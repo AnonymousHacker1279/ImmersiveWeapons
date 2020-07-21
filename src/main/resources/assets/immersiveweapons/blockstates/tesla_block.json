@@ -1,0 +1,10 @@
+{
+    "variants": {
+        "facing=down":  { "model": "immersiveweapons:block/tesla_block", "x": 180 },
+        "facing=up":    { "model": "immersiveweapons:block/tesla_block" },
+        "facing=north": { "model": "immersiveweapons:block/tesla_block" },
+        "facing=south": { "model": "immersiveweapons:block/tesla_block", "y": 180 },
+        "facing=west":  { "model": "immersiveweapons:block/tesla_block", "y": 270 },
+        "facing=east":  { "model": "immersiveweapons:block/tesla_block", "y": 90 }
+    }
+}

@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "minecraft:obsidian"
+    }
+  ],
+  "result":
+  {
+    "item": "immersiveweapons:obsidian_shard",
+    "count": 9
+  }
+}

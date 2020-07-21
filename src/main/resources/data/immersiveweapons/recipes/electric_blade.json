@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern":
+  [
+    " y ",
+    " y ",
+    " x "
+  ],
+  "key":
+  {
+    "x":
+    {
+      "item": "immersiveweapons:obsidian_rod"
+    },
+    "y":
+    {
+    	"item":"immersiveweapons:electric_ingot"
+    }
+  },
+  "result":
+  {
+    "item": "immersiveweapons:electric_blade",
+    "count": 1
+  }
+}

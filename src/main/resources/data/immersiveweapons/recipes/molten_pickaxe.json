@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern":
+  [
+    "yyy",
+    " x ",
+    " x "
+  ],
+  "key":
+  {
+    "x":
+    {
+      "item": "immersiveweapons:obsidian_rod"
+    },
+    "y":
+    {
+    	"item":"immersiveweapons:molten_ingot"
+    }
+  },
+  "result":
+  {
+    "item": "immersiveweapons:molten_pickaxe",
+    "count": 1
+  }
+}

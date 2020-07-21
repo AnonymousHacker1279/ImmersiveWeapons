@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern":
+  [
+    " x ",
+    " y ",
+    " y "
+  ],
+  "key":
+  {
+    "x":
+    {
+    	"item":"immersiveweapons:copper_ingot"
+    },
+    "y":
+    {
+    	"item":"minecraft:stick"
+    }
+  },
+  "result":
+  {
+    "item": "immersiveweapons:copper_shovel",
+    "count": 1
+  }
+}
