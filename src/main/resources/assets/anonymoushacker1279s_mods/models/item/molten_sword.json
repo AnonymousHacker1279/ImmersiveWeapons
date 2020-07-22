@@ -1,0 +1,6 @@
+{
+	"parent": "item/generated",
+	"textures": {
+		"layer0": "anonymoushacker1279s_mods:item/molten_sword"
+	}
+}
