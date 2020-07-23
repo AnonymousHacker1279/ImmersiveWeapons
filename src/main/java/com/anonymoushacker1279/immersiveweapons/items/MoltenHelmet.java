@@ -27,9 +27,11 @@ public class MoltenHelmet extends ArmorItem {
 
 	// Tick and add fire resistance when all armor pieces are worn
 	
+	public int DamageTickDown = 0;
+	
 	@Override
 	public void onArmorTick(ItemStack itemStack, World world, PlayerEntity player) {
-
+		
 		if(player.getItemStackFromSlot(EquipmentSlotType.HEAD).getItem() == DeferredRegistryHandler.MOLTEN_HELMET.get() &&
 				player.getItemStackFromSlot(EquipmentSlotType.CHEST).getItem() == DeferredRegistryHandler.MOLTEN_CHESTPLATE.get() &&
 				player.getItemStackFromSlot(EquipmentSlotType.LEGS).getItem() == DeferredRegistryHandler.MOLTEN_LEGGINGS.get() &&
@@ -38,5 +40,18 @@ public class MoltenHelmet extends ArmorItem {
 		) {
 			player.addPotionEffect(new EffectInstance(Effects.FIRE_RESISTANCE, 600, 0, true, false));
 		}
+		
+		if(player.isInLava() && !player.isCreative() && !world.isRemote && DamageTickDown == 0) {
+			player.getItemStackFromSlot(EquipmentSlotType.HEAD).damageItem(1, player, p -> p.sendBreakAnimation(EquipmentSlotType.HEAD));
+			player.getItemStackFromSlot(EquipmentSlotType.CHEST).damageItem(1, player, p -> p.sendBreakAnimation(EquipmentSlotType.CHEST));
+			player.getItemStackFromSlot(EquipmentSlotType.LEGS).damageItem(1, player, p -> p.sendBreakAnimation(EquipmentSlotType.LEGS));
+			player.getItemStackFromSlot(EquipmentSlotType.FEET).damageItem(1, player, p -> p.sendBreakAnimation(EquipmentSlotType.FEET));
+			DamageTickDown = 140;
+		}
+	}
+	
+	public void inventoryTick(World world){
+		if(!world.isRemote)
+			DamageTickDown =- 1;
 	}
 }
