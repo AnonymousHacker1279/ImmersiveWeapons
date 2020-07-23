@@ -13,7 +13,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.RegistryObject;
 
 public class MoltenHelmet extends ArmorItem {
 
@@ -27,32 +26,17 @@ public class MoltenHelmet extends ArmorItem {
 	}
 
 	// Tick and add fire resistance when all armor pieces are worn
+	
 	@Override
 	public void onArmorTick(ItemStack itemStack, World world, PlayerEntity player) {
-		RegistryObject<MoltenHelmet> helmet = DeferredRegistryHandler.MOLTEN_HELMET;
-		RegistryObject<MoltenChestplate> chestplate = DeferredRegistryHandler.MOLTEN_CHESTPLATE;
-		RegistryObject<MoltenLeggings> leggings = DeferredRegistryHandler.MOLTEN_LEGGINGS;
-		RegistryObject<MoltenBoots> boots = DeferredRegistryHandler.MOLTEN_BOOTS;
-		
-		if(helmet == DeferredRegistryHandler.MOLTEN_HELMET) {
-			if(chestplate == DeferredRegistryHandler.MOLTEN_CHESTPLATE) {
-				if(leggings == DeferredRegistryHandler.MOLTEN_LEGGINGS) {
-					if(boots == DeferredRegistryHandler.MOLTEN_BOOTS) {
-						if(player.isInLava()) {
-							if(!world.isRemote()) {
-								player.addPotionEffect(new EffectInstance(Effects.FIRE_RESISTANCE, 600, 0, true, false));
-							}
-						}
-					}
-				}
-			}
+
+		if(player.getItemStackFromSlot(EquipmentSlotType.HEAD).getItem() == DeferredRegistryHandler.MOLTEN_HELMET.get() &&
+				player.getItemStackFromSlot(EquipmentSlotType.CHEST).getItem() == DeferredRegistryHandler.MOLTEN_CHESTPLATE.get() &&
+				player.getItemStackFromSlot(EquipmentSlotType.LEGS).getItem() == DeferredRegistryHandler.MOLTEN_LEGGINGS.get() &&
+				player.getItemStackFromSlot(EquipmentSlotType.FEET).getItem() == DeferredRegistryHandler.MOLTEN_BOOTS.get() &&
+				!world.isRemote && player.isInLava()
+		) {
+			player.addPotionEffect(new EffectInstance(Effects.FIRE_RESISTANCE, 600, 0, true, false));
 		}
 	}
-	/*
-	 if(helmet == DeferredRegistryHandler.MOLTEN_HELMET && chestplate == DeferredRegistryHandler.MOLTEN_CHESTPLATE && leggings == DeferredRegistryHandler.MOLTEN_LEGGINGS && boots == DeferredRegistryHandler.MOLTEN_BOOTS && !player.isInLava()) {
-			if(!world.isRemote) {
-				player.addPotionEffect(new EffectInstance(Effects.FIRE_RESISTANCE, 600, 0, true, false));
-			} 
-		}
-	 */
 }
