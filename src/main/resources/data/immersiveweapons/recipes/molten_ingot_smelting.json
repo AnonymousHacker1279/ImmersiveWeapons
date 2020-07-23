@@ -4,6 +4,6 @@
     "item": "immersiveweapons:molten_ore"
   },
   "result": "immersiveweapons:molten_ingot",
-  "experience": 5.0,
+  "experience": 1.0,
   "cookingtime": 200
 }
