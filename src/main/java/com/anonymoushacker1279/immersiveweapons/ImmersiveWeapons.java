@@ -73,9 +73,9 @@ public class ImmersiveWeapons
     				if(biome == Biomes.NETHER) {
     					// Ore generation
     					ConfiguredPlacement<CountRangeConfig> customConfig = Placement.COUNT_RANGE
-    							.configure(new CountRangeConfig(3, 4, 4, 4));
+    							.configure(new CountRangeConfig(3, 4, 4, 5));
     					biome.addFeature(GenerationStage.Decoration.UNDERGROUND_ORES, Feature.ORE
-    							.withConfiguration(new OreFeatureConfig(FillerBlockType.NETHERRACK, DeferredRegistryHandler.MOLTEN_ORE.get().getDefaultState(), 10))
+    							.withConfiguration(new OreFeatureConfig(FillerBlockType.NETHERRACK, DeferredRegistryHandler.MOLTEN_ORE.get().getDefaultState(), 3))
     							.withPlacement(customConfig));
     				}
     				if(biome == Biomes.PLAINS) {
@@ -96,9 +96,9 @@ public class ImmersiveWeapons
     				// Ores that should generate in all biomes should go here
     				// Copper Ore
     				ConfiguredPlacement<CountRangeConfig> customConfig = Placement.COUNT_RANGE
-							.configure(new CountRangeConfig(7, 20, 12, 10));
+							.configure(new CountRangeConfig(9, 12, 7, 60));
 					biome.addFeature(GenerationStage.Decoration.UNDERGROUND_ORES, Feature.ORE
-							.withConfiguration(new OreFeatureConfig(FillerBlockType.NATURAL_STONE, DeferredRegistryHandler.COPPER_ORE.get().getDefaultState(), 10))
+							.withConfiguration(new OreFeatureConfig(FillerBlockType.NATURAL_STONE, DeferredRegistryHandler.COPPER_ORE.get().getDefaultState(), 9))
 							.withPlacement(customConfig));
     			}
     		}
