@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern":
+  [
+    "xxx",
+    "x x",
+    "x x"
+  ],
+  "key":
+  {
+    "x":
+    {
+    	"item":"immersiveweapons:copper_ingot"
+    }
+  },
+  "result":
+  {
+    "item": "immersiveweapons:copper_leggings",
+    "count": 1
+  }
+}

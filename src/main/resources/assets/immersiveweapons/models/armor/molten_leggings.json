@@ -1,0 +1,6 @@
+{
+	"parent": "item/generated",
+	"textures": {
+		"layer0": "immersiveweapons:armor/molten_layer_2"
+	}
+}

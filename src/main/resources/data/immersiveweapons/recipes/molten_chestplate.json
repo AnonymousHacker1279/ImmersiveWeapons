@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern":
+  [
+    "x x",
+    "xxx",
+    "xxx"
+  ],
+  "key":
+  {
+    "x":
+    {
+    	"item":"immersiveweapons:molten_plate"
+    }
+  },
+  "result":
+  {
+    "item": "immersiveweapons:molten_chestplate",
+    "count": 1
+  }
+}
