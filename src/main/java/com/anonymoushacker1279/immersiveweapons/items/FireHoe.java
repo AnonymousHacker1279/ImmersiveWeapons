@@ -1,17 +1,18 @@
 package com.anonymoushacker1279.immersiveweapons.items;
 
 import com.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
-import com.anonymoushacker1279.immersiveweapons.util.CustomItemMaterials;
 
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.item.HoeItem;
+import net.minecraft.item.IItemTier;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.PickaxeItem;
 
-public class MoltenPickaxe extends PickaxeItem {
+public class FireHoe extends HoeItem{
 
-	public MoltenPickaxe() {
-		super(CustomItemMaterials.MOLTEN, 2, -2.3F, (new Item.Properties().group(ImmersiveWeapons.TAB)));
+	public FireHoe(IItemTier tier, float attackSpeedIn) {
+		super(tier, attackSpeedIn, new Item.Properties().group(ImmersiveWeapons.TAB));
+		
 	}
 	
 	@Override

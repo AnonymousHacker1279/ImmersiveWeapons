@@ -1,4 +1,4 @@
-package com.anonymoushacker1279.immersiveweapons.blocks;
+package com.anonymoushacker1279.immersiveweapons.block;
 
 import com.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 

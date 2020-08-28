@@ -1,17 +1,18 @@
 package com.anonymoushacker1279.immersiveweapons.items;
 
 import com.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
-import com.anonymoushacker1279.immersiveweapons.util.CustomItemMaterials;
 
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.AxeItem;
+import net.minecraft.item.IItemTier;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
-public class MoltenAxe extends AxeItem {
+public class FireAxe extends AxeItem{
 
-	public MoltenAxe() {
-		super(CustomItemMaterials.MOLTEN, 6, -3.0f, (new Item.Properties().group(ImmersiveWeapons.TAB)));
+	public FireAxe(IItemTier tier, int attackDamageIn, float attackSpeedIn) {
+		super(tier, attackDamageIn, attackSpeedIn, new Item.Properties().group(ImmersiveWeapons.TAB));
+		
 	}
 	
 	@Override
