@@ -10,8 +10,8 @@ import net.minecraft.item.ItemStack;
 
 public class FireHoe extends HoeItem{
 
-	public FireHoe(IItemTier tier, float attackSpeedIn) {
-		super(tier, attackSpeedIn, new Item.Properties().group(ImmersiveWeapons.TAB));
+	public FireHoe(IItemTier tier, int attackDamageIn, float attackSpeedIn) {
+		super(tier, attackDamageIn, attackSpeedIn, new Item.Properties().group(ImmersiveWeapons.TAB));
 		
 	}
 	
