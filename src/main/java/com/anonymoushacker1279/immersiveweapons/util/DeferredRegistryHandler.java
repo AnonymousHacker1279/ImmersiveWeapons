@@ -3,8 +3,9 @@ package com.anonymoushacker1279.immersiveweapons.util;
 import com.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import com.anonymoushacker1279.immersiveweapons.block.BasicOrientableBlock;
 import com.anonymoushacker1279.immersiveweapons.block.BlockItemBase;
+import com.anonymoushacker1279.immersiveweapons.entity.projectile.CustomArrowEntity.CopperArrowEntity;
 import com.anonymoushacker1279.immersiveweapons.items.CopperArmorItem;
-import com.anonymoushacker1279.immersiveweapons.items.CustomArrowItem;
+import com.anonymoushacker1279.immersiveweapons.items.CustomArrows.CopperArrowItem;
 import com.anonymoushacker1279.immersiveweapons.items.ElectricBlade;
 import com.anonymoushacker1279.immersiveweapons.items.MoltenArmorItem;
 import com.anonymoushacker1279.immersiveweapons.items.MoltenItem.MoltenAxe;
@@ -96,7 +97,7 @@ public class DeferredRegistryHandler {
 	public static final RegistryObject<Item> WOOD_TOOL_ROD = ITEMS.register("wood_tool_rod", () -> new Item(new Item.Properties().group(ImmersiveWeapons.TAB)));
 	public static final RegistryObject<Item> COPPER_PIKE_HEAD = ITEMS.register("copper_pike_head", () -> new Item(new Item.Properties().group(ImmersiveWeapons.TAB)));
 	public static final RegistryObject<Item> COPPER_NUGGET = ITEMS.register("copper_nugget", () -> new Item(new Item.Properties().group(ImmersiveWeapons.TAB)));
-	public static final RegistryObject<Item> COPPER_ARROW = ITEMS.register("copper_arrow", () -> new CustomArrowItem(new Item.Properties().group(ImmersiveWeapons.TAB), 2.15d));
+	public static final RegistryObject<Item> COPPER_ARROW = ITEMS.register("copper_arrow", () -> new CopperArrowItem(new Item.Properties().group(ImmersiveWeapons.TAB), 2.15d));
 	public static final RegistryObject<Item> TESLA_PLATE = ITEMS.register("tesla_plate", () -> new Item(new Item.Properties().group(ImmersiveWeapons.TAB)));
 	public static final RegistryObject<Item> IRON_PIKE_HEAD = ITEMS.register("iron_pike_head", () -> new Item(new Item.Properties().group(ImmersiveWeapons.TAB)));
 	public static final RegistryObject<Item> DIAMOND_PIKE_HEAD = ITEMS.register("diamond_pike_head", () -> new Item(new Item.Properties().group(ImmersiveWeapons.TAB)));
@@ -141,7 +142,7 @@ public class DeferredRegistryHandler {
 	
 	// Entities
 	
-	public static final RegistryObject<EntityType<CustomArrowEntity>> COPPER_ARROW_ENTITY = ENTITY_TYPES.register("copper_arrow", () -> EntityType.Builder.<CustomArrowEntity>create(CustomArrowEntity::new, EntityClassification.MISC).size(0.5f, 0.5f).build(new ResourceLocation(ImmersiveWeapons.MOD_ID, "copper_arrow").toString()));
+	public static final RegistryObject<EntityType<CopperArrowEntity>> COPPER_ARROW_ENTITY = ENTITY_TYPES.register("copper_arrow", () -> EntityType.Builder.<CopperArrowEntity>create(CopperArrowEntity::new, EntityClassification.MISC).size(0.5f, 0.5f).build(new ResourceLocation(ImmersiveWeapons.MOD_ID, "copper_arrow").toString()));
 	
 	// Sounds
 	

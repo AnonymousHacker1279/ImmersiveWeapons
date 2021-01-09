@@ -1,8 +1,8 @@
 package com.anonymoushacker1279.immersiveweapons.items;
 
-import com.anonymoushacker1279.immersiveweapons.util.CustomArrowEntity;
-
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.projectile.AbstractArrowEntity;
+import net.minecraft.entity.projectile.ArrowEntity;
 import net.minecraft.item.ArrowItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -14,9 +14,9 @@ public class CustomArrowItem extends ArrowItem {
 	/**
 	 * The amount of damage this arrow does by default.
 	 */
-	public final double damage;
+	public double damage;
 	
-	private RegistryObject<Item> ref;
+	public RegistryObject<Item> ref;
 
 	/**
 	 * 
@@ -44,8 +44,8 @@ public class CustomArrowItem extends ArrowItem {
 	 * @returns the relevant Entity (in this case CustomArrowEntity) for use by the firing tool.
 	 */
 	@Override
-	public CustomArrowEntity createArrow(World worldIn, ItemStack stack, LivingEntity shooter) {
-		CustomArrowEntity arrowentity = new CustomArrowEntity(shooter, worldIn, ref.get());
+	public AbstractArrowEntity createArrow(World worldIn, ItemStack stack, LivingEntity shooter) {
+		AbstractArrowEntity arrowentity = new ArrowEntity(worldIn, shooter);
 		arrowentity.setDamage(this.damage);
 		return arrowentity;
 	}

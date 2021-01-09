@@ -1,7 +1,7 @@
 package com.anonymoushacker1279.immersiveweapons.client;
 
 import com.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
-import com.anonymoushacker1279.immersiveweapons.util.CustomArrowRenderer;
+import com.anonymoushacker1279.immersiveweapons.client.renderer.entity.CustomArrowRenderer.CopperArrowRenderer;
 import com.anonymoushacker1279.immersiveweapons.util.DeferredRegistryHandler;
 
 import net.minecraft.client.settings.KeyBinding;
@@ -18,7 +18,7 @@ public class ClientModEventSubscriber {
 	 @SubscribeEvent
 	 public static void onClientSetup(final FMLClientSetupEvent event) {
 	    ImmersiveWeapons.LOGGER.debug("Performing client-side setup");
-	    RenderingRegistry.registerEntityRenderingHandler(DeferredRegistryHandler.COPPER_ARROW_ENTITY.get(), CustomArrowRenderer::new);
+	    RenderingRegistry.registerEntityRenderingHandler(DeferredRegistryHandler.COPPER_ARROW_ENTITY.get(), CopperArrowRenderer::new);
 	 }
 	 
 	 private static final String CATEGORY = "key.categories." + ImmersiveWeapons.MOD_ID;

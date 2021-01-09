@@ -1,5 +1,7 @@
 package com.anonymoushacker1279.immersiveweapons.util;
 
+import com.anonymoushacker1279.immersiveweapons.entity.projectile.CustomArrowEntity.CopperArrowEntity;
+
 import net.minecraft.block.DispenserBlock;
 import net.minecraft.dispenser.IBlockSource;
 import net.minecraft.dispenser.IDispenseItemBehavior;
@@ -15,8 +17,8 @@ public class DispenserBehaviorRegistry implements IDispenseItemBehavior {
 		DispenserBlock.registerDispenseBehavior(DeferredRegistryHandler.COPPER_ARROW.get(), new ProjectileDispenseBehavior() {
 			@Override
 			protected ProjectileEntity getProjectileEntity(World worldIn, IPosition position, ItemStack stackIn) {
-				CustomArrowEntity arrowentity = new CustomArrowEntity(worldIn, position.getX(), position.getY(), position.getZ());
-				arrowentity.pickupStatus = CustomArrowEntity.PickupStatus.ALLOWED;
+				CopperArrowEntity arrowentity = new CopperArrowEntity(worldIn, position.getX(), position.getY(), position.getZ());
+				arrowentity.pickupStatus = CopperArrowEntity.PickupStatus.ALLOWED;
 				arrowentity.setDamage(2.15d);
 				return arrowentity;
 			}
