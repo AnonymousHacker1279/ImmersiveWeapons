@@ -1,0 +1,32 @@
+{
+  "tesla_armor_effect": {
+    "category": "neutral",
+    "subtitle": "immersiveweapons.subtitle.armor.tesla.effect",
+    "sounds": [
+      {
+        "name": "immersiveweapons:tesla_armor_effect",
+        "stream": true
+      }
+    ]
+  },
+  "tesla_armor_power_down": {
+    "category": "neutral",
+    "subtitle": "immersiveweapons.subtitle.armor.tesla.power_down",
+    "sounds": [
+      {
+        "name": "immersiveweapons:tesla_armor_power_down",
+        "stream": true
+      }
+    ]
+  },
+  "tesla_armor_power_up": {
+    "category": "neutral",
+    "subtitle": "immersiveweapons.subtitle.armor.tesla.power_up",
+    "sounds": [
+      {
+        "name": "immersiveweapons:tesla_armor_power_up",
+        "stream": true
+      }
+    ]
+  }
+}

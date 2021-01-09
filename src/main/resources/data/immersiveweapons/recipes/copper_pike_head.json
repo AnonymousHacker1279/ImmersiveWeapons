@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern":
+  [
+    " x ",
+    " y ",
+    "   "
+  ],
+  "key":
+  {
+  "x":
+    {
+    	"tag":"immersiveweapons:copper_ingots"
+    },
+    "y":
+    {
+    	"item":"immersiveweapons:copper_nugget"
+    }
+  },
+  "result":
+  {
+    "item": "immersiveweapons:copper_pike_head",
+    "count": 1
+  }
+}

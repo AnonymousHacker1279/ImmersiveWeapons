@@ -1,0 +1,29 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern":
+  [
+    "  x",
+    " y ",
+    "z  "
+  ],
+  "key":
+  {
+  "x":
+    {
+    	"item":"immersiveweapons:wood_pike_head"
+    },
+    "y":
+    {
+    	"tag":"minecraft:planks"
+    },
+    "z":
+    {
+    	"item":"immersiveweapons:wood_tool_rod"
+    }
+  },
+  "result":
+  {
+    "item": "immersiveweapons:wood_pike",
+    "count": 1
+  }
+}

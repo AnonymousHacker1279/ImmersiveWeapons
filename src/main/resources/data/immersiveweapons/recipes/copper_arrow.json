@@ -1,0 +1,29 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern":
+  [
+    " x ",
+    " y ",
+    " z "
+  ],
+  "key":
+  {
+    "x":
+    {
+    	"item":"immersiveweapons:copper_nugget"
+    },
+    "y":
+    {
+    	"item":"minecraft:stick"
+    },
+    "z":
+    {
+    	"item":"minecraft:feather"
+    }
+  },
+  "result":
+  {
+    "item": "immersiveweapons:copper_arrow",
+    "count": 2
+  }
+}

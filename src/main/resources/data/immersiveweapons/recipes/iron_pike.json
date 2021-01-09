@@ -1,0 +1,29 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern":
+  [
+    "  x",
+    " y ",
+    "z  "
+  ],
+  "key":
+  {
+  "x":
+    {
+    	"item":"immersiveweapons:iron_pike_head"
+    },
+    "y":
+    {
+    	"item":"minecraft:iron_ingot"
+    },
+    "z":
+    {
+    	"item":"immersiveweapons:wood_tool_rod"
+    }
+  },
+  "result":
+  {
+    "item": "immersiveweapons:iron_pike",
+    "count": 1
+  }
+}

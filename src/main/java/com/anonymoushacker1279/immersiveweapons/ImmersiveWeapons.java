@@ -6,7 +6,9 @@ import java.util.Map;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import com.anonymoushacker1279.immersiveweapons.util.AddAttributesAfterSetup;
 import com.anonymoushacker1279.immersiveweapons.util.DeferredRegistryHandler;
+import com.anonymoushacker1279.immersiveweapons.util.DispenserBehaviorRegistry;
 import com.anonymoushacker1279.immersiveweapons.util.OreGeneratorHandler;
 
 import net.minecraft.item.ItemGroup;
@@ -60,19 +62,21 @@ public class ImmersiveWeapons
         forgeBus.addListener(EventPriority.NORMAL, this::addDimensionalSpacing);
         forgeBus.addListener(EventPriority.HIGH, this::biomeModification);
    }
-
-    @SubscribeEvent
+    
+	@SubscribeEvent
     public void setup(final FMLCommonSetupEvent event) {
     	OreGeneratorHandler.init(event);
+    	DispenserBehaviorRegistry.init();
     	event.enqueueWork(() -> {
             STStructures.setupStructures();
             STStructures.registerAllPieces();
             STConfiguredStructures.registerConfiguredStructures();
             STStructures.init();
         });
+    	
+    	AddAttributesAfterSetup.init();
+	}
 
-    }
-    
     public void biomeModification(final BiomeLoadingEvent event) {
         // Add structure to all biomes
 
@@ -131,10 +135,4 @@ public class ImmersiveWeapons
     		return new ItemStack(DeferredRegistryHandler.MOLTEN_SWORD.get());
     	}
     };
-    
-    private double getDistance(int x1, int y1, int x2, int y2){
-        return Math.sqrt(Math.pow((x2-x1), 2) + Math.pow((y2-y1), 2));
-    }
-
-
 }
