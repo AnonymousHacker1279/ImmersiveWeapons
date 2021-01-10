@@ -10,16 +10,16 @@
   {
     "x":
     {
-      "item": "immersiveweapons:obsidian_rod"
+		"item": "immersiveweapons:obsidian_rod"
     },
     "y":
     {
-    	"item":"immersiveweapons:electric_ingot"
+    	"item":"immersiveweapons:tesla_ingot"
     }
   },
   "result":
   {
-    "item": "immersiveweapons:electric_blade",
+    "item": "immersiveweapons:tesla_sword",
     "count": 1
   }
 }

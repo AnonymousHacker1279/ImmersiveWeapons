@@ -103,7 +103,8 @@ public class ImmersiveWeapons
     	};
     }
     
-    public void addDimensionalSpacing(final WorldEvent.Load event) {
+    @SuppressWarnings("resource")
+	public void addDimensionalSpacing(final WorldEvent.Load event) {
         if(event.getWorld() instanceof ServerWorld){
             ServerWorld serverWorld = (ServerWorld) event.getWorld();
 

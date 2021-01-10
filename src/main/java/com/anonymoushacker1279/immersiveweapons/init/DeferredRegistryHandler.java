@@ -2,7 +2,6 @@ package com.anonymoushacker1279.immersiveweapons.init;
 
 import com.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import com.anonymoushacker1279.immersiveweapons.block.BasicOrientableBlock;
-import com.anonymoushacker1279.immersiveweapons.block.BlockItemBase;
 import com.anonymoushacker1279.immersiveweapons.entity.projectile.CustomArrowEntity.CopperArrowEntity;
 import com.anonymoushacker1279.immersiveweapons.entity.projectile.CustomArrowEntity.DiamondArrowEntity;
 import com.anonymoushacker1279.immersiveweapons.entity.projectile.CustomArrowEntity.GoldArrowEntity;
@@ -18,7 +17,6 @@ import com.anonymoushacker1279.immersiveweapons.items.CustomArrows.IronArrowItem
 import com.anonymoushacker1279.immersiveweapons.items.CustomArrows.NetheriteArrowItem;
 import com.anonymoushacker1279.immersiveweapons.items.CustomArrows.StoneArrowItem;
 import com.anonymoushacker1279.immersiveweapons.items.CustomArrows.WoodArrowItem;
-import com.anonymoushacker1279.immersiveweapons.items.ElectricBlade;
 import com.anonymoushacker1279.immersiveweapons.items.MoltenArmorItem;
 import com.anonymoushacker1279.immersiveweapons.items.MoltenItem.MoltenAxe;
 import com.anonymoushacker1279.immersiveweapons.items.MoltenItem.MoltenHoe;
@@ -33,6 +31,7 @@ import com.anonymoushacker1279.immersiveweapons.items.PikeItem.NetheritePikeItem
 import com.anonymoushacker1279.immersiveweapons.items.PikeItem.StonePikeItem;
 import com.anonymoushacker1279.immersiveweapons.items.PikeItem.WoodPikeItem;
 import com.anonymoushacker1279.immersiveweapons.items.TeslaArmorItem;
+import com.anonymoushacker1279.immersiveweapons.items.TeslaItem.TeslaSword;
 import com.anonymoushacker1279.immersiveweapons.util.CustomArmorMaterials;
 import com.anonymoushacker1279.immersiveweapons.util.CustomItemMaterials;
 
@@ -89,7 +88,7 @@ public class DeferredRegistryHandler {
 	public static final RegistryObject<Item> COPPER_AXE = ITEMS.register("copper_axe", () -> new AxeItem(CustomItemMaterials.COPPER, 3, -3.0f, new Item.Properties().group(ImmersiveWeapons.TAB)));
 	public static final RegistryObject<Item> COPPER_SHOVEL = ITEMS.register("copper_shovel", () -> new ShovelItem(CustomItemMaterials.COPPER, -2, -2.7f, new Item.Properties().group(ImmersiveWeapons.TAB)));
 	public static final RegistryObject<Item> COPPER_HOE = ITEMS.register("copper_hoe", () -> new HoeItem(CustomItemMaterials.COPPER, 0, 1.0f, new Item.Properties().group(ImmersiveWeapons.TAB)));
-	public static final RegistryObject<Item> ELECTRIC_BLADE = ITEMS.register("electric_blade", ElectricBlade::new);
+	public static final RegistryObject<Item> TESLA_SWORD = ITEMS.register("tesla_sword", () -> new TeslaSword());
 	public static final RegistryObject<Item> IRON_PIKE = ITEMS.register("iron_pike", () -> new IronPikeItem((new Item.Properties()).maxDamage(250).group(ImmersiveWeapons.TAB), 6.0d, -2.6d));
 	public static final RegistryObject<Item> DIAMOND_PIKE = ITEMS.register("diamond_pike", () -> new DiamondPikeItem((new Item.Properties()).maxDamage(1561).group(ImmersiveWeapons.TAB), 7.0d, -2.6d));
 	public static final RegistryObject<Item> NETHERITE_PIKE = ITEMS.register("netherite_pike", () -> new NetheritePikeItem((new Item.Properties()).maxDamage(2031).group(ImmersiveWeapons.TAB).isImmuneToFire(), 8.0d, -2.6d));
@@ -146,19 +145,19 @@ public class DeferredRegistryHandler {
 	
 	// Blocks
 	
-	public static final RegistryObject<Block> MOLTEN_ORE = BLOCKS.register("molten_ore", () -> new OreBlock(Block.Properties.create(Material.ROCK).hardnessAndResistance(5.0f, 7.0f).sound(SoundType.STONE).harvestLevel(3).harvestTool(ToolType.PICKAXE)));
-	public static final RegistryObject<Block> COPPER_ORE = BLOCKS.register("copper_ore", () -> new OreBlock(Block.Properties.create(Material.ROCK).hardnessAndResistance(2.5f, 2.5f).sound(SoundType.STONE).harvestLevel(1).harvestTool(ToolType.PICKAXE)));
-	public static final RegistryObject<Block> MOLTEN_BLOCK = BLOCKS.register("molten_block", () -> new Block(Block.Properties.create(Material.IRON).hardnessAndResistance(3.0f, 9.0f).sound(SoundType.METAL).harvestLevel(0).harvestTool(ToolType.PICKAXE)));
-	public static final RegistryObject<Block> ELECTRIC_ORE = BLOCKS.register("electric_ore", () -> new OreBlock(Block.Properties.create(Material.ROCK).hardnessAndResistance(4.0f, 5.0f).sound(SoundType.STONE).harvestLevel(3).harvestTool(ToolType.PICKAXE)));
-	public static final RegistryObject<Block> TESLA_BLOCK = BLOCKS.register("tesla_block", () -> new BasicOrientableBlock(Block.Properties.create(Material.IRON).hardnessAndResistance(2.8f, 8.8f).sound(SoundType.METAL).harvestLevel(0).harvestTool(ToolType.PICKAXE)));
+	public static final RegistryObject<Block> MOLTEN_ORE = BLOCKS.register("molten_ore", () -> new OreBlock(Block.Properties.create(Material.ROCK).hardnessAndResistance(6.0f, 8.0f).sound(SoundType.STONE).setRequiresTool().harvestLevel(3).harvestTool(ToolType.PICKAXE)));
+	public static final RegistryObject<Block> COPPER_ORE = BLOCKS.register("copper_ore", () -> new OreBlock(Block.Properties.create(Material.ROCK).hardnessAndResistance(2.5f, 2.5f).sound(SoundType.STONE).setRequiresTool().harvestLevel(1).harvestTool(ToolType.PICKAXE)));
+	public static final RegistryObject<Block> MOLTEN_BLOCK = BLOCKS.register("molten_block", () -> new Block(Block.Properties.create(Material.IRON).hardnessAndResistance(13.0f, 15.0f).sound(SoundType.METAL).setRequiresTool().harvestLevel(3).harvestTool(ToolType.PICKAXE)));
+	public static final RegistryObject<Block> ELECTRIC_ORE = BLOCKS.register("electric_ore", () -> new OreBlock(Block.Properties.create(Material.ROCK).hardnessAndResistance(6.0f, 8.0f).sound(SoundType.STONE).setRequiresTool().harvestLevel(3).harvestTool(ToolType.PICKAXE)));
+	public static final RegistryObject<Block> TESLA_BLOCK = BLOCKS.register("tesla_block", () -> new BasicOrientableBlock(Block.Properties.create(Material.IRON).hardnessAndResistance(12.2f, 12.4f).sound(SoundType.METAL).setRequiresTool().harvestLevel(3).harvestTool(ToolType.PICKAXE)));
 	
 	// Block Items
 	
-	public static final RegistryObject<BlockItem> MOLTEN_ORE_ITEM = ITEMS.register("molten_ore", () -> new BlockItemBase(MOLTEN_ORE.get()));
-	public static final RegistryObject<BlockItem> MOLTEN_BLOCK_ITEM = ITEMS.register("molten_block", () -> new BlockItemBase(MOLTEN_BLOCK.get()));
-	public static final RegistryObject<BlockItem> ELECTRIC_ORE_ITEM = ITEMS.register("electric_ore", () -> new BlockItemBase(ELECTRIC_ORE.get()));
-	public static final RegistryObject<BlockItem> COPPER_ORE_ITEM = ITEMS.register("copper_ore", () -> new BlockItemBase(COPPER_ORE.get()));
-	public static final RegistryObject<BlockItem> TESLA_BLOCK_ITEM = ITEMS.register("tesla_block", () -> new BlockItemBase(TESLA_BLOCK.get()));
+	public static final RegistryObject<BlockItem> MOLTEN_ORE_ITEM = ITEMS.register("molten_ore", () -> new BlockItem(MOLTEN_ORE.get(), new Item.Properties().group(ImmersiveWeapons.TAB).isImmuneToFire()));
+	public static final RegistryObject<BlockItem> MOLTEN_BLOCK_ITEM = ITEMS.register("molten_block", () -> new BlockItem(MOLTEN_BLOCK.get(), new Item.Properties().group(ImmersiveWeapons.TAB).isImmuneToFire()));
+	public static final RegistryObject<BlockItem> ELECTRIC_ORE_ITEM = ITEMS.register("electric_ore", () -> new BlockItem(ELECTRIC_ORE.get(), new Item.Properties().group(ImmersiveWeapons.TAB)));
+	public static final RegistryObject<BlockItem> COPPER_ORE_ITEM = ITEMS.register("copper_ore", () -> new BlockItem(COPPER_ORE.get(), new Item.Properties().group(ImmersiveWeapons.TAB)));
+	public static final RegistryObject<BlockItem> TESLA_BLOCK_ITEM = ITEMS.register("tesla_block", () -> new BlockItem(TESLA_BLOCK.get(), new Item.Properties().group(ImmersiveWeapons.TAB)));
 	
 	// Entities
 	
@@ -175,4 +174,5 @@ public class DeferredRegistryHandler {
 	public static final RegistryObject<SoundEvent> TESLA_ARMOR_EFFECT = SOUND_EVENTS.register("tesla_armor_effect", () -> new SoundEvent(new ResourceLocation(ImmersiveWeapons.MOD_ID, "tesla_armor_effect")));
 	public static final RegistryObject<SoundEvent> TESLA_ARMOR_POWER_DOWN = SOUND_EVENTS.register("tesla_armor_power_dodwn", () -> new SoundEvent(new ResourceLocation(ImmersiveWeapons.MOD_ID, "tesla_armor_power_down")));
 	public static final RegistryObject<SoundEvent> TESLA_ARMOR_POWER_UP = SOUND_EVENTS.register("tesla_armor_power_up", () -> new SoundEvent(new ResourceLocation(ImmersiveWeapons.MOD_ID, "tesla_armor_power_up")));
+	
 }
