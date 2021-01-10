@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern":
+  [
+    "xxx",
+    "xyx",
+    "xxx"
+  ],
+  "key":
+  {
+    "x":
+    {
+    	"item":"immersiveweapons:diamond_arrow"
+    },
+    "y":
+    {
+    	"item":"minecraft:netherite_ingot"
+    }
+  },
+  "result":
+  {
+    "item": "immersiveweapons:netherite_arrow",
+    "count": 8
+  }
+}

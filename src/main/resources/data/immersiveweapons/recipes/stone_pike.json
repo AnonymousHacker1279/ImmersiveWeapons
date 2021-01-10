@@ -1,0 +1,29 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern":
+  [
+    "  x",
+    " y ",
+    "z  "
+  ],
+  "key":
+  {
+  "x":
+    {
+    	"item":"immersiveweapons:stone_pike_head"
+    },
+    "y":
+    {
+    	"item":"minecraft:cobblestone"
+    },
+    "z":
+    {
+    	"item":"immersiveweapons:wood_tool_rod"
+    }
+  },
+  "result":
+  {
+    "item": "immersiveweapons:stone_pike",
+    "count": 1
+  }
+}

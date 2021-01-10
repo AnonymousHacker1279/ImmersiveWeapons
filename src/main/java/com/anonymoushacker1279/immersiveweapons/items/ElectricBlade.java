@@ -20,8 +20,9 @@ public class ElectricBlade extends SwordItem {
 	@Override
     public boolean hitEntity(ItemStack par1ItemStack, LivingEntity par2EntityLiving, LivingEntity par3EntityLiving)
     {
-    		par2EntityLiving.addPotionEffect(new EffectInstance(Effects.WEAKNESS, 60, 1, false, false));
-    		par2EntityLiving.addPotionEffect(new EffectInstance(Effects.SLOWNESS, 60, 1, false, false));
+    		par2EntityLiving.addPotionEffect(new EffectInstance(Effects.WEAKNESS, 140, 1, false, false));
+    		par2EntityLiving.addPotionEffect(new EffectInstance(Effects.SLOWNESS, 140, 1, false, false));
+    		par2EntityLiving.addPotionEffect(new EffectInstance(Effects.NAUSEA, 140, 1, false, false));
     		return super.hitEntity(par1ItemStack, par2EntityLiving, par3EntityLiving);
     }
 }

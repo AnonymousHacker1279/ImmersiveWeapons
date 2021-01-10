@@ -1,0 +1,29 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern":
+  [
+    " x ",
+    " y ",
+    " z "
+  ],
+  "key":
+  {
+    "x":
+    {
+    	"tag":"immersiveweapons:copper_ingots"
+    },
+    "y":
+    {
+    	"item":"minecraft:stick"
+    },
+    "z":
+    {
+    	"item":"minecraft:feather"
+    }
+  },
+  "result":
+  {
+    "item": "immersiveweapons:copper_arrow",
+    "count": 2
+  }
+}

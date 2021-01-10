@@ -11,12 +11,17 @@ import net.minecraft.item.ItemStack;
 
 public class CopperArmorItem extends ArmorItem{
 
-	public CopperArmorItem(IArmorMaterial material, EquipmentSlotType slot) {
+	private boolean isLeggings = false;
+	
+	public CopperArmorItem(IArmorMaterial material, EquipmentSlotType slot, int type) {
 		super(material, slot, (new Item.Properties().group(ImmersiveWeapons.TAB)));
+		if (type == 2) {
+			isLeggings = true;
+		}
 	}
 	
 	@Override
 	public String getArmorTexture(ItemStack stack, Entity entity, EquipmentSlotType slot, String type) {
-		return ImmersiveWeapons.MOD_ID+":textures/armor/copper_layer_1.png";
+		return (isLeggings == false ? ImmersiveWeapons.MOD_ID+":textures/armor/copper_layer_1.png" : ImmersiveWeapons.MOD_ID+":textures/armor/copper_layer_2.png");
 	}
 }

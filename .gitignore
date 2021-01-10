@@ -5,6 +5,7 @@ bin
 .metadata
 .classpath
 .project
+src/generated/
 
 # idea
 out
@@ -20,6 +21,11 @@ build
 # other
 eclipse
 run
+gradlew.bat
+
+# VS
+.vs
+.vscode
 
 # Files from Forge MDK
 forge*changelog.txt

@@ -2,6 +2,8 @@ package com.anonymoushacker1279.immersiveweapons.util;
 
 import java.util.function.Supplier;
 
+import com.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
+
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.IArmorMaterial;
 import net.minecraft.item.crafting.Ingredient;
@@ -18,6 +20,9 @@ public enum CustomArmorMaterials implements IArmorMaterial {
 	 }, 0.12F),
 	 COPPER("copper", 25, new int[]{1, 4, 5, 1}, 9, SoundEvents.ITEM_ARMOR_EQUIP_IRON, 0.0F, () -> {
 		 return Ingredient.fromItems(DeferredRegistryHandler.COPPER_INGOT.get());
+	 }, 0.0F),
+	 TESLA("tesla", 65, new int[]{7, 8, 11, 6}, 11, SoundEvents.ITEM_ARMOR_EQUIP_DIAMOND, 3.0F, () -> {
+		 return Ingredient.fromItems(DeferredRegistryHandler.TESLA_INGOT.get());
 	 }, 0.0F);
 	 
 	   static final int[] MAX_DAMAGE_ARRAY = new int[]{13, 15, 16, 11};
@@ -41,32 +46,39 @@ public enum CustomArmorMaterials implements IArmorMaterial {
 	      this.knockbackResistance = knockbackResistance;
 	   }
 
-	   public int getDurability(EquipmentSlotType slotIn) {
+	   @Override
+	public int getDurability(EquipmentSlotType slotIn) {
 	      return MAX_DAMAGE_ARRAY[slotIn.getIndex()] * this.maxDamageFactor;
 	   }
 
-	   public int getDamageReductionAmount(EquipmentSlotType slotIn) {
+	   @Override
+	public int getDamageReductionAmount(EquipmentSlotType slotIn) {
 	      return this.damageReductionAmountArray[slotIn.getIndex()];
 	   }
 
-	   public int getEnchantability() {
+	   @Override
+	public int getEnchantability() {
 	      return this.enchantability;
 	   }
 
-	   public SoundEvent getSoundEvent() {
+	   @Override
+	public SoundEvent getSoundEvent() {
 	      return this.soundEvent;
 	   }
 
-	   public Ingredient getRepairMaterial() {
+	   @Override
+	public Ingredient getRepairMaterial() {
 	      return this.repairMaterial.getValue();
 	   }
 
-	   @OnlyIn(Dist.CLIENT)
+	   @Override
+	@OnlyIn(Dist.CLIENT)
 	   public String getName() {
 	      return this.name;
 	   }
 
-	   public float getToughness() {
+	   @Override
+	public float getToughness() {
 	      return this.toughness;
 	   }
 

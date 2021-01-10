@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern":
+  [
+    "xx ",
+    "   ",
+    "   "
+  ],
+  "key":
+  {
+    "x":
+    {
+    	"item":"immersiveweapons:tesla_ingot"
+    }
+  },
+  "result":
+  {
+    "item": "immersiveweapons:tesla_plate",
+    "count": 2
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern":
+  [
+    " x ",
+    " y ",
+    " z "
+  ],
+  "key":
+  {
+    "x":
+    {
+    	"item":"immersiveweapons:wood_shard"
+    },
+    "y":
+    {
+    	"item":"minecraft:stick"
+    },
+    "z":
+    {
+    	"item":"minecraft:feather"
+    }
+  },
+  "result":
+  {
+    "item": "immersiveweapons:wood_arrow",
+    "count": 2
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern":
+  [
+    " x ",
+    " y ",
+    "   "
+  ],
+  "key":
+  {
+  "x":
+    {
+    	"item":"minecraft:diamond"
+    },
+    "y":
+    {
+    	"item":"immersiveweapons:diamond_shard"
+    }
+  },
+  "result":
+  {
+    "item": "immersiveweapons:diamond_pike_head",
+    "count": 1
+  }
+}
