@@ -1,4 +1,4 @@
-package com.anonymoushacker1279.immersiveweapons.util;
+package com.anonymoushacker1279.immersiveweapons.init;
 
 import net.minecraft.util.registry.Registry;
 import net.minecraft.util.registry.WorldGenRegistries;
@@ -19,16 +19,16 @@ public class OreGeneratorHandler {
 				Feature.ORE.withConfiguration(
 						new OreFeatureConfig(
 								OreFeatureConfig.FillerBlockType.BASE_STONE_OVERWORLD,
-								DeferredRegistryHandler.COPPER_ORE.get().getDefaultState(), 9)
-						).range(76).square().func_242731_b(20)
+								DeferredRegistryHandler.COPPER_ORE.get().getDefaultState(), 8)
+						).range(76).square().func_242731_b(25)
 				);
 		
 		ORE_MOLTEN_CONFIG = Registry.register(WorldGenRegistries.CONFIGURED_FEATURE, "ore_molten", 
 				Feature.ORE.withConfiguration(
 						new OreFeatureConfig(
 								OreFeatureConfig.FillerBlockType.BASE_STONE_NETHER,
-								DeferredRegistryHandler.MOLTEN_ORE.get().getDefaultState(), 7)
-						).range(28).square().func_242731_b(20)
+								DeferredRegistryHandler.MOLTEN_ORE.get().getDefaultState(), 3)
+						).range(28).square().func_242731_b(18)
 				);
 	}
 }

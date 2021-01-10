@@ -10,7 +10,7 @@
   {
     "x":
     {
-    	"tag":"immersiveweapons:copper_ingots"
+    	"item":"minecraft:iron_ingot"
     },
     "y":
     {
@@ -23,7 +23,7 @@
   },
   "result":
   {
-    "item": "immersiveweapons:copper_arrow",
+    "item": "immersiveweapons:iron_arrow",
     "count": 2
   }
 }

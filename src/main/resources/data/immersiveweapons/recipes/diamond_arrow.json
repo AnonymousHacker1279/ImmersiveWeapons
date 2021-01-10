@@ -10,7 +10,7 @@
   {
     "x":
     {
-    	"tag":"immersiveweapons:copper_ingots"
+    	"item":"immersiveweapons:diamond_shard"
     },
     "y":
     {
@@ -23,7 +23,7 @@
   },
   "result":
   {
-    "item": "immersiveweapons:copper_arrow",
+    "item": "immersiveweapons:diamond_arrow",
     "count": 2
   }
 }

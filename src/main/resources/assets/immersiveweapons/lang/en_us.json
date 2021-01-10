@@ -51,6 +51,12 @@
 	"item.immersiveweapons.wood_shard": "Wood Shard",
 	"item.immersiveweapons.gold_pike": "Gold Pike",
 	"item.immersiveweapons.gold_pike_head": "Gold Pike Head",
+	"item.immersiveweapons.iron_arrow": "Iron Arrow",
+	"item.immersiveweapons.diamond_arrow": "Diamond Arrow",
+	"item.immersiveweapons.gold_arrow": "Gold Arrow",
+	"item.immersiveweapons.stone_arrow": "Stone Arrow",
+	"item.immersiveweapons.wood_arrow": "Wood Arrow",
+	"item.immersiveweapons.netherite_arrow": "Netherite Arrow",
 	
 	"block.immersiveweapons.molten_ore": "Molten Ore",
 	"block.immersiveweapons.molten_block": "Molten Block",

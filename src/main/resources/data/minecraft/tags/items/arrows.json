@@ -1,6 +1,12 @@
 { 
 	"replace": false,
 	"values": [ 
-		"immersiveweapons:copper_arrow"
+		"immersiveweapons:copper_arrow",
+		"immersiveweapons:iron_arrow",
+		"immersiveweapons:diamond_arrow",
+		"immersiveweapons:gold_arrow",
+		"immersiveweapons:stone_arrow",
+		"immersiveweapons:wood_arrow",
+		"immersiveweapons:netherite_arrow"
 	]
 }

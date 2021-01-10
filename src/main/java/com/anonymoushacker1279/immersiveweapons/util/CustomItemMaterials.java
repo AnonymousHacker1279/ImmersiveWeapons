@@ -2,6 +2,8 @@ package com.anonymoushacker1279.immersiveweapons.util;
 
 import java.util.function.Supplier;
 
+import com.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
+
 import net.minecraft.item.IItemTier;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.LazyValue;

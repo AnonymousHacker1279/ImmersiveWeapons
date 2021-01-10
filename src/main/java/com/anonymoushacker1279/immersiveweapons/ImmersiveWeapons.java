@@ -6,10 +6,10 @@ import java.util.Map;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import com.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
+import com.anonymoushacker1279.immersiveweapons.init.DispenserBehaviorRegistry;
+import com.anonymoushacker1279.immersiveweapons.init.OreGeneratorHandler;
 import com.anonymoushacker1279.immersiveweapons.util.AddAttributesAfterSetup;
-import com.anonymoushacker1279.immersiveweapons.util.DeferredRegistryHandler;
-import com.anonymoushacker1279.immersiveweapons.util.DispenserBehaviorRegistry;
-import com.anonymoushacker1279.immersiveweapons.util.OreGeneratorHandler;
 
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;

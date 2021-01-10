@@ -2,6 +2,8 @@ package com.anonymoushacker1279.immersiveweapons.util;
 
 import java.util.function.Supplier;
 
+import com.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
+
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.IArmorMaterial;
 import net.minecraft.item.crafting.Ingredient;

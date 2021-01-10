@@ -5,7 +5,7 @@ import java.util.List;
 import com.anonymoushacker1279.immersiveweapons.Config;
 import com.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import com.anonymoushacker1279.immersiveweapons.client.ClientModEventSubscriber;
-import com.anonymoushacker1279.immersiveweapons.util.DeferredRegistryHandler;
+import com.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;

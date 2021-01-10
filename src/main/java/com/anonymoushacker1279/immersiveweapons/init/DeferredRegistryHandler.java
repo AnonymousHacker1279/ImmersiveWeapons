@@ -1,11 +1,23 @@
-package com.anonymoushacker1279.immersiveweapons.util;
+package com.anonymoushacker1279.immersiveweapons.init;
 
 import com.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import com.anonymoushacker1279.immersiveweapons.block.BasicOrientableBlock;
 import com.anonymoushacker1279.immersiveweapons.block.BlockItemBase;
 import com.anonymoushacker1279.immersiveweapons.entity.projectile.CustomArrowEntity.CopperArrowEntity;
+import com.anonymoushacker1279.immersiveweapons.entity.projectile.CustomArrowEntity.DiamondArrowEntity;
+import com.anonymoushacker1279.immersiveweapons.entity.projectile.CustomArrowEntity.GoldArrowEntity;
+import com.anonymoushacker1279.immersiveweapons.entity.projectile.CustomArrowEntity.IronArrowEntity;
+import com.anonymoushacker1279.immersiveweapons.entity.projectile.CustomArrowEntity.NetheriteArrowEntity;
+import com.anonymoushacker1279.immersiveweapons.entity.projectile.CustomArrowEntity.StoneArrowEntity;
+import com.anonymoushacker1279.immersiveweapons.entity.projectile.CustomArrowEntity.WoodArrowEntity;
 import com.anonymoushacker1279.immersiveweapons.items.CopperArmorItem;
 import com.anonymoushacker1279.immersiveweapons.items.CustomArrows.CopperArrowItem;
+import com.anonymoushacker1279.immersiveweapons.items.CustomArrows.DiamondArrowItem;
+import com.anonymoushacker1279.immersiveweapons.items.CustomArrows.GoldArrowItem;
+import com.anonymoushacker1279.immersiveweapons.items.CustomArrows.IronArrowItem;
+import com.anonymoushacker1279.immersiveweapons.items.CustomArrows.NetheriteArrowItem;
+import com.anonymoushacker1279.immersiveweapons.items.CustomArrows.StoneArrowItem;
+import com.anonymoushacker1279.immersiveweapons.items.CustomArrows.WoodArrowItem;
 import com.anonymoushacker1279.immersiveweapons.items.ElectricBlade;
 import com.anonymoushacker1279.immersiveweapons.items.MoltenArmorItem;
 import com.anonymoushacker1279.immersiveweapons.items.MoltenItem.MoltenAxe;
@@ -21,6 +33,8 @@ import com.anonymoushacker1279.immersiveweapons.items.PikeItem.NetheritePikeItem
 import com.anonymoushacker1279.immersiveweapons.items.PikeItem.StonePikeItem;
 import com.anonymoushacker1279.immersiveweapons.items.PikeItem.WoodPikeItem;
 import com.anonymoushacker1279.immersiveweapons.items.TeslaArmorItem;
+import com.anonymoushacker1279.immersiveweapons.util.CustomArmorMaterials;
+import com.anonymoushacker1279.immersiveweapons.util.CustomItemMaterials;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.OreBlock;
@@ -78,22 +92,22 @@ public class DeferredRegistryHandler {
 	public static final RegistryObject<Item> ELECTRIC_BLADE = ITEMS.register("electric_blade", ElectricBlade::new);
 	public static final RegistryObject<Item> IRON_PIKE = ITEMS.register("iron_pike", () -> new IronPikeItem((new Item.Properties()).maxDamage(250).group(ImmersiveWeapons.TAB), 6.0d, -2.6d));
 	public static final RegistryObject<Item> DIAMOND_PIKE = ITEMS.register("diamond_pike", () -> new DiamondPikeItem((new Item.Properties()).maxDamage(1561).group(ImmersiveWeapons.TAB), 7.0d, -2.6d));
-	public static final RegistryObject<Item> NETHERITE_PIKE = ITEMS.register("netherite_pike", () -> new NetheritePikeItem((new Item.Properties()).maxDamage(2031).group(ImmersiveWeapons.TAB), 8.0d, -2.6d));
+	public static final RegistryObject<Item> NETHERITE_PIKE = ITEMS.register("netherite_pike", () -> new NetheritePikeItem((new Item.Properties()).maxDamage(2031).group(ImmersiveWeapons.TAB).isImmuneToFire(), 8.0d, -2.6d));
 	public static final RegistryObject<Item> STONE_PIKE = ITEMS.register("stone_pike", () -> new StonePikeItem((new Item.Properties()).maxDamage(131).group(ImmersiveWeapons.TAB), 5.0d, -2.6d));
 	public static final RegistryObject<Item> WOOD_PIKE = ITEMS.register("wood_pike", () -> new WoodPikeItem((new Item.Properties()).maxDamage(59).group(ImmersiveWeapons.TAB), 4.0d, -2.6d));
 	public static final RegistryObject<Item> GOLD_PIKE = ITEMS.register("gold_pike", () -> new GoldPikeItem((new Item.Properties()).maxDamage(32).group(ImmersiveWeapons.TAB), 4.0d, -2.6d));
 
 	// Items
 	
-	public static final RegistryObject<Item> MOLTEN_INGOT = ITEMS.register("molten_ingot", () -> new Item(new Item.Properties().group(ImmersiveWeapons.TAB)));
-	public static final RegistryObject<Item> MOLTEN_SHARD = ITEMS.register("molten_shard", () -> new Item(new Item.Properties().group(ImmersiveWeapons.TAB)));
+	public static final RegistryObject<Item> MOLTEN_INGOT = ITEMS.register("molten_ingot", () -> new Item(new Item.Properties().group(ImmersiveWeapons.TAB).isImmuneToFire()));
+	public static final RegistryObject<Item> MOLTEN_SHARD = ITEMS.register("molten_shard", () -> new Item(new Item.Properties().group(ImmersiveWeapons.TAB).isImmuneToFire()));
 	public static final RegistryObject<Item> OBSIDIAN_SHARD = ITEMS.register("obsidian_shard", () -> new Item(new Item.Properties().group(ImmersiveWeapons.TAB)));
 	public static final RegistryObject<Item> OBSIDIAN_ROD = ITEMS.register("obsidian_rod", () -> new Item(new Item.Properties().group(ImmersiveWeapons.TAB)));
 	public static final RegistryObject<Item> ELECTRIC_INGOT = ITEMS.register("electric_ingot", () -> new Item(new Item.Properties().group(ImmersiveWeapons.TAB)));
 	public static final RegistryObject<Item> COPPER_INGOT = ITEMS.register("copper_ingot", () -> new Item(new Item.Properties().group(ImmersiveWeapons.TAB)));
 	public static final RegistryObject<Item> CONDUCTIVE_ALLOY = ITEMS.register("conductive_alloy", () -> new Item(new Item.Properties().group(ImmersiveWeapons.TAB)));
 	public static final RegistryObject<Item> TESLA_INGOT = ITEMS.register("tesla_ingot", () -> new Item(new Item.Properties().group(ImmersiveWeapons.TAB)));
-	public static final RegistryObject<Item> MOLTEN_PLATE = ITEMS.register("molten_plate", () -> new Item(new Item.Properties().group(ImmersiveWeapons.TAB)));
+	public static final RegistryObject<Item> MOLTEN_PLATE = ITEMS.register("molten_plate", () -> new Item(new Item.Properties().group(ImmersiveWeapons.TAB).isImmuneToFire()));
 	public static final RegistryObject<Item> WOOD_TOOL_ROD = ITEMS.register("wood_tool_rod", () -> new Item(new Item.Properties().group(ImmersiveWeapons.TAB)));
 	public static final RegistryObject<Item> COPPER_PIKE_HEAD = ITEMS.register("copper_pike_head", () -> new Item(new Item.Properties().group(ImmersiveWeapons.TAB)));
 	public static final RegistryObject<Item> COPPER_NUGGET = ITEMS.register("copper_nugget", () -> new Item(new Item.Properties().group(ImmersiveWeapons.TAB)));
@@ -107,7 +121,13 @@ public class DeferredRegistryHandler {
 	public static final RegistryObject<Item> WOOD_PIKE_HEAD = ITEMS.register("wood_pike_head", () -> new Item(new Item.Properties().group(ImmersiveWeapons.TAB)));
 	public static final RegistryObject<Item> WOOD_SHARD = ITEMS.register("wood_shard", () -> new Item(new Item.Properties().group(ImmersiveWeapons.TAB)));
 	public static final RegistryObject<Item> GOLD_PIKE_HEAD = ITEMS.register("gold_pike_head", () -> new Item(new Item.Properties().group(ImmersiveWeapons.TAB)));
-	
+	public static final RegistryObject<Item> IRON_ARROW = ITEMS.register("iron_arrow", () -> new IronArrowItem(new Item.Properties().group(ImmersiveWeapons.TAB), 2.35d));
+	public static final RegistryObject<Item> DIAMOND_ARROW = ITEMS.register("diamond_arrow", () -> new DiamondArrowItem(new Item.Properties().group(ImmersiveWeapons.TAB), 3.00d));
+	public static final RegistryObject<Item> GOLD_ARROW = ITEMS.register("gold_arrow", () -> new GoldArrowItem(new Item.Properties().group(ImmersiveWeapons.TAB), 2.10d));
+	public static final RegistryObject<Item> STONE_ARROW = ITEMS.register("stone_arrow", () -> new StoneArrowItem(new Item.Properties().group(ImmersiveWeapons.TAB), 1.85d));
+	public static final RegistryObject<Item> WOOD_ARROW = ITEMS.register("wood_arrow", () -> new WoodArrowItem(new Item.Properties().group(ImmersiveWeapons.TAB), 1.65d));
+	public static final RegistryObject<Item> NETHERITE_ARROW = ITEMS.register("netherite_arrow", () -> new NetheriteArrowItem(new Item.Properties().group(ImmersiveWeapons.TAB).isImmuneToFire(), 5.75d));
+
 	// Armor
 	
 	public static final RegistryObject<Item> MOLTEN_HELMET = ITEMS.register("molten_helmet", () -> new MoltenArmorItem(CustomArmorMaterials.MOLTEN, EquipmentSlotType.HEAD, 1));
@@ -143,7 +163,13 @@ public class DeferredRegistryHandler {
 	// Entities
 	
 	public static final RegistryObject<EntityType<CopperArrowEntity>> COPPER_ARROW_ENTITY = ENTITY_TYPES.register("copper_arrow", () -> EntityType.Builder.<CopperArrowEntity>create(CopperArrowEntity::new, EntityClassification.MISC).size(0.5f, 0.5f).build(new ResourceLocation(ImmersiveWeapons.MOD_ID, "copper_arrow").toString()));
-	
+	public static final RegistryObject<EntityType<IronArrowEntity>> IRON_ARROW_ENTITY = ENTITY_TYPES.register("iron_arrow", () -> EntityType.Builder.<IronArrowEntity>create(IronArrowEntity::new, EntityClassification.MISC).size(0.5f, 0.5f).build(new ResourceLocation(ImmersiveWeapons.MOD_ID, "iron_arrow").toString()));
+	public static final RegistryObject<EntityType<DiamondArrowEntity>> DIAMOND_ARROW_ENTITY = ENTITY_TYPES.register("diamond_arrow", () -> EntityType.Builder.<DiamondArrowEntity>create(DiamondArrowEntity::new, EntityClassification.MISC).size(0.5f, 0.5f).build(new ResourceLocation(ImmersiveWeapons.MOD_ID, "diamond_arrow").toString()));
+	public static final RegistryObject<EntityType<GoldArrowEntity>> GOLD_ARROW_ENTITY = ENTITY_TYPES.register("gold_arrow", () -> EntityType.Builder.<GoldArrowEntity>create(GoldArrowEntity::new, EntityClassification.MISC).size(0.5f, 0.5f).build(new ResourceLocation(ImmersiveWeapons.MOD_ID, "gold_arrow").toString()));
+	public static final RegistryObject<EntityType<StoneArrowEntity>> STONE_ARROW_ENTITY = ENTITY_TYPES.register("stone_arrow", () -> EntityType.Builder.<StoneArrowEntity>create(StoneArrowEntity::new, EntityClassification.MISC).size(0.5f, 0.5f).build(new ResourceLocation(ImmersiveWeapons.MOD_ID, "stone_arrow").toString()));
+	public static final RegistryObject<EntityType<WoodArrowEntity>> WOOD_ARROW_ENTITY = ENTITY_TYPES.register("wood_arrow", () -> EntityType.Builder.<WoodArrowEntity>create(WoodArrowEntity::new, EntityClassification.MISC).size(0.5f, 0.5f).build(new ResourceLocation(ImmersiveWeapons.MOD_ID, "wood_arrow").toString()));
+	public static final RegistryObject<EntityType<NetheriteArrowEntity>> NETHERITE_ARROW_ENTITY = ENTITY_TYPES.register("netherite_arrow", () -> EntityType.Builder.<NetheriteArrowEntity>create(NetheriteArrowEntity::new, EntityClassification.MISC).size(0.5f, 0.5f).build(new ResourceLocation(ImmersiveWeapons.MOD_ID, "netherite_arrow").toString()));
+
 	// Sounds
 	
 	public static final RegistryObject<SoundEvent> TESLA_ARMOR_EFFECT = SOUND_EVENTS.register("tesla_armor_effect", () -> new SoundEvent(new ResourceLocation(ImmersiveWeapons.MOD_ID, "tesla_armor_effect")));
