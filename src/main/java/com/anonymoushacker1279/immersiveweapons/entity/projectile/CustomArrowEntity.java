@@ -192,9 +192,7 @@ public class CustomArrowEntity {
 	
 	public static class WoodArrowEntity extends AbstractArrowEntity {
 		private final Item referenceItem;
-		private int ticksInGround;
-
-	    @SuppressWarnings("unchecked")
+		@SuppressWarnings("unchecked")
 	    public WoodArrowEntity(EntityType<?> type, World world) {
 	        super((EntityType<? extends AbstractArrowEntity>) type, world);
 	        this.referenceItem = DeferredRegistryHandler.WOOD_ARROW.get();
@@ -223,15 +221,12 @@ public class CustomArrowEntity {
 		@Override
 		public void shoot(double x, double y, double z, float velocity, float inaccuracy) {
 			super.shoot(x, y, z, velocity, (inaccuracy + getRandomNumber(5.8f, 7.2f)));
-		    this.ticksInGround = 0;
 		}
 	}
 	
 	public static class NetheriteArrowEntity extends AbstractArrowEntity {
 		private final Item referenceItem;
-		private int ticksInGround;
-
-	    @SuppressWarnings("unchecked")
+		@SuppressWarnings("unchecked")
 	    public NetheriteArrowEntity(EntityType<?> type, World world) {
 	        super((EntityType<? extends AbstractArrowEntity>) type, world);
 	        this.referenceItem = DeferredRegistryHandler.NETHERITE_ARROW.get();
@@ -277,9 +272,9 @@ public class CustomArrowEntity {
 		      this.inGround = false;
 		      Vector3d vector3d = this.getMotion();
 		      this.setMotion(vector3d.mul(this.rand.nextFloat() * 0.2F, this.rand.nextFloat() * 0.2F, this.rand.nextFloat() * 0.2F));
-		      this.ticksInGround = 0;
 		}
 		
+		@SuppressWarnings("deprecation")
 		@Override
 		public void tick() {
 		      super.tick();
@@ -385,10 +380,8 @@ public class CustomArrowEntity {
 		         this.rotationPitch = func_234614_e_(this.prevRotationPitch, this.rotationPitch);
 		         this.rotationYaw = func_234614_e_(this.prevRotationYaw, this.rotationYaw);
 		         float f2 = 0.99F;
-		         float f3 = 0.05F;
 		         if (this.isInWater()) {
 		            for(int j = 0; j < 4; ++j) {
-		               float f4 = 0.25F;
 		               this.world.addParticle(ParticleTypes.BUBBLE, d5 - d3 * 0.25D, d1 - d4 * 0.25D, d2 - d0 * 0.25D, d3, d4, d0);
 		            }
 

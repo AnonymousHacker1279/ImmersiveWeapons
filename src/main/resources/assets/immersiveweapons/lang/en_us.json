@@ -1,6 +1,6 @@
 {
 	"item.immersiveweapons.molten_sword": "Molten Sword",
-	"item.immersiveweapons.electric_blade": "Tesla Blade",
+	"item.immersiveweapons.tesla_sword": "Tesla Sword",
 	"item.immersiveweapons.molten_ingot": "Molten Ingot",
 	"item.immersiveweapons.molten_shard": "Molten Shard",
 	"item.immersiveweapons.obsidian_shard": "Obsidian Shard",
@@ -71,5 +71,5 @@
 	"key.categories.immersiveweapons": "Immersive Weapons",
 	"immersiveweapons.key.toggleArmorEffect": "Toggle Armor Effect",
 	
-	"itemGroup.immersiveweaponsTab": "Immersive Weapons"
+	"itemGroup.ImmersiveWeaponsTab": "Immersive Weapons"
 }

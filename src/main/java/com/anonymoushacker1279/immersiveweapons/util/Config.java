@@ -1,7 +1,8 @@
-package com.anonymoushacker1279.immersiveweapons;
+package com.anonymoushacker1279.immersiveweapons.util;
 
 import java.nio.file.Path;
 
+import com.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import com.electronwill.nightconfig.core.file.CommentedFileConfig;
 import com.electronwill.nightconfig.core.io.WritingMode;
 

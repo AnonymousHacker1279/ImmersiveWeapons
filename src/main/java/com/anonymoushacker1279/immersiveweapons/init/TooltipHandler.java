@@ -21,7 +21,7 @@ public class TooltipHandler {
 		if (stack.getItem() == DeferredRegistryHandler.MOLTEN_SWORD.get()) {
 			event.getToolTip().add(new TranslationTextComponent("Kill it with fire").mergeStyle(TextFormatting.DARK_RED, TextFormatting.ITALIC));
 		}
-		if (stack.getItem() == DeferredRegistryHandler.ELECTRIC_BLADE.get()) {
+		if (stack.getItem() == DeferredRegistryHandler.TESLA_SWORD.get()) {
 			event.getToolTip().add(new TranslationTextComponent("Provides quite a shocking experience").mergeStyle(TextFormatting.AQUA, TextFormatting.ITALIC));
 		}
 		

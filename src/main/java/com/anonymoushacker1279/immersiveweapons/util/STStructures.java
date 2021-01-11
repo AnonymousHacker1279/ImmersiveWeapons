@@ -1,7 +1,8 @@
-package com.anonymoushacker1279.immersiveweapons;
+package com.anonymoushacker1279.immersiveweapons.util;
 
 import java.util.function.Supplier;
 
+import com.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import com.anonymoushacker1279.immersiveweapons.world.structures.AbandonedFactory;
 import com.anonymoushacker1279.immersiveweapons.world.structures.AbandonedFactoryPieces;
 import com.google.common.collect.ImmutableList;

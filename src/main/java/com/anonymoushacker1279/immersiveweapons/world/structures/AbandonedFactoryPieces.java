@@ -5,7 +5,7 @@ import java.util.Map;
 import java.util.Random;
 
 import com.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
-import com.anonymoushacker1279.immersiveweapons.STStructures;
+import com.anonymoushacker1279.immersiveweapons.util.STStructures;
 import com.google.common.collect.ImmutableMap;
 
 import net.minecraft.nbt.CompoundNBT;

@@ -10,9 +10,10 @@ import com.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
 import com.anonymoushacker1279.immersiveweapons.init.DispenserBehaviorRegistry;
 import com.anonymoushacker1279.immersiveweapons.init.OreGeneratorHandler;
 import com.anonymoushacker1279.immersiveweapons.util.AddAttributesAfterSetup;
+import com.anonymoushacker1279.immersiveweapons.util.Config;
+import com.anonymoushacker1279.immersiveweapons.util.STConfiguredStructures;
+import com.anonymoushacker1279.immersiveweapons.util.STStructures;
 
-import net.minecraft.item.ItemGroup;
-import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
@@ -103,7 +104,8 @@ public class ImmersiveWeapons
     	};
     }
     
-    public void addDimensionalSpacing(final WorldEvent.Load event) {
+    @SuppressWarnings("resource")
+	public void addDimensionalSpacing(final WorldEvent.Load event) {
         if(event.getWorld() instanceof ServerWorld){
             ServerWorld serverWorld = (ServerWorld) event.getWorld();
 
@@ -127,12 +129,4 @@ public class ImmersiveWeapons
         registry.register(entry);
         return entry;
     }
-
-    
-    public static final ItemGroup TAB = new ItemGroup("immersiveweaponsTab") {
-    	@Override
-    	public ItemStack createIcon() {
-    		return new ItemStack(DeferredRegistryHandler.MOLTEN_SWORD.get());
-    	}
-    };
 }

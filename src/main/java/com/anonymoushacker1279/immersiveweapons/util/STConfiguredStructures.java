@@ -1,4 +1,6 @@
-package com.anonymoushacker1279.immersiveweapons;
+package com.anonymoushacker1279.immersiveweapons.util;
+
+import com.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.registry.Registry;
