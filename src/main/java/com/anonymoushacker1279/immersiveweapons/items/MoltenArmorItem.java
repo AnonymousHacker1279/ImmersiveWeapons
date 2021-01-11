@@ -20,7 +20,7 @@ public class MoltenArmorItem extends ArmorItem{
 	private boolean isLeggings = false;
 	
 	public MoltenArmorItem(IArmorMaterial material, EquipmentSlotType slot, int type) {
-		super(material, slot, (new Item.Properties().group(ImmersiveWeapons.TAB).isImmuneToFire()));
+		super(material, slot, (new Item.Properties().group(DeferredRegistryHandler.ITEM_GROUP).isImmuneToFire()));
 		if (type == 2) {
 			isLeggings = true;
 		}

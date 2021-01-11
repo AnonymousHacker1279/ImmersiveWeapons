@@ -1,5 +1,6 @@
-package com.anonymoushacker1279.immersiveweapons;
+package com.anonymoushacker1279.immersiveweapons.util;
 
+import com.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import com.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
 import com.anonymoushacker1279.immersiveweapons.items.CustomArrowItem;
 

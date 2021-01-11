@@ -1,6 +1,7 @@
 package com.anonymoushacker1279.immersiveweapons.items;
 
 import com.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
+import com.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.inventory.EquipmentSlotType;
@@ -14,7 +15,7 @@ public class CopperArmorItem extends ArmorItem{
 	private boolean isLeggings = false;
 	
 	public CopperArmorItem(IArmorMaterial material, EquipmentSlotType slot, int type) {
-		super(material, slot, (new Item.Properties().group(ImmersiveWeapons.TAB)));
+		super(material, slot, (new Item.Properties().group(DeferredRegistryHandler.ITEM_GROUP)));
 		if (type == 2) {
 			isLeggings = true;
 		}

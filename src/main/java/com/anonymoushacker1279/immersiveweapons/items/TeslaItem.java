@@ -1,6 +1,6 @@
 package com.anonymoushacker1279.immersiveweapons.items;
 
-import com.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
+import com.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
 
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.Item;
@@ -14,7 +14,7 @@ public class TeslaItem {
 
 	public static class TeslaSword extends SwordItem {
 		public TeslaSword() {
-			super(ItemTier.DIAMOND, 3, -2.4f, new Item.Properties().group(ImmersiveWeapons.TAB));
+			super(ItemTier.DIAMOND, 3, -2.4f, new Item.Properties().group(DeferredRegistryHandler.ITEM_GROUP));
 			
 		}
 		

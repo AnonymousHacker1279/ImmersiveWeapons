@@ -1,6 +1,6 @@
 package com.anonymoushacker1279.immersiveweapons.items;
 
-import com.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
+import com.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
 
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.AxeItem;
@@ -16,7 +16,7 @@ public class MoltenItem {
 
 	public static class MoltenSword extends SwordItem {
 		public MoltenSword(IItemTier tier, int attackDamageIn, float attackSpeedIn) {
-			super(tier, attackDamageIn, attackSpeedIn, new Item.Properties().group(ImmersiveWeapons.TAB).isImmuneToFire());
+			super(tier, attackDamageIn, attackSpeedIn, new Item.Properties().group(DeferredRegistryHandler.ITEM_GROUP).isImmuneToFire());
 		}
 		
 		@Override
@@ -30,7 +30,7 @@ public class MoltenItem {
 	public static class MoltenAxe extends AxeItem {
 
 		public MoltenAxe(IItemTier tier, int attackDamageIn, float attackSpeedIn) {
-			super(tier, attackDamageIn, attackSpeedIn, new Item.Properties().group(ImmersiveWeapons.TAB).isImmuneToFire());
+			super(tier, attackDamageIn, attackSpeedIn, new Item.Properties().group(DeferredRegistryHandler.ITEM_GROUP).isImmuneToFire());
 		}
 		
 		@Override
@@ -44,7 +44,7 @@ public class MoltenItem {
 	public static class MoltenPickaxe extends PickaxeItem {
 
 		public MoltenPickaxe(IItemTier tier, int attackDamageIn, float attackSpeedIn) {
-			super(tier, attackDamageIn, attackSpeedIn, new Item.Properties().group(ImmersiveWeapons.TAB).isImmuneToFire());
+			super(tier, attackDamageIn, attackSpeedIn, new Item.Properties().group(DeferredRegistryHandler.ITEM_GROUP).isImmuneToFire());
 		}
 		
 		@Override
@@ -58,7 +58,7 @@ public class MoltenItem {
 	public static class MoltenShovel extends ShovelItem {
 
 		public MoltenShovel(IItemTier tier, int attackDamageIn, float attackSpeedIn) {
-			super(tier, attackDamageIn, attackSpeedIn, new Item.Properties().group(ImmersiveWeapons.TAB).isImmuneToFire());
+			super(tier, attackDamageIn, attackSpeedIn, new Item.Properties().group(DeferredRegistryHandler.ITEM_GROUP).isImmuneToFire());
 		}
 		
 		@Override
@@ -72,7 +72,7 @@ public class MoltenItem {
 	public static class MoltenHoe extends HoeItem {
 
 		public MoltenHoe(IItemTier tier, int attackDamageIn, float attackSpeedIn) {
-			super(tier, attackDamageIn, attackSpeedIn, new Item.Properties().group(ImmersiveWeapons.TAB).isImmuneToFire());
+			super(tier, attackDamageIn, attackSpeedIn, new Item.Properties().group(DeferredRegistryHandler.ITEM_GROUP).isImmuneToFire());
 		}
 		
 		@Override
