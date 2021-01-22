@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern":
+  [
+    " y ",
+    "y y",
+    " yx"
+  ],
+  "key":
+  {
+    "x":
+    {
+    	"item":"immersiveweapons:blank_blueprint"
+    },
+    "y":
+    {
+    	"tag":"forge:nuggets/metal"
+    }
+  },
+  "result":
+  {
+    "item": "immersiveweapons:small_parts_blueprint",
+    "count": 1
+  }
+}

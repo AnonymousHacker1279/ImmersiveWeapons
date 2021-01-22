@@ -1,0 +1,12 @@
+{
+  "parent": "minecraft:block/cube",
+  "textures": {
+    "particle": "immersiveweapons:block/small_parts_table_front",
+    "north": "immersiveweapons:block/small_parts_table_front",
+    "south": "immersiveweapons:block/small_parts_table_front",
+    "east": "immersiveweapons:block/small_parts_table_side",
+    "west": "immersiveweapons:block/small_parts_table_side",
+    "up": "immersiveweapons:block/small_parts_table_top",
+    "down": "immersiveweapons:block/small_parts_table_bottom"
+  }
+}

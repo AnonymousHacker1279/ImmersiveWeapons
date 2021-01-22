@@ -10,11 +10,11 @@
   {
   "x":
     {
-    	"item":"minecraft:iron_ingot"
+    	"tag":"forge:ingots/iron"
     },
     "y":
     {
-    	"item":"minecraft:iron_nugget"
+    	"tag":"forge:nuggets/iron"
     }
   },
   "result":

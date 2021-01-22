@@ -28,5 +28,65 @@
         "stream": true
       }
     ]
+  },
+  "flintlock_pistol_fire": {
+    "category": "neutral",
+    "subtitle": "immersiveweapons.subtitle.item.gun.flintlock_fire",
+    "sounds": [
+      {
+        "name": "immersiveweapons:flintlock_pistol_fire",
+        "stream": false
+      }
+    ]
+  },
+  "bullet_whizz": {
+    "category": "neutral",
+    "subtitle": "immersiveweapons.subtitle.item.gun.bullet_whizz",
+    "sounds": [
+      {
+        "name": "immersiveweapons:bullet/bullet_whizz_1",
+        "stream": false
+      },
+      {
+        "name": "immersiveweapons:bullet/bullet_whizz_2",
+        "stream": false
+      },
+      {
+        "name": "immersiveweapons:bullet/bullet_whizz_3",
+        "stream": false
+      },
+      {
+        "name": "immersiveweapons:bullet/bullet_whizz_4",
+        "stream": false
+      },
+      {
+        "name": "immersiveweapons:bullet/bullet_whizz_5",
+        "stream": false
+      },
+      {
+        "name": "immersiveweapons:bullet/bullet_whizz_6",
+        "stream": false
+      }
+    ]
+  },
+  "flintlock_pistol_misfire": {
+    "category": "neutral",
+    "subtitle": "immersiveweapons.subtitle.item.gun.flintlock_misfire",
+    "sounds": [
+      {
+        "name": "immersiveweapons:gunpowder_explosion",
+        "stream": false
+      }
+    ]
+  },
+  "small_parts_table_used": {
+    "category": "neutral",
+    "subtitle": "immersiveweapons.subtitle.block.small_parts_table_used",
+    "sounds": [
+      {
+        "name": "immersiveweapons:small_parts_table_used",
+        "stream": false
+      }
+    ]
   }
 }

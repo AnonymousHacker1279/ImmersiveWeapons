@@ -40,7 +40,7 @@ public class TooltipHandler {
 		}
 		if (stack.getItem() == DeferredRegistryHandler.STONE_ARROW.get()) {
 			event.getToolTip().add(new TranslationTextComponent("15% less powerful than normal arrows").mergeStyle(TextFormatting.DARK_GRAY, TextFormatting.ITALIC));
-			event.getToolTip().add(new TranslationTextComponent("Kind of dull and weighs at least a pound").mergeStyle(TextFormatting.DARK_GRAY, TextFormatting.ITALIC));
+			event.getToolTip().add(new TranslationTextComponent("Kind of dull and weighs at least a pound.").mergeStyle(TextFormatting.DARK_GRAY, TextFormatting.ITALIC));
 		}
 		if (stack.getItem() == DeferredRegistryHandler.WOOD_ARROW.get()) {
 			event.getToolTip().add(new TranslationTextComponent("35% less powerful than normal arrows").mergeStyle(TextFormatting.DARK_GRAY, TextFormatting.ITALIC));
@@ -52,6 +52,38 @@ public class TooltipHandler {
 			event.getToolTip().add(new TranslationTextComponent("Extremely sharp, powerful, and accurate.").mergeStyle(TextFormatting.DARK_GRAY, TextFormatting.ITALIC));
 			event.getToolTip().add(new TranslationTextComponent("How can you even afford to shoot these?").mergeStyle(TextFormatting.DARK_GRAY, TextFormatting.ITALIC));
 		}
+		
+		// Bullets
+		if (stack.getItem() == DeferredRegistryHandler.WOOD_MUSKET_BALL.get()) {
+			event.getToolTip().add(new TranslationTextComponent("Very inaccurate, and likely to cause a misfire.").mergeStyle(TextFormatting.DARK_GRAY, TextFormatting.ITALIC));
+			event.getToolTip().add(new TranslationTextComponent("Why would anyone make wooden musket balls anyway?").mergeStyle(TextFormatting.DARK_GRAY, TextFormatting.ITALIC));
+		}
+		if (stack.getItem() == DeferredRegistryHandler.STONE_MUSKET_BALL.get()) {
+			event.getToolTip().add(new TranslationTextComponent("A very heavy musket ball, and not too accurate.").mergeStyle(TextFormatting.DARK_GRAY, TextFormatting.ITALIC));
+			event.getToolTip().add(new TranslationTextComponent("Less likely to cause a misfire than wooden ones.").mergeStyle(TextFormatting.DARK_GRAY, TextFormatting.ITALIC));
+		}
+		if (stack.getItem() == DeferredRegistryHandler.GOLD_MUSKET_BALL.get()) {
+			event.getToolTip().add(new TranslationTextComponent("Fancier than stone musket balls, but not much better.").mergeStyle(TextFormatting.DARK_GRAY, TextFormatting.ITALIC));
+			event.getToolTip().add(new TranslationTextComponent("At least it won't misfire.").mergeStyle(TextFormatting.DARK_GRAY, TextFormatting.ITALIC));
+			event.getToolTip().add(new TranslationTextComponent("Look at me! I have money to throw away!").mergeStyle(TextFormatting.DARK_GRAY, TextFormatting.ITALIC));
+		}
+		if (stack.getItem() == DeferredRegistryHandler.COPPER_MUSKET_BALL.get()) {
+			event.getToolTip().add(new TranslationTextComponent("A well constructed musket ball, made from copper.").mergeStyle(TextFormatting.DARK_GRAY, TextFormatting.ITALIC));
+		}
+		if (stack.getItem() == DeferredRegistryHandler.IRON_MUSKET_BALL.get()) {
+			event.getToolTip().add(new TranslationTextComponent("A hard hitting musket ball, made from iron.").mergeStyle(TextFormatting.DARK_GRAY, TextFormatting.ITALIC));
+		}
+		if (stack.getItem() == DeferredRegistryHandler.DIAMOND_MUSKET_BALL.get()) {
+			event.getToolTip().add(new TranslationTextComponent("A very sharp and powerful musket ball.").mergeStyle(TextFormatting.DARK_GRAY, TextFormatting.ITALIC));
+			event.getToolTip().add(new TranslationTextComponent("You're practically throwing away diamonds.").mergeStyle(TextFormatting.DARK_GRAY, TextFormatting.ITALIC));
+			event.getToolTip().add(new TranslationTextComponent("Pierces through a single target.").mergeStyle(TextFormatting.DARK_GRAY, TextFormatting.ITALIC));
+		}
+		if (stack.getItem() == DeferredRegistryHandler.NETHERITE_MUSKET_BALL.get()) {
+			event.getToolTip().add(new TranslationTextComponent("An extremely powerful and skillfully crafted musket ball.").mergeStyle(TextFormatting.DARK_GRAY, TextFormatting.ITALIC));
+			event.getToolTip().add(new TranslationTextComponent("For when you need to kill a chicken from the other side of a mountain.").mergeStyle(TextFormatting.DARK_GRAY, TextFormatting.ITALIC));
+			event.getToolTip().add(new TranslationTextComponent("Pierces through two targets.").mergeStyle(TextFormatting.DARK_GRAY, TextFormatting.ITALIC));
+		}
+		
 		
 		// Pikes
 		if (stack.getItem() == DeferredRegistryHandler.WOOD_PIKE.get() || stack.getItem() == DeferredRegistryHandler.STONE_PIKE.get() || stack.getItem() == DeferredRegistryHandler.GOLD_PIKE.get() || stack.getItem() == DeferredRegistryHandler.COPPER_PIKE.get() || stack.getItem() == DeferredRegistryHandler.IRON_PIKE.get() || stack.getItem() == DeferredRegistryHandler.DIAMOND_PIKE.get() || stack.getItem() == DeferredRegistryHandler.NETHERITE_PIKE.get()) {

@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern":
+  [
+    " x ",
+    "xyx",
+    "   "
+  ],
+  "key":
+  {
+    "x":
+    {
+    	"item":"immersiveweapons:wood_shard"
+    },
+    "y":
+    {
+    	"tag":"forge:gunpowder"
+    }
+  },
+  "result":
+  {
+    "item": "immersiveweapons:wood_musket_ball",
+    "count": 8
+  }
+}

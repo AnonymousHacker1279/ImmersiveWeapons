@@ -2,6 +2,15 @@ package com.anonymoushacker1279.immersiveweapons.init;
 
 import com.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import com.anonymoushacker1279.immersiveweapons.block.BasicOrientableBlock;
+import com.anonymoushacker1279.immersiveweapons.block.SmallPartsTable;
+import com.anonymoushacker1279.immersiveweapons.container.SmallPartsContainer;
+import com.anonymoushacker1279.immersiveweapons.entity.projectile.BulletEntity.CopperBulletEntity;
+import com.anonymoushacker1279.immersiveweapons.entity.projectile.BulletEntity.DiamondBulletEntity;
+import com.anonymoushacker1279.immersiveweapons.entity.projectile.BulletEntity.GoldBulletEntity;
+import com.anonymoushacker1279.immersiveweapons.entity.projectile.BulletEntity.IronBulletEntity;
+import com.anonymoushacker1279.immersiveweapons.entity.projectile.BulletEntity.NetheriteBulletEntity;
+import com.anonymoushacker1279.immersiveweapons.entity.projectile.BulletEntity.StoneBulletEntity;
+import com.anonymoushacker1279.immersiveweapons.entity.projectile.BulletEntity.WoodBulletEntity;
 import com.anonymoushacker1279.immersiveweapons.entity.projectile.CustomArrowEntity.CopperArrowEntity;
 import com.anonymoushacker1279.immersiveweapons.entity.projectile.CustomArrowEntity.DiamondArrowEntity;
 import com.anonymoushacker1279.immersiveweapons.entity.projectile.CustomArrowEntity.GoldArrowEntity;
@@ -9,29 +18,39 @@ import com.anonymoushacker1279.immersiveweapons.entity.projectile.CustomArrowEnt
 import com.anonymoushacker1279.immersiveweapons.entity.projectile.CustomArrowEntity.NetheriteArrowEntity;
 import com.anonymoushacker1279.immersiveweapons.entity.projectile.CustomArrowEntity.StoneArrowEntity;
 import com.anonymoushacker1279.immersiveweapons.entity.projectile.CustomArrowEntity.WoodArrowEntity;
-import com.anonymoushacker1279.immersiveweapons.items.CopperArmorItem;
-import com.anonymoushacker1279.immersiveweapons.items.CustomArrows.CopperArrowItem;
-import com.anonymoushacker1279.immersiveweapons.items.CustomArrows.DiamondArrowItem;
-import com.anonymoushacker1279.immersiveweapons.items.CustomArrows.GoldArrowItem;
-import com.anonymoushacker1279.immersiveweapons.items.CustomArrows.IronArrowItem;
-import com.anonymoushacker1279.immersiveweapons.items.CustomArrows.NetheriteArrowItem;
-import com.anonymoushacker1279.immersiveweapons.items.CustomArrows.StoneArrowItem;
-import com.anonymoushacker1279.immersiveweapons.items.CustomArrows.WoodArrowItem;
-import com.anonymoushacker1279.immersiveweapons.items.MoltenArmorItem;
-import com.anonymoushacker1279.immersiveweapons.items.MoltenItem.MoltenAxe;
-import com.anonymoushacker1279.immersiveweapons.items.MoltenItem.MoltenHoe;
-import com.anonymoushacker1279.immersiveweapons.items.MoltenItem.MoltenPickaxe;
-import com.anonymoushacker1279.immersiveweapons.items.MoltenItem.MoltenShovel;
-import com.anonymoushacker1279.immersiveweapons.items.MoltenItem.MoltenSword;
-import com.anonymoushacker1279.immersiveweapons.items.PikeItem.CopperPikeItem;
-import com.anonymoushacker1279.immersiveweapons.items.PikeItem.DiamondPikeItem;
-import com.anonymoushacker1279.immersiveweapons.items.PikeItem.GoldPikeItem;
-import com.anonymoushacker1279.immersiveweapons.items.PikeItem.IronPikeItem;
-import com.anonymoushacker1279.immersiveweapons.items.PikeItem.NetheritePikeItem;
-import com.anonymoushacker1279.immersiveweapons.items.PikeItem.StonePikeItem;
-import com.anonymoushacker1279.immersiveweapons.items.PikeItem.WoodPikeItem;
-import com.anonymoushacker1279.immersiveweapons.items.TeslaArmorItem;
-import com.anonymoushacker1279.immersiveweapons.items.TeslaItem.TeslaSword;
+import com.anonymoushacker1279.immersiveweapons.item.BlueprintItem;
+import com.anonymoushacker1279.immersiveweapons.item.Bullets.CopperBulletItem;
+import com.anonymoushacker1279.immersiveweapons.item.Bullets.DiamondBulletItem;
+import com.anonymoushacker1279.immersiveweapons.item.Bullets.GoldBulletItem;
+import com.anonymoushacker1279.immersiveweapons.item.Bullets.IronBulletItem;
+import com.anonymoushacker1279.immersiveweapons.item.Bullets.NetheriteBulletItem;
+import com.anonymoushacker1279.immersiveweapons.item.Bullets.StoneBulletItem;
+import com.anonymoushacker1279.immersiveweapons.item.Bullets.WoodBulletItem;
+import com.anonymoushacker1279.immersiveweapons.item.CopperArmorItem;
+import com.anonymoushacker1279.immersiveweapons.item.CustomArrows.CopperArrowItem;
+import com.anonymoushacker1279.immersiveweapons.item.CustomArrows.DiamondArrowItem;
+import com.anonymoushacker1279.immersiveweapons.item.CustomArrows.GoldArrowItem;
+import com.anonymoushacker1279.immersiveweapons.item.CustomArrows.IronArrowItem;
+import com.anonymoushacker1279.immersiveweapons.item.CustomArrows.NetheriteArrowItem;
+import com.anonymoushacker1279.immersiveweapons.item.CustomArrows.StoneArrowItem;
+import com.anonymoushacker1279.immersiveweapons.item.CustomArrows.WoodArrowItem;
+import com.anonymoushacker1279.immersiveweapons.item.MoltenArmorItem;
+import com.anonymoushacker1279.immersiveweapons.item.MoltenItem.MoltenAxe;
+import com.anonymoushacker1279.immersiveweapons.item.MoltenItem.MoltenHoe;
+import com.anonymoushacker1279.immersiveweapons.item.MoltenItem.MoltenPickaxe;
+import com.anonymoushacker1279.immersiveweapons.item.MoltenItem.MoltenShovel;
+import com.anonymoushacker1279.immersiveweapons.item.MoltenItem.MoltenSword;
+import com.anonymoushacker1279.immersiveweapons.item.PikeItem.CopperPikeItem;
+import com.anonymoushacker1279.immersiveweapons.item.PikeItem.DiamondPikeItem;
+import com.anonymoushacker1279.immersiveweapons.item.PikeItem.GoldPikeItem;
+import com.anonymoushacker1279.immersiveweapons.item.PikeItem.IronPikeItem;
+import com.anonymoushacker1279.immersiveweapons.item.PikeItem.NetheritePikeItem;
+import com.anonymoushacker1279.immersiveweapons.item.PikeItem.StonePikeItem;
+import com.anonymoushacker1279.immersiveweapons.item.PikeItem.WoodPikeItem;
+import com.anonymoushacker1279.immersiveweapons.item.SimplePistolItem;
+import com.anonymoushacker1279.immersiveweapons.item.TeslaArmorItem;
+import com.anonymoushacker1279.immersiveweapons.item.TeslaItem.TeslaSword;
+import com.anonymoushacker1279.immersiveweapons.item.crafting.SmallPartsRecipe;
 import com.anonymoushacker1279.immersiveweapons.util.CreativeTabSorter;
 import com.anonymoushacker1279.immersiveweapons.util.CustomArmorMaterials;
 import com.anonymoushacker1279.immersiveweapons.util.CustomItemMaterials;
@@ -43,6 +62,7 @@ import net.minecraft.block.material.Material;
 import net.minecraft.entity.EntityClassification;
 import net.minecraft.entity.EntityType;
 import net.minecraft.inventory.EquipmentSlotType;
+import net.minecraft.inventory.container.ContainerType;
 import net.minecraft.item.AxeItem;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.HoeItem;
@@ -51,9 +71,11 @@ import net.minecraft.item.ItemGroup;
 import net.minecraft.item.PickaxeItem;
 import net.minecraft.item.ShovelItem;
 import net.minecraft.item.SwordItem;
+import net.minecraft.item.crafting.IRecipeSerializer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraftforge.common.ToolType;
+import net.minecraftforge.common.extensions.IForgeContainerType;
 import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.DeferredRegister;
@@ -69,12 +91,18 @@ public class DeferredRegistryHandler {
 	public static final DeferredRegister<EntityType<?>> ENTITY_TYPES = DeferredRegister.create(ForgeRegistries.ENTITIES, ImmersiveWeapons.MOD_ID);
 	// Sound Register
 	public static final DeferredRegister<SoundEvent> SOUND_EVENTS = DeferredRegister.create(ForgeRegistries.SOUND_EVENTS, ImmersiveWeapons.MOD_ID);
-	
+	// Container Register
+	public static final DeferredRegister<ContainerType<?>> CONTAINER_TYPES = DeferredRegister.create(ForgeRegistries.CONTAINERS, ImmersiveWeapons.MOD_ID);
+	// Recipe Register
+	public static final DeferredRegister<IRecipeSerializer<?>> RECIPE_SERIALIZER = DeferredRegister.create(ForgeRegistries.RECIPE_SERIALIZERS, ImmersiveWeapons.MOD_ID);
+
 	public static void init() {
 		ITEMS.register(FMLJavaModLoadingContext.get().getModEventBus());
 		BLOCKS.register(FMLJavaModLoadingContext.get().getModEventBus());
 		ENTITY_TYPES.register(FMLJavaModLoadingContext.get().getModEventBus());
 		SOUND_EVENTS.register(FMLJavaModLoadingContext.get().getModEventBus());
+		CONTAINER_TYPES.register(FMLJavaModLoadingContext.get().getModEventBus());
+		RECIPE_SERIALIZER.register(FMLJavaModLoadingContext.get().getModEventBus());
 	}
 	
 	public static final ItemGroup ITEM_GROUP = new CreativeTabSorter("ImmersiveWeaponsTab");
@@ -103,6 +131,8 @@ public class DeferredRegistryHandler {
 	public static final RegistryObject<Item> DIAMOND_PIKE = ITEMS.register("diamond_pike", () -> new DiamondPikeItem((new Item.Properties()).maxDamage(1561).group(ITEM_GROUP), 7.0d, -2.6d));
 	public static final RegistryObject<Item> NETHERITE_PIKE = ITEMS.register("netherite_pike", () -> new NetheritePikeItem((new Item.Properties()).maxDamage(2031).group(ITEM_GROUP).isImmuneToFire(), 8.0d, -2.6d));
 
+	public static final RegistryObject<Item> FLINTLOCK_PISTOL = ITEMS.register("flintlock_pistol", () -> new SimplePistolItem(new Item.Properties().group(ITEM_GROUP).maxDamage(499)));
+	
 	// Items
 
 	public static final RegistryObject<Item> WOOD_SHARD = ITEMS.register("wood_shard", () -> new Item(new Item.Properties().group(ITEM_GROUP)));
@@ -140,6 +170,20 @@ public class DeferredRegistryHandler {
 	public static final RegistryObject<Item> DIAMOND_ARROW = ITEMS.register("diamond_arrow", () -> new DiamondArrowItem(new Item.Properties().group(ITEM_GROUP), 3.00d));
 	public static final RegistryObject<Item> NETHERITE_ARROW = ITEMS.register("netherite_arrow", () -> new NetheriteArrowItem(new Item.Properties().group(ITEM_GROUP).isImmuneToFire(), 5.75d));
 
+	public static final RegistryObject<Item> EMPTY_BULLET_CASING = ITEMS.register("empty_bullet_casing", () -> new Item(new Item.Properties().group(ITEM_GROUP)));
+	
+	public static final RegistryObject<Item> WOOD_MUSKET_BALL = ITEMS.register("wood_musket_ball", () -> new WoodBulletItem(new Item.Properties().group(ITEM_GROUP), 2.0d));
+	public static final RegistryObject<Item> STONE_MUSKET_BALL = ITEMS.register("stone_musket_ball", () -> new StoneBulletItem(new Item.Properties().group(ITEM_GROUP), 2.20d));
+	public static final RegistryObject<Item> GOLD_MUSKET_BALL = ITEMS.register("gold_musket_ball", () -> new GoldBulletItem(new Item.Properties().group(ITEM_GROUP), 2.30d));
+	public static final RegistryObject<Item> COPPER_MUSKET_BALL = ITEMS.register("copper_musket_ball", () -> new CopperBulletItem(new Item.Properties().group(ITEM_GROUP), 2.40d));
+	public static final RegistryObject<Item> IRON_MUSKET_BALL = ITEMS.register("iron_musket_ball", () -> new IronBulletItem(new Item.Properties().group(ITEM_GROUP), 2.65d));
+	public static final RegistryObject<Item> DIAMOND_MUSKET_BALL = ITEMS.register("diamond_musket_ball", () -> new DiamondBulletItem(new Item.Properties().group(ITEM_GROUP), 3.35d));
+	public static final RegistryObject<Item> NETHERITE_MUSKET_BALL = ITEMS.register("netherite_musket_ball", () -> new NetheriteBulletItem(new Item.Properties().group(ITEM_GROUP), 6.50d));
+
+	public static final RegistryObject<Item> BLANK_BLUEPRINT = ITEMS.register("blank_blueprint", () -> new Item(new Item.Properties().group(ITEM_GROUP)));
+	public static final RegistryObject<Item> SMALL_PARTS_BLUEPRINT = ITEMS.register("small_parts_blueprint", () -> new BlueprintItem(new Item.Properties().group(ITEM_GROUP).maxStackSize(1)));
+	
+	public static final RegistryObject<Item> SMALL_PARTS_IRON = ITEMS.register("small_parts_iron", () -> new Item(new Item.Properties().group(ITEM_GROUP)));
 	// Armor
 	
 	public static final RegistryObject<Item> MOLTEN_HELMET = ITEMS.register("molten_helmet", () -> new MoltenArmorItem(CustomArmorMaterials.MOLTEN, EquipmentSlotType.HEAD, 1));
@@ -167,6 +211,8 @@ public class DeferredRegistryHandler {
 	public static final RegistryObject<Block> MOLTEN_BLOCK = BLOCKS.register("molten_block", () -> new Block(Block.Properties.create(Material.IRON).hardnessAndResistance(13.0f, 15.0f).sound(SoundType.METAL).setRequiresTool().harvestLevel(3).harvestTool(ToolType.PICKAXE)));
 	public static final RegistryObject<Block> TESLA_BLOCK = BLOCKS.register("tesla_block", () -> new BasicOrientableBlock(Block.Properties.create(Material.IRON).hardnessAndResistance(12.2f, 12.4f).sound(SoundType.METAL).setRequiresTool().harvestLevel(3).harvestTool(ToolType.PICKAXE)));
 	
+	public static final RegistryObject<Block> SMALL_PARTS_TABLE = BLOCKS.register("small_parts_table", () -> new SmallPartsTable(Block.Properties.create(Material.WOOD).hardnessAndResistance(2.5f).sound(SoundType.WOOD).harvestLevel(0).harvestTool(ToolType.AXE)));
+	
 	// Block Items
 	
 	public static final RegistryObject<BlockItem> MOLTEN_ORE_ITEM = ITEMS.register("molten_ore", () -> new BlockItem(MOLTEN_ORE.get(), new Item.Properties().group(ITEM_GROUP).isImmuneToFire()));
@@ -174,6 +220,7 @@ public class DeferredRegistryHandler {
 	public static final RegistryObject<BlockItem> ELECTRIC_ORE_ITEM = ITEMS.register("electric_ore", () -> new BlockItem(ELECTRIC_ORE.get(), new Item.Properties().group(ITEM_GROUP)));
 	public static final RegistryObject<BlockItem> COPPER_ORE_ITEM = ITEMS.register("copper_ore", () -> new BlockItem(COPPER_ORE.get(), new Item.Properties().group(ITEM_GROUP)));
 	public static final RegistryObject<BlockItem> TESLA_BLOCK_ITEM = ITEMS.register("tesla_block", () -> new BlockItem(TESLA_BLOCK.get(), new Item.Properties().group(ITEM_GROUP)));
+	public static final RegistryObject<BlockItem> SMALL_PARTS_TABLE_ITEM = ITEMS.register("small_parts_table", () -> new BlockItem(SMALL_PARTS_TABLE.get(), new Item.Properties().group(ITEM_GROUP)));
 	
 	// Entities
 	
@@ -185,10 +232,31 @@ public class DeferredRegistryHandler {
 	public static final RegistryObject<EntityType<DiamondArrowEntity>> DIAMOND_ARROW_ENTITY = ENTITY_TYPES.register("diamond_arrow", () -> EntityType.Builder.<DiamondArrowEntity>create(DiamondArrowEntity::new, EntityClassification.MISC).size(0.5f, 0.5f).build(new ResourceLocation(ImmersiveWeapons.MOD_ID, "diamond_arrow").toString()));
 	public static final RegistryObject<EntityType<NetheriteArrowEntity>> NETHERITE_ARROW_ENTITY = ENTITY_TYPES.register("netherite_arrow", () -> EntityType.Builder.<NetheriteArrowEntity>create(NetheriteArrowEntity::new, EntityClassification.MISC).size(0.5f, 0.5f).build(new ResourceLocation(ImmersiveWeapons.MOD_ID, "netherite_arrow").toString()));
 
+	public static final RegistryObject<EntityType<WoodBulletEntity>> WOOD_BULLET_ENTITY = ENTITY_TYPES.register("wood_musket_ball", () -> EntityType.Builder.<WoodBulletEntity>create(WoodBulletEntity::new, EntityClassification.MISC).size(0.5f, 0.5f).build(new ResourceLocation(ImmersiveWeapons.MOD_ID, "wood_musket_ball").toString()));
+	public static final RegistryObject<EntityType<StoneBulletEntity>> STONE_BULLET_ENTITY = ENTITY_TYPES.register("stone_musket_ball", () -> EntityType.Builder.<StoneBulletEntity>create(StoneBulletEntity::new, EntityClassification.MISC).size(0.5f, 0.5f).build(new ResourceLocation(ImmersiveWeapons.MOD_ID, "stone_musket_ball").toString()));
+	public static final RegistryObject<EntityType<CopperBulletEntity>> COPPER_BULLET_ENTITY = ENTITY_TYPES.register("copper_musket_ball", () -> EntityType.Builder.<CopperBulletEntity>create(CopperBulletEntity::new, EntityClassification.MISC).size(0.5f, 0.5f).build(new ResourceLocation(ImmersiveWeapons.MOD_ID, "copper_musket_ball").toString()));
+	public static final RegistryObject<EntityType<IronBulletEntity>> IRON_BULLET_ENTITY = ENTITY_TYPES.register("iron_musket_ball", () -> EntityType.Builder.<IronBulletEntity>create(IronBulletEntity::new, EntityClassification.MISC).size(0.5f, 0.5f).build(new ResourceLocation(ImmersiveWeapons.MOD_ID, "iron_musket_ball").toString()));
+	public static final RegistryObject<EntityType<GoldBulletEntity>> GOLD_BULLET_ENTITY = ENTITY_TYPES.register("gold_musket_ball", () -> EntityType.Builder.<GoldBulletEntity>create(GoldBulletEntity::new, EntityClassification.MISC).size(0.5f, 0.5f).build(new ResourceLocation(ImmersiveWeapons.MOD_ID, "gold_musket_ball").toString()));
+	public static final RegistryObject<EntityType<DiamondBulletEntity>> DIAMOND_BULLET_ENTITY = ENTITY_TYPES.register("diamond_musket_ball", () -> EntityType.Builder.<DiamondBulletEntity>create(DiamondBulletEntity::new, EntityClassification.MISC).size(0.5f, 0.5f).build(new ResourceLocation(ImmersiveWeapons.MOD_ID, "diamond_musket_ball").toString()));
+	public static final RegistryObject<EntityType<NetheriteBulletEntity>> NETHERITE_BULLET_ENTITY = ENTITY_TYPES.register("netherite_musket_ball", () -> EntityType.Builder.<NetheriteBulletEntity>create(NetheriteBulletEntity::new, EntityClassification.MISC).size(0.5f, 0.5f).build(new ResourceLocation(ImmersiveWeapons.MOD_ID, "netherite_musket_ball").toString()));
+
 	// Sounds
 	
 	public static final RegistryObject<SoundEvent> TESLA_ARMOR_EFFECT = SOUND_EVENTS.register("tesla_armor_effect", () -> new SoundEvent(new ResourceLocation(ImmersiveWeapons.MOD_ID, "tesla_armor_effect")));
-	public static final RegistryObject<SoundEvent> TESLA_ARMOR_POWER_DOWN = SOUND_EVENTS.register("tesla_armor_power_dodwn", () -> new SoundEvent(new ResourceLocation(ImmersiveWeapons.MOD_ID, "tesla_armor_power_down")));
+	public static final RegistryObject<SoundEvent> TESLA_ARMOR_POWER_DOWN = SOUND_EVENTS.register("tesla_armor_power_down", () -> new SoundEvent(new ResourceLocation(ImmersiveWeapons.MOD_ID, "tesla_armor_power_down")));
 	public static final RegistryObject<SoundEvent> TESLA_ARMOR_POWER_UP = SOUND_EVENTS.register("tesla_armor_power_up", () -> new SoundEvent(new ResourceLocation(ImmersiveWeapons.MOD_ID, "tesla_armor_power_up")));
+	public static final RegistryObject<SoundEvent> FLINTLOCK_PISTOL_FIRE = SOUND_EVENTS.register("flintlock_pistol_fire", () -> new SoundEvent(new ResourceLocation(ImmersiveWeapons.MOD_ID, "flintlock_pistol_fire")));
+	public static final RegistryObject<SoundEvent> BULLET_WHIZZ = SOUND_EVENTS.register("bullet_whizz", () -> new SoundEvent(new ResourceLocation(ImmersiveWeapons.MOD_ID, "bullet_whizz")));
+	public static final RegistryObject<SoundEvent> FLINTLOCK_PISTOL_MISFIRE = SOUND_EVENTS.register("flintlock_pistol_misfire", () -> new SoundEvent(new ResourceLocation(ImmersiveWeapons.MOD_ID, "flintlock_pistol_misfire")));
+	public static final RegistryObject<SoundEvent> SMALL_PARTS_TABLE_USED = SOUND_EVENTS.register("small_parts_table_used", () -> new SoundEvent(new ResourceLocation(ImmersiveWeapons.MOD_ID, "small_parts_table_used")));
+
+	// Containers
+	
+	public static final RegistryObject<ContainerType<SmallPartsContainer>> SMALL_PARTS_TABLE_CONTAINER = CONTAINER_TYPES.register("small_parts_table", () -> IForgeContainerType.create((id, inv, data) -> {
+		return new SmallPartsContainer(id, inv);
+	}));
+	
+	// Recipes
+	public static final RegistryObject<IRecipeSerializer<?>> SMALL_PARTS_RECIPE_SERIALIZER = RECIPE_SERIALIZER.register("small_parts", () -> new SmallPartsRecipe.Serializer());
 	
 }

@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern":
+  [
+    "xxx",
+    "xyx",
+    "xxx"
+  ],
+  "key":
+  {
+    "x":
+    {
+    	"item":"immersiveweapons:diamond_musket_ball"
+    },
+    "y":
+    {
+    	"tag":"forge:ingots/netherite"
+    }
+  },
+  "result":
+  {
+    "item": "immersiveweapons:netherite_musket_ball",
+    "count": 8
+  }
+}
