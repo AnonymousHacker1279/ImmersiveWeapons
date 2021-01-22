@@ -1,0 +1,6 @@
+{
+	"parent": "item/handheld",
+	"textures": {
+		"layer0": "immersiveweapons:item/gold_musket_ball"
+	}
+}

@@ -29,12 +29,12 @@ displayURL="https://github.com/AnonymousHacker1279/ImmersiveWeapons-Mod" #option
 # A file name (in the root of the mod JAR) containing a logo for display
 #logoFile="examplemod.png" #optional
 # A text field displayed in the mod UI
-credits="Written by AnonymousHacker1279 and visually designed by Jonny-fox and gamingwarrior68 with pain and suffering" #optional
+credits="Written by AnonymousHacker1279 and visually designed with the help of Jonny-fox and gamingwarrior68 with pain and suffering" #optional
 # A text field displayed in the mod UI
 authors="AnonymousHacker1279" #optional
 # The description text for the mod (multi line!) (#mandatory)
 description='''
-A (currently) small vanilla+ weapons mod.
+A vanilla+ weapons mod.
 '''
 # A dependency - use the . to indicate dependency for a specific modid. Dependencies are optional.
 [[dependencies.immersiveweapons]] #optional

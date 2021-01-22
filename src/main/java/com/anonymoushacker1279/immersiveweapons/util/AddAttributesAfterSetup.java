@@ -1,13 +1,13 @@
 package com.anonymoushacker1279.immersiveweapons.util;
 
-import com.anonymoushacker1279.immersiveweapons.items.Pike;
-import com.anonymoushacker1279.immersiveweapons.items.PikeItem.CopperPikeItem;
-import com.anonymoushacker1279.immersiveweapons.items.PikeItem.DiamondPikeItem;
-import com.anonymoushacker1279.immersiveweapons.items.PikeItem.GoldPikeItem;
-import com.anonymoushacker1279.immersiveweapons.items.PikeItem.IronPikeItem;
-import com.anonymoushacker1279.immersiveweapons.items.PikeItem.NetheritePikeItem;
-import com.anonymoushacker1279.immersiveweapons.items.PikeItem.StonePikeItem;
-import com.anonymoushacker1279.immersiveweapons.items.PikeItem.WoodPikeItem;
+import com.anonymoushacker1279.immersiveweapons.item.Pike;
+import com.anonymoushacker1279.immersiveweapons.item.PikeItem.CopperPikeItem;
+import com.anonymoushacker1279.immersiveweapons.item.PikeItem.DiamondPikeItem;
+import com.anonymoushacker1279.immersiveweapons.item.PikeItem.GoldPikeItem;
+import com.anonymoushacker1279.immersiveweapons.item.PikeItem.IronPikeItem;
+import com.anonymoushacker1279.immersiveweapons.item.PikeItem.NetheritePikeItem;
+import com.anonymoushacker1279.immersiveweapons.item.PikeItem.StonePikeItem;
+import com.anonymoushacker1279.immersiveweapons.item.PikeItem.WoodPikeItem;
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.ImmutableMultimap.Builder;
 
@@ -17,7 +17,7 @@ import net.minecraftforge.common.ForgeMod;
 
 public class AddAttributesAfterSetup {
 	
-	public static boolean hasCompletedClientSetup = false;;
+	public static boolean hasCompletedClientSetup = false;
 	
 	public static void init() {
 		

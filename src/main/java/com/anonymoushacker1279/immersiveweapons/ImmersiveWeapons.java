@@ -38,7 +38,7 @@ import net.minecraftforge.registries.IForgeRegistry;
 import net.minecraftforge.registries.IForgeRegistryEntry;
 
 // The value here should match an entry in the META-INF/mods.toml file
-@Mod("immersiveweapons")
+@Mod(ImmersiveWeapons.MOD_ID)
 public class ImmersiveWeapons
 {
 	
@@ -74,10 +74,9 @@ public class ImmersiveWeapons
             STConfiguredStructures.registerConfiguredStructures();
             STStructures.init();
         });
-    	
     	AddAttributesAfterSetup.init();
 	}
-
+	
     public void biomeModification(final BiomeLoadingEvent event) {
         // Add structure to all biomes
 

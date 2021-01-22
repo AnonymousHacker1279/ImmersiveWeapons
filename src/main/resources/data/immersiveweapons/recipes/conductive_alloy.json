@@ -10,11 +10,11 @@
   {
     "x":
     {
-    	"tag":"immersiveweapons:copper_ingots"
+    	"tag":"forge:ingots/copper"
     },
     "y":
     {
-    	"item":"minecraft:gold_ingot"
+    	"tag":"forge:ingots/gold"
     }
   },
   "result":
