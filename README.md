@@ -1,8 +1,9 @@
 # ImmersiveWeapons Mod for Minecraft 1.16.5
 ## A vanilla+ weapons mod for Minecraft 1.16.5/1.16.4/1.15.2
-Active development is focused on the 1.16.5 branch. Please only use old releases if necessary. Support will not be provided for old releases. 
+Active development is focused on the 1.16.x branch. Please only use old releases if necessary. Support will not be provided for old releases. 
 
 The 1.16.5 build was compiled with Forge 36.0.1.
+#### Note: The 1.16.5 build will work on 1.16.4 as well.
 
 The 1.16.4 build was compiled with Forge 35.1.36.
 
