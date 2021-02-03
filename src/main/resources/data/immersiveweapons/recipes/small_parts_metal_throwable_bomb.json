@@ -1,0 +1,12 @@
+{
+  "type": "immersiveweapons:small_parts",
+  "material": {
+    "tag": "forge:ingots/iron"
+  },
+  "blueprint": {
+    "item": "immersiveweapons:small_parts_metal_throwable_bomb_blueprint"
+  },
+  "result": {
+    "item": "immersiveweapons:small_parts_metal_throwable_bomb"
+  }
+}

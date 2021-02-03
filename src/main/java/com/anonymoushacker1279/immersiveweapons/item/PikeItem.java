@@ -1,5 +1,6 @@
 package com.anonymoushacker1279.immersiveweapons.item;
 
+import com.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
 import com.anonymoushacker1279.immersiveweapons.util.AddAttributesAfterSetup;
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.ImmutableMultimap.Builder;
@@ -10,6 +11,10 @@ import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
+import net.minecraft.item.crafting.Ingredient;
+import net.minecraft.tags.ItemTags;
 
 public class PikeItem {
 	
@@ -23,7 +28,7 @@ public class PikeItem {
 			builder.put(Attributes.ATTACK_DAMAGE, new AttributeModifier(ATTACK_DAMAGE_MODIFIER, "Tool modifier", damageIn, AttributeModifier.Operation.ADDITION));
 			builder.put(Attributes.ATTACK_SPEED, new AttributeModifier(ATTACK_SPEED_MODIFIER, "Tool modifier", attackSpeedIn, AttributeModifier.Operation.ADDITION));
 			woodPikeAttributes = builder.build();
-		 }
+		}
 		
 		private Multimap<Attribute, AttributeModifier> returnValue;
 		
@@ -38,6 +43,15 @@ public class PikeItem {
 			return returnValue;
 		}
 		
+		public Ingredient getRepairMaterial() {
+			return Ingredient.fromTag(ItemTags.PLANKS);
+		}
+		
+		@Override
+		public boolean getIsRepairable(ItemStack toRepair, ItemStack repair) {
+		      return this.getRepairMaterial().test(repair) || super.getIsRepairable(toRepair, repair);
+		}
+		
 	}
 	
 	public static class StonePikeItem extends Pike {
@@ -50,7 +64,7 @@ public class PikeItem {
 			builder.put(Attributes.ATTACK_DAMAGE, new AttributeModifier(ATTACK_DAMAGE_MODIFIER, "Tool modifier", damageIn, AttributeModifier.Operation.ADDITION));
 			builder.put(Attributes.ATTACK_SPEED, new AttributeModifier(ATTACK_SPEED_MODIFIER, "Tool modifier", attackSpeedIn, AttributeModifier.Operation.ADDITION));
 			stonePikeAttributes = builder.build();
-		 }
+		}
 		
 		private Multimap<Attribute, AttributeModifier> returnValue;
 		
@@ -65,6 +79,14 @@ public class PikeItem {
 			return returnValue;
 		}
 		
+		public Ingredient getRepairMaterial() {
+			return Ingredient.fromTag(ItemTags.STONE_TOOL_MATERIALS);
+		}
+		
+		@Override
+		public boolean getIsRepairable(ItemStack toRepair, ItemStack repair) {
+		      return this.getRepairMaterial().test(repair) || super.getIsRepairable(toRepair, repair);
+		}
 	}
 	
 	public static class GoldPikeItem extends Pike {
@@ -77,7 +99,7 @@ public class PikeItem {
 			builder.put(Attributes.ATTACK_DAMAGE, new AttributeModifier(ATTACK_DAMAGE_MODIFIER, "Tool modifier", damageIn, AttributeModifier.Operation.ADDITION));
 			builder.put(Attributes.ATTACK_SPEED, new AttributeModifier(ATTACK_SPEED_MODIFIER, "Tool modifier", attackSpeedIn, AttributeModifier.Operation.ADDITION));
 			goldPikeAttributes = builder.build();
-		 }
+		}
 		
 		private Multimap<Attribute, AttributeModifier> returnValue;
 		
@@ -92,6 +114,14 @@ public class PikeItem {
 			return returnValue;
 		}
 		
+		public Ingredient getRepairMaterial() {
+			return Ingredient.fromItems(Items.GOLD_INGOT);
+		}
+		
+		@Override
+		public boolean getIsRepairable(ItemStack toRepair, ItemStack repair) {
+		      return this.getRepairMaterial().test(repair) || super.getIsRepairable(toRepair, repair);
+		}
 	}
 
 	public static class CopperPikeItem extends Pike {
@@ -104,7 +134,7 @@ public class PikeItem {
 			builder.put(Attributes.ATTACK_DAMAGE, new AttributeModifier(ATTACK_DAMAGE_MODIFIER, "Tool modifier", damageIn, AttributeModifier.Operation.ADDITION));
 			builder.put(Attributes.ATTACK_SPEED, new AttributeModifier(ATTACK_SPEED_MODIFIER, "Tool modifier", attackSpeedIn, AttributeModifier.Operation.ADDITION));
 			copperPikeAttributes = builder.build();
-		 }
+		}
 		
 		private Multimap<Attribute, AttributeModifier> returnValue;
 		
@@ -118,7 +148,15 @@ public class PikeItem {
 			}
 			return returnValue;
 		}
+
+		public Ingredient getRepairMaterial() {
+			return Ingredient.fromItems(DeferredRegistryHandler.COPPER_INGOT.get());
+		}
 		
+		@Override
+		public boolean getIsRepairable(ItemStack toRepair, ItemStack repair) {
+		      return this.getRepairMaterial().test(repair) || super.getIsRepairable(toRepair, repair);
+		}
 	}
 	
 	public static class IronPikeItem extends Pike {
@@ -131,7 +169,7 @@ public class PikeItem {
 			builder.put(Attributes.ATTACK_DAMAGE, new AttributeModifier(ATTACK_DAMAGE_MODIFIER, "Tool modifier", damageIn, AttributeModifier.Operation.ADDITION));
 			builder.put(Attributes.ATTACK_SPEED, new AttributeModifier(ATTACK_SPEED_MODIFIER, "Tool modifier", attackSpeedIn, AttributeModifier.Operation.ADDITION));
 			ironPikeAttributes = builder.build();
-		 }
+		}
 		
 		private Multimap<Attribute, AttributeModifier> returnValue;
 		
@@ -145,7 +183,15 @@ public class PikeItem {
 			}
 			return returnValue;
 		}
+
+		public Ingredient getRepairMaterial() {
+			return Ingredient.fromItems(Items.IRON_INGOT);
+		}
 		
+		@Override
+		public boolean getIsRepairable(ItemStack toRepair, ItemStack repair) {
+		      return this.getRepairMaterial().test(repair) || super.getIsRepairable(toRepair, repair);
+		}
 	}
 	
 	public static class DiamondPikeItem extends Pike {
@@ -158,7 +204,7 @@ public class PikeItem {
 			builder.put(Attributes.ATTACK_DAMAGE, new AttributeModifier(ATTACK_DAMAGE_MODIFIER, "Tool modifier", damageIn, AttributeModifier.Operation.ADDITION));
 			builder.put(Attributes.ATTACK_SPEED, new AttributeModifier(ATTACK_SPEED_MODIFIER, "Tool modifier", attackSpeedIn, AttributeModifier.Operation.ADDITION));
 			diamondPikeAttributes = builder.build();
-		 }
+		}
 		
 		private Multimap<Attribute, AttributeModifier> returnValue;
 		
@@ -172,7 +218,15 @@ public class PikeItem {
 			}
 			return returnValue;
 		}
+
+		public Ingredient getRepairMaterial() {
+			return Ingredient.fromItems(Items.DIAMOND);
+		}
 		
+		@Override
+		public boolean getIsRepairable(ItemStack toRepair, ItemStack repair) {
+		      return this.getRepairMaterial().test(repair) || super.getIsRepairable(toRepair, repair);
+		}
 	}
 	
 	public static class NetheritePikeItem extends Pike {
@@ -185,7 +239,7 @@ public class PikeItem {
 			builder.put(Attributes.ATTACK_DAMAGE, new AttributeModifier(ATTACK_DAMAGE_MODIFIER, "Tool modifier", damageIn, AttributeModifier.Operation.ADDITION));
 			builder.put(Attributes.ATTACK_SPEED, new AttributeModifier(ATTACK_SPEED_MODIFIER, "Tool modifier", attackSpeedIn, AttributeModifier.Operation.ADDITION));
 			netheritePikeAttributes = builder.build();
-		 }
+		}
 		
 		private Multimap<Attribute, AttributeModifier> returnValue;
 		
@@ -199,6 +253,14 @@ public class PikeItem {
 			}
 			return returnValue;
 		}
+
+		public Ingredient getRepairMaterial() {
+			return Ingredient.fromItems(Items.NETHERITE_INGOT);
+		}
 		
+		@Override
+		public boolean getIsRepairable(ItemStack toRepair, ItemStack repair) {
+		      return this.getRepairMaterial().test(repair) || super.getIsRepairable(toRepair, repair);
+		}
 	}
 }

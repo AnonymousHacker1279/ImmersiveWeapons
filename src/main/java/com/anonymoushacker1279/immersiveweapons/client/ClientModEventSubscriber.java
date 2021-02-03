@@ -2,6 +2,7 @@ package com.anonymoushacker1279.immersiveweapons.client;
 
 import com.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import com.anonymoushacker1279.immersiveweapons.client.gui.screen.SmallPartsTableScreen;
+import com.anonymoushacker1279.immersiveweapons.client.particle.SmokeBombParticleFactory;
 import com.anonymoushacker1279.immersiveweapons.client.renderer.entity.BulletRenderer.CopperBulletRenderer;
 import com.anonymoushacker1279.immersiveweapons.client.renderer.entity.BulletRenderer.DiamondBulletRenderer;
 import com.anonymoushacker1279.immersiveweapons.client.renderer.entity.BulletRenderer.GoldBulletRenderer;
@@ -14,14 +15,19 @@ import com.anonymoushacker1279.immersiveweapons.client.renderer.entity.CustomArr
 import com.anonymoushacker1279.immersiveweapons.client.renderer.entity.CustomArrowRenderer.GoldArrowRenderer;
 import com.anonymoushacker1279.immersiveweapons.client.renderer.entity.CustomArrowRenderer.IronArrowRenderer;
 import com.anonymoushacker1279.immersiveweapons.client.renderer.entity.CustomArrowRenderer.NetheriteArrowRenderer;
+import com.anonymoushacker1279.immersiveweapons.client.renderer.entity.CustomArrowRenderer.SmokeBombArrowRenderer;
 import com.anonymoushacker1279.immersiveweapons.client.renderer.entity.CustomArrowRenderer.StoneArrowRenderer;
 import com.anonymoushacker1279.immersiveweapons.client.renderer.entity.CustomArrowRenderer.WoodArrowRenderer;
+import com.anonymoushacker1279.immersiveweapons.client.renderer.entity.ThrowableItemRenderer.MolotovRenderer;
+import com.anonymoushacker1279.immersiveweapons.client.renderer.entity.ThrowableItemRenderer.SmokeBombRenderer;
 import com.anonymoushacker1279.immersiveweapons.container.CustomContainerHolder;
 import com.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScreenManager;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.client.event.ParticleFactoryRegisterEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
@@ -44,7 +50,8 @@ public class ClientModEventSubscriber {
 	    RenderingRegistry.registerEntityRenderingHandler(DeferredRegistryHandler.STONE_ARROW_ENTITY.get(), StoneArrowRenderer::new);
 	    RenderingRegistry.registerEntityRenderingHandler(DeferredRegistryHandler.WOOD_ARROW_ENTITY.get(), WoodArrowRenderer::new);
 	    RenderingRegistry.registerEntityRenderingHandler(DeferredRegistryHandler.NETHERITE_ARROW_ENTITY.get(), NetheriteArrowRenderer::new);
-	    
+	    RenderingRegistry.registerEntityRenderingHandler(DeferredRegistryHandler.SMOKE_BOMB_ARROW_ENTITY.get(), SmokeBombArrowRenderer::new);
+
 	    RenderingRegistry.registerEntityRenderingHandler(DeferredRegistryHandler.COPPER_BULLET_ENTITY.get(), CopperBulletRenderer::new);
 	    RenderingRegistry.registerEntityRenderingHandler(DeferredRegistryHandler.WOOD_BULLET_ENTITY.get(), WoodBulletRenderer::new);
 	    RenderingRegistry.registerEntityRenderingHandler(DeferredRegistryHandler.STONE_BULLET_ENTITY.get(), StoneBulletRenderer::new);
@@ -52,6 +59,17 @@ public class ClientModEventSubscriber {
 	    RenderingRegistry.registerEntityRenderingHandler(DeferredRegistryHandler.GOLD_BULLET_ENTITY.get(), GoldBulletRenderer::new);
 	    RenderingRegistry.registerEntityRenderingHandler(DeferredRegistryHandler.DIAMOND_BULLET_ENTITY.get(), DiamondBulletRenderer::new);
 	    RenderingRegistry.registerEntityRenderingHandler(DeferredRegistryHandler.NETHERITE_BULLET_ENTITY.get(), NetheriteBulletRenderer::new);
+	    
+
+	    RenderingRegistry.registerEntityRenderingHandler(DeferredRegistryHandler.SMOKE_BOMB_ENTITY.get(), new SmokeBombRenderer());
+	    RenderingRegistry.registerEntityRenderingHandler(DeferredRegistryHandler.MOLOTOV_COCKTAIL_ENTITY.get(), new MolotovRenderer());
+	 }
+	 
+	 @SubscribeEvent
+	 public static void onParticleFactoryRegisstration(ParticleFactoryRegisterEvent event) {
+		 Minecraft mc = Minecraft.getInstance();
+		 
+		 mc.particles.registerFactory(DeferredRegistryHandler.SMOKE_BOMB_PARTICLE_TYPE.get(), sprite -> new SmokeBombParticleFactory(sprite));
 	 }
 	 
 	 private static final String CATEGORY = "key.categories." + ImmersiveWeapons.MOD_ID;

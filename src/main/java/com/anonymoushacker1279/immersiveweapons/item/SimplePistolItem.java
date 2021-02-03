@@ -10,7 +10,9 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.AbstractArrowEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.item.UseAction;
+import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.stats.Stats;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
@@ -197,4 +199,13 @@ public class SimplePistolItem extends ShootableBullet implements IVanishable {
 	   public AbstractArrowEntity customArrow(AbstractArrowEntity arrow) {
 	      return arrow;
 	   }
+	   
+	   public Ingredient getRepairMaterial() {
+			return Ingredient.fromItems(Items.IRON_INGOT);
+		}
+		
+		@Override
+		public boolean getIsRepairable(ItemStack toRepair, ItemStack repair) {
+		      return this.getRepairMaterial().test(repair) || super.getIsRepairable(toRepair, repair);
+		}
 }

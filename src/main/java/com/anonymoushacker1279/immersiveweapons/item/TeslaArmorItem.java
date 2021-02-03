@@ -63,9 +63,9 @@ public class TeslaArmorItem extends ArmorItem {
 					for (java.util.Iterator<Entity> iterator = entity.iterator(); iterator.hasNext();) {
 						Entity element = iterator.next();
 							if (element.isLiving()) {
-								((LivingEntity) element).addPotionEffect(new EffectInstance(Effects.WEAKNESS, 100, 1, false, false));
-								((LivingEntity) element).addPotionEffect(new EffectInstance(Effects.SLOWNESS, 100, 1, false, false));
-								((LivingEntity) element).addPotionEffect(new EffectInstance(Effects.NAUSEA, 100, 1, false, false));
+								((LivingEntity) element).addPotionEffect(new EffectInstance(Effects.WEAKNESS, 100, 0, false, false));
+								((LivingEntity) element).addPotionEffect(new EffectInstance(Effects.SLOWNESS, 100, 0, false, false));
+								((LivingEntity) element).addPotionEffect(new EffectInstance(Effects.NAUSEA, 100, 0, false, false));
 		
 								effectNoise(world, player);
 							}

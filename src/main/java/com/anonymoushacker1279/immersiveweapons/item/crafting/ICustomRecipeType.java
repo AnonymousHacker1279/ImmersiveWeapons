@@ -23,6 +23,7 @@ public interface ICustomRecipeType<T extends IRecipe<?>> {
 		});
 	}
 
+	@SuppressWarnings("unchecked")
 	default <C extends IInventory> Optional<T> matches(IRecipe<C> recipe, World worldIn, C inv) {
 		return recipe.matches(inv, worldIn) ? Optional.of((T)recipe) : Optional.empty();
 	}

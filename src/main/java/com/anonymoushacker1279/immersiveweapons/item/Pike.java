@@ -57,7 +57,6 @@ public class Pike extends Item {
 	            entity.sendBreakAnimation(EquipmentSlotType.MAINHAND);
 	         });
 	      }
-
 	      return true;
 	 }
 

@@ -5,10 +5,12 @@ import com.anonymoushacker1279.immersiveweapons.entity.projectile.CustomArrowEnt
 import com.anonymoushacker1279.immersiveweapons.entity.projectile.CustomArrowEntity.GoldArrowEntity;
 import com.anonymoushacker1279.immersiveweapons.entity.projectile.CustomArrowEntity.IronArrowEntity;
 import com.anonymoushacker1279.immersiveweapons.entity.projectile.CustomArrowEntity.NetheriteArrowEntity;
+import com.anonymoushacker1279.immersiveweapons.entity.projectile.CustomArrowEntity.SmokeBombArrowEntity;
 import com.anonymoushacker1279.immersiveweapons.entity.projectile.CustomArrowEntity.StoneArrowEntity;
 import com.anonymoushacker1279.immersiveweapons.entity.projectile.CustomArrowEntity.WoodArrowEntity;
 
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.projectile.AbstractArrowEntity.PickupStatus;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
@@ -115,6 +117,27 @@ public class CustomArrows {
 		public NetheriteArrowEntity createArrow(World worldIn, ItemStack stack, LivingEntity shooter) {
 			NetheriteArrowEntity arrowentity = new NetheriteArrowEntity(shooter, worldIn, ref.get());
 			arrowentity.setDamage(this.damage);
+			return arrowentity;
+		}
+	}
+
+	public static class SmokeBombArrowItem extends CustomArrowItem {
+		
+		private String color = "none";
+		
+		public SmokeBombArrowItem(Properties properties, double damageIn, String color) {
+			super(properties, damageIn);
+			this.damage = damageIn;
+			this.color = color;
+		}
+
+		
+		@Override
+		public SmokeBombArrowEntity createArrow(World worldIn, ItemStack stack, LivingEntity shooter) {
+			SmokeBombArrowEntity arrowentity = new SmokeBombArrowEntity(shooter, worldIn, ref.get());
+			arrowentity.setDamage(this.damage);
+			arrowentity.pickupStatus = PickupStatus.DISALLOWED;
+			SmokeBombArrowEntity.setColor(color);
 			return arrowentity;
 		}
 	}

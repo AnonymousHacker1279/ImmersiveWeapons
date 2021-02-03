@@ -5,8 +5,11 @@ import com.anonymoushacker1279.immersiveweapons.entity.projectile.CustomArrowEnt
 import com.anonymoushacker1279.immersiveweapons.entity.projectile.CustomArrowEntity.GoldArrowEntity;
 import com.anonymoushacker1279.immersiveweapons.entity.projectile.CustomArrowEntity.IronArrowEntity;
 import com.anonymoushacker1279.immersiveweapons.entity.projectile.CustomArrowEntity.NetheriteArrowEntity;
+import com.anonymoushacker1279.immersiveweapons.entity.projectile.CustomArrowEntity.SmokeBombArrowEntity;
 import com.anonymoushacker1279.immersiveweapons.entity.projectile.CustomArrowEntity.StoneArrowEntity;
 import com.anonymoushacker1279.immersiveweapons.entity.projectile.CustomArrowEntity.WoodArrowEntity;
+import com.anonymoushacker1279.immersiveweapons.entity.projectile.MolotovEntity;
+import com.anonymoushacker1279.immersiveweapons.entity.projectile.SmokeBombEntity;
 
 import net.minecraft.block.DispenserBlock;
 import net.minecraft.dispenser.IBlockSource;
@@ -81,6 +84,140 @@ public class DispenserBehaviorRegistry implements IDispenseItemBehavior {
 				arrowentity.pickupStatus = NetheriteArrowEntity.PickupStatus.ALLOWED;
 				arrowentity.setDamage(5.75d);
 				return arrowentity;
+			}
+			
+		});
+		DispenserBlock.registerDispenseBehavior(DeferredRegistryHandler.SMOKE_BOMB.get(), new ProjectileDispenseBehavior() {
+			@Override
+			protected ProjectileEntity getProjectileEntity(World worldIn, IPosition position, ItemStack stackIn) {
+				SmokeBombEntity smokeBombEntity = new SmokeBombEntity(worldIn, position.getX(), position.getY(), position.getZ());
+				smokeBombEntity.addVelocity(5, 5, 5);
+				SmokeBombEntity.setColor("none");
+				return smokeBombEntity;
+			}
+			
+		});
+		DispenserBlock.registerDispenseBehavior(DeferredRegistryHandler.SMOKE_BOMB_RED.get(), new ProjectileDispenseBehavior() {
+			@Override
+			protected ProjectileEntity getProjectileEntity(World worldIn, IPosition position, ItemStack stackIn) {
+				SmokeBombEntity smokeBombEntity = new SmokeBombEntity(worldIn, position.getX(), position.getY(), position.getZ());
+				smokeBombEntity.addVelocity(5, 5, 5);
+				SmokeBombEntity.setColor("red");
+				return smokeBombEntity;
+			}
+			
+		});
+		DispenserBlock.registerDispenseBehavior(DeferredRegistryHandler.SMOKE_BOMB_GREEN.get(), new ProjectileDispenseBehavior() {
+			@Override
+			protected ProjectileEntity getProjectileEntity(World worldIn, IPosition position, ItemStack stackIn) {
+				SmokeBombEntity smokeBombEntity = new SmokeBombEntity(worldIn, position.getX(), position.getY(), position.getZ());
+				smokeBombEntity.addVelocity(5, 5, 5);
+				SmokeBombEntity.setColor("green");
+				return smokeBombEntity;
+			}
+			
+		});
+		DispenserBlock.registerDispenseBehavior(DeferredRegistryHandler.SMOKE_BOMB_BLUE.get(), new ProjectileDispenseBehavior() {
+			@Override
+			protected ProjectileEntity getProjectileEntity(World worldIn, IPosition position, ItemStack stackIn) {
+				SmokeBombEntity smokeBombEntity = new SmokeBombEntity(worldIn, position.getX(), position.getY(), position.getZ());
+				smokeBombEntity.addVelocity(5, 5, 5);
+				SmokeBombEntity.setColor("blue");
+				return smokeBombEntity;
+			}
+			
+		});
+		DispenserBlock.registerDispenseBehavior(DeferredRegistryHandler.SMOKE_BOMB_PURPLE.get(), new ProjectileDispenseBehavior() {
+			@Override
+			protected ProjectileEntity getProjectileEntity(World worldIn, IPosition position, ItemStack stackIn) {
+				SmokeBombEntity smokeBombEntity = new SmokeBombEntity(worldIn, position.getX(), position.getY(), position.getZ());
+				smokeBombEntity.addVelocity(5, 5, 5);
+				SmokeBombEntity.setColor("purple");
+				return smokeBombEntity;
+			}
+			
+		});
+		DispenserBlock.registerDispenseBehavior(DeferredRegistryHandler.SMOKE_BOMB_YELLOW.get(), new ProjectileDispenseBehavior() {
+			@Override
+			protected ProjectileEntity getProjectileEntity(World worldIn, IPosition position, ItemStack stackIn) {
+				SmokeBombEntity smokeBombEntity = new SmokeBombEntity(worldIn, position.getX(), position.getY(), position.getZ());
+				smokeBombEntity.addVelocity(5, 5, 5);
+				SmokeBombEntity.setColor("yellow");
+				return smokeBombEntity;
+			}
+			
+		});
+		DispenserBlock.registerDispenseBehavior(DeferredRegistryHandler.SMOKE_BOMB_ARROW.get(), new ProjectileDispenseBehavior() {
+			@Override
+			protected ProjectileEntity getProjectileEntity(World worldIn, IPosition position, ItemStack stackIn) {
+				SmokeBombArrowEntity smokeBombArrowEntity = new SmokeBombArrowEntity(worldIn, position.getX(), position.getY(), position.getZ());
+				smokeBombArrowEntity.pickupStatus = SmokeBombArrowEntity.PickupStatus.DISALLOWED;
+				smokeBombArrowEntity.addVelocity(5, 5, 5);
+				return smokeBombArrowEntity;
+			}
+			
+		});
+		DispenserBlock.registerDispenseBehavior(DeferredRegistryHandler.SMOKE_BOMB_ARROW_RED.get(), new ProjectileDispenseBehavior() {
+			@Override
+			protected ProjectileEntity getProjectileEntity(World worldIn, IPosition position, ItemStack stackIn) {
+				SmokeBombArrowEntity smokeBombArrowEntity = new SmokeBombArrowEntity(worldIn, position.getX(), position.getY(), position.getZ());
+				smokeBombArrowEntity.pickupStatus = SmokeBombArrowEntity.PickupStatus.DISALLOWED;
+				smokeBombArrowEntity.addVelocity(5, 5, 5);
+				SmokeBombArrowEntity.setColor("red");
+				return smokeBombArrowEntity;
+			}
+			
+		});
+		DispenserBlock.registerDispenseBehavior(DeferredRegistryHandler.SMOKE_BOMB_ARROW_GREEN.get(), new ProjectileDispenseBehavior() {
+			@Override
+			protected ProjectileEntity getProjectileEntity(World worldIn, IPosition position, ItemStack stackIn) {
+				SmokeBombArrowEntity smokeBombArrowEntity = new SmokeBombArrowEntity(worldIn, position.getX(), position.getY(), position.getZ());
+				smokeBombArrowEntity.pickupStatus = SmokeBombArrowEntity.PickupStatus.DISALLOWED;
+				smokeBombArrowEntity.addVelocity(5, 5, 5);
+				SmokeBombArrowEntity.setColor("green");
+				return smokeBombArrowEntity;
+			}
+			
+		});
+		DispenserBlock.registerDispenseBehavior(DeferredRegistryHandler.SMOKE_BOMB_ARROW_BLUE.get(), new ProjectileDispenseBehavior() {
+			@Override
+			protected ProjectileEntity getProjectileEntity(World worldIn, IPosition position, ItemStack stackIn) {
+				SmokeBombArrowEntity smokeBombArrowEntity = new SmokeBombArrowEntity(worldIn, position.getX(), position.getY(), position.getZ());
+				smokeBombArrowEntity.pickupStatus = SmokeBombArrowEntity.PickupStatus.DISALLOWED;
+				smokeBombArrowEntity.addVelocity(5, 5, 5);
+				SmokeBombArrowEntity.setColor("blue");
+				return smokeBombArrowEntity;
+			}
+			
+		});
+		DispenserBlock.registerDispenseBehavior(DeferredRegistryHandler.SMOKE_BOMB_ARROW_PURPLE.get(), new ProjectileDispenseBehavior() {
+			@Override
+			protected ProjectileEntity getProjectileEntity(World worldIn, IPosition position, ItemStack stackIn) {
+				SmokeBombArrowEntity smokeBombArrowEntity = new SmokeBombArrowEntity(worldIn, position.getX(), position.getY(), position.getZ());
+				smokeBombArrowEntity.pickupStatus = SmokeBombArrowEntity.PickupStatus.DISALLOWED;
+				smokeBombArrowEntity.addVelocity(5, 5, 5);
+				SmokeBombArrowEntity.setColor("purple");
+				return smokeBombArrowEntity;
+			}
+			
+		});
+		DispenserBlock.registerDispenseBehavior(DeferredRegistryHandler.SMOKE_BOMB_ARROW_YELLOW.get(), new ProjectileDispenseBehavior() {
+			@Override
+			protected ProjectileEntity getProjectileEntity(World worldIn, IPosition position, ItemStack stackIn) {
+				SmokeBombArrowEntity smokeBombArrowEntity = new SmokeBombArrowEntity(worldIn, position.getX(), position.getY(), position.getZ());
+				smokeBombArrowEntity.pickupStatus = SmokeBombArrowEntity.PickupStatus.DISALLOWED;
+				smokeBombArrowEntity.addVelocity(5, 5, 5);
+				SmokeBombArrowEntity.setColor("yellow");
+				return smokeBombArrowEntity;
+			}
+			
+		});
+		DispenserBlock.registerDispenseBehavior(DeferredRegistryHandler.MOLOTOV_COCKTAIL.get(), new ProjectileDispenseBehavior() {
+			@Override
+			protected ProjectileEntity getProjectileEntity(World worldIn, IPosition position, ItemStack stackIn) {
+				MolotovEntity molotovEntity = new MolotovEntity(worldIn, position.getX(), position.getY(), position.getZ());
+				molotovEntity.addVelocity(5, 5, 5);
+				return molotovEntity;
 			}
 			
 		});

@@ -1,9 +1,9 @@
 {
   "type": "immersiveweapons:small_parts",
-  "base": {
+  "material": {
     "tag": "forge:ingots/iron"
   },
-  "addition": {
+  "blueprint": {
     "item": "immersiveweapons:small_parts_blueprint"
   },
   "result": {

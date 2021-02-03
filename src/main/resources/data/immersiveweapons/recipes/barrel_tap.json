@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern":
+  [
+    "  y",
+    "xxx",
+    "  x"
+  ],
+  "key":
+  {
+    "x":
+    {
+      "tag": "forge:ingots/iron"
+    },
+    "y":
+    {
+      "tag": "forge:nuggets/metal"
+    }
+  },
+  "result":
+  {
+    "item": "immersiveweapons:barrel_tap",
+    "count": 1
+  }
+}
