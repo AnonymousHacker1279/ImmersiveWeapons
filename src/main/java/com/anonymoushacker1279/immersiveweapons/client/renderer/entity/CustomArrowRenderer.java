@@ -6,6 +6,7 @@ import com.anonymoushacker1279.immersiveweapons.entity.projectile.CustomArrowEnt
 import com.anonymoushacker1279.immersiveweapons.entity.projectile.CustomArrowEntity.GoldArrowEntity;
 import com.anonymoushacker1279.immersiveweapons.entity.projectile.CustomArrowEntity.IronArrowEntity;
 import com.anonymoushacker1279.immersiveweapons.entity.projectile.CustomArrowEntity.NetheriteArrowEntity;
+import com.anonymoushacker1279.immersiveweapons.entity.projectile.CustomArrowEntity.SmokeBombArrowEntity;
 import com.anonymoushacker1279.immersiveweapons.entity.projectile.CustomArrowEntity.StoneArrowEntity;
 import com.anonymoushacker1279.immersiveweapons.entity.projectile.CustomArrowEntity.WoodArrowEntity;
 
@@ -89,6 +90,17 @@ public class CustomArrowRenderer {
 		@Override
 		public ResourceLocation getEntityTexture(NetheriteArrowEntity entity) {
 			return new ResourceLocation(ImmersiveWeapons.MOD_ID, "textures/entity/projectiles/netherite_arrow.png");
+		}
+	}
+
+	public static class SmokeBombArrowRenderer extends ArrowRenderer<SmokeBombArrowEntity> {
+		public SmokeBombArrowRenderer(EntityRendererManager renderManagerIn) {
+			super(renderManagerIn);
+		}
+		
+		@Override
+		public ResourceLocation getEntityTexture(SmokeBombArrowEntity entity) {
+			return new ResourceLocation(ImmersiveWeapons.MOD_ID, "textures/entity/projectiles/smoke_bomb_arrow.png");
 		}
 	}
 }

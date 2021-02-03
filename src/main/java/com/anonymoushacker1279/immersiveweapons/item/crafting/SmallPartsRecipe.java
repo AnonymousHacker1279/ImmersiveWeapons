@@ -19,15 +19,15 @@ import net.minecraft.world.World;
 
 public class SmallPartsRecipe implements IRecipe<IInventory> {
 	
-	private final Ingredient base;
-	private final Ingredient addition;
+	private final Ingredient material;
+	private final Ingredient blueprint;
 	private final ItemStack result;
 	private final ResourceLocation recipeId;
 
-	public SmallPartsRecipe(ResourceLocation recipeId, Ingredient base, Ingredient addition, ItemStack result) {
+	public SmallPartsRecipe(ResourceLocation recipeId, Ingredient material, Ingredient blueprint, ItemStack result) {
 		this.recipeId = recipeId;
-		this.base = base;
-		this.addition = addition;
+		this.material = material;
+		this.blueprint = blueprint;
 		this.result = result;
 	}
 
@@ -36,7 +36,7 @@ public class SmallPartsRecipe implements IRecipe<IInventory> {
 	    */
 	   @Override
 	   public boolean matches(IInventory inv, World worldIn) {
-		   return this.base.test(inv.getStackInSlot(0)) && this.addition.test(inv.getStackInSlot(1));
+		   return this.material.test(inv.getStackInSlot(0)) && this.blueprint.test(inv.getStackInSlot(1));
 	   }
 
 	   /**
@@ -70,8 +70,8 @@ public class SmallPartsRecipe implements IRecipe<IInventory> {
 		   return this.result;
 	   }
 
-	   public boolean isValidAdditionItem(ItemStack addition) {
-	      return this.addition.test(addition);
+	   public boolean isValidAdditionItem(ItemStack blueprint) {
+	      return this.blueprint.test(blueprint);
 	   }
 
 	   @Override
@@ -97,16 +97,16 @@ public class SmallPartsRecipe implements IRecipe<IInventory> {
 	   @Override
 	   public NonNullList<Ingredient> getIngredients() {
 		   NonNullList<Ingredient> defaultedList = NonNullList.create();
-		   defaultedList.add(base);
-		   defaultedList.add(addition);
+		   defaultedList.add(material);
+		   defaultedList.add(blueprint);
 		   return defaultedList;
 	   }
 
 	   public static class Serializer extends net.minecraftforge.registries.ForgeRegistryEntry<IRecipeSerializer<?>> implements IRecipeSerializer<SmallPartsRecipe> {
 	      @Override
 	      public SmallPartsRecipe read(ResourceLocation recipeId, JsonObject json) {
-	    	  Ingredient ingredient = Ingredient.deserialize(JSONUtils.getJsonObject(json, "base"));
-	    	  Ingredient ingredient1 = Ingredient.deserialize(JSONUtils.getJsonObject(json, "addition"));
+	    	  Ingredient ingredient = Ingredient.deserialize(JSONUtils.getJsonObject(json, "material"));
+	    	  Ingredient ingredient1 = Ingredient.deserialize(JSONUtils.getJsonObject(json, "blueprint"));
 	    	  ItemStack itemstack = ShapedRecipe.deserializeItem(JSONUtils.getJsonObject(json, "result"));
 	    	  return new SmallPartsRecipe(recipeId, ingredient, ingredient1, itemstack);
 	      }
@@ -121,8 +121,8 @@ public class SmallPartsRecipe implements IRecipe<IInventory> {
 
 	      @Override
 	      public void write(PacketBuffer buffer, SmallPartsRecipe recipe) {
-	    	  recipe.base.write(buffer);
-	    	  recipe.addition.write(buffer);
+	    	  recipe.material.write(buffer);
+	    	  recipe.blueprint.write(buffer);
 	    	  buffer.writeItemStack(recipe.result);
 	      }
 	   }

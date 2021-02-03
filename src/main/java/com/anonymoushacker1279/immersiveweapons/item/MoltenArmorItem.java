@@ -39,9 +39,9 @@ public class MoltenArmorItem extends ArmorItem{
 				player.getItemStackFromSlot(EquipmentSlotType.FEET).getItem() == DeferredRegistryHandler.MOLTEN_BOOTS.get()) 
 			{
 				if (player.isInLava()) {
-					player.addPotionEffect(new EffectInstance(Effects.FIRE_RESISTANCE, 140, 1, false, false));
+					player.addPotionEffect(new EffectInstance(Effects.FIRE_RESISTANCE, 140, 0, false, false));
 				} else if (player.getLastDamageSource() == DamageSource.IN_FIRE || player.getLastDamageSource() == DamageSource.ON_FIRE) {
-					player.addPotionEffect(new EffectInstance(Effects.FIRE_RESISTANCE, 140, 1, false, false));
+					player.addPotionEffect(new EffectInstance(Effects.FIRE_RESISTANCE, 140, 0, false, false));
 					player.extinguish();
 				}
 			}

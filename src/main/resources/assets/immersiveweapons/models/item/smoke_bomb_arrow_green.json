@@ -1,0 +1,6 @@
+{
+	"parent": "item/handheld",
+	"textures": {
+		"layer0": "immersiveweapons:item/smoke_bomb_arrow_green"
+	}
+}

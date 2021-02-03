@@ -88,5 +88,25 @@
         "stream": false
       }
     ]
+  },
+  "smoke_bomb_hiss": {
+    "category": "neutral",
+    "subtitle": "immersiveweapons.subtitle.item.smoke_bomb_hiss",
+    "sounds": [
+      {
+        "name": "immersiveweapons:smoke_bomb_hiss",
+        "stream": true
+      }
+    ]
+  },
+  "generic_whoosh": {
+    "category": "neutral",
+    "subtitle": "immersiveweapons.subtitle.item.generic_whoosh",
+    "sounds": [
+      {
+        "name": "immersiveweapons:generic_whoosh",
+        "stream": false
+      }
+    ]
   }
 }

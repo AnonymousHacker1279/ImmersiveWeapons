@@ -25,6 +25,12 @@ public class TooltipHandler {
 			event.getToolTip().add(new TranslationTextComponent("Provides quite a shocking experience").mergeStyle(TextFormatting.AQUA, TextFormatting.ITALIC));
 		}
 		
+		// Guns
+		if (stack.getItem() == DeferredRegistryHandler.FLINTLOCK_PISTOL.get()) {
+			event.getToolTip().add(new TranslationTextComponent("Excels in long-range combat").mergeStyle(TextFormatting.DARK_GRAY, TextFormatting.ITALIC));
+			event.getToolTip().add(new TranslationTextComponent("A bit primitive in design.").mergeStyle(TextFormatting.DARK_GRAY, TextFormatting.ITALIC));
+		}
+		
 		// Arrows
 		if (stack.getItem() == DeferredRegistryHandler.COPPER_ARROW.get()) {
 			event.getToolTip().add(new TranslationTextComponent("15% more powerful than normal arrows").mergeStyle(TextFormatting.DARK_GRAY, TextFormatting.ITALIC));
@@ -51,6 +57,35 @@ public class TooltipHandler {
 			event.getToolTip().add(new TranslationTextComponent("375% more powerful than normal arrows").mergeStyle(TextFormatting.DARK_GRAY, TextFormatting.ITALIC));
 			event.getToolTip().add(new TranslationTextComponent("Extremely sharp, powerful, and accurate.").mergeStyle(TextFormatting.DARK_GRAY, TextFormatting.ITALIC));
 			event.getToolTip().add(new TranslationTextComponent("How can you even afford to shoot these?").mergeStyle(TextFormatting.DARK_GRAY, TextFormatting.ITALIC));
+		}
+		if (stack.getItem() == DeferredRegistryHandler.SMOKE_BOMB_ARROW.get()) {
+			event.getToolTip().add(new TranslationTextComponent("Obscure your enemy's vision").mergeStyle(TextFormatting.DARK_GRAY, TextFormatting.ITALIC));
+			event.getToolTip().add(new TranslationTextComponent("Creates a thick cloud of smoke upon impact.").mergeStyle(TextFormatting.DARK_GRAY, TextFormatting.ITALIC));
+		}
+		if (stack.getItem() == DeferredRegistryHandler.SMOKE_BOMB_ARROW_RED.get()) {
+			event.getToolTip().add(new TranslationTextComponent("Obscure your enemy's vision").mergeStyle(TextFormatting.DARK_GRAY, TextFormatting.ITALIC));
+			event.getToolTip().add(new TranslationTextComponent("Creates a thick cloud of smoke upon impact.").mergeStyle(TextFormatting.DARK_GRAY, TextFormatting.ITALIC));
+			event.getToolTip().add(new TranslationTextComponent("This one releases red smoke.").mergeStyle(TextFormatting.DARK_GRAY, TextFormatting.ITALIC));
+		}
+		if (stack.getItem() == DeferredRegistryHandler.SMOKE_BOMB_ARROW_GREEN.get()) {
+			event.getToolTip().add(new TranslationTextComponent("Obscure your enemy's vision").mergeStyle(TextFormatting.DARK_GRAY, TextFormatting.ITALIC));
+			event.getToolTip().add(new TranslationTextComponent("Creates a thick cloud of smoke upon impact.").mergeStyle(TextFormatting.DARK_GRAY, TextFormatting.ITALIC));
+			event.getToolTip().add(new TranslationTextComponent("This one releases green smoke.").mergeStyle(TextFormatting.DARK_GRAY, TextFormatting.ITALIC));
+		}
+		if (stack.getItem() == DeferredRegistryHandler.SMOKE_BOMB_ARROW_BLUE.get()) {
+			event.getToolTip().add(new TranslationTextComponent("Obscure your enemy's vision").mergeStyle(TextFormatting.DARK_GRAY, TextFormatting.ITALIC));
+			event.getToolTip().add(new TranslationTextComponent("Creates a thick cloud of smoke upon impact.").mergeStyle(TextFormatting.DARK_GRAY, TextFormatting.ITALIC));
+			event.getToolTip().add(new TranslationTextComponent("This one releases blue smoke.").mergeStyle(TextFormatting.DARK_GRAY, TextFormatting.ITALIC));
+		}
+		if (stack.getItem() == DeferredRegistryHandler.SMOKE_BOMB_ARROW_PURPLE.get()) {
+			event.getToolTip().add(new TranslationTextComponent("Obscure your enemy's vision").mergeStyle(TextFormatting.DARK_GRAY, TextFormatting.ITALIC));
+			event.getToolTip().add(new TranslationTextComponent("Creates a thick cloud of smoke upon impact.").mergeStyle(TextFormatting.DARK_GRAY, TextFormatting.ITALIC));
+			event.getToolTip().add(new TranslationTextComponent("This one releases purple smoke.").mergeStyle(TextFormatting.DARK_GRAY, TextFormatting.ITALIC));
+		}
+		if (stack.getItem() == DeferredRegistryHandler.SMOKE_BOMB_ARROW_YELLOW.get()) {
+			event.getToolTip().add(new TranslationTextComponent("Obscure your enemy's vision").mergeStyle(TextFormatting.DARK_GRAY, TextFormatting.ITALIC));
+			event.getToolTip().add(new TranslationTextComponent("Creates a thick cloud of smoke upon impact.").mergeStyle(TextFormatting.DARK_GRAY, TextFormatting.ITALIC));
+			event.getToolTip().add(new TranslationTextComponent("This one releases yellow smoke.").mergeStyle(TextFormatting.DARK_GRAY, TextFormatting.ITALIC));
 		}
 		
 		// Bullets
@@ -84,7 +119,6 @@ public class TooltipHandler {
 			event.getToolTip().add(new TranslationTextComponent("Pierces through two targets.").mergeStyle(TextFormatting.DARK_GRAY, TextFormatting.ITALIC));
 		}
 		
-		
 		// Pikes
 		if (stack.getItem() == DeferredRegistryHandler.WOOD_PIKE.get() || stack.getItem() == DeferredRegistryHandler.STONE_PIKE.get() || stack.getItem() == DeferredRegistryHandler.GOLD_PIKE.get() || stack.getItem() == DeferredRegistryHandler.COPPER_PIKE.get() || stack.getItem() == DeferredRegistryHandler.IRON_PIKE.get() || stack.getItem() == DeferredRegistryHandler.DIAMOND_PIKE.get() || stack.getItem() == DeferredRegistryHandler.NETHERITE_PIKE.get()) {
 			event.getToolTip().add(new TranslationTextComponent("Stab them from way over there").mergeStyle(TextFormatting.DARK_GRAY, TextFormatting.ITALIC));
@@ -93,6 +127,62 @@ public class TooltipHandler {
 		// Armor
 		if (stack.getItem() == DeferredRegistryHandler.MOLTEN_HELMET.get() || stack.getItem() == DeferredRegistryHandler.MOLTEN_CHESTPLATE.get() || stack.getItem() == DeferredRegistryHandler.MOLTEN_LEGGINGS.get() || stack.getItem() == DeferredRegistryHandler.MOLTEN_BOOTS.get()) {
 			event.getToolTip().add(new TranslationTextComponent("Warm and toasy inside").mergeStyle(TextFormatting.DARK_GRAY, TextFormatting.ITALIC));
+		}
+		
+		// Bombs
+		if (stack.getItem() == DeferredRegistryHandler.SMOKE_BOMB.get()) {
+			event.getToolTip().add(new TranslationTextComponent("Creates a thick cloud of smoke upon impact").mergeStyle(TextFormatting.DARK_GRAY, TextFormatting.ITALIC));
+			event.getToolTip().add(new TranslationTextComponent("Good for quickly escaping a situation.").mergeStyle(TextFormatting.DARK_GRAY, TextFormatting.ITALIC));
+		}
+		if (stack.getItem() == DeferredRegistryHandler.SMOKE_BOMB_RED.get()) {
+			event.getToolTip().add(new TranslationTextComponent("Creates a thick cloud of smoke upon impact").mergeStyle(TextFormatting.DARK_GRAY, TextFormatting.ITALIC));
+			event.getToolTip().add(new TranslationTextComponent("Good for quickly escaping a situation.").mergeStyle(TextFormatting.DARK_GRAY, TextFormatting.ITALIC));
+			event.getToolTip().add(new TranslationTextComponent("This one releases red smoke.").mergeStyle(TextFormatting.DARK_GRAY, TextFormatting.ITALIC));
+		}
+		if (stack.getItem() == DeferredRegistryHandler.SMOKE_BOMB_GREEN.get()) {
+			event.getToolTip().add(new TranslationTextComponent("Creates a thick cloud of smoke upon impact").mergeStyle(TextFormatting.DARK_GRAY, TextFormatting.ITALIC));
+			event.getToolTip().add(new TranslationTextComponent("Good for quickly escaping a situation.").mergeStyle(TextFormatting.DARK_GRAY, TextFormatting.ITALIC));
+			event.getToolTip().add(new TranslationTextComponent("This one releases green smoke.").mergeStyle(TextFormatting.DARK_GRAY, TextFormatting.ITALIC));
+		}
+		if (stack.getItem() == DeferredRegistryHandler.SMOKE_BOMB_BLUE.get()) {
+			event.getToolTip().add(new TranslationTextComponent("Creates a thick cloud of smoke upon impact").mergeStyle(TextFormatting.DARK_GRAY, TextFormatting.ITALIC));
+			event.getToolTip().add(new TranslationTextComponent("Good for quickly escaping a situation.").mergeStyle(TextFormatting.DARK_GRAY, TextFormatting.ITALIC));
+			event.getToolTip().add(new TranslationTextComponent("This one releases blue smoke.").mergeStyle(TextFormatting.DARK_GRAY, TextFormatting.ITALIC));
+		}
+		if (stack.getItem() == DeferredRegistryHandler.SMOKE_BOMB_PURPLE.get()) {
+			event.getToolTip().add(new TranslationTextComponent("Creates a thick cloud of smoke upon impact").mergeStyle(TextFormatting.DARK_GRAY, TextFormatting.ITALIC));
+			event.getToolTip().add(new TranslationTextComponent("Good for quickly escaping a situation.").mergeStyle(TextFormatting.DARK_GRAY, TextFormatting.ITALIC));
+			event.getToolTip().add(new TranslationTextComponent("This one releases purple smoke.").mergeStyle(TextFormatting.DARK_GRAY, TextFormatting.ITALIC));
+		}
+		if (stack.getItem() == DeferredRegistryHandler.SMOKE_BOMB_YELLOW.get()) {
+			event.getToolTip().add(new TranslationTextComponent("Creates a thick cloud of smoke upon impact").mergeStyle(TextFormatting.DARK_GRAY, TextFormatting.ITALIC));
+			event.getToolTip().add(new TranslationTextComponent("Good for quickly escaping a situation.").mergeStyle(TextFormatting.DARK_GRAY, TextFormatting.ITALIC));
+			event.getToolTip().add(new TranslationTextComponent("This one releases yellow smoke.").mergeStyle(TextFormatting.DARK_GRAY, TextFormatting.ITALIC));
+		}
+		
+		// Molotovs
+		if (stack.getItem() == DeferredRegistryHandler.MOLOTOV_COCKTAIL.get()) {
+			event.getToolTip().add(new TranslationTextComponent("Creates a ring of fire upon impact").mergeStyle(TextFormatting.DARK_GRAY, TextFormatting.ITALIC));
+			event.getToolTip().add(new TranslationTextComponent("Best used when thrown on flat ground.").mergeStyle(TextFormatting.DARK_GRAY, TextFormatting.ITALIC));
+		}
+		
+		// Bottles
+		if (stack.getItem() == DeferredRegistryHandler.BOTTLE_OF_ALCOHOL.get()) {
+			event.getToolTip().add(new TranslationTextComponent("You could drink this, but you'll be nauseous").mergeStyle(TextFormatting.DARK_GRAY, TextFormatting.ITALIC));
+			event.getToolTip().add(new TranslationTextComponent("Highly flammable!").mergeStyle(TextFormatting.DARK_GRAY, TextFormatting.ITALIC));
+		}
+		if (stack.getItem() == DeferredRegistryHandler.BOTTLE_OF_WINE.get()) {
+			event.getToolTip().add(new TranslationTextComponent("A relaxing combination of sweet berries").mergeStyle(TextFormatting.DARK_GRAY, TextFormatting.ITALIC));
+		}
+		
+		// Miscellaneous
+		if (stack.getItem() == DeferredRegistryHandler.BARREL_TAP_ITEM.get()) {
+			event.getToolTip().add(new TranslationTextComponent("Use this to convert some plants into a fluid form").mergeStyle(TextFormatting.DARK_GRAY, TextFormatting.ITALIC));
+			event.getToolTip().add(new TranslationTextComponent("Connect this to a barrel to collect it.").mergeStyle(TextFormatting.DARK_GRAY, TextFormatting.ITALIC));
+		}
+		if (stack.getItem() == DeferredRegistryHandler.TESLA_HOE.get()) {
+			event.getToolTip().add(new TranslationTextComponent("Good thing you aren't in charge of the US Treasury").mergeStyle(TextFormatting.DARK_GRAY, TextFormatting.ITALIC));
+			event.getToolTip().add(new TranslationTextComponent("Because if you were we'd be broke.").mergeStyle(TextFormatting.DARK_GRAY, TextFormatting.ITALIC));
 		}
 	}
 }

@@ -3,7 +3,7 @@
   "pattern":
   [
     "xxx",
-    "xyx",
+    "xxx",
     "xxx"
   ],
   "key":
@@ -11,10 +11,6 @@
     "x":
     {
       "item": "immersiveweapons:molten_ingot"
-    },
-    "y":
-    {
-    	"item":"minecraft:obsidian"
     }
   },
   "result":

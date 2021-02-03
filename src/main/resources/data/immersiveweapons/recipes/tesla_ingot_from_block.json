@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "group": "planks",
+  "ingredients": [
+    {
+      "item": "immersiveweapons:tesla_block"
+    }
+  ],
+  "result": {
+    "item": "immersiveweapons:tesla_ingot",
+    "count": 9
+  }
+}
