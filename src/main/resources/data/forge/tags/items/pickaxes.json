@@ -1,0 +1,13 @@
+{ 
+	"replace": false,
+	"values": [ 
+		"minecraft:wooden_pickaxe",
+		"minecraft:stone_pickaxe",
+		"minecraft:golden_pickaxe",
+		"minecraft:iron_pickaxe",
+		"minecraft:diamond_pickaxe",
+		"minecraft:netherite_pickaxe",
+		"immersiveweapons:molten_pickaxe",
+		"immersiveweapons:tesla_pickaxe"
+	]
+}

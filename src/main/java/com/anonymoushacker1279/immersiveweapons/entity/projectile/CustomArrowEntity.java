@@ -5,6 +5,7 @@ import java.awt.Color;
 import com.anonymoushacker1279.immersiveweapons.client.particle.SmokeBombParticleData;
 import com.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
 import com.anonymoushacker1279.immersiveweapons.util.Config;
+import com.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.client.Minecraft;
@@ -32,10 +33,6 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.network.NetworkHooks;
 
 public class CustomArrowEntity {
-	
-	private static float getRandomNumber(float min, float max) {
-	    return (float) ((Math.random() * (max - min)) + min);
-	}
 	
 	public static class CopperArrowEntity extends AbstractArrowEntity {
 		private final Item referenceItem;
@@ -228,7 +225,7 @@ public class CustomArrowEntity {
 		
 		@Override
 		public void shoot(double x, double y, double z, float velocity, float inaccuracy) {
-			super.shoot(x, y, z, velocity, (inaccuracy + getRandomNumber(5.8f, 7.2f)));
+			super.shoot(x, y, z, velocity, (inaccuracy + GeneralUtilities.getRandomNumber(5.8f, 7.2f)));
 		}
 	}
 	
@@ -262,7 +259,7 @@ public class CustomArrowEntity {
 		
 		@Override
 		public void shoot(double x, double y, double z, float velocity, float inaccuracy) {
-			Vector3d vector3d = (new Vector3d(x, y, z)).normalize().add(this.rand.nextGaussian() * 0.0025F * (getRandomNumber(0.2f, 1.1f)), 0.00025F * (getRandomNumber(0.2f, 1.1f)), this.rand.nextGaussian() * 0.0025F).scale(velocity);
+			Vector3d vector3d = (new Vector3d(x, y, z)).normalize().add(this.rand.nextGaussian() * 0.0025F * (GeneralUtilities.getRandomNumber(0.2f, 1.1f)), 0.00025F * (GeneralUtilities.getRandomNumber(0.2f, 1.1f)), this.rand.nextGaussian() * 0.0025F).scale(velocity);
 		    this.setMotion(vector3d);
 		    float f = MathHelper.sqrt(horizontalMag(vector3d));
 		    this.rotationYaw = (float)(MathHelper.atan2(vector3d.x, vector3d.z) * (180F / (float)Math.PI));
@@ -442,18 +439,11 @@ public class CustomArrowEntity {
 		private int configMaxParticles = Config.MAX_SMOKE_BOMB_PARTICLES.get();
 		
 		protected IParticleData makeParticle() {
-			  Color tint = getTint(getRandomNumber(0, 2));
-			  double diameter = getDiameter(getRandomNumber(1.0d, 5.5d));
+			  Color tint = getTint(GeneralUtilities.getRandomNumber(0, 2));
+			  double diameter = getDiameter(GeneralUtilities.getRandomNumber(1.0d, 5.5d));
 			  SmokeBombParticleData smokeBombParticleData = new SmokeBombParticleData(tint, diameter);
 			  
 			  return smokeBombParticleData;
-		}
-		
-		private double getRandomNumber(double min, double max) {
-			return Math.random() * (max - min) + min;
-		}
-		private int getRandomNumber(int min, int max) {
-		    return (int) ((Math.random() * (max - min)) + min);
 		}
 		
 		private static String color;
@@ -525,7 +515,7 @@ public class CustomArrowEntity {
 				this.world.playSound(this.getPosX(), this.getPosY(), this.getPosZ(), DeferredRegistryHandler.SMOKE_BOMB_HISS.get(), SoundCategory.NEUTRAL, 0.1f, 0.6f, true);
 				
 				for(int i = 0; i < configMaxParticles; ++i) {
-		    		this.world.addParticle(particleData, true, this.getPosX(), this.getPosY(), this.getPosZ(), getRandomNumber(-0.03, 0.03d), getRandomNumber(-0.02d, 0.02d), getRandomNumber(-0.03d, 0.03d));
+		    		this.world.addParticle(particleData, true, this.getPosX(), this.getPosY(), this.getPosZ(), GeneralUtilities.getRandomNumber(-0.03, 0.03d), GeneralUtilities.getRandomNumber(-0.02d, 0.02d), GeneralUtilities.getRandomNumber(-0.03d, 0.03d));
 		    	}
 				
 				RayTraceResult.Type raytraceresult$type = rayTraceResult.getType();

@@ -108,5 +108,15 @@
         "stream": false
       }
     ]
+  },
+  "blunderbuss_fire": {
+    "category": "neutral",
+    "subtitle": "immersiveweapons.subtitle.item.gun.blunderbuss_fire",
+    "sounds": [
+      {
+        "name": "immersiveweapons:blunderbuss_fire",
+        "stream": false
+      }
+    ]
   }
 }

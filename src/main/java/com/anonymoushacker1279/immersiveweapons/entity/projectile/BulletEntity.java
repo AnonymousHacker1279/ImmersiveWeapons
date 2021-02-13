@@ -1,19 +1,35 @@
 package com.anonymoushacker1279.immersiveweapons.entity.projectile;
 
-import com.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
+import java.util.Arrays;
+import java.util.List;
 
+import com.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
+import com.anonymoushacker1279.immersiveweapons.util.Config;
+import com.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
+import com.google.common.collect.Lists;
+
+import it.unimi.dsi.fastutil.ints.IntOpenHashSet;
+import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.block.BlockState;
+import net.minecraft.client.Minecraft;
+import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.entity.projectile.AbstractArrowEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.IPacket;
+import net.minecraft.network.play.server.SChangeGameStatePacket;
 import net.minecraft.particles.ParticleTypes;
+import net.minecraft.tags.BlockTags;
+import net.minecraft.util.DamageSource;
+import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.EntityRayTraceResult;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.RayTraceContext;
@@ -25,9 +41,8 @@ import net.minecraftforge.fml.network.NetworkHooks;
 
 public class BulletEntity {
 	
-	private static float getRandomNumber(float min, float max) {
-	    return (float) ((Math.random() * (max - min)) + min);
-	}
+	static Minecraft minecraft = Minecraft.getInstance();
+	static boolean canBreakGlass = Config.BULLETS_BREAK_GLASS.get();
 	
 	public static class CopperBulletEntity extends AbstractArrowEntity {
 		private final Item referenceItem;
@@ -60,7 +75,7 @@ public class BulletEntity {
 		
 		@Override
 		public void shoot(double x, double y, double z, float velocity, float inaccuracy) {
-			Vector3d vector3d = (new Vector3d(x, y, z)).normalize().add(this.rand.nextGaussian() * 0.0025F * (getRandomNumber(0.2f, 1.1f)), 0.00025F * (getRandomNumber(0.2f, 1.1f)), this.rand.nextGaussian() * 0.0025F).scale(velocity);
+			Vector3d vector3d = (new Vector3d(x, y, z)).normalize().add(this.rand.nextGaussian() * 0.0025F * (GeneralUtilities.getRandomNumber(0.2f, 1.1f)), 0.00025F * (GeneralUtilities.getRandomNumber(0.2f, 1.1f)), this.rand.nextGaussian() * 0.0025F).scale(velocity);
 		    this.setMotion(vector3d);
 		    float f = MathHelper.sqrt(horizontalMag(vector3d));
 		    this.rotationYaw = (float)(MathHelper.atan2(vector3d.x, vector3d.z) * (180F / (float)Math.PI));
@@ -203,6 +218,149 @@ public class BulletEntity {
 		         this.setPosition(d5, d1, d2);
 		         this.doBlockCollisions();
 		      }
+		}
+		/**
+		 * Called when the arrow hits an entity
+		 */
+		
+		private IntOpenHashSet piercedEntities;
+		private List<Entity> hitEntities;
+		private int knockbackStrength;
+		private SoundEvent hitSound = this.getHitEntitySound();
+		
+		@Override
+		protected void onEntityHit(EntityRayTraceResult p_213868_1_) {
+			super.onEntityHit(p_213868_1_);
+			Entity entity = p_213868_1_.getEntity();
+			float f = (float)this.getMotion().length();
+			int i = MathHelper.ceil(MathHelper.clamp(f * this.damage, 0.0D, 2.147483647E9D));
+			if (this.getPierceLevel() > 0) {
+				if (this.piercedEntities == null) {
+					this.piercedEntities = new IntOpenHashSet(5);
+				}
+
+				if (this.hitEntities == null) {
+					this.hitEntities = Lists.newArrayListWithCapacity(5);
+				}
+
+				if (this.piercedEntities.size() >= this.getPierceLevel() + 1) {
+					this.remove();
+					return;
+				}
+
+				this.piercedEntities.add(entity.getEntityId());
+			}
+
+			if (this.getIsCritical()) {
+				long j = this.rand.nextInt(i / 2 + 2);
+				i = (int)Math.min(j + i, 2147483647L);
+			}
+
+			Entity entity1 = this.func_234616_v_();
+			DamageSource damagesource;
+			if (entity1 == null) {
+				damagesource = DamageSource.causeArrowDamage(this, this);
+			} else {
+				damagesource = DamageSource.causeArrowDamage(this, entity1);
+				if (entity1 instanceof LivingEntity) {
+					entity.hurtResistantTime = 0;
+					entity.setInvulnerable(false);
+		            	((LivingEntity)entity1).setLastAttackedEntity(entity);
+		         	}
+		      	}
+
+		      	boolean flag = entity.getType() == EntityType.ENDERMAN;
+		      	int k = entity.getFireTimer();
+		      	if (this.isBurning() && !flag) {
+		      		entity.setFire(5);
+		      	}
+		      	
+		      	if (entity.attackEntityFrom(damagesource, i)) {
+		      		if (flag) {
+		      			return;
+		      		}
+		      		
+		      		if (entity instanceof LivingEntity) {
+		      			LivingEntity livingentity = (LivingEntity)entity;
+		      			if (!this.world.isRemote && this.getPierceLevel() <= 0) {
+		      				livingentity.setArrowCountInEntity(livingentity.getArrowCountInEntity() + 1);
+		      			}
+		      			
+		      			if (this.knockbackStrength > 0) {
+		      				Vector3d vector3d = this.getMotion().mul(1.0D, 0.0D, 1.0D).normalize().scale(this.knockbackStrength * 0.6D);
+		      				if (vector3d.lengthSquared() > 0.0D) {
+		      					livingentity.addVelocity(vector3d.x, 0.1D, vector3d.z);
+		      				}
+		      			}
+		      			
+		      			if (!this.world.isRemote && entity1 instanceof LivingEntity) {
+		      				EnchantmentHelper.applyThornEnchantments(livingentity, entity1);
+		      				EnchantmentHelper.applyArthropodEnchantments((LivingEntity)entity1, livingentity);
+		      			}
+
+		      			this.arrowHit(livingentity);
+		      			if (entity1 != null && livingentity != entity1 && livingentity instanceof PlayerEntity && entity1 instanceof ServerPlayerEntity && !this.isSilent()) {
+		      				((ServerPlayerEntity)entity1).connection.sendPacket(new SChangeGameStatePacket(SChangeGameStatePacket.field_241770_g_, 0.0F));
+		      			}
+		      			
+		      			if (!entity.isAlive() && this.hitEntities != null) {
+		      				this.hitEntities.add(livingentity);
+		      			}
+		      			
+		      			if (!this.world.isRemote && entity1 instanceof ServerPlayerEntity) {
+		      				ServerPlayerEntity serverplayerentity = (ServerPlayerEntity)entity1;
+		      				if (this.hitEntities != null && this.getShotFromCrossbow()) {
+		      					CriteriaTriggers.KILLED_BY_CROSSBOW.test(serverplayerentity, this.hitEntities);
+		      				} else if (!entity.isAlive() && this.getShotFromCrossbow()) {
+		      					CriteriaTriggers.KILLED_BY_CROSSBOW.test(serverplayerentity, Arrays.asList(entity));
+		      				}
+		      			}
+		      		}
+		      		
+		      		this.playSound(this.hitSound, 1.0F, 1.2F / (this.rand.nextFloat() * 0.2F + 0.9F));
+		      		if (this.getPierceLevel() <= 0) {
+		      			this.remove();
+		      		}
+		      	} else {
+		      		entity.forceFireTicks(k);
+		      		if (!this.world.isRemote && this.getMotion().lengthSquared() < 1.0E-7D) {
+		      			this.remove();
+		      		}
+		      	}
+		}
+		private boolean hasAlreadyBrokeGlass = false;
+		
+		@Override
+		protected void func_230299_a_(BlockRayTraceResult blockStateRayTraceResult) {
+			this.inBlockState = this.world.getBlockState(blockStateRayTraceResult.getPos());
+			super.func_230299_a_(blockStateRayTraceResult);
+			Vector3d vector3d = blockStateRayTraceResult.getHitVec().subtract(this.getPosX(), this.getPosY(), this.getPosZ());
+			this.setMotion(vector3d);
+			Vector3d vector3d1 = vector3d.normalize().scale(0.05F);
+			this.setRawPosition(this.getPosX() - vector3d1.x, this.getPosY() - vector3d1.y, this.getPosZ() - vector3d1.z);
+			this.inGround = true;
+			this.arrowShake = 2;
+			this.setIsCritical(false);
+			this.setPierceLevel((byte)0);
+			this.setHitSound(DeferredRegistryHandler.BULLET_WHIZZ.get());
+			this.setShotFromCrossbow(false);
+			this.func_213870_w();
+			
+			if (canBreakGlass && !this.hasAlreadyBrokeGlass && this.inBlockState.getBlock().isIn(BlockTags.makeWrapperTag("forge:glass")) || this.inBlockState.getBlock().isIn(BlockTags.makeWrapperTag("forge:glass_panes"))) {;
+				this.world.destroyBlock(blockStateRayTraceResult.getPos(), false);
+				this.hasAlreadyBrokeGlass = true;
+			}
+		}
+
+		private void func_213870_w() {
+			if (this.hitEntities != null) {
+				this.hitEntities.clear();
+			}
+
+			if (this.piercedEntities != null) {
+				this.piercedEntities.clear();
+			}
+
 		}
 	}
 
@@ -237,7 +395,7 @@ public class BulletEntity {
 		
 		@Override
 		public void shoot(double x, double y, double z, float velocity, float inaccuracy) {
-			Vector3d vector3d = (new Vector3d(x, y, z)).normalize().add(this.rand.nextGaussian() * 0.0075F * (getRandomNumber(3.2f, 5.1f)), -0.0095F * (getRandomNumber(3.2f, 5.1f)), this.rand.nextGaussian() * 0.0075F).scale(velocity);
+			Vector3d vector3d = (new Vector3d(x, y, z)).normalize().add(this.rand.nextGaussian() * 0.0075F * (GeneralUtilities.getRandomNumber(3.2f, 5.1f)), -0.0095F * (GeneralUtilities.getRandomNumber(3.2f, 5.1f)), this.rand.nextGaussian() * 0.0075F).scale(velocity);
 		    this.setMotion(vector3d);
 		    float f = MathHelper.sqrt(horizontalMag(vector3d));
 		    this.rotationYaw = (float)(MathHelper.atan2(vector3d.x, vector3d.z) * (180F / (float)Math.PI));
@@ -374,12 +532,155 @@ public class BulletEntity {
 		         this.setMotion(vector3d.scale(f2));
 		         if (!this.hasNoGravity() && !flag) {
 		            Vector3d vector3d4 = this.getMotion();
-		            this.setMotion(vector3d4.x, vector3d4.y + 0.055d, vector3d4.z);
+		            this.setMotion(vector3d4.x, vector3d4.y + 0.035d, vector3d4.z);
 		         }
 
 		         this.setPosition(d5, d1, d2);
 		         this.doBlockCollisions();
 		      }
+		}
+		/**
+		 * Called when the arrow hits an entity
+		 */
+		
+		private IntOpenHashSet piercedEntities;
+		private List<Entity> hitEntities;
+		private int knockbackStrength;
+		private SoundEvent hitSound = this.getHitEntitySound();
+		
+		@Override
+		protected void onEntityHit(EntityRayTraceResult p_213868_1_) {
+			super.onEntityHit(p_213868_1_);
+			Entity entity = p_213868_1_.getEntity();
+			float f = (float)this.getMotion().length();
+			int i = MathHelper.ceil(MathHelper.clamp(f * this.damage, 0.0D, 2.147483647E9D));
+			if (this.getPierceLevel() > 0) {
+				if (this.piercedEntities == null) {
+					this.piercedEntities = new IntOpenHashSet(5);
+				}
+
+				if (this.hitEntities == null) {
+					this.hitEntities = Lists.newArrayListWithCapacity(5);
+				}
+
+				if (this.piercedEntities.size() >= this.getPierceLevel() + 1) {
+					this.remove();
+					return;
+				}
+
+				this.piercedEntities.add(entity.getEntityId());
+			}
+
+			if (this.getIsCritical()) {
+				long j = this.rand.nextInt(i / 2 + 2);
+				i = (int)Math.min(j + i, 2147483647L);
+			}
+
+			Entity entity1 = this.func_234616_v_();
+			DamageSource damagesource;
+			if (entity1 == null) {
+				damagesource = DamageSource.causeArrowDamage(this, this);
+			} else {
+				damagesource = DamageSource.causeArrowDamage(this, entity1);
+				if (entity1 instanceof LivingEntity) {
+					entity.hurtResistantTime = 0;
+					entity.setInvulnerable(false);
+		            	((LivingEntity)entity1).setLastAttackedEntity(entity);
+		         	}
+		      	}
+
+		      	boolean flag = entity.getType() == EntityType.ENDERMAN;
+		      	int k = entity.getFireTimer();
+		      	if (this.isBurning() && !flag) {
+		      		entity.setFire(5);
+		      	}
+		      	
+		      	if (entity.attackEntityFrom(damagesource, i)) {
+		      		if (flag) {
+		      			return;
+		      		}
+		      		
+		      		if (entity instanceof LivingEntity) {
+		      			LivingEntity livingentity = (LivingEntity)entity;
+		      			if (!this.world.isRemote && this.getPierceLevel() <= 0) {
+		      				livingentity.setArrowCountInEntity(livingentity.getArrowCountInEntity() + 1);
+		      			}
+		      			
+		      			if (this.knockbackStrength > 0) {
+		      				Vector3d vector3d = this.getMotion().mul(1.0D, 0.0D, 1.0D).normalize().scale(this.knockbackStrength * 0.6D);
+		      				if (vector3d.lengthSquared() > 0.0D) {
+		      					livingentity.addVelocity(vector3d.x, 0.1D, vector3d.z);
+		      				}
+		      			}
+		      			
+		      			if (!this.world.isRemote && entity1 instanceof LivingEntity) {
+		      				EnchantmentHelper.applyThornEnchantments(livingentity, entity1);
+		      				EnchantmentHelper.applyArthropodEnchantments((LivingEntity)entity1, livingentity);
+		      			}
+
+		      			this.arrowHit(livingentity);
+		      			if (entity1 != null && livingentity != entity1 && livingentity instanceof PlayerEntity && entity1 instanceof ServerPlayerEntity && !this.isSilent()) {
+		      				((ServerPlayerEntity)entity1).connection.sendPacket(new SChangeGameStatePacket(SChangeGameStatePacket.field_241770_g_, 0.0F));
+		      			}
+		      			
+		      			if (!entity.isAlive() && this.hitEntities != null) {
+		      				this.hitEntities.add(livingentity);
+		      			}
+		      			
+		      			if (!this.world.isRemote && entity1 instanceof ServerPlayerEntity) {
+		      				ServerPlayerEntity serverplayerentity = (ServerPlayerEntity)entity1;
+		      				if (this.hitEntities != null && this.getShotFromCrossbow()) {
+		      					CriteriaTriggers.KILLED_BY_CROSSBOW.test(serverplayerentity, this.hitEntities);
+		      				} else if (!entity.isAlive() && this.getShotFromCrossbow()) {
+		      					CriteriaTriggers.KILLED_BY_CROSSBOW.test(serverplayerentity, Arrays.asList(entity));
+		      				}
+		      			}
+		      		}
+		      		
+		      		this.playSound(this.hitSound, 1.0F, 1.2F / (this.rand.nextFloat() * 0.2F + 0.9F));
+		      		if (this.getPierceLevel() <= 0) {
+		      			this.remove();
+		      		}
+		      	} else {
+		      		entity.forceFireTicks(k);
+		      		if (!this.world.isRemote && this.getMotion().lengthSquared() < 1.0E-7D) {
+		      			this.remove();
+		      		}
+		      	}
+		}
+		private boolean hasAlreadyBrokeGlass = false;
+		
+		@Override
+		protected void func_230299_a_(BlockRayTraceResult blockStateRayTraceResult) {
+			this.inBlockState = this.world.getBlockState(blockStateRayTraceResult.getPos());
+			super.func_230299_a_(blockStateRayTraceResult);
+			Vector3d vector3d = blockStateRayTraceResult.getHitVec().subtract(this.getPosX(), this.getPosY(), this.getPosZ());
+			this.setMotion(vector3d);
+			Vector3d vector3d1 = vector3d.normalize().scale(0.05F);
+			this.setRawPosition(this.getPosX() - vector3d1.x, this.getPosY() - vector3d1.y, this.getPosZ() - vector3d1.z);
+			this.inGround = true;
+			this.arrowShake = 2;
+			this.setIsCritical(false);
+			this.setPierceLevel((byte)0);
+			this.setHitSound(DeferredRegistryHandler.BULLET_WHIZZ.get());
+			this.setShotFromCrossbow(false);
+			this.func_213870_w();
+			
+			if (canBreakGlass && !this.hasAlreadyBrokeGlass && this.inBlockState.getBlock().isIn(BlockTags.makeWrapperTag("forge:glass")) || this.inBlockState.getBlock().isIn(BlockTags.makeWrapperTag("forge:glass_panes"))) {;
+				this.world.destroyBlock(blockStateRayTraceResult.getPos(), false);
+				this.hasAlreadyBrokeGlass = true;
+			}
+		}
+
+		private void func_213870_w() {
+			if (this.hitEntities != null) {
+				this.hitEntities.clear();
+			}
+
+			if (this.piercedEntities != null) {
+				this.piercedEntities.clear();
+			}
+
 		}
 	}
 	
@@ -414,7 +715,7 @@ public class BulletEntity {
 		
 		@Override
 		public void shoot(double x, double y, double z, float velocity, float inaccuracy) {
-			Vector3d vector3d = (new Vector3d(x, y, z)).normalize().add(this.rand.nextGaussian() * 0.0075F * (getRandomNumber(2.4f, 4.1f)), -0.0170F * (getRandomNumber(2.4f, 4.1f)), this.rand.nextGaussian() * 0.0075F).scale(velocity);
+			Vector3d vector3d = (new Vector3d(x, y, z)).normalize().add(this.rand.nextGaussian() * 0.0075F * (GeneralUtilities.getRandomNumber(2.4f, 4.1f)), -0.0170F * (GeneralUtilities.getRandomNumber(2.4f, 4.1f)), this.rand.nextGaussian() * 0.0075F).scale(velocity);
 		    this.setMotion(vector3d);
 		    float f = MathHelper.sqrt(horizontalMag(vector3d));
 		    this.rotationYaw = (float)(MathHelper.atan2(vector3d.x, vector3d.z) * (180F / (float)Math.PI));
@@ -551,12 +852,155 @@ public class BulletEntity {
 		         this.setMotion(vector3d.scale(f2));
 		         if (!this.hasNoGravity() && !flag) {
 		            Vector3d vector3d4 = this.getMotion();
-		            this.setMotion(vector3d4.x, vector3d4.y + 0.050d, vector3d4.z);
+		            this.setMotion(vector3d4.x, vector3d4.y + 0.020d, vector3d4.z);
 		         }
 
 		         this.setPosition(d5, d1, d2);
 		         this.doBlockCollisions();
 		      }
+		}
+		/**
+		 * Called when the arrow hits an entity
+		 */
+		
+		private IntOpenHashSet piercedEntities;
+		private List<Entity> hitEntities;
+		private int knockbackStrength;
+		private SoundEvent hitSound = this.getHitEntitySound();
+		
+		@Override
+		protected void onEntityHit(EntityRayTraceResult p_213868_1_) {
+			super.onEntityHit(p_213868_1_);
+			Entity entity = p_213868_1_.getEntity();
+			float f = (float)this.getMotion().length();
+			int i = MathHelper.ceil(MathHelper.clamp(f * this.damage, 0.0D, 2.147483647E9D));
+			if (this.getPierceLevel() > 0) {
+				if (this.piercedEntities == null) {
+					this.piercedEntities = new IntOpenHashSet(5);
+				}
+
+				if (this.hitEntities == null) {
+					this.hitEntities = Lists.newArrayListWithCapacity(5);
+				}
+
+				if (this.piercedEntities.size() >= this.getPierceLevel() + 1) {
+					this.remove();
+					return;
+				}
+
+				this.piercedEntities.add(entity.getEntityId());
+			}
+
+			if (this.getIsCritical()) {
+				long j = this.rand.nextInt(i / 2 + 2);
+				i = (int)Math.min(j + i, 2147483647L);
+			}
+
+			Entity entity1 = this.func_234616_v_();
+			DamageSource damagesource;
+			if (entity1 == null) {
+				damagesource = DamageSource.causeArrowDamage(this, this);
+			} else {
+				damagesource = DamageSource.causeArrowDamage(this, entity1);
+				if (entity1 instanceof LivingEntity) {
+					entity.hurtResistantTime = 0;
+					entity.setInvulnerable(false);
+		            	((LivingEntity)entity1).setLastAttackedEntity(entity);
+		         	}
+		      	}
+
+		      	boolean flag = entity.getType() == EntityType.ENDERMAN;
+		      	int k = entity.getFireTimer();
+		      	if (this.isBurning() && !flag) {
+		      		entity.setFire(5);
+		      	}
+		      	
+		      	if (entity.attackEntityFrom(damagesource, i)) {
+		      		if (flag) {
+		      			return;
+		      		}
+		      		
+		      		if (entity instanceof LivingEntity) {
+		      			LivingEntity livingentity = (LivingEntity)entity;
+		      			if (!this.world.isRemote && this.getPierceLevel() <= 0) {
+		      				livingentity.setArrowCountInEntity(livingentity.getArrowCountInEntity() + 1);
+		      			}
+		      			
+		      			if (this.knockbackStrength > 0) {
+		      				Vector3d vector3d = this.getMotion().mul(1.0D, 0.0D, 1.0D).normalize().scale(this.knockbackStrength * 0.6D);
+		      				if (vector3d.lengthSquared() > 0.0D) {
+		      					livingentity.addVelocity(vector3d.x, 0.1D, vector3d.z);
+		      				}
+		      			}
+		      			
+		      			if (!this.world.isRemote && entity1 instanceof LivingEntity) {
+		      				EnchantmentHelper.applyThornEnchantments(livingentity, entity1);
+		      				EnchantmentHelper.applyArthropodEnchantments((LivingEntity)entity1, livingentity);
+		      			}
+
+		      			this.arrowHit(livingentity);
+		      			if (entity1 != null && livingentity != entity1 && livingentity instanceof PlayerEntity && entity1 instanceof ServerPlayerEntity && !this.isSilent()) {
+		      				((ServerPlayerEntity)entity1).connection.sendPacket(new SChangeGameStatePacket(SChangeGameStatePacket.field_241770_g_, 0.0F));
+		      			}
+		      			
+		      			if (!entity.isAlive() && this.hitEntities != null) {
+		      				this.hitEntities.add(livingentity);
+		      			}
+		      			
+		      			if (!this.world.isRemote && entity1 instanceof ServerPlayerEntity) {
+		      				ServerPlayerEntity serverplayerentity = (ServerPlayerEntity)entity1;
+		      				if (this.hitEntities != null && this.getShotFromCrossbow()) {
+		      					CriteriaTriggers.KILLED_BY_CROSSBOW.test(serverplayerentity, this.hitEntities);
+		      				} else if (!entity.isAlive() && this.getShotFromCrossbow()) {
+		      					CriteriaTriggers.KILLED_BY_CROSSBOW.test(serverplayerentity, Arrays.asList(entity));
+		      				}
+		      			}
+		      		}
+		      		
+		      		this.playSound(this.hitSound, 1.0F, 1.2F / (this.rand.nextFloat() * 0.2F + 0.9F));
+		      		if (this.getPierceLevel() <= 0) {
+		      			this.remove();
+		      		}
+		      	} else {
+		      		entity.forceFireTicks(k);
+		      		if (!this.world.isRemote && this.getMotion().lengthSquared() < 1.0E-7D) {
+		      			this.remove();
+		      		}
+		      	}
+		}
+		private boolean hasAlreadyBrokeGlass = false;
+		
+		@Override
+		protected void func_230299_a_(BlockRayTraceResult blockStateRayTraceResult) {
+			this.inBlockState = this.world.getBlockState(blockStateRayTraceResult.getPos());
+			super.func_230299_a_(blockStateRayTraceResult);
+			Vector3d vector3d = blockStateRayTraceResult.getHitVec().subtract(this.getPosX(), this.getPosY(), this.getPosZ());
+			this.setMotion(vector3d);
+			Vector3d vector3d1 = vector3d.normalize().scale(0.05F);
+			this.setRawPosition(this.getPosX() - vector3d1.x, this.getPosY() - vector3d1.y, this.getPosZ() - vector3d1.z);
+			this.inGround = true;
+			this.arrowShake = 2;
+			this.setIsCritical(false);
+			this.setPierceLevel((byte)0);
+			this.setHitSound(DeferredRegistryHandler.BULLET_WHIZZ.get());
+			this.setShotFromCrossbow(false);
+			this.func_213870_w();
+			
+			if (canBreakGlass && !this.hasAlreadyBrokeGlass && this.inBlockState.getBlock().isIn(BlockTags.makeWrapperTag("forge:glass")) || this.inBlockState.getBlock().isIn(BlockTags.makeWrapperTag("forge:glass_panes"))) {;
+				this.world.destroyBlock(blockStateRayTraceResult.getPos(), false);
+				this.hasAlreadyBrokeGlass = true;
+			}
+		}
+
+		private void func_213870_w() {
+			if (this.hitEntities != null) {
+				this.hitEntities.clear();
+			}
+
+			if (this.piercedEntities != null) {
+				this.piercedEntities.clear();
+			}
+
 		}
 	}
 
@@ -591,7 +1035,7 @@ public class BulletEntity {
 		
 		@Override
 		public void shoot(double x, double y, double z, float velocity, float inaccuracy) {
-			Vector3d vector3d = (new Vector3d(x, y, z)).normalize().add(this.rand.nextGaussian() * 0.0025F * (getRandomNumber(0.2f, 1.1f)), 0.00025F * (getRandomNumber(0.2f, 1.1f)), this.rand.nextGaussian() * 0.0025F).scale(velocity);
+			Vector3d vector3d = (new Vector3d(x, y, z)).normalize().add(this.rand.nextGaussian() * 0.0025F * (GeneralUtilities.getRandomNumber(0.2f, 1.1f)), 0.00025F * (GeneralUtilities.getRandomNumber(0.2f, 1.1f)), this.rand.nextGaussian() * 0.0025F).scale(velocity);
 		    this.setMotion(vector3d);
 		    float f = MathHelper.sqrt(horizontalMag(vector3d));
 		    this.rotationYaw = (float)(MathHelper.atan2(vector3d.x, vector3d.z) * (180F / (float)Math.PI));
@@ -734,6 +1178,150 @@ public class BulletEntity {
 		         this.setPosition(d5, d1, d2);
 		         this.doBlockCollisions();
 		      }
+		}
+		
+		/**
+		 * Called when the arrow hits an entity
+		 */
+		
+		private IntOpenHashSet piercedEntities;
+		private List<Entity> hitEntities;
+		private int knockbackStrength;
+		private SoundEvent hitSound = this.getHitEntitySound();
+		
+		@Override
+		protected void onEntityHit(EntityRayTraceResult p_213868_1_) {
+			super.onEntityHit(p_213868_1_);
+			Entity entity = p_213868_1_.getEntity();
+			float f = (float)this.getMotion().length();
+			int i = MathHelper.ceil(MathHelper.clamp(f * this.damage, 0.0D, 2.147483647E9D));
+			if (this.getPierceLevel() > 0) {
+				if (this.piercedEntities == null) {
+					this.piercedEntities = new IntOpenHashSet(5);
+				}
+
+				if (this.hitEntities == null) {
+					this.hitEntities = Lists.newArrayListWithCapacity(5);
+				}
+
+				if (this.piercedEntities.size() >= this.getPierceLevel() + 1) {
+					this.remove();
+					return;
+				}
+
+				this.piercedEntities.add(entity.getEntityId());
+			}
+
+			if (this.getIsCritical()) {
+				long j = this.rand.nextInt(i / 2 + 2);
+				i = (int)Math.min(j + i, 2147483647L);
+			}
+
+			Entity entity1 = this.func_234616_v_();
+			DamageSource damagesource;
+			if (entity1 == null) {
+				damagesource = DamageSource.causeArrowDamage(this, this);
+			} else {
+				damagesource = DamageSource.causeArrowDamage(this, entity1);
+				if (entity1 instanceof LivingEntity) {
+					entity.hurtResistantTime = 0;
+					entity.setInvulnerable(false);
+		            	((LivingEntity)entity1).setLastAttackedEntity(entity);
+		         	}
+		      	}
+
+		      	boolean flag = entity.getType() == EntityType.ENDERMAN;
+		      	int k = entity.getFireTimer();
+		      	if (this.isBurning() && !flag) {
+		      		entity.setFire(5);
+		      	}
+		      	
+		      	if (entity.attackEntityFrom(damagesource, i)) {
+		      		if (flag) {
+		      			return;
+		      		}
+		      		
+		      		if (entity instanceof LivingEntity) {
+		      			LivingEntity livingentity = (LivingEntity)entity;
+		      			if (!this.world.isRemote && this.getPierceLevel() <= 0) {
+		      				livingentity.setArrowCountInEntity(livingentity.getArrowCountInEntity() + 1);
+		      			}
+		      			
+		      			if (this.knockbackStrength > 0) {
+		      				Vector3d vector3d = this.getMotion().mul(1.0D, 0.0D, 1.0D).normalize().scale(this.knockbackStrength * 0.6D);
+		      				if (vector3d.lengthSquared() > 0.0D) {
+		      					livingentity.addVelocity(vector3d.x, 0.1D, vector3d.z);
+		      				}
+		      			}
+		      			
+		      			if (!this.world.isRemote && entity1 instanceof LivingEntity) {
+		      				EnchantmentHelper.applyThornEnchantments(livingentity, entity1);
+		      				EnchantmentHelper.applyArthropodEnchantments((LivingEntity)entity1, livingentity);
+		      			}
+
+		      			this.arrowHit(livingentity);
+		      			if (entity1 != null && livingentity != entity1 && livingentity instanceof PlayerEntity && entity1 instanceof ServerPlayerEntity && !this.isSilent()) {
+		      				((ServerPlayerEntity)entity1).connection.sendPacket(new SChangeGameStatePacket(SChangeGameStatePacket.field_241770_g_, 0.0F));
+		      			}
+		      			
+		      			if (!entity.isAlive() && this.hitEntities != null) {
+		      				this.hitEntities.add(livingentity);
+		      			}
+		      			
+		      			if (!this.world.isRemote && entity1 instanceof ServerPlayerEntity) {
+		      				ServerPlayerEntity serverplayerentity = (ServerPlayerEntity)entity1;
+		      				if (this.hitEntities != null && this.getShotFromCrossbow()) {
+		      					CriteriaTriggers.KILLED_BY_CROSSBOW.test(serverplayerentity, this.hitEntities);
+		      				} else if (!entity.isAlive() && this.getShotFromCrossbow()) {
+		      					CriteriaTriggers.KILLED_BY_CROSSBOW.test(serverplayerentity, Arrays.asList(entity));
+		      				}
+		      			}
+		      		}
+		      		
+		      		this.playSound(this.hitSound, 1.0F, 1.2F / (this.rand.nextFloat() * 0.2F + 0.9F));
+		      		if (this.getPierceLevel() <= 0) {
+		      			this.remove();
+		      		}
+		      	} else {
+		      		entity.forceFireTicks(k);
+		      		if (!this.world.isRemote && this.getMotion().lengthSquared() < 1.0E-7D) {
+		      			this.remove();
+		      		}
+		      	}
+		}
+		private boolean hasAlreadyBrokeGlass = false;
+		
+		@Override
+		protected void func_230299_a_(BlockRayTraceResult blockStateRayTraceResult) {
+			this.inBlockState = this.world.getBlockState(blockStateRayTraceResult.getPos());
+			super.func_230299_a_(blockStateRayTraceResult);
+			Vector3d vector3d = blockStateRayTraceResult.getHitVec().subtract(this.getPosX(), this.getPosY(), this.getPosZ());
+			this.setMotion(vector3d);
+			Vector3d vector3d1 = vector3d.normalize().scale(0.05F);
+			this.setRawPosition(this.getPosX() - vector3d1.x, this.getPosY() - vector3d1.y, this.getPosZ() - vector3d1.z);
+			this.inGround = true;
+			this.arrowShake = 2;
+			this.setIsCritical(false);
+			this.setPierceLevel((byte)0);
+			this.setHitSound(DeferredRegistryHandler.BULLET_WHIZZ.get());
+			this.setShotFromCrossbow(false);
+			this.func_213870_w();
+			
+			if (canBreakGlass && !this.hasAlreadyBrokeGlass && this.inBlockState.getBlock().isIn(BlockTags.makeWrapperTag("forge:glass")) || this.inBlockState.getBlock().isIn(BlockTags.makeWrapperTag("forge:glass_panes"))) {;
+				this.world.destroyBlock(blockStateRayTraceResult.getPos(), false);
+				this.hasAlreadyBrokeGlass = true;
+			}
+		}
+
+		private void func_213870_w() {
+			if (this.hitEntities != null) {
+				this.hitEntities.clear();
+			}
+
+			if (this.piercedEntities != null) {
+				this.piercedEntities.clear();
+			}
+
 		}
 	}
 
@@ -768,7 +1356,7 @@ public class BulletEntity {
 		
 		@Override
 		public void shoot(double x, double y, double z, float velocity, float inaccuracy) {
-			Vector3d vector3d = (new Vector3d(x, y, z)).normalize().add(this.rand.nextGaussian() * 0.0025F * (getRandomNumber(0.2f, 1.1f)), 0.00025F * (getRandomNumber(0.2f, 1.1f)), this.rand.nextGaussian() * 0.0025F).scale(velocity);
+			Vector3d vector3d = (new Vector3d(x, y, z)).normalize().add(this.rand.nextGaussian() * 0.0025F * (GeneralUtilities.getRandomNumber(0.2f, 1.1f)), 0.00025F * (GeneralUtilities.getRandomNumber(0.2f, 1.1f)), this.rand.nextGaussian() * 0.0025F).scale(velocity);
 		    this.setMotion(vector3d);
 		    float f = MathHelper.sqrt(horizontalMag(vector3d));
 		    this.rotationYaw = (float)(MathHelper.atan2(vector3d.x, vector3d.z) * (180F / (float)Math.PI));
@@ -912,6 +1500,149 @@ public class BulletEntity {
 		         this.doBlockCollisions();
 		      }
 		}
+		/**
+		 * Called when the arrow hits an entity
+		 */
+		
+		private IntOpenHashSet piercedEntities;
+		private List<Entity> hitEntities;
+		private int knockbackStrength;
+		private SoundEvent hitSound = this.getHitEntitySound();
+		
+		@Override
+		protected void onEntityHit(EntityRayTraceResult p_213868_1_) {
+			super.onEntityHit(p_213868_1_);
+			Entity entity = p_213868_1_.getEntity();
+			float f = (float)this.getMotion().length();
+			int i = MathHelper.ceil(MathHelper.clamp(f * this.damage, 0.0D, 2.147483647E9D));
+			if (this.getPierceLevel() > 0) {
+				if (this.piercedEntities == null) {
+					this.piercedEntities = new IntOpenHashSet(5);
+				}
+
+				if (this.hitEntities == null) {
+					this.hitEntities = Lists.newArrayListWithCapacity(5);
+				}
+
+				if (this.piercedEntities.size() >= this.getPierceLevel() + 1) {
+					this.remove();
+					return;
+				}
+
+				this.piercedEntities.add(entity.getEntityId());
+			}
+
+			if (this.getIsCritical()) {
+				long j = this.rand.nextInt(i / 2 + 2);
+				i = (int)Math.min(j + i, 2147483647L);
+			}
+
+			Entity entity1 = this.func_234616_v_();
+			DamageSource damagesource;
+			if (entity1 == null) {
+				damagesource = DamageSource.causeArrowDamage(this, this);
+			} else {
+				damagesource = DamageSource.causeArrowDamage(this, entity1);
+				if (entity1 instanceof LivingEntity) {
+					entity.hurtResistantTime = 0;
+					entity.setInvulnerable(false);
+		            	((LivingEntity)entity1).setLastAttackedEntity(entity);
+		         	}
+		      	}
+
+		      	boolean flag = entity.getType() == EntityType.ENDERMAN;
+		      	int k = entity.getFireTimer();
+		      	if (this.isBurning() && !flag) {
+		      		entity.setFire(5);
+		      	}
+		      	
+		      	if (entity.attackEntityFrom(damagesource, i)) {
+		      		if (flag) {
+		      			return;
+		      		}
+		      		
+		      		if (entity instanceof LivingEntity) {
+		      			LivingEntity livingentity = (LivingEntity)entity;
+		      			if (!this.world.isRemote && this.getPierceLevel() <= 0) {
+		      				livingentity.setArrowCountInEntity(livingentity.getArrowCountInEntity() + 1);
+		      			}
+		      			
+		      			if (this.knockbackStrength > 0) {
+		      				Vector3d vector3d = this.getMotion().mul(1.0D, 0.0D, 1.0D).normalize().scale(this.knockbackStrength * 0.6D);
+		      				if (vector3d.lengthSquared() > 0.0D) {
+		      					livingentity.addVelocity(vector3d.x, 0.1D, vector3d.z);
+		      				}
+		      			}
+		      			
+		      			if (!this.world.isRemote && entity1 instanceof LivingEntity) {
+		      				EnchantmentHelper.applyThornEnchantments(livingentity, entity1);
+		      				EnchantmentHelper.applyArthropodEnchantments((LivingEntity)entity1, livingentity);
+		      			}
+
+		      			this.arrowHit(livingentity);
+		      			if (entity1 != null && livingentity != entity1 && livingentity instanceof PlayerEntity && entity1 instanceof ServerPlayerEntity && !this.isSilent()) {
+		      				((ServerPlayerEntity)entity1).connection.sendPacket(new SChangeGameStatePacket(SChangeGameStatePacket.field_241770_g_, 0.0F));
+		      			}
+		      			
+		      			if (!entity.isAlive() && this.hitEntities != null) {
+		      				this.hitEntities.add(livingentity);
+		      			}
+		      			
+		      			if (!this.world.isRemote && entity1 instanceof ServerPlayerEntity) {
+		      				ServerPlayerEntity serverplayerentity = (ServerPlayerEntity)entity1;
+		      				if (this.hitEntities != null && this.getShotFromCrossbow()) {
+		      					CriteriaTriggers.KILLED_BY_CROSSBOW.test(serverplayerentity, this.hitEntities);
+		      				} else if (!entity.isAlive() && this.getShotFromCrossbow()) {
+		      					CriteriaTriggers.KILLED_BY_CROSSBOW.test(serverplayerentity, Arrays.asList(entity));
+		      				}
+		      			}
+		      		}
+		      		
+		      		this.playSound(this.hitSound, 1.0F, 1.2F / (this.rand.nextFloat() * 0.2F + 0.9F));
+		      		if (this.getPierceLevel() <= 0) {
+		      			this.remove();
+		      		}
+		      	} else {
+		      		entity.forceFireTicks(k);
+		      		if (!this.world.isRemote && this.getMotion().lengthSquared() < 1.0E-7D) {
+		      			this.remove();
+		      		}
+		      	}
+		}
+		private boolean hasAlreadyBrokeGlass = false;
+		
+		@Override
+		protected void func_230299_a_(BlockRayTraceResult blockStateRayTraceResult) {
+			this.inBlockState = this.world.getBlockState(blockStateRayTraceResult.getPos());
+			super.func_230299_a_(blockStateRayTraceResult);
+			Vector3d vector3d = blockStateRayTraceResult.getHitVec().subtract(this.getPosX(), this.getPosY(), this.getPosZ());
+			this.setMotion(vector3d);
+			Vector3d vector3d1 = vector3d.normalize().scale(0.05F);
+			this.setRawPosition(this.getPosX() - vector3d1.x, this.getPosY() - vector3d1.y, this.getPosZ() - vector3d1.z);
+			this.inGround = true;
+			this.arrowShake = 2;
+			this.setIsCritical(false);
+			this.setPierceLevel((byte)0);
+			this.setHitSound(DeferredRegistryHandler.BULLET_WHIZZ.get());
+			this.setShotFromCrossbow(false);
+			this.func_213870_w();
+			
+			if (canBreakGlass && !this.hasAlreadyBrokeGlass && this.inBlockState.getBlock().isIn(BlockTags.makeWrapperTag("forge:glass")) || this.inBlockState.getBlock().isIn(BlockTags.makeWrapperTag("forge:glass_panes"))) {;
+				this.world.destroyBlock(blockStateRayTraceResult.getPos(), false);
+				this.hasAlreadyBrokeGlass = true;
+			}
+		}
+
+		private void func_213870_w() {
+			if (this.hitEntities != null) {
+				this.hitEntities.clear();
+			}
+
+			if (this.piercedEntities != null) {
+				this.piercedEntities.clear();
+			}
+
+		}
 	}
 
 	public static class DiamondBulletEntity extends AbstractArrowEntity {
@@ -945,7 +1676,7 @@ public class BulletEntity {
 		
 		@Override
 		public void shoot(double x, double y, double z, float velocity, float inaccuracy) {
-			Vector3d vector3d = (new Vector3d(x, y, z)).normalize().add(this.rand.nextGaussian() * 0.0025F * (getRandomNumber(0.2f, 0.9f)), 0.00025F * (getRandomNumber(0.2f, 0.9f)), this.rand.nextGaussian() * 0.0025F).scale(velocity);
+			Vector3d vector3d = (new Vector3d(x, y, z)).normalize().add(this.rand.nextGaussian() * 0.0025F * (GeneralUtilities.getRandomNumber(0.2f, 0.9f)), 0.00025F * (GeneralUtilities.getRandomNumber(0.2f, 0.9f)), this.rand.nextGaussian() * 0.0025F).scale(velocity);
 		    this.setMotion(vector3d);
 		    float f = MathHelper.sqrt(horizontalMag(vector3d));
 		    this.rotationYaw = (float)(MathHelper.atan2(vector3d.x, vector3d.z) * (180F / (float)Math.PI));
@@ -1089,8 +1820,152 @@ public class BulletEntity {
 		         this.doBlockCollisions();
 		      }
 		}
-	}
+		
+		/**
+		 * Called when the arrow hits an entity
+		 */
+		
+		private IntOpenHashSet piercedEntities;
+		private List<Entity> hitEntities;
+		private int knockbackStrength;
+		private SoundEvent hitSound = this.getHitEntitySound();
+		
+		@Override
+		protected void onEntityHit(EntityRayTraceResult p_213868_1_) {
+			super.onEntityHit(p_213868_1_);
+			Entity entity = p_213868_1_.getEntity();
+			float f = (float)this.getMotion().length();
+			int i = MathHelper.ceil(MathHelper.clamp(f * this.damage, 0.0D, 2.147483647E9D));
+			if (this.getPierceLevel() > 0) {
+				if (this.piercedEntities == null) {
+					this.piercedEntities = new IntOpenHashSet(5);
+				}
 
+				if (this.hitEntities == null) {
+					this.hitEntities = Lists.newArrayListWithCapacity(5);
+				}
+
+				if (this.piercedEntities.size() >= this.getPierceLevel() + 1) {
+					this.remove();
+					return;
+				}
+
+				this.piercedEntities.add(entity.getEntityId());
+			}
+
+			if (this.getIsCritical()) {
+				long j = this.rand.nextInt(i / 2 + 2);
+				i = (int)Math.min(j + i, 2147483647L);
+			}
+
+			Entity entity1 = this.func_234616_v_();
+			DamageSource damagesource;
+			if (entity1 == null) {
+				damagesource = DamageSource.causeArrowDamage(this, this);
+			} else {
+				damagesource = DamageSource.causeArrowDamage(this, entity1);
+				if (entity1 instanceof LivingEntity) {
+					entity.hurtResistantTime = 0;
+					entity.setInvulnerable(false);
+		            	((LivingEntity)entity1).setLastAttackedEntity(entity);
+		         	}
+		      	}
+
+		      	boolean flag = entity.getType() == EntityType.ENDERMAN;
+		      	int k = entity.getFireTimer();
+		      	if (this.isBurning() && !flag) {
+		      		entity.setFire(5);
+		      	}
+		      	
+		      	if (entity.attackEntityFrom(damagesource, i)) {
+		      		if (flag) {
+		      			return;
+		      		}
+		      		
+		      		if (entity instanceof LivingEntity) {
+		      			LivingEntity livingentity = (LivingEntity)entity;
+		      			if (!this.world.isRemote && this.getPierceLevel() <= 0) {
+		      				livingentity.setArrowCountInEntity(livingentity.getArrowCountInEntity() + 1);
+		      			}
+		      			
+		      			if (this.knockbackStrength > 0) {
+		      				Vector3d vector3d = this.getMotion().mul(1.0D, 0.0D, 1.0D).normalize().scale(this.knockbackStrength * 0.6D);
+		      				if (vector3d.lengthSquared() > 0.0D) {
+		      					livingentity.addVelocity(vector3d.x, 0.1D, vector3d.z);
+		      				}
+		      			}
+		      			
+		      			if (!this.world.isRemote && entity1 instanceof LivingEntity) {
+		      				EnchantmentHelper.applyThornEnchantments(livingentity, entity1);
+		      				EnchantmentHelper.applyArthropodEnchantments((LivingEntity)entity1, livingentity);
+		      			}
+
+		      			this.arrowHit(livingentity);
+		      			if (entity1 != null && livingentity != entity1 && livingentity instanceof PlayerEntity && entity1 instanceof ServerPlayerEntity && !this.isSilent()) {
+		      				((ServerPlayerEntity)entity1).connection.sendPacket(new SChangeGameStatePacket(SChangeGameStatePacket.field_241770_g_, 0.0F));
+		      			}
+		      			
+		      			if (!entity.isAlive() && this.hitEntities != null) {
+		      				this.hitEntities.add(livingentity);
+		      			}
+		      			
+		      			if (!this.world.isRemote && entity1 instanceof ServerPlayerEntity) {
+		      				ServerPlayerEntity serverplayerentity = (ServerPlayerEntity)entity1;
+		      				if (this.hitEntities != null && this.getShotFromCrossbow()) {
+		      					CriteriaTriggers.KILLED_BY_CROSSBOW.test(serverplayerentity, this.hitEntities);
+		      				} else if (!entity.isAlive() && this.getShotFromCrossbow()) {
+		      					CriteriaTriggers.KILLED_BY_CROSSBOW.test(serverplayerentity, Arrays.asList(entity));
+		      				}
+		      			}
+		      		}
+		      		
+		      		this.playSound(this.hitSound, 1.0F, 1.2F / (this.rand.nextFloat() * 0.2F + 0.9F));
+		      		if (this.getPierceLevel() <= 0) {
+		      			this.remove();
+		      		}
+		      	} else {
+		      		entity.forceFireTicks(k);
+		      		if (!this.world.isRemote && this.getMotion().lengthSquared() < 1.0E-7D) {
+		      			this.remove();
+		      		}
+		      	}
+		}
+		private boolean hasAlreadyBrokeGlass = false;
+		
+		@Override
+		protected void func_230299_a_(BlockRayTraceResult blockStateRayTraceResult) {
+			this.inBlockState = this.world.getBlockState(blockStateRayTraceResult.getPos());
+			super.func_230299_a_(blockStateRayTraceResult);
+			Vector3d vector3d = blockStateRayTraceResult.getHitVec().subtract(this.getPosX(), this.getPosY(), this.getPosZ());
+			this.setMotion(vector3d);
+			Vector3d vector3d1 = vector3d.normalize().scale(0.05F);
+			this.setRawPosition(this.getPosX() - vector3d1.x, this.getPosY() - vector3d1.y, this.getPosZ() - vector3d1.z);
+			this.inGround = true;
+			this.arrowShake = 2;
+			this.setIsCritical(false);
+			this.setPierceLevel((byte)0);
+			this.setHitSound(DeferredRegistryHandler.BULLET_WHIZZ.get());
+			this.setShotFromCrossbow(false);
+			this.func_213870_w();
+			
+			if (canBreakGlass && !this.hasAlreadyBrokeGlass && this.inBlockState.getBlock().isIn(BlockTags.makeWrapperTag("forge:glass")) || this.inBlockState.getBlock().isIn(BlockTags.makeWrapperTag("forge:glass_panes"))) {;
+				this.world.destroyBlock(blockStateRayTraceResult.getPos(), false);
+				this.hasAlreadyBrokeGlass = true;
+			}
+		}
+
+		private void func_213870_w() {
+			if (this.hitEntities != null) {
+				this.hitEntities.clear();
+			}
+
+			if (this.piercedEntities != null) {
+				this.piercedEntities.clear();
+			}
+
+		}
+	}
+	
 	public static class NetheriteBulletEntity extends AbstractArrowEntity {
 		private final Item referenceItem;
 
@@ -1122,7 +1997,7 @@ public class BulletEntity {
 		
 		@Override
 		public void shoot(double x, double y, double z, float velocity, float inaccuracy) {
-			Vector3d vector3d = (new Vector3d(x, y, z)).normalize().add(this.rand.nextGaussian() * 0.0020F * (getRandomNumber(0.2f, 0.7f)), 0.0020F * (getRandomNumber(0.2f, 0.7f)), this.rand.nextGaussian() * 0.0020F).scale(velocity);
+			Vector3d vector3d = (new Vector3d(x, y, z)).normalize().add(this.rand.nextGaussian() * 0.0020F * (GeneralUtilities.getRandomNumber(0.2f, 0.7f)), 0.0020F * (GeneralUtilities.getRandomNumber(0.2f, 0.7f)), this.rand.nextGaussian() * 0.0020F).scale(velocity);
 		    this.setMotion(vector3d);
 		    float f = MathHelper.sqrt(horizontalMag(vector3d));
 		    this.rotationYaw = (float)(MathHelper.atan2(vector3d.x, vector3d.z) * (180F / (float)Math.PI));
@@ -1265,6 +2140,151 @@ public class BulletEntity {
 		         this.setPosition(d5, d1, d2);
 		         this.doBlockCollisions();
 		      }
+		}
+		
+		/**
+		 * Called when the arrow hits an entity
+		 */
+		
+		private IntOpenHashSet piercedEntities;
+		private List<Entity> hitEntities;
+		private int knockbackStrength;
+		private SoundEvent hitSound = this.getHitEntitySound();
+		
+		@Override
+		protected void onEntityHit(EntityRayTraceResult p_213868_1_) {
+			super.onEntityHit(p_213868_1_);
+			Entity entity = p_213868_1_.getEntity();
+			float f = (float)this.getMotion().length();
+			int i = MathHelper.ceil(MathHelper.clamp(f * this.damage, 0.0D, 2.147483647E9D));
+			if (this.getPierceLevel() > 0) {
+				if (this.piercedEntities == null) {
+					this.piercedEntities = new IntOpenHashSet(5);
+				}
+
+				if (this.hitEntities == null) {
+					this.hitEntities = Lists.newArrayListWithCapacity(5);
+				}
+
+				if (this.piercedEntities.size() >= this.getPierceLevel() + 1) {
+					this.remove();
+					return;
+				}
+
+				this.piercedEntities.add(entity.getEntityId());
+			}
+
+			if (this.getIsCritical()) {
+				long j = this.rand.nextInt(i / 2 + 2);
+				i = (int)Math.min(j + i, 2147483647L);
+			}
+
+			Entity entity1 = this.func_234616_v_();
+			DamageSource damagesource;
+			if (entity1 == null) {
+				damagesource = DamageSource.causeArrowDamage(this, this);
+			} else {
+				damagesource = DamageSource.causeArrowDamage(this, entity1);
+				if (entity1 instanceof LivingEntity) {
+					entity.hurtResistantTime = 0;
+					entity.setInvulnerable(false);
+		            	((LivingEntity)entity1).setLastAttackedEntity(entity);
+		         	}
+		      	}
+
+		      	boolean flag = entity.getType() == EntityType.ENDERMAN;
+		      	int k = entity.getFireTimer();
+		      	if (this.isBurning() && !flag) {
+		      		entity.setFire(5);
+		      	}
+		      	
+		      	if (entity.attackEntityFrom(damagesource, i)) {
+		      		if (flag) {
+		      			return;
+		      		}
+		      		
+		      		if (entity instanceof LivingEntity) {
+		      			LivingEntity livingentity = (LivingEntity)entity;
+		      			if (!this.world.isRemote && this.getPierceLevel() <= 0) {
+		      				livingentity.setArrowCountInEntity(livingentity.getArrowCountInEntity() + 1);
+		      			}
+		      			
+		      			if (this.knockbackStrength > 0) {
+		      				Vector3d vector3d = this.getMotion().mul(1.0D, 0.0D, 1.0D).normalize().scale(this.knockbackStrength * 0.6D);
+		      				if (vector3d.lengthSquared() > 0.0D) {
+		      					livingentity.addVelocity(vector3d.x, 0.1D, vector3d.z);
+		      				}
+		      			}
+		      			
+		      			if (!this.world.isRemote && entity1 instanceof LivingEntity) {
+		      				EnchantmentHelper.applyThornEnchantments(livingentity, entity1);
+		      				EnchantmentHelper.applyArthropodEnchantments((LivingEntity)entity1, livingentity);
+		      			}
+
+		      			this.arrowHit(livingentity);
+		      			if (entity1 != null && livingentity != entity1 && livingentity instanceof PlayerEntity && entity1 instanceof ServerPlayerEntity && !this.isSilent()) {
+		      				((ServerPlayerEntity)entity1).connection.sendPacket(new SChangeGameStatePacket(SChangeGameStatePacket.field_241770_g_, 0.0F));
+		      			}
+		      			
+		      			if (!entity.isAlive() && this.hitEntities != null) {
+		      				this.hitEntities.add(livingentity);
+		      			}
+		      			
+		      			if (!this.world.isRemote && entity1 instanceof ServerPlayerEntity) {
+		      				ServerPlayerEntity serverplayerentity = (ServerPlayerEntity)entity1;
+		      				if (this.hitEntities != null && this.getShotFromCrossbow()) {
+		      					CriteriaTriggers.KILLED_BY_CROSSBOW.test(serverplayerentity, this.hitEntities);
+		      				} else if (!entity.isAlive() && this.getShotFromCrossbow()) {
+		      					CriteriaTriggers.KILLED_BY_CROSSBOW.test(serverplayerentity, Arrays.asList(entity));
+		      				}
+		      			}
+		      		}
+		      		
+		      		this.playSound(this.hitSound, 1.0F, 1.2F / (this.rand.nextFloat() * 0.2F + 0.9F));
+		      		if (this.getPierceLevel() <= 0) {
+		      			this.remove();
+		      		}
+		      	} else {
+		      		entity.forceFireTicks(k);
+		      		if (!this.world.isRemote && this.getMotion().lengthSquared() < 1.0E-7D) {
+		      			this.remove();
+		      		}
+		      	}  	
+		}
+		
+		private boolean hasAlreadyBrokeGlass = false;
+		
+		@Override
+		protected void func_230299_a_(BlockRayTraceResult blockStateRayTraceResult) {
+			this.inBlockState = this.world.getBlockState(blockStateRayTraceResult.getPos());
+			super.func_230299_a_(blockStateRayTraceResult);
+			Vector3d vector3d = blockStateRayTraceResult.getHitVec().subtract(this.getPosX(), this.getPosY(), this.getPosZ());
+			this.setMotion(vector3d);
+			Vector3d vector3d1 = vector3d.normalize().scale(0.05F);
+			this.setRawPosition(this.getPosX() - vector3d1.x, this.getPosY() - vector3d1.y, this.getPosZ() - vector3d1.z);
+			this.inGround = true;
+			this.arrowShake = 2;
+			this.setIsCritical(false);
+			this.setPierceLevel((byte)0);
+			this.setHitSound(DeferredRegistryHandler.BULLET_WHIZZ.get());
+			this.setShotFromCrossbow(false);
+			this.func_213870_w();
+			
+			if (canBreakGlass && !this.hasAlreadyBrokeGlass && this.inBlockState.getBlock().isIn(BlockTags.makeWrapperTag("forge:glass")) || this.inBlockState.getBlock().isIn(BlockTags.makeWrapperTag("forge:glass_panes"))) {;
+				this.world.destroyBlock(blockStateRayTraceResult.getPos(), false);
+				this.hasAlreadyBrokeGlass = true;
+			}
+		}
+
+		private void func_213870_w() {
+			if (this.hitEntities != null) {
+				this.hitEntities.clear();
+			}
+
+			if (this.piercedEntities != null) {
+				this.piercedEntities.clear();
+			}
+
 		}
 	}
 }

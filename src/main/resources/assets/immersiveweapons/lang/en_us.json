@@ -92,6 +92,7 @@
 	"item.immersiveweapons.tesla_pickaxe": "Tesla Pickaxe",
 	"item.immersiveweapons.tesla_shovel": "Tesla Shovel",
 	"item.immersiveweapons.tesla_hoe": "Tesla Hoe",
+	"item.immersiveweapons.blunderbuss": "Blunderbuss",
 	
 	"block.immersiveweapons.molten_ore": "Molten Ore",
 	"block.immersiveweapons.molten_block": "Molten Block",
@@ -110,10 +111,11 @@
 	"immersiveweapons.subtitle.armor.tesla.power_up": "Tesla armor turning on",
 	"immersiveweapons.subtitle.item.gun.flintlock_fire": "Flintlock pistol fires",
 	"immersiveweapons.subtitle.item.gun.bullet_whizz": "Bullet whizzes",
-	"immersiveweapons.subtitle.item.gun.flintlock_misfire": "Pistol misfires",
+	"immersiveweapons.subtitle.item.gun.flintlock_misfire": "Gun misfires",
 	"immersiveweapons.subtitle.block.small_parts_table_used": "Small parts table used",
 	"immersiveweapons.subtitle.item.smoke_bomb_hiss": "Smoke bomb hissing",
 	"immersiveweapons.subtitle.item.generic_whoosh": "Item flies",
+	"immersiveweapons.subtitle.item.gun.blunderbuss_fire": "Blunderbuss fires",
 	
 	"key.categories.immersiveweapons": "Immersive Weapons",
 	"immersiveweapons.key.toggleArmorEffect": "Toggle Armor Effect",

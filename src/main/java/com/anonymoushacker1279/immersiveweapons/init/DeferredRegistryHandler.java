@@ -59,6 +59,7 @@ import com.anonymoushacker1279.immersiveweapons.item.PikeItem.NetheritePikeItem;
 import com.anonymoushacker1279.immersiveweapons.item.PikeItem.StonePikeItem;
 import com.anonymoushacker1279.immersiveweapons.item.PikeItem.WoodPikeItem;
 import com.anonymoushacker1279.immersiveweapons.item.SimplePistolItem;
+import com.anonymoushacker1279.immersiveweapons.item.SimpleShotgunItem;
 import com.anonymoushacker1279.immersiveweapons.item.SmokeBombItem;
 import com.anonymoushacker1279.immersiveweapons.item.TeslaArmorItem;
 import com.anonymoushacker1279.immersiveweapons.item.TeslaItem.TeslaAxe;
@@ -94,6 +95,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraftforge.common.ToolType;
 import net.minecraftforge.common.extensions.IForgeContainerType;
+import net.minecraftforge.common.loot.GlobalLootModifierSerializer;
 import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.DeferredRegister;
@@ -115,7 +117,9 @@ public class DeferredRegistryHandler {
 	public static final DeferredRegister<IRecipeSerializer<?>> RECIPE_SERIALIZER = DeferredRegister.create(ForgeRegistries.RECIPE_SERIALIZERS, ImmersiveWeapons.MOD_ID);
 	// Particle Register
 	public static final DeferredRegister<ParticleType<?>> PARTICLE_TYPES = DeferredRegister.create(ForgeRegistries.PARTICLE_TYPES, ImmersiveWeapons.MOD_ID);
-
+	// Global Loot Modifier Register
+	public static final DeferredRegister<GlobalLootModifierSerializer<?>> GLOBAL_LOOT_MODIFIER_SERIALIZER = DeferredRegister.create(ForgeRegistries.LOOT_MODIFIER_SERIALIZERS, ImmersiveWeapons.MOD_ID);
+	
 	public static void init() {
 		ITEMS.register(FMLJavaModLoadingContext.get().getModEventBus());
 		BLOCKS.register(FMLJavaModLoadingContext.get().getModEventBus());
@@ -124,6 +128,7 @@ public class DeferredRegistryHandler {
 		CONTAINER_TYPES.register(FMLJavaModLoadingContext.get().getModEventBus());
 		RECIPE_SERIALIZER.register(FMLJavaModLoadingContext.get().getModEventBus());
 		PARTICLE_TYPES.register(FMLJavaModLoadingContext.get().getModEventBus());
+		GLOBAL_LOOT_MODIFIER_SERIALIZER.register(FMLJavaModLoadingContext.get().getModEventBus());
 	}
 	
 	public static final ItemGroup ITEM_GROUP = new CreativeTabSorter("ImmersiveWeaponsTab");
@@ -157,7 +162,8 @@ public class DeferredRegistryHandler {
 	public static final RegistryObject<Item> NETHERITE_PIKE = ITEMS.register("netherite_pike", () -> new NetheritePikeItem((new Properties()).maxDamage(2031).group(ITEM_GROUP).isImmuneToFire(), 8.0d, -2.6d));
 
 	public static final RegistryObject<Item> FLINTLOCK_PISTOL = ITEMS.register("flintlock_pistol", () -> new SimplePistolItem(new Properties().group(ITEM_GROUP).maxDamage(499)));
-	
+	public static final RegistryObject<Item> BLUNDERBUSS = ITEMS.register("blunderbuss", () -> new SimpleShotgunItem(new Properties().group(ITEM_GROUP).maxDamage(449)));
+
 	// Items
 
 	public static final RegistryObject<Item> WOOD_SHARD = ITEMS.register("wood_shard", () -> new Item(new Properties().group(ITEM_GROUP)));
@@ -309,6 +315,7 @@ public class DeferredRegistryHandler {
 	public static final RegistryObject<SoundEvent> SMALL_PARTS_TABLE_USED = SOUND_EVENTS.register("small_parts_table_used", () -> new SoundEvent(new ResourceLocation(ImmersiveWeapons.MOD_ID, "small_parts_table_used")));
 	public static final RegistryObject<SoundEvent> SMOKE_BOMB_HISS = SOUND_EVENTS.register("smoke_bomb_hiss", () -> new SoundEvent(new ResourceLocation(ImmersiveWeapons.MOD_ID, "smoke_bomb_hiss")));
 	public static final RegistryObject<SoundEvent> GENERIC_WHOOSH = SOUND_EVENTS.register("generic_whoosh", () -> new SoundEvent(new ResourceLocation(ImmersiveWeapons.MOD_ID, "generic_whoosh")));
+	public static final RegistryObject<SoundEvent> BLUNDERBUSS_FIRE = SOUND_EVENTS.register("blunderbuss_fire", () -> new SoundEvent(new ResourceLocation(ImmersiveWeapons.MOD_ID, "blunderbuss_fire")));
 
 	// Containers
 	
@@ -319,6 +326,10 @@ public class DeferredRegistryHandler {
 	// Recipes
 	
 	public static final RegistryObject<IRecipeSerializer<?>> SMALL_PARTS_RECIPE_SERIALIZER = RECIPE_SERIALIZER.register("small_parts", () -> new SmallPartsRecipe.Serializer());
+	
+	// Loot Table Modifiers
+	
+	public static final RegistryObject<LootTableHandler.LogShardsLootModifierHandler.Serializer> WOOD_LOGS_MODIFIER = GLOBAL_LOOT_MODIFIER_SERIALIZER.register("log_shards", LootTableHandler.LogShardsLootModifierHandler.Serializer::new);
 	
 	// Particles
 	

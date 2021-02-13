@@ -6,6 +6,7 @@ import javax.annotation.Nonnull;
 
 import com.anonymoushacker1279.immersiveweapons.client.particle.SmokeBombParticleData;
 import com.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
+import com.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
 
 import net.minecraft.block.Blocks;
 import net.minecraft.client.Minecraft;
@@ -97,23 +98,15 @@ public class MolotovEntity extends ProjectileItemEntity {
 			IParticleData particleData = this.makeParticle();
 	    	
 			for(int i = 0; i < 2; ++i) { // Create a few smoke particles, like the smoke bomb
-				this.world.addParticle(particleData, true, this.getPosX(), this.getPosY(), this.getPosZ(), getRandomNumber(-0.02, 0.02d), getRandomNumber(-0.02d, 0.02d), getRandomNumber(-0.02d, 0.02d));
+				this.world.addParticle(particleData, true, this.getPosX(), this.getPosY(), this.getPosZ(), GeneralUtilities.getRandomNumber(-0.02, 0.02d), GeneralUtilities.getRandomNumber(-0.02d, 0.02d), GeneralUtilities.getRandomNumber(-0.02d, 0.02d));
 			}
 			this.remove();
 	    }
 	  }
-	  
-	  private double getRandomNumber(double min, double max) {
-		    return Math.random() * (max - min) + min;
-	  }
-	  
-	  private int getRandomNumber(int min, int max) {
-		    return (int) ((Math.random() * (max - min)) + min);
-	  }
 
 	  private IParticleData makeParticle() {
-		  Color tint = getTint(getRandomNumber(0, 2));
-		  double diameter = getDiameter(getRandomNumber(0.2d, 0.4d));
+		  Color tint = getTint(GeneralUtilities.getRandomNumber(0, 2));
+		  double diameter = getDiameter(GeneralUtilities.getRandomNumber(0.2d, 0.4d));
 		  SmokeBombParticleData smokeBombParticleData = new SmokeBombParticleData(tint, diameter);
 		  
 		  return smokeBombParticleData;
