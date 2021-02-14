@@ -30,6 +30,10 @@ public class TooltipHandler {
 			event.getToolTip().add(new TranslationTextComponent("Excels in long-range combat").mergeStyle(TextFormatting.DARK_GRAY, TextFormatting.ITALIC));
 			event.getToolTip().add(new TranslationTextComponent("A bit primitive in design.").mergeStyle(TextFormatting.DARK_GRAY, TextFormatting.ITALIC));
 		}
+		if (stack.getItem() == DeferredRegistryHandler.BLUNDERBUSS.get()) {
+			event.getToolTip().add(new TranslationTextComponent("Good for hordes a short distance away").mergeStyle(TextFormatting.DARK_GRAY, TextFormatting.ITALIC));
+			event.getToolTip().add(new TranslationTextComponent("A primitive type of shotgun.").mergeStyle(TextFormatting.DARK_GRAY, TextFormatting.ITALIC));
+		}
 		
 		// Arrows
 		if (stack.getItem() == DeferredRegistryHandler.COPPER_ARROW.get()) {

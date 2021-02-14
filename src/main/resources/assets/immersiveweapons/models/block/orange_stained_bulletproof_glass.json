@@ -1,0 +1,6 @@
+{
+	"parent": "block/cube_all",
+	"textures": {
+		"all": "immersiveweapons:block/orange_stained_bulletproof_glass"
+	}
+}

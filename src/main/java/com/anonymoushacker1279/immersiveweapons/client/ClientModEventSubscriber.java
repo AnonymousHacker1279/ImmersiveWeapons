@@ -25,6 +25,8 @@ import com.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScreenManager;
+import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.RenderTypeLookup;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.ParticleFactoryRegisterEvent;
@@ -41,8 +43,10 @@ public class ClientModEventSubscriber {
 	 public static void onClientSetup(final FMLClientSetupEvent event) {
 	    ImmersiveWeapons.LOGGER.debug("Performing client-side setup");
 	    
+	    // Register GUI screens
 		ScreenManager.registerFactory(CustomContainerHolder.SMALL_PARTS_CONTAINER, SmallPartsTableScreen::new);
 	    
+		// Register projectile entity renderers
 	    RenderingRegistry.registerEntityRenderingHandler(DeferredRegistryHandler.COPPER_ARROW_ENTITY.get(), CopperArrowRenderer::new);
 	    RenderingRegistry.registerEntityRenderingHandler(DeferredRegistryHandler.IRON_ARROW_ENTITY.get(), IronArrowRenderer::new);
 	    RenderingRegistry.registerEntityRenderingHandler(DeferredRegistryHandler.DIAMOND_ARROW_ENTITY.get(), DiamondArrowRenderer::new);
@@ -60,9 +64,28 @@ public class ClientModEventSubscriber {
 	    RenderingRegistry.registerEntityRenderingHandler(DeferredRegistryHandler.DIAMOND_BULLET_ENTITY.get(), DiamondBulletRenderer::new);
 	    RenderingRegistry.registerEntityRenderingHandler(DeferredRegistryHandler.NETHERITE_BULLET_ENTITY.get(), NetheriteBulletRenderer::new);
 	    
-
 	    RenderingRegistry.registerEntityRenderingHandler(DeferredRegistryHandler.SMOKE_BOMB_ENTITY.get(), new SmokeBombRenderer());
 	    RenderingRegistry.registerEntityRenderingHandler(DeferredRegistryHandler.MOLOTOV_COCKTAIL_ENTITY.get(), new MolotovRenderer());
+	    
+	    // Register block renderers
+	    RenderTypeLookup.setRenderLayer(DeferredRegistryHandler.BULLETPROOF_GLASS.get(), RenderType.getCutoutMipped());
+	    RenderTypeLookup.setRenderLayer(DeferredRegistryHandler.WHITE_STAINED_BULLETPROOF_GLASS.get(), RenderType.getTranslucent());
+	    RenderTypeLookup.setRenderLayer(DeferredRegistryHandler.LIGHT_GRAY_STAINED_BULLETPROOF_GLASS.get(), RenderType.getTranslucent());
+	    RenderTypeLookup.setRenderLayer(DeferredRegistryHandler.GRAY_STAINED_BULLETPROOF_GLASS.get(), RenderType.getTranslucent());
+	    RenderTypeLookup.setRenderLayer(DeferredRegistryHandler.BLACK_STAINED_BULLETPROOF_GLASS.get(), RenderType.getTranslucent());
+	    RenderTypeLookup.setRenderLayer(DeferredRegistryHandler.ORANGE_STAINED_BULLETPROOF_GLASS.get(), RenderType.getTranslucent());
+	    RenderTypeLookup.setRenderLayer(DeferredRegistryHandler.MAGENTA_STAINED_BULLETPROOF_GLASS.get(), RenderType.getTranslucent());
+	    RenderTypeLookup.setRenderLayer(DeferredRegistryHandler.LIGHT_BLUE_STAINED_BULLETPROOF_GLASS.get(), RenderType.getTranslucent());
+	    RenderTypeLookup.setRenderLayer(DeferredRegistryHandler.YELLOW_STAINED_BULLETPROOF_GLASS.get(), RenderType.getTranslucent());
+	    RenderTypeLookup.setRenderLayer(DeferredRegistryHandler.LIME_STAINED_BULLETPROOF_GLASS.get(), RenderType.getTranslucent());
+	    RenderTypeLookup.setRenderLayer(DeferredRegistryHandler.PINK_STAINED_BULLETPROOF_GLASS.get(), RenderType.getTranslucent());
+	    RenderTypeLookup.setRenderLayer(DeferredRegistryHandler.CYAN_STAINED_BULLETPROOF_GLASS.get(), RenderType.getTranslucent());
+	    RenderTypeLookup.setRenderLayer(DeferredRegistryHandler.PURPLE_STAINED_BULLETPROOF_GLASS.get(), RenderType.getTranslucent());
+	    RenderTypeLookup.setRenderLayer(DeferredRegistryHandler.BLUE_STAINED_BULLETPROOF_GLASS.get(), RenderType.getTranslucent());
+	    RenderTypeLookup.setRenderLayer(DeferredRegistryHandler.BROWN_STAINED_BULLETPROOF_GLASS.get(), RenderType.getTranslucent());
+	    RenderTypeLookup.setRenderLayer(DeferredRegistryHandler.GREEN_STAINED_BULLETPROOF_GLASS.get(), RenderType.getTranslucent());
+	    RenderTypeLookup.setRenderLayer(DeferredRegistryHandler.RED_STAINED_BULLETPROOF_GLASS.get(), RenderType.getTranslucent());
+
 	 }
 	 
 	 @SubscribeEvent
