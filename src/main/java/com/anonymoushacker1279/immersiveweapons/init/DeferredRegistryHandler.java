@@ -71,8 +71,10 @@ import com.anonymoushacker1279.immersiveweapons.item.crafting.SmallPartsRecipe;
 import com.anonymoushacker1279.immersiveweapons.util.CreativeTabSorter;
 import com.anonymoushacker1279.immersiveweapons.util.CustomArmorMaterials;
 import com.anonymoushacker1279.immersiveweapons.util.CustomItemMaterials;
+import com.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.GlassBlock;
 import net.minecraft.block.OreBlock;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
@@ -82,6 +84,7 @@ import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.inventory.container.ContainerType;
 import net.minecraft.item.AxeItem;
 import net.minecraft.item.BlockItem;
+import net.minecraft.item.DyeColor;
 import net.minecraft.item.HoeItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.Item.Properties;
@@ -271,6 +274,24 @@ public class DeferredRegistryHandler {
 	
 	public static final RegistryObject<Block> BARREL_TAP = BLOCKS.register("barrel_tap", () -> new BarrelTapBlock(Block.Properties.create(Material.IRON).hardnessAndResistance(1.0f, 1.0f).sound(SoundType.METAL).harvestLevel(0)));
 	
+	public static final RegistryObject<Block> BULLETPROOF_GLASS = BLOCKS.register("bulletproof_glass", () -> new GlassBlock(Block.Properties.create(Material.GLASS).sound(SoundType.GLASS).notSolid().hardnessAndResistance(0.5f)));
+	public static final RegistryObject<Block> WHITE_STAINED_BULLETPROOF_GLASS = BLOCKS.register("white_stained_bulletproof_glass", () -> GeneralUtilities.createStainedGlassFromColor(DyeColor.WHITE, Block.Properties.create(Material.GLASS, DyeColor.WHITE).sound(SoundType.GLASS).notSolid().hardnessAndResistance(0.5f)));
+	public static final RegistryObject<Block> LIGHT_GRAY_STAINED_BULLETPROOF_GLASS = BLOCKS.register("light_gray_stained_bulletproof_glass", () -> GeneralUtilities.createStainedGlassFromColor(DyeColor.LIGHT_GRAY, Block.Properties.create(Material.GLASS, DyeColor.LIGHT_GRAY).sound(SoundType.GLASS).notSolid().hardnessAndResistance(0.5f)));
+	public static final RegistryObject<Block> GRAY_STAINED_BULLETPROOF_GLASS = BLOCKS.register("gray_stained_bulletproof_glass", () -> GeneralUtilities.createStainedGlassFromColor(DyeColor.GRAY, Block.Properties.create(Material.GLASS, DyeColor.GRAY).sound(SoundType.GLASS).notSolid().hardnessAndResistance(0.5f)));
+	public static final RegistryObject<Block> BLACK_STAINED_BULLETPROOF_GLASS = BLOCKS.register("black_stained_bulletproof_glass", () -> GeneralUtilities.createStainedGlassFromColor(DyeColor.BLACK, Block.Properties.create(Material.GLASS, DyeColor.BLACK).sound(SoundType.GLASS).notSolid().hardnessAndResistance(0.5f)));
+	public static final RegistryObject<Block> ORANGE_STAINED_BULLETPROOF_GLASS = BLOCKS.register("orange_stained_bulletproof_glass", () -> GeneralUtilities.createStainedGlassFromColor(DyeColor.ORANGE, Block.Properties.create(Material.GLASS, DyeColor.ORANGE).sound(SoundType.GLASS).notSolid().hardnessAndResistance(0.5f)));
+	public static final RegistryObject<Block> MAGENTA_STAINED_BULLETPROOF_GLASS = BLOCKS.register("magenta_stained_bulletproof_glass", () -> GeneralUtilities.createStainedGlassFromColor(DyeColor.MAGENTA, Block.Properties.create(Material.GLASS, DyeColor.MAGENTA).sound(SoundType.GLASS).notSolid().hardnessAndResistance(0.5f)));
+	public static final RegistryObject<Block> LIGHT_BLUE_STAINED_BULLETPROOF_GLASS = BLOCKS.register("light_blue_stained_bulletproof_glass", () -> GeneralUtilities.createStainedGlassFromColor(DyeColor.LIGHT_BLUE, Block.Properties.create(Material.GLASS, DyeColor.LIGHT_BLUE).sound(SoundType.GLASS).notSolid().hardnessAndResistance(0.5f)));
+	public static final RegistryObject<Block> YELLOW_STAINED_BULLETPROOF_GLASS = BLOCKS.register("yellow_stained_bulletproof_glass", () -> GeneralUtilities.createStainedGlassFromColor(DyeColor.YELLOW, Block.Properties.create(Material.GLASS, DyeColor.YELLOW).sound(SoundType.GLASS).notSolid().hardnessAndResistance(0.5f)));
+	public static final RegistryObject<Block> LIME_STAINED_BULLETPROOF_GLASS = BLOCKS.register("lime_stained_bulletproof_glass", () -> GeneralUtilities.createStainedGlassFromColor(DyeColor.LIME, Block.Properties.create(Material.GLASS, DyeColor.LIME).sound(SoundType.GLASS).notSolid().hardnessAndResistance(0.5f)));
+	public static final RegistryObject<Block> PINK_STAINED_BULLETPROOF_GLASS = BLOCKS.register("pink_stained_bulletproof_glass", () -> GeneralUtilities.createStainedGlassFromColor(DyeColor.PINK, Block.Properties.create(Material.GLASS, DyeColor.PINK).sound(SoundType.GLASS).notSolid().hardnessAndResistance(0.5f)));
+	public static final RegistryObject<Block> CYAN_STAINED_BULLETPROOF_GLASS = BLOCKS.register("cyan_stained_bulletproof_glass", () -> GeneralUtilities.createStainedGlassFromColor(DyeColor.CYAN, Block.Properties.create(Material.GLASS, DyeColor.CYAN).sound(SoundType.GLASS).notSolid().hardnessAndResistance(0.5f)));
+	public static final RegistryObject<Block> PURPLE_STAINED_BULLETPROOF_GLASS = BLOCKS.register("purple_stained_bulletproof_glass", () -> GeneralUtilities.createStainedGlassFromColor(DyeColor.PURPLE, Block.Properties.create(Material.GLASS, DyeColor.PURPLE).sound(SoundType.GLASS).notSolid().hardnessAndResistance(0.5f)));
+	public static final RegistryObject<Block> BLUE_STAINED_BULLETPROOF_GLASS = BLOCKS.register("blue_stained_bulletproof_glass", () -> GeneralUtilities.createStainedGlassFromColor(DyeColor.BLUE, Block.Properties.create(Material.GLASS, DyeColor.BLUE).sound(SoundType.GLASS).notSolid().hardnessAndResistance(0.5f)));
+	public static final RegistryObject<Block> BROWN_STAINED_BULLETPROOF_GLASS = BLOCKS.register("brown_stained_bulletproof_glass", () -> GeneralUtilities.createStainedGlassFromColor(DyeColor.BROWN, Block.Properties.create(Material.GLASS, DyeColor.BROWN).sound(SoundType.GLASS).notSolid().hardnessAndResistance(0.5f)));
+	public static final RegistryObject<Block> GREEN_STAINED_BULLETPROOF_GLASS = BLOCKS.register("green_stained_bulletproof_glass", () -> GeneralUtilities.createStainedGlassFromColor(DyeColor.GREEN, Block.Properties.create(Material.GLASS, DyeColor.GREEN).sound(SoundType.GLASS).notSolid().hardnessAndResistance(0.5f)));
+	public static final RegistryObject<Block> RED_STAINED_BULLETPROOF_GLASS = BLOCKS.register("red_stained_bulletproof_glass", () -> GeneralUtilities.createStainedGlassFromColor(DyeColor.RED, Block.Properties.create(Material.GLASS, DyeColor.RED).sound(SoundType.GLASS).notSolid().hardnessAndResistance(0.5f)));
+
 	// Block Items
 	
 	public static final RegistryObject<BlockItem> MOLTEN_ORE_ITEM = ITEMS.register("molten_ore", () -> new BlockItem(MOLTEN_ORE.get(), new Properties().group(ITEM_GROUP).isImmuneToFire()));
@@ -280,6 +301,23 @@ public class DeferredRegistryHandler {
 	public static final RegistryObject<BlockItem> TESLA_BLOCK_ITEM = ITEMS.register("tesla_block", () -> new BlockItem(TESLA_BLOCK.get(), new Properties().group(ITEM_GROUP)));
 	public static final RegistryObject<BlockItem> SMALL_PARTS_TABLE_ITEM = ITEMS.register("small_parts_table", () -> new BlockItem(SMALL_PARTS_TABLE.get(), new Properties().group(ITEM_GROUP)));
 	public static final RegistryObject<BlockItem> BARREL_TAP_ITEM = ITEMS.register("barrel_tap", () -> new BlockItem(BARREL_TAP.get(), new Properties().group(ITEM_GROUP)));
+	public static final RegistryObject<BlockItem> BULLETPROOF_GLASS_ITEM = ITEMS.register("bulletproof_glass", () -> new BlockItem(BULLETPROOF_GLASS.get(), new Properties().group(ITEM_GROUP)));
+	public static final RegistryObject<BlockItem> WHITE_STAINED_BULLETPROOF_GLASS_ITEM = ITEMS.register("white_stained_bulletproof_glass", () -> new BlockItem(WHITE_STAINED_BULLETPROOF_GLASS.get(), new Properties().group(ITEM_GROUP)));
+	public static final RegistryObject<BlockItem> LIGHT_GRAY_STAINED_BULLETPROOF_GLASS_ITEM = ITEMS.register("light_gray_stained_bulletproof_glass", () -> new BlockItem(LIGHT_GRAY_STAINED_BULLETPROOF_GLASS.get(), new Properties().group(ITEM_GROUP)));
+	public static final RegistryObject<BlockItem> GRAY_STAINED_BULLETPROOF_GLASS_ITEM = ITEMS.register("gray_stained_bulletproof_glass", () -> new BlockItem(GRAY_STAINED_BULLETPROOF_GLASS.get(), new Properties().group(ITEM_GROUP)));
+	public static final RegistryObject<BlockItem> BLACK_STAINED_BULLETPROOF_GLASS_ITEM = ITEMS.register("black_stained_bulletproof_glass", () -> new BlockItem(BLACK_STAINED_BULLETPROOF_GLASS.get(), new Properties().group(ITEM_GROUP)));
+	public static final RegistryObject<BlockItem> ORANGE_STAINED_BULLETPROOF_GLASS_ITEM = ITEMS.register("orange_stained_bulletproof_glass", () -> new BlockItem(ORANGE_STAINED_BULLETPROOF_GLASS.get(), new Properties().group(ITEM_GROUP)));
+	public static final RegistryObject<BlockItem> MAGENTA_STAINED_BULLETPROOF_GLASS_ITEM = ITEMS.register("magenta_stained_bulletproof_glass", () -> new BlockItem(MAGENTA_STAINED_BULLETPROOF_GLASS.get(), new Properties().group(ITEM_GROUP)));
+	public static final RegistryObject<BlockItem> LIGHT_BLUE_STAINED_BULLETPROOF_GLASS_ITEM = ITEMS.register("light_blue_stained_bulletproof_glass", () -> new BlockItem(LIGHT_BLUE_STAINED_BULLETPROOF_GLASS.get(), new Properties().group(ITEM_GROUP)));
+	public static final RegistryObject<BlockItem> YELLOW_STAINED_BULLETPROOF_GLASS_ITEM = ITEMS.register("yellow_stained_bulletproof_glass", () -> new BlockItem(YELLOW_STAINED_BULLETPROOF_GLASS.get(), new Properties().group(ITEM_GROUP)));
+	public static final RegistryObject<BlockItem> LIME_STAINED_BULLETPROOF_GLASS_ITEM = ITEMS.register("lime_stained_bulletproof_glass", () -> new BlockItem(LIME_STAINED_BULLETPROOF_GLASS.get(), new Properties().group(ITEM_GROUP)));
+	public static final RegistryObject<BlockItem> PINK_STAINED_BULLETPROOF_GLASS_ITEM = ITEMS.register("pink_stained_bulletproof_glass", () -> new BlockItem(PINK_STAINED_BULLETPROOF_GLASS.get(), new Properties().group(ITEM_GROUP)));
+	public static final RegistryObject<BlockItem> CYAN_STAINED_BULLETPROOF_GLASS_ITEM = ITEMS.register("cyan_stained_bulletproof_glass", () -> new BlockItem(CYAN_STAINED_BULLETPROOF_GLASS.get(), new Properties().group(ITEM_GROUP)));
+	public static final RegistryObject<BlockItem> PURPLE_STAINED_BULLETPROOF_GLASS_ITEM = ITEMS.register("purple_stained_bulletproof_glass", () -> new BlockItem(PURPLE_STAINED_BULLETPROOF_GLASS.get(), new Properties().group(ITEM_GROUP)));
+	public static final RegistryObject<BlockItem> BLUE_STAINED_BULLETPROOF_GLASS_ITEM = ITEMS.register("blue_stained_bulletproof_glass", () -> new BlockItem(BLUE_STAINED_BULLETPROOF_GLASS.get(), new Properties().group(ITEM_GROUP)));
+	public static final RegistryObject<BlockItem> BROWN_STAINED_BULLETPROOF_GLASS_ITEM = ITEMS.register("brown_stained_bulletproof_glass", () -> new BlockItem(BROWN_STAINED_BULLETPROOF_GLASS.get(), new Properties().group(ITEM_GROUP)));
+	public static final RegistryObject<BlockItem> GREEN_STAINED_BULLETPROOF_GLASS_ITEM = ITEMS.register("green_stained_bulletproof_glass", () -> new BlockItem(GREEN_STAINED_BULLETPROOF_GLASS.get(), new Properties().group(ITEM_GROUP)));
+	public static final RegistryObject<BlockItem> RED_STAINED_BULLETPROOF_GLASS_ITEM = ITEMS.register("red_stained_bulletproof_glass", () -> new BlockItem(RED_STAINED_BULLETPROOF_GLASS.get(), new Properties().group(ITEM_GROUP)));
 
 	// Entities
 	
@@ -334,4 +372,5 @@ public class DeferredRegistryHandler {
 	// Particles
 	
 	public static final RegistryObject<ParticleType<SmokeBombParticleData>> SMOKE_BOMB_PARTICLE_TYPE = PARTICLE_TYPES.register("smoke_bomb", () -> new SmokeBombParticleType());
+	
 }

@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern":
+  [
+    "xxx",
+    "xyx",
+    "xxx"
+  ],
+  "key":
+  {
+    "x":
+    {
+      "item": "immersiveweapons:bulletproof_glass"
+    },
+    "y":
+    {
+      "tag": "forge:dyes/green"
+    }
+  },
+  "result":
+  {
+    "item": "immersiveweapons:green_stained_bulletproof_glass",
+    "count": 8
+  }
+}

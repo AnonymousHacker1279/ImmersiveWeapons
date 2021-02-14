@@ -346,7 +346,7 @@ public class BulletEntity {
 			this.setShotFromCrossbow(false);
 			this.func_213870_w();
 			
-			if (canBreakGlass && !this.hasAlreadyBrokeGlass && this.inBlockState.getBlock().isIn(BlockTags.makeWrapperTag("forge:glass")) || this.inBlockState.getBlock().isIn(BlockTags.makeWrapperTag("forge:glass_panes"))) {;
+			if (canBreakGlass && !this.hasAlreadyBrokeGlass && !this.inBlockState.getBlock().isIn(BlockTags.makeWrapperTag("forge:bulletproof_glass")) && this.inBlockState.getBlock().isIn(BlockTags.makeWrapperTag("forge:glass")) || this.inBlockState.getBlock().isIn(BlockTags.makeWrapperTag("forge:glass_panes"))) {;
 				this.world.destroyBlock(blockStateRayTraceResult.getPos(), false);
 				this.hasAlreadyBrokeGlass = true;
 			}
@@ -666,7 +666,7 @@ public class BulletEntity {
 			this.setShotFromCrossbow(false);
 			this.func_213870_w();
 			
-			if (canBreakGlass && !this.hasAlreadyBrokeGlass && this.inBlockState.getBlock().isIn(BlockTags.makeWrapperTag("forge:glass")) || this.inBlockState.getBlock().isIn(BlockTags.makeWrapperTag("forge:glass_panes"))) {;
+			if (canBreakGlass && !this.hasAlreadyBrokeGlass && !this.inBlockState.getBlock().isIn(BlockTags.makeWrapperTag("forge:bulletproof_glass")) && this.inBlockState.getBlock().isIn(BlockTags.makeWrapperTag("forge:glass")) || this.inBlockState.getBlock().isIn(BlockTags.makeWrapperTag("forge:glass_panes"))) {;
 				this.world.destroyBlock(blockStateRayTraceResult.getPos(), false);
 				this.hasAlreadyBrokeGlass = true;
 			}
@@ -986,7 +986,7 @@ public class BulletEntity {
 			this.setShotFromCrossbow(false);
 			this.func_213870_w();
 			
-			if (canBreakGlass && !this.hasAlreadyBrokeGlass && this.inBlockState.getBlock().isIn(BlockTags.makeWrapperTag("forge:glass")) || this.inBlockState.getBlock().isIn(BlockTags.makeWrapperTag("forge:glass_panes"))) {;
+			if (canBreakGlass && !this.hasAlreadyBrokeGlass && !this.inBlockState.getBlock().isIn(BlockTags.makeWrapperTag("forge:bulletproof_glass")) && this.inBlockState.getBlock().isIn(BlockTags.makeWrapperTag("forge:glass")) || this.inBlockState.getBlock().isIn(BlockTags.makeWrapperTag("forge:glass_panes"))) {;
 				this.world.destroyBlock(blockStateRayTraceResult.getPos(), false);
 				this.hasAlreadyBrokeGlass = true;
 			}
@@ -1307,7 +1307,7 @@ public class BulletEntity {
 			this.setShotFromCrossbow(false);
 			this.func_213870_w();
 			
-			if (canBreakGlass && !this.hasAlreadyBrokeGlass && this.inBlockState.getBlock().isIn(BlockTags.makeWrapperTag("forge:glass")) || this.inBlockState.getBlock().isIn(BlockTags.makeWrapperTag("forge:glass_panes"))) {;
+			if (canBreakGlass && !this.hasAlreadyBrokeGlass && !this.inBlockState.getBlock().isIn(BlockTags.makeWrapperTag("forge:bulletproof_glass")) && this.inBlockState.getBlock().isIn(BlockTags.makeWrapperTag("forge:glass")) || this.inBlockState.getBlock().isIn(BlockTags.makeWrapperTag("forge:glass_panes"))) {;
 				this.world.destroyBlock(blockStateRayTraceResult.getPos(), false);
 				this.hasAlreadyBrokeGlass = true;
 			}
@@ -1627,7 +1627,7 @@ public class BulletEntity {
 			this.setShotFromCrossbow(false);
 			this.func_213870_w();
 			
-			if (canBreakGlass && !this.hasAlreadyBrokeGlass && this.inBlockState.getBlock().isIn(BlockTags.makeWrapperTag("forge:glass")) || this.inBlockState.getBlock().isIn(BlockTags.makeWrapperTag("forge:glass_panes"))) {;
+			if (canBreakGlass && !this.hasAlreadyBrokeGlass && !this.inBlockState.getBlock().isIn(BlockTags.makeWrapperTag("forge:bulletproof_glass")) && this.inBlockState.getBlock().isIn(BlockTags.makeWrapperTag("forge:glass")) || this.inBlockState.getBlock().isIn(BlockTags.makeWrapperTag("forge:glass_panes"))) {;
 				this.world.destroyBlock(blockStateRayTraceResult.getPos(), false);
 				this.hasAlreadyBrokeGlass = true;
 			}
@@ -1948,7 +1948,7 @@ public class BulletEntity {
 			this.setShotFromCrossbow(false);
 			this.func_213870_w();
 			
-			if (canBreakGlass && !this.hasAlreadyBrokeGlass && this.inBlockState.getBlock().isIn(BlockTags.makeWrapperTag("forge:glass")) || this.inBlockState.getBlock().isIn(BlockTags.makeWrapperTag("forge:glass_panes"))) {;
+			if (canBreakGlass && !this.hasAlreadyBrokeGlass && !this.inBlockState.getBlock().isIn(BlockTags.makeWrapperTag("forge:bulletproof_glass")) && this.inBlockState.getBlock().isIn(BlockTags.makeWrapperTag("forge:glass")) || this.inBlockState.getBlock().isIn(BlockTags.makeWrapperTag("forge:glass_panes"))) {;
 				this.world.destroyBlock(blockStateRayTraceResult.getPos(), false);
 				this.hasAlreadyBrokeGlass = true;
 			}
@@ -2270,7 +2270,7 @@ public class BulletEntity {
 			this.setShotFromCrossbow(false);
 			this.func_213870_w();
 			
-			if (canBreakGlass && !this.hasAlreadyBrokeGlass && this.inBlockState.getBlock().isIn(BlockTags.makeWrapperTag("forge:glass")) || this.inBlockState.getBlock().isIn(BlockTags.makeWrapperTag("forge:glass_panes"))) {;
+			if (canBreakGlass && !this.hasAlreadyBrokeGlass && !this.inBlockState.getBlock().isIn(BlockTags.makeWrapperTag("forge:bulletproof_glass")) && this.inBlockState.getBlock().isIn(BlockTags.makeWrapperTag("forge:glass")) || this.inBlockState.getBlock().isIn(BlockTags.makeWrapperTag("forge:glass_panes"))) {
 				this.world.destroyBlock(blockStateRayTraceResult.getPos(), false);
 				this.hasAlreadyBrokeGlass = true;
 			}
