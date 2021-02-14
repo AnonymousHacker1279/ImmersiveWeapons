@@ -7,4 +7,4 @@ Active development is focused on the 1.16.x branch. Please only use old releases
 
 Note that the 1.16.5 version will work on 1.16.4 as well. 
 
-Please report any bugs/suggestions to the issue tracker. If you would like to contribute please fork this repository and make a pull request. 
+Please report any bugs/suggestions to the issue tracker. If you would like to contribute please fork this repository and make a pull request.
