@@ -333,18 +333,22 @@ public class BulletEntity {
 		@Override
 		protected void func_230299_a_(BlockRayTraceResult blockStateRayTraceResult) {
 			this.inBlockState = this.world.getBlockState(blockStateRayTraceResult.getPos());
-			super.func_230299_a_(blockStateRayTraceResult);
-			Vector3d vector3d = blockStateRayTraceResult.getHitVec().subtract(this.getPosX(), this.getPosY(), this.getPosZ());
-			this.setMotion(vector3d);
-			Vector3d vector3d1 = vector3d.normalize().scale(0.05F);
-			this.setRawPosition(this.getPosX() - vector3d1.x, this.getPosY() - vector3d1.y, this.getPosZ() - vector3d1.z);
-			this.inGround = true;
-			this.arrowShake = 2;
-			this.setIsCritical(false);
-			this.setPierceLevel((byte)0);
-			this.setHitSound(DeferredRegistryHandler.BULLET_WHIZZ.get());
-			this.setShotFromCrossbow(false);
-			this.func_213870_w();
+			
+			if (this.inBlockState.getBlock().isIn(BlockTags.makeWrapperTag("forge:leaves"))) {
+				this.addVelocity(0, -0.1, 0);
+				this.arrowShake = 4;
+			} else {
+				Vector3d vector3d = blockStateRayTraceResult.getHitVec().subtract(this.getPosX(), this.getPosY(), this.getPosZ());
+				this.setMotion(vector3d);
+				Vector3d vector3d1 = vector3d.normalize().scale(0.05F);
+				this.setRawPosition(this.getPosX() - vector3d1.x, this.getPosY() - vector3d1.y, this.getPosZ() - vector3d1.z);
+				this.inGround = true;
+				this.arrowShake = 2;
+				this.setIsCritical(false);
+				this.setPierceLevel((byte)0);
+				this.setHitSound(DeferredRegistryHandler.BULLET_WHIZZ.get());
+				this.func_213870_w();
+			}
 			
 			if (canBreakGlass && !this.hasAlreadyBrokeGlass && !this.inBlockState.getBlock().isIn(BlockTags.makeWrapperTag("forge:bulletproof_glass")) && this.inBlockState.getBlock().isIn(BlockTags.makeWrapperTag("forge:glass")) || this.inBlockState.getBlock().isIn(BlockTags.makeWrapperTag("forge:glass_panes"))) {;
 				this.world.destroyBlock(blockStateRayTraceResult.getPos(), false);
@@ -653,25 +657,28 @@ public class BulletEntity {
 		@Override
 		protected void func_230299_a_(BlockRayTraceResult blockStateRayTraceResult) {
 			this.inBlockState = this.world.getBlockState(blockStateRayTraceResult.getPos());
-			super.func_230299_a_(blockStateRayTraceResult);
-			Vector3d vector3d = blockStateRayTraceResult.getHitVec().subtract(this.getPosX(), this.getPosY(), this.getPosZ());
-			this.setMotion(vector3d);
-			Vector3d vector3d1 = vector3d.normalize().scale(0.05F);
-			this.setRawPosition(this.getPosX() - vector3d1.x, this.getPosY() - vector3d1.y, this.getPosZ() - vector3d1.z);
-			this.inGround = true;
-			this.arrowShake = 2;
-			this.setIsCritical(false);
-			this.setPierceLevel((byte)0);
-			this.setHitSound(DeferredRegistryHandler.BULLET_WHIZZ.get());
-			this.setShotFromCrossbow(false);
-			this.func_213870_w();
+			
+			if (this.inBlockState.getBlock().isIn(BlockTags.makeWrapperTag("forge:leaves"))) {
+				this.addVelocity(0, -0.1, 0);
+				this.arrowShake = 4;
+			} else {
+				Vector3d vector3d = blockStateRayTraceResult.getHitVec().subtract(this.getPosX(), this.getPosY(), this.getPosZ());
+				this.setMotion(vector3d);
+				Vector3d vector3d1 = vector3d.normalize().scale(0.05F);
+				this.setRawPosition(this.getPosX() - vector3d1.x, this.getPosY() - vector3d1.y, this.getPosZ() - vector3d1.z);
+				this.inGround = true;
+				this.arrowShake = 2;
+				this.setIsCritical(false);
+				this.setPierceLevel((byte)0);
+				this.setHitSound(DeferredRegistryHandler.BULLET_WHIZZ.get());
+				this.func_213870_w();
+			}
 			
 			if (canBreakGlass && !this.hasAlreadyBrokeGlass && !this.inBlockState.getBlock().isIn(BlockTags.makeWrapperTag("forge:bulletproof_glass")) && this.inBlockState.getBlock().isIn(BlockTags.makeWrapperTag("forge:glass")) || this.inBlockState.getBlock().isIn(BlockTags.makeWrapperTag("forge:glass_panes"))) {;
 				this.world.destroyBlock(blockStateRayTraceResult.getPos(), false);
 				this.hasAlreadyBrokeGlass = true;
 			}
 		}
-
 		private void func_213870_w() {
 			if (this.hitEntities != null) {
 				this.hitEntities.clear();
@@ -973,18 +980,22 @@ public class BulletEntity {
 		@Override
 		protected void func_230299_a_(BlockRayTraceResult blockStateRayTraceResult) {
 			this.inBlockState = this.world.getBlockState(blockStateRayTraceResult.getPos());
-			super.func_230299_a_(blockStateRayTraceResult);
-			Vector3d vector3d = blockStateRayTraceResult.getHitVec().subtract(this.getPosX(), this.getPosY(), this.getPosZ());
-			this.setMotion(vector3d);
-			Vector3d vector3d1 = vector3d.normalize().scale(0.05F);
-			this.setRawPosition(this.getPosX() - vector3d1.x, this.getPosY() - vector3d1.y, this.getPosZ() - vector3d1.z);
-			this.inGround = true;
-			this.arrowShake = 2;
-			this.setIsCritical(false);
-			this.setPierceLevel((byte)0);
-			this.setHitSound(DeferredRegistryHandler.BULLET_WHIZZ.get());
-			this.setShotFromCrossbow(false);
-			this.func_213870_w();
+			
+			if (this.inBlockState.getBlock().isIn(BlockTags.makeWrapperTag("forge:leaves"))) {
+				this.addVelocity(0, -0.1, 0);
+				this.arrowShake = 4;
+			} else {
+				Vector3d vector3d = blockStateRayTraceResult.getHitVec().subtract(this.getPosX(), this.getPosY(), this.getPosZ());
+				this.setMotion(vector3d);
+				Vector3d vector3d1 = vector3d.normalize().scale(0.05F);
+				this.setRawPosition(this.getPosX() - vector3d1.x, this.getPosY() - vector3d1.y, this.getPosZ() - vector3d1.z);
+				this.inGround = true;
+				this.arrowShake = 2;
+				this.setIsCritical(false);
+				this.setPierceLevel((byte)0);
+				this.setHitSound(DeferredRegistryHandler.BULLET_WHIZZ.get());
+				this.func_213870_w();
+			}
 			
 			if (canBreakGlass && !this.hasAlreadyBrokeGlass && !this.inBlockState.getBlock().isIn(BlockTags.makeWrapperTag("forge:bulletproof_glass")) && this.inBlockState.getBlock().isIn(BlockTags.makeWrapperTag("forge:glass")) || this.inBlockState.getBlock().isIn(BlockTags.makeWrapperTag("forge:glass_panes"))) {;
 				this.world.destroyBlock(blockStateRayTraceResult.getPos(), false);
@@ -1294,18 +1305,22 @@ public class BulletEntity {
 		@Override
 		protected void func_230299_a_(BlockRayTraceResult blockStateRayTraceResult) {
 			this.inBlockState = this.world.getBlockState(blockStateRayTraceResult.getPos());
-			super.func_230299_a_(blockStateRayTraceResult);
-			Vector3d vector3d = blockStateRayTraceResult.getHitVec().subtract(this.getPosX(), this.getPosY(), this.getPosZ());
-			this.setMotion(vector3d);
-			Vector3d vector3d1 = vector3d.normalize().scale(0.05F);
-			this.setRawPosition(this.getPosX() - vector3d1.x, this.getPosY() - vector3d1.y, this.getPosZ() - vector3d1.z);
-			this.inGround = true;
-			this.arrowShake = 2;
-			this.setIsCritical(false);
-			this.setPierceLevel((byte)0);
-			this.setHitSound(DeferredRegistryHandler.BULLET_WHIZZ.get());
-			this.setShotFromCrossbow(false);
-			this.func_213870_w();
+			
+			if (this.inBlockState.getBlock().isIn(BlockTags.makeWrapperTag("forge:leaves"))) {
+				this.addVelocity(0, -0.1, 0);
+				this.arrowShake = 4;
+			} else {
+				Vector3d vector3d = blockStateRayTraceResult.getHitVec().subtract(this.getPosX(), this.getPosY(), this.getPosZ());
+				this.setMotion(vector3d);
+				Vector3d vector3d1 = vector3d.normalize().scale(0.05F);
+				this.setRawPosition(this.getPosX() - vector3d1.x, this.getPosY() - vector3d1.y, this.getPosZ() - vector3d1.z);
+				this.inGround = true;
+				this.arrowShake = 2;
+				this.setIsCritical(false);
+				this.setPierceLevel((byte)0);
+				this.setHitSound(DeferredRegistryHandler.BULLET_WHIZZ.get());
+				this.func_213870_w();
+			}
 			
 			if (canBreakGlass && !this.hasAlreadyBrokeGlass && !this.inBlockState.getBlock().isIn(BlockTags.makeWrapperTag("forge:bulletproof_glass")) && this.inBlockState.getBlock().isIn(BlockTags.makeWrapperTag("forge:glass")) || this.inBlockState.getBlock().isIn(BlockTags.makeWrapperTag("forge:glass_panes"))) {;
 				this.world.destroyBlock(blockStateRayTraceResult.getPos(), false);
@@ -1614,18 +1629,22 @@ public class BulletEntity {
 		@Override
 		protected void func_230299_a_(BlockRayTraceResult blockStateRayTraceResult) {
 			this.inBlockState = this.world.getBlockState(blockStateRayTraceResult.getPos());
-			super.func_230299_a_(blockStateRayTraceResult);
-			Vector3d vector3d = blockStateRayTraceResult.getHitVec().subtract(this.getPosX(), this.getPosY(), this.getPosZ());
-			this.setMotion(vector3d);
-			Vector3d vector3d1 = vector3d.normalize().scale(0.05F);
-			this.setRawPosition(this.getPosX() - vector3d1.x, this.getPosY() - vector3d1.y, this.getPosZ() - vector3d1.z);
-			this.inGround = true;
-			this.arrowShake = 2;
-			this.setIsCritical(false);
-			this.setPierceLevel((byte)0);
-			this.setHitSound(DeferredRegistryHandler.BULLET_WHIZZ.get());
-			this.setShotFromCrossbow(false);
-			this.func_213870_w();
+			
+			if (this.inBlockState.getBlock().isIn(BlockTags.makeWrapperTag("forge:leaves"))) {
+				this.addVelocity(0, -0.1, 0);
+				this.arrowShake = 4;
+			} else {
+				Vector3d vector3d = blockStateRayTraceResult.getHitVec().subtract(this.getPosX(), this.getPosY(), this.getPosZ());
+				this.setMotion(vector3d);
+				Vector3d vector3d1 = vector3d.normalize().scale(0.05F);
+				this.setRawPosition(this.getPosX() - vector3d1.x, this.getPosY() - vector3d1.y, this.getPosZ() - vector3d1.z);
+				this.inGround = true;
+				this.arrowShake = 2;
+				this.setIsCritical(false);
+				this.setPierceLevel((byte)0);
+				this.setHitSound(DeferredRegistryHandler.BULLET_WHIZZ.get());
+				this.func_213870_w();
+			}
 			
 			if (canBreakGlass && !this.hasAlreadyBrokeGlass && !this.inBlockState.getBlock().isIn(BlockTags.makeWrapperTag("forge:bulletproof_glass")) && this.inBlockState.getBlock().isIn(BlockTags.makeWrapperTag("forge:glass")) || this.inBlockState.getBlock().isIn(BlockTags.makeWrapperTag("forge:glass_panes"))) {;
 				this.world.destroyBlock(blockStateRayTraceResult.getPos(), false);
@@ -1935,18 +1954,22 @@ public class BulletEntity {
 		@Override
 		protected void func_230299_a_(BlockRayTraceResult blockStateRayTraceResult) {
 			this.inBlockState = this.world.getBlockState(blockStateRayTraceResult.getPos());
-			super.func_230299_a_(blockStateRayTraceResult);
-			Vector3d vector3d = blockStateRayTraceResult.getHitVec().subtract(this.getPosX(), this.getPosY(), this.getPosZ());
-			this.setMotion(vector3d);
-			Vector3d vector3d1 = vector3d.normalize().scale(0.05F);
-			this.setRawPosition(this.getPosX() - vector3d1.x, this.getPosY() - vector3d1.y, this.getPosZ() - vector3d1.z);
-			this.inGround = true;
-			this.arrowShake = 2;
-			this.setIsCritical(false);
-			this.setPierceLevel((byte)0);
-			this.setHitSound(DeferredRegistryHandler.BULLET_WHIZZ.get());
-			this.setShotFromCrossbow(false);
-			this.func_213870_w();
+			
+			if (this.inBlockState.getBlock().isIn(BlockTags.makeWrapperTag("forge:leaves"))) {
+				this.addVelocity(0, -0.1, 0);
+				this.arrowShake = 4;
+			} else {
+				Vector3d vector3d = blockStateRayTraceResult.getHitVec().subtract(this.getPosX(), this.getPosY(), this.getPosZ());
+				this.setMotion(vector3d);
+				Vector3d vector3d1 = vector3d.normalize().scale(0.05F);
+				this.setRawPosition(this.getPosX() - vector3d1.x, this.getPosY() - vector3d1.y, this.getPosZ() - vector3d1.z);
+				this.inGround = true;
+				this.arrowShake = 2;
+				this.setIsCritical(false);
+				this.setPierceLevel((byte)0);
+				this.setHitSound(DeferredRegistryHandler.BULLET_WHIZZ.get());
+				this.func_213870_w();
+			}
 			
 			if (canBreakGlass && !this.hasAlreadyBrokeGlass && !this.inBlockState.getBlock().isIn(BlockTags.makeWrapperTag("forge:bulletproof_glass")) && this.inBlockState.getBlock().isIn(BlockTags.makeWrapperTag("forge:glass")) || this.inBlockState.getBlock().isIn(BlockTags.makeWrapperTag("forge:glass_panes"))) {;
 				this.world.destroyBlock(blockStateRayTraceResult.getPos(), false);
@@ -2257,20 +2280,24 @@ public class BulletEntity {
 		@Override
 		protected void func_230299_a_(BlockRayTraceResult blockStateRayTraceResult) {
 			this.inBlockState = this.world.getBlockState(blockStateRayTraceResult.getPos());
-			super.func_230299_a_(blockStateRayTraceResult);
-			Vector3d vector3d = blockStateRayTraceResult.getHitVec().subtract(this.getPosX(), this.getPosY(), this.getPosZ());
-			this.setMotion(vector3d);
-			Vector3d vector3d1 = vector3d.normalize().scale(0.05F);
-			this.setRawPosition(this.getPosX() - vector3d1.x, this.getPosY() - vector3d1.y, this.getPosZ() - vector3d1.z);
-			this.inGround = true;
-			this.arrowShake = 2;
-			this.setIsCritical(false);
-			this.setPierceLevel((byte)0);
-			this.setHitSound(DeferredRegistryHandler.BULLET_WHIZZ.get());
-			this.setShotFromCrossbow(false);
-			this.func_213870_w();
 			
-			if (canBreakGlass && !this.hasAlreadyBrokeGlass && !this.inBlockState.getBlock().isIn(BlockTags.makeWrapperTag("forge:bulletproof_glass")) && this.inBlockState.getBlock().isIn(BlockTags.makeWrapperTag("forge:glass")) || this.inBlockState.getBlock().isIn(BlockTags.makeWrapperTag("forge:glass_panes"))) {
+			if (this.inBlockState.getBlock().isIn(BlockTags.makeWrapperTag("forge:leaves"))) {
+				this.addVelocity(0, -0.1, 0);
+				this.arrowShake = 4;
+			} else {
+				Vector3d vector3d = blockStateRayTraceResult.getHitVec().subtract(this.getPosX(), this.getPosY(), this.getPosZ());
+				this.setMotion(vector3d);
+				Vector3d vector3d1 = vector3d.normalize().scale(0.05F);
+				this.setRawPosition(this.getPosX() - vector3d1.x, this.getPosY() - vector3d1.y, this.getPosZ() - vector3d1.z);
+				this.inGround = true;
+				this.arrowShake = 2;
+				this.setIsCritical(false);
+				this.setPierceLevel((byte)0);
+				this.setHitSound(DeferredRegistryHandler.BULLET_WHIZZ.get());
+				this.func_213870_w();
+			}
+			
+			if (canBreakGlass && !this.hasAlreadyBrokeGlass && !this.inBlockState.getBlock().isIn(BlockTags.makeWrapperTag("forge:bulletproof_glass")) && this.inBlockState.getBlock().isIn(BlockTags.makeWrapperTag("forge:glass")) || this.inBlockState.getBlock().isIn(BlockTags.makeWrapperTag("forge:glass_panes"))) {;
 				this.world.destroyBlock(blockStateRayTraceResult.getPos(), false);
 				this.hasAlreadyBrokeGlass = true;
 			}
