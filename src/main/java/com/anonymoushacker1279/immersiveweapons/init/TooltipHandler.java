@@ -179,6 +179,18 @@ public class TooltipHandler {
 			event.getToolTip().add(new TranslationTextComponent("A relaxing combination of sweet berries").mergeStyle(TextFormatting.DARK_GRAY, TextFormatting.ITALIC));
 		}
 		
+		// Traps
+		if (stack.getItem() == DeferredRegistryHandler.PUNJI_STICKS_ITEM.get()) {
+			event.getToolTip().add(new TranslationTextComponent("Commit war crimes using Vietnam war tactics").mergeStyle(TextFormatting.DARK_GRAY, TextFormatting.ITALIC));
+		}
+		if (stack.getItem() == DeferredRegistryHandler.PITFALL_ITEM.get()) {
+			event.getToolTip().add(new TranslationTextComponent("Hide your traps with pitfalls").mergeStyle(TextFormatting.DARK_GRAY, TextFormatting.ITALIC));
+			event.getToolTip().add(new TranslationTextComponent("Pairs well with punji sticks.").mergeStyle(TextFormatting.DARK_GRAY, TextFormatting.ITALIC));
+		}
+		if (stack.getItem() == DeferredRegistryHandler.BEAR_TRAP_ITEM.get()) {
+			event.getToolTip().add(new TranslationTextComponent("You do not have permission to move").mergeStyle(TextFormatting.DARK_GRAY, TextFormatting.ITALIC));
+		}
+		
 		// Miscellaneous
 		if (stack.getItem() == DeferredRegistryHandler.BARREL_TAP_ITEM.get()) {
 			event.getToolTip().add(new TranslationTextComponent("Use this to convert some plants into a fluid form").mergeStyle(TextFormatting.DARK_GRAY, TextFormatting.ITALIC));

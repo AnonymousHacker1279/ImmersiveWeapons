@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern":
+  [
+    "   ",
+    "xyx",
+    "   "
+  ],
+  "key":
+  {
+    "x":
+    {
+      "tag": "forge:ingots/iron"
+    },
+    "y":
+    {
+      "item": "minecraft:heavy_weighted_pressure_plate"
+    }
+  },
+  "result":
+  {
+    "item": "immersiveweapons:bear_trap",
+    "count": 1
+  }
+}

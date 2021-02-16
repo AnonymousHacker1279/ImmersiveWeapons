@@ -3,6 +3,9 @@ package com.anonymoushacker1279.immersiveweapons.init;
 import com.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import com.anonymoushacker1279.immersiveweapons.block.BarrelTapBlock;
 import com.anonymoushacker1279.immersiveweapons.block.BasicOrientableBlock;
+import com.anonymoushacker1279.immersiveweapons.block.BearTrapBlock;
+import com.anonymoushacker1279.immersiveweapons.block.PitfallBlock;
+import com.anonymoushacker1279.immersiveweapons.block.PunjiSticksBlock;
 import com.anonymoushacker1279.immersiveweapons.block.SmallPartsTable;
 import com.anonymoushacker1279.immersiveweapons.client.particle.SmokeBombParticleData;
 import com.anonymoushacker1279.immersiveweapons.client.particle.SmokeBombParticleType;
@@ -68,10 +71,12 @@ import com.anonymoushacker1279.immersiveweapons.item.TeslaItem.TeslaPickaxe;
 import com.anonymoushacker1279.immersiveweapons.item.TeslaItem.TeslaShovel;
 import com.anonymoushacker1279.immersiveweapons.item.TeslaItem.TeslaSword;
 import com.anonymoushacker1279.immersiveweapons.item.crafting.SmallPartsRecipe;
+import com.anonymoushacker1279.immersiveweapons.tileentity.BearTrapTileEntity;
 import com.anonymoushacker1279.immersiveweapons.util.CreativeTabSorter;
 import com.anonymoushacker1279.immersiveweapons.util.CustomArmorMaterials;
 import com.anonymoushacker1279.immersiveweapons.util.CustomItemMaterials;
 import com.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
+import com.google.common.collect.Sets;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.GlassBlock;
@@ -94,6 +99,7 @@ import net.minecraft.item.ShovelItem;
 import net.minecraft.item.SwordItem;
 import net.minecraft.item.crafting.IRecipeSerializer;
 import net.minecraft.particles.ParticleType;
+import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraftforge.common.ToolType;
@@ -122,6 +128,8 @@ public class DeferredRegistryHandler {
 	public static final DeferredRegister<ParticleType<?>> PARTICLE_TYPES = DeferredRegister.create(ForgeRegistries.PARTICLE_TYPES, ImmersiveWeapons.MOD_ID);
 	// Global Loot Modifier Register
 	public static final DeferredRegister<GlobalLootModifierSerializer<?>> GLOBAL_LOOT_MODIFIER_SERIALIZER = DeferredRegister.create(ForgeRegistries.LOOT_MODIFIER_SERIALIZERS, ImmersiveWeapons.MOD_ID);
+	// Tile Entity Register
+	public static final DeferredRegister<TileEntityType<?>> TILE_ENTITIES = DeferredRegister.create(ForgeRegistries.TILE_ENTITIES, ImmersiveWeapons.MOD_ID);
 	
 	public static void init() {
 		ITEMS.register(FMLJavaModLoadingContext.get().getModEventBus());
@@ -132,6 +140,7 @@ public class DeferredRegistryHandler {
 		RECIPE_SERIALIZER.register(FMLJavaModLoadingContext.get().getModEventBus());
 		PARTICLE_TYPES.register(FMLJavaModLoadingContext.get().getModEventBus());
 		GLOBAL_LOOT_MODIFIER_SERIALIZER.register(FMLJavaModLoadingContext.get().getModEventBus());
+		TILE_ENTITIES.register(FMLJavaModLoadingContext.get().getModEventBus());
 	}
 	
 	public static final ItemGroup ITEM_GROUP = new CreativeTabSorter("ImmersiveWeaponsTab");
@@ -292,6 +301,10 @@ public class DeferredRegistryHandler {
 	public static final RegistryObject<Block> GREEN_STAINED_BULLETPROOF_GLASS = BLOCKS.register("green_stained_bulletproof_glass", () -> GeneralUtilities.createStainedGlassFromColor(DyeColor.GREEN, Block.Properties.create(Material.GLASS, DyeColor.GREEN).sound(SoundType.GLASS).notSolid().hardnessAndResistance(0.5f)));
 	public static final RegistryObject<Block> RED_STAINED_BULLETPROOF_GLASS = BLOCKS.register("red_stained_bulletproof_glass", () -> GeneralUtilities.createStainedGlassFromColor(DyeColor.RED, Block.Properties.create(Material.GLASS, DyeColor.RED).sound(SoundType.GLASS).notSolid().hardnessAndResistance(0.5f)));
 
+	public static final RegistryObject<Block> PUNJI_STICKS = BLOCKS.register("punji_sticks", () -> new PunjiSticksBlock(Block.Properties.create(Material.BAMBOO).hardnessAndResistance(5.0f, 1.0f).sound(SoundType.METAL).harvestLevel(1).harvestTool(ToolType.SHOVEL)));
+	public static final RegistryObject<Block> PITFALL = BLOCKS.register("pitfall", () -> new PitfallBlock(Block.Properties.create(Material.ORGANIC).hardnessAndResistance(0.2f, 1.0f).sound(SoundType.GROUND).tickRandomly()));
+	public static final RegistryObject<Block> BEAR_TRAP = BLOCKS.register("bear_trap", () -> new BearTrapBlock(Block.Properties.create(Material.IRON).notSolid().hardnessAndResistance(2.0F, 2.0F).sound(SoundType.METAL).harvestLevel(2)));
+	
 	// Block Items
 	
 	public static final RegistryObject<BlockItem> MOLTEN_ORE_ITEM = ITEMS.register("molten_ore", () -> new BlockItem(MOLTEN_ORE.get(), new Properties().group(ITEM_GROUP).isImmuneToFire()));
@@ -318,6 +331,9 @@ public class DeferredRegistryHandler {
 	public static final RegistryObject<BlockItem> BROWN_STAINED_BULLETPROOF_GLASS_ITEM = ITEMS.register("brown_stained_bulletproof_glass", () -> new BlockItem(BROWN_STAINED_BULLETPROOF_GLASS.get(), new Properties().group(ITEM_GROUP)));
 	public static final RegistryObject<BlockItem> GREEN_STAINED_BULLETPROOF_GLASS_ITEM = ITEMS.register("green_stained_bulletproof_glass", () -> new BlockItem(GREEN_STAINED_BULLETPROOF_GLASS.get(), new Properties().group(ITEM_GROUP)));
 	public static final RegistryObject<BlockItem> RED_STAINED_BULLETPROOF_GLASS_ITEM = ITEMS.register("red_stained_bulletproof_glass", () -> new BlockItem(RED_STAINED_BULLETPROOF_GLASS.get(), new Properties().group(ITEM_GROUP)));
+	public static final RegistryObject<BlockItem> PUNJI_STICKS_ITEM = ITEMS.register("punji_sticks", () -> new BlockItem(PUNJI_STICKS.get(), new Properties().group(ITEM_GROUP)));
+	public static final RegistryObject<BlockItem> PITFALL_ITEM = ITEMS.register("pitfall", () -> new BlockItem(PITFALL.get(), new Properties().group(ITEM_GROUP)));
+	public static final RegistryObject<BlockItem> BEAR_TRAP_ITEM = ITEMS.register("bear_trap", () -> new BlockItem(BEAR_TRAP.get(), new Properties().group(ITEM_GROUP)));
 
 	// Entities
 	
@@ -372,5 +388,9 @@ public class DeferredRegistryHandler {
 	// Particles
 	
 	public static final RegistryObject<ParticleType<SmokeBombParticleData>> SMOKE_BOMB_PARTICLE_TYPE = PARTICLE_TYPES.register("smoke_bomb", () -> new SmokeBombParticleType());
+	
+	// Tile Entities
+	
+	public static final RegistryObject<TileEntityType<?>> BEAR_TRAP_TILE_ENTITY = TILE_ENTITIES.register("bear_trap", () -> new TileEntityType<>(BearTrapTileEntity::new, Sets.newHashSet(BEAR_TRAP.get()), null));
 	
 }

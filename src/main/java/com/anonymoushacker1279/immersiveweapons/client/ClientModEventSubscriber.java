@@ -23,11 +23,19 @@ import com.anonymoushacker1279.immersiveweapons.client.renderer.entity.Throwable
 import com.anonymoushacker1279.immersiveweapons.container.CustomContainerHolder;
 import com.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
 
+import net.minecraft.block.BlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScreenManager;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.RenderTypeLookup;
+import net.minecraft.client.renderer.color.IBlockColor;
+import net.minecraft.client.renderer.color.IItemColor;
 import net.minecraft.client.settings.KeyBinding;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.GrassColors;
+import net.minecraft.world.IBlockDisplayReader;
+import net.minecraft.world.biome.BiomeColors;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.ParticleFactoryRegisterEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -85,11 +93,25 @@ public class ClientModEventSubscriber {
 	    RenderTypeLookup.setRenderLayer(DeferredRegistryHandler.BROWN_STAINED_BULLETPROOF_GLASS.get(), RenderType.getTranslucent());
 	    RenderTypeLookup.setRenderLayer(DeferredRegistryHandler.GREEN_STAINED_BULLETPROOF_GLASS.get(), RenderType.getTranslucent());
 	    RenderTypeLookup.setRenderLayer(DeferredRegistryHandler.RED_STAINED_BULLETPROOF_GLASS.get(), RenderType.getTranslucent());
-
+	    
+	    Minecraft.getInstance().getBlockColors().register(new IBlockColor() {
+	    	@Override
+	    	public int getColor(BlockState p_getColor_1_, IBlockDisplayReader p_getColor_2_, BlockPos p_getColor_3_,
+	    			int p_getColor_4_) {
+	    		return BiomeColors.getGrassColor(p_getColor_2_, p_getColor_3_);
+	    	}
+	    }, DeferredRegistryHandler.PITFALL.get());
+	    
+	    Minecraft.getInstance().getItemColors().register(new IItemColor() {		
+	    	@Override
+	    	public int getColor(ItemStack p_getColor_1_, int p_getColor_2_) {
+	    		return GrassColors.get(0.5d, 1.0d);
+	    	}
+	    }, DeferredRegistryHandler.PITFALL_ITEM.get());
 	 }
 	 
 	 @SubscribeEvent
-	 public static void onParticleFactoryRegisstration(ParticleFactoryRegisterEvent event) {
+	 public static void onParticleFactoryRegistration(ParticleFactoryRegisterEvent event) {
 		 Minecraft mc = Minecraft.getInstance();
 		 
 		 mc.particles.registerFactory(DeferredRegistryHandler.SMOKE_BOMB_PARTICLE_TYPE.get(), sprite -> new SmokeBombParticleFactory(sprite));

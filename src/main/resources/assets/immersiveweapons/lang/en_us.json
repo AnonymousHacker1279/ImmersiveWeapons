@@ -118,6 +118,9 @@
 	"block.immersiveweapons.brown_stained_bulletproof_glass": "Brown Stained Bulletproof Glass",
 	"block.immersiveweapons.green_stained_bulletproof_glass": "Green Stained Bulletproof Glass",
 	"block.immersiveweapons.red_stained_bulletproof_glass": "Red Stained Bulletproof Glass",
+	"block.immersiveweapons.punji_sticks": "Punji Sticks",
+	"block.immersiveweapons.pitfall": "Pitfall Trap",
+	"block.immersiveweapons.bear_trap": "Bear Trap",
 	
 	"container.immersiveweapons.small_parts_table": "Small Parts Crafting",
 	
@@ -136,6 +139,9 @@
 	
 	"key.categories.immersiveweapons": "Immersive Weapons",
 	"immersiveweapons.key.toggleArmorEffect": "Toggle Armor Effect",
+	
+	"death.attack.immersiveweapons.punji_sticks": "%s was victim to Vietnam-era war tactics",
+	"death.attack.immersiveweapons.bear_trap": "%s bled out in a bear trap",
 	
 	"itemGroup.ImmersiveWeaponsTab": "Immersive Weapons"
 }

@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "triggered=false": {
+      "model": "immersiveweapons:block/bear_trap_open"
+    },
+    "triggered=true": {
+      "model": "immersiveweapons:block/bear_trap_closed"
+    }
+  }
+}

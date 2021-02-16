@@ -39,19 +39,18 @@ import net.minecraftforge.registries.IForgeRegistryEntry;
 
 // The value here should match an entry in the META-INF/mods.toml file
 @Mod(ImmersiveWeapons.MOD_ID)
-public class ImmersiveWeapons
-{
+public class ImmersiveWeapons {
 	
 	public static final String MOD_ID = "immersiveweapons";
 	
 	// Setup logger
 	public static final Logger LOGGER = LogManager.getLogger();
 
-    public ImmersiveWeapons() {
-    	// Load configuration
-    	Config.setup(FMLPaths.CONFIGDIR.get().resolve(MOD_ID + ".toml"));
+	public ImmersiveWeapons() {
+		// Load configuration
+		Config.setup(FMLPaths.CONFIGDIR.get().resolve(MOD_ID + ".toml"));
     	
-    	DeferredRegistryHandler.init();
+		DeferredRegistryHandler.init();
     	
     	MinecraftForge.EVENT_BUS.register(this);
     	
@@ -62,6 +61,7 @@ public class ImmersiveWeapons
         IEventBus forgeBus = MinecraftForge.EVENT_BUS;
         forgeBus.addListener(EventPriority.NORMAL, this::addDimensionalSpacing);
         forgeBus.addListener(EventPriority.HIGH, this::biomeModification);
+        
    }
     
 	@SubscribeEvent
@@ -83,7 +83,6 @@ public class ImmersiveWeapons
         BiomeGenerationSettingsBuilder generation = event.getGeneration();
         if(
                 event.getCategory() == Biome.Category.FOREST
-                // && event.getDepth() < 0.2f
         ) {
             generation.getStructures().add(() -> (STConfiguredStructures.CONFIGURED_ABANDONED_FACTORY));
         }
@@ -105,10 +104,8 @@ public class ImmersiveWeapons
     
     @SuppressWarnings("resource")
 	public void addDimensionalSpacing(final WorldEvent.Load event) {
-        if(event.getWorld() instanceof ServerWorld){
-            ServerWorld serverWorld = (ServerWorld) event.getWorld();
-
-            // Prevent spawning our structure in Vanilla's superflat world
+    	if(event.getWorld() instanceof ServerWorld){
+    		ServerWorld serverWorld = (ServerWorld) event.getWorld();
 
             if(serverWorld.getChunkProvider().getChunkGenerator() instanceof FlatChunkGenerator &&
                     serverWorld.getDimensionKey().equals(World.OVERWORLD)){
@@ -121,11 +118,10 @@ public class ImmersiveWeapons
 
         }
     }
-
     
     public static <T extends IForgeRegistryEntry<T>> T register(IForgeRegistry<T> registry, T entry, String registryKey) {
-        entry.setRegistryName(new ResourceLocation(ImmersiveWeapons.MOD_ID, registryKey));
-        registry.register(entry);
-        return entry;
+    	entry.setRegistryName(new ResourceLocation(ImmersiveWeapons.MOD_ID, registryKey));
+    	registry.register(entry);
+    	return entry;
     }
 }
