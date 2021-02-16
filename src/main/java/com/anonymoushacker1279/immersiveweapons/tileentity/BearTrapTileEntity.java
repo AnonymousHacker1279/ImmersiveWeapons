@@ -30,12 +30,10 @@ public class BearTrapTileEntity extends TileEntity implements ITickableTileEntit
     private PlayerEntity entitylivingPlayer;
     private Goal doNothingGoal;
     private UUID id;
-    private int nextDamageTick;
     private boolean currentlyUnpressingKeys = false;
     private Minecraft mc = Minecraft.getInstance();
     
     private BlockPos previousPlayerPos;
-    private float playerDamageToDo;
 
     public BearTrapTileEntity() {
         super(DeferredRegistryHandler.BEAR_TRAP_TILE_ENTITY.get());
@@ -52,16 +50,6 @@ public class BearTrapTileEntity extends TileEntity implements ITickableTileEntit
             		// Entity has escaped
 	                if (!trapped.getBoundingBox().intersects(new AxisAlignedBB(this.pos)) || !trapped.isAlive()) {
 	                    this.setTrappedEntity(null);
-	
-	                } else  {
-	                    if (this.nextDamageTick == 0) {
-	                        trapped.attackEntityFrom(damageSource, 1);
-	                        this.nextDamageTick = 60 + this.world.rand.nextInt(20);
-	                    }
-	
-	                    if (this.nextDamageTick > 0) {
-	                        this.nextDamageTick--;
-	                    }
 	                }
             	}
                 
@@ -75,20 +63,10 @@ public class BearTrapTileEntity extends TileEntity implements ITickableTileEntit
 	                    currentlyUnpressingKeys = false;
 	
 	                } else  {
-	                    if (this.nextDamageTick == 0) {
-	                    	currentlyUnpressingKeys = true;
-	                    	if (trappedPlayer.getPosition() == previousPlayerPos) {
-	                    		playerDamageToDo = 1;
-	                    	} else {
-	                    		playerDamageToDo = 4;
-	                    	}
-	                    	trappedPlayer.attackEntityFrom(damageSource, playerDamageToDo);
-	                        this.nextDamageTick = 60 + this.world.rand.nextInt(20);
-	                    }
-	
-	                    if (this.nextDamageTick > 0) {
-	                        this.nextDamageTick--;
-	                    }
+	                	currentlyUnpressingKeys = true;
+	                	if (trappedPlayer.getPosition() != previousPlayerPos) {
+	                		trappedPlayer.attackEntityFrom(damageSource, 2);
+	                	}
 	                }
             	}
             }
@@ -154,8 +132,8 @@ public class BearTrapTileEntity extends TileEntity implements ITickableTileEntit
                 }
                 this.id = null;
                 this.doNothingGoal = null;
-                this.nextDamageTick = 0;
             } else {
+            	livingEntity.attackEntityFrom(damageSource, 2);
                 livingEntity.goalSelector.getRunningGoals().filter(PrioritizedGoal::isRunning).forEach(PrioritizedGoal::resetTask);
                 livingEntity.goalSelector.addGoal(0, this.doNothingGoal = new DoNothingGoal(livingEntity, this));
             }
@@ -172,7 +150,6 @@ public class BearTrapTileEntity extends TileEntity implements ITickableTileEntit
 
             if (livingEntity == null) {
                 this.id = null;
-                this.nextDamageTick = 0;
                 currentlyUnpressingKeys = false;
             }
 
