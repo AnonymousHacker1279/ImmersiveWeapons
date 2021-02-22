@@ -96,6 +96,8 @@
 	"item.immersiveweapons.pliers": "Pliers",
 	"item.immersiveweapons.small_parts_metal_tool": "Small Parts (Generic Metal, Tool)",
 	"item.immersiveweapons.small_parts_metal_tool_blueprint": "Small Parts Blueprint (Generic Metal, Tool)",
+	"item.immersiveweapons.chocolate_bar": "Chocolate Bar",
+	"item.immersiveweapons.explosive_chocolate_bar": "Chocolate Bar",
 	"block.immersiveweapons.molten_ore": "Molten Ore",
 	"block.immersiveweapons.molten_block": "Molten Block",
 	"block.immersiveweapons.electric_ore": "Electric Ore",
@@ -142,8 +144,14 @@
 	"key.categories.immersiveweapons": "Immersive Weapons",
 	"immersiveweapons.key.toggleArmorEffect": "Toggle Armor Effect",
 	"death.attack.immersiveweapons.punji_sticks": "%s was victim to Vietnam-era war tactics",
+	"death.attack.immersiveweapons.punji_sticks.player": "%s was victim to Vietnam-era war tactics by %s",
 	"death.attack.immersiveweapons.bear_trap": "%s bled out in a bear trap",
+	"death.attack.immersiveweapons.bear_trap.player": "%s bled out in a bear trap while %s watched",
 	"death.attack.immersiveweapons.barbed_wire": "%s thought it was a bright idea to walk into barbed wire",
+	"death.attack.immersiveweapons.barbed_wire.player": "%s was forced into barbed wire by %s",
 	"death.attack.immersiveweapons.landmine": "%s stepped on a landmine",
+	"death.attack.immersiveweapons.landmine.player": "%s stepped on a landmine because %s pushed them",
+	"death.attack.immersiveweapons.explosive_chocolate_bar": "%s learned to not accept candy from strangers",
+	"death.attack.immersiveweapons.explosive_chocolate_bar.player": "%s learned to not accept candy from strangers while %s watched",
 	"itemGroup.ImmersiveWeaponsTab": "Immersive Weapons"
 }

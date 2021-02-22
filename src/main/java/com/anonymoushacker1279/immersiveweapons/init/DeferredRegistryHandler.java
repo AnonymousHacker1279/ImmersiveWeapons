@@ -196,6 +196,9 @@ public class DeferredRegistryHandler {
 
 	public static final RegistryObject<Item> PLIERS = ITEMS.register("pliers", () -> new Item(new Properties().group(ITEM_GROUP).maxStackSize(1)));
 
+	public static final RegistryObject<Item> CHOCOLATE_BAR = ITEMS.register("chocolate_bar", () -> new Item(new Properties().group(ITEM_GROUP).maxStackSize(16).food(CustomFoods.CHOCOLATE_BAR)));
+	public static final RegistryObject<Item> EXPLOSIVE_CHOCOLATE_BAR = ITEMS.register("explosive_chocolate_bar", () -> new ExplosiveChocolateBar(new Properties().group(ITEM_GROUP).maxStackSize(16).food(CustomFoods.CHOCOLATE_BAR)));
+
 	// Armor
 
 	public static final RegistryObject<Item> MOLTEN_HELMET = ITEMS.register("molten_helmet", () -> new MoltenArmorItem(CustomArmorMaterials.MOLTEN, EquipmentSlotType.HEAD, 1));
