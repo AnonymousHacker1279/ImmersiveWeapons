@@ -1,5 +1,6 @@
 package com.anonymoushacker1279.immersiveweapons.world.structures;
 
+import com.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
 import com.mojang.serialization.Codec;
 import net.minecraft.util.Rotation;
 import net.minecraft.util.math.BlockPos;
@@ -14,15 +15,15 @@ import net.minecraft.world.gen.feature.structure.Structure;
 import net.minecraft.world.gen.feature.structure.StructureStart;
 import net.minecraft.world.gen.feature.template.TemplateManager;
 
-public class AbandonedFactory extends Structure<NoFeatureConfig> {
+public class BearTrap extends Structure<NoFeatureConfig> {
 
-	public AbandonedFactory(Codec<NoFeatureConfig> codec) {
+	public BearTrap(Codec<NoFeatureConfig> codec) {
 		super(codec);
 	}
 
 	@Override
-	public IStartFactory<NoFeatureConfig> getStartFactory() {
-		return AbandonedFactory.Start::new;
+	public Structure.IStartFactory<NoFeatureConfig> getStartFactory() {
+		return BearTrap.Start::new;
 	}
 
 	@Override
@@ -41,18 +42,17 @@ public class AbandonedFactory extends Structure<NoFeatureConfig> {
 
 			Rotation rotation = Rotation.values()[this.rand.nextInt(Rotation.values().length)];
 
-			// Turns the chunk coordinates into actual coordinates we can use. (Gets center of that chunk)
-			int x = (chunkX << 4) + 7;
-			int z = (chunkZ << 4) + 7;
+			// Turns the chunk coordinates into actual coordinates we can use.
+			int x = (chunkX << 4) + GeneralUtilities.getRandomNumber(0, 17);
+			int z = (chunkZ << 4) + GeneralUtilities.getRandomNumber(0, 17);
 
 			// Finds the y value of the terrain at location.
 			int surfaceY = generator.getHeight(x, z, Heightmap.Type.WORLD_SURFACE_WG);
 			BlockPos blockpos = new BlockPos(x, surfaceY, z);
 
-			AbandonedFactoryPieces.start(templateManagerIn, blockpos, rotation, this.components, this.rand);
+			BearTrapPieces.start(templateManagerIn, blockpos, rotation, this.components, this.rand);
 
 			this.recalculateStructureSize();
 		}
 	}
-
 }

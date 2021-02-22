@@ -93,7 +93,9 @@
 	"item.immersiveweapons.tesla_shovel": "Tesla Shovel",
 	"item.immersiveweapons.tesla_hoe": "Tesla Hoe",
 	"item.immersiveweapons.blunderbuss": "Blunderbuss",
-	
+	"item.immersiveweapons.pliers": "Pliers",
+	"item.immersiveweapons.small_parts_metal_tool": "Small Parts (Generic Metal, Tool)",
+	"item.immersiveweapons.small_parts_metal_tool_blueprint": "Small Parts Blueprint (Generic Metal, Tool)",
 	"block.immersiveweapons.molten_ore": "Molten Ore",
 	"block.immersiveweapons.molten_block": "Molten Block",
 	"block.immersiveweapons.electric_ore": "Electric Ore",
@@ -121,11 +123,10 @@
 	"block.immersiveweapons.punji_sticks": "Punji Sticks",
 	"block.immersiveweapons.pitfall": "Pitfall Trap",
 	"block.immersiveweapons.bear_trap": "Bear Trap",
-	
+	"block.immersiveweapons.barbed_wire": "Barbed Wire",
+	"block.immersiveweapons.landmine": "Landmine",
 	"container.immersiveweapons.small_parts_table": "Small Parts Crafting",
-	
 	"gui.jei.category.small_parts": "Small Parts Crafting",
-	
 	"immersiveweapons.subtitle.armor.tesla.effect": "Tesla armor zapping",
 	"immersiveweapons.subtitle.armor.tesla.power_down": "Tesla armor turning off",
 	"immersiveweapons.subtitle.armor.tesla.power_up": "Tesla armor turning on",
@@ -136,12 +137,13 @@
 	"immersiveweapons.subtitle.item.smoke_bomb_hiss": "Smoke bomb hissing",
 	"immersiveweapons.subtitle.item.generic_whoosh": "Item flies",
 	"immersiveweapons.subtitle.item.gun.blunderbuss_fire": "Blunderbuss fires",
-	
+	"immersiveweapons.subtitle.block.barbed_wire_rattle": "Barbed wire rattles",
+	"immersiveweapons.subtitle.block.bear_trap_close": "Bear trap closes",
 	"key.categories.immersiveweapons": "Immersive Weapons",
 	"immersiveweapons.key.toggleArmorEffect": "Toggle Armor Effect",
-	
 	"death.attack.immersiveweapons.punji_sticks": "%s was victim to Vietnam-era war tactics",
 	"death.attack.immersiveweapons.bear_trap": "%s bled out in a bear trap",
-	
+	"death.attack.immersiveweapons.barbed_wire": "%s thought it was a bright idea to walk into barbed wire",
+	"death.attack.immersiveweapons.landmine": "%s stepped on a landmine",
 	"itemGroup.ImmersiveWeaponsTab": "Immersive Weapons"
 }

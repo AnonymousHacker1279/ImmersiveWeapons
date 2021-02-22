@@ -20,11 +20,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
-public class AbandonedFactoryPieces {
+public class PitfallTrapPieces {
 
 	private static final int height = 0;
 
-	private static final ResourceLocation CENTER = new ResourceLocation(ImmersiveWeapons.MOD_ID, "abandoned_factory");
+	private static final ResourceLocation CENTER = new ResourceLocation(ImmersiveWeapons.MOD_ID, "pitfall_trap");
 	private static final Map<ResourceLocation, BlockPos> OFFSET = new ImmutableMap.Builder<ResourceLocation, BlockPos>()
 			.put(CENTER, new BlockPos(0, height, 0))
 			.build();
@@ -35,7 +35,7 @@ public class AbandonedFactoryPieces {
 
 		BlockPos rotationOffset = new BlockPos(0, 0, 0).rotate(rotation);
 		BlockPos blockPos = rotationOffset.add(x, pos.getY(), z);
-		pieceList.add(new AbandonedFactoryPieces.Piece(templateManager, CENTER, blockPos, rotation));
+		pieceList.add(new PitfallTrapPieces.Piece(templateManager, CENTER, blockPos, rotation));
 	}
 
 	public static class Piece extends TemplateStructurePiece {
@@ -43,16 +43,16 @@ public class AbandonedFactoryPieces {
 		private Rotation rotation;
 
 		public Piece(TemplateManager templateManagerIn, ResourceLocation resourceLocationIn, BlockPos pos, Rotation rotationIn) {
-			super(Structures.AF, 0);
+			super(Structures.PT, 0);
 			this.resourceLocation = resourceLocationIn;
-			BlockPos blockpos = AbandonedFactoryPieces.OFFSET.get(resourceLocation);
+			BlockPos blockpos = PitfallTrapPieces.OFFSET.get(resourceLocation);
 			this.templatePosition = pos.add(blockpos.getX(), blockpos.getY(), blockpos.getZ());
 			this.rotation = rotationIn;
 			this.setupPiece(templateManagerIn);
 		}
 
 		public Piece(TemplateManager templateManagerIn, CompoundNBT tagCompound) {
-			super(Structures.AF, tagCompound);
+			super(Structures.PT, tagCompound);
 			this.resourceLocation = new ResourceLocation(tagCompound.getString("Template"));
 			this.rotation = Rotation.valueOf(tagCompound.getString("Rot"));
 			this.setupPiece(templateManagerIn);
@@ -76,5 +76,4 @@ public class AbandonedFactoryPieces {
 
 		}
 	}
-
 }

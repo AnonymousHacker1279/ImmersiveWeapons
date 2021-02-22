@@ -1,5 +1,6 @@
 package com.anonymoushacker1279.immersiveweapons.world.structures;
 
+import com.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
 import com.mojang.serialization.Codec;
 import net.minecraft.util.Rotation;
 import net.minecraft.util.math.BlockPos;
@@ -14,20 +15,20 @@ import net.minecraft.world.gen.feature.structure.Structure;
 import net.minecraft.world.gen.feature.structure.StructureStart;
 import net.minecraft.world.gen.feature.template.TemplateManager;
 
-public class AbandonedFactory extends Structure<NoFeatureConfig> {
+public class PitfallTrap extends Structure<NoFeatureConfig> {
 
-	public AbandonedFactory(Codec<NoFeatureConfig> codec) {
+	public PitfallTrap(Codec<NoFeatureConfig> codec) {
 		super(codec);
 	}
 
 	@Override
-	public IStartFactory<NoFeatureConfig> getStartFactory() {
-		return AbandonedFactory.Start::new;
+	public Structure.IStartFactory<NoFeatureConfig> getStartFactory() {
+		return PitfallTrap.Start::new;
 	}
 
 	@Override
 	public GenerationStage.Decoration getDecorationStage() {
-		return GenerationStage.Decoration.SURFACE_STRUCTURES;
+		return GenerationStage.Decoration.TOP_LAYER_MODIFICATION;
 	}
 
 
@@ -42,17 +43,16 @@ public class AbandonedFactory extends Structure<NoFeatureConfig> {
 			Rotation rotation = Rotation.values()[this.rand.nextInt(Rotation.values().length)];
 
 			// Turns the chunk coordinates into actual coordinates we can use. (Gets center of that chunk)
-			int x = (chunkX << 4) + 7;
-			int z = (chunkZ << 4) + 7;
+			int x = (chunkX << 4) + GeneralUtilities.getRandomNumber(0, 17);
+			int z = (chunkZ << 4) + GeneralUtilities.getRandomNumber(0, 17);
 
 			// Finds the y value of the terrain at location.
 			int surfaceY = generator.getHeight(x, z, Heightmap.Type.WORLD_SURFACE_WG);
-			BlockPos blockpos = new BlockPos(x, surfaceY, z);
+			BlockPos blockpos = new BlockPos(x, surfaceY - 3, z);
 
-			AbandonedFactoryPieces.start(templateManagerIn, blockpos, rotation, this.components, this.rand);
+			PitfallTrapPieces.start(templateManagerIn, blockpos, rotation, this.components, this.rand);
 
 			this.recalculateStructureSize();
 		}
 	}
-
 }
