@@ -11,6 +11,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.loot.LootContext;
 import net.minecraft.loot.conditions.ILootCondition;
+import net.minecraft.tags.ItemTags;
 import net.minecraft.util.JSONUtils;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.loot.GlobalLootModifierSerializer;
@@ -22,12 +23,10 @@ public class LootTableHandler {
 	public static class LogShardsLootModifierHandler extends LootModifier {
 		
 	    private final int numShardsToConvert;
-	    private final Item itemToCheck;
 	    private final Item itemReward;
-	    public LogShardsLootModifierHandler(ILootCondition[] conditionsIn, int numShards, Item itemCheck, Item reward) {
+	    public LogShardsLootModifierHandler(ILootCondition[] conditionsIn, int numShards, Item reward) {
 	        super(conditionsIn);
 	        numShardsToConvert = numShards;
-	        itemToCheck = itemCheck;
 	        itemReward = reward;
 	    }
 
@@ -40,15 +39,15 @@ public class LootTableHandler {
 	        //
 	        int numShards = 0;
 	        for(ItemStack stack : generatedLoot) {
-	            //if(stack.getItem() == itemToCheck) 
-	        	numShards+=stack.getCount() + GeneralUtilities.getRandomNumber(2, 5);
+	            if(stack.getItem().isIn(ItemTags.makeWrapperTag("minecraft:logs"))) {
+	            	numShards+=stack.getCount() + GeneralUtilities.getRandomNumber(2, 5);
+	            }
 	        }
 	        if(numShards >= numShardsToConvert) {
-	            generatedLoot.removeIf(x -> x.getItem() == itemToCheck);
 	            generatedLoot.add(new ItemStack(itemReward, (numShards/numShardsToConvert)));
 	            numShards = numShards%numShardsToConvert;
 	            if(numShards > 0)
-	                generatedLoot.add(new ItemStack(itemToCheck, numShards));
+	                generatedLoot.add(new ItemStack(itemReward, numShards));
 	            	generatedLoot.remove(0); // The log item shouldn't drop, so remove it from the loot list
 	        }
 	        return generatedLoot;
@@ -59,9 +58,8 @@ public class LootTableHandler {
 	        @Override
 	        public LogShardsLootModifierHandler read(ResourceLocation name, JsonObject object, ILootCondition[] conditionsIn) {
 	            int numShards = JSONUtils.getInt(object, "numShards");
-	            Item shardItem = ForgeRegistries.ITEMS.getValue(new ResourceLocation((JSONUtils.getString(object, "shardItem"))));
 	            Item replacementItem = ForgeRegistries.ITEMS.getValue(new ResourceLocation(JSONUtils.getString(object, "replacement")));
-	            return new LogShardsLootModifierHandler(conditionsIn, numShards, shardItem, replacementItem);
+	            return new LogShardsLootModifierHandler(conditionsIn, numShards, replacementItem);
 	        }
 
 			@Override

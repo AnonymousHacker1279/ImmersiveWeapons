@@ -1,0 +1,20 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"pattern": [
+		"yy ",
+		"yx ",
+		"   "
+	],
+	"key": {
+		"x": {
+			"item": "immersiveweapons:chocolate_bar"
+		},
+		"y": {
+			"item": "minecraft:gunpowder"
+		}
+	},
+	"result": {
+		"item": "immersiveweapons:explosive_chocolate_bar",
+		"count": 1
+	}
+}

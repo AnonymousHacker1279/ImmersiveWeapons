@@ -1,0 +1,20 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"pattern": [
+		"xxx",
+		"xyx",
+		"xxx"
+	],
+	"key": {
+		"x": {
+			"item": "minecraft:cocoa_beans"
+		},
+		"y": {
+			"item": "minecraft:milk_bucket"
+		}
+	},
+	"result": {
+		"item": "immersiveweapons:chocolate_bar",
+		"count": 2
+	}
+}

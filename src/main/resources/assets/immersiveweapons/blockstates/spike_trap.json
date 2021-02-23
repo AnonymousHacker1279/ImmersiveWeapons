@@ -1,0 +1,10 @@
+{
+	"variants": {
+		"powered=false": {
+			"model": "immersiveweapons:block/spike_trap_deactivated"
+		},
+		"powered=true": {
+			"model": "immersiveweapons:block/spike_trap_activated"
+		}
+	}
+}

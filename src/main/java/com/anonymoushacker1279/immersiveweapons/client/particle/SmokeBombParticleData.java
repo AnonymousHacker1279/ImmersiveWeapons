@@ -75,7 +75,6 @@ public class SmokeBombParticleData implements IParticleData {
 	    this.diameter = constrainDiameterToValidRange(diameter);
 	  }
 
-	  @SuppressWarnings("deprecation")
 	  public static final IDeserializer<SmokeBombParticleData> DESERIALIZER = new IDeserializer<SmokeBombParticleData>() {
 
 		  // parse the parameters for this particle from a /particle command

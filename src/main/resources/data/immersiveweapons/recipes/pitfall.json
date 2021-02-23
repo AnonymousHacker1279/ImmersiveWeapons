@@ -1,0 +1,29 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern":
+  [
+    "   ",
+    "yzy",
+    "xxx"
+  ],
+  "key":
+  {
+    "x":
+    {
+      "item": "minecraft:stick"
+    },
+    "y":
+    {
+      "item": "minecraft:grass"
+    },
+    "z":
+    {
+      "tag": "forge:leaves"
+    }
+  },
+  "result":
+  {
+    "item": "immersiveweapons:pitfall",
+    "count": 1
+  }
+}
