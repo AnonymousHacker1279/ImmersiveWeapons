@@ -127,6 +127,7 @@
 	"block.immersiveweapons.bear_trap": "Bear Trap",
 	"block.immersiveweapons.barbed_wire": "Barbed Wire",
 	"block.immersiveweapons.landmine": "Landmine",
+	"block.immersiveweapons.spike_trap": "Spike Trap",
 	"container.immersiveweapons.small_parts_table": "Small Parts Crafting",
 	"gui.jei.category.small_parts": "Small Parts Crafting",
 	"immersiveweapons.subtitle.armor.tesla.effect": "Tesla armor zapping",
@@ -141,6 +142,8 @@
 	"immersiveweapons.subtitle.item.gun.blunderbuss_fire": "Blunderbuss fires",
 	"immersiveweapons.subtitle.block.barbed_wire_rattle": "Barbed wire rattles",
 	"immersiveweapons.subtitle.block.bear_trap_close": "Bear trap closes",
+	"immersiveweapons.subtitle.block.spike_trap_extend": "Spike trap extends",
+	"immersiveweapons.subtitle.block.spike_trap_retract": "Spike trap retracts",
 	"key.categories.immersiveweapons": "Immersive Weapons",
 	"immersiveweapons.key.toggleArmorEffect": "Toggle Armor Effect",
 	"death.attack.immersiveweapons.punji_sticks": "%s was victim to Vietnam-era war tactics",
@@ -153,5 +156,7 @@
 	"death.attack.immersiveweapons.landmine.player": "%s stepped on a landmine because %s pushed them",
 	"death.attack.immersiveweapons.explosive_chocolate_bar": "%s learned to not accept candy from strangers",
 	"death.attack.immersiveweapons.explosive_chocolate_bar.player": "%s learned to not accept candy from strangers while %s watched",
+	"death.attack.immersiveweapons.spike_trap": "%s was impaled",
+	"death.attack.immersiveweapons.spike_trap.plauer": "%s was impaled by %s",
 	"itemGroup.ImmersiveWeaponsTab": "Immersive Weapons"
 }

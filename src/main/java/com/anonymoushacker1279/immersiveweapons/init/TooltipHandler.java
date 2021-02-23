@@ -192,7 +192,9 @@ public class TooltipHandler {
 		if (stack.getItem() == DeferredRegistryHandler.LANDMINE_ITEM.get()) {
 			event.getToolTip().add(new TranslationTextComponent("They'll have to bury what's left of").mergeStyle(TextFormatting.DARK_GRAY, TextFormatting.ITALIC));
 			event.getToolTip().add(new TranslationTextComponent("you into a soup can").mergeStyle(TextFormatting.DARK_GRAY, TextFormatting.ITALIC));
-
+		}
+		if (stack.getItem() == DeferredRegistryHandler.SPIKE_TRAP_ITEM.get()) {
+			event.getToolTip().add(new TranslationTextComponent("Toggleable via redstone").mergeStyle(TextFormatting.DARK_GRAY, TextFormatting.ITALIC));
 		}
 
 		// Miscellaneous

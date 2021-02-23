@@ -253,6 +253,7 @@ public class DeferredRegistryHandler {
 	public static final RegistryObject<Block> BEAR_TRAP = BLOCKS.register("bear_trap", () -> new BearTrapBlock(Block.Properties.create(Material.IRON).notSolid().hardnessAndResistance(2.0F, 2.0F).sound(SoundType.METAL).harvestLevel(2)));
 	public static final RegistryObject<Block> BARBED_WIRE = BLOCKS.register("barbed_wire", () -> new BarbedWireBlock(Block.Properties.create(Material.IRON).hardnessAndResistance(2.0F, 2.0F).sound(SoundType.CHAIN).harvestLevel(2).notSolid().doesNotBlockMovement()));
 	public static final RegistryObject<Block> LANDMINE = BLOCKS.register("landmine", () -> new LandmineBlock(Block.Properties.create(Material.IRON).hardnessAndResistance(1.0F, 1.0F).sound(SoundType.METAL).harvestLevel(0)));
+	public static final RegistryObject<Block> SPIKE_TRAP = BLOCKS.register("spike_trap", () -> new SpikeTrapBlock(Block.Properties.create(Material.IRON).hardnessAndResistance(2.0F, 2.0F).sound(SoundType.METAL).harvestLevel(2).notSolid().doesNotBlockMovement()));
 
 	// Block Items
 
@@ -285,6 +286,7 @@ public class DeferredRegistryHandler {
 	public static final RegistryObject<BlockItem> BEAR_TRAP_ITEM = ITEMS.register("bear_trap", () -> new BlockItem(BEAR_TRAP.get(), new Properties().group(ITEM_GROUP)));
 	public static final RegistryObject<BlockItem> BARBED_WIRE_ITEM = ITEMS.register("barbed_wire", () -> new BlockItem(BARBED_WIRE.get(), new Properties().group(ITEM_GROUP)));
 	public static final RegistryObject<BlockItem> LANDMINE_ITEM = ITEMS.register("landmine", () -> new BlockItem(LANDMINE.get(), new Properties().group(ITEM_GROUP)));
+	public static final RegistryObject<BlockItem> SPIKE_TRAP_ITEM = ITEMS.register("spike_trap", () -> new BlockItem(SPIKE_TRAP.get(), new Properties().group(ITEM_GROUP)));
 
 	// Entities
 
@@ -323,6 +325,8 @@ public class DeferredRegistryHandler {
 	public static final RegistryObject<SoundEvent> BLUNDERBUSS_FIRE = SOUND_EVENTS.register("blunderbuss_fire", () -> new SoundEvent(new ResourceLocation(ImmersiveWeapons.MOD_ID, "blunderbuss_fire")));
 	public static final RegistryObject<SoundEvent> BARBED_WIRE_RATTLE = SOUND_EVENTS.register("barbed_wire_rattle", () -> new SoundEvent(new ResourceLocation(ImmersiveWeapons.MOD_ID, "barbed_wire_rattle")));
 	public static final RegistryObject<SoundEvent> BEAR_TRAP_CLOSE = SOUND_EVENTS.register("bear_trap_close", () -> new SoundEvent(new ResourceLocation(ImmersiveWeapons.MOD_ID, "bear_trap_close")));
+	public static final RegistryObject<SoundEvent> SPIKE_TRAP_EXTEND = SOUND_EVENTS.register("spike_trap_extend", () -> new SoundEvent(new ResourceLocation(ImmersiveWeapons.MOD_ID, "spike_trap_extend")));
+	public static final RegistryObject<SoundEvent> SPIKE_TRAP_RETRACT = SOUND_EVENTS.register("spike_trap_retract", () -> new SoundEvent(new ResourceLocation(ImmersiveWeapons.MOD_ID, "spike_trap_retract")));
 
 	// Containers
 

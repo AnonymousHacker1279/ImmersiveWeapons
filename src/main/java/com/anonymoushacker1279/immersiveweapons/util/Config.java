@@ -41,8 +41,8 @@ public class Config {
 		MAX_BEAR_TRAP_DISTANCE = COMMON_CONFIG_BUILDER.comment("Maximum distance in chunks between Bear Traps - Default 10").define("max_bear_trap_distance", 10);
 		MIN_BEAR_TRAP_DISTANCE = COMMON_CONFIG_BUILDER.comment("Minimum distance in chunks between Bear Traps - Default 4").define("min_bear_trap_distance", 4);
 
-		MAX_LANDMINE_TRAP_DISTANCE = COMMON_CONFIG_BUILDER.comment("Minimum distance in chunks between Landmine Traps - Default 12").define("min_bear_trap_distance", 12);
-		MIN_LANDMINE_TRAP_DISTANCE = COMMON_CONFIG_BUILDER.comment("Minimum distance in chunks between Landmine Traps - Default 6").define("min_bear_trap_distance", 6);
+		MAX_LANDMINE_TRAP_DISTANCE = COMMON_CONFIG_BUILDER.comment("Minimum distance in chunks between Landmine Traps - Default 12").define("max_landmine_trap_distance", 12);
+		MIN_LANDMINE_TRAP_DISTANCE = COMMON_CONFIG_BUILDER.comment("Minimum distance in chunks between Landmine Traps - Default 6").define("min_landmine_trap_distance", 6);
 
 		TESLA_ARMOR_EFFECT_SOUND = COMMON_CONFIG_BUILDER.comment("Enable/Disable the Tesla Armor effect sound - Default true").define("tesla_armor_effect_sound", true);
 

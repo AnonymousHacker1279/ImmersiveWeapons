@@ -80,7 +80,7 @@
 		]
 	},
 	"small_parts_table_used": {
-		"category": "neutral",
+		"category": "block",
 		"subtitle": "immersiveweapons.subtitle.block.small_parts_table_used",
 		"sounds": [
 			{
@@ -120,7 +120,7 @@
 		]
 	},
 	"barbed_wire_rattle": {
-		"category": "neutral",
+		"category": "block",
 		"subtitle": "immersiveweapons.subtitle.block.barbed_wire_rattle",
 		"sounds": [
 			{
@@ -130,11 +130,31 @@
 		]
 	},
 	"bear_trap_close": {
-		"category": "neutral",
+		"category": "block",
 		"subtitle": "immersiveweapons.subtitle.block.bear_trap_close",
 		"sounds": [
 			{
 				"name": "immersiveweapons:bear_trap_close",
+				"stream": false
+			}
+		]
+	},
+	"spike_trap_extend": {
+		"category": "block",
+		"subtitle": "immersiveweapons.subtitle.block.spike_trap_extend",
+		"sounds": [
+			{
+				"name": "immersiveweapons:spike_trap_extend",
+				"stream": false
+			}
+		]
+	},
+	"spike_trap_retract": {
+		"category": "block",
+		"subtitle": "immersiveweapons.subtitle.block.spike_trap_retract",
+		"sounds": [
+			{
+				"name": "immersiveweapons:spike_trap_retract",
 				"stream": false
 			}
 		]
