@@ -56,8 +56,6 @@ public class BarbedWireBlock extends HorizontalBlock implements IWaterLoggable {
 
 	@Override
 	public BlockState getStateForPlacement(BlockItemUseContext context) {
-		FluidState ifluidstate = context.getWorld().getFluidState(context.getPos());
-		//return this.getDefaultState().with(WATERLOGGED, ifluidstate.getFluid() == Fluids.WATER);
 		return this.getDefaultState().with(FACING, context.getPlacementHorizontalFacing().getOpposite());
 	}
 

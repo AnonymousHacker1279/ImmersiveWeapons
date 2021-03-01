@@ -1,0 +1,23 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"pattern": [
+		" y ",
+		"yxy",
+		"zyz"
+	],
+	"key": {
+		"x": {
+			"item": "minecraft:redstone_lamp"
+		},
+		"y": {
+			"tag": "forge:concrete/black"
+		},
+		"z": {
+			"tag": "forge:ingots/metal"
+		}
+	},
+	"result": {
+		"item": "immersiveweapons:spotlight",
+		"count": 1
+	}
+}

@@ -102,18 +102,16 @@ public class SpikeTrapBlock extends Block implements IWaterLoggable {
 	public void neighborChanged(BlockState state, World worldIn, BlockPos pos, Block blockIn, BlockPos fromPos, boolean isMoving) {
 		boolean flag = worldIn.isBlockPowered(pos);
 		if (flag != state.get(POWERED)) {
-			if (state.get(POWERED) != flag) {
-				state = state.with(POWERED, flag);
-				// A bit hacky here. This runs from the client so we can't use server logic to broadcast to all players.
-				AxisAlignedBB bound = new AxisAlignedBB(pos.getX() - 7, pos.getY() - 7, pos.getZ() - 7, pos.getX() + 7, pos.getY() + 7, pos.getZ() + 7);
-				List<PlayerEntity> entitiesInBound = worldIn.getEntitiesWithinAABB(PlayerEntity.class, bound);
-				for (int i = 0; i < worldIn.getPlayers().size(); i++) {
-					if (entitiesInBound.contains(worldIn.getPlayers().get(i))) {
-						if (state.get(POWERED)) {
-							worldIn.getPlayers().get(i).playSound(DeferredRegistryHandler.SPIKE_TRAP_EXTEND.get(), SoundCategory.BLOCKS, 1.0f, 1.0f);
-						} else {
-							worldIn.getPlayers().get(i).playSound(DeferredRegistryHandler.SPIKE_TRAP_RETRACT.get(), SoundCategory.BLOCKS, 1.0f, 1.0f);
-						}
+			state = state.with(POWERED, flag);
+			// A bit hacky here. This runs from the client so we can't use server logic to broadcast to all players.
+			AxisAlignedBB bound = new AxisAlignedBB(pos.getX() - 7, pos.getY() - 7, pos.getZ() - 7, pos.getX() + 7, pos.getY() + 7, pos.getZ() + 7);
+			List<PlayerEntity> entitiesInBound = worldIn.getEntitiesWithinAABB(PlayerEntity.class, bound);
+			for (int i = 0; i < worldIn.getPlayers().size(); i++) {
+				if (entitiesInBound.contains(worldIn.getPlayers().get(i))) {
+					if (state.get(POWERED)) {
+						worldIn.getPlayers().get(i).playSound(DeferredRegistryHandler.SPIKE_TRAP_EXTEND.get(), SoundCategory.BLOCKS, 1.0f, 1.0f);
+					} else {
+						worldIn.getPlayers().get(i).playSound(DeferredRegistryHandler.SPIKE_TRAP_RETRACT.get(), SoundCategory.BLOCKS, 1.0f, 1.0f);
 					}
 				}
 			}

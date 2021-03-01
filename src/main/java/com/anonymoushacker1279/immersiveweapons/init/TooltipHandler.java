@@ -206,5 +206,8 @@ public class TooltipHandler {
 			event.getToolTip().add(new TranslationTextComponent("Good thing you aren't in charge of the US Treasury").mergeStyle(TextFormatting.DARK_GRAY, TextFormatting.ITALIC));
 			event.getToolTip().add(new TranslationTextComponent("Because if you were we'd be broke.").mergeStyle(TextFormatting.DARK_GRAY, TextFormatting.ITALIC));
 		}
+		if (stack.getItem() == DeferredRegistryHandler.SPOTLIGHT_ITEM.get()) {
+			event.getToolTip().add(new TranslationTextComponent("I see you there").mergeStyle(TextFormatting.DARK_GRAY, TextFormatting.ITALIC));
+		}
 	}
 }
