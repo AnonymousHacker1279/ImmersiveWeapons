@@ -3,21 +3,18 @@
 	"pattern": [
 		"   ",
 		"yxy",
-		"z z"
+		"yxy"
 	],
 	"key": {
 		"x": {
-			"item": "minecraft:redstone_lamp"
+			"tag": "minecraft:wooden_slabs"
 		},
 		"y": {
-			"tag": "forge:concrete/black"
-		},
-		"z": {
 			"tag": "forge:ingots/metal"
 		}
 	},
 	"result": {
-		"item": "immersiveweapons:spotlight",
+		"item": "immersiveweapons:wall_shelf",
 		"count": 1
 	}
 }

@@ -22,6 +22,7 @@ import com.anonymoushacker1279.immersiveweapons.item.PikeItem.*;
 import com.anonymoushacker1279.immersiveweapons.item.TeslaItem.*;
 import com.anonymoushacker1279.immersiveweapons.item.crafting.SmallPartsRecipe;
 import com.anonymoushacker1279.immersiveweapons.tileentity.BearTrapTileEntity;
+import com.anonymoushacker1279.immersiveweapons.tileentity.WallShelfTileEntity;
 import com.anonymoushacker1279.immersiveweapons.util.CreativeTabSorter;
 import com.anonymoushacker1279.immersiveweapons.util.CustomArmorMaterials;
 import com.anonymoushacker1279.immersiveweapons.util.CustomItemMaterials;
@@ -265,6 +266,8 @@ public class DeferredRegistryHandler {
 		return 0;
 	})));
 
+	public static final RegistryObject<Block> WALL_SHELF = BLOCKS.register("wall_shelf", () -> new ShelfBlock(Block.Properties.create(Material.WOOD).hardnessAndResistance(1.0f, 1.0f).sound(SoundType.WOOD).notSolid().doesNotBlockMovement()));
+
 	// Block Items
 
 	public static final RegistryObject<BlockItem> MOLTEN_ORE_ITEM = ITEMS.register("molten_ore", () -> new BlockItem(MOLTEN_ORE.get(), new Properties().group(ITEM_GROUP).isImmuneToFire()));
@@ -302,7 +305,7 @@ public class DeferredRegistryHandler {
 	public static final RegistryObject<BlockItem> CORRUGATED_IRON_PANEL_FLAT_ITEM = ITEMS.register("corrugated_iron_panel_flat", () -> new BlockItem(CORRUGATED_IRON_PANEL_FLAT.get(), new Properties().group(ITEM_GROUP)));
 	public static final RegistryObject<BlockItem> CORRUGATED_IRON_PANEL_FLAT_BARS_ITEM = ITEMS.register("corrugated_iron_panel_flat_bars", () -> new BlockItem(CORRUGATED_IRON_PANEL_FLAT_BARS.get(), new Properties().group(ITEM_GROUP)));
 	public static final RegistryObject<BlockItem> SPOTLIGHT_ITEM = ITEMS.register("spotlight", () -> new BlockItem(SPOTLIGHT.get(), new Properties().group(ITEM_GROUP)));
-
+	public static final RegistryObject<BlockItem> WALL_SHELF_ITEM = ITEMS.register("wall_shelf", () -> new BlockItem(WALL_SHELF.get(), new Properties().group(ITEM_GROUP)));
 	// Entities
 
 	public static final RegistryObject<EntityType<WoodArrowEntity>> WOOD_ARROW_ENTITY = ENTITY_TYPES.register("wood_arrow", () -> EntityType.Builder.<WoodArrowEntity>create(WoodArrowEntity::new, EntityClassification.MISC).size(0.5f, 0.5f).build(new ResourceLocation(ImmersiveWeapons.MOD_ID, "wood_arrow").toString()));
@@ -364,5 +367,6 @@ public class DeferredRegistryHandler {
 	// Tile Entities
 
 	public static final RegistryObject<TileEntityType<?>> BEAR_TRAP_TILE_ENTITY = TILE_ENTITIES.register("bear_trap", () -> new TileEntityType<>(BearTrapTileEntity::new, Sets.newHashSet(BEAR_TRAP.get()), null));
+	public static final RegistryObject<TileEntityType<?>> WALL_SHELF_TILE_ENTITY = TILE_ENTITIES.register("wall_shelf", () -> new TileEntityType<>(WallShelfTileEntity::new, Sets.newHashSet(WALL_SHELF.get()), null));
 
 }

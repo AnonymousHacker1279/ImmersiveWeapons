@@ -3,12 +3,14 @@ package com.anonymoushacker1279.immersiveweapons.client;
 import com.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import com.anonymoushacker1279.immersiveweapons.client.gui.screen.SmallPartsTableScreen;
 import com.anonymoushacker1279.immersiveweapons.client.particle.SmokeBombParticleFactory;
+import com.anonymoushacker1279.immersiveweapons.client.renderer.ShelfRenderer;
 import com.anonymoushacker1279.immersiveweapons.client.renderer.entity.BulletRenderer.*;
 import com.anonymoushacker1279.immersiveweapons.client.renderer.entity.CustomArrowRenderer.*;
 import com.anonymoushacker1279.immersiveweapons.client.renderer.entity.ThrowableItemRenderer.MolotovRenderer;
 import com.anonymoushacker1279.immersiveweapons.client.renderer.entity.ThrowableItemRenderer.SmokeBombRenderer;
 import com.anonymoushacker1279.immersiveweapons.container.CustomContainerHolder;
 import com.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
+import com.anonymoushacker1279.immersiveweapons.tileentity.TileEntityHolder;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScreenManager;
@@ -80,6 +82,8 @@ public class ClientModEventSubscriber {
 		RenderTypeLookup.setRenderLayer(DeferredRegistryHandler.GREEN_STAINED_BULLETPROOF_GLASS.get(), RenderType.getTranslucent());
 		RenderTypeLookup.setRenderLayer(DeferredRegistryHandler.RED_STAINED_BULLETPROOF_GLASS.get(), RenderType.getTranslucent());
 		RenderTypeLookup.setRenderLayer(DeferredRegistryHandler.CORRUGATED_IRON_PANEL_BARS.get(), RenderType.getCutout());
+
+		ClientRegistry.bindTileEntityRenderer(TileEntityHolder.WALL_SHELF_TILE_ENTITY, ShelfRenderer::new);
 
 		Minecraft.getInstance().getBlockColors().register(new IBlockColor() {
 			@Override
