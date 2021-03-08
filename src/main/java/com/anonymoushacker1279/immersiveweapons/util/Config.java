@@ -50,7 +50,6 @@ public class Config {
 
 		BULLETS_BREAK_GLASS = COMMON_CONFIG_BUILDER.comment("Enable/Disable bullets breaking glass - Default true").define("bullets_break_glass", true);
 
-
 		COMMON_CONFIG_BUILDER.pop();
 		COMMON_CONFIG = COMMON_CONFIG_BUILDER.build();
 

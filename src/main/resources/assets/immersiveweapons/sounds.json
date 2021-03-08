@@ -158,5 +158,35 @@
 				"stream": false
 			}
 		]
+	},
+	"alarm_1": {
+		"category": "block",
+		"subtitle": "immersiveweapons.subtitle.block.alarm.alarm_1",
+		"sounds": [
+			{
+				"name": "immersiveweapons:alarm/alarm_1",
+				"stream": false
+			}
+		]
+	},
+	"alarm_2": {
+		"category": "block",
+		"subtitle": "immersiveweapons.subtitle.block.alarm.alarm_2",
+		"sounds": [
+			{
+				"name": "immersiveweapons:alarm/alarm_2",
+				"stream": true
+			}
+		]
+	},
+	"alarm_3": {
+		"category": "block",
+		"subtitle": "immersiveweapons.subtitle.block.alarm.alarm_3",
+		"sounds": [
+			{
+				"name": "immersiveweapons:alarm/alarm_3",
+				"stream": true
+			}
+		]
 	}
 }
