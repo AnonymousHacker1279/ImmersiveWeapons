@@ -6,23 +6,18 @@ import com.anonymoushacker1279.immersiveweapons.client.particle.SmokeBombParticl
 import com.anonymoushacker1279.immersiveweapons.client.renderer.ShelfRenderer;
 import com.anonymoushacker1279.immersiveweapons.client.renderer.entity.BulletRenderer.*;
 import com.anonymoushacker1279.immersiveweapons.client.renderer.entity.CustomArrowRenderer.*;
+import com.anonymoushacker1279.immersiveweapons.client.renderer.entity.DecayedSoldierRenderer;
 import com.anonymoushacker1279.immersiveweapons.client.renderer.entity.ThrowableItemRenderer.MolotovRenderer;
 import com.anonymoushacker1279.immersiveweapons.client.renderer.entity.ThrowableItemRenderer.SmokeBombRenderer;
 import com.anonymoushacker1279.immersiveweapons.container.CustomContainerHolder;
 import com.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
 import com.anonymoushacker1279.immersiveweapons.tileentity.TileEntityHolder;
-import net.minecraft.block.BlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScreenManager;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.RenderTypeLookup;
-import net.minecraft.client.renderer.color.IBlockColor;
-import net.minecraft.client.renderer.color.IItemColor;
 import net.minecraft.client.settings.KeyBinding;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.GrassColors;
-import net.minecraft.world.IBlockDisplayReader;
 import net.minecraft.world.biome.BiomeColors;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.ParticleFactoryRegisterEvent;
@@ -63,6 +58,8 @@ public class ClientModEventSubscriber {
 		RenderingRegistry.registerEntityRenderingHandler(DeferredRegistryHandler.SMOKE_BOMB_ENTITY.get(), new SmokeBombRenderer());
 		RenderingRegistry.registerEntityRenderingHandler(DeferredRegistryHandler.MOLOTOV_COCKTAIL_ENTITY.get(), new MolotovRenderer());
 
+		RenderingRegistry.registerEntityRenderingHandler(DeferredRegistryHandler.DECAYED_SOLDIER_ENTITY.get(), DecayedSoldierRenderer::new);
+
 		// Register block renderers
 		RenderTypeLookup.setRenderLayer(DeferredRegistryHandler.BULLETPROOF_GLASS.get(), RenderType.getCutoutMipped());
 		RenderTypeLookup.setRenderLayer(DeferredRegistryHandler.WHITE_STAINED_BULLETPROOF_GLASS.get(), RenderType.getTranslucent());
@@ -85,27 +82,20 @@ public class ClientModEventSubscriber {
 
 		ClientRegistry.bindTileEntityRenderer(TileEntityHolder.WALL_SHELF_TILE_ENTITY, ShelfRenderer::new);
 
-		Minecraft.getInstance().getBlockColors().register(new IBlockColor() {
-			@Override
-			public int getColor(BlockState p_getColor_1_, IBlockDisplayReader p_getColor_2_, BlockPos p_getColor_3_,
-			                    int p_getColor_4_) {
-				return BiomeColors.getGrassColor(p_getColor_2_, p_getColor_3_);
-			}
+		Minecraft.getInstance().getBlockColors().register((p_getColor_1_, p_getColor_2_, p_getColor_3_, p_getColor_4_) -> {
+			assert p_getColor_2_ != null;
+			assert p_getColor_3_ != null;
+			return BiomeColors.getGrassColor(p_getColor_2_, p_getColor_3_);
 		}, DeferredRegistryHandler.PITFALL.get());
 
-		Minecraft.getInstance().getItemColors().register(new IItemColor() {
-			@Override
-			public int getColor(ItemStack p_getColor_1_, int p_getColor_2_) {
-				return GrassColors.get(0.5d, 1.0d);
-			}
-		}, DeferredRegistryHandler.PITFALL_ITEM.get());
+		Minecraft.getInstance().getItemColors().register((p_getColor_1_, p_getColor_2_) -> GrassColors.get(0.5d, 1.0d), DeferredRegistryHandler.PITFALL_ITEM.get());
 	}
 
 	@SubscribeEvent
 	public static void onParticleFactoryRegistration(ParticleFactoryRegisterEvent event) {
 		Minecraft mc = Minecraft.getInstance();
 
-		mc.particles.registerFactory(DeferredRegistryHandler.SMOKE_BOMB_PARTICLE_TYPE.get(), sprite -> new SmokeBombParticleFactory(sprite));
+		mc.particles.registerFactory(DeferredRegistryHandler.SMOKE_BOMB_PARTICLE_TYPE.get(), SmokeBombParticleFactory::new);
 	}
 
 	private static final String CATEGORY = "key.categories." + ImmersiveWeapons.MOD_ID;

@@ -98,7 +98,7 @@ public class ShelfBlock extends ContainerBlock {
 
 	@Override
 	public void onReplaced(BlockState state, World worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
-		if (!state.isIn(newState.getBlock())) {
+		if (!state.matchesBlock(newState.getBlock())) {
 			TileEntity tileentity = worldIn.getTileEntity(pos);
 			if (tileentity instanceof WallShelfTileEntity) {
 				InventoryHelper.dropItems(worldIn, pos, ((WallShelfTileEntity) tileentity).getInventory());

@@ -14,6 +14,7 @@ public class ConfiguredStructures {
 	public static StructureFeature<?, ?> CONFIGURED_PITFALL_TRAP = Structures.PITFALL_TRAP.get().withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG);
 	public static StructureFeature<?, ?> CONFIGURED_BEAR_TRAP = Structures.BEAR_TRAP.get().withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG);
 	public static StructureFeature<?, ?> CONFIGURED_LANDMINE_TRAP = Structures.LANDMINE_TRAP.get().withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG);
+	public static StructureFeature<?, ?> CONFIGURED_UNDERGROUND_BUNKER = Structures.UNDERGROUND_BUNKER.get().withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG);
 
 	public static void registerConfiguredStructures() {
 		Registry<StructureFeature<?, ?>> registry = WorldGenRegistries.CONFIGURED_STRUCTURE_FEATURE;
@@ -28,6 +29,9 @@ public class ConfiguredStructures {
 
 		Registry.register(registry, new ResourceLocation(ImmersiveWeapons.MOD_ID, "configured_landmine_trap"), CONFIGURED_LANDMINE_TRAP);
 		FlatGenerationSettings.STRUCTURES.put(Structures.LANDMINE_TRAP.get(), CONFIGURED_LANDMINE_TRAP);
+
+		Registry.register(registry, new ResourceLocation(ImmersiveWeapons.MOD_ID, "configured_underground_bunker"), CONFIGURED_UNDERGROUND_BUNKER);
+		FlatGenerationSettings.STRUCTURES.put(Structures.UNDERGROUND_BUNKER.get(), CONFIGURED_UNDERGROUND_BUNKER);
 	}
 
 }

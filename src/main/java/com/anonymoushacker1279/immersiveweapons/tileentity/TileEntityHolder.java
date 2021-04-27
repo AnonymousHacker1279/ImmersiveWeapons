@@ -7,5 +7,4 @@ public class TileEntityHolder {
 
 	@ObjectHolder("immersiveweapons:wall_shelf")
 	public static final TileEntityType<WallShelfTileEntity> WALL_SHELF_TILE_ENTITY = null;
-	
 }

@@ -16,6 +16,7 @@ import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 
+import java.util.Objects;
 import java.util.function.Supplier;
 
 public class Structures {
@@ -26,10 +27,11 @@ public class Structures {
 		DEFERRED_REGISTRY_STRUCTURE.register(FMLJavaModLoadingContext.get().getModEventBus());
 	}
 
-	public static final RegistryObject<Structure<NoFeatureConfig>> ABANDONED_FACTORY = setupStructure("abandoned_factory", () -> (new AbandonedFactory(NoFeatureConfig.field_236558_a_)));
-	public static final RegistryObject<Structure<NoFeatureConfig>> PITFALL_TRAP = setupStructure("pitfall_trap", () -> (new PitfallTrap(NoFeatureConfig.field_236558_a_)));
-	public static final RegistryObject<Structure<NoFeatureConfig>> BEAR_TRAP = setupStructure("bear_trap", () -> (new BearTrap(NoFeatureConfig.field_236558_a_)));
-	public static final RegistryObject<Structure<NoFeatureConfig>> LANDMINE_TRAP = setupStructure("landmine_trap", () -> (new LandmineTrap(NoFeatureConfig.field_236558_a_)));
+	public static final RegistryObject<Structure<NoFeatureConfig>> ABANDONED_FACTORY = setupStructure("abandoned_factory", () -> (new AbandonedFactory(NoFeatureConfig.CODEC)));
+	public static final RegistryObject<Structure<NoFeatureConfig>> PITFALL_TRAP = setupStructure("pitfall_trap", () -> (new PitfallTrap(NoFeatureConfig.CODEC)));
+	public static final RegistryObject<Structure<NoFeatureConfig>> BEAR_TRAP = setupStructure("bear_trap", () -> (new BearTrap(NoFeatureConfig.CODEC)));
+	public static final RegistryObject<Structure<NoFeatureConfig>> LANDMINE_TRAP = setupStructure("landmine_trap", () -> (new LandmineTrap(NoFeatureConfig.CODEC)));
+	public static final RegistryObject<Structure<NoFeatureConfig>> UNDERGROUND_BUNKER = setupStructure("underground_bunker", () -> (new UndergroundBunker(NoFeatureConfig.CODEC)));
 
 	private static <T extends Structure<?>> RegistryObject<T> setupStructure(String name, Supplier<T> structure) {
 		return DEFERRED_REGISTRY_STRUCTURE.register(name, structure);
@@ -40,6 +42,7 @@ public class Structures {
 	public static IStructurePieceType PT = PitfallTrapPieces.Piece::new;
 	public static IStructurePieceType BT = BearTrapPieces.Piece::new;
 	public static IStructurePieceType LT = LandmineTrapPieces.Piece::new;
+	public static IStructurePieceType UB = UndergroundBunkerPieces.Piece::new;
 
 	public static void setupStructures() {
 		setupStructure(
@@ -70,28 +73,35 @@ public class Structures {
 						Config.MIN_LANDMINE_TRAP_DISTANCE.get(),
 						959874384),
 				true);
-		// TODO: Need config options for distance on the bear and landmine traps.
+		setupStructure(
+				UNDERGROUND_BUNKER.get(),
+				new StructureSeparationSettings(
+						Config.MAX_UNDERGROUND_BUNKER_DISTANCE.get(),
+						Config.MIN_UNDERGROUND_BUNKER_DISTANCE.get(),
+						959874384),
+				false);
+
 	}
 
 	public static <F extends Structure<?>> void setupStructure(
 			F structure,
 			StructureSeparationSettings structureSeparationSettings,
 			boolean transformSurroundingLand) {
-		Structure.NAME_STRUCTURE_BIMAP.put(structure.getRegistryName().toString(), structure);
+		Structure.NAME_STRUCTURE_BIMAP.put(Objects.requireNonNull(structure.getRegistryName()).toString(), structure);
 
 		/*
 		 * Will add land at the base of the structure
 		 */
 		if (transformSurroundingLand) {
 			Structure.field_236384_t_ =
-					ImmutableList.<Structure<?>>builder()
+					ImmutableList.<Structure<?>> builder()
 							.addAll(Structure.field_236384_t_)
 							.add(structure)
 							.build();
 		}
 
 		DimensionStructuresSettings.field_236191_b_ =
-				ImmutableMap.<Structure<?>, StructureSeparationSettings>builder()
+				ImmutableMap.<Structure<?>, StructureSeparationSettings> builder()
 						.putAll(DimensionStructuresSettings.field_236191_b_)
 						.put(structure, structureSeparationSettings)
 						.build();
@@ -102,6 +112,7 @@ public class Structures {
 		registerStructurePiece(PT, new ResourceLocation(ImmersiveWeapons.MOD_ID, "pt"));
 		registerStructurePiece(BT, new ResourceLocation(ImmersiveWeapons.MOD_ID, "bt"));
 		registerStructurePiece(LT, new ResourceLocation(ImmersiveWeapons.MOD_ID, "lt"));
+		registerStructurePiece(UB, new ResourceLocation(ImmersiveWeapons.MOD_ID, "ub"));
 	}
 
 	static void registerStructurePiece(IStructurePieceType structurePiece, ResourceLocation rl) {

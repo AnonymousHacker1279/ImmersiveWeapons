@@ -91,7 +91,7 @@ public class SpikeTrapBlock extends Block implements IWaterLoggable {
 
 	@Override
 	public void onBlockAdded(BlockState state, World worldIn, BlockPos pos, BlockState oldState, boolean isMoving) {
-		if (!oldState.isIn(state.getBlock())) {
+		if (!oldState.matchesBlock(state.getBlock())) {
 			if (worldIn.isBlockPowered(pos)) {
 				worldIn.setBlockState(pos, state.with(POWERED, true), 3);
 			}

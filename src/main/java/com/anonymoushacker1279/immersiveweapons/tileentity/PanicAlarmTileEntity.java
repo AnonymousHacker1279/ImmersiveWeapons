@@ -11,12 +11,11 @@ import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.Util;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
-
-import java.util.UUID;
 
 public class PanicAlarmTileEntity extends TileEntity implements ITickableTileEntity {
 
@@ -25,7 +24,6 @@ public class PanicAlarmTileEntity extends TileEntity implements ITickableTileEnt
 	private Option.IntOption delay = new Option.IntOption(this::getPos, "delay", 2, 1, 30, 1, true);
 	private int cooldown = 0;
 	private int currentlyPlayingSound = 1;
-	public static final UUID CHAT_MESSAGE_UUID = UUID.fromString("624ba1a9-0a4d-4283-883f-d3a9d77c3f0b");
 
 	public PanicAlarmTileEntity() {
 		super(DeferredRegistryHandler.PANIC_ALARM_TILE_ENTITY.get());
@@ -97,20 +95,20 @@ public class PanicAlarmTileEntity extends TileEntity implements ITickableTileEnt
 	public boolean changeAlarmSound(PlayerEntity activator, World worldIn) {
 		if (currentlyPlayingSound == 1) {
 			currentlyPlayingSound++;
-			activator.sendMessage(new TranslationTextComponent("immersiveweapons.block.alarm.alarm2").mergeStyle(TextFormatting.YELLOW), CHAT_MESSAGE_UUID);
+			activator.sendMessage(new TranslationTextComponent("immersiveweapons.block.alarm.alarm2").mergeStyle(TextFormatting.YELLOW), Util.DUMMY_UUID);
 			return true;
 		} else if (currentlyPlayingSound == 2) {
 			currentlyPlayingSound++;
-			activator.sendMessage(new TranslationTextComponent("immersiveweapons.block.alarm.alarm3").mergeStyle(TextFormatting.YELLOW), CHAT_MESSAGE_UUID);
+			activator.sendMessage(new TranslationTextComponent("immersiveweapons.block.alarm.alarm3").mergeStyle(TextFormatting.YELLOW), Util.DUMMY_UUID);
 			return true;
 		} else if (currentlyPlayingSound == 3) {
 			// Reset back to zero - we're already at the last one
 			currentlyPlayingSound = 1;
-			activator.sendMessage(new TranslationTextComponent("immersiveweapons.block.alarm.alarm1").mergeStyle(TextFormatting.YELLOW), CHAT_MESSAGE_UUID);
+			activator.sendMessage(new TranslationTextComponent("immersiveweapons.block.alarm.alarm1").mergeStyle(TextFormatting.YELLOW), Util.DUMMY_UUID);
 			return true;
 		} else {
 			currentlyPlayingSound = 1;
-			activator.sendMessage(new TranslationTextComponent("immersiveweapons.block.alarm.alarm1").mergeStyle(TextFormatting.YELLOW), CHAT_MESSAGE_UUID);
+			activator.sendMessage(new TranslationTextComponent("immersiveweapons.block.alarm.alarm1").mergeStyle(TextFormatting.YELLOW), Util.DUMMY_UUID);
 			return true;
 		}
 	}

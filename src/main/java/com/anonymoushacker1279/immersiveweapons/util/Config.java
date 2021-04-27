@@ -23,6 +23,8 @@ public class Config {
 	public static ForgeConfigSpec.ConfigValue<Boolean> TESLA_ARMOR_EFFECT_SOUND;
 	public static ForgeConfigSpec.ConfigValue<Integer> MAX_SMOKE_BOMB_PARTICLES;
 	public static ForgeConfigSpec.ConfigValue<Boolean> BULLETS_BREAK_GLASS;
+	public static ForgeConfigSpec.ConfigValue<Integer> MAX_UNDERGROUND_BUNKER_DISTANCE;
+	public static ForgeConfigSpec.ConfigValue<Integer> MIN_UNDERGROUND_BUNKER_DISTANCE;
 
 	static {
 		initConfig();
@@ -49,6 +51,9 @@ public class Config {
 		MAX_SMOKE_BOMB_PARTICLES = COMMON_CONFIG_BUILDER.comment("Set the maximum number of particles produced by the smoke bomb - Default 96\nSetting this higher can make clients laggy, setting to 0 effectively disables it").define("max_smoke_bomb_particles", 96);
 
 		BULLETS_BREAK_GLASS = COMMON_CONFIG_BUILDER.comment("Enable/Disable bullets breaking glass - Default true").define("bullets_break_glass", true);
+
+		MAX_UNDERGROUND_BUNKER_DISTANCE = COMMON_CONFIG_BUILDER.comment("Maximum distance in chunks between Underground Bunkers - Default 110").define("max_underground_bunker_distance", 110);
+		MIN_UNDERGROUND_BUNKER_DISTANCE = COMMON_CONFIG_BUILDER.comment("Minimum distance in chunks between Underground Bunkers - Default 80").define("min_underground_bunker_distance", 80);
 
 		COMMON_CONFIG_BUILDER.pop();
 		COMMON_CONFIG = COMMON_CONFIG_BUILDER.build();

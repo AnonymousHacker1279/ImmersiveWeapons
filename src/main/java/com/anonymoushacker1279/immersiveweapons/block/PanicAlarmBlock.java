@@ -111,7 +111,7 @@ public class PanicAlarmBlock extends HorizontalBlock implements IWaterLoggable {
 
 	@Override
 	public void onBlockAdded(BlockState state, World worldIn, BlockPos pos, BlockState oldState, boolean isMoving) {
-		if (!oldState.isIn(state.getBlock())) {
+		if (!oldState.matchesBlock(state.getBlock())) {
 			if (worldIn.isBlockPowered(pos)) {
 				if (!worldIn.isRemote) {
 					worldIn.getPendingBlockTicks().scheduleTick(pos, state.getBlock(), 5);

@@ -71,7 +71,7 @@ public class SpotlightBlock extends HorizontalBlock implements IWaterLoggable {
 				if (flag) {
 					worldIn.getPendingBlockTicks().scheduleTick(pos, this, 1);
 				} else {
-					worldIn.setBlockState(pos, state.func_235896_a_(LIT), 3);
+					worldIn.setBlockState(pos, state.cycleValue(LIT), 3);
 				}
 			}
 		}
@@ -79,7 +79,7 @@ public class SpotlightBlock extends HorizontalBlock implements IWaterLoggable {
 
 	@Override
 	public void onBlockAdded(BlockState state, World worldIn, BlockPos pos, BlockState oldState, boolean isMoving) {
-		if (!oldState.isIn(state.getBlock())) {
+		if (!oldState.matchesBlock(state.getBlock())) {
 			if (worldIn.isBlockPowered(pos)) {
 				worldIn.setBlockState(pos, state.with(LIT, true), 3);
 			}

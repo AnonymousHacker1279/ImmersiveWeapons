@@ -10,6 +10,7 @@ import com.anonymoushacker1279.immersiveweapons.util.Structures;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
+import net.minecraft.world.biome.Biome.Category;
 import net.minecraft.world.gen.FlatChunkGenerator;
 import net.minecraft.world.gen.GenerationStage;
 import net.minecraft.world.gen.feature.structure.Structure;
@@ -59,7 +60,6 @@ public class ImmersiveWeapons {
 		IEventBus forgeBus = MinecraftForge.EVENT_BUS;
 		forgeBus.addListener(EventPriority.NORMAL, this::addDimensionalSpacing);
 		forgeBus.addListener(EventPriority.HIGH, this::biomeModification);
-
 	}
 
 	@SubscribeEvent
@@ -79,14 +79,18 @@ public class ImmersiveWeapons {
 		// Add structure to all biomes
 
 		BiomeGenerationSettingsBuilder generation = event.getGeneration();
-		if (event.getCategory() == Biome.Category.FOREST) {
+		if (event.getCategory() == Category.FOREST) {
 			generation.getStructures().add(() -> (ConfiguredStructures.CONFIGURED_ABANDONED_FACTORY));
+			generation.getStructures().add(() -> (ConfiguredStructures.CONFIGURED_UNDERGROUND_BUNKER));
 			generation.getStructures().add(() -> (ConfiguredStructures.CONFIGURED_BEAR_TRAP));
 		}
-		if (event.getCategory() == Biome.Category.JUNGLE) {
+		if (event.getCategory() == Category.PLAINS) {
+			generation.getStructures().add(() -> (ConfiguredStructures.CONFIGURED_ABANDONED_FACTORY));
+		}
+		if (event.getCategory() == Category.JUNGLE) {
 			generation.getStructures().add(() -> (ConfiguredStructures.CONFIGURED_PITFALL_TRAP));
 		}
-		if (event.getCategory() == Biome.Category.DESERT) {
+		if (event.getCategory() == Category.DESERT) {
 			generation.getStructures().add(() -> (ConfiguredStructures.CONFIGURED_LANDMINE_TRAP));
 		}
 	}
@@ -119,6 +123,7 @@ public class ImmersiveWeapons {
 			tempMap.put(Structures.PITFALL_TRAP.get(), DimensionStructuresSettings.field_236191_b_.get(Structures.PITFALL_TRAP.get()));
 			tempMap.put(Structures.BEAR_TRAP.get(), DimensionStructuresSettings.field_236191_b_.get(Structures.BEAR_TRAP.get()));
 			tempMap.put(Structures.LANDMINE_TRAP.get(), DimensionStructuresSettings.field_236191_b_.get(Structures.LANDMINE_TRAP.get()));
+			tempMap.put(Structures.UNDERGROUND_BUNKER.get(), DimensionStructuresSettings.field_236191_b_.get(Structures.UNDERGROUND_BUNKER.get()));
 			serverWorld.getChunkProvider().generator.func_235957_b_().field_236193_d_ = tempMap;
 
 		}
