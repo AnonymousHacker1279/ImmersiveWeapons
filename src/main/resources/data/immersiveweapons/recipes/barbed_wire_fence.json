@@ -1,0 +1,23 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"pattern": [
+		" z ",
+		"xyx",
+		"xyx"
+	],
+	"key": {
+		"x": {
+			"item": "minecraft:iron_block"
+		},
+		"y": {
+			"tag": "forge:ingots/metal"
+		},
+		"z": {
+			"item": "immersiveweapons:barbed_wire"
+		}
+	},
+	"result": {
+		"item": "immersiveweapons:barbed_wire_fence",
+		"count": 6
+	}
+}

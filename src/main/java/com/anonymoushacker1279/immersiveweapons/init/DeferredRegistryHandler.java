@@ -269,6 +269,8 @@ public class DeferredRegistryHandler {
 
 	public static final RegistryObject<Block> WOODEN_TABLE = BLOCKS.register("wooden_table", () -> new WoodenTableBlock(Block.Properties.create(Material.WOOD).hardnessAndResistance(3.0f, 3.0f).sound(SoundType.WOOD).notSolid()));
 
+	public static final RegistryObject<Block> BARBED_WIRE_FENCE = BLOCKS.register("barbed_wire_fence", () -> new BarbedWireFenceBlock(Block.Properties.create(Material.WOOD).hardnessAndResistance(7.0f, 8.0f).sound(SoundType.WOOD).harvestLevel(2).harvestTool(ToolType.PICKAXE).notSolid()));
+
 	// Block Items
 
 	public static final RegistryObject<BlockItem> MOLTEN_ORE_ITEM = ITEMS.register("molten_ore", () -> new BlockItem(MOLTEN_ORE.get(), new Properties().group(ITEM_GROUP).isImmuneToFire()));
@@ -309,6 +311,7 @@ public class DeferredRegistryHandler {
 	public static final RegistryObject<BlockItem> WALL_SHELF_ITEM = ITEMS.register("wall_shelf", () -> new BlockItem(WALL_SHELF.get(), new Properties().group(ITEM_GROUP)));
 	public static final RegistryObject<BlockItem> PANIC_ALARM_ITEM = ITEMS.register("panic_alarm", () -> new BlockItem(PANIC_ALARM.get(), new Properties().group(ITEM_GROUP)));
 	public static final RegistryObject<BlockItem> WOODEN_TABLE_ITEM = ITEMS.register("wooden_table", () -> new BlockItem(WOODEN_TABLE.get(), new Properties().group(ITEM_GROUP)));
+	public static final RegistryObject<BlockItem> BARBED_WIRE_FENCE_ITEM = ITEMS.register("barbed_wire_fence", () -> new BlockItem(BARBED_WIRE_FENCE.get(), new Properties().group(ITEM_GROUP)));
 
 	// Entities
 
