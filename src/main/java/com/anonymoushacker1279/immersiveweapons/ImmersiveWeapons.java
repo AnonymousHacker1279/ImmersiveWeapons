@@ -1,16 +1,10 @@
 package com.anonymoushacker1279.immersiveweapons;
 
-import com.anonymoushacker1279.immersiveweapons.entity.passive.MinutemanEntity;
 import com.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
 import com.anonymoushacker1279.immersiveweapons.init.DispenserBehaviorRegistry;
 import com.anonymoushacker1279.immersiveweapons.init.OreGeneratorHandler;
 import com.anonymoushacker1279.immersiveweapons.util.*;
-import net.minecraft.entity.SpawnReason;
 import net.minecraft.util.RegistryKey;
-import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.village.PointOfInterestManager;
-import net.minecraft.village.PointOfInterestType;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.biome.Biome.Category;
@@ -29,7 +23,6 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.world.BiomeGenerationSettingsBuilder;
 import net.minecraftforge.event.world.BiomeLoadingEvent;
 import net.minecraftforge.event.world.WorldEvent;
-import net.minecraftforge.event.world.WorldEvent.PotentialSpawns;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -43,7 +36,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
@@ -135,15 +127,6 @@ public class ImmersiveWeapons {
 		}
 	}
 
-	@SubscribeEvent
-	public void potentialSpawns(final PotentialSpawns event) {
-		if (Objects.equals(event.getWorld().getBiome(event.getPos()).getRegistryName(), DeferredRegistryHandler.BATTLEFIELD.get().getRegistryName())) {
-			if (((ServerWorld) event.getWorld()).doesVillageHaveAllSections(event.getPos(), 2)) {
-				this.spawnMinuteman((ServerWorld) event.getWorld(), event.getPos());
-			}
-		}
-	}
-
 	@SuppressWarnings("resource")
 
 	public void addDimensionalSpacing(final WorldEvent.Load event) {
@@ -164,21 +147,6 @@ public class ImmersiveWeapons {
 			tempMap.put(Structures.BATTLEFIELD_CAMP.get(), DimensionStructuresSettings.field_236191_b_.get(Structures.BATTLEFIELD_CAMP.get()));
 			serverWorld.getChunkProvider().generator.func_235957_b_().field_236193_d_ = tempMap;
 
-		}
-	}
-
-	private void spawnMinuteman(ServerWorld worldIn, BlockPos blockPos) {
-		if (worldIn.getPointOfInterestManager().getCountInRange(PointOfInterestType.HOME.getPredicate(), blockPos, 48, PointOfInterestManager.Status.IS_OCCUPIED) > 4L) {
-			List<MinutemanEntity> list = worldIn.getEntitiesWithinAABB(MinutemanEntity.class, (new AxisAlignedBB(blockPos)).grow(48.0D, 8.0D, 48.0D));
-			if (list.size() < 3) {
-				MinutemanEntity minutemanEntity = DeferredRegistryHandler.MINUTEMAN_ENTITY.get().create(worldIn);
-				if (minutemanEntity == null) {
-				} else {
-					minutemanEntity.onInitialSpawn(worldIn, worldIn.getDifficultyForLocation(blockPos), SpawnReason.NATURAL, null, null);
-					minutemanEntity.moveToBlockPosAndAngles(blockPos, 0.0F, 0.0F);
-					worldIn.addEntity(minutemanEntity);
-				}
-			}
 		}
 	}
 }

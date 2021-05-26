@@ -5,10 +5,14 @@ import com.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
 import com.anonymoushacker1279.immersiveweapons.item.CustomArrowItem;
 import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.event.RegistryEvent;
+import net.minecraftforge.event.world.WorldEvent.PotentialSpawns;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.registries.IForgeRegistryEntry;
+
+import java.util.Objects;
 
 @EventBusSubscriber(modid = ImmersiveWeapons.MOD_ID, bus = EventBusSubscriber.Bus.MOD)
 public class ModEventSubscriber {
@@ -45,5 +49,14 @@ public class ModEventSubscriber {
 	public static <T extends IForgeRegistryEntry<T>> T setup(final T entry, final ResourceLocation registryName) {
 		entry.setRegistryName(registryName);
 		return entry;
+	}
+
+	@SubscribeEvent
+	public void potentialSpawns(final PotentialSpawns event) {
+		if (Objects.equals(event.getWorld().getBiome(event.getPos()).getRegistryName(), DeferredRegistryHandler.BATTLEFIELD.get().getRegistryName())) {
+			if (((ServerWorld) event.getWorld()).doesVillageHaveAllSections(event.getPos(), 2)) {
+				GeneralUtilities.spawnMinuteman((ServerWorld) event.getWorld(), event.getPos());
+			}
+		}
 	}
 }

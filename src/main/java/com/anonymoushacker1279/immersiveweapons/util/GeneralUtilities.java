@@ -1,12 +1,18 @@
 package com.anonymoushacker1279.immersiveweapons.util;
 
+import com.anonymoushacker1279.immersiveweapons.entity.passive.MinutemanEntity;
 import com.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
 import net.minecraft.block.AbstractBlock.Properties;
 import net.minecraft.block.StainedGlassBlock;
 import net.minecraft.entity.EntityClassification;
+import net.minecraft.entity.SpawnReason;
 import net.minecraft.item.DyeColor;
 import net.minecraft.util.RegistryKey;
+import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.registry.WorldGenRegistries;
+import net.minecraft.village.PointOfInterestManager;
+import net.minecraft.village.PointOfInterestType;
 import net.minecraft.world.biome.*;
 import net.minecraft.world.biome.Biome.Category;
 import net.minecraft.world.biome.MobSpawnInfo.Spawners;
@@ -14,6 +20,9 @@ import net.minecraft.world.gen.GenerationStage.Decoration;
 import net.minecraft.world.gen.feature.Features;
 import net.minecraft.world.gen.feature.structure.StructureFeatures;
 import net.minecraft.world.gen.surfacebuilders.ConfiguredSurfaceBuilder;
+import net.minecraft.world.server.ServerWorld;
+
+import java.util.List;
 
 public class GeneralUtilities {
 
@@ -89,5 +98,20 @@ public class GeneralUtilities {
 				.withMobSpawnSettings(mobSpawnInfoBuilder.build())
 				.withGenerationSettings(biomeGenerationSettingBuilder.build())
 				.build();
+	}
+
+	public static void spawnMinuteman(ServerWorld worldIn, BlockPos blockPos) {
+		if (worldIn.getPointOfInterestManager().getCountInRange(PointOfInterestType.HOME.getPredicate(), blockPos, 48, PointOfInterestManager.Status.IS_OCCUPIED) > 4L) {
+			List<MinutemanEntity> list = worldIn.getEntitiesWithinAABB(MinutemanEntity.class, (new AxisAlignedBB(blockPos)).grow(48.0D, 8.0D, 48.0D));
+			if (list.size() < 3) {
+				MinutemanEntity minutemanEntity = DeferredRegistryHandler.MINUTEMAN_ENTITY.get().create(worldIn);
+				if (minutemanEntity == null) {
+				} else {
+					minutemanEntity.onInitialSpawn(worldIn, worldIn.getDifficultyForLocation(blockPos), SpawnReason.NATURAL, null, null);
+					minutemanEntity.moveToBlockPosAndAngles(blockPos, 0.0F, 0.0F);
+					worldIn.addEntity(minutemanEntity);
+				}
+			}
+		}
 	}
 }

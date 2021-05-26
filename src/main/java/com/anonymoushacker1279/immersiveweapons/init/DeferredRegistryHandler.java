@@ -12,10 +12,10 @@ import com.anonymoushacker1279.immersiveweapons.entity.projectile.BulletEntity.*
 import com.anonymoushacker1279.immersiveweapons.entity.projectile.CustomArrowEntity.*;
 import com.anonymoushacker1279.immersiveweapons.entity.projectile.MolotovEntity;
 import com.anonymoushacker1279.immersiveweapons.entity.projectile.SmokeBombEntity;
+import com.anonymoushacker1279.immersiveweapons.item.*;
 import com.anonymoushacker1279.immersiveweapons.item.BottleItem.AlcoholBottleItem;
 import com.anonymoushacker1279.immersiveweapons.item.BottleItem.WineBottleItem;
 import com.anonymoushacker1279.immersiveweapons.item.Bullets.*;
-import com.anonymoushacker1279.immersiveweapons.item.*;
 import com.anonymoushacker1279.immersiveweapons.item.CustomArrows.*;
 import com.anonymoushacker1279.immersiveweapons.item.CustomContainerItem.BasicContainerItem;
 import com.anonymoushacker1279.immersiveweapons.item.CustomContainerItem.BlueprintItem;
@@ -122,7 +122,6 @@ public class DeferredRegistryHandler {
 	public static final RegistryObject<Item> FLINTLOCK_PISTOL = ITEMS.register("flintlock_pistol", () -> new SimplePistolItem(new Properties().group(ITEM_GROUP).maxDamage(499)));
 	public static final RegistryObject<Item> BLUNDERBUSS = ITEMS.register("blunderbuss", () -> new SimpleShotgunItem(new Properties().group(ITEM_GROUP).maxDamage(449)));
 
-
 	// Items
 	public static final RegistryObject<Item> STONE_SHARD = ITEMS.register("stone_shard", () -> new Item(new Properties().group(ITEM_GROUP)));
 	public static final RegistryObject<Item> DIAMOND_SHARD = ITEMS.register("diamond_shard", () -> new Item(new Properties().group(ITEM_GROUP)));
@@ -159,7 +158,6 @@ public class DeferredRegistryHandler {
 	public static final RegistryObject<Item> SMOKE_BOMB_ARROW_PURPLE = ITEMS.register("smoke_bomb_arrow_purple", () -> new SmokeBombArrowItem(new Properties().group(ITEM_GROUP), 2.00d, "purple"));
 	public static final RegistryObject<Item> SMOKE_BOMB_ARROW_YELLOW = ITEMS.register("smoke_bomb_arrow_yellow", () -> new SmokeBombArrowItem(new Properties().group(ITEM_GROUP), 2.00d, "yellow"));
 	public static final RegistryObject<Item> WOOD_MUSKET_BALL = ITEMS.register("wood_musket_ball", () -> new WoodBulletItem(new Properties().group(ITEM_GROUP), 2.0d));
-	// public static final RegistryObject<Item> EMPTY_BULLET_CASING = ITEMS.register("empty_bullet_casing", () -> new Item(new Properties().group(ITEM_GROUP)));	// Disabled for now: Was going to be used previously but I don't have any use for it yet
 	public static final RegistryObject<Item> STONE_MUSKET_BALL = ITEMS.register("stone_musket_ball", () -> new StoneBulletItem(new Properties().group(ITEM_GROUP), 2.20d));
 	public static final RegistryObject<Item> GOLD_MUSKET_BALL = ITEMS.register("gold_musket_ball", () -> new GoldBulletItem(new Properties().group(ITEM_GROUP), 2.30d));
 	public static final RegistryObject<Item> COPPER_MUSKET_BALL = ITEMS.register("copper_musket_ball", () -> new CopperBulletItem(new Properties().group(ITEM_GROUP), 2.40d));
@@ -185,8 +183,11 @@ public class DeferredRegistryHandler {
 	public static final RegistryObject<Item> BOTTLE_OF_ALCOHOL = ITEMS.register("bottle_of_alcohol", () -> new AlcoholBottleItem(new Properties().group(ITEM_GROUP).maxStackSize(16)));
 	public static final RegistryObject<Item> BOTTLE_OF_WINE = ITEMS.register("bottle_of_wine", () -> new WineBottleItem(new Properties().group(ITEM_GROUP).maxStackSize(16)));
 	public static final RegistryObject<Item> PLIERS = ITEMS.register("pliers", () -> new Item(new Properties().group(ITEM_GROUP).maxStackSize(1)));
-	public static final RegistryObject<Item> CHOCOLATE_BAR = ITEMS.register("chocolate_bar", () -> new Item(new Properties().group(ITEM_GROUP).maxStackSize(16).food(CustomFoods.CHOCOLATE_BAR)));
-	public static final RegistryObject<Item> EXPLOSIVE_CHOCOLATE_BAR = ITEMS.register("explosive_chocolate_bar", () -> new ExplosiveChocolateBar(new Properties().group(ITEM_GROUP).maxStackSize(16).food(CustomFoods.CHOCOLATE_BAR)));
+	public static final RegistryObject<Item> CHOCOLATE_BAR = ITEMS.register("chocolate_bar", () -> new Item(new Properties().group(ITEM_GROUP).food(CustomFoods.CHOCOLATE_BAR)));
+	public static final RegistryObject<Item> EXPLOSIVE_CHOCOLATE_BAR = ITEMS.register("explosive_chocolate_bar", () -> new ExplosiveChocolateBar(new Properties().group(ITEM_GROUP).food(CustomFoods.CHOCOLATE_BAR)));
+	public static final RegistryObject<Item> BANDAGE = ITEMS.register("bandage", () -> new BandageItem(new Properties().group(ITEM_GROUP).maxStackSize(16)));
+	public static final RegistryObject<Item> MRE = ITEMS.register("mre", () -> new Item(new Properties().group(ITEM_GROUP).food(CustomFoods.MRE)));
+
 
 	// Armor
 	public static final RegistryObject<Item> MOLTEN_CHESTPLATE = ITEMS.register("molten_chestplate", () -> new MoltenArmorItem(CustomArmorMaterials.MOLTEN, EquipmentSlotType.CHEST, 1));
