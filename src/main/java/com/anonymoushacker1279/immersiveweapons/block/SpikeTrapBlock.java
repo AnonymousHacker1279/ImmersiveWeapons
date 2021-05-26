@@ -32,9 +32,9 @@ import java.util.List;
 public class SpikeTrapBlock extends Block implements IWaterLoggable {
 
 	public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
-	protected static final VoxelShape SHAPE = Block.makeCuboidShape(0.0D, 0.0D, 0.0D, 16.0D, 1.0D, 16.0D);
-	private DamageSource damageSource = new DamageSource("immersiveweapons.spike_trap");
 	public static final BooleanProperty POWERED = BooleanProperty.create("powered");
+	protected static final VoxelShape SHAPE = Block.makeCuboidShape(0.0D, 0.0D, 0.0D, 16.0D, 1.0D, 16.0D);
+	private final DamageSource damageSource = new DamageSource("immersiveweapons.spike_trap");
 
 	public SpikeTrapBlock(Properties properties) {
 		super(properties);
@@ -91,7 +91,7 @@ public class SpikeTrapBlock extends Block implements IWaterLoggable {
 
 	@Override
 	public void onBlockAdded(BlockState state, World worldIn, BlockPos pos, BlockState oldState, boolean isMoving) {
-		if (!oldState.isIn(state.getBlock())) {
+		if (!oldState.matchesBlock(state.getBlock())) {
 			if (worldIn.isBlockPowered(pos)) {
 				worldIn.setBlockState(pos, state.with(POWERED, true), 3);
 			}
@@ -102,18 +102,16 @@ public class SpikeTrapBlock extends Block implements IWaterLoggable {
 	public void neighborChanged(BlockState state, World worldIn, BlockPos pos, Block blockIn, BlockPos fromPos, boolean isMoving) {
 		boolean flag = worldIn.isBlockPowered(pos);
 		if (flag != state.get(POWERED)) {
-			if (state.get(POWERED) != flag) {
-				state = state.with(POWERED, flag);
-				// A bit hacky here. This runs from the client so we can't use server logic to broadcast to all players.
-				AxisAlignedBB bound = new AxisAlignedBB(pos.getX() - 7, pos.getY() - 7, pos.getZ() - 7, pos.getX() + 7, pos.getY() + 7, pos.getZ() + 7);
-				List<PlayerEntity> entitiesInBound = worldIn.getEntitiesWithinAABB(PlayerEntity.class, bound);
-				for (int i = 0; i < worldIn.getPlayers().size(); i++) {
-					if (entitiesInBound.contains(worldIn.getPlayers().get(i))) {
-						if (state.get(POWERED)) {
-							worldIn.getPlayers().get(i).playSound(DeferredRegistryHandler.SPIKE_TRAP_EXTEND.get(), SoundCategory.BLOCKS, 1.0f, 1.0f);
-						} else {
-							worldIn.getPlayers().get(i).playSound(DeferredRegistryHandler.SPIKE_TRAP_RETRACT.get(), SoundCategory.BLOCKS, 1.0f, 1.0f);
-						}
+			state = state.with(POWERED, flag);
+			// A bit hacky here. This runs from the client so we can't use server logic to broadcast to all players.
+			AxisAlignedBB bound = new AxisAlignedBB(pos.getX() - 7, pos.getY() - 7, pos.getZ() - 7, pos.getX() + 7, pos.getY() + 7, pos.getZ() + 7);
+			List<PlayerEntity> entitiesInBound = worldIn.getEntitiesWithinAABB(PlayerEntity.class, bound);
+			for (int i = 0; i < worldIn.getPlayers().size(); i++) {
+				if (entitiesInBound.contains(worldIn.getPlayers().get(i))) {
+					if (state.get(POWERED)) {
+						worldIn.getPlayers().get(i).playSound(DeferredRegistryHandler.SPIKE_TRAP_EXTEND.get(), SoundCategory.BLOCKS, 1.0f, 1.0f);
+					} else {
+						worldIn.getPlayers().get(i).playSound(DeferredRegistryHandler.SPIKE_TRAP_RETRACT.get(), SoundCategory.BLOCKS, 1.0f, 1.0f);
 					}
 				}
 			}

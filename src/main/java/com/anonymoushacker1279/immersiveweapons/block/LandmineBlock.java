@@ -27,17 +27,24 @@ import javax.annotation.Nullable;
 public class LandmineBlock extends Block implements IWaterLoggable {
 
 	public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
-	protected static final VoxelShape SHAPE = Block.makeCuboidShape(2.0D, 0.0D, 2.0D, 14.0D, 3.5D, 14.0D);
-	private static final DamageSource damageSource = new DamageSource("immersiveweapons.landmine");
 	public static final BooleanProperty ARMED = BooleanProperty.create("armed");
 	public static final BooleanProperty SAND = BooleanProperty.create("sand");
 	public static final BooleanProperty VINES = BooleanProperty.create("vines");
+	protected static final VoxelShape SHAPE = Block.makeCuboidShape(2.0D, 0.0D, 2.0D, 14.0D, 3.5D, 14.0D);
+	private static final DamageSource damageSource = new DamageSource("immersiveweapons.landmine");
 	//private static final ExplosionContext explosionContext = new ExplosionContext();
 
 	public LandmineBlock(AbstractBlock.Properties properties) {
 		super(properties);
 		this.setDefaultState(this.stateContainer.getBaseState().with(ARMED, Boolean.valueOf(false)).with(WATERLOGGED, Boolean.valueOf(false)).with(VINES, Boolean.valueOf(false)).with(SAND, Boolean.valueOf(false)));
 
+	}
+
+	private static void explode(World worldIn, BlockPos pos, @Nullable LivingEntity entityIn) {
+		if (!worldIn.isRemote) {
+			worldIn.createExplosion(entityIn, damageSource, null, pos.getX(), pos.getY(), pos.getZ(), 2.0F, false, Explosion.Mode.BREAK);
+			worldIn.playSound(pos.getX(), pos.getY(), pos.getZ(), SoundEvents.ENTITY_TNT_PRIMED, SoundCategory.BLOCKS, 1.0F, 1.0F, false);
+		}
 	}
 
 	@Override
@@ -131,13 +138,6 @@ public class LandmineBlock extends Block implements IWaterLoggable {
 	public void onExplosionDestroy(World worldIn, BlockPos pos, Explosion explosionIn) {
 		if (!worldIn.isRemote) {
 			explode(worldIn, pos, null);
-		}
-	}
-
-	private static void explode(World worldIn, BlockPos pos, @Nullable LivingEntity entityIn) {
-		if (!worldIn.isRemote) {
-			worldIn.createExplosion(entityIn, damageSource, null, pos.getX(), pos.getY(), pos.getZ(), 2.0F, false, Explosion.Mode.BREAK);
-			worldIn.playSound(pos.getX(), pos.getY(), pos.getZ(), SoundEvents.ENTITY_TNT_PRIMED, SoundCategory.BLOCKS, 1.0F, 1.0F, false);
 		}
 	}
 

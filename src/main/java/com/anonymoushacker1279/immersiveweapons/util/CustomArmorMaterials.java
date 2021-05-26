@@ -1,9 +1,6 @@
 package com.anonymoushacker1279.immersiveweapons.util;
 
-import java.util.function.Supplier;
-
 import com.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
-
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.IArmorMaterial;
 import net.minecraft.item.crafting.Ingredient;
@@ -13,18 +10,20 @@ import net.minecraft.util.SoundEvents;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
+import java.util.function.Supplier;
+
 public enum CustomArmorMaterials implements IArmorMaterial {
 
-	 MOLTEN("molten", 39, new int[]{5, 6, 9, 4}, 15, SoundEvents.ITEM_ARMOR_EQUIP_NETHERITE, 3.5F, () -> {
-		 return Ingredient.fromItems(DeferredRegistryHandler.MOLTEN_PLATE.get()); 
-	 }, 0.12F),
-	 COPPER("copper", 15, new int[]{1, 4, 5, 1}, 9, SoundEvents.ITEM_ARMOR_EQUIP_IRON, 0.0F, () -> {
-		 return Ingredient.fromItems(DeferredRegistryHandler.COPPER_INGOT.get());
-	 }, 0.0F),
-	 TESLA("tesla", 42, new int[]{7, 8, 11, 6}, 20, SoundEvents.ITEM_ARMOR_EQUIP_GOLD, 3.0F, () -> {
-		 return Ingredient.fromItems(DeferredRegistryHandler.TESLA_INGOT.get());
-	 }, 0.05F);
-	 
+	MOLTEN("molten", 39, new int[]{5, 6, 9, 4}, 15, SoundEvents.ITEM_ARMOR_EQUIP_NETHERITE, 3.5F, () -> {
+		return Ingredient.fromItems(DeferredRegistryHandler.MOLTEN_PLATE.get());
+	}, 0.12F),
+	COPPER("copper", 15, new int[]{1, 4, 5, 1}, 9, SoundEvents.ITEM_ARMOR_EQUIP_IRON, 0.0F, () -> {
+		return Ingredient.fromItems(DeferredRegistryHandler.COPPER_INGOT.get());
+	}, 0.0F),
+	TESLA("tesla", 42, new int[]{7, 8, 11, 6}, 20, SoundEvents.ITEM_ARMOR_EQUIP_GOLD, 3.0F, () -> {
+		return Ingredient.fromItems(DeferredRegistryHandler.TESLA_INGOT.get());
+	}, 0.05F);
+
 	static final int[] MAX_DAMAGE_ARRAY = new int[]{13, 15, 16, 11};
 	private final String name;
 	private final int maxDamageFactor;
@@ -50,7 +49,7 @@ public enum CustomArmorMaterials implements IArmorMaterial {
 	public int getDurability(EquipmentSlotType slotIn) {
 		return MAX_DAMAGE_ARRAY[slotIn.getIndex()] * this.maxDamageFactor;
 	}
-	
+
 	@Override
 	public int getDamageReductionAmount(EquipmentSlotType slotIn) {
 		return this.damageReductionAmountArray[slotIn.getIndex()];

@@ -1,0 +1,19 @@
+{
+	"variants": {
+		"facing=north": {
+			"model": "immersiveweapons:block/panic_alarm",
+			"y": 180
+		},
+		"facing=south": {
+			"model": "immersiveweapons:block/panic_alarm"
+		},
+		"facing=west": {
+			"model": "immersiveweapons:block/panic_alarm",
+			"y": 90
+		},
+		"facing=east": {
+			"model": "immersiveweapons:block/panic_alarm",
+			"y": 270
+		}
+	}
+}

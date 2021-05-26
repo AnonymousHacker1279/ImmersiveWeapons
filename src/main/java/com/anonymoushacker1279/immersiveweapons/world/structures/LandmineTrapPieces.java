@@ -39,8 +39,8 @@ public class LandmineTrapPieces {
 	}
 
 	public static class Piece extends TemplateStructurePiece {
-		private ResourceLocation resourceLocation;
-		private Rotation rotation;
+		private final ResourceLocation resourceLocation;
+		private final Rotation rotation;
 
 		public Piece(TemplateManager templateManagerIn, ResourceLocation resourceLocationIn, BlockPos pos, Rotation rotationIn) {
 			super(Structures.LT, 0);

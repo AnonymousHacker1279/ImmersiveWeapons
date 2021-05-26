@@ -1,0 +1,18 @@
+{
+	"variants": {
+		"facing=north": {
+			"model": "immersiveweapons:block/wooden_spikes"
+		},
+		"facing=south": {
+			"model": "immersiveweapons:block/wooden_spikes"
+		},
+		"facing=west": {
+			"model": "immersiveweapons:block/wooden_spikes",
+			"y": 90
+		},
+		"facing=east": {
+			"model": "immersiveweapons:block/wooden_spikes",
+			"y": 90
+		}
+	}
+}

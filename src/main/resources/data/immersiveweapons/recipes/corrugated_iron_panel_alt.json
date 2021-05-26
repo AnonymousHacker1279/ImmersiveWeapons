@@ -1,0 +1,17 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"pattern": [
+		"   ",
+		"   ",
+		"x  "
+	],
+	"key": {
+		"x": {
+			"item": "immersiveweapons:corrugated_iron_panel_flat"
+		}
+	},
+	"result": {
+		"item": "immersiveweapons:corrugated_iron_panel",
+		"count": 1
+	}
+}
