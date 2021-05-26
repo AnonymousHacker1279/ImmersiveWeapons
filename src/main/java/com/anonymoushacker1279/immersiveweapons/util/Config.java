@@ -10,8 +10,6 @@ import java.nio.file.Path;
 public class Config {
 
 	private static final ForgeConfigSpec.Builder COMMON_CONFIG_BUILDER = new ForgeConfigSpec.Builder();
-	private static ForgeConfigSpec COMMON_CONFIG;
-
 	public static ForgeConfigSpec.ConfigValue<Integer> MAX_ABANDONED_FACTORY_DISTANCE;
 	public static ForgeConfigSpec.ConfigValue<Integer> MIN_ABANDONED_FACTORY_DISTANCE;
 	public static ForgeConfigSpec.ConfigValue<Integer> MAX_PITFALL_TRAP_DISTANCE;
@@ -25,6 +23,9 @@ public class Config {
 	public static ForgeConfigSpec.ConfigValue<Boolean> BULLETS_BREAK_GLASS;
 	public static ForgeConfigSpec.ConfigValue<Integer> MAX_UNDERGROUND_BUNKER_DISTANCE;
 	public static ForgeConfigSpec.ConfigValue<Integer> MIN_UNDERGROUND_BUNKER_DISTANCE;
+	public static ForgeConfigSpec.ConfigValue<Integer> MAX_BATTLEFIELD_CAMP_DISTANCE;
+	public static ForgeConfigSpec.ConfigValue<Integer> MIN_BATTLEFIELD_CAMP_DISTANCE;
+	private static ForgeConfigSpec COMMON_CONFIG;
 
 	static {
 		initConfig();
@@ -54,6 +55,9 @@ public class Config {
 
 		MAX_UNDERGROUND_BUNKER_DISTANCE = COMMON_CONFIG_BUILDER.comment("Maximum distance in chunks between Underground Bunkers - Default 110").define("max_underground_bunker_distance", 110);
 		MIN_UNDERGROUND_BUNKER_DISTANCE = COMMON_CONFIG_BUILDER.comment("Minimum distance in chunks between Underground Bunkers - Default 80").define("min_underground_bunker_distance", 80);
+
+		MAX_BATTLEFIELD_CAMP_DISTANCE = COMMON_CONFIG_BUILDER.comment("Maximum distance in chunks between Battlefield Camps - Default 16").define("max_underground_bunker_distance", 10);
+		MIN_BATTLEFIELD_CAMP_DISTANCE = COMMON_CONFIG_BUILDER.comment("Minimum distance in chunks between Battlefield Camps - Default 4").define("min_underground_bunker_distance", 2);
 
 		COMMON_CONFIG_BUILDER.pop();
 		COMMON_CONFIG = COMMON_CONFIG_BUILDER.build();

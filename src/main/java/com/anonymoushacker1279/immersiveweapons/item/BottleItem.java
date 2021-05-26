@@ -14,26 +14,26 @@ import net.minecraft.world.World;
 public class BottleItem {
 
 	public static class AlcoholBottleItem extends Item {
-		
+
 		public AlcoholBottleItem(Properties properties) {
 			super(properties);
 			properties.containerItem(this.getItem());
 		}
-		
+
 		@Override
 		public boolean hasContainerItem(ItemStack stack) {
 			return true;
 		}
-		
+
 		@Override
 		public ItemStack getContainerItem(ItemStack stack) {
 			return new ItemStack(Items.GLASS_BOTTLE);
 		}
-		
+
 		@Override
 		public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand handIn) {
 			ItemStack itemstack = playerIn.getHeldItem(handIn);
-			
+
 			// Give effects upon use for 30 seconds
 			playerIn.addPotionEffect(new EffectInstance(Effects.NAUSEA, 600, 0, false, true));
 			playerIn.addPotionEffect(new EffectInstance(Effects.STRENGTH, 600, 0, false, true));
@@ -47,34 +47,34 @@ public class BottleItem {
 
 			return ActionResult.func_233538_a_(itemstack, worldIn.isRemote());
 		}
-		
+
 		@Override
 		public UseAction getUseAction(ItemStack stack) {
 			return UseAction.DRINK;
 		}
 	}
-	
+
 	public static class WineBottleItem extends Item {
-		
+
 		public WineBottleItem(Properties properties) {
 			super(properties);
 			properties.containerItem(this.getItem());
 		}
-		
+
 		@Override
 		public boolean hasContainerItem(ItemStack stack) {
 			return true;
 		}
-		
+
 		@Override
 		public ItemStack getContainerItem(ItemStack stack) {
 			return new ItemStack(Items.GLASS_BOTTLE);
 		}
-		
+
 		@Override
 		public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand handIn) {
 			ItemStack itemstack = playerIn.getHeldItem(handIn);
-			
+
 			// Give effects upon use for 30 seconds
 			playerIn.addPotionEffect(new EffectInstance(Effects.STRENGTH, 360, 0, false, true));
 			playerIn.addPotionEffect(new EffectInstance(Effects.RESISTANCE, 360, 0, false, true));
@@ -87,7 +87,7 @@ public class BottleItem {
 
 			return ActionResult.func_233538_a_(itemstack, worldIn.isRemote());
 		}
-		
+
 		@Override
 		public UseAction getUseAction(ItemStack stack) {
 			return UseAction.DRINK;

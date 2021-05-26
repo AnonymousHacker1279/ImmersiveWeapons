@@ -1,0 +1,20 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"pattern": [
+		"y y",
+		" x ",
+		"y y"
+	],
+	"key": {
+		"x": {
+			"tag": "minecraft:planks"
+		},
+		"y": {
+			"item": "minecraft:stick"
+		}
+	},
+	"result": {
+		"item": "immersiveweapons:wooden_spikes",
+		"count": 1
+	}
+}

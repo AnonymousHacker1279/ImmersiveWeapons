@@ -19,9 +19,9 @@ public class AlarmTickableSounds {
 			this.repeat = false;
 			this.repeatDelay = 0;
 			this.volume = 1.0F;
-			this.x = (double) ((float) panicAlarmTileEntity.getPos().getX());
-			this.y = (double) ((float) panicAlarmTileEntity.getPos().getY());
-			this.z = (double) ((float) panicAlarmTileEntity.getPos().getZ());
+			this.x = (float) panicAlarmTileEntity.getPos().getX();
+			this.y = (float) panicAlarmTileEntity.getPos().getY();
+			this.z = (float) panicAlarmTileEntity.getPos().getZ();
 		}
 
 		@Override
@@ -29,9 +29,9 @@ public class AlarmTickableSounds {
 			if (!panicAlarmTileEntity.isPowered()) {
 				this.finishPlaying();
 			} else {
-				this.x = (double) ((float) panicAlarmTileEntity.getPos().getX());
-				this.y = (double) ((float) panicAlarmTileEntity.getPos().getY());
-				this.z = (double) ((float) panicAlarmTileEntity.getPos().getZ());
+				this.x = (float) panicAlarmTileEntity.getPos().getX();
+				this.y = (float) panicAlarmTileEntity.getPos().getY();
+				this.z = (float) panicAlarmTileEntity.getPos().getZ();
 				this.distance = 20f;
 				this.volume = 1.0f;
 			}
@@ -50,9 +50,9 @@ public class AlarmTickableSounds {
 			this.repeat = false;
 			this.repeatDelay = 0;
 			this.volume = 1.0F;
-			this.x = (double) ((float) panicAlarmTileEntity.getPos().getX());
-			this.y = (double) ((float) panicAlarmTileEntity.getPos().getY());
-			this.z = (double) ((float) panicAlarmTileEntity.getPos().getZ());
+			this.x = (float) panicAlarmTileEntity.getPos().getX();
+			this.y = (float) panicAlarmTileEntity.getPos().getY();
+			this.z = (float) panicAlarmTileEntity.getPos().getZ();
 		}
 
 		@Override
@@ -60,9 +60,9 @@ public class AlarmTickableSounds {
 			if (!panicAlarmTileEntity.isPowered()) {
 				this.finishPlaying();
 			} else {
-				this.x = (double) ((float) panicAlarmTileEntity.getPos().getX());
-				this.y = (double) ((float) panicAlarmTileEntity.getPos().getY());
-				this.z = (double) ((float) panicAlarmTileEntity.getPos().getZ());
+				this.x = (float) panicAlarmTileEntity.getPos().getX();
+				this.y = (float) panicAlarmTileEntity.getPos().getY();
+				this.z = (float) panicAlarmTileEntity.getPos().getZ();
 				this.distance = 20f;
 				this.volume = 1.0f;
 			}
@@ -81,9 +81,9 @@ public class AlarmTickableSounds {
 			this.repeat = false;
 			this.repeatDelay = 0;
 			this.volume = 1.0F;
-			this.x = (double) ((float) panicAlarmTileEntity.getPos().getX());
-			this.y = (double) ((float) panicAlarmTileEntity.getPos().getY());
-			this.z = (double) ((float) panicAlarmTileEntity.getPos().getZ());
+			this.x = (float) panicAlarmTileEntity.getPos().getX();
+			this.y = (float) panicAlarmTileEntity.getPos().getY();
+			this.z = (float) panicAlarmTileEntity.getPos().getZ();
 		}
 
 		@Override
@@ -91,9 +91,9 @@ public class AlarmTickableSounds {
 			if (!panicAlarmTileEntity.isPowered()) {
 				this.finishPlaying();
 			} else {
-				this.x = (double) ((float) panicAlarmTileEntity.getPos().getX());
-				this.y = (double) ((float) panicAlarmTileEntity.getPos().getY());
-				this.z = (double) ((float) panicAlarmTileEntity.getPos().getZ());
+				this.x = (float) panicAlarmTileEntity.getPos().getX();
+				this.y = (float) panicAlarmTileEntity.getPos().getY();
+				this.z = (float) panicAlarmTileEntity.getPos().getZ();
 				this.distance = 20f;
 				this.volume = 1.0f;
 			}

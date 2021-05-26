@@ -33,10 +33,10 @@ import net.minecraft.world.World;
 public class BearTrapBlock extends ContainerBlock implements IWaterLoggable {
 
 	public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
-	protected static final VoxelShape SHAPE = Block.makeCuboidShape(0.0D, 0.0D, 0.0D, 16.0D, 2.0D, 16.0D);
 	public static final BooleanProperty TRIGGERED = BooleanProperty.create("triggered");
 	public static final BooleanProperty VINES = BooleanProperty.create("vines");
-	private boolean isSomethingTrapped = false;
+	protected static final VoxelShape SHAPE = Block.makeCuboidShape(0.0D, 0.0D, 0.0D, 16.0D, 2.0D, 16.0D);
+	private final boolean isSomethingTrapped = false;
 
 	public BearTrapBlock(Properties properties) {
 		super(properties);
@@ -91,7 +91,7 @@ public class BearTrapBlock extends ContainerBlock implements IWaterLoggable {
 		if (state.get(TRIGGERED)) {
 			assert bearTrap != null;
 			if (bearTrap.getTrappedEntity() == entity || bearTrap.getTrappedPlayerEntity() == entity) {
-				entity.setMotionMultiplier(state, new Vector3d((double) 0.0F, 0.0D, (double) 0.0F));
+				entity.setMotionMultiplier(state, new Vector3d(0.0F, 0.0D, 0.0F));
 				if ((entity.lastTickPosX != entity.getPosX() || entity.lastTickPosZ != entity.getPosZ())) {
 					double d0 = Math.abs(entity.getPosX() - entity.lastTickPosX);
 					double d1 = Math.abs(entity.getPosZ() - entity.lastTickPosZ);

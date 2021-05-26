@@ -1,6 +1,8 @@
 package com.anonymoushacker1279.immersiveweapons.entity.monster;
 
+import com.anonymoushacker1279.immersiveweapons.entity.ai.goal.OpenFenceGateGoal;
 import com.anonymoushacker1279.immersiveweapons.entity.ai.goal.RangedGunAttackGoal;
+import com.anonymoushacker1279.immersiveweapons.entity.passive.AbstractMinutemanEntity;
 import com.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
 import com.anonymoushacker1279.immersiveweapons.item.CustomArrowItem;
 import net.minecraft.block.BlockState;
@@ -9,6 +11,7 @@ import net.minecraft.entity.*;
 import net.minecraft.entity.ai.attributes.AttributeModifierMap;
 import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.ai.goal.*;
+import net.minecraft.entity.merchant.villager.AbstractVillagerEntity;
 import net.minecraft.entity.monster.MonsterEntity;
 import net.minecraft.entity.passive.IronGolemEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -31,9 +34,9 @@ import javax.annotation.Nullable;
 import java.time.LocalDate;
 import java.time.temporal.ChronoField;
 
-public abstract class AbstractDecayedSoldierEntity extends MonsterEntity implements IRangedAttackMob {
+public abstract class AbstractDyingSoldierEntity extends MonsterEntity implements IRangedAttackMob {
 
-	private final RangedGunAttackGoal<AbstractDecayedSoldierEntity> aiArrowAttack = new RangedGunAttackGoal<>(this, 1.0D, 20, 15.0F);
+	private final RangedGunAttackGoal<AbstractDyingSoldierEntity> aiPistolAttack = new RangedGunAttackGoal<>(this, 1.0D, 20, 15.0F);
 	private final MeleeAttackGoal aiAttackOnCollide = new MeleeAttackGoal(this, 1.2D, false) {
 		/**
 		 * Reset the task's internal state. Called when this task is interrupted by another one
@@ -41,7 +44,7 @@ public abstract class AbstractDecayedSoldierEntity extends MonsterEntity impleme
 		@Override
 		public void resetTask() {
 			super.resetTask();
-			AbstractDecayedSoldierEntity.this.setAggroed(false);
+			AbstractDyingSoldierEntity.this.setAggroed(false);
 		}
 
 		/**
@@ -50,29 +53,38 @@ public abstract class AbstractDecayedSoldierEntity extends MonsterEntity impleme
 		@Override
 		public void startExecuting() {
 			super.startExecuting();
-			AbstractDecayedSoldierEntity.this.setAggroed(true);
+			AbstractDyingSoldierEntity.this.setAggroed(true);
 		}
 	};
 
-	protected AbstractDecayedSoldierEntity(EntityType<? extends AbstractDecayedSoldierEntity> type, World worldIn) {
+	protected AbstractDyingSoldierEntity(EntityType<? extends AbstractDyingSoldierEntity> type, World worldIn) {
 		super(type, worldIn);
 		this.setCombatTask();
-	}
-
-	@Override
-	protected void registerGoals() {
-		this.goalSelector.addGoal(5, new WaterAvoidingRandomWalkingGoal(this, 1.0D));
-		this.goalSelector.addGoal(6, new LookAtGoal(this, PlayerEntity.class, 8.0F));
-		this.goalSelector.addGoal(6, new LookRandomlyGoal(this));
-		this.targetSelector.addGoal(1, new HurtByTargetGoal(this));
-		this.targetSelector.addGoal(5, new NearestAttackableTargetGoal<>(this, PlayerEntity.class, true));
-		this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, IronGolemEntity.class, true));
 	}
 
 	public static AttributeModifierMap.MutableAttribute registerAttributes() {
 		return MonsterEntity.func_234295_eP_()
 				.createMutableAttribute(Attributes.MOVEMENT_SPEED, 0.3D)
 				.createMutableAttribute(Attributes.ARMOR, 5.0D);
+	}
+
+	public boolean isBreakDoorsTaskSet() {
+		return true;
+	}
+
+	@Override
+	protected void registerGoals() {
+		this.goalSelector.addGoal(4, new WaterAvoidingRandomWalkingGoal(this, 1.0D));
+		this.goalSelector.addGoal(3, new LookAtGoal(this, PlayerEntity.class, 8.0F));
+		this.goalSelector.addGoal(3, new LookRandomlyGoal(this));
+		this.goalSelector.addGoal(2, new MoveThroughVillageGoal(this, 1.0D, false, 6, this::isBreakDoorsTaskSet));
+		this.goalSelector.addGoal(2, new OpenDoorGoal(this, false));
+		this.goalSelector.addGoal(2, new OpenFenceGateGoal(this, false));
+		this.targetSelector.addGoal(4, new HurtByTargetGoal(this));
+		this.targetSelector.addGoal(6, new NearestAttackableTargetGoal<>(this, AbstractVillagerEntity.class, true));
+		this.targetSelector.addGoal(12, new NearestAttackableTargetGoal<>(this, AbstractMinutemanEntity.class, false));
+		this.targetSelector.addGoal(6, new NearestAttackableTargetGoal<>(this, PlayerEntity.class, false));
+		this.targetSelector.addGoal(5, new NearestAttackableTargetGoal<>(this, IronGolemEntity.class, true));
 	}
 
 	@Override
@@ -84,7 +96,7 @@ public abstract class AbstractDecayedSoldierEntity extends MonsterEntity impleme
 
 	@Override
 	public CreatureAttribute getCreatureAttribute() {
-		return CreatureAttribute.UNDEAD;
+		return CreatureAttribute.ILLAGER;
 	}
 
 	/**
@@ -145,7 +157,7 @@ public abstract class AbstractDecayedSoldierEntity extends MonsterEntity impleme
 	public void setCombatTask() {
 		if (this.world != null && !this.world.isRemote) {
 			this.goalSelector.removeGoal(this.aiAttackOnCollide);
-			this.goalSelector.removeGoal(this.aiArrowAttack);
+			this.goalSelector.removeGoal(this.aiPistolAttack);
 			ItemStack itemstack = this.getHeldItem(ProjectileHelper.getHandWith(this, DeferredRegistryHandler.FLINTLOCK_PISTOL.get()));
 			if (itemstack.getItem() == DeferredRegistryHandler.FLINTLOCK_PISTOL.get()) {
 				int i = 20;
@@ -153,8 +165,8 @@ public abstract class AbstractDecayedSoldierEntity extends MonsterEntity impleme
 					i = 40;
 				}
 
-				this.aiArrowAttack.setAttackCooldown(i);
-				this.goalSelector.addGoal(4, this.aiArrowAttack);
+				this.aiPistolAttack.setAttackCooldown(i);
+				this.goalSelector.addGoal(4, this.aiPistolAttack);
 			} else {
 				this.goalSelector.addGoal(4, this.aiAttackOnCollide);
 			}
@@ -174,7 +186,7 @@ public abstract class AbstractDecayedSoldierEntity extends MonsterEntity impleme
 		double d0 = target.getPosX() - this.getPosX();
 		double d1 = target.getPosYHeight(0.1D) - abstractarrowentity.getPosY();
 		double d2 = target.getPosZ() - this.getPosZ();
-		double d3 = (double) MathHelper.sqrt(d0 * d0 + d2 * d2);
+		double d3 = MathHelper.sqrt(d0 * d0 + d2 * d2);
 		abstractarrowentity.shoot(d0, d1 + d3 * (double) 0.2F, d2, 1.6F, (float) (14 - this.world.getDifficulty().getId() * 4));
 		this.playSound(DeferredRegistryHandler.FLINTLOCK_PISTOL_FIRE.get(), 1.0F, 1.0F / (this.getRNG().nextFloat() * 0.4F + 0.8F));
 		this.world.addEntity(abstractarrowentity);
@@ -225,5 +237,10 @@ public abstract class AbstractDecayedSoldierEntity extends MonsterEntity impleme
 	@Override
 	public double getYOffset() {
 		return -0.6D;
+	}
+
+	@Override
+	protected int decreaseAirSupply(int air) {
+		return air;
 	}
 }

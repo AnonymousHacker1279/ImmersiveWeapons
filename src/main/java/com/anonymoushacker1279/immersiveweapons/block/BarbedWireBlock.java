@@ -28,9 +28,9 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 public class BarbedWireBlock extends HorizontalBlock implements IWaterLoggable {
 
 	public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
-	private final DamageSource damageSource = new DamageSource("immersiveweapons.barbed_wire");
-	protected static final VoxelShape SHAPE = Block.makeCuboidShape(0.0D, 0.0D, 0.0D, 16.0D, 16.0D, 16.0D);
 	public static final DirectionProperty FACING = HorizontalBlock.HORIZONTAL_FACING;
+	protected static final VoxelShape SHAPE = Block.makeCuboidShape(0.0D, 0.0D, 0.0D, 16.0D, 16.0D, 16.0D);
+	private final DamageSource damageSource = new DamageSource("immersiveweapons.barbed_wire");
 	private int soundCooldown = 0;
 
 	public BarbedWireBlock(Properties properties) {
@@ -85,7 +85,7 @@ public class BarbedWireBlock extends HorizontalBlock implements IWaterLoggable {
 	@Override
 	public void onEntityCollision(BlockState state, World world, BlockPos pos, Entity entity) {
 		if (entity instanceof LivingEntity) {
-			entity.setMotionMultiplier(state, new Vector3d((double) 0.45F, 0.40D, (double) 0.45F));
+			entity.setMotionMultiplier(state, new Vector3d(0.45F, 0.40D, 0.45F));
 			if (!world.isRemote && (entity.lastTickPosX != entity.getPosX() || entity.lastTickPosZ != entity.getPosZ())) {
 				double d0 = Math.abs(entity.getPosX() - entity.lastTickPosX);
 				double d1 = Math.abs(entity.getPosZ() - entity.lastTickPosZ);

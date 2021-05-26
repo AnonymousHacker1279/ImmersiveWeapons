@@ -6,7 +6,8 @@ import com.anonymoushacker1279.immersiveweapons.client.particle.SmokeBombParticl
 import com.anonymoushacker1279.immersiveweapons.client.renderer.ShelfRenderer;
 import com.anonymoushacker1279.immersiveweapons.client.renderer.entity.BulletRenderer.*;
 import com.anonymoushacker1279.immersiveweapons.client.renderer.entity.CustomArrowRenderer.*;
-import com.anonymoushacker1279.immersiveweapons.client.renderer.entity.DecayedSoldierRenderer;
+import com.anonymoushacker1279.immersiveweapons.client.renderer.entity.DyingSoldierRenderer;
+import com.anonymoushacker1279.immersiveweapons.client.renderer.entity.MinutemanRenderer;
 import com.anonymoushacker1279.immersiveweapons.client.renderer.entity.ThrowableItemRenderer.MolotovRenderer;
 import com.anonymoushacker1279.immersiveweapons.client.renderer.entity.ThrowableItemRenderer.SmokeBombRenderer;
 import com.anonymoushacker1279.immersiveweapons.container.CustomContainerHolder;
@@ -29,6 +30,13 @@ import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 
 @EventBusSubscriber(modid = ImmersiveWeapons.MOD_ID, bus = EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 public class ClientModEventSubscriber {
+
+	private static final String CATEGORY = "key.categories." + ImmersiveWeapons.MOD_ID;
+	public static final KeyBinding toggleArmorEffect = new KeyBinding(ImmersiveWeapons.MOD_ID + ".key.toggleArmorEffect", 78, CATEGORY); // Keycode is N
+
+	static {
+		ClientRegistry.registerKeyBinding(toggleArmorEffect);
+	}
 
 	@SubscribeEvent
 	public static void onClientSetup(final FMLClientSetupEvent event) {
@@ -58,7 +66,8 @@ public class ClientModEventSubscriber {
 		RenderingRegistry.registerEntityRenderingHandler(DeferredRegistryHandler.SMOKE_BOMB_ENTITY.get(), new SmokeBombRenderer());
 		RenderingRegistry.registerEntityRenderingHandler(DeferredRegistryHandler.MOLOTOV_COCKTAIL_ENTITY.get(), new MolotovRenderer());
 
-		RenderingRegistry.registerEntityRenderingHandler(DeferredRegistryHandler.DECAYED_SOLDIER_ENTITY.get(), DecayedSoldierRenderer::new);
+		RenderingRegistry.registerEntityRenderingHandler(DeferredRegistryHandler.DYING_SOLDIER_ENTITY.get(), DyingSoldierRenderer::new);
+		RenderingRegistry.registerEntityRenderingHandler(DeferredRegistryHandler.MINUTEMAN_ENTITY.get(), MinutemanRenderer::new);
 
 		// Register block renderers
 		RenderTypeLookup.setRenderLayer(DeferredRegistryHandler.BULLETPROOF_GLASS.get(), RenderType.getCutoutMipped());
@@ -96,13 +105,5 @@ public class ClientModEventSubscriber {
 		Minecraft mc = Minecraft.getInstance();
 
 		mc.particles.registerFactory(DeferredRegistryHandler.SMOKE_BOMB_PARTICLE_TYPE.get(), SmokeBombParticleFactory::new);
-	}
-
-	private static final String CATEGORY = "key.categories." + ImmersiveWeapons.MOD_ID;
-
-	public static final KeyBinding toggleArmorEffect = new KeyBinding(ImmersiveWeapons.MOD_ID + ".key.toggleArmorEffect", 78, CATEGORY); // Keycode is N
-
-	static {
-		ClientRegistry.registerKeyBinding(toggleArmorEffect);
 	}
 }

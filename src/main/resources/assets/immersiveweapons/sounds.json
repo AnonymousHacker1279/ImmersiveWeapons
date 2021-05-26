@@ -188,5 +188,115 @@
 				"stream": true
 			}
 		]
+	},
+	"dying_soldier_ambient": {
+		"category": "entity",
+		"subtitle": "immersiveweapons.subtitle.entity.dying_soldier.ambient",
+		"sounds": [
+			{
+				"name": "immersiveweapons:entity/dying_soldier/ambient/ambient_1",
+				"stream": false
+			},
+			{
+				"name": "immersiveweapons:entity/dying_soldier/ambient/ambient_2",
+				"stream": false
+			},
+			{
+				"name": "immersiveweapons:entity/dying_soldier/ambient/ambient_3",
+				"stream": false
+			},
+			{
+				"name": "immersiveweapons:entity/dying_soldier/ambient/ambient_4",
+				"stream": false
+			},
+			{
+				"name": "immersiveweapons:entity/dying_soldier/ambient/ambient_5",
+				"stream": false
+			}
+		]
+	},
+	"dying_soldier_step": {
+		"category": "entity",
+		"subtitle": "immersiveweapons.subtitle.entity.dying_soldier.step",
+		"sounds": [
+			{
+				"name": "immersiveweapons:entity/dying_soldier/step/step_1",
+				"stream": false
+			},
+			{
+				"name": "immersiveweapons:entity/dying_soldier/step/step_2",
+				"stream": false
+			},
+			{
+				"name": "immersiveweapons:entity/dying_soldier/step/step_3",
+				"stream": false
+			},
+			{
+				"name": "immersiveweapons:entity/dying_soldier/step/step_4",
+				"stream": false
+			},
+			{
+				"name": "immersiveweapons:entity/dying_soldier/step/step_5",
+				"stream": false
+			},
+			{
+				"name": "immersiveweapons:entity/dying_soldier/step/step_6",
+				"stream": false
+			},
+			{
+				"name": "immersiveweapons:entity/dying_soldier/step/step_7",
+				"stream": false
+			},
+			{
+				"name": "immersiveweapons:entity/dying_soldier/step/step_8",
+				"stream": false
+			}
+		]
+	},
+	"dying_soldier_death": {
+		"category": "entity",
+		"subtitle": "immersiveweapons.subtitle.entity.dying_soldier.death",
+		"sounds": [
+			{
+				"name": "immersiveweapons:entity/dying_soldier/death/death",
+				"stream": false
+			}
+		]
+	},
+	"dying_soldier_hurt": {
+		"category": "entity",
+		"subtitle": "immersiveweapons.subtitle.entity.dying_soldier.hurt",
+		"sounds": [
+			{
+				"name": "immersiveweapons:entity/dying_soldier/hurt/hurt_1",
+				"stream": false
+			},
+			{
+				"name": "immersiveweapons:entity/dying_soldier/hurt/hurt_2",
+				"stream": false
+			},
+			{
+				"name": "immersiveweapons:entity/dying_soldier/hurt/hurt_3",
+				"stream": false
+			},
+			{
+				"name": "immersiveweapons:entity/dying_soldier/hurt/hurt_4",
+				"stream": false
+			},
+			{
+				"name": "immersiveweapons:entity/dying_soldier/hurt/hurt_5",
+				"stream": false
+			}
+		]
+	},
+	"battlefield_ambient": {
+		"category": "ambient",
+		"subtitle": "immersiveweapons.subtitle.biome.battlefield.ambient",
+		"sounds": [
+			{
+				"name": "immersiveweapons:biome/battlefield/battlefield_ambient",
+				"stream": true
+			}
+		]
 	}
 }

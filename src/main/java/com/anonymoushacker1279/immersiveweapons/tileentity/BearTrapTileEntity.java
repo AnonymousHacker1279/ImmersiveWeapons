@@ -23,12 +23,12 @@ import java.util.UUID;
 public class BearTrapTileEntity extends TileEntity implements ITickableTileEntity {
 
 	public static final DamageSource damageSource = new DamageSource("immersiveweapons.bear_trap");
+	Minecraft mc = Minecraft.getInstance();
 	@Nullable
 	private MobEntity entityliving;
 	private PlayerEntity entitylivingPlayer;
 	private Goal doNothingGoal;
 	private UUID id;
-	Minecraft mc = Minecraft.getInstance();
 
 
 	public BearTrapTileEntity() {
@@ -53,7 +53,7 @@ public class BearTrapTileEntity extends TileEntity implements ITickableTileEntit
 				if (!trappedPlayer.getBoundingBox().intersects(new AxisAlignedBB(this.pos)) || !trappedPlayer.isAlive()) {
 					this.setTrappedPlayerEntity(null);
 				} else {
-					trappedPlayer.setMotionMultiplier(this.getBlockState(), new Vector3d((double) 0.0F, 0.0D, (double) 0.0F));
+					trappedPlayer.setMotionMultiplier(this.getBlockState(), new Vector3d(0.0F, 0.0D, 0.0F));
 					mc.gameSettings.keyBindJump.setPressed(false);
 					mc.gameSettings.keyBindForward.setPressed(false);
 					mc.gameSettings.keyBindLeft.setPressed(false);
@@ -64,23 +64,6 @@ public class BearTrapTileEntity extends TileEntity implements ITickableTileEntit
 		}
 	}
 
-	class DoNothingGoal extends Goal {
-		private MobEntity trappedEntity;
-		private BearTrapTileEntity trap;
-
-		public DoNothingGoal(MobEntity trappedEntity, BearTrapTileEntity trap) {
-			this.setMutexFlags(EnumSet.of(Goal.Flag.MOVE, Goal.Flag.JUMP));
-			this.trappedEntity = trappedEntity;
-			this.trap = trap;
-		}
-
-		@Override
-		public boolean shouldExecute() {
-			return this.trap.isEntityTrapped(this.trappedEntity);
-		}
-	}
-
-
 	@Override
 	public void read(BlockState state, CompoundNBT nbt) {
 		super.read(state, nbt);
@@ -88,7 +71,6 @@ public class BearTrapTileEntity extends TileEntity implements ITickableTileEntit
 			this.id = nbt.getUniqueId("trapped_entity");
 		}
 	}
-
 
 	@Override
 	public CompoundNBT write(CompoundNBT compound) {
@@ -172,5 +154,21 @@ public class BearTrapTileEntity extends TileEntity implements ITickableTileEntit
 
 	public boolean isPlayerEntityTrapped(final PlayerEntity trappedEntity) {
 		return this.getTrappedPlayerEntity() == trappedEntity;
+	}
+
+	class DoNothingGoal extends Goal {
+		private final MobEntity trappedEntity;
+		private final BearTrapTileEntity trap;
+
+		public DoNothingGoal(MobEntity trappedEntity, BearTrapTileEntity trap) {
+			this.setMutexFlags(EnumSet.of(Goal.Flag.MOVE, Goal.Flag.JUMP));
+			this.trappedEntity = trappedEntity;
+			this.trap = trap;
+		}
+
+		@Override
+		public boolean shouldExecute() {
+			return this.trap.isEntityTrapped(this.trappedEntity);
+		}
 	}
 }

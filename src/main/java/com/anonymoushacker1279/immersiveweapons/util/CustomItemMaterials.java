@@ -1,23 +1,22 @@
 package com.anonymoushacker1279.immersiveweapons.util;
 
-import java.util.function.Supplier;
-
 import com.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
-
 import net.minecraft.item.IItemTier;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.LazyValue;
 
-public enum CustomItemMaterials implements IItemTier{
-	   MOLTEN(3, 1900, 8.2F, 3.0F, 14, () -> {
-		   		return Ingredient.fromItems(DeferredRegistryHandler.MOLTEN_INGOT.get()); 
-	   }),
-	   COPPER(2, 180, 5.9F, 2.0F, 12, () -> {
-		   		return Ingredient.fromItems(DeferredRegistryHandler.COPPER_INGOT.get());
-	   }),
-	   TESLA(4, 2100, 18.0F, 3.0F, 20, () -> {
-		   return Ingredient.fromItems(DeferredRegistryHandler.TESLA_INGOT.get());
-	   });
+import java.util.function.Supplier;
+
+public enum CustomItemMaterials implements IItemTier {
+	MOLTEN(3, 1900, 8.2F, 3.0F, 14, () -> {
+		return Ingredient.fromItems(DeferredRegistryHandler.MOLTEN_INGOT.get());
+	}),
+	COPPER(2, 180, 5.9F, 2.0F, 12, () -> {
+		return Ingredient.fromItems(DeferredRegistryHandler.COPPER_INGOT.get());
+	}),
+	TESLA(4, 2100, 18.0F, 3.0F, 20, () -> {
+		return Ingredient.fromItems(DeferredRegistryHandler.TESLA_INGOT.get());
+	});
 
 	private final int harvestLevel;
 	private final int maxUses;
@@ -63,5 +62,5 @@ public enum CustomItemMaterials implements IItemTier{
 	@Override
 	public Ingredient getRepairMaterial() {
 		return this.repairMaterial.getValue();
-	} 
+	}
 }

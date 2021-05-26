@@ -26,6 +26,19 @@ public class SimplePistolItem extends ShootableBullet implements IVanishable {
 		super(builder);
 	}
 
+	/**
+	 * Gets the velocity of the arrow entity from the bow's charge
+	 */
+	public static float getArrowVelocity(int charge) {
+		float f = charge / 20.0F;
+		f = (f * f + f * 2.0F) / 3.0F;
+		if (f > 1.0F) {
+			f = 1.0F;
+		}
+
+		return f;
+	}
+
 	public ItemStack findAmmo(ItemStack shootable, LivingEntity entityLiving) {
 		PlayerEntity playerentity = (PlayerEntity) entityLiving;
 		if (!(shootable.getItem() instanceof ShootableBullet)) {
@@ -62,7 +75,7 @@ public class SimplePistolItem extends ShootableBullet implements IVanishable {
 				int randomNumber = GeneralUtilities.getRandomNumber(1, 10);
 				if (randomNumber <= 3) {
 					misfire = true;
-					worldIn.playSound((PlayerEntity) null, playerentity.getPosX(), playerentity.getPosY(), playerentity.getPosZ(), this.getMisfireSound(), SoundCategory.PLAYERS, 1.0F, 1.0F / (random.nextFloat() * 0.4F + 1.2F) + 0.5F);
+					worldIn.playSound(null, playerentity.getPosX(), playerentity.getPosY(), playerentity.getPosZ(), this.getMisfireSound(), SoundCategory.PLAYERS, 1.0F, 1.0F / (random.nextFloat() * 0.4F + 1.2F) + 0.5F);
 					if (!playerentity.abilities.isCreativeMode) {
 						itemstack.shrink(1);
 						if (itemstack.isEmpty()) {
@@ -78,7 +91,7 @@ public class SimplePistolItem extends ShootableBullet implements IVanishable {
 				int randomNumber = GeneralUtilities.getRandomNumber(1, 20);
 				if (randomNumber <= 3) {
 					misfire = true;
-					worldIn.playSound((PlayerEntity) null, playerentity.getPosX(), playerentity.getPosY(), playerentity.getPosZ(), this.getMisfireSound(), SoundCategory.PLAYERS, 1.0F, 1.0F / (random.nextFloat() * 0.4F + 1.2F) + 0.5F);
+					worldIn.playSound(null, playerentity.getPosX(), playerentity.getPosY(), playerentity.getPosZ(), this.getMisfireSound(), SoundCategory.PLAYERS, 1.0F, 1.0F / (random.nextFloat() * 0.4F + 1.2F) + 0.5F);
 					if (!playerentity.abilities.isCreativeMode) {
 						itemstack.shrink(1);
 						if (itemstack.isEmpty()) {
@@ -119,7 +132,7 @@ public class SimplePistolItem extends ShootableBullet implements IVanishable {
 						worldIn.addEntity(abstractarrowentity);
 					}
 
-					worldIn.playSound((PlayerEntity) null, playerentity.getPosX(), playerentity.getPosY(), playerentity.getPosZ(), this.getFireSound(), SoundCategory.PLAYERS, 1.0F, 1.0F / (random.nextFloat() * 0.4F + 1.2F) + f * 0.5F);
+					worldIn.playSound(null, playerentity.getPosX(), playerentity.getPosY(), playerentity.getPosZ(), this.getFireSound(), SoundCategory.PLAYERS, 1.0F, 1.0F / (random.nextFloat() * 0.4F + 1.2F) + f * 0.5F);
 					if (!flag1 && !playerentity.abilities.isCreativeMode) {
 						itemstack.shrink(1);
 						if (itemstack.isEmpty()) {
@@ -134,19 +147,6 @@ public class SimplePistolItem extends ShootableBullet implements IVanishable {
 				}
 			}
 		}
-	}
-
-	/**
-	 * Gets the velocity of the arrow entity from the bow's charge
-	 */
-	public static float getArrowVelocity(int charge) {
-		float f = charge / 20.0F;
-		f = (f * f + f * 2.0F) / 3.0F;
-		if (f > 1.0F) {
-			f = 1.0F;
-		}
-
-		return f;
 	}
 
 	/**

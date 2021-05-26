@@ -1,6 +1,7 @@
 package com.anonymoushacker1279.immersiveweapons.util;
 
-import com.anonymoushacker1279.immersiveweapons.entity.monster.AbstractDecayedSoldierEntity;
+import com.anonymoushacker1279.immersiveweapons.entity.monster.AbstractDyingSoldierEntity;
+import com.anonymoushacker1279.immersiveweapons.entity.passive.AbstractMinutemanEntity;
 import com.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
 import com.anonymoushacker1279.immersiveweapons.item.Pike;
 import com.anonymoushacker1279.immersiveweapons.item.PikeItem.*;
@@ -65,6 +66,7 @@ public class AddAttributesAfterSetup {
 		combineBuilder.putAll(newAttributes);
 		NetheritePikeItem.netheritePikeAttributes = combineBuilder.build();
 
-		GlobalEntityTypeAttributes.put(DeferredRegistryHandler.DECAYED_SOLDIER_ENTITY.get(), AbstractDecayedSoldierEntity.registerAttributes().create());
+		GlobalEntityTypeAttributes.put(DeferredRegistryHandler.DYING_SOLDIER_ENTITY.get(), AbstractDyingSoldierEntity.registerAttributes().create());
+		GlobalEntityTypeAttributes.put(DeferredRegistryHandler.MINUTEMAN_ENTITY.get(), AbstractMinutemanEntity.registerAttributes().create());
 	}
 }

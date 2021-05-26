@@ -24,7 +24,7 @@ public class BarbedWireFenceBlock extends FenceBlock {
 	@Override
 	public void onEntityCollision(BlockState state, World world, BlockPos pos, Entity entity) {
 		if (entity instanceof LivingEntity) {
-			entity.setMotionMultiplier(state, new Vector3d((double) 0.45F, 0.40D, (double) 0.45F));
+			entity.setMotionMultiplier(state, new Vector3d(0.45F, 0.40D, 0.45F));
 			if (!world.isRemote && (entity.lastTickPosX != entity.getPosX() || entity.lastTickPosZ != entity.getPosZ())) {
 				double d0 = Math.abs(entity.getPosX() - entity.lastTickPosX);
 				double d1 = Math.abs(entity.getPosZ() - entity.lastTickPosZ);

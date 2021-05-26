@@ -225,6 +225,7 @@ public class CustomArrowEntity {
 
 	public static class NetheriteArrowEntity extends AbstractArrowEntity {
 		private final Item referenceItem;
+		private BlockState inBlockState;
 
 		@SuppressWarnings("unchecked")
 		public NetheriteArrowEntity(EntityType<?> type, World world) {
@@ -262,8 +263,6 @@ public class CustomArrowEntity {
 			this.prevRotationYaw = this.rotationYaw;
 			this.prevRotationPitch = this.rotationPitch;
 		}
-
-		private BlockState inBlockState;
 
 		private boolean func_234593_u_() {
 			return this.inGround && this.world.hasNoCollisions((new AxisAlignedBB(this.getPositionVec(), this.getPositionVec())).grow(0.06D));
@@ -402,8 +401,11 @@ public class CustomArrowEntity {
 	}
 
 	public static class SmokeBombArrowEntity extends AbstractArrowEntity {
+		private static String color;
 		private final Item referenceItem;
+		Minecraft mc = Minecraft.getInstance();
 		private boolean hasAlreadyImpacted = false;
+		private final int configMaxParticles = Config.MAX_SMOKE_BOMB_PARTICLES.get();
 
 		@SuppressWarnings("unchecked")
 		public SmokeBombArrowEntity(EntityType<?> type, World world) {
@@ -421,6 +423,10 @@ public class CustomArrowEntity {
 			this.referenceItem = DeferredRegistryHandler.SMOKE_BOMB_ARROW.get();
 		}
 
+		public static void setColor(String color) {
+			SmokeBombArrowEntity.color = color;
+		}
+
 		@Override
 		public ItemStack getArrowStack() {
 			return new ItemStack(this.referenceItem);
@@ -431,21 +437,12 @@ public class CustomArrowEntity {
 			return NetworkHooks.getEntitySpawningPacket(this);
 		}
 
-		Minecraft mc = Minecraft.getInstance();
-		private int configMaxParticles = Config.MAX_SMOKE_BOMB_PARTICLES.get();
-
 		protected IParticleData makeParticle() {
 			Color tint = getTint(GeneralUtilities.getRandomNumber(0, 2));
 			double diameter = getDiameter(GeneralUtilities.getRandomNumber(1.0d, 5.5d));
 			SmokeBombParticleData smokeBombParticleData = new SmokeBombParticleData(tint, diameter);
 
 			return smokeBombParticleData;
-		}
-
-		private static String color;
-
-		public static void setColor(String color) {
-			SmokeBombArrowEntity.color = color;
 		}
 
 		private Color getTint(int random) {

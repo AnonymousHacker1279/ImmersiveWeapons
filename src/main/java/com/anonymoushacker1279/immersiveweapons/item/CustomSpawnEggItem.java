@@ -41,24 +41,13 @@ public class CustomSpawnEggItem extends SpawnEggItem {
 		}
 	};
 
-	private Supplier<EntityType<?>> type;
+	private final Supplier<EntityType<?>> type;
 
 	public CustomSpawnEggItem(Supplier<EntityType<?>> typeIn, int primaryColorIn, int secondaryColorIn, Properties builder) {
 		super(null, primaryColorIn, secondaryColorIn, builder);
 		this.type = typeIn;
 		DispenserBlock.registerDispenseBehavior(this, SPAWN_EGG_BEHAVIOR);
 		MOD_EGGS.put(typeIn, this);
-	}
-
-	@Override
-	public EntityType<?> getType(CompoundNBT nbt) {
-		if (nbt != null && nbt.contains("EntityTag", 10)) {
-			CompoundNBT compoundnbt = nbt.getCompound("EntityTag");
-			if (compoundnbt.contains("id", 8)) {
-				return EntityType.byKey(compoundnbt.getString("id")).orElse(type.get());
-			}
-		}
-		return type.get();
 	}
 
 	// Use reflection to add the mod spawn eggs to the EGGS map in SpawnEggItem
@@ -74,5 +63,16 @@ public class CustomSpawnEggItem extends SpawnEggItem {
 				LOGGER.warn("Unable to access SpawnEggItem.EGGS");
 			}
 		});
+	}
+
+	@Override
+	public EntityType<?> getType(CompoundNBT nbt) {
+		if (nbt != null && nbt.contains("EntityTag", 10)) {
+			CompoundNBT compoundnbt = nbt.getCompound("EntityTag");
+			if (compoundnbt.contains("id", 8)) {
+				return EntityType.byKey(compoundnbt.getString("id")).orElse(type.get());
+			}
+		}
+		return type.get();
 	}
 }

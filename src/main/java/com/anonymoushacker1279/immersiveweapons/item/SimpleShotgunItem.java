@@ -32,7 +32,7 @@ public class SimpleShotgunItem extends SimplePistolItem {
 				int randomNumber = GeneralUtilities.getRandomNumber(1, 10);
 				if (randomNumber <= 3) {
 					misfire = true;
-					worldIn.playSound((PlayerEntity) null, playerentity.getPosX(), playerentity.getPosY(), playerentity.getPosZ(), this.getMisfireSound(), SoundCategory.PLAYERS, 1.0F, 1.0F / (random.nextFloat() * 0.4F + 1.2F) + 0.5F);
+					worldIn.playSound(null, playerentity.getPosX(), playerentity.getPosY(), playerentity.getPosZ(), this.getMisfireSound(), SoundCategory.PLAYERS, 1.0F, 1.0F / (random.nextFloat() * 0.4F + 1.2F) + 0.5F);
 					if (!playerentity.abilities.isCreativeMode) {
 						itemstack.shrink(bulletsToFire);
 						if (itemstack.isEmpty()) {
@@ -48,7 +48,7 @@ public class SimpleShotgunItem extends SimplePistolItem {
 				int randomNumber = GeneralUtilities.getRandomNumber(1, 20);
 				if (randomNumber <= 3) {
 					misfire = true;
-					worldIn.playSound((PlayerEntity) null, playerentity.getPosX(), playerentity.getPosY(), playerentity.getPosZ(), this.getMisfireSound(), SoundCategory.PLAYERS, 1.0F, 1.0F / (random.nextFloat() * 0.4F + 1.2F) + 0.5F);
+					worldIn.playSound(null, playerentity.getPosX(), playerentity.getPosY(), playerentity.getPosZ(), this.getMisfireSound(), SoundCategory.PLAYERS, 1.0F, 1.0F / (random.nextFloat() * 0.4F + 1.2F) + 0.5F);
 					if (!playerentity.abilities.isCreativeMode) {
 						itemstack.shrink(bulletsToFire);
 						if (itemstack.isEmpty()) {
@@ -76,20 +76,21 @@ public class SimpleShotgunItem extends SimplePistolItem {
 					if (!worldIn.isRemote) {
 						for (int iter = 0; iter < bulletsToFire; ++iter) {
 							CustomArrowItem arrowitem = (CustomArrowItem) (itemstack.getItem() instanceof CustomArrowItem ? itemstack.getItem() : DeferredRegistryHandler.IRON_MUSKET_BALL.get());
-							AbstractArrowEntity abstractarrowentity = arrowitem.createArrow(worldIn, itemstack, playerentity);
-							abstractarrowentity = customArrow(abstractarrowentity);
-							abstractarrowentity.setDirectionAndMovement(playerentity, playerentity.rotationPitch + GeneralUtilities.getRandomNumber(-5.0f, 5.0f), playerentity.rotationYaw + GeneralUtilities.getRandomNumber(-5.0f, 5.0f), 0.0F, f * 3.0F, 1.0F);
+							AbstractArrowEntity abstractBulletEntity = arrowitem.createArrow(worldIn, itemstack, playerentity);
+							abstractBulletEntity = customArrow(abstractBulletEntity);
+							abstractBulletEntity.setKnockbackStrength(3);
+							abstractBulletEntity.setDirectionAndMovement(playerentity, playerentity.rotationPitch + GeneralUtilities.getRandomNumber(-5.0f, 5.0f), playerentity.rotationYaw + GeneralUtilities.getRandomNumber(-5.0f, 5.0f), 0.0F, f * 3.0F, 1.0F);
 							if (f == 1.0F) {
-								abstractarrowentity.setIsCritical(true);
+								abstractBulletEntity.setIsCritical(true);
 							}
-							worldIn.addEntity(abstractarrowentity);
+							worldIn.addEntity(abstractBulletEntity);
 						}
 						stack.damageItem(1, playerentity, (p_220009_1_) -> {
 							p_220009_1_.sendBreakAnimation(playerentity.getActiveHand());
 						});
 					}
 
-					worldIn.playSound((PlayerEntity) null, playerentity.getPosX(), playerentity.getPosY(), playerentity.getPosZ(), this.getFireSound(), SoundCategory.PLAYERS, 1.0F, 1.0F / (random.nextFloat() * 0.4F + 1.2F) + f * 0.5F);
+					worldIn.playSound(null, playerentity.getPosX(), playerentity.getPosY(), playerentity.getPosZ(), this.getFireSound(), SoundCategory.PLAYERS, 1.0F, 1.0F / (random.nextFloat() * 0.4F + 1.2F) + f * 0.5F);
 					if (!flag1 && !playerentity.abilities.isCreativeMode) {
 						itemstack.shrink(bulletsToFire);
 						if (itemstack.isEmpty()) {

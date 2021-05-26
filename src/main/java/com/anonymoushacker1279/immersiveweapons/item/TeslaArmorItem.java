@@ -21,7 +21,9 @@ import java.util.List;
 
 public class TeslaArmorItem extends ArmorItem {
 
+	public boolean armorIsToggled = false;
 	private boolean isLeggings = false;
+	private int countdown = 0;
 
 	public TeslaArmorItem(IArmorMaterial material, EquipmentSlotType slot, int type) {
 		super(material, slot, (new Item.Properties().group(DeferredRegistryHandler.ITEM_GROUP)));
@@ -34,8 +36,6 @@ public class TeslaArmorItem extends ArmorItem {
 	public String getArmorTexture(ItemStack stack, Entity entity, EquipmentSlotType slot, String type) {
 		return (isLeggings == false ? ImmersiveWeapons.MOD_ID + ":textures/armor/tesla_layer_1.png" : ImmersiveWeapons.MOD_ID + ":textures/armor/tesla_layer_2.png");
 	}
-
-	public boolean armorIsToggled = false;
 
 	@Override
 	public void onArmorTick(ItemStack stack, World world, PlayerEntity player) {
@@ -72,8 +72,6 @@ public class TeslaArmorItem extends ArmorItem {
 
 		}
 	}
-
-	private int countdown = 0;
 
 	private void effectNoise(World world, PlayerEntity player) {
 		if (countdown == 0 && Config.TESLA_ARMOR_EFFECT_SOUND.get() == true) {

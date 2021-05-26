@@ -15,9 +15,8 @@ import net.minecraft.util.HandSide;
 import java.util.List;
 import java.util.Random;
 
-public class DecayedSoldierModel<T extends LivingEntity> extends BipedModel<T> {
+public class BasicPlayerModel<T extends LivingEntity> extends BipedModel<T> {
 
-	private List<ModelRenderer> modelRenderers = Lists.newArrayList();
 	public final ModelRenderer bipedLeftArmwear;
 	public final ModelRenderer bipedRightArmwear;
 	public final ModelRenderer bipedLeftLegwear;
@@ -25,8 +24,9 @@ public class DecayedSoldierModel<T extends LivingEntity> extends BipedModel<T> {
 	public final ModelRenderer bipedBodyWear;
 	private final ModelRenderer bipedCape;
 	private final boolean smallArms;
+	private List<ModelRenderer> modelRenderers = Lists.newArrayList();
 
-	public DecayedSoldierModel(float modelSize, boolean smallArmsIn) {
+	public BasicPlayerModel(float modelSize, boolean smallArmsIn) {
 		super(RenderType::getEntityTranslucent, modelSize, 0.0F, 64, 64);
 		this.smallArms = smallArmsIn;
 		this.bipedCape = new ModelRenderer(this, 0, 0);

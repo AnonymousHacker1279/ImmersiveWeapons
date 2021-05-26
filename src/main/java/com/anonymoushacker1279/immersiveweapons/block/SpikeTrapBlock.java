@@ -32,9 +32,9 @@ import java.util.List;
 public class SpikeTrapBlock extends Block implements IWaterLoggable {
 
 	public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
-	protected static final VoxelShape SHAPE = Block.makeCuboidShape(0.0D, 0.0D, 0.0D, 16.0D, 1.0D, 16.0D);
-	private DamageSource damageSource = new DamageSource("immersiveweapons.spike_trap");
 	public static final BooleanProperty POWERED = BooleanProperty.create("powered");
+	protected static final VoxelShape SHAPE = Block.makeCuboidShape(0.0D, 0.0D, 0.0D, 16.0D, 1.0D, 16.0D);
+	private final DamageSource damageSource = new DamageSource("immersiveweapons.spike_trap");
 
 	public SpikeTrapBlock(Properties properties) {
 		super(properties);

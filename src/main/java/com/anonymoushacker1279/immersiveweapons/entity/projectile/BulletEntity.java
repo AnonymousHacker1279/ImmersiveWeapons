@@ -39,6 +39,16 @@ public class BulletEntity {
 
 	public static class CopperBulletEntity extends AbstractArrowEntity {
 		private final Item referenceItem;
+		private BlockState inBlockState;
+		/**
+		 * Called when the arrow hits an entity
+		 */
+
+		private IntOpenHashSet piercedEntities;
+		private List<Entity> hitEntities;
+		private int knockbackStrength;
+		private final SoundEvent hitSound = this.getHitEntitySound();
+		private boolean hasAlreadyBrokeGlass = false;
 
 		@SuppressWarnings("unchecked")
 		public CopperBulletEntity(EntityType<?> type, World world) {
@@ -76,8 +86,6 @@ public class BulletEntity {
 			this.prevRotationYaw = this.rotationYaw;
 			this.prevRotationPitch = this.rotationPitch;
 		}
-
-		private BlockState inBlockState;
 
 		private boolean func_234593_u_() {
 			return this.inGround && this.world.hasNoCollisions((new AxisAlignedBB(this.getPositionVec(), this.getPositionVec())).grow(0.06D));
@@ -214,15 +222,6 @@ public class BulletEntity {
 			}
 		}
 
-		/**
-		 * Called when the arrow hits an entity
-		 */
-
-		private IntOpenHashSet piercedEntities;
-		private List<Entity> hitEntities;
-		private int knockbackStrength;
-		private SoundEvent hitSound = this.getHitEntitySound();
-
 		@Override
 		protected void onEntityHit(EntityRayTraceResult p_213868_1_) {
 			super.onEntityHit(p_213868_1_);
@@ -321,8 +320,6 @@ public class BulletEntity {
 			}
 		}
 
-		private boolean hasAlreadyBrokeGlass = false;
-
 		@Override
 		protected void func_230299_a_(BlockRayTraceResult blockStateRayTraceResult) {
 			this.inBlockState = this.world.getBlockState(blockStateRayTraceResult.getPos());
@@ -344,7 +341,6 @@ public class BulletEntity {
 			}
 
 			if (canBreakGlass && !this.hasAlreadyBrokeGlass && !this.inBlockState.getBlock().isIn(BlockTags.makeWrapperTag("forge:bulletproof_glass")) && this.inBlockState.getBlock().isIn(BlockTags.makeWrapperTag("forge:glass")) || this.inBlockState.getBlock().isIn(BlockTags.makeWrapperTag("forge:glass_panes"))) {
-				;
 				this.world.destroyBlock(blockStateRayTraceResult.getPos(), false);
 				this.hasAlreadyBrokeGlass = true;
 			}
@@ -364,6 +360,16 @@ public class BulletEntity {
 
 	public static class WoodBulletEntity extends AbstractArrowEntity {
 		private final Item referenceItem;
+		private BlockState inBlockState;
+		/**
+		 * Called when the arrow hits an entity
+		 */
+
+		private IntOpenHashSet piercedEntities;
+		private List<Entity> hitEntities;
+		private int knockbackStrength;
+		private final SoundEvent hitSound = this.getHitEntitySound();
+		private boolean hasAlreadyBrokeGlass = false;
 
 		@SuppressWarnings("unchecked")
 		public WoodBulletEntity(EntityType<?> type, World world) {
@@ -401,8 +407,6 @@ public class BulletEntity {
 			this.prevRotationYaw = this.rotationYaw;
 			this.prevRotationPitch = this.rotationPitch;
 		}
-
-		private BlockState inBlockState;
 
 		private boolean func_234593_u_() {
 			return this.inGround && this.world.hasNoCollisions((new AxisAlignedBB(this.getPositionVec(), this.getPositionVec())).grow(0.06D));
@@ -539,15 +543,6 @@ public class BulletEntity {
 			}
 		}
 
-		/**
-		 * Called when the arrow hits an entity
-		 */
-
-		private IntOpenHashSet piercedEntities;
-		private List<Entity> hitEntities;
-		private int knockbackStrength;
-		private SoundEvent hitSound = this.getHitEntitySound();
-
 		@Override
 		protected void onEntityHit(EntityRayTraceResult p_213868_1_) {
 			super.onEntityHit(p_213868_1_);
@@ -646,8 +641,6 @@ public class BulletEntity {
 			}
 		}
 
-		private boolean hasAlreadyBrokeGlass = false;
-
 		@Override
 		protected void func_230299_a_(BlockRayTraceResult blockStateRayTraceResult) {
 			this.inBlockState = this.world.getBlockState(blockStateRayTraceResult.getPos());
@@ -669,7 +662,6 @@ public class BulletEntity {
 			}
 
 			if (canBreakGlass && !this.hasAlreadyBrokeGlass && !this.inBlockState.getBlock().isIn(BlockTags.makeWrapperTag("forge:bulletproof_glass")) && this.inBlockState.getBlock().isIn(BlockTags.makeWrapperTag("forge:glass")) || this.inBlockState.getBlock().isIn(BlockTags.makeWrapperTag("forge:glass_panes"))) {
-				;
 				this.world.destroyBlock(blockStateRayTraceResult.getPos(), false);
 				this.hasAlreadyBrokeGlass = true;
 			}
@@ -689,6 +681,16 @@ public class BulletEntity {
 
 	public static class StoneBulletEntity extends AbstractArrowEntity {
 		private final Item referenceItem;
+		private BlockState inBlockState;
+		/**
+		 * Called when the arrow hits an entity
+		 */
+
+		private IntOpenHashSet piercedEntities;
+		private List<Entity> hitEntities;
+		private int knockbackStrength;
+		private final SoundEvent hitSound = this.getHitEntitySound();
+		private boolean hasAlreadyBrokeGlass = false;
 
 		@SuppressWarnings("unchecked")
 		public StoneBulletEntity(EntityType<?> type, World world) {
@@ -726,8 +728,6 @@ public class BulletEntity {
 			this.prevRotationYaw = this.rotationYaw;
 			this.prevRotationPitch = this.rotationPitch;
 		}
-
-		private BlockState inBlockState;
 
 		private boolean func_234593_u_() {
 			return this.inGround && this.world.hasNoCollisions((new AxisAlignedBB(this.getPositionVec(), this.getPositionVec())).grow(0.06D));
@@ -864,15 +864,6 @@ public class BulletEntity {
 			}
 		}
 
-		/**
-		 * Called when the arrow hits an entity
-		 */
-
-		private IntOpenHashSet piercedEntities;
-		private List<Entity> hitEntities;
-		private int knockbackStrength;
-		private SoundEvent hitSound = this.getHitEntitySound();
-
 		@Override
 		protected void onEntityHit(EntityRayTraceResult p_213868_1_) {
 			super.onEntityHit(p_213868_1_);
@@ -971,8 +962,6 @@ public class BulletEntity {
 			}
 		}
 
-		private boolean hasAlreadyBrokeGlass = false;
-
 		@Override
 		protected void func_230299_a_(BlockRayTraceResult blockStateRayTraceResult) {
 			this.inBlockState = this.world.getBlockState(blockStateRayTraceResult.getPos());
@@ -994,7 +983,6 @@ public class BulletEntity {
 			}
 
 			if (canBreakGlass && !this.hasAlreadyBrokeGlass && !this.inBlockState.getBlock().isIn(BlockTags.makeWrapperTag("forge:bulletproof_glass")) && this.inBlockState.getBlock().isIn(BlockTags.makeWrapperTag("forge:glass")) || this.inBlockState.getBlock().isIn(BlockTags.makeWrapperTag("forge:glass_panes"))) {
-				;
 				this.world.destroyBlock(blockStateRayTraceResult.getPos(), false);
 				this.hasAlreadyBrokeGlass = true;
 			}
@@ -1014,6 +1002,16 @@ public class BulletEntity {
 
 	public static class IronBulletEntity extends AbstractArrowEntity {
 		private final Item referenceItem;
+		private BlockState inBlockState;
+		/**
+		 * Called when the arrow hits an entity
+		 */
+
+		private IntOpenHashSet piercedEntities;
+		private List<Entity> hitEntities;
+		private int knockbackStrength;
+		private final SoundEvent hitSound = this.getHitEntitySound();
+		private boolean hasAlreadyBrokeGlass = false;
 
 		@SuppressWarnings("unchecked")
 		public IronBulletEntity(EntityType<?> type, World world) {
@@ -1052,8 +1050,6 @@ public class BulletEntity {
 			this.prevRotationPitch = this.rotationPitch;
 		}
 
-		private BlockState inBlockState;
-
 		private boolean func_234593_u_() {
 			return this.inGround && this.world.hasNoCollisions((new AxisAlignedBB(this.getPositionVec(), this.getPositionVec())).grow(0.06D));
 		}
@@ -1189,15 +1185,6 @@ public class BulletEntity {
 			}
 		}
 
-		/**
-		 * Called when the arrow hits an entity
-		 */
-
-		private IntOpenHashSet piercedEntities;
-		private List<Entity> hitEntities;
-		private int knockbackStrength;
-		private SoundEvent hitSound = this.getHitEntitySound();
-
 		@Override
 		protected void onEntityHit(EntityRayTraceResult p_213868_1_) {
 			super.onEntityHit(p_213868_1_);
@@ -1296,8 +1283,6 @@ public class BulletEntity {
 			}
 		}
 
-		private boolean hasAlreadyBrokeGlass = false;
-
 		@Override
 		protected void func_230299_a_(BlockRayTraceResult blockStateRayTraceResult) {
 			this.inBlockState = this.world.getBlockState(blockStateRayTraceResult.getPos());
@@ -1319,7 +1304,6 @@ public class BulletEntity {
 			}
 
 			if (canBreakGlass && !this.hasAlreadyBrokeGlass && !this.inBlockState.getBlock().isIn(BlockTags.makeWrapperTag("forge:bulletproof_glass")) && this.inBlockState.getBlock().isIn(BlockTags.makeWrapperTag("forge:glass")) || this.inBlockState.getBlock().isIn(BlockTags.makeWrapperTag("forge:glass_panes"))) {
-				;
 				this.world.destroyBlock(blockStateRayTraceResult.getPos(), false);
 				this.hasAlreadyBrokeGlass = true;
 			}
@@ -1339,6 +1323,16 @@ public class BulletEntity {
 
 	public static class GoldBulletEntity extends AbstractArrowEntity {
 		private final Item referenceItem;
+		private BlockState inBlockState;
+		/**
+		 * Called when the arrow hits an entity
+		 */
+
+		private IntOpenHashSet piercedEntities;
+		private List<Entity> hitEntities;
+		private int knockbackStrength;
+		private final SoundEvent hitSound = this.getHitEntitySound();
+		private boolean hasAlreadyBrokeGlass = false;
 
 		@SuppressWarnings("unchecked")
 		public GoldBulletEntity(EntityType<?> type, World world) {
@@ -1377,8 +1371,6 @@ public class BulletEntity {
 			this.prevRotationPitch = this.rotationPitch;
 		}
 
-		private BlockState inBlockState;
-
 		private boolean func_234593_u_() {
 			return this.inGround && this.world.hasNoCollisions((new AxisAlignedBB(this.getPositionVec(), this.getPositionVec())).grow(0.06D));
 		}
@@ -1514,15 +1506,6 @@ public class BulletEntity {
 			}
 		}
 
-		/**
-		 * Called when the arrow hits an entity
-		 */
-
-		private IntOpenHashSet piercedEntities;
-		private List<Entity> hitEntities;
-		private int knockbackStrength;
-		private SoundEvent hitSound = this.getHitEntitySound();
-
 		@Override
 		protected void onEntityHit(EntityRayTraceResult p_213868_1_) {
 			super.onEntityHit(p_213868_1_);
@@ -1621,8 +1604,6 @@ public class BulletEntity {
 			}
 		}
 
-		private boolean hasAlreadyBrokeGlass = false;
-
 		@Override
 		protected void func_230299_a_(BlockRayTraceResult blockStateRayTraceResult) {
 			this.inBlockState = this.world.getBlockState(blockStateRayTraceResult.getPos());
@@ -1644,7 +1625,6 @@ public class BulletEntity {
 			}
 
 			if (canBreakGlass && !this.hasAlreadyBrokeGlass && !this.inBlockState.getBlock().isIn(BlockTags.makeWrapperTag("forge:bulletproof_glass")) && this.inBlockState.getBlock().isIn(BlockTags.makeWrapperTag("forge:glass")) || this.inBlockState.getBlock().isIn(BlockTags.makeWrapperTag("forge:glass_panes"))) {
-				;
 				this.world.destroyBlock(blockStateRayTraceResult.getPos(), false);
 				this.hasAlreadyBrokeGlass = true;
 			}
@@ -1664,6 +1644,16 @@ public class BulletEntity {
 
 	public static class DiamondBulletEntity extends AbstractArrowEntity {
 		private final Item referenceItem;
+		private BlockState inBlockState;
+		/**
+		 * Called when the arrow hits an entity
+		 */
+
+		private IntOpenHashSet piercedEntities;
+		private List<Entity> hitEntities;
+		private int knockbackStrength;
+		private final SoundEvent hitSound = this.getHitEntitySound();
+		private boolean hasAlreadyBrokeGlass = false;
 
 		@SuppressWarnings("unchecked")
 		public DiamondBulletEntity(EntityType<?> type, World world) {
@@ -1701,8 +1691,6 @@ public class BulletEntity {
 			this.prevRotationYaw = this.rotationYaw;
 			this.prevRotationPitch = this.rotationPitch;
 		}
-
-		private BlockState inBlockState;
 
 		private boolean func_234593_u_() {
 			return this.inGround && this.world.hasNoCollisions((new AxisAlignedBB(this.getPositionVec(), this.getPositionVec())).grow(0.06D));
@@ -1839,15 +1827,6 @@ public class BulletEntity {
 			}
 		}
 
-		/**
-		 * Called when the arrow hits an entity
-		 */
-
-		private IntOpenHashSet piercedEntities;
-		private List<Entity> hitEntities;
-		private int knockbackStrength;
-		private SoundEvent hitSound = this.getHitEntitySound();
-
 		@Override
 		protected void onEntityHit(EntityRayTraceResult p_213868_1_) {
 			super.onEntityHit(p_213868_1_);
@@ -1946,8 +1925,6 @@ public class BulletEntity {
 			}
 		}
 
-		private boolean hasAlreadyBrokeGlass = false;
-
 		@Override
 		protected void func_230299_a_(BlockRayTraceResult blockStateRayTraceResult) {
 			this.inBlockState = this.world.getBlockState(blockStateRayTraceResult.getPos());
@@ -1969,7 +1946,6 @@ public class BulletEntity {
 			}
 
 			if (canBreakGlass && !this.hasAlreadyBrokeGlass && !this.inBlockState.getBlock().isIn(BlockTags.makeWrapperTag("forge:bulletproof_glass")) && this.inBlockState.getBlock().isIn(BlockTags.makeWrapperTag("forge:glass")) || this.inBlockState.getBlock().isIn(BlockTags.makeWrapperTag("forge:glass_panes"))) {
-				;
 				this.world.destroyBlock(blockStateRayTraceResult.getPos(), false);
 				this.hasAlreadyBrokeGlass = true;
 			}
@@ -1989,6 +1965,16 @@ public class BulletEntity {
 
 	public static class NetheriteBulletEntity extends AbstractArrowEntity {
 		private final Item referenceItem;
+		private BlockState inBlockState;
+		/**
+		 * Called when the arrow hits an entity
+		 */
+
+		private IntOpenHashSet piercedEntities;
+		private List<Entity> hitEntities;
+		private int knockbackStrength;
+		private final SoundEvent hitSound = this.getHitEntitySound();
+		private boolean hasAlreadyBrokeGlass = false;
 
 		@SuppressWarnings("unchecked")
 		public NetheriteBulletEntity(EntityType<?> type, World world) {
@@ -2026,8 +2012,6 @@ public class BulletEntity {
 			this.prevRotationYaw = this.rotationYaw;
 			this.prevRotationPitch = this.rotationPitch;
 		}
-
-		private BlockState inBlockState;
 
 		private boolean func_234593_u_() {
 			return this.inGround && this.world.hasNoCollisions((new AxisAlignedBB(this.getPositionVec(), this.getPositionVec())).grow(0.06D));
@@ -2164,15 +2148,6 @@ public class BulletEntity {
 			}
 		}
 
-		/**
-		 * Called when the arrow hits an entity
-		 */
-
-		private IntOpenHashSet piercedEntities;
-		private List<Entity> hitEntities;
-		private int knockbackStrength;
-		private SoundEvent hitSound = this.getHitEntitySound();
-
 		@Override
 		protected void onEntityHit(EntityRayTraceResult p_213868_1_) {
 			super.onEntityHit(p_213868_1_);
@@ -2271,8 +2246,6 @@ public class BulletEntity {
 			}
 		}
 
-		private boolean hasAlreadyBrokeGlass = false;
-
 		@Override
 		protected void func_230299_a_(BlockRayTraceResult blockStateRayTraceResult) {
 			this.inBlockState = this.world.getBlockState(blockStateRayTraceResult.getPos());
@@ -2294,7 +2267,6 @@ public class BulletEntity {
 			}
 
 			if (canBreakGlass && !this.hasAlreadyBrokeGlass && !this.inBlockState.getBlock().isIn(BlockTags.makeWrapperTag("forge:bulletproof_glass")) && this.inBlockState.getBlock().isIn(BlockTags.makeWrapperTag("forge:glass")) || this.inBlockState.getBlock().isIn(BlockTags.makeWrapperTag("forge:glass_panes"))) {
-				;
 				this.world.destroyBlock(blockStateRayTraceResult.getPos(), false);
 				this.hasAlreadyBrokeGlass = true;
 			}

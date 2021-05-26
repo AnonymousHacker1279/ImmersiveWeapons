@@ -19,9 +19,9 @@ import java.util.List;
 public class SmallPartsContainer extends AbstractRepairContainer {
 
 	private final World world;
+	private final List<SmallPartsRecipe> smallPartsRecipeList;
 	@Nullable
 	private SmallPartsRecipe smallPartsRecipe;
-	private final List<SmallPartsRecipe> smallPartsRecipeList;
 
 	public SmallPartsContainer(int id, PlayerInventory inv) {
 		this(id, inv, IWorldPosCallable.DUMMY);

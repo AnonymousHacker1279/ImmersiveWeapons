@@ -23,13 +23,12 @@ public class CorrugatedBlock {
 
 	public static class CorrugatedBlockNormal extends HorizontalBlock implements IWaterLoggable {
 
+		public static final DirectionProperty FACING = HorizontalBlock.HORIZONTAL_FACING;
+		public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
 		protected static final VoxelShape SHAPE_NORTH = Block.makeCuboidShape(0.0D, 0.0D, 16.0D, 16.0D, 16.0D, 14.0D);
 		protected static final VoxelShape SHAPE_SOUTH = Block.makeCuboidShape(0.0D, 0.0D, 0.0D, 16.0D, 16.0D, 2.0D);
 		protected static final VoxelShape SHAPE_EAST = Block.makeCuboidShape(0.0D, 0.0D, 0.0D, 2.0D, 16.0D, 16.0D);
 		protected static final VoxelShape SHAPE_WEST = Block.makeCuboidShape(14.0D, 0.0D, 0.0D, 16.0D, 16.0D, 16.0D);
-
-		public static final DirectionProperty FACING = HorizontalBlock.HORIZONTAL_FACING;
-		public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
 
 		public CorrugatedBlockNormal(Properties properties) {
 			super(properties);
@@ -79,10 +78,9 @@ public class CorrugatedBlock {
 
 	public static class CorrugatedBlockFlat extends HorizontalBlock implements IWaterLoggable {
 
-		protected static final VoxelShape SHAPE_FLAT = Block.makeCuboidShape(0.0D, 0.0D, 0.0D, 16.0D, 2.0D, 16.0D);
-
 		public static final DirectionProperty FACING = HorizontalBlock.HORIZONTAL_FACING;
 		public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
+		protected static final VoxelShape SHAPE_FLAT = Block.makeCuboidShape(0.0D, 0.0D, 0.0D, 16.0D, 2.0D, 16.0D);
 
 		public CorrugatedBlockFlat(Properties properties) {
 			super(properties);

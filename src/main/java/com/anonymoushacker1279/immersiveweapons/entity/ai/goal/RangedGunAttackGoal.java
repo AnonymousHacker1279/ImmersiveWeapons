@@ -15,8 +15,8 @@ public class RangedGunAttackGoal<T extends MonsterEntity & IRangedAttackMob> ext
 
 	private final T entity;
 	private final double moveSpeedAmp;
-	private int attackCooldown;
 	private final float maxAttackDistance;
+	private int attackCooldown;
 	private int attackTime = -1;
 	private int seeTime;
 	private boolean strafingClockwise;
@@ -144,7 +144,6 @@ public class RangedGunAttackGoal<T extends MonsterEntity & IRangedAttackMob> ext
 			} else if (--this.attackTime <= 0 && this.seeTime >= -60) {
 				this.entity.setActiveHand(ProjectileHelper.getHandWith(this.entity, DeferredRegistryHandler.FLINTLOCK_PISTOL.get()));
 			}
-
 		}
 	}
 }

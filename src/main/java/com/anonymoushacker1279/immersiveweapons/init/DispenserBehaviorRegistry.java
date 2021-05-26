@@ -1,16 +1,8 @@
 package com.anonymoushacker1279.immersiveweapons.init;
 
-import com.anonymoushacker1279.immersiveweapons.entity.projectile.CustomArrowEntity.CopperArrowEntity;
-import com.anonymoushacker1279.immersiveweapons.entity.projectile.CustomArrowEntity.DiamondArrowEntity;
-import com.anonymoushacker1279.immersiveweapons.entity.projectile.CustomArrowEntity.GoldArrowEntity;
-import com.anonymoushacker1279.immersiveweapons.entity.projectile.CustomArrowEntity.IronArrowEntity;
-import com.anonymoushacker1279.immersiveweapons.entity.projectile.CustomArrowEntity.NetheriteArrowEntity;
-import com.anonymoushacker1279.immersiveweapons.entity.projectile.CustomArrowEntity.SmokeBombArrowEntity;
-import com.anonymoushacker1279.immersiveweapons.entity.projectile.CustomArrowEntity.StoneArrowEntity;
-import com.anonymoushacker1279.immersiveweapons.entity.projectile.CustomArrowEntity.WoodArrowEntity;
+import com.anonymoushacker1279.immersiveweapons.entity.projectile.CustomArrowEntity.*;
 import com.anonymoushacker1279.immersiveweapons.entity.projectile.MolotovEntity;
 import com.anonymoushacker1279.immersiveweapons.entity.projectile.SmokeBombEntity;
-
 import net.minecraft.block.DispenserBlock;
 import net.minecraft.dispenser.IBlockSource;
 import net.minecraft.dispenser.IDispenseItemBehavior;
@@ -85,7 +77,7 @@ public class DispenserBehaviorRegistry implements IDispenseItemBehavior {
 				arrowentity.setDamage(5.75d);
 				return arrowentity;
 			}
-			
+
 		});
 		DispenserBlock.registerDispenseBehavior(DeferredRegistryHandler.SMOKE_BOMB.get(), new ProjectileDispenseBehavior() {
 			@Override
@@ -95,7 +87,7 @@ public class DispenserBehaviorRegistry implements IDispenseItemBehavior {
 				SmokeBombEntity.setColor("none");
 				return smokeBombEntity;
 			}
-			
+
 		});
 		DispenserBlock.registerDispenseBehavior(DeferredRegistryHandler.SMOKE_BOMB_RED.get(), new ProjectileDispenseBehavior() {
 			@Override
@@ -105,7 +97,7 @@ public class DispenserBehaviorRegistry implements IDispenseItemBehavior {
 				SmokeBombEntity.setColor("red");
 				return smokeBombEntity;
 			}
-			
+
 		});
 		DispenserBlock.registerDispenseBehavior(DeferredRegistryHandler.SMOKE_BOMB_GREEN.get(), new ProjectileDispenseBehavior() {
 			@Override
@@ -115,7 +107,7 @@ public class DispenserBehaviorRegistry implements IDispenseItemBehavior {
 				SmokeBombEntity.setColor("green");
 				return smokeBombEntity;
 			}
-			
+
 		});
 		DispenserBlock.registerDispenseBehavior(DeferredRegistryHandler.SMOKE_BOMB_BLUE.get(), new ProjectileDispenseBehavior() {
 			@Override
@@ -125,7 +117,7 @@ public class DispenserBehaviorRegistry implements IDispenseItemBehavior {
 				SmokeBombEntity.setColor("blue");
 				return smokeBombEntity;
 			}
-			
+
 		});
 		DispenserBlock.registerDispenseBehavior(DeferredRegistryHandler.SMOKE_BOMB_PURPLE.get(), new ProjectileDispenseBehavior() {
 			@Override
@@ -135,7 +127,7 @@ public class DispenserBehaviorRegistry implements IDispenseItemBehavior {
 				SmokeBombEntity.setColor("purple");
 				return smokeBombEntity;
 			}
-			
+
 		});
 		DispenserBlock.registerDispenseBehavior(DeferredRegistryHandler.SMOKE_BOMB_YELLOW.get(), new ProjectileDispenseBehavior() {
 			@Override
@@ -145,7 +137,7 @@ public class DispenserBehaviorRegistry implements IDispenseItemBehavior {
 				SmokeBombEntity.setColor("yellow");
 				return smokeBombEntity;
 			}
-			
+
 		});
 		DispenserBlock.registerDispenseBehavior(DeferredRegistryHandler.SMOKE_BOMB_ARROW.get(), new ProjectileDispenseBehavior() {
 			@Override
@@ -155,7 +147,7 @@ public class DispenserBehaviorRegistry implements IDispenseItemBehavior {
 				smokeBombArrowEntity.addVelocity(5, 5, 5);
 				return smokeBombArrowEntity;
 			}
-			
+
 		});
 		DispenserBlock.registerDispenseBehavior(DeferredRegistryHandler.SMOKE_BOMB_ARROW_RED.get(), new ProjectileDispenseBehavior() {
 			@Override
@@ -166,7 +158,7 @@ public class DispenserBehaviorRegistry implements IDispenseItemBehavior {
 				SmokeBombArrowEntity.setColor("red");
 				return smokeBombArrowEntity;
 			}
-			
+
 		});
 		DispenserBlock.registerDispenseBehavior(DeferredRegistryHandler.SMOKE_BOMB_ARROW_GREEN.get(), new ProjectileDispenseBehavior() {
 			@Override
@@ -177,7 +169,7 @@ public class DispenserBehaviorRegistry implements IDispenseItemBehavior {
 				SmokeBombArrowEntity.setColor("green");
 				return smokeBombArrowEntity;
 			}
-			
+
 		});
 		DispenserBlock.registerDispenseBehavior(DeferredRegistryHandler.SMOKE_BOMB_ARROW_BLUE.get(), new ProjectileDispenseBehavior() {
 			@Override
@@ -188,7 +180,7 @@ public class DispenserBehaviorRegistry implements IDispenseItemBehavior {
 				SmokeBombArrowEntity.setColor("blue");
 				return smokeBombArrowEntity;
 			}
-			
+
 		});
 		DispenserBlock.registerDispenseBehavior(DeferredRegistryHandler.SMOKE_BOMB_ARROW_PURPLE.get(), new ProjectileDispenseBehavior() {
 			@Override
@@ -199,7 +191,7 @@ public class DispenserBehaviorRegistry implements IDispenseItemBehavior {
 				SmokeBombArrowEntity.setColor("purple");
 				return smokeBombArrowEntity;
 			}
-			
+
 		});
 		DispenserBlock.registerDispenseBehavior(DeferredRegistryHandler.SMOKE_BOMB_ARROW_YELLOW.get(), new ProjectileDispenseBehavior() {
 			@Override
@@ -210,7 +202,7 @@ public class DispenserBehaviorRegistry implements IDispenseItemBehavior {
 				SmokeBombArrowEntity.setColor("yellow");
 				return smokeBombArrowEntity;
 			}
-			
+
 		});
 		DispenserBlock.registerDispenseBehavior(DeferredRegistryHandler.MOLOTOV_COCKTAIL.get(), new ProjectileDispenseBehavior() {
 			@Override
@@ -219,7 +211,7 @@ public class DispenserBehaviorRegistry implements IDispenseItemBehavior {
 				molotovEntity.addVelocity(5, 5, 5);
 				return molotovEntity;
 			}
-			
+
 		});
 	}
 

@@ -8,9 +8,9 @@ import java.util.function.Supplier;
 
 public abstract class Option<T> {
 
-	private String name;
 	protected T value;
-	private T defaultValue;
+	private final String name;
+	private final T defaultValue;
 	private T increment;
 	private T minimum;
 	private T maximum;

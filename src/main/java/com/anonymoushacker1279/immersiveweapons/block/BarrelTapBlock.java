@@ -26,16 +26,16 @@ import net.minecraft.world.World;
 
 public class BarrelTapBlock extends HorizontalBlock {
 
+	public static final DirectionProperty FACING = HorizontalBlock.HORIZONTAL_FACING;
 	protected static final VoxelShape SHAPE_NORTH = Block.makeCuboidShape(7.0D, 4.0D, 0.0D, 9.0D, 7.0D, 3.0D);
 	protected static final VoxelShape SHAPE_SOUTH = Block.makeCuboidShape(7.0D, 4.0D, 13.0D, 9.0D, 7.0D, 16.0D);
 	protected static final VoxelShape SHAPE_EAST = Block.makeCuboidShape(0.0D, 4.0D, 7.0D, 3.0D, 7.0D, 9.0D);
 	protected static final VoxelShape SHAPE_WEST = Block.makeCuboidShape(13.0D, 4.0D, 7.0D, 16.0D, 7.0D, 9.0D);
-	public static final DirectionProperty FACING = HorizontalBlock.HORIZONTAL_FACING;
-
 	private BlockState blockstateNorth;
 	private BlockState blockstateSouth;
 	private BlockState blockstateEast;
 	private BlockState blockstateWest;
+	private String directionToUse = "north"; // Default: check North for a barrel
 
 	public BarrelTapBlock(Properties properties) {
 		super(properties);
@@ -69,8 +69,6 @@ public class BarrelTapBlock extends HorizontalBlock {
 	public BlockState getStateForPlacement(BlockItemUseContext context) {
 		return this.getDefaultState().with(FACING, context.getPlacementHorizontalFacing().getOpposite());
 	}
-
-	private String directionToUse = "north"; // Default: check North for a barrel
 
 	@Override
 	public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {

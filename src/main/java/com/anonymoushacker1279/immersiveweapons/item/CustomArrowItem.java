@@ -15,13 +15,12 @@ public class CustomArrowItem extends ArrowItem {
 	 * The amount of damage this arrow does by default.
 	 */
 	public double damage;
-	
+
 	public RegistryObject<Item> ref;
 
 	/**
-	 * 
 	 * @param properties Default Item.Properties
-	 * @param damageIn Amount of damage this arrow deals as base (will be multiplied by projectile velocity later!)
+	 * @param damageIn   Amount of damage this arrow deals as base (will be multiplied by projectile velocity later!)
 	 */
 	public CustomArrowItem(Properties properties, double damageIn) {
 		super(properties);
@@ -31,6 +30,7 @@ public class CustomArrowItem extends ArrowItem {
 	/**
 	 * Set an internal reference to the represented item.
 	 * This is needed specifically for ensuring that CustomArrowEntity drops the correct arrow item.
+	 *
 	 * @param refIn a RegistryObject for building the Item
 	 * @returns Reference to this object, for method chaining
 	 */
@@ -38,9 +38,10 @@ public class CustomArrowItem extends ArrowItem {
 		this.ref = refIn;
 		return this;
 	}
-	
+
 	/**
 	 * Create an ArrowEntity representing this Item.
+	 *
 	 * @returns the relevant Entity (in this case CustomArrowEntity) for use by the firing tool.
 	 */
 	@Override
@@ -57,6 +58,6 @@ public class CustomArrowItem extends ArrowItem {
 	@Override
 	public boolean isInfinite(ItemStack stack, ItemStack bow, net.minecraft.entity.player.PlayerEntity player) {
 		int enchant = net.minecraft.enchantment.EnchantmentHelper.getEnchantmentLevel(net.minecraft.enchantment.Enchantments.INFINITY, bow);
-		return enchant <= 0 ? false : this instanceof ArrowItem;
+		return enchant > 0 && this instanceof ArrowItem;
 	}
 }
