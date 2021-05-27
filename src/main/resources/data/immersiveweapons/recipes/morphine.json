@@ -1,0 +1,23 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"pattern": [
+		"zzz",
+		"yxy",
+		"   "
+	],
+	"key": {
+		"x": {
+			"item": "immersiveweapons:syringe"
+		},
+		"y": {
+			"item": "minecraft:fermented_spider_eye"
+		},
+		"z": {
+			"item": "minecraft:sugar"
+		}
+	},
+	"result": {
+		"item": "immersiveweapons:morphine",
+		"count": 1
+	}
+}

@@ -23,6 +23,7 @@ import com.anonymoushacker1279.immersiveweapons.item.MoltenItem.*;
 import com.anonymoushacker1279.immersiveweapons.item.PikeItem.*;
 import com.anonymoushacker1279.immersiveweapons.item.TeslaItem.*;
 import com.anonymoushacker1279.immersiveweapons.item.crafting.SmallPartsRecipe.Serializer;
+import com.anonymoushacker1279.immersiveweapons.potion.MorphineEffect;
 import com.anonymoushacker1279.immersiveweapons.tileentity.BearTrapTileEntity;
 import com.anonymoushacker1279.immersiveweapons.tileentity.PanicAlarmTileEntity;
 import com.anonymoushacker1279.immersiveweapons.tileentity.WallShelfTileEntity;
@@ -39,6 +40,8 @@ import net.minecraft.item.*;
 import net.minecraft.item.Item.Properties;
 import net.minecraft.item.crafting.IRecipeSerializer;
 import net.minecraft.particles.ParticleType;
+import net.minecraft.potion.Effect;
+import net.minecraft.potion.EffectType;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
@@ -78,6 +81,8 @@ public class DeferredRegistryHandler {
 	public static final DeferredRegister<Biome> BIOMES = DeferredRegister.create(ForgeRegistries.BIOMES, ImmersiveWeapons.MOD_ID);
 	// World Carver Register
 	public static final DeferredRegister<WorldCarver<?>> WORLD_CARVERS = DeferredRegister.create(ForgeRegistries.WORLD_CARVERS, ImmersiveWeapons.MOD_ID);
+	// Effect Register
+	public static final DeferredRegister<Effect> EFFECTS = DeferredRegister.create(ForgeRegistries.POTIONS, ImmersiveWeapons.MOD_ID);
 
 	public static void init() {
 		IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
@@ -92,6 +97,7 @@ public class DeferredRegistryHandler {
 		TILE_ENTITIES.register(modEventBus);
 		BIOMES.register(modEventBus);
 		WORLD_CARVERS.register(modEventBus);
+		EFFECTS.register(modEventBus);
 	}
 
 	public static final ItemGroup ITEM_GROUP = new CreativeTabSorter("ImmersiveWeaponsTab");
@@ -188,6 +194,9 @@ public class DeferredRegistryHandler {
 	public static final RegistryObject<Item> BANDAGE = ITEMS.register("bandage", () -> new BandageItem(new Properties().group(ITEM_GROUP).maxStackSize(16)));
 	public static final RegistryObject<Item> MRE = ITEMS.register("mre", () -> new Item(new Properties().group(ITEM_GROUP).food(CustomFoods.MRE)));
 	public static final RegistryObject<Item> PAINKILLERS = ITEMS.register("painkillers", () -> new PainkillerItem(new Properties().group(ITEM_GROUP).maxStackSize(24)));
+	public static final RegistryObject<Item> SYRINGE = ITEMS.register("syringe", () -> new Item(new Properties().group(ITEM_GROUP).maxStackSize(16)));
+	public static final RegistryObject<Item> MORPHINE = ITEMS.register("morphine", () -> new MorphineItem(new Properties().group(ITEM_GROUP).maxStackSize(16)));
+	public static final RegistryObject<Item> USED_SYRINGE = ITEMS.register("used_syringe", () -> new UsedSyringeItem(new Properties().group(ITEM_GROUP).maxStackSize(16)));
 
 	// Armor
 	public static final RegistryObject<Item> MOLTEN_CHESTPLATE = ITEMS.register("molten_chestplate", () -> new MoltenArmorItem(CustomArmorMaterials.MOLTEN, EquipmentSlotType.CHEST, 1));
@@ -365,4 +374,7 @@ public class DeferredRegistryHandler {
 
 	// World Carvers
 	public static final RegistryObject<WorldCarver<?>> TRENCH_WORLD_CARVER = WORLD_CARVERS.register("trench", () -> new TrenchWorldCarver(ProbabilityConfig.CODEC, 256));
+
+	// Effects
+	public static final RegistryObject<Effect> MORPHINE_EFFECT = EFFECTS.register("morphine", () -> new MorphineEffect(EffectType.NEUTRAL, 3484189));
 }

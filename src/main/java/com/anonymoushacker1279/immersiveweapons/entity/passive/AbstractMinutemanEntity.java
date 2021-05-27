@@ -16,6 +16,7 @@ import net.minecraft.entity.ai.goal.*;
 import net.minecraft.entity.monster.CreeperEntity;
 import net.minecraft.entity.monster.IMob;
 import net.minecraft.entity.monster.MonsterEntity;
+import net.minecraft.entity.passive.IronGolemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.AbstractArrowEntity;
 import net.minecraft.entity.projectile.ProjectileHelper;
@@ -96,7 +97,7 @@ public abstract class AbstractMinutemanEntity extends CreatureEntity implements 
 		this.targetSelector.addGoal(5, new DefendVillageTargetGoal(this));
 		this.targetSelector.addGoal(12, new NearestAttackableTargetGoal<>(this, AbstractDyingSoldierEntity.class, false));
 		this.targetSelector.addGoal(6, new NearestAttackableTargetGoal<>(this, PlayerEntity.class, 8, true, false, this::func_233680_b_));
-		this.targetSelector.addGoal(9, new NearestAttackableTargetGoal<>(this, MobEntity.class, 10, false, false, (targetPredicate) -> targetPredicate instanceof IMob && !(targetPredicate instanceof AbstractMinutemanEntity) && !(targetPredicate instanceof CreeperEntity)));
+		this.targetSelector.addGoal(9, new NearestAttackableTargetGoal<>(this, MobEntity.class, 10, false, false, (targetPredicate) -> targetPredicate instanceof IMob && !(targetPredicate instanceof AbstractMinutemanEntity) && !(targetPredicate instanceof IronGolemEntity) && !(targetPredicate instanceof CreeperEntity)));
 		this.targetSelector.addGoal(1, new ResetAngerGoal<>(this, false));
 	}
 
@@ -246,7 +247,7 @@ public abstract class AbstractMinutemanEntity extends CreatureEntity implements 
 	public boolean attackEntityFrom(DamageSource source, float amount) {
 		super.attackEntityFrom(source, amount);
 		this.setCombatTask();
-		if (amount > 0 && !(source.getTrueSource() instanceof AbstractMinutemanEntity) && source.getTrueSource() instanceof PlayerEntity || source.getTrueSource() instanceof MobEntity) {
+		if (amount > 0 && !(source.getTrueSource() instanceof AbstractMinutemanEntity) && !(source.getTrueSource() instanceof IronGolemEntity) && source.getTrueSource() instanceof PlayerEntity || source.getTrueSource() instanceof MobEntity) {
 			if (source.getTrueSource() instanceof PlayerEntity) {
 				if (((PlayerEntity) source.getTrueSource()).isCreative()) {
 					return false;

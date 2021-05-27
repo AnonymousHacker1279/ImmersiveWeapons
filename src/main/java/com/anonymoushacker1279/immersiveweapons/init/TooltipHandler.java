@@ -212,5 +212,11 @@ public class TooltipHandler {
 		if (stack.getItem() == DeferredRegistryHandler.PANIC_ALARM_ITEM.get()) {
 			event.getToolTip().add(new TranslationTextComponent("immersiveweapons.tooltip.panic_alarm").mergeStyle(TextFormatting.DARK_GRAY, TextFormatting.ITALIC));
 		}
+		if (stack.getItem() == DeferredRegistryHandler.MORPHINE.get()) {
+			event.getToolTip().add(new TranslationTextComponent("immersiveweapons.tooltip.morphine").mergeStyle(TextFormatting.DARK_GRAY, TextFormatting.ITALIC));
+		}
+		if (stack.getItem() == DeferredRegistryHandler.USED_SYRINGE.get()) {
+			event.getToolTip().add(new TranslationTextComponent("immersiveweapons.tooltip.used_syringe").mergeStyle(TextFormatting.DARK_GRAY, TextFormatting.ITALIC));
+		}
 	}
 }

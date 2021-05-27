@@ -102,6 +102,9 @@
 	"item.immersiveweapons.bandage": "Bandage",
 	"item.immersiveweapons.mre": "Meal Ready-To-Eat (MRE)",
 	"item.immersiveweapons.painkillers": "Painkillers",
+	"item.immersiveweapons.syringe": "Syringe",
+	"item.immersiveweapons.morphine": "Morphine",
+	"item.immersiveweapons.used_syringe": "Used Syringe",
 	"block.immersiveweapons.molten_ore": "Molten Ore",
 	"block.immersiveweapons.molten_block": "Molten Block",
 	"block.immersiveweapons.electric_ore": "Electric Ore",
@@ -144,6 +147,7 @@
 	"block.immersiveweapons.wooden_spikes": "Wooden Spikes",
 	"entity.immersiveweapons.dying_soldier": "Dying Soldier",
 	"entity.immersiveweapons.minuteman": "Minuteman",
+	"effect.immersiveweapons.morphine": "Morphine",
 	"container.immersiveweapons.small_parts_table": "Small Parts Crafting",
 	"container.immersiveweapons.locked_chest": "Locked Chest",
 	"container.immersiveweapons.locked_double_chest": "Locked Double Chest",
@@ -234,6 +238,8 @@
 	"immersiveweapons.tooltip.tesla_hoe_2": "Because if you were we'd be broke.",
 	"immersiveweapons.tooltip.spotlight": "I see you there",
 	"immersiveweapons.tooltip.panic_alarm": "DON'T PANIC!!!",
+	"immersiveweapons.tooltip.morphine": "I wouldn't recommend using this",
+	"immersiveweapons.tooltip.used_syringe": "If you use this there's a good chance you will die of hepatitis",
 	"key.categories.immersiveweapons": "Immersive Weapons",
 	"immersiveweapons.key.toggleArmorEffect": "Toggle Armor Effect",
 	"death.attack.immersiveweapons.punji_sticks": "%s was victim to Vietnam-era war tactics",
@@ -248,5 +254,6 @@
 	"death.attack.immersiveweapons.explosive_chocolate_bar.player": "%s learned to not accept candy from strangers while %s watched",
 	"death.attack.immersiveweapons.spike_trap": "%s was impaled",
 	"death.attack.immersiveweapons.spike_trap.plauer": "%s was impaled by %s",
+	"death.attack.immersiveweapons.used_syringe": "%s died of hepatitis",
 	"itemGroup.ImmersiveWeaponsTab": "Immersive Weapons"
 }
