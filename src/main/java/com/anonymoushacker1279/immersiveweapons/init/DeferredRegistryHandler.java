@@ -197,7 +197,8 @@ public class DeferredRegistryHandler {
 	public static final RegistryObject<Item> SYRINGE = ITEMS.register("syringe", () -> new Item(new Properties().group(ITEM_GROUP).maxStackSize(16)));
 	public static final RegistryObject<Item> MORPHINE = ITEMS.register("morphine", () -> new MorphineItem(new Properties().group(ITEM_GROUP).maxStackSize(16)));
 	public static final RegistryObject<Item> USED_SYRINGE = ITEMS.register("used_syringe", () -> new UsedSyringeItem(new Properties().group(ITEM_GROUP).maxStackSize(16)));
-
+	public static final RegistryObject<Item> FIRST_AID_KIT = ITEMS.register("first_aid_kit", () -> new FirstAidKitItem(new Properties().group(ITEM_GROUP).maxStackSize(8)));
+	
 	// Armor
 	public static final RegistryObject<Item> MOLTEN_CHESTPLATE = ITEMS.register("molten_chestplate", () -> new MoltenArmorItem(CustomArmorMaterials.MOLTEN, EquipmentSlotType.CHEST, 1));
 	public static final RegistryObject<Item> MOLTEN_LEGGINGS = ITEMS.register("molten_leggings", () -> new MoltenArmorItem(CustomArmorMaterials.MOLTEN, EquipmentSlotType.LEGS, 2));
