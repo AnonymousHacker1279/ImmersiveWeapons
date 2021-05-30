@@ -7,10 +7,10 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
 
-public class MinutemanEntity extends AbstractMinutemanEntity {
+public class FieldMedicEntity extends AbstractFieldMedicEntity {
 
-	public MinutemanEntity(EntityType<? extends MinutemanEntity> p_i50194_1_, World p_i50194_2_) {
-		super(p_i50194_1_, p_i50194_2_);
+	public FieldMedicEntity(EntityType<? extends FieldMedicEntity> entity, World world) {
+		super(entity, world);
 	}
 
 	//TODO: Need custom sounds

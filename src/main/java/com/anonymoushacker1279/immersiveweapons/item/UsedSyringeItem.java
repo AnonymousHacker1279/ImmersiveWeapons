@@ -16,7 +16,7 @@ import net.minecraft.world.World;
 
 public class UsedSyringeItem extends Item {
 
-	private final DamageSource damageSource = new DamageSource("immersiveweapons.used_syringe");
+	public static final DamageSource damageSource = new DamageSource("immersiveweapons.used_syringe");
 
 	public UsedSyringeItem(Properties properties) {
 		super(properties);

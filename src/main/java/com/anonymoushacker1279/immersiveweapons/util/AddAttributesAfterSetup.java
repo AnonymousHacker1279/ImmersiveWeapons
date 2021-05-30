@@ -1,6 +1,7 @@
 package com.anonymoushacker1279.immersiveweapons.util;
 
 import com.anonymoushacker1279.immersiveweapons.entity.monster.AbstractDyingSoldierEntity;
+import com.anonymoushacker1279.immersiveweapons.entity.passive.AbstractFieldMedicEntity;
 import com.anonymoushacker1279.immersiveweapons.entity.passive.AbstractMinutemanEntity;
 import com.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
 import com.anonymoushacker1279.immersiveweapons.item.Pike;
@@ -68,5 +69,6 @@ public class AddAttributesAfterSetup {
 
 		GlobalEntityTypeAttributes.put(DeferredRegistryHandler.DYING_SOLDIER_ENTITY.get(), AbstractDyingSoldierEntity.registerAttributes().create());
 		GlobalEntityTypeAttributes.put(DeferredRegistryHandler.MINUTEMAN_ENTITY.get(), AbstractMinutemanEntity.registerAttributes().create());
+		GlobalEntityTypeAttributes.put(DeferredRegistryHandler.FIELD_MEDIC_ENTITY.get(), AbstractFieldMedicEntity.registerAttributes().create());
 	}
 }

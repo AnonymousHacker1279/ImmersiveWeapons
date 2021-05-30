@@ -93,7 +93,7 @@ public abstract class AbstractMinutemanEntity extends CreatureEntity implements 
 		this.goalSelector.addGoal(2, new LookRandomlyGoal(this));
 		this.goalSelector.addGoal(3, new OpenDoorGoal(this, true));
 		this.goalSelector.addGoal(3, new OpenFenceGateGoal(this, true));
-		this.targetSelector.addGoal(12, new HurtByTargetGoal(this, AbstractMinutemanEntity.class));
+		this.targetSelector.addGoal(12, new HurtByTargetGoal(this, AbstractMinutemanEntity.class, IronGolemEntity.class));
 		this.targetSelector.addGoal(5, new DefendVillageTargetGoal(this));
 		this.targetSelector.addGoal(12, new NearestAttackableTargetGoal<>(this, AbstractDyingSoldierEntity.class, false));
 		this.targetSelector.addGoal(6, new NearestAttackableTargetGoal<>(this, PlayerEntity.class, 8, true, false, this::func_233680_b_));
@@ -188,7 +188,7 @@ public abstract class AbstractMinutemanEntity extends CreatureEntity implements 
 
 	@Override
 	protected void collideWithEntity(Entity entityIn) {
-		if (entityIn instanceof IMob && !(entityIn instanceof MinutemanEntity) && this.getRNG().nextInt(20) == 0) {
+		if (entityIn instanceof IMob && !(entityIn instanceof MinutemanEntity) && !(entityIn instanceof IronGolemEntity) && this.getRNG().nextInt(20) == 0) {
 			this.setAttackTarget((LivingEntity) entityIn);
 		}
 

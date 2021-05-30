@@ -1,6 +1,5 @@
 package com.anonymoushacker1279.immersiveweapons.item;
 
-import com.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import net.minecraft.block.DispenserBlock;
 import net.minecraft.dispenser.DefaultDispenseItemBehavior;
 import net.minecraft.dispenser.IBlockSource;
@@ -10,69 +9,60 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.SpawnEggItem;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.Direction;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
+import net.minecraftforge.common.util.Lazy;
+import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
-import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
-import java.util.HashMap;
+import javax.annotation.Nullable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
-import java.util.function.Supplier;
 
-@EventBusSubscriber(modid = ImmersiveWeapons.MOD_ID, bus = Bus.MOD)
 public class CustomSpawnEggItem extends SpawnEggItem {
 
-	private static final Logger LOGGER = LogManager.getLogger();
+	protected static final List<CustomSpawnEggItem> UNADDED_EGGS = new ArrayList<>();
+	private final Lazy<? extends EntityType<?>> entityTypeSupplier;
 
-	private static final Map<Supplier<EntityType<?>>, SpawnEggItem> MOD_EGGS = new HashMap<>();
-
-	private static final DefaultDispenseItemBehavior SPAWN_EGG_BEHAVIOR = new DefaultDispenseItemBehavior() {
-		@Override
-		public ItemStack dispenseStack(IBlockSource source, ItemStack stack) {
-			Direction direction = source.getBlockState().get(DispenserBlock.FACING);
-			((SpawnEggItem) stack.getItem()).getType(stack.getTag()).spawn(source.getWorld(), stack, null,
-					source.getBlockPos().offset(direction), SpawnReason.DISPENSER, direction != Direction.UP, false);
-			stack.shrink(1);
-			return stack;
-		}
-	};
-
-	private final Supplier<EntityType<?>> type;
-
-	public CustomSpawnEggItem(Supplier<EntityType<?>> typeIn, int primaryColorIn, int secondaryColorIn, Properties builder) {
-		super(null, primaryColorIn, secondaryColorIn, builder);
-		this.type = typeIn;
-		DispenserBlock.registerDispenseBehavior(this, SPAWN_EGG_BEHAVIOR);
-		MOD_EGGS.put(typeIn, this);
+	public CustomSpawnEggItem(final RegistryObject<? extends EntityType<?>> entityTypeSupplier, final int primaryColor,
+	                          final int secondaryColor, final Properties properties) {
+		super(null, primaryColor, secondaryColor, properties);
+		this.entityTypeSupplier = Lazy.of(entityTypeSupplier);
+		UNADDED_EGGS.add(this);
 	}
 
-	// Use reflection to add the mod spawn eggs to the EGGS map in SpawnEggItem
-	@SubscribeEvent
-	public static void setup(FMLCommonSetupEvent event) {
-		event.enqueueWork(() -> {
-			try {
-				Map<EntityType<?>, SpawnEggItem> eggs = ObfuscationReflectionHelper.getPrivateValue(SpawnEggItem.class,
-						null, "field_195987_b");
-				for (Entry<Supplier<EntityType<?>>, SpawnEggItem> entry : MOD_EGGS.entrySet())
-					eggs.put(entry.getKey().get(), entry.getValue());
-			} catch (Exception e) {
-				LOGGER.warn("Unable to access SpawnEggItem.EGGS");
+	/**
+	 * Adds all the supplier based spawn eggs to vanilla's map and registers an
+	 * IDispenseItemBehavior for each of them as normal spawn eggs have one
+	 * registered for each of them during
+	 * {@link net.minecraft.dispenser.IDispenseItemBehavior#init()} but supplier
+	 * based ones won't have had their EntityTypes created yet.
+	 */
+	public static void initUnaddedEggs() {
+		final Map<EntityType<?>, SpawnEggItem> EGGS = ObfuscationReflectionHelper.getPrivateValue(SpawnEggItem.class,
+				null, "field_195987_b");
+		DefaultDispenseItemBehavior defaultDispenseItemBehavior = new DefaultDispenseItemBehavior() {
+			@Override
+			public ItemStack dispenseStack(IBlockSource source, ItemStack stack) {
+				Direction direction = source.getBlockState().get(DispenserBlock.FACING);
+				EntityType<?> entitytype = ((SpawnEggItem) stack.getItem()).getType(stack.getTag());
+				entitytype.spawn(source.getWorld(), stack, null, source.getBlockPos().offset(direction),
+						SpawnReason.DISPENSER, direction != Direction.UP, false);
+				stack.shrink(1);
+				return stack;
 			}
-		});
+		};
+		for (final SpawnEggItem egg : UNADDED_EGGS) {
+			EGGS.put(egg.getType(null), egg);
+			DispenserBlock.registerDispenseBehavior(egg, defaultDispenseItemBehavior);
+			// ItemColors for each spawn egg don't need to be registered because this method
+			// is called before ItemColors is created
+		}
+		UNADDED_EGGS.clear();
 	}
 
 	@Override
-	public EntityType<?> getType(CompoundNBT nbt) {
-		if (nbt != null && nbt.contains("EntityTag", 10)) {
-			CompoundNBT compoundnbt = nbt.getCompound("EntityTag");
-			if (compoundnbt.contains("id", 8)) {
-				return EntityType.byKey(compoundnbt.getString("id")).orElse(type.get());
-			}
-		}
-		return type.get();
+	public EntityType<?> getType(@Nullable final CompoundNBT p_208076_1_) {
+		return entityTypeSupplier.get();
 	}
+
 }

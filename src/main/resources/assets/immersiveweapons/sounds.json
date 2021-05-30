@@ -298,5 +298,15 @@
 				"stream": true
 			}
 		]
+	},
+	"field_medic_attack": {
+		"category": "entity",
+		"subtitle": "immersiveweapons.subtitle.entity.field_medic.attack",
+		"sounds": [
+			{
+				"name": "immersiveweapons:entity/field_medic/attack/attack",
+				"stream": false
+			}
+		]
 	}
 }
