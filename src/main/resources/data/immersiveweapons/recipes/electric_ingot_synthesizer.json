@@ -1,0 +1,16 @@
+{
+	"type": "immersiveweapons:tesla_synthesizer",
+	"block": {
+		"item": "minecraft:stone"
+	},
+	"material1": {
+		"item": "minecraft:lapis_lazuli"
+	},
+	"material2": {
+		"item": "immersiveweapons:conductive_alloy"
+	},
+	"result": {
+		"item": "immersiveweapons:electric_ingot"
+	},
+	"cookTime": 24000
+}

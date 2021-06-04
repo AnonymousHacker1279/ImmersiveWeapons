@@ -2,6 +2,7 @@ package com.anonymoushacker1279.immersiveweapons.client;
 
 import com.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import com.anonymoushacker1279.immersiveweapons.client.gui.screen.SmallPartsTableScreen;
+import com.anonymoushacker1279.immersiveweapons.client.gui.screen.TeslaSynthesizerScreen;
 import com.anonymoushacker1279.immersiveweapons.client.particle.SmokeBombParticleFactory;
 import com.anonymoushacker1279.immersiveweapons.client.renderer.ShelfRenderer;
 import com.anonymoushacker1279.immersiveweapons.client.renderer.entity.BulletRenderer.*;
@@ -49,6 +50,7 @@ public class ClientModEventSubscriber {
 
 		// Register GUI screens
 		ScreenManager.registerFactory(CustomContainerHolder.SMALL_PARTS_CONTAINER, SmallPartsTableScreen::new);
+		ScreenManager.registerFactory(CustomContainerHolder.TESLA_SYNTHESIZER_CONTAINER, TeslaSynthesizerScreen::new);
 
 		// Register projectile entity renderers
 		RenderingRegistry.registerEntityRenderingHandler(DeferredRegistryHandler.COPPER_ARROW_ENTITY.get(), CopperArrowRenderer::new);
@@ -94,6 +96,7 @@ public class ClientModEventSubscriber {
 		RenderTypeLookup.setRenderLayer(DeferredRegistryHandler.GREEN_STAINED_BULLETPROOF_GLASS.get(), RenderType.getTranslucent());
 		RenderTypeLookup.setRenderLayer(DeferredRegistryHandler.RED_STAINED_BULLETPROOF_GLASS.get(), RenderType.getTranslucent());
 		RenderTypeLookup.setRenderLayer(DeferredRegistryHandler.CORRUGATED_IRON_PANEL_BARS.get(), RenderType.getCutout());
+		RenderTypeLookup.setRenderLayer(DeferredRegistryHandler.TESLA_SYNTHESIZER.get(), RenderType.getTranslucent());
 
 		ClientRegistry.bindTileEntityRenderer(TileEntityHolder.WALL_SHELF_TILE_ENTITY, ShelfRenderer::new);
 

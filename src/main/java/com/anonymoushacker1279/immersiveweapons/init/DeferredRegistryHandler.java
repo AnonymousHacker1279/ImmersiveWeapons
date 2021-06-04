@@ -6,6 +6,7 @@ import com.anonymoushacker1279.immersiveweapons.block.CorrugatedBlock.Corrugated
 import com.anonymoushacker1279.immersiveweapons.client.particle.SmokeBombParticleData;
 import com.anonymoushacker1279.immersiveweapons.client.particle.SmokeBombParticleType;
 import com.anonymoushacker1279.immersiveweapons.container.SmallPartsContainer;
+import com.anonymoushacker1279.immersiveweapons.container.TeslaSynthesizerContainer;
 import com.anonymoushacker1279.immersiveweapons.entity.monster.DyingSoldierEntity;
 import com.anonymoushacker1279.immersiveweapons.entity.passive.FieldMedicEntity;
 import com.anonymoushacker1279.immersiveweapons.entity.passive.MinutemanEntity;
@@ -23,7 +24,8 @@ import com.anonymoushacker1279.immersiveweapons.item.CustomContainerItem.Bluepri
 import com.anonymoushacker1279.immersiveweapons.item.MoltenItem.*;
 import com.anonymoushacker1279.immersiveweapons.item.PikeItem.*;
 import com.anonymoushacker1279.immersiveweapons.item.TeslaItem.*;
-import com.anonymoushacker1279.immersiveweapons.item.crafting.SmallPartsRecipe.Serializer;
+import com.anonymoushacker1279.immersiveweapons.item.crafting.SmallPartsRecipe;
+import com.anonymoushacker1279.immersiveweapons.item.crafting.TeslaSynthesizerRecipe;
 import com.anonymoushacker1279.immersiveweapons.potion.MorphineEffect;
 import com.anonymoushacker1279.immersiveweapons.tileentity.*;
 import com.anonymoushacker1279.immersiveweapons.util.*;
@@ -262,6 +264,7 @@ public class DeferredRegistryHandler {
 	public static final RegistryObject<Block> BIOHAZARD_BOX = BLOCKS.register("biohazard_box", () -> new BiohazardBoxBlock(Block.Properties.create(Material.MISCELLANEOUS).hardnessAndResistance(0.5f, 0.5f).sound(SoundType.LANTERN).notSolid()));
 	public static final RegistryObject<Block> MINUTEMAN_STATUE = BLOCKS.register("minuteman_statue", () -> new MinutemanStatueBlock(Block.Properties.create(Material.ROCK).hardnessAndResistance(5.0f, 5.0f).sound(SoundType.STONE).notSolid()));
 	public static final RegistryObject<Block> MEDIC_STATUE = BLOCKS.register("medic_statue", () -> new MedicStatueBlock(Block.Properties.create(Material.ROCK).hardnessAndResistance(5.0f, 5.0f).sound(SoundType.STONE).notSolid()));
+	public static final RegistryObject<Block> TESLA_SYNTHESIZER = BLOCKS.register("tesla_synthesizer", () -> new TeslaSynthesizerBlock(Block.Properties.create(Material.IRON).hardnessAndResistance(10.0f, 10.0f).sound(SoundType.METAL).harvestLevel(3).harvestTool(ToolType.PICKAXE).notSolid()));
 
 	// Block Items
 	public static final RegistryObject<BlockItem> MOLTEN_ORE_ITEM = ITEMS.register("molten_ore", () -> new BlockItem(MOLTEN_ORE.get(), new Properties().group(ITEM_GROUP).isImmuneToFire()));
@@ -307,6 +310,7 @@ public class DeferredRegistryHandler {
 	public static final RegistryObject<BlockItem> BIOHAZARD_BOX_ITEM = ITEMS.register("biohazard_box", () -> new BlockItem(BIOHAZARD_BOX.get(), new Properties().group(ITEM_GROUP)));
 	public static final RegistryObject<BlockItem> MINUTEMAN_STATUE_ITEM = ITEMS.register("minuteman_statue", () -> new BlockItem(MINUTEMAN_STATUE.get(), new Properties().group(ITEM_GROUP)));
 	public static final RegistryObject<BlockItem> MEDIC_STATUE_ITEM = ITEMS.register("medic_statue", () -> new BlockItem(MEDIC_STATUE.get(), new Properties().group(ITEM_GROUP)));
+	public static final RegistryObject<BlockItem> TESLA_SYNTHESIZER_ITEM = ITEMS.register("tesla_synthesizer", () -> new BlockItem(TESLA_SYNTHESIZER.get(), new Properties().group(ITEM_GROUP)));
 
 	// Entities
 	public static final RegistryObject<EntityType<WoodArrowEntity>> WOOD_ARROW_ENTITY = ENTITY_TYPES.register("wood_arrow", () -> EntityType.Builder.<WoodArrowEntity> create(WoodArrowEntity::new, EntityClassification.MISC).size(0.5f, 0.5f).build(new ResourceLocation(ImmersiveWeapons.MOD_ID, "wood_arrow").toString()));
@@ -361,12 +365,12 @@ public class DeferredRegistryHandler {
 	public static final RegistryObject<SoundEvent> FIELD_MEDIC_ATTACK = SOUND_EVENTS.register("field_medic_attack", () -> new SoundEvent(new ResourceLocation(ImmersiveWeapons.MOD_ID, "field_medic_attack")));
 
 	// Containers
-	public static final RegistryObject<ContainerType<SmallPartsContainer>> SMALL_PARTS_TABLE_CONTAINER = CONTAINER_TYPES.register("small_parts_table", () -> IForgeContainerType.create((id, inv, data) -> {
-		return new SmallPartsContainer(id, inv);
-	}));
+	public static final RegistryObject<ContainerType<SmallPartsContainer>> SMALL_PARTS_TABLE_CONTAINER = CONTAINER_TYPES.register("small_parts_table", () -> IForgeContainerType.create((id, inv, data) -> new SmallPartsContainer(id, inv)));
+	public static final RegistryObject<ContainerType<TeslaSynthesizerContainer>> TESLA_SYNTHESIZER_CONTAINER = CONTAINER_TYPES.register("tesla_synthesizer", () -> IForgeContainerType.create((id, inv, data) -> new TeslaSynthesizerContainer(id, inv)));
 
 	// Recipes
-	public static final RegistryObject<IRecipeSerializer<?>> SMALL_PARTS_RECIPE_SERIALIZER = RECIPE_SERIALIZER.register("small_parts", Serializer::new);
+	public static final RegistryObject<IRecipeSerializer<?>> SMALL_PARTS_RECIPE_SERIALIZER = RECIPE_SERIALIZER.register("small_parts", SmallPartsRecipe.Serializer::new);
+	public static final RegistryObject<IRecipeSerializer<?>> TESLA_SYNTHEZISER_RECIPE_SERIALIZER = RECIPE_SERIALIZER.register("tesla_synthesizer", TeslaSynthesizerRecipe.Serializer::new);
 
 	// Loot Table Modifiers
 	public static final RegistryObject<LootTableHandler.LogShardsLootModifierHandler.Serializer> WOOD_LOGS_MODIFIER = GLOBAL_LOOT_MODIFIER_SERIALIZER.register("log_shards", LootTableHandler.LogShardsLootModifierHandler.Serializer::new);
@@ -380,6 +384,7 @@ public class DeferredRegistryHandler {
 	public static final RegistryObject<TileEntityType<?>> PANIC_ALARM_TILE_ENTITY = TILE_ENTITIES.register("panic_alarm", () -> new TileEntityType<>(PanicAlarmTileEntity::new, Sets.newHashSet(PANIC_ALARM.get()), null));
 	public static final RegistryObject<TileEntityType<?>> MINUTEMAN_STATUE_TILE_ENTITY = TILE_ENTITIES.register("minuteman_statue", () -> new TileEntityType<>(MinutemanStatueTileEntity::new, Sets.newHashSet(MINUTEMAN_STATUE.get()), null));
 	public static final RegistryObject<TileEntityType<?>> MEDIC_STATUE_TILE_ENTITY = TILE_ENTITIES.register("medic_statue", () -> new TileEntityType<>(MedicStatueTileEntity::new, Sets.newHashSet(MEDIC_STATUE.get()), null));
+	public static final RegistryObject<TileEntityType<?>> TESLA_SYNTHESIZER_TILE_ENTITY = TILE_ENTITIES.register("tesla_synthesizer", () -> new TileEntityType<>(TeslaSynthesizerTileEntity::new, Sets.newHashSet(TESLA_SYNTHESIZER.get()), null));
 
 	// Biomes
 	public static final RegistryObject<Biome> BATTLEFIELD = BIOMES.register("battlefield", () -> GeneralUtilities.makeBattlefieldBiome(

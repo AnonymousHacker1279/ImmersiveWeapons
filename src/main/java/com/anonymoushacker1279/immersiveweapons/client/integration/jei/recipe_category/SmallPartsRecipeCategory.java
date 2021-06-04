@@ -1,4 +1,4 @@
-package com.anonymoushacker1279.immersiveweapons.client.integration.jei.small_parts;
+package com.anonymoushacker1279.immersiveweapons.client.integration.jei.recipe_category;
 
 import com.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import com.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;

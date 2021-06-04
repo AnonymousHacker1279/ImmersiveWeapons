@@ -29,7 +29,7 @@ public class BattlefieldCamp extends Structure<NoFeatureConfig> {
 
 	@Override
 	public GenerationStage.Decoration getDecorationStage() {
-		return Decoration.TOP_LAYER_MODIFICATION;
+		return Decoration.SURFACE_STRUCTURES;
 	}
 
 

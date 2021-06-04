@@ -1,0 +1,27 @@
+{
+	"display": {
+		"title": {
+			"translate": "advancements.immersiveweapons.root.title",
+			"color": "dark_red"
+		},
+		"description": {
+			"translate": "advancements.immersiveweapons.root.description"
+		},
+		"icon": {
+			"item": "immersiveweapons:tesla_sword"
+		},
+		"frame": "task",
+		"show_toast": true,
+		"announce_to_chat": true,
+		"hidden": false,
+		"background": "immersiveweapons:textures/block/molten_ore.png"
+	},
+	"criteria": {
+		"exist": {
+			"trigger": "minecraft:location",
+			"conditions": {
+				"dimension": "overworld"
+			}
+		}
+	}
+}

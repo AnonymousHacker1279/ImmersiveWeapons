@@ -1,0 +1,10 @@
+{
+	"replace": false,
+	"values": [
+		"immersiveweapons:punji_sticks",
+		"immersiveweapons:bear_trap",
+		"immersiveweapons:landmine",
+		"immersiveweapons:spike_trap",
+		"immersiveweapons:pitfall"
+	]
+}

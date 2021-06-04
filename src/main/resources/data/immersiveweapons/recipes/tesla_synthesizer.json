@@ -1,0 +1,32 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"pattern": [
+		"zzz",
+		"wxy",
+		"uvu"
+	],
+	"key": {
+		"u": {
+			"item": "minecraft:netherite_block"
+		},
+		"v": {
+			"item": "immersiveweapons:molten_block"
+		},
+		"w": {
+			"tag": "forge:ingots/copper"
+		},
+		"x": {
+			"tag": "forge:glass_panes"
+		},
+		"y": {
+			"tag": "forge:ingots/iron"
+		},
+		"z": {
+			"item": "immersiveweapons:tesla_ingot"
+		}
+	},
+	"result": {
+		"item": "immersiveweapons:tesla_synthesizer",
+		"count": 1
+	}
+}
