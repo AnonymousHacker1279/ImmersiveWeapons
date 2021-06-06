@@ -2,6 +2,7 @@ package com.anonymoushacker1279.immersiveweapons.entity.monster;
 
 import com.anonymoushacker1279.immersiveweapons.entity.ai.goal.OpenFenceGateGoal;
 import com.anonymoushacker1279.immersiveweapons.entity.ai.goal.RangedGunAttackGoal;
+import com.anonymoushacker1279.immersiveweapons.entity.passive.AbstractFieldMedicEntity;
 import com.anonymoushacker1279.immersiveweapons.entity.passive.AbstractMinutemanEntity;
 import com.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
 import com.anonymoushacker1279.immersiveweapons.item.CustomArrowItem;
@@ -83,6 +84,7 @@ public abstract class AbstractDyingSoldierEntity extends MonsterEntity implement
 		this.targetSelector.addGoal(4, new HurtByTargetGoal(this));
 		this.targetSelector.addGoal(6, new NearestAttackableTargetGoal<>(this, AbstractVillagerEntity.class, true));
 		this.targetSelector.addGoal(12, new NearestAttackableTargetGoal<>(this, AbstractMinutemanEntity.class, false));
+		this.targetSelector.addGoal(13, new NearestAttackableTargetGoal<>(this, AbstractFieldMedicEntity.class, true));
 		this.targetSelector.addGoal(6, new NearestAttackableTargetGoal<>(this, PlayerEntity.class, false));
 		this.targetSelector.addGoal(5, new NearestAttackableTargetGoal<>(this, IronGolemEntity.class, true));
 	}

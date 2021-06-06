@@ -29,7 +29,7 @@ public class BattlefieldCamp extends Structure<NoFeatureConfig> {
 
 	@Override
 	public GenerationStage.Decoration getDecorationStage() {
-		return Decoration.TOP_LAYER_MODIFICATION;
+		return Decoration.SURFACE_STRUCTURES;
 	}
 
 
@@ -49,7 +49,7 @@ public class BattlefieldCamp extends Structure<NoFeatureConfig> {
 
 			// Finds the y value of the terrain at location.
 			int surfaceY = generator.getHeight(x, z, Heightmap.Type.WORLD_SURFACE_WG);
-			BlockPos blockpos = new BlockPos(x, surfaceY - 1, z);
+			BlockPos blockpos = new BlockPos(x, surfaceY - 3, z);
 
 			BattlefieldCampPieces.start(templateManagerIn, blockpos, rotation, this.components, this.rand);
 

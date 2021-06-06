@@ -6,26 +6,28 @@ import com.anonymoushacker1279.immersiveweapons.block.CorrugatedBlock.Corrugated
 import com.anonymoushacker1279.immersiveweapons.client.particle.SmokeBombParticleData;
 import com.anonymoushacker1279.immersiveweapons.client.particle.SmokeBombParticleType;
 import com.anonymoushacker1279.immersiveweapons.container.SmallPartsContainer;
+import com.anonymoushacker1279.immersiveweapons.container.TeslaSynthesizerContainer;
 import com.anonymoushacker1279.immersiveweapons.entity.monster.DyingSoldierEntity;
+import com.anonymoushacker1279.immersiveweapons.entity.passive.FieldMedicEntity;
 import com.anonymoushacker1279.immersiveweapons.entity.passive.MinutemanEntity;
 import com.anonymoushacker1279.immersiveweapons.entity.projectile.BulletEntity.*;
 import com.anonymoushacker1279.immersiveweapons.entity.projectile.CustomArrowEntity.*;
 import com.anonymoushacker1279.immersiveweapons.entity.projectile.MolotovEntity;
 import com.anonymoushacker1279.immersiveweapons.entity.projectile.SmokeBombEntity;
+import com.anonymoushacker1279.immersiveweapons.item.*;
 import com.anonymoushacker1279.immersiveweapons.item.BottleItem.AlcoholBottleItem;
 import com.anonymoushacker1279.immersiveweapons.item.BottleItem.WineBottleItem;
 import com.anonymoushacker1279.immersiveweapons.item.Bullets.*;
-import com.anonymoushacker1279.immersiveweapons.item.*;
 import com.anonymoushacker1279.immersiveweapons.item.CustomArrows.*;
 import com.anonymoushacker1279.immersiveweapons.item.CustomContainerItem.BasicContainerItem;
 import com.anonymoushacker1279.immersiveweapons.item.CustomContainerItem.BlueprintItem;
 import com.anonymoushacker1279.immersiveweapons.item.MoltenItem.*;
 import com.anonymoushacker1279.immersiveweapons.item.PikeItem.*;
 import com.anonymoushacker1279.immersiveweapons.item.TeslaItem.*;
-import com.anonymoushacker1279.immersiveweapons.item.crafting.SmallPartsRecipe.Serializer;
-import com.anonymoushacker1279.immersiveweapons.tileentity.BearTrapTileEntity;
-import com.anonymoushacker1279.immersiveweapons.tileentity.PanicAlarmTileEntity;
-import com.anonymoushacker1279.immersiveweapons.tileentity.WallShelfTileEntity;
+import com.anonymoushacker1279.immersiveweapons.item.crafting.SmallPartsRecipe;
+import com.anonymoushacker1279.immersiveweapons.item.crafting.TeslaSynthesizerRecipe;
+import com.anonymoushacker1279.immersiveweapons.potion.MorphineEffect;
+import com.anonymoushacker1279.immersiveweapons.tileentity.*;
 import com.anonymoushacker1279.immersiveweapons.util.*;
 import com.anonymoushacker1279.immersiveweapons.world.gen.carver.TrenchWorldCarver;
 import com.google.common.collect.Sets;
@@ -39,9 +41,12 @@ import net.minecraft.item.*;
 import net.minecraft.item.Item.Properties;
 import net.minecraft.item.crafting.IRecipeSerializer;
 import net.minecraft.particles.ParticleType;
+import net.minecraft.potion.Effect;
+import net.minecraft.potion.EffectType;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
+import net.minecraft.village.PointOfInterestType;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.gen.carver.WorldCarver;
 import net.minecraft.world.gen.feature.ProbabilityConfig;
@@ -78,6 +83,10 @@ public class DeferredRegistryHandler {
 	public static final DeferredRegister<Biome> BIOMES = DeferredRegister.create(ForgeRegistries.BIOMES, ImmersiveWeapons.MOD_ID);
 	// World Carver Register
 	public static final DeferredRegister<WorldCarver<?>> WORLD_CARVERS = DeferredRegister.create(ForgeRegistries.WORLD_CARVERS, ImmersiveWeapons.MOD_ID);
+	// Effect Register
+	public static final DeferredRegister<Effect> EFFECTS = DeferredRegister.create(ForgeRegistries.POTIONS, ImmersiveWeapons.MOD_ID);
+	// POI Register
+	public static final DeferredRegister<PointOfInterestType> POINTS_OF_INTEREST = DeferredRegister.create(ForgeRegistries.POI_TYPES, ImmersiveWeapons.MOD_ID);
 
 	public static void init() {
 		IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
@@ -92,6 +101,8 @@ public class DeferredRegistryHandler {
 		TILE_ENTITIES.register(modEventBus);
 		BIOMES.register(modEventBus);
 		WORLD_CARVERS.register(modEventBus);
+		EFFECTS.register(modEventBus);
+		POINTS_OF_INTEREST.register(modEventBus);
 	}
 
 	public static final ItemGroup ITEM_GROUP = new CreativeTabSorter("ImmersiveWeaponsTab");
@@ -112,6 +123,11 @@ public class DeferredRegistryHandler {
 	public static final RegistryObject<Item> TESLA_AXE = ITEMS.register("tesla_axe", () -> new TeslaAxe(CustomItemMaterials.TESLA, 7, -3.0f));
 	public static final RegistryObject<Item> TESLA_SHOVEL = ITEMS.register("tesla_shovel", () -> new TeslaShovel(CustomItemMaterials.TESLA, 0, -3.0f));
 	public static final RegistryObject<Item> TESLA_HOE = ITEMS.register("tesla_hoe", () -> new TeslaHoe(CustomItemMaterials.TESLA, -3, 1.0f));
+	public static final RegistryObject<Item> COBALT_SWORD = ITEMS.register("cobalt_sword", () -> new SwordItem(CustomItemMaterials.COBALT, 2, -2.4f, new Properties().group(ITEM_GROUP)));
+	public static final RegistryObject<Item> COBALT_PICKAXE = ITEMS.register("cobalt_pickaxe", () -> new PickaxeItem(CustomItemMaterials.COBALT, 1, -2.3F, new Properties().group(ITEM_GROUP)));
+	public static final RegistryObject<Item> COBALT_AXE = ITEMS.register("cobalt_axe", () -> new AxeItem(CustomItemMaterials.COBALT, 3, -3.0f, new Properties().group(ITEM_GROUP)));
+	public static final RegistryObject<Item> COBALT_SHOVEL = ITEMS.register("cobalt_shovel", () -> new ShovelItem(CustomItemMaterials.COBALT, -1, -2.7f, new Properties().group(ITEM_GROUP)));
+	public static final RegistryObject<Item> COBALT_HOE = ITEMS.register("cobalt_hoe", () -> new HoeItem(CustomItemMaterials.COBALT, -3, 1.0f, new Properties().group(ITEM_GROUP)));
 	public static final RegistryObject<Item> WOOD_PIKE = ITEMS.register("wood_pike", () -> new WoodPikeItem((new Properties()).maxDamage(59).group(ITEM_GROUP), 4.0d, -2.6d));
 	public static final RegistryObject<Item> STONE_PIKE = ITEMS.register("stone_pike", () -> new StonePikeItem((new Properties()).maxDamage(131).group(ITEM_GROUP), 5.0d, -2.6d));
 	public static final RegistryObject<Item> GOLD_PIKE = ITEMS.register("gold_pike", () -> new GoldPikeItem((new Properties()).maxDamage(32).group(ITEM_GROUP), 4.0d, -2.6d));
@@ -121,7 +137,6 @@ public class DeferredRegistryHandler {
 	public static final RegistryObject<Item> NETHERITE_PIKE = ITEMS.register("netherite_pike", () -> new NetheritePikeItem((new Properties()).maxDamage(2031).group(ITEM_GROUP).isImmuneToFire(), 8.0d, -2.6d));
 	public static final RegistryObject<Item> FLINTLOCK_PISTOL = ITEMS.register("flintlock_pistol", () -> new SimplePistolItem(new Properties().group(ITEM_GROUP).maxDamage(499)));
 	public static final RegistryObject<Item> BLUNDERBUSS = ITEMS.register("blunderbuss", () -> new SimpleShotgunItem(new Properties().group(ITEM_GROUP).maxDamage(449)));
-
 
 	// Items
 	public static final RegistryObject<Item> STONE_SHARD = ITEMS.register("stone_shard", () -> new Item(new Properties().group(ITEM_GROUP)));
@@ -139,6 +154,7 @@ public class DeferredRegistryHandler {
 	public static final RegistryObject<Item> CONDUCTIVE_ALLOY = ITEMS.register("conductive_alloy", () -> new Item(new Properties().group(ITEM_GROUP)));
 	public static final RegistryObject<Item> ELECTRIC_INGOT = ITEMS.register("electric_ingot", () -> new Item(new Properties().group(ITEM_GROUP)));
 	public static final RegistryObject<Item> TESLA_INGOT = ITEMS.register("tesla_ingot", () -> new Item(new Properties().group(ITEM_GROUP)));
+	public static final RegistryObject<Item> COBALT_INGOT = ITEMS.register("cobalt_ingot", () -> new Item(new Properties().group(ITEM_GROUP)));
 	public static final RegistryObject<Item> WOOD_PIKE_HEAD = ITEMS.register("wood_pike_head", () -> new Item(new Properties().group(ITEM_GROUP)));
 	public static final RegistryObject<Item> STONE_PIKE_HEAD = ITEMS.register("stone_pike_head", () -> new Item(new Properties().group(ITEM_GROUP)));
 	public static final RegistryObject<Item> GOLD_PIKE_HEAD = ITEMS.register("gold_pike_head", () -> new Item(new Properties().group(ITEM_GROUP)));
@@ -159,7 +175,6 @@ public class DeferredRegistryHandler {
 	public static final RegistryObject<Item> SMOKE_BOMB_ARROW_PURPLE = ITEMS.register("smoke_bomb_arrow_purple", () -> new SmokeBombArrowItem(new Properties().group(ITEM_GROUP), 2.00d, "purple"));
 	public static final RegistryObject<Item> SMOKE_BOMB_ARROW_YELLOW = ITEMS.register("smoke_bomb_arrow_yellow", () -> new SmokeBombArrowItem(new Properties().group(ITEM_GROUP), 2.00d, "yellow"));
 	public static final RegistryObject<Item> WOOD_MUSKET_BALL = ITEMS.register("wood_musket_ball", () -> new WoodBulletItem(new Properties().group(ITEM_GROUP), 2.0d));
-	// public static final RegistryObject<Item> EMPTY_BULLET_CASING = ITEMS.register("empty_bullet_casing", () -> new Item(new Properties().group(ITEM_GROUP)));	// Disabled for now: Was going to be used previously but I don't have any use for it yet
 	public static final RegistryObject<Item> STONE_MUSKET_BALL = ITEMS.register("stone_musket_ball", () -> new StoneBulletItem(new Properties().group(ITEM_GROUP), 2.20d));
 	public static final RegistryObject<Item> GOLD_MUSKET_BALL = ITEMS.register("gold_musket_ball", () -> new GoldBulletItem(new Properties().group(ITEM_GROUP), 2.30d));
 	public static final RegistryObject<Item> COPPER_MUSKET_BALL = ITEMS.register("copper_musket_ball", () -> new CopperBulletItem(new Properties().group(ITEM_GROUP), 2.40d));
@@ -185,14 +200,21 @@ public class DeferredRegistryHandler {
 	public static final RegistryObject<Item> BOTTLE_OF_ALCOHOL = ITEMS.register("bottle_of_alcohol", () -> new AlcoholBottleItem(new Properties().group(ITEM_GROUP).maxStackSize(16)));
 	public static final RegistryObject<Item> BOTTLE_OF_WINE = ITEMS.register("bottle_of_wine", () -> new WineBottleItem(new Properties().group(ITEM_GROUP).maxStackSize(16)));
 	public static final RegistryObject<Item> PLIERS = ITEMS.register("pliers", () -> new Item(new Properties().group(ITEM_GROUP).maxStackSize(1)));
-	public static final RegistryObject<Item> CHOCOLATE_BAR = ITEMS.register("chocolate_bar", () -> new Item(new Properties().group(ITEM_GROUP).maxStackSize(16).food(CustomFoods.CHOCOLATE_BAR)));
-	public static final RegistryObject<Item> EXPLOSIVE_CHOCOLATE_BAR = ITEMS.register("explosive_chocolate_bar", () -> new ExplosiveChocolateBar(new Properties().group(ITEM_GROUP).maxStackSize(16).food(CustomFoods.CHOCOLATE_BAR)));
+	public static final RegistryObject<Item> CHOCOLATE_BAR = ITEMS.register("chocolate_bar", () -> new Item(new Properties().group(ITEM_GROUP).food(CustomFoods.CHOCOLATE_BAR)));
+	public static final RegistryObject<Item> EXPLOSIVE_CHOCOLATE_BAR = ITEMS.register("explosive_chocolate_bar", () -> new ExplosiveChocolateBar(new Properties().group(ITEM_GROUP).food(CustomFoods.CHOCOLATE_BAR)));
+	public static final RegistryObject<Item> BANDAGE = ITEMS.register("bandage", () -> new BandageItem(new Properties().group(ITEM_GROUP).maxStackSize(16)));
+	public static final RegistryObject<Item> MRE = ITEMS.register("mre", () -> new Item(new Properties().group(ITEM_GROUP).food(CustomFoods.MRE)));
+	public static final RegistryObject<Item> PAINKILLERS = ITEMS.register("painkillers", () -> new PainkillerItem(new Properties().group(ITEM_GROUP).maxStackSize(24)));
+	public static final RegistryObject<Item> SYRINGE = ITEMS.register("syringe", () -> new Item(new Properties().group(ITEM_GROUP).maxStackSize(16)));
+	public static final RegistryObject<Item> MORPHINE = ITEMS.register("morphine", () -> new MorphineItem(new Properties().group(ITEM_GROUP).maxStackSize(16)));
+	public static final RegistryObject<Item> USED_SYRINGE = ITEMS.register("used_syringe", () -> new UsedSyringeItem(new Properties().group(ITEM_GROUP).maxStackSize(16)));
+	public static final RegistryObject<Item> FIRST_AID_KIT = ITEMS.register("first_aid_kit", () -> new FirstAidKitItem(new Properties().group(ITEM_GROUP).maxStackSize(8)));
 
 	// Armor
+	public static final RegistryObject<Item> MOLTEN_HELMET = ITEMS.register("molten_helmet", () -> new MoltenArmorItem(CustomArmorMaterials.MOLTEN, EquipmentSlotType.HEAD, 1));
 	public static final RegistryObject<Item> MOLTEN_CHESTPLATE = ITEMS.register("molten_chestplate", () -> new MoltenArmorItem(CustomArmorMaterials.MOLTEN, EquipmentSlotType.CHEST, 1));
 	public static final RegistryObject<Item> MOLTEN_LEGGINGS = ITEMS.register("molten_leggings", () -> new MoltenArmorItem(CustomArmorMaterials.MOLTEN, EquipmentSlotType.LEGS, 2));
 	public static final RegistryObject<Item> MOLTEN_BOOTS = ITEMS.register("molten_boots", () -> new MoltenArmorItem(CustomArmorMaterials.MOLTEN, EquipmentSlotType.FEET, 1));
-	public static final RegistryObject<Item> MOLTEN_HELMET = ITEMS.register("molten_helmet", () -> new MoltenArmorItem(CustomArmorMaterials.MOLTEN, EquipmentSlotType.HEAD, 1));
 	public static final RegistryObject<Item> COPPER_HELMET = ITEMS.register("copper_helmet", () -> new CopperArmorItem(CustomArmorMaterials.COPPER, EquipmentSlotType.HEAD, 1));
 	public static final RegistryObject<Item> COPPER_CHESTPLATE = ITEMS.register("copper_chestplate", () -> new CopperArmorItem(CustomArmorMaterials.COPPER, EquipmentSlotType.CHEST, 1));
 	public static final RegistryObject<Item> COPPER_LEGGINGS = ITEMS.register("copper_leggings", () -> new CopperArmorItem(CustomArmorMaterials.COPPER, EquipmentSlotType.LEGS, 2));
@@ -201,6 +223,10 @@ public class DeferredRegistryHandler {
 	public static final RegistryObject<Item> TESLA_CHESTPLATE = ITEMS.register("tesla_chestplate", () -> new TeslaArmorItem(CustomArmorMaterials.TESLA, EquipmentSlotType.CHEST, 1));
 	public static final RegistryObject<Item> TESLA_LEGGINGS = ITEMS.register("tesla_leggings", () -> new TeslaArmorItem(CustomArmorMaterials.TESLA, EquipmentSlotType.LEGS, 2));
 	public static final RegistryObject<Item> TESLA_BOOTS = ITEMS.register("tesla_boots", () -> new TeslaArmorItem(CustomArmorMaterials.TESLA, EquipmentSlotType.FEET, 1));
+	public static final RegistryObject<Item> COBALT_HELMET = ITEMS.register("cobalt_helmet", () -> new CobaltArmorItem(CustomArmorMaterials.COBALT, EquipmentSlotType.HEAD, 1));
+	public static final RegistryObject<Item> COBALT_CHESTPLATE = ITEMS.register("cobalt_chestplate", () -> new CobaltArmorItem(CustomArmorMaterials.COBALT, EquipmentSlotType.CHEST, 1));
+	public static final RegistryObject<Item> COBALT_LEGGINGS = ITEMS.register("cobalt_leggings", () -> new CobaltArmorItem(CustomArmorMaterials.COBALT, EquipmentSlotType.LEGS, 2));
+	public static final RegistryObject<Item> COBALT_BOOTS = ITEMS.register("cobalt_boots", () -> new CobaltArmorItem(CustomArmorMaterials.COBALT, EquipmentSlotType.FEET, 1));
 
 	// Blocks
 	public static final RegistryObject<Block> COPPER_ORE = BLOCKS.register("copper_ore", () -> new OreBlock(Block.Properties.create(Material.ROCK).hardnessAndResistance(2.5f, 2.5f).sound(SoundType.STONE).setRequiresTool().harvestLevel(1).harvestTool(ToolType.PICKAXE)));
@@ -245,12 +271,18 @@ public class DeferredRegistryHandler {
 	public static final RegistryObject<Block> WOODEN_TABLE = BLOCKS.register("wooden_table", () -> new WoodenTableBlock(Block.Properties.create(Material.WOOD).hardnessAndResistance(3.0f, 3.0f).sound(SoundType.WOOD).notSolid()));
 	public static final RegistryObject<Block> BARBED_WIRE_FENCE = BLOCKS.register("barbed_wire_fence", () -> new BarbedWireFenceBlock(Block.Properties.create(Material.IRON).hardnessAndResistance(7.0f, 8.0f).sound(SoundType.METAL).harvestLevel(2).harvestTool(ToolType.PICKAXE).notSolid()));
 	public static final RegistryObject<Block> WOODEN_SPIKES = BLOCKS.register("wooden_spikes", () -> new WoodenSpikesBlock(Block.Properties.create(Material.WOOD).hardnessAndResistance(3.0f, 3.0f).sound(SoundType.WOOD).harvestLevel(1).harvestTool(ToolType.AXE).notSolid()));
+	public static final RegistryObject<Block> BIOHAZARD_BOX = BLOCKS.register("biohazard_box", () -> new BiohazardBoxBlock(Block.Properties.create(Material.MISCELLANEOUS).hardnessAndResistance(0.5f, 0.5f).sound(SoundType.LANTERN).notSolid()));
+	public static final RegistryObject<Block> MINUTEMAN_STATUE = BLOCKS.register("minuteman_statue", () -> new MinutemanStatueBlock(Block.Properties.create(Material.ROCK).hardnessAndResistance(5.0f, 5.0f).sound(SoundType.STONE).notSolid()));
+	public static final RegistryObject<Block> MEDIC_STATUE = BLOCKS.register("medic_statue", () -> new MedicStatueBlock(Block.Properties.create(Material.ROCK).hardnessAndResistance(5.0f, 5.0f).sound(SoundType.STONE).notSolid()));
+	public static final RegistryObject<Block> TESLA_SYNTHESIZER = BLOCKS.register("tesla_synthesizer", () -> new TeslaSynthesizerBlock(Block.Properties.create(Material.IRON).hardnessAndResistance(10.0f, 10.0f).sound(SoundType.METAL).harvestLevel(3).harvestTool(ToolType.PICKAXE).notSolid()));
+	public static final RegistryObject<Block> COBALT_ORE = BLOCKS.register("cobalt_ore", () -> new OreBlock(Block.Properties.create(Material.ROCK).hardnessAndResistance(4.0f, 4.0f).sound(SoundType.STONE).setRequiresTool().harvestLevel(2).harvestTool(ToolType.PICKAXE)));
 
 	// Block Items
 	public static final RegistryObject<BlockItem> MOLTEN_ORE_ITEM = ITEMS.register("molten_ore", () -> new BlockItem(MOLTEN_ORE.get(), new Properties().group(ITEM_GROUP).isImmuneToFire()));
-	public static final RegistryObject<BlockItem> MOLTEN_BLOCK_ITEM = ITEMS.register("molten_block", () -> new BlockItem(MOLTEN_BLOCK.get(), new Properties().group(ITEM_GROUP).isImmuneToFire()));
 	public static final RegistryObject<BlockItem> ELECTRIC_ORE_ITEM = ITEMS.register("electric_ore", () -> new BlockItem(ELECTRIC_ORE.get(), new Properties().group(ITEM_GROUP)));
 	public static final RegistryObject<BlockItem> COPPER_ORE_ITEM = ITEMS.register("copper_ore", () -> new BlockItem(COPPER_ORE.get(), new Properties().group(ITEM_GROUP)));
+	public static final RegistryObject<BlockItem> COBALT_ORE_ITEM = ITEMS.register("cobalt_ore", () -> new BlockItem(COBALT_ORE.get(), new Properties().group(ITEM_GROUP)));
+	public static final RegistryObject<BlockItem> MOLTEN_BLOCK_ITEM = ITEMS.register("molten_block", () -> new BlockItem(MOLTEN_BLOCK.get(), new Properties().group(ITEM_GROUP).isImmuneToFire()));
 	public static final RegistryObject<BlockItem> TESLA_BLOCK_ITEM = ITEMS.register("tesla_block", () -> new BlockItem(TESLA_BLOCK.get(), new Properties().group(ITEM_GROUP)));
 	public static final RegistryObject<BlockItem> SMALL_PARTS_TABLE_ITEM = ITEMS.register("small_parts_table", () -> new BlockItem(SMALL_PARTS_TABLE.get(), new Properties().group(ITEM_GROUP)));
 	public static final RegistryObject<BlockItem> BARREL_TAP_ITEM = ITEMS.register("barrel_tap", () -> new BlockItem(BARREL_TAP.get(), new Properties().group(ITEM_GROUP)));
@@ -287,6 +319,10 @@ public class DeferredRegistryHandler {
 	public static final RegistryObject<BlockItem> WOODEN_TABLE_ITEM = ITEMS.register("wooden_table", () -> new BlockItem(WOODEN_TABLE.get(), new Properties().group(ITEM_GROUP)));
 	public static final RegistryObject<BlockItem> BARBED_WIRE_FENCE_ITEM = ITEMS.register("barbed_wire_fence", () -> new BlockItem(BARBED_WIRE_FENCE.get(), new Properties().group(ITEM_GROUP)));
 	public static final RegistryObject<BlockItem> WOODEN_SPIKES_ITEM = ITEMS.register("wooden_spikes", () -> new BlockItem(WOODEN_SPIKES.get(), new Properties().group(ITEM_GROUP)));
+	public static final RegistryObject<BlockItem> BIOHAZARD_BOX_ITEM = ITEMS.register("biohazard_box", () -> new BlockItem(BIOHAZARD_BOX.get(), new Properties().group(ITEM_GROUP)));
+	public static final RegistryObject<BlockItem> MINUTEMAN_STATUE_ITEM = ITEMS.register("minuteman_statue", () -> new BlockItem(MINUTEMAN_STATUE.get(), new Properties().group(ITEM_GROUP)));
+	public static final RegistryObject<BlockItem> MEDIC_STATUE_ITEM = ITEMS.register("medic_statue", () -> new BlockItem(MEDIC_STATUE.get(), new Properties().group(ITEM_GROUP)));
+	public static final RegistryObject<BlockItem> TESLA_SYNTHESIZER_ITEM = ITEMS.register("tesla_synthesizer", () -> new BlockItem(TESLA_SYNTHESIZER.get(), new Properties().group(ITEM_GROUP)));
 
 	// Entities
 	public static final RegistryObject<EntityType<WoodArrowEntity>> WOOD_ARROW_ENTITY = ENTITY_TYPES.register("wood_arrow", () -> EntityType.Builder.<WoodArrowEntity> create(WoodArrowEntity::new, EntityClassification.MISC).size(0.5f, 0.5f).build(new ResourceLocation(ImmersiveWeapons.MOD_ID, "wood_arrow").toString()));
@@ -308,10 +344,12 @@ public class DeferredRegistryHandler {
 	public static final RegistryObject<EntityType<MolotovEntity>> MOLOTOV_COCKTAIL_ENTITY = ENTITY_TYPES.register("molotov_cocktail", () -> EntityType.Builder.<MolotovEntity> create(MolotovEntity::new, EntityClassification.MISC).size(0.25f, 0.25f).build(new ResourceLocation(ImmersiveWeapons.MOD_ID, "molotov_cocktail").toString()));
 	public static final RegistryObject<EntityType<DyingSoldierEntity>> DYING_SOLDIER_ENTITY = ENTITY_TYPES.register("dying_soldier", () -> EntityType.Builder.create(DyingSoldierEntity::new, EntityClassification.MONSTER).size(0.6F, 1.99F).trackingRange(8).build(new ResourceLocation(ImmersiveWeapons.MOD_ID, "dying_soldier").toString()));
 	public static final RegistryObject<EntityType<MinutemanEntity>> MINUTEMAN_ENTITY = ENTITY_TYPES.register("minuteman", () -> EntityType.Builder.create(MinutemanEntity::new, EntityClassification.CREATURE).size(0.6F, 1.99F).trackingRange(16).build(new ResourceLocation(ImmersiveWeapons.MOD_ID, "minuteman").toString()));
+	public static final RegistryObject<EntityType<FieldMedicEntity>> FIELD_MEDIC_ENTITY = ENTITY_TYPES.register("field_medic", () -> EntityType.Builder.create(FieldMedicEntity::new, EntityClassification.CREATURE).size(0.6F, 1.99F).trackingRange(16).build(new ResourceLocation(ImmersiveWeapons.MOD_ID, "field_medic").toString()));
 
 	// Spawn eggs
-	public static final RegistryObject<Item> DYING_SOLDIER_SPAWN_EGG = ITEMS.register("dying_soldier_spawn_egg", () -> new CustomSpawnEggItem(DeferredRegistryHandler.DYING_SOLDIER_ENTITY::get, 0x7a6851, 0x783d22, (new Item.Properties()).group(ITEM_GROUP)));
-	public static final RegistryObject<Item> MINUTEMAN_SPAWN_EGG = ITEMS.register("minuteman_spawn_egg", () -> new CustomSpawnEggItem(DeferredRegistryHandler.MINUTEMAN_ENTITY::get, 0x494522, 0x204b2a, (new Item.Properties()).group(ITEM_GROUP)));
+	public static final RegistryObject<Item> DYING_SOLDIER_SPAWN_EGG = ITEMS.register("dying_soldier_spawn_egg", () -> new CustomSpawnEggItem(DeferredRegistryHandler.DYING_SOLDIER_ENTITY, 0x7a6851, 0x783d22, (new Item.Properties()).group(ITEM_GROUP)));
+	public static final RegistryObject<Item> MINUTEMAN_SPAWN_EGG = ITEMS.register("minuteman_spawn_egg", () -> new CustomSpawnEggItem(DeferredRegistryHandler.MINUTEMAN_ENTITY, 0x494522, 0x204b2a, (new Item.Properties()).group(ITEM_GROUP)));
+	public static final RegistryObject<Item> FIELD_MEDIC_SPAWN_EGG = ITEMS.register("field_medic_spawn_egg", () -> new CustomSpawnEggItem(DeferredRegistryHandler.FIELD_MEDIC_ENTITY, 0xde5451, 0xebe4d2, (new Item.Properties()).group(ITEM_GROUP)));
 
 	// Sounds
 	public static final RegistryObject<SoundEvent> TESLA_ARMOR_EFFECT = SOUND_EVENTS.register("tesla_armor_effect", () -> new SoundEvent(new ResourceLocation(ImmersiveWeapons.MOD_ID, "tesla_armor_effect")));
@@ -336,14 +374,15 @@ public class DeferredRegistryHandler {
 	public static final RegistryObject<SoundEvent> DYING_SOLDIER_DEATH = SOUND_EVENTS.register("dying_soldier_death", () -> new SoundEvent(new ResourceLocation(ImmersiveWeapons.MOD_ID, "dying_soldier_death")));
 	public static final RegistryObject<SoundEvent> DYING_SOLDIER_HURT = SOUND_EVENTS.register("dying_soldier_hurt", () -> new SoundEvent(new ResourceLocation(ImmersiveWeapons.MOD_ID, "dying_soldier_hurt")));
 	public static final RegistryObject<SoundEvent> BATTLEFIELD_AMBIENT = SOUND_EVENTS.register("battlefield_ambient", () -> new SoundEvent(new ResourceLocation(ImmersiveWeapons.MOD_ID, "battlefield_ambient")));
+	public static final RegistryObject<SoundEvent> FIELD_MEDIC_ATTACK = SOUND_EVENTS.register("field_medic_attack", () -> new SoundEvent(new ResourceLocation(ImmersiveWeapons.MOD_ID, "field_medic_attack")));
 
 	// Containers
-	public static final RegistryObject<ContainerType<SmallPartsContainer>> SMALL_PARTS_TABLE_CONTAINER = CONTAINER_TYPES.register("small_parts_table", () -> IForgeContainerType.create((id, inv, data) -> {
-		return new SmallPartsContainer(id, inv);
-	}));
+	public static final RegistryObject<ContainerType<SmallPartsContainer>> SMALL_PARTS_TABLE_CONTAINER = CONTAINER_TYPES.register("small_parts_table", () -> IForgeContainerType.create((id, inv, data) -> new SmallPartsContainer(id, inv)));
+	public static final RegistryObject<ContainerType<TeslaSynthesizerContainer>> TESLA_SYNTHESIZER_CONTAINER = CONTAINER_TYPES.register("tesla_synthesizer", () -> IForgeContainerType.create((id, inv, data) -> new TeslaSynthesizerContainer(id, inv)));
 
 	// Recipes
-	public static final RegistryObject<IRecipeSerializer<?>> SMALL_PARTS_RECIPE_SERIALIZER = RECIPE_SERIALIZER.register("small_parts", Serializer::new);
+	public static final RegistryObject<IRecipeSerializer<?>> SMALL_PARTS_RECIPE_SERIALIZER = RECIPE_SERIALIZER.register("small_parts", SmallPartsRecipe.Serializer::new);
+	public static final RegistryObject<IRecipeSerializer<?>> TESLA_SYNTHEZISER_RECIPE_SERIALIZER = RECIPE_SERIALIZER.register("tesla_synthesizer", TeslaSynthesizerRecipe.Serializer::new);
 
 	// Loot Table Modifiers
 	public static final RegistryObject<LootTableHandler.LogShardsLootModifierHandler.Serializer> WOOD_LOGS_MODIFIER = GLOBAL_LOOT_MODIFIER_SERIALIZER.register("log_shards", LootTableHandler.LogShardsLootModifierHandler.Serializer::new);
@@ -355,6 +394,9 @@ public class DeferredRegistryHandler {
 	public static final RegistryObject<TileEntityType<?>> BEAR_TRAP_TILE_ENTITY = TILE_ENTITIES.register("bear_trap", () -> new TileEntityType<>(BearTrapTileEntity::new, Sets.newHashSet(BEAR_TRAP.get()), null));
 	public static final RegistryObject<TileEntityType<?>> WALL_SHELF_TILE_ENTITY = TILE_ENTITIES.register("wall_shelf", () -> new TileEntityType<>(WallShelfTileEntity::new, Sets.newHashSet(WALL_SHELF.get()), null));
 	public static final RegistryObject<TileEntityType<?>> PANIC_ALARM_TILE_ENTITY = TILE_ENTITIES.register("panic_alarm", () -> new TileEntityType<>(PanicAlarmTileEntity::new, Sets.newHashSet(PANIC_ALARM.get()), null));
+	public static final RegistryObject<TileEntityType<?>> MINUTEMAN_STATUE_TILE_ENTITY = TILE_ENTITIES.register("minuteman_statue", () -> new TileEntityType<>(MinutemanStatueTileEntity::new, Sets.newHashSet(MINUTEMAN_STATUE.get()), null));
+	public static final RegistryObject<TileEntityType<?>> MEDIC_STATUE_TILE_ENTITY = TILE_ENTITIES.register("medic_statue", () -> new TileEntityType<>(MedicStatueTileEntity::new, Sets.newHashSet(MEDIC_STATUE.get()), null));
+	public static final RegistryObject<TileEntityType<?>> TESLA_SYNTHESIZER_TILE_ENTITY = TILE_ENTITIES.register("tesla_synthesizer", () -> new TileEntityType<>(TeslaSynthesizerTileEntity::new, Sets.newHashSet(TESLA_SYNTHESIZER.get()), null));
 
 	// Biomes
 	public static final RegistryObject<Biome> BATTLEFIELD = BIOMES.register("battlefield", () -> GeneralUtilities.makeBattlefieldBiome(
@@ -364,4 +406,10 @@ public class DeferredRegistryHandler {
 
 	// World Carvers
 	public static final RegistryObject<WorldCarver<?>> TRENCH_WORLD_CARVER = WORLD_CARVERS.register("trench", () -> new TrenchWorldCarver(ProbabilityConfig.CODEC, 256));
+
+	// Effects
+	public static final RegistryObject<Effect> MORPHINE_EFFECT = EFFECTS.register("morphine", () -> new MorphineEffect(EffectType.NEUTRAL, 3484189));
+
+	// Points of Interest
+	public static final RegistryObject<PointOfInterestType> FIELD_MEDIC_POI = POINTS_OF_INTEREST.register("field_medic_poi", () -> new PointOfInterestType("field_medic_poi", PointOfInterestType.getAllStates(BIOHAZARD_BOX.get()), 1, 64));
 }

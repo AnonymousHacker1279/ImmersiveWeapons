@@ -55,7 +55,6 @@ public class GeneralUtilities {
 				.withFeature(Decoration.VEGETAL_DECORATION, Features.PATCH_GRASS_PLAIN);
 
 		if (hasVillageAndOutpost) {
-			biomeGenerationSettingBuilder.withStructure(StructureFeatures.VILLAGE_PLAINS);
 			biomeGenerationSettingBuilder.withStructure(StructureFeatures.PILLAGER_OUTPOST);
 		}
 

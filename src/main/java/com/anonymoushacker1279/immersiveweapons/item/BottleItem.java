@@ -74,8 +74,7 @@ public class BottleItem {
 		@Override
 		public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand handIn) {
 			ItemStack itemstack = playerIn.getHeldItem(handIn);
-
-			// Give effects upon use for 30 seconds
+			
 			playerIn.addPotionEffect(new EffectInstance(Effects.STRENGTH, 360, 0, false, true));
 			playerIn.addPotionEffect(new EffectInstance(Effects.RESISTANCE, 360, 0, false, true));
 

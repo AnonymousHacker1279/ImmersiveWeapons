@@ -1,17 +1,15 @@
 package com.anonymoushacker1279.immersiveweapons.item.crafting;
 
 import com.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
-import net.minecraft.inventory.IInventory;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.item.crafting.IRecipeType;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.registry.Registry;
-import net.minecraft.world.World;
-
-import java.util.Optional;
 
 public interface ICustomRecipeType<T extends IRecipe<?>> {
 	IRecipeType<SmallPartsRecipe> SMALL_PARTS = register(ImmersiveWeapons.MOD_ID + ":small_parts");
+	IRecipeType<TeslaSynthesizerRecipe> TESLA_SYNTHESIZER = register(ImmersiveWeapons.MOD_ID + ":tesla_synthesizer");
+
 
 	static <T extends IRecipe<?>> IRecipeType<T> register(final String key) {
 		return Registry.register(Registry.RECIPE_TYPE, new ResourceLocation(key), new IRecipeType<T>() {
@@ -22,8 +20,4 @@ public interface ICustomRecipeType<T extends IRecipe<?>> {
 		});
 	}
 
-	@SuppressWarnings("unchecked")
-	default <C extends IInventory> Optional<T> matches(IRecipe<C> recipe, World worldIn, C inv) {
-		return recipe.matches(inv, worldIn) ? Optional.of((T) recipe) : Optional.empty();
-	}
 }

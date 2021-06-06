@@ -28,6 +28,7 @@ public class Structures {
 	public static final RegistryObject<Structure<NoFeatureConfig>> LANDMINE_TRAP = setupStructure("landmine_trap", () -> (new LandmineTrap(NoFeatureConfig.CODEC)));
 	public static final RegistryObject<Structure<NoFeatureConfig>> UNDERGROUND_BUNKER = setupStructure("underground_bunker", () -> (new UndergroundBunker(NoFeatureConfig.CODEC)));
 	public static final RegistryObject<Structure<NoFeatureConfig>> BATTLEFIELD_CAMP = setupStructure("battlefield_camp", () -> (new BattlefieldCamp(NoFeatureConfig.CODEC)));
+	public static final RegistryObject<Structure<NoFeatureConfig>> BATTLEFIELD_VILLAGE = setupStructure("battlefield_village", () -> (new BattlefieldVillage(NoFeatureConfig.CODEC)));
 	public static IStructurePieceType AF = AbandonedFactoryPieces.Piece::new;
 	public static IStructurePieceType PT = PitfallTrapPieces.Piece::new;
 	public static IStructurePieceType BT = BearTrapPieces.Piece::new;
@@ -86,7 +87,13 @@ public class Structures {
 						Config.MIN_BATTLEFIELD_CAMP_DISTANCE.get(),
 						458962175),
 				true);
-
+		setupStructure(
+				BATTLEFIELD_VILLAGE.get(),
+				new StructureSeparationSettings(
+						Config.MAX_BATTLEFIELD_VILLAGE_DISTANCE.get(),
+						Config.MIN_BATTLEFIELD_VILLAGE_DISTANCE.get(),
+						176482913),
+				true);
 	}
 
 	public static <F extends Structure<?>> void setupStructure(

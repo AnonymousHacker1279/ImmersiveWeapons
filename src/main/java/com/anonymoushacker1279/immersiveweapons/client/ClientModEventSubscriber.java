@@ -2,11 +2,13 @@ package com.anonymoushacker1279.immersiveweapons.client;
 
 import com.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import com.anonymoushacker1279.immersiveweapons.client.gui.screen.SmallPartsTableScreen;
+import com.anonymoushacker1279.immersiveweapons.client.gui.screen.TeslaSynthesizerScreen;
 import com.anonymoushacker1279.immersiveweapons.client.particle.SmokeBombParticleFactory;
 import com.anonymoushacker1279.immersiveweapons.client.renderer.ShelfRenderer;
 import com.anonymoushacker1279.immersiveweapons.client.renderer.entity.BulletRenderer.*;
 import com.anonymoushacker1279.immersiveweapons.client.renderer.entity.CustomArrowRenderer.*;
 import com.anonymoushacker1279.immersiveweapons.client.renderer.entity.DyingSoldierRenderer;
+import com.anonymoushacker1279.immersiveweapons.client.renderer.entity.FieldMedicRenderer;
 import com.anonymoushacker1279.immersiveweapons.client.renderer.entity.MinutemanRenderer;
 import com.anonymoushacker1279.immersiveweapons.client.renderer.entity.ThrowableItemRenderer.MolotovRenderer;
 import com.anonymoushacker1279.immersiveweapons.client.renderer.entity.ThrowableItemRenderer.SmokeBombRenderer;
@@ -28,8 +30,12 @@ import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 
+import java.util.Objects;
+
 @EventBusSubscriber(modid = ImmersiveWeapons.MOD_ID, bus = EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 public class ClientModEventSubscriber {
+
+	static Minecraft mc = Minecraft.getInstance();
 
 	private static final String CATEGORY = "key.categories." + ImmersiveWeapons.MOD_ID;
 	public static final KeyBinding toggleArmorEffect = new KeyBinding(ImmersiveWeapons.MOD_ID + ".key.toggleArmorEffect", 78, CATEGORY); // Keycode is N
@@ -44,6 +50,7 @@ public class ClientModEventSubscriber {
 
 		// Register GUI screens
 		ScreenManager.registerFactory(CustomContainerHolder.SMALL_PARTS_CONTAINER, SmallPartsTableScreen::new);
+		ScreenManager.registerFactory(CustomContainerHolder.TESLA_SYNTHESIZER_CONTAINER, TeslaSynthesizerScreen::new);
 
 		// Register projectile entity renderers
 		RenderingRegistry.registerEntityRenderingHandler(DeferredRegistryHandler.COPPER_ARROW_ENTITY.get(), CopperArrowRenderer::new);
@@ -68,6 +75,7 @@ public class ClientModEventSubscriber {
 
 		RenderingRegistry.registerEntityRenderingHandler(DeferredRegistryHandler.DYING_SOLDIER_ENTITY.get(), DyingSoldierRenderer::new);
 		RenderingRegistry.registerEntityRenderingHandler(DeferredRegistryHandler.MINUTEMAN_ENTITY.get(), MinutemanRenderer::new);
+		RenderingRegistry.registerEntityRenderingHandler(DeferredRegistryHandler.FIELD_MEDIC_ENTITY.get(), FieldMedicRenderer::new);
 
 		// Register block renderers
 		RenderTypeLookup.setRenderLayer(DeferredRegistryHandler.BULLETPROOF_GLASS.get(), RenderType.getCutoutMipped());
@@ -88,22 +96,20 @@ public class ClientModEventSubscriber {
 		RenderTypeLookup.setRenderLayer(DeferredRegistryHandler.GREEN_STAINED_BULLETPROOF_GLASS.get(), RenderType.getTranslucent());
 		RenderTypeLookup.setRenderLayer(DeferredRegistryHandler.RED_STAINED_BULLETPROOF_GLASS.get(), RenderType.getTranslucent());
 		RenderTypeLookup.setRenderLayer(DeferredRegistryHandler.CORRUGATED_IRON_PANEL_BARS.get(), RenderType.getCutout());
+		RenderTypeLookup.setRenderLayer(DeferredRegistryHandler.TESLA_SYNTHESIZER.get(), RenderType.getTranslucent());
 
 		ClientRegistry.bindTileEntityRenderer(TileEntityHolder.WALL_SHELF_TILE_ENTITY, ShelfRenderer::new);
 
-		Minecraft.getInstance().getBlockColors().register((p_getColor_1_, p_getColor_2_, p_getColor_3_, p_getColor_4_) -> {
-			assert p_getColor_2_ != null;
-			assert p_getColor_3_ != null;
-			return BiomeColors.getGrassColor(p_getColor_2_, p_getColor_3_);
-		}, DeferredRegistryHandler.PITFALL.get());
+		mc.getBlockColors().register((p_getColor_1_, p_getColor_2_, p_getColor_3_, p_getColor_4_) -> BiomeColors.getGrassColor(Objects.requireNonNull(p_getColor_2_), Objects.requireNonNull(p_getColor_3_)), DeferredRegistryHandler.PITFALL.get());
 
 		Minecraft.getInstance().getItemColors().register((p_getColor_1_, p_getColor_2_) -> GrassColors.get(0.5d, 1.0d), DeferredRegistryHandler.PITFALL_ITEM.get());
+		Minecraft.getInstance().getItemColors().register((p_getColor_1_, p_getColor_2_) -> 0x7a6851, DeferredRegistryHandler.DYING_SOLDIER_SPAWN_EGG.get());
+		Minecraft.getInstance().getItemColors().register((p_getColor_1_, p_getColor_2_) -> 0x494522, DeferredRegistryHandler.MINUTEMAN_SPAWN_EGG.get());
+		Minecraft.getInstance().getItemColors().register((p_getColor_1_, p_getColor_2_) -> 0xde5451, DeferredRegistryHandler.FIELD_MEDIC_SPAWN_EGG.get());
 	}
 
 	@SubscribeEvent
 	public static void onParticleFactoryRegistration(ParticleFactoryRegisterEvent event) {
-		Minecraft mc = Minecraft.getInstance();
-
 		mc.particles.registerFactory(DeferredRegistryHandler.SMOKE_BOMB_PARTICLE_TYPE.get(), SmokeBombParticleFactory::new);
 	}
 }

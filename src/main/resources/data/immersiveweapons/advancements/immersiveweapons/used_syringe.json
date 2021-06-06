@@ -1,0 +1,36 @@
+{
+	"display": {
+		"title": {
+			"translate": "advancements.immersiveweapons.used_syringe.title"
+		},
+		"description": {
+			"translate": "advancements.immersiveweapons.used_syringe.description"
+		},
+		"icon": {
+			"item": "immersiveweapons:used_syringe"
+		},
+		"frame": "challenge",
+		"show_toast": true,
+		"announce_to_chat": true,
+		"hidden": true,
+		"background": "immersiveweapons:textures/block/molten_ore.png"
+	},
+	"criteria": {
+		"die": {
+			"trigger": "minecraft:entity_killed_player",
+			"conditions": {
+				"entity": {
+					"equipment": {
+						"mainhand": {
+							"item": "immersiveweapons:used_syringe"
+						}
+					}
+				}
+			}
+		}
+	},
+	"rewards": {
+		"experience": 15
+	},
+	"parent": "immersiveweapons:immersiveweapons/root"
+}

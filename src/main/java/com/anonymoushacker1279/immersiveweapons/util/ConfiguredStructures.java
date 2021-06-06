@@ -16,6 +16,7 @@ public class ConfiguredStructures {
 	public static StructureFeature<?, ?> CONFIGURED_LANDMINE_TRAP = Structures.LANDMINE_TRAP.get().withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG);
 	public static StructureFeature<?, ?> CONFIGURED_UNDERGROUND_BUNKER = Structures.UNDERGROUND_BUNKER.get().withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG);
 	public static StructureFeature<?, ?> CONFIGURED_BATTLEFIELD_CAMP = Structures.BATTLEFIELD_CAMP.get().withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG);
+	public static StructureFeature<?, ?> CONFIGURED_BATTLEFIELD_VILLAGE = Structures.BATTLEFIELD_VILLAGE.get().withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG);
 
 	public static void registerConfiguredStructures() {
 		Registry<StructureFeature<?, ?>> registry = WorldGenRegistries.CONFIGURED_STRUCTURE_FEATURE;
@@ -36,6 +37,9 @@ public class ConfiguredStructures {
 
 		Registry.register(registry, new ResourceLocation(ImmersiveWeapons.MOD_ID, "configured_battlefield_camp"), CONFIGURED_BATTLEFIELD_CAMP);
 		FlatGenerationSettings.STRUCTURES.put(Structures.BATTLEFIELD_CAMP.get(), CONFIGURED_BATTLEFIELD_CAMP);
+
+		Registry.register(registry, new ResourceLocation(ImmersiveWeapons.MOD_ID, "configured_battlefield_village"), CONFIGURED_BATTLEFIELD_VILLAGE);
+		FlatGenerationSettings.STRUCTURES.put(Structures.BATTLEFIELD_VILLAGE.get(), CONFIGURED_BATTLEFIELD_VILLAGE);
 	}
 
 }

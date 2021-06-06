@@ -1,0 +1,17 @@
+{
+	"type": "minecraft:crafting_shapeless",
+	"ingredients": [
+		{
+			"item": "minecraft:sugar"
+		},
+		{
+			"item": "minecraft:glistering_melon_slice"
+		},
+		{
+			"item": "minecraft:beetroot"
+		}
+	],
+	"result": {
+		"item": "immersiveweapons:painkillers"
+	}
+}

@@ -1,0 +1,30 @@
+{
+	"display": {
+		"title": {
+			"translate": "advancements.immersiveweapons.abandoned_factory.title"
+		},
+		"description": {
+			"translate": "advancements.immersiveweapons.abandoned_factory.description"
+		},
+		"icon": {
+			"item": "minecraft:mossy_stone_bricks"
+		},
+		"frame": "task",
+		"show_toast": true,
+		"announce_to_chat": true,
+		"hidden": false,
+		"background": "immersiveweapons:textures/block/molten_ore.png"
+	},
+	"criteria": {
+		"visit": {
+			"trigger": "minecraft:location",
+			"conditions": {
+				"feature": "immersiveweapons:abandoned_factory"
+			}
+		}
+	},
+	"rewards": {
+		"experience": 75
+	},
+	"parent": "immersiveweapons:immersiveweapons/root"
+}

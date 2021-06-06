@@ -1,0 +1,20 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"pattern": [
+		"   ",
+		"xyx",
+		"   "
+	],
+	"key": {
+		"x": {
+			"item": "immersiveweapons:bandage"
+		},
+		"y": {
+			"item": "immersiveweapons:painkillers"
+		}
+	},
+	"result": {
+		"item": "immersiveweapons:first_aid_kit",
+		"count": 1
+	}
+}

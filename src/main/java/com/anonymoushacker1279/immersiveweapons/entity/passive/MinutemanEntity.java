@@ -52,5 +52,4 @@ public class MinutemanEntity extends AbstractMinutemanEntity {
 			}
 		}
 	}
-
 }

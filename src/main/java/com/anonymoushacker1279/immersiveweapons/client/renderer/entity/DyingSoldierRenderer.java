@@ -9,7 +9,7 @@ import net.minecraft.client.renderer.entity.layers.BipedArmorLayer;
 import net.minecraft.util.ResourceLocation;
 
 public class DyingSoldierRenderer extends BipedRenderer<AbstractDyingSoldierEntity, BasicPlayerModel<AbstractDyingSoldierEntity>> {
-	private static final ResourceLocation DECAYED_SOLDIER_TEXTURE = new ResourceLocation(ImmersiveWeapons.MOD_ID, "textures/entity/dying_soldier/dying_soldier.png");
+	private static final ResourceLocation DYING_SOLDIER_RENDERER = new ResourceLocation(ImmersiveWeapons.MOD_ID, "textures/entity/dying_soldier/dying_soldier.png");
 
 	public DyingSoldierRenderer(EntityRendererManager renderManagerIn) {
 		super(renderManagerIn, new BasicPlayerModel<>(1.0f, false), 0.5F);
@@ -18,6 +18,6 @@ public class DyingSoldierRenderer extends BipedRenderer<AbstractDyingSoldierEnti
 
 	@Override
 	public ResourceLocation getEntityTexture(AbstractDyingSoldierEntity entity) {
-		return DECAYED_SOLDIER_TEXTURE;
+		return DYING_SOLDIER_RENDERER;
 	}
 }

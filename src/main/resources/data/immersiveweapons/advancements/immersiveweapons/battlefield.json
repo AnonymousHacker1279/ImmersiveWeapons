@@ -1,0 +1,30 @@
+{
+	"display": {
+		"title": {
+			"translate": "advancements.immersiveweapons.battlefield.title"
+		},
+		"description": {
+			"translate": "advancements.immersiveweapons.battlefield.description"
+		},
+		"icon": {
+			"item": "minecraft:skeleton_skull"
+		},
+		"frame": "task",
+		"show_toast": true,
+		"announce_to_chat": true,
+		"hidden": false,
+		"background": "immersiveweapons:textures/block/molten_ore.png"
+	},
+	"criteria": {
+		"visit": {
+			"trigger": "minecraft:location",
+			"conditions": {
+				"biome": "immersiveweapons:battlefield"
+			}
+		}
+	},
+	"rewards": {
+		"experience": 50
+	},
+	"parent": "immersiveweapons:immersiveweapons/root"
+}

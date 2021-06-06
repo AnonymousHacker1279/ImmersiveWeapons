@@ -1,0 +1,19 @@
+{
+	"variants": {
+		"facing=north": {
+			"model": "immersiveweapons:block/biohazard_box",
+			"y": 180
+		},
+		"facing=south": {
+			"model": "immersiveweapons:block/biohazard_box"
+		},
+		"facing=west": {
+			"model": "immersiveweapons:block/biohazard_box",
+			"y": 90
+		},
+		"facing=east": {
+			"model": "immersiveweapons:block/biohazard_box",
+			"y": 270
+		}
+	}
+}

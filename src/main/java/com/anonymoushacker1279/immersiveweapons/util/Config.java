@@ -25,6 +25,8 @@ public class Config {
 	public static ForgeConfigSpec.ConfigValue<Integer> MIN_UNDERGROUND_BUNKER_DISTANCE;
 	public static ForgeConfigSpec.ConfigValue<Integer> MAX_BATTLEFIELD_CAMP_DISTANCE;
 	public static ForgeConfigSpec.ConfigValue<Integer> MIN_BATTLEFIELD_CAMP_DISTANCE;
+	public static ForgeConfigSpec.ConfigValue<Integer> MAX_BATTLEFIELD_VILLAGE_DISTANCE;
+	public static ForgeConfigSpec.ConfigValue<Integer> MIN_BATTLEFIELD_VILLAGE_DISTANCE;
 	private static ForgeConfigSpec COMMON_CONFIG;
 
 	static {
@@ -56,8 +58,11 @@ public class Config {
 		MAX_UNDERGROUND_BUNKER_DISTANCE = COMMON_CONFIG_BUILDER.comment("Maximum distance in chunks between Underground Bunkers - Default 110").define("max_underground_bunker_distance", 110);
 		MIN_UNDERGROUND_BUNKER_DISTANCE = COMMON_CONFIG_BUILDER.comment("Minimum distance in chunks between Underground Bunkers - Default 80").define("min_underground_bunker_distance", 80);
 
-		MAX_BATTLEFIELD_CAMP_DISTANCE = COMMON_CONFIG_BUILDER.comment("Maximum distance in chunks between Battlefield Camps - Default 16").define("max_underground_bunker_distance", 10);
-		MIN_BATTLEFIELD_CAMP_DISTANCE = COMMON_CONFIG_BUILDER.comment("Minimum distance in chunks between Battlefield Camps - Default 4").define("min_underground_bunker_distance", 2);
+		MAX_BATTLEFIELD_CAMP_DISTANCE = COMMON_CONFIG_BUILDER.comment("Maximum distance in chunks between Battlefield Camps - Default 16").define("max_battlefield_camp_distance", 16);
+		MIN_BATTLEFIELD_CAMP_DISTANCE = COMMON_CONFIG_BUILDER.comment("Minimum distance in chunks between Battlefield Camps - Default 4").define("min_battlefield_camp_distance", 4);
+
+		MAX_BATTLEFIELD_VILLAGE_DISTANCE = COMMON_CONFIG_BUILDER.comment("Maximum distance in chunks between Battlefield Villages - Default 30").define("max_battlefield_village_distance", 30);
+		MIN_BATTLEFIELD_VILLAGE_DISTANCE = COMMON_CONFIG_BUILDER.comment("Minimum distance in chunks between Battlefield Villages - Default 10").define("min_battlefield_village_distance", 10);
 
 		COMMON_CONFIG_BUILDER.pop();
 		COMMON_CONFIG = COMMON_CONFIG_BUILDER.build();
