@@ -1,16 +1,11 @@
 package com.anonymoushacker1279.immersiveweapons.util;
 
-import com.anonymoushacker1279.immersiveweapons.entity.monster.AbstractDyingSoldierEntity;
-import com.anonymoushacker1279.immersiveweapons.entity.passive.AbstractFieldMedicEntity;
-import com.anonymoushacker1279.immersiveweapons.entity.passive.AbstractMinutemanEntity;
-import com.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
 import com.anonymoushacker1279.immersiveweapons.item.Pike;
 import com.anonymoushacker1279.immersiveweapons.item.PikeItem.*;
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.ImmutableMultimap.Builder;
 import net.minecraft.entity.ai.attributes.Attribute;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
-import net.minecraft.entity.ai.attributes.GlobalEntityTypeAttributes;
 import net.minecraftforge.common.ForgeMod;
 
 public class AddAttributesAfterSetup {
@@ -66,9 +61,5 @@ public class AddAttributesAfterSetup {
 		combineBuilder.putAll(NetheritePikeItem.netheritePikeAttributes);
 		combineBuilder.putAll(newAttributes);
 		NetheritePikeItem.netheritePikeAttributes = combineBuilder.build();
-
-		GlobalEntityTypeAttributes.put(DeferredRegistryHandler.DYING_SOLDIER_ENTITY.get(), AbstractDyingSoldierEntity.registerAttributes().create());
-		GlobalEntityTypeAttributes.put(DeferredRegistryHandler.MINUTEMAN_ENTITY.get(), AbstractMinutemanEntity.registerAttributes().create());
-		GlobalEntityTypeAttributes.put(DeferredRegistryHandler.FIELD_MEDIC_ENTITY.get(), AbstractFieldMedicEntity.registerAttributes().create());
 	}
 }
