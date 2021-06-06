@@ -1,0 +1,17 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"pattern": [
+		"x x",
+		"xxx",
+		"xxx"
+	],
+	"key": {
+		"x": {
+			"item": "immersiveweapons:cobalt_ingot"
+		}
+	},
+	"result": {
+		"item": "immersiveweapons:cobalt_chestplate",
+		"count": 1
+	}
+}

@@ -99,6 +99,8 @@ public class ImmersiveWeapons {
 		if (event.getCategory() != Biome.Category.NETHER || event.getCategory() != Biome.Category.THEEND) {
 			event.getGeneration().getFeatures(GenerationStage.Decoration.UNDERGROUND_ORES)
 					.add(() -> OreGeneratorHandler.ORE_COPPER_CONFIG);
+			event.getGeneration().getFeatures(GenerationStage.Decoration.UNDERGROUND_ORES)
+					.add(() -> OreGeneratorHandler.ORE_COBALT_CONFIG);
 		}
 		if (event.getCategory() == Biome.Category.NETHER) {
 			event.getGeneration().getFeatures(GenerationStage.Decoration.UNDERGROUND_ORES)

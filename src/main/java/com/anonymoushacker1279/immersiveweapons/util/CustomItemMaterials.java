@@ -8,7 +8,7 @@ import net.minecraft.util.LazyValue;
 import java.util.function.Supplier;
 
 public enum CustomItemMaterials implements IItemTier {
-	MOLTEN(3, 1900, 8.2F, 3.0F, 14, () -> {
+	MOLTEN(3, 1900, 8.2F, 3.0F, 17, () -> {
 		return Ingredient.fromItems(DeferredRegistryHandler.MOLTEN_INGOT.get());
 	}),
 	COPPER(2, 180, 5.9F, 2.0F, 12, () -> {
@@ -16,6 +16,9 @@ public enum CustomItemMaterials implements IItemTier {
 	}),
 	TESLA(4, 2100, 18.0F, 3.0F, 20, () -> {
 		return Ingredient.fromItems(DeferredRegistryHandler.TESLA_INGOT.get());
+	}),
+	COBALT(2, 300, 6.2F, 3.0F, 15, () -> {
+		return Ingredient.fromItems(DeferredRegistryHandler.COBALT_INGOT.get());
 	});
 
 	private final int harvestLevel;

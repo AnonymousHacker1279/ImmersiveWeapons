@@ -1,0 +1,20 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"pattern": [
+		" x ",
+		" y ",
+		" y "
+	],
+	"key": {
+		"x": {
+			"item": "immersiveweapons:cobalt_ingot"
+		},
+		"y": {
+			"item": "minecraft:stick"
+		}
+	},
+	"result": {
+		"item": "immersiveweapons:cobalt_shovel",
+		"count": 1
+	}
+}
