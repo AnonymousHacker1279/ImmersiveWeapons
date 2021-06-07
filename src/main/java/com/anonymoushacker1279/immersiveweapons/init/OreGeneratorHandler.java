@@ -18,27 +18,27 @@ public class OreGeneratorHandler {
 	@SubscribeEvent
 	public static void init(FMLCommonSetupEvent event) {
 		ORE_COPPER_CONFIG = Registry.register(WorldGenRegistries.CONFIGURED_FEATURE, "ore_copper",
-				Feature.ORE.withConfiguration(
+				Feature.ORE.configured(
 						new OreFeatureConfig(
-								OreFeatureConfig.FillerBlockType.BASE_STONE_OVERWORLD,
-								DeferredRegistryHandler.COPPER_ORE.get().getDefaultState(), 8)
-				).range(76).square().count(15)
+								OreFeatureConfig.FillerBlockType.NATURAL_STONE,
+								DeferredRegistryHandler.COPPER_ORE.get().defaultBlockState(), 8)
+				).range(76).squared().count(15)
 		);
 
 		ORE_MOLTEN_CONFIG = Registry.register(WorldGenRegistries.CONFIGURED_FEATURE, "ore_molten",
-				Feature.ORE.withConfiguration(
+				Feature.ORE.configured(
 						new OreFeatureConfig(
-								OreFeatureConfig.FillerBlockType.BASE_STONE_NETHER,
-								DeferredRegistryHandler.MOLTEN_ORE.get().getDefaultState(), 3)
-				).range(28).square().count(6)
+								OreFeatureConfig.FillerBlockType.NETHER_ORE_REPLACEABLES,
+								DeferredRegistryHandler.MOLTEN_ORE.get().defaultBlockState(), 3)
+				).range(28).squared().count(6)
 		);
 
 		ORE_COBALT_CONFIG = Registry.register(WorldGenRegistries.CONFIGURED_FEATURE, "ore_cobalt",
-				Feature.ORE.withConfiguration(
+				Feature.ORE.configured(
 						new OreFeatureConfig(
-								FillerBlockType.BASE_STONE_OVERWORLD,
-								DeferredRegistryHandler.COBALT_ORE.get().getDefaultState(), 5)
-				).range(32).square().count(11)
+								FillerBlockType.NATURAL_STONE,
+								DeferredRegistryHandler.COBALT_ORE.get().defaultBlockState(), 5)
+				).range(32).squared().count(11)
 		);
 	}
 }

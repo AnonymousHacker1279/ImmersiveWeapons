@@ -38,7 +38,7 @@ public class LootTableHandler {
 			//
 			int numShards = 0;
 			for (ItemStack stack : generatedLoot) {
-				if (stack.getItem().isIn(ItemTags.makeWrapperTag("minecraft:logs"))) {
+				if (stack.getItem().is(ItemTags.bind("minecraft:logs"))) {
 					numShards += stack.getCount() + GeneralUtilities.getRandomNumber(2, 5);
 				}
 			}
@@ -56,8 +56,8 @@ public class LootTableHandler {
 
 			@Override
 			public LogShardsLootModifierHandler read(ResourceLocation name, JsonObject object, ILootCondition[] conditionsIn) {
-				int numShards = JSONUtils.getInt(object, "numShards");
-				Item replacementItem = ForgeRegistries.ITEMS.getValue(new ResourceLocation(JSONUtils.getString(object, "replacement")));
+				int numShards = JSONUtils.getAsInt(object, "numShards");
+				Item replacementItem = ForgeRegistries.ITEMS.getValue(new ResourceLocation(JSONUtils.getAsString(object, "replacement")));
 				return new LogShardsLootModifierHandler(conditionsIn, numShards, replacementItem);
 			}
 

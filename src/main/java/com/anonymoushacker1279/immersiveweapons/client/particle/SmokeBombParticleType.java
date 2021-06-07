@@ -15,7 +15,7 @@ public class SmokeBombParticleType extends ParticleType<SmokeBombParticleData> {
 	// a) convert a FlameParticleData to a serialized format
 	// b) construct a FlameParticleData object from the serialized format
 	@Override
-	public Codec<SmokeBombParticleData> func_230522_e_() {
+	public Codec<SmokeBombParticleData> codec() {
 		return SmokeBombParticleData.CODEC;
 	}
 }

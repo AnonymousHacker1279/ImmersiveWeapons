@@ -15,13 +15,13 @@ import java.util.List;
 public class DefendVillageTargetGoal extends TargetGoal {
 
 	private final MobEntity mobEntity;
+	private final EntityPredicate distancePredicate = (new EntityPredicate()).range(64.0D);
 	private LivingEntity villageAgressorTarget;
-	private final EntityPredicate distancePredicate = (new EntityPredicate()).setDistance(64.0D);
 
 	public DefendVillageTargetGoal(MobEntity mobEntity) {
 		super(mobEntity, false, true);
 		this.mobEntity = mobEntity;
-		this.setMutexFlags(EnumSet.of(Goal.Flag.TARGET));
+		this.setFlags(EnumSet.of(Goal.Flag.TARGET));
 	}
 
 	/**
@@ -29,10 +29,10 @@ public class DefendVillageTargetGoal extends TargetGoal {
 	 * method as well.
 	 */
 	@Override
-	public boolean shouldExecute() {
-		AxisAlignedBB axisalignedbb = this.mobEntity.getBoundingBox().grow(10.0D, 8.0D, 10.0D);
-		List<LivingEntity> list = this.mobEntity.world.getTargettableEntitiesWithinAABB(VillagerEntity.class, this.distancePredicate, this.mobEntity, axisalignedbb);
-		List<PlayerEntity> list1 = this.mobEntity.world.getTargettablePlayersWithinAABB(this.distancePredicate, this.mobEntity, axisalignedbb);
+	public boolean canUse() {
+		AxisAlignedBB axisalignedbb = this.mobEntity.getBoundingBox().inflate(10.0D, 8.0D, 10.0D);
+		List<LivingEntity> list = this.mobEntity.level.getNearbyEntities(VillagerEntity.class, this.distancePredicate, this.mobEntity, axisalignedbb);
+		List<PlayerEntity> list1 = this.mobEntity.level.getNearbyPlayers(this.distancePredicate, this.mobEntity, axisalignedbb);
 
 		for (LivingEntity livingentity : list) {
 			VillagerEntity villagerentity = (VillagerEntity) livingentity;
@@ -56,8 +56,8 @@ public class DefendVillageTargetGoal extends TargetGoal {
 	 * Execute a one shot task or start executing a continuous task
 	 */
 	@Override
-	public void startExecuting() {
-		this.mobEntity.setAttackTarget(this.villageAgressorTarget);
-		super.startExecuting();
+	public void start() {
+		this.mobEntity.setTarget(this.villageAgressorTarget);
+		super.start();
 	}
 }

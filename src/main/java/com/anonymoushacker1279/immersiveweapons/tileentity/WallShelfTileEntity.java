@@ -13,6 +13,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.NonNullList;
 
 import javax.annotation.Nullable;
+import java.util.Objects;
 
 public class WallShelfTileEntity extends TileEntity implements IClearable {
 
@@ -34,21 +35,22 @@ public class WallShelfTileEntity extends TileEntity implements IClearable {
 		return false;
 	}
 
-	public boolean removeItem() {
+	public void removeItem() {
 		for (int i = this.inventory.size() - 1; i > -1; i--) {
 			if (!this.inventory.get(i).isEmpty()) {
-				InventoryHelper.spawnItemStack(this.world, this.getPos().getX(), this.getPos().getY(), this.getPos().getZ(), this.inventory.get(i));
+				if (this.level != null) {
+					InventoryHelper.dropItemStack(this.level, this.getBlockPos().getX(), this.getBlockPos().getY(), this.getBlockPos().getZ(), this.inventory.get(i));
+				}
 				this.inventory.set(i, ItemStack.EMPTY);
 				this.inventoryChanged();
-				return true;
+				return;
 			}
 		}
-		return false;
 	}
 
 	private void inventoryChanged() {
-		this.markDirty();
-		this.getWorld().notifyBlockUpdate(this.getPos(), this.getBlockState(), this.getBlockState(), 3);
+		this.setChanged();
+		Objects.requireNonNull(this.getLevel()).sendBlockUpdated(this.getBlockPos(), this.getBlockState(), this.getBlockState(), 3);
 	}
 
 	public NonNullList<ItemStack> getInventory() {
@@ -56,20 +58,20 @@ public class WallShelfTileEntity extends TileEntity implements IClearable {
 	}
 
 	@Override
-	public void read(BlockState state, CompoundNBT nbt) {
-		super.read(state, nbt);
+	public void load(BlockState state, CompoundNBT nbt) {
+		super.load(state, nbt);
 		this.inventory.clear();
 		ItemStackHelper.loadAllItems(nbt, this.inventory);
 	}
 
 	@Override
-	public CompoundNBT write(CompoundNBT compound) {
+	public CompoundNBT save(CompoundNBT compound) {
 		this.writeItems(compound);
 		return compound;
 	}
 
 	private CompoundNBT writeItems(CompoundNBT compound) {
-		super.write(compound);
+		super.save(compound);
 		ItemStackHelper.saveAllItems(compound, this.inventory, true);
 		return compound;
 	}
@@ -77,7 +79,7 @@ public class WallShelfTileEntity extends TileEntity implements IClearable {
 	@Override
 	@Nullable
 	public SUpdateTileEntityPacket getUpdatePacket() {
-		return new SUpdateTileEntityPacket(this.pos, 13, this.getUpdateTag());
+		return new SUpdateTileEntityPacket(this.worldPosition, 13, this.getUpdateTag());
 	}
 
 	@Override
@@ -88,11 +90,11 @@ public class WallShelfTileEntity extends TileEntity implements IClearable {
 	@Override
 	public void onDataPacket(NetworkManager net, SUpdateTileEntityPacket pkt) {
 		super.onDataPacket(net, pkt);
-		handleUpdateTag(this.getBlockState(), pkt.getNbtCompound());
+		handleUpdateTag(this.getBlockState(), pkt.getTag());
 	}
 
 	@Override
-	public void clear() {
+	public void clearContent() {
 		this.inventory.clear();
 	}
 }

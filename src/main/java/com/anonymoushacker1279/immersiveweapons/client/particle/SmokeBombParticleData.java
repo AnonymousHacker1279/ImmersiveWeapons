@@ -27,7 +27,7 @@ public class SmokeBombParticleData implements IParticleData {
 		// parse the parameters for this particle from a /particle command
 		@Nonnull
 		@Override
-		public SmokeBombParticleData deserialize(@Nonnull ParticleType<SmokeBombParticleData> type, @Nonnull StringReader reader) throws CommandSyntaxException {
+		public SmokeBombParticleData fromCommand(@Nonnull ParticleType<SmokeBombParticleData> type, @Nonnull StringReader reader) throws CommandSyntaxException {
 			reader.expect(' ');
 			double diameter = constrainDiameterToValidRange(reader.readDouble());
 
@@ -46,7 +46,7 @@ public class SmokeBombParticleData implements IParticleData {
 
 		// read the particle information from a PacketBuffer after the client has received it from the server
 		@Override
-		public SmokeBombParticleData read(@Nonnull ParticleType<SmokeBombParticleData> type, PacketBuffer buf) {
+		public SmokeBombParticleData fromNetwork(@Nonnull ParticleType<SmokeBombParticleData> type, PacketBuffer buf) {
 			// warning! never trust the data read in from a packet buffer.
 
 			final int MIN_COLOR = 0;
@@ -96,7 +96,7 @@ public class SmokeBombParticleData implements IParticleData {
 
 	// write the particle information to a PacketBuffer, ready for transmission to a client
 	@Override
-	public void write(PacketBuffer buf) {
+	public void writeToNetwork(PacketBuffer buf) {
 		buf.writeInt(tint.getRed());
 		buf.writeInt(tint.getGreen());
 		buf.writeInt(tint.getBlue());
@@ -106,7 +106,7 @@ public class SmokeBombParticleData implements IParticleData {
 	// used for debugging I think; prints the data in human-readable format
 	@Nonnull
 	@Override
-	public String getParameters() {
+	public String writeToString() {
 		return String.format(Locale.ROOT, "%s %.2f %i %i %i",
 				this.getType().getRegistryName(), diameter, tint.getRed(), tint.getGreen(), tint.getBlue());
 	}

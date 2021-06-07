@@ -34,15 +34,15 @@ public class DyingSoldierEntity extends AbstractDyingSoldierEntity {
 	}
 
 	@Override
-	protected void dropSpecialItems(DamageSource source, int looting, boolean recentlyHitIn) {
-		super.dropSpecialItems(source, looting, recentlyHitIn);
+	protected void dropCustomDeathLoot(DamageSource source, int looting, boolean recentlyHitIn) {
+		super.dropCustomDeathLoot(source, looting, recentlyHitIn);
 		int lootingModifier = looting * 2;
 		if (lootingModifier >= 75) {
-			this.entityDropItem(DeferredRegistryHandler.FLINTLOCK_PISTOL.get());
+			this.spawnAtLocation(DeferredRegistryHandler.FLINTLOCK_PISTOL.get());
 		} else {
 			int i = GeneralUtilities.getRandomNumber(1, 75 - lootingModifier);
 			if (i == 1) {
-				this.entityDropItem(DeferredRegistryHandler.FLINTLOCK_PISTOL.get());
+				this.spawnAtLocation(DeferredRegistryHandler.FLINTLOCK_PISTOL.get());
 			}
 		}
 	}

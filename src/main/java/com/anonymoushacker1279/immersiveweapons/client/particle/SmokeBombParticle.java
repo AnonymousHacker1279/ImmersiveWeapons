@@ -1,7 +1,6 @@
 package com.anonymoushacker1279.immersiveweapons.client.particle;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.particle.IAnimatedSprite;
 import net.minecraft.client.particle.IParticleRenderType;
 import net.minecraft.client.particle.SpriteTexturedParticle;
 import net.minecraft.client.renderer.LightTexture;
@@ -12,16 +11,13 @@ import java.awt.*;
 
 public class SmokeBombParticle extends SpriteTexturedParticle {
 
-	@SuppressWarnings("unused")
-	private final IAnimatedSprite sprites;
-	Minecraft mc = Minecraft.getInstance();
 	private final double xPos;
 	private final double yPos;
 	private final double zPos;
+	Minecraft mc = Minecraft.getInstance();
 
-	public SmokeBombParticle(ClientWorld world, double x, double y, double z, double velocityX, double velocityY, double velocityZ, Color tint, double diameter, IAnimatedSprite sprites) {
+	public SmokeBombParticle(ClientWorld world, double x, double y, double z, double velocityX, double velocityY, double velocityZ, Color tint, double diameter) {
 		super(world, x, y, z, velocityX, velocityY, velocityZ);
-		this.sprites = sprites;
 
 		xPos = x;
 		yPos = y;
@@ -31,29 +27,30 @@ public class SmokeBombParticle extends SpriteTexturedParticle {
 		setSize((float) diameter, (float) diameter);    // the size (width, height) of the collision box.
 
 		final float PARTICLE_SCALE_FOR_ONE_METER = 0.5F; //  if the particleScale is 0.5, the texture will be rendered as 1 meter high
-		particleScale = PARTICLE_SCALE_FOR_ONE_METER * (float) diameter; // sets the rendering size of the particle for a TexturedParticle.
+		quadSize = PARTICLE_SCALE_FOR_ONE_METER * (float) diameter; // sets the rendering size of the particle for a TexturedParticle.
 
-		maxAge = 500;  // lifetime in ticks: 100 ticks = 5 seconds
+		lifetime = 500;  // lifetime in ticks: 100 ticks = 5 seconds
 
-		final float ALPHA_VALUE = 0.95F;
-		this.particleAlpha = ALPHA_VALUE;
+		this.alpha = 0.95F;
 
 		//the vanilla Particle constructor added random variation to our starting velocity.  Undo it!
-		motionX = velocityX;
-		motionY = velocityY;
-		motionZ = velocityZ;
+		xd = velocityX;
+		yd = velocityY;
+		zd = velocityZ;
 
-		this.canCollide = true;  // the move() method will check for collisions with scenery
+		this.hasPhysics = true;  // the move() method will check for collisions with scenery
 	}
 
 	@Override
-	protected int getBrightnessForRender(float partialTick) {
-		BlockPos blockPos = new BlockPos(xPos, yPos, zPos).up();
-		int lightAtParticleLocation = mc.world.getLight(blockPos);    // Get the light level at the current position
+	protected int getLightColor(float partialTick) {
+		BlockPos blockPos = new BlockPos(xPos, yPos, zPos).above();
+		int lightAtParticleLocation = 0;    // Get the light level at the current position
+		if (mc.level != null) {
+			lightAtParticleLocation = mc.level.getMaxLocalRawBrightness(blockPos);
+		}
 		final int BLOCK_LIGHT = lightAtParticleLocation;
 		final int SKY_LIGHT = lightAtParticleLocation;
-		final int FULL_BRIGHTNESS_VALUE = LightTexture.packLight(BLOCK_LIGHT, SKY_LIGHT);
-		return FULL_BRIGHTNESS_VALUE;
+		return LightTexture.pack(BLOCK_LIGHT, SKY_LIGHT);
 	}
 
 	@Override
@@ -67,21 +64,21 @@ public class SmokeBombParticle extends SpriteTexturedParticle {
 	@Override
 	public void tick() {
 
-		prevPosX = posX;
-		prevPosY = posY;
-		prevPosZ = posZ;
+		xo = x;
+		yo = y;
+		zo = z;
 
-		move(motionX, motionY, motionZ);
+		move(xd, yd, zd);
 		if (onGround) {
-			this.setExpired();
+			this.remove();
 		}
 
-		if (prevPosY == posY && motionY > 0) {
-			this.setExpired();
+		if (yo == y && yd > 0) {
+			this.remove();
 		}
 
-		if (this.age++ >= this.maxAge) {
-			this.setExpired();
+		if (this.age++ >= this.lifetime) {
+			this.remove();
 		}
 	}
 }

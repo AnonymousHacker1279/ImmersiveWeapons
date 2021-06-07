@@ -17,7 +17,7 @@ public class BottleItem {
 
 		public AlcoholBottleItem(Properties properties) {
 			super(properties);
-			properties.containerItem(this.getItem());
+			properties.craftRemainder(this.getItem());
 		}
 
 		@Override
@@ -31,25 +31,25 @@ public class BottleItem {
 		}
 
 		@Override
-		public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand handIn) {
-			ItemStack itemstack = playerIn.getHeldItem(handIn);
+		public ActionResult<ItemStack> use(World worldIn, PlayerEntity playerIn, Hand handIn) {
+			ItemStack itemstack = playerIn.getItemInHand(handIn);
 
 			// Give effects upon use for 30 seconds
-			playerIn.addPotionEffect(new EffectInstance(Effects.NAUSEA, 600, 0, false, true));
-			playerIn.addPotionEffect(new EffectInstance(Effects.STRENGTH, 600, 0, false, true));
-			playerIn.addPotionEffect(new EffectInstance(Effects.RESISTANCE, 600, 0, false, true));
+			playerIn.addEffect(new EffectInstance(Effects.CONFUSION, 600, 0, false, true));
+			playerIn.addEffect(new EffectInstance(Effects.DAMAGE_BOOST, 600, 0, false, true));
+			playerIn.addEffect(new EffectInstance(Effects.DAMAGE_RESISTANCE, 600, 0, false, true));
 
-			if (!playerIn.abilities.isCreativeMode) {
+			if (!playerIn.abilities.instabuild) {
 				itemstack.shrink(1);
-				playerIn.addItemStackToInventory(new ItemStack(Items.GLASS_BOTTLE));
-				playerIn.getCooldownTracker().setCooldown(this, 600);
+				playerIn.addItem(new ItemStack(Items.GLASS_BOTTLE));
+				playerIn.getCooldowns().addCooldown(this, 600);
 			}
 
-			return ActionResult.func_233538_a_(itemstack, worldIn.isRemote());
+			return ActionResult.sidedSuccess(itemstack, worldIn.isClientSide());
 		}
 
 		@Override
-		public UseAction getUseAction(ItemStack stack) {
+		public UseAction getUseAnimation(ItemStack stack) {
 			return UseAction.DRINK;
 		}
 	}
@@ -58,7 +58,7 @@ public class BottleItem {
 
 		public WineBottleItem(Properties properties) {
 			super(properties);
-			properties.containerItem(this.getItem());
+			properties.craftRemainder(this.getItem());
 		}
 
 		@Override
@@ -72,23 +72,23 @@ public class BottleItem {
 		}
 
 		@Override
-		public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand handIn) {
-			ItemStack itemstack = playerIn.getHeldItem(handIn);
-			
-			playerIn.addPotionEffect(new EffectInstance(Effects.STRENGTH, 360, 0, false, true));
-			playerIn.addPotionEffect(new EffectInstance(Effects.RESISTANCE, 360, 0, false, true));
+		public ActionResult<ItemStack> use(World worldIn, PlayerEntity playerIn, Hand handIn) {
+			ItemStack itemstack = playerIn.getItemInHand(handIn);
 
-			if (!playerIn.abilities.isCreativeMode) {
+			playerIn.addEffect(new EffectInstance(Effects.DAMAGE_BOOST, 360, 0, false, true));
+			playerIn.addEffect(new EffectInstance(Effects.DAMAGE_RESISTANCE, 360, 0, false, true));
+
+			if (!playerIn.abilities.instabuild) {
 				itemstack.shrink(1);
-				playerIn.addItemStackToInventory(new ItemStack(Items.GLASS_BOTTLE));
-				playerIn.getCooldownTracker().setCooldown(this, 600);
+				playerIn.addItem(new ItemStack(Items.GLASS_BOTTLE));
+				playerIn.getCooldowns().addCooldown(this, 600);
 			}
 
-			return ActionResult.func_233538_a_(itemstack, worldIn.isRemote());
+			return ActionResult.sidedSuccess(itemstack, worldIn.isClientSide());
 		}
 
 		@Override
-		public UseAction getUseAction(ItemStack stack) {
+		public UseAction getUseAnimation(ItemStack stack) {
 			return UseAction.DRINK;
 		}
 	}

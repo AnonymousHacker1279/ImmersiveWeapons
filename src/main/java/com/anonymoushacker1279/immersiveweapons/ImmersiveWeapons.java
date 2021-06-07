@@ -74,7 +74,7 @@ public class ImmersiveWeapons {
 	}
 
 	private static RegistryKey<Biome> key(final Biome biome) {
-		return RegistryKey.getOrCreateKey(ForgeRegistries.Keys.BIOMES, Objects.requireNonNull(ForgeRegistries.BIOMES.getKey(biome), "Biome registry name was null"));
+		return RegistryKey.create(ForgeRegistries.Keys.BIOMES, Objects.requireNonNull(ForgeRegistries.BIOMES.getKey(biome), "Biome registry name was null"));
 	}
 
 	@SubscribeEvent
@@ -109,25 +109,25 @@ public class ImmersiveWeapons {
 
 		// Biome modification
 		if (event.getCategory() == Category.FOREST) {
-			generation.withStructure(ConfiguredStructures.CONFIGURED_ABANDONED_FACTORY);
-			generation.withStructure(ConfiguredStructures.CONFIGURED_UNDERGROUND_BUNKER);
-			generation.withStructure(ConfiguredStructures.CONFIGURED_BEAR_TRAP);
+			generation.addStructureStart(ConfiguredStructures.CONFIGURED_ABANDONED_FACTORY);
+			generation.addStructureStart(ConfiguredStructures.CONFIGURED_UNDERGROUND_BUNKER);
+			generation.addStructureStart(ConfiguredStructures.CONFIGURED_BEAR_TRAP);
 		}
 		if (event.getCategory() == Category.PLAINS) {
-			generation.withStructure(ConfiguredStructures.CONFIGURED_ABANDONED_FACTORY);
+			generation.addStructureStart(ConfiguredStructures.CONFIGURED_ABANDONED_FACTORY);
 		}
 		if (event.getCategory() == Category.JUNGLE) {
-			generation.withStructure(ConfiguredStructures.CONFIGURED_PITFALL_TRAP);
+			generation.addStructureStart(ConfiguredStructures.CONFIGURED_PITFALL_TRAP);
 		}
 		if (event.getCategory() == Category.DESERT) {
-			generation.withStructure(ConfiguredStructures.CONFIGURED_LANDMINE_TRAP);
+			generation.addStructureStart(ConfiguredStructures.CONFIGURED_LANDMINE_TRAP);
 		}
 		if (Objects.requireNonNull(event.getName()).toString().equals(Objects.requireNonNull(DeferredRegistryHandler.BATTLEFIELD.get().getRegistryName()).toString())) {
-			generation.withStructure(ConfiguredStructures.CONFIGURED_BATTLEFIELD_CAMP);
-			generation.withStructure(ConfiguredStructures.CONFIGURED_UNDERGROUND_BUNKER);
-			generation.withStructure(ConfiguredStructures.CONFIGURED_BEAR_TRAP);
-			generation.withStructure(ConfiguredStructures.CONFIGURED_BATTLEFIELD_VILLAGE);
-			generation.withCarver(GenerationStage.Carving.AIR, new ConfiguredCarver(DeferredRegistryHandler.TRENCH_WORLD_CARVER.get(), new ProbabilityConfig(0.115f)));
+			generation.addStructureStart(ConfiguredStructures.CONFIGURED_BATTLEFIELD_CAMP);
+			generation.addStructureStart(ConfiguredStructures.CONFIGURED_UNDERGROUND_BUNKER);
+			generation.addStructureStart(ConfiguredStructures.CONFIGURED_BEAR_TRAP);
+			generation.addStructureStart(ConfiguredStructures.CONFIGURED_BATTLEFIELD_VILLAGE);
+			generation.addCarver(GenerationStage.Carving.AIR, new ConfiguredCarver(DeferredRegistryHandler.TRENCH_WORLD_CARVER.get(), new ProbabilityConfig(0.115f)));
 
 		}
 	}
@@ -138,20 +138,20 @@ public class ImmersiveWeapons {
 		if (event.getWorld() instanceof ServerWorld) {
 			ServerWorld serverWorld = (ServerWorld) event.getWorld();
 
-			if (serverWorld.getChunkProvider().getChunkGenerator() instanceof FlatChunkGenerator &&
-					serverWorld.getDimensionKey().equals(World.OVERWORLD)) {
+			if (serverWorld.getChunkSource().getGenerator() instanceof FlatChunkGenerator &&
+					serverWorld.dimension().equals(World.OVERWORLD)) {
 				return;
 			}
 
-			Map<Structure<?>, StructureSeparationSettings> tempMap = new HashMap<>(serverWorld.getChunkProvider().generator.func_235957_b_().func_236195_a_());
-			tempMap.put(Structures.ABANDONED_FACTORY.get(), DimensionStructuresSettings.field_236191_b_.get(Structures.ABANDONED_FACTORY.get()));
-			tempMap.put(Structures.PITFALL_TRAP.get(), DimensionStructuresSettings.field_236191_b_.get(Structures.PITFALL_TRAP.get()));
-			tempMap.put(Structures.BEAR_TRAP.get(), DimensionStructuresSettings.field_236191_b_.get(Structures.BEAR_TRAP.get()));
-			tempMap.put(Structures.LANDMINE_TRAP.get(), DimensionStructuresSettings.field_236191_b_.get(Structures.LANDMINE_TRAP.get()));
-			tempMap.put(Structures.UNDERGROUND_BUNKER.get(), DimensionStructuresSettings.field_236191_b_.get(Structures.UNDERGROUND_BUNKER.get()));
-			tempMap.put(Structures.BATTLEFIELD_CAMP.get(), DimensionStructuresSettings.field_236191_b_.get(Structures.BATTLEFIELD_CAMP.get()));
-			tempMap.put(Structures.BATTLEFIELD_VILLAGE.get(), DimensionStructuresSettings.field_236191_b_.get(Structures.BATTLEFIELD_VILLAGE.get()));
-			serverWorld.getChunkProvider().generator.func_235957_b_().field_236193_d_ = tempMap;
+			Map<Structure<?>, StructureSeparationSettings> tempMap = new HashMap<>(serverWorld.getChunkSource().generator.getSettings().structureConfig());
+			tempMap.put(Structures.ABANDONED_FACTORY.get(), DimensionStructuresSettings.DEFAULTS.get(Structures.ABANDONED_FACTORY.get()));
+			tempMap.put(Structures.PITFALL_TRAP.get(), DimensionStructuresSettings.DEFAULTS.get(Structures.PITFALL_TRAP.get()));
+			tempMap.put(Structures.BEAR_TRAP.get(), DimensionStructuresSettings.DEFAULTS.get(Structures.BEAR_TRAP.get()));
+			tempMap.put(Structures.LANDMINE_TRAP.get(), DimensionStructuresSettings.DEFAULTS.get(Structures.LANDMINE_TRAP.get()));
+			tempMap.put(Structures.UNDERGROUND_BUNKER.get(), DimensionStructuresSettings.DEFAULTS.get(Structures.UNDERGROUND_BUNKER.get()));
+			tempMap.put(Structures.BATTLEFIELD_CAMP.get(), DimensionStructuresSettings.DEFAULTS.get(Structures.BATTLEFIELD_CAMP.get()));
+			tempMap.put(Structures.BATTLEFIELD_VILLAGE.get(), DimensionStructuresSettings.DEFAULTS.get(Structures.BATTLEFIELD_VILLAGE.get()));
+			serverWorld.getChunkSource().generator.getSettings().structureConfig = tempMap;
 
 		}
 	}

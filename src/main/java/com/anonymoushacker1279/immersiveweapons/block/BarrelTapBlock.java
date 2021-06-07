@@ -26,118 +26,116 @@ import net.minecraft.world.World;
 
 public class BarrelTapBlock extends HorizontalBlock {
 
-	public static final DirectionProperty FACING = HorizontalBlock.HORIZONTAL_FACING;
-	protected static final VoxelShape SHAPE_NORTH = Block.makeCuboidShape(7.0D, 4.0D, 0.0D, 9.0D, 7.0D, 3.0D);
-	protected static final VoxelShape SHAPE_SOUTH = Block.makeCuboidShape(7.0D, 4.0D, 13.0D, 9.0D, 7.0D, 16.0D);
-	protected static final VoxelShape SHAPE_EAST = Block.makeCuboidShape(0.0D, 4.0D, 7.0D, 3.0D, 7.0D, 9.0D);
-	protected static final VoxelShape SHAPE_WEST = Block.makeCuboidShape(13.0D, 4.0D, 7.0D, 16.0D, 7.0D, 9.0D);
-	private BlockState blockstateNorth;
-	private BlockState blockstateSouth;
-	private BlockState blockstateEast;
-	private BlockState blockstateWest;
+	public static final DirectionProperty FACING = HorizontalBlock.FACING;
+	protected static final VoxelShape SHAPE_NORTH = Block.box(7.0D, 4.0D, 0.0D, 9.0D, 7.0D, 3.0D);
+	protected static final VoxelShape SHAPE_SOUTH = Block.box(7.0D, 4.0D, 13.0D, 9.0D, 7.0D, 16.0D);
+	protected static final VoxelShape SHAPE_EAST = Block.box(0.0D, 4.0D, 7.0D, 3.0D, 7.0D, 9.0D);
+	protected static final VoxelShape SHAPE_WEST = Block.box(13.0D, 4.0D, 7.0D, 16.0D, 7.0D, 9.0D);
 	private String directionToUse = "north"; // Default: check North for a barrel
 
 	public BarrelTapBlock(Properties properties) {
 		super(properties);
-		this.setDefaultState(
-				this.stateContainer.getBaseState().with(FACING, Direction.NORTH)
+		this.registerDefaultState(
+				this.stateDefinition.any().setValue(FACING, Direction.NORTH)
 		);
 	}
 
 	@Override
 	public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
 		Vector3d vector3d = state.getOffset(worldIn, pos);
-		switch (state.get(FACING)) {
+		switch (state.getValue(FACING)) {
 			case NORTH:
 			default:
-				return SHAPE_SOUTH.withOffset(vector3d.x, vector3d.y, vector3d.z);
+				return SHAPE_SOUTH.move(vector3d.x, vector3d.y, vector3d.z);
 			case SOUTH:
-				return SHAPE_NORTH.withOffset(vector3d.x, vector3d.y, vector3d.z);
+				return SHAPE_NORTH.move(vector3d.x, vector3d.y, vector3d.z);
 			case EAST:
-				return SHAPE_EAST.withOffset(vector3d.x, vector3d.y, vector3d.z);
+				return SHAPE_EAST.move(vector3d.x, vector3d.y, vector3d.z);
 			case WEST:
-				return SHAPE_WEST.withOffset(vector3d.x, vector3d.y, vector3d.z);
+				return SHAPE_WEST.move(vector3d.x, vector3d.y, vector3d.z);
 		}
 	}
 
 	@Override
-	public void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
+	public void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder) {
 		builder.add(FACING);
 	}
 
 	@Override
 	public BlockState getStateForPlacement(BlockItemUseContext context) {
-		return this.getDefaultState().with(FACING, context.getPlacementHorizontalFacing().getOpposite());
+		return this.defaultBlockState().setValue(FACING, context.getHorizontalDirection().getOpposite());
 	}
 
 	@Override
-	public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
-		blockstateNorth = worldIn.getBlockState(pos.north());
-		blockstateSouth = worldIn.getBlockState(pos.south());
-		blockstateEast = worldIn.getBlockState(pos.east());
-		blockstateWest = worldIn.getBlockState(pos.west());
+	public ActionResultType use(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
+		BlockState blockstateNorth = worldIn.getBlockState(pos.north());
+		BlockState blockstateSouth = worldIn.getBlockState(pos.south());
+		BlockState blockstateEast = worldIn.getBlockState(pos.east());
+		BlockState blockstateWest = worldIn.getBlockState(pos.west());
 
-		if (blockstateNorth.matchesBlock(Blocks.BARREL)) {
+		if (blockstateNorth.is(Blocks.BARREL)) {
 			directionToUse = "north";
-		} else if (blockstateSouth.matchesBlock(Blocks.BARREL)) {
+		} else if (blockstateSouth.is(Blocks.BARREL)) {
 			directionToUse = "south";
-		} else if (blockstateEast.matchesBlock(Blocks.BARREL)) {
+		} else if (blockstateEast.is(Blocks.BARREL)) {
 			directionToUse = "east";
-		} else if (blockstateWest.matchesBlock(Blocks.BARREL)) {
+		} else if (blockstateWest.is(Blocks.BARREL)) {
 			directionToUse = "west";
 		}
 
-		if (worldIn.isRemote) {
+		if (worldIn.isClientSide) {
 			return ActionResultType.SUCCESS;
 		} else {
-			if (blockstateNorth.matchesBlock(Blocks.BARREL) || blockstateSouth.matchesBlock(Blocks.BARREL) || blockstateEast.matchesBlock(Blocks.BARREL) || blockstateWest.matchesBlock(Blocks.BARREL)) {
+			if (blockstateNorth.is(Blocks.BARREL) || blockstateSouth.is(Blocks.BARREL) || blockstateEast.is(Blocks.BARREL) || blockstateWest.is(Blocks.BARREL)) {
 
-				TileEntity tileEntity = worldIn.getTileEntity(pos.north());
+				TileEntity tileEntity;
 
 				switch (directionToUse) {
 					case "south":
-						tileEntity = worldIn.getTileEntity(pos.south());
+						tileEntity = worldIn.getBlockEntity(pos.south());
 						break;
 					case "east":
-						tileEntity = worldIn.getTileEntity(pos.east());
+						tileEntity = worldIn.getBlockEntity(pos.east());
 						break;
 					case "west":
-						tileEntity = worldIn.getTileEntity(pos.west());
+						tileEntity = worldIn.getBlockEntity(pos.west());
 						break;
 					default:
-						tileEntity = worldIn.getTileEntity(pos.north());
+						tileEntity = worldIn.getBlockEntity(pos.north());
 						break;
 				}
 
 				ItemStack itemStack;
 
-				for (int i = 0; i < ((IInventory) tileEntity).getSizeInventory(); ++i) {
-					itemStack = ((IInventory) tileEntity).getStackInSlot(i);
+				if (tileEntity != null) {
+					for (int i = 0; i < ((IInventory) tileEntity).getContainerSize(); ++i) {
+						itemStack = ((IInventory) tileEntity).getItem(i);
 
-					// Define the various recipes
-					// They will be checked in order, so items higher in the list
-					// will be made before lower items
+						// Define the various recipes
+						// They will be checked in order, so items higher in the list
+						// will be made before lower items
 
-					// Bottle of Alcohol
-					if (itemStack.getItem() == Items.WHEAT && itemStack.getCount() >= 16) {
-						if (player.getHeldItemMainhand().getItem() == Items.GLASS_BOTTLE) {
-							player.addItemStackToInventory(new ItemStack(DeferredRegistryHandler.BOTTLE_OF_ALCOHOL.get()));
-							itemStack.shrink(16);
-							if (!player.abilities.isCreativeMode) {
-								player.getHeldItemMainhand().shrink(1);
+						// Bottle of Alcohol
+						if (itemStack.getItem() == Items.WHEAT && itemStack.getCount() >= 16) {
+							if (player.getMainHandItem().getItem() == Items.GLASS_BOTTLE) {
+								player.addItem(new ItemStack(DeferredRegistryHandler.BOTTLE_OF_ALCOHOL.get()));
+								itemStack.shrink(16);
+								if (!player.abilities.instabuild) {
+									player.getMainHandItem().shrink(1);
+								}
+								i = ((IInventory) tileEntity).getContainerSize();
 							}
-							i = ((IInventory) tileEntity).getSizeInventory();
 						}
-					}
-					// Bottle of Wine
-					else if (itemStack.getItem() == Items.SWEET_BERRIES && itemStack.getCount() >= 16) {
-						if (player.getHeldItemMainhand().getItem() == Items.GLASS_BOTTLE) {
-							player.addItemStackToInventory(new ItemStack(DeferredRegistryHandler.BOTTLE_OF_WINE.get()));
-							itemStack.shrink(16);
-							if (!player.abilities.isCreativeMode) {
-								player.getHeldItemMainhand().shrink(1);
+						// Bottle of Wine
+						else if (itemStack.getItem() == Items.SWEET_BERRIES && itemStack.getCount() >= 16) {
+							if (player.getMainHandItem().getItem() == Items.GLASS_BOTTLE) {
+								player.addItem(new ItemStack(DeferredRegistryHandler.BOTTLE_OF_WINE.get()));
+								itemStack.shrink(16);
+								if (!player.abilities.instabuild) {
+									player.getMainHandItem().shrink(1);
+								}
+								i = ((IInventory) tileEntity).getContainerSize();
 							}
-							i = ((IInventory) tileEntity).getSizeInventory();
 						}
 					}
 				}

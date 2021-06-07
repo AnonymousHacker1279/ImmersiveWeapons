@@ -34,7 +34,7 @@ public class LandmineTrapPieces {
 		int z = pos.getZ();
 
 		BlockPos rotationOffset = new BlockPos(0, 0, 0).rotate(rotation);
-		BlockPos blockPos = rotationOffset.add(x, pos.getY(), z);
+		BlockPos blockPos = rotationOffset.offset(x, pos.getY(), z);
 		pieceList.add(new LandmineTrapPieces.Piece(templateManager, CENTER, blockPos, rotation));
 	}
 
@@ -46,7 +46,7 @@ public class LandmineTrapPieces {
 			super(Structures.LT, 0);
 			this.resourceLocation = resourceLocationIn;
 			BlockPos blockpos = LandmineTrapPieces.OFFSET.get(resourceLocation);
-			this.templatePosition = pos.add(blockpos.getX(), blockpos.getY(), blockpos.getZ());
+			this.templatePosition = pos.offset(blockpos.getX(), blockpos.getY(), blockpos.getZ());
 			this.rotation = rotationIn;
 			this.setupPiece(templateManagerIn);
 		}
@@ -59,14 +59,14 @@ public class LandmineTrapPieces {
 		}
 
 		private void setupPiece(TemplateManager templateManager) {
-			Template template = templateManager.getTemplateDefaulted(this.resourceLocation);
+			Template template = templateManager.getOrCreate(this.resourceLocation);
 			PlacementSettings placementsettings = (new PlacementSettings()).setRotation(this.rotation).setMirror(Mirror.NONE);
 			this.setup(template, this.templatePosition, placementsettings);
 		}
 
 		@Override
-		protected void readAdditional(CompoundNBT tagCompound) {
-			super.readAdditional(tagCompound);
+		protected void addAdditionalSaveData(CompoundNBT tagCompound) {
+			super.addAdditionalSaveData(tagCompound);
 			tagCompound.putString("Template", this.resourceLocation.toString());
 			tagCompound.putString("Rot", this.rotation.name());
 		}

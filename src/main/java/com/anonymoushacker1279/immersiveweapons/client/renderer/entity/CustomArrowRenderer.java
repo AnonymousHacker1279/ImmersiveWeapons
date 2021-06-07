@@ -14,7 +14,7 @@ public class CustomArrowRenderer {
 		}
 
 		@Override
-		public ResourceLocation getEntityTexture(CopperArrowEntity entity) {
+		public ResourceLocation getTextureLocation(CopperArrowEntity entity) {
 			return new ResourceLocation(ImmersiveWeapons.MOD_ID, "textures/entity/projectiles/copper_arrow.png");
 		}
 	}
@@ -25,7 +25,7 @@ public class CustomArrowRenderer {
 		}
 
 		@Override
-		public ResourceLocation getEntityTexture(IronArrowEntity entity) {
+		public ResourceLocation getTextureLocation(IronArrowEntity entity) {
 			return new ResourceLocation(ImmersiveWeapons.MOD_ID, "textures/entity/projectiles/iron_arrow.png");
 		}
 	}
@@ -36,7 +36,7 @@ public class CustomArrowRenderer {
 		}
 
 		@Override
-		public ResourceLocation getEntityTexture(DiamondArrowEntity entity) {
+		public ResourceLocation getTextureLocation(DiamondArrowEntity entity) {
 			return new ResourceLocation(ImmersiveWeapons.MOD_ID, "textures/entity/projectiles/diamond_arrow.png");
 		}
 	}
@@ -47,7 +47,7 @@ public class CustomArrowRenderer {
 		}
 
 		@Override
-		public ResourceLocation getEntityTexture(GoldArrowEntity entity) {
+		public ResourceLocation getTextureLocation(GoldArrowEntity entity) {
 			return new ResourceLocation(ImmersiveWeapons.MOD_ID, "textures/entity/projectiles/gold_arrow.png");
 		}
 	}
@@ -58,7 +58,7 @@ public class CustomArrowRenderer {
 		}
 
 		@Override
-		public ResourceLocation getEntityTexture(StoneArrowEntity entity) {
+		public ResourceLocation getTextureLocation(StoneArrowEntity entity) {
 			return new ResourceLocation(ImmersiveWeapons.MOD_ID, "textures/entity/projectiles/stone_arrow.png");
 		}
 	}
@@ -69,7 +69,7 @@ public class CustomArrowRenderer {
 		}
 
 		@Override
-		public ResourceLocation getEntityTexture(WoodArrowEntity entity) {
+		public ResourceLocation getTextureLocation(WoodArrowEntity entity) {
 			return new ResourceLocation(ImmersiveWeapons.MOD_ID, "textures/entity/projectiles/wood_arrow.png");
 		}
 	}
@@ -80,7 +80,7 @@ public class CustomArrowRenderer {
 		}
 
 		@Override
-		public ResourceLocation getEntityTexture(NetheriteArrowEntity entity) {
+		public ResourceLocation getTextureLocation(NetheriteArrowEntity entity) {
 			return new ResourceLocation(ImmersiveWeapons.MOD_ID, "textures/entity/projectiles/netherite_arrow.png");
 		}
 	}
@@ -91,7 +91,7 @@ public class CustomArrowRenderer {
 		}
 
 		@Override
-		public ResourceLocation getEntityTexture(SmokeBombArrowEntity entity) {
+		public ResourceLocation getTextureLocation(SmokeBombArrowEntity entity) {
 			return new ResourceLocation(ImmersiveWeapons.MOD_ID, "textures/entity/projectiles/smoke_bomb_arrow.png");
 		}
 	}

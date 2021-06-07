@@ -9,19 +9,17 @@ import net.minecraft.util.Hand;
 import java.util.function.Predicate;
 
 public abstract class ShootableBullet extends Item {
-	public static final Predicate<ItemStack> MUSKET_BALLS = (stack) -> {
-		return stack.getItem().isIn(ItemTags.makeWrapperTag("immersiveweapons:projectiles/musket_ball"));
-	};
+	public static final Predicate<ItemStack> MUSKET_BALLS = (stack) -> stack.getItem().is(ItemTags.bind("immersiveweapons:projectiles/musket_ball"));
 
 	public ShootableBullet(Item.Properties builder) {
 		super(builder);
 	}
 
 	public static ItemStack getHeldAmmo(LivingEntity living, Predicate<ItemStack> isAmmo) {
-		if (isAmmo.test(living.getHeldItem(Hand.OFF_HAND))) {
-			return living.getHeldItem(Hand.OFF_HAND);
+		if (isAmmo.test(living.getItemInHand(Hand.OFF_HAND))) {
+			return living.getItemInHand(Hand.OFF_HAND);
 		} else {
-			return isAmmo.test(living.getHeldItem(Hand.MAIN_HAND)) ? living.getHeldItem(Hand.MAIN_HAND) : ItemStack.EMPTY;
+			return isAmmo.test(living.getItemInHand(Hand.MAIN_HAND)) ? living.getItemInHand(Hand.MAIN_HAND) : ItemStack.EMPTY;
 		}
 	}
 
@@ -38,7 +36,7 @@ public abstract class ShootableBullet extends Item {
 	 * Return the enchantability factor of the item, most of the time is based on material.
 	 */
 	@Override
-	public int getItemEnchantability() {
+	public int getEnchantmentValue() {
 		return 1;
 	}
 }

@@ -14,7 +14,7 @@ public class CopperArmorItem extends ArmorItem {
 	private boolean isLeggings = false;
 
 	public CopperArmorItem(IArmorMaterial material, EquipmentSlotType slot, int type) {
-		super(material, slot, (new Item.Properties().group(DeferredRegistryHandler.ITEM_GROUP)));
+		super(material, slot, (new Item.Properties().tab(DeferredRegistryHandler.ITEM_GROUP)));
 		if (type == 2) {
 			isLeggings = true;
 		}
@@ -22,6 +22,6 @@ public class CopperArmorItem extends ArmorItem {
 
 	@Override
 	public String getArmorTexture(ItemStack stack, Entity entity, EquipmentSlotType slot, String type) {
-		return (isLeggings == false ? ImmersiveWeapons.MOD_ID + ":textures/armor/copper_layer_1.png" : ImmersiveWeapons.MOD_ID + ":textures/armor/copper_layer_2.png");
+		return (!isLeggings ? ImmersiveWeapons.MOD_ID + ":textures/armor/copper_layer_1.png" : ImmersiveWeapons.MOD_ID + ":textures/armor/copper_layer_2.png");
 	}
 }

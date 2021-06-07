@@ -17,11 +17,11 @@ public class SmokeBombParticleFactory implements IParticleFactory<SmokeBombParti
 
 	@Nullable
 	@Override
-	public Particle makeParticle(SmokeBombParticleData smokeBombParticleData, ClientWorld world, double xPos, double yPos, double zPos, double xVelocity, double yVelocity, double zVelocity) {
+	public Particle createParticle(SmokeBombParticleData smokeBombParticleData, ClientWorld world, double xPos, double yPos, double zPos, double xVelocity, double yVelocity, double zVelocity) {
 		SmokeBombParticle newParticle = new SmokeBombParticle(world, xPos, yPos, zPos, xVelocity, yVelocity, zVelocity,
-				smokeBombParticleData.getTint(), smokeBombParticleData.getDiameter(),
-				sprites);
-		newParticle.selectSpriteRandomly(sprites);  // choose a random sprite from the available list (in this case there is only one)
+				smokeBombParticleData.getTint(), smokeBombParticleData.getDiameter()
+		);
+		newParticle.pickSprite(sprites);  // choose a random sprite from the available list (in this case there is only one)
 		return newParticle;
 	}
 }

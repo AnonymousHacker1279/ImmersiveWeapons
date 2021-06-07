@@ -30,43 +30,42 @@ public class LandmineBlock extends Block implements IWaterLoggable {
 	public static final BooleanProperty ARMED = BooleanProperty.create("armed");
 	public static final BooleanProperty SAND = BooleanProperty.create("sand");
 	public static final BooleanProperty VINES = BooleanProperty.create("vines");
-	protected static final VoxelShape SHAPE = Block.makeCuboidShape(2.0D, 0.0D, 2.0D, 14.0D, 3.5D, 14.0D);
+	protected static final VoxelShape SHAPE = Block.box(2.0D, 0.0D, 2.0D, 14.0D, 3.5D, 14.0D);
 	private static final DamageSource damageSource = new DamageSource("immersiveweapons.landmine");
-	//private static final ExplosionContext explosionContext = new ExplosionContext();
 
 	public LandmineBlock(AbstractBlock.Properties properties) {
 		super(properties);
-		this.setDefaultState(this.stateContainer.getBaseState().with(ARMED, Boolean.valueOf(false)).with(WATERLOGGED, Boolean.valueOf(false)).with(VINES, Boolean.valueOf(false)).with(SAND, Boolean.valueOf(false)));
+		this.registerDefaultState(this.stateDefinition.any().setValue(ARMED, Boolean.FALSE).setValue(WATERLOGGED, Boolean.FALSE).setValue(VINES, Boolean.FALSE).setValue(SAND, Boolean.FALSE));
 
 	}
 
 	private static void explode(World worldIn, BlockPos pos, @Nullable LivingEntity entityIn) {
-		if (!worldIn.isRemote) {
-			worldIn.createExplosion(entityIn, damageSource, null, pos.getX(), pos.getY(), pos.getZ(), 2.0F, false, Explosion.Mode.BREAK);
-			worldIn.playSound(pos.getX(), pos.getY(), pos.getZ(), SoundEvents.ENTITY_TNT_PRIMED, SoundCategory.BLOCKS, 1.0F, 1.0F, false);
+		if (!worldIn.isClientSide) {
+			worldIn.explode(entityIn, damageSource, null, pos.getX(), pos.getY(), pos.getZ(), 2.0F, false, Explosion.Mode.BREAK);
+			worldIn.playLocalSound(pos.getX(), pos.getY(), pos.getZ(), SoundEvents.TNT_PRIMED, SoundCategory.BLOCKS, 1.0F, 1.0F, false);
 		}
 	}
 
 	@Override
-	public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
-		if (!worldIn.isRemote) {
-			ItemStack currentlyHeldItem = player.getHeldItemMainhand();
-			if (state.get(ARMED) && currentlyHeldItem.getItem() == DeferredRegistryHandler.PLIERS.get()) {
-				worldIn.setBlockState(pos, state.with(ARMED, false), 3);
+	public ActionResultType use(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
+		if (!worldIn.isClientSide) {
+			ItemStack currentlyHeldItem = player.getMainHandItem();
+			if (state.getValue(ARMED) && currentlyHeldItem.getItem() == DeferredRegistryHandler.PLIERS.get()) {
+				worldIn.setBlock(pos, state.setValue(ARMED, false), 3);
 				return ActionResultType.PASS;
 			}
-			if (!state.get(ARMED) && currentlyHeldItem.getItem() != DeferredRegistryHandler.PLIERS.get()) {
-				worldIn.setBlockState(pos, state.with(ARMED, true), 3);
+			if (!state.getValue(ARMED) && currentlyHeldItem.getItem() != DeferredRegistryHandler.PLIERS.get()) {
+				worldIn.setBlock(pos, state.setValue(ARMED, true), 3);
 			}
-			if (!state.get(VINES) && !state.get(SAND) && currentlyHeldItem.getItem() == Items.VINE) {
-				worldIn.setBlockState(pos, state.with(VINES, true), 3);
-				if (!player.abilities.isCreativeMode) {
+			if (!state.getValue(VINES) && !state.getValue(SAND) && currentlyHeldItem.getItem() == Items.VINE) {
+				worldIn.setBlock(pos, state.setValue(VINES, true), 3);
+				if (!player.abilities.instabuild) {
 					currentlyHeldItem.shrink(1);
 				}
 			}
-			if (!state.get(SAND) && !state.get(VINES) && currentlyHeldItem.getItem() == Items.SAND) {
-				worldIn.setBlockState(pos, state.with(SAND, true), 3);
-				if (!player.abilities.isCreativeMode) {
+			if (!state.getValue(SAND) && !state.getValue(VINES) && currentlyHeldItem.getItem() == Items.SAND) {
+				worldIn.setBlock(pos, state.setValue(SAND, true), 3);
+				if (!player.abilities.instabuild) {
 					currentlyHeldItem.shrink(1);
 				}
 			}
@@ -85,13 +84,13 @@ public class LandmineBlock extends Block implements IWaterLoggable {
 	}
 
 	@Override
-	public BlockRenderType getRenderType(BlockState state) {
+	public BlockRenderType getRenderShape(BlockState state) {
 		return BlockRenderType.MODEL;
 	}
 
 	@Override
-	public void onEntityCollision(BlockState state, World world, BlockPos pos, Entity entity) {
-		if (state.get(ARMED) && !state.get(WATERLOGGED)) {
+	public void entityInside(BlockState state, World world, BlockPos pos, Entity entity) {
+		if (state.getValue(ARMED) && !state.getValue(WATERLOGGED)) {
 			if (entity instanceof MobEntity) {
 				explode(world, pos, (LivingEntity) entity);
 			}
@@ -103,49 +102,49 @@ public class LandmineBlock extends Block implements IWaterLoggable {
 
 	@SuppressWarnings("deprecation")
 	@Override
-	public BlockState updatePostPlacement(BlockState stateIn, Direction facing, BlockState facingState, IWorld worldIn, BlockPos currentPos, BlockPos facingPos) {
-		if (stateIn.get(WATERLOGGED)) {
-			worldIn.getPendingFluidTicks().scheduleTick(currentPos, Fluids.WATER, Fluids.WATER.getTickRate(worldIn));
+	public BlockState updateShape(BlockState stateIn, Direction facing, BlockState facingState, IWorld worldIn, BlockPos currentPos, BlockPos facingPos) {
+		if (stateIn.getValue(WATERLOGGED)) {
+			worldIn.getLiquidTicks().scheduleTick(currentPos, Fluids.WATER, Fluids.WATER.getTickDelay(worldIn));
 		}
 
-		return facing == Direction.DOWN && !stateIn.isValidPosition(worldIn, currentPos) ? Blocks.AIR.getDefaultState() : super.updatePostPlacement(stateIn, facing, facingState, worldIn, currentPos, facingPos);
+		return facing == Direction.DOWN && !stateIn.canSurvive(worldIn, currentPos) ? Blocks.AIR.defaultBlockState() : super.updateShape(stateIn, facing, facingState, worldIn, currentPos, facingPos);
 	}
 
 	@Override
 	public BlockState getStateForPlacement(BlockItemUseContext context) {
-		final FluidState ifluidstate = context.getWorld().getFluidState(context.getPos());
+		final FluidState ifluidstate = context.getLevel().getFluidState(context.getClickedPos());
 
-		return this.getDefaultState().with(WATERLOGGED, ifluidstate.getFluid() == Fluids.WATER);
+		return this.defaultBlockState().setValue(WATERLOGGED, ifluidstate.getType() == Fluids.WATER);
 	}
 
 	@SuppressWarnings("deprecation")
 	@Override
 	public FluidState getFluidState(BlockState state) {
-		return state.get(WATERLOGGED) ? Fluids.WATER.getStillFluidState(false) : super.getFluidState(state);
+		return state.getValue(WATERLOGGED) ? Fluids.WATER.getSource(false) : super.getFluidState(state);
 	}
 
 	@Override
-	public boolean isValidPosition(BlockState state, IWorldReader worldIn, BlockPos pos) {
-		return Block.hasEnoughSolidSide(worldIn, pos.down(), Direction.UP);
+	public boolean canSurvive(BlockState state, IWorldReader worldIn, BlockPos pos) {
+		return Block.canSupportCenter(worldIn, pos.below(), Direction.UP);
 	}
 
 	@Override
-	protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
+	protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder) {
 		builder.add(ARMED, SAND, VINES, WATERLOGGED);
 	}
 
 	@Override
-	public void onExplosionDestroy(World worldIn, BlockPos pos, Explosion explosionIn) {
-		if (!worldIn.isRemote) {
+	public void wasExploded(World worldIn, BlockPos pos, Explosion explosionIn) {
+		if (!worldIn.isClientSide) {
 			explode(worldIn, pos, null);
 		}
 	}
 
 	@Override
-	public void onBlockHarvested(World worldIn, BlockPos pos, BlockState state, PlayerEntity player) {
-		if (!worldIn.isRemote() && !player.isCreative() && state.get(ARMED)) {
+	public void playerWillDestroy(World worldIn, BlockPos pos, BlockState state, PlayerEntity player) {
+		if (!worldIn.isClientSide() && !player.isCreative() && state.getValue(ARMED)) {
 			explode(worldIn, pos, player);
 		}
-		super.onBlockHarvested(worldIn, pos, state, player);
+		super.playerWillDestroy(worldIn, pos, state, player);
 	}
 }

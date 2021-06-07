@@ -4,6 +4,6 @@ import net.minecraft.item.Food;
 
 public class CustomFoods {
 
-	public static final Food CHOCOLATE_BAR = (new Food.Builder()).hunger(2).saturation(0.2F).fastToEat().build();
-	public static final Food MRE = (new Food.Builder()).hunger(11).saturation(12.6f).build();
+	public static final Food CHOCOLATE_BAR = (new Food.Builder()).nutrition(2).saturationMod(0.2F).fast().build();
+	public static final Food MRE = (new Food.Builder()).nutrition(11).saturationMod(12.6f).build();
 }

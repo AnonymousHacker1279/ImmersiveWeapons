@@ -17,6 +17,12 @@
 		},
 		"armed=true,sand=true,vines=false": {
 			"model": "immersiveweapons:block/landmine_armed_sand"
+		},
+		"armed=false,sand=true,vines=true": {
+			"model": "immersiveweapons:block/landmine_disarmed"
+		},
+		"armed=true,sand=true,vines=true": {
+			"model": "immersiveweapons:block/landmine_armed"
 		}
 	}
 }

@@ -17,15 +17,15 @@ public class OpenFenceGateGoal extends InteractFenceGateGoal {
 	 * Returns whether an in-progress EntityAIBase should continue executing
 	 */
 	@Override
-	public boolean shouldContinueExecuting() {
-		return this.closeGate && this.closeGateTemporisation > 0 && super.shouldContinueExecuting();
+	public boolean canContinueToUse() {
+		return this.closeGate && this.closeGateTemporisation > 0 && super.canContinueToUse();
 	}
 
 	/**
 	 * Execute a one shot task or start executing a continuous task
 	 */
 	@Override
-	public void startExecuting() {
+	public void start() {
 		this.closeGateTemporisation = 20;
 		this.toggleGate(true);
 	}
@@ -34,7 +34,7 @@ public class OpenFenceGateGoal extends InteractFenceGateGoal {
 	 * Reset the task's internal state. Called when this task is interrupted by another one
 	 */
 	@Override
-	public void resetTask() {
+	public void stop() {
 		this.toggleGate(false);
 	}
 

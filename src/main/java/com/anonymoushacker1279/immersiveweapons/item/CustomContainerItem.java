@@ -9,7 +9,7 @@ public class CustomContainerItem {
 
 		public BlueprintItem(Properties properties) {
 			super(properties);
-			properties.containerItem(this.getItem());
+			properties.craftRemainder(this.getItem());
 		}
 
 		@Override
@@ -28,7 +28,7 @@ public class CustomContainerItem {
 
 		public BasicContainerItem(Properties properties) {
 			super(properties);
-			properties.containerItem(this.getItem());
+			properties.craftRemainder(this.getItem());
 		}
 
 		@Override

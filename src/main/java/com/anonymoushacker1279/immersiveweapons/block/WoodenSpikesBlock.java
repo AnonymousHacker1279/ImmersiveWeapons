@@ -23,37 +23,37 @@ import net.minecraft.world.World;
 public class WoodenSpikesBlock extends HorizontalBlock implements IWaterLoggable {
 
 	public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
-	public static final DirectionProperty FACING = HorizontalBlock.HORIZONTAL_FACING;
+	public static final DirectionProperty FACING = HorizontalBlock.FACING;
+	protected static final VoxelShape SHAPE = Block.box(1.0D, 0.0D, 1.0D, 15D, 14D, 15D);
 	private final DamageSource damageSource = new DamageSource("immersiveweapons.spike_trap");
-	protected static final VoxelShape SHAPE = Block.makeCuboidShape(1.0D, 0.0D, 1.0D, 15D, 14D, 15D);
 
 	public WoodenSpikesBlock(Properties properties) {
 		super(properties);
-		this.setDefaultState(this.stateContainer.getBaseState().with(WATERLOGGED, Boolean.FALSE));
+		this.registerDefaultState(this.stateDefinition.any().setValue(WATERLOGGED, Boolean.FALSE));
 	}
 
 	@Override
-	public BlockState updatePostPlacement(BlockState stateIn, Direction facing, BlockState facingState, IWorld worldIn, BlockPos currentPos, BlockPos facingPos) {
-		if (stateIn.get(WATERLOGGED)) {
-			worldIn.getPendingFluidTicks().scheduleTick(currentPos, Fluids.WATER, Fluids.WATER.getTickRate(worldIn));
+	public BlockState updateShape(BlockState stateIn, Direction facing, BlockState facingState, IWorld worldIn, BlockPos currentPos, BlockPos facingPos) {
+		if (stateIn.getValue(WATERLOGGED)) {
+			worldIn.getLiquidTicks().scheduleTick(currentPos, Fluids.WATER, Fluids.WATER.getTickDelay(worldIn));
 		}
 
-		return facing == Direction.DOWN && !stateIn.isValidPosition(worldIn, currentPos) ? Blocks.AIR.getDefaultState() : super.updatePostPlacement(stateIn, facing, facingState, worldIn, currentPos, facingPos);
+		return facing == Direction.DOWN && !stateIn.canSurvive(worldIn, currentPos) ? Blocks.AIR.defaultBlockState() : super.updateShape(stateIn, facing, facingState, worldIn, currentPos, facingPos);
 	}
 
 	@Override
 	public BlockState getStateForPlacement(BlockItemUseContext context) {
-		FluidState ifluidstate = context.getWorld().getFluidState(context.getPos());
-		return this.getDefaultState().with(FACING, context.getPlacementHorizontalFacing().getOpposite()).with(WATERLOGGED, ifluidstate.getFluid() == Fluids.WATER);
+		FluidState ifluidstate = context.getLevel().getFluidState(context.getClickedPos());
+		return this.defaultBlockState().setValue(FACING, context.getHorizontalDirection().getOpposite()).setValue(WATERLOGGED, ifluidstate.getType() == Fluids.WATER);
 	}
 
 	@Override
 	public FluidState getFluidState(BlockState state) {
-		return state.get(WATERLOGGED) ? Fluids.WATER.getStillFluidState(false) : super.getFluidState(state);
+		return state.getValue(WATERLOGGED) ? Fluids.WATER.getSource(false) : super.getFluidState(state);
 	}
 
 	@Override
-	protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
+	protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder) {
 		builder.add(WATERLOGGED);
 		builder.add(FACING);
 	}
@@ -61,7 +61,7 @@ public class WoodenSpikesBlock extends HorizontalBlock implements IWaterLoggable
 	@Override
 	public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
 		Vector3d vector3d = state.getOffset(worldIn, pos);
-		return SHAPE.withOffset(vector3d.x, vector3d.y, vector3d.z);
+		return SHAPE.move(vector3d.x, vector3d.y, vector3d.z);
 	}
 
 	@Override
@@ -70,14 +70,14 @@ public class WoodenSpikesBlock extends HorizontalBlock implements IWaterLoggable
 	}
 
 	@Override
-	public void onEntityCollision(BlockState state, World world, BlockPos pos, Entity entity) {
+	public void entityInside(BlockState state, World world, BlockPos pos, Entity entity) {
 		if (entity instanceof LivingEntity) {
-			entity.setMotionMultiplier(state, new Vector3d(0.85F, 0.80D, 0.85F));
-			if (!world.isRemote && (entity.lastTickPosX != entity.getPosX() || entity.lastTickPosZ != entity.getPosZ())) {
-				double d0 = Math.abs(entity.getPosX() - entity.lastTickPosX);
-				double d1 = Math.abs(entity.getPosZ() - entity.lastTickPosZ);
+			entity.makeStuckInBlock(state, new Vector3d(0.85F, 0.80D, 0.85F));
+			if (!world.isClientSide && (entity.xOld != entity.getX() || entity.zOld != entity.getZ())) {
+				double d0 = Math.abs(entity.getX() - entity.xOld);
+				double d1 = Math.abs(entity.getZ() - entity.zOld);
 				if (d0 >= (double) 0.003F || d1 >= (double) 0.003F) {
-					entity.attackEntityFrom(damageSource, 1.5F);
+					entity.hurt(damageSource, 1.5F);
 				}
 			}
 		}

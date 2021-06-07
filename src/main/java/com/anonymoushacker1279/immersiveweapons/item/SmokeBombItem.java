@@ -13,7 +13,7 @@ import net.minecraft.world.World;
 
 public class SmokeBombItem extends Item {
 
-	private String color = "none";
+	private final String color;
 
 	public SmokeBombItem(Item.Properties builder, String color) {
 		super(builder);
@@ -21,23 +21,23 @@ public class SmokeBombItem extends Item {
 	}
 
 	@Override
-	public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand handIn) {
-		ItemStack itemstack = playerIn.getHeldItem(handIn);
-		worldIn.playSound(null, playerIn.getPosX(), playerIn.getPosY(), playerIn.getPosZ(), DeferredRegistryHandler.GENERIC_WHOOSH.get(), SoundCategory.NEUTRAL, 0.5F, 0.4F / (random.nextFloat() * 0.4F + 0.8F));
-		if (!worldIn.isRemote) {
+	public ActionResult<ItemStack> use(World worldIn, PlayerEntity playerIn, Hand handIn) {
+		ItemStack itemstack = playerIn.getItemInHand(handIn);
+		worldIn.playSound(null, playerIn.getX(), playerIn.getY(), playerIn.getZ(), DeferredRegistryHandler.GENERIC_WHOOSH.get(), SoundCategory.NEUTRAL, 0.5F, 0.4F / (random.nextFloat() * 0.4F + 0.8F));
+		if (!worldIn.isClientSide) {
 			SmokeBombEntity.setColor(color);
 			SmokeBombEntity smokeBombEntity = new SmokeBombEntity(worldIn, playerIn);
 			smokeBombEntity.setItem(itemstack);
-			smokeBombEntity.setDirectionAndMovement(playerIn, playerIn.rotationPitch, playerIn.rotationYaw, 0.0F, 1.5F, 1.0F);
-			worldIn.addEntity(smokeBombEntity);
+			smokeBombEntity.shootFromRotation(playerIn, playerIn.xRot, playerIn.yRot, 0.0F, 1.5F, 1.0F);
+			worldIn.addFreshEntity(smokeBombEntity);
 		}
 
-		playerIn.addStat(Stats.ITEM_USED.get(this));
-		if (!playerIn.abilities.isCreativeMode) {
+		playerIn.awardStat(Stats.ITEM_USED.get(this));
+		if (!playerIn.abilities.instabuild) {
 			itemstack.shrink(1);
-			playerIn.getCooldownTracker().setCooldown(this, 100);    // Helps to prevent spamming, mostly to reduce the total particles in an area
+			playerIn.getCooldowns().addCooldown(this, 100);    // Helps to prevent spamming, mostly to reduce the total particles in an area
 		}
 
-		return ActionResult.func_233538_a_(itemstack, worldIn.isRemote());
+		return ActionResult.sidedSuccess(itemstack, worldIn.isClientSide());
 	}
 }

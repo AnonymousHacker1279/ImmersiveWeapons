@@ -23,22 +23,22 @@ public class UsedSyringeItem extends Item {
 	}
 
 	@Override
-	public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand handIn) {
-		ItemStack itemstack = playerIn.getHeldItem(handIn);
-		RayTraceResult rayTraceResult = Minecraft.getInstance().objectMouseOver;
-		if (rayTraceResult.getType() != Type.ENTITY) {
+	public ActionResult<ItemStack> use(World worldIn, PlayerEntity playerIn, Hand handIn) {
+		ItemStack itemstack = playerIn.getItemInHand(handIn);
+		RayTraceResult rayTraceResult = Minecraft.getInstance().hitResult;
+		if (rayTraceResult != null && rayTraceResult.getType() != Type.ENTITY) {
 			int randomNumber = GeneralUtilities.getRandomNumber(0, 100);
 			if (randomNumber <= 80) {
-				playerIn.addPotionEffect(new EffectInstance(Effects.POISON, 500, 0, false, true));
+				playerIn.addEffect(new EffectInstance(Effects.POISON, 500, 0, false, true));
 				if (randomNumber <= 30) {
-					playerIn.attackEntityFrom(damageSource, 8.0F);
+					playerIn.hurt(damageSource, 8.0F);
 				}
 			}
-			if (!playerIn.abilities.isCreativeMode) {
+			if (!playerIn.abilities.instabuild) {
 				itemstack.shrink(1);
 			}
 		}
 
-		return ActionResult.func_233538_a_(itemstack, worldIn.isRemote());
+		return ActionResult.sidedSuccess(itemstack, worldIn.isClientSide());
 	}
 }

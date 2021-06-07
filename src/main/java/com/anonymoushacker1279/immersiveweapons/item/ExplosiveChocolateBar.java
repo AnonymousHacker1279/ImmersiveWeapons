@@ -16,8 +16,8 @@ public class ExplosiveChocolateBar extends Item {
 	}
 
 	@Override
-	public ItemStack onItemUseFinish(ItemStack stack, World worldIn, LivingEntity entityLiving) {
-		worldIn.createExplosion(null, damageSource, null, entityLiving.getPosition().getX(), entityLiving.getPosition().getY(), entityLiving.getPosition().getZ(), 2.0F, false, Explosion.Mode.NONE);
-		return super.onItemUseFinish(stack, worldIn, entityLiving);
+	public ItemStack finishUsingItem(ItemStack stack, World worldIn, LivingEntity entityLiving) {
+		worldIn.explode(null, damageSource, null, entityLiving.blockPosition().getX(), entityLiving.blockPosition().getY(), entityLiving.blockPosition().getZ(), 2.0F, false, Explosion.Mode.NONE);
+		return super.finishUsingItem(stack, worldIn, entityLiving);
 	}
 }

@@ -27,28 +27,28 @@ public class BandageItem extends Item {
 	}
 
 	@Override
-	public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand handIn) {
-		ItemStack itemstack = playerIn.getHeldItem(handIn);
-		RayTraceResult rayTraceResult = Minecraft.getInstance().objectMouseOver;
-		if (rayTraceResult.getType() != Type.ENTITY) {
-			playerIn.addPotionEffect(new EffectInstance(Effects.REGENERATION, 240, 0, false, true));
-			if (!playerIn.abilities.isCreativeMode) {
+	public ActionResult<ItemStack> use(World worldIn, PlayerEntity playerIn, Hand handIn) {
+		ItemStack itemstack = playerIn.getItemInHand(handIn);
+		RayTraceResult rayTraceResult = Minecraft.getInstance().hitResult;
+		if (rayTraceResult != null && rayTraceResult.getType() != Type.ENTITY) {
+			playerIn.addEffect(new EffectInstance(Effects.REGENERATION, 240, 0, false, true));
+			if (!playerIn.abilities.instabuild) {
 				itemstack.shrink(1);
-				playerIn.getCooldownTracker().setCooldown(this, 300);
+				playerIn.getCooldowns().addCooldown(this, 300);
 			}
 		}
 
-		return ActionResult.func_233538_a_(itemstack, worldIn.isRemote());
+		return ActionResult.sidedSuccess(itemstack, worldIn.isClientSide());
 	}
 
 	@Override
-	public ActionResultType itemInteractionForEntity(ItemStack stack, PlayerEntity playerIn, LivingEntity entity, Hand hand) {
-		if (entity.world.isRemote) {
+	public ActionResultType interactLivingEntity(ItemStack stack, PlayerEntity playerIn, LivingEntity entity, Hand hand) {
+		if (entity.level.isClientSide) {
 			return ActionResultType.PASS;
 		}
 
-		entity.addPotionEffect(new EffectInstance(Effects.REGENERATION, 240, 0, false, true));
-		if (!playerIn.abilities.isCreativeMode) {
+		entity.addEffect(new EffectInstance(Effects.REGENERATION, 240, 0, false, true));
+		if (!playerIn.abilities.instabuild) {
 			stack.shrink(1);
 		}
 
@@ -56,7 +56,7 @@ public class BandageItem extends Item {
 	}
 
 	@Override
-	public UseAction getUseAction(ItemStack stack) {
+	public UseAction getUseAnimation(ItemStack stack) {
 		return UseAction.DRINK;
 	}
 }

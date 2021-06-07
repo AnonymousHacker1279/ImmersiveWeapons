@@ -14,7 +14,7 @@ public class BulletRenderer {
 		}
 
 		@Override
-		public ResourceLocation getEntityTexture(WoodBulletEntity entity) {
+		public ResourceLocation getTextureLocation(WoodBulletEntity entity) {
 			return new ResourceLocation(ImmersiveWeapons.MOD_ID, "textures/entity/projectiles/wood_musket_ball.png");
 		}
 	}
@@ -25,7 +25,7 @@ public class BulletRenderer {
 		}
 
 		@Override
-		public ResourceLocation getEntityTexture(StoneBulletEntity entity) {
+		public ResourceLocation getTextureLocation(StoneBulletEntity entity) {
 			return new ResourceLocation(ImmersiveWeapons.MOD_ID, "textures/entity/projectiles/stone_musket_ball.png");
 		}
 	}
@@ -36,7 +36,7 @@ public class BulletRenderer {
 		}
 
 		@Override
-		public ResourceLocation getEntityTexture(CopperBulletEntity entity) {
+		public ResourceLocation getTextureLocation(CopperBulletEntity entity) {
 			return new ResourceLocation(ImmersiveWeapons.MOD_ID, "textures/entity/projectiles/copper_musket_ball.png");
 		}
 	}
@@ -47,7 +47,7 @@ public class BulletRenderer {
 		}
 
 		@Override
-		public ResourceLocation getEntityTexture(IronBulletEntity entity) {
+		public ResourceLocation getTextureLocation(IronBulletEntity entity) {
 			return new ResourceLocation(ImmersiveWeapons.MOD_ID, "textures/entity/projectiles/iron_musket_ball.png");
 		}
 	}
@@ -58,7 +58,7 @@ public class BulletRenderer {
 		}
 
 		@Override
-		public ResourceLocation getEntityTexture(GoldBulletEntity entity) {
+		public ResourceLocation getTextureLocation(GoldBulletEntity entity) {
 			return new ResourceLocation(ImmersiveWeapons.MOD_ID, "textures/entity/projectiles/gold_musket_ball.png");
 		}
 	}
@@ -69,7 +69,7 @@ public class BulletRenderer {
 		}
 
 		@Override
-		public ResourceLocation getEntityTexture(DiamondBulletEntity entity) {
+		public ResourceLocation getTextureLocation(DiamondBulletEntity entity) {
 			return new ResourceLocation(ImmersiveWeapons.MOD_ID, "textures/entity/projectiles/diamond_musket_ball.png");
 		}
 	}
@@ -80,7 +80,7 @@ public class BulletRenderer {
 		}
 
 		@Override
-		public ResourceLocation getEntityTexture(NetheriteBulletEntity entity) {
+		public ResourceLocation getTextureLocation(NetheriteBulletEntity entity) {
 			return new ResourceLocation(ImmersiveWeapons.MOD_ID, "textures/entity/projectiles/netherite_musket_ball.png");
 		}
 	}

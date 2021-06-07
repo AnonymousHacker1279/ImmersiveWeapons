@@ -19,9 +19,9 @@ public class Bullets {
 		@Override
 		public WoodBulletEntity createArrow(World worldIn, ItemStack stack, LivingEntity shooter) {
 			WoodBulletEntity bulletentity = new WoodBulletEntity(shooter, worldIn, ref.get());
-			bulletentity.setDamage(this.damage);
-			bulletentity.pickupStatus = PickupStatus.DISALLOWED;
-			bulletentity.setHitSound(DeferredRegistryHandler.BULLET_WHIZZ.get());
+			bulletentity.setBaseDamage(this.damage);
+			bulletentity.pickup = PickupStatus.DISALLOWED;
+			bulletentity.setSoundEvent(DeferredRegistryHandler.BULLET_WHIZZ.get());
 			return bulletentity;
 		}
 	}
@@ -36,9 +36,9 @@ public class Bullets {
 		@Override
 		public StoneBulletEntity createArrow(World worldIn, ItemStack stack, LivingEntity shooter) {
 			StoneBulletEntity bulletentity = new StoneBulletEntity(shooter, worldIn, ref.get());
-			bulletentity.setDamage(this.damage);
-			bulletentity.pickupStatus = PickupStatus.DISALLOWED;
-			bulletentity.setHitSound(DeferredRegistryHandler.BULLET_WHIZZ.get());
+			bulletentity.setBaseDamage(this.damage);
+			bulletentity.pickup = PickupStatus.DISALLOWED;
+			bulletentity.setSoundEvent(DeferredRegistryHandler.BULLET_WHIZZ.get());
 			return bulletentity;
 		}
 	}
@@ -53,9 +53,9 @@ public class Bullets {
 		@Override
 		public CopperBulletEntity createArrow(World worldIn, ItemStack stack, LivingEntity shooter) {
 			CopperBulletEntity bulletentity = new CopperBulletEntity(shooter, worldIn, ref.get());
-			bulletentity.setDamage(this.damage);
-			bulletentity.pickupStatus = PickupStatus.DISALLOWED;
-			bulletentity.setHitSound(DeferredRegistryHandler.BULLET_WHIZZ.get());
+			bulletentity.setBaseDamage(this.damage);
+			bulletentity.pickup = PickupStatus.DISALLOWED;
+			bulletentity.setSoundEvent(DeferredRegistryHandler.BULLET_WHIZZ.get());
 			return bulletentity;
 		}
 	}
@@ -70,9 +70,9 @@ public class Bullets {
 		@Override
 		public IronBulletEntity createArrow(World worldIn, ItemStack stack, LivingEntity shooter) {
 			IronBulletEntity bulletentity = new IronBulletEntity(shooter, worldIn, ref.get());
-			bulletentity.setDamage(this.damage);
-			bulletentity.pickupStatus = PickupStatus.DISALLOWED;
-			bulletentity.setHitSound(DeferredRegistryHandler.BULLET_WHIZZ.get());
+			bulletentity.setBaseDamage(this.damage);
+			bulletentity.pickup = PickupStatus.DISALLOWED;
+			bulletentity.setSoundEvent(DeferredRegistryHandler.BULLET_WHIZZ.get());
 			return bulletentity;
 		}
 	}
@@ -87,9 +87,9 @@ public class Bullets {
 		@Override
 		public GoldBulletEntity createArrow(World worldIn, ItemStack stack, LivingEntity shooter) {
 			GoldBulletEntity bulletentity = new GoldBulletEntity(shooter, worldIn, ref.get());
-			bulletentity.setDamage(this.damage);
-			bulletentity.pickupStatus = PickupStatus.DISALLOWED;
-			bulletentity.setHitSound(DeferredRegistryHandler.BULLET_WHIZZ.get());
+			bulletentity.setBaseDamage(this.damage);
+			bulletentity.pickup = PickupStatus.DISALLOWED;
+			bulletentity.setSoundEvent(DeferredRegistryHandler.BULLET_WHIZZ.get());
 			return bulletentity;
 		}
 	}
@@ -104,9 +104,9 @@ public class Bullets {
 		@Override
 		public DiamondBulletEntity createArrow(World worldIn, ItemStack stack, LivingEntity shooter) {
 			DiamondBulletEntity bulletentity = new DiamondBulletEntity(shooter, worldIn, ref.get());
-			bulletentity.setDamage(this.damage);
-			bulletentity.pickupStatus = PickupStatus.DISALLOWED;
-			bulletentity.setHitSound(DeferredRegistryHandler.BULLET_WHIZZ.get());
+			bulletentity.setBaseDamage(this.damage);
+			bulletentity.pickup = PickupStatus.DISALLOWED;
+			bulletentity.setSoundEvent(DeferredRegistryHandler.BULLET_WHIZZ.get());
 			bulletentity.setPierceLevel((byte) 1);
 			return bulletentity;
 		}
@@ -122,9 +122,9 @@ public class Bullets {
 		@Override
 		public NetheriteBulletEntity createArrow(World worldIn, ItemStack stack, LivingEntity shooter) {
 			NetheriteBulletEntity bulletentity = new NetheriteBulletEntity(shooter, worldIn, ref.get());
-			bulletentity.setDamage(this.damage);
-			bulletentity.pickupStatus = PickupStatus.DISALLOWED;
-			bulletentity.setHitSound(DeferredRegistryHandler.BULLET_WHIZZ.get());
+			bulletentity.setBaseDamage(this.damage);
+			bulletentity.pickup = PickupStatus.DISALLOWED;
+			bulletentity.setSoundEvent(DeferredRegistryHandler.BULLET_WHIZZ.get());
 			bulletentity.setPierceLevel((byte) 2);
 			return bulletentity;
 		}

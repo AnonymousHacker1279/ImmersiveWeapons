@@ -14,14 +14,13 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Util;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 
 public class PanicAlarmTileEntity extends TileEntity implements ITickableTileEntity {
 
+	private final Option.IntOption range = new Option.IntOption("range", 20, 0, 30);
+	private final Option.IntOption delay = new Option.IntOption("delay", 2, 1, 30);
 	private boolean isPowered = false;
-	private final Option.IntOption range = new Option.IntOption(this::getPos, "range", 20, 0, 30, 1, true);
-	private final Option.IntOption delay = new Option.IntOption(this::getPos, "delay", 2, 1, 30, 1, true);
 	private int cooldown = 0;
 	private int currentlyPlayingSound = 1;
 
@@ -31,50 +30,52 @@ public class PanicAlarmTileEntity extends TileEntity implements ITickableTileEnt
 
 	@Override
 	public void tick() {
-		if (!world.isRemote) {
+		if (level != null && !level.isClientSide) {
 			if (cooldown > 0) {
 				cooldown--;
 			}
 
 			if (isPowered && cooldown == 0) {
-				PanicAlarmTileEntity tileEntity = (PanicAlarmTileEntity) world.getTileEntity(pos);
+				PanicAlarmTileEntity tileEntity = (PanicAlarmTileEntity) level.getBlockEntity(worldPosition);
 
-				boolean flag = Minecraft.getInstance().getSoundHandler().isPlaying(new AlarmTickableSounds.AlarmTickableSound1((tileEntity)));
-				boolean flag2 = Minecraft.getInstance().getSoundHandler().isPlaying(new AlarmTickableSounds.AlarmTickableSound2((tileEntity)));
-				boolean flag3 = Minecraft.getInstance().getSoundHandler().isPlaying(new AlarmTickableSounds.AlarmTickableSound3((tileEntity)));
+				if (tileEntity != null) {
+					boolean flag = Minecraft.getInstance().getSoundManager().isActive(new AlarmTickableSounds.AlarmTickableSound1((tileEntity)));
+					boolean flag2 = Minecraft.getInstance().getSoundManager().isActive(new AlarmTickableSounds.AlarmTickableSound2((tileEntity)));
+					boolean flag3 = Minecraft.getInstance().getSoundManager().isActive(new AlarmTickableSounds.AlarmTickableSound3((tileEntity)));
 
-				for (ServerPlayerEntity player : ((ServerWorld) world).getPlayers(p -> p.getPosition().distanceSq(pos) <= Math.pow(range.get(), 2))) {
-					if (currentlyPlayingSound == 1 && !flag) {
-						Minecraft.getInstance().getSoundHandler().play(new AlarmTickableSounds.AlarmTickableSound1(tileEntity));
-					} else if (currentlyPlayingSound == 2 && !flag2) {
-						Minecraft.getInstance().getSoundHandler().play(new AlarmTickableSounds.AlarmTickableSound2(tileEntity));
-					} else if (currentlyPlayingSound == 3 && !flag3) {
-						Minecraft.getInstance().getSoundHandler().play(new AlarmTickableSounds.AlarmTickableSound3(tileEntity));
+					for (ServerPlayerEntity ignored : ((ServerWorld) level).getPlayers(p -> p.blockPosition().distSqr(worldPosition) <= Math.pow(range.get(), 2))) {
+						if (currentlyPlayingSound == 1 && !flag) {
+							Minecraft.getInstance().getSoundManager().play(new AlarmTickableSounds.AlarmTickableSound1(tileEntity));
+						} else if (currentlyPlayingSound == 2 && !flag2) {
+							Minecraft.getInstance().getSoundManager().play(new AlarmTickableSounds.AlarmTickableSound2(tileEntity));
+						} else if (currentlyPlayingSound == 3 && !flag3) {
+							Minecraft.getInstance().getSoundManager().play(new AlarmTickableSounds.AlarmTickableSound3(tileEntity));
+						}
 					}
-				}
 
-				if (currentlyPlayingSound == 1) {
-					tileEntity.setCooldown(delay.get() * 27);
-				} else if (currentlyPlayingSound == 2) {
-					tileEntity.setCooldown(delay.get() * 120);
-				} else if (currentlyPlayingSound == 3) {
-					tileEntity.setCooldown(delay.get() * 120);
-				}
+					if (currentlyPlayingSound == 1) {
+						tileEntity.setCooldown(delay.get() * 27);
+					} else if (currentlyPlayingSound == 2) {
+						tileEntity.setCooldown(delay.get() * 120);
+					} else if (currentlyPlayingSound == 3) {
+						tileEntity.setCooldown(delay.get() * 120);
+					}
 
-				world.setBlockState(pos, world.getBlockState(pos).with(PanicAlarmBlock.HORIZONTAL_FACING, world.getBlockState(pos).get(PanicAlarmBlock.HORIZONTAL_FACING)), 2);
-				world.setTileEntity(pos, tileEntity);
+					level.setBlock(worldPosition, level.getBlockState(worldPosition).setValue(PanicAlarmBlock.HORIZONTAL_FACING, level.getBlockState(worldPosition).getValue(PanicAlarmBlock.HORIZONTAL_FACING)), 2);
+					level.setBlockEntity(worldPosition, tileEntity);
+				}
 			} else if (!isPowered) {
 				cooldown = 0;
-				PanicAlarmTileEntity tileEntity = (PanicAlarmTileEntity) world.getTileEntity(pos);
+				PanicAlarmTileEntity tileEntity = (PanicAlarmTileEntity) level.getBlockEntity(worldPosition);
 				assert tileEntity != null;
-				if (Minecraft.getInstance().getSoundHandler().isPlaying(new AlarmTickableSounds.AlarmTickableSound1((tileEntity)))) {
-					Minecraft.getInstance().getSoundHandler().stop(new AlarmTickableSounds.AlarmTickableSound1((tileEntity)));
+				if (Minecraft.getInstance().getSoundManager().isActive(new AlarmTickableSounds.AlarmTickableSound1((tileEntity)))) {
+					Minecraft.getInstance().getSoundManager().stop(new AlarmTickableSounds.AlarmTickableSound1((tileEntity)));
 				}
-				if (Minecraft.getInstance().getSoundHandler().isPlaying(new AlarmTickableSounds.AlarmTickableSound2((tileEntity)))) {
-					Minecraft.getInstance().getSoundHandler().stop(new AlarmTickableSounds.AlarmTickableSound2((tileEntity)));
+				if (Minecraft.getInstance().getSoundManager().isActive(new AlarmTickableSounds.AlarmTickableSound2((tileEntity)))) {
+					Minecraft.getInstance().getSoundManager().stop(new AlarmTickableSounds.AlarmTickableSound2((tileEntity)));
 				}
-				if (Minecraft.getInstance().getSoundHandler().isPlaying(new AlarmTickableSounds.AlarmTickableSound3((tileEntity)))) {
-					Minecraft.getInstance().getSoundHandler().stop(new AlarmTickableSounds.AlarmTickableSound3((tileEntity)));
+				if (Minecraft.getInstance().getSoundManager().isActive(new AlarmTickableSounds.AlarmTickableSound3((tileEntity)))) {
+					Minecraft.getInstance().getSoundManager().stop(new AlarmTickableSounds.AlarmTickableSound3((tileEntity)));
 				}
 			}
 		}
@@ -92,30 +93,26 @@ public class PanicAlarmTileEntity extends TileEntity implements ITickableTileEnt
 		this.cooldown = cooldown;
 	}
 
-	public boolean changeAlarmSound(PlayerEntity activator, World worldIn) {
+	public void changeAlarmSound(PlayerEntity activator) {
 		if (currentlyPlayingSound == 1) {
 			currentlyPlayingSound++;
-			activator.sendMessage(new TranslationTextComponent("immersiveweapons.block.alarm.alarm2").mergeStyle(TextFormatting.YELLOW), Util.DUMMY_UUID);
-			return true;
+			activator.sendMessage(new TranslationTextComponent("immersiveweapons.block.alarm.alarm2").withStyle(TextFormatting.YELLOW), Util.NIL_UUID);
 		} else if (currentlyPlayingSound == 2) {
 			currentlyPlayingSound++;
-			activator.sendMessage(new TranslationTextComponent("immersiveweapons.block.alarm.alarm3").mergeStyle(TextFormatting.YELLOW), Util.DUMMY_UUID);
-			return true;
+			activator.sendMessage(new TranslationTextComponent("immersiveweapons.block.alarm.alarm3").withStyle(TextFormatting.YELLOW), Util.NIL_UUID);
 		} else if (currentlyPlayingSound == 3) {
 			// Reset back to zero - we're already at the last one
 			currentlyPlayingSound = 1;
-			activator.sendMessage(new TranslationTextComponent("immersiveweapons.block.alarm.alarm1").mergeStyle(TextFormatting.YELLOW), Util.DUMMY_UUID);
-			return true;
+			activator.sendMessage(new TranslationTextComponent("immersiveweapons.block.alarm.alarm1").withStyle(TextFormatting.YELLOW), Util.NIL_UUID);
 		} else {
 			currentlyPlayingSound = 1;
-			activator.sendMessage(new TranslationTextComponent("immersiveweapons.block.alarm.alarm1").mergeStyle(TextFormatting.YELLOW), Util.DUMMY_UUID);
-			return true;
+			activator.sendMessage(new TranslationTextComponent("immersiveweapons.block.alarm.alarm1").withStyle(TextFormatting.YELLOW), Util.NIL_UUID);
 		}
 	}
 
 	@Override
-	public CompoundNBT write(CompoundNBT tag) {
-		super.write(tag);
+	public CompoundNBT save(CompoundNBT tag) {
+		super.save(tag);
 		tag.putInt("cooldown", cooldown);
 		tag.putBoolean("isPowered", isPowered);
 		tag.putInt("currentlyPlayingSound", currentlyPlayingSound);
@@ -123,8 +120,8 @@ public class PanicAlarmTileEntity extends TileEntity implements ITickableTileEnt
 	}
 
 	@Override
-	public void read(BlockState state, CompoundNBT tag) {
-		super.read(state, tag);
+	public void load(BlockState state, CompoundNBT tag) {
+		super.load(state, tag);
 
 		cooldown = tag.getInt("cooldown");
 		isPowered = tag.getBoolean("isPowered");

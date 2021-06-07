@@ -17,19 +17,17 @@ public class CreativeTabSorter extends ItemGroup {
 	}
 
 	@Override
-	public void fill(NonNullList<ItemStack> itemStack) {
-		List<Item> items = new ArrayList<Item>();
-		DeferredRegistryHandler.ITEMS.getEntries().stream().map(RegistryObject::get).forEach(item -> {
-			items.add(item);
-		});
+	public void fillItemList(NonNullList<ItemStack> itemStack) {
+		List<Item> items = new ArrayList<>();
+		DeferredRegistryHandler.ITEMS.getEntries().stream().map(RegistryObject::get).forEach(items::add);
 
 		for (Item item : items) {
-			item.fillItemGroup(this, itemStack);
+			item.fillItemCategory(this, itemStack);
 		}
 	}
 
 	@Override
-	public ItemStack createIcon() {
+	public ItemStack makeIcon() {
 		return new ItemStack(DeferredRegistryHandler.TESLA_SWORD.get());
 	}
 

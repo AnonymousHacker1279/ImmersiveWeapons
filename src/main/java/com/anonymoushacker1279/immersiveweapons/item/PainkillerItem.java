@@ -16,14 +16,14 @@ public class PainkillerItem extends Item {
 	}
 
 	@Override
-	public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand handIn) {
-		ItemStack itemstack = playerIn.getHeldItem(handIn);
-		playerIn.addPotionEffect(new EffectInstance(Effects.RESISTANCE, 1200, 0, false, true));
-		if (!playerIn.abilities.isCreativeMode) {
+	public ActionResult<ItemStack> use(World worldIn, PlayerEntity playerIn, Hand handIn) {
+		ItemStack itemstack = playerIn.getItemInHand(handIn);
+		playerIn.addEffect(new EffectInstance(Effects.DAMAGE_RESISTANCE, 1200, 0, false, true));
+		if (!playerIn.abilities.instabuild) {
 			itemstack.shrink(1);
-			playerIn.getCooldownTracker().setCooldown(this, 2400);
+			playerIn.getCooldowns().addCooldown(this, 2400);
 		}
 
-		return ActionResult.func_233538_a_(itemstack, worldIn.isRemote());
+		return ActionResult.sidedSuccess(itemstack, worldIn.isClientSide());
 	}
 }

@@ -20,21 +20,21 @@ public class PikeItem {
 	public static class WoodPikeItem extends Pike {
 
 		public static Multimap<Attribute, AttributeModifier> woodPikeAttributes;
-		private Multimap<Attribute, AttributeModifier> returnValue;
 
 		public WoodPikeItem(Item.Properties builderIn, double damageIn, double attackSpeedIn) {
 			super(builderIn, attackSpeedIn, attackSpeedIn);
 			Builder<Attribute, AttributeModifier> builder = ImmutableMultimap.builder();
-			builder.put(Attributes.ATTACK_DAMAGE, new AttributeModifier(ATTACK_DAMAGE_MODIFIER, "Tool modifier", damageIn, AttributeModifier.Operation.ADDITION));
-			builder.put(Attributes.ATTACK_SPEED, new AttributeModifier(ATTACK_SPEED_MODIFIER, "Tool modifier", attackSpeedIn, AttributeModifier.Operation.ADDITION));
+			builder.put(Attributes.ATTACK_DAMAGE, new AttributeModifier(BASE_ATTACK_DAMAGE_UUID, "Tool modifier", damageIn, AttributeModifier.Operation.ADDITION));
+			builder.put(Attributes.ATTACK_SPEED, new AttributeModifier(BASE_ATTACK_SPEED_UUID, "Tool modifier", attackSpeedIn, AttributeModifier.Operation.ADDITION));
 			woodPikeAttributes = builder.build();
 		}
 
 		@SuppressWarnings("deprecation")
 		@Override
-		public Multimap<Attribute, AttributeModifier> getAttributeModifiers(EquipmentSlotType equipmentSlot) {
+		public Multimap<Attribute, AttributeModifier> getDefaultAttributeModifiers(EquipmentSlotType equipmentSlot) {
+			Multimap<Attribute, AttributeModifier> returnValue;
 			if (AddAttributesAfterSetup.hasCompletedClientSetup) {
-				returnValue = equipmentSlot == EquipmentSlotType.MAINHAND ? WoodPikeItem.woodPikeAttributes : super.getAttributeModifiers(equipmentSlot);
+				returnValue = equipmentSlot == EquipmentSlotType.MAINHAND ? WoodPikeItem.woodPikeAttributes : super.getDefaultAttributeModifiers(equipmentSlot);
 			} else {
 				returnValue = WoodPikeItem.woodPikeAttributes;
 			}
@@ -42,12 +42,12 @@ public class PikeItem {
 		}
 
 		public Ingredient getRepairMaterial() {
-			return Ingredient.fromTag(ItemTags.PLANKS);
+			return Ingredient.of(ItemTags.PLANKS);
 		}
 
 		@Override
-		public boolean getIsRepairable(ItemStack toRepair, ItemStack repair) {
-			return this.getRepairMaterial().test(repair) || super.getIsRepairable(toRepair, repair);
+		public boolean isValidRepairItem(ItemStack toRepair, ItemStack repair) {
+			return this.getRepairMaterial().test(repair) || super.isValidRepairItem(toRepair, repair);
 		}
 
 	}
@@ -55,21 +55,21 @@ public class PikeItem {
 	public static class StonePikeItem extends Pike {
 
 		public static Multimap<Attribute, AttributeModifier> stonePikeAttributes;
-		private Multimap<Attribute, AttributeModifier> returnValue;
 
 		public StonePikeItem(Item.Properties builderIn, double damageIn, double attackSpeedIn) {
 			super(builderIn, attackSpeedIn, attackSpeedIn);
 			Builder<Attribute, AttributeModifier> builder = ImmutableMultimap.builder();
-			builder.put(Attributes.ATTACK_DAMAGE, new AttributeModifier(ATTACK_DAMAGE_MODIFIER, "Tool modifier", damageIn, AttributeModifier.Operation.ADDITION));
-			builder.put(Attributes.ATTACK_SPEED, new AttributeModifier(ATTACK_SPEED_MODIFIER, "Tool modifier", attackSpeedIn, AttributeModifier.Operation.ADDITION));
+			builder.put(Attributes.ATTACK_DAMAGE, new AttributeModifier(BASE_ATTACK_DAMAGE_UUID, "Tool modifier", damageIn, AttributeModifier.Operation.ADDITION));
+			builder.put(Attributes.ATTACK_SPEED, new AttributeModifier(BASE_ATTACK_SPEED_UUID, "Tool modifier", attackSpeedIn, AttributeModifier.Operation.ADDITION));
 			stonePikeAttributes = builder.build();
 		}
 
 		@SuppressWarnings("deprecation")
 		@Override
-		public Multimap<Attribute, AttributeModifier> getAttributeModifiers(EquipmentSlotType equipmentSlot) {
+		public Multimap<Attribute, AttributeModifier> getDefaultAttributeModifiers(EquipmentSlotType equipmentSlot) {
+			Multimap<Attribute, AttributeModifier> returnValue;
 			if (AddAttributesAfterSetup.hasCompletedClientSetup) {
-				returnValue = equipmentSlot == EquipmentSlotType.MAINHAND ? StonePikeItem.stonePikeAttributes : super.getAttributeModifiers(equipmentSlot);
+				returnValue = equipmentSlot == EquipmentSlotType.MAINHAND ? StonePikeItem.stonePikeAttributes : super.getDefaultAttributeModifiers(equipmentSlot);
 			} else {
 				returnValue = StonePikeItem.stonePikeAttributes;
 			}
@@ -77,33 +77,33 @@ public class PikeItem {
 		}
 
 		public Ingredient getRepairMaterial() {
-			return Ingredient.fromTag(ItemTags.STONE_TOOL_MATERIALS);
+			return Ingredient.of(ItemTags.STONE_TOOL_MATERIALS);
 		}
 
 		@Override
-		public boolean getIsRepairable(ItemStack toRepair, ItemStack repair) {
-			return this.getRepairMaterial().test(repair) || super.getIsRepairable(toRepair, repair);
+		public boolean isValidRepairItem(ItemStack toRepair, ItemStack repair) {
+			return this.getRepairMaterial().test(repair) || super.isValidRepairItem(toRepair, repair);
 		}
 	}
 
 	public static class GoldPikeItem extends Pike {
 
 		public static Multimap<Attribute, AttributeModifier> goldPikeAttributes;
-		private Multimap<Attribute, AttributeModifier> returnValue;
 
 		public GoldPikeItem(Item.Properties builderIn, double damageIn, double attackSpeedIn) {
 			super(builderIn, attackSpeedIn, attackSpeedIn);
 			Builder<Attribute, AttributeModifier> builder = ImmutableMultimap.builder();
-			builder.put(Attributes.ATTACK_DAMAGE, new AttributeModifier(ATTACK_DAMAGE_MODIFIER, "Tool modifier", damageIn, AttributeModifier.Operation.ADDITION));
-			builder.put(Attributes.ATTACK_SPEED, new AttributeModifier(ATTACK_SPEED_MODIFIER, "Tool modifier", attackSpeedIn, AttributeModifier.Operation.ADDITION));
+			builder.put(Attributes.ATTACK_DAMAGE, new AttributeModifier(BASE_ATTACK_DAMAGE_UUID, "Tool modifier", damageIn, AttributeModifier.Operation.ADDITION));
+			builder.put(Attributes.ATTACK_SPEED, new AttributeModifier(BASE_ATTACK_SPEED_UUID, "Tool modifier", attackSpeedIn, AttributeModifier.Operation.ADDITION));
 			goldPikeAttributes = builder.build();
 		}
 
 		@SuppressWarnings("deprecation")
 		@Override
-		public Multimap<Attribute, AttributeModifier> getAttributeModifiers(EquipmentSlotType equipmentSlot) {
+		public Multimap<Attribute, AttributeModifier> getDefaultAttributeModifiers(EquipmentSlotType equipmentSlot) {
+			Multimap<Attribute, AttributeModifier> returnValue;
 			if (AddAttributesAfterSetup.hasCompletedClientSetup) {
-				returnValue = equipmentSlot == EquipmentSlotType.MAINHAND ? GoldPikeItem.goldPikeAttributes : super.getAttributeModifiers(equipmentSlot);
+				returnValue = equipmentSlot == EquipmentSlotType.MAINHAND ? GoldPikeItem.goldPikeAttributes : super.getDefaultAttributeModifiers(equipmentSlot);
 			} else {
 				returnValue = GoldPikeItem.goldPikeAttributes;
 			}
@@ -111,33 +111,33 @@ public class PikeItem {
 		}
 
 		public Ingredient getRepairMaterial() {
-			return Ingredient.fromItems(Items.GOLD_INGOT);
+			return Ingredient.of(Items.GOLD_INGOT);
 		}
 
 		@Override
-		public boolean getIsRepairable(ItemStack toRepair, ItemStack repair) {
-			return this.getRepairMaterial().test(repair) || super.getIsRepairable(toRepair, repair);
+		public boolean isValidRepairItem(ItemStack toRepair, ItemStack repair) {
+			return this.getRepairMaterial().test(repair) || super.isValidRepairItem(toRepair, repair);
 		}
 	}
 
 	public static class CopperPikeItem extends Pike {
 
 		public static Multimap<Attribute, AttributeModifier> copperPikeAttributes;
-		private Multimap<Attribute, AttributeModifier> returnValue;
 
 		public CopperPikeItem(Item.Properties builderIn, double damageIn, double attackSpeedIn) {
 			super(builderIn, attackSpeedIn, attackSpeedIn);
 			Builder<Attribute, AttributeModifier> builder = ImmutableMultimap.builder();
-			builder.put(Attributes.ATTACK_DAMAGE, new AttributeModifier(ATTACK_DAMAGE_MODIFIER, "Tool modifier", damageIn, AttributeModifier.Operation.ADDITION));
-			builder.put(Attributes.ATTACK_SPEED, new AttributeModifier(ATTACK_SPEED_MODIFIER, "Tool modifier", attackSpeedIn, AttributeModifier.Operation.ADDITION));
+			builder.put(Attributes.ATTACK_DAMAGE, new AttributeModifier(BASE_ATTACK_DAMAGE_UUID, "Tool modifier", damageIn, AttributeModifier.Operation.ADDITION));
+			builder.put(Attributes.ATTACK_SPEED, new AttributeModifier(BASE_ATTACK_SPEED_UUID, "Tool modifier", attackSpeedIn, AttributeModifier.Operation.ADDITION));
 			copperPikeAttributes = builder.build();
 		}
 
 		@SuppressWarnings("deprecation")
 		@Override
-		public Multimap<Attribute, AttributeModifier> getAttributeModifiers(EquipmentSlotType equipmentSlot) {
+		public Multimap<Attribute, AttributeModifier> getDefaultAttributeModifiers(EquipmentSlotType equipmentSlot) {
+			Multimap<Attribute, AttributeModifier> returnValue;
 			if (AddAttributesAfterSetup.hasCompletedClientSetup) {
-				returnValue = equipmentSlot == EquipmentSlotType.MAINHAND ? CopperPikeItem.copperPikeAttributes : super.getAttributeModifiers(equipmentSlot);
+				returnValue = equipmentSlot == EquipmentSlotType.MAINHAND ? CopperPikeItem.copperPikeAttributes : super.getDefaultAttributeModifiers(equipmentSlot);
 			} else {
 				returnValue = CopperPikeItem.copperPikeAttributes;
 			}
@@ -145,33 +145,33 @@ public class PikeItem {
 		}
 
 		public Ingredient getRepairMaterial() {
-			return Ingredient.fromItems(DeferredRegistryHandler.COPPER_INGOT.get());
+			return Ingredient.of(DeferredRegistryHandler.COPPER_INGOT.get());
 		}
 
 		@Override
-		public boolean getIsRepairable(ItemStack toRepair, ItemStack repair) {
-			return this.getRepairMaterial().test(repair) || super.getIsRepairable(toRepair, repair);
+		public boolean isValidRepairItem(ItemStack toRepair, ItemStack repair) {
+			return this.getRepairMaterial().test(repair) || super.isValidRepairItem(toRepair, repair);
 		}
 	}
 
 	public static class IronPikeItem extends Pike {
 
 		public static Multimap<Attribute, AttributeModifier> ironPikeAttributes;
-		private Multimap<Attribute, AttributeModifier> returnValue;
 
 		public IronPikeItem(Item.Properties builderIn, double damageIn, double attackSpeedIn) {
 			super(builderIn, attackSpeedIn, attackSpeedIn);
 			Builder<Attribute, AttributeModifier> builder = ImmutableMultimap.builder();
-			builder.put(Attributes.ATTACK_DAMAGE, new AttributeModifier(ATTACK_DAMAGE_MODIFIER, "Tool modifier", damageIn, AttributeModifier.Operation.ADDITION));
-			builder.put(Attributes.ATTACK_SPEED, new AttributeModifier(ATTACK_SPEED_MODIFIER, "Tool modifier", attackSpeedIn, AttributeModifier.Operation.ADDITION));
+			builder.put(Attributes.ATTACK_DAMAGE, new AttributeModifier(BASE_ATTACK_DAMAGE_UUID, "Tool modifier", damageIn, AttributeModifier.Operation.ADDITION));
+			builder.put(Attributes.ATTACK_SPEED, new AttributeModifier(BASE_ATTACK_SPEED_UUID, "Tool modifier", attackSpeedIn, AttributeModifier.Operation.ADDITION));
 			ironPikeAttributes = builder.build();
 		}
 
 		@SuppressWarnings("deprecation")
 		@Override
-		public Multimap<Attribute, AttributeModifier> getAttributeModifiers(EquipmentSlotType equipmentSlot) {
+		public Multimap<Attribute, AttributeModifier> getDefaultAttributeModifiers(EquipmentSlotType equipmentSlot) {
+			Multimap<Attribute, AttributeModifier> returnValue;
 			if (AddAttributesAfterSetup.hasCompletedClientSetup) {
-				returnValue = equipmentSlot == EquipmentSlotType.MAINHAND ? IronPikeItem.ironPikeAttributes : super.getAttributeModifiers(equipmentSlot);
+				returnValue = equipmentSlot == EquipmentSlotType.MAINHAND ? IronPikeItem.ironPikeAttributes : super.getDefaultAttributeModifiers(equipmentSlot);
 			} else {
 				returnValue = IronPikeItem.ironPikeAttributes;
 			}
@@ -179,33 +179,33 @@ public class PikeItem {
 		}
 
 		public Ingredient getRepairMaterial() {
-			return Ingredient.fromItems(Items.IRON_INGOT);
+			return Ingredient.of(Items.IRON_INGOT);
 		}
 
 		@Override
-		public boolean getIsRepairable(ItemStack toRepair, ItemStack repair) {
-			return this.getRepairMaterial().test(repair) || super.getIsRepairable(toRepair, repair);
+		public boolean isValidRepairItem(ItemStack toRepair, ItemStack repair) {
+			return this.getRepairMaterial().test(repair) || super.isValidRepairItem(toRepair, repair);
 		}
 	}
 
 	public static class DiamondPikeItem extends Pike {
 
 		public static Multimap<Attribute, AttributeModifier> diamondPikeAttributes;
-		private Multimap<Attribute, AttributeModifier> returnValue;
 
 		public DiamondPikeItem(Item.Properties builderIn, double damageIn, double attackSpeedIn) {
 			super(builderIn, attackSpeedIn, attackSpeedIn);
 			Builder<Attribute, AttributeModifier> builder = ImmutableMultimap.builder();
-			builder.put(Attributes.ATTACK_DAMAGE, new AttributeModifier(ATTACK_DAMAGE_MODIFIER, "Tool modifier", damageIn, AttributeModifier.Operation.ADDITION));
-			builder.put(Attributes.ATTACK_SPEED, new AttributeModifier(ATTACK_SPEED_MODIFIER, "Tool modifier", attackSpeedIn, AttributeModifier.Operation.ADDITION));
+			builder.put(Attributes.ATTACK_DAMAGE, new AttributeModifier(BASE_ATTACK_DAMAGE_UUID, "Tool modifier", damageIn, AttributeModifier.Operation.ADDITION));
+			builder.put(Attributes.ATTACK_SPEED, new AttributeModifier(BASE_ATTACK_SPEED_UUID, "Tool modifier", attackSpeedIn, AttributeModifier.Operation.ADDITION));
 			diamondPikeAttributes = builder.build();
 		}
 
 		@SuppressWarnings("deprecation")
 		@Override
-		public Multimap<Attribute, AttributeModifier> getAttributeModifiers(EquipmentSlotType equipmentSlot) {
+		public Multimap<Attribute, AttributeModifier> getDefaultAttributeModifiers(EquipmentSlotType equipmentSlot) {
+			Multimap<Attribute, AttributeModifier> returnValue;
 			if (AddAttributesAfterSetup.hasCompletedClientSetup) {
-				returnValue = equipmentSlot == EquipmentSlotType.MAINHAND ? DiamondPikeItem.diamondPikeAttributes : super.getAttributeModifiers(equipmentSlot);
+				returnValue = equipmentSlot == EquipmentSlotType.MAINHAND ? DiamondPikeItem.diamondPikeAttributes : super.getDefaultAttributeModifiers(equipmentSlot);
 			} else {
 				returnValue = DiamondPikeItem.diamondPikeAttributes;
 			}
@@ -213,33 +213,33 @@ public class PikeItem {
 		}
 
 		public Ingredient getRepairMaterial() {
-			return Ingredient.fromItems(Items.DIAMOND);
+			return Ingredient.of(Items.DIAMOND);
 		}
 
 		@Override
-		public boolean getIsRepairable(ItemStack toRepair, ItemStack repair) {
-			return this.getRepairMaterial().test(repair) || super.getIsRepairable(toRepair, repair);
+		public boolean isValidRepairItem(ItemStack toRepair, ItemStack repair) {
+			return this.getRepairMaterial().test(repair) || super.isValidRepairItem(toRepair, repair);
 		}
 	}
 
 	public static class NetheritePikeItem extends Pike {
 
 		public static Multimap<Attribute, AttributeModifier> netheritePikeAttributes;
-		private Multimap<Attribute, AttributeModifier> returnValue;
 
 		public NetheritePikeItem(Item.Properties builderIn, double damageIn, double attackSpeedIn) {
 			super(builderIn, attackSpeedIn, attackSpeedIn);
 			Builder<Attribute, AttributeModifier> builder = ImmutableMultimap.builder();
-			builder.put(Attributes.ATTACK_DAMAGE, new AttributeModifier(ATTACK_DAMAGE_MODIFIER, "Tool modifier", damageIn, AttributeModifier.Operation.ADDITION));
-			builder.put(Attributes.ATTACK_SPEED, new AttributeModifier(ATTACK_SPEED_MODIFIER, "Tool modifier", attackSpeedIn, AttributeModifier.Operation.ADDITION));
+			builder.put(Attributes.ATTACK_DAMAGE, new AttributeModifier(BASE_ATTACK_DAMAGE_UUID, "Tool modifier", damageIn, AttributeModifier.Operation.ADDITION));
+			builder.put(Attributes.ATTACK_SPEED, new AttributeModifier(BASE_ATTACK_SPEED_UUID, "Tool modifier", attackSpeedIn, AttributeModifier.Operation.ADDITION));
 			netheritePikeAttributes = builder.build();
 		}
 
 		@SuppressWarnings("deprecation")
 		@Override
-		public Multimap<Attribute, AttributeModifier> getAttributeModifiers(EquipmentSlotType equipmentSlot) {
+		public Multimap<Attribute, AttributeModifier> getDefaultAttributeModifiers(EquipmentSlotType equipmentSlot) {
+			Multimap<Attribute, AttributeModifier> returnValue;
 			if (AddAttributesAfterSetup.hasCompletedClientSetup) {
-				returnValue = equipmentSlot == EquipmentSlotType.MAINHAND ? NetheritePikeItem.netheritePikeAttributes : super.getAttributeModifiers(equipmentSlot);
+				returnValue = equipmentSlot == EquipmentSlotType.MAINHAND ? NetheritePikeItem.netheritePikeAttributes : super.getDefaultAttributeModifiers(equipmentSlot);
 			} else {
 				returnValue = NetheritePikeItem.netheritePikeAttributes;
 			}
@@ -247,12 +247,12 @@ public class PikeItem {
 		}
 
 		public Ingredient getRepairMaterial() {
-			return Ingredient.fromItems(Items.NETHERITE_INGOT);
+			return Ingredient.of(Items.NETHERITE_INGOT);
 		}
 
 		@Override
-		public boolean getIsRepairable(ItemStack toRepair, ItemStack repair) {
-			return this.getRepairMaterial().test(repair) || super.getIsRepairable(toRepair, repair);
+		public boolean isValidRepairItem(ItemStack toRepair, ItemStack repair) {
+			return this.getRepairMaterial().test(repair) || super.isValidRepairItem(toRepair, repair);
 		}
 	}
 }

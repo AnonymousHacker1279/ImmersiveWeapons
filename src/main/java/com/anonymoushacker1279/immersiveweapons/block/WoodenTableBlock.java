@@ -11,7 +11,7 @@ import net.minecraft.world.IBlockReader;
 
 public class WoodenTableBlock extends Block {
 
-	public static final VoxelShape SHAPE = VoxelShapes.or(Block.makeCuboidShape(0.0D, 14.0D, 0.0D, 16.0D, 16.0D, 16.0D), Block.makeCuboidShape(7.0D, 0.0D, 7.0D, 9.0D, 14.0D, 9.0D));
+	public static final VoxelShape SHAPE = VoxelShapes.or(Block.box(0.0D, 14.0D, 0.0D, 16.0D, 16.0D, 16.0D), Block.box(7.0D, 0.0D, 7.0D, 9.0D, 14.0D, 9.0D));
 
 	public WoodenTableBlock(Properties properties) {
 		super(properties);
@@ -20,6 +20,6 @@ public class WoodenTableBlock extends Block {
 	@Override
 	public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
 		Vector3d vector3d = state.getOffset(worldIn, pos);
-		return SHAPE.withOffset(vector3d.x, vector3d.y, vector3d.z);
+		return SHAPE.move(vector3d.x, vector3d.y, vector3d.z);
 	}
 }

@@ -22,8 +22,8 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 public abstract class AbstractTeslaSynthesizerContainer extends Container {
 
 	protected final IInventory teslaSynthesizerInventory;
-	private final IIntArray teslaSynthesizerData;
 	protected final World world;
+	private final IIntArray teslaSynthesizerData;
 
 	protected AbstractTeslaSynthesizerContainer(ContainerType<?> containerType, int id, PlayerInventory playerInventory) {
 		this(containerType, id, playerInventory, new Inventory(5), new IntArray(4));
@@ -31,26 +31,26 @@ public abstract class AbstractTeslaSynthesizerContainer extends Container {
 
 	protected AbstractTeslaSynthesizerContainer(ContainerType<?> containerType, int id, PlayerInventory playerInventory, IInventory iInventory, IIntArray iIntArray) {
 		super(containerType, id);
-		assertInventorySize(iInventory, 5);
-		assertIntArraySize(iIntArray, 4);
+		checkContainerSize(iInventory, 5);
+		checkContainerDataCount(iIntArray, 4);
 		this.teslaSynthesizerInventory = iInventory;
 		this.teslaSynthesizerData = iIntArray;
-		this.world = playerInventory.player.world;
+		this.world = playerInventory.player.level;
 		this.addSlot(new Slot(iInventory, 0, 6, 17) {
 			@Override
-			public boolean isItemValid(ItemStack stack) {
+			public boolean mayPlace(ItemStack stack) {
 				return stack.getItem() == Items.STONE;
 			}
 		});
 		this.addSlot(new Slot(iInventory, 1, 31, 17) {
 			@Override
-			public boolean isItemValid(ItemStack stack) {
+			public boolean mayPlace(ItemStack stack) {
 				return stack.getItem() == Items.LAPIS_LAZULI;
 			}
 		});
 		this.addSlot(new Slot(iInventory, 2, 56, 17) {
 			@Override
-			public boolean isItemValid(ItemStack stack) {
+			public boolean mayPlace(ItemStack stack) {
 				return stack.getItem() == DeferredRegistryHandler.CONDUCTIVE_ALLOY.get();
 			}
 		});
@@ -68,7 +68,7 @@ public abstract class AbstractTeslaSynthesizerContainer extends Container {
 			this.addSlot(new Slot(playerInventory, k, 8 + k * 18, 142));
 		}
 
-		this.trackIntArray(iIntArray);
+		this.addDataSlots(iIntArray);
 	}
 
 	@OnlyIn(Dist.CLIENT)
@@ -80,8 +80,8 @@ public abstract class AbstractTeslaSynthesizerContainer extends Container {
 	 * Determines whether supplied player can use this container
 	 */
 	@Override
-	public boolean canInteractWith(PlayerEntity playerIn) {
-		return this.teslaSynthesizerInventory.isUsableByPlayer(playerIn);
+	public boolean stillValid(PlayerEntity playerIn) {
+		return this.teslaSynthesizerInventory.stillValid(playerIn);
 	}
 
 	/**
@@ -89,39 +89,39 @@ public abstract class AbstractTeslaSynthesizerContainer extends Container {
 	 * inventory and the other inventory(s).
 	 */
 	@Override
-	public ItemStack transferStackInSlot(PlayerEntity playerIn, int index) {
+	public ItemStack quickMoveStack(PlayerEntity playerIn, int index) {
 		ItemStack itemstack = ItemStack.EMPTY;
-		Slot slot = this.inventorySlots.get(index);
-		if (slot != null && slot.getHasStack()) {
-			ItemStack itemStack1 = slot.getStack();
+		Slot slot = this.slots.get(index);
+		if (slot != null && slot.hasItem()) {
+			ItemStack itemStack1 = slot.getItem();
 			itemstack = itemStack1.copy();
 			if (index == 2) {
-				if (!this.mergeItemStack(itemStack1, 3, 39, true)) {
+				if (!this.moveItemStackTo(itemStack1, 3, 39, true)) {
 					return ItemStack.EMPTY;
 				}
-				slot.onSlotChange(itemStack1, itemstack);
+				slot.onQuickCraft(itemStack1, itemstack);
 			} else if (index != 1 && index != 0) {
 				if (this.isFuel(itemStack1)) {
-					if (!this.mergeItemStack(itemStack1, 3, 4, false)) {
+					if (!this.moveItemStackTo(itemStack1, 3, 4, false)) {
 						return ItemStack.EMPTY;
 					}
-				} else if (!this.mergeItemStack(itemStack1, 0, 3, false)) {
+				} else if (!this.moveItemStackTo(itemStack1, 0, 3, false)) {
 					return ItemStack.EMPTY;
 				} else if (index < 30) {
-					if (!this.mergeItemStack(itemStack1, 30, 39, false)) {
+					if (!this.moveItemStackTo(itemStack1, 30, 39, false)) {
 						return ItemStack.EMPTY;
 					}
-				} else if (index < 39 && !this.mergeItemStack(itemStack1, 3, 30, false)) {
+				} else if (index < 39 && !this.moveItemStackTo(itemStack1, 3, 30, false)) {
 					return ItemStack.EMPTY;
 				}
-			} else if (!this.mergeItemStack(itemStack1, 3, 39, false)) {
+			} else if (!this.moveItemStackTo(itemStack1, 3, 39, false)) {
 				return ItemStack.EMPTY;
 			}
 
 			if (itemStack1.isEmpty()) {
-				slot.putStack(ItemStack.EMPTY);
+				slot.set(ItemStack.EMPTY);
 			} else {
-				slot.onSlotChanged();
+				slot.setChanged();
 			}
 
 			if (itemStack1.getCount() == itemstack.getCount()) {

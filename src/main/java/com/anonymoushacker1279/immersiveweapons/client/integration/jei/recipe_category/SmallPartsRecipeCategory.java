@@ -62,7 +62,7 @@ public class SmallPartsRecipeCategory implements IRecipeCategory<SmallPartsRecip
 		inputs.addAll(recipe.getIngredients());
 
 		ingredients.setInputIngredients(inputs);
-		ingredients.setOutput(VanillaTypes.ITEM, recipe.getRecipeOutput());
+		ingredients.setOutput(VanillaTypes.ITEM, recipe.getResultItem());
 	}
 
 	@Override

@@ -17,7 +17,7 @@ public class DyingSoldierRenderer extends BipedRenderer<AbstractDyingSoldierEnti
 	}
 
 	@Override
-	public ResourceLocation getEntityTexture(AbstractDyingSoldierEntity entity) {
+	public ResourceLocation getTextureLocation(AbstractDyingSoldierEntity entity) {
 		return DYING_SOLDIER_RENDERER;
 	}
 }

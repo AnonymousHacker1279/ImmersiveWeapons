@@ -35,20 +35,20 @@ public class MinutemanEntity extends AbstractMinutemanEntity {
 	}
 
 	@Override
-	public boolean canDespawn(double distanceToClosestPlayer) {
+	public boolean removeWhenFarAway(double distanceToClosestPlayer) {
 		return false;
 	}
 
 	@Override
-	protected void dropSpecialItems(DamageSource source, int looting, boolean recentlyHitIn) {
-		super.dropSpecialItems(source, looting, recentlyHitIn);
+	protected void dropCustomDeathLoot(DamageSource source, int looting, boolean recentlyHitIn) {
+		super.dropCustomDeathLoot(source, looting, recentlyHitIn);
 		int lootingModifier = looting * 2;
 		if (lootingModifier >= 85) {
-			this.entityDropItem(DeferredRegistryHandler.BLUNDERBUSS.get());
+			this.spawnAtLocation(DeferredRegistryHandler.BLUNDERBUSS.get());
 		} else {
 			int i = GeneralUtilities.getRandomNumber(1, 85 - lootingModifier);
 			if (i == 1) {
-				this.entityDropItem(DeferredRegistryHandler.BLUNDERBUSS.get());
+				this.spawnAtLocation(DeferredRegistryHandler.BLUNDERBUSS.get());
 			}
 		}
 	}
