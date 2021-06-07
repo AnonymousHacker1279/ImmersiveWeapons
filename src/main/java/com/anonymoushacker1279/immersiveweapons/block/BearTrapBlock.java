@@ -30,19 +30,16 @@ import net.minecraft.world.IWorld;
 import net.minecraft.world.IWorldReader;
 import net.minecraft.world.World;
 
-import net.minecraft.block.AbstractBlock.Properties;
-
 public class BearTrapBlock extends ContainerBlock implements IWaterLoggable {
 
 	public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
 	public static final BooleanProperty TRIGGERED = BooleanProperty.create("triggered");
 	public static final BooleanProperty VINES = BooleanProperty.create("vines");
 	protected static final VoxelShape SHAPE = Block.box(0.0D, 0.0D, 0.0D, 16.0D, 2.0D, 16.0D);
-	private final boolean isSomethingTrapped = false;
 
 	public BearTrapBlock(Properties properties) {
 		super(properties);
-		this.registerDefaultState(this.stateDefinition.any().setValue(TRIGGERED, Boolean.valueOf(false)).setValue(WATERLOGGED, Boolean.valueOf(false)).setValue(VINES, Boolean.valueOf(false)));
+		this.registerDefaultState(this.stateDefinition.any().setValue(TRIGGERED, Boolean.FALSE).setValue(WATERLOGGED, Boolean.FALSE).setValue(VINES, Boolean.FALSE));
 
 	}
 
@@ -51,7 +48,7 @@ public class BearTrapBlock extends ContainerBlock implements IWaterLoggable {
 		if (!worldIn.isClientSide) {
 			BearTrapTileEntity bearTrap = (BearTrapTileEntity) worldIn.getBlockEntity(pos);
 			ItemStack currentlyHeldItem = player.getMainHandItem();
-			if (state.getValue(TRIGGERED) && !bearTrap.hasTrappedEntity() && !bearTrap.hasTrappedPlayerEntity()) {
+			if (bearTrap != null && state.getValue(TRIGGERED) && !bearTrap.hasTrappedEntity() && !bearTrap.hasTrappedPlayerEntity()) {
 				worldIn.setBlock(pos, state.setValue(TRIGGERED, false).setValue(VINES, false), 3);
 				return ActionResultType.SUCCESS;
 			}

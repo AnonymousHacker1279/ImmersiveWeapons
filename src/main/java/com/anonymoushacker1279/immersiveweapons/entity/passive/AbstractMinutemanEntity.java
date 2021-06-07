@@ -215,7 +215,7 @@ public abstract class AbstractMinutemanEntity extends CreatureEntity implements 
 		double d3 = MathHelper.sqrt(d0 * d0 + d2 * d2);
 		for (int i = 0; i <= 4; i++) {
 			abstractBulletEntity.setKnockback(3);
-			abstractBulletEntity.shoot(d0, d1 + d3 * (double) 0.2F, d2, 1.6F, (float) (18 - this.level.getDifficulty().getId() * 4 + GeneralUtilities.getRandomNumber(0.2f, 0.8f)));
+			abstractBulletEntity.shoot(d0, d1 + d3 * (double) 0.2F, d2, 1.6F, 18 - this.level.getDifficulty().getId() * 4 + GeneralUtilities.getRandomNumber(0.2f, 0.8f));
 		}
 		this.playSound(DeferredRegistryHandler.BLUNDERBUSS_FIRE.get(), 1.0F, 1.0F / (this.getRandom().nextFloat() * 0.4F + 0.8F));
 		this.level.addFreshEntity(abstractBulletEntity);

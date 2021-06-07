@@ -27,8 +27,6 @@ import net.minecraft.world.IWorld;
 import net.minecraft.world.IWorldReader;
 import net.minecraft.world.World;
 
-import net.minecraft.block.AbstractBlock.Properties;
-
 public class PunjiSticksBlock extends Block implements IWaterLoggable {
 
 	public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
@@ -89,11 +87,10 @@ public class PunjiSticksBlock extends Block implements IWaterLoggable {
 
 		if (entity.fallDistance >= 5F) {
 			entity.hurt(damageSource, entity.fallDistance >= 10F ? entity.fallDistance + 20F * 0.5f : 20F);
-			((LivingEntity) entity).addEffect(new EffectInstance(Effects.POISON, 60, 0, false, false));
 		} else {
 			final float damageTodo = (float) entity.getDeltaMovement().dot(new Vector3d(1, 1, 1)) / 1.5F;
 			entity.hurt(damageSource, 2F + damageTodo);
-			((LivingEntity) entity).addEffect(new EffectInstance(Effects.POISON, 60, 0, false, false));
 		}
+		((LivingEntity) entity).addEffect(new EffectInstance(Effects.POISON, 60, 0, false, false));
 	}
 }

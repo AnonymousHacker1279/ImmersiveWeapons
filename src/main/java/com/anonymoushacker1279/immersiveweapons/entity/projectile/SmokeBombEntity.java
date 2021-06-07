@@ -90,9 +90,8 @@ public class SmokeBombEntity extends ProjectileItemEntity {
 	private IParticleData makeParticle() {
 		Color tint = getTint(GeneralUtilities.getRandomNumber(0, 2));
 		double diameter = getDiameter(GeneralUtilities.getRandomNumber(1.0d, 5.5d));
-		SmokeBombParticleData smokeBombParticleData = new SmokeBombParticleData(tint, diameter);
 
-		return smokeBombParticleData;
+		return new SmokeBombParticleData(tint, diameter);
 	}
 
 	private Color getTint(int random) {
@@ -127,20 +126,19 @@ public class SmokeBombEntity extends ProjectileItemEntity {
 				new Color(1.00f, 1.00f, 0.35f),  // off yellow 2: electric boogaloo
 		};
 
-		if (SmokeBombEntity.color == "none") {
-			return tints[random];
-		} else if (SmokeBombEntity.color == "red") {
-			return tintsRed[random];
-		} else if (SmokeBombEntity.color == "green") {
-			return tintsGreen[random];
-		} else if (SmokeBombEntity.color == "blue") {
-			return tintsBlue[random];
-		} else if (SmokeBombEntity.color == "purple") {
-			return tintsPurple[random];
-		} else if (SmokeBombEntity.color == "yellow") {
-			return tintsYellow[random];
-		} else {
-			return tints[random];
+		switch (SmokeBombEntity.color) {
+			case "red":
+				return tintsRed[random];
+			case "green":
+				return tintsGreen[random];
+			case "blue":
+				return tintsBlue[random];
+			case "purple":
+				return tintsPurple[random];
+			case "yellow":
+				return tintsYellow[random];
+			default:
+				return tints[random];
 		}
 	}
 

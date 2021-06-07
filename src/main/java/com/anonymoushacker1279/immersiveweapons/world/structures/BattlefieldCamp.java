@@ -16,8 +16,6 @@ import net.minecraft.world.gen.feature.structure.Structure;
 import net.minecraft.world.gen.feature.structure.StructureStart;
 import net.minecraft.world.gen.feature.template.TemplateManager;
 
-import net.minecraft.world.gen.feature.structure.Structure.IStartFactory;
-
 public class BattlefieldCamp extends Structure<NoFeatureConfig> {
 
 	public BattlefieldCamp(Codec<NoFeatureConfig> codec) {

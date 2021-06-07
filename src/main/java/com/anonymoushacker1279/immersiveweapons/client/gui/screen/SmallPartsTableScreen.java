@@ -20,7 +20,9 @@ public class SmallPartsTableScreen extends ContainerScreen<SmallPartsContainer> 
 
 	@Override
 	protected void renderBg(MatrixStack matrixStack, float partialTicks, int mouseX, int mouseY) {
-		this.minecraft.getTextureManager().bind(GUI_TEXTURE);
+		if (this.minecraft != null) {
+			this.minecraft.getTextureManager().bind(GUI_TEXTURE);
+		}
 		int x = (this.width - this.imageWidth) / 2;
 		int y = (this.height - this.imageHeight) / 2;
 		this.blit(matrixStack, x, y, 0, 0, this.imageWidth, this.imageHeight);

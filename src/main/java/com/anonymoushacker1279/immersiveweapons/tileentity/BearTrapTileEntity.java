@@ -40,7 +40,7 @@ public class BearTrapTileEntity extends TileEntity implements ITickableTileEntit
 		final MobEntity trapped = this.getTrappedEntity();
 		final PlayerEntity trappedPlayer = this.getTrappedPlayerEntity();
 
-		if (!this.level.isClientSide) {
+		if (this.level != null && !this.level.isClientSide) {
 			if (trapped != null) {
 				// Entity has escaped
 				if (!trapped.getBoundingBox().intersects(new AxisAlignedBB(this.worldPosition)) || !trapped.isAlive()) {
@@ -156,7 +156,7 @@ public class BearTrapTileEntity extends TileEntity implements ITickableTileEntit
 		return this.getTrappedPlayerEntity() == trappedEntity;
 	}
 
-	class DoNothingGoal extends Goal {
+	static class DoNothingGoal extends Goal {
 		private final MobEntity trappedEntity;
 		private final BearTrapTileEntity trap;
 

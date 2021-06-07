@@ -2,18 +2,13 @@ package com.anonymoushacker1279.immersiveweapons.client.renderer.entity.model;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Iterables;
-import com.google.common.collect.Lists;
 import com.mojang.blaze3d.matrix.MatrixStack;
-import com.mojang.blaze3d.vertex.IVertexBuilder;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.model.BipedModel;
 import net.minecraft.client.renderer.model.ModelRenderer;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.util.HandSide;
-
-import java.util.List;
-import java.util.Random;
 
 public class BasicPlayerModel<T extends LivingEntity> extends BipedModel<T> {
 
@@ -24,7 +19,6 @@ public class BasicPlayerModel<T extends LivingEntity> extends BipedModel<T> {
 	public final ModelRenderer bipedBodyWear;
 	private final ModelRenderer bipedCape;
 	private final boolean smallArms;
-	private List<ModelRenderer> modelRenderers = Lists.newArrayList();
 
 	public BasicPlayerModel(float modelSize, boolean smallArmsIn) {
 		super(RenderType::entityTranslucent, modelSize, 0.0F, 64, 64);
@@ -74,10 +68,6 @@ public class BasicPlayerModel<T extends LivingEntity> extends BipedModel<T> {
 	@Override
 	protected Iterable<ModelRenderer> bodyParts() {
 		return Iterables.concat(super.bodyParts(), ImmutableList.of(this.bipedLeftLegwear, this.bipedRightLegwear, this.bipedLeftArmwear, this.bipedRightArmwear, this.bipedBodyWear));
-	}
-
-	public void renderCape(MatrixStack matrixStackIn, IVertexBuilder bufferIn, int packedLightIn, int packedOverlayIn) {
-		this.bipedCape.render(matrixStackIn, bufferIn, packedLightIn, packedOverlayIn);
 	}
 
 	/**
@@ -132,18 +122,5 @@ public class BasicPlayerModel<T extends LivingEntity> extends BipedModel<T> {
 			modelrenderer.translateAndRotate(matrixStackIn);
 		}
 
-	}
-
-	public ModelRenderer getRandomModelRenderer(Random randomIn) {
-		return this.modelRenderers.get(randomIn.nextInt(this.modelRenderers.size()));
-	}
-
-	@Override
-	public void accept(ModelRenderer p_accept_1_) {
-		if (this.modelRenderers == null) {
-			this.modelRenderers = Lists.newArrayList();
-		}
-
-		this.modelRenderers.add(p_accept_1_);
 	}
 }

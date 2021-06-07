@@ -32,11 +32,10 @@ public class LandmineBlock extends Block implements IWaterLoggable {
 	public static final BooleanProperty VINES = BooleanProperty.create("vines");
 	protected static final VoxelShape SHAPE = Block.box(2.0D, 0.0D, 2.0D, 14.0D, 3.5D, 14.0D);
 	private static final DamageSource damageSource = new DamageSource("immersiveweapons.landmine");
-	//private static final ExplosionContext explosionContext = new ExplosionContext();
 
 	public LandmineBlock(AbstractBlock.Properties properties) {
 		super(properties);
-		this.registerDefaultState(this.stateDefinition.any().setValue(ARMED, Boolean.valueOf(false)).setValue(WATERLOGGED, Boolean.valueOf(false)).setValue(VINES, Boolean.valueOf(false)).setValue(SAND, Boolean.valueOf(false)));
+		this.registerDefaultState(this.stateDefinition.any().setValue(ARMED, Boolean.FALSE).setValue(WATERLOGGED, Boolean.FALSE).setValue(VINES, Boolean.FALSE).setValue(SAND, Boolean.FALSE));
 
 	}
 

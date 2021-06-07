@@ -13,6 +13,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.NonNullList;
 
 import javax.annotation.Nullable;
+import java.util.Objects;
 
 public class WallShelfTileEntity extends TileEntity implements IClearable {
 
@@ -34,21 +35,22 @@ public class WallShelfTileEntity extends TileEntity implements IClearable {
 		return false;
 	}
 
-	public boolean removeItem() {
+	public void removeItem() {
 		for (int i = this.inventory.size() - 1; i > -1; i--) {
 			if (!this.inventory.get(i).isEmpty()) {
-				InventoryHelper.dropItemStack(this.level, this.getBlockPos().getX(), this.getBlockPos().getY(), this.getBlockPos().getZ(), this.inventory.get(i));
+				if (this.level != null) {
+					InventoryHelper.dropItemStack(this.level, this.getBlockPos().getX(), this.getBlockPos().getY(), this.getBlockPos().getZ(), this.inventory.get(i));
+				}
 				this.inventory.set(i, ItemStack.EMPTY);
 				this.inventoryChanged();
-				return true;
+				return;
 			}
 		}
-		return false;
 	}
 
 	private void inventoryChanged() {
 		this.setChanged();
-		this.getLevel().sendBlockUpdated(this.getBlockPos(), this.getBlockState(), this.getBlockState(), 3);
+		Objects.requireNonNull(this.getLevel()).sendBlockUpdated(this.getBlockPos(), this.getBlockState(), this.getBlockState(), 3);
 	}
 
 	public NonNullList<ItemStack> getInventory() {

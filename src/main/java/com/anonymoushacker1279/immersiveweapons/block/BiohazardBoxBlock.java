@@ -13,8 +13,6 @@ import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.IBlockReader;
 
-import net.minecraft.block.AbstractBlock.Properties;
-
 public class BiohazardBoxBlock extends HorizontalBlock {
 
 	public static final DirectionProperty FACING = HorizontalBlock.FACING;

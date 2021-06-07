@@ -24,8 +24,6 @@ import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 
-import net.minecraft.block.AbstractBlock.Properties;
-
 public class BarrelTapBlock extends HorizontalBlock {
 
 	public static final DirectionProperty FACING = HorizontalBlock.FACING;
@@ -33,10 +31,6 @@ public class BarrelTapBlock extends HorizontalBlock {
 	protected static final VoxelShape SHAPE_SOUTH = Block.box(7.0D, 4.0D, 13.0D, 9.0D, 7.0D, 16.0D);
 	protected static final VoxelShape SHAPE_EAST = Block.box(0.0D, 4.0D, 7.0D, 3.0D, 7.0D, 9.0D);
 	protected static final VoxelShape SHAPE_WEST = Block.box(13.0D, 4.0D, 7.0D, 16.0D, 7.0D, 9.0D);
-	private BlockState blockstateNorth;
-	private BlockState blockstateSouth;
-	private BlockState blockstateEast;
-	private BlockState blockstateWest;
 	private String directionToUse = "north"; // Default: check North for a barrel
 
 	public BarrelTapBlock(Properties properties) {
@@ -74,10 +68,10 @@ public class BarrelTapBlock extends HorizontalBlock {
 
 	@Override
 	public ActionResultType use(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
-		blockstateNorth = worldIn.getBlockState(pos.north());
-		blockstateSouth = worldIn.getBlockState(pos.south());
-		blockstateEast = worldIn.getBlockState(pos.east());
-		blockstateWest = worldIn.getBlockState(pos.west());
+		BlockState blockstateNorth = worldIn.getBlockState(pos.north());
+		BlockState blockstateSouth = worldIn.getBlockState(pos.south());
+		BlockState blockstateEast = worldIn.getBlockState(pos.east());
+		BlockState blockstateWest = worldIn.getBlockState(pos.west());
 
 		if (blockstateNorth.is(Blocks.BARREL)) {
 			directionToUse = "north";
@@ -94,7 +88,7 @@ public class BarrelTapBlock extends HorizontalBlock {
 		} else {
 			if (blockstateNorth.is(Blocks.BARREL) || blockstateSouth.is(Blocks.BARREL) || blockstateEast.is(Blocks.BARREL) || blockstateWest.is(Blocks.BARREL)) {
 
-				TileEntity tileEntity = worldIn.getBlockEntity(pos.north());
+				TileEntity tileEntity;
 
 				switch (directionToUse) {
 					case "south":
@@ -113,33 +107,35 @@ public class BarrelTapBlock extends HorizontalBlock {
 
 				ItemStack itemStack;
 
-				for (int i = 0; i < ((IInventory) tileEntity).getContainerSize(); ++i) {
-					itemStack = ((IInventory) tileEntity).getItem(i);
+				if (tileEntity != null) {
+					for (int i = 0; i < ((IInventory) tileEntity).getContainerSize(); ++i) {
+						itemStack = ((IInventory) tileEntity).getItem(i);
 
-					// Define the various recipes
-					// They will be checked in order, so items higher in the list
-					// will be made before lower items
+						// Define the various recipes
+						// They will be checked in order, so items higher in the list
+						// will be made before lower items
 
-					// Bottle of Alcohol
-					if (itemStack.getItem() == Items.WHEAT && itemStack.getCount() >= 16) {
-						if (player.getMainHandItem().getItem() == Items.GLASS_BOTTLE) {
-							player.addItem(new ItemStack(DeferredRegistryHandler.BOTTLE_OF_ALCOHOL.get()));
-							itemStack.shrink(16);
-							if (!player.abilities.instabuild) {
-								player.getMainHandItem().shrink(1);
+						// Bottle of Alcohol
+						if (itemStack.getItem() == Items.WHEAT && itemStack.getCount() >= 16) {
+							if (player.getMainHandItem().getItem() == Items.GLASS_BOTTLE) {
+								player.addItem(new ItemStack(DeferredRegistryHandler.BOTTLE_OF_ALCOHOL.get()));
+								itemStack.shrink(16);
+								if (!player.abilities.instabuild) {
+									player.getMainHandItem().shrink(1);
+								}
+								i = ((IInventory) tileEntity).getContainerSize();
 							}
-							i = ((IInventory) tileEntity).getContainerSize();
 						}
-					}
-					// Bottle of Wine
-					else if (itemStack.getItem() == Items.SWEET_BERRIES && itemStack.getCount() >= 16) {
-						if (player.getMainHandItem().getItem() == Items.GLASS_BOTTLE) {
-							player.addItem(new ItemStack(DeferredRegistryHandler.BOTTLE_OF_WINE.get()));
-							itemStack.shrink(16);
-							if (!player.abilities.instabuild) {
-								player.getMainHandItem().shrink(1);
+						// Bottle of Wine
+						else if (itemStack.getItem() == Items.SWEET_BERRIES && itemStack.getCount() >= 16) {
+							if (player.getMainHandItem().getItem() == Items.GLASS_BOTTLE) {
+								player.addItem(new ItemStack(DeferredRegistryHandler.BOTTLE_OF_WINE.get()));
+								itemStack.shrink(16);
+								if (!player.abilities.instabuild) {
+									player.getMainHandItem().shrink(1);
+								}
+								i = ((IInventory) tileEntity).getContainerSize();
 							}
-							i = ((IInventory) tileEntity).getContainerSize();
 						}
 					}
 				}

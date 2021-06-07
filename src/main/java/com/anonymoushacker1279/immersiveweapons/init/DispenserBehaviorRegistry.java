@@ -8,11 +8,10 @@ import net.minecraft.dispenser.IBlockSource;
 import net.minecraft.dispenser.IDispenseItemBehavior;
 import net.minecraft.dispenser.IPosition;
 import net.minecraft.dispenser.ProjectileDispenseBehavior;
+import net.minecraft.entity.projectile.AbstractArrowEntity;
 import net.minecraft.entity.projectile.ProjectileEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
-
-import net.minecraft.entity.projectile.AbstractArrowEntity;
 
 public class DispenserBehaviorRegistry implements IDispenseItemBehavior {
 

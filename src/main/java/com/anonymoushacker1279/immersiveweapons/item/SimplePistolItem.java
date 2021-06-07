@@ -81,9 +81,7 @@ public class SimplePistolItem extends ShootableBullet implements IVanishable {
 						if (itemstack.isEmpty()) {
 							playerentity.inventory.removeItem(itemstack);
 						}
-						stack.hurtAndBreak(5, playerentity, (p_220009_1_) -> {
-							p_220009_1_.broadcastBreakEvent(playerentity.getUsedItemHand());
-						});
+						stack.hurtAndBreak(5, playerentity, (p_220009_1_) -> p_220009_1_.broadcastBreakEvent(playerentity.getUsedItemHand()));
 					}
 				}
 			}
@@ -97,9 +95,7 @@ public class SimplePistolItem extends ShootableBullet implements IVanishable {
 						if (itemstack.isEmpty()) {
 							playerentity.inventory.removeItem(itemstack);
 						}
-						stack.hurtAndBreak(5, playerentity, (p_220009_1_) -> {
-							p_220009_1_.broadcastBreakEvent(playerentity.getUsedItemHand());
-						});
+						stack.hurtAndBreak(5, playerentity, (p_220009_1_) -> p_220009_1_.broadcastBreakEvent(playerentity.getUsedItemHand()));
 					}
 				}
 			}
@@ -125,9 +121,7 @@ public class SimplePistolItem extends ShootableBullet implements IVanishable {
 							abstractarrowentity.setCritArrow(true);
 						}
 
-						stack.hurtAndBreak(1, playerentity, (p_220009_1_) -> {
-							p_220009_1_.broadcastBreakEvent(playerentity.getUsedItemHand());
-						});
+						stack.hurtAndBreak(1, playerentity, (p_220009_1_) -> p_220009_1_.broadcastBreakEvent(playerentity.getUsedItemHand()));
 
 						worldIn.addFreshEntity(abstractarrowentity);
 					}
@@ -165,10 +159,7 @@ public class SimplePistolItem extends ShootableBullet implements IVanishable {
 		return UseAction.CROSSBOW;
 	}
 
-	/**
-	 * Called to trigger the item's "innate" right click behavior. To handle when this item is used on a Block, see
-	 * {@link #onItemUse}.
-	 */
+
 	@Override
 	public ActionResult<ItemStack> use(World worldIn, PlayerEntity playerIn, Hand handIn) {
 		ItemStack itemstack = playerIn.getItemInHand(handIn);

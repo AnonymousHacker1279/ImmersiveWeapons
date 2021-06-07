@@ -14,8 +14,6 @@ import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.RayTraceResult.Type;
 import net.minecraft.world.World;
 
-import net.minecraft.item.Item.Properties;
-
 public class MorphineItem extends Item {
 
 	public MorphineItem(Properties properties) {

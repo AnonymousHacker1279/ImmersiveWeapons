@@ -1,19 +1,19 @@
 {
 	"credit": "Made with Blockbench",
-	"texture_size": [18, 16],
+	"texture_size": [32, 32],
 	"textures": {
-		"0": "immersiveweapons:custom/wooden_table",
-		"particle": "immersiveweapons:custom/wooden_table"
+		"0": "immersiveweapons:block/wooden_table",
+		"particle": "immersiveweapons:block/wooden_table"
 	},
 	"elements": [
 		{
 			"from": [7, 0, 7],
 			"to": [9, 14, 9],
 			"faces": {
-				"north": {"uv": [14.22222, 0, 16, 16], "texture": "#0"},
-				"east": {"uv": [14.22222, 0, 16, 16], "texture": "#0"},
-				"south": {"uv": [14.22222, 0, 16, 16], "texture": "#0"},
-				"west": {"uv": [14.22222, 0, 16, 16], "texture": "#0"},
+				"north": {"uv": [8, 0, 9, 8], "texture": "#0"},
+				"east": {"uv": [8, 0, 9, 8], "texture": "#0"},
+				"south": {"uv": [8, 0, 9, 8], "texture": "#0"},
+				"west": {"uv": [8, 0, 9, 8], "texture": "#0"},
 				"up": {"uv": [0, 0, 2, 2], "texture": "#0"},
 				"down": {"uv": [0, 0, 2, 2], "texture": "#0"}
 			}
@@ -72,12 +72,12 @@
 			"from": [0, 14, 0],
 			"to": [16, 16, 16],
 			"faces": {
-				"north": {"uv": [14.22222, 0, 16, 16], "rotation": 270, "texture": "#0"},
-				"east": {"uv": [14.22222, 0, 16, 16], "rotation": 90, "texture": "#0"},
-				"south": {"uv": [14.22222, 0, 16, 16], "rotation": 270, "texture": "#0"},
-				"west": {"uv": [14.22222, 0, 16, 16], "rotation": 270, "texture": "#0"},
-				"up": {"uv": [0, 0, 14.22222, 16], "texture": "#0"},
-				"down": {"uv": [0, 0, 14.22222, 16], "texture": "#0"}
+				"north": {"uv": [8, 0, 9, 8], "rotation": 270, "texture": "#0"},
+				"east": {"uv": [8, 0, 9, 8], "rotation": 90, "texture": "#0"},
+				"south": {"uv": [8, 0, 9, 8], "rotation": 270, "texture": "#0"},
+				"west": {"uv": [8, 0, 9, 8], "rotation": 270, "texture": "#0"},
+				"up": {"uv": [0, 0, 8, 8], "texture": "#0"},
+				"down": {"uv": [0, 0, 8, 8], "texture": "#0"}
 			}
 		}
 	],

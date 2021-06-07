@@ -5,14 +5,11 @@ import com.anonymoushacker1279.immersiveweapons.tileentity.PanicAlarmTileEntity;
 import net.minecraft.client.audio.TickableSound;
 import net.minecraft.util.SoundCategory;
 
-import net.minecraft.client.audio.ISound.AttenuationType;
-
 public class AlarmTickableSounds {
 
 	public static class AlarmTickableSound1 extends TickableSound {
 
 		private final PanicAlarmTileEntity panicAlarmTileEntity;
-		private float distance = 20.0F;
 
 		public AlarmTickableSound1(PanicAlarmTileEntity panicAlarmTileEntity) {
 			super(DeferredRegistryHandler.ALARM_1.get(), SoundCategory.BLOCKS);
@@ -34,7 +31,6 @@ public class AlarmTickableSounds {
 				this.x = (float) panicAlarmTileEntity.getBlockPos().getX();
 				this.y = (float) panicAlarmTileEntity.getBlockPos().getY();
 				this.z = (float) panicAlarmTileEntity.getBlockPos().getZ();
-				this.distance = 20f;
 				this.volume = 1.0f;
 			}
 		}
@@ -43,7 +39,6 @@ public class AlarmTickableSounds {
 	public static class AlarmTickableSound2 extends TickableSound {
 
 		private final PanicAlarmTileEntity panicAlarmTileEntity;
-		private float distance = 20.0F;
 
 		public AlarmTickableSound2(PanicAlarmTileEntity panicAlarmTileEntity) {
 			super(DeferredRegistryHandler.ALARM_2.get(), SoundCategory.BLOCKS);
@@ -65,7 +60,6 @@ public class AlarmTickableSounds {
 				this.x = (float) panicAlarmTileEntity.getBlockPos().getX();
 				this.y = (float) panicAlarmTileEntity.getBlockPos().getY();
 				this.z = (float) panicAlarmTileEntity.getBlockPos().getZ();
-				this.distance = 20f;
 				this.volume = 1.0f;
 			}
 		}
@@ -74,7 +68,6 @@ public class AlarmTickableSounds {
 	public static class AlarmTickableSound3 extends TickableSound {
 
 		private final PanicAlarmTileEntity panicAlarmTileEntity;
-		private float distance = 20.0F;
 
 		public AlarmTickableSound3(PanicAlarmTileEntity panicAlarmTileEntity) {
 			super(DeferredRegistryHandler.ALARM_3.get(), SoundCategory.BLOCKS);
@@ -96,7 +89,6 @@ public class AlarmTickableSounds {
 				this.x = (float) panicAlarmTileEntity.getBlockPos().getX();
 				this.y = (float) panicAlarmTileEntity.getBlockPos().getY();
 				this.z = (float) panicAlarmTileEntity.getBlockPos().getZ();
-				this.distance = 20f;
 				this.volume = 1.0f;
 			}
 		}

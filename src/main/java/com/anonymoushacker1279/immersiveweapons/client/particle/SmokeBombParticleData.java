@@ -14,8 +14,6 @@ import javax.annotation.Nonnull;
 import java.awt.*;
 import java.util.Locale;
 
-import net.minecraft.particles.IParticleData.IDeserializer;
-
 public class SmokeBombParticleData implements IParticleData {
 
 	public static final Codec<SmokeBombParticleData> CODEC = RecordCodecBuilder.create(

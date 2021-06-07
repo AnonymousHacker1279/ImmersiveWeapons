@@ -3,8 +3,6 @@ package com.anonymoushacker1279.immersiveweapons.item;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
-import net.minecraft.item.Item.Properties;
-
 public class CustomContainerItem {
 
 	public static class BlueprintItem extends Item {

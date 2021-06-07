@@ -22,7 +22,9 @@ public class TeslaSynthesizerScreen extends ContainerScreen<TeslaSynthesizerCont
 	@Override
 	protected void renderBg(MatrixStack matrixStack, float partialTicks, int mouseX, int mouseY) {
 		RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
-		this.minecraft.getTextureManager().bind(GUI_TEXTURE);
+		if (this.minecraft != null) {
+			this.minecraft.getTextureManager().bind(GUI_TEXTURE);
+		}
 		int i = this.leftPos;
 		int j = this.topPos;
 		this.blit(matrixStack, i, j, 0, 0, this.imageWidth, this.imageHeight);

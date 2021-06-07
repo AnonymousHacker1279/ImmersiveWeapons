@@ -26,9 +26,7 @@ public class SmallPartsTable extends CraftingTableBlock {
 
 	@Override
 	public INamedContainerProvider getMenuProvider(BlockState state, World worldIn, BlockPos pos) {
-		return new SimpleNamedContainerProvider((id, inventory, player) -> {
-			return new SmallPartsContainer(id, inventory, IWorldPosCallable.create(worldIn, pos));
-		}, CONTAINER_NAME);
+		return new SimpleNamedContainerProvider((id, inventory, player) -> new SmallPartsContainer(id, inventory, IWorldPosCallable.create(worldIn, pos)), CONTAINER_NAME);
 	}
 
 	@Override

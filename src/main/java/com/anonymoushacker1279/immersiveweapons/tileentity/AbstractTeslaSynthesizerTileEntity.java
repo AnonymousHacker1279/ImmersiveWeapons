@@ -145,9 +145,7 @@ public abstract class AbstractTeslaSynthesizerTileEntity extends LockableTileEnt
 		compound.putInt("CookTimeTotal", this.cookTimeTotal);
 		ItemStackHelper.saveAllItems(compound, this.items);
 		CompoundNBT compoundnbt = new CompoundNBT();
-		this.recipes.forEach((recipeId, craftedAmount) -> {
-			compoundnbt.putInt(recipeId.toString(), craftedAmount);
-		});
+		this.recipes.forEach((recipeId, craftedAmount) -> compoundnbt.putInt(recipeId.toString(), craftedAmount));
 		compound.put("RecipesUsed", compoundnbt);
 		return compound;
 	}
@@ -160,7 +158,7 @@ public abstract class AbstractTeslaSynthesizerTileEntity extends LockableTileEnt
 			--this.burnTime;
 		}
 
-		if (!this.level.isClientSide) {
+		if (this.level != null && !this.level.isClientSide) {
 			ItemStack itemstack = this.items.get(3);
 			if (this.isBurning() || !itemstack.isEmpty() && !this.items.get(0).isEmpty() && !this.items.get(1).isEmpty() && !this.items.get(2).isEmpty()) {
 				RecipeManager recipeManager = this.level.getRecipeManager();
@@ -252,7 +250,7 @@ public abstract class AbstractTeslaSynthesizerTileEntity extends LockableTileEnt
 				recipeOutputStack.grow(recipeOutput.getCount());
 			}
 
-			if (!this.level.isClientSide) {
+			if (this.level != null && !this.level.isClientSide) {
 				this.setRecipeUsed(recipe);
 			}
 
@@ -365,7 +363,7 @@ public abstract class AbstractTeslaSynthesizerTileEntity extends LockableTileEnt
 	 */
 	@Override
 	public boolean stillValid(PlayerEntity player) {
-		if (this.level.getBlockEntity(this.worldPosition) != this) {
+		if ((this.level != null ? this.level.getBlockEntity(this.worldPosition) : null) != this) {
 			return false;
 		} else {
 			return player.distanceToSqr((double) this.worldPosition.getX() + 0.5D, (double) this.worldPosition.getY() + 0.5D, (double) this.worldPosition.getZ() + 0.5D) <= 64.0D;

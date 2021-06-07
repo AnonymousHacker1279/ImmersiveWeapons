@@ -9,8 +9,6 @@ import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.world.World;
 
-import net.minecraft.item.Item.Properties;
-
 public class PainkillerItem extends Item {
 
 	public PainkillerItem(Properties properties) {

@@ -2,8 +2,8 @@
 	"credit": "Made with Blockbench",
 	"texture_size": [48, 32],
 	"textures": {
-		"0": "immersiveweapons:custom/mre",
-		"particle": "immersiveweapons:custom/mre"
+		"0": "immersiveweapons:item/mre",
+		"particle": "immersiveweapons:item/mre"
 	},
 	"elements": [
 		{

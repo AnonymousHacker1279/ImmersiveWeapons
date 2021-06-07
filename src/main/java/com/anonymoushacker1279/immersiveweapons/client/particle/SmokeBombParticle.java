@@ -1,7 +1,6 @@
 package com.anonymoushacker1279.immersiveweapons.client.particle;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.particle.IAnimatedSprite;
 import net.minecraft.client.particle.IParticleRenderType;
 import net.minecraft.client.particle.SpriteTexturedParticle;
 import net.minecraft.client.renderer.LightTexture;
@@ -12,16 +11,13 @@ import java.awt.*;
 
 public class SmokeBombParticle extends SpriteTexturedParticle {
 
-	@SuppressWarnings("unused")
-	private final IAnimatedSprite sprites;
 	Minecraft mc = Minecraft.getInstance();
 	private final double xPos;
 	private final double yPos;
 	private final double zPos;
 
-	public SmokeBombParticle(ClientWorld world, double x, double y, double z, double velocityX, double velocityY, double velocityZ, Color tint, double diameter, IAnimatedSprite sprites) {
+	public SmokeBombParticle(ClientWorld world, double x, double y, double z, double velocityX, double velocityY, double velocityZ, Color tint, double diameter) {
 		super(world, x, y, z, velocityX, velocityY, velocityZ);
-		this.sprites = sprites;
 
 		xPos = x;
 		yPos = y;
@@ -35,8 +31,7 @@ public class SmokeBombParticle extends SpriteTexturedParticle {
 
 		lifetime = 500;  // lifetime in ticks: 100 ticks = 5 seconds
 
-		final float ALPHA_VALUE = 0.95F;
-		this.alpha = ALPHA_VALUE;
+		this.alpha = 0.95F;
 
 		//the vanilla Particle constructor added random variation to our starting velocity.  Undo it!
 		xd = velocityX;
@@ -49,11 +44,13 @@ public class SmokeBombParticle extends SpriteTexturedParticle {
 	@Override
 	protected int getLightColor(float partialTick) {
 		BlockPos blockPos = new BlockPos(xPos, yPos, zPos).above();
-		int lightAtParticleLocation = mc.level.getMaxLocalRawBrightness(blockPos);    // Get the light level at the current position
+		int lightAtParticleLocation = 0;    // Get the light level at the current position
+		if (mc.level != null) {
+			lightAtParticleLocation = mc.level.getMaxLocalRawBrightness(blockPos);
+		}
 		final int BLOCK_LIGHT = lightAtParticleLocation;
 		final int SKY_LIGHT = lightAtParticleLocation;
-		final int FULL_BRIGHTNESS_VALUE = LightTexture.pack(BLOCK_LIGHT, SKY_LIGHT);
-		return FULL_BRIGHTNESS_VALUE;
+		return LightTexture.pack(BLOCK_LIGHT, SKY_LIGHT);
 	}
 
 	@Override

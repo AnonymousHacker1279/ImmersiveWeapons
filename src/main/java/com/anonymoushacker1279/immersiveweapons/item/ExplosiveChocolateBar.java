@@ -7,8 +7,6 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.world.Explosion;
 import net.minecraft.world.World;
 
-import net.minecraft.item.Item.Properties;
-
 public class ExplosiveChocolateBar extends Item {
 
 	private static final DamageSource damageSource = new DamageSource("immersiveweapons.explosive_chocolate_bar");

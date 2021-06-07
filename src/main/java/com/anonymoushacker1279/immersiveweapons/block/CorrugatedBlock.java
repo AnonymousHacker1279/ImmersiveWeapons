@@ -19,8 +19,6 @@ import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorld;
 
-import net.minecraft.block.AbstractBlock.Properties;
-
 public class CorrugatedBlock {
 
 	public static class CorrugatedBlockNormal extends HorizontalBlock implements IWaterLoggable {

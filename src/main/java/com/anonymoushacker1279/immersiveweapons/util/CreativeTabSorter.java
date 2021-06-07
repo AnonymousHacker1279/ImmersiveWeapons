@@ -18,10 +18,8 @@ public class CreativeTabSorter extends ItemGroup {
 
 	@Override
 	public void fillItemList(NonNullList<ItemStack> itemStack) {
-		List<Item> items = new ArrayList<Item>();
-		DeferredRegistryHandler.ITEMS.getEntries().stream().map(RegistryObject::get).forEach(item -> {
-			items.add(item);
-		});
+		List<Item> items = new ArrayList<>();
+		DeferredRegistryHandler.ITEMS.getEntries().stream().map(RegistryObject::get).forEach(items::add);
 
 		for (Item item : items) {
 			item.fillItemCategory(this, itemStack);

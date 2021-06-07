@@ -28,8 +28,6 @@ import net.minecraft.world.server.ServerWorld;
 
 import java.util.Random;
 
-import net.minecraft.block.AbstractBlock.Properties;
-
 public class PanicAlarmBlock extends HorizontalBlock implements IWaterLoggable {
 
 	public static final DirectionProperty HORIZONTAL_FACING = BlockStateProperties.HORIZONTAL_FACING;
@@ -160,7 +158,7 @@ public class PanicAlarmBlock extends HorizontalBlock implements IWaterLoggable {
 		TileEntity tileEntity = worldIn.getBlockEntity(pos);
 		if (tileEntity instanceof PanicAlarmTileEntity) {
 			if (!worldIn.isClientSide && handIn == Hand.MAIN_HAND) {
-				((PanicAlarmTileEntity) tileEntity).changeAlarmSound(player, worldIn);
+				((PanicAlarmTileEntity) tileEntity).changeAlarmSound(player);
 				return ActionResultType.SUCCESS;
 			} else {
 				return ActionResultType.PASS;

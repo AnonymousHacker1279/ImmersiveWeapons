@@ -20,7 +20,6 @@ public class PikeItem {
 	public static class WoodPikeItem extends Pike {
 
 		public static Multimap<Attribute, AttributeModifier> woodPikeAttributes;
-		private Multimap<Attribute, AttributeModifier> returnValue;
 
 		public WoodPikeItem(Item.Properties builderIn, double damageIn, double attackSpeedIn) {
 			super(builderIn, attackSpeedIn, attackSpeedIn);
@@ -33,6 +32,7 @@ public class PikeItem {
 		@SuppressWarnings("deprecation")
 		@Override
 		public Multimap<Attribute, AttributeModifier> getDefaultAttributeModifiers(EquipmentSlotType equipmentSlot) {
+			Multimap<Attribute, AttributeModifier> returnValue;
 			if (AddAttributesAfterSetup.hasCompletedClientSetup) {
 				returnValue = equipmentSlot == EquipmentSlotType.MAINHAND ? WoodPikeItem.woodPikeAttributes : super.getDefaultAttributeModifiers(equipmentSlot);
 			} else {
@@ -55,7 +55,6 @@ public class PikeItem {
 	public static class StonePikeItem extends Pike {
 
 		public static Multimap<Attribute, AttributeModifier> stonePikeAttributes;
-		private Multimap<Attribute, AttributeModifier> returnValue;
 
 		public StonePikeItem(Item.Properties builderIn, double damageIn, double attackSpeedIn) {
 			super(builderIn, attackSpeedIn, attackSpeedIn);
@@ -68,6 +67,7 @@ public class PikeItem {
 		@SuppressWarnings("deprecation")
 		@Override
 		public Multimap<Attribute, AttributeModifier> getDefaultAttributeModifiers(EquipmentSlotType equipmentSlot) {
+			Multimap<Attribute, AttributeModifier> returnValue;
 			if (AddAttributesAfterSetup.hasCompletedClientSetup) {
 				returnValue = equipmentSlot == EquipmentSlotType.MAINHAND ? StonePikeItem.stonePikeAttributes : super.getDefaultAttributeModifiers(equipmentSlot);
 			} else {
@@ -89,7 +89,6 @@ public class PikeItem {
 	public static class GoldPikeItem extends Pike {
 
 		public static Multimap<Attribute, AttributeModifier> goldPikeAttributes;
-		private Multimap<Attribute, AttributeModifier> returnValue;
 
 		public GoldPikeItem(Item.Properties builderIn, double damageIn, double attackSpeedIn) {
 			super(builderIn, attackSpeedIn, attackSpeedIn);
@@ -102,6 +101,7 @@ public class PikeItem {
 		@SuppressWarnings("deprecation")
 		@Override
 		public Multimap<Attribute, AttributeModifier> getDefaultAttributeModifiers(EquipmentSlotType equipmentSlot) {
+			Multimap<Attribute, AttributeModifier> returnValue;
 			if (AddAttributesAfterSetup.hasCompletedClientSetup) {
 				returnValue = equipmentSlot == EquipmentSlotType.MAINHAND ? GoldPikeItem.goldPikeAttributes : super.getDefaultAttributeModifiers(equipmentSlot);
 			} else {
@@ -123,7 +123,6 @@ public class PikeItem {
 	public static class CopperPikeItem extends Pike {
 
 		public static Multimap<Attribute, AttributeModifier> copperPikeAttributes;
-		private Multimap<Attribute, AttributeModifier> returnValue;
 
 		public CopperPikeItem(Item.Properties builderIn, double damageIn, double attackSpeedIn) {
 			super(builderIn, attackSpeedIn, attackSpeedIn);
@@ -136,6 +135,7 @@ public class PikeItem {
 		@SuppressWarnings("deprecation")
 		@Override
 		public Multimap<Attribute, AttributeModifier> getDefaultAttributeModifiers(EquipmentSlotType equipmentSlot) {
+			Multimap<Attribute, AttributeModifier> returnValue;
 			if (AddAttributesAfterSetup.hasCompletedClientSetup) {
 				returnValue = equipmentSlot == EquipmentSlotType.MAINHAND ? CopperPikeItem.copperPikeAttributes : super.getDefaultAttributeModifiers(equipmentSlot);
 			} else {
@@ -157,7 +157,6 @@ public class PikeItem {
 	public static class IronPikeItem extends Pike {
 
 		public static Multimap<Attribute, AttributeModifier> ironPikeAttributes;
-		private Multimap<Attribute, AttributeModifier> returnValue;
 
 		public IronPikeItem(Item.Properties builderIn, double damageIn, double attackSpeedIn) {
 			super(builderIn, attackSpeedIn, attackSpeedIn);
@@ -170,6 +169,7 @@ public class PikeItem {
 		@SuppressWarnings("deprecation")
 		@Override
 		public Multimap<Attribute, AttributeModifier> getDefaultAttributeModifiers(EquipmentSlotType equipmentSlot) {
+			Multimap<Attribute, AttributeModifier> returnValue;
 			if (AddAttributesAfterSetup.hasCompletedClientSetup) {
 				returnValue = equipmentSlot == EquipmentSlotType.MAINHAND ? IronPikeItem.ironPikeAttributes : super.getDefaultAttributeModifiers(equipmentSlot);
 			} else {
@@ -191,7 +191,6 @@ public class PikeItem {
 	public static class DiamondPikeItem extends Pike {
 
 		public static Multimap<Attribute, AttributeModifier> diamondPikeAttributes;
-		private Multimap<Attribute, AttributeModifier> returnValue;
 
 		public DiamondPikeItem(Item.Properties builderIn, double damageIn, double attackSpeedIn) {
 			super(builderIn, attackSpeedIn, attackSpeedIn);
@@ -204,6 +203,7 @@ public class PikeItem {
 		@SuppressWarnings("deprecation")
 		@Override
 		public Multimap<Attribute, AttributeModifier> getDefaultAttributeModifiers(EquipmentSlotType equipmentSlot) {
+			Multimap<Attribute, AttributeModifier> returnValue;
 			if (AddAttributesAfterSetup.hasCompletedClientSetup) {
 				returnValue = equipmentSlot == EquipmentSlotType.MAINHAND ? DiamondPikeItem.diamondPikeAttributes : super.getDefaultAttributeModifiers(equipmentSlot);
 			} else {
@@ -225,7 +225,6 @@ public class PikeItem {
 	public static class NetheritePikeItem extends Pike {
 
 		public static Multimap<Attribute, AttributeModifier> netheritePikeAttributes;
-		private Multimap<Attribute, AttributeModifier> returnValue;
 
 		public NetheritePikeItem(Item.Properties builderIn, double damageIn, double attackSpeedIn) {
 			super(builderIn, attackSpeedIn, attackSpeedIn);
@@ -238,6 +237,7 @@ public class PikeItem {
 		@SuppressWarnings("deprecation")
 		@Override
 		public Multimap<Attribute, AttributeModifier> getDefaultAttributeModifiers(EquipmentSlotType equipmentSlot) {
+			Multimap<Attribute, AttributeModifier> returnValue;
 			if (AddAttributesAfterSetup.hasCompletedClientSetup) {
 				returnValue = equipmentSlot == EquipmentSlotType.MAINHAND ? NetheritePikeItem.netheritePikeAttributes : super.getDefaultAttributeModifiers(equipmentSlot);
 			} else {

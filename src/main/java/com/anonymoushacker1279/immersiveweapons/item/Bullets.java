@@ -7,8 +7,6 @@ import net.minecraft.entity.projectile.AbstractArrowEntity.PickupStatus;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
-import net.minecraft.item.Item.Properties;
-
 public class Bullets {
 
 	public static class WoodBulletItem extends CustomArrowItem {

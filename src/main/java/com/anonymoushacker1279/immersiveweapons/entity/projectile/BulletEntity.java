@@ -5,9 +5,7 @@ import com.anonymoushacker1279.immersiveweapons.util.Config;
 import com.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
 import com.google.common.collect.Lists;
 import it.unimi.dsi.fastutil.ints.IntOpenHashSet;
-import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.block.BlockState;
-import net.minecraft.client.Minecraft;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
@@ -27,14 +25,13 @@ import net.minecraft.util.math.*;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
+import net.minecraftforge.event.ForgeEventFactory;
 import net.minecraftforge.fml.network.NetworkHooks;
 
-import java.util.Arrays;
 import java.util.List;
 
 public class BulletEntity {
 
-	static Minecraft minecraft = Minecraft.getInstance();
 	static boolean canBreakGlass = Config.BULLETS_BREAK_GLASS.get();
 
 	public static class CopperBulletEntity extends AbstractArrowEntity {
@@ -51,19 +48,15 @@ public class BulletEntity {
 		private boolean hasAlreadyBrokeGlass = false;
 
 		@SuppressWarnings("unchecked")
-		public CopperBulletEntity(EntityType<?> type, World world) {
+		public CopperBulletEntity(EntityType<?> type, World world, int knockbackStrength) {
 			super((EntityType<? extends AbstractArrowEntity>) type, world);
+			this.knockbackStrength = knockbackStrength;
 			this.referenceItem = DeferredRegistryHandler.COPPER_MUSKET_BALL.get();
 		}
 
 		public CopperBulletEntity(LivingEntity shooter, World world, Item referenceItemIn) {
 			super(DeferredRegistryHandler.COPPER_BULLET_ENTITY.get(), shooter, world);
 			this.referenceItem = referenceItemIn;
-		}
-
-		public CopperBulletEntity(World worldIn, double x, double y, double z) {
-			super(DeferredRegistryHandler.COPPER_BULLET_ENTITY.get(), x, y, z, worldIn);
-			this.referenceItem = DeferredRegistryHandler.COPPER_MUSKET_BALL.get();
 		}
 
 		@Override
@@ -159,7 +152,10 @@ public class BulletEntity {
 					}
 
 					if (raytraceresult != null && raytraceresult.getType() == RayTraceResult.Type.ENTITY) {
-						Entity entity = ((EntityRayTraceResult) raytraceresult).getEntity();
+						Entity entity = null;
+						if (raytraceresult instanceof EntityRayTraceResult) {
+							entity = ((EntityRayTraceResult) raytraceresult).getEntity();
+						}
 						Entity entity1 = this.getOwner();
 						if (entity instanceof PlayerEntity && entity1 instanceof PlayerEntity && !((PlayerEntity) entity1).canHarmPlayer((PlayerEntity) entity)) {
 							raytraceresult = null;
@@ -167,7 +163,7 @@ public class BulletEntity {
 						}
 					}
 
-					if (raytraceresult != null && raytraceresult.getType() != RayTraceResult.Type.MISS && !flag && !net.minecraftforge.event.ForgeEventFactory.onProjectileImpact(this, raytraceresult)) {
+					if (raytraceresult != null && raytraceresult.getType() != RayTraceResult.Type.MISS && !flag && !ForgeEventFactory.onProjectileImpact(this, raytraceresult)) {
 						this.onHit(raytraceresult);
 						this.hasImpulse = true;
 					}
@@ -290,7 +286,7 @@ public class BulletEntity {
 					}
 
 					this.doPostHurtEffects(livingentity);
-					if (entity1 != null && livingentity != entity1 && livingentity instanceof PlayerEntity && entity1 instanceof ServerPlayerEntity && !this.isSilent()) {
+					if (livingentity != entity1 && livingentity instanceof PlayerEntity && entity1 instanceof ServerPlayerEntity && !this.isSilent()) {
 						((ServerPlayerEntity) entity1).connection.send(new SChangeGameStatePacket(SChangeGameStatePacket.ARROW_HIT_PLAYER, 0.0F));
 					}
 
@@ -298,14 +294,7 @@ public class BulletEntity {
 						this.hitEntities.add(livingentity);
 					}
 
-					if (!this.level.isClientSide && entity1 instanceof ServerPlayerEntity) {
-						ServerPlayerEntity serverplayerentity = (ServerPlayerEntity) entity1;
-						if (this.hitEntities != null && this.shotFromCrossbow()) {
-							CriteriaTriggers.KILLED_BY_CROSSBOW.trigger(serverplayerentity, this.hitEntities);
-						} else if (!entity.isAlive() && this.shotFromCrossbow()) {
-							CriteriaTriggers.KILLED_BY_CROSSBOW.trigger(serverplayerentity, Arrays.asList(entity));
-						}
-					}
+
 				}
 
 				this.playSound(this.hitSound, 1.0F, 1.2F / (this.random.nextFloat() * 0.2F + 0.9F));
@@ -372,19 +361,15 @@ public class BulletEntity {
 		private boolean hasAlreadyBrokeGlass = false;
 
 		@SuppressWarnings("unchecked")
-		public WoodBulletEntity(EntityType<?> type, World world) {
+		public WoodBulletEntity(EntityType<?> type, World world, int knockbackStrength) {
 			super((EntityType<? extends AbstractArrowEntity>) type, world);
+			this.knockbackStrength = knockbackStrength;
 			this.referenceItem = DeferredRegistryHandler.WOOD_MUSKET_BALL.get();
 		}
 
 		public WoodBulletEntity(LivingEntity shooter, World world, Item referenceItemIn) {
 			super(DeferredRegistryHandler.WOOD_BULLET_ENTITY.get(), shooter, world);
 			this.referenceItem = referenceItemIn;
-		}
-
-		public WoodBulletEntity(World worldIn, double x, double y, double z) {
-			super(DeferredRegistryHandler.WOOD_BULLET_ENTITY.get(), x, y, z, worldIn);
-			this.referenceItem = DeferredRegistryHandler.WOOD_MUSKET_BALL.get();
 		}
 
 		@Override
@@ -480,7 +465,10 @@ public class BulletEntity {
 					}
 
 					if (raytraceresult != null && raytraceresult.getType() == RayTraceResult.Type.ENTITY) {
-						Entity entity = ((EntityRayTraceResult) raytraceresult).getEntity();
+						Entity entity = null;
+						if (raytraceresult instanceof EntityRayTraceResult) {
+							entity = ((EntityRayTraceResult) raytraceresult).getEntity();
+						}
 						Entity entity1 = this.getOwner();
 						if (entity instanceof PlayerEntity && entity1 instanceof PlayerEntity && !((PlayerEntity) entity1).canHarmPlayer((PlayerEntity) entity)) {
 							raytraceresult = null;
@@ -488,7 +476,7 @@ public class BulletEntity {
 						}
 					}
 
-					if (raytraceresult != null && raytraceresult.getType() != RayTraceResult.Type.MISS && !flag && !net.minecraftforge.event.ForgeEventFactory.onProjectileImpact(this, raytraceresult)) {
+					if (raytraceresult != null && raytraceresult.getType() != RayTraceResult.Type.MISS && !flag && !ForgeEventFactory.onProjectileImpact(this, raytraceresult)) {
 						this.onHit(raytraceresult);
 						this.hasImpulse = true;
 					}
@@ -611,7 +599,7 @@ public class BulletEntity {
 					}
 
 					this.doPostHurtEffects(livingentity);
-					if (entity1 != null && livingentity != entity1 && livingentity instanceof PlayerEntity && entity1 instanceof ServerPlayerEntity && !this.isSilent()) {
+					if (livingentity != entity1 && livingentity instanceof PlayerEntity && entity1 instanceof ServerPlayerEntity && !this.isSilent()) {
 						((ServerPlayerEntity) entity1).connection.send(new SChangeGameStatePacket(SChangeGameStatePacket.ARROW_HIT_PLAYER, 0.0F));
 					}
 
@@ -619,14 +607,7 @@ public class BulletEntity {
 						this.hitEntities.add(livingentity);
 					}
 
-					if (!this.level.isClientSide && entity1 instanceof ServerPlayerEntity) {
-						ServerPlayerEntity serverplayerentity = (ServerPlayerEntity) entity1;
-						if (this.hitEntities != null && this.shotFromCrossbow()) {
-							CriteriaTriggers.KILLED_BY_CROSSBOW.trigger(serverplayerentity, this.hitEntities);
-						} else if (!entity.isAlive() && this.shotFromCrossbow()) {
-							CriteriaTriggers.KILLED_BY_CROSSBOW.trigger(serverplayerentity, Arrays.asList(entity));
-						}
-					}
+
 				}
 
 				this.playSound(this.hitSound, 1.0F, 1.2F / (this.random.nextFloat() * 0.2F + 0.9F));
@@ -693,19 +674,15 @@ public class BulletEntity {
 		private boolean hasAlreadyBrokeGlass = false;
 
 		@SuppressWarnings("unchecked")
-		public StoneBulletEntity(EntityType<?> type, World world) {
+		public StoneBulletEntity(EntityType<?> type, World world, int knockbackStrength) {
 			super((EntityType<? extends AbstractArrowEntity>) type, world);
+			this.knockbackStrength = knockbackStrength;
 			this.referenceItem = DeferredRegistryHandler.STONE_MUSKET_BALL.get();
 		}
 
 		public StoneBulletEntity(LivingEntity shooter, World world, Item referenceItemIn) {
 			super(DeferredRegistryHandler.STONE_BULLET_ENTITY.get(), shooter, world);
 			this.referenceItem = referenceItemIn;
-		}
-
-		public StoneBulletEntity(World worldIn, double x, double y, double z) {
-			super(DeferredRegistryHandler.STONE_BULLET_ENTITY.get(), x, y, z, worldIn);
-			this.referenceItem = DeferredRegistryHandler.STONE_MUSKET_BALL.get();
 		}
 
 		@Override
@@ -801,7 +778,10 @@ public class BulletEntity {
 					}
 
 					if (raytraceresult != null && raytraceresult.getType() == RayTraceResult.Type.ENTITY) {
-						Entity entity = ((EntityRayTraceResult) raytraceresult).getEntity();
+						Entity entity = null;
+						if (raytraceresult instanceof EntityRayTraceResult) {
+							entity = ((EntityRayTraceResult) raytraceresult).getEntity();
+						}
 						Entity entity1 = this.getOwner();
 						if (entity instanceof PlayerEntity && entity1 instanceof PlayerEntity && !((PlayerEntity) entity1).canHarmPlayer((PlayerEntity) entity)) {
 							raytraceresult = null;
@@ -809,7 +789,7 @@ public class BulletEntity {
 						}
 					}
 
-					if (raytraceresult != null && raytraceresult.getType() != RayTraceResult.Type.MISS && !flag && !net.minecraftforge.event.ForgeEventFactory.onProjectileImpact(this, raytraceresult)) {
+					if (raytraceresult != null && raytraceresult.getType() != RayTraceResult.Type.MISS && !flag && !ForgeEventFactory.onProjectileImpact(this, raytraceresult)) {
 						this.onHit(raytraceresult);
 						this.hasImpulse = true;
 					}
@@ -932,7 +912,7 @@ public class BulletEntity {
 					}
 
 					this.doPostHurtEffects(livingentity);
-					if (entity1 != null && livingentity != entity1 && livingentity instanceof PlayerEntity && entity1 instanceof ServerPlayerEntity && !this.isSilent()) {
+					if (livingentity != entity1 && livingentity instanceof PlayerEntity && entity1 instanceof ServerPlayerEntity && !this.isSilent()) {
 						((ServerPlayerEntity) entity1).connection.send(new SChangeGameStatePacket(SChangeGameStatePacket.ARROW_HIT_PLAYER, 0.0F));
 					}
 
@@ -940,14 +920,7 @@ public class BulletEntity {
 						this.hitEntities.add(livingentity);
 					}
 
-					if (!this.level.isClientSide && entity1 instanceof ServerPlayerEntity) {
-						ServerPlayerEntity serverplayerentity = (ServerPlayerEntity) entity1;
-						if (this.hitEntities != null && this.shotFromCrossbow()) {
-							CriteriaTriggers.KILLED_BY_CROSSBOW.trigger(serverplayerentity, this.hitEntities);
-						} else if (!entity.isAlive() && this.shotFromCrossbow()) {
-							CriteriaTriggers.KILLED_BY_CROSSBOW.trigger(serverplayerentity, Arrays.asList(entity));
-						}
-					}
+
 				}
 
 				this.playSound(this.hitSound, 1.0F, 1.2F / (this.random.nextFloat() * 0.2F + 0.9F));
@@ -1014,19 +987,15 @@ public class BulletEntity {
 		private boolean hasAlreadyBrokeGlass = false;
 
 		@SuppressWarnings("unchecked")
-		public IronBulletEntity(EntityType<?> type, World world) {
+		public IronBulletEntity(EntityType<?> type, World world, int knockbackStrength) {
 			super((EntityType<? extends AbstractArrowEntity>) type, world);
+			this.knockbackStrength = knockbackStrength;
 			this.referenceItem = DeferredRegistryHandler.IRON_MUSKET_BALL.get();
 		}
 
 		public IronBulletEntity(LivingEntity shooter, World world, Item referenceItemIn) {
 			super(DeferredRegistryHandler.IRON_BULLET_ENTITY.get(), shooter, world);
 			this.referenceItem = referenceItemIn;
-		}
-
-		public IronBulletEntity(World worldIn, double x, double y, double z) {
-			super(DeferredRegistryHandler.IRON_BULLET_ENTITY.get(), x, y, z, worldIn);
-			this.referenceItem = DeferredRegistryHandler.IRON_MUSKET_BALL.get();
 		}
 
 		@Override
@@ -1122,7 +1091,10 @@ public class BulletEntity {
 					}
 
 					if (raytraceresult != null && raytraceresult.getType() == RayTraceResult.Type.ENTITY) {
-						Entity entity = ((EntityRayTraceResult) raytraceresult).getEntity();
+						Entity entity = null;
+						if (raytraceresult instanceof EntityRayTraceResult) {
+							entity = ((EntityRayTraceResult) raytraceresult).getEntity();
+						}
 						Entity entity1 = this.getOwner();
 						if (entity instanceof PlayerEntity && entity1 instanceof PlayerEntity && !((PlayerEntity) entity1).canHarmPlayer((PlayerEntity) entity)) {
 							raytraceresult = null;
@@ -1130,7 +1102,7 @@ public class BulletEntity {
 						}
 					}
 
-					if (raytraceresult != null && raytraceresult.getType() != RayTraceResult.Type.MISS && !flag && !net.minecraftforge.event.ForgeEventFactory.onProjectileImpact(this, raytraceresult)) {
+					if (raytraceresult != null && raytraceresult.getType() != RayTraceResult.Type.MISS && !flag && !ForgeEventFactory.onProjectileImpact(this, raytraceresult)) {
 						this.onHit(raytraceresult);
 						this.hasImpulse = true;
 					}
@@ -1253,7 +1225,7 @@ public class BulletEntity {
 					}
 
 					this.doPostHurtEffects(livingentity);
-					if (entity1 != null && livingentity != entity1 && livingentity instanceof PlayerEntity && entity1 instanceof ServerPlayerEntity && !this.isSilent()) {
+					if (livingentity != entity1 && livingentity instanceof PlayerEntity && entity1 instanceof ServerPlayerEntity && !this.isSilent()) {
 						((ServerPlayerEntity) entity1).connection.send(new SChangeGameStatePacket(SChangeGameStatePacket.ARROW_HIT_PLAYER, 0.0F));
 					}
 
@@ -1261,14 +1233,7 @@ public class BulletEntity {
 						this.hitEntities.add(livingentity);
 					}
 
-					if (!this.level.isClientSide && entity1 instanceof ServerPlayerEntity) {
-						ServerPlayerEntity serverplayerentity = (ServerPlayerEntity) entity1;
-						if (this.hitEntities != null && this.shotFromCrossbow()) {
-							CriteriaTriggers.KILLED_BY_CROSSBOW.trigger(serverplayerentity, this.hitEntities);
-						} else if (!entity.isAlive() && this.shotFromCrossbow()) {
-							CriteriaTriggers.KILLED_BY_CROSSBOW.trigger(serverplayerentity, Arrays.asList(entity));
-						}
-					}
+
 				}
 
 				this.playSound(this.hitSound, 1.0F, 1.2F / (this.random.nextFloat() * 0.2F + 0.9F));
@@ -1335,19 +1300,15 @@ public class BulletEntity {
 		private boolean hasAlreadyBrokeGlass = false;
 
 		@SuppressWarnings("unchecked")
-		public GoldBulletEntity(EntityType<?> type, World world) {
+		public GoldBulletEntity(EntityType<?> type, World world, int knockbackStrength) {
 			super((EntityType<? extends AbstractArrowEntity>) type, world);
+			this.knockbackStrength = knockbackStrength;
 			this.referenceItem = DeferredRegistryHandler.GOLD_MUSKET_BALL.get();
 		}
 
 		public GoldBulletEntity(LivingEntity shooter, World world, Item referenceItemIn) {
 			super(DeferredRegistryHandler.GOLD_BULLET_ENTITY.get(), shooter, world);
 			this.referenceItem = referenceItemIn;
-		}
-
-		public GoldBulletEntity(World worldIn, double x, double y, double z) {
-			super(DeferredRegistryHandler.GOLD_BULLET_ENTITY.get(), x, y, z, worldIn);
-			this.referenceItem = DeferredRegistryHandler.GOLD_MUSKET_BALL.get();
 		}
 
 		@Override
@@ -1443,7 +1404,10 @@ public class BulletEntity {
 					}
 
 					if (raytraceresult != null && raytraceresult.getType() == RayTraceResult.Type.ENTITY) {
-						Entity entity = ((EntityRayTraceResult) raytraceresult).getEntity();
+						Entity entity = null;
+						if (raytraceresult instanceof EntityRayTraceResult) {
+							entity = ((EntityRayTraceResult) raytraceresult).getEntity();
+						}
 						Entity entity1 = this.getOwner();
 						if (entity instanceof PlayerEntity && entity1 instanceof PlayerEntity && !((PlayerEntity) entity1).canHarmPlayer((PlayerEntity) entity)) {
 							raytraceresult = null;
@@ -1451,7 +1415,7 @@ public class BulletEntity {
 						}
 					}
 
-					if (raytraceresult != null && raytraceresult.getType() != RayTraceResult.Type.MISS && !flag && !net.minecraftforge.event.ForgeEventFactory.onProjectileImpact(this, raytraceresult)) {
+					if (raytraceresult != null && raytraceresult.getType() != RayTraceResult.Type.MISS && !flag && !ForgeEventFactory.onProjectileImpact(this, raytraceresult)) {
 						this.onHit(raytraceresult);
 						this.hasImpulse = true;
 					}
@@ -1574,7 +1538,7 @@ public class BulletEntity {
 					}
 
 					this.doPostHurtEffects(livingentity);
-					if (entity1 != null && livingentity != entity1 && livingentity instanceof PlayerEntity && entity1 instanceof ServerPlayerEntity && !this.isSilent()) {
+					if (livingentity != entity1 && livingentity instanceof PlayerEntity && entity1 instanceof ServerPlayerEntity && !this.isSilent()) {
 						((ServerPlayerEntity) entity1).connection.send(new SChangeGameStatePacket(SChangeGameStatePacket.ARROW_HIT_PLAYER, 0.0F));
 					}
 
@@ -1582,14 +1546,7 @@ public class BulletEntity {
 						this.hitEntities.add(livingentity);
 					}
 
-					if (!this.level.isClientSide && entity1 instanceof ServerPlayerEntity) {
-						ServerPlayerEntity serverplayerentity = (ServerPlayerEntity) entity1;
-						if (this.hitEntities != null && this.shotFromCrossbow()) {
-							CriteriaTriggers.KILLED_BY_CROSSBOW.trigger(serverplayerentity, this.hitEntities);
-						} else if (!entity.isAlive() && this.shotFromCrossbow()) {
-							CriteriaTriggers.KILLED_BY_CROSSBOW.trigger(serverplayerentity, Arrays.asList(entity));
-						}
-					}
+
 				}
 
 				this.playSound(this.hitSound, 1.0F, 1.2F / (this.random.nextFloat() * 0.2F + 0.9F));
@@ -1656,19 +1613,15 @@ public class BulletEntity {
 		private boolean hasAlreadyBrokeGlass = false;
 
 		@SuppressWarnings("unchecked")
-		public DiamondBulletEntity(EntityType<?> type, World world) {
+		public DiamondBulletEntity(EntityType<?> type, World world, int knockbackStrength) {
 			super((EntityType<? extends AbstractArrowEntity>) type, world);
+			this.knockbackStrength = knockbackStrength;
 			this.referenceItem = DeferredRegistryHandler.DIAMOND_MUSKET_BALL.get();
 		}
 
 		public DiamondBulletEntity(LivingEntity shooter, World world, Item referenceItemIn) {
 			super(DeferredRegistryHandler.DIAMOND_BULLET_ENTITY.get(), shooter, world);
 			this.referenceItem = referenceItemIn;
-		}
-
-		public DiamondBulletEntity(World worldIn, double x, double y, double z) {
-			super(DeferredRegistryHandler.DIAMOND_BULLET_ENTITY.get(), x, y, z, worldIn);
-			this.referenceItem = DeferredRegistryHandler.DIAMOND_MUSKET_BALL.get();
 		}
 
 		@Override
@@ -1764,7 +1717,10 @@ public class BulletEntity {
 					}
 
 					if (raytraceresult != null && raytraceresult.getType() == RayTraceResult.Type.ENTITY) {
-						Entity entity = ((EntityRayTraceResult) raytraceresult).getEntity();
+						Entity entity = null;
+						if (raytraceresult instanceof EntityRayTraceResult) {
+							entity = ((EntityRayTraceResult) raytraceresult).getEntity();
+						}
 						Entity entity1 = this.getOwner();
 						if (entity instanceof PlayerEntity && entity1 instanceof PlayerEntity && !((PlayerEntity) entity1).canHarmPlayer((PlayerEntity) entity)) {
 							raytraceresult = null;
@@ -1772,7 +1728,7 @@ public class BulletEntity {
 						}
 					}
 
-					if (raytraceresult != null && raytraceresult.getType() != RayTraceResult.Type.MISS && !flag && !net.minecraftforge.event.ForgeEventFactory.onProjectileImpact(this, raytraceresult)) {
+					if (raytraceresult != null && raytraceresult.getType() != RayTraceResult.Type.MISS && !flag && !ForgeEventFactory.onProjectileImpact(this, raytraceresult)) {
 						this.onHit(raytraceresult);
 						this.hasImpulse = true;
 					}
@@ -1895,7 +1851,7 @@ public class BulletEntity {
 					}
 
 					this.doPostHurtEffects(livingentity);
-					if (entity1 != null && livingentity != entity1 && livingentity instanceof PlayerEntity && entity1 instanceof ServerPlayerEntity && !this.isSilent()) {
+					if (livingentity != entity1 && livingentity instanceof PlayerEntity && entity1 instanceof ServerPlayerEntity && !this.isSilent()) {
 						((ServerPlayerEntity) entity1).connection.send(new SChangeGameStatePacket(SChangeGameStatePacket.ARROW_HIT_PLAYER, 0.0F));
 					}
 
@@ -1903,14 +1859,7 @@ public class BulletEntity {
 						this.hitEntities.add(livingentity);
 					}
 
-					if (!this.level.isClientSide && entity1 instanceof ServerPlayerEntity) {
-						ServerPlayerEntity serverplayerentity = (ServerPlayerEntity) entity1;
-						if (this.hitEntities != null && this.shotFromCrossbow()) {
-							CriteriaTriggers.KILLED_BY_CROSSBOW.trigger(serverplayerentity, this.hitEntities);
-						} else if (!entity.isAlive() && this.shotFromCrossbow()) {
-							CriteriaTriggers.KILLED_BY_CROSSBOW.trigger(serverplayerentity, Arrays.asList(entity));
-						}
-					}
+
 				}
 
 				this.playSound(this.hitSound, 1.0F, 1.2F / (this.random.nextFloat() * 0.2F + 0.9F));
@@ -1977,19 +1926,15 @@ public class BulletEntity {
 		private boolean hasAlreadyBrokeGlass = false;
 
 		@SuppressWarnings("unchecked")
-		public NetheriteBulletEntity(EntityType<?> type, World world) {
+		public NetheriteBulletEntity(EntityType<?> type, World world, int knockbackStrength) {
 			super((EntityType<? extends AbstractArrowEntity>) type, world);
+			this.knockbackStrength = knockbackStrength;
 			this.referenceItem = DeferredRegistryHandler.NETHERITE_MUSKET_BALL.get();
 		}
 
 		public NetheriteBulletEntity(LivingEntity shooter, World world, Item referenceItemIn) {
 			super(DeferredRegistryHandler.NETHERITE_BULLET_ENTITY.get(), shooter, world);
 			this.referenceItem = referenceItemIn;
-		}
-
-		public NetheriteBulletEntity(World worldIn, double x, double y, double z) {
-			super(DeferredRegistryHandler.NETHERITE_BULLET_ENTITY.get(), x, y, z, worldIn);
-			this.referenceItem = DeferredRegistryHandler.NETHERITE_MUSKET_BALL.get();
 		}
 
 		@Override
@@ -2085,7 +2030,10 @@ public class BulletEntity {
 					}
 
 					if (raytraceresult != null && raytraceresult.getType() == RayTraceResult.Type.ENTITY) {
-						Entity entity = ((EntityRayTraceResult) raytraceresult).getEntity();
+						Entity entity = null;
+						if (raytraceresult instanceof EntityRayTraceResult) {
+							entity = ((EntityRayTraceResult) raytraceresult).getEntity();
+						}
 						Entity entity1 = this.getOwner();
 						if (entity instanceof PlayerEntity && entity1 instanceof PlayerEntity && !((PlayerEntity) entity1).canHarmPlayer((PlayerEntity) entity)) {
 							raytraceresult = null;
@@ -2093,7 +2041,7 @@ public class BulletEntity {
 						}
 					}
 
-					if (raytraceresult != null && raytraceresult.getType() != RayTraceResult.Type.MISS && !flag && !net.minecraftforge.event.ForgeEventFactory.onProjectileImpact(this, raytraceresult)) {
+					if (raytraceresult != null && raytraceresult.getType() != RayTraceResult.Type.MISS && !flag && !ForgeEventFactory.onProjectileImpact(this, raytraceresult)) {
 						this.onHit(raytraceresult);
 						this.hasImpulse = true;
 					}
@@ -2216,7 +2164,7 @@ public class BulletEntity {
 					}
 
 					this.doPostHurtEffects(livingentity);
-					if (entity1 != null && livingentity != entity1 && livingentity instanceof PlayerEntity && entity1 instanceof ServerPlayerEntity && !this.isSilent()) {
+					if (livingentity != entity1 && livingentity instanceof PlayerEntity && entity1 instanceof ServerPlayerEntity && !this.isSilent()) {
 						((ServerPlayerEntity) entity1).connection.send(new SChangeGameStatePacket(SChangeGameStatePacket.ARROW_HIT_PLAYER, 0.0F));
 					}
 
@@ -2224,14 +2172,7 @@ public class BulletEntity {
 						this.hitEntities.add(livingentity);
 					}
 
-					if (!this.level.isClientSide && entity1 instanceof ServerPlayerEntity) {
-						ServerPlayerEntity serverplayerentity = (ServerPlayerEntity) entity1;
-						if (this.hitEntities != null && this.shotFromCrossbow()) {
-							CriteriaTriggers.KILLED_BY_CROSSBOW.trigger(serverplayerentity, this.hitEntities);
-						} else if (!entity.isAlive() && this.shotFromCrossbow()) {
-							CriteriaTriggers.KILLED_BY_CROSSBOW.trigger(serverplayerentity, Arrays.asList(entity));
-						}
-					}
+
 				}
 
 				this.playSound(this.hitSound, 1.0F, 1.2F / (this.random.nextFloat() * 0.2F + 0.9F));

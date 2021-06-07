@@ -118,9 +118,8 @@ public class MolotovEntity extends ProjectileItemEntity {
 	private IParticleData makeParticle() {
 		Color tint = getTint(GeneralUtilities.getRandomNumber(0, 2));
 		double diameter = getDiameter(GeneralUtilities.getRandomNumber(0.2d, 0.4d));
-		SmokeBombParticleData smokeBombParticleData = new SmokeBombParticleData(tint, diameter);
 
-		return smokeBombParticleData;
+		return new SmokeBombParticleData(tint, diameter);
 	}
 
 	private Color getTint(int random) {

@@ -18,7 +18,6 @@ import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.NBTUtil;
-import net.minecraft.particles.IParticleData;
 import net.minecraft.particles.ParticleTypes;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
@@ -61,7 +60,7 @@ public abstract class AbstractFieldMedicEntity extends CreatureEntity {
 			AbstractFieldMedicEntity.this.setAggressive(true);
 		}
 	};
-	private List<Class> checkedEntities = new ArrayList<>();
+	private final List<Class> checkedEntities = new ArrayList<>();
 	private int checkForHurtEntitiesCooldown;
 	private BlockPos PointOfInterestBlockPos;
 	private int cooldownBeforeLocatingNewPOI;
@@ -78,12 +77,12 @@ public abstract class AbstractFieldMedicEntity extends CreatureEntity {
 		cooldownBeforeLocatingNewPOI = 0;
 	}
 
-	private void spawnParticles(IParticleData particleData) {
+	private void spawnParticles() {
 		for (int i = 0; i < 5; ++i) {
 			double d0 = this.random.nextGaussian() * 0.02D;
 			double d1 = this.random.nextGaussian() * 0.02D;
 			double d2 = this.random.nextGaussian() * 0.02D;
-			this.level.addParticle(particleData, this.getRandomX(1.0D), this.getRandomY() + 1.0D, this.getRandomZ(1.0D), d0, d1, d2);
+			this.level.addParticle(ParticleTypes.SPLASH, this.getRandomX(1.0D), this.getRandomY() + 1.0D, this.getRandomZ(1.0D), d0, d1, d2);
 		}
 	}
 
@@ -335,7 +334,7 @@ public abstract class AbstractFieldMedicEntity extends CreatureEntity {
 			List<BlockPos> list = this.getNearbyPOIs();
 			if (!list.isEmpty()) {
 				for (BlockPos blockpos : list) {
-					AbstractFieldMedicEntity.this.spawnParticles(ParticleTypes.SPLASH);
+					AbstractFieldMedicEntity.this.spawnParticles();
 					AbstractFieldMedicEntity.this.PointOfInterestBlockPos = blockpos;
 					return;
 				}

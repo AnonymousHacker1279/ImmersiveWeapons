@@ -15,8 +15,6 @@ import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.RayTraceResult.Type;
 import net.minecraft.world.World;
 
-import net.minecraft.item.Item.Properties;
-
 public class BandageItem extends Item {
 
 	public BandageItem(Properties properties) {
@@ -32,7 +30,7 @@ public class BandageItem extends Item {
 	public ActionResult<ItemStack> use(World worldIn, PlayerEntity playerIn, Hand handIn) {
 		ItemStack itemstack = playerIn.getItemInHand(handIn);
 		RayTraceResult rayTraceResult = Minecraft.getInstance().hitResult;
-		if (rayTraceResult.getType() != Type.ENTITY) {
+		if (rayTraceResult != null && rayTraceResult.getType() != Type.ENTITY) {
 			playerIn.addEffect(new EffectInstance(Effects.REGENERATION, 240, 0, false, true));
 			if (!playerIn.abilities.instabuild) {
 				itemstack.shrink(1);

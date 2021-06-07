@@ -13,7 +13,7 @@ import net.minecraft.world.World;
 
 public class SmokeBombItem extends Item {
 
-	private String color = "none";
+	private final String color;
 
 	public SmokeBombItem(Item.Properties builder, String color) {
 		super(builder);

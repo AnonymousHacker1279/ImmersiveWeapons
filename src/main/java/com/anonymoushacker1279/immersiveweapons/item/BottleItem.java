@@ -11,8 +11,6 @@ import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.world.World;
 
-import net.minecraft.item.Item.Properties;
-
 public class BottleItem {
 
 	public static class AlcoholBottleItem extends Item {
@@ -76,7 +74,7 @@ public class BottleItem {
 		@Override
 		public ActionResult<ItemStack> use(World worldIn, PlayerEntity playerIn, Hand handIn) {
 			ItemStack itemstack = playerIn.getItemInHand(handIn);
-			
+
 			playerIn.addEffect(new EffectInstance(Effects.DAMAGE_BOOST, 360, 0, false, true));
 			playerIn.addEffect(new EffectInstance(Effects.DAMAGE_RESISTANCE, 360, 0, false, true));
 

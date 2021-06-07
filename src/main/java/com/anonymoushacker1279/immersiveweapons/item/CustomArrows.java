@@ -6,8 +6,6 @@ import net.minecraft.entity.projectile.AbstractArrowEntity.PickupStatus;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
-import net.minecraft.item.Item.Properties;
-
 public class CustomArrows {
 
 	public static class CopperArrowItem extends CustomArrowItem {
@@ -117,7 +115,7 @@ public class CustomArrows {
 
 	public static class SmokeBombArrowItem extends CustomArrowItem {
 
-		private String color = "none";
+		private final String color;
 
 		public SmokeBombArrowItem(Properties properties, double damageIn, String color) {
 			super(properties, damageIn);

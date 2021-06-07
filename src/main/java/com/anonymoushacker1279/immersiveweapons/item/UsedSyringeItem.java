@@ -14,8 +14,6 @@ import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.RayTraceResult.Type;
 import net.minecraft.world.World;
 
-import net.minecraft.item.Item.Properties;
-
 public class UsedSyringeItem extends Item {
 
 	public static final DamageSource damageSource = new DamageSource("immersiveweapons.used_syringe");
@@ -28,7 +26,7 @@ public class UsedSyringeItem extends Item {
 	public ActionResult<ItemStack> use(World worldIn, PlayerEntity playerIn, Hand handIn) {
 		ItemStack itemstack = playerIn.getItemInHand(handIn);
 		RayTraceResult rayTraceResult = Minecraft.getInstance().hitResult;
-		if (rayTraceResult.getType() != Type.ENTITY) {
+		if (rayTraceResult != null && rayTraceResult.getType() != Type.ENTITY) {
 			int randomNumber = GeneralUtilities.getRandomNumber(0, 100);
 			if (randomNumber <= 80) {
 				playerIn.addEffect(new EffectInstance(Effects.POISON, 500, 0, false, true));

@@ -9,9 +9,7 @@ import net.minecraft.util.Hand;
 import java.util.function.Predicate;
 
 public abstract class ShootableBullet extends Item {
-	public static final Predicate<ItemStack> MUSKET_BALLS = (stack) -> {
-		return stack.getItem().is(ItemTags.bind("immersiveweapons:projectiles/musket_ball"));
-	};
+	public static final Predicate<ItemStack> MUSKET_BALLS = (stack) -> stack.getItem().is(ItemTags.bind("immersiveweapons:projectiles/musket_ball"));
 
 	public ShootableBullet(Item.Properties builder) {
 		super(builder);

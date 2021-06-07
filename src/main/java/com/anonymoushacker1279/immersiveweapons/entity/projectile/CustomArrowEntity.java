@@ -5,7 +5,6 @@ import com.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
 import com.anonymoushacker1279.immersiveweapons.util.Config;
 import com.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
 import net.minecraft.block.BlockState;
-import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
@@ -336,7 +335,10 @@ public class CustomArrowEntity {
 					}
 
 					if (raytraceresult != null && raytraceresult.getType() == RayTraceResult.Type.ENTITY) {
-						Entity entity = ((EntityRayTraceResult) raytraceresult).getEntity();
+						Entity entity = null;
+						if (raytraceresult instanceof EntityRayTraceResult) {
+							entity = ((EntityRayTraceResult) raytraceresult).getEntity();
+						}
 						Entity entity1 = this.getOwner();
 						if (entity instanceof PlayerEntity && entity1 instanceof PlayerEntity && !((PlayerEntity) entity1).canHarmPlayer((PlayerEntity) entity)) {
 							raytraceresult = null;
@@ -403,7 +405,6 @@ public class CustomArrowEntity {
 	public static class SmokeBombArrowEntity extends AbstractArrowEntity {
 		private static String color;
 		private final Item referenceItem;
-		Minecraft mc = Minecraft.getInstance();
 		private boolean hasAlreadyImpacted = false;
 		private final int configMaxParticles = Config.MAX_SMOKE_BOMB_PARTICLES.get();
 
@@ -440,9 +441,8 @@ public class CustomArrowEntity {
 		protected IParticleData makeParticle() {
 			Color tint = getTint(GeneralUtilities.getRandomNumber(0, 2));
 			double diameter = getDiameter(GeneralUtilities.getRandomNumber(1.0d, 5.5d));
-			SmokeBombParticleData smokeBombParticleData = new SmokeBombParticleData(tint, diameter);
 
-			return smokeBombParticleData;
+			return new SmokeBombParticleData(tint, diameter);
 		}
 
 		private Color getTint(int random) {
@@ -477,20 +477,19 @@ public class CustomArrowEntity {
 					new Color(1.00f, 1.00f, 0.35f),  // off yellow 2: electric boogaloo
 			};
 
-			if (SmokeBombArrowEntity.color == "none") {
-				return tints[random];
-			} else if (SmokeBombArrowEntity.color == "red") {
-				return tintsRed[random];
-			} else if (SmokeBombArrowEntity.color == "green") {
-				return tintsGreen[random];
-			} else if (SmokeBombArrowEntity.color == "blue") {
-				return tintsBlue[random];
-			} else if (SmokeBombArrowEntity.color == "purple") {
-				return tintsPurple[random];
-			} else if (SmokeBombArrowEntity.color == "yellow") {
-				return tintsYellow[random];
-			} else {
-				return tints[random];
+			switch (SmokeBombArrowEntity.color) {
+				case "red":
+					return tintsRed[random];
+				case "green":
+					return tintsGreen[random];
+				case "blue":
+					return tintsBlue[random];
+				case "purple":
+					return tintsPurple[random];
+				case "yellow":
+					return tintsYellow[random];
+				default:
+					return tints[random];
 			}
 		}
 

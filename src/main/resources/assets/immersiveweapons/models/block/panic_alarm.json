@@ -1,8 +1,8 @@
 {
 	"credit": "Made with Blockbench",
 	"textures": {
-		"0": "immersiveweapons:custom/panic_alarm",
-		"particle": "immersiveweapons:custom/panic_alarm"
+		"0": "immersiveweapons:block/panic_alarm",
+		"particle": "immersiveweapons:block/panic_alarm"
 	},
 	"elements": [
 		{

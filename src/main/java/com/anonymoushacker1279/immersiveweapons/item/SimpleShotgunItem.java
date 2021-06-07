@@ -11,8 +11,6 @@ import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
 
-import net.minecraft.item.Item.Properties;
-
 public class SimpleShotgunItem extends SimplePistolItem {
 
 	public SimpleShotgunItem(Properties builder) {
@@ -40,9 +38,7 @@ public class SimpleShotgunItem extends SimplePistolItem {
 						if (itemstack.isEmpty()) {
 							playerentity.inventory.removeItem(itemstack);
 						}
-						stack.hurtAndBreak(5, playerentity, (p_220009_1_) -> {
-							p_220009_1_.broadcastBreakEvent(playerentity.getUsedItemHand());
-						});
+						stack.hurtAndBreak(5, playerentity, (p_220009_1_) -> p_220009_1_.broadcastBreakEvent(playerentity.getUsedItemHand()));
 					}
 				}
 			}
@@ -56,9 +52,7 @@ public class SimpleShotgunItem extends SimplePistolItem {
 						if (itemstack.isEmpty()) {
 							playerentity.inventory.removeItem(itemstack);
 						}
-						stack.hurtAndBreak(5, playerentity, (p_220009_1_) -> {
-							p_220009_1_.broadcastBreakEvent(playerentity.getUsedItemHand());
-						});
+						stack.hurtAndBreak(5, playerentity, (p_220009_1_) -> p_220009_1_.broadcastBreakEvent(playerentity.getUsedItemHand()));
 					}
 				}
 			}
@@ -87,9 +81,7 @@ public class SimpleShotgunItem extends SimplePistolItem {
 							}
 							worldIn.addFreshEntity(abstractBulletEntity);
 						}
-						stack.hurtAndBreak(1, playerentity, (p_220009_1_) -> {
-							p_220009_1_.broadcastBreakEvent(playerentity.getUsedItemHand());
-						});
+						stack.hurtAndBreak(1, playerentity, (p_220009_1_) -> p_220009_1_.broadcastBreakEvent(playerentity.getUsedItemHand()));
 					}
 
 					worldIn.playSound(null, playerentity.getX(), playerentity.getY(), playerentity.getZ(), this.getFireSound(), SoundCategory.PLAYERS, 1.0F, 1.0F / (random.nextFloat() * 0.4F + 1.2F) + f * 0.5F);
@@ -110,11 +102,7 @@ public class SimpleShotgunItem extends SimplePistolItem {
 	}
 
 	private int getBulletsToFire(ItemStack itemStack) {
-		if (itemStack.getCount() >= 4) {
-			return 4;
-		} else {
-			return itemStack.getCount();
-		}
+		return Math.min(itemStack.getCount(), 4);
 	}
 
 	private SoundEvent getMisfireSound() {

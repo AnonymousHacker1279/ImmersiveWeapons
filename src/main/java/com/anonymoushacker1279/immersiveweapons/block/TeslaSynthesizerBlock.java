@@ -28,8 +28,6 @@ import net.minecraftforge.fml.network.NetworkHooks;
 
 import java.util.Random;
 
-import net.minecraft.block.AbstractBlock.Properties;
-
 public class TeslaSynthesizerBlock extends ContainerBlock {
 
 	private static final ITextComponent CONTAINER_NAME = new TranslationTextComponent("container.immersiveweapons.tesla_synthesizer");

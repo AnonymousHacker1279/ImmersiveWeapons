@@ -12,8 +12,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
 
-import net.minecraft.block.AbstractBlock.Properties;
-
 public class BarbedWireFenceBlock extends FenceBlock {
 
 	private final DamageSource damageSource = new DamageSource("immersiveweapons.barbed_wire");

@@ -75,9 +75,7 @@ public class SmallPartsContainer extends AbstractRepairContainer {
 
 	@Override
 	protected boolean shouldQuickMoveToAdditionalSlot(ItemStack itemStack) {
-		return this.smallPartsRecipeList.stream().anyMatch((p_241444_1_) -> {
-			return p_241444_1_.isValidAdditionItem(itemStack);
-		});
+		return this.smallPartsRecipeList.stream().anyMatch((p_241444_1_) -> p_241444_1_.isValidAdditionItem(itemStack));
 	}
 
 	/**
