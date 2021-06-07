@@ -22,8 +22,8 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 public abstract class AbstractTeslaSynthesizerContainer extends Container {
 
 	protected final IInventory teslaSynthesizerInventory;
-	private final IIntArray teslaSynthesizerData;
 	protected final World world;
+	private final IIntArray teslaSynthesizerData;
 
 	protected AbstractTeslaSynthesizerContainer(ContainerType<?> containerType, int id, PlayerInventory playerInventory) {
 		this(containerType, id, playerInventory, new Inventory(5), new IntArray(4));

@@ -36,6 +36,7 @@ public class BulletEntity {
 
 	public static class CopperBulletEntity extends AbstractArrowEntity {
 		private final Item referenceItem;
+		private final SoundEvent hitSound = this.getDefaultHitGroundSoundEvent();
 		private BlockState inBlockState;
 		/**
 		 * Called when the arrow hits an entity
@@ -44,7 +45,6 @@ public class BulletEntity {
 		private IntOpenHashSet piercedEntities;
 		private List<Entity> hitEntities;
 		private int knockbackStrength;
-		private final SoundEvent hitSound = this.getDefaultHitGroundSoundEvent();
 		private boolean hasAlreadyBrokeGlass = false;
 
 		@SuppressWarnings("unchecked")
@@ -349,6 +349,7 @@ public class BulletEntity {
 
 	public static class WoodBulletEntity extends AbstractArrowEntity {
 		private final Item referenceItem;
+		private final SoundEvent hitSound = this.getDefaultHitGroundSoundEvent();
 		private BlockState inBlockState;
 		/**
 		 * Called when the arrow hits an entity
@@ -357,7 +358,6 @@ public class BulletEntity {
 		private IntOpenHashSet piercedEntities;
 		private List<Entity> hitEntities;
 		private int knockbackStrength;
-		private final SoundEvent hitSound = this.getDefaultHitGroundSoundEvent();
 		private boolean hasAlreadyBrokeGlass = false;
 
 		@SuppressWarnings("unchecked")
@@ -662,6 +662,7 @@ public class BulletEntity {
 
 	public static class StoneBulletEntity extends AbstractArrowEntity {
 		private final Item referenceItem;
+		private final SoundEvent hitSound = this.getDefaultHitGroundSoundEvent();
 		private BlockState inBlockState;
 		/**
 		 * Called when the arrow hits an entity
@@ -670,7 +671,6 @@ public class BulletEntity {
 		private IntOpenHashSet piercedEntities;
 		private List<Entity> hitEntities;
 		private int knockbackStrength;
-		private final SoundEvent hitSound = this.getDefaultHitGroundSoundEvent();
 		private boolean hasAlreadyBrokeGlass = false;
 
 		@SuppressWarnings("unchecked")
@@ -975,6 +975,7 @@ public class BulletEntity {
 
 	public static class IronBulletEntity extends AbstractArrowEntity {
 		private final Item referenceItem;
+		private final SoundEvent hitSound = this.getDefaultHitGroundSoundEvent();
 		private BlockState inBlockState;
 		/**
 		 * Called when the arrow hits an entity
@@ -983,7 +984,6 @@ public class BulletEntity {
 		private IntOpenHashSet piercedEntities;
 		private List<Entity> hitEntities;
 		private int knockbackStrength;
-		private final SoundEvent hitSound = this.getDefaultHitGroundSoundEvent();
 		private boolean hasAlreadyBrokeGlass = false;
 
 		@SuppressWarnings("unchecked")
@@ -1288,6 +1288,7 @@ public class BulletEntity {
 
 	public static class GoldBulletEntity extends AbstractArrowEntity {
 		private final Item referenceItem;
+		private final SoundEvent hitSound = this.getDefaultHitGroundSoundEvent();
 		private BlockState inBlockState;
 		/**
 		 * Called when the arrow hits an entity
@@ -1296,7 +1297,6 @@ public class BulletEntity {
 		private IntOpenHashSet piercedEntities;
 		private List<Entity> hitEntities;
 		private int knockbackStrength;
-		private final SoundEvent hitSound = this.getDefaultHitGroundSoundEvent();
 		private boolean hasAlreadyBrokeGlass = false;
 
 		@SuppressWarnings("unchecked")
@@ -1601,6 +1601,7 @@ public class BulletEntity {
 
 	public static class DiamondBulletEntity extends AbstractArrowEntity {
 		private final Item referenceItem;
+		private final SoundEvent hitSound = this.getDefaultHitGroundSoundEvent();
 		private BlockState inBlockState;
 		/**
 		 * Called when the arrow hits an entity
@@ -1609,7 +1610,6 @@ public class BulletEntity {
 		private IntOpenHashSet piercedEntities;
 		private List<Entity> hitEntities;
 		private int knockbackStrength;
-		private final SoundEvent hitSound = this.getDefaultHitGroundSoundEvent();
 		private boolean hasAlreadyBrokeGlass = false;
 
 		@SuppressWarnings("unchecked")
@@ -1914,6 +1914,7 @@ public class BulletEntity {
 
 	public static class NetheriteBulletEntity extends AbstractArrowEntity {
 		private final Item referenceItem;
+		private final SoundEvent hitSound = this.getDefaultHitGroundSoundEvent();
 		private BlockState inBlockState;
 		/**
 		 * Called when the arrow hits an entity
@@ -1922,7 +1923,6 @@ public class BulletEntity {
 		private IntOpenHashSet piercedEntities;
 		private List<Entity> hitEntities;
 		private int knockbackStrength;
-		private final SoundEvent hitSound = this.getDefaultHitGroundSoundEvent();
 		private boolean hasAlreadyBrokeGlass = false;
 
 		@SuppressWarnings("unchecked")

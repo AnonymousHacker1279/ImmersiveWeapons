@@ -30,8 +30,8 @@ import java.util.Random;
 
 public class TeslaSynthesizerBlock extends ContainerBlock {
 
-	private static final ITextComponent CONTAINER_NAME = new TranslationTextComponent("container.immersiveweapons.tesla_synthesizer");
 	protected static final VoxelShape SHAPE = Block.box(0.0D, 0.0D, 0.0D, 16.0D, 6.0D, 16.0D);
+	private static final ITextComponent CONTAINER_NAME = new TranslationTextComponent("container.immersiveweapons.tesla_synthesizer");
 
 	public TeslaSynthesizerBlock(Properties properties) {
 		super(properties);

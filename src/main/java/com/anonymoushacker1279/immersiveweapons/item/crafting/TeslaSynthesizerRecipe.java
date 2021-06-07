@@ -15,12 +15,12 @@ import net.minecraftforge.registries.ForgeRegistryEntry;
 
 public class TeslaSynthesizerRecipe implements IRecipe<IInventory> {
 
+	private static int cookTime = 0;
 	private final Ingredient blockIngredient;
 	private final Ingredient material1;
 	private final Ingredient material2;
 	private final ItemStack result;
 	private final ResourceLocation recipeId;
-	private static int cookTime = 0;
 
 	public TeslaSynthesizerRecipe(ResourceLocation recipeId, Ingredient blockIngredient, Ingredient material1, Ingredient material2, ItemStack result, int cookTime) {
 		this.recipeId = recipeId;
@@ -29,6 +29,10 @@ public class TeslaSynthesizerRecipe implements IRecipe<IInventory> {
 		this.material2 = material2;
 		this.result = result;
 		TeslaSynthesizerRecipe.cookTime = cookTime;
+	}
+
+	public static Object getCookTime() {
+		return cookTime;
 	}
 
 	/**
@@ -97,10 +101,6 @@ public class TeslaSynthesizerRecipe implements IRecipe<IInventory> {
 		defaultedList.add(material1);
 		defaultedList.add(material2);
 		return defaultedList;
-	}
-
-	public static Object getCookTime() {
-		return cookTime;
 	}
 
 	public static class Serializer extends ForgeRegistryEntry<IRecipeSerializer<?>> implements IRecipeSerializer<TeslaSynthesizerRecipe> {

@@ -6,7 +6,7 @@ import net.minecraft.inventory.IInventory;
 import net.minecraft.util.IIntArray;
 
 public class TeslaSynthesizerContainer extends AbstractTeslaSynthesizerContainer {
-	
+
 	public TeslaSynthesizerContainer(int id, PlayerInventory playerInventoryIn) {
 		super(DeferredRegistryHandler.TESLA_SYNTHESIZER_CONTAINER.get(), id, playerInventoryIn);
 	}

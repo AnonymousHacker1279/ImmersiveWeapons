@@ -49,8 +49,6 @@ import java.util.function.Predicate;
 
 public abstract class AbstractMinutemanEntity extends CreatureEntity implements IRangedAttackMob, IAngerable {
 
-	private int angerTime;
-	private UUID targetUUID;
 	private static final RangedInteger tickRange = TickRangeConverter.rangeOfSeconds(20, 39);
 	private final RangedShotgunAttackGoal<AbstractMinutemanEntity> aiShotgunAttack = new RangedShotgunAttackGoal<>(this, 1.0D, 25, 14.0F);
 	private final MeleeAttackGoal aiAttackOnCollide = new MeleeAttackGoal(this, 1.2D, false) {
@@ -72,6 +70,8 @@ public abstract class AbstractMinutemanEntity extends CreatureEntity implements 
 			AbstractMinutemanEntity.this.setAggressive(true);
 		}
 	};
+	private int angerTime;
+	private UUID targetUUID;
 
 	protected AbstractMinutemanEntity(EntityType<? extends AbstractMinutemanEntity> type, World worldIn) {
 		super(type, worldIn);
@@ -313,22 +313,22 @@ public abstract class AbstractMinutemanEntity extends CreatureEntity implements 
 	}
 
 	@Override
-	public void setRemainingPersistentAngerTime(int time) {
-		this.angerTime = time;
-	}
-
-	@Override
 	public int getRemainingPersistentAngerTime() {
 		return this.angerTime;
 	}
 
 	@Override
-	public void setPersistentAngerTarget(@Nullable UUID target) {
-		this.targetUUID = target;
+	public void setRemainingPersistentAngerTime(int time) {
+		this.angerTime = time;
 	}
 
 	@Override
 	public UUID getPersistentAngerTarget() {
 		return this.targetUUID;
+	}
+
+	@Override
+	public void setPersistentAngerTarget(@Nullable UUID target) {
+		this.targetUUID = target;
 	}
 }

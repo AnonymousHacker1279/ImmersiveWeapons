@@ -18,9 +18,9 @@ import net.minecraft.world.server.ServerWorld;
 
 public class PanicAlarmTileEntity extends TileEntity implements ITickableTileEntity {
 
-	private boolean isPowered = false;
 	private final Option.IntOption range = new Option.IntOption("range", 20, 0, 30);
 	private final Option.IntOption delay = new Option.IntOption("delay", 2, 1, 30);
+	private boolean isPowered = false;
 	private int cooldown = 0;
 	private int currentlyPlayingSound = 1;
 

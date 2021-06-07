@@ -24,8 +24,8 @@ public class WoodenSpikesBlock extends HorizontalBlock implements IWaterLoggable
 
 	public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
 	public static final DirectionProperty FACING = HorizontalBlock.FACING;
-	private final DamageSource damageSource = new DamageSource("immersiveweapons.spike_trap");
 	protected static final VoxelShape SHAPE = Block.box(1.0D, 0.0D, 1.0D, 15D, 14D, 15D);
+	private final DamageSource damageSource = new DamageSource("immersiveweapons.spike_trap");
 
 	public WoodenSpikesBlock(Properties properties) {
 		super(properties);

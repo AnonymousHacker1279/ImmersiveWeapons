@@ -11,10 +11,10 @@ import java.awt.*;
 
 public class SmokeBombParticle extends SpriteTexturedParticle {
 
-	Minecraft mc = Minecraft.getInstance();
 	private final double xPos;
 	private final double yPos;
 	private final double zPos;
+	Minecraft mc = Minecraft.getInstance();
 
 	public SmokeBombParticle(ClientWorld world, double x, double y, double z, double velocityX, double velocityY, double velocityZ, Color tint, double diameter) {
 		super(world, x, y, z, velocityX, velocityY, velocityZ);

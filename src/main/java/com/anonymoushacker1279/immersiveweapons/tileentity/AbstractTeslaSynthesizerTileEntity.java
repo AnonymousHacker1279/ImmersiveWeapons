@@ -38,8 +38,12 @@ public abstract class AbstractTeslaSynthesizerTileEntity extends LockableTileEnt
 	private static final int[] SLOTS_UP = new int[]{0};
 	private static final int[] SLOTS_DOWN = new int[]{2, 1};
 	private static final int[] SLOTS_HORIZONTAL = new int[]{1};
-	protected NonNullList<ItemStack> items = NonNullList.withSize(5, ItemStack.EMPTY);
 	static Map<Item, Integer> burnTimesMap = Maps.newLinkedHashMap();
+	protected final IRecipeType recipeType;
+	private final Object2IntOpenHashMap<ResourceLocation> recipes = new Object2IntOpenHashMap<>();
+	protected NonNullList<ItemStack> items = NonNullList.withSize(5, ItemStack.EMPTY);
+	LazyOptional<? extends IItemHandler>[] handlers =
+			SidedInvWrapper.create(this, Direction.UP, Direction.DOWN, Direction.NORTH);
 	private int burnTime;
 	private int burnTimeTotal;
 	private int cookTime;
@@ -84,8 +88,6 @@ public abstract class AbstractTeslaSynthesizerTileEntity extends LockableTileEnt
 			return 4;
 		}
 	};
-	private final Object2IntOpenHashMap<ResourceLocation> recipes = new Object2IntOpenHashMap<>();
-	protected final IRecipeType recipeType;
 
 	protected AbstractTeslaSynthesizerTileEntity(TileEntityType<?> tileTypeIn, IRecipeType recipeTypeIn) {
 		super(tileTypeIn);
@@ -95,10 +97,6 @@ public abstract class AbstractTeslaSynthesizerTileEntity extends LockableTileEnt
 
 	public static Map<Item, Integer> getBurnTimes() {
 		return burnTimesMap;
-	}
-
-	private void setupBurnTimes() {
-		addItemBurnTime(burnTimesMap, DeferredRegistryHandler.MOLTEN_INGOT.get(), 24000); // 20 minutes
 	}
 
 	private static boolean isNonFlammable(Item item) {
@@ -114,6 +112,29 @@ public abstract class AbstractTeslaSynthesizerTileEntity extends LockableTileEnt
 		} else {
 			map.put(item, burnTimeIn);
 		}
+	}
+
+	protected static int getBurnTime(ItemStack fuel) {
+		if (!fuel.isEmpty()) {
+			Item item = fuel.getItem();
+			Map<Item, Integer> map = getBurnTimes();
+			if (map.containsKey(item)) {
+				return map.get(item);
+			}
+		}
+		return 0;
+	}
+
+	public static boolean isFuel(ItemStack stack) {
+		Map<Item, Integer> map = getBurnTimes();
+		if (map.containsKey(stack.getItem())) {
+			return getBurnTime(stack) > 0;
+		}
+		return false;
+	}
+
+	private void setupBurnTimes() {
+		addItemBurnTime(burnTimesMap, DeferredRegistryHandler.MOLTEN_INGOT.get(), 24000); // 20 minutes
 	}
 
 	private boolean isBurning() {
@@ -260,30 +281,11 @@ public abstract class AbstractTeslaSynthesizerTileEntity extends LockableTileEnt
 		}
 	}
 
-	protected static int getBurnTime(ItemStack fuel) {
-		if (!fuel.isEmpty()) {
-			Item item = fuel.getItem();
-			Map<Item, Integer> map = getBurnTimes();
-			if (map.containsKey(item)) {
-				return map.get(item);
-			}
-		}
-		return 0;
-	}
-
 	protected int getCookTime() {
 		if (this.level != null) {
 			return (int) this.level.getRecipeManager().getRecipeFor(ICustomRecipeType.TESLA_SYNTHESIZER, this, this.level).map(o -> TeslaSynthesizerRecipe.getCookTime()).orElse(200);
 		}
 		return 0;
-	}
-
-	public static boolean isFuel(ItemStack stack) {
-		Map<Item, Integer> map = getBurnTimes();
-		if (map.containsKey(stack.getItem())) {
-			return getBurnTime(stack) > 0;
-		}
-		return false;
 	}
 
 	@Override
@@ -391,18 +393,18 @@ public abstract class AbstractTeslaSynthesizerTileEntity extends LockableTileEnt
 	}
 
 	@Override
+	@Nullable
+	public IRecipe<?> getRecipeUsed() {
+		return null;
+	}
+
+	@Override
 	public void setRecipeUsed(@Nullable IRecipe<?> recipe) {
 		if (recipe != null) {
 			ResourceLocation resourcelocation = recipe.getId();
 			this.recipes.addTo(resourcelocation, 1);
 		}
 
-	}
-
-	@Override
-	@Nullable
-	public IRecipe<?> getRecipeUsed() {
-		return null;
 	}
 
 	@Override
@@ -416,9 +418,6 @@ public abstract class AbstractTeslaSynthesizerTileEntity extends LockableTileEnt
 		}
 
 	}
-
-	LazyOptional<? extends IItemHandler>[] handlers =
-			SidedInvWrapper.create(this, Direction.UP, Direction.DOWN, Direction.NORTH);
 
 	@Override
 	public <T> LazyOptional<T> getCapability(Capability<T> capability, @Nullable Direction facing) {

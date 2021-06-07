@@ -405,8 +405,8 @@ public class CustomArrowEntity {
 	public static class SmokeBombArrowEntity extends AbstractArrowEntity {
 		private static String color;
 		private final Item referenceItem;
-		private boolean hasAlreadyImpacted = false;
 		private final int configMaxParticles = Config.MAX_SMOKE_BOMB_PARTICLES.get();
+		private boolean hasAlreadyImpacted = false;
 
 		@SuppressWarnings("unchecked")
 		public SmokeBombArrowEntity(EntityType<?> type, World world) {

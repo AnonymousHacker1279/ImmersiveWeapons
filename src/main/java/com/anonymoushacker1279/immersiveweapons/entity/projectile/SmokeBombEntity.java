@@ -24,9 +24,9 @@ public class SmokeBombEntity extends ProjectileItemEntity {
 
 	private static final byte VANILLA_IMPACT_STATUS_ID = 3;
 	private static String color;
+	private final int configMaxParticles = Config.MAX_SMOKE_BOMB_PARTICLES.get();
 	// We hit something (entity or block).
 	Minecraft mc = Minecraft.getInstance();
-	private final int configMaxParticles = Config.MAX_SMOKE_BOMB_PARTICLES.get();
 
 	public SmokeBombEntity(EntityType<? extends SmokeBombEntity> entityType, World world) {
 		super(entityType, world);

@@ -4,10 +4,10 @@ import net.minecraftforge.fml.client.gui.widget.Slider;
 
 public abstract class Option<T> {
 
-	protected T value;
 	private final String name;
 	private final T minimum;
 	private final T maximum;
+	protected T value;
 
 	public Option(String optionName, T value, T min, T max) {
 		this.name = optionName;

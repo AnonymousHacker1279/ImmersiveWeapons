@@ -35,10 +35,9 @@ import java.util.Objects;
 @EventBusSubscriber(modid = ImmersiveWeapons.MOD_ID, bus = EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 public class ClientModEventSubscriber {
 
-	static Minecraft mc = Minecraft.getInstance();
-
 	private static final String CATEGORY = "key.categories." + ImmersiveWeapons.MOD_ID;
 	public static final KeyBinding toggleArmorEffect = new KeyBinding(ImmersiveWeapons.MOD_ID + ".key.toggleArmorEffect", 78, CATEGORY); // Keycode is N
+	static Minecraft mc = Minecraft.getInstance();
 
 	static {
 		ClientRegistry.registerKeyBinding(toggleArmorEffect);

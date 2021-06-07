@@ -64,6 +64,9 @@ public abstract class AbstractFieldMedicEntity extends CreatureEntity {
 	private int checkForHurtEntitiesCooldown;
 	private BlockPos PointOfInterestBlockPos;
 	private int cooldownBeforeLocatingNewPOI;
+	private LivingEntity currentlyTargetedEntity = null;
+	private LivingEntity lastTargetedEntity = null;
+	private int unlockLastTargetedEntityCooldown = 0;
 
 	protected AbstractFieldMedicEntity(EntityType<? extends CreatureEntity> type, World worldIn) {
 		super(type, worldIn);
@@ -77,6 +80,12 @@ public abstract class AbstractFieldMedicEntity extends CreatureEntity {
 		cooldownBeforeLocatingNewPOI = 0;
 	}
 
+	public static AttributeModifierMap.MutableAttribute registerAttributes() {
+		return MonsterEntity.createMonsterAttributes()
+				.add(Attributes.MOVEMENT_SPEED, 0.3D)
+				.add(Attributes.ARMOR, 2.75D);
+	}
+
 	private void spawnParticles() {
 		for (int i = 0; i < 5; ++i) {
 			double d0 = this.random.nextGaussian() * 0.02D;
@@ -84,12 +93,6 @@ public abstract class AbstractFieldMedicEntity extends CreatureEntity {
 			double d2 = this.random.nextGaussian() * 0.02D;
 			this.level.addParticle(ParticleTypes.SPLASH, this.getRandomX(1.0D), this.getRandomY() + 1.0D, this.getRandomZ(1.0D), d0, d1, d2);
 		}
-	}
-
-	public static AttributeModifierMap.MutableAttribute registerAttributes() {
-		return MonsterEntity.createMonsterAttributes()
-				.add(Attributes.MOVEMENT_SPEED, 0.3D)
-				.add(Attributes.ARMOR, 2.75D);
 	}
 
 	@Override
@@ -243,10 +246,6 @@ public abstract class AbstractFieldMedicEntity extends CreatureEntity {
 		return flag;
 	}
 
-	private LivingEntity currentlyTargetedEntity = null;
-	private LivingEntity lastTargetedEntity = null;
-	private int unlockLastTargetedEntityCooldown = 0;
-
 	private void checkForHurtEntities(List<Class> checkedEntities) {
 		if (checkForHurtEntitiesCooldown == 0 && currentlyTargetedEntity == null) {
 			List<Entity> entity = this.level.getEntities(this, this.getBoundingBox().move(-24, -5, -24).expandTowards(24, 5, 24));
@@ -310,6 +309,26 @@ public abstract class AbstractFieldMedicEntity extends CreatureEntity {
 		super.readAdditionalSaveData(compound);
 	}
 
+	abstract static class PassiveFieldMedicGoal extends Goal {
+
+		private PassiveFieldMedicGoal() {
+		}
+
+		public abstract boolean canMedicStart();
+
+		public abstract boolean canMedicContinue();
+
+		@Override
+		public boolean canUse() {
+			return this.canMedicStart();
+		}
+
+		@Override
+		public boolean canContinueToUse() {
+			return this.canMedicContinue();
+		}
+	}
+
 	class UpdateFieldMedicPOIGoal extends AbstractFieldMedicEntity.PassiveFieldMedicGoal {
 
 		public UpdateFieldMedicPOIGoal() {
@@ -347,26 +366,6 @@ public abstract class AbstractFieldMedicEntity extends CreatureEntity {
 			PointOfInterestManager pointOfInterestManager = ((ServerWorld) AbstractFieldMedicEntity.this.level).getPoiManager();
 			Stream<PointOfInterest> stream = pointOfInterestManager.getInRange((pointOfInterestType) -> pointOfInterestType == DeferredRegistryHandler.FIELD_MEDIC_POI.get(), blockpos, 32, PointOfInterestManager.Status.ANY);
 			return stream.map(PointOfInterest::getPos).sorted(Comparator.comparingDouble((extractor) -> extractor.distSqr(blockpos))).collect(Collectors.toList());
-		}
-	}
-
-	abstract static class PassiveFieldMedicGoal extends Goal {
-
-		private PassiveFieldMedicGoal() {
-		}
-
-		public abstract boolean canMedicStart();
-
-		public abstract boolean canMedicContinue();
-
-		@Override
-		public boolean canUse() {
-			return this.canMedicStart();
-		}
-
-		@Override
-		public boolean canContinueToUse() {
-			return this.canMedicContinue();
 		}
 	}
 }

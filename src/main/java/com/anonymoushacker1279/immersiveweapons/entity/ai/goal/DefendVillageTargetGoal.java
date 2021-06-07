@@ -15,8 +15,8 @@ import java.util.List;
 public class DefendVillageTargetGoal extends TargetGoal {
 
 	private final MobEntity mobEntity;
-	private LivingEntity villageAgressorTarget;
 	private final EntityPredicate distancePredicate = (new EntityPredicate()).range(64.0D);
+	private LivingEntity villageAgressorTarget;
 
 	public DefendVillageTargetGoal(MobEntity mobEntity) {
 		super(mobEntity, false, true);
