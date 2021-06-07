@@ -18,16 +18,16 @@ public class ConfiguredSurfaceBuilders {
 		register(BATTLEFIELD,
 				new ConfiguredSurfaceBuilder<>(
 						SurfaceBuilder.DEFAULT,
-						new SurfaceBuilderConfig(Blocks.GRASS_BLOCK.getDefaultState(), Blocks.COARSE_DIRT.getDefaultState(), Blocks.STONE.getDefaultState())
+						new SurfaceBuilderConfig(Blocks.GRASS_BLOCK.defaultBlockState(), Blocks.COARSE_DIRT.defaultBlockState(), Blocks.STONE.defaultBlockState())
 				)
 		);
 	}
 
 	private static RegistryKey<ConfiguredSurfaceBuilder<?>> key(final String name) {
-		return RegistryKey.getOrCreateKey(Registry.CONFIGURED_SURFACE_BUILDER_KEY, new ResourceLocation(ImmersiveWeapons.MOD_ID, name));
+		return RegistryKey.create(Registry.CONFIGURED_SURFACE_BUILDER_REGISTRY, new ResourceLocation(ImmersiveWeapons.MOD_ID, name));
 	}
 
 	private static void register(final RegistryKey<ConfiguredSurfaceBuilder<?>> key, final ConfiguredSurfaceBuilder<?> configuredSurfaceBuilder) {
-		Registry.register(WorldGenRegistries.CONFIGURED_SURFACE_BUILDER, key.getLocation(), configuredSurfaceBuilder);
+		Registry.register(WorldGenRegistries.CONFIGURED_SURFACE_BUILDER, key.location(), configuredSurfaceBuilder);
 	}
 }

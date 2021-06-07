@@ -44,49 +44,49 @@ public class GeneralUtilities {
 			final boolean hasVillageAndOutpost
 	) {
 		final MobSpawnInfo.Builder mobSpawnInfoBuilder = new MobSpawnInfo.Builder()
-				.isValidSpawnBiomeForPlayer()
-				.withSpawner(EntityClassification.MONSTER, new Spawners(DeferredRegistryHandler.DYING_SOLDIER_ENTITY.get(), 50, 1, 4));
+				.setPlayerCanSpawn()
+				.addSpawn(EntityClassification.MONSTER, new Spawners(DeferredRegistryHandler.DYING_SOLDIER_ENTITY.get(), 50, 1, 4));
 
 		final MoodSoundAmbience ambienceSound = new MoodSoundAmbience(DeferredRegistryHandler.FLINTLOCK_PISTOL_FIRE.get(), 5000, 8, 2.0D);
 
 		final BiomeGenerationSettings.Builder biomeGenerationSettingBuilder = new BiomeGenerationSettings.Builder()
-				.withSurfaceBuilder(surfaceBuilder)
-				.withFeature(Decoration.VEGETAL_DECORATION, Features.PLAIN_VEGETATION)
-				.withFeature(Decoration.VEGETAL_DECORATION, Features.PATCH_GRASS_PLAIN);
+				.surfaceBuilder(surfaceBuilder)
+				.addFeature(Decoration.VEGETAL_DECORATION, Features.PLAIN_VEGETATION)
+				.addFeature(Decoration.VEGETAL_DECORATION, Features.PATCH_GRASS_PLAIN);
 
 		if (hasVillageAndOutpost) {
-			biomeGenerationSettingBuilder.withStructure(StructureFeatures.PILLAGER_OUTPOST);
+			biomeGenerationSettingBuilder.addStructureStart(StructureFeatures.PILLAGER_OUTPOST);
 		}
 
-		DefaultBiomeFeatures.withStrongholdAndMineshaft(biomeGenerationSettingBuilder);
-		DefaultBiomeFeatures.withCavesAndCanyons(biomeGenerationSettingBuilder);
-		DefaultBiomeFeatures.withMonsterRoom(biomeGenerationSettingBuilder);
-		DefaultBiomeFeatures.withCommonOverworldBlocks(biomeGenerationSettingBuilder);
-		DefaultBiomeFeatures.withOverworldOres(biomeGenerationSettingBuilder);
-		DefaultBiomeFeatures.withBadlandsGrass(biomeGenerationSettingBuilder);
-		DefaultBiomeFeatures.withLavaAndWaterSprings(biomeGenerationSettingBuilder);
+		DefaultBiomeFeatures.addDefaultOverworldLandStructures(biomeGenerationSettingBuilder);
+		DefaultBiomeFeatures.addDefaultCarvers(biomeGenerationSettingBuilder);
+		DefaultBiomeFeatures.addDefaultMonsterRoom(biomeGenerationSettingBuilder);
+		DefaultBiomeFeatures.addDefaultUndergroundVariety(biomeGenerationSettingBuilder);
+		DefaultBiomeFeatures.addDefaultOres(biomeGenerationSettingBuilder);
+		DefaultBiomeFeatures.addDefaultGrass(biomeGenerationSettingBuilder);
+		DefaultBiomeFeatures.addDefaultSprings(biomeGenerationSettingBuilder);
 
 		return new Biome.Builder()
 				.precipitation(Biome.RainType.RAIN)
-				.category(Category.PLAINS)
+				.biomeCategory(Category.PLAINS)
 				.depth(depth)
 				.scale(scale)
 				.temperature(0.8f)
 				.downfall(0.3f)
-				.setEffects(
+				.specialEffects(
 						new BiomeAmbience.Builder()
-								.setWaterColor(0x55274c)
-								.setWaterFogColor(0x503b72)
-								.setFogColor(0x906c80)
-								.withSkyColor(0x746776)
-								.withGrassColor(0x551710)
-								.withFoliageColor(0x442e35)
-								.setMoodSound(ambienceSound)
-								.setAmbientSound(DeferredRegistryHandler.BATTLEFIELD_AMBIENT.get())
+								.waterColor(0x55274c)
+								.waterFogColor(0x503b72)
+								.fogColor(0x906c80)
+								.skyColor(0x746776)
+								.grassColorOverride(0x551710)
+								.foliageColorOverride(0x442e35)
+								.ambientMoodSound(ambienceSound)
+								.ambientLoopSound(DeferredRegistryHandler.BATTLEFIELD_AMBIENT.get())
 								.build()
 				)
-				.withMobSpawnSettings(mobSpawnInfoBuilder.build())
-				.withGenerationSettings(biomeGenerationSettingBuilder.build())
+				.mobSpawnSettings(mobSpawnInfoBuilder.build())
+				.generationSettings(biomeGenerationSettingBuilder.build())
 				.build();
 	}
 }

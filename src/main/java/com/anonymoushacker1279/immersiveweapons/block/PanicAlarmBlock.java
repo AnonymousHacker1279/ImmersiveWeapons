@@ -28,38 +28,40 @@ import net.minecraft.world.server.ServerWorld;
 
 import java.util.Random;
 
+import net.minecraft.block.AbstractBlock.Properties;
+
 public class PanicAlarmBlock extends HorizontalBlock implements IWaterLoggable {
 
 	public static final DirectionProperty HORIZONTAL_FACING = BlockStateProperties.HORIZONTAL_FACING;
 	public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
-	protected static final VoxelShape SHAPE_NORTH = Block.makeCuboidShape(4.0D, 4.0D, 13.0D, 12.0D, 11.0D, 16.0D);
-	protected static final VoxelShape SHAPE_SOUTH = Block.makeCuboidShape(4.0D, 4.0D, 0.0D, 12.0D, 11.0D, 3.0D);
-	protected static final VoxelShape SHAPE_EAST = Block.makeCuboidShape(0.0D, 4.0D, 4.0D, 3.0D, 11.0D, 12.0D);
-	protected static final VoxelShape SHAPE_WEST = Block.makeCuboidShape(13.0D, 4.0D, 4.0D, 16.0D, 11.0D, 12.0D);
+	protected static final VoxelShape SHAPE_NORTH = Block.box(4.0D, 4.0D, 13.0D, 12.0D, 11.0D, 16.0D);
+	protected static final VoxelShape SHAPE_SOUTH = Block.box(4.0D, 4.0D, 0.0D, 12.0D, 11.0D, 3.0D);
+	protected static final VoxelShape SHAPE_EAST = Block.box(0.0D, 4.0D, 4.0D, 3.0D, 11.0D, 12.0D);
+	protected static final VoxelShape SHAPE_WEST = Block.box(13.0D, 4.0D, 4.0D, 16.0D, 11.0D, 12.0D);
 
 	public PanicAlarmBlock(Properties properties) {
 		super(properties);
-		this.setDefaultState(this.stateContainer.getBaseState().with(WATERLOGGED, false).with(HORIZONTAL_FACING, Direction.NORTH));
+		this.registerDefaultState(this.stateDefinition.any().setValue(WATERLOGGED, false).setValue(HORIZONTAL_FACING, Direction.NORTH));
 	}
 
 	@Override
 	public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
 		Vector3d vector3d = state.getOffset(worldIn, pos);
-		switch (state.get(HORIZONTAL_FACING)) {
+		switch (state.getValue(HORIZONTAL_FACING)) {
 			case NORTH:
 			default:
-				return SHAPE_NORTH.withOffset(vector3d.x, vector3d.y, vector3d.z);
+				return SHAPE_NORTH.move(vector3d.x, vector3d.y, vector3d.z);
 			case SOUTH:
-				return SHAPE_SOUTH.withOffset(vector3d.x, vector3d.y, vector3d.z);
+				return SHAPE_SOUTH.move(vector3d.x, vector3d.y, vector3d.z);
 			case EAST:
-				return SHAPE_EAST.withOffset(vector3d.x, vector3d.y, vector3d.z);
+				return SHAPE_EAST.move(vector3d.x, vector3d.y, vector3d.z);
 			case WEST:
-				return SHAPE_WEST.withOffset(vector3d.x, vector3d.y, vector3d.z);
+				return SHAPE_WEST.move(vector3d.x, vector3d.y, vector3d.z);
 		}
 	}
 
 	@Override
-	public void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
+	public void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder) {
 		builder.add(WATERLOGGED);
 		builder.add(HORIZONTAL_FACING);
 	}
@@ -75,46 +77,46 @@ public class PanicAlarmBlock extends HorizontalBlock implements IWaterLoggable {
 	}
 
 	@Override
-	public boolean isValidPosition(BlockState state, IWorldReader worldIn, BlockPos pos) {
-		Direction direction = state.get(HORIZONTAL_FACING);
-		BlockPos blockpos = pos.offset(direction.getOpposite());
+	public boolean canSurvive(BlockState state, IWorldReader worldIn, BlockPos pos) {
+		Direction direction = state.getValue(HORIZONTAL_FACING);
+		BlockPos blockpos = pos.relative(direction.getOpposite());
 		BlockState blockstate = worldIn.getBlockState(blockpos);
-		return blockstate.isSolidSide(worldIn, blockpos, direction);
+		return blockstate.isFaceSturdy(worldIn, blockpos, direction);
 	}
 
 	@Override
-	public BlockState updatePostPlacement(BlockState stateIn, Direction facing, BlockState facingState, IWorld worldIn, BlockPos currentPos, BlockPos facingPos) {
-		if (stateIn.get(WATERLOGGED)) {
-			worldIn.getPendingFluidTicks().scheduleTick(currentPos, Fluids.WATER, Fluids.WATER.getTickRate(worldIn));
+	public BlockState updateShape(BlockState stateIn, Direction facing, BlockState facingState, IWorld worldIn, BlockPos currentPos, BlockPos facingPos) {
+		if (stateIn.getValue(WATERLOGGED)) {
+			worldIn.getLiquidTicks().scheduleTick(currentPos, Fluids.WATER, Fluids.WATER.getTickDelay(worldIn));
 		}
-		return facing.getOpposite() == stateIn.get(HORIZONTAL_FACING) && !stateIn.isValidPosition(worldIn, currentPos) ? Blocks.AIR.getDefaultState() : stateIn;
+		return facing.getOpposite() == stateIn.getValue(HORIZONTAL_FACING) && !stateIn.canSurvive(worldIn, currentPos) ? Blocks.AIR.defaultBlockState() : stateIn;
 	}
 
 	@Override
 	public BlockState getStateForPlacement(BlockItemUseContext context) {
-		FluidState ifluidstate = context.getWorld().getFluidState(context.getPos());
-		return this.getDefaultState().with(HORIZONTAL_FACING, context.getPlacementHorizontalFacing().getOpposite()).with(WATERLOGGED, ifluidstate.getFluid() == Fluids.WATER);
+		FluidState ifluidstate = context.getLevel().getFluidState(context.getClickedPos());
+		return this.defaultBlockState().setValue(HORIZONTAL_FACING, context.getHorizontalDirection().getOpposite()).setValue(WATERLOGGED, ifluidstate.getType() == Fluids.WATER);
 	}
 
 	@Override
 	public FluidState getFluidState(BlockState state) {
-		return state.get(WATERLOGGED) ? Fluids.WATER.getStillFluidState(false) : super.getFluidState(state);
+		return state.getValue(WATERLOGGED) ? Fluids.WATER.getSource(false) : super.getFluidState(state);
 	}
 
 	@Override
 	public void neighborChanged(BlockState state, World worldIn, BlockPos pos, Block blockIn, BlockPos fromPos, boolean isMoving) {
-		if (!worldIn.isRemote) {
+		if (!worldIn.isClientSide) {
 			playSiren(worldIn, pos);
-			worldIn.getPendingBlockTicks().scheduleTick(pos, state.getBlock(), 5);
+			worldIn.getBlockTicks().scheduleTick(pos, state.getBlock(), 5);
 		}
 	}
 
 	@Override
-	public void onBlockAdded(BlockState state, World worldIn, BlockPos pos, BlockState oldState, boolean isMoving) {
-		if (!oldState.matchesBlock(state.getBlock())) {
-			if (worldIn.isBlockPowered(pos)) {
-				if (!worldIn.isRemote) {
-					worldIn.getPendingBlockTicks().scheduleTick(pos, state.getBlock(), 5);
+	public void onPlace(BlockState state, World worldIn, BlockPos pos, BlockState oldState, boolean isMoving) {
+		if (!oldState.is(state.getBlock())) {
+			if (worldIn.hasNeighborSignal(pos)) {
+				if (!worldIn.isClientSide) {
+					worldIn.getBlockTicks().scheduleTick(pos, state.getBlock(), 5);
 				}
 			}
 		}
@@ -122,9 +124,9 @@ public class PanicAlarmBlock extends HorizontalBlock implements IWaterLoggable {
 
 	@Override
 	public void tick(BlockState state, ServerWorld worldIn, BlockPos pos, Random rand) {
-		if (!worldIn.isRemote) {
+		if (!worldIn.isClientSide) {
 			playSiren(worldIn, pos);
-			worldIn.getPendingBlockTicks().scheduleTick(pos, state.getBlock(), 5);
+			worldIn.getBlockTicks().scheduleTick(pos, state.getBlock(), 5);
 		}
 	}
 
@@ -133,11 +135,11 @@ public class PanicAlarmBlock extends HorizontalBlock implements IWaterLoggable {
 		if (state.getBlock() != DeferredRegistryHandler.PANIC_ALARM.get()) {
 			return;
 		}
-		TileEntity tileEntity = worldIn.getTileEntity(pos);
+		TileEntity tileEntity = worldIn.getBlockEntity(pos);
 
 		if (tileEntity instanceof PanicAlarmTileEntity) {
 			PanicAlarmTileEntity panicAlarmTileEntity = (PanicAlarmTileEntity) tileEntity;
-			if (worldIn.getRedstonePowerFromNeighbors(pos) > 0) {
+			if (worldIn.getBestNeighborSignal(pos) > 0) {
 				boolean isPowered = panicAlarmTileEntity.isPowered();
 
 				if (!isPowered) {
@@ -154,10 +156,10 @@ public class PanicAlarmBlock extends HorizontalBlock implements IWaterLoggable {
 	}
 
 	@Override
-	public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
-		TileEntity tileEntity = worldIn.getTileEntity(pos);
+	public ActionResultType use(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
+		TileEntity tileEntity = worldIn.getBlockEntity(pos);
 		if (tileEntity instanceof PanicAlarmTileEntity) {
-			if (!worldIn.isRemote && handIn == Hand.MAIN_HAND) {
+			if (!worldIn.isClientSide && handIn == Hand.MAIN_HAND) {
 				((PanicAlarmTileEntity) tileEntity).changeAlarmSound(player, worldIn);
 				return ActionResultType.SUCCESS;
 			} else {

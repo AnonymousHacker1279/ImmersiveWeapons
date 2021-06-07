@@ -22,7 +22,7 @@ public class CobaltArmorItem extends ArmorItem {
 	private boolean effectEnabled = false;
 
 	public CobaltArmorItem(IArmorMaterial material, EquipmentSlotType slot, int type) {
-		super(material, slot, (new Item.Properties().group(DeferredRegistryHandler.ITEM_GROUP)));
+		super(material, slot, (new Item.Properties().tab(DeferredRegistryHandler.ITEM_GROUP)));
 		if (type == 2) {
 			isLeggings = true;
 		}
@@ -35,22 +35,22 @@ public class CobaltArmorItem extends ArmorItem {
 
 	@Override
 	public void onArmorTick(ItemStack stack, World world, PlayerEntity player) {
-		if (player.getItemStackFromSlot(EquipmentSlotType.HEAD).getItem() == DeferredRegistryHandler.COBALT_HELMET.get() &&
-				player.getItemStackFromSlot(EquipmentSlotType.CHEST).getItem() == DeferredRegistryHandler.COBALT_CHESTPLATE.get() &&
-				player.getItemStackFromSlot(EquipmentSlotType.LEGS).getItem() == DeferredRegistryHandler.COBALT_LEGGINGS.get() &&
-				player.getItemStackFromSlot(EquipmentSlotType.FEET).getItem() == DeferredRegistryHandler.COBALT_BOOTS.get()) {
-			if (player.getUniqueID().toString().equals("086ab520-a158-3f3b-b711-6f10d99b4969") || player.getUniqueID().toString().equals("94f11dac-d1bc-46da-877b-c69f533f2da2")) {
-				if (ClientModEventSubscriber.toggleArmorEffect.isPressed()) {
+		if (player.getItemBySlot(EquipmentSlotType.HEAD).getItem() == DeferredRegistryHandler.COBALT_HELMET.get() &&
+				player.getItemBySlot(EquipmentSlotType.CHEST).getItem() == DeferredRegistryHandler.COBALT_CHESTPLATE.get() &&
+				player.getItemBySlot(EquipmentSlotType.LEGS).getItem() == DeferredRegistryHandler.COBALT_LEGGINGS.get() &&
+				player.getItemBySlot(EquipmentSlotType.FEET).getItem() == DeferredRegistryHandler.COBALT_BOOTS.get()) {
+			if (player.getUUID().toString().equals("086ab520-a158-3f3b-b711-6f10d99b4969") || player.getUUID().toString().equals("94f11dac-d1bc-46da-877b-c69f533f2da2")) {
+				if (ClientModEventSubscriber.toggleArmorEffect.consumeClick()) {
 					effectEnabled = !effectEnabled;
 				}
 
 				if (effectEnabled) {
-					world.addParticle(ParticleTypes.SOUL_FIRE_FLAME, player.getPosX(), player.getPosY() + 2.2D, player.getPosZ(), GeneralUtilities.getRandomNumber(-0.03d, 0.03d), GeneralUtilities.getRandomNumber(0.0d, 0.03d), GeneralUtilities.getRandomNumber(-0.03d, 0.03d));
-					world.addParticle(ParticleTypes.FLAME, player.getPosX(), player.getPosY() + 2.2D, player.getPosZ(), GeneralUtilities.getRandomNumber(-0.03d, 0.03d), GeneralUtilities.getRandomNumber(0.0d, 0.03d), GeneralUtilities.getRandomNumber(-0.03d, 0.03d));
+					world.addParticle(ParticleTypes.SOUL_FIRE_FLAME, player.getX(), player.getY() + 2.2D, player.getZ(), GeneralUtilities.getRandomNumber(-0.03d, 0.03d), GeneralUtilities.getRandomNumber(0.0d, 0.03d), GeneralUtilities.getRandomNumber(-0.03d, 0.03d));
+					world.addParticle(ParticleTypes.FLAME, player.getX(), player.getY() + 2.2D, player.getZ(), GeneralUtilities.getRandomNumber(-0.03d, 0.03d), GeneralUtilities.getRandomNumber(0.0d, 0.03d), GeneralUtilities.getRandomNumber(-0.03d, 0.03d));
 
-					player.addPotionEffect(new EffectInstance(Effects.STRENGTH, 1, 4, false, false));
-					player.addPotionEffect(new EffectInstance(Effects.RESISTANCE, 1, 1, false, false));
-					player.addPotionEffect(new EffectInstance(Effects.SPEED, 1, 1, false, false));
+					player.addEffect(new EffectInstance(Effects.DAMAGE_BOOST, 1, 4, false, false));
+					player.addEffect(new EffectInstance(Effects.DAMAGE_RESISTANCE, 1, 1, false, false));
+					player.addEffect(new EffectInstance(Effects.MOVEMENT_SPEED, 1, 1, false, false));
 				}
 			}
 		}

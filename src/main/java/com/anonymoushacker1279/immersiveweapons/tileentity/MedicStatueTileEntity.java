@@ -27,18 +27,18 @@ public class MedicStatueTileEntity extends TileEntity implements ITickableTileEn
 
 	@Override
 	public void tick() {
-		if (this.world != null && !this.world.isRemote && Objects.equals(this.world.getBiome(this.getPos()).getRegistryName(), DeferredRegistryHandler.BATTLEFIELD.get().getRegistryName()) && cooldown == 0) {
-			List<FieldMedicEntity> listofMedicsInArea = this.world.getEntitiesWithinAABB(FieldMedicEntity.class, new AxisAlignedBB(this.getPos().getX() - 48, this.getPos().getY() - 16, this.getPos().getZ() - 48, this.getPos().getX() + 48, this.getPos().getY() + 16, this.getPos().getZ() + 48));
+		if (this.level != null && !this.level.isClientSide && Objects.equals(this.level.getBiome(this.getBlockPos()).getRegistryName(), DeferredRegistryHandler.BATTLEFIELD.get().getRegistryName()) && cooldown == 0) {
+			List<FieldMedicEntity> listofMedicsInArea = this.level.getEntitiesOfClass(FieldMedicEntity.class, new AxisAlignedBB(this.getBlockPos().getX() - 48, this.getBlockPos().getY() - 16, this.getBlockPos().getZ() - 48, this.getBlockPos().getX() + 48, this.getBlockPos().getY() + 16, this.getBlockPos().getZ() + 48));
 			scannedMedics = listofMedicsInArea.size();
 
 			if (scannedMedics <= 1) {
-				FieldMedicEntity fieldMedicEntity = DeferredRegistryHandler.FIELD_MEDIC_ENTITY.get().create(this.world);
+				FieldMedicEntity fieldMedicEntity = DeferredRegistryHandler.FIELD_MEDIC_ENTITY.get().create(this.level);
 				if (fieldMedicEntity != null) {
 					while (true) {
 						BlockPos blockPos = this.getRandomPositionInArea();
-						if (this.world.getBlockState(blockPos) == Blocks.AIR.getDefaultState()) {
-							fieldMedicEntity.moveToBlockPosAndAngles(blockPos, 0.0F, 0.0F);
-							this.world.addEntity(fieldMedicEntity);
+						if (this.level.getBlockState(blockPos) == Blocks.AIR.defaultBlockState()) {
+							fieldMedicEntity.moveTo(blockPos, 0.0F, 0.0F);
+							this.level.addFreshEntity(fieldMedicEntity);
 							spawnParticles();
 							cooldown = 400;
 							break;
@@ -52,27 +52,27 @@ public class MedicStatueTileEntity extends TileEntity implements ITickableTileEn
 	}
 
 	private void spawnParticles() {
-		ServerWorld serverWorld = (ServerWorld) this.getWorld();
+		ServerWorld serverWorld = (ServerWorld) this.getLevel();
 		if (serverWorld != null) {
-			serverWorld.spawnParticle(ParticleTypes.HAPPY_VILLAGER, this.getPos().getX() + 0.5d, this.getPos().getY(), this.getPos().getZ() + 0.75d, 5, GeneralUtilities.getRandomNumber(-0.05d, 0.05d), GeneralUtilities.getRandomNumber(-0.25d, 0.25d), GeneralUtilities.getRandomNumber(-0.05d, 0.05d), GeneralUtilities.getRandomNumber(-0.15d, 0.15d));
+			serverWorld.sendParticles(ParticleTypes.HAPPY_VILLAGER, this.getBlockPos().getX() + 0.5d, this.getBlockPos().getY(), this.getBlockPos().getZ() + 0.75d, 5, GeneralUtilities.getRandomNumber(-0.05d, 0.05d), GeneralUtilities.getRandomNumber(-0.25d, 0.25d), GeneralUtilities.getRandomNumber(-0.05d, 0.05d), GeneralUtilities.getRandomNumber(-0.15d, 0.15d));
 		}
 	}
 
 	private BlockPos getRandomPositionInArea() {
-		return new BlockPos(this.getPos().getX() + GeneralUtilities.getRandomNumber(-15, 15), this.getPos().getY(), this.getPos().getZ() + GeneralUtilities.getRandomNumber(-15, 15));
+		return new BlockPos(this.getBlockPos().getX() + GeneralUtilities.getRandomNumber(-15, 15), this.getBlockPos().getY(), this.getBlockPos().getZ() + GeneralUtilities.getRandomNumber(-15, 15));
 	}
 
 	@Override
-	public CompoundNBT write(CompoundNBT tag) {
-		super.write(tag);
+	public CompoundNBT save(CompoundNBT tag) {
+		super.save(tag);
 		tag.putInt("scanCooldown", cooldown);
 		tag.putInt("scannedMedics", scannedMedics);
 		return tag;
 	}
 
 	@Override
-	public void read(BlockState state, CompoundNBT tag) {
-		super.read(state, tag);
+	public void load(BlockState state, CompoundNBT tag) {
+		super.load(state, tag);
 		cooldown = tag.getInt("scanCooldown");
 		scannedMedics = tag.getInt("scannedMedics");
 	}

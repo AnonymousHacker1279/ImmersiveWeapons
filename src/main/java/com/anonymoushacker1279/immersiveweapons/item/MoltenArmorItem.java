@@ -21,7 +21,7 @@ public class MoltenArmorItem extends ArmorItem {
 	private boolean isLeggings = false;
 
 	public MoltenArmorItem(IArmorMaterial material, EquipmentSlotType slot, int type) {
-		super(material, slot, (new Item.Properties().group(DeferredRegistryHandler.ITEM_GROUP).isImmuneToFire()));
+		super(material, slot, (new Item.Properties().tab(DeferredRegistryHandler.ITEM_GROUP).fireResistant()));
 		if (type == 2) {
 			isLeggings = true;
 		}
@@ -34,17 +34,17 @@ public class MoltenArmorItem extends ArmorItem {
 
 	@Override
 	public void onArmorTick(ItemStack stack, World world, PlayerEntity player) {
-		if (player.getItemStackFromSlot(EquipmentSlotType.HEAD).getItem() == DeferredRegistryHandler.MOLTEN_HELMET.get() &&
-				player.getItemStackFromSlot(EquipmentSlotType.CHEST).getItem() == DeferredRegistryHandler.MOLTEN_CHESTPLATE.get() &&
-				player.getItemStackFromSlot(EquipmentSlotType.LEGS).getItem() == DeferredRegistryHandler.MOLTEN_LEGGINGS.get() &&
-				player.getItemStackFromSlot(EquipmentSlotType.FEET).getItem() == DeferredRegistryHandler.MOLTEN_BOOTS.get()) {
+		if (player.getItemBySlot(EquipmentSlotType.HEAD).getItem() == DeferredRegistryHandler.MOLTEN_HELMET.get() &&
+				player.getItemBySlot(EquipmentSlotType.CHEST).getItem() == DeferredRegistryHandler.MOLTEN_CHESTPLATE.get() &&
+				player.getItemBySlot(EquipmentSlotType.LEGS).getItem() == DeferredRegistryHandler.MOLTEN_LEGGINGS.get() &&
+				player.getItemBySlot(EquipmentSlotType.FEET).getItem() == DeferredRegistryHandler.MOLTEN_BOOTS.get()) {
 			if (player.isInLava()) {
-				player.addPotionEffect(new EffectInstance(Effects.FIRE_RESISTANCE, 140, 0, false, false));
-				player.setMotionMultiplier(Blocks.LAVA.getDefaultState(), new Vector3d(5.5D, 5.5D, 5.5D));
-				player.extinguish();
+				player.addEffect(new EffectInstance(Effects.FIRE_RESISTANCE, 140, 0, false, false));
+				player.makeStuckInBlock(Blocks.LAVA.defaultBlockState(), new Vector3d(5.5D, 5.5D, 5.5D));
+				player.clearFire();
 			} else if (player.getLastDamageSource() == DamageSource.IN_FIRE || player.getLastDamageSource() == DamageSource.ON_FIRE) {
-				player.addPotionEffect(new EffectInstance(Effects.FIRE_RESISTANCE, 140, 0, false, false));
-				player.extinguish();
+				player.addEffect(new EffectInstance(Effects.FIRE_RESISTANCE, 140, 0, false, false));
+				player.clearFire();
 			}
 		}
 	}

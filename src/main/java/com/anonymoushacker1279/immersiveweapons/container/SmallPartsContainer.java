@@ -24,57 +24,57 @@ public class SmallPartsContainer extends AbstractRepairContainer {
 	private SmallPartsRecipe smallPartsRecipe;
 
 	public SmallPartsContainer(int id, PlayerInventory inv) {
-		this(id, inv, IWorldPosCallable.DUMMY);
+		this(id, inv, IWorldPosCallable.NULL);
 	}
 
 	public SmallPartsContainer(int id, PlayerInventory inv, IWorldPosCallable worldPosCallable) {
 		super(DeferredRegistryHandler.SMALL_PARTS_TABLE_CONTAINER.get(), id, inv, worldPosCallable);
-		this.world = inv.player.world;
-		this.smallPartsRecipeList = this.world.getRecipeManager().getRecipesForType(ICustomRecipeType.SMALL_PARTS);
+		this.world = inv.player.level;
+		this.smallPartsRecipeList = this.world.getRecipeManager().getAllRecipesFor(ICustomRecipeType.SMALL_PARTS);
 	}
 
 	@Override
-	protected boolean func_230302_a_(BlockState blockState) {
-		return blockState.matchesBlock(DeferredRegistryHandler.SMALL_PARTS_TABLE.get());
+	protected boolean isValidBlock(BlockState blockState) {
+		return blockState.is(DeferredRegistryHandler.SMALL_PARTS_TABLE.get());
 	}
 
 	@Override
-	protected boolean func_230303_b_(PlayerEntity playerEntity, boolean matchesRecipe) {
-		return this.smallPartsRecipe != null && this.smallPartsRecipe.matches(this.field_234643_d_, this.world);
+	protected boolean mayPickup(PlayerEntity playerEntity, boolean matchesRecipe) {
+		return this.smallPartsRecipe != null && this.smallPartsRecipe.matches(this.inputSlots, this.world);
 	}
 
 	@Override
-	protected ItemStack func_230301_a_(PlayerEntity playerEntity, ItemStack itemStack) {
-		itemStack.onCrafting(playerEntity.world, playerEntity, itemStack.getCount());
-		this.field_234642_c_.onCrafting(playerEntity);
-		this.func_234654_d_(0);
+	protected ItemStack onTake(PlayerEntity playerEntity, ItemStack itemStack) {
+		itemStack.onCraftedBy(playerEntity.level, playerEntity, itemStack.getCount());
+		this.resultSlots.awardUsedRecipes(playerEntity);
+		this.shrinkStackInSlot(0);
 		// Normally we would destroy both items here. However we don't want to destroy the blueprint item.
-		world.playSound(playerEntity, playerEntity.getPosition(), DeferredRegistryHandler.SMALL_PARTS_TABLE_USED.get(), SoundCategory.NEUTRAL, 1f, 1);
+		world.playSound(playerEntity, playerEntity.blockPosition(), DeferredRegistryHandler.SMALL_PARTS_TABLE_USED.get(), SoundCategory.NEUTRAL, 1f, 1);
 		return itemStack;
 	}
 
-	private void func_234654_d_(int index) {
-		ItemStack itemstack = this.field_234643_d_.getStackInSlot(index);
+	private void shrinkStackInSlot(int index) {
+		ItemStack itemstack = this.inputSlots.getItem(index);
 		itemstack.shrink(1);
-		this.field_234643_d_.setInventorySlotContents(index, itemstack);
+		this.inputSlots.setItem(index, itemstack);
 	}
 
 	@Override
-	public void updateRepairOutput() {
-		List<SmallPartsRecipe> list = this.world.getRecipeManager().getRecipes(ICustomRecipeType.SMALL_PARTS, this.field_234643_d_, this.world);
+	public void createResult() {
+		List<SmallPartsRecipe> list = this.world.getRecipeManager().getRecipesFor(ICustomRecipeType.SMALL_PARTS, this.inputSlots, this.world);
 		if (list.isEmpty()) {
-			this.field_234642_c_.setInventorySlotContents(0, ItemStack.EMPTY);
+			this.resultSlots.setItem(0, ItemStack.EMPTY);
 		} else {
 			this.smallPartsRecipe = list.get(0);
-			ItemStack itemstack = this.smallPartsRecipe.getCraftingResult(this.field_234643_d_);
-			this.field_234642_c_.setRecipeUsed(this.smallPartsRecipe);
-			this.field_234642_c_.setInventorySlotContents(0, itemstack);
+			ItemStack itemstack = this.smallPartsRecipe.assemble(this.inputSlots);
+			this.resultSlots.setRecipeUsed(this.smallPartsRecipe);
+			this.resultSlots.setItem(0, itemstack);
 		}
 
 	}
 
 	@Override
-	protected boolean func_241210_a_(ItemStack itemStack) {
+	protected boolean shouldQuickMoveToAdditionalSlot(ItemStack itemStack) {
 		return this.smallPartsRecipeList.stream().anyMatch((p_241444_1_) -> {
 			return p_241444_1_.isValidAdditionItem(itemStack);
 		});
@@ -85,8 +85,8 @@ public class SmallPartsContainer extends AbstractRepairContainer {
 	 * null for the initial slot that was double-clicked.
 	 */
 	@Override
-	public boolean canMergeSlot(ItemStack stack, Slot slotIn) {
-		return slotIn.inventory != this.field_234642_c_ && super.canMergeSlot(stack, slotIn);
+	public boolean canTakeItemForPickAll(ItemStack stack, Slot slotIn) {
+		return slotIn.container != this.resultSlots && super.canTakeItemForPickAll(stack, slotIn);
 	}
 
 }

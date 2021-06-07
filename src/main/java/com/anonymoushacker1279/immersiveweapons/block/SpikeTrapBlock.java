@@ -29,93 +29,95 @@ import net.minecraft.world.World;
 
 import java.util.List;
 
+import net.minecraft.block.AbstractBlock.Properties;
+
 public class SpikeTrapBlock extends Block implements IWaterLoggable {
 
 	public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
 	public static final BooleanProperty POWERED = BooleanProperty.create("powered");
-	protected static final VoxelShape SHAPE = Block.makeCuboidShape(0.0D, 0.0D, 0.0D, 16.0D, 1.0D, 16.0D);
+	protected static final VoxelShape SHAPE = Block.box(0.0D, 0.0D, 0.0D, 16.0D, 1.0D, 16.0D);
 	private final DamageSource damageSource = new DamageSource("immersiveweapons.spike_trap");
 
 	public SpikeTrapBlock(Properties properties) {
 		super(properties);
-		this.setDefaultState(this.stateContainer.getBaseState().with(WATERLOGGED, Boolean.FALSE).with(POWERED, Boolean.FALSE));
+		this.registerDefaultState(this.stateDefinition.any().setValue(WATERLOGGED, Boolean.FALSE).setValue(POWERED, Boolean.FALSE));
 	}
 
 	@Override
 	public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
 		Vector3d vector3d = state.getOffset(worldIn, pos);
-		return SHAPE.withOffset(vector3d.x, vector3d.y, vector3d.z);
+		return SHAPE.move(vector3d.x, vector3d.y, vector3d.z);
 	}
 
 	@SuppressWarnings("deprecation")
 	@Override
-	public BlockState updatePostPlacement(BlockState stateIn, Direction facing, BlockState facingState, IWorld worldIn, BlockPos currentPos, BlockPos facingPos) {
-		if (stateIn.get(WATERLOGGED)) {
-			worldIn.getPendingFluidTicks().scheduleTick(currentPos, Fluids.WATER, Fluids.WATER.getTickRate(worldIn));
+	public BlockState updateShape(BlockState stateIn, Direction facing, BlockState facingState, IWorld worldIn, BlockPos currentPos, BlockPos facingPos) {
+		if (stateIn.getValue(WATERLOGGED)) {
+			worldIn.getLiquidTicks().scheduleTick(currentPos, Fluids.WATER, Fluids.WATER.getTickDelay(worldIn));
 		}
 
-		return facing == Direction.DOWN && !stateIn.isValidPosition(worldIn, currentPos) ? Blocks.AIR.getDefaultState() : super.updatePostPlacement(stateIn, facing, facingState, worldIn, currentPos, facingPos);
+		return facing == Direction.DOWN && !stateIn.canSurvive(worldIn, currentPos) ? Blocks.AIR.defaultBlockState() : super.updateShape(stateIn, facing, facingState, worldIn, currentPos, facingPos);
 	}
 
 	@Override
 	public BlockState getStateForPlacement(BlockItemUseContext context) {
-		FluidState ifluidstate = context.getWorld().getFluidState(context.getPos());
+		FluidState ifluidstate = context.getLevel().getFluidState(context.getClickedPos());
 
-		return this.getDefaultState().with(WATERLOGGED, ifluidstate.getFluid() == Fluids.WATER);
+		return this.defaultBlockState().setValue(WATERLOGGED, ifluidstate.getType() == Fluids.WATER);
 	}
 
 	@SuppressWarnings("deprecation")
 	@Override
 	public FluidState getFluidState(BlockState state) {
-		return state.get(WATERLOGGED) ? Fluids.WATER.getStillFluidState(false) : super.getFluidState(state);
+		return state.getValue(WATERLOGGED) ? Fluids.WATER.getSource(false) : super.getFluidState(state);
 	}
 
 	@Override
-	protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
+	protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder) {
 		builder.add(WATERLOGGED, POWERED);
 	}
 
 	@Override
-	public boolean isValidPosition(BlockState state, IWorldReader worldIn, BlockPos pos) {
-		return Block.hasEnoughSolidSide(worldIn, pos.down(), Direction.UP);
+	public boolean canSurvive(BlockState state, IWorldReader worldIn, BlockPos pos) {
+		return Block.canSupportCenter(worldIn, pos.below(), Direction.UP);
 	}
 
 	@Override
-	public void onEntityCollision(BlockState state, World world, BlockPos pos, Entity entity) {
+	public void entityInside(BlockState state, World world, BlockPos pos, Entity entity) {
 		if (entity instanceof PlayerEntity || entity instanceof MobEntity) {
-			if (state.get(POWERED)) {
-				entity.attackEntityFrom(damageSource, 2f);
+			if (state.getValue(POWERED)) {
+				entity.hurt(damageSource, 2f);
 			}
 		}
 	}
 
 	@Override
-	public void onBlockAdded(BlockState state, World worldIn, BlockPos pos, BlockState oldState, boolean isMoving) {
-		if (!oldState.matchesBlock(state.getBlock())) {
-			if (worldIn.isBlockPowered(pos)) {
-				worldIn.setBlockState(pos, state.with(POWERED, true), 3);
+	public void onPlace(BlockState state, World worldIn, BlockPos pos, BlockState oldState, boolean isMoving) {
+		if (!oldState.is(state.getBlock())) {
+			if (worldIn.hasNeighborSignal(pos)) {
+				worldIn.setBlock(pos, state.setValue(POWERED, true), 3);
 			}
 		}
 	}
 
 	@Override
 	public void neighborChanged(BlockState state, World worldIn, BlockPos pos, Block blockIn, BlockPos fromPos, boolean isMoving) {
-		boolean flag = worldIn.isBlockPowered(pos);
-		if (flag != state.get(POWERED)) {
-			state = state.with(POWERED, flag);
+		boolean flag = worldIn.hasNeighborSignal(pos);
+		if (flag != state.getValue(POWERED)) {
+			state = state.setValue(POWERED, flag);
 			// A bit hacky here. This runs from the client so we can't use server logic to broadcast to all players.
 			AxisAlignedBB bound = new AxisAlignedBB(pos.getX() - 7, pos.getY() - 7, pos.getZ() - 7, pos.getX() + 7, pos.getY() + 7, pos.getZ() + 7);
-			List<PlayerEntity> entitiesInBound = worldIn.getEntitiesWithinAABB(PlayerEntity.class, bound);
-			for (int i = 0; i < worldIn.getPlayers().size(); i++) {
-				if (entitiesInBound.contains(worldIn.getPlayers().get(i))) {
-					if (state.get(POWERED)) {
-						worldIn.getPlayers().get(i).playSound(DeferredRegistryHandler.SPIKE_TRAP_EXTEND.get(), SoundCategory.BLOCKS, 1.0f, 1.0f);
+			List<PlayerEntity> entitiesInBound = worldIn.getEntitiesOfClass(PlayerEntity.class, bound);
+			for (int i = 0; i < worldIn.players().size(); i++) {
+				if (entitiesInBound.contains(worldIn.players().get(i))) {
+					if (state.getValue(POWERED)) {
+						worldIn.players().get(i).playNotifySound(DeferredRegistryHandler.SPIKE_TRAP_EXTEND.get(), SoundCategory.BLOCKS, 1.0f, 1.0f);
 					} else {
-						worldIn.getPlayers().get(i).playSound(DeferredRegistryHandler.SPIKE_TRAP_RETRACT.get(), SoundCategory.BLOCKS, 1.0f, 1.0f);
+						worldIn.players().get(i).playNotifySound(DeferredRegistryHandler.SPIKE_TRAP_RETRACT.get(), SoundCategory.BLOCKS, 1.0f, 1.0f);
 					}
 				}
 			}
-			worldIn.setBlockState(pos, state.with(POWERED, flag), 2);
+			worldIn.setBlock(pos, state.setValue(POWERED, flag), 2);
 		}
 	}
 }

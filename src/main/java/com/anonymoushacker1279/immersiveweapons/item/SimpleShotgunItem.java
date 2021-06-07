@@ -11,6 +11,8 @@ import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
 
+import net.minecraft.item.Item.Properties;
+
 public class SimpleShotgunItem extends SimplePistolItem {
 
 	public SimpleShotgunItem(Properties builder) {
@@ -18,10 +20,10 @@ public class SimpleShotgunItem extends SimplePistolItem {
 	}
 
 	@Override
-	public void onPlayerStoppedUsing(ItemStack stack, World worldIn, LivingEntity entityLiving, int timeLeft) {
+	public void releaseUsing(ItemStack stack, World worldIn, LivingEntity entityLiving, int timeLeft) {
 		if (entityLiving instanceof PlayerEntity) {
 			PlayerEntity playerentity = (PlayerEntity) entityLiving;
-			boolean flag = playerentity.abilities.isCreativeMode;
+			boolean flag = playerentity.abilities.instabuild;
 			boolean misfire = false;
 			ItemStack itemstack = findAmmo(stack, entityLiving);
 
@@ -32,14 +34,14 @@ public class SimpleShotgunItem extends SimplePistolItem {
 				int randomNumber = GeneralUtilities.getRandomNumber(1, 10);
 				if (randomNumber <= 3) {
 					misfire = true;
-					worldIn.playSound(null, playerentity.getPosX(), playerentity.getPosY(), playerentity.getPosZ(), this.getMisfireSound(), SoundCategory.PLAYERS, 1.0F, 1.0F / (random.nextFloat() * 0.4F + 1.2F) + 0.5F);
-					if (!playerentity.abilities.isCreativeMode) {
+					worldIn.playSound(null, playerentity.getX(), playerentity.getY(), playerentity.getZ(), this.getMisfireSound(), SoundCategory.PLAYERS, 1.0F, 1.0F / (random.nextFloat() * 0.4F + 1.2F) + 0.5F);
+					if (!playerentity.abilities.instabuild) {
 						itemstack.shrink(bulletsToFire);
 						if (itemstack.isEmpty()) {
-							playerentity.inventory.deleteStack(itemstack);
+							playerentity.inventory.removeItem(itemstack);
 						}
-						stack.damageItem(5, playerentity, (p_220009_1_) -> {
-							p_220009_1_.sendBreakAnimation(playerentity.getActiveHand());
+						stack.hurtAndBreak(5, playerentity, (p_220009_1_) -> {
+							p_220009_1_.broadcastBreakEvent(playerentity.getUsedItemHand());
 						});
 					}
 				}
@@ -48,14 +50,14 @@ public class SimpleShotgunItem extends SimplePistolItem {
 				int randomNumber = GeneralUtilities.getRandomNumber(1, 20);
 				if (randomNumber <= 3) {
 					misfire = true;
-					worldIn.playSound(null, playerentity.getPosX(), playerentity.getPosY(), playerentity.getPosZ(), this.getMisfireSound(), SoundCategory.PLAYERS, 1.0F, 1.0F / (random.nextFloat() * 0.4F + 1.2F) + 0.5F);
-					if (!playerentity.abilities.isCreativeMode) {
+					worldIn.playSound(null, playerentity.getX(), playerentity.getY(), playerentity.getZ(), this.getMisfireSound(), SoundCategory.PLAYERS, 1.0F, 1.0F / (random.nextFloat() * 0.4F + 1.2F) + 0.5F);
+					if (!playerentity.abilities.instabuild) {
 						itemstack.shrink(bulletsToFire);
 						if (itemstack.isEmpty()) {
-							playerentity.inventory.deleteStack(itemstack);
+							playerentity.inventory.removeItem(itemstack);
 						}
-						stack.damageItem(5, playerentity, (p_220009_1_) -> {
-							p_220009_1_.sendBreakAnimation(playerentity.getActiveHand());
+						stack.hurtAndBreak(5, playerentity, (p_220009_1_) -> {
+							p_220009_1_.broadcastBreakEvent(playerentity.getUsedItemHand());
 						});
 					}
 				}
@@ -72,35 +74,35 @@ public class SimpleShotgunItem extends SimplePistolItem {
 
 				float f = getArrowVelocity(i);
 				if (!(f < 0.1D) && !misfire) {
-					boolean flag1 = playerentity.abilities.isCreativeMode || (itemstack.getItem() instanceof CustomArrowItem && ((CustomArrowItem) itemstack.getItem()).isInfinite(itemstack, stack, playerentity));
-					if (!worldIn.isRemote) {
+					boolean flag1 = playerentity.abilities.instabuild || (itemstack.getItem() instanceof CustomArrowItem && ((CustomArrowItem) itemstack.getItem()).isInfinite(itemstack, stack, playerentity));
+					if (!worldIn.isClientSide) {
 						for (int iter = 0; iter < bulletsToFire; ++iter) {
 							CustomArrowItem arrowitem = (CustomArrowItem) (itemstack.getItem() instanceof CustomArrowItem ? itemstack.getItem() : DeferredRegistryHandler.IRON_MUSKET_BALL.get());
 							AbstractArrowEntity abstractBulletEntity = arrowitem.createArrow(worldIn, itemstack, playerentity);
 							abstractBulletEntity = customArrow(abstractBulletEntity);
-							abstractBulletEntity.setKnockbackStrength(3);
-							abstractBulletEntity.setDirectionAndMovement(playerentity, playerentity.rotationPitch + GeneralUtilities.getRandomNumber(-5.0f, 5.0f), playerentity.rotationYaw + GeneralUtilities.getRandomNumber(-5.0f, 5.0f), 0.0F, f * 3.0F, 1.0F);
+							abstractBulletEntity.setKnockback(3);
+							abstractBulletEntity.shootFromRotation(playerentity, playerentity.xRot + GeneralUtilities.getRandomNumber(-5.0f, 5.0f), playerentity.yRot + GeneralUtilities.getRandomNumber(-5.0f, 5.0f), 0.0F, f * 3.0F, 1.0F);
 							if (f == 1.0F) {
-								abstractBulletEntity.setIsCritical(true);
+								abstractBulletEntity.setCritArrow(true);
 							}
-							worldIn.addEntity(abstractBulletEntity);
+							worldIn.addFreshEntity(abstractBulletEntity);
 						}
-						stack.damageItem(1, playerentity, (p_220009_1_) -> {
-							p_220009_1_.sendBreakAnimation(playerentity.getActiveHand());
+						stack.hurtAndBreak(1, playerentity, (p_220009_1_) -> {
+							p_220009_1_.broadcastBreakEvent(playerentity.getUsedItemHand());
 						});
 					}
 
-					worldIn.playSound(null, playerentity.getPosX(), playerentity.getPosY(), playerentity.getPosZ(), this.getFireSound(), SoundCategory.PLAYERS, 1.0F, 1.0F / (random.nextFloat() * 0.4F + 1.2F) + f * 0.5F);
-					if (!flag1 && !playerentity.abilities.isCreativeMode) {
+					worldIn.playSound(null, playerentity.getX(), playerentity.getY(), playerentity.getZ(), this.getFireSound(), SoundCategory.PLAYERS, 1.0F, 1.0F / (random.nextFloat() * 0.4F + 1.2F) + f * 0.5F);
+					if (!flag1 && !playerentity.abilities.instabuild) {
 						itemstack.shrink(bulletsToFire);
 						if (itemstack.isEmpty()) {
-							playerentity.inventory.deleteStack(itemstack);
+							playerentity.inventory.removeItem(itemstack);
 						}
 					}
 
-					playerentity.addStat(Stats.ITEM_USED.get(this));
-					if (!playerentity.abilities.isCreativeMode) {
-						playerentity.getCooldownTracker().setCooldown(this, 100);
+					playerentity.awardStat(Stats.ITEM_USED.get(this));
+					if (!playerentity.abilities.instabuild) {
+						playerentity.getCooldowns().addCooldown(this, 100);
 					}
 				}
 			}

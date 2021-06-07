@@ -22,11 +22,11 @@ public class TrenchWorldCarver extends WorldCarver<ProbabilityConfig> {
 	}
 
 	@Override
-	public boolean carveRegion(IChunk chunk, Function<BlockPos, Biome> biomePos, Random rand, int seaLevel, int chunkXOffset, int chunkZOffset, int chunkX, int chunkZ, BitSet carvingMask, ProbabilityConfig config) {
-		int i = (this.func_222704_c() * 2 - 1) * 16;
+	public boolean carve(IChunk chunk, Function<BlockPos, Biome> biomePos, Random rand, int seaLevel, int chunkXOffset, int chunkZOffset, int chunkX, int chunkZ, BitSet carvingMask, ProbabilityConfig config) {
+		int i = (this.getRange() * 2 - 1) * 16;
 		double d0 = chunkXOffset * 16 + rand.nextInt(16);
 		double d2 = chunkZOffset * 16 + rand.nextInt(16);
-		double d1 = rand.nextInt(rand.nextInt(40) + 8) + chunk.getTopBlockY(Type.WORLD_SURFACE_WG, (int) d0, (int) d2) - 2;
+		double d1 = rand.nextInt(rand.nextInt(40) + 8) + chunk.getHeight(Type.WORLD_SURFACE_WG, (int) d0, (int) d2) - 2;
 		float f = rand.nextFloat() * ((float) Math.PI * 2.0f);
 		float f1 = (rand.nextFloat() - 0.5F) * 2.0F / 16.0F;
 		float f2 = (rand.nextFloat() * 1.5F + rand.nextFloat()) * 1.5F;
@@ -59,10 +59,10 @@ public class TrenchWorldCarver extends WorldCarver<ProbabilityConfig> {
 			f1 = f1 + (random.nextFloat() - random.nextFloat()) * random.nextFloat() * 1.5F;
 			f4 = f4 + (random.nextFloat() - random.nextFloat()) * random.nextFloat() * 2.0F;
 			if (random.nextInt(4) != 0) {
-				if (!this.func_222702_a(chunkX, chunkZ, randOffsetXCoord, randOffsetZCoord, j, p_227204_18_, p_227204_14_)) {
+				if (!this.canReach(chunkX, chunkZ, randOffsetXCoord, randOffsetZCoord, j, p_227204_18_, p_227204_14_)) {
 					return;
 				}
-				this.func_227208_a_(chunk, biomePos, rand, seaLevel, chunkX, chunkZ, randOffsetXCoord, startY, randOffsetZCoord, d0, d1, carvingMask);
+				this.carveSphere(chunk, biomePos, rand, seaLevel, chunkX, chunkZ, randOffsetXCoord, startY, randOffsetZCoord, d0, d1, carvingMask);
 			}
 		}
 
@@ -70,12 +70,12 @@ public class TrenchWorldCarver extends WorldCarver<ProbabilityConfig> {
 
 
 	@Override
-	public boolean shouldCarve(Random rand, int chunkX, int chunkZ, ProbabilityConfig config) {
+	public boolean isStartChunk(Random rand, int chunkX, int chunkZ, ProbabilityConfig config) {
 		return rand.nextFloat() <= config.probability;
 	}
 
 	@Override
-	protected boolean func_222708_a(double p_222708_1_, double p_222708_3_, double p_222708_5_, int p_222708_7_) {
+	protected boolean skip(double p_222708_1_, double p_222708_3_, double p_222708_5_, int p_222708_7_) {
 		return false;
 	}
 }

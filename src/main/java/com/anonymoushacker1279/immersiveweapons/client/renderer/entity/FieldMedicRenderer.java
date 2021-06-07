@@ -18,7 +18,7 @@ public class FieldMedicRenderer extends BipedRenderer<AbstractFieldMedicEntity, 
 	}
 
 	@Override
-	public ResourceLocation getEntityTexture(AbstractFieldMedicEntity entity) {
+	public ResourceLocation getTextureLocation(AbstractFieldMedicEntity entity) {
 		return FIELD_MEDIC;
 	}
 }

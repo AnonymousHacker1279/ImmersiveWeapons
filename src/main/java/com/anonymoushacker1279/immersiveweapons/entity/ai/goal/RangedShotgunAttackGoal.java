@@ -27,7 +27,7 @@ public class RangedShotgunAttackGoal<T extends CreatureEntity & IRangedAttackMob
 		this.moveSpeedAmp = moveSpeedAmpIn;
 		this.attackCooldown = attackCooldownIn;
 		this.maxAttackDistance = maxAttackDistanceIn * maxAttackDistanceIn;
-		this.setMutexFlags(EnumSet.of(Goal.Flag.MOVE, Goal.Flag.LOOK));
+		this.setFlags(EnumSet.of(Goal.Flag.MOVE, Goal.Flag.LOOK));
 	}
 
 	public void setAttackCooldown(int attackCooldownIn) {
@@ -39,41 +39,41 @@ public class RangedShotgunAttackGoal<T extends CreatureEntity & IRangedAttackMob
 	 * method as well.
 	 */
 	@Override
-	public boolean shouldExecute() {
-		return this.entity.getAttackTarget() != null && this.isGunInMainhand();
+	public boolean canUse() {
+		return this.entity.getTarget() != null && this.isGunInMainhand();
 	}
 
 	protected boolean isGunInMainhand() {
-		return this.entity.func_233634_a_(SimpleShotgunItem.class::isInstance);
+		return this.entity.isHolding(SimpleShotgunItem.class::isInstance);
 	}
 
 	/**
 	 * Returns whether an in-progress EntityAIBase should continue executing
 	 */
 	@Override
-	public boolean shouldContinueExecuting() {
-		return (this.shouldExecute() || !this.entity.getNavigator().noPath()) && this.isGunInMainhand();
+	public boolean canContinueToUse() {
+		return (this.canUse() || !this.entity.getNavigation().isDone()) && this.isGunInMainhand();
 	}
 
 	/**
 	 * Execute a one shot task or start executing a continuous task
 	 */
 	@Override
-	public void startExecuting() {
-		super.startExecuting();
-		this.entity.setAggroed(true);
+	public void start() {
+		super.start();
+		this.entity.setAggressive(true);
 	}
 
 	/**
 	 * Reset the task's internal state. Called when this task is interrupted by another one
 	 */
 	@Override
-	public void resetTask() {
-		super.resetTask();
-		this.entity.setAggroed(false);
+	public void stop() {
+		super.stop();
+		this.entity.setAggressive(false);
 		this.seeTime = 0;
 		this.attackTime = -1;
-		this.entity.resetActiveHand();
+		this.entity.stopUsingItem();
 	}
 
 	/**
@@ -81,10 +81,10 @@ public class RangedShotgunAttackGoal<T extends CreatureEntity & IRangedAttackMob
 	 */
 	@Override
 	public void tick() {
-		LivingEntity livingentity = this.entity.getAttackTarget();
+		LivingEntity livingentity = this.entity.getTarget();
 		if (livingentity != null) {
-			double d0 = this.entity.getDistanceSq(livingentity.getPosX(), livingentity.getPosY(), livingentity.getPosZ());
-			boolean flag = this.entity.getEntitySenses().canSee(livingentity);
+			double d0 = this.entity.distanceToSqr(livingentity.getX(), livingentity.getY(), livingentity.getZ());
+			boolean flag = this.entity.getSensing().canSee(livingentity);
 			boolean flag1 = this.seeTime > 0;
 			if (flag != flag1) {
 				this.seeTime = 0;
@@ -97,19 +97,19 @@ public class RangedShotgunAttackGoal<T extends CreatureEntity & IRangedAttackMob
 			}
 
 			if (!(d0 > (double) this.maxAttackDistance) && this.seeTime >= 20) {
-				this.entity.getNavigator().clearPath();
+				this.entity.getNavigation().stop();
 				++this.strafingTime;
 			} else {
-				this.entity.getNavigator().tryMoveToEntityLiving(livingentity, this.moveSpeedAmp);
+				this.entity.getNavigation().moveTo(livingentity, this.moveSpeedAmp);
 				this.strafingTime = -1;
 			}
 
 			if (this.strafingTime >= 20) {
-				if ((double) this.entity.getRNG().nextFloat() < 0.3D) {
+				if ((double) this.entity.getRandom().nextFloat() < 0.3D) {
 					this.strafingClockwise = !this.strafingClockwise;
 				}
 
-				if ((double) this.entity.getRNG().nextFloat() < 0.3D) {
+				if ((double) this.entity.getRandom().nextFloat() < 0.3D) {
 					this.strafingBackwards = !this.strafingBackwards;
 				}
 
@@ -123,25 +123,25 @@ public class RangedShotgunAttackGoal<T extends CreatureEntity & IRangedAttackMob
 					this.strafingBackwards = true;
 				}
 
-				this.entity.getMoveHelper().strafe(this.strafingBackwards ? -0.5F : 0.5F, this.strafingClockwise ? 0.5F : -0.5F);
-				this.entity.faceEntity(livingentity, 30.0F, 30.0F);
+				this.entity.getMoveControl().strafe(this.strafingBackwards ? -0.5F : 0.5F, this.strafingClockwise ? 0.5F : -0.5F);
+				this.entity.lookAt(livingentity, 30.0F, 30.0F);
 			} else {
-				this.entity.getLookController().setLookPositionWithEntity(livingentity, 30.0F, 30.0F);
+				this.entity.getLookControl().setLookAt(livingentity, 30.0F, 30.0F);
 			}
 
-			if (this.entity.isHandActive()) {
+			if (this.entity.isUsingItem()) {
 				if (!flag && this.seeTime < -60) {
-					this.entity.resetActiveHand();
+					this.entity.stopUsingItem();
 				} else if (flag) {
-					int i = this.entity.getItemInUseMaxCount();
+					int i = this.entity.getTicksUsingItem();
 					if (i >= 20) {
-						this.entity.resetActiveHand();
-						this.entity.attackEntityWithRangedAttack(livingentity, SimpleShotgunItem.getArrowVelocity(i));
+						this.entity.stopUsingItem();
+						this.entity.performRangedAttack(livingentity, SimpleShotgunItem.getArrowVelocity(i));
 						this.attackTime = this.attackCooldown;
 					}
 				}
 			} else if (--this.attackTime <= 0 && this.seeTime >= -60) {
-				this.entity.setActiveHand(ProjectileHelper.getHandWith(this.entity, DeferredRegistryHandler.BLUNDERBUSS.get()));
+				this.entity.startUsingItem(ProjectileHelper.getWeaponHoldingHand(this.entity, DeferredRegistryHandler.BLUNDERBUSS.get()));
 			}
 		}
 	}

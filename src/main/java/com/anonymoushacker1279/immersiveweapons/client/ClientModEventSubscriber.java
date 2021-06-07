@@ -49,8 +49,8 @@ public class ClientModEventSubscriber {
 		ImmersiveWeapons.LOGGER.debug("Performing client-side setup");
 
 		// Register GUI screens
-		ScreenManager.registerFactory(CustomContainerHolder.SMALL_PARTS_CONTAINER, SmallPartsTableScreen::new);
-		ScreenManager.registerFactory(CustomContainerHolder.TESLA_SYNTHESIZER_CONTAINER, TeslaSynthesizerScreen::new);
+		ScreenManager.register(CustomContainerHolder.SMALL_PARTS_CONTAINER, SmallPartsTableScreen::new);
+		ScreenManager.register(CustomContainerHolder.TESLA_SYNTHESIZER_CONTAINER, TeslaSynthesizerScreen::new);
 
 		// Register projectile entity renderers
 		RenderingRegistry.registerEntityRenderingHandler(DeferredRegistryHandler.COPPER_ARROW_ENTITY.get(), CopperArrowRenderer::new);
@@ -78,29 +78,29 @@ public class ClientModEventSubscriber {
 		RenderingRegistry.registerEntityRenderingHandler(DeferredRegistryHandler.FIELD_MEDIC_ENTITY.get(), FieldMedicRenderer::new);
 
 		// Register block renderers
-		RenderTypeLookup.setRenderLayer(DeferredRegistryHandler.BULLETPROOF_GLASS.get(), RenderType.getCutoutMipped());
-		RenderTypeLookup.setRenderLayer(DeferredRegistryHandler.WHITE_STAINED_BULLETPROOF_GLASS.get(), RenderType.getTranslucent());
-		RenderTypeLookup.setRenderLayer(DeferredRegistryHandler.LIGHT_GRAY_STAINED_BULLETPROOF_GLASS.get(), RenderType.getTranslucent());
-		RenderTypeLookup.setRenderLayer(DeferredRegistryHandler.GRAY_STAINED_BULLETPROOF_GLASS.get(), RenderType.getTranslucent());
-		RenderTypeLookup.setRenderLayer(DeferredRegistryHandler.BLACK_STAINED_BULLETPROOF_GLASS.get(), RenderType.getTranslucent());
-		RenderTypeLookup.setRenderLayer(DeferredRegistryHandler.ORANGE_STAINED_BULLETPROOF_GLASS.get(), RenderType.getTranslucent());
-		RenderTypeLookup.setRenderLayer(DeferredRegistryHandler.MAGENTA_STAINED_BULLETPROOF_GLASS.get(), RenderType.getTranslucent());
-		RenderTypeLookup.setRenderLayer(DeferredRegistryHandler.LIGHT_BLUE_STAINED_BULLETPROOF_GLASS.get(), RenderType.getTranslucent());
-		RenderTypeLookup.setRenderLayer(DeferredRegistryHandler.YELLOW_STAINED_BULLETPROOF_GLASS.get(), RenderType.getTranslucent());
-		RenderTypeLookup.setRenderLayer(DeferredRegistryHandler.LIME_STAINED_BULLETPROOF_GLASS.get(), RenderType.getTranslucent());
-		RenderTypeLookup.setRenderLayer(DeferredRegistryHandler.PINK_STAINED_BULLETPROOF_GLASS.get(), RenderType.getTranslucent());
-		RenderTypeLookup.setRenderLayer(DeferredRegistryHandler.CYAN_STAINED_BULLETPROOF_GLASS.get(), RenderType.getTranslucent());
-		RenderTypeLookup.setRenderLayer(DeferredRegistryHandler.PURPLE_STAINED_BULLETPROOF_GLASS.get(), RenderType.getTranslucent());
-		RenderTypeLookup.setRenderLayer(DeferredRegistryHandler.BLUE_STAINED_BULLETPROOF_GLASS.get(), RenderType.getTranslucent());
-		RenderTypeLookup.setRenderLayer(DeferredRegistryHandler.BROWN_STAINED_BULLETPROOF_GLASS.get(), RenderType.getTranslucent());
-		RenderTypeLookup.setRenderLayer(DeferredRegistryHandler.GREEN_STAINED_BULLETPROOF_GLASS.get(), RenderType.getTranslucent());
-		RenderTypeLookup.setRenderLayer(DeferredRegistryHandler.RED_STAINED_BULLETPROOF_GLASS.get(), RenderType.getTranslucent());
-		RenderTypeLookup.setRenderLayer(DeferredRegistryHandler.CORRUGATED_IRON_PANEL_BARS.get(), RenderType.getCutout());
-		RenderTypeLookup.setRenderLayer(DeferredRegistryHandler.TESLA_SYNTHESIZER.get(), RenderType.getTranslucent());
+		RenderTypeLookup.setRenderLayer(DeferredRegistryHandler.BULLETPROOF_GLASS.get(), RenderType.cutoutMipped());
+		RenderTypeLookup.setRenderLayer(DeferredRegistryHandler.WHITE_STAINED_BULLETPROOF_GLASS.get(), RenderType.translucent());
+		RenderTypeLookup.setRenderLayer(DeferredRegistryHandler.LIGHT_GRAY_STAINED_BULLETPROOF_GLASS.get(), RenderType.translucent());
+		RenderTypeLookup.setRenderLayer(DeferredRegistryHandler.GRAY_STAINED_BULLETPROOF_GLASS.get(), RenderType.translucent());
+		RenderTypeLookup.setRenderLayer(DeferredRegistryHandler.BLACK_STAINED_BULLETPROOF_GLASS.get(), RenderType.translucent());
+		RenderTypeLookup.setRenderLayer(DeferredRegistryHandler.ORANGE_STAINED_BULLETPROOF_GLASS.get(), RenderType.translucent());
+		RenderTypeLookup.setRenderLayer(DeferredRegistryHandler.MAGENTA_STAINED_BULLETPROOF_GLASS.get(), RenderType.translucent());
+		RenderTypeLookup.setRenderLayer(DeferredRegistryHandler.LIGHT_BLUE_STAINED_BULLETPROOF_GLASS.get(), RenderType.translucent());
+		RenderTypeLookup.setRenderLayer(DeferredRegistryHandler.YELLOW_STAINED_BULLETPROOF_GLASS.get(), RenderType.translucent());
+		RenderTypeLookup.setRenderLayer(DeferredRegistryHandler.LIME_STAINED_BULLETPROOF_GLASS.get(), RenderType.translucent());
+		RenderTypeLookup.setRenderLayer(DeferredRegistryHandler.PINK_STAINED_BULLETPROOF_GLASS.get(), RenderType.translucent());
+		RenderTypeLookup.setRenderLayer(DeferredRegistryHandler.CYAN_STAINED_BULLETPROOF_GLASS.get(), RenderType.translucent());
+		RenderTypeLookup.setRenderLayer(DeferredRegistryHandler.PURPLE_STAINED_BULLETPROOF_GLASS.get(), RenderType.translucent());
+		RenderTypeLookup.setRenderLayer(DeferredRegistryHandler.BLUE_STAINED_BULLETPROOF_GLASS.get(), RenderType.translucent());
+		RenderTypeLookup.setRenderLayer(DeferredRegistryHandler.BROWN_STAINED_BULLETPROOF_GLASS.get(), RenderType.translucent());
+		RenderTypeLookup.setRenderLayer(DeferredRegistryHandler.GREEN_STAINED_BULLETPROOF_GLASS.get(), RenderType.translucent());
+		RenderTypeLookup.setRenderLayer(DeferredRegistryHandler.RED_STAINED_BULLETPROOF_GLASS.get(), RenderType.translucent());
+		RenderTypeLookup.setRenderLayer(DeferredRegistryHandler.CORRUGATED_IRON_PANEL_BARS.get(), RenderType.cutout());
+		RenderTypeLookup.setRenderLayer(DeferredRegistryHandler.TESLA_SYNTHESIZER.get(), RenderType.translucent());
 
 		ClientRegistry.bindTileEntityRenderer(TileEntityHolder.WALL_SHELF_TILE_ENTITY, ShelfRenderer::new);
 
-		mc.getBlockColors().register((p_getColor_1_, p_getColor_2_, p_getColor_3_, p_getColor_4_) -> BiomeColors.getGrassColor(Objects.requireNonNull(p_getColor_2_), Objects.requireNonNull(p_getColor_3_)), DeferredRegistryHandler.PITFALL.get());
+		mc.getBlockColors().register((p_getColor_1_, p_getColor_2_, p_getColor_3_, p_getColor_4_) -> BiomeColors.getAverageGrassColor(Objects.requireNonNull(p_getColor_2_), Objects.requireNonNull(p_getColor_3_)), DeferredRegistryHandler.PITFALL.get());
 
 		Minecraft.getInstance().getItemColors().register((p_getColor_1_, p_getColor_2_) -> GrassColors.get(0.5d, 1.0d), DeferredRegistryHandler.PITFALL_ITEM.get());
 		Minecraft.getInstance().getItemColors().register((p_getColor_1_, p_getColor_2_) -> 0x7a6851, DeferredRegistryHandler.DYING_SOLDIER_SPAWN_EGG.get());
@@ -110,6 +110,6 @@ public class ClientModEventSubscriber {
 
 	@SubscribeEvent
 	public static void onParticleFactoryRegistration(ParticleFactoryRegisterEvent event) {
-		mc.particles.registerFactory(DeferredRegistryHandler.SMOKE_BOMB_PARTICLE_TYPE.get(), SmokeBombParticleFactory::new);
+		mc.particleEngine.register(DeferredRegistryHandler.SMOKE_BOMB_PARTICLE_TYPE.get(), SmokeBombParticleFactory::new);
 	}
 }

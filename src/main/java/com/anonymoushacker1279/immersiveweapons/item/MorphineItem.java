@@ -14,6 +14,8 @@ import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.RayTraceResult.Type;
 import net.minecraft.world.World;
 
+import net.minecraft.item.Item.Properties;
+
 public class MorphineItem extends Item {
 
 	public MorphineItem(Properties properties) {
@@ -21,31 +23,31 @@ public class MorphineItem extends Item {
 	}
 
 	@Override
-	public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand handIn) {
-		ItemStack itemstack = playerIn.getHeldItem(handIn);
-		RayTraceResult rayTraceResult = Minecraft.getInstance().objectMouseOver;
+	public ActionResult<ItemStack> use(World worldIn, PlayerEntity playerIn, Hand handIn) {
+		ItemStack itemstack = playerIn.getItemInHand(handIn);
+		RayTraceResult rayTraceResult = Minecraft.getInstance().hitResult;
 		if (rayTraceResult.getType() != Type.ENTITY) {
-			playerIn.addPotionEffect(new EffectInstance(DeferredRegistryHandler.MORPHINE_EFFECT.get(), 1800, 0, false, true));
-			if (!playerIn.abilities.isCreativeMode) {
+			playerIn.addEffect(new EffectInstance(DeferredRegistryHandler.MORPHINE_EFFECT.get(), 1800, 0, false, true));
+			if (!playerIn.abilities.instabuild) {
 				itemstack.shrink(1);
-				playerIn.inventory.addItemStackToInventory(new ItemStack(DeferredRegistryHandler.USED_SYRINGE.get()));
-				playerIn.getCooldownTracker().setCooldown(this, 2400);
+				playerIn.inventory.add(new ItemStack(DeferredRegistryHandler.USED_SYRINGE.get()));
+				playerIn.getCooldowns().addCooldown(this, 2400);
 			}
 		}
 
-		return ActionResult.func_233538_a_(itemstack, worldIn.isRemote());
+		return ActionResult.sidedSuccess(itemstack, worldIn.isClientSide());
 	}
 
 	@Override
-	public ActionResultType itemInteractionForEntity(ItemStack stack, PlayerEntity playerIn, LivingEntity entity, Hand hand) {
-		if (entity.world.isRemote) {
+	public ActionResultType interactLivingEntity(ItemStack stack, PlayerEntity playerIn, LivingEntity entity, Hand hand) {
+		if (entity.level.isClientSide) {
 			return ActionResultType.PASS;
 		}
 
-		entity.addPotionEffect(new EffectInstance(DeferredRegistryHandler.MORPHINE_EFFECT.get(), 1800, 0, false, true));
-		if (!playerIn.abilities.isCreativeMode) {
+		entity.addEffect(new EffectInstance(DeferredRegistryHandler.MORPHINE_EFFECT.get(), 1800, 0, false, true));
+		if (!playerIn.abilities.instabuild) {
 			stack.shrink(1);
-			playerIn.inventory.addItemStackToInventory(new ItemStack(DeferredRegistryHandler.USED_SYRINGE.get()));
+			playerIn.inventory.add(new ItemStack(DeferredRegistryHandler.USED_SYRINGE.get()));
 		}
 
 		return ActionResultType.PASS;

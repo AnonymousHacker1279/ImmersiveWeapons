@@ -47,12 +47,12 @@ public class CustomArrowEntity {
 		}
 
 		@Override
-		public ItemStack getArrowStack() {
+		public ItemStack getPickupItem() {
 			return new ItemStack(this.referenceItem);
 		}
 
 		@Override
-		public IPacket<?> createSpawnPacket() {
+		public IPacket<?> getAddEntityPacket() {
 			return NetworkHooks.getEntitySpawningPacket(this);
 		}
 	}
@@ -77,12 +77,12 @@ public class CustomArrowEntity {
 		}
 
 		@Override
-		public ItemStack getArrowStack() {
+		public ItemStack getPickupItem() {
 			return new ItemStack(this.referenceItem);
 		}
 
 		@Override
-		public IPacket<?> createSpawnPacket() {
+		public IPacket<?> getAddEntityPacket() {
 			return NetworkHooks.getEntitySpawningPacket(this);
 		}
 	}
@@ -107,12 +107,12 @@ public class CustomArrowEntity {
 		}
 
 		@Override
-		public ItemStack getArrowStack() {
+		public ItemStack getPickupItem() {
 			return new ItemStack(this.referenceItem);
 		}
 
 		@Override
-		public IPacket<?> createSpawnPacket() {
+		public IPacket<?> getAddEntityPacket() {
 			return NetworkHooks.getEntitySpawningPacket(this);
 		}
 	}
@@ -137,12 +137,12 @@ public class CustomArrowEntity {
 		}
 
 		@Override
-		public ItemStack getArrowStack() {
+		public ItemStack getPickupItem() {
 			return new ItemStack(this.referenceItem);
 		}
 
 		@Override
-		public IPacket<?> createSpawnPacket() {
+		public IPacket<?> getAddEntityPacket() {
 			return NetworkHooks.getEntitySpawningPacket(this);
 		}
 	}
@@ -167,24 +167,24 @@ public class CustomArrowEntity {
 		}
 
 		@Override
-		public ItemStack getArrowStack() {
+		public ItemStack getPickupItem() {
 			return new ItemStack(this.referenceItem);
 		}
 
 		@Override
-		public IPacket<?> createSpawnPacket() {
+		public IPacket<?> getAddEntityPacket() {
 			return NetworkHooks.getEntitySpawningPacket(this);
 		}
 
 		@Override
 		public void shoot(double x, double y, double z, float velocity, float inaccuracy) {
-			Vector3d vector3d = (new Vector3d(x, y, z)).normalize().add(this.rand.nextGaussian() * 0.0075F * inaccuracy, -0.1085F * inaccuracy, this.rand.nextGaussian() * 0.0075F * inaccuracy).scale(velocity);
-			this.setMotion(vector3d);
-			float f = MathHelper.sqrt(horizontalMag(vector3d));
-			this.rotationYaw = (float) (MathHelper.atan2(vector3d.x, vector3d.z) * (180F / (float) Math.PI));
-			this.rotationPitch = (float) (MathHelper.atan2(vector3d.y, f) * (180F / (float) Math.PI));
-			this.prevRotationYaw = this.rotationYaw;
-			this.prevRotationPitch = this.rotationPitch;
+			Vector3d vector3d = (new Vector3d(x, y, z)).normalize().add(this.random.nextGaussian() * 0.0075F * inaccuracy, -0.1085F * inaccuracy, this.random.nextGaussian() * 0.0075F * inaccuracy).scale(velocity);
+			this.setDeltaMovement(vector3d);
+			float f = MathHelper.sqrt(getHorizontalDistanceSqr(vector3d));
+			this.yRot = (float) (MathHelper.atan2(vector3d.x, vector3d.z) * (180F / (float) Math.PI));
+			this.xRot = (float) (MathHelper.atan2(vector3d.y, f) * (180F / (float) Math.PI));
+			this.yRotO = this.yRot;
+			this.xRotO = this.xRot;
 		}
 	}
 
@@ -208,12 +208,12 @@ public class CustomArrowEntity {
 		}
 
 		@Override
-		public ItemStack getArrowStack() {
+		public ItemStack getPickupItem() {
 			return new ItemStack(this.referenceItem);
 		}
 
 		@Override
-		public IPacket<?> createSpawnPacket() {
+		public IPacket<?> getAddEntityPacket() {
 			return NetworkHooks.getEntitySpawningPacket(this);
 		}
 
@@ -244,59 +244,59 @@ public class CustomArrowEntity {
 		}
 
 		@Override
-		public ItemStack getArrowStack() {
+		public ItemStack getPickupItem() {
 			return new ItemStack(this.referenceItem);
 		}
 
 		@Override
-		public IPacket<?> createSpawnPacket() {
+		public IPacket<?> getAddEntityPacket() {
 			return NetworkHooks.getEntitySpawningPacket(this);
 		}
 
 		@Override
 		public void shoot(double x, double y, double z, float velocity, float inaccuracy) {
-			Vector3d vector3d = (new Vector3d(x, y, z)).normalize().add(this.rand.nextGaussian() * 0.0025F * (GeneralUtilities.getRandomNumber(0.2f, 1.1f)), 0.00025F * (GeneralUtilities.getRandomNumber(0.2f, 1.1f)), this.rand.nextGaussian() * 0.0025F).scale(velocity);
-			this.setMotion(vector3d);
-			float f = MathHelper.sqrt(horizontalMag(vector3d));
-			this.rotationYaw = (float) (MathHelper.atan2(vector3d.x, vector3d.z) * (180F / (float) Math.PI));
-			this.rotationPitch = (float) (MathHelper.atan2(vector3d.y, f) * (180F / (float) Math.PI));
-			this.prevRotationYaw = this.rotationYaw;
-			this.prevRotationPitch = this.rotationPitch;
+			Vector3d vector3d = (new Vector3d(x, y, z)).normalize().add(this.random.nextGaussian() * 0.0025F * (GeneralUtilities.getRandomNumber(0.2f, 1.1f)), 0.00025F * (GeneralUtilities.getRandomNumber(0.2f, 1.1f)), this.random.nextGaussian() * 0.0025F).scale(velocity);
+			this.setDeltaMovement(vector3d);
+			float f = MathHelper.sqrt(getHorizontalDistanceSqr(vector3d));
+			this.yRot = (float) (MathHelper.atan2(vector3d.x, vector3d.z) * (180F / (float) Math.PI));
+			this.xRot = (float) (MathHelper.atan2(vector3d.y, f) * (180F / (float) Math.PI));
+			this.yRotO = this.yRot;
+			this.xRotO = this.xRot;
 		}
 
-		private boolean func_234593_u_() {
-			return this.inGround && this.world.hasNoCollisions((new AxisAlignedBB(this.getPositionVec(), this.getPositionVec())).grow(0.06D));
+		private boolean shouldFall() {
+			return this.inGround && this.level.noCollision((new AxisAlignedBB(this.position(), this.position())).inflate(0.06D));
 		}
 
-		private void func_234594_z_() {
+		private void startFalling() {
 			this.inGround = false;
-			Vector3d vector3d = this.getMotion();
-			this.setMotion(vector3d.mul(this.rand.nextFloat() * 0.2F, this.rand.nextFloat() * 0.2F, this.rand.nextFloat() * 0.2F));
+			Vector3d vector3d = this.getDeltaMovement();
+			this.setDeltaMovement(vector3d.multiply(this.random.nextFloat() * 0.2F, this.random.nextFloat() * 0.2F, this.random.nextFloat() * 0.2F));
 		}
 
 		@SuppressWarnings("deprecation")
 		@Override
 		public void tick() {
 			super.tick();
-			boolean flag = this.getNoClip();
-			Vector3d vector3d = this.getMotion();
-			if (this.prevRotationPitch == 0.0F && this.prevRotationYaw == 0.0F) {
-				float f = MathHelper.sqrt(horizontalMag(vector3d));
-				this.rotationYaw = (float) (MathHelper.atan2(vector3d.x, vector3d.z) * (180F / (float) Math.PI));
-				this.rotationPitch = (float) (MathHelper.atan2(vector3d.y, f) * (180F / (float) Math.PI));
-				this.prevRotationYaw = this.rotationYaw;
-				this.prevRotationPitch = this.rotationPitch;
+			boolean flag = this.isNoPhysics();
+			Vector3d vector3d = this.getDeltaMovement();
+			if (this.xRotO == 0.0F && this.yRotO == 0.0F) {
+				float f = MathHelper.sqrt(getHorizontalDistanceSqr(vector3d));
+				this.yRot = (float) (MathHelper.atan2(vector3d.x, vector3d.z) * (180F / (float) Math.PI));
+				this.xRot = (float) (MathHelper.atan2(vector3d.y, f) * (180F / (float) Math.PI));
+				this.yRotO = this.yRot;
+				this.xRotO = this.xRot;
 			}
 
-			BlockPos blockpos = this.getPosition();
-			BlockState blockstate = this.world.getBlockState(blockpos);
-			if (!blockstate.isAir(this.world, blockpos) && !flag) {
-				VoxelShape voxelshape = blockstate.getCollisionShape(this.world, blockpos);
+			BlockPos blockpos = this.blockPosition();
+			BlockState blockstate = this.level.getBlockState(blockpos);
+			if (!blockstate.isAir(this.level, blockpos) && !flag) {
+				VoxelShape voxelshape = blockstate.getBlockSupportShape(this.level, blockpos);
 				if (!voxelshape.isEmpty()) {
-					Vector3d vector3d1 = this.getPositionVec();
+					Vector3d vector3d1 = this.position();
 
-					for (AxisAlignedBB axisalignedbb : voxelshape.toBoundingBoxList()) {
-						if (axisalignedbb.offset(blockpos).contains(vector3d1)) {
+					for (AxisAlignedBB axisalignedbb : voxelshape.toAabbs()) {
+						if (axisalignedbb.move(blockpos).contains(vector3d1)) {
 							this.inGround = true;
 							break;
 						}
@@ -304,49 +304,49 @@ public class CustomArrowEntity {
 				}
 			}
 
-			if (this.arrowShake > 0) {
-				--this.arrowShake;
+			if (this.shakeTime > 0) {
+				--this.shakeTime;
 			}
 
-			if (this.isWet()) {
-				this.extinguish();
+			if (this.isInWaterOrRain()) {
+				this.clearFire();
 			}
 
 			if (this.inGround && !flag) {
-				if (this.inBlockState != blockstate && this.func_234593_u_()) {
-					this.func_234594_z_();
-				} else if (!this.world.isRemote) {
-					this.func_225516_i_();
+				if (this.inBlockState != blockstate && this.shouldFall()) {
+					this.startFalling();
+				} else if (!this.level.isClientSide) {
+					this.tickDespawn();
 				}
 
-				++this.timeInGround;
+				++this.inGroundTime;
 			} else {
-				this.timeInGround = 0;
-				Vector3d vector3d2 = this.getPositionVec();
+				this.inGroundTime = 0;
+				Vector3d vector3d2 = this.position();
 				Vector3d vector3d3 = vector3d2.add(vector3d);
-				RayTraceResult raytraceresult = this.world.rayTraceBlocks(new RayTraceContext(vector3d2, vector3d3, RayTraceContext.BlockMode.COLLIDER, RayTraceContext.FluidMode.NONE, this));
+				RayTraceResult raytraceresult = this.level.clip(new RayTraceContext(vector3d2, vector3d3, RayTraceContext.BlockMode.COLLIDER, RayTraceContext.FluidMode.NONE, this));
 				if (raytraceresult.getType() != RayTraceResult.Type.MISS) {
-					vector3d3 = raytraceresult.getHitVec();
+					vector3d3 = raytraceresult.getLocation();
 				}
 
 				while (!this.removed) {
-					EntityRayTraceResult entityraytraceresult = this.rayTraceEntities(vector3d2, vector3d3);
+					EntityRayTraceResult entityraytraceresult = this.findHitEntity(vector3d2, vector3d3);
 					if (entityraytraceresult != null) {
 						raytraceresult = entityraytraceresult;
 					}
 
 					if (raytraceresult != null && raytraceresult.getType() == RayTraceResult.Type.ENTITY) {
 						Entity entity = ((EntityRayTraceResult) raytraceresult).getEntity();
-						Entity entity1 = this.getShooter();
-						if (entity instanceof PlayerEntity && entity1 instanceof PlayerEntity && !((PlayerEntity) entity1).canAttackPlayer((PlayerEntity) entity)) {
+						Entity entity1 = this.getOwner();
+						if (entity instanceof PlayerEntity && entity1 instanceof PlayerEntity && !((PlayerEntity) entity1).canHarmPlayer((PlayerEntity) entity)) {
 							raytraceresult = null;
 							entityraytraceresult = null;
 						}
 					}
 
 					if (raytraceresult != null && raytraceresult.getType() != RayTraceResult.Type.MISS && !flag && !net.minecraftforge.event.ForgeEventFactory.onProjectileImpact(this, raytraceresult)) {
-						this.onImpact(raytraceresult);
-						this.isAirBorne = true;
+						this.onHit(raytraceresult);
+						this.hasImpulse = true;
 					}
 
 					if (entityraytraceresult == null || this.getPierceLevel() <= 0) {
@@ -356,46 +356,46 @@ public class CustomArrowEntity {
 					raytraceresult = null;
 				}
 
-				vector3d = this.getMotion();
+				vector3d = this.getDeltaMovement();
 				double d3 = vector3d.x;
 				double d4 = vector3d.y;
 				double d0 = vector3d.z;
-				if (this.getIsCritical()) {
+				if (this.isCritArrow()) {
 					for (int i = 0; i < 4; ++i) {
-						this.world.addParticle(ParticleTypes.CRIT, this.getPosX() + d3 * i / 4.0D, this.getPosY() + d4 * i / 4.0D, this.getPosZ() + d0 * i / 4.0D, -d3, -d4 + 0.2D, -d0);
+						this.level.addParticle(ParticleTypes.CRIT, this.getX() + d3 * i / 4.0D, this.getY() + d4 * i / 4.0D, this.getZ() + d0 * i / 4.0D, -d3, -d4 + 0.2D, -d0);
 					}
 				}
 
-				double d5 = this.getPosX() + d3;
-				double d1 = this.getPosY() + d4;
-				double d2 = this.getPosZ() + d0;
-				float f1 = MathHelper.sqrt(horizontalMag(vector3d));
+				double d5 = this.getX() + d3;
+				double d1 = this.getY() + d4;
+				double d2 = this.getZ() + d0;
+				float f1 = MathHelper.sqrt(getHorizontalDistanceSqr(vector3d));
 				if (flag) {
-					this.rotationYaw = (float) (MathHelper.atan2(-d3, -d0) * (180F / (float) Math.PI));
+					this.yRot = (float) (MathHelper.atan2(-d3, -d0) * (180F / (float) Math.PI));
 				} else {
-					this.rotationYaw = (float) (MathHelper.atan2(d3, d0) * (180F / (float) Math.PI));
+					this.yRot = (float) (MathHelper.atan2(d3, d0) * (180F / (float) Math.PI));
 				}
 
-				this.rotationPitch = (float) (MathHelper.atan2(d4, f1) * (180F / (float) Math.PI));
-				this.rotationPitch = func_234614_e_(this.prevRotationPitch, this.rotationPitch);
-				this.rotationYaw = func_234614_e_(this.prevRotationYaw, this.rotationYaw);
+				this.xRot = (float) (MathHelper.atan2(d4, f1) * (180F / (float) Math.PI));
+				this.xRot = lerpRotation(this.xRotO, this.xRot);
+				this.yRot = lerpRotation(this.yRotO, this.yRot);
 				float f2 = 0.99F;
 				if (this.isInWater()) {
 					for (int j = 0; j < 4; ++j) {
-						this.world.addParticle(ParticleTypes.BUBBLE, d5 - d3 * 0.25D, d1 - d4 * 0.25D, d2 - d0 * 0.25D, d3, d4, d0);
+						this.level.addParticle(ParticleTypes.BUBBLE, d5 - d3 * 0.25D, d1 - d4 * 0.25D, d2 - d0 * 0.25D, d3, d4, d0);
 					}
 
-					f2 = this.getWaterDrag();
+					f2 = this.getWaterInertia();
 				}
 
-				this.setMotion(vector3d.scale(f2));
-				if (!this.hasNoGravity() && !flag) {
-					Vector3d vector3d4 = this.getMotion();
-					this.setMotion(vector3d4.x, vector3d4.y + 0.0455d, vector3d4.z);
+				this.setDeltaMovement(vector3d.scale(f2));
+				if (!this.isNoGravity() && !flag) {
+					Vector3d vector3d4 = this.getDeltaMovement();
+					this.setDeltaMovement(vector3d4.x, vector3d4.y + 0.0455d, vector3d4.z);
 				}
 
-				this.setPosition(d5, d1, d2);
-				this.doBlockCollisions();
+				this.setPos(d5, d1, d2);
+				this.checkInsideBlocks();
 			}
 		}
 	}
@@ -428,12 +428,12 @@ public class CustomArrowEntity {
 		}
 
 		@Override
-		public ItemStack getArrowStack() {
+		public ItemStack getPickupItem() {
 			return new ItemStack(this.referenceItem);
 		}
 
 		@Override
-		public IPacket<?> createSpawnPacket() {
+		public IPacket<?> getAddEntityPacket() {
 			return NetworkHooks.getEntitySpawningPacket(this);
 		}
 
@@ -501,21 +501,21 @@ public class CustomArrowEntity {
 		}
 
 		@Override
-		public void onImpact(RayTraceResult rayTraceResult) {
+		public void onHit(RayTraceResult rayTraceResult) {
 			if (!hasAlreadyImpacted) {
 				hasAlreadyImpacted = true;
 				IParticleData particleData = this.makeParticle();
-				this.world.playSound(this.getPosX(), this.getPosY(), this.getPosZ(), DeferredRegistryHandler.SMOKE_BOMB_HISS.get(), SoundCategory.NEUTRAL, 0.1f, 0.6f, true);
+				this.level.playLocalSound(this.getX(), this.getY(), this.getZ(), DeferredRegistryHandler.SMOKE_BOMB_HISS.get(), SoundCategory.NEUTRAL, 0.1f, 0.6f, true);
 
 				for (int i = 0; i < configMaxParticles; ++i) {
-					this.world.addParticle(particleData, true, this.getPosX(), this.getPosY(), this.getPosZ(), GeneralUtilities.getRandomNumber(-0.03, 0.03d), GeneralUtilities.getRandomNumber(-0.02d, 0.02d), GeneralUtilities.getRandomNumber(-0.03d, 0.03d));
+					this.level.addParticle(particleData, true, this.getX(), this.getY(), this.getZ(), GeneralUtilities.getRandomNumber(-0.03, 0.03d), GeneralUtilities.getRandomNumber(-0.02d, 0.02d), GeneralUtilities.getRandomNumber(-0.03d, 0.03d));
 				}
 
 				RayTraceResult.Type raytraceresult$type = rayTraceResult.getType();
 				if (raytraceresult$type == RayTraceResult.Type.ENTITY) {
-					this.onEntityHit((EntityRayTraceResult) rayTraceResult);
+					this.onHitEntity((EntityRayTraceResult) rayTraceResult);
 				} else if (raytraceresult$type == RayTraceResult.Type.BLOCK) {
-					this.func_230299_a_((BlockRayTraceResult) rayTraceResult);
+					this.onHitBlock((BlockRayTraceResult) rayTraceResult);
 				}
 			}
 		}

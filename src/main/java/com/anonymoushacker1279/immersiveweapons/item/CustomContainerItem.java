@@ -3,13 +3,15 @@ package com.anonymoushacker1279.immersiveweapons.item;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
+import net.minecraft.item.Item.Properties;
+
 public class CustomContainerItem {
 
 	public static class BlueprintItem extends Item {
 
 		public BlueprintItem(Properties properties) {
 			super(properties);
-			properties.containerItem(this.getItem());
+			properties.craftRemainder(this.getItem());
 		}
 
 		@Override
@@ -28,7 +30,7 @@ public class CustomContainerItem {
 
 		public BasicContainerItem(Properties properties) {
 			super(properties);
-			properties.containerItem(this.getItem());
+			properties.craftRemainder(this.getItem());
 		}
 
 		@Override

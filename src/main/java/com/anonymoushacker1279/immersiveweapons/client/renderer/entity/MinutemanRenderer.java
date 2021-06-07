@@ -18,7 +18,7 @@ public class MinutemanRenderer extends BipedRenderer<AbstractMinutemanEntity, Ba
 	}
 
 	@Override
-	public ResourceLocation getEntityTexture(AbstractMinutemanEntity entity) {
+	public ResourceLocation getTextureLocation(AbstractMinutemanEntity entity) {
 		return MINUTEMAN_TEXTURE;
 	}
 }

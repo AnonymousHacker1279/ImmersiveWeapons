@@ -16,21 +16,21 @@ public class MorphineEffect extends Effect {
 	}
 
 	@Override
-	public void performEffect(@NotNull LivingEntity entityLivingBaseIn, int amplifier) {
+	public void applyEffectTick(@NotNull LivingEntity entityLivingBaseIn, int amplifier) {
 		if (duration > 900) {
-			entityLivingBaseIn.addPotionEffect(new EffectInstance(Effects.RESISTANCE, duration - 900, amplifier, false, false));
-			entityLivingBaseIn.addPotionEffect(new EffectInstance(Effects.HEALTH_BOOST, duration - 900, amplifier, false, false));
-			entityLivingBaseIn.addPotionEffect(new EffectInstance(Effects.SPEED, duration - 900, amplifier, false, false));
+			entityLivingBaseIn.addEffect(new EffectInstance(Effects.DAMAGE_RESISTANCE, duration - 900, amplifier, false, false));
+			entityLivingBaseIn.addEffect(new EffectInstance(Effects.HEALTH_BOOST, duration - 900, amplifier, false, false));
+			entityLivingBaseIn.addEffect(new EffectInstance(Effects.MOVEMENT_SPEED, duration - 900, amplifier, false, false));
 		}
 		if (duration <= 900) {
-			entityLivingBaseIn.addPotionEffect(new EffectInstance(Effects.WEAKNESS, duration, amplifier, false, false));
-			entityLivingBaseIn.addPotionEffect(new EffectInstance(Effects.MINING_FATIGUE, duration, amplifier, false, false));
-			entityLivingBaseIn.addPotionEffect(new EffectInstance(Effects.SLOWNESS, duration, amplifier, false, false));
+			entityLivingBaseIn.addEffect(new EffectInstance(Effects.WEAKNESS, duration, amplifier, false, false));
+			entityLivingBaseIn.addEffect(new EffectInstance(Effects.DIG_SLOWDOWN, duration, amplifier, false, false));
+			entityLivingBaseIn.addEffect(new EffectInstance(Effects.MOVEMENT_SLOWDOWN, duration, amplifier, false, false));
 		}
 	}
 
 	@Override
-	public boolean isReady(int duration, int amplifier) {
+	public boolean isDurationEffectTick(int duration, int amplifier) {
 		this.duration = duration;
 		return true;
 	}

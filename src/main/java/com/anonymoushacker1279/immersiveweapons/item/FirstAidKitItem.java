@@ -18,6 +18,8 @@ import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 
+import net.minecraft.item.Item.Properties;
+
 public class FirstAidKitItem extends Item {
 
 	public FirstAidKitItem(Properties properties) {
@@ -30,38 +32,38 @@ public class FirstAidKitItem extends Item {
 	}
 
 	@Override
-	public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand handIn) {
-		ItemStack itemstack = playerIn.getHeldItem(handIn);
-		RayTraceResult rayTraceResult = Minecraft.getInstance().objectMouseOver;
+	public ActionResult<ItemStack> use(World worldIn, PlayerEntity playerIn, Hand handIn) {
+		ItemStack itemstack = playerIn.getItemInHand(handIn);
+		RayTraceResult rayTraceResult = Minecraft.getInstance().hitResult;
 		if (rayTraceResult.getType() != Type.ENTITY) {
 			if (playerIn.getMaxHealth() - playerIn.getHealth() <= playerIn.getMaxHealth() / 2) { // Only use if at or less than half health
-				if (worldIn.isRemote) {
-					playerIn.sendMessage(new TranslationTextComponent("immersiveweapons.item.first_aid_kit").mergeStyle(TextFormatting.RED), Util.DUMMY_UUID);
+				if (worldIn.isClientSide) {
+					playerIn.sendMessage(new TranslationTextComponent("immersiveweapons.item.first_aid_kit").withStyle(TextFormatting.RED), Util.NIL_UUID);
 				}
-				return ActionResult.resultPass(itemstack);
+				return ActionResult.pass(itemstack);
 			}
-			playerIn.addPotionEffect(new EffectInstance(Effects.REGENERATION, 240, 1, false, true));
-			playerIn.addPotionEffect(new EffectInstance(Effects.RESISTANCE, 1200, 0, false, true));
-			if (!playerIn.abilities.isCreativeMode) {
+			playerIn.addEffect(new EffectInstance(Effects.REGENERATION, 240, 1, false, true));
+			playerIn.addEffect(new EffectInstance(Effects.DAMAGE_RESISTANCE, 1200, 0, false, true));
+			if (!playerIn.abilities.instabuild) {
 				itemstack.shrink(1);
-				playerIn.getCooldownTracker().setCooldown(this, 400);
+				playerIn.getCooldowns().addCooldown(this, 400);
 			}
 		}
 
-		return ActionResult.func_233538_a_(itemstack, worldIn.isRemote());
+		return ActionResult.sidedSuccess(itemstack, worldIn.isClientSide());
 	}
 
 	@Override
-	public ActionResultType itemInteractionForEntity(ItemStack stack, PlayerEntity playerIn, LivingEntity entity, Hand hand) {
-		if (entity.world.isRemote) {
+	public ActionResultType interactLivingEntity(ItemStack stack, PlayerEntity playerIn, LivingEntity entity, Hand hand) {
+		if (entity.level.isClientSide) {
 			return ActionResultType.PASS;
 		}
 		if (entity.getMaxHealth() - entity.getHealth() <= entity.getMaxHealth() / 2) { // Only use if at or less than half health
 			return ActionResultType.PASS;
 		}
-		entity.addPotionEffect(new EffectInstance(Effects.REGENERATION, 240, 1, false, true));
-		entity.addPotionEffect(new EffectInstance(Effects.RESISTANCE, 1200, 0, false, true));
-		if (!playerIn.abilities.isCreativeMode) {
+		entity.addEffect(new EffectInstance(Effects.REGENERATION, 240, 1, false, true));
+		entity.addEffect(new EffectInstance(Effects.DAMAGE_RESISTANCE, 1200, 0, false, true));
+		if (!playerIn.abilities.instabuild) {
 			stack.shrink(1);
 		}
 
@@ -69,7 +71,7 @@ public class FirstAidKitItem extends Item {
 	}
 
 	@Override
-	public UseAction getUseAction(ItemStack stack) {
+	public UseAction getUseAnimation(ItemStack stack) {
 		return UseAction.DRINK;
 	}
 }

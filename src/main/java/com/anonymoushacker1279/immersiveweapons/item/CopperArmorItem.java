@@ -14,7 +14,7 @@ public class CopperArmorItem extends ArmorItem {
 	private boolean isLeggings = false;
 
 	public CopperArmorItem(IArmorMaterial material, EquipmentSlotType slot, int type) {
-		super(material, slot, (new Item.Properties().group(DeferredRegistryHandler.ITEM_GROUP)));
+		super(material, slot, (new Item.Properties().tab(DeferredRegistryHandler.ITEM_GROUP)));
 		if (type == 2) {
 			isLeggings = true;
 		}

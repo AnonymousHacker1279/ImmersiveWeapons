@@ -51,25 +51,25 @@ public abstract class AbstractMinutemanEntity extends CreatureEntity implements 
 
 	private int angerTime;
 	private UUID targetUUID;
-	private static final RangedInteger tickRange = TickRangeConverter.convertRange(20, 39);
+	private static final RangedInteger tickRange = TickRangeConverter.rangeOfSeconds(20, 39);
 	private final RangedShotgunAttackGoal<AbstractMinutemanEntity> aiShotgunAttack = new RangedShotgunAttackGoal<>(this, 1.0D, 25, 14.0F);
 	private final MeleeAttackGoal aiAttackOnCollide = new MeleeAttackGoal(this, 1.2D, false) {
 		/**
 		 * Reset the task's internal state. Called when this task is interrupted by another one
 		 */
 		@Override
-		public void resetTask() {
-			super.resetTask();
-			AbstractMinutemanEntity.this.setAggroed(false);
+		public void stop() {
+			super.stop();
+			AbstractMinutemanEntity.this.setAggressive(false);
 		}
 
 		/**
 		 * Execute a one shot task or start executing a continuous task
 		 */
 		@Override
-		public void startExecuting() {
-			super.startExecuting();
-			AbstractMinutemanEntity.this.setAggroed(true);
+		public void start() {
+			super.start();
+			AbstractMinutemanEntity.this.setAggressive(true);
 		}
 	};
 
@@ -79,9 +79,9 @@ public abstract class AbstractMinutemanEntity extends CreatureEntity implements 
 	}
 
 	public static AttributeModifierMap.MutableAttribute registerAttributes() {
-		return MonsterEntity.func_234295_eP_()
-				.createMutableAttribute(Attributes.MOVEMENT_SPEED, 0.3D)
-				.createMutableAttribute(Attributes.ARMOR, 4.5D);
+		return MonsterEntity.createMonsterAttributes()
+				.add(Attributes.MOVEMENT_SPEED, 0.3D)
+				.add(Attributes.ARMOR, 4.5D);
 	}
 
 	@Override
@@ -96,7 +96,7 @@ public abstract class AbstractMinutemanEntity extends CreatureEntity implements 
 		this.targetSelector.addGoal(12, new HurtByTargetGoal(this, AbstractMinutemanEntity.class, IronGolemEntity.class));
 		this.targetSelector.addGoal(5, new DefendVillageTargetGoal(this));
 		this.targetSelector.addGoal(12, new NearestAttackableTargetGoal<>(this, AbstractDyingSoldierEntity.class, false));
-		this.targetSelector.addGoal(6, new NearestAttackableTargetGoal<>(this, PlayerEntity.class, 8, true, false, this::func_233680_b_));
+		this.targetSelector.addGoal(6, new NearestAttackableTargetGoal<>(this, PlayerEntity.class, 8, true, false, this::isAngryAt));
 		this.targetSelector.addGoal(9, new NearestAttackableTargetGoal<>(this, MobEntity.class, 10, false, false, (targetPredicate) -> targetPredicate instanceof IMob && !(targetPredicate instanceof AbstractMinutemanEntity) && !(targetPredicate instanceof IronGolemEntity) && !(targetPredicate instanceof CreeperEntity)));
 		this.targetSelector.addGoal(1, new ResetAngerGoal<>(this, false));
 	}
@@ -113,10 +113,10 @@ public abstract class AbstractMinutemanEntity extends CreatureEntity implements 
 	 * use this to react to sunlight and start to burn.
 	 */
 	@Override
-	public void livingTick() {
-		super.livingTick();
-		if (!this.world.isRemote) {
-			this.func_241359_a_((ServerWorld) this.world, true);
+	public void aiStep() {
+		super.aiStep();
+		if (!this.level.isClientSide) {
+			this.updatePersistentAnger((ServerWorld) this.level, true);
 		}
 	}
 
@@ -124,11 +124,11 @@ public abstract class AbstractMinutemanEntity extends CreatureEntity implements 
 	 * Handles updating while riding another entity
 	 */
 	@Override
-	public void updateRidden() {
-		super.updateRidden();
-		if (this.getRidingEntity() instanceof CreatureEntity) {
-			CreatureEntity creatureEntity = (CreatureEntity) this.getRidingEntity();
-			this.renderYawOffset = creatureEntity.renderYawOffset;
+	public void rideTick() {
+		super.rideTick();
+		if (this.getVehicle() instanceof CreatureEntity) {
+			CreatureEntity creatureEntity = (CreatureEntity) this.getVehicle();
+			this.yBodyRot = creatureEntity.yBodyRot;
 		}
 
 	}
@@ -137,26 +137,26 @@ public abstract class AbstractMinutemanEntity extends CreatureEntity implements 
 	 * Gives armor or weapon for entity based on given DifficultyInstance
 	 */
 	@Override
-	protected void setEquipmentBasedOnDifficulty(DifficultyInstance difficulty) {
-		super.setEquipmentBasedOnDifficulty(difficulty);
-		this.setItemStackToSlot(EquipmentSlotType.MAINHAND, new ItemStack(DeferredRegistryHandler.BLUNDERBUSS.get()));
+	protected void populateDefaultEquipmentSlots(DifficultyInstance difficulty) {
+		super.populateDefaultEquipmentSlots(difficulty);
+		this.setItemSlot(EquipmentSlotType.MAINHAND, new ItemStack(DeferredRegistryHandler.BLUNDERBUSS.get()));
 	}
 
 	@Override
 	@Nullable
-	public ILivingEntityData onInitialSpawn(@NotNull IServerWorld worldIn, @NotNull DifficultyInstance difficultyIn, @NotNull SpawnReason reason, @Nullable ILivingEntityData spawnDataIn, @Nullable CompoundNBT dataTag) {
-		spawnDataIn = super.onInitialSpawn(worldIn, difficultyIn, reason, spawnDataIn, dataTag);
-		this.setEquipmentBasedOnDifficulty(difficultyIn);
-		this.setEnchantmentBasedOnDifficulty(difficultyIn);
+	public ILivingEntityData finalizeSpawn(@NotNull IServerWorld worldIn, @NotNull DifficultyInstance difficultyIn, @NotNull SpawnReason reason, @Nullable ILivingEntityData spawnDataIn, @Nullable CompoundNBT dataTag) {
+		spawnDataIn = super.finalizeSpawn(worldIn, difficultyIn, reason, spawnDataIn, dataTag);
+		this.populateDefaultEquipmentSlots(difficultyIn);
+		this.populateDefaultEquipmentEnchantments(difficultyIn);
 		this.setCombatTask();
-		this.setCanPickUpLoot(this.rand.nextFloat() < 0.55F * difficultyIn.getClampedAdditionalDifficulty());
-		if (this.getItemStackFromSlot(EquipmentSlotType.HEAD).isEmpty()) {
+		this.setCanPickUpLoot(this.random.nextFloat() < 0.55F * difficultyIn.getSpecialMultiplier());
+		if (this.getItemBySlot(EquipmentSlotType.HEAD).isEmpty()) {
 			LocalDate localdate = LocalDate.now();
 			int i = localdate.get(ChronoField.DAY_OF_MONTH);
 			int j = localdate.get(ChronoField.MONTH_OF_YEAR);
-			if (j == 10 && i == 31 && this.rand.nextFloat() < 0.25F) {
-				this.setItemStackToSlot(EquipmentSlotType.HEAD, new ItemStack(this.rand.nextFloat() < 0.1F ? Blocks.JACK_O_LANTERN : Blocks.CARVED_PUMPKIN));
-				this.inventoryArmorDropChances[EquipmentSlotType.HEAD.getIndex()] = 0.0F;
+			if (j == 10 && i == 31 && this.random.nextFloat() < 0.25F) {
+				this.setItemSlot(EquipmentSlotType.HEAD, new ItemStack(this.random.nextFloat() < 0.1F ? Blocks.JACK_O_LANTERN : Blocks.CARVED_PUMPKIN));
+				this.armorDropChances[EquipmentSlotType.HEAD.getIndex()] = 0.0F;
 			}
 		}
 
@@ -167,13 +167,13 @@ public abstract class AbstractMinutemanEntity extends CreatureEntity implements 
 	 * sets this entity's combat AI.
 	 */
 	public void setCombatTask() {
-		if (this.world != null && !this.world.isRemote) {
+		if (this.level != null && !this.level.isClientSide) {
 			this.goalSelector.removeGoal(this.aiAttackOnCollide);
 			this.goalSelector.removeGoal(this.aiShotgunAttack);
-			ItemStack itemstack = this.getHeldItem(ProjectileHelper.getHandWith(this, DeferredRegistryHandler.BLUNDERBUSS.get()));
+			ItemStack itemstack = this.getItemInHand(ProjectileHelper.getWeaponHoldingHand(this, DeferredRegistryHandler.BLUNDERBUSS.get()));
 			if (itemstack.getItem() == DeferredRegistryHandler.BLUNDERBUSS.get()) {
 				int i = 25;
-				if (this.world.getDifficulty() != Difficulty.HARD) {
+				if (this.level.getDifficulty() != Difficulty.HARD) {
 					i = 45;
 				}
 
@@ -187,16 +187,16 @@ public abstract class AbstractMinutemanEntity extends CreatureEntity implements 
 	}
 
 	@Override
-	protected void collideWithEntity(Entity entityIn) {
-		if (entityIn instanceof IMob && !(entityIn instanceof MinutemanEntity) && !(entityIn instanceof IronGolemEntity) && this.getRNG().nextInt(20) == 0) {
-			this.setAttackTarget((LivingEntity) entityIn);
+	protected void doPush(Entity entityIn) {
+		if (entityIn instanceof IMob && !(entityIn instanceof MinutemanEntity) && !(entityIn instanceof IronGolemEntity) && this.getRandom().nextInt(20) == 0) {
+			this.setTarget((LivingEntity) entityIn);
 		}
 
-		super.collideWithEntity(entityIn);
+		super.doPush(entityIn);
 	}
 
 	@Override
-	public boolean canAttack(EntityType<?> typeIn) {
+	public boolean canAttackType(EntityType<?> typeIn) {
 		return typeIn != DeferredRegistryHandler.MINUTEMAN_ENTITY.get() && typeIn != EntityType.CREEPER;
 	}
 
@@ -204,28 +204,28 @@ public abstract class AbstractMinutemanEntity extends CreatureEntity implements 
 	 * Attack the specified entity using a ranged attack.
 	 */
 	@Override
-	public void attackEntityWithRangedAttack(LivingEntity target, float distanceFactor) {
-		ItemStack itemstack = this.findAmmo(this.getHeldItem(ProjectileHelper.getHandWith(this, DeferredRegistryHandler.BLUNDERBUSS.get())));
+	public void performRangedAttack(LivingEntity target, float distanceFactor) {
+		ItemStack itemstack = this.getProjectile(this.getItemInHand(ProjectileHelper.getWeaponHoldingHand(this, DeferredRegistryHandler.BLUNDERBUSS.get())));
 		AbstractArrowEntity abstractBulletEntity = this.fireArrow(itemstack, distanceFactor);
-		if (this.getHeldItemMainhand().getItem() instanceof BowItem)
-			abstractBulletEntity = ((BowItem) this.getHeldItemMainhand().getItem()).customArrow(abstractBulletEntity);
-		double d0 = target.getPosX() - this.getPosX();
-		double d1 = target.getPosYHeight(0.12D) - abstractBulletEntity.getPosY();
-		double d2 = target.getPosZ() - this.getPosZ();
+		if (this.getMainHandItem().getItem() instanceof BowItem)
+			abstractBulletEntity = ((BowItem) this.getMainHandItem().getItem()).customArrow(abstractBulletEntity);
+		double d0 = target.getX() - this.getX();
+		double d1 = target.getY(0.12D) - abstractBulletEntity.getY();
+		double d2 = target.getZ() - this.getZ();
 		double d3 = MathHelper.sqrt(d0 * d0 + d2 * d2);
 		for (int i = 0; i <= 4; i++) {
-			abstractBulletEntity.setKnockbackStrength(3);
-			abstractBulletEntity.shoot(d0, d1 + d3 * (double) 0.2F, d2, 1.6F, (float) (18 - this.world.getDifficulty().getId() * 4 + GeneralUtilities.getRandomNumber(0.2f, 0.8f)));
+			abstractBulletEntity.setKnockback(3);
+			abstractBulletEntity.shoot(d0, d1 + d3 * (double) 0.2F, d2, 1.6F, (float) (18 - this.level.getDifficulty().getId() * 4 + GeneralUtilities.getRandomNumber(0.2f, 0.8f)));
 		}
-		this.playSound(DeferredRegistryHandler.BLUNDERBUSS_FIRE.get(), 1.0F, 1.0F / (this.getRNG().nextFloat() * 0.4F + 0.8F));
-		this.world.addEntity(abstractBulletEntity);
+		this.playSound(DeferredRegistryHandler.BLUNDERBUSS_FIRE.get(), 1.0F, 1.0F / (this.getRandom().nextFloat() * 0.4F + 0.8F));
+		this.level.addFreshEntity(abstractBulletEntity);
 	}
 
 	@Override
-	public ItemStack findAmmo(ItemStack shootable) {
+	public ItemStack getProjectile(ItemStack shootable) {
 		if (shootable.getItem() instanceof ShootableItem) {
-			Predicate<ItemStack> predicate = ((ShootableItem) shootable.getItem()).getAmmoPredicate();
-			ItemStack itemstack = ShootableItem.getHeldAmmo(this, predicate);
+			Predicate<ItemStack> predicate = ((ShootableItem) shootable.getItem()).getSupportedHeldProjectiles();
+			ItemStack itemstack = ShootableItem.getHeldProjectile(this, predicate);
 			return itemstack.isEmpty() ? new ItemStack(Items.ARROW) : itemstack;
 		} else {
 			return ItemStack.EMPTY;
@@ -237,36 +237,36 @@ public abstract class AbstractMinutemanEntity extends CreatureEntity implements 
 	 */
 	protected AbstractArrowEntity fireArrow(ItemStack arrowStack, float distanceFactor) {
 		CustomArrowItem arrowitem = (CustomArrowItem) (arrowStack.getItem() instanceof CustomArrowItem ? arrowStack.getItem() : DeferredRegistryHandler.COPPER_MUSKET_BALL.get());
-		AbstractArrowEntity abstractarrowentity = arrowitem.createArrow(this.world, arrowStack, this);
+		AbstractArrowEntity abstractarrowentity = arrowitem.createArrow(this.level, arrowStack, this);
 		abstractarrowentity.setEnchantmentEffectsFromEntity(this, distanceFactor);
 
 		return abstractarrowentity;
 	}
 
 	@Override
-	public boolean attackEntityFrom(DamageSource source, float amount) {
-		super.attackEntityFrom(source, amount);
+	public boolean hurt(DamageSource source, float amount) {
+		super.hurt(source, amount);
 		this.setCombatTask();
-		if (amount > 0 && !(source.getTrueSource() instanceof AbstractMinutemanEntity) && !(source.getTrueSource() instanceof IronGolemEntity) && source.getTrueSource() instanceof PlayerEntity || source.getTrueSource() instanceof MobEntity) {
-			if (source.getTrueSource() instanceof PlayerEntity) {
-				if (((PlayerEntity) source.getTrueSource()).isCreative()) {
+		if (amount > 0 && !(source.getEntity() instanceof AbstractMinutemanEntity) && !(source.getEntity() instanceof IronGolemEntity) && source.getEntity() instanceof PlayerEntity || source.getEntity() instanceof MobEntity) {
+			if (source.getEntity() instanceof PlayerEntity) {
+				if (((PlayerEntity) source.getEntity()).isCreative()) {
 					return false;
 				}
 			}
-			this.setAttackTarget((LivingEntity) source.getTrueSource());
-			this.setAngerTarget(source.getTrueSource().getUniqueID());
+			this.setTarget((LivingEntity) source.getEntity());
+			this.setPersistentAngerTarget(source.getEntity().getUUID());
 			// Aggro all other minutemen in the area
-			List<MinutemanEntity> list = this.world.getEntitiesWithinAABB(MinutemanEntity.class, (new AxisAlignedBB(this.getPosition())).grow(24.0D, 8.0D, 24.0D));
+			List<MinutemanEntity> list = this.level.getEntitiesOfClass(MinutemanEntity.class, (new AxisAlignedBB(this.blockPosition())).inflate(24.0D, 8.0D, 24.0D));
 			for (MinutemanEntity minutemanEntity : list) {
-				minutemanEntity.setAttackTarget((LivingEntity) source.getTrueSource());
-				minutemanEntity.setAngerTarget(source.getTrueSource().getUniqueID());
+				minutemanEntity.setTarget((LivingEntity) source.getEntity());
+				minutemanEntity.setPersistentAngerTarget(source.getEntity().getUUID());
 			}
 		}
 		return false;
 	}
 
 	@Override
-	public boolean func_230280_a_(ShootableItem shootableItem) {
+	public boolean canFireProjectileWeapon(ShootableItem shootableItem) {
 		return shootableItem == DeferredRegistryHandler.BLUNDERBUSS.get();
 	}
 
@@ -274,22 +274,22 @@ public abstract class AbstractMinutemanEntity extends CreatureEntity implements 
 	 * (abstract) Protected helper method to read subclass entity data from NBT.
 	 */
 	@Override
-	public void readAdditional(CompoundNBT compound) {
-		super.readAdditional(compound);
-		this.readAngerNBT((ServerWorld) this.world, compound);
+	public void readAdditionalSaveData(CompoundNBT compound) {
+		super.readAdditionalSaveData(compound);
+		this.readPersistentAngerSaveData((ServerWorld) this.level, compound);
 		this.setCombatTask();
 	}
 
 	@Override
-	public void writeAdditional(CompoundNBT compound) {
-		super.writeAdditional(compound);
-		this.writeAngerNBT(compound);
+	public void addAdditionalSaveData(CompoundNBT compound) {
+		super.addAdditionalSaveData(compound);
+		this.addPersistentAngerSaveData(compound);
 	}
 
 	@Override
-	public void setItemStackToSlot(EquipmentSlotType slotIn, ItemStack stack) {
-		super.setItemStackToSlot(slotIn, stack);
-		if (!this.world.isRemote) {
+	public void setItemSlot(EquipmentSlotType slotIn, ItemStack stack) {
+		super.setItemSlot(slotIn, stack);
+		if (!this.level.isClientSide) {
 			this.setCombatTask();
 		}
 	}
@@ -303,32 +303,32 @@ public abstract class AbstractMinutemanEntity extends CreatureEntity implements 
 	 * Returns the Y Offset of this entity.
 	 */
 	@Override
-	public double getYOffset() {
+	public double getMyRidingOffset() {
 		return -0.6D;
 	}
 
 	@Override
-	public void func_230258_H__() {
-		this.setAngerTime(tickRange.getRandomWithinRange(this.rand));
+	public void startPersistentAngerTimer() {
+		this.setRemainingPersistentAngerTime(tickRange.randomValue(this.random));
 	}
 
 	@Override
-	public void setAngerTime(int time) {
+	public void setRemainingPersistentAngerTime(int time) {
 		this.angerTime = time;
 	}
 
 	@Override
-	public int getAngerTime() {
+	public int getRemainingPersistentAngerTime() {
 		return this.angerTime;
 	}
 
 	@Override
-	public void setAngerTarget(@Nullable UUID target) {
+	public void setPersistentAngerTarget(@Nullable UUID target) {
 		this.targetUUID = target;
 	}
 
 	@Override
-	public UUID getAngerTarget() {
+	public UUID getPersistentAngerTarget() {
 		return this.targetUUID;
 	}
 }

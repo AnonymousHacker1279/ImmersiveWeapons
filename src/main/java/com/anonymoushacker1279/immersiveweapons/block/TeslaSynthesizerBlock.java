@@ -28,17 +28,19 @@ import net.minecraftforge.fml.network.NetworkHooks;
 
 import java.util.Random;
 
+import net.minecraft.block.AbstractBlock.Properties;
+
 public class TeslaSynthesizerBlock extends ContainerBlock {
 
 	private static final ITextComponent CONTAINER_NAME = new TranslationTextComponent("container.immersiveweapons.tesla_synthesizer");
-	protected static final VoxelShape SHAPE = Block.makeCuboidShape(0.0D, 0.0D, 0.0D, 16.0D, 6.0D, 16.0D);
+	protected static final VoxelShape SHAPE = Block.box(0.0D, 0.0D, 0.0D, 16.0D, 6.0D, 16.0D);
 
 	public TeslaSynthesizerBlock(Properties properties) {
 		super(properties);
 	}
 
 	@Override
-	public TileEntity createNewTileEntity(IBlockReader world) {
+	public TileEntity newBlockEntity(IBlockReader world) {
 		return new TeslaSynthesizerTileEntity();
 	}
 
@@ -48,21 +50,21 @@ public class TeslaSynthesizerBlock extends ContainerBlock {
 	}
 
 	@Override
-	public BlockRenderType getRenderType(BlockState state) {
+	public BlockRenderType getRenderShape(BlockState state) {
 		return BlockRenderType.MODEL;
 	}
 
 	@Override
-	public INamedContainerProvider getContainer(BlockState state, World worldIn, BlockPos pos) {
+	public INamedContainerProvider getMenuProvider(BlockState state, World worldIn, BlockPos pos) {
 		return new SimpleNamedContainerProvider((id, inventory, player) -> new TeslaSynthesizerContainer(id, inventory), CONTAINER_NAME);
 	}
 
 	@Override
-	public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
-		if (worldIn.isRemote) {
+	public ActionResultType use(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
+		if (worldIn.isClientSide) {
 			return ActionResultType.SUCCESS;
 		} else {
-			TileEntity tileEntity = worldIn.getTileEntity(pos);
+			TileEntity tileEntity = worldIn.getBlockEntity(pos);
 			if (tileEntity instanceof TeslaSynthesizerTileEntity) {
 				NetworkHooks.openGui((ServerPlayerEntity) player, (INamedContainerProvider) tileEntity, pos);
 			}
@@ -71,15 +73,15 @@ public class TeslaSynthesizerBlock extends ContainerBlock {
 	}
 
 	@Override
-	public void onReplaced(BlockState state, World worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
-		if (!state.matchesBlock(newState.getBlock())) {
-			TileEntity tileEntity = worldIn.getTileEntity(pos);
+	public void onRemove(BlockState state, World worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
+		if (!state.is(newState.getBlock())) {
+			TileEntity tileEntity = worldIn.getBlockEntity(pos);
 			if (tileEntity instanceof AbstractTeslaSynthesizerTileEntity) {
-				InventoryHelper.dropInventoryItems(worldIn, pos, (AbstractTeslaSynthesizerTileEntity) tileEntity);
-				worldIn.updateComparatorOutputLevel(pos, this);
+				InventoryHelper.dropContents(worldIn, pos, (AbstractTeslaSynthesizerTileEntity) tileEntity);
+				worldIn.updateNeighbourForOutputSignal(pos, this);
 			}
 
-			super.onReplaced(state, worldIn, pos, newState, isMoving);
+			super.onRemove(state, worldIn, pos, newState, isMoving);
 		}
 	}
 

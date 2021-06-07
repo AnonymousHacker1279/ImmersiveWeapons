@@ -31,16 +31,16 @@ public class SmallPartsRecipe implements IRecipe<IInventory> {
 	 */
 	@Override
 	public boolean matches(IInventory inv, World worldIn) {
-		return this.material.test(inv.getStackInSlot(0)) && this.blueprint.test(inv.getStackInSlot(1));
+		return this.material.test(inv.getItem(0)) && this.blueprint.test(inv.getItem(1));
 	}
 
 	/**
 	 * Returns an Item that is the result of this recipe
 	 */
 	@Override
-	public ItemStack getCraftingResult(IInventory inv) {
+	public ItemStack assemble(IInventory inv) {
 		ItemStack itemstack = this.result.copy();
-		CompoundNBT compoundnbt = inv.getStackInSlot(0).getTag();
+		CompoundNBT compoundnbt = inv.getItem(0).getTag();
 		if (compoundnbt != null) {
 			itemstack.setTag(compoundnbt.copy());
 		}
@@ -52,7 +52,7 @@ public class SmallPartsRecipe implements IRecipe<IInventory> {
 	 * Used to determine if this recipe can fit in a grid of the given width/height
 	 */
 	@Override
-	public boolean canFit(int width, int height) {
+	public boolean canCraftInDimensions(int width, int height) {
 		return width * height >= 2;
 	}
 
@@ -61,7 +61,7 @@ public class SmallPartsRecipe implements IRecipe<IInventory> {
 	 * possible result (e.g. it's dynamic and depends on its inputs), then return an empty stack.
 	 */
 	@Override
-	public ItemStack getRecipeOutput() {
+	public ItemStack getResultItem() {
 		return this.result;
 	}
 
@@ -70,7 +70,7 @@ public class SmallPartsRecipe implements IRecipe<IInventory> {
 	}
 
 	@Override
-	public ItemStack getIcon() {
+	public ItemStack getToastSymbol() {
 		return new ItemStack(DeferredRegistryHandler.SMALL_PARTS_TABLE.get());
 	}
 
@@ -99,26 +99,26 @@ public class SmallPartsRecipe implements IRecipe<IInventory> {
 
 	public static class Serializer extends net.minecraftforge.registries.ForgeRegistryEntry<IRecipeSerializer<?>> implements IRecipeSerializer<SmallPartsRecipe> {
 		@Override
-		public SmallPartsRecipe read(ResourceLocation recipeId, JsonObject json) {
-			Ingredient ingredient = Ingredient.deserialize(JSONUtils.getJsonObject(json, "material"));
-			Ingredient ingredient1 = Ingredient.deserialize(JSONUtils.getJsonObject(json, "blueprint"));
-			ItemStack itemstack = ShapedRecipe.deserializeItem(JSONUtils.getJsonObject(json, "result"));
+		public SmallPartsRecipe fromJson(ResourceLocation recipeId, JsonObject json) {
+			Ingredient ingredient = Ingredient.fromJson(JSONUtils.getAsJsonObject(json, "material"));
+			Ingredient ingredient1 = Ingredient.fromJson(JSONUtils.getAsJsonObject(json, "blueprint"));
+			ItemStack itemstack = ShapedRecipe.itemFromJson(JSONUtils.getAsJsonObject(json, "result"));
 			return new SmallPartsRecipe(recipeId, ingredient, ingredient1, itemstack);
 		}
 
 		@Override
-		public SmallPartsRecipe read(ResourceLocation recipeId, PacketBuffer buffer) {
-			Ingredient ingredient = Ingredient.read(buffer);
-			Ingredient ingredient1 = Ingredient.read(buffer);
-			ItemStack itemstack = buffer.readItemStack();
+		public SmallPartsRecipe fromNetwork(ResourceLocation recipeId, PacketBuffer buffer) {
+			Ingredient ingredient = Ingredient.fromNetwork(buffer);
+			Ingredient ingredient1 = Ingredient.fromNetwork(buffer);
+			ItemStack itemstack = buffer.readItem();
 			return new SmallPartsRecipe(recipeId, ingredient, ingredient1, itemstack);
 		}
 
 		@Override
-		public void write(PacketBuffer buffer, SmallPartsRecipe recipe) {
-			recipe.material.write(buffer);
-			recipe.blueprint.write(buffer);
-			buffer.writeItemStack(recipe.result);
+		public void toNetwork(PacketBuffer buffer, SmallPartsRecipe recipe) {
+			recipe.material.toNetwork(buffer);
+			recipe.blueprint.toNetwork(buffer);
+			buffer.writeItem(recipe.result);
 		}
 	}
 }

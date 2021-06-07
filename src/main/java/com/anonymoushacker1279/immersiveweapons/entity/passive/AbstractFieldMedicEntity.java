@@ -50,15 +50,15 @@ public abstract class AbstractFieldMedicEntity extends CreatureEntity {
 
 	private final MeleeAttackGoal aiAttackOnCollide = new MeleeAttackGoal(this, 1.2D, false) {
 		@Override
-		public void resetTask() {
-			super.resetTask();
-			AbstractFieldMedicEntity.this.setAggroed(false);
+		public void stop() {
+			super.stop();
+			AbstractFieldMedicEntity.this.setAggressive(false);
 		}
 
 		@Override
-		public void startExecuting() {
-			super.startExecuting();
-			AbstractFieldMedicEntity.this.setAggroed(true);
+		public void start() {
+			super.start();
+			AbstractFieldMedicEntity.this.setAggressive(true);
 		}
 	};
 	private List<Class> checkedEntities = new ArrayList<>();
@@ -80,17 +80,17 @@ public abstract class AbstractFieldMedicEntity extends CreatureEntity {
 
 	private void spawnParticles(IParticleData particleData) {
 		for (int i = 0; i < 5; ++i) {
-			double d0 = this.rand.nextGaussian() * 0.02D;
-			double d1 = this.rand.nextGaussian() * 0.02D;
-			double d2 = this.rand.nextGaussian() * 0.02D;
-			this.world.addParticle(particleData, this.getPosXRandom(1.0D), this.getPosYRandom() + 1.0D, this.getPosZRandom(1.0D), d0, d1, d2);
+			double d0 = this.random.nextGaussian() * 0.02D;
+			double d1 = this.random.nextGaussian() * 0.02D;
+			double d2 = this.random.nextGaussian() * 0.02D;
+			this.level.addParticle(particleData, this.getRandomX(1.0D), this.getRandomY() + 1.0D, this.getRandomZ(1.0D), d0, d1, d2);
 		}
 	}
 
 	public static AttributeModifierMap.MutableAttribute registerAttributes() {
-		return MonsterEntity.func_234295_eP_()
-				.createMutableAttribute(Attributes.MOVEMENT_SPEED, 0.3D)
-				.createMutableAttribute(Attributes.ARMOR, 2.75D);
+		return MonsterEntity.createMonsterAttributes()
+				.add(Attributes.MOVEMENT_SPEED, 0.3D)
+				.add(Attributes.ARMOR, 2.75D);
 	}
 
 	@Override
@@ -105,9 +105,9 @@ public abstract class AbstractFieldMedicEntity extends CreatureEntity {
 		this.goalSelector.addGoal(5, new UpdateFieldMedicPOIGoal());
 		this.goalSelector.addGoal(4, new MoveToBlockGoal(this, 0.97D, 64) {
 			@Override
-			protected boolean shouldMoveTo(IWorldReader worldIn, BlockPos pos) {
+			protected boolean isValidTarget(IWorldReader worldIn, BlockPos pos) {
 				if (PointOfInterestBlockPos != null) {
-					moveController.setMoveTo(PointOfInterestBlockPos.getX(), PointOfInterestBlockPos.getY(), PointOfInterestBlockPos.getX(), 0.97D);
+					moveControl.setWantedPosition(PointOfInterestBlockPos.getX(), PointOfInterestBlockPos.getY(), PointOfInterestBlockPos.getX(), 0.97D);
 					return true;
 				} else {
 					return false;
@@ -129,8 +129,8 @@ public abstract class AbstractFieldMedicEntity extends CreatureEntity {
 	 * use this to react to sunlight and start to burn.
 	 */
 	@Override
-	public void livingTick() {
-		super.livingTick();
+	public void aiStep() {
+		super.aiStep();
 		this.checkForHurtEntities(this.checkedEntities);
 		if (checkForHurtEntitiesCooldown > 0) {
 			checkForHurtEntitiesCooldown--;
@@ -141,11 +141,11 @@ public abstract class AbstractFieldMedicEntity extends CreatureEntity {
 	 * Handles updating while riding another entity
 	 */
 	@Override
-	public void updateRidden() {
-		super.updateRidden();
-		if (this.getRidingEntity() instanceof CreatureEntity) {
-			CreatureEntity creatureEntity = (CreatureEntity) this.getRidingEntity();
-			this.renderYawOffset = creatureEntity.renderYawOffset;
+	public void rideTick() {
+		super.rideTick();
+		if (this.getVehicle() instanceof CreatureEntity) {
+			CreatureEntity creatureEntity = (CreatureEntity) this.getVehicle();
+			this.yBodyRot = creatureEntity.yBodyRot;
 		}
 
 	}
@@ -154,25 +154,25 @@ public abstract class AbstractFieldMedicEntity extends CreatureEntity {
 	 * Gives armor or weapon for entity based on given DifficultyInstance
 	 */
 	@Override
-	protected void setEquipmentBasedOnDifficulty(DifficultyInstance difficulty) {
-		super.setEquipmentBasedOnDifficulty(difficulty);
+	protected void populateDefaultEquipmentSlots(DifficultyInstance difficulty) {
+		super.populateDefaultEquipmentSlots(difficulty);
 	}
 
 	@Override
 	@Nullable
-	public ILivingEntityData onInitialSpawn(@NotNull IServerWorld worldIn, @NotNull DifficultyInstance difficultyIn, @NotNull SpawnReason reason, @Nullable ILivingEntityData spawnDataIn, @Nullable CompoundNBT dataTag) {
-		spawnDataIn = super.onInitialSpawn(worldIn, difficultyIn, reason, spawnDataIn, dataTag);
-		this.setEquipmentBasedOnDifficulty(difficultyIn);
-		this.setEnchantmentBasedOnDifficulty(difficultyIn);
+	public ILivingEntityData finalizeSpawn(@NotNull IServerWorld worldIn, @NotNull DifficultyInstance difficultyIn, @NotNull SpawnReason reason, @Nullable ILivingEntityData spawnDataIn, @Nullable CompoundNBT dataTag) {
+		spawnDataIn = super.finalizeSpawn(worldIn, difficultyIn, reason, spawnDataIn, dataTag);
+		this.populateDefaultEquipmentSlots(difficultyIn);
+		this.populateDefaultEquipmentEnchantments(difficultyIn);
 		this.setCombatTask();
-		this.setCanPickUpLoot(this.rand.nextFloat() < 0.55F * difficultyIn.getClampedAdditionalDifficulty());
-		if (this.getItemStackFromSlot(EquipmentSlotType.HEAD).isEmpty()) {
+		this.setCanPickUpLoot(this.random.nextFloat() < 0.55F * difficultyIn.getSpecialMultiplier());
+		if (this.getItemBySlot(EquipmentSlotType.HEAD).isEmpty()) {
 			LocalDate localdate = LocalDate.now();
 			int i = localdate.get(ChronoField.DAY_OF_MONTH);
 			int j = localdate.get(ChronoField.MONTH_OF_YEAR);
-			if (j == 10 && i == 31 && this.rand.nextFloat() < 0.25F) {
-				this.setItemStackToSlot(EquipmentSlotType.HEAD, new ItemStack(this.rand.nextFloat() < 0.1F ? Blocks.JACK_O_LANTERN : Blocks.CARVED_PUMPKIN));
-				this.inventoryArmorDropChances[EquipmentSlotType.HEAD.getIndex()] = 0.0F;
+			if (j == 10 && i == 31 && this.random.nextFloat() < 0.25F) {
+				this.setItemSlot(EquipmentSlotType.HEAD, new ItemStack(this.random.nextFloat() < 0.1F ? Blocks.JACK_O_LANTERN : Blocks.CARVED_PUMPKIN));
+				this.armorDropChances[EquipmentSlotType.HEAD.getIndex()] = 0.0F;
 			}
 		}
 
@@ -183,31 +183,31 @@ public abstract class AbstractFieldMedicEntity extends CreatureEntity {
 	 * sets this entity's combat AI.
 	 */
 	public void setCombatTask() {
-		if (this.world != null && !this.world.isRemote) {
+		if (this.level != null && !this.level.isClientSide) {
 			this.goalSelector.removeGoal(this.aiAttackOnCollide);
-			this.setHeldItem(Hand.MAIN_HAND, new ItemStack(DeferredRegistryHandler.USED_SYRINGE.get()));
+			this.setItemInHand(Hand.MAIN_HAND, new ItemStack(DeferredRegistryHandler.USED_SYRINGE.get()));
 			this.goalSelector.addGoal(12, this.aiAttackOnCollide);
 		}
 	}
 
 	@Override
-	public boolean attackEntityFrom(DamageSource source, float amount) {
-		super.attackEntityFrom(source, amount);
-		if (amount > 0 && !(source.getTrueSource() instanceof AbstractMinutemanEntity) && !(source.getTrueSource() instanceof IronGolemEntity) && source.getTrueSource() instanceof PlayerEntity || source.getTrueSource() instanceof MobEntity) {
-			if (source.getTrueSource() instanceof PlayerEntity) {
-				if (((PlayerEntity) source.getTrueSource()).isCreative()) {
+	public boolean hurt(DamageSource source, float amount) {
+		super.hurt(source, amount);
+		if (amount > 0 && !(source.getEntity() instanceof AbstractMinutemanEntity) && !(source.getEntity() instanceof IronGolemEntity) && source.getEntity() instanceof PlayerEntity || source.getEntity() instanceof MobEntity) {
+			if (source.getEntity() instanceof PlayerEntity) {
+				if (((PlayerEntity) source.getEntity()).isCreative()) {
 					return false;
 				}
 			}
 			// Heal itself
 			this.heal();
-			this.setAttackTarget((LivingEntity) source.getTrueSource());
+			this.setTarget((LivingEntity) source.getEntity());
 			this.setCombatTask();
 			// Aggro all other minutemen in the area
-			List<MinutemanEntity> list = this.world.getEntitiesWithinAABB(MinutemanEntity.class, (new AxisAlignedBB(this.getPosition())).grow(48.0D, 8.0D, 48.0D));
+			List<MinutemanEntity> list = this.level.getEntitiesOfClass(MinutemanEntity.class, (new AxisAlignedBB(this.blockPosition())).inflate(48.0D, 8.0D, 48.0D));
 			for (MinutemanEntity minutemanEntity : list) {
-				minutemanEntity.setAttackTarget((LivingEntity) source.getTrueSource());
-				minutemanEntity.setAngerTarget(source.getTrueSource().getUniqueID());
+				minutemanEntity.setTarget((LivingEntity) source.getEntity());
+				minutemanEntity.setPersistentAngerTarget(source.getEntity().getUUID());
 			}
 		}
 		return false;
@@ -215,27 +215,27 @@ public abstract class AbstractFieldMedicEntity extends CreatureEntity {
 
 	public void heal() {
 		if (this.getHealth() <= this.getMaxHealth() / 2) {
-			this.setHeldItem(Hand.MAIN_HAND, new ItemStack(DeferredRegistryHandler.FIRST_AID_KIT.get()));
-			this.addPotionEffect(new EffectInstance(Effects.REGENERATION, 240, 1, false, true));
-			this.addPotionEffect(new EffectInstance(Effects.RESISTANCE, 1200, 0, false, true));
+			this.setItemInHand(Hand.MAIN_HAND, new ItemStack(DeferredRegistryHandler.FIRST_AID_KIT.get()));
+			this.addEffect(new EffectInstance(Effects.REGENERATION, 240, 1, false, true));
+			this.addEffect(new EffectInstance(Effects.DAMAGE_RESISTANCE, 1200, 0, false, true));
 		} else {
-			this.setHeldItem(Hand.MAIN_HAND, new ItemStack(DeferredRegistryHandler.BANDAGE.get()));
-			this.addPotionEffect(new EffectInstance(Effects.REGENERATION, 240, 0, false, true));
+			this.setItemInHand(Hand.MAIN_HAND, new ItemStack(DeferredRegistryHandler.BANDAGE.get()));
+			this.addEffect(new EffectInstance(Effects.REGENERATION, 240, 0, false, true));
 		}
 	}
 
 	@Override
-	public boolean attackEntityAsMob(Entity entityIn) {
-		boolean flag = super.attackEntityAsMob(entityIn);
+	public boolean doHurtTarget(Entity entityIn) {
+		boolean flag = super.doHurtTarget(entityIn);
 		if (flag) {
-			if (this.getHeldItemMainhand().getItem() == DeferredRegistryHandler.USED_SYRINGE.get()) {
+			if (this.getMainHandItem().getItem() == DeferredRegistryHandler.USED_SYRINGE.get()) {
 				int randomNumber = GeneralUtilities.getRandomNumber(0, 100);
 				if (randomNumber <= 80) {
-					((LivingEntity) entityIn).addPotionEffect(new EffectInstance(Effects.POISON, 500, 0, false, true));
+					((LivingEntity) entityIn).addEffect(new EffectInstance(Effects.POISON, 500, 0, false, true));
 					if (randomNumber <= 30) {
-						entityIn.attackEntityFrom(UsedSyringeItem.damageSource, 8.0F);
+						entityIn.hurt(UsedSyringeItem.damageSource, 8.0F);
 						if (randomNumber <= 5) {
-							entityIn.world.playSound(entityIn.getPosX(), entityIn.getPosY(), entityIn.getPosZ(), DeferredRegistryHandler.FIELD_MEDIC_ATTACK.get(), SoundCategory.HOSTILE, 1.0f, 1.0f, false);
+							entityIn.level.playLocalSound(entityIn.getX(), entityIn.getY(), entityIn.getZ(), DeferredRegistryHandler.FIELD_MEDIC_ATTACK.get(), SoundCategory.HOSTILE, 1.0f, 1.0f, false);
 						}
 					}
 				}
@@ -250,7 +250,7 @@ public abstract class AbstractFieldMedicEntity extends CreatureEntity {
 
 	private void checkForHurtEntities(List<Class> checkedEntities) {
 		if (checkForHurtEntitiesCooldown == 0 && currentlyTargetedEntity == null) {
-			List<Entity> entity = this.world.getEntitiesWithinAABBExcludingEntity(this, this.getBoundingBox().offset(-24, -5, -24).expand(24, 5, 24));
+			List<Entity> entity = this.level.getEntities(this, this.getBoundingBox().move(-24, -5, -24).expandTowards(24, 5, 24));
 			if (!entity.isEmpty()) {
 				for (Entity element : entity) {
 					if (!checkedEntities.contains(element.getClass())) {
@@ -264,7 +264,7 @@ public abstract class AbstractFieldMedicEntity extends CreatureEntity {
 						lastTargetedEntity = null;
 						continue;
 					}
-					if (element.isLiving()) {
+					if (element.showVehicleHealth()) {
 						if (((LivingEntity) element).getHealth() < ((LivingEntity) element).getMaxHealth()) {
 							currentlyTargetedEntity = (LivingEntity) element.getEntity();
 							checkForHurtEntitiesCooldown = 100;
@@ -277,15 +277,15 @@ public abstract class AbstractFieldMedicEntity extends CreatureEntity {
 				checkForHurtEntitiesCooldown = 100;
 			}
 		} else if (currentlyTargetedEntity != null) {
-			this.getNavigator().tryMoveToEntityLiving(currentlyTargetedEntity, 1.0D);
-			if (this.getDistance(currentlyTargetedEntity) <= 1.5 && this.canEntityBeSeen(currentlyTargetedEntity)) {
+			this.getNavigation().moveTo(currentlyTargetedEntity, 1.0D);
+			if (this.distanceTo(currentlyTargetedEntity) <= 1.5 && this.canSee(currentlyTargetedEntity)) {
 				if (currentlyTargetedEntity.getHealth() <= currentlyTargetedEntity.getMaxHealth() / 2) {
-					this.setHeldItem(Hand.MAIN_HAND, new ItemStack(DeferredRegistryHandler.FIRST_AID_KIT.get()));
-					currentlyTargetedEntity.addPotionEffect(new EffectInstance(Effects.REGENERATION, 240, 1, false, true));
-					currentlyTargetedEntity.addPotionEffect(new EffectInstance(Effects.RESISTANCE, 1200, 0, false, true));
+					this.setItemInHand(Hand.MAIN_HAND, new ItemStack(DeferredRegistryHandler.FIRST_AID_KIT.get()));
+					currentlyTargetedEntity.addEffect(new EffectInstance(Effects.REGENERATION, 240, 1, false, true));
+					currentlyTargetedEntity.addEffect(new EffectInstance(Effects.DAMAGE_RESISTANCE, 1200, 0, false, true));
 				} else {
-					this.setHeldItem(Hand.MAIN_HAND, new ItemStack(DeferredRegistryHandler.BANDAGE.get()));
-					currentlyTargetedEntity.addPotionEffect(new EffectInstance(Effects.REGENERATION, 240, 0, false, true));
+					this.setItemInHand(Hand.MAIN_HAND, new ItemStack(DeferredRegistryHandler.BANDAGE.get()));
+					currentlyTargetedEntity.addEffect(new EffectInstance(Effects.REGENERATION, 240, 0, false, true));
 				}
 				lastTargetedEntity = currentlyTargetedEntity;
 				unlockLastTargetedEntityCooldown = 200;
@@ -295,20 +295,20 @@ public abstract class AbstractFieldMedicEntity extends CreatureEntity {
 	}
 
 	@Override
-	public void writeAdditional(CompoundNBT compound) {
-		super.writeAdditional(compound);
+	public void addAdditionalSaveData(CompoundNBT compound) {
+		super.addAdditionalSaveData(compound);
 		if (this.PointOfInterestBlockPos != null) {
 			compound.put("POIPos", NBTUtil.writeBlockPos(this.PointOfInterestBlockPos));
 		}
 	}
 
 	@Override
-	public void readAdditional(CompoundNBT compound) {
+	public void readAdditionalSaveData(CompoundNBT compound) {
 		this.PointOfInterestBlockPos = null;
 		if (compound.contains("POIPos")) {
 			this.PointOfInterestBlockPos = NBTUtil.readBlockPos(compound.getCompound("POIPos"));
 		}
-		super.readAdditional(compound);
+		super.readAdditionalSaveData(compound);
 	}
 
 	class UpdateFieldMedicPOIGoal extends AbstractFieldMedicEntity.PassiveFieldMedicGoal {
@@ -330,7 +330,7 @@ public abstract class AbstractFieldMedicEntity extends CreatureEntity {
 		 * Execute a one shot task or start executing a continuous task
 		 */
 		@Override
-		public void startExecuting() {
+		public void start() {
 			AbstractFieldMedicEntity.this.cooldownBeforeLocatingNewPOI = 200;
 			List<BlockPos> list = this.getNearbyPOIs();
 			if (!list.isEmpty()) {
@@ -344,10 +344,10 @@ public abstract class AbstractFieldMedicEntity extends CreatureEntity {
 		}
 
 		private List<BlockPos> getNearbyPOIs() {
-			BlockPos blockpos = AbstractFieldMedicEntity.this.getPosition();
-			PointOfInterestManager pointOfInterestManager = ((ServerWorld) AbstractFieldMedicEntity.this.world).getPointOfInterestManager();
-			Stream<PointOfInterest> stream = pointOfInterestManager.func_219146_b((pointOfInterestType) -> pointOfInterestType == DeferredRegistryHandler.FIELD_MEDIC_POI.get(), blockpos, 32, PointOfInterestManager.Status.ANY);
-			return stream.map(PointOfInterest::getPos).sorted(Comparator.comparingDouble((extractor) -> extractor.distanceSq(blockpos))).collect(Collectors.toList());
+			BlockPos blockpos = AbstractFieldMedicEntity.this.blockPosition();
+			PointOfInterestManager pointOfInterestManager = ((ServerWorld) AbstractFieldMedicEntity.this.level).getPoiManager();
+			Stream<PointOfInterest> stream = pointOfInterestManager.getInRange((pointOfInterestType) -> pointOfInterestType == DeferredRegistryHandler.FIELD_MEDIC_POI.get(), blockpos, 32, PointOfInterestManager.Status.ANY);
+			return stream.map(PointOfInterest::getPos).sorted(Comparator.comparingDouble((extractor) -> extractor.distSqr(blockpos))).collect(Collectors.toList());
 		}
 	}
 
@@ -361,12 +361,12 @@ public abstract class AbstractFieldMedicEntity extends CreatureEntity {
 		public abstract boolean canMedicContinue();
 
 		@Override
-		public boolean shouldExecute() {
+		public boolean canUse() {
 			return this.canMedicStart();
 		}
 
 		@Override
-		public boolean shouldContinueExecuting() {
+		public boolean canContinueToUse() {
 			return this.canMedicContinue();
 		}
 	}

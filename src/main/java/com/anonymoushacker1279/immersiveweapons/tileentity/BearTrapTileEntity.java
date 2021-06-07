@@ -40,46 +40,46 @@ public class BearTrapTileEntity extends TileEntity implements ITickableTileEntit
 		final MobEntity trapped = this.getTrappedEntity();
 		final PlayerEntity trappedPlayer = this.getTrappedPlayerEntity();
 
-		if (!this.world.isRemote) {
+		if (!this.level.isClientSide) {
 			if (trapped != null) {
 				// Entity has escaped
-				if (!trapped.getBoundingBox().intersects(new AxisAlignedBB(this.pos)) || !trapped.isAlive()) {
+				if (!trapped.getBoundingBox().intersects(new AxisAlignedBB(this.worldPosition)) || !trapped.isAlive()) {
 					this.setTrappedEntity(null);
 				}
 			}
 
 			if (trappedPlayer != null) {
 				// Player has escaped
-				if (!trappedPlayer.getBoundingBox().intersects(new AxisAlignedBB(this.pos)) || !trappedPlayer.isAlive()) {
+				if (!trappedPlayer.getBoundingBox().intersects(new AxisAlignedBB(this.worldPosition)) || !trappedPlayer.isAlive()) {
 					this.setTrappedPlayerEntity(null);
 				} else {
-					trappedPlayer.setMotionMultiplier(this.getBlockState(), new Vector3d(0.0F, 0.0D, 0.0F));
-					mc.gameSettings.keyBindJump.setPressed(false);
-					mc.gameSettings.keyBindForward.setPressed(false);
-					mc.gameSettings.keyBindLeft.setPressed(false);
-					mc.gameSettings.keyBindRight.setPressed(false);
-					mc.gameSettings.keyBindBack.setPressed(false);
+					trappedPlayer.makeStuckInBlock(this.getBlockState(), new Vector3d(0.0F, 0.0D, 0.0F));
+					mc.options.keyJump.setDown(false);
+					mc.options.keyUp.setDown(false);
+					mc.options.keyLeft.setDown(false);
+					mc.options.keyRight.setDown(false);
+					mc.options.keyDown.setDown(false);
 				}
 			}
 		}
 	}
 
 	@Override
-	public void read(BlockState state, CompoundNBT nbt) {
-		super.read(state, nbt);
-		if (nbt.hasUniqueId("trapped_entity")) {
-			this.id = nbt.getUniqueId("trapped_entity");
+	public void load(BlockState state, CompoundNBT nbt) {
+		super.load(state, nbt);
+		if (nbt.hasUUID("trapped_entity")) {
+			this.id = nbt.getUUID("trapped_entity");
 		}
 	}
 
 	@Override
-	public CompoundNBT write(CompoundNBT compound) {
-		super.write(compound);
+	public CompoundNBT save(CompoundNBT compound) {
+		super.save(compound);
 		if (this.entityliving != null && this.entityliving.isAlive()) {
-			compound.putUniqueId("trapped_entity", this.entityliving.getUniqueID());
+			compound.putUUID("trapped_entity", this.entityliving.getUUID());
 		}
 		if (this.entitylivingPlayer != null && this.entitylivingPlayer.isAlive()) {
-			compound.putUniqueId("trapped_entity", this.entitylivingPlayer.getUniqueID());
+			compound.putUUID("trapped_entity", this.entitylivingPlayer.getUUID());
 		}
 		return compound;
 	}
@@ -96,8 +96,8 @@ public class BearTrapTileEntity extends TileEntity implements ITickableTileEntit
 				this.id = null;
 				this.doNothingGoal = null;
 			} else {
-				livingEntity.attackEntityFrom(damageSource, 2);
-				livingEntity.goalSelector.getRunningGoals().filter(PrioritizedGoal::isRunning).forEach(PrioritizedGoal::resetTask);
+				livingEntity.hurt(damageSource, 2);
+				livingEntity.goalSelector.getRunningGoals().filter(PrioritizedGoal::isRunning).forEach(PrioritizedGoal::stop);
 				livingEntity.goalSelector.addGoal(0, this.doNothingGoal = new DoNothingGoal(livingEntity, this));
 			}
 
@@ -121,8 +121,8 @@ public class BearTrapTileEntity extends TileEntity implements ITickableTileEntit
 	}
 
 	public MobEntity getTrappedEntity() {
-		if (this.id != null && this.world instanceof ServerWorld) {
-			Entity entity = ((ServerWorld) this.world).getEntityByUuid(this.id);
+		if (this.id != null && this.level instanceof ServerWorld) {
+			Entity entity = ((ServerWorld) this.level).getEntity(this.id);
 			this.id = null;
 			if (entity instanceof MobEntity)
 				this.setTrappedEntity((MobEntity) entity);
@@ -131,8 +131,8 @@ public class BearTrapTileEntity extends TileEntity implements ITickableTileEntit
 	}
 
 	public PlayerEntity getTrappedPlayerEntity() {
-		if (this.id != null && this.world instanceof ServerWorld) {
-			Entity entity = ((ServerWorld) this.world).getEntityByUuid(this.id);
+		if (this.id != null && this.level instanceof ServerWorld) {
+			Entity entity = ((ServerWorld) this.level).getEntity(this.id);
 			this.id = null;
 			if (entity instanceof PlayerEntity)
 				this.setTrappedPlayerEntity((PlayerEntity) entity);
@@ -161,13 +161,13 @@ public class BearTrapTileEntity extends TileEntity implements ITickableTileEntit
 		private final BearTrapTileEntity trap;
 
 		public DoNothingGoal(MobEntity trappedEntity, BearTrapTileEntity trap) {
-			this.setMutexFlags(EnumSet.of(Goal.Flag.MOVE, Goal.Flag.JUMP));
+			this.setFlags(EnumSet.of(Goal.Flag.MOVE, Goal.Flag.JUMP));
 			this.trappedEntity = trappedEntity;
 			this.trap = trap;
 		}
 
 		@Override
-		public boolean shouldExecute() {
+		public boolean canUse() {
 			return this.trap.isEntityTrapped(this.trappedEntity);
 		}
 	}

@@ -50,7 +50,7 @@ public class SmokeBombEntity extends ProjectileItemEntity {
 	//    and hence it will not render.
 	@Nonnull
 	@Override
-	public IPacket<?> createSpawnPacket() {
+	public IPacket<?> getAddEntityPacket() {
 		return NetworkHooks.getEntitySpawningPacket(this);
 	}
 
@@ -62,11 +62,11 @@ public class SmokeBombEntity extends ProjectileItemEntity {
 	}
 
 	@Override
-	protected void onImpact(RayTraceResult rayTraceResult) {
-		if (!this.world.isRemote) {
+	protected void onHit(RayTraceResult rayTraceResult) {
+		if (!this.level.isClientSide) {
 			PlayerEntity playerEntity = mc.player;
-			this.world.setEntityState(this, VANILLA_IMPACT_STATUS_ID);  // calls handleStatusUpdate which tells the client to render particles
-			this.world.playSound(playerEntity, this.getPosition(), DeferredRegistryHandler.SMOKE_BOMB_HISS.get(), SoundCategory.NEUTRAL, 0.1f, 0.6f);
+			this.level.broadcastEntityEvent(this, VANILLA_IMPACT_STATUS_ID);  // calls handleStatusUpdate which tells the client to render particles
+			this.level.playSound(playerEntity, this.blockPosition(), DeferredRegistryHandler.SMOKE_BOMB_HISS.get(), SoundCategory.NEUTRAL, 0.1f, 0.6f);
 		}
 	}
 
@@ -76,12 +76,12 @@ public class SmokeBombEntity extends ProjectileItemEntity {
 	}
 
 	@Override
-	public void handleStatusUpdate(byte statusID) {
+	public void handleEntityEvent(byte statusID) {
 		if (statusID == VANILLA_IMPACT_STATUS_ID) {
 			IParticleData particleData = this.makeParticle();
 
 			for (int i = 0; i < configMaxParticles; ++i) {
-				this.world.addParticle(particleData, true, this.getPosX(), this.getPosY(), this.getPosZ(), GeneralUtilities.getRandomNumber(-0.03, 0.03d), GeneralUtilities.getRandomNumber(-0.02d, 0.02d), GeneralUtilities.getRandomNumber(-0.03d, 0.03d));
+				this.level.addParticle(particleData, true, this.getX(), this.getY(), this.getZ(), GeneralUtilities.getRandomNumber(-0.03, 0.03d), GeneralUtilities.getRandomNumber(-0.02d, 0.02d), GeneralUtilities.getRandomNumber(-0.03d, 0.03d));
 			}
 			this.remove();
 		}

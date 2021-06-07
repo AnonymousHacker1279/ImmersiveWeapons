@@ -36,16 +36,16 @@ public class TeslaSynthesizerRecipe implements IRecipe<IInventory> {
 	 */
 	@Override
 	public boolean matches(IInventory inv, World worldIn) {
-		return this.blockIngredient.test(inv.getStackInSlot(0)) && this.material1.test(inv.getStackInSlot(1)) && this.material2.test(inv.getStackInSlot(2));
+		return this.blockIngredient.test(inv.getItem(0)) && this.material1.test(inv.getItem(1)) && this.material2.test(inv.getItem(2));
 	}
 
 	/**
 	 * Returns an Item that is the result of this recipe
 	 */
 	@Override
-	public ItemStack getCraftingResult(IInventory inv) {
+	public ItemStack assemble(IInventory inv) {
 		ItemStack itemstack = this.result.copy();
-		CompoundNBT compoundnbt = inv.getStackInSlot(4).getTag();
+		CompoundNBT compoundnbt = inv.getItem(4).getTag();
 		if (compoundnbt != null) {
 			itemstack.setTag(compoundnbt.copy());
 		}
@@ -57,7 +57,7 @@ public class TeslaSynthesizerRecipe implements IRecipe<IInventory> {
 	 * Used to determine if this recipe can fit in a grid of the given width/height
 	 */
 	@Override
-	public boolean canFit(int width, int height) {
+	public boolean canCraftInDimensions(int width, int height) {
 		return width * height >= 2;
 	}
 
@@ -66,12 +66,12 @@ public class TeslaSynthesizerRecipe implements IRecipe<IInventory> {
 	 * possible result (e.g. it's dynamic and depends on its inputs), then return an empty stack.
 	 */
 	@Override
-	public ItemStack getRecipeOutput() {
+	public ItemStack getResultItem() {
 		return this.result;
 	}
 
 	@Override
-	public ItemStack getIcon() {
+	public ItemStack getToastSymbol() {
 		return new ItemStack(DeferredRegistryHandler.TESLA_SYNTHESIZER.get());
 	}
 
@@ -105,31 +105,31 @@ public class TeslaSynthesizerRecipe implements IRecipe<IInventory> {
 
 	public static class Serializer extends ForgeRegistryEntry<IRecipeSerializer<?>> implements IRecipeSerializer<TeslaSynthesizerRecipe> {
 		@Override
-		public TeslaSynthesizerRecipe read(ResourceLocation recipeId, JsonObject json) {
-			Ingredient blockIngredient = Ingredient.deserialize(JSONUtils.getJsonObject(json, "block"));
-			Ingredient material1 = Ingredient.deserialize(JSONUtils.getJsonObject(json, "material1"));
-			Ingredient material2 = Ingredient.deserialize(JSONUtils.getJsonObject(json, "material2"));
-			TeslaSynthesizerRecipe.cookTime = JSONUtils.getInt(json, "cookTime");
-			ItemStack result = ShapedRecipe.deserializeItem(JSONUtils.getJsonObject(json, "result"));
+		public TeslaSynthesizerRecipe fromJson(ResourceLocation recipeId, JsonObject json) {
+			Ingredient blockIngredient = Ingredient.fromJson(JSONUtils.getAsJsonObject(json, "block"));
+			Ingredient material1 = Ingredient.fromJson(JSONUtils.getAsJsonObject(json, "material1"));
+			Ingredient material2 = Ingredient.fromJson(JSONUtils.getAsJsonObject(json, "material2"));
+			TeslaSynthesizerRecipe.cookTime = JSONUtils.getAsInt(json, "cookTime");
+			ItemStack result = ShapedRecipe.itemFromJson(JSONUtils.getAsJsonObject(json, "result"));
 			return new TeslaSynthesizerRecipe(recipeId, blockIngredient, material1, material2, result, cookTime);
 		}
 
 		@Override
-		public TeslaSynthesizerRecipe read(ResourceLocation recipeId, PacketBuffer buffer) {
-			Ingredient blockIngredient = Ingredient.read(buffer);
-			Ingredient material1 = Ingredient.read(buffer);
-			Ingredient material2 = Ingredient.read(buffer);
+		public TeslaSynthesizerRecipe fromNetwork(ResourceLocation recipeId, PacketBuffer buffer) {
+			Ingredient blockIngredient = Ingredient.fromNetwork(buffer);
+			Ingredient material1 = Ingredient.fromNetwork(buffer);
+			Ingredient material2 = Ingredient.fromNetwork(buffer);
 			TeslaSynthesizerRecipe.cookTime = buffer.readInt();
-			ItemStack result = buffer.readItemStack();
+			ItemStack result = buffer.readItem();
 			return new TeslaSynthesizerRecipe(recipeId, blockIngredient, material1, material2, result, cookTime);
 		}
 
 		@Override
-		public void write(PacketBuffer buffer, TeslaSynthesizerRecipe recipe) {
-			recipe.blockIngredient.write(buffer);
-			recipe.material1.write(buffer);
-			recipe.material2.write(buffer);
-			buffer.writeItemStack(recipe.result);
+		public void toNetwork(PacketBuffer buffer, TeslaSynthesizerRecipe recipe) {
+			recipe.blockIngredient.toNetwork(buffer);
+			recipe.material1.toNetwork(buffer);
+			recipe.material2.toNetwork(buffer);
+			buffer.writeItem(recipe.result);
 		}
 	}
 }

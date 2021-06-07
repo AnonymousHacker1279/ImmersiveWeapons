@@ -18,77 +18,79 @@ import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 
+import net.minecraft.block.AbstractBlock.Properties;
+
 public class ShelfBlock extends ContainerBlock {
 
-	public static final DirectionProperty FACING = HorizontalBlock.HORIZONTAL_FACING;
-	protected static final VoxelShape SHAPE_NORTH = Block.makeCuboidShape(0.0D, 0.0D, 16.0D, 16.0D, 16.0D, 10.0D);
-	protected static final VoxelShape SHAPE_SOUTH = Block.makeCuboidShape(0.0D, 0.0D, 0.0D, 16.0D, 16.0D, 6.0D);
-	protected static final VoxelShape SHAPE_EAST = Block.makeCuboidShape(0.0D, 0.0D, 0.0D, 6.0D, 16.0D, 16.0D);
-	protected static final VoxelShape SHAPE_WEST = Block.makeCuboidShape(10.0D, 0.0D, 0.0D, 16.0D, 16.0D, 16.0D);
+	public static final DirectionProperty FACING = HorizontalBlock.FACING;
+	protected static final VoxelShape SHAPE_NORTH = Block.box(0.0D, 0.0D, 16.0D, 16.0D, 16.0D, 10.0D);
+	protected static final VoxelShape SHAPE_SOUTH = Block.box(0.0D, 0.0D, 0.0D, 16.0D, 16.0D, 6.0D);
+	protected static final VoxelShape SHAPE_EAST = Block.box(0.0D, 0.0D, 0.0D, 6.0D, 16.0D, 16.0D);
+	protected static final VoxelShape SHAPE_WEST = Block.box(10.0D, 0.0D, 0.0D, 16.0D, 16.0D, 16.0D);
 
 	public ShelfBlock(Properties properties) {
 		super(properties);
-		this.setDefaultState(this.stateContainer.getBaseState().with(FACING, Direction.NORTH));
+		this.registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.NORTH));
 	}
 
 	@Override
-	public BlockRenderType getRenderType(BlockState state) {
+	public BlockRenderType getRenderShape(BlockState state) {
 		return BlockRenderType.MODEL;
 	}
 
 	@Override
 	public BlockState rotate(BlockState state, Rotation rot) {
-		return state.with(FACING, rot.rotate(state.get(FACING)));
+		return state.setValue(FACING, rot.rotate(state.getValue(FACING)));
 	}
 
 	@Override
 	public BlockState mirror(BlockState state, Mirror mirrorIn) {
-		return state.rotate(mirrorIn.toRotation(state.get(FACING)));
+		return state.rotate(mirrorIn.getRotation(state.getValue(FACING)));
 	}
 
 	@Override
 	public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
 		Vector3d vector3d = state.getOffset(worldIn, pos);
-		switch (state.get(FACING)) {
+		switch (state.getValue(FACING)) {
 			case NORTH:
 			default:
-				return SHAPE_NORTH.withOffset(vector3d.x, vector3d.y, vector3d.z);
+				return SHAPE_NORTH.move(vector3d.x, vector3d.y, vector3d.z);
 			case SOUTH:
-				return SHAPE_SOUTH.withOffset(vector3d.x, vector3d.y, vector3d.z);
+				return SHAPE_SOUTH.move(vector3d.x, vector3d.y, vector3d.z);
 			case EAST:
-				return SHAPE_EAST.withOffset(vector3d.x, vector3d.y, vector3d.z);
+				return SHAPE_EAST.move(vector3d.x, vector3d.y, vector3d.z);
 			case WEST:
-				return SHAPE_WEST.withOffset(vector3d.x, vector3d.y, vector3d.z);
+				return SHAPE_WEST.move(vector3d.x, vector3d.y, vector3d.z);
 		}
 	}
 
 	@Override
-	public void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
+	public void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder) {
 		builder.add(FACING);
 	}
 
 	@Override
 	public BlockState getStateForPlacement(BlockItemUseContext context) {
-		return this.getDefaultState().with(FACING, context.getPlacementHorizontalFacing().getOpposite());
+		return this.defaultBlockState().setValue(FACING, context.getHorizontalDirection().getOpposite());
 	}
 
 	@Override
-	public TileEntity createNewTileEntity(IBlockReader world) {
+	public TileEntity newBlockEntity(IBlockReader world) {
 		return new WallShelfTileEntity();
 	}
 
 	@Override
-	public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
-		TileEntity tileentity = worldIn.getTileEntity(pos);
+	public ActionResultType use(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
+		TileEntity tileentity = worldIn.getBlockEntity(pos);
 		if (tileentity instanceof WallShelfTileEntity) {
 			WallShelfTileEntity wallShelfTileEntity = (WallShelfTileEntity) tileentity;
-			ItemStack itemstack = player.getHeldItem(handIn);
+			ItemStack itemstack = player.getItemInHand(handIn);
 			if (itemstack.isEmpty()) {
 				// If not holding anything, remove the last added item
 				wallShelfTileEntity.removeItem();
 				return ActionResultType.SUCCESS;
 			}
-			if (!worldIn.isRemote && wallShelfTileEntity.addItem(player.abilities.isCreativeMode ? itemstack.copy() : itemstack)) {
+			if (!worldIn.isClientSide && wallShelfTileEntity.addItem(player.abilities.instabuild ? itemstack.copy() : itemstack)) {
 				return ActionResultType.SUCCESS;
 			}
 			return ActionResultType.CONSUME;
@@ -97,14 +99,14 @@ public class ShelfBlock extends ContainerBlock {
 	}
 
 	@Override
-	public void onReplaced(BlockState state, World worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
-		if (!state.matchesBlock(newState.getBlock())) {
-			TileEntity tileentity = worldIn.getTileEntity(pos);
+	public void onRemove(BlockState state, World worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
+		if (!state.is(newState.getBlock())) {
+			TileEntity tileentity = worldIn.getBlockEntity(pos);
 			if (tileentity instanceof WallShelfTileEntity) {
-				InventoryHelper.dropItems(worldIn, pos, ((WallShelfTileEntity) tileentity).getInventory());
+				InventoryHelper.dropContents(worldIn, pos, ((WallShelfTileEntity) tileentity).getInventory());
 			}
 
-			super.onReplaced(state, worldIn, pos, newState, isMoving);
+			super.onRemove(state, worldIn, pos, newState, isMoving);
 		}
 	}
 }

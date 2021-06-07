@@ -40,10 +40,10 @@ public class ImmersiveWeaponsJEIPlugin implements IModPlugin {
 	@Override
 	public void registerRecipes(IRecipeRegistration registration) {
 		Minecraft minecraft = Minecraft.getInstance();
-		ClientWorld world = Objects.requireNonNull(minecraft.world);
+		ClientWorld world = Objects.requireNonNull(minecraft.level);
 
-		Set<SmallPartsRecipe> smallPartsRecipes = ImmutableSet.copyOf(world.getRecipeManager().getRecipesForType(ICustomRecipeType.SMALL_PARTS));
-		Set<TeslaSynthesizerRecipe> teslaSynthesizerRecipes = ImmutableSet.copyOf(world.getRecipeManager().getRecipesForType(ICustomRecipeType.TESLA_SYNTHESIZER));
+		Set<SmallPartsRecipe> smallPartsRecipes = ImmutableSet.copyOf(world.getRecipeManager().getAllRecipesFor(ICustomRecipeType.SMALL_PARTS));
+		Set<TeslaSynthesizerRecipe> teslaSynthesizerRecipes = ImmutableSet.copyOf(world.getRecipeManager().getAllRecipesFor(ICustomRecipeType.TESLA_SYNTHESIZER));
 		registration.addRecipes(smallPartsRecipes, SmallPartsRecipeCategory.UID);
 		registration.addRecipes(teslaSynthesizerRecipes, TeslaSynthesizerRecipeCategory.UID);
 	}

@@ -80,7 +80,7 @@ public abstract class AbstractTeslaSynthesizerTileEntity extends LockableTileEnt
 		}
 
 		@Override
-		public int size() {
+		public int getCount() {
 			return 4;
 		}
 	};
@@ -108,8 +108,8 @@ public abstract class AbstractTeslaSynthesizerTileEntity extends LockableTileEnt
 	private static void addItemBurnTime(Map<Item, Integer> map, IItemProvider itemProvider, int burnTimeIn) {
 		Item item = itemProvider.asItem();
 		if (isNonFlammable(item)) {
-			if (SharedConstants.developmentMode) {
-				throw Util.pauseDevMode(new IllegalStateException("A developer tried to explicitly make fire resistant item " + item.getDisplayName(null).getString() + " a furnace fuel. That will not work!"));
+			if (SharedConstants.IS_RUNNING_IN_IDE) {
+				throw Util.pauseInIde(new IllegalStateException("A developer tried to explicitly make fire resistant item " + item.getName(null).getString() + " a furnace fuel. That will not work!"));
 			}
 		} else {
 			map.put(item, burnTimeIn);
@@ -121,9 +121,9 @@ public abstract class AbstractTeslaSynthesizerTileEntity extends LockableTileEnt
 	}
 
 	@Override
-	public void read(BlockState state, CompoundNBT nbt) {
-		super.read(state, nbt);
-		this.items = NonNullList.withSize(this.getSizeInventory(), ItemStack.EMPTY);
+	public void load(BlockState state, CompoundNBT nbt) {
+		super.load(state, nbt);
+		this.items = NonNullList.withSize(this.getContainerSize(), ItemStack.EMPTY);
 		ItemStackHelper.loadAllItems(nbt, this.items);
 		this.burnTime = nbt.getInt("BurnTime");
 		this.cookTime = nbt.getInt("CookTime");
@@ -131,15 +131,15 @@ public abstract class AbstractTeslaSynthesizerTileEntity extends LockableTileEnt
 		this.burnTimeTotal = getBurnTime(this.items.get(3));
 		CompoundNBT compoundnbt = nbt.getCompound("RecipesUsed");
 
-		for (String s : compoundnbt.keySet()) {
+		for (String s : compoundnbt.getAllKeys()) {
 			this.recipes.put(new ResourceLocation(s), compoundnbt.getInt(s));
 		}
 
 	}
 
 	@Override
-	public CompoundNBT write(CompoundNBT compound) {
-		super.write(compound);
+	public CompoundNBT save(CompoundNBT compound) {
+		super.save(compound);
 		compound.putInt("BurnTime", this.burnTime);
 		compound.putInt("CookTime", this.cookTime);
 		compound.putInt("CookTimeTotal", this.cookTimeTotal);
@@ -160,11 +160,11 @@ public abstract class AbstractTeslaSynthesizerTileEntity extends LockableTileEnt
 			--this.burnTime;
 		}
 
-		if (!this.world.isRemote) {
+		if (!this.level.isClientSide) {
 			ItemStack itemstack = this.items.get(3);
 			if (this.isBurning() || !itemstack.isEmpty() && !this.items.get(0).isEmpty() && !this.items.get(1).isEmpty() && !this.items.get(2).isEmpty()) {
-				RecipeManager recipeManager = this.world.getRecipeManager();
-				IRecipe<?> iRecipe = recipeManager.getRecipe(ICustomRecipeType.TESLA_SYNTHESIZER, this, this.world).orElse(null);
+				RecipeManager recipeManager = this.level.getRecipeManager();
+				IRecipe<?> iRecipe = recipeManager.getRecipeFor(ICustomRecipeType.TESLA_SYNTHESIZER, this, this.level).orElse(null);
 				if (!this.isBurning() && this.canSmelt(iRecipe)) {
 					this.burnTime = getBurnTime(itemstack);
 					this.burnTimeTotal = this.burnTime;
@@ -202,23 +202,23 @@ public abstract class AbstractTeslaSynthesizerTileEntity extends LockableTileEnt
 		}
 
 		if (flag1) {
-			this.markDirty();
+			this.setChanged();
 		}
 
 	}
 
 	protected boolean canSmelt(@Nullable IRecipe<?> recipeIn) {
 		if (!this.items.get(0).isEmpty() && !this.items.get(1).isEmpty() && !this.items.get(2).isEmpty() && recipeIn != null) {
-			ItemStack itemstack = recipeIn.getRecipeOutput();
+			ItemStack itemstack = recipeIn.getResultItem();
 			if (itemstack.isEmpty()) {
 				return false;
 			} else {
 				ItemStack itemstack1 = this.items.get(4);
 				if (itemstack1.isEmpty()) {
 					return true;
-				} else if (!itemstack1.isItemEqual(itemstack)) {
+				} else if (!itemstack1.sameItem(itemstack)) {
 					return false;
-				} else if (itemstack1.getCount() + itemstack.getCount() <= this.getInventoryStackLimit() && itemstack1.getCount() + itemstack.getCount() <= itemstack1.getMaxStackSize()) { // Forge fix: make furnace respect stack sizes in furnace recipes
+				} else if (itemstack1.getCount() + itemstack.getCount() <= this.getMaxStackSize() && itemstack1.getCount() + itemstack.getCount() <= itemstack1.getMaxStackSize()) { // Forge fix: make furnace respect stack sizes in furnace recipes
 					return true;
 				} else {
 					return itemstack1.getCount() + itemstack.getCount() <= itemstack.getMaxStackSize(); // Forge fix: make furnace respect stack sizes in furnace recipes
@@ -230,12 +230,12 @@ public abstract class AbstractTeslaSynthesizerTileEntity extends LockableTileEnt
 	}
 
 	@Override
-	public boolean canInsertItem(int index, ItemStack itemStackIn, @Nullable Direction direction) {
+	public boolean canPlaceItemThroughFace(int index, ItemStack itemStackIn, @Nullable Direction direction) {
 		return false;
 	}
 
 	@Override
-	public boolean canExtractItem(int index, ItemStack stack, Direction direction) {
+	public boolean canTakeItemThroughFace(int index, ItemStack stack, Direction direction) {
 		return false;
 	}
 
@@ -245,14 +245,14 @@ public abstract class AbstractTeslaSynthesizerTileEntity extends LockableTileEnt
 			ItemStack ingredient2 = this.items.get(1);
 			ItemStack ingredient3 = this.items.get(2);
 			ItemStack recipeOutputStack = this.items.get(4);
-			ItemStack recipeOutput = recipe.getRecipeOutput();
+			ItemStack recipeOutput = recipe.getResultItem();
 			if (recipeOutputStack.isEmpty()) {
 				this.items.set(4, recipeOutput.copy());
 			} else if (recipeOutputStack.getItem() == recipeOutput.getItem()) {
 				recipeOutputStack.grow(recipeOutput.getCount());
 			}
 
-			if (!this.world.isRemote) {
+			if (!this.level.isClientSide) {
 				this.setRecipeUsed(recipe);
 			}
 
@@ -274,8 +274,8 @@ public abstract class AbstractTeslaSynthesizerTileEntity extends LockableTileEnt
 	}
 
 	protected int getCookTime() {
-		if (this.world != null) {
-			return (int) this.world.getRecipeManager().getRecipe(ICustomRecipeType.TESLA_SYNTHESIZER, this, this.world).map(o -> TeslaSynthesizerRecipe.getCookTime()).orElse(200);
+		if (this.level != null) {
+			return (int) this.level.getRecipeManager().getRecipeFor(ICustomRecipeType.TESLA_SYNTHESIZER, this, this.level).map(o -> TeslaSynthesizerRecipe.getCookTime()).orElse(200);
 		}
 		return 0;
 	}
@@ -301,7 +301,7 @@ public abstract class AbstractTeslaSynthesizerTileEntity extends LockableTileEnt
 	 * Returns the number of slots in the inventory.
 	 */
 	@Override
-	public int getSizeInventory() {
+	public int getContainerSize() {
 		return this.items.size();
 	}
 
@@ -320,7 +320,7 @@ public abstract class AbstractTeslaSynthesizerTileEntity extends LockableTileEnt
 	 * Returns the stack in the given slot.
 	 */
 	@Override
-	public ItemStack getStackInSlot(int index) {
+	public ItemStack getItem(int index) {
 		return this.items.get(index);
 	}
 
@@ -328,34 +328,34 @@ public abstract class AbstractTeslaSynthesizerTileEntity extends LockableTileEnt
 	 * Removes up to a specified number of items from an inventory slot and returns them in a new stack.
 	 */
 	@Override
-	public ItemStack decrStackSize(int index, int count) {
-		return ItemStackHelper.getAndSplit(this.items, index, count);
+	public ItemStack removeItem(int index, int count) {
+		return ItemStackHelper.removeItem(this.items, index, count);
 	}
 
 	/**
 	 * Removes a stack from the given slot and returns it.
 	 */
 	@Override
-	public ItemStack removeStackFromSlot(int index) {
-		return ItemStackHelper.getAndRemove(this.items, index);
+	public ItemStack removeItemNoUpdate(int index) {
+		return ItemStackHelper.takeItem(this.items, index);
 	}
 
 	/**
 	 * Sets the given item stack to the specified slot in the inventory (can be crafting or armor sections).
 	 */
 	@Override
-	public void setInventorySlotContents(int index, ItemStack stack) {
+	public void setItem(int index, ItemStack stack) {
 		ItemStack itemstack = this.items.get(index);
-		boolean flag = !stack.isEmpty() && stack.isItemEqual(itemstack) && ItemStack.areItemStackTagsEqual(stack, itemstack);
+		boolean flag = !stack.isEmpty() && stack.sameItem(itemstack) && ItemStack.tagMatches(stack, itemstack);
 		this.items.set(index, stack);
-		if (stack.getCount() > this.getInventoryStackLimit()) {
-			stack.setCount(this.getInventoryStackLimit());
+		if (stack.getCount() > this.getMaxStackSize()) {
+			stack.setCount(this.getMaxStackSize());
 		}
 
 		if (index == 0 && !flag) {
 			this.cookTimeTotal = this.getCookTime();
 			this.cookTime = 0;
-			this.markDirty();
+			this.setChanged();
 		}
 
 	}
@@ -364,11 +364,11 @@ public abstract class AbstractTeslaSynthesizerTileEntity extends LockableTileEnt
 	 * Don't rename this method to canInteractWith due to conflicts with Container
 	 */
 	@Override
-	public boolean isUsableByPlayer(PlayerEntity player) {
-		if (this.world.getTileEntity(this.pos) != this) {
+	public boolean stillValid(PlayerEntity player) {
+		if (this.level.getBlockEntity(this.worldPosition) != this) {
 			return false;
 		} else {
-			return player.getDistanceSq((double) this.pos.getX() + 0.5D, (double) this.pos.getY() + 0.5D, (double) this.pos.getZ() + 0.5D) <= 64.0D;
+			return player.distanceToSqr((double) this.worldPosition.getX() + 0.5D, (double) this.worldPosition.getY() + 0.5D, (double) this.worldPosition.getZ() + 0.5D) <= 64.0D;
 		}
 	}
 
@@ -377,7 +377,7 @@ public abstract class AbstractTeslaSynthesizerTileEntity extends LockableTileEnt
 	 * guis use Slot.isItemValid
 	 */
 	@Override
-	public boolean isItemValidForSlot(int index, ItemStack stack) {
+	public boolean canPlaceItem(int index, ItemStack stack) {
 		if (index == 2) {
 			return false;
 		} else if (index != 1) {
@@ -388,7 +388,7 @@ public abstract class AbstractTeslaSynthesizerTileEntity extends LockableTileEnt
 	}
 
 	@Override
-	public void clear() {
+	public void clearContent() {
 		this.items.clear();
 	}
 
@@ -408,7 +408,7 @@ public abstract class AbstractTeslaSynthesizerTileEntity extends LockableTileEnt
 	}
 
 	@Override
-	public void onCrafting(PlayerEntity player) {
+	public void awardUsedRecipes(PlayerEntity player) {
 	}
 
 	@Override
@@ -424,7 +424,7 @@ public abstract class AbstractTeslaSynthesizerTileEntity extends LockableTileEnt
 
 	@Override
 	public <T> LazyOptional<T> getCapability(Capability<T> capability, @Nullable Direction facing) {
-		if (!this.removed && facing != null && capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
+		if (!this.remove && facing != null && capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
 			if (facing == Direction.UP)
 				return handlers[0].cast();
 			else if (facing == Direction.DOWN)

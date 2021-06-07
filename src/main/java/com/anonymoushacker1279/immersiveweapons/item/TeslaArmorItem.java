@@ -26,7 +26,7 @@ public class TeslaArmorItem extends ArmorItem {
 	private int countdown = 0;
 
 	public TeslaArmorItem(IArmorMaterial material, EquipmentSlotType slot, int type) {
-		super(material, slot, (new Item.Properties().group(DeferredRegistryHandler.ITEM_GROUP)));
+		super(material, slot, (new Item.Properties().tab(DeferredRegistryHandler.ITEM_GROUP)));
 		if (type == 2) {
 			isLeggings = true;
 		}
@@ -39,30 +39,30 @@ public class TeslaArmorItem extends ArmorItem {
 
 	@Override
 	public void onArmorTick(ItemStack stack, World world, PlayerEntity player) {
-		if (player.getItemStackFromSlot(EquipmentSlotType.HEAD).getItem() == DeferredRegistryHandler.TESLA_HELMET.get() &&
-				player.getItemStackFromSlot(EquipmentSlotType.CHEST).getItem() == DeferredRegistryHandler.TESLA_CHESTPLATE.get() &&
-				player.getItemStackFromSlot(EquipmentSlotType.LEGS).getItem() == DeferredRegistryHandler.TESLA_LEGGINGS.get() &&
-				player.getItemStackFromSlot(EquipmentSlotType.FEET).getItem() == DeferredRegistryHandler.TESLA_BOOTS.get()) {
-			if (ClientModEventSubscriber.toggleArmorEffect.isPressed()) {
+		if (player.getItemBySlot(EquipmentSlotType.HEAD).getItem() == DeferredRegistryHandler.TESLA_HELMET.get() &&
+				player.getItemBySlot(EquipmentSlotType.CHEST).getItem() == DeferredRegistryHandler.TESLA_CHESTPLATE.get() &&
+				player.getItemBySlot(EquipmentSlotType.LEGS).getItem() == DeferredRegistryHandler.TESLA_LEGGINGS.get() &&
+				player.getItemBySlot(EquipmentSlotType.FEET).getItem() == DeferredRegistryHandler.TESLA_BOOTS.get()) {
+			if (ClientModEventSubscriber.toggleArmorEffect.consumeClick()) {
 				if (!armorIsToggled) {
 					armorIsToggled = true;
-					world.playSound(player.getPosX(), player.getPosY(), player.getPosZ(), DeferredRegistryHandler.TESLA_ARMOR_POWER_UP.get(), SoundCategory.NEUTRAL, 0.9f, 1, false);
+					world.playLocalSound(player.getX(), player.getY(), player.getZ(), DeferredRegistryHandler.TESLA_ARMOR_POWER_UP.get(), SoundCategory.NEUTRAL, 0.9f, 1, false);
 				} else {
 					armorIsToggled = false;
-					world.playSound(player.getPosX(), player.getPosY(), player.getPosZ(), DeferredRegistryHandler.TESLA_ARMOR_POWER_DOWN.get(), SoundCategory.NEUTRAL, 0.9f, 1, false);
+					world.playLocalSound(player.getX(), player.getY(), player.getZ(), DeferredRegistryHandler.TESLA_ARMOR_POWER_DOWN.get(), SoundCategory.NEUTRAL, 0.9f, 1, false);
 					countdown = 0;
 				}
 			}
 
 			if (armorIsToggled) {
-				List<Entity> entity = player.world.getEntitiesWithinAABBExcludingEntity(player, player.getBoundingBox().offset(-3, -3, -3).expand(6, 6, 6));
+				List<Entity> entity = player.level.getEntities(player, player.getBoundingBox().move(-3, -3, -3).expandTowards(6, 6, 6));
 
 				if (!entity.isEmpty()) {
 					for (Entity element : entity) {
-						if (element.isLiving()) {
-							((LivingEntity) element).addPotionEffect(new EffectInstance(Effects.WEAKNESS, 100, 0, false, false));
-							((LivingEntity) element).addPotionEffect(new EffectInstance(Effects.SLOWNESS, 100, 0, false, false));
-							((LivingEntity) element).addPotionEffect(new EffectInstance(Effects.NAUSEA, 100, 0, false, false));
+						if (element.showVehicleHealth()) {
+							((LivingEntity) element).addEffect(new EffectInstance(Effects.WEAKNESS, 100, 0, false, false));
+							((LivingEntity) element).addEffect(new EffectInstance(Effects.MOVEMENT_SLOWDOWN, 100, 0, false, false));
+							((LivingEntity) element).addEffect(new EffectInstance(Effects.CONFUSION, 100, 0, false, false));
 							effectNoise(world, player);
 						}
 					}
@@ -74,7 +74,7 @@ public class TeslaArmorItem extends ArmorItem {
 
 	private void effectNoise(World world, PlayerEntity player) {
 		if (countdown == 0 && Config.TESLA_ARMOR_EFFECT_SOUND.get()) {
-			world.playSound(player, player.getPosition(), DeferredRegistryHandler.TESLA_ARMOR_EFFECT.get(), SoundCategory.NEUTRAL, 0.65f, 1);
+			world.playSound(player, player.blockPosition(), DeferredRegistryHandler.TESLA_ARMOR_EFFECT.get(), SoundCategory.NEUTRAL, 0.65f, 1);
 			countdown = 120;
 		} else if (countdown > 0) {
 			countdown--;

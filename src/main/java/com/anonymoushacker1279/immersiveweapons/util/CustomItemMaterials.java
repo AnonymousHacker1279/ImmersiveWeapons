@@ -9,16 +9,16 @@ import java.util.function.Supplier;
 
 public enum CustomItemMaterials implements IItemTier {
 	MOLTEN(3, 1900, 8.2F, 3.0F, 17, () -> {
-		return Ingredient.fromItems(DeferredRegistryHandler.MOLTEN_INGOT.get());
+		return Ingredient.of(DeferredRegistryHandler.MOLTEN_INGOT.get());
 	}),
 	COPPER(2, 180, 5.9F, 2.0F, 12, () -> {
-		return Ingredient.fromItems(DeferredRegistryHandler.COPPER_INGOT.get());
+		return Ingredient.of(DeferredRegistryHandler.COPPER_INGOT.get());
 	}),
 	TESLA(4, 2100, 18.0F, 3.0F, 20, () -> {
-		return Ingredient.fromItems(DeferredRegistryHandler.TESLA_INGOT.get());
+		return Ingredient.of(DeferredRegistryHandler.TESLA_INGOT.get());
 	}),
 	COBALT(2, 300, 6.2F, 3.0F, 15, () -> {
-		return Ingredient.fromItems(DeferredRegistryHandler.COBALT_INGOT.get());
+		return Ingredient.of(DeferredRegistryHandler.COBALT_INGOT.get());
 	});
 
 	private final int harvestLevel;
@@ -38,32 +38,32 @@ public enum CustomItemMaterials implements IItemTier {
 	}
 
 	@Override
-	public int getMaxUses() {
+	public int getUses() {
 		return this.maxUses;
 	}
 
 	@Override
-	public float getEfficiency() {
+	public float getSpeed() {
 		return this.efficiency;
 	}
 
 	@Override
-	public float getAttackDamage() {
+	public float getAttackDamageBonus() {
 		return this.attackDamage;
 	}
 
 	@Override
-	public int getHarvestLevel() {
+	public int getLevel() {
 		return this.harvestLevel;
 	}
 
 	@Override
-	public int getEnchantability() {
+	public int getEnchantmentValue() {
 		return this.enchantability;
 	}
 
 	@Override
-	public Ingredient getRepairMaterial() {
-		return this.repairMaterial.getValue();
+	public Ingredient getRepairIngredient() {
+		return this.repairMaterial.get();
 	}
 }

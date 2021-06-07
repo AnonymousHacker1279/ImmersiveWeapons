@@ -19,12 +19,12 @@ public class ForgeEventSubscriber {
 	public static void renderBlockOverlayEvent(final RenderBlockOverlayEvent event) {
 
 		// Remove fire overlay from players wearing a full set of molten armor
-		if (event.getPlayer().getItemStackFromSlot(EquipmentSlotType.HEAD).getItem() == DeferredRegistryHandler.MOLTEN_HELMET.get() &&
-				event.getPlayer().getItemStackFromSlot(EquipmentSlotType.CHEST).getItem() == DeferredRegistryHandler.MOLTEN_CHESTPLATE.get() &&
-				event.getPlayer().getItemStackFromSlot(EquipmentSlotType.LEGS).getItem() == DeferredRegistryHandler.MOLTEN_LEGGINGS.get() &&
-				event.getPlayer().getItemStackFromSlot(EquipmentSlotType.FEET).getItem() == DeferredRegistryHandler.MOLTEN_BOOTS.get()) {
+		if (event.getPlayer().getItemBySlot(EquipmentSlotType.HEAD).getItem() == DeferredRegistryHandler.MOLTEN_HELMET.get() &&
+				event.getPlayer().getItemBySlot(EquipmentSlotType.CHEST).getItem() == DeferredRegistryHandler.MOLTEN_CHESTPLATE.get() &&
+				event.getPlayer().getItemBySlot(EquipmentSlotType.LEGS).getItem() == DeferredRegistryHandler.MOLTEN_LEGGINGS.get() &&
+				event.getPlayer().getItemBySlot(EquipmentSlotType.FEET).getItem() == DeferredRegistryHandler.MOLTEN_BOOTS.get()) {
 			if (event.getPlayer().isInLava()) {
-				if (event.getBlockForOverlay() == Blocks.FIRE.getDefaultState()) {
+				if (event.getBlockForOverlay() == Blocks.FIRE.defaultBlockState()) {
 					event.setCanceled(true);
 				}
 			}
@@ -36,10 +36,10 @@ public class ForgeEventSubscriber {
 
 		// Reduce lava fog from players wearing a full set of molten armor
 		PlayerEntity player = Minecraft.getInstance().player;
-		if (player != null && player.getItemStackFromSlot(EquipmentSlotType.HEAD).getItem() == DeferredRegistryHandler.MOLTEN_HELMET.get() &&
-				player.getItemStackFromSlot(EquipmentSlotType.CHEST).getItem() == DeferredRegistryHandler.MOLTEN_CHESTPLATE.get() &&
-				player.getItemStackFromSlot(EquipmentSlotType.LEGS).getItem() == DeferredRegistryHandler.MOLTEN_LEGGINGS.get() &&
-				player.getItemStackFromSlot(EquipmentSlotType.FEET).getItem() == DeferredRegistryHandler.MOLTEN_BOOTS.get()) {
+		if (player != null && player.getItemBySlot(EquipmentSlotType.HEAD).getItem() == DeferredRegistryHandler.MOLTEN_HELMET.get() &&
+				player.getItemBySlot(EquipmentSlotType.CHEST).getItem() == DeferredRegistryHandler.MOLTEN_CHESTPLATE.get() &&
+				player.getItemBySlot(EquipmentSlotType.LEGS).getItem() == DeferredRegistryHandler.MOLTEN_LEGGINGS.get() &&
+				player.getItemBySlot(EquipmentSlotType.FEET).getItem() == DeferredRegistryHandler.MOLTEN_BOOTS.get()) {
 			if (player.isInLava()) {
 				event.setDensity(0.05F);
 				event.setCanceled(true);

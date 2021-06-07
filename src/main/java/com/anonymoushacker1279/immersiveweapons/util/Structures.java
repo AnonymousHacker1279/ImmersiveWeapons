@@ -100,22 +100,22 @@ public class Structures {
 			F structure,
 			StructureSeparationSettings structureSeparationSettings,
 			boolean transformSurroundingLand) {
-		Structure.NAME_STRUCTURE_BIMAP.put(Objects.requireNonNull(structure.getRegistryName()).toString(), structure);
+		Structure.STRUCTURES_REGISTRY.put(Objects.requireNonNull(structure.getRegistryName()).toString(), structure);
 
 		/*
 		 * Will add land at the base of the structure
 		 */
 		if (transformSurroundingLand) {
-			Structure.field_236384_t_ =
+			Structure.NOISE_AFFECTING_FEATURES =
 					ImmutableList.<Structure<?>> builder()
-							.addAll(Structure.field_236384_t_)
+							.addAll(Structure.NOISE_AFFECTING_FEATURES)
 							.add(structure)
 							.build();
 		}
 
-		DimensionStructuresSettings.field_236191_b_ =
+		DimensionStructuresSettings.DEFAULTS =
 				ImmutableMap.<Structure<?>, StructureSeparationSettings> builder()
-						.putAll(DimensionStructuresSettings.field_236191_b_)
+						.putAll(DimensionStructuresSettings.DEFAULTS)
 						.put(structure, structureSeparationSettings)
 						.build();
 	}

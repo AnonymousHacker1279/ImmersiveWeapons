@@ -18,22 +18,22 @@ public class MolotovItem extends Item {
 	}
 
 	@Override
-	public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand handIn) {
-		ItemStack itemstack = playerIn.getHeldItem(handIn);
-		worldIn.playSound(null, playerIn.getPosX(), playerIn.getPosY(), playerIn.getPosZ(), DeferredRegistryHandler.GENERIC_WHOOSH.get(), SoundCategory.NEUTRAL, 0.5F, 0.4F / (random.nextFloat() * 0.4F + 0.8F));
-		if (!worldIn.isRemote) {
+	public ActionResult<ItemStack> use(World worldIn, PlayerEntity playerIn, Hand handIn) {
+		ItemStack itemstack = playerIn.getItemInHand(handIn);
+		worldIn.playSound(null, playerIn.getX(), playerIn.getY(), playerIn.getZ(), DeferredRegistryHandler.GENERIC_WHOOSH.get(), SoundCategory.NEUTRAL, 0.5F, 0.4F / (random.nextFloat() * 0.4F + 0.8F));
+		if (!worldIn.isClientSide) {
 			MolotovEntity molotovEntity = new MolotovEntity(worldIn, playerIn);
 			molotovEntity.setItem(itemstack);
-			molotovEntity.setDirectionAndMovement(playerIn, playerIn.rotationPitch, playerIn.rotationYaw, 0.01F, 1F, 1.0F);
-			worldIn.addEntity(molotovEntity);
+			molotovEntity.shootFromRotation(playerIn, playerIn.xRot, playerIn.yRot, 0.01F, 1F, 1.0F);
+			worldIn.addFreshEntity(molotovEntity);
 		}
 
-		playerIn.addStat(Stats.ITEM_USED.get(this));
-		if (!playerIn.abilities.isCreativeMode) {
+		playerIn.awardStat(Stats.ITEM_USED.get(this));
+		if (!playerIn.abilities.instabuild) {
 			itemstack.shrink(1);
-			playerIn.getCooldownTracker().setCooldown(this, 100);    // Helps to prevent spamming
+			playerIn.getCooldowns().addCooldown(this, 100);    // Helps to prevent spamming
 		}
 
-		return ActionResult.func_233538_a_(itemstack, worldIn.isRemote());
+		return ActionResult.sidedSuccess(itemstack, worldIn.isClientSide());
 	}
 }
