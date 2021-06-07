@@ -2,6 +2,7 @@ package com.anonymoushacker1279.immersiveweapons.item;
 
 import com.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import com.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
+import net.minecraft.block.Blocks;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
@@ -12,6 +13,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
 
 public class MoltenArmorItem extends ArmorItem {
@@ -27,7 +29,7 @@ public class MoltenArmorItem extends ArmorItem {
 
 	@Override
 	public String getArmorTexture(ItemStack stack, Entity entity, EquipmentSlotType slot, String type) {
-		return (isLeggings == false ? ImmersiveWeapons.MOD_ID + ":textures/armor/molten_layer_1.png" : ImmersiveWeapons.MOD_ID + ":textures/armor/molten_layer_2.png");
+		return (!isLeggings ? ImmersiveWeapons.MOD_ID + ":textures/armor/molten_layer_1.png" : ImmersiveWeapons.MOD_ID + ":textures/armor/molten_layer_2.png");
 	}
 
 	@Override
@@ -38,6 +40,8 @@ public class MoltenArmorItem extends ArmorItem {
 				player.getItemStackFromSlot(EquipmentSlotType.FEET).getItem() == DeferredRegistryHandler.MOLTEN_BOOTS.get()) {
 			if (player.isInLava()) {
 				player.addPotionEffect(new EffectInstance(Effects.FIRE_RESISTANCE, 140, 0, false, false));
+				player.setMotionMultiplier(Blocks.LAVA.getDefaultState(), new Vector3d(5.5D, 5.5D, 5.5D));
+				player.extinguish();
 			} else if (player.getLastDamageSource() == DamageSource.IN_FIRE || player.getLastDamageSource() == DamageSource.ON_FIRE) {
 				player.addPotionEffect(new EffectInstance(Effects.FIRE_RESISTANCE, 140, 0, false, false));
 				player.extinguish();

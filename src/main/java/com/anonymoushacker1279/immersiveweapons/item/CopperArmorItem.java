@@ -22,6 +22,6 @@ public class CopperArmorItem extends ArmorItem {
 
 	@Override
 	public String getArmorTexture(ItemStack stack, Entity entity, EquipmentSlotType slot, String type) {
-		return (isLeggings == false ? ImmersiveWeapons.MOD_ID + ":textures/armor/copper_layer_1.png" : ImmersiveWeapons.MOD_ID + ":textures/armor/copper_layer_2.png");
+		return (!isLeggings ? ImmersiveWeapons.MOD_ID + ":textures/armor/copper_layer_1.png" : ImmersiveWeapons.MOD_ID + ":textures/armor/copper_layer_2.png");
 	}
 }

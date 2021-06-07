@@ -34,7 +34,7 @@ public class TeslaArmorItem extends ArmorItem {
 
 	@Override
 	public String getArmorTexture(ItemStack stack, Entity entity, EquipmentSlotType slot, String type) {
-		return (isLeggings == false ? ImmersiveWeapons.MOD_ID + ":textures/armor/tesla_layer_1.png" : ImmersiveWeapons.MOD_ID + ":textures/armor/tesla_layer_2.png");
+		return (!isLeggings ? ImmersiveWeapons.MOD_ID + ":textures/armor/tesla_layer_1.png" : ImmersiveWeapons.MOD_ID + ":textures/armor/tesla_layer_2.png");
 	}
 
 	@Override
@@ -44,22 +44,21 @@ public class TeslaArmorItem extends ArmorItem {
 				player.getItemStackFromSlot(EquipmentSlotType.LEGS).getItem() == DeferredRegistryHandler.TESLA_LEGGINGS.get() &&
 				player.getItemStackFromSlot(EquipmentSlotType.FEET).getItem() == DeferredRegistryHandler.TESLA_BOOTS.get()) {
 			if (ClientModEventSubscriber.toggleArmorEffect.isPressed()) {
-				if (armorIsToggled == false) {
+				if (!armorIsToggled) {
 					armorIsToggled = true;
 					world.playSound(player.getPosX(), player.getPosY(), player.getPosZ(), DeferredRegistryHandler.TESLA_ARMOR_POWER_UP.get(), SoundCategory.NEUTRAL, 0.9f, 1, false);
-				} else if (armorIsToggled == true) {
+				} else {
 					armorIsToggled = false;
 					world.playSound(player.getPosX(), player.getPosY(), player.getPosZ(), DeferredRegistryHandler.TESLA_ARMOR_POWER_DOWN.get(), SoundCategory.NEUTRAL, 0.9f, 1, false);
 					countdown = 0;
 				}
 			}
 
-			if (armorIsToggled == true) {
+			if (armorIsToggled) {
 				List<Entity> entity = player.world.getEntitiesWithinAABBExcludingEntity(player, player.getBoundingBox().offset(-3, -3, -3).expand(6, 6, 6));
 
 				if (!entity.isEmpty()) {
-					for (java.util.Iterator<Entity> iterator = entity.iterator(); iterator.hasNext(); ) {
-						Entity element = iterator.next();
+					for (Entity element : entity) {
 						if (element.isLiving()) {
 							((LivingEntity) element).addPotionEffect(new EffectInstance(Effects.WEAKNESS, 100, 0, false, false));
 							((LivingEntity) element).addPotionEffect(new EffectInstance(Effects.SLOWNESS, 100, 0, false, false));
@@ -74,7 +73,7 @@ public class TeslaArmorItem extends ArmorItem {
 	}
 
 	private void effectNoise(World world, PlayerEntity player) {
-		if (countdown == 0 && Config.TESLA_ARMOR_EFFECT_SOUND.get() == true) {
+		if (countdown == 0 && Config.TESLA_ARMOR_EFFECT_SOUND.get()) {
 			world.playSound(player, player.getPosition(), DeferredRegistryHandler.TESLA_ARMOR_EFFECT.get(), SoundCategory.NEUTRAL, 0.65f, 1);
 			countdown = 120;
 		} else if (countdown > 0) {

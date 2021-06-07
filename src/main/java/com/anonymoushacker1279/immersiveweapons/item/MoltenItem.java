@@ -13,7 +13,7 @@ public class MoltenItem {
 
 		@Override
 		public boolean hitEntity(ItemStack par1ItemStack, LivingEntity par2EntityLiving, LivingEntity par3EntityLiving) {
-			par2EntityLiving.setFire(6);
+			par2EntityLiving.setFire(10);
 			return super.hitEntity(par1ItemStack, par2EntityLiving, par3EntityLiving);
 		}
 	}
@@ -26,7 +26,7 @@ public class MoltenItem {
 
 		@Override
 		public boolean hitEntity(ItemStack par1ItemStack, LivingEntity par2EntityLiving, LivingEntity par3EntityLiving) {
-			par2EntityLiving.setFire(6);
+			par2EntityLiving.setFire(10);
 			return super.hitEntity(par1ItemStack, par2EntityLiving, par3EntityLiving);
 		}
 	}
@@ -39,7 +39,7 @@ public class MoltenItem {
 
 		@Override
 		public boolean hitEntity(ItemStack par1ItemStack, LivingEntity par2EntityLiving, LivingEntity par3EntityLiving) {
-			par2EntityLiving.setFire(6);
+			par2EntityLiving.setFire(10);
 			return super.hitEntity(par1ItemStack, par2EntityLiving, par3EntityLiving);
 		}
 	}
@@ -52,7 +52,7 @@ public class MoltenItem {
 
 		@Override
 		public boolean hitEntity(ItemStack par1ItemStack, LivingEntity par2EntityLiving, LivingEntity par3EntityLiving) {
-			par2EntityLiving.setFire(6);
+			par2EntityLiving.setFire(10);
 			return super.hitEntity(par1ItemStack, par2EntityLiving, par3EntityLiving);
 		}
 	}
@@ -65,7 +65,7 @@ public class MoltenItem {
 
 		@Override
 		public boolean hitEntity(ItemStack par1ItemStack, LivingEntity par2EntityLiving, LivingEntity par3EntityLiving) {
-			par2EntityLiving.setFire(6);
+			par2EntityLiving.setFire(10);
 			return super.hitEntity(par1ItemStack, par2EntityLiving, par3EntityLiving);
 		}
 	}
