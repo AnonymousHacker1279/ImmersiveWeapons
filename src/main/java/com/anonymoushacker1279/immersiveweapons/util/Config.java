@@ -27,6 +27,8 @@ public class Config {
 	public static ForgeConfigSpec.ConfigValue<Integer> MIN_BATTLEFIELD_CAMP_DISTANCE;
 	public static ForgeConfigSpec.ConfigValue<Integer> MAX_BATTLEFIELD_VILLAGE_DISTANCE;
 	public static ForgeConfigSpec.ConfigValue<Integer> MIN_BATTLEFIELD_VILLAGE_DISTANCE;
+	public static ForgeConfigSpec.ConfigValue<Integer> MAX_CLOUD_ISLAND_DISTANCE;
+	public static ForgeConfigSpec.ConfigValue<Integer> MIN_CLOUD_ISLAND_DISTANCE;
 	private static ForgeConfigSpec COMMON_CONFIG;
 
 	static {
@@ -63,6 +65,9 @@ public class Config {
 
 		MAX_BATTLEFIELD_VILLAGE_DISTANCE = COMMON_CONFIG_BUILDER.comment("Maximum distance in chunks between Battlefield Villages - Default 30").define("max_battlefield_village_distance", 30);
 		MIN_BATTLEFIELD_VILLAGE_DISTANCE = COMMON_CONFIG_BUILDER.comment("Minimum distance in chunks between Battlefield Villages - Default 10").define("min_battlefield_village_distance", 10);
+
+		MAX_CLOUD_ISLAND_DISTANCE = COMMON_CONFIG_BUILDER.comment("Maximum distance in chunks between Cloud Islands - Default 90").define("max_cloud_island_distance", 90);
+		MIN_CLOUD_ISLAND_DISTANCE = COMMON_CONFIG_BUILDER.comment("Minimum distance in chunks between Cloud Islands - Default 70").define("min_cloud_island_distance", 70);
 
 		COMMON_CONFIG_BUILDER.pop();
 		COMMON_CONFIG = COMMON_CONFIG_BUILDER.build();

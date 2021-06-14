@@ -17,6 +17,7 @@ public class ConfiguredStructures {
 	public static StructureFeature<?, ?> CONFIGURED_UNDERGROUND_BUNKER = Structures.UNDERGROUND_BUNKER.get().configured(IFeatureConfig.NONE);
 	public static StructureFeature<?, ?> CONFIGURED_BATTLEFIELD_CAMP = Structures.BATTLEFIELD_CAMP.get().configured(IFeatureConfig.NONE);
 	public static StructureFeature<?, ?> CONFIGURED_BATTLEFIELD_VILLAGE = Structures.BATTLEFIELD_VILLAGE.get().configured(IFeatureConfig.NONE);
+	public static StructureFeature<?, ?> CONFIGURED_CLOUD_ISLAND = Structures.CLOUD_ISLAND.get().configured(IFeatureConfig.NONE);
 
 	public static void registerConfiguredStructures() {
 		Registry<StructureFeature<?, ?>> registry = WorldGenRegistries.CONFIGURED_STRUCTURE_FEATURE;
@@ -40,6 +41,9 @@ public class ConfiguredStructures {
 
 		Registry.register(registry, new ResourceLocation(ImmersiveWeapons.MOD_ID, "configured_battlefield_village"), CONFIGURED_BATTLEFIELD_VILLAGE);
 		FlatGenerationSettings.STRUCTURE_FEATURES.put(Structures.BATTLEFIELD_VILLAGE.get(), CONFIGURED_BATTLEFIELD_VILLAGE);
+
+		Registry.register(registry, new ResourceLocation(ImmersiveWeapons.MOD_ID, "configured_cloud_island"), CONFIGURED_CLOUD_ISLAND);
+		FlatGenerationSettings.STRUCTURE_FEATURES.put(Structures.CLOUD_ISLAND.get(), CONFIGURED_CLOUD_ISLAND);
 	}
 
 }

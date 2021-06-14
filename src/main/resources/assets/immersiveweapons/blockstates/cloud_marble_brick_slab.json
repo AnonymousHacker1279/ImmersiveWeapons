@@ -1,0 +1,13 @@
+{
+	"variants": {
+		"type=bottom": {
+			"model": "immersiveweapons:block/cloud_marble_brick_slab"
+		},
+		"type=double": {
+			"model": "immersiveweapons:block/cloud_marble_bricks"
+		},
+		"type=top": {
+			"model": "immersiveweapons:block/cloud_marble_brick_slab_top"
+		}
+	}
+}
