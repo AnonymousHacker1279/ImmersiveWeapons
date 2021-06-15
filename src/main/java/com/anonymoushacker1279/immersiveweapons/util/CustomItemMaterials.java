@@ -19,6 +19,9 @@ public enum CustomItemMaterials implements IItemTier {
 	}),
 	COBALT(2, 300, 6.2F, 3.0F, 15, () -> {
 		return Ingredient.of(DeferredRegistryHandler.COBALT_INGOT.get());
+	}),
+	VENTUS(3, 1900, 8.6F, 3.0F, 16, () -> {
+		return Ingredient.of(DeferredRegistryHandler.VENTUS_SHARD.get());
 	});
 
 	private final int harvestLevel;

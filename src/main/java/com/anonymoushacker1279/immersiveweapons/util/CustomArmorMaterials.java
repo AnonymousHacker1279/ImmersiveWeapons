@@ -25,7 +25,10 @@ public enum CustomArmorMaterials implements IArmorMaterial {
 	}, 0.05F),
 	COBALT("cobalt", 16, new int[]{3, 5, 6, 3}, 10, SoundEvents.ARMOR_EQUIP_IRON, 0.0F, () -> {
 		return Ingredient.of(DeferredRegistryHandler.COBALT_INGOT.get());
-	}, 0.0F);
+	}, 0.0F),
+	VENTUS("ventus", 39, new int[]{5, 6, 9, 5}, 14, SoundEvents.ARMOR_EQUIP_NETHERITE, 2.5F, () -> {
+		return Ingredient.of(DeferredRegistryHandler.VENTUS_SHARD.get());
+	}, 0.02F);
 
 	static final int[] MAX_DAMAGE_ARRAY = new int[]{13, 15, 16, 11};
 	private final String name;

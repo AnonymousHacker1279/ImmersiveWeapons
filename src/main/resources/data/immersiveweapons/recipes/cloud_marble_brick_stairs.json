@@ -1,0 +1,17 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"pattern": [
+		"x  ",
+		"xx ",
+		"xxx"
+	],
+	"key": {
+		"x": {
+			"item": "immersiveweapons:cloud_marble_bricks"
+		}
+	},
+	"result": {
+		"item": "immersiveweapons:cloud_marble_brick_stairs",
+		"count": 4
+	}
+}

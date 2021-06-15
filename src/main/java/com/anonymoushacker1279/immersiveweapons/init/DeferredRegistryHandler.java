@@ -24,6 +24,7 @@ import com.anonymoushacker1279.immersiveweapons.item.CustomContainerItem.Bluepri
 import com.anonymoushacker1279.immersiveweapons.item.MoltenItem.*;
 import com.anonymoushacker1279.immersiveweapons.item.PikeItem.*;
 import com.anonymoushacker1279.immersiveweapons.item.TeslaItem.*;
+import com.anonymoushacker1279.immersiveweapons.item.VentusItem.*;
 import com.anonymoushacker1279.immersiveweapons.item.crafting.SmallPartsRecipe;
 import com.anonymoushacker1279.immersiveweapons.item.crafting.TeslaSynthesizerRecipe;
 import com.anonymoushacker1279.immersiveweapons.potion.MorphineEffect;
@@ -128,6 +129,12 @@ public class DeferredRegistryHandler {
 	public static final RegistryObject<Item> COBALT_AXE = ITEMS.register("cobalt_axe", () -> new AxeItem(CustomItemMaterials.COBALT, 3, -3.0f, new Properties().tab(ITEM_GROUP)));
 	public static final RegistryObject<Item> COBALT_SHOVEL = ITEMS.register("cobalt_shovel", () -> new ShovelItem(CustomItemMaterials.COBALT, -1, -2.7f, new Properties().tab(ITEM_GROUP)));
 	public static final RegistryObject<Item> COBALT_HOE = ITEMS.register("cobalt_hoe", () -> new HoeItem(CustomItemMaterials.COBALT, -3, 1.0f, new Properties().tab(ITEM_GROUP)));
+	public static final RegistryObject<Item> VENTUS_SWORD = ITEMS.register("ventus_sword", () -> new VentusSword(CustomItemMaterials.VENTUS, 4, -2.0f, new Properties().tab(ITEM_GROUP)));
+	public static final RegistryObject<Item> VENTUS_PICKAXE = ITEMS.register("ventus_pickaxe", () -> new VentusPickaxe(CustomItemMaterials.VENTUS, 3, -2.2f));
+	public static final RegistryObject<Item> VENTUS_AXE = ITEMS.register("ventus_axe", () -> new VentusAxe(CustomItemMaterials.VENTUS, 6, -2.9f));
+	public static final RegistryObject<Item> VENTUS_SHOVEL = ITEMS.register("ventus_shovel", () -> new VentusShovel(CustomItemMaterials.VENTUS, 0, -2.9f));
+	public static final RegistryObject<Item> VENTUS_HOE = ITEMS.register("ventus_hoe", () -> new VentusHoe(CustomItemMaterials.VENTUS, -3, 1.0f));
+	public static final RegistryObject<Item> VENTUS_STAFF = ITEMS.register("ventus_staff", () -> new VentusStaff(new Properties().durability(300).tab(ITEM_GROUP)));
 	public static final RegistryObject<Item> WOOD_PIKE = ITEMS.register("wood_pike", () -> new WoodPikeItem((new Properties()).durability(59).tab(ITEM_GROUP), 4.0d, -2.6d));
 	public static final RegistryObject<Item> STONE_PIKE = ITEMS.register("stone_pike", () -> new StonePikeItem((new Properties()).durability(131).tab(ITEM_GROUP), 5.0d, -2.6d));
 	public static final RegistryObject<Item> GOLD_PIKE = ITEMS.register("gold_pike", () -> new GoldPikeItem((new Properties()).durability(32).tab(ITEM_GROUP), 4.0d, -2.6d));
@@ -143,6 +150,7 @@ public class DeferredRegistryHandler {
 	public static final RegistryObject<Item> DIAMOND_SHARD = ITEMS.register("diamond_shard", () -> new Item(new Properties().tab(ITEM_GROUP)));
 	public static final RegistryObject<Item> OBSIDIAN_SHARD = ITEMS.register("obsidian_shard", () -> new Item(new Properties().tab(ITEM_GROUP)));
 	public static final RegistryObject<Item> MOLTEN_SHARD = ITEMS.register("molten_shard", () -> new Item(new Properties().tab(ITEM_GROUP).fireResistant()));
+	public static final RegistryObject<Item> VENTUS_SHARD = ITEMS.register("ventus_shard", () -> new Item(new Properties().tab(ITEM_GROUP)));
 	public static final RegistryObject<Item> WOOD_SHARD = ITEMS.register("wood_shard", () -> new Item(new Properties().tab(ITEM_GROUP)));
 	public static final RegistryObject<Item> COPPER_NUGGET = ITEMS.register("copper_nugget", () -> new Item(new Properties().tab(ITEM_GROUP)));
 	public static final RegistryObject<Item> MOLTEN_PLATE = ITEMS.register("molten_plate", () -> new Item(new Properties().tab(ITEM_GROUP).fireResistant()));
@@ -155,6 +163,7 @@ public class DeferredRegistryHandler {
 	public static final RegistryObject<Item> ELECTRIC_INGOT = ITEMS.register("electric_ingot", () -> new Item(new Properties().tab(ITEM_GROUP)));
 	public static final RegistryObject<Item> TESLA_INGOT = ITEMS.register("tesla_ingot", () -> new Item(new Properties().tab(ITEM_GROUP)));
 	public static final RegistryObject<Item> COBALT_INGOT = ITEMS.register("cobalt_ingot", () -> new Item(new Properties().tab(ITEM_GROUP)));
+	public static final RegistryObject<Item> VENTUS_STAFF_CORE = ITEMS.register("ventus_staff_core", () -> new Item(new Properties().tab(ITEM_GROUP)));
 	public static final RegistryObject<Item> WOOD_PIKE_HEAD = ITEMS.register("wood_pike_head", () -> new Item(new Properties().tab(ITEM_GROUP)));
 	public static final RegistryObject<Item> STONE_PIKE_HEAD = ITEMS.register("stone_pike_head", () -> new Item(new Properties().tab(ITEM_GROUP)));
 	public static final RegistryObject<Item> GOLD_PIKE_HEAD = ITEMS.register("gold_pike_head", () -> new Item(new Properties().tab(ITEM_GROUP)));
@@ -227,6 +236,10 @@ public class DeferredRegistryHandler {
 	public static final RegistryObject<Item> COBALT_CHESTPLATE = ITEMS.register("cobalt_chestplate", () -> new CobaltArmorItem(CustomArmorMaterials.COBALT, EquipmentSlotType.CHEST, 1));
 	public static final RegistryObject<Item> COBALT_LEGGINGS = ITEMS.register("cobalt_leggings", () -> new CobaltArmorItem(CustomArmorMaterials.COBALT, EquipmentSlotType.LEGS, 2));
 	public static final RegistryObject<Item> COBALT_BOOTS = ITEMS.register("cobalt_boots", () -> new CobaltArmorItem(CustomArmorMaterials.COBALT, EquipmentSlotType.FEET, 1));
+	public static final RegistryObject<Item> VENTUS_HELMET = ITEMS.register("ventus_helmet", () -> new VentusArmorItem(CustomArmorMaterials.VENTUS, EquipmentSlotType.HEAD, 1));
+	public static final RegistryObject<Item> VENTUS_CHESTPLATE = ITEMS.register("ventus_chestplate", () -> new VentusArmorItem(CustomArmorMaterials.VENTUS, EquipmentSlotType.CHEST, 1));
+	public static final RegistryObject<Item> VENTUS_LEGGINGS = ITEMS.register("ventus_leggings", () -> new VentusArmorItem(CustomArmorMaterials.VENTUS, EquipmentSlotType.LEGS, 2));
+	public static final RegistryObject<Item> VENTUS_BOOTS = ITEMS.register("ventus_boots", () -> new VentusArmorItem(CustomArmorMaterials.VENTUS, EquipmentSlotType.FEET, 1));
 
 	// Blocks
 	public static final RegistryObject<Block> COPPER_ORE = BLOCKS.register("copper_ore", () -> new OreBlock(AbstractBlock.Properties.of(Material.STONE).strength(2.5f, 2.5f).sound(SoundType.STONE).requiresCorrectToolForDrops().harvestLevel(1).harvestTool(ToolType.PICKAXE)));
@@ -255,33 +268,41 @@ public class DeferredRegistryHandler {
 	public static final RegistryObject<Block> RED_STAINED_BULLETPROOF_GLASS = BLOCKS.register("red_stained_bulletproof_glass", () -> GeneralUtilities.createStainedGlassFromColor(DyeColor.RED, AbstractBlock.Properties.of(Material.GLASS, DyeColor.RED).sound(SoundType.GLASS).noOcclusion().strength(0.5f)));
 	public static final RegistryObject<Block> PUNJI_STICKS = BLOCKS.register("punji_sticks", () -> new PunjiSticksBlock(AbstractBlock.Properties.of(Material.BAMBOO).strength(5.0f, 1.0f).sound(SoundType.METAL).harvestLevel(1).harvestTool(ToolType.SHOVEL)));
 	public static final RegistryObject<Block> PITFALL = BLOCKS.register("pitfall", () -> new PitfallBlock(AbstractBlock.Properties.of(Material.GRASS).strength(0.2f, 1.0f).sound(SoundType.GRAVEL).randomTicks()));
-	public static final RegistryObject<Block> BEAR_TRAP = BLOCKS.register("bear_trap", () -> new BearTrapBlock(AbstractBlock.Properties.of(Material.METAL).noOcclusion().strength(2.0F, 2.0F).sound(SoundType.METAL).harvestLevel(2)));
-	public static final RegistryObject<Block> BARBED_WIRE = BLOCKS.register("barbed_wire", () -> new BarbedWireBlock(AbstractBlock.Properties.of(Material.METAL).strength(2.0F, 2.0F).sound(SoundType.CHAIN).harvestLevel(2).noOcclusion().noCollission()));
-	public static final RegistryObject<Block> LANDMINE = BLOCKS.register("landmine", () -> new LandmineBlock(AbstractBlock.Properties.of(Material.METAL).strength(1.0F, 1.0F).sound(SoundType.METAL).harvestLevel(0)));
-	public static final RegistryObject<Block> SPIKE_TRAP = BLOCKS.register("spike_trap", () -> new SpikeTrapBlock(AbstractBlock.Properties.of(Material.METAL).strength(2.0F, 2.0F).sound(SoundType.METAL).harvestLevel(2).noOcclusion().noCollission()));
+	public static final RegistryObject<Block> BEAR_TRAP = BLOCKS.register("bear_trap", () -> new BearTrapBlock(AbstractBlock.Properties.of(Material.METAL).noOcclusion().strength(2.0F).sound(SoundType.METAL).harvestLevel(2)));
+	public static final RegistryObject<Block> BARBED_WIRE = BLOCKS.register("barbed_wire", () -> new BarbedWireBlock(AbstractBlock.Properties.of(Material.METAL).strength(2.0f).sound(SoundType.CHAIN).harvestLevel(2).noOcclusion().noCollission()));
+	public static final RegistryObject<Block> LANDMINE = BLOCKS.register("landmine", () -> new LandmineBlock(AbstractBlock.Properties.of(Material.METAL).strength(1.0F).sound(SoundType.METAL).harvestLevel(0)));
+	public static final RegistryObject<Block> SPIKE_TRAP = BLOCKS.register("spike_trap", () -> new SpikeTrapBlock(AbstractBlock.Properties.of(Material.METAL).strength(2.0F).sound(SoundType.METAL).harvestLevel(2).noOcclusion().noCollission()));
 	public static final RegistryObject<Block> CORRUGATED_IRON_PANEL = BLOCKS.register("corrugated_iron_panel", () -> new CorrugatedBlockNormal(AbstractBlock.Properties.of(Material.METAL).strength(5.0f, 6.0f).sound(SoundType.METAL).harvestLevel(1).noOcclusion()));
 	public static final RegistryObject<Block> CORRUGATED_IRON_PANEL_BARS = BLOCKS.register("corrugated_iron_panel_bars", () -> new CorrugatedBlockNormal(AbstractBlock.Properties.of(Material.METAL).strength(5.0f, 6.0f).sound(SoundType.METAL).harvestLevel(1).noOcclusion()));
 	public static final RegistryObject<Block> CORRUGATED_IRON_PANEL_FLAT = BLOCKS.register("corrugated_iron_panel_flat", () -> new CorrugatedBlock.CorrugatedBlockFlat(AbstractBlock.Properties.of(Material.METAL).strength(5.0f, 6.0f).sound(SoundType.METAL).harvestLevel(1).noOcclusion()));
 	public static final RegistryObject<Block> CORRUGATED_IRON_PANEL_FLAT_BARS = BLOCKS.register("corrugated_iron_panel_flat_bars", () -> new CorrugatedBlock.CorrugatedBlockFlat(AbstractBlock.Properties.of(Material.METAL).strength(5.0f, 6.0f).sound(SoundType.METAL).harvestLevel(1).noOcclusion()));
-	public static final RegistryObject<Block> SPOTLIGHT = BLOCKS.register("spotlight", () -> new SpotlightBlock(AbstractBlock.Properties.of(Material.METAL).strength(2.0f, 2.0f).sound(SoundType.METAL).harvestLevel(1).harvestTool(ToolType.PICKAXE).noOcclusion().lightLevel((state) -> {
+	public static final RegistryObject<Block> SPOTLIGHT = BLOCKS.register("spotlight", () -> new SpotlightBlock(AbstractBlock.Properties.of(Material.METAL).strength(2.0f).sound(SoundType.METAL).harvestLevel(1).harvestTool(ToolType.PICKAXE).noOcclusion().lightLevel((state) -> {
 		return 0;
 	})));
-	public static final RegistryObject<Block> WALL_SHELF = BLOCKS.register("wall_shelf", () -> new ShelfBlock(AbstractBlock.Properties.of(Material.WOOD).strength(1.0f, 1.0f).sound(SoundType.WOOD).noOcclusion().noCollission()));
-	public static final RegistryObject<Block> PANIC_ALARM = BLOCKS.register("panic_alarm", () -> new PanicAlarmBlock(AbstractBlock.Properties.of(Material.WOOD).strength(1.0f, 1.0f).sound(SoundType.WOOD).noOcclusion().randomTicks()));
-	public static final RegistryObject<Block> WOODEN_TABLE = BLOCKS.register("wooden_table", () -> new WoodenTableBlock(AbstractBlock.Properties.of(Material.WOOD).strength(3.0f, 3.0f).sound(SoundType.WOOD).noOcclusion()));
+	public static final RegistryObject<Block> WALL_SHELF = BLOCKS.register("wall_shelf", () -> new ShelfBlock(AbstractBlock.Properties.of(Material.WOOD).strength(1.0f).sound(SoundType.WOOD).noOcclusion().noCollission()));
+	public static final RegistryObject<Block> PANIC_ALARM = BLOCKS.register("panic_alarm", () -> new PanicAlarmBlock(AbstractBlock.Properties.of(Material.WOOD).strength(1.0f).sound(SoundType.WOOD).noOcclusion().randomTicks()));
+	public static final RegistryObject<Block> WOODEN_TABLE = BLOCKS.register("wooden_table", () -> new WoodenTableBlock(AbstractBlock.Properties.of(Material.WOOD).strength(3.0f).sound(SoundType.WOOD).noOcclusion()));
 	public static final RegistryObject<Block> BARBED_WIRE_FENCE = BLOCKS.register("barbed_wire_fence", () -> new BarbedWireFenceBlock(AbstractBlock.Properties.of(Material.METAL).strength(7.0f, 8.0f).sound(SoundType.METAL).harvestLevel(2).harvestTool(ToolType.PICKAXE).noOcclusion()));
-	public static final RegistryObject<Block> WOODEN_SPIKES = BLOCKS.register("wooden_spikes", () -> new WoodenSpikesBlock(AbstractBlock.Properties.of(Material.WOOD).strength(3.0f, 3.0f).sound(SoundType.WOOD).harvestLevel(1).harvestTool(ToolType.AXE).noOcclusion()));
-	public static final RegistryObject<Block> BIOHAZARD_BOX = BLOCKS.register("biohazard_box", () -> new BiohazardBoxBlock(AbstractBlock.Properties.of(Material.DECORATION).strength(0.5f, 0.5f).sound(SoundType.LANTERN).noOcclusion()));
-	public static final RegistryObject<Block> MINUTEMAN_STATUE = BLOCKS.register("minuteman_statue", () -> new MinutemanStatueBlock(AbstractBlock.Properties.of(Material.STONE).strength(5.0f, 5.0f).sound(SoundType.STONE).noOcclusion()));
-	public static final RegistryObject<Block> MEDIC_STATUE = BLOCKS.register("medic_statue", () -> new MedicStatueBlock(AbstractBlock.Properties.of(Material.STONE).strength(5.0f, 5.0f).sound(SoundType.STONE).noOcclusion()));
-	public static final RegistryObject<Block> TESLA_SYNTHESIZER = BLOCKS.register("tesla_synthesizer", () -> new TeslaSynthesizerBlock(AbstractBlock.Properties.of(Material.METAL).strength(10.0f, 10.0f).sound(SoundType.METAL).harvestLevel(3).harvestTool(ToolType.PICKAXE).noOcclusion()));
-	public static final RegistryObject<Block> COBALT_ORE = BLOCKS.register("cobalt_ore", () -> new OreBlock(AbstractBlock.Properties.of(Material.STONE).strength(4.0f, 4.0f).sound(SoundType.STONE).requiresCorrectToolForDrops().harvestLevel(2).harvestTool(ToolType.PICKAXE)));
+	public static final RegistryObject<Block> WOODEN_SPIKES = BLOCKS.register("wooden_spikes", () -> new WoodenSpikesBlock(AbstractBlock.Properties.of(Material.WOOD).strength(3.0f).sound(SoundType.WOOD).harvestLevel(1).harvestTool(ToolType.AXE).noOcclusion()));
+	public static final RegistryObject<Block> BIOHAZARD_BOX = BLOCKS.register("biohazard_box", () -> new BiohazardBoxBlock(AbstractBlock.Properties.of(Material.DECORATION).strength(0.5f).sound(SoundType.LANTERN).noOcclusion()));
+	public static final RegistryObject<Block> MINUTEMAN_STATUE = BLOCKS.register("minuteman_statue", () -> new MinutemanStatueBlock(AbstractBlock.Properties.of(Material.STONE).strength(5.0f).sound(SoundType.STONE).noOcclusion()));
+	public static final RegistryObject<Block> MEDIC_STATUE = BLOCKS.register("medic_statue", () -> new MedicStatueBlock(AbstractBlock.Properties.of(Material.STONE).strength(5.0f).sound(SoundType.STONE).noOcclusion()));
+	public static final RegistryObject<Block> TESLA_SYNTHESIZER = BLOCKS.register("tesla_synthesizer", () -> new TeslaSynthesizerBlock(AbstractBlock.Properties.of(Material.METAL).strength(10.0f).sound(SoundType.METAL).harvestLevel(3).harvestTool(ToolType.PICKAXE).noOcclusion()));
+	public static final RegistryObject<Block> COBALT_ORE = BLOCKS.register("cobalt_ore", () -> new OreBlock(AbstractBlock.Properties.of(Material.STONE).strength(4.0f).sound(SoundType.STONE).requiresCorrectToolForDrops().harvestLevel(2).harvestTool(ToolType.PICKAXE)));
+	public static final RegistryObject<Block> CLOUD = BLOCKS.register("cloud", () -> new BreakableBlock(AbstractBlock.Properties.of(Material.STRUCTURAL_AIR).strength(0.7f).sound(SoundType.SNOW).noOcclusion()));
+	public static final RegistryObject<Block> CLOUD_MARBLE = BLOCKS.register("cloud_marble", () -> new Block(AbstractBlock.Properties.of(Material.STONE).strength(1.5f, 6.0f).sound(SoundType.STONE).harvestTool(ToolType.PICKAXE)));
+	public static final RegistryObject<Block> CLOUD_MARBLE_BRICKS = BLOCKS.register("cloud_marble_bricks", () -> new Block(AbstractBlock.Properties.of(Material.STONE).strength(1.5f, 6.0f).sound(SoundType.STONE).harvestTool(ToolType.PICKAXE)));
+	public static final RegistryObject<Block> CLOUD_MARBLE_PILLAR = BLOCKS.register("cloud_marble_pillar", () -> new RotatedPillarBlock(AbstractBlock.Properties.of(Material.STONE).strength(1.5f, 6.0f).sound(SoundType.STONE).harvestTool(ToolType.PICKAXE)));
+	public static final RegistryObject<Block> CLOUD_MARBLE_BRICK_STAIRS = BLOCKS.register("cloud_marble_brick_stairs", () -> new StairsBlock(() -> CLOUD_MARBLE_BRICKS.get().defaultBlockState(), AbstractBlock.Properties.copy(CLOUD_MARBLE_BRICKS.get())));
+	public static final RegistryObject<Block> CLOUD_MARBLE_BRICK_SLAB = BLOCKS.register("cloud_marble_brick_slab", () -> new SlabBlock(AbstractBlock.Properties.of(Material.STONE).strength(1.5f, 6.0f).sound(SoundType.STONE).harvestTool(ToolType.PICKAXE)));
+	public static final RegistryObject<Block> VENTUS_ORE = BLOCKS.register("ventus_ore", () -> new Block(AbstractBlock.Properties.of(Material.STONE).strength(3.5f, 6.0f).sound(SoundType.STONE).harvestLevel(2).harvestTool(ToolType.PICKAXE)));
 
 	// Block Items
 	public static final RegistryObject<BlockItem> MOLTEN_ORE_ITEM = ITEMS.register("molten_ore", () -> new BlockItem(MOLTEN_ORE.get(), new Properties().tab(ITEM_GROUP).fireResistant()));
 	public static final RegistryObject<BlockItem> ELECTRIC_ORE_ITEM = ITEMS.register("electric_ore", () -> new BlockItem(ELECTRIC_ORE.get(), new Properties().tab(ITEM_GROUP)));
 	public static final RegistryObject<BlockItem> COPPER_ORE_ITEM = ITEMS.register("copper_ore", () -> new BlockItem(COPPER_ORE.get(), new Properties().tab(ITEM_GROUP)));
 	public static final RegistryObject<BlockItem> COBALT_ORE_ITEM = ITEMS.register("cobalt_ore", () -> new BlockItem(COBALT_ORE.get(), new Properties().tab(ITEM_GROUP)));
+	public static final RegistryObject<BlockItem> VENTUS_ORE_ITEM = ITEMS.register("ventus_ore", () -> new BlockItem(VENTUS_ORE.get(), new Properties().tab(ITEM_GROUP)));
 	public static final RegistryObject<BlockItem> MOLTEN_BLOCK_ITEM = ITEMS.register("molten_block", () -> new BlockItem(MOLTEN_BLOCK.get(), new Properties().tab(ITEM_GROUP).fireResistant()));
 	public static final RegistryObject<BlockItem> TESLA_BLOCK_ITEM = ITEMS.register("tesla_block", () -> new BlockItem(TESLA_BLOCK.get(), new Properties().tab(ITEM_GROUP)));
 	public static final RegistryObject<BlockItem> SMALL_PARTS_TABLE_ITEM = ITEMS.register("small_parts_table", () -> new BlockItem(SMALL_PARTS_TABLE.get(), new Properties().tab(ITEM_GROUP)));
@@ -323,6 +344,12 @@ public class DeferredRegistryHandler {
 	public static final RegistryObject<BlockItem> MINUTEMAN_STATUE_ITEM = ITEMS.register("minuteman_statue", () -> new BlockItem(MINUTEMAN_STATUE.get(), new Properties().tab(ITEM_GROUP)));
 	public static final RegistryObject<BlockItem> MEDIC_STATUE_ITEM = ITEMS.register("medic_statue", () -> new BlockItem(MEDIC_STATUE.get(), new Properties().tab(ITEM_GROUP)));
 	public static final RegistryObject<BlockItem> TESLA_SYNTHESIZER_ITEM = ITEMS.register("tesla_synthesizer", () -> new BlockItem(TESLA_SYNTHESIZER.get(), new Properties().tab(ITEM_GROUP)));
+	public static final RegistryObject<BlockItem> CLOUD_ITEM = ITEMS.register("cloud", () -> new BlockItem(CLOUD.get(), new Properties().tab(ITEM_GROUP)));
+	public static final RegistryObject<BlockItem> CLOUD_MARBLE_ITEM = ITEMS.register("cloud_marble", () -> new BlockItem(CLOUD_MARBLE.get(), new Properties().tab(ITEM_GROUP)));
+	public static final RegistryObject<BlockItem> CLOUD_MARBLE_BRICKS_ITEM = ITEMS.register("cloud_marble_bricks", () -> new BlockItem(CLOUD_MARBLE_BRICKS.get(), new Properties().tab(ITEM_GROUP)));
+	public static final RegistryObject<BlockItem> CLOUD_MARBLE_PILLAR_ITEM = ITEMS.register("cloud_marble_pillar", () -> new BlockItem(CLOUD_MARBLE_PILLAR.get(), new Properties().tab(ITEM_GROUP)));
+	public static final RegistryObject<BlockItem> CLOUD_MARBLE_BRICK_STAIRS_ITEM = ITEMS.register("cloud_marble_brick_stairs", () -> new BlockItem(CLOUD_MARBLE_BRICK_STAIRS.get(), new Properties().tab(ITEM_GROUP)));
+	public static final RegistryObject<BlockItem> CLOUD_MARBLE_BRICK_SLAB_ITEM = ITEMS.register("cloud_marble_brick_slab", () -> new BlockItem(CLOUD_MARBLE_BRICK_SLAB.get(), new Properties().tab(ITEM_GROUP)));
 
 	// Entities
 	public static final RegistryObject<EntityType<WoodArrowEntity>> WOOD_ARROW_ENTITY = ENTITY_TYPES.register("wood_arrow", () -> EntityType.Builder.<WoodArrowEntity> of(WoodArrowEntity::new, EntityClassification.MISC).sized(0.5f, 0.5f).build(new ResourceLocation(ImmersiveWeapons.MOD_ID, "wood_arrow").toString()));

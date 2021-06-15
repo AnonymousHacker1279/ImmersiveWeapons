@@ -1,0 +1,20 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"pattern": [
+		" x ",
+		" y ",
+		" y "
+	],
+	"key": {
+		"x": {
+			"item": "immersiveweapons:ventus_staff_core"
+		},
+		"y": {
+			"item": "immersiveweapons:obsidian_rod"
+		}
+	},
+	"result": {
+		"item": "immersiveweapons:ventus_staff",
+		"count": 1
+	}
+}

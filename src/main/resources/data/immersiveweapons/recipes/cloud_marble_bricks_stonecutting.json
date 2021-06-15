@@ -1,0 +1,8 @@
+{
+	"type": "minecraft:stonecutting",
+	"ingredient": {
+		"item": "immersiveweapons:cloud_marble"
+	},
+	"result": "immersiveweapons:cloud_marble_bricks",
+	"count": 1
+}

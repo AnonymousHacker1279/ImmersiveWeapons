@@ -29,12 +29,14 @@ public class Structures {
 	public static final RegistryObject<Structure<NoFeatureConfig>> UNDERGROUND_BUNKER = setupStructure("underground_bunker", () -> (new UndergroundBunker(NoFeatureConfig.CODEC)));
 	public static final RegistryObject<Structure<NoFeatureConfig>> BATTLEFIELD_CAMP = setupStructure("battlefield_camp", () -> (new BattlefieldCamp(NoFeatureConfig.CODEC)));
 	public static final RegistryObject<Structure<NoFeatureConfig>> BATTLEFIELD_VILLAGE = setupStructure("battlefield_village", () -> (new BattlefieldVillage(NoFeatureConfig.CODEC)));
+	public static final RegistryObject<Structure<NoFeatureConfig>> CLOUD_ISLAND = setupStructure("cloud_island", () -> (new CloudIsland(NoFeatureConfig.CODEC)));
 	public static IStructurePieceType AF = AbandonedFactoryPieces.Piece::new;
 	public static IStructurePieceType PT = PitfallTrapPieces.Piece::new;
 	public static IStructurePieceType BT = BearTrapPieces.Piece::new;
 	public static IStructurePieceType LT = LandmineTrapPieces.Piece::new;
 	public static IStructurePieceType UB = UndergroundBunkerPieces.Piece::new;
 	public static IStructurePieceType BF_C = BattlefieldCampPieces.Piece::new;
+	public static IStructurePieceType CI = CloudIslandPieces.Piece::new;
 
 	public static void init() {
 		DEFERRED_REGISTRY_STRUCTURE.register(FMLJavaModLoadingContext.get().getModEventBus());
@@ -94,6 +96,13 @@ public class Structures {
 						Config.MIN_BATTLEFIELD_VILLAGE_DISTANCE.get(),
 						176482913),
 				true);
+		setupStructure(
+				CLOUD_ISLAND.get(),
+				new StructureSeparationSettings(
+						Config.MAX_CLOUD_ISLAND_DISTANCE.get(),
+						Config.MIN_CLOUD_ISLAND_DISTANCE.get(),
+						349821657),
+				false);
 	}
 
 	public static <F extends Structure<?>> void setupStructure(
@@ -127,6 +136,7 @@ public class Structures {
 		registerStructurePiece(LT, new ResourceLocation(ImmersiveWeapons.MOD_ID, "lt"));
 		registerStructurePiece(UB, new ResourceLocation(ImmersiveWeapons.MOD_ID, "ub"));
 		registerStructurePiece(BF_C, new ResourceLocation(ImmersiveWeapons.MOD_ID, "bf_c"));
+		registerStructurePiece(CI, new ResourceLocation(ImmersiveWeapons.MOD_ID, "ci"));
 	}
 
 	static void registerStructurePiece(IStructurePieceType structurePiece, ResourceLocation rl) {

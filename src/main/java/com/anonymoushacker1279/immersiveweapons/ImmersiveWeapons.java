@@ -122,13 +122,15 @@ public class ImmersiveWeapons {
 		if (event.getCategory() == Category.DESERT) {
 			generation.addStructureStart(ConfiguredStructures.CONFIGURED_LANDMINE_TRAP);
 		}
+		if (event.getCategory() == Category.TAIGA) {
+			generation.addStructureStart(ConfiguredStructures.CONFIGURED_CLOUD_ISLAND);
+		}
 		if (Objects.requireNonNull(event.getName()).toString().equals(Objects.requireNonNull(DeferredRegistryHandler.BATTLEFIELD.get().getRegistryName()).toString())) {
 			generation.addStructureStart(ConfiguredStructures.CONFIGURED_BATTLEFIELD_CAMP);
 			generation.addStructureStart(ConfiguredStructures.CONFIGURED_UNDERGROUND_BUNKER);
 			generation.addStructureStart(ConfiguredStructures.CONFIGURED_BEAR_TRAP);
 			generation.addStructureStart(ConfiguredStructures.CONFIGURED_BATTLEFIELD_VILLAGE);
 			generation.addCarver(GenerationStage.Carving.AIR, new ConfiguredCarver(DeferredRegistryHandler.TRENCH_WORLD_CARVER.get(), new ProbabilityConfig(0.115f)));
-
 		}
 	}
 
@@ -151,6 +153,7 @@ public class ImmersiveWeapons {
 			tempMap.put(Structures.UNDERGROUND_BUNKER.get(), DimensionStructuresSettings.DEFAULTS.get(Structures.UNDERGROUND_BUNKER.get()));
 			tempMap.put(Structures.BATTLEFIELD_CAMP.get(), DimensionStructuresSettings.DEFAULTS.get(Structures.BATTLEFIELD_CAMP.get()));
 			tempMap.put(Structures.BATTLEFIELD_VILLAGE.get(), DimensionStructuresSettings.DEFAULTS.get(Structures.BATTLEFIELD_VILLAGE.get()));
+			tempMap.put(Structures.CLOUD_ISLAND.get(), DimensionStructuresSettings.DEFAULTS.get(Structures.CLOUD_ISLAND.get()));
 			serverWorld.getChunkSource().generator.getSettings().structureConfig = tempMap;
 
 		}
