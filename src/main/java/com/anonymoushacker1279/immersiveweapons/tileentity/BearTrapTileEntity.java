@@ -23,7 +23,6 @@ import java.util.UUID;
 public class BearTrapTileEntity extends TileEntity implements ITickableTileEntity {
 
 	public static final DamageSource damageSource = new DamageSource("immersiveweapons.bear_trap");
-	Minecraft mc = Minecraft.getInstance();
 	@Nullable
 	private MobEntity entityliving;
 	private PlayerEntity entitylivingPlayer;
@@ -54,11 +53,11 @@ public class BearTrapTileEntity extends TileEntity implements ITickableTileEntit
 					this.setTrappedPlayerEntity(null);
 				} else {
 					trappedPlayer.makeStuckInBlock(this.getBlockState(), new Vector3d(0.0F, 0.0D, 0.0F));
-					mc.options.keyJump.setDown(false);
-					mc.options.keyUp.setDown(false);
-					mc.options.keyLeft.setDown(false);
-					mc.options.keyRight.setDown(false);
-					mc.options.keyDown.setDown(false);
+					Minecraft.getInstance().options.keyJump.setDown(false);
+					Minecraft.getInstance().options.keyUp.setDown(false);
+					Minecraft.getInstance().options.keyLeft.setDown(false);
+					Minecraft.getInstance().options.keyRight.setDown(false);
+					Minecraft.getInstance().options.keyDown.setDown(false);
 				}
 			}
 		}

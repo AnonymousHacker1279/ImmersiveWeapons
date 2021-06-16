@@ -3,29 +3,36 @@ package com.anonymoushacker1279.immersiveweapons.entity.projectile;
 import com.anonymoushacker1279.immersiveweapons.client.particle.SmokeBombParticleData;
 import com.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
 import com.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
+import com.anonymoushacker1279.immersiveweapons.util.PacketHandler;
 import net.minecraft.block.Blocks;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.ProjectileItemEntity;
 import net.minecraft.item.Item;
 import net.minecraft.network.IPacket;
+import net.minecraft.network.PacketBuffer;
 import net.minecraft.particles.IParticleData;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvents;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.fml.DistExecutor;
+import net.minecraftforge.fml.network.NetworkEvent;
+import net.minecraftforge.fml.network.NetworkEvent.Context;
 import net.minecraftforge.fml.network.NetworkHooks;
+import net.minecraftforge.fml.network.PacketDistributor;
 
 import javax.annotation.Nonnull;
 import java.awt.*;
+import java.util.function.Supplier;
 
 public class MolotovEntity extends ProjectileItemEntity {
 
 	private static final byte VANILLA_IMPACT_STATUS_ID = 3;
-	// We hit something (entity or block).
-	Minecraft mc = Minecraft.getInstance();
 	private boolean hasAlreadySetFire = false;
 
 	public MolotovEntity(EntityType<? extends MolotovEntity> entityType, World world) {
@@ -60,11 +67,10 @@ public class MolotovEntity extends ProjectileItemEntity {
 	@Override
 	protected void onHit(RayTraceResult rayTraceResult) {
 		if (!this.level.isClientSide) {
-			PlayerEntity playerEntity = mc.player;
 			this.level.broadcastEntityEvent(this, VANILLA_IMPACT_STATUS_ID);  // calls handleStatusUpdate which tells the client to render particles
 			if (!this.hasAlreadySetFire) {
 				// Create a ring of fire around the point of impact
-				this.level.playSound(playerEntity, this.blockPosition(), SoundEvents.GLASS_BREAK, SoundCategory.NEUTRAL, 1f, 1f);
+				PacketHandler.INSTANCE.send(PacketDistributor.TRACKING_CHUNK.with(() -> level.getChunkAt(this.blockPosition())), new MolotovEntityPacketHandler(this.blockPosition()));
 				if (this.level.getBlockState(this.blockPosition()) == Blocks.AIR.defaultBlockState() || this.level.getBlockState(this.blockPosition()) == Blocks.CAVE_AIR.defaultBlockState())
 					this.level.setBlockAndUpdate(this.blockPosition(), Blocks.FIRE.defaultBlockState());
 				if (this.level.getBlockState(this.blockPosition().above()) == Blocks.AIR.defaultBlockState() || this.level.getBlockState(this.blockPosition().above()) == Blocks.CAVE_AIR.defaultBlockState())
@@ -136,5 +142,36 @@ public class MolotovEntity extends ProjectileItemEntity {
 		final double MIN_DIAMETER = 0.01;
 		final double MAX_DIAMETER = 5.5;
 		return MIN_DIAMETER + (MAX_DIAMETER - MIN_DIAMETER) * random;
+	}
+
+	public static class MolotovEntityPacketHandler {
+
+		private final BlockPos blockPos;
+
+		public MolotovEntityPacketHandler(final BlockPos blockPos) {
+			this.blockPos = blockPos;
+		}
+
+		public static void encode(final MolotovEntityPacketHandler msg, final PacketBuffer packetBuffer) {
+			packetBuffer.writeBlockPos(msg.blockPos);
+		}
+
+		public static MolotovEntityPacketHandler decode(final PacketBuffer packetBuffer) {
+			return new MolotovEntityPacketHandler(packetBuffer.readBlockPos());
+		}
+
+		public static void handle(final MolotovEntityPacketHandler msg, final Supplier<Context> contextSupplier) {
+			final NetworkEvent.Context context = contextSupplier.get();
+			context.enqueueWork(() -> DistExecutor.runWhenOn(Dist.CLIENT, () -> () -> handleOnClient(msg)));
+			context.setPacketHandled(true);
+		}
+
+		@OnlyIn(Dist.CLIENT)
+		private static void handleOnClient(final MolotovEntityPacketHandler msg) {
+			Minecraft minecraft = Minecraft.getInstance();
+			if (minecraft.level != null) {
+				minecraft.level.playLocalSound(msg.blockPos, SoundEvents.GLASS_BREAK, SoundCategory.NEUTRAL, 1f, 1f, false);
+			}
+		}
 	}
 }

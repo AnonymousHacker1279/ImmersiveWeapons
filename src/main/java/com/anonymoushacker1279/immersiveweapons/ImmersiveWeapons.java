@@ -1,8 +1,11 @@
 package com.anonymoushacker1279.immersiveweapons;
 
+import com.anonymoushacker1279.immersiveweapons.entity.projectile.MolotovEntity.MolotovEntityPacketHandler;
+import com.anonymoushacker1279.immersiveweapons.entity.projectile.SmokeBombEntity.SmokeBombEntityPacketHandler;
 import com.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
 import com.anonymoushacker1279.immersiveweapons.init.DispenserBehaviorRegistry;
 import com.anonymoushacker1279.immersiveweapons.init.OreGeneratorHandler;
+import com.anonymoushacker1279.immersiveweapons.tileentity.PanicAlarmTileEntity.PanicAlarmPacketHandler;
 import com.anonymoushacker1279.immersiveweapons.util.*;
 import com.anonymoushacker1279.immersiveweapons.world.gen.feature.structure.BattlefieldVillagePools;
 import net.minecraft.util.RegistryKey;
@@ -64,6 +67,27 @@ public class ImmersiveWeapons {
 		IEventBus forgeBus = MinecraftForge.EVENT_BUS;
 		forgeBus.addListener(EventPriority.NORMAL, this::addDimensionalSpacing);
 		forgeBus.addListener(EventPriority.HIGH, this::onBiomeLoading);
+
+		// Register packet handlers
+		int networkId = 0;
+		PacketHandler.INSTANCE.registerMessage(networkId++,
+				PanicAlarmPacketHandler.class,
+				PanicAlarmPacketHandler::encode,
+				PanicAlarmPacketHandler::decode,
+				PanicAlarmPacketHandler::handle
+		);
+		PacketHandler.INSTANCE.registerMessage(networkId++,
+				SmokeBombEntityPacketHandler.class,
+				SmokeBombEntityPacketHandler::encode,
+				SmokeBombEntityPacketHandler::decode,
+				SmokeBombEntityPacketHandler::handle
+		);
+		PacketHandler.INSTANCE.registerMessage(networkId++,
+				MolotovEntityPacketHandler.class,
+				MolotovEntityPacketHandler::encode,
+				MolotovEntityPacketHandler::decode,
+				MolotovEntityPacketHandler::handle
+		);
 	}
 
 	private static void setupBiome(final Biome biome, final BiomeManager.BiomeType biomeType, final int weight, final BiomeDictionary.Type... types) {

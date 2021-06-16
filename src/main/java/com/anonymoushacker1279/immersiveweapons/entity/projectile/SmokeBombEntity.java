@@ -4,29 +4,36 @@ import com.anonymoushacker1279.immersiveweapons.client.particle.SmokeBombParticl
 import com.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
 import com.anonymoushacker1279.immersiveweapons.util.Config;
 import com.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
+import com.anonymoushacker1279.immersiveweapons.util.PacketHandler;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.ProjectileItemEntity;
 import net.minecraft.item.Item;
 import net.minecraft.network.IPacket;
+import net.minecraft.network.PacketBuffer;
 import net.minecraft.particles.IParticleData;
 import net.minecraft.util.SoundCategory;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.fml.DistExecutor;
+import net.minecraftforge.fml.network.NetworkEvent;
+import net.minecraftforge.fml.network.NetworkEvent.Context;
 import net.minecraftforge.fml.network.NetworkHooks;
+import net.minecraftforge.fml.network.PacketDistributor;
 
 import javax.annotation.Nonnull;
 import java.awt.*;
+import java.util.function.Supplier;
 
 public class SmokeBombEntity extends ProjectileItemEntity {
 
 	private static final byte VANILLA_IMPACT_STATUS_ID = 3;
 	private static String color;
 	private final int configMaxParticles = Config.MAX_SMOKE_BOMB_PARTICLES.get();
-	// We hit something (entity or block).
-	Minecraft mc = Minecraft.getInstance();
 
 	public SmokeBombEntity(EntityType<? extends SmokeBombEntity> entityType, World world) {
 		super(entityType, world);
@@ -44,18 +51,13 @@ public class SmokeBombEntity extends ProjectileItemEntity {
 		SmokeBombEntity.color = color;
 	}
 
-	// If you forget to override this method, the default vanilla method will be called.
-	// This sends a vanilla spawn packet, which is then silently discarded when it reaches the client.
-	//  Your entity will be present on the server and can cause effects, but the client will not have a copy of the entity
-	//    and hence it will not render.
 	@Nonnull
 	@Override
 	public IPacket<?> getAddEntityPacket() {
 		return NetworkHooks.getEntitySpawningPacket(this);
 	}
 
-	// ProjectileItemEntity::setItem uses this to save storage space.  It only stores the itemStack if the itemStack is not
-	//   the default item.
+
 	@Override
 	protected Item getDefaultItem() {
 		return DeferredRegistryHandler.SMOKE_BOMB.get();
@@ -64,9 +66,9 @@ public class SmokeBombEntity extends ProjectileItemEntity {
 	@Override
 	protected void onHit(RayTraceResult rayTraceResult) {
 		if (!this.level.isClientSide) {
-			PlayerEntity playerEntity = mc.player;
 			this.level.broadcastEntityEvent(this, VANILLA_IMPACT_STATUS_ID);  // calls handleStatusUpdate which tells the client to render particles
-			this.level.playSound(playerEntity, this.blockPosition(), DeferredRegistryHandler.SMOKE_BOMB_HISS.get(), SoundCategory.NEUTRAL, 0.1f, 0.6f);
+			PacketHandler.INSTANCE.send(PacketDistributor.TRACKING_CHUNK.with(() -> level.getChunkAt(this.blockPosition())), new SmokeBombEntityPacketHandler(this.blockPosition()));
+			this.kill();
 		}
 	}
 
@@ -146,5 +148,36 @@ public class SmokeBombEntity extends ProjectileItemEntity {
 		final double MIN_DIAMETER = 0.5;
 		final double MAX_DIAMETER = 5.5;
 		return MIN_DIAMETER + (MAX_DIAMETER - MIN_DIAMETER) * random;
+	}
+
+	public static class SmokeBombEntityPacketHandler {
+
+		private final BlockPos blockPos;
+
+		public SmokeBombEntityPacketHandler(final BlockPos blockPos) {
+			this.blockPos = blockPos;
+		}
+
+		public static void encode(final SmokeBombEntityPacketHandler msg, final PacketBuffer packetBuffer) {
+			packetBuffer.writeBlockPos(msg.blockPos);
+		}
+
+		public static SmokeBombEntityPacketHandler decode(final PacketBuffer packetBuffer) {
+			return new SmokeBombEntityPacketHandler(packetBuffer.readBlockPos());
+		}
+
+		public static void handle(final SmokeBombEntityPacketHandler msg, final Supplier<Context> contextSupplier) {
+			final NetworkEvent.Context context = contextSupplier.get();
+			context.enqueueWork(() -> DistExecutor.runWhenOn(Dist.CLIENT, () -> () -> handleOnClient(msg)));
+			context.setPacketHandled(true);
+		}
+
+		@OnlyIn(Dist.CLIENT)
+		private static void handleOnClient(final SmokeBombEntityPacketHandler msg) {
+			Minecraft minecraft = Minecraft.getInstance();
+			if (minecraft.level != null) {
+				minecraft.level.playLocalSound(msg.blockPos, DeferredRegistryHandler.SMOKE_BOMB_HISS.get(), SoundCategory.NEUTRAL, 0.1f, 0.6f, false);
+			}
+		}
 	}
 }
