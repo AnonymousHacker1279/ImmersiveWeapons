@@ -28,7 +28,6 @@ import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.fml.loading.FMLPaths;
@@ -42,7 +41,6 @@ import java.util.Objects;
 
 // The value here should match an entry in the META-INF/mods.toml file
 @Mod(ImmersiveWeapons.MOD_ID)
-@Mod.EventBusSubscriber(modid = ImmersiveWeapons.MOD_ID, bus = Bus.MOD)
 public class ImmersiveWeapons {
 
 	public static final String MOD_ID = "immersiveweapons";
@@ -134,8 +132,6 @@ public class ImmersiveWeapons {
 		}
 	}
 
-	@SuppressWarnings("resource")
-
 	public void addDimensionalSpacing(final WorldEvent.Load event) {
 		if (event.getWorld() instanceof ServerWorld) {
 			ServerWorld serverWorld = (ServerWorld) event.getWorld();
@@ -155,7 +151,6 @@ public class ImmersiveWeapons {
 			tempMap.put(Structures.BATTLEFIELD_VILLAGE.get(), DimensionStructuresSettings.DEFAULTS.get(Structures.BATTLEFIELD_VILLAGE.get()));
 			tempMap.put(Structures.CLOUD_ISLAND.get(), DimensionStructuresSettings.DEFAULTS.get(Structures.CLOUD_ISLAND.get()));
 			serverWorld.getChunkSource().generator.getSettings().structureConfig = tempMap;
-
 		}
 	}
 }

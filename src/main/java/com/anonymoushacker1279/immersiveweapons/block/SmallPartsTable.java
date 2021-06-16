@@ -2,9 +2,10 @@ package com.anonymoushacker1279.immersiveweapons.block;
 
 import com.anonymoushacker1279.immersiveweapons.container.SmallPartsContainer;
 import net.minecraft.block.AbstractBlock;
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.CraftingTableBlock;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.inventory.container.SimpleNamedContainerProvider;
 import net.minecraft.util.ActionResultType;
@@ -15,8 +16,9 @@ import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.network.NetworkHooks;
 
-public class SmallPartsTable extends CraftingTableBlock {
+public class SmallPartsTable extends Block {
 
 	private static final ITextComponent CONTAINER_NAME = new TranslationTextComponent("container.immersiveweapons.small_parts_table");
 
@@ -34,7 +36,7 @@ public class SmallPartsTable extends CraftingTableBlock {
 		if (worldIn.isClientSide) {
 			return ActionResultType.SUCCESS;
 		} else {
-			player.openMenu(state.getMenuProvider(worldIn, pos));
+			NetworkHooks.openGui((ServerPlayerEntity) player, state.getMenuProvider(worldIn, pos), pos);
 			return ActionResultType.CONSUME;
 		}
 	}
