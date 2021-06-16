@@ -1,24 +1,32 @@
 package com.anonymoushacker1279.immersiveweapons.tileentity;
 
 import com.anonymoushacker1279.immersiveweapons.block.PanicAlarmBlock;
-import com.anonymoushacker1279.immersiveweapons.client.sound.AlarmTickableSounds;
 import com.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
 import com.anonymoushacker1279.immersiveweapons.util.Option;
+import com.anonymoushacker1279.immersiveweapons.util.PacketHandler;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.network.PacketBuffer;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.SoundCategory;
 import net.minecraft.util.Util;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.fml.DistExecutor;
+import net.minecraftforge.fml.network.NetworkEvent;
+import net.minecraftforge.fml.network.NetworkEvent.Context;
+import net.minecraftforge.fml.network.PacketDistributor;
+
+import java.util.function.Supplier;
 
 public class PanicAlarmTileEntity extends TileEntity implements ITickableTileEntity {
 
-	private final Option.IntOption range = new Option.IntOption("range", 20, 0, 30);
 	private final Option.IntOption delay = new Option.IntOption("delay", 2, 1, 30);
 	private boolean isPowered = false;
 	private int cooldown = 0;
@@ -30,7 +38,7 @@ public class PanicAlarmTileEntity extends TileEntity implements ITickableTileEnt
 
 	@Override
 	public void tick() {
-		if (level != null && !level.isClientSide) {
+		if (level != null) {
 			if (cooldown > 0) {
 				cooldown--;
 			}
@@ -39,19 +47,7 @@ public class PanicAlarmTileEntity extends TileEntity implements ITickableTileEnt
 				PanicAlarmTileEntity tileEntity = (PanicAlarmTileEntity) level.getBlockEntity(worldPosition);
 
 				if (tileEntity != null) {
-					boolean flag = Minecraft.getInstance().getSoundManager().isActive(new AlarmTickableSounds.AlarmTickableSound1((tileEntity)));
-					boolean flag2 = Minecraft.getInstance().getSoundManager().isActive(new AlarmTickableSounds.AlarmTickableSound2((tileEntity)));
-					boolean flag3 = Minecraft.getInstance().getSoundManager().isActive(new AlarmTickableSounds.AlarmTickableSound3((tileEntity)));
-
-					for (ServerPlayerEntity ignored : ((ServerWorld) level).getPlayers(p -> p.blockPosition().distSqr(worldPosition) <= Math.pow(range.get(), 2))) {
-						if (currentlyPlayingSound == 1 && !flag) {
-							Minecraft.getInstance().getSoundManager().play(new AlarmTickableSounds.AlarmTickableSound1(tileEntity));
-						} else if (currentlyPlayingSound == 2 && !flag2) {
-							Minecraft.getInstance().getSoundManager().play(new AlarmTickableSounds.AlarmTickableSound2(tileEntity));
-						} else if (currentlyPlayingSound == 3 && !flag3) {
-							Minecraft.getInstance().getSoundManager().play(new AlarmTickableSounds.AlarmTickableSound3(tileEntity));
-						}
-					}
+					PacketHandler.INSTANCE.send(PacketDistributor.TRACKING_CHUNK.with(() -> level.getChunkAt(tileEntity.worldPosition)), new PanicAlarmPacketHandler(currentlyPlayingSound, worldPosition));
 
 					if (currentlyPlayingSound == 1) {
 						tileEntity.setCooldown(delay.get() * 27);
@@ -63,19 +59,6 @@ public class PanicAlarmTileEntity extends TileEntity implements ITickableTileEnt
 
 					level.setBlock(worldPosition, level.getBlockState(worldPosition).setValue(PanicAlarmBlock.HORIZONTAL_FACING, level.getBlockState(worldPosition).getValue(PanicAlarmBlock.HORIZONTAL_FACING)), 2);
 					level.setBlockEntity(worldPosition, tileEntity);
-				}
-			} else if (!isPowered) {
-				cooldown = 0;
-				PanicAlarmTileEntity tileEntity = (PanicAlarmTileEntity) level.getBlockEntity(worldPosition);
-				assert tileEntity != null;
-				if (Minecraft.getInstance().getSoundManager().isActive(new AlarmTickableSounds.AlarmTickableSound1((tileEntity)))) {
-					Minecraft.getInstance().getSoundManager().stop(new AlarmTickableSounds.AlarmTickableSound1((tileEntity)));
-				}
-				if (Minecraft.getInstance().getSoundManager().isActive(new AlarmTickableSounds.AlarmTickableSound2((tileEntity)))) {
-					Minecraft.getInstance().getSoundManager().stop(new AlarmTickableSounds.AlarmTickableSound2((tileEntity)));
-				}
-				if (Minecraft.getInstance().getSoundManager().isActive(new AlarmTickableSounds.AlarmTickableSound3((tileEntity)))) {
-					Minecraft.getInstance().getSoundManager().stop(new AlarmTickableSounds.AlarmTickableSound3((tileEntity)));
 				}
 			}
 		}
@@ -126,6 +109,50 @@ public class PanicAlarmTileEntity extends TileEntity implements ITickableTileEnt
 		cooldown = tag.getInt("cooldown");
 		isPowered = tag.getBoolean("isPowered");
 		currentlyPlayingSound = tag.getInt("currentlyPlayingSound");
+	}
+
+	public static class PanicAlarmPacketHandler {
+
+		private final int currentlyPlayingSound;
+		private final BlockPos blockPos;
+
+		public PanicAlarmPacketHandler(final int currentlyPlayingSound, final BlockPos blockPos) {
+			this.currentlyPlayingSound = currentlyPlayingSound;
+			this.blockPos = blockPos;
+		}
+
+		public static void encode(final PanicAlarmPacketHandler msg, final PacketBuffer packetBuffer) {
+			packetBuffer.writeInt(msg.currentlyPlayingSound);
+			packetBuffer.writeBlockPos(msg.blockPos);
+		}
+
+		public static PanicAlarmPacketHandler decode(final PacketBuffer packetBuffer) {
+			return new PanicAlarmPacketHandler(packetBuffer.readInt(), packetBuffer.readBlockPos());
+		}
+
+		public static void handle(final PanicAlarmPacketHandler msg, final Supplier<Context> contextSupplier) {
+			final NetworkEvent.Context context = contextSupplier.get();
+			context.enqueueWork(() -> DistExecutor.runWhenOn(Dist.CLIENT, () -> () -> handleOnClient(msg)));
+			context.setPacketHandled(true);
+		}
+
+		@OnlyIn(Dist.CLIENT)
+		private static void handleOnClient(final PanicAlarmPacketHandler msg) {
+			final int currentlyPlayingSound = msg.currentlyPlayingSound;
+			Minecraft minecraft = Minecraft.getInstance();
+			if (minecraft.level != null) {
+				PanicAlarmTileEntity tileEntity = (PanicAlarmTileEntity) minecraft.level.getBlockEntity(msg.blockPos);
+				if (tileEntity != null) {
+					if (currentlyPlayingSound == 1) {
+						minecraft.level.playLocalSound(msg.blockPos, DeferredRegistryHandler.ALARM_1.get(), SoundCategory.BLOCKS, 1.0f, 1.0f, false);
+					} else if (currentlyPlayingSound == 2) {
+						minecraft.level.playLocalSound(msg.blockPos, DeferredRegistryHandler.ALARM_2.get(), SoundCategory.BLOCKS, 1.0f, 1.0f, false);
+					} else if (currentlyPlayingSound == 3) {
+						minecraft.level.playLocalSound(msg.blockPos, DeferredRegistryHandler.ALARM_3.get(), SoundCategory.BLOCKS, 1.0f, 1.0f, false);
+					}
+				}
+			}
+		}
 	}
 
 }
