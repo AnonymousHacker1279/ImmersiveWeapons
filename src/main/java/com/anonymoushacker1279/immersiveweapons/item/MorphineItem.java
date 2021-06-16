@@ -1,7 +1,6 @@
 package com.anonymoushacker1279.immersiveweapons.item;
 
 import com.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
-import net.minecraft.client.Minecraft;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
@@ -10,8 +9,6 @@ import net.minecraft.potion.EffectInstance;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
-import net.minecraft.util.math.RayTraceResult;
-import net.minecraft.util.math.RayTraceResult.Type;
 import net.minecraft.world.World;
 
 public class MorphineItem extends Item {
@@ -23,14 +20,11 @@ public class MorphineItem extends Item {
 	@Override
 	public ActionResult<ItemStack> use(World worldIn, PlayerEntity playerIn, Hand handIn) {
 		ItemStack itemstack = playerIn.getItemInHand(handIn);
-		RayTraceResult rayTraceResult = Minecraft.getInstance().hitResult;
-		if (rayTraceResult.getType() != Type.ENTITY) {
-			playerIn.addEffect(new EffectInstance(DeferredRegistryHandler.MORPHINE_EFFECT.get(), 1800, 0, false, true));
-			if (!playerIn.abilities.instabuild) {
-				itemstack.shrink(1);
-				playerIn.inventory.add(new ItemStack(DeferredRegistryHandler.USED_SYRINGE.get()));
-				playerIn.getCooldowns().addCooldown(this, 2400);
-			}
+		playerIn.addEffect(new EffectInstance(DeferredRegistryHandler.MORPHINE_EFFECT.get(), 1800, 0, false, true));
+		if (!playerIn.abilities.instabuild) {
+			itemstack.shrink(1);
+			playerIn.inventory.add(new ItemStack(DeferredRegistryHandler.USED_SYRINGE.get()));
+			playerIn.getCooldowns().addCooldown(this, 2400);
 		}
 
 		return ActionResult.sidedSuccess(itemstack, worldIn.isClientSide());
