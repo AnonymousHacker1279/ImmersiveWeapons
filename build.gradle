@@ -20,15 +20,10 @@ repositories {
         name = "ModMaven"
         url = "https://modmaven.k-4u.nl"
     }
-    maven {
-        // Location of the maven for Hwyla
-        url "https://maven.tehnut.info"
-    }
 }
 
 apply plugin: 'net.minecraftforge.gradle'
 // Only edit below this line, the above code adds and enables the necessary things for Forge to be setup.
-apply plugin: 'eclipse'
 apply plugin: 'maven-publish'
 
 version = '1.16.5-1.0.3'
@@ -117,14 +112,9 @@ dependencies {
     minecraft 'net.minecraftforge:forge:1.16.5-36.1.31'
 
     // compile against the JEI API but do not include it at runtime
-    compileOnly fg.deobf("mezz.jei:jei-1.16.5:7.6.1.75:api")
+    compileOnly fg.deobf("mezz.jei:jei-1.16.5:7.7.0.106:api")
     // at runtime, use the full JEI jar
-    runtimeOnly fg.deobf("mezz.jei:jei-1.16.5:7.6.1.75")
-
-    // Compile against the Hwyla API, but do not include it at runtime
-    compileOnly fg.deobf("mcp.mobius.waila:Hwyla:1.10.11-B78_1.16.2:api")
-    // At runtime, use the full Hwyla jar
-    runtimeOnly fg.deobf("mcp.mobius.waila:Hwyla:1.10.11-B78_1.16.2")
+    runtimeOnly fg.deobf("mezz.jei:jei-1.16.5:7.7.0.106")
 
 }
 
