@@ -4,6 +4,7 @@ import com.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import com.anonymoushacker1279.immersiveweapons.client.ClientModEventSubscriber;
 import com.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
 import com.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
+import com.anonymoushacker1279.immersiveweapons.util.PacketHandler;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -12,14 +13,21 @@ import net.minecraft.item.ArmorItem;
 import net.minecraft.item.IArmorMaterial;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.network.PacketBuffer;
 import net.minecraft.particles.ParticleTypes;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
 import net.minecraft.world.World;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.fml.DistExecutor;
+import net.minecraftforge.fml.network.NetworkEvent;
+import net.minecraftforge.fml.network.NetworkEvent.Context;
+
+import java.util.function.Supplier;
 
 public class VentusArmorItem extends ArmorItem {
 
-	public boolean armorIsToggled = false;
+	public static boolean armorIsToggled = false;
 	private boolean isLeggings = false;
 
 	public VentusArmorItem(IArmorMaterial material, EquipmentSlotType slot, int type) {
@@ -40,17 +48,57 @@ public class VentusArmorItem extends ArmorItem {
 				player.getItemBySlot(EquipmentSlotType.CHEST).getItem() == DeferredRegistryHandler.VENTUS_CHESTPLATE.get() &&
 				player.getItemBySlot(EquipmentSlotType.LEGS).getItem() == DeferredRegistryHandler.VENTUS_LEGGINGS.get() &&
 				player.getItemBySlot(EquipmentSlotType.FEET).getItem() == DeferredRegistryHandler.VENTUS_BOOTS.get()) {
-			if (ClientModEventSubscriber.toggleArmorEffect.consumeClick()) {
-				armorIsToggled = !armorIsToggled;
+
+			if (world.isClientSide) {
+				if (ClientModEventSubscriber.toggleArmorEffect.consumeClick()) {
+					PacketHandler.INSTANCE.sendToServer(new VentusArmorItemPacketHandler(true));
+					if (!Minecraft.getInstance().isLocalServer()) {
+						toggleEffect();
+					}
+				}
+				if (armorIsToggled) {
+					if (Minecraft.getInstance().options.keyJump.consumeClick()) {
+						world.addParticle(ParticleTypes.CLOUD, player.getX(), player.getY() + 0.1d, player.getZ(), GeneralUtilities.getRandomNumber(-0.03d, 0.03d), GeneralUtilities.getRandomNumber(0.0d, 0.03d), GeneralUtilities.getRandomNumber(-0.03d, 0.03d));
+					}
+				}
 			}
 
 			if (armorIsToggled) {
 				player.addEffect(new EffectInstance(Effects.JUMP, 0, 2, false, false));
 				player.addEffect(new EffectInstance(Effects.SLOW_FALLING, 0, 0, false, false));
-				if (Minecraft.getInstance().options.keyJump.consumeClick()) {
-					world.addParticle(ParticleTypes.CLOUD, player.getX(), player.getY() + 0.1d, player.getZ(), GeneralUtilities.getRandomNumber(-0.03d, 0.03d), GeneralUtilities.getRandomNumber(0.0d, 0.03d), GeneralUtilities.getRandomNumber(-0.03d, 0.03d));
-				}
 			}
+		}
+	}
+
+	public static void toggleEffect() {
+		armorIsToggled = !armorIsToggled;
+	}
+
+	public static class VentusArmorItemPacketHandler {
+
+		private final boolean clientSide;
+
+		public VentusArmorItemPacketHandler(final boolean clientSide) {
+			this.clientSide = clientSide;
+		}
+
+		public static void encode(final VentusArmorItemPacketHandler msg, final PacketBuffer packetBuffer) {
+			packetBuffer.writeBoolean(msg.clientSide);
+		}
+
+		public static VentusArmorItemPacketHandler decode(final PacketBuffer packetBuffer) {
+			return new VentusArmorItemPacketHandler(packetBuffer.readBoolean());
+		}
+
+		public static void handle(final VentusArmorItemPacketHandler msg, final Supplier<Context> contextSupplier) {
+			final NetworkEvent.Context context = contextSupplier.get();
+			context.enqueueWork(() -> DistExecutor.runWhenOn(Dist.CLIENT, () -> () -> handleOnServer(msg)));
+			context.enqueueWork(() -> DistExecutor.runWhenOn(Dist.DEDICATED_SERVER, () -> () -> handleOnServer(msg)));
+			context.setPacketHandled(true);
+		}
+
+		private static void handleOnServer(final VentusArmorItemPacketHandler msg) {
+			VentusArmorItem.toggleEffect();
 		}
 	}
 }
