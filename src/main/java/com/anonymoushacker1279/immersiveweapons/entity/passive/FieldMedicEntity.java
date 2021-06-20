@@ -20,6 +20,11 @@ public class FieldMedicEntity extends AbstractFieldMedicEntity {
 	}
 
 	@Override
+	public int getAmbientSoundInterval() {
+		return GeneralUtilities.getRandomNumber(240, 1600);
+	}
+
+	@Override
 	protected SoundEvent getHurtSound(DamageSource damageSourceIn) {
 		return DeferredRegistryHandler.DYING_SOLDIER_HURT.get();
 	}
