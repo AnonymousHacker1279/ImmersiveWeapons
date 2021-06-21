@@ -1,0 +1,19 @@
+{
+	"variants": {
+		"facing=north": {
+			"model": "immersiveweapons:block/camp_chair",
+			"y": 180
+		},
+		"facing=south": {
+			"model": "immersiveweapons:block/camp_chair"
+		},
+		"facing=west": {
+			"model": "immersiveweapons:block/camp_chair",
+			"y": 90
+		},
+		"facing=east": {
+			"model": "immersiveweapons:block/camp_chair",
+			"y": 270
+		}
+	}
+}
