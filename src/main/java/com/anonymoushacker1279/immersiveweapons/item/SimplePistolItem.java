@@ -17,6 +17,7 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
+import net.minecraftforge.event.ForgeEventFactory;
 
 import java.util.function.Predicate;
 
@@ -58,7 +59,7 @@ public class SimplePistolItem extends ShootableBullet implements IVanishable {
 					}
 				}
 
-				return playerentity.abilities.instabuild ? new ItemStack(DeferredRegistryHandler.IRON_MUSKET_BALL.get()) : ItemStack.EMPTY;
+				return playerentity.abilities.instabuild ? new ItemStack(defaultAmmo()) : ItemStack.EMPTY;
 			}
 		}
 	}
@@ -101,19 +102,19 @@ public class SimplePistolItem extends ShootableBullet implements IVanishable {
 			}
 
 			int i = this.getUseDuration(stack);
-			i = net.minecraftforge.event.ForgeEventFactory.onArrowLoose(stack, worldIn, playerentity, i, !itemstack.isEmpty() || flag);
+			i = ForgeEventFactory.onArrowLoose(stack, worldIn, playerentity, i, !itemstack.isEmpty() || flag);
 			if (i < 0) return;
 
 			if (!itemstack.isEmpty() || flag || !misfire) {
 				if (itemstack.isEmpty()) {
-					itemstack = new ItemStack(DeferredRegistryHandler.IRON_MUSKET_BALL.get());
+					itemstack = new ItemStack(defaultAmmo());
 				}
 
 				float f = getArrowVelocity(i);
 				if (!(f < 0.1D) && !misfire) {
 					boolean flag1 = playerentity.abilities.instabuild || (itemstack.getItem() instanceof CustomArrowItem && ((CustomArrowItem) itemstack.getItem()).isInfinite(itemstack, stack, playerentity));
 					if (!worldIn.isClientSide) {
-						CustomArrowItem arrowitem = (CustomArrowItem) (itemstack.getItem() instanceof CustomArrowItem ? itemstack.getItem() : DeferredRegistryHandler.IRON_MUSKET_BALL.get());
+						CustomArrowItem arrowitem = (CustomArrowItem) (itemstack.getItem() instanceof CustomArrowItem ? itemstack.getItem() : defaultAmmo());
 						AbstractArrowEntity abstractarrowentity = arrowitem.createArrow(worldIn, itemstack, playerentity);
 						abstractarrowentity = customArrow(abstractarrowentity);
 						abstractarrowentity.shootFromRotation(playerentity, playerentity.xRot, playerentity.yRot, 0.0F, f * 3.0F, 1.0F);
@@ -165,7 +166,7 @@ public class SimplePistolItem extends ShootableBullet implements IVanishable {
 		ItemStack itemstack = playerIn.getItemInHand(handIn);
 		boolean flag = !findAmmo(itemstack, playerIn).isEmpty();
 
-		ActionResult<ItemStack> ret = net.minecraftforge.event.ForgeEventFactory.onArrowNock(itemstack, worldIn, playerIn, handIn, flag);
+		ActionResult<ItemStack> ret = ForgeEventFactory.onArrowNock(itemstack, worldIn, playerIn, handIn, flag);
 		if (ret != null) return ret;
 
 		if (!playerIn.abilities.instabuild && !flag) {
@@ -192,16 +193,20 @@ public class SimplePistolItem extends ShootableBullet implements IVanishable {
 		return Ingredient.of(Items.IRON_INGOT);
 	}
 
+	public Item defaultAmmo() {
+		return DeferredRegistryHandler.IRON_MUSKET_BALL.get();
+	}
+
 	@Override
 	public boolean isValidRepairItem(ItemStack toRepair, ItemStack repair) {
 		return this.getRepairMaterial().test(repair) || super.isValidRepairItem(toRepair, repair);
 	}
 
-	private SoundEvent getMisfireSound() {
+	public SoundEvent getMisfireSound() {
 		return DeferredRegistryHandler.FLINTLOCK_PISTOL_MISFIRE.get();
 	}
 
-	private SoundEvent getFireSound() {
+	public SoundEvent getFireSound() {
 		return DeferredRegistryHandler.FLINTLOCK_PISTOL_FIRE.get();
 	}
 }

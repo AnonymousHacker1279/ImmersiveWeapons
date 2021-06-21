@@ -308,5 +308,15 @@
 				"stream": false
 			}
 		]
+	},
+	"flare_gun_fire": {
+		"category": "neutral",
+		"subtitle": "immersiveweapons.subtitle.item.gun.flare_gun_fire",
+		"sounds": [
+			{
+				"name": "immersiveweapons:flare_gun_fire",
+				"stream": false
+			}
+		]
 	}
 }

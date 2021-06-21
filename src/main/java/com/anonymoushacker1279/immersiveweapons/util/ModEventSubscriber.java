@@ -38,6 +38,7 @@ public class ModEventSubscriber {
 		((CustomArrowItem) (DeferredRegistryHandler.GOLD_MUSKET_BALL.get())).setItemReference(DeferredRegistryHandler.GOLD_MUSKET_BALL);
 		((CustomArrowItem) (DeferredRegistryHandler.DIAMOND_MUSKET_BALL.get())).setItemReference(DeferredRegistryHandler.DIAMOND_MUSKET_BALL);
 		((CustomArrowItem) (DeferredRegistryHandler.NETHERITE_MUSKET_BALL.get())).setItemReference(DeferredRegistryHandler.NETHERITE_MUSKET_BALL);
+		((CustomArrowItem) (DeferredRegistryHandler.FLARE.get())).setItemReference(DeferredRegistryHandler.FLARE);
 	}
 
 	@SubscribeEvent

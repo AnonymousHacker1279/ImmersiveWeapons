@@ -2,9 +2,14 @@ package com.anonymoushacker1279.immersiveweapons.client.renderer.entity;
 
 import com.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import com.anonymoushacker1279.immersiveweapons.entity.projectile.BulletEntity.*;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.ItemRenderer;
 import net.minecraft.client.renderer.entity.ArrowRenderer;
+import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererManager;
+import net.minecraft.client.renderer.entity.SpriteRenderer;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.fml.client.registry.IRenderFactory;
 
 public class BulletRenderer {
 
@@ -82,6 +87,15 @@ public class BulletRenderer {
 		@Override
 		public ResourceLocation getTextureLocation(NetheriteBulletEntity entity) {
 			return new ResourceLocation(ImmersiveWeapons.MOD_ID, "textures/entity/projectiles/netherite_musket_ball.png");
+		}
+	}
+
+	public static class FlareRenderer implements IRenderFactory<FlareEntity> {
+
+		@Override
+		public EntityRenderer<? super FlareEntity> createRenderFor(EntityRendererManager manager) {
+			ItemRenderer itemRenderer = Minecraft.getInstance().getItemRenderer();
+			return new SpriteRenderer<>(manager, itemRenderer);
 		}
 	}
 }

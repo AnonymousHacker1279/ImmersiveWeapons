@@ -1,0 +1,26 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"pattern": [
+		"xy ",
+		"wz ",
+		"   "
+	],
+	"key": {
+		"w": {
+			"tag": "minecraft:planks"
+		},
+		"x": {
+			"item": "immersiveweapons:small_parts_iron"
+		},
+		"y": {
+			"tag": "forge:ingots/iron"
+		},
+		"z": {
+			"tag": "forge:nuggets/metal"
+		}
+	},
+	"result": {
+		"item": "immersiveweapons:flare_gun",
+		"count": 1
+	}
+}

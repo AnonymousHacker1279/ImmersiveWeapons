@@ -10,6 +10,7 @@ import java.util.function.Predicate;
 
 public abstract class ShootableBullet extends Item {
 	public static final Predicate<ItemStack> MUSKET_BALLS = (stack) -> stack.getItem().is(ItemTags.bind("immersiveweapons:projectiles/musket_ball"));
+	public static final Predicate<ItemStack> FLARES = (stack) -> stack.getItem().is(ItemTags.bind("immersiveweapons:projectiles/flares"));
 
 	public ShootableBullet(Item.Properties builder) {
 		super(builder);
