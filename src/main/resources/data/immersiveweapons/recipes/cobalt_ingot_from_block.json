@@ -2,11 +2,11 @@
 	"type": "minecraft:crafting_shapeless",
 	"ingredients": [
 		{
-			"item": "immersiveweapons:tesla_block"
+			"item": "immersiveweapons:cobalt_block"
 		}
 	],
 	"result": {
-		"item": "immersiveweapons:tesla_ingot",
+		"item": "immersiveweapons:cobalt_ingot",
 		"count": 9
 	}
 }
