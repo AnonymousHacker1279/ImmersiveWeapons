@@ -1,0 +1,60 @@
+{
+	"variants": {
+		"facing=north,bags=1": {
+			"model": "immersiveweapons:block/sandbag_1"
+		},
+		"facing=north,bags=2": {
+			"model": "immersiveweapons:block/sandbag_2"
+		},
+		"facing=north,bags=3": {
+			"model": "immersiveweapons:block/sandbag_3"
+		},
+		"facing=north,bags=4": {
+			"model": "immersiveweapons:block/sandbag_4"
+		},
+		"facing=south,bags=1": {
+			"model": "immersiveweapons:block/sandbag_1"
+		},
+		"facing=south,bags=2": {
+			"model": "immersiveweapons:block/sandbag_2"
+		},
+		"facing=south,bags=3": {
+			"model": "immersiveweapons:block/sandbag_3"
+		},
+		"facing=south,bags=4": {
+			"model": "immersiveweapons:block/sandbag_4"
+		},
+		"facing=west,bags=1": {
+			"model": "immersiveweapons:block/sandbag_1",
+			"y": 90
+		},
+		"facing=west,bags=2": {
+			"model": "immersiveweapons:block/sandbag_2",
+			"y": 90
+		},
+		"facing=west,bags=3": {
+			"model": "immersiveweapons:block/sandbag_3",
+			"y": 90
+		},
+		"facing=west,bags=4": {
+			"model": "immersiveweapons:block/sandbag_4",
+			"y": 90
+		},
+		"facing=east,bags=1": {
+			"model": "immersiveweapons:block/sandbag_1",
+			"y": 90
+		},
+		"facing=east,bags=2": {
+			"model": "immersiveweapons:block/sandbag_2",
+			"y": 90
+		},
+		"facing=east,bags=3": {
+			"model": "immersiveweapons:block/sandbag_3",
+			"y": 90
+		},
+		"facing=east,bags=4": {
+			"model": "immersiveweapons:block/sandbag_4",
+			"y": 90
+		}
+	}
+}

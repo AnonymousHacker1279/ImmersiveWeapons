@@ -221,6 +221,7 @@ public class DeferredRegistryHandler {
 	public static final RegistryObject<Item> MORPHINE = ITEMS.register("morphine", () -> new MorphineItem(new Properties().tab(ITEM_GROUP).stacksTo(16)));
 	public static final RegistryObject<Item> USED_SYRINGE = ITEMS.register("used_syringe", () -> new UsedSyringeItem(new Properties().tab(ITEM_GROUP).stacksTo(16)));
 	public static final RegistryObject<Item> FIRST_AID_KIT = ITEMS.register("first_aid_kit", () -> new FirstAidKitItem(new Properties().tab(ITEM_GROUP).stacksTo(8)));
+	public static final RegistryObject<Item> CLOTH_SCRAP = ITEMS.register("cloth_scrap", () -> new Item(new Properties().tab(ITEM_GROUP)));
 
 	// Armor
 	public static final RegistryObject<Item> MOLTEN_HELMET = ITEMS.register("molten_helmet", () -> new MoltenArmorItem(CustomArmorMaterials.MOLTEN, EquipmentSlotType.HEAD, 1));
@@ -299,6 +300,7 @@ public class DeferredRegistryHandler {
 	public static final RegistryObject<Block> VENTUS_ORE = BLOCKS.register("ventus_ore", () -> new Block(AbstractBlock.Properties.of(Material.STONE).strength(3.5f, 6.0f).sound(SoundType.STONE).harvestLevel(2).harvestTool(ToolType.PICKAXE)));
 	public static final RegistryObject<Block> COBALT_BLOCK = BLOCKS.register("cobalt_block", () -> new Block(AbstractBlock.Properties.of(Material.METAL).strength(6.0f)));
 	public static final RegistryObject<Block> CAMP_CHAIR = BLOCKS.register("camp_chair", () -> new CampChairBlock(AbstractBlock.Properties.of(Material.CLOTH_DECORATION).strength(1.0f).sound(SoundType.WOOL).noOcclusion()));
+	public static final RegistryObject<Block> SANDBAG = BLOCKS.register("sandbag", () -> new SandbagBlock(AbstractBlock.Properties.of(Material.SAND).strength(4.0f, 5.0f).harvestTool(ToolType.SHOVEL).noOcclusion()));
 
 	// Block Items
 	public static final RegistryObject<BlockItem> MOLTEN_ORE_ITEM = ITEMS.register("molten_ore", () -> new BlockItem(MOLTEN_ORE.get(), new Properties().tab(ITEM_GROUP).fireResistant()));
@@ -334,6 +336,7 @@ public class DeferredRegistryHandler {
 	public static final RegistryObject<BlockItem> BARBED_WIRE_ITEM = ITEMS.register("barbed_wire", () -> new BlockItem(BARBED_WIRE.get(), new Properties().tab(ITEM_GROUP)));
 	public static final RegistryObject<BlockItem> LANDMINE_ITEM = ITEMS.register("landmine", () -> new BlockItem(LANDMINE.get(), new Properties().tab(ITEM_GROUP)));
 	public static final RegistryObject<BlockItem> SPIKE_TRAP_ITEM = ITEMS.register("spike_trap", () -> new BlockItem(SPIKE_TRAP.get(), new Properties().tab(ITEM_GROUP)));
+	public static final RegistryObject<BlockItem> SANDBAG_ITEM = ITEMS.register("sandbag", () -> new BlockItem(SANDBAG.get(), new Properties().tab(ITEM_GROUP)));
 	public static final RegistryObject<BlockItem> CORRUGATED_IRON_PANEL_ITEM = ITEMS.register("corrugated_iron_panel", () -> new BlockItem(CORRUGATED_IRON_PANEL.get(), new Properties().tab(ITEM_GROUP)));
 	public static final RegistryObject<BlockItem> CORRUGATED_IRON_PANEL_BARS_ITEM = ITEMS.register("corrugated_iron_panel_bars", () -> new BlockItem(CORRUGATED_IRON_PANEL_BARS.get(), new Properties().tab(ITEM_GROUP)));
 	public static final RegistryObject<BlockItem> CORRUGATED_IRON_PANEL_FLAT_ITEM = ITEMS.register("corrugated_iron_panel_flat", () -> new BlockItem(CORRUGATED_IRON_PANEL_FLAT.get(), new Properties().tab(ITEM_GROUP)));
