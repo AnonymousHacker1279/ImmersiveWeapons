@@ -1,0 +1,20 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"pattern": [
+		"y  ",
+		"yyy",
+		"x x"
+	],
+	"key": {
+		"x": {
+			"tag": "forge:ingots/metal"
+		},
+		"y": {
+			"tag": "minecraft:wool"
+		}
+	},
+	"result": {
+		"item": "immersiveweapons:camp_chair",
+		"count": 1
+	}
+}

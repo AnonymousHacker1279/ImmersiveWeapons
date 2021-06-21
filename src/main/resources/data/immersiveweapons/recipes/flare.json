@@ -1,0 +1,23 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"pattern": [
+		" y ",
+		" x ",
+		" z "
+	],
+	"key": {
+		"x": {
+			"item": "minecraft:paper"
+		},
+		"y": {
+			"item": "immersiveweapons:copper_nugget"
+		},
+		"z": {
+			"item": "immersiveweapons:smoke_powder"
+		}
+	},
+	"result": {
+		"item": "immersiveweapons:flare",
+		"count": 1
+	}
+}

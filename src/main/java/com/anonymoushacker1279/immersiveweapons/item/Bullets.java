@@ -129,4 +129,21 @@ public class Bullets {
 			return bulletentity;
 		}
 	}
+
+	public static class FlareItem extends CustomArrowItem {
+
+		public FlareItem(Properties properties, double damageIn) {
+			super(properties, damageIn);
+			this.damage = damageIn;
+		}
+
+		@Override
+		public FlareEntity createArrow(World worldIn, ItemStack stack, LivingEntity shooter) {
+			FlareEntity bulletentity = new FlareEntity(shooter, worldIn, ref.get());
+			bulletentity.setBaseDamage(this.damage);
+			bulletentity.pickup = PickupStatus.DISALLOWED;
+			bulletentity.setSoundEvent(DeferredRegistryHandler.BULLET_WHIZZ.get());
+			return bulletentity;
+		}
+	}
 }

@@ -63,7 +63,7 @@ public class SimpleShotgunItem extends SimplePistolItem {
 
 			if (!itemstack.isEmpty() || flag || !misfire) {
 				if (itemstack.isEmpty()) {
-					itemstack = new ItemStack(DeferredRegistryHandler.IRON_MUSKET_BALL.get());
+					itemstack = new ItemStack(defaultAmmo());
 				}
 
 				float f = getArrowVelocity(i);
@@ -71,7 +71,7 @@ public class SimpleShotgunItem extends SimplePistolItem {
 					boolean flag1 = playerentity.abilities.instabuild || (itemstack.getItem() instanceof CustomArrowItem && ((CustomArrowItem) itemstack.getItem()).isInfinite(itemstack, stack, playerentity));
 					if (!worldIn.isClientSide) {
 						for (int iter = 0; iter < bulletsToFire; ++iter) {
-							CustomArrowItem arrowitem = (CustomArrowItem) (itemstack.getItem() instanceof CustomArrowItem ? itemstack.getItem() : DeferredRegistryHandler.IRON_MUSKET_BALL.get());
+							CustomArrowItem arrowitem = (CustomArrowItem) (itemstack.getItem() instanceof CustomArrowItem ? itemstack.getItem() : defaultAmmo());
 							AbstractArrowEntity abstractBulletEntity = arrowitem.createArrow(worldIn, itemstack, playerentity);
 							abstractBulletEntity = customArrow(abstractBulletEntity);
 							abstractBulletEntity.setKnockback(3);
@@ -105,11 +105,13 @@ public class SimpleShotgunItem extends SimplePistolItem {
 		return Math.min(itemStack.getCount(), 4);
 	}
 
-	private SoundEvent getMisfireSound() {
+	@Override
+	public SoundEvent getMisfireSound() {
 		return DeferredRegistryHandler.FLINTLOCK_PISTOL_MISFIRE.get();
 	}
 
-	private SoundEvent getFireSound() {
+	@Override
+	public SoundEvent getFireSound() {
 		return DeferredRegistryHandler.BLUNDERBUSS_FIRE.get();
 	}
 }

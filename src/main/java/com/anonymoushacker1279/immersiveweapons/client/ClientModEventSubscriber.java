@@ -4,6 +4,7 @@ import com.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import com.anonymoushacker1279.immersiveweapons.client.gui.screen.SmallPartsTableScreen;
 import com.anonymoushacker1279.immersiveweapons.client.gui.screen.TeslaSynthesizerScreen;
 import com.anonymoushacker1279.immersiveweapons.client.particle.SmokeBombParticleFactory;
+import com.anonymoushacker1279.immersiveweapons.client.renderer.ChairRenderer;
 import com.anonymoushacker1279.immersiveweapons.client.renderer.ShelfRenderer;
 import com.anonymoushacker1279.immersiveweapons.client.renderer.entity.BulletRenderer.*;
 import com.anonymoushacker1279.immersiveweapons.client.renderer.entity.CustomArrowRenderer.*;
@@ -68,6 +69,7 @@ public class ClientModEventSubscriber {
 		RenderingRegistry.registerEntityRenderingHandler(DeferredRegistryHandler.GOLD_BULLET_ENTITY.get(), GoldBulletRenderer::new);
 		RenderingRegistry.registerEntityRenderingHandler(DeferredRegistryHandler.DIAMOND_BULLET_ENTITY.get(), DiamondBulletRenderer::new);
 		RenderingRegistry.registerEntityRenderingHandler(DeferredRegistryHandler.NETHERITE_BULLET_ENTITY.get(), NetheriteBulletRenderer::new);
+		RenderingRegistry.registerEntityRenderingHandler(DeferredRegistryHandler.FLARE_ENTITY.get(), new FlareRenderer());
 
 		RenderingRegistry.registerEntityRenderingHandler(DeferredRegistryHandler.SMOKE_BOMB_ENTITY.get(), new SmokeBombRenderer());
 		RenderingRegistry.registerEntityRenderingHandler(DeferredRegistryHandler.MOLOTOV_COCKTAIL_ENTITY.get(), new MolotovRenderer());
@@ -75,6 +77,8 @@ public class ClientModEventSubscriber {
 		RenderingRegistry.registerEntityRenderingHandler(DeferredRegistryHandler.DYING_SOLDIER_ENTITY.get(), DyingSoldierRenderer::new);
 		RenderingRegistry.registerEntityRenderingHandler(DeferredRegistryHandler.MINUTEMAN_ENTITY.get(), MinutemanRenderer::new);
 		RenderingRegistry.registerEntityRenderingHandler(DeferredRegistryHandler.FIELD_MEDIC_ENTITY.get(), FieldMedicRenderer::new);
+
+		RenderingRegistry.registerEntityRenderingHandler(DeferredRegistryHandler.CHAIR_ENTITY.get(), ChairRenderer::new);
 
 		// Register block renderers
 		RenderTypeLookup.setRenderLayer(DeferredRegistryHandler.BULLETPROOF_GLASS.get(), RenderType.cutoutMipped());

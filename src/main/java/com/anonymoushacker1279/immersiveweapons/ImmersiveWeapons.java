@@ -116,12 +116,14 @@ public class ImmersiveWeapons {
 		}
 		if (event.getCategory() == Category.PLAINS) {
 			generation.addStructureStart(ConfiguredStructures.CONFIGURED_ABANDONED_FACTORY);
+			generation.addStructureStart(ConfiguredStructures.CONFIGURED_CAMPSITE);
 		}
 		if (event.getCategory() == Category.JUNGLE) {
 			generation.addStructureStart(ConfiguredStructures.CONFIGURED_PITFALL_TRAP);
 		}
 		if (event.getCategory() == Category.DESERT) {
 			generation.addStructureStart(ConfiguredStructures.CONFIGURED_LANDMINE_TRAP);
+			generation.addStructureStart(ConfiguredStructures.CONFIGURED_CAMPSITE);
 		}
 		if (event.getCategory() == Category.TAIGA) {
 			generation.addStructureStart(ConfiguredStructures.CONFIGURED_CLOUD_ISLAND);
@@ -153,6 +155,7 @@ public class ImmersiveWeapons {
 			tempMap.put(Structures.BATTLEFIELD_CAMP.get(), DimensionStructuresSettings.DEFAULTS.get(Structures.BATTLEFIELD_CAMP.get()));
 			tempMap.put(Structures.BATTLEFIELD_VILLAGE.get(), DimensionStructuresSettings.DEFAULTS.get(Structures.BATTLEFIELD_VILLAGE.get()));
 			tempMap.put(Structures.CLOUD_ISLAND.get(), DimensionStructuresSettings.DEFAULTS.get(Structures.CLOUD_ISLAND.get()));
+			tempMap.put(Structures.CAMPSITE.get(), DimensionStructuresSettings.DEFAULTS.get(Structures.CAMPSITE.get()));
 			serverWorld.getChunkSource().generator.getSettings().structureConfig = tempMap;
 		}
 	}

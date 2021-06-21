@@ -1,0 +1,9 @@
+{
+	"type": "minecraft:blasting",
+	"ingredient": {
+		"item": "immersiveweapons:molten_ore"
+	},
+	"result": "immersiveweapons:molten_ingot",
+	"experience": 1.2,
+	"cookingtime": 600
+}
