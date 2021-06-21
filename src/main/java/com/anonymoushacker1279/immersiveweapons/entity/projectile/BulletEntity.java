@@ -26,6 +26,8 @@ import net.minecraft.util.math.*;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.event.ForgeEventFactory;
 import net.minecraftforge.fml.network.NetworkHooks;
 
@@ -2226,6 +2228,7 @@ public class BulletEntity {
 		}
 	}
 
+	@OnlyIn(value = Dist.CLIENT, _interface = IRendersAsItem.class)
 	public static class FlareEntity extends AbstractArrowEntity implements IRendersAsItem {
 		private final Item referenceItem;
 		private final SoundEvent hitSound = this.getDefaultHitGroundSoundEvent();
