@@ -1,9 +1,9 @@
 {
-	"type": "minecraft:smelting",
+	"type": "minecraft:blasting",
 	"ingredient": {
 		"item": "immersiveweapons:electric_ore"
 	},
 	"result": "immersiveweapons:electric_ingot",
 	"experience": 1.3,
-	"cookingtime": 200
+	"cookingtime": 100
 }

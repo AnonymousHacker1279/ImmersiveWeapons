@@ -1,9 +1,9 @@
 {
-	"type": "minecraft:smelting",
+	"type": "minecraft:blasting",
 	"ingredient": {
 		"item": "immersiveweapons:copper_ore"
 	},
 	"result": "immersiveweapons:copper_ingot",
 	"experience": 0.7,
-	"cookingtime": 180
+	"cookingtime": 90
 }
