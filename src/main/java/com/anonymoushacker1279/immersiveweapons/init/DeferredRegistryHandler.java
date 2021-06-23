@@ -300,7 +300,7 @@ public class DeferredRegistryHandler {
 	public static final RegistryObject<Block> VENTUS_ORE = BLOCKS.register("ventus_ore", () -> new Block(AbstractBlock.Properties.of(Material.STONE).strength(3.5f, 6.0f).sound(SoundType.STONE).harvestLevel(2).harvestTool(ToolType.PICKAXE)));
 	public static final RegistryObject<Block> COBALT_BLOCK = BLOCKS.register("cobalt_block", () -> new Block(AbstractBlock.Properties.of(Material.METAL).strength(6.0f)));
 	public static final RegistryObject<Block> CAMP_CHAIR = BLOCKS.register("camp_chair", () -> new CampChairBlock(AbstractBlock.Properties.of(Material.CLOTH_DECORATION).strength(1.0f).sound(SoundType.WOOL).noOcclusion()));
-	public static final RegistryObject<Block> SANDBAG = BLOCKS.register("sandbag", () -> new SandbagBlock(AbstractBlock.Properties.of(Material.SAND).strength(4.0f, 5.0f).harvestTool(ToolType.SHOVEL).noOcclusion()));
+	public static final RegistryObject<Block> SANDBAG = BLOCKS.register("sandbag", () -> new SandbagBlock(AbstractBlock.Properties.of(Material.SAND).strength(4.0f, 5.0f).sound(SoundType.SAND).harvestTool(ToolType.SHOVEL).noOcclusion()));
 
 	// Block Items
 	public static final RegistryObject<BlockItem> MOLTEN_ORE_ITEM = ITEMS.register("molten_ore", () -> new BlockItem(MOLTEN_ORE.get(), new Properties().tab(ITEM_GROUP).fireResistant()));

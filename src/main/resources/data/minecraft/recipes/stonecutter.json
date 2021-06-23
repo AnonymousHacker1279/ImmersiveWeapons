@@ -1,0 +1,19 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"pattern": [
+		" x ",
+		"yyy",
+		"   "
+	],
+	"key": {
+		"x": {
+			"tag": "forge:ingots/metal"
+		},
+		"y": {
+			"item": "minecraft:stone"
+		}
+	},
+	"result": {
+		"item": "minecraft:stonecutter"
+	}
+}

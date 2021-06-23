@@ -1,0 +1,19 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"pattern": [
+		"y y",
+		"yxy",
+		" y "
+	],
+	"key": {
+		"x": {
+			"item": "minecraft:chest"
+		},
+		"y": {
+			"tag": "forge:ingots/metal"
+		}
+	},
+	"result": {
+		"item": "minecraft:hopper"
+	}
+}
