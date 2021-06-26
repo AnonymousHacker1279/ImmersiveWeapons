@@ -8,9 +8,7 @@ import com.anonymoushacker1279.immersiveweapons.client.renderer.ChairRenderer;
 import com.anonymoushacker1279.immersiveweapons.client.renderer.ShelfRenderer;
 import com.anonymoushacker1279.immersiveweapons.client.renderer.entity.BulletRenderer.*;
 import com.anonymoushacker1279.immersiveweapons.client.renderer.entity.CustomArrowRenderer.*;
-import com.anonymoushacker1279.immersiveweapons.client.renderer.entity.DyingSoldierRenderer;
-import com.anonymoushacker1279.immersiveweapons.client.renderer.entity.FieldMedicRenderer;
-import com.anonymoushacker1279.immersiveweapons.client.renderer.entity.MinutemanRenderer;
+import com.anonymoushacker1279.immersiveweapons.client.renderer.entity.*;
 import com.anonymoushacker1279.immersiveweapons.client.renderer.entity.ThrowableItemRenderer.MolotovRenderer;
 import com.anonymoushacker1279.immersiveweapons.client.renderer.entity.ThrowableItemRenderer.SmokeBombRenderer;
 import com.anonymoushacker1279.immersiveweapons.container.CustomContainerHolder;
@@ -77,6 +75,8 @@ public class ClientModEventSubscriber {
 		RenderingRegistry.registerEntityRenderingHandler(DeferredRegistryHandler.DYING_SOLDIER_ENTITY.get(), DyingSoldierRenderer::new);
 		RenderingRegistry.registerEntityRenderingHandler(DeferredRegistryHandler.MINUTEMAN_ENTITY.get(), MinutemanRenderer::new);
 		RenderingRegistry.registerEntityRenderingHandler(DeferredRegistryHandler.FIELD_MEDIC_ENTITY.get(), FieldMedicRenderer::new);
+		RenderingRegistry.registerEntityRenderingHandler(DeferredRegistryHandler.WANDERING_WARRIOR_ENTITY.get(), WanderingWarriorRenderer::new);
+		RenderingRegistry.registerEntityRenderingHandler(DeferredRegistryHandler.HANS_ENTITY.get(), HansRenderer::new);
 
 		RenderingRegistry.registerEntityRenderingHandler(DeferredRegistryHandler.CHAIR_ENTITY.get(), ChairRenderer::new);
 
@@ -106,10 +106,12 @@ public class ClientModEventSubscriber {
 
 		mc.getBlockColors().register((p_getColor_1_, p_getColor_2_, p_getColor_3_, p_getColor_4_) -> BiomeColors.getAverageGrassColor(Objects.requireNonNull(p_getColor_2_), Objects.requireNonNull(p_getColor_3_)), DeferredRegistryHandler.PITFALL.get());
 
-		Minecraft.getInstance().getItemColors().register((p_getColor_1_, p_getColor_2_) -> GrassColors.get(0.5d, 1.0d), DeferredRegistryHandler.PITFALL_ITEM.get());
-		Minecraft.getInstance().getItemColors().register((p_getColor_1_, p_getColor_2_) -> 0x7a6851, DeferredRegistryHandler.DYING_SOLDIER_SPAWN_EGG.get());
-		Minecraft.getInstance().getItemColors().register((p_getColor_1_, p_getColor_2_) -> 0x494522, DeferredRegistryHandler.MINUTEMAN_SPAWN_EGG.get());
-		Minecraft.getInstance().getItemColors().register((p_getColor_1_, p_getColor_2_) -> 0xde5451, DeferredRegistryHandler.FIELD_MEDIC_SPAWN_EGG.get());
+		mc.getItemColors().register((p_getColor_1_, p_getColor_2_) -> GrassColors.get(0.5d, 1.0d), DeferredRegistryHandler.PITFALL_ITEM.get());
+		mc.getItemColors().register((p_getColor_1_, p_getColor_2_) -> 0x7a6851, DeferredRegistryHandler.DYING_SOLDIER_SPAWN_EGG.get());
+		mc.getItemColors().register((p_getColor_1_, p_getColor_2_) -> 0x494522, DeferredRegistryHandler.MINUTEMAN_SPAWN_EGG.get());
+		mc.getItemColors().register((p_getColor_1_, p_getColor_2_) -> 0xde5451, DeferredRegistryHandler.FIELD_MEDIC_SPAWN_EGG.get());
+		mc.getItemColors().register((p_getColor_1_, p_getColor_2_) -> 0x614226, DeferredRegistryHandler.WANDERING_WARRIOR_SPAWN_EGG.get());
+		mc.getItemColors().register((p_getColor_1_, p_getColor_2_) -> 0xd0a873, DeferredRegistryHandler.HANS_SPAWN_EGG.get());
 	}
 
 	@SubscribeEvent

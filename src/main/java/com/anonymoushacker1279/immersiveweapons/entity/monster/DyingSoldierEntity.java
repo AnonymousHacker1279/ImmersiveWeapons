@@ -9,8 +9,8 @@ import net.minecraft.world.World;
 
 public class DyingSoldierEntity extends AbstractDyingSoldierEntity {
 
-	public DyingSoldierEntity(EntityType<? extends DyingSoldierEntity> p_i50194_1_, World p_i50194_2_) {
-		super(p_i50194_1_, p_i50194_2_);
+	public DyingSoldierEntity(EntityType<? extends DyingSoldierEntity> entityType, World world) {
+		super(entityType, world);
 	}
 
 	@Override

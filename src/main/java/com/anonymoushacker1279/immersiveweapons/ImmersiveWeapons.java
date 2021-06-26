@@ -5,10 +5,12 @@ import com.anonymoushacker1279.immersiveweapons.init.DispenserBehaviorRegistry;
 import com.anonymoushacker1279.immersiveweapons.init.OreGeneratorHandler;
 import com.anonymoushacker1279.immersiveweapons.util.*;
 import com.anonymoushacker1279.immersiveweapons.world.gen.feature.structure.BattlefieldVillagePools;
+import net.minecraft.entity.EntityClassification;
 import net.minecraft.util.RegistryKey;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.biome.Biome.Category;
+import net.minecraft.world.biome.MobSpawnInfo.Spawners;
 import net.minecraft.world.gen.FlatChunkGenerator;
 import net.minecraft.world.gen.GenerationStage;
 import net.minecraft.world.gen.carver.ConfiguredCarver;
@@ -95,20 +97,21 @@ public class ImmersiveWeapons {
 
 	@SubscribeEvent
 	public void onBiomeLoading(final BiomeLoadingEvent event) {
-		// Ore generation
+		// Biome modifications
 		BiomeGenerationSettingsBuilder generation = event.getGeneration();
 		if (event.getCategory() != Biome.Category.NETHER || event.getCategory() != Biome.Category.THEEND) {
 			event.getGeneration().getFeatures(GenerationStage.Decoration.UNDERGROUND_ORES)
 					.add(() -> OreGeneratorHandler.ORE_COPPER_CONFIG);
 			event.getGeneration().getFeatures(GenerationStage.Decoration.UNDERGROUND_ORES)
 					.add(() -> OreGeneratorHandler.ORE_COBALT_CONFIG);
+			event.getSpawns().addSpawn(EntityClassification.MONSTER, new Spawners(DeferredRegistryHandler.WANDERING_WARRIOR_ENTITY.get(), 15, 1, 1));
+			event.getSpawns().addSpawn(EntityClassification.MONSTER, new Spawners(DeferredRegistryHandler.HANS_ENTITY.get(), 1, 1, 1));
 		}
 		if (event.getCategory() == Biome.Category.NETHER) {
 			event.getGeneration().getFeatures(GenerationStage.Decoration.UNDERGROUND_ORES)
 					.add(() -> OreGeneratorHandler.ORE_MOLTEN_CONFIG);
 		}
 
-		// Biome modification
 		if (event.getCategory() == Category.FOREST) {
 			generation.addStructureStart(ConfiguredStructures.CONFIGURED_ABANDONED_FACTORY);
 			generation.addStructureStart(ConfiguredStructures.CONFIGURED_UNDERGROUND_BUNKER);

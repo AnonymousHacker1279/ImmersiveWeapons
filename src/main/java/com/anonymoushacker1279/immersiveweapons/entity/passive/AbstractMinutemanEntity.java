@@ -86,19 +86,20 @@ public abstract class AbstractMinutemanEntity extends CreatureEntity implements 
 
 	@Override
 	protected void registerGoals() {
+		this.goalSelector.addGoal(1, new SwimGoal(this));
 		this.goalSelector.addGoal(4, new WaterAvoidingRandomWalkingGoal(this, 1.0D));
 		this.goalSelector.addGoal(2, new ReturnToVillageGoal(this, 0.6D, false));
 		this.goalSelector.addGoal(3, new PatrolVillageGoal(this, 0.6D));
-		this.goalSelector.addGoal(1, new LookAtGoal(this, PlayerEntity.class, 8.0F));
-		this.goalSelector.addGoal(2, new LookRandomlyGoal(this));
+		this.goalSelector.addGoal(3, new LookAtGoal(this, PlayerEntity.class, 8.0F));
+		this.goalSelector.addGoal(3, new LookRandomlyGoal(this));
 		this.goalSelector.addGoal(3, new OpenDoorGoal(this, true));
 		this.goalSelector.addGoal(3, new OpenFenceGateGoal(this, true));
-		this.targetSelector.addGoal(12, new HurtByTargetGoal(this, AbstractMinutemanEntity.class, IronGolemEntity.class));
-		this.targetSelector.addGoal(5, new DefendVillageTargetGoal(this));
-		this.targetSelector.addGoal(12, new NearestAttackableTargetGoal<>(this, AbstractDyingSoldierEntity.class, false));
-		this.targetSelector.addGoal(6, new NearestAttackableTargetGoal<>(this, PlayerEntity.class, 8, true, false, this::isAngryAt));
-		this.targetSelector.addGoal(9, new NearestAttackableTargetGoal<>(this, MobEntity.class, 10, false, false, (targetPredicate) -> targetPredicate instanceof IMob && !(targetPredicate instanceof AbstractMinutemanEntity) && !(targetPredicate instanceof IronGolemEntity) && !(targetPredicate instanceof CreeperEntity)));
-		this.targetSelector.addGoal(1, new ResetAngerGoal<>(this, false));
+		this.targetSelector.addGoal(2, new HurtByTargetGoal(this, AbstractMinutemanEntity.class, IronGolemEntity.class));
+		this.targetSelector.addGoal(4, new DefendVillageTargetGoal(this));
+		this.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, AbstractDyingSoldierEntity.class, false));
+		this.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, PlayerEntity.class, 8, true, false, this::isAngryAt));
+		this.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, MobEntity.class, 10, false, false, (targetPredicate) -> targetPredicate instanceof IMob && !(targetPredicate instanceof AbstractMinutemanEntity) && !(targetPredicate instanceof IronGolemEntity) && !(targetPredicate instanceof CreeperEntity)));
+		this.targetSelector.addGoal(5, new ResetAngerGoal<>(this, false));
 	}
 
 	@Override
@@ -180,6 +181,7 @@ public abstract class AbstractMinutemanEntity extends CreatureEntity implements 
 				this.aiShotgunAttack.setAttackCooldown(i);
 				this.goalSelector.addGoal(16, this.aiShotgunAttack);
 			} else {
+				this.populateDefaultEquipmentSlots(this.level.getCurrentDifficultyAt(this.blockPosition()));
 				this.goalSelector.addGoal(12, this.aiAttackOnCollide);
 			}
 
