@@ -299,6 +299,28 @@
 			}
 		]
 	},
+	"field_medic_ambient": {
+		"category": "entity",
+		"subtitle": "immersiveweapons.subtitle.entity.field_medic.ambient",
+		"sounds": [
+			{
+				"name": "immersiveweapons:entity/field_medic/ambient/ambient_1",
+				"stream": false
+			},
+			{
+				"name": "immersiveweapons:entity/field_medic/ambient/ambient_2",
+				"stream": false
+			},
+			{
+				"name": "immersiveweapons:entity/field_medic/ambient/ambient_3",
+				"stream": false
+			},
+			{
+				"name": "immersiveweapons:entity/field_medic/ambient/ambient_4",
+				"stream": false
+			}
+		]
+	},
 	"field_medic_attack": {
 		"category": "entity",
 		"subtitle": "immersiveweapons.subtitle.entity.field_medic.attack",
@@ -407,6 +429,56 @@
 			},
 			{
 				"name": "immersiveweapons:entity/wandering_warrior/step/step_8",
+				"stream": false
+			}
+		]
+	},
+	"field_medic_hurt": {
+		"category": "entity",
+		"subtitle": "immersiveweapons.subtitle.entity.field_medic.hurt",
+		"sounds": [
+			{
+				"name": "immersiveweapons:entity/field_medic/hurt/hurt_1",
+				"stream": false
+			},
+			{
+				"name": "immersiveweapons:entity/field_medic/hurt/hurt_2",
+				"stream": false
+			},
+			{
+				"name": "immersiveweapons:entity/field_medic/hurt/hurt_3",
+				"stream": false
+			}
+		]
+	},
+	"field_medic_death": {
+		"category": "entity",
+		"subtitle": "immersiveweapons.subtitle.entity.field_medic.death",
+		"sounds": [
+			{
+				"name": "immersiveweapons:entity/field_medic/death/death",
+				"stream": false
+			}
+		]
+	},
+	"field_medic_step": {
+		"category": "entity",
+		"subtitle": "immersiveweapons.subtitle.entity.field_medic.step",
+		"sounds": [
+			{
+				"name": "immersiveweapons:entity/field_medic/step/step_1",
+				"stream": false
+			},
+			{
+				"name": "immersiveweapons:entity/field_medic/step/step_2",
+				"stream": false
+			},
+			{
+				"name": "immersiveweapons:entity/field_medic/step/step_3",
+				"stream": false
+			},
+			{
+				"name": "immersiveweapons:entity/field_medic/step/step_4",
 				"stream": false
 			}
 		]

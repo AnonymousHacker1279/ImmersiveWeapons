@@ -16,7 +16,7 @@ public class FieldMedicEntity extends AbstractFieldMedicEntity {
 	//TODO: Need custom sounds
 	@Override
 	protected SoundEvent getAmbientSound() {
-		return DeferredRegistryHandler.DYING_SOLDIER_AMBIENT.get();
+		return DeferredRegistryHandler.FIELD_MEDIC_AMBIENT.get();
 	}
 
 	@Override
@@ -26,17 +26,17 @@ public class FieldMedicEntity extends AbstractFieldMedicEntity {
 
 	@Override
 	protected SoundEvent getHurtSound(DamageSource damageSourceIn) {
-		return DeferredRegistryHandler.DYING_SOLDIER_HURT.get();
+		return DeferredRegistryHandler.FIELD_MEDIC_HURT.get();
 	}
 
 	@Override
 	protected SoundEvent getDeathSound() {
-		return DeferredRegistryHandler.DYING_SOLDIER_DEATH.get();
+		return DeferredRegistryHandler.FIELD_MEDIC_DEATH.get();
 	}
 
 	@Override
 	protected SoundEvent getStepSound() {
-		return DeferredRegistryHandler.DYING_SOLDIER_STEP.get();
+		return DeferredRegistryHandler.FIELD_MEDIC_STEP.get();
 	}
 
 	@Override
@@ -49,11 +49,11 @@ public class FieldMedicEntity extends AbstractFieldMedicEntity {
 		super.dropCustomDeathLoot(source, looting, recentlyHitIn);
 		int lootingModifier = looting * 2;
 		if (lootingModifier >= 85) {
-			this.spawnAtLocation(DeferredRegistryHandler.BLUNDERBUSS.get());
+			this.spawnAtLocation(DeferredRegistryHandler.USED_SYRINGE.get());
 		} else {
 			int i = GeneralUtilities.getRandomNumber(1, 85 - lootingModifier);
 			if (i == 1) {
-				this.spawnAtLocation(DeferredRegistryHandler.BLUNDERBUSS.get());
+				this.spawnAtLocation(DeferredRegistryHandler.USED_SYRINGE.get());
 			}
 		}
 	}
