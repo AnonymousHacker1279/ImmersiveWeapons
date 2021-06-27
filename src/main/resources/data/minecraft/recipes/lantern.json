@@ -1,0 +1,19 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"pattern": [
+		"yyy",
+		"yxy",
+		"yyy"
+	],
+	"key": {
+		"x": {
+			"item": "minecraft:torch"
+		},
+		"y": {
+			"tag": "forge:nuggets/metal"
+		}
+	},
+	"result": {
+		"item": "minecraft:lantern"
+	}
+}

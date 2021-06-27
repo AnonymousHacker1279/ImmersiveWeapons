@@ -97,11 +97,12 @@ public abstract class AbstractFieldMedicEntity extends CreatureEntity {
 
 	@Override
 	protected void registerGoals() {
+		this.goalSelector.addGoal(1, new SwimGoal(this));
 		this.goalSelector.addGoal(4, new WaterAvoidingRandomWalkingGoal(this, 1.0D));
-		this.goalSelector.addGoal(2, new ReturnToVillageGoal(this, 0.6D, false));
-		this.goalSelector.addGoal(4, new PatrolVillageGoal(this, 0.6D));
-		this.goalSelector.addGoal(1, new LookAtGoal(this, PlayerEntity.class, 8.0F));
-		this.goalSelector.addGoal(2, new LookRandomlyGoal(this));
+		this.goalSelector.addGoal(3, new ReturnToVillageGoal(this, 0.6D, false));
+		this.goalSelector.addGoal(2, new PatrolVillageGoal(this, 0.6D));
+		this.goalSelector.addGoal(4, new LookAtGoal(this, PlayerEntity.class, 8.0F));
+		this.goalSelector.addGoal(4, new LookRandomlyGoal(this));
 		this.goalSelector.addGoal(3, new OpenDoorGoal(this, true));
 		this.goalSelector.addGoal(3, new OpenFenceGateGoal(this, true));
 		this.goalSelector.addGoal(5, new UpdateFieldMedicPOIGoal());
@@ -116,7 +117,7 @@ public abstract class AbstractFieldMedicEntity extends CreatureEntity {
 				}
 			}
 		});
-		this.targetSelector.addGoal(7, new HurtByTargetGoal(this, AbstractMinutemanEntity.class, IronGolemEntity.class));
+		this.targetSelector.addGoal(1, new HurtByTargetGoal(this, AbstractMinutemanEntity.class, IronGolemEntity.class));
 	}
 
 	@Override

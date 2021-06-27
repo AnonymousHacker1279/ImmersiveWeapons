@@ -1,8 +1,8 @@
-{ 
+{
 	"replace": false,
 	"values": [
-		"minecraft:iron_nugget",
-		"minecraft:gold_nugget",
-		"immersiveweapons:copper_nugget"
+		"#forge:nuggets/iron",
+		"#forge:nuggets/gold",
+		"#forge:nuggets/copper"
 	]
 }

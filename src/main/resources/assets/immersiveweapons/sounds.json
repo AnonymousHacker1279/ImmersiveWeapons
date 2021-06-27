@@ -299,6 +299,28 @@
 			}
 		]
 	},
+	"field_medic_ambient": {
+		"category": "entity",
+		"subtitle": "immersiveweapons.subtitle.entity.field_medic.ambient",
+		"sounds": [
+			{
+				"name": "immersiveweapons:entity/field_medic/ambient/ambient_1",
+				"stream": false
+			},
+			{
+				"name": "immersiveweapons:entity/field_medic/ambient/ambient_2",
+				"stream": false
+			},
+			{
+				"name": "immersiveweapons:entity/field_medic/ambient/ambient_3",
+				"stream": false
+			},
+			{
+				"name": "immersiveweapons:entity/field_medic/ambient/ambient_4",
+				"stream": false
+			}
+		]
+	},
 	"field_medic_attack": {
 		"category": "entity",
 		"subtitle": "immersiveweapons.subtitle.entity.field_medic.attack",
@@ -315,6 +337,148 @@
 		"sounds": [
 			{
 				"name": "immersiveweapons:flare_gun_fire",
+				"stream": false
+			}
+		]
+	},
+	"wandering_warrior_ambient": {
+		"category": "entity",
+		"subtitle": "immersiveweapons.subtitle.entity.wandering_warrior.ambient",
+		"sounds": [
+			{
+				"name": "immersiveweapons:entity/wandering_warrior/ambient/ambient_1",
+				"stream": false
+			},
+			{
+				"name": "immersiveweapons:entity/wandering_warrior/ambient/ambient_2",
+				"stream": false
+			}
+		]
+	},
+	"wandering_warrior_hurt": {
+		"category": "entity",
+		"subtitle": "immersiveweapons.subtitle.entity.wandering_warrior.hurt",
+		"sounds": [
+			{
+				"name": "immersiveweapons:entity/wandering_warrior/hurt/hurt_1",
+				"stream": false
+			},
+			{
+				"name": "immersiveweapons:entity/wandering_warrior/hurt/hurt_2",
+				"stream": false
+			},
+			{
+				"name": "immersiveweapons:entity/wandering_warrior/hurt/hurt_3",
+				"stream": false
+			},
+			{
+				"name": "immersiveweapons:entity/wandering_warrior/hurt/hurt_4",
+				"stream": false
+			},
+			{
+				"name": "immersiveweapons:entity/wandering_warrior/hurt/hurt_5",
+				"stream": false
+			},
+			{
+				"name": "immersiveweapons:entity/wandering_warrior/hurt/hurt_6",
+				"stream": false
+			}
+		]
+	},
+	"wandering_warrior_death": {
+		"category": "entity",
+		"subtitle": "immersiveweapons.subtitle.entity.wandering_warrior.death",
+		"sounds": [
+			{
+				"name": "immersiveweapons:entity/wandering_warrior/death/death",
+				"stream": false
+			}
+		]
+	},
+	"wandering_warrior_step": {
+		"category": "entity",
+		"subtitle": "immersiveweapons.subtitle.entity.wandering_warrior.step",
+		"sounds": [
+			{
+				"name": "immersiveweapons:entity/wandering_warrior/step/step_1",
+				"stream": false
+			},
+			{
+				"name": "immersiveweapons:entity/wandering_warrior/step/step_2",
+				"stream": false
+			},
+			{
+				"name": "immersiveweapons:entity/wandering_warrior/step/step_3",
+				"stream": false
+			},
+			{
+				"name": "immersiveweapons:entity/wandering_warrior/step/step_4",
+				"stream": false
+			},
+			{
+				"name": "immersiveweapons:entity/wandering_warrior/step/step_5",
+				"stream": false
+			},
+			{
+				"name": "immersiveweapons:entity/wandering_warrior/step/step_6",
+				"stream": false
+			},
+			{
+				"name": "immersiveweapons:entity/wandering_warrior/step/step_7",
+				"stream": false
+			},
+			{
+				"name": "immersiveweapons:entity/wandering_warrior/step/step_8",
+				"stream": false
+			}
+		]
+	},
+	"field_medic_hurt": {
+		"category": "entity",
+		"subtitle": "immersiveweapons.subtitle.entity.field_medic.hurt",
+		"sounds": [
+			{
+				"name": "immersiveweapons:entity/field_medic/hurt/hurt_1",
+				"stream": false
+			},
+			{
+				"name": "immersiveweapons:entity/field_medic/hurt/hurt_2",
+				"stream": false
+			},
+			{
+				"name": "immersiveweapons:entity/field_medic/hurt/hurt_3",
+				"stream": false
+			}
+		]
+	},
+	"field_medic_death": {
+		"category": "entity",
+		"subtitle": "immersiveweapons.subtitle.entity.field_medic.death",
+		"sounds": [
+			{
+				"name": "immersiveweapons:entity/field_medic/death/death",
+				"stream": false
+			}
+		]
+	},
+	"field_medic_step": {
+		"category": "entity",
+		"subtitle": "immersiveweapons.subtitle.entity.field_medic.step",
+		"sounds": [
+			{
+				"name": "immersiveweapons:entity/field_medic/step/step_1",
+				"stream": false
+			},
+			{
+				"name": "immersiveweapons:entity/field_medic/step/step_2",
+				"stream": false
+			},
+			{
+				"name": "immersiveweapons:entity/field_medic/step/step_3",
+				"stream": false
+			},
+			{
+				"name": "immersiveweapons:entity/field_medic/step/step_4",
 				"stream": false
 			}
 		]
