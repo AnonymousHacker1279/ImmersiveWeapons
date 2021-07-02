@@ -104,8 +104,11 @@ public class ImmersiveWeapons {
 					.add(() -> OreGeneratorHandler.ORE_COPPER_CONFIG);
 			event.getGeneration().getFeatures(GenerationStage.Decoration.UNDERGROUND_ORES)
 					.add(() -> OreGeneratorHandler.ORE_COBALT_CONFIG);
-			event.getSpawns().addSpawn(EntityClassification.MONSTER, new Spawners(DeferredRegistryHandler.WANDERING_WARRIOR_ENTITY.get(), 15, 1, 1));
-			event.getSpawns().addSpawn(EntityClassification.MONSTER, new Spawners(DeferredRegistryHandler.HANS_ENTITY.get(), 1, 1, 1));
+
+			if (event.getCategory() != Category.OCEAN && event.getCategory() != Category.RIVER) {
+				event.getSpawns().addSpawn(EntityClassification.MONSTER, new Spawners(DeferredRegistryHandler.WANDERING_WARRIOR_ENTITY.get(), 15, 1, 1));
+				event.getSpawns().addSpawn(EntityClassification.MONSTER, new Spawners(DeferredRegistryHandler.HANS_ENTITY.get(), 1, 1, 1));
+			}
 		}
 		if (event.getCategory() == Biome.Category.NETHER) {
 			event.getGeneration().getFeatures(GenerationStage.Decoration.UNDERGROUND_ORES)
