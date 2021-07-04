@@ -1,12 +1,17 @@
 package com.anonymoushacker1279.immersiveweapons.util;
 
 import com.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
+import com.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
+import com.google.common.collect.ImmutableSet;
+import net.minecraft.block.Blocks;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.util.registry.WorldGenRegistries;
 import net.minecraft.world.gen.FlatGenerationSettings;
-import net.minecraft.world.gen.feature.IFeatureConfig;
-import net.minecraft.world.gen.feature.StructureFeature;
+import net.minecraft.world.gen.blockplacer.SimpleBlockPlacer;
+import net.minecraft.world.gen.blockstateprovider.SimpleBlockStateProvider;
+import net.minecraft.world.gen.feature.*;
+import net.minecraft.world.gen.feature.Features.Placements;
 
 public class ConfiguredStructures {
 
@@ -19,6 +24,8 @@ public class ConfiguredStructures {
 	public static StructureFeature<?, ?> CONFIGURED_BATTLEFIELD_VILLAGE = Structures.BATTLEFIELD_VILLAGE.get().configured(IFeatureConfig.NONE);
 	public static StructureFeature<?, ?> CONFIGURED_CLOUD_ISLAND = Structures.CLOUD_ISLAND.get().configured(IFeatureConfig.NONE);
 	public static StructureFeature<?, ?> CONFIGURED_CAMPSITE = Structures.CAMPSITE.get().configured(IFeatureConfig.NONE);
+
+	public static ConfiguredFeature<?, ?> CONFIGURED_WOODEN_SPIKES = Feature.RANDOM_PATCH.configured(new BlockClusterFeatureConfig.Builder(new SimpleBlockStateProvider(DeferredRegistryHandler.WOODEN_SPIKES.get().defaultBlockState()), SimpleBlockPlacer.INSTANCE).tries(32).whitelist(ImmutableSet.of(Blocks.GRASS_BLOCK)).yspread(1).xspread(4).zspread(4).noProjection().build()).decorated(Placements.TOP_SOLID_HEIGHTMAP_SQUARE).chance(12);
 
 	public static void registerConfiguredStructures() {
 		Registry<StructureFeature<?, ?>> registry = WorldGenRegistries.CONFIGURED_STRUCTURE_FEATURE;
