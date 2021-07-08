@@ -1,6 +1,7 @@
 package com.anonymoushacker1279.immersiveweapons.util;
 
 import com.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
+import com.anonymoushacker1279.immersiveweapons.block.MortarBlock.MortarBlockPacketHandler;
 import com.anonymoushacker1279.immersiveweapons.entity.projectile.MolotovEntity.MolotovEntityPacketHandler;
 import com.anonymoushacker1279.immersiveweapons.entity.projectile.SmokeBombEntity.SmokeBombEntityPacketHandler;
 import com.anonymoushacker1279.immersiveweapons.item.CobaltArmorItem.CobaltArmorItemPacketHandler;
@@ -58,6 +59,12 @@ public class PacketHandler {
 				VentusArmorItemPacketHandler::encode,
 				VentusArmorItemPacketHandler::decode,
 				VentusArmorItemPacketHandler::handle
+		);
+		PacketHandler.INSTANCE.registerMessage(networkId++,
+				MortarBlockPacketHandler.class,
+				MortarBlockPacketHandler::encode,
+				MortarBlockPacketHandler::decode,
+				MortarBlockPacketHandler::handle
 		);
 	}
 }

@@ -68,6 +68,7 @@ public class ClientModEventSubscriber {
 		RenderingRegistry.registerEntityRenderingHandler(DeferredRegistryHandler.DIAMOND_BULLET_ENTITY.get(), DiamondBulletRenderer::new);
 		RenderingRegistry.registerEntityRenderingHandler(DeferredRegistryHandler.NETHERITE_BULLET_ENTITY.get(), NetheriteBulletRenderer::new);
 		RenderingRegistry.registerEntityRenderingHandler(DeferredRegistryHandler.FLARE_ENTITY.get(), new FlareRenderer());
+		RenderingRegistry.registerEntityRenderingHandler(DeferredRegistryHandler.MORTAR_SHELL_ENTITY.get(), new MortarShellRenderer());
 
 		RenderingRegistry.registerEntityRenderingHandler(DeferredRegistryHandler.SMOKE_BOMB_ENTITY.get(), new SmokeBombRenderer());
 		RenderingRegistry.registerEntityRenderingHandler(DeferredRegistryHandler.MOLOTOV_COCKTAIL_ENTITY.get(), new MolotovRenderer());

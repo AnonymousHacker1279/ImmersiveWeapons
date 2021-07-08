@@ -2,6 +2,7 @@ package com.anonymoushacker1279.immersiveweapons.client.renderer.entity;
 
 import com.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import com.anonymoushacker1279.immersiveweapons.entity.projectile.BulletEntity.*;
+import com.anonymoushacker1279.immersiveweapons.entity.projectile.MortarShellEntity;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.ItemRenderer;
 import net.minecraft.client.renderer.entity.ArrowRenderer;
@@ -94,6 +95,15 @@ public class BulletRenderer {
 
 		@Override
 		public EntityRenderer<? super FlareEntity> createRenderFor(EntityRendererManager manager) {
+			ItemRenderer itemRenderer = Minecraft.getInstance().getItemRenderer();
+			return new SpriteRenderer<>(manager, itemRenderer);
+		}
+	}
+
+	public static class MortarShellRenderer implements IRenderFactory<MortarShellEntity> {
+
+		@Override
+		public EntityRenderer<? super MortarShellEntity> createRenderFor(EntityRendererManager manager) {
 			ItemRenderer itemRenderer = Minecraft.getInstance().getItemRenderer();
 			return new SpriteRenderer<>(manager, itemRenderer);
 		}
