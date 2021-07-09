@@ -1,5 +1,5 @@
 modLoader = "javafml" #mandatory
-loaderVersion = "[35,)" #mandatory
+loaderVersion = "[36,)" #mandatory
 license = "MIT"
 issueTrackerURL = "https://github.com/AnonymousHacker1279/ImmersiveWeapons/issues" #optional
 
@@ -19,13 +19,13 @@ Immersive Weapons is a vanilla+ weapons add-on aiming to spice up your combat sk
 [[dependencies.immersiveweapons]] #optional
 modId = "forge" #mandatory
 mandatory = true #mandatory
-versionRange = "[35,)" #mandatory
+versionRange = "[36,)" #mandatory
 ordering = "NONE"
 side = "BOTH"
 
 [[dependencies.immersiveweapons]]
 modId = "minecraft"
 mandatory = true
-versionRange = "[1.16.4,1.17)"
+versionRange = "[1.16.5,1.17)"
 ordering = "NONE"
 side = "BOTH"
