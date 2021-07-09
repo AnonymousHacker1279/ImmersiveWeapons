@@ -13,6 +13,7 @@ import net.minecraft.world.biome.Biome.Category;
 import net.minecraft.world.biome.MobSpawnInfo.Spawners;
 import net.minecraft.world.gen.FlatChunkGenerator;
 import net.minecraft.world.gen.GenerationStage;
+import net.minecraft.world.gen.GenerationStage.Decoration;
 import net.minecraft.world.gen.carver.ConfiguredCarver;
 import net.minecraft.world.gen.feature.ProbabilityConfig;
 import net.minecraft.world.gen.feature.structure.Structure;
@@ -104,8 +105,11 @@ public class ImmersiveWeapons {
 					.add(() -> OreGeneratorHandler.ORE_COPPER_CONFIG);
 			event.getGeneration().getFeatures(GenerationStage.Decoration.UNDERGROUND_ORES)
 					.add(() -> OreGeneratorHandler.ORE_COBALT_CONFIG);
-			event.getSpawns().addSpawn(EntityClassification.MONSTER, new Spawners(DeferredRegistryHandler.WANDERING_WARRIOR_ENTITY.get(), 15, 1, 1));
-			event.getSpawns().addSpawn(EntityClassification.MONSTER, new Spawners(DeferredRegistryHandler.HANS_ENTITY.get(), 1, 1, 1));
+
+			if (event.getCategory() != Category.OCEAN && event.getCategory() != Category.RIVER) {
+				event.getSpawns().addSpawn(EntityClassification.MONSTER, new Spawners(DeferredRegistryHandler.WANDERING_WARRIOR_ENTITY.get(), 15, 1, 1));
+				event.getSpawns().addSpawn(EntityClassification.MONSTER, new Spawners(DeferredRegistryHandler.HANS_ENTITY.get(), 1, 1, 1));
+			}
 		}
 		if (event.getCategory() == Biome.Category.NETHER) {
 			event.getGeneration().getFeatures(GenerationStage.Decoration.UNDERGROUND_ORES)
@@ -136,6 +140,7 @@ public class ImmersiveWeapons {
 			generation.addStructureStart(ConfiguredStructures.CONFIGURED_UNDERGROUND_BUNKER);
 			generation.addStructureStart(ConfiguredStructures.CONFIGURED_BEAR_TRAP);
 			generation.addStructureStart(ConfiguredStructures.CONFIGURED_BATTLEFIELD_VILLAGE);
+			generation.addFeature(Decoration.VEGETAL_DECORATION, ConfiguredStructures.CONFIGURED_WOODEN_SPIKES);
 			generation.addCarver(GenerationStage.Carving.AIR, new ConfiguredCarver(DeferredRegistryHandler.TRENCH_WORLD_CARVER.get(), new ProbabilityConfig(0.115f)));
 		}
 	}

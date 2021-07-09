@@ -8,6 +8,7 @@ modId = "immersiveweapons" #mandatory
 version = "${file.jarVersion}" #mandatory
 displayName = "Immersive Weapons" #mandatory
 displayURL = "https://github.com/AnonymousHacker1279/ImmersiveWeapons" #optional
+updateJSONURL = "https://github.com/AnonymousHacker1279/ImmersiveWeapons/raw/master/update.json"
 logoFile = "logo.png" #optional
 credits = "Written by AnonymousHacker1279 and visually designed with the help of Jonny-fox and gamingwarrior68 with pain and suffering" #optional
 authors = "AnonymousHacker1279" #optional

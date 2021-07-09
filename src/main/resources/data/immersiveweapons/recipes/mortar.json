@@ -1,0 +1,19 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"pattern": [
+		"   ",
+		"y y",
+		"xyx"
+	],
+	"key": {
+		"x": {
+			"tag": "forge:ingots/metal"
+		},
+		"y": {
+			"tag": "forge:stone"
+		}
+	},
+	"result": {
+		"item": "immersiveweapons:mortar"
+	}
+}

@@ -1,0 +1,19 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"pattern": [
+		" y ",
+		"yxy",
+		" y "
+	],
+	"key": {
+		"x": {
+			"item": "minecraft:tnt"
+		},
+		"y": {
+			"tag": "forge:stone"
+		}
+	},
+	"result": {
+		"item": "immersiveweapons:mortar_shell"
+	}
+}

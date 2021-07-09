@@ -9,15 +9,12 @@ import net.minecraft.fluid.FluidState;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.state.BooleanProperty;
-import net.minecraft.state.DirectionProperty;
 import net.minecraft.state.StateContainer;
 import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.Direction;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.shapes.ISelectionContext;
-import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorld;
@@ -28,8 +25,6 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 public class BarbedWireBlock extends HorizontalBlock implements IWaterLoggable {
 
 	public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
-	public static final DirectionProperty FACING = HorizontalBlock.FACING;
-	protected static final VoxelShape SHAPE = Block.box(0.0D, 0.0D, 0.0D, 16.0D, 16.0D, 16.0D);
 	private final DamageSource damageSource = new DamageSource("immersiveweapons.barbed_wire");
 	private int soundCooldown = 0;
 
@@ -49,12 +44,6 @@ public class BarbedWireBlock extends HorizontalBlock implements IWaterLoggable {
 	}
 
 	@Override
-	public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
-		Vector3d vector3d = state.getOffset(worldIn, pos);
-		return SHAPE.move(vector3d.x, vector3d.y, vector3d.z);
-	}
-
-	@Override
 	public BlockState getStateForPlacement(BlockItemUseContext context) {
 		return this.defaultBlockState().setValue(FACING, context.getHorizontalDirection().getOpposite());
 	}
@@ -67,8 +56,7 @@ public class BarbedWireBlock extends HorizontalBlock implements IWaterLoggable {
 
 	@Override
 	protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder) {
-		builder.add(WATERLOGGED);
-		builder.add(FACING);
+		builder.add(WATERLOGGED, FACING);
 	}
 
 	@Override
