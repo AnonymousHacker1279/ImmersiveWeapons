@@ -13,9 +13,9 @@ import net.minecraft.world.World;
 
 public class SmokeBombItem extends Item {
 
-	private final String color;
+	private final int color;
 
-	public SmokeBombItem(Item.Properties builder, String color) {
+	public SmokeBombItem(Item.Properties builder, int color) {
 		super(builder);
 		this.color = color;
 	}

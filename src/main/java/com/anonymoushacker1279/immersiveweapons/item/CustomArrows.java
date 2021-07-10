@@ -12,14 +12,14 @@ public class CustomArrows {
 
 		public CopperArrowItem(Properties properties, double damageIn) {
 			super(properties, damageIn);
-			this.damage = damageIn;
+			damage = damageIn;
 		}
 
 		@Override
 		public CopperArrowEntity createArrow(World worldIn, ItemStack stack, LivingEntity shooter) {
-			CopperArrowEntity arrowentity = new CopperArrowEntity(shooter, worldIn, ref.get());
-			arrowentity.setBaseDamage(this.damage);
-			return arrowentity;
+			CopperArrowEntity arrowEntity = new CopperArrowEntity(shooter, worldIn, ref.get());
+			arrowEntity.setBaseDamage(damage);
+			return arrowEntity;
 		}
 	}
 
@@ -27,14 +27,14 @@ public class CustomArrows {
 
 		public IronArrowItem(Properties properties, double damageIn) {
 			super(properties, damageIn);
-			this.damage = damageIn;
+			damage = damageIn;
 		}
 
 		@Override
 		public IronArrowEntity createArrow(World worldIn, ItemStack stack, LivingEntity shooter) {
-			IronArrowEntity arrowentity = new IronArrowEntity(shooter, worldIn, ref.get());
-			arrowentity.setBaseDamage(this.damage);
-			return arrowentity;
+			IronArrowEntity arrowEntity = new IronArrowEntity(shooter, worldIn, ref.get());
+			arrowEntity.setBaseDamage(damage);
+			return arrowEntity;
 		}
 	}
 
@@ -42,14 +42,14 @@ public class CustomArrows {
 
 		public DiamondArrowItem(Properties properties, double damageIn) {
 			super(properties, damageIn);
-			this.damage = damageIn;
+			damage = damageIn;
 		}
 
 		@Override
 		public DiamondArrowEntity createArrow(World worldIn, ItemStack stack, LivingEntity shooter) {
-			DiamondArrowEntity arrowentity = new DiamondArrowEntity(shooter, worldIn, ref.get());
-			arrowentity.setBaseDamage(this.damage);
-			return arrowentity;
+			DiamondArrowEntity arrowEntity = new DiamondArrowEntity(shooter, worldIn, ref.get());
+			arrowEntity.setBaseDamage(damage);
+			return arrowEntity;
 		}
 	}
 
@@ -57,14 +57,14 @@ public class CustomArrows {
 
 		public GoldArrowItem(Properties properties, double damageIn) {
 			super(properties, damageIn);
-			this.damage = damageIn;
+			damage = damageIn;
 		}
 
 		@Override
 		public GoldArrowEntity createArrow(World worldIn, ItemStack stack, LivingEntity shooter) {
-			GoldArrowEntity arrowentity = new GoldArrowEntity(shooter, worldIn, ref.get());
-			arrowentity.setBaseDamage(this.damage);
-			return arrowentity;
+			GoldArrowEntity arrowEntity = new GoldArrowEntity(shooter, worldIn, ref.get());
+			arrowEntity.setBaseDamage(damage);
+			return arrowEntity;
 		}
 	}
 
@@ -72,14 +72,14 @@ public class CustomArrows {
 
 		public StoneArrowItem(Properties properties, double damageIn) {
 			super(properties, damageIn);
-			this.damage = damageIn;
+			damage = damageIn;
 		}
 
 		@Override
 		public StoneArrowEntity createArrow(World worldIn, ItemStack stack, LivingEntity shooter) {
-			StoneArrowEntity arrowentity = new StoneArrowEntity(shooter, worldIn, ref.get());
-			arrowentity.setBaseDamage(this.damage);
-			return arrowentity;
+			StoneArrowEntity arrowEntity = new StoneArrowEntity(shooter, worldIn, ref.get());
+			arrowEntity.setBaseDamage(damage);
+			return arrowEntity;
 		}
 	}
 
@@ -87,14 +87,14 @@ public class CustomArrows {
 
 		public WoodArrowItem(Properties properties, double damageIn) {
 			super(properties, damageIn);
-			this.damage = damageIn;
+			damage = damageIn;
 		}
 
 		@Override
 		public WoodArrowEntity createArrow(World worldIn, ItemStack stack, LivingEntity shooter) {
-			WoodArrowEntity arrowentity = new WoodArrowEntity(shooter, worldIn, ref.get());
-			arrowentity.setBaseDamage(this.damage);
-			return arrowentity;
+			WoodArrowEntity arrowEntity = new WoodArrowEntity(shooter, worldIn, ref.get());
+			arrowEntity.setBaseDamage(damage);
+			return arrowEntity;
 		}
 	}
 
@@ -102,35 +102,35 @@ public class CustomArrows {
 
 		public NetheriteArrowItem(Properties properties, double damageIn) {
 			super(properties, damageIn);
-			this.damage = damageIn;
+			damage = damageIn;
 		}
 
 		@Override
 		public NetheriteArrowEntity createArrow(World worldIn, ItemStack stack, LivingEntity shooter) {
-			NetheriteArrowEntity arrowentity = new NetheriteArrowEntity(shooter, worldIn, ref.get());
-			arrowentity.setBaseDamage(this.damage);
-			return arrowentity;
+			NetheriteArrowEntity arrowEntity = new NetheriteArrowEntity(shooter, worldIn, ref.get());
+			arrowEntity.setBaseDamage(damage);
+			return arrowEntity;
 		}
 	}
 
 	public static class SmokeBombArrowItem extends CustomArrowItem {
 
-		private final String color;
+		private final int color;
 
-		public SmokeBombArrowItem(Properties properties, double damageIn, String color) {
+		public SmokeBombArrowItem(Properties properties, double damageIn, int color) {
 			super(properties, damageIn);
-			this.damage = damageIn;
+			damage = damageIn;
 			this.color = color;
 		}
 
 
 		@Override
 		public SmokeBombArrowEntity createArrow(World worldIn, ItemStack stack, LivingEntity shooter) {
-			SmokeBombArrowEntity arrowentity = new SmokeBombArrowEntity(shooter, worldIn, ref.get());
-			arrowentity.setBaseDamage(this.damage);
-			arrowentity.pickup = PickupStatus.DISALLOWED;
+			SmokeBombArrowEntity arrowEntity = new SmokeBombArrowEntity(shooter, worldIn, ref.get());
+			arrowEntity.setBaseDamage(damage);
+			arrowEntity.pickup = PickupStatus.DISALLOWED;
 			SmokeBombArrowEntity.setColor(color);
-			return arrowentity;
+			return arrowEntity;
 		}
 	}
 }
