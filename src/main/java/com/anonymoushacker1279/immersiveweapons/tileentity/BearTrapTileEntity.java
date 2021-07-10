@@ -36,23 +36,23 @@ public class BearTrapTileEntity extends TileEntity implements ITickableTileEntit
 
 	@Override
 	public void tick() {
-		final MobEntity trapped = this.getTrappedEntity();
-		final PlayerEntity trappedPlayer = this.getTrappedPlayerEntity();
+		final MobEntity trapped = getTrappedEntity();
+		final PlayerEntity trappedPlayer = getTrappedPlayerEntity();
 
-		if (this.level != null && !this.level.isClientSide) {
+		if (level != null && !level.isClientSide) {
 			if (trapped != null) {
 				// Entity has escaped
-				if (!trapped.getBoundingBox().intersects(new AxisAlignedBB(this.worldPosition)) || !trapped.isAlive()) {
-					this.setTrappedEntity(null);
+				if (!trapped.getBoundingBox().intersects(new AxisAlignedBB(worldPosition)) || !trapped.isAlive()) {
+					setTrappedEntity(null);
 				}
 			}
 
 			if (trappedPlayer != null) {
 				// Player has escaped
-				if (!trappedPlayer.getBoundingBox().intersects(new AxisAlignedBB(this.worldPosition)) || !trappedPlayer.isAlive()) {
-					this.setTrappedPlayerEntity(null);
+				if (!trappedPlayer.getBoundingBox().intersects(new AxisAlignedBB(worldPosition)) || !trappedPlayer.isAlive()) {
+					setTrappedPlayerEntity(null);
 				} else {
-					trappedPlayer.makeStuckInBlock(this.getBlockState(), new Vector3d(0.0F, 0.0D, 0.0F));
+					trappedPlayer.makeStuckInBlock(getBlockState(), new Vector3d(0.0F, 0.0D, 0.0F));
 					Minecraft.getInstance().options.keyJump.setDown(false);
 					Minecraft.getInstance().options.keyUp.setDown(false);
 					Minecraft.getInstance().options.keyLeft.setDown(false);
@@ -67,92 +67,88 @@ public class BearTrapTileEntity extends TileEntity implements ITickableTileEntit
 	public void load(BlockState state, CompoundNBT nbt) {
 		super.load(state, nbt);
 		if (nbt.hasUUID("trapped_entity")) {
-			this.id = nbt.getUUID("trapped_entity");
+			id = nbt.getUUID("trapped_entity");
 		}
 	}
 
 	@Override
 	public CompoundNBT save(CompoundNBT compound) {
 		super.save(compound);
-		if (this.entityliving != null && this.entityliving.isAlive()) {
-			compound.putUUID("trapped_entity", this.entityliving.getUUID());
+		if (entityliving != null && entityliving.isAlive()) {
+			compound.putUUID("trapped_entity", entityliving.getUUID());
 		}
-		if (this.entitylivingPlayer != null && this.entitylivingPlayer.isAlive()) {
-			compound.putUUID("trapped_entity", this.entitylivingPlayer.getUUID());
+		if (entitylivingPlayer != null && entitylivingPlayer.isAlive()) {
+			compound.putUUID("trapped_entity", entitylivingPlayer.getUUID());
 		}
 		return compound;
 	}
 
 	public boolean setTrappedEntity(@Nullable MobEntity livingEntity) {
-		if (this.hasTrappedEntity() && livingEntity != null) {
+		if (hasTrappedEntity() && livingEntity != null) {
 			return false;
 		} else {
 
 			if (livingEntity == null) {
-				if (this.entityliving != null) {
-					this.entityliving.goalSelector.removeGoal(this.doNothingGoal);
+				if (entityliving != null) {
+					entityliving.goalSelector.removeGoal(doNothingGoal);
 				}
-				this.id = null;
-				this.doNothingGoal = null;
+				id = null;
+				doNothingGoal = null;
 			} else {
 				livingEntity.hurt(damageSource, 2);
 				livingEntity.goalSelector.getRunningGoals().filter(PrioritizedGoal::isRunning).forEach(PrioritizedGoal::stop);
-				livingEntity.goalSelector.addGoal(0, this.doNothingGoal = new DoNothingGoal(livingEntity, this));
+				livingEntity.goalSelector.addGoal(0, doNothingGoal = new DoNothingGoal(livingEntity, this));
 			}
 
-			this.entityliving = livingEntity;
+			entityliving = livingEntity;
 			return true;
 		}
 	}
 
 	public boolean setTrappedPlayerEntity(@Nullable PlayerEntity livingEntity) {
-		if (this.hasTrappedPlayerEntity() && livingEntity != null) {
+		if (hasTrappedPlayerEntity() && livingEntity != null) {
 			return false;
 		} else {
 
 			if (livingEntity == null) {
-				this.id = null;
+				id = null;
 			}
 
-			this.entitylivingPlayer = livingEntity;
+			entitylivingPlayer = livingEntity;
 			return true;
 		}
 	}
 
 	public MobEntity getTrappedEntity() {
-		if (this.id != null && this.level instanceof ServerWorld) {
-			Entity entity = ((ServerWorld) this.level).getEntity(this.id);
-			this.id = null;
+		if (id != null && level instanceof ServerWorld) {
+			Entity entity = ((ServerWorld) level).getEntity(id);
+			id = null;
 			if (entity instanceof MobEntity)
-				this.setTrappedEntity((MobEntity) entity);
+				setTrappedEntity((MobEntity) entity);
 		}
-		return this.entityliving;
+		return entityliving;
 	}
 
 	public PlayerEntity getTrappedPlayerEntity() {
-		if (this.id != null && this.level instanceof ServerWorld) {
-			Entity entity = ((ServerWorld) this.level).getEntity(this.id);
-			this.id = null;
+		if (id != null && level instanceof ServerWorld) {
+			Entity entity = ((ServerWorld) level).getEntity(id);
+			id = null;
 			if (entity instanceof PlayerEntity)
-				this.setTrappedPlayerEntity((PlayerEntity) entity);
+				setTrappedPlayerEntity((PlayerEntity) entity);
 		}
-		return this.entitylivingPlayer;
+		return entitylivingPlayer;
 	}
 
 	public boolean hasTrappedEntity() {
-		return this.getTrappedEntity() != null;
+		return getTrappedEntity() != null;
 	}
 
 	public boolean hasTrappedPlayerEntity() {
-		return this.getTrappedPlayerEntity() != null;
+		return getTrappedPlayerEntity() != null;
 	}
 
 	public boolean isEntityTrapped(final MobEntity trappedEntity) {
-		return this.getTrappedEntity() == trappedEntity;
-	}
-
-	public boolean isPlayerEntityTrapped(final PlayerEntity trappedEntity) {
-		return this.getTrappedPlayerEntity() == trappedEntity;
+		return getTrappedEntity() == trappedEntity;
 	}
 
 	static class DoNothingGoal extends Goal {
@@ -160,14 +156,14 @@ public class BearTrapTileEntity extends TileEntity implements ITickableTileEntit
 		private final BearTrapTileEntity trap;
 
 		public DoNothingGoal(MobEntity trappedEntity, BearTrapTileEntity trap) {
-			this.setFlags(EnumSet.of(Goal.Flag.MOVE, Goal.Flag.JUMP));
+			setFlags(EnumSet.of(Goal.Flag.MOVE, Goal.Flag.JUMP));
 			this.trappedEntity = trappedEntity;
 			this.trap = trap;
 		}
 
 		@Override
 		public boolean canUse() {
-			return this.trap.isEntityTrapped(this.trappedEntity);
+			return trap.isEntityTrapped(trappedEntity);
 		}
 	}
 }

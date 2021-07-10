@@ -21,12 +21,12 @@ import com.anonymoushacker1279.immersiveweapons.entity.projectile.SmokeBombEntit
 import com.anonymoushacker1279.immersiveweapons.item.*;
 import com.anonymoushacker1279.immersiveweapons.item.BottleItem.AlcoholBottleItem;
 import com.anonymoushacker1279.immersiveweapons.item.BottleItem.WineBottleItem;
-import com.anonymoushacker1279.immersiveweapons.item.Bullets.*;
+import com.anonymoushacker1279.immersiveweapons.item.BulletItem.*;
 import com.anonymoushacker1279.immersiveweapons.item.CustomArrows.*;
 import com.anonymoushacker1279.immersiveweapons.item.CustomContainerItem.BasicContainerItem;
 import com.anonymoushacker1279.immersiveweapons.item.CustomContainerItem.BlueprintItem;
 import com.anonymoushacker1279.immersiveweapons.item.MoltenItem.*;
-import com.anonymoushacker1279.immersiveweapons.item.PikeItem.*;
+import com.anonymoushacker1279.immersiveweapons.item.PikeItems.*;
 import com.anonymoushacker1279.immersiveweapons.item.TeslaItem.*;
 import com.anonymoushacker1279.immersiveweapons.item.VentusItem.*;
 import com.anonymoushacker1279.immersiveweapons.item.crafting.SmallPartsRecipe;

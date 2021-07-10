@@ -19,64 +19,64 @@ public class DispenserBehaviorRegistry implements IDispenseItemBehavior {
 		DispenserBlock.registerBehavior(DeferredRegistryHandler.COPPER_ARROW.get(), new ProjectileDispenseBehavior() {
 			@Override
 			protected ProjectileEntity getProjectile(World worldIn, IPosition position, ItemStack stackIn) {
-				CopperArrowEntity arrowentity = new CopperArrowEntity(worldIn, position.x(), position.y(), position.z());
-				arrowentity.pickup = AbstractArrowEntity.PickupStatus.ALLOWED;
-				arrowentity.setBaseDamage(2.15d);
-				return arrowentity;
+				CopperArrowEntity arrowEntity = new CopperArrowEntity(worldIn, position.x(), position.y(), position.z());
+				arrowEntity.pickup = AbstractArrowEntity.PickupStatus.ALLOWED;
+				arrowEntity.setBaseDamage(2.15d);
+				return arrowEntity;
 			}
 		});
 		DispenserBlock.registerBehavior(DeferredRegistryHandler.IRON_ARROW.get(), new ProjectileDispenseBehavior() {
 			@Override
 			protected ProjectileEntity getProjectile(World worldIn, IPosition position, ItemStack stackIn) {
-				IronArrowEntity arrowentity = new IronArrowEntity(worldIn, position.x(), position.y(), position.z());
-				arrowentity.pickup = AbstractArrowEntity.PickupStatus.ALLOWED;
-				arrowentity.setBaseDamage(2.35d);
-				return arrowentity;
+				IronArrowEntity arrowEntity = new IronArrowEntity(worldIn, position.x(), position.y(), position.z());
+				arrowEntity.pickup = AbstractArrowEntity.PickupStatus.ALLOWED;
+				arrowEntity.setBaseDamage(2.35d);
+				return arrowEntity;
 			}
 		});
 		DispenserBlock.registerBehavior(DeferredRegistryHandler.DIAMOND_ARROW.get(), new ProjectileDispenseBehavior() {
 			@Override
 			protected ProjectileEntity getProjectile(World worldIn, IPosition position, ItemStack stackIn) {
-				DiamondArrowEntity arrowentity = new DiamondArrowEntity(worldIn, position.x(), position.y(), position.z());
-				arrowentity.pickup = AbstractArrowEntity.PickupStatus.ALLOWED;
-				arrowentity.setBaseDamage(3.0d);
-				return arrowentity;
+				DiamondArrowEntity arrowEntity = new DiamondArrowEntity(worldIn, position.x(), position.y(), position.z());
+				arrowEntity.pickup = AbstractArrowEntity.PickupStatus.ALLOWED;
+				arrowEntity.setBaseDamage(3.0d);
+				return arrowEntity;
 			}
 		});
 		DispenserBlock.registerBehavior(DeferredRegistryHandler.GOLD_ARROW.get(), new ProjectileDispenseBehavior() {
 			@Override
 			protected ProjectileEntity getProjectile(World worldIn, IPosition position, ItemStack stackIn) {
-				GoldArrowEntity arrowentity = new GoldArrowEntity(worldIn, position.x(), position.y(), position.z());
-				arrowentity.pickup = AbstractArrowEntity.PickupStatus.ALLOWED;
-				arrowentity.setBaseDamage(2.10d);
-				return arrowentity;
+				GoldArrowEntity arrowEntity = new GoldArrowEntity(worldIn, position.x(), position.y(), position.z());
+				arrowEntity.pickup = AbstractArrowEntity.PickupStatus.ALLOWED;
+				arrowEntity.setBaseDamage(2.10d);
+				return arrowEntity;
 			}
 		});
 		DispenserBlock.registerBehavior(DeferredRegistryHandler.STONE_ARROW.get(), new ProjectileDispenseBehavior() {
 			@Override
 			protected ProjectileEntity getProjectile(World worldIn, IPosition position, ItemStack stackIn) {
-				StoneArrowEntity arrowentity = new StoneArrowEntity(worldIn, position.x(), position.y(), position.z());
-				arrowentity.pickup = AbstractArrowEntity.PickupStatus.ALLOWED;
-				arrowentity.setBaseDamage(1.85d);
-				return arrowentity;
+				StoneArrowEntity arrowEntity = new StoneArrowEntity(worldIn, position.x(), position.y(), position.z());
+				arrowEntity.pickup = AbstractArrowEntity.PickupStatus.ALLOWED;
+				arrowEntity.setBaseDamage(1.85d);
+				return arrowEntity;
 			}
 		});
 		DispenserBlock.registerBehavior(DeferredRegistryHandler.WOOD_ARROW.get(), new ProjectileDispenseBehavior() {
 			@Override
 			protected ProjectileEntity getProjectile(World worldIn, IPosition position, ItemStack stackIn) {
-				WoodArrowEntity arrowentity = new WoodArrowEntity(worldIn, position.x(), position.y(), position.z());
-				arrowentity.pickup = AbstractArrowEntity.PickupStatus.ALLOWED;
-				arrowentity.setBaseDamage(1.65d);
-				return arrowentity;
+				WoodArrowEntity arrowEntity = new WoodArrowEntity(worldIn, position.x(), position.y(), position.z());
+				arrowEntity.pickup = AbstractArrowEntity.PickupStatus.ALLOWED;
+				arrowEntity.setBaseDamage(1.65d);
+				return arrowEntity;
 			}
 		});
 		DispenserBlock.registerBehavior(DeferredRegistryHandler.NETHERITE_ARROW.get(), new ProjectileDispenseBehavior() {
 			@Override
 			protected ProjectileEntity getProjectile(World worldIn, IPosition position, ItemStack stackIn) {
-				NetheriteArrowEntity arrowentity = new NetheriteArrowEntity(worldIn, position.x(), position.y(), position.z());
-				arrowentity.pickup = AbstractArrowEntity.PickupStatus.ALLOWED;
-				arrowentity.setBaseDamage(5.75d);
-				return arrowentity;
+				NetheriteArrowEntity arrowEntity = new NetheriteArrowEntity(worldIn, position.x(), position.y(), position.z());
+				arrowEntity.pickup = AbstractArrowEntity.PickupStatus.ALLOWED;
+				arrowEntity.setBaseDamage(5.75d);
+				return arrowEntity;
 			}
 
 		});
@@ -217,7 +217,7 @@ public class DispenserBehaviorRegistry implements IDispenseItemBehavior {
 	}
 
 	@Override
-	public ItemStack dispense(IBlockSource p_dispense_1_, ItemStack p_dispense_2_) {
+	public ItemStack dispense(IBlockSource iBlockSource, ItemStack itemStack) {
 		return null;
 	}
 }

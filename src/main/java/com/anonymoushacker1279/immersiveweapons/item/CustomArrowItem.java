@@ -1,6 +1,8 @@
 package com.anonymoushacker1279.immersiveweapons.item;
 
+import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.AbstractArrowEntity;
 import net.minecraft.entity.projectile.ArrowEntity;
 import net.minecraft.item.ArrowItem;
@@ -24,24 +26,24 @@ public class CustomArrowItem extends ArrowItem {
 	 */
 	public CustomArrowItem(Properties properties, double damageIn) {
 		super(properties);
-		this.damage = damageIn;
+		damage = damageIn;
 	}
 
 	public void setItemReference(RegistryObject<Item> refIn) {
-		this.ref = refIn;
+		ref = refIn;
 	}
 
 	@Override
 	public AbstractArrowEntity createArrow(World worldIn, ItemStack stack, LivingEntity shooter) {
-		AbstractArrowEntity arrowentity = new ArrowEntity(worldIn, shooter);
-		arrowentity.setBaseDamage(this.damage);
-		return arrowentity;
+		AbstractArrowEntity arrowEntity = new ArrowEntity(worldIn, shooter);
+		arrowEntity.setBaseDamage(damage);
+		return arrowEntity;
 	}
 
 	// We override this method here because the version in ArrowItem *directly* compares against ArrowItem.class, rather than this more flexible check.
 	@Override
-	public boolean isInfinite(ItemStack stack, ItemStack bow, net.minecraft.entity.player.PlayerEntity player) {
-		int enchant = net.minecraft.enchantment.EnchantmentHelper.getItemEnchantmentLevel(net.minecraft.enchantment.Enchantments.INFINITY_ARROWS, bow);
+	public boolean isInfinite(ItemStack stack, ItemStack bow, PlayerEntity player) {
+		int enchant = EnchantmentHelper.getItemEnchantmentLevel(net.minecraft.enchantment.Enchantments.INFINITY_ARROWS, bow);
 		return enchant > 0;
 	}
 }
