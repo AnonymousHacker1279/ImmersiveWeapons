@@ -45,7 +45,7 @@ public abstract class AbstractDyingSoldierEntity extends MonsterEntity implement
 		@Override
 		public void stop() {
 			super.stop();
-			AbstractDyingSoldierEntity.this.setAggressive(false);
+			setAggressive(false);
 		}
 
 		/**
@@ -54,13 +54,13 @@ public abstract class AbstractDyingSoldierEntity extends MonsterEntity implement
 		@Override
 		public void start() {
 			super.start();
-			AbstractDyingSoldierEntity.this.setAggressive(true);
+			setAggressive(true);
 		}
 	};
 
 	protected AbstractDyingSoldierEntity(EntityType<? extends AbstractDyingSoldierEntity> type, World worldIn) {
 		super(type, worldIn);
-		this.setCombatTask();
+		setCombatTask();
 	}
 
 	public static AttributeModifierMap.MutableAttribute registerAttributes() {
@@ -75,24 +75,24 @@ public abstract class AbstractDyingSoldierEntity extends MonsterEntity implement
 
 	@Override
 	protected void registerGoals() {
-		this.goalSelector.addGoal(1, new SwimGoal(this));
-		this.goalSelector.addGoal(4, new WaterAvoidingRandomWalkingGoal(this, 1.0D));
-		this.goalSelector.addGoal(4, new LookAtGoal(this, PlayerEntity.class, 8.0F));
-		this.goalSelector.addGoal(4, new LookRandomlyGoal(this));
-		this.goalSelector.addGoal(2, new MoveThroughVillageGoal(this, 1.0D, false, 6, this::isBreakDoorsTaskSet));
-		this.goalSelector.addGoal(2, new OpenDoorGoal(this, false));
-		this.goalSelector.addGoal(2, new OpenFenceGateGoal(this, false));
-		this.targetSelector.addGoal(2, new HurtByTargetGoal(this));
-		this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, AbstractVillagerEntity.class, true));
-		this.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, AbstractMinutemanEntity.class, false));
-		this.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, AbstractFieldMedicEntity.class, true));
-		this.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, PlayerEntity.class, false));
-		this.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, IronGolemEntity.class, true));
+		goalSelector.addGoal(1, new SwimGoal(this));
+		goalSelector.addGoal(4, new WaterAvoidingRandomWalkingGoal(this, 1.0D));
+		goalSelector.addGoal(4, new LookAtGoal(this, PlayerEntity.class, 8.0F));
+		goalSelector.addGoal(4, new LookRandomlyGoal(this));
+		goalSelector.addGoal(2, new MoveThroughVillageGoal(this, 1.0D, false, 6, this::isBreakDoorsTaskSet));
+		goalSelector.addGoal(2, new OpenDoorGoal(this, false));
+		goalSelector.addGoal(2, new OpenFenceGateGoal(this, false));
+		targetSelector.addGoal(2, new HurtByTargetGoal(this));
+		targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, AbstractVillagerEntity.class, true));
+		targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, AbstractMinutemanEntity.class, false));
+		targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, AbstractFieldMedicEntity.class, true));
+		targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, PlayerEntity.class, false));
+		targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, IronGolemEntity.class, true));
 	}
 
 	@Override
 	protected void playStepSound(BlockPos pos, BlockState blockIn) {
-		this.playSound(this.getStepSound(), 0.15F, 1.0F);
+		playSound(getStepSound(), 0.15F, 1.0F);
 	}
 
 	protected abstract SoundEvent getStepSound();
@@ -117,9 +117,9 @@ public abstract class AbstractDyingSoldierEntity extends MonsterEntity implement
 	@Override
 	public void rideTick() {
 		super.rideTick();
-		if (this.getVehicle() instanceof CreatureEntity) {
-			CreatureEntity creatureentity = (CreatureEntity) this.getVehicle();
-			this.yBodyRot = creatureentity.yBodyRot;
+		if (getVehicle() instanceof CreatureEntity) {
+			CreatureEntity creatureentity = (CreatureEntity) getVehicle();
+			yBodyRot = creatureentity.yBodyRot;
 		}
 
 	}
@@ -130,24 +130,24 @@ public abstract class AbstractDyingSoldierEntity extends MonsterEntity implement
 	@Override
 	protected void populateDefaultEquipmentSlots(DifficultyInstance difficulty) {
 		super.populateDefaultEquipmentSlots(difficulty);
-		this.setItemSlot(EquipmentSlotType.MAINHAND, new ItemStack(DeferredRegistryHandler.FLINTLOCK_PISTOL.get()));
+		setItemSlot(EquipmentSlotType.MAINHAND, new ItemStack(DeferredRegistryHandler.FLINTLOCK_PISTOL.get()));
 	}
 
 	@Override
 	@Nullable
 	public ILivingEntityData finalizeSpawn(IServerWorld worldIn, DifficultyInstance difficultyIn, SpawnReason reason, @Nullable ILivingEntityData spawnDataIn, @Nullable CompoundNBT dataTag) {
 		spawnDataIn = super.finalizeSpawn(worldIn, difficultyIn, reason, spawnDataIn, dataTag);
-		this.populateDefaultEquipmentSlots(difficultyIn);
-		this.populateDefaultEquipmentEnchantments(difficultyIn);
-		this.setCombatTask();
-		this.setCanPickUpLoot(this.random.nextFloat() < 0.55F * difficultyIn.getSpecialMultiplier());
-		if (this.getItemBySlot(EquipmentSlotType.HEAD).isEmpty()) {
+		populateDefaultEquipmentSlots(difficultyIn);
+		populateDefaultEquipmentEnchantments(difficultyIn);
+		setCombatTask();
+		setCanPickUpLoot(random.nextFloat() < 0.55F * difficultyIn.getSpecialMultiplier());
+		if (getItemBySlot(EquipmentSlotType.HEAD).isEmpty()) {
 			LocalDate localdate = LocalDate.now();
 			int i = localdate.get(ChronoField.DAY_OF_MONTH);
 			int j = localdate.get(ChronoField.MONTH_OF_YEAR);
-			if (j == 10 && i == 31 && this.random.nextFloat() < 0.25F) {
-				this.setItemSlot(EquipmentSlotType.HEAD, new ItemStack(this.random.nextFloat() < 0.1F ? Blocks.JACK_O_LANTERN : Blocks.CARVED_PUMPKIN));
-				this.armorDropChances[EquipmentSlotType.HEAD.getIndex()] = 0.0F;
+			if (j == 10 && i == 31 && random.nextFloat() < 0.25F) {
+				setItemSlot(EquipmentSlotType.HEAD, new ItemStack(random.nextFloat() < 0.1F ? Blocks.JACK_O_LANTERN : Blocks.CARVED_PUMPKIN));
+				armorDropChances[EquipmentSlotType.HEAD.getIndex()] = 0.0F;
 			}
 		}
 
@@ -158,20 +158,20 @@ public abstract class AbstractDyingSoldierEntity extends MonsterEntity implement
 	 * sets this entity's combat AI.
 	 */
 	public void setCombatTask() {
-		if (this.level != null && !this.level.isClientSide) {
-			this.goalSelector.removeGoal(this.aiAttackOnCollide);
-			this.goalSelector.removeGoal(this.aiPistolAttack);
-			ItemStack itemstack = this.getItemInHand(ProjectileHelper.getWeaponHoldingHand(this, DeferredRegistryHandler.FLINTLOCK_PISTOL.get()));
+		if (level != null && !level.isClientSide) {
+			goalSelector.removeGoal(aiAttackOnCollide);
+			goalSelector.removeGoal(aiPistolAttack);
+			ItemStack itemstack = getItemInHand(ProjectileHelper.getWeaponHoldingHand(this, DeferredRegistryHandler.FLINTLOCK_PISTOL.get()));
 			if (itemstack.getItem() == DeferredRegistryHandler.FLINTLOCK_PISTOL.get()) {
 				int i = 20;
-				if (this.level.getDifficulty() != Difficulty.HARD) {
+				if (level.getDifficulty() != Difficulty.HARD) {
 					i = 40;
 				}
 
-				this.aiPistolAttack.setAttackCooldown(i);
-				this.goalSelector.addGoal(4, this.aiPistolAttack);
+				aiPistolAttack.setAttackCooldown(i);
+				goalSelector.addGoal(4, aiPistolAttack);
 			} else {
-				this.goalSelector.addGoal(4, this.aiAttackOnCollide);
+				goalSelector.addGoal(4, aiAttackOnCollide);
 			}
 
 		}
@@ -182,17 +182,17 @@ public abstract class AbstractDyingSoldierEntity extends MonsterEntity implement
 	 */
 	@Override
 	public void performRangedAttack(LivingEntity target, float distanceFactor) {
-		ItemStack itemstack = this.getProjectile(this.getItemInHand(ProjectileHelper.getWeaponHoldingHand(this, DeferredRegistryHandler.FLINTLOCK_PISTOL.get())));
-		AbstractArrowEntity abstractarrowentity = this.fireArrow(itemstack, distanceFactor);
-		if (this.getMainHandItem().getItem() instanceof BowItem)
-			abstractarrowentity = ((BowItem) this.getMainHandItem().getItem()).customArrow(abstractarrowentity);
-		double d0 = target.getX() - this.getX();
+		ItemStack itemstack = getProjectile(getItemInHand(ProjectileHelper.getWeaponHoldingHand(this, DeferredRegistryHandler.FLINTLOCK_PISTOL.get())));
+		AbstractArrowEntity abstractarrowentity = fireArrow(itemstack, distanceFactor);
+		if (getMainHandItem().getItem() instanceof BowItem)
+			abstractarrowentity = ((BowItem) getMainHandItem().getItem()).customArrow(abstractarrowentity);
+		double d0 = target.getX() - getX();
 		double d1 = target.getY(0.1D) - abstractarrowentity.getY();
-		double d2 = target.getZ() - this.getZ();
+		double d2 = target.getZ() - getZ();
 		double d3 = MathHelper.sqrt(d0 * d0 + d2 * d2);
-		abstractarrowentity.shoot(d0, d1 + d3 * (double) 0.2F, d2, 1.6F, (float) (14 - this.level.getDifficulty().getId() * 4));
-		this.playSound(DeferredRegistryHandler.FLINTLOCK_PISTOL_FIRE.get(), 1.0F, 1.0F / (this.getRandom().nextFloat() * 0.4F + 0.8F));
-		this.level.addFreshEntity(abstractarrowentity);
+		abstractarrowentity.shoot(d0, d1 + d3 * (double) 0.2F, d2, 1.6F, (float) (14 - level.getDifficulty().getId() * 4));
+		playSound(DeferredRegistryHandler.FLINTLOCK_PISTOL_FIRE.get(), 1.0F, 1.0F / (getRandom().nextFloat() * 0.4F + 0.8F));
+		level.addFreshEntity(abstractarrowentity);
 	}
 
 	/**
@@ -200,15 +200,15 @@ public abstract class AbstractDyingSoldierEntity extends MonsterEntity implement
 	 */
 	protected AbstractArrowEntity fireArrow(ItemStack arrowStack, float distanceFactor) {
 		CustomArrowItem arrowitem = (CustomArrowItem) (arrowStack.getItem() instanceof CustomArrowItem ? arrowStack.getItem() : DeferredRegistryHandler.IRON_MUSKET_BALL.get());
-		AbstractArrowEntity abstractarrowentity = arrowitem.createArrow(this.level, arrowStack, this);
+		AbstractArrowEntity abstractarrowentity = arrowitem.createArrow(level, arrowStack, this);
 		abstractarrowentity.setEnchantmentEffectsFromEntity(this, distanceFactor);
 
 		return abstractarrowentity;
 	}
 
 	@Override
-	public boolean canFireProjectileWeapon(ShootableItem p_230280_1_) {
-		return p_230280_1_ == DeferredRegistryHandler.FLINTLOCK_PISTOL.get();
+	public boolean canFireProjectileWeapon(ShootableItem shootableItem) {
+		return shootableItem == DeferredRegistryHandler.FLINTLOCK_PISTOL.get();
 	}
 
 	/**
@@ -217,14 +217,14 @@ public abstract class AbstractDyingSoldierEntity extends MonsterEntity implement
 	@Override
 	public void readAdditionalSaveData(CompoundNBT compound) {
 		super.readAdditionalSaveData(compound);
-		this.setCombatTask();
+		setCombatTask();
 	}
 
 	@Override
 	public void setItemSlot(EquipmentSlotType slotIn, ItemStack stack) {
 		super.setItemSlot(slotIn, stack);
-		if (!this.level.isClientSide) {
-			this.setCombatTask();
+		if (!level.isClientSide) {
+			setCombatTask();
 		}
 
 	}

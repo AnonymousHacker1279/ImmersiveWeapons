@@ -39,7 +39,7 @@ public abstract class AbstractTeslaSynthesizerTileEntity extends LockableTileEnt
 	private static final int[] SLOTS_DOWN = new int[]{2, 1};
 	private static final int[] SLOTS_HORIZONTAL = new int[]{1};
 	static Map<Item, Integer> burnTimesMap = Maps.newLinkedHashMap();
-	protected final IRecipeType recipeType;
+	protected final IRecipeType<TeslaSynthesizerRecipe> recipeType;
 	private final Object2IntOpenHashMap<ResourceLocation> recipes = new Object2IntOpenHashMap<>();
 	protected NonNullList<ItemStack> items = NonNullList.withSize(5, ItemStack.EMPTY);
 	LazyOptional<? extends IItemHandler>[] handlers =
@@ -53,13 +53,13 @@ public abstract class AbstractTeslaSynthesizerTileEntity extends LockableTileEnt
 		public int get(int index) {
 			switch (index) {
 				case 0:
-					return AbstractTeslaSynthesizerTileEntity.this.burnTime;
+					return burnTime;
 				case 1:
-					return AbstractTeslaSynthesizerTileEntity.this.burnTimeTotal;
+					return burnTimeTotal;
 				case 2:
-					return AbstractTeslaSynthesizerTileEntity.this.cookTime;
+					return cookTime;
 				case 3:
-					return AbstractTeslaSynthesizerTileEntity.this.cookTimeTotal;
+					return cookTimeTotal;
 				default:
 					return 0;
 			}
@@ -69,16 +69,16 @@ public abstract class AbstractTeslaSynthesizerTileEntity extends LockableTileEnt
 		public void set(int index, int value) {
 			switch (index) {
 				case 0:
-					AbstractTeslaSynthesizerTileEntity.this.burnTime = value;
+					burnTime = value;
 					break;
 				case 1:
-					AbstractTeslaSynthesizerTileEntity.this.burnTimeTotal = value;
+					burnTimeTotal = value;
 					break;
 				case 2:
-					AbstractTeslaSynthesizerTileEntity.this.cookTime = value;
+					cookTime = value;
 					break;
 				case 3:
-					AbstractTeslaSynthesizerTileEntity.this.cookTimeTotal = value;
+					cookTimeTotal = value;
 			}
 
 		}
@@ -91,8 +91,8 @@ public abstract class AbstractTeslaSynthesizerTileEntity extends LockableTileEnt
 
 	protected AbstractTeslaSynthesizerTileEntity(TileEntityType<?> tileTypeIn, IRecipeType recipeTypeIn) {
 		super(tileTypeIn);
-		this.recipeType = recipeTypeIn;
-		this.setupBurnTimes();
+		recipeType = recipeTypeIn;
+		setupBurnTimes();
 	}
 
 	public static Map<Item, Integer> getBurnTimes() {
@@ -138,22 +138,22 @@ public abstract class AbstractTeslaSynthesizerTileEntity extends LockableTileEnt
 	}
 
 	private boolean isBurning() {
-		return this.burnTime > 0;
+		return burnTime > 0;
 	}
 
 	@Override
 	public void load(BlockState state, CompoundNBT nbt) {
 		super.load(state, nbt);
-		this.items = NonNullList.withSize(this.getContainerSize(), ItemStack.EMPTY);
-		ItemStackHelper.loadAllItems(nbt, this.items);
-		this.burnTime = nbt.getInt("BurnTime");
-		this.cookTime = nbt.getInt("CookTime");
-		this.cookTimeTotal = nbt.getInt("CookTimeTotal");
-		this.burnTimeTotal = getBurnTime(this.items.get(3));
+		items = NonNullList.withSize(getContainerSize(), ItemStack.EMPTY);
+		ItemStackHelper.loadAllItems(nbt, items);
+		burnTime = nbt.getInt("BurnTime");
+		cookTime = nbt.getInt("CookTime");
+		cookTimeTotal = nbt.getInt("CookTimeTotal");
+		burnTimeTotal = getBurnTime(items.get(3));
 		CompoundNBT compoundnbt = nbt.getCompound("RecipesUsed");
 
 		for (String s : compoundnbt.getAllKeys()) {
-			this.recipes.put(new ResourceLocation(s), compoundnbt.getInt(s));
+			recipes.put(new ResourceLocation(s), compoundnbt.getInt(s));
 		}
 
 	}
@@ -161,86 +161,86 @@ public abstract class AbstractTeslaSynthesizerTileEntity extends LockableTileEnt
 	@Override
 	public CompoundNBT save(CompoundNBT compound) {
 		super.save(compound);
-		compound.putInt("BurnTime", this.burnTime);
-		compound.putInt("CookTime", this.cookTime);
-		compound.putInt("CookTimeTotal", this.cookTimeTotal);
-		ItemStackHelper.saveAllItems(compound, this.items);
+		compound.putInt("BurnTime", burnTime);
+		compound.putInt("CookTime", cookTime);
+		compound.putInt("CookTimeTotal", cookTimeTotal);
+		ItemStackHelper.saveAllItems(compound, items);
 		CompoundNBT compoundnbt = new CompoundNBT();
-		this.recipes.forEach((recipeId, craftedAmount) -> compoundnbt.putInt(recipeId.toString(), craftedAmount));
+		recipes.forEach((recipeId, craftedAmount) -> compoundnbt.putInt(recipeId.toString(), craftedAmount));
 		compound.put("RecipesUsed", compoundnbt);
 		return compound;
 	}
 
 	@Override
 	public void tick() {
-		boolean flag = this.isBurning();
+		boolean flag = isBurning();
 		boolean flag1 = false;
-		if (this.isBurning()) {
-			--this.burnTime;
+		if (isBurning()) {
+			--burnTime;
 		}
 
-		if (this.level != null && !this.level.isClientSide) {
-			ItemStack itemstack = this.items.get(3);
-			if (this.isBurning() || !itemstack.isEmpty() && !this.items.get(0).isEmpty() && !this.items.get(1).isEmpty() && !this.items.get(2).isEmpty()) {
-				RecipeManager recipeManager = this.level.getRecipeManager();
-				IRecipe<?> iRecipe = recipeManager.getRecipeFor(ICustomRecipeType.TESLA_SYNTHESIZER, this, this.level).orElse(null);
-				if (!this.isBurning() && this.canSmelt(iRecipe)) {
-					this.burnTime = getBurnTime(itemstack);
-					this.burnTimeTotal = this.burnTime;
-					if (this.isBurning()) {
+		if (level != null && !level.isClientSide) {
+			ItemStack itemstack = items.get(3);
+			if (isBurning() || !itemstack.isEmpty() && !items.get(0).isEmpty() && !items.get(1).isEmpty() && !items.get(2).isEmpty()) {
+				RecipeManager recipeManager = level.getRecipeManager();
+				IRecipe<?> iRecipe = recipeManager.getRecipeFor(ICustomRecipeType.TESLA_SYNTHESIZER, this, level).orElse(null);
+				if (!isBurning() && canSmelt(iRecipe)) {
+					burnTime = getBurnTime(itemstack);
+					burnTimeTotal = burnTime;
+					if (isBurning()) {
 						flag1 = true;
 						if (itemstack.hasContainerItem())
-							this.items.set(3, itemstack.getContainerItem());
+							items.set(3, itemstack.getContainerItem());
 						else if (!itemstack.isEmpty()) {
 							itemstack.shrink(1);
 							if (itemstack.isEmpty()) {
-								this.items.set(3, itemstack.getContainerItem());
+								items.set(3, itemstack.getContainerItem());
 							}
 						}
 					}
 				}
 
-				if (this.isBurning() && this.canSmelt(iRecipe)) {
-					++this.cookTime;
-					if (this.cookTime == this.cookTimeTotal) {
-						this.cookTime = 0;
-						this.cookTimeTotal = this.getCookTime();
-						this.smelt(iRecipe);
+				if (isBurning() && canSmelt(iRecipe)) {
+					++cookTime;
+					if (cookTime == cookTimeTotal) {
+						cookTime = 0;
+						cookTimeTotal = getCookTime();
+						smelt(iRecipe);
 						flag1 = true;
 					}
 				} else {
-					this.cookTime = 0;
+					cookTime = 0;
 				}
-			} else if (!this.isBurning() && this.cookTime > 0) {
-				this.cookTime = MathHelper.clamp(this.cookTime - 2, 0, this.cookTimeTotal);
+			} else if (!isBurning() && cookTime > 0) {
+				cookTime = MathHelper.clamp(cookTime - 2, 0, cookTimeTotal);
 			}
 
-			if (flag != this.isBurning()) {
+			if (flag != isBurning()) {
 				flag1 = true;
 			}
 		}
 
 		if (flag1) {
-			this.setChanged();
+			setChanged();
 		}
 
 	}
 
 	protected boolean canSmelt(@Nullable IRecipe<?> recipeIn) {
-		if (!this.items.get(0).isEmpty() && !this.items.get(1).isEmpty() && !this.items.get(2).isEmpty() && recipeIn != null) {
+		if (!items.get(0).isEmpty() && !items.get(1).isEmpty() && !items.get(2).isEmpty() && recipeIn != null) {
 			ItemStack itemstack = recipeIn.getResultItem();
 			if (itemstack.isEmpty()) {
 				return false;
 			} else {
-				ItemStack itemstack1 = this.items.get(4);
-				if (itemstack1.isEmpty()) {
+				ItemStack itemStack1 = items.get(4);
+				if (itemStack1.isEmpty()) {
 					return true;
-				} else if (!itemstack1.sameItem(itemstack)) {
+				} else if (!itemStack1.sameItem(itemstack)) {
 					return false;
-				} else if (itemstack1.getCount() + itemstack.getCount() <= this.getMaxStackSize() && itemstack1.getCount() + itemstack.getCount() <= itemstack1.getMaxStackSize()) { // Forge fix: make furnace respect stack sizes in furnace recipes
+				} else if (itemStack1.getCount() + itemstack.getCount() <= getMaxStackSize() && itemStack1.getCount() + itemstack.getCount() <= itemStack1.getMaxStackSize()) { // Forge fix: make furnace respect stack sizes in furnace recipes
 					return true;
 				} else {
-					return itemstack1.getCount() + itemstack.getCount() <= itemstack.getMaxStackSize(); // Forge fix: make furnace respect stack sizes in furnace recipes
+					return itemStack1.getCount() + itemstack.getCount() <= itemstack.getMaxStackSize(); // Forge fix: make furnace respect stack sizes in furnace recipes
 				}
 			}
 		} else {
@@ -249,30 +249,30 @@ public abstract class AbstractTeslaSynthesizerTileEntity extends LockableTileEnt
 	}
 
 	@Override
-	public boolean canPlaceItemThroughFace(int index, ItemStack itemStackIn, @Nullable Direction direction) {
+	public boolean canPlaceItemThroughFace(int index, ItemStack itemStack, @Nullable Direction direction) {
 		return false;
 	}
 
 	@Override
-	public boolean canTakeItemThroughFace(int index, ItemStack stack, Direction direction) {
+	public boolean canTakeItemThroughFace(int index, ItemStack itemStack, Direction direction) {
 		return false;
 	}
 
 	private void smelt(@Nullable IRecipe<?> recipe) {
-		if (recipe != null && this.canSmelt(recipe)) {
-			ItemStack ingredient1 = this.items.get(0);
-			ItemStack ingredient2 = this.items.get(1);
-			ItemStack ingredient3 = this.items.get(2);
-			ItemStack recipeOutputStack = this.items.get(4);
+		if (recipe != null && canSmelt(recipe)) {
+			ItemStack ingredient1 = items.get(0);
+			ItemStack ingredient2 = items.get(1);
+			ItemStack ingredient3 = items.get(2);
+			ItemStack recipeOutputStack = items.get(4);
 			ItemStack recipeOutput = recipe.getResultItem();
 			if (recipeOutputStack.isEmpty()) {
-				this.items.set(4, recipeOutput.copy());
+				items.set(4, recipeOutput.copy());
 			} else if (recipeOutputStack.getItem() == recipeOutput.getItem()) {
 				recipeOutputStack.grow(recipeOutput.getCount());
 			}
 
-			if (this.level != null && !this.level.isClientSide) {
-				this.setRecipeUsed(recipe);
+			if (level != null && !level.isClientSide) {
+				setRecipeUsed(recipe);
 			}
 
 			ingredient1.shrink(1);
@@ -282,8 +282,8 @@ public abstract class AbstractTeslaSynthesizerTileEntity extends LockableTileEnt
 	}
 
 	protected int getCookTime() {
-		if (this.level != null) {
-			return (int) this.level.getRecipeManager().getRecipeFor(ICustomRecipeType.TESLA_SYNTHESIZER, this, this.level).map(o -> TeslaSynthesizerRecipe.getCookTime()).orElse(200);
+		if (level != null) {
+			return (int) level.getRecipeManager().getRecipeFor(ICustomRecipeType.TESLA_SYNTHESIZER, this, level).map(o -> TeslaSynthesizerRecipe.getCookTime()).orElse(200);
 		}
 		return 0;
 	}
@@ -302,12 +302,12 @@ public abstract class AbstractTeslaSynthesizerTileEntity extends LockableTileEnt
 	 */
 	@Override
 	public int getContainerSize() {
-		return this.items.size();
+		return items.size();
 	}
 
 	@Override
 	public boolean isEmpty() {
-		for (ItemStack itemstack : this.items) {
+		for (ItemStack itemstack : items) {
 			if (!itemstack.isEmpty()) {
 				return false;
 			}
@@ -321,7 +321,7 @@ public abstract class AbstractTeslaSynthesizerTileEntity extends LockableTileEnt
 	 */
 	@Override
 	public ItemStack getItem(int index) {
-		return this.items.get(index);
+		return items.get(index);
 	}
 
 	/**
@@ -329,7 +329,7 @@ public abstract class AbstractTeslaSynthesizerTileEntity extends LockableTileEnt
 	 */
 	@Override
 	public ItemStack removeItem(int index, int count) {
-		return ItemStackHelper.removeItem(this.items, index, count);
+		return ItemStackHelper.removeItem(items, index, count);
 	}
 
 	/**
@@ -337,7 +337,7 @@ public abstract class AbstractTeslaSynthesizerTileEntity extends LockableTileEnt
 	 */
 	@Override
 	public ItemStack removeItemNoUpdate(int index) {
-		return ItemStackHelper.takeItem(this.items, index);
+		return ItemStackHelper.takeItem(items, index);
 	}
 
 	/**
@@ -345,17 +345,17 @@ public abstract class AbstractTeslaSynthesizerTileEntity extends LockableTileEnt
 	 */
 	@Override
 	public void setItem(int index, ItemStack stack) {
-		ItemStack itemstack = this.items.get(index);
+		ItemStack itemstack = items.get(index);
 		boolean flag = !stack.isEmpty() && stack.sameItem(itemstack) && ItemStack.tagMatches(stack, itemstack);
-		this.items.set(index, stack);
-		if (stack.getCount() > this.getMaxStackSize()) {
-			stack.setCount(this.getMaxStackSize());
+		items.set(index, stack);
+		if (stack.getCount() > getMaxStackSize()) {
+			stack.setCount(getMaxStackSize());
 		}
 
 		if (index == 0 && !flag) {
-			this.cookTimeTotal = this.getCookTime();
-			this.cookTime = 0;
-			this.setChanged();
+			cookTimeTotal = getCookTime();
+			cookTime = 0;
+			setChanged();
 		}
 
 	}
@@ -365,10 +365,10 @@ public abstract class AbstractTeslaSynthesizerTileEntity extends LockableTileEnt
 	 */
 	@Override
 	public boolean stillValid(PlayerEntity player) {
-		if ((this.level != null ? this.level.getBlockEntity(this.worldPosition) : null) != this) {
+		if ((level != null ? level.getBlockEntity(worldPosition) : null) != this) {
 			return false;
 		} else {
-			return player.distanceToSqr((double) this.worldPosition.getX() + 0.5D, (double) this.worldPosition.getY() + 0.5D, (double) this.worldPosition.getZ() + 0.5D) <= 64.0D;
+			return player.distanceToSqr((double) worldPosition.getX() + 0.5D, (double) worldPosition.getY() + 0.5D, (double) worldPosition.getZ() + 0.5D) <= 64.0D;
 		}
 	}
 
@@ -389,7 +389,7 @@ public abstract class AbstractTeslaSynthesizerTileEntity extends LockableTileEnt
 
 	@Override
 	public void clearContent() {
-		this.items.clear();
+		items.clear();
 	}
 
 	@Override
@@ -402,7 +402,7 @@ public abstract class AbstractTeslaSynthesizerTileEntity extends LockableTileEnt
 	public void setRecipeUsed(@Nullable IRecipe<?> recipe) {
 		if (recipe != null) {
 			ResourceLocation resourcelocation = recipe.getId();
-			this.recipes.addTo(resourcelocation, 1);
+			recipes.addTo(resourcelocation, 1);
 		}
 
 	}
@@ -413,7 +413,7 @@ public abstract class AbstractTeslaSynthesizerTileEntity extends LockableTileEnt
 
 	@Override
 	public void fillStackedContents(RecipeItemHelper helper) {
-		for (ItemStack itemstack : this.items) {
+		for (ItemStack itemstack : items) {
 			helper.accountStack(itemstack);
 		}
 
@@ -421,7 +421,7 @@ public abstract class AbstractTeslaSynthesizerTileEntity extends LockableTileEnt
 
 	@Override
 	public <T> LazyOptional<T> getCapability(Capability<T> capability, @Nullable Direction facing) {
-		if (!this.remove && facing != null && capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
+		if (!remove && facing != null && capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
 			if (facing == Direction.UP)
 				return handlers[0].cast();
 			else if (facing == Direction.DOWN)

@@ -27,9 +27,6 @@ public class SimplePistolItem extends ShootableBullet implements IVanishable {
 		super(builder);
 	}
 
-	/**
-	 * Gets the velocity of the arrow entity from the bow's charge
-	 */
 	public static float getArrowVelocity(int charge) {
 		float f = charge / 20.0F;
 		f = (f * f + f * 2.0F) / 3.0F;
@@ -40,22 +37,22 @@ public class SimplePistolItem extends ShootableBullet implements IVanishable {
 		return f;
 	}
 
-	public ItemStack findAmmo(ItemStack shootable, LivingEntity entityLiving) {
+	public ItemStack findAmmo(ItemStack itemStack, LivingEntity entityLiving) {
 		PlayerEntity playerentity = (PlayerEntity) entityLiving;
-		if (!(shootable.getItem() instanceof ShootableBullet)) {
+		if (!(itemStack.getItem() instanceof ShootableBullet)) {
 			return ItemStack.EMPTY;
 		} else {
-			Predicate<ItemStack> predicate = ((ShootableBullet) shootable.getItem()).getAmmoPredicate();
+			Predicate<ItemStack> predicate = ((ShootableBullet) itemStack.getItem()).getAmmoPredicate();
 			ItemStack itemstack = ShootableBullet.getHeldAmmo(playerentity, predicate);
 			if (!itemstack.isEmpty()) {
 				return itemstack;
 			} else {
-				predicate = ((ShootableBullet) shootable.getItem()).getInventoryAmmoPredicate();
+				predicate = ((ShootableBullet) itemStack.getItem()).getInventoryAmmoPredicate();
 
 				for (int i = 0; i < playerentity.inventory.getContainerSize(); ++i) {
-					ItemStack itemstack1 = playerentity.inventory.getItem(i);
-					if (predicate.test(itemstack1)) {
-						return itemstack1;
+					ItemStack itemStack1 = playerentity.inventory.getItem(i);
+					if (predicate.test(itemStack1)) {
+						return itemStack1;
 					}
 				}
 
@@ -65,79 +62,79 @@ public class SimplePistolItem extends ShootableBullet implements IVanishable {
 	}
 
 	@Override
-	public void releaseUsing(ItemStack stack, World worldIn, LivingEntity entityLiving, int timeLeft) {
+	public void releaseUsing(ItemStack itemStack, World worldIn, LivingEntity entityLiving, int timeLeft) {
 		if (entityLiving instanceof PlayerEntity) {
-			PlayerEntity playerentity = (PlayerEntity) entityLiving;
-			boolean flag = playerentity.abilities.instabuild;
+			PlayerEntity playerEntity = (PlayerEntity) entityLiving;
+			boolean flag = playerEntity.abilities.instabuild;
 			boolean misfire = false;
-			ItemStack itemstack = findAmmo(stack, entityLiving);
+			ItemStack itemStack1 = findAmmo(itemStack, entityLiving);
 
-			if (itemstack.getItem() == DeferredRegistryHandler.WOOD_MUSKET_BALL.get()) {
+			if (itemStack1.getItem() == DeferredRegistryHandler.WOOD_MUSKET_BALL.get()) {
 				int randomNumber = GeneralUtilities.getRandomNumber(1, 10);
 				if (randomNumber <= 3) {
 					misfire = true;
-					worldIn.playSound(null, playerentity.getX(), playerentity.getY(), playerentity.getZ(), this.getMisfireSound(), SoundCategory.PLAYERS, 1.0F, 1.0F / (random.nextFloat() * 0.4F + 1.2F) + 0.5F);
-					if (!playerentity.abilities.instabuild) {
-						itemstack.shrink(1);
-						if (itemstack.isEmpty()) {
-							playerentity.inventory.removeItem(itemstack);
+					worldIn.playSound(null, playerEntity.getX(), playerEntity.getY(), playerEntity.getZ(), getMisfireSound(), SoundCategory.PLAYERS, 1.0F, 1.0F / (random.nextFloat() * 0.4F + 1.2F) + 0.5F);
+					if (!playerEntity.abilities.instabuild) {
+						itemStack1.shrink(1);
+						if (itemStack1.isEmpty()) {
+							playerEntity.inventory.removeItem(itemStack1);
 						}
-						stack.hurtAndBreak(5, playerentity, (p_220009_1_) -> p_220009_1_.broadcastBreakEvent(playerentity.getUsedItemHand()));
+						itemStack.hurtAndBreak(5, playerEntity, (entity) -> entity.broadcastBreakEvent(entity.getUsedItemHand()));
 					}
 				}
 			}
-			if (itemstack.getItem() == DeferredRegistryHandler.STONE_MUSKET_BALL.get()) {
+			if (itemStack1.getItem() == DeferredRegistryHandler.STONE_MUSKET_BALL.get()) {
 				int randomNumber = GeneralUtilities.getRandomNumber(1, 20);
 				if (randomNumber <= 3) {
 					misfire = true;
-					worldIn.playSound(null, playerentity.getX(), playerentity.getY(), playerentity.getZ(), this.getMisfireSound(), SoundCategory.PLAYERS, 1.0F, 1.0F / (random.nextFloat() * 0.4F + 1.2F) + 0.5F);
-					if (!playerentity.abilities.instabuild) {
-						itemstack.shrink(1);
-						if (itemstack.isEmpty()) {
-							playerentity.inventory.removeItem(itemstack);
+					worldIn.playSound(null, playerEntity.getX(), playerEntity.getY(), playerEntity.getZ(), getMisfireSound(), SoundCategory.PLAYERS, 1.0F, 1.0F / (random.nextFloat() * 0.4F + 1.2F) + 0.5F);
+					if (!playerEntity.abilities.instabuild) {
+						itemStack1.shrink(1);
+						if (itemStack1.isEmpty()) {
+							playerEntity.inventory.removeItem(itemStack1);
 						}
-						stack.hurtAndBreak(5, playerentity, (p_220009_1_) -> p_220009_1_.broadcastBreakEvent(playerentity.getUsedItemHand()));
+						itemStack.hurtAndBreak(5, playerEntity, (entity) -> entity.broadcastBreakEvent(playerEntity.getUsedItemHand()));
 					}
 				}
 			}
 
-			int i = this.getUseDuration(stack);
-			i = ForgeEventFactory.onArrowLoose(stack, worldIn, playerentity, i, !itemstack.isEmpty() || flag);
+			int i = getUseDuration(itemStack);
+			i = ForgeEventFactory.onArrowLoose(itemStack, worldIn, playerEntity, i, !itemStack1.isEmpty() || flag);
 			if (i < 0) return;
 
-			if (!itemstack.isEmpty() || flag || !misfire) {
-				if (itemstack.isEmpty()) {
-					itemstack = new ItemStack(defaultAmmo());
+			if (!itemStack1.isEmpty() || flag || !misfire) {
+				if (itemStack1.isEmpty()) {
+					itemStack1 = new ItemStack(defaultAmmo());
 				}
 
 				float f = getArrowVelocity(i);
 				if (!(f < 0.1D) && !misfire) {
-					boolean flag1 = playerentity.abilities.instabuild || (itemstack.getItem() instanceof CustomArrowItem && ((CustomArrowItem) itemstack.getItem()).isInfinite(itemstack, stack, playerentity));
+					boolean flag1 = playerEntity.abilities.instabuild || (itemStack1.getItem() instanceof CustomArrowItem && ((CustomArrowItem) itemStack1.getItem()).isInfinite(itemStack1, itemStack, playerEntity));
 					if (!worldIn.isClientSide) {
-						CustomArrowItem arrowitem = (CustomArrowItem) (itemstack.getItem() instanceof CustomArrowItem ? itemstack.getItem() : defaultAmmo());
-						AbstractArrowEntity abstractarrowentity = arrowitem.createArrow(worldIn, itemstack, playerentity);
-						abstractarrowentity = customArrow(abstractarrowentity);
-						abstractarrowentity.shootFromRotation(playerentity, playerentity.xRot, playerentity.yRot, 0.0F, f * 3.0F, 1.0F);
+						CustomArrowItem customArrowItem = (CustomArrowItem) (itemStack1.getItem() instanceof CustomArrowItem ? itemStack1.getItem() : defaultAmmo());
+						AbstractArrowEntity abstractArrowEntity = customArrowItem.createArrow(worldIn, itemStack1, playerEntity);
+						abstractArrowEntity = customArrow(abstractArrowEntity);
+						abstractArrowEntity.shootFromRotation(playerEntity, playerEntity.xRot, playerEntity.yRot, 0.0F, f * 3.0F, 1.0F);
 						if (f == 1.0F) {
-							abstractarrowentity.setCritArrow(true);
+							abstractArrowEntity.setCritArrow(true);
 						}
 
-						stack.hurtAndBreak(1, playerentity, (p_220009_1_) -> p_220009_1_.broadcastBreakEvent(playerentity.getUsedItemHand()));
+						itemStack.hurtAndBreak(1, playerEntity, (entity) -> entity.broadcastBreakEvent(playerEntity.getUsedItemHand()));
 
-						worldIn.addFreshEntity(abstractarrowentity);
+						worldIn.addFreshEntity(abstractArrowEntity);
 					}
 
-					worldIn.playSound(null, playerentity.getX(), playerentity.getY(), playerentity.getZ(), this.getFireSound(), SoundCategory.PLAYERS, 1.0F, 1.0F / (random.nextFloat() * 0.4F + 1.2F) + f * 0.5F);
-					if (!flag1 && !playerentity.abilities.instabuild) {
-						itemstack.shrink(1);
-						if (itemstack.isEmpty()) {
-							playerentity.inventory.removeItem(itemstack);
+					worldIn.playSound(null, playerEntity.getX(), playerEntity.getY(), playerEntity.getZ(), getFireSound(), SoundCategory.PLAYERS, 1.0F, 1.0F / (random.nextFloat() * 0.4F + 1.2F) + f * 0.5F);
+					if (!flag1 && !playerEntity.abilities.instabuild) {
+						itemStack1.shrink(1);
+						if (itemStack1.isEmpty()) {
+							playerEntity.inventory.removeItem(itemStack1);
 						}
 					}
 
-					playerentity.awardStat(Stats.ITEM_USED.get(this));
-					if (!playerentity.abilities.instabuild) {
-						playerentity.getCooldowns().addCooldown(this, 60);
+					playerEntity.awardStat(Stats.ITEM_USED.get(this));
+					if (!playerEntity.abilities.instabuild) {
+						playerEntity.getCooldowns().addCooldown(this, 60);
 					}
 				}
 			}
@@ -199,7 +196,7 @@ public class SimplePistolItem extends ShootableBullet implements IVanishable {
 
 	@Override
 	public boolean isValidRepairItem(ItemStack toRepair, ItemStack repair) {
-		return this.getRepairMaterial().test(repair) || super.isValidRepairItem(toRepair, repair);
+		return getRepairMaterial().test(repair) || super.isValidRepairItem(toRepair, repair);
 	}
 
 	public SoundEvent getMisfireSound() {

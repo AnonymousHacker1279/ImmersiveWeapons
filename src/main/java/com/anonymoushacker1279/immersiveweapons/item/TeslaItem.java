@@ -14,11 +14,11 @@ public class TeslaItem {
 		}
 
 		@Override
-		public boolean hurtEnemy(ItemStack par1ItemStack, LivingEntity par2EntityLiving, LivingEntity par3EntityLiving) {
-			par2EntityLiving.addEffect(new EffectInstance(Effects.WEAKNESS, 140, 1, false, false));
-			par2EntityLiving.addEffect(new EffectInstance(Effects.MOVEMENT_SLOWDOWN, 140, 1, false, false));
-			par2EntityLiving.addEffect(new EffectInstance(Effects.CONFUSION, 140, 1, false, false));
-			return super.hurtEnemy(par1ItemStack, par2EntityLiving, par3EntityLiving);
+		public boolean hurtEnemy(ItemStack itemStack, LivingEntity livingEntity, LivingEntity livingEntity1) {
+			livingEntity.addEffect(new EffectInstance(Effects.WEAKNESS, 140, 1, false, false));
+			livingEntity.addEffect(new EffectInstance(Effects.MOVEMENT_SLOWDOWN, 140, 1, false, false));
+			livingEntity.addEffect(new EffectInstance(Effects.CONFUSION, 140, 1, false, false));
+			return super.hurtEnemy(itemStack, livingEntity, livingEntity1);
 		}
 	}
 
@@ -29,11 +29,11 @@ public class TeslaItem {
 		}
 
 		@Override
-		public boolean hurtEnemy(ItemStack par1ItemStack, LivingEntity par2EntityLiving, LivingEntity par3EntityLiving) {
-			par2EntityLiving.addEffect(new EffectInstance(Effects.WEAKNESS, 140, 1, false, false));
-			par2EntityLiving.addEffect(new EffectInstance(Effects.MOVEMENT_SLOWDOWN, 140, 1, false, false));
-			par2EntityLiving.addEffect(new EffectInstance(Effects.CONFUSION, 140, 1, false, false));
-			return super.hurtEnemy(par1ItemStack, par2EntityLiving, par3EntityLiving);
+		public boolean hurtEnemy(ItemStack itemStack, LivingEntity livingEntity, LivingEntity livingEntity1) {
+			livingEntity.addEffect(new EffectInstance(Effects.WEAKNESS, 140, 1, false, false));
+			livingEntity.addEffect(new EffectInstance(Effects.MOVEMENT_SLOWDOWN, 140, 1, false, false));
+			livingEntity.addEffect(new EffectInstance(Effects.CONFUSION, 140, 1, false, false));
+			return super.hurtEnemy(itemStack, livingEntity, livingEntity1);
 		}
 	}
 
@@ -44,11 +44,11 @@ public class TeslaItem {
 		}
 
 		@Override
-		public boolean hurtEnemy(ItemStack par1ItemStack, LivingEntity par2EntityLiving, LivingEntity par3EntityLiving) {
-			par2EntityLiving.addEffect(new EffectInstance(Effects.WEAKNESS, 140, 1, false, false));
-			par2EntityLiving.addEffect(new EffectInstance(Effects.MOVEMENT_SLOWDOWN, 140, 1, false, false));
-			par2EntityLiving.addEffect(new EffectInstance(Effects.CONFUSION, 140, 1, false, false));
-			return super.hurtEnemy(par1ItemStack, par2EntityLiving, par3EntityLiving);
+		public boolean hurtEnemy(ItemStack itemStack, LivingEntity livingEntity, LivingEntity livingEntity1) {
+			livingEntity.addEffect(new EffectInstance(Effects.WEAKNESS, 140, 1, false, false));
+			livingEntity.addEffect(new EffectInstance(Effects.MOVEMENT_SLOWDOWN, 140, 1, false, false));
+			livingEntity.addEffect(new EffectInstance(Effects.CONFUSION, 140, 1, false, false));
+			return super.hurtEnemy(itemStack, livingEntity, livingEntity1);
 		}
 	}
 
@@ -59,11 +59,11 @@ public class TeslaItem {
 		}
 
 		@Override
-		public boolean hurtEnemy(ItemStack par1ItemStack, LivingEntity par2EntityLiving, LivingEntity par3EntityLiving) {
-			par2EntityLiving.addEffect(new EffectInstance(Effects.WEAKNESS, 140, 1, false, false));
-			par2EntityLiving.addEffect(new EffectInstance(Effects.MOVEMENT_SLOWDOWN, 140, 1, false, false));
-			par2EntityLiving.addEffect(new EffectInstance(Effects.CONFUSION, 140, 1, false, false));
-			return super.hurtEnemy(par1ItemStack, par2EntityLiving, par3EntityLiving);
+		public boolean hurtEnemy(ItemStack itemStack, LivingEntity livingEntity, LivingEntity livingEntity1) {
+			livingEntity.addEffect(new EffectInstance(Effects.WEAKNESS, 140, 1, false, false));
+			livingEntity.addEffect(new EffectInstance(Effects.MOVEMENT_SLOWDOWN, 140, 1, false, false));
+			livingEntity.addEffect(new EffectInstance(Effects.CONFUSION, 140, 1, false, false));
+			return super.hurtEnemy(itemStack, livingEntity, livingEntity1);
 		}
 	}
 
@@ -74,11 +74,11 @@ public class TeslaItem {
 		}
 
 		@Override
-		public boolean hurtEnemy(ItemStack par1ItemStack, LivingEntity par2EntityLiving, LivingEntity par3EntityLiving) {
-			par2EntityLiving.addEffect(new EffectInstance(Effects.WEAKNESS, 140, 1, false, false));
-			par2EntityLiving.addEffect(new EffectInstance(Effects.MOVEMENT_SLOWDOWN, 140, 1, false, false));
-			par2EntityLiving.addEffect(new EffectInstance(Effects.CONFUSION, 140, 1, false, false));
-			return super.hurtEnemy(par1ItemStack, par2EntityLiving, par3EntityLiving);
+		public boolean hurtEnemy(ItemStack itemStack, LivingEntity livingEntity, LivingEntity livingEntity1) {
+			livingEntity.addEffect(new EffectInstance(Effects.WEAKNESS, 140, 1, false, false));
+			livingEntity.addEffect(new EffectInstance(Effects.MOVEMENT_SLOWDOWN, 140, 1, false, false));
+			livingEntity.addEffect(new EffectInstance(Effects.CONFUSION, 140, 1, false, false));
+			return super.hurtEnemy(itemStack, livingEntity, livingEntity1);
 		}
 	}
 }

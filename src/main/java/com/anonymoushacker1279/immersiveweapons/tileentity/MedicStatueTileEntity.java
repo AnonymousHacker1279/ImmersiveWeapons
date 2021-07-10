@@ -27,18 +27,18 @@ public class MedicStatueTileEntity extends TileEntity implements ITickableTileEn
 
 	@Override
 	public void tick() {
-		if (this.level != null && !this.level.isClientSide && Objects.equals(this.level.getBiome(this.getBlockPos()).getRegistryName(), DeferredRegistryHandler.BATTLEFIELD.get().getRegistryName()) && cooldown == 0) {
-			List<FieldMedicEntity> listofMedicsInArea = this.level.getEntitiesOfClass(FieldMedicEntity.class, new AxisAlignedBB(this.getBlockPos().getX() - 48, this.getBlockPos().getY() - 16, this.getBlockPos().getZ() - 48, this.getBlockPos().getX() + 48, this.getBlockPos().getY() + 16, this.getBlockPos().getZ() + 48));
-			scannedMedics = listofMedicsInArea.size();
+		if (level != null && !level.isClientSide && Objects.equals(level.getBiome(getBlockPos()).getRegistryName(), DeferredRegistryHandler.BATTLEFIELD.get().getRegistryName()) && cooldown == 0) {
+			List<FieldMedicEntity> listOfMedicsInArea = level.getEntitiesOfClass(FieldMedicEntity.class, new AxisAlignedBB(getBlockPos().getX() - 48, getBlockPos().getY() - 16, getBlockPos().getZ() - 48, getBlockPos().getX() + 48, getBlockPos().getY() + 16, getBlockPos().getZ() + 48));
+			scannedMedics = listOfMedicsInArea.size();
 
 			if (scannedMedics <= 1) {
-				FieldMedicEntity fieldMedicEntity = DeferredRegistryHandler.FIELD_MEDIC_ENTITY.get().create(this.level);
+				FieldMedicEntity fieldMedicEntity = DeferredRegistryHandler.FIELD_MEDIC_ENTITY.get().create(level);
 				if (fieldMedicEntity != null) {
 					while (true) {
-						BlockPos blockPos = this.getRandomPositionInArea();
-						if (this.level.getBlockState(blockPos) == Blocks.AIR.defaultBlockState()) {
+						BlockPos blockPos = getRandomPositionInArea();
+						if (level.getBlockState(blockPos) == Blocks.AIR.defaultBlockState()) {
 							fieldMedicEntity.moveTo(blockPos, 0.0F, 0.0F);
-							this.level.addFreshEntity(fieldMedicEntity);
+							level.addFreshEntity(fieldMedicEntity);
 							spawnParticles();
 							cooldown = 400;
 							break;
@@ -52,14 +52,14 @@ public class MedicStatueTileEntity extends TileEntity implements ITickableTileEn
 	}
 
 	private void spawnParticles() {
-		ServerWorld serverWorld = (ServerWorld) this.getLevel();
+		ServerWorld serverWorld = (ServerWorld) getLevel();
 		if (serverWorld != null) {
-			serverWorld.sendParticles(ParticleTypes.HAPPY_VILLAGER, this.getBlockPos().getX() + 0.5d, this.getBlockPos().getY(), this.getBlockPos().getZ() + 0.75d, 5, GeneralUtilities.getRandomNumber(-0.05d, 0.05d), GeneralUtilities.getRandomNumber(-0.25d, 0.25d), GeneralUtilities.getRandomNumber(-0.05d, 0.05d), GeneralUtilities.getRandomNumber(-0.15d, 0.15d));
+			serverWorld.sendParticles(ParticleTypes.HAPPY_VILLAGER, getBlockPos().getX() + 0.5d, getBlockPos().getY(), getBlockPos().getZ() + 0.75d, 5, GeneralUtilities.getRandomNumber(-0.05d, 0.05d), GeneralUtilities.getRandomNumber(-0.25d, 0.25d), GeneralUtilities.getRandomNumber(-0.05d, 0.05d), GeneralUtilities.getRandomNumber(-0.15d, 0.15d));
 		}
 	}
 
 	private BlockPos getRandomPositionInArea() {
-		return new BlockPos(this.getBlockPos().getX() + GeneralUtilities.getRandomNumber(-15, 15), this.getBlockPos().getY(), this.getBlockPos().getZ() + GeneralUtilities.getRandomNumber(-15, 15));
+		return new BlockPos(getBlockPos().getX() + GeneralUtilities.getRandomNumber(-15, 15), getBlockPos().getY(), getBlockPos().getZ() + GeneralUtilities.getRandomNumber(-15, 15));
 	}
 
 	@Override

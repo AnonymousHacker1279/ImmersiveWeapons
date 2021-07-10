@@ -66,58 +66,53 @@ public class MolotovEntity extends ProjectileItemEntity {
 
 	@Override
 	protected void onHit(RayTraceResult rayTraceResult) {
-		if (!this.level.isClientSide) {
-			this.level.broadcastEntityEvent(this, VANILLA_IMPACT_STATUS_ID);  // calls handleStatusUpdate which tells the client to render particles
-			if (!this.hasAlreadySetFire) {
+		if (!level.isClientSide) {
+			level.broadcastEntityEvent(this, VANILLA_IMPACT_STATUS_ID);  // calls handleStatusUpdate which tells the client to render particles
+			if (!hasAlreadySetFire) {
 				// Create a ring of fire around the point of impact
-				PacketHandler.INSTANCE.send(PacketDistributor.TRACKING_CHUNK.with(() -> level.getChunkAt(this.blockPosition())), new MolotovEntityPacketHandler(this.blockPosition()));
-				if (this.level.getBlockState(this.blockPosition()) == Blocks.AIR.defaultBlockState() || this.level.getBlockState(this.blockPosition()) == Blocks.CAVE_AIR.defaultBlockState())
-					this.level.setBlockAndUpdate(this.blockPosition(), Blocks.FIRE.defaultBlockState());
-				if (this.level.getBlockState(this.blockPosition().above()) == Blocks.AIR.defaultBlockState() || this.level.getBlockState(this.blockPosition().above()) == Blocks.CAVE_AIR.defaultBlockState())
-					this.level.setBlockAndUpdate(this.blockPosition().above(), Blocks.FIRE.defaultBlockState());
-				if (this.level.getBlockState(this.blockPosition().east()) == Blocks.AIR.defaultBlockState() || this.level.getBlockState(this.blockPosition().east()) == Blocks.CAVE_AIR.defaultBlockState())
-					this.level.setBlockAndUpdate(this.blockPosition().east(), Blocks.FIRE.defaultBlockState());
-				if (this.level.getBlockState(this.blockPosition().east(2)) == Blocks.AIR.defaultBlockState() || this.level.getBlockState(this.blockPosition().east(2)) == Blocks.CAVE_AIR.defaultBlockState())
-					this.level.setBlockAndUpdate(this.blockPosition().east(2), Blocks.FIRE.defaultBlockState());
-				if (this.level.getBlockState(this.blockPosition().east().north()) == Blocks.AIR.defaultBlockState() || this.level.getBlockState(this.blockPosition().east().north()) == Blocks.CAVE_AIR.defaultBlockState())
-					this.level.setBlockAndUpdate(this.blockPosition().east().north(), Blocks.FIRE.defaultBlockState());
-				if (this.level.getBlockState(this.blockPosition().east().south()) == Blocks.AIR.defaultBlockState() || this.level.getBlockState(this.blockPosition().east().south()) == Blocks.CAVE_AIR.defaultBlockState())
-					this.level.setBlockAndUpdate(this.blockPosition().east().south(), Blocks.FIRE.defaultBlockState());
-				if (this.level.getBlockState(this.blockPosition().west()) == Blocks.AIR.defaultBlockState() || this.level.getBlockState(this.blockPosition().west()) == Blocks.CAVE_AIR.defaultBlockState())
-					this.level.setBlockAndUpdate(this.blockPosition().west(), Blocks.FIRE.defaultBlockState());
-				if (this.level.getBlockState(this.blockPosition().west(2)) == Blocks.AIR.defaultBlockState() || this.level.getBlockState(this.blockPosition().west(2)) == Blocks.CAVE_AIR.defaultBlockState())
-					this.level.setBlockAndUpdate(this.blockPosition().west(2), Blocks.FIRE.defaultBlockState());
-				if (this.level.getBlockState(this.blockPosition().west().south()) == Blocks.AIR.defaultBlockState() || this.level.getBlockState(this.blockPosition().west().south()) == Blocks.CAVE_AIR.defaultBlockState())
-					this.level.setBlockAndUpdate(this.blockPosition().west().south(), Blocks.FIRE.defaultBlockState());
-				if (this.level.getBlockState(this.blockPosition().west().north()) == Blocks.AIR.defaultBlockState() || this.level.getBlockState(this.blockPosition().west().north()) == Blocks.CAVE_AIR.defaultBlockState())
-					this.level.setBlockAndUpdate(this.blockPosition().west().north(), Blocks.FIRE.defaultBlockState());
-				if (this.level.getBlockState(this.blockPosition().north()) == Blocks.AIR.defaultBlockState() || this.level.getBlockState(this.blockPosition().north()) == Blocks.CAVE_AIR.defaultBlockState())
-					this.level.setBlockAndUpdate(this.blockPosition().north(), Blocks.FIRE.defaultBlockState());
-				if (this.level.getBlockState(this.blockPosition().north(2)) == Blocks.AIR.defaultBlockState() || this.level.getBlockState(this.blockPosition().north(2)) == Blocks.CAVE_AIR.defaultBlockState())
-					this.level.setBlockAndUpdate(this.blockPosition().north(2), Blocks.FIRE.defaultBlockState());
-				if (this.level.getBlockState(this.blockPosition().south()) == Blocks.AIR.defaultBlockState() || this.level.getBlockState(this.blockPosition().south()) == Blocks.CAVE_AIR.defaultBlockState())
-					this.level.setBlockAndUpdate(this.blockPosition().south(), Blocks.FIRE.defaultBlockState());
-				if (this.level.getBlockState(this.blockPosition().south(2)) == Blocks.AIR.defaultBlockState() || this.level.getBlockState(this.blockPosition().south(2)) == Blocks.CAVE_AIR.defaultBlockState())
-					this.level.setBlockAndUpdate(this.blockPosition().south(2), Blocks.FIRE.defaultBlockState());
-				this.hasAlreadySetFire = true;
+				PacketHandler.INSTANCE.send(PacketDistributor.TRACKING_CHUNK.with(() -> level.getChunkAt(blockPosition())), new MolotovEntityPacketHandler(blockPosition()));
+				if (level.getBlockState(blockPosition()) == Blocks.AIR.defaultBlockState() || level.getBlockState(blockPosition()) == Blocks.CAVE_AIR.defaultBlockState())
+					level.setBlockAndUpdate(blockPosition(), Blocks.FIRE.defaultBlockState());
+				if (level.getBlockState(blockPosition().above()) == Blocks.AIR.defaultBlockState() || level.getBlockState(blockPosition().above()) == Blocks.CAVE_AIR.defaultBlockState())
+					level.setBlockAndUpdate(blockPosition().above(), Blocks.FIRE.defaultBlockState());
+				if (level.getBlockState(blockPosition().east()) == Blocks.AIR.defaultBlockState() || level.getBlockState(blockPosition().east()) == Blocks.CAVE_AIR.defaultBlockState())
+					level.setBlockAndUpdate(blockPosition().east(), Blocks.FIRE.defaultBlockState());
+				if (level.getBlockState(blockPosition().east(2)) == Blocks.AIR.defaultBlockState() || level.getBlockState(blockPosition().east(2)) == Blocks.CAVE_AIR.defaultBlockState())
+					level.setBlockAndUpdate(blockPosition().east(2), Blocks.FIRE.defaultBlockState());
+				if (level.getBlockState(blockPosition().east().north()) == Blocks.AIR.defaultBlockState() || level.getBlockState(blockPosition().east().north()) == Blocks.CAVE_AIR.defaultBlockState())
+					level.setBlockAndUpdate(blockPosition().east().north(), Blocks.FIRE.defaultBlockState());
+				if (level.getBlockState(blockPosition().east().south()) == Blocks.AIR.defaultBlockState() || level.getBlockState(blockPosition().east().south()) == Blocks.CAVE_AIR.defaultBlockState())
+					level.setBlockAndUpdate(blockPosition().east().south(), Blocks.FIRE.defaultBlockState());
+				if (level.getBlockState(blockPosition().west()) == Blocks.AIR.defaultBlockState() || level.getBlockState(blockPosition().west()) == Blocks.CAVE_AIR.defaultBlockState())
+					level.setBlockAndUpdate(blockPosition().west(), Blocks.FIRE.defaultBlockState());
+				if (level.getBlockState(blockPosition().west(2)) == Blocks.AIR.defaultBlockState() || level.getBlockState(blockPosition().west(2)) == Blocks.CAVE_AIR.defaultBlockState())
+					level.setBlockAndUpdate(blockPosition().west(2), Blocks.FIRE.defaultBlockState());
+				if (level.getBlockState(blockPosition().west().south()) == Blocks.AIR.defaultBlockState() || level.getBlockState(blockPosition().west().south()) == Blocks.CAVE_AIR.defaultBlockState())
+					level.setBlockAndUpdate(blockPosition().west().south(), Blocks.FIRE.defaultBlockState());
+				if (level.getBlockState(blockPosition().west().north()) == Blocks.AIR.defaultBlockState() || level.getBlockState(blockPosition().west().north()) == Blocks.CAVE_AIR.defaultBlockState())
+					level.setBlockAndUpdate(blockPosition().west().north(), Blocks.FIRE.defaultBlockState());
+				if (level.getBlockState(blockPosition().north()) == Blocks.AIR.defaultBlockState() || level.getBlockState(blockPosition().north()) == Blocks.CAVE_AIR.defaultBlockState())
+					level.setBlockAndUpdate(blockPosition().north(), Blocks.FIRE.defaultBlockState());
+				if (level.getBlockState(blockPosition().north(2)) == Blocks.AIR.defaultBlockState() || level.getBlockState(blockPosition().north(2)) == Blocks.CAVE_AIR.defaultBlockState())
+					level.setBlockAndUpdate(blockPosition().north(2), Blocks.FIRE.defaultBlockState());
+				if (level.getBlockState(blockPosition().south()) == Blocks.AIR.defaultBlockState() || level.getBlockState(blockPosition().south()) == Blocks.CAVE_AIR.defaultBlockState())
+					level.setBlockAndUpdate(blockPosition().south(), Blocks.FIRE.defaultBlockState());
+				if (level.getBlockState(blockPosition().south(2)) == Blocks.AIR.defaultBlockState() || level.getBlockState(blockPosition().south(2)) == Blocks.CAVE_AIR.defaultBlockState())
+					level.setBlockAndUpdate(blockPosition().south(2), Blocks.FIRE.defaultBlockState());
+				hasAlreadySetFire = true;
 			}
 		}
 	}
 
 	@Override
-	public void tick() {
-		super.tick();
-	}
-
-	@Override
 	public void handleEntityEvent(byte statusID) {
 		if (statusID == VANILLA_IMPACT_STATUS_ID) {
-			IParticleData particleData = this.makeParticle();
+			IParticleData particleData = makeParticle();
 
 			for (int i = 0; i < 2; ++i) { // Create a few smoke particles, like the smoke bomb
-				this.level.addParticle(particleData, true, this.getX(), this.getY(), this.getZ(), GeneralUtilities.getRandomNumber(-0.02, 0.02d), GeneralUtilities.getRandomNumber(-0.02d, 0.02d), GeneralUtilities.getRandomNumber(-0.02d, 0.02d));
+				level.addParticle(particleData, true, getX(), getY(), getZ(), GeneralUtilities.getRandomNumber(-0.02, 0.02d), GeneralUtilities.getRandomNumber(-0.02d, 0.02d), GeneralUtilities.getRandomNumber(-0.02d, 0.02d));
 			}
-			this.remove();
+			remove();
 		}
 	}
 

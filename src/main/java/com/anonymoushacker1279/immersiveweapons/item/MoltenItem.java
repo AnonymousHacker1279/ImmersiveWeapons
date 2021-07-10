@@ -12,9 +12,9 @@ public class MoltenItem {
 		}
 
 		@Override
-		public boolean hurtEnemy(ItemStack par1ItemStack, LivingEntity par2EntityLiving, LivingEntity par3EntityLiving) {
-			par2EntityLiving.setSecondsOnFire(10);
-			return super.hurtEnemy(par1ItemStack, par2EntityLiving, par3EntityLiving);
+		public boolean hurtEnemy(ItemStack itemStack, LivingEntity livingEntity, LivingEntity livingEntity1) {
+			livingEntity.setSecondsOnFire(10);
+			return super.hurtEnemy(itemStack, livingEntity, livingEntity1);
 		}
 	}
 
@@ -25,9 +25,9 @@ public class MoltenItem {
 		}
 
 		@Override
-		public boolean hurtEnemy(ItemStack par1ItemStack, LivingEntity par2EntityLiving, LivingEntity par3EntityLiving) {
-			par2EntityLiving.setSecondsOnFire(10);
-			return super.hurtEnemy(par1ItemStack, par2EntityLiving, par3EntityLiving);
+		public boolean hurtEnemy(ItemStack itemStack, LivingEntity livingEntity, LivingEntity livingEntity1) {
+			livingEntity.setSecondsOnFire(10);
+			return super.hurtEnemy(itemStack, livingEntity, livingEntity1);
 		}
 	}
 
@@ -38,9 +38,9 @@ public class MoltenItem {
 		}
 
 		@Override
-		public boolean hurtEnemy(ItemStack par1ItemStack, LivingEntity par2EntityLiving, LivingEntity par3EntityLiving) {
-			par2EntityLiving.setSecondsOnFire(10);
-			return super.hurtEnemy(par1ItemStack, par2EntityLiving, par3EntityLiving);
+		public boolean hurtEnemy(ItemStack itemStack, LivingEntity livingEntity, LivingEntity livingEntity1) {
+			livingEntity.setSecondsOnFire(10);
+			return super.hurtEnemy(itemStack, livingEntity, livingEntity1);
 		}
 	}
 
@@ -51,9 +51,9 @@ public class MoltenItem {
 		}
 
 		@Override
-		public boolean hurtEnemy(ItemStack par1ItemStack, LivingEntity par2EntityLiving, LivingEntity par3EntityLiving) {
-			par2EntityLiving.setSecondsOnFire(10);
-			return super.hurtEnemy(par1ItemStack, par2EntityLiving, par3EntityLiving);
+		public boolean hurtEnemy(ItemStack itemStack, LivingEntity livingEntity, LivingEntity livingEntity1) {
+			livingEntity.setSecondsOnFire(10);
+			return super.hurtEnemy(itemStack, livingEntity, livingEntity1);
 		}
 	}
 
@@ -64,9 +64,9 @@ public class MoltenItem {
 		}
 
 		@Override
-		public boolean hurtEnemy(ItemStack par1ItemStack, LivingEntity par2EntityLiving, LivingEntity par3EntityLiving) {
-			par2EntityLiving.setSecondsOnFire(10);
-			return super.hurtEnemy(par1ItemStack, par2EntityLiving, par3EntityLiving);
+		public boolean hurtEnemy(ItemStack itemStack, LivingEntity livingEntity, LivingEntity livingEntity1) {
+			livingEntity.setSecondsOnFire(10);
+			return super.hurtEnemy(itemStack, livingEntity, livingEntity1);
 		}
 	}
 

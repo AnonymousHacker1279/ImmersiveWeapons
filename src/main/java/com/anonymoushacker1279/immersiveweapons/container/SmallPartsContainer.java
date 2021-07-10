@@ -29,8 +29,8 @@ public class SmallPartsContainer extends AbstractRepairContainer {
 
 	public SmallPartsContainer(int id, PlayerInventory inv, IWorldPosCallable worldPosCallable) {
 		super(DeferredRegistryHandler.SMALL_PARTS_TABLE_CONTAINER.get(), id, inv, worldPosCallable);
-		this.world = inv.player.level;
-		this.smallPartsRecipeList = this.world.getRecipeManager().getAllRecipesFor(ICustomRecipeType.SMALL_PARTS);
+		world = inv.player.level;
+		smallPartsRecipeList = world.getRecipeManager().getAllRecipesFor(ICustomRecipeType.SMALL_PARTS);
 	}
 
 	@Override
@@ -40,42 +40,42 @@ public class SmallPartsContainer extends AbstractRepairContainer {
 
 	@Override
 	protected boolean mayPickup(PlayerEntity playerEntity, boolean matchesRecipe) {
-		return this.smallPartsRecipe != null && this.smallPartsRecipe.matches(this.inputSlots, this.world);
+		return smallPartsRecipe != null && smallPartsRecipe.matches(inputSlots, world);
 	}
 
 	@Override
 	protected ItemStack onTake(PlayerEntity playerEntity, ItemStack itemStack) {
 		itemStack.onCraftedBy(playerEntity.level, playerEntity, itemStack.getCount());
-		this.resultSlots.awardUsedRecipes(playerEntity);
-		this.shrinkStackInSlot(0);
+		resultSlots.awardUsedRecipes(playerEntity);
+		shrinkStackInSlot(0);
 		// Normally we would destroy both items here. However we don't want to destroy the blueprint item.
 		world.playSound(playerEntity, playerEntity.blockPosition(), DeferredRegistryHandler.SMALL_PARTS_TABLE_USED.get(), SoundCategory.NEUTRAL, 1f, 1);
 		return itemStack;
 	}
 
 	private void shrinkStackInSlot(int index) {
-		ItemStack itemstack = this.inputSlots.getItem(index);
+		ItemStack itemstack = inputSlots.getItem(index);
 		itemstack.shrink(1);
-		this.inputSlots.setItem(index, itemstack);
+		inputSlots.setItem(index, itemstack);
 	}
 
 	@Override
 	public void createResult() {
-		List<SmallPartsRecipe> list = this.world.getRecipeManager().getRecipesFor(ICustomRecipeType.SMALL_PARTS, this.inputSlots, this.world);
+		List<SmallPartsRecipe> list = world.getRecipeManager().getRecipesFor(ICustomRecipeType.SMALL_PARTS, inputSlots, world);
 		if (list.isEmpty()) {
-			this.resultSlots.setItem(0, ItemStack.EMPTY);
+			resultSlots.setItem(0, ItemStack.EMPTY);
 		} else {
-			this.smallPartsRecipe = list.get(0);
-			ItemStack itemstack = this.smallPartsRecipe.assemble(this.inputSlots);
-			this.resultSlots.setRecipeUsed(this.smallPartsRecipe);
-			this.resultSlots.setItem(0, itemstack);
+			smallPartsRecipe = list.get(0);
+			ItemStack itemstack = smallPartsRecipe.assemble(inputSlots);
+			resultSlots.setRecipeUsed(smallPartsRecipe);
+			resultSlots.setItem(0, itemstack);
 		}
 
 	}
 
 	@Override
 	protected boolean shouldQuickMoveToAdditionalSlot(ItemStack itemStack) {
-		return this.smallPartsRecipeList.stream().anyMatch((p_241444_1_) -> p_241444_1_.isValidAdditionItem(itemStack));
+		return smallPartsRecipeList.stream().anyMatch((smallPartsRecipe) -> smallPartsRecipe.isValidAdditionItem(itemStack));
 	}
 
 	/**
@@ -84,7 +84,7 @@ public class SmallPartsContainer extends AbstractRepairContainer {
 	 */
 	@Override
 	public boolean canTakeItemForPickAll(ItemStack stack, Slot slotIn) {
-		return slotIn.container != this.resultSlots && super.canTakeItemForPickAll(stack, slotIn);
+		return slotIn.container != resultSlots && super.canTakeItemForPickAll(stack, slotIn);
 	}
 
 }

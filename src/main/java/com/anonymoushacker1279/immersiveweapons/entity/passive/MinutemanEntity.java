@@ -9,11 +9,10 @@ import net.minecraft.world.World;
 
 public class MinutemanEntity extends AbstractMinutemanEntity {
 
-	public MinutemanEntity(EntityType<? extends MinutemanEntity> p_i50194_1_, World p_i50194_2_) {
-		super(p_i50194_1_, p_i50194_2_);
+	public MinutemanEntity(EntityType<? extends MinutemanEntity> entityType, World world) {
+		super(entityType, world);
 	}
 
-	//TODO: Need custom sounds
 	@Override
 	protected SoundEvent getAmbientSound() {
 		return DeferredRegistryHandler.DYING_SOLDIER_AMBIENT.get();
@@ -49,11 +48,11 @@ public class MinutemanEntity extends AbstractMinutemanEntity {
 		super.dropCustomDeathLoot(source, looting, recentlyHitIn);
 		int lootingModifier = looting * 2;
 		if (lootingModifier >= 85) {
-			this.spawnAtLocation(DeferredRegistryHandler.BLUNDERBUSS.get());
+			spawnAtLocation(DeferredRegistryHandler.BLUNDERBUSS.get());
 		} else {
 			int i = GeneralUtilities.getRandomNumber(1, 85 - lootingModifier);
 			if (i == 1) {
-				this.spawnAtLocation(DeferredRegistryHandler.BLUNDERBUSS.get());
+				spawnAtLocation(DeferredRegistryHandler.BLUNDERBUSS.get());
 			}
 		}
 	}

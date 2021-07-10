@@ -13,7 +13,6 @@ public class FieldMedicEntity extends AbstractFieldMedicEntity {
 		super(entity, world);
 	}
 
-	//TODO: Need custom sounds
 	@Override
 	protected SoundEvent getAmbientSound() {
 		return DeferredRegistryHandler.FIELD_MEDIC_AMBIENT.get();
@@ -49,11 +48,11 @@ public class FieldMedicEntity extends AbstractFieldMedicEntity {
 		super.dropCustomDeathLoot(source, looting, recentlyHitIn);
 		int lootingModifier = looting * 2;
 		if (lootingModifier >= 85) {
-			this.spawnAtLocation(DeferredRegistryHandler.USED_SYRINGE.get());
+			spawnAtLocation(DeferredRegistryHandler.USED_SYRINGE.get());
 		} else {
 			int i = GeneralUtilities.getRandomNumber(1, 85 - lootingModifier);
 			if (i == 1) {
-				this.spawnAtLocation(DeferredRegistryHandler.USED_SYRINGE.get());
+				spawnAtLocation(DeferredRegistryHandler.USED_SYRINGE.get());
 			}
 		}
 	}

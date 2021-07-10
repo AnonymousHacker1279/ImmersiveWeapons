@@ -27,9 +27,9 @@ public class VentusItem {
 		}
 
 		@Override
-		public boolean hurtEnemy(ItemStack par1ItemStack, LivingEntity par2EntityLiving, LivingEntity par3EntityLiving) {
-			par2EntityLiving.addEffect(new EffectInstance(Effects.LEVITATION, 60, 2, false, false));
-			return super.hurtEnemy(par1ItemStack, par2EntityLiving, par3EntityLiving);
+		public boolean hurtEnemy(ItemStack itemStack, LivingEntity livingEntity, LivingEntity livingEntity1) {
+			livingEntity.addEffect(new EffectInstance(Effects.LEVITATION, 60, 2, false, false));
+			return super.hurtEnemy(itemStack, livingEntity, livingEntity1);
 		}
 	}
 
@@ -40,9 +40,9 @@ public class VentusItem {
 		}
 
 		@Override
-		public boolean hurtEnemy(ItemStack par1ItemStack, LivingEntity par2EntityLiving, LivingEntity par3EntityLiving) {
-			par2EntityLiving.addEffect(new EffectInstance(Effects.LEVITATION, 60, 2, false, false));
-			return super.hurtEnemy(par1ItemStack, par2EntityLiving, par3EntityLiving);
+		public boolean hurtEnemy(ItemStack itemStack, LivingEntity livingEntity, LivingEntity livingEntity1) {
+			livingEntity.addEffect(new EffectInstance(Effects.LEVITATION, 60, 2, false, false));
+			return super.hurtEnemy(itemStack, livingEntity, livingEntity1);
 		}
 	}
 
@@ -53,9 +53,9 @@ public class VentusItem {
 		}
 
 		@Override
-		public boolean hurtEnemy(ItemStack par1ItemStack, LivingEntity par2EntityLiving, LivingEntity par3EntityLiving) {
-			par2EntityLiving.addEffect(new EffectInstance(Effects.LEVITATION, 60, 2, false, false));
-			return super.hurtEnemy(par1ItemStack, par2EntityLiving, par3EntityLiving);
+		public boolean hurtEnemy(ItemStack itemStack, LivingEntity livingEntity, LivingEntity livingEntity1) {
+			livingEntity.addEffect(new EffectInstance(Effects.LEVITATION, 60, 2, false, false));
+			return super.hurtEnemy(itemStack, livingEntity, livingEntity1);
 		}
 	}
 
@@ -66,9 +66,9 @@ public class VentusItem {
 		}
 
 		@Override
-		public boolean hurtEnemy(ItemStack par1ItemStack, LivingEntity par2EntityLiving, LivingEntity par3EntityLiving) {
-			par2EntityLiving.addEffect(new EffectInstance(Effects.LEVITATION, 60, 2, false, false));
-			return super.hurtEnemy(par1ItemStack, par2EntityLiving, par3EntityLiving);
+		public boolean hurtEnemy(ItemStack itemStack, LivingEntity livingEntity, LivingEntity livingEntity1) {
+			livingEntity.addEffect(new EffectInstance(Effects.LEVITATION, 60, 2, false, false));
+			return super.hurtEnemy(itemStack, livingEntity, livingEntity1);
 		}
 	}
 
@@ -79,9 +79,9 @@ public class VentusItem {
 		}
 
 		@Override
-		public boolean hurtEnemy(ItemStack par1ItemStack, LivingEntity par2EntityLiving, LivingEntity par3EntityLiving) {
-			par2EntityLiving.addEffect(new EffectInstance(Effects.LEVITATION, 60, 2, false, false));
-			return super.hurtEnemy(par1ItemStack, par2EntityLiving, par3EntityLiving);
+		public boolean hurtEnemy(ItemStack itemStack, LivingEntity livingEntity, LivingEntity livingEntity1) {
+			livingEntity.addEffect(new EffectInstance(Effects.LEVITATION, 60, 2, false, false));
+			return super.hurtEnemy(itemStack, livingEntity, livingEntity1);
 		}
 	}
 
@@ -100,7 +100,7 @@ public class VentusItem {
 
 			if (!entity.isEmpty()) {
 				for (Entity element : entity) {
-					if (element.showVehicleHealth()) {
+					if (element.isAlive()) {
 						worldIn.addParticle(ParticleTypes.CLOUD, element.getX(), element.getY() + 0.3d, element.getZ(), GeneralUtilities.getRandomNumber(-0.03d, 0.03d), GeneralUtilities.getRandomNumber(0.0d, 0.03d), GeneralUtilities.getRandomNumber(-0.03d, 0.03d));
 						element.push(playerIn.getLookAngle().get(Axis.X), 1f, playerIn.getLookAngle().get(Axis.Z));
 
