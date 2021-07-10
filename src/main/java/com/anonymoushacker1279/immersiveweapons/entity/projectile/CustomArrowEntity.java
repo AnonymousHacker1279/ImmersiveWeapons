@@ -4,7 +4,9 @@ import com.anonymoushacker1279.immersiveweapons.client.particle.SmokeBombParticl
 import com.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
 import com.anonymoushacker1279.immersiveweapons.util.Config;
 import com.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
+import com.anonymoushacker1279.immersiveweapons.util.PacketHandler;
 import net.minecraft.block.BlockState;
+import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
@@ -13,6 +15,7 @@ import net.minecraft.entity.projectile.AbstractArrowEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.IPacket;
+import net.minecraft.network.PacketBuffer;
 import net.minecraft.particles.IParticleData;
 import net.minecraft.particles.ParticleTypes;
 import net.minecraft.util.SoundCategory;
@@ -20,34 +23,40 @@ import net.minecraft.util.math.*;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.fml.DistExecutor;
+import net.minecraftforge.fml.network.NetworkEvent;
+import net.minecraftforge.fml.network.NetworkEvent.Context;
 import net.minecraftforge.fml.network.NetworkHooks;
+import net.minecraftforge.fml.network.PacketDistributor;
 
 import java.awt.*;
+import java.util.function.Supplier;
 
 public class CustomArrowEntity {
 
 	public static class CopperArrowEntity extends AbstractArrowEntity {
 		private final Item referenceItem;
 
-		@SuppressWarnings("unchecked")
-		public CopperArrowEntity(EntityType<?> type, World world) {
-			super((EntityType<? extends AbstractArrowEntity>) type, world);
-			this.referenceItem = DeferredRegistryHandler.COPPER_ARROW.get();
+		public CopperArrowEntity(EntityType<? extends AbstractArrowEntity> type, World world) {
+			super(type, world);
+			referenceItem = DeferredRegistryHandler.COPPER_ARROW.get();
 		}
 
 		public CopperArrowEntity(LivingEntity shooter, World world, Item referenceItemIn) {
 			super(DeferredRegistryHandler.COPPER_ARROW_ENTITY.get(), shooter, world);
-			this.referenceItem = referenceItemIn;
+			referenceItem = referenceItemIn;
 		}
 
 		public CopperArrowEntity(World worldIn, double x, double y, double z) {
 			super(DeferredRegistryHandler.COPPER_ARROW_ENTITY.get(), x, y, z, worldIn);
-			this.referenceItem = DeferredRegistryHandler.COPPER_ARROW.get();
+			referenceItem = DeferredRegistryHandler.COPPER_ARROW.get();
 		}
 
 		@Override
 		public ItemStack getPickupItem() {
-			return new ItemStack(this.referenceItem);
+			return new ItemStack(referenceItem);
 		}
 
 		@Override
@@ -59,25 +68,24 @@ public class CustomArrowEntity {
 	public static class IronArrowEntity extends AbstractArrowEntity {
 		private final Item referenceItem;
 
-		@SuppressWarnings("unchecked")
-		public IronArrowEntity(EntityType<?> type, World world) {
-			super((EntityType<? extends AbstractArrowEntity>) type, world);
-			this.referenceItem = DeferredRegistryHandler.IRON_ARROW.get();
+		public IronArrowEntity(EntityType<? extends AbstractArrowEntity> type, World world) {
+			super(type, world);
+			referenceItem = DeferredRegistryHandler.IRON_ARROW.get();
 		}
 
 		public IronArrowEntity(LivingEntity shooter, World world, Item referenceItemIn) {
 			super(DeferredRegistryHandler.IRON_ARROW_ENTITY.get(), shooter, world);
-			this.referenceItem = referenceItemIn;
+			referenceItem = referenceItemIn;
 		}
 
 		public IronArrowEntity(World worldIn, double x, double y, double z) {
 			super(DeferredRegistryHandler.IRON_ARROW_ENTITY.get(), x, y, z, worldIn);
-			this.referenceItem = DeferredRegistryHandler.IRON_ARROW.get();
+			referenceItem = DeferredRegistryHandler.IRON_ARROW.get();
 		}
 
 		@Override
 		public ItemStack getPickupItem() {
-			return new ItemStack(this.referenceItem);
+			return new ItemStack(referenceItem);
 		}
 
 		@Override
@@ -89,25 +97,24 @@ public class CustomArrowEntity {
 	public static class DiamondArrowEntity extends AbstractArrowEntity {
 		private final Item referenceItem;
 
-		@SuppressWarnings("unchecked")
-		public DiamondArrowEntity(EntityType<?> type, World world) {
-			super((EntityType<? extends AbstractArrowEntity>) type, world);
-			this.referenceItem = DeferredRegistryHandler.DIAMOND_ARROW.get();
+		public DiamondArrowEntity(EntityType<? extends AbstractArrowEntity> type, World world) {
+			super(type, world);
+			referenceItem = DeferredRegistryHandler.DIAMOND_ARROW.get();
 		}
 
 		public DiamondArrowEntity(LivingEntity shooter, World world, Item referenceItemIn) {
 			super(DeferredRegistryHandler.DIAMOND_ARROW_ENTITY.get(), shooter, world);
-			this.referenceItem = referenceItemIn;
+			referenceItem = referenceItemIn;
 		}
 
 		public DiamondArrowEntity(World worldIn, double x, double y, double z) {
 			super(DeferredRegistryHandler.DIAMOND_ARROW_ENTITY.get(), x, y, z, worldIn);
-			this.referenceItem = DeferredRegistryHandler.DIAMOND_ARROW.get();
+			referenceItem = DeferredRegistryHandler.DIAMOND_ARROW.get();
 		}
 
 		@Override
 		public ItemStack getPickupItem() {
-			return new ItemStack(this.referenceItem);
+			return new ItemStack(referenceItem);
 		}
 
 		@Override
@@ -119,25 +126,24 @@ public class CustomArrowEntity {
 	public static class GoldArrowEntity extends AbstractArrowEntity {
 		private final Item referenceItem;
 
-		@SuppressWarnings("unchecked")
-		public GoldArrowEntity(EntityType<?> type, World world) {
-			super((EntityType<? extends AbstractArrowEntity>) type, world);
-			this.referenceItem = DeferredRegistryHandler.GOLD_ARROW.get();
+		public GoldArrowEntity(EntityType<? extends AbstractArrowEntity> type, World world) {
+			super(type, world);
+			referenceItem = DeferredRegistryHandler.GOLD_ARROW.get();
 		}
 
 		public GoldArrowEntity(LivingEntity shooter, World world, Item referenceItemIn) {
 			super(DeferredRegistryHandler.GOLD_ARROW_ENTITY.get(), shooter, world);
-			this.referenceItem = referenceItemIn;
+			referenceItem = referenceItemIn;
 		}
 
 		public GoldArrowEntity(World worldIn, double x, double y, double z) {
 			super(DeferredRegistryHandler.GOLD_ARROW_ENTITY.get(), x, y, z, worldIn);
-			this.referenceItem = DeferredRegistryHandler.GOLD_ARROW.get();
+			referenceItem = DeferredRegistryHandler.GOLD_ARROW.get();
 		}
 
 		@Override
 		public ItemStack getPickupItem() {
-			return new ItemStack(this.referenceItem);
+			return new ItemStack(referenceItem);
 		}
 
 		@Override
@@ -149,25 +155,24 @@ public class CustomArrowEntity {
 	public static class StoneArrowEntity extends AbstractArrowEntity {
 		private final Item referenceItem;
 
-		@SuppressWarnings("unchecked")
-		public StoneArrowEntity(EntityType<?> type, World world) {
-			super((EntityType<? extends AbstractArrowEntity>) type, world);
-			this.referenceItem = DeferredRegistryHandler.STONE_ARROW.get();
+		public StoneArrowEntity(EntityType<? extends AbstractArrowEntity> type, World world) {
+			super(type, world);
+			referenceItem = DeferredRegistryHandler.STONE_ARROW.get();
 		}
 
 		public StoneArrowEntity(LivingEntity shooter, World world, Item referenceItemIn) {
 			super(DeferredRegistryHandler.STONE_ARROW_ENTITY.get(), shooter, world);
-			this.referenceItem = referenceItemIn;
+			referenceItem = referenceItemIn;
 		}
 
 		public StoneArrowEntity(World worldIn, double x, double y, double z) {
 			super(DeferredRegistryHandler.STONE_ARROW_ENTITY.get(), x, y, z, worldIn);
-			this.referenceItem = DeferredRegistryHandler.STONE_ARROW.get();
+			referenceItem = DeferredRegistryHandler.STONE_ARROW.get();
 		}
 
 		@Override
 		public ItemStack getPickupItem() {
-			return new ItemStack(this.referenceItem);
+			return new ItemStack(referenceItem);
 		}
 
 		@Override
@@ -177,38 +182,37 @@ public class CustomArrowEntity {
 
 		@Override
 		public void shoot(double x, double y, double z, float velocity, float inaccuracy) {
-			Vector3d vector3d = (new Vector3d(x, y, z)).normalize().add(this.random.nextGaussian() * 0.0075F * inaccuracy, -0.1085F * inaccuracy, this.random.nextGaussian() * 0.0075F * inaccuracy).scale(velocity);
-			this.setDeltaMovement(vector3d);
+			Vector3d vector3d = (new Vector3d(x, y, z)).normalize().add(random.nextGaussian() * 0.0075F * inaccuracy, -0.1085F * inaccuracy, random.nextGaussian() * 0.0075F * inaccuracy).scale(velocity);
+			setDeltaMovement(vector3d);
 			float f = MathHelper.sqrt(getHorizontalDistanceSqr(vector3d));
-			this.yRot = (float) (MathHelper.atan2(vector3d.x, vector3d.z) * (180F / (float) Math.PI));
-			this.xRot = (float) (MathHelper.atan2(vector3d.y, f) * (180F / (float) Math.PI));
-			this.yRotO = this.yRot;
-			this.xRotO = this.xRot;
+			yRot = (float) (MathHelper.atan2(vector3d.x, vector3d.z) * (180F / (float) Math.PI));
+			xRot = (float) (MathHelper.atan2(vector3d.y, f) * (180F / (float) Math.PI));
+			yRotO = yRot;
+			xRotO = xRot;
 		}
 	}
 
 	public static class WoodArrowEntity extends AbstractArrowEntity {
 		private final Item referenceItem;
 
-		@SuppressWarnings("unchecked")
-		public WoodArrowEntity(EntityType<?> type, World world) {
-			super((EntityType<? extends AbstractArrowEntity>) type, world);
-			this.referenceItem = DeferredRegistryHandler.WOOD_ARROW.get();
+		public WoodArrowEntity(EntityType<? extends AbstractArrowEntity> type, World world) {
+			super(type, world);
+			referenceItem = DeferredRegistryHandler.WOOD_ARROW.get();
 		}
 
 		public WoodArrowEntity(LivingEntity shooter, World world, Item referenceItemIn) {
 			super(DeferredRegistryHandler.WOOD_ARROW_ENTITY.get(), shooter, world);
-			this.referenceItem = referenceItemIn;
+			referenceItem = referenceItemIn;
 		}
 
 		public WoodArrowEntity(World worldIn, double x, double y, double z) {
 			super(DeferredRegistryHandler.WOOD_ARROW_ENTITY.get(), x, y, z, worldIn);
-			this.referenceItem = DeferredRegistryHandler.WOOD_ARROW.get();
+			referenceItem = DeferredRegistryHandler.WOOD_ARROW.get();
 		}
 
 		@Override
 		public ItemStack getPickupItem() {
-			return new ItemStack(this.referenceItem);
+			return new ItemStack(referenceItem);
 		}
 
 		@Override
@@ -226,25 +230,24 @@ public class CustomArrowEntity {
 		private final Item referenceItem;
 		private BlockState inBlockState;
 
-		@SuppressWarnings("unchecked")
-		public NetheriteArrowEntity(EntityType<?> type, World world) {
-			super((EntityType<? extends AbstractArrowEntity>) type, world);
-			this.referenceItem = DeferredRegistryHandler.NETHERITE_ARROW.get();
+		public NetheriteArrowEntity(EntityType<? extends AbstractArrowEntity> type, World world) {
+			super(type, world);
+			referenceItem = DeferredRegistryHandler.NETHERITE_ARROW.get();
 		}
 
 		public NetheriteArrowEntity(LivingEntity shooter, World world, Item referenceItemIn) {
 			super(DeferredRegistryHandler.NETHERITE_ARROW_ENTITY.get(), shooter, world);
-			this.referenceItem = referenceItemIn;
+			referenceItem = referenceItemIn;
 		}
 
 		public NetheriteArrowEntity(World worldIn, double x, double y, double z) {
 			super(DeferredRegistryHandler.NETHERITE_ARROW_ENTITY.get(), x, y, z, worldIn);
-			this.referenceItem = DeferredRegistryHandler.NETHERITE_ARROW.get();
+			referenceItem = DeferredRegistryHandler.NETHERITE_ARROW.get();
 		}
 
 		@Override
 		public ItemStack getPickupItem() {
-			return new ItemStack(this.referenceItem);
+			return new ItemStack(referenceItem);
 		}
 
 		@Override
@@ -254,82 +257,81 @@ public class CustomArrowEntity {
 
 		@Override
 		public void shoot(double x, double y, double z, float velocity, float inaccuracy) {
-			Vector3d vector3d = (new Vector3d(x, y, z)).normalize().add(this.random.nextGaussian() * 0.0025F * (GeneralUtilities.getRandomNumber(0.2f, 1.1f)), 0.00025F * (GeneralUtilities.getRandomNumber(0.2f, 1.1f)), this.random.nextGaussian() * 0.0025F).scale(velocity);
-			this.setDeltaMovement(vector3d);
+			Vector3d vector3d = (new Vector3d(x, y, z)).normalize().add(random.nextGaussian() * 0.0025F * (GeneralUtilities.getRandomNumber(0.2f, 1.1f)), 0.00025F * (GeneralUtilities.getRandomNumber(0.2f, 1.1f)), random.nextGaussian() * 0.0025F).scale(velocity);
+			setDeltaMovement(vector3d);
 			float f = MathHelper.sqrt(getHorizontalDistanceSqr(vector3d));
-			this.yRot = (float) (MathHelper.atan2(vector3d.x, vector3d.z) * (180F / (float) Math.PI));
-			this.xRot = (float) (MathHelper.atan2(vector3d.y, f) * (180F / (float) Math.PI));
-			this.yRotO = this.yRot;
-			this.xRotO = this.xRot;
+			yRot = (float) (MathHelper.atan2(vector3d.x, vector3d.z) * (180F / (float) Math.PI));
+			xRot = (float) (MathHelper.atan2(vector3d.y, f) * (180F / (float) Math.PI));
+			yRotO = yRot;
+			xRotO = xRot;
 		}
 
 		private boolean shouldFall() {
-			return this.inGround && this.level.noCollision((new AxisAlignedBB(this.position(), this.position())).inflate(0.06D));
+			return inGround && level.noCollision((new AxisAlignedBB(position(), position())).inflate(0.06D));
 		}
 
 		private void startFalling() {
-			this.inGround = false;
-			Vector3d vector3d = this.getDeltaMovement();
-			this.setDeltaMovement(vector3d.multiply(this.random.nextFloat() * 0.2F, this.random.nextFloat() * 0.2F, this.random.nextFloat() * 0.2F));
+			inGround = false;
+			Vector3d vector3d = getDeltaMovement();
+			setDeltaMovement(vector3d.multiply(random.nextFloat() * 0.2F, random.nextFloat() * 0.2F, random.nextFloat() * 0.2F));
 		}
 
-		@SuppressWarnings("deprecation")
 		@Override
 		public void tick() {
 			super.tick();
-			boolean flag = this.isNoPhysics();
-			Vector3d vector3d = this.getDeltaMovement();
-			if (this.xRotO == 0.0F && this.yRotO == 0.0F) {
+			boolean flag = isNoPhysics();
+			Vector3d vector3d = getDeltaMovement();
+			if (xRotO == 0.0F && yRotO == 0.0F) {
 				float f = MathHelper.sqrt(getHorizontalDistanceSqr(vector3d));
-				this.yRot = (float) (MathHelper.atan2(vector3d.x, vector3d.z) * (180F / (float) Math.PI));
-				this.xRot = (float) (MathHelper.atan2(vector3d.y, f) * (180F / (float) Math.PI));
-				this.yRotO = this.yRot;
-				this.xRotO = this.xRot;
+				yRot = (float) (MathHelper.atan2(vector3d.x, vector3d.z) * (180F / (float) Math.PI));
+				xRot = (float) (MathHelper.atan2(vector3d.y, f) * (180F / (float) Math.PI));
+				yRotO = yRot;
+				xRotO = xRot;
 			}
 
-			BlockPos blockpos = this.blockPosition();
-			BlockState blockstate = this.level.getBlockState(blockpos);
-			if (!blockstate.isAir(this.level, blockpos) && !flag) {
-				VoxelShape voxelshape = blockstate.getBlockSupportShape(this.level, blockpos);
+			BlockPos blockpos = blockPosition();
+			BlockState blockstate = level.getBlockState(blockpos);
+			if (!blockstate.isAir(level, blockpos) && !flag) {
+				VoxelShape voxelshape = blockstate.getBlockSupportShape(level, blockpos);
 				if (!voxelshape.isEmpty()) {
-					Vector3d vector3d1 = this.position();
+					Vector3d vector3d1 = position();
 
 					for (AxisAlignedBB axisalignedbb : voxelshape.toAabbs()) {
 						if (axisalignedbb.move(blockpos).contains(vector3d1)) {
-							this.inGround = true;
+							inGround = true;
 							break;
 						}
 					}
 				}
 			}
 
-			if (this.shakeTime > 0) {
-				--this.shakeTime;
+			if (shakeTime > 0) {
+				--shakeTime;
 			}
 
-			if (this.isInWaterOrRain()) {
-				this.clearFire();
+			if (isInWaterOrRain()) {
+				clearFire();
 			}
 
-			if (this.inGround && !flag) {
-				if (this.inBlockState != blockstate && this.shouldFall()) {
-					this.startFalling();
-				} else if (!this.level.isClientSide) {
-					this.tickDespawn();
+			if (inGround && !flag) {
+				if (inBlockState != blockstate && shouldFall()) {
+					startFalling();
+				} else if (!level.isClientSide) {
+					tickDespawn();
 				}
 
-				++this.inGroundTime;
+				++inGroundTime;
 			} else {
-				this.inGroundTime = 0;
-				Vector3d vector3d2 = this.position();
+				inGroundTime = 0;
+				Vector3d vector3d2 = position();
 				Vector3d vector3d3 = vector3d2.add(vector3d);
-				RayTraceResult raytraceresult = this.level.clip(new RayTraceContext(vector3d2, vector3d3, RayTraceContext.BlockMode.COLLIDER, RayTraceContext.FluidMode.NONE, this));
+				RayTraceResult raytraceresult = level.clip(new RayTraceContext(vector3d2, vector3d3, RayTraceContext.BlockMode.COLLIDER, RayTraceContext.FluidMode.NONE, this));
 				if (raytraceresult.getType() != RayTraceResult.Type.MISS) {
 					vector3d3 = raytraceresult.getLocation();
 				}
 
-				while (!this.removed) {
-					EntityRayTraceResult entityraytraceresult = this.findHitEntity(vector3d2, vector3d3);
+				while (!removed) {
+					EntityRayTraceResult entityraytraceresult = findHitEntity(vector3d2, vector3d3);
 					if (entityraytraceresult != null) {
 						raytraceresult = entityraytraceresult;
 					}
@@ -339,7 +341,7 @@ public class CustomArrowEntity {
 						if (raytraceresult instanceof EntityRayTraceResult) {
 							entity = ((EntityRayTraceResult) raytraceresult).getEntity();
 						}
-						Entity entity1 = this.getOwner();
+						Entity entity1 = getOwner();
 						if (entity instanceof PlayerEntity && entity1 instanceof PlayerEntity && !((PlayerEntity) entity1).canHarmPlayer((PlayerEntity) entity)) {
 							raytraceresult = null;
 							entityraytraceresult = null;
@@ -347,90 +349,89 @@ public class CustomArrowEntity {
 					}
 
 					if (raytraceresult != null && raytraceresult.getType() != RayTraceResult.Type.MISS && !flag && !net.minecraftforge.event.ForgeEventFactory.onProjectileImpact(this, raytraceresult)) {
-						this.onHit(raytraceresult);
-						this.hasImpulse = true;
+						onHit(raytraceresult);
+						hasImpulse = true;
 					}
 
-					if (entityraytraceresult == null || this.getPierceLevel() <= 0) {
+					if (entityraytraceresult == null || getPierceLevel() <= 0) {
 						break;
 					}
 
 					raytraceresult = null;
 				}
 
-				vector3d = this.getDeltaMovement();
+				vector3d = getDeltaMovement();
 				double d3 = vector3d.x;
 				double d4 = vector3d.y;
 				double d0 = vector3d.z;
-				if (this.isCritArrow()) {
+				if (isCritArrow()) {
 					for (int i = 0; i < 4; ++i) {
-						this.level.addParticle(ParticleTypes.CRIT, this.getX() + d3 * i / 4.0D, this.getY() + d4 * i / 4.0D, this.getZ() + d0 * i / 4.0D, -d3, -d4 + 0.2D, -d0);
+						level.addParticle(ParticleTypes.CRIT, getX() + d3 * i / 4.0D, getY() + d4 * i / 4.0D, getZ() + d0 * i / 4.0D, -d3, -d4 + 0.2D, -d0);
 					}
 				}
 
-				double d5 = this.getX() + d3;
-				double d1 = this.getY() + d4;
-				double d2 = this.getZ() + d0;
+				double d5 = getX() + d3;
+				double d1 = getY() + d4;
+				double d2 = getZ() + d0;
 				float f1 = MathHelper.sqrt(getHorizontalDistanceSqr(vector3d));
 				if (flag) {
-					this.yRot = (float) (MathHelper.atan2(-d3, -d0) * (180F / (float) Math.PI));
+					yRot = (float) (MathHelper.atan2(-d3, -d0) * (180F / (float) Math.PI));
 				} else {
-					this.yRot = (float) (MathHelper.atan2(d3, d0) * (180F / (float) Math.PI));
+					yRot = (float) (MathHelper.atan2(d3, d0) * (180F / (float) Math.PI));
 				}
 
-				this.xRot = (float) (MathHelper.atan2(d4, f1) * (180F / (float) Math.PI));
-				this.xRot = lerpRotation(this.xRotO, this.xRot);
-				this.yRot = lerpRotation(this.yRotO, this.yRot);
+				xRot = (float) (MathHelper.atan2(d4, f1) * (180F / (float) Math.PI));
+				xRot = lerpRotation(xRotO, xRot);
+				yRot = lerpRotation(yRotO, yRot);
 				float f2 = 0.99F;
-				if (this.isInWater()) {
+				if (isInWater()) {
 					for (int j = 0; j < 4; ++j) {
-						this.level.addParticle(ParticleTypes.BUBBLE, d5 - d3 * 0.25D, d1 - d4 * 0.25D, d2 - d0 * 0.25D, d3, d4, d0);
+						level.addParticle(ParticleTypes.BUBBLE, d5 - d3 * 0.25D, d1 - d4 * 0.25D, d2 - d0 * 0.25D, d3, d4, d0);
 					}
 
-					f2 = this.getWaterInertia();
+					f2 = getWaterInertia();
 				}
 
-				this.setDeltaMovement(vector3d.scale(f2));
-				if (!this.isNoGravity() && !flag) {
-					Vector3d vector3d4 = this.getDeltaMovement();
-					this.setDeltaMovement(vector3d4.x, vector3d4.y + 0.0455d, vector3d4.z);
+				setDeltaMovement(vector3d.scale(f2));
+				if (!isNoGravity() && !flag) {
+					Vector3d vector3d4 = getDeltaMovement();
+					setDeltaMovement(vector3d4.x, vector3d4.y + 0.0455d, vector3d4.z);
 				}
 
-				this.setPos(d5, d1, d2);
-				this.checkInsideBlocks();
+				setPos(d5, d1, d2);
+				checkInsideBlocks();
 			}
 		}
 	}
 
 	public static class SmokeBombArrowEntity extends AbstractArrowEntity {
-		private static String color;
+		private static int color = 0;
 		private final Item referenceItem;
 		private final int configMaxParticles = Config.MAX_SMOKE_BOMB_PARTICLES.get();
 		private boolean hasAlreadyImpacted = false;
 
-		@SuppressWarnings("unchecked")
-		public SmokeBombArrowEntity(EntityType<?> type, World world) {
-			super((EntityType<? extends AbstractArrowEntity>) type, world);
-			this.referenceItem = DeferredRegistryHandler.SMOKE_BOMB_ARROW.get();
+		public SmokeBombArrowEntity(EntityType<? extends AbstractArrowEntity> type, World world) {
+			super(type, world);
+			referenceItem = DeferredRegistryHandler.SMOKE_BOMB_ARROW.get();
 		}
 
 		public SmokeBombArrowEntity(LivingEntity shooter, World world, Item referenceItemIn) {
 			super(DeferredRegistryHandler.SMOKE_BOMB_ARROW_ENTITY.get(), shooter, world);
-			this.referenceItem = referenceItemIn;
+			referenceItem = referenceItemIn;
 		}
 
 		public SmokeBombArrowEntity(World worldIn, double x, double y, double z) {
 			super(DeferredRegistryHandler.SMOKE_BOMB_ARROW_ENTITY.get(), x, y, z, worldIn);
-			this.referenceItem = DeferredRegistryHandler.SMOKE_BOMB_ARROW.get();
+			referenceItem = DeferredRegistryHandler.SMOKE_BOMB_ARROW.get();
 		}
 
-		public static void setColor(String color) {
+		public static void setColor(int color) {
 			SmokeBombArrowEntity.color = color;
 		}
 
 		@Override
 		public ItemStack getPickupItem() {
-			return new ItemStack(this.referenceItem);
+			return new ItemStack(referenceItem);
 		}
 
 		@Override
@@ -438,83 +439,118 @@ public class CustomArrowEntity {
 			return NetworkHooks.getEntitySpawningPacket(this);
 		}
 
-		protected IParticleData makeParticle() {
-			Color tint = getTint(GeneralUtilities.getRandomNumber(0, 2));
-			double diameter = getDiameter(GeneralUtilities.getRandomNumber(1.0d, 5.5d));
+		@Override
+		public void onHit(RayTraceResult rayTraceResult) {
+			if (!hasAlreadyImpacted && !level.isClientSide) {
+				hasAlreadyImpacted = true;
+				PacketHandler.INSTANCE.send(PacketDistributor.TRACKING_CHUNK.with(() -> level.getChunkAt(blockPosition())), new SmokeBombArrowEntityPacketHandler(blockPosition(), configMaxParticles, color));
 
-			return new SmokeBombParticleData(tint, diameter);
-		}
-
-		private Color getTint(int random) {
-			Color[] tints = {
-					new Color(1.00f, 1.00f, 1.00f),  // no tint (white)
-					new Color(1.00f, 0.97f, 1.00f),  // off white
-					new Color(1.00f, 1.00f, 0.97f),  // off white 2: electric boogaloo
-			};
-			Color[] tintsRed = {
-					new Color(1.00f, 0.25f, 0.25f),  // tint (red)
-					new Color(1.00f, 0.30f, 0.25f),  // off red
-					new Color(1.00f, 0.25f, 0.30f),  // off red 2: electric boogaloo
-			};
-			Color[] tintsGreen = {
-					new Color(0.25f, 1.00f, 0.25f),  // tint (green)
-					new Color(0.30f, 1.00f, 0.25f),  // off green
-					new Color(0.25f, 1.00f, 0.30f),  // off green 2: electric boogaloo
-			};
-			Color[] tintsBlue = {
-					new Color(0.25f, 0.25f, 1.00f),  // tint (blue)
-					new Color(0.30f, 0.25f, 1.00f),  // off blue
-					new Color(0.25f, 0.30f, 1.00f),  // off blue 2: electric boogaloo
-			};
-			Color[] tintsPurple = {
-					new Color(1.00f, 0.25f, 1.00f),  // tint (purple)
-					new Color(1.00f, 0.30f, 1.00f),  // off purple
-					new Color(1.00f, 0.35f, 1.00f),  // off purple 2: electric boogaloo
-			};
-			Color[] tintsYellow = {
-					new Color(1.00f, 1.00f, 0.25f),  // tint (yellow)
-					new Color(1.00f, 1.00f, 0.30f),  // off yellow
-					new Color(1.00f, 1.00f, 0.35f),  // off yellow 2: electric boogaloo
-			};
-
-			switch (SmokeBombArrowEntity.color) {
-				case "red":
-					return tintsRed[random];
-				case "green":
-					return tintsGreen[random];
-				case "blue":
-					return tintsBlue[random];
-				case "purple":
-					return tintsPurple[random];
-				case "yellow":
-					return tintsYellow[random];
-				default:
-					return tints[random];
+				RayTraceResult.Type rayTraceResultType = rayTraceResult.getType();
+				if (rayTraceResultType == RayTraceResult.Type.ENTITY) {
+					onHitEntity((EntityRayTraceResult) rayTraceResult);
+				} else if (rayTraceResultType == RayTraceResult.Type.BLOCK) {
+					onHitBlock((BlockRayTraceResult) rayTraceResult);
+				}
 			}
 		}
 
-		private double getDiameter(double random) {
-			final double MIN_DIAMETER = 0.5;
-			final double MAX_DIAMETER = 5.5;
-			return MIN_DIAMETER + (MAX_DIAMETER - MIN_DIAMETER) * random;
-		}
+		public static class SmokeBombArrowEntityPacketHandler {
 
-		@Override
-		public void onHit(RayTraceResult rayTraceResult) {
-			if (!hasAlreadyImpacted) {
-				hasAlreadyImpacted = true;
-				IParticleData particleData = this.makeParticle();
-				this.level.playLocalSound(this.getX(), this.getY(), this.getZ(), DeferredRegistryHandler.SMOKE_BOMB_HISS.get(), SoundCategory.NEUTRAL, 0.1f, 0.6f, true);
+			private final BlockPos blockPos;
+			private final int configMaxParticles;
+			private final int color;
 
-				for (int i = 0; i < configMaxParticles; ++i) {
-					this.level.addParticle(particleData, true, this.getX(), this.getY(), this.getZ(), GeneralUtilities.getRandomNumber(-0.03, 0.03d), GeneralUtilities.getRandomNumber(-0.02d, 0.02d), GeneralUtilities.getRandomNumber(-0.03d, 0.03d));
+			public SmokeBombArrowEntityPacketHandler(final BlockPos blockPos, final int configMaxParticles, final int color) {
+				this.blockPos = blockPos;
+				this.configMaxParticles = configMaxParticles;
+				this.color = color;
+			}
+
+			public static void encode(final SmokeBombArrowEntityPacketHandler msg, final PacketBuffer packetBuffer) {
+				packetBuffer.writeBlockPos(msg.blockPos).writeInt(msg.configMaxParticles).writeInt(msg.color);
+			}
+
+			public static SmokeBombArrowEntityPacketHandler decode(final PacketBuffer packetBuffer) {
+				return new SmokeBombArrowEntityPacketHandler(packetBuffer.readBlockPos(), packetBuffer.readInt(), packetBuffer.readInt());
+			}
+
+			public static void handle(final SmokeBombArrowEntityPacketHandler msg, final Supplier<Context> contextSupplier) {
+				final NetworkEvent.Context context = contextSupplier.get();
+				context.enqueueWork(() -> DistExecutor.runWhenOn(Dist.CLIENT, () -> () -> handleOnClient(msg)));
+				context.setPacketHandled(true);
+			}
+
+			@OnlyIn(Dist.CLIENT)
+			private static void handleOnClient(final SmokeBombArrowEntityPacketHandler msg) {
+				Minecraft minecraft = Minecraft.getInstance();
+				if (minecraft.level != null) {
+					minecraft.level.playLocalSound(msg.blockPos, DeferredRegistryHandler.SMOKE_BOMB_HISS.get(), SoundCategory.NEUTRAL, 0.1f, 0.6f, true);
+
+					IParticleData particleData = makeParticle(msg);
+					for (int i = 0; i < msg.configMaxParticles; ++i) {
+						minecraft.level.addParticle(particleData, true, msg.blockPos.getX(), msg.blockPos.getY(), msg.blockPos.getZ(), GeneralUtilities.getRandomNumber(-0.03, 0.03d), GeneralUtilities.getRandomNumber(-0.02d, 0.02d), GeneralUtilities.getRandomNumber(-0.03d, 0.03d));
+					}
 				}
+			}
 
-				RayTraceResult.Type raytraceresult$type = rayTraceResult.getType();
-				if (raytraceresult$type == RayTraceResult.Type.ENTITY) {
-					this.onHitEntity((EntityRayTraceResult) rayTraceResult);
-				} else if (raytraceresult$type == RayTraceResult.Type.BLOCK) {
-					this.onHitBlock((BlockRayTraceResult) rayTraceResult);
+			protected static IParticleData makeParticle(final SmokeBombArrowEntityPacketHandler msg) {
+				Color tint = getTint(GeneralUtilities.getRandomNumber(0, 2), msg);
+				double diameter = getDiameter(GeneralUtilities.getRandomNumber(1.0d, 5.5d));
+
+				return new SmokeBombParticleData(tint, diameter);
+			}
+
+			private static double getDiameter(double random){
+				final double MIN_DIAMETER = 0.5;
+				final double MAX_DIAMETER = 5.5;
+				return MIN_DIAMETER + (MAX_DIAMETER - MIN_DIAMETER) * random;
+			}
+
+			private static Color getTint(int random, final SmokeBombArrowEntityPacketHandler msg){
+				Color[] tints = {
+						new Color(1.00f, 1.00f, 1.00f),  // no tint (white)
+						new Color(1.00f, 0.97f, 1.00f),  // off white
+						new Color(1.00f, 1.00f, 0.97f),  // off white 2
+				};
+				Color[] tintsRed = {
+						new Color(1.00f, 0.25f, 0.25f),  // tint (red)
+						new Color(1.00f, 0.30f, 0.25f),  // off red
+						new Color(1.00f, 0.25f, 0.30f),  // off red 2
+				};
+				Color[] tintsGreen = {
+						new Color(0.25f, 1.00f, 0.25f),  // tint (green)
+						new Color(0.30f, 1.00f, 0.25f),  // off green
+						new Color(0.25f, 1.00f, 0.30f),  // off green 2
+				};
+				Color[] tintsBlue = {
+						new Color(0.25f, 0.25f, 1.00f),  // tint (blue)
+						new Color(0.30f, 0.25f, 1.00f),  // off blue
+						new Color(0.25f, 0.30f, 1.00f),  // off blue 2
+				};
+				Color[] tintsPurple = {
+						new Color(1.00f, 0.25f, 1.00f),  // tint (purple)
+						new Color(1.00f, 0.30f, 1.00f),  // off purple
+						new Color(1.00f, 0.35f, 1.00f),  // off purple 2
+				};
+				Color[] tintsYellow = {
+						new Color(1.00f, 1.00f, 0.25f),  // tint (yellow)
+						new Color(1.00f, 1.00f, 0.30f),  // off yellow
+						new Color(1.00f, 1.00f, 0.35f),  // off yellow 2
+				};
+
+				switch(msg.color) {
+					case 1:
+						return tintsRed[random];
+					case 2:
+						return tintsGreen[random];
+					case 3:
+						return tintsBlue[random];
+					case 4:
+						return tintsPurple[random];
+					case 5:
+						return tintsYellow[random];
+					default:
+						return tints[random];
 				}
 			}
 		}

@@ -85,7 +85,7 @@ public class DispenserBehaviorRegistry implements IDispenseItemBehavior {
 			protected ProjectileEntity getProjectile(World worldIn, IPosition position, ItemStack stackIn) {
 				SmokeBombEntity smokeBombEntity = new SmokeBombEntity(worldIn, position.x(), position.y(), position.z());
 				smokeBombEntity.push(5, 5, 5);
-				SmokeBombEntity.setColor("none");
+				SmokeBombEntity.setColor(0);
 				return smokeBombEntity;
 			}
 
@@ -95,7 +95,7 @@ public class DispenserBehaviorRegistry implements IDispenseItemBehavior {
 			protected ProjectileEntity getProjectile(World worldIn, IPosition position, ItemStack stackIn) {
 				SmokeBombEntity smokeBombEntity = new SmokeBombEntity(worldIn, position.x(), position.y(), position.z());
 				smokeBombEntity.push(5, 5, 5);
-				SmokeBombEntity.setColor("red");
+				SmokeBombEntity.setColor(1);
 				return smokeBombEntity;
 			}
 
@@ -105,7 +105,7 @@ public class DispenserBehaviorRegistry implements IDispenseItemBehavior {
 			protected ProjectileEntity getProjectile(World worldIn, IPosition position, ItemStack stackIn) {
 				SmokeBombEntity smokeBombEntity = new SmokeBombEntity(worldIn, position.x(), position.y(), position.z());
 				smokeBombEntity.push(5, 5, 5);
-				SmokeBombEntity.setColor("green");
+				SmokeBombEntity.setColor(2);
 				return smokeBombEntity;
 			}
 
@@ -115,7 +115,7 @@ public class DispenserBehaviorRegistry implements IDispenseItemBehavior {
 			protected ProjectileEntity getProjectile(World worldIn, IPosition position, ItemStack stackIn) {
 				SmokeBombEntity smokeBombEntity = new SmokeBombEntity(worldIn, position.x(), position.y(), position.z());
 				smokeBombEntity.push(5, 5, 5);
-				SmokeBombEntity.setColor("blue");
+				SmokeBombEntity.setColor(3);
 				return smokeBombEntity;
 			}
 
@@ -125,7 +125,7 @@ public class DispenserBehaviorRegistry implements IDispenseItemBehavior {
 			protected ProjectileEntity getProjectile(World worldIn, IPosition position, ItemStack stackIn) {
 				SmokeBombEntity smokeBombEntity = new SmokeBombEntity(worldIn, position.x(), position.y(), position.z());
 				smokeBombEntity.push(5, 5, 5);
-				SmokeBombEntity.setColor("purple");
+				SmokeBombEntity.setColor(4);
 				return smokeBombEntity;
 			}
 
@@ -135,7 +135,7 @@ public class DispenserBehaviorRegistry implements IDispenseItemBehavior {
 			protected ProjectileEntity getProjectile(World worldIn, IPosition position, ItemStack stackIn) {
 				SmokeBombEntity smokeBombEntity = new SmokeBombEntity(worldIn, position.x(), position.y(), position.z());
 				smokeBombEntity.push(5, 5, 5);
-				SmokeBombEntity.setColor("yellow");
+				SmokeBombEntity.setColor(5);
 				return smokeBombEntity;
 			}
 
@@ -156,7 +156,7 @@ public class DispenserBehaviorRegistry implements IDispenseItemBehavior {
 				SmokeBombArrowEntity smokeBombArrowEntity = new SmokeBombArrowEntity(worldIn, position.x(), position.y(), position.z());
 				smokeBombArrowEntity.pickup = AbstractArrowEntity.PickupStatus.DISALLOWED;
 				smokeBombArrowEntity.push(5, 5, 5);
-				SmokeBombArrowEntity.setColor("red");
+				SmokeBombArrowEntity.setColor(1);
 				return smokeBombArrowEntity;
 			}
 
@@ -167,7 +167,7 @@ public class DispenserBehaviorRegistry implements IDispenseItemBehavior {
 				SmokeBombArrowEntity smokeBombArrowEntity = new SmokeBombArrowEntity(worldIn, position.x(), position.y(), position.z());
 				smokeBombArrowEntity.pickup = AbstractArrowEntity.PickupStatus.DISALLOWED;
 				smokeBombArrowEntity.push(5, 5, 5);
-				SmokeBombArrowEntity.setColor("green");
+				SmokeBombArrowEntity.setColor(2);
 				return smokeBombArrowEntity;
 			}
 
@@ -178,7 +178,7 @@ public class DispenserBehaviorRegistry implements IDispenseItemBehavior {
 				SmokeBombArrowEntity smokeBombArrowEntity = new SmokeBombArrowEntity(worldIn, position.x(), position.y(), position.z());
 				smokeBombArrowEntity.pickup = AbstractArrowEntity.PickupStatus.DISALLOWED;
 				smokeBombArrowEntity.push(5, 5, 5);
-				SmokeBombArrowEntity.setColor("blue");
+				SmokeBombArrowEntity.setColor(3);
 				return smokeBombArrowEntity;
 			}
 
@@ -189,7 +189,7 @@ public class DispenserBehaviorRegistry implements IDispenseItemBehavior {
 				SmokeBombArrowEntity smokeBombArrowEntity = new SmokeBombArrowEntity(worldIn, position.x(), position.y(), position.z());
 				smokeBombArrowEntity.pickup = AbstractArrowEntity.PickupStatus.DISALLOWED;
 				smokeBombArrowEntity.push(5, 5, 5);
-				SmokeBombArrowEntity.setColor("purple");
+				SmokeBombArrowEntity.setColor(4);
 				return smokeBombArrowEntity;
 			}
 
@@ -200,7 +200,7 @@ public class DispenserBehaviorRegistry implements IDispenseItemBehavior {
 				SmokeBombArrowEntity smokeBombArrowEntity = new SmokeBombArrowEntity(worldIn, position.x(), position.y(), position.z());
 				smokeBombArrowEntity.pickup = AbstractArrowEntity.PickupStatus.DISALLOWED;
 				smokeBombArrowEntity.push(5, 5, 5);
-				SmokeBombArrowEntity.setColor("yellow");
+				SmokeBombArrowEntity.setColor(5);
 				return smokeBombArrowEntity;
 			}
 
