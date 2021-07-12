@@ -462,7 +462,7 @@ public class DeferredRegistryHandler {
 	);
 
 	// World Carvers
-	public static final RegistryObject<WorldCarver<?>> TRENCH_WORLD_CARVER = WORLD_CARVERS.register("trench", () -> new TrenchWorldCarver(ProbabilityConfig.CODEC, 256));
+	public static final RegistryObject<WorldCarver<ProbabilityConfig>> TRENCH_WORLD_CARVER = WORLD_CARVERS.register("trench", () -> new TrenchWorldCarver(ProbabilityConfig.CODEC, 256));
 
 	// Effects
 	public static final RegistryObject<Effect> MORPHINE_EFFECT = EFFECTS.register("morphine", () -> new MorphineEffect(EffectType.NEUTRAL, 3484189));

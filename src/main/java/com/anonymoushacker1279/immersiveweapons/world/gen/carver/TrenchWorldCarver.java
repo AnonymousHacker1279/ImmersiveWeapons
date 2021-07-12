@@ -6,7 +6,6 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.chunk.IChunk;
 import net.minecraft.world.gen.Heightmap.Type;
-import net.minecraft.world.gen.carver.ICarverConfig;
 import net.minecraft.world.gen.carver.WorldCarver;
 import net.minecraft.world.gen.feature.ProbabilityConfig;
 
@@ -14,7 +13,7 @@ import java.util.BitSet;
 import java.util.Random;
 import java.util.function.Function;
 
-public class TrenchWorldCarver extends WorldCarver<ProbabilityConfig> implements ICarverConfig {
+public class TrenchWorldCarver extends WorldCarver<ProbabilityConfig> {
 	// Most of this is based on the CavernWorldCarver
 	// So its still obfuscated to the moon
 

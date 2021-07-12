@@ -141,7 +141,7 @@ public class ImmersiveWeapons {
 			generation.addStructureStart(ConfiguredStructures.CONFIGURED_BEAR_TRAP);
 			generation.addStructureStart(ConfiguredStructures.CONFIGURED_BATTLEFIELD_VILLAGE);
 			generation.addFeature(Decoration.VEGETAL_DECORATION, ConfiguredStructures.CONFIGURED_WOODEN_SPIKES);
-			generation.addCarver(GenerationStage.Carving.AIR, new ConfiguredCarver(DeferredRegistryHandler.TRENCH_WORLD_CARVER.get(), new ProbabilityConfig(0.115f)));
+			generation.addCarver(GenerationStage.Carving.AIR, new ConfiguredCarver<>(DeferredRegistryHandler.TRENCH_WORLD_CARVER.get(), new ProbabilityConfig(0.115f)));
 		}
 	}
 
