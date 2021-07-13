@@ -4,9 +4,14 @@ import com.anonymoushacker1279.immersiveweapons.tileentity.MinutemanStatueTileEn
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.HorizontalBlock;
+import net.minecraft.block.IWaterLoggable;
+import net.minecraft.fluid.FluidState;
+import net.minecraft.fluid.Fluids;
 import net.minecraft.item.BlockItemUseContext;
+import net.minecraft.state.BooleanProperty;
 import net.minecraft.state.DirectionProperty;
 import net.minecraft.state.StateContainer;
+import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
@@ -14,14 +19,15 @@ import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.world.IBlockReader;
 
-public class MinutemanStatueBlock extends HorizontalBlock {
+public class MinutemanStatueBlock extends HorizontalBlock implements IWaterLoggable {
 
 	public static final DirectionProperty FACING = HorizontalBlock.FACING;
+	public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
 	protected static final VoxelShape SHAPE = Block.box(2.0D, 0.0D, 2.0D, 14.0D, 10.0D, 14.0D);
 
 	public MinutemanStatueBlock(Properties properties) {
 		super(properties);
-		this.registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.NORTH));
+		registerDefaultState(stateDefinition.any().setValue(FACING, Direction.NORTH).setValue(WATERLOGGED, false));
 	}
 
 	@Override
@@ -41,11 +47,16 @@ public class MinutemanStatueBlock extends HorizontalBlock {
 
 	@Override
 	public void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder) {
-		builder.add(FACING);
+		builder.add(FACING, WATERLOGGED);
 	}
 
 	@Override
 	public BlockState getStateForPlacement(BlockItemUseContext context) {
-		return this.defaultBlockState().setValue(FACING, context.getHorizontalDirection().getOpposite());
+		return defaultBlockState().setValue(FACING, context.getHorizontalDirection().getOpposite());
+	}
+
+	@Override
+	public FluidState getFluidState(BlockState state) {
+		return state.getValue(WATERLOGGED) ? Fluids.WATER.getSource(false) : super.getFluidState(state);
 	}
 }

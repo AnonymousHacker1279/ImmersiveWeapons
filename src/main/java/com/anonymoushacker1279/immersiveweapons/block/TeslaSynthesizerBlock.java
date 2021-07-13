@@ -3,16 +3,18 @@ package com.anonymoushacker1279.immersiveweapons.block;
 import com.anonymoushacker1279.immersiveweapons.container.TeslaSynthesizerContainer;
 import com.anonymoushacker1279.immersiveweapons.tileentity.AbstractTeslaSynthesizerTileEntity;
 import com.anonymoushacker1279.immersiveweapons.tileentity.TeslaSynthesizerTileEntity;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockRenderType;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.ContainerBlock;
+import net.minecraft.block.*;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.fluid.FluidState;
+import net.minecraft.fluid.Fluids;
 import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.inventory.container.SimpleNamedContainerProvider;
 import net.minecraft.particles.ParticleTypes;
+import net.minecraft.state.BooleanProperty;
+import net.minecraft.state.StateContainer;
+import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
@@ -28,13 +30,15 @@ import net.minecraftforge.fml.network.NetworkHooks;
 
 import java.util.Random;
 
-public class TeslaSynthesizerBlock extends ContainerBlock {
+public class TeslaSynthesizerBlock extends ContainerBlock implements IWaterLoggable {
 
 	protected static final VoxelShape SHAPE = Block.box(0.0D, 0.0D, 0.0D, 16.0D, 6.0D, 16.0D);
+	public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
 	private static final ITextComponent CONTAINER_NAME = new TranslationTextComponent("container.immersiveweapons.tesla_synthesizer");
 
 	public TeslaSynthesizerBlock(Properties properties) {
 		super(properties);
+		registerDefaultState(stateDefinition.any().setValue(WATERLOGGED, false));
 	}
 
 	@Override
@@ -45,6 +49,16 @@ public class TeslaSynthesizerBlock extends ContainerBlock {
 	@Override
 	public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
 		return SHAPE;
+	}
+
+	@Override
+	public void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder) {
+		builder.add(WATERLOGGED);
+	}
+
+	@Override
+	public FluidState getFluidState(BlockState state) {
+		return state.getValue(WATERLOGGED) ? Fluids.WATER.getSource(false) : super.getFluidState(state);
 	}
 
 	@Override
