@@ -213,7 +213,7 @@
 			"scale": [0.25, 0.25, 0.25]
 		},
 		"gui": {
-			"rotation": [21, -36.25, 0],
+			"rotation": [21, 36.25, 0],
 			"scale": [0.5, 0.5, 0.5]
 		},
 		"fixed": {
@@ -226,25 +226,30 @@
 		{
 			"name": "legs",
 			"origin": [8, 8, 8],
+			"color": 0,
 			"children": [
 				{
 					"name": "leg",
 					"origin": [15.5, 3.5, 1.5],
+					"color": 0,
 					"children": [0, 1, 2]
 				},
 				{
 					"name": "leg",
 					"origin": [14.5, 3.5, 15.5],
+					"color": 0,
 					"children": [3, 4, 5]
 				},
 				{
 					"name": "leg",
 					"origin": [1.5, 3.5, 0.5],
+					"color": 0,
 					"children": [6, 7, 8]
 				},
 				{
 					"name": "leg",
 					"origin": [1.5, 3.5, 0.5],
+					"color": 0,
 					"children": [9, 10, 11]
 				}
 			]
@@ -252,6 +257,7 @@
 		{
 			"name": "seat",
 			"origin": [8, 8, 8],
+			"color": 0,
 			"children": [12, 13]
 		}
 	]

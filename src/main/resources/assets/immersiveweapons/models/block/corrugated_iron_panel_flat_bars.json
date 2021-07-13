@@ -233,7 +233,7 @@
 			"scale": [0.5, 0.5, 0.5]
 		},
 		"gui": {
-			"rotation": [16.75, -12.75, 0],
+			"rotation": [16.75, 22, 0],
 			"translation": [0, 3.5, 0],
 			"scale": [0.75, 0.75, 0.75]
 		},
@@ -245,19 +245,23 @@
 		{
 			"name": "main",
 			"origin": [8, 8, 8],
+			"color": 0,
 			"children": [0, 1, 2, 3,
 				{
 					"name": "corrugation",
 					"origin": [8, 8, 8],
+					"color": 0,
 					"children": [
 						{
 							"name": "side",
 							"origin": [20, 8, 14],
+							"color": 0,
 							"children": [4, 5, 6, 7, 8, 9]
 						},
 						{
 							"name": "side",
 							"origin": [20, 8, 14],
+							"color": 0,
 							"children": [10, 11, 12, 13, 14, 15]
 						}
 					]

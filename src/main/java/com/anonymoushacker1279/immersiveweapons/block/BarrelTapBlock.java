@@ -1,16 +1,17 @@
 package com.anonymoushacker1279.immersiveweapons.block;
 
 import com.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.HorizontalBlock;
+import net.minecraft.block.*;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.fluid.FluidState;
+import net.minecraft.fluid.Fluids;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.state.BooleanProperty;
 import net.minecraft.state.StateContainer;
+import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Direction;
@@ -23,19 +24,23 @@ import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 
-public class BarrelTapBlock extends HorizontalBlock {
+public class BarrelTapBlock extends HorizontalBlock implements IWaterLoggable {
 
 	protected static final VoxelShape SHAPE_NORTH = Block.box(7.0D, 4.0D, 0.0D, 9.0D, 7.0D, 3.0D);
 	protected static final VoxelShape SHAPE_SOUTH = Block.box(7.0D, 4.0D, 13.0D, 9.0D, 7.0D, 16.0D);
 	protected static final VoxelShape SHAPE_EAST = Block.box(0.0D, 4.0D, 7.0D, 3.0D, 7.0D, 9.0D);
 	protected static final VoxelShape SHAPE_WEST = Block.box(13.0D, 4.0D, 7.0D, 16.0D, 7.0D, 9.0D);
+	public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
 	private String directionToUse = "north"; // Default: check North for a barrel
 
 	public BarrelTapBlock(Properties properties) {
 		super(properties);
-		this.registerDefaultState(
-				this.stateDefinition.any().setValue(FACING, Direction.NORTH)
-		);
+		registerDefaultState(stateDefinition.any().setValue(FACING, Direction.NORTH).setValue(WATERLOGGED, false));
+	}
+
+	@Override
+	public FluidState getFluidState(BlockState state) {
+		return state.getValue(WATERLOGGED) ? Fluids.WATER.getSource(false) : super.getFluidState(state);
 	}
 
 	@Override
@@ -56,35 +61,35 @@ public class BarrelTapBlock extends HorizontalBlock {
 
 	@Override
 	public void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder) {
-		builder.add(FACING);
+		builder.add(FACING, WATERLOGGED);
 	}
 
 	@Override
 	public BlockState getStateForPlacement(BlockItemUseContext context) {
-		return this.defaultBlockState().setValue(FACING, context.getHorizontalDirection().getOpposite());
+		return defaultBlockState().setValue(FACING, context.getHorizontalDirection().getOpposite());
 	}
 
 	@Override
 	public ActionResultType use(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
-		BlockState blockstateNorth = worldIn.getBlockState(pos.north());
-		BlockState blockstateSouth = worldIn.getBlockState(pos.south());
-		BlockState blockstateEast = worldIn.getBlockState(pos.east());
-		BlockState blockstateWest = worldIn.getBlockState(pos.west());
+		BlockState blockStateNorth = worldIn.getBlockState(pos.north());
+		BlockState blockStateSouth = worldIn.getBlockState(pos.south());
+		BlockState blockStateEast = worldIn.getBlockState(pos.east());
+		BlockState blockStateWest = worldIn.getBlockState(pos.west());
 
-		if (blockstateNorth.is(Blocks.BARREL)) {
+		if (blockStateNorth.is(Blocks.BARREL)) {
 			directionToUse = "north";
-		} else if (blockstateSouth.is(Blocks.BARREL)) {
+		} else if (blockStateSouth.is(Blocks.BARREL)) {
 			directionToUse = "south";
-		} else if (blockstateEast.is(Blocks.BARREL)) {
+		} else if (blockStateEast.is(Blocks.BARREL)) {
 			directionToUse = "east";
-		} else if (blockstateWest.is(Blocks.BARREL)) {
+		} else if (blockStateWest.is(Blocks.BARREL)) {
 			directionToUse = "west";
 		}
 
 		if (worldIn.isClientSide) {
 			return ActionResultType.SUCCESS;
 		} else {
-			if (blockstateNorth.is(Blocks.BARREL) || blockstateSouth.is(Blocks.BARREL) || blockstateEast.is(Blocks.BARREL) || blockstateWest.is(Blocks.BARREL)) {
+			if (blockStateNorth.is(Blocks.BARREL) || blockStateSouth.is(Blocks.BARREL) || blockStateEast.is(Blocks.BARREL) || blockStateWest.is(Blocks.BARREL)) {
 
 				TileEntity tileEntity;
 
