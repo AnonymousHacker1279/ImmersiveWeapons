@@ -15,13 +15,22 @@ public class HansRenderer extends MobRenderer<HansEntity, PlayerModel<HansEntity
 
 	private static final ResourceLocation HANS_TEXTURE = new ResourceLocation(ImmersiveWeapons.MOD_ID, "textures/entity/hans/hans.png");
 
+	/**
+	 * Constructor for HansRenderer.
+	 * @param renderManagerIn an <code>EntityRendererManager</code> instance
+	 */
 	public HansRenderer(EntityRendererManager renderManagerIn) {
 		super(renderManagerIn, new PlayerModel<>(0.0F, false), 0.5F);
-		this.addLayer(new BipedArmorLayer<>(this, new BipedModel<>(0.25F), new BipedModel<>(0.75F)));
-		this.addLayer(new ArrowLayer<>(this));
-		this.addLayer(new HeldItemLayer<>(this));
+		addLayer(new BipedArmorLayer<>(this, new BipedModel<>(0.25F), new BipedModel<>(0.75F)));
+		addLayer(new ArrowLayer<>(this));
+		addLayer(new HeldItemLayer<>(this));
 	}
 
+	/**
+	 * Get the texture location.
+	 * @param entity the <code>HansEntity</code> instance
+	 * @return ResourceLocation
+	 */
 	@Override
 	public ResourceLocation getTextureLocation(HansEntity entity) {
 		return HANS_TEXTURE;

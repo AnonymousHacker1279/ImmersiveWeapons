@@ -26,36 +26,65 @@ public class SmallPartsRecipeCategory implements IRecipeCategory<SmallPartsRecip
 	private final IDrawable background;
 	private final IDrawable icon;
 
+	/**
+	 * Constructor for SmallPartsRecipeCategory.
+	 * @param guiHelper a <code>IGuiHelper</code> instance
+	 */
 	public SmallPartsRecipeCategory(IGuiHelper guiHelper) {
 		icon = guiHelper.createDrawableIngredient(new ItemStack(DeferredRegistryHandler.SMALL_PARTS_TABLE.get()));
 		background = guiHelper.createDrawable(GUI_TEXTURE, 0, 0, 125, 18);
 	}
 
+	/**
+	 * Get the UID of the category.
+	 * @return ResourceLocation
+	 */
 	@Override
 	public ResourceLocation getUid() {
 		return UID;
 	}
 
+	/**
+	 * Get the recipe class for this category.
+	 * @return Class extending SmallPartsRecipe
+	 */
 	@Override
 	public Class<? extends SmallPartsRecipe> getRecipeClass() {
 		return SmallPartsRecipe.class;
 	}
 
+	/**
+	 * Get the title of the recipe category.
+	 * @return String
+	 */
 	@Override
 	public String getTitle() {
 		return new TranslationTextComponent("gui.jei.category.small_parts").getString();
 	}
 
+	/**
+	 * Get the background.
+	 * @return IDrawable
+	 */
 	@Override
 	public IDrawable getBackground() {
 		return background;
 	}
 
+	/**
+	 * Get the icon.
+	 * @return IDrawable
+	 */
 	@Override
 	public IDrawable getIcon() {
 		return icon;
 	}
 
+	/**
+	 * Set the ingredients in a recipe.
+	 * @param recipe a <code>SmallPartsRecipe</code> instance
+	 * @param ingredients the <code>IIngredients</code> being passed
+	 */
 	@Override
 	public void setIngredients(SmallPartsRecipe recipe, IIngredients ingredients) {
 		NonNullList<Ingredient> inputs = NonNullList.create();
@@ -65,6 +94,12 @@ public class SmallPartsRecipeCategory implements IRecipeCategory<SmallPartsRecip
 		ingredients.setOutput(VanillaTypes.ITEM, recipe.getResultItem());
 	}
 
+	/**
+	 * Setup the recipe layout.
+	 * @param recipeLayout a <code>IRecipeLayout</code> instance
+	 * @param recipe a <code>SmallPartsRecipe</code> instance
+	 * @param ingredients the <code>IIngredients</code> being passed
+	 */
 	@Override
 	public void setRecipe(IRecipeLayout recipeLayout, SmallPartsRecipe recipe, IIngredients ingredients) {
 		IGuiItemStackGroup guiItemStacks = recipeLayout.getItemStacks();

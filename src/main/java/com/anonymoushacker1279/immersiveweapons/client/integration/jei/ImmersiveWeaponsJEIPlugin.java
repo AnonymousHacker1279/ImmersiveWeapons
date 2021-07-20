@@ -26,21 +26,32 @@ import java.util.Set;
 @JeiPlugin
 public class ImmersiveWeaponsJEIPlugin implements IModPlugin {
 
+	/**
+	 * Get the plugin UID.
+	 * @return ResourceLocation
+	 */
 	@Override
 	public ResourceLocation getPluginUid() {
 		return new ResourceLocation(ImmersiveWeapons.MOD_ID, "jei_plugin");
 	}
 
+	/**
+	 * Register recipe catalysts.
+	 * @param registration an <code>IRecipeCatalystRegistration</code> instance
+	 */
 	@Override
 	public void registerRecipeCatalysts(IRecipeCatalystRegistration registration) {
 		registration.addRecipeCatalyst(new ItemStack(DeferredRegistryHandler.SMALL_PARTS_TABLE.get()), SmallPartsRecipeCategory.UID);
 		registration.addRecipeCatalyst(new ItemStack(DeferredRegistryHandler.TESLA_SYNTHESIZER.get()), TeslaSynthesizerRecipeCategory.UID);
 	}
 
+	/**
+	 * Register recipes.
+	 * @param registration an <code>IRecipeRegistration</code> instance
+	 */
 	@Override
 	public void registerRecipes(IRecipeRegistration registration) {
-		Minecraft minecraft = Minecraft.getInstance();
-		ClientWorld world = Objects.requireNonNull(minecraft.level);
+		ClientWorld world = Objects.requireNonNull(Minecraft.getInstance().level);
 
 		Set<SmallPartsRecipe> smallPartsRecipes = ImmutableSet.copyOf(world.getRecipeManager().getAllRecipesFor(ICustomRecipeType.SMALL_PARTS));
 		Set<TeslaSynthesizerRecipe> teslaSynthesizerRecipes = ImmutableSet.copyOf(world.getRecipeManager().getAllRecipesFor(ICustomRecipeType.TESLA_SYNTHESIZER));
@@ -48,18 +59,30 @@ public class ImmersiveWeaponsJEIPlugin implements IModPlugin {
 		registration.addRecipes(teslaSynthesizerRecipes, TeslaSynthesizerRecipeCategory.UID);
 	}
 
+	/**
+	 * Register recipe categories.
+	 * @param registration an <code>IRecipeCategoryRegistration</code> instance
+	 */
 	@Override
 	public void registerCategories(IRecipeCategoryRegistration registration) {
 		registration.addRecipeCategories(new SmallPartsRecipeCategory(registration.getJeiHelpers().getGuiHelper()));
 		registration.addRecipeCategories(new TeslaSynthesizerRecipeCategory(registration.getJeiHelpers().getGuiHelper()));
 	}
 
+	/**
+	 * Register recipe transfer handlers.
+	 * @param registration an <code>IRecipeTransferRegistration</code> instance
+	 */
 	@Override
 	public void registerRecipeTransferHandlers(IRecipeTransferRegistration registration) {
 		registration.addRecipeTransferHandler(SmallPartsContainer.class, SmallPartsRecipeCategory.UID, 0, 2, 0, 35);
 		registration.addRecipeTransferHandler(TeslaSynthesizerContainer.class, TeslaSynthesizerRecipeCategory.UID, 0, 3, 0, 35);
 	}
 
+	/**
+	 * Register GUI handlers.
+	 * @param registration an <code>IGuiHandlerRegistration</code> instance
+	 */
 	@Override
 	public void registerGuiHandlers(IGuiHandlerRegistration registration) {
 		registration.addRecipeClickArea(SmallPartsTableScreen.class, 103, 48, 25, 15, SmallPartsRecipeCategory.UID);

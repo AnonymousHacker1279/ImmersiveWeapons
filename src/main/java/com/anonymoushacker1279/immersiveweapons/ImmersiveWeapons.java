@@ -77,8 +77,8 @@ public class ImmersiveWeapons {
 	/**
 	 * Sets up a custom biome. Adds the types to the BiomeDictionary
 	 *      and adds the biome to the BiomeManager.
-	 * @param biome the biome you're setting up
-	 * @param biomeType the biome type
+	 * @param biome the <code>Biome</code> being setup
+	 * @param biomeType the <code>BiomeType</code> for the biome
 	 * @param weight weight to generate biomes
 	 * @param types the dimension type: leave null for a modded dimension
 	 */
@@ -89,7 +89,7 @@ public class ImmersiveWeapons {
 
 	/**
 	 * Create a RegistryKey for Biomes.
-	 * @param biome
+	 * @param biome the <code>Biome</code> being registered
 	 * @return RegistryKey
 	 */
 	private static RegistryKey<Biome> key(final Biome biome) {
@@ -99,7 +99,7 @@ public class ImmersiveWeapons {
 	/**
 	 * Event handler for the FMLCommonSetupEvent.
 	 * Most of this is registry related.
-	 * @param event
+	 * @param event the <code>FMLCommonSetupEvent</code> instance
 	 */
 	@SubscribeEvent
 	public void setup(final FMLCommonSetupEvent event) {
@@ -119,7 +119,7 @@ public class ImmersiveWeapons {
 	/**
 	 * Event handler for the BiomeLoadingEvent.
 	 * Configures custom ores, carvers, spawns, structures, etc.
-	 * @param event
+	 * @param event the <code>BiomeLoadingEvent</code> instance
 	 */
 	@SubscribeEvent
 	public void onBiomeLoading(final BiomeLoadingEvent event) {
@@ -174,7 +174,7 @@ public class ImmersiveWeapons {
 	 * Event handler for the WorldEvent.Load event.
 	 * Most importantly, we are building a Map
 	 *     to contain our structures.
-	 * @param event
+	 * @param event the <code>WorldEvent.Load</code> instance
 	 */
 	public void worldLoadEvent(final WorldEvent.Load event) {
 		if (event.getWorld() instanceof ServerWorld) {

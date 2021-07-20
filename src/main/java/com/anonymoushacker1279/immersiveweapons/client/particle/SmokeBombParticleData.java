@@ -22,10 +22,15 @@ public class SmokeBombParticleData implements IParticleData {
 					Codec.DOUBLE.fieldOf("diameter").forGetter(d -> d.diameter)
 			).apply(instance, SmokeBombParticleData::new)
 	);
-	public static final IDeserializer<SmokeBombParticleData> DESERIALIZER = new IDeserializer<SmokeBombParticleData>() {
+	public static final IDeserializer<SmokeBombParticleData> DESERIALIZER = new IDeserializer<>() {
 
-		// parse the parameters for this particle from a /particle command
-		@Nonnull
+		/**
+		 * Parse information for spawning particles with commands.
+		 * @param type a <code>ParticleType</code> instance extending SmokeBombParticleData
+		 * @param reader a <code>StringReader</code> instance
+		 * @return SmokeBombParticleData
+		 * @throws CommandSyntaxException occurs when improper command syntax is provided
+		 */
 		@Override
 		public SmokeBombParticleData fromCommand(@Nonnull ParticleType<SmokeBombParticleData> type, @Nonnull StringReader reader) throws CommandSyntaxException {
 			reader.expect(' ');
@@ -44,57 +49,89 @@ public class SmokeBombParticleData implements IParticleData {
 			return new SmokeBombParticleData(color, diameter);
 		}
 
-		// read the particle information from a PacketBuffer after the client has received it from the server
+		/**
+		 * Read particle data from a packet.
+		 * @param type a <code>ParticleType</code> instance extending SmokeBombParticleData
+		 * @param buf a <code>PacketBuffer</code> containing packet data
+		 * @return SmokeBombParticleData
+		 */
 		@Override
 		public SmokeBombParticleData fromNetwork(@Nonnull ParticleType<SmokeBombParticleData> type, PacketBuffer buf) {
-			// warning! never trust the data read in from a packet buffer.
-
 			final int MIN_COLOR = 0;
 			final int MAX_COLOR = 255;
 			int red = MathHelper.clamp(buf.readInt(), MIN_COLOR, MAX_COLOR);
 			int green = MathHelper.clamp(buf.readInt(), MIN_COLOR, MAX_COLOR);
 			int blue = MathHelper.clamp(buf.readInt(), MIN_COLOR, MAX_COLOR);
 			Color color = new Color(red, green, blue);
-
 			double diameter = constrainDiameterToValidRange(buf.readDouble());
 
 			return new SmokeBombParticleData(color, diameter);
 		}
 	};
+
 	private final Color tint;
 	private final double diameter;
 
+	/**
+	 * Constructor for SmokeBombParticleData.
+	 * @param tint a <code>Color</code> instance
+	 * @param diameter the particle diameter
+	 */
 	public SmokeBombParticleData(Color tint, double diameter) {
 		this.tint = tint;
 		this.diameter = constrainDiameterToValidRange(diameter);
 	}
 
+	/**
+	 * Constructor for SmokeBombParticleData.
+	 * @param tintRGB an integer for RGB tinting
+	 * @param diameter the particle diameter
+	 */
 	private SmokeBombParticleData(int tintRGB, double diameter) {
-		this.tint = new Color(tintRGB);
+		tint = new Color(tintRGB);
 		this.diameter = constrainDiameterToValidRange(diameter);
 	}
 
+	/**
+	 * Clamps diameters to a valid range.
+	 * @param diameter the particle diameter
+	 * @return double
+	 */
 	private static double constrainDiameterToValidRange(double diameter) {
 		final double MIN_DIAMETER = 0.05;
 		final double MAX_DIAMETER = 5.5;
 		return MathHelper.clamp(diameter, MIN_DIAMETER, MAX_DIAMETER);
 	}
 
+	/**
+	 * Get the tint of the particle.
+	 * @return Color
+	 */
 	public Color getTint() {
 		return tint;
 	}
 
+	/**
+	 * Get the diameter of the particle.
+	 * @return double
+	 */
 	public double getDiameter() {
 		return diameter;
 	}
 
-	@Nonnull
+	/**
+	 * Get the particle type.
+	 * @return ParticleType extending SmokeBombParticleData
+	 */
 	@Override
 	public ParticleType<SmokeBombParticleData> getType() {
 		return DeferredRegistryHandler.SMOKE_BOMB_PARTICLE_TYPE.get();
 	}
 
-	// write the particle information to a PacketBuffer, ready for transmission to a client
+	/**
+	 * Write particle information to a PacketBuffer.
+	 * @param buf a <code>PacketBuffer</code> instance
+	 */
 	@Override
 	public void writeToNetwork(PacketBuffer buf) {
 		buf.writeInt(tint.getRed());
@@ -103,11 +140,14 @@ public class SmokeBombParticleData implements IParticleData {
 		buf.writeDouble(diameter);
 	}
 
-	// used for debugging I think; prints the data in human-readable format
+	/**
+	 * For debugging: Write information to a readable format
+	 * @return String
+	 */
 	@Nonnull
 	@Override
 	public String writeToString() {
 		return String.format(Locale.ROOT, "%s %.2f %i %i %i",
-				this.getType().getRegistryName(), diameter, tint.getRed(), tint.getGreen(), tint.getBlue());
+				getType().getRegistryName(), diameter, tint.getRed(), tint.getGreen(), tint.getBlue());
 	}
 }

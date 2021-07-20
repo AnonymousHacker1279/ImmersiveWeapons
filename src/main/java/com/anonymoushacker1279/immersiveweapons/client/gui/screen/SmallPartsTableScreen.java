@@ -12,33 +12,58 @@ import net.minecraft.util.text.ITextComponent;
 public class SmallPartsTableScreen extends ContainerScreen<SmallPartsContainer> {
 	private static final ResourceLocation GUI_TEXTURE = new ResourceLocation(ImmersiveWeapons.MOD_ID, "textures/gui/container/small_parts_table.png");
 
+	/**
+	 * Constructor for SmallPartsTableScreen.
+	 * @param container a <code>SmallPartsContainer</code> instance
+	 * @param playerInventory a <code>PlayerInventory</code> instance
+	 * @param title the <code>ITextComponent</code> title for the screen
+	 */
 	public SmallPartsTableScreen(SmallPartsContainer container, PlayerInventory playerInventory, ITextComponent title) {
 		super(container, playerInventory, title);
-		this.titleLabelX = 60;
-		this.titleLabelY = 18;
+		titleLabelX = 60;
+		titleLabelY = 18;
 	}
 
+	/**
+	 * Render the background of the screen.
+	 * @param matrixStack the <code>MatrixStack</code> instance for the screen
+	 * @param partialTicks the current partial tick
+	 * @param mouseX the mouse's X position
+	 * @param mouseY the mouse's Y position
+	 */
 	@Override
 	protected void renderBg(MatrixStack matrixStack, float partialTicks, int mouseX, int mouseY) {
-		if (this.minecraft != null) {
-			this.minecraft.getTextureManager().bind(GUI_TEXTURE);
+		if (minecraft != null) {
+			minecraft.getTextureManager().bind(GUI_TEXTURE);
 		}
-		int x = (this.width - this.imageWidth) / 2;
-		int y = (this.height - this.imageHeight) / 2;
-		this.blit(matrixStack, x, y, 0, 0, this.imageWidth, this.imageHeight);
+		int x = (width - imageWidth) / 2;
+		int y = (height - imageHeight) / 2;
+		blit(matrixStack, x, y, 0, 0, imageWidth, imageHeight);
 	}
 
+	/**
+	 * Render labels on the screen.
+	 * @param matrixStack the <code>MatrixStack</code> instance for the screen
+	 * @param x the X position to render at
+	 * @param y the Y position to render at
+	 */
 	@Override
 	protected void renderLabels(MatrixStack matrixStack, int x, int y) {
 		RenderSystem.disableBlend();
 		super.renderLabels(matrixStack, x, y);
 	}
 
+	/**
+	 * Render the screen.
+	 * @param matrixStack the <code>MatrixStack</code> instance for the screen
+	 * @param mouseX the mouse's X position
+	 * @param mouseY the mouse's Y position
+	 * @param partialTicks the current partial tick
+	 */
 	@Override
 	public void render(MatrixStack matrixStack, int mouseX, int mouseY, float partialTicks) {
-		this.renderBackground(matrixStack);
+		renderBackground(matrixStack);
 		super.render(matrixStack, mouseX, mouseY, partialTicks);
-		this.renderTooltip(matrixStack, mouseX, mouseY);
+		renderTooltip(matrixStack, mouseX, mouseY);
 	}
-
 }

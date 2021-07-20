@@ -42,6 +42,10 @@ public class ClientModEventSubscriber {
 		ClientRegistry.registerKeyBinding(toggleArmorEffect);
 	}
 
+	/**
+	 * Event handler for the FMLClientSetupEvent.
+	 * @param event the <code>FMLClientSetupEvent</code> instance
+	 */
 	@SubscribeEvent
 	public static void onClientSetup(final FMLClientSetupEvent event) {
 		ImmersiveWeapons.LOGGER.debug("Performing client-side setup");
@@ -115,6 +119,10 @@ public class ClientModEventSubscriber {
 		mc.getItemColors().register((p_getColor_1_, p_getColor_2_) -> 0xd0a873, DeferredRegistryHandler.HANS_SPAWN_EGG.get());
 	}
 
+	/**
+	 * Event handler for the ParticleFactoryRegisterEvent.
+	 * @param event the <code>ParticleFactoryRegisterEvent</code> instance
+	 */
 	@SubscribeEvent
 	public static void onParticleFactoryRegistration(ParticleFactoryRegisterEvent event) {
 		mc.particleEngine.register(DeferredRegistryHandler.SMOKE_BOMB_PARTICLE_TYPE.get(), SmokeBombParticleFactory::new);
