@@ -25,36 +25,75 @@ public class MinutemanStatueBlock extends HorizontalBlock implements IWaterLogga
 	public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
 	protected static final VoxelShape SHAPE = Block.box(2.0D, 0.0D, 2.0D, 14.0D, 10.0D, 14.0D);
 
+	/**
+	 * Constructor for MinutemanStatueBlock.
+	 * @param properties the <code>Properties</code> of the block
+	 */
 	public MinutemanStatueBlock(Properties properties) {
 		super(properties);
 		registerDefaultState(stateDefinition.any().setValue(FACING, Direction.NORTH).setValue(WATERLOGGED, false));
 	}
 
+	/**
+	 * Determine if a block has a tile entity.
+	 * @param state the <code>BlockState</code> of the block
+	 * @return boolean
+	 */
 	@Override
 	public boolean hasTileEntity(BlockState state) {
 		return true;
 	}
 
+	/**
+	 * Create a tile entity for a block.
+	 * @param state the <code>BlockState</code> of the block
+	 * @param reader the <code>IBlockReader</code> for the block
+	 * @return TileEntity
+	 */
 	@Override
 	public TileEntity createTileEntity(BlockState state, IBlockReader reader) {
 		return new MinutemanStatueTileEntity();
 	}
 
+	/**
+	 * Set the shape of the block.
+	 * @param state the <code>BlockState</code> of the block
+	 * @param reader the <code>IBlockReader</code> for the block
+	 * @param pos the <code>BlockPos</code> the block is at
+	 * @param selectionContext the <code>ISelectionContext</code> of the block
+	 * @return VoxelShape
+	 */
 	@Override
-	public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
+	public VoxelShape getShape(BlockState state, IBlockReader reader, BlockPos pos, ISelectionContext selectionContext) {
 		return SHAPE;
 	}
 
+	/**
+	 * Create the BlockState definition.
+	 * @param builder the <code>StateContainer.Builder</code> of the block
+	 */
 	@Override
 	public void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder) {
 		builder.add(FACING, WATERLOGGED);
 	}
 
+	/**
+	 * Set placement properties.
+	 * Sets the facing direction of the block for placement.
+	 * @param context the <code>BlockItemUseContext</code> during placement
+	 * @return BlockState
+	 */
 	@Override
 	public BlockState getStateForPlacement(BlockItemUseContext context) {
 		return defaultBlockState().setValue(FACING, context.getHorizontalDirection().getOpposite());
 	}
 
+	/**
+	 * Set FluidState properties.
+	 * Allows the block to exhibit waterlogged behavior.
+	 * @param state the <code>BlockState</code> of the block
+	 * @return FluidState
+	 */
 	@Override
 	public FluidState getFluidState(BlockState state) {
 		return state.getValue(WATERLOGGED) ? Fluids.WATER.getSource(false) : super.getFluidState(state);

@@ -17,10 +17,22 @@ public class BarbedWireFenceBlock extends FenceBlock {
 	private final DamageSource damageSource = new DamageSource("immersiveweapons.barbed_wire");
 	private int soundCooldown = 0;
 
+	/**
+	 * Constructor for BarbedWireFenceBlock.
+	 * @param properties the <code>Properties</code> of the block
+	 */
 	public BarbedWireFenceBlock(Properties properties) {
 		super(properties);
 	}
 
+	/**
+	 * Runs when an entity is inside of the block's collision area.
+	 * Allows the block to deal damage on contact.
+	 * @param state the <code>BlockState</code> of the block
+	 * @param world the <code>World</code> the block is in
+	 * @param pos the <code>BlockPos</code> the block is at
+	 * @param entity the <code>Entity</code> passing through the block
+	 */
 	@Override
 	public void entityInside(BlockState state, World world, BlockPos pos, Entity entity) {
 		if (entity instanceof LivingEntity) {

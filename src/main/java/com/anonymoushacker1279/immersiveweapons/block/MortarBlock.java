@@ -37,35 +37,68 @@ public class MortarBlock extends HorizontalBlock {
 	public static final BooleanProperty LOADED = BooleanProperty.create("loaded");
 	protected static final VoxelShape SHAPE = Block.box(2.0D, 0.0D, 2.0D, 14.0D, 10.0D, 14.0D);
 
+	/**
+	 * Constructor for MortarBlock.
+	 * @param properties the <code>Properties</code> of the block
+	 */
 	public MortarBlock(Properties properties) {
 		super(properties);
-		this.registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.NORTH).setValue(ROTATION, 0).setValue(LOADED, false));
+		registerDefaultState(stateDefinition.any().setValue(FACING, Direction.NORTH).setValue(ROTATION, 0).setValue(LOADED, false));
 	}
 
+	/**
+	 * Create the BlockState definition.
+	 * @param builder the <code>StateContainer.Builder</code> of the block
+	 */
 	@Override
 	protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder) {
 		builder.add(ROTATION, FACING, LOADED);
 	}
 
+	/**
+	 * Set placement properties.
+	 * Sets the facing direction of the block for placement.
+	 * @param context the <code>BlockItemUseContext</code> during placement
+	 * @return BlockState
+	 */
 	@Override
 	public BlockState getStateForPlacement(BlockItemUseContext context) {
-		return this.defaultBlockState().setValue(FACING, context.getHorizontalDirection().getOpposite());
+		return defaultBlockState().setValue(FACING, context.getHorizontalDirection().getOpposite());
 	}
 
+	/**
+	 * Set the shape of the block.
+	 * @param state the <code>BlockState</code> of the block
+	 * @param reader the <code>IBlockReader</code> for the block
+	 * @param pos the <code>BlockPos</code> the block is at
+	 * @param selectionContext the <code>ISelectionContext</code> of the block
+	 * @return VoxelShape
+	 */
 	@Override
-	public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext selectionContext) {
+	public VoxelShape getShape(BlockState state, IBlockReader reader, BlockPos pos, ISelectionContext selectionContext) {
 		return SHAPE;
 	}
 
+	/**
+	 * Runs when the block is activated.
+	 * Allows the block to respond to user interaction.
+	 * @param state the <code>BlockState</code> of the block
+	 * @param worldIn the <code>World</code> the block is in
+	 * @param pos the <code>BlockPos</code> the block is at
+	 * @param player the <code>PlayerEntity</code> interacting with the block
+	 * @param handIn the <code>Hand</code> the PlayerEntity used
+	 * @param blockRayTraceResult the <code>BlockRayTraceResult</code> of the interaction
+	 * @return ActionResultType
+	 */
 	@Override
-	public ActionResultType use(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
+	public ActionResultType use(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult blockRayTraceResult) {
 		if (!worldIn.isClientSide && handIn.equals(Hand.MAIN_HAND)) {
 			ItemStack itemStack = player.getMainHandItem();
 			if (state.getValue(LOADED) && itemStack.getItem() == Items.FLINT_AND_STEEL) {
 				if (!player.isCreative()) {
 					itemStack.setDamageValue(itemStack.getDamageValue() - 1);
 				}
-				this.fire(worldIn, pos, state);
+				fire(worldIn, pos, state);
 				return ActionResultType.CONSUME;
 			} else if (!state.getValue(LOADED) && itemStack.getItem() == DeferredRegistryHandler.MORTAR_SHELL.get()) {
 				worldIn.setBlock(pos, state.setValue(LOADED, true), 3);
@@ -95,15 +128,30 @@ public class MortarBlock extends HorizontalBlock {
 		return ActionResultType.PASS;
 	}
 
+	/**
+	 * Runs when neighboring blocks change state.
+	 * @param state the <code>BlockState</code> of the block
+	 * @param worldIn the <code>World</code> the block is in
+	 * @param pos the <code>BlockPos</code> the block is at
+	 * @param blockIn the <code>Block</code> that is changing
+	 * @param fromPos the <code>BlockPos</code> of the changing block
+	 * @param isMoving determines if the block is moving
+	 */
 	@Override
 	public void neighborChanged(BlockState state, World worldIn, BlockPos pos, Block blockIn, BlockPos fromPos, boolean isMoving) {
 		if (!worldIn.isClientSide) {
 			if (state.getValue(LOADED) && worldIn.hasNeighborSignal(pos)) {
-				this.fire(worldIn, pos, state);
+				fire(worldIn, pos, state);
 			}
 		}
 	}
 
+	/**
+	 * Fires a mortar shell and sends packets to tracking players.
+	 * @param worldIn the <code>World</code> the block is in
+	 * @param pos the <code>BlockPos</code> the block is at
+	 * @param state the <code>BlockState</code> of the block
+	 */
 	private void fire(World worldIn, BlockPos pos, BlockState state) {
 		PacketHandler.INSTANCE.send(PacketDistributor.TRACKING_CHUNK.with(() -> worldIn.getChunkAt(pos)), new MortarBlockPacketHandler(pos));
 		worldIn.setBlock(pos, state.setValue(LOADED, false), 3);
@@ -114,24 +162,47 @@ public class MortarBlock extends HorizontalBlock {
 
 		private final BlockPos blockPos;
 
+		/**
+		 * Constructor for MortarBlockPacketHandler.
+		 * @param blockPos the <code>BlockPos</code> of the block where the packet was sent
+		 */
 		public MortarBlockPacketHandler(final BlockPos blockPos) {
 			this.blockPos = blockPos;
 		}
 
+		/**
+		 * Encodes a packet
+		 * @param msg the <code>MortarBlockPacketHandler</code> message being sent
+		 * @param packetBuffer the <code>PacketBuffer</code> containing packet data
+		 */
 		public static void encode(final MortarBlockPacketHandler msg, final PacketBuffer packetBuffer) {
 			packetBuffer.writeBlockPos(msg.blockPos);
 		}
 
+		/**
+		 * Decodes a packet
+		 * @param packetBuffer the <code>PacketBuffer</code> containing packet data
+		 * @return MortarBlockPacketHandler
+		 */
 		public static MortarBlockPacketHandler decode(final PacketBuffer packetBuffer) {
 			return new MortarBlockPacketHandler(packetBuffer.readBlockPos());
 		}
 
+		/**
+		 * Handles an incoming packet, by sending it to the client/server
+		 * @param msg the <code>MortarBlockPacketHandler</code> message being sent
+		 * @param contextSupplier the <code>Supplier</code> providing context
+		 */
 		public static void handle(final MortarBlockPacketHandler msg, final Supplier<Context> contextSupplier) {
 			final NetworkEvent.Context context = contextSupplier.get();
 			context.enqueueWork(() -> DistExecutor.runWhenOn(Dist.CLIENT, () -> () -> handleOnClient(msg)));
 			context.setPacketHandled(true);
 		}
 
+		/**
+		 * Runs specifically on the client, when a packet is received
+		 * @param msg the <code>MortarBlockPacketHandler</code> message being sent
+		 */
 		@OnlyIn(Dist.CLIENT)
 		private static void handleOnClient(final MortarBlockPacketHandler msg) {
 			Minecraft minecraft = Minecraft.getInstance();

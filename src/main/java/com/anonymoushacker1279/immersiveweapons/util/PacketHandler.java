@@ -2,6 +2,7 @@ package com.anonymoushacker1279.immersiveweapons.util;
 
 import com.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import com.anonymoushacker1279.immersiveweapons.block.MortarBlock.MortarBlockPacketHandler;
+import com.anonymoushacker1279.immersiveweapons.block.SpikeTrapBlock.SpikeTrapBlockPacketHandler;
 import com.anonymoushacker1279.immersiveweapons.entity.projectile.CustomArrowEntity.SmokeBombArrowEntity.SmokeBombArrowEntityPacketHandler;
 import com.anonymoushacker1279.immersiveweapons.entity.projectile.MolotovEntity.MolotovEntityPacketHandler;
 import com.anonymoushacker1279.immersiveweapons.entity.projectile.SmokeBombEntity.SmokeBombEntityPacketHandler;
@@ -72,6 +73,12 @@ public class PacketHandler {
 				SmokeBombArrowEntityPacketHandler::encode,
 				SmokeBombArrowEntityPacketHandler::decode,
 				SmokeBombArrowEntityPacketHandler::handle
+		);
+		PacketHandler.INSTANCE.registerMessage(networkId++,
+				SpikeTrapBlockPacketHandler.class,
+				SpikeTrapBlockPacketHandler::encode,
+				SpikeTrapBlockPacketHandler::decode,
+				SpikeTrapBlockPacketHandler::handle
 		);
 	}
 }

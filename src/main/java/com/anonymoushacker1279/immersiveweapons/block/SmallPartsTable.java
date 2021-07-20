@@ -22,17 +22,39 @@ public class SmallPartsTable extends Block {
 
 	private static final ITextComponent CONTAINER_NAME = new TranslationTextComponent("container.immersiveweapons.small_parts_table");
 
+	/**
+	 * Constructor for SmallPartsTable.
+	 * @param properties the <code>Properties</code> of the block
+	 */
 	public SmallPartsTable(AbstractBlock.Properties properties) {
 		super(properties);
 	}
 
+	/**
+	 * Get the INamedContainerProvider for the block.
+	 * @param state the <code>BlockState</code> of the block
+	 * @param worldIn the <code>World</code> the block is in
+	 * @param pos the <code>BlockPos</code> the block is at
+	 * @return INamedContainerProvider
+	 */
 	@Override
 	public INamedContainerProvider getMenuProvider(BlockState state, World worldIn, BlockPos pos) {
 		return new SimpleNamedContainerProvider((id, inventory, player) -> new SmallPartsContainer(id, inventory, IWorldPosCallable.create(worldIn, pos)), CONTAINER_NAME);
 	}
 
+	/**
+	 * Runs when the block is activated.
+	 * Allows the block to respond to user interaction.
+	 * @param state the <code>BlockState</code> of the block
+	 * @param worldIn the <code>World</code> the block is in
+	 * @param pos the <code>BlockPos</code> the block is at
+	 * @param player the <code>PlayerEntity</code> interacting with the block
+	 * @param handIn the <code>Hand</code> the PlayerEntity used
+	 * @param blockRayTraceResult the <code>BlockRayTraceResult</code> of the interaction
+	 * @return ActionResultType
+	 */
 	@Override
-	public ActionResultType use(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
+	public ActionResultType use(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult blockRayTraceResult) {
 		if (worldIn.isClientSide) {
 			return ActionResultType.SUCCESS;
 		} else {

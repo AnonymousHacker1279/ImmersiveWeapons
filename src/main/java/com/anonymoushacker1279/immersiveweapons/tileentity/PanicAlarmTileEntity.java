@@ -57,7 +57,7 @@ public class PanicAlarmTileEntity extends TileEntity implements ITickableTileEnt
 						tileEntity.setCooldown(delay.get() * 120);
 					}
 
-					level.setBlock(worldPosition, level.getBlockState(worldPosition).setValue(PanicAlarmBlock.HORIZONTAL_FACING, level.getBlockState(worldPosition).getValue(PanicAlarmBlock.HORIZONTAL_FACING)), 2);
+					level.setBlock(worldPosition, level.getBlockState(worldPosition).setValue(PanicAlarmBlock.FACING, level.getBlockState(worldPosition).getValue(PanicAlarmBlock.FACING)), 2);
 					level.setBlockEntity(worldPosition, tileEntity);
 				}
 			}
@@ -154,5 +154,4 @@ public class PanicAlarmTileEntity extends TileEntity implements ITickableTileEnt
 			}
 		}
 	}
-
 }
