@@ -19,25 +19,33 @@ public abstract class InteractFenceGateGoal extends Goal {
 	private float entityPositionX;
 	private float entityPositionZ;
 
+	/**
+	 * Constructor for InteractFenceGateGoal.
+	 * @param entityIn the <code>MobEntity</code> instance
+	 */
 	public InteractFenceGateGoal(MobEntity entityIn) {
-		this.entity = entityIn;
+		entity = entityIn;
 		if (!GroundPathHelper.hasGroundPathNavigation(entityIn)) {
 			throw new IllegalArgumentException("Unsupported mob type for InteractFenceGateGoal");
 		}
 	}
 
+	/**
+	 * Toggle the state of blocks.
+	 * @param open set the state of "open"
+	 */
 	protected void toggleGate(boolean open) {
-		if (this.gateInteract) {
-			this.gatePosition = this.entity.blockPosition().relative(this.entity.getDirection());
-			BlockState blockstate = this.entity.level.getBlockState(this.gatePosition);
+		if (gateInteract) {
+			gatePosition = entity.blockPosition().relative(entity.getDirection());
+			BlockState blockstate = entity.level.getBlockState(gatePosition);
 			if (blockstate.getBlock() instanceof FenceGateBlock) {
 				if (open) {
 					blockstate = blockstate.setValue(FenceGateBlock.OPEN, Boolean.TRUE);
-					this.entity.level.setBlock(this.gatePosition, blockstate, 3);
+					entity.level.setBlock(gatePosition, blockstate, 3);
 				}
 				if (!open) {
 					blockstate = blockstate.setValue(FenceGateBlock.OPEN, Boolean.FALSE);
-					this.entity.level.setBlock(this.gatePosition, blockstate, 3);
+					entity.level.setBlock(gatePosition, blockstate, 3);
 				}
 			}
 		}
@@ -47,26 +55,27 @@ public abstract class InteractFenceGateGoal extends Goal {
 	/**
 	 * Returns whether execution should begin. You can also read and cache any state necessary for execution in this
 	 * method as well.
+	 * @return boolean
 	 */
 	@Override
 	public boolean canUse() {
-		if (!GroundPathHelper.hasGroundPathNavigation(this.entity)) {
+		if (!GroundPathHelper.hasGroundPathNavigation(entity)) {
 			return false;
-		} else if (!this.entity.horizontalCollision) {
+		} else if (!entity.horizontalCollision) {
 			return false;
 		} else {
-			GroundPathNavigator groundpathnavigator = (GroundPathNavigator) this.entity.getNavigation();
+			GroundPathNavigator groundpathnavigator = (GroundPathNavigator) entity.getNavigation();
 			Path path = groundpathnavigator.getPath();
 			if (path != null && !path.isDone() && groundpathnavigator.canOpenDoors()) {
 				for (int i = 0; i < Math.min(path.getNextNodeIndex() + 2, path.getNodeCount()); ++i) {
 					PathPoint pathpoint = path.getNode(i);
-					this.gatePosition = new BlockPos(pathpoint.x, pathpoint.y + 1, pathpoint.z);
-					if (!(this.entity.distanceToSqr(this.gatePosition.getX(), this.entity.getY(), this.gatePosition.getZ()) > 2.25D)) {
+					gatePosition = new BlockPos(pathpoint.x, pathpoint.y + 1, pathpoint.z);
+					if (!(entity.distanceToSqr(gatePosition.getX(), entity.getY(), gatePosition.getZ()) > 2.25D)) {
 						return true;
 					}
 				}
 
-				this.gatePosition = this.entity.blockPosition().above();
+				gatePosition = entity.blockPosition().above();
 				return true;
 			} else {
 				return false;
@@ -76,10 +85,11 @@ public abstract class InteractFenceGateGoal extends Goal {
 
 	/**
 	 * Returns whether an in-progress EntityAIBase should continue executing
+	 * @return boolean
 	 */
 	@Override
 	public boolean canContinueToUse() {
-		return !this.hasStoppedGateInteraction;
+		return !hasStoppedGateInteraction;
 	}
 
 	/**
@@ -87,9 +97,9 @@ public abstract class InteractFenceGateGoal extends Goal {
 	 */
 	@Override
 	public void start() {
-		this.hasStoppedGateInteraction = false;
-		this.entityPositionX = (float) ((double) this.gatePosition.getX() + 0.5D - this.entity.getX());
-		this.entityPositionZ = (float) ((double) this.gatePosition.getZ() + 0.5D - this.entity.getZ());
+		hasStoppedGateInteraction = false;
+		entityPositionX = (float) ((double) gatePosition.getX() + 0.5D - entity.getX());
+		entityPositionZ = (float) ((double) gatePosition.getZ() + 0.5D - entity.getZ());
 	}
 
 	/**
@@ -97,12 +107,11 @@ public abstract class InteractFenceGateGoal extends Goal {
 	 */
 	@Override
 	public void tick() {
-		float f = (float) ((double) this.gatePosition.getX() + 0.5D - this.entity.getX());
-		float f1 = (float) ((double) this.gatePosition.getZ() + 0.5D - this.entity.getZ());
-		float f2 = this.entityPositionX * f + this.entityPositionZ * f1;
+		float f = (float) ((double) gatePosition.getX() + 0.5D - entity.getX());
+		float f1 = (float) ((double) gatePosition.getZ() + 0.5D - entity.getZ());
+		float f2 = entityPositionX * f + entityPositionZ * f1;
 		if (f2 < 0.0F) {
-			this.hasStoppedGateInteraction = true;
+			hasStoppedGateInteraction = true;
 		}
-
 	}
 }

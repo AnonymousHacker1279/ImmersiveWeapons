@@ -51,7 +51,6 @@ import net.minecraft.potion.EffectType;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
-import net.minecraft.village.PointOfInterestType;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.gen.carver.WorldCarver;
 import net.minecraft.world.gen.feature.ProbabilityConfig;
@@ -90,8 +89,6 @@ public class DeferredRegistryHandler {
 	public static final DeferredRegister<WorldCarver<?>> WORLD_CARVERS = DeferredRegister.create(ForgeRegistries.WORLD_CARVERS, ImmersiveWeapons.MOD_ID);
 	// Effect Register
 	public static final DeferredRegister<Effect> EFFECTS = DeferredRegister.create(ForgeRegistries.POTIONS, ImmersiveWeapons.MOD_ID);
-	// POI Register
-	public static final DeferredRegister<PointOfInterestType> POINTS_OF_INTEREST = DeferredRegister.create(ForgeRegistries.POI_TYPES, ImmersiveWeapons.MOD_ID);
 
 	public static void init() {
 		IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
@@ -107,7 +104,6 @@ public class DeferredRegistryHandler {
 		BIOMES.register(modEventBus);
 		WORLD_CARVERS.register(modEventBus);
 		EFFECTS.register(modEventBus);
-		POINTS_OF_INTEREST.register(modEventBus);
 	}
 
 	public static final ItemGroup ITEM_GROUP = new CreativeTabSorter("ImmersiveWeaponsTab");
@@ -466,7 +462,4 @@ public class DeferredRegistryHandler {
 
 	// Effects
 	public static final RegistryObject<Effect> MORPHINE_EFFECT = EFFECTS.register("morphine", () -> new MorphineEffect(EffectType.NEUTRAL, 3484189));
-
-	// Points of Interest
-	public static final RegistryObject<PointOfInterestType> FIELD_MEDIC_POI = POINTS_OF_INTEREST.register("field_medic_poi", () -> new PointOfInterestType("field_medic_poi", PointOfInterestType.getBlockStates(BIOHAZARD_BOX.get()), 1, 64));
 }

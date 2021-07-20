@@ -89,7 +89,7 @@ public abstract class AbstractTeslaSynthesizerTileEntity extends LockableTileEnt
 		}
 	};
 
-	protected AbstractTeslaSynthesizerTileEntity(TileEntityType<?> tileTypeIn, IRecipeType recipeTypeIn) {
+	protected AbstractTeslaSynthesizerTileEntity(TileEntityType<?> tileTypeIn, IRecipeType<TeslaSynthesizerRecipe> recipeTypeIn) {
 		super(tileTypeIn);
 		recipeType = recipeTypeIn;
 		setupBurnTimes();

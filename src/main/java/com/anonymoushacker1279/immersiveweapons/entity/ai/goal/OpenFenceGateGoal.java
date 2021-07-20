@@ -7,18 +7,24 @@ public class OpenFenceGateGoal extends InteractFenceGateGoal {
 	private final boolean closeGate;
 	private int closeGateTemporisation;
 
+	/**
+	 * Constructor for InteractFenceGateGoal.
+	 * @param entitylivingIn the <code>MobEntity</code> instance
+	 * @param shouldClose if true, the gate will be closed behind the entity
+	 */
 	public OpenFenceGateGoal(MobEntity entitylivingIn, boolean shouldClose) {
 		super(entitylivingIn);
-		this.entity = entitylivingIn;
-		this.closeGate = shouldClose;
+		entity = entitylivingIn;
+		closeGate = shouldClose;
 	}
 
 	/**
 	 * Returns whether an in-progress EntityAIBase should continue executing
+	 * @return boolean
 	 */
 	@Override
 	public boolean canContinueToUse() {
-		return this.closeGate && this.closeGateTemporisation > 0 && super.canContinueToUse();
+		return closeGate && closeGateTemporisation > 0 && super.canContinueToUse();
 	}
 
 	/**
@@ -26,8 +32,8 @@ public class OpenFenceGateGoal extends InteractFenceGateGoal {
 	 */
 	@Override
 	public void start() {
-		this.closeGateTemporisation = 20;
-		this.toggleGate(true);
+		closeGateTemporisation = 20;
+		toggleGate(true);
 	}
 
 	/**
@@ -35,7 +41,7 @@ public class OpenFenceGateGoal extends InteractFenceGateGoal {
 	 */
 	@Override
 	public void stop() {
-		this.toggleGate(false);
+		toggleGate(false);
 	}
 
 	/**
@@ -43,7 +49,7 @@ public class OpenFenceGateGoal extends InteractFenceGateGoal {
 	 */
 	@Override
 	public void tick() {
-		--this.closeGateTemporisation;
+		--closeGateTemporisation;
 		super.tick();
 	}
 }
