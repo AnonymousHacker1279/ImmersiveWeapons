@@ -10,13 +10,23 @@ public class TeslaSynthesizerResultSlot extends Slot {
 	private final PlayerEntity player;
 	private int removeCount;
 
+	/**
+	 * Constructor for TeslaSynthesizerResultSlot.
+	 * @param player the <code>PlayerEntity</code> instance
+	 * @param inventoryIn the <code>IInventory</code> of the tile entity
+	 * @param slotIndex the slot index
+	 * @param xPosition the X position of the slot
+	 * @param yPosition the Y position of the slot
+	 */
 	public TeslaSynthesizerResultSlot(PlayerEntity player, IInventory inventoryIn, int slotIndex, int xPosition, int yPosition) {
 		super(inventoryIn, slotIndex, xPosition, yPosition);
 		this.player = player;
 	}
 
 	/**
-	 * Check if the stack is allowed to be placed in this slot, used for armor slots as well as furnace fuel.
+	 * Check if the stack is allowed to be placed in this slot.
+	 * @param stack the <code>ItemStack</code> to be checked
+	 * @return boolean
 	 */
 	@Override
 	public boolean mayPlace(ItemStack stack) {
@@ -24,40 +34,29 @@ public class TeslaSynthesizerResultSlot extends Slot {
 	}
 
 	/**
-	 * Decrease the size of the stack in slot (first int arg) by the amount of the second int arg. Returns the new stack.
+	 * Decrease the size of the stack in slot by the specified amount. Returns the new stack.
+	 * @param amount the amount to reduce the stack by
+	 * @return ItemStack
 	 */
 	@Override
 	public ItemStack remove(int amount) {
-		if (this.hasItem()) {
-			this.removeCount += Math.min(amount, this.getItem().getCount());
+		if (hasItem()) {
+			removeCount += Math.min(amount, getItem().getCount());
 		}
 
 		return super.remove(amount);
 	}
 
+	/**
+	 * Runs when the stack is taken from the tile entity.
+	 * @param player the <code>PlayerEntity</code> instance
+	 * @param stack the <code>ItemStack</code> being taken
+	 * @return ItemStack
+	 */
 	@Override
-	public ItemStack onTake(PlayerEntity thePlayer, ItemStack stack) {
-		this.checkTakeAchievements(stack);
-		super.onTake(thePlayer, stack);
+	public ItemStack onTake(PlayerEntity player, ItemStack stack) {
+		checkTakeAchievements(stack);
+		super.onTake(player, stack);
 		return stack;
-	}
-
-	/**
-	 * the itemStack passed in is the output - ie, iron ingots, and pickaxes, not ore and wood. Typically increases an
-	 * internal count then calls onCrafting(item).
-	 */
-	@Override
-	protected void onQuickCraft(ItemStack stack, int amount) {
-		this.removeCount += amount;
-		this.checkTakeAchievements(stack);
-	}
-
-	/**
-	 * the itemStack passed in is the output - ie, iron ingots, and pickaxes, not ore and wood.
-	 */
-	@Override
-	protected void checkTakeAchievements(ItemStack stack) {
-		stack.onCraftedBy(this.player.level, this.player, this.removeCount);
-		this.removeCount = 0;
 	}
 }
