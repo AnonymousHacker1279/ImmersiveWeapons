@@ -4,7 +4,6 @@ import com.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import com.anonymoushacker1279.immersiveweapons.block.MortarBlock.MortarBlockPacketHandler;
 import com.anonymoushacker1279.immersiveweapons.block.SpikeTrapBlock.SpikeTrapBlockPacketHandler;
 import com.anonymoushacker1279.immersiveweapons.entity.projectile.CustomArrowEntity.SmokeBombArrowEntity.SmokeBombArrowEntityPacketHandler;
-import com.anonymoushacker1279.immersiveweapons.entity.projectile.MolotovEntity.MolotovEntityPacketHandler;
 import com.anonymoushacker1279.immersiveweapons.entity.projectile.SmokeBombEntity.SmokeBombEntityPacketHandler;
 import com.anonymoushacker1279.immersiveweapons.item.CobaltArmorItem.CobaltArmorItemPacketHandler;
 import com.anonymoushacker1279.immersiveweapons.item.TeslaArmorItem.TeslaArmorItemPacketHandler;
@@ -37,12 +36,6 @@ public class PacketHandler {
 				SmokeBombEntityPacketHandler::encode,
 				SmokeBombEntityPacketHandler::decode,
 				SmokeBombEntityPacketHandler::handle
-		);
-		PacketHandler.INSTANCE.registerMessage(networkId++,
-				MolotovEntityPacketHandler.class,
-				MolotovEntityPacketHandler::encode,
-				MolotovEntityPacketHandler::decode,
-				MolotovEntityPacketHandler::handle
 		);
 		PacketHandler.INSTANCE.registerMessage(networkId++,
 				CobaltArmorItemPacketHandler.class,
