@@ -13,6 +13,10 @@ import net.minecraftforge.fml.common.Mod;
 @Mod.EventBusSubscriber(modid = ImmersiveWeapons.MOD_ID, bus = Mod.EventBusSubscriber.Bus.FORGE, value = Dist.CLIENT)
 public class TooltipHandler {
 
+	/**
+	 * Handles adding tooltips to items.
+	 * @param event the <code>ItemTooltipEvent</code> instance
+	 */
 	@SubscribeEvent(priority = EventPriority.NORMAL, receiveCanceled = true)
 	public static void addItemTooltip(ItemTooltipEvent event) {
 		ItemStack stack = event.getItemStack();

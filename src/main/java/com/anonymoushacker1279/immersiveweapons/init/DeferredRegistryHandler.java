@@ -90,6 +90,9 @@ public class DeferredRegistryHandler {
 	// Effect Register
 	public static final DeferredRegister<Effect> EFFECTS = DeferredRegister.create(ForgeRegistries.POTIONS, ImmersiveWeapons.MOD_ID);
 
+	/**
+	 * Initialize deferred registers.
+	 */
 	public static void init() {
 		IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
 		ITEMS.register(modEventBus);
