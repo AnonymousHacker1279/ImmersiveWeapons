@@ -139,7 +139,7 @@ public class ShelfBlock extends ContainerBlock implements IWaterLoggable {
 				wallShelfTileEntity.removeItem();
 				return ActionResultType.SUCCESS;
 			}
-			if (!worldIn.isClientSide && wallShelfTileEntity.addItem(player.abilities.instabuild ? itemstack.copy() : itemstack)) {
+			if (!worldIn.isClientSide && wallShelfTileEntity.addItem(player.isCreative() ? itemstack.copy() : itemstack)) {
 				return ActionResultType.SUCCESS;
 			}
 			return ActionResultType.CONSUME;

@@ -36,7 +36,7 @@ public class ClientModEventSubscriber {
 
 	private static final String CATEGORY = "key.categories." + ImmersiveWeapons.MOD_ID;
 	public static final KeyBinding toggleArmorEffect = new KeyBinding(ImmersiveWeapons.MOD_ID + ".key.toggleArmorEffect", 78, CATEGORY); // Keycode is N
-	static Minecraft mc = Minecraft.getInstance();
+	private static Minecraft mc = Minecraft.getInstance();
 
 	static {
 		ClientRegistry.registerKeyBinding(toggleArmorEffect);
@@ -47,7 +47,7 @@ public class ClientModEventSubscriber {
 	 * @param event the <code>FMLClientSetupEvent</code> instance
 	 */
 	@SubscribeEvent
-	public static void onClientSetup(final FMLClientSetupEvent event) {
+	public static void onClientSetup(FMLClientSetupEvent event) {
 		ImmersiveWeapons.LOGGER.debug("Performing client-side setup");
 
 		// Register GUI screens
@@ -109,14 +109,9 @@ public class ClientModEventSubscriber {
 
 		ClientRegistry.bindTileEntityRenderer(TileEntityHolder.WALL_SHELF_TILE_ENTITY, ShelfRenderer::new);
 
-		mc.getBlockColors().register((p_getColor_1_, p_getColor_2_, p_getColor_3_, p_getColor_4_) -> BiomeColors.getAverageGrassColor(Objects.requireNonNull(p_getColor_2_), Objects.requireNonNull(p_getColor_3_)), DeferredRegistryHandler.PITFALL.get());
+		mc.getBlockColors().register((color1, color2, color3, color4) -> BiomeColors.getAverageGrassColor(Objects.requireNonNull(color2), Objects.requireNonNull(color3)), DeferredRegistryHandler.PITFALL.get());
 
-		mc.getItemColors().register((p_getColor_1_, p_getColor_2_) -> GrassColors.get(0.5d, 1.0d), DeferredRegistryHandler.PITFALL_ITEM.get());
-		mc.getItemColors().register((p_getColor_1_, p_getColor_2_) -> 0x7a6851, DeferredRegistryHandler.DYING_SOLDIER_SPAWN_EGG.get());
-		mc.getItemColors().register((p_getColor_1_, p_getColor_2_) -> 0x494522, DeferredRegistryHandler.MINUTEMAN_SPAWN_EGG.get());
-		mc.getItemColors().register((p_getColor_1_, p_getColor_2_) -> 0xde5451, DeferredRegistryHandler.FIELD_MEDIC_SPAWN_EGG.get());
-		mc.getItemColors().register((p_getColor_1_, p_getColor_2_) -> 0x614226, DeferredRegistryHandler.WANDERING_WARRIOR_SPAWN_EGG.get());
-		mc.getItemColors().register((p_getColor_1_, p_getColor_2_) -> 0xd0a873, DeferredRegistryHandler.HANS_SPAWN_EGG.get());
+		mc.getItemColors().register((color1, color2) -> GrassColors.get(0.5d, 1.0d), DeferredRegistryHandler.PITFALL_ITEM.get());
 	}
 
 	/**

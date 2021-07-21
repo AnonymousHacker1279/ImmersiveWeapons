@@ -111,21 +111,21 @@ public class SandbagBlock extends HorizontalBlock {
 		if (player.getMainHandItem().getItem() == DeferredRegistryHandler.SANDBAG_ITEM.get()) {
 			if (state.getValue(BAGS) == 1) {
 				worldIn.setBlock(pos, state.setValue(BAGS, 2).setValue(FACING, state.getValue(FACING)), 3);
-				if (!player.abilities.instabuild) {
+				if (!player.isCreative()) {
 					player.getMainHandItem().shrink(1);
 				}
 				return ActionResultType.CONSUME;
 			}
 			if (state.getValue(BAGS) == 2) {
 				worldIn.setBlock(pos, state.setValue(BAGS, 3).setValue(FACING, state.getValue(FACING)), 3);
-				if (!player.abilities.instabuild) {
+				if (!player.isCreative()) {
 					player.getMainHandItem().shrink(1);
 				}
 				return ActionResultType.CONSUME;
 			}
 			if (state.getValue(BAGS) == 3) {
 				worldIn.setBlock(pos, state.setValue(BAGS, 4).setValue(FACING, state.getValue(FACING)), 3);
-				if (!player.abilities.instabuild) {
+				if (!player.isCreative()) {
 					player.getMainHandItem().shrink(1);
 				}
 				return ActionResultType.CONSUME;

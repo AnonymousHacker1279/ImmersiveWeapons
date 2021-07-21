@@ -66,7 +66,7 @@ public class BearTrapBlock extends ContainerBlock implements IWaterLoggable {
 			}
 			if (!state.getValue(VINES) && currentlyHeldItem.getItem() == Items.VINE) {
 				worldIn.setBlock(pos, state.setValue(VINES, true), 3);
-				if (!player.abilities.instabuild) {
+				if (!player.isCreative()) {
 					currentlyHeldItem.shrink(1);
 				}
 			}
@@ -150,7 +150,7 @@ public class BearTrapBlock extends ContainerBlock implements IWaterLoggable {
 
 		if ((entity instanceof PlayerEntity)) {
 			final PlayerEntity livingEntity = (PlayerEntity) entity;
-			if (!livingEntity.abilities.instabuild) {
+			if (!livingEntity.isCreative()) {
 				if (state.getValue(VINES)) {
 					world.setBlock(pos, state.setValue(TRIGGERED, true).setValue(VINES, true), 3);
 				} else {

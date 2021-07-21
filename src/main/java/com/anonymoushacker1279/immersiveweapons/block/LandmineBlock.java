@@ -82,13 +82,13 @@ public class LandmineBlock extends Block implements IWaterLoggable {
 			}
 			if (!state.getValue(VINES) && !state.getValue(SAND) && currentlyHeldItem.getItem() == Items.VINE) {
 				worldIn.setBlock(pos, state.setValue(VINES, true), 3);
-				if (!player.abilities.instabuild) {
+				if (!player.isCreative()) {
 					currentlyHeldItem.shrink(1);
 				}
 			}
 			if (!state.getValue(SAND) && !state.getValue(VINES) && currentlyHeldItem.getItem() == Items.SAND) {
 				worldIn.setBlock(pos, state.setValue(SAND, true), 3);
-				if (!player.abilities.instabuild) {
+				if (!player.isCreative()) {
 					currentlyHeldItem.shrink(1);
 				}
 			}

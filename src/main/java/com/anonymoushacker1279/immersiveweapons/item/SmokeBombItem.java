@@ -5,7 +5,6 @@ import com.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.stats.Stats;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.SoundCategory;
@@ -15,11 +14,22 @@ public class SmokeBombItem extends Item {
 
 	private final int color;
 
-	public SmokeBombItem(Item.Properties builder, int color) {
-		super(builder);
+	/**
+	 * Constructor for SmokeBombItem.
+	 * @param properties the <code>Properties</code> for the item
+	 */
+	public SmokeBombItem(Properties properties, int color) {
+		super(properties);
 		this.color = color;
 	}
 
+	/**
+	 * Runs when the player right-clicks.
+	 * @param worldIn the <code>World</code> the player is in
+	 * @param playerIn the <code>PlayerEntity</code> performing the action
+	 * @param handIn the <code>Hand</code> the player is using
+	 * @return ActionResult extending ItemStack
+	 */
 	@Override
 	public ActionResult<ItemStack> use(World worldIn, PlayerEntity playerIn, Hand handIn) {
 		ItemStack itemstack = playerIn.getItemInHand(handIn);
@@ -31,9 +41,7 @@ public class SmokeBombItem extends Item {
 			smokeBombEntity.shootFromRotation(playerIn, playerIn.xRot, playerIn.yRot, 0.0F, 1.5F, 1.0F);
 			worldIn.addFreshEntity(smokeBombEntity);
 		}
-
-		playerIn.awardStat(Stats.ITEM_USED.get(this));
-		if (!playerIn.abilities.instabuild) {
+		if (!playerIn.isCreative()) {
 			itemstack.shrink(1);
 			playerIn.getCooldowns().addCooldown(this, 100);    // Helps to prevent spamming, mostly to reduce the total particles in an area
 		}

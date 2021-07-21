@@ -11,15 +11,26 @@ import net.minecraft.world.World;
 
 public class PainkillerItem extends Item {
 
+	/**
+	 * Constructor for PainkillerItem.
+	 * @param properties the <code>Properties</code> for the item
+	 */
 	public PainkillerItem(Properties properties) {
 		super(properties);
 	}
 
+	/**
+	 * Runs when the player right-clicks.
+	 * @param worldIn the <code>World</code> the player is in
+	 * @param playerIn the <code>PlayerEntity</code> performing the action
+	 * @param handIn the <code>Hand</code> the player is using
+	 * @return ActionResult extending ItemStack
+	 */
 	@Override
 	public ActionResult<ItemStack> use(World worldIn, PlayerEntity playerIn, Hand handIn) {
 		ItemStack itemstack = playerIn.getItemInHand(handIn);
 		playerIn.addEffect(new EffectInstance(Effects.DAMAGE_RESISTANCE, 1200, 0, false, true));
-		if (!playerIn.abilities.instabuild) {
+		if (!playerIn.isCreative()) {
 			itemstack.shrink(1);
 			playerIn.getCooldowns().addCooldown(this, 2400);
 		}

@@ -61,7 +61,7 @@ public class RangedShotgunAttackGoal<T extends CreatureEntity & IRangedAttackMob
 	 * by the entity
 	 * @return boolean
 	 */
-	protected boolean isGunInMainhand() {
+	private boolean isGunInMainhand() {
 		return entity.isHolding(SimpleShotgunItem.class::isInstance);
 	}
 
@@ -155,7 +155,7 @@ public class RangedShotgunAttackGoal<T extends CreatureEntity & IRangedAttackMob
 					int i = entity.getTicksUsingItem();
 					if (i >= 20) {
 						entity.stopUsingItem();
-						entity.performRangedAttack(livingentity, SimpleShotgunItem.getArrowVelocity(i));
+						entity.performRangedAttack(livingentity, 1);
 						attackTime = attackCooldown;
 					}
 				}

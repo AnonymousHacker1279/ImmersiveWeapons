@@ -21,10 +21,10 @@ import java.util.UUID;
 public class PikeItem extends Item {
 
 	public static final UUID ATTACK_REACH_MODIFIER = UUID.fromString("9f470b49-0445-4341-ae85-55b9e5ec2a1c");
-	public static Multimap<Attribute, AttributeModifier> pikeAttributes;
+	private static Multimap<Attribute, AttributeModifier> pikeAttributes;
 
-	public PikeItem(Item.Properties builderIn, double damageIn, double attackSpeedIn) {
-		super(builderIn);
+	PikeItem(Properties properties, double damageIn, double attackSpeedIn) {
+		super(properties);
 		Builder<Attribute, AttributeModifier> builder = ImmutableMultimap.builder();
 		builder.put(Attributes.ATTACK_DAMAGE, new AttributeModifier(BASE_ATTACK_DAMAGE_UUID, "Tool modifier", damageIn, AttributeModifier.Operation.ADDITION));
 		builder.put(Attributes.ATTACK_SPEED, new AttributeModifier(BASE_ATTACK_SPEED_UUID, "Tool modifier", attackSpeedIn, AttributeModifier.Operation.ADDITION));

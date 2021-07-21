@@ -13,20 +13,26 @@ import net.minecraft.world.World;
 
 public class BandageItem extends Item {
 
+	/**
+	 * Constructor for Bandageitem.
+	 * @param properties the <code>Properties</code> for the item
+	 */
 	public BandageItem(Properties properties) {
 		super(properties);
 	}
 
-	@Override
-	public int getUseDuration(ItemStack stack) {
-		return 40;
-	}
-
+	/**
+	 * Runs when the player right-clicks.
+	 * @param worldIn the <code>World</code> the player is in
+	 * @param playerIn the <code>PlayerEntity</code> performing the action
+	 * @param handIn the <code>Hand</code> the player is using
+	 * @return ActionResult extending ItemStack
+	 */
 	@Override
 	public ActionResult<ItemStack> use(World worldIn, PlayerEntity playerIn, Hand handIn) {
 		ItemStack itemstack = playerIn.getItemInHand(handIn);
 		playerIn.addEffect(new EffectInstance(Effects.REGENERATION, 240, 0, false, true));
-		if (!playerIn.abilities.instabuild) {
+		if (!playerIn.isCreative()) {
 			itemstack.shrink(1);
 			playerIn.getCooldowns().addCooldown(this, 300);
 		}
@@ -34,6 +40,14 @@ public class BandageItem extends Item {
 		return ActionResult.sidedSuccess(itemstack, worldIn.isClientSide());
 	}
 
+	/**
+	 * Runs when the player right-clicks an entity.
+	 * @param stack the <code>ItemStack</code> right-clicked with
+	 * @param playerIn the <code>PlayerEntity</code> performing the action
+	 * @param entity the <code>LivingEntity</code> being interacted with
+	 * @param hand the <code>Hand</code> the player is using
+	 * @return ActionResultType
+	 */
 	@Override
 	public ActionResultType interactLivingEntity(ItemStack stack, PlayerEntity playerIn, LivingEntity entity, Hand hand) {
 		if (entity.level.isClientSide) {
@@ -41,7 +55,7 @@ public class BandageItem extends Item {
 		}
 
 		entity.addEffect(new EffectInstance(Effects.REGENERATION, 160, 0, false, true));
-		if (!playerIn.abilities.instabuild) {
+		if (!playerIn.isCreative()) {
 			stack.shrink(1);
 		}
 

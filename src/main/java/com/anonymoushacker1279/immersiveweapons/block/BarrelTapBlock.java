@@ -162,7 +162,7 @@ public class BarrelTapBlock extends HorizontalBlock implements IWaterLoggable {
 							if (player.getMainHandItem().getItem() == Items.GLASS_BOTTLE) {
 								player.addItem(new ItemStack(DeferredRegistryHandler.BOTTLE_OF_ALCOHOL.get()));
 								itemStack.shrink(16);
-								if (!player.abilities.instabuild) {
+								if (!player.isCreative()) {
 									player.getMainHandItem().shrink(1);
 								}
 								i = ((IInventory) tileEntity).getContainerSize();
@@ -173,7 +173,7 @@ public class BarrelTapBlock extends HorizontalBlock implements IWaterLoggable {
 							if (player.getMainHandItem().getItem() == Items.GLASS_BOTTLE) {
 								player.addItem(new ItemStack(DeferredRegistryHandler.BOTTLE_OF_WINE.get()));
 								itemStack.shrink(16);
-								if (!player.abilities.instabuild) {
+								if (!player.isCreative()) {
 									player.getMainHandItem().shrink(1);
 								}
 								i = ((IInventory) tileEntity).getContainerSize();

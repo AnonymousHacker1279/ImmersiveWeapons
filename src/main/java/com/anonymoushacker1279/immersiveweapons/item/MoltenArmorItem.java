@@ -20,6 +20,12 @@ public class MoltenArmorItem extends ArmorItem {
 
 	private boolean isLeggings = false;
 
+	/**
+	 * Constructor for MoltenArmorItem.
+	 * @param material the <code>IArmorMaterial</code> for the item
+	 * @param slot the <code>EquipmentSlotType</code>
+	 * @param type type ID
+	 */
 	public MoltenArmorItem(IArmorMaterial material, EquipmentSlotType slot, int type) {
 		super(material, slot, (new Item.Properties().tab(DeferredRegistryHandler.ITEM_GROUP).fireResistant()));
 		if (type == 2) {
@@ -27,11 +33,25 @@ public class MoltenArmorItem extends ArmorItem {
 		}
 	}
 
+	/**
+	 * Get the armor texture.
+	 * @param stack the <code>ItemStack</code> instance
+	 * @param entity the <code>Entity</code> wearing the armor
+	 * @param slot the <code>EquipmentSlotType</code>
+	 * @param type type ID
+	 * @return String
+	 */
 	@Override
 	public String getArmorTexture(ItemStack stack, Entity entity, EquipmentSlotType slot, String type) {
 		return (!isLeggings ? ImmersiveWeapons.MOD_ID + ":textures/armor/molten_layer_1.png" : ImmersiveWeapons.MOD_ID + ":textures/armor/molten_layer_2.png");
 	}
 
+	/**
+	 * Runs once per tick while armor is equipped
+	 * @param stack the <code>ItemStack</code> instance
+	 * @param world the <code>World</code> the player is in
+	 * @param player the <code>PlayerEntity</code> wearing the armor
+	 */
 	@Override
 	public void onArmorTick(ItemStack stack, World world, PlayerEntity player) {
 		if (player.getItemBySlot(EquipmentSlotType.HEAD).getItem() == DeferredRegistryHandler.MOLTEN_HELMET.get() &&

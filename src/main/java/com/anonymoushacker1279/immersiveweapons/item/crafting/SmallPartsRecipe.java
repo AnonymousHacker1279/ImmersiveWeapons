@@ -11,6 +11,7 @@ import net.minecraft.util.JSONUtils;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
+import net.minecraftforge.registries.ForgeRegistryEntry;
 
 public class SmallPartsRecipe implements IRecipe<IInventory> {
 
@@ -19,7 +20,14 @@ public class SmallPartsRecipe implements IRecipe<IInventory> {
 	private final ItemStack result;
 	private final ResourceLocation recipeId;
 
-	public SmallPartsRecipe(ResourceLocation recipeId, Ingredient material, Ingredient blueprint, ItemStack result) {
+	/**
+	 * Constructor for SmallPartsRecipe.
+	 * @param recipeId the <code>ResourceLocation</code> for the recipe
+	 * @param material the first <code>Ingredient</code>
+	 * @param blueprint the second <code>Ingredient</code>
+	 * @param result the result <code>ItemStack</code>
+	 */
+	SmallPartsRecipe(ResourceLocation recipeId, Ingredient material, Ingredient blueprint, ItemStack result) {
 		this.recipeId = recipeId;
 		this.material = material;
 		this.blueprint = blueprint;
@@ -27,19 +35,24 @@ public class SmallPartsRecipe implements IRecipe<IInventory> {
 	}
 
 	/**
-	 * Used to check if a recipe matches current crafting inventory
+	 * Used to check if a recipe matches current crafting inventory.
+	 * @param inv the <code>IInventory</code> instance
+	 * @param worldIn the current <code>World</code>
+	 * @return boolean
 	 */
 	@Override
 	public boolean matches(IInventory inv, World worldIn) {
-		return this.material.test(inv.getItem(0)) && this.blueprint.test(inv.getItem(1));
+		return material.test(inv.getItem(0)) && blueprint.test(inv.getItem(1));
 	}
 
 	/**
-	 * Returns an Item that is the result of this recipe
+	 * Returns an Item that is the result of this recipe.
+	 * @param inv the <code>IInventory</code> instance
+	 * @return ItemStack
 	 */
 	@Override
 	public ItemStack assemble(IInventory inv) {
-		ItemStack itemstack = this.result.copy();
+		ItemStack itemstack = result.copy();
 		CompoundNBT compoundnbt = inv.getItem(0).getTag();
 		if (compoundnbt != null) {
 			itemstack.setTag(compoundnbt.copy());
@@ -49,7 +62,10 @@ public class SmallPartsRecipe implements IRecipe<IInventory> {
 	}
 
 	/**
-	 * Used to determine if this recipe can fit in a grid of the given width/height
+	 * Used to determine if this recipe can fit in a grid of the given width/height.
+	 * @param width the width of the grid
+	 * @param height the height of the grid
+	 * @return boolean
 	 */
 	@Override
 	public boolean canCraftInDimensions(int width, int height) {
@@ -59,36 +75,62 @@ public class SmallPartsRecipe implements IRecipe<IInventory> {
 	/**
 	 * Get the result of this recipe, usually for display purposes (e.g. recipe book). If your recipe has more than one
 	 * possible result (e.g. it's dynamic and depends on its inputs), then return an empty stack.
+	 * @return ItemStack
 	 */
 	@Override
 	public ItemStack getResultItem() {
-		return this.result;
+		return result;
 	}
 
+	/**
+	 * Check if the given ItemStack is a valid addition item.
+	 * @param blueprint the <code>ItemStack</code> instance
+	 * @return boolean
+	 */
 	public boolean isValidAdditionItem(ItemStack blueprint) {
 		return this.blueprint.test(blueprint);
 	}
 
+	/**
+	 * Get the toast symbol.
+	 * @return ItemStack
+	 */
 	@Override
 	public ItemStack getToastSymbol() {
 		return new ItemStack(DeferredRegistryHandler.SMALL_PARTS_TABLE.get());
 	}
 
+	/**
+	 * Get the recipe ID.
+	 * @return ResourceLocation
+	 */
 	@Override
 	public ResourceLocation getId() {
-		return this.recipeId;
+		return recipeId;
 	}
 
+	/**
+	 * Get the recipe serializer.
+	 * @return IRecipeSerializer
+	 */
 	@Override
 	public IRecipeSerializer<?> getSerializer() {
 		return DeferredRegistryHandler.SMALL_PARTS_RECIPE_SERIALIZER.get();
 	}
 
+	/**
+	 * Get the recipe type.
+	 * @return IRecipeType
+	 */
 	@Override
 	public IRecipeType<?> getType() {
 		return ICustomRecipeType.SMALL_PARTS;
 	}
 
+	/**
+	 * Get the recipe's ingredients.
+	 * @return NonNullList extending Ingredient
+	 */
 	@Override
 	public NonNullList<Ingredient> getIngredients() {
 		NonNullList<Ingredient> defaultedList = NonNullList.create();
@@ -97,7 +139,13 @@ public class SmallPartsRecipe implements IRecipe<IInventory> {
 		return defaultedList;
 	}
 
-	public static class Serializer extends net.minecraftforge.registries.ForgeRegistryEntry<IRecipeSerializer<?>> implements IRecipeSerializer<SmallPartsRecipe> {
+	public static class Serializer extends ForgeRegistryEntry<IRecipeSerializer<?>> implements IRecipeSerializer<SmallPartsRecipe> {
+		/**
+		 * Serialize from JSON.
+		 * @param recipeId the <code>ResourceLocation</code> for the recipe
+		 * @param json the <code>JsonObject</code> instance
+		 * @return SmallPartsRecipe
+		 */
 		@Override
 		public SmallPartsRecipe fromJson(ResourceLocation recipeId, JsonObject json) {
 			Ingredient ingredient = Ingredient.fromJson(JSONUtils.getAsJsonObject(json, "material"));
@@ -106,6 +154,12 @@ public class SmallPartsRecipe implements IRecipe<IInventory> {
 			return new SmallPartsRecipe(recipeId, ingredient, ingredient1, itemstack);
 		}
 
+		/**
+		 * Serialize from JSON on the network.
+		 * @param recipeId the <code>ResourceLocation</code> for the recipe
+		 * @param buffer the <code>PacketBuffer</code> instance
+		 * @return SmallPartsRecipe
+		 */
 		@Override
 		public SmallPartsRecipe fromNetwork(ResourceLocation recipeId, PacketBuffer buffer) {
 			Ingredient ingredient = Ingredient.fromNetwork(buffer);
@@ -114,6 +168,11 @@ public class SmallPartsRecipe implements IRecipe<IInventory> {
 			return new SmallPartsRecipe(recipeId, ingredient, ingredient1, itemstack);
 		}
 
+		/**
+		 * Serialize to JSON on the network.
+		 * @param buffer the <code>PacketBuffer</code> instance
+		 * @param recipe the <code>SmallPartsRecipe</code> instance
+		 */
 		@Override
 		public void toNetwork(PacketBuffer buffer, SmallPartsRecipe recipe) {
 			recipe.material.toNetwork(buffer);

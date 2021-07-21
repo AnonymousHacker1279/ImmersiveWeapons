@@ -40,7 +40,7 @@ public class PikeItems {
 			return returnValue;
 		}
 
-		public Ingredient getRepairMaterial() {
+		Ingredient getRepairMaterial() {
 			return Ingredient.of(ItemTags.PLANKS);
 		}
 
@@ -74,7 +74,7 @@ public class PikeItems {
 			return returnValue;
 		}
 
-		public Ingredient getRepairMaterial() {
+		Ingredient getRepairMaterial() {
 			return Ingredient.of(ItemTags.STONE_TOOL_MATERIALS);
 		}
 
@@ -107,7 +107,7 @@ public class PikeItems {
 			return returnValue;
 		}
 
-		public Ingredient getRepairMaterial() {
+		Ingredient getRepairMaterial() {
 			return Ingredient.of(Items.GOLD_INGOT);
 		}
 
@@ -140,7 +140,7 @@ public class PikeItems {
 			return returnValue;
 		}
 
-		public Ingredient getRepairMaterial() {
+		Ingredient getRepairMaterial() {
 			return Ingredient.of(DeferredRegistryHandler.COPPER_INGOT.get());
 		}
 
@@ -173,7 +173,7 @@ public class PikeItems {
 			return returnValue;
 		}
 
-		public Ingredient getRepairMaterial() {
+		Ingredient getRepairMaterial() {
 			return Ingredient.of(Items.IRON_INGOT);
 		}
 
@@ -206,7 +206,7 @@ public class PikeItems {
 			return returnValue;
 		}
 
-		public Ingredient getRepairMaterial() {
+		Ingredient getRepairMaterial() {
 			return Ingredient.of(Items.DIAMOND);
 		}
 
@@ -239,7 +239,7 @@ public class PikeItems {
 			return returnValue;
 		}
 
-		public Ingredient getRepairMaterial() {
+		Ingredient getRepairMaterial() {
 			return Ingredient.of(Items.NETHERITE_INGOT);
 		}
 

@@ -18,10 +18,21 @@ public class UsedSyringeItem extends Item {
 
 	public static final DamageSource damageSource = new DamageSource("immersiveweapons.used_syringe");
 
+	/**
+	 * Constructor for UsedSyringeItem.
+	 * @param properties the <code>Properties</code> for the item
+	 */
 	public UsedSyringeItem(Properties properties) {
 		super(properties);
 	}
 
+	/**
+	 * Runs when the player right-clicks.
+	 * @param worldIn the <code>World</code> the player is in
+	 * @param playerIn the <code>PlayerEntity</code> performing the action
+	 * @param handIn the <code>Hand</code> the player is using
+	 * @return ActionResult extending ItemStack
+	 */
 	@Override
 	public ActionResult<ItemStack> use(World worldIn, PlayerEntity playerIn, Hand handIn) {
 		ItemStack itemstack = playerIn.getItemInHand(handIn);
@@ -34,7 +45,7 @@ public class UsedSyringeItem extends Item {
 					playerIn.hurt(damageSource, 8.0F);
 				}
 			}
-			if (!playerIn.abilities.instabuild) {
+			if (!playerIn.isCreative()) {
 				itemstack.shrink(1);
 			}
 		}
