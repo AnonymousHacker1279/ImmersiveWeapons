@@ -16,13 +16,13 @@ import java.util.Locale;
 
 public class SmokeBombParticleData implements IParticleData {
 
-	public static final Codec<SmokeBombParticleData> CODEC = RecordCodecBuilder.create(
+	static final Codec<SmokeBombParticleData> CODEC = RecordCodecBuilder.create(
 			instance -> instance.group(
 					Codec.INT.fieldOf("tint").forGetter(d -> d.tint.getRGB()),
 					Codec.DOUBLE.fieldOf("diameter").forGetter(d -> d.diameter)
 			).apply(instance, SmokeBombParticleData::new)
 	);
-	public static final IDeserializer<SmokeBombParticleData> DESERIALIZER = new IDeserializer<>() {
+	static final IDeserializer<SmokeBombParticleData> DESERIALIZER = new IDeserializer<SmokeBombParticleData>() {
 
 		/**
 		 * Parse information for spawning particles with commands.
@@ -115,7 +115,7 @@ public class SmokeBombParticleData implements IParticleData {
 	 * Get the diameter of the particle.
 	 * @return double
 	 */
-	public double getDiameter() {
+	double getDiameter() {
 		return diameter;
 	}
 

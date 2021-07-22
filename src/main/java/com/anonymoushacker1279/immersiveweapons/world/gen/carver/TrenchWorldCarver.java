@@ -14,13 +14,30 @@ import java.util.Random;
 import java.util.function.Function;
 
 public class TrenchWorldCarver extends WorldCarver<ProbabilityConfig> {
-	// Most of this is based on the CavernWorldCarver
-	// So its still obfuscated to the moon
 
+	/**
+	 * Constructor for TrenchWorldCarver.
+	 * @param codec the <code>Codec</code> extending ProbabilityConfig
+	 * @param maxHeight the max height
+	 */
 	public TrenchWorldCarver(Codec<ProbabilityConfig> codec, int maxHeight) {
 		super(codec, maxHeight);
 	}
 
+	/**
+	 * Carve an area of land.
+	 * @param chunk the <code>IChunk</code>
+	 * @param biomePos the <code>Function</code>
+	 * @param rand a <code>Random</code> instance
+	 * @param seaLevel the sea level
+	 * @param chunkXOffset the X chunk offset
+	 * @param chunkZOffset the Z chunk offset
+	 * @param chunkX the chunk X position
+	 * @param chunkZ the chunk Z position
+	 * @param carvingMask the <code>BitSet</code> carving mask
+	 * @param config the <code>ProbabilityConfig</code>
+	 * @return boolean
+	 */
 	@Override
 	public boolean carve(IChunk chunk, Function<BlockPos, Biome> biomePos, Random rand, int seaLevel, int chunkXOffset, int chunkZOffset, int chunkX, int chunkZ, BitSet carvingMask, ProbabilityConfig config) {
 		int i = (getRange() * 2 - 1) * 16;
@@ -35,6 +52,24 @@ public class TrenchWorldCarver extends WorldCarver<ProbabilityConfig> {
 		return true;
 	}
 
+	/**
+	 *
+	 * @param chunk the <code>IChunk</code>
+	 * @param biomePos the <code>Function</code>
+	 * @param rand a <code>Random</code> instance
+	 * @param seaLevel the sea level
+	 * @param chunkX the chunk X position
+	 * @param chunkZ the chunk Z position
+	 * @param randOffsetXCoord the random X offset
+	 * @param startY the starting Y level
+	 * @param randOffsetZCoord the random Z offset
+	 * @param int3 an int; not sure what it does because obfuscations
+	 * @param int5 another int; not sure what it does because obfuscations
+	 * @param int4 another int; not sure what it does because obfuscations
+	 * @param int1 another int; not sure what it does because obfuscations
+	 * @param int2 another int; not sure what it does because obfuscations
+	 * @param carvingMask the <code>BitSet</code> carving mask
+	 */
 	private void doMathToCarveRegion(IChunk chunk, Function<BlockPos, Biome> biomePos, long rand, int seaLevel, int chunkX, int chunkZ, double randOffsetXCoord, double startY, double randOffsetZCoord, float int3, float int5, float int4, int int1, int int2, BitSet carvingMask) {
 		Random random = new Random(rand);
 
@@ -68,12 +103,27 @@ public class TrenchWorldCarver extends WorldCarver<ProbabilityConfig> {
 
 	}
 
-
+	/**
+	 * Determine if a chunk is the starting one.
+	 * @param rand a <code>Random</code> instance
+	 * @param chunkX the chunk X position
+	 * @param chunkZ the chunk Z position
+ 	 * @param config the <code>ProbabilityConfig</code> instance
+	 * @return boolean
+	 */
 	@Override
 	public boolean isStartChunk(Random rand, int chunkX, int chunkZ, ProbabilityConfig config) {
 		return rand.nextFloat() <= config.probability;
 	}
 
+	/**
+	 * I believe this checks if a chunk should be skipped. Hard telling though.
+	 * @param double1 a double
+	 * @param double2 another double
+	 * @param double3 another double
+	 * @param double4 another double
+	 * @return boolean
+	 */
 	@Override
 	protected boolean skip(double double1, double double2, double double3, int double4) {
 		return false;

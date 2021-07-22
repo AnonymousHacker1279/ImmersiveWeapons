@@ -29,6 +29,13 @@ public class BattlefieldCampPieces {
 			.put(CENTER, new BlockPos(0, height, 0))
 			.build();
 
+	/**
+	 * Start building structure pieces.
+	 * @param templateManager the <code>TemplateManager</code> instance
+	 * @param pos the <code>BlockPos</code> position
+	 * @param rotation the <code>Rotation</code>
+	 * @param pieceList the <code>List</code> of pieces; must extend StructurePiece
+	 */
 	public static void start(TemplateManager templateManager, BlockPos pos, Rotation rotation, List<StructurePiece> pieceList, Random random) {
 		int x = pos.getX();
 		int z = pos.getZ();
@@ -42,38 +49,65 @@ public class BattlefieldCampPieces {
 		private final ResourceLocation resourceLocation;
 		private final Rotation rotation;
 
-		public Piece(TemplateManager templateManagerIn, ResourceLocation resourceLocationIn, BlockPos pos, Rotation rotationIn) {
+		/**
+		 * Constructor for Piece.
+		 * @param templateManagerIn the <code>TemplateManager</code> instance
+		 * @param resourceLocationIn the <code>ResourceLocation</code> for the piece
+		 * @param pos the <code>BlockPos</code> position
+		 * @param rotationIn the <code>Rotation</code>
+		 */
+		Piece(TemplateManager templateManagerIn, ResourceLocation resourceLocationIn, BlockPos pos, Rotation rotationIn) {
 			super(Structures.BF_C, 0);
-			this.resourceLocation = resourceLocationIn;
+			resourceLocation = resourceLocationIn;
 			BlockPos blockpos = BattlefieldCampPieces.OFFSET.get(resourceLocation);
-			this.templatePosition = pos.offset(blockpos.getX(), blockpos.getY(), blockpos.getZ());
-			this.rotation = rotationIn;
-			this.setupPiece(templateManagerIn);
+			templatePosition = pos.offset(blockpos.getX(), blockpos.getY(), blockpos.getZ());
+			rotation = rotationIn;
+			setupPiece(templateManagerIn);
 		}
 
-		public Piece(TemplateManager templateManagerIn, CompoundNBT tagCompound) {
-			super(Structures.BF_C, tagCompound);
-			this.resourceLocation = new ResourceLocation(tagCompound.getString("Template"));
-			this.rotation = Rotation.valueOf(tagCompound.getString("Rot"));
-			this.setupPiece(templateManagerIn);
+		/**
+		 * Constructor for Piece.
+		 * @param templateManagerIn the <code>TemplateManager</code> instance
+		 * @param nbt the <code>CompoundNBT</code> data
+		 */
+		public Piece(TemplateManager templateManagerIn, CompoundNBT nbt) {
+			super(Structures.BF_C, nbt);
+			resourceLocation = new ResourceLocation(nbt.getString("Template"));
+			rotation = Rotation.valueOf(nbt.getString("Rot"));
+			setupPiece(templateManagerIn);
 		}
 
+		/**
+		 * Setup a piece.
+		 * @param templateManager the <code>TemplateManger</code> instance
+		 */
 		private void setupPiece(TemplateManager templateManager) {
-			Template template = templateManager.getOrCreate(this.resourceLocation);
-			PlacementSettings placementsettings = (new PlacementSettings()).setRotation(this.rotation).setMirror(Mirror.NONE);
-			this.setup(template, this.templatePosition, placementsettings);
+			Template template = templateManager.getOrCreate(resourceLocation);
+			PlacementSettings placementsettings = (new PlacementSettings()).setRotation(rotation).setMirror(Mirror.NONE);
+			setup(template, templatePosition, placementsettings);
 		}
 
+		/**
+		 * Add additional save data to NBT.
+		 * @param nbt the <code>CompoundNBT</code> data
+		 */
 		@Override
-		protected void addAdditionalSaveData(CompoundNBT tagCompound) {
-			super.addAdditionalSaveData(tagCompound);
-			tagCompound.putString("Template", this.resourceLocation.toString());
-			tagCompound.putString("Rot", this.rotation.name());
+		protected void addAdditionalSaveData(CompoundNBT nbt) {
+			super.addAdditionalSaveData(nbt);
+			nbt.putString("Template", resourceLocation.toString());
+			nbt.putString("Rot", rotation.name());
 		}
 
+		/**
+		 * Handle data markers.
+		 * @param function the <code>String</code> function
+		 * @param pos the <code>BlockPos</code> position
+		 * @param worldIn the <code>IServerWorld</code>
+		 * @param rand the <code>Random</code> instance
+		 * @param sbb the <code>MutableBoundingBox</code>
+		 */
 		@Override
 		protected void handleDataMarker(String function, BlockPos pos, IServerWorld worldIn, Random rand, MutableBoundingBox sbb) {
-
 		}
 	}
 }
