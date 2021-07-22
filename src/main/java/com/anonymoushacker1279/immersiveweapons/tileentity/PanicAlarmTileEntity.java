@@ -32,10 +32,16 @@ public class PanicAlarmTileEntity extends TileEntity implements ITickableTileEnt
 	private int cooldown = 0;
 	private int currentlyPlayingSound = 1;
 
+	/**
+	 * Constructor for PanicAlarmTileEntity.
+	 */
 	public PanicAlarmTileEntity() {
 		super(DeferredRegistryHandler.PANIC_ALARM_TILE_ENTITY.get());
 	}
 
+	/**
+	 * Runs once each tick. Handle scanning and spawning entities.
+	 */
 	@Override
 	public void tick() {
 		if (level != null) {
@@ -64,18 +70,34 @@ public class PanicAlarmTileEntity extends TileEntity implements ITickableTileEnt
 		}
 	}
 
+	/**
+	 * Get the power status.
+	 * @return boolean
+	 */
 	public boolean isPowered() {
 		return isPowered;
 	}
 
+	/**
+	 * Set the power status.
+	 * @param isPowered if the device should be powered
+	 */
 	public void setPowered(boolean isPowered) {
 		this.isPowered = isPowered;
 	}
 
-	public void setCooldown(int cooldown) {
+	/**
+	 * Set the cooldown.
+	 * @param cooldown the cooldown time
+	 */
+	private void setCooldown(int cooldown) {
 		this.cooldown = cooldown;
 	}
 
+	/**
+	 * Handle changing of alarm sounds.
+	 * @param activator the <code>PlayerEntity</code> interacting with the tile entity
+	 */
 	public void changeAlarmSound(PlayerEntity activator) {
 		if (currentlyPlayingSound == 1) {
 			currentlyPlayingSound++;
@@ -93,22 +115,31 @@ public class PanicAlarmTileEntity extends TileEntity implements ITickableTileEnt
 		}
 	}
 
+	/**
+	 * Save NBT data.
+	 * @param nbt the <code>CompoundNBT</code> to save
+	 */
 	@Override
-	public CompoundNBT save(CompoundNBT tag) {
-		super.save(tag);
-		tag.putInt("cooldown", cooldown);
-		tag.putBoolean("isPowered", isPowered);
-		tag.putInt("currentlyPlayingSound", currentlyPlayingSound);
-		return tag;
+	public CompoundNBT save(CompoundNBT nbt) {
+		super.save(nbt);
+		nbt.putInt("cooldown", cooldown);
+		nbt.putBoolean("isPowered", isPowered);
+		nbt.putInt("currentlyPlayingSound", currentlyPlayingSound);
+		return nbt;
 	}
 
+	/**
+	 * Load NBT data.
+	 * @param state the <code>BlockState</code> of the block
+	 * @param nbt the <code>CompoundNBT</code> to load
+	 */
 	@Override
-	public void load(BlockState state, CompoundNBT tag) {
-		super.load(state, tag);
+	public void load(BlockState state, CompoundNBT nbt) {
+		super.load(state, nbt);
 
-		cooldown = tag.getInt("cooldown");
-		isPowered = tag.getBoolean("isPowered");
-		currentlyPlayingSound = tag.getInt("currentlyPlayingSound");
+		cooldown = nbt.getInt("cooldown");
+		isPowered = nbt.getBoolean("isPowered");
+		currentlyPlayingSound = nbt.getInt("currentlyPlayingSound");
 	}
 
 	public static class PanicAlarmPacketHandler {
@@ -116,29 +147,53 @@ public class PanicAlarmTileEntity extends TileEntity implements ITickableTileEnt
 		private final int currentlyPlayingSound;
 		private final BlockPos blockPos;
 
-		public PanicAlarmPacketHandler(final int currentlyPlayingSound, final BlockPos blockPos) {
+		/**
+		 * Constructor for PanicAlarmPacketHandler.
+		 * @param currentlyPlayingSound the currently playing sound ID
+		 * @param blockPos the <code>BlockPos</code> to play at
+		 */
+		PanicAlarmPacketHandler(int currentlyPlayingSound, BlockPos blockPos) {
 			this.currentlyPlayingSound = currentlyPlayingSound;
 			this.blockPos = blockPos;
 		}
 
-		public static void encode(final PanicAlarmPacketHandler msg, final PacketBuffer packetBuffer) {
+		/**
+		 * Encodes a packet
+		 * @param msg the <code>PanicAlarmPacketHandler</code> message being sent
+		 * @param packetBuffer the <code>PacketBuffer</code> containing packet data
+		 */
+		public static void encode(PanicAlarmPacketHandler msg, PacketBuffer packetBuffer) {
 			packetBuffer.writeInt(msg.currentlyPlayingSound);
 			packetBuffer.writeBlockPos(msg.blockPos);
 		}
 
-		public static PanicAlarmPacketHandler decode(final PacketBuffer packetBuffer) {
+		/**
+		 * Decodes a packet
+		 * @param packetBuffer the <code>PacketBuffer</code> containing packet data
+		 * @return PanicAlarmPacketHandler
+		 */
+		public static PanicAlarmPacketHandler decode(PacketBuffer packetBuffer) {
 			return new PanicAlarmPacketHandler(packetBuffer.readInt(), packetBuffer.readBlockPos());
 		}
 
-		public static void handle(final PanicAlarmPacketHandler msg, final Supplier<Context> contextSupplier) {
-			final NetworkEvent.Context context = contextSupplier.get();
+		/**
+		 * Handles an incoming packet, by sending it to the client/server
+		 * @param msg the <code>PanicAlarmPacketHandler</code> message being sent
+		 * @param contextSupplier the <code>Supplier</code> providing context
+		 */
+		public static void handle(PanicAlarmPacketHandler msg, Supplier<Context> contextSupplier) {
+			NetworkEvent.Context context = contextSupplier.get();
 			context.enqueueWork(() -> DistExecutor.runWhenOn(Dist.CLIENT, () -> () -> handleOnClient(msg)));
 			context.setPacketHandled(true);
 		}
 
+		/**
+		 * Runs specifically on the client, when a packet is received
+		 * @param msg the <code>PanicAlarmPacketHandler</code> message being sent
+		 */
 		@OnlyIn(Dist.CLIENT)
-		private static void handleOnClient(final PanicAlarmPacketHandler msg) {
-			final int currentlyPlayingSound = msg.currentlyPlayingSound;
+		private static void handleOnClient(PanicAlarmPacketHandler msg) {
+			int currentlyPlayingSound = msg.currentlyPlayingSound;
 			Minecraft minecraft = Minecraft.getInstance();
 			if (minecraft.level != null) {
 				PanicAlarmTileEntity tileEntity = (PanicAlarmTileEntity) minecraft.level.getBlockEntity(msg.blockPos);

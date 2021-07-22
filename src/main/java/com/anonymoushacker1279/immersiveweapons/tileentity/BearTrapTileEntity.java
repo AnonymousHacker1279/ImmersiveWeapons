@@ -29,15 +29,20 @@ public class BearTrapTileEntity extends TileEntity implements ITickableTileEntit
 	private Goal doNothingGoal;
 	private UUID id;
 
-
+	/**
+	 * Constructor for BearTrapTileEntity.
+	 */
 	public BearTrapTileEntity() {
 		super(DeferredRegistryHandler.BEAR_TRAP_TILE_ENTITY.get());
 	}
 
+	/**
+	 * Runs once each tick. Handle trapping and releasing entities.
+	 */
 	@Override
 	public void tick() {
-		final MobEntity trapped = getTrappedEntity();
-		final PlayerEntity trappedPlayer = getTrappedPlayerEntity();
+		MobEntity trapped = getTrappedEntity();
+		PlayerEntity trappedPlayer = getTrappedPlayerEntity();
 
 		if (level != null && !level.isClientSide) {
 			if (trapped != null) {
@@ -63,6 +68,11 @@ public class BearTrapTileEntity extends TileEntity implements ITickableTileEntit
 		}
 	}
 
+	/**
+	 * Load NBT data.
+	 * @param state the <code>BlockState</code> of the block
+	 * @param nbt the <code>CompoundNBT</code> to load
+	 */
 	@Override
 	public void load(BlockState state, CompoundNBT nbt) {
 		super.load(state, nbt);
@@ -71,54 +81,72 @@ public class BearTrapTileEntity extends TileEntity implements ITickableTileEntit
 		}
 	}
 
+	/**
+	 * Save NBT data.
+	 * @param nbt the <code>CompoundNBT</code> to save
+	 */
 	@Override
-	public CompoundNBT save(CompoundNBT compound) {
-		super.save(compound);
+	public CompoundNBT save(CompoundNBT nbt) {
+		super.save(nbt);
 		if (entityliving != null && entityliving.isAlive()) {
-			compound.putUUID("trapped_entity", entityliving.getUUID());
+			nbt.putUUID("trapped_entity", entityliving.getUUID());
 		}
 		if (entitylivingPlayer != null && entitylivingPlayer.isAlive()) {
-			compound.putUUID("trapped_entity", entitylivingPlayer.getUUID());
+			nbt.putUUID("trapped_entity", entitylivingPlayer.getUUID());
 		}
-		return compound;
+		return nbt;
 	}
 
-	public boolean setTrappedEntity(@Nullable MobEntity livingEntity) {
-		if (hasTrappedEntity() && livingEntity != null) {
+	/**
+	 * Set trapped entities
+	 * @param mobEntity the <code>MobEntity</code> to trap
+	 * @return boolean
+	 */
+	public boolean setTrappedEntity(@Nullable MobEntity mobEntity) {
+		if (hasTrappedEntity() && mobEntity != null) {
 			return false;
 		} else {
 
-			if (livingEntity == null) {
+			if (mobEntity == null) {
 				if (entityliving != null) {
 					entityliving.goalSelector.removeGoal(doNothingGoal);
 				}
 				id = null;
 				doNothingGoal = null;
 			} else {
-				livingEntity.hurt(damageSource, 2);
-				livingEntity.goalSelector.getRunningGoals().filter(PrioritizedGoal::isRunning).forEach(PrioritizedGoal::stop);
-				livingEntity.goalSelector.addGoal(0, doNothingGoal = new DoNothingGoal(livingEntity, this));
+				mobEntity.hurt(damageSource, 2);
+				mobEntity.goalSelector.getRunningGoals().filter(PrioritizedGoal::isRunning).forEach(PrioritizedGoal::stop);
+				mobEntity.goalSelector.addGoal(0, doNothingGoal = new DoNothingGoal(mobEntity, this));
 			}
 
-			entityliving = livingEntity;
+			entityliving = mobEntity;
 			return true;
 		}
 	}
 
-	public boolean setTrappedPlayerEntity(@Nullable PlayerEntity livingEntity) {
-		if (hasTrappedPlayerEntity() && livingEntity != null) {
+	/**
+	 * Set trapped players
+	 * @param playerEntity the <code>PlayerEntity</code> to trap
+	 * @return boolean
+	 */
+	public boolean setTrappedPlayerEntity(@Nullable PlayerEntity playerEntity) {
+		if (hasTrappedPlayerEntity() && playerEntity != null) {
 			return false;
 		} else {
 
-			if (livingEntity == null) {
+			if (playerEntity == null) {
 				id = null;
 			}
 
-			entitylivingPlayer = livingEntity;
+			entitylivingPlayer = playerEntity;
 			return true;
 		}
 	}
 
+	/**
+	 * Get trapped entities.
+	 * @return MobEntity
+	 */
 	public MobEntity getTrappedEntity() {
 		if (id != null && level instanceof ServerWorld) {
 			Entity entity = ((ServerWorld) level).getEntity(id);
@@ -129,6 +157,10 @@ public class BearTrapTileEntity extends TileEntity implements ITickableTileEntit
 		return entityliving;
 	}
 
+	/**
+	 * Get trapped players.
+	 * @return PlayerEntity
+	 */
 	public PlayerEntity getTrappedPlayerEntity() {
 		if (id != null && level instanceof ServerWorld) {
 			Entity entity = ((ServerWorld) level).getEntity(id);
@@ -139,15 +171,27 @@ public class BearTrapTileEntity extends TileEntity implements ITickableTileEntit
 		return entitylivingPlayer;
 	}
 
+	/**
+	 * Check for trapped entities.
+	 * @return boolean
+	 */
 	public boolean hasTrappedEntity() {
 		return getTrappedEntity() != null;
 	}
 
+	/**
+	 * Check for trapped players.
+	 * @return boolean
+	 */
 	public boolean hasTrappedPlayerEntity() {
 		return getTrappedPlayerEntity() != null;
 	}
 
-	public boolean isEntityTrapped(final MobEntity trappedEntity) {
+	/**
+	 * Check if a specific entity is trapped.
+	 * @return boolean
+	 */
+	boolean isEntityTrapped(MobEntity trappedEntity) {
 		return getTrappedEntity() == trappedEntity;
 	}
 
@@ -155,12 +199,21 @@ public class BearTrapTileEntity extends TileEntity implements ITickableTileEntit
 		private final MobEntity trappedEntity;
 		private final BearTrapTileEntity trap;
 
-		public DoNothingGoal(MobEntity trappedEntity, BearTrapTileEntity trap) {
+		/**
+		 * Constructor for DoNothingGoal.
+		 * @param trappedEntity the <code>MobEntity</code> instance
+		 * @param trap the <code>BearTrapTileEntity</code> instance
+		 */
+		DoNothingGoal(MobEntity trappedEntity, BearTrapTileEntity trap) {
 			setFlags(EnumSet.of(Goal.Flag.MOVE, Goal.Flag.JUMP));
 			this.trappedEntity = trappedEntity;
 			this.trap = trap;
 		}
 
+		/**
+		 * Check if entities can use the goal.
+		 * @return boolean
+		 */
 		@Override
 		public boolean canUse() {
 			return trap.isEntityTrapped(trappedEntity);

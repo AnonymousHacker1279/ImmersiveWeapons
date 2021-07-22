@@ -2,7 +2,6 @@ package com.anonymoushacker1279.immersiveweapons.container;
 
 import com.anonymoushacker1279.immersiveweapons.container.slot.TeslaSynthesizerFuelSlot;
 import com.anonymoushacker1279.immersiveweapons.container.slot.TeslaSynthesizerResultSlot;
-import com.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
 import com.anonymoushacker1279.immersiveweapons.tileentity.AbstractTeslaSynthesizerTileEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
@@ -12,7 +11,6 @@ import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.ContainerType;
 import net.minecraft.inventory.container.Slot;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
 import net.minecraft.util.IIntArray;
 import net.minecraft.util.IntArray;
 import net.minecraft.world.World;
@@ -21,7 +19,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 
 public abstract class AbstractTeslaSynthesizerContainer extends Container {
 
-	protected final IInventory teslaSynthesizerInventory;
+	private final IInventory teslaSynthesizerInventory;
 	protected final World world;
 	private final IIntArray teslaSynthesizerData;
 
@@ -31,8 +29,8 @@ public abstract class AbstractTeslaSynthesizerContainer extends Container {
 	 * @param id the ID of the container
 	 * @param playerInventory the <code>PlayerInventory</code> instance
 	 */
-	protected AbstractTeslaSynthesizerContainer(ContainerType<?> containerType, int id, PlayerInventory playerInventory) {
-		this(containerType, id, playerInventory, new Inventory(5), new IntArray(5));
+	AbstractTeslaSynthesizerContainer(ContainerType<?> containerType, int id, PlayerInventory playerInventory) {
+		this(containerType, id, playerInventory, new Inventory(5), new IntArray(4));
 	}
 
 	/**
@@ -43,7 +41,7 @@ public abstract class AbstractTeslaSynthesizerContainer extends Container {
 	 * @param iInventory the <code>IInventory</code> instance
 	 * @param iIntArray the <code>IIntArray</code> instance
 	 */
-	protected AbstractTeslaSynthesizerContainer(ContainerType<?> containerType, int id, PlayerInventory playerInventory, IInventory iInventory, IIntArray iIntArray) {
+	AbstractTeslaSynthesizerContainer(ContainerType<?> containerType, int id, PlayerInventory playerInventory, IInventory iInventory, IIntArray iIntArray) {
 		super(containerType, id);
 		checkContainerSize(iInventory, 5);
 		checkContainerDataCount(iIntArray, 4);
@@ -51,26 +49,11 @@ public abstract class AbstractTeslaSynthesizerContainer extends Container {
 		teslaSynthesizerData = iIntArray;
 		world = playerInventory.player.level;
 		// First ingredient slot
-		addSlot(new Slot(iInventory, 0, 6, 17) {
-			@Override
-			public boolean mayPlace(ItemStack stack) {
-				return stack.getItem() == Items.STONE;
-			}
-		});
+		addSlot(new Slot(iInventory, 0, 6, 17));
 		// Second ingredient slot
-		addSlot(new Slot(iInventory, 1, 31, 17) {
-			@Override
-			public boolean mayPlace(ItemStack stack) {
-				return stack.getItem() == Items.LAPIS_LAZULI;
-			}
-		});
+		addSlot(new Slot(iInventory, 1, 31, 17));
 		// Third ingredient slot
-		addSlot(new Slot(iInventory, 2, 56, 17) {
-			@Override
-			public boolean mayPlace(ItemStack stack) {
-				return stack.getItem() == DeferredRegistryHandler.CONDUCTIVE_ALLOY.get();
-			}
-		});
+		addSlot(new Slot(iInventory, 2, 56, 17));
 		// Fuel slot
 		addSlot(new TeslaSynthesizerFuelSlot(this, iInventory, 3, 56, 53));
 		// Result slot

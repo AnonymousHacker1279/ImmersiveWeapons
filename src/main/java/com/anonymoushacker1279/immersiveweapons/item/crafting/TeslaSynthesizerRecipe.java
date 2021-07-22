@@ -15,7 +15,7 @@ import net.minecraftforge.registries.ForgeRegistryEntry;
 
 public class TeslaSynthesizerRecipe implements IRecipe<IInventory> {
 
-	private static int cookTime = 0;
+	private final int cookTime;
 	private final Ingredient blockIngredient;
 	private final Ingredient material1;
 	private final Ingredient material2;
@@ -37,14 +37,14 @@ public class TeslaSynthesizerRecipe implements IRecipe<IInventory> {
 		this.material1 = material1;
 		this.material2 = material2;
 		this.result = result;
-		TeslaSynthesizerRecipe.cookTime = cookTime;
+		this.cookTime = cookTime;
 	}
 
 	/**
 	 * Get the cook time.
 	 * @return int
 	 */
-	public static int getCookTime() {
+	public int getCookTime() {
 		return cookTime;
 	}
 
@@ -157,7 +157,7 @@ public class TeslaSynthesizerRecipe implements IRecipe<IInventory> {
 			Ingredient blockIngredient = Ingredient.fromJson(JSONUtils.getAsJsonObject(json, "block"));
 			Ingredient material1 = Ingredient.fromJson(JSONUtils.getAsJsonObject(json, "material1"));
 			Ingredient material2 = Ingredient.fromJson(JSONUtils.getAsJsonObject(json, "material2"));
-			TeslaSynthesizerRecipe.cookTime = JSONUtils.getAsInt(json, "cookTime");
+			int cookTime = JSONUtils.getAsInt(json, "cookTime");
 			ItemStack result = ShapedRecipe.itemFromJson(JSONUtils.getAsJsonObject(json, "result"));
 			return new TeslaSynthesizerRecipe(recipeId, blockIngredient, material1, material2, result, cookTime);
 		}
@@ -173,7 +173,7 @@ public class TeslaSynthesizerRecipe implements IRecipe<IInventory> {
 			Ingredient blockIngredient = Ingredient.fromNetwork(buffer);
 			Ingredient material1 = Ingredient.fromNetwork(buffer);
 			Ingredient material2 = Ingredient.fromNetwork(buffer);
-			TeslaSynthesizerRecipe.cookTime = buffer.readInt();
+			int cookTime = buffer.readInt();
 			ItemStack result = buffer.readItem();
 			return new TeslaSynthesizerRecipe(recipeId, blockIngredient, material1, material2, result, cookTime);
 		}
