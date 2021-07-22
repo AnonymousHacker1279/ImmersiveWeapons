@@ -2,7 +2,6 @@ package com.anonymoushacker1279.immersiveweapons.tileentity;
 
 import com.anonymoushacker1279.immersiveweapons.block.PanicAlarmBlock;
 import com.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
-import com.anonymoushacker1279.immersiveweapons.util.Option;
 import com.anonymoushacker1279.immersiveweapons.util.PacketHandler;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.Minecraft;
@@ -27,7 +26,6 @@ import java.util.function.Supplier;
 
 public class PanicAlarmTileEntity extends TileEntity implements ITickableTileEntity {
 
-	private final Option.IntOption delay = new Option.IntOption("delay", 2, 1, 30);
 	private boolean isPowered = false;
 	private int cooldown = 0;
 	private int currentlyPlayingSound = 1;
@@ -56,11 +54,9 @@ public class PanicAlarmTileEntity extends TileEntity implements ITickableTileEnt
 					PacketHandler.INSTANCE.send(PacketDistributor.TRACKING_CHUNK.with(() -> level.getChunkAt(tileEntity.worldPosition)), new PanicAlarmPacketHandler(currentlyPlayingSound, worldPosition));
 
 					if (currentlyPlayingSound == 1) {
-						tileEntity.setCooldown(delay.get() * 27);
-					} else if (currentlyPlayingSound == 2) {
-						tileEntity.setCooldown(delay.get() * 120);
-					} else if (currentlyPlayingSound == 3) {
-						tileEntity.setCooldown(delay.get() * 120);
+						tileEntity.setCooldown(60);
+					} else {
+						tileEntity.setCooldown(240);
 					}
 
 					level.setBlock(worldPosition, level.getBlockState(worldPosition).setValue(PanicAlarmBlock.FACING, level.getBlockState(worldPosition).getValue(PanicAlarmBlock.FACING)), 2);

@@ -1,6 +1,6 @@
 package com.anonymoushacker1279.immersiveweapons.util;
 
-import com.anonymoushacker1279.immersiveweapons.item.PikeItem;
+import com.anonymoushacker1279.immersiveweapons.item.AbstractPikeItem;
 import com.anonymoushacker1279.immersiveweapons.item.PikeItems.*;
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.ImmutableMultimap.Builder;
@@ -12,13 +12,16 @@ public class AddAttributesAfterSetup {
 
 	public static boolean hasCompletedClientSetup = false;
 
+	/**
+	 * Initialize attributes which must be applied after setup.
+	 */
 	public static void init() {
 
 		hasCompletedClientSetup = true;
 
 		// Pike Special Attributes
 		Builder<Attribute, AttributeModifier> builder = ImmutableMultimap.builder();
-		ImmutableMultimap<Attribute, AttributeModifier> newAttributes = builder.put(ForgeMod.REACH_DISTANCE.get(), new AttributeModifier(PikeItem.ATTACK_REACH_MODIFIER, "Weapon modifier", 0.5d, AttributeModifier.Operation.ADDITION)).build();
+		ImmutableMultimap<Attribute, AttributeModifier> newAttributes = builder.put(ForgeMod.REACH_DISTANCE.get(), new AttributeModifier(AbstractPikeItem.ATTACK_REACH_MODIFIER, "Weapon modifier", 0.5d, AttributeModifier.Operation.ADDITION)).build();
 		Builder<Attribute, AttributeModifier> combineBuilder = ImmutableMultimap.builder();
 
 		// Wood Pike Item

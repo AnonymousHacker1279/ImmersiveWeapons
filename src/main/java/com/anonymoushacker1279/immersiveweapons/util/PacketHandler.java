@@ -23,6 +23,9 @@ public class PacketHandler {
 			PROTOCOL_VERSION::equals
 	);
 
+	/**
+	 * Register packet information.
+	 */
 	public static void registerPackets() {
 		int networkId = 0;
 		PacketHandler.INSTANCE.registerMessage(networkId++,

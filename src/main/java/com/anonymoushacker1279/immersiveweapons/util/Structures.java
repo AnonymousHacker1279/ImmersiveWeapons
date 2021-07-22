@@ -40,14 +40,26 @@ public class Structures {
 	public static IStructurePieceType CI = CloudIslandPieces.Piece::new;
 	public static IStructurePieceType CS = CampsitePieces.Piece::new;
 
+	/**
+	 * Initialize the deferred registry structures.
+	 */
 	public static void init() {
 		DEFERRED_REGISTRY_STRUCTURE.register(FMLJavaModLoadingContext.get().getModEventBus());
 	}
 
+	/**
+	 * Setup a structure.
+	 * @param name the structure name
+	 * @param structure the <code>Supplier</code> for the structure
+	 * @return RegistryObject
+	 */
 	private static <T extends Structure<?>> RegistryObject<T> setupStructure(String name, Supplier<T> structure) {
 		return DEFERRED_REGISTRY_STRUCTURE.register(name, structure);
 	}
 
+	/**
+	 * Setup structures.
+	 */
 	public static void setupStructures() {
 		setupStructure(
 				ABANDONED_FACTORY.get(),
@@ -114,10 +126,13 @@ public class Structures {
 				true);
 	}
 
-	public static <F extends Structure<?>> void setupStructure(
-			F structure,
-			StructureSeparationSettings structureSeparationSettings,
-			boolean transformSurroundingLand) {
+	/**
+	 * Setup structure with separation settings and transforms.
+	 * @param structure the structure
+	 * @param structureSeparationSettings the <code>StructureSeparationSettings</code>
+	 * @param transformSurroundingLand if the structure should transform surrounding land
+	 */
+	private static <F extends Structure<?>> void setupStructure(F structure, StructureSeparationSettings structureSeparationSettings, boolean transformSurroundingLand) {
 		Structure.STRUCTURES_REGISTRY.put(Objects.requireNonNull(structure.getRegistryName()).toString(), structure);
 
 		/*
@@ -138,6 +153,9 @@ public class Structures {
 						.build();
 	}
 
+	/**
+	 * Register pieces.
+	 */
 	public static void registerAllPieces() {
 		registerStructurePiece(AF, new ResourceLocation(ImmersiveWeapons.MOD_ID, "af"));
 		registerStructurePiece(PT, new ResourceLocation(ImmersiveWeapons.MOD_ID, "pt"));
@@ -149,8 +167,13 @@ public class Structures {
 		registerStructurePiece(CS, new ResourceLocation(ImmersiveWeapons.MOD_ID, "cs"));
 	}
 
-	static void registerStructurePiece(IStructurePieceType structurePiece, ResourceLocation rl) {
-		Registry.register(Registry.STRUCTURE_PIECE, rl, structurePiece);
+	/**
+	 * Register a structure piece.
+	 * @param structurePiece the <code>IStructurePieceType</code>
+	 * @param resourceLocation the <code>ResourceLocation</code> of the piece
+	 */
+	private static void registerStructurePiece(IStructurePieceType structurePiece, ResourceLocation resourceLocation) {
+		Registry.register(Registry.STRUCTURE_PIECE, resourceLocation, structurePiece);
 	}
 
 }

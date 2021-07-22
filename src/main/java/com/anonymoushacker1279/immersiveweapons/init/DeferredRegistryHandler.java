@@ -455,7 +455,7 @@ public class DeferredRegistryHandler {
 	// Biomes
 	public static final RegistryObject<Biome> BATTLEFIELD = BIOMES.register("battlefield", () -> BiomeBuilder.makeBattlefieldBiome(
 			BiomeBuilder.getSurfaceBuilder(ConfiguredSurfaceBuilders.BATTLEFIELD),
-			0.18f, 0.1f, true)
+			0.18f, 0.1f)
 	);
 
 	// World Carvers

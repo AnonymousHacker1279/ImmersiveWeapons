@@ -40,55 +40,100 @@ public enum CustomArmorMaterials implements IArmorMaterial {
 	private final LazyValue<Ingredient> repairMaterial;
 	private final float knockbackResistance;
 
-	CustomArmorMaterials(String nameIn, int maxDamageFactorIn, int[] damageReductionAmountsIn, int enchantabilityIn, SoundEvent equipSoundIn, float toughnessIn, Supplier<Ingredient> repairMaterialSupplier, float knockbackResistance) {
-		this.name = nameIn;
-		this.maxDamageFactor = maxDamageFactorIn;
-		this.damageReductionAmountArray = damageReductionAmountsIn;
-		this.enchantability = enchantabilityIn;
-		this.soundEvent = equipSoundIn;
-		this.toughness = toughnessIn;
-		this.repairMaterial = new LazyValue<>(repairMaterialSupplier);
-		this.knockbackResistance = knockbackResistance;
+	/**
+	 * Constructor for CustomArmorMaterials.
+	 * @param nameIn the material name
+	 * @param maxDamageFactorIn the max damage factor
+	 * @param damageReductionAmountsIn the reduction amount
+	 * @param enchantabilityIn the enchantability level
+	 * @param equipSoundIn the equip <code>SoundEvent</code>
+	 * @param toughnessIn the toughness level
+	 * @param repairMaterialSupplier the <code>Supplier</code> extending Ingredient for repairs
+	 * @param knockbackResistanceIn the knockback resistance
+	 */
+	CustomArmorMaterials(String nameIn, int maxDamageFactorIn, int[] damageReductionAmountsIn, int enchantabilityIn, SoundEvent equipSoundIn, float toughnessIn, Supplier<Ingredient> repairMaterialSupplier, float knockbackResistanceIn) {
+		name = nameIn;
+		maxDamageFactor = maxDamageFactorIn;
+		damageReductionAmountArray = damageReductionAmountsIn;
+		enchantability = enchantabilityIn;
+		soundEvent = equipSoundIn;
+		toughness = toughnessIn;
+		repairMaterial = new LazyValue<>(repairMaterialSupplier);
+		knockbackResistance = knockbackResistanceIn;
 	}
 
+	/**
+	 * Get durability for a slot.
+	 * @param slotIn the <code>EquipmentSlotType</code>
+	 * @return int
+	 */
 	@Override
 	public int getDurabilityForSlot(EquipmentSlotType slotIn) {
-		return MAX_DAMAGE_ARRAY[slotIn.getIndex()] * this.maxDamageFactor;
+		return MAX_DAMAGE_ARRAY[slotIn.getIndex()] * maxDamageFactor;
 	}
 
+	/**
+	 * Get the defense for a slot.
+	 * @param slotIn the <code>EquipmentSlotType</code>
+	 * @return int
+	 */
 	@Override
 	public int getDefenseForSlot(EquipmentSlotType slotIn) {
-		return this.damageReductionAmountArray[slotIn.getIndex()];
+		return damageReductionAmountArray[slotIn.getIndex()];
 	}
 
+	/**
+	 * Get the enchantment value.
+	 * @return int
+	 */
 	@Override
 	public int getEnchantmentValue() {
-		return this.enchantability;
+		return enchantability;
 	}
 
+	/**
+	 * Get the equip sound.
+	 * @return SoundEvent
+	 */
 	@Override
 	public SoundEvent getEquipSound() {
-		return this.soundEvent;
+		return soundEvent;
 	}
 
+	/**
+	 * Get the repair ingredient.
+	 * @return Ingredient
+	 */
 	@Override
 	public Ingredient getRepairIngredient() {
-		return this.repairMaterial.get();
+		return repairMaterial.get();
 	}
 
+	/**
+	 * Get the name.
+	 * @return String
+	 */
 	@Override
 	@OnlyIn(Dist.CLIENT)
 	public String getName() {
-		return this.name;
+		return name;
 	}
 
+	/**
+	 * Get the toughness.
+	 * @return float
+	 */
 	@Override
 	public float getToughness() {
-		return this.toughness;
+		return toughness;
 	}
 
+	/**
+	 * Get the knockback resistance.
+	 * @return float
+	 */
 	@Override
 	public float getKnockbackResistance() {
-		return this.knockbackResistance;
+		return knockbackResistance;
 	}
 }
