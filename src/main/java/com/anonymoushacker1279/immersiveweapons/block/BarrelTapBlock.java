@@ -33,19 +33,37 @@ public class BarrelTapBlock extends HorizontalBlock implements IWaterLoggable {
 	public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
 	private String directionToUse = "north"; // Default: check North for a barrel
 
+	/**
+	 * Constructor for BarrelTapBlock.
+	 * @param properties the <code>Properties</code> of the block
+	 */
 	public BarrelTapBlock(Properties properties) {
 		super(properties);
 		registerDefaultState(stateDefinition.any().setValue(FACING, Direction.NORTH).setValue(WATERLOGGED, false));
 	}
 
+	/**
+	 * Set FluidState properties.
+	 * Allows the block to exhibit waterlogged behavior.
+	 * @param state the <code>BlockState</code> of the block
+	 * @return FluidState
+	 */
 	@Override
 	public FluidState getFluidState(BlockState state) {
 		return state.getValue(WATERLOGGED) ? Fluids.WATER.getSource(false) : super.getFluidState(state);
 	}
 
+	/**
+	 * Set the shape of the block.
+	 * @param state the <code>BlockState</code> of the block
+	 * @param reader the <code>IBlockReader</code> for the block
+	 * @param pos the <code>BlockPos</code> the block is at
+	 * @param selectionContext the <code>ISelectionContext</code> of the block
+	 * @return VoxelShape
+	 */
 	@Override
-	public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
-		Vector3d vector3d = state.getOffset(worldIn, pos);
+	public VoxelShape getShape(BlockState state, IBlockReader reader, BlockPos pos, ISelectionContext selectionContext) {
+		Vector3d vector3d = state.getOffset(reader, pos);
 		switch (state.getValue(FACING)) {
 			case NORTH:
 			default:
@@ -59,18 +77,39 @@ public class BarrelTapBlock extends HorizontalBlock implements IWaterLoggable {
 		}
 	}
 
+	/**
+	 * Create the BlockState definition.
+	 * @param builder the <code>StateContainer.Builder</code> of the block
+	 */
 	@Override
 	public void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder) {
 		builder.add(FACING, WATERLOGGED);
 	}
 
+	/**
+	 * Set placement properties.
+	 * Sets the facing direction of the block for placement.
+	 * @param context the <code>BlockItemUseContext</code> during placement
+	 * @return BlockState
+	 */
 	@Override
 	public BlockState getStateForPlacement(BlockItemUseContext context) {
 		return defaultBlockState().setValue(FACING, context.getHorizontalDirection().getOpposite());
 	}
 
+	/**
+	 * Runs when the block is activated.
+	 * Allows the block to respond to user interaction.
+	 * @param state the <code>BlockState</code> of the block
+	 * @param worldIn the <code>World</code> the block is in
+	 * @param pos the <code>BlockPos</code> the block is at
+	 * @param player the <code>PlayerEntity</code> interacting with the block
+	 * @param handIn the <code>Hand</code> the PlayerEntity used
+	 * @param blockRayTraceResult the <code>BlockRayTraceResult</code> of the interaction
+	 * @return ActionResultType
+	 */
 	@Override
-	public ActionResultType use(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
+	public ActionResultType use(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult blockRayTraceResult) {
 		BlockState blockStateNorth = worldIn.getBlockState(pos.north());
 		BlockState blockStateSouth = worldIn.getBlockState(pos.south());
 		BlockState blockStateEast = worldIn.getBlockState(pos.east());
@@ -123,7 +162,7 @@ public class BarrelTapBlock extends HorizontalBlock implements IWaterLoggable {
 							if (player.getMainHandItem().getItem() == Items.GLASS_BOTTLE) {
 								player.addItem(new ItemStack(DeferredRegistryHandler.BOTTLE_OF_ALCOHOL.get()));
 								itemStack.shrink(16);
-								if (!player.abilities.instabuild) {
+								if (!player.isCreative()) {
 									player.getMainHandItem().shrink(1);
 								}
 								i = ((IInventory) tileEntity).getContainerSize();
@@ -134,7 +173,7 @@ public class BarrelTapBlock extends HorizontalBlock implements IWaterLoggable {
 							if (player.getMainHandItem().getItem() == Items.GLASS_BOTTLE) {
 								player.addItem(new ItemStack(DeferredRegistryHandler.BOTTLE_OF_WINE.get()));
 								itemStack.shrink(16);
-								if (!player.abilities.instabuild) {
+								if (!player.isCreative()) {
 									player.getMainHandItem().shrink(1);
 								}
 								i = ((IInventory) tileEntity).getContainerSize();

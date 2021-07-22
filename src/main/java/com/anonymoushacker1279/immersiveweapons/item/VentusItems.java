@@ -19,13 +19,27 @@ import net.minecraft.world.World;
 
 import java.util.List;
 
-public class VentusItem {
+public class VentusItems {
 
 	public static class VentusSword extends SwordItem {
-		public VentusSword(IItemTier tier, int attackDamageIn, float attackSpeedIn, Properties tab) {
-			super(tier, attackDamageIn, attackSpeedIn, new Item.Properties().tab(DeferredRegistryHandler.ITEM_GROUP));
+		/**
+		 * Constructor for VentusSword.
+		 * @param tier the <code>IItemTier</code>
+		 * @param attackDamageIn attack damage
+		 * @param attackSpeedIn attack speed
+		 * @param properties the <code>Properties</code> for the item
+		 */
+		public VentusSword(IItemTier tier, int attackDamageIn, float attackSpeedIn, Properties properties) {
+			super(tier, attackDamageIn, attackSpeedIn, properties);
 		}
 
+		/**
+		 * Runs when an entity is hit.
+		 * @param itemStack the <code>ItemStack</code> instance
+		 * @param livingEntity the <code>LivingEntity</code> attacking
+		 * @param livingEntity1 the <code>LivingEntity</code> being hit
+		 * @return boolean
+		 */
 		@Override
 		public boolean hurtEnemy(ItemStack itemStack, LivingEntity livingEntity, LivingEntity livingEntity1) {
 			livingEntity.addEffect(new EffectInstance(Effects.LEVITATION, 60, 2, false, false));
@@ -34,11 +48,24 @@ public class VentusItem {
 	}
 
 	public static class VentusAxe extends AxeItem {
-
-		public VentusAxe(IItemTier tier, int attackDamageIn, float attackSpeedIn) {
-			super(tier, attackDamageIn, attackSpeedIn, new Item.Properties().tab(DeferredRegistryHandler.ITEM_GROUP).fireResistant());
+		/**
+		 * Constructor for VentusAxe.
+		 * @param tier the <code>IItemTier</code>
+		 * @param attackDamageIn attack damage
+		 * @param attackSpeedIn attack speed
+		 * @param properties the <code>Properties</code> for the item
+		 */
+		public VentusAxe(IItemTier tier, int attackDamageIn, float attackSpeedIn, Properties properties) {
+			super(tier, attackDamageIn, attackSpeedIn, properties);
 		}
 
+		/**
+		 * Runs when an entity is hit.
+		 * @param itemStack the <code>ItemStack</code> instance
+		 * @param livingEntity the <code>LivingEntity</code> attacking
+		 * @param livingEntity1 the <code>LivingEntity</code> being hit
+		 * @return boolean
+		 */
 		@Override
 		public boolean hurtEnemy(ItemStack itemStack, LivingEntity livingEntity, LivingEntity livingEntity1) {
 			livingEntity.addEffect(new EffectInstance(Effects.LEVITATION, 60, 2, false, false));
@@ -47,11 +74,24 @@ public class VentusItem {
 	}
 
 	public static class VentusPickaxe extends PickaxeItem {
-
-		public VentusPickaxe(IItemTier tier, int attackDamageIn, float attackSpeedIn) {
-			super(tier, attackDamageIn, attackSpeedIn, new Item.Properties().tab(DeferredRegistryHandler.ITEM_GROUP).fireResistant());
+		/**
+		 * Constructor for VentusPickaxe.
+		 * @param tier the <code>IItemTier</code>
+		 * @param attackDamageIn attack damage
+		 * @param attackSpeedIn attack speed
+		 * @param properties the <code>Properties</code> for the item
+		 */
+		public VentusPickaxe(IItemTier tier, int attackDamageIn, float attackSpeedIn, Properties properties) {
+			super(tier, attackDamageIn, attackSpeedIn, properties);
 		}
 
+		/**
+		 * Runs when an entity is hit.
+		 * @param itemStack the <code>ItemStack</code> instance
+		 * @param livingEntity the <code>LivingEntity</code> attacking
+		 * @param livingEntity1 the <code>LivingEntity</code> being hit
+		 * @return boolean
+		 */
 		@Override
 		public boolean hurtEnemy(ItemStack itemStack, LivingEntity livingEntity, LivingEntity livingEntity1) {
 			livingEntity.addEffect(new EffectInstance(Effects.LEVITATION, 60, 2, false, false));
@@ -60,11 +100,24 @@ public class VentusItem {
 	}
 
 	public static class VentusShovel extends ShovelItem {
-
-		public VentusShovel(IItemTier tier, int attackDamageIn, float attackSpeedIn) {
-			super(tier, attackDamageIn, attackSpeedIn, new Item.Properties().tab(DeferredRegistryHandler.ITEM_GROUP).fireResistant());
+		/**
+		 * Constructor for VentusShovel.
+		 * @param tier the <code>IItemTier</code>
+		 * @param attackDamageIn attack damage
+		 * @param attackSpeedIn attack speed
+		 * @param properties the <code>Properties</code> for the item
+		 */
+		public VentusShovel(IItemTier tier, int attackDamageIn, float attackSpeedIn, Properties properties) {
+			super(tier, attackDamageIn, attackSpeedIn, properties);
 		}
 
+		/**
+		 * Runs when an entity is hit.
+		 * @param itemStack the <code>ItemStack</code> instance
+		 * @param livingEntity the <code>LivingEntity</code> attacking
+		 * @param livingEntity1 the <code>LivingEntity</code> being hit
+		 * @return boolean
+		 */
 		@Override
 		public boolean hurtEnemy(ItemStack itemStack, LivingEntity livingEntity, LivingEntity livingEntity1) {
 			livingEntity.addEffect(new EffectInstance(Effects.LEVITATION, 60, 2, false, false));
@@ -73,11 +126,24 @@ public class VentusItem {
 	}
 
 	public static class VentusHoe extends HoeItem {
-
-		public VentusHoe(IItemTier tier, int attackDamageIn, float attackSpeedIn) {
-			super(tier, attackDamageIn, attackSpeedIn, new Item.Properties().tab(DeferredRegistryHandler.ITEM_GROUP).fireResistant());
+		/**
+		 * Constructor for VentusHoe.
+		 * @param tier the <code>IItemTier</code>
+		 * @param attackDamageIn attack damage
+		 * @param attackSpeedIn attack speed
+		 * @param properties the <code>Properties</code> for the item
+		 */
+		public VentusHoe(IItemTier tier, int attackDamageIn, float attackSpeedIn, Properties properties) {
+			super(tier, attackDamageIn, attackSpeedIn, properties);
 		}
 
+		/**
+		 * Runs when an entity is hit.
+		 * @param itemStack the <code>ItemStack</code> instance
+		 * @param livingEntity the <code>LivingEntity</code> attacking
+		 * @param livingEntity1 the <code>LivingEntity</code> being hit
+		 * @return boolean
+		 */
 		@Override
 		public boolean hurtEnemy(ItemStack itemStack, LivingEntity livingEntity, LivingEntity livingEntity1) {
 			livingEntity.addEffect(new EffectInstance(Effects.LEVITATION, 60, 2, false, false));
@@ -89,10 +155,21 @@ public class VentusItem {
 
 		private boolean pushedEntity = false;
 
+		/**
+		 * Constructor for VentusStaff.
+		 * @param properties the <code>Properties</code> for the item
+		 */
 		public VentusStaff(Properties properties) {
 			super(properties);
 		}
 
+		/**
+		 * Runs when the player right-clicks.
+		 * @param worldIn the <code>World</code> the player is in
+		 * @param playerIn the <code>PlayerEntity</code> performing the action
+		 * @param handIn the <code>Hand</code> the player is using
+		 * @return ActionResult extending ItemStack
+		 */
 		@Override
 		public ActionResult<ItemStack> use(World worldIn, PlayerEntity playerIn, Hand handIn) {
 			ItemStack itemstack = playerIn.getItemInHand(handIn);
@@ -124,6 +201,12 @@ public class VentusItem {
 			return ActionResult.sidedSuccess(itemstack, worldIn.isClientSide());
 		}
 
+		/**
+		 * Check for a valid repair item.
+		 * @param toRepair the <code>ItemStack</code> being repaired
+		 * @param repair the <code>ItemStack</code> to repair the first one
+		 * @return boolean
+		 */
 		@Override
 		public boolean isValidRepairItem(ItemStack toRepair, ItemStack repair) {
 			return repair.getItem() == DeferredRegistryHandler.VENTUS_SHARD.get();

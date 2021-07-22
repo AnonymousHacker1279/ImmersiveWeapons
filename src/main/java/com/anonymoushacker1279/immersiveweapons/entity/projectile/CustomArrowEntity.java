@@ -5,22 +5,17 @@ import com.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
 import com.anonymoushacker1279.immersiveweapons.util.Config;
 import com.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
 import com.anonymoushacker1279.immersiveweapons.util.PacketHandler;
-import net.minecraft.block.BlockState;
 import net.minecraft.client.Minecraft;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.AbstractArrowEntity;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.network.IPacket;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.particles.IParticleData;
-import net.minecraft.particles.ParticleTypes;
 import net.minecraft.util.SoundCategory;
-import net.minecraft.util.math.*;
-import net.minecraft.util.math.shapes.VoxelShape;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
@@ -28,7 +23,6 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.network.NetworkEvent;
 import net.minecraftforge.fml.network.NetworkEvent.Context;
-import net.minecraftforge.fml.network.NetworkHooks;
 import net.minecraftforge.fml.network.PacketDistributor;
 
 import java.awt.*;
@@ -36,150 +30,193 @@ import java.util.function.Supplier;
 
 public class CustomArrowEntity {
 
-	public static class CopperArrowEntity extends AbstractArrowEntity {
-		private final Item referenceItem;
+	public static class CopperArrowEntity extends AbstractCustomArrowEntity {
 
+		/**
+		 * Constructor for CopperArrowEntity.
+		 * @param type the <code>EntityType</code> instance; must extend AbstractArrowEntity
+		 * @param world the <code>World</code> the entity is in
+		 */
 		public CopperArrowEntity(EntityType<? extends AbstractArrowEntity> type, World world) {
 			super(type, world);
 			referenceItem = DeferredRegistryHandler.COPPER_ARROW.get();
 		}
 
+		/**
+		 * Constructor for CopperArrowEntity.
+		 * @param shooter the <code>LivingEntity</code> shooting the entity
+		 * @param world the <code>World</code> the entity is in
+		 * @param referenceItemIn the reference item
+		 */
 		public CopperArrowEntity(LivingEntity shooter, World world, Item referenceItemIn) {
 			super(DeferredRegistryHandler.COPPER_ARROW_ENTITY.get(), shooter, world);
 			referenceItem = referenceItemIn;
 		}
 
+		/**
+		 * Constructor for CopperArrowEntity.
+		 * @param worldIn the <code>World</code> the entity is in
+		 * @param x the X position
+		 * @param y the Y position
+		 * @param z the Z position
+		 */
 		public CopperArrowEntity(World worldIn, double x, double y, double z) {
-			super(DeferredRegistryHandler.COPPER_ARROW_ENTITY.get(), x, y, z, worldIn);
+			super(DeferredRegistryHandler.COPPER_ARROW_ENTITY.get(), worldIn, x, y, z);
 			referenceItem = DeferredRegistryHandler.COPPER_ARROW.get();
-		}
-
-		@Override
-		public ItemStack getPickupItem() {
-			return new ItemStack(referenceItem);
-		}
-
-		@Override
-		public IPacket<?> getAddEntityPacket() {
-			return NetworkHooks.getEntitySpawningPacket(this);
 		}
 	}
 
-	public static class IronArrowEntity extends AbstractArrowEntity {
-		private final Item referenceItem;
+	public static class IronArrowEntity extends AbstractCustomArrowEntity {
 
+		/**
+		 * Constructor for IronArrowEntity.
+		 * @param type the <code>EntityType</code> instance; must extend AbstractArrowEntity
+		 * @param world the <code>World</code> the entity is in
+		 */
 		public IronArrowEntity(EntityType<? extends AbstractArrowEntity> type, World world) {
 			super(type, world);
 			referenceItem = DeferredRegistryHandler.IRON_ARROW.get();
 		}
 
+		/**
+		 * Constructor for IronArrowEntity.
+		 * @param shooter the <code>LivingEntity</code> shooting the entity
+		 * @param world the <code>World</code> the entity is in
+		 * @param referenceItemIn the reference item
+		 */
 		public IronArrowEntity(LivingEntity shooter, World world, Item referenceItemIn) {
 			super(DeferredRegistryHandler.IRON_ARROW_ENTITY.get(), shooter, world);
 			referenceItem = referenceItemIn;
 		}
 
+		/**
+		 * Constructor for IronArrowEntity.
+		 * @param worldIn the <code>World</code> the entity is in
+		 * @param x the X position
+		 * @param y the Y position
+		 * @param z the Z position
+		 */
 		public IronArrowEntity(World worldIn, double x, double y, double z) {
-			super(DeferredRegistryHandler.IRON_ARROW_ENTITY.get(), x, y, z, worldIn);
+			super(DeferredRegistryHandler.IRON_ARROW_ENTITY.get(), worldIn, x, y, z);
 			referenceItem = DeferredRegistryHandler.IRON_ARROW.get();
-		}
-
-		@Override
-		public ItemStack getPickupItem() {
-			return new ItemStack(referenceItem);
-		}
-
-		@Override
-		public IPacket<?> getAddEntityPacket() {
-			return NetworkHooks.getEntitySpawningPacket(this);
 		}
 	}
 
-	public static class DiamondArrowEntity extends AbstractArrowEntity {
-		private final Item referenceItem;
+	public static class DiamondArrowEntity extends AbstractCustomArrowEntity {
 
+		/**
+		 * Constructor for DiamondArrowEntity.
+		 * @param type the <code>EntityType</code> instance; must extend AbstractArrowEntity
+		 * @param world the <code>World</code> the entity is in
+		 */
 		public DiamondArrowEntity(EntityType<? extends AbstractArrowEntity> type, World world) {
 			super(type, world);
 			referenceItem = DeferredRegistryHandler.DIAMOND_ARROW.get();
 		}
 
+		/**
+		 * Constructor for DiamondArrowEntity.
+		 * @param shooter the <code>LivingEntity</code> shooting the entity
+		 * @param world the <code>World</code> the entity is in
+		 * @param referenceItemIn the reference item
+		 */
 		public DiamondArrowEntity(LivingEntity shooter, World world, Item referenceItemIn) {
 			super(DeferredRegistryHandler.DIAMOND_ARROW_ENTITY.get(), shooter, world);
 			referenceItem = referenceItemIn;
 		}
 
+		/**
+		 * Constructor for DiamondArrowEntity.
+		 * @param worldIn the <code>World</code> the entity is in
+		 * @param x the X position
+		 * @param y the Y position
+		 * @param z the Z position
+		 */
 		public DiamondArrowEntity(World worldIn, double x, double y, double z) {
-			super(DeferredRegistryHandler.DIAMOND_ARROW_ENTITY.get(), x, y, z, worldIn);
+			super(DeferredRegistryHandler.DIAMOND_ARROW_ENTITY.get(), worldIn, x, y, z);
 			referenceItem = DeferredRegistryHandler.DIAMOND_ARROW.get();
-		}
-
-		@Override
-		public ItemStack getPickupItem() {
-			return new ItemStack(referenceItem);
-		}
-
-		@Override
-		public IPacket<?> getAddEntityPacket() {
-			return NetworkHooks.getEntitySpawningPacket(this);
 		}
 	}
 
-	public static class GoldArrowEntity extends AbstractArrowEntity {
-		private final Item referenceItem;
+	public static class GoldArrowEntity extends AbstractCustomArrowEntity {
 
+		/**
+		 * Constructor for GoldArrowEntity.
+		 * @param type the <code>EntityType</code> instance; must extend AbstractArrowEntity
+		 * @param world the <code>World</code> the entity is in
+		 */
 		public GoldArrowEntity(EntityType<? extends AbstractArrowEntity> type, World world) {
 			super(type, world);
 			referenceItem = DeferredRegistryHandler.GOLD_ARROW.get();
 		}
 
+		/**
+		 * Constructor for GoldArrowEntity.
+		 * @param shooter the <code>LivingEntity</code> shooting the entity
+		 * @param world the <code>World</code> the entity is in
+		 * @param referenceItemIn the reference item
+		 */
 		public GoldArrowEntity(LivingEntity shooter, World world, Item referenceItemIn) {
 			super(DeferredRegistryHandler.GOLD_ARROW_ENTITY.get(), shooter, world);
 			referenceItem = referenceItemIn;
 		}
 
+		/**
+		 * Constructor for GoldArrowEntity.
+		 * @param worldIn the <code>World</code> the entity is in
+		 * @param x the X position
+		 * @param y the Y position
+		 * @param z the Z position
+		 */
 		public GoldArrowEntity(World worldIn, double x, double y, double z) {
-			super(DeferredRegistryHandler.GOLD_ARROW_ENTITY.get(), x, y, z, worldIn);
+			super(DeferredRegistryHandler.GOLD_ARROW_ENTITY.get(), worldIn, x, y, z);
 			referenceItem = DeferredRegistryHandler.GOLD_ARROW.get();
-		}
-
-		@Override
-		public ItemStack getPickupItem() {
-			return new ItemStack(referenceItem);
-		}
-
-		@Override
-		public IPacket<?> getAddEntityPacket() {
-			return NetworkHooks.getEntitySpawningPacket(this);
 		}
 	}
 
-	public static class StoneArrowEntity extends AbstractArrowEntity {
-		private final Item referenceItem;
+	public static class StoneArrowEntity extends AbstractCustomArrowEntity {
 
+		/**
+		 * Constructor for StoneArrowEntity.
+		 * @param type the <code>EntityType</code> instance; must extend AbstractArrowEntity
+		 * @param world the <code>World</code> the entity is in
+		 */
 		public StoneArrowEntity(EntityType<? extends AbstractArrowEntity> type, World world) {
 			super(type, world);
 			referenceItem = DeferredRegistryHandler.STONE_ARROW.get();
 		}
 
+		/**
+		 * Constructor for StoneArrowEntity.
+		 * @param shooter the <code>LivingEntity</code> shooting the entity
+		 * @param world the <code>World</code> the entity is in
+		 * @param referenceItemIn the reference item
+		 */
 		public StoneArrowEntity(LivingEntity shooter, World world, Item referenceItemIn) {
 			super(DeferredRegistryHandler.STONE_ARROW_ENTITY.get(), shooter, world);
 			referenceItem = referenceItemIn;
 		}
 
+		/**
+		 * Constructor for StoneArrowEntity.
+		 * @param worldIn the <code>World</code> the entity is in
+		 * @param x the X position
+		 * @param y the Y position
+		 * @param z the Z position
+		 */
 		public StoneArrowEntity(World worldIn, double x, double y, double z) {
-			super(DeferredRegistryHandler.STONE_ARROW_ENTITY.get(), x, y, z, worldIn);
+			super(DeferredRegistryHandler.STONE_ARROW_ENTITY.get(), worldIn, x, y, z);
 			referenceItem = DeferredRegistryHandler.STONE_ARROW.get();
 		}
 
-		@Override
-		public ItemStack getPickupItem() {
-			return new ItemStack(referenceItem);
-		}
-
-		@Override
-		public IPacket<?> getAddEntityPacket() {
-			return NetworkHooks.getEntitySpawningPacket(this);
-		}
-
+		/**
+		 * Fire the entity from a position with a velocity and inaccuracy.
+		 * @param x the X position
+		 * @param y the Y position
+		 * @param z the Z position
+		 * @param velocity the velocity
+		 * @param inaccuracy the inaccuracy modifier
+		 */
 		@Override
 		public void shoot(double x, double y, double z, float velocity, float inaccuracy) {
 			Vector3d vector3d = (new Vector3d(x, y, z)).normalize().add(random.nextGaussian() * 0.0075F * inaccuracy, -0.1085F * inaccuracy, random.nextGaussian() * 0.0075F * inaccuracy).scale(velocity);
@@ -192,69 +229,98 @@ public class CustomArrowEntity {
 		}
 	}
 
-	public static class WoodArrowEntity extends AbstractArrowEntity {
-		private final Item referenceItem;
+	public static class WoodArrowEntity extends AbstractCustomArrowEntity {
 
+		/**
+		 * Constructor for WoodArrowEntity.
+		 * @param type the <code>EntityType</code> instance; must extend AbstractArrowEntity
+		 * @param world the <code>World</code> the entity is in
+		 */
 		public WoodArrowEntity(EntityType<? extends AbstractArrowEntity> type, World world) {
 			super(type, world);
 			referenceItem = DeferredRegistryHandler.WOOD_ARROW.get();
 		}
 
+		/**
+		 * Constructor for WoodArrowEntity.
+		 * @param shooter the <code>LivingEntity</code> shooting the entity
+		 * @param world the <code>World</code> the entity is in
+		 * @param referenceItemIn the reference item
+		 */
 		public WoodArrowEntity(LivingEntity shooter, World world, Item referenceItemIn) {
 			super(DeferredRegistryHandler.WOOD_ARROW_ENTITY.get(), shooter, world);
 			referenceItem = referenceItemIn;
 		}
 
+		/**
+		 * Constructor for WoodArrowEntity.
+		 * @param worldIn the <code>World</code> the entity is in
+		 * @param x the X position
+		 * @param y the Y position
+		 * @param z the Z position
+		 */
 		public WoodArrowEntity(World worldIn, double x, double y, double z) {
-			super(DeferredRegistryHandler.WOOD_ARROW_ENTITY.get(), x, y, z, worldIn);
+			super(DeferredRegistryHandler.WOOD_ARROW_ENTITY.get(), worldIn, x, y, z);
 			referenceItem = DeferredRegistryHandler.WOOD_ARROW.get();
 		}
 
-		@Override
-		public ItemStack getPickupItem() {
-			return new ItemStack(referenceItem);
-		}
-
-		@Override
-		public IPacket<?> getAddEntityPacket() {
-			return NetworkHooks.getEntitySpawningPacket(this);
-		}
-
+		/**
+		 * Fire the entity from a position with a velocity and inaccuracy.
+		 * @param x the X position
+		 * @param y the Y position
+		 * @param z the Z position
+		 * @param velocity the velocity
+		 * @param inaccuracy the inaccuracy modifier
+		 */
 		@Override
 		public void shoot(double x, double y, double z, float velocity, float inaccuracy) {
 			super.shoot(x, y, z, velocity, (inaccuracy + GeneralUtilities.getRandomNumber(5.8f, 7.2f)));
 		}
 	}
 
-	public static class NetheriteArrowEntity extends AbstractArrowEntity {
-		private final Item referenceItem;
-		private BlockState inBlockState;
+	public static class NetheriteArrowEntity extends AbstractCustomArrowEntity {
 
+		/**
+		 * Constructor for NetheriteArrowEntity.
+		 * @param type the <code>EntityType</code> instance; must extend AbstractArrowEntity
+		 * @param world the <code>World</code> the entity is in
+		 */
 		public NetheriteArrowEntity(EntityType<? extends AbstractArrowEntity> type, World world) {
 			super(type, world);
 			referenceItem = DeferredRegistryHandler.NETHERITE_ARROW.get();
 		}
 
+		/**
+		 * Constructor for NetheriteArrowEntity.
+		 * @param shooter the <code>LivingEntity</code> shooting the entity
+		 * @param world the <code>World</code> the entity is in
+		 * @param referenceItemIn the reference item
+		 */
 		public NetheriteArrowEntity(LivingEntity shooter, World world, Item referenceItemIn) {
 			super(DeferredRegistryHandler.NETHERITE_ARROW_ENTITY.get(), shooter, world);
 			referenceItem = referenceItemIn;
 		}
 
+		/**
+		 * Constructor for NetheriteArrowEntity.
+		 * @param worldIn the <code>World</code> the entity is in
+		 * @param x the X position
+		 * @param y the Y position
+		 * @param z the Z position
+		 */
 		public NetheriteArrowEntity(World worldIn, double x, double y, double z) {
-			super(DeferredRegistryHandler.NETHERITE_ARROW_ENTITY.get(), x, y, z, worldIn);
+			super(DeferredRegistryHandler.NETHERITE_ARROW_ENTITY.get(), worldIn, x, y, z);
 			referenceItem = DeferredRegistryHandler.NETHERITE_ARROW.get();
 		}
 
-		@Override
-		public ItemStack getPickupItem() {
-			return new ItemStack(referenceItem);
-		}
-
-		@Override
-		public IPacket<?> getAddEntityPacket() {
-			return NetworkHooks.getEntitySpawningPacket(this);
-		}
-
+		/**
+		 * Fire the entity from a position with a velocity and inaccuracy.
+		 * @param x the X position
+		 * @param y the Y position
+		 * @param z the Z position
+		 * @param velocity the velocity
+		 * @param inaccuracy the inaccuracy modifier
+		 */
 		@Override
 		public void shoot(double x, double y, double z, float velocity, float inaccuracy) {
 			Vector3d vector3d = (new Vector3d(x, y, z)).normalize().add(random.nextGaussian() * 0.0025F * (GeneralUtilities.getRandomNumber(0.2f, 1.1f)), 0.00025F * (GeneralUtilities.getRandomNumber(0.2f, 1.1f)), random.nextGaussian() * 0.0025F).scale(velocity);
@@ -266,191 +332,70 @@ public class CustomArrowEntity {
 			xRotO = xRot;
 		}
 
-		private boolean shouldFall() {
-			return inGround && level.noCollision((new AxisAlignedBB(position(), position())).inflate(0.06D));
-		}
-
-		private void startFalling() {
-			inGround = false;
-			Vector3d vector3d = getDeltaMovement();
-			setDeltaMovement(vector3d.multiply(random.nextFloat() * 0.2F, random.nextFloat() * 0.2F, random.nextFloat() * 0.2F));
-		}
-
+		/**
+		 * Get the movement modifier.
+		 * @return double
+		 */
 		@Override
-		public void tick() {
-			super.tick();
-			boolean flag = isNoPhysics();
-			Vector3d vector3d = getDeltaMovement();
-			if (xRotO == 0.0F && yRotO == 0.0F) {
-				float f = MathHelper.sqrt(getHorizontalDistanceSqr(vector3d));
-				yRot = (float) (MathHelper.atan2(vector3d.x, vector3d.z) * (180F / (float) Math.PI));
-				xRot = (float) (MathHelper.atan2(vector3d.y, f) * (180F / (float) Math.PI));
-				yRotO = yRot;
-				xRotO = xRot;
-			}
-
-			BlockPos blockpos = blockPosition();
-			BlockState blockstate = level.getBlockState(blockpos);
-			if (!blockstate.isAir(level, blockpos) && !flag) {
-				VoxelShape voxelshape = blockstate.getBlockSupportShape(level, blockpos);
-				if (!voxelshape.isEmpty()) {
-					Vector3d vector3d1 = position();
-
-					for (AxisAlignedBB axisalignedbb : voxelshape.toAabbs()) {
-						if (axisalignedbb.move(blockpos).contains(vector3d1)) {
-							inGround = true;
-							break;
-						}
-					}
-				}
-			}
-
-			if (shakeTime > 0) {
-				--shakeTime;
-			}
-
-			if (isInWaterOrRain()) {
-				clearFire();
-			}
-
-			if (inGround && !flag) {
-				if (inBlockState != blockstate && shouldFall()) {
-					startFalling();
-				} else if (!level.isClientSide) {
-					tickDespawn();
-				}
-
-				++inGroundTime;
-			} else {
-				inGroundTime = 0;
-				Vector3d vector3d2 = position();
-				Vector3d vector3d3 = vector3d2.add(vector3d);
-				RayTraceResult raytraceresult = level.clip(new RayTraceContext(vector3d2, vector3d3, RayTraceContext.BlockMode.COLLIDER, RayTraceContext.FluidMode.NONE, this));
-				if (raytraceresult.getType() != RayTraceResult.Type.MISS) {
-					vector3d3 = raytraceresult.getLocation();
-				}
-
-				while (!removed) {
-					EntityRayTraceResult entityraytraceresult = findHitEntity(vector3d2, vector3d3);
-					if (entityraytraceresult != null) {
-						raytraceresult = entityraytraceresult;
-					}
-
-					if (raytraceresult != null && raytraceresult.getType() == RayTraceResult.Type.ENTITY) {
-						Entity entity = null;
-						if (raytraceresult instanceof EntityRayTraceResult) {
-							entity = ((EntityRayTraceResult) raytraceresult).getEntity();
-						}
-						Entity entity1 = getOwner();
-						if (entity instanceof PlayerEntity && entity1 instanceof PlayerEntity && !((PlayerEntity) entity1).canHarmPlayer((PlayerEntity) entity)) {
-							raytraceresult = null;
-							entityraytraceresult = null;
-						}
-					}
-
-					if (raytraceresult != null && raytraceresult.getType() != RayTraceResult.Type.MISS && !flag && !net.minecraftforge.event.ForgeEventFactory.onProjectileImpact(this, raytraceresult)) {
-						onHit(raytraceresult);
-						hasImpulse = true;
-					}
-
-					if (entityraytraceresult == null || getPierceLevel() <= 0) {
-						break;
-					}
-
-					raytraceresult = null;
-				}
-
-				vector3d = getDeltaMovement();
-				double d3 = vector3d.x;
-				double d4 = vector3d.y;
-				double d0 = vector3d.z;
-				if (isCritArrow()) {
-					for (int i = 0; i < 4; ++i) {
-						level.addParticle(ParticleTypes.CRIT, getX() + d3 * i / 4.0D, getY() + d4 * i / 4.0D, getZ() + d0 * i / 4.0D, -d3, -d4 + 0.2D, -d0);
-					}
-				}
-
-				double d5 = getX() + d3;
-				double d1 = getY() + d4;
-				double d2 = getZ() + d0;
-				float f1 = MathHelper.sqrt(getHorizontalDistanceSqr(vector3d));
-				if (flag) {
-					yRot = (float) (MathHelper.atan2(-d3, -d0) * (180F / (float) Math.PI));
-				} else {
-					yRot = (float) (MathHelper.atan2(d3, d0) * (180F / (float) Math.PI));
-				}
-
-				xRot = (float) (MathHelper.atan2(d4, f1) * (180F / (float) Math.PI));
-				xRot = lerpRotation(xRotO, xRot);
-				yRot = lerpRotation(yRotO, yRot);
-				float f2 = 0.99F;
-				if (isInWater()) {
-					for (int j = 0; j < 4; ++j) {
-						level.addParticle(ParticleTypes.BUBBLE, d5 - d3 * 0.25D, d1 - d4 * 0.25D, d2 - d0 * 0.25D, d3, d4, d0);
-					}
-
-					f2 = getWaterInertia();
-				}
-
-				setDeltaMovement(vector3d.scale(f2));
-				if (!isNoGravity() && !flag) {
-					Vector3d vector3d4 = getDeltaMovement();
-					setDeltaMovement(vector3d4.x, vector3d4.y + 0.0455d, vector3d4.z);
-				}
-
-				setPos(d5, d1, d2);
-				checkInsideBlocks();
-			}
+		public double getMovementModifier() {
+			return 0.0455d;
 		}
 	}
 
-	public static class SmokeBombArrowEntity extends AbstractArrowEntity {
+	public static class SmokeBombArrowEntity extends AbstractCustomArrowEntity {
 		private static int color = 0;
-		private final Item referenceItem;
 		private final int configMaxParticles = Config.MAX_SMOKE_BOMB_PARTICLES.get();
-		private boolean hasAlreadyImpacted = false;
 
+		/**
+		 * Constructor for SmokeBombArrowEntity.
+		 * @param type the <code>EntityType</code> instance; must extend AbstractArrowEntity
+		 * @param world the <code>World</code> the entity is in
+		 */
 		public SmokeBombArrowEntity(EntityType<? extends AbstractArrowEntity> type, World world) {
 			super(type, world);
 			referenceItem = DeferredRegistryHandler.SMOKE_BOMB_ARROW.get();
 		}
 
+		/**
+		 * Constructor for SmokeBombArrowEntity.
+		 * @param shooter the <code>LivingEntity</code> shooting the entity
+		 * @param world the <code>World</code> the entity is in
+		 * @param referenceItemIn the reference item
+		 */
 		public SmokeBombArrowEntity(LivingEntity shooter, World world, Item referenceItemIn) {
 			super(DeferredRegistryHandler.SMOKE_BOMB_ARROW_ENTITY.get(), shooter, world);
 			referenceItem = referenceItemIn;
 		}
 
+		/**
+		 * Constructor for SmokeBombArrowEntity.
+		 * @param worldIn the <code>World</code> the entity is in
+		 * @param x the X position
+		 * @param y the Y position
+		 * @param z the Z position
+		 */
 		public SmokeBombArrowEntity(World worldIn, double x, double y, double z) {
-			super(DeferredRegistryHandler.SMOKE_BOMB_ARROW_ENTITY.get(), x, y, z, worldIn);
+			super(DeferredRegistryHandler.SMOKE_BOMB_ARROW_ENTITY.get(), worldIn, x, y, z);
 			referenceItem = DeferredRegistryHandler.SMOKE_BOMB_ARROW.get();
 		}
 
+		/**
+		 * Set the color of smoke.
+		 * @param color an integer representing the color
+		 */
 		public static void setColor(int color) {
 			SmokeBombArrowEntity.color = color;
 		}
 
-		@Override
-		public ItemStack getPickupItem() {
-			return new ItemStack(referenceItem);
-		}
-
-		@Override
-		public IPacket<?> getAddEntityPacket() {
-			return NetworkHooks.getEntitySpawningPacket(this);
-		}
-
+		/**
+		 * Runs when the entity hits something.
+		 * @param rayTraceResult the <code>RayTraceResult</code> instance
+		 */
 		@Override
 		public void onHit(RayTraceResult rayTraceResult) {
-			if (!hasAlreadyImpacted && !level.isClientSide) {
-				hasAlreadyImpacted = true;
+			super.onHit(rayTraceResult);
+			if (!level.isClientSide) {
 				PacketHandler.INSTANCE.send(PacketDistributor.TRACKING_CHUNK.with(() -> level.getChunkAt(blockPosition())), new SmokeBombArrowEntityPacketHandler(blockPosition(), configMaxParticles, color));
-
-				RayTraceResult.Type rayTraceResultType = rayTraceResult.getType();
-				if (rayTraceResultType == RayTraceResult.Type.ENTITY) {
-					onHitEntity((EntityRayTraceResult) rayTraceResult);
-				} else if (rayTraceResultType == RayTraceResult.Type.BLOCK) {
-					onHitBlock((BlockRayTraceResult) rayTraceResult);
-				}
 			}
 		}
 
@@ -460,28 +405,53 @@ public class CustomArrowEntity {
 			private final int configMaxParticles;
 			private final int color;
 
-			public SmokeBombArrowEntityPacketHandler(final BlockPos blockPos, final int configMaxParticles, final int color) {
+			/**
+			 * Constructor for SmokeBombArrowEntityPacketHandler.
+			 * @param blockPos the <code>BlockPos</code> of the block where the packet was sent
+			 * @param configMaxParticles the max particles to generate
+			 * @param color an integer representing the color
+			 */
+			SmokeBombArrowEntityPacketHandler(BlockPos blockPos, int configMaxParticles, int color) {
 				this.blockPos = blockPos;
 				this.configMaxParticles = configMaxParticles;
 				this.color = color;
 			}
 
-			public static void encode(final SmokeBombArrowEntityPacketHandler msg, final PacketBuffer packetBuffer) {
+			/**
+			 * Encodes a packet
+			 * @param msg the <code>SmokeBombArrowEntityPacketHandler</code> message being sent
+			 * @param packetBuffer the <code>PacketBuffer</code> containing packet data
+			 */
+			public static void encode(SmokeBombArrowEntityPacketHandler msg, PacketBuffer packetBuffer) {
 				packetBuffer.writeBlockPos(msg.blockPos).writeInt(msg.configMaxParticles).writeInt(msg.color);
 			}
 
-			public static SmokeBombArrowEntityPacketHandler decode(final PacketBuffer packetBuffer) {
+			/**
+			 * Decodes a packet
+			 * @param packetBuffer the <code>PacketBuffer</code> containing packet data
+			 * @return SmokeBombArrowEntityPacketHandler
+			 */
+			public static SmokeBombArrowEntityPacketHandler decode(PacketBuffer packetBuffer) {
 				return new SmokeBombArrowEntityPacketHandler(packetBuffer.readBlockPos(), packetBuffer.readInt(), packetBuffer.readInt());
 			}
 
-			public static void handle(final SmokeBombArrowEntityPacketHandler msg, final Supplier<Context> contextSupplier) {
-				final NetworkEvent.Context context = contextSupplier.get();
+			/**
+			 * Handles an incoming packet, by sending it to the client/server
+			 * @param msg the <code>SmokeBombArrowEntityPacketHandler</code> message being sent
+			 * @param contextSupplier the <code>Supplier</code> providing context
+			 */
+			public static void handle(SmokeBombArrowEntityPacketHandler msg, Supplier<Context> contextSupplier) {
+				NetworkEvent.Context context = contextSupplier.get();
 				context.enqueueWork(() -> DistExecutor.runWhenOn(Dist.CLIENT, () -> () -> handleOnClient(msg)));
 				context.setPacketHandled(true);
 			}
 
+			/**
+			 * Runs specifically on the client, when a packet is received
+			 * @param msg the <code>SmokeBombArrowEntityPacketHandler</code> message being sent
+			 */
 			@OnlyIn(Dist.CLIENT)
-			private static void handleOnClient(final SmokeBombArrowEntityPacketHandler msg) {
+			private static void handleOnClient(SmokeBombArrowEntityPacketHandler msg) {
 				Minecraft minecraft = Minecraft.getInstance();
 				if (minecraft.level != null) {
 					minecraft.level.playLocalSound(msg.blockPos, DeferredRegistryHandler.SMOKE_BOMB_HISS.get(), SoundCategory.NEUTRAL, 0.1f, 0.6f, true);
@@ -493,20 +463,36 @@ public class CustomArrowEntity {
 				}
 			}
 
-			protected static IParticleData makeParticle(final SmokeBombArrowEntityPacketHandler msg) {
+			/**
+			 * Create a new particle.
+			 * @param msg the <code>SmokeBombArrowEntityPacketHandler</code> message
+			 * @return IParticleData
+			 */
+			static IParticleData makeParticle(SmokeBombArrowEntityPacketHandler msg) {
 				Color tint = getTint(GeneralUtilities.getRandomNumber(0, 2), msg);
 				double diameter = getDiameter(GeneralUtilities.getRandomNumber(1.0d, 5.5d));
 
 				return new SmokeBombParticleData(tint, diameter);
 			}
 
+			/**
+			 * Get the particle diameter.
+			 * @param random a random number
+			 * @return double
+			 */
 			private static double getDiameter(double random){
 				final double MIN_DIAMETER = 0.5;
 				final double MAX_DIAMETER = 5.5;
 				return MIN_DIAMETER + (MAX_DIAMETER - MIN_DIAMETER) * random;
 			}
 
-			private static Color getTint(int random, final SmokeBombArrowEntityPacketHandler msg){
+			/**
+			 * Get the particle tint.
+			 * @param random a random number
+			 * @param msg the <code>SmokeBombArrowEntityPacketHandler</code> message
+			 * @return Color
+			 */
+			private static Color getTint(int random, SmokeBombArrowEntityPacketHandler msg){
 				Color[] tints = {
 						new Color(1.00f, 1.00f, 1.00f),  // no tint (white)
 						new Color(1.00f, 0.97f, 1.00f),  // off white

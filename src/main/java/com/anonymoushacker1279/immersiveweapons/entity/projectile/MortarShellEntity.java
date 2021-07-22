@@ -31,15 +31,33 @@ public class MortarShellEntity extends Entity implements IRendersAsItem {
 
 	private static final DamageSource damageSource = new DamageSource("immersiveweapons.mortar");
 
+	/**
+	 * Constructor for MortarShellEntity.
+	 * @param entityType the <code>EntityType</code> instance; must extend MolotovEntity
+	 * @param world the <code>World</code> the entity is in
+	 */
 	public MortarShellEntity(EntityType<?> entityType, World world) {
 		super(entityType, world);
 	}
 
-	private MortarShellEntity(World world, BlockPos source, double yOffset) {
+	/**
+	 * Constructor for MortarShellEntity.
+	 * @param world the <code>World</code> the entity is in
+	 * @param pos the <code>BlockPos</code> the entity should spawn at
+	 * @param yOffset the Y offset to spawn at
+	 */
+	private MortarShellEntity(World world, BlockPos pos, double yOffset) {
 		this(DeferredRegistryHandler.MORTAR_SHELL_ENTITY.get(), world);
-		setPos(source.getX() + 0.5D, source.getY() + yOffset, source.getZ() + 0.5D);
+		setPos(pos.getX() + 0.5D, pos.getY() + yOffset, pos.getZ() + 0.5D);
 	}
 
+	/**
+	 * Create the entity and set its initial movement.
+	 * @param world the <code>World</code> the entity is in
+	 * @param pos the <code>BlockPos</code> the entity is at
+	 * @param yOffset the Y offset to spawn at
+	 * @return ActionResultType
+	 */
 	public static ActionResultType create(World world, BlockPos pos, double yOffset, BlockState state) {
 		if (!world.isClientSide) {
 			MortarShellEntity mortarShellEntity = new MortarShellEntity(world, pos, yOffset);
@@ -67,28 +85,31 @@ public class MortarShellEntity extends Entity implements IRendersAsItem {
 		return ActionResultType.CONSUME;
 	}
 
+	/**
+	 * Runs once every tick.
+	 */
 	@Override
 	public void tick() {
 		super.tick();
-		Vector3d deltaMovement = this.getDeltaMovement();
+		Vector3d deltaMovement = getDeltaMovement();
 
 		// Check for collisions
-		Vector3d currentPosition = this.position();
+		Vector3d currentPosition = position();
 		Vector3d currentPositionPlusMovement = currentPosition.add(deltaMovement);
-		RayTraceResult rayTraceResult = this.level.clip(new RayTraceContext(currentPosition, currentPositionPlusMovement, RayTraceContext.BlockMode.COLLIDER, RayTraceContext.FluidMode.NONE, this));
+		RayTraceResult rayTraceResult = level.clip(new RayTraceContext(currentPosition, currentPositionPlusMovement, RayTraceContext.BlockMode.COLLIDER, RayTraceContext.FluidMode.NONE, this));
 		if (rayTraceResult.getType() != RayTraceResult.Type.MISS) {
 			currentPositionPlusMovement = rayTraceResult.getLocation();
 		}
 
-		while (this.isAlive()) {
-			EntityRayTraceResult entityRayTraceResult = ProjectileHelper.getEntityHitResult(this.level, this, currentPosition, currentPositionPlusMovement, this.getBoundingBox().expandTowards(this.getDeltaMovement()).inflate(1.0D), this::canHitEntity);
+		while (isAlive()) {
+			EntityRayTraceResult entityRayTraceResult = ProjectileHelper.getEntityHitResult(level, this, currentPosition, currentPositionPlusMovement, getBoundingBox().expandTowards(getDeltaMovement()).inflate(1.0D), this::canHitEntity);
 			if (entityRayTraceResult != null) {
 				rayTraceResult = entityRayTraceResult;
 			}
 
 			if (rayTraceResult != null && rayTraceResult.getType() != RayTraceResult.Type.MISS && !ForgeEventFactory.onProjectileImpact(this, rayTraceResult)) {
-				this.onHit(rayTraceResult);
-				this.hasImpulse = true;
+				onHit(rayTraceResult);
+				hasImpulse = true;
 			}
 
 			if (entityRayTraceResult == null) {
@@ -98,42 +119,51 @@ public class MortarShellEntity extends Entity implements IRendersAsItem {
 			rayTraceResult = null;
 		}
 
-		deltaMovement = this.getDeltaMovement();
+		deltaMovement = getDeltaMovement();
 		double deltaMovementX = deltaMovement.x;
 		double deltaMovementY = deltaMovement.y;
 		double deltaMovementZ = deltaMovement.z;
-		double deltaMovementXPlusPosition = this.getX() + deltaMovementX;
-		double deltaMovementYPlusPosition = this.getY() + deltaMovementY;
-		double deltaMovementZPlusPosition = this.getZ() + deltaMovementZ;
+		double deltaMovementXPlusPosition = getX() + deltaMovementX;
+		double deltaMovementYPlusPosition = getY() + deltaMovementY;
+		double deltaMovementZPlusPosition = getZ() + deltaMovementZ;
 
 		float inertia = 0.99F;
-		if (this.isInWater()) {
+		if (isInWater()) {
 			for (int j = 0; j < 4; ++j) {
-				this.level.addParticle(ParticleTypes.BUBBLE, deltaMovementXPlusPosition - deltaMovementX * 0.25D, deltaMovementYPlusPosition - deltaMovementY * 0.25D, deltaMovementZPlusPosition - deltaMovementZ * 0.25D, deltaMovementX, deltaMovementY, deltaMovementZ);
+				level.addParticle(ParticleTypes.BUBBLE, deltaMovementXPlusPosition - deltaMovementX * 0.25D, deltaMovementYPlusPosition - deltaMovementY * 0.25D, deltaMovementZPlusPosition - deltaMovementZ * 0.25D, deltaMovementX, deltaMovementY, deltaMovementZ);
 			}
 			inertia = 0.6f;
 		}
-		this.setDeltaMovement(deltaMovement.scale(inertia));
-		if (!this.isNoGravity()) {
-			Vector3d newDeltaMovement = this.getDeltaMovement();
-			this.setDeltaMovement(newDeltaMovement.x, newDeltaMovement.y - 0.0355f, newDeltaMovement.z);
+		setDeltaMovement(deltaMovement.scale(inertia));
+		if (!isNoGravity()) {
+			Vector3d newDeltaMovement = getDeltaMovement();
+			setDeltaMovement(newDeltaMovement.x, newDeltaMovement.y - 0.0355f, newDeltaMovement.z);
 		}
 
-		this.setPos(deltaMovementXPlusPosition, deltaMovementYPlusPosition, deltaMovementZPlusPosition);
-		this.checkInsideBlocks();
+		setPos(deltaMovementXPlusPosition, deltaMovementYPlusPosition, deltaMovementZPlusPosition);
+		checkInsideBlocks();
 	}
 
-	protected void onHit(RayTraceResult rayTraceResult) {
-		Vector3d vector3d = rayTraceResult.getLocation().subtract(this.getX(), this.getY(), this.getZ());
-		this.setDeltaMovement(vector3d);
+	/**
+	 * Runs when an entity/block is hit.
+	 * @param rayTraceResult the <code>RayTraceResult</code> instance
+	 */
+	private void onHit(RayTraceResult rayTraceResult) {
+		Vector3d vector3d = rayTraceResult.getLocation().subtract(getX(), getY(), getZ());
+		setDeltaMovement(vector3d);
 		Vector3d vector3d1 = vector3d.normalize().scale(0.05F);
-		this.setPosRaw(this.getX() - vector3d1.x, this.getY() - vector3d1.y, this.getZ() - vector3d1.z);
-		if (!this.level.isClientSide) {
-			this.level.explode(this.getEntity(), damageSource, null, this.blockPosition().getX(), this.blockPosition().getY(), this.blockPosition().getZ(), 4.0F, false, Mode.BREAK);
+		setPosRaw(getX() - vector3d1.x, getY() - vector3d1.y, getZ() - vector3d1.z);
+		if (!level.isClientSide) {
+			level.explode(getEntity(), damageSource, null, blockPosition().getX(), blockPosition().getY(), blockPosition().getZ(), 4.0F, false, Mode.BREAK);
 		}
-		this.kill();
+		kill();
 	}
 
+	/**
+	 * Determines if an entity can be hit.
+	 * @param entity the <code>Entity</code> to check
+	 * @return boolean
+	 */
 	private boolean canHitEntity(Entity entity) {
 		return true;
 	}
@@ -150,11 +180,19 @@ public class MortarShellEntity extends Entity implements IRendersAsItem {
 	protected void addAdditionalSaveData(CompoundNBT nbt) {
 	}
 
+	/**
+	 * Get the entity spawn packet.
+	 * @return IPacket
+	 */
 	@Override
 	public IPacket<?> getAddEntityPacket() {
 		return NetworkHooks.getEntitySpawningPacket(this);
 	}
 
+	/**
+	 * Get the reference item.
+	 * @return ItemStack
+	 */
 	@Override
 	public ItemStack getItem() {
 		return new ItemStack(DeferredRegistryHandler.MORTAR_SHELL.get());

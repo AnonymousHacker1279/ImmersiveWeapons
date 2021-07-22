@@ -1,7 +1,10 @@
 package com.anonymoushacker1279.immersiveweapons.block;
 
 import com.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
-import net.minecraft.block.*;
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.HorizontalBlock;
+import net.minecraft.block.IWaterLoggable;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -12,15 +15,11 @@ import net.minecraft.state.BooleanProperty;
 import net.minecraft.state.StateContainer;
 import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.util.DamageSource;
-import net.minecraft.util.Direction;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.IBlockReader;
-import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 
 public class BarbedWireBlock extends HorizontalBlock implements IWaterLoggable {
 
@@ -28,46 +27,66 @@ public class BarbedWireBlock extends HorizontalBlock implements IWaterLoggable {
 	private final DamageSource damageSource = new DamageSource("immersiveweapons.barbed_wire");
 	private int soundCooldown = 0;
 
+	/**
+	 * Constructor for BarbedWireBlock.
+	 * @param properties the <code>Properties</code> of the block
+	 */
 	public BarbedWireBlock(Properties properties) {
 		super(properties);
 		registerDefaultState(stateDefinition.any().setValue(WATERLOGGED, false));
 	}
 
-	@Override
-	public BlockState updateShape(BlockState stateIn, Direction facing, BlockState facingState, IWorld worldIn, BlockPos currentPos, BlockPos facingPos) {
-		if (stateIn.getValue(WATERLOGGED)) {
-			worldIn.getLiquidTicks().scheduleTick(currentPos, Fluids.WATER, Fluids.WATER.getTickDelay(worldIn));
-		}
-
-		return facing == Direction.DOWN && !stateIn.canSurvive(worldIn, currentPos) ? Blocks.AIR.defaultBlockState() : super.updateShape(stateIn, facing, facingState, worldIn, currentPos, facingPos);
-	}
-
+	/**
+	 * Set placement properties.
+	 * Sets the facing direction of the block for placement.
+	 * @param context the <code>BlockItemUseContext</code> during placement
+	 * @return BlockState
+	 */
 	@Override
 	public BlockState getStateForPlacement(BlockItemUseContext context) {
 		return defaultBlockState().setValue(FACING, context.getHorizontalDirection().getOpposite());
 	}
 
+	/**
+	 * Set FluidState properties.
+	 * Allows the block to exhibit waterlogged behavior.
+	 * @param state the <code>BlockState</code> of the block
+	 * @return FluidState
+	 */
 	@Override
 	public FluidState getFluidState(BlockState state) {
 		return state.getValue(WATERLOGGED) ? Fluids.WATER.getSource(false) : super.getFluidState(state);
 	}
 
+	/**
+	 * Create the BlockState definition.
+	 * @param builder the <code>StateContainer.Builder</code> of the block
+	 */
 	@Override
 	protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder) {
 		builder.add(WATERLOGGED, FACING);
 	}
 
-	@Override
-	@OnlyIn(Dist.CLIENT)
-	public float getShadeBrightness(BlockState state, IBlockReader worldIn, BlockPos pos) {
-		return 1.0F;
-	}
-
+	/**
+	 * Determines if skylight should pass through the block.
+	 * @param state the <code>BlockState</code> of the block
+	 * @param reader the <code>IBlockReader</code> for the block
+	 * @param pos the <code>BlockPos</code> the block is at
+	 * @return boolean
+	 */
 	@Override
 	public boolean propagatesSkylightDown(BlockState state, IBlockReader reader, BlockPos pos) {
 		return true;
 	}
 
+	/**
+	 * Runs when an entity is inside of the block's collision area.
+	 * Allows the block to deal damage on contact.
+	 * @param state the <code>BlockState</code> of the block
+	 * @param world the <code>World</code> the block is in
+	 * @param pos the <code>BlockPos</code> the block is at
+	 * @param entity the <code>Entity</code> passing through the block
+	 */
 	@Override
 	public void entityInside(BlockState state, World world, BlockPos pos, Entity entity) {
 		if (entity instanceof LivingEntity) {

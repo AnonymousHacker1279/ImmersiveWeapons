@@ -23,6 +23,7 @@ import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.common.BiomeDictionary;
 import net.minecraftforge.common.BiomeDictionary.Type;
 import net.minecraftforge.common.BiomeManager;
+import net.minecraftforge.common.BiomeManager.BiomeType;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.world.BiomeGenerationSettingsBuilder;
 import net.minecraftforge.event.world.BiomeLoadingEvent;
@@ -51,6 +52,7 @@ public class ImmersiveWeapons {
 	// Setup logger
 	public static final Logger LOGGER = LogManager.getLogger();
 
+	// Mod setup begins here
 	public ImmersiveWeapons() {
 		// Load configuration
 		Config.setup(FMLPaths.CONFIGDIR.get().resolve(MOD_ID + ".toml"));
@@ -65,22 +67,40 @@ public class ImmersiveWeapons {
 		modEventBus.addListener(this::setup);
 
 		IEventBus forgeBus = MinecraftForge.EVENT_BUS;
-		forgeBus.addListener(EventPriority.NORMAL, this::addDimensionalSpacing);
+		forgeBus.addListener(EventPriority.NORMAL, this::worldLoadEvent);
 		forgeBus.addListener(EventPriority.HIGH, this::onBiomeLoading);
 
 		// Register packet handlers
 		PacketHandler.registerPackets();
 	}
 
-	private static void setupBiome(final Biome biome, final BiomeManager.BiomeType biomeType, final int weight, final BiomeDictionary.Type... types) {
+	/**
+	 * Sets up a custom biome. Adds the types to the BiomeDictionary
+	 *      and adds the biome to the BiomeManager.
+	 * @param biome the <code>Biome</code> being setup
+	 * @param biomeType the <code>BiomeType</code> for the biome
+	 * @param weight weight to generate biomes
+	 * @param types the dimension type: leave null for a modded dimension
+	 */
+	private static void setupBiome(final Biome biome, final BiomeType biomeType, final int weight, final BiomeDictionary.Type... types) {
 		BiomeDictionary.addTypes(key(biome), types);
 		BiomeManager.addBiome(biomeType, new BiomeManager.BiomeEntry(key(biome), weight));
 	}
 
+	/**
+	 * Create a RegistryKey for Biomes.
+	 * @param biome the <code>Biome</code> being registered
+	 * @return RegistryKey
+	 */
 	private static RegistryKey<Biome> key(final Biome biome) {
 		return RegistryKey.create(ForgeRegistries.Keys.BIOMES, Objects.requireNonNull(ForgeRegistries.BIOMES.getKey(biome), "Biome registry name was null"));
 	}
 
+	/**
+	 * Event handler for the FMLCommonSetupEvent.
+	 * Most of this is registry related.
+	 * @param event the <code>FMLCommonSetupEvent</code> instance
+	 */
 	@SubscribeEvent
 	public void setup(final FMLCommonSetupEvent event) {
 		OreGeneratorHandler.init(event);
@@ -96,6 +116,11 @@ public class ImmersiveWeapons {
 		AddAttributesAfterSetup.init();
 	}
 
+	/**
+	 * Event handler for the BiomeLoadingEvent.
+	 * Configures custom ores, carvers, spawns, structures, etc.
+	 * @param event the <code>BiomeLoadingEvent</code> instance
+	 */
 	@SubscribeEvent
 	public void onBiomeLoading(final BiomeLoadingEvent event) {
 		// Biome modifications
@@ -145,7 +170,13 @@ public class ImmersiveWeapons {
 		}
 	}
 
-	public void addDimensionalSpacing(final WorldEvent.Load event) {
+	/**
+	 * Event handler for the WorldEvent.Load event.
+	 * Most importantly, we are building a Map
+	 *     to contain our structures.
+	 * @param event the <code>WorldEvent.Load</code> instance
+	 */
+	public void worldLoadEvent(final WorldEvent.Load event) {
 		if (event.getWorld() instanceof ServerWorld) {
 			ServerWorld serverWorld = (ServerWorld) event.getWorld();
 

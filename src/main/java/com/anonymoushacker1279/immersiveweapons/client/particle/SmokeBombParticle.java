@@ -14,8 +14,19 @@ public class SmokeBombParticle extends SpriteTexturedParticle {
 	private final double xPos;
 	private final double yPos;
 	private final double zPos;
-	Minecraft mc = Minecraft.getInstance();
 
+	/**
+	 * Constructor for SmokeBombParticle.
+	 * @param world the <code>ClientWorld</code> the particle is in
+	 * @param x the X position to spawn at
+	 * @param y the Y position to spawn at
+	 * @param z the Z position to spawn at
+	 * @param velocityX the X velocity to spawn with
+	 * @param velocityY the Y velocity to spawn with
+	 * @param velocityZ the Z velocity to spawn with
+	 * @param tint the <code>Color</code> to spawn with
+	 * @param diameter the diameter to spawn at
+	 */
 	public SmokeBombParticle(ClientWorld world, double x, double y, double z, double velocityX, double velocityY, double velocityZ, Color tint, double diameter) {
 		super(world, x, y, z, velocityX, velocityY, velocityZ);
 
@@ -31,20 +42,26 @@ public class SmokeBombParticle extends SpriteTexturedParticle {
 
 		lifetime = 500;  // lifetime in ticks: 100 ticks = 5 seconds
 
-		this.alpha = 0.95F;
+		alpha = 0.95F; // transparency
 
-		//the vanilla Particle constructor added random variation to our starting velocity.  Undo it!
+		//the vanilla Particle constructor added random variation to our starting velocity. Undo it!
 		xd = velocityX;
 		yd = velocityY;
 		zd = velocityZ;
 
-		this.hasPhysics = true;  // the move() method will check for collisions with scenery
+		hasPhysics = true;  // the move() method will check for collisions with scenery
 	}
 
+	/**
+	 * Get the lighting color.
+	 * @param partialTick the current partial tick
+	 * @return int
+	 */
 	@Override
 	protected int getLightColor(float partialTick) {
 		BlockPos blockPos = new BlockPos(xPos, yPos, zPos).above();
 		int lightAtParticleLocation = 0;    // Get the light level at the current position
+		Minecraft mc = Minecraft.getInstance();
 		if (mc.level != null) {
 			lightAtParticleLocation = mc.level.getMaxLocalRawBrightness(blockPos);
 		}
@@ -53,32 +70,33 @@ public class SmokeBombParticle extends SpriteTexturedParticle {
 		return LightTexture.pack(BLOCK_LIGHT, SKY_LIGHT);
 	}
 
+	/**
+	 * Get the render type.
+	 * @return IParticleRenderType
+	 */
 	@Override
 	public IParticleRenderType getRenderType() {
 		return IParticleRenderType.PARTICLE_SHEET_TRANSLUCENT;
 	}
 
 	/**
-	 * call once per tick to update the Particle position, calculate collisions, remove when max lifetime is reached, etc
+	 * Runs once per tick to update particle data.
 	 */
 	@Override
 	public void tick() {
-
 		xo = x;
 		yo = y;
 		zo = z;
 
 		move(xd, yd, zd);
 		if (onGround) {
-			this.remove();
+			remove();
 		}
-
 		if (yo == y && yd > 0) {
-			this.remove();
+			remove();
 		}
-
-		if (this.age++ >= this.lifetime) {
-			this.remove();
+		if (age++ >= lifetime) {
+			remove();
 		}
 	}
 }

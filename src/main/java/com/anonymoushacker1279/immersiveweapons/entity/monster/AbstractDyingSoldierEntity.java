@@ -58,28 +58,44 @@ public abstract class AbstractDyingSoldierEntity extends MonsterEntity implement
 		}
 	};
 
+	/**
+	 * Constructor for AbstractDyingSoldierEntity.
+	 * @param type the <code>EntityType</code> instance
+	 * @param worldIn the <code>World</code> the entity is in
+	 */
 	protected AbstractDyingSoldierEntity(EntityType<? extends AbstractDyingSoldierEntity> type, World worldIn) {
 		super(type, worldIn);
 		setCombatTask();
 	}
 
+	/**
+	 * Register this entity's attributes.
+	 * @return AttributeModifierMap.MutableAttribute
+	 */
 	public static AttributeModifierMap.MutableAttribute registerAttributes() {
 		return MonsterEntity.createMonsterAttributes()
 				.add(Attributes.MOVEMENT_SPEED, 0.3D)
 				.add(Attributes.ARMOR, 5.0D);
 	}
 
-	public boolean isBreakDoorsTaskSet() {
+	/**
+	 * Specify if the entity should be able to open doors.
+	 * @return boolean
+	 */
+	public boolean isOpenDoorsTaskSet() {
 		return true;
 	}
 
+	/**
+	 * Register entity goals and targets.
+	 */
 	@Override
 	protected void registerGoals() {
 		goalSelector.addGoal(1, new SwimGoal(this));
 		goalSelector.addGoal(4, new WaterAvoidingRandomWalkingGoal(this, 1.0D));
 		goalSelector.addGoal(4, new LookAtGoal(this, PlayerEntity.class, 8.0F));
 		goalSelector.addGoal(4, new LookRandomlyGoal(this));
-		goalSelector.addGoal(2, new MoveThroughVillageGoal(this, 1.0D, false, 6, this::isBreakDoorsTaskSet));
+		goalSelector.addGoal(2, new MoveThroughVillageGoal(this, 1.0D, false, 6, this::isOpenDoorsTaskSet));
 		goalSelector.addGoal(2, new OpenDoorGoal(this, false));
 		goalSelector.addGoal(2, new OpenFenceGateGoal(this, false));
 		targetSelector.addGoal(2, new HurtByTargetGoal(this));
@@ -90,6 +106,11 @@ public abstract class AbstractDyingSoldierEntity extends MonsterEntity implement
 		targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, IronGolemEntity.class, true));
 	}
 
+	/**
+	 * Play the step sound.
+	 * @param pos the <code>BlockPos</code> the entity is at
+	 * @param blockIn the <code>BlockState</code> of the block being stepped on
+	 */
 	@Override
 	protected void playStepSound(BlockPos pos, BlockState blockIn) {
 		playSound(getStepSound(), 0.15F, 1.0F);
@@ -97,18 +118,13 @@ public abstract class AbstractDyingSoldierEntity extends MonsterEntity implement
 
 	protected abstract SoundEvent getStepSound();
 
+	/**
+	 * Get the mob type.
+	 * @return CreatureAttribute
+	 */
 	@Override
 	public CreatureAttribute getMobType() {
 		return CreatureAttribute.ILLAGER;
-	}
-
-	/**
-	 * Called frequently so the entity can update its state every tick as required. For example, zombies and skeletons
-	 * use this to react to sunlight and start to burn.
-	 */
-	@Override
-	public void aiStep() {
-		super.aiStep();
 	}
 
 	/**
@@ -118,14 +134,14 @@ public abstract class AbstractDyingSoldierEntity extends MonsterEntity implement
 	public void rideTick() {
 		super.rideTick();
 		if (getVehicle() instanceof CreatureEntity) {
-			CreatureEntity creatureentity = (CreatureEntity) getVehicle();
-			yBodyRot = creatureentity.yBodyRot;
+			CreatureEntity creatureEntity = (CreatureEntity) getVehicle();
+			yBodyRot = creatureEntity.yBodyRot;
 		}
-
 	}
 
 	/**
 	 * Gives armor or weapon for entity based on given DifficultyInstance
+	 * @param difficulty the <code>DifficultyInstance</code> of the world
 	 */
 	@Override
 	protected void populateDefaultEquipmentSlots(DifficultyInstance difficulty) {
@@ -133,8 +149,16 @@ public abstract class AbstractDyingSoldierEntity extends MonsterEntity implement
 		setItemSlot(EquipmentSlotType.MAINHAND, new ItemStack(DeferredRegistryHandler.FLINTLOCK_PISTOL.get()));
 	}
 
+	/**
+	 * Finalize spawn information.
+	 * @param worldIn the <code>IServerWorld</code> the entity is in
+	 * @param difficultyIn the <code>DifficultyInstance</code> of the world
+	 * @param reason the <code>SpawnReason</code> for the entity
+	 * @param spawnDataIn the <code>ILivingEntitySpawnData</code> for the entity
+	 * @param dataTag the <code>CompoundNBT</code> data tag for the entity
+	 * @return ILivingEntityData
+	 */
 	@Override
-	@Nullable
 	public ILivingEntityData finalizeSpawn(IServerWorld worldIn, DifficultyInstance difficultyIn, SpawnReason reason, @Nullable ILivingEntityData spawnDataIn, @Nullable CompoundNBT dataTag) {
 		spawnDataIn = super.finalizeSpawn(worldIn, difficultyIn, reason, spawnDataIn, dataTag);
 		populateDefaultEquipmentSlots(difficultyIn);
@@ -155,7 +179,7 @@ public abstract class AbstractDyingSoldierEntity extends MonsterEntity implement
 	}
 
 	/**
-	 * sets this entity's combat AI.
+	 * Set the entity's combat AI.
 	 */
 	public void setCombatTask() {
 		if (level != null && !level.isClientSide) {
@@ -179,6 +203,8 @@ public abstract class AbstractDyingSoldierEntity extends MonsterEntity implement
 
 	/**
 	 * Attack the specified entity using a ranged attack.
+	 * @param target the <code>LivingEntity</code> being targeted
+	 * @param distanceFactor the distance factor
 	 */
 	@Override
 	public void performRangedAttack(LivingEntity target, float distanceFactor) {
@@ -196,23 +222,32 @@ public abstract class AbstractDyingSoldierEntity extends MonsterEntity implement
 	}
 
 	/**
-	 * Fires an arrow
+	 * Fires an arrow.
+	 * @param arrowStack the <code>ItemStack</code> of the arrow
+	 * @param distanceFactor the distance factor for firing
+	 * @return AbstractArrowEntity
 	 */
 	protected AbstractArrowEntity fireArrow(ItemStack arrowStack, float distanceFactor) {
-		CustomArrowItem arrowitem = (CustomArrowItem) (arrowStack.getItem() instanceof CustomArrowItem ? arrowStack.getItem() : DeferredRegistryHandler.IRON_MUSKET_BALL.get());
-		AbstractArrowEntity abstractarrowentity = arrowitem.createArrow(level, arrowStack, this);
-		abstractarrowentity.setEnchantmentEffectsFromEntity(this, distanceFactor);
+		CustomArrowItem arrowItem = (CustomArrowItem) (arrowStack.getItem() instanceof CustomArrowItem ? arrowStack.getItem() : DeferredRegistryHandler.IRON_MUSKET_BALL.get());
+		AbstractArrowEntity abstractArrowEntity = arrowItem.createArrow(level, arrowStack, this);
+		abstractArrowEntity.setEnchantmentEffectsFromEntity(this, distanceFactor);
 
-		return abstractarrowentity;
+		return abstractArrowEntity;
 	}
 
+	/**
+	 * Check if the entity can fire a projectile.
+	 * @param shootableItem the <code>ShootableItem</code> instance
+	 * @return boolean
+	 */
 	@Override
 	public boolean canFireProjectileWeapon(ShootableItem shootableItem) {
 		return shootableItem == DeferredRegistryHandler.FLINTLOCK_PISTOL.get();
 	}
 
 	/**
-	 * (abstract) Protected helper method to read subclass entity data from NBT.
+	 * Read entity NBT data.
+	 * @param compound the <code>CompoundNBT</code> to read from
 	 */
 	@Override
 	public void readAdditionalSaveData(CompoundNBT compound) {
@@ -220,6 +255,11 @@ public abstract class AbstractDyingSoldierEntity extends MonsterEntity implement
 		setCombatTask();
 	}
 
+	/**
+	 * Set item slots.
+	 * @param slotIn the <code>EquipmentSlotType</code> to set
+	 * @param stack the <code>ItemStack</code> to set in the slot
+	 */
 	@Override
 	public void setItemSlot(EquipmentSlotType slotIn, ItemStack stack) {
 		super.setItemSlot(slotIn, stack);
@@ -229,21 +269,23 @@ public abstract class AbstractDyingSoldierEntity extends MonsterEntity implement
 
 	}
 
+	/**
+	 * Get the standing eye height of the entity.
+	 * @param poseIn the <code>Pose</code> instance
+	 * @param sizeIn the <code>EntitySize</code> of the entity
+	 * @return float
+	 */
 	@Override
 	protected float getStandingEyeHeight(Pose poseIn, EntitySize sizeIn) {
 		return 1.74F;
 	}
 
 	/**
-	 * Returns the Y Offset of this entity.
+	 * Get the Y offset of the entity.
+	 * @return double
 	 */
 	@Override
 	public double getMyRidingOffset() {
 		return -0.6D;
-	}
-
-	@Override
-	protected int decreaseAirSupply(int air) {
-		return air;
 	}
 }

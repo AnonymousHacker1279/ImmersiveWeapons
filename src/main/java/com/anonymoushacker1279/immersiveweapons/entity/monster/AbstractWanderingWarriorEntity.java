@@ -4,7 +4,10 @@ import com.anonymoushacker1279.immersiveweapons.entity.ai.goal.OpenFenceGateGoal
 import com.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
-import net.minecraft.entity.*;
+import net.minecraft.entity.CreatureEntity;
+import net.minecraft.entity.EntityType;
+import net.minecraft.entity.ILivingEntityData;
+import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.ai.attributes.AttributeModifierMap;
 import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.ai.goal.*;
@@ -15,7 +18,6 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.DamageSource;
 import net.minecraft.util.Hand;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
@@ -35,56 +37,64 @@ public abstract class AbstractWanderingWarriorEntity extends MonsterEntity {
 		@Override
 		public void stop() {
 			super.stop();
-			AbstractWanderingWarriorEntity.this.setAggressive(false);
+			setAggressive(false);
 		}
 
 		@Override
 		public void start() {
 			super.start();
-			AbstractWanderingWarriorEntity.this.setAggressive(true);
+			setAggressive(true);
 		}
 	};
 
+	/**
+	 * Constructor for AbstractWanderingWarriorEntity.
+	 * @param type the <code>EntityType</code> instance
+	 * @param worldIn the <code>World</code> the entity is in
+	 */
 	public AbstractWanderingWarriorEntity(EntityType<? extends MonsterEntity> type, World worldIn) {
 		super(type, worldIn);
-		this.setCombatTask();
+		setCombatTask();
 	}
 
+	/**
+	 * Register this entity's attributes.
+	 * @return AttributeModifierMap.MutableAttribute
+	 */
 	public static AttributeModifierMap.MutableAttribute registerAttributes() {
 		return MonsterEntity.createMonsterAttributes()
 				.add(Attributes.MOVEMENT_SPEED, 0.25D)
 				.add(Attributes.ARMOR, 4.0D);
 	}
 
+	/**
+	 * Register entity goals and targets.
+	 */
 	@Override
 	protected void registerGoals() {
-		this.goalSelector.addGoal(4, new WaterAvoidingRandomWalkingGoal(this, 1.0D));
-		this.goalSelector.addGoal(4, new LookAtGoal(this, PlayerEntity.class, 8.0F));
-		this.goalSelector.addGoal(4, new LookRandomlyGoal(this));
-		this.goalSelector.addGoal(3, new OpenDoorGoal(this, true));
-		this.goalSelector.addGoal(3, new OpenFenceGateGoal(this, true));
-		this.goalSelector.addGoal(1, new SwimGoal(this));
-		this.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, MonsterEntity.class, false));
-		this.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, PlayerEntity.class, false));
-		this.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, CreatureEntity.class, false));
-		this.targetSelector.addGoal(2, new HurtByTargetGoal(this));
+		goalSelector.addGoal(4, new WaterAvoidingRandomWalkingGoal(this, 1.0D));
+		goalSelector.addGoal(4, new LookAtGoal(this, PlayerEntity.class, 8.0F));
+		goalSelector.addGoal(4, new LookRandomlyGoal(this));
+		goalSelector.addGoal(3, new OpenDoorGoal(this, true));
+		goalSelector.addGoal(3, new OpenFenceGateGoal(this, true));
+		goalSelector.addGoal(1, new SwimGoal(this));
+		targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, MonsterEntity.class, false));
+		targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, PlayerEntity.class, false));
+		targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, CreatureEntity.class, false));
+		targetSelector.addGoal(2, new HurtByTargetGoal(this));
 	}
 
+	/**
+	 * Play the step sound.
+	 * @param pos the <code>BlockPos</code> the entity is at
+	 * @param blockIn the <code>BlockState</code> of the block being stepped on
+	 */
 	@Override
 	protected void playStepSound(BlockPos pos, BlockState blockIn) {
-		this.playSound(this.getStepSound(), 0.15F, 1.0F);
+		playSound(getStepSound(), 0.15F, 1.0F);
 	}
 
 	protected abstract SoundEvent getStepSound();
-
-	/**
-	 * Called frequently so the entity can update its state every tick as required. For example, zombies and skeletons
-	 * use this to react to sunlight and start to burn.
-	 */
-	@Override
-	public void aiStep() {
-		super.aiStep();
-	}
 
 	/**
 	 * Handles updating while riding another entity
@@ -92,15 +102,15 @@ public abstract class AbstractWanderingWarriorEntity extends MonsterEntity {
 	@Override
 	public void rideTick() {
 		super.rideTick();
-		if (this.getVehicle() instanceof CreatureEntity) {
-			CreatureEntity creatureEntity = (CreatureEntity) this.getVehicle();
-			this.yBodyRot = creatureEntity.yBodyRot;
+		if (getVehicle() instanceof CreatureEntity) {
+			CreatureEntity creatureEntity = (CreatureEntity) getVehicle();
+			yBodyRot = creatureEntity.yBodyRot;
 		}
-
 	}
 
 	/**
 	 * Gives armor or weapon for entity based on given DifficultyInstance
+	 * @param difficulty the <code>DifficultyInstance</code> of the world
 	 */
 	@Override
 	protected void populateDefaultEquipmentSlots(DifficultyInstance difficulty) {
@@ -108,11 +118,11 @@ public abstract class AbstractWanderingWarriorEntity extends MonsterEntity {
 		// Populate weapons
 		float random = this.random.nextFloat();
 		if (random <= 0.5) {
-			this.setItemInHand(Hand.MAIN_HAND, new ItemStack(Items.IRON_SWORD));
+			setItemInHand(Hand.MAIN_HAND, new ItemStack(Items.IRON_SWORD));
 		} else if (random <= 0.3) {
-			this.setItemInHand(Hand.MAIN_HAND, new ItemStack(DeferredRegistryHandler.COBALT_SWORD.get()));
+			setItemInHand(Hand.MAIN_HAND, new ItemStack(DeferredRegistryHandler.COBALT_SWORD.get()));
 		} else {
-			this.setItemInHand(Hand.MAIN_HAND, new ItemStack(DeferredRegistryHandler.COPPER_SWORD.get()));
+			setItemInHand(Hand.MAIN_HAND, new ItemStack(DeferredRegistryHandler.COPPER_SWORD.get()));
 		}
 		// Populate armor
 		boolean flag = true;
@@ -123,10 +133,10 @@ public abstract class AbstractWanderingWarriorEntity extends MonsterEntity {
 		if (this.random.nextFloat() < 0.1F) {
 			armorTier++;
 		}
-		float difficultyModifier = this.level.getDifficulty() == Difficulty.HARD ? 0.3F : 0.75F;
+		float difficultyModifier = level.getDifficulty() == Difficulty.HARD ? 0.3F : 0.75F;
 		for (EquipmentSlotType equipmentslottype : EquipmentSlotType.values()) {
 			if (equipmentslottype.getType() == EquipmentSlotType.Group.ARMOR) {
-				ItemStack itemstack = this.getItemBySlot(equipmentslottype);
+				ItemStack itemstack = getItemBySlot(equipmentslottype);
 				if (!flag && this.random.nextFloat() < difficultyModifier) {
 					break;
 				}
@@ -135,28 +145,36 @@ public abstract class AbstractWanderingWarriorEntity extends MonsterEntity {
 				if (itemstack.isEmpty()) {
 					Item item = getEquipmentForSlot(equipmentslottype, armorTier);
 					if (item != null) {
-						this.setItemSlot(equipmentslottype, new ItemStack(item));
+						setItemSlot(equipmentslottype, new ItemStack(item));
 					}
 				}
 			}
 		}
 	}
 
+	/**
+	 * Finalize spawn information.
+	 * @param worldIn the <code>IServerWorld</code> the entity is in
+	 * @param difficultyIn the <code>DifficultyInstance</code> of the world
+	 * @param reason the <code>SpawnReason</code> for the entity
+	 * @param spawnDataIn the <code>ILivingEntitySpawnData</code> for the entity
+	 * @param dataTag the <code>CompoundNBT</code> data tag for the entity
+	 * @return ILivingEntityData
+	 */
 	@Override
-	@Nullable
 	public ILivingEntityData finalizeSpawn(@NotNull IServerWorld worldIn, @NotNull DifficultyInstance difficultyIn, @NotNull SpawnReason reason, @Nullable ILivingEntityData spawnDataIn, @Nullable CompoundNBT dataTag) {
 		spawnDataIn = super.finalizeSpawn(worldIn, difficultyIn, reason, spawnDataIn, dataTag);
-		this.populateDefaultEquipmentSlots(difficultyIn);
-		this.populateDefaultEquipmentEnchantments(difficultyIn);
-		this.setCombatTask();
-		this.setCanPickUpLoot(this.random.nextFloat() < 0.55F * difficultyIn.getSpecialMultiplier());
-		if (this.getItemBySlot(EquipmentSlotType.HEAD).isEmpty()) {
+		populateDefaultEquipmentSlots(difficultyIn);
+		populateDefaultEquipmentEnchantments(difficultyIn);
+		setCombatTask();
+		setCanPickUpLoot(random.nextFloat() < 0.55F * difficultyIn.getSpecialMultiplier());
+		if (getItemBySlot(EquipmentSlotType.HEAD).isEmpty()) {
 			LocalDate localdate = LocalDate.now();
 			int i = localdate.get(ChronoField.DAY_OF_MONTH);
 			int j = localdate.get(ChronoField.MONTH_OF_YEAR);
-			if (j == 10 && i == 31 && this.random.nextFloat() < 0.25F) {
-				this.setItemSlot(EquipmentSlotType.HEAD, new ItemStack(this.random.nextFloat() < 0.1F ? Blocks.JACK_O_LANTERN : Blocks.CARVED_PUMPKIN));
-				this.armorDropChances[EquipmentSlotType.HEAD.getIndex()] = 0.0F;
+			if (j == 10 && i == 31 && random.nextFloat() < 0.25F) {
+				setItemSlot(EquipmentSlotType.HEAD, new ItemStack(random.nextFloat() < 0.1F ? Blocks.JACK_O_LANTERN : Blocks.CARVED_PUMPKIN));
+				armorDropChances[EquipmentSlotType.HEAD.getIndex()] = 0.0F;
 			}
 		}
 
@@ -164,39 +182,22 @@ public abstract class AbstractWanderingWarriorEntity extends MonsterEntity {
 	}
 
 	/**
-	 * sets this entity's combat AI.
+	 * Set the entity's combat AI.
 	 */
 	public void setCombatTask() {
-		if (this.level != null && !this.level.isClientSide) {
-			this.goalSelector.removeGoal(this.aiAttackOnCollide);
-			if (this.getItemInHand(Hand.MAIN_HAND).getItem() == Items.AIR) {
-				this.populateDefaultEquipmentSlots(this.level.getCurrentDifficultyAt(this.blockPosition()));
+		if (level != null && !level.isClientSide) {
+			goalSelector.removeGoal(aiAttackOnCollide);
+			if (getItemInHand(Hand.MAIN_HAND).getItem() == Items.AIR) {
+				populateDefaultEquipmentSlots(level.getCurrentDifficultyAt(blockPosition()));
 			}
-			this.goalSelector.addGoal(12, this.aiAttackOnCollide);
+			goalSelector.addGoal(12, aiAttackOnCollide);
 		}
 	}
 
-	@Override
-	public boolean hurt(DamageSource source, float amount) {
-		super.hurt(source, amount);
-		if (amount > 0 && source.getEntity() instanceof PlayerEntity || source.getEntity() instanceof MobEntity || source.getEntity() instanceof CreatureEntity) {
-			if (source.getEntity() instanceof PlayerEntity) {
-				if (((PlayerEntity) source.getEntity()).isCreative()) {
-					return false;
-				}
-			}
-			this.setTarget((LivingEntity) source.getEntity());
-			this.setCombatTask();
-			return true;
-		}
-		return false;
-	}
-
-	@Override
-	public void addAdditionalSaveData(CompoundNBT compound) {
-		super.addAdditionalSaveData(compound);
-	}
-
+	/**
+	 * Read entity NBT data.
+	 * @param compound the <code>CompoundNBT</code> to read from
+	 */
 	@Override
 	public void readAdditionalSaveData(CompoundNBT compound) {
 		super.readAdditionalSaveData(compound);

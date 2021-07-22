@@ -13,6 +13,12 @@ public class CopperArmorItem extends ArmorItem {
 
 	private boolean isLeggings = false;
 
+	/**
+	 * Constructor for CopperArmorItem.
+	 * @param material the <code>IArmorMaterial</code> for the item
+	 * @param slot the <code>EquipmentSlotType</code>
+	 * @param type type ID
+	 */
 	public CopperArmorItem(IArmorMaterial material, EquipmentSlotType slot, int type) {
 		super(material, slot, (new Item.Properties().tab(DeferredRegistryHandler.ITEM_GROUP)));
 		if (type == 2) {
@@ -20,6 +26,14 @@ public class CopperArmorItem extends ArmorItem {
 		}
 	}
 
+	/**
+	 * Get the armor texture.
+	 * @param stack the <code>ItemStack</code> instance
+	 * @param entity the <code>Entity</code> wearing the armor
+	 * @param slot the <code>EquipmentSlotType</code>
+	 * @param type type ID
+	 * @return String
+	 */
 	@Override
 	public String getArmorTexture(ItemStack stack, Entity entity, EquipmentSlotType slot, String type) {
 		return (!isLeggings ? ImmersiveWeapons.MOD_ID + ":textures/armor/copper_layer_1.png" : ImmersiveWeapons.MOD_ID + ":textures/armor/copper_layer_2.png");

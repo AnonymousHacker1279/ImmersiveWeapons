@@ -27,9 +27,15 @@ import java.util.function.Supplier;
 
 public class VentusArmorItem extends ArmorItem {
 
-	public static boolean armorIsToggled = false;
+	private static boolean armorIsToggled = false;
 	private boolean isLeggings = false;
 
+	/**
+	 * Constructor for VentusArmorItem.
+	 * @param material the <code>IArmorMaterial</code> for the item
+	 * @param slot the <code>EquipmentSlotType</code>
+	 * @param type type ID
+	 */
 	public VentusArmorItem(IArmorMaterial material, EquipmentSlotType slot, int type) {
 		super(material, slot, (new Item.Properties().tab(DeferredRegistryHandler.ITEM_GROUP)));
 		if (type == 2) {
@@ -37,11 +43,25 @@ public class VentusArmorItem extends ArmorItem {
 		}
 	}
 
+	/**
+	 * Get the armor texture.
+	 * @param stack the <code>ItemStack</code> instance
+	 * @param entity the <code>Entity</code> wearing the armor
+	 * @param slot the <code>EquipmentSlotType</code>
+	 * @param type type ID
+	 * @return String
+	 */
 	@Override
 	public String getArmorTexture(ItemStack stack, Entity entity, EquipmentSlotType slot, String type) {
 		return (!isLeggings ? ImmersiveWeapons.MOD_ID + ":textures/armor/ventus_layer_1.png" : ImmersiveWeapons.MOD_ID + ":textures/armor/ventus_layer_2.png");
 	}
 
+	/**
+	 * Runs once per tick while armor is equipped
+	 * @param stack the <code>ItemStack</code> instance
+	 * @param world the <code>World</code> the player is in
+	 * @param player the <code>PlayerEntity</code> wearing the armor
+	 */
 	@Override
 	public void onArmorTick(ItemStack stack, World world, PlayerEntity player) {
 		if (player.getItemBySlot(EquipmentSlotType.HEAD).getItem() == DeferredRegistryHandler.VENTUS_HELMET.get() &&
@@ -70,7 +90,10 @@ public class VentusArmorItem extends ArmorItem {
 		}
 	}
 
-	public static void toggleEffect() {
+	/**
+	 * Toggle the armor effect.
+	 */
+	static void toggleEffect() {
 		armorIsToggled = !armorIsToggled;
 	}
 
@@ -78,26 +101,49 @@ public class VentusArmorItem extends ArmorItem {
 
 		private final boolean clientSide;
 
-		public VentusArmorItemPacketHandler(final boolean clientSide) {
+		/**
+		 * Constructor for VentusArmorItemPacketHandler.
+		 * @param clientSide if the packet is from the client
+		 */
+		VentusArmorItemPacketHandler(boolean clientSide) {
 			this.clientSide = clientSide;
 		}
 
-		public static void encode(final VentusArmorItemPacketHandler msg, final PacketBuffer packetBuffer) {
+		/**
+		 * Encodes a packet
+		 * @param msg the <code>VentusArmorItemPacketHandler</code> message being sent
+		 * @param packetBuffer the <code>PacketBuffer</code> containing packet data
+		 */
+		public static void encode(VentusArmorItemPacketHandler msg, PacketBuffer packetBuffer) {
 			packetBuffer.writeBoolean(msg.clientSide);
 		}
 
-		public static VentusArmorItemPacketHandler decode(final PacketBuffer packetBuffer) {
+		/**
+		 * Decodes a packet
+		 * @param packetBuffer the <code>PacketBuffer</code> containing packet data
+		 * @return VentusArmorItemPacketHandler
+		 */
+		public static VentusArmorItemPacketHandler decode(PacketBuffer packetBuffer) {
 			return new VentusArmorItemPacketHandler(packetBuffer.readBoolean());
 		}
 
-		public static void handle(final VentusArmorItemPacketHandler msg, final Supplier<Context> contextSupplier) {
-			final NetworkEvent.Context context = contextSupplier.get();
+		/**
+		 * Handles an incoming packet, by sending it to the client/server
+		 * @param msg the <code>VentusArmorItemPacketHandler</code> message being sent
+		 * @param contextSupplier the <code>Supplier</code> providing context
+		 */
+		public static void handle(VentusArmorItemPacketHandler msg, Supplier<Context> contextSupplier) {
+			NetworkEvent.Context context = contextSupplier.get();
 			context.enqueueWork(() -> DistExecutor.runWhenOn(Dist.CLIENT, () -> () -> handleOnServer(msg)));
 			context.enqueueWork(() -> DistExecutor.runWhenOn(Dist.DEDICATED_SERVER, () -> () -> handleOnServer(msg)));
 			context.setPacketHandled(true);
 		}
 
-		private static void handleOnServer(final VentusArmorItemPacketHandler msg) {
+		/**
+		 * Runs specifically on the server, when a packet is received
+		 * @param msg the <code>VentusArmorItemPacketHandler</code> message being sent
+		 */
+		private static void handleOnServer(VentusArmorItemPacketHandler msg) {
 			VentusArmorItem.toggleEffect();
 		}
 	}

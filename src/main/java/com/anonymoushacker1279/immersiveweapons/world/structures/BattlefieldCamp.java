@@ -8,7 +8,6 @@ import net.minecraft.util.math.MutableBoundingBox;
 import net.minecraft.util.registry.DynamicRegistries;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.gen.ChunkGenerator;
-import net.minecraft.world.gen.GenerationStage;
 import net.minecraft.world.gen.GenerationStage.Decoration;
 import net.minecraft.world.gen.Heightmap;
 import net.minecraft.world.gen.feature.NoFeatureConfig;
@@ -18,30 +17,61 @@ import net.minecraft.world.gen.feature.template.TemplateManager;
 
 public class BattlefieldCamp extends Structure<NoFeatureConfig> {
 
+	/**
+	 * Constructor for BattlefieldCamp.
+	 * @param codec the <code>Codec</code> extending NoFeatureConfig
+	 */
 	public BattlefieldCamp(Codec<NoFeatureConfig> codec) {
 		super(codec);
 	}
 
+	/**
+	 * Get the factory start.
+	 * @return IStartFactory extending NoFeatureConfig
+	 */
 	@Override
 	public IStartFactory<NoFeatureConfig> getStartFactory() {
 		return BattlefieldCamp.Start::new;
 	}
 
+	/**
+	 * Get the generation stage.
+	 * @return Decoration
+	 */
 	@Override
-	public GenerationStage.Decoration step() {
+	public Decoration step() {
 		return Decoration.SURFACE_STRUCTURES;
 	}
 
 
 	public static class Start extends StructureStart<NoFeatureConfig> {
+		/**
+		 * Constructor for Start.
+		 * @param structureIn the <code>Structure</code> extending NoFeatureConfig
+		 * @param chunkX the chunk X position
+		 * @param chunkZ the chunk Z position
+		 * @param mutableBoundingBox a <code>MutableBoundingBox</code> instance
+		 * @param referenceIn the reference ID
+		 * @param seedIn the world seed
+		 */
 		public Start(Structure<NoFeatureConfig> structureIn, int chunkX, int chunkZ, MutableBoundingBox mutableBoundingBox, int referenceIn, long seedIn) {
 			super(structureIn, chunkX, chunkZ, mutableBoundingBox, referenceIn, seedIn);
 		}
 
+		/**
+		 * Generate structure pieces.
+		 * @param dynamicRegistryManager the <code>DynamicRegistries</code> instance
+		 * @param generator the <code>ChunkGenerator</code> instance
+		 * @param templateManagerIn the <code>TemplateManager</code> instance
+		 * @param chunkX the chunk X position
+		 * @param chunkZ the chunk Z position
+		 * @param biomeIn the <code>Biome</code> instance
+		 * @param config the <code>NoFeatureConfig</code> instance
+		 */
 		@Override
 		public void generatePieces(DynamicRegistries dynamicRegistryManager, ChunkGenerator generator, TemplateManager templateManagerIn, int chunkX, int chunkZ, Biome biomeIn, NoFeatureConfig config) {
 
-			Rotation rotation = Rotation.values()[this.random.nextInt(Rotation.values().length)];
+			Rotation rotation = Rotation.values()[random.nextInt(Rotation.values().length)];
 
 			// Turns the chunk coordinates into actual coordinates we can use. (Gets center of that chunk)
 			int x = (chunkX << 4) + GeneralUtilities.getRandomNumber(0, 17);
@@ -51,9 +81,9 @@ public class BattlefieldCamp extends Structure<NoFeatureConfig> {
 			int surfaceY = generator.getBaseHeight(x, z, Heightmap.Type.WORLD_SURFACE_WG);
 			BlockPos blockpos = new BlockPos(x, surfaceY - 3, z);
 
-			BattlefieldCampPieces.start(templateManagerIn, blockpos, rotation, this.pieces, this.random);
+			BattlefieldCampPieces.start(templateManagerIn, blockpos, rotation, pieces, random);
 
-			this.calculateBoundingBox();
+			calculateBoundingBox();
 		}
 	}
 }

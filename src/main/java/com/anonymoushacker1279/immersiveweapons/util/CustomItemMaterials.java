@@ -31,42 +31,75 @@ public enum CustomItemMaterials implements IItemTier {
 	private final int enchantability;
 	private final LazyValue<Ingredient> repairMaterial;
 
+	/**
+	 * Constructor for CustomItemMaterials.
+	 * @param harvestLevelIn the harvest level
+	 * @param maxUsesIn the max uses
+	 * @param efficiencyIn the efficiency
+	 * @param attackDamageIn the attack damage
+	 * @param enchantabilityIn the enchantability
+	 * @param repairMaterialIn the <code>Supplier</code> extending Ingredient for repairs
+	 */
 	CustomItemMaterials(int harvestLevelIn, int maxUsesIn, float efficiencyIn, float attackDamageIn, int enchantabilityIn, Supplier<Ingredient> repairMaterialIn) {
-		this.harvestLevel = harvestLevelIn;
-		this.maxUses = maxUsesIn;
-		this.efficiency = efficiencyIn;
-		this.attackDamage = attackDamageIn;
-		this.enchantability = enchantabilityIn;
-		this.repairMaterial = new LazyValue<>(repairMaterialIn);
+		harvestLevel = harvestLevelIn;
+		maxUses = maxUsesIn;
+		efficiency = efficiencyIn;
+		attackDamage = attackDamageIn;
+		enchantability = enchantabilityIn;
+		repairMaterial = new LazyValue<>(repairMaterialIn);
 	}
 
+	/**
+	 * Get max uses.
+	 * @return int
+	 */
 	@Override
 	public int getUses() {
-		return this.maxUses;
+		return maxUses;
 	}
 
+	/**
+	 * Get the efficiency.
+	 * @return float
+	 */
 	@Override
 	public float getSpeed() {
-		return this.efficiency;
+		return efficiency;
 	}
 
+	/**
+	 * Get the attack damage.
+	 * @return float
+	 */
 	@Override
 	public float getAttackDamageBonus() {
-		return this.attackDamage;
+		return attackDamage;
 	}
 
+	/**
+	 * Get the harvest level.
+	 * @return int
+	 */
 	@Override
 	public int getLevel() {
-		return this.harvestLevel;
+		return harvestLevel;
 	}
 
+	/**
+	 * Get the enchantability.
+	 * @return int
+	 */
 	@Override
 	public int getEnchantmentValue() {
-		return this.enchantability;
+		return enchantability;
 	}
 
+	/**
+	 * Get the repair ingredient.
+	 * @return Ingredient
+	 */
 	@Override
 	public Ingredient getRepairIngredient() {
-		return this.repairMaterial.get();
+		return repairMaterial.get();
 	}
 }

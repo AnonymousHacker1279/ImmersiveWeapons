@@ -12,10 +12,18 @@ import java.util.List;
 
 public class CreativeTabSorter extends ItemGroup {
 
+	/**
+	 * Constructor for CreativeTabSorter.
+	 * @param label the tab label
+	 */
 	public CreativeTabSorter(String label) {
 		super(label);
 	}
 
+	/**
+	 * Fill the item list with the proper ordering.
+	 * @param itemStack the <code>NonNullList</code> extending ItemStack
+	 */
 	@Override
 	public void fillItemList(NonNullList<ItemStack> itemStack) {
 		List<Item> items = new ArrayList<>();
@@ -26,6 +34,10 @@ public class CreativeTabSorter extends ItemGroup {
 		}
 	}
 
+	/**
+	 * Set the tab icon.
+	 * @return ItemStack
+	 */
 	@Override
 	public ItemStack makeIcon() {
 		return new ItemStack(DeferredRegistryHandler.TESLA_SWORD.get());

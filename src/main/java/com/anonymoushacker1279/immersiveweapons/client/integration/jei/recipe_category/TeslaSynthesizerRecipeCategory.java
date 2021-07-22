@@ -27,36 +27,65 @@ public class TeslaSynthesizerRecipeCategory implements IRecipeCategory<TeslaSynt
 	private final IDrawable background;
 	private final IDrawable icon;
 
+	/**
+	 * Constructor for TeslaSynthesizerRecipeCategory.
+	 * @param guiHelper a <code>IGuiHelper</code> instance
+	 */
 	public TeslaSynthesizerRecipeCategory(IGuiHelper guiHelper) {
 		icon = guiHelper.createDrawableIngredient(new ItemStack(DeferredRegistryHandler.TESLA_SYNTHESIZER.get()));
 		background = guiHelper.createDrawable(GUI_TEXTURE, 0, 0, 132, 54);
 	}
 
+	/**
+	 * Get the UID of the category.
+	 * @return ResourceLocation
+	 */
 	@Override
 	public ResourceLocation getUid() {
 		return UID;
 	}
 
+	/**
+	 * Get the recipe class for this category.
+	 * @return Class extending TeslaSynthesizerRecipe
+	 */
 	@Override
 	public Class<? extends TeslaSynthesizerRecipe> getRecipeClass() {
 		return TeslaSynthesizerRecipe.class;
 	}
 
+	/**
+	 * Get the title of the recipe category.
+	 * @return String
+	 */
 	@Override
 	public String getTitle() {
 		return new TranslationTextComponent("gui.jei.category.tesla_synthesizer").getString();
 	}
 
+	/**
+	 * Get the background.
+	 * @return IDrawable
+	 */
 	@Override
 	public IDrawable getBackground() {
 		return background;
 	}
 
+	/**
+	 * Get the icon.
+	 * @return IDrawable
+	 */
 	@Override
 	public IDrawable getIcon() {
 		return icon;
 	}
 
+	/**
+	 * Set the ingredients in a recipe.
+	 * @param recipe a <code>TeslaSynthesizerRecipe</code> instance
+	 * @param ingredients the <code>IIngredients</code> being passed
+	 */
 	@Override
 	public void setIngredients(TeslaSynthesizerRecipe recipe, IIngredients ingredients) {
 		NonNullList<Ingredient> inputs = NonNullList.create();
@@ -66,6 +95,12 @@ public class TeslaSynthesizerRecipeCategory implements IRecipeCategory<TeslaSynt
 		ingredients.setOutput(VanillaTypes.ITEM, recipe.getResultItem());
 	}
 
+	/**
+	 * Setup the recipe layout.
+	 * @param recipeLayout a <code>IRecipeLayout</code> instance
+	 * @param recipe a <code>TeslaSynthesizerRecipe</code> instance
+	 * @param ingredients the <code>IIngredients</code> being passed
+	 */
 	@Override
 	public void setRecipe(IRecipeLayout recipeLayout, TeslaSynthesizerRecipe recipe, IIngredients ingredients) {
 		IGuiItemStackGroup guiItemStacks = recipeLayout.getItemStacks();

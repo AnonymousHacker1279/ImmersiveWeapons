@@ -13,6 +13,11 @@ public class ThrowableItemRenderer {
 
 	public static class SmokeBombRenderer implements IRenderFactory<SmokeBombEntity> {
 
+		/**
+		 * Create a renderer.
+		 * @param manager an <code>EntityRendererManager</code> instance
+		 * @return EntityRenderer extending SmokeBombEntity
+		 */
 		@Override
 		public EntityRenderer<? super SmokeBombEntity> createRenderFor(EntityRendererManager manager) {
 			ItemRenderer itemRenderer = Minecraft.getInstance().getItemRenderer();
@@ -22,6 +27,11 @@ public class ThrowableItemRenderer {
 
 	public static class MolotovRenderer implements IRenderFactory<MolotovEntity> {
 
+		/**
+		 * Create a renderer.
+		 * @param manager an <code>EntityRendererManager</code> instance
+		 * @return EntityRenderer extending MolotovEntity
+		 */
 		@Override
 		public EntityRenderer<? super MolotovEntity> createRenderFor(EntityRendererManager manager) {
 			ItemRenderer itemRenderer = Minecraft.getInstance().getItemRenderer();

@@ -13,36 +13,62 @@ import net.minecraft.util.IWorldPosCallable;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.world.World;
 
-import javax.annotation.Nullable;
 import java.util.List;
 
 public class SmallPartsContainer extends AbstractRepairContainer {
 
 	private final World world;
 	private final List<SmallPartsRecipe> smallPartsRecipeList;
-	@Nullable
 	private SmallPartsRecipe smallPartsRecipe;
 
+	/**
+	 * Constructor for SmallPartsContainer.
+	 * @param id the ID of the container
+	 * @param inv the <code>PlayerInventory</code> instance
+	 */
 	public SmallPartsContainer(int id, PlayerInventory inv) {
 		this(id, inv, IWorldPosCallable.NULL);
 	}
 
+	/**
+	 * Constructor for SmallPartsContainer.
+	 * @param id the ID of the container
+	 * @param inv the <code>PlayerInventory</code> instance
+	 * @param worldPosCallable the <code>IWorldPosCallable</code> instance
+	 */
 	public SmallPartsContainer(int id, PlayerInventory inv, IWorldPosCallable worldPosCallable) {
 		super(DeferredRegistryHandler.SMALL_PARTS_TABLE_CONTAINER.get(), id, inv, worldPosCallable);
 		world = inv.player.level;
 		smallPartsRecipeList = world.getRecipeManager().getAllRecipesFor(ICustomRecipeType.SMALL_PARTS);
 	}
 
+	/**
+	 * Check for a valid block.
+	 * @param blockState the <code>BlockState</code> of the block
+	 * @return boolean
+	 */
 	@Override
 	protected boolean isValidBlock(BlockState blockState) {
 		return blockState.is(DeferredRegistryHandler.SMALL_PARTS_TABLE.get());
 	}
 
+	/**
+	 * Check if the player can pick up a recipe.
+	 * @param playerEntity the <code>PlayerEntity</code> instance
+	 * @param matchesRecipe set the recipe match
+	 * @return boolean
+	 */
 	@Override
 	protected boolean mayPickup(PlayerEntity playerEntity, boolean matchesRecipe) {
 		return smallPartsRecipe != null && smallPartsRecipe.matches(inputSlots, world);
 	}
 
+	/**
+	 * Runs when the result is taken from the container.
+	 * @param playerEntity the <code>PlayerEntity</code> instance
+	 * @param itemStack the <code>ItemStack</code> being taken
+	 * @return ItemStack
+	 */
 	@Override
 	protected ItemStack onTake(PlayerEntity playerEntity, ItemStack itemStack) {
 		itemStack.onCraftedBy(playerEntity.level, playerEntity, itemStack.getCount());
@@ -53,12 +79,19 @@ public class SmallPartsContainer extends AbstractRepairContainer {
 		return itemStack;
 	}
 
+	/**
+	 * Shrink a stack in a slot.
+	 * @param index the slot index
+	 */
 	private void shrinkStackInSlot(int index) {
 		ItemStack itemstack = inputSlots.getItem(index);
 		itemstack.shrink(1);
 		inputSlots.setItem(index, itemstack);
 	}
 
+	/**
+	 * Create a result from a recipe.
+	 */
 	@Override
 	public void createResult() {
 		List<SmallPartsRecipe> list = world.getRecipeManager().getRecipesFor(ICustomRecipeType.SMALL_PARTS, inputSlots, world);
@@ -73,14 +106,21 @@ public class SmallPartsContainer extends AbstractRepairContainer {
 
 	}
 
+	/**
+	 * Check if a stack should be quick-moved.
+	 * @param itemStack the <code>ItemStack</code> being checked
+	 * @return boolean
+	 */
 	@Override
 	protected boolean shouldQuickMoveToAdditionalSlot(ItemStack itemStack) {
 		return smallPartsRecipeList.stream().anyMatch((smallPartsRecipe) -> smallPartsRecipe.isValidAdditionItem(itemStack));
 	}
 
 	/**
-	 * Called to determine if the current slot is valid for the stack merging (double-click) code. The stack passed in is
-	 * null for the initial slot that was double-clicked.
+	 * Check if the specified slot is valid for stack merging.
+	 * @param stack the <code>ItemStack</code> being merged
+	 * @param slotIn the <code>Slot</code> instance
+	 * @return boolean
 	 */
 	@Override
 	public boolean canTakeItemForPickAll(ItemStack stack, Slot slotIn) {

@@ -13,26 +13,34 @@ import net.minecraftforge.fml.RegistryObject;
 
 public class CustomArrowItem extends ArrowItem {
 
-	/**
-	 * The amount of damage this arrow does by default.
-	 */
 	public double damage;
-
-	public RegistryObject<Item> ref;
+	RegistryObject<Item> ref;
 
 	/**
-	 * @param properties Default Item.Properties
-	 * @param damageIn   Amount of damage this arrow deals as base (will be multiplied by projectile velocity later!)
+	 * Constructor for CustomArrowItem.
+	 * @param properties the <code>Properties</code> for the item
+	 * @param damageIn the damage to deal on impact
 	 */
-	public CustomArrowItem(Properties properties, double damageIn) {
+	CustomArrowItem(Properties properties, double damageIn) {
 		super(properties);
 		damage = damageIn;
 	}
 
+	/**
+	 * Set item references.
+	 * @param refIn the <code>RegistryObject</code> reference, must extend Item
+	 */
 	public void setItemReference(RegistryObject<Item> refIn) {
 		ref = refIn;
 	}
 
+	/**
+	 * Create an arrow item.
+	 * @param worldIn the <code>World</code> the shooter is in
+	 * @param stack the <code>ItemStack</code> being shot
+	 * @param shooter the <code>LivingEntity</code> shooting the arrow
+	 * @return AbstractArrowEntity
+	 */
 	@Override
 	public AbstractArrowEntity createArrow(World worldIn, ItemStack stack, LivingEntity shooter) {
 		AbstractArrowEntity arrowEntity = new ArrowEntity(worldIn, shooter);
@@ -40,7 +48,13 @@ public class CustomArrowItem extends ArrowItem {
 		return arrowEntity;
 	}
 
-	// We override this method here because the version in ArrowItem *directly* compares against ArrowItem.class, rather than this more flexible check.
+	/**
+	 * Check if the arrow is infinite. A more flexible check than Vanilla provides.
+	 * @param stack the <code>ItemStack</code> being checked
+	 * @param bow the <code>ItemStack</code> containing the bow that's firing
+	 * @param player the <code>PlayerEntity</code> firing the bow
+	 * @return boolean
+	 */
 	@Override
 	public boolean isInfinite(ItemStack stack, ItemStack bow, PlayerEntity player) {
 		int enchant = EnchantmentHelper.getItemEnchantmentLevel(net.minecraft.enchantment.Enchantments.INFINITY_ARROWS, bow);

@@ -18,21 +18,26 @@ public class DefendVillageTargetGoal extends TargetGoal {
 	private final EntityPredicate distancePredicate = (new EntityPredicate()).range(64.0D);
 	private LivingEntity villageAgressorTarget;
 
+	/**
+	 * Constructor for DefendVillageTargetGoal.
+	 * @param mobEntity the <code>MobEntity</code> instance
+	 */
 	public DefendVillageTargetGoal(MobEntity mobEntity) {
 		super(mobEntity, false, true);
 		this.mobEntity = mobEntity;
-		this.setFlags(EnumSet.of(Goal.Flag.TARGET));
+		setFlags(EnumSet.of(Goal.Flag.TARGET));
 	}
 
 	/**
 	 * Returns whether execution should begin. You can also read and cache any state necessary for execution in this
 	 * method as well.
+	 * @return boolean
 	 */
 	@Override
 	public boolean canUse() {
-		AxisAlignedBB axisalignedbb = this.mobEntity.getBoundingBox().inflate(10.0D, 8.0D, 10.0D);
-		List<LivingEntity> list = this.mobEntity.level.getNearbyEntities(VillagerEntity.class, this.distancePredicate, this.mobEntity, axisalignedbb);
-		List<PlayerEntity> list1 = this.mobEntity.level.getNearbyPlayers(this.distancePredicate, this.mobEntity, axisalignedbb);
+		AxisAlignedBB axisalignedbb = mobEntity.getBoundingBox().inflate(10.0D, 8.0D, 10.0D);
+		List<LivingEntity> list = mobEntity.level.getNearbyEntities(VillagerEntity.class, distancePredicate, mobEntity, axisalignedbb);
+		List<PlayerEntity> list1 = mobEntity.level.getNearbyPlayers(distancePredicate, mobEntity, axisalignedbb);
 
 		for (LivingEntity livingentity : list) {
 			VillagerEntity villagerentity = (VillagerEntity) livingentity;
@@ -40,15 +45,15 @@ public class DefendVillageTargetGoal extends TargetGoal {
 			for (PlayerEntity playerentity : list1) {
 				int i = villagerentity.getPlayerReputation(playerentity);
 				if (i <= -100) {
-					this.villageAgressorTarget = playerentity;
+					villageAgressorTarget = playerentity;
 				}
 			}
 		}
 
-		if (this.villageAgressorTarget == null) {
+		if (villageAgressorTarget == null) {
 			return false;
 		} else {
-			return !(this.villageAgressorTarget instanceof PlayerEntity) || !this.villageAgressorTarget.isSpectator() && !((PlayerEntity) this.villageAgressorTarget).isCreative();
+			return !(villageAgressorTarget instanceof PlayerEntity) || !villageAgressorTarget.isSpectator() && !((PlayerEntity) villageAgressorTarget).isCreative();
 		}
 	}
 
@@ -57,7 +62,7 @@ public class DefendVillageTargetGoal extends TargetGoal {
 	 */
 	@Override
 	public void start() {
-		this.mobEntity.setTarget(this.villageAgressorTarget);
+		mobEntity.setTarget(villageAgressorTarget);
 		super.start();
 	}
 }

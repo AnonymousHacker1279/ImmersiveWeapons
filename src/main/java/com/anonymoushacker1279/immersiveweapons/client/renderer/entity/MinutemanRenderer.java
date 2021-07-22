@@ -15,13 +15,22 @@ public class MinutemanRenderer extends BipedRenderer<AbstractMinutemanEntity, Pl
 
 	private static final ResourceLocation MINUTEMAN_TEXTURE = new ResourceLocation(ImmersiveWeapons.MOD_ID, "textures/entity/minuteman/minuteman.png");
 
+	/**
+	 * Constructor for MinutemanRenderer.
+	 * @param renderManagerIn an <code>EntityRendererManager</code> instance
+	 */
 	public MinutemanRenderer(EntityRendererManager renderManagerIn) {
 		super(renderManagerIn, new PlayerModel<>(0.0f, true), 0.5F);
-		this.addLayer(new BipedArmorLayer<>(this, new BipedModel<>(0.25F), new BipedModel<>(0.75F)));
-		this.addLayer(new ArrowLayer<>(this));
-		this.addLayer(new HeldItemLayer<>(this));
+		addLayer(new BipedArmorLayer<>(this, new BipedModel<>(0.25F), new BipedModel<>(0.75F)));
+		addLayer(new ArrowLayer<>(this));
+		addLayer(new HeldItemLayer<>(this));
 	}
 
+	/**
+	 * Get the texture location.
+	 * @param entity the <code>AbstractMinutemanEntity</code> instance
+	 * @return ResourceLocation
+	 */
 	@Override
 	public ResourceLocation getTextureLocation(AbstractMinutemanEntity entity) {
 		return MINUTEMAN_TEXTURE;

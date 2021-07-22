@@ -15,13 +15,22 @@ public class FieldMedicRenderer extends BipedRenderer<AbstractFieldMedicEntity, 
 
 	private static final ResourceLocation FIELD_MEDIC = new ResourceLocation(ImmersiveWeapons.MOD_ID, "textures/entity/field_medic/field_medic.png");
 
+	/**
+	 * Constructor for FieldMedicRenderer.
+	 * @param renderManagerIn an <code>EntityRendererManager</code> instance
+	 */
 	public FieldMedicRenderer(EntityRendererManager renderManagerIn) {
 		super(renderManagerIn, new PlayerModel<>(0.0f, false), 0.5F);
-		this.addLayer(new BipedArmorLayer<>(this, new BipedModel<>(0.25F), new BipedModel<>(0.75F)));
-		this.addLayer(new ArrowLayer<>(this));
-		this.addLayer(new HeldItemLayer<>(this));
+		addLayer(new BipedArmorLayer<>(this, new BipedModel<>(0.25F), new BipedModel<>(0.75F)));
+		addLayer(new ArrowLayer<>(this));
+		addLayer(new HeldItemLayer<>(this));
 	}
 
+	/**
+	 * Get the texture location.
+	 * @param entity the <code>AbstractFieldMedicEntity</code> instance
+	 * @return ResourceLocation
+	 */
 	@Override
 	public ResourceLocation getTextureLocation(AbstractFieldMedicEntity entity) {
 		return FIELD_MEDIC;

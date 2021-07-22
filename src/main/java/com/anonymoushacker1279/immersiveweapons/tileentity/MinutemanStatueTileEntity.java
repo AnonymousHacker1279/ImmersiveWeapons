@@ -21,10 +21,16 @@ public class MinutemanStatueTileEntity extends TileEntity implements ITickableTi
 	private int cooldown;
 	private int scannedMinutemen;
 
+	/**
+	 * Constructor for MinutemanStatueTileEntity.
+	 */
 	public MinutemanStatueTileEntity() {
 		super(DeferredRegistryHandler.MINUTEMAN_STATUE_TILE_ENTITY.get());
 	}
 
+	/**
+	 * Runs once each tick. Handle scanning and spawning entities.
+	 */
 	@Override
 	public void tick() {
 		if (level != null && !level.isClientSide && Objects.equals(level.getBiome(getBlockPos()).getRegistryName(), DeferredRegistryHandler.BATTLEFIELD.get().getRegistryName()) && cooldown == 0) {
@@ -51,6 +57,9 @@ public class MinutemanStatueTileEntity extends TileEntity implements ITickableTi
 		}
 	}
 
+	/**
+	 * Spawn particles.
+	 */
 	private void spawnParticles() {
 		ServerWorld serverWorld = (ServerWorld) getLevel();
 		if (serverWorld != null) {
@@ -58,22 +67,35 @@ public class MinutemanStatueTileEntity extends TileEntity implements ITickableTi
 		}
 	}
 
+	/**
+	 * Get a random position in the nearby area.
+	 * @return BlockPos
+	 */
 	private BlockPos getRandomPositionInArea() {
 		return new BlockPos(getBlockPos().getX() + GeneralUtilities.getRandomNumber(-15, 15), getBlockPos().getY(), getBlockPos().getZ() + GeneralUtilities.getRandomNumber(-15, 15));
 	}
 
+	/**
+	 * Save NBT data.
+	 * @param nbt the <code>CompoundNBT</code> to save
+	 */
 	@Override
-	public CompoundNBT save(CompoundNBT tag) {
-		super.save(tag);
-		tag.putInt("scanCooldown", cooldown);
-		tag.putInt("scannedMinutemen", scannedMinutemen);
-		return tag;
+	public CompoundNBT save(CompoundNBT nbt) {
+		super.save(nbt);
+		nbt.putInt("scanCooldown", cooldown);
+		nbt.putInt("scannedMinutemen", scannedMinutemen);
+		return nbt;
 	}
 
+	/**
+	 * Load NBT data.
+	 * @param state the <code>BlockState</code> of the block
+	 * @param nbt the <code>CompoundNBT</code> to load
+	 */
 	@Override
-	public void load(BlockState state, CompoundNBT tag) {
-		super.load(state, tag);
-		cooldown = tag.getInt("scanCooldown");
-		scannedMinutemen = tag.getInt("scannedMinutemen");
+	public void load(BlockState state, CompoundNBT nbt) {
+		super.load(state, nbt);
+		cooldown = nbt.getInt("scanCooldown");
+		scannedMinutemen = nbt.getInt("scannedMinutemen");
 	}
 }

@@ -16,16 +16,29 @@ import net.minecraft.util.math.vector.Vector3f;
 
 public class ShelfRenderer extends TileEntityRenderer<WallShelfTileEntity> {
 
+	/**
+	 * Constructor for ShelfRenderer.
+	 * @param renderManagerIn a <code>TileEntityRendererDispatcher</code> instance
+	 */
 	public ShelfRenderer(TileEntityRendererDispatcher renderManagerIn) {
 		super(renderManagerIn);
 	}
 
+	/**
+	 * Render the tile entity.
+	 * @param tileEntityIn the <code>WallShelfTileEntity</code> instance
+	 * @param partialTicks the current partial tick
+	 * @param matrixStackIn the <code>MatrixStack</code> instance
+	 * @param bufferIn the <code>IRenderTypeBuffer</code> instance
+	 * @param combinedLightIn the combined light value
+	 * @param combinedOverlayIn the combined overlay value
+	 */
 	@Override
 	public void render(WallShelfTileEntity tileEntityIn, float partialTicks, MatrixStack matrixStackIn, IRenderTypeBuffer bufferIn, int combinedLightIn, int combinedOverlayIn) {
 		Direction direction = tileEntityIn.getBlockState().getValue(ShelfBlock.FACING);
-		NonNullList<ItemStack> nonnulllist = tileEntityIn.getInventory();
+		NonNullList<ItemStack> tileEntityInventory = tileEntityIn.getInventory();
 
-		for (ItemStack itemstack : nonnulllist) {
+		for (ItemStack itemstack : tileEntityInventory) {
 			if (itemstack != ItemStack.EMPTY) {
 				matrixStackIn.pushPose();
 				// Actual position of the item
@@ -49,16 +62,16 @@ public class ShelfRenderer extends TileEntityRenderer<WallShelfTileEntity> {
 				// Rotation occurs here
 				matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(50f));
 				matrixStackIn.translate(0.0D, 0.10D, -0.10D);
-				if (nonnulllist.get(0) == itemstack) {
+				if (tileEntityInventory.get(0) == itemstack) {
 					// First item goes on bottom left
 					matrixStackIn.translate(-0.3125D, 0.3125D, 0.15D);
-				} else if (nonnulllist.get(1) == itemstack) {
+				} else if (tileEntityInventory.get(1) == itemstack) {
 					// Second item goes on bottom right
 					matrixStackIn.translate(0.3125D, 0.3125D, 0.15D);
-				} else if (nonnulllist.get(2) == itemstack) {
+				} else if (tileEntityInventory.get(2) == itemstack) {
 					// Third item goes on top left
 					matrixStackIn.translate(-0.3125D, 0.6D, -0.17D);
-				} else if (nonnulllist.get(3) == itemstack) {
+				} else if (tileEntityInventory.get(3) == itemstack) {
 					// Fourth item goes on top right
 					matrixStackIn.translate(0.3125D, 0.6D, -0.17D);
 				}

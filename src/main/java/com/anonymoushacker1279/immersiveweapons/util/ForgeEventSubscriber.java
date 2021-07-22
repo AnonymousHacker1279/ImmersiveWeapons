@@ -16,9 +16,12 @@ import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
 @EventBusSubscriber(modid = ImmersiveWeapons.MOD_ID, bus = Bus.FORGE, value = Dist.CLIENT)
 public class ForgeEventSubscriber {
 
-
+	/**
+	 * Event handler for the RenderBlockOverlayEvent.
+	 * @param event the <code>RenderBlockOverlayEvent</code> instance
+	 */
 	@SubscribeEvent
-	public static void renderBlockOverlayEvent(final RenderBlockOverlayEvent event) {
+	public static void renderBlockOverlayEvent(RenderBlockOverlayEvent event) {
 
 		// Remove fire overlay from players wearing a full set of molten armor
 		if (event.getPlayer().getItemBySlot(EquipmentSlotType.HEAD).getItem() == DeferredRegistryHandler.MOLTEN_HELMET.get() &&
@@ -33,8 +36,12 @@ public class ForgeEventSubscriber {
 		}
 	}
 
+	/**
+	 * Event handler for the FogDensity.
+	 * @param event the <code>FogDensity</code> instance
+	 */
 	@SubscribeEvent
-	public static void entityViewRenderEvent(final FogDensity event) {
+	public static void FogDensity(FogDensity event) {
 
 		// Reduce lava fog from players wearing a full set of molten armor
 		PlayerEntity player = Minecraft.getInstance().player;

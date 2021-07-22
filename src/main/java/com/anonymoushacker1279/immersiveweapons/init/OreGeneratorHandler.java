@@ -15,6 +15,10 @@ public class OreGeneratorHandler {
 	public static ConfiguredFeature<?, ?> ORE_MOLTEN_CONFIG;
 	public static ConfiguredFeature<?, ?> ORE_COBALT_CONFIG;
 
+	/**
+	 * Initialize ore generation setup.
+	 * @param event the <code>FMLCommonSetupEvent</code> instance
+	 */
 	@SubscribeEvent
 	public static void init(FMLCommonSetupEvent event) {
 		ORE_COPPER_CONFIG = Registry.register(WorldGenRegistries.CONFIGURED_FEATURE, "ore_copper",

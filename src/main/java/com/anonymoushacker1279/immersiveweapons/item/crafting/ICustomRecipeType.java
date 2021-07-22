@@ -10,8 +10,13 @@ public interface ICustomRecipeType {
 	IRecipeType<SmallPartsRecipe> SMALL_PARTS = register(ImmersiveWeapons.MOD_ID + ":small_parts");
 	IRecipeType<TeslaSynthesizerRecipe> TESLA_SYNTHESIZER = register(ImmersiveWeapons.MOD_ID + ":tesla_synthesizer");
 
-
-	static <T extends IRecipe<?>> IRecipeType<T> register(final String key) {
+	/**
+	 * Register recipe types.
+	 * @param key the registry key
+	 * @param <T> <code>IRecipeType</code> extending IRecipe
+	 * @return T extending IRecipe
+	 */
+	static <T extends IRecipe<?>> IRecipeType<T> register(String key) {
 		return Registry.register(Registry.RECIPE_TYPE, new ResourceLocation(key), new IRecipeType<T>() {
 			@Override
 			public String toString() {

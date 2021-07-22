@@ -14,30 +14,35 @@ import net.minecraft.world.gen.surfacebuilders.ConfiguredSurfaceBuilder;
 
 public class BiomeBuilder {
 
-	public static ConfiguredSurfaceBuilder<?> getSurfaceBuilder(final RegistryKey<ConfiguredSurfaceBuilder<?>> key) {
+	/**
+	 * Get the surface builder.
+	 * @param key the <code>RegistryKey</code>, must extend ConfiguredSurfaceBuilder
+	 * @return ConfiguredSurfaceBuilder
+	 */
+	public static ConfiguredSurfaceBuilder<?> getSurfaceBuilder(RegistryKey<ConfiguredSurfaceBuilder<?>> key) {
 		return WorldGenRegistries.CONFIGURED_SURFACE_BUILDER.getOrThrow(key);
 	}
 
-	public static Biome makeBattlefieldBiome(
-			final ConfiguredSurfaceBuilder<?> surfaceBuilder,
-			final float depth,
-			final float scale,
-			final boolean hasVillageAndOutpost
-	) {
-		final MobSpawnInfo.Builder mobSpawnInfoBuilder = new MobSpawnInfo.Builder()
+	/**
+	 * Make a Battlefield biome.
+	 * @param surfaceBuilder the <code>SurfaceBuilder</code> instance
+	 * @param depth the biome depth
+	 * @param scale the biome scale
+	 * @return Biome
+	 */
+	public static Biome makeBattlefieldBiome(ConfiguredSurfaceBuilder<?> surfaceBuilder, float depth, float scale) {
+		MobSpawnInfo.Builder mobSpawnInfoBuilder = new MobSpawnInfo.Builder()
 				.setPlayerCanSpawn()
 				.addSpawn(EntityClassification.MONSTER, new Spawners(DeferredRegistryHandler.DYING_SOLDIER_ENTITY.get(), 50, 1, 4));
 
-		final MoodSoundAmbience ambienceSound = new MoodSoundAmbience(DeferredRegistryHandler.FLINTLOCK_PISTOL_FIRE.get(), 5000, 8, 2.0D);
+		MoodSoundAmbience ambienceSound = new MoodSoundAmbience(DeferredRegistryHandler.FLINTLOCK_PISTOL_FIRE.get(), 5000, 8, 2.0D);
 
-		final BiomeGenerationSettings.Builder biomeGenerationSettingBuilder = new BiomeGenerationSettings.Builder()
+		BiomeGenerationSettings.Builder biomeGenerationSettingBuilder = new BiomeGenerationSettings.Builder()
 				.surfaceBuilder(surfaceBuilder)
 				.addFeature(Decoration.VEGETAL_DECORATION, Features.PLAIN_VEGETATION)
 				.addFeature(Decoration.VEGETAL_DECORATION, Features.PATCH_GRASS_PLAIN);
 
-		if (hasVillageAndOutpost) {
-			biomeGenerationSettingBuilder.addStructureStart(StructureFeatures.PILLAGER_OUTPOST);
-		}
+		biomeGenerationSettingBuilder.addStructureStart(StructureFeatures.PILLAGER_OUTPOST);
 
 		DefaultBiomeFeatures.addDefaultOverworldLandStructures(biomeGenerationSettingBuilder);
 		DefaultBiomeFeatures.addDefaultCarvers(biomeGenerationSettingBuilder);

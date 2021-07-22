@@ -15,40 +15,58 @@ import net.minecraftforge.registries.ForgeRegistryEntry;
 
 public class TeslaSynthesizerRecipe implements IRecipe<IInventory> {
 
-	private static int cookTime = 0;
+	private final int cookTime;
 	private final Ingredient blockIngredient;
 	private final Ingredient material1;
 	private final Ingredient material2;
 	private final ItemStack result;
 	private final ResourceLocation recipeId;
 
-	public TeslaSynthesizerRecipe(ResourceLocation recipeId, Ingredient blockIngredient, Ingredient material1, Ingredient material2, ItemStack result, int cookTime) {
+	/**
+	 * Constructor for SmallPartsRecipe.
+	 * @param recipeId the <code>ResourceLocation</code> for the recipe
+	 * @param blockIngredient the first <code>Ingredient</code>
+	 * @param material1 the second <code>Ingredient</code>
+	 * @param material2 the third <code>Ingredient</code>
+	 * @param result the result <code>ItemStack</code>
+	 * @param cookTime the cooking time
+	 */
+	TeslaSynthesizerRecipe(ResourceLocation recipeId, Ingredient blockIngredient, Ingredient material1, Ingredient material2, ItemStack result, int cookTime) {
 		this.recipeId = recipeId;
 		this.blockIngredient = blockIngredient;
 		this.material1 = material1;
 		this.material2 = material2;
 		this.result = result;
-		TeslaSynthesizerRecipe.cookTime = cookTime;
+		this.cookTime = cookTime;
 	}
 
-	public static Object getCookTime() {
+	/**
+	 * Get the cook time.
+	 * @return int
+	 */
+	public int getCookTime() {
 		return cookTime;
 	}
 
 	/**
-	 * Used to check if a recipe matches current crafting inventory
+	 * Used to check if a recipe matches current crafting inventory.
+	 * @param inv the <code>IInventory</code> instance
+	 * @param worldIn the current <code>World</code>
+	 * @return boolean
 	 */
 	@Override
 	public boolean matches(IInventory inv, World worldIn) {
-		return this.blockIngredient.test(inv.getItem(0)) && this.material1.test(inv.getItem(1)) && this.material2.test(inv.getItem(2));
+		return blockIngredient.test(inv.getItem(0)) && material1.test(inv.getItem(1)) && material2.test(inv.getItem(2));
 	}
 
 	/**
-	 * Returns an Item that is the result of this recipe
+	 * Returns an Item that is the result of this recipe.
+	 * @param inv the <code>IInventory</code> instance
+	 * @return ItemStack
 	 */
 	@Override
 	public ItemStack assemble(IInventory inv) {
-		ItemStack itemstack = this.result.copy();
+		ItemStack itemstack = result.copy();
 		CompoundNBT compoundnbt = inv.getItem(4).getTag();
 		if (compoundnbt != null) {
 			itemstack.setTag(compoundnbt.copy());
@@ -58,7 +76,10 @@ public class TeslaSynthesizerRecipe implements IRecipe<IInventory> {
 	}
 
 	/**
-	 * Used to determine if this recipe can fit in a grid of the given width/height
+	 * Used to determine if this recipe can fit in a grid of the given width/height.
+	 * @param width the width of the grid
+	 * @param height the height of the grid
+	 * @return boolean
 	 */
 	@Override
 	public boolean canCraftInDimensions(int width, int height) {
@@ -68,32 +89,53 @@ public class TeslaSynthesizerRecipe implements IRecipe<IInventory> {
 	/**
 	 * Get the result of this recipe, usually for display purposes (e.g. recipe book). If your recipe has more than one
 	 * possible result (e.g. it's dynamic and depends on its inputs), then return an empty stack.
+	 * @return ItemStack
 	 */
 	@Override
 	public ItemStack getResultItem() {
-		return this.result;
+		return result;
 	}
 
+	/**
+	 * Get the toast symbol.
+	 * @return ItemStack
+	 */
 	@Override
 	public ItemStack getToastSymbol() {
 		return new ItemStack(DeferredRegistryHandler.TESLA_SYNTHESIZER.get());
 	}
 
+	/**
+	 * Get the recipe ID.
+	 * @return ResourceLocation
+	 */
 	@Override
 	public ResourceLocation getId() {
-		return this.recipeId;
+		return recipeId;
 	}
 
+	/**
+	 * Get the recipe serializer.
+	 * @return IRecipeSerializer
+	 */
 	@Override
 	public IRecipeSerializer<?> getSerializer() {
 		return DeferredRegistryHandler.TESLA_SYNTHEZISER_RECIPE_SERIALIZER.get();
 	}
 
+	/**
+	 * Get the recipe type.
+	 * @return IRecipeType
+	 */
 	@Override
 	public IRecipeType<?> getType() {
 		return ICustomRecipeType.TESLA_SYNTHESIZER;
 	}
 
+	/**
+	 * Get the recipe's ingredients.
+	 * @return NonNullList extending Ingredient
+	 */
 	@Override
 	public NonNullList<Ingredient> getIngredients() {
 		NonNullList<Ingredient> defaultedList = NonNullList.create();
@@ -104,26 +146,43 @@ public class TeslaSynthesizerRecipe implements IRecipe<IInventory> {
 	}
 
 	public static class Serializer extends ForgeRegistryEntry<IRecipeSerializer<?>> implements IRecipeSerializer<TeslaSynthesizerRecipe> {
+		/**
+		 * Serialize from JSON.
+		 * @param recipeId the <code>ResourceLocation</code> for the recipe
+		 * @param json the <code>JsonObject</code> instance
+		 * @return TeslaSynthesizerRecipe
+		 */
 		@Override
 		public TeslaSynthesizerRecipe fromJson(ResourceLocation recipeId, JsonObject json) {
 			Ingredient blockIngredient = Ingredient.fromJson(JSONUtils.getAsJsonObject(json, "block"));
 			Ingredient material1 = Ingredient.fromJson(JSONUtils.getAsJsonObject(json, "material1"));
 			Ingredient material2 = Ingredient.fromJson(JSONUtils.getAsJsonObject(json, "material2"));
-			TeslaSynthesizerRecipe.cookTime = JSONUtils.getAsInt(json, "cookTime");
+			int cookTime = JSONUtils.getAsInt(json, "cookTime");
 			ItemStack result = ShapedRecipe.itemFromJson(JSONUtils.getAsJsonObject(json, "result"));
 			return new TeslaSynthesizerRecipe(recipeId, blockIngredient, material1, material2, result, cookTime);
 		}
 
+		/**
+		 * Serialize from JSON on the network.
+		 * @param recipeId the <code>ResourceLocation</code> for the recipe
+		 * @param buffer the <code>PacketBuffer</code> instance
+		 * @return TeslaSynthesizerRecipe
+		 */
 		@Override
 		public TeslaSynthesizerRecipe fromNetwork(ResourceLocation recipeId, PacketBuffer buffer) {
 			Ingredient blockIngredient = Ingredient.fromNetwork(buffer);
 			Ingredient material1 = Ingredient.fromNetwork(buffer);
 			Ingredient material2 = Ingredient.fromNetwork(buffer);
-			TeslaSynthesizerRecipe.cookTime = buffer.readInt();
+			int cookTime = buffer.readInt();
 			ItemStack result = buffer.readItem();
 			return new TeslaSynthesizerRecipe(recipeId, blockIngredient, material1, material2, result, cookTime);
 		}
 
+		/**
+		 * Serialize to JSON on the network.
+		 * @param buffer the <code>PacketBuffer</code> instance
+		 * @param recipe the <code>TeslaSynthesizerRecipe</code> instance
+		 */
 		@Override
 		public void toNetwork(PacketBuffer buffer, TeslaSynthesizerRecipe recipe) {
 			recipe.blockIngredient.toNetwork(buffer);

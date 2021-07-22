@@ -17,6 +17,10 @@ import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 @EventBusSubscriber(modid = ImmersiveWeapons.MOD_ID, bus = EventBusSubscriber.Bus.MOD)
 public class ModEventSubscriber {
 
+	/**
+	 * Event handler for the RegistryEvent.Register event.
+	 * @param event the <code>RegistryEvent.Register</code> instance
+	 */
 	@SubscribeEvent
 	public static void onRegisterItems(RegistryEvent.Register<Item> event) {
 		((CustomArrowItem) (DeferredRegistryHandler.COPPER_ARROW.get())).setItemReference(DeferredRegistryHandler.COPPER_ARROW);
@@ -43,8 +47,12 @@ public class ModEventSubscriber {
 		((CustomArrowItem) (DeferredRegistryHandler.FLARE.get())).setItemReference(DeferredRegistryHandler.FLARE);
 	}
 
+	/**
+	 * Event handler for the EntityAttributeCreationEvent.
+	 * @param event the <code>EntityAttributeCreationEvent</code> instance
+	 */
 	@SubscribeEvent
-	public static void entityAttributeCreationEvent(final EntityAttributeCreationEvent event) {
+	public static void entityAttributeCreationEvent(EntityAttributeCreationEvent event) {
 		event.put(DeferredRegistryHandler.DYING_SOLDIER_ENTITY.get(), AbstractDyingSoldierEntity.registerAttributes().build());
 		event.put(DeferredRegistryHandler.MINUTEMAN_ENTITY.get(), AbstractMinutemanEntity.registerAttributes().build());
 		event.put(DeferredRegistryHandler.FIELD_MEDIC_ENTITY.get(), AbstractFieldMedicEntity.registerAttributes().build());

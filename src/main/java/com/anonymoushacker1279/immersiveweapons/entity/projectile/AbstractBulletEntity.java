@@ -2,7 +2,6 @@ package com.anonymoushacker1279.immersiveweapons.entity.projectile;
 
 import com.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
 import com.anonymoushacker1279.immersiveweapons.util.Config;
-import com.google.common.collect.Lists;
 import it.unimi.dsi.fastutil.ints.IntOpenHashSet;
 import net.minecraft.block.BlockState;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -28,48 +27,57 @@ import net.minecraftforge.event.ForgeEventFactory;
 import net.minecraftforge.fml.network.NetworkHooks;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.List;
-
 public abstract class AbstractBulletEntity extends AbstractArrowEntity {
 
-	protected Item referenceItem;
-	protected final SoundEvent hitSound = getDefaultHitGroundSoundEvent();
-	protected BlockState inBlockState;
-	protected IntOpenHashSet piercedEntities;
-	protected List<Entity> hitEntities;
-	protected int knockbackStrength;
-	protected boolean hasAlreadyBrokeGlass = false;
-	protected boolean shouldStopMoving = false;
-	public static boolean canBreakGlass = Config.BULLETS_BREAK_GLASS.get();
+	Item referenceItem;
+	private final SoundEvent hitSound = getDefaultHitGroundSoundEvent();
+	private BlockState inBlockState;
+	private IntOpenHashSet piercedEntities;
+	int knockbackStrength;
+	private boolean hasAlreadyBrokeGlass = false;
+	boolean shouldStopMoving = false;
+	private static final boolean canBreakGlass = Config.BULLETS_BREAK_GLASS.get();
 
-	public AbstractBulletEntity(EntityType<? extends AbstractArrowEntity> entityType, World world) {
+	/**
+	 * Constructor for AbstractBulletEntity.
+	 * @param entityType the <code>EntityType</code> instance
+	 * @param world the <code>World</code> the entity is in
+	 */
+	AbstractBulletEntity(EntityType<? extends AbstractArrowEntity> entityType, World world) {
 		super(entityType, world);
 	}
 
-	public AbstractBulletEntity(EntityType<? extends AbstractBulletEntity> type, LivingEntity shooter, World world) {
-		super(type, shooter, world);
+	/**
+	 * Constructor for AbstractBulletEntity.
+	 * @param entityType the <code>EntityType</code> instance
+	 * @param shooter the <code>LivingEntity</code> shooting the entity
+	 * @param world the <code>World</code> the entity is in
+	 */
+	AbstractBulletEntity(EntityType<? extends AbstractBulletEntity> entityType, LivingEntity shooter, World world) {
+		super(entityType, shooter, world);
 	}
 
+	/**
+	 * Get the pickup item.
+	 * @return ItemStack
+	 */
 	@Override
 	public @NotNull ItemStack getPickupItem() {
 		return new ItemStack(referenceItem);
 	}
 
+	/**
+	 * Get the entity spawn packet.
+	 * @return IPacket
+	 */
 	@Override
 	public @NotNull IPacket<?> getAddEntityPacket() {
 		return NetworkHooks.getEntitySpawningPacket(this);
 	}
 
-	protected boolean shouldFall() {
-		return inGround && level.noCollision((new AxisAlignedBB(position(), position())).inflate(0.06D));
-	}
-
-	protected void startFalling() {
-		inGround = false;
-		Vector3d vector3d = getDeltaMovement();
-		setDeltaMovement(vector3d.multiply(random.nextFloat() * 0.4F, random.nextFloat() * 0.4F, random.nextFloat() * 0.4F));
-	}
-
+	/**
+	 * Runs once each tick.
+	 */
 	@Override
 	public void tick() {
 		super.tick();
@@ -202,10 +210,18 @@ public abstract class AbstractBulletEntity extends AbstractArrowEntity {
 		}
 	}
 
+	/**
+	 * Get the movement modifier.
+	 * @return double
+	 */
 	public double getMovementModifier() {
 		return 0.0d;
 	}
 
+	/**
+	 * Runs when an entity is hit.
+	 * @param entityRayTraceResult the <code>EntityRayTraceResult</code> instance
+	 */
 	@Override
 	protected void onHitEntity(@NotNull EntityRayTraceResult entityRayTraceResult) {
 		super.onHitEntity(entityRayTraceResult);
@@ -215,10 +231,6 @@ public abstract class AbstractBulletEntity extends AbstractArrowEntity {
 		if (getPierceLevel() > 0) {
 			if (piercedEntities == null) {
 				piercedEntities = new IntOpenHashSet(5);
-			}
-
-			if (hitEntities == null) {
-				hitEntities = Lists.newArrayListWithCapacity(5);
 			}
 
 			if (piercedEntities.size() >= getPierceLevel() + 1) {
@@ -260,30 +272,24 @@ public abstract class AbstractBulletEntity extends AbstractArrowEntity {
 			}
 
 			if (entity instanceof LivingEntity) {
-				LivingEntity livingentity = (LivingEntity) entity;
+				LivingEntity livingEntity = (LivingEntity) entity;
 
 				if (knockbackStrength > 0) {
 					Vector3d vector3d = getDeltaMovement().multiply(1.0D, 0.0D, 1.0D).normalize().scale(knockbackStrength * 0.6D);
 					if (vector3d.lengthSqr() > 0.0D) {
-						livingentity.push(vector3d.x, 0.1D, vector3d.z);
+						livingEntity.push(vector3d.x, 0.1D, vector3d.z);
 					}
 				}
 
 				if (!level.isClientSide && entity1 instanceof LivingEntity) {
-					EnchantmentHelper.doPostHurtEffects(livingentity, entity1);
-					EnchantmentHelper.doPostDamageEffects((LivingEntity) entity1, livingentity);
+					EnchantmentHelper.doPostHurtEffects(livingEntity, entity1);
+					EnchantmentHelper.doPostDamageEffects((LivingEntity) entity1, livingEntity);
 				}
 
-				doPostHurtEffects(livingentity);
-				if (livingentity != entity1 && livingentity instanceof PlayerEntity && entity1 instanceof ServerPlayerEntity && !isSilent()) {
+				doPostHurtEffects(livingEntity);
+				if (livingEntity != entity1 && livingEntity instanceof PlayerEntity && entity1 instanceof ServerPlayerEntity && !isSilent()) {
 					((ServerPlayerEntity) entity1).connection.send(new SChangeGameStatePacket(SChangeGameStatePacket.ARROW_HIT_PLAYER, 0.0F));
 				}
-
-				if (entity.isAlive() && hitEntities != null) {
-					hitEntities.add(livingentity);
-				}
-
-
 			}
 
 			playSound(hitSound, 1.0F, 1.2F / (random.nextFloat() * 0.2F + 0.9F));
@@ -298,6 +304,10 @@ public abstract class AbstractBulletEntity extends AbstractArrowEntity {
 		}
 	}
 
+	/**
+	 * Runs when an block is hit.
+	 * @param blockStateRayTraceResult the <code>BlockRayTraceResult</code> instance
+	 */
 	@Override
 	protected void onHitBlock(BlockRayTraceResult blockStateRayTraceResult) {
 		inBlockState = level.getBlockState(blockStateRayTraceResult.getBlockPos());
@@ -324,20 +334,25 @@ public abstract class AbstractBulletEntity extends AbstractArrowEntity {
 		}
 	}
 
+	/**
+	 * Reset the pierced entities list.
+	 */
 	private void resetPiercedEntities() {
-		if (hitEntities != null) {
-			hitEntities.clear();
-		}
-
 		if (piercedEntities != null) {
 			piercedEntities.clear();
 		}
-
 	}
 
+	/**
+	 * Additional stuff to do while ticking.
+	 */
 	protected void doWhileTicking() {
 	}
 
+	/**
+	 * Additional stuff to do when an entity is hit.
+	 * @param entity the <code>Entity</code> being hit
+	 */
 	protected void doWhenHitEntity(Entity entity) {
 	}
 }

@@ -7,7 +7,7 @@
 		}
 	 }
  	],
- 	"shardItem": "minecraft:logs",
+ 	"blockTag": "minecraft:logs",
  	"numShards": 1,
  	"replacement": "immersiveweapons:wood_shard"
 }

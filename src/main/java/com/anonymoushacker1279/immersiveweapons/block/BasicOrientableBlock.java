@@ -12,22 +12,38 @@ public class BasicOrientableBlock extends HorizontalBlock {
 
 	public static final DirectionProperty FACING = HorizontalBlock.FACING;
 
+	/**
+	 * Constructor for BasicOrientableBlock.
+	 * This class creates a block with a DirectionProperty.
+	 * @param properties the <code>Properties</code> of the block
+	 * @see HorizontalBlock
+	 */
 	public BasicOrientableBlock(Properties properties) {
 		super(properties);
-		this.registerDefaultState(
-				this.stateDefinition.any()
+		registerDefaultState(
+				stateDefinition.any()
 						.setValue(FACING, Direction.NORTH)
 		);
 	}
 
+	/**
+	 * Create the BlockState definition.
+	 * @param builder the <code>StateContainer.Builder</code> of the block
+	 */
 	@Override
 	public void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder) {
 		builder.add(FACING);
 	}
 
+	/**
+	 * Set placement properties.
+	 * Sets the facing direction of the block for placement.
+	 * @param context the <code>BlockItemUseContext</code> during placement
+	 * @return BlockState
+	 */
 	@Override
 	public BlockState getStateForPlacement(BlockItemUseContext context) {
-		return this.defaultBlockState().setValue(FACING, context.getHorizontalDirection().getOpposite());
+		return defaultBlockState().setValue(FACING, context.getHorizontalDirection().getOpposite());
 	}
 
 }

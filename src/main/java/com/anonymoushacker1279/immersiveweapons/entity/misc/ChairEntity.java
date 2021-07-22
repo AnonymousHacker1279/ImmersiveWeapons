@@ -18,16 +18,35 @@ public class ChairEntity extends Entity {
 
 	private BlockPos source;
 
+	/**
+	 * Constructor for ChairEntity.
+	 * @param entityType the <code>EntityType</code> instance
+	 * @param world the <code>World</code> the entity is in
+	 */
 	public ChairEntity(EntityType<?> entityType, World world) {
 		super(entityType, world);
 	}
 
-	private ChairEntity(World world, BlockPos source, double yOffset) {
+	/**
+	 * Constructor for ChairEntity.
+	 * @param world the <code>World</code> the entity is in
+	 * @param pos the <code>BlockPos</code> the entity is at
+	 * @param yOffset the Y offset to spawn at
+	 */
+	private ChairEntity(World world, BlockPos pos, double yOffset) {
 		this(DeferredRegistryHandler.CHAIR_ENTITY.get(), world);
-		this.source = source;
-		setPos(source.getX() + 0.5D, source.getY() + yOffset, source.getZ() + 0.5D);
+		source = pos;
+		setPos(pos.getX() + 0.5D, pos.getY() + yOffset, pos.getZ() + 0.5D);
 	}
 
+	/**
+	 * Create the entity and mount the player to it.
+	 * @param world the <code>World</code> the entity is in
+	 * @param pos the <code>BlockPos</code> the entity is at
+	 * @param yOffset the Y offset to spawn at
+	 * @param player the <code>PlayerEntity</code> interacting with the entity
+	 * @return ActionResultType
+	 */
 	public static ActionResultType create(World world, BlockPos pos, double yOffset, PlayerEntity player) {
 		if (!world.isClientSide) {
 			List<ChairEntity> seats = world.getEntitiesOfClass(ChairEntity.class, new AxisAlignedBB(pos.getX(), pos.getY(), pos.getZ(), pos.getX() + 1.0D, pos.getY() + 1.0D, pos.getZ() + 1.0D));
@@ -40,20 +59,28 @@ public class ChairEntity extends Entity {
 		return ActionResultType.SUCCESS;
 	}
 
+	/**
+	 * Runs once each tick.
+	 */
 	@Override
 	public void tick() {
 		super.tick();
-		if (this.source == null) {
-			this.source = blockPosition();
+		if (source == null) {
+			source = blockPosition();
 		}
-		if (!this.level.isClientSide) {
-			if (getPassengers().isEmpty() || this.level.isEmptyBlock(this.source)) {
+		if (!level.isClientSide) {
+			if (getPassengers().isEmpty() || level.isEmptyBlock(source)) {
 				remove();
-				this.level.updateNeighbourForOutputSignal(blockPosition(), this.level.getBlockState(blockPosition()).getBlock());
+				level.updateNeighbourForOutputSignal(blockPosition(), level.getBlockState(blockPosition()).getBlock());
 			}
 		}
 	}
 
+	/**
+	 * Check if this entity can be ridden by the supplied entity.
+	 * @param entity the <code>Entity</code> being checked
+	 * @return boolean
+	 */
 	@Override
 	protected boolean canRide(Entity entity) {
 		return true;
@@ -71,6 +98,10 @@ public class ChairEntity extends Entity {
 	protected void addAdditionalSaveData(CompoundNBT nbt) {
 	}
 
+	/**
+	 * Get the entity spawn packet.
+	 * @return IPacket
+	 */
 	@Override
 	public IPacket<?> getAddEntityPacket() {
 		return NetworkHooks.getEntitySpawningPacket(this);

@@ -27,6 +27,9 @@ public class ConfiguredStructures {
 
 	public static ConfiguredFeature<?, ?> CONFIGURED_WOODEN_SPIKES = Feature.RANDOM_PATCH.configured(new BlockClusterFeatureConfig.Builder(new SimpleBlockStateProvider(DeferredRegistryHandler.WOODEN_SPIKES.get().defaultBlockState()), SimpleBlockPlacer.INSTANCE).tries(32).whitelist(ImmutableSet.of(Blocks.GRASS_BLOCK)).yspread(1).xspread(4).zspread(4).noProjection().build()).decorated(Placements.TOP_SOLID_HEIGHTMAP_SQUARE).chance(12);
 
+	/**
+	 * Register configured structures.
+	 */
 	public static void registerConfiguredStructures() {
 		Registry<StructureFeature<?, ?>> registry = WorldGenRegistries.CONFIGURED_STRUCTURE_FEATURE;
 		Registry.register(registry, new ResourceLocation(ImmersiveWeapons.MOD_ID, "configured_abandoned_factory"), CONFIGURED_ABANDONED_FACTORY);

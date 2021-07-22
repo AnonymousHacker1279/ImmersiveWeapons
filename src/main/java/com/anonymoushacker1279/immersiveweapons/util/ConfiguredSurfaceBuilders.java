@@ -14,6 +14,9 @@ public class ConfiguredSurfaceBuilders {
 
 	public static RegistryKey<ConfiguredSurfaceBuilder<?>> BATTLEFIELD = key("battlefield");
 
+	/**
+	 * Register surface builders.
+	 */
 	public static void register() {
 		register(BATTLEFIELD,
 				new ConfiguredSurfaceBuilder<>(
@@ -23,11 +26,21 @@ public class ConfiguredSurfaceBuilders {
 		);
 	}
 
-	private static RegistryKey<ConfiguredSurfaceBuilder<?>> key(final String name) {
+	/**
+	 * Create registry keys.
+	 * @param name the name
+	 * @return RegistryKey extending ConfiguredSurfaceBuilder
+	 */
+	private static RegistryKey<ConfiguredSurfaceBuilder<?>> key(String name) {
 		return RegistryKey.create(Registry.CONFIGURED_SURFACE_BUILDER_REGISTRY, new ResourceLocation(ImmersiveWeapons.MOD_ID, name));
 	}
 
-	private static void register(final RegistryKey<ConfiguredSurfaceBuilder<?>> key, final ConfiguredSurfaceBuilder<?> configuredSurfaceBuilder) {
+	/**
+	 * Register a configured surface builder.
+	 * @param key the <code>RegistryKey</code>, must extend ConfiguredSurfaceBuilder
+	 * @param configuredSurfaceBuilder the <code>ConfiguredSurfaceBuilder</code> instance
+	 */
+	private static void register(RegistryKey<ConfiguredSurfaceBuilder<?>> key, ConfiguredSurfaceBuilder<?> configuredSurfaceBuilder) {
 		Registry.register(WorldGenRegistries.CONFIGURED_SURFACE_BUILDER, key.location(), configuredSurfaceBuilder);
 	}
 }

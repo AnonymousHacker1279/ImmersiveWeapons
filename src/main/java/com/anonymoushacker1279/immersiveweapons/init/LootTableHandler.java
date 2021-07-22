@@ -13,23 +13,36 @@ import net.minecraftforge.common.loot.GlobalLootModifierSerializer;
 import net.minecraftforge.common.loot.LootModifier;
 import net.minecraftforge.registries.ForgeRegistries;
 
-import javax.annotation.Nonnull;
 import java.util.List;
 
-public class LootTableHandler {
+class LootTableHandler {
 
 	public static class LogShardsLootModifierHandler extends LootModifier {
 
 		private final int numShardsToConvert;
+		private final String blockTag;
 		private final Item itemReward;
 
-		public LogShardsLootModifierHandler(ILootCondition[] conditionsIn, int numShards, Item reward) {
+		/**
+		 * Constructor for LogShardsLootModifierHandler.
+		 * @param conditionsIn the <code>ILootCondition</code>s
+		 * @param tag the block tag string
+		 * @param numShards the number of shards
+		 * @param reward the returned item
+		 */
+		LogShardsLootModifierHandler(ILootCondition[] conditionsIn, String tag, int numShards, Item reward) {
 			super(conditionsIn);
+			blockTag = tag;
 			numShardsToConvert = numShards;
 			itemReward = reward;
 		}
 
-		@Nonnull
+		/**
+		 * Apply loot table modifications.
+		 * @param generatedLoot the <code>List</code> of generated items
+		 * @param context the <code>LootContext</code> instance
+		 * @return List extending ItemStack
+		 */
 		@Override
 		public List<ItemStack> doApply(List<ItemStack> generatedLoot, LootContext context) {
 			//
@@ -38,7 +51,7 @@ public class LootTableHandler {
 			//
 			int numShards = 0;
 			for (ItemStack stack : generatedLoot) {
-				if (stack.getItem().is(ItemTags.bind("minecraft:logs"))) {
+				if (stack.getItem().is(ItemTags.bind(blockTag))) {
 					numShards += stack.getCount() + GeneralUtilities.getRandomNumber(2, 5);
 				}
 			}
@@ -47,20 +60,33 @@ public class LootTableHandler {
 				numShards = numShards % numShardsToConvert;
 				if (numShards > 0)
 					generatedLoot.add(new ItemStack(itemReward, numShards));
-				generatedLoot.remove(0); // The log item shouldn't drop, so remove it from the loot list
+				generatedLoot.remove(0); // The original item shouldn't drop, so remove it from the loot list
 			}
 			return generatedLoot;
 		}
 
 		public static class Serializer extends GlobalLootModifierSerializer<LogShardsLootModifierHandler> {
 
+			/**
+			 * Read from JSON.
+			 * @param name the <code>ResourceLocation</code> to read from
+			 * @param object the <code>JsonObject</code> instance
+			 * @param conditionsIn the <code>ILootCondition</code>s
+			 * @return LogShardsLootModifierHandler
+			 */
 			@Override
 			public LogShardsLootModifierHandler read(ResourceLocation name, JsonObject object, ILootCondition[] conditionsIn) {
+				String blockTag = JSONUtils.getAsString(object, "blockTag");
 				int numShards = JSONUtils.getAsInt(object, "numShards");
 				Item replacementItem = ForgeRegistries.ITEMS.getValue(new ResourceLocation(JSONUtils.getAsString(object, "replacement")));
-				return new LogShardsLootModifierHandler(conditionsIn, numShards, replacementItem);
+				return new LogShardsLootModifierHandler(conditionsIn, blockTag, numShards, replacementItem);
 			}
 
+			/**
+			 * Write to JSON.
+			 * @param instance the <code>LogShardsLootModifierHandler</code> instance
+			 * @return JsonObject
+			 */
 			@Override
 			public JsonObject write(LogShardsLootModifierHandler instance) {
 				return null;

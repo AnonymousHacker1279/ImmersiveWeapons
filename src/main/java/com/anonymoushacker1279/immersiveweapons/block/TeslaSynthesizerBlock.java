@@ -36,43 +36,93 @@ public class TeslaSynthesizerBlock extends ContainerBlock implements IWaterLogga
 	public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
 	private static final ITextComponent CONTAINER_NAME = new TranslationTextComponent("container.immersiveweapons.tesla_synthesizer");
 
+	/**
+	 * Constructor for TeslaSynthesizerBlock.
+	 * @param properties the <code>Properties</code> of the block
+	 */
 	public TeslaSynthesizerBlock(Properties properties) {
 		super(properties);
 		registerDefaultState(stateDefinition.any().setValue(WATERLOGGED, false));
 	}
 
+	/**
+	 * Create a tile entity for the block.
+	 * @param reader the <code>IBlockReader</code> of the block
+	 * @return TileEntity
+	 */
 	@Override
-	public TileEntity newBlockEntity(IBlockReader world) {
+	public TileEntity newBlockEntity(IBlockReader reader) {
 		return new TeslaSynthesizerTileEntity();
 	}
 
+	/**
+	 * Set the shape of the block.
+	 * @param state the <code>BlockState</code> of the block
+	 * @param reader the <code>IBlockReader</code> for the block
+	 * @param pos the <code>BlockPos</code> the block is at
+	 * @param selectionContext the <code>ISelectionContext</code> of the block
+	 * @return VoxelShape
+	 */
 	@Override
-	public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
+	public VoxelShape getShape(BlockState state, IBlockReader reader, BlockPos pos, ISelectionContext selectionContext) {
 		return SHAPE;
 	}
 
+	/**
+	 * Create the BlockState definition.
+	 * @param builder the <code>StateContainer.Builder</code> of the block
+	 */
 	@Override
 	public void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder) {
 		builder.add(WATERLOGGED);
 	}
 
+	/**
+	 * Set FluidState properties.
+	 * Allows the block to exhibit waterlogged behavior.
+	 * @param state the <code>BlockState</code> of the block
+	 * @return FluidState
+	 */
 	@Override
 	public FluidState getFluidState(BlockState state) {
 		return state.getValue(WATERLOGGED) ? Fluids.WATER.getSource(false) : super.getFluidState(state);
 	}
 
+	/**
+	 * Set the RenderShape of the block's model.
+	 * @param state the <code>BlockState</code> of the block
+	 * @return BlockRenderType
+	 */
 	@Override
 	public BlockRenderType getRenderShape(BlockState state) {
 		return BlockRenderType.MODEL;
 	}
 
+	/**
+	 * Get the INamedContainerProvider for the block.
+	 * @param state the <code>BlockState</code> of the block
+	 * @param worldIn the <code>World</code> the block is in
+	 * @param pos the <code>BlockPos</code> the block is at
+	 * @return INamedContainerProvider
+	 */
 	@Override
 	public INamedContainerProvider getMenuProvider(BlockState state, World worldIn, BlockPos pos) {
 		return new SimpleNamedContainerProvider((id, inventory, player) -> new TeslaSynthesizerContainer(id, inventory), CONTAINER_NAME);
 	}
 
+	/**
+	 * Runs when the block is activated.
+	 * Allows the block to respond to user interaction.
+	 * @param state the <code>BlockState</code> of the block
+	 * @param worldIn the <code>World</code> the block is in
+	 * @param pos the <code>BlockPos</code> the block is at
+	 * @param player the <code>PlayerEntity</code> interacting with the block
+	 * @param handIn the <code>Hand</code> the PlayerEntity used
+	 * @param blockRayTraceResult the <code>BlockRayTraceResult</code> of the interaction
+	 * @return ActionResultType
+	 */
 	@Override
-	public ActionResultType use(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
+	public ActionResultType use(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult blockRayTraceResult) {
 		if (worldIn.isClientSide) {
 			return ActionResultType.SUCCESS;
 		} else {
@@ -84,6 +134,14 @@ public class TeslaSynthesizerBlock extends ContainerBlock implements IWaterLogga
 		}
 	}
 
+	/**
+	 * Runs when the block is removed.
+	 * @param state the <code>BlockState</code> of the block
+	 * @param worldIn the <code>World</code> the block is in
+	 * @param pos the <code>BlockPos</code> the block is at
+	 * @param newState the <code>BlockState</code> the block now has
+	 * @param isMoving determines if the block is moving
+	 */
 	@Override
 	public void onRemove(BlockState state, World worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
 		if (!state.is(newState.getBlock())) {
@@ -97,6 +155,13 @@ public class TeslaSynthesizerBlock extends ContainerBlock implements IWaterLogga
 		}
 	}
 
+	/**
+	 * Runs occasionally to create animations.
+	 * @param stateIn the <code>BlockState</code> of the block
+	 * @param worldIn the <code>World</code> the block is in
+	 * @param pos the <code>BlockPos</code> the block is at
+	 * @param rand a <code>Random</code> instance
+	 */
 	@Override
 	public void animateTick(BlockState stateIn, World worldIn, BlockPos pos, Random rand) {
 		worldIn.addParticle(ParticleTypes.SOUL_FIRE_FLAME, pos.getX() + 0.5D, pos.getY() + 0.4D, pos.getZ() + 0.5D, 0.0D, 0.0D, 0.0D);

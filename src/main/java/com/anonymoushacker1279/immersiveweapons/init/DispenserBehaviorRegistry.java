@@ -15,6 +15,9 @@ import net.minecraft.world.World;
 
 public class DispenserBehaviorRegistry implements IDispenseItemBehavior {
 
+	/**
+	 * Initialize the dispenser behavior registry.
+	 */
 	public static void init() {
 		DispenserBlock.registerBehavior(DeferredRegistryHandler.COPPER_ARROW.get(), new ProjectileDispenseBehavior() {
 			@Override
@@ -216,6 +219,12 @@ public class DispenserBehaviorRegistry implements IDispenseItemBehavior {
 		});
 	}
 
+	/**
+	 * Custom dispense behavior.
+	 * @param iBlockSource the <code>IBlockSource</code> instance
+	 * @param itemStack the <code>ItemStack</code> being dispensed
+	 * @return ItemStack
+	 */
 	@Override
 	public ItemStack dispense(IBlockSource iBlockSource, ItemStack itemStack) {
 		return null;
