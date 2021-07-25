@@ -1,7 +1,7 @@
 package com.anonymoushacker1279.immersiveweapons.item;
 
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.item.*;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.*;
 
 public class MoltenItems {
 
@@ -13,7 +13,7 @@ public class MoltenItems {
 		 * @param attackSpeedIn attack speed
 		 * @param properties the <code>Properties</code> for the item
 		 */
-		public MoltenSword(IItemTier tier, int attackDamageIn, float attackSpeedIn, Properties properties) {
+		public MoltenSword(Tier tier, int attackDamageIn, float attackSpeedIn, Properties properties) {
 			super(tier, attackDamageIn, attackSpeedIn, properties);
 		}
 
@@ -39,7 +39,7 @@ public class MoltenItems {
 		 * @param attackSpeedIn attack speed
 		 * @param properties the <code>Properties</code> for the item
 		 */
-		public MoltenAxe(IItemTier tier, int attackDamageIn, float attackSpeedIn, Properties properties) {
+		public MoltenAxe(Tier tier, int attackDamageIn, float attackSpeedIn, Properties properties) {
 			super(tier, attackDamageIn, attackSpeedIn, properties);
 		}
 
@@ -65,7 +65,7 @@ public class MoltenItems {
 		 * @param attackSpeedIn attack speed
 		 * @param properties the <code>Properties</code> for the item
 		 */
-		public MoltenPickaxe(IItemTier tier, int attackDamageIn, float attackSpeedIn, Properties properties) {
+		public MoltenPickaxe(Tier tier, int attackDamageIn, float attackSpeedIn, Properties properties) {
 			super(tier, attackDamageIn, attackSpeedIn, properties);
 		}
 
@@ -91,7 +91,7 @@ public class MoltenItems {
 		 * @param attackSpeedIn attack speed
 		 * @param properties the <code>Properties</code> for the item
 		 */
-		public MoltenShovel(IItemTier tier, int attackDamageIn, float attackSpeedIn, Properties properties) {
+		public MoltenShovel(Tier tier, int attackDamageIn, float attackSpeedIn, Properties properties) {
 			super(tier, attackDamageIn, attackSpeedIn, properties);
 		}
 
@@ -117,7 +117,7 @@ public class MoltenItems {
 		 * @param attackSpeedIn attack speed
 		 * @param properties the <code>Properties</code> for the item
 		 */
-		public MoltenHoe(IItemTier tier, int attackDamageIn, float attackSpeedIn, Properties properties) {
+		public MoltenHoe(Tier tier, int attackDamageIn, float attackSpeedIn, Properties properties) {
 			super(tier, attackDamageIn, attackSpeedIn, properties);
 		}
 

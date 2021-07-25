@@ -1,0 +1,33 @@
+{
+	"display": {
+		"title": {
+			"translate": "advancements.immersiveweapons.tesla_sword.title"
+		},
+		"description": {
+			"translate": "advancements.immersiveweapons.tesla_sword.description"
+		},
+		"icon": {
+			"item": "immersiveweapons:tesla_sword"
+		},
+		"frame": "task",
+		"show_toast": true,
+		"announce_to_chat": true,
+		"hidden": false
+	},
+	"criteria": {
+		"hold": {
+			"trigger": "minecraft:inventory_changed",
+			"conditions": {
+				"items": [
+					{
+						"item": "immersiveweapons:tesla_sword"
+					}
+				]
+			}
+		}
+	},
+	"rewards": {
+		"experience": 45
+	},
+	"parent": "immersiveweapons:inventory/tesla_ingot"
+}

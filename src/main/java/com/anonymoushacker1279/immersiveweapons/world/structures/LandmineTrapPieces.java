@@ -1,20 +1,22 @@
 package com.anonymoushacker1279.immersiveweapons.world.structures;
 
 import com.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
+import com.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
 import com.anonymoushacker1279.immersiveweapons.util.Structures;
 import com.google.common.collect.ImmutableMap;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.Mirror;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.Rotation;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MutableBoundingBox;
-import net.minecraft.world.IServerWorld;
-import net.minecraft.world.gen.feature.structure.StructurePiece;
-import net.minecraft.world.gen.feature.structure.TemplateStructurePiece;
-import net.minecraft.world.gen.feature.template.PlacementSettings;
-import net.minecraft.world.gen.feature.template.Template;
-import net.minecraft.world.gen.feature.template.TemplateManager;
+import net.minecraft.core.BlockPos;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.level.ServerLevelAccessor;
+import net.minecraft.world.level.block.Mirror;
+import net.minecraft.world.level.block.Rotation;
+import net.minecraft.world.level.levelgen.structure.BoundingBox;
+import net.minecraft.world.level.levelgen.structure.StructurePiece;
+import net.minecraft.world.level.levelgen.structure.TemplateStructurePiece;
+import net.minecraft.world.level.levelgen.structure.templatesystem.BlockIgnoreProcessor;
+import net.minecraft.world.level.levelgen.structure.templatesystem.StructureManager;
+import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings;
 
 import java.util.List;
 import java.util.Map;
@@ -36,18 +38,18 @@ public class LandmineTrapPieces {
 	 * @param rotation the <code>Rotation</code>
 	 * @param pieceList the <code>List</code> of pieces; must extend StructurePiece
 	 */
-	public static void start(TemplateManager templateManager, BlockPos pos, Rotation rotation, List<StructurePiece> pieceList, Random random) {
+	public static void start(StructureManager templateManager, BlockPos pos, Rotation rotation, List<StructurePiece> pieceList, Random random) {
 		int x = pos.getX();
 		int z = pos.getZ();
 
 		BlockPos rotationOffset = new BlockPos(0, 0, 0).rotate(rotation);
 		BlockPos blockPos = rotationOffset.offset(x, pos.getY(), z);
-		pieceList.add(new LandmineTrapPieces.Piece(templateManager, CENTER, blockPos, rotation));
+		pieceList.add(new LandmineTrapPieces.Piece(templateManager, CENTER, blockPos, rotation, GeneralUtilities.getRandomNumber(1, 3)));
 	}
 
 	public static class Piece extends TemplateStructurePiece {
-		private final ResourceLocation resourceLocation;
-		private final Rotation rotation;
+		private static ResourceLocation resourceLocation;
+		private static Rotation rotation;
 
 		/**
 		 * Constructor for Piece.
@@ -56,44 +58,36 @@ public class LandmineTrapPieces {
 		 * @param pos the <code>BlockPos</code> position
 		 * @param rotationIn the <code>Rotation</code>
 		 */
-		Piece(TemplateManager templateManagerIn, ResourceLocation resourceLocationIn, BlockPos pos, Rotation rotationIn) {
-			super(Structures.LT, 0);
+		Piece(StructureManager templateManagerIn, ResourceLocation resourceLocationIn, BlockPos pos, Rotation rotationIn, int i) {
+			super(Structures.LT, 0, templateManagerIn, resourceLocationIn, resourceLocationIn.toString(), makeSettings(rotationIn, resourceLocationIn), makePosition(resourceLocationIn, pos, i));
+		}
+
+		// TODO: javadocs
+		public Piece(ServerLevel level, CompoundTag nbt) {
+			super(Structures.LT, nbt, level, (resourceLocation) -> makeSettings(Rotation.valueOf(nbt.getString("Rot")), resourceLocation));
+		}
+
+		// TODO: javadocs
+		private static StructurePlaceSettings makeSettings(Rotation rotationIn, ResourceLocation resourceLocationIn) {
 			resourceLocation = resourceLocationIn;
-			BlockPos blockpos = LandmineTrapPieces.OFFSET.get(resourceLocation);
-			templatePosition = pos.offset(blockpos.getX(), blockpos.getY(), blockpos.getZ());
 			rotation = rotationIn;
-			setupPiece(templateManagerIn);
+			return (new StructurePlaceSettings()).setRotation(rotation).setMirror(Mirror.NONE).setRotationPivot(LandmineTrapPieces.OFFSET.get(resourceLocation)).addProcessor(BlockIgnoreProcessor.STRUCTURE_BLOCK);
 		}
 
-		/**
-		 * Constructor for Piece.
-		 * @param templateManagerIn the <code>TemplateManager</code> instance
-		 * @param nbt the <code>CompoundNBT</code> data
-		 */
-		public Piece(TemplateManager templateManagerIn, CompoundNBT nbt) {
-			super(Structures.LT, nbt);
-			resourceLocation = new ResourceLocation(nbt.getString("Template"));
-			rotation = Rotation.valueOf(nbt.getString("Rot"));
-			setupPiece(templateManagerIn);
+		// TODO: javadocs
+		private static BlockPos makePosition(ResourceLocation resourceLocation, BlockPos blockPos, int i) {
+			return blockPos.offset(LandmineTrapPieces.OFFSET.get(resourceLocation)).below(i);
 		}
 
-		/**
-		 * Setup a piece.
-		 * @param templateManager the <code>TemplateManger</code> instance
-		 */
-		private void setupPiece(TemplateManager templateManager) {
-			Template template = templateManager.getOrCreate(resourceLocation);
-			PlacementSettings placementsettings = (new PlacementSettings()).setRotation(rotation).setMirror(Mirror.NONE);
-			setup(template, templatePosition, placementsettings);
-		}
 
 		/**
 		 * Add additional save data to NBT.
 		 * @param nbt the <code>CompoundNBT</code> data
 		 */
+		// TODO: update javadocs
 		@Override
-		protected void addAdditionalSaveData(CompoundNBT nbt) {
-			super.addAdditionalSaveData(nbt);
+		protected void addAdditionalSaveData(ServerLevel level, CompoundTag nbt) {
+			super.addAdditionalSaveData(level, nbt);
 			nbt.putString("Template", resourceLocation.toString());
 			nbt.putString("Rot", rotation.name());
 		}
@@ -107,7 +101,7 @@ public class LandmineTrapPieces {
 		 * @param sbb the <code>MutableBoundingBox</code>
 		 */
 		@Override
-		protected void handleDataMarker(String function, BlockPos pos, IServerWorld worldIn, Random rand, MutableBoundingBox sbb) {
+		protected void handleDataMarker(String function, BlockPos pos, ServerLevelAccessor worldIn, Random rand, BoundingBox sbb) {
 		}
 	}
 }

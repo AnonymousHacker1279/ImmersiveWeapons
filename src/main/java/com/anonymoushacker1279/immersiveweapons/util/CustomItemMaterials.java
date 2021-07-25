@@ -1,18 +1,19 @@
 package com.anonymoushacker1279.immersiveweapons.util;
 
 import com.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
-import net.minecraft.item.IItemTier;
-import net.minecraft.item.crafting.Ingredient;
-import net.minecraft.util.LazyValue;
+import net.minecraft.util.LazyLoadedValue;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.Tier;
+import net.minecraft.world.item.crafting.Ingredient;
 
 import java.util.function.Supplier;
 
-public enum CustomItemMaterials implements IItemTier {
+public enum CustomItemMaterials implements Tier {
 	MOLTEN(3, 1900, 8.2F, 3.0F, 17, () -> {
 		return Ingredient.of(DeferredRegistryHandler.MOLTEN_INGOT.get());
 	}),
 	COPPER(2, 180, 5.9F, 2.0F, 12, () -> {
-		return Ingredient.of(DeferredRegistryHandler.COPPER_INGOT.get());
+		return Ingredient.of(Items.COPPER_INGOT);
 	}),
 	TESLA(4, 2100, 18.0F, 3.0F, 20, () -> {
 		return Ingredient.of(DeferredRegistryHandler.TESLA_INGOT.get());
@@ -29,7 +30,7 @@ public enum CustomItemMaterials implements IItemTier {
 	private final float efficiency;
 	private final float attackDamage;
 	private final int enchantability;
-	private final LazyValue<Ingredient> repairMaterial;
+	private final LazyLoadedValue<Ingredient> repairMaterial;
 
 	/**
 	 * Constructor for CustomItemMaterials.
@@ -46,7 +47,7 @@ public enum CustomItemMaterials implements IItemTier {
 		efficiency = efficiencyIn;
 		attackDamage = attackDamageIn;
 		enchantability = enchantabilityIn;
-		repairMaterial = new LazyValue<>(repairMaterialIn);
+		repairMaterial = new LazyLoadedValue<>(repairMaterialIn);
 	}
 
 	/**

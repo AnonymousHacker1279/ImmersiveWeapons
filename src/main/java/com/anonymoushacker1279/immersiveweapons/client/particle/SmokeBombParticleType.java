@@ -1,7 +1,7 @@
 package com.anonymoushacker1279.immersiveweapons.client.particle;
 
 import com.mojang.serialization.Codec;
-import net.minecraft.particles.ParticleType;
+import net.minecraft.core.particles.ParticleType;
 
 public class SmokeBombParticleType extends ParticleType<SmokeBombParticleData> {
 

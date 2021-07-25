@@ -1,16 +1,18 @@
 package com.anonymoushacker1279.immersiveweapons.block;
 
 import com.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.FenceBlock;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.world.World;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.FenceBlock;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.level.Level;
+
+import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
 
 public class BarbedWireFenceBlock extends FenceBlock {
 
@@ -34,9 +36,9 @@ public class BarbedWireFenceBlock extends FenceBlock {
 	 * @param entity the <code>Entity</code> passing through the block
 	 */
 	@Override
-	public void entityInside(BlockState state, World world, BlockPos pos, Entity entity) {
+	public void entityInside(BlockState state, Level world, BlockPos pos, Entity entity) {
 		if (entity instanceof LivingEntity) {
-			entity.makeStuckInBlock(state, new Vector3d(0.45F, 0.40D, 0.45F));
+			entity.makeStuckInBlock(state, new Vec3(0.45F, 0.40D, 0.45F));
 			if (!world.isClientSide && (entity.xOld != entity.getX() || entity.zOld != entity.getZ())) {
 				double d0 = Math.abs(entity.getX() - entity.xOld);
 				double d1 = Math.abs(entity.getZ() - entity.zOld);
@@ -44,8 +46,8 @@ public class BarbedWireFenceBlock extends FenceBlock {
 					entity.hurt(damageSource, 2.0F);
 				}
 			}
-			if (entity instanceof PlayerEntity && soundCooldown <= 0) {
-				world.playSound((PlayerEntity) entity, pos, DeferredRegistryHandler.BARBED_WIRE_RATTLE.get(), SoundCategory.BLOCKS, 1f, 1f);
+			if (entity instanceof Player && soundCooldown <= 0) {
+				world.playSound((Player) entity, pos, DeferredRegistryHandler.BARBED_WIRE_RATTLE.get(), SoundSource.BLOCKS, 1f, 1f);
 				soundCooldown = 40;
 			} else {
 				soundCooldown--;

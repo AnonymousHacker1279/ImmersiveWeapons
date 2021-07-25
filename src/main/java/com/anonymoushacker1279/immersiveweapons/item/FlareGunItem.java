@@ -1,11 +1,13 @@
 package com.anonymoushacker1279.immersiveweapons.item;
 
 import com.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.SoundEvent;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.sounds.SoundEvent;
 
 import java.util.function.Predicate;
+
+import net.minecraft.world.item.Item.Properties;
 
 public class FlareGunItem extends SimplePistolItem {
 

@@ -1,33 +1,33 @@
 package com.anonymoushacker1279.immersiveweapons.block;
 
 import com.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.HorizontalBlock;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.BlockItemUseContext;
-import net.minecraft.state.IntegerProperty;
-import net.minecraft.state.StateContainer;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Direction;
-import net.minecraft.util.Hand;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.util.math.shapes.ISelectionContext;
-import net.minecraft.util.math.shapes.VoxelShape;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.world.IBlockReader;
-import net.minecraft.world.World;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.HorizontalDirectionalBlock;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.IntegerProperty;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
-public class SandbagBlock extends HorizontalBlock {
+public class SandbagBlock extends HorizontalDirectionalBlock {
 
-	public static final IntegerProperty BAGS = IntegerProperty.create("bags", 1, 4);
-	protected static final VoxelShape SHAPE_1 = Block.box(0.0D, 0.0D, 0.0D, 16.0D, 4.0D, 16.0D);
-	protected static final VoxelShape SHAPE_2 = Block.box(0.0D, 0.0D, 0.0D, 16.0D, 8.0D, 16.0D);
-	protected static final VoxelShape SHAPE_3 = Block.box(0.0D, 0.0D, 0.0D, 16.0D, 12.0D, 16.0D);
-	protected static final VoxelShape SHAPE_4 = Block.box(0.0D, 0.0D, 0.0D, 16.0D, 16.0D, 16.0D);
+	private static final IntegerProperty BAGS = IntegerProperty.create("bags", 1, 4);
+	private static final VoxelShape SHAPE_1 = Block.box(0.0D, 0.0D, 0.0D, 16.0D, 4.0D, 16.0D);
+	private static final VoxelShape SHAPE_2 = Block.box(0.0D, 0.0D, 0.0D, 16.0D, 8.0D, 16.0D);
+	private static final VoxelShape SHAPE_3 = Block.box(0.0D, 0.0D, 0.0D, 16.0D, 12.0D, 16.0D);
+	private static final VoxelShape SHAPE_4 = Block.box(0.0D, 0.0D, 0.0D, 16.0D, 16.0D, 16.0D);
 
 	/**
 	 * Constructor for SandbagBlock.
@@ -43,7 +43,7 @@ public class SandbagBlock extends HorizontalBlock {
 	 * @param builder the <code>StateContainer.Builder</code> of the block
 	 */
 	@Override
-	protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder) {
+	protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
 		builder.add(BAGS, FACING);
 	}
 
@@ -54,7 +54,7 @@ public class SandbagBlock extends HorizontalBlock {
 	 * @return BlockState
 	 */
 	@Override
-	public BlockState getStateForPlacement(BlockItemUseContext context) {
+	public BlockState getStateForPlacement(BlockPlaceContext context) {
 		return defaultBlockState().setValue(FACING, context.getHorizontalDirection().getOpposite()).setValue(BAGS, 1);
 	}
 
@@ -67,8 +67,8 @@ public class SandbagBlock extends HorizontalBlock {
 	 * @return VoxelShape
 	 */
 	@Override
-	public VoxelShape getShape(BlockState state, IBlockReader reader, BlockPos pos, ISelectionContext selectionContext) {
-		Vector3d vector3d = state.getOffset(reader, pos);
+	public VoxelShape getShape(BlockState state, BlockGetter reader, BlockPos pos, CollisionContext selectionContext) {
+		Vec3 vector3d = state.getOffset(reader, pos);
 		switch (state.getValue(BAGS)) {
 			case 1:
 			default:
@@ -91,7 +91,7 @@ public class SandbagBlock extends HorizontalBlock {
 	 */
 	@Override
 	@OnlyIn(Dist.CLIENT)
-	public float getShadeBrightness(BlockState state, IBlockReader reader, BlockPos pos) {
+	public float getShadeBrightness(BlockState state, BlockGetter reader, BlockPos pos) {
 		return 1.0F;
 	}
 
@@ -107,30 +107,30 @@ public class SandbagBlock extends HorizontalBlock {
 	 * @return ActionResultType
 	 */
 	@Override
-	public ActionResultType use(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult blockRayTraceResult) {
+	public InteractionResult use(BlockState state, Level worldIn, BlockPos pos, Player player, InteractionHand handIn, BlockHitResult blockRayTraceResult) {
 		if (player.getMainHandItem().getItem() == DeferredRegistryHandler.SANDBAG_ITEM.get()) {
 			if (state.getValue(BAGS) == 1) {
 				worldIn.setBlock(pos, state.setValue(BAGS, 2).setValue(FACING, state.getValue(FACING)), 3);
 				if (!player.isCreative()) {
 					player.getMainHandItem().shrink(1);
 				}
-				return ActionResultType.CONSUME;
+				return InteractionResult.CONSUME;
 			}
 			if (state.getValue(BAGS) == 2) {
 				worldIn.setBlock(pos, state.setValue(BAGS, 3).setValue(FACING, state.getValue(FACING)), 3);
 				if (!player.isCreative()) {
 					player.getMainHandItem().shrink(1);
 				}
-				return ActionResultType.CONSUME;
+				return InteractionResult.CONSUME;
 			}
 			if (state.getValue(BAGS) == 3) {
 				worldIn.setBlock(pos, state.setValue(BAGS, 4).setValue(FACING, state.getValue(FACING)), 3);
 				if (!player.isCreative()) {
 					player.getMainHandItem().shrink(1);
 				}
-				return ActionResultType.CONSUME;
+				return InteractionResult.CONSUME;
 			}
 		}
-		return ActionResultType.PASS;
+		return InteractionResult.PASS;
 	}
 }

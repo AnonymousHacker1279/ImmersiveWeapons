@@ -2,14 +2,14 @@ package com.anonymoushacker1279.immersiveweapons.client.gui.screen;
 
 import com.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import com.anonymoushacker1279.immersiveweapons.container.TeslaSynthesizerContainer;
-import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
-import net.minecraft.client.gui.screen.inventory.ContainerScreen;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.ITextComponent;
+import com.mojang.blaze3d.vertex.PoseStack;
+import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
+import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.player.Inventory;
 
-public class TeslaSynthesizerScreen extends ContainerScreen<TeslaSynthesizerContainer> {
+public class TeslaSynthesizerScreen extends AbstractContainerScreen<TeslaSynthesizerContainer> {
 
 	private static final ResourceLocation GUI_TEXTURE = new ResourceLocation(ImmersiveWeapons.MOD_ID, "textures/gui/container/tesla_synthesizer.png");
 
@@ -19,7 +19,7 @@ public class TeslaSynthesizerScreen extends ContainerScreen<TeslaSynthesizerCont
 	 * @param playerInventory a <code>PlayerInventory</code> instance
 	 * @param title the <code>ITextComponent</code> title for the screen
 	 */
-	public TeslaSynthesizerScreen(TeslaSynthesizerContainer container, PlayerInventory playerInventory, ITextComponent title) {
+	public TeslaSynthesizerScreen(TeslaSynthesizerContainer container, Inventory playerInventory, Component title) {
 		super(container, playerInventory, title);
 		titleLabelX = 75;
 		titleLabelY = 18;
@@ -33,11 +33,9 @@ public class TeslaSynthesizerScreen extends ContainerScreen<TeslaSynthesizerCont
 	 * @param mouseY the mouse's Y position
 	 */
 	@Override
-	protected void renderBg(MatrixStack matrixStack, float partialTicks, int mouseX, int mouseY) {
-		RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
-		if (minecraft != null) {
-			minecraft.getTextureManager().bind(GUI_TEXTURE);
-		}
+	protected void renderBg(PoseStack matrixStack, float partialTicks, int mouseX, int mouseY) {
+		RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
+		RenderSystem.setShaderTexture(0, GUI_TEXTURE);
 		int i = leftPos;
 		int j = topPos;
 		blit(matrixStack, i, j, 0, 0, imageWidth, imageHeight);
@@ -57,7 +55,7 @@ public class TeslaSynthesizerScreen extends ContainerScreen<TeslaSynthesizerCont
 	 * @param y the Y position to render at
 	 */
 	@Override
-	protected void renderLabels(MatrixStack matrixStack, int x, int y) {
+	protected void renderLabels(PoseStack matrixStack, int x, int y) {
 		RenderSystem.disableBlend();
 		super.renderLabels(matrixStack, x, y);
 	}
@@ -70,7 +68,7 @@ public class TeslaSynthesizerScreen extends ContainerScreen<TeslaSynthesizerCont
 	 * @param partialTicks the current partial tick
 	 */
 	@Override
-	public void render(MatrixStack matrixStack, int mouseX, int mouseY, float partialTicks) {
+	public void render(PoseStack matrixStack, int mouseX, int mouseY, float partialTicks) {
 		renderBackground(matrixStack);
 		super.render(matrixStack, mouseX, mouseY, partialTicks);
 		renderTooltip(matrixStack, mouseX, mouseY);

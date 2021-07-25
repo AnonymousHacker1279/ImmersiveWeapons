@@ -2,15 +2,15 @@ package com.anonymoushacker1279.immersiveweapons.entity.ai.goal;
 
 import com.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
 import com.anonymoushacker1279.immersiveweapons.item.SimpleShotgunItem;
-import net.minecraft.entity.CreatureEntity;
-import net.minecraft.entity.IRangedAttackMob;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.ai.goal.Goal;
-import net.minecraft.entity.projectile.ProjectileHelper;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.PathfinderMob;
+import net.minecraft.world.entity.ai.goal.Goal;
+import net.minecraft.world.entity.monster.RangedAttackMob;
+import net.minecraft.world.entity.projectile.ProjectileUtil;
 
 import java.util.EnumSet;
 
-public class RangedShotgunAttackGoal<T extends CreatureEntity & IRangedAttackMob> extends Goal {
+public class RangedShotgunAttackGoal<T extends PathfinderMob & RangedAttackMob> extends Goal {
 
 	private final T entity;
 	private final double moveSpeedAmp;
@@ -103,7 +103,7 @@ public class RangedShotgunAttackGoal<T extends CreatureEntity & IRangedAttackMob
 		LivingEntity livingentity = entity.getTarget();
 		if (livingentity != null) {
 			double d0 = entity.distanceToSqr(livingentity.getX(), livingentity.getY(), livingentity.getZ());
-			boolean flag = entity.getSensing().canSee(livingentity);
+			boolean flag = entity.getSensing().hasLineOfSight(livingentity);
 			boolean flag1 = seeTime > 0;
 			if (flag != flag1) {
 				seeTime = 0;
@@ -160,7 +160,7 @@ public class RangedShotgunAttackGoal<T extends CreatureEntity & IRangedAttackMob
 					}
 				}
 			} else if (--attackTime <= 0 && seeTime >= -60) {
-				entity.startUsingItem(ProjectileHelper.getWeaponHoldingHand(entity, DeferredRegistryHandler.BLUNDERBUSS.get()));
+				entity.startUsingItem(ProjectileUtil.getWeaponHoldingHand(entity, DeferredRegistryHandler.BLUNDERBUSS.get()));
 			}
 		}
 	}

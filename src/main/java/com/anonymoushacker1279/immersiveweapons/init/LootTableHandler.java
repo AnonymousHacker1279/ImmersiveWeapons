@@ -2,13 +2,13 @@ package com.anonymoushacker1279.immersiveweapons.init;
 
 import com.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
 import com.google.gson.JsonObject;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.loot.LootContext;
-import net.minecraft.loot.conditions.ILootCondition;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.ItemTags;
-import net.minecraft.util.JSONUtils;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.GsonHelper;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.storage.loot.LootContext;
+import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
 import net.minecraftforge.common.loot.GlobalLootModifierSerializer;
 import net.minecraftforge.common.loot.LootModifier;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -30,7 +30,7 @@ class LootTableHandler {
 		 * @param numShards the number of shards
 		 * @param reward the returned item
 		 */
-		LogShardsLootModifierHandler(ILootCondition[] conditionsIn, String tag, int numShards, Item reward) {
+		LogShardsLootModifierHandler(LootItemCondition[] conditionsIn, String tag, int numShards, Item reward) {
 			super(conditionsIn);
 			blockTag = tag;
 			numShardsToConvert = numShards;
@@ -51,7 +51,7 @@ class LootTableHandler {
 			//
 			int numShards = 0;
 			for (ItemStack stack : generatedLoot) {
-				if (stack.getItem().is(ItemTags.bind(blockTag))) {
+				if (stack.is(ItemTags.bind(blockTag))) {
 					numShards += stack.getCount() + GeneralUtilities.getRandomNumber(2, 5);
 				}
 			}
@@ -75,10 +75,10 @@ class LootTableHandler {
 			 * @return LogShardsLootModifierHandler
 			 */
 			@Override
-			public LogShardsLootModifierHandler read(ResourceLocation name, JsonObject object, ILootCondition[] conditionsIn) {
-				String blockTag = JSONUtils.getAsString(object, "blockTag");
-				int numShards = JSONUtils.getAsInt(object, "numShards");
-				Item replacementItem = ForgeRegistries.ITEMS.getValue(new ResourceLocation(JSONUtils.getAsString(object, "replacement")));
+			public LogShardsLootModifierHandler read(ResourceLocation name, JsonObject object, LootItemCondition[] conditionsIn) {
+				String blockTag = GsonHelper.getAsString(object, "blockTag");
+				int numShards = GsonHelper.getAsInt(object, "numShards");
+				Item replacementItem = ForgeRegistries.ITEMS.getValue(new ResourceLocation(GsonHelper.getAsString(object, "replacement")));
 				return new LogShardsLootModifierHandler(conditionsIn, blockTag, numShards, replacementItem);
 			}
 

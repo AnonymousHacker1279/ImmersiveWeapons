@@ -6,25 +6,25 @@ import com.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
 import com.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
 import com.anonymoushacker1279.immersiveweapons.util.PacketHandler;
 import net.minecraft.client.Minecraft;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.item.ArmorItem;
-import net.minecraft.item.IArmorMaterial;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.network.PacketBuffer;
-import net.minecraft.particles.ParticleTypes;
-import net.minecraft.potion.EffectInstance;
-import net.minecraft.potion.Effects;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.world.World;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ArmorItem;
+import net.minecraft.world.item.ArmorMaterial;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.fml.DistExecutor;
-import net.minecraftforge.fml.network.NetworkEvent;
-import net.minecraftforge.fml.network.NetworkEvent.Context;
-import net.minecraftforge.fml.network.PacketDistributor;
+import net.minecraftforge.fmllegacy.network.NetworkEvent;
+import net.minecraftforge.fmllegacy.network.NetworkEvent.Context;
+import net.minecraftforge.fmllegacy.network.PacketDistributor;
 
 import java.util.function.Supplier;
 
@@ -39,7 +39,7 @@ public class CobaltArmorItem extends ArmorItem {
 	 * @param slot the <code>EquipmentSlotType</code>
 	 * @param type type ID
 	 */
-	public CobaltArmorItem(IArmorMaterial material, EquipmentSlotType slot, int type) {
+	public CobaltArmorItem(ArmorMaterial material, EquipmentSlot slot, int type) {
 		super(material, slot, (new Item.Properties().tab(DeferredRegistryHandler.ITEM_GROUP)));
 		if (type == 2) {
 			isLeggings = true;
@@ -55,7 +55,7 @@ public class CobaltArmorItem extends ArmorItem {
 	 * @return String
 	 */
 	@Override
-	public String getArmorTexture(ItemStack stack, Entity entity, EquipmentSlotType slot, String type) {
+	public String getArmorTexture(ItemStack stack, Entity entity, EquipmentSlot slot, String type) {
 		return (!isLeggings ? ImmersiveWeapons.MOD_ID + ":textures/armor/cobalt_layer_1.png" : ImmersiveWeapons.MOD_ID + ":textures/armor/cobalt_layer_2.png");
 	}
 
@@ -66,12 +66,12 @@ public class CobaltArmorItem extends ArmorItem {
 	 * @param player the <code>PlayerEntity</code> wearing the armor
 	 */
 	@Override
-	public void onArmorTick(ItemStack stack, World world, PlayerEntity player) {
-		if (player.getItemBySlot(EquipmentSlotType.HEAD).getItem() == DeferredRegistryHandler.COBALT_HELMET.get() &&
-				player.getItemBySlot(EquipmentSlotType.CHEST).getItem() == DeferredRegistryHandler.COBALT_CHESTPLATE.get() &&
-				player.getItemBySlot(EquipmentSlotType.LEGS).getItem() == DeferredRegistryHandler.COBALT_LEGGINGS.get() &&
-				player.getItemBySlot(EquipmentSlotType.FEET).getItem() == DeferredRegistryHandler.COBALT_BOOTS.get()) {
-			if (player.getUUID().toString().equals("086ab520-a158-3f3b-b711-6f10d99b4969") || player.getUUID().toString().equals("94f11dac-d1bc-46da-877b-c69f533f2da2")) {
+	public void onArmorTick(ItemStack stack, Level world, Player player) {
+		if (player.getItemBySlot(EquipmentSlot.HEAD).getItem() == DeferredRegistryHandler.COBALT_HELMET.get() &&
+				player.getItemBySlot(EquipmentSlot.CHEST).getItem() == DeferredRegistryHandler.COBALT_CHESTPLATE.get() &&
+				player.getItemBySlot(EquipmentSlot.LEGS).getItem() == DeferredRegistryHandler.COBALT_LEGGINGS.get() &&
+				player.getItemBySlot(EquipmentSlot.FEET).getItem() == DeferredRegistryHandler.COBALT_BOOTS.get()) {
+			if (player.getUUID().toString().equals("380df991-f603-344c-a090-369bad2a924a") || player.getUUID().toString().equals("94f11dac-d1bc-46da-877b-c69f533f2da2")) {
 				if (world.isClientSide) {
 					if (ClientModEventSubscriber.toggleArmorEffect.consumeClick()) {
 						PacketHandler.INSTANCE.sendToServer(new CobaltArmorItemPacketHandler(false, player.blockPosition(), player.position()));
@@ -82,9 +82,9 @@ public class CobaltArmorItem extends ArmorItem {
 				}
 
 				if (effectEnabled) {
-					player.addEffect(new EffectInstance(Effects.DAMAGE_BOOST, 1, 4, false, false));
-					player.addEffect(new EffectInstance(Effects.DAMAGE_RESISTANCE, 1, 1, false, false));
-					player.addEffect(new EffectInstance(Effects.MOVEMENT_SPEED, 1, 1, false, false));
+					player.addEffect(new MobEffectInstance(MobEffects.DAMAGE_BOOST, 1, 4, false, false));
+					player.addEffect(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, 1, 1, false, false));
+					player.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SPEED, 1, 1, false, false));
 
 					if (!world.isClientSide) {
 						PacketHandler.INSTANCE.send(PacketDistributor.TRACKING_CHUNK.with(() -> world.getChunkAt(player.blockPosition())), new CobaltArmorItemPacketHandler(true, player.blockPosition(), player.position()));
@@ -105,7 +105,7 @@ public class CobaltArmorItem extends ArmorItem {
 
 		private final boolean isParticles;
 		private final BlockPos blockPos;
-		private final Vector3d vector3d;
+		private final Vec3 vector3d;
 
 		/**
 		 * Constructor for CobaltArmorItemPacketHandler.
@@ -113,7 +113,7 @@ public class CobaltArmorItem extends ArmorItem {
 		 * @param blockPos the <code>BlockPos</code> the packet came from
 		 * @param vector3d the <code>Vector3d</code> of the player position
 		 */
-		CobaltArmorItemPacketHandler(boolean isParticles, BlockPos blockPos, Vector3d vector3d) {
+		CobaltArmorItemPacketHandler(boolean isParticles, BlockPos blockPos, Vec3 vector3d) {
 			this.isParticles = isParticles;
 			this.blockPos = blockPos;
 			this.vector3d = vector3d;
@@ -124,7 +124,7 @@ public class CobaltArmorItem extends ArmorItem {
 		 * @param msg the <code>CobaltArmorItemPacketHandler</code> message being sent
 		 * @param packetBuffer the <code>PacketBuffer</code> containing packet data
 		 */
-		public static void encode(CobaltArmorItemPacketHandler msg, PacketBuffer packetBuffer) {
+		public static void encode(CobaltArmorItemPacketHandler msg, FriendlyByteBuf packetBuffer) {
 			packetBuffer.writeBoolean(msg.isParticles);
 			packetBuffer.writeBlockPos(msg.blockPos);
 			packetBuffer.writeDouble(msg.vector3d.x).writeDouble(msg.vector3d.y).writeDouble(msg.vector3d.z);
@@ -135,8 +135,8 @@ public class CobaltArmorItem extends ArmorItem {
 		 * @param packetBuffer the <code>PacketBuffer</code> containing packet data
 		 * @return CobaltArmorItemPacketHandler
 		 */
-		public static CobaltArmorItemPacketHandler decode(PacketBuffer packetBuffer) {
-			return new CobaltArmorItemPacketHandler(packetBuffer.readBoolean(), packetBuffer.readBlockPos(), new Vector3d(packetBuffer.readDouble(), packetBuffer.readDouble(), packetBuffer.readDouble()));
+		public static CobaltArmorItemPacketHandler decode(FriendlyByteBuf packetBuffer) {
+			return new CobaltArmorItemPacketHandler(packetBuffer.readBoolean(), packetBuffer.readBlockPos(), new Vec3(packetBuffer.readDouble(), packetBuffer.readDouble(), packetBuffer.readDouble()));
 		}
 
 		/**

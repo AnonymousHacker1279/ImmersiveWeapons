@@ -2,18 +2,18 @@ package com.anonymoushacker1279.immersiveweapons.item.crafting;
 
 import com.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
 import com.google.gson.JsonObject;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.*;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.network.PacketBuffer;
-import net.minecraft.util.JSONUtils;
-import net.minecraft.util.NonNullList;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.world.World;
+import net.minecraft.core.NonNullList;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.GsonHelper;
+import net.minecraft.world.Container;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.*;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.registries.ForgeRegistryEntry;
 
-public class TeslaSynthesizerRecipe implements IRecipe<IInventory> {
+public class TeslaSynthesizerRecipe implements Recipe<Container> {
 
 	private final int cookTime;
 	private final Ingredient blockIngredient;
@@ -55,7 +55,7 @@ public class TeslaSynthesizerRecipe implements IRecipe<IInventory> {
 	 * @return boolean
 	 */
 	@Override
-	public boolean matches(IInventory inv, World worldIn) {
+	public boolean matches(Container inv, Level worldIn) {
 		return blockIngredient.test(inv.getItem(0)) && material1.test(inv.getItem(1)) && material2.test(inv.getItem(2));
 	}
 
@@ -65,9 +65,9 @@ public class TeslaSynthesizerRecipe implements IRecipe<IInventory> {
 	 * @return ItemStack
 	 */
 	@Override
-	public ItemStack assemble(IInventory inv) {
+	public ItemStack assemble(Container inv) {
 		ItemStack itemstack = result.copy();
-		CompoundNBT compoundnbt = inv.getItem(4).getTag();
+		CompoundTag compoundnbt = inv.getItem(4).getTag();
 		if (compoundnbt != null) {
 			itemstack.setTag(compoundnbt.copy());
 		}
@@ -119,7 +119,7 @@ public class TeslaSynthesizerRecipe implements IRecipe<IInventory> {
 	 * @return IRecipeSerializer
 	 */
 	@Override
-	public IRecipeSerializer<?> getSerializer() {
+	public RecipeSerializer<?> getSerializer() {
 		return DeferredRegistryHandler.TESLA_SYNTHEZISER_RECIPE_SERIALIZER.get();
 	}
 
@@ -128,7 +128,7 @@ public class TeslaSynthesizerRecipe implements IRecipe<IInventory> {
 	 * @return IRecipeType
 	 */
 	@Override
-	public IRecipeType<?> getType() {
+	public RecipeType<?> getType() {
 		return ICustomRecipeType.TESLA_SYNTHESIZER;
 	}
 
@@ -145,7 +145,7 @@ public class TeslaSynthesizerRecipe implements IRecipe<IInventory> {
 		return defaultedList;
 	}
 
-	public static class Serializer extends ForgeRegistryEntry<IRecipeSerializer<?>> implements IRecipeSerializer<TeslaSynthesizerRecipe> {
+	public static class Serializer extends ForgeRegistryEntry<RecipeSerializer<?>> implements RecipeSerializer<TeslaSynthesizerRecipe> {
 		/**
 		 * Serialize from JSON.
 		 * @param recipeId the <code>ResourceLocation</code> for the recipe
@@ -154,11 +154,11 @@ public class TeslaSynthesizerRecipe implements IRecipe<IInventory> {
 		 */
 		@Override
 		public TeslaSynthesizerRecipe fromJson(ResourceLocation recipeId, JsonObject json) {
-			Ingredient blockIngredient = Ingredient.fromJson(JSONUtils.getAsJsonObject(json, "block"));
-			Ingredient material1 = Ingredient.fromJson(JSONUtils.getAsJsonObject(json, "material1"));
-			Ingredient material2 = Ingredient.fromJson(JSONUtils.getAsJsonObject(json, "material2"));
-			int cookTime = JSONUtils.getAsInt(json, "cookTime");
-			ItemStack result = ShapedRecipe.itemFromJson(JSONUtils.getAsJsonObject(json, "result"));
+			Ingredient blockIngredient = Ingredient.fromJson(GsonHelper.getAsJsonObject(json, "block"));
+			Ingredient material1 = Ingredient.fromJson(GsonHelper.getAsJsonObject(json, "material1"));
+			Ingredient material2 = Ingredient.fromJson(GsonHelper.getAsJsonObject(json, "material2"));
+			int cookTime = GsonHelper.getAsInt(json, "cookTime");
+			ItemStack result = new ItemStack(ShapedRecipe.itemFromJson(GsonHelper.getAsJsonObject(json, "result")));
 			return new TeslaSynthesizerRecipe(recipeId, blockIngredient, material1, material2, result, cookTime);
 		}
 
@@ -169,7 +169,7 @@ public class TeslaSynthesizerRecipe implements IRecipe<IInventory> {
 		 * @return TeslaSynthesizerRecipe
 		 */
 		@Override
-		public TeslaSynthesizerRecipe fromNetwork(ResourceLocation recipeId, PacketBuffer buffer) {
+		public TeslaSynthesizerRecipe fromNetwork(ResourceLocation recipeId, FriendlyByteBuf buffer) {
 			Ingredient blockIngredient = Ingredient.fromNetwork(buffer);
 			Ingredient material1 = Ingredient.fromNetwork(buffer);
 			Ingredient material2 = Ingredient.fromNetwork(buffer);
@@ -184,7 +184,7 @@ public class TeslaSynthesizerRecipe implements IRecipe<IInventory> {
 		 * @param recipe the <code>TeslaSynthesizerRecipe</code> instance
 		 */
 		@Override
-		public void toNetwork(PacketBuffer buffer, TeslaSynthesizerRecipe recipe) {
+		public void toNetwork(FriendlyByteBuf buffer, TeslaSynthesizerRecipe recipe) {
 			recipe.blockIngredient.toNetwork(buffer);
 			recipe.material1.toNetwork(buffer);
 			recipe.material2.toNetwork(buffer);

@@ -1,18 +1,18 @@
 package com.anonymoushacker1279.immersiveweapons.entity.ai.goal;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.block.FenceGateBlock;
-import net.minecraft.entity.MobEntity;
-import net.minecraft.entity.ai.goal.Goal;
-import net.minecraft.pathfinding.GroundPathNavigator;
-import net.minecraft.pathfinding.Path;
-import net.minecraft.pathfinding.PathPoint;
-import net.minecraft.util.GroundPathHelper;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.FenceGateBlock;
+import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.ai.goal.Goal;
+import net.minecraft.world.entity.ai.navigation.GroundPathNavigation;
+import net.minecraft.world.level.pathfinder.Path;
+import net.minecraft.world.level.pathfinder.Node;
+import net.minecraft.world.entity.ai.util.GoalUtils;
+import net.minecraft.core.BlockPos;
 
 public abstract class InteractFenceGateGoal extends Goal {
 
-	protected MobEntity entity;
+	protected Mob entity;
 	protected BlockPos gatePosition = BlockPos.ZERO;
 	protected boolean gateInteract = true;
 	private boolean hasStoppedGateInteraction;
@@ -23,9 +23,9 @@ public abstract class InteractFenceGateGoal extends Goal {
 	 * Constructor for InteractFenceGateGoal.
 	 * @param entityIn the <code>MobEntity</code> instance
 	 */
-	public InteractFenceGateGoal(MobEntity entityIn) {
+	public InteractFenceGateGoal(Mob entityIn) {
 		entity = entityIn;
-		if (!GroundPathHelper.hasGroundPathNavigation(entityIn)) {
+		if (!GoalUtils.hasGroundPathNavigation(entityIn)) {
 			throw new IllegalArgumentException("Unsupported mob type for InteractFenceGateGoal");
 		}
 	}
@@ -59,16 +59,16 @@ public abstract class InteractFenceGateGoal extends Goal {
 	 */
 	@Override
 	public boolean canUse() {
-		if (!GroundPathHelper.hasGroundPathNavigation(entity)) {
+		if (!GoalUtils.hasGroundPathNavigation(entity)) {
 			return false;
 		} else if (!entity.horizontalCollision) {
 			return false;
 		} else {
-			GroundPathNavigator groundpathnavigator = (GroundPathNavigator) entity.getNavigation();
+			GroundPathNavigation groundpathnavigator = (GroundPathNavigation) entity.getNavigation();
 			Path path = groundpathnavigator.getPath();
 			if (path != null && !path.isDone() && groundpathnavigator.canOpenDoors()) {
 				for (int i = 0; i < Math.min(path.getNextNodeIndex() + 2, path.getNodeCount()); ++i) {
-					PathPoint pathpoint = path.getNode(i);
+					Node pathpoint = path.getNode(i);
 					gatePosition = new BlockPos(pathpoint.x, pathpoint.y + 1, pathpoint.z);
 					if (!(entity.distanceToSqr(gatePosition.getX(), entity.getY(), gatePosition.getZ()) > 2.25D)) {
 						return true;

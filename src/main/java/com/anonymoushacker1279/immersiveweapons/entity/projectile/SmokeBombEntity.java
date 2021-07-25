@@ -5,28 +5,28 @@ import com.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
 import com.anonymoushacker1279.immersiveweapons.util.Config;
 import com.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
 import com.anonymoushacker1279.immersiveweapons.util.PacketHandler;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.projectile.ProjectileItemEntity;
-import net.minecraft.item.Item;
-import net.minecraft.network.IPacket;
-import net.minecraft.network.PacketBuffer;
-import net.minecraft.particles.IParticleData;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.math.RayTraceResult;
-import net.minecraft.world.World;
+import net.minecraft.core.particles.ParticleOptions;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.protocol.Packet;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.projectile.ThrowableItemProjectile;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.HitResult;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.DistExecutor;
-import net.minecraftforge.fml.network.NetworkEvent;
-import net.minecraftforge.fml.network.NetworkEvent.Context;
-import net.minecraftforge.fml.network.NetworkHooks;
-import net.minecraftforge.fml.network.PacketDistributor;
+import net.minecraftforge.fmllegacy.network.NetworkEvent;
+import net.minecraftforge.fmllegacy.network.NetworkEvent.Context;
+import net.minecraftforge.fmllegacy.network.NetworkHooks;
+import net.minecraftforge.fmllegacy.network.PacketDistributor;
 
 import java.awt.*;
 import java.util.function.Supplier;
 
-public class SmokeBombEntity extends ProjectileItemEntity {
+public class SmokeBombEntity extends ThrowableItemProjectile {
 
 	private static int color;
 	private final int configMaxParticles = Config.MAX_SMOKE_BOMB_PARTICLES.get();
@@ -34,10 +34,10 @@ public class SmokeBombEntity extends ProjectileItemEntity {
 
 	/**
 	 * Constructor for SmokeBombEntity.
-	 * @param entityType the <code>EntityType</code> instance; must extend MolotovEntity
+	 * @param entityType the <code>EntityType</code> instance; must extend SmokeBombEntity
 	 * @param world the <code>World</code> the entity is in
 	 */
-	public SmokeBombEntity(EntityType<? extends SmokeBombEntity> entityType, World world) {
+	public SmokeBombEntity(EntityType<? extends SmokeBombEntity> entityType, Level world) {
 		super(entityType, world);
 	}
 
@@ -46,7 +46,7 @@ public class SmokeBombEntity extends ProjectileItemEntity {
 	 * @param world the <code>World</code> the entity is in
 	 * @param livingEntity the <code>LivingEntity</code> throwing the entity
 	 */
-	public SmokeBombEntity(World world, LivingEntity livingEntity) {
+	public SmokeBombEntity(Level world, LivingEntity livingEntity) {
 		super(DeferredRegistryHandler.SMOKE_BOMB_ENTITY.get(), livingEntity, world);
 	}
 
@@ -57,7 +57,7 @@ public class SmokeBombEntity extends ProjectileItemEntity {
 	 * @param y the Y position
 	 * @param z the Z position
 	 */
-	public SmokeBombEntity(World world, double x, double y, double z) {
+	public SmokeBombEntity(Level world, double x, double y, double z) {
 		super(DeferredRegistryHandler.SMOKE_BOMB_ENTITY.get(), x, y, z, world);
 	}
 
@@ -74,7 +74,7 @@ public class SmokeBombEntity extends ProjectileItemEntity {
 	 * @return IPacket
 	 */
 	@Override
-	public IPacket<?> getAddEntityPacket() {
+	public Packet<?> getAddEntityPacket() {
 		return NetworkHooks.getEntitySpawningPacket(this);
 	}
 
@@ -93,7 +93,7 @@ public class SmokeBombEntity extends ProjectileItemEntity {
 	 * @param rayTraceResult the <code>RayTraceResult</code> instance
 	 */
 	@Override
-	protected void onHit(RayTraceResult rayTraceResult) {
+	protected void onHit(HitResult rayTraceResult) {
 		super.onHit(rayTraceResult);
 		if (!level.isClientSide) {
 			PacketHandler.INSTANCE.send(PacketDistributor.TRACKING_CHUNK.with(() -> level.getChunkAt(blockPosition())), new SmokeBombEntityPacketHandler(color));
@@ -109,13 +109,13 @@ public class SmokeBombEntity extends ProjectileItemEntity {
 	@Override
 	public void handleEntityEvent(byte statusID) {
 		if (statusID == VANILLA_IMPACT_STATUS_ID) {
-			IParticleData particleData = makeParticle();
+			ParticleOptions particleData = makeParticle();
 
 			for (int i = 0; i < configMaxParticles; ++i) {
 				level.addParticle(particleData, true, getX(), getY(), getZ(), GeneralUtilities.getRandomNumber(-0.03, 0.03d), GeneralUtilities.getRandomNumber(-0.02d, 0.02d), GeneralUtilities.getRandomNumber(-0.03d, 0.03d));
 			}
-			level.playLocalSound(getX(), getY(), getZ(), DeferredRegistryHandler.SMOKE_BOMB_HISS.get(), SoundCategory.NEUTRAL, 1f, 1f, false);
-			remove();
+			level.playLocalSound(getX(), getY(), getZ(), DeferredRegistryHandler.SMOKE_BOMB_HISS.get(), SoundSource.NEUTRAL, 1f, 1f, false);
+			kill();
 		}
 	}
 
@@ -123,7 +123,7 @@ public class SmokeBombEntity extends ProjectileItemEntity {
 	 * Create a particle.
 	 * @return IParticleData
 	 */
-	private static IParticleData makeParticle() {
+	private static ParticleOptions makeParticle() {
 		Color tint = getTint(GeneralUtilities.getRandomNumber(0, 2));
 		double diameter = getDiameter(GeneralUtilities.getRandomNumber(1.0d, 5.5d));
 
@@ -211,7 +211,7 @@ public class SmokeBombEntity extends ProjectileItemEntity {
 		 * @param msg the <code>SmokeBombEntityPacketHandler</code> message being sent
 		 * @param packetBuffer the <code>PacketBuffer</code> containing packet data
 		 */
-		public static void encode(SmokeBombEntityPacketHandler msg, PacketBuffer packetBuffer) {
+		public static void encode(SmokeBombEntityPacketHandler msg, FriendlyByteBuf packetBuffer) {
 			packetBuffer.writeInt(msg.color);
 		}
 
@@ -220,7 +220,7 @@ public class SmokeBombEntity extends ProjectileItemEntity {
 		 * @param packetBuffer the <code>PacketBuffer</code> containing packet data
 		 * @return SmokeBombEntityPacketHandler
 		 */
-		public static SmokeBombEntityPacketHandler decode(PacketBuffer packetBuffer) {
+		public static SmokeBombEntityPacketHandler decode(FriendlyByteBuf packetBuffer) {
 			return new SmokeBombEntityPacketHandler(packetBuffer.readInt());
 		}
 

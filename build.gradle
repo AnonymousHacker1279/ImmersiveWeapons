@@ -23,11 +23,14 @@ repositories {
 }
 
 // Only edit below this line, the above code adds and enables the necessary things for Forge to be setup.
+apply plugin: 'net.minecraftforge.gradle'
 apply plugin: 'maven-publish'
 
-version = '1.16.5-1.4.0'
+version = '1.17.1-1.5.0-beta'
 group = 'com.anonymoushacker1279.immersiveweapons' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = 'immersiveweapons'
+
+java.toolchain.languageVersion = JavaLanguageVersion.of(16)
 
 println('Java: ' + System.getProperty('java.version') + ' JVM: ' + System.getProperty('java.vm.version') + '(' + System.getProperty('java.vendor') + ') Arch: ' + System.getProperty('os.arch'))
 minecraft {
@@ -36,7 +39,7 @@ minecraft {
 	// stable_#            Stables are built at the discretion of the MCP team.
 	// Use non-default mappings at your own risk. they may not always work.
 	// Simply re-run your setup task after changing the mappings to update your workspace.
-	mappings channel: "official", version: "1.16.5"
+	mappings channel: "official", version: "1.17.1"
 	// makeObfSourceJar = false // an Srg named sources jar is made by default. uncomment this to disable.
 
 	accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
@@ -106,12 +109,12 @@ dependencies {
 	// Specify the version of Minecraft to use, If this is any group other then 'net.minecraft' it is assumed
 	// that the dep is a ForgeGradle 'patcher' dependency. And it's patches will be applied.
 	// The userdev artifact is a special name and will get all sorts of transformations applied to it.
-	minecraft 'net.minecraftforge:forge:1.16.5-36.2.0'
+	minecraft 'net.minecraftforge:forge:1.17.1-37.0.9'
 
 	// compile against the JEI API but do not include it at runtime
-	compileOnly fg.deobf("mezz.jei:jei-1.16.5:7.7.0.106:api")
+	// compileOnly fg.deobf("mezz.jei:jei-1.16.5:7.7.0.106:api") - Disabled until JEI updates to 1.17.1
 	// at runtime, use the full JEI jar
-	runtimeOnly fg.deobf("mezz.jei:jei-1.16.5:7.7.0.106")
+	// runtimeOnly fg.deobf("mezz.jei:jei-1.16.5:7.7.0.106") - Disabled until JEI updates to 1.17.1
 }
 
 // Example for how to get properties into the manifest for reading by the runtime..

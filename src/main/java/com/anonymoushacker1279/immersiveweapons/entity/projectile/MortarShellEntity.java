@@ -2,32 +2,33 @@ package com.anonymoushacker1279.immersiveweapons.entity.projectile;
 
 import com.anonymoushacker1279.immersiveweapons.block.MortarBlock;
 import com.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.IRendersAsItem;
-import net.minecraft.entity.projectile.ProjectileHelper;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.network.IPacket;
-import net.minecraft.particles.ParticleTypes;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.EntityRayTraceResult;
-import net.minecraft.util.math.RayTraceContext;
-import net.minecraft.util.math.RayTraceResult;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.world.Explosion.Mode;
-import net.minecraft.world.World;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.protocol.Packet;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.projectile.ItemSupplier;
+import net.minecraft.world.entity.projectile.Projectile;
+import net.minecraft.world.entity.projectile.ProjectileUtil;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.ClipContext;
+import net.minecraft.world.level.Explosion.BlockInteraction;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.EntityHitResult;
+import net.minecraft.world.phys.HitResult;
+import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.event.ForgeEventFactory;
-import net.minecraftforge.fml.network.NetworkHooks;
+import net.minecraftforge.fmllegacy.network.NetworkHooks;
 
-@OnlyIn(value = Dist.CLIENT, _interface = IRendersAsItem.class)
-public class MortarShellEntity extends Entity implements IRendersAsItem {
+@OnlyIn(value = Dist.CLIENT, _interface = ItemSupplier.class)
+public class MortarShellEntity extends Projectile implements ItemSupplier {
 
 	private static final DamageSource damageSource = new DamageSource("immersiveweapons.mortar");
 
@@ -36,7 +37,7 @@ public class MortarShellEntity extends Entity implements IRendersAsItem {
 	 * @param entityType the <code>EntityType</code> instance; must extend MolotovEntity
 	 * @param world the <code>World</code> the entity is in
 	 */
-	public MortarShellEntity(EntityType<?> entityType, World world) {
+	public MortarShellEntity(EntityType<? extends Projectile> entityType, Level world) {
 		super(entityType, world);
 	}
 
@@ -46,7 +47,7 @@ public class MortarShellEntity extends Entity implements IRendersAsItem {
 	 * @param pos the <code>BlockPos</code> the entity should spawn at
 	 * @param yOffset the Y offset to spawn at
 	 */
-	private MortarShellEntity(World world, BlockPos pos, double yOffset) {
+	private MortarShellEntity(Level world, BlockPos pos, double yOffset) {
 		this(DeferredRegistryHandler.MORTAR_SHELL_ENTITY.get(), world);
 		setPos(pos.getX() + 0.5D, pos.getY() + yOffset, pos.getZ() + 0.5D);
 	}
@@ -58,7 +59,7 @@ public class MortarShellEntity extends Entity implements IRendersAsItem {
 	 * @param yOffset the Y offset to spawn at
 	 * @return ActionResultType
 	 */
-	public static ActionResultType create(World world, BlockPos pos, double yOffset, BlockState state) {
+	public static InteractionResult create(Level world, BlockPos pos, double yOffset, BlockState state) {
 		if (!world.isClientSide) {
 			MortarShellEntity mortarShellEntity = new MortarShellEntity(world, pos, yOffset);
 
@@ -82,7 +83,7 @@ public class MortarShellEntity extends Entity implements IRendersAsItem {
 			}
 			world.addFreshEntity(mortarShellEntity);
 		}
-		return ActionResultType.CONSUME;
+		return InteractionResult.CONSUME;
 	}
 
 	/**
@@ -91,23 +92,23 @@ public class MortarShellEntity extends Entity implements IRendersAsItem {
 	@Override
 	public void tick() {
 		super.tick();
-		Vector3d deltaMovement = getDeltaMovement();
+		Vec3 deltaMovement = getDeltaMovement();
 
 		// Check for collisions
-		Vector3d currentPosition = position();
-		Vector3d currentPositionPlusMovement = currentPosition.add(deltaMovement);
-		RayTraceResult rayTraceResult = level.clip(new RayTraceContext(currentPosition, currentPositionPlusMovement, RayTraceContext.BlockMode.COLLIDER, RayTraceContext.FluidMode.NONE, this));
-		if (rayTraceResult.getType() != RayTraceResult.Type.MISS) {
+		Vec3 currentPosition = position();
+		Vec3 currentPositionPlusMovement = currentPosition.add(deltaMovement);
+		HitResult rayTraceResult = level.clip(new ClipContext(currentPosition, currentPositionPlusMovement, ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, this));
+		if (rayTraceResult.getType() != HitResult.Type.MISS) {
 			currentPositionPlusMovement = rayTraceResult.getLocation();
 		}
 
 		while (isAlive()) {
-			EntityRayTraceResult entityRayTraceResult = ProjectileHelper.getEntityHitResult(level, this, currentPosition, currentPositionPlusMovement, getBoundingBox().expandTowards(getDeltaMovement()).inflate(1.0D), this::canHitEntity);
+			EntityHitResult entityRayTraceResult = ProjectileUtil.getEntityHitResult(level, this, currentPosition, currentPositionPlusMovement, getBoundingBox().expandTowards(getDeltaMovement()).inflate(1.0D), this::canHitEntity);
 			if (entityRayTraceResult != null) {
 				rayTraceResult = entityRayTraceResult;
 			}
 
-			if (rayTraceResult != null && rayTraceResult.getType() != RayTraceResult.Type.MISS && !ForgeEventFactory.onProjectileImpact(this, rayTraceResult)) {
+			if (rayTraceResult != null && rayTraceResult.getType() != HitResult.Type.MISS && !ForgeEventFactory.onProjectileImpact(this, rayTraceResult)) {
 				onHit(rayTraceResult);
 				hasImpulse = true;
 			}
@@ -136,7 +137,7 @@ public class MortarShellEntity extends Entity implements IRendersAsItem {
 		}
 		setDeltaMovement(deltaMovement.scale(inertia));
 		if (!isNoGravity()) {
-			Vector3d newDeltaMovement = getDeltaMovement();
+			Vec3 newDeltaMovement = getDeltaMovement();
 			setDeltaMovement(newDeltaMovement.x, newDeltaMovement.y - 0.0355f, newDeltaMovement.z);
 		}
 
@@ -148,13 +149,14 @@ public class MortarShellEntity extends Entity implements IRendersAsItem {
 	 * Runs when an entity/block is hit.
 	 * @param rayTraceResult the <code>RayTraceResult</code> instance
 	 */
-	private void onHit(RayTraceResult rayTraceResult) {
-		Vector3d vector3d = rayTraceResult.getLocation().subtract(getX(), getY(), getZ());
+	@Override
+	protected void onHit(HitResult rayTraceResult) {
+		Vec3 vector3d = rayTraceResult.getLocation().subtract(getX(), getY(), getZ());
 		setDeltaMovement(vector3d);
-		Vector3d vector3d1 = vector3d.normalize().scale(0.05F);
+		Vec3 vector3d1 = vector3d.normalize().scale(0.05F);
 		setPosRaw(getX() - vector3d1.x, getY() - vector3d1.y, getZ() - vector3d1.z);
 		if (!level.isClientSide) {
-			level.explode(getEntity(), damageSource, null, blockPosition().getX(), blockPosition().getY(), blockPosition().getZ(), 4.0F, false, Mode.BREAK);
+			level.explode(this, damageSource, null, blockPosition().getX(), blockPosition().getY(), blockPosition().getZ(), 4.0F, false, BlockInteraction.BREAK);
 		}
 		kill();
 	}
@@ -164,7 +166,8 @@ public class MortarShellEntity extends Entity implements IRendersAsItem {
 	 * @param entity the <code>Entity</code> to check
 	 * @return boolean
 	 */
-	private boolean canHitEntity(Entity entity) {
+	@Override
+	protected boolean canHitEntity(Entity entity) {
 		return true;
 	}
 
@@ -173,11 +176,11 @@ public class MortarShellEntity extends Entity implements IRendersAsItem {
 	}
 
 	@Override
-	protected void readAdditionalSaveData(CompoundNBT nbt) {
+	protected void readAdditionalSaveData(CompoundTag nbt) {
 	}
 
 	@Override
-	protected void addAdditionalSaveData(CompoundNBT nbt) {
+	protected void addAdditionalSaveData(CompoundTag nbt) {
 	}
 
 	/**
@@ -185,7 +188,7 @@ public class MortarShellEntity extends Entity implements IRendersAsItem {
 	 * @return IPacket
 	 */
 	@Override
-	public IPacket<?> getAddEntityPacket() {
+	public Packet<?> getAddEntityPacket() {
 		return NetworkHooks.getEntitySpawningPacket(this);
 	}
 

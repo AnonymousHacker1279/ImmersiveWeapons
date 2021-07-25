@@ -5,21 +5,29 @@ import com.anonymoushacker1279.immersiveweapons.init.DispenserBehaviorRegistry;
 import com.anonymoushacker1279.immersiveweapons.init.OreGeneratorHandler;
 import com.anonymoushacker1279.immersiveweapons.util.*;
 import com.anonymoushacker1279.immersiveweapons.world.gen.feature.structure.BattlefieldVillagePools;
-import net.minecraft.entity.EntityClassification;
-import net.minecraft.util.RegistryKey;
-import net.minecraft.world.World;
-import net.minecraft.world.biome.Biome;
-import net.minecraft.world.biome.Biome.Category;
-import net.minecraft.world.biome.MobSpawnInfo.Spawners;
-import net.minecraft.world.gen.FlatChunkGenerator;
-import net.minecraft.world.gen.GenerationStage;
-import net.minecraft.world.gen.GenerationStage.Decoration;
-import net.minecraft.world.gen.carver.ConfiguredCarver;
-import net.minecraft.world.gen.feature.ProbabilityConfig;
-import net.minecraft.world.gen.feature.structure.Structure;
-import net.minecraft.world.gen.settings.DimensionStructuresSettings;
-import net.minecraft.world.gen.settings.StructureSeparationSettings;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.valueproviders.ConstantFloat;
+import net.minecraft.util.valueproviders.TrapezoidFloat;
+import net.minecraft.util.valueproviders.UniformFloat;
+import net.minecraft.world.entity.MobCategory;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.biome.Biome;
+import net.minecraft.world.level.biome.Biome.BiomeCategory;
+import net.minecraft.world.level.biome.MobSpawnSettings.SpawnerData;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.levelgen.FlatLevelSource;
+import net.minecraft.world.level.levelgen.GenerationStep;
+import net.minecraft.world.level.levelgen.GenerationStep.Decoration;
+import net.minecraft.world.level.levelgen.StructureSettings;
+import net.minecraft.world.level.levelgen.VerticalAnchor;
+import net.minecraft.world.level.levelgen.carver.CanyonCarverConfiguration;
+import net.minecraft.world.level.levelgen.carver.CanyonWorldCarver;
+import net.minecraft.world.level.levelgen.carver.CarverDebugSettings;
+import net.minecraft.world.level.levelgen.carver.ConfiguredWorldCarver;
+import net.minecraft.world.level.levelgen.feature.StructureFeature;
+import net.minecraft.world.level.levelgen.feature.configurations.StructureFeatureConfiguration;
+import net.minecraft.world.level.levelgen.heightproviders.BiasedToBottomHeight;
 import net.minecraftforge.common.BiomeDictionary;
 import net.minecraftforge.common.BiomeDictionary.Type;
 import net.minecraftforge.common.BiomeManager;
@@ -82,7 +90,7 @@ public class ImmersiveWeapons {
 	 * @param weight weight to generate biomes
 	 * @param types the dimension type: leave null for a modded dimension
 	 */
-	private static void setupBiome(final Biome biome, final BiomeType biomeType, final int weight, final BiomeDictionary.Type... types) {
+	private static void setupBiome(Biome biome, BiomeType biomeType, int weight, BiomeDictionary.Type... types) {
 		BiomeDictionary.addTypes(key(biome), types);
 		BiomeManager.addBiome(biomeType, new BiomeManager.BiomeEntry(key(biome), weight));
 	}
@@ -92,8 +100,8 @@ public class ImmersiveWeapons {
 	 * @param biome the <code>Biome</code> being registered
 	 * @return RegistryKey
 	 */
-	private static RegistryKey<Biome> key(final Biome biome) {
-		return RegistryKey.create(ForgeRegistries.Keys.BIOMES, Objects.requireNonNull(ForgeRegistries.BIOMES.getKey(biome), "Biome registry name was null"));
+	private static ResourceKey<Biome> key(Biome biome) {
+		return ResourceKey.create(ForgeRegistries.Keys.BIOMES, Objects.requireNonNull(ForgeRegistries.BIOMES.getKey(biome), "Biome registry name was null"));
 	}
 
 	/**
@@ -102,7 +110,7 @@ public class ImmersiveWeapons {
 	 * @param event the <code>FMLCommonSetupEvent</code> instance
 	 */
 	@SubscribeEvent
-	public void setup(final FMLCommonSetupEvent event) {
+	public void setup(FMLCommonSetupEvent event) {
 		OreGeneratorHandler.init(event);
 		DispenserBehaviorRegistry.init();
 		BattlefieldVillagePools.init();
@@ -122,42 +130,40 @@ public class ImmersiveWeapons {
 	 * @param event the <code>BiomeLoadingEvent</code> instance
 	 */
 	@SubscribeEvent
-	public void onBiomeLoading(final BiomeLoadingEvent event) {
+	public void onBiomeLoading(BiomeLoadingEvent event) {
 		// Biome modifications
 		BiomeGenerationSettingsBuilder generation = event.getGeneration();
-		if (event.getCategory() != Biome.Category.NETHER || event.getCategory() != Biome.Category.THEEND) {
-			event.getGeneration().getFeatures(GenerationStage.Decoration.UNDERGROUND_ORES)
-					.add(() -> OreGeneratorHandler.ORE_COPPER_CONFIG);
-			event.getGeneration().getFeatures(GenerationStage.Decoration.UNDERGROUND_ORES)
+		if (event.getCategory() != Biome.BiomeCategory.NETHER || event.getCategory() != Biome.BiomeCategory.THEEND) {
+			event.getGeneration().getFeatures(GenerationStep.Decoration.UNDERGROUND_ORES)
 					.add(() -> OreGeneratorHandler.ORE_COBALT_CONFIG);
 
-			if (event.getCategory() != Category.OCEAN && event.getCategory() != Category.RIVER) {
-				event.getSpawns().addSpawn(EntityClassification.MONSTER, new Spawners(DeferredRegistryHandler.WANDERING_WARRIOR_ENTITY.get(), 15, 1, 1));
-				event.getSpawns().addSpawn(EntityClassification.MONSTER, new Spawners(DeferredRegistryHandler.HANS_ENTITY.get(), 1, 1, 1));
+			if (event.getCategory() != BiomeCategory.OCEAN && event.getCategory() != BiomeCategory.RIVER) {
+				event.getSpawns().addSpawn(MobCategory.MONSTER, new SpawnerData(DeferredRegistryHandler.WANDERING_WARRIOR_ENTITY.get(), 15, 1, 1));
+				event.getSpawns().addSpawn(MobCategory.MONSTER, new SpawnerData(DeferredRegistryHandler.HANS_ENTITY.get(), 1, 1, 1));
 			}
 		}
-		if (event.getCategory() == Biome.Category.NETHER) {
-			event.getGeneration().getFeatures(GenerationStage.Decoration.UNDERGROUND_ORES)
+		if (event.getCategory() == Biome.BiomeCategory.NETHER) {
+			event.getGeneration().getFeatures(GenerationStep.Decoration.UNDERGROUND_ORES)
 					.add(() -> OreGeneratorHandler.ORE_MOLTEN_CONFIG);
 		}
 
-		if (event.getCategory() == Category.FOREST) {
+		if (event.getCategory() == BiomeCategory.FOREST) {
 			generation.addStructureStart(ConfiguredStructures.CONFIGURED_ABANDONED_FACTORY);
 			generation.addStructureStart(ConfiguredStructures.CONFIGURED_UNDERGROUND_BUNKER);
 			generation.addStructureStart(ConfiguredStructures.CONFIGURED_BEAR_TRAP);
 		}
-		if (event.getCategory() == Category.PLAINS) {
+		if (event.getCategory() == BiomeCategory.PLAINS) {
 			generation.addStructureStart(ConfiguredStructures.CONFIGURED_ABANDONED_FACTORY);
 			generation.addStructureStart(ConfiguredStructures.CONFIGURED_CAMPSITE);
 		}
-		if (event.getCategory() == Category.JUNGLE) {
+		if (event.getCategory() == BiomeCategory.JUNGLE) {
 			generation.addStructureStart(ConfiguredStructures.CONFIGURED_PITFALL_TRAP);
 		}
-		if (event.getCategory() == Category.DESERT) {
+		if (event.getCategory() == BiomeCategory.DESERT) {
 			generation.addStructureStart(ConfiguredStructures.CONFIGURED_LANDMINE_TRAP);
 			generation.addStructureStart(ConfiguredStructures.CONFIGURED_CAMPSITE);
 		}
-		if (event.getCategory() == Category.TAIGA) {
+		if (event.getCategory() == BiomeCategory.TAIGA) {
 			generation.addStructureStart(ConfiguredStructures.CONFIGURED_CLOUD_ISLAND);
 		}
 		if (Objects.requireNonNull(event.getName()).toString().equals(Objects.requireNonNull(DeferredRegistryHandler.BATTLEFIELD.get().getRegistryName()).toString())) {
@@ -166,7 +172,7 @@ public class ImmersiveWeapons {
 			generation.addStructureStart(ConfiguredStructures.CONFIGURED_BEAR_TRAP);
 			generation.addStructureStart(ConfiguredStructures.CONFIGURED_BATTLEFIELD_VILLAGE);
 			generation.addFeature(Decoration.VEGETAL_DECORATION, ConfiguredStructures.CONFIGURED_WOODEN_SPIKES);
-			generation.addCarver(GenerationStage.Carving.AIR, new ConfiguredCarver<>(DeferredRegistryHandler.TRENCH_WORLD_CARVER.get(), new ProbabilityConfig(0.115f)));
+			generation.addCarver(GenerationStep.Carving.AIR, new ConfiguredWorldCarver<>(CanyonWorldCarver.CANYON, new CanyonCarverConfiguration(0.15F, BiasedToBottomHeight.of(VerticalAnchor.absolute(68), VerticalAnchor.absolute(70), 2), ConstantFloat.of(0.5F), VerticalAnchor.aboveBottom(20), false, CarverDebugSettings.of(false, Blocks.WARPED_BUTTON.defaultBlockState()), UniformFloat.of(-0.125F, 0.125F), new CanyonCarverConfiguration.CanyonShapeConfiguration(UniformFloat.of(0.5F, 0.75F), TrapezoidFloat.of(0.0F, 4.0F, 1.0F), 3, UniformFloat.of(0.75F, 1.0F), 0.5F, 0.0F))));
 		}
 	}
 
@@ -176,25 +182,25 @@ public class ImmersiveWeapons {
 	 *     to contain our structures.
 	 * @param event the <code>WorldEvent.Load</code> instance
 	 */
-	public void worldLoadEvent(final WorldEvent.Load event) {
-		if (event.getWorld() instanceof ServerWorld) {
-			ServerWorld serverWorld = (ServerWorld) event.getWorld();
+	private void worldLoadEvent(WorldEvent.Load event) {
+		if (event.getWorld() instanceof ServerLevel) {
+			ServerLevel serverWorld = (ServerLevel) event.getWorld();
 
-			if (serverWorld.getChunkSource().getGenerator() instanceof FlatChunkGenerator &&
-					serverWorld.dimension().equals(World.OVERWORLD)) {
+			if (serverWorld.getChunkSource().getGenerator() instanceof FlatLevelSource &&
+					serverWorld.dimension().equals(Level.OVERWORLD)) {
 				return;
 			}
 
-			Map<Structure<?>, StructureSeparationSettings> tempMap = new HashMap<>(serverWorld.getChunkSource().generator.getSettings().structureConfig());
-			tempMap.put(Structures.ABANDONED_FACTORY.get(), DimensionStructuresSettings.DEFAULTS.get(Structures.ABANDONED_FACTORY.get()));
-			tempMap.put(Structures.PITFALL_TRAP.get(), DimensionStructuresSettings.DEFAULTS.get(Structures.PITFALL_TRAP.get()));
-			tempMap.put(Structures.BEAR_TRAP.get(), DimensionStructuresSettings.DEFAULTS.get(Structures.BEAR_TRAP.get()));
-			tempMap.put(Structures.LANDMINE_TRAP.get(), DimensionStructuresSettings.DEFAULTS.get(Structures.LANDMINE_TRAP.get()));
-			tempMap.put(Structures.UNDERGROUND_BUNKER.get(), DimensionStructuresSettings.DEFAULTS.get(Structures.UNDERGROUND_BUNKER.get()));
-			tempMap.put(Structures.BATTLEFIELD_CAMP.get(), DimensionStructuresSettings.DEFAULTS.get(Structures.BATTLEFIELD_CAMP.get()));
-			tempMap.put(Structures.BATTLEFIELD_VILLAGE.get(), DimensionStructuresSettings.DEFAULTS.get(Structures.BATTLEFIELD_VILLAGE.get()));
-			tempMap.put(Structures.CLOUD_ISLAND.get(), DimensionStructuresSettings.DEFAULTS.get(Structures.CLOUD_ISLAND.get()));
-			tempMap.put(Structures.CAMPSITE.get(), DimensionStructuresSettings.DEFAULTS.get(Structures.CAMPSITE.get()));
+			Map<StructureFeature<?>, StructureFeatureConfiguration> tempMap = new HashMap<>(serverWorld.getChunkSource().generator.getSettings().structureConfig());
+			tempMap.put(Structures.ABANDONED_FACTORY.get(), StructureSettings.DEFAULTS.get(Structures.ABANDONED_FACTORY.get()));
+			tempMap.put(Structures.PITFALL_TRAP.get(), StructureSettings.DEFAULTS.get(Structures.PITFALL_TRAP.get()));
+			tempMap.put(Structures.BEAR_TRAP.get(), StructureSettings.DEFAULTS.get(Structures.BEAR_TRAP.get()));
+			tempMap.put(Structures.LANDMINE_TRAP.get(), StructureSettings.DEFAULTS.get(Structures.LANDMINE_TRAP.get()));
+			tempMap.put(Structures.UNDERGROUND_BUNKER.get(), StructureSettings.DEFAULTS.get(Structures.UNDERGROUND_BUNKER.get()));
+			tempMap.put(Structures.BATTLEFIELD_CAMP.get(), StructureSettings.DEFAULTS.get(Structures.BATTLEFIELD_CAMP.get()));
+			tempMap.put(Structures.BATTLEFIELD_VILLAGE.get(), StructureSettings.DEFAULTS.get(Structures.BATTLEFIELD_VILLAGE.get()));
+			tempMap.put(Structures.CLOUD_ISLAND.get(), StructureSettings.DEFAULTS.get(Structures.CLOUD_ISLAND.get()));
+			tempMap.put(Structures.CAMPSITE.get(), StructureSettings.DEFAULTS.get(Structures.CAMPSITE.get()));
 			serverWorld.getChunkSource().generator.getSettings().structureConfig = tempMap;
 		}
 	}

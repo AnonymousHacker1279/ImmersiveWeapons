@@ -1,16 +1,16 @@
 package com.anonymoushacker1279.immersiveweapons.item;
 
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
 import net.minecraft.tags.ItemTags;
-import net.minecraft.util.Hand;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 
 import java.util.function.Predicate;
 
 public abstract class AbstractBullet extends Item {
-	static final Predicate<ItemStack> MUSKET_BALLS = (stack) -> stack.getItem().is(ItemTags.bind("immersiveweapons:projectiles/musket_ball"));
-	static final Predicate<ItemStack> FLARES = (stack) -> stack.getItem().is(ItemTags.bind("immersiveweapons:projectiles/flares"));
+	static final Predicate<ItemStack> MUSKET_BALLS = (stack) -> stack.is(ItemTags.bind("immersiveweapons:projectiles/musket_ball"));
+	static final Predicate<ItemStack> FLARES = (stack) -> stack.is(ItemTags.bind("immersiveweapons:projectiles/flares"));
 
 	/**
 	 * Constructor for AbstractBullet.
@@ -27,10 +27,10 @@ public abstract class AbstractBullet extends Item {
 	 * @return ItemStack
 	 */
 	static ItemStack getHeldAmmo(LivingEntity livingEntity, Predicate<ItemStack> isAmmo) {
-		if (isAmmo.test(livingEntity.getItemInHand(Hand.OFF_HAND))) {
-			return livingEntity.getItemInHand(Hand.OFF_HAND);
+		if (isAmmo.test(livingEntity.getItemInHand(InteractionHand.OFF_HAND))) {
+			return livingEntity.getItemInHand(InteractionHand.OFF_HAND);
 		} else {
-			return isAmmo.test(livingEntity.getItemInHand(Hand.MAIN_HAND)) ? livingEntity.getItemInHand(Hand.MAIN_HAND) : ItemStack.EMPTY;
+			return isAmmo.test(livingEntity.getItemInHand(InteractionHand.MAIN_HAND)) ? livingEntity.getItemInHand(InteractionHand.MAIN_HAND) : ItemStack.EMPTY;
 		}
 	}
 

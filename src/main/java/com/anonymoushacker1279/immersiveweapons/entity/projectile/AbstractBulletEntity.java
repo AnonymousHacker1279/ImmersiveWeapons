@@ -3,31 +3,36 @@ package com.anonymoushacker1279.immersiveweapons.entity.projectile;
 import com.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
 import com.anonymoushacker1279.immersiveweapons.util.Config;
 import it.unimi.dsi.fastutil.ints.IntOpenHashSet;
-import net.minecraft.block.BlockState;
-import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.entity.projectile.AbstractArrowEntity;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.network.IPacket;
-import net.minecraft.network.play.server.SChangeGameStatePacket;
-import net.minecraft.particles.ParticleTypes;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.network.protocol.Packet;
+import net.minecraft.network.protocol.game.ClientboundGameEventPacket;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundEvent;
 import net.minecraft.tags.BlockTags;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.SoundEvent;
-import net.minecraft.util.math.*;
-import net.minecraft.util.math.shapes.VoxelShape;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.world.World;
+import net.minecraft.util.Mth;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.projectile.AbstractArrow;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.level.ClipContext;
+import net.minecraft.world.level.ClipContext.Block;
+import net.minecraft.world.level.ClipContext.Fluid;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.*;
+import net.minecraft.world.phys.HitResult.Type;
+import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraftforge.event.ForgeEventFactory;
-import net.minecraftforge.fml.network.NetworkHooks;
+import net.minecraftforge.fmllegacy.network.NetworkHooks;
 import org.jetbrains.annotations.NotNull;
 
-public abstract class AbstractBulletEntity extends AbstractArrowEntity {
+public abstract class AbstractBulletEntity extends AbstractArrow {
 
 	Item referenceItem;
 	private final SoundEvent hitSound = getDefaultHitGroundSoundEvent();
@@ -43,7 +48,7 @@ public abstract class AbstractBulletEntity extends AbstractArrowEntity {
 	 * @param entityType the <code>EntityType</code> instance
 	 * @param world the <code>World</code> the entity is in
 	 */
-	AbstractBulletEntity(EntityType<? extends AbstractArrowEntity> entityType, World world) {
+	AbstractBulletEntity(EntityType<? extends AbstractArrow> entityType, Level world) {
 		super(entityType, world);
 	}
 
@@ -53,7 +58,7 @@ public abstract class AbstractBulletEntity extends AbstractArrowEntity {
 	 * @param shooter the <code>LivingEntity</code> shooting the entity
 	 * @param world the <code>World</code> the entity is in
 	 */
-	AbstractBulletEntity(EntityType<? extends AbstractBulletEntity> entityType, LivingEntity shooter, World world) {
+	AbstractBulletEntity(EntityType<? extends AbstractBulletEntity> entityType, LivingEntity shooter, Level world) {
 		super(entityType, shooter, world);
 	}
 
@@ -71,7 +76,7 @@ public abstract class AbstractBulletEntity extends AbstractArrowEntity {
 	 * @return IPacket
 	 */
 	@Override
-	public @NotNull IPacket<?> getAddEntityPacket() {
+	public @NotNull Packet<?> getAddEntityPacket() {
 		return NetworkHooks.getEntitySpawningPacket(this);
 	}
 
@@ -83,24 +88,26 @@ public abstract class AbstractBulletEntity extends AbstractArrowEntity {
 		super.tick();
 		doWhileTicking();
 		boolean flag = isNoPhysics();
-		Vector3d vector3d = getDeltaMovement();
+		Vec3 vector3d = getDeltaMovement();
+		double yRot;
+		double xRot;
 		if (xRotO == 0.0F && yRotO == 0.0F) {
-			float f = MathHelper.sqrt(getHorizontalDistanceSqr(vector3d));
-			yRot = (float) (MathHelper.atan2(vector3d.x, vector3d.z) * (180F / (float) Math.PI));
-			xRot = (float) (MathHelper.atan2(vector3d.y, f) * (180F / (float) Math.PI));
-			yRotO = yRot;
-			xRotO = xRot;
+			double d = vector3d.horizontalDistanceSqr();
+			yRot = (Mth.atan2(vector3d.x, vector3d.z) * (180F / (float) Math.PI));
+			xRot = (Mth.atan2(vector3d.y, d) * (180F / (float) Math.PI));
+			yRotO = (float) yRot;
+			xRotO = (float) xRot;
 		}
 
 		BlockPos blockpos = blockPosition();
 		BlockState blockstate = level.getBlockState(blockpos);
-		if (!blockstate.isAir(level, blockpos) && !flag) {
+		if (!blockstate.isAir() && !flag) {
 			VoxelShape voxelshape = blockstate.getBlockSupportShape(level, blockpos);
 			if (!voxelshape.isEmpty()) {
-				Vector3d vector3d1 = position();
+				Vec3 vector3d1 = position();
 
-				for (AxisAlignedBB axisalignedbb : voxelshape.toAabbs()) {
-					if (axisalignedbb.move(blockpos).contains(vector3d1)) {
+				for (AABB aabb : voxelshape.toAabbs()) {
+					if (aabb.move(blockpos).contains(vector3d1)) {
 						inGround = true;
 						break;
 					}
@@ -126,32 +133,32 @@ public abstract class AbstractBulletEntity extends AbstractArrowEntity {
 			++inGroundTime;
 		} else {
 			inGroundTime = 0;
-			Vector3d vector3d2 = position();
-			Vector3d vector3d3 = vector3d2.add(vector3d);
-			RayTraceResult raytraceresult = level.clip(new RayTraceContext(vector3d2, vector3d3, RayTraceContext.BlockMode.COLLIDER, RayTraceContext.FluidMode.NONE, this));
-			if (raytraceresult.getType() != RayTraceResult.Type.MISS) {
+			Vec3 vector3d2 = position();
+			Vec3 vector3d3 = vector3d2.add(vector3d);
+			HitResult raytraceresult = level.clip(new ClipContext(vector3d2, vector3d3, Block.COLLIDER, Fluid.NONE, this));
+			if (raytraceresult.getType() != Type.MISS) {
 				vector3d3 = raytraceresult.getLocation();
 			}
 
 			while (isAlive()) {
-				EntityRayTraceResult entityraytraceresult = findHitEntity(vector3d2, vector3d3);
+				EntityHitResult entityraytraceresult = findHitEntity(vector3d2, vector3d3);
 				if (entityraytraceresult != null) {
 					raytraceresult = entityraytraceresult;
 				}
 
-				if (raytraceresult != null && raytraceresult.getType() == RayTraceResult.Type.ENTITY) {
+				if (raytraceresult != null && raytraceresult.getType() == Type.ENTITY) {
 					Entity entity = null;
-					if (raytraceresult instanceof EntityRayTraceResult) {
-						entity = ((EntityRayTraceResult) raytraceresult).getEntity();
+					if (raytraceresult instanceof EntityHitResult) {
+						entity = ((EntityHitResult) raytraceresult).getEntity();
 					}
 					Entity entity1 = getOwner();
-					if (entity instanceof PlayerEntity && entity1 instanceof PlayerEntity && !((PlayerEntity) entity1).canHarmPlayer((PlayerEntity) entity)) {
+					if (entity instanceof Player && entity1 instanceof Player && !((Player) entity1).canHarmPlayer((Player) entity)) {
 						raytraceresult = null;
 						entityraytraceresult = null;
 					}
 				}
 
-				if (raytraceresult != null && raytraceresult.getType() != RayTraceResult.Type.MISS && !flag && !ForgeEventFactory.onProjectileImpact(this, raytraceresult)) {
+				if (raytraceresult != null && raytraceresult.getType() != Type.MISS && !flag && !ForgeEventFactory.onProjectileImpact(this, raytraceresult)) {
 					onHit(raytraceresult);
 					hasImpulse = true;
 				}
@@ -176,16 +183,16 @@ public abstract class AbstractBulletEntity extends AbstractArrowEntity {
 			double d5 = getX() + d3;
 			double d1 = getY() + d4;
 			double d2 = getZ() + d0;
-			float f1 = MathHelper.sqrt(getHorizontalDistanceSqr(vector3d));
+			double horizontalDistanceSqr = vector3d.horizontalDistanceSqr();
 			if (flag) {
-				yRot = (float) (MathHelper.atan2(-d3, -d0) * (180F / (float) Math.PI));
+				yRot = (float) (Mth.atan2(-d3, -d0) * (180F / (float) Math.PI));
 			} else {
-				yRot = (float) (MathHelper.atan2(d3, d0) * (180F / (float) Math.PI));
+				yRot = (float) (Mth.atan2(d3, d0) * (180F / (float) Math.PI));
 			}
 
-			xRot = (float) (MathHelper.atan2(d4, f1) * (180F / (float) Math.PI));
-			xRot = lerpRotation(xRotO, xRot);
-			yRot = lerpRotation(yRotO, yRot);
+			xRot = (float) (Mth.atan2(d4, horizontalDistanceSqr) * (180F / (float) Math.PI));
+			xRot = lerpRotation(xRotO, (float) xRot);
+			yRot = lerpRotation(yRotO, (float) yRot);
 			float f2 = 0.99F;
 			if (isInWater()) {
 				for (int j = 0; j < 4; ++j) {
@@ -197,7 +204,7 @@ public abstract class AbstractBulletEntity extends AbstractArrowEntity {
 
 			setDeltaMovement(vector3d.scale(f2));
 			if (!isNoGravity() && !flag) {
-				Vector3d vector3d4 = getDeltaMovement();
+				Vec3 vector3d4 = getDeltaMovement();
 				if (shouldStopMoving) {
 					setDeltaMovement(0, 0, 0);
 				} else {
@@ -223,18 +230,18 @@ public abstract class AbstractBulletEntity extends AbstractArrowEntity {
 	 * @param entityRayTraceResult the <code>EntityRayTraceResult</code> instance
 	 */
 	@Override
-	protected void onHitEntity(@NotNull EntityRayTraceResult entityRayTraceResult) {
+	protected void onHitEntity(@NotNull EntityHitResult entityRayTraceResult) {
 		super.onHitEntity(entityRayTraceResult);
 		Entity entity = entityRayTraceResult.getEntity();
 		float f = (float) getDeltaMovement().length();
-		int i = MathHelper.ceil(MathHelper.clamp(f * baseDamage, 0.0D, 2.147483647E9D));
+		int i = Mth.ceil(Mth.clamp(f * baseDamage, 0.0D, 2.147483647E9D));
 		if (getPierceLevel() > 0) {
 			if (piercedEntities == null) {
 				piercedEntities = new IntOpenHashSet(5);
 			}
 
 			if (piercedEntities.size() >= getPierceLevel() + 1) {
-				remove();
+				kill();
 				return;
 			}
 
@@ -275,7 +282,7 @@ public abstract class AbstractBulletEntity extends AbstractArrowEntity {
 				LivingEntity livingEntity = (LivingEntity) entity;
 
 				if (knockbackStrength > 0) {
-					Vector3d vector3d = getDeltaMovement().multiply(1.0D, 0.0D, 1.0D).normalize().scale(knockbackStrength * 0.6D);
+					Vec3 vector3d = getDeltaMovement().multiply(1.0D, 0.0D, 1.0D).normalize().scale(knockbackStrength * 0.6D);
 					if (vector3d.lengthSqr() > 0.0D) {
 						livingEntity.push(vector3d.x, 0.1D, vector3d.z);
 					}
@@ -287,19 +294,19 @@ public abstract class AbstractBulletEntity extends AbstractArrowEntity {
 				}
 
 				doPostHurtEffects(livingEntity);
-				if (livingEntity != entity1 && livingEntity instanceof PlayerEntity && entity1 instanceof ServerPlayerEntity && !isSilent()) {
-					((ServerPlayerEntity) entity1).connection.send(new SChangeGameStatePacket(SChangeGameStatePacket.ARROW_HIT_PLAYER, 0.0F));
+				if (livingEntity != entity1 && livingEntity instanceof Player && entity1 instanceof ServerPlayer && !isSilent()) {
+					((ServerPlayer) entity1).connection.send(new ClientboundGameEventPacket(ClientboundGameEventPacket.ARROW_HIT_PLAYER, 0.0F));
 				}
 			}
 
 			playSound(hitSound, 1.0F, 1.2F / (random.nextFloat() * 0.2F + 0.9F));
 			if (getPierceLevel() <= 0) {
-				remove();
+				kill();
 			}
 		} else {
 			entity.setRemainingFireTicks(k);
 			if (!level.isClientSide && getDeltaMovement().lengthSqr() < 1.0E-7D) {
-				remove();
+				kill();
 			}
 		}
 	}
@@ -309,16 +316,16 @@ public abstract class AbstractBulletEntity extends AbstractArrowEntity {
 	 * @param blockStateRayTraceResult the <code>BlockRayTraceResult</code> instance
 	 */
 	@Override
-	protected void onHitBlock(BlockRayTraceResult blockStateRayTraceResult) {
+	protected void onHitBlock(BlockHitResult blockStateRayTraceResult) {
 		inBlockState = level.getBlockState(blockStateRayTraceResult.getBlockPos());
 
-		if (inBlockState.getBlock().is(BlockTags.bind("forge:leaves"))) {
+		if (inBlockState.is(BlockTags.bind("forge:leaves"))) {
 			push(0, -0.1, 0);
 			shakeTime = 4;
 		} else {
-			Vector3d vector3d = blockStateRayTraceResult.getLocation().subtract(getX(), getY(), getZ());
+			Vec3 vector3d = blockStateRayTraceResult.getLocation().subtract(getX(), getY(), getZ());
 			setDeltaMovement(vector3d);
-			Vector3d vector3d1 = vector3d.normalize().scale(0.05F);
+			Vec3 vector3d1 = vector3d.normalize().scale(0.05F);
 			setPosRaw(getX() - vector3d1.x, getY() - vector3d1.y, getZ() - vector3d1.z);
 			inGround = true;
 			shakeTime = 2;
@@ -328,7 +335,7 @@ public abstract class AbstractBulletEntity extends AbstractArrowEntity {
 			resetPiercedEntities();
 		}
 
-		if (canBreakGlass && !hasAlreadyBrokeGlass && !inBlockState.getBlock().is(BlockTags.bind("forge:bulletproof_glass")) && inBlockState.getBlock().is(BlockTags.bind("forge:glass")) || inBlockState.getBlock().is(BlockTags.bind("forge:glass_panes"))) {
+		if (canBreakGlass && !hasAlreadyBrokeGlass && !inBlockState.is(BlockTags.bind("forge:bulletproof_glass")) && inBlockState.is(BlockTags.bind("forge:glass")) || inBlockState.is(BlockTags.bind("forge:glass_panes"))) {
 			level.destroyBlock(blockStateRayTraceResult.getBlockPos(), false);
 			hasAlreadyBrokeGlass = true;
 		}

@@ -2,15 +2,15 @@ package com.anonymoushacker1279.immersiveweapons.item;
 
 import com.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
 import com.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.projectile.AbstractArrowEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.item.crafting.Ingredient;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.SoundEvent;
-import net.minecraft.world.World;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.projectile.AbstractArrow;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.level.Level;
 
 public class SimpleShotgunItem extends SimplePistolItem {
 
@@ -30,9 +30,9 @@ public class SimpleShotgunItem extends SimplePistolItem {
 	 * @param timeLeft the time left from charging
 	 */
 	@Override
-	public void releaseUsing(ItemStack itemStack, World worldIn, LivingEntity entityLiving, int timeLeft) {
-		if (entityLiving instanceof PlayerEntity) {
-			PlayerEntity playerEntity = (PlayerEntity) entityLiving;
+	public void releaseUsing(ItemStack itemStack, Level worldIn, LivingEntity entityLiving, int timeLeft) {
+		if (entityLiving instanceof Player) {
+			Player playerEntity = (Player) entityLiving;
 			boolean flag = playerEntity.isCreative();
 			boolean misfire = false;
 			ItemStack itemStack1 = findAmmo(itemStack, entityLiving);
@@ -45,11 +45,11 @@ public class SimpleShotgunItem extends SimplePistolItem {
 				int randomNumber = GeneralUtilities.getRandomNumber(1, 10);
 				if (randomNumber <= 3) {
 					misfire = true;
-					worldIn.playSound(null, playerEntity.getX(), playerEntity.getY(), playerEntity.getZ(), getMisfireSound(), SoundCategory.PLAYERS, 1.0F, 1.0F / (random.nextFloat() * 0.4F + 1.2F) + 0.5F);
+					worldIn.playSound(null, playerEntity.getX(), playerEntity.getY(), playerEntity.getZ(), getMisfireSound(), SoundSource.PLAYERS, 1.0F, 1.0F / (GeneralUtilities.getRandomNumber(0.2f, 0.6f) + 1.2F) + 0.5F);
 					if (!playerEntity.isCreative()) {
 						itemStack1.shrink(bulletsToFire);
 						if (itemStack1.isEmpty()) {
-							playerEntity.inventory.removeItem(itemStack1);
+							playerEntity.getInventory().removeItem(itemStack1);
 						}
 						itemStack.hurtAndBreak(5, playerEntity, (entity) -> entity.broadcastBreakEvent(playerEntity.getUsedItemHand()));
 					}
@@ -60,11 +60,11 @@ public class SimpleShotgunItem extends SimplePistolItem {
 				int randomNumber = GeneralUtilities.getRandomNumber(1, 20);
 				if (randomNumber <= 3) {
 					misfire = true;
-					worldIn.playSound(null, playerEntity.getX(), playerEntity.getY(), playerEntity.getZ(), getMisfireSound(), SoundCategory.PLAYERS, 1.0F, 1.0F / (random.nextFloat() * 0.4F + 1.2F) + 0.5F);
+					worldIn.playSound(null, playerEntity.getX(), playerEntity.getY(), playerEntity.getZ(), getMisfireSound(), SoundSource.PLAYERS, 1.0F, 1.0F / (GeneralUtilities.getRandomNumber(0.2f, 0.6f) + 1.2F) + 0.5F);
 					if (!playerEntity.isCreative()) {
 						itemStack1.shrink(bulletsToFire);
 						if (itemStack1.isEmpty()) {
-							playerEntity.inventory.removeItem(itemStack1);
+							playerEntity.getInventory().removeItem(itemStack1);
 						}
 						itemStack.hurtAndBreak(5, playerEntity, (entity) -> entity.broadcastBreakEvent(playerEntity.getUsedItemHand()));
 					}
@@ -85,7 +85,7 @@ public class SimpleShotgunItem extends SimplePistolItem {
 					if (!worldIn.isClientSide) {
 						for (int iterator = 0; iterator < bulletsToFire; ++iterator) {
 							CustomArrowItem customArrowItem = (CustomArrowItem) (itemStack1.getItem() instanceof CustomArrowItem ? itemStack1.getItem() : defaultAmmo());
-							AbstractArrowEntity abstractBulletEntity = customArrowItem.createArrow(worldIn, itemStack1, playerEntity);
+							AbstractArrow abstractBulletEntity = customArrowItem.createArrow(worldIn, itemStack1, playerEntity);
 							abstractBulletEntity.setKnockback(3);
 							abstractBulletEntity.shootFromRotation(playerEntity, playerEntity.xRot + GeneralUtilities.getRandomNumber(-5.0f, 5.0f), playerEntity.yRot + GeneralUtilities.getRandomNumber(-5.0f, 5.0f), 0.0F, 3.0F, 1.0F);
 							abstractBulletEntity.setCritArrow(true);
@@ -94,11 +94,11 @@ public class SimpleShotgunItem extends SimplePistolItem {
 						itemStack.hurtAndBreak(1, playerEntity, (entity) -> entity.broadcastBreakEvent(playerEntity.getUsedItemHand()));
 					}
 
-					worldIn.playSound(null, playerEntity.getX(), playerEntity.getY(), playerEntity.getZ(), getFireSound(), SoundCategory.PLAYERS, 1.0F, 1.0F / (random.nextFloat() * 0.4F + 1.2F) + 0.5F);
+					worldIn.playSound(null, playerEntity.getX(), playerEntity.getY(), playerEntity.getZ(), getFireSound(), SoundSource.PLAYERS, 1.0F, 1.0F / (GeneralUtilities.getRandomNumber(0.2f, 0.6f) + 0.5F));
 					if (!flag1 && !playerEntity.isCreative()) {
 						itemStack1.shrink(bulletsToFire);
 						if (itemStack1.isEmpty()) {
-							playerEntity.inventory.removeItem(itemStack1);
+							playerEntity.getInventory().removeItem(itemStack1);
 						}
 					}
 					if (!playerEntity.isCreative()) {

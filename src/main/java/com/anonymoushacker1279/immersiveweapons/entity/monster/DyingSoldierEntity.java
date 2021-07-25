@@ -2,10 +2,10 @@ package com.anonymoushacker1279.immersiveweapons.entity.monster;
 
 import com.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
 import com.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
-import net.minecraft.entity.EntityType;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.SoundEvent;
-import net.minecraft.world.World;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.world.level.Level;
 
 public class DyingSoldierEntity extends AbstractDyingSoldierEntity {
 
@@ -14,7 +14,7 @@ public class DyingSoldierEntity extends AbstractDyingSoldierEntity {
 	 * @param entityType the <code>EntityType</code> instance
 	 * @param world the <code>World</code> the entity is in
 	 */
-	public DyingSoldierEntity(EntityType<? extends DyingSoldierEntity> entityType, World world) {
+	public DyingSoldierEntity(EntityType<? extends DyingSoldierEntity> entityType, Level world) {
 		super(entityType, world);
 	}
 

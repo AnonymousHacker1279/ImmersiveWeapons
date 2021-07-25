@@ -1,37 +1,45 @@
 package com.anonymoushacker1279.immersiveweapons.block;
 
 import com.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
-import net.minecraft.block.*;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.MobEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.fluid.FluidState;
-import net.minecraft.fluid.Fluids;
-import net.minecraft.item.BlockItemUseContext;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.state.BooleanProperty;
-import net.minecraft.state.StateContainer;
-import net.minecraft.state.properties.BlockStateProperties;
-import net.minecraft.util.*;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.util.math.shapes.ISelectionContext;
-import net.minecraft.util.math.shapes.VoxelShape;
-import net.minecraft.util.math.shapes.VoxelShapes;
-import net.minecraft.world.Explosion;
-import net.minecraft.world.IBlockReader;
-import net.minecraft.world.World;
+import net.minecraft.core.BlockPos;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Explosion;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.RenderShape;
+import net.minecraft.world.level.block.SimpleWaterloggedBlock;
+import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.level.material.FluidState;
+import net.minecraft.world.level.material.Fluids;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.Shapes;
+import net.minecraft.world.phys.shapes.VoxelShape;
 
 import javax.annotation.Nullable;
 
-public class LandmineBlock extends Block implements IWaterLoggable {
+public class LandmineBlock extends Block implements SimpleWaterloggedBlock {
 
 	public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
-	public static final BooleanProperty ARMED = BooleanProperty.create("armed");
-	public static final BooleanProperty SAND = BooleanProperty.create("sand");
-	public static final BooleanProperty VINES = BooleanProperty.create("vines");
+	private static final BooleanProperty ARMED = BooleanProperty.create("armed");
+	private static final BooleanProperty SAND = BooleanProperty.create("sand");
+	private static final BooleanProperty VINES = BooleanProperty.create("vines");
 	protected static final VoxelShape SHAPE = Block.box(2.0D, 0.0D, 2.0D, 14.0D, 3.5D, 14.0D);
 	private static final DamageSource damageSource = new DamageSource("immersiveweapons.landmine");
 
@@ -39,7 +47,7 @@ public class LandmineBlock extends Block implements IWaterLoggable {
 	 * Constructor for LandmineBlock.
 	 * @param properties the <code>Properties</code> of the block
 	 */
-	public LandmineBlock(AbstractBlock.Properties properties) {
+	public LandmineBlock(BlockBehaviour.Properties properties) {
 		super(properties);
 		registerDefaultState(stateDefinition.any().setValue(ARMED, Boolean.FALSE).setValue(WATERLOGGED, Boolean.FALSE).setValue(VINES, Boolean.FALSE).setValue(SAND, Boolean.FALSE));
 
@@ -51,10 +59,10 @@ public class LandmineBlock extends Block implements IWaterLoggable {
 	 * @param pos the <code>BlockPos</code> to explode at
 	 * @param entityIn the <code>LivingEntity</code> causing the explosion
 	 */
-	private static void explode(World worldIn, BlockPos pos, @Nullable LivingEntity entityIn) {
+	private static void explode(Level worldIn, BlockPos pos, @Nullable LivingEntity entityIn) {
 		if (!worldIn.isClientSide) {
-			worldIn.explode(entityIn, damageSource, null, pos.getX(), pos.getY(), pos.getZ(), 2.0F, false, Explosion.Mode.BREAK);
-			worldIn.playLocalSound(pos.getX(), pos.getY(), pos.getZ(), SoundEvents.TNT_PRIMED, SoundCategory.BLOCKS, 1.0F, 1.0F, false);
+			worldIn.explode(entityIn, damageSource, null, pos.getX(), pos.getY(), pos.getZ(), 2.0F, false, Explosion.BlockInteraction.BREAK);
+			worldIn.playLocalSound(pos.getX(), pos.getY(), pos.getZ(), SoundEvents.TNT_PRIMED, SoundSource.BLOCKS, 1.0F, 1.0F, false);
 		}
 	}
 
@@ -70,12 +78,12 @@ public class LandmineBlock extends Block implements IWaterLoggable {
 	 * @return ActionResultType
 	 */
 	@Override
-	public ActionResultType use(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult blockRayTraceResult) {
+	public InteractionResult use(BlockState state, Level worldIn, BlockPos pos, Player player, InteractionHand handIn, BlockHitResult blockRayTraceResult) {
 		if (!worldIn.isClientSide) {
 			ItemStack currentlyHeldItem = player.getMainHandItem();
 			if (state.getValue(ARMED) && currentlyHeldItem.getItem() == DeferredRegistryHandler.PLIERS.get()) {
 				worldIn.setBlock(pos, state.setValue(ARMED, false), 3);
-				return ActionResultType.PASS;
+				return InteractionResult.PASS;
 			}
 			if (!state.getValue(ARMED) && currentlyHeldItem.getItem() != DeferredRegistryHandler.PLIERS.get()) {
 				worldIn.setBlock(pos, state.setValue(ARMED, true), 3);
@@ -93,7 +101,7 @@ public class LandmineBlock extends Block implements IWaterLoggable {
 				}
 			}
 		}
-		return ActionResultType.PASS;
+		return InteractionResult.PASS;
 	}
 
 	/**
@@ -105,7 +113,7 @@ public class LandmineBlock extends Block implements IWaterLoggable {
 	 * @return VoxelShape
 	 */
 	@Override
-	public VoxelShape getShape(BlockState state, IBlockReader reader, BlockPos pos, ISelectionContext selectionContext) {
+	public VoxelShape getShape(BlockState state, BlockGetter reader, BlockPos pos, CollisionContext selectionContext) {
 		return SHAPE;
 	}
 
@@ -118,8 +126,8 @@ public class LandmineBlock extends Block implements IWaterLoggable {
 	 * @return VoxelShape
 	 */
 	@Override
-	public VoxelShape getCollisionShape(BlockState state, IBlockReader reader, BlockPos pos, ISelectionContext selectionContext) {
-		return VoxelShapes.empty();
+	public VoxelShape getCollisionShape(BlockState state, BlockGetter reader, BlockPos pos, CollisionContext selectionContext) {
+		return Shapes.empty();
 	}
 
 	/**
@@ -128,8 +136,8 @@ public class LandmineBlock extends Block implements IWaterLoggable {
 	 * @return BlockRenderType
 	 */
 	@Override
-	public BlockRenderType getRenderShape(BlockState state) {
-		return BlockRenderType.MODEL;
+	public RenderShape getRenderShape(BlockState state) {
+		return RenderShape.MODEL;
 	}
 
 	/**
@@ -141,12 +149,12 @@ public class LandmineBlock extends Block implements IWaterLoggable {
 	 * @param entity the <code>Entity</code> passing through the block
 	 */
 	@Override
-	public void entityInside(BlockState state, World world, BlockPos pos, Entity entity) {
+	public void entityInside(BlockState state, Level world, BlockPos pos, Entity entity) {
 		if (state.getValue(ARMED) && !state.getValue(WATERLOGGED)) {
-			if (entity instanceof MobEntity) {
+			if (entity instanceof Mob) {
 				explode(world, pos, (LivingEntity) entity);
 			}
-			if (entity instanceof PlayerEntity && !((PlayerEntity) entity).isCreative()) {
+			if (entity instanceof Player && !((Player) entity).isCreative()) {
 				explode(world, pos, (LivingEntity) entity);
 			}
 		}
@@ -159,7 +167,7 @@ public class LandmineBlock extends Block implements IWaterLoggable {
 	 * @return BlockState
 	 */
 	@Override
-	public BlockState getStateForPlacement(BlockItemUseContext context) {
+	public BlockState getStateForPlacement(BlockPlaceContext context) {
 		return defaultBlockState().setValue(WATERLOGGED, context.getLevel().getFluidState(context.getClickedPos()).getType() == Fluids.WATER);
 	}
 
@@ -179,7 +187,7 @@ public class LandmineBlock extends Block implements IWaterLoggable {
 	 * @param builder the <code>StateContainer.Builder</code> of the block
 	 */
 	@Override
-	protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder) {
+	protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
 		builder.add(ARMED, SAND, VINES, WATERLOGGED);
 	}
 
@@ -190,7 +198,7 @@ public class LandmineBlock extends Block implements IWaterLoggable {
 	 * @param explosionIn the <code>Explosion</code> destroying the block
 	 */
 	@Override
-	public void wasExploded(World worldIn, BlockPos pos, Explosion explosionIn) {
+	public void wasExploded(Level worldIn, BlockPos pos, Explosion explosionIn) {
 		if (!worldIn.isClientSide) {
 			explode(worldIn, pos, null);
 		}
@@ -204,7 +212,7 @@ public class LandmineBlock extends Block implements IWaterLoggable {
 	 * @param player the <code>PlayerEntity</code> destroying the block
 	 */
 	@Override
-	public void playerWillDestroy(World worldIn, BlockPos pos, BlockState state, PlayerEntity player) {
+	public void playerWillDestroy(Level worldIn, BlockPos pos, BlockState state, Player player) {
 		if (!worldIn.isClientSide() && !player.isCreative() && state.getValue(ARMED)) {
 			explode(worldIn, pos, player);
 		}

@@ -3,22 +3,22 @@ package com.anonymoushacker1279.immersiveweapons.entity.projectile;
 import com.anonymoushacker1279.immersiveweapons.client.particle.SmokeBombParticleData;
 import com.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
 import com.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
-import net.minecraft.block.Blocks;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.projectile.ProjectileItemEntity;
-import net.minecraft.item.Item;
-import net.minecraft.network.IPacket;
-import net.minecraft.particles.IParticleData;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.SoundEvents;
-import net.minecraft.util.math.RayTraceResult;
-import net.minecraft.world.World;
-import net.minecraftforge.fml.network.NetworkHooks;
+import net.minecraft.core.particles.ParticleOptions;
+import net.minecraft.network.protocol.Packet;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.projectile.ThrowableItemProjectile;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.phys.HitResult;
+import net.minecraftforge.fmllegacy.network.NetworkHooks;
 
 import java.awt.*;
 
-public class MolotovEntity extends ProjectileItemEntity {
+public class MolotovEntity extends ThrowableItemProjectile {
 
 	private static final byte VANILLA_IMPACT_STATUS_ID = 3;
 
@@ -27,7 +27,7 @@ public class MolotovEntity extends ProjectileItemEntity {
 	 * @param entityType the <code>EntityType</code> instance; must extend MolotovEntity
 	 * @param world the <code>World</code> the entity is in
 	 */
-	public MolotovEntity(EntityType<? extends MolotovEntity> entityType, World world) {
+	public MolotovEntity(EntityType<? extends MolotovEntity> entityType, Level world) {
 		super(entityType, world);
 	}
 
@@ -36,7 +36,7 @@ public class MolotovEntity extends ProjectileItemEntity {
 	 * @param world the <code>World</code> the entity is in
 	 * @param livingEntity the <code>LivingEntity</code> throwing the entity
 	 */
-	public MolotovEntity(World world, LivingEntity livingEntity) {
+	public MolotovEntity(Level world, LivingEntity livingEntity) {
 		super(DeferredRegistryHandler.MOLOTOV_COCKTAIL_ENTITY.get(), livingEntity, world);
 	}
 
@@ -47,7 +47,7 @@ public class MolotovEntity extends ProjectileItemEntity {
 	 * @param y the Y position
 	 * @param z the Z position
 	 */
-	public MolotovEntity(World world, double x, double y, double z) {
+	public MolotovEntity(Level world, double x, double y, double z) {
 		super(DeferredRegistryHandler.MOLOTOV_COCKTAIL_ENTITY.get(), x, y, z, world);
 	}
 
@@ -56,7 +56,7 @@ public class MolotovEntity extends ProjectileItemEntity {
 	 * @return IPacket
 	 */
 	@Override
-	public IPacket<?> getAddEntityPacket() {
+	public Packet<?> getAddEntityPacket() {
 		return NetworkHooks.getEntitySpawningPacket(this);
 	}
 
@@ -75,7 +75,7 @@ public class MolotovEntity extends ProjectileItemEntity {
 	 * @param rayTraceResult the <code>RayTraceResult</code> instance
 	 */
 	@Override
-	protected void onHit(RayTraceResult rayTraceResult) {
+	protected void onHit(HitResult rayTraceResult) {
 		super.onHit(rayTraceResult);
 		if (!level.isClientSide) {
 			level.broadcastEntityEvent(this, VANILLA_IMPACT_STATUS_ID);  // calls handleStatusUpdate which tells the client to render particles
@@ -118,13 +118,13 @@ public class MolotovEntity extends ProjectileItemEntity {
 	@Override
 	public void handleEntityEvent(byte statusID) {
 		if (statusID == VANILLA_IMPACT_STATUS_ID) {
-			IParticleData particleData = makeParticle();
+			ParticleOptions particleData = makeParticle();
 
 			for (int i = 0; i < 2; ++i) { // Create a few smoke particles, like the smoke bomb
 				level.addParticle(particleData, true, getX(), getY(), getZ(), GeneralUtilities.getRandomNumber(-0.02, 0.02d), GeneralUtilities.getRandomNumber(-0.02d, 0.02d), GeneralUtilities.getRandomNumber(-0.02d, 0.02d));
 			}
-			level.playLocalSound(getX(), getY(), getZ(), SoundEvents.GLASS_BREAK, SoundCategory.NEUTRAL, 1f, 1f, false);
-			remove();
+			level.playLocalSound(getX(), getY(), getZ(), SoundEvents.GLASS_BREAK, SoundSource.NEUTRAL, 1f, 1f, false);
+			kill();
 		}
 	}
 
@@ -132,7 +132,7 @@ public class MolotovEntity extends ProjectileItemEntity {
 	 * Create a particle.
 	 * @return IParticleData
 	 */
-	private IParticleData makeParticle() {
+	private ParticleOptions makeParticle() {
 		Color tint = getTint(GeneralUtilities.getRandomNumber(0, 2));
 		double diameter = getDiameter(GeneralUtilities.getRandomNumber(0.2d, 0.4d));
 

@@ -5,16 +5,16 @@ import com.mojang.brigadier.StringReader;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import net.minecraft.network.PacketBuffer;
-import net.minecraft.particles.IParticleData;
-import net.minecraft.particles.ParticleType;
-import net.minecraft.util.math.MathHelper;
+import net.minecraft.core.particles.ParticleOptions;
+import net.minecraft.core.particles.ParticleType;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.util.Mth;
 
 import javax.annotation.Nonnull;
 import java.awt.*;
 import java.util.Locale;
 
-public class SmokeBombParticleData implements IParticleData {
+public class SmokeBombParticleData implements ParticleOptions {
 
 	static final Codec<SmokeBombParticleData> CODEC = RecordCodecBuilder.create(
 			instance -> instance.group(
@@ -22,11 +22,12 @@ public class SmokeBombParticleData implements IParticleData {
 					Codec.DOUBLE.fieldOf("diameter").forGetter(d -> d.diameter)
 			).apply(instance, SmokeBombParticleData::new)
 	);
-	static final IDeserializer<SmokeBombParticleData> DESERIALIZER = new IDeserializer<SmokeBombParticleData>() {
+	static final Deserializer<SmokeBombParticleData> DESERIALIZER = new Deserializer<>() {
 
 		/**
 		 * Parse information for spawning particles with commands.
-		 * @param type a <code>ParticleType</code> instance extending SmokeBombParticleData
+		 *
+		 * @param type   a <code>ParticleType</code> instance extending SmokeBombParticleData
 		 * @param reader a <code>StringReader</code> instance
 		 * @return SmokeBombParticleData
 		 * @throws CommandSyntaxException occurs when improper command syntax is provided
@@ -39,11 +40,11 @@ public class SmokeBombParticleData implements IParticleData {
 			final int MIN_COLOR = 0;
 			final int MAX_COLOR = 255;
 			reader.expect(' ');
-			int red = MathHelper.clamp(reader.readInt(), MIN_COLOR, MAX_COLOR);
+			int red = Mth.clamp(reader.readInt(), MIN_COLOR, MAX_COLOR);
 			reader.expect(' ');
-			int green = MathHelper.clamp(reader.readInt(), MIN_COLOR, MAX_COLOR);
+			int green = Mth.clamp(reader.readInt(), MIN_COLOR, MAX_COLOR);
 			reader.expect(' ');
-			int blue = MathHelper.clamp(reader.readInt(), MIN_COLOR, MAX_COLOR);
+			int blue = Mth.clamp(reader.readInt(), MIN_COLOR, MAX_COLOR);
 			Color color = new Color(red, green, blue);
 
 			return new SmokeBombParticleData(color, diameter);
@@ -51,17 +52,18 @@ public class SmokeBombParticleData implements IParticleData {
 
 		/**
 		 * Read particle data from a packet.
+		 *
 		 * @param type a <code>ParticleType</code> instance extending SmokeBombParticleData
-		 * @param buf a <code>PacketBuffer</code> containing packet data
+		 * @param buf  a <code>PacketBuffer</code> containing packet data
 		 * @return SmokeBombParticleData
 		 */
 		@Override
-		public SmokeBombParticleData fromNetwork(@Nonnull ParticleType<SmokeBombParticleData> type, PacketBuffer buf) {
+		public SmokeBombParticleData fromNetwork(@Nonnull ParticleType<SmokeBombParticleData> type, FriendlyByteBuf buf) {
 			final int MIN_COLOR = 0;
 			final int MAX_COLOR = 255;
-			int red = MathHelper.clamp(buf.readInt(), MIN_COLOR, MAX_COLOR);
-			int green = MathHelper.clamp(buf.readInt(), MIN_COLOR, MAX_COLOR);
-			int blue = MathHelper.clamp(buf.readInt(), MIN_COLOR, MAX_COLOR);
+			int red = Mth.clamp(buf.readInt(), MIN_COLOR, MAX_COLOR);
+			int green = Mth.clamp(buf.readInt(), MIN_COLOR, MAX_COLOR);
+			int blue = Mth.clamp(buf.readInt(), MIN_COLOR, MAX_COLOR);
 			Color color = new Color(red, green, blue);
 			double diameter = constrainDiameterToValidRange(buf.readDouble());
 
@@ -100,7 +102,7 @@ public class SmokeBombParticleData implements IParticleData {
 	private static double constrainDiameterToValidRange(double diameter) {
 		final double MIN_DIAMETER = 0.05;
 		final double MAX_DIAMETER = 5.5;
-		return MathHelper.clamp(diameter, MIN_DIAMETER, MAX_DIAMETER);
+		return Mth.clamp(diameter, MIN_DIAMETER, MAX_DIAMETER);
 	}
 
 	/**
@@ -133,7 +135,7 @@ public class SmokeBombParticleData implements IParticleData {
 	 * @param buf a <code>PacketBuffer</code> instance
 	 */
 	@Override
-	public void writeToNetwork(PacketBuffer buf) {
+	public void writeToNetwork(FriendlyByteBuf buf) {
 		buf.writeInt(tint.getRed());
 		buf.writeInt(tint.getGreen());
 		buf.writeInt(tint.getBlue());

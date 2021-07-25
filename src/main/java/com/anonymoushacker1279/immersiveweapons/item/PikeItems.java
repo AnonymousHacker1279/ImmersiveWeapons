@@ -1,18 +1,17 @@
 package com.anonymoushacker1279.immersiveweapons.item;
 
-import com.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
 import com.anonymoushacker1279.immersiveweapons.util.AddAttributesAfterSetup;
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.ImmutableMultimap.Builder;
 import com.google.common.collect.Multimap;
-import net.minecraft.entity.ai.attributes.Attribute;
-import net.minecraft.entity.ai.attributes.AttributeModifier;
-import net.minecraft.entity.ai.attributes.Attributes;
-import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.tags.ItemTags;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.ai.attributes.Attribute;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.crafting.Ingredient;
 
 public class PikeItems {
 
@@ -35,10 +34,10 @@ public class PikeItems {
 		}
 
 		@Override
-		public Multimap<Attribute, AttributeModifier> getAttributeModifiers(EquipmentSlotType equipmentSlot, ItemStack stack) {
+		public Multimap<Attribute, AttributeModifier> getAttributeModifiers(EquipmentSlot equipmentSlot, ItemStack stack) {
 			Multimap<Attribute, AttributeModifier> returnValue;
 			if (AddAttributesAfterSetup.hasCompletedClientSetup) {
-				returnValue = equipmentSlot == EquipmentSlotType.MAINHAND ? WoodPikeItem.woodPikeAttributes : super.getAttributeModifiers(equipmentSlot, stack);
+				returnValue = equipmentSlot == EquipmentSlot.MAINHAND ? WoodPikeItem.woodPikeAttributes : super.getAttributeModifiers(equipmentSlot, stack);
 			} else {
 				returnValue = WoodPikeItem.woodPikeAttributes;
 			}
@@ -65,10 +64,10 @@ public class PikeItems {
 		}
 
 		@Override
-		public Multimap<Attribute, AttributeModifier> getAttributeModifiers(EquipmentSlotType equipmentSlot, ItemStack stack) {
+		public Multimap<Attribute, AttributeModifier> getAttributeModifiers(EquipmentSlot equipmentSlot, ItemStack stack) {
 			Multimap<Attribute, AttributeModifier> returnValue;
 			if (AddAttributesAfterSetup.hasCompletedClientSetup) {
-				returnValue = equipmentSlot == EquipmentSlotType.MAINHAND ? StonePikeItem.stonePikeAttributes : super.getAttributeModifiers(equipmentSlot, stack);
+				returnValue = equipmentSlot == EquipmentSlot.MAINHAND ? StonePikeItem.stonePikeAttributes : super.getAttributeModifiers(equipmentSlot, stack);
 			} else {
 				returnValue = StonePikeItem.stonePikeAttributes;
 			}
@@ -100,10 +99,10 @@ public class PikeItems {
 		}
 
 		@Override
-		public Multimap<Attribute, AttributeModifier> getAttributeModifiers(EquipmentSlotType equipmentSlot, ItemStack stack) {
+		public Multimap<Attribute, AttributeModifier> getAttributeModifiers(EquipmentSlot equipmentSlot, ItemStack stack) {
 			Multimap<Attribute, AttributeModifier> returnValue;
 			if (AddAttributesAfterSetup.hasCompletedClientSetup) {
-				returnValue = equipmentSlot == EquipmentSlotType.MAINHAND ? GoldPikeItem.goldPikeAttributes : super.getAttributeModifiers(equipmentSlot, stack);
+				returnValue = equipmentSlot == EquipmentSlot.MAINHAND ? GoldPikeItem.goldPikeAttributes : super.getAttributeModifiers(equipmentSlot, stack);
 			} else {
 				returnValue = GoldPikeItem.goldPikeAttributes;
 			}
@@ -135,10 +134,10 @@ public class PikeItems {
 		}
 
 		@Override
-		public Multimap<Attribute, AttributeModifier> getAttributeModifiers(EquipmentSlotType equipmentSlot, ItemStack stack) {
+		public Multimap<Attribute, AttributeModifier> getAttributeModifiers(EquipmentSlot equipmentSlot, ItemStack stack) {
 			Multimap<Attribute, AttributeModifier> returnValue;
 			if (AddAttributesAfterSetup.hasCompletedClientSetup) {
-				returnValue = equipmentSlot == EquipmentSlotType.MAINHAND ? CopperPikeItem.copperPikeAttributes : super.getAttributeModifiers(equipmentSlot, stack);
+				returnValue = equipmentSlot == EquipmentSlot.MAINHAND ? CopperPikeItem.copperPikeAttributes : super.getAttributeModifiers(equipmentSlot, stack);
 			} else {
 				returnValue = CopperPikeItem.copperPikeAttributes;
 			}
@@ -147,7 +146,7 @@ public class PikeItems {
 
 		@Override
 		Ingredient getRepairMaterial() {
-			return Ingredient.of(DeferredRegistryHandler.COPPER_INGOT.get());
+			return Ingredient.of(Items.COPPER_INGOT);
 		}
 	}
 
@@ -170,10 +169,10 @@ public class PikeItems {
 		}
 
 		@Override
-		public Multimap<Attribute, AttributeModifier> getAttributeModifiers(EquipmentSlotType equipmentSlot, ItemStack stack) {
+		public Multimap<Attribute, AttributeModifier> getAttributeModifiers(EquipmentSlot equipmentSlot, ItemStack stack) {
 			Multimap<Attribute, AttributeModifier> returnValue;
 			if (AddAttributesAfterSetup.hasCompletedClientSetup) {
-				returnValue = equipmentSlot == EquipmentSlotType.MAINHAND ? IronPikeItem.ironPikeAttributes : super.getAttributeModifiers(equipmentSlot, stack);
+				returnValue = equipmentSlot == EquipmentSlot.MAINHAND ? IronPikeItem.ironPikeAttributes : super.getAttributeModifiers(equipmentSlot, stack);
 			} else {
 				returnValue = IronPikeItem.ironPikeAttributes;
 			}
@@ -205,10 +204,10 @@ public class PikeItems {
 		}
 
 		@Override
-		public Multimap<Attribute, AttributeModifier> getAttributeModifiers(EquipmentSlotType equipmentSlot, ItemStack stack) {
+		public Multimap<Attribute, AttributeModifier> getAttributeModifiers(EquipmentSlot equipmentSlot, ItemStack stack) {
 			Multimap<Attribute, AttributeModifier> returnValue;
 			if (AddAttributesAfterSetup.hasCompletedClientSetup) {
-				returnValue = equipmentSlot == EquipmentSlotType.MAINHAND ? DiamondPikeItem.diamondPikeAttributes : super.getAttributeModifiers(equipmentSlot, stack);
+				returnValue = equipmentSlot == EquipmentSlot.MAINHAND ? DiamondPikeItem.diamondPikeAttributes : super.getAttributeModifiers(equipmentSlot, stack);
 			} else {
 				returnValue = DiamondPikeItem.diamondPikeAttributes;
 			}
@@ -240,10 +239,10 @@ public class PikeItems {
 		}
 
 		@Override
-		public Multimap<Attribute, AttributeModifier> getAttributeModifiers(EquipmentSlotType equipmentSlot, ItemStack stack) {
+		public Multimap<Attribute, AttributeModifier> getAttributeModifiers(EquipmentSlot equipmentSlot, ItemStack stack) {
 			Multimap<Attribute, AttributeModifier> returnValue;
 			if (AddAttributesAfterSetup.hasCompletedClientSetup) {
-				returnValue = equipmentSlot == EquipmentSlotType.MAINHAND ? NetheritePikeItem.netheritePikeAttributes : super.getAttributeModifiers(equipmentSlot, stack);
+				returnValue = equipmentSlot == EquipmentSlot.MAINHAND ? NetheritePikeItem.netheritePikeAttributes : super.getAttributeModifiers(equipmentSlot, stack);
 			} else {
 				returnValue = NetheritePikeItem.netheritePikeAttributes;
 			}

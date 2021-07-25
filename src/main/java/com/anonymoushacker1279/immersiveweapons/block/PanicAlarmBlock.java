@@ -1,40 +1,42 @@
 package com.anonymoushacker1279.immersiveweapons.block;
 
+import com.anonymoushacker1279.immersiveweapons.blockentity.PanicAlarmBlockEntity;
 import com.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
-import com.anonymoushacker1279.immersiveweapons.tileentity.PanicAlarmTileEntity;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.HorizontalBlock;
-import net.minecraft.block.IWaterLoggable;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.fluid.FluidState;
-import net.minecraft.fluid.Fluids;
-import net.minecraft.item.BlockItemUseContext;
-import net.minecraft.state.BooleanProperty;
-import net.minecraft.state.StateContainer;
-import net.minecraft.state.properties.BlockStateProperties;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Direction;
-import net.minecraft.util.Hand;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.util.math.shapes.ISelectionContext;
-import net.minecraft.util.math.shapes.VoxelShape;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.world.IBlockReader;
-import net.minecraft.world.World;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.*;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityTicker;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.level.block.state.properties.DirectionProperty;
+import net.minecraft.world.level.material.FluidState;
+import net.minecraft.world.level.material.Fluids;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.VoxelShape;
 
 import java.util.Random;
 
-public class PanicAlarmBlock extends HorizontalBlock implements IWaterLoggable {
+public class PanicAlarmBlock extends BaseEntityBlock implements SimpleWaterloggedBlock, EntityBlock {
 
 	public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
-	protected static final VoxelShape SHAPE_NORTH = Block.box(4.0D, 4.0D, 13.0D, 12.0D, 11.0D, 16.0D);
-	protected static final VoxelShape SHAPE_SOUTH = Block.box(4.0D, 4.0D, 0.0D, 12.0D, 11.0D, 3.0D);
-	protected static final VoxelShape SHAPE_EAST = Block.box(0.0D, 4.0D, 4.0D, 3.0D, 11.0D, 12.0D);
-	protected static final VoxelShape SHAPE_WEST = Block.box(13.0D, 4.0D, 4.0D, 16.0D, 11.0D, 12.0D);
+	public static final DirectionProperty FACING = BlockStateProperties.FACING;
+	private static final VoxelShape SHAPE_NORTH = Block.box(4.0D, 4.0D, 13.0D, 12.0D, 11.0D, 16.0D);
+	private static final VoxelShape SHAPE_SOUTH = Block.box(4.0D, 4.0D, 0.0D, 12.0D, 11.0D, 3.0D);
+	private static final VoxelShape SHAPE_EAST = Block.box(0.0D, 4.0D, 4.0D, 3.0D, 11.0D, 12.0D);
+	private static final VoxelShape SHAPE_WEST = Block.box(13.0D, 4.0D, 4.0D, 16.0D, 11.0D, 12.0D);
 
 	/**
 	 * Constructor for PanicAlarmBlock.
@@ -54,8 +56,8 @@ public class PanicAlarmBlock extends HorizontalBlock implements IWaterLoggable {
 	 * @return VoxelShape
 	 */
 	@Override
-	public VoxelShape getShape(BlockState state, IBlockReader reader, BlockPos pos, ISelectionContext selectionContext) {
-		Vector3d vector3d = state.getOffset(reader, pos);
+	public VoxelShape getShape(BlockState state, BlockGetter reader, BlockPos pos, CollisionContext selectionContext) {
+		Vec3 vector3d = state.getOffset(reader, pos);
 		switch (state.getValue(FACING)) {
 			case NORTH:
 			default:
@@ -74,29 +76,35 @@ public class PanicAlarmBlock extends HorizontalBlock implements IWaterLoggable {
 	 * @param builder the <code>StateContainer.Builder</code> of the block
 	 */
 	@Override
-	public void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder) {
+	public void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
 		builder.add(WATERLOGGED, FACING);
 	}
 
 	/**
-	 * Determine if a block has a tile entity.
+	 * Set the RenderShape of the block's model.
 	 * @param state the <code>BlockState</code> of the block
-	 * @return boolean
+	 * @return BlockRenderType
 	 */
 	@Override
-	public boolean hasTileEntity(BlockState state) {
-		return true;
+	public RenderShape getRenderShape(BlockState state) {
+		return RenderShape.MODEL;
 	}
 
 	/**
-	 * Create a tile entity for a block.
-	 * @param state the <code>BlockState</code> of the block
-	 * @param reader the <code>IBlockReader</code> for the block
+	 * Create a tile entity for the block.
+	 * @param blockPos the <code>BlockPos</code> the block is at
+	 * @param blockState the <code>BlockState</code> of the block
 	 * @return TileEntity
 	 */
 	@Override
-	public TileEntity createTileEntity(BlockState state, IBlockReader reader) {
-		return new PanicAlarmTileEntity();
+	public BlockEntity newBlockEntity(BlockPos blockPos, BlockState blockState) {
+		return new PanicAlarmBlockEntity(blockPos, blockState);
+	}
+
+	// TODO: Javdocs
+	@Override
+	public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState blockState, BlockEntityType<T> blockEntityType) {
+		return level.isClientSide ? null : createTickerHelper(blockEntityType, DeferredRegistryHandler.PANIC_ALARM_BLOCK_ENTITY.get(), PanicAlarmBlockEntity::serverTick);
 	}
 
 	/**
@@ -106,7 +114,7 @@ public class PanicAlarmBlock extends HorizontalBlock implements IWaterLoggable {
 	 * @return BlockState
 	 */
 	@Override
-	public BlockState getStateForPlacement(BlockItemUseContext context) {
+	public BlockState getStateForPlacement(BlockPlaceContext context) {
 		return defaultBlockState().setValue(FACING, context.getHorizontalDirection().getOpposite()).setValue(WATERLOGGED, context.getLevel().getFluidState(context.getClickedPos()).getType() == Fluids.WATER);
 	}
 
@@ -131,7 +139,7 @@ public class PanicAlarmBlock extends HorizontalBlock implements IWaterLoggable {
 	 * @param isMoving determines if the block is moving
 	 */
 	@Override
-	public void neighborChanged(BlockState state, World worldIn, BlockPos pos, Block blockIn, BlockPos fromPos, boolean isMoving) {
+	public void neighborChanged(BlockState state, Level worldIn, BlockPos pos, Block blockIn, BlockPos fromPos, boolean isMoving) {
 		if (!worldIn.isClientSide) {
 			playSiren(worldIn, pos);
 			worldIn.getBlockTicks().scheduleTick(pos, state.getBlock(), 5);
@@ -147,7 +155,7 @@ public class PanicAlarmBlock extends HorizontalBlock implements IWaterLoggable {
 	 * @param isMoving determines if the block is moving
 	 */
 	@Override
-	public void onPlace(BlockState state, World worldIn, BlockPos pos, BlockState oldState, boolean isMoving) {
+	public void onPlace(BlockState state, Level worldIn, BlockPos pos, BlockState oldState, boolean isMoving) {
 		if (!oldState.is(state.getBlock())) {
 			if (worldIn.hasNeighborSignal(pos)) {
 				if (!worldIn.isClientSide) {
@@ -165,7 +173,7 @@ public class PanicAlarmBlock extends HorizontalBlock implements IWaterLoggable {
 	 * @param rand a <code>Random</code> instance
 	 */
 	@Override
-	public void tick(BlockState state, ServerWorld worldIn, BlockPos pos, Random rand) {
+	public void tick(BlockState state, ServerLevel worldIn, BlockPos pos, Random rand) {
 		if (!worldIn.isClientSide) {
 			playSiren(worldIn, pos);
 			worldIn.getBlockTicks().scheduleTick(pos, state.getBlock(), 5);
@@ -177,15 +185,15 @@ public class PanicAlarmBlock extends HorizontalBlock implements IWaterLoggable {
 	 * @param worldIn the <code>World</code> the block is at
 	 * @param pos the <code>BlockPos</code> the block is at
 	 */
-	private void playSiren(World worldIn, BlockPos pos) {
+	private void playSiren(Level worldIn, BlockPos pos) {
 		BlockState state = worldIn.getBlockState(pos);
 		if (state.getBlock() != DeferredRegistryHandler.PANIC_ALARM.get()) {
 			return;
 		}
-		TileEntity tileEntity = worldIn.getBlockEntity(pos);
+		BlockEntity tileEntity = worldIn.getBlockEntity(pos);
 
-		if (tileEntity instanceof PanicAlarmTileEntity) {
-			PanicAlarmTileEntity panicAlarmTileEntity = (PanicAlarmTileEntity) tileEntity;
+		if (tileEntity instanceof PanicAlarmBlockEntity) {
+			PanicAlarmBlockEntity panicAlarmTileEntity = (PanicAlarmBlockEntity) tileEntity;
 			if (worldIn.getBestNeighborSignal(pos) > 0) {
 				boolean isPowered = panicAlarmTileEntity.isPowered();
 
@@ -214,16 +222,16 @@ public class PanicAlarmBlock extends HorizontalBlock implements IWaterLoggable {
 	 * @return ActionResultType
 	 */
 	@Override
-	public ActionResultType use(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult blockRayTraceResult) {
-		TileEntity tileEntity = worldIn.getBlockEntity(pos);
-		if (tileEntity instanceof PanicAlarmTileEntity) {
-			if (!worldIn.isClientSide && handIn == Hand.MAIN_HAND) {
-				((PanicAlarmTileEntity) tileEntity).changeAlarmSound(player);
-				return ActionResultType.SUCCESS;
+	public InteractionResult use(BlockState state, Level worldIn, BlockPos pos, Player player, InteractionHand handIn, BlockHitResult blockRayTraceResult) {
+		BlockEntity tileEntity = worldIn.getBlockEntity(pos);
+		if (tileEntity instanceof PanicAlarmBlockEntity) {
+			if (!worldIn.isClientSide && handIn == InteractionHand.MAIN_HAND) {
+				((PanicAlarmBlockEntity) tileEntity).changeAlarmSound(player);
+				return InteractionResult.SUCCESS;
 			} else {
-				return ActionResultType.PASS;
+				return InteractionResult.PASS;
 			}
 		}
-		return ActionResultType.FAIL;
+		return InteractionResult.FAIL;
 	}
 }

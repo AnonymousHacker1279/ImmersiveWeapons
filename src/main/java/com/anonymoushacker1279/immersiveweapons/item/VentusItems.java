@@ -2,20 +2,20 @@ package com.anonymoushacker1279.immersiveweapons.item;
 
 import com.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
 import com.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.item.*;
-import net.minecraft.particles.ParticleTypes;
-import net.minecraft.potion.EffectInstance;
-import net.minecraft.potion.Effects;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.Direction.Axis;
-import net.minecraft.util.Hand;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.SoundEvents;
-import net.minecraft.world.World;
+import net.minecraft.core.Direction.Axis;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.*;
+import net.minecraft.world.level.Level;
 
 import java.util.List;
 
@@ -29,7 +29,7 @@ public class VentusItems {
 		 * @param attackSpeedIn attack speed
 		 * @param properties the <code>Properties</code> for the item
 		 */
-		public VentusSword(IItemTier tier, int attackDamageIn, float attackSpeedIn, Properties properties) {
+		public VentusSword(Tier tier, int attackDamageIn, float attackSpeedIn, Properties properties) {
 			super(tier, attackDamageIn, attackSpeedIn, properties);
 		}
 
@@ -42,7 +42,7 @@ public class VentusItems {
 		 */
 		@Override
 		public boolean hurtEnemy(ItemStack itemStack, LivingEntity livingEntity, LivingEntity livingEntity1) {
-			livingEntity.addEffect(new EffectInstance(Effects.LEVITATION, 60, 2, false, false));
+			livingEntity.addEffect(new MobEffectInstance(MobEffects.LEVITATION, 60, 2, false, false));
 			return super.hurtEnemy(itemStack, livingEntity, livingEntity1);
 		}
 	}
@@ -55,7 +55,7 @@ public class VentusItems {
 		 * @param attackSpeedIn attack speed
 		 * @param properties the <code>Properties</code> for the item
 		 */
-		public VentusAxe(IItemTier tier, int attackDamageIn, float attackSpeedIn, Properties properties) {
+		public VentusAxe(Tier tier, int attackDamageIn, float attackSpeedIn, Properties properties) {
 			super(tier, attackDamageIn, attackSpeedIn, properties);
 		}
 
@@ -68,7 +68,7 @@ public class VentusItems {
 		 */
 		@Override
 		public boolean hurtEnemy(ItemStack itemStack, LivingEntity livingEntity, LivingEntity livingEntity1) {
-			livingEntity.addEffect(new EffectInstance(Effects.LEVITATION, 60, 2, false, false));
+			livingEntity.addEffect(new MobEffectInstance(MobEffects.LEVITATION, 60, 2, false, false));
 			return super.hurtEnemy(itemStack, livingEntity, livingEntity1);
 		}
 	}
@@ -81,7 +81,7 @@ public class VentusItems {
 		 * @param attackSpeedIn attack speed
 		 * @param properties the <code>Properties</code> for the item
 		 */
-		public VentusPickaxe(IItemTier tier, int attackDamageIn, float attackSpeedIn, Properties properties) {
+		public VentusPickaxe(Tier tier, int attackDamageIn, float attackSpeedIn, Properties properties) {
 			super(tier, attackDamageIn, attackSpeedIn, properties);
 		}
 
@@ -94,7 +94,7 @@ public class VentusItems {
 		 */
 		@Override
 		public boolean hurtEnemy(ItemStack itemStack, LivingEntity livingEntity, LivingEntity livingEntity1) {
-			livingEntity.addEffect(new EffectInstance(Effects.LEVITATION, 60, 2, false, false));
+			livingEntity.addEffect(new MobEffectInstance(MobEffects.LEVITATION, 60, 2, false, false));
 			return super.hurtEnemy(itemStack, livingEntity, livingEntity1);
 		}
 	}
@@ -107,7 +107,7 @@ public class VentusItems {
 		 * @param attackSpeedIn attack speed
 		 * @param properties the <code>Properties</code> for the item
 		 */
-		public VentusShovel(IItemTier tier, int attackDamageIn, float attackSpeedIn, Properties properties) {
+		public VentusShovel(Tier tier, int attackDamageIn, float attackSpeedIn, Properties properties) {
 			super(tier, attackDamageIn, attackSpeedIn, properties);
 		}
 
@@ -120,7 +120,7 @@ public class VentusItems {
 		 */
 		@Override
 		public boolean hurtEnemy(ItemStack itemStack, LivingEntity livingEntity, LivingEntity livingEntity1) {
-			livingEntity.addEffect(new EffectInstance(Effects.LEVITATION, 60, 2, false, false));
+			livingEntity.addEffect(new MobEffectInstance(MobEffects.LEVITATION, 60, 2, false, false));
 			return super.hurtEnemy(itemStack, livingEntity, livingEntity1);
 		}
 	}
@@ -133,7 +133,7 @@ public class VentusItems {
 		 * @param attackSpeedIn attack speed
 		 * @param properties the <code>Properties</code> for the item
 		 */
-		public VentusHoe(IItemTier tier, int attackDamageIn, float attackSpeedIn, Properties properties) {
+		public VentusHoe(Tier tier, int attackDamageIn, float attackSpeedIn, Properties properties) {
 			super(tier, attackDamageIn, attackSpeedIn, properties);
 		}
 
@@ -146,7 +146,7 @@ public class VentusItems {
 		 */
 		@Override
 		public boolean hurtEnemy(ItemStack itemStack, LivingEntity livingEntity, LivingEntity livingEntity1) {
-			livingEntity.addEffect(new EffectInstance(Effects.LEVITATION, 60, 2, false, false));
+			livingEntity.addEffect(new MobEffectInstance(MobEffects.LEVITATION, 60, 2, false, false));
 			return super.hurtEnemy(itemStack, livingEntity, livingEntity1);
 		}
 	}
@@ -171,7 +171,7 @@ public class VentusItems {
 		 * @return ActionResult extending ItemStack
 		 */
 		@Override
-		public ActionResult<ItemStack> use(World worldIn, PlayerEntity playerIn, Hand handIn) {
+		public InteractionResultHolder<ItemStack> use(Level worldIn, Player playerIn, InteractionHand handIn) {
 			ItemStack itemstack = playerIn.getItemInHand(handIn);
 			List<Entity> entity = playerIn.level.getEntities(playerIn, playerIn.getBoundingBox().move(-2, 0, -2).expandTowards(4, 2, 4));
 
@@ -189,16 +189,16 @@ public class VentusItems {
 			}
 
 			if (pushedEntity) {
-				worldIn.playLocalSound(playerIn.getX(), playerIn.getY(), playerIn.getZ(), SoundEvents.LIGHTNING_BOLT_THUNDER, SoundCategory.PLAYERS, 0.4f, 1.0f, true);
+				worldIn.playLocalSound(playerIn.getX(), playerIn.getY(), playerIn.getZ(), SoundEvents.LIGHTNING_BOLT_THUNDER, SoundSource.PLAYERS, 0.4f, 1.0f, true);
 				pushedEntity = false;
 
 				if (!playerIn.isCreative()) {
 					playerIn.getCooldowns().addCooldown(this, 100);
-					itemstack.hurtAndBreak(1, playerIn, (player) -> player.broadcastBreakEvent(EquipmentSlotType.MAINHAND));
+					itemstack.hurtAndBreak(1, playerIn, (player) -> player.broadcastBreakEvent(EquipmentSlot.MAINHAND));
 				}
 			}
 
-			return ActionResult.sidedSuccess(itemstack, worldIn.isClientSide());
+			return InteractionResultHolder.sidedSuccess(itemstack, worldIn.isClientSide());
 		}
 
 		/**

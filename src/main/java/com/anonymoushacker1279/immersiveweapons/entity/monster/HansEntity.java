@@ -2,23 +2,23 @@ package com.anonymoushacker1279.immersiveweapons.entity.monster;
 
 import com.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
 import com.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
-import net.minecraft.entity.CreatureEntity;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.MobEntity;
-import net.minecraft.entity.ai.attributes.AttributeModifierMap;
-import net.minecraft.entity.ai.attributes.Attributes;
-import net.minecraft.entity.monster.MonsterEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.projectile.AbstractArrowEntity;
-import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.Hand;
-import net.minecraft.util.SoundEvent;
+import net.minecraft.world.entity.PathfinderMob;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.monster.Monster;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.projectile.AbstractArrow;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.DifficultyInstance;
-import net.minecraft.world.World;
+import net.minecraft.world.level.Level;
 
 public class HansEntity extends AbstractWanderingWarriorEntity {
 
@@ -27,7 +27,7 @@ public class HansEntity extends AbstractWanderingWarriorEntity {
 	 * @param entityType the <code>EntityType</code> instance
 	 * @param world the <code>World</code> the entity is in
 	 */
-	public HansEntity(EntityType<? extends HansEntity> entityType, World world) {
+	public HansEntity(EntityType<? extends HansEntity> entityType, Level world) {
 		super(entityType, world);
 	}
 
@@ -81,8 +81,8 @@ public class HansEntity extends AbstractWanderingWarriorEntity {
 	 * Register this entity's attributes.
 	 * @return AttributeModifierMap.MutableAttribute
 	 */
-	public static AttributeModifierMap.MutableAttribute registerAttributes() {
-		return MonsterEntity.createMonsterAttributes()
+	public static AttributeSupplier.Builder registerAttributes() {
+		return Monster.createMonsterAttributes()
 				.add(Attributes.MOVEMENT_SPEED, 0.35D)
 				.add(Attributes.ARMOR, 20.0D);
 	}
@@ -93,8 +93,8 @@ public class HansEntity extends AbstractWanderingWarriorEntity {
 	 */
 	@Override
 	public void populateDefaultEquipmentSlots(DifficultyInstance difficulty) {
-		setItemSlot(EquipmentSlotType.HEAD, new ItemStack(Items.IRON_HELMET));
-		setItemInHand(Hand.MAIN_HAND, new ItemStack(Items.IRON_SWORD));
+		setItemSlot(EquipmentSlot.HEAD, new ItemStack(Items.IRON_HELMET));
+		setItemInHand(InteractionHand.MAIN_HAND, new ItemStack(Items.IRON_SWORD));
 	}
 
 	/**
@@ -105,12 +105,12 @@ public class HansEntity extends AbstractWanderingWarriorEntity {
 	 */
 	@Override
 	public boolean hurt(DamageSource source, float amount) {
-		if (amount > 0 && source.getEntity() instanceof PlayerEntity || source.getEntity() instanceof MobEntity || source.getEntity() instanceof CreatureEntity) {
+		if (amount > 0 && source.getEntity() instanceof Player || source.getEntity() instanceof Mob || source.getEntity() instanceof PathfinderMob) {
 			if (source.isCreativePlayer()) {
 				super.hurt(source, amount);
 				return false;
 			}
-			if (source.isProjectile() || source.getDirectEntity() instanceof AbstractArrowEntity) {
+			if (source.isProjectile() || source.getDirectEntity() instanceof AbstractArrow) {
 				setTarget((LivingEntity) source.getEntity());
 				setCombatTask();
 				heal(amount);

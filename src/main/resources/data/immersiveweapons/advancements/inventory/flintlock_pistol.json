@@ -1,0 +1,36 @@
+{
+	"display": {
+		"title": {
+			"translate": "advancements.immersiveweapons.flintlock_pistol.title"
+		},
+		"description": {
+			"translate": "advancements.immersiveweapons.flintlock_pistol.description"
+		},
+		"icon": {
+			"item": "immersiveweapons:flintlock_pistol"
+		},
+		"frame": "task",
+		"show_toast": true,
+		"announce_to_chat": true,
+		"hidden": false
+	},
+	"criteria": {
+		"hold": {
+			"trigger": "minecraft:inventory_changed",
+			"conditions": {
+				"items": [
+					{
+						"item": "immersiveweapons:flintlock_pistol"
+					},
+					{
+						"tag": "immersiveweapons:projectiles/musket_ball"
+					}
+				]
+			}
+		}
+	},
+	"rewards": {
+		"experience": 50
+	},
+	"parent": "immersiveweapons:inventory/blueprint"
+}

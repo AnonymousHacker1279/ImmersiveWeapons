@@ -2,46 +2,46 @@ package com.anonymoushacker1279.immersiveweapons.block;
 
 import com.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
 import com.anonymoushacker1279.immersiveweapons.util.PacketHandler;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.IWaterLoggable;
 import net.minecraft.client.Minecraft;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.MobEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.fluid.FluidState;
-import net.minecraft.fluid.Fluids;
-import net.minecraft.item.BlockItemUseContext;
-import net.minecraft.network.PacketBuffer;
-import net.minecraft.state.BooleanProperty;
-import net.minecraft.state.StateContainer;
-import net.minecraft.state.properties.BlockStateProperties;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.Direction;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.shapes.ISelectionContext;
-import net.minecraft.util.math.shapes.VoxelShape;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.world.IBlockReader;
-import net.minecraft.world.IWorld;
-import net.minecraft.world.IWorldReader;
-import net.minecraft.world.World;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.SimpleWaterloggedBlock;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.level.material.FluidState;
+import net.minecraft.world.level.material.Fluids;
+import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.DistExecutor;
-import net.minecraftforge.fml.network.NetworkEvent;
-import net.minecraftforge.fml.network.NetworkEvent.Context;
-import net.minecraftforge.fml.network.PacketDistributor;
-import net.minecraftforge.fml.network.PacketDistributor.TargetPoint;
+import net.minecraftforge.fmllegacy.network.NetworkEvent;
+import net.minecraftforge.fmllegacy.network.NetworkEvent.Context;
+import net.minecraftforge.fmllegacy.network.PacketDistributor;
+import net.minecraftforge.fmllegacy.network.PacketDistributor.TargetPoint;
 
 import java.util.function.Supplier;
 
-public class SpikeTrapBlock extends Block implements IWaterLoggable {
+public class SpikeTrapBlock extends Block implements SimpleWaterloggedBlock {
 
 	public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
-	public static final BooleanProperty POWERED = BooleanProperty.create("powered");
+	private static final BooleanProperty POWERED = BooleanProperty.create("powered");
 	protected static final VoxelShape SHAPE = Block.box(0.0D, 0.0D, 0.0D, 16.0D, 1.0D, 16.0D);
 	private final DamageSource damageSource = new DamageSource("immersiveweapons.spike_trap");
 
@@ -63,8 +63,8 @@ public class SpikeTrapBlock extends Block implements IWaterLoggable {
 	 * @return VoxelShape
 	 */
 	@Override
-	public VoxelShape getShape(BlockState state, IBlockReader reader, BlockPos pos, ISelectionContext selectionContext) {
-		Vector3d vector3d = state.getOffset(reader, pos);
+	public VoxelShape getShape(BlockState state, BlockGetter reader, BlockPos pos, CollisionContext selectionContext) {
+		Vec3 vector3d = state.getOffset(reader, pos);
 		return SHAPE.move(vector3d.x, vector3d.y, vector3d.z);
 	}
 
@@ -79,7 +79,7 @@ public class SpikeTrapBlock extends Block implements IWaterLoggable {
 	 * @return BlockState
 	 */
 	@Override
-	public BlockState updateShape(BlockState stateIn, Direction facing, BlockState facingState, IWorld worldIn, BlockPos currentPos, BlockPos facingPos) {
+	public BlockState updateShape(BlockState stateIn, Direction facing, BlockState facingState, LevelAccessor worldIn, BlockPos currentPos, BlockPos facingPos) {
 		if (stateIn.getValue(WATERLOGGED)) {
 			worldIn.getLiquidTicks().scheduleTick(currentPos, Fluids.WATER, Fluids.WATER.getTickDelay(worldIn));
 		}
@@ -94,7 +94,7 @@ public class SpikeTrapBlock extends Block implements IWaterLoggable {
 	 * @return BlockState
 	 */
 	@Override
-	public BlockState getStateForPlacement(BlockItemUseContext context) {
+	public BlockState getStateForPlacement(BlockPlaceContext context) {
 		return defaultBlockState().setValue(WATERLOGGED, context.getLevel().getFluidState(context.getClickedPos()).getType() == Fluids.WATER);
 	}
 
@@ -114,7 +114,7 @@ public class SpikeTrapBlock extends Block implements IWaterLoggable {
 	 * @param builder the <code>StateContainer.Builder</code> of the block
 	 */
 	@Override
-	protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder) {
+	protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
 		builder.add(WATERLOGGED, POWERED);
 	}
 
@@ -126,7 +126,7 @@ public class SpikeTrapBlock extends Block implements IWaterLoggable {
 	 * @return boolean
 	 */
 	@Override
-	public boolean canSurvive(BlockState state, IWorldReader reader, BlockPos pos) {
+	public boolean canSurvive(BlockState state, LevelReader reader, BlockPos pos) {
 		return Block.canSupportCenter(reader, pos.below(), Direction.UP);
 	}
 
@@ -139,8 +139,8 @@ public class SpikeTrapBlock extends Block implements IWaterLoggable {
 	 * @param entity the <code>Entity</code> passing through the block
 	 */
 	@Override
-	public void entityInside(BlockState state, World world, BlockPos pos, Entity entity) {
-		if (entity instanceof PlayerEntity || entity instanceof MobEntity) {
+	public void entityInside(BlockState state, Level world, BlockPos pos, Entity entity) {
+		if (entity instanceof Player || entity instanceof Mob) {
 			if (state.getValue(POWERED)) {
 				entity.hurt(damageSource, 2f);
 			}
@@ -156,7 +156,7 @@ public class SpikeTrapBlock extends Block implements IWaterLoggable {
 	 * @param isMoving determines if the block is moving
 	 */
 	@Override
-	public void onPlace(BlockState state, World worldIn, BlockPos pos, BlockState oldState, boolean isMoving) {
+	public void onPlace(BlockState state, Level worldIn, BlockPos pos, BlockState oldState, boolean isMoving) {
 		if (!oldState.is(state.getBlock())) {
 			if (worldIn.hasNeighborSignal(pos)) {
 				worldIn.setBlock(pos, state.setValue(POWERED, true), 3);
@@ -174,7 +174,7 @@ public class SpikeTrapBlock extends Block implements IWaterLoggable {
 	 * @param isMoving determines if the block is moving
 	 */
 	@Override
-	public void neighborChanged(BlockState state, World worldIn, BlockPos pos, Block blockIn, BlockPos fromPos, boolean isMoving) {
+	public void neighborChanged(BlockState state, Level worldIn, BlockPos pos, Block blockIn, BlockPos fromPos, boolean isMoving) {
 		boolean flag = worldIn.hasNeighborSignal(pos);
 		if (flag != state.getValue(POWERED)) {
 			state = state.setValue(POWERED, flag);
@@ -197,7 +197,7 @@ public class SpikeTrapBlock extends Block implements IWaterLoggable {
 		 * @param blockPos the <code>BlockPos</code> of the block where the packet was sent
 		 * @param extend determines if the block is "extending" or "retracting"
 		 */
-		public SpikeTrapBlockPacketHandler(final BlockPos blockPos, final boolean extend) {
+		SpikeTrapBlockPacketHandler(BlockPos blockPos, boolean extend) {
 			this.blockPos = blockPos;
 			this.extend = extend;
 		}
@@ -207,7 +207,7 @@ public class SpikeTrapBlock extends Block implements IWaterLoggable {
 		 * @param msg the <code>SpikeTrapBlockPacketHandler</code> message being sent
 		 * @param packetBuffer the <code>PacketBuffer</code> containing packet data
 		 */
-		public static void encode(final SpikeTrapBlockPacketHandler msg, final PacketBuffer packetBuffer) {
+		public static void encode(SpikeTrapBlockPacketHandler msg, FriendlyByteBuf packetBuffer) {
 			packetBuffer.writeBlockPos(msg.blockPos).writeBoolean(msg.extend);
 		}
 
@@ -216,7 +216,7 @@ public class SpikeTrapBlock extends Block implements IWaterLoggable {
 		 * @param packetBuffer the <code>PacketBuffer</code> containing packet data
 		 * @return SpikeTrapBlockPacketHandler
 		 */
-		public static SpikeTrapBlockPacketHandler decode(final PacketBuffer packetBuffer) {
+		public static SpikeTrapBlockPacketHandler decode(FriendlyByteBuf packetBuffer) {
 			return new SpikeTrapBlockPacketHandler(packetBuffer.readBlockPos(), packetBuffer.readBoolean());
 		}
 
@@ -225,8 +225,8 @@ public class SpikeTrapBlock extends Block implements IWaterLoggable {
 		 * @param msg the <code>SpikeTrapBlockPacketHandler</code> message being sent
 		 * @param contextSupplier the <code>Supplier</code> providing context
 		 */
-		public static void handle(final SpikeTrapBlockPacketHandler msg, final Supplier<Context> contextSupplier) {
-			final NetworkEvent.Context context = contextSupplier.get();
+		public static void handle(SpikeTrapBlockPacketHandler msg, Supplier<Context> contextSupplier) {
+			NetworkEvent.Context context = contextSupplier.get();
 			context.enqueueWork(() -> DistExecutor.runWhenOn(Dist.CLIENT, () -> () -> handleOnClient(msg)));
 			context.setPacketHandled(true);
 		}
@@ -236,13 +236,13 @@ public class SpikeTrapBlock extends Block implements IWaterLoggable {
 		 * @param msg the <code>SpikeTrapBlockPacketHandler</code> message being sent
 		 */
 		@OnlyIn(Dist.CLIENT)
-		private static void handleOnClient(final SpikeTrapBlockPacketHandler msg) {
+		private static void handleOnClient(SpikeTrapBlockPacketHandler msg) {
 			Minecraft minecraft = Minecraft.getInstance();
 			if (minecraft.level != null) {
 				if (msg.extend) {
-					minecraft.level.playLocalSound(msg.blockPos, DeferredRegistryHandler.SPIKE_TRAP_EXTEND.get(), SoundCategory.BLOCKS, 1.0f, 1.0f, true);
+					minecraft.level.playLocalSound(msg.blockPos, DeferredRegistryHandler.SPIKE_TRAP_EXTEND.get(), SoundSource.BLOCKS, 1.0f, 1.0f, true);
 				} else {
-					minecraft.level.playLocalSound(msg.blockPos, DeferredRegistryHandler.SPIKE_TRAP_RETRACT.get(), SoundCategory.BLOCKS, 1.0f, 1.0f, true);
+					minecraft.level.playLocalSound(msg.blockPos, DeferredRegistryHandler.SPIKE_TRAP_RETRACT.get(), SoundSource.BLOCKS, 1.0f, 1.0f, true);
 				}
 			}
 		}

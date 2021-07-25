@@ -2,25 +2,21 @@ package com.anonymoushacker1279.immersiveweapons.client.renderer.entity;
 
 import com.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import com.anonymoushacker1279.immersiveweapons.entity.projectile.BulletEntity.*;
-import com.anonymoushacker1279.immersiveweapons.entity.projectile.MortarShellEntity;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.ItemRenderer;
 import net.minecraft.client.renderer.entity.ArrowRenderer;
 import net.minecraft.client.renderer.entity.EntityRenderer;
-import net.minecraft.client.renderer.entity.EntityRendererManager;
-import net.minecraft.client.renderer.entity.SpriteRenderer;
-import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.fml.client.registry.IRenderFactory;
+import net.minecraft.client.renderer.entity.EntityRendererProvider;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.projectile.AbstractArrow;
 
 public class BulletRenderer {
 
-	public static class WoodBulletRenderer extends ArrowRenderer<WoodBulletEntity> {
+	public static class WoodBulletRenderer<T extends AbstractArrow> extends ArrowRenderer<WoodBulletEntity> implements EntityRendererProvider<WoodBulletEntity> {
 		/**
 		 * Constructor for WoodBulletRenderer.
-		 * @param renderManagerIn an <code>EntityRendererManager</code> instance
+		 * @param context a <code>Context</code> instance
 		 */
-		public WoodBulletRenderer(EntityRendererManager renderManagerIn) {
-			super(renderManagerIn);
+		public WoodBulletRenderer(Context context) {
+			super(context);
 		}
 
 		/**
@@ -32,15 +28,20 @@ public class BulletRenderer {
 		public ResourceLocation getTextureLocation(WoodBulletEntity entity) {
 			return new ResourceLocation(ImmersiveWeapons.MOD_ID, "textures/entity/projectiles/wood_musket_ball.png");
 		}
+
+		@Override
+		public EntityRenderer<WoodBulletEntity> create(Context context) {
+			return new WoodBulletRenderer<WoodBulletEntity>(context);
+		}
 	}
 
-	public static class StoneBulletRenderer extends ArrowRenderer<StoneBulletEntity> {
+	public static class StoneBulletRenderer<T extends AbstractArrow> extends ArrowRenderer<StoneBulletEntity> implements EntityRendererProvider<StoneBulletEntity> {
 		/**
 		 * Constructor for StoneBulletRenderer.
-		 * @param renderManagerIn an <code>EntityRendererManager</code> instance
+		 * @param context a <code>Context</code> instance
 		 */
-		public StoneBulletRenderer(EntityRendererManager renderManagerIn) {
-			super(renderManagerIn);
+		public StoneBulletRenderer(Context context) {
+			super(context);
 		}
 
 		/**
@@ -52,15 +53,20 @@ public class BulletRenderer {
 		public ResourceLocation getTextureLocation(StoneBulletEntity entity) {
 			return new ResourceLocation(ImmersiveWeapons.MOD_ID, "textures/entity/projectiles/stone_musket_ball.png");
 		}
+
+		@Override
+		public EntityRenderer<StoneBulletEntity> create(Context context) {
+			return new StoneBulletRenderer<StoneBulletEntity>(context);
+		}
 	}
 
-	public static class CopperBulletRenderer extends ArrowRenderer<CopperBulletEntity> {
+	public static class CopperBulletRenderer<T extends AbstractArrow> extends ArrowRenderer<CopperBulletEntity> implements EntityRendererProvider<CopperBulletEntity> {
 		/**
 		 * Constructor for CopperBulletRenderer.
-		 * @param renderManagerIn an <code>EntityRendererManager</code> instance
+		 * @param context a <code>Context</code> instance
 		 */
-		public CopperBulletRenderer(EntityRendererManager renderManagerIn) {
-			super(renderManagerIn);
+		public CopperBulletRenderer(Context context) {
+			super(context);
 		}
 
 		/**
@@ -72,15 +78,20 @@ public class BulletRenderer {
 		public ResourceLocation getTextureLocation(CopperBulletEntity entity) {
 			return new ResourceLocation(ImmersiveWeapons.MOD_ID, "textures/entity/projectiles/copper_musket_ball.png");
 		}
+
+		@Override
+		public EntityRenderer<CopperBulletEntity> create(Context context) {
+			return new CopperBulletRenderer<CopperBulletEntity>(context);
+		}
 	}
 
-	public static class IronBulletRenderer extends ArrowRenderer<IronBulletEntity> {
+	public static class IronBulletRenderer<T extends AbstractArrow> extends ArrowRenderer<IronBulletEntity> implements EntityRendererProvider<IronBulletEntity> {
 		/**
 		 * Constructor for IronBulletRenderer.
-		 * @param renderManagerIn an <code>EntityRendererManager</code> instance
+		 * @param context a <code>Context</code> instance
 		 */
-		public IronBulletRenderer(EntityRendererManager renderManagerIn) {
-			super(renderManagerIn);
+		public IronBulletRenderer(Context context) {
+			super(context);
 		}
 
 		/**
@@ -92,15 +103,20 @@ public class BulletRenderer {
 		public ResourceLocation getTextureLocation(IronBulletEntity entity) {
 			return new ResourceLocation(ImmersiveWeapons.MOD_ID, "textures/entity/projectiles/iron_musket_ball.png");
 		}
+
+		@Override
+		public EntityRenderer<IronBulletEntity> create(Context context) {
+			return new IronBulletRenderer<IronBulletEntity>(context);
+		}
 	}
 
-	public static class GoldBulletRenderer extends ArrowRenderer<GoldBulletEntity> {
+	public static class GoldBulletRenderer<T extends AbstractArrow> extends ArrowRenderer<GoldBulletEntity> implements EntityRendererProvider<GoldBulletEntity> {
 		/**
 		 * Constructor for GoldBulletRenderer.
-		 * @param renderManagerIn an <code>EntityRendererManager</code> instance
+		 * @param context a <code>Context</code> instance
 		 */
-		public GoldBulletRenderer(EntityRendererManager renderManagerIn) {
-			super(renderManagerIn);
+		public GoldBulletRenderer(Context context) {
+			super(context);
 		}
 
 		/**
@@ -112,15 +128,20 @@ public class BulletRenderer {
 		public ResourceLocation getTextureLocation(GoldBulletEntity entity) {
 			return new ResourceLocation(ImmersiveWeapons.MOD_ID, "textures/entity/projectiles/gold_musket_ball.png");
 		}
+
+		@Override
+		public EntityRenderer<GoldBulletEntity> create(Context context) {
+			return new GoldBulletRenderer<GoldBulletEntity>(context);
+		}
 	}
 
-	public static class DiamondBulletRenderer extends ArrowRenderer<DiamondBulletEntity> {
+	public static class DiamondBulletRenderer<T extends AbstractArrow> extends ArrowRenderer<DiamondBulletEntity> implements EntityRendererProvider<DiamondBulletEntity> {
 		/**
 		 * Constructor for DiamondBulletRenderer.
-		 * @param renderManagerIn an <code>EntityRendererManager</code> instance
+		 * @param context a <code>Context</code> instance
 		 */
-		public DiamondBulletRenderer(EntityRendererManager renderManagerIn) {
-			super(renderManagerIn);
+		public DiamondBulletRenderer(Context context) {
+			super(context);
 		}
 
 		/**
@@ -132,15 +153,20 @@ public class BulletRenderer {
 		public ResourceLocation getTextureLocation(DiamondBulletEntity entity) {
 			return new ResourceLocation(ImmersiveWeapons.MOD_ID, "textures/entity/projectiles/diamond_musket_ball.png");
 		}
+
+		@Override
+		public EntityRenderer<DiamondBulletEntity> create(Context context) {
+			return new DiamondBulletRenderer<DiamondBulletEntity>(context);
+		}
 	}
 
-	public static class NetheriteBulletRenderer extends ArrowRenderer<NetheriteBulletEntity> {
+	public static class NetheriteBulletRenderer<T extends AbstractArrow> extends ArrowRenderer<NetheriteBulletEntity> implements EntityRendererProvider<NetheriteBulletEntity> {
 		/**
 		 * Constructor for NetheriteBulletRenderer.
-		 * @param renderManagerIn an <code>EntityRendererManager</code> instance
+		 * @param context a <code>Context</code> instance
 		 */
-		public NetheriteBulletRenderer(EntityRendererManager renderManagerIn) {
-			super(renderManagerIn);
+		public NetheriteBulletRenderer(Context context) {
+			super(context);
 		}
 
 		/**
@@ -152,33 +178,10 @@ public class BulletRenderer {
 		public ResourceLocation getTextureLocation(NetheriteBulletEntity entity) {
 			return new ResourceLocation(ImmersiveWeapons.MOD_ID, "textures/entity/projectiles/netherite_musket_ball.png");
 		}
-	}
 
-	public static class FlareRenderer implements IRenderFactory<FlareEntity> {
-
-		/**
-		 * Create a renderer.
-		 * @param manager an <code>EntityRendererManager</code> instance
-		 * @return EntityRenderer extending FlareEntity
-		 */
 		@Override
-		public EntityRenderer<? super FlareEntity> createRenderFor(EntityRendererManager manager) {
-			ItemRenderer itemRenderer = Minecraft.getInstance().getItemRenderer();
-			return new SpriteRenderer<>(manager, itemRenderer);
-		}
-	}
-
-	public static class MortarShellRenderer implements IRenderFactory<MortarShellEntity> {
-
-		/**
-		 * Create a renderer.
-		 * @param manager an <code>EntityRendererManager</code> instance
-		 * @return EntityRenderer extending MortarShellEntity
-		 */
-		@Override
-		public EntityRenderer<? super MortarShellEntity> createRenderFor(EntityRendererManager manager) {
-			ItemRenderer itemRenderer = Minecraft.getInstance().getItemRenderer();
-			return new SpriteRenderer<>(manager, itemRenderer);
+		public EntityRenderer<NetheriteBulletEntity> create(Context context) {
+			return new NetheriteBulletRenderer<NetheriteBulletEntity>(context);
 		}
 	}
 }

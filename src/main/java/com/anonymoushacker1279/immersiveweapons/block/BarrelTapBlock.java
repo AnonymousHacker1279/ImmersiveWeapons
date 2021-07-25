@@ -1,35 +1,39 @@
 package com.anonymoushacker1279.immersiveweapons.block;
 
 import com.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
-import net.minecraft.block.*;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.fluid.FluidState;
-import net.minecraft.fluid.Fluids;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.item.BlockItemUseContext;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.state.BooleanProperty;
-import net.minecraft.state.StateContainer;
-import net.minecraft.state.properties.BlockStateProperties;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Direction;
-import net.minecraft.util.Hand;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.util.math.shapes.ISelectionContext;
-import net.minecraft.util.math.shapes.VoxelShape;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.world.IBlockReader;
-import net.minecraft.world.World;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.world.Container;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.HorizontalDirectionalBlock;
+import net.minecraft.world.level.block.SimpleWaterloggedBlock;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.level.material.FluidState;
+import net.minecraft.world.level.material.Fluids;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.VoxelShape;
 
-public class BarrelTapBlock extends HorizontalBlock implements IWaterLoggable {
+public class BarrelTapBlock extends HorizontalDirectionalBlock implements SimpleWaterloggedBlock {
 
-	protected static final VoxelShape SHAPE_NORTH = Block.box(7.0D, 4.0D, 0.0D, 9.0D, 7.0D, 3.0D);
-	protected static final VoxelShape SHAPE_SOUTH = Block.box(7.0D, 4.0D, 13.0D, 9.0D, 7.0D, 16.0D);
-	protected static final VoxelShape SHAPE_EAST = Block.box(0.0D, 4.0D, 7.0D, 3.0D, 7.0D, 9.0D);
-	protected static final VoxelShape SHAPE_WEST = Block.box(13.0D, 4.0D, 7.0D, 16.0D, 7.0D, 9.0D);
+	private static final VoxelShape SHAPE_NORTH = Block.box(7.0D, 4.0D, 0.0D, 9.0D, 7.0D, 3.0D);
+	private static final VoxelShape SHAPE_SOUTH = Block.box(7.0D, 4.0D, 13.0D, 9.0D, 7.0D, 16.0D);
+	private static final VoxelShape SHAPE_EAST = Block.box(0.0D, 4.0D, 7.0D, 3.0D, 7.0D, 9.0D);
+	private static final VoxelShape SHAPE_WEST = Block.box(13.0D, 4.0D, 7.0D, 16.0D, 7.0D, 9.0D);
 	public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
 	private String directionToUse = "north"; // Default: check North for a barrel
 
@@ -62,8 +66,8 @@ public class BarrelTapBlock extends HorizontalBlock implements IWaterLoggable {
 	 * @return VoxelShape
 	 */
 	@Override
-	public VoxelShape getShape(BlockState state, IBlockReader reader, BlockPos pos, ISelectionContext selectionContext) {
-		Vector3d vector3d = state.getOffset(reader, pos);
+	public VoxelShape getShape(BlockState state, BlockGetter reader, BlockPos pos, CollisionContext selectionContext) {
+		Vec3 vector3d = state.getOffset(reader, pos);
 		switch (state.getValue(FACING)) {
 			case NORTH:
 			default:
@@ -82,7 +86,7 @@ public class BarrelTapBlock extends HorizontalBlock implements IWaterLoggable {
 	 * @param builder the <code>StateContainer.Builder</code> of the block
 	 */
 	@Override
-	public void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder) {
+	public void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
 		builder.add(FACING, WATERLOGGED);
 	}
 
@@ -93,7 +97,7 @@ public class BarrelTapBlock extends HorizontalBlock implements IWaterLoggable {
 	 * @return BlockState
 	 */
 	@Override
-	public BlockState getStateForPlacement(BlockItemUseContext context) {
+	public BlockState getStateForPlacement(BlockPlaceContext context) {
 		return defaultBlockState().setValue(FACING, context.getHorizontalDirection().getOpposite());
 	}
 
@@ -109,7 +113,7 @@ public class BarrelTapBlock extends HorizontalBlock implements IWaterLoggable {
 	 * @return ActionResultType
 	 */
 	@Override
-	public ActionResultType use(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult blockRayTraceResult) {
+	public InteractionResult use(BlockState state, Level worldIn, BlockPos pos, Player player, InteractionHand handIn, BlockHitResult blockRayTraceResult) {
 		BlockState blockStateNorth = worldIn.getBlockState(pos.north());
 		BlockState blockStateSouth = worldIn.getBlockState(pos.south());
 		BlockState blockStateEast = worldIn.getBlockState(pos.east());
@@ -126,11 +130,11 @@ public class BarrelTapBlock extends HorizontalBlock implements IWaterLoggable {
 		}
 
 		if (worldIn.isClientSide) {
-			return ActionResultType.SUCCESS;
+			return InteractionResult.SUCCESS;
 		} else {
 			if (blockStateNorth.is(Blocks.BARREL) || blockStateSouth.is(Blocks.BARREL) || blockStateEast.is(Blocks.BARREL) || blockStateWest.is(Blocks.BARREL)) {
 
-				TileEntity tileEntity;
+				BlockEntity tileEntity;
 
 				switch (directionToUse) {
 					case "south":
@@ -150,8 +154,8 @@ public class BarrelTapBlock extends HorizontalBlock implements IWaterLoggable {
 				ItemStack itemStack;
 
 				if (tileEntity != null) {
-					for (int i = 0; i < ((IInventory) tileEntity).getContainerSize(); ++i) {
-						itemStack = ((IInventory) tileEntity).getItem(i);
+					for (int i = 0; i < ((Container) tileEntity).getContainerSize(); ++i) {
+						itemStack = ((Container) tileEntity).getItem(i);
 
 						// Define the various recipes
 						// They will be checked in order, so items higher in the list
@@ -165,7 +169,7 @@ public class BarrelTapBlock extends HorizontalBlock implements IWaterLoggable {
 								if (!player.isCreative()) {
 									player.getMainHandItem().shrink(1);
 								}
-								i = ((IInventory) tileEntity).getContainerSize();
+								i = ((Container) tileEntity).getContainerSize();
 							}
 						}
 						// Bottle of Wine
@@ -176,14 +180,14 @@ public class BarrelTapBlock extends HorizontalBlock implements IWaterLoggable {
 								if (!player.isCreative()) {
 									player.getMainHandItem().shrink(1);
 								}
-								i = ((IInventory) tileEntity).getContainerSize();
+								i = ((Container) tileEntity).getContainerSize();
 							}
 						}
 					}
 				}
-				return ActionResultType.SUCCESS;
+				return InteractionResult.SUCCESS;
 			}
-			return ActionResultType.FAIL;
+			return InteractionResult.FAIL;
 		}
 	}
 }

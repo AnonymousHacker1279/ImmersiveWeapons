@@ -1,24 +1,25 @@
 package com.anonymoushacker1279.immersiveweapons.util;
 
 import com.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
-import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.item.IArmorMaterial;
-import net.minecraft.item.crafting.Ingredient;
-import net.minecraft.util.LazyValue;
-import net.minecraft.util.SoundEvent;
-import net.minecraft.util.SoundEvents;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.util.LazyLoadedValue;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.item.ArmorMaterial;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
 import java.util.function.Supplier;
 
-public enum CustomArmorMaterials implements IArmorMaterial {
+public enum CustomArmorMaterials implements ArmorMaterial {
 
 	MOLTEN("molten", 39, new int[]{5, 6, 9, 4}, 15, SoundEvents.ARMOR_EQUIP_NETHERITE, 3.5F, () -> {
 		return Ingredient.of(DeferredRegistryHandler.MOLTEN_PLATE.get());
 	}, 0.12F),
 	COPPER("copper", 15, new int[]{1, 4, 5, 1}, 9, SoundEvents.ARMOR_EQUIP_IRON, 0.0F, () -> {
-		return Ingredient.of(DeferredRegistryHandler.COPPER_INGOT.get());
+		return Ingredient.of(Items.COPPER_INGOT);
 	}, 0.0F),
 	TESLA("tesla", 42, new int[]{7, 8, 11, 6}, 20, SoundEvents.ARMOR_EQUIP_GOLD, 3.0F, () -> {
 		return Ingredient.of(DeferredRegistryHandler.TESLA_INGOT.get());
@@ -37,7 +38,7 @@ public enum CustomArmorMaterials implements IArmorMaterial {
 	private final int enchantability;
 	private final SoundEvent soundEvent;
 	private final float toughness;
-	private final LazyValue<Ingredient> repairMaterial;
+	private final LazyLoadedValue<Ingredient> repairMaterial;
 	private final float knockbackResistance;
 
 	/**
@@ -58,7 +59,7 @@ public enum CustomArmorMaterials implements IArmorMaterial {
 		enchantability = enchantabilityIn;
 		soundEvent = equipSoundIn;
 		toughness = toughnessIn;
-		repairMaterial = new LazyValue<>(repairMaterialSupplier);
+		repairMaterial = new LazyLoadedValue<>(repairMaterialSupplier);
 		knockbackResistance = knockbackResistanceIn;
 	}
 
@@ -68,7 +69,7 @@ public enum CustomArmorMaterials implements IArmorMaterial {
 	 * @return int
 	 */
 	@Override
-	public int getDurabilityForSlot(EquipmentSlotType slotIn) {
+	public int getDurabilityForSlot(EquipmentSlot slotIn) {
 		return MAX_DAMAGE_ARRAY[slotIn.getIndex()] * maxDamageFactor;
 	}
 
@@ -78,7 +79,7 @@ public enum CustomArmorMaterials implements IArmorMaterial {
 	 * @return int
 	 */
 	@Override
-	public int getDefenseForSlot(EquipmentSlotType slotIn) {
+	public int getDefenseForSlot(EquipmentSlot slotIn) {
 		return damageReductionAmountArray[slotIn.getIndex()];
 	}
 

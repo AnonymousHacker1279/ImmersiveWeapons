@@ -1,38 +1,44 @@
 package com.anonymoushacker1279.immersiveweapons.block;
 
+import com.anonymoushacker1279.immersiveweapons.blockentity.BearTrapBlockEntity;
 import com.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
-import com.anonymoushacker1279.immersiveweapons.tileentity.BearTrapTileEntity;
-import net.minecraft.block.*;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.MobEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.fluid.FluidState;
-import net.minecraft.fluid.Fluids;
-import net.minecraft.item.BlockItemUseContext;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.state.BooleanProperty;
-import net.minecraft.state.StateContainer;
-import net.minecraft.state.properties.BlockStateProperties;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Direction;
-import net.minecraft.util.Hand;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.util.math.shapes.ISelectionContext;
-import net.minecraft.util.math.shapes.VoxelShape;
-import net.minecraft.util.math.shapes.VoxelShapes;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.world.IBlockReader;
-import net.minecraft.world.World;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.BaseEntityBlock;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.RenderShape;
+import net.minecraft.world.level.block.SimpleWaterloggedBlock;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityTicker;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.level.material.FluidState;
+import net.minecraft.world.level.material.Fluids;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.Shapes;
+import net.minecraft.world.phys.shapes.VoxelShape;
 
-public class BearTrapBlock extends ContainerBlock implements IWaterLoggable {
+public class BearTrapBlock extends BaseEntityBlock implements SimpleWaterloggedBlock {
 
 	public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
-	public static final BooleanProperty TRIGGERED = BooleanProperty.create("triggered");
-	public static final BooleanProperty VINES = BooleanProperty.create("vines");
+	private static final BooleanProperty TRIGGERED = BooleanProperty.create("triggered");
+	private static final BooleanProperty VINES = BooleanProperty.create("vines");
 	protected static final VoxelShape SHAPE = Block.box(0.0D, 0.0D, 0.0D, 16.0D, 2.0D, 16.0D);
 
 	/**
@@ -56,13 +62,13 @@ public class BearTrapBlock extends ContainerBlock implements IWaterLoggable {
 	 * @return ActionResultType
 	 */
 	@Override
-	public ActionResultType use(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult blockRayTraceResult) {
+	public InteractionResult use(BlockState state, Level worldIn, BlockPos pos, Player player, InteractionHand handIn, BlockHitResult blockRayTraceResult) {
 		if (!worldIn.isClientSide) {
-			BearTrapTileEntity bearTrap = (BearTrapTileEntity) worldIn.getBlockEntity(pos);
+			BearTrapBlockEntity bearTrap = (BearTrapBlockEntity) worldIn.getBlockEntity(pos);
 			ItemStack currentlyHeldItem = player.getMainHandItem();
 			if (bearTrap != null && state.getValue(TRIGGERED) && !bearTrap.hasTrappedEntity() && !bearTrap.hasTrappedPlayerEntity()) {
 				worldIn.setBlock(pos, state.setValue(TRIGGERED, false).setValue(VINES, false), 3);
-				return ActionResultType.SUCCESS;
+				return InteractionResult.SUCCESS;
 			}
 			if (!state.getValue(VINES) && currentlyHeldItem.getItem() == Items.VINE) {
 				worldIn.setBlock(pos, state.setValue(VINES, true), 3);
@@ -72,7 +78,7 @@ public class BearTrapBlock extends ContainerBlock implements IWaterLoggable {
 			}
 		}
 
-		return ActionResultType.PASS;
+		return InteractionResult.PASS;
 	}
 
 	/**
@@ -84,7 +90,7 @@ public class BearTrapBlock extends ContainerBlock implements IWaterLoggable {
 	 * @return VoxelShape
 	 */
 	@Override
-	public VoxelShape getShape(BlockState state, IBlockReader reader, BlockPos pos, ISelectionContext selectionContext) {
+	public VoxelShape getShape(BlockState state, BlockGetter reader, BlockPos pos, CollisionContext selectionContext) {
 		return SHAPE;
 	}
 
@@ -97,8 +103,8 @@ public class BearTrapBlock extends ContainerBlock implements IWaterLoggable {
 	 * @return VoxelShape
 	 */
 	@Override
-	public VoxelShape getCollisionShape(BlockState state, IBlockReader reader, BlockPos pos, ISelectionContext selectionContext) {
-		return VoxelShapes.empty();
+	public VoxelShape getCollisionShape(BlockState state, BlockGetter reader, BlockPos pos, CollisionContext selectionContext) {
+		return Shapes.empty();
 	}
 
 	/**
@@ -107,40 +113,47 @@ public class BearTrapBlock extends ContainerBlock implements IWaterLoggable {
 	 * @return BlockRenderType
 	 */
 	@Override
-	public BlockRenderType getRenderShape(BlockState state) {
-		return BlockRenderType.MODEL;
+	public RenderShape getRenderShape(BlockState state) {
+		return RenderShape.MODEL;
 	}
 
 	/**
 	 * Create a tile entity for the block.
-	 * @param reader the <code>IBlockReader</code> of the block
+	 * @param blockPos the <code>BlockPos</code> the block is at
+	 * @param blockState the <code>BlockState</code> of the block
 	 * @return TileEntity
 	 */
 	@Override
-	public TileEntity newBlockEntity(IBlockReader reader) {
-		return new BearTrapTileEntity();
+	public BlockEntity newBlockEntity(BlockPos blockPos, BlockState blockState) {
+		return new BearTrapBlockEntity(blockPos, blockState);
 	}
 
-	/**
-	 * Runs when an entity is inside of the block's collision area.
-	 * Allows the block to deal damage on contact.
-	 * @param state the <code>BlockState</code> of the block
-	 * @param world the <code>World</code> the block is in
-	 * @param pos the <code>BlockPos</code> the block is at
-	 * @param entity the <code>Entity</code> passing through the block
-	 */
+	// TODO: Javdocs
 	@Override
-	public void entityInside(BlockState state, World world, BlockPos pos, Entity entity) {
-		final BearTrapTileEntity bearTrap = (BearTrapTileEntity) world.getBlockEntity(pos);
+	public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState blockState, BlockEntityType<T> blockEntityType) {
+		return level.isClientSide ? null : createTickerHelper(blockEntityType, DeferredRegistryHandler.BEAR_TRAP_BLOCK_ENTITY.get(), BearTrapBlockEntity::serverTick);
+	}
+
+		/**
+		 * Runs when an entity is inside of the block's collision area.
+		 * Allows the block to deal damage on contact.
+		 * @param state the <code>BlockState</code> of the block
+		 * @param world the <code>World</code> the block is in
+		 * @param pos the <code>BlockPos</code> the block is at
+		 * @param entity the <code>Entity</code> passing through the block
+		 */
+	@Override
+	public void entityInside(BlockState state, Level world, BlockPos pos, Entity entity) {
+		BearTrapBlockEntity bearTrap = (BearTrapBlockEntity) world.getBlockEntity(pos);
 
 		if (state.getValue(TRIGGERED)) {
 			if (bearTrap != null && (bearTrap.getTrappedEntity() == entity || bearTrap.getTrappedPlayerEntity() == entity)) {
-				entity.makeStuckInBlock(state, new Vector3d(0.0F, 0.0D, 0.0F));
+				entity.makeStuckInBlock(state, new Vec3(0.0F, 0.0D, 0.0F));
 				if ((entity.xOld != entity.getX() || entity.zOld != entity.getZ())) {
 					double d0 = Math.abs(entity.getX() - entity.xOld);
 					double d1 = Math.abs(entity.getZ() - entity.zOld);
 					if (d0 >= (double) 0.003F || d1 >= (double) 0.003F) {
-						entity.hurt(BearTrapTileEntity.damageSource, 1.0F);
+						entity.hurt(BearTrapBlockEntity.damageSource, 1.0F);
 					}
 				}
 			}
@@ -148,28 +161,28 @@ public class BearTrapBlock extends ContainerBlock implements IWaterLoggable {
 		}
 
 
-		if ((entity instanceof PlayerEntity)) {
-			final PlayerEntity livingEntity = (PlayerEntity) entity;
+		if ((entity instanceof Player)) {
+			Player livingEntity = (Player) entity;
 			if (!livingEntity.isCreative()) {
 				if (state.getValue(VINES)) {
 					world.setBlock(pos, state.setValue(TRIGGERED, true).setValue(VINES, true), 3);
 				} else {
 					world.setBlock(pos, state.setValue(TRIGGERED, true).setValue(VINES, false), 3);
 				}
-				livingEntity.hurt(BearTrapTileEntity.damageSource, 2.0F);
-				world.playSound((PlayerEntity) entity, pos, DeferredRegistryHandler.BEAR_TRAP_CLOSE.get(), SoundCategory.BLOCKS, 1f, 1f);
+				livingEntity.hurt(BearTrapBlockEntity.damageSource, 2.0F);
+				world.playSound((Player) entity, pos, DeferredRegistryHandler.BEAR_TRAP_CLOSE.get(), SoundSource.BLOCKS, 1f, 1f);
 				bearTrap.setTrappedPlayerEntity(livingEntity);
 			}
-		} else if ((entity instanceof MobEntity)) {
+		} else if ((entity instanceof Mob)) {
 			if (state.getValue(VINES)) {
 				world.setBlock(pos, state.setValue(TRIGGERED, true).setValue(VINES, true), 3);
 			} else {
 				world.setBlock(pos, state.setValue(TRIGGERED, true).setValue(VINES, false), 3);
 			}
-			final MobEntity livingEntity = (MobEntity) entity;
+			Mob livingEntity = (Mob) entity;
 			world.setBlock(pos, state.setValue(TRIGGERED, true), 3);
-			livingEntity.hurt(BearTrapTileEntity.damageSource, 2.0F);
-			world.playLocalSound(pos.getX(), pos.getY(), pos.getZ(), DeferredRegistryHandler.BEAR_TRAP_CLOSE.get(), SoundCategory.BLOCKS, 1f, 1f, false);
+			livingEntity.hurt(BearTrapBlockEntity.damageSource, 2.0F);
+			world.playLocalSound(pos.getX(), pos.getY(), pos.getZ(), DeferredRegistryHandler.BEAR_TRAP_CLOSE.get(), SoundSource.BLOCKS, 1f, 1f, false);
 			if (bearTrap != null) {
 				bearTrap.setTrappedEntity(livingEntity);
 			}
@@ -183,7 +196,7 @@ public class BearTrapBlock extends ContainerBlock implements IWaterLoggable {
 	 * @return BlockState
 	 */
 	@Override
-	public BlockState getStateForPlacement(BlockItemUseContext context) {
+	public BlockState getStateForPlacement(BlockPlaceContext context) {
 		return defaultBlockState().setValue(WATERLOGGED, context.getLevel().getFluidState(context.getClickedPos()).getType() == Fluids.WATER);
 	}
 
@@ -216,7 +229,7 @@ public class BearTrapBlock extends ContainerBlock implements IWaterLoggable {
 	 * @return int
 	 */
 	@Override
-	public int getAnalogOutputSignal(BlockState state, World worldIn, BlockPos pos) {
+	public int getAnalogOutputSignal(BlockState state, Level worldIn, BlockPos pos) {
 		return state.getValue(TRIGGERED) ? 15 : 0;
 	}
 
@@ -225,7 +238,7 @@ public class BearTrapBlock extends ContainerBlock implements IWaterLoggable {
 	 * @param builder the <code>StateContainer.Builder</code> of the block
 	 */
 	@Override
-	protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder) {
+	protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
 		builder.add(TRIGGERED, VINES, WATERLOGGED);
 	}
 
@@ -248,7 +261,7 @@ public class BearTrapBlock extends ContainerBlock implements IWaterLoggable {
 	 * @return int
 	 */
 	@Override
-	public int getSignal(BlockState blockState, IBlockReader reader, BlockPos pos, Direction side) {
+	public int getSignal(BlockState blockState, BlockGetter reader, BlockPos pos, Direction side) {
 		if (!blockState.isSignalSource()) {
 			return 0;
 		} else {

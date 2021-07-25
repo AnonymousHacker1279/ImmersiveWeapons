@@ -1,16 +1,17 @@
 package com.anonymoushacker1279.immersiveweapons.util;
 
 import com.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
-import net.minecraft.entity.EntityClassification;
-import net.minecraft.util.RegistryKey;
-import net.minecraft.util.registry.WorldGenRegistries;
-import net.minecraft.world.biome.*;
-import net.minecraft.world.biome.Biome.Category;
-import net.minecraft.world.biome.MobSpawnInfo.Spawners;
-import net.minecraft.world.gen.GenerationStage.Decoration;
-import net.minecraft.world.gen.feature.Features;
-import net.minecraft.world.gen.feature.structure.StructureFeatures;
-import net.minecraft.world.gen.surfacebuilders.ConfiguredSurfaceBuilder;
+import net.minecraft.data.BuiltinRegistries;
+import net.minecraft.data.worldgen.BiomeDefaultFeatures;
+import net.minecraft.data.worldgen.Features;
+import net.minecraft.data.worldgen.StructureFeatures;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.world.entity.MobCategory;
+import net.minecraft.world.level.biome.*;
+import net.minecraft.world.level.biome.Biome.BiomeCategory;
+import net.minecraft.world.level.biome.MobSpawnSettings.SpawnerData;
+import net.minecraft.world.level.levelgen.GenerationStep.Decoration;
+import net.minecraft.world.level.levelgen.surfacebuilders.ConfiguredSurfaceBuilder;
 
 public class BiomeBuilder {
 
@@ -19,8 +20,8 @@ public class BiomeBuilder {
 	 * @param key the <code>RegistryKey</code>, must extend ConfiguredSurfaceBuilder
 	 * @return ConfiguredSurfaceBuilder
 	 */
-	public static ConfiguredSurfaceBuilder<?> getSurfaceBuilder(RegistryKey<ConfiguredSurfaceBuilder<?>> key) {
-		return WorldGenRegistries.CONFIGURED_SURFACE_BUILDER.getOrThrow(key);
+	public static ConfiguredSurfaceBuilder<?> getSurfaceBuilder(ResourceKey<ConfiguredSurfaceBuilder<?>> key) {
+		return BuiltinRegistries.CONFIGURED_SURFACE_BUILDER.getOrThrow(key);
 	}
 
 	/**
@@ -31,11 +32,11 @@ public class BiomeBuilder {
 	 * @return Biome
 	 */
 	public static Biome makeBattlefieldBiome(ConfiguredSurfaceBuilder<?> surfaceBuilder, float depth, float scale) {
-		MobSpawnInfo.Builder mobSpawnInfoBuilder = new MobSpawnInfo.Builder()
+		MobSpawnSettings.Builder mobSpawnInfoBuilder = new MobSpawnSettings.Builder()
 				.setPlayerCanSpawn()
-				.addSpawn(EntityClassification.MONSTER, new Spawners(DeferredRegistryHandler.DYING_SOLDIER_ENTITY.get(), 50, 1, 4));
+				.addSpawn(MobCategory.MONSTER, new SpawnerData(DeferredRegistryHandler.DYING_SOLDIER_ENTITY.get(), 50, 1, 4));
 
-		MoodSoundAmbience ambienceSound = new MoodSoundAmbience(DeferredRegistryHandler.FLINTLOCK_PISTOL_FIRE.get(), 5000, 8, 2.0D);
+		AmbientMoodSettings ambienceSound = new AmbientMoodSettings(DeferredRegistryHandler.FLINTLOCK_PISTOL_FIRE.get(), 5000, 8, 2.0D);
 
 		BiomeGenerationSettings.Builder biomeGenerationSettingBuilder = new BiomeGenerationSettings.Builder()
 				.surfaceBuilder(surfaceBuilder)
@@ -44,23 +45,23 @@ public class BiomeBuilder {
 
 		biomeGenerationSettingBuilder.addStructureStart(StructureFeatures.PILLAGER_OUTPOST);
 
-		DefaultBiomeFeatures.addDefaultOverworldLandStructures(biomeGenerationSettingBuilder);
-		DefaultBiomeFeatures.addDefaultCarvers(biomeGenerationSettingBuilder);
-		DefaultBiomeFeatures.addDefaultMonsterRoom(biomeGenerationSettingBuilder);
-		DefaultBiomeFeatures.addDefaultUndergroundVariety(biomeGenerationSettingBuilder);
-		DefaultBiomeFeatures.addDefaultOres(biomeGenerationSettingBuilder);
-		DefaultBiomeFeatures.addDefaultGrass(biomeGenerationSettingBuilder);
-		DefaultBiomeFeatures.addDefaultSprings(biomeGenerationSettingBuilder);
+		BiomeDefaultFeatures.addDefaultOverworldLandStructures(biomeGenerationSettingBuilder);
+		BiomeDefaultFeatures.addDefaultCarvers(biomeGenerationSettingBuilder);
+		BiomeDefaultFeatures.addDefaultMonsterRoom(biomeGenerationSettingBuilder);
+		BiomeDefaultFeatures.addDefaultUndergroundVariety(biomeGenerationSettingBuilder);
+		BiomeDefaultFeatures.addDefaultOres(biomeGenerationSettingBuilder);
+		BiomeDefaultFeatures.addDefaultGrass(biomeGenerationSettingBuilder);
+		BiomeDefaultFeatures.addDefaultSprings(biomeGenerationSettingBuilder);
 
-		return new Biome.Builder()
-				.precipitation(Biome.RainType.RAIN)
-				.biomeCategory(Category.PLAINS)
+		return new Biome.BiomeBuilder()
+				.precipitation(Biome.Precipitation.RAIN)
+				.biomeCategory(BiomeCategory.PLAINS)
 				.depth(depth)
 				.scale(scale)
 				.temperature(0.8f)
 				.downfall(0.3f)
 				.specialEffects(
-						new BiomeAmbience.Builder()
+						new BiomeSpecialEffects.Builder()
 								.waterColor(0x55274c)
 								.waterFogColor(0x503b72)
 								.fogColor(0x906c80)

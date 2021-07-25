@@ -1,9 +1,9 @@
 package com.anonymoushacker1279.immersiveweapons.item;
 
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.item.*;
-import net.minecraft.potion.EffectInstance;
-import net.minecraft.potion.Effects;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.*;
 
 public class TeslaItems {
 
@@ -15,7 +15,7 @@ public class TeslaItems {
 		 * @param attackSpeedIn attack speed
 		 * @param properties the <code>Properties</code> for the item
 		 */
-		public TeslaSword(IItemTier tier, int attackDamageIn, float attackSpeedIn, Properties properties) {
+		public TeslaSword(Tier tier, int attackDamageIn, float attackSpeedIn, Properties properties) {
 			super(tier, attackDamageIn, attackSpeedIn, properties);
 		}
 
@@ -28,9 +28,9 @@ public class TeslaItems {
 		 */
 		@Override
 		public boolean hurtEnemy(ItemStack itemStack, LivingEntity livingEntity, LivingEntity livingEntity1) {
-			livingEntity.addEffect(new EffectInstance(Effects.WEAKNESS, 140, 1, false, false));
-			livingEntity.addEffect(new EffectInstance(Effects.MOVEMENT_SLOWDOWN, 140, 1, false, false));
-			livingEntity.addEffect(new EffectInstance(Effects.CONFUSION, 140, 1, false, false));
+			livingEntity.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, 140, 1, false, false));
+			livingEntity.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 140, 1, false, false));
+			livingEntity.addEffect(new MobEffectInstance(MobEffects.CONFUSION, 140, 1, false, false));
 			return super.hurtEnemy(itemStack, livingEntity, livingEntity1);
 		}
 	}
@@ -43,7 +43,7 @@ public class TeslaItems {
 		 * @param attackSpeedIn attack speed
 		 * @param properties the <code>Properties</code> for the item
 		 */
-		public TeslaAxe(IItemTier tier, int attackDamageIn, float attackSpeedIn, Properties properties) {
+		public TeslaAxe(Tier tier, int attackDamageIn, float attackSpeedIn, Properties properties) {
 			super(tier, attackDamageIn, attackSpeedIn, properties);
 		}
 
@@ -56,9 +56,9 @@ public class TeslaItems {
 		 */
 		@Override
 		public boolean hurtEnemy(ItemStack itemStack, LivingEntity livingEntity, LivingEntity livingEntity1) {
-			livingEntity.addEffect(new EffectInstance(Effects.WEAKNESS, 140, 1, false, false));
-			livingEntity.addEffect(new EffectInstance(Effects.MOVEMENT_SLOWDOWN, 140, 1, false, false));
-			livingEntity.addEffect(new EffectInstance(Effects.CONFUSION, 140, 1, false, false));
+			livingEntity.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, 140, 1, false, false));
+			livingEntity.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 140, 1, false, false));
+			livingEntity.addEffect(new MobEffectInstance(MobEffects.CONFUSION, 140, 1, false, false));
 			return super.hurtEnemy(itemStack, livingEntity, livingEntity1);
 		}
 	}
@@ -71,7 +71,7 @@ public class TeslaItems {
 		 * @param attackSpeedIn attack speed
 		 * @param properties the <code>Properties</code> for the item
 		 */
-		public TeslaPickaxe(IItemTier tier, int attackDamageIn, float attackSpeedIn, Properties properties) {
+		public TeslaPickaxe(Tier tier, int attackDamageIn, float attackSpeedIn, Properties properties) {
 			super(tier, attackDamageIn, attackSpeedIn, properties);
 		}
 
@@ -84,9 +84,9 @@ public class TeslaItems {
 		 */
 		@Override
 		public boolean hurtEnemy(ItemStack itemStack, LivingEntity livingEntity, LivingEntity livingEntity1) {
-			livingEntity.addEffect(new EffectInstance(Effects.WEAKNESS, 140, 1, false, false));
-			livingEntity.addEffect(new EffectInstance(Effects.MOVEMENT_SLOWDOWN, 140, 1, false, false));
-			livingEntity.addEffect(new EffectInstance(Effects.CONFUSION, 140, 1, false, false));
+			livingEntity.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, 140, 1, false, false));
+			livingEntity.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 140, 1, false, false));
+			livingEntity.addEffect(new MobEffectInstance(MobEffects.CONFUSION, 140, 1, false, false));
 			return super.hurtEnemy(itemStack, livingEntity, livingEntity1);
 		}
 	}
@@ -99,7 +99,7 @@ public class TeslaItems {
 		 * @param attackSpeedIn attack speed
 		 * @param properties the <code>Properties</code> for the item
 		 */
-		public TeslaShovel(IItemTier tier, int attackDamageIn, float attackSpeedIn, Properties properties) {
+		public TeslaShovel(Tier tier, int attackDamageIn, float attackSpeedIn, Properties properties) {
 			super(tier, attackDamageIn, attackSpeedIn, properties);
 		}
 
@@ -112,9 +112,9 @@ public class TeslaItems {
 		 */
 		@Override
 		public boolean hurtEnemy(ItemStack itemStack, LivingEntity livingEntity, LivingEntity livingEntity1) {
-			livingEntity.addEffect(new EffectInstance(Effects.WEAKNESS, 140, 1, false, false));
-			livingEntity.addEffect(new EffectInstance(Effects.MOVEMENT_SLOWDOWN, 140, 1, false, false));
-			livingEntity.addEffect(new EffectInstance(Effects.CONFUSION, 140, 1, false, false));
+			livingEntity.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, 140, 1, false, false));
+			livingEntity.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 140, 1, false, false));
+			livingEntity.addEffect(new MobEffectInstance(MobEffects.CONFUSION, 140, 1, false, false));
 			return super.hurtEnemy(itemStack, livingEntity, livingEntity1);
 		}
 	}
@@ -127,7 +127,7 @@ public class TeslaItems {
 		 * @param attackSpeedIn attack speed
 		 * @param properties the <code>Properties</code> for the item
 		 */
-		public TeslaHoe(IItemTier tier, int attackDamageIn, float attackSpeedIn, Properties properties) {
+		public TeslaHoe(Tier tier, int attackDamageIn, float attackSpeedIn, Properties properties) {
 			super(tier, attackDamageIn, attackSpeedIn, properties);
 		}
 
@@ -140,9 +140,9 @@ public class TeslaItems {
 		 */
 		@Override
 		public boolean hurtEnemy(ItemStack itemStack, LivingEntity livingEntity, LivingEntity livingEntity1) {
-			livingEntity.addEffect(new EffectInstance(Effects.WEAKNESS, 140, 1, false, false));
-			livingEntity.addEffect(new EffectInstance(Effects.MOVEMENT_SLOWDOWN, 140, 1, false, false));
-			livingEntity.addEffect(new EffectInstance(Effects.CONFUSION, 140, 1, false, false));
+			livingEntity.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, 140, 1, false, false));
+			livingEntity.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 140, 1, false, false));
+			livingEntity.addEffect(new MobEffectInstance(MobEffects.CONFUSION, 140, 1, false, false));
 			return super.hurtEnemy(itemStack, livingEntity, livingEntity1);
 		}
 	}

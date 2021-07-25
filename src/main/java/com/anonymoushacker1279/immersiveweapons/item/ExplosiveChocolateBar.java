@@ -1,11 +1,13 @@
 package com.anonymoushacker1279.immersiveweapons.item;
 
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.DamageSource;
-import net.minecraft.world.Explosion;
-import net.minecraft.world.World;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.level.Explosion;
+import net.minecraft.world.level.Level;
+
+import net.minecraft.world.item.Item.Properties;
 
 public class ExplosiveChocolateBar extends Item {
 
@@ -27,8 +29,8 @@ public class ExplosiveChocolateBar extends Item {
 	 * @return ItemStack
 	 */
 	@Override
-	public ItemStack finishUsingItem(ItemStack stack, World worldIn, LivingEntity entityLiving) {
-		worldIn.explode(null, damageSource, null, entityLiving.blockPosition().getX(), entityLiving.blockPosition().getY(), entityLiving.blockPosition().getZ(), 2.0F, false, Explosion.Mode.NONE);
+	public ItemStack finishUsingItem(ItemStack stack, Level worldIn, LivingEntity entityLiving) {
+		worldIn.explode(null, damageSource, null, entityLiving.blockPosition().getX(), entityLiving.blockPosition().getY(), entityLiving.blockPosition().getZ(), 2.0F, false, Explosion.BlockInteraction.NONE);
 		return super.finishUsingItem(stack, worldIn, entityLiving);
 	}
 }

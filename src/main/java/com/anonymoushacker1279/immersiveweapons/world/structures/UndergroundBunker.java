@@ -2,26 +2,27 @@ package com.anonymoushacker1279.immersiveweapons.world.structures;
 
 import com.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
 import com.mojang.serialization.Codec;
-import net.minecraft.util.Rotation;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MutableBoundingBox;
-import net.minecraft.util.registry.DynamicRegistries;
-import net.minecraft.world.biome.Biome;
-import net.minecraft.world.gen.ChunkGenerator;
-import net.minecraft.world.gen.GenerationStage.Decoration;
-import net.minecraft.world.gen.Heightmap;
-import net.minecraft.world.gen.feature.NoFeatureConfig;
-import net.minecraft.world.gen.feature.structure.Structure;
-import net.minecraft.world.gen.feature.structure.StructureStart;
-import net.minecraft.world.gen.feature.template.TemplateManager;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.RegistryAccess;
+import net.minecraft.world.level.ChunkPos;
+import net.minecraft.world.level.LevelHeightAccessor;
+import net.minecraft.world.level.biome.Biome;
+import net.minecraft.world.level.block.Rotation;
+import net.minecraft.world.level.chunk.ChunkGenerator;
+import net.minecraft.world.level.levelgen.GenerationStep.Decoration;
+import net.minecraft.world.level.levelgen.Heightmap;
+import net.minecraft.world.level.levelgen.feature.StructureFeature;
+import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
+import net.minecraft.world.level.levelgen.structure.StructureStart;
+import net.minecraft.world.level.levelgen.structure.templatesystem.StructureManager;
 
-public class UndergroundBunker extends Structure<NoFeatureConfig> {
+public class UndergroundBunker extends StructureFeature<NoneFeatureConfiguration> {
 
 	/**
 	 * Constructor for UndergroundBunker.
 	 * @param codec the <code>Codec</code> extending NoFeatureConfig
 	 */
-	public UndergroundBunker(Codec<NoFeatureConfig> codec) {
+	public UndergroundBunker(Codec<NoneFeatureConfiguration> codec) {
 		super(codec);
 	}
 
@@ -30,7 +31,7 @@ public class UndergroundBunker extends Structure<NoFeatureConfig> {
 	 * @return IStartFactory extending NoFeatureConfig
 	 */
 	@Override
-	public IStartFactory<NoFeatureConfig> getStartFactory() {
+	public StructureStartFactory<NoneFeatureConfiguration> getStartFactory() {
 		return UndergroundBunker.Start::new;
 	}
 
@@ -44,46 +45,35 @@ public class UndergroundBunker extends Structure<NoFeatureConfig> {
 	}
 
 
-	public static class Start extends StructureStart<NoFeatureConfig> {
+	public static class Start extends StructureStart<NoneFeatureConfiguration> {
 		/**
 		 * Constructor for Start.
 		 * @param structureIn the <code>Structure</code> extending NoFeatureConfig
-		 * @param chunkX the chunk X position
-		 * @param chunkZ the chunk Z position
-		 * @param mutableBoundingBox a <code>MutableBoundingBox</code> instance
 		 * @param referenceIn the reference ID
 		 * @param seedIn the world seed
 		 */
-		public Start(Structure<NoFeatureConfig> structureIn, int chunkX, int chunkZ, MutableBoundingBox mutableBoundingBox, int referenceIn, long seedIn) {
-			super(structureIn, chunkX, chunkZ, mutableBoundingBox, referenceIn, seedIn);
+		// TODO: Update javadocs
+		public Start(StructureFeature<NoneFeatureConfiguration> structureIn, ChunkPos chunkPos, int referenceIn, long seedIn) {
+			super(structureIn, chunkPos, referenceIn, seedIn);
 		}
 
-		/**
-		 * Generate structure pieces.
-		 * @param dynamicRegistryManager the <code>DynamicRegistries</code> instance
-		 * @param generator the <code>ChunkGenerator</code> instance
-		 * @param templateManagerIn the <code>TemplateManager</code> instance
-		 * @param chunkX the chunk X position
-		 * @param chunkZ the chunk Z position
-		 * @param biomeIn the <code>Biome</code> instance
-		 * @param config the <code>NoFeatureConfig</code> instance
-		 */
+		// TODO: Redo javadocs
 		@Override
-		public void generatePieces(DynamicRegistries dynamicRegistryManager, ChunkGenerator generator, TemplateManager templateManagerIn, int chunkX, int chunkZ, Biome biomeIn, NoFeatureConfig config) {
-
+		public void generatePieces(RegistryAccess registryAccess, ChunkGenerator generator, StructureManager templateManagerIn, ChunkPos chunkPos, Biome biome, NoneFeatureConfiguration config, LevelHeightAccessor heightAccessor) {
 			Rotation rotation = Rotation.values()[random.nextInt(Rotation.values().length)];
 
 			// Turns the chunk coordinates into actual coordinates we can use. (Gets center of that chunk)
-			int x = (chunkX << 4) + GeneralUtilities.getRandomNumber(0, 17);
-			int z = (chunkZ << 4) + GeneralUtilities.getRandomNumber(0, 17);
+			int x = (chunkPos.x << 4) + GeneralUtilities.getRandomNumber(0, 17);
+			int z = (chunkPos.z << 4) + GeneralUtilities.getRandomNumber(0, 17);
 
 			// Finds the y value of the terrain at location.
-			int surfaceY = generator.getBaseHeight(x, z, Heightmap.Type.WORLD_SURFACE_WG);
+			int surfaceY = generator.getBaseHeight(x, z, Heightmap.Types.WORLD_SURFACE_WG, heightAccessor);
 			BlockPos blockpos = new BlockPos(x, surfaceY - 7, z);
 
 			UndergroundBunkerPieces.start(templateManagerIn, blockpos, rotation, pieces, random);
 
-			calculateBoundingBox();
+			// TODO: Does this work properly?
+			createBoundingBox();
 		}
 	}
 }
