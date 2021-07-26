@@ -1,0 +1,64 @@
+{
+  "parent": "immersiveweapons:warm_and_toasty",
+  "display": {
+    "icon": {
+      "item": "minecraft:lava_bucket"
+    },
+    "title": {
+      "translate": "advancements.immersiveweapons.lava_bath.title"
+    },
+    "description": {
+      "translate": "advancements.immersiveweapons.lava_bath.description"
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "rewards": {
+    "experience": 35
+  },
+  "criteria": {
+    "hold": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "immersiveweapons:molten_helmet"
+            ]
+          },
+          {
+            "items": [
+              "immersiveweapons:molten_chestplate"
+            ]
+          },
+          {
+            "items": [
+              "immersiveweapons:molten_leggings"
+            ]
+          },
+          {
+            "items": [
+              "immersiveweapons:molten_boots"
+            ]
+          }
+        ]
+      }
+    },
+    "swim": {
+      "trigger": "minecraft:enter_block",
+      "conditions": {
+        "block": "minecraft:lava"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "hold"
+    ],
+    [
+      "swim"
+    ]
+  ]
+}

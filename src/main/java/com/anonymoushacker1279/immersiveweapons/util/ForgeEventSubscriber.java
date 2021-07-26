@@ -2,10 +2,11 @@ package com.anonymoushacker1279.immersiveweapons.util;
 
 import com.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import com.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.client.Minecraft;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.EntityViewRenderEvent.FogDensity;
 import net.minecraftforge.client.event.RenderBlockOverlayEvent;
@@ -50,8 +51,13 @@ public class ForgeEventSubscriber {
 				player.getItemBySlot(EquipmentSlot.LEGS).getItem() == DeferredRegistryHandler.MOLTEN_LEGGINGS.get() &&
 				player.getItemBySlot(EquipmentSlot.FEET).getItem() == DeferredRegistryHandler.MOLTEN_BOOTS.get()) {
 			if (player.isInLava()) {
-				event.setDensity(0.05F);
-				event.setCanceled(true);
+				if (Minecraft.getInstance().level != null) {
+					BlockState state = Minecraft.getInstance().level.getBlockState(player.eyeBlockPosition());
+					if (state.is(Blocks.LAVA)) {
+						event.setDensity(0.05F);
+						event.setCanceled(true);
+					}
+				}
 			}
 		}
 	}

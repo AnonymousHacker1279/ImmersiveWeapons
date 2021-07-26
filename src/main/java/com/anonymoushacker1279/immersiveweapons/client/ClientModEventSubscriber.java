@@ -38,10 +38,6 @@ public class ClientModEventSubscriber {
 	public static final KeyMapping toggleArmorEffect = new KeyMapping(ImmersiveWeapons.MOD_ID + ".key.toggleArmorEffect", 78, CATEGORY); // Keycode is N
 	private static final Minecraft mc = Minecraft.getInstance();
 
-	static {
-		ClientRegistry.registerKeyBinding(toggleArmorEffect);
-	}
-
 	/**
 	 * Event handler for the FMLClientSetupEvent.
 	 * @param event the <code>FMLClientSetupEvent</code> instance
@@ -53,6 +49,9 @@ public class ClientModEventSubscriber {
 		// Register GUI screens
 		MenuScreens.register(CustomContainerHolder.SMALL_PARTS_CONTAINER, SmallPartsTableScreen::new);
 		MenuScreens.register(CustomContainerHolder.TESLA_SYNTHESIZER_CONTAINER, TeslaSynthesizerScreen::new);
+
+		// Register keybinds
+		ClientRegistry.registerKeyBinding(toggleArmorEffect);
 
 		// Register block renderers
 		ItemBlockRenderTypes.setRenderLayer(DeferredRegistryHandler.BULLETPROOF_GLASS.get(), RenderType.cutoutMipped());

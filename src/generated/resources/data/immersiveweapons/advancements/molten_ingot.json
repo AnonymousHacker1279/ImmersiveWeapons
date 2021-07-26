@@ -1,0 +1,37 @@
+{
+  "parent": "immersiveweapons:molten_shard",
+  "display": {
+    "icon": {
+      "item": "immersiveweapons:molten_ingot"
+    },
+    "title": {
+      "translate": "advancements.immersiveweapons.molten_ingot.title"
+    },
+    "description": {
+      "translate": "advancements.immersiveweapons.molten_ingot.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "hold": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "immersiveweapons:molten_ingot"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "hold"
+    ]
+  ]
+}

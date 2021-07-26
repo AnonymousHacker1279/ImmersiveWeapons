@@ -1,0 +1,116 @@
+{
+  "parent": "immersiveweapons:tool_rod",
+  "display": {
+    "icon": {
+      "item": "immersiveweapons:iron_pike",
+      "nbt": "{Damage:0}"
+    },
+    "title": {
+      "translate": "advancements.immersiveweapons.pike.title"
+    },
+    "description": {
+      "translate": "advancements.immersiveweapons.pike.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "hold": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "immersiveweapons:wood_pike"
+            ]
+          }
+        ]
+      }
+    },
+    "hold1": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "immersiveweapons:stone_pike"
+            ]
+          }
+        ]
+      }
+    },
+    "hold2": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "immersiveweapons:iron_pike"
+            ]
+          }
+        ]
+      }
+    },
+    "hold3": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "immersiveweapons:copper_pike"
+            ]
+          }
+        ]
+      }
+    },
+    "hold4": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "immersiveweapons:gold_pike"
+            ]
+          }
+        ]
+      }
+    },
+    "hold5": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "immersiveweapons:diamond_pike"
+            ]
+          }
+        ]
+      }
+    },
+    "hold6": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "immersiveweapons:netherite_pike"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "hold",
+      "hold1",
+      "hold2",
+      "hold3",
+      "hold4",
+      "hold5",
+      "hold6"
+    ]
+  ]
+}
