@@ -29,7 +29,7 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 
 import java.util.Random;
 
-public class PanicAlarmBlock extends BaseEntityBlock implements SimpleWaterloggedBlock, EntityBlock {
+public class PanicAlarmBlock extends HorizontalDirectionalBlock implements SimpleWaterloggedBlock, EntityBlock {
 
 	public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
 	public static final DirectionProperty FACING = BlockStateProperties.FACING;
@@ -58,17 +58,12 @@ public class PanicAlarmBlock extends BaseEntityBlock implements SimpleWaterlogge
 	@Override
 	public VoxelShape getShape(BlockState state, BlockGetter reader, BlockPos pos, CollisionContext selectionContext) {
 		Vec3 vector3d = state.getOffset(reader, pos);
-		switch (state.getValue(FACING)) {
-			case NORTH:
-			default:
-				return SHAPE_NORTH.move(vector3d.x, vector3d.y, vector3d.z);
-			case SOUTH:
-				return SHAPE_SOUTH.move(vector3d.x, vector3d.y, vector3d.z);
-			case EAST:
-				return SHAPE_EAST.move(vector3d.x, vector3d.y, vector3d.z);
-			case WEST:
-				return SHAPE_WEST.move(vector3d.x, vector3d.y, vector3d.z);
-		}
+		return switch (state.getValue(FACING)) {
+			default -> SHAPE_NORTH.move(vector3d.x, vector3d.y, vector3d.z);
+			case SOUTH -> SHAPE_SOUTH.move(vector3d.x, vector3d.y, vector3d.z);
+			case EAST -> SHAPE_EAST.move(vector3d.x, vector3d.y, vector3d.z);
+			case WEST -> SHAPE_WEST.move(vector3d.x, vector3d.y, vector3d.z);
+		};
 	}
 
 	/**
@@ -78,16 +73,6 @@ public class PanicAlarmBlock extends BaseEntityBlock implements SimpleWaterlogge
 	@Override
 	public void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
 		builder.add(WATERLOGGED, FACING);
-	}
-
-	/**
-	 * Set the RenderShape of the block's model.
-	 * @param state the <code>BlockState</code> of the block
-	 * @return BlockRenderType
-	 */
-	@Override
-	public RenderShape getRenderShape(BlockState state) {
-		return RenderShape.MODEL;
 	}
 
 	/**
@@ -104,7 +89,7 @@ public class PanicAlarmBlock extends BaseEntityBlock implements SimpleWaterlogge
 	// TODO: Javdocs
 	@Override
 	public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState blockState, BlockEntityType<T> blockEntityType) {
-		return level.isClientSide ? null : createTickerHelper(blockEntityType, DeferredRegistryHandler.PANIC_ALARM_BLOCK_ENTITY.get(), PanicAlarmBlockEntity::serverTick);
+		return level.isClientSide ? null : BaseEntityBlock.createTickerHelper(blockEntityType, DeferredRegistryHandler.PANIC_ALARM_BLOCK_ENTITY.get(), PanicAlarmBlockEntity::serverTick);
 	}
 
 	/**
@@ -192,8 +177,7 @@ public class PanicAlarmBlock extends BaseEntityBlock implements SimpleWaterlogge
 		}
 		BlockEntity tileEntity = worldIn.getBlockEntity(pos);
 
-		if (tileEntity instanceof PanicAlarmBlockEntity) {
-			PanicAlarmBlockEntity panicAlarmTileEntity = (PanicAlarmBlockEntity) tileEntity;
+		if (tileEntity instanceof PanicAlarmBlockEntity panicAlarmTileEntity) {
 			if (worldIn.getBestNeighborSignal(pos) > 0) {
 				boolean isPowered = panicAlarmTileEntity.isPowered();
 

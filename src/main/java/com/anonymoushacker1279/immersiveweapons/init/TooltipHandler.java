@@ -1,9 +1,9 @@
 package com.anonymoushacker1279.immersiveweapons.init;
 
 import com.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.eventbus.api.EventPriority;

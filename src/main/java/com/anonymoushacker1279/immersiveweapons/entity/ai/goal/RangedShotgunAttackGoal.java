@@ -9,6 +9,7 @@ import net.minecraft.world.entity.monster.RangedAttackMob;
 import net.minecraft.world.entity.projectile.ProjectileUtil;
 
 import java.util.EnumSet;
+import java.util.function.Predicate;
 
 public class RangedShotgunAttackGoal<T extends PathfinderMob & RangedAttackMob> extends Goal {
 
@@ -160,7 +161,7 @@ public class RangedShotgunAttackGoal<T extends PathfinderMob & RangedAttackMob> 
 					}
 				}
 			} else if (--attackTime <= 0 && seeTime >= -60) {
-				entity.startUsingItem(ProjectileUtil.getWeaponHoldingHand(entity, DeferredRegistryHandler.BLUNDERBUSS.get()));
+				entity.startUsingItem(ProjectileUtil.getWeaponHoldingHand(entity, Predicate.isEqual(DeferredRegistryHandler.BLUNDERBUSS.get())));
 			}
 		}
 	}

@@ -1,8 +1,8 @@
 package com.anonymoushacker1279.immersiveweapons.container;
 
 import com.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
-import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.Container;
+import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.ContainerData;
 
 public class TeslaSynthesizerContainer extends AbstractTeslaSynthesizerContainer {

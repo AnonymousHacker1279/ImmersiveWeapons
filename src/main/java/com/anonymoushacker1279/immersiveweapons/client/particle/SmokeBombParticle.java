@@ -1,10 +1,10 @@
 package com.anonymoushacker1279.immersiveweapons.client.particle;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.particle.ParticleRenderType;
 import net.minecraft.client.particle.TextureSheetParticle;
 import net.minecraft.client.renderer.LightTexture;
-import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.core.BlockPos;
 
 import java.awt.*;
@@ -65,8 +65,8 @@ public class SmokeBombParticle extends TextureSheetParticle {
 		if (mc.level != null) {
 			lightAtParticleLocation = mc.level.getMaxLocalRawBrightness(blockPos);
 		}
-		final int BLOCK_LIGHT = lightAtParticleLocation;
-		final int SKY_LIGHT = lightAtParticleLocation;
+		int BLOCK_LIGHT = lightAtParticleLocation;
+		int SKY_LIGHT = lightAtParticleLocation;
 		return LightTexture.pack(BLOCK_LIGHT, SKY_LIGHT);
 	}
 

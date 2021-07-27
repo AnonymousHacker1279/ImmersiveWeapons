@@ -97,21 +97,20 @@ public class VentusArmorItem extends ArmorItem {
 		armorIsToggled = !armorIsToggled;
 	}
 
-	public static class VentusArmorItemPacketHandler {
-
-		private final boolean clientSide;
+	public record VentusArmorItemPacketHandler(boolean clientSide) {
 
 		/**
 		 * Constructor for VentusArmorItemPacketHandler.
+		 *
 		 * @param clientSide if the packet is from the client
 		 */
-		VentusArmorItemPacketHandler(boolean clientSide) {
-			this.clientSide = clientSide;
+		public VentusArmorItemPacketHandler {
 		}
 
 		/**
 		 * Encodes a packet
-		 * @param msg the <code>VentusArmorItemPacketHandler</code> message being sent
+		 *
+		 * @param msg          the <code>VentusArmorItemPacketHandler</code> message being sent
 		 * @param packetBuffer the <code>PacketBuffer</code> containing packet data
 		 */
 		public static void encode(VentusArmorItemPacketHandler msg, FriendlyByteBuf packetBuffer) {
@@ -120,6 +119,7 @@ public class VentusArmorItem extends ArmorItem {
 
 		/**
 		 * Decodes a packet
+		 *
 		 * @param packetBuffer the <code>PacketBuffer</code> containing packet data
 		 * @return VentusArmorItemPacketHandler
 		 */
@@ -129,21 +129,20 @@ public class VentusArmorItem extends ArmorItem {
 
 		/**
 		 * Handles an incoming packet, by sending it to the client/server
-		 * @param msg the <code>VentusArmorItemPacketHandler</code> message being sent
+		 *
 		 * @param contextSupplier the <code>Supplier</code> providing context
 		 */
-		public static void handle(VentusArmorItemPacketHandler msg, Supplier<Context> contextSupplier) {
+		public static void handle(Supplier<Context> contextSupplier) {
 			NetworkEvent.Context context = contextSupplier.get();
-			context.enqueueWork(() -> DistExecutor.runWhenOn(Dist.CLIENT, () -> () -> handleOnServer(msg)));
-			context.enqueueWork(() -> DistExecutor.runWhenOn(Dist.DEDICATED_SERVER, () -> () -> handleOnServer(msg)));
+			context.enqueueWork(() -> DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> VentusArmorItemPacketHandler::handleOnServer));
+			context.enqueueWork(() -> DistExecutor.unsafeRunWhenOn(Dist.DEDICATED_SERVER, () -> VentusArmorItemPacketHandler::handleOnServer));
 			context.setPacketHandled(true);
 		}
 
 		/**
 		 * Runs specifically on the server, when a packet is received
-		 * @param msg the <code>VentusArmorItemPacketHandler</code> message being sent
 		 */
-		private static void handleOnServer(VentusArmorItemPacketHandler msg) {
+		private static void handleOnServer() {
 			VentusArmorItem.toggleEffect();
 		}
 	}

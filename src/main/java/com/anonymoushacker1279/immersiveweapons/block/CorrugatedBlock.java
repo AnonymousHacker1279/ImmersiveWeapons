@@ -22,9 +22,7 @@ public class CorrugatedBlock {
 
 	public static class CorrugatedBlockNormal extends HorizontalDirectionalBlock implements SimpleWaterloggedBlock {
 
-		public static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
 		public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
-		// TODO: Check North shape
 		static final VoxelShape SHAPE_NORTH = Block.box(0.0D, 0.0D, 14.0D, 16.0D, 16.0D, 16.0D);
 		static final VoxelShape SHAPE_SOUTH = Block.box(0.0D, 0.0D, 0.0D, 16.0D, 16.0D, 2.0D);
 		static final VoxelShape SHAPE_EAST = Block.box(0.0D, 0.0D, 0.0D, 2.0D, 16.0D, 16.0D);
@@ -50,17 +48,12 @@ public class CorrugatedBlock {
 		@Override
 		public VoxelShape getShape(BlockState state, BlockGetter reader, BlockPos pos, CollisionContext selectionContext) {
 			Vec3 vector3d = state.getOffset(reader, pos);
-			switch (state.getValue(FACING)) {
-				case NORTH:
-				default:
-					return SHAPE_NORTH.move(vector3d.x, vector3d.y, vector3d.z);
-				case SOUTH:
-					return SHAPE_SOUTH.move(vector3d.x, vector3d.y, vector3d.z);
-				case EAST:
-					return SHAPE_EAST.move(vector3d.x, vector3d.y, vector3d.z);
-				case WEST:
-					return SHAPE_WEST.move(vector3d.x, vector3d.y, vector3d.z);
-			}
+			return switch (state.getValue(FACING)) {
+				default -> SHAPE_NORTH.move(vector3d.x, vector3d.y, vector3d.z);
+				case SOUTH -> SHAPE_SOUTH.move(vector3d.x, vector3d.y, vector3d.z);
+				case EAST -> SHAPE_EAST.move(vector3d.x, vector3d.y, vector3d.z);
+				case WEST -> SHAPE_WEST.move(vector3d.x, vector3d.y, vector3d.z);
+			};
 		}
 
 		/**

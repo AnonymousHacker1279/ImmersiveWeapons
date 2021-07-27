@@ -1,13 +1,11 @@
 package com.anonymoushacker1279.immersiveweapons.item;
 
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.level.Explosion;
 import net.minecraft.world.level.Level;
-
-import net.minecraft.world.item.Item.Properties;
 
 public class ExplosiveChocolateBar extends Item {
 

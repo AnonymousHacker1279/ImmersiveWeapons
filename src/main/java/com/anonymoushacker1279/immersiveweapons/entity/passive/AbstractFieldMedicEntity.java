@@ -129,8 +129,7 @@ public abstract class AbstractFieldMedicEntity extends PathfinderMob {
 	@Override
 	public void rideTick() {
 		super.rideTick();
-		if (getVehicle() instanceof PathfinderMob) {
-			PathfinderMob creatureEntity = (PathfinderMob) getVehicle();
+		if (getVehicle() instanceof PathfinderMob creatureEntity) {
 			yBodyRot = creatureEntity.yBodyRot;
 		}
 	}
@@ -177,7 +176,7 @@ public abstract class AbstractFieldMedicEntity extends PathfinderMob {
 	 * Set the entity's combat AI.
 	 */
 	private void setCombatTask() {
-		if (level != null && !level.isClientSide) {
+		if (!level.isClientSide) {
 			goalSelector.removeGoal(aiAttackOnCollide);
 			setItemInHand(InteractionHand.MAIN_HAND, new ItemStack(DeferredRegistryHandler.USED_SYRINGE.get()));
 			goalSelector.addGoal(12, aiAttackOnCollide);

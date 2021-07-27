@@ -2,9 +2,9 @@ package com.anonymoushacker1279.immersiveweapons.entity.monster;
 
 import com.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
 import com.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.sounds.SoundEvent;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.Level;
 
 public class WanderingWarriorEntity extends AbstractWanderingWarriorEntity {

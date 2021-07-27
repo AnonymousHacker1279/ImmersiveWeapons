@@ -69,17 +69,12 @@ public class SandbagBlock extends HorizontalDirectionalBlock {
 	@Override
 	public VoxelShape getShape(BlockState state, BlockGetter reader, BlockPos pos, CollisionContext selectionContext) {
 		Vec3 vector3d = state.getOffset(reader, pos);
-		switch (state.getValue(BAGS)) {
-			case 1:
-			default:
-				return SHAPE_1.move(vector3d.x, vector3d.y, vector3d.z);
-			case 2:
-				return SHAPE_2.move(vector3d.x, vector3d.y, vector3d.z);
-			case 3:
-				return SHAPE_3.move(vector3d.x, vector3d.y, vector3d.z);
-			case 4:
-				return SHAPE_4.move(vector3d.x, vector3d.y, vector3d.z);
-		}
+		return switch (state.getValue(BAGS)) {
+			default -> SHAPE_1.move(vector3d.x, vector3d.y, vector3d.z);
+			case 2 -> SHAPE_2.move(vector3d.x, vector3d.y, vector3d.z);
+			case 3 -> SHAPE_3.move(vector3d.x, vector3d.y, vector3d.z);
+			case 4 -> SHAPE_4.move(vector3d.x, vector3d.y, vector3d.z);
+		};
 	}
 
 	/**

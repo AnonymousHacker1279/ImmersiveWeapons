@@ -1,14 +1,14 @@
 package com.anonymoushacker1279.immersiveweapons.entity.ai.goal;
 
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.FenceGateBlock;
+import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.ai.navigation.GroundPathNavigation;
-import net.minecraft.world.level.pathfinder.Path;
-import net.minecraft.world.level.pathfinder.Node;
 import net.minecraft.world.entity.ai.util.GoalUtils;
-import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.block.FenceGateBlock;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.pathfinder.Node;
+import net.minecraft.world.level.pathfinder.Path;
 
 public abstract class InteractFenceGateGoal extends Goal {
 

@@ -125,21 +125,20 @@ public class TeslaArmorItem extends ArmorItem {
 		}
 	}
 
-	public static class TeslaArmorItemPacketHandler {
-
-		private final boolean clientSide;
+	public record TeslaArmorItemPacketHandler(boolean clientSide) {
 
 		/**
 		 * Constructor for TeslaArmorItemPacketHandler.
+		 *
 		 * @param clientSide if the packet is from the client
 		 */
-		TeslaArmorItemPacketHandler(boolean clientSide) {
-			this.clientSide = clientSide;
+		public TeslaArmorItemPacketHandler {
 		}
 
 		/**
 		 * Encodes a packet
-		 * @param msg the <code>TeslaArmorItemPacketHandler</code> message being sent
+		 *
+		 * @param msg          the <code>TeslaArmorItemPacketHandler</code> message being sent
 		 * @param packetBuffer the <code>PacketBuffer</code> containing packet data
 		 */
 		public static void encode(TeslaArmorItemPacketHandler msg, FriendlyByteBuf packetBuffer) {
@@ -148,6 +147,7 @@ public class TeslaArmorItem extends ArmorItem {
 
 		/**
 		 * Decodes a packet
+		 *
 		 * @param packetBuffer the <code>PacketBuffer</code> containing packet data
 		 * @return TeslaArmorItemPacketHandler
 		 */
@@ -157,21 +157,20 @@ public class TeslaArmorItem extends ArmorItem {
 
 		/**
 		 * Handles an incoming packet, by sending it to the client/server
-		 * @param msg the <code>TeslaArmorItemPacketHandler</code> message being sent
+		 *
 		 * @param contextSupplier the <code>Supplier</code> providing context
 		 */
-		public static void handle(TeslaArmorItemPacketHandler msg, Supplier<Context> contextSupplier) {
+		public static void handle(Supplier<Context> contextSupplier) {
 			NetworkEvent.Context context = contextSupplier.get();
-			context.enqueueWork(() -> DistExecutor.runWhenOn(Dist.CLIENT, () -> () -> handleOnServer(msg)));
-			context.enqueueWork(() -> DistExecutor.runWhenOn(Dist.DEDICATED_SERVER, () -> () -> handleOnServer(msg)));
+			context.enqueueWork(() -> DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> TeslaArmorItemPacketHandler::handleOnServer));
+			context.enqueueWork(() -> DistExecutor.unsafeRunWhenOn(Dist.DEDICATED_SERVER, () -> TeslaArmorItemPacketHandler::handleOnServer));
 			context.setPacketHandled(true);
 		}
 
 		/**
 		 * Runs specifically on the server, when a packet is received
-		 * @param msg the <code>TeslaArmorItemPacketHandler</code> message being sent
 		 */
-		private static void handleOnServer(TeslaArmorItemPacketHandler msg) {
+		private static void handleOnServer() {
 			TeslaArmorItem.toggleEffect();
 		}
 	}

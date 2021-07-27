@@ -68,17 +68,12 @@ public class BarrelTapBlock extends HorizontalDirectionalBlock implements Simple
 	@Override
 	public VoxelShape getShape(BlockState state, BlockGetter reader, BlockPos pos, CollisionContext selectionContext) {
 		Vec3 vector3d = state.getOffset(reader, pos);
-		switch (state.getValue(FACING)) {
-			case NORTH:
-			default:
-				return SHAPE_SOUTH.move(vector3d.x, vector3d.y, vector3d.z);
-			case SOUTH:
-				return SHAPE_NORTH.move(vector3d.x, vector3d.y, vector3d.z);
-			case EAST:
-				return SHAPE_EAST.move(vector3d.x, vector3d.y, vector3d.z);
-			case WEST:
-				return SHAPE_WEST.move(vector3d.x, vector3d.y, vector3d.z);
-		}
+		return switch (state.getValue(FACING)) {
+			default -> SHAPE_SOUTH.move(vector3d.x, vector3d.y, vector3d.z);
+			case SOUTH -> SHAPE_NORTH.move(vector3d.x, vector3d.y, vector3d.z);
+			case EAST -> SHAPE_EAST.move(vector3d.x, vector3d.y, vector3d.z);
+			case WEST -> SHAPE_WEST.move(vector3d.x, vector3d.y, vector3d.z);
+		};
 	}
 
 	/**
@@ -134,22 +129,12 @@ public class BarrelTapBlock extends HorizontalDirectionalBlock implements Simple
 		} else {
 			if (blockStateNorth.is(Blocks.BARREL) || blockStateSouth.is(Blocks.BARREL) || blockStateEast.is(Blocks.BARREL) || blockStateWest.is(Blocks.BARREL)) {
 
-				BlockEntity tileEntity;
-
-				switch (directionToUse) {
-					case "south":
-						tileEntity = worldIn.getBlockEntity(pos.south());
-						break;
-					case "east":
-						tileEntity = worldIn.getBlockEntity(pos.east());
-						break;
-					case "west":
-						tileEntity = worldIn.getBlockEntity(pos.west());
-						break;
-					default:
-						tileEntity = worldIn.getBlockEntity(pos.north());
-						break;
-				}
+				BlockEntity tileEntity = switch (directionToUse) {
+					case "south" -> worldIn.getBlockEntity(pos.south());
+					case "east" -> worldIn.getBlockEntity(pos.east());
+					case "west" -> worldIn.getBlockEntity(pos.west());
+					default -> worldIn.getBlockEntity(pos.north());
+				};
 
 				ItemStack itemStack;
 

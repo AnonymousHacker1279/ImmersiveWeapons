@@ -6,8 +6,6 @@ import net.minecraft.world.entity.projectile.AbstractArrow.Pickup;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 
-import net.minecraft.world.item.Item.Properties;
-
 public class ArrowItems {
 
 	public static class CopperArrowItem extends CustomArrowItem {

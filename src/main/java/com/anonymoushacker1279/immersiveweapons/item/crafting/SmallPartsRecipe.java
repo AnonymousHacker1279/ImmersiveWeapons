@@ -13,30 +13,26 @@ import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.registries.ForgeRegistryEntry;
 
-public class SmallPartsRecipe implements Recipe<Container> {
-
-	private final Ingredient material;
-	private final Ingredient blueprint;
-	private final ItemStack result;
-	private final ResourceLocation recipeId;
+public record SmallPartsRecipe(ResourceLocation recipeId,
+                               Ingredient material,
+                               Ingredient blueprint,
+                               ItemStack result) implements Recipe<Container> {
 
 	/**
 	 * Constructor for SmallPartsRecipe.
-	 * @param recipeId the <code>ResourceLocation</code> for the recipe
-	 * @param material the first <code>Ingredient</code>
+	 *
+	 * @param recipeId  the <code>ResourceLocation</code> for the recipe
+	 * @param material  the first <code>Ingredient</code>
 	 * @param blueprint the second <code>Ingredient</code>
-	 * @param result the result <code>ItemStack</code>
+	 * @param result    the result <code>ItemStack</code>
 	 */
-	SmallPartsRecipe(ResourceLocation recipeId, Ingredient material, Ingredient blueprint, ItemStack result) {
-		this.recipeId = recipeId;
-		this.material = material;
-		this.blueprint = blueprint;
-		this.result = result;
+	public SmallPartsRecipe {
 	}
 
 	/**
 	 * Used to check if a recipe matches current crafting inventory.
-	 * @param inv the <code>IInventory</code> instance
+	 *
+	 * @param inv     the <code>IInventory</code> instance
 	 * @param worldIn the current <code>World</code>
 	 * @return boolean
 	 */
@@ -47,15 +43,16 @@ public class SmallPartsRecipe implements Recipe<Container> {
 
 	/**
 	 * Returns an Item that is the result of this recipe.
+	 *
 	 * @param inv the <code>IInventory</code> instance
 	 * @return ItemStack
 	 */
 	@Override
 	public ItemStack assemble(Container inv) {
 		ItemStack itemstack = result.copy();
-		CompoundTag compoundnbt = inv.getItem(0).getTag();
-		if (compoundnbt != null) {
-			itemstack.setTag(compoundnbt.copy());
+		CompoundTag compoundTag = inv.getItem(0).getTag();
+		if (compoundTag != null) {
+			itemstack.setTag(compoundTag.copy());
 		}
 
 		return itemstack;
@@ -63,7 +60,8 @@ public class SmallPartsRecipe implements Recipe<Container> {
 
 	/**
 	 * Used to determine if this recipe can fit in a grid of the given width/height.
-	 * @param width the width of the grid
+	 *
+	 * @param width  the width of the grid
 	 * @param height the height of the grid
 	 * @return boolean
 	 */
@@ -75,6 +73,7 @@ public class SmallPartsRecipe implements Recipe<Container> {
 	/**
 	 * Get the result of this recipe, usually for display purposes (e.g. recipe book). If your recipe has more than one
 	 * possible result (e.g. it's dynamic and depends on its inputs), then return an empty stack.
+	 *
 	 * @return ItemStack
 	 */
 	@Override
@@ -84,6 +83,7 @@ public class SmallPartsRecipe implements Recipe<Container> {
 
 	/**
 	 * Check if the given ItemStack is a valid addition item.
+	 *
 	 * @param blueprint the <code>ItemStack</code> instance
 	 * @return boolean
 	 */
@@ -93,6 +93,7 @@ public class SmallPartsRecipe implements Recipe<Container> {
 
 	/**
 	 * Get the toast symbol.
+	 *
 	 * @return ItemStack
 	 */
 	@Override
@@ -102,6 +103,7 @@ public class SmallPartsRecipe implements Recipe<Container> {
 
 	/**
 	 * Get the recipe ID.
+	 *
 	 * @return ResourceLocation
 	 */
 	@Override
@@ -111,6 +113,7 @@ public class SmallPartsRecipe implements Recipe<Container> {
 
 	/**
 	 * Get the recipe serializer.
+	 *
 	 * @return IRecipeSerializer
 	 */
 	@Override
@@ -120,6 +123,7 @@ public class SmallPartsRecipe implements Recipe<Container> {
 
 	/**
 	 * Get the recipe type.
+	 *
 	 * @return IRecipeType
 	 */
 	@Override
@@ -129,6 +133,7 @@ public class SmallPartsRecipe implements Recipe<Container> {
 
 	/**
 	 * Get the recipe's ingredients.
+	 *
 	 * @return NonNullList extending Ingredient
 	 */
 	@Override
@@ -142,8 +147,9 @@ public class SmallPartsRecipe implements Recipe<Container> {
 	public static class Serializer extends ForgeRegistryEntry<RecipeSerializer<?>> implements RecipeSerializer<SmallPartsRecipe> {
 		/**
 		 * Serialize from JSON.
+		 *
 		 * @param recipeId the <code>ResourceLocation</code> for the recipe
-		 * @param json the <code>JsonObject</code> instance
+		 * @param json     the <code>JsonObject</code> instance
 		 * @return SmallPartsRecipe
 		 */
 		@Override
@@ -156,8 +162,9 @@ public class SmallPartsRecipe implements Recipe<Container> {
 
 		/**
 		 * Serialize from JSON on the network.
+		 *
 		 * @param recipeId the <code>ResourceLocation</code> for the recipe
-		 * @param buffer the <code>PacketBuffer</code> instance
+		 * @param buffer   the <code>PacketBuffer</code> instance
 		 * @return SmallPartsRecipe
 		 */
 		@Override
@@ -170,6 +177,7 @@ public class SmallPartsRecipe implements Recipe<Container> {
 
 		/**
 		 * Serialize to JSON on the network.
+		 *
 		 * @param buffer the <code>PacketBuffer</code> instance
 		 * @param recipe the <code>SmallPartsRecipe</code> instance
 		 */

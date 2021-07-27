@@ -183,8 +183,7 @@ public class ImmersiveWeapons {
 	 * @param event the <code>WorldEvent.Load</code> instance
 	 */
 	private void worldLoadEvent(WorldEvent.Load event) {
-		if (event.getWorld() instanceof ServerLevel) {
-			ServerLevel serverWorld = (ServerLevel) event.getWorld();
+		if (event.getWorld() instanceof ServerLevel serverWorld) {
 
 			if (serverWorld.getChunkSource().getGenerator() instanceof FlatLevelSource &&
 					serverWorld.dimension().equals(Level.OVERWORLD)) {

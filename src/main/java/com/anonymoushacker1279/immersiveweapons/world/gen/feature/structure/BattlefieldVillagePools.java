@@ -2,12 +2,12 @@ package com.anonymoushacker1279.immersiveweapons.world.gen.feature.structure;
 
 import com.google.common.collect.ImmutableList;
 import com.mojang.datafixers.util.Pair;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.data.worldgen.Features;
-import net.minecraft.world.level.levelgen.feature.structures.StructureTemplatePool;
 import net.minecraft.data.worldgen.Pools;
-import net.minecraft.world.level.levelgen.feature.structures.StructurePoolElement;
 import net.minecraft.data.worldgen.ProcessorLists;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.levelgen.feature.structures.StructurePoolElement;
+import net.minecraft.world.level.levelgen.feature.structures.StructureTemplatePool;
 
 public class BattlefieldVillagePools {
 

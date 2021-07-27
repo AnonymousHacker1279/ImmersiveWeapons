@@ -183,16 +183,7 @@ public abstract class AbstractBulletEntity extends AbstractArrow {
 			double d5 = getX() + d3;
 			double d1 = getY() + d4;
 			double d2 = getZ() + d0;
-			double horizontalDistanceSqr = vector3d.horizontalDistanceSqr();
-			if (flag) {
-				yRot = (float) (Mth.atan2(-d3, -d0) * (180F / (float) Math.PI));
-			} else {
-				yRot = (float) (Mth.atan2(d3, d0) * (180F / (float) Math.PI));
-			}
 
-			xRot = (float) (Mth.atan2(d4, horizontalDistanceSqr) * (180F / (float) Math.PI));
-			xRot = lerpRotation(xRotO, (float) xRot);
-			yRot = lerpRotation(yRotO, (float) yRot);
 			float f2 = 0.99F;
 			if (isInWater()) {
 				for (int j = 0; j < 4; ++j) {
@@ -278,8 +269,7 @@ public abstract class AbstractBulletEntity extends AbstractArrow {
 				return;
 			}
 
-			if (entity instanceof LivingEntity) {
-				LivingEntity livingEntity = (LivingEntity) entity;
+			if (entity instanceof LivingEntity livingEntity) {
 
 				if (knockbackStrength > 0) {
 					Vec3 vector3d = getDeltaMovement().multiply(1.0D, 0.0D, 1.0D).normalize().scale(knockbackStrength * 0.6D);

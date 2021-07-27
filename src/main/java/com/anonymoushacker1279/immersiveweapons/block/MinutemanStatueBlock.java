@@ -15,15 +15,13 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
-import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
-public class MinutemanStatueBlock extends BaseEntityBlock implements SimpleWaterloggedBlock {
+public class MinutemanStatueBlock extends HorizontalDirectionalBlock implements EntityBlock, SimpleWaterloggedBlock {
 
-	public static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
 	public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
 	protected static final VoxelShape SHAPE = Block.box(2.0D, 0.0D, 2.0D, 14.0D, 10.0D, 14.0D);
 
@@ -34,16 +32,6 @@ public class MinutemanStatueBlock extends BaseEntityBlock implements SimpleWater
 	public MinutemanStatueBlock(Properties properties) {
 		super(properties);
 		registerDefaultState(stateDefinition.any().setValue(FACING, Direction.NORTH).setValue(WATERLOGGED, false));
-	}
-
-	/**
-	 * Set the RenderShape of the block's model.
-	 * @param state the <code>BlockState</code> of the block
-	 * @return BlockRenderType
-	 */
-	@Override
-	public RenderShape getRenderShape(BlockState state) {
-		return RenderShape.MODEL;
 	}
 
 	/**
@@ -60,7 +48,7 @@ public class MinutemanStatueBlock extends BaseEntityBlock implements SimpleWater
 	// TODO: Javdocs
 	@Override
 	public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState blockState, BlockEntityType<T> blockEntityType) {
-		return level.isClientSide ? null : createTickerHelper(blockEntityType, DeferredRegistryHandler.MINUTEMAN_STATUE_BLOCK_ENTITY.get(), MinutemanStatueBlockEntity::serverTick);
+		return level.isClientSide ? null : BaseEntityBlock.createTickerHelper(blockEntityType, DeferredRegistryHandler.MINUTEMAN_STATUE_BLOCK_ENTITY.get(), MinutemanStatueBlockEntity::serverTick);
 	}
 
 	/**

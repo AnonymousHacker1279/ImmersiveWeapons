@@ -13,35 +13,29 @@ import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.registries.ForgeRegistryEntry;
 
-public class TeslaSynthesizerRecipe implements Recipe<Container> {
-
-	private final int cookTime;
-	private final Ingredient blockIngredient;
-	private final Ingredient material1;
-	private final Ingredient material2;
-	private final ItemStack result;
-	private final ResourceLocation recipeId;
+public record TeslaSynthesizerRecipe(ResourceLocation recipeId,
+                                     Ingredient blockIngredient,
+                                     Ingredient material1,
+                                     Ingredient material2,
+                                     ItemStack result,
+                                     int cookTime) implements Recipe<Container> {
 
 	/**
 	 * Constructor for SmallPartsRecipe.
-	 * @param recipeId the <code>ResourceLocation</code> for the recipe
+	 *
+	 * @param recipeId        the <code>ResourceLocation</code> for the recipe
 	 * @param blockIngredient the first <code>Ingredient</code>
-	 * @param material1 the second <code>Ingredient</code>
-	 * @param material2 the third <code>Ingredient</code>
-	 * @param result the result <code>ItemStack</code>
-	 * @param cookTime the cooking time
+	 * @param material1       the second <code>Ingredient</code>
+	 * @param material2       the third <code>Ingredient</code>
+	 * @param result          the result <code>ItemStack</code>
+	 * @param cookTime        the cooking time
 	 */
-	TeslaSynthesizerRecipe(ResourceLocation recipeId, Ingredient blockIngredient, Ingredient material1, Ingredient material2, ItemStack result, int cookTime) {
-		this.recipeId = recipeId;
-		this.blockIngredient = blockIngredient;
-		this.material1 = material1;
-		this.material2 = material2;
-		this.result = result;
-		this.cookTime = cookTime;
+	public TeslaSynthesizerRecipe {
 	}
 
 	/**
 	 * Get the cook time.
+	 *
 	 * @return int
 	 */
 	public int getCookTime() {
@@ -50,7 +44,8 @@ public class TeslaSynthesizerRecipe implements Recipe<Container> {
 
 	/**
 	 * Used to check if a recipe matches current crafting inventory.
-	 * @param inv the <code>IInventory</code> instance
+	 *
+	 * @param inv     the <code>IInventory</code> instance
 	 * @param worldIn the current <code>World</code>
 	 * @return boolean
 	 */
@@ -61,15 +56,16 @@ public class TeslaSynthesizerRecipe implements Recipe<Container> {
 
 	/**
 	 * Returns an Item that is the result of this recipe.
+	 *
 	 * @param inv the <code>IInventory</code> instance
 	 * @return ItemStack
 	 */
 	@Override
 	public ItemStack assemble(Container inv) {
 		ItemStack itemstack = result.copy();
-		CompoundTag compoundnbt = inv.getItem(4).getTag();
-		if (compoundnbt != null) {
-			itemstack.setTag(compoundnbt.copy());
+		CompoundTag compoundTag = inv.getItem(4).getTag();
+		if (compoundTag != null) {
+			itemstack.setTag(compoundTag.copy());
 		}
 
 		return itemstack;
@@ -77,7 +73,8 @@ public class TeslaSynthesizerRecipe implements Recipe<Container> {
 
 	/**
 	 * Used to determine if this recipe can fit in a grid of the given width/height.
-	 * @param width the width of the grid
+	 *
+	 * @param width  the width of the grid
 	 * @param height the height of the grid
 	 * @return boolean
 	 */
@@ -89,6 +86,7 @@ public class TeslaSynthesizerRecipe implements Recipe<Container> {
 	/**
 	 * Get the result of this recipe, usually for display purposes (e.g. recipe book). If your recipe has more than one
 	 * possible result (e.g. it's dynamic and depends on its inputs), then return an empty stack.
+	 *
 	 * @return ItemStack
 	 */
 	@Override
@@ -98,6 +96,7 @@ public class TeslaSynthesizerRecipe implements Recipe<Container> {
 
 	/**
 	 * Get the toast symbol.
+	 *
 	 * @return ItemStack
 	 */
 	@Override
@@ -107,6 +106,7 @@ public class TeslaSynthesizerRecipe implements Recipe<Container> {
 
 	/**
 	 * Get the recipe ID.
+	 *
 	 * @return ResourceLocation
 	 */
 	@Override
@@ -116,6 +116,7 @@ public class TeslaSynthesizerRecipe implements Recipe<Container> {
 
 	/**
 	 * Get the recipe serializer.
+	 *
 	 * @return IRecipeSerializer
 	 */
 	@Override
@@ -125,6 +126,7 @@ public class TeslaSynthesizerRecipe implements Recipe<Container> {
 
 	/**
 	 * Get the recipe type.
+	 *
 	 * @return IRecipeType
 	 */
 	@Override
@@ -134,6 +136,7 @@ public class TeslaSynthesizerRecipe implements Recipe<Container> {
 
 	/**
 	 * Get the recipe's ingredients.
+	 *
 	 * @return NonNullList extending Ingredient
 	 */
 	@Override
@@ -148,8 +151,9 @@ public class TeslaSynthesizerRecipe implements Recipe<Container> {
 	public static class Serializer extends ForgeRegistryEntry<RecipeSerializer<?>> implements RecipeSerializer<TeslaSynthesizerRecipe> {
 		/**
 		 * Serialize from JSON.
+		 *
 		 * @param recipeId the <code>ResourceLocation</code> for the recipe
-		 * @param json the <code>JsonObject</code> instance
+		 * @param json     the <code>JsonObject</code> instance
 		 * @return TeslaSynthesizerRecipe
 		 */
 		@Override
@@ -164,8 +168,9 @@ public class TeslaSynthesizerRecipe implements Recipe<Container> {
 
 		/**
 		 * Serialize from JSON on the network.
+		 *
 		 * @param recipeId the <code>ResourceLocation</code> for the recipe
-		 * @param buffer the <code>PacketBuffer</code> instance
+		 * @param buffer   the <code>PacketBuffer</code> instance
 		 * @return TeslaSynthesizerRecipe
 		 */
 		@Override
@@ -180,6 +185,7 @@ public class TeslaSynthesizerRecipe implements Recipe<Container> {
 
 		/**
 		 * Serialize to JSON on the network.
+		 *
 		 * @param buffer the <code>PacketBuffer</code> instance
 		 * @param recipe the <code>TeslaSynthesizerRecipe</code> instance
 		 */

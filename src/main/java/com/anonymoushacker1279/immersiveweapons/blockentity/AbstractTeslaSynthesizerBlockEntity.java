@@ -57,34 +57,22 @@ public abstract class AbstractTeslaSynthesizerBlockEntity extends BaseContainerB
 	final ContainerData teslaSynthesizerData = new ContainerData() {
 		@Override
 		public int get(int index) {
-			switch (index) {
-				case 0:
-					return burnTime;
-				case 1:
-					return burnTimeTotal;
-				case 2:
-					return cookTime;
-				case 3:
-					return cookTimeTotal;
-				default:
-					return 0;
-			}
+			return switch (index) {
+				case 0 -> burnTime;
+				case 1 -> burnTimeTotal;
+				case 2 -> cookTime;
+				case 3 -> cookTimeTotal;
+				default -> 0;
+			};
 		}
 
 		@Override
 		public void set(int index, int value) {
 			switch (index) {
-				case 0:
-					burnTime = value;
-					break;
-				case 1:
-					burnTimeTotal = value;
-					break;
-				case 2:
-					cookTime = value;
-					break;
-				case 3:
-					cookTimeTotal = value;
+				case 0 -> burnTime = value;
+				case 1 -> burnTimeTotal = value;
+				case 2 -> cookTime = value;
+				case 3 -> cookTimeTotal = value;
 			}
 
 		}
@@ -201,10 +189,10 @@ public abstract class AbstractTeslaSynthesizerBlockEntity extends BaseContainerB
 		cookTime = nbt.getInt("CookTime");
 		cookTimeTotal = nbt.getInt("CookTimeTotal");
 		burnTimeTotal = getBurnTime(items.get(3));
-		CompoundTag compoundnbt = nbt.getCompound("RecipesUsed");
+		CompoundTag compoundTag = nbt.getCompound("RecipesUsed");
 
-		for (String s : compoundnbt.getAllKeys()) {
-			recipes.put(new ResourceLocation(s), compoundnbt.getInt(s));
+		for (String s : compoundTag.getAllKeys()) {
+			recipes.put(new ResourceLocation(s), compoundTag.getInt(s));
 		}
 
 	}
@@ -220,9 +208,9 @@ public abstract class AbstractTeslaSynthesizerBlockEntity extends BaseContainerB
 		nbt.putInt("CookTime", cookTime);
 		nbt.putInt("CookTimeTotal", cookTimeTotal);
 		ContainerHelper.saveAllItems(nbt, items);
-		CompoundTag compoundnbt = new CompoundTag();
-		recipes.forEach((recipeId, craftedAmount) -> compoundnbt.putInt(recipeId.toString(), craftedAmount));
-		nbt.put("RecipesUsed", compoundnbt);
+		CompoundTag compoundTag = new CompoundTag();
+		recipes.forEach((recipeId, craftedAmount) -> compoundTag.putInt(recipeId.toString(), craftedAmount));
+		nbt.put("RecipesUsed", compoundTag);
 		return nbt;
 	}
 

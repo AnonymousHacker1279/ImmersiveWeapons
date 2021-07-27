@@ -50,13 +50,13 @@ public class PacketHandler {
 				TeslaArmorItemPacketHandler.class,
 				TeslaArmorItemPacketHandler::encode,
 				TeslaArmorItemPacketHandler::decode,
-				TeslaArmorItemPacketHandler::handle
+				(msg, contextSupplier) -> TeslaArmorItemPacketHandler.handle(contextSupplier)
 		);
 		PacketHandler.INSTANCE.registerMessage(networkId++,
 				VentusArmorItemPacketHandler.class,
 				VentusArmorItemPacketHandler::encode,
 				VentusArmorItemPacketHandler::decode,
-				VentusArmorItemPacketHandler::handle
+				(msg, contextSupplier) -> VentusArmorItemPacketHandler.handle(contextSupplier)
 		);
 		PacketHandler.INSTANCE.registerMessage(networkId++,
 				MortarBlockPacketHandler.class,
@@ -70,7 +70,7 @@ public class PacketHandler {
 				SmokeBombArrowEntityPacketHandler::decode,
 				SmokeBombArrowEntityPacketHandler::handle
 		);
-		PacketHandler.INSTANCE.registerMessage(networkId++,
+		PacketHandler.INSTANCE.registerMessage(networkId,
 				SpikeTrapBlockPacketHandler.class,
 				SpikeTrapBlockPacketHandler::encode,
 				SpikeTrapBlockPacketHandler::decode,

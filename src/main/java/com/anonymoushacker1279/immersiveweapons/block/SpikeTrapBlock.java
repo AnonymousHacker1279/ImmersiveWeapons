@@ -187,24 +187,18 @@ public class SpikeTrapBlock extends Block implements SimpleWaterloggedBlock {
 		}
 	}
 
-	public static class SpikeTrapBlockPacketHandler {
-
-		private final BlockPos blockPos;
-		private final boolean extend;
+	public record SpikeTrapBlockPacketHandler(BlockPos blockPos, boolean extend) {
 
 		/**
 		 * Constructor for SpikeTrapBlockPacketHandler.
-		 * @param blockPos the <code>BlockPos</code> of the block where the packet was sent
-		 * @param extend determines if the block is "extending" or "retracting"
 		 */
-		SpikeTrapBlockPacketHandler(BlockPos blockPos, boolean extend) {
-			this.blockPos = blockPos;
-			this.extend = extend;
+		public SpikeTrapBlockPacketHandler {
 		}
 
 		/**
 		 * Encodes a packet
-		 * @param msg the <code>SpikeTrapBlockPacketHandler</code> message being sent
+		 *
+		 * @param msg          the <code>SpikeTrapBlockPacketHandler</code> message being sent
 		 * @param packetBuffer the <code>PacketBuffer</code> containing packet data
 		 */
 		public static void encode(SpikeTrapBlockPacketHandler msg, FriendlyByteBuf packetBuffer) {
@@ -213,6 +207,7 @@ public class SpikeTrapBlock extends Block implements SimpleWaterloggedBlock {
 
 		/**
 		 * Decodes a packet
+		 *
 		 * @param packetBuffer the <code>PacketBuffer</code> containing packet data
 		 * @return SpikeTrapBlockPacketHandler
 		 */
@@ -222,7 +217,8 @@ public class SpikeTrapBlock extends Block implements SimpleWaterloggedBlock {
 
 		/**
 		 * Handles an incoming packet, by sending it to the client/server
-		 * @param msg the <code>SpikeTrapBlockPacketHandler</code> message being sent
+		 *
+		 * @param msg             the <code>SpikeTrapBlockPacketHandler</code> message being sent
 		 * @param contextSupplier the <code>Supplier</code> providing context
 		 */
 		public static void handle(SpikeTrapBlockPacketHandler msg, Supplier<Context> contextSupplier) {
@@ -233,6 +229,7 @@ public class SpikeTrapBlock extends Block implements SimpleWaterloggedBlock {
 
 		/**
 		 * Runs specifically on the client, when a packet is received
+		 *
 		 * @param msg the <code>SpikeTrapBlockPacketHandler</code> message being sent
 		 */
 		@OnlyIn(Dist.CLIENT)

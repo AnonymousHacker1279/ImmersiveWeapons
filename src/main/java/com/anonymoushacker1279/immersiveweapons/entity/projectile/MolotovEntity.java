@@ -148,7 +148,7 @@ public class MolotovEntity extends ThrowableItemProjectile {
 		Color[] tints = {
 				new Color(1.00f, 1.00f, 1.00f),  // no tint (white)
 				new Color(1.00f, 0.97f, 1.00f),  // off white
-				new Color(1.00f, 1.00f, 0.97f),  // off white 2: electric boogaloo
+				new Color(1.00f, 1.00f, 0.97f),  // off white 2
 		};
 
 		return tints[random];

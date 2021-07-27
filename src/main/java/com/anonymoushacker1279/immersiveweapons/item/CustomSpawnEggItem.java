@@ -60,7 +60,9 @@ public class CustomSpawnEggItem extends SpawnEggItem {
                         null, "f_43201_");
                 Minecraft minecraft = Minecraft.getInstance();
 	            for (CustomSpawnEggItem spawnEggItem : UNADDED_EGGS) {
-		            spawnEggItemMap.put(spawnEggItem.entityTypeSupplier.get(), spawnEggItem);
+		            if (spawnEggItemMap != null) {
+			            spawnEggItemMap.put(spawnEggItem.entityTypeSupplier.get(), spawnEggItem);
+		            }
 		            minecraft.getItemColors().register((color1, color2) -> spawnEggItem.getColor(color2), spawnEggItem);
 	            }
             } catch (Exception e) {

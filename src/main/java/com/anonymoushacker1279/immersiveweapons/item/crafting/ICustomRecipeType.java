@@ -1,10 +1,10 @@
 package com.anonymoushacker1279.immersiveweapons.item.crafting;
 
 import com.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
+import net.minecraft.core.Registry;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeType;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.core.Registry;
 
 public interface ICustomRecipeType {
 	RecipeType<SmallPartsRecipe> SMALL_PARTS = register(ImmersiveWeapons.MOD_ID + ":small_parts");

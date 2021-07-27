@@ -31,8 +31,7 @@ public class SimpleShotgunItem extends SimplePistolItem {
 	 */
 	@Override
 	public void releaseUsing(ItemStack itemStack, Level worldIn, LivingEntity entityLiving, int timeLeft) {
-		if (entityLiving instanceof Player) {
-			Player playerEntity = (Player) entityLiving;
+		if (entityLiving instanceof Player playerEntity) {
 			boolean flag = playerEntity.isCreative();
 			boolean misfire = false;
 			ItemStack itemStack1 = findAmmo(itemStack, entityLiving);

@@ -178,37 +178,30 @@ public class SmokeBombEntity extends ThrowableItemProjectile {
 				new Color(1.00f, 1.00f, 0.35f),  // off yellow 2
 		};
 
-		switch(color) {
-			case 1:
-				return tintsRed[random];
-			case 2:
-				return tintsGreen[random];
-			case 3:
-				return tintsBlue[random];
-			case 4:
-				return tintsPurple[random];
-			case 5:
-				return tintsYellow[random];
-			default:
-				return tints[random];
-		}
+		return switch (color) {
+			case 1 -> tintsRed[random];
+			case 2 -> tintsGreen[random];
+			case 3 -> tintsBlue[random];
+			case 4 -> tintsPurple[random];
+			case 5 -> tintsYellow[random];
+			default -> tints[random];
+		};
 	}
 
-	public static class SmokeBombEntityPacketHandler {
-
-		private final int color;
+	public record SmokeBombEntityPacketHandler(int color) {
 
 		/**
 		 * Constructor for SmokeBombEntityPacketHandler.
+		 *
 		 * @param color the color ID
 		 */
-		SmokeBombEntityPacketHandler(int color) {
-			this.color = color;
+		public SmokeBombEntityPacketHandler {
 		}
 
 		/**
 		 * Encodes a packet
-		 * @param msg the <code>SmokeBombEntityPacketHandler</code> message being sent
+		 *
+		 * @param msg          the <code>SmokeBombEntityPacketHandler</code> message being sent
 		 * @param packetBuffer the <code>PacketBuffer</code> containing packet data
 		 */
 		public static void encode(SmokeBombEntityPacketHandler msg, FriendlyByteBuf packetBuffer) {
@@ -217,6 +210,7 @@ public class SmokeBombEntity extends ThrowableItemProjectile {
 
 		/**
 		 * Decodes a packet
+		 *
 		 * @param packetBuffer the <code>PacketBuffer</code> containing packet data
 		 * @return SmokeBombEntityPacketHandler
 		 */
@@ -226,17 +220,19 @@ public class SmokeBombEntity extends ThrowableItemProjectile {
 
 		/**
 		 * Handles an incoming packet, by sending it to the client/server
-		 * @param msg the <code>SmokeBombEntityPacketHandler</code> message being sent
+		 *
+		 * @param msg             the <code>SmokeBombEntityPacketHandler</code> message being sent
 		 * @param contextSupplier the <code>Supplier</code> providing context
 		 */
 		public static void handle(SmokeBombEntityPacketHandler msg, Supplier<Context> contextSupplier) {
 			NetworkEvent.Context context = contextSupplier.get();
-			context.enqueueWork(() -> DistExecutor.runWhenOn(Dist.CLIENT, () -> () -> handleOnClient(msg)));
+			context.enqueueWork(() -> DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> handleOnClient(msg)));
 			context.setPacketHandled(true);
 		}
 
 		/**
 		 * Runs specifically on the client, when a packet is received
+		 *
 		 * @param msg the <code>SmokeBombEntityPacketHandler</code> message being sent
 		 */
 		@OnlyIn(Dist.CLIENT)

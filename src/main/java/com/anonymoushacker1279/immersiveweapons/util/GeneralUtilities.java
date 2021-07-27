@@ -1,8 +1,8 @@
 package com.anonymoushacker1279.immersiveweapons.util;
 
-import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
-import net.minecraft.world.level.block.StainedGlassBlock;
 import net.minecraft.world.item.DyeColor;
+import net.minecraft.world.level.block.StainedGlassBlock;
+import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
 
 public class GeneralUtilities {
 

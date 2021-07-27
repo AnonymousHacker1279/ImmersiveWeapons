@@ -26,7 +26,7 @@ public class CreativeTabSorter extends CreativeModeTab {
 	 */
 	@Override
 	public void fillItemList(NonNullList<ItemStack> itemStack) {
-		List<Item> items = new ArrayList<>();
+		List<Item> items = new ArrayList<>(1);
 		DeferredRegistryHandler.ITEMS.getEntries().stream().map(RegistryObject::get).forEach(items::add);
 
 		for (Item item : items) {

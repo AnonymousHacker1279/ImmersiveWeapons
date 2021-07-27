@@ -94,7 +94,7 @@ public abstract class AbstractTeslaSynthesizerContainer extends AbstractContaine
 	public ItemStack quickMoveStack(Player playerIn, int index) {
 		ItemStack itemstack = ItemStack.EMPTY;
 		Slot slot = slots.get(index);
-		if (slot != null && slot.hasItem()) {
+		if (slot.hasItem()) {
 			ItemStack itemStack1 = slot.getItem();
 			itemstack = itemStack1.copy();
 			if (index == 4) {
@@ -139,7 +139,7 @@ public abstract class AbstractTeslaSynthesizerContainer extends AbstractContaine
 	/**
 	 * Check if the given ItemStack is a fuel item.
 	 * @param stack the <code>ItemStack</code> being checked
-	 * @return
+	 * @return boolean
 	 */
 	public boolean isFuel(ItemStack stack) {
 		return AbstractTeslaSynthesizerBlockEntity.isFuel(stack);

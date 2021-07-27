@@ -135,8 +135,7 @@ public abstract class AbstractDyingSoldierEntity extends Monster implements Rang
 	@Override
 	public void rideTick() {
 		super.rideTick();
-		if (getVehicle() instanceof PathfinderMob) {
-			PathfinderMob creatureEntity = (PathfinderMob) getVehicle();
+		if (getVehicle() instanceof PathfinderMob creatureEntity) {
 			yBodyRot = creatureEntity.yBodyRot;
 		}
 	}
@@ -184,7 +183,7 @@ public abstract class AbstractDyingSoldierEntity extends Monster implements Rang
 	 * Set the entity's combat AI.
 	 */
 	private void setCombatTask() {
-		if (level != null && !level.isClientSide) {
+		if (!level.isClientSide) {
 			goalSelector.removeGoal(aiAttackOnCollide);
 			goalSelector.removeGoal(aiPistolAttack);
 			ItemStack itemstack = getItemInHand(ProjectileUtil.getWeaponHoldingHand(this, DeferredRegistryHandler.FLINTLOCK_PISTOL.get()));
@@ -211,16 +210,16 @@ public abstract class AbstractDyingSoldierEntity extends Monster implements Rang
 	@Override
 	public void performRangedAttack(LivingEntity target, float distanceFactor) {
 		ItemStack itemstack = getProjectile(getItemInHand(ProjectileUtil.getWeaponHoldingHand(this, DeferredRegistryHandler.FLINTLOCK_PISTOL.get())));
-		AbstractArrow abstractarrowentity = fireArrow(itemstack, distanceFactor);
+		AbstractArrow abstractArrow = fireArrow(itemstack, distanceFactor);
 		if (getMainHandItem().getItem() instanceof BowItem)
-			abstractarrowentity = ((BowItem) getMainHandItem().getItem()).customArrow(abstractarrowentity);
+			abstractArrow = ((BowItem) getMainHandItem().getItem()).customArrow(abstractArrow);
 		double d0 = target.getX() - getX();
-		double d1 = target.getY(0.1D) - abstractarrowentity.getY();
+		double d1 = target.getY(0.1D) - abstractArrow.getY();
 		double d2 = target.getZ() - getZ();
 		double d3 = Mth.sqrt((float) (d0 * d0 + d2 * d2));
-		abstractarrowentity.shoot(d0, d1 + d3 * (double) 0.2F, d2, 1.6F, (float) (14 - level.getDifficulty().getId() * 4));
+		abstractArrow.shoot(d0, d1 + d3 * (double) 0.2F, d2, 1.6F, (float) (14 - level.getDifficulty().getId() * 4));
 		playSound(DeferredRegistryHandler.FLINTLOCK_PISTOL_FIRE.get(), 1.0F, 1.0F / (getRandom().nextFloat() * 0.4F + 0.8F));
-		level.addFreshEntity(abstractarrowentity);
+		level.addFreshEntity(abstractArrow);
 	}
 
 	/**

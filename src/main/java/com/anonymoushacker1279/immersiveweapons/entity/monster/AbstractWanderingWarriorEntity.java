@@ -100,8 +100,7 @@ public abstract class AbstractWanderingWarriorEntity extends Monster {
 	@Override
 	public void rideTick() {
 		super.rideTick();
-		if (getVehicle() instanceof PathfinderMob) {
-			PathfinderMob creatureEntity = (PathfinderMob) getVehicle();
+		if (getVehicle() instanceof PathfinderMob creatureEntity) {
 			yBodyRot = creatureEntity.yBodyRot;
 		}
 	}
@@ -132,18 +131,18 @@ public abstract class AbstractWanderingWarriorEntity extends Monster {
 			armorTier++;
 		}
 		float difficultyModifier = level.getDifficulty() == Difficulty.HARD ? 0.3F : 0.75F;
-		for (EquipmentSlot equipmentslottype : EquipmentSlot.values()) {
-			if (equipmentslottype.getType() == EquipmentSlot.Type.ARMOR) {
-				ItemStack itemstack = getItemBySlot(equipmentslottype);
+		for (EquipmentSlot equipmentSlot : EquipmentSlot.values()) {
+			if (equipmentSlot.getType() == EquipmentSlot.Type.ARMOR) {
+				ItemStack itemstack = getItemBySlot(equipmentSlot);
 				if (!flag && this.random.nextFloat() < difficultyModifier) {
 					break;
 				}
 
 				flag = false;
 				if (itemstack.isEmpty()) {
-					Item item = getEquipmentForSlot(equipmentslottype, armorTier);
+					Item item = getEquipmentForSlot(equipmentSlot, armorTier);
 					if (item != null) {
-						setItemSlot(equipmentslottype, new ItemStack(item));
+						setItemSlot(equipmentSlot, new ItemStack(item));
 					}
 				}
 			}
@@ -183,7 +182,7 @@ public abstract class AbstractWanderingWarriorEntity extends Monster {
 	 * Set the entity's combat AI.
 	 */
 	void setCombatTask() {
-		if (level != null && !level.isClientSide) {
+		if (!level.isClientSide) {
 			goalSelector.removeGoal(aiAttackOnCollide);
 			if (getItemInHand(InteractionHand.MAIN_HAND).getItem() == Items.AIR) {
 				populateDefaultEquipmentSlots(level.getCurrentDifficultyAt(blockPosition()));

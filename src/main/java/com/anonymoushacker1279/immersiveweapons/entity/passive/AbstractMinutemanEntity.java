@@ -146,8 +146,7 @@ public abstract class AbstractMinutemanEntity extends PathfinderMob implements R
 	@Override
 	public void rideTick() {
 		super.rideTick();
-		if (getVehicle() instanceof PathfinderMob) {
-			PathfinderMob creatureEntity = (PathfinderMob) getVehicle();
+		if (getVehicle() instanceof PathfinderMob creatureEntity) {
 			yBodyRot = creatureEntity.yBodyRot;
 		}
 	}
@@ -195,10 +194,10 @@ public abstract class AbstractMinutemanEntity extends PathfinderMob implements R
 	 * Set the entity's combat AI.
 	 */
 	private void setCombatTask() {
-		if (level != null && !level.isClientSide) {
+		if (!level.isClientSide) {
 			goalSelector.removeGoal(aiAttackOnCollide);
 			goalSelector.removeGoal(aiShotgunAttack);
-			ItemStack itemstack = getItemInHand(ProjectileUtil.getWeaponHoldingHand(this, DeferredRegistryHandler.BLUNDERBUSS.get()));
+			ItemStack itemstack = getItemInHand(ProjectileUtil.getWeaponHoldingHand(this, Predicate.isEqual(DeferredRegistryHandler.BLUNDERBUSS.get())));
 			if (itemstack.getItem() == DeferredRegistryHandler.BLUNDERBUSS.get()) {
 				int i = 25;
 				if (level.getDifficulty() != Difficulty.HARD) {
@@ -244,7 +243,7 @@ public abstract class AbstractMinutemanEntity extends PathfinderMob implements R
 	 */
 	@Override
 	public void performRangedAttack(LivingEntity target, float distanceFactor) {
-		ItemStack itemstack = getProjectile(getItemInHand(ProjectileUtil.getWeaponHoldingHand(this, DeferredRegistryHandler.BLUNDERBUSS.get())));
+		ItemStack itemstack = getProjectile(getItemInHand(ProjectileUtil.getWeaponHoldingHand(this, Predicate.isEqual(DeferredRegistryHandler.BLUNDERBUSS.get()))));
 		AbstractArrow abstractBulletEntity = fireArrow(itemstack, distanceFactor);
 		if (getMainHandItem().getItem() instanceof BowItem)
 			abstractBulletEntity = ((BowItem) getMainHandItem().getItem()).customArrow(abstractBulletEntity);
@@ -335,7 +334,7 @@ public abstract class AbstractMinutemanEntity extends PathfinderMob implements R
 	@Override
 	public void readAdditionalSaveData(CompoundTag compound) {
 		super.readAdditionalSaveData(compound);
-		readPersistentAngerSaveData((ServerLevel) level, compound);
+		readPersistentAngerSaveData(level, compound);
 		setCombatTask();
 	}
 

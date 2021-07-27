@@ -101,27 +101,23 @@ public class CobaltArmorItem extends ArmorItem {
 		effectEnabled = !effectEnabled;
 	}
 
-	public static class CobaltArmorItemPacketHandler {
-
-		private final boolean isParticles;
-		private final BlockPos blockPos;
-		private final Vec3 vector3d;
+	public record CobaltArmorItemPacketHandler(boolean isParticles, BlockPos blockPos,
+	                                           Vec3 vector3d) {
 
 		/**
 		 * Constructor for CobaltArmorItemPacketHandler.
+		 *
 		 * @param isParticles if the packet is for rendering particles
-		 * @param blockPos the <code>BlockPos</code> the packet came from
-		 * @param vector3d the <code>Vector3d</code> of the player position
+		 * @param blockPos    the <code>BlockPos</code> the packet came from
+		 * @param vector3d    the <code>Vector3d</code> of the player position
 		 */
-		CobaltArmorItemPacketHandler(boolean isParticles, BlockPos blockPos, Vec3 vector3d) {
-			this.isParticles = isParticles;
-			this.blockPos = blockPos;
-			this.vector3d = vector3d;
+		public CobaltArmorItemPacketHandler {
 		}
 
 		/**
 		 * Encodes a packet
-		 * @param msg the <code>CobaltArmorItemPacketHandler</code> message being sent
+		 *
+		 * @param msg          the <code>CobaltArmorItemPacketHandler</code> message being sent
 		 * @param packetBuffer the <code>PacketBuffer</code> containing packet data
 		 */
 		public static void encode(CobaltArmorItemPacketHandler msg, FriendlyByteBuf packetBuffer) {
@@ -132,6 +128,7 @@ public class CobaltArmorItem extends ArmorItem {
 
 		/**
 		 * Decodes a packet
+		 *
 		 * @param packetBuffer the <code>PacketBuffer</code> containing packet data
 		 * @return CobaltArmorItemPacketHandler
 		 */
@@ -141,30 +138,32 @@ public class CobaltArmorItem extends ArmorItem {
 
 		/**
 		 * Handles an incoming packet, by sending it to the client/server
-		 * @param msg the <code>CobaltArmorItemPacketHandler</code> message being sent
+		 *
+		 * @param msg             the <code>CobaltArmorItemPacketHandler</code> message being sent
 		 * @param contextSupplier the <code>Supplier</code> providing context
 		 */
 		public static void handle(CobaltArmorItemPacketHandler msg, Supplier<Context> contextSupplier) {
 			NetworkEvent.Context context = contextSupplier.get();
 			if (msg.isParticles) {
-				context.enqueueWork(() -> DistExecutor.runWhenOn(Dist.CLIENT, () -> () -> handleOnClient(msg)));
+				context.enqueueWork(() -> DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> handleOnClient(msg)));
 			} else {
-				context.enqueueWork(() -> DistExecutor.runWhenOn(Dist.CLIENT, () -> () -> handleOnServer(msg)));
-				context.enqueueWork(() -> DistExecutor.runWhenOn(Dist.DEDICATED_SERVER, () -> () -> handleOnServer(msg)));
+				context.enqueueWork(() -> DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> CobaltArmorItemPacketHandler::handleOnServer));
+				context.enqueueWork(() -> DistExecutor.unsafeRunWhenOn(Dist.DEDICATED_SERVER, () -> CobaltArmorItemPacketHandler::handleOnServer));
 			}
 			context.setPacketHandled(true);
 		}
 
 		/**
 		 * Runs specifically on the server, when a packet is received
-		 * @param msg the <code>CobaltArmorItemPacketHandler</code> message being sent
+		 *
 		 */
-		private static void handleOnServer(CobaltArmorItemPacketHandler msg) {
+		private static void handleOnServer() {
 			CobaltArmorItem.toggleEffect();
 		}
 
 		/**
 		 * Runs specifically on the client, when a packet is received
+		 *
 		 * @param msg the <code>CobaltArmorItemPacketHandler</code> message being sent
 		 */
 		private static void handleOnClient(CobaltArmorItemPacketHandler msg) {

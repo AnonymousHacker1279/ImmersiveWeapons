@@ -179,16 +179,7 @@ public abstract class AbstractCustomArrowEntity extends AbstractArrow {
 			double d5 = getX() + d3;
 			double d1 = getY() + d4;
 			double d2 = getZ() + d0;
-			double horizontalDistanceSqr = vector3d.horizontalDistanceSqr();
-			if (flag) {
-				yRot = (float) (Mth.atan2(-d3, -d0) * (180F / (float) Math.PI));
-			} else {
-				yRot = (float) (Mth.atan2(d3, d0) * (180F / (float) Math.PI));
-			}
 
-			xRot = (float) (Mth.atan2(d4, horizontalDistanceSqr) * (180F / (float) Math.PI));
-			xRot = lerpRotation(xRotO, xRot);
-			yRot = lerpRotation(yRotO, yRot);
 			float f2 = 0.99F;
 			if (isInWater()) {
 				for (int j = 0; j < 4; ++j) {

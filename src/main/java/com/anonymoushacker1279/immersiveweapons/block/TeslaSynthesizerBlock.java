@@ -15,7 +15,7 @@ import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.RenderShape;
+import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.SimpleWaterloggedBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
@@ -34,7 +34,7 @@ import net.minecraftforge.fmllegacy.network.NetworkHooks;
 import javax.annotation.Nullable;
 import java.util.Random;
 
-public class TeslaSynthesizerBlock extends BaseEntityBlock implements SimpleWaterloggedBlock {
+public class TeslaSynthesizerBlock extends Block implements EntityBlock, SimpleWaterloggedBlock {
 
 	protected static final VoxelShape SHAPE = Block.box(0.0D, 0.0D, 0.0D, 16.0D, 6.0D, 16.0D);
 	public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
@@ -59,7 +59,7 @@ public class TeslaSynthesizerBlock extends BaseEntityBlock implements SimpleWate
 	// TODO: Javdocs
 	@Override
 	public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState blockState, BlockEntityType<T> blockEntityType) {
-		return level.isClientSide ? null : createTickerHelper(blockEntityType, DeferredRegistryHandler.TESLA_SYNTHESIZER_BLOCK_ENTITY.get(), TeslaSynthesizerBlockEntity::serverTick);
+		return level.isClientSide ? null : BaseEntityBlock.createTickerHelper(blockEntityType, DeferredRegistryHandler.TESLA_SYNTHESIZER_BLOCK_ENTITY.get(), TeslaSynthesizerBlockEntity::serverTick);
 	}
 
 	/**
@@ -93,16 +93,6 @@ public class TeslaSynthesizerBlock extends BaseEntityBlock implements SimpleWate
 	@Override
 	public FluidState getFluidState(BlockState state) {
 		return state.getValue(WATERLOGGED) ? Fluids.WATER.getSource(false) : super.getFluidState(state);
-	}
-
-	/**
-	 * Set the RenderShape of the block's model.
-	 * @param state the <code>BlockState</code> of the block
-	 * @return BlockRenderType
-	 */
-	@Override
-	public RenderShape getRenderShape(BlockState state) {
-		return RenderShape.MODEL;
 	}
 
 	/**

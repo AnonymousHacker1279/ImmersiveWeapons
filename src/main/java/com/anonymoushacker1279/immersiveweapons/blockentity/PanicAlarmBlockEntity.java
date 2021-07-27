@@ -151,24 +151,18 @@ public class PanicAlarmBlockEntity extends BlockEntity implements EntityBlock {
 		currentlyPlayingSound = nbt.getInt("currentlyPlayingSound");
 	}
 
-	public static class PanicAlarmPacketHandler {
-
-		private final int currentlyPlayingSound;
-		private final BlockPos blockPos;
+	public record PanicAlarmPacketHandler(int currentlyPlayingSound, BlockPos blockPos) {
 
 		/**
 		 * Constructor for PanicAlarmPacketHandler.
-		 * @param currentlyPlayingSound the currently playing sound ID
-		 * @param blockPos the <code>BlockPos</code> to play at
 		 */
-		PanicAlarmPacketHandler(int currentlyPlayingSound, BlockPos blockPos) {
-			this.currentlyPlayingSound = currentlyPlayingSound;
-			this.blockPos = blockPos;
+		public PanicAlarmPacketHandler {
 		}
 
 		/**
 		 * Encodes a packet
-		 * @param msg the <code>PanicAlarmPacketHandler</code> message being sent
+		 *
+		 * @param msg          the <code>PanicAlarmPacketHandler</code> message being sent
 		 * @param packetBuffer the <code>PacketBuffer</code> containing packet data
 		 */
 		public static void encode(PanicAlarmPacketHandler msg, FriendlyByteBuf packetBuffer) {
@@ -178,6 +172,7 @@ public class PanicAlarmBlockEntity extends BlockEntity implements EntityBlock {
 
 		/**
 		 * Decodes a packet
+		 *
 		 * @param packetBuffer the <code>PacketBuffer</code> containing packet data
 		 * @return PanicAlarmPacketHandler
 		 */
@@ -187,7 +182,8 @@ public class PanicAlarmBlockEntity extends BlockEntity implements EntityBlock {
 
 		/**
 		 * Handles an incoming packet, by sending it to the client/server
-		 * @param msg the <code>PanicAlarmPacketHandler</code> message being sent
+		 *
+		 * @param msg             the <code>PanicAlarmPacketHandler</code> message being sent
 		 * @param contextSupplier the <code>Supplier</code> providing context
 		 */
 		public static void handle(PanicAlarmPacketHandler msg, Supplier<Context> contextSupplier) {
@@ -198,6 +194,7 @@ public class PanicAlarmBlockEntity extends BlockEntity implements EntityBlock {
 
 		/**
 		 * Runs specifically on the client, when a packet is received
+		 *
 		 * @param msg the <code>PanicAlarmPacketHandler</code> message being sent
 		 */
 		@OnlyIn(Dist.CLIENT)

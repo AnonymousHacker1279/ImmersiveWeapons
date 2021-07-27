@@ -399,27 +399,23 @@ public class CustomArrowEntity {
 			}
 		}
 
-		public static class SmokeBombArrowEntityPacketHandler {
-
-			private final BlockPos blockPos;
-			private final int configMaxParticles;
-			private final int color;
+		public record SmokeBombArrowEntityPacketHandler(BlockPos blockPos, int configMaxParticles,
+		                                                int color) {
 
 			/**
 			 * Constructor for SmokeBombArrowEntityPacketHandler.
-			 * @param blockPos the <code>BlockPos</code> of the block where the packet was sent
+			 *
+			 * @param blockPos           the <code>BlockPos</code> of the block where the packet was sent
 			 * @param configMaxParticles the max particles to generate
-			 * @param color an integer representing the color
+			 * @param color              an integer representing the color
 			 */
-			SmokeBombArrowEntityPacketHandler(BlockPos blockPos, int configMaxParticles, int color) {
-				this.blockPos = blockPos;
-				this.configMaxParticles = configMaxParticles;
-				this.color = color;
+			public SmokeBombArrowEntityPacketHandler {
 			}
 
 			/**
 			 * Encodes a packet
-			 * @param msg the <code>SmokeBombArrowEntityPacketHandler</code> message being sent
+			 *
+			 * @param msg          the <code>SmokeBombArrowEntityPacketHandler</code> message being sent
 			 * @param packetBuffer the <code>PacketBuffer</code> containing packet data
 			 */
 			public static void encode(SmokeBombArrowEntityPacketHandler msg, FriendlyByteBuf packetBuffer) {
@@ -428,6 +424,7 @@ public class CustomArrowEntity {
 
 			/**
 			 * Decodes a packet
+			 *
 			 * @param packetBuffer the <code>PacketBuffer</code> containing packet data
 			 * @return SmokeBombArrowEntityPacketHandler
 			 */
@@ -437,17 +434,19 @@ public class CustomArrowEntity {
 
 			/**
 			 * Handles an incoming packet, by sending it to the client/server
-			 * @param msg the <code>SmokeBombArrowEntityPacketHandler</code> message being sent
+			 *
+			 * @param msg             the <code>SmokeBombArrowEntityPacketHandler</code> message being sent
 			 * @param contextSupplier the <code>Supplier</code> providing context
 			 */
 			public static void handle(SmokeBombArrowEntityPacketHandler msg, Supplier<Context> contextSupplier) {
 				NetworkEvent.Context context = contextSupplier.get();
-				context.enqueueWork(() -> DistExecutor.runWhenOn(Dist.CLIENT, () -> () -> handleOnClient(msg)));
+				context.enqueueWork(() -> DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> handleOnClient(msg)));
 				context.setPacketHandled(true);
 			}
 
 			/**
 			 * Runs specifically on the client, when a packet is received
+			 *
 			 * @param msg the <code>SmokeBombArrowEntityPacketHandler</code> message being sent
 			 */
 			@OnlyIn(Dist.CLIENT)
@@ -465,6 +464,7 @@ public class CustomArrowEntity {
 
 			/**
 			 * Create a new particle.
+			 *
 			 * @param msg the <code>SmokeBombArrowEntityPacketHandler</code> message
 			 * @return IParticleData
 			 */
@@ -477,10 +477,11 @@ public class CustomArrowEntity {
 
 			/**
 			 * Get the particle diameter.
+			 *
 			 * @param random a random number
 			 * @return double
 			 */
-			private static double getDiameter(double random){
+			private static double getDiameter(double random) {
 				final double MIN_DIAMETER = 0.5;
 				final double MAX_DIAMETER = 5.5;
 				return MIN_DIAMETER + (MAX_DIAMETER - MIN_DIAMETER) * random;
@@ -488,11 +489,12 @@ public class CustomArrowEntity {
 
 			/**
 			 * Get the particle tint.
+			 *
 			 * @param random a random number
-			 * @param msg the <code>SmokeBombArrowEntityPacketHandler</code> message
+			 * @param msg    the <code>SmokeBombArrowEntityPacketHandler</code> message
 			 * @return Color
 			 */
-			private static Color getTint(int random, SmokeBombArrowEntityPacketHandler msg){
+			private static Color getTint(int random, SmokeBombArrowEntityPacketHandler msg) {
 				Color[] tints = {
 						new Color(1.00f, 1.00f, 1.00f),  // no tint (white)
 						new Color(1.00f, 0.97f, 1.00f),  // off white
@@ -524,20 +526,14 @@ public class CustomArrowEntity {
 						new Color(1.00f, 1.00f, 0.35f),  // off yellow 2
 				};
 
-				switch(msg.color) {
-					case 1:
-						return tintsRed[random];
-					case 2:
-						return tintsGreen[random];
-					case 3:
-						return tintsBlue[random];
-					case 4:
-						return tintsPurple[random];
-					case 5:
-						return tintsYellow[random];
-					default:
-						return tints[random];
-				}
+				return switch (msg.color) {
+					case 1 -> tintsRed[random];
+					case 2 -> tintsGreen[random];
+					case 3 -> tintsBlue[random];
+					case 4 -> tintsPurple[random];
+					case 5 -> tintsYellow[random];
+					default -> tints[random];
+				};
 			}
 		}
 	}

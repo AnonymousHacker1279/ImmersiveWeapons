@@ -1,10 +1,10 @@
 package com.anonymoushacker1279.immersiveweapons.util;
 
 import com.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
-import net.minecraft.util.LazyLoadedValue;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.Tier;
 import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraftforge.common.util.Lazy;
 
 import java.util.function.Supplier;
 
@@ -30,7 +30,7 @@ public enum CustomItemMaterials implements Tier {
 	private final float efficiency;
 	private final float attackDamage;
 	private final int enchantability;
-	private final LazyLoadedValue<Ingredient> repairMaterial;
+	private final Lazy<Ingredient> repairMaterial;
 
 	/**
 	 * Constructor for CustomItemMaterials.
@@ -47,7 +47,7 @@ public enum CustomItemMaterials implements Tier {
 		efficiency = efficiencyIn;
 		attackDamage = attackDamageIn;
 		enchantability = enchantabilityIn;
-		repairMaterial = new LazyLoadedValue<>(repairMaterialIn);
+		repairMaterial = () -> (Ingredient) repairMaterialIn;
 	}
 
 	/**
