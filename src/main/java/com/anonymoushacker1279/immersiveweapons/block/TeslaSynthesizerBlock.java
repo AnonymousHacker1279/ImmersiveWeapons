@@ -49,14 +49,26 @@ public class TeslaSynthesizerBlock extends Block implements EntityBlock, SimpleW
 		registerDefaultState(stateDefinition.any().setValue(WATERLOGGED, false));
 	}
 
-	// TODO: JavaDocs
+	/**
+	 * Create a block entity for the block.
+	 * @param blockPos the <code>BlockPos</code> the block is at
+	 * @param blockState the <code>BlockState</code> of the block
+	 * @return BlockEntity
+	 */
 	@Nullable
 	@Override
 	public BlockEntity newBlockEntity(BlockPos blockPos, BlockState blockState) {
 		return new TeslaSynthesizerBlockEntity(blockPos, blockState);
 	}
 
-	// TODO: Javdocs
+	/**
+	 * Get the ticker for the block.
+	 * @param level the <code>Level</code> the block is in
+	 * @param blockState the <code>BlockState</code> of the block
+	 * @param blockEntityType the <code>BlockEntityType</code> to get the ticker of
+	 * @param <T> the type extending BlockEntity
+	 * @return BlockEntityTicker
+	 */
 	@Override
 	public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState blockState, BlockEntityType<T> blockEntityType) {
 		return level.isClientSide ? null : BaseEntityBlock.createTickerHelper(blockEntityType, DeferredRegistryHandler.TESLA_SYNTHESIZER_BLOCK_ENTITY.get(), (level1, blockPos, blockState1, abstractTeslaSynthesizerTileEntity) -> TeslaSynthesizerBlockEntity.serverTick(level1, abstractTeslaSynthesizerTileEntity));

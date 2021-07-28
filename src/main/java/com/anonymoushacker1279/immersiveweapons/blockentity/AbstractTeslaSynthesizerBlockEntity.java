@@ -91,7 +91,12 @@ public abstract class AbstractTeslaSynthesizerBlockEntity extends BaseContainerB
 		setupBurnTimes();
 	}
 
-	// TODO: JavaDocs
+	/**
+	 * Create a block entity for the block.
+	 * @param blockPos the <code>BlockPos</code> the block is at
+	 * @param blockState the <code>BlockState</code> of the block
+	 * @return BlockEntity
+	 */
 	@Nullable
 	@Override
 	public BlockEntity newBlockEntity(BlockPos blockPos, BlockState blockState) {
@@ -217,7 +222,6 @@ public abstract class AbstractTeslaSynthesizerBlockEntity extends BaseContainerB
 	/**
 	 * Runs once per tick. Handle smelting procedures here.
 	 */
-	// TODO: Use constructor parameters and optimize
 	public static void serverTick(Level level, AbstractTeslaSynthesizerBlockEntity abstractTeslaSynthesizerTileEntity) {
 		boolean flag = abstractTeslaSynthesizerTileEntity.isBurning();
 		boolean flag1 = false;

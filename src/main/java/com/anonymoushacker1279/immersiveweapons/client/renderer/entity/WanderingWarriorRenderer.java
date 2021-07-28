@@ -14,10 +14,9 @@ public class WanderingWarriorRenderer extends HumanoidMobRenderer<WanderingWarri
 
 	private static final ResourceLocation WANDERING_WARRIOR_TEXTURE = new ResourceLocation(ImmersiveWeapons.MOD_ID, "textures/entity/wandering_warrior/wandering_warrior.png");
 
-	// TODO: Update javadocs
 	/**
 	 * Constructor for WanderingWarriorRenderer.
-	 * @param context an <code>EntityRendererManager</code> instance
+	 * @param context a <code>Context</code> instance
 	 */
 	public WanderingWarriorRenderer(Context context) {
 		super(context, new PlayerModel<>(context.bakeLayer(ModelLayers.PLAYER), false), 0.5F);
@@ -26,7 +25,7 @@ public class WanderingWarriorRenderer extends HumanoidMobRenderer<WanderingWarri
 
 	/**
 	 * Get the texture location.
-	 * @param entity the <code>AbstractWanderingWarriorEntity</code> instance
+	 * @param entity the <code>WanderingWarriorEntity</code> instance
 	 * @return ResourceLocation
 	 */
 	@Override

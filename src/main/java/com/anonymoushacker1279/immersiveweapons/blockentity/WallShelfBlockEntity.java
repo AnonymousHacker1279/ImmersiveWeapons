@@ -146,7 +146,12 @@ public class WallShelfBlockEntity extends BlockEntity implements EntityBlock, Cl
 		inventory.clear();
 	}
 
-	// TODO: JavaDocs
+	/**
+	 * Create a block entity for the block.
+	 * @param blockPos the <code>BlockPos</code> the block is at
+	 * @param blockState the <code>BlockState</code> of the block
+	 * @return BlockEntity
+	 */
 	@Nullable
 	@Override
 	public BlockEntity newBlockEntity(BlockPos blockPos, BlockState blockState) {

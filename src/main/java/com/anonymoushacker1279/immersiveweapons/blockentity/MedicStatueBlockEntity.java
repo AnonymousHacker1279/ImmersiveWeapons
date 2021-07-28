@@ -30,7 +30,12 @@ public class MedicStatueBlockEntity extends BlockEntity implements EntityBlock {
 		super(DeferredRegistryHandler.MEDIC_STATUE_BLOCK_ENTITY.get(), blockPos, blockState);
 	}
 
-	// TODO: JavaDocs
+	/**
+	 * Create a block entity for the block.
+	 * @param blockPos the <code>BlockPos</code> the block is at
+	 * @param blockState the <code>BlockState</code> of the block
+	 * @return BlockEntity
+	 */
 	@Nullable
 	@Override
 	public BlockEntity newBlockEntity(BlockPos blockPos, BlockState blockState) {
@@ -40,7 +45,6 @@ public class MedicStatueBlockEntity extends BlockEntity implements EntityBlock {
 	/**
 	 * Runs once each tick. Handle scanning and spawning entities.
 	 */
-	// TODO: Use constructor parameters and optimize
 	public static void serverTick(Level level, BlockPos blockPos, MedicStatueBlockEntity medicStatueBlockEntity) {
 		if (Objects.equals(level.getBiome(blockPos).getRegistryName(), DeferredRegistryHandler.BATTLEFIELD.get().getRegistryName()) && medicStatueBlockEntity.cooldown == 0) {
 			List<FieldMedicEntity> listOfMedicsInArea = level.getEntitiesOfClass(FieldMedicEntity.class, new AABB(medicStatueBlockEntity.getBlockPos().getX() - 48, medicStatueBlockEntity.getBlockPos().getY() - 16, medicStatueBlockEntity.getBlockPos().getZ() - 48, medicStatueBlockEntity.getBlockPos().getX() + 48, medicStatueBlockEntity.getBlockPos().getY() + 16, medicStatueBlockEntity.getBlockPos().getZ() + 48));

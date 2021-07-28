@@ -13,10 +13,9 @@ import net.minecraft.resources.ResourceLocation;
 public class MinutemanRenderer extends HumanoidMobRenderer<MinutemanEntity, PlayerModel<MinutemanEntity>> {
 	private static final ResourceLocation MINUTEMAN_TEXTURE = new ResourceLocation(ImmersiveWeapons.MOD_ID, "textures/entity/minuteman/minuteman.png");
 
-	// TODO: Fix javadocs
 	/**
 	 * Constructor for MinutemanRenderer.
-	 * @param context an <code>EntityRendererManager</code> instance
+	 * @param context a <code>Context</code> instance
 	 */
 	public MinutemanRenderer(Context context) {
 		super(context, new PlayerModel<>(context.bakeLayer(ModelLayers.PLAYER_SLIM), false), 0.5F);
@@ -25,7 +24,7 @@ public class MinutemanRenderer extends HumanoidMobRenderer<MinutemanEntity, Play
 
 	/**
 	 * Get the texture location.
-	 * @param entity the <code>AbstractMinutemanEntity</code> instance
+	 * @param entity the <code>MinutemanEntity</code> instance
 	 * @return ResourceLocation
 	 */
 	@Override

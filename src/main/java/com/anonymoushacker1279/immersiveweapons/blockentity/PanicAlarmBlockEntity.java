@@ -53,7 +53,6 @@ public class PanicAlarmBlockEntity extends BlockEntity implements EntityBlock {
 	/**
 	 * Runs once each tick. Handle scanning and spawning entities.
 	 */
-	// TODO: Evaluate usages
 	public static void serverTick(Level level, BlockPos blockPos, PanicAlarmBlockEntity panicAlarmBlockEntity) {
 		if (panicAlarmBlockEntity.cooldown > 0) {
 			panicAlarmBlockEntity.cooldown--;

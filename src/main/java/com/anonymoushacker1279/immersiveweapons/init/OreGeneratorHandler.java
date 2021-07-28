@@ -17,8 +17,6 @@ public class OreGeneratorHandler {
 	public static ConfiguredFeature<?, ?> ORE_MOLTEN_CONFIG;
 	public static ConfiguredFeature<?, ?> ORE_COBALT_CONFIG;
 
-	// TODO: Re-evaluate range configurations... again
-
 	/**
 	 * Initialize ore generation setup.
 	 * @param event the <code>FMLCommonSetupEvent</code> instance

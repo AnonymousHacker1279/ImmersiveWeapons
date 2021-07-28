@@ -13,10 +13,9 @@ import net.minecraft.resources.ResourceLocation;
 public class DyingSoldierRenderer extends HumanoidMobRenderer<DyingSoldierEntity, PlayerModel<DyingSoldierEntity>> {
 	private static final ResourceLocation DYING_SOLDIER_RENDERER = new ResourceLocation(ImmersiveWeapons.MOD_ID, "textures/entity/dying_soldier/dying_soldier.png");
 
-	// TODO: Fix javadocs
 	/**
 	 * Constructor for DyingSoldierRenderer.
-	 * @param context an <code>EntityRendererManager</code> instance
+	 * @param context a <code>Context</code> instance
 	 */
 	public DyingSoldierRenderer(Context context) {
 		super(context, new PlayerModel<>(context.bakeLayer(ModelLayers.PLAYER), false), 0.5F);

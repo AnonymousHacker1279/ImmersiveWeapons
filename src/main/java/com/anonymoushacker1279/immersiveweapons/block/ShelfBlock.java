@@ -95,10 +95,10 @@ public class ShelfBlock extends HorizontalDirectionalBlock implements EntityBloc
 	}
 
 	/**
-	 * Create a tile entity for the block.
+	 * Create a block entity for the block.
 	 * @param blockPos the <code>BlockPos</code> the block is at
 	 * @param blockState the <code>BlockState</code> of the block
-	 * @return TileEntity
+	 * @return BlockEntity
 	 */
 	@Override
 	public BlockEntity newBlockEntity(BlockPos blockPos, BlockState blockState) {

@@ -30,8 +30,12 @@ public class MinutemanStatueBlockEntity extends BlockEntity implements EntityBlo
 		super(DeferredRegistryHandler.MINUTEMAN_STATUE_BLOCK_ENTITY.get(), blockPos, blockState);
 	}
 
-	// TODO: JavaDocs
-	@Nullable
+	/**
+	 * Create a block entity for the block.
+	 * @param blockPos the <code>BlockPos</code> the block is at
+	 * @param blockState the <code>BlockState</code> of the block
+	 * @return BlockEntity
+	 */	@Nullable
 	@Override
 	public BlockEntity newBlockEntity(BlockPos blockPos, BlockState blockState) {
 		return new MinutemanStatueBlockEntity(blockPos, blockState);
@@ -40,7 +44,6 @@ public class MinutemanStatueBlockEntity extends BlockEntity implements EntityBlo
 	/**
 	 * Runs once each tick. Handle scanning and spawning entities.
 	 */
-	// TODO: Use constructor parameters and optimize
 	public static void serverTick(Level level, BlockPos blockPos, MinutemanStatueBlockEntity minutemanStatueBlockEntity) {
 		if (Objects.equals(level.getBiome(blockPos).getRegistryName(), DeferredRegistryHandler.BATTLEFIELD.get().getRegistryName()) && minutemanStatueBlockEntity.cooldown == 0) {
 			List<MinutemanEntity> listOfMinutemenInArea = level.getEntitiesOfClass(MinutemanEntity.class, new AABB(minutemanStatueBlockEntity.getBlockPos().getX() - 48, minutemanStatueBlockEntity.getBlockPos().getY() - 16, minutemanStatueBlockEntity.getBlockPos().getZ() - 48, minutemanStatueBlockEntity.getBlockPos().getX() + 48, minutemanStatueBlockEntity.getBlockPos().getY() + 16, minutemanStatueBlockEntity.getBlockPos().getZ() + 48));

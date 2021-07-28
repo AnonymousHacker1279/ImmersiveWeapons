@@ -46,7 +46,8 @@ public class Campsite extends StructureFeature<NoneFeatureConfiguration> {
 	public static class Start extends StructureStart<NoneFeatureConfiguration> {
 		/**
 		 * Constructor for Start.
-		 * @param structureIn the <code>Structure</code> extending NoFeatureConfig
+		 * @param structureIn the <code>StructureFeature</code> extending NoFeatureConfig
+		 * @param chunkPos the <code>ChunkPos</code> position
 		 * @param referenceIn the reference ID
 		 * @param seedIn the world seed
 		 */
@@ -54,9 +55,18 @@ public class Campsite extends StructureFeature<NoneFeatureConfiguration> {
 			super(structureIn, chunkPos, referenceIn, seedIn);
 		}
 
-		// TODO: Redo javadocs
+		/**
+		 * Generate structure pieces.
+		 * @param registryAccess the <code>RegistryAccess</code> instance
+		 * @param generator the <code>ChunkGenerator</code>
+		 * @param structureManager the <code>StructureManager</code>
+		 * @param chunkPos the <code>ChunkPos</code> position
+		 * @param biome the <code>Biome</code> the structure is in
+		 * @param config the <code>NoneFeatureConfiguration</code> instance
+		 * @param heightAccessor the <code>LevelHeightAccessor</code> instance
+		 */
 		@Override
-		public void generatePieces(RegistryAccess registryAccess, ChunkGenerator generator, StructureManager templateManagerIn, ChunkPos chunkPos, Biome biome, NoneFeatureConfiguration config, LevelHeightAccessor heightAccessor) {
+		public void generatePieces(RegistryAccess registryAccess, ChunkGenerator generator, StructureManager structureManager, ChunkPos chunkPos, Biome biome, NoneFeatureConfiguration config, LevelHeightAccessor heightAccessor) {
 			Rotation rotation = Rotation.values()[random.nextInt(Rotation.values().length)];
 
 			// Turns the chunk coordinates into actual coordinates we can use. (Gets center of that chunk)
@@ -67,9 +77,8 @@ public class Campsite extends StructureFeature<NoneFeatureConfiguration> {
 			int surfaceY = generator.getBaseHeight(x, z, Heightmap.Types.WORLD_SURFACE_WG, heightAccessor);
 			BlockPos blockpos = new BlockPos(x, surfaceY, z);
 
-			CampsitePieces.start(templateManagerIn, blockpos, rotation, pieces, random);
+			CampsitePieces.start(structureManager, blockpos, rotation, pieces);
 
-			// TODO: Does this work properly?
 			createBoundingBox();
 		}
 	}

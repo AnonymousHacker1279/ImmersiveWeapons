@@ -177,7 +177,12 @@ public class BearTrapBlockEntity extends BlockEntity implements EntityBlock {
 		return getTrappedEntity() == trappedEntity;
 	}
 
-	// TODO: JavaDocs
+	/**
+	 * Create a block entity for the block.
+	 * @param blockPos the <code>BlockPos</code> the block is at
+	 * @param blockState the <code>BlockState</code> of the block
+	 * @return BlockEntity
+	 */
 	@Override
 	public BlockEntity newBlockEntity(BlockPos blockPos, BlockState blockState) {
 		return new BearTrapBlockEntity(blockPos, blockState);

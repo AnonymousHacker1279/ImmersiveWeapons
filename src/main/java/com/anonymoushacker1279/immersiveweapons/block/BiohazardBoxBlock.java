@@ -22,7 +22,6 @@ public class BiohazardBoxBlock extends HorizontalDirectionalBlock implements Sim
 
 	public static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
 	public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
-	// TODO: Check north values
 	private static final VoxelShape SHAPE_NORTH = Block.box(2.0D, 3.0D, 11.0D, 14.0D, 13.0D, 16.0D);
 	private static final VoxelShape SHAPE_SOUTH = Block.box(2.0D, 3.0D, 0.0D, 14.0D, 13.0D, 5.0D);
 	private static final VoxelShape SHAPE_EAST = Block.box(0.0D, 3.0D, 2.0D, 5.0D, 13.0D, 14.0D);
