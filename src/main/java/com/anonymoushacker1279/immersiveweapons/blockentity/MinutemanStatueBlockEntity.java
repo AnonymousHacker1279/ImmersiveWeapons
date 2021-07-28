@@ -41,8 +41,8 @@ public class MinutemanStatueBlockEntity extends BlockEntity implements EntityBlo
 	 * Runs once each tick. Handle scanning and spawning entities.
 	 */
 	// TODO: Use constructor parameters and optimize
-	public static void serverTick(Level level, BlockPos blockPos, BlockState blockState, MinutemanStatueBlockEntity minutemanStatueBlockEntity) {
-		if (level != null && !level.isClientSide && Objects.equals(level.getBiome(minutemanStatueBlockEntity.getBlockPos()).getRegistryName(), DeferredRegistryHandler.BATTLEFIELD.get().getRegistryName()) && minutemanStatueBlockEntity.cooldown == 0) {
+	public static void serverTick(Level level, BlockPos blockPos, MinutemanStatueBlockEntity minutemanStatueBlockEntity) {
+		if (Objects.equals(level.getBiome(blockPos).getRegistryName(), DeferredRegistryHandler.BATTLEFIELD.get().getRegistryName()) && minutemanStatueBlockEntity.cooldown == 0) {
 			List<MinutemanEntity> listOfMinutemenInArea = level.getEntitiesOfClass(MinutemanEntity.class, new AABB(minutemanStatueBlockEntity.getBlockPos().getX() - 48, minutemanStatueBlockEntity.getBlockPos().getY() - 16, minutemanStatueBlockEntity.getBlockPos().getZ() - 48, minutemanStatueBlockEntity.getBlockPos().getX() + 48, minutemanStatueBlockEntity.getBlockPos().getY() + 16, minutemanStatueBlockEntity.getBlockPos().getZ() + 48));
 			minutemanStatueBlockEntity.scannedMinutemen = listOfMinutemenInArea.size();
 

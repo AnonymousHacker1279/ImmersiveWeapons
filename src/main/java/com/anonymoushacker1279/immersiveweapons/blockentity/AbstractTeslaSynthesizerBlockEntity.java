@@ -218,52 +218,50 @@ public abstract class AbstractTeslaSynthesizerBlockEntity extends BaseContainerB
 	 * Runs once per tick. Handle smelting procedures here.
 	 */
 	// TODO: Use constructor parameters and optimize
-	public static void serverTick(Level level, BlockPos blockPos, BlockState blockState, AbstractTeslaSynthesizerBlockEntity abstractTeslaSynthesizerTileEntity) {
+	public static void serverTick(Level level, AbstractTeslaSynthesizerBlockEntity abstractTeslaSynthesizerTileEntity) {
 		boolean flag = abstractTeslaSynthesizerTileEntity.isBurning();
 		boolean flag1 = false;
 		if (abstractTeslaSynthesizerTileEntity.isBurning()) {
 			--abstractTeslaSynthesizerTileEntity.burnTime;
 		}
 
-		if (level != null && !level.isClientSide) {
-			ItemStack itemstack = abstractTeslaSynthesizerTileEntity.items.get(3);
-			if (abstractTeslaSynthesizerTileEntity.isBurning() || !itemstack.isEmpty() && !abstractTeslaSynthesizerTileEntity.items.get(0).isEmpty() && !abstractTeslaSynthesizerTileEntity.items.get(1).isEmpty() && !abstractTeslaSynthesizerTileEntity.items.get(2).isEmpty()) {
-				RecipeManager recipeManager = level.getRecipeManager();
-				Recipe<?> iRecipe = recipeManager.getRecipeFor(ICustomRecipeType.TESLA_SYNTHESIZER, abstractTeslaSynthesizerTileEntity, level).orElse(null);
-				if (!abstractTeslaSynthesizerTileEntity.isBurning() && abstractTeslaSynthesizerTileEntity.canSmelt(iRecipe)) {
-					abstractTeslaSynthesizerTileEntity.burnTime = getBurnTime(itemstack);
-					abstractTeslaSynthesizerTileEntity.burnTimeTotal = abstractTeslaSynthesizerTileEntity.burnTime;
-					if (abstractTeslaSynthesizerTileEntity.isBurning()) {
-						flag1 = true;
-						if (itemstack.hasContainerItem())
-							abstractTeslaSynthesizerTileEntity.items.set(3, itemstack.getContainerItem());
-						else if (!itemstack.isEmpty()) {
-							itemstack.shrink(1);
-							if (itemstack.isEmpty()) {
-								abstractTeslaSynthesizerTileEntity.	items.set(3, itemstack.getContainerItem());
-							}
+		ItemStack itemstack = abstractTeslaSynthesizerTileEntity.items.get(3);
+		if (abstractTeslaSynthesizerTileEntity.isBurning() || !itemstack.isEmpty() && !abstractTeslaSynthesizerTileEntity.items.get(0).isEmpty() && !abstractTeslaSynthesizerTileEntity.items.get(1).isEmpty() && !abstractTeslaSynthesizerTileEntity.items.get(2).isEmpty()) {
+			RecipeManager recipeManager = level.getRecipeManager();
+			Recipe<?> iRecipe = recipeManager.getRecipeFor(ICustomRecipeType.TESLA_SYNTHESIZER, abstractTeslaSynthesizerTileEntity, level).orElse(null);
+			if (!abstractTeslaSynthesizerTileEntity.isBurning() && abstractTeslaSynthesizerTileEntity.canSmelt(iRecipe)) {
+				abstractTeslaSynthesizerTileEntity.burnTime = getBurnTime(itemstack);
+				abstractTeslaSynthesizerTileEntity.burnTimeTotal = abstractTeslaSynthesizerTileEntity.burnTime;
+				if (abstractTeslaSynthesizerTileEntity.isBurning()) {
+					flag1 = true;
+					if (itemstack.hasContainerItem())
+						abstractTeslaSynthesizerTileEntity.items.set(3, itemstack.getContainerItem());
+					else if (!itemstack.isEmpty()) {
+						itemstack.shrink(1);
+						if (itemstack.isEmpty()) {
+							abstractTeslaSynthesizerTileEntity.	items.set(3, itemstack.getContainerItem());
 						}
 					}
 				}
+			}
 
-				if (abstractTeslaSynthesizerTileEntity.isBurning() && abstractTeslaSynthesizerTileEntity.canSmelt(iRecipe)) {
-					++abstractTeslaSynthesizerTileEntity.cookTime;
-					if (abstractTeslaSynthesizerTileEntity.cookTime == abstractTeslaSynthesizerTileEntity.cookTimeTotal) {
-						abstractTeslaSynthesizerTileEntity.cookTime = 0;
-						abstractTeslaSynthesizerTileEntity.cookTimeTotal = abstractTeslaSynthesizerTileEntity.getCookTime();
-						abstractTeslaSynthesizerTileEntity.smelt(iRecipe);
-						flag1 = true;
-					}
-				} else {
+			if (abstractTeslaSynthesizerTileEntity.isBurning() && abstractTeslaSynthesizerTileEntity.canSmelt(iRecipe)) {
+				++abstractTeslaSynthesizerTileEntity.cookTime;
+				if (abstractTeslaSynthesizerTileEntity.cookTime == abstractTeslaSynthesizerTileEntity.cookTimeTotal) {
 					abstractTeslaSynthesizerTileEntity.cookTime = 0;
+					abstractTeslaSynthesizerTileEntity.cookTimeTotal = abstractTeslaSynthesizerTileEntity.getCookTime();
+					abstractTeslaSynthesizerTileEntity.smelt(iRecipe);
+					flag1 = true;
 				}
-			} else if (!abstractTeslaSynthesizerTileEntity.isBurning() && abstractTeslaSynthesizerTileEntity.cookTime > 0) {
-				abstractTeslaSynthesizerTileEntity.cookTime = Mth.clamp(abstractTeslaSynthesizerTileEntity.cookTime - 2, 0, abstractTeslaSynthesizerTileEntity.cookTimeTotal);
+			} else {
+				abstractTeslaSynthesizerTileEntity.cookTime = 0;
 			}
+		} else if (!abstractTeslaSynthesizerTileEntity.isBurning() && abstractTeslaSynthesizerTileEntity.cookTime > 0) {
+			abstractTeslaSynthesizerTileEntity.cookTime = Mth.clamp(abstractTeslaSynthesizerTileEntity.cookTime - 2, 0, abstractTeslaSynthesizerTileEntity.cookTimeTotal);
+		}
 
-			if (flag != abstractTeslaSynthesizerTileEntity.isBurning()) {
-				flag1 = true;
-			}
+		if (flag != abstractTeslaSynthesizerTileEntity.isBurning()) {
+			flag1 = true;
 		}
 
 		if (flag1) {

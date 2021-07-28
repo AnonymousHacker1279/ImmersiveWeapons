@@ -48,7 +48,7 @@ public class MinutemanStatueBlock extends HorizontalDirectionalBlock implements 
 	// TODO: Javdocs
 	@Override
 	public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState blockState, BlockEntityType<T> blockEntityType) {
-		return level.isClientSide ? null : BaseEntityBlock.createTickerHelper(blockEntityType, DeferredRegistryHandler.MINUTEMAN_STATUE_BLOCK_ENTITY.get(), MinutemanStatueBlockEntity::serverTick);
+		return level.isClientSide ? null : BaseEntityBlock.createTickerHelper(blockEntityType, DeferredRegistryHandler.MINUTEMAN_STATUE_BLOCK_ENTITY.get(), (level1, blockPos, blockState1, minutemanStatueBlockEntity) -> MinutemanStatueBlockEntity.serverTick(level1, blockPos, minutemanStatueBlockEntity));
 	}
 
 	/**

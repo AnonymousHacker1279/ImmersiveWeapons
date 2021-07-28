@@ -59,7 +59,7 @@ public class TeslaSynthesizerBlock extends Block implements EntityBlock, SimpleW
 	// TODO: Javdocs
 	@Override
 	public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState blockState, BlockEntityType<T> blockEntityType) {
-		return level.isClientSide ? null : BaseEntityBlock.createTickerHelper(blockEntityType, DeferredRegistryHandler.TESLA_SYNTHESIZER_BLOCK_ENTITY.get(), TeslaSynthesizerBlockEntity::serverTick);
+		return level.isClientSide ? null : BaseEntityBlock.createTickerHelper(blockEntityType, DeferredRegistryHandler.TESLA_SYNTHESIZER_BLOCK_ENTITY.get(), (level1, blockPos, blockState1, abstractTeslaSynthesizerTileEntity) -> TeslaSynthesizerBlockEntity.serverTick(level1, abstractTeslaSynthesizerTileEntity));
 	}
 
 	/**

@@ -11,7 +11,6 @@ import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.ai.goal.WrappedGoal;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
@@ -41,31 +40,28 @@ public class BearTrapBlockEntity extends BlockEntity implements EntityBlock {
 	/**
 	 * Runs once each tick. Handle trapping and releasing entities.
 	 */
-	// TODO: Re-evaluate the usages here. Try to use the constructor parameters. Also, OPTIMIZE!
-	public static void serverTick(Level level, BlockPos blockPos, BlockState blockState, BearTrapBlockEntity bearTrapBlockEntity) {
+	public static void serverTick(BlockPos blockPos, BearTrapBlockEntity bearTrapBlockEntity) {
 		Mob trapped = bearTrapBlockEntity.getTrappedEntity();
 		Player trappedPlayer = bearTrapBlockEntity.getTrappedPlayerEntity();
 
-		if (level != null && !level.isClientSide) {
-			if (trapped != null) {
-				// Entity has escaped
-				if (!trapped.getBoundingBox().intersects(new AABB(bearTrapBlockEntity.worldPosition)) || !trapped.isAlive()) {
-					bearTrapBlockEntity.setTrappedEntity(null);
-				}
+		if (trapped != null) {
+			// Entity has escaped
+			if (!trapped.getBoundingBox().intersects(new AABB(blockPos)) || !trapped.isAlive()) {
+				bearTrapBlockEntity.setTrappedEntity(null);
 			}
+		}
 
-			if (trappedPlayer != null) {
-				// Player has escaped
-				if (!trappedPlayer.getBoundingBox().intersects(new AABB(bearTrapBlockEntity.worldPosition)) || !trappedPlayer.isAlive()) {
-					bearTrapBlockEntity.setTrappedPlayerEntity(null);
-				} else {
-					trappedPlayer.makeStuckInBlock(bearTrapBlockEntity.getBlockState(), new Vec3(0.0F, 0.0D, 0.0F));
-					Minecraft.getInstance().options.keyJump.setDown(false);
-					Minecraft.getInstance().options.keyUp.setDown(false);
-					Minecraft.getInstance().options.keyLeft.setDown(false);
-					Minecraft.getInstance().options.keyRight.setDown(false);
-					Minecraft.getInstance().options.keyDown.setDown(false);
-				}
+		if (trappedPlayer != null) {
+			// Player has escaped
+			if (!trappedPlayer.getBoundingBox().intersects(new AABB(blockPos)) || !trappedPlayer.isAlive()) {
+				bearTrapBlockEntity.setTrappedPlayerEntity(null);
+			} else {
+				trappedPlayer.makeStuckInBlock(bearTrapBlockEntity.getBlockState(), new Vec3(0.0F, 0.0D, 0.0F));
+				Minecraft.getInstance().options.keyJump.setDown(false);
+				Minecraft.getInstance().options.keyUp.setDown(false);
+				Minecraft.getInstance().options.keyLeft.setDown(false);
+				Minecraft.getInstance().options.keyRight.setDown(false);
+				Minecraft.getInstance().options.keyDown.setDown(false);
 			}
 		}
 	}
@@ -101,46 +97,31 @@ public class BearTrapBlockEntity extends BlockEntity implements EntityBlock {
 	/**
 	 * Set trapped entities
 	 * @param mobEntity the <code>MobEntity</code> to trap
-	 * @return boolean
 	 */
-	public boolean setTrappedEntity(@Nullable Mob mobEntity) {
-		if (hasTrappedEntity() && mobEntity != null) {
-			return false;
-		} else {
-
-			if (mobEntity == null) {
-				if (livingEntity != null) {
-					livingEntity.goalSelector.removeGoal(doNothingGoal);
-				}
-				id = null;
-				doNothingGoal = null;
-			} else {
-				mobEntity.hurt(damageSource, 2);
-				mobEntity.goalSelector.getRunningGoals().filter(WrappedGoal::isRunning).forEach(WrappedGoal::stop);
-				mobEntity.goalSelector.addGoal(0, doNothingGoal = new DoNothingGoal(mobEntity, this));
+	public void setTrappedEntity(@Nullable Mob mobEntity) {
+		if (mobEntity == null) {
+			if (livingEntity != null) {
+				livingEntity.goalSelector.removeGoal(doNothingGoal);
 			}
-
-			livingEntity = mobEntity;
-			return true;
+			id = null;
+			doNothingGoal = null;
+		} else {
+			mobEntity.hurt(damageSource, 2);
+			mobEntity.goalSelector.getRunningGoals().filter(WrappedGoal::isRunning).forEach(WrappedGoal::stop);
+			mobEntity.goalSelector.addGoal(0, doNothingGoal = new DoNothingGoal(mobEntity, this));
 		}
+
+		livingEntity = mobEntity;
 	}
 
 	/**
 	 * Set trapped players
 	 * @param playerEntity the <code>PlayerEntity</code> to trap
-	 * @return boolean
 	 */
-	public boolean setTrappedPlayerEntity(@Nullable Player playerEntity) {
-		if (hasTrappedPlayerEntity() && playerEntity != null) {
-			return false;
-		} else {
-
-			if (playerEntity == null) {
-				id = null;
-			}
-
+	public void setTrappedPlayerEntity(@Nullable Player playerEntity) {
+		if (!hasTrappedPlayerEntity() && playerEntity != null) {
+			id = null;
 			this.playerEntity = playerEntity;
-			return true;
 		}
 	}
 

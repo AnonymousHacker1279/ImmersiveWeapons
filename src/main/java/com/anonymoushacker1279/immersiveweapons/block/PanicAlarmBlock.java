@@ -87,7 +87,7 @@ public class PanicAlarmBlock extends HorizontalDirectionalBlock implements Simpl
 	// TODO: Javdocs
 	@Override
 	public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState blockState, BlockEntityType<T> blockEntityType) {
-		return level.isClientSide ? null : BaseEntityBlock.createTickerHelper(blockEntityType, DeferredRegistryHandler.PANIC_ALARM_BLOCK_ENTITY.get(), PanicAlarmBlockEntity::serverTick);
+		return level.isClientSide ? null : BaseEntityBlock.createTickerHelper(blockEntityType, DeferredRegistryHandler.PANIC_ALARM_BLOCK_ENTITY.get(), (level1, blockPos, blockState1, panicAlarmBlockEntity) -> PanicAlarmBlockEntity.serverTick(level1, blockPos, panicAlarmBlockEntity));
 	}
 
 	/**

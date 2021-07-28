@@ -66,7 +66,7 @@ public class BearTrapBlock extends BaseEntityBlock implements SimpleWaterloggedB
 		if (!worldIn.isClientSide) {
 			BearTrapBlockEntity bearTrap = (BearTrapBlockEntity) worldIn.getBlockEntity(pos);
 			ItemStack currentlyHeldItem = player.getMainHandItem();
-			if (bearTrap != null && state.getValue(TRIGGERED) && !bearTrap.hasTrappedEntity() && !bearTrap.hasTrappedPlayerEntity()) {
+			if (bearTrap != null && state.getValue(TRIGGERED) && !bearTrap.hasTrappedEntity() && bearTrap.hasTrappedPlayerEntity()) {
 				worldIn.setBlock(pos, state.setValue(TRIGGERED, false).setValue(VINES, false), 3);
 				return InteractionResult.SUCCESS;
 			}
@@ -131,7 +131,7 @@ public class BearTrapBlock extends BaseEntityBlock implements SimpleWaterloggedB
 	// TODO: Javdocs
 	@Override
 	public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState blockState, BlockEntityType<T> blockEntityType) {
-		return level.isClientSide ? null : createTickerHelper(blockEntityType, DeferredRegistryHandler.BEAR_TRAP_BLOCK_ENTITY.get(), BearTrapBlockEntity::serverTick);
+		return level.isClientSide ? null : createTickerHelper(blockEntityType, DeferredRegistryHandler.BEAR_TRAP_BLOCK_ENTITY.get(), (level1, blockPos, blockState1, bearTrapBlockEntity) -> BearTrapBlockEntity.serverTick(blockPos, bearTrapBlockEntity));
 	}
 
 		/**

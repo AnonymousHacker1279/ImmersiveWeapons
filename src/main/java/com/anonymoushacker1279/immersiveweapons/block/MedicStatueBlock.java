@@ -48,7 +48,7 @@ public class MedicStatueBlock extends HorizontalDirectionalBlock implements Enti
 	// TODO: Javdocs
 	@Override
 	public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState blockState, BlockEntityType<T> blockEntityType) {
-		return level.isClientSide ? null : BaseEntityBlock.createTickerHelper(blockEntityType, DeferredRegistryHandler.MEDIC_STATUE_BLOCK_ENTITY.get(), MedicStatueBlockEntity::serverTick);
+		return level.isClientSide ? null : BaseEntityBlock.createTickerHelper(blockEntityType, DeferredRegistryHandler.MEDIC_STATUE_BLOCK_ENTITY.get(), (level1, blockPos, blockState1, medicStatueBlockEntity) -> MedicStatueBlockEntity.serverTick(level1, blockPos, medicStatueBlockEntity));
 	}
 
 	/**

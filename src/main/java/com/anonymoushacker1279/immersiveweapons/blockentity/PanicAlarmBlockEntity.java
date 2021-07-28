@@ -1,6 +1,5 @@
 package com.anonymoushacker1279.immersiveweapons.blockentity;
 
-import com.anonymoushacker1279.immersiveweapons.block.PanicAlarmBlock;
 import com.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
 import com.anonymoushacker1279.immersiveweapons.util.PacketHandler;
 import net.minecraft.ChatFormatting;
@@ -55,27 +54,24 @@ public class PanicAlarmBlockEntity extends BlockEntity implements EntityBlock {
 	 * Runs once each tick. Handle scanning and spawning entities.
 	 */
 	// TODO: Evaluate usages
-	public static void serverTick(Level level, BlockPos blockPos, BlockState blockState, PanicAlarmBlockEntity panicAlarmBlockEntity) {
-		if (level != null) {
-			if (panicAlarmBlockEntity.cooldown > 0) {
-				panicAlarmBlockEntity.cooldown--;
-			}
+	public static void serverTick(Level level, BlockPos blockPos, PanicAlarmBlockEntity panicAlarmBlockEntity) {
+		if (panicAlarmBlockEntity.cooldown > 0) {
+			panicAlarmBlockEntity.cooldown--;
+		}
 
-			if (panicAlarmBlockEntity.isPowered && panicAlarmBlockEntity.cooldown == 0) {
-				PanicAlarmBlockEntity blockEntity = (PanicAlarmBlockEntity) level.getBlockEntity(panicAlarmBlockEntity.worldPosition);
+		if (panicAlarmBlockEntity.isPowered && panicAlarmBlockEntity.cooldown == 0) {
+			PanicAlarmBlockEntity blockEntity = (PanicAlarmBlockEntity) level.getBlockEntity(blockPos);
 
-				if (blockEntity != null) {
-					PacketHandler.INSTANCE.send(PacketDistributor.TRACKING_CHUNK.with(() -> level.getChunkAt(blockEntity.worldPosition)), new PanicAlarmPacketHandler(panicAlarmBlockEntity.currentlyPlayingSound, panicAlarmBlockEntity.worldPosition));
+			if (blockEntity != null) {
+				PacketHandler.INSTANCE.send(PacketDistributor.TRACKING_CHUNK.with(() -> level.getChunkAt(blockPos)), new PanicAlarmPacketHandler(panicAlarmBlockEntity.currentlyPlayingSound, blockPos));
 
-					if (panicAlarmBlockEntity.currentlyPlayingSound == 1) {
-						blockEntity.setCooldown(60);
-					} else {
-						blockEntity.setCooldown(240);
-					}
-
-					level.setBlock(panicAlarmBlockEntity.worldPosition, level.getBlockState(panicAlarmBlockEntity.worldPosition).setValue(PanicAlarmBlock.FACING, level.getBlockState(panicAlarmBlockEntity.worldPosition).getValue(PanicAlarmBlock.FACING)), 2);
-					level.setBlockEntity(blockEntity);
+				if (panicAlarmBlockEntity.currentlyPlayingSound == 1) {
+					blockEntity.setCooldown(60);
+				} else {
+					blockEntity.setCooldown(240);
 				}
+
+				level.setBlockEntity(blockEntity);
 			}
 		}
 	}
@@ -188,7 +184,7 @@ public class PanicAlarmBlockEntity extends BlockEntity implements EntityBlock {
 		 */
 		public static void handle(PanicAlarmPacketHandler msg, Supplier<Context> contextSupplier) {
 			NetworkEvent.Context context = contextSupplier.get();
-			context.enqueueWork(() -> DistExecutor.runWhenOn(Dist.CLIENT, () -> () -> handleOnClient(msg)));
+			context.enqueueWork(() -> DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> handleOnClient(msg)));
 			context.setPacketHandled(true);
 		}
 

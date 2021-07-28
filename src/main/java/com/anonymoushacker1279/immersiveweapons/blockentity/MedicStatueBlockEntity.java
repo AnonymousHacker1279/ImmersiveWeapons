@@ -41,8 +41,8 @@ public class MedicStatueBlockEntity extends BlockEntity implements EntityBlock {
 	 * Runs once each tick. Handle scanning and spawning entities.
 	 */
 	// TODO: Use constructor parameters and optimize
-	public static void serverTick(Level level, BlockPos blockPos, BlockState blockState, MedicStatueBlockEntity medicStatueBlockEntity) {
-		if (level != null && !level.isClientSide && Objects.equals(level.getBiome(medicStatueBlockEntity.getBlockPos()).getRegistryName(), DeferredRegistryHandler.BATTLEFIELD.get().getRegistryName()) && medicStatueBlockEntity.cooldown == 0) {
+	public static void serverTick(Level level, BlockPos blockPos, MedicStatueBlockEntity medicStatueBlockEntity) {
+		if (Objects.equals(level.getBiome(blockPos).getRegistryName(), DeferredRegistryHandler.BATTLEFIELD.get().getRegistryName()) && medicStatueBlockEntity.cooldown == 0) {
 			List<FieldMedicEntity> listOfMedicsInArea = level.getEntitiesOfClass(FieldMedicEntity.class, new AABB(medicStatueBlockEntity.getBlockPos().getX() - 48, medicStatueBlockEntity.getBlockPos().getY() - 16, medicStatueBlockEntity.getBlockPos().getZ() - 48, medicStatueBlockEntity.getBlockPos().getX() + 48, medicStatueBlockEntity.getBlockPos().getY() + 16, medicStatueBlockEntity.getBlockPos().getZ() + 48));
 			medicStatueBlockEntity.scannedMedics = listOfMedicsInArea.size();
 
