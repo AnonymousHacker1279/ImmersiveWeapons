@@ -1,6 +1,0 @@
-{
-	"parent": "item/handheld",
-	"textures": {
-		"layer0": "immersiveweapons:item/small_parts_metal_throwable_bomb_blueprint"
-	}
-}

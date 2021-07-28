@@ -1,6 +1,6 @@
 {
 	"variants": {
-		"facing=north": {
+		"facing=north,": {
 			"model": "immersiveweapons:block/panic_alarm",
 			"y": 180
 		},

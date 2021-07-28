@@ -2,6 +2,7 @@ package com.anonymoushacker1279.immersiveweapons.data;
 
 import com.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import com.anonymoushacker1279.immersiveweapons.data.advancements.AdvancementProvider;
+import com.anonymoushacker1279.immersiveweapons.data.models.ModelProvider;
 import net.minecraft.data.DataGenerator;
 import net.minecraftforge.common.data.LanguageProvider;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -19,6 +20,7 @@ public class CustomDataGenerator {
 
 		if (event.includeClient()) {
 			generator.addProvider(new Lang(generator));
+			generator.addProvider(new ModelProvider(generator));
 		}
 		if (event.includeServer()) {
 			generator.addProvider(new AdvancementProvider(generator));
