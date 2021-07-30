@@ -1,0 +1,37 @@
+{
+  "parent": "immersiveweapons:bottle_of_alcohol",
+  "display": {
+    "icon": {
+      "item": "immersiveweapons:molotov_cocktail"
+    },
+    "title": {
+      "translate": "advancements.immersiveweapons.molotov_cocktail.title"
+    },
+    "description": {
+      "translate": "advancements.immersiveweapons.molotov_cocktail.description"
+    },
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "hold": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "immersiveweapons:molotov_cocktail"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "hold"
+    ]
+  ]
+}

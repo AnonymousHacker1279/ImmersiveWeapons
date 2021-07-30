@@ -1,5 +1,7 @@
 {
-  "variants": {
-    "": { "model": "immersiveweapons:block/bulletproof_glass" }
-  }
+	"variants": {
+		"": {
+			"model": "immersiveweapons:block/bulletproof_glass"
+		}
+	}
 }

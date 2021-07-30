@@ -2,13 +2,14 @@ package com.anonymoushacker1279.immersiveweapons.item;
 
 import com.anonymoushacker1279.immersiveweapons.entity.projectile.MolotovEntity;
 import com.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.Hand;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.world.World;
+import com.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
 
 public class MolotovItem extends Item {
 
@@ -28,9 +29,9 @@ public class MolotovItem extends Item {
 	 * @return ActionResult extending ItemStack
 	 */
 	@Override
-	public ActionResult<ItemStack> use(World worldIn, PlayerEntity playerIn, Hand handIn) {
+	public InteractionResultHolder<ItemStack> use(Level worldIn, Player playerIn, InteractionHand handIn) {
 		ItemStack itemstack = playerIn.getItemInHand(handIn);
-		worldIn.playLocalSound(playerIn.getX(), playerIn.getY(), playerIn.getZ(), DeferredRegistryHandler.GENERIC_WHOOSH.get(), SoundCategory.NEUTRAL, 0.5F, 0.4F / (random.nextFloat() * 0.4F + 0.8F), false);
+		worldIn.playLocalSound(playerIn.getX(), playerIn.getY(), playerIn.getZ(), DeferredRegistryHandler.GENERIC_WHOOSH.get(), SoundSource.NEUTRAL, 0.5F, 0.4F / (GeneralUtilities.getRandomNumber(0.2f, 0.6f) + 0.8F), false);
 		if (!worldIn.isClientSide) {
 			MolotovEntity molotovEntity = new MolotovEntity(worldIn, playerIn);
 			molotovEntity.setItem(itemstack);
@@ -43,6 +44,6 @@ public class MolotovItem extends Item {
 			playerIn.getCooldowns().addCooldown(this, 100);    // Helps to prevent spamming
 		}
 
-		return ActionResult.sidedSuccess(itemstack, worldIn.isClientSide());
+		return InteractionResultHolder.sidedSuccess(itemstack, worldIn.isClientSide());
 	}
 }

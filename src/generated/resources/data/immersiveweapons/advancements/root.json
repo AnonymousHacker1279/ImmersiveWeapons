@@ -1,0 +1,35 @@
+{
+  "display": {
+    "icon": {
+      "item": "immersiveweapons:tesla_sword",
+      "nbt": "{Damage:0}"
+    },
+    "title": {
+      "color": "red",
+      "translate": "advancements.immersiveweapons.root.title"
+    },
+    "description": {
+      "translate": "advancements.immersiveweapons.root.description"
+    },
+    "frame": "task",
+    "show_toast": false,
+    "announce_to_chat": false,
+    "hidden": false,
+    "background": "immersiveweapons:textures/block/red_stained_bulletproof_glass.png"
+  },
+  "criteria": {
+    "exist": {
+      "trigger": "minecraft:location",
+      "conditions": {
+        "location": {
+          "dimension": "minecraft:overworld"
+        }
+      }
+    }
+  },
+  "requirements": [
+    [
+      "exist"
+    ]
+  ]
+}

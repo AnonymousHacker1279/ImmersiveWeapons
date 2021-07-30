@@ -6,22 +6,22 @@ import com.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
 import com.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
 import com.anonymoushacker1279.immersiveweapons.util.PacketHandler;
 import net.minecraft.client.Minecraft;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.item.ArmorItem;
-import net.minecraft.item.IArmorMaterial;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.network.PacketBuffer;
-import net.minecraft.particles.ParticleTypes;
-import net.minecraft.potion.EffectInstance;
-import net.minecraft.potion.Effects;
-import net.minecraft.world.World;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ArmorItem;
+import net.minecraft.world.item.ArmorMaterial;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.fml.DistExecutor;
-import net.minecraftforge.fml.network.NetworkEvent;
-import net.minecraftforge.fml.network.NetworkEvent.Context;
+import net.minecraftforge.fmllegacy.network.NetworkEvent;
+import net.minecraftforge.fmllegacy.network.NetworkEvent.Context;
 
 import java.util.function.Supplier;
 
@@ -36,7 +36,7 @@ public class VentusArmorItem extends ArmorItem {
 	 * @param slot the <code>EquipmentSlotType</code>
 	 * @param type type ID
 	 */
-	public VentusArmorItem(IArmorMaterial material, EquipmentSlotType slot, int type) {
+	public VentusArmorItem(ArmorMaterial material, EquipmentSlot slot, int type) {
 		super(material, slot, (new Item.Properties().tab(DeferredRegistryHandler.ITEM_GROUP)));
 		if (type == 2) {
 			isLeggings = true;
@@ -52,7 +52,7 @@ public class VentusArmorItem extends ArmorItem {
 	 * @return String
 	 */
 	@Override
-	public String getArmorTexture(ItemStack stack, Entity entity, EquipmentSlotType slot, String type) {
+	public String getArmorTexture(ItemStack stack, Entity entity, EquipmentSlot slot, String type) {
 		return (!isLeggings ? ImmersiveWeapons.MOD_ID + ":textures/armor/ventus_layer_1.png" : ImmersiveWeapons.MOD_ID + ":textures/armor/ventus_layer_2.png");
 	}
 
@@ -63,11 +63,11 @@ public class VentusArmorItem extends ArmorItem {
 	 * @param player the <code>PlayerEntity</code> wearing the armor
 	 */
 	@Override
-	public void onArmorTick(ItemStack stack, World world, PlayerEntity player) {
-		if (player.getItemBySlot(EquipmentSlotType.HEAD).getItem() == DeferredRegistryHandler.VENTUS_HELMET.get() &&
-				player.getItemBySlot(EquipmentSlotType.CHEST).getItem() == DeferredRegistryHandler.VENTUS_CHESTPLATE.get() &&
-				player.getItemBySlot(EquipmentSlotType.LEGS).getItem() == DeferredRegistryHandler.VENTUS_LEGGINGS.get() &&
-				player.getItemBySlot(EquipmentSlotType.FEET).getItem() == DeferredRegistryHandler.VENTUS_BOOTS.get()) {
+	public void onArmorTick(ItemStack stack, Level world, Player player) {
+		if (player.getItemBySlot(EquipmentSlot.HEAD).getItem() == DeferredRegistryHandler.VENTUS_HELMET.get() &&
+				player.getItemBySlot(EquipmentSlot.CHEST).getItem() == DeferredRegistryHandler.VENTUS_CHESTPLATE.get() &&
+				player.getItemBySlot(EquipmentSlot.LEGS).getItem() == DeferredRegistryHandler.VENTUS_LEGGINGS.get() &&
+				player.getItemBySlot(EquipmentSlot.FEET).getItem() == DeferredRegistryHandler.VENTUS_BOOTS.get()) {
 
 			if (world.isClientSide) {
 				if (ClientModEventSubscriber.toggleArmorEffect.consumeClick()) {
@@ -84,8 +84,8 @@ public class VentusArmorItem extends ArmorItem {
 			}
 
 			if (armorIsToggled) {
-				player.addEffect(new EffectInstance(Effects.JUMP, 0, 2, false, false));
-				player.addEffect(new EffectInstance(Effects.SLOW_FALLING, 0, 0, false, false));
+				player.addEffect(new MobEffectInstance(MobEffects.JUMP, 0, 2, false, false));
+				player.addEffect(new MobEffectInstance(MobEffects.SLOW_FALLING, 0, 0, false, false));
 			}
 		}
 	}
@@ -97,53 +97,52 @@ public class VentusArmorItem extends ArmorItem {
 		armorIsToggled = !armorIsToggled;
 	}
 
-	public static class VentusArmorItemPacketHandler {
-
-		private final boolean clientSide;
+	public record VentusArmorItemPacketHandler(boolean clientSide) {
 
 		/**
 		 * Constructor for VentusArmorItemPacketHandler.
+		 *
 		 * @param clientSide if the packet is from the client
 		 */
-		VentusArmorItemPacketHandler(boolean clientSide) {
-			this.clientSide = clientSide;
+		public VentusArmorItemPacketHandler {
 		}
 
 		/**
 		 * Encodes a packet
-		 * @param msg the <code>VentusArmorItemPacketHandler</code> message being sent
+		 *
+		 * @param msg          the <code>VentusArmorItemPacketHandler</code> message being sent
 		 * @param packetBuffer the <code>PacketBuffer</code> containing packet data
 		 */
-		public static void encode(VentusArmorItemPacketHandler msg, PacketBuffer packetBuffer) {
+		public static void encode(VentusArmorItemPacketHandler msg, FriendlyByteBuf packetBuffer) {
 			packetBuffer.writeBoolean(msg.clientSide);
 		}
 
 		/**
 		 * Decodes a packet
+		 *
 		 * @param packetBuffer the <code>PacketBuffer</code> containing packet data
 		 * @return VentusArmorItemPacketHandler
 		 */
-		public static VentusArmorItemPacketHandler decode(PacketBuffer packetBuffer) {
+		public static VentusArmorItemPacketHandler decode(FriendlyByteBuf packetBuffer) {
 			return new VentusArmorItemPacketHandler(packetBuffer.readBoolean());
 		}
 
 		/**
 		 * Handles an incoming packet, by sending it to the client/server
-		 * @param msg the <code>VentusArmorItemPacketHandler</code> message being sent
+		 *
 		 * @param contextSupplier the <code>Supplier</code> providing context
 		 */
-		public static void handle(VentusArmorItemPacketHandler msg, Supplier<Context> contextSupplier) {
+		public static void handle(Supplier<Context> contextSupplier) {
 			NetworkEvent.Context context = contextSupplier.get();
-			context.enqueueWork(() -> DistExecutor.runWhenOn(Dist.CLIENT, () -> () -> handleOnServer(msg)));
-			context.enqueueWork(() -> DistExecutor.runWhenOn(Dist.DEDICATED_SERVER, () -> () -> handleOnServer(msg)));
+			context.enqueueWork(() -> DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> VentusArmorItemPacketHandler::handleOnServer));
+			context.enqueueWork(() -> DistExecutor.unsafeRunWhenOn(Dist.DEDICATED_SERVER, () -> VentusArmorItemPacketHandler::handleOnServer));
 			context.setPacketHandled(true);
 		}
 
 		/**
 		 * Runs specifically on the server, when a packet is received
-		 * @param msg the <code>VentusArmorItemPacketHandler</code> message being sent
 		 */
-		private static void handleOnServer(VentusArmorItemPacketHandler msg) {
+		private static void handleOnServer() {
 			VentusArmorItem.toggleEffect();
 		}
 	}

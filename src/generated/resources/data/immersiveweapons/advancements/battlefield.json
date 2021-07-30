@@ -1,0 +1,36 @@
+{
+  "parent": "immersiveweapons:root",
+  "display": {
+    "icon": {
+      "item": "minecraft:skeleton_skull"
+    },
+    "title": {
+      "translate": "advancements.immersiveweapons.battlefield.title"
+    },
+    "description": {
+      "translate": "advancements.immersiveweapons.battlefield.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "rewards": {
+    "experience": 50
+  },
+  "criteria": {
+    "visit": {
+      "trigger": "minecraft:location",
+      "conditions": {
+        "location": {
+          "biome": "immersiveweapons:battlefield"
+        }
+      }
+    }
+  },
+  "requirements": [
+    [
+      "visit"
+    ]
+  ]
+}

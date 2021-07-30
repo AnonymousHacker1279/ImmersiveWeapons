@@ -1,27 +1,26 @@
 package com.anonymoushacker1279.immersiveweapons.client.renderer;
 
 import com.anonymoushacker1279.immersiveweapons.block.ShelfBlock;
-import com.anonymoushacker1279.immersiveweapons.tileentity.WallShelfTileEntity;
-import com.mojang.blaze3d.matrix.MatrixStack;
+import com.anonymoushacker1279.immersiveweapons.blockentity.WallShelfBlockEntity;
+import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.math.Quaternion;
+import com.mojang.math.Vector3f;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.IRenderTypeBuffer;
-import net.minecraft.client.renderer.model.ItemCameraTransforms;
-import net.minecraft.client.renderer.tileentity.TileEntityRenderer;
-import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.Direction;
-import net.minecraft.util.NonNullList;
-import net.minecraft.util.math.vector.Quaternion;
-import net.minecraft.util.math.vector.Vector3f;
+import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.block.model.ItemTransforms;
+import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
+import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider.Context;
+import net.minecraft.core.Direction;
+import net.minecraft.core.NonNullList;
+import net.minecraft.world.item.ItemStack;
 
-public class ShelfRenderer extends TileEntityRenderer<WallShelfTileEntity> {
+public class ShelfRenderer implements BlockEntityRenderer<WallShelfBlockEntity> {
 
 	/**
 	 * Constructor for ShelfRenderer.
-	 * @param renderManagerIn a <code>TileEntityRendererDispatcher</code> instance
+	 * @param context the <code>Context</code> instance
 	 */
-	public ShelfRenderer(TileEntityRendererDispatcher renderManagerIn) {
-		super(renderManagerIn);
+	public ShelfRenderer(Context context) {
 	}
 
 	/**
@@ -34,7 +33,7 @@ public class ShelfRenderer extends TileEntityRenderer<WallShelfTileEntity> {
 	 * @param combinedOverlayIn the combined overlay value
 	 */
 	@Override
-	public void render(WallShelfTileEntity tileEntityIn, float partialTicks, MatrixStack matrixStackIn, IRenderTypeBuffer bufferIn, int combinedLightIn, int combinedOverlayIn) {
+	public void render(WallShelfBlockEntity tileEntityIn, float partialTicks, PoseStack matrixStackIn, MultiBufferSource bufferIn, int combinedLightIn, int combinedOverlayIn) {
 		Direction direction = tileEntityIn.getBlockState().getValue(ShelfBlock.FACING);
 		NonNullList<ItemStack> tileEntityInventory = tileEntityIn.getInventory();
 
@@ -46,18 +45,10 @@ public class ShelfRenderer extends TileEntityRenderer<WallShelfTileEntity> {
 
 				// Rotate by direction
 				switch (direction) {
-					case NORTH:
-						matrixStackIn.mulPose(new Quaternion(Vector3f.YP, 0, true));
-						break;
-					case EAST:
-						matrixStackIn.mulPose(new Quaternion(Vector3f.YP, 270, true));
-						break;
-					case SOUTH:
-						matrixStackIn.mulPose(new Quaternion(Vector3f.YP, 180, true));
-						break;
-					case WEST:
-						matrixStackIn.mulPose(new Quaternion(Vector3f.YP, 90, true));
-						break;
+					case NORTH -> matrixStackIn.mulPose(new Quaternion(Vector3f.YP, 0, true));
+					case EAST -> matrixStackIn.mulPose(new Quaternion(Vector3f.YP, 270, true));
+					case SOUTH -> matrixStackIn.mulPose(new Quaternion(Vector3f.YP, 180, true));
+					case WEST -> matrixStackIn.mulPose(new Quaternion(Vector3f.YP, 90, true));
 				}
 				// Rotation occurs here
 				matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(50f));
@@ -79,7 +70,7 @@ public class ShelfRenderer extends TileEntityRenderer<WallShelfTileEntity> {
 				// Scale render
 				matrixStackIn.scale(0.375F, 0.375F, 0.375F);
 				// Actually render the item
-				Minecraft.getInstance().getItemRenderer().renderStatic(itemstack, ItemCameraTransforms.TransformType.FIXED, combinedLightIn, combinedOverlayIn, matrixStackIn, bufferIn);
+				Minecraft.getInstance().getItemRenderer().renderStatic(itemstack, ItemTransforms.TransformType.FIXED, combinedLightIn, combinedOverlayIn, matrixStackIn, bufferIn, 0);
 				matrixStackIn.popPose();
 			}
 		}

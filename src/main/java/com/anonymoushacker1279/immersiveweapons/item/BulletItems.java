@@ -2,10 +2,10 @@ package com.anonymoushacker1279.immersiveweapons.item;
 
 import com.anonymoushacker1279.immersiveweapons.entity.projectile.BulletEntity.*;
 import com.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.projectile.AbstractArrowEntity.PickupStatus;
-import net.minecraft.item.ItemStack;
-import net.minecraft.world.World;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.projectile.AbstractArrow.Pickup;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
 
 public class BulletItems {
 
@@ -29,10 +29,10 @@ public class BulletItems {
 		 * @return WoodBulletEntity
 		 */
 		@Override
-		public WoodBulletEntity createArrow(World worldIn, ItemStack stack, LivingEntity shooter) {
+		public WoodBulletEntity createArrow(Level worldIn, ItemStack stack, LivingEntity shooter) {
 			WoodBulletEntity bulletEntity = new WoodBulletEntity(shooter, worldIn, ref.get());
 			bulletEntity.setBaseDamage(damage);
-			bulletEntity.pickup = PickupStatus.DISALLOWED;
+			bulletEntity.pickup = Pickup.DISALLOWED;
 			bulletEntity.setSoundEvent(DeferredRegistryHandler.BULLET_WHIZZ.get());
 			return bulletEntity;
 		}
@@ -58,10 +58,10 @@ public class BulletItems {
 		 * @return StoneBulletItem
 		 */
 		@Override
-		public StoneBulletEntity createArrow(World worldIn, ItemStack stack, LivingEntity shooter) {
+		public StoneBulletEntity createArrow(Level worldIn, ItemStack stack, LivingEntity shooter) {
 			StoneBulletEntity bulletEntity = new StoneBulletEntity(shooter, worldIn, ref.get());
 			bulletEntity.setBaseDamage(damage);
-			bulletEntity.pickup = PickupStatus.DISALLOWED;
+			bulletEntity.pickup = Pickup.DISALLOWED;
 			bulletEntity.setSoundEvent(DeferredRegistryHandler.BULLET_WHIZZ.get());
 			return bulletEntity;
 		}
@@ -87,10 +87,10 @@ public class BulletItems {
 		 * @return CopperBulletItem
 		 */
 		@Override
-		public CopperBulletEntity createArrow(World worldIn, ItemStack stack, LivingEntity shooter) {
+		public CopperBulletEntity createArrow(Level worldIn, ItemStack stack, LivingEntity shooter) {
 			CopperBulletEntity bulletEntity = new CopperBulletEntity(shooter, worldIn, ref.get());
 			bulletEntity.setBaseDamage(damage);
-			bulletEntity.pickup = PickupStatus.DISALLOWED;
+			bulletEntity.pickup = Pickup.DISALLOWED;
 			bulletEntity.setSoundEvent(DeferredRegistryHandler.BULLET_WHIZZ.get());
 			return bulletEntity;
 		}
@@ -116,10 +116,10 @@ public class BulletItems {
 		 * @return IronBulletEntity
 		 */
 		@Override
-		public IronBulletEntity createArrow(World worldIn, ItemStack stack, LivingEntity shooter) {
+		public IronBulletEntity createArrow(Level worldIn, ItemStack stack, LivingEntity shooter) {
 			IronBulletEntity bulletEntity = new IronBulletEntity(shooter, worldIn, ref.get());
 			bulletEntity.setBaseDamage(damage);
-			bulletEntity.pickup = PickupStatus.DISALLOWED;
+			bulletEntity.pickup = Pickup.DISALLOWED;
 			bulletEntity.setSoundEvent(DeferredRegistryHandler.BULLET_WHIZZ.get());
 			return bulletEntity;
 		}
@@ -145,10 +145,10 @@ public class BulletItems {
 		 * @return GoldBulletEntity
 		 */
 		@Override
-		public GoldBulletEntity createArrow(World worldIn, ItemStack stack, LivingEntity shooter) {
+		public GoldBulletEntity createArrow(Level worldIn, ItemStack stack, LivingEntity shooter) {
 			GoldBulletEntity bulletEntity = new GoldBulletEntity(shooter, worldIn, ref.get());
 			bulletEntity.setBaseDamage(damage);
-			bulletEntity.pickup = PickupStatus.DISALLOWED;
+			bulletEntity.pickup = Pickup.DISALLOWED;
 			bulletEntity.setSoundEvent(DeferredRegistryHandler.BULLET_WHIZZ.get());
 			return bulletEntity;
 		}
@@ -174,10 +174,10 @@ public class BulletItems {
 		 * @return DiamondBulletEntity
 		 */
 		@Override
-		public DiamondBulletEntity createArrow(World worldIn, ItemStack stack, LivingEntity shooter) {
+		public DiamondBulletEntity createArrow(Level worldIn, ItemStack stack, LivingEntity shooter) {
 			DiamondBulletEntity bulletEntity = new DiamondBulletEntity(shooter, worldIn, ref.get());
 			bulletEntity.setBaseDamage(damage);
-			bulletEntity.pickup = PickupStatus.DISALLOWED;
+			bulletEntity.pickup = Pickup.DISALLOWED;
 			bulletEntity.setSoundEvent(DeferredRegistryHandler.BULLET_WHIZZ.get());
 			bulletEntity.setPierceLevel((byte) 1);
 			return bulletEntity;
@@ -204,10 +204,10 @@ public class BulletItems {
 		 * @return NetheriteBulletEntity
 		 */
 		@Override
-		public NetheriteBulletEntity createArrow(World worldIn, ItemStack stack, LivingEntity shooter) {
+		public NetheriteBulletEntity createArrow(Level worldIn, ItemStack stack, LivingEntity shooter) {
 			NetheriteBulletEntity bulletEntity = new NetheriteBulletEntity(shooter, worldIn, ref.get());
 			bulletEntity.setBaseDamage(damage);
-			bulletEntity.pickup = PickupStatus.DISALLOWED;
+			bulletEntity.pickup = Pickup.DISALLOWED;
 			bulletEntity.setSoundEvent(DeferredRegistryHandler.BULLET_WHIZZ.get());
 			bulletEntity.setPierceLevel((byte) 2);
 			return bulletEntity;
@@ -234,10 +234,10 @@ public class BulletItems {
 		 * @return FlareEntity
 		 */
 		@Override
-		public FlareEntity createArrow(World worldIn, ItemStack stack, LivingEntity shooter) {
+		public FlareEntity createArrow(Level worldIn, ItemStack stack, LivingEntity shooter) {
 			FlareEntity flareEntity = new FlareEntity(shooter, worldIn, ref.get());
 			flareEntity.setBaseDamage(damage);
-			flareEntity.pickup = PickupStatus.DISALLOWED;
+			flareEntity.pickup = Pickup.DISALLOWED;
 			flareEntity.setSoundEvent(DeferredRegistryHandler.BULLET_WHIZZ.get());
 			return flareEntity;
 		}

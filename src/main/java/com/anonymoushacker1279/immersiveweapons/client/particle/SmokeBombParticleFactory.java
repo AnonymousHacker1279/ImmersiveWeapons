@@ -1,19 +1,19 @@
 package com.anonymoushacker1279.immersiveweapons.client.particle;
 
-import net.minecraft.client.particle.IAnimatedSprite;
-import net.minecraft.client.particle.IParticleFactory;
+import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.particle.Particle;
-import net.minecraft.client.world.ClientWorld;
+import net.minecraft.client.particle.ParticleProvider;
+import net.minecraft.client.particle.SpriteSet;
 
-public class SmokeBombParticleFactory implements IParticleFactory<SmokeBombParticleData> {
+public class SmokeBombParticleFactory implements ParticleProvider<SmokeBombParticleData> {
 
-	private final IAnimatedSprite sprites;
+	private final SpriteSet sprites;
 
 	/**
 	 * Constructor for SmokeBombParticleFactory.
 	 * @param sprite an <code>IAnimatedSprite</code> instance
 	 */
-	public SmokeBombParticleFactory(IAnimatedSprite sprite) {
+	public SmokeBombParticleFactory(SpriteSet sprite) {
 		sprites = sprite;
 	}
 
@@ -30,7 +30,7 @@ public class SmokeBombParticleFactory implements IParticleFactory<SmokeBombParti
 	 * @return Particle
 	 */
 	@Override
-	public Particle createParticle(SmokeBombParticleData smokeBombParticleData, ClientWorld world, double xPos, double yPos, double zPos, double xVelocity, double yVelocity, double zVelocity) {
+	public Particle createParticle(SmokeBombParticleData smokeBombParticleData, ClientLevel world, double xPos, double yPos, double zPos, double xVelocity, double yVelocity, double zVelocity) {
 		SmokeBombParticle newParticle = new SmokeBombParticle(world, xPos, yPos, zPos, xVelocity, yVelocity, zVelocity,
 				smokeBombParticleData.getTint(), smokeBombParticleData.getDiameter()
 		);

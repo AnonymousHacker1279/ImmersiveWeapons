@@ -1,25 +1,20 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "pattern":
-  [
-    "xxx",
-    "xyx",
-    "xxx"
-  ],
-  "key":
-  {
-    "x":
-    {
-      "item": "immersiveweapons:bulletproof_glass"
-    },
-    "y":
-    {
-      "tag": "forge:dyes/magenta"
-    }
-  },
-  "result":
-  {
-    "item": "immersiveweapons:magenta_stained_bulletproof_glass",
-    "count": 8
-  }
+	"type": "minecraft:crafting_shaped",
+	"pattern": [
+		"xxx",
+		"xyx",
+		"xxx"
+	],
+	"key": {
+		"x": {
+			"item": "immersiveweapons:bulletproof_glass"
+		},
+		"y": {
+			"tag": "forge:dyes/magenta"
+		}
+	},
+	"result": {
+		"item": "immersiveweapons:magenta_stained_bulletproof_glass",
+		"count": 8
+	}
 }

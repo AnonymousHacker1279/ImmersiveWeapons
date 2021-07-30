@@ -1,19 +1,19 @@
 package com.anonymoushacker1279.immersiveweapons.block;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.shapes.ISelectionContext;
-import net.minecraft.util.math.shapes.VoxelShape;
-import net.minecraft.util.math.shapes.VoxelShapes;
-import net.minecraft.world.IBlockReader;
-import net.minecraft.world.IWorld;
-import net.minecraft.world.IWorldReader;
-import net.minecraft.world.World;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.Shapes;
+import net.minecraft.world.phys.shapes.VoxelShape;
 
 public class PitfallBlock extends Block {
 
@@ -36,7 +36,7 @@ public class PitfallBlock extends Block {
 	 * @return VoxelShape
 	 */
 	@Override
-	public VoxelShape getShape(BlockState state, IBlockReader reader, BlockPos pos, ISelectionContext selectionContext) {
+	public VoxelShape getShape(BlockState state, BlockGetter reader, BlockPos pos, CollisionContext selectionContext) {
 		return SHAPE;
 	}
 
@@ -49,8 +49,8 @@ public class PitfallBlock extends Block {
 	 * @return VoxelShape
 	 */
 	@Override
-	public VoxelShape getCollisionShape(BlockState state, IBlockReader reader, BlockPos pos, ISelectionContext selectionContext) {
-		return VoxelShapes.empty();
+	public VoxelShape getCollisionShape(BlockState state, BlockGetter reader, BlockPos pos, CollisionContext selectionContext) {
+		return Shapes.empty();
 	}
 
 	/**
@@ -64,7 +64,7 @@ public class PitfallBlock extends Block {
 	 * @return BlockState
 	 */
 	@Override
-	public BlockState updateShape(BlockState stateIn, Direction facing, BlockState facingState, IWorld worldIn, BlockPos currentPos, BlockPos facingPos) {
+	public BlockState updateShape(BlockState stateIn, Direction facing, BlockState facingState, LevelAccessor worldIn, BlockPos currentPos, BlockPos facingPos) {
 		return !stateIn.canSurvive(worldIn, currentPos) ? Blocks.AIR.defaultBlockState() : super.updateShape(stateIn, facing, facingState, worldIn, currentPos, facingPos);
 	}
 
@@ -76,10 +76,10 @@ public class PitfallBlock extends Block {
 	 * @return boolean
 	 */
 	@Override
-	public boolean canSurvive(BlockState state, IWorldReader reader, BlockPos pos) {
+	public boolean canSurvive(BlockState state, LevelReader reader, BlockPos pos) {
 		for (Direction facing : new Direction[]{Direction.EAST, Direction.WEST, Direction.SOUTH, Direction.NORTH}) {
-			final BlockPos posOff = pos.relative(facing);
-			final BlockState blockstate = reader.getBlockState(posOff);
+			BlockPos posOff = pos.relative(facing);
+			BlockState blockstate = reader.getBlockState(posOff);
 			if (Block.canSupportCenter(reader, posOff, facing.getOpposite()) || blockstate.getBlock() == this)
 				return true;
 		}
@@ -95,7 +95,7 @@ public class PitfallBlock extends Block {
 	 * @param entity the <code>Entity</code> passing through the block
 	 */
 	@Override
-	public void entityInside(BlockState state, World world, BlockPos pos, Entity entity) {
+	public void entityInside(BlockState state, Level world, BlockPos pos, Entity entity) {
 		if (entity instanceof LivingEntity && !world.isClientSide) {
 			world.destroyBlock(pos, true);
 		}

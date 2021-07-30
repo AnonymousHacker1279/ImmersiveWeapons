@@ -1,33 +1,26 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "pattern":
-  [
-    "zyx",
-    " w ",
-    " w "
-  ],
-  "key":
-  {
-    "w":
-    {
-    	"item":"minecraft:bamboo"
-    },
-    "x":
-    {
-    	"item":"immersiveweapons:small_parts_metal_throwable_bomb"
-    },
-    "y":
-    { 
-    	"item":"immersiveweapons:smoke_powder"
-    },
-    "z":
-    { 
-    	"tag":"forge:dyes/yellow"
-    }
-  },
-  "result":
-  {
-    "item": "immersiveweapons:smoke_bomb_yellow",
-    "count": 2
-  }
+	"type": "minecraft:crafting_shaped",
+	"pattern": [
+		"zyx",
+		" w ",
+		" w "
+	],
+	"key": {
+		"w": {
+			"item": "minecraft:bamboo"
+		},
+		"x": {
+			"item": "immersiveweapons:small_parts_metal_throwable_bomb"
+		},
+		"y": {
+			"item": "immersiveweapons:smoke_powder"
+		},
+		"z": {
+			"tag": "forge:dyes/yellow"
+		}
+	},
+	"result": {
+		"item": "immersiveweapons:smoke_bomb_yellow",
+		"count": 2
+	}
 }

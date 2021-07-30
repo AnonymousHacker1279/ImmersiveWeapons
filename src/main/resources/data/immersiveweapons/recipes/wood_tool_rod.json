@@ -1,21 +1,17 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "pattern":
-  [
-    "   ",
-    " x ",
-    "x  "
-  ],
-  "key":
-  {
-    "x":
-    {
-    	"tag":"minecraft:planks"
-    }
-  },
-  "result":
-  {
-    "item": "immersiveweapons:wood_tool_rod",
-    "count": 1
-  }
+	"type": "minecraft:crafting_shaped",
+	"pattern": [
+		"   ",
+		" x ",
+		"x  "
+	],
+	"key": {
+		"x": {
+			"tag": "minecraft:planks"
+		}
+	},
+	"result": {
+		"item": "immersiveweapons:wood_tool_rod",
+		"count": 1
+	}
 }

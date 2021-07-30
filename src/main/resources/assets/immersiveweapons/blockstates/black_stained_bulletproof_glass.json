@@ -1,5 +1,7 @@
 {
-  "variants": {
-    "": { "model": "immersiveweapons:block/black_stained_bulletproof_glass" }
-  }
+	"variants": {
+		"": {
+			"model": "immersiveweapons:block/black_stained_bulletproof_glass"
+		}
+	}
 }

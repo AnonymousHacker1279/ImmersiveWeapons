@@ -3,21 +3,21 @@ package com.anonymoushacker1279.immersiveweapons.container;
 import com.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
 import com.anonymoushacker1279.immersiveweapons.item.crafting.ICustomRecipeType;
 import com.anonymoushacker1279.immersiveweapons.item.crafting.SmallPartsRecipe;
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.container.AbstractRepairContainer;
-import net.minecraft.inventory.container.Slot;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.IWorldPosCallable;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.world.World;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.ContainerLevelAccess;
+import net.minecraft.world.inventory.ItemCombinerMenu;
+import net.minecraft.world.inventory.Slot;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.state.BlockState;
 
 import java.util.List;
 
-public class SmallPartsContainer extends AbstractRepairContainer {
+public class SmallPartsContainer extends ItemCombinerMenu {
 
-	private final World world;
+	private final Level world;
 	private final List<SmallPartsRecipe> smallPartsRecipeList;
 	private SmallPartsRecipe smallPartsRecipe;
 
@@ -26,8 +26,8 @@ public class SmallPartsContainer extends AbstractRepairContainer {
 	 * @param id the ID of the container
 	 * @param inv the <code>PlayerInventory</code> instance
 	 */
-	public SmallPartsContainer(int id, PlayerInventory inv) {
-		this(id, inv, IWorldPosCallable.NULL);
+	public SmallPartsContainer(int id, Inventory inv) {
+		this(id, inv, ContainerLevelAccess.NULL);
 	}
 
 	/**
@@ -36,7 +36,7 @@ public class SmallPartsContainer extends AbstractRepairContainer {
 	 * @param inv the <code>PlayerInventory</code> instance
 	 * @param worldPosCallable the <code>IWorldPosCallable</code> instance
 	 */
-	public SmallPartsContainer(int id, PlayerInventory inv, IWorldPosCallable worldPosCallable) {
+	public SmallPartsContainer(int id, Inventory inv, ContainerLevelAccess worldPosCallable) {
 		super(DeferredRegistryHandler.SMALL_PARTS_TABLE_CONTAINER.get(), id, inv, worldPosCallable);
 		world = inv.player.level;
 		smallPartsRecipeList = world.getRecipeManager().getAllRecipesFor(ICustomRecipeType.SMALL_PARTS);
@@ -59,7 +59,7 @@ public class SmallPartsContainer extends AbstractRepairContainer {
 	 * @return boolean
 	 */
 	@Override
-	protected boolean mayPickup(PlayerEntity playerEntity, boolean matchesRecipe) {
+	protected boolean mayPickup(Player playerEntity, boolean matchesRecipe) {
 		return smallPartsRecipe != null && smallPartsRecipe.matches(inputSlots, world);
 	}
 
@@ -67,16 +67,14 @@ public class SmallPartsContainer extends AbstractRepairContainer {
 	 * Runs when the result is taken from the container.
 	 * @param playerEntity the <code>PlayerEntity</code> instance
 	 * @param itemStack the <code>ItemStack</code> being taken
-	 * @return ItemStack
 	 */
 	@Override
-	protected ItemStack onTake(PlayerEntity playerEntity, ItemStack itemStack) {
+	protected void onTake(Player playerEntity, ItemStack itemStack) {
 		itemStack.onCraftedBy(playerEntity.level, playerEntity, itemStack.getCount());
 		resultSlots.awardUsedRecipes(playerEntity);
 		shrinkStackInSlot(0);
 		// Normally we would destroy both items here. However we don't want to destroy the blueprint item.
-		world.playSound(playerEntity, playerEntity.blockPosition(), DeferredRegistryHandler.SMALL_PARTS_TABLE_USED.get(), SoundCategory.NEUTRAL, 1f, 1);
-		return itemStack;
+		world.playSound(playerEntity, playerEntity.blockPosition(), DeferredRegistryHandler.SMALL_PARTS_TABLE_USED.get(), SoundSource.NEUTRAL, 1f, 1);
 	}
 
 	/**

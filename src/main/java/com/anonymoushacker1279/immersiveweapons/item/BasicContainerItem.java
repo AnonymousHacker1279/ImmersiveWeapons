@@ -1,7 +1,7 @@
 package com.anonymoushacker1279.immersiveweapons.item;
 
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 
 public class BasicContainerItem extends Item {
 
@@ -11,7 +11,7 @@ public class BasicContainerItem extends Item {
 	 */
 	public BasicContainerItem(Properties properties) {
 		super(properties);
-		properties.craftRemainder(getItem());
+		properties.craftRemainder(asItem());
 	}
 
 	/**
@@ -31,6 +31,6 @@ public class BasicContainerItem extends Item {
 	 */
 	@Override
 	public ItemStack getContainerItem(ItemStack stack) {
-		return new ItemStack(getItem());
+		return new ItemStack(asItem());
 	}
 }

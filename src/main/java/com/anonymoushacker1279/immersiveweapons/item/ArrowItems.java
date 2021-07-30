@@ -1,10 +1,10 @@
 package com.anonymoushacker1279.immersiveweapons.item;
 
 import com.anonymoushacker1279.immersiveweapons.entity.projectile.CustomArrowEntity.*;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.projectile.AbstractArrowEntity.PickupStatus;
-import net.minecraft.item.ItemStack;
-import net.minecraft.world.World;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.projectile.AbstractArrow.Pickup;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
 
 public class ArrowItems {
 
@@ -28,7 +28,7 @@ public class ArrowItems {
 		 * @return CopperArrowEntity
 		 */
 		@Override
-		public CopperArrowEntity createArrow(World worldIn, ItemStack stack, LivingEntity shooter) {
+		public CopperArrowEntity createArrow(Level worldIn, ItemStack stack, LivingEntity shooter) {
 			CopperArrowEntity arrowEntity = new CopperArrowEntity(shooter, worldIn, ref.get());
 			arrowEntity.setBaseDamage(damage);
 			return arrowEntity;
@@ -55,7 +55,7 @@ public class ArrowItems {
 		 * @return IronArrowEntity
 		 */
 		@Override
-		public IronArrowEntity createArrow(World worldIn, ItemStack stack, LivingEntity shooter) {
+		public IronArrowEntity createArrow(Level worldIn, ItemStack stack, LivingEntity shooter) {
 			IronArrowEntity arrowEntity = new IronArrowEntity(shooter, worldIn, ref.get());
 			arrowEntity.setBaseDamage(damage);
 			return arrowEntity;
@@ -82,7 +82,7 @@ public class ArrowItems {
 		 * @return DiamondArrowEntity
 		 */
 		@Override
-		public DiamondArrowEntity createArrow(World worldIn, ItemStack stack, LivingEntity shooter) {
+		public DiamondArrowEntity createArrow(Level worldIn, ItemStack stack, LivingEntity shooter) {
 			DiamondArrowEntity arrowEntity = new DiamondArrowEntity(shooter, worldIn, ref.get());
 			arrowEntity.setBaseDamage(damage);
 			return arrowEntity;
@@ -109,7 +109,7 @@ public class ArrowItems {
 		 * @return GoldArrowEntity
 		 */
 		@Override
-		public GoldArrowEntity createArrow(World worldIn, ItemStack stack, LivingEntity shooter) {
+		public GoldArrowEntity createArrow(Level worldIn, ItemStack stack, LivingEntity shooter) {
 			GoldArrowEntity arrowEntity = new GoldArrowEntity(shooter, worldIn, ref.get());
 			arrowEntity.setBaseDamage(damage);
 			return arrowEntity;
@@ -136,7 +136,7 @@ public class ArrowItems {
 		 * @return StoneArrowEntity
 		 */
 		@Override
-		public StoneArrowEntity createArrow(World worldIn, ItemStack stack, LivingEntity shooter) {
+		public StoneArrowEntity createArrow(Level worldIn, ItemStack stack, LivingEntity shooter) {
 			StoneArrowEntity arrowEntity = new StoneArrowEntity(shooter, worldIn, ref.get());
 			arrowEntity.setBaseDamage(damage);
 			return arrowEntity;
@@ -163,7 +163,7 @@ public class ArrowItems {
 		 * @return WoodArrowEntity
 		 */
 		@Override
-		public WoodArrowEntity createArrow(World worldIn, ItemStack stack, LivingEntity shooter) {
+		public WoodArrowEntity createArrow(Level worldIn, ItemStack stack, LivingEntity shooter) {
 			WoodArrowEntity arrowEntity = new WoodArrowEntity(shooter, worldIn, ref.get());
 			arrowEntity.setBaseDamage(damage);
 			return arrowEntity;
@@ -190,7 +190,7 @@ public class ArrowItems {
 		 * @return NetheriteArrowEntity
 		 */
 		@Override
-		public NetheriteArrowEntity createArrow(World worldIn, ItemStack stack, LivingEntity shooter) {
+		public NetheriteArrowEntity createArrow(Level worldIn, ItemStack stack, LivingEntity shooter) {
 			NetheriteArrowEntity arrowEntity = new NetheriteArrowEntity(shooter, worldIn, ref.get());
 			arrowEntity.setBaseDamage(damage);
 			return arrowEntity;
@@ -220,10 +220,10 @@ public class ArrowItems {
 		 * @return SmokeBombArrowEntity
 		 */
 		@Override
-		public SmokeBombArrowEntity createArrow(World worldIn, ItemStack stack, LivingEntity shooter) {
+		public SmokeBombArrowEntity createArrow(Level worldIn, ItemStack stack, LivingEntity shooter) {
 			SmokeBombArrowEntity arrowEntity = new SmokeBombArrowEntity(shooter, worldIn, ref.get());
 			arrowEntity.setBaseDamage(damage);
-			arrowEntity.pickup = PickupStatus.DISALLOWED;
+			arrowEntity.pickup = Pickup.DISALLOWED;
 			SmokeBombArrowEntity.setColor(color);
 			return arrowEntity;
 		}

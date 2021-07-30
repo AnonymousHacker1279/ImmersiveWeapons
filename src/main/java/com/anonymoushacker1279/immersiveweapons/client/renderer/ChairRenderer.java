@@ -2,17 +2,17 @@ package com.anonymoushacker1279.immersiveweapons.client.renderer;
 
 import com.anonymoushacker1279.immersiveweapons.entity.misc.ChairEntity;
 import net.minecraft.client.renderer.entity.EntityRenderer;
-import net.minecraft.client.renderer.entity.EntityRendererManager;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.client.renderer.entity.EntityRendererProvider;
+import net.minecraft.resources.ResourceLocation;
 
-public class ChairRenderer extends EntityRenderer<ChairEntity> {
+public class ChairRenderer extends EntityRenderer<ChairEntity> implements EntityRendererProvider<ChairEntity> {
 
 	/**
 	 * Constructor for ChairRenderer.
-	 * @param manager an <code>EntityRendererManager</code> instance
+	 * @param context the <code>Context</code> instance
 	 */
-	public ChairRenderer(EntityRendererManager manager) {
-		super(manager);
+	public ChairRenderer(Context context) {
+		super(context);
 	}
 
 	/**
@@ -22,6 +22,11 @@ public class ChairRenderer extends EntityRenderer<ChairEntity> {
 	 */
 	@Override
 	public ResourceLocation getTextureLocation(ChairEntity entity) {
+		return null;
+	}
+
+	@Override
+	public EntityRenderer<ChairEntity> create(Context context) {
 		return null;
 	}
 }

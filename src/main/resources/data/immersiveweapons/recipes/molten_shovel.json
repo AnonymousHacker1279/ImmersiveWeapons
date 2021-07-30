@@ -1,25 +1,20 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "pattern":
-  [
-    " y ",
-    " x ",
-    " x "
-  ],
-  "key":
-  {
-    "x":
-    {
-      "item": "immersiveweapons:obsidian_rod"
-    },
-    "y":
-    {
-    	"item":"immersiveweapons:molten_ingot"
-    }
-  },
-  "result":
-  {
-    "item": "immersiveweapons:molten_shovel",
-    "count": 1
-  }
+	"type": "minecraft:crafting_shaped",
+	"pattern": [
+		" y ",
+		" x ",
+		" x "
+	],
+	"key": {
+		"x": {
+			"item": "immersiveweapons:obsidian_rod"
+		},
+		"y": {
+			"item": "immersiveweapons:molten_ingot"
+		}
+	},
+	"result": {
+		"item": "immersiveweapons:molten_shovel",
+		"count": 1
+	}
 }

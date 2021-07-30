@@ -1,9 +1,0 @@
-{
-	"replace": false,
-	"values": [
-		"immersiveweapons:wood_shard",
-		"immersiveweapons:stone_shard",
-		"immersiveweapons:obsidian_shard",
-		"immersiveweapons:molten_shard"
-	]
-}

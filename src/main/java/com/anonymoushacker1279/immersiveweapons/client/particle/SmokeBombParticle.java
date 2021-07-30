@@ -1,15 +1,15 @@
 package com.anonymoushacker1279.immersiveweapons.client.particle;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.particle.IParticleRenderType;
-import net.minecraft.client.particle.SpriteTexturedParticle;
+import net.minecraft.client.multiplayer.ClientLevel;
+import net.minecraft.client.particle.ParticleRenderType;
+import net.minecraft.client.particle.TextureSheetParticle;
 import net.minecraft.client.renderer.LightTexture;
-import net.minecraft.client.world.ClientWorld;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.core.BlockPos;
 
 import java.awt.*;
 
-public class SmokeBombParticle extends SpriteTexturedParticle {
+public class SmokeBombParticle extends TextureSheetParticle {
 
 	private final double xPos;
 	private final double yPos;
@@ -27,7 +27,7 @@ public class SmokeBombParticle extends SpriteTexturedParticle {
 	 * @param tint the <code>Color</code> to spawn with
 	 * @param diameter the diameter to spawn at
 	 */
-	public SmokeBombParticle(ClientWorld world, double x, double y, double z, double velocityX, double velocityY, double velocityZ, Color tint, double diameter) {
+	public SmokeBombParticle(ClientLevel world, double x, double y, double z, double velocityX, double velocityY, double velocityZ, Color tint, double diameter) {
 		super(world, x, y, z, velocityX, velocityY, velocityZ);
 
 		xPos = x;
@@ -65,8 +65,8 @@ public class SmokeBombParticle extends SpriteTexturedParticle {
 		if (mc.level != null) {
 			lightAtParticleLocation = mc.level.getMaxLocalRawBrightness(blockPos);
 		}
-		final int BLOCK_LIGHT = lightAtParticleLocation;
-		final int SKY_LIGHT = lightAtParticleLocation;
+		int BLOCK_LIGHT = lightAtParticleLocation;
+		int SKY_LIGHT = lightAtParticleLocation;
 		return LightTexture.pack(BLOCK_LIGHT, SKY_LIGHT);
 	}
 
@@ -75,8 +75,8 @@ public class SmokeBombParticle extends SpriteTexturedParticle {
 	 * @return IParticleRenderType
 	 */
 	@Override
-	public IParticleRenderType getRenderType() {
-		return IParticleRenderType.PARTICLE_SHEET_TRANSLUCENT;
+	public ParticleRenderType getRenderType() {
+		return ParticleRenderType.PARTICLE_SHEET_TRANSLUCENT;
 	}
 
 	/**

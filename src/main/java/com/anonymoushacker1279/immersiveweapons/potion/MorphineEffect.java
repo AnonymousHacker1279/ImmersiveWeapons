@@ -1,13 +1,13 @@
 package com.anonymoushacker1279.immersiveweapons.potion;
 
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.potion.Effect;
-import net.minecraft.potion.EffectInstance;
-import net.minecraft.potion.EffectType;
-import net.minecraft.potion.Effects;
+import net.minecraft.world.effect.MobEffect;
+import net.minecraft.world.effect.MobEffectCategory;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.LivingEntity;
 import org.jetbrains.annotations.NotNull;
 
-public class MorphineEffect extends Effect {
+public class MorphineEffect extends MobEffect {
 
 	private int duration;
 
@@ -16,7 +16,7 @@ public class MorphineEffect extends Effect {
 	 * @param typeIn the <code>EffectType</code> instance
 	 * @param liquidColorIn the liquid color
 	 */
-	public MorphineEffect(EffectType typeIn, int liquidColorIn) {
+	public MorphineEffect(MobEffectCategory typeIn, int liquidColorIn) {
 		super(typeIn, liquidColorIn);
 	}
 
@@ -28,14 +28,14 @@ public class MorphineEffect extends Effect {
 	@Override
 	public void applyEffectTick(@NotNull LivingEntity livingEntity, int amplifier) {
 		if (duration > 900) {
-			livingEntity.addEffect(new EffectInstance(Effects.DAMAGE_RESISTANCE, duration - 900, amplifier, false, false));
-			livingEntity.addEffect(new EffectInstance(Effects.HEALTH_BOOST, duration - 900, amplifier, false, false));
-			livingEntity.addEffect(new EffectInstance(Effects.MOVEMENT_SPEED, duration - 900, amplifier, false, false));
+			livingEntity.addEffect(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, duration - 900, amplifier, false, false));
+			livingEntity.addEffect(new MobEffectInstance(MobEffects.HEALTH_BOOST, duration - 900, amplifier, false, false));
+			livingEntity.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SPEED, duration - 900, amplifier, false, false));
 		}
 		if (duration <= 900) {
-			livingEntity.addEffect(new EffectInstance(Effects.WEAKNESS, duration, amplifier, false, false));
-			livingEntity.addEffect(new EffectInstance(Effects.DIG_SLOWDOWN, duration, amplifier, false, false));
-			livingEntity.addEffect(new EffectInstance(Effects.MOVEMENT_SLOWDOWN, duration, amplifier, false, false));
+			livingEntity.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, duration, amplifier, false, false));
+			livingEntity.addEffect(new MobEffectInstance(MobEffects.DIG_SLOWDOWN, duration, amplifier, false, false));
+			livingEntity.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, duration, amplifier, false, false));
 		}
 	}
 

@@ -1,25 +1,20 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "pattern":
-  [
-    "xxx",
-    " y ",
-    " y "
-  ],
-  "key":
-  {
-    "x":
-    {
-    	"tag":"forge:ingots/copper"
-    },
-    "y":
-    {
-    	"item":"minecraft:stick"
-    }
-  },
-  "result":
-  {
-    "item": "immersiveweapons:copper_pickaxe",
-    "count": 1
-  }
+	"type": "minecraft:crafting_shaped",
+	"pattern": [
+		"xxx",
+		" y ",
+		" y "
+	],
+	"key": {
+		"x": {
+			"tag": "forge:ingots/copper"
+		},
+		"y": {
+			"item": "minecraft:stick"
+		}
+	},
+	"result": {
+		"item": "immersiveweapons:copper_pickaxe",
+		"count": 1
+	}
 }

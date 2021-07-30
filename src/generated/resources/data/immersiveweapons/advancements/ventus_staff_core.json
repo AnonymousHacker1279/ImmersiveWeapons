@@ -1,0 +1,37 @@
+{
+  "parent": "immersiveweapons:ventus_shard",
+  "display": {
+    "icon": {
+      "item": "immersiveweapons:ventus_staff_core"
+    },
+    "title": {
+      "translate": "advancements.immersiveweapons.ventus_staff_core.title"
+    },
+    "description": {
+      "translate": "advancements.immersiveweapons.ventus_staff_core.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "hold": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "immersiveweapons:ventus_staff_core"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "hold"
+    ]
+  ]
+}

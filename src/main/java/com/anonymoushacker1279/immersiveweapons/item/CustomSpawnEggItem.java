@@ -2,16 +2,16 @@ package com.anonymoushacker1279.immersiveweapons.item;
 
 import com.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import net.minecraft.client.Minecraft;
-import net.minecraft.entity.EntityType;
-import net.minecraft.item.SpawnEggItem;
-import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.item.SpawnEggItem;
 import net.minecraftforge.common.util.Lazy;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
-import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.minecraftforge.fml.util.ObfuscationReflectionHelper;
+import net.minecraftforge.fmllegacy.RegistryObject;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
@@ -44,7 +44,7 @@ public class CustomSpawnEggItem extends SpawnEggItem {
 	 * @return EntityType
 	 */
 	@Override
-	public EntityType<?> getType(@Nullable CompoundNBT compoundNBT) {
+	public EntityType<?> getType(@Nullable CompoundTag compoundNBT) {
 		return entityTypeSupplier.get();
 	}
 
@@ -57,10 +57,12 @@ public class CustomSpawnEggItem extends SpawnEggItem {
         event.enqueueWork(() -> {
             try {
                 Map<EntityType<?>, SpawnEggItem> spawnEggItemMap = ObfuscationReflectionHelper.getPrivateValue(SpawnEggItem.class,
-                        null, "field_195987_b");
+                        null, "f_43201_");
                 Minecraft minecraft = Minecraft.getInstance();
 	            for (CustomSpawnEggItem spawnEggItem : UNADDED_EGGS) {
-		            spawnEggItemMap.put(spawnEggItem.entityTypeSupplier.get(), spawnEggItem);
+		            if (spawnEggItemMap != null) {
+			            spawnEggItemMap.put(spawnEggItem.entityTypeSupplier.get(), spawnEggItem);
+		            }
 		            minecraft.getItemColors().register((color1, color2) -> spawnEggItem.getColor(color2), spawnEggItem);
 	            }
             } catch (Exception e) {

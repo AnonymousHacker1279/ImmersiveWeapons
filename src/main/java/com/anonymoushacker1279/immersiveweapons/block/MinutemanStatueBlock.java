@@ -1,27 +1,27 @@
 package com.anonymoushacker1279.immersiveweapons.block;
 
-import com.anonymoushacker1279.immersiveweapons.tileentity.MinutemanStatueTileEntity;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.HorizontalBlock;
-import net.minecraft.block.IWaterLoggable;
-import net.minecraft.fluid.FluidState;
-import net.minecraft.fluid.Fluids;
-import net.minecraft.item.BlockItemUseContext;
-import net.minecraft.state.BooleanProperty;
-import net.minecraft.state.DirectionProperty;
-import net.minecraft.state.StateContainer;
-import net.minecraft.state.properties.BlockStateProperties;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.shapes.ISelectionContext;
-import net.minecraft.util.math.shapes.VoxelShape;
-import net.minecraft.world.IBlockReader;
+import com.anonymoushacker1279.immersiveweapons.blockentity.MinutemanStatueBlockEntity;
+import com.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.*;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityTicker;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.level.material.FluidState;
+import net.minecraft.world.level.material.Fluids;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.VoxelShape;
 
-public class MinutemanStatueBlock extends HorizontalBlock implements IWaterLoggable {
+public class MinutemanStatueBlock extends HorizontalDirectionalBlock implements EntityBlock, SimpleWaterloggedBlock {
 
-	public static final DirectionProperty FACING = HorizontalBlock.FACING;
 	public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
 	protected static final VoxelShape SHAPE = Block.box(2.0D, 0.0D, 2.0D, 14.0D, 10.0D, 14.0D);
 
@@ -35,24 +35,27 @@ public class MinutemanStatueBlock extends HorizontalBlock implements IWaterLogga
 	}
 
 	/**
-	 * Determine if a block has a tile entity.
-	 * @param state the <code>BlockState</code> of the block
-	 * @return boolean
+	 * Create a block entity for the block.
+	 * @param blockPos the <code>BlockPos</code> the block is at
+	 * @param blockState the <code>BlockState</code> of the block
+	 * @return BlockEntity
 	 */
 	@Override
-	public boolean hasTileEntity(BlockState state) {
-		return true;
+	public BlockEntity newBlockEntity(BlockPos blockPos, BlockState blockState) {
+		return new MinutemanStatueBlockEntity(blockPos, blockState);
 	}
 
 	/**
-	 * Create a tile entity for a block.
-	 * @param state the <code>BlockState</code> of the block
-	 * @param reader the <code>IBlockReader</code> for the block
-	 * @return TileEntity
+	 * Get the ticker for the block.
+	 * @param level the <code>Level</code> the block is in
+	 * @param blockState the <code>BlockState</code> of the block
+	 * @param blockEntityType the <code>BlockEntityType</code> to get the ticker of
+	 * @param <T> the type extending BlockEntity
+	 * @return BlockEntityTicker
 	 */
 	@Override
-	public TileEntity createTileEntity(BlockState state, IBlockReader reader) {
-		return new MinutemanStatueTileEntity();
+	public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState blockState, BlockEntityType<T> blockEntityType) {
+		return level.isClientSide ? null : BaseEntityBlock.createTickerHelper(blockEntityType, DeferredRegistryHandler.MINUTEMAN_STATUE_BLOCK_ENTITY.get(), (level1, blockPos, blockState1, minutemanStatueBlockEntity) -> MinutemanStatueBlockEntity.serverTick(level1, blockPos, minutemanStatueBlockEntity));
 	}
 
 	/**
@@ -64,7 +67,7 @@ public class MinutemanStatueBlock extends HorizontalBlock implements IWaterLogga
 	 * @return VoxelShape
 	 */
 	@Override
-	public VoxelShape getShape(BlockState state, IBlockReader reader, BlockPos pos, ISelectionContext selectionContext) {
+	public VoxelShape getShape(BlockState state, BlockGetter reader, BlockPos pos, CollisionContext selectionContext) {
 		return SHAPE;
 	}
 
@@ -73,7 +76,7 @@ public class MinutemanStatueBlock extends HorizontalBlock implements IWaterLogga
 	 * @param builder the <code>StateContainer.Builder</code> of the block
 	 */
 	@Override
-	public void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder) {
+	public void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
 		builder.add(FACING, WATERLOGGED);
 	}
 
@@ -84,8 +87,8 @@ public class MinutemanStatueBlock extends HorizontalBlock implements IWaterLogga
 	 * @return BlockState
 	 */
 	@Override
-	public BlockState getStateForPlacement(BlockItemUseContext context) {
-		return defaultBlockState().setValue(FACING, context.getHorizontalDirection().getOpposite());
+	public BlockState getStateForPlacement(BlockPlaceContext context) {
+		return defaultBlockState().setValue(FACING, context.getHorizontalDirection());
 	}
 
 	/**

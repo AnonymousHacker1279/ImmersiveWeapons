@@ -1,13 +1,13 @@
 {
 	"conditions": [
-	{
-		"condition": "minecraft:match_tool",
- 	    "predicate": {
-   	    	"tag": "forge:pickaxes"
+		{
+			"condition": "minecraft:match_tool",
+			"predicate": {
+				"tag": "forge:pickaxes"
+			}
 		}
-	 }
- 	],
- 	"blockTag": "minecraft:logs",
- 	"numShards": 1,
- 	"replacement": "immersiveweapons:wood_shard"
+	],
+	"blockTag": "minecraft:logs",
+	"numShards": 1,
+	"replacement": "immersiveweapons:wood_shard"
 }

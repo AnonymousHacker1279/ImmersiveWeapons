@@ -1,25 +1,29 @@
 package com.anonymoushacker1279.immersiveweapons.block;
 
-import net.minecraft.block.*;
-import net.minecraft.fluid.FluidState;
-import net.minecraft.fluid.Fluids;
-import net.minecraft.item.BlockItemUseContext;
-import net.minecraft.state.BooleanProperty;
-import net.minecraft.state.StateContainer;
-import net.minecraft.state.properties.BlockStateProperties;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.IBlockReader;
-import net.minecraft.world.IWorld;
-import net.minecraft.world.IWorldReader;
-import net.minecraft.world.World;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.HorizontalDirectionalBlock;
+import net.minecraft.world.level.block.SimpleWaterloggedBlock;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.level.material.FluidState;
+import net.minecraft.world.level.material.Fluids;
 
 import java.util.Random;
 
-public class SpotlightBlock extends HorizontalBlock implements IWaterLoggable {
+public class SpotlightBlock extends HorizontalDirectionalBlock implements SimpleWaterloggedBlock {
 
-	public static final BooleanProperty LIT = BlockStateProperties.LIT;
+	private static final BooleanProperty LIT = BlockStateProperties.LIT;
 	public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
 
 	/**
@@ -36,7 +40,7 @@ public class SpotlightBlock extends HorizontalBlock implements IWaterLoggable {
 	 * @param builder the <code>StateContainer.Builder</code> of the block
 	 */
 	@Override
-	public void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder) {
+	public void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
 		builder.add(WATERLOGGED, FACING, LIT);
 	}
 
@@ -48,7 +52,7 @@ public class SpotlightBlock extends HorizontalBlock implements IWaterLoggable {
 	 * @return boolean
 	 */
 	@Override
-	public boolean canSurvive(BlockState state, IWorldReader reader, BlockPos pos) {
+	public boolean canSurvive(BlockState state, LevelReader reader, BlockPos pos) {
 		Direction direction = state.getValue(FACING);
 		BlockPos blockpos = pos.relative(direction.getOpposite());
 		BlockState blockstate = reader.getBlockState(blockpos);
@@ -66,7 +70,7 @@ public class SpotlightBlock extends HorizontalBlock implements IWaterLoggable {
 	 * @return BlockState
 	 */
 	@Override
-	public BlockState updateShape(BlockState stateIn, Direction facing, BlockState facingState, IWorld worldIn, BlockPos currentPos, BlockPos facingPos) {
+	public BlockState updateShape(BlockState stateIn, Direction facing, BlockState facingState, LevelAccessor worldIn, BlockPos currentPos, BlockPos facingPos) {
 		if (stateIn.getValue(WATERLOGGED)) {
 			worldIn.getLiquidTicks().scheduleTick(currentPos, Fluids.WATER, Fluids.WATER.getTickDelay(worldIn));
 		}
@@ -74,7 +78,7 @@ public class SpotlightBlock extends HorizontalBlock implements IWaterLoggable {
 	}
 
 	@Override
-	public BlockState getStateForPlacement(BlockItemUseContext context) {
+	public BlockState getStateForPlacement(BlockPlaceContext context) {
 		return defaultBlockState().setValue(FACING, context.getHorizontalDirection().getOpposite()).setValue(LIT, false).setValue(WATERLOGGED, context.getLevel().getFluidState(context.getClickedPos()).getType() == Fluids.WATER);
 	}
 
@@ -99,7 +103,7 @@ public class SpotlightBlock extends HorizontalBlock implements IWaterLoggable {
 	 * @param isMoving determines if the block is moving
 	 */
 	@Override
-	public void neighborChanged(BlockState state, World worldIn, BlockPos pos, Block blockIn, BlockPos fromPos, boolean isMoving) {
+	public void neighborChanged(BlockState state, Level worldIn, BlockPos pos, Block blockIn, BlockPos fromPos, boolean isMoving) {
 		if (!worldIn.isClientSide) {
 			boolean flag = state.getValue(LIT);
 			if (flag != worldIn.hasNeighborSignal(pos)) {
@@ -121,7 +125,7 @@ public class SpotlightBlock extends HorizontalBlock implements IWaterLoggable {
 	 * @param isMoving determines if the block is moving
 	 */
 	@Override
-	public void onPlace(BlockState state, World worldIn, BlockPos pos, BlockState oldState, boolean isMoving) {
+	public void onPlace(BlockState state, Level worldIn, BlockPos pos, BlockState oldState, boolean isMoving) {
 		if (!oldState.is(state.getBlock())) {
 			if (worldIn.hasNeighborSignal(pos)) {
 				worldIn.setBlock(pos, state.setValue(LIT, true), 3);
@@ -137,7 +141,7 @@ public class SpotlightBlock extends HorizontalBlock implements IWaterLoggable {
 	 * @param rand a <code>Random</code> instance
 	 */
 	@Override
-	public void tick(BlockState state, ServerWorld worldIn, BlockPos pos, Random rand) {
+	public void tick(BlockState state, ServerLevel worldIn, BlockPos pos, Random rand) {
 		if (state.getValue(LIT) && !worldIn.hasNeighborSignal(pos)) {
 			worldIn.setBlock(pos, state.setValue(LIT, false), 3);
 		}
@@ -148,10 +152,10 @@ public class SpotlightBlock extends HorizontalBlock implements IWaterLoggable {
 	 * @param state the <code>BlockState</code> of the block
 	 * @param reader the <code>IBlockReader</code> of the block
 	 * @param pos the <code>BlockPos</code> the block is at
-	 * @return
+	 * @return int
 	 */
 	@Override
-	public int getLightValue(BlockState state, IBlockReader reader, BlockPos pos) {
+	public int getLightEmission(BlockState state, BlockGetter reader, BlockPos pos) {
 		if (state.getValue(LIT)) {
 			return 15;
 		} else {

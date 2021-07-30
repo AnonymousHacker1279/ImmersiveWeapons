@@ -1,9 +1,9 @@
 package com.anonymoushacker1279.immersiveweapons.container.slot;
 
 import com.anonymoushacker1279.immersiveweapons.container.AbstractTeslaSynthesizerContainer;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.inventory.container.Slot;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.Container;
+import net.minecraft.world.inventory.Slot;
+import net.minecraft.world.item.ItemStack;
 
 public class TeslaSynthesizerFuelSlot extends Slot {
 
@@ -17,7 +17,7 @@ public class TeslaSynthesizerFuelSlot extends Slot {
 	 * @param xPos the X position of the slot
 	 * @param yPos the Y position of the slot
 	 */
-	public TeslaSynthesizerFuelSlot(AbstractTeslaSynthesizerContainer teslaSynthesizerFuelSlot, IInventory teslaSynthesizerInventory, int slotIndex, int xPos, int yPos) {
+	public TeslaSynthesizerFuelSlot(AbstractTeslaSynthesizerContainer teslaSynthesizerFuelSlot, Container teslaSynthesizerInventory, int slotIndex, int xPos, int yPos) {
 		super(teslaSynthesizerInventory, slotIndex, xPos, yPos);
 		abstractTeslaSynthesizerContainer = teslaSynthesizerFuelSlot;
 	}

@@ -7,37 +7,40 @@ import com.anonymoushacker1279.immersiveweapons.entity.monster.AbstractDyingSold
 import com.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
 import com.anonymoushacker1279.immersiveweapons.item.CustomArrowItem;
 import com.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.entity.*;
-import net.minecraft.entity.ai.attributes.AttributeModifierMap;
-import net.minecraft.entity.ai.attributes.Attributes;
-import net.minecraft.entity.ai.goal.*;
-import net.minecraft.entity.monster.CreeperEntity;
-import net.minecraft.entity.monster.IMob;
-import net.minecraft.entity.monster.MonsterEntity;
-import net.minecraft.entity.passive.IronGolemEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.projectile.AbstractArrowEntity;
-import net.minecraft.entity.projectile.ProjectileHelper;
-import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.item.BowItem;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.item.ShootableItem;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.RangedInteger;
-import net.minecraft.util.SoundEvent;
-import net.minecraft.util.TickRangeConverter;
-import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
+import net.minecraft.core.BlockPos;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.util.Mth;
+import net.minecraft.util.TimeUtil;
+import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.DifficultyInstance;
-import net.minecraft.world.IServerWorld;
-import net.minecraft.world.World;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.ai.goal.*;
+import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
+import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
+import net.minecraft.world.entity.ai.goal.target.ResetUniversalAngerTargetGoal;
+import net.minecraft.world.entity.animal.IronGolem;
+import net.minecraft.world.entity.monster.Creeper;
+import net.minecraft.world.entity.monster.Enemy;
+import net.minecraft.world.entity.monster.Monster;
+import net.minecraft.world.entity.monster.RangedAttackMob;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.projectile.AbstractArrow;
+import net.minecraft.world.entity.projectile.ProjectileUtil;
+import net.minecraft.world.item.BowItem;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.ProjectileWeaponItem;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.ServerLevelAccessor;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.AABB;
 import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
@@ -47,9 +50,9 @@ import java.util.List;
 import java.util.UUID;
 import java.util.function.Predicate;
 
-public abstract class AbstractMinutemanEntity extends CreatureEntity implements IRangedAttackMob, IAngerable {
+public abstract class AbstractMinutemanEntity extends PathfinderMob implements RangedAttackMob, NeutralMob {
 
-	private static final RangedInteger tickRange = TickRangeConverter.rangeOfSeconds(20, 39);
+	private static final UniformInt tickRange = TimeUtil.rangeOfSeconds(20, 39);
 	private final RangedShotgunAttackGoal<AbstractMinutemanEntity> aiShotgunAttack = new RangedShotgunAttackGoal<>(this, 1.0D, 25, 14.0F);
 	private final MeleeAttackGoal aiAttackOnCollide = new MeleeAttackGoal(this, 1.2D, false) {
 		/**
@@ -78,7 +81,7 @@ public abstract class AbstractMinutemanEntity extends CreatureEntity implements 
 	 * @param type the <code>EntityType</code> instance
 	 * @param worldIn the <code>World</code> the entity is in
 	 */
-	protected AbstractMinutemanEntity(EntityType<? extends AbstractMinutemanEntity> type, World worldIn) {
+	AbstractMinutemanEntity(EntityType<? extends AbstractMinutemanEntity> type, Level worldIn) {
 		super(type, worldIn);
 		setCombatTask();
 	}
@@ -87,8 +90,8 @@ public abstract class AbstractMinutemanEntity extends CreatureEntity implements 
 	 * Register this entity's attributes.
 	 * @return AttributeModifierMap.MutableAttribute
 	 */
-	public static AttributeModifierMap.MutableAttribute registerAttributes() {
-		return MonsterEntity.createMonsterAttributes()
+	public static AttributeSupplier.Builder registerAttributes() {
+		return Monster.createMonsterAttributes()
 				.add(Attributes.MOVEMENT_SPEED, 0.3D)
 				.add(Attributes.ARMOR, 4.5D);
 	}
@@ -98,20 +101,20 @@ public abstract class AbstractMinutemanEntity extends CreatureEntity implements 
 	 */
 	@Override
 	protected void registerGoals() {
-		goalSelector.addGoal(1, new SwimGoal(this));
-		goalSelector.addGoal(4, new WaterAvoidingRandomWalkingGoal(this, 1.0D));
-		goalSelector.addGoal(2, new ReturnToVillageGoal(this, 0.6D, false));
-		goalSelector.addGoal(3, new PatrolVillageGoal(this, 0.6D));
-		goalSelector.addGoal(3, new LookAtGoal(this, PlayerEntity.class, 8.0F));
-		goalSelector.addGoal(3, new LookRandomlyGoal(this));
+		goalSelector.addGoal(1, new FloatGoal(this));
+		goalSelector.addGoal(4, new WaterAvoidingRandomStrollGoal(this, 1.0D));
+		goalSelector.addGoal(2, new MoveBackToVillageGoal(this, 0.6D, false));
+		goalSelector.addGoal(3, new GolemRandomStrollInVillageGoal(this, 0.6D));
+		goalSelector.addGoal(3, new LookAtPlayerGoal(this, Player.class, 8.0F));
+		goalSelector.addGoal(3, new RandomLookAroundGoal(this));
 		goalSelector.addGoal(3, new OpenDoorGoal(this, true));
 		goalSelector.addGoal(3, new OpenFenceGateGoal(this, true));
-		targetSelector.addGoal(2, new HurtByTargetGoal(this, AbstractMinutemanEntity.class, IronGolemEntity.class));
+		targetSelector.addGoal(2, new HurtByTargetGoal(this, AbstractMinutemanEntity.class, IronGolem.class));
 		targetSelector.addGoal(4, new DefendVillageTargetGoal(this));
 		targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, AbstractDyingSoldierEntity.class, false));
-		targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, PlayerEntity.class, 8, true, false, this::isAngryAt));
-		targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, MobEntity.class, 10, false, false, (targetPredicate) -> targetPredicate instanceof IMob && !(targetPredicate instanceof AbstractMinutemanEntity) && !(targetPredicate instanceof IronGolemEntity) && !(targetPredicate instanceof CreeperEntity)));
-		targetSelector.addGoal(5, new ResetAngerGoal<>(this, false));
+		targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, Player.class, 8, true, false, this::isAngryAt));
+		targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, Mob.class, 10, false, false, (targetPredicate) -> targetPredicate instanceof Enemy && !(targetPredicate instanceof AbstractMinutemanEntity) && !(targetPredicate instanceof IronGolem) && !(targetPredicate instanceof Creeper)));
+		targetSelector.addGoal(5, new ResetUniversalAngerTargetGoal<>(this, false));
 	}
 
 	/**
@@ -133,7 +136,7 @@ public abstract class AbstractMinutemanEntity extends CreatureEntity implements 
 	public void aiStep() {
 		super.aiStep();
 		if (!level.isClientSide) {
-			updatePersistentAnger((ServerWorld) level, true);
+			updatePersistentAnger((ServerLevel) level, true);
 		}
 	}
 
@@ -143,8 +146,7 @@ public abstract class AbstractMinutemanEntity extends CreatureEntity implements 
 	@Override
 	public void rideTick() {
 		super.rideTick();
-		if (getVehicle() instanceof CreatureEntity) {
-			CreatureEntity creatureEntity = (CreatureEntity) getVehicle();
+		if (getVehicle() instanceof PathfinderMob creatureEntity) {
 			yBodyRot = creatureEntity.yBodyRot;
 		}
 	}
@@ -156,7 +158,7 @@ public abstract class AbstractMinutemanEntity extends CreatureEntity implements 
 	@Override
 	protected void populateDefaultEquipmentSlots(DifficultyInstance difficulty) {
 		super.populateDefaultEquipmentSlots(difficulty);
-		setItemSlot(EquipmentSlotType.MAINHAND, new ItemStack(DeferredRegistryHandler.BLUNDERBUSS.get()));
+		setItemSlot(EquipmentSlot.MAINHAND, new ItemStack(DeferredRegistryHandler.BLUNDERBUSS.get()));
 	}
 
 	/**
@@ -169,19 +171,19 @@ public abstract class AbstractMinutemanEntity extends CreatureEntity implements 
 	 * @return ILivingEntityData
 	 */
 	@Override
-	public ILivingEntityData finalizeSpawn(@NotNull IServerWorld worldIn, @NotNull DifficultyInstance difficultyIn, @NotNull SpawnReason reason, @Nullable ILivingEntityData spawnDataIn, @Nullable CompoundNBT dataTag) {
+	public SpawnGroupData finalizeSpawn(@NotNull ServerLevelAccessor worldIn, @NotNull DifficultyInstance difficultyIn, @NotNull MobSpawnType reason, @Nullable SpawnGroupData spawnDataIn, @Nullable CompoundTag dataTag) {
 		spawnDataIn = super.finalizeSpawn(worldIn, difficultyIn, reason, spawnDataIn, dataTag);
 		populateDefaultEquipmentSlots(difficultyIn);
 		populateDefaultEquipmentEnchantments(difficultyIn);
 		setCombatTask();
 		setCanPickUpLoot(random.nextFloat() < 0.55F * difficultyIn.getSpecialMultiplier());
-		if (getItemBySlot(EquipmentSlotType.HEAD).isEmpty()) {
+		if (getItemBySlot(EquipmentSlot.HEAD).isEmpty()) {
 			LocalDate localdate = LocalDate.now();
 			int i = localdate.get(ChronoField.DAY_OF_MONTH);
 			int j = localdate.get(ChronoField.MONTH_OF_YEAR);
 			if (j == 10 && i == 31 && random.nextFloat() < 0.25F) {
-				setItemSlot(EquipmentSlotType.HEAD, new ItemStack(random.nextFloat() < 0.1F ? Blocks.JACK_O_LANTERN : Blocks.CARVED_PUMPKIN));
-				armorDropChances[EquipmentSlotType.HEAD.getIndex()] = 0.0F;
+				setItemSlot(EquipmentSlot.HEAD, new ItemStack(random.nextFloat() < 0.1F ? Blocks.JACK_O_LANTERN : Blocks.CARVED_PUMPKIN));
+				armorDropChances[EquipmentSlot.HEAD.getIndex()] = 0.0F;
 			}
 		}
 
@@ -191,11 +193,11 @@ public abstract class AbstractMinutemanEntity extends CreatureEntity implements 
 	/**
 	 * Set the entity's combat AI.
 	 */
-	public void setCombatTask() {
-		if (level != null && !level.isClientSide) {
+	private void setCombatTask() {
+		if (!level.isClientSide) {
 			goalSelector.removeGoal(aiAttackOnCollide);
 			goalSelector.removeGoal(aiShotgunAttack);
-			ItemStack itemstack = getItemInHand(ProjectileHelper.getWeaponHoldingHand(this, DeferredRegistryHandler.BLUNDERBUSS.get()));
+			ItemStack itemstack = getItemInHand(ProjectileUtil.getWeaponHoldingHand(this, Predicate.isEqual(DeferredRegistryHandler.BLUNDERBUSS.get())));
 			if (itemstack.getItem() == DeferredRegistryHandler.BLUNDERBUSS.get()) {
 				int i = 25;
 				if (level.getDifficulty() != Difficulty.HARD) {
@@ -218,7 +220,7 @@ public abstract class AbstractMinutemanEntity extends CreatureEntity implements 
 	 */
 	@Override
 	protected void doPush(Entity entityIn) {
-		if (entityIn instanceof IMob && !(entityIn instanceof MinutemanEntity) && !(entityIn instanceof IronGolemEntity) && getRandom().nextInt(20) == 0) {
+		if (entityIn instanceof Enemy && !(entityIn instanceof MinutemanEntity) && !(entityIn instanceof IronGolem) && getRandom().nextInt(20) == 0) {
 			setTarget((LivingEntity) entityIn);
 		}
 		super.doPush(entityIn);
@@ -241,14 +243,14 @@ public abstract class AbstractMinutemanEntity extends CreatureEntity implements 
 	 */
 	@Override
 	public void performRangedAttack(LivingEntity target, float distanceFactor) {
-		ItemStack itemstack = getProjectile(getItemInHand(ProjectileHelper.getWeaponHoldingHand(this, DeferredRegistryHandler.BLUNDERBUSS.get())));
-		AbstractArrowEntity abstractBulletEntity = fireArrow(itemstack, distanceFactor);
+		ItemStack itemstack = getProjectile(getItemInHand(ProjectileUtil.getWeaponHoldingHand(this, Predicate.isEqual(DeferredRegistryHandler.BLUNDERBUSS.get()))));
+		AbstractArrow abstractBulletEntity = fireArrow(itemstack, distanceFactor);
 		if (getMainHandItem().getItem() instanceof BowItem)
 			abstractBulletEntity = ((BowItem) getMainHandItem().getItem()).customArrow(abstractBulletEntity);
 		double d0 = target.getX() - getX();
 		double d1 = target.getY(0.12D) - abstractBulletEntity.getY();
 		double d2 = target.getZ() - getZ();
-		double d3 = MathHelper.sqrt(d0 * d0 + d2 * d2);
+		double d3 = Mth.sqrt((float) (d0 * d0 + d2 * d2));
 		for (int i = 0; i <= 4; i++) {
 			abstractBulletEntity.setKnockback(3);
 			abstractBulletEntity.shoot(d0, d1 + d3 * (double) 0.2F, d2, 1.6F, 18 - level.getDifficulty().getId() * 4 + GeneralUtilities.getRandomNumber(0.2f, 0.8f));
@@ -264,9 +266,9 @@ public abstract class AbstractMinutemanEntity extends CreatureEntity implements 
 	 */
 	@Override
 	public ItemStack getProjectile(ItemStack shootable) {
-		if (shootable.getItem() instanceof ShootableItem) {
-			Predicate<ItemStack> predicate = ((ShootableItem) shootable.getItem()).getSupportedHeldProjectiles();
-			ItemStack itemstack = ShootableItem.getHeldProjectile(this, predicate);
+		if (shootable.getItem() instanceof ProjectileWeaponItem) {
+			Predicate<ItemStack> predicate = ((ProjectileWeaponItem) shootable.getItem()).getSupportedHeldProjectiles();
+			ItemStack itemstack = ProjectileWeaponItem.getHeldProjectile(this, predicate);
 			return itemstack.isEmpty() ? new ItemStack(Items.ARROW) : itemstack;
 		} else {
 			return ItemStack.EMPTY;
@@ -279,9 +281,9 @@ public abstract class AbstractMinutemanEntity extends CreatureEntity implements 
 	 * @param distanceFactor the distance factor for firing
 	 * @return AbstractArrowEntity
 	 */
-	protected AbstractArrowEntity fireArrow(ItemStack arrowStack, float distanceFactor) {
+	private AbstractArrow fireArrow(ItemStack arrowStack, float distanceFactor) {
 		CustomArrowItem arrowItem = (CustomArrowItem) (arrowStack.getItem() instanceof CustomArrowItem ? arrowStack.getItem() : DeferredRegistryHandler.COPPER_MUSKET_BALL.get());
-		AbstractArrowEntity abstractArrowEntity = arrowItem.createArrow(level, arrowStack, this);
+		AbstractArrow abstractArrowEntity = arrowItem.createArrow(level, arrowStack, this);
 		abstractArrowEntity.setEnchantmentEffectsFromEntity(this, distanceFactor);
 
 		return abstractArrowEntity;
@@ -297,16 +299,16 @@ public abstract class AbstractMinutemanEntity extends CreatureEntity implements 
 	public boolean hurt(DamageSource source, float amount) {
 		super.hurt(source, amount);
 		setCombatTask();
-		if (amount > 0 && !(source.getEntity() instanceof AbstractMinutemanEntity) && !(source.getEntity() instanceof IronGolemEntity) && source.getEntity() instanceof PlayerEntity || source.getEntity() instanceof MobEntity) {
-			if (source.getEntity() instanceof PlayerEntity) {
-				if (((PlayerEntity) source.getEntity()).isCreative()) {
+		if (amount > 0 && !(source.getEntity() instanceof AbstractMinutemanEntity) && !(source.getEntity() instanceof IronGolem) && source.getEntity() instanceof Player || source.getEntity() instanceof Mob) {
+			if (source.getEntity() instanceof Player) {
+				if (((Player) source.getEntity()).isCreative()) {
 					return false;
 				}
 			}
 			setTarget((LivingEntity) source.getEntity());
 			setPersistentAngerTarget(source.getEntity().getUUID());
 			// Aggro all other minutemen in the area
-			List<MinutemanEntity> list = level.getEntitiesOfClass(MinutemanEntity.class, (new AxisAlignedBB(blockPosition())).inflate(24.0D, 8.0D, 24.0D));
+			List<MinutemanEntity> list = level.getEntitiesOfClass(MinutemanEntity.class, (new AABB(blockPosition())).inflate(24.0D, 8.0D, 24.0D));
 			for (MinutemanEntity minutemanEntity : list) {
 				minutemanEntity.setTarget((LivingEntity) source.getEntity());
 				minutemanEntity.setPersistentAngerTarget(source.getEntity().getUUID());
@@ -321,7 +323,7 @@ public abstract class AbstractMinutemanEntity extends CreatureEntity implements 
 	 * @return boolean
 	 */
 	@Override
-	public boolean canFireProjectileWeapon(ShootableItem shootableItem) {
+	public boolean canFireProjectileWeapon(ProjectileWeaponItem shootableItem) {
 		return shootableItem == DeferredRegistryHandler.BLUNDERBUSS.get();
 	}
 
@@ -330,9 +332,9 @@ public abstract class AbstractMinutemanEntity extends CreatureEntity implements 
 	 * @param compound the <code>CompoundNBT</code> to read from
 	 */
 	@Override
-	public void readAdditionalSaveData(CompoundNBT compound) {
+	public void readAdditionalSaveData(CompoundTag compound) {
 		super.readAdditionalSaveData(compound);
-		readPersistentAngerSaveData((ServerWorld) level, compound);
+		readPersistentAngerSaveData(level, compound);
 		setCombatTask();
 	}
 
@@ -341,7 +343,7 @@ public abstract class AbstractMinutemanEntity extends CreatureEntity implements 
 	 * @param compound the <code>CompoundNBT</code> to write to
 	 */
 	@Override
-	public void addAdditionalSaveData(CompoundNBT compound) {
+	public void addAdditionalSaveData(CompoundTag compound) {
 		super.addAdditionalSaveData(compound);
 		addPersistentAngerSaveData(compound);
 	}
@@ -352,7 +354,7 @@ public abstract class AbstractMinutemanEntity extends CreatureEntity implements 
 	 * @param stack the <code>ItemStack</code> to set in the slot
 	 */
 	@Override
-	public void setItemSlot(EquipmentSlotType slotIn, ItemStack stack) {
+	public void setItemSlot(EquipmentSlot slotIn, ItemStack stack) {
 		super.setItemSlot(slotIn, stack);
 		if (!level.isClientSide) {
 			setCombatTask();
@@ -366,7 +368,7 @@ public abstract class AbstractMinutemanEntity extends CreatureEntity implements 
 	 * @return float
 	 */
 	@Override
-	protected float getStandingEyeHeight(Pose poseIn, EntitySize sizeIn) {
+	protected float getStandingEyeHeight(Pose poseIn, EntityDimensions sizeIn) {
 		return 1.74F;
 	}
 
@@ -384,7 +386,7 @@ public abstract class AbstractMinutemanEntity extends CreatureEntity implements 
 	 */
 	@Override
 	public void startPersistentAngerTimer() {
-		setRemainingPersistentAngerTime(tickRange.randomValue(random));
+		setRemainingPersistentAngerTime(tickRange.sample(random));
 	}
 
 	/**

@@ -4,30 +4,30 @@ import com.anonymoushacker1279.immersiveweapons.entity.ai.goal.OpenFenceGateGoal
 import com.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
 import com.anonymoushacker1279.immersiveweapons.item.UsedSyringeItem;
 import com.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.entity.*;
-import net.minecraft.entity.ai.attributes.AttributeModifierMap;
-import net.minecraft.entity.ai.attributes.Attributes;
-import net.minecraft.entity.ai.goal.*;
-import net.minecraft.entity.merchant.villager.VillagerEntity;
-import net.minecraft.entity.monster.MonsterEntity;
-import net.minecraft.entity.passive.IronGolemEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.potion.EffectInstance;
-import net.minecraft.potion.Effects;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.Hand;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.SoundEvent;
-import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.core.BlockPos;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.DifficultyInstance;
-import net.minecraft.world.IServerWorld;
-import net.minecraft.world.World;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.ai.goal.*;
+import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
+import net.minecraft.world.entity.animal.IronGolem;
+import net.minecraft.world.entity.monster.Monster;
+import net.minecraft.world.entity.npc.Villager;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.ServerLevelAccessor;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.AABB;
 import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
@@ -36,7 +36,7 @@ import java.time.temporal.ChronoField;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class AbstractFieldMedicEntity extends CreatureEntity {
+public abstract class AbstractFieldMedicEntity extends PathfinderMob {
 
 	private final MeleeAttackGoal aiAttackOnCollide = new MeleeAttackGoal(this, 1.2D, false) {
 		@Override
@@ -51,7 +51,7 @@ public abstract class AbstractFieldMedicEntity extends CreatureEntity {
 			setAggressive(true);
 		}
 	};
-	private final List<Class<? extends CreatureEntity>> checkedEntities = new ArrayList<>(4);
+	private final List<Class<? extends PathfinderMob>> checkedEntities = new ArrayList<>(4);
 	private int checkForHurtEntitiesCooldown;
 	private LivingEntity currentlyTargetedEntity = null;
 	private LivingEntity lastTargetedEntity = null;
@@ -62,13 +62,13 @@ public abstract class AbstractFieldMedicEntity extends CreatureEntity {
 	 * @param type the <code>EntityType</code> instance
 	 * @param worldIn the <code>World</code> the entity is in
 	 */
-	protected AbstractFieldMedicEntity(EntityType<? extends CreatureEntity> type, World worldIn) {
+	AbstractFieldMedicEntity(EntityType<? extends PathfinderMob> type, Level worldIn) {
 		super(type, worldIn);
 		setCombatTask();
 
 		checkedEntities.add(MinutemanEntity.class);
-		checkedEntities.add(IronGolemEntity.class);
-		checkedEntities.add(VillagerEntity.class);
+		checkedEntities.add(IronGolem.class);
+		checkedEntities.add(Villager.class);
 		checkedEntities.add(AbstractFieldMedicEntity.class);
 		checkForHurtEntitiesCooldown = 0;
 	}
@@ -77,8 +77,8 @@ public abstract class AbstractFieldMedicEntity extends CreatureEntity {
 	 * Register this entity's attributes.
 	 * @return AttributeModifierMap.MutableAttribute
 	 */
-	public static AttributeModifierMap.MutableAttribute registerAttributes() {
-		return MonsterEntity.createMonsterAttributes()
+	public static AttributeSupplier.Builder registerAttributes() {
+		return Monster.createMonsterAttributes()
 				.add(Attributes.MOVEMENT_SPEED, 0.3D)
 				.add(Attributes.ARMOR, 2.75D);
 	}
@@ -88,15 +88,15 @@ public abstract class AbstractFieldMedicEntity extends CreatureEntity {
 	 */
 	@Override
 	protected void registerGoals() {
-		goalSelector.addGoal(1, new SwimGoal(this));
-		goalSelector.addGoal(4, new WaterAvoidingRandomWalkingGoal(this, 1.0D));
-		goalSelector.addGoal(3, new ReturnToVillageGoal(this, 0.6D, false));
-		goalSelector.addGoal(2, new PatrolVillageGoal(this, 0.6D));
-		goalSelector.addGoal(4, new LookAtGoal(this, PlayerEntity.class, 8.0F));
-		goalSelector.addGoal(4, new LookRandomlyGoal(this));
+		goalSelector.addGoal(1, new FloatGoal(this));
+		goalSelector.addGoal(4, new WaterAvoidingRandomStrollGoal(this, 1.0D));
+		goalSelector.addGoal(3, new MoveBackToVillageGoal(this, 0.6D, false));
+		goalSelector.addGoal(2, new GolemRandomStrollInVillageGoal(this, 0.6D));
+		goalSelector.addGoal(4, new LookAtPlayerGoal(this, Player.class, 8.0F));
+		goalSelector.addGoal(4, new RandomLookAroundGoal(this));
 		goalSelector.addGoal(3, new OpenDoorGoal(this, true));
 		goalSelector.addGoal(3, new OpenFenceGateGoal(this, true));
-		targetSelector.addGoal(1, new HurtByTargetGoal(this, AbstractMinutemanEntity.class, IronGolemEntity.class));
+		targetSelector.addGoal(1, new HurtByTargetGoal(this, AbstractMinutemanEntity.class, IronGolem.class));
 	}
 
 	/**
@@ -129,8 +129,7 @@ public abstract class AbstractFieldMedicEntity extends CreatureEntity {
 	@Override
 	public void rideTick() {
 		super.rideTick();
-		if (getVehicle() instanceof CreatureEntity) {
-			CreatureEntity creatureEntity = (CreatureEntity) getVehicle();
+		if (getVehicle() instanceof PathfinderMob creatureEntity) {
 			yBodyRot = creatureEntity.yBodyRot;
 		}
 	}
@@ -154,19 +153,19 @@ public abstract class AbstractFieldMedicEntity extends CreatureEntity {
 	 * @return ILivingEntityData
 	 */
 	@Override
-	public ILivingEntityData finalizeSpawn(@NotNull IServerWorld worldIn, @NotNull DifficultyInstance difficultyIn, @NotNull SpawnReason reason, @Nullable ILivingEntityData spawnDataIn, @Nullable CompoundNBT dataTag) {
+	public SpawnGroupData finalizeSpawn(@NotNull ServerLevelAccessor worldIn, @NotNull DifficultyInstance difficultyIn, @NotNull MobSpawnType reason, @Nullable SpawnGroupData spawnDataIn, @Nullable CompoundTag dataTag) {
 		spawnDataIn = super.finalizeSpawn(worldIn, difficultyIn, reason, spawnDataIn, dataTag);
 		populateDefaultEquipmentSlots(difficultyIn);
 		populateDefaultEquipmentEnchantments(difficultyIn);
 		setCombatTask();
 		setCanPickUpLoot(random.nextFloat() < 0.55F * difficultyIn.getSpecialMultiplier());
-		if (getItemBySlot(EquipmentSlotType.HEAD).isEmpty()) {
+		if (getItemBySlot(EquipmentSlot.HEAD).isEmpty()) {
 			LocalDate localdate = LocalDate.now();
 			int i = localdate.get(ChronoField.DAY_OF_MONTH);
 			int j = localdate.get(ChronoField.MONTH_OF_YEAR);
 			if (j == 10 && i == 31 && random.nextFloat() < 0.25F) {
-				setItemSlot(EquipmentSlotType.HEAD, new ItemStack(random.nextFloat() < 0.1F ? Blocks.JACK_O_LANTERN : Blocks.CARVED_PUMPKIN));
-				armorDropChances[EquipmentSlotType.HEAD.getIndex()] = 0.0F;
+				setItemSlot(EquipmentSlot.HEAD, new ItemStack(random.nextFloat() < 0.1F ? Blocks.JACK_O_LANTERN : Blocks.CARVED_PUMPKIN));
+				armorDropChances[EquipmentSlot.HEAD.getIndex()] = 0.0F;
 			}
 		}
 
@@ -176,10 +175,10 @@ public abstract class AbstractFieldMedicEntity extends CreatureEntity {
 	/**
 	 * Set the entity's combat AI.
 	 */
-	public void setCombatTask() {
-		if (level != null && !level.isClientSide) {
+	private void setCombatTask() {
+		if (!level.isClientSide) {
 			goalSelector.removeGoal(aiAttackOnCollide);
-			setItemInHand(Hand.MAIN_HAND, new ItemStack(DeferredRegistryHandler.USED_SYRINGE.get()));
+			setItemInHand(InteractionHand.MAIN_HAND, new ItemStack(DeferredRegistryHandler.USED_SYRINGE.get()));
 			goalSelector.addGoal(12, aiAttackOnCollide);
 		}
 	}
@@ -193,9 +192,9 @@ public abstract class AbstractFieldMedicEntity extends CreatureEntity {
 	@Override
 	public boolean hurt(DamageSource source, float amount) {
 		super.hurt(source, amount);
-		if (amount > 0 && !(source.getEntity() instanceof AbstractMinutemanEntity) && !(source.getEntity() instanceof IronGolemEntity) && source.getEntity() instanceof PlayerEntity || source.getEntity() instanceof MobEntity) {
-			if (source.getEntity() instanceof PlayerEntity) {
-				if (((PlayerEntity) source.getEntity()).isCreative()) {
+		if (amount > 0 && !(source.getEntity() instanceof AbstractMinutemanEntity) && !(source.getEntity() instanceof IronGolem) && source.getEntity() instanceof Player || source.getEntity() instanceof Mob) {
+			if (source.getEntity() instanceof Player) {
+				if (((Player) source.getEntity()).isCreative()) {
 					return false;
 				}
 			}
@@ -204,7 +203,7 @@ public abstract class AbstractFieldMedicEntity extends CreatureEntity {
 			setTarget((LivingEntity) source.getEntity());
 			setCombatTask();
 			// Aggro all other minutemen in the area
-			List<MinutemanEntity> list = level.getEntitiesOfClass(MinutemanEntity.class, (new AxisAlignedBB(blockPosition())).inflate(48.0D, 8.0D, 48.0D));
+			List<MinutemanEntity> list = level.getEntitiesOfClass(MinutemanEntity.class, (new AABB(blockPosition())).inflate(48.0D, 8.0D, 48.0D));
 			for (MinutemanEntity minutemanEntity : list) {
 				minutemanEntity.setTarget((LivingEntity) source.getEntity());
 				minutemanEntity.setPersistentAngerTarget(source.getEntity().getUUID());
@@ -216,14 +215,14 @@ public abstract class AbstractFieldMedicEntity extends CreatureEntity {
 	/**
 	 * Perform the healing process on the entity.
 	 */
-	public void heal() {
+	private void heal() {
 		if (getHealth() <= getMaxHealth() / 2) {
-			setItemInHand(Hand.MAIN_HAND, new ItemStack(DeferredRegistryHandler.FIRST_AID_KIT.get()));
-			addEffect(new EffectInstance(Effects.REGENERATION, 240, 1, false, true));
-			addEffect(new EffectInstance(Effects.DAMAGE_RESISTANCE, 1200, 0, false, true));
+			setItemInHand(InteractionHand.MAIN_HAND, new ItemStack(DeferredRegistryHandler.FIRST_AID_KIT.get()));
+			addEffect(new MobEffectInstance(MobEffects.REGENERATION, 240, 1, false, true));
+			addEffect(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, 1200, 0, false, true));
 		} else {
-			setItemInHand(Hand.MAIN_HAND, new ItemStack(DeferredRegistryHandler.BANDAGE.get()));
-			addEffect(new EffectInstance(Effects.REGENERATION, 240, 0, false, true));
+			setItemInHand(InteractionHand.MAIN_HAND, new ItemStack(DeferredRegistryHandler.BANDAGE.get()));
+			addEffect(new MobEffectInstance(MobEffects.REGENERATION, 240, 0, false, true));
 		}
 	}
 
@@ -239,11 +238,11 @@ public abstract class AbstractFieldMedicEntity extends CreatureEntity {
 			if (getMainHandItem().getItem() == DeferredRegistryHandler.USED_SYRINGE.get()) {
 				int randomNumber = GeneralUtilities.getRandomNumber(0, 100);
 				if (randomNumber <= 80) {
-					((LivingEntity) entityIn).addEffect(new EffectInstance(Effects.POISON, 500, 0, false, true));
+					((LivingEntity) entityIn).addEffect(new MobEffectInstance(MobEffects.POISON, 500, 0, false, true));
 					if (randomNumber <= 30) {
 						entityIn.hurt(UsedSyringeItem.damageSource, 8.0F);
 						if (randomNumber <= 5) {
-							entityIn.level.playLocalSound(entityIn.getX(), entityIn.getY(), entityIn.getZ(), DeferredRegistryHandler.FIELD_MEDIC_ATTACK.get(), SoundCategory.HOSTILE, 1.0f, 1.0f, false);
+							entityIn.level.playLocalSound(entityIn.getX(), entityIn.getY(), entityIn.getZ(), DeferredRegistryHandler.FIELD_MEDIC_ATTACK.get(), SoundSource.HOSTILE, 1.0f, 1.0f, false);
 						}
 					}
 				}
@@ -257,7 +256,7 @@ public abstract class AbstractFieldMedicEntity extends CreatureEntity {
 	 * @param checkedEntities a <code>List</code> containing entity classes to check for,
 	 *                        entries must extend CreatureEntity
 	 */
-	private void checkForHurtEntities(List<Class<? extends CreatureEntity>> checkedEntities) {
+	private void checkForHurtEntities(List<Class<? extends PathfinderMob>> checkedEntities) {
 		if (checkForHurtEntitiesCooldown == 0 && currentlyTargetedEntity == null) {
 			List<Entity> entity = level.getEntities(this, getBoundingBox().move(-24, -5, -24).expandTowards(24, 5, 24));
 			if (!entity.isEmpty()) {
@@ -265,7 +264,7 @@ public abstract class AbstractFieldMedicEntity extends CreatureEntity {
 					if (!checkedEntities.contains(element.getClass())) {
 						continue;
 					}
-					if (element.getEntity() == lastTargetedEntity) {
+					if (element.getRootVehicle() == lastTargetedEntity) {
 						if (unlockLastTargetedEntityCooldown > 0) {
 							unlockLastTargetedEntityCooldown--;
 							continue;
@@ -275,7 +274,7 @@ public abstract class AbstractFieldMedicEntity extends CreatureEntity {
 					}
 					if (element.showVehicleHealth()) {
 						if (((LivingEntity) element).getHealth() < ((LivingEntity) element).getMaxHealth()) {
-							currentlyTargetedEntity = (LivingEntity) element.getEntity();
+							currentlyTargetedEntity = (LivingEntity) element.getRootVehicle();
 							checkForHurtEntitiesCooldown = 100;
 							return;
 						} else {
@@ -287,14 +286,14 @@ public abstract class AbstractFieldMedicEntity extends CreatureEntity {
 			}
 		} else if (currentlyTargetedEntity != null) {
 			getNavigation().moveTo(currentlyTargetedEntity, 1.0D);
-			if (distanceTo(currentlyTargetedEntity) <= 1.5 && canSee(currentlyTargetedEntity)) {
+			if (distanceTo(currentlyTargetedEntity) <= 1.5 && hasLineOfSight(currentlyTargetedEntity)) {
 				if (currentlyTargetedEntity.getHealth() <= currentlyTargetedEntity.getMaxHealth() / 2) {
-					setItemInHand(Hand.MAIN_HAND, new ItemStack(DeferredRegistryHandler.FIRST_AID_KIT.get()));
-					currentlyTargetedEntity.addEffect(new EffectInstance(Effects.REGENERATION, 240, 1, false, true));
-					currentlyTargetedEntity.addEffect(new EffectInstance(Effects.DAMAGE_RESISTANCE, 1200, 0, false, true));
+					setItemInHand(InteractionHand.MAIN_HAND, new ItemStack(DeferredRegistryHandler.FIRST_AID_KIT.get()));
+					currentlyTargetedEntity.addEffect(new MobEffectInstance(MobEffects.REGENERATION, 240, 1, false, true));
+					currentlyTargetedEntity.addEffect(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, 1200, 0, false, true));
 				} else {
-					setItemInHand(Hand.MAIN_HAND, new ItemStack(DeferredRegistryHandler.BANDAGE.get()));
-					currentlyTargetedEntity.addEffect(new EffectInstance(Effects.REGENERATION, 240, 0, false, true));
+					setItemInHand(InteractionHand.MAIN_HAND, new ItemStack(DeferredRegistryHandler.BANDAGE.get()));
+					currentlyTargetedEntity.addEffect(new MobEffectInstance(MobEffects.REGENERATION, 240, 0, false, true));
 				}
 				lastTargetedEntity = currentlyTargetedEntity;
 				unlockLastTargetedEntityCooldown = 200;
@@ -308,7 +307,7 @@ public abstract class AbstractFieldMedicEntity extends CreatureEntity {
 	 * @param compound the <code>CompoundNBT</code> to read from
 	 */
 	@Override
-	public void readAdditionalSaveData(CompoundNBT compound) {
+	public void readAdditionalSaveData(CompoundTag compound) {
 		super.readAdditionalSaveData(compound);
 	}
 }

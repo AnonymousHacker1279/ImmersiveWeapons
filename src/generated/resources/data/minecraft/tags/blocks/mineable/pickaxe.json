@@ -1,0 +1,23 @@
+{
+  "replace": false,
+  "values": [
+    "immersiveweapons:molten_ore",
+    "immersiveweapons:electric_ore",
+    "immersiveweapons:molten_block",
+    "immersiveweapons:tesla_block",
+    "immersiveweapons:barrel_tap",
+    "immersiveweapons:spotlight",
+    "immersiveweapons:barbed_wire_fence",
+    "immersiveweapons:tesla_synthesizer",
+    "immersiveweapons:cobalt_ore",
+    "immersiveweapons:cloud_marble",
+    "immersiveweapons:cloud_marble_bricks",
+    "immersiveweapons:cloud_marble_pillar",
+    "immersiveweapons:cloud_marble_brick_stairs",
+    "immersiveweapons:cloud_marble_brick_slab",
+    "immersiveweapons:ventus_ore",
+    "immersiveweapons:cobalt_block",
+    "immersiveweapons:mortar",
+    "immersiveweapons:raw_cobalt_block"
+  ]
+}

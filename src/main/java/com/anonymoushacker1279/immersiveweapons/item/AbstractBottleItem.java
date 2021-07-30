@@ -1,13 +1,13 @@
 package com.anonymoushacker1279.immersiveweapons.item;
 
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.item.UseAction;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.Hand;
-import net.minecraft.world.World;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.UseAnim;
+import net.minecraft.world.level.Level;
 
 public abstract class AbstractBottleItem extends Item {
 
@@ -26,7 +26,7 @@ public abstract class AbstractBottleItem extends Item {
 	 * @param handIn the <code>Hand</code> the player is using
 	 */
 	@Override
-	public ActionResult<ItemStack> use(World worldIn, PlayerEntity playerIn, Hand handIn) {
+	public InteractionResultHolder<ItemStack> use(Level worldIn, Player playerIn, InteractionHand handIn) {
 		ItemStack itemstack = playerIn.getItemInHand(handIn);
 		onUse(worldIn, playerIn, handIn);
 		if (!playerIn.isCreative()) {
@@ -35,7 +35,7 @@ public abstract class AbstractBottleItem extends Item {
 			playerIn.getCooldowns().addCooldown(this, getCooldown());
 		}
 
-		return ActionResult.sidedSuccess(itemstack, worldIn.isClientSide());
+		return InteractionResultHolder.sidedSuccess(itemstack, worldIn.isClientSide());
 	}
 
 	/**
@@ -44,7 +44,7 @@ public abstract class AbstractBottleItem extends Item {
 	 * @param playerIn the <code>PlayerEntity</code> instance
 	 * @param handIn the <code>Hand</code> the player is using
 	 */
-	protected void onUse(World worldIn, PlayerEntity playerIn, Hand handIn) {
+	protected void onUse(Level worldIn, Player playerIn, InteractionHand handIn) {
 	}
 
 	/**
@@ -81,7 +81,7 @@ public abstract class AbstractBottleItem extends Item {
 	 * @return UseAction
 	 */
 	@Override
-	public UseAction getUseAnimation(ItemStack stack) {
-		return UseAction.DRINK;
+	public UseAnim getUseAnimation(ItemStack stack) {
+		return UseAnim.DRINK;
 	}
 }

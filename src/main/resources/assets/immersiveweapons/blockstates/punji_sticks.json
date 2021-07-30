@@ -1,5 +1,7 @@
 {
-  "variants": {
-    "": { "model": "immersiveweapons:block/punji_sticks" }
-  }
+	"variants": {
+		"": {
+			"model": "immersiveweapons:block/punji_sticks"
+		}
+	}
 }

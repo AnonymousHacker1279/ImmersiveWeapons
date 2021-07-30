@@ -1,27 +1,23 @@
 package com.anonymoushacker1279.immersiveweapons.container;
 
+import com.anonymoushacker1279.immersiveweapons.blockentity.AbstractTeslaSynthesizerBlockEntity;
 import com.anonymoushacker1279.immersiveweapons.container.slot.TeslaSynthesizerFuelSlot;
 import com.anonymoushacker1279.immersiveweapons.container.slot.TeslaSynthesizerResultSlot;
-import com.anonymoushacker1279.immersiveweapons.tileentity.AbstractTeslaSynthesizerTileEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.inventory.Inventory;
-import net.minecraft.inventory.container.Container;
-import net.minecraft.inventory.container.ContainerType;
-import net.minecraft.inventory.container.Slot;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.IIntArray;
-import net.minecraft.util.IntArray;
-import net.minecraft.world.World;
+import net.minecraft.world.Container;
+import net.minecraft.world.SimpleContainer;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.*;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
-public abstract class AbstractTeslaSynthesizerContainer extends Container {
+public abstract class AbstractTeslaSynthesizerContainer extends AbstractContainerMenu {
 
-	private final IInventory teslaSynthesizerInventory;
-	protected final World world;
-	private final IIntArray teslaSynthesizerData;
+	private final Container teslaSynthesizerInventory;
+	protected final Level world;
+	private final ContainerData teslaSynthesizerData;
 
 	/**
 	 * Constructor for AbstractTeslaSynthesizerContainer.
@@ -29,8 +25,8 @@ public abstract class AbstractTeslaSynthesizerContainer extends Container {
 	 * @param id the ID of the container
 	 * @param playerInventory the <code>PlayerInventory</code> instance
 	 */
-	AbstractTeslaSynthesizerContainer(ContainerType<?> containerType, int id, PlayerInventory playerInventory) {
-		this(containerType, id, playerInventory, new Inventory(5), new IntArray(4));
+	AbstractTeslaSynthesizerContainer(MenuType<?> containerType, int id, Inventory playerInventory) {
+		this(containerType, id, playerInventory, new SimpleContainer(5), new SimpleContainerData(4));
 	}
 
 	/**
@@ -41,7 +37,7 @@ public abstract class AbstractTeslaSynthesizerContainer extends Container {
 	 * @param iInventory the <code>IInventory</code> instance
 	 * @param iIntArray the <code>IIntArray</code> instance
 	 */
-	AbstractTeslaSynthesizerContainer(ContainerType<?> containerType, int id, PlayerInventory playerInventory, IInventory iInventory, IIntArray iIntArray) {
+	AbstractTeslaSynthesizerContainer(MenuType<?> containerType, int id, Inventory playerInventory, Container iInventory, ContainerData iIntArray) {
 		super(containerType, id);
 		checkContainerSize(iInventory, 5);
 		checkContainerDataCount(iIntArray, 4);
@@ -84,7 +80,7 @@ public abstract class AbstractTeslaSynthesizerContainer extends Container {
 	 * @return boolean
 	 */
 	@Override
-	public boolean stillValid(PlayerEntity playerIn) {
+	public boolean stillValid(Player playerIn) {
 		return teslaSynthesizerInventory.stillValid(playerIn);
 	}
 
@@ -95,10 +91,10 @@ public abstract class AbstractTeslaSynthesizerContainer extends Container {
 	 * @return ItemStack
 	 */
 	@Override
-	public ItemStack quickMoveStack(PlayerEntity playerIn, int index) {
+	public ItemStack quickMoveStack(Player playerIn, int index) {
 		ItemStack itemstack = ItemStack.EMPTY;
 		Slot slot = slots.get(index);
-		if (slot != null && slot.hasItem()) {
+		if (slot.hasItem()) {
 			ItemStack itemStack1 = slot.getItem();
 			itemstack = itemStack1.copy();
 			if (index == 4) {
@@ -143,10 +139,10 @@ public abstract class AbstractTeslaSynthesizerContainer extends Container {
 	/**
 	 * Check if the given ItemStack is a fuel item.
 	 * @param stack the <code>ItemStack</code> being checked
-	 * @return
+	 * @return boolean
 	 */
 	public boolean isFuel(ItemStack stack) {
-		return AbstractTeslaSynthesizerTileEntity.isFuel(stack);
+		return AbstractTeslaSynthesizerBlockEntity.isFuel(stack);
 	}
 
 	/**

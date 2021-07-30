@@ -1,40 +1,44 @@
 package com.anonymoushacker1279.immersiveweapons.block;
 
+import com.anonymoushacker1279.immersiveweapons.blockentity.AbstractTeslaSynthesizerBlockEntity;
+import com.anonymoushacker1279.immersiveweapons.blockentity.TeslaSynthesizerBlockEntity;
 import com.anonymoushacker1279.immersiveweapons.container.TeslaSynthesizerContainer;
-import com.anonymoushacker1279.immersiveweapons.tileentity.AbstractTeslaSynthesizerTileEntity;
-import com.anonymoushacker1279.immersiveweapons.tileentity.TeslaSynthesizerTileEntity;
-import net.minecraft.block.*;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.fluid.FluidState;
-import net.minecraft.fluid.Fluids;
-import net.minecraft.inventory.InventoryHelper;
-import net.minecraft.inventory.container.INamedContainerProvider;
-import net.minecraft.inventory.container.SimpleNamedContainerProvider;
-import net.minecraft.particles.ParticleTypes;
-import net.minecraft.state.BooleanProperty;
-import net.minecraft.state.StateContainer;
-import net.minecraft.state.properties.BlockStateProperties;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Hand;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.util.math.shapes.ISelectionContext;
-import net.minecraft.util.math.shapes.VoxelShape;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraft.world.IBlockReader;
-import net.minecraft.world.World;
-import net.minecraftforge.fml.network.NetworkHooks;
+import com.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.*;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.BaseEntityBlock;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.EntityBlock;
+import net.minecraft.world.level.block.SimpleWaterloggedBlock;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityTicker;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.level.material.FluidState;
+import net.minecraft.world.level.material.Fluids;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.VoxelShape;
+import net.minecraftforge.fmllegacy.network.NetworkHooks;
 
+import javax.annotation.Nullable;
 import java.util.Random;
 
-public class TeslaSynthesizerBlock extends ContainerBlock implements IWaterLoggable {
+public class TeslaSynthesizerBlock extends Block implements EntityBlock, SimpleWaterloggedBlock {
 
 	protected static final VoxelShape SHAPE = Block.box(0.0D, 0.0D, 0.0D, 16.0D, 6.0D, 16.0D);
 	public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
-	private static final ITextComponent CONTAINER_NAME = new TranslationTextComponent("container.immersiveweapons.tesla_synthesizer");
+	private static final Component CONTAINER_NAME = new TranslatableComponent("container.immersiveweapons.tesla_synthesizer");
 
 	/**
 	 * Constructor for TeslaSynthesizerBlock.
@@ -46,13 +50,28 @@ public class TeslaSynthesizerBlock extends ContainerBlock implements IWaterLogga
 	}
 
 	/**
-	 * Create a tile entity for the block.
-	 * @param reader the <code>IBlockReader</code> of the block
-	 * @return TileEntity
+	 * Create a block entity for the block.
+	 * @param blockPos the <code>BlockPos</code> the block is at
+	 * @param blockState the <code>BlockState</code> of the block
+	 * @return BlockEntity
+	 */
+	@Nullable
+	@Override
+	public BlockEntity newBlockEntity(BlockPos blockPos, BlockState blockState) {
+		return new TeslaSynthesizerBlockEntity(blockPos, blockState);
+	}
+
+	/**
+	 * Get the ticker for the block.
+	 * @param level the <code>Level</code> the block is in
+	 * @param blockState the <code>BlockState</code> of the block
+	 * @param blockEntityType the <code>BlockEntityType</code> to get the ticker of
+	 * @param <T> the type extending BlockEntity
+	 * @return BlockEntityTicker
 	 */
 	@Override
-	public TileEntity newBlockEntity(IBlockReader reader) {
-		return new TeslaSynthesizerTileEntity();
+	public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState blockState, BlockEntityType<T> blockEntityType) {
+		return level.isClientSide ? null : BaseEntityBlock.createTickerHelper(blockEntityType, DeferredRegistryHandler.TESLA_SYNTHESIZER_BLOCK_ENTITY.get(), (level1, blockPos, blockState1, abstractTeslaSynthesizerTileEntity) -> TeslaSynthesizerBlockEntity.serverTick(level1, abstractTeslaSynthesizerTileEntity));
 	}
 
 	/**
@@ -64,7 +83,7 @@ public class TeslaSynthesizerBlock extends ContainerBlock implements IWaterLogga
 	 * @return VoxelShape
 	 */
 	@Override
-	public VoxelShape getShape(BlockState state, IBlockReader reader, BlockPos pos, ISelectionContext selectionContext) {
+	public VoxelShape getShape(BlockState state, BlockGetter reader, BlockPos pos, CollisionContext selectionContext) {
 		return SHAPE;
 	}
 
@@ -73,7 +92,7 @@ public class TeslaSynthesizerBlock extends ContainerBlock implements IWaterLogga
 	 * @param builder the <code>StateContainer.Builder</code> of the block
 	 */
 	@Override
-	public void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder) {
+	public void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
 		builder.add(WATERLOGGED);
 	}
 
@@ -89,16 +108,6 @@ public class TeslaSynthesizerBlock extends ContainerBlock implements IWaterLogga
 	}
 
 	/**
-	 * Set the RenderShape of the block's model.
-	 * @param state the <code>BlockState</code> of the block
-	 * @return BlockRenderType
-	 */
-	@Override
-	public BlockRenderType getRenderShape(BlockState state) {
-		return BlockRenderType.MODEL;
-	}
-
-	/**
 	 * Get the INamedContainerProvider for the block.
 	 * @param state the <code>BlockState</code> of the block
 	 * @param worldIn the <code>World</code> the block is in
@@ -106,8 +115,8 @@ public class TeslaSynthesizerBlock extends ContainerBlock implements IWaterLogga
 	 * @return INamedContainerProvider
 	 */
 	@Override
-	public INamedContainerProvider getMenuProvider(BlockState state, World worldIn, BlockPos pos) {
-		return new SimpleNamedContainerProvider((id, inventory, player) -> new TeslaSynthesizerContainer(id, inventory), CONTAINER_NAME);
+	public MenuProvider getMenuProvider(BlockState state, Level worldIn, BlockPos pos) {
+		return new SimpleMenuProvider((id, inventory, player) -> new TeslaSynthesizerContainer(id, inventory), CONTAINER_NAME);
 	}
 
 	/**
@@ -122,15 +131,15 @@ public class TeslaSynthesizerBlock extends ContainerBlock implements IWaterLogga
 	 * @return ActionResultType
 	 */
 	@Override
-	public ActionResultType use(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult blockRayTraceResult) {
+	public InteractionResult use(BlockState state, Level worldIn, BlockPos pos, Player player, InteractionHand handIn, BlockHitResult blockRayTraceResult) {
 		if (worldIn.isClientSide) {
-			return ActionResultType.SUCCESS;
+			return InteractionResult.SUCCESS;
 		} else {
-			TileEntity tileEntity = worldIn.getBlockEntity(pos);
-			if (tileEntity instanceof TeslaSynthesizerTileEntity) {
-				NetworkHooks.openGui((ServerPlayerEntity) player, (INamedContainerProvider) tileEntity, pos);
+			BlockEntity tileEntity = worldIn.getBlockEntity(pos);
+			if (tileEntity instanceof TeslaSynthesizerBlockEntity) {
+				NetworkHooks.openGui((ServerPlayer) player, (MenuProvider) tileEntity, pos);
 			}
-			return ActionResultType.CONSUME;
+			return InteractionResult.CONSUME;
 		}
 	}
 
@@ -143,11 +152,11 @@ public class TeslaSynthesizerBlock extends ContainerBlock implements IWaterLogga
 	 * @param isMoving determines if the block is moving
 	 */
 	@Override
-	public void onRemove(BlockState state, World worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
+	public void onRemove(BlockState state, Level worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
 		if (!state.is(newState.getBlock())) {
-			TileEntity tileEntity = worldIn.getBlockEntity(pos);
-			if (tileEntity instanceof AbstractTeslaSynthesizerTileEntity) {
-				InventoryHelper.dropContents(worldIn, pos, (AbstractTeslaSynthesizerTileEntity) tileEntity);
+			BlockEntity tileEntity = worldIn.getBlockEntity(pos);
+			if (tileEntity instanceof AbstractTeslaSynthesizerBlockEntity) {
+				Containers.dropContents(worldIn, pos, (AbstractTeslaSynthesizerBlockEntity) tileEntity);
 				worldIn.updateNeighbourForOutputSignal(pos, this);
 			}
 
@@ -163,7 +172,7 @@ public class TeslaSynthesizerBlock extends ContainerBlock implements IWaterLogga
 	 * @param rand a <code>Random</code> instance
 	 */
 	@Override
-	public void animateTick(BlockState stateIn, World worldIn, BlockPos pos, Random rand) {
+	public void animateTick(BlockState stateIn, Level worldIn, BlockPos pos, Random rand) {
 		worldIn.addParticle(ParticleTypes.SOUL_FIRE_FLAME, pos.getX() + 0.5D, pos.getY() + 0.4D, pos.getZ() + 0.5D, 0.0D, 0.0D, 0.0D);
 	}
 }

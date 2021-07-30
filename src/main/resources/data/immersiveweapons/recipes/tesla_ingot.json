@@ -1,25 +1,20 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "pattern":
-  [
-    "xy ",
-    "   ",
-    "   "
-  ],
-  "key":
-  {
-    "x":
-    {
-    	"item":"immersiveweapons:conductive_alloy"
-    },
-    "y":
-    {
-    	"item":"immersiveweapons:electric_ingot"
-    }
-  },
-  "result":
-  {
-    "item": "immersiveweapons:tesla_ingot",
-    "count": 1
-  }
+	"type": "minecraft:crafting_shaped",
+	"pattern": [
+		"xy ",
+		"   ",
+		"   "
+	],
+	"key": {
+		"x": {
+			"item": "immersiveweapons:conductive_alloy"
+		},
+		"y": {
+			"item": "immersiveweapons:electric_ingot"
+		}
+	},
+	"result": {
+		"item": "immersiveweapons:tesla_ingot",
+		"count": 1
+	}
 }

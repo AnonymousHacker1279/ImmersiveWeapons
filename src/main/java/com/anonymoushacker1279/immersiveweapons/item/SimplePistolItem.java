@@ -2,25 +2,21 @@ package com.anonymoushacker1279.immersiveweapons.item;
 
 import com.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
 import com.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
-import net.minecraft.enchantment.IVanishable;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.projectile.AbstractArrowEntity;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.item.UseAction;
-import net.minecraft.item.crafting.Ingredient;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.Hand;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.SoundEvent;
-import net.minecraft.world.World;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.projectile.AbstractArrow;
+import net.minecraft.world.item.*;
+import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.event.ForgeEventFactory;
 
 import java.util.function.Predicate;
 
-public class SimplePistolItem extends AbstractBullet implements IVanishable {
+public class SimplePistolItem extends AbstractBullet implements Vanishable {
 
 	/**
 	 * Constructor for SimplePistolItem.
@@ -37,7 +33,7 @@ public class SimplePistolItem extends AbstractBullet implements IVanishable {
 	 * @return ItemStack
 	 */
 	ItemStack findAmmo(ItemStack itemStack, LivingEntity entityLiving) {
-		PlayerEntity playerEntity = (PlayerEntity) entityLiving;
+		Player playerEntity = (Player) entityLiving;
 		if (!(itemStack.getItem() instanceof AbstractBullet)) {
 			return ItemStack.EMPTY;
 		} else {
@@ -47,8 +43,8 @@ public class SimplePistolItem extends AbstractBullet implements IVanishable {
 				return itemStack2;
 			} else {
 				predicate = ((AbstractBullet) itemStack.getItem()).getInventoryAmmoPredicate();
-				for (int i = 0; i < playerEntity.inventory.getContainerSize(); ++i) {
-					ItemStack itemStack1 = playerEntity.inventory.getItem(i);
+				for (int i = 0; i < playerEntity.getInventory().getContainerSize(); ++i) {
+					ItemStack itemStack1 = playerEntity.getInventory().getItem(i);
 					if (predicate.test(itemStack1)) {
 						return itemStack1;
 					}
@@ -67,9 +63,8 @@ public class SimplePistolItem extends AbstractBullet implements IVanishable {
 	 * @param timeLeft the time left from charging
 	 */
 	@Override
-	public void releaseUsing(ItemStack itemStack, World worldIn, LivingEntity entityLiving, int timeLeft) {
-		if (entityLiving instanceof PlayerEntity) {
-			PlayerEntity playerEntity = (PlayerEntity) entityLiving;
+	public void releaseUsing(ItemStack itemStack, Level worldIn, LivingEntity entityLiving, int timeLeft) {
+		if (entityLiving instanceof Player playerEntity) {
 			boolean flag = playerEntity.isCreative();
 			boolean misfire = false;
 			ItemStack itemStack1 = findAmmo(itemStack, entityLiving);
@@ -79,11 +74,11 @@ public class SimplePistolItem extends AbstractBullet implements IVanishable {
 				int randomNumber = GeneralUtilities.getRandomNumber(1, 10);
 				if (randomNumber <= 3) {
 					misfire = true;
-					worldIn.playSound(null, playerEntity.getX(), playerEntity.getY(), playerEntity.getZ(), getMisfireSound(), SoundCategory.PLAYERS, 1.0F, 1.0F / (random.nextFloat() * 0.4F + 1.2F) + 0.5F);
+					worldIn.playSound(null, playerEntity.getX(), playerEntity.getY(), playerEntity.getZ(), getMisfireSound(), SoundSource.PLAYERS, 1.0F, 1.0F / (GeneralUtilities.getRandomNumber(0.2f, 0.6f) + 1.2F) + 0.5F);
 					if (!playerEntity.isCreative()) {
 						itemStack1.shrink(1);
 						if (itemStack1.isEmpty()) {
-							playerEntity.inventory.removeItem(itemStack1);
+							playerEntity.getInventory().removeItem(itemStack1);
 						}
 						itemStack.hurtAndBreak(5, playerEntity, (entity) -> entity.broadcastBreakEvent(entity.getUsedItemHand()));
 					}
@@ -94,11 +89,11 @@ public class SimplePistolItem extends AbstractBullet implements IVanishable {
 				int randomNumber = GeneralUtilities.getRandomNumber(1, 20);
 				if (randomNumber <= 3) {
 					misfire = true;
-					worldIn.playSound(null, playerEntity.getX(), playerEntity.getY(), playerEntity.getZ(), getMisfireSound(), SoundCategory.PLAYERS, 1.0F, 1.0F / (random.nextFloat() * 0.4F + 1.2F) + 0.5F);
+					worldIn.playSound(null, playerEntity.getX(), playerEntity.getY(), playerEntity.getZ(), getMisfireSound(), SoundSource.PLAYERS, 1.0F, 1.0F / (GeneralUtilities.getRandomNumber(0.2f, 0.6f) + 1.2F) + 0.5F);
 					if (!playerEntity.isCreative()) {
 						itemStack1.shrink(1);
 						if (itemStack1.isEmpty()) {
-							playerEntity.inventory.removeItem(itemStack1);
+							playerEntity.getInventory().removeItem(itemStack1);
 						}
 						itemStack.hurtAndBreak(5, playerEntity, (entity) -> entity.broadcastBreakEvent(playerEntity.getUsedItemHand()));
 					}
@@ -118,7 +113,7 @@ public class SimplePistolItem extends AbstractBullet implements IVanishable {
 					boolean flag1 = playerEntity.isCreative() || (itemStack1.getItem() instanceof CustomArrowItem && ((CustomArrowItem) itemStack1.getItem()).isInfinite(itemStack1, itemStack, playerEntity));
 					if (!worldIn.isClientSide) {
 						CustomArrowItem customArrowItem = (CustomArrowItem) (itemStack1.getItem() instanceof CustomArrowItem ? itemStack1.getItem() : defaultAmmo());
-						AbstractArrowEntity abstractArrowEntity = customArrowItem.createArrow(worldIn, itemStack1, playerEntity);
+						AbstractArrow abstractArrowEntity = customArrowItem.createArrow(worldIn, itemStack1, playerEntity);
 						abstractArrowEntity.shootFromRotation(playerEntity, playerEntity.xRot, playerEntity.yRot, 0.0F, 3.0F, 1.0F);
 						abstractArrowEntity.setCritArrow(true);
 
@@ -127,11 +122,11 @@ public class SimplePistolItem extends AbstractBullet implements IVanishable {
 						worldIn.addFreshEntity(abstractArrowEntity);
 					}
 
-					worldIn.playSound(null, playerEntity.getX(), playerEntity.getY(), playerEntity.getZ(), getFireSound(), SoundCategory.PLAYERS, 1.0F, 1.0F / (random.nextFloat() * 0.4F + 1.2F) + 0.5F);
+					worldIn.playSound(null, playerEntity.getX(), playerEntity.getY(), playerEntity.getZ(), getFireSound(), SoundSource.PLAYERS, 1.0F, 1.0F / (GeneralUtilities.getRandomNumber(0.2f, 0.6f) + 1.2F) + 0.5F);
 					if (!flag1 && !playerEntity.isCreative()) {
 						itemStack1.shrink(1);
 						if (itemStack1.isEmpty()) {
-							playerEntity.inventory.removeItem(itemStack1);
+							playerEntity.getInventory().removeItem(itemStack1);
 						}
 					}
 					if (!playerEntity.isCreative()) {
@@ -148,8 +143,8 @@ public class SimplePistolItem extends AbstractBullet implements IVanishable {
 	 * @return UseAction
 	 */
 	@Override
-	public UseAction getUseAnimation(ItemStack stack) {
-		return UseAction.CROSSBOW;
+	public UseAnim getUseAnimation(ItemStack stack) {
+		return UseAnim.CROSSBOW;
 	}
 
 	/**
@@ -160,18 +155,18 @@ public class SimplePistolItem extends AbstractBullet implements IVanishable {
 	 * @return ActionResult extending ItemStack
 	 */
 	@Override
-	public ActionResult<ItemStack> use(World worldIn, PlayerEntity playerIn, Hand handIn) {
+	public InteractionResultHolder<ItemStack> use(Level worldIn, Player playerIn, InteractionHand handIn) {
 		ItemStack itemstack = playerIn.getItemInHand(handIn);
 		boolean flag = !findAmmo(itemstack, playerIn).isEmpty();
 
-		ActionResult<ItemStack> ret = ForgeEventFactory.onArrowNock(itemstack, worldIn, playerIn, handIn, flag);
+		InteractionResultHolder<ItemStack> ret = ForgeEventFactory.onArrowNock(itemstack, worldIn, playerIn, handIn, flag);
 		if (ret != null) return ret;
 
 		if (!playerIn.isCreative() && !flag) {
-			return ActionResult.fail(itemstack);
+			return InteractionResultHolder.fail(itemstack);
 		} else {
 			playerIn.startUsingItem(handIn);
-			return ActionResult.consume(itemstack);
+			return InteractionResultHolder.consume(itemstack);
 		}
 	}
 

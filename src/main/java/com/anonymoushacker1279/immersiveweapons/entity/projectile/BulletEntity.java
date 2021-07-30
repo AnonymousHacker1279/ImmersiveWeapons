@@ -2,16 +2,16 @@ package com.anonymoushacker1279.immersiveweapons.entity.projectile;
 
 import com.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
 import com.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.IRendersAsItem;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.particles.ParticleTypes;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.world.World;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.util.Mth;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.projectile.ItemSupplier;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import org.jetbrains.annotations.NotNull;
@@ -26,7 +26,7 @@ public class BulletEntity {
 		 * @param world the <code>World</code> the entity is in
 		 * @param knockbackStrength the bullet knockback strength
 		 */
-		public CopperBulletEntity(EntityType<CopperBulletEntity> entityType, World world, int knockbackStrength) {
+		public CopperBulletEntity(EntityType<CopperBulletEntity> entityType, Level world, int knockbackStrength) {
 			super(entityType, world);
 			this.knockbackStrength = knockbackStrength;
 			referenceItem = DeferredRegistryHandler.COPPER_MUSKET_BALL.get();
@@ -38,7 +38,7 @@ public class BulletEntity {
 		 * @param world the <code>World</code> the entity is in
 		 * @param referenceItemIn the reference item
 		 */
-		public CopperBulletEntity(LivingEntity shooter, World world, Item referenceItemIn) {
+		public CopperBulletEntity(LivingEntity shooter, Level world, Item referenceItemIn) {
 			super(DeferredRegistryHandler.COPPER_BULLET_ENTITY.get(), shooter, world);
 			referenceItem = referenceItemIn;
 		}
@@ -53,11 +53,11 @@ public class BulletEntity {
 		 */
 		@Override
 		public void shoot(double x, double y, double z, float velocity, float inaccuracy) {
-			Vector3d vector3d = (new Vector3d(x, y, z)).normalize().add(random.nextGaussian() * 0.0025F * (GeneralUtilities.getRandomNumber(0.2f, 1.1f)), 0.00025F * (GeneralUtilities.getRandomNumber(0.2f, 1.1f)), random.nextGaussian() * 0.0025F).scale(velocity);
+			Vec3 vector3d = (new Vec3(x, y, z)).normalize().add(random.nextGaussian() * 0.0025F * (GeneralUtilities.getRandomNumber(0.2f, 1.1f)), 0.00025F * (GeneralUtilities.getRandomNumber(0.2f, 1.1f)), random.nextGaussian() * 0.0025F).scale(velocity);
 			setDeltaMovement(vector3d);
-			float f = MathHelper.sqrt(getHorizontalDistanceSqr(vector3d));
-			yRot = (float) (MathHelper.atan2(vector3d.x, vector3d.z) * (180F / (float) Math.PI));
-			xRot = (float) (MathHelper.atan2(vector3d.y, f) * (180F / (float) Math.PI));
+			double horizontalDistanceSqr = vector3d.horizontalDistanceSqr();
+			float yRot = (float) (Mth.atan2(vector3d.x, vector3d.z) * (180F / (float) Math.PI));
+			float xRot = (float) (Mth.atan2(vector3d.y, horizontalDistanceSqr) * (180F / (float) Math.PI));
 			yRotO = yRot;
 			xRotO = xRot;
 		}
@@ -79,7 +79,7 @@ public class BulletEntity {
 		 * @param world the <code>World</code> the entity is in
 		 * @param knockbackStrength the bullet knockback strength
 		 */
-		public WoodBulletEntity(EntityType<WoodBulletEntity> entityType, World world, int knockbackStrength) {
+		public WoodBulletEntity(EntityType<WoodBulletEntity> entityType, Level world, int knockbackStrength) {
 			super(entityType, world);
 			this.knockbackStrength = knockbackStrength;
 			referenceItem = DeferredRegistryHandler.WOOD_MUSKET_BALL.get();
@@ -91,7 +91,7 @@ public class BulletEntity {
 		 * @param world the <code>World</code> the entity is in
 		 * @param referenceItemIn the reference item
 		 */
-		public WoodBulletEntity(LivingEntity shooter, World world, Item referenceItemIn) {
+		public WoodBulletEntity(LivingEntity shooter, Level world, Item referenceItemIn) {
 			super(DeferredRegistryHandler.WOOD_BULLET_ENTITY.get(), shooter, world);
 			referenceItem = referenceItemIn;
 		}
@@ -106,11 +106,11 @@ public class BulletEntity {
 		 */
 		@Override
 		public void shoot(double x, double y, double z, float velocity, float inaccuracy) {
-			Vector3d vector3d = (new Vector3d(x, y, z)).normalize().add(random.nextGaussian() * 0.0075F * (GeneralUtilities.getRandomNumber(3.2f, 5.1f)), -0.0095F * (GeneralUtilities.getRandomNumber(3.2f, 5.1f)), random.nextGaussian() * 0.0075F).scale(velocity);
+			Vec3 vector3d = (new Vec3(x, y, z)).normalize().add(random.nextGaussian() * 0.0075F * (GeneralUtilities.getRandomNumber(3.2f, 5.1f)), -0.0095F * (GeneralUtilities.getRandomNumber(3.2f, 5.1f)), random.nextGaussian() * 0.0075F).scale(velocity);
 			setDeltaMovement(vector3d);
-			float f = MathHelper.sqrt(getHorizontalDistanceSqr(vector3d));
-			yRot = (float) (MathHelper.atan2(vector3d.x, vector3d.z) * (180F / (float) Math.PI));
-			xRot = (float) (MathHelper.atan2(vector3d.y, f) * (180F / (float) Math.PI));
+			double horizontalDistanceSqr = vector3d.horizontalDistanceSqr();
+			float yRot = (float) (Mth.atan2(vector3d.x, vector3d.z) * (180F / (float) Math.PI));
+			float xRot = (float) (Mth.atan2(vector3d.y, horizontalDistanceSqr) * (180F / (float) Math.PI));
 			yRotO = yRot;
 			xRotO = xRot;
 		}
@@ -132,7 +132,7 @@ public class BulletEntity {
 		 * @param world the <code>World</code> the entity is in
 		 * @param knockbackStrength the bullet knockback strength
 		 */
-		public StoneBulletEntity(EntityType<StoneBulletEntity> entityType, World world, int knockbackStrength) {
+		public StoneBulletEntity(EntityType<StoneBulletEntity> entityType, Level world, int knockbackStrength) {
 			super(entityType, world);
 			this.knockbackStrength = knockbackStrength;
 			referenceItem = DeferredRegistryHandler.STONE_MUSKET_BALL.get();
@@ -144,7 +144,7 @@ public class BulletEntity {
 		 * @param world the <code>World</code> the entity is in
 		 * @param referenceItemIn the reference item
 		 */
-		public StoneBulletEntity(LivingEntity shooter, World world, Item referenceItemIn) {
+		public StoneBulletEntity(LivingEntity shooter, Level world, Item referenceItemIn) {
 			super(DeferredRegistryHandler.STONE_BULLET_ENTITY.get(), shooter, world);
 			referenceItem = referenceItemIn;
 		}
@@ -159,11 +159,11 @@ public class BulletEntity {
 		 */
 		@Override
 		public void shoot(double x, double y, double z, float velocity, float inaccuracy) {
-			Vector3d vector3d = (new Vector3d(x, y, z)).normalize().add(random.nextGaussian() * 0.0075F * (GeneralUtilities.getRandomNumber(2.4f, 4.1f)), -0.0170F * (GeneralUtilities.getRandomNumber(2.4f, 4.1f)), random.nextGaussian() * 0.0075F).scale(velocity);
+			Vec3 vector3d = (new Vec3(x, y, z)).normalize().add(random.nextGaussian() * 0.0075F * (GeneralUtilities.getRandomNumber(2.4f, 4.1f)), -0.0170F * (GeneralUtilities.getRandomNumber(2.4f, 4.1f)), random.nextGaussian() * 0.0075F).scale(velocity);
 			setDeltaMovement(vector3d);
-			float f = MathHelper.sqrt(getHorizontalDistanceSqr(vector3d));
-			yRot = (float) (MathHelper.atan2(vector3d.x, vector3d.z) * (180F / (float) Math.PI));
-			xRot = (float) (MathHelper.atan2(vector3d.y, f) * (180F / (float) Math.PI));
+			double horizontalDistanceSqr = vector3d.horizontalDistanceSqr();
+			float yRot = (float) (Mth.atan2(vector3d.x, vector3d.z) * (180F / (float) Math.PI));
+			float xRot = (float) (Mth.atan2(vector3d.y, horizontalDistanceSqr) * (180F / (float) Math.PI));
 			yRotO = yRot;
 			xRotO = xRot;
 		}
@@ -185,7 +185,7 @@ public class BulletEntity {
 		 * @param world the <code>World</code> the entity is in
 		 * @param knockbackStrength the bullet knockback strength
 		 */
-		public IronBulletEntity(EntityType<IronBulletEntity> entityType, World world, int knockbackStrength) {
+		public IronBulletEntity(EntityType<IronBulletEntity> entityType, Level world, int knockbackStrength) {
 			super(entityType, world);
 			this.knockbackStrength = knockbackStrength;
 			referenceItem = DeferredRegistryHandler.IRON_MUSKET_BALL.get();
@@ -197,7 +197,7 @@ public class BulletEntity {
 		 * @param world the <code>World</code> the entity is in
 		 * @param referenceItemIn the reference item
 		 */
-		public IronBulletEntity(LivingEntity shooter, World world, Item referenceItemIn) {
+		public IronBulletEntity(LivingEntity shooter, Level world, Item referenceItemIn) {
 			super(DeferredRegistryHandler.IRON_BULLET_ENTITY.get(), shooter, world);
 			referenceItem = referenceItemIn;
 		}
@@ -212,11 +212,11 @@ public class BulletEntity {
 		 */
 		@Override
 		public void shoot(double x, double y, double z, float velocity, float inaccuracy) {
-			Vector3d vector3d = (new Vector3d(x, y, z)).normalize().add(random.nextGaussian() * 0.0025F * (GeneralUtilities.getRandomNumber(0.2f, 1.1f)), 0.00025F * (GeneralUtilities.getRandomNumber(0.2f, 1.1f)), random.nextGaussian() * 0.0025F).scale(velocity);
+			Vec3 vector3d = (new Vec3(x, y, z)).normalize().add(random.nextGaussian() * 0.0025F * (GeneralUtilities.getRandomNumber(0.2f, 1.1f)), 0.00025F * (GeneralUtilities.getRandomNumber(0.2f, 1.1f)), random.nextGaussian() * 0.0025F).scale(velocity);
 			setDeltaMovement(vector3d);
-			float f = MathHelper.sqrt(getHorizontalDistanceSqr(vector3d));
-			yRot = (float) (MathHelper.atan2(vector3d.x, vector3d.z) * (180F / (float) Math.PI));
-			xRot = (float) (MathHelper.atan2(vector3d.y, f) * (180F / (float) Math.PI));
+			double horizontalDistanceSqr = vector3d.horizontalDistanceSqr();
+			float yRot = (float) (Mth.atan2(vector3d.x, vector3d.z) * (180F / (float) Math.PI));
+			float xRot = (float) (Mth.atan2(vector3d.y, horizontalDistanceSqr) * (180F / (float) Math.PI));
 			yRotO = yRot;
 			xRotO = xRot;
 		}
@@ -238,7 +238,7 @@ public class BulletEntity {
 		 * @param world the <code>World</code> the entity is in
 		 * @param knockbackStrength the bullet knockback strength
 		 */
-		public GoldBulletEntity(EntityType<GoldBulletEntity> entityType, World world, int knockbackStrength) {
+		public GoldBulletEntity(EntityType<GoldBulletEntity> entityType, Level world, int knockbackStrength) {
 			super(entityType, world);
 			this.knockbackStrength = knockbackStrength;
 			referenceItem = DeferredRegistryHandler.GOLD_MUSKET_BALL.get();
@@ -250,7 +250,7 @@ public class BulletEntity {
 		 * @param world the <code>World</code> the entity is in
 		 * @param referenceItemIn the reference item
 		 */
-		public GoldBulletEntity(LivingEntity shooter, World world, Item referenceItemIn) {
+		public GoldBulletEntity(LivingEntity shooter, Level world, Item referenceItemIn) {
 			super(DeferredRegistryHandler.GOLD_BULLET_ENTITY.get(), shooter, world);
 			referenceItem = referenceItemIn;
 		}
@@ -265,11 +265,11 @@ public class BulletEntity {
 		 */
 		@Override
 		public void shoot(double x, double y, double z, float velocity, float inaccuracy) {
-			Vector3d vector3d = (new Vector3d(x, y, z)).normalize().add(random.nextGaussian() * 0.0025F * (GeneralUtilities.getRandomNumber(0.2f, 1.1f)), 0.00025F * (GeneralUtilities.getRandomNumber(0.2f, 1.1f)), random.nextGaussian() * 0.0025F).scale(velocity);
+			Vec3 vector3d = (new Vec3(x, y, z)).normalize().add(random.nextGaussian() * 0.0025F * (GeneralUtilities.getRandomNumber(0.2f, 1.1f)), 0.00025F * (GeneralUtilities.getRandomNumber(0.2f, 1.1f)), random.nextGaussian() * 0.0025F).scale(velocity);
 			setDeltaMovement(vector3d);
-			float f = MathHelper.sqrt(getHorizontalDistanceSqr(vector3d));
-			yRot = (float) (MathHelper.atan2(vector3d.x, vector3d.z) * (180F / (float) Math.PI));
-			xRot = (float) (MathHelper.atan2(vector3d.y, f) * (180F / (float) Math.PI));
+			double horizontalDistanceSqr = vector3d.horizontalDistanceSqr();
+			float yRot = (float) (Mth.atan2(vector3d.x, vector3d.z) * (180F / (float) Math.PI));
+			float xRot = (float) (Mth.atan2(vector3d.y, horizontalDistanceSqr) * (180F / (float) Math.PI));
 			yRotO = yRot;
 			xRotO = xRot;
 		}
@@ -291,7 +291,7 @@ public class BulletEntity {
 		 * @param world the <code>World</code> the entity is in
 		 * @param knockbackStrength the bullet knockback strength
 		 */
-		public DiamondBulletEntity(EntityType<DiamondBulletEntity> entityType, World world, int knockbackStrength) {
+		public DiamondBulletEntity(EntityType<DiamondBulletEntity> entityType, Level world, int knockbackStrength) {
 			super(entityType, world);
 			this.knockbackStrength = knockbackStrength;
 			referenceItem = DeferredRegistryHandler.DIAMOND_MUSKET_BALL.get();
@@ -303,7 +303,7 @@ public class BulletEntity {
 		 * @param world the <code>World</code> the entity is in
 		 * @param referenceItemIn the reference item
 		 */
-		public DiamondBulletEntity(LivingEntity shooter, World world, Item referenceItemIn) {
+		public DiamondBulletEntity(LivingEntity shooter, Level world, Item referenceItemIn) {
 			super(DeferredRegistryHandler.DIAMOND_BULLET_ENTITY.get(), shooter, world);
 			referenceItem = referenceItemIn;
 		}
@@ -327,11 +327,11 @@ public class BulletEntity {
 		 */
 		@Override
 		public void shoot(double x, double y, double z, float velocity, float inaccuracy) {
-			Vector3d vector3d = (new Vector3d(x, y, z)).normalize().add(random.nextGaussian() * 0.0025F * (GeneralUtilities.getRandomNumber(0.2f, 0.9f)), 0.00025F * (GeneralUtilities.getRandomNumber(0.2f, 0.9f)), random.nextGaussian() * 0.0025F).scale(velocity);
+			Vec3 vector3d = (new Vec3(x, y, z)).normalize().add(random.nextGaussian() * 0.0025F * (GeneralUtilities.getRandomNumber(0.2f, 0.9f)), 0.00025F * (GeneralUtilities.getRandomNumber(0.2f, 0.9f)), random.nextGaussian() * 0.0025F).scale(velocity);
 			setDeltaMovement(vector3d);
-			float f = MathHelper.sqrt(getHorizontalDistanceSqr(vector3d));
-			yRot = (float) (MathHelper.atan2(vector3d.x, vector3d.z) * (180F / (float) Math.PI));
-			xRot = (float) (MathHelper.atan2(vector3d.y, f) * (180F / (float) Math.PI));
+			double horizontalDistanceSqr = vector3d.horizontalDistanceSqr();
+			float yRot = (float) (Mth.atan2(vector3d.x, vector3d.z) * (180F / (float) Math.PI));
+			float xRot = (float) (Mth.atan2(vector3d.y, horizontalDistanceSqr) * (180F / (float) Math.PI));
 			yRotO = yRot;
 			xRotO = xRot;
 		}
@@ -344,7 +344,7 @@ public class BulletEntity {
 		 * @param world the <code>World</code> the entity is in
 		 * @param knockbackStrength the bullet knockback strength
 		 */
-		public NetheriteBulletEntity(EntityType<NetheriteBulletEntity> entityType, World world, int knockbackStrength) {
+		public NetheriteBulletEntity(EntityType<NetheriteBulletEntity> entityType, Level world, int knockbackStrength) {
 			super(entityType, world);
 			this.knockbackStrength = knockbackStrength;
 			referenceItem = DeferredRegistryHandler.NETHERITE_MUSKET_BALL.get();
@@ -356,7 +356,7 @@ public class BulletEntity {
 		 * @param world the <code>World</code> the entity is in
 		 * @param referenceItemIn the reference item
 		 */
-		public NetheriteBulletEntity(LivingEntity shooter, World world, Item referenceItemIn) {
+		public NetheriteBulletEntity(LivingEntity shooter, Level world, Item referenceItemIn) {
 			super(DeferredRegistryHandler.NETHERITE_BULLET_ENTITY.get(), shooter, world);
 			referenceItem = referenceItemIn;
 		}
@@ -371,11 +371,11 @@ public class BulletEntity {
 		 */
 		@Override
 		public void shoot(double x, double y, double z, float velocity, float inaccuracy) {
-			Vector3d vector3d = (new Vector3d(x, y, z)).normalize().add(random.nextGaussian() * 0.0020F * (GeneralUtilities.getRandomNumber(0.2f, 0.7f)), 0.0020F * (GeneralUtilities.getRandomNumber(0.2f, 0.7f)), random.nextGaussian() * 0.0020F).scale(velocity);
+			Vec3 vector3d = (new Vec3(x, y, z)).normalize().add(random.nextGaussian() * 0.0020F * (GeneralUtilities.getRandomNumber(0.2f, 0.7f)), 0.0020F * (GeneralUtilities.getRandomNumber(0.2f, 0.7f)), random.nextGaussian() * 0.0020F).scale(velocity);
 			setDeltaMovement(vector3d);
-			float f = MathHelper.sqrt(getHorizontalDistanceSqr(vector3d));
-			yRot = (float) (MathHelper.atan2(vector3d.x, vector3d.z) * (180F / (float) Math.PI));
-			xRot = (float) (MathHelper.atan2(vector3d.y, f) * (180F / (float) Math.PI));
+			double horizontalDistanceSqr = vector3d.horizontalDistanceSqr();
+			float yRot = (float) (Mth.atan2(vector3d.x, vector3d.z) * (180F / (float) Math.PI));
+			float xRot = (float) (Mth.atan2(vector3d.y, horizontalDistanceSqr) * (180F / (float) Math.PI));
 			yRotO = yRot;
 			xRotO = xRot;
 		}
@@ -390,8 +390,8 @@ public class BulletEntity {
 		}
 	}
 
-	@OnlyIn(value = Dist.CLIENT, _interface = IRendersAsItem.class)
-	public static class FlareEntity extends AbstractBulletEntity implements IRendersAsItem {
+	@OnlyIn(value = Dist.CLIENT, _interface = ItemSupplier.class)
+	public static class FlareEntity extends AbstractBulletEntity implements ItemSupplier {
 
 		private int explodeDelay = 10;
 		private int deathDelay = 300;
@@ -402,7 +402,7 @@ public class BulletEntity {
 		 * @param world the <code>World</code> the entity is in
 		 * @param knockbackStrength the bullet knockback strength
 		 */
-		public FlareEntity(EntityType<FlareEntity> entityType, World world, int knockbackStrength) {
+		public FlareEntity(EntityType<FlareEntity> entityType, Level world, int knockbackStrength) {
 			super(entityType, world);
 			this.knockbackStrength = knockbackStrength;
 			referenceItem = DeferredRegistryHandler.FLARE.get();
@@ -414,7 +414,7 @@ public class BulletEntity {
 		 * @param world the <code>World</code> the entity is in
 		 * @param referenceItemIn the reference item
 		 */
-		public FlareEntity(LivingEntity shooter, World world, Item referenceItemIn) {
+		public FlareEntity(LivingEntity shooter, Level world, Item referenceItemIn) {
 			super(DeferredRegistryHandler.FLARE_ENTITY.get(), shooter, world);
 			referenceItem = referenceItemIn;
 		}
@@ -429,11 +429,11 @@ public class BulletEntity {
 		 */
 		@Override
 		public void shoot(double x, double y, double z, float velocity, float inaccuracy) {
-			Vector3d vector3d = (new Vector3d(x, y, z)).normalize().add(random.nextGaussian() * 0.0025F * (GeneralUtilities.getRandomNumber(0.2f, 1.1f)), 0.00025F * (GeneralUtilities.getRandomNumber(0.2f, 1.1f)), random.nextGaussian() * 0.0025F).scale(velocity);
+			Vec3 vector3d = (new Vec3(x, y, z)).normalize().add(random.nextGaussian() * 0.0025F * (GeneralUtilities.getRandomNumber(0.2f, 1.1f)), 0.00025F * (GeneralUtilities.getRandomNumber(0.2f, 1.1f)), random.nextGaussian() * 0.0025F).scale(velocity);
 			setDeltaMovement(vector3d);
-			float f = MathHelper.sqrt(getHorizontalDistanceSqr(vector3d));
-			yRot = (float) (MathHelper.atan2(vector3d.x, vector3d.z) * (180F / (float) Math.PI));
-			xRot = (float) (MathHelper.atan2(vector3d.y, f) * (180F / (float) Math.PI));
+			double horizontalDistanceSqr = vector3d.horizontalDistanceSqr();
+			float yRot = (float) (Mth.atan2(vector3d.x, vector3d.z) * (180F / (float) Math.PI));
+			float xRot = (float) (Mth.atan2(vector3d.y, horizontalDistanceSqr) * (180F / (float) Math.PI));
 			yRotO = yRot;
 			xRotO = xRot;
 		}
@@ -458,7 +458,7 @@ public class BulletEntity {
 					}
 					deathDelay--;
 				} else {
-					remove();
+					kill();
 				}
 			}
 		}

@@ -1,25 +1,20 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "pattern":
-  [
-    " x ",
-    " y ",
-    " y "
-  ],
-  "key":
-  {
-    "x":
-    {
-    	"tag":"forge:ingots/copper"
-    },
-    "y":
-    {
-    	"item":"minecraft:stick"
-    }
-  },
-  "result":
-  {
-    "item": "immersiveweapons:copper_shovel",
-    "count": 1
-  }
+	"type": "minecraft:crafting_shaped",
+	"pattern": [
+		" x ",
+		" y ",
+		" y "
+	],
+	"key": {
+		"x": {
+			"tag": "forge:ingots/copper"
+		},
+		"y": {
+			"item": "minecraft:stick"
+		}
+	},
+	"result": {
+		"item": "immersiveweapons:copper_shovel",
+		"count": 1
+	}
 }

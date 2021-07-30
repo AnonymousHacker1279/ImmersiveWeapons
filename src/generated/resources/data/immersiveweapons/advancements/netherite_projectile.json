@@ -1,0 +1,55 @@
+{
+  "parent": "immersiveweapons:root",
+  "display": {
+    "icon": {
+      "item": "immersiveweapons:netherite_arrow"
+    },
+    "title": {
+      "translate": "advancements.immersiveweapons.netherite_projectile.title"
+    },
+    "description": {
+      "translate": "advancements.immersiveweapons.netherite_projectile.description"
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "rewards": {
+    "experience": 50
+  },
+  "criteria": {
+    "hold": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "immersiveweapons:netherite_arrow"
+            ]
+          }
+        ]
+      }
+    },
+    "hold1": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "immersiveweapons:netherite_musket_ball"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "hold"
+    ],
+    [
+      "hold1"
+    ]
+  ]
+}

@@ -1,0 +1,41 @@
+{
+  "parent": "immersiveweapons:root",
+  "display": {
+    "icon": {
+      "item": "immersiveweapons:used_syringe"
+    },
+    "title": {
+      "translate": "advancements.immersiveweapons.used_syringe.title"
+    },
+    "description": {
+      "translate": "advancements.immersiveweapons.used_syringe.description"
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": true
+  },
+  "criteria": {
+    "hold": {
+      "trigger": "minecraft:entity_killed_player",
+      "conditions": {
+        "killing_blow": {
+          "source_entity": {
+            "equipment": {
+              "mainhand": {
+                "items": [
+                  "immersiveweapons:used_syringe"
+                ]
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "requirements": [
+    [
+      "hold"
+    ]
+  ]
+}

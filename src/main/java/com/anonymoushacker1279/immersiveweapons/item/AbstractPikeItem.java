@@ -2,20 +2,20 @@ package com.anonymoushacker1279.immersiveweapons.item;
 
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.ImmutableMultimap.Builder;
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.ai.attributes.Attribute;
-import net.minecraft.entity.ai.attributes.AttributeModifier;
-import net.minecraft.entity.ai.attributes.Attributes;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.UseAction;
-import net.minecraft.item.crafting.Ingredient;
+import net.minecraft.core.BlockPos;
 import net.minecraft.tags.ItemTags;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.attributes.Attribute;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.UseAnim;
+import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.state.BlockState;
 
 import java.util.UUID;
 
@@ -45,7 +45,7 @@ public abstract class AbstractPikeItem extends Item {
 	 * @return boolean
 	 */
 	@Override
-	public boolean canAttackBlock(BlockState state, World worldIn, BlockPos pos, PlayerEntity player) {
+	public boolean canAttackBlock(BlockState state, Level worldIn, BlockPos pos, Player player) {
 		return !player.isCreative();
 	}
 
@@ -55,8 +55,8 @@ public abstract class AbstractPikeItem extends Item {
 	 * @return UseAction
 	 */
 	@Override
-	public UseAction getUseAnimation(ItemStack stack) {
-		return UseAction.SPEAR;
+	public UseAnim getUseAnimation(ItemStack stack) {
+		return UseAnim.SPEAR;
 	}
 
 	/**
@@ -68,7 +68,7 @@ public abstract class AbstractPikeItem extends Item {
 	 */
 	@Override
 	public boolean hurtEnemy(ItemStack stack, LivingEntity target, LivingEntity attacker) {
-		stack.hurtAndBreak(1, attacker, (entity) -> entity.broadcastBreakEvent(EquipmentSlotType.MAINHAND));
+		stack.hurtAndBreak(1, attacker, (entity) -> entity.broadcastBreakEvent(EquipmentSlot.MAINHAND));
 		return true;
 	}
 
@@ -82,11 +82,9 @@ public abstract class AbstractPikeItem extends Item {
 	 * @return boolean
 	 */
 	@Override
-	public boolean mineBlock(ItemStack stack, World worldIn, BlockState state, BlockPos pos, LivingEntity entityLiving) {
+	public boolean mineBlock(ItemStack stack, Level worldIn, BlockState state, BlockPos pos, LivingEntity entityLiving) {
 		if (state.getDestroySpeed(worldIn, pos) != 0.0D) {
-			stack.hurtAndBreak(2, entityLiving, (entity) -> {
-				entity.broadcastBreakEvent(EquipmentSlotType.MAINHAND);
-			});
+			stack.hurtAndBreak(2, entityLiving, (entity) -> entity.broadcastBreakEvent(EquipmentSlot.MAINHAND));
 		}
 		return true;
 	}

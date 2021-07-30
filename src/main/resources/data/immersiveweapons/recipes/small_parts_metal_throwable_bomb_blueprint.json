@@ -1,25 +1,20 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "pattern":
-  [
-    "y  ",
-    "y y",
-    "  x"
-  ],
-  "key":
-  {
-    "x":
-    {
-    	"item":"immersiveweapons:blank_blueprint"
-    },
-    "y":
-    {
-    	"tag":"forge:nuggets/metal"
-    }
-  },
-  "result":
-  {
-    "item": "immersiveweapons:small_parts_metal_throwable_bomb_blueprint",
-    "count": 1
-  }
+	"type": "minecraft:crafting_shaped",
+	"pattern": [
+		"y  ",
+		"y y",
+		"  x"
+	],
+	"key": {
+		"x": {
+			"item": "immersiveweapons:blank_blueprint"
+		},
+		"y": {
+			"tag": "forge:nuggets/metal"
+		}
+	},
+	"result": {
+		"item": "immersiveweapons:small_parts_metal_throwable_bomb_blueprint",
+		"count": 1
+	}
 }

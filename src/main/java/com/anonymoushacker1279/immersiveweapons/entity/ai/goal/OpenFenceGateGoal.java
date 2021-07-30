@@ -1,6 +1,6 @@
 package com.anonymoushacker1279.immersiveweapons.entity.ai.goal;
 
-import net.minecraft.entity.MobEntity;
+import net.minecraft.world.entity.Mob;
 
 public class OpenFenceGateGoal extends InteractFenceGateGoal {
 
@@ -12,7 +12,7 @@ public class OpenFenceGateGoal extends InteractFenceGateGoal {
 	 * @param entitylivingIn the <code>MobEntity</code> instance
 	 * @param shouldClose if true, the gate will be closed behind the entity
 	 */
-	public OpenFenceGateGoal(MobEntity entitylivingIn, boolean shouldClose) {
+	public OpenFenceGateGoal(Mob entitylivingIn, boolean shouldClose) {
 		super(entitylivingIn);
 		entity = entitylivingIn;
 		closeGate = shouldClose;

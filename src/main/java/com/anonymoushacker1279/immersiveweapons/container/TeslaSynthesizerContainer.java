@@ -1,9 +1,9 @@
 package com.anonymoushacker1279.immersiveweapons.container;
 
 import com.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.util.IIntArray;
+import net.minecraft.world.Container;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.inventory.ContainerData;
 
 public class TeslaSynthesizerContainer extends AbstractTeslaSynthesizerContainer {
 
@@ -12,7 +12,7 @@ public class TeslaSynthesizerContainer extends AbstractTeslaSynthesizerContainer
 	 * @param id the ID of the container
 	 * @param playerInventoryIn the <code>PlayerInventory</code> instance
 	 */
-	public TeslaSynthesizerContainer(int id, PlayerInventory playerInventoryIn) {
+	public TeslaSynthesizerContainer(int id, Inventory playerInventoryIn) {
 		super(DeferredRegistryHandler.TESLA_SYNTHESIZER_CONTAINER.get(), id, playerInventoryIn);
 	}
 
@@ -23,7 +23,7 @@ public class TeslaSynthesizerContainer extends AbstractTeslaSynthesizerContainer
 	 * @param teslaSynthesizerInventory the <code>IInventory</code> of the container
 	 * @param teslaSynthesizerData the <code>IIntArray</code> data
 	 */
-	public TeslaSynthesizerContainer(int id, PlayerInventory playerInventoryIn, IInventory teslaSynthesizerInventory, IIntArray teslaSynthesizerData) {
+	public TeslaSynthesizerContainer(int id, Inventory playerInventoryIn, Container teslaSynthesizerInventory, ContainerData teslaSynthesizerData) {
 		super(DeferredRegistryHandler.TESLA_SYNTHESIZER_CONTAINER.get(), id, playerInventoryIn, teslaSynthesizerInventory, teslaSynthesizerData);
 	}
 }

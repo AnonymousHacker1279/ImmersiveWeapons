@@ -1,29 +1,23 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "pattern":
-  [
-    "xxy",
-    "xxz",
-    "   "
-  ],
-  "key":
-  {
-    "x":
-    {
-    	"item":"minecraft:arrow"
-    },
-    "y":
-    {
-    	"item":"immersiveweapons:smoke_powder"
-    },
-    "z":
-    { 
-    	"tag":"forge:dyes/purple"
-    }
-  },
-  "result":
-  {
-    "item": "immersiveweapons:smoke_bomb_arrow_purple",
-    "count": 4
-  }
+	"type": "minecraft:crafting_shaped",
+	"pattern": [
+		"xxy",
+		"xxz",
+		"   "
+	],
+	"key": {
+		"x": {
+			"item": "minecraft:arrow"
+		},
+		"y": {
+			"item": "immersiveweapons:smoke_powder"
+		},
+		"z": {
+			"tag": "forge:dyes/purple"
+		}
+	},
+	"result": {
+		"item": "immersiveweapons:smoke_bomb_arrow_purple",
+		"count": 4
+	}
 }

@@ -1,15 +1,15 @@
 package com.anonymoushacker1279.immersiveweapons.item;
 
-import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.projectile.AbstractArrowEntity;
-import net.minecraft.entity.projectile.ArrowEntity;
-import net.minecraft.item.ArrowItem;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.world.World;
-import net.minecraftforge.fml.RegistryObject;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.projectile.AbstractArrow;
+import net.minecraft.world.entity.projectile.Arrow;
+import net.minecraft.world.item.ArrowItem;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.level.Level;
+import net.minecraftforge.fmllegacy.RegistryObject;
 
 public class CustomArrowItem extends ArrowItem {
 
@@ -42,8 +42,8 @@ public class CustomArrowItem extends ArrowItem {
 	 * @return AbstractArrowEntity
 	 */
 	@Override
-	public AbstractArrowEntity createArrow(World worldIn, ItemStack stack, LivingEntity shooter) {
-		AbstractArrowEntity arrowEntity = new ArrowEntity(worldIn, shooter);
+	public AbstractArrow createArrow(Level worldIn, ItemStack stack, LivingEntity shooter) {
+		AbstractArrow arrowEntity = new Arrow(worldIn, shooter);
 		arrowEntity.setBaseDamage(damage);
 		return arrowEntity;
 	}
@@ -56,8 +56,8 @@ public class CustomArrowItem extends ArrowItem {
 	 * @return boolean
 	 */
 	@Override
-	public boolean isInfinite(ItemStack stack, ItemStack bow, PlayerEntity player) {
-		int enchant = EnchantmentHelper.getItemEnchantmentLevel(net.minecraft.enchantment.Enchantments.INFINITY_ARROWS, bow);
+	public boolean isInfinite(ItemStack stack, ItemStack bow, Player player) {
+		int enchant = EnchantmentHelper.getItemEnchantmentLevel(net.minecraft.world.item.enchantment.Enchantments.INFINITY_ARROWS, bow);
 		return enchant > 0;
 	}
 }

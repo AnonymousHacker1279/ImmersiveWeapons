@@ -1,23 +1,28 @@
 package com.anonymoushacker1279.immersiveweapons.entity.projectile;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.projectile.AbstractArrowEntity;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.network.IPacket;
-import net.minecraft.particles.ParticleTypes;
-import net.minecraft.util.math.*;
-import net.minecraft.util.math.shapes.VoxelShape;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.world.World;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.network.protocol.Packet;
+import net.minecraft.util.Mth;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.projectile.AbstractArrow;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.ClipContext;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.AABB;
+import net.minecraft.world.phys.EntityHitResult;
+import net.minecraft.world.phys.HitResult;
+import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraftforge.event.ForgeEventFactory;
-import net.minecraftforge.fml.network.NetworkHooks;
+import net.minecraftforge.fmllegacy.network.NetworkHooks;
 
-public abstract class AbstractCustomArrowEntity extends AbstractArrowEntity {
+public abstract class AbstractCustomArrowEntity extends AbstractArrow {
 	Item referenceItem;
 
 	/**
@@ -25,7 +30,7 @@ public abstract class AbstractCustomArrowEntity extends AbstractArrowEntity {
 	 * @param type the <code>EntityType</code> instance; must extend AbstractArrowEntity
 	 * @param world the <code>World</code> the entity is in
 	 */
-	AbstractCustomArrowEntity(EntityType<? extends AbstractArrowEntity> type, World world) {
+	AbstractCustomArrowEntity(EntityType<? extends AbstractArrow> type, Level world) {
 		super(type, world);
 		referenceItem = null;
 	}
@@ -36,7 +41,7 @@ public abstract class AbstractCustomArrowEntity extends AbstractArrowEntity {
 	 * @param shooter the <code>LivingEntity</code> shooting the entity
 	 * @param world the <code>World</code> the entity is in
 	 */
-	AbstractCustomArrowEntity(EntityType<? extends AbstractCustomArrowEntity> type, LivingEntity shooter, World world) {
+	AbstractCustomArrowEntity(EntityType<? extends AbstractCustomArrowEntity> type, LivingEntity shooter, Level world) {
 		super(type, shooter, world);
 		referenceItem = null;
 	}
@@ -49,7 +54,7 @@ public abstract class AbstractCustomArrowEntity extends AbstractArrowEntity {
 	 * @param y the Y position
 	 * @param z the Z position
 	 */
-	AbstractCustomArrowEntity(EntityType<? extends AbstractCustomArrowEntity> type, World world, double x, double y, double z) {
+	AbstractCustomArrowEntity(EntityType<? extends AbstractCustomArrowEntity> type, Level world, double x, double y, double z) {
 		super(type, x, y, z, world);
 		referenceItem = null;
 	}
@@ -68,7 +73,7 @@ public abstract class AbstractCustomArrowEntity extends AbstractArrowEntity {
 	 * @return IPacket
 	 */
 	@Override
-	public IPacket<?> getAddEntityPacket() {
+	public Packet<?> getAddEntityPacket() {
 		return NetworkHooks.getEntitySpawningPacket(this);
 	}
 
@@ -79,24 +84,26 @@ public abstract class AbstractCustomArrowEntity extends AbstractArrowEntity {
 	public void tick() {
 		super.tick();
 		boolean flag = isNoPhysics();
-		Vector3d vector3d = getDeltaMovement();
+		Vec3 vector3d = getDeltaMovement();
+		float yRot;
+		float xRot;
 		if (xRotO == 0.0F && yRotO == 0.0F) {
-			float f = MathHelper.sqrt(getHorizontalDistanceSqr(vector3d));
-			yRot = (float) (MathHelper.atan2(vector3d.x, vector3d.z) * (180F / (float) Math.PI));
-			xRot = (float) (MathHelper.atan2(vector3d.y, f) * (180F / (float) Math.PI));
+			double horizontalDistanceSqr = vector3d.horizontalDistanceSqr();
+			yRot = (float) (Mth.atan2(vector3d.x, vector3d.z) * (180F / (float) Math.PI));
+			xRot = (float) (Mth.atan2(vector3d.y, horizontalDistanceSqr) * (180F / (float) Math.PI));
 			yRotO = yRot;
 			xRotO = xRot;
 		}
 
 		BlockPos blockPos = blockPosition();
 		BlockState blockState = level.getBlockState(blockPos);
-		if (!blockState.isAir(level, blockPos) && !flag) {
+		if (!blockState.isAir() && !flag) {
 			VoxelShape voxelShape = blockState.getCollisionShape(level, blockPos);
 			if (!voxelShape.isEmpty()) {
-				Vector3d vector3d1 = position();
+				Vec3 vector3d1 = position();
 
-				for (AxisAlignedBB axisalignedbb : voxelShape.toAabbs()) {
-					if (axisalignedbb.move(blockPos).contains(vector3d1)) {
+				for (AABB aabb : voxelShape.toAabbs()) {
+					if (aabb.move(blockPos).contains(vector3d1)) {
 						inGround = true;
 						break;
 					}
@@ -122,32 +129,32 @@ public abstract class AbstractCustomArrowEntity extends AbstractArrowEntity {
 			++inGroundTime;
 		} else {
 			inGroundTime = 0;
-			Vector3d vector3d2 = position();
-			Vector3d vector3d3 = vector3d2.add(vector3d);
-			RayTraceResult rayTraceResult = level.clip(new RayTraceContext(vector3d2, vector3d3, RayTraceContext.BlockMode.COLLIDER, RayTraceContext.FluidMode.NONE, this));
-			if (rayTraceResult.getType() != RayTraceResult.Type.MISS) {
+			Vec3 vector3d2 = position();
+			Vec3 vector3d3 = vector3d2.add(vector3d);
+			HitResult rayTraceResult = level.clip(new ClipContext(vector3d2, vector3d3, ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, this));
+			if (rayTraceResult.getType() != HitResult.Type.MISS) {
 				vector3d3 = rayTraceResult.getLocation();
 			}
 
 			while (isAlive()) {
-				EntityRayTraceResult entityRayTraceResult = findHitEntity(vector3d2, vector3d3);
+				EntityHitResult entityRayTraceResult = findHitEntity(vector3d2, vector3d3);
 				if (entityRayTraceResult != null) {
 					rayTraceResult = entityRayTraceResult;
 				}
 
-				if (rayTraceResult != null && rayTraceResult.getType() == RayTraceResult.Type.ENTITY) {
+				if (rayTraceResult != null && rayTraceResult.getType() == HitResult.Type.ENTITY) {
 					Entity entity = null;
-					if (rayTraceResult instanceof EntityRayTraceResult) {
-						entity = ((EntityRayTraceResult) rayTraceResult).getEntity();
+					if (rayTraceResult instanceof EntityHitResult) {
+						entity = ((EntityHitResult) rayTraceResult).getEntity();
 					}
 					Entity entity1 = getOwner();
-					if (entity instanceof PlayerEntity && entity1 instanceof PlayerEntity && !((PlayerEntity) entity1).canHarmPlayer((PlayerEntity) entity)) {
+					if (entity instanceof Player && entity1 instanceof Player && !((Player) entity1).canHarmPlayer((Player) entity)) {
 						rayTraceResult = null;
 						entityRayTraceResult = null;
 					}
 				}
 
-				if (rayTraceResult != null && rayTraceResult.getType() != RayTraceResult.Type.MISS && !flag && !ForgeEventFactory.onProjectileImpact(this, rayTraceResult)) {
+				if (rayTraceResult != null && rayTraceResult.getType() != HitResult.Type.MISS && !flag && !ForgeEventFactory.onProjectileImpact(this, rayTraceResult)) {
 					onHit(rayTraceResult);
 					hasImpulse = true;
 				}
@@ -172,16 +179,7 @@ public abstract class AbstractCustomArrowEntity extends AbstractArrowEntity {
 			double d5 = getX() + d3;
 			double d1 = getY() + d4;
 			double d2 = getZ() + d0;
-			float f1 = MathHelper.sqrt(getHorizontalDistanceSqr(vector3d));
-			if (flag) {
-				yRot = (float) (MathHelper.atan2(-d3, -d0) * (180F / (float) Math.PI));
-			} else {
-				yRot = (float) (MathHelper.atan2(d3, d0) * (180F / (float) Math.PI));
-			}
 
-			xRot = (float) (MathHelper.atan2(d4, f1) * (180F / (float) Math.PI));
-			xRot = lerpRotation(xRotO, xRot);
-			yRot = lerpRotation(yRotO, yRot);
 			float f2 = 0.99F;
 			if (isInWater()) {
 				for (int j = 0; j < 4; ++j) {
@@ -193,7 +191,7 @@ public abstract class AbstractCustomArrowEntity extends AbstractArrowEntity {
 
 			setDeltaMovement(vector3d.scale(f2));
 			if (!isNoGravity() && !flag) {
-				Vector3d vector3d4 = getDeltaMovement();
+				Vec3 vector3d4 = getDeltaMovement();
 				setDeltaMovement(vector3d4.x, vector3d4.y - 0.05d + getMovementModifier(), vector3d4.z);
 			}
 

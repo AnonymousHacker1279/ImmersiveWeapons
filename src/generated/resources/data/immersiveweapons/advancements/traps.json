@@ -1,0 +1,128 @@
+{
+  "parent": "immersiveweapons:root",
+  "display": {
+    "icon": {
+      "item": "immersiveweapons:bear_trap"
+    },
+    "title": {
+      "translate": "advancements.immersiveweapons.traps.title"
+    },
+    "description": {
+      "translate": "advancements.immersiveweapons.traps.description"
+    },
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "hold": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "immersiveweapons:bear_trap"
+            ]
+          }
+        ]
+      }
+    },
+    "hold1": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "immersiveweapons:punji_sticks"
+            ]
+          }
+        ]
+      }
+    },
+    "hold2": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "immersiveweapons:landmine"
+            ]
+          }
+        ]
+      }
+    },
+    "hold3": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "immersiveweapons:bear_trap"
+            ]
+          }
+        ]
+      }
+    },
+    "hold4": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "immersiveweapons:barbed_wire"
+            ]
+          }
+        ]
+      }
+    },
+    "hold5": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "immersiveweapons:spike_trap"
+            ]
+          }
+        ]
+      }
+    },
+    "hold6": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "immersiveweapons:pitfall"
+            ]
+          }
+        ]
+      }
+    },
+    "hold7": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "immersiveweapons:wooden_spikes"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "hold",
+      "hold1",
+      "hold2",
+      "hold3",
+      "hold4",
+      "hold5",
+      "hold6",
+      "hold7"
+    ]
+  ]
+}

@@ -8,6 +8,6 @@ public class BlueprintItem extends BasicContainerItem {
 	 */
 	public BlueprintItem(Properties properties) {
 		super(properties);
-		properties.craftRemainder(getItem());
+		properties.craftRemainder(asItem());
 	}
 }

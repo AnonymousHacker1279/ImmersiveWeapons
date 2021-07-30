@@ -1,5 +1,7 @@
 {
-  "variants": {
-    "": { "model": "immersiveweapons:block/pitfall" }
-  }
+	"variants": {
+		"": {
+			"model": "immersiveweapons:block/pitfall"
+		}
+	}
 }

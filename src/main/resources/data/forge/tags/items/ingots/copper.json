@@ -1,6 +1,6 @@
-{ 
+{
 	"replace": false,
-	"values": [ 
-		"immersiveweapons:copper_ingot"
+	"values": [
+		"minecraft:copper_ingot"
 	]
 }

@@ -3,15 +3,15 @@ package com.anonymoushacker1279.immersiveweapons.util;
 import com.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import com.anonymoushacker1279.immersiveweapons.block.MortarBlock.MortarBlockPacketHandler;
 import com.anonymoushacker1279.immersiveweapons.block.SpikeTrapBlock.SpikeTrapBlockPacketHandler;
+import com.anonymoushacker1279.immersiveweapons.blockentity.PanicAlarmBlockEntity.PanicAlarmPacketHandler;
 import com.anonymoushacker1279.immersiveweapons.entity.projectile.CustomArrowEntity.SmokeBombArrowEntity.SmokeBombArrowEntityPacketHandler;
 import com.anonymoushacker1279.immersiveweapons.entity.projectile.SmokeBombEntity.SmokeBombEntityPacketHandler;
 import com.anonymoushacker1279.immersiveweapons.item.CobaltArmorItem.CobaltArmorItemPacketHandler;
 import com.anonymoushacker1279.immersiveweapons.item.TeslaArmorItem.TeslaArmorItemPacketHandler;
 import com.anonymoushacker1279.immersiveweapons.item.VentusArmorItem.VentusArmorItemPacketHandler;
-import com.anonymoushacker1279.immersiveweapons.tileentity.PanicAlarmTileEntity.PanicAlarmPacketHandler;
-import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.fml.network.NetworkRegistry;
-import net.minecraftforge.fml.network.simple.SimpleChannel;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraftforge.fmllegacy.network.NetworkRegistry;
+import net.minecraftforge.fmllegacy.network.simple.SimpleChannel;
 
 public class PacketHandler {
 
@@ -50,13 +50,13 @@ public class PacketHandler {
 				TeslaArmorItemPacketHandler.class,
 				TeslaArmorItemPacketHandler::encode,
 				TeslaArmorItemPacketHandler::decode,
-				TeslaArmorItemPacketHandler::handle
+				(msg, contextSupplier) -> TeslaArmorItemPacketHandler.handle(contextSupplier)
 		);
 		PacketHandler.INSTANCE.registerMessage(networkId++,
 				VentusArmorItemPacketHandler.class,
 				VentusArmorItemPacketHandler::encode,
 				VentusArmorItemPacketHandler::decode,
-				VentusArmorItemPacketHandler::handle
+				(msg, contextSupplier) -> VentusArmorItemPacketHandler.handle(contextSupplier)
 		);
 		PacketHandler.INSTANCE.registerMessage(networkId++,
 				MortarBlockPacketHandler.class,
@@ -70,7 +70,7 @@ public class PacketHandler {
 				SmokeBombArrowEntityPacketHandler::decode,
 				SmokeBombArrowEntityPacketHandler::handle
 		);
-		PacketHandler.INSTANCE.registerMessage(networkId++,
+		PacketHandler.INSTANCE.registerMessage(networkId,
 				SpikeTrapBlockPacketHandler.class,
 				SpikeTrapBlockPacketHandler::encode,
 				SpikeTrapBlockPacketHandler::decode,

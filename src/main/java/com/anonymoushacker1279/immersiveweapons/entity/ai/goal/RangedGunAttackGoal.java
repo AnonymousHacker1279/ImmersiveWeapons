@@ -2,16 +2,17 @@ package com.anonymoushacker1279.immersiveweapons.entity.ai.goal;
 
 import com.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
 import com.anonymoushacker1279.immersiveweapons.item.SimplePistolItem;
-import net.minecraft.entity.CreatureEntity;
-import net.minecraft.entity.IRangedAttackMob;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.ai.goal.Goal;
-import net.minecraft.entity.projectile.ProjectileHelper;
-import net.minecraft.item.BowItem;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.PathfinderMob;
+import net.minecraft.world.entity.ai.goal.Goal;
+import net.minecraft.world.entity.monster.RangedAttackMob;
+import net.minecraft.world.entity.projectile.ProjectileUtil;
+import net.minecraft.world.item.BowItem;
 
 import java.util.EnumSet;
+import java.util.function.Predicate;
 
-public class RangedGunAttackGoal<T extends CreatureEntity & IRangedAttackMob> extends Goal {
+public class RangedGunAttackGoal<T extends PathfinderMob & RangedAttackMob> extends Goal {
 
 	private final T entity;
 	private final double moveSpeedAmp;
@@ -62,7 +63,7 @@ public class RangedGunAttackGoal<T extends CreatureEntity & IRangedAttackMob> ex
 	 * by the entity
 	 * @return boolean
 	 */
-	protected boolean isGunInMainhand() {
+	private boolean isGunInMainhand() {
 		return entity.isHolding(SimplePistolItem.class::isInstance);
 	}
 
@@ -104,7 +105,7 @@ public class RangedGunAttackGoal<T extends CreatureEntity & IRangedAttackMob> ex
 		LivingEntity livingentity = entity.getTarget();
 		if (livingentity != null) {
 			double d0 = entity.distanceToSqr(livingentity.getX(), livingentity.getY(), livingentity.getZ());
-			boolean flag = entity.getSensing().canSee(livingentity);
+			boolean flag = entity.getSensing().hasLineOfSight(livingentity);
 			boolean flag1 = seeTime > 0;
 			if (flag != flag1) {
 				seeTime = 0;
@@ -161,7 +162,7 @@ public class RangedGunAttackGoal<T extends CreatureEntity & IRangedAttackMob> ex
 					}
 				}
 			} else if (--attackTime <= 0 && seeTime >= -60) {
-				entity.startUsingItem(ProjectileHelper.getWeaponHoldingHand(entity, DeferredRegistryHandler.FLINTLOCK_PISTOL.get()));
+				entity.startUsingItem(ProjectileUtil.getWeaponHoldingHand(entity, Predicate.isEqual(DeferredRegistryHandler.FLINTLOCK_PISTOL.get())));
 			}
 		}
 	}

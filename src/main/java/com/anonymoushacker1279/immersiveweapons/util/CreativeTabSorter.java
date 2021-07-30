@@ -1,16 +1,16 @@
 package com.anonymoushacker1279.immersiveweapons.util;
 
 import com.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemGroup;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.NonNullList;
-import net.minecraftforge.fml.RegistryObject;
+import net.minecraft.core.NonNullList;
+import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraftforge.fmllegacy.RegistryObject;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class CreativeTabSorter extends ItemGroup {
+public class CreativeTabSorter extends CreativeModeTab {
 
 	/**
 	 * Constructor for CreativeTabSorter.
@@ -26,7 +26,7 @@ public class CreativeTabSorter extends ItemGroup {
 	 */
 	@Override
 	public void fillItemList(NonNullList<ItemStack> itemStack) {
-		List<Item> items = new ArrayList<>();
+		List<Item> items = new ArrayList<>(1);
 		DeferredRegistryHandler.ITEMS.getEntries().stream().map(RegistryObject::get).forEach(items::add);
 
 		for (Item item : items) {

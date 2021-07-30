@@ -2,36 +2,34 @@ package com.anonymoushacker1279.immersiveweapons.entity.monster;
 
 import com.anonymoushacker1279.immersiveweapons.entity.ai.goal.OpenFenceGateGoal;
 import com.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.entity.CreatureEntity;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.ILivingEntityData;
-import net.minecraft.entity.SpawnReason;
-import net.minecraft.entity.ai.attributes.AttributeModifierMap;
-import net.minecraft.entity.ai.attributes.Attributes;
-import net.minecraft.entity.ai.goal.*;
-import net.minecraft.entity.monster.MonsterEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.Hand;
-import net.minecraft.util.SoundEvent;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.core.BlockPos;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.DifficultyInstance;
-import net.minecraft.world.IServerWorld;
-import net.minecraft.world.World;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.ai.goal.*;
+import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
+import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
+import net.minecraft.world.entity.monster.Monster;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.ServerLevelAccessor;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
 import java.time.LocalDate;
 import java.time.temporal.ChronoField;
 
-public abstract class AbstractWanderingWarriorEntity extends MonsterEntity {
+public abstract class AbstractWanderingWarriorEntity extends Monster {
 
 	private final MeleeAttackGoal aiAttackOnCollide = new MeleeAttackGoal(this, 1.2D, false) {
 		@Override
@@ -52,7 +50,7 @@ public abstract class AbstractWanderingWarriorEntity extends MonsterEntity {
 	 * @param type the <code>EntityType</code> instance
 	 * @param worldIn the <code>World</code> the entity is in
 	 */
-	public AbstractWanderingWarriorEntity(EntityType<? extends MonsterEntity> type, World worldIn) {
+	AbstractWanderingWarriorEntity(EntityType<? extends Monster> type, Level worldIn) {
 		super(type, worldIn);
 		setCombatTask();
 	}
@@ -61,8 +59,8 @@ public abstract class AbstractWanderingWarriorEntity extends MonsterEntity {
 	 * Register this entity's attributes.
 	 * @return AttributeModifierMap.MutableAttribute
 	 */
-	public static AttributeModifierMap.MutableAttribute registerAttributes() {
-		return MonsterEntity.createMonsterAttributes()
+	public static AttributeSupplier.Builder registerAttributes() {
+		return Monster.createMonsterAttributes()
 				.add(Attributes.MOVEMENT_SPEED, 0.25D)
 				.add(Attributes.ARMOR, 4.0D);
 	}
@@ -72,15 +70,15 @@ public abstract class AbstractWanderingWarriorEntity extends MonsterEntity {
 	 */
 	@Override
 	protected void registerGoals() {
-		goalSelector.addGoal(4, new WaterAvoidingRandomWalkingGoal(this, 1.0D));
-		goalSelector.addGoal(4, new LookAtGoal(this, PlayerEntity.class, 8.0F));
-		goalSelector.addGoal(4, new LookRandomlyGoal(this));
+		goalSelector.addGoal(4, new WaterAvoidingRandomStrollGoal(this, 1.0D));
+		goalSelector.addGoal(4, new LookAtPlayerGoal(this, Player.class, 8.0F));
+		goalSelector.addGoal(4, new RandomLookAroundGoal(this));
 		goalSelector.addGoal(3, new OpenDoorGoal(this, true));
 		goalSelector.addGoal(3, new OpenFenceGateGoal(this, true));
-		goalSelector.addGoal(1, new SwimGoal(this));
-		targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, MonsterEntity.class, false));
-		targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, PlayerEntity.class, false));
-		targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, CreatureEntity.class, false));
+		goalSelector.addGoal(1, new FloatGoal(this));
+		targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, Monster.class, false));
+		targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, Player.class, false));
+		targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, PathfinderMob.class, false));
 		targetSelector.addGoal(2, new HurtByTargetGoal(this));
 	}
 
@@ -102,8 +100,7 @@ public abstract class AbstractWanderingWarriorEntity extends MonsterEntity {
 	@Override
 	public void rideTick() {
 		super.rideTick();
-		if (getVehicle() instanceof CreatureEntity) {
-			CreatureEntity creatureEntity = (CreatureEntity) getVehicle();
+		if (getVehicle() instanceof PathfinderMob creatureEntity) {
 			yBodyRot = creatureEntity.yBodyRot;
 		}
 	}
@@ -118,11 +115,11 @@ public abstract class AbstractWanderingWarriorEntity extends MonsterEntity {
 		// Populate weapons
 		float random = this.random.nextFloat();
 		if (random <= 0.5) {
-			setItemInHand(Hand.MAIN_HAND, new ItemStack(Items.IRON_SWORD));
+			setItemInHand(InteractionHand.MAIN_HAND, new ItemStack(Items.IRON_SWORD));
 		} else if (random <= 0.3) {
-			setItemInHand(Hand.MAIN_HAND, new ItemStack(DeferredRegistryHandler.COBALT_SWORD.get()));
+			setItemInHand(InteractionHand.MAIN_HAND, new ItemStack(DeferredRegistryHandler.COBALT_SWORD.get()));
 		} else {
-			setItemInHand(Hand.MAIN_HAND, new ItemStack(DeferredRegistryHandler.COPPER_SWORD.get()));
+			setItemInHand(InteractionHand.MAIN_HAND, new ItemStack(DeferredRegistryHandler.COPPER_SWORD.get()));
 		}
 		// Populate armor
 		boolean flag = true;
@@ -134,18 +131,18 @@ public abstract class AbstractWanderingWarriorEntity extends MonsterEntity {
 			armorTier++;
 		}
 		float difficultyModifier = level.getDifficulty() == Difficulty.HARD ? 0.3F : 0.75F;
-		for (EquipmentSlotType equipmentslottype : EquipmentSlotType.values()) {
-			if (equipmentslottype.getType() == EquipmentSlotType.Group.ARMOR) {
-				ItemStack itemstack = getItemBySlot(equipmentslottype);
+		for (EquipmentSlot equipmentSlot : EquipmentSlot.values()) {
+			if (equipmentSlot.getType() == EquipmentSlot.Type.ARMOR) {
+				ItemStack itemstack = getItemBySlot(equipmentSlot);
 				if (!flag && this.random.nextFloat() < difficultyModifier) {
 					break;
 				}
 
 				flag = false;
 				if (itemstack.isEmpty()) {
-					Item item = getEquipmentForSlot(equipmentslottype, armorTier);
+					Item item = getEquipmentForSlot(equipmentSlot, armorTier);
 					if (item != null) {
-						setItemSlot(equipmentslottype, new ItemStack(item));
+						setItemSlot(equipmentSlot, new ItemStack(item));
 					}
 				}
 			}
@@ -162,19 +159,19 @@ public abstract class AbstractWanderingWarriorEntity extends MonsterEntity {
 	 * @return ILivingEntityData
 	 */
 	@Override
-	public ILivingEntityData finalizeSpawn(@NotNull IServerWorld worldIn, @NotNull DifficultyInstance difficultyIn, @NotNull SpawnReason reason, @Nullable ILivingEntityData spawnDataIn, @Nullable CompoundNBT dataTag) {
+	public SpawnGroupData finalizeSpawn(@NotNull ServerLevelAccessor worldIn, @NotNull DifficultyInstance difficultyIn, @NotNull MobSpawnType reason, @Nullable SpawnGroupData spawnDataIn, @Nullable CompoundTag dataTag) {
 		spawnDataIn = super.finalizeSpawn(worldIn, difficultyIn, reason, spawnDataIn, dataTag);
 		populateDefaultEquipmentSlots(difficultyIn);
 		populateDefaultEquipmentEnchantments(difficultyIn);
 		setCombatTask();
 		setCanPickUpLoot(random.nextFloat() < 0.55F * difficultyIn.getSpecialMultiplier());
-		if (getItemBySlot(EquipmentSlotType.HEAD).isEmpty()) {
+		if (getItemBySlot(EquipmentSlot.HEAD).isEmpty()) {
 			LocalDate localdate = LocalDate.now();
 			int i = localdate.get(ChronoField.DAY_OF_MONTH);
 			int j = localdate.get(ChronoField.MONTH_OF_YEAR);
 			if (j == 10 && i == 31 && random.nextFloat() < 0.25F) {
-				setItemSlot(EquipmentSlotType.HEAD, new ItemStack(random.nextFloat() < 0.1F ? Blocks.JACK_O_LANTERN : Blocks.CARVED_PUMPKIN));
-				armorDropChances[EquipmentSlotType.HEAD.getIndex()] = 0.0F;
+				setItemSlot(EquipmentSlot.HEAD, new ItemStack(random.nextFloat() < 0.1F ? Blocks.JACK_O_LANTERN : Blocks.CARVED_PUMPKIN));
+				armorDropChances[EquipmentSlot.HEAD.getIndex()] = 0.0F;
 			}
 		}
 
@@ -184,10 +181,10 @@ public abstract class AbstractWanderingWarriorEntity extends MonsterEntity {
 	/**
 	 * Set the entity's combat AI.
 	 */
-	public void setCombatTask() {
-		if (level != null && !level.isClientSide) {
+	void setCombatTask() {
+		if (!level.isClientSide) {
 			goalSelector.removeGoal(aiAttackOnCollide);
-			if (getItemInHand(Hand.MAIN_HAND).getItem() == Items.AIR) {
+			if (getItemInHand(InteractionHand.MAIN_HAND).getItem() == Items.AIR) {
 				populateDefaultEquipmentSlots(level.getCurrentDifficultyAt(blockPosition()));
 			}
 			goalSelector.addGoal(12, aiAttackOnCollide);
@@ -199,7 +196,7 @@ public abstract class AbstractWanderingWarriorEntity extends MonsterEntity {
 	 * @param compound the <code>CompoundNBT</code> to read from
 	 */
 	@Override
-	public void readAdditionalSaveData(CompoundNBT compound) {
+	public void readAdditionalSaveData(CompoundTag compound) {
 		super.readAdditionalSaveData(compound);
 	}
 }

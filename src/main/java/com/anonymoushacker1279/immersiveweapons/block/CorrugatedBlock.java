@@ -1,33 +1,32 @@
 package com.anonymoushacker1279.immersiveweapons.block;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.HorizontalBlock;
-import net.minecraft.block.IWaterLoggable;
-import net.minecraft.fluid.FluidState;
-import net.minecraft.fluid.Fluids;
-import net.minecraft.item.BlockItemUseContext;
-import net.minecraft.state.BooleanProperty;
-import net.minecraft.state.DirectionProperty;
-import net.minecraft.state.StateContainer;
-import net.minecraft.state.properties.BlockStateProperties;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.shapes.ISelectionContext;
-import net.minecraft.util.math.shapes.VoxelShape;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.world.IBlockReader;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.HorizontalDirectionalBlock;
+import net.minecraft.world.level.block.SimpleWaterloggedBlock;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.level.block.state.properties.DirectionProperty;
+import net.minecraft.world.level.material.FluidState;
+import net.minecraft.world.level.material.Fluids;
+import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.VoxelShape;
 
 public class CorrugatedBlock {
 
-	public static class CorrugatedBlockNormal extends HorizontalBlock implements IWaterLoggable {
+	public static class CorrugatedBlockNormal extends HorizontalDirectionalBlock implements SimpleWaterloggedBlock {
 
-		public static final DirectionProperty FACING = HorizontalBlock.FACING;
 		public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
-		protected static final VoxelShape SHAPE_NORTH = Block.box(0.0D, 0.0D, 16.0D, 16.0D, 16.0D, 14.0D);
-		protected static final VoxelShape SHAPE_SOUTH = Block.box(0.0D, 0.0D, 0.0D, 16.0D, 16.0D, 2.0D);
-		protected static final VoxelShape SHAPE_EAST = Block.box(0.0D, 0.0D, 0.0D, 2.0D, 16.0D, 16.0D);
-		protected static final VoxelShape SHAPE_WEST = Block.box(14.0D, 0.0D, 0.0D, 16.0D, 16.0D, 16.0D);
+		static final VoxelShape SHAPE_NORTH = Block.box(0.0D, 0.0D, 14.0D, 16.0D, 16.0D, 16.0D);
+		static final VoxelShape SHAPE_SOUTH = Block.box(0.0D, 0.0D, 0.0D, 16.0D, 16.0D, 2.0D);
+		static final VoxelShape SHAPE_EAST = Block.box(0.0D, 0.0D, 0.0D, 2.0D, 16.0D, 16.0D);
+		static final VoxelShape SHAPE_WEST = Block.box(14.0D, 0.0D, 0.0D, 16.0D, 16.0D, 16.0D);
 
 		/**
 		 * Constructor for CorrugatedBlockNormal.
@@ -47,19 +46,14 @@ public class CorrugatedBlock {
 		 * @return VoxelShape
 		 */
 		@Override
-		public VoxelShape getShape(BlockState state, IBlockReader reader, BlockPos pos, ISelectionContext selectionContext) {
-			Vector3d vector3d = state.getOffset(reader, pos);
-			switch (state.getValue(FACING)) {
-				case NORTH:
-				default:
-					return SHAPE_NORTH.move(vector3d.x, vector3d.y, vector3d.z);
-				case SOUTH:
-					return SHAPE_SOUTH.move(vector3d.x, vector3d.y, vector3d.z);
-				case EAST:
-					return SHAPE_EAST.move(vector3d.x, vector3d.y, vector3d.z);
-				case WEST:
-					return SHAPE_WEST.move(vector3d.x, vector3d.y, vector3d.z);
-			}
+		public VoxelShape getShape(BlockState state, BlockGetter reader, BlockPos pos, CollisionContext selectionContext) {
+			Vec3 vector3d = state.getOffset(reader, pos);
+			return switch (state.getValue(FACING)) {
+				default -> SHAPE_NORTH.move(vector3d.x, vector3d.y, vector3d.z);
+				case SOUTH -> SHAPE_SOUTH.move(vector3d.x, vector3d.y, vector3d.z);
+				case EAST -> SHAPE_EAST.move(vector3d.x, vector3d.y, vector3d.z);
+				case WEST -> SHAPE_WEST.move(vector3d.x, vector3d.y, vector3d.z);
+			};
 		}
 
 		/**
@@ -67,7 +61,7 @@ public class CorrugatedBlock {
 		 * @param builder the <code>StateContainer.Builder</code> of the block
 		 */
 		@Override
-		public void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder) {
+		public void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
 			builder.add(FACING, WATERLOGGED);
 		}
 
@@ -78,7 +72,7 @@ public class CorrugatedBlock {
 		 * @return BlockState
 		 */
 		@Override
-		public BlockState getStateForPlacement(BlockItemUseContext context) {
+		public BlockState getStateForPlacement(BlockPlaceContext context) {
 			return defaultBlockState().setValue(WATERLOGGED, false).setValue(FACING, context.getHorizontalDirection().getOpposite());
 		}
 
@@ -94,11 +88,11 @@ public class CorrugatedBlock {
 		}
 	}
 
-	public static class CorrugatedBlockFlat extends HorizontalBlock implements IWaterLoggable {
+	public static class CorrugatedBlockFlat extends HorizontalDirectionalBlock implements SimpleWaterloggedBlock {
 
-		public static final DirectionProperty FACING = HorizontalBlock.FACING;
+		public static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
 		public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
-		protected static final VoxelShape SHAPE_FLAT = Block.box(0.0D, 0.0D, 0.0D, 16.0D, 2.0D, 16.0D);
+		static final VoxelShape SHAPE_FLAT = Block.box(0.0D, 0.0D, 0.0D, 16.0D, 2.0D, 16.0D);
 
 		/**
 		 * Constructor for CorrugatedBlockFlat.
@@ -118,8 +112,8 @@ public class CorrugatedBlock {
 		 * @return VoxelShape
 		 */
 		@Override
-		public VoxelShape getShape(BlockState state, IBlockReader reader, BlockPos pos, ISelectionContext selectionContext) {
-			Vector3d vector3d = state.getOffset(reader, pos);
+		public VoxelShape getShape(BlockState state, BlockGetter reader, BlockPos pos, CollisionContext selectionContext) {
+			Vec3 vector3d = state.getOffset(reader, pos);
 			return SHAPE_FLAT.move(vector3d.x, vector3d.y, vector3d.z);
 		}
 
@@ -128,7 +122,7 @@ public class CorrugatedBlock {
 		 * @param builder the <code>StateContainer.Builder</code> of the block
 		 */
 		@Override
-		public void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder) {
+		public void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
 			builder.add(FACING, WATERLOGGED);
 		}
 
@@ -139,7 +133,7 @@ public class CorrugatedBlock {
 		 * @return BlockState
 		 */
 		@Override
-		public BlockState getStateForPlacement(BlockItemUseContext context) {
+		public BlockState getStateForPlacement(BlockPlaceContext context) {
 			return defaultBlockState().setValue(WATERLOGGED, false).setValue(FACING, context.getHorizontalDirection().getOpposite());
 		}
 

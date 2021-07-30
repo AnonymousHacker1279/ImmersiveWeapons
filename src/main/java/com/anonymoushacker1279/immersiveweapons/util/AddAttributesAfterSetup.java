@@ -4,8 +4,8 @@ import com.anonymoushacker1279.immersiveweapons.item.AbstractPikeItem;
 import com.anonymoushacker1279.immersiveweapons.item.PikeItems.*;
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.ImmutableMultimap.Builder;
-import net.minecraft.entity.ai.attributes.Attribute;
-import net.minecraft.entity.ai.attributes.AttributeModifier;
+import net.minecraft.world.entity.ai.attributes.Attribute;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraftforge.common.ForgeMod;
 
 public class AddAttributesAfterSetup {

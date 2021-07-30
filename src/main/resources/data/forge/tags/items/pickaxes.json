@@ -1,6 +1,6 @@
-{ 
+{
 	"replace": false,
-	"values": [ 
+	"values": [
 		"minecraft:wooden_pickaxe",
 		"minecraft:stone_pickaxe",
 		"minecraft:golden_pickaxe",

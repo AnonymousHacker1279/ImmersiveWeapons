@@ -1,13 +1,13 @@
 package com.anonymoushacker1279.immersiveweapons.container.slot;
 
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.inventory.container.Slot;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.Container;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.Slot;
+import net.minecraft.world.item.ItemStack;
 
 public class TeslaSynthesizerResultSlot extends Slot {
 
-	private final PlayerEntity player;
+	private final Player player;
 	private int removeCount;
 
 	/**
@@ -18,7 +18,7 @@ public class TeslaSynthesizerResultSlot extends Slot {
 	 * @param xPosition the X position of the slot
 	 * @param yPosition the Y position of the slot
 	 */
-	public TeslaSynthesizerResultSlot(PlayerEntity player, IInventory inventoryIn, int slotIndex, int xPosition, int yPosition) {
+	public TeslaSynthesizerResultSlot(Player player, Container inventoryIn, int slotIndex, int xPosition, int yPosition) {
 		super(inventoryIn, slotIndex, xPosition, yPosition);
 		this.player = player;
 	}
@@ -51,12 +51,10 @@ public class TeslaSynthesizerResultSlot extends Slot {
 	 * Runs when the stack is taken from the tile entity.
 	 * @param player the <code>PlayerEntity</code> instance
 	 * @param stack the <code>ItemStack</code> being taken
-	 * @return ItemStack
 	 */
 	@Override
-	public ItemStack onTake(PlayerEntity player, ItemStack stack) {
+	public void onTake(Player player, ItemStack stack) {
 		checkTakeAchievements(stack);
 		super.onTake(player, stack);
-		return stack;
 	}
 }
