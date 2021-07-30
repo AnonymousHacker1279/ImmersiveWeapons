@@ -1,25 +1,20 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "pattern":
-  [
-    " x ",
-    " y ",
-    "   "
-  ],
-  "key":
-  {
-    "x":
-    {
-    	"item":"minecraft:stick"
-    },
-    "y":
-    {
-    	"item":"minecraft:paper"
-    }
-  },
-  "result":
-  {
-    "item": "immersiveweapons:blank_blueprint",
-    "count": 1
-  }
+	"type": "minecraft:crafting_shaped",
+	"pattern": [
+		" x ",
+		" y ",
+		"   "
+	],
+	"key": {
+		"x": {
+			"item": "minecraft:stick"
+		},
+		"y": {
+			"item": "minecraft:paper"
+		}
+	},
+	"result": {
+		"item": "immersiveweapons:blank_blueprint",
+		"count": 1
+	}
 }

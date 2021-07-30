@@ -1,21 +1,17 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "pattern":
-  [
-    "xxx",
-    "x x",
-    "   "
-  ],
-  "key":
-  {
-    "x":
-    {
-    	"item":"immersiveweapons:molten_plate"
-    }
-  },
-  "result":
-  {
-    "item": "immersiveweapons:molten_helmet",
-    "count": 1
-  }
+	"type": "minecraft:crafting_shaped",
+	"pattern": [
+		"xxx",
+		"x x",
+		"   "
+	],
+	"key": {
+		"x": {
+			"item": "immersiveweapons:molten_plate"
+		}
+	},
+	"result": {
+		"item": "immersiveweapons:molten_helmet",
+		"count": 1
+	}
 }

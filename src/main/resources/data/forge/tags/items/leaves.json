@@ -1,6 +1,6 @@
-{ 
+{
 	"replace": false,
-	"values": [ 
+	"values": [
 		"minecraft:oak_leaves",
 		"minecraft:birch_leaves",
 		"minecraft:spruce_leaves",

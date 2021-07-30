@@ -1,25 +1,20 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "pattern":
-  [
-    " y ",
-    " y ",
-    " x "
-  ],
-  "key":
-  {
-    "x":
-    {
-		"item": "immersiveweapons:obsidian_rod"
-    },
-    "y":
-    {
-    	"item":"immersiveweapons:tesla_ingot"
-    }
-  },
-  "result":
-  {
-    "item": "immersiveweapons:tesla_sword",
-    "count": 1
-  }
+	"type": "minecraft:crafting_shaped",
+	"pattern": [
+		" y ",
+		" y ",
+		" x "
+	],
+	"key": {
+		"x": {
+			"item": "immersiveweapons:obsidian_rod"
+		},
+		"y": {
+			"item": "immersiveweapons:tesla_ingot"
+		}
+	},
+	"result": {
+		"item": "immersiveweapons:tesla_sword",
+		"count": 1
+	}
 }

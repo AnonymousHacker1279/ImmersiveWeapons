@@ -1,21 +1,17 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "pattern":
-  [
-    "   ",
-    " x ",
-    "   "
-  ],
-  "key":
-  {
-  "x":
-    {
-    	"item":"minecraft:copper_ingot"
-    }
-  },
-  "result":
-  {
-    "item": "immersiveweapons:copper_nugget",
-    "count": 9
-  }
+	"type": "minecraft:crafting_shaped",
+	"pattern": [
+		"   ",
+		" x ",
+		"   "
+	],
+	"key": {
+		"x": {
+			"item": "minecraft:copper_ingot"
+		}
+	},
+	"result": {
+		"item": "immersiveweapons:copper_nugget",
+		"count": 9
+	}
 }

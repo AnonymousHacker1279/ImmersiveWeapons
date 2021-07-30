@@ -1,5 +1,7 @@
 {
-  "variants": {
-    "": { "model": "immersiveweapons:block/electric_ore" }
-  }
+	"variants": {
+		"": {
+			"model": "immersiveweapons:block/electric_ore"
+		}
+	}
 }

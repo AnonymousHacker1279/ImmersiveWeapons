@@ -1,21 +1,17 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "pattern":
-  [
-    "   ",
-    "x x",
-    "x x"
-  ],
-  "key":
-  {
-    "x":
-    {
-    	"item":"immersiveweapons:tesla_plate"
-    }
-  },
-  "result":
-  {
-    "item": "immersiveweapons:tesla_boots",
-    "count": 1
-  }
+	"type": "minecraft:crafting_shaped",
+	"pattern": [
+		"   ",
+		"x x",
+		"x x"
+	],
+	"key": {
+		"x": {
+			"item": "immersiveweapons:tesla_plate"
+		}
+	},
+	"result": {
+		"item": "immersiveweapons:tesla_boots",
+		"count": 1
+	}
 }

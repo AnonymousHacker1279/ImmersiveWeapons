@@ -1,21 +1,17 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "pattern":
-  [
-    "xx ",
-    "   ",
-    "   "
-  ],
-  "key":
-  {
-    "x":
-    {
-    	"item":"immersiveweapons:molten_ingot"
-    }
-  },
-  "result":
-  {
-    "item": "immersiveweapons:molten_plate",
-    "count": 2
-  }
+	"type": "minecraft:crafting_shaped",
+	"pattern": [
+		"xx ",
+		"   ",
+		"   "
+	],
+	"key": {
+		"x": {
+			"item": "immersiveweapons:molten_ingot"
+		}
+	},
+	"result": {
+		"item": "immersiveweapons:molten_plate",
+		"count": 2
+	}
 }

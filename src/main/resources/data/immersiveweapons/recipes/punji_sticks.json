@@ -1,29 +1,23 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "pattern":
-  [
-    "yyy",
-    "yzy",
-    "xxx"
-  ],
-  "key":
-  {
-    "x":
-    {
-      "item": "minecraft:dirt"
-    },
-    "y":
-    {
-      "item": "minecraft:bamboo"
-    },
-    "z":
-    {
-      "item": "minecraft:spider_eye"
-    }
-  },
-  "result":
-  {
-    "item": "immersiveweapons:punji_sticks",
-    "count": 3
-  }
+	"type": "minecraft:crafting_shaped",
+	"pattern": [
+		"yyy",
+		"yzy",
+		"xxx"
+	],
+	"key": {
+		"x": {
+			"item": "minecraft:dirt"
+		},
+		"y": {
+			"item": "minecraft:bamboo"
+		},
+		"z": {
+			"item": "minecraft:spider_eye"
+		}
+	},
+	"result": {
+		"item": "immersiveweapons:punji_sticks",
+		"count": 3
+	}
 }

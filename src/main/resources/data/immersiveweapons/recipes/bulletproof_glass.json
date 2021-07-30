@@ -1,25 +1,20 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "pattern":
-  [
-    "yyy",
-    "yxy",
-    "yyy"
-  ],
-  "key":
-  {
-    "x":
-    {
-      "tag": "forge:ingots/iron"
-    },
-    "y":
-    {
-      "item": "minecraft:glass"
-    }
-  },
-  "result":
-  {
-    "item": "immersiveweapons:bulletproof_glass",
-    "count": 8
-  }
+	"type": "minecraft:crafting_shaped",
+	"pattern": [
+		"yyy",
+		"yxy",
+		"yyy"
+	],
+	"key": {
+		"x": {
+			"tag": "forge:ingots/iron"
+		},
+		"y": {
+			"item": "minecraft:glass"
+		}
+	},
+	"result": {
+		"item": "immersiveweapons:bulletproof_glass",
+		"count": 8
+	}
 }

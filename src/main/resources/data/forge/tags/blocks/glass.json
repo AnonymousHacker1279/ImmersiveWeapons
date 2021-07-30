@@ -1,6 +1,6 @@
 {
-  "replace": false,
-  "values": [
-    "immersiveweapons:bulletproof_glass"
-  ]
+	"replace": false,
+	"values": [
+		"immersiveweapons:bulletproof_glass"
+	]
 }

@@ -1,33 +1,26 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "pattern":
-  [
-    "   ",
-    "yz ",
-    "xw "
-  ],
-  "key":
-  {
-    "w":
-    {
-    	"item":"immersiveweapons:mortar_and_pestle"
-    },
-    "x":
-    {
-    	"item":"minecraft:gunpowder"
-    },
-    "y":
-    { 
-    	"item":"minecraft:charcoal"
-    },
-    "z":
-    { 
-    	"tag":"forge:leaves"
-    }
-  },
-  "result":
-  {
-    "item": "immersiveweapons:smoke_powder",
-    "count": 4
-  }
+	"type": "minecraft:crafting_shaped",
+	"pattern": [
+		"   ",
+		"yz ",
+		"xw "
+	],
+	"key": {
+		"w": {
+			"item": "immersiveweapons:mortar_and_pestle"
+		},
+		"x": {
+			"item": "minecraft:gunpowder"
+		},
+		"y": {
+			"item": "minecraft:charcoal"
+		},
+		"z": {
+			"tag": "forge:leaves"
+		}
+	},
+	"result": {
+		"item": "immersiveweapons:smoke_powder",
+		"count": 4
+	}
 }

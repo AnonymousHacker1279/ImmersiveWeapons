@@ -1,14 +1,14 @@
 {
-  "type": "minecraft:block",
-  "pools": [
-    {
-      "rolls": 1,
-      "entries": [
-        {
-          "type": "minecraft:item",
-          "name": "immersiveweapons:small_parts_table"
-        }
-      ]
-    }
-  ]
+	"type": "minecraft:block",
+	"pools": [
+		{
+			"rolls": 1,
+			"entries": [
+				{
+					"type": "minecraft:item",
+					"name": "immersiveweapons:small_parts_table"
+				}
+			]
+		}
+	]
 }

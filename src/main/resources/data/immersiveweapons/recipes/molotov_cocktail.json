@@ -1,29 +1,23 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "pattern":
-  [
-    "  y",
-    "zxz",
-    " z "
-  ],
-  "key":
-  {
-    "x":
-    {
-   	   "item": "immersiveweapons:bottle_of_alcohol"
-    },
-    "y":
-    {
-		"tag": "forge:string"
-    },
-    "z":
-    { 
-    	"tag": "forge:glass_panes"
-    }
-  },
-  "result":
-  {
-    "item": "immersiveweapons:molotov_cocktail",
-    "count": 1
-  }
+	"type": "minecraft:crafting_shaped",
+	"pattern": [
+		"  y",
+		"zxz",
+		" z "
+	],
+	"key": {
+		"x": {
+			"item": "immersiveweapons:bottle_of_alcohol"
+		},
+		"y": {
+			"tag": "forge:string"
+		},
+		"z": {
+			"tag": "forge:glass_panes"
+		}
+	},
+	"result": {
+		"item": "immersiveweapons:molotov_cocktail",
+		"count": 1
+	}
 }

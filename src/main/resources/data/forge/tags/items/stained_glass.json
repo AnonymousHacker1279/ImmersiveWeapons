@@ -1,21 +1,21 @@
 {
-  "replace": false,
-  "values": [
-    "immersiveweapons:white_stained_bulletproof_glass",
-    "immersiveweapons:light_gray_stained_bulletproof_glass",
-    "immersiveweapons:gray_stained_bulletproof_glass",
-    "immersiveweapons:black_stained_bulletproof_glass",
-    "immersiveweapons:orange_stained_bulletproof_glass",
-    "immersiveweapons:magenta_stained_bulletproof_glass",
-    "immersiveweapons:light_blue_stained_bulletproof_glass",
-    "immersiveweapons:yellow_stained_bulletproof_glass",
-    "immersiveweapons:lime_stained_bulletproof_glass",
-    "immersiveweapons:pink_stained_bulletproof_glass",
-    "immersiveweapons:cyan_stained_bulletproof_glass",
-    "immersiveweapons:purple_stained_bulletproof_glass",
-    "immersiveweapons:blue_stained_bulletproof_glass",
-    "immersiveweapons:brown_stained_bulletproof_glass",
-    "immersiveweapons:green_stained_bulletproof_glass",
-    "immersiveweapons:red_stained_bulletproof_glass"
-  ]
+	"replace": false,
+	"values": [
+		"immersiveweapons:white_stained_bulletproof_glass",
+		"immersiveweapons:light_gray_stained_bulletproof_glass",
+		"immersiveweapons:gray_stained_bulletproof_glass",
+		"immersiveweapons:black_stained_bulletproof_glass",
+		"immersiveweapons:orange_stained_bulletproof_glass",
+		"immersiveweapons:magenta_stained_bulletproof_glass",
+		"immersiveweapons:light_blue_stained_bulletproof_glass",
+		"immersiveweapons:yellow_stained_bulletproof_glass",
+		"immersiveweapons:lime_stained_bulletproof_glass",
+		"immersiveweapons:pink_stained_bulletproof_glass",
+		"immersiveweapons:cyan_stained_bulletproof_glass",
+		"immersiveweapons:purple_stained_bulletproof_glass",
+		"immersiveweapons:blue_stained_bulletproof_glass",
+		"immersiveweapons:brown_stained_bulletproof_glass",
+		"immersiveweapons:green_stained_bulletproof_glass",
+		"immersiveweapons:red_stained_bulletproof_glass"
+	]
 }

@@ -1,6 +1,6 @@
-{ 
+{
 	"replace": false,
-	"values": [ 
+	"values": [
 		"immersiveweapons:copper_arrow",
 		"immersiveweapons:iron_arrow",
 		"immersiveweapons:diamond_arrow",

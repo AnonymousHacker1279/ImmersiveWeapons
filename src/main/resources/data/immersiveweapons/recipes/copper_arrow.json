@@ -1,29 +1,23 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "pattern":
-  [
-    " x ",
-    " y ",
-    " z "
-  ],
-  "key":
-  {
-    "x":
-    {
-    	"tag":"forge:ingots/copper"
-    },
-    "y":
-    {
-    	"item":"minecraft:stick"
-    },
-    "z":
-    {
-    	"item":"minecraft:feather"
-    }
-  },
-  "result":
-  {
-    "item": "immersiveweapons:copper_arrow",
-    "count": 2
-  }
+	"type": "minecraft:crafting_shaped",
+	"pattern": [
+		" x ",
+		" y ",
+		" z "
+	],
+	"key": {
+		"x": {
+			"tag": "forge:ingots/copper"
+		},
+		"y": {
+			"item": "minecraft:stick"
+		},
+		"z": {
+			"item": "minecraft:feather"
+		}
+	},
+	"result": {
+		"item": "immersiveweapons:copper_arrow",
+		"count": 2
+	}
 }

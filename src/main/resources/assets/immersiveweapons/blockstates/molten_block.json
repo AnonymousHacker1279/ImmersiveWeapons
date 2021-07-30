@@ -1,5 +1,7 @@
 {
-  "variants": {
-    "": { "model": "immersiveweapons:block/molten_block" }
-  }
+	"variants": {
+		"": {
+			"model": "immersiveweapons:block/molten_block"
+		}
+	}
 }

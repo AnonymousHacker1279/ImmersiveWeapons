@@ -1,5 +1,7 @@
 {
-  "variants": {
-    "": { "model": "immersiveweapons:block/small_parts_table" }
-  }
+	"variants": {
+		"": {
+			"model": "immersiveweapons:block/small_parts_table"
+		}
+	}
 }

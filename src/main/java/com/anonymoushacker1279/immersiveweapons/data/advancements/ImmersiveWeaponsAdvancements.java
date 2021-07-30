@@ -19,10 +19,15 @@ import net.minecraft.world.level.block.Blocks;
 
 import java.util.function.Consumer;
 
-public class ImmersiveWeaponsAdvancements implements Consumer<Consumer<Advancement>>{
+public class ImmersiveWeaponsAdvancements implements Consumer<Consumer<Advancement>> {
 	ImmersiveWeaponsAdvancements() {
 	}
 
+	/**
+	 * Build advancement trees.
+	 *
+	 * @param consumer the <code>Consumer</code> extending Advancement
+	 */
 	@Override
 	public void accept(Consumer<Advancement> consumer) {
 		// Root advancement

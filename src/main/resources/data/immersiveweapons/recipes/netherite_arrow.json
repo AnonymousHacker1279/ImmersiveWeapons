@@ -1,25 +1,20 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "pattern":
-  [
-    "xxx",
-    "xyx",
-    "xxx"
-  ],
-  "key":
-  {
-    "x":
-    {
-    	"item":"immersiveweapons:diamond_arrow"
-    },
-    "y":
-    {
-    	"tag":"forge:ingots/netherite"
-    }
-  },
-  "result":
-  {
-    "item": "immersiveweapons:netherite_arrow",
-    "count": 8
-  }
+	"type": "minecraft:crafting_shaped",
+	"pattern": [
+		"xxx",
+		"xyx",
+		"xxx"
+	],
+	"key": {
+		"x": {
+			"item": "immersiveweapons:diamond_arrow"
+		},
+		"y": {
+			"tag": "forge:ingots/netherite"
+		}
+	},
+	"result": {
+		"item": "immersiveweapons:netherite_arrow",
+		"count": 8
+	}
 }

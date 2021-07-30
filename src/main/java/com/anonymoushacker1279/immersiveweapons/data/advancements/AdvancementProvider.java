@@ -23,12 +23,22 @@ public class AdvancementProvider implements DataProvider {
 	private final DataGenerator generator;
 	private final List<Consumer<Consumer<Advancement>>> tabs = ImmutableList.of(new ImmersiveWeaponsAdvancements());
 
+	/**
+	 * Constructor for AdvancementProvider.
+	 *
+	 * @param dataGenerator the <code>DataGenerator</code> instance
+	 */
 	public AdvancementProvider(DataGenerator dataGenerator) {
 		generator = dataGenerator;
 	}
 
+	/**
+	 * Run the model provider.
+	 *
+	 * @param hashCache the <code>HashCache</code> instance
+	 */
 	@Override
-	public void run(HashCache cache) {
+	public void run(HashCache hashCache) {
 		Path outputFolder = generator.getOutputFolder();
 		Set<ResourceLocation> resourceLocations = Sets.newHashSet();
 		Consumer<Advancement> advancementConsumer = (advancement) -> {
@@ -38,7 +48,7 @@ public class AdvancementProvider implements DataProvider {
 				Path path = createPath(outputFolder, advancement);
 
 				try {
-					DataProvider.save(GSON, cache, advancement.deconstruct().serializeToJson(), path);
+					DataProvider.save(GSON, hashCache, advancement.deconstruct().serializeToJson(), path);
 				} catch (IOException exception) {
 					ImmersiveWeapons.LOGGER.error("Couldn't save advancement {}", path, exception);
 				}
@@ -51,11 +61,23 @@ public class AdvancementProvider implements DataProvider {
 		}
 	}
 
+	/**
+	 * Create model paths.
+	 *
+	 * @param path        the <code>Path</code> to save at
+	 * @param advancement the <code>Advancement</code> to use
+	 * @return Path
+	 */
 	private static Path createPath(Path path, Advancement advancement) {
 		String namespace = advancement.getId().getNamespace();
 		return path.resolve("data/" + namespace + "/advancements/" + advancement.getId().getPath() + ".json");
 	}
-
+	
+	/**
+	 * Get the name of the provider.
+	 *
+	 * @return String
+	 */
 	@Override
 	public String getName() {
 		return "Advancements";

@@ -1,0 +1,9 @@
+{
+	"type": "minecraft:smelting",
+	"ingredient": {
+		"item": "immersiveweapons:raw_cobalt"
+	},
+	"result": "immersiveweapons:cobalt_ingot",
+	"experience": 0.7,
+	"cookingtime": 200
+}

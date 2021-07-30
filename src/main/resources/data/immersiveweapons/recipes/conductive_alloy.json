@@ -1,25 +1,20 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "pattern":
-  [
-    "xy ",
-    "   ",
-    "   "
-  ],
-  "key":
-  {
-    "x":
-    {
-    	"tag":"forge:ingots/copper"
-    },
-    "y":
-    {
-    	"tag":"forge:ingots/gold"
-    }
-  },
-  "result":
-  {
-    "item": "immersiveweapons:conductive_alloy",
-    "count": 1
-  }
+	"type": "minecraft:crafting_shaped",
+	"pattern": [
+		"xy ",
+		"   ",
+		"   "
+	],
+	"key": {
+		"x": {
+			"tag": "forge:ingots/copper"
+		},
+		"y": {
+			"tag": "forge:ingots/gold"
+		}
+	},
+	"result": {
+		"item": "immersiveweapons:conductive_alloy",
+		"count": 1
+	}
 }
