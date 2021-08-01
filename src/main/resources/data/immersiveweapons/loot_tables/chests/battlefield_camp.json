@@ -12,7 +12,7 @@
 			},
 			"entries": [
 				{
-					"type": "item",
+					"type": "minecraft:item",
 					"name": "immersiveweapons:iron_musket_ball",
 					"weight": 8,
 					"functions": [
@@ -26,7 +26,7 @@
 					]
 				},
 				{
-					"type": "item",
+					"type": "minecraft:item",
 					"name": "minecraft:bread",
 					"weight": 7,
 					"functions": [
@@ -40,7 +40,7 @@
 					]
 				},
 				{
-					"type": "item",
+					"type": "minecraft:item",
 					"name": "minecraft:apple",
 					"weight": 7,
 					"functions": [
@@ -54,7 +54,7 @@
 					]
 				},
 				{
-					"type": "item",
+					"type": "minecraft:item",
 					"name": "minecraft:rotten_flesh",
 					"weight": 10,
 					"functions": [
@@ -68,7 +68,7 @@
 					]
 				},
 				{
-					"type": "item",
+					"type": "minecraft:item",
 					"name": "immersiveweapons:copper_pickaxe",
 					"weight": 6,
 					"functions": [
@@ -87,7 +87,7 @@
 					]
 				},
 				{
-					"type": "item",
+					"type": "minecraft:item",
 					"name": "minecraft:iron_ingot",
 					"weight": 4,
 					"functions": [
@@ -101,7 +101,7 @@
 					]
 				},
 				{
-					"type": "item",
+					"type": "minecraft:item",
 					"name": "immersiveweapons:flintlock_pistol",
 					"weight": 1,
 					"functions": [
@@ -115,7 +115,7 @@
 					]
 				},
 				{
-					"type": "item",
+					"type": "minecraft:item",
 					"name": "minecraft:emerald",
 					"weight": 3,
 					"functions": [

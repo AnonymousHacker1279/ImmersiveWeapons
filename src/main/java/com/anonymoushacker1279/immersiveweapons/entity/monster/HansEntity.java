@@ -15,6 +15,7 @@ import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
+import org.jetbrains.annotations.NotNull;
 
 public class HansEntity extends AbstractWanderingWarriorEntity {
 
@@ -51,7 +52,7 @@ public class HansEntity extends AbstractWanderingWarriorEntity {
 	 * @return SoundEvent
 	 */
 	@Override
-	protected SoundEvent getHurtSound(DamageSource damageSourceIn) {
+	protected SoundEvent getHurtSound(@NotNull DamageSource damageSourceIn) {
 		return DeferredRegistryHandler.WANDERING_WARRIOR_HURT.get();
 	}
 
@@ -100,7 +101,7 @@ public class HansEntity extends AbstractWanderingWarriorEntity {
 	 * @return boolean
 	 */
 	@Override
-	public boolean hurt(DamageSource source, float amount) {
+	public boolean hurt(@NotNull DamageSource source, float amount) {
 		if (amount > 0 && source.getEntity() instanceof Player || source.getEntity() instanceof Mob || source.getEntity() instanceof PathfinderMob) {
 			if (source.isCreativePlayer()) {
 				super.hurt(source, amount);

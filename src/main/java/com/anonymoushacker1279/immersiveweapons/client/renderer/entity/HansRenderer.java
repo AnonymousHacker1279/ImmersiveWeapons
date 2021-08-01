@@ -9,6 +9,7 @@ import net.minecraft.client.renderer.entity.EntityRendererProvider.Context;
 import net.minecraft.client.renderer.entity.HumanoidMobRenderer;
 import net.minecraft.client.renderer.entity.layers.HumanoidArmorLayer;
 import net.minecraft.resources.ResourceLocation;
+import org.jetbrains.annotations.NotNull;
 
 public class HansRenderer extends HumanoidMobRenderer<HansEntity, PlayerModel<HansEntity>> {
 
@@ -29,7 +30,7 @@ public class HansRenderer extends HumanoidMobRenderer<HansEntity, PlayerModel<Ha
 	 * @return ResourceLocation
 	 */
 	@Override
-	public ResourceLocation getTextureLocation(HansEntity entity) {
+	public @NotNull ResourceLocation getTextureLocation(@NotNull HansEntity entity) {
 		return HANS_TEXTURE;
 	}
 }

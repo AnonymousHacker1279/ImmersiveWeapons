@@ -22,6 +22,7 @@ import net.minecraftforge.fmllegacy.network.NetworkEvent;
 import net.minecraftforge.fmllegacy.network.NetworkEvent.Context;
 import net.minecraftforge.fmllegacy.network.NetworkHooks;
 import net.minecraftforge.fmllegacy.network.PacketDistributor;
+import org.jetbrains.annotations.NotNull;
 
 import java.awt.*;
 import java.util.function.Supplier;
@@ -74,7 +75,7 @@ public class SmokeBombEntity extends ThrowableItemProjectile {
 	 * @return IPacket
 	 */
 	@Override
-	public Packet<?> getAddEntityPacket() {
+	public @NotNull Packet<?> getAddEntityPacket() {
 		return NetworkHooks.getEntitySpawningPacket(this);
 	}
 
@@ -84,7 +85,7 @@ public class SmokeBombEntity extends ThrowableItemProjectile {
 	 * @return Item
 	 */
 	@Override
-	protected Item getDefaultItem() {
+	protected @NotNull Item getDefaultItem() {
 		return DeferredRegistryHandler.SMOKE_BOMB.get();
 	}
 
@@ -93,7 +94,7 @@ public class SmokeBombEntity extends ThrowableItemProjectile {
 	 * @param rayTraceResult the <code>RayTraceResult</code> instance
 	 */
 	@Override
-	protected void onHit(HitResult rayTraceResult) {
+	protected void onHit(@NotNull HitResult rayTraceResult) {
 		super.onHit(rayTraceResult);
 		if (!level.isClientSide) {
 			PacketHandler.INSTANCE.send(PacketDistributor.TRACKING_CHUNK.with(() -> level.getChunkAt(blockPosition())), new SmokeBombEntityPacketHandler(color));
@@ -149,33 +150,33 @@ public class SmokeBombEntity extends ThrowableItemProjectile {
 	private static Color getTint(int random){
 		Color[] tints = {
 				new Color(1.00f, 1.00f, 1.00f),  // no tint (white)
-				new Color(1.00f, 0.97f, 1.00f),  // off white
-				new Color(1.00f, 1.00f, 0.97f),  // off white 2
+				new Color(1.00f, 0.97f, 1.00f),  // off-white
+				new Color(1.00f, 1.00f, 0.97f),  // off-white 2
 		};
 		Color[] tintsRed = {
 				new Color(1.00f, 0.25f, 0.25f),  // tint (red)
-				new Color(1.00f, 0.30f, 0.25f),  // off red
-				new Color(1.00f, 0.25f, 0.30f),  // off red 2
+				new Color(1.00f, 0.30f, 0.25f),  // off-red
+				new Color(1.00f, 0.25f, 0.30f),  // off-red 2
 		};
 		Color[] tintsGreen = {
 				new Color(0.25f, 1.00f, 0.25f),  // tint (green)
-				new Color(0.30f, 1.00f, 0.25f),  // off green
-				new Color(0.25f, 1.00f, 0.30f),  // off green 2
+				new Color(0.30f, 1.00f, 0.25f),  // off-green
+				new Color(0.25f, 1.00f, 0.30f),  // off-green 2
 		};
 		Color[] tintsBlue = {
 				new Color(0.25f, 0.25f, 1.00f),  // tint (blue)
-				new Color(0.30f, 0.25f, 1.00f),  // off blue
-				new Color(0.25f, 0.30f, 1.00f),  // off blue 2
+				new Color(0.30f, 0.25f, 1.00f),  // off-blue
+				new Color(0.25f, 0.30f, 1.00f),  // off-blue 2
 		};
 		Color[] tintsPurple = {
 				new Color(1.00f, 0.25f, 1.00f),  // tint (purple)
-				new Color(1.00f, 0.30f, 1.00f),  // off purple
-				new Color(1.00f, 0.35f, 1.00f),  // off purple 2
+				new Color(1.00f, 0.30f, 1.00f),  // off-purple
+				new Color(1.00f, 0.35f, 1.00f),  // off-purple 2
 		};
 		Color[] tintsYellow = {
 				new Color(1.00f, 1.00f, 0.25f),  // tint (yellow)
-				new Color(1.00f, 1.00f, 0.30f),  // off yellow
-				new Color(1.00f, 1.00f, 0.35f),  // off yellow 2
+				new Color(1.00f, 1.00f, 0.30f),  // off-yellow
+				new Color(1.00f, 1.00f, 0.35f),  // off-yellow 2
 		};
 
 		return switch (color) {

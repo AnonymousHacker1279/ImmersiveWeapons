@@ -15,6 +15,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.phys.HitResult;
 import net.minecraftforge.fmllegacy.network.NetworkHooks;
+import org.jetbrains.annotations.NotNull;
 
 import java.awt.*;
 
@@ -56,7 +57,7 @@ public class MolotovEntity extends ThrowableItemProjectile {
 	 * @return IPacket
 	 */
 	@Override
-	public Packet<?> getAddEntityPacket() {
+	public @NotNull Packet<?> getAddEntityPacket() {
 		return NetworkHooks.getEntitySpawningPacket(this);
 	}
 
@@ -66,7 +67,7 @@ public class MolotovEntity extends ThrowableItemProjectile {
 	 * @return Item
 	 */
 	@Override
-	protected Item getDefaultItem() {
+	protected @NotNull Item getDefaultItem() {
 		return DeferredRegistryHandler.MOLOTOV_COCKTAIL.get();
 	}
 
@@ -75,7 +76,7 @@ public class MolotovEntity extends ThrowableItemProjectile {
 	 * @param rayTraceResult the <code>RayTraceResult</code> instance
 	 */
 	@Override
-	protected void onHit(HitResult rayTraceResult) {
+	protected void onHit(@NotNull HitResult rayTraceResult) {
 		super.onHit(rayTraceResult);
 		if (!level.isClientSide) {
 			level.broadcastEntityEvent(this, VANILLA_IMPACT_STATUS_ID);  // calls handleStatusUpdate which tells the client to render particles
@@ -147,8 +148,8 @@ public class MolotovEntity extends ThrowableItemProjectile {
 	private Color getTint(int random) {
 		Color[] tints = {
 				new Color(1.00f, 1.00f, 1.00f),  // no tint (white)
-				new Color(1.00f, 0.97f, 1.00f),  // off white
-				new Color(1.00f, 1.00f, 0.97f),  // off white 2
+				new Color(1.00f, 0.97f, 1.00f),  // off-white
+				new Color(1.00f, 1.00f, 0.97f),  // off-white 2
 		};
 
 		return tints[random];

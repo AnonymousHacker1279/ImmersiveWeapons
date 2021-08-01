@@ -17,7 +17,7 @@ public class BiomeBuilder {
 
 	/**
 	 * Get the surface builder.
-	 * @param key the <code>RegistryKey</code>, must extend ConfiguredSurfaceBuilder
+	 * @param key the <code>ResourceKey</code>, must extend ConfiguredSurfaceBuilder
 	 * @return ConfiguredSurfaceBuilder
 	 */
 	public static ConfiguredSurfaceBuilder<?> getSurfaceBuilder(ResourceKey<ConfiguredSurfaceBuilder<?>> key) {
@@ -26,7 +26,7 @@ public class BiomeBuilder {
 
 	/**
 	 * Make a Battlefield biome.
-	 * @param surfaceBuilder the <code>SurfaceBuilder</code> instance
+	 * @param surfaceBuilder the <code>ConfiguredSurfaceBuilder</code> instance
 	 * @param depth the biome depth
 	 * @param scale the biome scale
 	 * @return Biome

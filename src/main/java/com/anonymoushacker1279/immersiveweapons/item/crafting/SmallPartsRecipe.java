@@ -12,6 +12,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.registries.ForgeRegistryEntry;
+import org.jetbrains.annotations.NotNull;
 
 public record SmallPartsRecipe(ResourceLocation recipeId,
                                Ingredient material,
@@ -37,7 +38,7 @@ public record SmallPartsRecipe(ResourceLocation recipeId,
 	 * @return boolean
 	 */
 	@Override
-	public boolean matches(Container inv, Level worldIn) {
+	public boolean matches(Container inv, @NotNull Level worldIn) {
 		return material.test(inv.getItem(0)) && blueprint.test(inv.getItem(1));
 	}
 
@@ -48,7 +49,7 @@ public record SmallPartsRecipe(ResourceLocation recipeId,
 	 * @return ItemStack
 	 */
 	@Override
-	public ItemStack assemble(Container inv) {
+	public @NotNull ItemStack assemble(Container inv) {
 		ItemStack itemstack = result.copy();
 		CompoundTag compoundTag = inv.getItem(0).getTag();
 		if (compoundTag != null) {
@@ -77,7 +78,7 @@ public record SmallPartsRecipe(ResourceLocation recipeId,
 	 * @return ItemStack
 	 */
 	@Override
-	public ItemStack getResultItem() {
+	public @NotNull ItemStack getResultItem() {
 		return result;
 	}
 
@@ -97,7 +98,7 @@ public record SmallPartsRecipe(ResourceLocation recipeId,
 	 * @return ItemStack
 	 */
 	@Override
-	public ItemStack getToastSymbol() {
+	public @NotNull ItemStack getToastSymbol() {
 		return new ItemStack(DeferredRegistryHandler.SMALL_PARTS_TABLE.get());
 	}
 
@@ -107,7 +108,7 @@ public record SmallPartsRecipe(ResourceLocation recipeId,
 	 * @return ResourceLocation
 	 */
 	@Override
-	public ResourceLocation getId() {
+	public @NotNull ResourceLocation getId() {
 		return recipeId;
 	}
 
@@ -117,7 +118,7 @@ public record SmallPartsRecipe(ResourceLocation recipeId,
 	 * @return IRecipeSerializer
 	 */
 	@Override
-	public RecipeSerializer<?> getSerializer() {
+	public @NotNull RecipeSerializer<?> getSerializer() {
 		return DeferredRegistryHandler.SMALL_PARTS_RECIPE_SERIALIZER.get();
 	}
 
@@ -127,7 +128,7 @@ public record SmallPartsRecipe(ResourceLocation recipeId,
 	 * @return IRecipeType
 	 */
 	@Override
-	public RecipeType<?> getType() {
+	public @NotNull RecipeType<?> getType() {
 		return ICustomRecipeType.SMALL_PARTS;
 	}
 
@@ -137,7 +138,7 @@ public record SmallPartsRecipe(ResourceLocation recipeId,
 	 * @return NonNullList extending Ingredient
 	 */
 	@Override
-	public NonNullList<Ingredient> getIngredients() {
+	public @NotNull NonNullList<Ingredient> getIngredients() {
 		NonNullList<Ingredient> defaultedList = NonNullList.create();
 		defaultedList.add(material);
 		defaultedList.add(blueprint);
@@ -153,7 +154,7 @@ public record SmallPartsRecipe(ResourceLocation recipeId,
 		 * @return SmallPartsRecipe
 		 */
 		@Override
-		public SmallPartsRecipe fromJson(ResourceLocation recipeId, JsonObject json) {
+		public @NotNull SmallPartsRecipe fromJson(@NotNull ResourceLocation recipeId, @NotNull JsonObject json) {
 			Ingredient ingredient = Ingredient.fromJson(GsonHelper.getAsJsonObject(json, "material"));
 			Ingredient ingredient1 = Ingredient.fromJson(GsonHelper.getAsJsonObject(json, "blueprint"));
 			ItemStack itemstack = new ItemStack(ShapedRecipe.itemFromJson(GsonHelper.getAsJsonObject(json, "result")));
@@ -168,7 +169,7 @@ public record SmallPartsRecipe(ResourceLocation recipeId,
 		 * @return SmallPartsRecipe
 		 */
 		@Override
-		public SmallPartsRecipe fromNetwork(ResourceLocation recipeId, FriendlyByteBuf buffer) {
+		public SmallPartsRecipe fromNetwork(@NotNull ResourceLocation recipeId, @NotNull FriendlyByteBuf buffer) {
 			Ingredient ingredient = Ingredient.fromNetwork(buffer);
 			Ingredient ingredient1 = Ingredient.fromNetwork(buffer);
 			ItemStack itemstack = buffer.readItem();
@@ -182,7 +183,7 @@ public record SmallPartsRecipe(ResourceLocation recipeId,
 		 * @param recipe the <code>SmallPartsRecipe</code> instance
 		 */
 		@Override
-		public void toNetwork(FriendlyByteBuf buffer, SmallPartsRecipe recipe) {
+		public void toNetwork(@NotNull FriendlyByteBuf buffer, SmallPartsRecipe recipe) {
 			recipe.material.toNetwork(buffer);
 			recipe.blueprint.toNetwork(buffer);
 			buffer.writeItem(recipe.result);

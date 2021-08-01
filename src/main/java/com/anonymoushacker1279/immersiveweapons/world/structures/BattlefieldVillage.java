@@ -1,6 +1,6 @@
 package com.anonymoushacker1279.immersiveweapons.world.structures;
 
-import com.anonymoushacker1279.immersiveweapons.world.gen.feature.structure.BattlefieldVillagePools;
+import com.anonymoushacker1279.immersiveweapons.world.level.levelgen.BattlefieldVillagePools;
 import com.mojang.serialization.Codec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.RegistryAccess;
@@ -17,11 +17,12 @@ import net.minecraft.world.level.levelgen.feature.structures.JigsawPlacement;
 import net.minecraft.world.level.levelgen.structure.PoolElementStructurePiece;
 import net.minecraft.world.level.levelgen.structure.StructureStart;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureManager;
+import org.jetbrains.annotations.NotNull;
 
 public class BattlefieldVillage extends StructureFeature<NoneFeatureConfiguration> {
 	/**
 	 * Constructor for BattlefieldVillage.
-	 * @param codec the <code>Codec</code> extending NoFeatureConfig
+	 * @param codec the <code>Codec</code> extending NoneFeatureConfiguration
 	 */
 	public BattlefieldVillage(Codec<NoneFeatureConfiguration> codec) {
 		super(codec);
@@ -29,10 +30,10 @@ public class BattlefieldVillage extends StructureFeature<NoneFeatureConfiguratio
 
 	/**
 	 * Get the factory start.
-	 * @return IStartFactory extending NoFeatureConfig
+	 * @return IStartFactory extending NoneFeatureConfiguration
 	 */
 	@Override
-	public StructureStartFactory<NoneFeatureConfiguration> getStartFactory() {
+	public @NotNull StructureStartFactory<NoneFeatureConfiguration> getStartFactory() {
 		return BattlefieldVillage.Start::new;
 	}
 
@@ -41,7 +42,7 @@ public class BattlefieldVillage extends StructureFeature<NoneFeatureConfiguratio
 	 * @return Decoration
 	 */
 	@Override
-	public Decoration step() {
+	public @NotNull Decoration step() {
 		return Decoration.SURFACE_STRUCTURES;
 	}
 
@@ -50,13 +51,13 @@ public class BattlefieldVillage extends StructureFeature<NoneFeatureConfiguratio
 		private static JigsawConfiguration structurePoolFeatureConfig = null;
 		/**
 		 * Constructor for Start.
-		 * @param structureIn the <code>StructureFeature</code> extending NoFeatureConfig
+		 * @param structure the <code>StructureFeature</code> extending NoneFeatureConfiguration
 		 * @param chunkPos the <code>ChunkPos</code> position
-		 * @param referenceIn the reference ID
-		 * @param seedIn the world seed
+		 * @param reference the reference ID
+		 * @param seed the world seed
 		 */
-		public Start(StructureFeature<NoneFeatureConfiguration> structureIn, ChunkPos chunkPos, int referenceIn, long seedIn) {
-			super(structureIn, chunkPos, referenceIn, seedIn);
+		public Start(StructureFeature<NoneFeatureConfiguration> structure, ChunkPos chunkPos, int reference, long seed) {
+			super(structure, chunkPos, reference, seed);
 		}
 
 		/**
@@ -70,7 +71,7 @@ public class BattlefieldVillage extends StructureFeature<NoneFeatureConfiguratio
 		 * @param heightAccessor the <code>LevelHeightAccessor</code> instance
 		 */
 		@Override
-		public void generatePieces(RegistryAccess registryAccess, ChunkGenerator generator, StructureManager structureManager, ChunkPos chunkPos, Biome biome, NoneFeatureConfiguration config, LevelHeightAccessor heightAccessor) {
+		public void generatePieces(@NotNull RegistryAccess registryAccess, ChunkGenerator generator, @NotNull StructureManager structureManager, ChunkPos chunkPos, @NotNull Biome biome, @NotNull NoneFeatureConfiguration config, @NotNull LevelHeightAccessor heightAccessor) {
 
 			// Turns the chunk coordinates into actual coordinates we can use. (Gets center of that chunk)
 			int x = (chunkPos.x << 4) + 7;

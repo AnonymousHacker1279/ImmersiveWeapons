@@ -1,13 +1,12 @@
 package com.anonymoushacker1279.immersiveweapons.entity.projectile;
 
-import com.anonymoushacker1279.immersiveweapons.block.MortarBlock;
+import com.anonymoushacker1279.immersiveweapons.block.base.MortarBlock;
 import com.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.Packet;
-import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
@@ -26,6 +25,7 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.event.ForgeEventFactory;
 import net.minecraftforge.fmllegacy.network.NetworkHooks;
+import org.jetbrains.annotations.NotNull;
 
 @OnlyIn(value = Dist.CLIENT, _interface = ItemSupplier.class)
 public class MortarShellEntity extends Projectile implements ItemSupplier {
@@ -57,9 +57,8 @@ public class MortarShellEntity extends Projectile implements ItemSupplier {
 	 * @param world the <code>World</code> the entity is in
 	 * @param pos the <code>BlockPos</code> the entity is at
 	 * @param yOffset the Y offset to spawn at
-	 * @return ActionResultType
 	 */
-	public static InteractionResult create(Level world, BlockPos pos, double yOffset, BlockState state) {
+	public static void create(Level world, BlockPos pos, double yOffset, BlockState state) {
 		if (!world.isClientSide) {
 			MortarShellEntity mortarShellEntity = new MortarShellEntity(world, pos, yOffset);
 
@@ -83,7 +82,6 @@ public class MortarShellEntity extends Projectile implements ItemSupplier {
 			}
 			world.addFreshEntity(mortarShellEntity);
 		}
-		return InteractionResult.CONSUME;
 	}
 
 	/**
@@ -167,7 +165,7 @@ public class MortarShellEntity extends Projectile implements ItemSupplier {
 	 * @return boolean
 	 */
 	@Override
-	protected boolean canHitEntity(Entity entity) {
+	protected boolean canHitEntity(@NotNull Entity entity) {
 		return true;
 	}
 
@@ -176,11 +174,11 @@ public class MortarShellEntity extends Projectile implements ItemSupplier {
 	}
 
 	@Override
-	protected void readAdditionalSaveData(CompoundTag nbt) {
+	protected void readAdditionalSaveData(@NotNull CompoundTag nbt) {
 	}
 
 	@Override
-	protected void addAdditionalSaveData(CompoundTag nbt) {
+	protected void addAdditionalSaveData(@NotNull CompoundTag nbt) {
 	}
 
 	/**
@@ -188,7 +186,7 @@ public class MortarShellEntity extends Projectile implements ItemSupplier {
 	 * @return IPacket
 	 */
 	@Override
-	public Packet<?> getAddEntityPacket() {
+	public @NotNull Packet<?> getAddEntityPacket() {
 		return NetworkHooks.getEntitySpawningPacket(this);
 	}
 
@@ -197,7 +195,7 @@ public class MortarShellEntity extends Projectile implements ItemSupplier {
 	 * @return ItemStack
 	 */
 	@Override
-	public ItemStack getItem() {
+	public @NotNull ItemStack getItem() {
 		return new ItemStack(DeferredRegistryHandler.MORTAR_SHELL.get());
 	}
 }

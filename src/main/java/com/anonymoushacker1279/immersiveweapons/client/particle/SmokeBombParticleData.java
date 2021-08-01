@@ -9,6 +9,7 @@ import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleType;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.util.Mth;
+import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nonnull;
 import java.awt.*;
@@ -33,7 +34,7 @@ public class SmokeBombParticleData implements ParticleOptions {
 		 * @throws CommandSyntaxException occurs when improper command syntax is provided
 		 */
 		@Override
-		public SmokeBombParticleData fromCommand(@Nonnull ParticleType<SmokeBombParticleData> type, @Nonnull StringReader reader) throws CommandSyntaxException {
+		public @NotNull SmokeBombParticleData fromCommand(@Nonnull ParticleType<SmokeBombParticleData> type, @Nonnull StringReader reader) throws CommandSyntaxException {
 			reader.expect(' ');
 			double diameter = constrainDiameterToValidRange(reader.readDouble());
 
@@ -58,7 +59,7 @@ public class SmokeBombParticleData implements ParticleOptions {
 		 * @return SmokeBombParticleData
 		 */
 		@Override
-		public SmokeBombParticleData fromNetwork(@Nonnull ParticleType<SmokeBombParticleData> type, FriendlyByteBuf buf) {
+		public @NotNull SmokeBombParticleData fromNetwork(@Nonnull ParticleType<SmokeBombParticleData> type, FriendlyByteBuf buf) {
 			final int MIN_COLOR = 0;
 			final int MAX_COLOR = 255;
 			int red = Mth.clamp(buf.readInt(), MIN_COLOR, MAX_COLOR);
@@ -126,7 +127,7 @@ public class SmokeBombParticleData implements ParticleOptions {
 	 * @return ParticleType extending SmokeBombParticleData
 	 */
 	@Override
-	public ParticleType<SmokeBombParticleData> getType() {
+	public @NotNull ParticleType<SmokeBombParticleData> getType() {
 		return DeferredRegistryHandler.SMOKE_BOMB_PARTICLE_TYPE.get();
 	}
 
@@ -149,7 +150,6 @@ public class SmokeBombParticleData implements ParticleOptions {
 	@Nonnull
 	@Override
 	public String writeToString() {
-		return String.format(Locale.ROOT, "%s %.2f %i %i %i",
-				getType().getRegistryName(), diameter, tint.getRed(), tint.getGreen(), tint.getBlue());
+		return String.format(Locale.ROOT, "%s %.2f %d %d %d", getType().getRegistryName(), diameter, tint.getRed(), tint.getGreen(), tint.getBlue());
 	}
 }

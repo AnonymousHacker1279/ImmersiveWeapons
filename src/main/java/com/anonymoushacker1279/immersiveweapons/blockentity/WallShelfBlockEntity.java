@@ -13,6 +13,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
 import java.util.Objects;
@@ -82,7 +83,7 @@ public class WallShelfBlockEntity extends BlockEntity implements EntityBlock, Cl
 	 * @param nbt the <code>CompoundNBT</code> to load
 	 */
 	@Override
-	public void load(CompoundTag nbt) {
+	public void load(@NotNull CompoundTag nbt) {
 		super.load(nbt);
 		inventory.clear();
 		ContainerHelper.loadAllItems(nbt, inventory);
@@ -93,7 +94,7 @@ public class WallShelfBlockEntity extends BlockEntity implements EntityBlock, Cl
 	 * @param nbt the <code>CompoundNBT</code> to save
 	 */
 	@Override
-	public CompoundTag save(CompoundTag nbt) {
+	public @NotNull CompoundTag save(@NotNull CompoundTag nbt) {
 		writeItems(nbt);
 		return nbt;
 	}
@@ -123,7 +124,7 @@ public class WallShelfBlockEntity extends BlockEntity implements EntityBlock, Cl
 	 * @return CompoundNBT
 	 */
 	@Override
-	public CompoundTag getUpdateTag() {
+	public @NotNull CompoundTag getUpdateTag() {
 		return writeItems(new CompoundTag());
 	}
 
@@ -154,7 +155,7 @@ public class WallShelfBlockEntity extends BlockEntity implements EntityBlock, Cl
 	 */
 	@Nullable
 	@Override
-	public BlockEntity newBlockEntity(BlockPos blockPos, BlockState blockState) {
+	public BlockEntity newBlockEntity(@NotNull BlockPos blockPos, @NotNull BlockState blockState) {
 		return new WallShelfBlockEntity(blockPos, blockState);
 	}
 }

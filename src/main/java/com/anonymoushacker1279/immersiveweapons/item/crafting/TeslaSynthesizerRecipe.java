@@ -12,6 +12,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.registries.ForgeRegistryEntry;
+import org.jetbrains.annotations.NotNull;
 
 public record TeslaSynthesizerRecipe(ResourceLocation recipeId,
                                      Ingredient blockIngredient,
@@ -50,7 +51,7 @@ public record TeslaSynthesizerRecipe(ResourceLocation recipeId,
 	 * @return boolean
 	 */
 	@Override
-	public boolean matches(Container inv, Level worldIn) {
+	public boolean matches(Container inv, @NotNull Level worldIn) {
 		return blockIngredient.test(inv.getItem(0)) && material1.test(inv.getItem(1)) && material2.test(inv.getItem(2));
 	}
 
@@ -61,7 +62,7 @@ public record TeslaSynthesizerRecipe(ResourceLocation recipeId,
 	 * @return ItemStack
 	 */
 	@Override
-	public ItemStack assemble(Container inv) {
+	public @NotNull ItemStack assemble(Container inv) {
 		ItemStack itemstack = result.copy();
 		CompoundTag compoundTag = inv.getItem(4).getTag();
 		if (compoundTag != null) {
@@ -90,7 +91,7 @@ public record TeslaSynthesizerRecipe(ResourceLocation recipeId,
 	 * @return ItemStack
 	 */
 	@Override
-	public ItemStack getResultItem() {
+	public @NotNull ItemStack getResultItem() {
 		return result;
 	}
 
@@ -100,7 +101,7 @@ public record TeslaSynthesizerRecipe(ResourceLocation recipeId,
 	 * @return ItemStack
 	 */
 	@Override
-	public ItemStack getToastSymbol() {
+	public @NotNull ItemStack getToastSymbol() {
 		return new ItemStack(DeferredRegistryHandler.TESLA_SYNTHESIZER.get());
 	}
 
@@ -110,7 +111,7 @@ public record TeslaSynthesizerRecipe(ResourceLocation recipeId,
 	 * @return ResourceLocation
 	 */
 	@Override
-	public ResourceLocation getId() {
+	public @NotNull ResourceLocation getId() {
 		return recipeId;
 	}
 
@@ -120,7 +121,7 @@ public record TeslaSynthesizerRecipe(ResourceLocation recipeId,
 	 * @return IRecipeSerializer
 	 */
 	@Override
-	public RecipeSerializer<?> getSerializer() {
+	public @NotNull RecipeSerializer<?> getSerializer() {
 		return DeferredRegistryHandler.TESLA_SYNTHEZISER_RECIPE_SERIALIZER.get();
 	}
 
@@ -130,7 +131,7 @@ public record TeslaSynthesizerRecipe(ResourceLocation recipeId,
 	 * @return IRecipeType
 	 */
 	@Override
-	public RecipeType<?> getType() {
+	public @NotNull RecipeType<?> getType() {
 		return ICustomRecipeType.TESLA_SYNTHESIZER;
 	}
 
@@ -140,7 +141,7 @@ public record TeslaSynthesizerRecipe(ResourceLocation recipeId,
 	 * @return NonNullList extending Ingredient
 	 */
 	@Override
-	public NonNullList<Ingredient> getIngredients() {
+	public @NotNull NonNullList<Ingredient> getIngredients() {
 		NonNullList<Ingredient> defaultedList = NonNullList.create();
 		defaultedList.add(blockIngredient);
 		defaultedList.add(material1);
@@ -157,7 +158,7 @@ public record TeslaSynthesizerRecipe(ResourceLocation recipeId,
 		 * @return TeslaSynthesizerRecipe
 		 */
 		@Override
-		public TeslaSynthesizerRecipe fromJson(ResourceLocation recipeId, JsonObject json) {
+		public @NotNull TeslaSynthesizerRecipe fromJson(@NotNull ResourceLocation recipeId, @NotNull JsonObject json) {
 			Ingredient blockIngredient = Ingredient.fromJson(GsonHelper.getAsJsonObject(json, "block"));
 			Ingredient material1 = Ingredient.fromJson(GsonHelper.getAsJsonObject(json, "material1"));
 			Ingredient material2 = Ingredient.fromJson(GsonHelper.getAsJsonObject(json, "material2"));
@@ -174,7 +175,7 @@ public record TeslaSynthesizerRecipe(ResourceLocation recipeId,
 		 * @return TeslaSynthesizerRecipe
 		 */
 		@Override
-		public TeslaSynthesizerRecipe fromNetwork(ResourceLocation recipeId, FriendlyByteBuf buffer) {
+		public TeslaSynthesizerRecipe fromNetwork(@NotNull ResourceLocation recipeId, @NotNull FriendlyByteBuf buffer) {
 			Ingredient blockIngredient = Ingredient.fromNetwork(buffer);
 			Ingredient material1 = Ingredient.fromNetwork(buffer);
 			Ingredient material2 = Ingredient.fromNetwork(buffer);
@@ -190,7 +191,7 @@ public record TeslaSynthesizerRecipe(ResourceLocation recipeId,
 		 * @param recipe the <code>TeslaSynthesizerRecipe</code> instance
 		 */
 		@Override
-		public void toNetwork(FriendlyByteBuf buffer, TeslaSynthesizerRecipe recipe) {
+		public void toNetwork(@NotNull FriendlyByteBuf buffer, TeslaSynthesizerRecipe recipe) {
 			recipe.blockIngredient.toNetwork(buffer);
 			recipe.material1.toNetwork(buffer);
 			recipe.material2.toNetwork(buffer);

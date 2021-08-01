@@ -135,39 +135,39 @@ public abstract class AbstractBulletEntity extends AbstractArrow {
 			inGroundTime = 0;
 			Vec3 vector3d2 = position();
 			Vec3 vector3d3 = vector3d2.add(vector3d);
-			HitResult raytraceresult = level.clip(new ClipContext(vector3d2, vector3d3, Block.COLLIDER, Fluid.NONE, this));
-			if (raytraceresult.getType() != Type.MISS) {
-				vector3d3 = raytraceresult.getLocation();
+			HitResult hitResult = level.clip(new ClipContext(vector3d2, vector3d3, Block.COLLIDER, Fluid.NONE, this));
+			if (hitResult.getType() != Type.MISS) {
+				vector3d3 = hitResult.getLocation();
 			}
 
 			while (isAlive()) {
-				EntityHitResult entityraytraceresult = findHitEntity(vector3d2, vector3d3);
-				if (entityraytraceresult != null) {
-					raytraceresult = entityraytraceresult;
+				EntityHitResult entityHitResult = findHitEntity(vector3d2, vector3d3);
+				if (entityHitResult != null) {
+					hitResult = entityHitResult;
 				}
 
-				if (raytraceresult != null && raytraceresult.getType() == Type.ENTITY) {
+				if (hitResult != null && hitResult.getType() == Type.ENTITY) {
 					Entity entity = null;
-					if (raytraceresult instanceof EntityHitResult) {
-						entity = ((EntityHitResult) raytraceresult).getEntity();
+					if (hitResult instanceof EntityHitResult) {
+						entity = ((EntityHitResult) hitResult).getEntity();
 					}
 					Entity entity1 = getOwner();
 					if (entity instanceof Player && entity1 instanceof Player && !((Player) entity1).canHarmPlayer((Player) entity)) {
-						raytraceresult = null;
-						entityraytraceresult = null;
+						hitResult = null;
+						entityHitResult = null;
 					}
 				}
 
-				if (raytraceresult != null && raytraceresult.getType() != Type.MISS && !flag && !ForgeEventFactory.onProjectileImpact(this, raytraceresult)) {
-					onHit(raytraceresult);
+				if (hitResult != null && hitResult.getType() != Type.MISS && !flag && !ForgeEventFactory.onProjectileImpact(this, hitResult)) {
+					onHit(hitResult);
 					hasImpulse = true;
 				}
 
-				if (entityraytraceresult == null || getPierceLevel() <= 0) {
+				if (entityHitResult == null || getPierceLevel() <= 0) {
 					break;
 				}
 
-				raytraceresult = null;
+				hitResult = null;
 			}
 
 			vector3d = getDeltaMovement();
@@ -302,18 +302,18 @@ public abstract class AbstractBulletEntity extends AbstractArrow {
 	}
 
 	/**
-	 * Runs when an block is hit.
-	 * @param blockStateRayTraceResult the <code>BlockRayTraceResult</code> instance
+	 * Runs when a block is hit.
+	 * @param blockHitResult the <code>BlockHitResult</code> instance
 	 */
 	@Override
-	protected void onHitBlock(BlockHitResult blockStateRayTraceResult) {
-		inBlockState = level.getBlockState(blockStateRayTraceResult.getBlockPos());
+	protected void onHitBlock(BlockHitResult blockHitResult) {
+		inBlockState = level.getBlockState(blockHitResult.getBlockPos());
 
 		if (inBlockState.is(BlockTags.bind("forge:leaves"))) {
 			push(0, -0.1, 0);
 			shakeTime = 4;
 		} else {
-			Vec3 vector3d = blockStateRayTraceResult.getLocation().subtract(getX(), getY(), getZ());
+			Vec3 vector3d = blockHitResult.getLocation().subtract(getX(), getY(), getZ());
 			setDeltaMovement(vector3d);
 			Vec3 vector3d1 = vector3d.normalize().scale(0.05F);
 			setPosRaw(getX() - vector3d1.x, getY() - vector3d1.y, getZ() - vector3d1.z);
@@ -326,7 +326,7 @@ public abstract class AbstractBulletEntity extends AbstractArrow {
 		}
 
 		if (canBreakGlass && !hasAlreadyBrokeGlass && !inBlockState.is(BlockTags.bind("forge:bulletproof_glass")) && inBlockState.is(BlockTags.bind("forge:glass")) || inBlockState.is(BlockTags.bind("forge:glass_panes"))) {
-			level.destroyBlock(blockStateRayTraceResult.getBlockPos(), false);
+			level.destroyBlock(blockHitResult.getBlockPos(), false);
 			hasAlreadyBrokeGlass = true;
 		}
 	}

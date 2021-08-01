@@ -9,6 +9,7 @@ import net.minecraft.client.renderer.entity.EntityRendererProvider.Context;
 import net.minecraft.client.renderer.entity.HumanoidMobRenderer;
 import net.minecraft.client.renderer.entity.layers.HumanoidArmorLayer;
 import net.minecraft.resources.ResourceLocation;
+import org.jetbrains.annotations.NotNull;
 
 public class WanderingWarriorRenderer extends HumanoidMobRenderer<WanderingWarriorEntity, PlayerModel<WanderingWarriorEntity>> {
 
@@ -29,7 +30,7 @@ public class WanderingWarriorRenderer extends HumanoidMobRenderer<WanderingWarri
 	 * @return ResourceLocation
 	 */
 	@Override
-	public ResourceLocation getTextureLocation(WanderingWarriorEntity entity) {
+	public @NotNull ResourceLocation getTextureLocation(@NotNull WanderingWarriorEntity entity) {
 		return WANDERING_WARRIOR_TEXTURE;
 	}
 }

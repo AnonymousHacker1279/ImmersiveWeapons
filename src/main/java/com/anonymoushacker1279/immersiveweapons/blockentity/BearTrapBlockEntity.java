@@ -16,6 +16,7 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
+import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
 import java.util.EnumSet;
@@ -71,7 +72,7 @@ public class BearTrapBlockEntity extends BlockEntity implements EntityBlock {
 	 * @param nbt the <code>CompoundNBT</code> to load
 	 */
 	@Override
-	public void load(CompoundTag nbt) {
+	public void load(@NotNull CompoundTag nbt) {
 		super.load(nbt);
 		if (nbt.hasUUID("trapped_entity")) {
 			id = nbt.getUUID("trapped_entity");
@@ -83,7 +84,7 @@ public class BearTrapBlockEntity extends BlockEntity implements EntityBlock {
 	 * @param nbt the <code>CompoundNBT</code> to save
 	 */
 	@Override
-	public CompoundTag save(CompoundTag nbt) {
+	public @NotNull CompoundTag save(@NotNull CompoundTag nbt) {
 		super.save(nbt);
 		if (livingEntity != null && livingEntity.isAlive()) {
 			nbt.putUUID("trapped_entity", livingEntity.getUUID());
@@ -184,7 +185,7 @@ public class BearTrapBlockEntity extends BlockEntity implements EntityBlock {
 	 * @return BlockEntity
 	 */
 	@Override
-	public BlockEntity newBlockEntity(BlockPos blockPos, BlockState blockState) {
+	public BlockEntity newBlockEntity(@NotNull BlockPos blockPos, @NotNull BlockState blockState) {
 		return new BearTrapBlockEntity(blockPos, blockState);
 	}
 

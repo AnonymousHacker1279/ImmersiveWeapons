@@ -15,11 +15,12 @@ import net.minecraft.world.level.levelgen.feature.StructureFeature;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import net.minecraft.world.level.levelgen.structure.StructureStart;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureManager;
+import org.jetbrains.annotations.NotNull;
 
 public class LandmineTrap extends StructureFeature<NoneFeatureConfiguration> {
 	/**
 	 * Constructor for LandmineTrap.
-	 * @param codec the <code>Codec</code> extending NoFeatureConfig
+	 * @param codec the <code>Codec</code> extending NoneFeatureConfiguration
 	 */
 	public LandmineTrap(Codec<NoneFeatureConfiguration> codec) {
 		super(codec);
@@ -27,10 +28,10 @@ public class LandmineTrap extends StructureFeature<NoneFeatureConfiguration> {
 
 	/**
 	 * Get the factory start.
-	 * @return IStartFactory extending NoFeatureConfig
+	 * @return IStartFactory extending NoneFeatureConfiguration
 	 */
 	@Override
-	public StructureStartFactory<NoneFeatureConfiguration> getStartFactory() {
+	public @NotNull StructureStartFactory<NoneFeatureConfiguration> getStartFactory() {
 		return LandmineTrap.Start::new;
 	}
 
@@ -39,7 +40,7 @@ public class LandmineTrap extends StructureFeature<NoneFeatureConfiguration> {
 	 * @return Decoration
 	 */
 	@Override
-	public Decoration step() {
+	public @NotNull Decoration step() {
 		return Decoration.SURFACE_STRUCTURES;
 	}
 
@@ -47,13 +48,13 @@ public class LandmineTrap extends StructureFeature<NoneFeatureConfiguration> {
 	public static class Start extends StructureStart<NoneFeatureConfiguration> {
 		/**
 		 * Constructor for Start.
-		 * @param structureIn the <code>StructureFeature</code> extending NoFeatureConfig
+		 * @param structure the <code>StructureFeature</code> extending NoneFeatureConfiguration
 		 * @param chunkPos the <code>ChunkPos</code> position
-		 * @param referenceIn the reference ID
-		 * @param seedIn the world seed
+		 * @param reference the reference ID
+		 * @param seed the world seed
 		 */
-		public Start(StructureFeature<NoneFeatureConfiguration> structureIn, ChunkPos chunkPos, int referenceIn, long seedIn) {
-			super(structureIn, chunkPos, referenceIn, seedIn);
+		public Start(StructureFeature<NoneFeatureConfiguration> structure, ChunkPos chunkPos, int reference, long seed) {
+			super(structure, chunkPos, reference, seed);
 		}
 
 		/**
@@ -67,7 +68,7 @@ public class LandmineTrap extends StructureFeature<NoneFeatureConfiguration> {
 		 * @param heightAccessor the <code>LevelHeightAccessor</code> instance
 		 */
 		@Override
-		public void generatePieces(RegistryAccess registryAccess, ChunkGenerator generator, StructureManager structureManager, ChunkPos chunkPos, Biome biome, NoneFeatureConfiguration config, LevelHeightAccessor heightAccessor) {
+		public void generatePieces(@NotNull RegistryAccess registryAccess, ChunkGenerator generator, @NotNull StructureManager structureManager, ChunkPos chunkPos, @NotNull Biome biome, @NotNull NoneFeatureConfiguration config, @NotNull LevelHeightAccessor heightAccessor) {
 			Rotation rotation = Rotation.values()[random.nextInt(Rotation.values().length)];
 
 			// Turns the chunk coordinates into actual coordinates we can use.

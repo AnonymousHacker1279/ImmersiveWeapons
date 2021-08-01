@@ -4,23 +4,19 @@ import net.minecraft.world.Container;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
+import org.jetbrains.annotations.NotNull;
 
 public class TeslaSynthesizerResultSlot extends Slot {
 
-	private final Player player;
-	private int removeCount;
-
 	/**
 	 * Constructor for TeslaSynthesizerResultSlot.
-	 * @param player the <code>PlayerEntity</code> instance
 	 * @param inventoryIn the <code>IInventory</code> of the tile entity
 	 * @param slotIndex the slot index
 	 * @param xPosition the X position of the slot
 	 * @param yPosition the Y position of the slot
 	 */
-	public TeslaSynthesizerResultSlot(Player player, Container inventoryIn, int slotIndex, int xPosition, int yPosition) {
+	public TeslaSynthesizerResultSlot(Container inventoryIn, int slotIndex, int xPosition, int yPosition) {
 		super(inventoryIn, slotIndex, xPosition, yPosition);
-		this.player = player;
 	}
 
 	/**
@@ -29,7 +25,7 @@ public class TeslaSynthesizerResultSlot extends Slot {
 	 * @return boolean
 	 */
 	@Override
-	public boolean mayPlace(ItemStack stack) {
+	public boolean mayPlace(@NotNull ItemStack stack) {
 		return false;
 	}
 
@@ -39,11 +35,7 @@ public class TeslaSynthesizerResultSlot extends Slot {
 	 * @return ItemStack
 	 */
 	@Override
-	public ItemStack remove(int amount) {
-		if (hasItem()) {
-			removeCount += Math.min(amount, getItem().getCount());
-		}
-
+	public @NotNull ItemStack remove(int amount) {
 		return super.remove(amount);
 	}
 
@@ -53,7 +45,7 @@ public class TeslaSynthesizerResultSlot extends Slot {
 	 * @param stack the <code>ItemStack</code> being taken
 	 */
 	@Override
-	public void onTake(Player player, ItemStack stack) {
+	public void onTake(@NotNull Player player, @NotNull ItemStack stack) {
 		checkTakeAchievements(stack);
 		super.onTake(player, stack);
 	}

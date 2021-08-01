@@ -5,6 +5,7 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.Tier;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraftforge.common.util.Lazy;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.function.Supplier;
 
@@ -100,7 +101,7 @@ public enum CustomItemMaterials implements Tier {
 	 * @return Ingredient
 	 */
 	@Override
-	public Ingredient getRepairIngredient() {
+	public @NotNull Ingredient getRepairIngredient() {
 		return repairMaterial.get();
 	}
 }

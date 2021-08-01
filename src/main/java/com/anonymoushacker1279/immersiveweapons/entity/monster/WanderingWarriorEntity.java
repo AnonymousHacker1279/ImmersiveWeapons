@@ -6,6 +6,7 @@ import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.Level;
+import org.jetbrains.annotations.NotNull;
 
 public class WanderingWarriorEntity extends AbstractWanderingWarriorEntity {
 
@@ -42,7 +43,7 @@ public class WanderingWarriorEntity extends AbstractWanderingWarriorEntity {
 	 * @return SoundEvent
 	 */
 	@Override
-	protected SoundEvent getHurtSound(DamageSource damageSourceIn) {
+	protected SoundEvent getHurtSound(@NotNull DamageSource damageSourceIn) {
 		return DeferredRegistryHandler.WANDERING_WARRIOR_HURT.get();
 	}
 

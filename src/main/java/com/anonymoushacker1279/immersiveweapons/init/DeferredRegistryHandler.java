@@ -1,8 +1,19 @@
 package com.anonymoushacker1279.immersiveweapons.init;
 
 import com.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
-import com.anonymoushacker1279.immersiveweapons.block.*;
-import com.anonymoushacker1279.immersiveweapons.block.CorrugatedBlock.CorrugatedBlockNormal;
+import com.anonymoushacker1279.immersiveweapons.block.base.*;
+import com.anonymoushacker1279.immersiveweapons.block.core.BasicOrientableBlock;
+import com.anonymoushacker1279.immersiveweapons.block.crafting.BarrelTapBlock;
+import com.anonymoushacker1279.immersiveweapons.block.crafting.SmallPartsTable;
+import com.anonymoushacker1279.immersiveweapons.block.crafting.TeslaSynthesizerBlock;
+import com.anonymoushacker1279.immersiveweapons.block.decoration.BiohazardBoxBlock;
+import com.anonymoushacker1279.immersiveweapons.block.decoration.CampChairBlock;
+import com.anonymoushacker1279.immersiveweapons.block.decoration.ShelfBlock;
+import com.anonymoushacker1279.immersiveweapons.block.base.CorrugatedBlock.CorrugatedBlockNormal;
+import com.anonymoushacker1279.immersiveweapons.block.misc.MedicStatueBlock;
+import com.anonymoushacker1279.immersiveweapons.block.misc.MinutemanStatueBlock;
+import com.anonymoushacker1279.immersiveweapons.block.trap.*;
+import com.anonymoushacker1279.immersiveweapons.block.decoration.WoodenTableBlock;
 import com.anonymoushacker1279.immersiveweapons.blockentity.*;
 import com.anonymoushacker1279.immersiveweapons.client.particle.SmokeBombParticleData;
 import com.anonymoushacker1279.immersiveweapons.client.particle.SmokeBombParticleType;
@@ -19,19 +30,36 @@ import com.anonymoushacker1279.immersiveweapons.entity.projectile.CustomArrowEnt
 import com.anonymoushacker1279.immersiveweapons.entity.projectile.MolotovEntity;
 import com.anonymoushacker1279.immersiveweapons.entity.projectile.MortarShellEntity;
 import com.anonymoushacker1279.immersiveweapons.entity.projectile.SmokeBombEntity;
-import com.anonymoushacker1279.immersiveweapons.item.ArrowItems.*;
-import com.anonymoushacker1279.immersiveweapons.item.*;
-import com.anonymoushacker1279.immersiveweapons.item.BottleItems.AlcoholBottleItem;
-import com.anonymoushacker1279.immersiveweapons.item.BottleItems.WineBottleItem;
-import com.anonymoushacker1279.immersiveweapons.item.BulletItems.*;
-import com.anonymoushacker1279.immersiveweapons.item.MoltenItems.*;
-import com.anonymoushacker1279.immersiveweapons.item.PikeItems.*;
-import com.anonymoushacker1279.immersiveweapons.item.TeslaItems.*;
-import com.anonymoushacker1279.immersiveweapons.item.VentusItems.*;
+import com.anonymoushacker1279.immersiveweapons.item.armor.*;
+import com.anonymoushacker1279.immersiveweapons.item.bottle.AlcoholBottleItem;
+import com.anonymoushacker1279.immersiveweapons.item.bottle.WineBottleItem;
 import com.anonymoushacker1279.immersiveweapons.item.crafting.SmallPartsRecipe;
 import com.anonymoushacker1279.immersiveweapons.item.crafting.TeslaSynthesizerRecipe;
+import com.anonymoushacker1279.immersiveweapons.item.fortitude.BandageItem;
+import com.anonymoushacker1279.immersiveweapons.item.fortitude.FirstAidKitItem;
+import com.anonymoushacker1279.immersiveweapons.item.fortitude.MorphineItem;
+import com.anonymoushacker1279.immersiveweapons.item.fortitude.PainkillerItem;
+import com.anonymoushacker1279.immersiveweapons.item.misc.ExplosiveChocolateBar;
+import com.anonymoushacker1279.immersiveweapons.item.misc.UsedSyringeItem;
+import com.anonymoushacker1279.immersiveweapons.item.pike.*;
+import com.anonymoushacker1279.immersiveweapons.item.projectile.arrow.*;
+import com.anonymoushacker1279.immersiveweapons.item.projectile.bullet.*;
+import com.anonymoushacker1279.immersiveweapons.item.projectile.gun.FlareGunItem;
+import com.anonymoushacker1279.immersiveweapons.item.projectile.gun.SimplePistolItem;
+import com.anonymoushacker1279.immersiveweapons.item.projectile.gun.SimpleShotgunItem;
+import com.anonymoushacker1279.immersiveweapons.item.projectile.throwable.MolotovItem;
+import com.anonymoushacker1279.immersiveweapons.item.projectile.throwable.SmokeBombItem;
+import com.anonymoushacker1279.immersiveweapons.item.tool.molten.*;
+import com.anonymoushacker1279.immersiveweapons.item.tool.tesla.*;
+import com.anonymoushacker1279.immersiveweapons.item.tool.ventus.*;
+import com.anonymoushacker1279.immersiveweapons.item.utility.BasicContainerItem;
+import com.anonymoushacker1279.immersiveweapons.item.utility.BlueprintItem;
+import com.anonymoushacker1279.immersiveweapons.item.utility.CustomSpawnEggItem;
 import com.anonymoushacker1279.immersiveweapons.potion.MorphineEffect;
 import com.anonymoushacker1279.immersiveweapons.util.*;
+import com.anonymoushacker1279.immersiveweapons.world.food.FoodItemProperties;
+import com.anonymoushacker1279.immersiveweapons.world.level.loot.LogShardsLootModifierHandler;
+import com.anonymoushacker1279.immersiveweapons.world.structures.*;
 import com.google.common.collect.Sets;
 import net.minecraft.core.particles.ParticleType;
 import net.minecraft.resources.ResourceLocation;
@@ -49,6 +77,8 @@ import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.levelgen.feature.StructureFeature;
+import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import net.minecraft.world.level.material.Material;
 import net.minecraftforge.common.ToolType;
 import net.minecraftforge.common.extensions.IForgeContainerType;
@@ -83,6 +113,8 @@ public class DeferredRegistryHandler {
 	public static final DeferredRegister<Biome> BIOMES = DeferredRegister.create(ForgeRegistries.BIOMES, ImmersiveWeapons.MOD_ID);
 	// Effect Register
 	public static final DeferredRegister<MobEffect> EFFECTS = DeferredRegister.create(ForgeRegistries.POTIONS, ImmersiveWeapons.MOD_ID);
+	// Structure Register
+	public static final DeferredRegister<StructureFeature<?>> STRUCTURES = DeferredRegister.create(ForgeRegistries.STRUCTURE_FEATURES, ImmersiveWeapons.MOD_ID);
 
 	/**
 	 * Initialize deferred registers.
@@ -100,6 +132,7 @@ public class DeferredRegistryHandler {
 		BLOCK_ENTITIES.register(modEventBus);
 		BIOMES.register(modEventBus);
 		EFFECTS.register(modEventBus);
+		STRUCTURES.register(modEventBus);
 	}
 
 	public static final CreativeModeTab ITEM_GROUP = new CreativeTabSorter("ImmersiveWeaponsTab");
@@ -131,13 +164,13 @@ public class DeferredRegistryHandler {
 	public static final RegistryObject<Item> VENTUS_SHOVEL = ITEMS.register("ventus_shovel", () -> new VentusShovel(CustomItemMaterials.VENTUS, 0, -2.9f, new Properties().tab(ITEM_GROUP)));
 	public static final RegistryObject<Item> VENTUS_HOE = ITEMS.register("ventus_hoe", () -> new VentusHoe(CustomItemMaterials.VENTUS, -3, 1.0f, new Properties().tab(ITEM_GROUP)));
 	public static final RegistryObject<Item> VENTUS_STAFF = ITEMS.register("ventus_staff", () -> new VentusStaff(new Properties().durability(300).tab(ITEM_GROUP)));
-	public static final RegistryObject<Item> WOOD_PIKE = ITEMS.register("wood_pike", () -> new WoodPikeItem((new Properties()).durability(59).tab(ITEM_GROUP), 4.0d, -2.6d));
-	public static final RegistryObject<Item> STONE_PIKE = ITEMS.register("stone_pike", () -> new StonePikeItem((new Properties()).durability(131).tab(ITEM_GROUP), 5.0d, -2.6d));
-	public static final RegistryObject<Item> GOLD_PIKE = ITEMS.register("gold_pike", () -> new GoldPikeItem((new Properties()).durability(32).tab(ITEM_GROUP), 4.0d, -2.6d));
-	public static final RegistryObject<Item> COPPER_PIKE = ITEMS.register("copper_pike", () -> new CopperPikeItem((new Properties()).durability(180).tab(ITEM_GROUP), 6.0d, -2.6d));
-	public static final RegistryObject<Item> IRON_PIKE = ITEMS.register("iron_pike", () -> new IronPikeItem((new Properties()).durability(250).tab(ITEM_GROUP), 6.0d, -2.6d));
-	public static final RegistryObject<Item> DIAMOND_PIKE = ITEMS.register("diamond_pike", () -> new DiamondPikeItem((new Properties()).durability(1561).tab(ITEM_GROUP), 7.0d, -2.6d));
-	public static final RegistryObject<Item> NETHERITE_PIKE = ITEMS.register("netherite_pike", () -> new NetheritePikeItem((new Properties()).durability(2031).tab(ITEM_GROUP).fireResistant(), 8.0d, -2.6d));
+	public static final RegistryObject<Item> WOOD_PIKE = ITEMS.register("wood_pike", () -> new WoodPikeItem(new Properties().durability(59).tab(ITEM_GROUP), 4.0d, -2.6d));
+	public static final RegistryObject<Item> STONE_PIKE = ITEMS.register("stone_pike", () -> new StonePikeItem(new Properties().durability(131).tab(ITEM_GROUP), 5.0d, -2.6d));
+	public static final RegistryObject<Item> GOLD_PIKE = ITEMS.register("gold_pike", () -> new GoldPikeItem(new Properties().durability(32).tab(ITEM_GROUP), 4.0d, -2.6d));
+	public static final RegistryObject<Item> COPPER_PIKE = ITEMS.register("copper_pike", () -> new CopperPikeItem(new Properties().durability(180).tab(ITEM_GROUP), 6.0d, -2.6d));
+	public static final RegistryObject<Item> IRON_PIKE = ITEMS.register("iron_pike", () -> new IronPikeItem(new Properties().durability(250).tab(ITEM_GROUP), 6.0d, -2.6d));
+	public static final RegistryObject<Item> DIAMOND_PIKE = ITEMS.register("diamond_pike", () -> new DiamondPikeItem(new Properties().durability(1561).tab(ITEM_GROUP), 7.0d, -2.6d));
+	public static final RegistryObject<Item> NETHERITE_PIKE = ITEMS.register("netherite_pike", () -> new NetheritePikeItem(new Properties().durability(2031).tab(ITEM_GROUP).fireResistant(), 8.0d, -2.6d));
 	public static final RegistryObject<Item> FLINTLOCK_PISTOL = ITEMS.register("flintlock_pistol", () -> new SimplePistolItem(new Properties().tab(ITEM_GROUP).durability(499)));
 	public static final RegistryObject<Item> BLUNDERBUSS = ITEMS.register("blunderbuss", () -> new SimpleShotgunItem(new Properties().tab(ITEM_GROUP).durability(449)));
 	public static final RegistryObject<Item> FLARE_GUN = ITEMS.register("flare_gun", () -> new FlareGunItem(new Properties().tab(ITEM_GROUP).durability(399)));
@@ -186,7 +219,7 @@ public class DeferredRegistryHandler {
 	public static final RegistryObject<Item> COPPER_MUSKET_BALL = ITEMS.register("copper_musket_ball", () -> new CopperBulletItem(new Properties().tab(ITEM_GROUP), 2.40d));
 	public static final RegistryObject<Item> IRON_MUSKET_BALL = ITEMS.register("iron_musket_ball", () -> new IronBulletItem(new Properties().tab(ITEM_GROUP), 2.65d));
 	public static final RegistryObject<Item> DIAMOND_MUSKET_BALL = ITEMS.register("diamond_musket_ball", () -> new DiamondBulletItem(new Properties().tab(ITEM_GROUP), 3.35d));
-	public static final RegistryObject<Item> NETHERITE_MUSKET_BALL = ITEMS.register("netherite_musket_ball", () -> new NetheriteBulletItem(new Properties().tab(ITEM_GROUP), 6.50d));
+	public static final RegistryObject<Item> NETHERITE_MUSKET_BALL = ITEMS.register("netherite_musket_ball", () -> new NetheriteBulletItem(new Properties().tab(ITEM_GROUP).fireResistant(), 6.50d));
 	public static final RegistryObject<Item> FLARE = ITEMS.register("flare", () -> new FlareItem(new Properties().tab(ITEM_GROUP), 0.1d));
 	public static final RegistryObject<Item> MORTAR_SHELL = ITEMS.register("mortar_shell", () -> new Item(new Properties().tab(ITEM_GROUP)));
 	public static final RegistryObject<Item> BLANK_BLUEPRINT = ITEMS.register("blank_blueprint", () -> new Item(new Properties().tab(ITEM_GROUP)));
@@ -208,10 +241,10 @@ public class DeferredRegistryHandler {
 	public static final RegistryObject<Item> BOTTLE_OF_ALCOHOL = ITEMS.register("bottle_of_alcohol", () -> new AlcoholBottleItem(new Properties().tab(ITEM_GROUP).stacksTo(16)));
 	public static final RegistryObject<Item> BOTTLE_OF_WINE = ITEMS.register("bottle_of_wine", () -> new WineBottleItem(new Properties().tab(ITEM_GROUP).stacksTo(16)));
 	public static final RegistryObject<Item> PLIERS = ITEMS.register("pliers", () -> new Item(new Properties().tab(ITEM_GROUP).stacksTo(1)));
-	public static final RegistryObject<Item> CHOCOLATE_BAR = ITEMS.register("chocolate_bar", () -> new Item(new Properties().tab(ITEM_GROUP).food(FoodItems.CHOCOLATE_BAR)));
-	public static final RegistryObject<Item> EXPLOSIVE_CHOCOLATE_BAR = ITEMS.register("explosive_chocolate_bar", () -> new ExplosiveChocolateBar(new Properties().tab(ITEM_GROUP).food(FoodItems.CHOCOLATE_BAR)));
+	public static final RegistryObject<Item> CHOCOLATE_BAR = ITEMS.register("chocolate_bar", () -> new Item(new Properties().tab(ITEM_GROUP).food(FoodItemProperties.CHOCOLATE_BAR)));
+	public static final RegistryObject<Item> EXPLOSIVE_CHOCOLATE_BAR = ITEMS.register("explosive_chocolate_bar", () -> new ExplosiveChocolateBar(new Properties().tab(ITEM_GROUP).food(FoodItemProperties.CHOCOLATE_BAR)));
 	public static final RegistryObject<Item> BANDAGE = ITEMS.register("bandage", () -> new BandageItem(new Properties().tab(ITEM_GROUP).stacksTo(16)));
-	public static final RegistryObject<Item> MRE = ITEMS.register("mre", () -> new Item(new Properties().tab(ITEM_GROUP).food(FoodItems.MRE)));
+	public static final RegistryObject<Item> MRE = ITEMS.register("mre", () -> new Item(new Properties().tab(ITEM_GROUP).food(FoodItemProperties.MRE)));
 	public static final RegistryObject<Item> PAINKILLERS = ITEMS.register("painkillers", () -> new PainkillerItem(new Properties().tab(ITEM_GROUP).stacksTo(24)));
 	public static final RegistryObject<Item> SYRINGE = ITEMS.register("syringe", () -> new Item(new Properties().tab(ITEM_GROUP).stacksTo(16)));
 	public static final RegistryObject<Item> MORPHINE = ITEMS.register("morphine", () -> new MorphineItem(new Properties().tab(ITEM_GROUP).stacksTo(16)));
@@ -438,7 +471,7 @@ public class DeferredRegistryHandler {
 	public static final RegistryObject<RecipeSerializer<?>> TESLA_SYNTHEZISER_RECIPE_SERIALIZER = RECIPE_SERIALIZER.register("tesla_synthesizer", TeslaSynthesizerRecipe.Serializer::new);
 
 	// Loot Table Modifiers
-	public static final RegistryObject<LootTableHandler.LogShardsLootModifierHandler.Serializer> WOOD_LOGS_MODIFIER = GLOBAL_LOOT_MODIFIER_SERIALIZER.register("log_shards", LootTableHandler.LogShardsLootModifierHandler.Serializer::new);
+	public static final RegistryObject<LogShardsLootModifierHandler.Serializer> WOOD_LOGS_MODIFIER = GLOBAL_LOOT_MODIFIER_SERIALIZER.register("log_shards", LogShardsLootModifierHandler.Serializer::new);
 
 	// Particles
 	public static final RegistryObject<ParticleType<SmokeBombParticleData>> SMOKE_BOMB_PARTICLE_TYPE = PARTICLE_TYPES.register("smoke_bomb", SmokeBombParticleType::new);
@@ -459,4 +492,15 @@ public class DeferredRegistryHandler {
 
 	// Effects
 	public static final RegistryObject<MobEffect> MORPHINE_EFFECT = EFFECTS.register("morphine", () -> new MorphineEffect(MobEffectCategory.NEUTRAL, 3484189));
+
+	// Structures
+	public static final RegistryObject<StructureFeature<NoneFeatureConfiguration>> ABANDONED_FACTORY_STRUCTURE = Structures.setupStructure("abandoned_factory", () -> (new AbandonedFactory(NoneFeatureConfiguration.CODEC)));
+	public static final RegistryObject<StructureFeature<NoneFeatureConfiguration>> PITFALL_TRAP_STRUCTURE = Structures.setupStructure("pitfall_trap", () -> (new PitfallTrap(NoneFeatureConfiguration.CODEC)));
+	public static final RegistryObject<StructureFeature<NoneFeatureConfiguration>> BEAR_TRAP_STRUCTURE = Structures.setupStructure("bear_trap", () -> (new BearTrap(NoneFeatureConfiguration.CODEC)));
+	public static final RegistryObject<StructureFeature<NoneFeatureConfiguration>> LANDMINE_TRAP_STRUCTURE = Structures.setupStructure("landmine_trap", () -> (new LandmineTrap(NoneFeatureConfiguration.CODEC)));
+	public static final RegistryObject<StructureFeature<NoneFeatureConfiguration>> UNDERGROUND_BUNKER_STRUCTURE = Structures.setupStructure("underground_bunker", () -> (new UndergroundBunker(NoneFeatureConfiguration.CODEC)));
+	public static final RegistryObject<StructureFeature<NoneFeatureConfiguration>> BATTLEFIELD_CAMP_STRUCTURE = Structures.setupStructure("battlefield_camp", () -> (new BattlefieldCamp(NoneFeatureConfiguration.CODEC)));
+	public static final RegistryObject<StructureFeature<NoneFeatureConfiguration>> BATTLEFIELD_VILLAGE_STRUCTURE = Structures.setupStructure("battlefield_village", () -> (new BattlefieldVillage(NoneFeatureConfiguration.CODEC)));
+	public static final RegistryObject<StructureFeature<NoneFeatureConfiguration>> CLOUD_ISLAND_STRUCTURE = Structures.setupStructure("cloud_island", () -> (new CloudIsland(NoneFeatureConfiguration.CODEC)));
+	public static final RegistryObject<StructureFeature<NoneFeatureConfiguration>> CAMPSITE_STRUCTURE = Structures.setupStructure("campsite", () -> (new Campsite(NoneFeatureConfiguration.CODEC)));
 }

@@ -5,16 +5,16 @@ import net.minecraft.world.entity.Mob;
 public class OpenFenceGateGoal extends InteractFenceGateGoal {
 
 	private final boolean closeGate;
-	private int closeGateTemporisation;
+	private int closeGateTemporising;
 
 	/**
 	 * Constructor for InteractFenceGateGoal.
-	 * @param entitylivingIn the <code>MobEntity</code> instance
+	 * @param mob the <code>Mob</code> instance
 	 * @param shouldClose if true, the gate will be closed behind the entity
 	 */
-	public OpenFenceGateGoal(Mob entitylivingIn, boolean shouldClose) {
-		super(entitylivingIn);
-		entity = entitylivingIn;
+	public OpenFenceGateGoal(Mob mob, boolean shouldClose) {
+		super(mob);
+		entity = mob;
 		closeGate = shouldClose;
 	}
 
@@ -24,7 +24,7 @@ public class OpenFenceGateGoal extends InteractFenceGateGoal {
 	 */
 	@Override
 	public boolean canContinueToUse() {
-		return closeGate && closeGateTemporisation > 0 && super.canContinueToUse();
+		return closeGate && closeGateTemporising > 0 && super.canContinueToUse();
 	}
 
 	/**
@@ -32,7 +32,7 @@ public class OpenFenceGateGoal extends InteractFenceGateGoal {
 	 */
 	@Override
 	public void start() {
-		closeGateTemporisation = 20;
+		closeGateTemporising = 20;
 		toggleGate(true);
 	}
 
@@ -49,7 +49,7 @@ public class OpenFenceGateGoal extends InteractFenceGateGoal {
 	 */
 	@Override
 	public void tick() {
-		--closeGateTemporisation;
+		--closeGateTemporising;
 		super.tick();
 	}
 }

@@ -2,9 +2,9 @@ package com.anonymoushacker1279.immersiveweapons;
 
 import com.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
 import com.anonymoushacker1279.immersiveweapons.init.DispenserBehaviorRegistry;
-import com.anonymoushacker1279.immersiveweapons.init.OreGeneratorHandler;
+import com.anonymoushacker1279.immersiveweapons.init.PostSetupHandler;
 import com.anonymoushacker1279.immersiveweapons.util.*;
-import com.anonymoushacker1279.immersiveweapons.world.gen.feature.structure.BattlefieldVillagePools;
+import com.anonymoushacker1279.immersiveweapons.world.level.levelgen.OreGeneratorHandler;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.valueproviders.ConstantFloat;
@@ -38,7 +38,6 @@ import net.minecraftforge.event.world.BiomeLoadingEvent;
 import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
@@ -65,15 +64,18 @@ public class ImmersiveWeapons {
 		// Load configuration
 		Config.setup(FMLPaths.CONFIGDIR.get().resolve(MOD_ID + ".toml"));
 
+		// Register surface builders
 		ConfiguredSurfaceBuilders.register();
+
+		// Initialize deferred registry
 		DeferredRegistryHandler.init();
 
+		// Register on the event bus
 		MinecraftForge.EVENT_BUS.register(this);
 
+		// Add event listeners
 		IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
-		Structures.DEFERRED_REGISTRY_STRUCTURE.register(modEventBus);
 		modEventBus.addListener(this::setup);
-
 		IEventBus forgeBus = MinecraftForge.EVENT_BUS;
 		forgeBus.addListener(EventPriority.NORMAL, this::worldLoadEvent);
 		forgeBus.addListener(EventPriority.HIGH, this::onBiomeLoading);
@@ -96,9 +98,9 @@ public class ImmersiveWeapons {
 	}
 
 	/**
-	 * Create a RegistryKey for Biomes.
+	 * Create a ResourceKey for Biomes.
 	 * @param biome the <code>Biome</code> being registered
-	 * @return RegistryKey
+	 * @return ResourceKey extending Biome
 	 */
 	private static ResourceKey<Biome> key(Biome biome) {
 		return ResourceKey.create(ForgeRegistries.Keys.BIOMES, Objects.requireNonNull(ForgeRegistries.BIOMES.getKey(biome), "Biome registry name was null"));
@@ -109,19 +111,16 @@ public class ImmersiveWeapons {
 	 * Most of this is registry related.
 	 * @param event the <code>FMLCommonSetupEvent</code> instance
 	 */
-	@SubscribeEvent
 	public void setup(FMLCommonSetupEvent event) {
 		OreGeneratorHandler.init(event);
 		DispenserBehaviorRegistry.init();
-		BattlefieldVillagePools.init();
 		event.enqueueWork(() -> {
 			setupBiome(DeferredRegistryHandler.BATTLEFIELD.get(), BiomeManager.BiomeType.WARM, 3, Type.PLAINS, Type.OVERWORLD);
 			Structures.setupStructures();
 			Structures.registerAllPieces();
 			ConfiguredStructures.registerConfiguredStructures();
-			Structures.init();
 		});
-		AddAttributesAfterSetup.init();
+		PostSetupHandler.init();
 	}
 
 	/**
@@ -129,7 +128,6 @@ public class ImmersiveWeapons {
 	 * Configures custom ores, carvers, spawns, structures, etc.
 	 * @param event the <code>BiomeLoadingEvent</code> instance
 	 */
-	@SubscribeEvent
 	public void onBiomeLoading(BiomeLoadingEvent event) {
 		// Biome modifications
 		BiomeGenerationSettingsBuilder generation = event.getGeneration();
@@ -182,7 +180,7 @@ public class ImmersiveWeapons {
 	 *     to contain our structures.
 	 * @param event the <code>WorldEvent.Load</code> instance
 	 */
-	private void worldLoadEvent(WorldEvent.Load event) {
+	public void worldLoadEvent(WorldEvent.Load event) {
 		if (event.getWorld() instanceof ServerLevel serverWorld) {
 
 			if (serverWorld.getChunkSource().getGenerator() instanceof FlatLevelSource &&
@@ -191,15 +189,15 @@ public class ImmersiveWeapons {
 			}
 
 			Map<StructureFeature<?>, StructureFeatureConfiguration> tempMap = new HashMap<>(serverWorld.getChunkSource().generator.getSettings().structureConfig());
-			tempMap.put(Structures.ABANDONED_FACTORY.get(), StructureSettings.DEFAULTS.get(Structures.ABANDONED_FACTORY.get()));
-			tempMap.put(Structures.PITFALL_TRAP.get(), StructureSettings.DEFAULTS.get(Structures.PITFALL_TRAP.get()));
-			tempMap.put(Structures.BEAR_TRAP.get(), StructureSettings.DEFAULTS.get(Structures.BEAR_TRAP.get()));
-			tempMap.put(Structures.LANDMINE_TRAP.get(), StructureSettings.DEFAULTS.get(Structures.LANDMINE_TRAP.get()));
-			tempMap.put(Structures.UNDERGROUND_BUNKER.get(), StructureSettings.DEFAULTS.get(Structures.UNDERGROUND_BUNKER.get()));
-			tempMap.put(Structures.BATTLEFIELD_CAMP.get(), StructureSettings.DEFAULTS.get(Structures.BATTLEFIELD_CAMP.get()));
-			tempMap.put(Structures.BATTLEFIELD_VILLAGE.get(), StructureSettings.DEFAULTS.get(Structures.BATTLEFIELD_VILLAGE.get()));
-			tempMap.put(Structures.CLOUD_ISLAND.get(), StructureSettings.DEFAULTS.get(Structures.CLOUD_ISLAND.get()));
-			tempMap.put(Structures.CAMPSITE.get(), StructureSettings.DEFAULTS.get(Structures.CAMPSITE.get()));
+			tempMap.put(DeferredRegistryHandler.ABANDONED_FACTORY_STRUCTURE.get(), StructureSettings.DEFAULTS.get(DeferredRegistryHandler.ABANDONED_FACTORY_STRUCTURE.get()));
+			tempMap.put(DeferredRegistryHandler.PITFALL_TRAP_STRUCTURE.get(), StructureSettings.DEFAULTS.get(DeferredRegistryHandler.PITFALL_TRAP_STRUCTURE.get()));
+			tempMap.put(DeferredRegistryHandler.BEAR_TRAP_STRUCTURE.get(), StructureSettings.DEFAULTS.get(DeferredRegistryHandler.BEAR_TRAP_STRUCTURE.get()));
+			tempMap.put(DeferredRegistryHandler.LANDMINE_TRAP_STRUCTURE.get(), StructureSettings.DEFAULTS.get(DeferredRegistryHandler.LANDMINE_TRAP_STRUCTURE.get()));
+			tempMap.put(DeferredRegistryHandler.UNDERGROUND_BUNKER_STRUCTURE.get(), StructureSettings.DEFAULTS.get(DeferredRegistryHandler.UNDERGROUND_BUNKER_STRUCTURE.get()));
+			tempMap.put(DeferredRegistryHandler.BATTLEFIELD_CAMP_STRUCTURE.get(), StructureSettings.DEFAULTS.get(DeferredRegistryHandler.BATTLEFIELD_CAMP_STRUCTURE.get()));
+			tempMap.put(DeferredRegistryHandler.BATTLEFIELD_VILLAGE_STRUCTURE.get(), StructureSettings.DEFAULTS.get(DeferredRegistryHandler.BATTLEFIELD_VILLAGE_STRUCTURE.get()));
+			tempMap.put(DeferredRegistryHandler.CLOUD_ISLAND_STRUCTURE.get(), StructureSettings.DEFAULTS.get(DeferredRegistryHandler.CLOUD_ISLAND_STRUCTURE.get()));
+			tempMap.put(DeferredRegistryHandler.CAMPSITE_STRUCTURE.get(), StructureSettings.DEFAULTS.get(DeferredRegistryHandler.CAMPSITE_STRUCTURE.get()));
 			serverWorld.getChunkSource().generator.getSettings().structureConfig = tempMap;
 		}
 	}

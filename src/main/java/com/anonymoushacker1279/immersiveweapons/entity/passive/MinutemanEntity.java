@@ -6,6 +6,7 @@ import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.Level;
+import org.jetbrains.annotations.NotNull;
 
 public class MinutemanEntity extends AbstractMinutemanEntity {
 
@@ -42,7 +43,7 @@ public class MinutemanEntity extends AbstractMinutemanEntity {
 	 * @return SoundEvent
 	 */
 	@Override
-	protected SoundEvent getHurtSound(DamageSource damageSourceIn) {
+	protected SoundEvent getHurtSound(@NotNull DamageSource damageSourceIn) {
 		return DeferredRegistryHandler.DYING_SOLDIER_HURT.get();
 	}
 
@@ -71,7 +72,7 @@ public class MinutemanEntity extends AbstractMinutemanEntity {
 	 * @param recentlyHitIn if the entity was recently hit
 	 */
 	@Override
-	protected void dropCustomDeathLoot(DamageSource source, int looting, boolean recentlyHitIn) {
+	protected void dropCustomDeathLoot(@NotNull DamageSource source, int looting, boolean recentlyHitIn) {
 		super.dropCustomDeathLoot(source, looting, recentlyHitIn);
 		int lootingModifier = looting * 2;
 		if (lootingModifier >= 85) {

@@ -12,7 +12,7 @@ import net.minecraft.world.level.levelgen.surfacebuilders.SurfaceBuilderBaseConf
 
 public class ConfiguredSurfaceBuilders {
 
-	public static ResourceKey<ConfiguredSurfaceBuilder<?>> BATTLEFIELD = key("battlefield");
+	public static final ResourceKey<ConfiguredSurfaceBuilder<?>> BATTLEFIELD = key("battlefield");
 
 	/**
 	 * Register surface builders.
@@ -27,9 +27,9 @@ public class ConfiguredSurfaceBuilders {
 	}
 
 	/**
-	 * Create registry keys.
+	 * Create resource keys.
 	 * @param name the name
-	 * @return RegistryKey extending ConfiguredSurfaceBuilder
+	 * @return ResourceKey extending ConfiguredSurfaceBuilder
 	 */
 	private static ResourceKey<ConfiguredSurfaceBuilder<?>> key(String name) {
 		return ResourceKey.create(Registry.CONFIGURED_SURFACE_BUILDER_REGISTRY, new ResourceLocation(ImmersiveWeapons.MOD_ID, name));
@@ -37,7 +37,7 @@ public class ConfiguredSurfaceBuilders {
 
 	/**
 	 * Register a configured surface builder.
-	 * @param key the <code>RegistryKey</code>, must extend ConfiguredSurfaceBuilder
+	 * @param key the <code>ResourceKey</code>, must extend ConfiguredSurfaceBuilder
 	 * @param configuredSurfaceBuilder the <code>ConfiguredSurfaceBuilder</code> instance
 	 */
 	private static void register(ResourceKey<ConfiguredSurfaceBuilder<?>> key, ConfiguredSurfaceBuilder<?> configuredSurfaceBuilder) {

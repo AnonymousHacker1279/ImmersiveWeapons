@@ -8,8 +8,8 @@ import net.minecraftforge.registries.ObjectHolder;
 public class CustomContainerHolder {
 
 	@ObjectHolder("small_parts_table")
-	public static MenuType<SmallPartsContainer> SMALL_PARTS_CONTAINER = null;
+	public static final MenuType<SmallPartsContainer> SMALL_PARTS_CONTAINER = null;
 
 	@ObjectHolder("tesla_synthesizer")
-	public static MenuType<TeslaSynthesizerContainer> TESLA_SYNTHESIZER_CONTAINER = null;
+	public static final MenuType<TeslaSynthesizerContainer> TESLA_SYNTHESIZER_CONTAINER = null;
 }

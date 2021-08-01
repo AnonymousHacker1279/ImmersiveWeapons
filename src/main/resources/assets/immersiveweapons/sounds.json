@@ -54,18 +54,6 @@
 			{
 				"name": "immersiveweapons:bullet/bullet_whizz_3",
 				"stream": false
-			},
-			{
-				"name": "immersiveweapons:bullet/bullet_whizz_4",
-				"stream": false
-			},
-			{
-				"name": "immersiveweapons:bullet/bullet_whizz_5",
-				"stream": false
-			},
-			{
-				"name": "immersiveweapons:bullet/bullet_whizz_6",
-				"stream": false
 			}
 		]
 	},
@@ -204,14 +192,6 @@
 			{
 				"name": "immersiveweapons:entity/dying_soldier/ambient/ambient_3",
 				"stream": false
-			},
-			{
-				"name": "immersiveweapons:entity/dying_soldier/ambient/ambient_4",
-				"stream": false
-			},
-			{
-				"name": "immersiveweapons:entity/dying_soldier/ambient/ambient_5",
-				"stream": false
 			}
 		]
 	},
@@ -233,22 +213,6 @@
 			},
 			{
 				"name": "immersiveweapons:entity/dying_soldier/step/step_4",
-				"stream": false
-			},
-			{
-				"name": "immersiveweapons:entity/dying_soldier/step/step_5",
-				"stream": false
-			},
-			{
-				"name": "immersiveweapons:entity/dying_soldier/step/step_6",
-				"stream": false
-			},
-			{
-				"name": "immersiveweapons:entity/dying_soldier/step/step_7",
-				"stream": false
-			},
-			{
-				"name": "immersiveweapons:entity/dying_soldier/step/step_8",
 				"stream": false
 			}
 		]
@@ -277,14 +241,6 @@
 			},
 			{
 				"name": "immersiveweapons:entity/dying_soldier/hurt/hurt_3",
-				"stream": false
-			},
-			{
-				"name": "immersiveweapons:entity/dying_soldier/hurt/hurt_4",
-				"stream": false
-			},
-			{
-				"name": "immersiveweapons:entity/dying_soldier/hurt/hurt_5",
 				"stream": false
 			}
 		]
@@ -370,18 +326,6 @@
 			{
 				"name": "immersiveweapons:entity/wandering_warrior/hurt/hurt_3",
 				"stream": false
-			},
-			{
-				"name": "immersiveweapons:entity/wandering_warrior/hurt/hurt_4",
-				"stream": false
-			},
-			{
-				"name": "immersiveweapons:entity/wandering_warrior/hurt/hurt_5",
-				"stream": false
-			},
-			{
-				"name": "immersiveweapons:entity/wandering_warrior/hurt/hurt_6",
-				"stream": false
 			}
 		]
 	},
@@ -413,22 +357,6 @@
 			},
 			{
 				"name": "immersiveweapons:entity/wandering_warrior/step/step_4",
-				"stream": false
-			},
-			{
-				"name": "immersiveweapons:entity/wandering_warrior/step/step_5",
-				"stream": false
-			},
-			{
-				"name": "immersiveweapons:entity/wandering_warrior/step/step_6",
-				"stream": false
-			},
-			{
-				"name": "immersiveweapons:entity/wandering_warrior/step/step_7",
-				"stream": false
-			},
-			{
-				"name": "immersiveweapons:entity/wandering_warrior/step/step_8",
 				"stream": false
 			}
 		]

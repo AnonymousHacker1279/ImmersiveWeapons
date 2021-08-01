@@ -88,7 +88,7 @@ public abstract class AbstractWanderingWarriorEntity extends Monster {
 	 * @param blockIn the <code>BlockState</code> of the block being stepped on
 	 */
 	@Override
-	protected void playStepSound(BlockPos pos, BlockState blockIn) {
+	protected void playStepSound(@NotNull BlockPos pos, @NotNull BlockState blockIn) {
 		playSound(getStepSound(), 0.15F, 1.0F);
 	}
 
@@ -110,7 +110,7 @@ public abstract class AbstractWanderingWarriorEntity extends Monster {
 	 * @param difficulty the <code>DifficultyInstance</code> of the world
 	 */
 	@Override
-	protected void populateDefaultEquipmentSlots(DifficultyInstance difficulty) {
+	protected void populateDefaultEquipmentSlots(@NotNull DifficultyInstance difficulty) {
 		super.populateDefaultEquipmentSlots(difficulty);
 		// Populate weapons
 		float random = this.random.nextFloat();
@@ -196,7 +196,7 @@ public abstract class AbstractWanderingWarriorEntity extends Monster {
 	 * @param compound the <code>CompoundNBT</code> to read from
 	 */
 	@Override
-	public void readAdditionalSaveData(CompoundTag compound) {
+	public void readAdditionalSaveData(@NotNull CompoundTag compound) {
 		super.readAdditionalSaveData(compound);
 	}
 }

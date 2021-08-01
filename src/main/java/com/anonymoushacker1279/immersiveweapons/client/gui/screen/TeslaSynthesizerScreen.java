@@ -8,6 +8,7 @@ import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
+import org.jetbrains.annotations.NotNull;
 
 public class TeslaSynthesizerScreen extends AbstractContainerScreen<TeslaSynthesizerContainer> {
 
@@ -33,7 +34,7 @@ public class TeslaSynthesizerScreen extends AbstractContainerScreen<TeslaSynthes
 	 * @param mouseY the mouse's Y position
 	 */
 	@Override
-	protected void renderBg(PoseStack matrixStack, float partialTicks, int mouseX, int mouseY) {
+	protected void renderBg(@NotNull PoseStack matrixStack, float partialTicks, int mouseX, int mouseY) {
 		RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
 		RenderSystem.setShaderTexture(0, GUI_TEXTURE);
 		int i = leftPos;
@@ -55,7 +56,7 @@ public class TeslaSynthesizerScreen extends AbstractContainerScreen<TeslaSynthes
 	 * @param y the Y position to render at
 	 */
 	@Override
-	protected void renderLabels(PoseStack matrixStack, int x, int y) {
+	protected void renderLabels(@NotNull PoseStack matrixStack, int x, int y) {
 		RenderSystem.disableBlend();
 		super.renderLabels(matrixStack, x, y);
 	}
@@ -68,7 +69,7 @@ public class TeslaSynthesizerScreen extends AbstractContainerScreen<TeslaSynthes
 	 * @param partialTicks the current partial tick
 	 */
 	@Override
-	public void render(PoseStack matrixStack, int mouseX, int mouseY, float partialTicks) {
+	public void render(@NotNull PoseStack matrixStack, int mouseX, int mouseY, float partialTicks) {
 		renderBackground(matrixStack);
 		super.render(matrixStack, mouseX, mouseY, partialTicks);
 		renderTooltip(matrixStack, mouseX, mouseY);

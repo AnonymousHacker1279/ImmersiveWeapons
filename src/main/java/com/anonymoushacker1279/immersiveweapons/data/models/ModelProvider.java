@@ -11,6 +11,7 @@ import net.minecraft.data.DataProvider;
 import net.minecraft.data.HashCache;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
+import org.jetbrains.annotations.NotNull;
 
 import java.nio.file.Path;
 import java.util.Map;
@@ -40,7 +41,7 @@ public class ModelProvider implements DataProvider {
 	 * @param hashCache the <code>HashCache</code> instance
 	 */
 	@Override
-	public void run(HashCache hashCache) {
+	public void run(@NotNull HashCache hashCache) {
 		Path getOutputFolder = generator.getOutputFolder();
 		Map<ResourceLocation, Supplier<JsonElement>> locationSupplierHashMap = Maps.newHashMap();
 		Set<Item> itemHashSet = Sets.newHashSet();
@@ -95,7 +96,7 @@ public class ModelProvider implements DataProvider {
 	 * @return String
 	 */
 	@Override
-	public String getName() {
+	public @NotNull String getName() {
 		return "Model Provider";
 	}
 }
