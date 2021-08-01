@@ -36,6 +36,7 @@ import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.wrapper.SidedInvWrapper;
+import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
 import java.util.Map;
@@ -99,16 +100,8 @@ public abstract class AbstractTeslaSynthesizerBlockEntity extends BaseContainerB
 	 */
 	@Nullable
 	@Override
-	public BlockEntity newBlockEntity(BlockPos blockPos, BlockState blockState) {
+	public BlockEntity newBlockEntity(@NotNull BlockPos blockPos, @NotNull BlockState blockState) {
 		return new TeslaSynthesizerBlockEntity(blockPos, blockState);
-	}
-
-	/**
-	 * Get the burn time map.
-	 * @return Map extending Item, Integer
-	 */
-	private static Map<Item, Integer> getBurnTimes() {
-		return burnTimesMap;
 	}
 
 	/**
@@ -145,9 +138,8 @@ public abstract class AbstractTeslaSynthesizerBlockEntity extends BaseContainerB
 	private static int getBurnTime(ItemStack fuel) {
 		if (!fuel.isEmpty()) {
 			Item item = fuel.getItem();
-			Map<Item, Integer> map = getBurnTimes();
-			if (map.containsKey(item)) {
-				return map.get(item);
+			if (burnTimesMap.containsKey(item)) {
+				return burnTimesMap.get(item);
 			}
 		}
 		return 0;
@@ -159,15 +151,14 @@ public abstract class AbstractTeslaSynthesizerBlockEntity extends BaseContainerB
 	 * @return boolean
 	 */
 	public static boolean isFuel(ItemStack stack) {
-		Map<Item, Integer> map = getBurnTimes();
-		if (map.containsKey(stack.getItem())) {
+		if (burnTimesMap.containsKey(stack.getItem())) {
 			return getBurnTime(stack) > 0;
 		}
 		return false;
 	}
 
 	/**
-	 * Setup the burn time map
+	 * Set up the burn time map
 	 */
 	private void setupBurnTimes() {
 		addItemBurnTime(burnTimesMap, DeferredRegistryHandler.MOLTEN_INGOT.get(), 24000); // 20 minutes
@@ -186,7 +177,7 @@ public abstract class AbstractTeslaSynthesizerBlockEntity extends BaseContainerB
 	 * @param nbt the <code>CompoundNBT</code> to load
 	 */
 	@Override
-	public void load(CompoundTag nbt) {
+	public void load(@NotNull CompoundTag nbt) {
 		super.load(nbt);
 		items = NonNullList.withSize(getContainerSize(), ItemStack.EMPTY);
 		ContainerHelper.loadAllItems(nbt, items);
@@ -207,7 +198,7 @@ public abstract class AbstractTeslaSynthesizerBlockEntity extends BaseContainerB
 	 * @param nbt the <code>CompoundNBT</code> to save
 	 */
 	@Override
-	public CompoundTag save(CompoundTag nbt) {
+	public @NotNull CompoundTag save(@NotNull CompoundTag nbt) {
 		super.save(nbt);
 		nbt.putInt("BurnTime", burnTime);
 		nbt.putInt("CookTime", cookTime);
@@ -275,8 +266,8 @@ public abstract class AbstractTeslaSynthesizerBlockEntity extends BaseContainerB
 	}
 
 	/**
-	 * Determines if the recipe can smelt.
-	 * @param recipeIn the <code>IRecipe</code> instance
+	 * Determines if the recipe can be smelt.
+	 * @param recipeIn the <code>Recipe</code> instance
 	 * @return boolean
 	 */
 	private boolean canSmelt(@Nullable Recipe<?> recipeIn) {
@@ -347,7 +338,7 @@ public abstract class AbstractTeslaSynthesizerBlockEntity extends BaseContainerB
 	 * @return int[]
 	 */
 	@Override
-	public int[] getSlotsForFace(Direction side) {
+	public int @NotNull [] getSlotsForFace(@NotNull Direction side) {
 		if (side == Direction.DOWN) {
 			return SLOTS_DOWN;
 		} else {
@@ -387,7 +378,7 @@ public abstract class AbstractTeslaSynthesizerBlockEntity extends BaseContainerB
 	 * @return boolean
 	 */
 	@Override
-	public boolean canPlaceItemThroughFace(int index, ItemStack itemStack, Direction direction) {
+	public boolean canPlaceItemThroughFace(int index, @NotNull ItemStack itemStack, Direction direction) {
 		return false;
 	}
 
@@ -399,7 +390,7 @@ public abstract class AbstractTeslaSynthesizerBlockEntity extends BaseContainerB
 	 * @return boolean
 	 */
 	@Override
-	public boolean canTakeItemThroughFace(int index, ItemStack itemStack, Direction direction) {
+	public boolean canTakeItemThroughFace(int index, @NotNull ItemStack itemStack, @NotNull Direction direction) {
 		return false;
 	}
 
@@ -409,7 +400,7 @@ public abstract class AbstractTeslaSynthesizerBlockEntity extends BaseContainerB
 	 * @return ItemStack
 	 */
 	@Override
-	public ItemStack getItem(int index) {
+	public @NotNull ItemStack getItem(int index) {
 		return items.get(index);
 	}
 
@@ -420,7 +411,7 @@ public abstract class AbstractTeslaSynthesizerBlockEntity extends BaseContainerB
 	 * @return ItemStack
 	 */
 	@Override
-	public ItemStack removeItem(int index, int count) {
+	public @NotNull ItemStack removeItem(int index, int count) {
 		return ContainerHelper.removeItem(items, index, count);
 	}
 
@@ -430,7 +421,7 @@ public abstract class AbstractTeslaSynthesizerBlockEntity extends BaseContainerB
 	 * @return ItemStack
 	 */
 	@Override
-	public ItemStack removeItemNoUpdate(int index) {
+	public @NotNull ItemStack removeItemNoUpdate(int index) {
 		return ContainerHelper.takeItem(items, index);
 	}
 
@@ -462,7 +453,7 @@ public abstract class AbstractTeslaSynthesizerBlockEntity extends BaseContainerB
 	 * @return boolean
 	 */
 	@Override
-	public boolean stillValid(Player player) {
+	public boolean stillValid(@NotNull Player player) {
 		if ((level != null ? level.getBlockEntity(worldPosition) : null) != this) {
 			return false;
 		} else {
@@ -476,7 +467,7 @@ public abstract class AbstractTeslaSynthesizerBlockEntity extends BaseContainerB
 	 * @param stack the <code>ItemStack</code> to insert
 	 */
 	@Override
-	public boolean canPlaceItem(int index, ItemStack stack) {
+	public boolean canPlaceItem(int index, @NotNull ItemStack stack) {
 		return false;
 	}
 
@@ -515,7 +506,7 @@ public abstract class AbstractTeslaSynthesizerBlockEntity extends BaseContainerB
 	 * @param player the <code>PlayerEntity</code> instance
 	 */
 	@Override
-	public void awardUsedRecipes(Player player) {
+	public void awardUsedRecipes(@NotNull Player player) {
 	}
 
 	/**
@@ -523,7 +514,7 @@ public abstract class AbstractTeslaSynthesizerBlockEntity extends BaseContainerB
 	 * @param helper the <code>RecipeItemHelper</code> instance
 	 */
 	@Override
-	public void fillStackedContents(StackedContents helper) {
+	public void fillStackedContents(@NotNull StackedContents helper) {
 		for (ItemStack itemstack : items) {
 			helper.accountStack(itemstack);
 		}
@@ -537,7 +528,7 @@ public abstract class AbstractTeslaSynthesizerBlockEntity extends BaseContainerB
 	 * @return LazyOptional
 	 */
 	@Override
-	public <T> LazyOptional<T> getCapability(Capability<T> capability, @Nullable Direction facing) {
+	public <T> @NotNull LazyOptional<T> getCapability(@NotNull Capability<T> capability, @Nullable Direction facing) {
 		if (!remove && facing != null && capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
 			if (facing == Direction.UP)
 				return handlers[0].cast();

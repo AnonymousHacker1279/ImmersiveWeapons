@@ -4,6 +4,7 @@ import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.particle.Particle;
 import net.minecraft.client.particle.ParticleProvider;
 import net.minecraft.client.particle.SpriteSet;
+import org.jetbrains.annotations.NotNull;
 
 public class SmokeBombParticleFactory implements ParticleProvider<SmokeBombParticleData> {
 
@@ -30,7 +31,7 @@ public class SmokeBombParticleFactory implements ParticleProvider<SmokeBombParti
 	 * @return Particle
 	 */
 	@Override
-	public Particle createParticle(SmokeBombParticleData smokeBombParticleData, ClientLevel world, double xPos, double yPos, double zPos, double xVelocity, double yVelocity, double zVelocity) {
+	public Particle createParticle(SmokeBombParticleData smokeBombParticleData, @NotNull ClientLevel world, double xPos, double yPos, double zPos, double xVelocity, double yVelocity, double zVelocity) {
 		SmokeBombParticle newParticle = new SmokeBombParticle(world, xPos, yPos, zPos, xVelocity, yVelocity, zVelocity,
 				smokeBombParticleData.getTint(), smokeBombParticleData.getDiameter()
 		);

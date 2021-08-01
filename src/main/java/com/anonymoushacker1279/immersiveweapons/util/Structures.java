@@ -1,6 +1,7 @@
 package com.anonymoushacker1279.immersiveweapons.util;
 
 import com.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
+import com.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
 import com.anonymoushacker1279.immersiveweapons.world.structures.*;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
@@ -9,43 +10,22 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.levelgen.StructureSettings;
 import net.minecraft.world.level.levelgen.feature.StructureFeature;
 import net.minecraft.world.level.levelgen.feature.StructurePieceType;
-import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import net.minecraft.world.level.levelgen.feature.configurations.StructureFeatureConfiguration;
-import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.fmllegacy.RegistryObject;
-import net.minecraftforge.registries.DeferredRegister;
-import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.Objects;
 import java.util.function.Supplier;
 
 public class Structures {
 
-	public static final DeferredRegister<StructureFeature<?>> DEFERRED_REGISTRY_STRUCTURE = DeferredRegister.create(ForgeRegistries.STRUCTURE_FEATURES, ImmersiveWeapons.MOD_ID);
-	public static final RegistryObject<StructureFeature<NoneFeatureConfiguration>> ABANDONED_FACTORY = setupStructure("abandoned_factory", () -> (new AbandonedFactory(NoneFeatureConfiguration.CODEC)));
-	public static final RegistryObject<StructureFeature<NoneFeatureConfiguration>> PITFALL_TRAP = setupStructure("pitfall_trap", () -> (new PitfallTrap(NoneFeatureConfiguration.CODEC)));
-	public static final RegistryObject<StructureFeature<NoneFeatureConfiguration>> BEAR_TRAP = setupStructure("bear_trap", () -> (new BearTrap(NoneFeatureConfiguration.CODEC)));
-	public static final RegistryObject<StructureFeature<NoneFeatureConfiguration>> LANDMINE_TRAP = setupStructure("landmine_trap", () -> (new LandmineTrap(NoneFeatureConfiguration.CODEC)));
-	public static final RegistryObject<StructureFeature<NoneFeatureConfiguration>> UNDERGROUND_BUNKER = setupStructure("underground_bunker", () -> (new UndergroundBunker(NoneFeatureConfiguration.CODEC)));
-	public static final RegistryObject<StructureFeature<NoneFeatureConfiguration>> BATTLEFIELD_CAMP = setupStructure("battlefield_camp", () -> (new BattlefieldCamp(NoneFeatureConfiguration.CODEC)));
-	public static final RegistryObject<StructureFeature<NoneFeatureConfiguration>> BATTLEFIELD_VILLAGE = setupStructure("battlefield_village", () -> (new BattlefieldVillage(NoneFeatureConfiguration.CODEC)));
-	public static final RegistryObject<StructureFeature<NoneFeatureConfiguration>> CLOUD_ISLAND = setupStructure("cloud_island", () -> (new CloudIsland(NoneFeatureConfiguration.CODEC)));
-	public static final RegistryObject<StructureFeature<NoneFeatureConfiguration>> CAMPSITE = setupStructure("campsite", () -> (new Campsite(NoneFeatureConfiguration.CODEC)));
-	public static StructurePieceType AF = AbandonedFactoryPieces.Piece::new;
-	public static StructurePieceType PT = PitfallTrapPieces.Piece::new;
-	public static StructurePieceType BT = BearTrapPieces.Piece::new;
-	public static StructurePieceType LT = LandmineTrapPieces.Piece::new;
-	public static StructurePieceType UB = UndergroundBunkerPieces.Piece::new;
-	public static StructurePieceType BF_C = BattlefieldCampPieces.Piece::new;
-	public static StructurePieceType CI = CloudIslandPieces.Piece::new;
-	public static StructurePieceType CS = CampsitePieces.Piece::new;
-
-	/**
-	 * Initialize the deferred registry structures.
-	 */
-	public static void init() {
-		DEFERRED_REGISTRY_STRUCTURE.register(FMLJavaModLoadingContext.get().getModEventBus());
-	}
+	public static final StructurePieceType AF = AbandonedFactoryPieces.Piece::new;
+	public static final StructurePieceType PT = PitfallTrapPieces.Piece::new;
+	public static final StructurePieceType BT = BearTrapPieces.Piece::new;
+	public static final StructurePieceType LT = LandmineTrapPieces.Piece::new;
+	public static final StructurePieceType UB = UndergroundBunkerPieces.Piece::new;
+	public static final StructurePieceType BF_C = BattlefieldCampPieces.Piece::new;
+	public static final StructurePieceType CI = CloudIslandPieces.Piece::new;
+	public static final StructurePieceType CS = CampsitePieces.Piece::new;
 
 	/**
 	 * Setup a structure.
@@ -53,8 +33,8 @@ public class Structures {
 	 * @param structure the <code>Supplier</code> for the structure
 	 * @return RegistryObject
 	 */
-	private static <T extends StructureFeature<?>> RegistryObject<T> setupStructure(String name, Supplier<T> structure) {
-		return DEFERRED_REGISTRY_STRUCTURE.register(name, structure);
+	public static <T extends StructureFeature<?>> RegistryObject<T> setupStructure(String name, Supplier<T> structure) {
+		return DeferredRegistryHandler.STRUCTURES.register(name, structure);
 	}
 
 	/**
@@ -62,63 +42,63 @@ public class Structures {
 	 */
 	public static void setupStructures() {
 		setupStructure(
-				ABANDONED_FACTORY.get(),
+				DeferredRegistryHandler.ABANDONED_FACTORY_STRUCTURE.get(),
 				new StructureFeatureConfiguration(
 						Config.MAX_ABANDONED_FACTORY_DISTANCE.get(),
 						Config.MIN_ABANDONED_FACTORY_DISTANCE.get(),
 						959874384),
 				true);
 		setupStructure(
-				PITFALL_TRAP.get(),
+				DeferredRegistryHandler.PITFALL_TRAP_STRUCTURE.get(),
 				new StructureFeatureConfiguration(
 						Config.MAX_PITFALL_TRAP_DISTANCE.get(),
 						Config.MIN_PITFALL_TRAP_DISTANCE.get(),
 						875412395),
 				false);
 		setupStructure(
-				BEAR_TRAP.get(),
+				DeferredRegistryHandler.BEAR_TRAP_STRUCTURE.get(),
 				new StructureFeatureConfiguration(
 						Config.MAX_BEAR_TRAP_DISTANCE.get(),
 						Config.MIN_BEAR_TRAP_DISTANCE.get(),
 						794532168),
 				false);
 		setupStructure(
-				LANDMINE_TRAP.get(),
+				DeferredRegistryHandler.LANDMINE_TRAP_STRUCTURE.get(),
 				new StructureFeatureConfiguration(
 						Config.MAX_LANDMINE_TRAP_DISTANCE.get(),
 						Config.MIN_LANDMINE_TRAP_DISTANCE.get(),
 						959874384),
 				true);
 		setupStructure(
-				UNDERGROUND_BUNKER.get(),
+				DeferredRegistryHandler.UNDERGROUND_BUNKER_STRUCTURE.get(),
 				new StructureFeatureConfiguration(
 						Config.MAX_UNDERGROUND_BUNKER_DISTANCE.get(),
 						Config.MIN_UNDERGROUND_BUNKER_DISTANCE.get(),
 						548796135),
 				false);
 		setupStructure(
-				BATTLEFIELD_CAMP.get(),
+				DeferredRegistryHandler.BATTLEFIELD_CAMP_STRUCTURE.get(),
 				new StructureFeatureConfiguration(
 						Config.MAX_BATTLEFIELD_CAMP_DISTANCE.get(),
 						Config.MIN_BATTLEFIELD_CAMP_DISTANCE.get(),
 						458962175),
 				true);
 		setupStructure(
-				BATTLEFIELD_VILLAGE.get(),
+				DeferredRegistryHandler.BATTLEFIELD_VILLAGE_STRUCTURE.get(),
 				new StructureFeatureConfiguration(
 						Config.MAX_BATTLEFIELD_VILLAGE_DISTANCE.get(),
 						Config.MIN_BATTLEFIELD_VILLAGE_DISTANCE.get(),
 						176482913),
 				true);
 		setupStructure(
-				CLOUD_ISLAND.get(),
+				DeferredRegistryHandler.CLOUD_ISLAND_STRUCTURE.get(),
 				new StructureFeatureConfiguration(
 						Config.MAX_CLOUD_ISLAND_DISTANCE.get(),
 						Config.MIN_CLOUD_ISLAND_DISTANCE.get(),
 						349821657),
 				false);
 		setupStructure(
-				CAMPSITE.get(),
+				DeferredRegistryHandler.CAMPSITE_STRUCTURE.get(),
 				new StructureFeatureConfiguration(
 						Config.MAX_CAMPSITE_DISTANCE.get(),
 						Config.MIN_CAMPSITE_DISTANCE.get(),
@@ -129,10 +109,10 @@ public class Structures {
 	/**
 	 * Setup structure with separation settings and transforms.
 	 * @param structure the structure
-	 * @param structureSeparationSettings the <code>StructureSeparationSettings</code>
+	 * @param featureConfiguration the <code>StructureFeatureConfiguration</code>
 	 * @param transformSurroundingLand if the structure should transform surrounding land
 	 */
-	private static <F extends StructureFeature<?>> void setupStructure(F structure, StructureFeatureConfiguration structureSeparationSettings, boolean transformSurroundingLand) {
+	private static <F extends StructureFeature<?>> void setupStructure(F structure, StructureFeatureConfiguration featureConfiguration, boolean transformSurroundingLand) {
 		StructureFeature.STRUCTURES_REGISTRY.put(Objects.requireNonNull(structure.getRegistryName()).toString(), structure);
 
 		/*
@@ -149,7 +129,7 @@ public class Structures {
 		StructureSettings.DEFAULTS =
 				ImmutableMap.<StructureFeature<?>, StructureFeatureConfiguration> builder()
 						.putAll(StructureSettings.DEFAULTS)
-						.put(structure, structureSeparationSettings)
+						.put(structure, featureConfiguration)
 						.build();
 	}
 
@@ -169,7 +149,7 @@ public class Structures {
 
 	/**
 	 * Register a structure piece.
-	 * @param structurePiece the <code>IStructurePieceType</code>
+	 * @param structurePiece the <code>StructurePieceType</code>
 	 * @param resourceLocation the <code>ResourceLocation</code> of the piece
 	 */
 	private static void registerStructurePiece(StructurePieceType structurePiece, ResourceLocation resourceLocation) {

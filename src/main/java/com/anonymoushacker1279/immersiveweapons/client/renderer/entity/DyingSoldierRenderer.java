@@ -9,6 +9,7 @@ import net.minecraft.client.renderer.entity.EntityRendererProvider.Context;
 import net.minecraft.client.renderer.entity.HumanoidMobRenderer;
 import net.minecraft.client.renderer.entity.layers.HumanoidArmorLayer;
 import net.minecraft.resources.ResourceLocation;
+import org.jetbrains.annotations.NotNull;
 
 public class DyingSoldierRenderer extends HumanoidMobRenderer<DyingSoldierEntity, PlayerModel<DyingSoldierEntity>> {
 	private static final ResourceLocation DYING_SOLDIER_RENDERER = new ResourceLocation(ImmersiveWeapons.MOD_ID, "textures/entity/dying_soldier/dying_soldier.png");
@@ -28,7 +29,7 @@ public class DyingSoldierRenderer extends HumanoidMobRenderer<DyingSoldierEntity
 	 * @return ResourceLocation
 	 */
 	@Override
-	public ResourceLocation getTextureLocation(DyingSoldierEntity entity) {
+	public @NotNull ResourceLocation getTextureLocation(@NotNull DyingSoldierEntity entity) {
 		return DYING_SOLDIER_RENDERER;
 	}
 }

@@ -12,6 +12,7 @@ import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
@@ -59,22 +60,22 @@ public class SmallPartsContainer extends ItemCombinerMenu {
 	 * @return boolean
 	 */
 	@Override
-	protected boolean mayPickup(Player playerEntity, boolean matchesRecipe) {
+	protected boolean mayPickup(@NotNull Player playerEntity, boolean matchesRecipe) {
 		return smallPartsRecipe != null && smallPartsRecipe.matches(inputSlots, world);
 	}
 
 	/**
 	 * Runs when the result is taken from the container.
-	 * @param playerEntity the <code>PlayerEntity</code> instance
+	 * @param player the <code>Player</code> instance
 	 * @param itemStack the <code>ItemStack</code> being taken
 	 */
 	@Override
-	protected void onTake(Player playerEntity, ItemStack itemStack) {
-		itemStack.onCraftedBy(playerEntity.level, playerEntity, itemStack.getCount());
-		resultSlots.awardUsedRecipes(playerEntity);
+	protected void onTake(@NotNull Player player, ItemStack itemStack) {
+		itemStack.onCraftedBy(player.level, player, itemStack.getCount());
+		resultSlots.awardUsedRecipes(player);
 		shrinkStackInSlot(0);
-		// Normally we would destroy both items here. However we don't want to destroy the blueprint item.
-		world.playSound(playerEntity, playerEntity.blockPosition(), DeferredRegistryHandler.SMALL_PARTS_TABLE_USED.get(), SoundSource.NEUTRAL, 1f, 1);
+		// Normally we would destroy both items here. However, we don't want to destroy the blueprint item.
+		world.playSound(player, player.blockPosition(), DeferredRegistryHandler.SMALL_PARTS_TABLE_USED.get(), SoundSource.NEUTRAL, 1f, 1);
 	}
 
 	/**
@@ -110,7 +111,7 @@ public class SmallPartsContainer extends ItemCombinerMenu {
 	 * @return boolean
 	 */
 	@Override
-	protected boolean shouldQuickMoveToAdditionalSlot(ItemStack itemStack) {
+	protected boolean shouldQuickMoveToAdditionalSlot(@NotNull ItemStack itemStack) {
 		return smallPartsRecipeList.stream().anyMatch((smallPartsRecipe) -> smallPartsRecipe.isValidAdditionItem(itemStack));
 	}
 
@@ -121,7 +122,7 @@ public class SmallPartsContainer extends ItemCombinerMenu {
 	 * @return boolean
 	 */
 	@Override
-	public boolean canTakeItemForPickAll(ItemStack stack, Slot slotIn) {
+	public boolean canTakeItemForPickAll(@NotNull ItemStack stack, Slot slotIn) {
 		return slotIn.container != resultSlots && super.canTakeItemForPickAll(stack, slotIn);
 	}
 

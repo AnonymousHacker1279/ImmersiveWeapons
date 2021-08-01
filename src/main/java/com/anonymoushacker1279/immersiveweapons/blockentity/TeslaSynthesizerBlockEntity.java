@@ -7,6 +7,7 @@ import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.level.block.state.BlockState;
+import org.jetbrains.annotations.NotNull;
 
 public class TeslaSynthesizerBlockEntity extends AbstractTeslaSynthesizerBlockEntity {
 
@@ -22,7 +23,7 @@ public class TeslaSynthesizerBlockEntity extends AbstractTeslaSynthesizerBlockEn
 	 * @return ITextComponent
 	 */
 	@Override
-	protected Component getDefaultName() {
+	protected @NotNull Component getDefaultName() {
 		return new TranslatableComponent("container.immersiveweapons.tesla_synthesizer");
 	}
 
@@ -33,7 +34,7 @@ public class TeslaSynthesizerBlockEntity extends AbstractTeslaSynthesizerBlockEn
 	 * @return Container
 	 */
 	@Override
-	protected AbstractContainerMenu createMenu(int id, Inventory player) {
+	protected @NotNull AbstractContainerMenu createMenu(int id, @NotNull Inventory player) {
 		return new TeslaSynthesizerContainer(id, player, this, teslaSynthesizerData);
 	}
 }

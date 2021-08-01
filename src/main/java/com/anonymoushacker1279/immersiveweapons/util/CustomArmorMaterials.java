@@ -10,6 +10,7 @@ import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.util.Lazy;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.function.Supplier;
 
@@ -47,7 +48,7 @@ public enum CustomArmorMaterials implements ArmorMaterial {
 	 * @param maxDamageFactorIn the max damage factor
 	 * @param damageReductionAmountsIn the reduction amount
 	 * @param enchantabilityIn the enchantability level
-	 * @param equipSoundIn the equip <code>SoundEvent</code>
+	 * @param equipSoundIn the equipping <code>SoundEvent</code>
 	 * @param toughnessIn the toughness level
 	 * @param repairMaterialSupplier the <code>Supplier</code> extending Ingredient for repairs
 	 * @param knockbackResistanceIn the knockback resistance
@@ -93,11 +94,11 @@ public enum CustomArmorMaterials implements ArmorMaterial {
 	}
 
 	/**
-	 * Get the equip sound.
+	 * Get the equipping sound.
 	 * @return SoundEvent
 	 */
 	@Override
-	public SoundEvent getEquipSound() {
+	public @NotNull SoundEvent getEquipSound() {
 		return soundEvent;
 	}
 
@@ -106,7 +107,7 @@ public enum CustomArmorMaterials implements ArmorMaterial {
 	 * @return Ingredient
 	 */
 	@Override
-	public Ingredient getRepairIngredient() {
+	public @NotNull Ingredient getRepairIngredient() {
 		return repairMaterial.get();
 	}
 
@@ -116,7 +117,7 @@ public enum CustomArmorMaterials implements ArmorMaterial {
 	 */
 	@Override
 	@OnlyIn(Dist.CLIENT)
-	public String getName() {
+	public @NotNull String getName() {
 		return name;
 	}
 

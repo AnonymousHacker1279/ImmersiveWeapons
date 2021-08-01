@@ -1,7 +1,7 @@
 package com.anonymoushacker1279.immersiveweapons.entity.ai.goal;
 
 import com.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
-import com.anonymoushacker1279.immersiveweapons.item.SimpleShotgunItem;
+import com.anonymoushacker1279.immersiveweapons.item.projectile.gun.SimpleShotgunItem;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.ai.goal.Goal;
@@ -54,7 +54,7 @@ public class RangedShotgunAttackGoal<T extends PathfinderMob & RangedAttackMob> 
 	 */
 	@Override
 	public boolean canUse() {
-		return entity.getTarget() != null && isGunInMainhand();
+		return entity.getTarget() != null && isGunInMainHand();
 	}
 
 	/**
@@ -62,7 +62,7 @@ public class RangedShotgunAttackGoal<T extends PathfinderMob & RangedAttackMob> 
 	 * by the entity
 	 * @return boolean
 	 */
-	private boolean isGunInMainhand() {
+	private boolean isGunInMainHand() {
 		return entity.isHolding(SimpleShotgunItem.class::isInstance);
 	}
 
@@ -72,7 +72,7 @@ public class RangedShotgunAttackGoal<T extends PathfinderMob & RangedAttackMob> 
 	 */
 	@Override
 	public boolean canContinueToUse() {
-		return (canUse() || !entity.getNavigation().isDone()) && isGunInMainhand();
+		return (canUse() || !entity.getNavigation().isDone()) && isGunInMainHand();
 	}
 
 	/**

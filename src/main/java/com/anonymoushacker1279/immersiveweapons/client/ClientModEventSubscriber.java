@@ -4,11 +4,11 @@ import com.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import com.anonymoushacker1279.immersiveweapons.client.gui.screen.SmallPartsTableScreen;
 import com.anonymoushacker1279.immersiveweapons.client.gui.screen.TeslaSynthesizerScreen;
 import com.anonymoushacker1279.immersiveweapons.client.particle.SmokeBombParticleFactory;
-import com.anonymoushacker1279.immersiveweapons.client.renderer.ChairRenderer;
-import com.anonymoushacker1279.immersiveweapons.client.renderer.ShelfRenderer;
-import com.anonymoushacker1279.immersiveweapons.client.renderer.entity.BulletRenderer.*;
-import com.anonymoushacker1279.immersiveweapons.client.renderer.entity.CustomArrowRenderer.*;
+import com.anonymoushacker1279.immersiveweapons.client.renderer.blockentity.ChairRenderer;
+import com.anonymoushacker1279.immersiveweapons.client.renderer.blockentity.ShelfRenderer;
 import com.anonymoushacker1279.immersiveweapons.client.renderer.entity.*;
+import com.anonymoushacker1279.immersiveweapons.client.renderer.entity.arrow.*;
+import com.anonymoushacker1279.immersiveweapons.client.renderer.entity.bullet.*;
 import com.anonymoushacker1279.immersiveweapons.container.CustomContainerHolder;
 import com.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
 import net.minecraft.client.KeyMapping;
@@ -50,7 +50,7 @@ public class ClientModEventSubscriber {
 		MenuScreens.register(CustomContainerHolder.SMALL_PARTS_CONTAINER, SmallPartsTableScreen::new);
 		MenuScreens.register(CustomContainerHolder.TESLA_SYNTHESIZER_CONTAINER, TeslaSynthesizerScreen::new);
 
-		// Register keybinds
+		// Register key binds
 		ClientRegistry.registerKeyBinding(toggleArmorEffect);
 
 		// Register block renderers
@@ -75,7 +75,7 @@ public class ClientModEventSubscriber {
 		ItemBlockRenderTypes.setRenderLayer(DeferredRegistryHandler.TESLA_SYNTHESIZER.get(), RenderType.translucent());
 		ItemBlockRenderTypes.setRenderLayer(DeferredRegistryHandler.CLOUD.get(), RenderType.translucent());
 
-		BlockEntityRenderers.register(DeferredRegistryHandler.WALL_SHELF_BLOCK_ENTITY.get(), ShelfRenderer::new);
+		BlockEntityRenderers.register(DeferredRegistryHandler.WALL_SHELF_BLOCK_ENTITY.get(), context -> new ShelfRenderer());
 
 		mc.getBlockColors().register((color1, color2, color3, color4) -> BiomeColors.getAverageGrassColor(Objects.requireNonNull(color2), Objects.requireNonNull(color3)), DeferredRegistryHandler.PITFALL.get());
 

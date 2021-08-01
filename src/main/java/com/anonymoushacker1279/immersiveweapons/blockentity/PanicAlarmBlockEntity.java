@@ -21,6 +21,7 @@ import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fmllegacy.network.NetworkEvent;
 import net.minecraftforge.fmllegacy.network.NetworkEvent.Context;
 import net.minecraftforge.fmllegacy.network.PacketDistributor;
+import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
 import java.util.function.Supplier;
@@ -46,7 +47,7 @@ public class PanicAlarmBlockEntity extends BlockEntity implements EntityBlock {
 	 */
 	@Nullable
 	@Override
-	public BlockEntity newBlockEntity(BlockPos blockPos, BlockState blockState) {
+	public BlockEntity newBlockEntity(@NotNull BlockPos blockPos, @NotNull BlockState blockState) {
 		return new PanicAlarmBlockEntity(blockPos, blockState);
 	}
 
@@ -125,7 +126,7 @@ public class PanicAlarmBlockEntity extends BlockEntity implements EntityBlock {
 	 * @param nbt the <code>CompoundNBT</code> to save
 	 */
 	@Override
-	public CompoundTag save(CompoundTag nbt) {
+	public @NotNull CompoundTag save(@NotNull CompoundTag nbt) {
 		super.save(nbt);
 		nbt.putInt("cooldown", cooldown);
 		nbt.putBoolean("isPowered", isPowered);
@@ -138,7 +139,7 @@ public class PanicAlarmBlockEntity extends BlockEntity implements EntityBlock {
 	 * @param nbt the <code>CompoundNBT</code> to load
 	 */
 	@Override
-	public void load(CompoundTag nbt) {
+	public void load(@NotNull CompoundTag nbt) {
 		super.load(nbt);
 
 		cooldown = nbt.getInt("cooldown");

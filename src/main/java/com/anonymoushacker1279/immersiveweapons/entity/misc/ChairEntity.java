@@ -11,6 +11,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
 import net.minecraftforge.fmllegacy.network.NetworkHooks;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
@@ -54,9 +55,10 @@ public class ChairEntity extends Entity {
 				ChairEntity seat = new ChairEntity(world, pos, yOffset);
 				world.addFreshEntity(seat);
 				player.startRiding(seat, false);
+				return InteractionResult.SUCCESS;
 			}
 		}
-		return InteractionResult.SUCCESS;
+		return InteractionResult.PASS;
 	}
 
 	/**
@@ -82,7 +84,7 @@ public class ChairEntity extends Entity {
 	 * @return boolean
 	 */
 	@Override
-	protected boolean canRide(Entity entity) {
+	protected boolean canRide(@NotNull Entity entity) {
 		return true;
 	}
 
@@ -91,11 +93,11 @@ public class ChairEntity extends Entity {
 	}
 
 	@Override
-	protected void readAdditionalSaveData(CompoundTag nbt) {
+	protected void readAdditionalSaveData(@NotNull CompoundTag nbt) {
 	}
 
 	@Override
-	protected void addAdditionalSaveData(CompoundTag nbt) {
+	protected void addAdditionalSaveData(@NotNull CompoundTag nbt) {
 	}
 
 	/**
@@ -103,7 +105,7 @@ public class ChairEntity extends Entity {
 	 * @return IPacket
 	 */
 	@Override
-	public Packet<?> getAddEntityPacket() {
+	public @NotNull Packet<?> getAddEntityPacket() {
 		return NetworkHooks.getEntitySpawningPacket(this);
 	}
 }

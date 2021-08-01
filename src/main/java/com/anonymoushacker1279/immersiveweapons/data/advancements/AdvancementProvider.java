@@ -10,6 +10,7 @@ import net.minecraft.data.DataGenerator;
 import net.minecraft.data.DataProvider;
 import net.minecraft.data.HashCache;
 import net.minecraft.resources.ResourceLocation;
+import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
 import java.nio.file.Path;
@@ -38,7 +39,7 @@ public class AdvancementProvider implements DataProvider {
 	 * @param hashCache the <code>HashCache</code> instance
 	 */
 	@Override
-	public void run(HashCache hashCache) {
+	public void run(@NotNull HashCache hashCache) {
 		Path outputFolder = generator.getOutputFolder();
 		Set<ResourceLocation> resourceLocations = Sets.newHashSet();
 		Consumer<Advancement> advancementConsumer = (advancement) -> {
@@ -79,7 +80,7 @@ public class AdvancementProvider implements DataProvider {
 	 * @return String
 	 */
 	@Override
-	public String getName() {
+	public @NotNull String getName() {
 		return "Advancements";
 	}
 }

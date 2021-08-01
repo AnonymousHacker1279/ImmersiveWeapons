@@ -7,7 +7,7 @@ import com.anonymoushacker1279.immersiveweapons.entity.monster.HansEntity;
 import com.anonymoushacker1279.immersiveweapons.entity.passive.AbstractFieldMedicEntity;
 import com.anonymoushacker1279.immersiveweapons.entity.passive.AbstractMinutemanEntity;
 import com.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
-import com.anonymoushacker1279.immersiveweapons.item.CustomArrowItem;
+import com.anonymoushacker1279.immersiveweapons.item.projectile.arrow.AbstractArrowItem;
 import net.minecraft.world.item.Item;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
@@ -23,28 +23,28 @@ public class ModEventSubscriber {
 	 */
 	@SubscribeEvent
 	public static void onRegisterItems(RegistryEvent.Register<Item> event) {
-		((CustomArrowItem) (DeferredRegistryHandler.COPPER_ARROW.get())).setItemReference(DeferredRegistryHandler.COPPER_ARROW);
-		((CustomArrowItem) (DeferredRegistryHandler.IRON_ARROW.get())).setItemReference(DeferredRegistryHandler.IRON_ARROW);
-		((CustomArrowItem) (DeferredRegistryHandler.DIAMOND_ARROW.get())).setItemReference(DeferredRegistryHandler.DIAMOND_ARROW);
-		((CustomArrowItem) (DeferredRegistryHandler.GOLD_ARROW.get())).setItemReference(DeferredRegistryHandler.GOLD_ARROW);
-		((CustomArrowItem) (DeferredRegistryHandler.STONE_ARROW.get())).setItemReference(DeferredRegistryHandler.STONE_ARROW);
-		((CustomArrowItem) (DeferredRegistryHandler.WOOD_ARROW.get())).setItemReference(DeferredRegistryHandler.WOOD_ARROW);
-		((CustomArrowItem) (DeferredRegistryHandler.NETHERITE_ARROW.get())).setItemReference(DeferredRegistryHandler.NETHERITE_ARROW);
-		((CustomArrowItem) (DeferredRegistryHandler.SMOKE_BOMB_ARROW.get())).setItemReference(DeferredRegistryHandler.SMOKE_BOMB_ARROW);
-		((CustomArrowItem) (DeferredRegistryHandler.SMOKE_BOMB_ARROW_RED.get())).setItemReference(DeferredRegistryHandler.SMOKE_BOMB_ARROW_RED);
-		((CustomArrowItem) (DeferredRegistryHandler.SMOKE_BOMB_ARROW_GREEN.get())).setItemReference(DeferredRegistryHandler.SMOKE_BOMB_ARROW_GREEN);
-		((CustomArrowItem) (DeferredRegistryHandler.SMOKE_BOMB_ARROW_BLUE.get())).setItemReference(DeferredRegistryHandler.SMOKE_BOMB_ARROW_BLUE);
-		((CustomArrowItem) (DeferredRegistryHandler.SMOKE_BOMB_ARROW_PURPLE.get())).setItemReference(DeferredRegistryHandler.SMOKE_BOMB_ARROW_PURPLE);
-		((CustomArrowItem) (DeferredRegistryHandler.SMOKE_BOMB_ARROW_YELLOW.get())).setItemReference(DeferredRegistryHandler.SMOKE_BOMB_ARROW_YELLOW);
+		((AbstractArrowItem) (DeferredRegistryHandler.COPPER_ARROW.get())).setItemReference(DeferredRegistryHandler.COPPER_ARROW);
+		((AbstractArrowItem) (DeferredRegistryHandler.IRON_ARROW.get())).setItemReference(DeferredRegistryHandler.IRON_ARROW);
+		((AbstractArrowItem) (DeferredRegistryHandler.DIAMOND_ARROW.get())).setItemReference(DeferredRegistryHandler.DIAMOND_ARROW);
+		((AbstractArrowItem) (DeferredRegistryHandler.GOLD_ARROW.get())).setItemReference(DeferredRegistryHandler.GOLD_ARROW);
+		((AbstractArrowItem) (DeferredRegistryHandler.STONE_ARROW.get())).setItemReference(DeferredRegistryHandler.STONE_ARROW);
+		((AbstractArrowItem) (DeferredRegistryHandler.WOOD_ARROW.get())).setItemReference(DeferredRegistryHandler.WOOD_ARROW);
+		((AbstractArrowItem) (DeferredRegistryHandler.NETHERITE_ARROW.get())).setItemReference(DeferredRegistryHandler.NETHERITE_ARROW);
+		((AbstractArrowItem) (DeferredRegistryHandler.SMOKE_BOMB_ARROW.get())).setItemReference(DeferredRegistryHandler.SMOKE_BOMB_ARROW);
+		((AbstractArrowItem) (DeferredRegistryHandler.SMOKE_BOMB_ARROW_RED.get())).setItemReference(DeferredRegistryHandler.SMOKE_BOMB_ARROW_RED);
+		((AbstractArrowItem) (DeferredRegistryHandler.SMOKE_BOMB_ARROW_GREEN.get())).setItemReference(DeferredRegistryHandler.SMOKE_BOMB_ARROW_GREEN);
+		((AbstractArrowItem) (DeferredRegistryHandler.SMOKE_BOMB_ARROW_BLUE.get())).setItemReference(DeferredRegistryHandler.SMOKE_BOMB_ARROW_BLUE);
+		((AbstractArrowItem) (DeferredRegistryHandler.SMOKE_BOMB_ARROW_PURPLE.get())).setItemReference(DeferredRegistryHandler.SMOKE_BOMB_ARROW_PURPLE);
+		((AbstractArrowItem) (DeferredRegistryHandler.SMOKE_BOMB_ARROW_YELLOW.get())).setItemReference(DeferredRegistryHandler.SMOKE_BOMB_ARROW_YELLOW);
 
-		((CustomArrowItem) (DeferredRegistryHandler.COPPER_MUSKET_BALL.get())).setItemReference(DeferredRegistryHandler.COPPER_MUSKET_BALL);
-		((CustomArrowItem) (DeferredRegistryHandler.WOOD_MUSKET_BALL.get())).setItemReference(DeferredRegistryHandler.WOOD_MUSKET_BALL);
-		((CustomArrowItem) (DeferredRegistryHandler.STONE_MUSKET_BALL.get())).setItemReference(DeferredRegistryHandler.STONE_MUSKET_BALL);
-		((CustomArrowItem) (DeferredRegistryHandler.IRON_MUSKET_BALL.get())).setItemReference(DeferredRegistryHandler.IRON_MUSKET_BALL);
-		((CustomArrowItem) (DeferredRegistryHandler.GOLD_MUSKET_BALL.get())).setItemReference(DeferredRegistryHandler.GOLD_MUSKET_BALL);
-		((CustomArrowItem) (DeferredRegistryHandler.DIAMOND_MUSKET_BALL.get())).setItemReference(DeferredRegistryHandler.DIAMOND_MUSKET_BALL);
-		((CustomArrowItem) (DeferredRegistryHandler.NETHERITE_MUSKET_BALL.get())).setItemReference(DeferredRegistryHandler.NETHERITE_MUSKET_BALL);
-		((CustomArrowItem) (DeferredRegistryHandler.FLARE.get())).setItemReference(DeferredRegistryHandler.FLARE);
+		((AbstractArrowItem) (DeferredRegistryHandler.COPPER_MUSKET_BALL.get())).setItemReference(DeferredRegistryHandler.COPPER_MUSKET_BALL);
+		((AbstractArrowItem) (DeferredRegistryHandler.WOOD_MUSKET_BALL.get())).setItemReference(DeferredRegistryHandler.WOOD_MUSKET_BALL);
+		((AbstractArrowItem) (DeferredRegistryHandler.STONE_MUSKET_BALL.get())).setItemReference(DeferredRegistryHandler.STONE_MUSKET_BALL);
+		((AbstractArrowItem) (DeferredRegistryHandler.IRON_MUSKET_BALL.get())).setItemReference(DeferredRegistryHandler.IRON_MUSKET_BALL);
+		((AbstractArrowItem) (DeferredRegistryHandler.GOLD_MUSKET_BALL.get())).setItemReference(DeferredRegistryHandler.GOLD_MUSKET_BALL);
+		((AbstractArrowItem) (DeferredRegistryHandler.DIAMOND_MUSKET_BALL.get())).setItemReference(DeferredRegistryHandler.DIAMOND_MUSKET_BALL);
+		((AbstractArrowItem) (DeferredRegistryHandler.NETHERITE_MUSKET_BALL.get())).setItemReference(DeferredRegistryHandler.NETHERITE_MUSKET_BALL);
+		((AbstractArrowItem) (DeferredRegistryHandler.FLARE.get())).setItemReference(DeferredRegistryHandler.FLARE);
 	}
 
 	/**

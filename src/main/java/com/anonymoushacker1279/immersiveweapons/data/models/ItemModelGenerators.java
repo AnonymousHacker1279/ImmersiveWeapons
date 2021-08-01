@@ -45,7 +45,7 @@ public class ItemModelGenerators {
 	public void run() {
 		ItemModelLists.init();
 		List<Item> items = new ArrayList<>(1);
-		List<Item> ignoredItems = ItemModelLists.getIgnoredItems();
+		List<Item> ignoredItems = ItemModelLists.ignoredItems;
 
 		DeferredRegistryHandler.ITEMS.getEntries().stream().map(RegistryObject::get).filter(Predicate.not(ignoredItems::contains)).forEach(items::add);
 

@@ -6,6 +6,7 @@ import net.minecraft.client.particle.ParticleRenderType;
 import net.minecraft.client.particle.TextureSheetParticle;
 import net.minecraft.client.renderer.LightTexture;
 import net.minecraft.core.BlockPos;
+import org.jetbrains.annotations.NotNull;
 
 import java.awt.*;
 
@@ -75,7 +76,7 @@ public class SmokeBombParticle extends TextureSheetParticle {
 	 * @return IParticleRenderType
 	 */
 	@Override
-	public ParticleRenderType getRenderType() {
+	public @NotNull ParticleRenderType getRenderType() {
 		return ParticleRenderType.PARTICLE_SHEET_TRANSLUCENT;
 	}
 

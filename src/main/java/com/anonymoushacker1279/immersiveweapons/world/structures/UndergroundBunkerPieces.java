@@ -16,6 +16,7 @@ import net.minecraft.world.level.levelgen.structure.TemplateStructurePiece;
 import net.minecraft.world.level.levelgen.structure.templatesystem.BlockIgnoreProcessor;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureManager;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 import java.util.Map;
@@ -43,7 +44,7 @@ public class UndergroundBunkerPieces {
 
 		BlockPos rotationOffset = new BlockPos(0, 0, 0).rotate(rotation);
 		BlockPos blockPos = rotationOffset.offset(x, pos.getY(), z);
-		pieceList.add(new UndergroundBunkerPieces.Piece(structureManager, CENTER, blockPos, rotation));
+		pieceList.add(new UndergroundBunkerPieces.Piece(structureManager, blockPos, rotation));
 	}
 
 	public static class Piece extends TemplateStructurePiece {
@@ -52,13 +53,12 @@ public class UndergroundBunkerPieces {
 
 		/**
 		 * Constructor for Piece.
-		 * @param structureManager the <code>TemplateManager</code> instance
-		 * @param resourceLocationIn the <code>ResourceLocation</code> for the piece
+		 * @param structureManager the <code>StructureManager</code> instance
 		 * @param pos the <code>BlockPos</code> position
 		 * @param rotationIn the <code>Rotation</code>
 		 */
-		Piece(StructureManager structureManager, ResourceLocation resourceLocationIn, BlockPos pos, Rotation rotationIn) {
-			super(Structures.UB, 0, structureManager, resourceLocationIn, resourceLocationIn.toString(), makeSettings(rotationIn, resourceLocationIn), makePosition(resourceLocationIn, pos));
+		Piece(StructureManager structureManager, BlockPos pos, Rotation rotationIn) {
+			super(Structures.UB, 0, structureManager, UndergroundBunkerPieces.CENTER, UndergroundBunkerPieces.CENTER.toString(), makeSettings(rotationIn, UndergroundBunkerPieces.CENTER), makePosition(pos));
 		}
 
 		/**
@@ -84,12 +84,11 @@ public class UndergroundBunkerPieces {
 
 		/**
 		 * Make a structure position.
-		 * @param resourceLocation the <code>ResourceLocation</code> of the piece
 		 * @param blockPos the <code>BlockPos</code> the piece is at
 		 * @return BlockPos
 		 */
-		private static BlockPos makePosition(ResourceLocation resourceLocation, BlockPos blockPos) {
-			return blockPos.offset(UndergroundBunkerPieces.OFFSET.get(resourceLocation));
+		private static BlockPos makePosition(BlockPos blockPos) {
+			return blockPos.offset(UndergroundBunkerPieces.OFFSET.get(UndergroundBunkerPieces.CENTER));
 		}
 
 
@@ -99,7 +98,7 @@ public class UndergroundBunkerPieces {
 		 * @param tag the <code>CompoundNBT</code> data
 		 */
 		@Override
-		protected void addAdditionalSaveData(ServerLevel level, CompoundTag tag) {
+		protected void addAdditionalSaveData(@NotNull ServerLevel level, @NotNull CompoundTag tag) {
 			super.addAdditionalSaveData(level, tag);
 			tag.putString("Template", resourceLocation.toString());
 			tag.putString("Rot", rotation.name());
@@ -109,12 +108,12 @@ public class UndergroundBunkerPieces {
 		 * Handle data markers.
 		 * @param function the <code>String</code> function
 		 * @param pos the <code>BlockPos</code> position
-		 * @param worldIn the <code>IServerWorld</code>
+		 * @param serverLevelAccessor the <code>ServerLevelAccessor</code>
 		 * @param rand the <code>Random</code> instance
 		 * @param sbb the <code>MutableBoundingBox</code>
 		 */
 		@Override
-		protected void handleDataMarker(String function, BlockPos pos, ServerLevelAccessor worldIn, Random rand, BoundingBox sbb) {
+		protected void handleDataMarker(@NotNull String function, @NotNull BlockPos pos, @NotNull ServerLevelAccessor serverLevelAccessor, @NotNull Random rand, @NotNull BoundingBox sbb) {
 		}
 	}
 }

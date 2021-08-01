@@ -16,6 +16,7 @@ import net.minecraft.world.level.levelgen.structure.TemplateStructurePiece;
 import net.minecraft.world.level.levelgen.structure.templatesystem.BlockIgnoreProcessor;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureManager;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 import java.util.Map;
@@ -37,13 +38,13 @@ public class BearTrapPieces {
 	 * @param rotation the <code>Rotation</code>
 	 * @param pieceList the <code>List</code> of pieces; must extend StructurePiece
 	 */
-	public static void start(StructureManager structureManager, BlockPos pos, Rotation rotation, List<StructurePiece> pieceList, Random random) {
+	public static void start(StructureManager structureManager, BlockPos pos, Rotation rotation, List<StructurePiece> pieceList) {
 		int x = pos.getX();
 		int z = pos.getZ();
 
 		BlockPos rotationOffset = new BlockPos(0, 0, 0).rotate(rotation);
 		BlockPos blockPos = rotationOffset.offset(x, pos.getY(), z);
-		pieceList.add(new BearTrapPieces.Piece(structureManager, CENTER, blockPos, rotation));
+		pieceList.add(new BearTrapPieces.Piece(structureManager, blockPos, rotation));
 	}
 
 	public static class Piece extends TemplateStructurePiece {
@@ -52,13 +53,12 @@ public class BearTrapPieces {
 
 		/**
 		 * Constructor for Piece.
-		 * @param structureManager the <code>TemplateManager</code> instance
-		 * @param resourceLocationIn the <code>ResourceLocation</code> for the piece
+		 * @param structureManager the <code>StructureManager</code> instance
 		 * @param pos the <code>BlockPos</code> position
 		 * @param rotationIn the <code>Rotation</code>
 		 */
-		Piece(StructureManager structureManager, ResourceLocation resourceLocationIn, BlockPos pos, Rotation rotationIn) {
-			super(Structures.BT, 0, structureManager, resourceLocationIn, resourceLocationIn.toString(), makeSettings(rotationIn, resourceLocationIn), makePosition(resourceLocationIn, pos));
+		Piece(StructureManager structureManager, BlockPos pos, Rotation rotationIn) {
+			super(Structures.BT, 0, structureManager, BearTrapPieces.CENTER, BearTrapPieces.CENTER.toString(), makeSettings(rotationIn, BearTrapPieces.CENTER), makePosition(pos));
 		}
 
 		/**
@@ -84,12 +84,11 @@ public class BearTrapPieces {
 
 		/**
 		 * Make a structure position.
-		 * @param resourceLocation the <code>ResourceLocation</code> of the piece
 		 * @param blockPos the <code>BlockPos</code> the piece is at
 		 * @return BlockPos
 		 */
-		private static BlockPos makePosition(ResourceLocation resourceLocation, BlockPos blockPos) {
-			return blockPos.offset(BearTrapPieces.OFFSET.get(resourceLocation));
+		private static BlockPos makePosition(BlockPos blockPos) {
+			return blockPos.offset(BearTrapPieces.OFFSET.get(BearTrapPieces.CENTER));
 		}
 
 
@@ -99,7 +98,7 @@ public class BearTrapPieces {
 		 * @param tag the <code>CompoundNBT</code> data
 		 */
 		@Override
-		protected void addAdditionalSaveData(ServerLevel level, CompoundTag tag) {
+		protected void addAdditionalSaveData(@NotNull ServerLevel level, @NotNull CompoundTag tag) {
 			super.addAdditionalSaveData(level, tag);
 			tag.putString("Template", resourceLocation.toString());
 			tag.putString("Rot", rotation.name());
@@ -109,12 +108,12 @@ public class BearTrapPieces {
 		 * Handle data markers.
 		 * @param function the <code>String</code> function
 		 * @param pos the <code>BlockPos</code> position
-		 * @param worldIn the <code>IServerWorld</code>
+		 * @param serverLevelAccessor the <code>ServerLevelAccessor</code>
 		 * @param rand the <code>Random</code> instance
 		 * @param sbb the <code>MutableBoundingBox</code>
 		 */
 		@Override
-		protected void handleDataMarker(String function, BlockPos pos, ServerLevelAccessor worldIn, Random rand, BoundingBox sbb) {
+		protected void handleDataMarker(@NotNull String function, @NotNull BlockPos pos, @NotNull ServerLevelAccessor serverLevelAccessor, @NotNull Random rand, @NotNull BoundingBox sbb) {
 		}
 	}
 }

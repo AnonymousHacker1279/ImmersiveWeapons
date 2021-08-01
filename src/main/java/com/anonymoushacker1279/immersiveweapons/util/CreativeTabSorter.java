@@ -6,6 +6,7 @@ import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.fmllegacy.RegistryObject;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +26,7 @@ public class CreativeTabSorter extends CreativeModeTab {
 	 * @param itemStack the <code>NonNullList</code> extending ItemStack
 	 */
 	@Override
-	public void fillItemList(NonNullList<ItemStack> itemStack) {
+	public void fillItemList(@NotNull NonNullList<ItemStack> itemStack) {
 		List<Item> items = new ArrayList<>(1);
 		DeferredRegistryHandler.ITEMS.getEntries().stream().map(RegistryObject::get).forEach(items::add);
 
@@ -39,7 +40,7 @@ public class CreativeTabSorter extends CreativeModeTab {
 	 * @return ItemStack
 	 */
 	@Override
-	public ItemStack makeIcon() {
+	public @NotNull ItemStack makeIcon() {
 		return new ItemStack(DeferredRegistryHandler.TESLA_SWORD.get());
 	}
 

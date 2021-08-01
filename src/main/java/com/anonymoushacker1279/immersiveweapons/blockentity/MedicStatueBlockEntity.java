@@ -13,6 +13,7 @@ import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
+import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -38,7 +39,7 @@ public class MedicStatueBlockEntity extends BlockEntity implements EntityBlock {
 	 */
 	@Nullable
 	@Override
-	public BlockEntity newBlockEntity(BlockPos blockPos, BlockState blockState) {
+	public BlockEntity newBlockEntity(@NotNull BlockPos blockPos, @NotNull BlockState blockState) {
 		return new MinutemanStatueBlockEntity(blockPos, blockState);
 	}
 
@@ -93,7 +94,7 @@ public class MedicStatueBlockEntity extends BlockEntity implements EntityBlock {
 	 * @param nbt the <code>CompoundNBT</code> to save
 	 */
 	@Override
-	public CompoundTag save(CompoundTag nbt) {
+	public @NotNull CompoundTag save(@NotNull CompoundTag nbt) {
 		super.save(nbt);
 		nbt.putInt("scanCooldown", cooldown);
 		nbt.putInt("scannedMedics", scannedMedics);
@@ -105,7 +106,7 @@ public class MedicStatueBlockEntity extends BlockEntity implements EntityBlock {
 	 * @param nbt the <code>CompoundNBT</code> to load
 	 */
 	@Override
-	public void load(CompoundTag nbt) {
+	public void load(@NotNull CompoundTag nbt) {
 		super.load(nbt);
 		cooldown = nbt.getInt("scanCooldown");
 		scannedMedics = nbt.getInt("scannedMedics");

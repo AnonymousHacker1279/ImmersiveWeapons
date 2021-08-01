@@ -8,7 +8,7 @@ import java.util.List;
 
 public class ItemModelLists {
 
-	protected static List<Item> ignoredItems = new ArrayList<>(1);
+	protected static final List<Item> ignoredItems = new ArrayList<>(1);
 
 	/**
 	 * Initialize the lists.
@@ -40,14 +40,5 @@ public class ItemModelLists {
 		ignoredItems.add(DeferredRegistryHandler.WANDERING_WARRIOR_SPAWN_EGG.get());
 		ignoredItems.add(DeferredRegistryHandler.HANS_SPAWN_EGG.get());
 		ignoredItems.add(DeferredRegistryHandler.MRE.get());
-	}
-
-	/**
-	 * Get the ignored items.
-	 *
-	 * @return List extending Item
-	 */
-	protected static List<Item> getIgnoredItems() {
-		return ignoredItems;
 	}
 }

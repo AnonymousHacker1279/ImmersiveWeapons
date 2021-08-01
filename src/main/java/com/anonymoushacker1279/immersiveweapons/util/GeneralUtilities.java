@@ -37,7 +37,7 @@ public class GeneralUtilities {
 	}
 
 	/**
-	 * Create a stained glass block from a color.
+	 * Create a stained-glass block from a color.
 	 * @param color the <code>DyeColor</code>
 	 * @param properties the <code>Properties</code> for the block
 	 * @return StainedGlassBlock

@@ -14,7 +14,7 @@ public abstract class InteractFenceGateGoal extends Goal {
 
 	protected Mob entity;
 	protected BlockPos gatePosition = BlockPos.ZERO;
-	protected boolean gateInteract = true;
+	protected final boolean gateInteract = true;
 	private boolean hasStoppedGateInteraction;
 	private float entityPositionX;
 	private float entityPositionZ;
@@ -64,12 +64,12 @@ public abstract class InteractFenceGateGoal extends Goal {
 		} else if (!entity.horizontalCollision) {
 			return false;
 		} else {
-			GroundPathNavigation groundpathnavigator = (GroundPathNavigation) entity.getNavigation();
-			Path path = groundpathnavigator.getPath();
-			if (path != null && !path.isDone() && groundpathnavigator.canOpenDoors()) {
+			GroundPathNavigation groundPathNavigation = (GroundPathNavigation) entity.getNavigation();
+			Path path = groundPathNavigation.getPath();
+			if (path != null && !path.isDone() && groundPathNavigation.canOpenDoors()) {
 				for (int i = 0; i < Math.min(path.getNextNodeIndex() + 2, path.getNodeCount()); ++i) {
-					Node pathpoint = path.getNode(i);
-					gatePosition = new BlockPos(pathpoint.x, pathpoint.y + 1, pathpoint.z);
+					Node node = path.getNode(i);
+					gatePosition = new BlockPos(node.x, node.y + 1, node.z);
 					if (!(entity.distanceToSqr(gatePosition.getX(), entity.getY(), gatePosition.getZ()) > 2.25D)) {
 						return true;
 					}

@@ -9,14 +9,13 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.*;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import org.jetbrains.annotations.NotNull;
 
 public abstract class AbstractTeslaSynthesizerContainer extends AbstractContainerMenu {
 
 	private final Container teslaSynthesizerInventory;
-	protected final Level world;
 	private final ContainerData teslaSynthesizerData;
 
 	/**
@@ -43,7 +42,6 @@ public abstract class AbstractTeslaSynthesizerContainer extends AbstractContaine
 		checkContainerDataCount(iIntArray, 4);
 		teslaSynthesizerInventory = iInventory;
 		teslaSynthesizerData = iIntArray;
-		world = playerInventory.player.level;
 		// First ingredient slot
 		addSlot(new Slot(iInventory, 0, 6, 17));
 		// Second ingredient slot
@@ -53,7 +51,7 @@ public abstract class AbstractTeslaSynthesizerContainer extends AbstractContaine
 		// Fuel slot
 		addSlot(new TeslaSynthesizerFuelSlot(this, iInventory, 3, 56, 53));
 		// Result slot
-		addSlot(new TeslaSynthesizerResultSlot(playerInventory.player, iInventory, 4, 116, 35));
+		addSlot(new TeslaSynthesizerResultSlot(iInventory, 4, 116, 35));
 
 		// Player inventory slots
 		for (int i = 0; i < 3; ++i) {
@@ -69,18 +67,13 @@ public abstract class AbstractTeslaSynthesizerContainer extends AbstractContaine
 		addDataSlots(iIntArray);
 	}
 
-	@OnlyIn(Dist.CLIENT)
-	public int getSize() {
-		return 5;
-	}
-
 	/**
 	 * Determines whether the player can use this container.
 	 * @param playerIn the <code>PlayerEntity</code> being checked
 	 * @return boolean
 	 */
 	@Override
-	public boolean stillValid(Player playerIn) {
+	public boolean stillValid(@NotNull Player playerIn) {
 		return teslaSynthesizerInventory.stillValid(playerIn);
 	}
 
@@ -91,7 +84,7 @@ public abstract class AbstractTeslaSynthesizerContainer extends AbstractContaine
 	 * @return ItemStack
 	 */
 	@Override
-	public ItemStack quickMoveStack(Player playerIn, int index) {
+	public @NotNull ItemStack quickMoveStack(@NotNull Player playerIn, int index) {
 		ItemStack itemstack = ItemStack.EMPTY;
 		Slot slot = slots.get(index);
 		if (slot.hasItem()) {

@@ -5,7 +5,7 @@ import com.anonymoushacker1279.immersiveweapons.entity.ai.goal.OpenFenceGateGoal
 import com.anonymoushacker1279.immersiveweapons.entity.ai.goal.RangedShotgunAttackGoal;
 import com.anonymoushacker1279.immersiveweapons.entity.monster.AbstractDyingSoldierEntity;
 import com.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
-import com.anonymoushacker1279.immersiveweapons.item.CustomArrowItem;
+import com.anonymoushacker1279.immersiveweapons.item.projectile.arrow.AbstractArrowItem;
 import com.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
@@ -123,7 +123,7 @@ public abstract class AbstractMinutemanEntity extends PathfinderMob implements R
 	 * @param blockIn the <code>BlockState</code> of the block being stepped on
 	 */
 	@Override
-	protected void playStepSound(BlockPos pos, BlockState blockIn) {
+	protected void playStepSound(@NotNull BlockPos pos, @NotNull BlockState blockIn) {
 		playSound(getStepSound(), 0.15F, 1.0F);
 	}
 
@@ -156,7 +156,7 @@ public abstract class AbstractMinutemanEntity extends PathfinderMob implements R
 	 * @param difficulty the <code>DifficultyInstance</code> of the world
 	 */
 	@Override
-	protected void populateDefaultEquipmentSlots(DifficultyInstance difficulty) {
+	protected void populateDefaultEquipmentSlots(@NotNull DifficultyInstance difficulty) {
 		super.populateDefaultEquipmentSlots(difficulty);
 		setItemSlot(EquipmentSlot.MAINHAND, new ItemStack(DeferredRegistryHandler.BLUNDERBUSS.get()));
 	}
@@ -219,7 +219,7 @@ public abstract class AbstractMinutemanEntity extends PathfinderMob implements R
 	 * @param entityIn the <code>Entity</code> being pushed
 	 */
 	@Override
-	protected void doPush(Entity entityIn) {
+	protected void doPush(@NotNull Entity entityIn) {
 		if (entityIn instanceof Enemy && !(entityIn instanceof MinutemanEntity) && !(entityIn instanceof IronGolem) && getRandom().nextInt(20) == 0) {
 			setTarget((LivingEntity) entityIn);
 		}
@@ -232,7 +232,7 @@ public abstract class AbstractMinutemanEntity extends PathfinderMob implements R
 	 * @return boolean
 	 */
 	@Override
-	public boolean canAttackType(EntityType<?> typeIn) {
+	public boolean canAttackType(@NotNull EntityType<?> typeIn) {
 		return typeIn != DeferredRegistryHandler.MINUTEMAN_ENTITY.get() && typeIn != EntityType.CREEPER;
 	}
 
@@ -242,7 +242,7 @@ public abstract class AbstractMinutemanEntity extends PathfinderMob implements R
 	 * @param distanceFactor the distance factor
 	 */
 	@Override
-	public void performRangedAttack(LivingEntity target, float distanceFactor) {
+	public void performRangedAttack(@NotNull LivingEntity target, float distanceFactor) {
 		ItemStack itemstack = getProjectile(getItemInHand(ProjectileUtil.getWeaponHoldingHand(this, Predicate.isEqual(DeferredRegistryHandler.BLUNDERBUSS.get()))));
 		AbstractArrow abstractBulletEntity = fireArrow(itemstack, distanceFactor);
 		if (getMainHandItem().getItem() instanceof BowItem)
@@ -261,13 +261,13 @@ public abstract class AbstractMinutemanEntity extends PathfinderMob implements R
 
 	/**
 	 * Get the projectile for the entity's weapon.
-	 * @param shootable the <code>ItemStack</code> instance
+	 * @param weapon the <code>ItemStack</code> instance
 	 * @return ItemStack
 	 */
 	@Override
-	public ItemStack getProjectile(ItemStack shootable) {
-		if (shootable.getItem() instanceof ProjectileWeaponItem) {
-			Predicate<ItemStack> predicate = ((ProjectileWeaponItem) shootable.getItem()).getSupportedHeldProjectiles();
+	public @NotNull ItemStack getProjectile(ItemStack weapon) {
+		if (weapon.getItem() instanceof ProjectileWeaponItem) {
+			Predicate<ItemStack> predicate = ((ProjectileWeaponItem) weapon.getItem()).getSupportedHeldProjectiles();
 			ItemStack itemstack = ProjectileWeaponItem.getHeldProjectile(this, predicate);
 			return itemstack.isEmpty() ? new ItemStack(Items.ARROW) : itemstack;
 		} else {
@@ -282,7 +282,7 @@ public abstract class AbstractMinutemanEntity extends PathfinderMob implements R
 	 * @return AbstractArrowEntity
 	 */
 	private AbstractArrow fireArrow(ItemStack arrowStack, float distanceFactor) {
-		CustomArrowItem arrowItem = (CustomArrowItem) (arrowStack.getItem() instanceof CustomArrowItem ? arrowStack.getItem() : DeferredRegistryHandler.COPPER_MUSKET_BALL.get());
+		AbstractArrowItem arrowItem = (AbstractArrowItem) (arrowStack.getItem() instanceof AbstractArrowItem ? arrowStack.getItem() : DeferredRegistryHandler.COPPER_MUSKET_BALL.get());
 		AbstractArrow abstractArrowEntity = arrowItem.createArrow(level, arrowStack, this);
 		abstractArrowEntity.setEnchantmentEffectsFromEntity(this, distanceFactor);
 
@@ -296,7 +296,7 @@ public abstract class AbstractMinutemanEntity extends PathfinderMob implements R
 	 * @return boolean
 	 */
 	@Override
-	public boolean hurt(DamageSource source, float amount) {
+	public boolean hurt(@NotNull DamageSource source, float amount) {
 		super.hurt(source, amount);
 		setCombatTask();
 		if (amount > 0 && !(source.getEntity() instanceof AbstractMinutemanEntity) && !(source.getEntity() instanceof IronGolem) && source.getEntity() instanceof Player || source.getEntity() instanceof Mob) {
@@ -319,12 +319,12 @@ public abstract class AbstractMinutemanEntity extends PathfinderMob implements R
 
 	/**
 	 * Check if the entity can fire a projectile.
-	 * @param shootableItem the <code>ShootableItem</code> instance
+	 * @param projectileWeaponItem the <code>ProjectileItemWeapon</code> instance
 	 * @return boolean
 	 */
 	@Override
-	public boolean canFireProjectileWeapon(ProjectileWeaponItem shootableItem) {
-		return shootableItem == DeferredRegistryHandler.BLUNDERBUSS.get();
+	public boolean canFireProjectileWeapon(@NotNull ProjectileWeaponItem projectileWeaponItem) {
+		return projectileWeaponItem == DeferredRegistryHandler.BLUNDERBUSS.get();
 	}
 
 	/**
@@ -332,7 +332,7 @@ public abstract class AbstractMinutemanEntity extends PathfinderMob implements R
 	 * @param compound the <code>CompoundNBT</code> to read from
 	 */
 	@Override
-	public void readAdditionalSaveData(CompoundTag compound) {
+	public void readAdditionalSaveData(@NotNull CompoundTag compound) {
 		super.readAdditionalSaveData(compound);
 		readPersistentAngerSaveData(level, compound);
 		setCombatTask();
@@ -343,7 +343,7 @@ public abstract class AbstractMinutemanEntity extends PathfinderMob implements R
 	 * @param compound the <code>CompoundNBT</code> to write to
 	 */
 	@Override
-	public void addAdditionalSaveData(CompoundTag compound) {
+	public void addAdditionalSaveData(@NotNull CompoundTag compound) {
 		super.addAdditionalSaveData(compound);
 		addPersistentAngerSaveData(compound);
 	}
@@ -354,7 +354,7 @@ public abstract class AbstractMinutemanEntity extends PathfinderMob implements R
 	 * @param stack the <code>ItemStack</code> to set in the slot
 	 */
 	@Override
-	public void setItemSlot(EquipmentSlot slotIn, ItemStack stack) {
+	public void setItemSlot(@NotNull EquipmentSlot slotIn, @NotNull ItemStack stack) {
 		super.setItemSlot(slotIn, stack);
 		if (!level.isClientSide) {
 			setCombatTask();
@@ -368,7 +368,7 @@ public abstract class AbstractMinutemanEntity extends PathfinderMob implements R
 	 * @return float
 	 */
 	@Override
-	protected float getStandingEyeHeight(Pose poseIn, EntityDimensions sizeIn) {
+	protected float getStandingEyeHeight(@NotNull Pose poseIn, @NotNull EntityDimensions sizeIn) {
 		return 1.74F;
 	}
 
