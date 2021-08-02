@@ -1,14 +1,14 @@
 ![Immersive Weapons Logo](logo.png)
 
-# Immersive Weapons for Minecraft 1.17.1
+# Immersive Weapons for Minecraft 1.17.1/1.16.5/1.16.4/1.15.2
 
 ![CodeQL](https://github.com/AnonymousHacker1279/ImmersiveWeapons-Mod/workflows/CodeQL/badge.svg)
 [![](http://cf.way2muchnoise.eu/full_494454_Downloads.svg)](https://www.curseforge.com/minecraft/mc-mods/immersive-weapons)
 [![](http://cf.way2muchnoise.eu/versions/494454.svg)](https://www.curseforge.com/minecraft/mc-mods/immersive-weapons)
 
-## A vanilla+ weapons mod for Minecraft 1.17.1/1.16.5/1.16.4/1.15.2
+## A weapons mod for Minecraft 1.17.1/1.16.5/1.16.4/1.15.2
 
-Immersive Weapons is a vanilla+ weapons add-on aiming to spice up your combat skills.
+Immersive Weapons is <s>a weapons mod</s> more than just a weapons mod aiming to spice up your combat skills.
 
 Traverse the world, scavenging in destroyed factories or climbing to the pits of hell to collect new and powerful
 resources. Build stronger and more versatile weapons of war. Fortify your base and sound alarms at the first sign of
@@ -32,8 +32,23 @@ A few other notes:
 
 [Interested in coding, or just want to hang out? Join my Discord server: Titan Programming](https://discord.gg/hjvZfAu7sB)
 
-Active development will be focused on the latest Minecraft version. Please only use old releases if necessary. Support
-will not be provided for old releases, except for major bugfixes.
+## Version Support
+
+Active development will be focused on the latest Minecraft version. You should upgrade to newer versions of Immersive Weapons for bug fixes and new features.
+
+When looking at the mod file, the version looks like this: "immersiveweapons-\<Minecraft version\>-\<Immersive Weapons version\>". For example, "immersiveweapons-1.17.1-1.6.0".
+The Minecraft version is simple: it only changes when the mod is updated to newer versions of Minecraft. 
+	
+The Immersive Weapons version is a bit more complex:  
+When the first number changes (**1**.6.0), it is a major change. For example, changing from a beta to a full release. This probably won't change.  
+When the second number changes (1.**6**.0), it is a minor change. For example, adding new features, improvements, etc. These are usually content releases or large rewrites.  
+When the third number changes (1.6.**0**), it is a bugfix/patch. These are small changes that correct behaviors or otherwise add small functionalities.
+
+You should always update to the latest bugfix/patch version. Updating to the latest minor version is also recommended, but can be treated with a lower priority.
+Read the update changelogs associated with new releases for any important information about that release.
+
+This table lists the latest Immersive Weapons version for a Minecraft version. If anything is listed other than **Latest**, consider it to be at the End of Life. In some
+cases, an older version will receive bugfixes should the community describe an interest in it (This excludes versions listed as **N/A - Build From Source**). 
 
 | MC Version | Immersive Weapons Version Support |
 | :-- | :-- |
@@ -42,4 +57,29 @@ will not be provided for old releases, except for major bugfixes.
 | 1.16.4 | [1.1.1](https://github.com/AnonymousHacker1279/ImmersiveWeapons/releases/tag/v1.1.1) |
 | 1.15.2 | [N/A - Build From Source](https://github.com/AnonymousHacker1279/ImmersiveWeapons/tree/1.15.2-dev) |
 
-Please report any bugs/suggestions to the issue tracker. If you would like to contribute please fork this repository and make a pull request.
+## Contributing
+
+Contributions are welcomed and appreciated. If you would like to contribute please create a fork of this repository and propose your changes in a pull request. 
+Alternatively, see the feature request template in Issues.
+
+When making a pull request, you should target the development branch for the Minecraft version you are working with. For example, a PR under Minecraft 1.17.1 should target the
+``1.17.x-dev`` branch. 
+Additionally, you will be asked to sign a Contributer License Agreement (CLA). This ensures you are aware of the MIT license governence over your contributions.
+
+Please note that creating bug reports/suggestions does not involve the CLA. This is only required for PRs. 
+
+## Bug Reports and Feature Suggestions
+
+Bug reports and feature suggestions are welcomed. However, there are a few things you need to include when making them.
+
+- **Title**. You need to have a title that accurately summarizes the rest of the report.
+- **Description**. You need to describe EXACTLY what happens/should happen. Also list steps you can take to reproduce this.
+- **Additional Context**. List any other information that is important in understanding your report. 
+
+Specifically for bug reports:  
+- **Version Information**. You need to list the Minecraft version you are using, the Immersive Weapons version, and the Forge version.
+- **Debug logs**. You MUST upload your debug log. Otherwise, I won't be able to determine what isn't working. The bug report template lists where to find them at.
+
+**Providing the requested information at the beginning can make the difference between a three hour update and a three day update.**
+
+Before making a report, update to the latest version of Immersive Weapons and Forge. It's possible that what you're looking for was merged into a newer release.
