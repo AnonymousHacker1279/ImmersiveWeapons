@@ -1,0 +1,12 @@
+{
+  "replace": false,
+  "values": [
+    "immersiveweapons:spotlight",
+    "immersiveweapons:corrugated_iron_panel",
+    "immersiveweapons:corrugated_iron_panel_bars",
+    "immersiveweapons:corrugated_iron_panel_flat",
+    "immersiveweapons:corrugated_iron_panel_flat_bars",
+    "immersiveweapons:wooden_spikes",
+    "immersiveweapons:punji_sticks"
+  ]
+}

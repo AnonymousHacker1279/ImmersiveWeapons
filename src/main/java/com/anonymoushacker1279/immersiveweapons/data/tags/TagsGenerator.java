@@ -34,19 +34,36 @@ public class TagsGenerator extends BlockTagsProvider {
 
 		// Handle adding block tags that involve mining with tools.
 		int tagStage = 0;
+		int tier = 0;
 		for (Block block : blocks) {
 			if (block == DeferredRegistryHandler.SMALL_PARTS_TABLE.get()) {
 				tagStage = 1;
-			} else if (block == DeferredRegistryHandler.PUNJI_STICKS.get()) {
+			} else if (block == DeferredRegistryHandler.SANDBAG.get()) {
 				tagStage = 2;
 			} else if (block == DeferredRegistryHandler.BULLETPROOF_GLASS.get()) {
 				tagStage = -1;
+			}
+
+			if (block == DeferredRegistryHandler.BULLETPROOF_GLASS.get() || block == DeferredRegistryHandler.SMALL_PARTS_TABLE.get() || block == DeferredRegistryHandler.SANDBAG.get()) {
+				tier = 0;
+			} else if (block == DeferredRegistryHandler.SPOTLIGHT.get() || block == DeferredRegistryHandler.WOODEN_SPIKES.get() || block == DeferredRegistryHandler.PUNJI_STICKS.get()) {
+				tier = 1;
+			} else if (block == DeferredRegistryHandler.BARBED_WIRE_FENCE.get()) {
+				tier = 2;
+			} else if (block == DeferredRegistryHandler.MOLTEN_ORE.get()) {
+				tier = 3;
 			}
 
 			switch (tagStage) {
 				case 0 -> tag(BlockTags.bind(BlockTags.MINEABLE_WITH_PICKAXE.getName().toString())).add(block);
 				case 1 -> tag(BlockTags.bind(BlockTags.MINEABLE_WITH_AXE.getName().toString())).add(block);
 				case 2 -> tag(BlockTags.bind(BlockTags.MINEABLE_WITH_SHOVEL.getName().toString())).add(block);
+			}
+
+			switch (tier) {
+				case 1 -> tag(BlockTags.bind(BlockTags.NEEDS_STONE_TOOL.getName().toString())).add(block);
+				case 2 -> tag(BlockTags.bind(BlockTags.NEEDS_IRON_TOOL.getName().toString())).add(block);
+				case 3 -> tag(BlockTags.bind(BlockTags.NEEDS_DIAMOND_TOOL.getName().toString())).add(block);
 			}
 		}
 	}

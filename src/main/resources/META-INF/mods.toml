@@ -13,7 +13,7 @@ logoFile = "logo.png" #optional
 credits = "Written by AnonymousHacker1279 and visually designed with the help of Jonny-fox and gamingwarrior68 with pain and suffering" #optional
 authors = "AnonymousHacker1279" #optional
 description = '''
-Immersive Weapons is a vanilla+ weapons add-on aiming to spice up your combat skills.
+Immersive Weapons is more than just a weapons mod aiming to spice up your combat skills.
 '''
 
 [[dependencies.immersiveweapons]] #optional
