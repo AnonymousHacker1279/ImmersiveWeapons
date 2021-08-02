@@ -1,7 +1,7 @@
 {
   "replace": false,
   "values": [
-    "immersiveweapons:punji_sticks",
-    "immersiveweapons:sandbag"
+    "immersiveweapons:sandbag",
+    "immersiveweapons:punji_sticks"
   ]
 }
