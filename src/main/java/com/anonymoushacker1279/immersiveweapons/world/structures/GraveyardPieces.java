@@ -22,9 +22,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
-public class BearTrapPieces {
+public class GraveyardPieces {
 
-	private static final ResourceLocation CENTER = new ResourceLocation(ImmersiveWeapons.MOD_ID, "bear_trap");
+	private static final ResourceLocation CENTER = new ResourceLocation(ImmersiveWeapons.MOD_ID, "graveyard");
 	private static final Map<ResourceLocation, BlockPos> OFFSET = new ImmutableMap.Builder<ResourceLocation, BlockPos>()
 			.put(CENTER, new BlockPos(0, 0, 0))
 			.build();
@@ -41,8 +41,8 @@ public class BearTrapPieces {
 		int z = pos.getZ();
 
 		BlockPos rotationOffset = new BlockPos(0, 0, 0).rotate(rotation);
-		BlockPos blockPos = rotationOffset.offset(x, pos.getY(), z);
-		pieceList.add(new BearTrapPieces.Piece(structureManager, blockPos, rotation));
+		BlockPos blockPos = rotationOffset.offset(x, pos.getY() - 2, z);
+		pieceList.add(new GraveyardPieces.Piece(structureManager, blockPos, rotation));
 	}
 
 	public static class Piece extends TemplateStructurePiece {
@@ -56,7 +56,7 @@ public class BearTrapPieces {
 		 * @param rotationIn the <code>Rotation</code>
 		 */
 		Piece(StructureManager structureManager, BlockPos pos, Rotation rotationIn) {
-			super(Structures.BT, 0, structureManager, BearTrapPieces.CENTER, BearTrapPieces.CENTER.toString(), makeSettings(rotationIn, BearTrapPieces.CENTER), makePosition(pos));
+			super(Structures.GY, 0, structureManager, GraveyardPieces.CENTER, GraveyardPieces.CENTER.toString(), makeSettings(rotationIn, GraveyardPieces.CENTER), makePosition(pos));
 		}
 
 		/**
@@ -65,7 +65,7 @@ public class BearTrapPieces {
 		 * @param tag the <code>CompoundTag</code> data
 		 */
 		public Piece(ServerLevel level, CompoundTag tag) {
-			super(Structures.BT, tag, level, (location) -> makeSettings(Rotation.valueOf(tag.getString("Rot")), location));
+			super(Structures.GY, tag, level, (resourceLocation) -> makeSettings(Rotation.valueOf(tag.getString("Rot")), resourceLocation));
 		}
 
 		/**
@@ -77,7 +77,7 @@ public class BearTrapPieces {
 		private static StructurePlaceSettings makeSettings(Rotation rotationIn, ResourceLocation resourceLocationIn) {
 			resourceLocation = resourceLocationIn;
 			rotation = rotationIn;
-			return (new StructurePlaceSettings()).setRotation(rotation).setMirror(Mirror.NONE).setRotationPivot(BearTrapPieces.OFFSET.get(resourceLocation)).addProcessor(BlockIgnoreProcessor.STRUCTURE_BLOCK);
+			return (new StructurePlaceSettings()).setRotation(rotationIn).setMirror(Mirror.NONE).setRotationPivot(GraveyardPieces.OFFSET.get(resourceLocationIn)).addProcessor(BlockIgnoreProcessor.STRUCTURE_BLOCK);
 		}
 
 		/**
@@ -86,7 +86,7 @@ public class BearTrapPieces {
 		 * @return BlockPos
 		 */
 		private static BlockPos makePosition(BlockPos blockPos) {
-			return blockPos.offset(BearTrapPieces.OFFSET.get(BearTrapPieces.CENTER));
+			return blockPos.offset(GraveyardPieces.OFFSET.get(GraveyardPieces.CENTER));
 		}
 
 

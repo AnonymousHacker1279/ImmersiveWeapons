@@ -111,7 +111,7 @@ public class DeferredRegistryHandler {
 	// Biome Register
 	public static final DeferredRegister<Biome> BIOMES = DeferredRegister.create(ForgeRegistries.BIOMES, ImmersiveWeapons.MOD_ID);
 	// Effect Register
-	public static final DeferredRegister<MobEffect> EFFECTS = DeferredRegister.create(ForgeRegistries.POTIONS, ImmersiveWeapons.MOD_ID);
+	public static final DeferredRegister<MobEffect> EFFECTS = DeferredRegister.create(ForgeRegistries.MOB_EFFECTS, ImmersiveWeapons.MOD_ID);
 	// Structure Register
 	public static final DeferredRegister<StructureFeature<?>> STRUCTURES = DeferredRegister.create(ForgeRegistries.STRUCTURE_FEATURES, ImmersiveWeapons.MOD_ID);
 
@@ -514,4 +514,8 @@ public class DeferredRegistryHandler {
 	public static final RegistryObject<StructureFeature<NoneFeatureConfiguration>> BATTLEFIELD_VILLAGE_STRUCTURE = Structures.setupStructure("battlefield_village", () -> (new BattlefieldVillage(NoneFeatureConfiguration.CODEC)));
 	public static final RegistryObject<StructureFeature<NoneFeatureConfiguration>> CLOUD_ISLAND_STRUCTURE = Structures.setupStructure("cloud_island", () -> (new CloudIsland(NoneFeatureConfiguration.CODEC)));
 	public static final RegistryObject<StructureFeature<NoneFeatureConfiguration>> CAMPSITE_STRUCTURE = Structures.setupStructure("campsite", () -> (new Campsite(NoneFeatureConfiguration.CODEC)));
+	public static final RegistryObject<StructureFeature<NoneFeatureConfiguration>> BATTLEFIELD_HOUSE_STRUCTURE = Structures.setupStructure("battlefield_house", () -> (new BattlefieldHouse(NoneFeatureConfiguration.CODEC)));
+	public static final RegistryObject<StructureFeature<NoneFeatureConfiguration>> OUTHOUSE_STRUCTURE = Structures.setupStructure("outhouse", () -> (new Outhouse(NoneFeatureConfiguration.CODEC)));
+	public static final RegistryObject<StructureFeature<NoneFeatureConfiguration>> WATER_TOWER_STRUCTURE = Structures.setupStructure("water_tower", () -> (new WaterTower(NoneFeatureConfiguration.CODEC)));
+	public static final RegistryObject<StructureFeature<NoneFeatureConfiguration>> GRAVEYARD_STRUCTURE = Structures.setupStructure("graveyard", () -> (new Graveyard(NoneFeatureConfiguration.CODEC)));
 }

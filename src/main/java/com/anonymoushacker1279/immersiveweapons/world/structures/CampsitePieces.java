@@ -24,11 +24,9 @@ import java.util.Random;
 
 public class CampsitePieces {
 
-	private static final int height = 0;
-
 	private static final ResourceLocation CENTER = new ResourceLocation(ImmersiveWeapons.MOD_ID, "campsite");
 	private static final Map<ResourceLocation, BlockPos> OFFSET = new ImmutableMap.Builder<ResourceLocation, BlockPos>()
-			.put(CENTER, new BlockPos(0, height, 0))
+			.put(CENTER, new BlockPos(0, 0, 0))
 			.build();
 
 	/**

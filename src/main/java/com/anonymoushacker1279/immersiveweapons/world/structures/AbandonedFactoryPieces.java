@@ -24,11 +24,9 @@ import java.util.Random;
 
 public class AbandonedFactoryPieces {
 
-	private static final int height = 0;
-
 	private static final ResourceLocation CENTER = new ResourceLocation(ImmersiveWeapons.MOD_ID, "abandoned_factory");
 	private static final Map<ResourceLocation, BlockPos> OFFSET = new ImmutableMap.Builder<ResourceLocation, BlockPos>()
-			.put(CENTER, new BlockPos(0, height, 0))
+			.put(CENTER, new BlockPos(0, 0, 0))
 			.build();
 
 	/**
@@ -116,5 +114,4 @@ public class AbandonedFactoryPieces {
 		protected void handleDataMarker(@NotNull String function, @NotNull BlockPos pos, @NotNull ServerLevelAccessor serverLevelAccessor, @NotNull Random rand, @NotNull BoundingBox sbb) {
 		}
 	}
-
 }
