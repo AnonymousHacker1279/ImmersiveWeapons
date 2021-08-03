@@ -79,7 +79,7 @@ public class BattlefieldCamp extends StructureFeature<NoneFeatureConfiguration> 
 
 			// Finds the y value of the terrain at location.
 			int surfaceY = generator.getBaseHeight(x, z, Heightmap.Types.WORLD_SURFACE_WG, heightAccessor);
-			BlockPos blockpos = new BlockPos(x, surfaceY - 3, z);
+			BlockPos blockpos = new BlockPos(x, surfaceY, z);
 
 			BattlefieldCampPieces.start(structureManager, blockpos, rotation, pieces);
 

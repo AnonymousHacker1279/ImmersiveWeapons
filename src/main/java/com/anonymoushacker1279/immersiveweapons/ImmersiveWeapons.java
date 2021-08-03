@@ -149,10 +149,13 @@ public class ImmersiveWeapons {
 			generation.addStructureStart(ConfiguredStructures.CONFIGURED_ABANDONED_FACTORY);
 			generation.addStructureStart(ConfiguredStructures.CONFIGURED_UNDERGROUND_BUNKER);
 			generation.addStructureStart(ConfiguredStructures.CONFIGURED_BEAR_TRAP);
+			generation.addStructureStart(ConfiguredStructures.CONFIGURED_OUTHOUSE);
 		}
 		if (event.getCategory() == BiomeCategory.PLAINS) {
 			generation.addStructureStart(ConfiguredStructures.CONFIGURED_ABANDONED_FACTORY);
 			generation.addStructureStart(ConfiguredStructures.CONFIGURED_CAMPSITE);
+			generation.addStructureStart(ConfiguredStructures.CONFIGURED_OUTHOUSE);
+			generation.addStructureStart(ConfiguredStructures.CONFIGURED_WATER_TOWER);
 		}
 		if (event.getCategory() == BiomeCategory.JUNGLE) {
 			generation.addStructureStart(ConfiguredStructures.CONFIGURED_PITFALL_TRAP);
@@ -169,6 +172,8 @@ public class ImmersiveWeapons {
 			generation.addStructureStart(ConfiguredStructures.CONFIGURED_UNDERGROUND_BUNKER);
 			generation.addStructureStart(ConfiguredStructures.CONFIGURED_BEAR_TRAP);
 			generation.addStructureStart(ConfiguredStructures.CONFIGURED_BATTLEFIELD_VILLAGE);
+			generation.addStructureStart(ConfiguredStructures.CONFIGURED_BATTLEFIELD_HOUSE);
+			generation.addStructureStart(ConfiguredStructures.CONFIGURED_GRAVEYARD);
 			generation.addFeature(Decoration.VEGETAL_DECORATION, ConfiguredStructures.CONFIGURED_WOODEN_SPIKES);
 			generation.addCarver(GenerationStep.Carving.AIR, new ConfiguredWorldCarver<>(CanyonWorldCarver.CANYON, new CanyonCarverConfiguration(0.15F, BiasedToBottomHeight.of(VerticalAnchor.absolute(68), VerticalAnchor.absolute(70), 2), ConstantFloat.of(0.5F), VerticalAnchor.aboveBottom(20), false, CarverDebugSettings.of(false, Blocks.WARPED_BUTTON.defaultBlockState()), UniformFloat.of(-0.125F, 0.125F), new CanyonCarverConfiguration.CanyonShapeConfiguration(UniformFloat.of(0.5F, 0.75F), TrapezoidFloat.of(0.0F, 4.0F, 1.0F), 3, UniformFloat.of(0.75F, 1.0F), 0.5F, 0.0F))));
 		}
@@ -198,6 +203,10 @@ public class ImmersiveWeapons {
 			tempMap.put(DeferredRegistryHandler.BATTLEFIELD_VILLAGE_STRUCTURE.get(), StructureSettings.DEFAULTS.get(DeferredRegistryHandler.BATTLEFIELD_VILLAGE_STRUCTURE.get()));
 			tempMap.put(DeferredRegistryHandler.CLOUD_ISLAND_STRUCTURE.get(), StructureSettings.DEFAULTS.get(DeferredRegistryHandler.CLOUD_ISLAND_STRUCTURE.get()));
 			tempMap.put(DeferredRegistryHandler.CAMPSITE_STRUCTURE.get(), StructureSettings.DEFAULTS.get(DeferredRegistryHandler.CAMPSITE_STRUCTURE.get()));
+			tempMap.put(DeferredRegistryHandler.BATTLEFIELD_HOUSE_STRUCTURE.get(), StructureSettings.DEFAULTS.get(DeferredRegistryHandler.BATTLEFIELD_HOUSE_STRUCTURE.get()));
+			tempMap.put(DeferredRegistryHandler.OUTHOUSE_STRUCTURE.get(), StructureSettings.DEFAULTS.get(DeferredRegistryHandler.OUTHOUSE_STRUCTURE.get()));
+			tempMap.put(DeferredRegistryHandler.WATER_TOWER_STRUCTURE.get(), StructureSettings.DEFAULTS.get(DeferredRegistryHandler.WATER_TOWER_STRUCTURE.get()));
+			tempMap.put(DeferredRegistryHandler.GRAVEYARD_STRUCTURE.get(), StructureSettings.DEFAULTS.get(DeferredRegistryHandler.GRAVEYARD_STRUCTURE.get()));
 			serverWorld.getChunkSource().generator.getSettings().structureConfig = tempMap;
 		}
 	}

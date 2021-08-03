@@ -8,6 +8,7 @@ import net.minecraft.world.level.LevelHeightAccessor;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.chunk.ChunkGenerator;
+import net.minecraft.world.level.levelgen.GenerationStep;
 import net.minecraft.world.level.levelgen.GenerationStep.Decoration;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.levelgen.feature.StructureFeature;
@@ -16,13 +17,13 @@ import net.minecraft.world.level.levelgen.structure.StructureStart;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureManager;
 import org.jetbrains.annotations.NotNull;
 
-public class AbandonedFactory extends StructureFeature<NoneFeatureConfiguration> {
+public class Graveyard extends StructureFeature<NoneFeatureConfiguration> {
 
 	/**
-	 * Constructor for AbandonedFactory.
+	 * Constructor for Graveyard.
 	 * @param codec the <code>Codec</code> extending NoneFeatureConfiguration
 	 */
-	public AbandonedFactory(Codec<NoneFeatureConfiguration> codec) {
+	public Graveyard(Codec<NoneFeatureConfiguration> codec) {
 		super(codec);
 	}
 
@@ -32,7 +33,7 @@ public class AbandonedFactory extends StructureFeature<NoneFeatureConfiguration>
 	 */
 	@Override
 	public @NotNull StructureStartFactory<NoneFeatureConfiguration> getStartFactory() {
-		return AbandonedFactory.Start::new;
+		return Graveyard.Start::new;
 	}
 
 	/**
@@ -40,7 +41,7 @@ public class AbandonedFactory extends StructureFeature<NoneFeatureConfiguration>
 	 * @return Decoration
 	 */
 	@Override
-	public @NotNull Decoration step() {
+	public @NotNull GenerationStep.Decoration step() {
 		return Decoration.SURFACE_STRUCTURES;
 	}
 
@@ -79,7 +80,7 @@ public class AbandonedFactory extends StructureFeature<NoneFeatureConfiguration>
 			int surfaceY = generator.getBaseHeight(x, z, Heightmap.Types.WORLD_SURFACE_WG, heightAccessor);
 			BlockPos blockpos = new BlockPos(x, surfaceY, z);
 
-			AbandonedFactoryPieces.start(structureManager, blockpos, rotation, pieces);
+			GraveyardPieces.start(structureManager, blockpos, rotation, pieces);
 
 			createBoundingBox();
 		}

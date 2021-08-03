@@ -28,6 +28,10 @@ public class ConfiguredStructures {
 	public static final ConfiguredStructureFeature<?, ?> CONFIGURED_BATTLEFIELD_VILLAGE = DeferredRegistryHandler.BATTLEFIELD_VILLAGE_STRUCTURE.get().configured(FeatureConfiguration.NONE);
 	public static final ConfiguredStructureFeature<?, ?> CONFIGURED_CLOUD_ISLAND = DeferredRegistryHandler.CLOUD_ISLAND_STRUCTURE.get().configured(FeatureConfiguration.NONE);
 	public static final ConfiguredStructureFeature<?, ?> CONFIGURED_CAMPSITE = DeferredRegistryHandler.CAMPSITE_STRUCTURE.get().configured(FeatureConfiguration.NONE);
+	public static final ConfiguredStructureFeature<?, ?> CONFIGURED_BATTLEFIELD_HOUSE = DeferredRegistryHandler.BATTLEFIELD_HOUSE_STRUCTURE.get().configured(FeatureConfiguration.NONE);
+	public static final ConfiguredStructureFeature<?, ?> CONFIGURED_OUTHOUSE = DeferredRegistryHandler.OUTHOUSE_STRUCTURE.get().configured(FeatureConfiguration.NONE);
+	public static final ConfiguredStructureFeature<?, ?> CONFIGURED_WATER_TOWER = DeferredRegistryHandler.WATER_TOWER_STRUCTURE.get().configured(FeatureConfiguration.NONE);
+	public static final ConfiguredStructureFeature<?, ?> CONFIGURED_GRAVEYARD = DeferredRegistryHandler.GRAVEYARD_STRUCTURE.get().configured(FeatureConfiguration.NONE);
 
 	public static final ConfiguredFeature<?, ?> CONFIGURED_WOODEN_SPIKES = Feature.RANDOM_PATCH.configured(new RandomPatchConfiguration.GrassConfigurationBuilder(new SimpleStateProvider(DeferredRegistryHandler.WOODEN_SPIKES.get().defaultBlockState()), SimpleBlockPlacer.INSTANCE).tries(32).whitelist(ImmutableSet.of(Blocks.GRASS_BLOCK)).yspread(1).xspread(4).zspread(4).noProjection().build()).decorated(Features.Decorators.TOP_SOLID_HEIGHTMAP_SQUARE).rarity(12);
 
@@ -62,6 +66,18 @@ public class ConfiguredStructures {
 
 		Registry.register(registry, new ResourceLocation(ImmersiveWeapons.MOD_ID, "configured_campsite"), CONFIGURED_CAMPSITE);
 		FlatLevelGeneratorSettings.STRUCTURE_FEATURES.put(DeferredRegistryHandler.CAMPSITE_STRUCTURE.get(), CONFIGURED_CAMPSITE);
+
+		Registry.register(registry, new ResourceLocation(ImmersiveWeapons.MOD_ID, "configured_battlefield_house"), CONFIGURED_BATTLEFIELD_HOUSE);
+		FlatLevelGeneratorSettings.STRUCTURE_FEATURES.put(DeferredRegistryHandler.BATTLEFIELD_HOUSE_STRUCTURE.get(), CONFIGURED_BATTLEFIELD_HOUSE);
+
+		Registry.register(registry, new ResourceLocation(ImmersiveWeapons.MOD_ID, "configured_outhouse"), CONFIGURED_OUTHOUSE);
+		FlatLevelGeneratorSettings.STRUCTURE_FEATURES.put(DeferredRegistryHandler.OUTHOUSE_STRUCTURE.get(), CONFIGURED_OUTHOUSE);
+
+		Registry.register(registry, new ResourceLocation(ImmersiveWeapons.MOD_ID, "configured_water_tower"), CONFIGURED_WATER_TOWER);
+		FlatLevelGeneratorSettings.STRUCTURE_FEATURES.put(DeferredRegistryHandler.WATER_TOWER_STRUCTURE.get(), CONFIGURED_WATER_TOWER);
+
+		Registry.register(registry, new ResourceLocation(ImmersiveWeapons.MOD_ID, "configured_graveyard"), CONFIGURED_GRAVEYARD);
+		FlatLevelGeneratorSettings.STRUCTURE_FEATURES.put(DeferredRegistryHandler.GRAVEYARD_STRUCTURE.get(), CONFIGURED_GRAVEYARD);
 	}
 
 }

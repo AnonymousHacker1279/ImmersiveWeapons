@@ -24,11 +24,9 @@ import java.util.Random;
 
 public class BattlefieldCampPieces {
 
-	private static final int height = 0;
-
 	private static final ResourceLocation CENTER = new ResourceLocation(ImmersiveWeapons.MOD_ID, "battlefield_camp");
 	private static final Map<ResourceLocation, BlockPos> OFFSET = new ImmutableMap.Builder<ResourceLocation, BlockPos>()
-			.put(CENTER, new BlockPos(0, height, 0))
+			.put(CENTER, new BlockPos(0, 0, 0))
 			.build();
 
 	/**
@@ -43,7 +41,7 @@ public class BattlefieldCampPieces {
 		int z = pos.getZ();
 
 		BlockPos rotationOffset = new BlockPos(0, 0, 0).rotate(rotation);
-		BlockPos blockPos = rotationOffset.offset(x, pos.getY(), z);
+		BlockPos blockPos = rotationOffset.offset(x, pos.getY() - 1, z);
 		pieceList.add(new BattlefieldCampPieces.Piece(structureManager, blockPos, rotation));
 	}
 

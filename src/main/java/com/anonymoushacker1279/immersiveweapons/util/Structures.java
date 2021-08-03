@@ -26,6 +26,11 @@ public class Structures {
 	public static final StructurePieceType BF_C = BattlefieldCampPieces.Piece::new;
 	public static final StructurePieceType CI = CloudIslandPieces.Piece::new;
 	public static final StructurePieceType CS = CampsitePieces.Piece::new;
+	public static final StructurePieceType BF_H1 = BattlefieldHousePieces.Piece::new;
+	public static final StructurePieceType BF_H2 = BattlefieldHousePieces.PieceTwo::new;
+	public static final StructurePieceType OH = OuthousePieces.Piece::new;
+	public static final StructurePieceType WT = WaterTowerPieces.Piece::new;
+	public static final StructurePieceType GY = GraveyardPieces.Piece::new;
 
 	/**
 	 * Setup a structure.
@@ -82,7 +87,7 @@ public class Structures {
 						Config.MAX_BATTLEFIELD_CAMP_DISTANCE.get(),
 						Config.MIN_BATTLEFIELD_CAMP_DISTANCE.get(),
 						458962175),
-				true);
+				false);
 		setupStructure(
 				DeferredRegistryHandler.BATTLEFIELD_VILLAGE_STRUCTURE.get(),
 				new StructureFeatureConfiguration(
@@ -104,6 +109,34 @@ public class Structures {
 						Config.MIN_CAMPSITE_DISTANCE.get(),
 						671249835),
 				true);
+		setupStructure(
+				DeferredRegistryHandler.BATTLEFIELD_HOUSE_STRUCTURE.get(),
+				new StructureFeatureConfiguration(
+						Config.MAX_BATTLEFIELD_HOUSE_DISTANCE.get(),
+						Config.MIN_BATTLEFIELD_HOUSE_DISTANCE.get(),
+						615794356),
+				false);
+		setupStructure(
+				DeferredRegistryHandler.OUTHOUSE_STRUCTURE.get(),
+				new StructureFeatureConfiguration(
+						Config.MAX_OUTHOUSE_DISTANCE.get(),
+						Config.MIN_OUTHOUSE_DISTANCE.get(),
+						845721365),
+				false);
+		setupStructure(
+				DeferredRegistryHandler.WATER_TOWER_STRUCTURE.get(),
+				new StructureFeatureConfiguration(
+						Config.MAX_WATER_TOWER_DISTANCE.get(),
+						Config.MIN_WATER_TOWER_DISTANCE.get(),
+						246975135),
+				true);
+		setupStructure(
+				DeferredRegistryHandler.GRAVEYARD_STRUCTURE.get(),
+				new StructureFeatureConfiguration(
+						Config.MAX_GRAVEYARD_DISTANCE.get(),
+						Config.MIN_GRAVEYARD_DISTANCE.get(),
+						346751289),
+				false);
 	}
 
 	/**
@@ -145,6 +178,11 @@ public class Structures {
 		registerStructurePiece(BF_C, new ResourceLocation(ImmersiveWeapons.MOD_ID, "bf_c"));
 		registerStructurePiece(CI, new ResourceLocation(ImmersiveWeapons.MOD_ID, "ci"));
 		registerStructurePiece(CS, new ResourceLocation(ImmersiveWeapons.MOD_ID, "cs"));
+		registerStructurePiece(BF_H1, new ResourceLocation(ImmersiveWeapons.MOD_ID, "bf_h1"));
+		registerStructurePiece(BF_H2, new ResourceLocation(ImmersiveWeapons.MOD_ID, "bf_h2"));
+		registerStructurePiece(OH, new ResourceLocation(ImmersiveWeapons.MOD_ID, "oh"));
+		registerStructurePiece(WT, new ResourceLocation(ImmersiveWeapons.MOD_ID, "wt"));
+		registerStructurePiece(GY, new ResourceLocation(ImmersiveWeapons.MOD_ID, "gy"));
 	}
 
 	/**
