@@ -8,6 +8,8 @@
 
 ## A vanilla+ weapons mod for Minecraft 1.16.5/1.16.4/1.15.2
 
+**This README is outdated. Please switch to the master branch for an updated version.**
+
 Immersive Weapons is a vanilla+ weapons add-on aiming to spice up your combat skills.
 
 Traverse the world, scavenging in destroyed factories or climbing to the pits of hell to collect new and powerful
