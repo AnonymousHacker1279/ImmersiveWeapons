@@ -544,7 +544,7 @@ public abstract class AbstractTeslaSynthesizerBlockEntity extends BaseContainerB
 	 * Invalidate capabilities.
 	 */
 	@Override
-	protected void invalidateCaps() {
+	public void invalidateCaps() {
 		super.invalidateCaps();
 		for (LazyOptional<? extends IItemHandler> handler : handlers)
 			handler.invalidate();
