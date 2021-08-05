@@ -30,7 +30,7 @@ A few other notes:
 - This is open source. If you want to port to old versions or to Fabric, do it yourself.
 - This is NOT to be reposted to any mod rehosting websites. The only places you should download this mod at are the CurseForge page, and this GitHub repository. #StopModReposts
 
-[Interested in coding, or just want to hang out? Join my Discord server: Titan Programming](https://discord.gg/hjvZfAu7sB)
+[Interested in the development of this project, or just want to hang out? Join the Official Discord server](https://discord.gg/WNMCTg7TsT)
 
 ## Version Support
 
