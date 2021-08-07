@@ -30,7 +30,7 @@ repositories {
 apply plugin: 'net.minecraftforge.gradle'
 apply plugin: 'maven-publish'
 
-version = '1.17.1-1.7.1'
+version = '1.17.1-1.8.0'
 group = 'com.anonymoushacker1279.immersiveweapons' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = 'immersiveweapons'
 

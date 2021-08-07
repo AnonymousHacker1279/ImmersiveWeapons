@@ -54,7 +54,7 @@ public class ForgeEventSubscriber {
 				if (Minecraft.getInstance().level != null) {
 					BlockState state = Minecraft.getInstance().level.getBlockState(player.eyeBlockPosition());
 					if (state.is(Blocks.LAVA)) {
-						event.setDensity(0.05F);
+						event.setDensity(192.0F - (192.0F * 0.02F));
 						event.setCanceled(true);
 					}
 				}

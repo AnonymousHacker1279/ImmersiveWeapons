@@ -1,0 +1,35 @@
+{
+	"credit": "Made with Blockbench",
+	"textures": {
+		"0": "immersiveweapons:block/burned_oak_branch",
+		"particle": "immersiveweapons:block/burned_oak_branch"
+	},
+	"elements": [
+		{
+			"from": [6, 0, 0],
+			"to": [6, 9, 11],
+			"rotation": {"angle": -22.5, "axis": "y", "origin": [7, 0.5, 4.5]},
+			"faces": {
+				"north": {"uv": [0, 0, 0, 8], "texture": "#0"},
+				"east": {"uv": [10, 8, 0, 16], "texture": "#0"},
+				"south": {"uv": [0, 0, 0, 8], "texture": "#0"},
+				"west": {"uv": [0, 8, 10, 16], "texture": "#0"},
+				"up": {"uv": [0, 0, 0, 11], "texture": "#0"},
+				"down": {"uv": [0, 0, 0, 11], "texture": "#0"}
+			}
+		},
+		{
+			"from": [9.92388, 0, 0.38268],
+			"to": [9.92388, 9, 11.38268],
+			"rotation": {"angle": 22.5, "axis": "y", "origin": [7.92388, 0.5, 4.88268]},
+			"faces": {
+				"north": {"uv": [0, 0, 0, 8], "texture": "#0"},
+				"east": {"uv": [10, 8, 0, 16], "texture": "#0"},
+				"south": {"uv": [0, 0, 0, 8], "texture": "#0"},
+				"west": {"uv": [0, 8, 10, 16], "texture": "#0"},
+				"up": {"uv": [0, 0, 0, 11], "texture": "#0"},
+				"down": {"uv": [0, 0, 0, 11], "texture": "#0"}
+			}
+		}
+	]
+}
