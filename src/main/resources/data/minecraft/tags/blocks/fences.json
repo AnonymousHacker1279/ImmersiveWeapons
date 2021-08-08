@@ -1,6 +1,7 @@
 {
 	"replace": false,
 	"values": [
-		"immersiveweapons:barbed_wire_fence"
+		"immersiveweapons:barbed_wire_fence",
+		"immersiveweapons:burned_oak_fence"
 	]
 }

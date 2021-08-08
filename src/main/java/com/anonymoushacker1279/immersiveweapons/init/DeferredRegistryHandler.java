@@ -327,7 +327,8 @@ public class DeferredRegistryHandler {
 	public static final RegistryObject<Block> STRIPPED_BURNED_OAK_LOG = BLOCKS.register("stripped_burned_oak_log", () -> new RotatedPillarBlock(BlockBehaviour.Properties.of(Material.WOOD).strength(1.7F).sound(SoundType.WOOD)));
 	public static final RegistryObject<Block> BURNED_OAK_PLANKS = BLOCKS.register("burned_oak_planks", () -> new Block(BlockBehaviour.Properties.of(Material.WOOD).strength(1.7f, 2.7f).sound(SoundType.WOOD)));
 	public static final RegistryObject<Block> BURNED_OAK_STAIRS = BLOCKS.register("burned_oak_stairs", () -> new StairBlock(() -> BURNED_OAK_PLANKS.get().defaultBlockState(), BlockBehaviour.Properties.copy(BURNED_OAK_PLANKS.get())));
-	public static final RegistryObject<Block> BURNED_OAK_SLAB = BLOCKS.register("burned_oak_slab", () -> new SlabBlock(BlockBehaviour.Properties.of(Material.WOOD).strength(1.7f, 2.7f).sound(SoundType.WOOD).requiresCorrectToolForDrops()));
+	public static final RegistryObject<Block> BURNED_OAK_SLAB = BLOCKS.register("burned_oak_slab", () -> new SlabBlock(BlockBehaviour.Properties.of(Material.WOOD).strength(1.7f, 2.7f).sound(SoundType.WOOD)));
+	public static final RegistryObject<Block> BURNED_OAK_FENCE = BLOCKS.register("burned_oak_fence", () -> new FenceBlock(BlockBehaviour.Properties.of(Material.WOOD).strength(1.7f, 2.7f).sound(SoundType.WOOD)));
 	// Stone tier
 	public static final RegistryObject<Block> WOODEN_SPIKES = BLOCKS.register("wooden_spikes", () -> new WoodenSpikesBlock(BlockBehaviour.Properties.of(Material.WOOD).strength(3.0f).sound(SoundType.WOOD).requiresCorrectToolForDrops().noOcclusion()));
 
@@ -431,6 +432,7 @@ public class DeferredRegistryHandler {
 	public static final RegistryObject<BlockItem> BURNED_OAK_PLANKS_ITEM = ITEMS.register("burned_oak_planks", () -> new BlockItem(BURNED_OAK_PLANKS.get(), new Properties().tab(ITEM_GROUP)));
 	public static final RegistryObject<BlockItem> BURNED_OAK_STAIRS_ITEM = ITEMS.register("burned_oak_stairs", () -> new BlockItem(BURNED_OAK_STAIRS.get(), new Properties().tab(ITEM_GROUP)));
 	public static final RegistryObject<BlockItem> BURNED_OAK_SLAB_ITEM = ITEMS.register("burned_oak_slab", () -> new BlockItem(BURNED_OAK_SLAB.get(), new Properties().tab(ITEM_GROUP)));
+	public static final RegistryObject<BlockItem> BURNED_OAK_FENCE_ITEM = ITEMS.register("burned_oak_fence", () -> new BlockItem(BURNED_OAK_FENCE.get(), new Properties().tab(ITEM_GROUP)));
 	public static final RegistryObject<BlockItem> BURNED_OAK_BRANCH_ITEM = ITEMS.register("burned_oak_branch", () -> new BlockItem(BURNED_OAK_BRANCH.get(), new Properties().tab(ITEM_GROUP)));
 
 	// Entities
