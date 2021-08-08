@@ -2,6 +2,13 @@
   "replace": false,
   "values": [
     "immersiveweapons:small_parts_table",
+    "immersiveweapons:burned_oak_wood",
+    "immersiveweapons:burned_oak_log",
+    "immersiveweapons:stripped_burned_oak_wood",
+    "immersiveweapons:stripped_burned_oak_log",
+    "immersiveweapons:burned_oak_planks",
+    "immersiveweapons:burned_oak_stairs",
+    "immersiveweapons:burned_oak_slab",
     "immersiveweapons:wooden_spikes"
   ]
 }

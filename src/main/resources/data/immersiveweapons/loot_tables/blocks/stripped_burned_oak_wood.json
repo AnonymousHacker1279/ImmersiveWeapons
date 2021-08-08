@@ -1,0 +1,14 @@
+{
+	"type": "minecraft:block",
+	"pools": [
+		{
+			"rolls": 1,
+			"entries": [
+				{
+					"type": "minecraft:item",
+					"name": "immersiveweapons:stripped_burned_oak_wood"
+				}
+			]
+		}
+	]
+}

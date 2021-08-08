@@ -1,0 +1,8 @@
+{
+	"parent": "minecraft:block/slab",
+	"textures": {
+		"bottom": "immersiveweapons:block/burned_oak_planks",
+		"top": "immersiveweapons:block/burned_oak_planks",
+		"side": "immersiveweapons:block/burned_oak_planks"
+	}
+}
