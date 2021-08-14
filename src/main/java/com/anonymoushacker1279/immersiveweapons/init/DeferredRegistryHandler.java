@@ -77,6 +77,7 @@ import net.minecraft.world.item.Item.Properties;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.*;
+import net.minecraft.world.level.block.PressurePlateBlock.Sensitivity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.levelgen.feature.StructureFeature;
@@ -329,6 +330,8 @@ public class DeferredRegistryHandler {
 	public static final RegistryObject<Block> BURNED_OAK_STAIRS = BLOCKS.register("burned_oak_stairs", () -> new StairBlock(() -> BURNED_OAK_PLANKS.get().defaultBlockState(), BlockBehaviour.Properties.copy(BURNED_OAK_PLANKS.get())));
 	public static final RegistryObject<Block> BURNED_OAK_SLAB = BLOCKS.register("burned_oak_slab", () -> new SlabBlock(BlockBehaviour.Properties.of(Material.WOOD).strength(1.7f, 2.7f).sound(SoundType.WOOD)));
 	public static final RegistryObject<Block> BURNED_OAK_FENCE = BLOCKS.register("burned_oak_fence", () -> new FenceBlock(BlockBehaviour.Properties.of(Material.WOOD).strength(1.7f, 2.7f).sound(SoundType.WOOD)));
+	public static final RegistryObject<Block> BURNED_OAK_DOOR = BLOCKS.register("burned_oak_door", () -> new DoorBlock(BlockBehaviour.Properties.of(Material.WOOD).strength(1.7f, 2.7f).sound(SoundType.WOOD)));
+	public static final RegistryObject<Block> BURNED_OAK_PRESSURE_PLATE = BLOCKS.register("burned_oak_pressure_plate", () -> new PressurePlateBlock(Sensitivity.EVERYTHING, BlockBehaviour.Properties.of(Material.WOOD).strength(0.4f).sound(SoundType.WOOD).noOcclusion().noCollission()));
 	// Stone tier
 	public static final RegistryObject<Block> WOODEN_SPIKES = BLOCKS.register("wooden_spikes", () -> new WoodenSpikesBlock(BlockBehaviour.Properties.of(Material.WOOD).strength(3.0f).sound(SoundType.WOOD).requiresCorrectToolForDrops().noOcclusion()));
 
@@ -434,6 +437,8 @@ public class DeferredRegistryHandler {
 	public static final RegistryObject<BlockItem> BURNED_OAK_SLAB_ITEM = ITEMS.register("burned_oak_slab", () -> new BlockItem(BURNED_OAK_SLAB.get(), new Properties().tab(ITEM_GROUP)));
 	public static final RegistryObject<BlockItem> BURNED_OAK_FENCE_ITEM = ITEMS.register("burned_oak_fence", () -> new BlockItem(BURNED_OAK_FENCE.get(), new Properties().tab(ITEM_GROUP)));
 	public static final RegistryObject<BlockItem> BURNED_OAK_BRANCH_ITEM = ITEMS.register("burned_oak_branch", () -> new BlockItem(BURNED_OAK_BRANCH.get(), new Properties().tab(ITEM_GROUP)));
+	public static final RegistryObject<BlockItem> BURNED_OAK_DOOR_ITEM = ITEMS.register("burned_oak_door", () -> new BlockItem(BURNED_OAK_DOOR.get(), new Properties().tab(ITEM_GROUP)));
+	public static final RegistryObject<BlockItem> BURNED_OAK_PRESSURE_PLATE_ITEM = ITEMS.register("burned_oak_pressure_plate", () -> new BlockItem(BURNED_OAK_PRESSURE_PLATE.get(), new Properties().tab(ITEM_GROUP)));
 
 	// Entities
 	public static final RegistryObject<EntityType<WoodArrowEntity>> WOOD_ARROW_ENTITY = ENTITY_TYPES.register("wood_arrow", () -> EntityType.Builder.<WoodArrowEntity> of(WoodArrowEntity::new, MobCategory.MISC).sized(0.5f, 0.5f).build(new ResourceLocation(ImmersiveWeapons.MOD_ID, "wood_arrow").toString()));
