@@ -9,7 +9,6 @@ import com.anonymoushacker1279.immersiveweapons.client.renderer.blockentity.Shel
 import com.anonymoushacker1279.immersiveweapons.client.renderer.entity.*;
 import com.anonymoushacker1279.immersiveweapons.client.renderer.entity.arrow.*;
 import com.anonymoushacker1279.immersiveweapons.client.renderer.entity.bullet.*;
-import com.anonymoushacker1279.immersiveweapons.container.CustomContainerHolder;
 import com.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
@@ -46,8 +45,8 @@ public class ClientModEventSubscriber {
 		ImmersiveWeapons.LOGGER.debug("Performing client-side setup");
 
 		// Register GUI screens
-		MenuScreens.register(CustomContainerHolder.SMALL_PARTS_CONTAINER, SmallPartsTableScreen::new);
-		MenuScreens.register(CustomContainerHolder.TESLA_SYNTHESIZER_CONTAINER, TeslaSynthesizerScreen::new);
+		MenuScreens.register(DeferredRegistryHandler.SMALL_PARTS_TABLE_CONTAINER.get(), SmallPartsTableScreen::new);
+		MenuScreens.register(DeferredRegistryHandler.TESLA_SYNTHESIZER_CONTAINER.get(), TeslaSynthesizerScreen::new);
 
 		// Register key binds
 		ClientRegistry.registerKeyBinding(toggleArmorEffect);
@@ -75,6 +74,7 @@ public class ClientModEventSubscriber {
 		ItemBlockRenderTypes.setRenderLayer(DeferredRegistryHandler.CLOUD.get(), RenderType.translucent());
 		ItemBlockRenderTypes.setRenderLayer(DeferredRegistryHandler.BURNED_OAK_BRANCH.get(), RenderType.cutout());
 		ItemBlockRenderTypes.setRenderLayer(DeferredRegistryHandler.BURNED_OAK_DOOR.get(), RenderType.cutout());
+		ItemBlockRenderTypes.setRenderLayer(DeferredRegistryHandler.BURNED_OAK_TRAPDOOR.get(), RenderType.cutout());
 
 		mc.getBlockColors().register((color1, color2, color3, color4) -> BiomeColors.getAverageGrassColor(Objects.requireNonNull(color2), Objects.requireNonNull(color3)), DeferredRegistryHandler.PITFALL.get());
 
