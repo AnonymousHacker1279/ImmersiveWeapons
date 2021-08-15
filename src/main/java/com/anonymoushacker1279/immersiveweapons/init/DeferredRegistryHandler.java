@@ -1,19 +1,18 @@
 package com.anonymoushacker1279.immersiveweapons.init;
 
 import com.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
-import com.anonymoushacker1279.immersiveweapons.block.BranchBlock;
 import com.anonymoushacker1279.immersiveweapons.block.base.*;
+import com.anonymoushacker1279.immersiveweapons.block.base.CorrugatedBlock.CorrugatedBlockFlat;
 import com.anonymoushacker1279.immersiveweapons.block.base.CorrugatedBlock.CorrugatedBlockNormal;
 import com.anonymoushacker1279.immersiveweapons.block.core.BasicOrientableBlock;
 import com.anonymoushacker1279.immersiveweapons.block.crafting.BarrelTapBlock;
 import com.anonymoushacker1279.immersiveweapons.block.crafting.SmallPartsTable;
 import com.anonymoushacker1279.immersiveweapons.block.crafting.TeslaSynthesizerBlock;
-import com.anonymoushacker1279.immersiveweapons.block.decoration.BiohazardBoxBlock;
-import com.anonymoushacker1279.immersiveweapons.block.decoration.CampChairBlock;
-import com.anonymoushacker1279.immersiveweapons.block.decoration.ShelfBlock;
-import com.anonymoushacker1279.immersiveweapons.block.decoration.WoodenTableBlock;
+import com.anonymoushacker1279.immersiveweapons.block.decoration.*;
 import com.anonymoushacker1279.immersiveweapons.block.misc.MedicStatueBlock;
 import com.anonymoushacker1279.immersiveweapons.block.misc.MinutemanStatueBlock;
+import com.anonymoushacker1279.immersiveweapons.block.sign.BurnedOakStandingSignBlock;
+import com.anonymoushacker1279.immersiveweapons.block.sign.BurnedOakWallSignBlock;
 import com.anonymoushacker1279.immersiveweapons.block.trap.*;
 import com.anonymoushacker1279.immersiveweapons.blockentity.*;
 import com.anonymoushacker1279.immersiveweapons.client.particle.SmokeBombParticleData;
@@ -144,42 +143,42 @@ public class DeferredRegistryHandler {
 	public static final CreativeModeTab ITEM_GROUP = new CreativeTabSorter("ImmersiveWeaponsTab");
 
 	// Tools
-	public static final RegistryObject<Item> MOLTEN_SWORD = ITEMS.register("molten_sword", () -> new MoltenSword(CustomItemMaterials.MOLTEN, 4, -2.1f, new Properties().tab(DeferredRegistryHandler.ITEM_GROUP).fireResistant()));
-	public static final RegistryObject<Item> MOLTEN_PICKAXE = ITEMS.register("molten_pickaxe", () -> new MoltenPickaxe(CustomItemMaterials.MOLTEN, 2, -2.3F, new Properties().tab(DeferredRegistryHandler.ITEM_GROUP).fireResistant()));
-	public static final RegistryObject<Item> MOLTEN_AXE = ITEMS.register("molten_axe", () -> new MoltenAxe(CustomItemMaterials.MOLTEN, 6, -3.0f, new Properties().tab(DeferredRegistryHandler.ITEM_GROUP).fireResistant()));
-	public static final RegistryObject<Item> MOLTEN_SHOVEL = ITEMS.register("molten_shovel", () -> new MoltenShovel(CustomItemMaterials.MOLTEN, -1, -3.0f, new Properties().tab(DeferredRegistryHandler.ITEM_GROUP).fireResistant()));
-	public static final RegistryObject<Item> MOLTEN_HOE = ITEMS.register("molten_hoe", () -> new MoltenHoe(CustomItemMaterials.MOLTEN, -3, 1.0f, new Properties().tab(DeferredRegistryHandler.ITEM_GROUP).fireResistant()));
-	public static final RegistryObject<Item> COPPER_SWORD = ITEMS.register("copper_sword", () -> new SwordItem(CustomItemMaterials.COPPER, 2, -2.4f, new Properties().tab(ITEM_GROUP)));
-	public static final RegistryObject<Item> COPPER_PICKAXE = ITEMS.register("copper_pickaxe", () -> new PickaxeItem(CustomItemMaterials.COPPER, 1, -2.3F, new Properties().tab(ITEM_GROUP)));
-	public static final RegistryObject<Item> COPPER_AXE = ITEMS.register("copper_axe", () -> new AxeItem(CustomItemMaterials.COPPER, 3, -3.0f, new Properties().tab(ITEM_GROUP)));
-	public static final RegistryObject<Item> COPPER_SHOVEL = ITEMS.register("copper_shovel", () -> new ShovelItem(CustomItemMaterials.COPPER, -1, -2.7f, new Properties().tab(ITEM_GROUP)));
-	public static final RegistryObject<Item> COPPER_HOE = ITEMS.register("copper_hoe", () -> new HoeItem(CustomItemMaterials.COPPER, -2, 1.0f, new Properties().tab(ITEM_GROUP)));
-	public static final RegistryObject<Item> TESLA_SWORD = ITEMS.register("tesla_sword", () -> new TeslaSword(CustomItemMaterials.TESLA, 5, -2.1f, new Properties().tab(ITEM_GROUP)));
-	public static final RegistryObject<Item> TESLA_PICKAXE = ITEMS.register("tesla_pickaxe", () -> new TeslaPickaxe(CustomItemMaterials.TESLA, 4, -2.3f, new Properties().tab(ITEM_GROUP)));
-	public static final RegistryObject<Item> TESLA_AXE = ITEMS.register("tesla_axe", () -> new TeslaAxe(CustomItemMaterials.TESLA, 7, -3.0f, new Properties().tab(ITEM_GROUP)));
-	public static final RegistryObject<Item> TESLA_SHOVEL = ITEMS.register("tesla_shovel", () -> new TeslaShovel(CustomItemMaterials.TESLA, 0, -3.0f, new Properties().tab(ITEM_GROUP)));
-	public static final RegistryObject<Item> TESLA_HOE = ITEMS.register("tesla_hoe", () -> new TeslaHoe(CustomItemMaterials.TESLA, -3, 1.0f, new Properties().tab(ITEM_GROUP)));
-	public static final RegistryObject<Item> COBALT_SWORD = ITEMS.register("cobalt_sword", () -> new SwordItem(CustomItemMaterials.COBALT, 2, -2.4f, new Properties().tab(ITEM_GROUP)));
-	public static final RegistryObject<Item> COBALT_PICKAXE = ITEMS.register("cobalt_pickaxe", () -> new PickaxeItem(CustomItemMaterials.COBALT, 1, -2.3F, new Properties().tab(ITEM_GROUP)));
-	public static final RegistryObject<Item> COBALT_AXE = ITEMS.register("cobalt_axe", () -> new AxeItem(CustomItemMaterials.COBALT, 3, -3.0f, new Properties().tab(ITEM_GROUP)));
-	public static final RegistryObject<Item> COBALT_SHOVEL = ITEMS.register("cobalt_shovel", () -> new ShovelItem(CustomItemMaterials.COBALT, -1, -2.7f, new Properties().tab(ITEM_GROUP)));
-	public static final RegistryObject<Item> COBALT_HOE = ITEMS.register("cobalt_hoe", () -> new HoeItem(CustomItemMaterials.COBALT, -3, 1.0f, new Properties().tab(ITEM_GROUP)));
-	public static final RegistryObject<Item> VENTUS_SWORD = ITEMS.register("ventus_sword", () -> new VentusSword(CustomItemMaterials.VENTUS, 4, -2.0f, new Properties().tab(ITEM_GROUP)));
-	public static final RegistryObject<Item> VENTUS_PICKAXE = ITEMS.register("ventus_pickaxe", () -> new VentusPickaxe(CustomItemMaterials.VENTUS, 3, -2.2f, new Properties().tab(ITEM_GROUP)));
-	public static final RegistryObject<Item> VENTUS_AXE = ITEMS.register("ventus_axe", () -> new VentusAxe(CustomItemMaterials.VENTUS, 6, -2.9f, new Properties().tab(ITEM_GROUP)));
-	public static final RegistryObject<Item> VENTUS_SHOVEL = ITEMS.register("ventus_shovel", () -> new VentusShovel(CustomItemMaterials.VENTUS, 0, -2.9f, new Properties().tab(ITEM_GROUP)));
-	public static final RegistryObject<Item> VENTUS_HOE = ITEMS.register("ventus_hoe", () -> new VentusHoe(CustomItemMaterials.VENTUS, -3, 1.0f, new Properties().tab(ITEM_GROUP)));
-	public static final RegistryObject<Item> VENTUS_STAFF = ITEMS.register("ventus_staff", () -> new VentusStaff(new Properties().durability(300).tab(ITEM_GROUP)));
-	public static final RegistryObject<Item> WOOD_PIKE = ITEMS.register("wood_pike", () -> new WoodPikeItem(new Properties().durability(59).tab(ITEM_GROUP), 4.0d, -2.6d));
-	public static final RegistryObject<Item> STONE_PIKE = ITEMS.register("stone_pike", () -> new StonePikeItem(new Properties().durability(131).tab(ITEM_GROUP), 5.0d, -2.6d));
-	public static final RegistryObject<Item> GOLD_PIKE = ITEMS.register("gold_pike", () -> new GoldPikeItem(new Properties().durability(32).tab(ITEM_GROUP), 4.0d, -2.6d));
-	public static final RegistryObject<Item> COPPER_PIKE = ITEMS.register("copper_pike", () -> new CopperPikeItem(new Properties().durability(180).tab(ITEM_GROUP), 6.0d, -2.6d));
-	public static final RegistryObject<Item> IRON_PIKE = ITEMS.register("iron_pike", () -> new IronPikeItem(new Properties().durability(250).tab(ITEM_GROUP), 6.0d, -2.6d));
-	public static final RegistryObject<Item> DIAMOND_PIKE = ITEMS.register("diamond_pike", () -> new DiamondPikeItem(new Properties().durability(1561).tab(ITEM_GROUP), 7.0d, -2.6d));
-	public static final RegistryObject<Item> NETHERITE_PIKE = ITEMS.register("netherite_pike", () -> new NetheritePikeItem(new Properties().durability(2031).tab(ITEM_GROUP).fireResistant(), 8.0d, -2.6d));
-	public static final RegistryObject<Item> FLINTLOCK_PISTOL = ITEMS.register("flintlock_pistol", () -> new SimplePistolItem(new Properties().tab(ITEM_GROUP).durability(499)));
-	public static final RegistryObject<Item> BLUNDERBUSS = ITEMS.register("blunderbuss", () -> new SimpleShotgunItem(new Properties().tab(ITEM_GROUP).durability(449)));
-	public static final RegistryObject<Item> FLARE_GUN = ITEMS.register("flare_gun", () -> new FlareGunItem(new Properties().tab(ITEM_GROUP).durability(399)));
+	public static final RegistryObject<MoltenSword> MOLTEN_SWORD = ITEMS.register("molten_sword", () -> new MoltenSword(CustomItemMaterials.MOLTEN, 4, -2.1f, new Properties().tab(DeferredRegistryHandler.ITEM_GROUP).fireResistant()));
+	public static final RegistryObject<MoltenPickaxe> MOLTEN_PICKAXE = ITEMS.register("molten_pickaxe", () -> new MoltenPickaxe(CustomItemMaterials.MOLTEN, 2, -2.3F, new Properties().tab(DeferredRegistryHandler.ITEM_GROUP).fireResistant()));
+	public static final RegistryObject<MoltenAxe> MOLTEN_AXE = ITEMS.register("molten_axe", () -> new MoltenAxe(CustomItemMaterials.MOLTEN, 6, -3.0f, new Properties().tab(DeferredRegistryHandler.ITEM_GROUP).fireResistant()));
+	public static final RegistryObject<MoltenShovel> MOLTEN_SHOVEL = ITEMS.register("molten_shovel", () -> new MoltenShovel(CustomItemMaterials.MOLTEN, -1, -3.0f, new Properties().tab(DeferredRegistryHandler.ITEM_GROUP).fireResistant()));
+	public static final RegistryObject<MoltenHoe> MOLTEN_HOE = ITEMS.register("molten_hoe", () -> new MoltenHoe(CustomItemMaterials.MOLTEN, -3, 1.0f, new Properties().tab(DeferredRegistryHandler.ITEM_GROUP).fireResistant()));
+	public static final RegistryObject<SwordItem> COPPER_SWORD = ITEMS.register("copper_sword", () -> new SwordItem(CustomItemMaterials.COPPER, 2, -2.4f, new Properties().tab(ITEM_GROUP)));
+	public static final RegistryObject<PickaxeItem> COPPER_PICKAXE = ITEMS.register("copper_pickaxe", () -> new PickaxeItem(CustomItemMaterials.COPPER, 1, -2.3F, new Properties().tab(ITEM_GROUP)));
+	public static final RegistryObject<AxeItem> COPPER_AXE = ITEMS.register("copper_axe", () -> new AxeItem(CustomItemMaterials.COPPER, 3, -3.0f, new Properties().tab(ITEM_GROUP)));
+	public static final RegistryObject<ShovelItem> COPPER_SHOVEL = ITEMS.register("copper_shovel", () -> new ShovelItem(CustomItemMaterials.COPPER, -1, -2.7f, new Properties().tab(ITEM_GROUP)));
+	public static final RegistryObject<HoeItem> COPPER_HOE = ITEMS.register("copper_hoe", () -> new HoeItem(CustomItemMaterials.COPPER, -2, 1.0f, new Properties().tab(ITEM_GROUP)));
+	public static final RegistryObject<TeslaSword> TESLA_SWORD = ITEMS.register("tesla_sword", () -> new TeslaSword(CustomItemMaterials.TESLA, 5, -2.1f, new Properties().tab(ITEM_GROUP)));
+	public static final RegistryObject<TeslaPickaxe> TESLA_PICKAXE = ITEMS.register("tesla_pickaxe", () -> new TeslaPickaxe(CustomItemMaterials.TESLA, 4, -2.3f, new Properties().tab(ITEM_GROUP)));
+	public static final RegistryObject<TeslaAxe> TESLA_AXE = ITEMS.register("tesla_axe", () -> new TeslaAxe(CustomItemMaterials.TESLA, 7, -3.0f, new Properties().tab(ITEM_GROUP)));
+	public static final RegistryObject<TeslaShovel> TESLA_SHOVEL = ITEMS.register("tesla_shovel", () -> new TeslaShovel(CustomItemMaterials.TESLA, 0, -3.0f, new Properties().tab(ITEM_GROUP)));
+	public static final RegistryObject<TeslaHoe> TESLA_HOE = ITEMS.register("tesla_hoe", () -> new TeslaHoe(CustomItemMaterials.TESLA, -3, 1.0f, new Properties().tab(ITEM_GROUP)));
+	public static final RegistryObject<SwordItem> COBALT_SWORD = ITEMS.register("cobalt_sword", () -> new SwordItem(CustomItemMaterials.COBALT, 2, -2.4f, new Properties().tab(ITEM_GROUP)));
+	public static final RegistryObject<PickaxeItem> COBALT_PICKAXE = ITEMS.register("cobalt_pickaxe", () -> new PickaxeItem(CustomItemMaterials.COBALT, 1, -2.3F, new Properties().tab(ITEM_GROUP)));
+	public static final RegistryObject<AxeItem> COBALT_AXE = ITEMS.register("cobalt_axe", () -> new AxeItem(CustomItemMaterials.COBALT, 3, -3.0f, new Properties().tab(ITEM_GROUP)));
+	public static final RegistryObject<ShovelItem> COBALT_SHOVEL = ITEMS.register("cobalt_shovel", () -> new ShovelItem(CustomItemMaterials.COBALT, -1, -2.7f, new Properties().tab(ITEM_GROUP)));
+	public static final RegistryObject<HoeItem> COBALT_HOE = ITEMS.register("cobalt_hoe", () -> new HoeItem(CustomItemMaterials.COBALT, -3, 1.0f, new Properties().tab(ITEM_GROUP)));
+	public static final RegistryObject<VentusSword> VENTUS_SWORD = ITEMS.register("ventus_sword", () -> new VentusSword(CustomItemMaterials.VENTUS, 4, -2.0f, new Properties().tab(ITEM_GROUP)));
+	public static final RegistryObject<VentusPickaxe> VENTUS_PICKAXE = ITEMS.register("ventus_pickaxe", () -> new VentusPickaxe(CustomItemMaterials.VENTUS, 3, -2.2f, new Properties().tab(ITEM_GROUP)));
+	public static final RegistryObject<VentusAxe> VENTUS_AXE = ITEMS.register("ventus_axe", () -> new VentusAxe(CustomItemMaterials.VENTUS, 6, -2.9f, new Properties().tab(ITEM_GROUP)));
+	public static final RegistryObject<VentusShovel> VENTUS_SHOVEL = ITEMS.register("ventus_shovel", () -> new VentusShovel(CustomItemMaterials.VENTUS, 0, -2.9f, new Properties().tab(ITEM_GROUP)));
+	public static final RegistryObject<VentusHoe> VENTUS_HOE = ITEMS.register("ventus_hoe", () -> new VentusHoe(CustomItemMaterials.VENTUS, -3, 1.0f, new Properties().tab(ITEM_GROUP)));
+	public static final RegistryObject<VentusStaff> VENTUS_STAFF = ITEMS.register("ventus_staff", () -> new VentusStaff(new Properties().durability(300).tab(ITEM_GROUP)));
+	public static final RegistryObject<WoodPikeItem> WOOD_PIKE = ITEMS.register("wood_pike", () -> new WoodPikeItem(new Properties().durability(59).tab(ITEM_GROUP), 4.0d, -2.6d));
+	public static final RegistryObject<StonePikeItem> STONE_PIKE = ITEMS.register("stone_pike", () -> new StonePikeItem(new Properties().durability(131).tab(ITEM_GROUP), 5.0d, -2.6d));
+	public static final RegistryObject<GoldPikeItem> GOLD_PIKE = ITEMS.register("gold_pike", () -> new GoldPikeItem(new Properties().durability(32).tab(ITEM_GROUP), 4.0d, -2.6d));
+	public static final RegistryObject<CopperPikeItem> COPPER_PIKE = ITEMS.register("copper_pike", () -> new CopperPikeItem(new Properties().durability(180).tab(ITEM_GROUP), 6.0d, -2.6d));
+	public static final RegistryObject<IronPikeItem> IRON_PIKE = ITEMS.register("iron_pike", () -> new IronPikeItem(new Properties().durability(250).tab(ITEM_GROUP), 6.0d, -2.6d));
+	public static final RegistryObject<DiamondPikeItem> DIAMOND_PIKE = ITEMS.register("diamond_pike", () -> new DiamondPikeItem(new Properties().durability(1561).tab(ITEM_GROUP), 7.0d, -2.6d));
+	public static final RegistryObject<NetheritePikeItem> NETHERITE_PIKE = ITEMS.register("netherite_pike", () -> new NetheritePikeItem(new Properties().durability(2031).tab(ITEM_GROUP).fireResistant(), 8.0d, -2.6d));
+	public static final RegistryObject<SimplePistolItem> FLINTLOCK_PISTOL = ITEMS.register("flintlock_pistol", () -> new SimplePistolItem(new Properties().tab(ITEM_GROUP).durability(499)));
+	public static final RegistryObject<SimpleShotgunItem> BLUNDERBUSS = ITEMS.register("blunderbuss", () -> new SimpleShotgunItem(new Properties().tab(ITEM_GROUP).durability(449)));
+	public static final RegistryObject<FlareGunItem> FLARE_GUN = ITEMS.register("flare_gun", () -> new FlareGunItem(new Properties().tab(ITEM_GROUP).durability(399)));
 
 	// Items
 	public static final RegistryObject<Item> STONE_SHARD = ITEMS.register("stone_shard", () -> new Item(new Properties().tab(ITEM_GROUP)));
@@ -206,172 +205,174 @@ public class DeferredRegistryHandler {
 	public static final RegistryObject<Item> COPPER_PIKE_HEAD = ITEMS.register("copper_pike_head", () -> new Item(new Properties().tab(ITEM_GROUP)));
 	public static final RegistryObject<Item> IRON_PIKE_HEAD = ITEMS.register("iron_pike_head", () -> new Item(new Properties().tab(ITEM_GROUP)));
 	public static final RegistryObject<Item> DIAMOND_PIKE_HEAD = ITEMS.register("diamond_pike_head", () -> new Item(new Properties().tab(ITEM_GROUP)));
-	public static final RegistryObject<Item> WOOD_ARROW = ITEMS.register("wood_arrow", () -> new WoodArrowItem(new Properties().tab(ITEM_GROUP), 1.65d));
-	public static final RegistryObject<Item> STONE_ARROW = ITEMS.register("stone_arrow", () -> new StoneArrowItem(new Properties().tab(ITEM_GROUP), 1.85d));
-	public static final RegistryObject<Item> GOLD_ARROW = ITEMS.register("gold_arrow", () -> new GoldArrowItem(new Properties().tab(ITEM_GROUP), 2.10d));
-	public static final RegistryObject<Item> COPPER_ARROW = ITEMS.register("copper_arrow", () -> new CopperArrowItem(new Properties().tab(ITEM_GROUP), 2.15d));
-	public static final RegistryObject<Item> IRON_ARROW = ITEMS.register("iron_arrow", () -> new IronArrowItem(new Properties().tab(ITEM_GROUP), 2.35d));
-	public static final RegistryObject<Item> DIAMOND_ARROW = ITEMS.register("diamond_arrow", () -> new DiamondArrowItem(new Properties().tab(ITEM_GROUP), 3.00d));
-	public static final RegistryObject<Item> NETHERITE_ARROW = ITEMS.register("netherite_arrow", () -> new NetheriteArrowItem(new Properties().tab(ITEM_GROUP).fireResistant(), 5.75d));
-	public static final RegistryObject<Item> SMOKE_BOMB_ARROW = ITEMS.register("smoke_bomb_arrow", () -> new SmokeBombArrowItem(new Properties().tab(ITEM_GROUP), 2.00d, 0));
-	public static final RegistryObject<Item> SMOKE_BOMB_ARROW_RED = ITEMS.register("smoke_bomb_arrow_red", () -> new SmokeBombArrowItem(new Properties().tab(ITEM_GROUP), 2.00d, 1));
-	public static final RegistryObject<Item> SMOKE_BOMB_ARROW_GREEN = ITEMS.register("smoke_bomb_arrow_green", () -> new SmokeBombArrowItem(new Properties().tab(ITEM_GROUP), 2.00d, 2));
-	public static final RegistryObject<Item> SMOKE_BOMB_ARROW_BLUE = ITEMS.register("smoke_bomb_arrow_blue", () -> new SmokeBombArrowItem(new Properties().tab(ITEM_GROUP), 2.00d, 3));
-	public static final RegistryObject<Item> SMOKE_BOMB_ARROW_PURPLE = ITEMS.register("smoke_bomb_arrow_purple", () -> new SmokeBombArrowItem(new Properties().tab(ITEM_GROUP), 2.00d, 4));
-	public static final RegistryObject<Item> SMOKE_BOMB_ARROW_YELLOW = ITEMS.register("smoke_bomb_arrow_yellow", () -> new SmokeBombArrowItem(new Properties().tab(ITEM_GROUP), 2.00d, 5));
-	public static final RegistryObject<Item> WOOD_MUSKET_BALL = ITEMS.register("wood_musket_ball", () -> new WoodBulletItem(new Properties().tab(ITEM_GROUP), 2.0d));
-	public static final RegistryObject<Item> STONE_MUSKET_BALL = ITEMS.register("stone_musket_ball", () -> new StoneBulletItem(new Properties().tab(ITEM_GROUP), 2.20d));
-	public static final RegistryObject<Item> GOLD_MUSKET_BALL = ITEMS.register("gold_musket_ball", () -> new GoldBulletItem(new Properties().tab(ITEM_GROUP), 2.30d));
-	public static final RegistryObject<Item> COPPER_MUSKET_BALL = ITEMS.register("copper_musket_ball", () -> new CopperBulletItem(new Properties().tab(ITEM_GROUP), 2.40d));
-	public static final RegistryObject<Item> IRON_MUSKET_BALL = ITEMS.register("iron_musket_ball", () -> new IronBulletItem(new Properties().tab(ITEM_GROUP), 2.65d));
-	public static final RegistryObject<Item> DIAMOND_MUSKET_BALL = ITEMS.register("diamond_musket_ball", () -> new DiamondBulletItem(new Properties().tab(ITEM_GROUP), 3.35d));
-	public static final RegistryObject<Item> NETHERITE_MUSKET_BALL = ITEMS.register("netherite_musket_ball", () -> new NetheriteBulletItem(new Properties().tab(ITEM_GROUP).fireResistant(), 6.50d));
-	public static final RegistryObject<Item> FLARE = ITEMS.register("flare", () -> new FlareItem(new Properties().tab(ITEM_GROUP), 0.1d));
+	public static final RegistryObject<WoodArrowItem> WOOD_ARROW = ITEMS.register("wood_arrow", () -> new WoodArrowItem(new Properties().tab(ITEM_GROUP), 1.65d));
+	public static final RegistryObject<StoneArrowItem> STONE_ARROW = ITEMS.register("stone_arrow", () -> new StoneArrowItem(new Properties().tab(ITEM_GROUP), 1.85d));
+	public static final RegistryObject<GoldArrowItem> GOLD_ARROW = ITEMS.register("gold_arrow", () -> new GoldArrowItem(new Properties().tab(ITEM_GROUP), 2.10d));
+	public static final RegistryObject<CopperArrowItem> COPPER_ARROW = ITEMS.register("copper_arrow", () -> new CopperArrowItem(new Properties().tab(ITEM_GROUP), 2.15d));
+	public static final RegistryObject<IronArrowItem> IRON_ARROW = ITEMS.register("iron_arrow", () -> new IronArrowItem(new Properties().tab(ITEM_GROUP), 2.35d));
+	public static final RegistryObject<DiamondArrowItem> DIAMOND_ARROW = ITEMS.register("diamond_arrow", () -> new DiamondArrowItem(new Properties().tab(ITEM_GROUP), 3.00d));
+	public static final RegistryObject<NetheriteArrowItem> NETHERITE_ARROW = ITEMS.register("netherite_arrow", () -> new NetheriteArrowItem(new Properties().tab(ITEM_GROUP).fireResistant(), 5.75d));
+	public static final RegistryObject<SmokeBombArrowItem> SMOKE_BOMB_ARROW = ITEMS.register("smoke_bomb_arrow", () -> new SmokeBombArrowItem(new Properties().tab(ITEM_GROUP), 2.00d, 0));
+	public static final RegistryObject<SmokeBombArrowItem> SMOKE_BOMB_ARROW_RED = ITEMS.register("smoke_bomb_arrow_red", () -> new SmokeBombArrowItem(new Properties().tab(ITEM_GROUP), 2.00d, 1));
+	public static final RegistryObject<SmokeBombArrowItem> SMOKE_BOMB_ARROW_GREEN = ITEMS.register("smoke_bomb_arrow_green", () -> new SmokeBombArrowItem(new Properties().tab(ITEM_GROUP), 2.00d, 2));
+	public static final RegistryObject<SmokeBombArrowItem> SMOKE_BOMB_ARROW_BLUE = ITEMS.register("smoke_bomb_arrow_blue", () -> new SmokeBombArrowItem(new Properties().tab(ITEM_GROUP), 2.00d, 3));
+	public static final RegistryObject<SmokeBombArrowItem> SMOKE_BOMB_ARROW_PURPLE = ITEMS.register("smoke_bomb_arrow_purple", () -> new SmokeBombArrowItem(new Properties().tab(ITEM_GROUP), 2.00d, 4));
+	public static final RegistryObject<SmokeBombArrowItem> SMOKE_BOMB_ARROW_YELLOW = ITEMS.register("smoke_bomb_arrow_yellow", () -> new SmokeBombArrowItem(new Properties().tab(ITEM_GROUP), 2.00d, 5));
+	public static final RegistryObject<WoodBulletItem> WOOD_MUSKET_BALL = ITEMS.register("wood_musket_ball", () -> new WoodBulletItem(new Properties().tab(ITEM_GROUP), 2.0d));
+	public static final RegistryObject<StoneBulletItem> STONE_MUSKET_BALL = ITEMS.register("stone_musket_ball", () -> new StoneBulletItem(new Properties().tab(ITEM_GROUP), 2.20d));
+	public static final RegistryObject<GoldBulletItem> GOLD_MUSKET_BALL = ITEMS.register("gold_musket_ball", () -> new GoldBulletItem(new Properties().tab(ITEM_GROUP), 2.30d));
+	public static final RegistryObject<CopperBulletItem> COPPER_MUSKET_BALL = ITEMS.register("copper_musket_ball", () -> new CopperBulletItem(new Properties().tab(ITEM_GROUP), 2.40d));
+	public static final RegistryObject<IronBulletItem> IRON_MUSKET_BALL = ITEMS.register("iron_musket_ball", () -> new IronBulletItem(new Properties().tab(ITEM_GROUP), 2.65d));
+	public static final RegistryObject<DiamondBulletItem> DIAMOND_MUSKET_BALL = ITEMS.register("diamond_musket_ball", () -> new DiamondBulletItem(new Properties().tab(ITEM_GROUP), 3.35d));
+	public static final RegistryObject<NetheriteBulletItem> NETHERITE_MUSKET_BALL = ITEMS.register("netherite_musket_ball", () -> new NetheriteBulletItem(new Properties().tab(ITEM_GROUP).fireResistant(), 6.50d));
+	public static final RegistryObject<FlareItem> FLARE = ITEMS.register("flare", () -> new FlareItem(new Properties().tab(ITEM_GROUP), 0.1d));
 	public static final RegistryObject<Item> MORTAR_SHELL = ITEMS.register("mortar_shell", () -> new Item(new Properties().tab(ITEM_GROUP)));
 	public static final RegistryObject<Item> BLANK_BLUEPRINT = ITEMS.register("blank_blueprint", () -> new Item(new Properties().tab(ITEM_GROUP)));
-	public static final RegistryObject<Item> SMALL_PARTS_BLUEPRINT = ITEMS.register("small_parts_blueprint", () -> new BlueprintItem(new Properties().tab(ITEM_GROUP).stacksTo(1)));
-	public static final RegistryObject<Item> SMALL_PARTS_METAL_THROWABLE_BOMB_BLUEPRINT = ITEMS.register("small_parts_metal_throwable_bomb_blueprint", () -> new BlueprintItem(new Properties().tab(ITEM_GROUP).stacksTo(1)));
-	public static final RegistryObject<Item> SMALL_PARTS_METAL_TOOL_BLUEPRINT = ITEMS.register("small_parts_metal_tool_blueprint", () -> new BlueprintItem(new Properties().tab(ITEM_GROUP).stacksTo(1)));
+	public static final RegistryObject<BlueprintItem> SMALL_PARTS_BLUEPRINT = ITEMS.register("small_parts_blueprint", () -> new BlueprintItem(new Properties().tab(ITEM_GROUP).stacksTo(1)));
+	public static final RegistryObject<BlueprintItem> SMALL_PARTS_METAL_THROWABLE_BOMB_BLUEPRINT = ITEMS.register("small_parts_metal_throwable_bomb_blueprint", () -> new BlueprintItem(new Properties().tab(ITEM_GROUP).stacksTo(1)));
+	public static final RegistryObject<BlueprintItem> SMALL_PARTS_METAL_TOOL_BLUEPRINT = ITEMS.register("small_parts_metal_tool_blueprint", () -> new BlueprintItem(new Properties().tab(ITEM_GROUP).stacksTo(1)));
 	public static final RegistryObject<Item> SMALL_PARTS_IRON = ITEMS.register("small_parts_iron", () -> new Item(new Properties().tab(ITEM_GROUP)));
 	public static final RegistryObject<Item> SMALL_PARTS_METAL_THROWABLE_BOMB = ITEMS.register("small_parts_metal_throwable_bomb", () -> new Item(new Properties().tab(ITEM_GROUP)));
 	public static final RegistryObject<Item> SMALL_PARTS_METAL_TOOL = ITEMS.register("small_parts_metal_tool", () -> new Item(new Properties().tab(ITEM_GROUP)));
-	public static final RegistryObject<Item> SMOKE_BOMB = ITEMS.register("smoke_bomb", () -> new SmokeBombItem(new Properties().tab(ITEM_GROUP).stacksTo(16), 0));
-	public static final RegistryObject<Item> SMOKE_BOMB_RED = ITEMS.register("smoke_bomb_red", () -> new SmokeBombItem(new Properties().tab(ITEM_GROUP).stacksTo(16), 1));
-	public static final RegistryObject<Item> SMOKE_BOMB_GREEN = ITEMS.register("smoke_bomb_green", () -> new SmokeBombItem(new Properties().tab(ITEM_GROUP).stacksTo(16), 2));
-	public static final RegistryObject<Item> SMOKE_BOMB_BLUE = ITEMS.register("smoke_bomb_blue", () -> new SmokeBombItem(new Properties().tab(ITEM_GROUP).stacksTo(16), 3));
-	public static final RegistryObject<Item> SMOKE_BOMB_PURPLE = ITEMS.register("smoke_bomb_purple", () -> new SmokeBombItem(new Properties().tab(ITEM_GROUP).stacksTo(16), 4));
-	public static final RegistryObject<Item> SMOKE_BOMB_YELLOW = ITEMS.register("smoke_bomb_yellow", () -> new SmokeBombItem(new Properties().tab(ITEM_GROUP).stacksTo(16), 5));
-	public static final RegistryObject<Item> MOLOTOV_COCKTAIL = ITEMS.register("molotov_cocktail", () -> new MolotovItem(new Properties().tab(ITEM_GROUP).stacksTo(16)));
+	public static final RegistryObject<SmokeBombItem> SMOKE_BOMB = ITEMS.register("smoke_bomb", () -> new SmokeBombItem(new Properties().tab(ITEM_GROUP).stacksTo(16), 0));
+	public static final RegistryObject<SmokeBombItem> SMOKE_BOMB_RED = ITEMS.register("smoke_bomb_red", () -> new SmokeBombItem(new Properties().tab(ITEM_GROUP).stacksTo(16), 1));
+	public static final RegistryObject<SmokeBombItem> SMOKE_BOMB_GREEN = ITEMS.register("smoke_bomb_green", () -> new SmokeBombItem(new Properties().tab(ITEM_GROUP).stacksTo(16), 2));
+	public static final RegistryObject<SmokeBombItem> SMOKE_BOMB_BLUE = ITEMS.register("smoke_bomb_blue", () -> new SmokeBombItem(new Properties().tab(ITEM_GROUP).stacksTo(16), 3));
+	public static final RegistryObject<SmokeBombItem> SMOKE_BOMB_PURPLE = ITEMS.register("smoke_bomb_purple", () -> new SmokeBombItem(new Properties().tab(ITEM_GROUP).stacksTo(16), 4));
+	public static final RegistryObject<SmokeBombItem> SMOKE_BOMB_YELLOW = ITEMS.register("smoke_bomb_yellow", () -> new SmokeBombItem(new Properties().tab(ITEM_GROUP).stacksTo(16), 5));
+	public static final RegistryObject<MolotovItem> MOLOTOV_COCKTAIL = ITEMS.register("molotov_cocktail", () -> new MolotovItem(new Properties().tab(ITEM_GROUP).stacksTo(16)));
 	public static final RegistryObject<Item> SMOKE_POWDER = ITEMS.register("smoke_powder", () -> new Item(new Properties().tab(ITEM_GROUP)));
-	public static final RegistryObject<Item> MORTAR_AND_PESTLE = ITEMS.register("mortar_and_pestle", () -> new BasicContainerItem(new Properties().tab(ITEM_GROUP)));
-	public static final RegistryObject<Item> BOTTLE_OF_ALCOHOL = ITEMS.register("bottle_of_alcohol", () -> new AlcoholBottleItem(new Properties().tab(ITEM_GROUP).stacksTo(16)));
-	public static final RegistryObject<Item> BOTTLE_OF_WINE = ITEMS.register("bottle_of_wine", () -> new WineBottleItem(new Properties().tab(ITEM_GROUP).stacksTo(16)));
+	public static final RegistryObject<BasicContainerItem> MORTAR_AND_PESTLE = ITEMS.register("mortar_and_pestle", () -> new BasicContainerItem(new Properties().tab(ITEM_GROUP)));
+	public static final RegistryObject<AlcoholBottleItem> BOTTLE_OF_ALCOHOL = ITEMS.register("bottle_of_alcohol", () -> new AlcoholBottleItem(new Properties().tab(ITEM_GROUP).stacksTo(16)));
+	public static final RegistryObject<WineBottleItem> BOTTLE_OF_WINE = ITEMS.register("bottle_of_wine", () -> new WineBottleItem(new Properties().tab(ITEM_GROUP).stacksTo(16)));
 	public static final RegistryObject<Item> PLIERS = ITEMS.register("pliers", () -> new Item(new Properties().tab(ITEM_GROUP).stacksTo(1)));
 	public static final RegistryObject<Item> CHOCOLATE_BAR = ITEMS.register("chocolate_bar", () -> new Item(new Properties().tab(ITEM_GROUP).food(FoodItemProperties.CHOCOLATE_BAR)));
-	public static final RegistryObject<Item> EXPLOSIVE_CHOCOLATE_BAR = ITEMS.register("explosive_chocolate_bar", () -> new ExplosiveChocolateBar(new Properties().tab(ITEM_GROUP).food(FoodItemProperties.CHOCOLATE_BAR)));
-	public static final RegistryObject<Item> BANDAGE = ITEMS.register("bandage", () -> new BandageItem(new Properties().tab(ITEM_GROUP).stacksTo(16)));
+	public static final RegistryObject<ExplosiveChocolateBar> EXPLOSIVE_CHOCOLATE_BAR = ITEMS.register("explosive_chocolate_bar", () -> new ExplosiveChocolateBar(new Properties().tab(ITEM_GROUP).food(FoodItemProperties.CHOCOLATE_BAR)));
+	public static final RegistryObject<BandageItem> BANDAGE = ITEMS.register("bandage", () -> new BandageItem(new Properties().tab(ITEM_GROUP).stacksTo(16)));
 	public static final RegistryObject<Item> MRE = ITEMS.register("mre", () -> new Item(new Properties().tab(ITEM_GROUP).food(FoodItemProperties.MRE)));
-	public static final RegistryObject<Item> PAINKILLERS = ITEMS.register("painkillers", () -> new PainkillerItem(new Properties().tab(ITEM_GROUP).stacksTo(24)));
+	public static final RegistryObject<PainkillerItem> PAINKILLERS = ITEMS.register("painkillers", () -> new PainkillerItem(new Properties().tab(ITEM_GROUP).stacksTo(24)));
 	public static final RegistryObject<Item> SYRINGE = ITEMS.register("syringe", () -> new Item(new Properties().tab(ITEM_GROUP).stacksTo(16)));
-	public static final RegistryObject<Item> MORPHINE = ITEMS.register("morphine", () -> new MorphineItem(new Properties().tab(ITEM_GROUP).stacksTo(16)));
-	public static final RegistryObject<Item> USED_SYRINGE = ITEMS.register("used_syringe", () -> new UsedSyringeItem(new Properties().tab(ITEM_GROUP).stacksTo(16)));
-	public static final RegistryObject<Item> FIRST_AID_KIT = ITEMS.register("first_aid_kit", () -> new FirstAidKitItem(new Properties().tab(ITEM_GROUP).stacksTo(8)));
+	public static final RegistryObject<MorphineItem> MORPHINE = ITEMS.register("morphine", () -> new MorphineItem(new Properties().tab(ITEM_GROUP).stacksTo(16)));
+	public static final RegistryObject<UsedSyringeItem> USED_SYRINGE = ITEMS.register("used_syringe", () -> new UsedSyringeItem(new Properties().tab(ITEM_GROUP).stacksTo(16)));
+	public static final RegistryObject<FirstAidKitItem> FIRST_AID_KIT = ITEMS.register("first_aid_kit", () -> new FirstAidKitItem(new Properties().tab(ITEM_GROUP).stacksTo(8)));
 	public static final RegistryObject<Item> CLOTH_SCRAP = ITEMS.register("cloth_scrap", () -> new Item(new Properties().tab(ITEM_GROUP)));
 
 	// Armor
-	public static final RegistryObject<Item> MOLTEN_HELMET = ITEMS.register("molten_helmet", () -> new MoltenArmorItem(CustomArmorMaterials.MOLTEN, EquipmentSlot.HEAD, 1));
-	public static final RegistryObject<Item> MOLTEN_CHESTPLATE = ITEMS.register("molten_chestplate", () -> new MoltenArmorItem(CustomArmorMaterials.MOLTEN, EquipmentSlot.CHEST, 1));
-	public static final RegistryObject<Item> MOLTEN_LEGGINGS = ITEMS.register("molten_leggings", () -> new MoltenArmorItem(CustomArmorMaterials.MOLTEN, EquipmentSlot.LEGS, 2));
-	public static final RegistryObject<Item> MOLTEN_BOOTS = ITEMS.register("molten_boots", () -> new MoltenArmorItem(CustomArmorMaterials.MOLTEN, EquipmentSlot.FEET, 1));
-	public static final RegistryObject<Item> COPPER_HELMET = ITEMS.register("copper_helmet", () -> new CopperArmorItem(CustomArmorMaterials.COPPER, EquipmentSlot.HEAD, 1));
-	public static final RegistryObject<Item> COPPER_CHESTPLATE = ITEMS.register("copper_chestplate", () -> new CopperArmorItem(CustomArmorMaterials.COPPER, EquipmentSlot.CHEST, 1));
-	public static final RegistryObject<Item> COPPER_LEGGINGS = ITEMS.register("copper_leggings", () -> new CopperArmorItem(CustomArmorMaterials.COPPER, EquipmentSlot.LEGS, 2));
-	public static final RegistryObject<Item> COPPER_BOOTS = ITEMS.register("copper_boots", () -> new CopperArmorItem(CustomArmorMaterials.COPPER, EquipmentSlot.FEET, 1));
-	public static final RegistryObject<Item> TESLA_HELMET = ITEMS.register("tesla_helmet", () -> new TeslaArmorItem(CustomArmorMaterials.TESLA, EquipmentSlot.HEAD, 1));
-	public static final RegistryObject<Item> TESLA_CHESTPLATE = ITEMS.register("tesla_chestplate", () -> new TeslaArmorItem(CustomArmorMaterials.TESLA, EquipmentSlot.CHEST, 1));
-	public static final RegistryObject<Item> TESLA_LEGGINGS = ITEMS.register("tesla_leggings", () -> new TeslaArmorItem(CustomArmorMaterials.TESLA, EquipmentSlot.LEGS, 2));
-	public static final RegistryObject<Item> TESLA_BOOTS = ITEMS.register("tesla_boots", () -> new TeslaArmorItem(CustomArmorMaterials.TESLA, EquipmentSlot.FEET, 1));
-	public static final RegistryObject<Item> COBALT_HELMET = ITEMS.register("cobalt_helmet", () -> new CobaltArmorItem(CustomArmorMaterials.COBALT, EquipmentSlot.HEAD, 1));
-	public static final RegistryObject<Item> COBALT_CHESTPLATE = ITEMS.register("cobalt_chestplate", () -> new CobaltArmorItem(CustomArmorMaterials.COBALT, EquipmentSlot.CHEST, 1));
-	public static final RegistryObject<Item> COBALT_LEGGINGS = ITEMS.register("cobalt_leggings", () -> new CobaltArmorItem(CustomArmorMaterials.COBALT, EquipmentSlot.LEGS, 2));
-	public static final RegistryObject<Item> COBALT_BOOTS = ITEMS.register("cobalt_boots", () -> new CobaltArmorItem(CustomArmorMaterials.COBALT, EquipmentSlot.FEET, 1));
-	public static final RegistryObject<Item> VENTUS_HELMET = ITEMS.register("ventus_helmet", () -> new VentusArmorItem(CustomArmorMaterials.VENTUS, EquipmentSlot.HEAD, 1));
-	public static final RegistryObject<Item> VENTUS_CHESTPLATE = ITEMS.register("ventus_chestplate", () -> new VentusArmorItem(CustomArmorMaterials.VENTUS, EquipmentSlot.CHEST, 1));
-	public static final RegistryObject<Item> VENTUS_LEGGINGS = ITEMS.register("ventus_leggings", () -> new VentusArmorItem(CustomArmorMaterials.VENTUS, EquipmentSlot.LEGS, 2));
-	public static final RegistryObject<Item> VENTUS_BOOTS = ITEMS.register("ventus_boots", () -> new VentusArmorItem(CustomArmorMaterials.VENTUS, EquipmentSlot.FEET, 1));
+	public static final RegistryObject<MoltenArmorItem> MOLTEN_HELMET = ITEMS.register("molten_helmet", () -> new MoltenArmorItem(CustomArmorMaterials.MOLTEN, EquipmentSlot.HEAD, 1));
+	public static final RegistryObject<MoltenArmorItem> MOLTEN_CHESTPLATE = ITEMS.register("molten_chestplate", () -> new MoltenArmorItem(CustomArmorMaterials.MOLTEN, EquipmentSlot.CHEST, 1));
+	public static final RegistryObject<MoltenArmorItem> MOLTEN_LEGGINGS = ITEMS.register("molten_leggings", () -> new MoltenArmorItem(CustomArmorMaterials.MOLTEN, EquipmentSlot.LEGS, 2));
+	public static final RegistryObject<MoltenArmorItem> MOLTEN_BOOTS = ITEMS.register("molten_boots", () -> new MoltenArmorItem(CustomArmorMaterials.MOLTEN, EquipmentSlot.FEET, 1));
+	public static final RegistryObject<CopperArmorItem> COPPER_HELMET = ITEMS.register("copper_helmet", () -> new CopperArmorItem(CustomArmorMaterials.COPPER, EquipmentSlot.HEAD, 1));
+	public static final RegistryObject<CopperArmorItem> COPPER_CHESTPLATE = ITEMS.register("copper_chestplate", () -> new CopperArmorItem(CustomArmorMaterials.COPPER, EquipmentSlot.CHEST, 1));
+	public static final RegistryObject<CopperArmorItem> COPPER_LEGGINGS = ITEMS.register("copper_leggings", () -> new CopperArmorItem(CustomArmorMaterials.COPPER, EquipmentSlot.LEGS, 2));
+	public static final RegistryObject<CopperArmorItem> COPPER_BOOTS = ITEMS.register("copper_boots", () -> new CopperArmorItem(CustomArmorMaterials.COPPER, EquipmentSlot.FEET, 1));
+	public static final RegistryObject<TeslaArmorItem> TESLA_HELMET = ITEMS.register("tesla_helmet", () -> new TeslaArmorItem(CustomArmorMaterials.TESLA, EquipmentSlot.HEAD, 1));
+	public static final RegistryObject<TeslaArmorItem> TESLA_CHESTPLATE = ITEMS.register("tesla_chestplate", () -> new TeslaArmorItem(CustomArmorMaterials.TESLA, EquipmentSlot.CHEST, 1));
+	public static final RegistryObject<TeslaArmorItem> TESLA_LEGGINGS = ITEMS.register("tesla_leggings", () -> new TeslaArmorItem(CustomArmorMaterials.TESLA, EquipmentSlot.LEGS, 2));
+	public static final RegistryObject<TeslaArmorItem> TESLA_BOOTS = ITEMS.register("tesla_boots", () -> new TeslaArmorItem(CustomArmorMaterials.TESLA, EquipmentSlot.FEET, 1));
+	public static final RegistryObject<CobaltArmorItem> COBALT_HELMET = ITEMS.register("cobalt_helmet", () -> new CobaltArmorItem(CustomArmorMaterials.COBALT, EquipmentSlot.HEAD, 1));
+	public static final RegistryObject<CobaltArmorItem> COBALT_CHESTPLATE = ITEMS.register("cobalt_chestplate", () -> new CobaltArmorItem(CustomArmorMaterials.COBALT, EquipmentSlot.CHEST, 1));
+	public static final RegistryObject<CobaltArmorItem> COBALT_LEGGINGS = ITEMS.register("cobalt_leggings", () -> new CobaltArmorItem(CustomArmorMaterials.COBALT, EquipmentSlot.LEGS, 2));
+	public static final RegistryObject<CobaltArmorItem> COBALT_BOOTS = ITEMS.register("cobalt_boots", () -> new CobaltArmorItem(CustomArmorMaterials.COBALT, EquipmentSlot.FEET, 1));
+	public static final RegistryObject<VentusArmorItem> VENTUS_HELMET = ITEMS.register("ventus_helmet", () -> new VentusArmorItem(CustomArmorMaterials.VENTUS, EquipmentSlot.HEAD, 1));
+	public static final RegistryObject<VentusArmorItem> VENTUS_CHESTPLATE = ITEMS.register("ventus_chestplate", () -> new VentusArmorItem(CustomArmorMaterials.VENTUS, EquipmentSlot.CHEST, 1));
+	public static final RegistryObject<VentusArmorItem> VENTUS_LEGGINGS = ITEMS.register("ventus_leggings", () -> new VentusArmorItem(CustomArmorMaterials.VENTUS, EquipmentSlot.LEGS, 2));
+	public static final RegistryObject<VentusArmorItem> VENTUS_BOOTS = ITEMS.register("ventus_boots", () -> new VentusArmorItem(CustomArmorMaterials.VENTUS, EquipmentSlot.FEET, 1));
 
 	// Spawn eggs
-	public static final RegistryObject<Item> DYING_SOLDIER_SPAWN_EGG = ITEMS.register("dying_soldier_spawn_egg", () -> new CustomSpawnEggItem(DeferredRegistryHandler.DYING_SOLDIER_ENTITY, 0x7a6851, 0x783d22, (new Item.Properties()).tab(ITEM_GROUP)));
-	public static final RegistryObject<Item> MINUTEMAN_SPAWN_EGG = ITEMS.register("minuteman_spawn_egg", () -> new CustomSpawnEggItem(DeferredRegistryHandler.MINUTEMAN_ENTITY, 0x494522, 0x204b2a, (new Item.Properties()).tab(ITEM_GROUP)));
-	public static final RegistryObject<Item> FIELD_MEDIC_SPAWN_EGG = ITEMS.register("field_medic_spawn_egg", () -> new CustomSpawnEggItem(DeferredRegistryHandler.FIELD_MEDIC_ENTITY, 0xde5451, 0xebe4d2, (new Item.Properties()).tab(ITEM_GROUP)));
-	public static final RegistryObject<Item> WANDERING_WARRIOR_SPAWN_EGG = ITEMS.register("wandering_warrior_spawn_egg", () -> new CustomSpawnEggItem(DeferredRegistryHandler.WANDERING_WARRIOR_ENTITY, 0x614226, 0x2e6278, (new Item.Properties()).tab(ITEM_GROUP)));
-	public static final RegistryObject<Item> HANS_SPAWN_EGG = ITEMS.register("hans_spawn_egg", () -> new CustomSpawnEggItem(DeferredRegistryHandler.HANS_ENTITY, 0xd0a873, 0xafafaf, (new Item.Properties().tab(ITEM_GROUP))));
+	public static final RegistryObject<CustomSpawnEggItem> DYING_SOLDIER_SPAWN_EGG = ITEMS.register("dying_soldier_spawn_egg", () -> new CustomSpawnEggItem(DeferredRegistryHandler.DYING_SOLDIER_ENTITY, 0x7a6851, 0x783d22, (new Item.Properties()).tab(ITEM_GROUP)));
+	public static final RegistryObject<CustomSpawnEggItem> MINUTEMAN_SPAWN_EGG = ITEMS.register("minuteman_spawn_egg", () -> new CustomSpawnEggItem(DeferredRegistryHandler.MINUTEMAN_ENTITY, 0x494522, 0x204b2a, (new Item.Properties()).tab(ITEM_GROUP)));
+	public static final RegistryObject<CustomSpawnEggItem> FIELD_MEDIC_SPAWN_EGG = ITEMS.register("field_medic_spawn_egg", () -> new CustomSpawnEggItem(DeferredRegistryHandler.FIELD_MEDIC_ENTITY, 0xde5451, 0xebe4d2, (new Item.Properties()).tab(ITEM_GROUP)));
+	public static final RegistryObject<CustomSpawnEggItem> WANDERING_WARRIOR_SPAWN_EGG = ITEMS.register("wandering_warrior_spawn_egg", () -> new CustomSpawnEggItem(DeferredRegistryHandler.WANDERING_WARRIOR_ENTITY, 0x614226, 0x2e6278, (new Item.Properties()).tab(ITEM_GROUP)));
+	public static final RegistryObject<CustomSpawnEggItem> HANS_SPAWN_EGG = ITEMS.register("hans_spawn_egg", () -> new CustomSpawnEggItem(DeferredRegistryHandler.HANS_ENTITY, 0xd0a873, 0xafafaf, (new Item.Properties().tab(ITEM_GROUP))));
 
 	// Blocks
 	// Breakable via pickaxe
 	// Wooden tier
-	public static final RegistryObject<Block> BARREL_TAP = BLOCKS.register("barrel_tap", () -> new BarrelTapBlock(BlockBehaviour.Properties.of(Material.METAL).strength(1.0f).sound(SoundType.METAL)));
-	public static final RegistryObject<Block> MORTAR = BLOCKS.register("mortar", () -> new MortarBlock(BlockBehaviour.Properties.of(Material.STONE).strength(5.0f).sound(SoundType.STONE).requiresCorrectToolForDrops().noOcclusion()));
+	public static final RegistryObject<BarrelTapBlock> BARREL_TAP = BLOCKS.register("barrel_tap", () -> new BarrelTapBlock(BlockBehaviour.Properties.of(Material.METAL).strength(1.0f).sound(SoundType.METAL)));
+	public static final RegistryObject<MortarBlock> MORTAR = BLOCKS.register("mortar", () -> new MortarBlock(BlockBehaviour.Properties.of(Material.STONE).strength(5.0f).sound(SoundType.STONE).requiresCorrectToolForDrops().noOcclusion()));
 	public static final RegistryObject<Block> CLOUD_MARBLE = BLOCKS.register("cloud_marble", () -> new Block(BlockBehaviour.Properties.of(Material.STONE).strength(2.5f, 6.0f).sound(SoundType.STONE).requiresCorrectToolForDrops()));
 	public static final RegistryObject<Block> CLOUD_MARBLE_BRICKS = BLOCKS.register("cloud_marble_bricks", () -> new Block(BlockBehaviour.Properties.of(Material.STONE).strength(2.5f, 6.0f).sound(SoundType.STONE).requiresCorrectToolForDrops()));
-	public static final RegistryObject<Block> CLOUD_MARBLE_PILLAR = BLOCKS.register("cloud_marble_pillar", () -> new RotatedPillarBlock(BlockBehaviour.Properties.of(Material.STONE).strength(2.5f, 6.0f).sound(SoundType.STONE).requiresCorrectToolForDrops()));
-	public static final RegistryObject<Block> CLOUD_MARBLE_BRICK_STAIRS = BLOCKS.register("cloud_marble_brick_stairs", () -> new StairBlock(() -> CLOUD_MARBLE_BRICKS.get().defaultBlockState(), BlockBehaviour.Properties.copy(CLOUD_MARBLE_BRICKS.get())));
-	public static final RegistryObject<Block> CLOUD_MARBLE_BRICK_SLAB = BLOCKS.register("cloud_marble_brick_slab", () -> new SlabBlock(BlockBehaviour.Properties.of(Material.STONE).strength(2.5f, 6.0f).sound(SoundType.STONE).requiresCorrectToolForDrops()));
+	public static final RegistryObject<RotatedPillarBlock> CLOUD_MARBLE_PILLAR = BLOCKS.register("cloud_marble_pillar", () -> new RotatedPillarBlock(BlockBehaviour.Properties.of(Material.STONE).strength(2.5f, 6.0f).sound(SoundType.STONE).requiresCorrectToolForDrops()));
+	public static final RegistryObject<StairBlock> CLOUD_MARBLE_BRICK_STAIRS = BLOCKS.register("cloud_marble_brick_stairs", () -> new StairBlock(() -> CLOUD_MARBLE_BRICKS.get().defaultBlockState(), BlockBehaviour.Properties.copy(CLOUD_MARBLE_BRICKS.get())));
+	public static final RegistryObject<SlabBlock> CLOUD_MARBLE_BRICK_SLAB = BLOCKS.register("cloud_marble_brick_slab", () -> new SlabBlock(BlockBehaviour.Properties.of(Material.STONE).strength(2.5f, 6.0f).sound(SoundType.STONE).requiresCorrectToolForDrops()));
 	// Stone tier
-	public static final RegistryObject<Block> SPOTLIGHT = BLOCKS.register("spotlight", () -> new SpotlightBlock(BlockBehaviour.Properties.of(Material.METAL).strength(2.0f).sound(SoundType.METAL).requiresCorrectToolForDrops().noOcclusion().lightLevel((state) -> 0)));
-	public static final RegistryObject<Block> CORRUGATED_IRON_PANEL = BLOCKS.register("corrugated_iron_panel", () -> new CorrugatedBlockNormal(BlockBehaviour.Properties.of(Material.METAL).strength(5.0f, 6.0f).sound(SoundType.METAL).requiresCorrectToolForDrops().noOcclusion()));
-	public static final RegistryObject<Block> CORRUGATED_IRON_PANEL_BARS = BLOCKS.register("corrugated_iron_panel_bars", () -> new CorrugatedBlockNormal(BlockBehaviour.Properties.of(Material.METAL).strength(5.0f, 6.0f).sound(SoundType.METAL).requiresCorrectToolForDrops().noOcclusion()));
-	public static final RegistryObject<Block> CORRUGATED_IRON_PANEL_FLAT = BLOCKS.register("corrugated_iron_panel_flat", () -> new CorrugatedBlock.CorrugatedBlockFlat(BlockBehaviour.Properties.of(Material.METAL).strength(5.0f, 6.0f).sound(SoundType.METAL).requiresCorrectToolForDrops().noOcclusion()));
-	public static final RegistryObject<Block> CORRUGATED_IRON_PANEL_FLAT_BARS = BLOCKS.register("corrugated_iron_panel_flat_bars", () -> new CorrugatedBlock.CorrugatedBlockFlat(BlockBehaviour.Properties.of(Material.METAL).strength(5.0f, 6.0f).sound(SoundType.METAL).requiresCorrectToolForDrops().noOcclusion()));
+	public static final RegistryObject<SpotlightBlock> SPOTLIGHT = BLOCKS.register("spotlight", () -> new SpotlightBlock(BlockBehaviour.Properties.of(Material.METAL).strength(2.0f).sound(SoundType.METAL).requiresCorrectToolForDrops().noOcclusion().lightLevel((state) -> 0)));
+	public static final RegistryObject<CorrugatedBlockNormal> CORRUGATED_IRON_PANEL = BLOCKS.register("corrugated_iron_panel", () -> new CorrugatedBlockNormal(BlockBehaviour.Properties.of(Material.METAL).strength(5.0f, 6.0f).sound(SoundType.METAL).requiresCorrectToolForDrops().noOcclusion()));
+	public static final RegistryObject<CorrugatedBlockNormal> CORRUGATED_IRON_PANEL_BARS = BLOCKS.register("corrugated_iron_panel_bars", () -> new CorrugatedBlockNormal(BlockBehaviour.Properties.of(Material.METAL).strength(5.0f, 6.0f).sound(SoundType.METAL).requiresCorrectToolForDrops().noOcclusion()));
+	public static final RegistryObject<CorrugatedBlockFlat> CORRUGATED_IRON_PANEL_FLAT = BLOCKS.register("corrugated_iron_panel_flat", () -> new CorrugatedBlockFlat(BlockBehaviour.Properties.of(Material.METAL).strength(5.0f, 6.0f).sound(SoundType.METAL).requiresCorrectToolForDrops().noOcclusion()));
+	public static final RegistryObject<CorrugatedBlockFlat> CORRUGATED_IRON_PANEL_FLAT_BARS = BLOCKS.register("corrugated_iron_panel_flat_bars", () -> new CorrugatedBlockFlat(BlockBehaviour.Properties.of(Material.METAL).strength(5.0f, 6.0f).sound(SoundType.METAL).requiresCorrectToolForDrops().noOcclusion()));
 	// Iron tier
-	public static final RegistryObject<Block> BARBED_WIRE_FENCE = BLOCKS.register("barbed_wire_fence", () -> new BarbedWireFenceBlock(BlockBehaviour.Properties.of(Material.METAL).strength(7.0f, 8.0f).sound(SoundType.METAL).noOcclusion()));
-	public static final RegistryObject<Block> COBALT_ORE = BLOCKS.register("cobalt_ore", () -> new OreBlock(BlockBehaviour.Properties.of(Material.STONE).strength(4.0f).sound(SoundType.STONE).requiresCorrectToolForDrops()));
-	public static final RegistryObject<Block> VENTUS_ORE = BLOCKS.register("ventus_ore", () -> new OreBlock(BlockBehaviour.Properties.of(Material.STONE).strength(3.5f, 6.0f).sound(SoundType.STONE).requiresCorrectToolForDrops()));
+	public static final RegistryObject<BarbedWireFenceBlock> BARBED_WIRE_FENCE = BLOCKS.register("barbed_wire_fence", () -> new BarbedWireFenceBlock(BlockBehaviour.Properties.of(Material.METAL).strength(7.0f, 8.0f).sound(SoundType.METAL).noOcclusion()));
+	public static final RegistryObject<OreBlock> COBALT_ORE = BLOCKS.register("cobalt_ore", () -> new OreBlock(BlockBehaviour.Properties.of(Material.STONE).strength(4.0f).sound(SoundType.STONE).requiresCorrectToolForDrops()));
+	public static final RegistryObject<OreBlock> VENTUS_ORE = BLOCKS.register("ventus_ore", () -> new OreBlock(BlockBehaviour.Properties.of(Material.STONE).strength(3.5f, 6.0f).sound(SoundType.STONE).requiresCorrectToolForDrops()));
 	public static final RegistryObject<Block> COBALT_BLOCK = BLOCKS.register("cobalt_block", () -> new Block(BlockBehaviour.Properties.of(Material.METAL).strength(6.0f).requiresCorrectToolForDrops()));
 	public static final RegistryObject<Block> RAW_COBALT_BLOCK = BLOCKS.register("raw_cobalt_block", () -> new Block(BlockBehaviour.Properties.of(Material.METAL).strength(4.0f).requiresCorrectToolForDrops()));
-	public static final RegistryObject<Block> BEAR_TRAP = BLOCKS.register("bear_trap", () -> new BearTrapBlock(BlockBehaviour.Properties.of(Material.METAL).noOcclusion().strength(2.0f).sound(SoundType.METAL)));
-	public static final RegistryObject<Block> BARBED_WIRE = BLOCKS.register("barbed_wire", () -> new BarbedWireBlock(BlockBehaviour.Properties.of(Material.METAL).strength(2.0f).sound(SoundType.CHAIN).noOcclusion().noCollission()));
-	public static final RegistryObject<Block> SPIKE_TRAP = BLOCKS.register("spike_trap", () -> new SpikeTrapBlock(BlockBehaviour.Properties.of(Material.METAL).strength(2.0f).sound(SoundType.METAL).noOcclusion().noCollission()));
+	public static final RegistryObject<BearTrapBlock> BEAR_TRAP = BLOCKS.register("bear_trap", () -> new BearTrapBlock(BlockBehaviour.Properties.of(Material.METAL).noOcclusion().strength(2.0f).sound(SoundType.METAL)));
+	public static final RegistryObject<BarbedWireBlock> BARBED_WIRE = BLOCKS.register("barbed_wire", () -> new BarbedWireBlock(BlockBehaviour.Properties.of(Material.METAL).strength(2.0f).sound(SoundType.CHAIN).noOcclusion().noCollission()));
+	public static final RegistryObject<SpikeTrapBlock> SPIKE_TRAP = BLOCKS.register("spike_trap", () -> new SpikeTrapBlock(BlockBehaviour.Properties.of(Material.METAL).strength(2.0f).sound(SoundType.METAL).noOcclusion().noCollission()));
 	// Diamond tier
-	public static final RegistryObject<Block> MOLTEN_ORE = BLOCKS.register("molten_ore", () -> new OreBlock(BlockBehaviour.Properties.of(Material.STONE).strength(6.0f, 8.0f).sound(SoundType.STONE).requiresCorrectToolForDrops()));
-	public static final RegistryObject<Block> ELECTRIC_ORE = BLOCKS.register("electric_ore", () -> new OreBlock(BlockBehaviour.Properties.of(Material.STONE).strength(6.0f, 8.0f).sound(SoundType.STONE).requiresCorrectToolForDrops()));
+	public static final RegistryObject<OreBlock> MOLTEN_ORE = BLOCKS.register("molten_ore", () -> new OreBlock(BlockBehaviour.Properties.of(Material.STONE).strength(6.0f, 8.0f).sound(SoundType.STONE).requiresCorrectToolForDrops()));
+	public static final RegistryObject<OreBlock> ELECTRIC_ORE = BLOCKS.register("electric_ore", () -> new OreBlock(BlockBehaviour.Properties.of(Material.STONE).strength(6.0f, 8.0f).sound(SoundType.STONE).requiresCorrectToolForDrops()));
 	public static final RegistryObject<Block> MOLTEN_BLOCK = BLOCKS.register("molten_block", () -> new Block(BlockBehaviour.Properties.of(Material.METAL).strength(45.0f, 1100.0f).sound(SoundType.METAL).requiresCorrectToolForDrops()));
-	public static final RegistryObject<Block> TESLA_BLOCK = BLOCKS.register("tesla_block", () -> new BasicOrientableBlock(BlockBehaviour.Properties.of(Material.METAL).strength(25.0f).sound(SoundType.METAL).requiresCorrectToolForDrops()));
-	public static final RegistryObject<Block> TESLA_SYNTHESIZER = BLOCKS.register("tesla_synthesizer", () -> new TeslaSynthesizerBlock(BlockBehaviour.Properties.of(Material.METAL).strength(10.0f).sound(SoundType.METAL).requiresCorrectToolForDrops().noOcclusion()));
+	public static final RegistryObject<BasicOrientableBlock> TESLA_BLOCK = BLOCKS.register("tesla_block", () -> new BasicOrientableBlock(BlockBehaviour.Properties.of(Material.METAL).strength(25.0f).sound(SoundType.METAL).requiresCorrectToolForDrops()));
+	public static final RegistryObject<TeslaSynthesizerBlock> TESLA_SYNTHESIZER = BLOCKS.register("tesla_synthesizer", () -> new TeslaSynthesizerBlock(BlockBehaviour.Properties.of(Material.METAL).strength(10.0f).sound(SoundType.METAL).requiresCorrectToolForDrops().noOcclusion()));
 
 	// Breakable via axe
 	// Wood tier
-	public static final RegistryObject<Block> SMALL_PARTS_TABLE = BLOCKS.register("small_parts_table", () -> new SmallPartsTable(BlockBehaviour.Properties.of(Material.WOOD).strength(2.5f).sound(SoundType.WOOD).requiresCorrectToolForDrops()));
-	public static final RegistryObject<Block> BURNED_OAK_WOOD = BLOCKS.register("burned_oak_wood", () -> new RotatedPillarBlock(BlockBehaviour.Properties.of(Material.WOOD).strength(1.7f).sound(SoundType.WOOD)));
-	public static final RegistryObject<Block> BURNED_OAK_LOG = BLOCKS.register("burned_oak_log", () -> new RotatedPillarBlock(BlockBehaviour.Properties.of(Material.WOOD).strength(1.7f).sound(SoundType.WOOD)));
-	public static final RegistryObject<Block> STRIPPED_BURNED_OAK_WOOD = BLOCKS.register("stripped_burned_oak_wood", () -> new RotatedPillarBlock(BlockBehaviour.Properties.of(Material.WOOD).strength(1.7f).sound(SoundType.WOOD)));
-	public static final RegistryObject<Block> STRIPPED_BURNED_OAK_LOG = BLOCKS.register("stripped_burned_oak_log", () -> new RotatedPillarBlock(BlockBehaviour.Properties.of(Material.WOOD).strength(1.7F).sound(SoundType.WOOD)));
+	public static final RegistryObject<SmallPartsTable> SMALL_PARTS_TABLE = BLOCKS.register("small_parts_table", () -> new SmallPartsTable(BlockBehaviour.Properties.of(Material.WOOD).strength(2.5f).sound(SoundType.WOOD).requiresCorrectToolForDrops()));
+	public static final RegistryObject<RotatedPillarBlock> BURNED_OAK_WOOD = BLOCKS.register("burned_oak_wood", () -> new RotatedPillarBlock(BlockBehaviour.Properties.of(Material.WOOD).strength(1.7f).sound(SoundType.WOOD)));
+	public static final RegistryObject<RotatedPillarBlock> BURNED_OAK_LOG = BLOCKS.register("burned_oak_log", () -> new RotatedPillarBlock(BlockBehaviour.Properties.of(Material.WOOD).strength(1.7f).sound(SoundType.WOOD)));
+	public static final RegistryObject<RotatedPillarBlock> STRIPPED_BURNED_OAK_WOOD = BLOCKS.register("stripped_burned_oak_wood", () -> new RotatedPillarBlock(BlockBehaviour.Properties.of(Material.WOOD).strength(1.7f).sound(SoundType.WOOD)));
+	public static final RegistryObject<RotatedPillarBlock> STRIPPED_BURNED_OAK_LOG = BLOCKS.register("stripped_burned_oak_log", () -> new RotatedPillarBlock(BlockBehaviour.Properties.of(Material.WOOD).strength(1.7F).sound(SoundType.WOOD)));
 	public static final RegistryObject<Block> BURNED_OAK_PLANKS = BLOCKS.register("burned_oak_planks", () -> new Block(BlockBehaviour.Properties.of(Material.WOOD).strength(1.7f, 2.7f).sound(SoundType.WOOD)));
-	public static final RegistryObject<Block> BURNED_OAK_STAIRS = BLOCKS.register("burned_oak_stairs", () -> new StairBlock(() -> BURNED_OAK_PLANKS.get().defaultBlockState(), BlockBehaviour.Properties.copy(BURNED_OAK_PLANKS.get())));
-	public static final RegistryObject<Block> BURNED_OAK_SLAB = BLOCKS.register("burned_oak_slab", () -> new SlabBlock(BlockBehaviour.Properties.of(Material.WOOD).strength(1.7f, 2.7f).sound(SoundType.WOOD)));
-	public static final RegistryObject<Block> BURNED_OAK_FENCE = BLOCKS.register("burned_oak_fence", () -> new FenceBlock(BlockBehaviour.Properties.of(Material.WOOD).strength(1.7f, 2.7f).sound(SoundType.WOOD)));
-	public static final RegistryObject<Block> BURNED_OAK_FENCE_GATE = BLOCKS.register("burned_oak_fence_gate", () -> new FenceGateBlock(BlockBehaviour.Properties.of(Material.WOOD).strength(1.7f, 2.7f).sound(SoundType.WOOD)));
-	public static final RegistryObject<Block> BURNED_OAK_DOOR = BLOCKS.register("burned_oak_door", () -> new DoorBlock(BlockBehaviour.Properties.of(Material.WOOD).strength(1.7f, 2.7f).sound(SoundType.WOOD)));
-	public static final RegistryObject<Block> BURNED_OAK_TRAPDOOR = BLOCKS.register("burned_oak_trapdoor", () -> new TrapDoorBlock(BlockBehaviour.Properties.of(Material.WOOD).strength(1.7f, 2.7f).sound(SoundType.WOOD).noOcclusion()));
-	public static final RegistryObject<Block> BURNED_OAK_PRESSURE_PLATE = BLOCKS.register("burned_oak_pressure_plate", () -> new PressurePlateBlock(Sensitivity.EVERYTHING, BlockBehaviour.Properties.of(Material.WOOD).strength(0.4f).sound(SoundType.WOOD).noOcclusion().noCollission()));
+	public static final RegistryObject<StairBlock> BURNED_OAK_STAIRS = BLOCKS.register("burned_oak_stairs", () -> new StairBlock(() -> BURNED_OAK_PLANKS.get().defaultBlockState(), BlockBehaviour.Properties.copy(BURNED_OAK_PLANKS.get())));
+	public static final RegistryObject<SlabBlock> BURNED_OAK_SLAB = BLOCKS.register("burned_oak_slab", () -> new SlabBlock(BlockBehaviour.Properties.of(Material.WOOD).strength(1.7f, 2.7f).sound(SoundType.WOOD)));
+	public static final RegistryObject<FenceBlock> BURNED_OAK_FENCE = BLOCKS.register("burned_oak_fence", () -> new FenceBlock(BlockBehaviour.Properties.of(Material.WOOD).strength(1.7f, 2.7f).sound(SoundType.WOOD)));
+	public static final RegistryObject<FenceGateBlock> BURNED_OAK_FENCE_GATE = BLOCKS.register("burned_oak_fence_gate", () -> new FenceGateBlock(BlockBehaviour.Properties.of(Material.WOOD).strength(1.7f, 2.7f).sound(SoundType.WOOD)));
+	public static final RegistryObject<DoorBlock> BURNED_OAK_DOOR = BLOCKS.register("burned_oak_door", () -> new DoorBlock(BlockBehaviour.Properties.of(Material.WOOD).strength(1.7f, 2.7f).sound(SoundType.WOOD)));
+	public static final RegistryObject<TrapDoorBlock> BURNED_OAK_TRAPDOOR = BLOCKS.register("burned_oak_trapdoor", () -> new TrapDoorBlock(BlockBehaviour.Properties.of(Material.WOOD).strength(1.7f, 2.7f).sound(SoundType.WOOD).noOcclusion()));
+	public static final RegistryObject<PressurePlateBlock> BURNED_OAK_PRESSURE_PLATE = BLOCKS.register("burned_oak_pressure_plate", () -> new PressurePlateBlock(Sensitivity.EVERYTHING, BlockBehaviour.Properties.of(Material.WOOD).strength(0.4f).sound(SoundType.WOOD).noOcclusion().noCollission()));
+	public static final RegistryObject<BurnedOakStandingSignBlock> BURNED_OAK_SIGN = BLOCKS.register("burned_oak_sign", () -> new BurnedOakStandingSignBlock(BlockBehaviour.Properties.of(Material.WOOD).noCollission().strength(1.0F).sound(SoundType.WOOD), CustomWoodTypes.BURNED_OAK));
+	public static final RegistryObject<BurnedOakWallSignBlock> BURNED_OAK_WALL_SIGN = BLOCKS.register("burned_oak_wall_sign", () -> new BurnedOakWallSignBlock(BlockBehaviour.Properties.of(Material.WOOD).noCollission().strength(1.0F).sound(SoundType.WOOD), CustomWoodTypes.BURNED_OAK));
 	// Stone tier
-	public static final RegistryObject<Block> WOODEN_SPIKES = BLOCKS.register("wooden_spikes", () -> new WoodenSpikesBlock(BlockBehaviour.Properties.of(Material.WOOD).strength(3.0f).sound(SoundType.WOOD).requiresCorrectToolForDrops().noOcclusion()));
+	public static final RegistryObject<WoodenSpikesBlock> WOODEN_SPIKES = BLOCKS.register("wooden_spikes", () -> new WoodenSpikesBlock(BlockBehaviour.Properties.of(Material.WOOD).strength(3.0f).sound(SoundType.WOOD).requiresCorrectToolForDrops().noOcclusion()));
 
 	// Breakable via shovel
 	// Wood tier
-	public static final RegistryObject<Block> SANDBAG = BLOCKS.register("sandbag", () -> new SandbagBlock(BlockBehaviour.Properties.of(Material.SAND).strength(4.0f, 5.0f).sound(SoundType.SAND).noOcclusion()));
+	public static final RegistryObject<SandbagBlock> SANDBAG = BLOCKS.register("sandbag", () -> new SandbagBlock(BlockBehaviour.Properties.of(Material.SAND).strength(4.0f, 5.0f).sound(SoundType.SAND).noOcclusion()));
 	// Stone tier
-	public static final RegistryObject<Block> PUNJI_STICKS = BLOCKS.register("punji_sticks", () -> new PunjiSticksBlock(BlockBehaviour.Properties.of(Material.BAMBOO).strength(5.0f, 1.0f).sound(SoundType.METAL).requiresCorrectToolForDrops()));
+	public static final RegistryObject<PunjiSticksBlock> PUNJI_STICKS = BLOCKS.register("punji_sticks", () -> new PunjiSticksBlock(BlockBehaviour.Properties.of(Material.BAMBOO).strength(5.0f, 1.0f).sound(SoundType.METAL).requiresCorrectToolForDrops()));
 
 	// Breakable without tool
-	public static final RegistryObject<Block> BULLETPROOF_GLASS = BLOCKS.register("bulletproof_glass", () -> new GlassBlock(BlockBehaviour.Properties.of(Material.GLASS).sound(SoundType.GLASS).noOcclusion().strength(0.5f)));
-	public static final RegistryObject<Block> WHITE_STAINED_BULLETPROOF_GLASS = BLOCKS.register("white_stained_bulletproof_glass", () -> GeneralUtilities.createStainedGlassFromColor(DyeColor.WHITE, BlockBehaviour.Properties.of(Material.GLASS, DyeColor.WHITE).sound(SoundType.GLASS).noOcclusion().strength(0.5f)));
-	public static final RegistryObject<Block> LIGHT_GRAY_STAINED_BULLETPROOF_GLASS = BLOCKS.register("light_gray_stained_bulletproof_glass", () -> GeneralUtilities.createStainedGlassFromColor(DyeColor.LIGHT_GRAY, BlockBehaviour.Properties.of(Material.GLASS, DyeColor.LIGHT_GRAY).sound(SoundType.GLASS).noOcclusion().strength(0.5f)));
-	public static final RegistryObject<Block> GRAY_STAINED_BULLETPROOF_GLASS = BLOCKS.register("gray_stained_bulletproof_glass", () -> GeneralUtilities.createStainedGlassFromColor(DyeColor.GRAY, BlockBehaviour.Properties.of(Material.GLASS, DyeColor.GRAY).sound(SoundType.GLASS).noOcclusion().strength(0.5f)));
-	public static final RegistryObject<Block> BLACK_STAINED_BULLETPROOF_GLASS = BLOCKS.register("black_stained_bulletproof_glass", () -> GeneralUtilities.createStainedGlassFromColor(DyeColor.BLACK, BlockBehaviour.Properties.of(Material.GLASS, DyeColor.BLACK).sound(SoundType.GLASS).noOcclusion().strength(0.5f)));
-	public static final RegistryObject<Block> ORANGE_STAINED_BULLETPROOF_GLASS = BLOCKS.register("orange_stained_bulletproof_glass", () -> GeneralUtilities.createStainedGlassFromColor(DyeColor.ORANGE, BlockBehaviour.Properties.of(Material.GLASS, DyeColor.ORANGE).sound(SoundType.GLASS).noOcclusion().strength(0.5f)));
-	public static final RegistryObject<Block> MAGENTA_STAINED_BULLETPROOF_GLASS = BLOCKS.register("magenta_stained_bulletproof_glass", () -> GeneralUtilities.createStainedGlassFromColor(DyeColor.MAGENTA, BlockBehaviour.Properties.of(Material.GLASS, DyeColor.MAGENTA).sound(SoundType.GLASS).noOcclusion().strength(0.5f)));
-	public static final RegistryObject<Block> LIGHT_BLUE_STAINED_BULLETPROOF_GLASS = BLOCKS.register("light_blue_stained_bulletproof_glass", () -> GeneralUtilities.createStainedGlassFromColor(DyeColor.LIGHT_BLUE, BlockBehaviour.Properties.of(Material.GLASS, DyeColor.LIGHT_BLUE).sound(SoundType.GLASS).noOcclusion().strength(0.5f)));
-	public static final RegistryObject<Block> YELLOW_STAINED_BULLETPROOF_GLASS = BLOCKS.register("yellow_stained_bulletproof_glass", () -> GeneralUtilities.createStainedGlassFromColor(DyeColor.YELLOW, BlockBehaviour.Properties.of(Material.GLASS, DyeColor.YELLOW).sound(SoundType.GLASS).noOcclusion().strength(0.5f)));
-	public static final RegistryObject<Block> LIME_STAINED_BULLETPROOF_GLASS = BLOCKS.register("lime_stained_bulletproof_glass", () -> GeneralUtilities.createStainedGlassFromColor(DyeColor.LIME, BlockBehaviour.Properties.of(Material.GLASS, DyeColor.LIME).sound(SoundType.GLASS).noOcclusion().strength(0.5f)));
-	public static final RegistryObject<Block> PINK_STAINED_BULLETPROOF_GLASS = BLOCKS.register("pink_stained_bulletproof_glass", () -> GeneralUtilities.createStainedGlassFromColor(DyeColor.PINK, BlockBehaviour.Properties.of(Material.GLASS, DyeColor.PINK).sound(SoundType.GLASS).noOcclusion().strength(0.5f)));
-	public static final RegistryObject<Block> CYAN_STAINED_BULLETPROOF_GLASS = BLOCKS.register("cyan_stained_bulletproof_glass", () -> GeneralUtilities.createStainedGlassFromColor(DyeColor.CYAN, BlockBehaviour.Properties.of(Material.GLASS, DyeColor.CYAN).sound(SoundType.GLASS).noOcclusion().strength(0.5f)));
-	public static final RegistryObject<Block> PURPLE_STAINED_BULLETPROOF_GLASS = BLOCKS.register("purple_stained_bulletproof_glass", () -> GeneralUtilities.createStainedGlassFromColor(DyeColor.PURPLE, BlockBehaviour.Properties.of(Material.GLASS, DyeColor.PURPLE).sound(SoundType.GLASS).noOcclusion().strength(0.5f)));
-	public static final RegistryObject<Block> BLUE_STAINED_BULLETPROOF_GLASS = BLOCKS.register("blue_stained_bulletproof_glass", () -> GeneralUtilities.createStainedGlassFromColor(DyeColor.BLUE, BlockBehaviour.Properties.of(Material.GLASS, DyeColor.BLUE).sound(SoundType.GLASS).noOcclusion().strength(0.5f)));
-	public static final RegistryObject<Block> BROWN_STAINED_BULLETPROOF_GLASS = BLOCKS.register("brown_stained_bulletproof_glass", () -> GeneralUtilities.createStainedGlassFromColor(DyeColor.BROWN, BlockBehaviour.Properties.of(Material.GLASS, DyeColor.BROWN).sound(SoundType.GLASS).noOcclusion().strength(0.5f)));
-	public static final RegistryObject<Block> GREEN_STAINED_BULLETPROOF_GLASS = BLOCKS.register("green_stained_bulletproof_glass", () -> GeneralUtilities.createStainedGlassFromColor(DyeColor.GREEN, BlockBehaviour.Properties.of(Material.GLASS, DyeColor.GREEN).sound(SoundType.GLASS).noOcclusion().strength(0.5f)));
-	public static final RegistryObject<Block> RED_STAINED_BULLETPROOF_GLASS = BLOCKS.register("red_stained_bulletproof_glass", () -> GeneralUtilities.createStainedGlassFromColor(DyeColor.RED, BlockBehaviour.Properties.of(Material.GLASS, DyeColor.RED).sound(SoundType.GLASS).noOcclusion().strength(0.5f)));
-	public static final RegistryObject<Block> PITFALL = BLOCKS.register("pitfall", () -> new PitfallBlock(BlockBehaviour.Properties.of(Material.GRASS).strength(0.2f, 1.0f).sound(SoundType.GRAVEL).randomTicks()));
-	public static final RegistryObject<Block> LANDMINE = BLOCKS.register("landmine", () -> new LandmineBlock(BlockBehaviour.Properties.of(Material.METAL).strength(1.0F).sound(SoundType.METAL)));
-	public static final RegistryObject<Block> MINUTEMAN_STATUE = BLOCKS.register("minuteman_statue", () -> new MinutemanStatueBlock(BlockBehaviour.Properties.of(Material.STONE).strength(5.0f).sound(SoundType.STONE).noOcclusion()));
-	public static final RegistryObject<Block> MEDIC_STATUE = BLOCKS.register("medic_statue", () -> new MedicStatueBlock(BlockBehaviour.Properties.of(Material.STONE).strength(5.0f).sound(SoundType.STONE).noOcclusion()));
-	public static final RegistryObject<Block> WALL_SHELF = BLOCKS.register("wall_shelf", () -> new ShelfBlock(BlockBehaviour.Properties.of(Material.WOOD).strength(1.0f).sound(SoundType.WOOD).noOcclusion().noCollission()));
-	public static final RegistryObject<Block> PANIC_ALARM = BLOCKS.register("panic_alarm", () -> new PanicAlarmBlock(BlockBehaviour.Properties.of(Material.WOOD).strength(1.0f).sound(SoundType.WOOD).noOcclusion().randomTicks()));
-	public static final RegistryObject<Block> WOODEN_TABLE = BLOCKS.register("wooden_table", () -> new WoodenTableBlock(BlockBehaviour.Properties.of(Material.WOOD).strength(3.0f).sound(SoundType.WOOD).noOcclusion()));
-	public static final RegistryObject<Block> BIOHAZARD_BOX = BLOCKS.register("biohazard_box", () -> new BiohazardBoxBlock(BlockBehaviour.Properties.of(Material.DECORATION).strength(0.5f).sound(SoundType.LANTERN).noOcclusion()));
-	public static final RegistryObject<Block> CLOUD = BLOCKS.register("cloud", () -> new HalfTransparentBlock(BlockBehaviour.Properties.of(Material.STRUCTURAL_AIR).strength(0.7f).sound(SoundType.SNOW).noOcclusion()));
-	public static final RegistryObject<Block> CAMP_CHAIR = BLOCKS.register("camp_chair", () -> new CampChairBlock(BlockBehaviour.Properties.of(Material.CLOTH_DECORATION).strength(1.0f).sound(SoundType.WOOL).noOcclusion()));
-	public static final RegistryObject<Block> BURNED_OAK_BRANCH = BLOCKS.register("burned_oak_branch", () -> new BranchBlock(BlockBehaviour.Properties.of(Material.WOOD).strength(0.1f).sound(SoundType.WOOD).noOcclusion().noCollission()));
+	public static final RegistryObject<GlassBlock> BULLETPROOF_GLASS = BLOCKS.register("bulletproof_glass", () -> new GlassBlock(BlockBehaviour.Properties.of(Material.GLASS).sound(SoundType.GLASS).noOcclusion().strength(0.5f)));
+	public static final RegistryObject<StainedGlassBlock> WHITE_STAINED_BULLETPROOF_GLASS = BLOCKS.register("white_stained_bulletproof_glass", () -> GeneralUtilities.createStainedGlassFromColor(DyeColor.WHITE, BlockBehaviour.Properties.of(Material.GLASS, DyeColor.WHITE).sound(SoundType.GLASS).noOcclusion().strength(0.5f)));
+	public static final RegistryObject<StainedGlassBlock> LIGHT_GRAY_STAINED_BULLETPROOF_GLASS = BLOCKS.register("light_gray_stained_bulletproof_glass", () -> GeneralUtilities.createStainedGlassFromColor(DyeColor.LIGHT_GRAY, BlockBehaviour.Properties.of(Material.GLASS, DyeColor.LIGHT_GRAY).sound(SoundType.GLASS).noOcclusion().strength(0.5f)));
+	public static final RegistryObject<StainedGlassBlock> GRAY_STAINED_BULLETPROOF_GLASS = BLOCKS.register("gray_stained_bulletproof_glass", () -> GeneralUtilities.createStainedGlassFromColor(DyeColor.GRAY, BlockBehaviour.Properties.of(Material.GLASS, DyeColor.GRAY).sound(SoundType.GLASS).noOcclusion().strength(0.5f)));
+	public static final RegistryObject<StainedGlassBlock> BLACK_STAINED_BULLETPROOF_GLASS = BLOCKS.register("black_stained_bulletproof_glass", () -> GeneralUtilities.createStainedGlassFromColor(DyeColor.BLACK, BlockBehaviour.Properties.of(Material.GLASS, DyeColor.BLACK).sound(SoundType.GLASS).noOcclusion().strength(0.5f)));
+	public static final RegistryObject<StainedGlassBlock> ORANGE_STAINED_BULLETPROOF_GLASS = BLOCKS.register("orange_stained_bulletproof_glass", () -> GeneralUtilities.createStainedGlassFromColor(DyeColor.ORANGE, BlockBehaviour.Properties.of(Material.GLASS, DyeColor.ORANGE).sound(SoundType.GLASS).noOcclusion().strength(0.5f)));
+	public static final RegistryObject<StainedGlassBlock> MAGENTA_STAINED_BULLETPROOF_GLASS = BLOCKS.register("magenta_stained_bulletproof_glass", () -> GeneralUtilities.createStainedGlassFromColor(DyeColor.MAGENTA, BlockBehaviour.Properties.of(Material.GLASS, DyeColor.MAGENTA).sound(SoundType.GLASS).noOcclusion().strength(0.5f)));
+	public static final RegistryObject<StainedGlassBlock> LIGHT_BLUE_STAINED_BULLETPROOF_GLASS = BLOCKS.register("light_blue_stained_bulletproof_glass", () -> GeneralUtilities.createStainedGlassFromColor(DyeColor.LIGHT_BLUE, BlockBehaviour.Properties.of(Material.GLASS, DyeColor.LIGHT_BLUE).sound(SoundType.GLASS).noOcclusion().strength(0.5f)));
+	public static final RegistryObject<StainedGlassBlock> YELLOW_STAINED_BULLETPROOF_GLASS = BLOCKS.register("yellow_stained_bulletproof_glass", () -> GeneralUtilities.createStainedGlassFromColor(DyeColor.YELLOW, BlockBehaviour.Properties.of(Material.GLASS, DyeColor.YELLOW).sound(SoundType.GLASS).noOcclusion().strength(0.5f)));
+	public static final RegistryObject<StainedGlassBlock> LIME_STAINED_BULLETPROOF_GLASS = BLOCKS.register("lime_stained_bulletproof_glass", () -> GeneralUtilities.createStainedGlassFromColor(DyeColor.LIME, BlockBehaviour.Properties.of(Material.GLASS, DyeColor.LIME).sound(SoundType.GLASS).noOcclusion().strength(0.5f)));
+	public static final RegistryObject<StainedGlassBlock> PINK_STAINED_BULLETPROOF_GLASS = BLOCKS.register("pink_stained_bulletproof_glass", () -> GeneralUtilities.createStainedGlassFromColor(DyeColor.PINK, BlockBehaviour.Properties.of(Material.GLASS, DyeColor.PINK).sound(SoundType.GLASS).noOcclusion().strength(0.5f)));
+	public static final RegistryObject<StainedGlassBlock> CYAN_STAINED_BULLETPROOF_GLASS = BLOCKS.register("cyan_stained_bulletproof_glass", () -> GeneralUtilities.createStainedGlassFromColor(DyeColor.CYAN, BlockBehaviour.Properties.of(Material.GLASS, DyeColor.CYAN).sound(SoundType.GLASS).noOcclusion().strength(0.5f)));
+	public static final RegistryObject<StainedGlassBlock> PURPLE_STAINED_BULLETPROOF_GLASS = BLOCKS.register("purple_stained_bulletproof_glass", () -> GeneralUtilities.createStainedGlassFromColor(DyeColor.PURPLE, BlockBehaviour.Properties.of(Material.GLASS, DyeColor.PURPLE).sound(SoundType.GLASS).noOcclusion().strength(0.5f)));
+	public static final RegistryObject<StainedGlassBlock> BLUE_STAINED_BULLETPROOF_GLASS = BLOCKS.register("blue_stained_bulletproof_glass", () -> GeneralUtilities.createStainedGlassFromColor(DyeColor.BLUE, BlockBehaviour.Properties.of(Material.GLASS, DyeColor.BLUE).sound(SoundType.GLASS).noOcclusion().strength(0.5f)));
+	public static final RegistryObject<StainedGlassBlock> BROWN_STAINED_BULLETPROOF_GLASS = BLOCKS.register("brown_stained_bulletproof_glass", () -> GeneralUtilities.createStainedGlassFromColor(DyeColor.BROWN, BlockBehaviour.Properties.of(Material.GLASS, DyeColor.BROWN).sound(SoundType.GLASS).noOcclusion().strength(0.5f)));
+	public static final RegistryObject<StainedGlassBlock> GREEN_STAINED_BULLETPROOF_GLASS = BLOCKS.register("green_stained_bulletproof_glass", () -> GeneralUtilities.createStainedGlassFromColor(DyeColor.GREEN, BlockBehaviour.Properties.of(Material.GLASS, DyeColor.GREEN).sound(SoundType.GLASS).noOcclusion().strength(0.5f)));
+	public static final RegistryObject<StainedGlassBlock> RED_STAINED_BULLETPROOF_GLASS = BLOCKS.register("red_stained_bulletproof_glass", () -> GeneralUtilities.createStainedGlassFromColor(DyeColor.RED, BlockBehaviour.Properties.of(Material.GLASS, DyeColor.RED).sound(SoundType.GLASS).noOcclusion().strength(0.5f)));
+	public static final RegistryObject<PitfallBlock> PITFALL = BLOCKS.register("pitfall", () -> new PitfallBlock(BlockBehaviour.Properties.of(Material.GRASS).strength(0.2f, 1.0f).sound(SoundType.GRAVEL).randomTicks()));
+	public static final RegistryObject<LandmineBlock> LANDMINE = BLOCKS.register("landmine", () -> new LandmineBlock(BlockBehaviour.Properties.of(Material.METAL).strength(1.0F).sound(SoundType.METAL)));
+	public static final RegistryObject<MinutemanStatueBlock> MINUTEMAN_STATUE = BLOCKS.register("minuteman_statue", () -> new MinutemanStatueBlock(BlockBehaviour.Properties.of(Material.STONE).strength(5.0f).sound(SoundType.STONE).noOcclusion()));
+	public static final RegistryObject<MedicStatueBlock> MEDIC_STATUE = BLOCKS.register("medic_statue", () -> new MedicStatueBlock(BlockBehaviour.Properties.of(Material.STONE).strength(5.0f).sound(SoundType.STONE).noOcclusion()));
+	public static final RegistryObject<ShelfBlock> WALL_SHELF = BLOCKS.register("wall_shelf", () -> new ShelfBlock(BlockBehaviour.Properties.of(Material.WOOD).strength(1.0f).sound(SoundType.WOOD).noOcclusion().noCollission()));
+	public static final RegistryObject<PanicAlarmBlock> PANIC_ALARM = BLOCKS.register("panic_alarm", () -> new PanicAlarmBlock(BlockBehaviour.Properties.of(Material.WOOD).strength(1.0f).sound(SoundType.WOOD).noOcclusion().randomTicks()));
+	public static final RegistryObject<WoodenTableBlock> WOODEN_TABLE = BLOCKS.register("wooden_table", () -> new WoodenTableBlock(BlockBehaviour.Properties.of(Material.WOOD).strength(3.0f).sound(SoundType.WOOD).noOcclusion()));
+	public static final RegistryObject<BiohazardBoxBlock> BIOHAZARD_BOX = BLOCKS.register("biohazard_box", () -> new BiohazardBoxBlock(BlockBehaviour.Properties.of(Material.DECORATION).strength(0.5f).sound(SoundType.LANTERN).noOcclusion()));
+	public static final RegistryObject<HalfTransparentBlock> CLOUD = BLOCKS.register("cloud", () -> new HalfTransparentBlock(BlockBehaviour.Properties.of(Material.STRUCTURAL_AIR).strength(0.7f).sound(SoundType.SNOW).noOcclusion()));
+	public static final RegistryObject<CampChairBlock> CAMP_CHAIR = BLOCKS.register("camp_chair", () -> new CampChairBlock(BlockBehaviour.Properties.of(Material.CLOTH_DECORATION).strength(1.0f).sound(SoundType.WOOL).noOcclusion()));
+	public static final RegistryObject<BranchBlock> BURNED_OAK_BRANCH = BLOCKS.register("burned_oak_branch", () -> new BranchBlock(BlockBehaviour.Properties.of(Material.WOOD).strength(0.1f).sound(SoundType.WOOD).noOcclusion().noCollission()));
 
 	// Block Items
 	public static final RegistryObject<BlockItem> MOLTEN_ORE_ITEM = ITEMS.register("molten_ore", () -> new BlockItem(MOLTEN_ORE.get(), new Properties().tab(ITEM_GROUP).fireResistant()));
@@ -443,6 +444,7 @@ public class DeferredRegistryHandler {
 	public static final RegistryObject<BlockItem> BURNED_OAK_DOOR_ITEM = ITEMS.register("burned_oak_door", () -> new BlockItem(BURNED_OAK_DOOR.get(), new Properties().tab(ITEM_GROUP)));
 	public static final RegistryObject<BlockItem> BURNED_OAK_TRAPDOOR_ITEM = ITEMS.register("burned_oak_trapdoor", () -> new BlockItem(BURNED_OAK_TRAPDOOR.get(), new Properties().tab(ITEM_GROUP)));
 	public static final RegistryObject<BlockItem> BURNED_OAK_PRESSURE_PLATE_ITEM = ITEMS.register("burned_oak_pressure_plate", () -> new BlockItem(BURNED_OAK_PRESSURE_PLATE.get(), new Properties().tab(ITEM_GROUP)));
+	public static final RegistryObject<SignItem> BURNED_OAK_SIGN_ITEM = ITEMS.register("burned_oak_sign", () -> new SignItem(new Properties().tab(ITEM_GROUP), BURNED_OAK_SIGN.get(), BURNED_OAK_WALL_SIGN.get()));
 
 	// Entities
 	public static final RegistryObject<EntityType<WoodArrowEntity>> WOOD_ARROW_ENTITY = ENTITY_TYPES.register("wood_arrow", () -> EntityType.Builder.<WoodArrowEntity> of(WoodArrowEntity::new, MobCategory.MISC).sized(0.5f, 0.5f).build(new ResourceLocation(ImmersiveWeapons.MOD_ID, "wood_arrow").toString()));
@@ -510,8 +512,8 @@ public class DeferredRegistryHandler {
 	public static final RegistryObject<MenuType<TeslaSynthesizerContainer>> TESLA_SYNTHESIZER_CONTAINER = CONTAINER_TYPES.register("tesla_synthesizer", () -> IForgeContainerType.create((id, inv, data) -> new TeslaSynthesizerContainer(id, inv)));
 
 	// Recipes
-	public static final RegistryObject<RecipeSerializer<?>> SMALL_PARTS_RECIPE_SERIALIZER = RECIPE_SERIALIZER.register("small_parts", SmallPartsRecipe.Serializer::new);
-	public static final RegistryObject<RecipeSerializer<?>> TESLA_SYNTHEZISER_RECIPE_SERIALIZER = RECIPE_SERIALIZER.register("tesla_synthesizer", TeslaSynthesizerRecipe.Serializer::new);
+	public static final RegistryObject<RecipeSerializer<SmallPartsRecipe>> SMALL_PARTS_RECIPE_SERIALIZER = RECIPE_SERIALIZER.register("small_parts", SmallPartsRecipe.Serializer::new);
+	public static final RegistryObject<RecipeSerializer<TeslaSynthesizerRecipe>> TESLA_SYNTHEZISER_RECIPE_SERIALIZER = RECIPE_SERIALIZER.register("tesla_synthesizer", TeslaSynthesizerRecipe.Serializer::new);
 
 	// Loot Table Modifiers
 	public static final RegistryObject<LogShardsLootModifierHandler.Serializer> WOOD_LOGS_MODIFIER = GLOBAL_LOOT_MODIFIER_SERIALIZER.register("log_shards", LogShardsLootModifierHandler.Serializer::new);
@@ -526,6 +528,7 @@ public class DeferredRegistryHandler {
 	public static final RegistryObject<BlockEntityType<MinutemanStatueBlockEntity>> MINUTEMAN_STATUE_BLOCK_ENTITY = BLOCK_ENTITIES.register("minuteman_statue", () -> new BlockEntityType<>(MinutemanStatueBlockEntity::new, Sets.newHashSet(MINUTEMAN_STATUE.get()), null));
 	public static final RegistryObject<BlockEntityType<MedicStatueBlockEntity>> MEDIC_STATUE_BLOCK_ENTITY = BLOCK_ENTITIES.register("medic_statue", () -> new BlockEntityType<>(MedicStatueBlockEntity::new, Sets.newHashSet(MEDIC_STATUE.get()), null));
 	public static final RegistryObject<BlockEntityType<TeslaSynthesizerBlockEntity>> TESLA_SYNTHESIZER_BLOCK_ENTITY = BLOCK_ENTITIES.register("tesla_synthesizer", () -> new BlockEntityType<>(TeslaSynthesizerBlockEntity::new, Sets.newHashSet(TESLA_SYNTHESIZER.get()), null));
+	public static final RegistryObject<BlockEntityType<BurnedOakSignEntity>> BURNED_OAK_SIGN_ENTITY = BLOCK_ENTITIES.register("custom_sign", () -> BlockEntityType.Builder.of(BurnedOakSignEntity::new, BURNED_OAK_SIGN.get(), BURNED_OAK_WALL_SIGN.get()).build(null));
 
 	// Biomes
 	public static final RegistryObject<Biome> BATTLEFIELD = BIOMES.register("battlefield", () -> BiomeBuilder.makeBattlefieldBiome(
@@ -534,7 +537,7 @@ public class DeferredRegistryHandler {
 	);
 
 	// Effects
-	public static final RegistryObject<MobEffect> MORPHINE_EFFECT = EFFECTS.register("morphine", () -> new MorphineEffect(MobEffectCategory.NEUTRAL, 3484189));
+	public static final RegistryObject<MorphineEffect> MORPHINE_EFFECT = EFFECTS.register("morphine", () -> new MorphineEffect(MobEffectCategory.NEUTRAL, 3484189));
 
 	// Structures
 	public static final RegistryObject<StructureFeature<NoneFeatureConfiguration>> ABANDONED_FACTORY_STRUCTURE = Structures.setupStructure("abandoned_factory", () -> (new AbandonedFactory(NoneFeatureConfiguration.CODEC)));

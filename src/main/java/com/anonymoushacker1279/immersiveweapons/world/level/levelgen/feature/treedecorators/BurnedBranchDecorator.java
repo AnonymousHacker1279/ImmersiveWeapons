@@ -1,6 +1,6 @@
 package com.anonymoushacker1279.immersiveweapons.world.level.levelgen.feature.treedecorators;
 
-import com.anonymoushacker1279.immersiveweapons.block.BranchBlock;
+import com.anonymoushacker1279.immersiveweapons.block.decoration.BranchBlock;
 import com.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
 import com.mojang.serialization.Codec;
 import net.minecraft.core.BlockPos;

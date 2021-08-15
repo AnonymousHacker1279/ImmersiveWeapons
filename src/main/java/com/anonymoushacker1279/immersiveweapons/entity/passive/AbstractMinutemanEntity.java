@@ -324,7 +324,7 @@ public abstract class AbstractMinutemanEntity extends PathfinderMob implements R
 	 */
 	@Override
 	public boolean canFireProjectileWeapon(@NotNull ProjectileWeaponItem projectileWeaponItem) {
-		return projectileWeaponItem == DeferredRegistryHandler.BLUNDERBUSS.get();
+		return projectileWeaponItem == DeferredRegistryHandler.BLUNDERBUSS.get().asItem();
 	}
 
 	/**

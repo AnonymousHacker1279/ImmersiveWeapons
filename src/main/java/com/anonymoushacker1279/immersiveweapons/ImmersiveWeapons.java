@@ -16,6 +16,7 @@ import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.biome.Biome.BiomeCategory;
 import net.minecraft.world.level.biome.MobSpawnSettings.SpawnerData;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.properties.WoodType;
 import net.minecraft.world.level.levelgen.FlatLevelSource;
 import net.minecraft.world.level.levelgen.GenerationStep;
 import net.minecraft.world.level.levelgen.GenerationStep.Decoration;
@@ -115,6 +116,7 @@ public class ImmersiveWeapons {
 		OreGeneratorHandler.init(event);
 		DispenserBehaviorRegistry.init();
 		event.enqueueWork(() -> {
+			WoodType.register(CustomWoodTypes.BURNED_OAK);
 			setupBiome(DeferredRegistryHandler.BATTLEFIELD.get(), BiomeManager.BiomeType.WARM, 3, Type.PLAINS, Type.OVERWORLD);
 			Structures.setupStructures();
 			Structures.registerAllPieces();

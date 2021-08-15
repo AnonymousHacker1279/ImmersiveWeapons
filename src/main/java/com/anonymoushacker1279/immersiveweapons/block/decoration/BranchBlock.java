@@ -1,4 +1,4 @@
-package com.anonymoushacker1279.immersiveweapons.block;
+package com.anonymoushacker1279.immersiveweapons.block.decoration;
 
 import com.anonymoushacker1279.immersiveweapons.block.core.BasicOrientableBlock;
 import com.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
