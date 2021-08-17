@@ -6,9 +6,10 @@ import com.anonymoushacker1279.immersiveweapons.client.gui.screen.TeslaSynthesiz
 import com.anonymoushacker1279.immersiveweapons.client.particle.SmokeBombParticleFactory;
 import com.anonymoushacker1279.immersiveweapons.client.renderer.blockentity.ChairRenderer;
 import com.anonymoushacker1279.immersiveweapons.client.renderer.blockentity.ShelfRenderer;
-import com.anonymoushacker1279.immersiveweapons.client.renderer.entity.*;
 import com.anonymoushacker1279.immersiveweapons.client.renderer.entity.arrow.*;
 import com.anonymoushacker1279.immersiveweapons.client.renderer.entity.bullet.*;
+import com.anonymoushacker1279.immersiveweapons.client.renderer.entity.misc.BurnedOakBoatRenderer;
+import com.anonymoushacker1279.immersiveweapons.client.renderer.entity.mob.*;
 import com.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
 import com.anonymoushacker1279.immersiveweapons.util.CustomWoodTypes;
 import net.minecraft.client.KeyMapping;
@@ -119,6 +120,7 @@ public class ClientModEventSubscriber {
 		event.registerEntityRenderer(DeferredRegistryHandler.WANDERING_WARRIOR_ENTITY.get(), WanderingWarriorRenderer::new);
 		event.registerEntityRenderer(DeferredRegistryHandler.HANS_ENTITY.get(), HansRenderer::new);
 		event.registerEntityRenderer(DeferredRegistryHandler.CHAIR_ENTITY.get(), ChairRenderer::new);
+		event.registerEntityRenderer(DeferredRegistryHandler.BURNED_OAK_BOAT_ENTITY.get(), BurnedOakBoatRenderer::new);
 		event.registerBlockEntityRenderer(DeferredRegistryHandler.WALL_SHELF_BLOCK_ENTITY.get(), context -> new ShelfRenderer());
 		event.registerBlockEntityRenderer(DeferredRegistryHandler.BURNED_OAK_SIGN_ENTITY.get(), SignRenderer::new);
 	}
