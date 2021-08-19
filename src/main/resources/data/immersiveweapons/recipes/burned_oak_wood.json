@@ -1,0 +1,18 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"group": "bark",
+	"pattern": [
+		"xx ",
+		"xx ",
+		"   "
+	],
+	"key": {
+		"x": {
+			"item": "immersiveweapons:burned_oak_log"
+		}
+	},
+	"result": {
+		"item": "immersiveweapons:burned_oak_wood",
+		"count": 3
+	}
+}

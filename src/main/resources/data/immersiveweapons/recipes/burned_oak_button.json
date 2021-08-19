@@ -1,0 +1,11 @@
+{
+	"type": "minecraft:crafting_shapeless",
+	"ingredients": [
+		{
+			"item": "immersiveweapons:burned_oak_planks"
+		}
+	],
+	"result": {
+		"item": "immersiveweapons:burned_oak_button"
+	}
+}

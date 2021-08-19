@@ -16,7 +16,7 @@ import org.jetbrains.annotations.NotNull;
 public abstract class AbstractArrowItem extends ArrowItem {
 
 	public double damage;
-	protected RegistryObject<Item> ref;
+	protected RegistryObject<? extends Item> ref;
 
 	/**
 	 * Constructor for AbstractArrowItem.
@@ -32,7 +32,7 @@ public abstract class AbstractArrowItem extends ArrowItem {
 	 * Set item references.
 	 * @param refIn the <code>RegistryObject</code> reference, must extend Item
 	 */
-	public void setItemReference(RegistryObject<Item> refIn) {
+	public void setItemReference(RegistryObject<? extends Item> refIn) {
 		ref = refIn;
 	}
 

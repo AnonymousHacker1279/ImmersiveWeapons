@@ -40,7 +40,6 @@ public class BiomeBuilder {
 
 		BiomeGenerationSettings.Builder biomeGenerationSettingBuilder = new BiomeGenerationSettings.Builder()
 				.surfaceBuilder(surfaceBuilder)
-				.addFeature(Decoration.VEGETAL_DECORATION, Features.PLAIN_VEGETATION)
 				.addFeature(Decoration.VEGETAL_DECORATION, Features.PATCH_GRASS_PLAIN);
 
 		biomeGenerationSettingBuilder.addStructureStart(StructureFeatures.PILLAGER_OUTPOST);

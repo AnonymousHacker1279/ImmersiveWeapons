@@ -139,7 +139,7 @@ public class BearTrapBlock extends BaseEntityBlock implements SimpleWaterloggedB
 	 */
 	@Override
 	public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, @NotNull BlockState blockState, @NotNull BlockEntityType<T> blockEntityType) {
-		return level.isClientSide ? null : createTickerHelper(blockEntityType, DeferredRegistryHandler.BEAR_TRAP_BLOCK_ENTITY.get(), (level1, blockPos, blockState1, bearTrapBlockEntity) -> BearTrapBlockEntity.serverTick(blockPos, bearTrapBlockEntity));
+		return !level.isClientSide ? null : createTickerHelper(blockEntityType, DeferredRegistryHandler.BEAR_TRAP_BLOCK_ENTITY.get(), (level1, blockPos, blockState1, bearTrapBlockEntity) -> BearTrapBlockEntity.clientTick(blockPos, bearTrapBlockEntity));
 	}
 
 		/**

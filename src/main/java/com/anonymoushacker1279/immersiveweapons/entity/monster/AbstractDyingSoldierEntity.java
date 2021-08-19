@@ -237,7 +237,7 @@ public abstract class AbstractDyingSoldierEntity extends Monster implements Rang
 	 */
 	@Override
 	public boolean canFireProjectileWeapon(@NotNull ProjectileWeaponItem projectileWeaponItem) {
-		return projectileWeaponItem == DeferredRegistryHandler.FLINTLOCK_PISTOL.get();
+		return projectileWeaponItem == DeferredRegistryHandler.FLINTLOCK_PISTOL.get().asItem();
 	}
 
 	/**

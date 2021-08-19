@@ -1,10 +1,13 @@
 package com.anonymoushacker1279.immersiveweapons.init;
 
 import com.anonymoushacker1279.immersiveweapons.item.pike.*;
+import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.ImmutableMultimap.Builder;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
+import net.minecraft.world.item.AxeItem;
+import net.minecraft.world.level.block.Block;
 import net.minecraftforge.common.ForgeMod;
 
 public class PostSetupHandler {
@@ -63,5 +66,8 @@ public class PostSetupHandler {
 		combineBuilder.putAll(NetheritePikeItem.pikeAttributes);
 		combineBuilder.putAll(newAttributes);
 		NetheritePikeItem.pikeAttributes = combineBuilder.build();
+
+		// Add custom logs to be stripped in AxeItem
+		AxeItem.STRIPPABLES = new ImmutableMap.Builder<Block, Block>().putAll(AxeItem.STRIPPABLES).put(DeferredRegistryHandler.BURNED_OAK_LOG.get(), DeferredRegistryHandler.STRIPPED_BURNED_OAK_LOG.get()).put(DeferredRegistryHandler.BURNED_OAK_WOOD.get(), DeferredRegistryHandler.STRIPPED_BURNED_OAK_WOOD.get()).build();
 	}
 }

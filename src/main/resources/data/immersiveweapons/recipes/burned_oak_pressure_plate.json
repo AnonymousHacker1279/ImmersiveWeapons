@@ -1,0 +1,17 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"pattern": [
+		"   ",
+		"   ",
+		"xx "
+	],
+	"key": {
+		"x": {
+			"item": "immersiveweapons:burned_oak_planks"
+		}
+	},
+	"result": {
+		"item": "immersiveweapons:burned_oak_pressure_plate",
+		"count": 1
+	}
+}
