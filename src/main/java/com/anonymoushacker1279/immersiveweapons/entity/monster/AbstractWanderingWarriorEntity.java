@@ -14,6 +14,7 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.*;
 import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
+import net.minecraft.world.entity.monster.Creeper;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
@@ -28,6 +29,7 @@ import org.jetbrains.annotations.NotNull;
 import javax.annotation.Nullable;
 import java.time.LocalDate;
 import java.time.temporal.ChronoField;
+import java.util.function.Predicate;
 
 public abstract class AbstractWanderingWarriorEntity extends Monster {
 
@@ -44,6 +46,8 @@ public abstract class AbstractWanderingWarriorEntity extends Monster {
 			setAggressive(true);
 		}
 	};
+
+	public static final Predicate<LivingEntity> CAN_TARGET = (livingEntity) -> !(livingEntity instanceof Creeper);
 
 	/**
 	 * Constructor for AbstractWanderingWarriorEntity.
@@ -76,9 +80,8 @@ public abstract class AbstractWanderingWarriorEntity extends Monster {
 		goalSelector.addGoal(3, new OpenDoorGoal(this, true));
 		goalSelector.addGoal(3, new OpenFenceGateGoal(this, true));
 		goalSelector.addGoal(1, new FloatGoal(this));
-		targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, Monster.class, false));
+		targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, Monster.class, 0, false, true, CAN_TARGET));
 		targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, Player.class, false));
-		targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, PathfinderMob.class, false));
 		targetSelector.addGoal(2, new HurtByTargetGoal(this));
 	}
 
