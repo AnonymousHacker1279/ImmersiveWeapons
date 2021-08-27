@@ -17,6 +17,8 @@ import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
 @EventBusSubscriber(modid = ImmersiveWeapons.MOD_ID, bus = Bus.FORGE, value = Dist.CLIENT)
 public class ForgeEventSubscriber {
 
+	Minecraft minecraft;
+
 	/**
 	 * Event handler for the RenderBlockOverlayEvent.
 	 * @param event the <code>RenderBlockOverlayEvent</code> instance
@@ -38,11 +40,11 @@ public class ForgeEventSubscriber {
 	}
 
 	/**
-	 * Event handler for the FogDensity.
+	 * Event handler for the FogDensity event.
 	 * @param event the <code>FogDensity</code> instance
 	 */
 	@SubscribeEvent
-	public static void FogDensity(FogDensity event) {
+	public static void fogDensityEvent(FogDensity event) {
 
 		// Reduce lava fog from players wearing a full set of molten armor
 		Player player = Minecraft.getInstance().player;
