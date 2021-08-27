@@ -80,6 +80,14 @@ Specifically for bug reports:
 - **Version Information**. You need to list the Minecraft version you are using, the Immersive Weapons version, and the Forge version.
 - **Debug logs**. You MUST upload your debug log. Otherwise, I won't be able to determine what isn't working. The bug report template lists where to find them at.
 
-**Providing the requested information at the beginning can make the difference between a three hour update and a three day update.**
+**Providing the requested information at the beginning can make the difference between a three-hour update and a three-day update.**
 
 Before making a report, update to the latest version of Immersive Weapons and Forge. It's possible that what you're looking for was merged into a newer release.
+
+
+## Translations
+
+Translations other than English are generated automatically using my [Mr. Worldwide](https://github.com/AnonymousHacker1279/MrWorldwide) toolkit. Chances are that it's
+not completely accurate and needs refinements. I do not have the time nor will to refine these.
+
+If you want to clean up the translations then go ahead and make a contribution. I appreciate it.
