@@ -7,6 +7,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.projectile.AbstractArrow.Pickup;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import org.jetbrains.annotations.NotNull;
 
 public class WoodBulletItem extends AbstractArrowItem {
 
@@ -28,8 +29,8 @@ public class WoodBulletItem extends AbstractArrowItem {
 	 * @return WoodBulletEntity
 	 */
 	@Override
-	public WoodBulletEntity createArrow(Level level, ItemStack stack, LivingEntity shooter) {
-		WoodBulletEntity bulletEntity = new WoodBulletEntity(shooter, level, ref.get());
+	public @NotNull WoodBulletEntity createArrow(@NotNull Level level, @NotNull ItemStack stack, @NotNull LivingEntity shooter) {
+		WoodBulletEntity bulletEntity = new WoodBulletEntity(shooter, level, ref.get().asItem());
 		bulletEntity.setBaseDamage(damage);
 		bulletEntity.pickup = Pickup.DISALLOWED;
 		bulletEntity.setSoundEvent(DeferredRegistryHandler.BULLET_WHIZZ.get());

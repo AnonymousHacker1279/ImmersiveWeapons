@@ -4,6 +4,7 @@ import com.anonymoushacker1279.immersiveweapons.entity.projectile.CustomArrowEnt
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import org.jetbrains.annotations.NotNull;
 
 public class DiamondArrowItem extends AbstractArrowItem {
 
@@ -25,8 +26,8 @@ public class DiamondArrowItem extends AbstractArrowItem {
 	 * @return DiamondArrowEntity
 	 */
 	@Override
-	public DiamondArrowEntity createArrow(Level worldIn, ItemStack stack, LivingEntity shooter) {
-		DiamondArrowEntity arrowEntity = new DiamondArrowEntity(shooter, worldIn, ref.get());
+	public @NotNull DiamondArrowEntity createArrow(@NotNull Level worldIn, @NotNull ItemStack stack, @NotNull LivingEntity shooter) {
+		DiamondArrowEntity arrowEntity = new DiamondArrowEntity(shooter, worldIn, ref.get().asItem());
 		arrowEntity.setBaseDamage(damage);
 		return arrowEntity;
 	}
