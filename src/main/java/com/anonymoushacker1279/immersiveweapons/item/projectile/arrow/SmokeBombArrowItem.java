@@ -5,6 +5,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.projectile.AbstractArrow.Pickup;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import org.jetbrains.annotations.NotNull;
 
 public class SmokeBombArrowItem extends AbstractArrowItem {
 
@@ -29,8 +30,8 @@ public class SmokeBombArrowItem extends AbstractArrowItem {
 	 * @return SmokeBombArrowEntity
 	 */
 	@Override
-	public SmokeBombArrowEntity createArrow(Level worldIn, ItemStack stack, LivingEntity shooter) {
-		SmokeBombArrowEntity arrowEntity = new SmokeBombArrowEntity(shooter, worldIn, ref.get());
+	public @NotNull SmokeBombArrowEntity createArrow(@NotNull Level worldIn, @NotNull ItemStack stack, @NotNull LivingEntity shooter) {
+		SmokeBombArrowEntity arrowEntity = new SmokeBombArrowEntity(shooter, worldIn, ref.get().asItem());
 		arrowEntity.setBaseDamage(damage);
 		arrowEntity.pickup = Pickup.DISALLOWED;
 		SmokeBombArrowEntity.setColor(color);

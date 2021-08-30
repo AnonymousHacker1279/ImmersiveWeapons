@@ -12,6 +12,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
+import org.jetbrains.annotations.NotNull;
 
 public class SimpleShotgunItem extends SimplePistolItem {
 
@@ -31,7 +32,7 @@ public class SimpleShotgunItem extends SimplePistolItem {
 	 * @param timeLeft the time left from charging
 	 */
 	@Override
-	public void releaseUsing(ItemStack itemStack, Level worldIn, LivingEntity entityLiving, int timeLeft) {
+	public void releaseUsing(@NotNull ItemStack itemStack, @NotNull Level worldIn, @NotNull LivingEntity entityLiving, int timeLeft) {
 		if (entityLiving instanceof Player playerEntity) {
 			boolean flag = playerEntity.isCreative();
 			boolean misfire = false;

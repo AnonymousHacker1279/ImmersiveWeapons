@@ -21,7 +21,7 @@ public class BurnedOakBoatRenderer extends BoatRenderer {
 	}
 
 	@Override
-	public @NotNull Pair<ResourceLocation, BoatModel> getModelWithLocation(Boat boat) {
+	public @NotNull Pair<ResourceLocation, BoatModel> getModelWithLocation(@NotNull Boat boat) {
 		return boatResources;
 	}
 }

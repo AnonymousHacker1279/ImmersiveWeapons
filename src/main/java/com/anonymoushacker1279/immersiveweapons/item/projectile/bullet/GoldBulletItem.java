@@ -7,6 +7,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.projectile.AbstractArrow.Pickup;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import org.jetbrains.annotations.NotNull;
 
 public class GoldBulletItem extends AbstractArrowItem {
 
@@ -28,8 +29,8 @@ public class GoldBulletItem extends AbstractArrowItem {
 	 * @return GoldBulletEntity
 	 */
 	@Override
-	public GoldBulletEntity createArrow(Level level, ItemStack stack, LivingEntity shooter) {
-		GoldBulletEntity bulletEntity = new GoldBulletEntity(shooter, level, ref.get());
+	public @NotNull GoldBulletEntity createArrow(@NotNull Level level, @NotNull ItemStack stack, @NotNull LivingEntity shooter) {
+		GoldBulletEntity bulletEntity = new GoldBulletEntity(shooter, level, ref.get().asItem());
 		bulletEntity.setBaseDamage(damage);
 		bulletEntity.pickup = Pickup.DISALLOWED;
 		bulletEntity.setSoundEvent(DeferredRegistryHandler.BULLET_WHIZZ.get());

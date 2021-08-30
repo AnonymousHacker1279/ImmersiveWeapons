@@ -84,9 +84,7 @@ public class ClientModEventSubscriber {
 
 		mc.getItemColors().register((color1, color2) -> GrassColor.get(0.5d, 1.0d), DeferredRegistryHandler.PITFALL_ITEM.get());
 
-		event.enqueueWork(() -> {
-			Sheets.addWoodType(CustomWoodTypes.BURNED_OAK);
-		});
+		event.enqueueWork(() -> Sheets.addWoodType(CustomWoodTypes.BURNED_OAK));
 	}
 
 	/**
