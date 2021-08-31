@@ -24,6 +24,10 @@ repositories {
 		name "Maven Central"
 		url "https://repo.maven.apache.org/maven2"
 	}
+	maven {
+		name "Bai Maven"
+		url "https://maven.bai.lol"
+	}
 }
 
 // Only edit below this line, the above code adds and enables the necessary things for Forge to be setup.
@@ -31,7 +35,7 @@ apply plugin: 'net.minecraftforge.gradle'
 apply plugin: 'org.parchmentmc.librarian.forgegradle'
 apply plugin: 'maven-publish'
 
-version = '1.17.1-1.8.3'
+version = '1.17.1-1.8.4'
 group = 'com.anonymoushacker1279.immersiveweapons' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 
 java.toolchain.languageVersion = JavaLanguageVersion.of(16)
@@ -108,12 +112,13 @@ dependencies {
 	// Specify the version of Minecraft to use, If this is any group other then 'net.minecraft' it is assumed
 	// that the dep is a ForgeGradle 'patcher' dependency. And it's patches will be applied.
 	// The userdev artifact is a special name and will get all sorts of transformations applied to it.
-	minecraft 'net.minecraftforge:forge:1.17.1-37.0.45'
+	minecraft 'net.minecraftforge:forge:1.17.1-37.0.47'
 
-	// compile against the JEI API but do not include it at runtime
-	compileOnly fg.deobf("mezz.jei:jei-1.17.1:8.0.0.14:api")
-	// at runtime, use the full JEI jar
-	runtimeOnly fg.deobf("mezz.jei:jei-1.17.1:8.0.0.14")
+	// Include JEI
+	implementation fg.deobf("mezz.jei:jei-1.17.1:8.0.0.14")
+
+	// Include WTHIT
+	implementation fg.deobf("mcp.mobius.waila:wthit:forge-3.8.1")
 }
 
 // Example for how to get properties into the manifest for reading by the runtime..
