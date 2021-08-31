@@ -5,6 +5,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.SpawnEggItem;
+import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.util.Lazy;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
@@ -19,7 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-@EventBusSubscriber(modid = ImmersiveWeapons.MOD_ID, bus = Bus.MOD)
+@EventBusSubscriber(modid = ImmersiveWeapons.MOD_ID, bus = Bus.MOD, value = Dist.CLIENT)
 public class CustomSpawnEggItem extends SpawnEggItem {
 
 	private static final List<CustomSpawnEggItem> UNADDED_EGGS = new ArrayList<>(1);
@@ -59,7 +60,7 @@ public class CustomSpawnEggItem extends SpawnEggItem {
             try {
                 Map<EntityType<?>, SpawnEggItem> spawnEggItemMap = ObfuscationReflectionHelper.getPrivateValue(SpawnEggItem.class,
                         null, "f_43201_");
-                Minecraft minecraft = Minecraft.getInstance();
+	            Minecraft minecraft = Minecraft.getInstance();
 	            for (CustomSpawnEggItem spawnEggItem : UNADDED_EGGS) {
 		            if (spawnEggItemMap != null) {
 			            spawnEggItemMap.put(spawnEggItem.entityTypeSupplier.get(), spawnEggItem);
