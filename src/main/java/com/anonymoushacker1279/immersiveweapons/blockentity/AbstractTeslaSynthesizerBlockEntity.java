@@ -70,10 +70,10 @@ public abstract class AbstractTeslaSynthesizerBlockEntity extends BaseContainerB
 		@Override
 		public void set(int index, int value) {
 			switch (index) {
-				case 0 -> burnTime = value;
 				case 1 -> burnTimeTotal = value;
 				case 2 -> cookTime = value;
 				case 3 -> cookTimeTotal = value;
+				default -> burnTime = value;
 			}
 
 		}
@@ -123,7 +123,7 @@ public abstract class AbstractTeslaSynthesizerBlockEntity extends BaseContainerB
 		Item item = itemProvider.asItem();
 		if (isNonFlammable(item)) {
 			if (SharedConstants.IS_RUNNING_IN_IDE) {
-				throw Util.pauseInIde(new IllegalStateException("A developer tried to explicitly make fire resistant item " + item.getName(null).getString() + " a furnace fuel. That will not work!"));
+				throw Util.pauseInIde(new IllegalStateException("A developer tried to explicitly make fire resistant item " + item.getName(new ItemStack(item)).getString() + " a furnace fuel. That will not work!"));
 			}
 		} else {
 			map.put(item, burnTimeIn);

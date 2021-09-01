@@ -44,10 +44,10 @@ public class ShelfRenderer implements BlockEntityRenderer<WallShelfBlockEntity> 
 
 				// Rotate by direction
 				switch (direction) {
-					case NORTH -> matrixStackIn.mulPose(new Quaternion(Vector3f.YP, 0, true));
 					case EAST -> matrixStackIn.mulPose(new Quaternion(Vector3f.YP, 270, true));
 					case SOUTH -> matrixStackIn.mulPose(new Quaternion(Vector3f.YP, 180, true));
 					case WEST -> matrixStackIn.mulPose(new Quaternion(Vector3f.YP, 90, true));
+					default -> matrixStackIn.mulPose(new Quaternion(Vector3f.YP, 0, true));
 				}
 				// Rotation occurs here
 				matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(50f));

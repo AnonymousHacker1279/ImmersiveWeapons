@@ -55,15 +55,15 @@ public class TagsGenerator extends BlockTagsProvider {
 			}
 
 			switch (tagStage) {
-				case 0 -> tag(BlockTags.bind(BlockTags.MINEABLE_WITH_PICKAXE.getName().toString())).add(block);
 				case 1 -> tag(BlockTags.bind(BlockTags.MINEABLE_WITH_AXE.getName().toString())).add(block);
 				case 2 -> tag(BlockTags.bind(BlockTags.MINEABLE_WITH_SHOVEL.getName().toString())).add(block);
+				default -> tag(BlockTags.bind(BlockTags.MINEABLE_WITH_PICKAXE.getName().toString())).add(block);
 			}
 
 			switch (tier) {
-				case 1 -> tag(BlockTags.bind(BlockTags.NEEDS_STONE_TOOL.getName().toString())).add(block);
 				case 2 -> tag(BlockTags.bind(BlockTags.NEEDS_IRON_TOOL.getName().toString())).add(block);
 				case 3 -> tag(BlockTags.bind(BlockTags.NEEDS_DIAMOND_TOOL.getName().toString())).add(block);
+				default -> tag(BlockTags.bind(BlockTags.NEEDS_STONE_TOOL.getName().toString())).add(block);
 			}
 		}
 	}
