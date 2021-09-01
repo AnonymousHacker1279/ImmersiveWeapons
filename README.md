@@ -5,7 +5,7 @@
 ![CodeQL](https://github.com/AnonymousHacker1279/ImmersiveWeapons-Mod/workflows/CodeQL/badge.svg)
 [![](http://cf.way2muchnoise.eu/full_494454_Downloads.svg)](https://www.curseforge.com/minecraft/mc-mods/immersive-weapons)
 [![](http://cf.way2muchnoise.eu/versions/494454.svg)](https://www.curseforge.com/minecraft/mc-mods/immersive-weapons)
-
+[![CodeFactor](https://www.codefactor.io/repository/github/anonymoushacker1279/immersiveweapons/badge/master)](https://www.codefactor.io/repository/github/anonymoushacker1279/immersiveweapons/overview/master)
 ## A weapons mod for Minecraft 1.17.1/1.16.5/1.16.4/1.15.2
 
 Immersive Weapons is <s>a weapons mod</s> more than just a weapons mod aiming to spice up your combat skills.
@@ -28,7 +28,7 @@ A few other notes:
 - This is for the Forge modloading platform. No, I don't plan to port to Fabric, don't ask about it.
 - Yes, you can include it in modpacks, provided it is open source and doesn't have an installer.
 - This is open source. If you want to port to old versions or to Fabric, do it yourself.
-- This is NOT to be reposted to any mod rehosting websites. The only places you should download this mod at are the CurseForge page, and this GitHub repository. #StopModReposts
+- This is NOT to be reposted to any mod reposting websites. The only places you should download this mod at are the CurseForge page, and this GitHub repository. #StopModReposts
 
 [Interested in the development of this project, or just want to hang out? Join the Official Discord server](https://discord.gg/WNMCTg7TsT)
 
@@ -64,7 +64,7 @@ Alternatively, see the feature request template in Issues.
 
 When making a pull request, you should target the development branch for the Minecraft version you are working with. For example, a PR under Minecraft 1.17.1 should target the
 ``1.17.x-dev`` branch. 
-Additionally, you will be asked to sign a Contributer License Agreement (CLA). This ensures you are aware of the MIT license governence over your contributions.
+Additionally, you will be asked to sign a Contributor License Agreement (CLA). This ensures you are aware of the MIT license governance over your contributions.
 
 Please note that creating bug reports/suggestions does not involve the CLA. This is only required for PRs. 
 
