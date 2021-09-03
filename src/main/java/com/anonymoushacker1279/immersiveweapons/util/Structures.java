@@ -43,6 +43,33 @@ public class Structures {
 	}
 
 	/**
+	 * Setup structure with separation settings and transforms.
+	 * @param structure the structure
+	 * @param featureConfiguration the <code>StructureFeatureConfiguration</code>
+	 * @param transformSurroundingLand if the structure should transform surrounding land
+	 */
+	private static <F extends StructureFeature<?>> void setupStructure(F structure, StructureFeatureConfiguration featureConfiguration, boolean transformSurroundingLand) {
+		StructureFeature.STRUCTURES_REGISTRY.put(Objects.requireNonNull(structure.getRegistryName()).toString(), structure);
+
+		/*
+		 * Will add land at the base of the structure
+		 */
+		if (transformSurroundingLand) {
+			StructureFeature.NOISE_AFFECTING_FEATURES =
+					ImmutableList.<StructureFeature<?>> builder()
+							.addAll(StructureFeature.NOISE_AFFECTING_FEATURES)
+							.add(structure)
+							.build();
+		}
+
+		StructureSettings.DEFAULTS =
+				ImmutableMap.<StructureFeature<?>, StructureFeatureConfiguration> builder()
+						.putAll(StructureSettings.DEFAULTS)
+						.put(structure, featureConfiguration)
+						.build();
+	}
+
+	/**
 	 * Setup structures.
 	 */
 	public static void setupStructures() {
@@ -137,33 +164,6 @@ public class Structures {
 						Config.MIN_GRAVEYARD_DISTANCE.get(),
 						346751289),
 				false);
-	}
-
-	/**
-	 * Setup structure with separation settings and transforms.
-	 * @param structure the structure
-	 * @param featureConfiguration the <code>StructureFeatureConfiguration</code>
-	 * @param transformSurroundingLand if the structure should transform surrounding land
-	 */
-	private static <F extends StructureFeature<?>> void setupStructure(F structure, StructureFeatureConfiguration featureConfiguration, boolean transformSurroundingLand) {
-		StructureFeature.STRUCTURES_REGISTRY.put(Objects.requireNonNull(structure.getRegistryName()).toString(), structure);
-
-		/*
-		 * Will add land at the base of the structure
-		 */
-		if (transformSurroundingLand) {
-			StructureFeature.NOISE_AFFECTING_FEATURES =
-					ImmutableList.<StructureFeature<?>> builder()
-							.addAll(StructureFeature.NOISE_AFFECTING_FEATURES)
-							.add(structure)
-							.build();
-		}
-
-		StructureSettings.DEFAULTS =
-				ImmutableMap.<StructureFeature<?>, StructureFeatureConfiguration> builder()
-						.putAll(StructureSettings.DEFAULTS)
-						.put(structure, featureConfiguration)
-						.build();
 	}
 
 	/**

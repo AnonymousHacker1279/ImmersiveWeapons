@@ -50,10 +50,10 @@ public class CorrugatedBlock {
 		public @NotNull VoxelShape getShape(BlockState state, @NotNull BlockGetter reader, @NotNull BlockPos pos, @NotNull CollisionContext selectionContext) {
 			Vec3 vector3d = state.getOffset(reader, pos);
 			return switch (state.getValue(FACING)) {
-				default -> SHAPE_NORTH.move(vector3d.x, vector3d.y, vector3d.z);
 				case SOUTH -> SHAPE_SOUTH.move(vector3d.x, vector3d.y, vector3d.z);
 				case EAST -> SHAPE_EAST.move(vector3d.x, vector3d.y, vector3d.z);
 				case WEST -> SHAPE_WEST.move(vector3d.x, vector3d.y, vector3d.z);
+				default -> SHAPE_NORTH.move(vector3d.x, vector3d.y, vector3d.z);
 			};
 		}
 
