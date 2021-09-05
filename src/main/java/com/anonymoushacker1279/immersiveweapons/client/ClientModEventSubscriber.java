@@ -3,7 +3,8 @@ package com.anonymoushacker1279.immersiveweapons.client;
 import com.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import com.anonymoushacker1279.immersiveweapons.client.gui.screen.SmallPartsTableScreen;
 import com.anonymoushacker1279.immersiveweapons.client.gui.screen.TeslaSynthesizerScreen;
-import com.anonymoushacker1279.immersiveweapons.client.particle.SmokeBombParticleFactory;
+import com.anonymoushacker1279.immersiveweapons.client.particle.blood.BloodParticleFactory;
+import com.anonymoushacker1279.immersiveweapons.client.particle.smokebomb.SmokeBombParticleFactory;
 import com.anonymoushacker1279.immersiveweapons.client.renderer.blockentity.ChairRenderer;
 import com.anonymoushacker1279.immersiveweapons.client.renderer.blockentity.ShelfRenderer;
 import com.anonymoushacker1279.immersiveweapons.client.renderer.entity.arrow.*;
@@ -130,5 +131,6 @@ public class ClientModEventSubscriber {
 	@SubscribeEvent
 	public static void onParticleFactoryRegistration(ParticleFactoryRegisterEvent event) {
 		mc.particleEngine.register(DeferredRegistryHandler.SMOKE_BOMB_PARTICLE_TYPE.get(), SmokeBombParticleFactory::new);
+		mc.particleEngine.register(DeferredRegistryHandler.BLOOD_PARTICLE_TYPE.get(), BloodParticleFactory::new);
 	}
 }

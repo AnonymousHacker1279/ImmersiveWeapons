@@ -1,11 +1,11 @@
-package com.anonymoushacker1279.immersiveweapons.client.particle;
+package com.anonymoushacker1279.immersiveweapons.client.particle.smokebomb;
 
+import com.anonymoushacker1279.immersiveweapons.client.particle.AbstractParticleData;
 import com.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
 import com.mojang.brigadier.StringReader;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleType;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.util.Mth;
@@ -13,9 +13,8 @@ import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nonnull;
 import java.awt.*;
-import java.util.Locale;
 
-public class SmokeBombParticleData implements ParticleOptions {
+public class SmokeBombParticleData extends AbstractParticleData {
 
 	static final Codec<SmokeBombParticleData> CODEC = RecordCodecBuilder.create(
 			instance -> instance.group(
@@ -81,6 +80,7 @@ public class SmokeBombParticleData implements ParticleOptions {
 	 * @param diameter the particle diameter
 	 */
 	public SmokeBombParticleData(Color tint, double diameter) {
+		super(tint, diameter);
 		this.tint = tint;
 		this.diameter = constrainDiameterToValidRange(diameter);
 	}
@@ -91,35 +91,9 @@ public class SmokeBombParticleData implements ParticleOptions {
 	 * @param diameter the particle diameter
 	 */
 	private SmokeBombParticleData(int tintRGB, double diameter) {
+		super(tintRGB, diameter);
 		tint = new Color(tintRGB);
 		this.diameter = constrainDiameterToValidRange(diameter);
-	}
-
-	/**
-	 * Clamps diameters to a valid range.
-	 * @param diameter the particle diameter
-	 * @return double
-	 */
-	private static double constrainDiameterToValidRange(double diameter) {
-		final double MIN_DIAMETER = 0.05;
-		final double MAX_DIAMETER = 5.5;
-		return Mth.clamp(diameter, MIN_DIAMETER, MAX_DIAMETER);
-	}
-
-	/**
-	 * Get the tint of the particle.
-	 * @return Color
-	 */
-	public Color getTint() {
-		return tint;
-	}
-
-	/**
-	 * Get the diameter of the particle.
-	 * @return double
-	 */
-	double getDiameter() {
-		return diameter;
 	}
 
 	/**
@@ -129,27 +103,5 @@ public class SmokeBombParticleData implements ParticleOptions {
 	@Override
 	public @NotNull ParticleType<SmokeBombParticleData> getType() {
 		return DeferredRegistryHandler.SMOKE_BOMB_PARTICLE_TYPE.get();
-	}
-
-	/**
-	 * Write particle information to a PacketBuffer.
-	 * @param buf a <code>PacketBuffer</code> instance
-	 */
-	@Override
-	public void writeToNetwork(FriendlyByteBuf buf) {
-		buf.writeInt(tint.getRed());
-		buf.writeInt(tint.getGreen());
-		buf.writeInt(tint.getBlue());
-		buf.writeDouble(diameter);
-	}
-
-	/**
-	 * For debugging: Write information to a readable format
-	 * @return String
-	 */
-	@Nonnull
-	@Override
-	public String writeToString() {
-		return String.format(Locale.ROOT, "%s %.2f %d %d %d", getType().getRegistryName(), diameter, tint.getRed(), tint.getGreen(), tint.getBlue());
 	}
 }

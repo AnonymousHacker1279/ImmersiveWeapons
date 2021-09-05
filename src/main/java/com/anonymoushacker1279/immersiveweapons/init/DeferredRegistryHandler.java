@@ -15,8 +15,10 @@ import com.anonymoushacker1279.immersiveweapons.block.sign.BurnedOakStandingSign
 import com.anonymoushacker1279.immersiveweapons.block.sign.BurnedOakWallSignBlock;
 import com.anonymoushacker1279.immersiveweapons.block.trap.*;
 import com.anonymoushacker1279.immersiveweapons.blockentity.*;
-import com.anonymoushacker1279.immersiveweapons.client.particle.SmokeBombParticleData;
-import com.anonymoushacker1279.immersiveweapons.client.particle.SmokeBombParticleType;
+import com.anonymoushacker1279.immersiveweapons.client.particle.blood.BloodParticleData;
+import com.anonymoushacker1279.immersiveweapons.client.particle.blood.BloodParticleType;
+import com.anonymoushacker1279.immersiveweapons.client.particle.smokebomb.SmokeBombParticleData;
+import com.anonymoushacker1279.immersiveweapons.client.particle.smokebomb.SmokeBombParticleType;
 import com.anonymoushacker1279.immersiveweapons.container.SmallPartsContainer;
 import com.anonymoushacker1279.immersiveweapons.container.TeslaSynthesizerContainer;
 import com.anonymoushacker1279.immersiveweapons.entity.misc.ChairEntity;
@@ -41,6 +43,7 @@ import com.anonymoushacker1279.immersiveweapons.item.fortitude.BandageItem;
 import com.anonymoushacker1279.immersiveweapons.item.fortitude.FirstAidKitItem;
 import com.anonymoushacker1279.immersiveweapons.item.fortitude.MorphineItem;
 import com.anonymoushacker1279.immersiveweapons.item.fortitude.PainkillerItem;
+import com.anonymoushacker1279.immersiveweapons.item.gauntlet.*;
 import com.anonymoushacker1279.immersiveweapons.item.misc.ExplosiveChocolateBar;
 import com.anonymoushacker1279.immersiveweapons.item.misc.UsedSyringeItem;
 import com.anonymoushacker1279.immersiveweapons.item.pike.*;
@@ -58,6 +61,7 @@ import com.anonymoushacker1279.immersiveweapons.item.utility.BasicContainerItem;
 import com.anonymoushacker1279.immersiveweapons.item.utility.BlueprintItem;
 import com.anonymoushacker1279.immersiveweapons.item.utility.CustomBoatItem;
 import com.anonymoushacker1279.immersiveweapons.item.utility.CustomSpawnEggItem;
+import com.anonymoushacker1279.immersiveweapons.potion.BleedingEffect;
 import com.anonymoushacker1279.immersiveweapons.potion.MorphineEffect;
 import com.anonymoushacker1279.immersiveweapons.util.*;
 import com.anonymoushacker1279.immersiveweapons.world.food.FoodItemProperties;
@@ -182,6 +186,13 @@ public class DeferredRegistryHandler {
 	public static final RegistryObject<SimplePistolItem> FLINTLOCK_PISTOL = ITEMS.register("flintlock_pistol", () -> new SimplePistolItem(new Properties().tab(ITEM_GROUP).durability(499)));
 	public static final RegistryObject<SimpleShotgunItem> BLUNDERBUSS = ITEMS.register("blunderbuss", () -> new SimpleShotgunItem(new Properties().tab(ITEM_GROUP).durability(449)));
 	public static final RegistryObject<FlareGunItem> FLARE_GUN = ITEMS.register("flare_gun", () -> new FlareGunItem(new Properties().tab(ITEM_GROUP).durability(399)));
+	public static final RegistryObject<WoodGauntletItem> WOOD_GAUNTLET = ITEMS.register("wood_gauntlet", () -> new WoodGauntletItem(Tiers.WOOD, 2, -2.6f, new Properties().tab(ITEM_GROUP), 0.15f));
+	public static final RegistryObject<StoneGauntletItem> STONE_GAUNTLET = ITEMS.register("stone_gauntlet", () -> new StoneGauntletItem(Tiers.STONE, 2, -2.6f, new Properties().tab(ITEM_GROUP), 0.25f));
+	public static final RegistryObject<GoldGauntletItem> GOLD_GAUNTLET = ITEMS.register("gold_gauntlet", () -> new GoldGauntletItem(Tiers.GOLD, 2, -2.6f, new Properties().tab(ITEM_GROUP), 0.35f));
+	public static final RegistryObject<CopperGauntletItem> COPPER_GAUNTLET = ITEMS.register("copper_gauntlet", () -> new CopperGauntletItem(CustomItemMaterials.COPPER, 1, -2.6f, new Properties().tab(ITEM_GROUP), 0.45f));
+	public static final RegistryObject<IronGauntletItem> IRON_GAUNTLET = ITEMS.register("iron_gauntlet", () -> new IronGauntletItem(Tiers.IRON, 2, -2.6f, new Properties().tab(ITEM_GROUP), 0.55f));
+	public static final RegistryObject<DiamondGauntletItem> DIAMOND_GAUNTLET = ITEMS.register("diamond_gauntlet", () -> new DiamondGauntletItem(Tiers.DIAMOND, 2, -2.6f, new Properties().tab(ITEM_GROUP), 0.75f));
+	public static final RegistryObject<NetheriteGauntletItem> NETHERITE_GAUNTLET = ITEMS.register("netherite_gauntlet", () -> new NetheriteGauntletItem(Tiers.NETHERITE, 2, -2.6f, new Properties().tab(ITEM_GROUP), 0.85f));
 
 	// Items
 	public static final RegistryObject<Item> STONE_SHARD = ITEMS.register("stone_shard", () -> new Item(new Properties().tab(ITEM_GROUP)));
@@ -529,6 +540,7 @@ public class DeferredRegistryHandler {
 
 	// Particles
 	public static final RegistryObject<ParticleType<SmokeBombParticleData>> SMOKE_BOMB_PARTICLE_TYPE = PARTICLE_TYPES.register("smoke_bomb", SmokeBombParticleType::new);
+	public static final RegistryObject<ParticleType<BloodParticleData>> BLOOD_PARTICLE_TYPE = PARTICLE_TYPES.register("blood", BloodParticleType::new);
 
 	// Block Entities
 	public static final RegistryObject<BlockEntityType<BearTrapBlockEntity>> BEAR_TRAP_BLOCK_ENTITY = BLOCK_ENTITIES.register("bear_trap", () -> new BlockEntityType<>(BearTrapBlockEntity::new, Sets.newHashSet(BEAR_TRAP.get()), null));
@@ -547,6 +559,7 @@ public class DeferredRegistryHandler {
 
 	// Effects
 	public static final RegistryObject<MorphineEffect> MORPHINE_EFFECT = EFFECTS.register("morphine", () -> new MorphineEffect(MobEffectCategory.NEUTRAL, 3484189));
+	public static final RegistryObject<BleedingEffect> BLEEDING_EFFECT = EFFECTS.register("bleeding", () -> new BleedingEffect(MobEffectCategory.HARMFUL, 8392463));
 
 	// Structures
 	public static final RegistryObject<StructureFeature<NoneFeatureConfiguration>> ABANDONED_FACTORY_STRUCTURE = Structures.setupStructure("abandoned_factory", () -> (new AbandonedFactory(NoneFeatureConfiguration.CODEC)));

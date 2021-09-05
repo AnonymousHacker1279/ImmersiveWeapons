@@ -1,6 +1,6 @@
 package com.anonymoushacker1279.immersiveweapons.entity.projectile;
 
-import com.anonymoushacker1279.immersiveweapons.client.particle.SmokeBombParticleData;
+import com.anonymoushacker1279.immersiveweapons.client.particle.smokebomb.SmokeBombParticleData;
 import com.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
 import com.anonymoushacker1279.immersiveweapons.util.Config;
 import com.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;

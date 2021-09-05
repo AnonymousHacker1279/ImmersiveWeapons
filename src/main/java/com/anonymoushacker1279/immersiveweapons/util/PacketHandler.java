@@ -9,6 +9,7 @@ import com.anonymoushacker1279.immersiveweapons.entity.projectile.SmokeBombEntit
 import com.anonymoushacker1279.immersiveweapons.item.armor.CobaltArmorItem.CobaltArmorItemPacketHandler;
 import com.anonymoushacker1279.immersiveweapons.item.armor.TeslaArmorItem.TeslaArmorItemPacketHandler;
 import com.anonymoushacker1279.immersiveweapons.item.armor.VentusArmorItem.VentusArmorItemPacketHandler;
+import com.anonymoushacker1279.immersiveweapons.potion.BleedingEffect.BleedingEffectPacketHandler;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.fmllegacy.network.NetworkRegistry;
 import net.minecraftforge.fmllegacy.network.simple.SimpleChannel;
@@ -70,11 +71,17 @@ public class PacketHandler {
 				SmokeBombArrowEntityPacketHandler::decode,
 				SmokeBombArrowEntityPacketHandler::handle
 		);
-		PacketHandler.INSTANCE.registerMessage(networkId,
+		PacketHandler.INSTANCE.registerMessage(networkId++,
 				SpikeTrapBlockPacketHandler.class,
 				SpikeTrapBlockPacketHandler::encode,
 				SpikeTrapBlockPacketHandler::decode,
 				SpikeTrapBlockPacketHandler::handle
+		);
+		PacketHandler.INSTANCE.registerMessage(networkId,
+				BleedingEffectPacketHandler.class,
+				BleedingEffectPacketHandler::encode,
+				BleedingEffectPacketHandler::decode,
+				BleedingEffectPacketHandler::handle
 		);
 	}
 }
