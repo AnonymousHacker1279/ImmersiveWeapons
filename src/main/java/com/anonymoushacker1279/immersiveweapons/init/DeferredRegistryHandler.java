@@ -245,9 +245,11 @@ public class DeferredRegistryHandler {
 	public static final RegistryObject<BlueprintItem> SMALL_PARTS_BLUEPRINT = ITEMS.register("small_parts_blueprint", () -> new BlueprintItem(new Properties().tab(ITEM_GROUP).stacksTo(1)));
 	public static final RegistryObject<BlueprintItem> SMALL_PARTS_METAL_THROWABLE_BOMB_BLUEPRINT = ITEMS.register("small_parts_metal_throwable_bomb_blueprint", () -> new BlueprintItem(new Properties().tab(ITEM_GROUP).stacksTo(1)));
 	public static final RegistryObject<BlueprintItem> SMALL_PARTS_METAL_TOOL_BLUEPRINT = ITEMS.register("small_parts_metal_tool_blueprint", () -> new BlueprintItem(new Properties().tab(ITEM_GROUP).stacksTo(1)));
+	public static final RegistryObject<BlueprintItem> GAUNTLET_SCAFFOLDING_BLUEPRINT = ITEMS.register("gauntlet_scaffolding_blueprint", () -> new BlueprintItem(new Properties().tab(ITEM_GROUP).stacksTo(1)));
 	public static final RegistryObject<Item> SMALL_PARTS_IRON = ITEMS.register("small_parts_iron", () -> new Item(new Properties().tab(ITEM_GROUP)));
 	public static final RegistryObject<Item> SMALL_PARTS_METAL_THROWABLE_BOMB = ITEMS.register("small_parts_metal_throwable_bomb", () -> new Item(new Properties().tab(ITEM_GROUP)));
 	public static final RegistryObject<Item> SMALL_PARTS_METAL_TOOL = ITEMS.register("small_parts_metal_tool", () -> new Item(new Properties().tab(ITEM_GROUP)));
+	public static final RegistryObject<Item> GAUNTLET_SCAFFOLDING = ITEMS.register("gauntlet_scaffolding", () -> new Item(new Properties().tab(ITEM_GROUP)));
 	public static final RegistryObject<SmokeBombItem> SMOKE_BOMB = ITEMS.register("smoke_bomb", () -> new SmokeBombItem(new Properties().tab(ITEM_GROUP).stacksTo(16), 0));
 	public static final RegistryObject<SmokeBombItem> SMOKE_BOMB_RED = ITEMS.register("smoke_bomb_red", () -> new SmokeBombItem(new Properties().tab(ITEM_GROUP).stacksTo(16), 1));
 	public static final RegistryObject<SmokeBombItem> SMOKE_BOMB_GREEN = ITEMS.register("smoke_bomb_green", () -> new SmokeBombItem(new Properties().tab(ITEM_GROUP).stacksTo(16), 2));

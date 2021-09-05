@@ -41,7 +41,7 @@ public class TagsGenerator extends BlockTagsProvider {
 			} else if (block == DeferredRegistryHandler.SANDBAG.get()) {
 				tagStage = 2;
 			} else if (block == DeferredRegistryHandler.BULLETPROOF_GLASS.get()) {
-				tagStage = -1;
+				tagStage = 3;
 			}
 
 			if (block == DeferredRegistryHandler.BULLETPROOF_GLASS.get() || block == DeferredRegistryHandler.SMALL_PARTS_TABLE.get() || block == DeferredRegistryHandler.SANDBAG.get()) {
@@ -54,16 +54,20 @@ public class TagsGenerator extends BlockTagsProvider {
 				tier = 3;
 			}
 
-			switch (tagStage) {
-				case 1 -> tag(BlockTags.bind(BlockTags.MINEABLE_WITH_AXE.getName().toString())).add(block);
-				case 2 -> tag(BlockTags.bind(BlockTags.MINEABLE_WITH_SHOVEL.getName().toString())).add(block);
-				default -> tag(BlockTags.bind(BlockTags.MINEABLE_WITH_PICKAXE.getName().toString())).add(block);
+			if (tagStage != 3) {
+				switch (tagStage) {
+					case 1 -> tag(BlockTags.bind(BlockTags.MINEABLE_WITH_AXE.getName().toString())).add(block);
+					case 2 -> tag(BlockTags.bind(BlockTags.MINEABLE_WITH_SHOVEL.getName().toString())).add(block);
+					default -> tag(BlockTags.bind(BlockTags.MINEABLE_WITH_PICKAXE.getName().toString())).add(block);
+				}
 			}
 
-			switch (tier) {
-				case 2 -> tag(BlockTags.bind(BlockTags.NEEDS_IRON_TOOL.getName().toString())).add(block);
-				case 3 -> tag(BlockTags.bind(BlockTags.NEEDS_DIAMOND_TOOL.getName().toString())).add(block);
-				default -> tag(BlockTags.bind(BlockTags.NEEDS_STONE_TOOL.getName().toString())).add(block);
+			if (tier != 0) {
+				switch (tier) {
+					case 2 -> tag(BlockTags.bind(BlockTags.NEEDS_IRON_TOOL.getName().toString())).add(block);
+					case 3 -> tag(BlockTags.bind(BlockTags.NEEDS_DIAMOND_TOOL.getName().toString())).add(block);
+					default -> tag(BlockTags.bind(BlockTags.NEEDS_STONE_TOOL.getName().toString())).add(block);
+				}
 			}
 		}
 	}

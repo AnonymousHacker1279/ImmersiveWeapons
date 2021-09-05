@@ -9,7 +9,6 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.common.util.Lazy;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.function.Supplier;
@@ -39,7 +38,7 @@ public enum CustomArmorMaterials implements ArmorMaterial {
 	private final int enchantability;
 	private final SoundEvent soundEvent;
 	private final float toughness;
-	private final Lazy<Ingredient> repairMaterial;
+	private final Supplier<Ingredient> repairMaterial;
 	private final float knockbackResistance;
 
 	/**
@@ -60,7 +59,7 @@ public enum CustomArmorMaterials implements ArmorMaterial {
 		enchantability = enchantabilityIn;
 		soundEvent = equipSoundIn;
 		toughness = toughnessIn;
-		repairMaterial = () -> (Ingredient) repairMaterialSupplier;
+		repairMaterial = repairMaterialSupplier;
 		knockbackResistance = knockbackResistanceIn;
 	}
 

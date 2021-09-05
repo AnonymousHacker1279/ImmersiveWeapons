@@ -1,0 +1,23 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"pattern": [
+		"zzz",
+		"zzz",
+		"yyx"
+	],
+	"key": {
+		"x": {
+			"item": "immersiveweapons:blank_blueprint"
+		},
+		"y": {
+			"tag": "minecraft:planks"
+		},
+		"z": {
+			"item": "minecraft:stick"
+		}
+	},
+	"result": {
+		"item": "immersiveweapons:gauntlet_scaffolding_blueprint",
+		"count": 1
+	}
+}
