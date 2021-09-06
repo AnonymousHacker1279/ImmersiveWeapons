@@ -13,6 +13,7 @@ import com.anonymoushacker1279.immersiveweapons.client.renderer.entity.misc.Burn
 import com.anonymoushacker1279.immersiveweapons.client.renderer.entity.mob.*;
 import com.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
 import com.anonymoushacker1279.immersiveweapons.util.CustomWoodTypes;
+import com.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.MenuScreens;
@@ -32,6 +33,7 @@ import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fmlclient.registry.ClientRegistry;
 
+import java.util.Locale;
 import java.util.Objects;
 
 @EventBusSubscriber(modid = ImmersiveWeapons.MOD_ID, bus = Bus.MOD, value = Dist.CLIENT)
@@ -86,6 +88,8 @@ public class ClientModEventSubscriber {
 		mc.getItemColors().register((color1, color2) -> GrassColor.get(0.5d, 1.0d), DeferredRegistryHandler.PITFALL_ITEM.get());
 
 		event.enqueueWork(() -> Sheets.addWoodType(CustomWoodTypes.BURNED_OAK));
+
+		event.enqueueWork(ClientModEventSubscriber::registerPropertyGetters);
 	}
 
 	/**
@@ -132,5 +136,10 @@ public class ClientModEventSubscriber {
 	public static void onParticleFactoryRegistration(ParticleFactoryRegisterEvent event) {
 		mc.particleEngine.register(DeferredRegistryHandler.SMOKE_BOMB_PARTICLE_TYPE.get(), SmokeBombParticleFactory::new);
 		mc.particleEngine.register(DeferredRegistryHandler.BLOOD_PARTICLE_TYPE.get(), BloodParticleFactory::new);
+	}
+
+	private static void registerPropertyGetters() {
+		GeneralUtilities.registerPropertyGetter(DeferredRegistryHandler.IRON_GAUNTLET.get(), GeneralUtilities.prefix("gunslinger"),
+				(stack, clientLevel, livingEntity, i) -> stack.getDisplayName().getString().toLowerCase(Locale.ROOT).equals("[the gunslinger]") ? 1 : 0);
 	}
 }
