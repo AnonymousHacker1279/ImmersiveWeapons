@@ -19,6 +19,7 @@ A few things that will be the highlight of your experience:
 - Tiered Pikes, so you can stab someone from way over there
 - Flintlock Pistol and Blunderbuss, so you can shoot someone from way over there
 - New and Powerful Swords, so you can slice someone that isn't way over there
+- Tiered Gauntlets, so you can punch someone that isn't way over there, but not over there enough to use a sword
 - Medical Equipment, so you can survive getting stabbed, shot, and sliced
 - Environmental Traps, so you can stop people from coming over to stab, shoot, and slice you
 
