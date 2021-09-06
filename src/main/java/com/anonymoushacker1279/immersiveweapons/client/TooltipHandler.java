@@ -10,8 +10,9 @@ import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
 
-@Mod.EventBusSubscriber(modid = ImmersiveWeapons.MOD_ID, bus = Mod.EventBusSubscriber.Bus.FORGE, value = Dist.CLIENT)
+@Mod.EventBusSubscriber(modid = ImmersiveWeapons.MOD_ID, bus = Bus.FORGE, value = Dist.CLIENT)
 public class TooltipHandler {
 
 	/**
@@ -182,6 +183,36 @@ public class TooltipHandler {
 		}
 		if (stack.getItem() == DeferredRegistryHandler.SPIKE_TRAP_ITEM.get()) {
 			event.getToolTip().add(new TranslatableComponent("immersiveweapons.tooltip.spike_trap").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
+		}
+
+		// Gauntlets
+		if (stack.getItem() == DeferredRegistryHandler.WOOD_GAUNTLET.get()) {
+			event.getToolTip().add(new TranslatableComponent("immersiveweapons.tooltip.gauntlet").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
+			event.getToolTip().add(new TranslatableComponent("immersiveweapons.tooltip.wood_gauntlet").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
+		}
+		if (stack.getItem() == DeferredRegistryHandler.STONE_GAUNTLET.get()) {
+			event.getToolTip().add(new TranslatableComponent("immersiveweapons.tooltip.gauntlet").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
+			event.getToolTip().add(new TranslatableComponent("immersiveweapons.tooltip.stone_gauntlet").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
+		}
+		if (stack.getItem() == DeferredRegistryHandler.GOLD_GAUNTLET.get()) {
+			event.getToolTip().add(new TranslatableComponent("immersiveweapons.tooltip.gauntlet").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
+			event.getToolTip().add(new TranslatableComponent("immersiveweapons.tooltip.gold_gauntlet").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
+		}
+		if (stack.getItem() == DeferredRegistryHandler.COPPER_GAUNTLET.get()) {
+			event.getToolTip().add(new TranslatableComponent("immersiveweapons.tooltip.gauntlet").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
+			event.getToolTip().add(new TranslatableComponent("immersiveweapons.tooltip.copper_gauntlet").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
+		}
+		if (stack.getItem() == DeferredRegistryHandler.IRON_GAUNTLET.get()) {
+			event.getToolTip().add(new TranslatableComponent("immersiveweapons.tooltip.gauntlet").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
+			event.getToolTip().add(new TranslatableComponent("immersiveweapons.tooltip.iron_gauntlet").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
+		}
+		if (stack.getItem() == DeferredRegistryHandler.DIAMOND_GAUNTLET.get()) {
+			event.getToolTip().add(new TranslatableComponent("immersiveweapons.tooltip.gauntlet").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
+			event.getToolTip().add(new TranslatableComponent("immersiveweapons.tooltip.diamond_gauntlet").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
+		}
+		if (stack.getItem() == DeferredRegistryHandler.NETHERITE_GAUNTLET.get()) {
+			event.getToolTip().add(new TranslatableComponent("immersiveweapons.tooltip.gauntlet").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
+			event.getToolTip().add(new TranslatableComponent("immersiveweapons.tooltip.netherite_gauntlet").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
 		}
 
 		// Miscellaneous

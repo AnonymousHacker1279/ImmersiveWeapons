@@ -1,0 +1,116 @@
+{
+  "parent": "immersiveweapons:root",
+  "display": {
+    "icon": {
+      "item": "immersiveweapons:iron_gauntlet",
+      "nbt": "{Damage:0}"
+    },
+    "title": {
+      "translate": "advancements.immersiveweapons.gauntlet.title"
+    },
+    "description": {
+      "translate": "advancements.immersiveweapons.gauntlet.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "hold": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "immersiveweapons:wood_gauntlet"
+            ]
+          }
+        ]
+      }
+    },
+    "hold1": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "immersiveweapons:stone_gauntlet"
+            ]
+          }
+        ]
+      }
+    },
+    "hold2": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "immersiveweapons:gold_gauntlet"
+            ]
+          }
+        ]
+      }
+    },
+    "hold3": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "immersiveweapons:copper_gauntlet"
+            ]
+          }
+        ]
+      }
+    },
+    "hold4": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "immersiveweapons:iron_gauntlet"
+            ]
+          }
+        ]
+      }
+    },
+    "hold5": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "immersiveweapons:diamond_gauntlet"
+            ]
+          }
+        ]
+      }
+    },
+    "hold6": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "immersiveweapons:netherite_gauntlet"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "hold",
+      "hold1",
+      "hold2",
+      "hold3",
+      "hold4",
+      "hold5",
+      "hold6"
+    ]
+  ]
+}
