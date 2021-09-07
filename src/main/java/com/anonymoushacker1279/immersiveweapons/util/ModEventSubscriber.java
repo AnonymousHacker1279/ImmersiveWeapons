@@ -24,6 +24,7 @@ public class ModEventSubscriber {
 	public static void onRegisterItems(RegistryEvent.Register<Item> event) {
 		DeferredRegistryHandler.COPPER_ARROW.get().setItemReference(DeferredRegistryHandler.COPPER_ARROW);
 		DeferredRegistryHandler.IRON_ARROW.get().setItemReference(DeferredRegistryHandler.IRON_ARROW);
+		DeferredRegistryHandler.COBALT_ARROW.get().setItemReference(DeferredRegistryHandler.COBALT_ARROW);
 		DeferredRegistryHandler.DIAMOND_ARROW.get().setItemReference(DeferredRegistryHandler.DIAMOND_ARROW);
 		DeferredRegistryHandler.GOLD_ARROW.get().setItemReference(DeferredRegistryHandler.GOLD_ARROW);
 		DeferredRegistryHandler.STONE_ARROW.get().setItemReference(DeferredRegistryHandler.STONE_ARROW);
@@ -40,6 +41,7 @@ public class ModEventSubscriber {
 		DeferredRegistryHandler.WOOD_MUSKET_BALL.get().setItemReference(DeferredRegistryHandler.WOOD_MUSKET_BALL);
 		DeferredRegistryHandler.STONE_MUSKET_BALL.get().setItemReference(DeferredRegistryHandler.STONE_MUSKET_BALL);
 		DeferredRegistryHandler.IRON_MUSKET_BALL.get().setItemReference(DeferredRegistryHandler.IRON_MUSKET_BALL);
+		DeferredRegistryHandler.COBALT_MUSKET_BALL.get().setItemReference(DeferredRegistryHandler.COBALT_MUSKET_BALL);
 		DeferredRegistryHandler.GOLD_MUSKET_BALL.get().setItemReference(DeferredRegistryHandler.GOLD_MUSKET_BALL);
 		DeferredRegistryHandler.DIAMOND_MUSKET_BALL.get().setItemReference(DeferredRegistryHandler.DIAMOND_MUSKET_BALL);
 		DeferredRegistryHandler.NETHERITE_MUSKET_BALL.get().setItemReference(DeferredRegistryHandler.NETHERITE_MUSKET_BALL);

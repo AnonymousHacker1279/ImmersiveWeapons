@@ -103,6 +103,42 @@ public class CustomArrowEntity {
 		}
 	}
 
+	public static class CobaltArrowEntity extends AbstractCustomArrowEntity {
+
+		/**
+		 * Constructor for CobaltArrowEntity.
+		 * @param type the <code>EntityType</code> instance; must extend AbstractArrowEntity
+		 * @param world the <code>World</code> the entity is in
+		 */
+		public CobaltArrowEntity(EntityType<? extends AbstractArrow> type, Level world) {
+			super(type, world);
+			referenceItem = DeferredRegistryHandler.COBALT_ARROW.get();
+		}
+
+		/**
+		 * Constructor for CobaltArrowEntity.
+		 * @param shooter the <code>LivingEntity</code> shooting the entity
+		 * @param world the <code>World</code> the entity is in
+		 * @param referenceItemIn the reference item
+		 */
+		public CobaltArrowEntity(LivingEntity shooter, Level world, Item referenceItemIn) {
+			super(DeferredRegistryHandler.COBALT_ARROW_ENTITY.get(), shooter, world);
+			referenceItem = referenceItemIn;
+		}
+
+		/**
+		 * Constructor for CobaltArrowEntity.
+		 * @param worldIn the <code>World</code> the entity is in
+		 * @param x the X position
+		 * @param y the Y position
+		 * @param z the Z position
+		 */
+		public CobaltArrowEntity(Level worldIn, double x, double y, double z) {
+			super(DeferredRegistryHandler.COBALT_ARROW_ENTITY.get(), worldIn, x, y, z);
+			referenceItem = DeferredRegistryHandler.COBALT_ARROW.get();
+		}
+	}
+
 	public static class DiamondArrowEntity extends AbstractCustomArrowEntity {
 
 		/**

@@ -231,6 +231,59 @@ public class BulletEntity {
 		}
 	}
 
+	public static class CobaltBulletEntity extends AbstractBulletEntity {
+		/**
+		 * Constructor for CobaltBulletEntity.
+		 * @param entityType the <code>EntityType</code> instance
+		 * @param world the <code>World</code> the entity is in
+		 * @param knockbackStrength the bullet knockback strength
+		 */
+		public CobaltBulletEntity(EntityType<CobaltBulletEntity> entityType, Level world, int knockbackStrength) {
+			super(entityType, world);
+			this.knockbackStrength = knockbackStrength;
+			referenceItem = DeferredRegistryHandler.COBALT_MUSKET_BALL.get();
+		}
+
+		/**
+		 * Constructor for CobaltBulletEntity.
+		 * @param shooter the <code>LivingEntity</code> shooting the entity
+		 * @param world the <code>World</code> the entity is in
+		 * @param referenceItemIn the reference item
+		 */
+		public CobaltBulletEntity(LivingEntity shooter, Level world, Item referenceItemIn) {
+			super(DeferredRegistryHandler.COBALT_BULLET_ENTITY.get(), shooter, world);
+			referenceItem = referenceItemIn;
+		}
+
+		/**
+		 * Fire the entity from a position with a velocity and inaccuracy.
+		 * @param x the X position
+		 * @param y the Y position
+		 * @param z the Z position
+		 * @param velocity the velocity
+		 * @param inaccuracy the inaccuracy modifier
+		 */
+		@Override
+		public void shoot(double x, double y, double z, float velocity, float inaccuracy) {
+			Vec3 vector3d = (new Vec3(x, y, z)).normalize().add(random.nextGaussian() * 0.0025F * (GeneralUtilities.getRandomNumber(0.2f, 1.1f)), 0.00025F * (GeneralUtilities.getRandomNumber(0.2f, 1.1f)), random.nextGaussian() * 0.0025F).scale(velocity);
+			setDeltaMovement(vector3d);
+			double horizontalDistanceSqr = vector3d.horizontalDistanceSqr();
+			float yRot = (float) (Mth.atan2(vector3d.x, vector3d.z) * (180F / (float) Math.PI));
+			float xRot = (float) (Mth.atan2(vector3d.y, horizontalDistanceSqr) * (180F / (float) Math.PI));
+			yRotO = yRot;
+			xRotO = xRot;
+		}
+
+		/**
+		 * Get the movement modifier.
+		 * @return double
+		 */
+		@Override
+		public double getMovementModifier() {
+			return 0.0355d;
+		}
+	}
+
 	public static class GoldBulletEntity extends AbstractBulletEntity {
 		/**
 		 * Constructor for GoldBulletEntity.

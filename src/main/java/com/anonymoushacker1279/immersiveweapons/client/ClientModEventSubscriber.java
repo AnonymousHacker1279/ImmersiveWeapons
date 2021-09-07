@@ -100,6 +100,7 @@ public class ClientModEventSubscriber {
 	public static void entityRenderers(EntityRenderersEvent.RegisterRenderers event) {
 		event.registerEntityRenderer(DeferredRegistryHandler.COPPER_ARROW_ENTITY.get(), CopperArrowRenderer::new);
 		event.registerEntityRenderer(DeferredRegistryHandler.IRON_ARROW_ENTITY.get(), IronArrowRenderer::new);
+		event.registerEntityRenderer(DeferredRegistryHandler.COBALT_ARROW_ENTITY.get(), CobaltArrowRenderer::new);
 		event.registerEntityRenderer(DeferredRegistryHandler.DIAMOND_ARROW_ENTITY.get(), DiamondArrowRenderer::new);
 		event.registerEntityRenderer(DeferredRegistryHandler.GOLD_ARROW_ENTITY.get(), GoldArrowRenderer::new);
 		event.registerEntityRenderer(DeferredRegistryHandler.STONE_ARROW_ENTITY.get(), StoneArrowRenderer::new);
@@ -110,6 +111,7 @@ public class ClientModEventSubscriber {
 		event.registerEntityRenderer(DeferredRegistryHandler.WOOD_BULLET_ENTITY.get(), WoodBulletRenderer::new);
 		event.registerEntityRenderer(DeferredRegistryHandler.STONE_BULLET_ENTITY.get(), StoneBulletRenderer::new);
 		event.registerEntityRenderer(DeferredRegistryHandler.IRON_BULLET_ENTITY.get(), IronBulletRenderer::new);
+		event.registerEntityRenderer(DeferredRegistryHandler.COBALT_BULLET_ENTITY.get(), CobaltBulletRenderer::new);
 		event.registerEntityRenderer(DeferredRegistryHandler.GOLD_BULLET_ENTITY.get(), GoldBulletRenderer::new);
 		event.registerEntityRenderer(DeferredRegistryHandler.DIAMOND_BULLET_ENTITY.get(), DiamondBulletRenderer::new);
 		event.registerEntityRenderer(DeferredRegistryHandler.NETHERITE_BULLET_ENTITY.get(), NetheriteBulletRenderer::new);
