@@ -38,6 +38,15 @@ public class DispenserBehaviorRegistry implements DispenseItemBehavior {
 				return arrowEntity;
 			}
 		});
+		DispenserBlock.registerBehavior(DeferredRegistryHandler.COBALT_ARROW.get(), new AbstractProjectileDispenseBehavior() {
+			@Override
+			protected @NotNull Projectile getProjectile(@NotNull Level worldIn, @NotNull Position position, @NotNull ItemStack stackIn) {
+				CobaltArrowEntity arrowEntity = new CobaltArrowEntity(worldIn, position.x(), position.y(), position.z());
+				arrowEntity.pickup = AbstractArrow.Pickup.ALLOWED;
+				arrowEntity.setBaseDamage(2.55d);
+				return arrowEntity;
+			}
+		});
 		DispenserBlock.registerBehavior(DeferredRegistryHandler.DIAMOND_ARROW.get(), new AbstractProjectileDispenseBehavior() {
 			@Override
 			protected @NotNull Projectile getProjectile(@NotNull Level worldIn, @NotNull Position position, @NotNull ItemStack stackIn) {
@@ -222,8 +231,9 @@ public class DispenserBehaviorRegistry implements DispenseItemBehavior {
 
 	/**
 	 * Custom dispense behavior.
+	 *
 	 * @param iBlockSource the <code>IBlockSource</code> instance
-	 * @param itemStack the <code>ItemStack</code> being dispensed
+	 * @param itemStack    the <code>ItemStack</code> being dispensed
 	 * @return ItemStack
 	 */
 	@Override

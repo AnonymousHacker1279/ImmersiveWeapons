@@ -22,6 +22,7 @@ public class BloodParticleData extends AbstractParticleData {
 					Codec.DOUBLE.fieldOf("diameter").forGetter(d -> d.diameter)
 			).apply(instance, BloodParticleData::new)
 	);
+	@SuppressWarnings("deprecation")
 	static final Deserializer<BloodParticleData> DESERIALIZER = new Deserializer<>() {
 
 		/**
@@ -76,7 +77,8 @@ public class BloodParticleData extends AbstractParticleData {
 
 	/**
 	 * Constructor for BloodParticleData.
-	 * @param tint a <code>Color</code> instance
+	 *
+	 * @param tint     a <code>Color</code> instance
 	 * @param diameter the particle diameter
 	 */
 	public BloodParticleData(Color tint, double diameter) {
@@ -87,7 +89,8 @@ public class BloodParticleData extends AbstractParticleData {
 
 	/**
 	 * Constructor for BloodParticleData.
-	 * @param tintRGB an integer for RGB tinting
+	 *
+	 * @param tintRGB  an integer for RGB tinting
 	 * @param diameter the particle diameter
 	 */
 	private BloodParticleData(int tintRGB, double diameter) {
@@ -98,6 +101,7 @@ public class BloodParticleData extends AbstractParticleData {
 
 	/**
 	 * Get the particle type.
+	 *
 	 * @return ParticleType extending BloodParticleData
 	 */
 	@Override

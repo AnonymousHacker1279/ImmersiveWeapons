@@ -29,6 +29,7 @@ public class SpotlightBlock extends HorizontalDirectionalBlock implements Simple
 
 	/**
 	 * Constructor for SpotlightBlock.
+	 *
 	 * @param properties the <code>Properties</code> of the block
 	 */
 	public SpotlightBlock(Properties properties) {
@@ -38,6 +39,7 @@ public class SpotlightBlock extends HorizontalDirectionalBlock implements Simple
 
 	/**
 	 * Create the BlockState definition.
+	 *
 	 * @param builder the <code>StateContainer.Builder</code> of the block
 	 */
 	@Override
@@ -47,11 +49,13 @@ public class SpotlightBlock extends HorizontalDirectionalBlock implements Simple
 
 	/**
 	 * Determines if the block can exist in a given state.
-	 * @param state the <code>BlockState</code> of the block
+	 *
+	 * @param state  the <code>BlockState</code> of the block
 	 * @param reader the <code>IWorldReader</code> for the block
-	 * @param pos the <code>BlocKPos</code> the block is at
+	 * @param pos    the <code>BlocKPos</code> the block is at
 	 * @return boolean
 	 */
+	@SuppressWarnings("deprecation")
 	@Override
 	public boolean canSurvive(BlockState state, LevelReader reader, BlockPos pos) {
 		Direction direction = state.getValue(FACING);
@@ -62,14 +66,16 @@ public class SpotlightBlock extends HorizontalDirectionalBlock implements Simple
 
 	/**
 	 * Updates the block when required.
-	 * @param stateIn the <code>BlockState</code> of the block
-	 * @param facing the <code>Direction</code> the block is facing
+	 *
+	 * @param stateIn     the <code>BlockState</code> of the block
+	 * @param facing      the <code>Direction</code> the block is facing
 	 * @param facingState the <code>BlockState</code> of the facing block
-	 * @param worldIn the <code>IWorld</code> the block is in
-	 * @param currentPos the <code>BlockPos</code> the block is at
-	 * @param facingPos the <code>BlocKPos</code> the facing block is at
+	 * @param worldIn     the <code>IWorld</code> the block is in
+	 * @param currentPos  the <code>BlockPos</code> the block is at
+	 * @param facingPos   the <code>BlocKPos</code> the facing block is at
 	 * @return BlockState
 	 */
+	@SuppressWarnings("deprecation")
 	@Override
 	public @NotNull BlockState updateShape(BlockState stateIn, @NotNull Direction facing, @NotNull BlockState facingState, @NotNull LevelAccessor worldIn, @NotNull BlockPos currentPos, @NotNull BlockPos facingPos) {
 		if (stateIn.getValue(WATERLOGGED)) {
@@ -86,9 +92,11 @@ public class SpotlightBlock extends HorizontalDirectionalBlock implements Simple
 	/**
 	 * Set FluidState properties.
 	 * Allows the block to exhibit waterlogged behavior.
+	 *
 	 * @param state the <code>BlockState</code> of the block
 	 * @return FluidState
 	 */
+	@SuppressWarnings("deprecation")
 	@Override
 	public @NotNull FluidState getFluidState(BlockState state) {
 		return state.getValue(WATERLOGGED) ? Fluids.WATER.getSource(false) : super.getFluidState(state);
@@ -96,13 +104,15 @@ public class SpotlightBlock extends HorizontalDirectionalBlock implements Simple
 
 	/**
 	 * Runs when neighboring blocks change state.
-	 * @param state the <code>BlockState</code> of the block
-	 * @param worldIn the <code>World</code> the block is in
-	 * @param pos the <code>BlockPos</code> the block is at
-	 * @param blockIn the <code>Block</code> that is changing
-	 * @param fromPos the <code>BlockPos</code> of the changing block
+	 *
+	 * @param state    the <code>BlockState</code> of the block
+	 * @param worldIn  the <code>World</code> the block is in
+	 * @param pos      the <code>BlockPos</code> the block is at
+	 * @param blockIn  the <code>Block</code> that is changing
+	 * @param fromPos  the <code>BlockPos</code> of the changing block
 	 * @param isMoving determines if the block is moving
 	 */
+	@SuppressWarnings("deprecation")
 	@Override
 	public void neighborChanged(@NotNull BlockState state, Level worldIn, @NotNull BlockPos pos, @NotNull Block blockIn, @NotNull BlockPos fromPos, boolean isMoving) {
 		if (!worldIn.isClientSide) {
@@ -119,12 +129,14 @@ public class SpotlightBlock extends HorizontalDirectionalBlock implements Simple
 
 	/**
 	 * Runs when neighboring blocks change state.
-	 * @param state the <code>BlockState</code> of the block
-	 * @param worldIn the <code>World</code> the block is in
-	 * @param pos the <code>BlockPos</code> the block is at
+	 *
+	 * @param state    the <code>BlockState</code> of the block
+	 * @param worldIn  the <code>World</code> the block is in
+	 * @param pos      the <code>BlockPos</code> the block is at
 	 * @param oldState the <code>BlockState</code> the block previously had
 	 * @param isMoving determines if the block is moving
 	 */
+	@SuppressWarnings("deprecation")
 	@Override
 	public void onPlace(BlockState state, @NotNull Level worldIn, @NotNull BlockPos pos, BlockState oldState, boolean isMoving) {
 		if (!oldState.is(state.getBlock())) {
@@ -136,11 +148,13 @@ public class SpotlightBlock extends HorizontalDirectionalBlock implements Simple
 
 	/**
 	 * Runs once every tick
-	 * @param state the <code>BlockState</code> of the block
+	 *
+	 * @param state   the <code>BlockState</code> of the block
 	 * @param worldIn the <code>ServerWorld</code> of the block
-	 * @param pos the <code>BlockPos</code> the block is at
-	 * @param rand a <code>Random</code> instance
+	 * @param pos     the <code>BlockPos</code> the block is at
+	 * @param rand    a <code>Random</code> instance
 	 */
+	@SuppressWarnings("deprecation")
 	@Override
 	public void tick(BlockState state, @NotNull ServerLevel worldIn, @NotNull BlockPos pos, @NotNull Random rand) {
 		if (state.getValue(LIT) && !worldIn.hasNeighborSignal(pos)) {
@@ -150,9 +164,10 @@ public class SpotlightBlock extends HorizontalDirectionalBlock implements Simple
 
 	/**
 	 * Get the light value of the block.
-	 * @param state the <code>BlockState</code> of the block
+	 *
+	 * @param state  the <code>BlockState</code> of the block
 	 * @param reader the <code>IBlockReader</code> of the block
-	 * @param pos the <code>BlockPos</code> the block is at
+	 * @param pos    the <code>BlockPos</code> the block is at
 	 * @return int
 	 */
 	@Override

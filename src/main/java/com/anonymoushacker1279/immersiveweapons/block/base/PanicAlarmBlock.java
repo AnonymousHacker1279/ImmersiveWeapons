@@ -39,6 +39,7 @@ public class PanicAlarmBlock extends HorizontalDirectionalBlock implements Simpl
 
 	/**
 	 * Constructor for PanicAlarmBlock.
+	 *
 	 * @param properties the <code>Properties</code> of the block
 	 */
 	public PanicAlarmBlock(Properties properties) {
@@ -48,12 +49,14 @@ public class PanicAlarmBlock extends HorizontalDirectionalBlock implements Simpl
 
 	/**
 	 * Set the shape of the block.
-	 * @param state the <code>BlockState</code> of the block
-	 * @param reader the <code>IBlockReader</code> for the block
-	 * @param pos the <code>BlockPos</code> the block is at
+	 *
+	 * @param state            the <code>BlockState</code> of the block
+	 * @param reader           the <code>IBlockReader</code> for the block
+	 * @param pos              the <code>BlockPos</code> the block is at
 	 * @param selectionContext the <code>ISelectionContext</code> of the block
 	 * @return VoxelShape
 	 */
+	@SuppressWarnings("deprecation")
 	@Override
 	public @NotNull VoxelShape getShape(BlockState state, @NotNull BlockGetter reader, @NotNull BlockPos pos, @NotNull CollisionContext selectionContext) {
 		Vec3 vector3d = state.getOffset(reader, pos);
@@ -67,6 +70,7 @@ public class PanicAlarmBlock extends HorizontalDirectionalBlock implements Simpl
 
 	/**
 	 * Create the BlockState definition.
+	 *
 	 * @param builder the <code>StateContainer.Builder</code> of the block
 	 */
 	@Override
@@ -76,7 +80,8 @@ public class PanicAlarmBlock extends HorizontalDirectionalBlock implements Simpl
 
 	/**
 	 * Create a block entity for the block.
-	 * @param blockPos the <code>BlockPos</code> the block is at
+	 *
+	 * @param blockPos   the <code>BlockPos</code> the block is at
 	 * @param blockState the <code>BlockState</code> of the block
 	 * @return BlockEntity
 	 */
@@ -87,10 +92,11 @@ public class PanicAlarmBlock extends HorizontalDirectionalBlock implements Simpl
 
 	/**
 	 * Get the ticker for the block.
-	 * @param level the <code>Level</code> the block is in
-	 * @param blockState the <code>BlockState</code> of the block
+	 *
+	 * @param level           the <code>Level</code> the block is in
+	 * @param blockState      the <code>BlockState</code> of the block
 	 * @param blockEntityType the <code>BlockEntityType</code> to get the ticker of
-	 * @param <T> the type extending BlockEntity
+	 * @param <T>             the type extending BlockEntity
 	 * @return BlockEntityTicker
 	 */
 	@Override
@@ -101,6 +107,7 @@ public class PanicAlarmBlock extends HorizontalDirectionalBlock implements Simpl
 	/**
 	 * Set placement properties.
 	 * Sets the facing direction of the block for placement.
+	 *
 	 * @param context the <code>BlockItemUseContext</code> during placement
 	 * @return BlockState
 	 */
@@ -112,9 +119,11 @@ public class PanicAlarmBlock extends HorizontalDirectionalBlock implements Simpl
 	/**
 	 * Set FluidState properties.
 	 * Allows the block to exhibit waterlogged behavior.
+	 *
 	 * @param state the <code>BlockState</code> of the block
 	 * @return FluidState
 	 */
+	@SuppressWarnings("deprecation")
 	@Override
 	public @NotNull FluidState getFluidState(BlockState state) {
 		return state.getValue(WATERLOGGED) ? Fluids.WATER.getSource(false) : super.getFluidState(state);
@@ -122,13 +131,15 @@ public class PanicAlarmBlock extends HorizontalDirectionalBlock implements Simpl
 
 	/**
 	 * Runs when neighboring blocks change state.
-	 * @param state the <code>BlockState</code> of the block
-	 * @param worldIn the <code>World</code> the block is in
-	 * @param pos the <code>BlockPos</code> the block is at
-	 * @param blockIn the <code>Block</code> that is changing
-	 * @param fromPos the <code>BlockPos</code> of the changing block
+	 *
+	 * @param state    the <code>BlockState</code> of the block
+	 * @param worldIn  the <code>World</code> the block is in
+	 * @param pos      the <code>BlockPos</code> the block is at
+	 * @param blockIn  the <code>Block</code> that is changing
+	 * @param fromPos  the <code>BlockPos</code> of the changing block
 	 * @param isMoving determines if the block is moving
 	 */
+	@SuppressWarnings("deprecation")
 	@Override
 	public void neighborChanged(@NotNull BlockState state, Level worldIn, @NotNull BlockPos pos, @NotNull Block blockIn, @NotNull BlockPos fromPos, boolean isMoving) {
 		if (!worldIn.isClientSide) {
@@ -139,12 +150,14 @@ public class PanicAlarmBlock extends HorizontalDirectionalBlock implements Simpl
 
 	/**
 	 * Runs when neighboring blocks change state.
-	 * @param state the <code>BlockState</code> of the block
-	 * @param worldIn the <code>World</code> the block is in
-	 * @param pos the <code>BlockPos</code> the block is at
+	 *
+	 * @param state    the <code>BlockState</code> of the block
+	 * @param worldIn  the <code>World</code> the block is in
+	 * @param pos      the <code>BlockPos</code> the block is at
 	 * @param oldState the <code>BlockState</code> the block previously had
 	 * @param isMoving determines if the block is moving
 	 */
+	@SuppressWarnings("deprecation")
 	@Override
 	public void onPlace(BlockState state, @NotNull Level worldIn, @NotNull BlockPos pos, BlockState oldState, boolean isMoving) {
 		if (!oldState.is(state.getBlock())) {
@@ -158,11 +171,13 @@ public class PanicAlarmBlock extends HorizontalDirectionalBlock implements Simpl
 
 	/**
 	 * Runs once every tick
-	 * @param state the <code>BlockState</code> of the block
+	 *
+	 * @param state   the <code>BlockState</code> of the block
 	 * @param worldIn the <code>ServerWorld</code> of the block
-	 * @param pos the <code>BlockPos</code> the block is at
-	 * @param rand a <code>Random</code> instance
+	 * @param pos     the <code>BlockPos</code> the block is at
+	 * @param rand    a <code>Random</code> instance
 	 */
+	@SuppressWarnings("deprecation")
 	@Override
 	public void tick(@NotNull BlockState state, ServerLevel worldIn, @NotNull BlockPos pos, @NotNull Random rand) {
 		if (!worldIn.isClientSide) {
@@ -173,8 +188,9 @@ public class PanicAlarmBlock extends HorizontalDirectionalBlock implements Simpl
 
 	/**
 	 * Plays a sound when powered.
+	 *
 	 * @param worldIn the <code>World</code> the block is at
-	 * @param pos the <code>BlockPos</code> the block is at
+	 * @param pos     the <code>BlockPos</code> the block is at
 	 */
 	private void playSiren(Level worldIn, BlockPos pos) {
 		BlockState state = worldIn.getBlockState(pos);
@@ -203,14 +219,16 @@ public class PanicAlarmBlock extends HorizontalDirectionalBlock implements Simpl
 	/**
 	 * Runs when the block is activated.
 	 * Allows the block to respond to user interaction.
-	 * @param state the <code>BlockState</code> of the block
-	 * @param worldIn the <code>World</code> the block is in
-	 * @param pos the <code>BlockPos</code> the block is at
-	 * @param player the <code>PlayerEntity</code> interacting with the block
-	 * @param handIn the <code>Hand</code> the PlayerEntity used
+	 *
+	 * @param state               the <code>BlockState</code> of the block
+	 * @param worldIn             the <code>World</code> the block is in
+	 * @param pos                 the <code>BlockPos</code> the block is at
+	 * @param player              the <code>PlayerEntity</code> interacting with the block
+	 * @param handIn              the <code>Hand</code> the PlayerEntity used
 	 * @param blockRayTraceResult the <code>BlockRayTraceResult</code> of the interaction
 	 * @return ActionResultType
 	 */
+	@SuppressWarnings("deprecation")
 	@Override
 	public @NotNull InteractionResult use(@NotNull BlockState state, Level worldIn, @NotNull BlockPos pos, @NotNull Player player, @NotNull InteractionHand handIn, @NotNull BlockHitResult blockRayTraceResult) {
 		BlockEntity tileEntity = worldIn.getBlockEntity(pos);

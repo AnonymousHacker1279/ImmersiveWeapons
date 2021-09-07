@@ -22,6 +22,7 @@ public class SmokeBombParticleData extends AbstractParticleData {
 					Codec.DOUBLE.fieldOf("diameter").forGetter(d -> d.diameter)
 			).apply(instance, SmokeBombParticleData::new)
 	);
+	@SuppressWarnings("deprecation")
 	static final Deserializer<SmokeBombParticleData> DESERIALIZER = new Deserializer<>() {
 
 		/**
@@ -76,7 +77,8 @@ public class SmokeBombParticleData extends AbstractParticleData {
 
 	/**
 	 * Constructor for SmokeBombParticleData.
-	 * @param tint a <code>Color</code> instance
+	 *
+	 * @param tint     a <code>Color</code> instance
 	 * @param diameter the particle diameter
 	 */
 	public SmokeBombParticleData(Color tint, double diameter) {
@@ -87,7 +89,8 @@ public class SmokeBombParticleData extends AbstractParticleData {
 
 	/**
 	 * Constructor for SmokeBombParticleData.
-	 * @param tintRGB an integer for RGB tinting
+	 *
+	 * @param tintRGB  an integer for RGB tinting
 	 * @param diameter the particle diameter
 	 */
 	private SmokeBombParticleData(int tintRGB, double diameter) {
@@ -98,6 +101,7 @@ public class SmokeBombParticleData extends AbstractParticleData {
 
 	/**
 	 * Get the particle type.
+	 *
 	 * @return ParticleType extending SmokeBombParticleData
 	 */
 	@Override

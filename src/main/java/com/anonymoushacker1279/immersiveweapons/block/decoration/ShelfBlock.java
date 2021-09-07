@@ -38,6 +38,7 @@ public class ShelfBlock extends HorizontalDirectionalBlock implements EntityBloc
 
 	/**
 	 * Constructor for ShelfBlock.
+	 *
 	 * @param properties the <code>Properties</code> of the block
 	 */
 	public ShelfBlock(Properties properties) {
@@ -47,12 +48,14 @@ public class ShelfBlock extends HorizontalDirectionalBlock implements EntityBloc
 
 	/**
 	 * Set the shape of the block.
-	 * @param state the <code>BlockState</code> of the block
-	 * @param reader the <code>IBlockReader</code> for the block
-	 * @param pos the <code>BlockPos</code> the block is at
+	 *
+	 * @param state            the <code>BlockState</code> of the block
+	 * @param reader           the <code>IBlockReader</code> for the block
+	 * @param pos              the <code>BlockPos</code> the block is at
 	 * @param selectionContext the <code>ISelectionContext</code> of the block
 	 * @return VoxelShape
 	 */
+	@SuppressWarnings("deprecation")
 	@Override
 	public @NotNull VoxelShape getShape(BlockState state, @NotNull BlockGetter reader, @NotNull BlockPos pos, @NotNull CollisionContext selectionContext) {
 		Vec3 vector3d = state.getOffset(reader, pos);
@@ -66,6 +69,7 @@ public class ShelfBlock extends HorizontalDirectionalBlock implements EntityBloc
 
 	/**
 	 * Create the BlockState definition.
+	 *
 	 * @param builder the <code>StateContainer.Builder</code> of the block
 	 */
 	@Override
@@ -76,6 +80,7 @@ public class ShelfBlock extends HorizontalDirectionalBlock implements EntityBloc
 	/**
 	 * Set placement properties.
 	 * Sets the facing direction of the block for placement.
+	 *
 	 * @param context the <code>BlockItemUseContext</code> during placement
 	 * @return BlockState
 	 */
@@ -87,9 +92,11 @@ public class ShelfBlock extends HorizontalDirectionalBlock implements EntityBloc
 	/**
 	 * Set FluidState properties.
 	 * Allows the block to exhibit waterlogged behavior.
+	 *
 	 * @param state the <code>BlockState</code> of the block
 	 * @return FluidState
 	 */
+	@SuppressWarnings("deprecation")
 	@Override
 	public @NotNull FluidState getFluidState(BlockState state) {
 		return state.getValue(WATERLOGGED) ? Fluids.WATER.getSource(false) : super.getFluidState(state);
@@ -97,7 +104,8 @@ public class ShelfBlock extends HorizontalDirectionalBlock implements EntityBloc
 
 	/**
 	 * Create a block entity for the block.
-	 * @param blockPos the <code>BlockPos</code> the block is at
+	 *
+	 * @param blockPos   the <code>BlockPos</code> the block is at
 	 * @param blockState the <code>BlockState</code> of the block
 	 * @return BlockEntity
 	 */
@@ -109,14 +117,16 @@ public class ShelfBlock extends HorizontalDirectionalBlock implements EntityBloc
 	/**
 	 * Runs when the block is activated.
 	 * Allows the block to respond to user interaction.
-	 * @param state the <code>BlockState</code> of the block
-	 * @param worldIn the <code>World</code> the block is in
-	 * @param pos the <code>BlockPos</code> the block is at
-	 * @param player the <code>PlayerEntity</code> interacting with the block
-	 * @param handIn the <code>Hand</code> the PlayerEntity used
+	 *
+	 * @param state               the <code>BlockState</code> of the block
+	 * @param worldIn             the <code>World</code> the block is in
+	 * @param pos                 the <code>BlockPos</code> the block is at
+	 * @param player              the <code>PlayerEntity</code> interacting with the block
+	 * @param handIn              the <code>Hand</code> the PlayerEntity used
 	 * @param blockRayTraceResult the <code>BlockRayTraceResult</code> of the interaction
 	 * @return ActionResultType
 	 */
+	@SuppressWarnings("deprecation")
 	@Override
 	public @NotNull InteractionResult use(@NotNull BlockState state, Level worldIn, @NotNull BlockPos pos, @NotNull Player player, @NotNull InteractionHand handIn, @NotNull BlockHitResult blockRayTraceResult) {
 		BlockEntity blockEntity = worldIn.getBlockEntity(pos);
@@ -137,12 +147,14 @@ public class ShelfBlock extends HorizontalDirectionalBlock implements EntityBloc
 
 	/**
 	 * Runs when the block is removed.
-	 * @param state the <code>BlockState</code> of the block
-	 * @param worldIn the <code>World</code> the block is in
-	 * @param pos the <code>BlockPos</code> the block is at
+	 *
+	 * @param state    the <code>BlockState</code> of the block
+	 * @param worldIn  the <code>World</code> the block is in
+	 * @param pos      the <code>BlockPos</code> the block is at
 	 * @param newState the <code>BlockState</code> the block now has
 	 * @param isMoving determines if the block is moving
 	 */
+	@SuppressWarnings("deprecation")
 	@Override
 	public void onRemove(BlockState state, @NotNull Level worldIn, @NotNull BlockPos pos, BlockState newState, boolean isMoving) {
 		if (!state.is(newState.getBlock())) {

@@ -53,18 +53,14 @@ public class GauntletItem extends TieredItem implements Vanishable {
 	@Override
 	public boolean hurtEnemy(@NotNull ItemStack stack, @NotNull LivingEntity target, @NotNull LivingEntity attacker) {
 		bleedBehavior(target);
-		stack.hurtAndBreak(1, attacker, (breakEvent) -> {
-			breakEvent.broadcastBreakEvent(EquipmentSlot.MAINHAND);
-		});
+		stack.hurtAndBreak(1, attacker, (breakEvent) -> breakEvent.broadcastBreakEvent(EquipmentSlot.MAINHAND));
 		return true;
 	}
 
 	@Override
 	public boolean mineBlock(@NotNull ItemStack stack, @NotNull Level level, BlockState state, @NotNull BlockPos pos, @NotNull LivingEntity livingEntity) {
 		if (state.getDestroySpeed(level, pos) != 0.0F) {
-			stack.hurtAndBreak(2, livingEntity, (breakEvent) -> {
-				breakEvent.broadcastBreakEvent(EquipmentSlot.MAINHAND);
-			});
+			stack.hurtAndBreak(2, livingEntity, (breakEvent) -> breakEvent.broadcastBreakEvent(EquipmentSlot.MAINHAND));
 		}
 
 		return true;
@@ -82,8 +78,9 @@ public class GauntletItem extends TieredItem implements Vanishable {
 
 	/**
 	 * Check if the repair item is valid.
+	 *
 	 * @param toRepair the <code>ItemStack</code> to repair
-	 * @param repair the <code>ItemStack</code> to repair the first item
+	 * @param repair   the <code>ItemStack</code> to repair the first item
 	 * @return boolean
 	 */
 	@Override
@@ -93,6 +90,7 @@ public class GauntletItem extends TieredItem implements Vanishable {
 
 	/**
 	 * Get the repair material.
+	 *
 	 * @return Ingredient
 	 */
 	Ingredient getRepairMaterial() {
@@ -101,7 +99,8 @@ public class GauntletItem extends TieredItem implements Vanishable {
 
 	/**
 	 * Set the bleeding behavior.
-	 * @param target    the <code>LivingEntity</code> being targeted
+	 *
+	 * @param target the <code>LivingEntity</code> being targeted
 	 */
 	public void bleedBehavior(LivingEntity target) {
 		if (GeneralUtilities.getRandomNumber(0.0f, 1.0f) <= bleedChance) {

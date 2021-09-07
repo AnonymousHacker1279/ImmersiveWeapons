@@ -32,6 +32,7 @@ public class SandbagBlock extends HorizontalDirectionalBlock {
 
 	/**
 	 * Constructor for SandbagBlock.
+	 *
 	 * @param properties the <code>Properties</code> of the block
 	 */
 	public SandbagBlock(Properties properties) {
@@ -41,6 +42,7 @@ public class SandbagBlock extends HorizontalDirectionalBlock {
 
 	/**
 	 * Create the BlockState definition.
+	 *
 	 * @param builder the <code>StateContainer.Builder</code> of the block
 	 */
 	@Override
@@ -51,6 +53,7 @@ public class SandbagBlock extends HorizontalDirectionalBlock {
 	/**
 	 * Set placement properties.
 	 * Sets the facing direction of the block for placement.
+	 *
 	 * @param context the <code>BlockItemUseContext</code> during placement
 	 * @return BlockState
 	 */
@@ -61,12 +64,14 @@ public class SandbagBlock extends HorizontalDirectionalBlock {
 
 	/**
 	 * Set the shape of the block.
-	 * @param state the <code>BlockState</code> of the block
-	 * @param reader the <code>IBlockReader</code> for the block
-	 * @param pos the <code>BlockPos</code> the block is at
+	 *
+	 * @param state            the <code>BlockState</code> of the block
+	 * @param reader           the <code>IBlockReader</code> for the block
+	 * @param pos              the <code>BlockPos</code> the block is at
 	 * @param selectionContext the <code>ISelectionContext</code> of the block
 	 * @return VoxelShape
 	 */
+	@SuppressWarnings("deprecation")
 	@Override
 	public @NotNull VoxelShape getShape(BlockState state, @NotNull BlockGetter reader, @NotNull BlockPos pos, @NotNull CollisionContext selectionContext) {
 		Vec3 vector3d = state.getOffset(reader, pos);
@@ -80,11 +85,13 @@ public class SandbagBlock extends HorizontalDirectionalBlock {
 
 	/**
 	 * Set the shading brightness on the client.
-	 * @param state the <code>BlockState</code> of the block
+	 *
+	 * @param state  the <code>BlockState</code> of the block
 	 * @param reader the <code>IBlockReader</code> of the block
-	 * @param pos the <code>BlockPos</code> the block is at
+	 * @param pos    the <code>BlockPos</code> the block is at
 	 * @return float
 	 */
+	@SuppressWarnings("deprecation")
 	@Override
 	@OnlyIn(Dist.CLIENT)
 	public float getShadeBrightness(@NotNull BlockState state, @NotNull BlockGetter reader, @NotNull BlockPos pos) {
@@ -94,14 +101,16 @@ public class SandbagBlock extends HorizontalDirectionalBlock {
 	/**
 	 * Runs when the block is activated.
 	 * Allows the block to respond to user interaction.
-	 * @param state the <code>BlockState</code> of the block
-	 * @param worldIn the <code>World</code> the block is in
-	 * @param pos the <code>BlockPos</code> the block is at
-	 * @param player the <code>PlayerEntity</code> interacting with the block
-	 * @param handIn the <code>Hand</code> the PlayerEntity used
+	 *
+	 * @param state               the <code>BlockState</code> of the block
+	 * @param worldIn             the <code>World</code> the block is in
+	 * @param pos                 the <code>BlockPos</code> the block is at
+	 * @param player              the <code>PlayerEntity</code> interacting with the block
+	 * @param handIn              the <code>Hand</code> the PlayerEntity used
 	 * @param blockRayTraceResult the <code>BlockRayTraceResult</code> of the interaction
 	 * @return ActionResultType
 	 */
+	@SuppressWarnings("deprecation")
 	@Override
 	public @NotNull InteractionResult use(@NotNull BlockState state, @NotNull Level worldIn, @NotNull BlockPos pos, Player player, @NotNull InteractionHand handIn, @NotNull BlockHitResult blockRayTraceResult) {
 		if (player.getMainHandItem().getItem() == DeferredRegistryHandler.SANDBAG_ITEM.get()) {

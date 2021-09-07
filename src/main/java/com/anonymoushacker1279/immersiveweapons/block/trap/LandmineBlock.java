@@ -46,6 +46,7 @@ public class LandmineBlock extends Block implements SimpleWaterloggedBlock {
 
 	/**
 	 * Constructor for LandmineBlock.
+	 *
 	 * @param properties the <code>Properties</code> of the block
 	 */
 	public LandmineBlock(BlockBehaviour.Properties properties) {
@@ -56,8 +57,9 @@ public class LandmineBlock extends Block implements SimpleWaterloggedBlock {
 
 	/**
 	 * Create an explosion.
-	 * @param worldIn the <code>World</code> to explode in
-	 * @param pos the <code>BlockPos</code> to explode at
+	 *
+	 * @param worldIn  the <code>World</code> to explode in
+	 * @param pos      the <code>BlockPos</code> to explode at
 	 * @param entityIn the <code>LivingEntity</code> causing the explosion
 	 */
 	private static void explode(Level worldIn, BlockPos pos, @Nullable LivingEntity entityIn) {
@@ -70,14 +72,16 @@ public class LandmineBlock extends Block implements SimpleWaterloggedBlock {
 	/**
 	 * Runs when the block is activated.
 	 * Allows the block to respond to user interaction.
-	 * @param state the <code>BlockState</code> of the block
-	 * @param worldIn the <code>World</code> the block is in
-	 * @param pos the <code>BlockPos</code> the block is at
-	 * @param player the <code>PlayerEntity</code> interacting with the block
-	 * @param handIn the <code>Hand</code> the PlayerEntity used
+	 *
+	 * @param state               the <code>BlockState</code> of the block
+	 * @param worldIn             the <code>World</code> the block is in
+	 * @param pos                 the <code>BlockPos</code> the block is at
+	 * @param player              the <code>PlayerEntity</code> interacting with the block
+	 * @param handIn              the <code>Hand</code> the PlayerEntity used
 	 * @param blockRayTraceResult the <code>BlockRayTraceResult</code> of the interaction
 	 * @return ActionResultType
 	 */
+	@SuppressWarnings("deprecation")
 	@Override
 	public @NotNull InteractionResult use(@NotNull BlockState state, Level worldIn, @NotNull BlockPos pos, @NotNull Player player, @NotNull InteractionHand handIn, @NotNull BlockHitResult blockRayTraceResult) {
 		if (!worldIn.isClientSide) {
@@ -107,12 +111,14 @@ public class LandmineBlock extends Block implements SimpleWaterloggedBlock {
 
 	/**
 	 * Set the shape of the block.
-	 * @param state the <code>BlockState</code> of the block
-	 * @param reader the <code>IBlockReader</code> for the block
-	 * @param pos the <code>BlockPos</code> the block is at
+	 *
+	 * @param state            the <code>BlockState</code> of the block
+	 * @param reader           the <code>IBlockReader</code> for the block
+	 * @param pos              the <code>BlockPos</code> the block is at
 	 * @param selectionContext the <code>ISelectionContext</code> of the block
 	 * @return VoxelShape
 	 */
+	@SuppressWarnings("deprecation")
 	@Override
 	public @NotNull VoxelShape getShape(@NotNull BlockState state, @NotNull BlockGetter reader, @NotNull BlockPos pos, @NotNull CollisionContext selectionContext) {
 		return SHAPE;
@@ -120,12 +126,14 @@ public class LandmineBlock extends Block implements SimpleWaterloggedBlock {
 
 	/**
 	 * Get the collision shape of the block.
-	 * @param state the <code>BlockState</code> of the block
-	 * @param reader the <code>IBlockReader</code> for the block
-	 * @param pos the <code>BlockPos</code> the block is at
+	 *
+	 * @param state            the <code>BlockState</code> of the block
+	 * @param reader           the <code>IBlockReader</code> for the block
+	 * @param pos              the <code>BlockPos</code> the block is at
 	 * @param selectionContext the <code>ISelectionContext</code> of the block
 	 * @return VoxelShape
 	 */
+	@SuppressWarnings("deprecation")
 	@Override
 	public @NotNull VoxelShape getCollisionShape(@NotNull BlockState state, @NotNull BlockGetter reader, @NotNull BlockPos pos, @NotNull CollisionContext selectionContext) {
 		return Shapes.empty();
@@ -133,9 +141,11 @@ public class LandmineBlock extends Block implements SimpleWaterloggedBlock {
 
 	/**
 	 * Set the RenderShape of the block's model.
+	 *
 	 * @param state the <code>BlockState</code> of the block
 	 * @return BlockRenderType
 	 */
+	@SuppressWarnings("deprecation")
 	@Override
 	public @NotNull RenderShape getRenderShape(@NotNull BlockState state) {
 		return RenderShape.MODEL;
@@ -144,11 +154,13 @@ public class LandmineBlock extends Block implements SimpleWaterloggedBlock {
 	/**
 	 * Runs when an entity is inside the block's collision area.
 	 * Allows the block to deal damage on contact.
-	 * @param state the <code>BlockState</code> of the block
-	 * @param level the <code>Level</code> the block is in
-	 * @param pos the <code>BlockPos</code> the block is at
+	 *
+	 * @param state  the <code>BlockState</code> of the block
+	 * @param level  the <code>Level</code> the block is in
+	 * @param pos    the <code>BlockPos</code> the block is at
 	 * @param entity the <code>Entity</code> passing through the block
 	 */
+	@SuppressWarnings("deprecation")
 	@Override
 	public void entityInside(BlockState state, @NotNull Level level, @NotNull BlockPos pos, @NotNull Entity entity) {
 		if (state.getValue(ARMED) && !state.getValue(WATERLOGGED)) {
@@ -164,6 +176,7 @@ public class LandmineBlock extends Block implements SimpleWaterloggedBlock {
 	/**
 	 * Set placement properties.
 	 * Sets the facing direction of the block for placement.
+	 *
 	 * @param context the <code>BlockItemUseContext</code> during placement
 	 * @return BlockState
 	 */
@@ -175,9 +188,11 @@ public class LandmineBlock extends Block implements SimpleWaterloggedBlock {
 	/**
 	 * Set FluidState properties.
 	 * Allows the block to exhibit waterlogged behavior.
+	 *
 	 * @param state the <code>BlockState</code> of the block
 	 * @return FluidState
 	 */
+	@SuppressWarnings("deprecation")
 	@Override
 	public @NotNull FluidState getFluidState(BlockState state) {
 		return state.getValue(WATERLOGGED) ? Fluids.WATER.getSource(false) : super.getFluidState(state);
@@ -185,6 +200,7 @@ public class LandmineBlock extends Block implements SimpleWaterloggedBlock {
 
 	/**
 	 * Create the BlockState definition.
+	 *
 	 * @param builder the <code>StateContainer.Builder</code> of the block
 	 */
 	@Override
@@ -194,8 +210,9 @@ public class LandmineBlock extends Block implements SimpleWaterloggedBlock {
 
 	/**
 	 * Runs when the block is exploded by another block.
-	 * @param worldIn the <code>World</code> the block is in
-	 * @param pos the <code>BlockPos</code> the block is at
+	 *
+	 * @param worldIn     the <code>World</code> the block is in
+	 * @param pos         the <code>BlockPos</code> the block is at
 	 * @param explosionIn the <code>Explosion</code> destroying the block
 	 */
 	@Override
@@ -207,10 +224,11 @@ public class LandmineBlock extends Block implements SimpleWaterloggedBlock {
 
 	/**
 	 * Runs when the player destroys the block.
+	 *
 	 * @param worldIn the <code>World</code> the block is in
-	 * @param pos the <code>BlockPos</code> the block is at
-	 * @param state the <code>BlockState</code> of the block
-	 * @param player the <code>PlayerEntity</code> destroying the block
+	 * @param pos     the <code>BlockPos</code> the block is at
+	 * @param state   the <code>BlockState</code> of the block
+	 * @param player  the <code>PlayerEntity</code> destroying the block
 	 */
 	@Override
 	public void playerWillDestroy(Level worldIn, @NotNull BlockPos pos, @NotNull BlockState state, @NotNull Player player) {

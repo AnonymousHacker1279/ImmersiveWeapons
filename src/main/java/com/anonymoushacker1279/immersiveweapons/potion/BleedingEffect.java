@@ -26,11 +26,12 @@ import java.util.function.Supplier;
 public class BleedingEffect extends MobEffect {
 
 	private int cooldownTicks = 0;
-	public DamageSource damageSource = new DamageSource("immersiveweapons.bleeding").bypassArmor();
+	public final DamageSource damageSource = new DamageSource("immersiveweapons.bleeding").bypassArmor();
 
 	/**
 	 * Constructor for BleedingEffect.
-	 * @param typeIn the <code>EffectType</code> instance
+	 *
+	 * @param typeIn        the <code>EffectType</code> instance
 	 * @param liquidColorIn the liquid color
 	 */
 	public BleedingEffect(MobEffectCategory typeIn, int liquidColorIn) {
@@ -39,8 +40,9 @@ public class BleedingEffect extends MobEffect {
 
 	/**
 	 * Runs once each tick while the effect is active.
+	 *
 	 * @param livingEntity the <code>LivingEntity</code> with the effect
-	 * @param amplifier the effect amplifier
+	 * @param amplifier    the effect amplifier
 	 */
 	@Override
 	public void applyEffectTick(@NotNull LivingEntity livingEntity, int amplifier) {
@@ -57,7 +59,8 @@ public class BleedingEffect extends MobEffect {
 
 	/**
 	 * Check if the duration effect is ticking.
-	 * @param duration the duration
+	 *
+	 * @param duration  the duration
 	 * @param amplifier the effect amplifier
 	 * @return boolean
 	 */
@@ -72,9 +75,9 @@ public class BleedingEffect extends MobEffect {
 		/**
 		 * Constructor for BleedingEffectPacketHandler.
 		 *
-		 * @param blockPos    the <code>BlockPos</code> the packet came from
-		 * @param vector3d    the <code>Vector3d</code> of the entity position
-		 * @param eyeLevel    the eye level of the entity
+		 * @param blockPos the <code>BlockPos</code> the packet came from
+		 * @param vector3d the <code>Vector3d</code> of the entity position
+		 * @param eyeLevel the eye level of the entity
 		 */
 		public BleedingEffectPacketHandler {
 		}
@@ -128,6 +131,7 @@ public class BleedingEffect extends MobEffect {
 
 		/**
 		 * Create a particle.
+		 *
 		 * @return IParticleData
 		 */
 		private static ParticleOptions makeParticle() {
@@ -139,6 +143,7 @@ public class BleedingEffect extends MobEffect {
 
 		/**
 		 * Get the particle diameter.
+		 *
 		 * @param random a random number
 		 * @return double
 		 */
@@ -150,10 +155,11 @@ public class BleedingEffect extends MobEffect {
 
 		/**
 		 * Tint a particle.
+		 *
 		 * @param random a random number
 		 * @return Color
 		 */
-		private static Color getTint(int random){
+		private static Color getTint(int random) {
 			Color[] tints = {
 					new Color(1.00f, 0.25f, 0.25f),  // tint (red)
 					new Color(1.00f, 0.30f, 0.25f),  // off-red
