@@ -1,0 +1,20 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"pattern": [
+		"   ",
+		"xxx",
+		"xyx"
+	],
+	"key": {
+		"x": {
+			"tag": "forge:ingots/cobalt"
+		},
+		"y": {
+			"item": "immersiveweapons:gauntlet_scaffolding"
+		}
+	},
+	"result": {
+		"item": "immersiveweapons:cobalt_gauntlet",
+		"count": 1
+	}
+}

@@ -179,8 +179,9 @@ public class DeferredRegistryHandler {
 	public static final RegistryObject<WoodPikeItem> WOOD_PIKE = ITEMS.register("wood_pike", () -> new WoodPikeItem(new Properties().durability(59).tab(ITEM_GROUP), 4.0d, -2.6d));
 	public static final RegistryObject<StonePikeItem> STONE_PIKE = ITEMS.register("stone_pike", () -> new StonePikeItem(new Properties().durability(131).tab(ITEM_GROUP), 5.0d, -2.6d));
 	public static final RegistryObject<GoldPikeItem> GOLD_PIKE = ITEMS.register("gold_pike", () -> new GoldPikeItem(new Properties().durability(32).tab(ITEM_GROUP), 4.0d, -2.6d));
-	public static final RegistryObject<CopperPikeItem> COPPER_PIKE = ITEMS.register("copper_pike", () -> new CopperPikeItem(new Properties().durability(180).tab(ITEM_GROUP), 6.0d, -2.6d));
+	public static final RegistryObject<CopperPikeItem> COPPER_PIKE = ITEMS.register("copper_pike", () -> new CopperPikeItem(new Properties().durability(180).tab(ITEM_GROUP), 5.0d, -2.6d));
 	public static final RegistryObject<IronPikeItem> IRON_PIKE = ITEMS.register("iron_pike", () -> new IronPikeItem(new Properties().durability(250).tab(ITEM_GROUP), 6.0d, -2.6d));
+	public static final RegistryObject<CobaltPikeItem> COBALT_PIKE = ITEMS.register("cobalt_pike", () -> new CobaltPikeItem(new Properties().durability(300).tab(ITEM_GROUP), 6.0d, -2.6d));
 	public static final RegistryObject<DiamondPikeItem> DIAMOND_PIKE = ITEMS.register("diamond_pike", () -> new DiamondPikeItem(new Properties().durability(1561).tab(ITEM_GROUP), 7.0d, -2.6d));
 	public static final RegistryObject<NetheritePikeItem> NETHERITE_PIKE = ITEMS.register("netherite_pike", () -> new NetheritePikeItem(new Properties().durability(2031).tab(ITEM_GROUP).fireResistant(), 8.0d, -2.6d));
 	public static final RegistryObject<SimplePistolItem> FLINTLOCK_PISTOL = ITEMS.register("flintlock_pistol", () -> new SimplePistolItem(new Properties().tab(ITEM_GROUP).durability(499)));
@@ -191,6 +192,7 @@ public class DeferredRegistryHandler {
 	public static final RegistryObject<GoldGauntletItem> GOLD_GAUNTLET = ITEMS.register("gold_gauntlet", () -> new GoldGauntletItem(Tiers.GOLD, 2, -2.6f, new Properties().tab(ITEM_GROUP), 0.35f));
 	public static final RegistryObject<CopperGauntletItem> COPPER_GAUNTLET = ITEMS.register("copper_gauntlet", () -> new CopperGauntletItem(CustomItemMaterials.COPPER, 1, -2.6f, new Properties().tab(ITEM_GROUP), 0.45f));
 	public static final RegistryObject<IronGauntletItem> IRON_GAUNTLET = ITEMS.register("iron_gauntlet", () -> new IronGauntletItem(Tiers.IRON, 2, -2.6f, new Properties().tab(ITEM_GROUP), 0.55f));
+	public static final RegistryObject<CobaltGauntletItem> COBALT_GAUNTLET = ITEMS.register("cobalt_gauntlet", () -> new CobaltGauntletItem(CustomItemMaterials.COBALT, 1, -2.6f, new Properties().tab(ITEM_GROUP), 0.60f));
 	public static final RegistryObject<DiamondGauntletItem> DIAMOND_GAUNTLET = ITEMS.register("diamond_gauntlet", () -> new DiamondGauntletItem(Tiers.DIAMOND, 2, -2.6f, new Properties().tab(ITEM_GROUP), 0.75f));
 	public static final RegistryObject<NetheriteGauntletItem> NETHERITE_GAUNTLET = ITEMS.register("netherite_gauntlet", () -> new NetheriteGauntletItem(Tiers.NETHERITE, 2, -2.6f, new Properties().tab(ITEM_GROUP), 0.85f));
 
@@ -202,6 +204,7 @@ public class DeferredRegistryHandler {
 	public static final RegistryObject<Item> VENTUS_SHARD = ITEMS.register("ventus_shard", () -> new Item(new Properties().tab(ITEM_GROUP)));
 	public static final RegistryObject<Item> WOOD_SHARD = ITEMS.register("wood_shard", () -> new Item(new Properties().tab(ITEM_GROUP)));
 	public static final RegistryObject<Item> COPPER_NUGGET = ITEMS.register("copper_nugget", () -> new Item(new Properties().tab(ITEM_GROUP)));
+	public static final RegistryObject<Item> COBALT_NUGGET = ITEMS.register("cobalt_nugget", () -> new Item(new Properties().tab(ITEM_GROUP)));
 	public static final RegistryObject<Item> MOLTEN_PLATE = ITEMS.register("molten_plate", () -> new Item(new Properties().tab(ITEM_GROUP).fireResistant()));
 	public static final RegistryObject<Item> TESLA_PLATE = ITEMS.register("tesla_plate", () -> new Item(new Properties().tab(ITEM_GROUP)));
 	public static final RegistryObject<Item> WOOD_TOOL_ROD = ITEMS.register("wood_tool_rod", () -> new Item(new Properties().tab(ITEM_GROUP)));
@@ -218,6 +221,7 @@ public class DeferredRegistryHandler {
 	public static final RegistryObject<Item> GOLD_PIKE_HEAD = ITEMS.register("gold_pike_head", () -> new Item(new Properties().tab(ITEM_GROUP)));
 	public static final RegistryObject<Item> COPPER_PIKE_HEAD = ITEMS.register("copper_pike_head", () -> new Item(new Properties().tab(ITEM_GROUP)));
 	public static final RegistryObject<Item> IRON_PIKE_HEAD = ITEMS.register("iron_pike_head", () -> new Item(new Properties().tab(ITEM_GROUP)));
+	public static final RegistryObject<Item> COBALT_PIKE_HEAD = ITEMS.register("cobalt_pike_head", () -> new Item(new Properties().tab(ITEM_GROUP)));
 	public static final RegistryObject<Item> DIAMOND_PIKE_HEAD = ITEMS.register("diamond_pike_head", () -> new Item(new Properties().tab(ITEM_GROUP)));
 	public static final RegistryObject<WoodArrowItem> WOOD_ARROW = ITEMS.register("wood_arrow", () -> new WoodArrowItem(new Properties().tab(ITEM_GROUP), 1.65d));
 	public static final RegistryObject<StoneArrowItem> STONE_ARROW = ITEMS.register("stone_arrow", () -> new StoneArrowItem(new Properties().tab(ITEM_GROUP), 1.85d));

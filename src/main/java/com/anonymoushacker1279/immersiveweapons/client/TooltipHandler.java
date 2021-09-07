@@ -121,7 +121,7 @@ public class TooltipHandler {
 		}
 
 		// Pikes
-		if (stack.getItem() == DeferredRegistryHandler.WOOD_PIKE.get() || stack.getItem() == DeferredRegistryHandler.STONE_PIKE.get() || stack.getItem() == DeferredRegistryHandler.GOLD_PIKE.get() || stack.getItem() == DeferredRegistryHandler.COPPER_PIKE.get() || stack.getItem() == DeferredRegistryHandler.IRON_PIKE.get() || stack.getItem() == DeferredRegistryHandler.DIAMOND_PIKE.get() || stack.getItem() == DeferredRegistryHandler.NETHERITE_PIKE.get()) {
+		if (stack.getItem() == DeferredRegistryHandler.WOOD_PIKE.get() || stack.getItem() == DeferredRegistryHandler.STONE_PIKE.get() || stack.getItem() == DeferredRegistryHandler.GOLD_PIKE.get() || stack.getItem() == DeferredRegistryHandler.COPPER_PIKE.get() || stack.getItem() == DeferredRegistryHandler.IRON_PIKE.get() || stack.getItem() == DeferredRegistryHandler.COBALT_PIKE.get() || stack.getItem() == DeferredRegistryHandler.DIAMOND_PIKE.get() || stack.getItem() == DeferredRegistryHandler.NETHERITE_PIKE.get()) {
 			event.getToolTip().add(new TranslatableComponent("immersiveweapons.tooltip.pike").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
 		}
 
@@ -205,6 +205,10 @@ public class TooltipHandler {
 		if (stack.getItem() == DeferredRegistryHandler.IRON_GAUNTLET.get()) {
 			event.getToolTip().add(new TranslatableComponent("immersiveweapons.tooltip.gauntlet").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
 			event.getToolTip().add(new TranslatableComponent("immersiveweapons.tooltip.iron_gauntlet").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
+		}
+		if (stack.getItem() == DeferredRegistryHandler.COBALT_GAUNTLET.get()) {
+			event.getToolTip().add(new TranslatableComponent("immersiveweapons.tooltip.gauntlet").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
+			event.getToolTip().add(new TranslatableComponent("immersiveweapons.tooltip.cobalt_gauntlet").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
 		}
 		if (stack.getItem() == DeferredRegistryHandler.DIAMOND_GAUNTLET.get()) {
 			event.getToolTip().add(new TranslatableComponent("immersiveweapons.tooltip.gauntlet").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));

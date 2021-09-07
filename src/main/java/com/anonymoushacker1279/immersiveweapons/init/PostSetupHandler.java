@@ -58,6 +58,12 @@ public class PostSetupHandler {
 		combineBuilder.putAll(newAttributes);
 		IronPikeItem.pikeAttributes = combineBuilder.build();
 
+		// Cobalt Pike Item
+		combineBuilder = ImmutableMultimap.builder();
+		combineBuilder.putAll(CobaltPikeItem.pikeAttributes);
+		combineBuilder.putAll(newAttributes);
+		CobaltPikeItem.pikeAttributes = combineBuilder.build();
+
 		// Diamond Pike Item
 		combineBuilder = ImmutableMultimap.builder();
 		combineBuilder.putAll(DiamondPikeItem.pikeAttributes);
@@ -103,6 +109,12 @@ public class PostSetupHandler {
 		combineBuilder.putAll(IronGauntletItem.gauntletAttributes);
 		combineBuilder.putAll(newAttributes);
 		IronGauntletItem.gauntletAttributes = combineBuilder.build();
+
+		// Cobalt Gauntlet Item
+		combineBuilder = ImmutableMultimap.builder();
+		combineBuilder.putAll(CobaltGauntletItem.gauntletAttributes);
+		combineBuilder.putAll(newAttributes);
+		CobaltGauntletItem.gauntletAttributes = combineBuilder.build();
 
 		// Diamond Gauntlet Item
 		combineBuilder = ImmutableMultimap.builder();
