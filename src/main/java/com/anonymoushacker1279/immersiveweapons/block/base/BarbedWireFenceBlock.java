@@ -20,6 +20,7 @@ public class BarbedWireFenceBlock extends FenceBlock {
 
 	/**
 	 * Constructor for BarbedWireFenceBlock.
+	 *
 	 * @param properties the <code>Properties</code> of the block
 	 */
 	public BarbedWireFenceBlock(Properties properties) {
@@ -29,11 +30,13 @@ public class BarbedWireFenceBlock extends FenceBlock {
 	/**
 	 * Runs when an entity is inside the block's collision area.
 	 * Allows the block to deal damage on contact.
-	 * @param state the <code>BlockState</code> of the block
-	 * @param level the <code>Level</code> the block is in
-	 * @param pos the <code>BlockPos</code> the block is at
+	 *
+	 * @param state  the <code>BlockState</code> of the block
+	 * @param level  the <code>Level</code> the block is in
+	 * @param pos    the <code>BlockPos</code> the block is at
 	 * @param entity the <code>Entity</code> passing through the block
 	 */
+	@SuppressWarnings("deprecation")
 	@Override
 	public void entityInside(@NotNull BlockState state, @NotNull Level level, @NotNull BlockPos pos, @NotNull Entity entity) {
 		if (entity instanceof LivingEntity) {

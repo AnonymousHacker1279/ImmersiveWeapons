@@ -11,13 +11,11 @@ public class CustomBoatType {
 	private static final List<CustomBoatType> VALUES = new ArrayList<>(1);
 	private final int id;
 	private final String name;
-	private final ResourceLocation texture;
 	private ItemLike boatItem;
 
 	private CustomBoatType(int id, String name, ResourceLocation texture) {
 		this.id = id;
 		this.name = name;
-		this.texture = texture;
 	}
 
 	public static CustomBoatType register(String name) {
@@ -55,9 +53,5 @@ public class CustomBoatType {
 
 	public String getName() {
 		return name;
-	}
-
-	public ResourceLocation getTexture() {
-		return texture;
 	}
 }

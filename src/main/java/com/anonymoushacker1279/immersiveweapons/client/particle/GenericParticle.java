@@ -10,14 +10,14 @@ import org.jetbrains.annotations.NotNull;
 
 import java.awt.*;
 
-public class SmokeBombParticle extends TextureSheetParticle {
+public class GenericParticle extends TextureSheetParticle {
 
 	private final double xPos;
 	private final double yPos;
 	private final double zPos;
 
 	/**
-	 * Constructor for SmokeBombParticle.
+	 * Constructor for GenericParticle.
 	 * @param world the <code>ClientWorld</code> the particle is in
 	 * @param x the X position to spawn at
 	 * @param y the Y position to spawn at
@@ -28,7 +28,7 @@ public class SmokeBombParticle extends TextureSheetParticle {
 	 * @param tint the <code>Color</code> to spawn with
 	 * @param diameter the diameter to spawn at
 	 */
-	public SmokeBombParticle(ClientLevel world, double x, double y, double z, double velocityX, double velocityY, double velocityZ, Color tint, double diameter) {
+	public GenericParticle(ClientLevel world, double x, double y, double z, double velocityX, double velocityY, double velocityZ, Color tint, double diameter) {
 		super(world, x, y, z, velocityX, velocityY, velocityZ);
 
 		xPos = x;

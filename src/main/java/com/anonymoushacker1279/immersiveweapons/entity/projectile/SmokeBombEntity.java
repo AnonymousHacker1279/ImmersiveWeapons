@@ -1,6 +1,6 @@
 package com.anonymoushacker1279.immersiveweapons.entity.projectile;
 
-import com.anonymoushacker1279.immersiveweapons.client.particle.SmokeBombParticleData;
+import com.anonymoushacker1279.immersiveweapons.client.particle.smokebomb.SmokeBombParticleData;
 import com.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
 import com.anonymoushacker1279.immersiveweapons.util.Config;
 import com.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
@@ -110,10 +110,8 @@ public class SmokeBombEntity extends ThrowableItemProjectile {
 	@Override
 	public void handleEntityEvent(byte statusID) {
 		if (statusID == VANILLA_IMPACT_STATUS_ID) {
-			ParticleOptions particleData = makeParticle();
-
 			for (int i = 0; i < configMaxParticles; ++i) {
-				level.addParticle(particleData, true, getX(), getY(), getZ(), GeneralUtilities.getRandomNumber(-0.03, 0.03d), GeneralUtilities.getRandomNumber(-0.02d, 0.02d), GeneralUtilities.getRandomNumber(-0.03d, 0.03d));
+				level.addParticle(makeParticle(), true, getX(), getY(), getZ(), GeneralUtilities.getRandomNumber(-0.03, 0.03d), GeneralUtilities.getRandomNumber(-0.02d, 0.02d), GeneralUtilities.getRandomNumber(-0.03d, 0.03d));
 			}
 			level.playLocalSound(getX(), getY(), getZ(), DeferredRegistryHandler.SMOKE_BOMB_HISS.get(), SoundSource.NEUTRAL, 1f, 1f, false);
 			kill();
@@ -136,7 +134,7 @@ public class SmokeBombEntity extends ThrowableItemProjectile {
 	 * @param random a random number
 	 * @return double
 	 */
-	private static double getDiameter(double random){
+	private static double getDiameter(double random) {
 		final double MIN_DIAMETER = 0.5;
 		final double MAX_DIAMETER = 5.5;
 		return MIN_DIAMETER + (MAX_DIAMETER - MIN_DIAMETER) * random;

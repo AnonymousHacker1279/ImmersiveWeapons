@@ -1,4 +1,4 @@
-package com.anonymoushacker1279.immersiveweapons.client.particle;
+package com.anonymoushacker1279.immersiveweapons.client.particle.smokebomb;
 
 import com.mojang.serialization.Codec;
 import net.minecraft.core.particles.ParticleType;
@@ -6,13 +6,11 @@ import org.jetbrains.annotations.NotNull;
 
 public class SmokeBombParticleType extends ParticleType<SmokeBombParticleData> {
 
-	private static final boolean ALWAYS_SHOW_REGARDLESS_OF_DISTANCE_FROM_PLAYER = false;
-
 	/**
 	 * Constructor for SmokeBombParticleType.
 	 */
 	public SmokeBombParticleType() {
-		super(ALWAYS_SHOW_REGARDLESS_OF_DISTANCE_FROM_PLAYER, SmokeBombParticleData.DESERIALIZER);
+		super(false, SmokeBombParticleData.DESERIALIZER);
 	}
 
 	/**

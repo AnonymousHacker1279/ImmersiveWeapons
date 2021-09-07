@@ -1,0 +1,20 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"pattern": [
+		"   ",
+		"xxx",
+		"xyx"
+	],
+	"key": {
+		"x": {
+			"tag": "minecraft:planks"
+		},
+		"y": {
+			"item": "immersiveweapons:gauntlet_scaffolding"
+		}
+	},
+	"result": {
+		"item": "immersiveweapons:wood_gauntlet",
+		"count": 1
+	}
+}

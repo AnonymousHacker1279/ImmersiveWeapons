@@ -1,5 +1,6 @@
-package com.anonymoushacker1279.immersiveweapons.client.particle;
+package com.anonymoushacker1279.immersiveweapons.client.particle.smokebomb;
 
+import com.anonymoushacker1279.immersiveweapons.client.particle.GenericParticle;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.particle.Particle;
 import net.minecraft.client.particle.ParticleProvider;
@@ -32,7 +33,7 @@ public class SmokeBombParticleFactory implements ParticleProvider<SmokeBombParti
 	 */
 	@Override
 	public Particle createParticle(SmokeBombParticleData smokeBombParticleData, @NotNull ClientLevel world, double xPos, double yPos, double zPos, double xVelocity, double yVelocity, double zVelocity) {
-		SmokeBombParticle newParticle = new SmokeBombParticle(world, xPos, yPos, zPos, xVelocity, yVelocity, zVelocity,
+		GenericParticle newParticle = new GenericParticle(world, xPos, yPos, zPos, xVelocity, yVelocity, zVelocity,
 				smokeBombParticleData.getTint(), smokeBombParticleData.getDiameter()
 		);
 		newParticle.pickSprite(sprites);  // choose a random sprite from the available list (in this case there is only one)

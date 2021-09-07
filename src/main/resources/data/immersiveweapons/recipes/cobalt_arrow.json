@@ -1,0 +1,23 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"pattern": [
+		" x ",
+		" y ",
+		" z "
+	],
+	"key": {
+		"x": {
+			"tag": "forge:ingots/cobalt"
+		},
+		"y": {
+			"item": "minecraft:stick"
+		},
+		"z": {
+			"item": "minecraft:feather"
+		}
+	},
+	"result": {
+		"item": "immersiveweapons:cobalt_arrow",
+		"count": 2
+	}
+}

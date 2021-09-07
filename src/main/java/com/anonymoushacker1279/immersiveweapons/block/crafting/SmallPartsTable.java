@@ -25,6 +25,7 @@ public class SmallPartsTable extends Block {
 
 	/**
 	 * Constructor for SmallPartsTable.
+	 *
 	 * @param properties the <code>Properties</code> of the block
 	 */
 	public SmallPartsTable(BlockBehaviour.Properties properties) {
@@ -33,11 +34,13 @@ public class SmallPartsTable extends Block {
 
 	/**
 	 * Get the INamedContainerProvider for the block.
-	 * @param state the <code>BlockState</code> of the block
+	 *
+	 * @param state   the <code>BlockState</code> of the block
 	 * @param worldIn the <code>World</code> the block is in
-	 * @param pos the <code>BlockPos</code> the block is at
+	 * @param pos     the <code>BlockPos</code> the block is at
 	 * @return INamedContainerProvider
 	 */
+	@SuppressWarnings("deprecation")
 	@Override
 	public MenuProvider getMenuProvider(@NotNull BlockState state, @NotNull Level worldIn, @NotNull BlockPos pos) {
 		return new SimpleMenuProvider((id, inventory, player) -> new SmallPartsContainer(id, inventory, ContainerLevelAccess.create(worldIn, pos)), CONTAINER_NAME);
@@ -46,14 +49,16 @@ public class SmallPartsTable extends Block {
 	/**
 	 * Runs when the block is activated.
 	 * Allows the block to respond to user interaction.
-	 * @param state the <code>BlockState</code> of the block
-	 * @param worldIn the <code>World</code> the block is in
-	 * @param pos the <code>BlockPos</code> the block is at
-	 * @param player the <code>PlayerEntity</code> interacting with the block
-	 * @param handIn the <code>Hand</code> the PlayerEntity used
+	 *
+	 * @param state               the <code>BlockState</code> of the block
+	 * @param worldIn             the <code>World</code> the block is in
+	 * @param pos                 the <code>BlockPos</code> the block is at
+	 * @param player              the <code>PlayerEntity</code> interacting with the block
+	 * @param handIn              the <code>Hand</code> the PlayerEntity used
 	 * @param blockRayTraceResult the <code>BlockRayTraceResult</code> of the interaction
 	 * @return ActionResultType
 	 */
+	@SuppressWarnings("deprecation")
 	@Override
 	public @NotNull InteractionResult use(@NotNull BlockState state, Level worldIn, @NotNull BlockPos pos, @NotNull Player player, @NotNull InteractionHand handIn, @NotNull BlockHitResult blockRayTraceResult) {
 		if (worldIn.isClientSide) {

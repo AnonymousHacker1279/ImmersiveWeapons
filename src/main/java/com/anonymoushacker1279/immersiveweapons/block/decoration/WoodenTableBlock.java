@@ -23,6 +23,7 @@ public class WoodenTableBlock extends Block implements SimpleWaterloggedBlock {
 
 	/**
 	 * Constructor for WoodenTableBlock.
+	 *
 	 * @param properties the <code>Properties</code> of the block
 	 */
 	public WoodenTableBlock(Properties properties) {
@@ -32,6 +33,7 @@ public class WoodenTableBlock extends Block implements SimpleWaterloggedBlock {
 
 	/**
 	 * Create the BlockState definition.
+	 *
 	 * @param builder the <code>StateContainer.Builder</code> of the block
 	 */
 	@Override
@@ -42,9 +44,11 @@ public class WoodenTableBlock extends Block implements SimpleWaterloggedBlock {
 	/**
 	 * Set FluidState properties.
 	 * Allows the block to exhibit waterlogged behavior.
+	 *
 	 * @param state the <code>BlockState</code> of the block
 	 * @return FluidState
 	 */
+	@SuppressWarnings("deprecation")
 	@Override
 	public @NotNull FluidState getFluidState(BlockState state) {
 		return state.getValue(WATERLOGGED) ? Fluids.WATER.getSource(false) : super.getFluidState(state);
@@ -52,12 +56,14 @@ public class WoodenTableBlock extends Block implements SimpleWaterloggedBlock {
 
 	/**
 	 * Set the shape of the block.
-	 * @param state the <code>BlockState</code> of the block
-	 * @param reader the <code>IBlockReader</code> for the block
-	 * @param pos the <code>BlockPos</code> the block is at
+	 *
+	 * @param state            the <code>BlockState</code> of the block
+	 * @param reader           the <code>IBlockReader</code> for the block
+	 * @param pos              the <code>BlockPos</code> the block is at
 	 * @param selectionContext the <code>ISelectionContext</code> of the block
 	 * @return VoxelShape
 	 */
+	@SuppressWarnings("deprecation")
 	@Override
 	public @NotNull VoxelShape getShape(BlockState state, @NotNull BlockGetter reader, @NotNull BlockPos pos, @NotNull CollisionContext selectionContext) {
 		Vec3 vector3d = state.getOffset(reader, pos);

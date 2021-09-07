@@ -22,6 +22,7 @@ public class PitfallBlock extends Block {
 
 	/**
 	 * Constructor for PitfallBlock.
+	 *
 	 * @param properties the <code>Properties</code> of the block
 	 */
 	public PitfallBlock(Properties properties) {
@@ -30,12 +31,14 @@ public class PitfallBlock extends Block {
 
 	/**
 	 * Set the shape of the block.
-	 * @param state the <code>BlockState</code> of the block
-	 * @param reader the <code>IBlockReader</code> for the block
-	 * @param pos the <code>BlockPos</code> the block is at
+	 *
+	 * @param state            the <code>BlockState</code> of the block
+	 * @param reader           the <code>IBlockReader</code> for the block
+	 * @param pos              the <code>BlockPos</code> the block is at
 	 * @param selectionContext the <code>ISelectionContext</code> of the block
 	 * @return VoxelShape
 	 */
+	@SuppressWarnings("deprecation")
 	@Override
 	public @NotNull VoxelShape getShape(@NotNull BlockState state, @NotNull BlockGetter reader, @NotNull BlockPos pos, @NotNull CollisionContext selectionContext) {
 		return SHAPE;
@@ -43,12 +46,14 @@ public class PitfallBlock extends Block {
 
 	/**
 	 * Get the collision shape of the block.
-	 * @param state the <code>BlockState</code> of the block
-	 * @param reader the <code>IBlockReader</code> for the block
-	 * @param pos the <code>BlockPos</code> the block is at
+	 *
+	 * @param state            the <code>BlockState</code> of the block
+	 * @param reader           the <code>IBlockReader</code> for the block
+	 * @param pos              the <code>BlockPos</code> the block is at
 	 * @param selectionContext the <code>ISelectionContext</code> of the block
 	 * @return VoxelShape
 	 */
+	@SuppressWarnings("deprecation")
 	@Override
 	public @NotNull VoxelShape getCollisionShape(@NotNull BlockState state, @NotNull BlockGetter reader, @NotNull BlockPos pos, @NotNull CollisionContext selectionContext) {
 		return Shapes.empty();
@@ -56,14 +61,16 @@ public class PitfallBlock extends Block {
 
 	/**
 	 * Updates the block when required.
-	 * @param stateIn the <code>BlockState</code> of the block
-	 * @param facing the <code>Direction</code> the block is facing
+	 *
+	 * @param stateIn     the <code>BlockState</code> of the block
+	 * @param facing      the <code>Direction</code> the block is facing
 	 * @param facingState the <code>BlockState</code> of the facing block
-	 * @param worldIn the <code>IWorld</code> the block is in
-	 * @param currentPos the <code>BlockPos</code> the block is at
-	 * @param facingPos the <code>BlocKPos</code> the facing block is at
+	 * @param worldIn     the <code>IWorld</code> the block is in
+	 * @param currentPos  the <code>BlockPos</code> the block is at
+	 * @param facingPos   the <code>BlocKPos</code> the facing block is at
 	 * @return BlockState
 	 */
+	@SuppressWarnings("deprecation")
 	@Override
 	public @NotNull BlockState updateShape(BlockState stateIn, @NotNull Direction facing, @NotNull BlockState facingState, @NotNull LevelAccessor worldIn, @NotNull BlockPos currentPos, @NotNull BlockPos facingPos) {
 		return !stateIn.canSurvive(worldIn, currentPos) ? Blocks.AIR.defaultBlockState() : super.updateShape(stateIn, facing, facingState, worldIn, currentPos, facingPos);
@@ -71,11 +78,13 @@ public class PitfallBlock extends Block {
 
 	/**
 	 * Determines if the block can exist in a given state.
-	 * @param state the <code>BlockState</code> of the block
+	 *
+	 * @param state  the <code>BlockState</code> of the block
 	 * @param reader the <code>IWorldReader</code> for the block
-	 * @param pos the <code>BlocKPos</code> the block is at
+	 * @param pos    the <code>BlocKPos</code> the block is at
 	 * @return boolean
 	 */
+	@SuppressWarnings("deprecation")
 	@Override
 	public boolean canSurvive(@NotNull BlockState state, @NotNull LevelReader reader, @NotNull BlockPos pos) {
 		for (Direction facing : new Direction[]{Direction.EAST, Direction.WEST, Direction.SOUTH, Direction.NORTH}) {
@@ -90,11 +99,13 @@ public class PitfallBlock extends Block {
 	/**
 	 * Runs when an entity is inside the block's collision area.
 	 * Allows the block to deal damage on contact.
-	 * @param state the <code>BlockState</code> of the block
-	 * @param level the <code>Level</code> the block is in
-	 * @param pos the <code>BlockPos</code> the block is at
+	 *
+	 * @param state  the <code>BlockState</code> of the block
+	 * @param level  the <code>Level</code> the block is in
+	 * @param pos    the <code>BlockPos</code> the block is at
 	 * @param entity the <code>Entity</code> passing through the block
 	 */
+	@SuppressWarnings("deprecation")
 	@Override
 	public void entityInside(@NotNull BlockState state, @NotNull Level level, @NotNull BlockPos pos, @NotNull Entity entity) {
 		if (entity instanceof LivingEntity && !level.isClientSide) {

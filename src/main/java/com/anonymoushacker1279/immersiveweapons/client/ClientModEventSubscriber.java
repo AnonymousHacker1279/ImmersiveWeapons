@@ -3,7 +3,8 @@ package com.anonymoushacker1279.immersiveweapons.client;
 import com.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import com.anonymoushacker1279.immersiveweapons.client.gui.screen.SmallPartsTableScreen;
 import com.anonymoushacker1279.immersiveweapons.client.gui.screen.TeslaSynthesizerScreen;
-import com.anonymoushacker1279.immersiveweapons.client.particle.SmokeBombParticleFactory;
+import com.anonymoushacker1279.immersiveweapons.client.particle.blood.BloodParticleFactory;
+import com.anonymoushacker1279.immersiveweapons.client.particle.smokebomb.SmokeBombParticleFactory;
 import com.anonymoushacker1279.immersiveweapons.client.renderer.blockentity.ChairRenderer;
 import com.anonymoushacker1279.immersiveweapons.client.renderer.blockentity.ShelfRenderer;
 import com.anonymoushacker1279.immersiveweapons.client.renderer.entity.arrow.*;
@@ -12,6 +13,7 @@ import com.anonymoushacker1279.immersiveweapons.client.renderer.entity.misc.Burn
 import com.anonymoushacker1279.immersiveweapons.client.renderer.entity.mob.*;
 import com.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
 import com.anonymoushacker1279.immersiveweapons.util.CustomWoodTypes;
+import com.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.MenuScreens;
@@ -31,6 +33,7 @@ import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fmlclient.registry.ClientRegistry;
 
+import java.util.Locale;
 import java.util.Objects;
 
 @EventBusSubscriber(modid = ImmersiveWeapons.MOD_ID, bus = Bus.MOD, value = Dist.CLIENT)
@@ -85,6 +88,8 @@ public class ClientModEventSubscriber {
 		mc.getItemColors().register((color1, color2) -> GrassColor.get(0.5d, 1.0d), DeferredRegistryHandler.PITFALL_ITEM.get());
 
 		event.enqueueWork(() -> Sheets.addWoodType(CustomWoodTypes.BURNED_OAK));
+
+		event.enqueueWork(ClientModEventSubscriber::registerPropertyGetters);
 	}
 
 	/**
@@ -95,6 +100,7 @@ public class ClientModEventSubscriber {
 	public static void entityRenderers(EntityRenderersEvent.RegisterRenderers event) {
 		event.registerEntityRenderer(DeferredRegistryHandler.COPPER_ARROW_ENTITY.get(), CopperArrowRenderer::new);
 		event.registerEntityRenderer(DeferredRegistryHandler.IRON_ARROW_ENTITY.get(), IronArrowRenderer::new);
+		event.registerEntityRenderer(DeferredRegistryHandler.COBALT_ARROW_ENTITY.get(), CobaltArrowRenderer::new);
 		event.registerEntityRenderer(DeferredRegistryHandler.DIAMOND_ARROW_ENTITY.get(), DiamondArrowRenderer::new);
 		event.registerEntityRenderer(DeferredRegistryHandler.GOLD_ARROW_ENTITY.get(), GoldArrowRenderer::new);
 		event.registerEntityRenderer(DeferredRegistryHandler.STONE_ARROW_ENTITY.get(), StoneArrowRenderer::new);
@@ -105,6 +111,7 @@ public class ClientModEventSubscriber {
 		event.registerEntityRenderer(DeferredRegistryHandler.WOOD_BULLET_ENTITY.get(), WoodBulletRenderer::new);
 		event.registerEntityRenderer(DeferredRegistryHandler.STONE_BULLET_ENTITY.get(), StoneBulletRenderer::new);
 		event.registerEntityRenderer(DeferredRegistryHandler.IRON_BULLET_ENTITY.get(), IronBulletRenderer::new);
+		event.registerEntityRenderer(DeferredRegistryHandler.COBALT_BULLET_ENTITY.get(), CobaltBulletRenderer::new);
 		event.registerEntityRenderer(DeferredRegistryHandler.GOLD_BULLET_ENTITY.get(), GoldBulletRenderer::new);
 		event.registerEntityRenderer(DeferredRegistryHandler.DIAMOND_BULLET_ENTITY.get(), DiamondBulletRenderer::new);
 		event.registerEntityRenderer(DeferredRegistryHandler.NETHERITE_BULLET_ENTITY.get(), NetheriteBulletRenderer::new);
@@ -130,5 +137,11 @@ public class ClientModEventSubscriber {
 	@SubscribeEvent
 	public static void onParticleFactoryRegistration(ParticleFactoryRegisterEvent event) {
 		mc.particleEngine.register(DeferredRegistryHandler.SMOKE_BOMB_PARTICLE_TYPE.get(), SmokeBombParticleFactory::new);
+		mc.particleEngine.register(DeferredRegistryHandler.BLOOD_PARTICLE_TYPE.get(), BloodParticleFactory::new);
+	}
+
+	private static void registerPropertyGetters() {
+		GeneralUtilities.registerPropertyGetter(DeferredRegistryHandler.IRON_GAUNTLET.get(), GeneralUtilities.prefix("gunslinger"),
+				(stack, clientLevel, livingEntity, i) -> stack.getDisplayName().getString().toLowerCase(Locale.ROOT).equals("[the gunslinger]") ? 1 : 0);
 	}
 }

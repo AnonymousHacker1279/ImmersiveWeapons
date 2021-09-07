@@ -24,6 +24,7 @@ public class BranchBlock extends BasicOrientableBlock {
 
 	/**
 	 * Constructor for BranchBlock.
+	 *
 	 * @param properties The <code>Properties</code> of the block
 	 */
 	public BranchBlock(Properties properties) {
@@ -32,12 +33,14 @@ public class BranchBlock extends BasicOrientableBlock {
 
 	/**
 	 * Set the shape of the block.
-	 * @param state the <code>BlockState</code> of the block
-	 * @param reader the <code>IBlockReader</code> for the block
-	 * @param pos the <code>BlockPos</code> the block is at
+	 *
+	 * @param state            the <code>BlockState</code> of the block
+	 * @param reader           the <code>IBlockReader</code> for the block
+	 * @param pos              the <code>BlockPos</code> the block is at
 	 * @param selectionContext the <code>ISelectionContext</code> of the block
 	 * @return VoxelShape
 	 */
+	@SuppressWarnings("deprecation")
 	@Override
 	public @NotNull VoxelShape getShape(BlockState state, @NotNull BlockGetter reader, @NotNull BlockPos pos, @NotNull CollisionContext selectionContext) {
 		Vec3 vector3d = state.getOffset(reader, pos);
@@ -51,11 +54,13 @@ public class BranchBlock extends BasicOrientableBlock {
 
 	/**
 	 * Determine if the block can survive an update.
-	 * @param state the <code>BlockState</code> of the block
+	 *
+	 * @param state  the <code>BlockState</code> of the block
 	 * @param reader the <code>LevelReader</code> for the block
-	 * @param pos the <code>BlockPos</code> the block is at
+	 * @param pos    the <code>BlockPos</code> the block is at
 	 * @return boolean
 	 */
+	@SuppressWarnings("deprecation")
 	@Override
 	public boolean canSurvive(BlockState state, LevelReader reader, BlockPos pos) {
 		BlockState blockstate = reader.getBlockState(pos.relative(state.getValue(FACING)));
@@ -64,14 +69,16 @@ public class BranchBlock extends BasicOrientableBlock {
 
 	/**
 	 * Update the block's shape.
-	 * @param state the new <code>BlockState</code> of the block
+	 *
+	 * @param state     the new <code>BlockState</code> of the block
 	 * @param direction the <code>Direction</code> the block is facing
-	 * @param state1 the old <code>BlockState</code> of the block
-	 * @param accessor the <code>LevelAccessor</code> for the block
-	 * @param pos the new <code>BlockPos</code> the block is at
-	 * @param pos1 the old <code>BlockPos</code> the block was at
+	 * @param state1    the old <code>BlockState</code> of the block
+	 * @param accessor  the <code>LevelAccessor</code> for the block
+	 * @param pos       the new <code>BlockPos</code> the block is at
+	 * @param pos1      the old <code>BlockPos</code> the block was at
 	 * @return BlockState
 	 */
+	@SuppressWarnings("deprecation")
 	@Override
 	public @NotNull BlockState updateShape(BlockState state, @NotNull Direction direction, @NotNull BlockState state1, @NotNull LevelAccessor accessor, @NotNull BlockPos pos, @NotNull BlockPos pos1) {
 		return direction == state.getValue(FACING) && !state.canSurvive(accessor, pos) ? Blocks.AIR.defaultBlockState() : super.updateShape(state, direction, state1, accessor, pos, pos1);
