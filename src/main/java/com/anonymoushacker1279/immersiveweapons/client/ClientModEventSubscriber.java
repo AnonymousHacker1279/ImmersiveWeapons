@@ -13,7 +13,6 @@ import com.anonymoushacker1279.immersiveweapons.client.renderer.entity.misc.Burn
 import com.anonymoushacker1279.immersiveweapons.client.renderer.entity.mob.*;
 import com.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
 import com.anonymoushacker1279.immersiveweapons.util.CustomWoodTypes;
-import com.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.MenuScreens;
@@ -23,7 +22,11 @@ import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.Sheets;
 import net.minecraft.client.renderer.blockentity.SignRenderer;
 import net.minecraft.client.renderer.entity.ThrownItemRenderer;
+import net.minecraft.client.renderer.item.ClampedItemPropertyFunction;
+import net.minecraft.client.renderer.item.ItemProperties;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.GrassColor;
+import net.minecraft.world.level.ItemLike;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.client.event.ParticleFactoryRegisterEvent;
@@ -141,7 +144,26 @@ public class ClientModEventSubscriber {
 	}
 
 	private static void registerPropertyGetters() {
-		GeneralUtilities.registerPropertyGetter(DeferredRegistryHandler.IRON_GAUNTLET.get(), GeneralUtilities.prefix("gunslinger"),
+		registerPropertyGetter(DeferredRegistryHandler.IRON_GAUNTLET.get(), prefix("gunslinger"),
 				(stack, clientLevel, livingEntity, i) -> stack.getDisplayName().getString().toLowerCase(Locale.ROOT).equals("[the gunslinger]") ? 1 : 0);
+	}
+
+	/**
+	 * Register an item property getter.
+	 * @param item the <code>ItemLike</code> instance
+	 * @param resourceLocation the <code>ResourceLocation</code> of the item
+	 * @param propertyValue the <code>ClampedItemPropertyFunction</code> value
+	 */
+	public static void registerPropertyGetter(ItemLike item, ResourceLocation resourceLocation, ClampedItemPropertyFunction propertyValue) {
+		ItemProperties.register(item.asItem(), resourceLocation, propertyValue);
+	}
+
+	/***
+	 * Get the prefix of a string.
+	 * @param path the path to prefix
+	 * @return ResourceLocation
+	 */
+	public static ResourceLocation prefix(String path) {
+		return new ResourceLocation(ImmersiveWeapons.MOD_ID, path);
 	}
 }
