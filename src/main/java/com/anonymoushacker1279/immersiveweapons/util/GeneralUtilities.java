@@ -1,11 +1,6 @@
 package com.anonymoushacker1279.immersiveweapons.util;
 
-import com.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
-import net.minecraft.client.renderer.item.ClampedItemPropertyFunction;
-import net.minecraft.client.renderer.item.ItemProperties;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.DyeColor;
-import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.StainedGlassBlock;
 import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
 
@@ -53,24 +48,5 @@ public class GeneralUtilities {
 	 */
 	public static StainedGlassBlock createStainedGlassFromColor(DyeColor color, Properties properties) {
 		return new StainedGlassBlock(color, properties);
-	}
-
-	/**
-	 * Register an item property getter.
-	 * @param item the <code>ItemLike</code> instance
-	 * @param resourceLocation the <code>ResourceLocation</code> of the item
-	 * @param propertyValue the <code>ClampedItemPropertyFunction</code> value
-	 */
-	public static void registerPropertyGetter(ItemLike item, ResourceLocation resourceLocation, ClampedItemPropertyFunction propertyValue) {
-		ItemProperties.register(item.asItem(), resourceLocation, propertyValue);
-	}
-
-	/***
-	 * Get the prefix of a string.
-	 * @param path the path to prefix
-	 * @return ResourceLocation
-	 */
-	public static ResourceLocation prefix(String path) {
-		return new ResourceLocation(ImmersiveWeapons.MOD_ID, path);
 	}
 }
