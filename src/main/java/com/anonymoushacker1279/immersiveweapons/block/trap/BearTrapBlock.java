@@ -67,12 +67,14 @@ public class BearTrapBlock extends BaseEntityBlock implements SimpleWaterloggedB
 	@SuppressWarnings("deprecation")
 	@Override
 	public @NotNull InteractionResult use(@NotNull BlockState state, Level worldIn, @NotNull BlockPos pos, @NotNull Player player, @NotNull InteractionHand handIn, @NotNull BlockHitResult blockRayTraceResult) {
-		if (!worldIn.isClientSide) {
+		if (!worldIn.isClientSide && handIn.equals(InteractionHand.MAIN_HAND)) {
 			BearTrapBlockEntity bearTrap = (BearTrapBlockEntity) worldIn.getBlockEntity(pos);
 			ItemStack currentlyHeldItem = player.getMainHandItem();
-			if (bearTrap != null && state.getValue(TRIGGERED) && !bearTrap.hasTrappedEntity() && bearTrap.hasTrappedPlayerEntity()) {
-				worldIn.setBlock(pos, state.setValue(TRIGGERED, false).setValue(VINES, false), 3);
-				return InteractionResult.SUCCESS;
+			if (bearTrap != null) {
+				if (state.getValue(TRIGGERED) && !bearTrap.hasTrappedEntity() && !bearTrap.hasTrappedPlayerEntity()) {
+					worldIn.setBlock(pos, state.setValue(TRIGGERED, false).setValue(VINES, false), 3);
+					return InteractionResult.SUCCESS;
+				}
 			}
 			if (!state.getValue(VINES) && currentlyHeldItem.getItem() == Items.VINE) {
 				worldIn.setBlock(pos, state.setValue(VINES, true), 3);
@@ -148,8 +150,8 @@ public class BearTrapBlock extends BaseEntityBlock implements SimpleWaterloggedB
 	 * @return BlockEntityTicker
 	 */
 	@Override
-	public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, @NotNull BlockState blockState, @NotNull BlockEntityType<T> blockEntityType) {
-		return !level.isClientSide ? null : createTickerHelper(blockEntityType, DeferredRegistryHandler.BEAR_TRAP_BLOCK_ENTITY.get(), (level1, blockPos, blockState1, bearTrapBlockEntity) -> BearTrapBlockEntity.clientTick(blockPos, bearTrapBlockEntity));
+	public <T extends BlockEntity> BlockEntityTicker<T> getTicker(@NotNull Level level, @NotNull BlockState blockState, @NotNull BlockEntityType<T> blockEntityType) {
+		return createTickerHelper(blockEntityType, DeferredRegistryHandler.BEAR_TRAP_BLOCK_ENTITY.get(), (level1, blockPos, blockState1, bearTrapBlockEntity) -> BearTrapBlockEntity.tick(blockPos, bearTrapBlockEntity));
 	}
 
 	/**
@@ -167,7 +169,7 @@ public class BearTrapBlock extends BaseEntityBlock implements SimpleWaterloggedB
 		BearTrapBlockEntity bearTrap = (BearTrapBlockEntity) level.getBlockEntity(pos);
 
 		if (state.getValue(TRIGGERED)) {
-			if (bearTrap != null && (bearTrap.getTrappedEntity() == entity || bearTrap.getTrappedPlayerEntity() == entity)) {
+			if (bearTrap != null && (bearTrap.getTrappedMobEntity() == entity || bearTrap.getTrappedPlayerEntity() == entity)) {
 				entity.makeStuckInBlock(state, new Vec3(0.0F, 0.0D, 0.0F));
 				if ((entity.xOld != entity.getX() || entity.zOld != entity.getZ())) {
 					double d0 = Math.abs(entity.getX() - entity.xOld);
@@ -204,7 +206,7 @@ public class BearTrapBlock extends BaseEntityBlock implements SimpleWaterloggedB
 			livingEntity.hurt(BearTrapBlockEntity.damageSource, 2.0F);
 			level.playLocalSound(pos.getX(), pos.getY(), pos.getZ(), DeferredRegistryHandler.BEAR_TRAP_CLOSE.get(), SoundSource.BLOCKS, 1f, 1f, false);
 			if (bearTrap != null) {
-				bearTrap.setTrappedEntity(livingEntity);
+				bearTrap.setTrappedMobEntity(livingEntity);
 			}
 		}
 	}
