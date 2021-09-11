@@ -16,7 +16,7 @@
 			"item": "minecraft:charcoal"
 		},
 		"z": {
-			"tag": "forge:leaves"
+			"tag": "minecraft:leaves"
 		}
 	},
 	"result": {

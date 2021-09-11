@@ -309,7 +309,7 @@ public abstract class AbstractBulletEntity extends AbstractArrow {
 	protected void onHitBlock(BlockHitResult blockHitResult) {
 		inBlockState = level.getBlockState(blockHitResult.getBlockPos());
 
-		if (inBlockState.is(BlockTags.bind("forge:leaves"))) {
+		if (inBlockState.is(BlockTags.bind("minecraft:leaves"))) {
 			push(0, -0.1, 0);
 			shakeTime = 4;
 		} else {
