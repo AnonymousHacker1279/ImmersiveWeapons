@@ -1,7 +1,6 @@
 package com.anonymoushacker1279.immersiveweapons.entity.ai.goal;
 
 import com.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
-import com.anonymoushacker1279.immersiveweapons.item.projectile.gun.SimpleShotgunItem;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.ai.goal.Goal;
@@ -63,7 +62,7 @@ public class RangedShotgunAttackGoal<T extends PathfinderMob & RangedAttackMob> 
 	 * @return boolean
 	 */
 	private boolean isGunInMainHand() {
-		return entity.isHolding(SimpleShotgunItem.class::isInstance);
+		return entity.isHolding(DeferredRegistryHandler.BLUNDERBUSS.get());
 	}
 
 	/**

@@ -1,7 +1,6 @@
 package com.anonymoushacker1279.immersiveweapons.entity.passive;
 
 import com.anonymoushacker1279.immersiveweapons.entity.ai.goal.DefendVillageTargetGoal;
-import com.anonymoushacker1279.immersiveweapons.entity.ai.goal.OpenFenceGateGoal;
 import com.anonymoushacker1279.immersiveweapons.entity.ai.goal.RangedShotgunAttackGoal;
 import com.anonymoushacker1279.immersiveweapons.entity.monster.AbstractDyingSoldierEntity;
 import com.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
@@ -104,16 +103,15 @@ public abstract class AbstractMinutemanEntity extends PathfinderMob implements R
 		goalSelector.addGoal(1, new FloatGoal(this));
 		goalSelector.addGoal(4, new WaterAvoidingRandomStrollGoal(this, 1.0D));
 		goalSelector.addGoal(2, new MoveBackToVillageGoal(this, 0.6D, false));
-		goalSelector.addGoal(3, new GolemRandomStrollInVillageGoal(this, 0.6D));
-		goalSelector.addGoal(3, new LookAtPlayerGoal(this, Player.class, 8.0F));
-		goalSelector.addGoal(3, new RandomLookAroundGoal(this));
-		goalSelector.addGoal(3, new OpenDoorGoal(this, true));
-		goalSelector.addGoal(3, new OpenFenceGateGoal(this, true));
-		targetSelector.addGoal(2, new HurtByTargetGoal(this, AbstractMinutemanEntity.class, IronGolem.class));
+		goalSelector.addGoal(4, new MoveThroughVillageGoal(this, 1.0D, false, 6, () -> true));
+		goalSelector.addGoal(8, new LookAtPlayerGoal(this, Player.class, 8.0F));
+		goalSelector.addGoal(100, new RandomLookAroundGoal(this));
+		goalSelector.addGoal(4, new OpenDoorGoal(this, true));
+		targetSelector.addGoal(1, new HurtByTargetGoal(this, MinutemanEntity.class, IronGolem.class));
 		targetSelector.addGoal(4, new DefendVillageTargetGoal(this));
 		targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, AbstractDyingSoldierEntity.class, false));
 		targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, Player.class, 8, true, false, this::isAngryAt));
-		targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, Mob.class, 10, false, false, (targetPredicate) -> targetPredicate instanceof Enemy && !(targetPredicate instanceof AbstractMinutemanEntity) && !(targetPredicate instanceof IronGolem) && !(targetPredicate instanceof Creeper)));
+		targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Monster.class, 10, false, false, (targetPredicate) -> !(targetPredicate instanceof Creeper)));
 		targetSelector.addGoal(5, new ResetUniversalAngerTargetGoal<>(this, false));
 	}
 
@@ -210,7 +208,6 @@ public abstract class AbstractMinutemanEntity extends PathfinderMob implements R
 				populateDefaultEquipmentSlots(level.getCurrentDifficultyAt(blockPosition()));
 				goalSelector.addGoal(12, aiAttackOnCollide);
 			}
-
 		}
 	}
 
@@ -298,15 +295,21 @@ public abstract class AbstractMinutemanEntity extends PathfinderMob implements R
 	@Override
 	public boolean hurt(@NotNull DamageSource source, float amount) {
 		super.hurt(source, amount);
-		setCombatTask();
-		if (amount > 0 && !(source.getEntity() instanceof AbstractMinutemanEntity) && !(source.getEntity() instanceof IronGolem) && source.getEntity() instanceof Player || source.getEntity() instanceof Mob) {
+		if (amount > 0 && source.getEntity() != null && !(source.getEntity() instanceof MinutemanEntity) && !(source.getEntity() instanceof IronGolem) && source.getEntity() instanceof Player || source.getEntity() instanceof Mob) {
 			if (source.getEntity() instanceof Player) {
 				if (((Player) source.getEntity()).isCreative()) {
 					return false;
 				}
 			}
+			setCombatTask();
 			setTarget((LivingEntity) source.getEntity());
 			setPersistentAngerTarget(source.getEntity().getUUID());
+
+			if (getTarget() != null && getTarget().getType() == DeferredRegistryHandler.MINUTEMAN_ENTITY.get()) {
+				setTarget(null);
+				return true;
+			}
+
 			// Aggro all other minutemen in the area
 			List<MinutemanEntity> list = level.getEntitiesOfClass(MinutemanEntity.class, (new AABB(blockPosition())).inflate(24.0D, 8.0D, 24.0D));
 			for (MinutemanEntity minutemanEntity : list) {

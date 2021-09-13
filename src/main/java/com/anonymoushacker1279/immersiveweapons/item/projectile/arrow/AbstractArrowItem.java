@@ -47,6 +47,7 @@ public abstract class AbstractArrowItem extends ArrowItem {
 	public @NotNull AbstractArrow createArrow(@NotNull Level worldIn, @NotNull ItemStack stack, @NotNull LivingEntity shooter) {
 		AbstractArrow arrowEntity = new Arrow(worldIn, shooter);
 		arrowEntity.setBaseDamage(damage);
+		arrowEntity.setOwner(shooter);
 		return arrowEntity;
 	}
 

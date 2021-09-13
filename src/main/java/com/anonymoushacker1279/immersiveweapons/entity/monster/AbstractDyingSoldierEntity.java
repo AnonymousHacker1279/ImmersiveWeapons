@@ -1,9 +1,8 @@
 package com.anonymoushacker1279.immersiveweapons.entity.monster;
 
-import com.anonymoushacker1279.immersiveweapons.entity.ai.goal.OpenFenceGateGoal;
 import com.anonymoushacker1279.immersiveweapons.entity.ai.goal.RangedGunAttackGoal;
-import com.anonymoushacker1279.immersiveweapons.entity.passive.AbstractFieldMedicEntity;
-import com.anonymoushacker1279.immersiveweapons.entity.passive.AbstractMinutemanEntity;
+import com.anonymoushacker1279.immersiveweapons.entity.passive.FieldMedicEntity;
+import com.anonymoushacker1279.immersiveweapons.entity.passive.MinutemanEntity;
 import com.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
 import com.anonymoushacker1279.immersiveweapons.item.projectile.arrow.AbstractArrowItem;
 import net.minecraft.core.BlockPos;
@@ -21,7 +20,7 @@ import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.animal.IronGolem;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.monster.RangedAttackMob;
-import net.minecraft.world.entity.npc.AbstractVillager;
+import net.minecraft.world.entity.npc.Villager;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.entity.projectile.ProjectileUtil;
@@ -90,16 +89,15 @@ public abstract class AbstractDyingSoldierEntity extends Monster implements Rang
 		goalSelector.addGoal(1, new FloatGoal(this));
 		goalSelector.addGoal(4, new WaterAvoidingRandomStrollGoal(this, 1.0D));
 		goalSelector.addGoal(4, new LookAtPlayerGoal(this, Player.class, 8.0F));
-		goalSelector.addGoal(4, new RandomLookAroundGoal(this));
-		goalSelector.addGoal(2, new MoveThroughVillageGoal(this, 1.0D, false, 6, () -> true));
-		goalSelector.addGoal(2, new OpenDoorGoal(this, false));
-		goalSelector.addGoal(2, new OpenFenceGateGoal(this, false));
-		targetSelector.addGoal(2, new HurtByTargetGoal(this));
-		targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, AbstractVillager.class, true));
-		targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, AbstractMinutemanEntity.class, false));
-		targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, AbstractFieldMedicEntity.class, true));
-		targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, Player.class, false));
-		targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, IronGolem.class, true));
+		goalSelector.addGoal(100, new RandomLookAroundGoal(this));
+		goalSelector.addGoal(6, new MoveThroughVillageGoal(this, 1.0D, false, 6, () -> true));
+		goalSelector.addGoal(6, new OpenDoorGoal(this, false));
+		targetSelector.addGoal(1, new HurtByTargetGoal(this));
+		targetSelector.addGoal(5, new NearestAttackableTargetGoal<>(this, Villager.class, false));
+		targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, MinutemanEntity.class, true));
+		targetSelector.addGoal(4, new NearestAttackableTargetGoal<>(this, FieldMedicEntity.class, true));
+		targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, Player.class, true));
+		targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, IronGolem.class, true));
 	}
 
 	/**
@@ -188,7 +186,7 @@ public abstract class AbstractDyingSoldierEntity extends Monster implements Rang
 				}
 
 				aiPistolAttack.setAttackCooldown(i);
-				goalSelector.addGoal(4, aiPistolAttack);
+				goalSelector.addGoal(1, aiPistolAttack);
 			} else {
 				goalSelector.addGoal(4, aiAttackOnCollide);
 			}

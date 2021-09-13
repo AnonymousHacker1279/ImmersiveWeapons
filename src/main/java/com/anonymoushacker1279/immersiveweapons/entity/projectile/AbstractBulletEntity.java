@@ -244,17 +244,17 @@ public abstract class AbstractBulletEntity extends AbstractArrow {
 			i = (int) Math.min(j + i, 2147483647L);
 		}
 
-		Entity entity1 = getOwner();
+		Entity owner = getOwner();
 		DamageSource damagesource;
-		if (entity1 == null) {
+		if (owner == null) {
 			damagesource = DamageSource.arrow(this, this);
 		} else {
-			damagesource = DamageSource.arrow(this, entity1);
-			if (entity1 instanceof LivingEntity) {
+			damagesource = DamageSource.arrow(this, owner);
+			if (owner instanceof LivingEntity) {
 				entity.invulnerableTime = 0;
 				entity.setInvulnerable(false);
 				doWhenHitEntity(entity);
-				((LivingEntity) entity1).setLastHurtMob(entity);
+				((LivingEntity) owner).setLastHurtMob(entity);
 			}
 		}
 
@@ -278,14 +278,14 @@ public abstract class AbstractBulletEntity extends AbstractArrow {
 					}
 				}
 
-				if (!level.isClientSide && entity1 instanceof LivingEntity) {
-					EnchantmentHelper.doPostHurtEffects(livingEntity, entity1);
-					EnchantmentHelper.doPostDamageEffects((LivingEntity) entity1, livingEntity);
+				if (!level.isClientSide && owner instanceof LivingEntity) {
+					EnchantmentHelper.doPostHurtEffects(livingEntity, owner);
+					EnchantmentHelper.doPostDamageEffects((LivingEntity) owner, livingEntity);
 				}
 
 				doPostHurtEffects(livingEntity);
-				if (livingEntity != entity1 && livingEntity instanceof Player && entity1 instanceof ServerPlayer && !isSilent()) {
-					((ServerPlayer) entity1).connection.send(new ClientboundGameEventPacket(ClientboundGameEventPacket.ARROW_HIT_PLAYER, 0.0F));
+				if (livingEntity != owner && livingEntity instanceof Player && owner instanceof ServerPlayer && !isSilent()) {
+					((ServerPlayer) owner).connection.send(new ClientboundGameEventPacket(ClientboundGameEventPacket.ARROW_HIT_PLAYER, 0.0F));
 				}
 			}
 
