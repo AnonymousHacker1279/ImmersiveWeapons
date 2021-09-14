@@ -1,6 +1,5 @@
 package com.anonymoushacker1279.immersiveweapons.entity.monster;
 
-import com.anonymoushacker1279.immersiveweapons.entity.ai.goal.OpenFenceGateGoal;
 import com.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
@@ -29,7 +28,6 @@ import org.jetbrains.annotations.NotNull;
 import javax.annotation.Nullable;
 import java.time.LocalDate;
 import java.time.temporal.ChronoField;
-import java.util.function.Predicate;
 
 public abstract class AbstractWanderingWarriorEntity extends Monster {
 
@@ -46,8 +44,6 @@ public abstract class AbstractWanderingWarriorEntity extends Monster {
 			setAggressive(true);
 		}
 	};
-
-	public static final Predicate<LivingEntity> CAN_TARGET = (livingEntity) -> !(livingEntity instanceof Creeper);
 
 	/**
 	 * Constructor for AbstractWanderingWarriorEntity.
@@ -74,14 +70,13 @@ public abstract class AbstractWanderingWarriorEntity extends Monster {
 	 */
 	@Override
 	protected void registerGoals() {
-		goalSelector.addGoal(4, new WaterAvoidingRandomStrollGoal(this, 1.0D));
-		goalSelector.addGoal(4, new LookAtPlayerGoal(this, Player.class, 8.0F));
-		goalSelector.addGoal(4, new RandomLookAroundGoal(this));
-		goalSelector.addGoal(3, new OpenDoorGoal(this, true));
-		goalSelector.addGoal(3, new OpenFenceGateGoal(this, true));
+		goalSelector.addGoal(5, new WaterAvoidingRandomStrollGoal(this, 1.0D));
+		goalSelector.addGoal(8, new LookAtPlayerGoal(this, Player.class, 8.0F));
+		goalSelector.addGoal(100, new RandomLookAroundGoal(this));
+		goalSelector.addGoal(4, new OpenDoorGoal(this, false));
 		goalSelector.addGoal(1, new FloatGoal(this));
-		targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, Monster.class, 0, false, true, CAN_TARGET));
-		targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, Player.class, false));
+		targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Monster.class, 1, true, true, (targetPredicate) -> !(targetPredicate instanceof Creeper)));
+		targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, Player.class, true));
 		targetSelector.addGoal(2, new HurtByTargetGoal(this));
 	}
 
@@ -190,7 +185,7 @@ public abstract class AbstractWanderingWarriorEntity extends Monster {
 			if (getItemInHand(InteractionHand.MAIN_HAND).getItem() == Items.AIR) {
 				populateDefaultEquipmentSlots(level.getCurrentDifficultyAt(blockPosition()));
 			}
-			goalSelector.addGoal(12, aiAttackOnCollide);
+			goalSelector.addGoal(1, aiAttackOnCollide);
 		}
 	}
 

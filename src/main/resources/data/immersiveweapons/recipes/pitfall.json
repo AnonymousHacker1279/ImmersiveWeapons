@@ -13,7 +13,7 @@
 			"item": "minecraft:grass"
 		},
 		"z": {
-			"tag": "forge:leaves"
+			"tag": "minecraft:leaves"
 		}
 	},
 	"result": {

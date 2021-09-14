@@ -1,5 +1,6 @@
 package com.anonymoushacker1279.immersiveweapons.item.projectile.gun;
 
+import com.anonymoushacker1279.immersiveweapons.entity.projectile.AbstractBulletEntity;
 import com.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
 import com.anonymoushacker1279.immersiveweapons.item.projectile.arrow.AbstractArrowItem;
 import com.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
@@ -7,11 +8,12 @@ import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.projectile.AbstractArrow;
+import net.minecraft.world.entity.projectile.AbstractArrow.Pickup;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
+import net.minecraftforge.event.ForgeEventFactory;
 import org.jetbrains.annotations.NotNull;
 
 public class SimpleShotgunItem extends SimplePistolItem {
@@ -73,7 +75,7 @@ public class SimpleShotgunItem extends SimplePistolItem {
 			}
 
 			int i = getUseDuration(itemStack);
-			i = net.minecraftforge.event.ForgeEventFactory.onArrowLoose(itemStack, worldIn, playerEntity, i, !itemStack1.isEmpty() || flag);
+			i = ForgeEventFactory.onArrowLoose(itemStack, worldIn, playerEntity, i, !itemStack1.isEmpty() || flag);
 			if (i < 0) return;
 
 			if (!itemStack1.isEmpty() || flag || !misfire) {
@@ -86,10 +88,12 @@ public class SimpleShotgunItem extends SimplePistolItem {
 					if (!worldIn.isClientSide) {
 						for (int iterator = 0; iterator < bulletsToFire; ++iterator) {
 							AbstractArrowItem customArrowItem = (AbstractArrowItem) (itemStack1.getItem() instanceof AbstractArrowItem ? itemStack1.getItem() : defaultAmmo());
-							AbstractArrow abstractBulletEntity = customArrowItem.createArrow(worldIn, itemStack1, playerEntity);
+							AbstractBulletEntity abstractBulletEntity = (AbstractBulletEntity) customArrowItem.createArrow(worldIn, itemStack1, playerEntity);
 							abstractBulletEntity.setKnockback(3);
 							abstractBulletEntity.shootFromRotation(playerEntity, playerEntity.xRot + GeneralUtilities.getRandomNumber(-5.0f, 5.0f), playerEntity.yRot + GeneralUtilities.getRandomNumber(-5.0f, 5.0f), 0.0F, 3.0F, 1.0F);
 							abstractBulletEntity.setCritArrow(true);
+							abstractBulletEntity.setOwner(playerEntity);
+							abstractBulletEntity.pickup = Pickup.DISALLOWED;
 							worldIn.addFreshEntity(abstractBulletEntity);
 						}
 						itemStack.hurtAndBreak(1, playerEntity, (entity) -> entity.broadcastBreakEvent(playerEntity.getUsedItemHand()));

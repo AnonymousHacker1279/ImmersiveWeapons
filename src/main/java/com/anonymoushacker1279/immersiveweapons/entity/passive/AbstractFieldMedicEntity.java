@@ -1,6 +1,5 @@
 package com.anonymoushacker1279.immersiveweapons.entity.passive;
 
-import com.anonymoushacker1279.immersiveweapons.entity.ai.goal.OpenFenceGateGoal;
 import com.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
 import com.anonymoushacker1279.immersiveweapons.item.misc.UsedSyringeItem;
 import com.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
@@ -56,6 +55,8 @@ public abstract class AbstractFieldMedicEntity extends PathfinderMob {
 	private LivingEntity currentlyTargetedEntity = null;
 	private LivingEntity lastTargetedEntity = null;
 	private int unlockLastTargetedEntityCooldown = 0;
+	private int healCooldown = 0;
+	private int randomHealTicks = 0;
 
 	/**
 	 * Constructor for AbstractFieldMedicEntity.
@@ -90,12 +91,11 @@ public abstract class AbstractFieldMedicEntity extends PathfinderMob {
 	protected void registerGoals() {
 		goalSelector.addGoal(1, new FloatGoal(this));
 		goalSelector.addGoal(4, new WaterAvoidingRandomStrollGoal(this, 1.0D));
-		goalSelector.addGoal(3, new MoveBackToVillageGoal(this, 0.6D, false));
-		goalSelector.addGoal(2, new GolemRandomStrollInVillageGoal(this, 0.6D));
-		goalSelector.addGoal(4, new LookAtPlayerGoal(this, Player.class, 8.0F));
-		goalSelector.addGoal(4, new RandomLookAroundGoal(this));
+		goalSelector.addGoal(5, new MoveBackToVillageGoal(this, 0.6D, false));
+		goalSelector.addGoal(4, new GolemRandomStrollInVillageGoal(this, 0.6D));
+		goalSelector.addGoal(7, new LookAtPlayerGoal(this, Player.class, 8.0F));
+		goalSelector.addGoal(100, new RandomLookAroundGoal(this));
 		goalSelector.addGoal(3, new OpenDoorGoal(this, true));
-		goalSelector.addGoal(3, new OpenFenceGateGoal(this, true));
 		targetSelector.addGoal(1, new HurtByTargetGoal(this, AbstractMinutemanEntity.class, IronGolem.class));
 	}
 
@@ -120,6 +120,19 @@ public abstract class AbstractFieldMedicEntity extends PathfinderMob {
 		checkForHurtEntities(checkedEntities);
 		if (checkForHurtEntitiesCooldown > 0) {
 			checkForHurtEntitiesCooldown--;
+		}
+		if (healCooldown > 0) {
+			healCooldown--;
+		}
+		if (!level.isClientSide && getHealth() <= getMaxHealth()) {
+			if (randomHealTicks >= 20) {
+				heal();
+				randomHealTicks = 0;
+			} else {
+				if (random.nextFloat() <= 0.01f) {
+					randomHealTicks++;
+				}
+			}
 		}
 	}
 
@@ -179,7 +192,7 @@ public abstract class AbstractFieldMedicEntity extends PathfinderMob {
 		if (!level.isClientSide) {
 			goalSelector.removeGoal(aiAttackOnCollide);
 			setItemInHand(InteractionHand.MAIN_HAND, new ItemStack(DeferredRegistryHandler.USED_SYRINGE.get()));
-			goalSelector.addGoal(12, aiAttackOnCollide);
+			goalSelector.addGoal(1, aiAttackOnCollide);
 		}
 	}
 
@@ -195,11 +208,13 @@ public abstract class AbstractFieldMedicEntity extends PathfinderMob {
 		if (amount > 0 && !(source.getEntity() instanceof AbstractMinutemanEntity) && !(source.getEntity() instanceof IronGolem) && source.getEntity() instanceof Player || source.getEntity() instanceof Mob) {
 			if (source.getEntity() instanceof Player) {
 				if (((Player) source.getEntity()).isCreative()) {
-					return false;
+					return true;
 				}
 			}
 			// Heal itself
-			heal();
+			if (healCooldown == 0) {
+				heal();
+			}
 			setTarget((LivingEntity) source.getEntity());
 			setCombatTask();
 			// Aggro all other minutemen in the area
@@ -208,6 +223,7 @@ public abstract class AbstractFieldMedicEntity extends PathfinderMob {
 				minutemanEntity.setTarget((LivingEntity) source.getEntity());
 				minutemanEntity.setPersistentAngerTarget(source.getEntity().getUUID());
 			}
+			return true;
 		}
 		return false;
 	}
@@ -216,12 +232,13 @@ public abstract class AbstractFieldMedicEntity extends PathfinderMob {
 	 * Perform the healing process on the entity.
 	 */
 	private void heal() {
+		healCooldown = 100;
 		if (getHealth() <= getMaxHealth() / 2) {
-			setItemInHand(InteractionHand.MAIN_HAND, new ItemStack(DeferredRegistryHandler.FIRST_AID_KIT.get()));
+			setItemInHand(InteractionHand.OFF_HAND, new ItemStack(DeferredRegistryHandler.FIRST_AID_KIT.get()));
 			addEffect(new MobEffectInstance(MobEffects.REGENERATION, 240, 1, false, true));
 			addEffect(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, 1200, 0, false, true));
 		} else {
-			setItemInHand(InteractionHand.MAIN_HAND, new ItemStack(DeferredRegistryHandler.BANDAGE.get()));
+			setItemInHand(InteractionHand.OFF_HAND, new ItemStack(DeferredRegistryHandler.BANDAGE.get()));
 			addEffect(new MobEffectInstance(MobEffects.REGENERATION, 240, 0, false, true));
 		}
 	}
