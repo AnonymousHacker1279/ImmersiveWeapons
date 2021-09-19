@@ -44,6 +44,9 @@ import com.anonymoushacker1279.immersiveweapons.item.fortitude.FirstAidKitItem;
 import com.anonymoushacker1279.immersiveweapons.item.fortitude.MorphineItem;
 import com.anonymoushacker1279.immersiveweapons.item.fortitude.PainkillerItem;
 import com.anonymoushacker1279.immersiveweapons.item.gauntlet.*;
+import com.anonymoushacker1279.immersiveweapons.item.handbook.BarBrawlerHandbook;
+import com.anonymoushacker1279.immersiveweapons.item.handbook.HealingExpertHandbook;
+import com.anonymoushacker1279.immersiveweapons.item.handbook.PikeMaintenanceHandbook;
 import com.anonymoushacker1279.immersiveweapons.item.misc.ExplosiveChocolateBar;
 import com.anonymoushacker1279.immersiveweapons.item.misc.UsedSyringeItem;
 import com.anonymoushacker1279.immersiveweapons.item.pike.*;
@@ -61,6 +64,7 @@ import com.anonymoushacker1279.immersiveweapons.item.utility.BasicContainerItem;
 import com.anonymoushacker1279.immersiveweapons.item.utility.BlueprintItem;
 import com.anonymoushacker1279.immersiveweapons.item.utility.CustomBoatItem;
 import com.anonymoushacker1279.immersiveweapons.item.utility.CustomSpawnEggItem;
+import com.anonymoushacker1279.immersiveweapons.potion.AlcoholEffect;
 import com.anonymoushacker1279.immersiveweapons.potion.BleedingEffect;
 import com.anonymoushacker1279.immersiveweapons.potion.MorphineEffect;
 import com.anonymoushacker1279.immersiveweapons.util.*;
@@ -278,6 +282,9 @@ public class DeferredRegistryHandler {
 	public static final RegistryObject<UsedSyringeItem> USED_SYRINGE = ITEMS.register("used_syringe", () -> new UsedSyringeItem(new Properties().tab(ITEM_GROUP).stacksTo(16)));
 	public static final RegistryObject<FirstAidKitItem> FIRST_AID_KIT = ITEMS.register("first_aid_kit", () -> new FirstAidKitItem(new Properties().tab(ITEM_GROUP).stacksTo(8)));
 	public static final RegistryObject<Item> CLOTH_SCRAP = ITEMS.register("cloth_scrap", () -> new Item(new Properties().tab(ITEM_GROUP)));
+	public static final RegistryObject<BarBrawlerHandbook> BAR_BRAWLER_HANDBOOK = ITEMS.register("bar_brawler_handbook", () -> new BarBrawlerHandbook(new Properties().tab(ITEM_GROUP).stacksTo(1)));
+	public static final RegistryObject<HealingExpertHandbook> HEALING_EXPERT_HANDBOOK = ITEMS.register("healing_expert_handbook", () -> new HealingExpertHandbook(new Properties().tab(ITEM_GROUP).stacksTo(1)));
+	public static final RegistryObject<PikeMaintenanceHandbook> PIKE_MAINTENANCE_HANDBOOK = ITEMS.register("pike_maintenance_handbook", () -> new PikeMaintenanceHandbook(new Properties().tab(ITEM_GROUP).stacksTo(1)));
 
 	// Armor
 	public static final RegistryObject<MoltenArmorItem> MOLTEN_HELMET = ITEMS.register("molten_helmet", () -> new MoltenArmorItem(CustomArmorMaterials.MOLTEN, EquipmentSlot.HEAD, 1));
@@ -302,11 +309,11 @@ public class DeferredRegistryHandler {
 	public static final RegistryObject<VentusArmorItem> VENTUS_BOOTS = ITEMS.register("ventus_boots", () -> new VentusArmorItem(CustomArmorMaterials.VENTUS, EquipmentSlot.FEET, 1));
 
 	// Spawn eggs
-	public static final RegistryObject<CustomSpawnEggItem> DYING_SOLDIER_SPAWN_EGG = ITEMS.register("dying_soldier_spawn_egg", () -> new CustomSpawnEggItem(DeferredRegistryHandler.DYING_SOLDIER_ENTITY, 0x7a6851, 0x783d22, (new Item.Properties()).tab(ITEM_GROUP)));
-	public static final RegistryObject<CustomSpawnEggItem> MINUTEMAN_SPAWN_EGG = ITEMS.register("minuteman_spawn_egg", () -> new CustomSpawnEggItem(DeferredRegistryHandler.MINUTEMAN_ENTITY, 0x494522, 0x204b2a, (new Item.Properties()).tab(ITEM_GROUP)));
-	public static final RegistryObject<CustomSpawnEggItem> FIELD_MEDIC_SPAWN_EGG = ITEMS.register("field_medic_spawn_egg", () -> new CustomSpawnEggItem(DeferredRegistryHandler.FIELD_MEDIC_ENTITY, 0xde5451, 0xebe4d2, (new Item.Properties()).tab(ITEM_GROUP)));
-	public static final RegistryObject<CustomSpawnEggItem> WANDERING_WARRIOR_SPAWN_EGG = ITEMS.register("wandering_warrior_spawn_egg", () -> new CustomSpawnEggItem(DeferredRegistryHandler.WANDERING_WARRIOR_ENTITY, 0x614226, 0x2e6278, (new Item.Properties()).tab(ITEM_GROUP)));
-	public static final RegistryObject<CustomSpawnEggItem> HANS_SPAWN_EGG = ITEMS.register("hans_spawn_egg", () -> new CustomSpawnEggItem(DeferredRegistryHandler.HANS_ENTITY, 0xd0a873, 0xafafaf, (new Item.Properties().tab(ITEM_GROUP))));
+	public static final RegistryObject<CustomSpawnEggItem> DYING_SOLDIER_SPAWN_EGG = ITEMS.register("dying_soldier_spawn_egg", () -> new CustomSpawnEggItem(DeferredRegistryHandler.DYING_SOLDIER_ENTITY, 0x7a6851, 0x783d22, (new Item.Properties()).tab(ITEM_GROUP).stacksTo(16)));
+	public static final RegistryObject<CustomSpawnEggItem> MINUTEMAN_SPAWN_EGG = ITEMS.register("minuteman_spawn_egg", () -> new CustomSpawnEggItem(DeferredRegistryHandler.MINUTEMAN_ENTITY, 0x494522, 0x204b2a, (new Item.Properties()).tab(ITEM_GROUP).stacksTo(16)));
+	public static final RegistryObject<CustomSpawnEggItem> FIELD_MEDIC_SPAWN_EGG = ITEMS.register("field_medic_spawn_egg", () -> new CustomSpawnEggItem(DeferredRegistryHandler.FIELD_MEDIC_ENTITY, 0xde5451, 0xebe4d2, (new Item.Properties()).tab(ITEM_GROUP).stacksTo(16)));
+	public static final RegistryObject<CustomSpawnEggItem> WANDERING_WARRIOR_SPAWN_EGG = ITEMS.register("wandering_warrior_spawn_egg", () -> new CustomSpawnEggItem(DeferredRegistryHandler.WANDERING_WARRIOR_ENTITY, 0x614226, 0x2e6278, (new Item.Properties()).tab(ITEM_GROUP).stacksTo(16)));
+	public static final RegistryObject<CustomSpawnEggItem> HANS_SPAWN_EGG = ITEMS.register("hans_spawn_egg", () -> new CustomSpawnEggItem(DeferredRegistryHandler.HANS_ENTITY, 0xd0a873, 0xafafaf, (new Item.Properties().tab(ITEM_GROUP).stacksTo(16))));
 
 	// Blocks
 	// Breakable via pickaxe
@@ -570,6 +577,7 @@ public class DeferredRegistryHandler {
 	// Effects
 	public static final RegistryObject<MorphineEffect> MORPHINE_EFFECT = EFFECTS.register("morphine", () -> new MorphineEffect(MobEffectCategory.NEUTRAL, 3484189));
 	public static final RegistryObject<BleedingEffect> BLEEDING_EFFECT = EFFECTS.register("bleeding", () -> new BleedingEffect(MobEffectCategory.HARMFUL, 8392463));
+	public static final RegistryObject<AlcoholEffect> ALCOHOL_EFFECT = EFFECTS.register("alcohol", () -> new AlcoholEffect(MobEffectCategory.NEUTRAL, 14465637));
 
 	// Structures
 	public static final RegistryObject<StructureFeature<NoneFeatureConfiguration>> ABANDONED_FACTORY_STRUCTURE = Structures.setupStructure("abandoned_factory", () -> (new AbandonedFactory(NoneFeatureConfiguration.CODEC)));

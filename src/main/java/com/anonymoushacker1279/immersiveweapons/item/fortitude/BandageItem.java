@@ -12,6 +12,8 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Objects;
+
 public class BandageItem extends Item {
 
 	/**
@@ -32,7 +34,11 @@ public class BandageItem extends Item {
 	@Override
 	public @NotNull InteractionResultHolder<ItemStack> use(@NotNull Level worldIn, Player playerIn, @NotNull InteractionHand handIn) {
 		ItemStack itemstack = playerIn.getItemInHand(handIn);
-		playerIn.addEffect(new MobEffectInstance(MobEffects.REGENERATION, 240, 0, false, true));
+		if (playerIn.getPersistentData().get(Player.PERSISTED_NBT_TAG) != null && Objects.requireNonNull(playerIn.getPersistentData().get(Player.PERSISTED_NBT_TAG)).toString().contains("handbookHealingExpert")) {
+			playerIn.addEffect(new MobEffectInstance(MobEffects.REGENERATION, 312, 1, false, true));
+		} else {
+			playerIn.addEffect(new MobEffectInstance(MobEffects.REGENERATION, 240, 0, false, true));
+		}
 		if (!playerIn.isCreative()) {
 			itemstack.shrink(1);
 			playerIn.getCooldowns().addCooldown(this, 300);
@@ -54,8 +60,11 @@ public class BandageItem extends Item {
 		if (entity.level.isClientSide) {
 			return InteractionResult.PASS;
 		}
-
-		entity.addEffect(new MobEffectInstance(MobEffects.REGENERATION, 160, 0, false, true));
+		if (playerIn.getPersistentData().get(Player.PERSISTED_NBT_TAG) != null && Objects.requireNonNull(playerIn.getPersistentData().get(Player.PERSISTED_NBT_TAG)).toString().contains("handbookHealingExpert")) {
+			entity.addEffect(new MobEffectInstance(MobEffects.REGENERATION, 208, 1, false, true));
+		} else {
+			entity.addEffect(new MobEffectInstance(MobEffects.REGENERATION, 160, 0, false, true));
+		}
 		if (!playerIn.isCreative()) {
 			stack.shrink(1);
 		}
