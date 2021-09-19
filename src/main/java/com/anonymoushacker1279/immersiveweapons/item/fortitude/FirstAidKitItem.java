@@ -15,6 +15,8 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Objects;
+
 public class FirstAidKitItem extends Item {
 
 	/**
@@ -41,8 +43,13 @@ public class FirstAidKitItem extends Item {
 			}
 			return InteractionResultHolder.pass(itemstack);
 		}
-		playerIn.addEffect(new MobEffectInstance(MobEffects.REGENERATION, 240, 1, false, true));
-		playerIn.addEffect(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, 1200, 0, false, true));
+		if (playerIn.getPersistentData().get(Player.PERSISTED_NBT_TAG) != null && Objects.requireNonNull(playerIn.getPersistentData().get(Player.PERSISTED_NBT_TAG)).toString().contains("handbookHealingExpert")) {
+			playerIn.addEffect(new MobEffectInstance(MobEffects.REGENERATION, 312, 2, false, true));
+			playerIn.addEffect(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, 1560, 1, false, true));
+		} else {
+			playerIn.addEffect(new MobEffectInstance(MobEffects.REGENERATION, 240, 1, false, true));
+			playerIn.addEffect(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, 1200, 0, false, true));
+		}
 		if (!playerIn.isCreative()) {
 			itemstack.shrink(1);
 			playerIn.getCooldowns().addCooldown(this, 400);
@@ -67,8 +74,13 @@ public class FirstAidKitItem extends Item {
 		if (entity.getMaxHealth() - entity.getHealth() <= entity.getMaxHealth() / 2) { // Only use if at or less than half health
 			return InteractionResult.PASS;
 		}
-		entity.addEffect(new MobEffectInstance(MobEffects.REGENERATION, 160, 1, false, true));
-		entity.addEffect(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, 900, 0, false, true));
+		if (playerIn.getPersistentData().get(Player.PERSISTED_NBT_TAG) != null && Objects.requireNonNull(playerIn.getPersistentData().get(Player.PERSISTED_NBT_TAG)).toString().contains("handbookHealingExpert")) {
+			entity.addEffect(new MobEffectInstance(MobEffects.REGENERATION, 312, 2, false, true));
+			entity.addEffect(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, 1560, 1, false, true));
+		} else {
+			entity.addEffect(new MobEffectInstance(MobEffects.REGENERATION, 240, 1, false, true));
+			entity.addEffect(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, 1200, 0, false, true));
+		}
 		if (!playerIn.isCreative()) {
 			stack.shrink(1);
 		}

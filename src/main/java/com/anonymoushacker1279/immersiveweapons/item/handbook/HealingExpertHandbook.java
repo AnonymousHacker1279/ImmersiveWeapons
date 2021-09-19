@@ -14,10 +14,10 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
 
-public class BarBrawlerHandbook extends Item {
+public class HealingExpertHandbook extends Item {
 
-	public BarBrawlerHandbook(Properties properties) {
-		super(properties);
+	public HealingExpertHandbook(Properties pProperties) {
+		super(pProperties);
 	}
 
 	/**
@@ -31,15 +31,15 @@ public class BarBrawlerHandbook extends Item {
 		ItemStack itemStack = playerIn.getItemInHand(handIn);
 
 		if (!worldIn.isClientSide) {
-			if (playerIn.getPersistentData().get(Player.PERSISTED_NBT_TAG) != null && Objects.requireNonNull(playerIn.getPersistentData().get(Player.PERSISTED_NBT_TAG)).toString().contains("handbookBarBrawler")) {
+			if (playerIn.getPersistentData().get(Player.PERSISTED_NBT_TAG) != null && Objects.requireNonNull(playerIn.getPersistentData().get(Player.PERSISTED_NBT_TAG)).toString().contains("handbookHealingExpert")) {
 				playerIn.sendMessage(new TranslatableComponent("immersiveweapons.item.handbook.already_exists").withStyle(ChatFormatting.YELLOW), Util.NIL_UUID);
 			} else {
-				playerIn.getPersistentData().putString(Player.PERSISTED_NBT_TAG, "handbookBarBrawler");
+				playerIn.getPersistentData().putString(Player.PERSISTED_NBT_TAG, "handbookHealingExpert");
 				itemStack.shrink(1);
 				playerIn.playSound(SoundEvents.BOOK_PUT, 1, 1);
 				playerIn.giveExperiencePoints(15);
-				playerIn.sendMessage(new TranslatableComponent("immersiveweapons.item.handbook.bar_brawler1").withStyle(ChatFormatting.GREEN), Util.NIL_UUID);
-				playerIn.sendMessage(new TranslatableComponent("immersiveweapons.item.handbook.bar_brawler2").withStyle(ChatFormatting.GREEN), Util.NIL_UUID);
+				playerIn.sendMessage(new TranslatableComponent("immersiveweapons.item.handbook.healing_expert1").withStyle(ChatFormatting.GREEN), Util.NIL_UUID);
+				playerIn.sendMessage(new TranslatableComponent("immersiveweapons.item.handbook.healing_expert2").withStyle(ChatFormatting.GREEN), Util.NIL_UUID);
 			}
 		}
 

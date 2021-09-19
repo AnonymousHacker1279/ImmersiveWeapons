@@ -45,6 +45,7 @@ import com.anonymoushacker1279.immersiveweapons.item.fortitude.MorphineItem;
 import com.anonymoushacker1279.immersiveweapons.item.fortitude.PainkillerItem;
 import com.anonymoushacker1279.immersiveweapons.item.gauntlet.*;
 import com.anonymoushacker1279.immersiveweapons.item.handbook.BarBrawlerHandbook;
+import com.anonymoushacker1279.immersiveweapons.item.handbook.HealingExpertHandbook;
 import com.anonymoushacker1279.immersiveweapons.item.misc.ExplosiveChocolateBar;
 import com.anonymoushacker1279.immersiveweapons.item.misc.UsedSyringeItem;
 import com.anonymoushacker1279.immersiveweapons.item.pike.*;
@@ -281,6 +282,7 @@ public class DeferredRegistryHandler {
 	public static final RegistryObject<FirstAidKitItem> FIRST_AID_KIT = ITEMS.register("first_aid_kit", () -> new FirstAidKitItem(new Properties().tab(ITEM_GROUP).stacksTo(8)));
 	public static final RegistryObject<Item> CLOTH_SCRAP = ITEMS.register("cloth_scrap", () -> new Item(new Properties().tab(ITEM_GROUP)));
 	public static final RegistryObject<BarBrawlerHandbook> BAR_BRAWLER_HANDBOOK = ITEMS.register("bar_brawler_handbook", () -> new BarBrawlerHandbook(new Properties().tab(ITEM_GROUP).stacksTo(1)));
+	public static final RegistryObject<HealingExpertHandbook> HEALING_EXPERT_HANDBOOK = ITEMS.register("healing_expert_handbook", () -> new HealingExpertHandbook(new Properties().tab(ITEM_GROUP).stacksTo(1)));
 
 	// Armor
 	public static final RegistryObject<MoltenArmorItem> MOLTEN_HELMET = ITEMS.register("molten_helmet", () -> new MoltenArmorItem(CustomArmorMaterials.MOLTEN, EquipmentSlot.HEAD, 1));
