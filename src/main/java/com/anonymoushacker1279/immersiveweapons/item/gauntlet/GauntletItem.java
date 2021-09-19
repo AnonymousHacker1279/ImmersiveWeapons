@@ -26,6 +26,8 @@ import net.minecraft.world.level.material.Material;
 import net.minecraftforge.common.ToolActions;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Objects;
+
 public class GauntletItem extends TieredItem implements Vanishable {
 	public static Multimap<Attribute, AttributeModifier> gauntletAttributes;
 	private final float bleedChance;
@@ -52,6 +54,11 @@ public class GauntletItem extends TieredItem implements Vanishable {
 
 	@Override
 	public boolean hurtEnemy(@NotNull ItemStack stack, @NotNull LivingEntity target, @NotNull LivingEntity attacker) {
+		if (attacker.getPersistentData().get(Player.PERSISTED_NBT_TAG) != null && Objects.requireNonNull(attacker.getPersistentData().get(Player.PERSISTED_NBT_TAG)).toString().contains("handbookBarBrawler")) {
+			if (attacker.getActiveEffectsMap().containsKey(DeferredRegistryHandler.ALCOHOL_EFFECT.get())) {
+				target.hurt(Objects.requireNonNull(target.getLastDamageSource()), target.lastHurt * 1.5f);
+			}
+		}
 		bleedBehavior(target);
 		stack.hurtAndBreak(1, attacker, (breakEvent) -> breakEvent.broadcastBreakEvent(EquipmentSlot.MAINHAND));
 		return true;

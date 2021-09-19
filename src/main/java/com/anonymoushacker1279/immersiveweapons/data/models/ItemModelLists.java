@@ -49,5 +49,6 @@ public class ItemModelLists {
 		ignoredItems.add(DeferredRegistryHandler.COBALT_GAUNTLET.get());
 		ignoredItems.add(DeferredRegistryHandler.DIAMOND_GAUNTLET.get());
 		ignoredItems.add(DeferredRegistryHandler.NETHERITE_GAUNTLET.get());
+		ignoredItems.add(DeferredRegistryHandler.BAR_BRAWLER_HANDBOOK.get());
 	}
 }

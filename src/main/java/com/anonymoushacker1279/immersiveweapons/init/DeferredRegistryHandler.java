@@ -44,6 +44,7 @@ import com.anonymoushacker1279.immersiveweapons.item.fortitude.FirstAidKitItem;
 import com.anonymoushacker1279.immersiveweapons.item.fortitude.MorphineItem;
 import com.anonymoushacker1279.immersiveweapons.item.fortitude.PainkillerItem;
 import com.anonymoushacker1279.immersiveweapons.item.gauntlet.*;
+import com.anonymoushacker1279.immersiveweapons.item.handbook.BarBrawlerHandbook;
 import com.anonymoushacker1279.immersiveweapons.item.misc.ExplosiveChocolateBar;
 import com.anonymoushacker1279.immersiveweapons.item.misc.UsedSyringeItem;
 import com.anonymoushacker1279.immersiveweapons.item.pike.*;
@@ -61,6 +62,7 @@ import com.anonymoushacker1279.immersiveweapons.item.utility.BasicContainerItem;
 import com.anonymoushacker1279.immersiveweapons.item.utility.BlueprintItem;
 import com.anonymoushacker1279.immersiveweapons.item.utility.CustomBoatItem;
 import com.anonymoushacker1279.immersiveweapons.item.utility.CustomSpawnEggItem;
+import com.anonymoushacker1279.immersiveweapons.potion.AlcoholEffect;
 import com.anonymoushacker1279.immersiveweapons.potion.BleedingEffect;
 import com.anonymoushacker1279.immersiveweapons.potion.MorphineEffect;
 import com.anonymoushacker1279.immersiveweapons.util.*;
@@ -278,6 +280,7 @@ public class DeferredRegistryHandler {
 	public static final RegistryObject<UsedSyringeItem> USED_SYRINGE = ITEMS.register("used_syringe", () -> new UsedSyringeItem(new Properties().tab(ITEM_GROUP).stacksTo(16)));
 	public static final RegistryObject<FirstAidKitItem> FIRST_AID_KIT = ITEMS.register("first_aid_kit", () -> new FirstAidKitItem(new Properties().tab(ITEM_GROUP).stacksTo(8)));
 	public static final RegistryObject<Item> CLOTH_SCRAP = ITEMS.register("cloth_scrap", () -> new Item(new Properties().tab(ITEM_GROUP)));
+	public static final RegistryObject<BarBrawlerHandbook> BAR_BRAWLER_HANDBOOK = ITEMS.register("bar_brawler_handbook", () -> new BarBrawlerHandbook(new Properties().tab(ITEM_GROUP).stacksTo(1)));
 
 	// Armor
 	public static final RegistryObject<MoltenArmorItem> MOLTEN_HELMET = ITEMS.register("molten_helmet", () -> new MoltenArmorItem(CustomArmorMaterials.MOLTEN, EquipmentSlot.HEAD, 1));
@@ -570,6 +573,7 @@ public class DeferredRegistryHandler {
 	// Effects
 	public static final RegistryObject<MorphineEffect> MORPHINE_EFFECT = EFFECTS.register("morphine", () -> new MorphineEffect(MobEffectCategory.NEUTRAL, 3484189));
 	public static final RegistryObject<BleedingEffect> BLEEDING_EFFECT = EFFECTS.register("bleeding", () -> new BleedingEffect(MobEffectCategory.HARMFUL, 8392463));
+	public static final RegistryObject<AlcoholEffect> ALCOHOL_EFFECT = EFFECTS.register("alcohol", () -> new AlcoholEffect(MobEffectCategory.NEUTRAL, 14465637));
 
 	// Structures
 	public static final RegistryObject<StructureFeature<NoneFeatureConfiguration>> ABANDONED_FACTORY_STRUCTURE = Structures.setupStructure("abandoned_factory", () -> (new AbandonedFactory(NoneFeatureConfiguration.CODEC)));
