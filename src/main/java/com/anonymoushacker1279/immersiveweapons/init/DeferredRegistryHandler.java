@@ -60,6 +60,7 @@ import com.anonymoushacker1279.immersiveweapons.item.tool.ventus.*;
 import com.anonymoushacker1279.immersiveweapons.item.utility.BasicContainerItem;
 import com.anonymoushacker1279.immersiveweapons.item.utility.BlueprintItem;
 import com.anonymoushacker1279.immersiveweapons.item.utility.CustomBoatItem;
+import com.anonymoushacker1279.immersiveweapons.potion.AlcoholEffect;
 import com.anonymoushacker1279.immersiveweapons.potion.BleedingEffect;
 import com.anonymoushacker1279.immersiveweapons.potion.MorphineEffect;
 import com.anonymoushacker1279.immersiveweapons.util.*;
@@ -570,6 +571,7 @@ public class DeferredRegistryHandler {
 	// Effects
 	public static final RegistryObject<MorphineEffect> MORPHINE_EFFECT = EFFECTS.register("morphine", () -> new MorphineEffect(MobEffectCategory.NEUTRAL, 3484189));
 	public static final RegistryObject<BleedingEffect> BLEEDING_EFFECT = EFFECTS.register("bleeding", () -> new BleedingEffect(MobEffectCategory.HARMFUL, 8392463));
+	public static final RegistryObject<AlcoholEffect> ALCOHOL_EFFECT = EFFECTS.register("alcohol", () -> new AlcoholEffect(MobEffectCategory.NEUTRAL, 14465637));
 
 	// Structures
 	public static final RegistryObject<StructureFeature<NoneFeatureConfiguration>> ABANDONED_FACTORY_STRUCTURE = Structures.setupStructure("abandoned_factory", () -> (new AbandonedFactory(NoneFeatureConfiguration.CODEC)));
