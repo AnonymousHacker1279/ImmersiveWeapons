@@ -21,6 +21,9 @@ public class Config {
 	public static ForgeConfigSpec.ConfigValue<Boolean> TESLA_ARMOR_EFFECT_SOUND;
 	public static ForgeConfigSpec.ConfigValue<Integer> MAX_SMOKE_BOMB_PARTICLES;
 	public static ForgeConfigSpec.ConfigValue<Boolean> BULLETS_BREAK_GLASS;
+	public static ForgeConfigSpec.ConfigValue<Boolean> DYING_SOLDIER_SPAWN;
+	public static ForgeConfigSpec.ConfigValue<Boolean> WANDERING_WARRIOR_SPAWN;
+	public static ForgeConfigSpec.ConfigValue<Boolean> HANS_SPAWN;
 	static ForgeConfigSpec.ConfigValue<Integer> MAX_UNDERGROUND_BUNKER_DISTANCE;
 	static ForgeConfigSpec.ConfigValue<Integer> MIN_UNDERGROUND_BUNKER_DISTANCE;
 	static ForgeConfigSpec.ConfigValue<Integer> MAX_BATTLEFIELD_CAMP_DISTANCE;
@@ -51,9 +54,13 @@ public class Config {
 	private static void initConfig() {
 		COMMON_CONFIG_BUILDER.push(ImmersiveWeapons.MOD_ID + "-common");
 
-		TESLA_ARMOR_EFFECT_SOUND = COMMON_CONFIG_BUILDER.comment("Enable/Disable the Tesla Armor effect sound - Default true").define("tesla_armor_effect_sound", true);
+		TESLA_ARMOR_EFFECT_SOUND = COMMON_CONFIG_BUILDER.comment("Enable the Tesla Armor effect sound - Default true").define("tesla_armor_effect_sound", true);
 		MAX_SMOKE_BOMB_PARTICLES = COMMON_CONFIG_BUILDER.comment("Set the maximum number of particles produced by the smoke bomb - Default 96\nSetting this higher can make clients laggy, setting to 0 effectively disables it").define("max_smoke_bomb_particles", 96);
-		BULLETS_BREAK_GLASS = COMMON_CONFIG_BUILDER.comment("Enable/Disable bullets breaking glass - Default true").define("bullets_break_glass", true);
+		BULLETS_BREAK_GLASS = COMMON_CONFIG_BUILDER.comment("Enable bullets breaking glass - Default true").define("bullets_break_glass", true);
+
+		DYING_SOLDIER_SPAWN = COMMON_CONFIG_BUILDER.comment("Enable the natural spawning of Dying Soldiers - Default true").define("dying_soldiers_spawn", true);
+		WANDERING_WARRIOR_SPAWN = COMMON_CONFIG_BUILDER.comment("Enable the natural spawning of Wandering Warriors - Default true").define("wandering_warriors_spawn", true);
+		HANS_SPAWN = COMMON_CONFIG_BUILDER.comment("Enable the natural spawning of Hans the Almighty - Default true").define("hans_spawn", true);
 
 		MAX_ABANDONED_FACTORY_DISTANCE = COMMON_CONFIG_BUILDER.comment("Maximum distance in chunks between Abandoned Factories - Default 120").define("max_abandoned_factory_distance", 120);
 		MIN_ABANDONED_FACTORY_DISTANCE = COMMON_CONFIG_BUILDER.comment("Minimum distance in chunks between Abandoned Factories - Default 90").define("min_abandoned_factory_distance", 90);

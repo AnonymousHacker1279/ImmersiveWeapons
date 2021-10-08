@@ -33,8 +33,11 @@ public class BiomeBuilder {
 	 */
 	public static Biome makeBattlefieldBiome(ConfiguredSurfaceBuilder<?> surfaceBuilder, float depth, float scale) {
 		MobSpawnSettings.Builder mobSpawnInfoBuilder = new MobSpawnSettings.Builder()
-				.setPlayerCanSpawn()
-				.addSpawn(MobCategory.MONSTER, new SpawnerData(DeferredRegistryHandler.DYING_SOLDIER_ENTITY.get(), 50, 1, 4));
+				.setPlayerCanSpawn();
+
+		if (Config.DYING_SOLDIER_SPAWN.get()) {
+			mobSpawnInfoBuilder.addSpawn(MobCategory.MONSTER, new SpawnerData(DeferredRegistryHandler.DYING_SOLDIER_ENTITY.get(), 50, 1, 4));
+		}
 
 		AmbientMoodSettings ambienceSound = new AmbientMoodSettings(DeferredRegistryHandler.FLINTLOCK_PISTOL_FIRE.get(), 5000, 8, 2.0D);
 
