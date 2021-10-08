@@ -1,6 +1,5 @@
 package com.anonymoushacker1279.immersiveweapons.item.pike;
 
-import com.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -13,8 +12,6 @@ import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.NotNull;
-
-import java.util.Objects;
 
 public class PikeItem extends Item {
 
@@ -57,14 +54,8 @@ public class PikeItem extends Item {
 	 * @return boolean
 	 */
 	@Override
-	public boolean hurtEnemy(@NotNull ItemStack stack, @NotNull LivingEntity target, @NotNull LivingEntity attacker) {
-		if (attacker.getPersistentData().get(Player.PERSISTED_NBT_TAG) != null && Objects.requireNonNull(attacker.getPersistentData().get(Player.PERSISTED_NBT_TAG)).toString().contains("handbookPikeMaintenance")) {
-			if (GeneralUtilities.getRandomNumber(0.0f, 1.0f) <= 0.75f) {
-				stack.hurtAndBreak(1, attacker, (entity) -> entity.broadcastBreakEvent(EquipmentSlot.MAINHAND));
-			}
-		} else {
-			stack.hurtAndBreak(1, attacker, (entity) -> entity.broadcastBreakEvent(EquipmentSlot.MAINHAND));
-		}
+	public boolean hurtEnemy(ItemStack stack, @NotNull LivingEntity target, @NotNull LivingEntity attacker) {
+		stack.hurtAndBreak(1, attacker, (entity) -> entity.broadcastBreakEvent(EquipmentSlot.MAINHAND));
 		return true;
 	}
 
