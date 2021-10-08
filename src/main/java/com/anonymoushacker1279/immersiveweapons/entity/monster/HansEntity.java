@@ -117,6 +117,10 @@ public class HansEntity extends AbstractWanderingWarriorEntity {
 			setCombatTask();
 			super.hurt(source, amount);
 		}
+		if (source == DamageSource.OUT_OF_WORLD) {
+			super.hurt(source, amount);
+			return true;
+		}
 		return false;
 	}
 }
