@@ -51,9 +51,8 @@ public class PunjiSticksBlock extends Block implements SimpleWaterloggedBlock {
 	 */
 	@SuppressWarnings("deprecation")
 	@Override
-	public @NotNull VoxelShape getShape(BlockState state, @NotNull BlockGetter reader, @NotNull BlockPos pos, @NotNull CollisionContext selectionContext) {
-		Vec3 vector3d = state.getOffset(reader, pos);
-		return SHAPE.move(vector3d.x, vector3d.y, vector3d.z);
+	public @NotNull VoxelShape getShape(@NotNull BlockState state, @NotNull BlockGetter reader, @NotNull BlockPos pos, @NotNull CollisionContext selectionContext) {
+		return SHAPE;
 	}
 
 	/**

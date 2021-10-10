@@ -10,7 +10,6 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
-import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
@@ -65,8 +64,7 @@ public class WoodenTableBlock extends Block implements SimpleWaterloggedBlock {
 	 */
 	@SuppressWarnings("deprecation")
 	@Override
-	public @NotNull VoxelShape getShape(BlockState state, @NotNull BlockGetter reader, @NotNull BlockPos pos, @NotNull CollisionContext selectionContext) {
-		Vec3 vector3d = state.getOffset(reader, pos);
-		return SHAPE.move(vector3d.x, vector3d.y, vector3d.z);
+	public @NotNull VoxelShape getShape(@NotNull BlockState state, @NotNull BlockGetter reader, @NotNull BlockPos pos, @NotNull CollisionContext selectionContext) {
+		return SHAPE;
 	}
 }

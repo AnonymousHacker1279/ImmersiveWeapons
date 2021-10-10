@@ -15,7 +15,6 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.phys.BlockHitResult;
-import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraftforge.api.distmarker.Dist;
@@ -74,12 +73,11 @@ public class SandbagBlock extends HorizontalDirectionalBlock {
 	@SuppressWarnings("deprecation")
 	@Override
 	public @NotNull VoxelShape getShape(BlockState state, @NotNull BlockGetter reader, @NotNull BlockPos pos, @NotNull CollisionContext selectionContext) {
-		Vec3 vector3d = state.getOffset(reader, pos);
 		return switch (state.getValue(BAGS)) {
-			case 2 -> SHAPE_2.move(vector3d.x, vector3d.y, vector3d.z);
-			case 3 -> SHAPE_3.move(vector3d.x, vector3d.y, vector3d.z);
-			case 4 -> SHAPE_4.move(vector3d.x, vector3d.y, vector3d.z);
-			default -> SHAPE_1.move(vector3d.x, vector3d.y, vector3d.z);
+			case 2 -> SHAPE_2;
+			case 3 -> SHAPE_3;
+			case 4 -> SHAPE_4;
+			default -> SHAPE_1;
 		};
 	}
 
