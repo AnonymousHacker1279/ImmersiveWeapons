@@ -326,6 +326,7 @@ public class DeferredRegistryHandler {
 	public static final RegistryObject<FlagBlock> MEXICAN_FLAG = BLOCKS.register("mexican_flag", () -> new FlagBlock(BlockBehaviour.Properties.of(Material.METAL).strength(2.5f).sound(SoundType.METAL).noOcclusion()));
 	public static final RegistryObject<FlagBlock> BRITISH_FLAG = BLOCKS.register("british_flag", () -> new FlagBlock(BlockBehaviour.Properties.of(Material.METAL).strength(2.5f).sound(SoundType.METAL).noOcclusion()));
 	public static final RegistryObject<FlagBlock> TROLL_FLAG = BLOCKS.register("troll_flag", () -> new FlagBlock(BlockBehaviour.Properties.of(Material.METAL).strength(2.5f).sound(SoundType.METAL).noOcclusion()));
+	public static final RegistryObject<FlagBlock> IMMERSIVE_WEAPONS_FLAG = BLOCKS.register("immersive_weapons_flag", () -> new FlagBlock(BlockBehaviour.Properties.of(Material.METAL).strength(2.5f).sound(SoundType.METAL).noOcclusion()));
 	// Stone tier
 	public static final RegistryObject<SpotlightBlock> SPOTLIGHT = BLOCKS.register("spotlight", () -> new SpotlightBlock(BlockBehaviour.Properties.of(Material.METAL).strength(2.0f).sound(SoundType.METAL).requiresCorrectToolForDrops().noOcclusion().lightLevel((state) -> 0)));
 	public static final RegistryObject<CorrugatedBlockNormal> CORRUGATED_IRON_PANEL = BLOCKS.register("corrugated_iron_panel", () -> new CorrugatedBlockNormal(BlockBehaviour.Properties.of(Material.METAL).strength(5.0f, 6.0f).sound(SoundType.METAL).requiresCorrectToolForDrops().noOcclusion()));
@@ -515,6 +516,7 @@ public class DeferredRegistryHandler {
 	public static final RegistryObject<BlockItem> MEXICAN_FLAG_ITEM = ITEMS.register("mexican_flag", () -> new BlockItem(MEXICAN_FLAG.get(), new Properties().tab(ITEM_GROUP)));
 	public static final RegistryObject<BlockItem> BRITISH_FLAG_ITEM = ITEMS.register("british_flag", () -> new BlockItem(BRITISH_FLAG.get(), new Properties().tab(ITEM_GROUP)));
 	public static final RegistryObject<BlockItem> TROLL_FLAG_ITEM = ITEMS.register("troll_flag", () -> new BlockItem(TROLL_FLAG.get(), new Properties().tab(ITEM_GROUP)));
+	public static final RegistryObject<BlockItem> IMMERSIVE_WEAPONS_FLAG_ITEM = ITEMS.register("immersive_weapons_flag", () -> new BlockItem(IMMERSIVE_WEAPONS_FLAG.get(), new Properties().tab(ITEM_GROUP)));
 
 	// Sounds
 	public static final RegistryObject<SoundEvent> TESLA_ARMOR_EFFECT = SOUND_EVENTS.register("tesla_armor_effect", () -> new SoundEvent(new ResourceLocation(ImmersiveWeapons.MOD_ID, "tesla_armor_effect")));

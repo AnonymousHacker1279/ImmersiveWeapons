@@ -229,6 +229,7 @@
 	"block.immersiveweapons.mexican_flag": "Mexican Flag",
 	"block.immersiveweapons.british_flag": "British Flag",
 	"block.immersiveweapons.troll_flag": "Troll World Order Flag",
+	"block.immersiveweapons.immersive_weapons_flag": "Immersive Weapons Flag",
 	"entity.immersiveweapons.dying_soldier": "Dying Soldier",
 	"entity.immersiveweapons.minuteman": "Minuteman",
 	"entity.immersiveweapons.field_medic": "Field Medic",
