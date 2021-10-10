@@ -1,0 +1,26 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"pattern": [
+		"yxy",
+		"zyz",
+		"w  "
+	],
+	"key": {
+		"w": {
+			"item": "immersiveweapons:flag_pole"
+		},
+		"x": {
+			"item": "minecraft:blue_wool"
+		},
+		"y": {
+			"item": "minecraft:red_wool"
+		},
+		"z": {
+			"item": "minecraft:white_wool"
+		}
+	},
+	"result": {
+		"item": "immersiveweapons:british_flag",
+		"count": 1
+	}
+}

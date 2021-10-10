@@ -35,14 +35,14 @@ apply plugin: 'net.minecraftforge.gradle'
 apply plugin: 'org.parchmentmc.librarian.forgegradle'
 apply plugin: 'maven-publish'
 
-version = '1.17.1-1.9.3'
+version = '1.17.1-1.10.0'
 group = 'com.anonymoushacker1279.immersiveweapons' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 
 java.toolchain.languageVersion = JavaLanguageVersion.of(16)
 
 println('Java: ' + System.getProperty('java.version') + ' JVM: ' + System.getProperty('java.vm.version') + '(' + System.getProperty('java.vendor') + ') Arch: ' + System.getProperty('os.arch'))
 minecraft {
-	mappings channel: 'parchment', version: '2021.09.05-1.17.1'
+	mappings channel: 'parchment', version: '2021.10.10-1.17.1'
 	// makeObfSourceJar = false // an Srg named sources jar is made by default. uncomment this to disable.
 
 	accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
@@ -115,10 +115,10 @@ dependencies {
 	minecraft 'net.minecraftforge:forge:1.17.1-37.0.84'
 
 	// Include JEI
-	implementation fg.deobf("mezz.jei:jei-1.17.1:8.0.0.16")
+	implementation fg.deobf("mezz.jei:jei-1.17.1:8.1.0.26")
 
 	// Include WTHIT
-	implementation fg.deobf("mcp.mobius.waila:wthit:forge-3.9.0")
+	implementation fg.deobf("mcp.mobius.waila:wthit:forge-3.9.3")
 }
 
 // Example for how to get properties into the manifest for reading by the runtime..

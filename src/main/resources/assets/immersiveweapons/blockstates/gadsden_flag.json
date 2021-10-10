@@ -1,0 +1,19 @@
+{
+	"variants": {
+		"facing=north": {
+			"model": "immersiveweapons:block/gadsden_flag",
+			"y": 180
+		},
+		"facing=south": {
+			"model": "immersiveweapons:block/gadsden_flag"
+		},
+		"facing=west": {
+			"model": "immersiveweapons:block/gadsden_flag",
+			"y": 90
+		},
+		"facing=east": {
+			"model": "immersiveweapons:block/gadsden_flag",
+			"y": 270
+		}
+	}
+}
