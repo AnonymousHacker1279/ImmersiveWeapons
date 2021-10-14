@@ -1,11 +1,11 @@
 :root {
 	--header-color: rgba(255, 255, 255, .15);
-	--page-background: url('images/iw_army_base.png');
+	--page-background: url('../images/iw_army_base.png');
 	--color: white;
 	--text-outline: 2px;
 	--text-outline-color: black;
 	--font-family: Arial, Helvetica, sans-serif;
-	--shelf-background: url('images/aluminum.png');
+	--shelf-background: url('../images/aluminum.png');
 }
 
 html {
