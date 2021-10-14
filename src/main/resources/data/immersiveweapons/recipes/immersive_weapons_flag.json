@@ -1,0 +1,26 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"pattern": [
+		"xyx",
+		"xzx",
+		"w  "
+	],
+	"key": {
+		"w": {
+			"item": "immersiveweapons:flag_pole"
+		},
+		"x": {
+			"item": "minecraft:light_blue_wool"
+		},
+		"y": {
+			"item": "minecraft:golden_sword"
+		},
+		"z": {
+			"item": "minecraft:yellow_wool"
+		}
+	},
+	"result": {
+		"item": "immersiveweapons:immersive_weapons_flag",
+		"count": 1
+	}
+}

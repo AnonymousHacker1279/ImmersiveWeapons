@@ -25,7 +25,6 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
-import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraftforge.api.distmarker.Dist;
@@ -67,9 +66,8 @@ public class SpikeTrapBlock extends Block implements SimpleWaterloggedBlock {
 	 */
 	@SuppressWarnings("deprecation")
 	@Override
-	public @NotNull VoxelShape getShape(BlockState state, @NotNull BlockGetter reader, @NotNull BlockPos pos, @NotNull CollisionContext selectionContext) {
-		Vec3 vector3d = state.getOffset(reader, pos);
-		return SHAPE.move(vector3d.x, vector3d.y, vector3d.z);
+	public @NotNull VoxelShape getShape(@NotNull BlockState state, @NotNull BlockGetter reader, @NotNull BlockPos pos, @NotNull CollisionContext selectionContext) {
+		return SHAPE;
 	}
 
 	/**
@@ -241,7 +239,7 @@ public class SpikeTrapBlock extends Block implements SimpleWaterloggedBlock {
 		 */
 		public static void handle(SpikeTrapBlockPacketHandler msg, Supplier<Context> contextSupplier) {
 			NetworkEvent.Context context = contextSupplier.get();
-			context.enqueueWork(() -> DistExecutor.safeRunWhenOn(Dist.CLIENT, () -> () -> handleOnClient(msg)));
+			context.enqueueWork(() -> DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> handleOnClient(msg)));
 			context.setPacketHandled(true);
 		}
 

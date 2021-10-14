@@ -84,8 +84,7 @@ public class WoodenSpikesBlock extends HorizontalDirectionalBlock implements Sim
 	@SuppressWarnings("deprecation")
 	@Override
 	public @NotNull VoxelShape getShape(BlockState state, @NotNull BlockGetter reader, @NotNull BlockPos pos, @NotNull CollisionContext selectionContext) {
-		Vec3 vector3d = state.getOffset(reader, pos);
-		return SHAPE.move(vector3d.x, vector3d.y, vector3d.z);
+		return SHAPE;
 	}
 
 	/**

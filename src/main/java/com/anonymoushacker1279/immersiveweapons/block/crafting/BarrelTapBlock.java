@@ -24,7 +24,6 @@ import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.BlockHitResult;
-import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.NotNull;
@@ -73,12 +72,11 @@ public class BarrelTapBlock extends HorizontalDirectionalBlock implements Simple
 	@SuppressWarnings("deprecation")
 	@Override
 	public @NotNull VoxelShape getShape(BlockState state, @NotNull BlockGetter reader, @NotNull BlockPos pos, @NotNull CollisionContext selectionContext) {
-		Vec3 vector3d = state.getOffset(reader, pos);
 		return switch (state.getValue(FACING)) {
-			case SOUTH -> SHAPE_NORTH.move(vector3d.x, vector3d.y, vector3d.z);
-			case EAST -> SHAPE_EAST.move(vector3d.x, vector3d.y, vector3d.z);
-			case WEST -> SHAPE_WEST.move(vector3d.x, vector3d.y, vector3d.z);
-			default -> SHAPE_SOUTH.move(vector3d.x, vector3d.y, vector3d.z);
+			case SOUTH -> SHAPE_NORTH;
+			case EAST -> SHAPE_EAST;
+			case WEST -> SHAPE_WEST;
+			default -> SHAPE_SOUTH;
 		};
 	}
 
