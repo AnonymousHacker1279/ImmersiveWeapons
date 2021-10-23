@@ -4,17 +4,22 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.SimpleWaterloggedBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.level.material.FluidState;
+import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.NotNull;
 
-public class FlagPoleBlock extends Block {
+public class FlagPoleBlock extends Block implements SimpleWaterloggedBlock {
 
+	public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
 	private static final BooleanProperty IS_BASE = BooleanProperty.create("base");
 	private static final VoxelShape SHAPE_POLE = Block.box(7.0D, 0.0D, 7.0D, 9.0D, 16.0D, 9.0D);
 	private static final VoxelShape SHAPE_BASE = Shapes.or(SHAPE_POLE, Block.box(3.0D, 0.0D, 3.0D, 13.0D, 2.0D, 13.0D));
@@ -26,7 +31,7 @@ public class FlagPoleBlock extends Block {
 	 */
 	public FlagPoleBlock(Properties properties) {
 		super(properties);
-		registerDefaultState(stateDefinition.any().setValue(IS_BASE, true));
+		registerDefaultState(stateDefinition.any().setValue(IS_BASE, true).setValue(WATERLOGGED, false));
 	}
 
 	/**
@@ -36,7 +41,7 @@ public class FlagPoleBlock extends Block {
 	 */
 	@Override
 	protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-		builder.add(IS_BASE);
+		builder.add(IS_BASE, WATERLOGGED);
 	}
 
 	/**
@@ -74,5 +79,10 @@ public class FlagPoleBlock extends Block {
 		} else {
 			return SHAPE_POLE.move(vector3d.x, vector3d.y, vector3d.z);
 		}
+	}
+
+	@Override
+	public @NotNull FluidState getFluidState(BlockState state) {
+		return state.getValue(WATERLOGGED) ? Fluids.WATER.getSource(false) : super.getFluidState(state);
 	}
 }

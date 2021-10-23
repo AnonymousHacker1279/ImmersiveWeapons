@@ -4,6 +4,9 @@ import com.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import com.anonymoushacker1279.immersiveweapons.block.base.*;
 import com.anonymoushacker1279.immersiveweapons.block.base.CorrugatedBlock.CorrugatedBlockFlat;
 import com.anonymoushacker1279.immersiveweapons.block.base.CorrugatedBlock.CorrugatedBlockNormal;
+import com.anonymoushacker1279.immersiveweapons.block.base.mud.DriedMudBlock;
+import com.anonymoushacker1279.immersiveweapons.block.base.mud.HardenedMudWindowBlock;
+import com.anonymoushacker1279.immersiveweapons.block.base.mud.MudBlock;
 import com.anonymoushacker1279.immersiveweapons.block.core.BasicOrientableBlock;
 import com.anonymoushacker1279.immersiveweapons.block.crafting.BarrelTapBlock;
 import com.anonymoushacker1279.immersiveweapons.block.crafting.SmallPartsTable;
@@ -378,6 +381,7 @@ public class DeferredRegistryHandler {
 	public static final RegistryObject<Block> HARDENED_MUD = BLOCKS.register("hardened_mud", () -> new Block(BlockBehaviour.Properties.of(Material.DIRT).strength(2.0f, 1.0f).sound(SoundType.ROOTED_DIRT)));
 	public static final RegistryObject<StairBlock> HARDENED_MUD_STAIRS = BLOCKS.register("hardened_mud_stairs", () -> new StairBlock(() -> HARDENED_MUD.get().defaultBlockState(), BlockBehaviour.Properties.copy(BURNED_OAK_PLANKS.get())));
 	public static final RegistryObject<SlabBlock> HARDENED_MUD_SLAB = BLOCKS.register("hardened_mud_slab", () -> new SlabBlock(BlockBehaviour.Properties.of(Material.DIRT).strength(2.0f, 1.0f).sound(SoundType.ROOTED_DIRT)));
+	public static final RegistryObject<Block> HARDENED_MUD_WINDOW = BLOCKS.register("hardened_mud_window", () -> new HardenedMudWindowBlock(BlockBehaviour.Properties.of(Material.DIRT).strength(2.0f, 1.0f).sound(SoundType.ROOTED_DIRT).noOcclusion()));
 	// Stone tier
 	public static final RegistryObject<PunjiSticksBlock> PUNJI_STICKS = BLOCKS.register("punji_sticks", () -> new PunjiSticksBlock(BlockBehaviour.Properties.of(Material.BAMBOO).strength(5.0f, 1.0f).sound(SoundType.METAL).requiresCorrectToolForDrops()));
 
@@ -527,6 +531,7 @@ public class DeferredRegistryHandler {
 	public static final RegistryObject<BlockItem> HARDENED_MUD_ITEM = ITEMS.register("hardened_mud", () -> new BlockItem(HARDENED_MUD.get(), new Properties().tab(ITEM_GROUP)));
 	public static final RegistryObject<BlockItem> HARDENED_MUD_STAIRS_ITEM = ITEMS.register("hardened_mud_stairs", () -> new BlockItem(HARDENED_MUD_STAIRS.get(), new Properties().tab(ITEM_GROUP)));
 	public static final RegistryObject<BlockItem> HARDENED_MUD_SLAB_ITEM = ITEMS.register("hardened_mud_slab", () -> new BlockItem(HARDENED_MUD_SLAB.get(), new Properties().tab(ITEM_GROUP)));
+	public static final RegistryObject<BlockItem> HARDENED_MUD_WINDOW_ITEM = ITEMS.register("hardened_mud_window", () -> new BlockItem(HARDENED_MUD_WINDOW.get(), new Properties().tab(ITEM_GROUP)));
 
 	// Sounds
 	public static final RegistryObject<SoundEvent> TESLA_ARMOR_EFFECT = SOUND_EVENTS.register("tesla_armor_effect", () -> new SoundEvent(new ResourceLocation(ImmersiveWeapons.MOD_ID, "tesla_armor_effect")));

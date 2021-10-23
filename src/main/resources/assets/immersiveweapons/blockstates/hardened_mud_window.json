@@ -1,0 +1,19 @@
+{
+	"variants": {
+		"facing=north": {
+			"model": "immersiveweapons:block/hardened_mud_window",
+			"y": 180
+		},
+		"facing=south": {
+			"model": "immersiveweapons:block/hardened_mud_window"
+		},
+		"facing=west": {
+			"model": "immersiveweapons:block/hardened_mud_window",
+			"y": 90
+		},
+		"facing=east": {
+			"model": "immersiveweapons:block/hardened_mud_window",
+			"y": 270
+		}
+	}
+}

@@ -1,4 +1,4 @@
-package com.anonymoushacker1279.immersiveweapons.block.base;
+package com.anonymoushacker1279.immersiveweapons.block.base.mud;
 
 import com.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
 import net.minecraft.core.BlockPos;
