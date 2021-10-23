@@ -1,0 +1,13 @@
+{
+	"variants": {
+		"type=bottom": {
+			"model": "immersiveweapons:block/hardened_mud_slab"
+		},
+		"type=double": {
+			"model": "immersiveweapons:block/hardened_mud"
+		},
+		"type=top": {
+			"model": "immersiveweapons:block/hardened_mud_slab_top"
+		}
+	}
+}

@@ -373,6 +373,11 @@ public class DeferredRegistryHandler {
 	// Breakable via shovel
 	// Wood tier
 	public static final RegistryObject<SandbagBlock> SANDBAG = BLOCKS.register("sandbag", () -> new SandbagBlock(BlockBehaviour.Properties.of(Material.SAND).strength(4.0f, 5.0f).sound(SoundType.SAND).noOcclusion()));
+	public static final RegistryObject<Block> MUD = BLOCKS.register("mud", () -> new MudBlock(BlockBehaviour.Properties.of(Material.DIRT).strength(0.8f, 0.3f).sound(SoundType.WET_GRASS).speedFactor(0.75f).randomTicks()));
+	public static final RegistryObject<Block> DRIED_MUD = BLOCKS.register("dried_mud", () -> new DriedMudBlock(BlockBehaviour.Properties.of(Material.DIRT).strength(1.0f, 0.7f).sound(SoundType.ROOTED_DIRT).randomTicks()));
+	public static final RegistryObject<Block> HARDENED_MUD = BLOCKS.register("hardened_mud", () -> new Block(BlockBehaviour.Properties.of(Material.DIRT).strength(2.0f, 1.0f).sound(SoundType.ROOTED_DIRT)));
+	public static final RegistryObject<StairBlock> HARDENED_MUD_STAIRS = BLOCKS.register("hardened_mud_stairs", () -> new StairBlock(() -> HARDENED_MUD.get().defaultBlockState(), BlockBehaviour.Properties.copy(BURNED_OAK_PLANKS.get())));
+	public static final RegistryObject<SlabBlock> HARDENED_MUD_SLAB = BLOCKS.register("hardened_mud_slab", () -> new SlabBlock(BlockBehaviour.Properties.of(Material.DIRT).strength(2.0f, 1.0f).sound(SoundType.ROOTED_DIRT)));
 	// Stone tier
 	public static final RegistryObject<PunjiSticksBlock> PUNJI_STICKS = BLOCKS.register("punji_sticks", () -> new PunjiSticksBlock(BlockBehaviour.Properties.of(Material.BAMBOO).strength(5.0f, 1.0f).sound(SoundType.METAL).requiresCorrectToolForDrops()));
 
@@ -517,6 +522,11 @@ public class DeferredRegistryHandler {
 	public static final RegistryObject<BlockItem> BRITISH_FLAG_ITEM = ITEMS.register("british_flag", () -> new BlockItem(BRITISH_FLAG.get(), new Properties().tab(ITEM_GROUP)));
 	public static final RegistryObject<BlockItem> TROLL_FLAG_ITEM = ITEMS.register("troll_flag", () -> new BlockItem(TROLL_FLAG.get(), new Properties().tab(ITEM_GROUP)));
 	public static final RegistryObject<BlockItem> IMMERSIVE_WEAPONS_FLAG_ITEM = ITEMS.register("immersive_weapons_flag", () -> new BlockItem(IMMERSIVE_WEAPONS_FLAG.get(), new Properties().tab(ITEM_GROUP)));
+	public static final RegistryObject<BlockItem> MUD_ITEM = ITEMS.register("mud", () -> new BlockItem(MUD.get(), new Properties().tab(ITEM_GROUP)));
+	public static final RegistryObject<BlockItem> DRIED_MUD_ITEM = ITEMS.register("dried_mud", () -> new BlockItem(DRIED_MUD.get(), new Properties().tab(ITEM_GROUP)));
+	public static final RegistryObject<BlockItem> HARDENED_MUD_ITEM = ITEMS.register("hardened_mud", () -> new BlockItem(HARDENED_MUD.get(), new Properties().tab(ITEM_GROUP)));
+	public static final RegistryObject<BlockItem> HARDENED_MUD_STAIRS_ITEM = ITEMS.register("hardened_mud_stairs", () -> new BlockItem(HARDENED_MUD_STAIRS.get(), new Properties().tab(ITEM_GROUP)));
+	public static final RegistryObject<BlockItem> HARDENED_MUD_SLAB_ITEM = ITEMS.register("hardened_mud_slab", () -> new BlockItem(HARDENED_MUD_SLAB.get(), new Properties().tab(ITEM_GROUP)));
 
 	// Sounds
 	public static final RegistryObject<SoundEvent> TESLA_ARMOR_EFFECT = SOUND_EVENTS.register("tesla_armor_effect", () -> new SoundEvent(new ResourceLocation(ImmersiveWeapons.MOD_ID, "tesla_armor_effect")));
