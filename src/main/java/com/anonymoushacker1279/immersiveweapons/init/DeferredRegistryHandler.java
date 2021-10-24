@@ -34,6 +34,7 @@ import com.anonymoushacker1279.immersiveweapons.entity.projectile.BulletEntity.*
 import com.anonymoushacker1279.immersiveweapons.entity.projectile.CustomArrowEntity.*;
 import com.anonymoushacker1279.immersiveweapons.entity.projectile.MolotovEntity;
 import com.anonymoushacker1279.immersiveweapons.entity.projectile.MortarShellEntity;
+import com.anonymoushacker1279.immersiveweapons.entity.projectile.MudBallEntity;
 import com.anonymoushacker1279.immersiveweapons.entity.projectile.SmokeBombEntity;
 import com.anonymoushacker1279.immersiveweapons.entity.vehicle.BurnedOakBoatEntity;
 import com.anonymoushacker1279.immersiveweapons.entity.vehicle.CustomBoatType;
@@ -56,6 +57,7 @@ import com.anonymoushacker1279.immersiveweapons.item.projectile.gun.FlareGunItem
 import com.anonymoushacker1279.immersiveweapons.item.projectile.gun.SimplePistolItem;
 import com.anonymoushacker1279.immersiveweapons.item.projectile.gun.SimpleShotgunItem;
 import com.anonymoushacker1279.immersiveweapons.item.projectile.throwable.MolotovItem;
+import com.anonymoushacker1279.immersiveweapons.item.projectile.throwable.MudBallItem;
 import com.anonymoushacker1279.immersiveweapons.item.projectile.throwable.SmokeBombItem;
 import com.anonymoushacker1279.immersiveweapons.item.tool.molten.*;
 import com.anonymoushacker1279.immersiveweapons.item.tool.tesla.*;
@@ -282,6 +284,7 @@ public class DeferredRegistryHandler {
 	public static final RegistryObject<UsedSyringeItem> USED_SYRINGE = ITEMS.register("used_syringe", () -> new UsedSyringeItem(new Properties().tab(ITEM_GROUP).stacksTo(16)));
 	public static final RegistryObject<FirstAidKitItem> FIRST_AID_KIT = ITEMS.register("first_aid_kit", () -> new FirstAidKitItem(new Properties().tab(ITEM_GROUP).stacksTo(8)));
 	public static final RegistryObject<Item> CLOTH_SCRAP = ITEMS.register("cloth_scrap", () -> new Item(new Properties().tab(ITEM_GROUP)));
+	public static final RegistryObject<MudBallItem> MUD_BALL = ITEMS.register("mud_ball", () -> new MudBallItem(new Properties().tab(ITEM_GROUP)));
 
 	// Armor
 	public static final RegistryObject<MoltenArmorItem> MOLTEN_HELMET = ITEMS.register("molten_helmet", () -> new MoltenArmorItem(CustomArmorMaterials.MOLTEN, EquipmentSlot.HEAD, 1));
@@ -444,6 +447,7 @@ public class DeferredRegistryHandler {
 	public static final RegistryObject<EntityType<HansEntity>> HANS_ENTITY = ENTITY_TYPES.register("hans", () -> EntityType.Builder.of(HansEntity::new, MobCategory.MONSTER).sized(0.6f, 1.99f).clientTrackingRange(16).build(new ResourceLocation(ImmersiveWeapons.MOD_ID, "hans").toString()));
 	public static final RegistryObject<EntityType<MortarShellEntity>> MORTAR_SHELL_ENTITY = ENTITY_TYPES.register("mortar_shell", () -> EntityType.Builder.of(MortarShellEntity::new, MobCategory.MISC).sized(0.5f, 0.5f).build(new ResourceLocation(ImmersiveWeapons.MOD_ID, "mortar_shell").toString()));
 	public static final RegistryObject<EntityType<BurnedOakBoatEntity>> BURNED_OAK_BOAT_ENTITY = ENTITY_TYPES.register("burned_oak_boat", () -> EntityType.Builder.<BurnedOakBoatEntity>of(BurnedOakBoatEntity::new, MobCategory.MISC).sized(1.375f, 0.5625f).build(new ResourceLocation(ImmersiveWeapons.MOD_ID, "burned_oak_boat").toString()));
+	public static final RegistryObject<EntityType<MudBallEntity>> MUD_BALL_ENTITY = ENTITY_TYPES.register("mud_ball", () -> EntityType.Builder.<MudBallEntity> of(MudBallEntity::new, MobCategory.MISC).sized(0.25f, 0.25f).build(new ResourceLocation(ImmersiveWeapons.MOD_ID, "mud_ball").toString()));
 
 	// Block Items
 	public static final RegistryObject<BlockItem> MOLTEN_ORE_ITEM = ITEMS.register("molten_ore", () -> new BlockItem(MOLTEN_ORE.get(), new Properties().tab(ITEM_GROUP).fireResistant()));

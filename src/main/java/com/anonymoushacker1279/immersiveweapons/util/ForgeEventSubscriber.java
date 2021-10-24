@@ -17,8 +17,6 @@ import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
 @EventBusSubscriber(modid = ImmersiveWeapons.MOD_ID, bus = Bus.FORGE, value = Dist.CLIENT)
 public class ForgeEventSubscriber {
 
-	Minecraft minecraft;
-
 	/**
 	 * Event handler for the RenderBlockOverlayEvent.
 	 * @param event the <code>RenderBlockOverlayEvent</code> instance
