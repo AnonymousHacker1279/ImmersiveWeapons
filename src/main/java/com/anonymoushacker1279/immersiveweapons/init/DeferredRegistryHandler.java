@@ -4,6 +4,9 @@ import com.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import com.anonymoushacker1279.immersiveweapons.block.base.*;
 import com.anonymoushacker1279.immersiveweapons.block.base.CorrugatedBlock.CorrugatedBlockFlat;
 import com.anonymoushacker1279.immersiveweapons.block.base.CorrugatedBlock.CorrugatedBlockNormal;
+import com.anonymoushacker1279.immersiveweapons.block.base.mud.DriedMudBlock;
+import com.anonymoushacker1279.immersiveweapons.block.base.mud.HardenedMudWindowBlock;
+import com.anonymoushacker1279.immersiveweapons.block.base.mud.MudBlock;
 import com.anonymoushacker1279.immersiveweapons.block.core.BasicOrientableBlock;
 import com.anonymoushacker1279.immersiveweapons.block.crafting.BarrelTapBlock;
 import com.anonymoushacker1279.immersiveweapons.block.crafting.SmallPartsTable;
@@ -31,6 +34,7 @@ import com.anonymoushacker1279.immersiveweapons.entity.projectile.BulletEntity.*
 import com.anonymoushacker1279.immersiveweapons.entity.projectile.CustomArrowEntity.*;
 import com.anonymoushacker1279.immersiveweapons.entity.projectile.MolotovEntity;
 import com.anonymoushacker1279.immersiveweapons.entity.projectile.MortarShellEntity;
+import com.anonymoushacker1279.immersiveweapons.entity.projectile.MudBallEntity;
 import com.anonymoushacker1279.immersiveweapons.entity.projectile.SmokeBombEntity;
 import com.anonymoushacker1279.immersiveweapons.entity.vehicle.BurnedOakBoatEntity;
 import com.anonymoushacker1279.immersiveweapons.entity.vehicle.CustomBoatType;
@@ -53,6 +57,7 @@ import com.anonymoushacker1279.immersiveweapons.item.projectile.gun.FlareGunItem
 import com.anonymoushacker1279.immersiveweapons.item.projectile.gun.SimplePistolItem;
 import com.anonymoushacker1279.immersiveweapons.item.projectile.gun.SimpleShotgunItem;
 import com.anonymoushacker1279.immersiveweapons.item.projectile.throwable.MolotovItem;
+import com.anonymoushacker1279.immersiveweapons.item.projectile.throwable.MudBallItem;
 import com.anonymoushacker1279.immersiveweapons.item.projectile.throwable.SmokeBombItem;
 import com.anonymoushacker1279.immersiveweapons.item.tool.molten.*;
 import com.anonymoushacker1279.immersiveweapons.item.tool.tesla.*;
@@ -279,6 +284,7 @@ public class DeferredRegistryHandler {
 	public static final RegistryObject<UsedSyringeItem> USED_SYRINGE = ITEMS.register("used_syringe", () -> new UsedSyringeItem(new Properties().tab(ITEM_GROUP).stacksTo(16)));
 	public static final RegistryObject<FirstAidKitItem> FIRST_AID_KIT = ITEMS.register("first_aid_kit", () -> new FirstAidKitItem(new Properties().tab(ITEM_GROUP).stacksTo(8)));
 	public static final RegistryObject<Item> CLOTH_SCRAP = ITEMS.register("cloth_scrap", () -> new Item(new Properties().tab(ITEM_GROUP)));
+	public static final RegistryObject<MudBallItem> MUD_BALL = ITEMS.register("mud_ball", () -> new MudBallItem(new Properties().tab(ITEM_GROUP)));
 
 	// Armor
 	public static final RegistryObject<MoltenArmorItem> MOLTEN_HELMET = ITEMS.register("molten_helmet", () -> new MoltenArmorItem(CustomArmorMaterials.MOLTEN, EquipmentSlot.HEAD, 1));
@@ -373,6 +379,12 @@ public class DeferredRegistryHandler {
 	// Breakable via shovel
 	// Wood tier
 	public static final RegistryObject<SandbagBlock> SANDBAG = BLOCKS.register("sandbag", () -> new SandbagBlock(BlockBehaviour.Properties.of(Material.SAND).strength(4.0f, 5.0f).sound(SoundType.SAND).noOcclusion()));
+	public static final RegistryObject<Block> MUD = BLOCKS.register("mud", () -> new MudBlock(BlockBehaviour.Properties.of(Material.DIRT).strength(0.8f, 0.3f).sound(SoundType.WET_GRASS).speedFactor(0.75f).randomTicks()));
+	public static final RegistryObject<Block> DRIED_MUD = BLOCKS.register("dried_mud", () -> new DriedMudBlock(BlockBehaviour.Properties.of(Material.DIRT).strength(1.0f, 0.7f).sound(SoundType.ROOTED_DIRT).randomTicks()));
+	public static final RegistryObject<Block> HARDENED_MUD = BLOCKS.register("hardened_mud", () -> new Block(BlockBehaviour.Properties.of(Material.DIRT).strength(2.0f, 1.0f).sound(SoundType.ROOTED_DIRT)));
+	public static final RegistryObject<StairBlock> HARDENED_MUD_STAIRS = BLOCKS.register("hardened_mud_stairs", () -> new StairBlock(() -> HARDENED_MUD.get().defaultBlockState(), BlockBehaviour.Properties.copy(BURNED_OAK_PLANKS.get())));
+	public static final RegistryObject<SlabBlock> HARDENED_MUD_SLAB = BLOCKS.register("hardened_mud_slab", () -> new SlabBlock(BlockBehaviour.Properties.of(Material.DIRT).strength(2.0f, 1.0f).sound(SoundType.ROOTED_DIRT)));
+	public static final RegistryObject<Block> HARDENED_MUD_WINDOW = BLOCKS.register("hardened_mud_window", () -> new HardenedMudWindowBlock(BlockBehaviour.Properties.of(Material.DIRT).strength(2.0f, 1.0f).sound(SoundType.ROOTED_DIRT).noOcclusion()));
 	// Stone tier
 	public static final RegistryObject<PunjiSticksBlock> PUNJI_STICKS = BLOCKS.register("punji_sticks", () -> new PunjiSticksBlock(BlockBehaviour.Properties.of(Material.BAMBOO).strength(5.0f, 1.0f).sound(SoundType.METAL).requiresCorrectToolForDrops()));
 
@@ -435,6 +447,7 @@ public class DeferredRegistryHandler {
 	public static final RegistryObject<EntityType<HansEntity>> HANS_ENTITY = ENTITY_TYPES.register("hans", () -> EntityType.Builder.of(HansEntity::new, MobCategory.MONSTER).sized(0.6f, 1.99f).clientTrackingRange(16).build(new ResourceLocation(ImmersiveWeapons.MOD_ID, "hans").toString()));
 	public static final RegistryObject<EntityType<MortarShellEntity>> MORTAR_SHELL_ENTITY = ENTITY_TYPES.register("mortar_shell", () -> EntityType.Builder.of(MortarShellEntity::new, MobCategory.MISC).sized(0.5f, 0.5f).build(new ResourceLocation(ImmersiveWeapons.MOD_ID, "mortar_shell").toString()));
 	public static final RegistryObject<EntityType<BurnedOakBoatEntity>> BURNED_OAK_BOAT_ENTITY = ENTITY_TYPES.register("burned_oak_boat", () -> EntityType.Builder.<BurnedOakBoatEntity>of(BurnedOakBoatEntity::new, MobCategory.MISC).sized(1.375f, 0.5625f).build(new ResourceLocation(ImmersiveWeapons.MOD_ID, "burned_oak_boat").toString()));
+	public static final RegistryObject<EntityType<MudBallEntity>> MUD_BALL_ENTITY = ENTITY_TYPES.register("mud_ball", () -> EntityType.Builder.<MudBallEntity> of(MudBallEntity::new, MobCategory.MISC).sized(0.25f, 0.25f).build(new ResourceLocation(ImmersiveWeapons.MOD_ID, "mud_ball").toString()));
 
 	// Block Items
 	public static final RegistryObject<BlockItem> MOLTEN_ORE_ITEM = ITEMS.register("molten_ore", () -> new BlockItem(MOLTEN_ORE.get(), new Properties().tab(ITEM_GROUP).fireResistant()));
@@ -517,6 +530,12 @@ public class DeferredRegistryHandler {
 	public static final RegistryObject<BlockItem> BRITISH_FLAG_ITEM = ITEMS.register("british_flag", () -> new BlockItem(BRITISH_FLAG.get(), new Properties().tab(ITEM_GROUP)));
 	public static final RegistryObject<BlockItem> TROLL_FLAG_ITEM = ITEMS.register("troll_flag", () -> new BlockItem(TROLL_FLAG.get(), new Properties().tab(ITEM_GROUP)));
 	public static final RegistryObject<BlockItem> IMMERSIVE_WEAPONS_FLAG_ITEM = ITEMS.register("immersive_weapons_flag", () -> new BlockItem(IMMERSIVE_WEAPONS_FLAG.get(), new Properties().tab(ITEM_GROUP)));
+	public static final RegistryObject<BlockItem> MUD_ITEM = ITEMS.register("mud", () -> new BlockItem(MUD.get(), new Properties().tab(ITEM_GROUP)));
+	public static final RegistryObject<BlockItem> DRIED_MUD_ITEM = ITEMS.register("dried_mud", () -> new BlockItem(DRIED_MUD.get(), new Properties().tab(ITEM_GROUP)));
+	public static final RegistryObject<BlockItem> HARDENED_MUD_ITEM = ITEMS.register("hardened_mud", () -> new BlockItem(HARDENED_MUD.get(), new Properties().tab(ITEM_GROUP)));
+	public static final RegistryObject<BlockItem> HARDENED_MUD_STAIRS_ITEM = ITEMS.register("hardened_mud_stairs", () -> new BlockItem(HARDENED_MUD_STAIRS.get(), new Properties().tab(ITEM_GROUP)));
+	public static final RegistryObject<BlockItem> HARDENED_MUD_SLAB_ITEM = ITEMS.register("hardened_mud_slab", () -> new BlockItem(HARDENED_MUD_SLAB.get(), new Properties().tab(ITEM_GROUP)));
+	public static final RegistryObject<BlockItem> HARDENED_MUD_WINDOW_ITEM = ITEMS.register("hardened_mud_window", () -> new BlockItem(HARDENED_MUD_WINDOW.get(), new Properties().tab(ITEM_GROUP)));
 
 	// Sounds
 	public static final RegistryObject<SoundEvent> TESLA_ARMOR_EFFECT = SOUND_EVENTS.register("tesla_armor_effect", () -> new SoundEvent(new ResourceLocation(ImmersiveWeapons.MOD_ID, "tesla_armor_effect")));

@@ -2,6 +2,12 @@
   "replace": false,
   "values": [
     "immersiveweapons:sandbag",
+    "immersiveweapons:mud",
+    "immersiveweapons:dried_mud",
+    "immersiveweapons:hardened_mud",
+    "immersiveweapons:hardened_mud_stairs",
+    "immersiveweapons:hardened_mud_slab",
+    "immersiveweapons:hardened_mud_window",
     "immersiveweapons:punji_sticks"
   ]
 }

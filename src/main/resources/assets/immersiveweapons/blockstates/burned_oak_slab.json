@@ -4,7 +4,7 @@
 			"model": "immersiveweapons:block/burned_oak_slab"
 		},
 		"type=double": {
-			"model": "immersiveweapons:block/burned_oak_slab"
+			"model": "immersiveweapons:block/burned_oak_planks"
 		},
 		"type=top": {
 			"model": "immersiveweapons:block/burned_oak_slab_top"

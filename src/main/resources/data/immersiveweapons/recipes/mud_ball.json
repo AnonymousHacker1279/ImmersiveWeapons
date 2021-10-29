@@ -1,0 +1,12 @@
+{
+	"type": "minecraft:crafting_shapeless",
+	"ingredients": [
+		{
+			"item": "immersiveweapons:mud"
+		}
+	],
+	"result": {
+		"item": "immersiveweapons:mud_ball",
+		"count": 4
+	}
+}

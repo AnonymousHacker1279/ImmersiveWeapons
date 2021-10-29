@@ -3,6 +3,7 @@
 	"values": [
 		"#forge:nuggets/iron",
 		"#forge:nuggets/gold",
-		"#forge:nuggets/copper"
+		"#forge:nuggets/copper",
+		"#forge:nuggets/cobalt"
 	]
 }

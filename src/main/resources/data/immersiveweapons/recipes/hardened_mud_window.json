@@ -1,0 +1,17 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"pattern": [
+		"xxx",
+		"x x",
+		"xxx"
+	],
+	"key": {
+		"x": {
+			"item": "immersiveweapons:hardened_mud"
+		}
+	},
+	"result": {
+		"item": "immersiveweapons:hardened_mud_window",
+		"count": 8
+	}
+}
