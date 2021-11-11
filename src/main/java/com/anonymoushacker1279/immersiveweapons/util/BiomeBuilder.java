@@ -6,6 +6,7 @@ import net.minecraft.data.worldgen.BiomeDefaultFeatures;
 import net.minecraft.data.worldgen.Features;
 import net.minecraft.data.worldgen.StructureFeatures;
 import net.minecraft.resources.ResourceKey;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.level.biome.*;
 import net.minecraft.world.level.biome.Biome.BiomeCategory;
@@ -72,6 +73,51 @@ public class BiomeBuilder {
 								.foliageColorOverride(0x442e35)
 								.ambientMoodSound(ambienceSound)
 								.ambientLoopSound(DeferredRegistryHandler.BATTLEFIELD_AMBIENT.get())
+								.build()
+				)
+				.mobSpawnSettings(mobSpawnInfoBuilder.build())
+				.generationSettings(biomeGenerationSettingBuilder.build())
+				.build();
+	}
+
+	/**
+	 * Make an Tiltros biome.
+	 * @param surfaceBuilder the <code>ConfiguredSurfaceBuilder</code> instance
+	 * @param depth the biome depth
+	 * @param scale the biome scale
+	 * @return Biome
+	 */
+	public static Biome makeTiltrosBiome(ConfiguredSurfaceBuilder<?> surfaceBuilder, float depth, float scale) {
+		MobSpawnSettings.Builder mobSpawnInfoBuilder = new MobSpawnSettings.Builder()
+				.setPlayerCanSpawn();
+
+		BiomeGenerationSettings.Builder biomeGenerationSettingBuilder = new BiomeGenerationSettings.Builder()
+				.surfaceBuilder(surfaceBuilder)
+				.addFeature(Decoration.VEGETAL_DECORATION, Features.PATCH_GRASS_PLAIN);
+
+
+		BiomeDefaultFeatures.addDefaultCarvers(biomeGenerationSettingBuilder);
+		BiomeDefaultFeatures.addDefaultUndergroundVariety(biomeGenerationSettingBuilder);
+		BiomeDefaultFeatures.addDefaultOres(biomeGenerationSettingBuilder);
+		BiomeDefaultFeatures.addDefaultGrass(biomeGenerationSettingBuilder);
+		BiomeDefaultFeatures.addDefaultSprings(biomeGenerationSettingBuilder);
+
+		return new Biome.BiomeBuilder()
+				.precipitation(Biome.Precipitation.NONE)
+				.biomeCategory(BiomeCategory.NONE)
+				.depth(depth)
+				.scale(scale)
+				.temperature(0.8f)
+				.downfall(0.0f)
+				.specialEffects(
+						new BiomeSpecialEffects.Builder()
+								.waterColor(0x1a7ca4)
+								.waterFogColor(0x503b72)
+								.fogColor(0x8b7e67)
+								.skyColor(0x87CEEB)
+								.grassColorOverride(0xF5DEB3)
+								.foliageColorOverride(0xdfc695)
+								.ambientLoopSound(SoundEvents.AMBIENT_NETHER_WASTES_LOOP) // TODO: Custom ambient loop sound
 								.build()
 				)
 				.mobSpawnSettings(mobSpawnInfoBuilder.build())

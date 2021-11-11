@@ -35,14 +35,14 @@ apply plugin: 'net.minecraftforge.gradle'
 apply plugin: 'org.parchmentmc.librarian.forgegradle'
 apply plugin: 'maven-publish'
 
-version = '1.17.1-1.11.0'
+version = '1.17.1-1.12.0'
 group = 'com.anonymoushacker1279.immersiveweapons' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 
 java.toolchain.languageVersion = JavaLanguageVersion.of(16)
 
 println('Java: ' + System.getProperty('java.version') + ' JVM: ' + System.getProperty('java.vm.version') + '(' + System.getProperty('java.vendor') + ') Arch: ' + System.getProperty('os.arch'))
 minecraft {
-	mappings channel: 'parchment', version: '2021.10.24-1.17.1'
+	mappings channel: 'parchment', version: '2021.10.31-1.17.1'
 	// makeObfSourceJar = false // an Srg named sources jar is made by default. uncomment this to disable.
 
 	accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
@@ -112,7 +112,7 @@ dependencies {
 	// Specify the version of Minecraft to use, If this is any group other then 'net.minecraft' it is assumed
 	// that the dep is a ForgeGradle 'patcher' dependency. And it's patches will be applied.
 	// The userdev artifact is a special name and will get all sorts of transformations applied to it.
-	minecraft 'net.minecraftforge:forge:1.17.1-37.0.103'
+	minecraft 'net.minecraftforge:forge:1.17.1-37.0.108'
 
 	// Include JEI
 	implementation fg.deobf("mezz.jei:jei-1.17.1:8.1.0.31")

@@ -1,0 +1,12 @@
+{
+	"type": "minecraft:overworld",
+	"generator": {
+		"type": "minecraft:noise",
+		"seed": 2031154856,
+		"settings": "minecraft:overworld",
+		"biome_source": {
+			"type": "minecraft:fixed",
+			"biome": "immersiveweapons:tiltros"
+		}
+	}
+}

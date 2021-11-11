@@ -1,0 +1,34 @@
+{
+	"variants": {
+		"facing=north,powered=false": {
+			"model": "immersiveweapons:block/warrior_statue_head",
+			"y": 180
+		},
+		"facing=south,powered=false": {
+			"model": "immersiveweapons:block/warrior_statue_head"
+		},
+		"facing=west,powered=false": {
+			"model": "immersiveweapons:block/warrior_statue_head",
+			"y": 90
+		},
+		"facing=east,powered=false": {
+			"model": "immersiveweapons:block/warrior_statue_head",
+			"y": 270
+		},
+		"facing=north,powered=true": {
+			"model": "immersiveweapons:block/warrior_statue_head_powered",
+			"y": 180
+		},
+		"facing=south,powered=true": {
+			"model": "immersiveweapons:block/warrior_statue_head_powered"
+		},
+		"facing=west,powered=true": {
+			"model": "immersiveweapons:block/warrior_statue_head_powered",
+			"y": 90
+		},
+		"facing=east,powered=true": {
+			"model": "immersiveweapons:block/warrior_statue_head_powered",
+			"y": 270
+		}
+	}
+}
