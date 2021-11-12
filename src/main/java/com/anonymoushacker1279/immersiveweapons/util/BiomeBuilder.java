@@ -6,7 +6,6 @@ import net.minecraft.data.worldgen.BiomeDefaultFeatures;
 import net.minecraft.data.worldgen.Features;
 import net.minecraft.data.worldgen.StructureFeatures;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.level.biome.*;
 import net.minecraft.world.level.biome.Biome.BiomeCategory;
@@ -111,13 +110,13 @@ public class BiomeBuilder {
 				.downfall(0.0f)
 				.specialEffects(
 						new BiomeSpecialEffects.Builder()
-								.waterColor(0x1a7ca4)
-								.waterFogColor(0x503b72)
-								.fogColor(0x8b7e67)
-								.skyColor(0x87CEEB)
+								.waterColor(0x6B4984)
+								.waterFogColor(0x483475)
+								.fogColor(0x2B2F77)
+								.skyColor(0x070B34)
 								.grassColorOverride(0xF5DEB3)
 								.foliageColorOverride(0xdfc695)
-								.ambientLoopSound(SoundEvents.AMBIENT_NETHER_WASTES_LOOP) // TODO: Custom ambient loop sound
+								.ambientLoopSound(DeferredRegistryHandler.TILTROS_AMBIENT.get())
 								.build()
 				)
 				.mobSpawnSettings(mobSpawnInfoBuilder.build())

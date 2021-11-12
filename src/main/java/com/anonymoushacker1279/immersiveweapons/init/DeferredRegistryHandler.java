@@ -583,6 +583,7 @@ public class DeferredRegistryHandler {
 	public static final RegistryObject<SoundEvent> WANDERING_WARRIOR_HURT = SOUND_EVENTS.register("wandering_warrior_hurt", () -> new SoundEvent(new ResourceLocation(ImmersiveWeapons.MOD_ID, "wandering_warrior_hurt")));
 	public static final RegistryObject<SoundEvent> WANDERING_WARRIOR_DEATH = SOUND_EVENTS.register("wandering_warrior_death", () -> new SoundEvent(new ResourceLocation(ImmersiveWeapons.MOD_ID, "wandering_warrior_death")));
 	public static final RegistryObject<SoundEvent> WANDERING_WARRIOR_STEP = SOUND_EVENTS.register("wandering_warrior_step", () -> new SoundEvent(new ResourceLocation(ImmersiveWeapons.MOD_ID, "wandering_warrior_step")));
+	public static final RegistryObject<SoundEvent> TILTROS_AMBIENT = SOUND_EVENTS.register("tiltros_ambient", () -> new SoundEvent(new ResourceLocation(ImmersiveWeapons.MOD_ID, "tiltros_ambient")));
 
 	// Containers
 	public static final RegistryObject<MenuType<SmallPartsContainer>> SMALL_PARTS_TABLE_CONTAINER = CONTAINER_TYPES.register("small_parts_table", () -> IForgeContainerType.create((id, inv, data) -> new SmallPartsContainer(id, inv)));

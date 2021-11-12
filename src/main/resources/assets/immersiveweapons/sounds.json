@@ -410,5 +410,15 @@
 				"stream": false
 			}
 		]
+	},
+	"tiltros_ambient": {
+		"category": "ambient",
+		"subtitle": "immersiveweapons.subtitle.biome.tiltros.ambient",
+		"sounds": [
+			{
+				"name": "immersiveweapons:biome/tiltros/ambient/ambient_1",
+				"stream": true
+			}
+		]
 	}
 }
