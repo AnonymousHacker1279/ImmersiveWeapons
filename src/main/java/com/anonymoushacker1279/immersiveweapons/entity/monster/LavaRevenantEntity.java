@@ -1,14 +1,17 @@
 package com.anonymoushacker1279.immersiveweapons.entity.monster;
 
+import com.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
 import com.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
+import com.anonymoushacker1279.immersiveweapons.util.PacketHandler;
+import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.sounds.SoundEvent;
-import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
 import net.minecraft.world.DifficultyInstance;
@@ -18,6 +21,7 @@ import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.control.BodyRotationControl;
 import net.minecraft.world.entity.ai.control.LookControl;
+import net.minecraft.world.entity.ai.control.MoveControl;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.ai.targeting.TargetingConditions;
 import net.minecraft.world.entity.monster.Enemy;
@@ -27,6 +31,12 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.fml.DistExecutor;
+import net.minecraftforge.fmllegacy.network.NetworkEvent;
+import net.minecraftforge.fmllegacy.network.NetworkEvent.Context;
+import net.minecraftforge.fmllegacy.network.PacketDistributor;
 import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
@@ -34,6 +44,7 @@ import java.util.Comparator;
 import java.util.EnumSet;
 import java.util.List;
 import java.util.Objects;
+import java.util.function.Supplier;
 
 public class LavaRevenantEntity extends FlyingMob implements Enemy {
 
@@ -46,7 +57,7 @@ public class LavaRevenantEntity extends FlyingMob implements Enemy {
 	public LavaRevenantEntity(EntityType<? extends LavaRevenantEntity> entityType, Level level) {
 		super(entityType, level);
 		xpReward = 25;
-		moveControl = new MoveControl(this);
+		moveControl = new LavaRevenantMoveControl(this);
 		lookControl = new LavaRevenantLookControl(this);
 	}
 
@@ -57,7 +68,7 @@ public class LavaRevenantEntity extends FlyingMob implements Enemy {
 
 	@Override
 	public boolean removeWhenFarAway(double pDistanceToClosestPlayer) {
-		return pDistanceToClosestPlayer >= 512;
+		return pDistanceToClosestPlayer >= 768;
 	}
 
 	@Override
@@ -136,7 +147,7 @@ public class LavaRevenantEntity extends FlyingMob implements Enemy {
 			float f = Mth.cos((float)(getUniqueFlapTickOffset() + tickCount) * 7.448451F * ((float)Math.PI / 180F) + (float)Math.PI);
 			float f1 = Mth.cos((float)(getUniqueFlapTickOffset() + tickCount + 1) * 7.448451F * ((float)Math.PI / 180F) + (float)Math.PI);
 			if (f > 0.0F && f1 <= 0.0F) {
-				level.playLocalSound(getX(), getY(), getZ(), SoundEvents.PHANTOM_FLAP, getSoundSource(), 0.95F + random.nextFloat() * 0.05F, 0.95F + random.nextFloat() * 0.05F, false);
+				level.playLocalSound(getX(), getY(), getZ(), DeferredRegistryHandler.LAVA_REVENANT_FLAP.get(), getSoundSource(), 0.95F + random.nextFloat() * 0.05F, 0.95F + random.nextFloat() * 0.05F, false);
 			}
 
 			int size = getSize();
@@ -165,7 +176,7 @@ public class LavaRevenantEntity extends FlyingMob implements Enemy {
 
 	@Override
 	public SpawnGroupData finalizeSpawn(@NotNull ServerLevelAccessor pLevel, @NotNull DifficultyInstance pDifficulty, @NotNull MobSpawnType pReason, @Nullable SpawnGroupData pSpawnData, @Nullable CompoundTag pDataTag) {
-		anchorPoint = blockPosition().above(5);
+		anchorPoint = blockPosition().above(15);
 		setSize(GeneralUtilities.getRandomNumber(1, 4));
 		setHealth(getMaxHealth());
 		return super.finalizeSpawn(pLevel, pDifficulty, pReason, pSpawnData, pDataTag);
@@ -201,7 +212,6 @@ public class LavaRevenantEntity extends FlyingMob implements Enemy {
 		return true;
 	}
 
-	// TODO: Custom sounds
 	@Override
 	public @NotNull SoundSource getSoundSource() {
 		return SoundSource.HOSTILE;
@@ -209,17 +219,17 @@ public class LavaRevenantEntity extends FlyingMob implements Enemy {
 
 	@Override
 	protected SoundEvent getAmbientSound() {
-		return SoundEvents.PHANTOM_AMBIENT;
+		return DeferredRegistryHandler.LAVA_REVENANT_AMBIENT.get();
 	}
 
 	@Override
 	protected SoundEvent getHurtSound(@NotNull DamageSource pDamageSource) {
-		return SoundEvents.PHANTOM_HURT;
+		return DeferredRegistryHandler.LAVA_REVENANT_HURT.get();
 	}
 
 	@Override
 	protected SoundEvent getDeathSound() {
-		return SoundEvents.PHANTOM_DEATH;
+		return DeferredRegistryHandler.LAVA_REVENANT_DEATH.get();
 	}
 
 	@Override
@@ -243,9 +253,9 @@ public class LavaRevenantEntity extends FlyingMob implements Enemy {
 	@Override
 	public @NotNull EntityDimensions getDimensions(@NotNull Pose pPose) {
 		int i = getSize();
-		EntityDimensions entitydimensions = super.getDimensions(pPose);
-		float f = (entitydimensions.width + 0.2F * (float)i) / entitydimensions.width;
-		return entitydimensions.scale(f);
+		EntityDimensions dimensions = super.getDimensions(pPose);
+		float f = (dimensions.width + 0.2F * (float)i) / dimensions.width;
+		return dimensions.scale(f);
 	}
 
 	enum AttackPhase {
@@ -321,7 +331,7 @@ public class LavaRevenantEntity extends FlyingMob implements Enemy {
 		 */
 		@Override
 		public void stop() {
-			anchorPoint = level.getHeightmapPos(Heightmap.Types.MOTION_BLOCKING, anchorPoint).above(10 + random.nextInt(20));
+			anchorPoint = level.getHeightmapPos(Heightmap.Types.MOTION_BLOCKING, anchorPoint).above(30 + random.nextInt(20));
 		}
 
 		/**
@@ -335,14 +345,14 @@ public class LavaRevenantEntity extends FlyingMob implements Enemy {
 					attackPhase = LavaRevenantEntity.AttackPhase.SWOOP;
 					setAnchorAboveTarget();
 					nextSweepTick = (8 + random.nextInt(4)) * 20;
-					playSound(SoundEvents.PHANTOM_SWOOP, 10.0F, 0.95F + random.nextFloat() * 0.1F);
+					playSound(DeferredRegistryHandler.LAVA_REVENANT_SWOOP.get(), 10.0F, 0.95F + random.nextFloat() * 0.1F);
 				}
 			}
 
 		}
 
 		private void setAnchorAboveTarget() {
-			anchorPoint = Objects.requireNonNull(getTarget()).blockPosition().above(20 + random.nextInt(20));
+			anchorPoint = Objects.requireNonNull(getTarget()).blockPosition().above(30 + random.nextInt(20));
 			if (anchorPoint.getY() < level.getSeaLevel()) {
 				anchorPoint = new BlockPos(anchorPoint.getX(), level.getSeaLevel() + 1, anchorPoint.getZ());
 			}
@@ -452,10 +462,10 @@ public class LavaRevenantEntity extends FlyingMob implements Enemy {
 		}
 	}
 
-	class MoveControl extends net.minecraft.world.entity.ai.control.MoveControl {
+	class LavaRevenantMoveControl extends MoveControl {
 		private float speed = 0.1F;
 
-		public MoveControl(Mob mob) {
+		public LavaRevenantMoveControl(Mob mob) {
 			super(mob);
 		}
 
@@ -566,11 +576,67 @@ public class LavaRevenantEntity extends FlyingMob implements Enemy {
 					doHurtTarget(livingentity);
 					attackPhase = LavaRevenantEntity.AttackPhase.CIRCLE;
 					if (!isSilent()) {
-						level.levelEvent(1039, blockPosition(), 0);
+						PacketHandler.INSTANCE.send(PacketDistributor.TRACKING_CHUNK.with(() -> level.getChunkAt(blockPosition())), new LavaRevenantEntityPacketHandler(blockPosition()));
 					}
 				} else if (horizontalCollision || hurtTime > 0) {
 					attackPhase = LavaRevenantEntity.AttackPhase.CIRCLE;
 				}
+			}
+		}
+	}
+
+	public record LavaRevenantEntityPacketHandler(BlockPos blockPos) {
+
+		/**
+		 * Constructor for LavaRevenantEntityPacketHandler.
+		 *
+		 * @param blockPos the <code>BlockPos</code> the packet came from
+		 */
+		public LavaRevenantEntityPacketHandler {
+		}
+
+		/**
+		 * Encodes a packet
+		 *
+		 * @param msg          the <code>LavaRevenantEntityPacketHandler</code> message being sent
+		 * @param packetBuffer the <code>PacketBuffer</code> containing packet data
+		 */
+		public static void encode(LavaRevenantEntityPacketHandler msg, FriendlyByteBuf packetBuffer) {
+			packetBuffer.writeBlockPos(msg.blockPos);
+		}
+
+		/**
+		 * Decodes a packet
+		 *
+		 * @param packetBuffer the <code>PacketBuffer</code> containing packet data
+		 * @return LavaRevenantEntityPacketHandler
+		 */
+		public static LavaRevenantEntityPacketHandler decode(FriendlyByteBuf packetBuffer) {
+			return new LavaRevenantEntityPacketHandler(packetBuffer.readBlockPos());
+		}
+
+		/**
+		 * Handles an incoming packet, by sending it to the client/server
+		 *
+		 * @param msg             the <code>LavaRevenantEntityPacketHandler</code> message being sent
+		 * @param contextSupplier the <code>Supplier</code> providing context
+		 */
+		public static void handle(LavaRevenantEntityPacketHandler msg, Supplier<Context> contextSupplier) {
+			NetworkEvent.Context context = contextSupplier.get();
+			context.enqueueWork(() -> DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> handleOnClient(msg)));
+			context.setPacketHandled(true);
+		}
+
+		/**
+		 * Runs specifically on the client, when a packet is received
+		 *
+		 * @param msg the <code>LavaRevenantEntityPacketHandler</code> message being sent
+		 */
+		@OnlyIn(Dist.CLIENT)
+		private static void handleOnClient(LavaRevenantEntityPacketHandler msg) {
+			Minecraft minecraft = Minecraft.getInstance();
+			if (minecraft.level != null) {
+				minecraft.level.playLocalSound(msg.blockPos.getX(), msg.blockPos.getY(), msg.blockPos.getZ(), DeferredRegistryHandler.LAVA_REVENANT_BITE.get(), SoundSource.HOSTILE, 0.3F, GeneralUtilities.getRandomNumber(0.0f, 1.0f) * 0.1F + 0.9F, false);
 			}
 		}
 	}
