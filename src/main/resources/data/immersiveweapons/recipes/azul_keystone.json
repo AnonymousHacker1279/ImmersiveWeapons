@@ -1,0 +1,20 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"pattern": [
+		"yyy",
+		"yxy",
+		"yyy"
+	],
+	"key": {
+		"x": {
+			"tag": "forge:gems/diamond"
+		},
+		"y": {
+			"item": "immersiveweapons:azul_keystone_fragment"
+		}
+	},
+	"result": {
+		"item": "immersiveweapons:azul_keystone",
+		"count": 1
+	}
+}

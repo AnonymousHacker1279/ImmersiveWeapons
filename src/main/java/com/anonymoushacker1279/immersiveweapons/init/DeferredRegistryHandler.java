@@ -75,6 +75,7 @@ import com.anonymoushacker1279.immersiveweapons.potion.MorphineEffect;
 import com.anonymoushacker1279.immersiveweapons.util.*;
 import com.anonymoushacker1279.immersiveweapons.world.food.FoodItemProperties;
 import com.anonymoushacker1279.immersiveweapons.world.level.levelgen.feature.treedecorators.BurnedBranchDecorator;
+import com.anonymoushacker1279.immersiveweapons.world.level.loot.AzulKeystoneFragmentInChestsLootModifierHandler;
 import com.anonymoushacker1279.immersiveweapons.world.level.loot.LogShardsLootModifierHandler;
 import com.anonymoushacker1279.immersiveweapons.world.structures.*;
 import com.google.common.collect.Sets;
@@ -291,6 +292,7 @@ public class DeferredRegistryHandler {
 	public static final RegistryObject<Item> CLOTH_SCRAP = ITEMS.register("cloth_scrap", () -> new Item(new Properties().tab(ITEM_GROUP)));
 	public static final RegistryObject<MudBallItem> MUD_BALL = ITEMS.register("mud_ball", () -> new MudBallItem(new Properties().tab(ITEM_GROUP)));
 	public static final RegistryObject<Item> AZUL_KEYSTONE = ITEMS.register("azul_keystone", () -> new Item(new Properties().tab(ITEM_GROUP)));
+	public static final RegistryObject<Item> AZUL_KEYSTONE_FRAGMENT = ITEMS.register("azul_keystone_fragment", () -> new Item(new Properties().tab(ITEM_GROUP)));
 
 	// Armor
 	public static final RegistryObject<MoltenArmorItem> MOLTEN_HELMET = ITEMS.register("molten_helmet", () -> new MoltenArmorItem(CustomArmorMaterials.MOLTEN, EquipmentSlot.HEAD, 1));
@@ -604,6 +606,7 @@ public class DeferredRegistryHandler {
 
 	// Loot Table Modifiers
 	public static final RegistryObject<LogShardsLootModifierHandler.Serializer> WOOD_LOGS_MODIFIER = GLOBAL_LOOT_MODIFIER_SERIALIZER.register("log_shards", LogShardsLootModifierHandler.Serializer::new);
+	public static final RegistryObject<AzulKeystoneFragmentInChestsLootModifierHandler.Serializer> AZUL_KEYSTONE_FRAGMENT_IN_CHESTS_MODIFIER = GLOBAL_LOOT_MODIFIER_SERIALIZER.register("azul_keystone_fragment_in_chests", AzulKeystoneFragmentInChestsLootModifierHandler.Serializer::new);
 
 	// Particles
 	public static final RegistryObject<ParticleType<SmokeBombParticleData>> SMOKE_BOMB_PARTICLE_TYPE = PARTICLE_TYPES.register("smoke_bomb", SmokeBombParticleType::new);
