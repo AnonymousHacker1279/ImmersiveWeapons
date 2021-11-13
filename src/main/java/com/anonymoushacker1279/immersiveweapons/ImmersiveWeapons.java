@@ -119,7 +119,7 @@ public class ImmersiveWeapons {
 		event.enqueueWork(() -> {
 			WoodType.register(CustomWoodTypes.BURNED_OAK);
 			setupBiome(DeferredRegistryHandler.BATTLEFIELD.get(), BiomeManager.BiomeType.WARM, 3, Type.PLAINS, Type.OVERWORLD);
-			setupBiome(DeferredRegistryHandler.TILTROS.get(), BiomeType.DESERT, 0, Type.PLAINS, Type.OVERWORLD);
+			setupBiome(DeferredRegistryHandler.TILTROS.get(), BiomeType.COOL, 0, Type.PLAINS, Type.OVERWORLD);
 			Structures.setupStructures();
 			Structures.registerAllPieces();
 			ConfiguredStructures.registerConfiguredStructures();
@@ -135,13 +135,18 @@ public class ImmersiveWeapons {
 	public void onBiomeLoading(BiomeLoadingEvent event) {
 		// Biome modifications
 		BiomeGenerationSettingsBuilder generation = event.getGeneration();
-		if (event.getCategory() != Biome.BiomeCategory.NETHER || event.getCategory() != Biome.BiomeCategory.THEEND) {
+		if (event.getCategory() != Biome.BiomeCategory.NETHER && event.getCategory() != Biome.BiomeCategory.THEEND && !Objects.requireNonNull(event.getName()).toString().equals("immersiveweapons:tiltros")) {
 			event.getGeneration().getFeatures(GenerationStep.Decoration.UNDERGROUND_ORES)
 					.add(() -> OreGeneratorHandler.ORE_COBALT_CONFIG);
 
 			if (event.getCategory() != BiomeCategory.OCEAN && event.getCategory() != BiomeCategory.RIVER) {
 				if (Config.WANDERING_WARRIOR_SPAWN.get()) event.getSpawns().addSpawn(MobCategory.MONSTER, new SpawnerData(DeferredRegistryHandler.WANDERING_WARRIOR_ENTITY.get(), 13, 1, 1));
 				if (Config.HANS_SPAWN.get()) event.getSpawns().addSpawn(MobCategory.MONSTER, new SpawnerData(DeferredRegistryHandler.HANS_ENTITY.get(), 1, 1, 1));
+			}
+		}
+		if (Objects.requireNonNull(event.getName()).toString().equals("immersiveweapons:tiltros")) {
+			if (Config.LAVA_REVENANT_SPAWN.get()) {
+				event.getSpawns().addSpawn(MobCategory.MONSTER, new SpawnerData(DeferredRegistryHandler.LAVA_REVENANT_ENTITY.get(), 1, 0, 1));
 			}
 		}
 		if (event.getCategory() == Biome.BiomeCategory.NETHER) {

@@ -1,5 +1,5 @@
 {
-	"type": "minecraft:overworld",
+	"type": "immersiveweapons:tiltros",
 	"generator": {
 		"type": "minecraft:noise",
 		"seed": 2031154856,

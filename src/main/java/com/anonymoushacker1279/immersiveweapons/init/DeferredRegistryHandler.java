@@ -30,6 +30,7 @@ import com.anonymoushacker1279.immersiveweapons.container.TeslaSynthesizerContai
 import com.anonymoushacker1279.immersiveweapons.entity.misc.ChairEntity;
 import com.anonymoushacker1279.immersiveweapons.entity.monster.DyingSoldierEntity;
 import com.anonymoushacker1279.immersiveweapons.entity.monster.HansEntity;
+import com.anonymoushacker1279.immersiveweapons.entity.monster.LavaRevenantEntity;
 import com.anonymoushacker1279.immersiveweapons.entity.monster.WanderingWarriorEntity;
 import com.anonymoushacker1279.immersiveweapons.entity.passive.FieldMedicEntity;
 import com.anonymoushacker1279.immersiveweapons.entity.passive.MinutemanEntity;
@@ -319,6 +320,7 @@ public class DeferredRegistryHandler {
 	public static final RegistryObject<ForgeSpawnEggItem> FIELD_MEDIC_SPAWN_EGG = ITEMS.register("field_medic_spawn_egg", () -> new ForgeSpawnEggItem(DeferredRegistryHandler.FIELD_MEDIC_ENTITY, 0xde5451, 0xebe4d2, (new Item.Properties()).tab(ITEM_GROUP).stacksTo(16)));
 	public static final RegistryObject<ForgeSpawnEggItem> WANDERING_WARRIOR_SPAWN_EGG = ITEMS.register("wandering_warrior_spawn_egg", () -> new ForgeSpawnEggItem(DeferredRegistryHandler.WANDERING_WARRIOR_ENTITY, 0x614226, 0x2e6278, (new Item.Properties()).tab(ITEM_GROUP).stacksTo(16)));
 	public static final RegistryObject<ForgeSpawnEggItem> HANS_SPAWN_EGG = ITEMS.register("hans_spawn_egg", () -> new ForgeSpawnEggItem(DeferredRegistryHandler.HANS_ENTITY, 0xd0a873, 0xafafaf, (new Item.Properties().tab(ITEM_GROUP).stacksTo(16))));
+	public static final RegistryObject<ForgeSpawnEggItem> LAVA_REVENANT_SPAWN_EGG = ITEMS.register("lava_revenant_spawn_egg", () -> new ForgeSpawnEggItem(DeferredRegistryHandler.LAVA_REVENANT_ENTITY, 0x640000, 0x990000, (new Item.Properties().tab(ITEM_GROUP).stacksTo(16))));
 
 	// Blocks
 	// Breakable via pickaxe
@@ -457,6 +459,7 @@ public class DeferredRegistryHandler {
 	public static final RegistryObject<EntityType<MortarShellEntity>> MORTAR_SHELL_ENTITY = ENTITY_TYPES.register("mortar_shell", () -> EntityType.Builder.of(MortarShellEntity::new, MobCategory.MISC).sized(0.5f, 0.5f).build(new ResourceLocation(ImmersiveWeapons.MOD_ID, "mortar_shell").toString()));
 	public static final RegistryObject<EntityType<BurnedOakBoatEntity>> BURNED_OAK_BOAT_ENTITY = ENTITY_TYPES.register("burned_oak_boat", () -> EntityType.Builder.<BurnedOakBoatEntity>of(BurnedOakBoatEntity::new, MobCategory.MISC).sized(1.375f, 0.5625f).build(new ResourceLocation(ImmersiveWeapons.MOD_ID, "burned_oak_boat").toString()));
 	public static final RegistryObject<EntityType<MudBallEntity>> MUD_BALL_ENTITY = ENTITY_TYPES.register("mud_ball", () -> EntityType.Builder.<MudBallEntity> of(MudBallEntity::new, MobCategory.MISC).sized(0.25f, 0.25f).build(new ResourceLocation(ImmersiveWeapons.MOD_ID, "mud_ball").toString()));
+	public static final RegistryObject<EntityType<LavaRevenantEntity>> LAVA_REVENANT_ENTITY = ENTITY_TYPES.register("lava_revenant", () -> EntityType.Builder.of(LavaRevenantEntity::new, MobCategory.MONSTER).sized(15.0f,  5.0f).clientTrackingRange(128).fireImmune().build(new ResourceLocation(ImmersiveWeapons.MOD_ID, "lava_revenant").toString()));
 
 	// Block Items
 	public static final RegistryObject<BlockItem> MOLTEN_ORE_ITEM = ITEMS.register("molten_ore", () -> new BlockItem(MOLTEN_ORE.get(), new Properties().tab(ITEM_GROUP).fireResistant()));

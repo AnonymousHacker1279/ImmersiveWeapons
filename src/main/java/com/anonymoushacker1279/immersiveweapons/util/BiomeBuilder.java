@@ -88,6 +88,7 @@ public class BiomeBuilder {
 	 */
 	public static Biome makeTiltrosBiome(ConfiguredSurfaceBuilder<?> surfaceBuilder, float depth, float scale) {
 		MobSpawnSettings.Builder mobSpawnInfoBuilder = new MobSpawnSettings.Builder()
+				.addMobCharge(DeferredRegistryHandler.LAVA_REVENANT_ENTITY.get(), 4.0D, 0.12D)
 				.setPlayerCanSpawn();
 
 		BiomeGenerationSettings.Builder biomeGenerationSettingBuilder = new BiomeGenerationSettings.Builder()

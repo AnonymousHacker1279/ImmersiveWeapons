@@ -7,6 +7,7 @@ import com.anonymoushacker1279.immersiveweapons.client.particle.blood.BloodParti
 import com.anonymoushacker1279.immersiveweapons.client.particle.smokebomb.SmokeBombParticleFactory;
 import com.anonymoushacker1279.immersiveweapons.client.renderer.blockentity.ChairRenderer;
 import com.anonymoushacker1279.immersiveweapons.client.renderer.blockentity.ShelfRenderer;
+import com.anonymoushacker1279.immersiveweapons.client.renderer.dimension.TiltrosDimensionSpecialEffects;
 import com.anonymoushacker1279.immersiveweapons.client.renderer.entity.arrow.*;
 import com.anonymoushacker1279.immersiveweapons.client.renderer.entity.bullet.*;
 import com.anonymoushacker1279.immersiveweapons.client.renderer.entity.misc.BurnedOakBoatRenderer;
@@ -16,10 +17,7 @@ import com.anonymoushacker1279.immersiveweapons.util.CustomWoodTypes;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.MenuScreens;
-import net.minecraft.client.renderer.BiomeColors;
-import net.minecraft.client.renderer.ItemBlockRenderTypes;
-import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.renderer.Sheets;
+import net.minecraft.client.renderer.*;
 import net.minecraft.client.renderer.blockentity.SignRenderer;
 import net.minecraft.client.renderer.entity.ThrownItemRenderer;
 import net.minecraft.client.renderer.item.ClampedItemPropertyFunction;
@@ -94,6 +92,8 @@ public class ClientModEventSubscriber {
 		event.enqueueWork(() -> Sheets.addWoodType(CustomWoodTypes.BURNED_OAK));
 
 		event.enqueueWork(ClientModEventSubscriber::registerPropertyGetters);
+
+		DimensionSpecialEffects.EFFECTS.put(new ResourceLocation(ImmersiveWeapons.MOD_ID, "tiltros"), new TiltrosDimensionSpecialEffects());
 	}
 
 	/**
@@ -131,6 +131,7 @@ public class ClientModEventSubscriber {
 		event.registerEntityRenderer(DeferredRegistryHandler.CHAIR_ENTITY.get(), ChairRenderer::new);
 		event.registerEntityRenderer(DeferredRegistryHandler.BURNED_OAK_BOAT_ENTITY.get(), BurnedOakBoatRenderer::new);
 		event.registerEntityRenderer(DeferredRegistryHandler.MUD_BALL_ENTITY.get(), ThrownItemRenderer::new);
+		event.registerEntityRenderer(DeferredRegistryHandler.LAVA_REVENANT_ENTITY.get(), LavaRevenantRenderer::new);
 		event.registerBlockEntityRenderer(DeferredRegistryHandler.WALL_SHELF_BLOCK_ENTITY.get(), context -> new ShelfRenderer());
 		event.registerBlockEntityRenderer(DeferredRegistryHandler.BURNED_OAK_SIGN_ENTITY.get(), SignRenderer::new);
 	}
