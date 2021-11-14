@@ -41,6 +41,7 @@ public class ItemModelLists {
 		ignoredItems.add(DeferredRegistryHandler.WANDERING_WARRIOR_SPAWN_EGG.get());
 		ignoredItems.add(DeferredRegistryHandler.HANS_SPAWN_EGG.get());
 		ignoredItems.add(DeferredRegistryHandler.LAVA_REVENANT_SPAWN_EGG.get());
+		ignoredItems.add(DeferredRegistryHandler.ROCK_SPIDER_SPAWN_EGG.get());
 		ignoredItems.add(DeferredRegistryHandler.MRE.get());
 		ignoredItems.add(DeferredRegistryHandler.WOOD_GAUNTLET.get());
 		ignoredItems.add(DeferredRegistryHandler.STONE_GAUNTLET.get());

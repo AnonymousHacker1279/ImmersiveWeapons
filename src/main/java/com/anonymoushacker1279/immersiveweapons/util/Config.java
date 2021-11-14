@@ -17,6 +17,7 @@ public class Config {
 	public static ForgeConfigSpec.ConfigValue<Boolean> WANDERING_WARRIOR_SPAWN;
 	public static ForgeConfigSpec.ConfigValue<Boolean> HANS_SPAWN;
 	public static ForgeConfigSpec.ConfigValue<Boolean> LAVA_REVENANT_SPAWN;
+	public static ForgeConfigSpec.ConfigValue<Boolean> ROCK_SPIDER_SPAWN;
 	public static ForgeConfigSpec.ConfigValue<Boolean> TILTROS_ENABLED;
 	static ForgeConfigSpec.ConfigValue<Integer> MAX_ABANDONED_FACTORY_DISTANCE;
 	static ForgeConfigSpec.ConfigValue<Integer> MIN_ABANDONED_FACTORY_DISTANCE;
@@ -65,6 +66,7 @@ public class Config {
 		WANDERING_WARRIOR_SPAWN = COMMON_CONFIG_BUILDER.comment("Enable the natural spawning of Wandering Warriors - Default true").define("wandering_warriors_spawn", true);
 		HANS_SPAWN = COMMON_CONFIG_BUILDER.comment("Enable the natural spawning of Hans the Almighty - Default true").define("hans_spawn", true);
 		LAVA_REVENANT_SPAWN = COMMON_CONFIG_BUILDER.comment("Enable the natural spawning of Lava Revenants - Default true").define("lava_revenant_spawn", true);
+		ROCK_SPIDER_SPAWN = COMMON_CONFIG_BUILDER.comment("Enable the natural spawning of Rock Spiders - Default true").define("rock_spider_spawn", true);
 
 		MAX_ABANDONED_FACTORY_DISTANCE = COMMON_CONFIG_BUILDER.comment("Maximum distance in chunks between Abandoned Factories - Default 120").define("max_abandoned_factory_distance", 120);
 		MIN_ABANDONED_FACTORY_DISTANCE = COMMON_CONFIG_BUILDER.comment("Minimum distance in chunks between Abandoned Factories - Default 90").define("min_abandoned_factory_distance", 90);

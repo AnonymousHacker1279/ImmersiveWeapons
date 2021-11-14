@@ -1,10 +1,7 @@
 package com.anonymoushacker1279.immersiveweapons.util;
 
 import com.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
-import com.anonymoushacker1279.immersiveweapons.entity.monster.AbstractDyingSoldierEntity;
-import com.anonymoushacker1279.immersiveweapons.entity.monster.AbstractWanderingWarriorEntity;
-import com.anonymoushacker1279.immersiveweapons.entity.monster.HansEntity;
-import com.anonymoushacker1279.immersiveweapons.entity.monster.LavaRevenantEntity;
+import com.anonymoushacker1279.immersiveweapons.entity.monster.*;
 import com.anonymoushacker1279.immersiveweapons.entity.passive.AbstractFieldMedicEntity;
 import com.anonymoushacker1279.immersiveweapons.entity.passive.AbstractMinutemanEntity;
 import com.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
@@ -61,5 +58,6 @@ public class ModEventSubscriber {
 		event.put(DeferredRegistryHandler.WANDERING_WARRIOR_ENTITY.get(), AbstractWanderingWarriorEntity.registerAttributes().build());
 		event.put(DeferredRegistryHandler.HANS_ENTITY.get(), HansEntity.registerAttributes().build());
 		event.put(DeferredRegistryHandler.LAVA_REVENANT_ENTITY.get(), LavaRevenantEntity.registerAttributes().build());
+		event.put(DeferredRegistryHandler.ROCK_SPIDER_ENTITY.get(), RockSpiderEntity.registerAttributes().build());
 	}
 }

@@ -34,7 +34,8 @@ public class LavaRevenantRenderer extends MobRenderer<LavaRevenantEntity, LavaRe
 		int i = pLivingEntity.getSize();
 		float f = 1.0F + 5.0F * (float)i;
 		pMatrixStack.scale(f, f, f);
-		pMatrixStack.translate(0.0D, 1.3125D, 0.1875D);	}
+		pMatrixStack.translate(0.0D, 1.3125D, 0.1875D);
+	}
 
 	@Override
 	protected void setupRotations(@NotNull LavaRevenantEntity pEntityLiving, @NotNull PoseStack pMatrixStack, float pAgeInTicks, float pRotationYaw, float pPartialTicks) {

@@ -145,9 +145,8 @@ public class ImmersiveWeapons {
 			}
 		}
 		if (Objects.requireNonNull(event.getName()).toString().equals("immersiveweapons:tiltros")) {
-			if (Config.LAVA_REVENANT_SPAWN.get()) {
-				event.getSpawns().addSpawn(MobCategory.MONSTER, new SpawnerData(DeferredRegistryHandler.LAVA_REVENANT_ENTITY.get(), 1, 0, 1));
-			}
+			if (Config.LAVA_REVENANT_SPAWN.get()) event.getSpawns().addSpawn(MobCategory.MONSTER, new SpawnerData(DeferredRegistryHandler.LAVA_REVENANT_ENTITY.get(), 1, 0, 1));
+			if (Config.ROCK_SPIDER_SPAWN.get()) event.getSpawns().addSpawn(MobCategory.MONSTER, new SpawnerData(DeferredRegistryHandler.ROCK_SPIDER_ENTITY.get(), 5, 4, 12));
 		}
 		if (event.getCategory() == Biome.BiomeCategory.NETHER) {
 			event.getGeneration().getFeatures(GenerationStep.Decoration.UNDERGROUND_ORES)
