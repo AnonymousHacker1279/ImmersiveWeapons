@@ -1,17 +1,11 @@
 {
-	"type": "minecraft:crafting_shaped",
-	"pattern": [
-		"   ",
-		" x ",
-		"   "
-	],
-	"key": {
-		"x": {
+	"type": "minecraft:crafting_shapeless",
+	"ingredients": [
+		{
 			"item": "minecraft:cobblestone"
 		}
-	},
+	],
 	"result": {
-		"item": "immersiveweapons:stone_shard",
-		"count": 4
+		"item": "immersiveweapons:stone_shard"
 	}
 }

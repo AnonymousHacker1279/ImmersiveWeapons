@@ -1,0 +1,17 @@
+{
+	"type": "minecraft:crafting_shapeless",
+	"ingredients": [
+		{
+			"tag": "minecraft:coals"
+		},
+		{
+			"item": "immersiveweapons:sulfur"
+		},
+		{
+			"item": "immersiveweapons:sulfur"
+		}
+	],
+	"result": {
+		"item": "minecraft:gunpowder"
+	}
+}

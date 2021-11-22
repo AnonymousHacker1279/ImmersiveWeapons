@@ -189,6 +189,11 @@ public class RockSpiderEntity extends Monster {
 			}
 		}
 
+		// To keep the entity from dying of falls upon spawn in Tiltros
+		if (pReason == MobSpawnType.NATURAL && pLevel.getBlockState(blockPosition().below()) == Blocks.AIR.defaultBlockState()) {
+			addEffect(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, 50, 255, true, true));
+		}
+
 		return pSpawnData;
 	}
 

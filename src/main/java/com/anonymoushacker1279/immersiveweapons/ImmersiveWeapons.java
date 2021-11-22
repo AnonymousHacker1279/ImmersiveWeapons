@@ -135,22 +135,29 @@ public class ImmersiveWeapons {
 	public void onBiomeLoading(BiomeLoadingEvent event) {
 		// Biome modifications
 		BiomeGenerationSettingsBuilder generation = event.getGeneration();
-		if (event.getCategory() != Biome.BiomeCategory.NETHER && event.getCategory() != Biome.BiomeCategory.THEEND && !Objects.requireNonNull(event.getName()).toString().equals("immersiveweapons:tiltros")) {
-			event.getGeneration().getFeatures(GenerationStep.Decoration.UNDERGROUND_ORES)
+		if (event.getCategory() != BiomeCategory.NETHER && event.getCategory() != BiomeCategory.THEEND && !Objects.requireNonNull(event.getName()).toString().equals("immersiveweapons:tiltros")) {
+			event.getGeneration().getFeatures(Decoration.UNDERGROUND_ORES)
 					.add(() -> OreGeneratorHandler.ORE_COBALT_CONFIG);
+
+			if (event.getCategory() == BiomeCategory.RIVER || event.getCategory() == BiomeCategory.OCEAN) {
+				event.getGeneration().getFeatures(Decoration.UNDERGROUND_ORES)
+						.add(() -> OreGeneratorHandler.ORE_SULFUR_CONFIG);
+			}
 
 			if (event.getCategory() != BiomeCategory.OCEAN && event.getCategory() != BiomeCategory.RIVER) {
 				if (Config.WANDERING_WARRIOR_SPAWN.get()) event.getSpawns().addSpawn(MobCategory.MONSTER, new SpawnerData(DeferredRegistryHandler.WANDERING_WARRIOR_ENTITY.get(), 13, 1, 1));
 				if (Config.HANS_SPAWN.get()) event.getSpawns().addSpawn(MobCategory.MONSTER, new SpawnerData(DeferredRegistryHandler.HANS_ENTITY.get(), 1, 1, 1));
 			}
 		}
+		if (event.getCategory() == BiomeCategory.NETHER) {
+			event.getGeneration().getFeatures(GenerationStep.Decoration.UNDERGROUND_ORES)
+					.add(() -> OreGeneratorHandler.ORE_MOLTEN_CONFIG);
+			event.getGeneration().getFeatures(Decoration.UNDERGROUND_ORES)
+					.add(() -> OreGeneratorHandler.ORE_NETHER_SULFUR_CONFIG);
+		}
 		if (Objects.requireNonNull(event.getName()).toString().equals("immersiveweapons:tiltros")) {
 			if (Config.LAVA_REVENANT_SPAWN.get()) event.getSpawns().addSpawn(MobCategory.MONSTER, new SpawnerData(DeferredRegistryHandler.LAVA_REVENANT_ENTITY.get(), 1, 0, 1));
 			if (Config.ROCK_SPIDER_SPAWN.get()) event.getSpawns().addSpawn(MobCategory.MONSTER, new SpawnerData(DeferredRegistryHandler.ROCK_SPIDER_ENTITY.get(), 5, 4, 12));
-		}
-		if (event.getCategory() == Biome.BiomeCategory.NETHER) {
-			event.getGeneration().getFeatures(GenerationStep.Decoration.UNDERGROUND_ORES)
-					.add(() -> OreGeneratorHandler.ORE_MOLTEN_CONFIG);
 		}
 
 		if (event.getCategory() == BiomeCategory.FOREST) {
