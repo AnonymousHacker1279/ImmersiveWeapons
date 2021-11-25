@@ -17,6 +17,7 @@ public class TooltipHandler {
 
 	/**
 	 * Handles adding tooltips to items.
+	 *
 	 * @param event the <code>ItemTooltipEvent</code> instance
 	 */
 	@SubscribeEvent(priority = EventPriority.NORMAL, receiveCanceled = true)
@@ -196,6 +197,9 @@ public class TooltipHandler {
 		}
 		if (stack.getItem() == DeferredRegistryHandler.SPIKE_TRAP_ITEM.get()) {
 			event.getToolTip().add(new TranslatableComponent("immersiveweapons.tooltip.spike_trap").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
+		}
+		if (stack.getItem() == DeferredRegistryHandler.WOODEN_SPIKES_ITEM.get()) {
+			event.getToolTip().add(new TranslatableComponent("immersiveweapons.tooltip.wooden_spikes").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
 		}
 
 		// Gauntlets

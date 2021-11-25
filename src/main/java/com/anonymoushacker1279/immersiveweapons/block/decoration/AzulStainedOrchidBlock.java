@@ -17,7 +17,10 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.FlowerBlock;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.AABB;
 import org.jetbrains.annotations.NotNull;
+
+import java.util.stream.Stream;
 
 public class AzulStainedOrchidBlock extends FlowerBlock {
 
@@ -53,17 +56,34 @@ public class AzulStainedOrchidBlock extends FlowerBlock {
 						BlockPos oldEntityPos = entity.blockPosition();
 						entity.teleportTo(oldEntityPos.getX() - 0.5f, oldEntityPos.getY() + 0.5f, oldEntityPos.getZ() + 0.5f);
 						// Build a spawn area with another portal, if one doesn't already exist
-						if (destinationWorld.getBlockState(oldEntityPos).getBlock() != DeferredRegistryHandler.AZUL_STAINED_ORCHID.get()) {
-							destinationWorld.destroyBlock(oldEntityPos, true);
+						Stream<BlockState> destinationBlockStates = destinationWorld.getBlockStates(new AABB(oldEntityPos.getX() - 10, oldEntityPos.getY() - 5, oldEntityPos.getZ() - 10, oldEntityPos.getX() + 10, oldEntityPos.getY() + 5, oldEntityPos.getZ() + 10));
+						if (destinationBlockStates.noneMatch(blockState -> blockState == DeferredRegistryHandler.AZUL_STAINED_ORCHID.get().defaultBlockState())) {
 							destinationWorld.destroyBlock(oldEntityPos.above(), true);
+							destinationWorld.destroyBlock(oldEntityPos.below(), true);
 							destinationWorld.setBlock(oldEntityPos.below(), Blocks.GRASS_BLOCK.defaultBlockState(), 3);
+							destinationWorld.destroyBlock(oldEntityPos, true);
 							destinationWorld.setBlock(oldEntityPos, DeferredRegistryHandler.AZUL_STAINED_ORCHID.get().defaultBlockState(), 3);
+							destinationWorld.destroyBlock(oldEntityPos.relative(entity.getDirection()), true);
+							destinationWorld.destroyBlock(oldEntityPos.relative(entity.getDirection()).above(), true);
+							destinationWorld.destroyBlock(oldEntityPos.relative(entity.getDirection()).below(), true);
 							destinationWorld.setBlock(oldEntityPos.relative(entity.getDirection()).below(), Blocks.STONE_BRICKS.defaultBlockState(), 3);
+							destinationWorld.destroyBlock(oldEntityPos.relative(entity.getDirection().getClockWise()), true);
+							destinationWorld.destroyBlock(oldEntityPos.relative(entity.getDirection().getClockWise()).above(), true);
+							destinationWorld.destroyBlock(oldEntityPos.relative(entity.getDirection().getClockWise()).below(), true);
 							destinationWorld.setBlock(oldEntityPos.relative(entity.getDirection().getClockWise()).below(), Blocks.STONE_BRICKS.defaultBlockState(), 3);
+							destinationWorld.destroyBlock(oldEntityPos.relative(entity.getDirection().getCounterClockWise()), true);
+							destinationWorld.destroyBlock(oldEntityPos.relative(entity.getDirection().getCounterClockWise()).above(), true);
+							destinationWorld.destroyBlock(oldEntityPos.relative(entity.getDirection().getCounterClockWise()).below(), true);
 							destinationWorld.setBlock(oldEntityPos.relative(entity.getDirection().getCounterClockWise()).below(), Blocks.STONE_BRICKS.defaultBlockState(), 3);
+							destinationWorld.destroyBlock(oldEntityPos.relative(entity.getDirection().getOpposite()), true);
+							destinationWorld.destroyBlock(oldEntityPos.relative(entity.getDirection().getOpposite()).above(), true);
+							destinationWorld.destroyBlock(oldEntityPos.relative(entity.getDirection().getOpposite()).below(), true);
 							destinationWorld.setBlock(oldEntityPos.relative(entity.getDirection().getOpposite()).below(), Blocks.STONE_BRICKS.defaultBlockState(), 3);
+							destinationWorld.destroyBlock(oldEntityPos.relative(entity.getDirection()), true);
 							destinationWorld.setBlock(oldEntityPos.relative(entity.getDirection()), DeferredRegistryHandler.WARRIOR_STATUE_BASE.get().defaultBlockState().setValue(WarriorStatueTorso.FACING, entity.getDirection().getOpposite()), 3);
+							destinationWorld.destroyBlock(oldEntityPos.relative(entity.getDirection()).above(), true);
 							destinationWorld.setBlock(oldEntityPos.relative(entity.getDirection()).above(), DeferredRegistryHandler.WARRIOR_STATUE_TORSO.get().defaultBlockState().setValue(WarriorStatueTorso.FACING, entity.getDirection().getOpposite()).setValue(WarriorStatueTorso.POWERED, true), 3);
+							destinationWorld.destroyBlock(oldEntityPos.relative(entity.getDirection()).above(2), true);
 							destinationWorld.setBlock(oldEntityPos.relative(entity.getDirection()).above(2), DeferredRegistryHandler.WARRIOR_STATUE_HEAD.get().defaultBlockState().setValue(WarriorStatueTorso.FACING, entity.getDirection().getOpposite()).setValue(WarriorStatueTorso.POWERED, true), 3);
 						}
 						entityWorld.getProfiler().pop();
