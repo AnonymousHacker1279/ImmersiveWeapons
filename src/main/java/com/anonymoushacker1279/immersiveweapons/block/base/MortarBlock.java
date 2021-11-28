@@ -211,7 +211,7 @@ public class MortarBlock extends HorizontalDirectionalBlock {
 		 */
 		public static void handle(MortarBlockPacketHandler msg, Supplier<Context> contextSupplier) {
 			NetworkEvent.Context context = contextSupplier.get();
-			context.enqueueWork(() -> DistExecutor.safeRunWhenOn(Dist.CLIENT, () -> () -> handleOnClient(msg)));
+			context.enqueueWork(() -> DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> handleOnClient(msg)));
 			context.setPacketHandled(true);
 		}
 

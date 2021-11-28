@@ -1,4 +1,4 @@
-package com.anonymoushacker1279.immersiveweapons.client.renderer.entity.arrow;
+package com.anonymoushacker1279.immersiveweapons.client.renderer.entity.projectile.arrow;
 
 import com.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import com.anonymoushacker1279.immersiveweapons.entity.projectile.CustomArrowEntity.CobaltArrowEntity;
@@ -12,6 +12,7 @@ public class CobaltArrowRenderer extends ArrowRenderer<CobaltArrowEntity> implem
 
 	/**
 	 * Constructor for CobaltArrowRenderer.
+	 *
 	 * @param context a <code>Context</code> instance
 	 */
 	public CobaltArrowRenderer(Context context) {
@@ -20,6 +21,7 @@ public class CobaltArrowRenderer extends ArrowRenderer<CobaltArrowEntity> implem
 
 	/**
 	 * Get the texture location.
+	 *
 	 * @param entity the <code>CobaltArrowEntity</code> instance
 	 * @return ResourceLocation
 	 */

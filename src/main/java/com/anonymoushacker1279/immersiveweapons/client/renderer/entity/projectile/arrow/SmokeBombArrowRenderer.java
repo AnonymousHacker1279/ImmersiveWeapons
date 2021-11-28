@@ -1,4 +1,4 @@
-package com.anonymoushacker1279.immersiveweapons.client.renderer.entity.arrow;
+package com.anonymoushacker1279.immersiveweapons.client.renderer.entity.projectile.arrow;
 
 import com.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import com.anonymoushacker1279.immersiveweapons.entity.projectile.CustomArrowEntity.SmokeBombArrowEntity;
@@ -11,6 +11,7 @@ import org.jetbrains.annotations.NotNull;
 public class SmokeBombArrowRenderer extends ArrowRenderer<SmokeBombArrowEntity> implements EntityRendererProvider<SmokeBombArrowEntity> {
 	/**
 	 * Constructor for SmokeBombArrowRenderer.
+	 *
 	 * @param context a <code>Context</code> instance
 	 */
 	public SmokeBombArrowRenderer(Context context) {
@@ -19,6 +20,7 @@ public class SmokeBombArrowRenderer extends ArrowRenderer<SmokeBombArrowEntity> 
 
 	/**
 	 * Get the texture location.
+	 *
 	 * @param entity the <code>SmokeBombArrowEntity</code> instance
 	 * @return ResourceLocation
 	 */

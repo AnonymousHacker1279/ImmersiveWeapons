@@ -1,4 +1,4 @@
-package com.anonymoushacker1279.immersiveweapons.client.renderer.entity.arrow;
+package com.anonymoushacker1279.immersiveweapons.client.renderer.entity.projectile.arrow;
 
 import com.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import com.anonymoushacker1279.immersiveweapons.entity.projectile.CustomArrowEntity.NetheriteArrowEntity;
@@ -11,6 +11,7 @@ import org.jetbrains.annotations.NotNull;
 public class NetheriteArrowRenderer extends ArrowRenderer<NetheriteArrowEntity> implements EntityRendererProvider<NetheriteArrowEntity> {
 	/**
 	 * Constructor for NetheriteArrowRenderer.
+	 *
 	 * @param context a <code>Context</code> instance
 	 */
 	public NetheriteArrowRenderer(Context context) {
@@ -19,6 +20,7 @@ public class NetheriteArrowRenderer extends ArrowRenderer<NetheriteArrowEntity> 
 
 	/**
 	 * Get the texture location.
+	 *
 	 * @param entity the <code>NetheriteArrowEntity</code> instance
 	 * @return ResourceLocation
 	 */

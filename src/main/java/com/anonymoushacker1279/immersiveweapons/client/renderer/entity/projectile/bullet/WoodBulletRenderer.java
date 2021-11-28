@@ -1,4 +1,4 @@
-package com.anonymoushacker1279.immersiveweapons.client.renderer.entity.bullet;
+package com.anonymoushacker1279.immersiveweapons.client.renderer.entity.projectile.bullet;
 
 import com.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import com.anonymoushacker1279.immersiveweapons.entity.projectile.BulletEntity.WoodBulletEntity;
@@ -11,6 +11,7 @@ import org.jetbrains.annotations.NotNull;
 public class WoodBulletRenderer extends ArrowRenderer<WoodBulletEntity> implements EntityRendererProvider<WoodBulletEntity> {
 	/**
 	 * Constructor for WoodBulletRenderer.
+	 *
 	 * @param context a <code>Context</code> instance
 	 */
 	public WoodBulletRenderer(Context context) {
@@ -19,6 +20,7 @@ public class WoodBulletRenderer extends ArrowRenderer<WoodBulletEntity> implemen
 
 	/**
 	 * Get the texture location.
+	 *
 	 * @param entity the <code>WoodBulletEntity</code> instance
 	 * @return ResourceLocation
 	 */

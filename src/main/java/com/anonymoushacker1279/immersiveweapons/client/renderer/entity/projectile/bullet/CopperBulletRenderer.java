@@ -1,4 +1,4 @@
-package com.anonymoushacker1279.immersiveweapons.client.renderer.entity.bullet;
+package com.anonymoushacker1279.immersiveweapons.client.renderer.entity.projectile.bullet;
 
 import com.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import com.anonymoushacker1279.immersiveweapons.entity.projectile.BulletEntity.CopperBulletEntity;
@@ -11,6 +11,7 @@ import org.jetbrains.annotations.NotNull;
 public class CopperBulletRenderer extends ArrowRenderer<CopperBulletEntity> implements EntityRendererProvider<CopperBulletEntity> {
 	/**
 	 * Constructor for CopperBulletRenderer.
+	 *
 	 * @param context a <code>Context</code> instance
 	 */
 	public CopperBulletRenderer(Context context) {
@@ -19,6 +20,7 @@ public class CopperBulletRenderer extends ArrowRenderer<CopperBulletEntity> impl
 
 	/**
 	 * Get the texture location.
+	 *
 	 * @param entity the <code>CopperBulletEntity</code> instance
 	 * @return ResourceLocation
 	 */

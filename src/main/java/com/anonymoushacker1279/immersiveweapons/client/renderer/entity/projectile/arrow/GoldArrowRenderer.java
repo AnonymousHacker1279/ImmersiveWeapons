@@ -1,4 +1,4 @@
-package com.anonymoushacker1279.immersiveweapons.client.renderer.entity.arrow;
+package com.anonymoushacker1279.immersiveweapons.client.renderer.entity.projectile.arrow;
 
 import com.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import com.anonymoushacker1279.immersiveweapons.entity.projectile.CustomArrowEntity.GoldArrowEntity;
@@ -11,13 +11,16 @@ import org.jetbrains.annotations.NotNull;
 public class GoldArrowRenderer extends ArrowRenderer<GoldArrowEntity> implements EntityRendererProvider<GoldArrowEntity> {
 	/**
 	 * Constructor for GoldArrowRenderer.
+	 *
 	 * @param context a <code>Context</code> instance
 	 */
 	public GoldArrowRenderer(Context context) {
 		super(context);
 	}
+
 	/**
 	 * Get the texture location.
+	 *
 	 * @param entity the <code>GoldArrowEntity</code> instance
 	 * @return ResourceLocation
 	 */

@@ -4,7 +4,6 @@ import com.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import com.anonymoushacker1279.immersiveweapons.entity.monster.RockSpiderEntity;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.model.SpiderModel;
-import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelLayers;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.MobRenderer;
@@ -17,11 +16,7 @@ public class RockSpiderRenderer<T extends RockSpiderEntity> extends MobRenderer<
 	private static final ResourceLocation TEXTURE_LOCATION = new ResourceLocation(ImmersiveWeapons.MOD_ID, "textures/entity/rock_spider/rock_spider.png");
 
 	public RockSpiderRenderer(EntityRendererProvider.Context context) {
-		this(context, ModelLayers.SPIDER);
-	}
-
-	public RockSpiderRenderer(EntityRendererProvider.Context context, ModelLayerLocation layerLocation) {
-		super(context, new SpiderModel<>(context.bakeLayer(layerLocation)), 0.25F);
+		super(context, new SpiderModel<>(context.bakeLayer(ModelLayers.SPIDER)), 0.25F);
 		addLayer(new SpiderEyesLayer<>(this));
 	}
 

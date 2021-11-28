@@ -1,4 +1,4 @@
-package com.anonymoushacker1279.immersiveweapons.client.renderer.entity.arrow;
+package com.anonymoushacker1279.immersiveweapons.client.renderer.entity.projectile.arrow;
 
 import com.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import com.anonymoushacker1279.immersiveweapons.entity.projectile.CustomArrowEntity.IronArrowEntity;
@@ -11,6 +11,7 @@ import org.jetbrains.annotations.NotNull;
 public class IronArrowRenderer extends ArrowRenderer<IronArrowEntity> implements EntityRendererProvider<IronArrowEntity> {
 	/**
 	 * Constructor for IronArrowRenderer.
+	 *
 	 * @param context a <code>Context</code> instance
 	 */
 	public IronArrowRenderer(Context context) {
@@ -19,6 +20,7 @@ public class IronArrowRenderer extends ArrowRenderer<IronArrowEntity> implements
 
 	/**
 	 * Get the texture location.
+	 *
 	 * @param entity the <code>IronArrowEntity</code> instance
 	 * @return ResourceLocation
 	 */

@@ -1,4 +1,4 @@
-package com.anonymoushacker1279.immersiveweapons.client.renderer.entity.bullet;
+package com.anonymoushacker1279.immersiveweapons.client.renderer.entity.projectile.bullet;
 
 import com.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import com.anonymoushacker1279.immersiveweapons.entity.projectile.BulletEntity.GoldBulletEntity;
@@ -11,6 +11,7 @@ import org.jetbrains.annotations.NotNull;
 public class GoldBulletRenderer extends ArrowRenderer<GoldBulletEntity> implements EntityRendererProvider<GoldBulletEntity> {
 	/**
 	 * Constructor for GoldBulletRenderer.
+	 *
 	 * @param context a <code>Context</code> instance
 	 */
 	public GoldBulletRenderer(Context context) {
@@ -19,6 +20,7 @@ public class GoldBulletRenderer extends ArrowRenderer<GoldBulletEntity> implemen
 
 	/**
 	 * Get the texture location.
+	 *
 	 * @param entity the <code>GoldBulletEntity</code> instance
 	 * @return ResourceLocation
 	 */

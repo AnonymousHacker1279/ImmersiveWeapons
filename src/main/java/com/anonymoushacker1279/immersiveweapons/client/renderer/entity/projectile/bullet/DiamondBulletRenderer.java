@@ -1,4 +1,4 @@
-package com.anonymoushacker1279.immersiveweapons.client.renderer.entity.bullet;
+package com.anonymoushacker1279.immersiveweapons.client.renderer.entity.projectile.bullet;
 
 import com.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import com.anonymoushacker1279.immersiveweapons.entity.projectile.BulletEntity.DiamondBulletEntity;
@@ -11,6 +11,7 @@ import org.jetbrains.annotations.NotNull;
 public class DiamondBulletRenderer extends ArrowRenderer<DiamondBulletEntity> implements EntityRendererProvider<DiamondBulletEntity> {
 	/**
 	 * Constructor for DiamondBulletRenderer.
+	 *
 	 * @param context a <code>Context</code> instance
 	 */
 	public DiamondBulletRenderer(Context context) {
@@ -19,6 +20,7 @@ public class DiamondBulletRenderer extends ArrowRenderer<DiamondBulletEntity> im
 
 	/**
 	 * Get the texture location.
+	 *
 	 * @param entity the <code>DiamondBulletEntity</code> instance
 	 * @return ResourceLocation
 	 */

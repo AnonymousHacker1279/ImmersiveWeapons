@@ -5,9 +5,7 @@ import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.ExperienceOrb;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
@@ -102,18 +100,14 @@ public class PunjiSticksBlock extends Block implements SimpleWaterloggedBlock {
 	@SuppressWarnings("deprecation")
 	@Override
 	public void entityInside(@NotNull BlockState state, @NotNull Level level, @NotNull BlockPos pos, @NotNull Entity entity) {
-		if (entity instanceof ItemEntity) {
-			return;
-		} else if (entity instanceof ExperienceOrb) {
-			return;
+		if (entity instanceof LivingEntity livingEntity) {
+			if (livingEntity.fallDistance >= 5F) {
+				livingEntity.hurt(damageSource, livingEntity.fallDistance >= 10F ? livingEntity.fallDistance + 20F * 0.5f : 20F);
+			} else {
+				float damageTodo = (float) livingEntity.getDeltaMovement().dot(new Vec3(1, 1, 1)) / 1.5F;
+				livingEntity.hurt(damageSource, 2F + damageTodo);
+			}
+			(livingEntity).addEffect(new MobEffectInstance(MobEffects.POISON, 60, 0, false, false));
 		}
-
-		if (entity.fallDistance >= 5F) {
-			entity.hurt(damageSource, entity.fallDistance >= 10F ? entity.fallDistance + 20F * 0.5f : 20F);
-		} else {
-			float damageTodo = (float) entity.getDeltaMovement().dot(new Vec3(1, 1, 1)) / 1.5F;
-			entity.hurt(damageSource, 2F + damageTodo);
-		}
-		((LivingEntity) entity).addEffect(new MobEffectInstance(MobEffects.POISON, 60, 0, false, false));
 	}
 }

@@ -16,6 +16,7 @@ public class ModEventSubscriber {
 
 	/**
 	 * Event handler for the RegistryEvent.Register event.
+	 *
 	 * @param event the <code>RegistryEvent.Register</code> instance
 	 */
 	@SubscribeEvent
@@ -48,6 +49,7 @@ public class ModEventSubscriber {
 
 	/**
 	 * Event handler for the EntityAttributeCreationEvent.
+	 *
 	 * @param event the <code>EntityAttributeCreationEvent</code> instance
 	 */
 	@SubscribeEvent
@@ -59,5 +61,6 @@ public class ModEventSubscriber {
 		event.put(DeferredRegistryHandler.HANS_ENTITY.get(), HansEntity.registerAttributes().build());
 		event.put(DeferredRegistryHandler.LAVA_REVENANT_ENTITY.get(), LavaRevenantEntity.registerAttributes().build());
 		event.put(DeferredRegistryHandler.ROCK_SPIDER_ENTITY.get(), RockSpiderEntity.registerAttributes().build());
+		event.put(DeferredRegistryHandler.CELESTIAL_TOWER_ENTITY.get(), CelestialTowerEntity.registerAttributes().build());
 	}
 }

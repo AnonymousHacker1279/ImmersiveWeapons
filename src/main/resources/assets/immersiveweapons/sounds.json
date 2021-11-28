@@ -501,5 +501,62 @@
 				"stream": false
 			}
 		]
+	},
+	"celestial_tower_ambient": {
+		"subtitle": "immersiveweapons.subtitle.entity.celestial_tower.ambient",
+		"sounds": [
+			{
+				"name": "immersiveweapons:entity/celestial_tower/ambient/ambient_1",
+				"stream": true
+			},
+			{
+				"name": "immersiveweapons:entity/celestial_tower/ambient/ambient_2",
+				"stream": false
+			},
+			{
+				"name": "immersiveweapons:entity/celestial_tower/ambient/ambient_3",
+				"stream": false
+			}
+		]
+	},
+	"celestial_tower_hurt": {
+		"subtitle": "immersiveweapons.subtitle.entity.celestial_tower.hurt",
+		"sounds": [
+			{
+				"name": "immersiveweapons:entity/celestial_tower/hurt/hurt_1",
+				"stream": false
+			},
+			{
+				"name": "immersiveweapons:entity/celestial_tower/hurt/hurt_2",
+				"stream": false
+			}
+		]
+	},
+	"celestial_tower_death": {
+		"subtitle": "immersiveweapons.subtitle.entity.celestial_tower.death",
+		"sounds": [
+			{
+				"name": "immersiveweapons:entity/celestial_tower/death/death_1",
+				"stream": false
+			}
+		]
+	},
+	"celestial_tower_summon": {
+		"subtitle": "immersiveweapons.subtitle.entity.celestial_tower.summon",
+		"sounds": [
+			{
+				"name": "immersiveweapons:entity/celestial_tower/summon/summon_1",
+				"stream": false
+			}
+		]
+	},
+	"celestial_tower_vulnerable": {
+		"subtitle": "immersiveweapons.subtitle.entity.celestial_tower.vulnerable",
+		"sounds": [
+			{
+				"name": "immersiveweapons:entity/celestial_tower/vulnerable/vulnerable_1",
+				"stream": false
+			}
+		]
 	}
 }

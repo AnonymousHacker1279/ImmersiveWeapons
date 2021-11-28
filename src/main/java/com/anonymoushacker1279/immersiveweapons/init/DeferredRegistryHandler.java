@@ -322,6 +322,7 @@ public class DeferredRegistryHandler {
 	public static final RegistryObject<ForgeSpawnEggItem> HANS_SPAWN_EGG = ITEMS.register("hans_spawn_egg", () -> new ForgeSpawnEggItem(DeferredRegistryHandler.HANS_ENTITY, 0xd0a873, 0xafafaf, (new Item.Properties().tab(ITEM_GROUP).stacksTo(16))));
 	public static final RegistryObject<ForgeSpawnEggItem> LAVA_REVENANT_SPAWN_EGG = ITEMS.register("lava_revenant_spawn_egg", () -> new ForgeSpawnEggItem(DeferredRegistryHandler.LAVA_REVENANT_ENTITY, 0x640000, 0x990000, (new Item.Properties().tab(ITEM_GROUP).stacksTo(16))));
 	public static final RegistryObject<ForgeSpawnEggItem> ROCK_SPIDER_SPAWN_EGG = ITEMS.register("rock_spider_spawn_egg", () -> new ForgeSpawnEggItem(DeferredRegistryHandler.ROCK_SPIDER_ENTITY, 0x7f7f7f, 0xa80e0e, (new Item.Properties().tab(ITEM_GROUP).stacksTo(16))));
+	public static final RegistryObject<ForgeSpawnEggItem> CELESTIAL_TOWER_SPAWN_EGG = ITEMS.register("celestial_tower_spawn_egg", () -> new ForgeSpawnEggItem(DeferredRegistryHandler.CELESTIAL_TOWER_ENTITY, 0x63353d, 0xb3754b, (new Item.Properties().tab(ITEM_GROUP).stacksTo(16))));
 
 	// Blocks
 	// Breakable via pickaxe
@@ -460,10 +461,11 @@ public class DeferredRegistryHandler {
 	public static final RegistryObject<EntityType<WanderingWarriorEntity>> WANDERING_WARRIOR_ENTITY = ENTITY_TYPES.register("wandering_warrior", () -> EntityType.Builder.of(WanderingWarriorEntity::new, MobCategory.MONSTER).sized(0.6f, 1.99f).clientTrackingRange(16).build(new ResourceLocation(ImmersiveWeapons.MOD_ID, "wandering_warrior").toString()));
 	public static final RegistryObject<EntityType<HansEntity>> HANS_ENTITY = ENTITY_TYPES.register("hans", () -> EntityType.Builder.of(HansEntity::new, MobCategory.MONSTER).sized(0.6f, 1.99f).clientTrackingRange(16).build(new ResourceLocation(ImmersiveWeapons.MOD_ID, "hans").toString()));
 	public static final RegistryObject<EntityType<MortarShellEntity>> MORTAR_SHELL_ENTITY = ENTITY_TYPES.register("mortar_shell", () -> EntityType.Builder.of(MortarShellEntity::new, MobCategory.MISC).sized(0.5f, 0.5f).build(new ResourceLocation(ImmersiveWeapons.MOD_ID, "mortar_shell").toString()));
-	public static final RegistryObject<EntityType<BurnedOakBoatEntity>> BURNED_OAK_BOAT_ENTITY = ENTITY_TYPES.register("burned_oak_boat", () -> EntityType.Builder.<BurnedOakBoatEntity>of(BurnedOakBoatEntity::new, MobCategory.MISC).sized(1.375f, 0.5625f).build(new ResourceLocation(ImmersiveWeapons.MOD_ID, "burned_oak_boat").toString()));
+	public static final RegistryObject<EntityType<BurnedOakBoatEntity>> BURNED_OAK_BOAT_ENTITY = ENTITY_TYPES.register("burned_oak_boat", () -> EntityType.Builder.<BurnedOakBoatEntity> of(BurnedOakBoatEntity::new, MobCategory.MISC).sized(1.375f, 0.5625f).build(new ResourceLocation(ImmersiveWeapons.MOD_ID, "burned_oak_boat").toString()));
 	public static final RegistryObject<EntityType<MudBallEntity>> MUD_BALL_ENTITY = ENTITY_TYPES.register("mud_ball", () -> EntityType.Builder.<MudBallEntity> of(MudBallEntity::new, MobCategory.MISC).sized(0.25f, 0.25f).build(new ResourceLocation(ImmersiveWeapons.MOD_ID, "mud_ball").toString()));
-	public static final RegistryObject<EntityType<LavaRevenantEntity>> LAVA_REVENANT_ENTITY = ENTITY_TYPES.register("lava_revenant", () -> EntityType.Builder.of(LavaRevenantEntity::new, MobCategory.MONSTER).sized(15.0f,  5.0f).clientTrackingRange(128).fireImmune().build(new ResourceLocation(ImmersiveWeapons.MOD_ID, "lava_revenant").toString()));
-	public static final RegistryObject<EntityType<RockSpiderEntity>> ROCK_SPIDER_ENTITY = ENTITY_TYPES.register("rock_spider", () -> EntityType.Builder.of(RockSpiderEntity::new, MobCategory.MONSTER).sized(0.30f,  0.30f).clientTrackingRange(16).build(new ResourceLocation(ImmersiveWeapons.MOD_ID, "rock_spider").toString()));
+	public static final RegistryObject<EntityType<LavaRevenantEntity>> LAVA_REVENANT_ENTITY = ENTITY_TYPES.register("lava_revenant", () -> EntityType.Builder.of(LavaRevenantEntity::new, MobCategory.MONSTER).sized(15.0f, 5.0f).clientTrackingRange(128).fireImmune().build(new ResourceLocation(ImmersiveWeapons.MOD_ID, "lava_revenant").toString()));
+	public static final RegistryObject<EntityType<RockSpiderEntity>> ROCK_SPIDER_ENTITY = ENTITY_TYPES.register("rock_spider", () -> EntityType.Builder.of(RockSpiderEntity::new, MobCategory.MONSTER).sized(0.30f, 0.30f).clientTrackingRange(16).build(new ResourceLocation(ImmersiveWeapons.MOD_ID, "rock_spider").toString()));
+	public static final RegistryObject<EntityType<CelestialTowerEntity>> CELESTIAL_TOWER_ENTITY = ENTITY_TYPES.register("celestial_tower", () -> EntityType.Builder.of(CelestialTowerEntity::new, MobCategory.MONSTER).sized(8.0f, 9.0f).clientTrackingRange(32).build(new ResourceLocation(ImmersiveWeapons.MOD_ID, "celestial_tower").toString()));
 
 	// Block Items
 	public static final RegistryObject<BlockItem> MOLTEN_ORE_ITEM = ITEMS.register("molten_ore", () -> new BlockItem(MOLTEN_ORE.get(), new Properties().tab(ITEM_GROUP).fireResistant()));
@@ -599,6 +601,11 @@ public class DeferredRegistryHandler {
 	public static final RegistryObject<SoundEvent> LAVA_REVENANT_FLAP = SOUND_EVENTS.register("lava_revenant_flap", () -> new SoundEvent(new ResourceLocation(ImmersiveWeapons.MOD_ID, "lava_revenant_flap")));
 	public static final RegistryObject<SoundEvent> LAVA_REVENANT_SWOOP = SOUND_EVENTS.register("lava_revenant_swoop", () -> new SoundEvent(new ResourceLocation(ImmersiveWeapons.MOD_ID, "lava_revenant_swoop")));
 	public static final RegistryObject<SoundEvent> LAVA_REVENANT_BITE = SOUND_EVENTS.register("lava_revenant_bite", () -> new SoundEvent(new ResourceLocation(ImmersiveWeapons.MOD_ID, "lava_revenant_bite")));
+	public static final RegistryObject<SoundEvent> CELESTIAL_TOWER_AMBIENT = SOUND_EVENTS.register("celestial_tower_ambient", () -> new SoundEvent(new ResourceLocation(ImmersiveWeapons.MOD_ID, "celestial_tower_ambient")));
+	public static final RegistryObject<SoundEvent> CELESTIAL_TOWER_HURT = SOUND_EVENTS.register("celestial_tower_hurt", () -> new SoundEvent(new ResourceLocation(ImmersiveWeapons.MOD_ID, "celestial_tower_hurt")));
+	public static final RegistryObject<SoundEvent> CELESTIAL_TOWER_DEATH = SOUND_EVENTS.register("celestial_tower_death", () -> new SoundEvent(new ResourceLocation(ImmersiveWeapons.MOD_ID, "celestial_tower_death")));
+	public static final RegistryObject<SoundEvent> CELESTIAL_TOWER_SUMMON = SOUND_EVENTS.register("celestial_tower_summon", () -> new SoundEvent(new ResourceLocation(ImmersiveWeapons.MOD_ID, "celestial_tower_summon")));
+	public static final RegistryObject<SoundEvent> CELESTIAL_TOWER_VULNERABLE = SOUND_EVENTS.register("celestial_tower_vulnerable", () -> new SoundEvent(new ResourceLocation(ImmersiveWeapons.MOD_ID, "celestial_tower_vulnerable")));
 
 	// Containers
 	public static final RegistryObject<MenuType<SmallPartsContainer>> SMALL_PARTS_TABLE_CONTAINER = CONTAINER_TYPES.register("small_parts_table", () -> IForgeContainerType.create((id, inv, data) -> new SmallPartsContainer(id, inv)));
@@ -656,5 +663,5 @@ public class DeferredRegistryHandler {
 	public static final RegistryObject<StructureFeature<NoneFeatureConfiguration>> GRAVEYARD_STRUCTURE = Structures.setupStructure("graveyard", () -> (new Graveyard(NoneFeatureConfiguration.CODEC)));
 
 	// Tree Decorators
-	public static final RegistryObject<TreeDecoratorType<BurnedBranchDecorator>> BURNED_BRANCH_DECORATOR = TREE_DECORATORS.register("burned_branch", () ->  new TreeDecoratorType<>(BurnedBranchDecorator.CODEC));
+	public static final RegistryObject<TreeDecoratorType<BurnedBranchDecorator>> BURNED_BRANCH_DECORATOR = TREE_DECORATORS.register("burned_branch", () -> new TreeDecoratorType<>(BurnedBranchDecorator.CODEC));
 }

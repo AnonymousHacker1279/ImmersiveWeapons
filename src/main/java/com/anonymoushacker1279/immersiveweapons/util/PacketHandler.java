@@ -5,6 +5,7 @@ import com.anonymoushacker1279.immersiveweapons.block.base.MortarBlock.MortarBlo
 import com.anonymoushacker1279.immersiveweapons.block.misc.portal.statue.warrior.WarriorStatueTorso.WarriorStatueTorsoPacketHandler;
 import com.anonymoushacker1279.immersiveweapons.block.trap.SpikeTrapBlock.SpikeTrapBlockPacketHandler;
 import com.anonymoushacker1279.immersiveweapons.blockentity.PanicAlarmBlockEntity.PanicAlarmPacketHandler;
+import com.anonymoushacker1279.immersiveweapons.entity.ai.goal.CelestialTowerSummonGoal.CelestialTowerSummonGoalPacketHandler;
 import com.anonymoushacker1279.immersiveweapons.entity.monster.LavaRevenantEntity.LavaRevenantEntityPacketHandler;
 import com.anonymoushacker1279.immersiveweapons.entity.projectile.CustomArrowEntity.SmokeBombArrowEntity.SmokeBombArrowEntityPacketHandler;
 import com.anonymoushacker1279.immersiveweapons.entity.projectile.SmokeBombEntity.SmokeBombEntityPacketHandler;
@@ -91,11 +92,17 @@ public class PacketHandler {
 				WarriorStatueTorsoPacketHandler::decode,
 				WarriorStatueTorsoPacketHandler::handle
 		);
-		PacketHandler.INSTANCE.registerMessage(networkId,
+		PacketHandler.INSTANCE.registerMessage(networkId++,
 				LavaRevenantEntityPacketHandler.class,
 				LavaRevenantEntityPacketHandler::encode,
 				LavaRevenantEntityPacketHandler::decode,
 				LavaRevenantEntityPacketHandler::handle
+		);
+		PacketHandler.INSTANCE.registerMessage(networkId,
+				CelestialTowerSummonGoalPacketHandler.class,
+				CelestialTowerSummonGoalPacketHandler::encode,
+				CelestialTowerSummonGoalPacketHandler::decode,
+				CelestialTowerSummonGoalPacketHandler::handle
 		);
 	}
 }
