@@ -148,8 +148,8 @@ public class CelestialTowerEntity extends Monster {
 	@Override
 	public void readAdditionalSaveData(@NotNull CompoundTag pCompound) {
 		super.readAdditionalSaveData(pCompound);
-		if (this.hasCustomName()) {
-			this.bossEvent.setName(this.getDisplayName());
+		if (hasCustomName()) {
+			bossEvent.setName(getDisplayName());
 		}
 		totalWavesToSpawn = pCompound.getInt("totalWavesToSpawn");
 		waveSizeModifier = pCompound.getInt("waveSizeModifier");
@@ -174,31 +174,34 @@ public class CelestialTowerEntity extends Monster {
 	@Override
 	public void setCustomName(@Nullable Component pName) {
 		super.setCustomName(pName);
-		this.bossEvent.setName(this.getDisplayName());
+		bossEvent.setName(getDisplayName());
 	}
 
 	@Override
 	public void startSeenByPlayer(ServerPlayer pPlayer) {
 		super.startSeenByPlayer(pPlayer);
-		this.bossEvent.addPlayer(pPlayer);
+		bossEvent.addPlayer(pPlayer);
 	}
 
 	@Override
 	public void stopSeenByPlayer(ServerPlayer pPlayer) {
 		super.stopSeenByPlayer(pPlayer);
-		this.bossEvent.removePlayer(pPlayer);
+		bossEvent.removePlayer(pPlayer);
 	}
 
 	@Override
 	public boolean checkSpawnRules(LevelAccessor pLevel, MobSpawnType pSpawnReason) {
 		BlockPos blockPos = blockPosition();
+		boolean flag = pLevel.getBlockState(blockPos.below()).isValidSpawn(pLevel, blockPos.below(), getType());
 		boolean flag1 = pLevel.getBlockStates(new AABB(blockPos.getX() - 16, blockPos.getY() + 1, blockPos.getZ() - 16, blockPos.getX() + 16, blockPos.getY() + 12, blockPos.getZ() + 16))
-				.allMatch(blockState -> blockState == Blocks.AIR.defaultBlockState());
+				.filter(blockState -> blockState == Blocks.AIR.defaultBlockState())
+				.count() / 11264.0f >= 0.6f;
 		boolean flag2 = pLevel.getBlockStates(new AABB(blockPos.getX() - 16, blockPos.getY() - 1, blockPos.getZ() - 16, blockPos.getX() + 16, blockPos.getY(), blockPos.getZ() + 16))
-				.noneMatch(blockState -> blockState == Blocks.AIR.defaultBlockState());
-		return pSpawnReason == MobSpawnType.SPAWNER || (pLevel.getBlockState(blockPos.below()).isValidSpawn(pLevel, blockPos.below(), getType()) &&
-				flag1 &&
-				flag2);
+				.filter(blockState -> blockState == Blocks.AIR.defaultBlockState())
+				.count() / 256.0f >= 0.4f;
+		if (pSpawnReason == MobSpawnType.SPAWNER || pSpawnReason == MobSpawnType.SPAWN_EGG) {
+			return true;
+		} else return flag && flag1 && flag2;
 	}
 
 	public boolean isDoneSpawningWaves() {
