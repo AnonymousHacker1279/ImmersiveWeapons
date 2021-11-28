@@ -32,17 +32,6 @@ public class MinutemanStatueBlockEntity extends BlockEntity implements EntityBlo
 	}
 
 	/**
-	 * Create a block entity for the block.
-	 * @param blockPos the <code>BlockPos</code> the block is at
-	 * @param blockState the <code>BlockState</code> of the block
-	 * @return BlockEntity
-	 */	@Nullable
-	@Override
-	public BlockEntity newBlockEntity(@NotNull BlockPos blockPos, @NotNull BlockState blockState) {
-		return new MinutemanStatueBlockEntity(blockPos, blockState);
-	}
-
-	/**
 	 * Runs once each tick. Handle scanning and spawning entities.
 	 */
 	public static void serverTick(Level level, BlockPos blockPos, MinutemanStatueBlockEntity minutemanStatueBlockEntity) {
@@ -71,6 +60,19 @@ public class MinutemanStatueBlockEntity extends BlockEntity implements EntityBlo
 	}
 
 	/**
+	 * Create a block entity for the block.
+	 *
+	 * @param blockPos   the <code>BlockPos</code> the block is at
+	 * @param blockState the <code>BlockState</code> of the block
+	 * @return BlockEntity
+	 */
+	@Nullable
+	@Override
+	public BlockEntity newBlockEntity(@NotNull BlockPos blockPos, @NotNull BlockState blockState) {
+		return new MinutemanStatueBlockEntity(blockPos, blockState);
+	}
+
+	/**
 	 * Spawn particles.
 	 */
 	private void spawnParticles() {
@@ -82,6 +84,7 @@ public class MinutemanStatueBlockEntity extends BlockEntity implements EntityBlo
 
 	/**
 	 * Get a random position in the nearby area.
+	 *
 	 * @return BlockPos
 	 */
 	private BlockPos getRandomPositionInArea() {
@@ -90,6 +93,7 @@ public class MinutemanStatueBlockEntity extends BlockEntity implements EntityBlo
 
 	/**
 	 * Save NBT data.
+	 *
 	 * @param nbt the <code>CompoundNBT</code> to save
 	 */
 	@Override
@@ -102,6 +106,7 @@ public class MinutemanStatueBlockEntity extends BlockEntity implements EntityBlo
 
 	/**
 	 * Load NBT data.
+	 *
 	 * @param nbt the <code>CompoundNBT</code> to load
 	 */
 	@Override

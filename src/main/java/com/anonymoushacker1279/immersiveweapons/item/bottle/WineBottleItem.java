@@ -8,6 +8,7 @@ public class WineBottleItem extends AbstractBottleItem {
 
 	/**
 	 * Constructor for WineBottleItem.
+	 *
 	 * @param properties the <code>Properties</code> for the item
 	 */
 	public WineBottleItem(Properties properties) {
@@ -17,6 +18,7 @@ public class WineBottleItem extends AbstractBottleItem {
 
 	/**
 	 * Additional code to run when the item is used.
+	 *
 	 * @param playerIn the <code>PlayerEntity</code> instance
 	 */
 	@Override

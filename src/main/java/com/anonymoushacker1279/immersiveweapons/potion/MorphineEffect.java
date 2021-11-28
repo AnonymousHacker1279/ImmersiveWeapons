@@ -13,7 +13,8 @@ public class MorphineEffect extends MobEffect {
 
 	/**
 	 * Constructor for MorphineEffect.
-	 * @param typeIn the <code>EffectType</code> instance
+	 *
+	 * @param typeIn        the <code>EffectType</code> instance
 	 * @param liquidColorIn the liquid color
 	 */
 	public MorphineEffect(MobEffectCategory typeIn, int liquidColorIn) {
@@ -22,8 +23,9 @@ public class MorphineEffect extends MobEffect {
 
 	/**
 	 * Runs once each tick while the effect is active.
+	 *
 	 * @param livingEntity the <code>LivingEntity</code> with the effect
-	 * @param amplifier the effect amplifier
+	 * @param amplifier    the effect amplifier
 	 */
 	@Override
 	public void applyEffectTick(@NotNull LivingEntity livingEntity, int amplifier) {
@@ -41,7 +43,8 @@ public class MorphineEffect extends MobEffect {
 
 	/**
 	 * Check if the duration effect is ticking.
-	 * @param duration the duration
+	 *
+	 * @param duration  the duration
 	 * @param amplifier the effect amplifier
 	 * @return boolean
 	 */

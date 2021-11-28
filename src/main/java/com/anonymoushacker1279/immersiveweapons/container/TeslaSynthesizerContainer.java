@@ -9,7 +9,8 @@ public class TeslaSynthesizerContainer extends AbstractTeslaSynthesizerContainer
 
 	/**
 	 * Constructor for TeslaSynthesizerContainer.
-	 * @param id the ID of the container
+	 *
+	 * @param id                the ID of the container
 	 * @param playerInventoryIn the <code>PlayerInventory</code> instance
 	 */
 	public TeslaSynthesizerContainer(int id, Inventory playerInventoryIn) {
@@ -18,10 +19,11 @@ public class TeslaSynthesizerContainer extends AbstractTeslaSynthesizerContainer
 
 	/**
 	 * Constructor for TeslaSynthesizerContainer.
-	 * @param id the ID of the container
-	 * @param playerInventoryIn the <code>PlayerInventory</code> instance
+	 *
+	 * @param id                        the ID of the container
+	 * @param playerInventoryIn         the <code>PlayerInventory</code> instance
 	 * @param teslaSynthesizerInventory the <code>IInventory</code> of the container
-	 * @param teslaSynthesizerData the <code>IIntArray</code> data
+	 * @param teslaSynthesizerData      the <code>IIntArray</code> data
 	 */
 	public TeslaSynthesizerContainer(int id, Inventory playerInventoryIn, Container teslaSynthesizerInventory, ContainerData teslaSynthesizerData) {
 		super(DeferredRegistryHandler.TESLA_SYNTHESIZER_CONTAINER.get(), id, playerInventoryIn, teslaSynthesizerInventory, teslaSynthesizerData);

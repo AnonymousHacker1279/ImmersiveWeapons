@@ -7,6 +7,7 @@ public class BasicContainerItem extends Item {
 
 	/**
 	 * Constructor for BasicContainerItem.
+	 *
 	 * @param properties the <code>Properties</code> for the item
 	 */
 	public BasicContainerItem(Properties properties) {
@@ -16,6 +17,7 @@ public class BasicContainerItem extends Item {
 
 	/**
 	 * Check if the item has a container item.
+	 *
 	 * @param stack the <code>ItemStack</code> to be checked
 	 * @return boolean
 	 */
@@ -26,6 +28,7 @@ public class BasicContainerItem extends Item {
 
 	/**
 	 * Get the container item.
+	 *
 	 * @param stack the <code>ItemStack</code> to get a container item for
 	 * @return ItemStack
 	 */

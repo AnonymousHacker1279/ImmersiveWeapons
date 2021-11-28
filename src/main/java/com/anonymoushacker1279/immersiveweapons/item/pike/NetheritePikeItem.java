@@ -18,8 +18,9 @@ public class NetheritePikeItem extends PikeItem {
 
 	/**
 	 * Constructor for NetheritePikeItem.
-	 * @param properties the <code>Properties</code> for the item
-	 * @param damageIn the damage
+	 *
+	 * @param properties    the <code>Properties</code> for the item
+	 * @param damageIn      the damage
 	 * @param attackSpeedIn the attack speed
 	 */
 	public NetheritePikeItem(Properties properties, double damageIn, double attackSpeedIn) {

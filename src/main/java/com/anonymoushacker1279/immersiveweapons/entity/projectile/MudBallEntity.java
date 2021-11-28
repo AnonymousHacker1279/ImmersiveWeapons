@@ -39,7 +39,7 @@ public class MudBallEntity extends ThrowableItemProjectile {
 	public void handleEntityEvent(byte pId) {
 		if (pId == 3) {
 			ParticleOptions particleoptions = getParticle();
-			for(int i = 0; i < 8; ++i) {
+			for (int i = 0; i < 8; ++i) {
 				level.addParticle(particleoptions, getX(), getY(), getZ(), 0.0D, 0.0D, 0.0D);
 			}
 		}
@@ -51,14 +51,14 @@ public class MudBallEntity extends ThrowableItemProjectile {
 		super.onHitEntity(pResult);
 		Entity entity = pResult.getEntity();
 		int i = entity instanceof Blaze ? 3 : 0;
-		entity.hurt(DamageSource.thrown(this, getOwner()), (float)i);
+		entity.hurt(DamageSource.thrown(this, getOwner()), (float) i);
 	}
 
 	@Override
 	protected void onHit(@NotNull HitResult pResult) {
 		super.onHit(pResult);
 		if (!level.isClientSide) {
-			level.broadcastEntityEvent(this, (byte)3);
+			level.broadcastEntityEvent(this, (byte) 3);
 			discard();
 		}
 	}

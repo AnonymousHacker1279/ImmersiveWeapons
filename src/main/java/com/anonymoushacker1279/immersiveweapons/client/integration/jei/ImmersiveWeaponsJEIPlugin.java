@@ -30,6 +30,7 @@ public class ImmersiveWeaponsJEIPlugin implements IModPlugin {
 
 	/**
 	 * Get the plugin UID.
+	 *
 	 * @return ResourceLocation
 	 */
 	@Override
@@ -39,6 +40,7 @@ public class ImmersiveWeaponsJEIPlugin implements IModPlugin {
 
 	/**
 	 * Register recipe catalysts.
+	 *
 	 * @param registration an <code>IRecipeCatalystRegistration</code> instance
 	 */
 	@Override
@@ -49,6 +51,7 @@ public class ImmersiveWeaponsJEIPlugin implements IModPlugin {
 
 	/**
 	 * Register recipes.
+	 *
 	 * @param registration an <code>IRecipeRegistration</code> instance
 	 */
 	@Override
@@ -63,6 +66,7 @@ public class ImmersiveWeaponsJEIPlugin implements IModPlugin {
 
 	/**
 	 * Register recipe categories.
+	 *
 	 * @param registration an <code>IRecipeCategoryRegistration</code> instance
 	 */
 	@Override
@@ -73,6 +77,7 @@ public class ImmersiveWeaponsJEIPlugin implements IModPlugin {
 
 	/**
 	 * Register recipe transfer handlers.
+	 *
 	 * @param registration an <code>IRecipeTransferRegistration</code> instance
 	 */
 	@Override
@@ -83,6 +88,7 @@ public class ImmersiveWeaponsJEIPlugin implements IModPlugin {
 
 	/**
 	 * Register GUI handlers.
+	 *
 	 * @param registration an <code>IGuiHandlerRegistration</code> instance
 	 */
 	@Override

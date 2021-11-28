@@ -35,7 +35,8 @@ public class ConfiguredSurfaceBuilders {
 
 	/**
 	 * Register a configured surface builder.
-	 * @param key the <code>ResourceKey</code>, must extend ConfiguredSurfaceBuilder
+	 *
+	 * @param key                      the <code>ResourceKey</code>, must extend ConfiguredSurfaceBuilder
 	 * @param configuredSurfaceBuilder the <code>ConfiguredSurfaceBuilder</code> instance
 	 */
 	private static void register(ResourceKey<ConfiguredSurfaceBuilder<?>> key, ConfiguredSurfaceBuilder<?> configuredSurfaceBuilder) {
@@ -44,6 +45,7 @@ public class ConfiguredSurfaceBuilders {
 
 	/**
 	 * Create resource keys.
+	 *
 	 * @param name the name
 	 * @return ResourceKey extending ConfiguredSurfaceBuilder
 	 */

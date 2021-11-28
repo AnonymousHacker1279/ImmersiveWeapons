@@ -30,14 +30,15 @@ import java.util.function.Supplier;
 
 public class CobaltArmorItem extends ArmorItem {
 
-	private boolean isLeggings = false;
 	private static boolean effectEnabled = false;
+	private boolean isLeggings = false;
 
 	/**
 	 * Constructor for CobaltArmorItem.
+	 *
 	 * @param material the <code>IArmorMaterial</code> for the item
-	 * @param slot the <code>EquipmentSlotType</code>
-	 * @param type type ID
+	 * @param slot     the <code>EquipmentSlotType</code>
+	 * @param type     type ID
 	 */
 	public CobaltArmorItem(ArmorMaterial material, EquipmentSlot slot, int type) {
 		super(material, slot, (new Item.Properties().tab(DeferredRegistryHandler.ITEM_GROUP)));
@@ -47,11 +48,19 @@ public class CobaltArmorItem extends ArmorItem {
 	}
 
 	/**
+	 * Toggle the armor effect.
+	 */
+	static void toggleEffect() {
+		effectEnabled = !effectEnabled;
+	}
+
+	/**
 	 * Get the armor texture.
-	 * @param stack the <code>ItemStack</code> instance
+	 *
+	 * @param stack  the <code>ItemStack</code> instance
 	 * @param entity the <code>Entity</code> wearing the armor
-	 * @param slot the <code>EquipmentSlotType</code>
-	 * @param type type ID
+	 * @param slot   the <code>EquipmentSlotType</code>
+	 * @param type   type ID
 	 * @return String
 	 */
 	@Override
@@ -61,8 +70,9 @@ public class CobaltArmorItem extends ArmorItem {
 
 	/**
 	 * Runs once per tick while armor is equipped
-	 * @param stack the <code>ItemStack</code> instance
-	 * @param world the <code>World</code> the player is in
+	 *
+	 * @param stack  the <code>ItemStack</code> instance
+	 * @param world  the <code>World</code> the player is in
 	 * @param player the <code>PlayerEntity</code> wearing the armor
 	 */
 	@Override
@@ -92,13 +102,6 @@ public class CobaltArmorItem extends ArmorItem {
 				}
 			}
 		}
-	}
-
-	/**
-	 * Toggle the armor effect.
-	 */
-	static void toggleEffect() {
-		effectEnabled = !effectEnabled;
 	}
 
 	public record CobaltArmorItemPacketHandler(boolean isParticles, BlockPos blockPos,
@@ -155,7 +158,6 @@ public class CobaltArmorItem extends ArmorItem {
 
 		/**
 		 * Runs specifically on the server, when a packet is received
-		 *
 		 */
 		private static void handleOnServer() {
 			CobaltArmorItem.toggleEffect();

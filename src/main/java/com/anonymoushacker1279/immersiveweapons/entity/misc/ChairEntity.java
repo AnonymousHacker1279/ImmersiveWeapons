@@ -21,8 +21,9 @@ public class ChairEntity extends Entity {
 
 	/**
 	 * Constructor for ChairEntity.
+	 *
 	 * @param entityType the <code>EntityType</code> instance
-	 * @param world the <code>World</code> the entity is in
+	 * @param world      the <code>World</code> the entity is in
 	 */
 	public ChairEntity(EntityType<?> entityType, Level world) {
 		super(entityType, world);
@@ -30,8 +31,9 @@ public class ChairEntity extends Entity {
 
 	/**
 	 * Constructor for ChairEntity.
-	 * @param world the <code>World</code> the entity is in
-	 * @param pos the <code>BlockPos</code> the entity is at
+	 *
+	 * @param world   the <code>World</code> the entity is in
+	 * @param pos     the <code>BlockPos</code> the entity is at
 	 * @param yOffset the Y offset to spawn at
 	 */
 	private ChairEntity(Level world, BlockPos pos, double yOffset) {
@@ -42,10 +44,11 @@ public class ChairEntity extends Entity {
 
 	/**
 	 * Create the entity and mount the player to it.
-	 * @param world the <code>World</code> the entity is in
-	 * @param pos the <code>BlockPos</code> the entity is at
+	 *
+	 * @param world   the <code>World</code> the entity is in
+	 * @param pos     the <code>BlockPos</code> the entity is at
 	 * @param yOffset the Y offset to spawn at
-	 * @param player the <code>PlayerEntity</code> interacting with the entity
+	 * @param player  the <code>PlayerEntity</code> interacting with the entity
 	 * @return ActionResultType
 	 */
 	public static InteractionResult create(Level world, BlockPos pos, double yOffset, Player player) {
@@ -80,6 +83,7 @@ public class ChairEntity extends Entity {
 
 	/**
 	 * Check if this entity can be ridden by the supplied entity.
+	 *
 	 * @param entity the <code>Entity</code> being checked
 	 * @return boolean
 	 */
@@ -102,6 +106,7 @@ public class ChairEntity extends Entity {
 
 	/**
 	 * Get the entity spawn packet.
+	 *
 	 * @return IPacket
 	 */
 	@Override

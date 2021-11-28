@@ -10,8 +10,9 @@ public class IronArrowItem extends AbstractArrowItem {
 
 	/**
 	 * Constructor for IronArrowItem.
+	 *
 	 * @param properties the <code>Properties</code> for the item
-	 * @param damageIn the damage to deal on impact
+	 * @param damageIn   the damage to deal on impact
 	 */
 	public IronArrowItem(Properties properties, double damageIn) {
 		super(properties, damageIn);
@@ -20,8 +21,9 @@ public class IronArrowItem extends AbstractArrowItem {
 
 	/**
 	 * Create an arrow item.
+	 *
 	 * @param worldIn the <code>World</code> the shooter is in
-	 * @param stack the <code>ItemStack</code> being shot
+	 * @param stack   the <code>ItemStack</code> being shot
 	 * @param shooter the <code>LivingEntity</code> shooting the arrow
 	 * @return IronArrowEntity
 	 */

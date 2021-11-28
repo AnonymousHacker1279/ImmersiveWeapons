@@ -25,8 +25,9 @@ public class MolotovEntity extends ThrowableItemProjectile {
 
 	/**
 	 * Constructor for MolotovEntity.
+	 *
 	 * @param entityType the <code>EntityType</code> instance; must extend MolotovEntity
-	 * @param world the <code>World</code> the entity is in
+	 * @param world      the <code>World</code> the entity is in
 	 */
 	public MolotovEntity(EntityType<? extends MolotovEntity> entityType, Level world) {
 		super(entityType, world);
@@ -34,7 +35,8 @@ public class MolotovEntity extends ThrowableItemProjectile {
 
 	/**
 	 * Constructor for MolotovEntity.
-	 * @param world the <code>World</code> the entity is in
+	 *
+	 * @param world        the <code>World</code> the entity is in
 	 * @param livingEntity the <code>LivingEntity</code> throwing the entity
 	 */
 	public MolotovEntity(Level world, LivingEntity livingEntity) {
@@ -43,10 +45,11 @@ public class MolotovEntity extends ThrowableItemProjectile {
 
 	/**
 	 * Constructor for MolotovEntity.
+	 *
 	 * @param world the <code>World</code> the entity is in
-	 * @param x the X position
-	 * @param y the Y position
-	 * @param z the Z position
+	 * @param x     the X position
+	 * @param y     the Y position
+	 * @param z     the Z position
 	 */
 	public MolotovEntity(Level world, double x, double y, double z) {
 		super(DeferredRegistryHandler.MOLOTOV_COCKTAIL_ENTITY.get(), x, y, z, world);
@@ -54,6 +57,7 @@ public class MolotovEntity extends ThrowableItemProjectile {
 
 	/**
 	 * Get the entity spawn packet.
+	 *
 	 * @return IPacket
 	 */
 	@Override
@@ -64,6 +68,7 @@ public class MolotovEntity extends ThrowableItemProjectile {
 	/**
 	 * ProjectileItemEntity::setItem uses this to save storage space.
 	 * It only stores the itemStack if the itemStack is not the default item.
+	 *
 	 * @return Item
 	 */
 	@Override
@@ -73,6 +78,7 @@ public class MolotovEntity extends ThrowableItemProjectile {
 
 	/**
 	 * Runs when an entity/block is hit.
+	 *
 	 * @param rayTraceResult the <code>RayTraceResult</code> instance
 	 */
 	@Override
@@ -114,6 +120,7 @@ public class MolotovEntity extends ThrowableItemProjectile {
 
 	/**
 	 * Handle entity events.
+	 *
 	 * @param statusID the <code>byte</code> containing status ID
 	 */
 	@Override
@@ -131,6 +138,7 @@ public class MolotovEntity extends ThrowableItemProjectile {
 
 	/**
 	 * Create a particle.
+	 *
 	 * @return IParticleData
 	 */
 	private ParticleOptions makeParticle() {
@@ -142,6 +150,7 @@ public class MolotovEntity extends ThrowableItemProjectile {
 
 	/**
 	 * Tint a particle.
+	 *
 	 * @param random a random number
 	 * @return Color
 	 */
@@ -157,6 +166,7 @@ public class MolotovEntity extends ThrowableItemProjectile {
 
 	/**
 	 * Get the particle diameter.
+	 *
 	 * @param random a random number
 	 * @return double
 	 */

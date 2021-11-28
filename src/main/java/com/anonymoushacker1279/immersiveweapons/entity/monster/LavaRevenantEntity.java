@@ -61,6 +61,17 @@ public class LavaRevenantEntity extends FlyingMob implements Enemy {
 		lookControl = new LavaRevenantLookControl(this);
 	}
 
+	/**
+	 * Register this entity's attributes.
+	 *
+	 * @return AttributeModifierMap.MutableAttribute
+	 */
+	public static AttributeSupplier.Builder registerAttributes() {
+		return Monster.createMonsterAttributes()
+				.add(Attributes.FLYING_SPEED, 0.70D)
+				.add(Attributes.ARMOR, 35.0D);
+	}
+
 	@Override
 	public boolean isFlapping() {
 		return (getUniqueFlapTickOffset() + tickCount) % TICKS_PER_FLAP == 0;
@@ -74,16 +85,6 @@ public class LavaRevenantEntity extends FlyingMob implements Enemy {
 	@Override
 	protected @NotNull BodyRotationControl createBodyControl() {
 		return new LavaRevenantBodyRotationControl(this);
-	}
-
-	/**
-	 * Register this entity's attributes.
-	 * @return AttributeModifierMap.MutableAttribute
-	 */
-	public static AttributeSupplier.Builder registerAttributes() {
-		return Monster.createMonsterAttributes()
-				.add(Attributes.FLYING_SPEED, 0.70D)
-				.add(Attributes.ARMOR, 35.0D);
 	}
 
 	@Override
@@ -100,10 +101,6 @@ public class LavaRevenantEntity extends FlyingMob implements Enemy {
 		entityData.define(ID_SIZE, 0);
 	}
 
-	public void setSize(int pSize) {
-		entityData.set(ID_SIZE, Mth.clamp(pSize, 0, 64));
-	}
-
 	private void updateSizeInfo() {
 		refreshDimensions();
 		Objects.requireNonNull(getAttribute(Attributes.ATTACK_DAMAGE)).setBaseValue(14 + getSize());
@@ -112,6 +109,10 @@ public class LavaRevenantEntity extends FlyingMob implements Enemy {
 
 	public int getSize() {
 		return entityData.get(ID_SIZE);
+	}
+
+	public void setSize(int pSize) {
+		entityData.set(ID_SIZE, Mth.clamp(pSize, 0, 64));
 	}
 
 	@Override
@@ -144,18 +145,18 @@ public class LavaRevenantEntity extends FlyingMob implements Enemy {
 	public void tick() {
 		super.tick();
 		if (level.isClientSide) {
-			float f = Mth.cos((float)(getUniqueFlapTickOffset() + tickCount) * 7.448451F * ((float)Math.PI / 180F) + (float)Math.PI);
-			float f1 = Mth.cos((float)(getUniqueFlapTickOffset() + tickCount + 1) * 7.448451F * ((float)Math.PI / 180F) + (float)Math.PI);
+			float f = Mth.cos((float) (getUniqueFlapTickOffset() + tickCount) * 7.448451F * ((float) Math.PI / 180F) + (float) Math.PI);
+			float f1 = Mth.cos((float) (getUniqueFlapTickOffset() + tickCount + 1) * 7.448451F * ((float) Math.PI / 180F) + (float) Math.PI);
 			if (f > 0.0F && f1 <= 0.0F) {
 				level.playLocalSound(getX(), getY(), getZ(), DeferredRegistryHandler.LAVA_REVENANT_FLAP.get(), getSoundSource(), 0.95F + random.nextFloat() * 0.05F, 0.95F + random.nextFloat() * 0.05F, false);
 			}
 
 			int size = getSize();
-			float xSizeModifier = Mth.cos(getYRot() * ((float)Math.PI / 180F)) * (7.0F * (float)size);
-			float zSizeModifier = Mth.sin(getYRot() * ((float)Math.PI / 180F)) * (7.0f * (float)size);
-			float ySizeModifier = (0.3F + f * 0.45F) * ((float)size * 0.2F + 1.5F);
-			level.addParticle(ParticleTypes.LAVA, getX() + (double)xSizeModifier, getY() + (double)ySizeModifier, getZ() + (double)zSizeModifier, 0.0D, 0.0D, 0.0D);
-			level.addParticle(ParticleTypes.LAVA, getX() - (double)xSizeModifier, getY() + (double)ySizeModifier, getZ() - (double)zSizeModifier, 0.0D, 0.0D, 0.0D);
+			float xSizeModifier = Mth.cos(getYRot() * ((float) Math.PI / 180F)) * (7.0F * (float) size);
+			float zSizeModifier = Mth.sin(getYRot() * ((float) Math.PI / 180F)) * (7.0f * (float) size);
+			float ySizeModifier = (0.3F + f * 0.45F) * ((float) size * 0.2F + 1.5F);
+			level.addParticle(ParticleTypes.LAVA, getX() + (double) xSizeModifier, getY() + (double) ySizeModifier, getZ() + (double) zSizeModifier, 0.0D, 0.0D, 0.0D);
+			level.addParticle(ParticleTypes.LAVA, getX() - (double) xSizeModifier, getY() + (double) ySizeModifier, getZ() - (double) zSizeModifier, 0.0D, 0.0D, 0.0D);
 		}
 
 	}
@@ -240,13 +241,82 @@ public class LavaRevenantEntity extends FlyingMob implements Enemy {
 	public @NotNull EntityDimensions getDimensions(@NotNull Pose pPose) {
 		int i = getSize();
 		EntityDimensions dimensions = super.getDimensions(pPose);
-		float f = (dimensions.width + 0.2F * (float)i) / dimensions.width;
+		float f = (dimensions.width + 0.2F * (float) i) / dimensions.width;
 		return dimensions.scale(f);
 	}
 
 	enum AttackPhase {
 		CIRCLE,
 		SWOOP
+	}
+
+	static class LavaRevenantLookControl extends LookControl {
+		public LavaRevenantLookControl(Mob mob) {
+			super(mob);
+		}
+
+		/**
+		 * Updates look
+		 */
+		@Override
+		public void tick() {
+		}
+	}
+
+	public record LavaRevenantEntityPacketHandler(BlockPos blockPos) {
+
+		/**
+		 * Constructor for LavaRevenantEntityPacketHandler.
+		 *
+		 * @param blockPos the <code>BlockPos</code> the packet came from
+		 */
+		public LavaRevenantEntityPacketHandler {
+		}
+
+		/**
+		 * Encodes a packet
+		 *
+		 * @param msg          the <code>LavaRevenantEntityPacketHandler</code> message being sent
+		 * @param packetBuffer the <code>PacketBuffer</code> containing packet data
+		 */
+		public static void encode(LavaRevenantEntityPacketHandler msg, FriendlyByteBuf packetBuffer) {
+			packetBuffer.writeBlockPos(msg.blockPos);
+		}
+
+		/**
+		 * Decodes a packet
+		 *
+		 * @param packetBuffer the <code>PacketBuffer</code> containing packet data
+		 * @return LavaRevenantEntityPacketHandler
+		 */
+		public static LavaRevenantEntityPacketHandler decode(FriendlyByteBuf packetBuffer) {
+			return new LavaRevenantEntityPacketHandler(packetBuffer.readBlockPos());
+		}
+
+		/**
+		 * Handles an incoming packet, by sending it to the client/server
+		 *
+		 * @param msg             the <code>LavaRevenantEntityPacketHandler</code> message being sent
+		 * @param contextSupplier the <code>Supplier</code> providing context
+		 */
+		public static void handle(LavaRevenantEntityPacketHandler msg, Supplier<Context> contextSupplier) {
+			NetworkEvent.Context context = contextSupplier.get();
+			context.enqueueWork(() -> DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> handleOnClient(msg)));
+			context.setPacketHandled(true);
+		}
+
+		/**
+		 * Runs specifically on the client, when a packet is received
+		 *
+		 * @param msg the <code>LavaRevenantEntityPacketHandler</code> message being sent
+		 */
+		@OnlyIn(Dist.CLIENT)
+		private static void handleOnClient(LavaRevenantEntityPacketHandler msg) {
+			Minecraft minecraft = Minecraft.getInstance();
+			if (minecraft.level != null) {
+				minecraft.level.playLocalSound(msg.blockPos.getX(), msg.blockPos.getY(), msg.blockPos.getZ(), DeferredRegistryHandler.LAVA_REVENANT_BITE.get(), SoundSource.HOSTILE, 0.3F, GeneralUtilities.getRandomNumber(0.0f, 1.0f) * 0.1F + 0.9F, false);
+			}
+		}
 	}
 
 	class AttackPlayerTargetGoal extends Goal {
@@ -265,9 +335,9 @@ public class LavaRevenantEntity extends FlyingMob implements Enemy {
 				nextScanTick = 60;
 				List<Player> list = level.getNearbyPlayers(attackTargeting, LavaRevenantEntity.this, getBoundingBox().inflate(128.0D, 96.0D, 128.0D));
 				if (!list.isEmpty()) {
-					list.sort(Comparator.<Entity, Double>comparing(Entity::getY).reversed());
+					list.sort(Comparator.<Entity, Double> comparing(Entity::getY).reversed());
 
-					for(Player player : list) {
+					for (Player player : list) {
 						if (canAttack(player, TargetingConditions.DEFAULT)) {
 							setTarget(player);
 							return true;
@@ -405,7 +475,7 @@ public class LavaRevenantEntity extends FlyingMob implements Enemy {
 			}
 
 			if (random.nextInt(450) == 0) {
-				angle = random.nextFloat() * 2.0F * (float)Math.PI;
+				angle = random.nextFloat() * 2.0F * (float) Math.PI;
 				selectNext();
 			}
 
@@ -430,21 +500,8 @@ public class LavaRevenantEntity extends FlyingMob implements Enemy {
 				anchorPoint = blockPosition();
 			}
 
-			angle += clockwise * 15.0F * ((float)Math.PI / 180F);
+			angle += clockwise * 15.0F * ((float) Math.PI / 180F);
 			moveTargetPoint = Vec3.atLowerCornerOf(anchorPoint).add(distance * Mth.cos(angle), -4.0F + height, distance * Mth.sin(angle));
-		}
-	}
-
-	static class LavaRevenantLookControl extends LookControl {
-		public LavaRevenantLookControl(Mob mob) {
-			super(mob);
-		}
-
-		/**
-		 * Updates look
-		 */
-		@Override
-		public void tick() {
 		}
 	}
 
@@ -462,20 +519,20 @@ public class LavaRevenantEntity extends FlyingMob implements Enemy {
 				speed = 0.1F;
 			}
 
-			float f = (float)(moveTargetPoint.x - getX());
-			float f1 = (float)(moveTargetPoint.y - getY());
-			float f2 = (float)(moveTargetPoint.z - getZ());
+			float f = (float) (moveTargetPoint.x - getX());
+			float f1 = (float) (moveTargetPoint.y - getY());
+			float f2 = (float) (moveTargetPoint.z - getZ());
 			double d0 = Mth.sqrt(f * f + f2 * f2);
-			if (Math.abs(d0) > (double)1.0E-5F) {
-				double d1 = 1.0D - (double)Mth.abs(f1 * 0.7F) / d0;
-				f = (float)((double)f * d1);
-				f2 = (float)((double)f2 * d1);
+			if (Math.abs(d0) > (double) 1.0E-5F) {
+				double d1 = 1.0D - (double) Mth.abs(f1 * 0.7F) / d0;
+				f = (float) ((double) f * d1);
+				f2 = (float) ((double) f2 * d1);
 				d0 = Mth.sqrt(f * f + f2 * f2);
 				double d2 = Mth.sqrt(f * f + f2 * f2 + f1 * f1);
 				float f3 = getYRot();
-				float f4 = (float)Mth.atan2(f2, f);
+				float f4 = (float) Mth.atan2(f2, f);
 				float f5 = Mth.wrapDegrees(getYRot() + 90.0F);
-				float f6 = Mth.wrapDegrees(f4 * (180F / (float)Math.PI));
+				float f6 = Mth.wrapDegrees(f4 * (180F / (float) Math.PI));
 				setYRot(Mth.approachDegrees(f5, f6, 4.0F) - 90.0F);
 				yBodyRot = getYRot();
 				if (Mth.degreesDifferenceAbs(f3, getYRot()) < 3.0F) {
@@ -484,12 +541,12 @@ public class LavaRevenantEntity extends FlyingMob implements Enemy {
 					speed = Mth.approach(speed, 0.2F, 0.025F);
 				}
 
-				float f7 = (float)(-(Mth.atan2(-f1, d0) * (double)(180F / (float)Math.PI)));
+				float f7 = (float) (-(Mth.atan2(-f1, d0) * (double) (180F / (float) Math.PI)));
 				setXRot(f7);
 				float f8 = getYRot() + 90.0F;
-				double d3 = (double)(speed * Mth.cos(f8 * ((float)Math.PI / 180F))) * Math.abs((double)f / d2);
-				double d4 = (double)(speed * Mth.sin(f8 * ((float)Math.PI / 180F))) * Math.abs((double)f2 / d2);
-				double d5 = (double)(speed * Mth.sin(f7 * ((float)Math.PI / 180F))) * Math.abs((double)f1 / d2);
+				double d3 = (double) (speed * Mth.cos(f8 * ((float) Math.PI / 180F))) * Math.abs((double) f / d2);
+				double d4 = (double) (speed * Mth.sin(f8 * ((float) Math.PI / 180F))) * Math.abs((double) f2 / d2);
+				double d5 = (double) (speed * Mth.sin(f7 * ((float) Math.PI / 180F))) * Math.abs((double) f1 / d2);
 				Vec3 vec3 = getDeltaMovement();
 				setDeltaMovement(vec3.add((new Vec3(d3, d5, d4)).subtract(vec3).scale(0.2D)));
 			}
@@ -527,7 +584,7 @@ public class LavaRevenantEntity extends FlyingMob implements Enemy {
 				return false;
 			} else if (!livingentity.isAlive()) {
 				return false;
-			} else if (!(livingentity instanceof Player) || !livingentity.isSpectator() && !((Player)livingentity).isCreative()) {
+			} else if (!(livingentity instanceof Player) || !livingentity.isSpectator() && !((Player) livingentity).isCreative()) {
 				return canUse();
 			} else {
 				return false;
@@ -567,62 +624,6 @@ public class LavaRevenantEntity extends FlyingMob implements Enemy {
 				} else if (horizontalCollision || hurtTime > 0) {
 					attackPhase = LavaRevenantEntity.AttackPhase.CIRCLE;
 				}
-			}
-		}
-	}
-
-	public record LavaRevenantEntityPacketHandler(BlockPos blockPos) {
-
-		/**
-		 * Constructor for LavaRevenantEntityPacketHandler.
-		 *
-		 * @param blockPos the <code>BlockPos</code> the packet came from
-		 */
-		public LavaRevenantEntityPacketHandler {
-		}
-
-		/**
-		 * Encodes a packet
-		 *
-		 * @param msg          the <code>LavaRevenantEntityPacketHandler</code> message being sent
-		 * @param packetBuffer the <code>PacketBuffer</code> containing packet data
-		 */
-		public static void encode(LavaRevenantEntityPacketHandler msg, FriendlyByteBuf packetBuffer) {
-			packetBuffer.writeBlockPos(msg.blockPos);
-		}
-
-		/**
-		 * Decodes a packet
-		 *
-		 * @param packetBuffer the <code>PacketBuffer</code> containing packet data
-		 * @return LavaRevenantEntityPacketHandler
-		 */
-		public static LavaRevenantEntityPacketHandler decode(FriendlyByteBuf packetBuffer) {
-			return new LavaRevenantEntityPacketHandler(packetBuffer.readBlockPos());
-		}
-
-		/**
-		 * Handles an incoming packet, by sending it to the client/server
-		 *
-		 * @param msg             the <code>LavaRevenantEntityPacketHandler</code> message being sent
-		 * @param contextSupplier the <code>Supplier</code> providing context
-		 */
-		public static void handle(LavaRevenantEntityPacketHandler msg, Supplier<Context> contextSupplier) {
-			NetworkEvent.Context context = contextSupplier.get();
-			context.enqueueWork(() -> DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> handleOnClient(msg)));
-			context.setPacketHandled(true);
-		}
-
-		/**
-		 * Runs specifically on the client, when a packet is received
-		 *
-		 * @param msg the <code>LavaRevenantEntityPacketHandler</code> message being sent
-		 */
-		@OnlyIn(Dist.CLIENT)
-		private static void handleOnClient(LavaRevenantEntityPacketHandler msg) {
-			Minecraft minecraft = Minecraft.getInstance();
-			if (minecraft.level != null) {
-				minecraft.level.playLocalSound(msg.blockPos.getX(), msg.blockPos.getY(), msg.blockPos.getZ(), DeferredRegistryHandler.LAVA_REVENANT_BITE.get(), SoundSource.HOSTILE, 0.3F, GeneralUtilities.getRandomNumber(0.0f, 1.0f) * 0.1F + 0.9F, false);
 			}
 		}
 	}

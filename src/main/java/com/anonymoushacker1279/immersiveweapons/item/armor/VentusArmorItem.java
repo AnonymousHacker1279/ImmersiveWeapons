@@ -32,9 +32,10 @@ public class VentusArmorItem extends ArmorItem {
 
 	/**
 	 * Constructor for VentusArmorItem.
+	 *
 	 * @param material the <code>IArmorMaterial</code> for the item
-	 * @param slot the <code>EquipmentSlotType</code>
-	 * @param type type ID
+	 * @param slot     the <code>EquipmentSlotType</code>
+	 * @param type     type ID
 	 */
 	public VentusArmorItem(ArmorMaterial material, EquipmentSlot slot, int type) {
 		super(material, slot, (new Item.Properties().tab(DeferredRegistryHandler.ITEM_GROUP)));
@@ -44,11 +45,19 @@ public class VentusArmorItem extends ArmorItem {
 	}
 
 	/**
+	 * Toggle the armor effect.
+	 */
+	static void toggleEffect() {
+		armorIsToggled = !armorIsToggled;
+	}
+
+	/**
 	 * Get the armor texture.
-	 * @param stack the <code>ItemStack</code> instance
+	 *
+	 * @param stack  the <code>ItemStack</code> instance
 	 * @param entity the <code>Entity</code> wearing the armor
-	 * @param slot the <code>EquipmentSlotType</code>
-	 * @param type type ID
+	 * @param slot   the <code>EquipmentSlotType</code>
+	 * @param type   type ID
 	 * @return String
 	 */
 	@Override
@@ -58,8 +67,9 @@ public class VentusArmorItem extends ArmorItem {
 
 	/**
 	 * Runs once per tick while armor is equipped
-	 * @param stack the <code>ItemStack</code> instance
-	 * @param world the <code>World</code> the player is in
+	 *
+	 * @param stack  the <code>ItemStack</code> instance
+	 * @param world  the <code>World</code> the player is in
 	 * @param player the <code>PlayerEntity</code> wearing the armor
 	 */
 	@Override
@@ -88,13 +98,6 @@ public class VentusArmorItem extends ArmorItem {
 				player.addEffect(new MobEffectInstance(MobEffects.SLOW_FALLING, 0, 0, false, false));
 			}
 		}
-	}
-
-	/**
-	 * Toggle the armor effect.
-	 */
-	static void toggleEffect() {
-		armorIsToggled = !armorIsToggled;
 	}
 
 	public record VentusArmorItemPacketHandler(boolean clientSide) {

@@ -35,13 +35,13 @@ public class LavaRevenantModel<T extends LavaRevenantEntity> extends Hierarchica
 	 * Sets this entity's model rotation angles
 	 */
 	@Override
-	public void setupAnim(T p_170791_, float p_170792_, float p_170793_, float p_170794_, float p_170795_, float p_170796_) {
-		float f = ((float)p_170791_.getUniqueFlapTickOffset() + p_170794_) * 7.448451F * ((float)Math.PI / 180F);
-		leftWingBase.zRot = Mth.cos(f) * 16.0F * ((float)Math.PI / 180F);
-		leftWingTip.zRot = Mth.cos(f) * 16.0F * ((float)Math.PI / 180F);
+	public void setupAnim(T pEntity, float pLimbSwing, float pLimbSwingAmount, float pAgeInTicks, float pNetHeadYaw, float pHeadPitch) {
+		float f = ((float) pEntity.getUniqueFlapTickOffset() + pAgeInTicks) * 7.448451F * ((float) Math.PI / 180F);
+		leftWingBase.zRot = Mth.cos(f) * 16.0F * ((float) Math.PI / 180F);
+		leftWingTip.zRot = Mth.cos(f) * 16.0F * ((float) Math.PI / 180F);
 		rightWingBase.zRot = -leftWingBase.zRot;
 		rightWingTip.zRot = -leftWingTip.zRot;
-		tailBase.xRot = -(5.0F + Mth.cos(f * 2.0F) * 5.0F) * ((float)Math.PI / 180F);
-		tailTip.xRot = -(5.0F + Mth.cos(f * 2.0F) * 5.0F) * ((float)Math.PI / 180F);
+		tailBase.xRot = -(5.0F + Mth.cos(f * 2.0F) * 5.0F) * ((float) Math.PI / 180F);
+		tailTip.xRot = -(5.0F + Mth.cos(f * 2.0F) * 5.0F) * ((float) Math.PI / 180F);
 	}
 }

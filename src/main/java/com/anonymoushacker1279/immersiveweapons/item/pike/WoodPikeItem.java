@@ -16,8 +16,9 @@ public class WoodPikeItem extends PikeItem {
 
 	/**
 	 * Constructor for WoodPikeItem.
-	 * @param properties the <code>Properties</code> for the item
-	 * @param damageIn the damage
+	 *
+	 * @param properties    the <code>Properties</code> for the item
+	 * @param damageIn      the damage
 	 * @param attackSpeedIn the attack speed
 	 */
 	public WoodPikeItem(Properties properties, double damageIn, double attackSpeedIn) {

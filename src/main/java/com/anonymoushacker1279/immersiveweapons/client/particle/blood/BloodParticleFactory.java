@@ -7,12 +7,13 @@ import net.minecraft.client.particle.ParticleProvider;
 import net.minecraft.client.particle.SpriteSet;
 import org.jetbrains.annotations.NotNull;
 
-public class BloodParticleFactory  implements ParticleProvider<BloodParticleData> {
+public class BloodParticleFactory implements ParticleProvider<BloodParticleData> {
 
 	private final SpriteSet sprites;
 
 	/**
 	 * Constructor for BloodParticleFactory.
+	 *
 	 * @param sprite an <code>IAnimatedSprite</code> instance
 	 */
 	public BloodParticleFactory(SpriteSet sprite) {
@@ -21,14 +22,15 @@ public class BloodParticleFactory  implements ParticleProvider<BloodParticleData
 
 	/**
 	 * Create a particle at the given coordinates with velocity.
+	 *
 	 * @param bloodParticleData a <code>BloodParticleData</code> instance
-	 * @param world the <code>ClientWorld</code> the particle is in
-	 * @param xPos the X position to spawn at
-	 * @param yPos the Y position to spawn at
-	 * @param zPos the Z position to spawn at
-	 * @param xVelocity the X velocity to spawn with
-	 * @param yVelocity the Y velocity to spawn with
-	 * @param zVelocity the Z velocity to spawn with
+	 * @param world             the <code>ClientWorld</code> the particle is in
+	 * @param xPos              the X position to spawn at
+	 * @param yPos              the Y position to spawn at
+	 * @param zPos              the Z position to spawn at
+	 * @param xVelocity         the X velocity to spawn with
+	 * @param yVelocity         the Y velocity to spawn with
+	 * @param zVelocity         the Z velocity to spawn with
 	 * @return Particle
 	 */
 	@Override

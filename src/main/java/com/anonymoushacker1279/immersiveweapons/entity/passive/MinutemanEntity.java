@@ -12,8 +12,9 @@ public class MinutemanEntity extends AbstractMinutemanEntity {
 
 	/**
 	 * Constructor for MinutemanEntity.
+	 *
 	 * @param entityType the <code>EntityType</code> instance
-	 * @param world the <code>World</code> the entity is in
+	 * @param world      the <code>World</code> the entity is in
 	 */
 	public MinutemanEntity(EntityType<? extends MinutemanEntity> entityType, Level world) {
 		super(entityType, world);
@@ -21,6 +22,7 @@ public class MinutemanEntity extends AbstractMinutemanEntity {
 
 	/**
 	 * Get the ambient sound.
+	 *
 	 * @return SoundEvent
 	 */
 	@Override
@@ -30,6 +32,7 @@ public class MinutemanEntity extends AbstractMinutemanEntity {
 
 	/**
 	 * Get the ambient sound interval.
+	 *
 	 * @return int
 	 */
 	@Override
@@ -39,6 +42,7 @@ public class MinutemanEntity extends AbstractMinutemanEntity {
 
 	/**
 	 * Get the hurt sound.
+	 *
 	 * @param damageSourceIn the <code>DamageSource</code> instance
 	 * @return SoundEvent
 	 */
@@ -49,6 +53,7 @@ public class MinutemanEntity extends AbstractMinutemanEntity {
 
 	/**
 	 * Get the death sound.
+	 *
 	 * @return SoundEvent
 	 */
 	@Override
@@ -58,6 +63,7 @@ public class MinutemanEntity extends AbstractMinutemanEntity {
 
 	/**
 	 * Get the step sound.
+	 *
 	 * @return SoundEvent
 	 */
 	@Override
@@ -67,8 +73,9 @@ public class MinutemanEntity extends AbstractMinutemanEntity {
 
 	/**
 	 * Set custom loot parameters.
-	 * @param source the <code>DamageSource</code> instance
-	 * @param looting the level of looting enchantment on an item
+	 *
+	 * @param source        the <code>DamageSource</code> instance
+	 * @param looting       the level of looting enchantment on an item
 	 * @param recentlyHitIn if the entity was recently hit
 	 */
 	@Override

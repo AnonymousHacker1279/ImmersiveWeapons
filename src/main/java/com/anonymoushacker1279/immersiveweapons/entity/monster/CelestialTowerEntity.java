@@ -35,23 +35,15 @@ import java.util.Objects;
 
 public class CelestialTowerEntity extends Monster {
 
+	public final ServerBossEvent bossEvent = (ServerBossEvent) (new ServerBossEvent(getDisplayName(), BossBarColor.RED, BossBarOverlay.PROGRESS)).setDarkenScreen(true);
 	private int totalWavesToSpawn = 3;
 	private int waveSizeModifier = 1;
 	private int wavesSpawned = 0;
 	private boolean doneSpawningWaves = false;
-	public final ServerBossEvent bossEvent = (ServerBossEvent) (new ServerBossEvent(getDisplayName(), BossBarColor.RED, BossBarOverlay.PROGRESS)).setDarkenScreen(true);
 
 	public CelestialTowerEntity(EntityType<? extends Monster> type, Level level) {
 		super(type, level);
 		setNoGravity(true);
-	}
-
-	@Override
-	protected void registerGoals() {
-		goalSelector.addGoal(1, new FloatGoal(this));
-		goalSelector.addGoal(1, new HoverGoal(this));
-		goalSelector.addGoal(2, new CelestialTowerSummonGoal(this));
-		goalSelector.addGoal(6, new RandomLookAroundGoal(this));
 	}
 
 	public static AttributeSupplier.Builder registerAttributes() {
@@ -63,6 +55,13 @@ public class CelestialTowerEntity extends Monster {
 				.add(Attributes.ARMOR, 5.0D);
 	}
 
+	@Override
+	protected void registerGoals() {
+		goalSelector.addGoal(1, new FloatGoal(this));
+		goalSelector.addGoal(1, new HoverGoal(this));
+		goalSelector.addGoal(2, new CelestialTowerSummonGoal(this));
+		goalSelector.addGoal(6, new RandomLookAroundGoal(this));
+	}
 
 	@Override
 	protected SoundEvent getAmbientSound() {

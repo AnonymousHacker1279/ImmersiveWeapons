@@ -86,6 +86,7 @@ public class WarriorStatueHead extends HorizontalDirectionalBlock implements Sim
 			return Blocks.AIR.defaultBlockState();
 		}
 	}
+
 	/**
 	 * Set the shading brightness on the client.
 	 *

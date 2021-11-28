@@ -18,8 +18,9 @@ public class StonePikeItem extends PikeItem {
 
 	/**
 	 * Constructor for StonePikeItem.
-	 * @param properties the <code>Properties</code> for the item
-	 * @param damageIn the damage
+	 *
+	 * @param properties    the <code>Properties</code> for the item
+	 * @param damageIn      the damage
 	 * @param attackSpeedIn the attack speed
 	 */
 	public StonePikeItem(Properties properties, double damageIn, double attackSpeedIn) {

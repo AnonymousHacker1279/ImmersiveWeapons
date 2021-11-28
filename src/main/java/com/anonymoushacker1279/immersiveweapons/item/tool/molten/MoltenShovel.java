@@ -10,10 +10,11 @@ public class MoltenShovel extends ShovelItem {
 
 	/**
 	 * Constructor for MoltenShovel.
-	 * @param tier the <code>IItemTier</code>
+	 *
+	 * @param tier           the <code>IItemTier</code>
 	 * @param attackDamageIn attack damage
-	 * @param attackSpeedIn attack speed
-	 * @param properties the <code>Properties</code> for the item
+	 * @param attackSpeedIn  attack speed
+	 * @param properties     the <code>Properties</code> for the item
 	 */
 	public MoltenShovel(Tier tier, int attackDamageIn, float attackSpeedIn, Properties properties) {
 		super(tier, attackDamageIn, attackSpeedIn, properties);
@@ -21,8 +22,9 @@ public class MoltenShovel extends ShovelItem {
 
 	/**
 	 * Runs when an entity is hit.
-	 * @param itemStack the <code>ItemStack</code> instance
-	 * @param livingEntity the <code>LivingEntity</code> attacking
+	 *
+	 * @param itemStack     the <code>ItemStack</code> instance
+	 * @param livingEntity  the <code>LivingEntity</code> attacking
 	 * @param livingEntity1 the <code>LivingEntity</code> being hit
 	 * @return boolean
 	 */

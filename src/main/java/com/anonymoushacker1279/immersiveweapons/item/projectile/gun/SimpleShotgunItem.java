@@ -20,6 +20,7 @@ public class SimpleShotgunItem extends SimplePistolItem {
 
 	/**
 	 * Constructor for SimpleShotgunItem.
+	 *
 	 * @param properties the <code>Properties</code> for the item
 	 */
 	public SimpleShotgunItem(Properties properties) {
@@ -28,10 +29,11 @@ public class SimpleShotgunItem extends SimplePistolItem {
 
 	/**
 	 * Runs when the item is released.
-	 * @param itemStack the <code>ItemStack</code> being used
-	 * @param worldIn the <code>World</code> the entity is in
+	 *
+	 * @param itemStack    the <code>ItemStack</code> being used
+	 * @param worldIn      the <code>World</code> the entity is in
 	 * @param entityLiving the <code>LivingEntity</code> releasing the item
-	 * @param timeLeft the time left from charging
+	 * @param timeLeft     the time left from charging
 	 */
 	@Override
 	public void releaseUsing(@NotNull ItemStack itemStack, @NotNull Level worldIn, @NotNull LivingEntity entityLiving, int timeLeft) {
@@ -116,6 +118,7 @@ public class SimpleShotgunItem extends SimplePistolItem {
 
 	/**
 	 * Get the number of bullets to fire.
+	 *
 	 * @param itemStack the ammunition <code>ItemStack</code>
 	 * @return int
 	 */
@@ -125,6 +128,7 @@ public class SimpleShotgunItem extends SimplePistolItem {
 
 	/**
 	 * Get the fire sound.
+	 *
 	 * @return SoundEvent
 	 */
 	@Override
@@ -134,6 +138,7 @@ public class SimpleShotgunItem extends SimplePistolItem {
 
 	/**
 	 * Get the repair material.
+	 *
 	 * @return Ingredient
 	 */
 	@Override

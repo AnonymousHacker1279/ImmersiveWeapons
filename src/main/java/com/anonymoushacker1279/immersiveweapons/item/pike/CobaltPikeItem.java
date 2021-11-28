@@ -18,8 +18,9 @@ public class CobaltPikeItem extends PikeItem {
 
 	/**
 	 * Constructor for CobaltPikeItem.
-	 * @param properties the <code>Properties</code> for the item
-	 * @param damageIn the damage
+	 *
+	 * @param properties    the <code>Properties</code> for the item
+	 * @param damageIn      the damage
 	 * @param attackSpeedIn the attack speed
 	 */
 	public CobaltPikeItem(Properties properties, double damageIn, double attackSpeedIn) {

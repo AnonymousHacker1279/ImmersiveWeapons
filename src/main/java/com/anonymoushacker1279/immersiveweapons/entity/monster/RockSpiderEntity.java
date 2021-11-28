@@ -45,6 +45,13 @@ public class RockSpiderEntity extends Monster {
 		super(entityType, level);
 	}
 
+	public static AttributeSupplier.Builder registerAttributes() {
+		return Monster.createMonsterAttributes().add(Attributes.MAX_HEALTH, 4.0D)
+				.add(Attributes.MOVEMENT_SPEED, 0.35F)
+				.add(Attributes.ATTACK_DAMAGE, 2.0D)
+				.add(Attributes.ARMOR, 2.0D);
+	}
+
 	@Override
 	protected void registerGoals() {
 		goalSelector.addGoal(1, new FloatGoal(this));
@@ -74,7 +81,7 @@ public class RockSpiderEntity extends Monster {
 	@Override
 	protected void defineSynchedData() {
 		super.defineSynchedData();
-		entityData.define(DATA_FLAGS_ID, (byte)0);
+		entityData.define(DATA_FLAGS_ID, (byte) 0);
 	}
 
 	/**
@@ -87,13 +94,6 @@ public class RockSpiderEntity extends Monster {
 			setClimbing(horizontalCollision);
 		}
 
-	}
-
-	public static AttributeSupplier.Builder registerAttributes() {
-		return Monster.createMonsterAttributes().add(Attributes.MAX_HEALTH, 4.0D)
-				.add(Attributes.MOVEMENT_SPEED, 0.35F)
-				.add(Attributes.ATTACK_DAMAGE, 2.0D)
-				.add(Attributes.ARMOR, 2.0D);
 	}
 
 	@Override
@@ -163,9 +163,9 @@ public class RockSpiderEntity extends Monster {
 	public void setClimbing(boolean pClimbing) {
 		byte b0 = entityData.get(DATA_FLAGS_ID);
 		if (pClimbing) {
-			b0 = (byte)(b0 | 1);
+			b0 = (byte) (b0 | 1);
 		} else {
-			b0 = (byte)(b0 & -2);
+			b0 = (byte) (b0 & -2);
 		}
 
 		entityData.set(DATA_FLAGS_ID, b0);
@@ -178,12 +178,12 @@ public class RockSpiderEntity extends Monster {
 		if (pSpawnData == null) {
 			pSpawnData = new RockSpiderEffectsGroupData();
 			if (pLevel.getDifficulty() == Difficulty.HARD && pLevel.getRandom().nextFloat() < 0.1F * pDifficulty.getSpecialMultiplier()) {
-				((RockSpiderEffectsGroupData)pSpawnData).setRandomEffect(pLevel.getRandom());
+				((RockSpiderEffectsGroupData) pSpawnData).setRandomEffect(pLevel.getRandom());
 			}
 		}
 
 		if (pSpawnData instanceof RockSpiderEffectsGroupData) {
-			MobEffect mobEffect = ((RockSpiderEffectsGroupData)pSpawnData).effect;
+			MobEffect mobEffect = ((RockSpiderEffectsGroupData) pSpawnData).effect;
 			if (mobEffect != null) {
 				addEffect(new MobEffectInstance(mobEffect, Integer.MAX_VALUE));
 			}

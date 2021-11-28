@@ -35,7 +35,7 @@ public class BurnedBranchDecorator extends TreeDecorator {
 		if (!(random.nextFloat() >= probability)) {
 			int i = pos.get(0).getY();
 			pos.stream().filter((blockPos) -> blockPos.getY() - i <= 8).forEach((blockPos) -> {
-				for(Direction direction : Direction.Plane.HORIZONTAL) {
+				for (Direction direction : Direction.Plane.HORIZONTAL) {
 					if (random.nextFloat() <= 0.25F) {
 						Direction direction1 = direction.getOpposite();
 						BlockPos blockpos = blockPos.offset(direction1.getStepX(), 0, direction1.getStepZ());

@@ -15,6 +15,7 @@ public class BloodParticleType extends ParticleType<BloodParticleData> {
 
 	/**
 	 * Get the particle codec.
+	 *
 	 * @return Codec extending BloodParticleData
 	 */
 	@Override

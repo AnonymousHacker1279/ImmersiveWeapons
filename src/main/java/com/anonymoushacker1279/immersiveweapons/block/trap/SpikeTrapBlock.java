@@ -41,8 +41,8 @@ import java.util.function.Supplier;
 public class SpikeTrapBlock extends Block implements SimpleWaterloggedBlock {
 
 	public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
-	private static final BooleanProperty POWERED = BooleanProperty.create("powered");
 	protected static final VoxelShape SHAPE = Block.box(0.0D, 0.0D, 0.0D, 16.0D, 1.0D, 16.0D);
+	private static final BooleanProperty POWERED = BooleanProperty.create("powered");
 	private final DamageSource damageSource = new DamageSource("immersiveweapons.spike_trap");
 
 	/**

@@ -10,6 +10,7 @@ public class ChairRenderer extends EntityRenderer<ChairEntity> implements Entity
 
 	/**
 	 * Constructor for ChairRenderer.
+	 *
 	 * @param context the <code>Context</code> instance
 	 */
 	public ChairRenderer(Context context) {
@@ -18,6 +19,7 @@ public class ChairRenderer extends EntityRenderer<ChairEntity> implements Entity
 
 	/**
 	 * Get the texture location.
+	 *
 	 * @param entity the <code>ChairEntity</code> instance
 	 * @return ResourceLocation
 	 */

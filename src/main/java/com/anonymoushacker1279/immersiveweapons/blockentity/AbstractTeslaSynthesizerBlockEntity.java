@@ -49,8 +49,8 @@ public abstract class AbstractTeslaSynthesizerBlockEntity extends BaseContainerB
 	private static final int[] SLOTS_HORIZONTAL = new int[]{1};
 	private static final Map<Item, Integer> burnTimesMap = Maps.newLinkedHashMap();
 	private final Object2IntOpenHashMap<ResourceLocation> recipes = new Object2IntOpenHashMap<>();
-	protected NonNullList<ItemStack> items = NonNullList.withSize(5, ItemStack.EMPTY);
 	private final LazyOptional<? extends IItemHandler>[] handlers = SidedInvWrapper.create(this, Direction.UP, Direction.DOWN, Direction.NORTH);
+	protected NonNullList<ItemStack> items = NonNullList.withSize(5, ItemStack.EMPTY);
 	private int burnTime;
 	private int burnTimeTotal;
 	private int cookTime;
@@ -93,19 +93,8 @@ public abstract class AbstractTeslaSynthesizerBlockEntity extends BaseContainerB
 	}
 
 	/**
-	 * Create a block entity for the block.
-	 * @param blockPos the <code>BlockPos</code> the block is at
-	 * @param blockState the <code>BlockState</code> of the block
-	 * @return BlockEntity
-	 */
-	@Nullable
-	@Override
-	public BlockEntity newBlockEntity(@NotNull BlockPos blockPos, @NotNull BlockState blockState) {
-		return new TeslaSynthesizerBlockEntity(blockPos, blockState);
-	}
-
-	/**
 	 * Check if a fuel source is blacklisted.
+	 *
 	 * @param item the <code>Item</code> to check
 	 * @return boolean
 	 */
@@ -115,9 +104,10 @@ public abstract class AbstractTeslaSynthesizerBlockEntity extends BaseContainerB
 
 	/**
 	 * Add an item burn time to the map.
-	 * @param map the burn time <code>Map</code> extending Item, Integer
+	 *
+	 * @param map          the burn time <code>Map</code> extending Item, Integer
 	 * @param itemProvider the <code>IItemProvider</code> instance
-	 * @param burnTimeIn the burn time
+	 * @param burnTimeIn   the burn time
 	 */
 	private static void addItemBurnTime(Map<Item, Integer> map, ItemLike itemProvider, int burnTimeIn) {
 		Item item = itemProvider.asItem();
@@ -132,6 +122,7 @@ public abstract class AbstractTeslaSynthesizerBlockEntity extends BaseContainerB
 
 	/**
 	 * Get the burn time for a fuel item.
+	 *
 	 * @param fuel the <code>ItemStack</code> to check
 	 * @return int
 	 */
@@ -147,6 +138,7 @@ public abstract class AbstractTeslaSynthesizerBlockEntity extends BaseContainerB
 
 	/**
 	 * Check if an item is fuel.
+	 *
 	 * @param stack the <code>ItemStack</code> to check
 	 * @return boolean
 	 */
@@ -155,59 +147,6 @@ public abstract class AbstractTeslaSynthesizerBlockEntity extends BaseContainerB
 			return getBurnTime(stack) > 0;
 		}
 		return false;
-	}
-
-	/**
-	 * Set up the burn time map
-	 */
-	private void setupBurnTimes() {
-		addItemBurnTime(burnTimesMap, DeferredRegistryHandler.MOLTEN_INGOT.get(), 24000); // 20 minutes
-	}
-
-	/**
-	 * Check if the fuel is burning.
-	 * @return boolean
-	 */
-	private boolean isBurning() {
-		return burnTime > 0;
-	}
-
-	/**
-	 * Load NBT data.
-	 * @param nbt the <code>CompoundNBT</code> to load
-	 */
-	@Override
-	public void load(@NotNull CompoundTag nbt) {
-		super.load(nbt);
-		items = NonNullList.withSize(getContainerSize(), ItemStack.EMPTY);
-		ContainerHelper.loadAllItems(nbt, items);
-		burnTime = nbt.getInt("BurnTime");
-		cookTime = nbt.getInt("CookTime");
-		cookTimeTotal = nbt.getInt("CookTimeTotal");
-		burnTimeTotal = getBurnTime(items.get(3));
-		CompoundTag compoundTag = nbt.getCompound("RecipesUsed");
-
-		for (String s : compoundTag.getAllKeys()) {
-			recipes.put(new ResourceLocation(s), compoundTag.getInt(s));
-		}
-
-	}
-
-	/**
-	 * Save NBT data.
-	 * @param nbt the <code>CompoundNBT</code> to save
-	 */
-	@Override
-	public @NotNull CompoundTag save(@NotNull CompoundTag nbt) {
-		super.save(nbt);
-		nbt.putInt("BurnTime", burnTime);
-		nbt.putInt("CookTime", cookTime);
-		nbt.putInt("CookTimeTotal", cookTimeTotal);
-		ContainerHelper.saveAllItems(nbt, items);
-		CompoundTag compoundTag = new CompoundTag();
-		recipes.forEach((recipeId, craftedAmount) -> compoundTag.putInt(recipeId.toString(), craftedAmount));
-		nbt.put("RecipesUsed", compoundTag);
-		return nbt;
 	}
 
 	/**
@@ -234,7 +173,7 @@ public abstract class AbstractTeslaSynthesizerBlockEntity extends BaseContainerB
 					else if (!itemstack.isEmpty()) {
 						itemstack.shrink(1);
 						if (itemstack.isEmpty()) {
-							abstractTeslaSynthesizerTileEntity.	items.set(3, itemstack.getContainerItem());
+							abstractTeslaSynthesizerTileEntity.items.set(3, itemstack.getContainerItem());
 						}
 					}
 				}
@@ -266,7 +205,77 @@ public abstract class AbstractTeslaSynthesizerBlockEntity extends BaseContainerB
 	}
 
 	/**
+	 * Create a block entity for the block.
+	 *
+	 * @param blockPos   the <code>BlockPos</code> the block is at
+	 * @param blockState the <code>BlockState</code> of the block
+	 * @return BlockEntity
+	 */
+	@Nullable
+	@Override
+	public BlockEntity newBlockEntity(@NotNull BlockPos blockPos, @NotNull BlockState blockState) {
+		return new TeslaSynthesizerBlockEntity(blockPos, blockState);
+	}
+
+	/**
+	 * Set up the burn time map
+	 */
+	private void setupBurnTimes() {
+		addItemBurnTime(burnTimesMap, DeferredRegistryHandler.MOLTEN_INGOT.get(), 24000); // 20 minutes
+	}
+
+	/**
+	 * Check if the fuel is burning.
+	 *
+	 * @return boolean
+	 */
+	private boolean isBurning() {
+		return burnTime > 0;
+	}
+
+	/**
+	 * Load NBT data.
+	 *
+	 * @param nbt the <code>CompoundNBT</code> to load
+	 */
+	@Override
+	public void load(@NotNull CompoundTag nbt) {
+		super.load(nbt);
+		items = NonNullList.withSize(getContainerSize(), ItemStack.EMPTY);
+		ContainerHelper.loadAllItems(nbt, items);
+		burnTime = nbt.getInt("BurnTime");
+		cookTime = nbt.getInt("CookTime");
+		cookTimeTotal = nbt.getInt("CookTimeTotal");
+		burnTimeTotal = getBurnTime(items.get(3));
+		CompoundTag compoundTag = nbt.getCompound("RecipesUsed");
+
+		for (String s : compoundTag.getAllKeys()) {
+			recipes.put(new ResourceLocation(s), compoundTag.getInt(s));
+		}
+
+	}
+
+	/**
+	 * Save NBT data.
+	 *
+	 * @param nbt the <code>CompoundNBT</code> to save
+	 */
+	@Override
+	public @NotNull CompoundTag save(@NotNull CompoundTag nbt) {
+		super.save(nbt);
+		nbt.putInt("BurnTime", burnTime);
+		nbt.putInt("CookTime", cookTime);
+		nbt.putInt("CookTimeTotal", cookTimeTotal);
+		ContainerHelper.saveAllItems(nbt, items);
+		CompoundTag compoundTag = new CompoundTag();
+		recipes.forEach((recipeId, craftedAmount) -> compoundTag.putInt(recipeId.toString(), craftedAmount));
+		nbt.put("RecipesUsed", compoundTag);
+		return nbt;
+	}
+
+	/**
 	 * Determines if the recipe can be smelt.
+	 *
 	 * @param recipeIn the <code>Recipe</code> instance
 	 * @return boolean
 	 */
@@ -294,6 +303,7 @@ public abstract class AbstractTeslaSynthesizerBlockEntity extends BaseContainerB
 
 	/**
 	 * Smelt a recipe.
+	 *
 	 * @param recipe the <code>IRecipe</code> instance
 	 */
 	private void smelt(@Nullable Recipe<?> recipe) {
@@ -321,19 +331,21 @@ public abstract class AbstractTeslaSynthesizerBlockEntity extends BaseContainerB
 
 	/**
 	 * Get the cook time for a recipe.
+	 *
 	 * @return int
 	 */
 	private int getCookTime() {
 		if (level != null) {
 			Optional<TeslaSynthesizerRecipe> optional = level.getRecipeManager().getRecipeFor(ICustomRecipeType.TESLA_SYNTHESIZER, this, level);
 			if (optional.isPresent())
-			return optional.get().getCookTime();
+				return optional.get().getCookTime();
 		}
 		return 0;
 	}
 
 	/**
 	 * Get slots for faces.
+	 *
 	 * @param side the <code>Direction</code> to check
 	 * @return int[]
 	 */
@@ -348,6 +360,7 @@ public abstract class AbstractTeslaSynthesizerBlockEntity extends BaseContainerB
 
 	/**
 	 * Get the number of slots in the inventory.
+	 *
 	 * @return int
 	 */
 	@Override
@@ -357,6 +370,7 @@ public abstract class AbstractTeslaSynthesizerBlockEntity extends BaseContainerB
 
 	/**
 	 * Check if the inventory is empty.
+	 *
 	 * @return boolean
 	 */
 	@Override
@@ -372,7 +386,8 @@ public abstract class AbstractTeslaSynthesizerBlockEntity extends BaseContainerB
 
 	/**
 	 * Determine if an item can be placed through a face.
-	 * @param index the slot index
+	 *
+	 * @param index     the slot index
 	 * @param itemStack the <code>ItemStack</code> to insert
 	 * @param direction the <code>Direction</code> the block is facing
 	 * @return boolean
@@ -384,7 +399,8 @@ public abstract class AbstractTeslaSynthesizerBlockEntity extends BaseContainerB
 
 	/**
 	 * Determine if an item can be removed through a face.
-	 * @param index the slot index
+	 *
+	 * @param index     the slot index
 	 * @param itemStack the <code>ItemStack</code> to remove
 	 * @param direction the <code>Direction</code> the block is facing
 	 * @return boolean
@@ -396,6 +412,7 @@ public abstract class AbstractTeslaSynthesizerBlockEntity extends BaseContainerB
 
 	/**
 	 * Get the stack in the given slot.
+	 *
 	 * @param index the slot index
 	 * @return ItemStack
 	 */
@@ -406,6 +423,7 @@ public abstract class AbstractTeslaSynthesizerBlockEntity extends BaseContainerB
 
 	/**
 	 * Removes up to a specified number of items from an inventory slot and returns them in a new stack.
+	 *
 	 * @param index the slot index
 	 * @param count the number to remove
 	 * @return ItemStack
@@ -417,6 +435,7 @@ public abstract class AbstractTeslaSynthesizerBlockEntity extends BaseContainerB
 
 	/**
 	 * Removes a stack from the given slot and returns it.
+	 *
 	 * @param index the slot index
 	 * @return ItemStack
 	 */
@@ -427,6 +446,7 @@ public abstract class AbstractTeslaSynthesizerBlockEntity extends BaseContainerB
 
 	/**
 	 * Sets the given item stack to the specified slot in the inventory.
+	 *
 	 * @param index the slot index
 	 * @param stack the <code>ItemStack</code> to set
 	 */
@@ -449,6 +469,7 @@ public abstract class AbstractTeslaSynthesizerBlockEntity extends BaseContainerB
 
 	/**
 	 * Check if the player is still valid.
+	 *
 	 * @param player the <code>PlayerEntity</code> to check
 	 * @return boolean
 	 */
@@ -463,6 +484,7 @@ public abstract class AbstractTeslaSynthesizerBlockEntity extends BaseContainerB
 
 	/**
 	 * Check if automation is allowed to insert the given stack (ignoring stack size) into the given slot.
+	 *
 	 * @param index the slot index
 	 * @param stack the <code>ItemStack</code> to insert
 	 */
@@ -481,6 +503,7 @@ public abstract class AbstractTeslaSynthesizerBlockEntity extends BaseContainerB
 
 	/**
 	 * Get the used recipe.
+	 *
 	 * @return IRecipe
 	 */
 	@Override
@@ -490,6 +513,7 @@ public abstract class AbstractTeslaSynthesizerBlockEntity extends BaseContainerB
 
 	/**
 	 * Set the used recipe.
+	 *
 	 * @param recipe the <code>IRecipe</code> to set
 	 */
 	@Override
@@ -503,6 +527,7 @@ public abstract class AbstractTeslaSynthesizerBlockEntity extends BaseContainerB
 
 	/**
 	 * Award used recipes to the player.
+	 *
 	 * @param player the <code>PlayerEntity</code> instance
 	 */
 	@Override
@@ -511,6 +536,7 @@ public abstract class AbstractTeslaSynthesizerBlockEntity extends BaseContainerB
 
 	/**
 	 * Fill stacked contents.
+	 *
 	 * @param helper the <code>RecipeItemHelper</code> instance
 	 */
 	@Override
@@ -523,8 +549,9 @@ public abstract class AbstractTeslaSynthesizerBlockEntity extends BaseContainerB
 
 	/**
 	 * Get capabilities.
+	 *
 	 * @param capability the <code>Capability</code> instance
-	 * @param facing the <code>Direction</code> the block is facing
+	 * @param facing     the <code>Direction</code> the block is facing
 	 * @return LazyOptional
 	 */
 	@Override

@@ -38,10 +38,10 @@ import javax.annotation.Nullable;
 public class LandmineBlock extends Block implements SimpleWaterloggedBlock {
 
 	public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
+	protected static final VoxelShape SHAPE = Block.box(2.0D, 0.0D, 2.0D, 14.0D, 3.5D, 14.0D);
 	private static final BooleanProperty ARMED = BooleanProperty.create("armed");
 	private static final BooleanProperty SAND = BooleanProperty.create("sand");
 	private static final BooleanProperty VINES = BooleanProperty.create("vines");
-	protected static final VoxelShape SHAPE = Block.box(2.0D, 0.0D, 2.0D, 14.0D, 3.5D, 14.0D);
 	private static final DamageSource damageSource = new DamageSource("immersiveweapons.landmine");
 
 	/**

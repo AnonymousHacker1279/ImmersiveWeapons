@@ -31,6 +31,7 @@ public class WallShelfBlockEntity extends BlockEntity implements EntityBlock, Cl
 
 	/**
 	 * Add an item to the inventory.
+	 *
 	 * @param itemStackIn the <code>ItemStack</code> to add
 	 * @return boolean
 	 */
@@ -72,6 +73,7 @@ public class WallShelfBlockEntity extends BlockEntity implements EntityBlock, Cl
 
 	/**
 	 * Get the inventory.
+	 *
 	 * @return NonNullList extending ItemStack
 	 */
 	public NonNullList<ItemStack> getInventory() {
@@ -80,6 +82,7 @@ public class WallShelfBlockEntity extends BlockEntity implements EntityBlock, Cl
 
 	/**
 	 * Load NBT data.
+	 *
 	 * @param nbt the <code>CompoundNBT</code> to load
 	 */
 	@Override
@@ -91,6 +94,7 @@ public class WallShelfBlockEntity extends BlockEntity implements EntityBlock, Cl
 
 	/**
 	 * Save NBT data.
+	 *
 	 * @param nbt the <code>CompoundNBT</code> to save
 	 */
 	@Override
@@ -101,6 +105,7 @@ public class WallShelfBlockEntity extends BlockEntity implements EntityBlock, Cl
 
 	/**
 	 * Write items to NBT.
+	 *
 	 * @param nbt the <code>NBT</code> to write to
 	 * @return CompoundNBT
 	 */
@@ -112,6 +117,7 @@ public class WallShelfBlockEntity extends BlockEntity implements EntityBlock, Cl
 
 	/**
 	 * Get the entity update packet.
+	 *
 	 * @return ClientboundBlockEntityDataPacket
 	 */
 	@Override
@@ -121,6 +127,7 @@ public class WallShelfBlockEntity extends BlockEntity implements EntityBlock, Cl
 
 	/**
 	 * Get the update tag.
+	 *
 	 * @return CompoundNBT
 	 */
 	@Override
@@ -130,6 +137,7 @@ public class WallShelfBlockEntity extends BlockEntity implements EntityBlock, Cl
 
 	/**
 	 * Handle data packets.
+	 *
 	 * @param net the <code>NetworkManager</code> instance
 	 * @param pkt the <code>ClientboundBlockEntityDataPacket</code> instance
 	 */
@@ -149,7 +157,8 @@ public class WallShelfBlockEntity extends BlockEntity implements EntityBlock, Cl
 
 	/**
 	 * Create a block entity for the block.
-	 * @param blockPos the <code>BlockPos</code> the block is at
+	 *
+	 * @param blockPos   the <code>BlockPos</code> the block is at
 	 * @param blockState the <code>BlockState</code> of the block
 	 * @return BlockEntity
 	 */

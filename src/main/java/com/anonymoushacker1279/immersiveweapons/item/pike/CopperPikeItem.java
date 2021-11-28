@@ -18,8 +18,9 @@ public class CopperPikeItem extends PikeItem {
 
 	/**
 	 * Constructor for CopperPikeItem.
-	 * @param properties the <code>Properties</code> for the item
-	 * @param damageIn the damage
+	 *
+	 * @param properties    the <code>Properties</code> for the item
+	 * @param damageIn      the damage
 	 * @param attackSpeedIn the attack speed
 	 */
 	public CopperPikeItem(Properties properties, double damageIn, double attackSpeedIn) {

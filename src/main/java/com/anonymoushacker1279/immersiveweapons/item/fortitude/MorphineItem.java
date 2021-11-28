@@ -16,6 +16,7 @@ public class MorphineItem extends Item {
 
 	/**
 	 * Constructor for MorphineItem.
+	 *
 	 * @param properties the <code>Properties</code> for the item
 	 */
 	public MorphineItem(Properties properties) {
@@ -24,9 +25,10 @@ public class MorphineItem extends Item {
 
 	/**
 	 * Runs when the player right-clicks.
-	 * @param worldIn the <code>World</code> the player is in
+	 *
+	 * @param worldIn  the <code>World</code> the player is in
 	 * @param playerIn the <code>PlayerEntity</code> performing the action
-	 * @param handIn the <code>Hand</code> the player is using
+	 * @param handIn   the <code>Hand</code> the player is using
 	 * @return ActionResult extending ItemStack
 	 */
 	@Override
@@ -44,10 +46,11 @@ public class MorphineItem extends Item {
 
 	/**
 	 * Runs when the player right-clicks an entity.
-	 * @param stack the <code>ItemStack</code> right-clicked with
+	 *
+	 * @param stack    the <code>ItemStack</code> right-clicked with
 	 * @param playerIn the <code>PlayerEntity</code> performing the action
-	 * @param entity the <code>LivingEntity</code> being interacted with
-	 * @param hand the <code>Hand</code> the player is using
+	 * @param entity   the <code>LivingEntity</code> being interacted with
+	 * @param hand     the <code>Hand</code> the player is using
 	 * @return ActionResultType
 	 */
 	@Override
@@ -60,7 +63,7 @@ public class MorphineItem extends Item {
 			stack.shrink(1);
 			playerIn.getInventory().add(new ItemStack(DeferredRegistryHandler.USED_SYRINGE.get()));
 		}
-		
+
 		return InteractionResult.PASS;
 	}
 }

@@ -29,14 +29,15 @@ import java.util.function.Supplier;
 
 public class SmokeBombEntity extends ThrowableItemProjectile {
 
+	private static final byte VANILLA_IMPACT_STATUS_ID = 3;
 	private static int color;
 	private final int configMaxParticles = Config.MAX_SMOKE_BOMB_PARTICLES.get();
-	private static final byte VANILLA_IMPACT_STATUS_ID = 3;
 
 	/**
 	 * Constructor for SmokeBombEntity.
+	 *
 	 * @param entityType the <code>EntityType</code> instance; must extend SmokeBombEntity
-	 * @param world the <code>World</code> the entity is in
+	 * @param world      the <code>World</code> the entity is in
 	 */
 	public SmokeBombEntity(EntityType<? extends SmokeBombEntity> entityType, Level world) {
 		super(entityType, world);
@@ -44,7 +45,8 @@ public class SmokeBombEntity extends ThrowableItemProjectile {
 
 	/**
 	 * Constructor for SmokeBombEntity.
-	 * @param world the <code>World</code> the entity is in
+	 *
+	 * @param world        the <code>World</code> the entity is in
 	 * @param livingEntity the <code>LivingEntity</code> throwing the entity
 	 */
 	public SmokeBombEntity(Level world, LivingEntity livingEntity) {
@@ -53,10 +55,11 @@ public class SmokeBombEntity extends ThrowableItemProjectile {
 
 	/**
 	 * Constructor for SmokeBombEntity.
+	 *
 	 * @param world the <code>World</code> the entity is in
-	 * @param x the X position
-	 * @param y the Y position
-	 * @param z the Z position
+	 * @param x     the X position
+	 * @param y     the Y position
+	 * @param z     the Z position
 	 */
 	public SmokeBombEntity(Level world, double x, double y, double z) {
 		super(DeferredRegistryHandler.SMOKE_BOMB_ENTITY.get(), x, y, z, world);
@@ -64,6 +67,7 @@ public class SmokeBombEntity extends ThrowableItemProjectile {
 
 	/**
 	 * Set the particle color.
+	 *
 	 * @param color a color ID
 	 */
 	public static void setColor(int color) {
@@ -71,55 +75,8 @@ public class SmokeBombEntity extends ThrowableItemProjectile {
 	}
 
 	/**
-	 * Get the entity spawn packet.
-	 * @return IPacket
-	 */
-	@Override
-	public @NotNull Packet<?> getAddEntityPacket() {
-		return NetworkHooks.getEntitySpawningPacket(this);
-	}
-
-	/**
-	 * ProjectileItemEntity::setItem uses this to save storage space.
-	 * It only stores the itemStack if the itemStack is not the default item.
-	 * @return Item
-	 */
-	@Override
-	protected @NotNull Item getDefaultItem() {
-		return DeferredRegistryHandler.SMOKE_BOMB.get();
-	}
-
-	/**
-	 * Runs when an entity/block is hit.
-	 * @param rayTraceResult the <code>RayTraceResult</code> instance
-	 */
-	@Override
-	protected void onHit(@NotNull HitResult rayTraceResult) {
-		super.onHit(rayTraceResult);
-		if (!level.isClientSide) {
-			PacketHandler.INSTANCE.send(PacketDistributor.TRACKING_CHUNK.with(() -> level.getChunkAt(blockPosition())), new SmokeBombEntityPacketHandler(color));
-			level.broadcastEntityEvent(this, VANILLA_IMPACT_STATUS_ID);  // calls handleStatusUpdate which tells the client to render particles
-			kill();
-		}
-	}
-
-	/**
-	 * Handle entity events.
-	 * @param statusID the <code>byte</code> containing status ID
-	 */
-	@Override
-	public void handleEntityEvent(byte statusID) {
-		if (statusID == VANILLA_IMPACT_STATUS_ID) {
-			for (int i = 0; i < configMaxParticles; ++i) {
-				level.addParticle(makeParticle(), true, getX(), getY(), getZ(), GeneralUtilities.getRandomNumber(-0.03, 0.03d), GeneralUtilities.getRandomNumber(-0.02d, 0.02d), GeneralUtilities.getRandomNumber(-0.03d, 0.03d));
-			}
-			level.playLocalSound(getX(), getY(), getZ(), DeferredRegistryHandler.SMOKE_BOMB_HISS.get(), SoundSource.NEUTRAL, 1f, 1f, false);
-			kill();
-		}
-	}
-
-	/**
 	 * Create a particle.
+	 *
 	 * @return IParticleData
 	 */
 	private static ParticleOptions makeParticle() {
@@ -131,6 +88,7 @@ public class SmokeBombEntity extends ThrowableItemProjectile {
 
 	/**
 	 * Get the particle diameter.
+	 *
 	 * @param random a random number
 	 * @return double
 	 */
@@ -142,10 +100,11 @@ public class SmokeBombEntity extends ThrowableItemProjectile {
 
 	/**
 	 * Tint a particle.
+	 *
 	 * @param random a random number
 	 * @return Color
 	 */
-	private static Color getTint(int random){
+	private static Color getTint(int random) {
 		Color[] tints = {
 				new Color(1.00f, 1.00f, 1.00f),  // no tint (white)
 				new Color(1.00f, 0.97f, 1.00f),  // off-white
@@ -185,6 +144,58 @@ public class SmokeBombEntity extends ThrowableItemProjectile {
 			case 5 -> tintsYellow[random];
 			default -> tints[random];
 		};
+	}
+
+	/**
+	 * Get the entity spawn packet.
+	 *
+	 * @return IPacket
+	 */
+	@Override
+	public @NotNull Packet<?> getAddEntityPacket() {
+		return NetworkHooks.getEntitySpawningPacket(this);
+	}
+
+	/**
+	 * ProjectileItemEntity::setItem uses this to save storage space.
+	 * It only stores the itemStack if the itemStack is not the default item.
+	 *
+	 * @return Item
+	 */
+	@Override
+	protected @NotNull Item getDefaultItem() {
+		return DeferredRegistryHandler.SMOKE_BOMB.get();
+	}
+
+	/**
+	 * Runs when an entity/block is hit.
+	 *
+	 * @param rayTraceResult the <code>RayTraceResult</code> instance
+	 */
+	@Override
+	protected void onHit(@NotNull HitResult rayTraceResult) {
+		super.onHit(rayTraceResult);
+		if (!level.isClientSide) {
+			PacketHandler.INSTANCE.send(PacketDistributor.TRACKING_CHUNK.with(() -> level.getChunkAt(blockPosition())), new SmokeBombEntityPacketHandler(color));
+			level.broadcastEntityEvent(this, VANILLA_IMPACT_STATUS_ID);  // calls handleStatusUpdate which tells the client to render particles
+			kill();
+		}
+	}
+
+	/**
+	 * Handle entity events.
+	 *
+	 * @param statusID the <code>byte</code> containing status ID
+	 */
+	@Override
+	public void handleEntityEvent(byte statusID) {
+		if (statusID == VANILLA_IMPACT_STATUS_ID) {
+			for (int i = 0; i < configMaxParticles; ++i) {
+				level.addParticle(makeParticle(), true, getX(), getY(), getZ(), GeneralUtilities.getRandomNumber(-0.03, 0.03d), GeneralUtilities.getRandomNumber(-0.02d, 0.02d), GeneralUtilities.getRandomNumber(-0.03d, 0.03d));
+			}
+			level.playLocalSound(getX(), getY(), getZ(), DeferredRegistryHandler.SMOKE_BOMB_HISS.get(), SoundSource.NEUTRAL, 1f, 1f, false);
+			kill();
+		}
 	}
 
 	public record SmokeBombEntityPacketHandler(int color) {

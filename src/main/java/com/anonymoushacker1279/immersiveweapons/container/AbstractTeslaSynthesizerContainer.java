@@ -20,8 +20,9 @@ public abstract class AbstractTeslaSynthesizerContainer extends AbstractContaine
 
 	/**
 	 * Constructor for AbstractTeslaSynthesizerContainer.
-	 * @param containerType the <code>ContainerType</code> of the container
-	 * @param id the ID of the container
+	 *
+	 * @param containerType   the <code>ContainerType</code> of the container
+	 * @param id              the ID of the container
 	 * @param playerInventory the <code>PlayerInventory</code> instance
 	 */
 	AbstractTeslaSynthesizerContainer(MenuType<?> containerType, int id, Inventory playerInventory) {
@@ -30,11 +31,12 @@ public abstract class AbstractTeslaSynthesizerContainer extends AbstractContaine
 
 	/**
 	 * Constructor for AbstractTeslaSynthesizerContainer.
-	 * @param containerType the <code>ContainerType</code> of the container
-	 * @param id the ID of the container
+	 *
+	 * @param containerType   the <code>ContainerType</code> of the container
+	 * @param id              the ID of the container
 	 * @param playerInventory the <code>PlayerInventory</code> instance
-	 * @param iInventory the <code>IInventory</code> instance
-	 * @param iIntArray the <code>IIntArray</code> instance
+	 * @param iInventory      the <code>IInventory</code> instance
+	 * @param iIntArray       the <code>IIntArray</code> instance
 	 */
 	AbstractTeslaSynthesizerContainer(MenuType<?> containerType, int id, Inventory playerInventory, Container iInventory, ContainerData iIntArray) {
 		super(containerType, id);
@@ -69,6 +71,7 @@ public abstract class AbstractTeslaSynthesizerContainer extends AbstractContaine
 
 	/**
 	 * Determines whether the player can use this container.
+	 *
 	 * @param playerIn the <code>PlayerEntity</code> being checked
 	 * @return boolean
 	 */
@@ -79,8 +82,9 @@ public abstract class AbstractTeslaSynthesizerContainer extends AbstractContaine
 
 	/**
 	 * Handle shift-clicking stacks from slots.
+	 *
 	 * @param playerIn the <code>PlayerEntity</code> instance
-	 * @param index the slot index
+	 * @param index    the slot index
 	 * @return ItemStack
 	 */
 	@Override
@@ -131,6 +135,7 @@ public abstract class AbstractTeslaSynthesizerContainer extends AbstractContaine
 
 	/**
 	 * Check if the given ItemStack is a fuel item.
+	 *
 	 * @param stack the <code>ItemStack</code> being checked
 	 * @return boolean
 	 */
@@ -140,6 +145,7 @@ public abstract class AbstractTeslaSynthesizerContainer extends AbstractContaine
 
 	/**
 	 * Get the current progression.
+	 *
 	 * @return int
 	 */
 	@OnlyIn(Dist.CLIENT)
@@ -151,6 +157,7 @@ public abstract class AbstractTeslaSynthesizerContainer extends AbstractContaine
 
 	/**
 	 * Get the scaled burn time left.
+	 *
 	 * @return int
 	 */
 	@OnlyIn(Dist.CLIENT)
@@ -165,6 +172,7 @@ public abstract class AbstractTeslaSynthesizerContainer extends AbstractContaine
 
 	/**
 	 * Check if the fuel is currently burning.
+	 *
 	 * @return boolean
 	 */
 	@OnlyIn(Dist.CLIENT)

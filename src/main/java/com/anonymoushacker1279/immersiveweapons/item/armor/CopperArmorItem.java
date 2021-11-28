@@ -15,9 +15,10 @@ public class CopperArmorItem extends ArmorItem {
 
 	/**
 	 * Constructor for CopperArmorItem.
+	 *
 	 * @param material the <code>IArmorMaterial</code> for the item
-	 * @param slot the <code>EquipmentSlotType</code>
-	 * @param type type ID
+	 * @param slot     the <code>EquipmentSlotType</code>
+	 * @param type     type ID
 	 */
 	public CopperArmorItem(ArmorMaterial material, EquipmentSlot slot, int type) {
 		super(material, slot, (new Item.Properties().tab(DeferredRegistryHandler.ITEM_GROUP)));
@@ -28,10 +29,11 @@ public class CopperArmorItem extends ArmorItem {
 
 	/**
 	 * Get the armor texture.
-	 * @param stack the <code>ItemStack</code> instance
+	 *
+	 * @param stack  the <code>ItemStack</code> instance
 	 * @param entity the <code>Entity</code> wearing the armor
-	 * @param slot the <code>EquipmentSlotType</code>
-	 * @param type type ID
+	 * @param slot   the <code>EquipmentSlotType</code>
+	 * @param type   type ID
 	 * @return String
 	 */
 	@Override

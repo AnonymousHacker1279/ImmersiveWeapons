@@ -60,7 +60,8 @@ public abstract class AbstractFieldMedicEntity extends PathfinderMob {
 
 	/**
 	 * Constructor for AbstractFieldMedicEntity.
-	 * @param type the <code>EntityType</code> instance
+	 *
+	 * @param type    the <code>EntityType</code> instance
 	 * @param worldIn the <code>World</code> the entity is in
 	 */
 	AbstractFieldMedicEntity(EntityType<? extends PathfinderMob> type, Level worldIn) {
@@ -76,6 +77,7 @@ public abstract class AbstractFieldMedicEntity extends PathfinderMob {
 
 	/**
 	 * Register this entity's attributes.
+	 *
 	 * @return AttributeModifierMap.MutableAttribute
 	 */
 	public static AttributeSupplier.Builder registerAttributes() {
@@ -101,7 +103,8 @@ public abstract class AbstractFieldMedicEntity extends PathfinderMob {
 
 	/**
 	 * Play the step sound.
-	 * @param pos the <code>BlockPos</code> the entity is at
+	 *
+	 * @param pos     the <code>BlockPos</code> the entity is at
 	 * @param blockIn the <code>BlockState</code> of the block being stepped on
 	 */
 	@Override
@@ -149,6 +152,7 @@ public abstract class AbstractFieldMedicEntity extends PathfinderMob {
 
 	/**
 	 * Gives armor or weapon for entity based on given DifficultyInstance
+	 *
 	 * @param difficulty the <code>DifficultyInstance</code> of the world
 	 */
 	@Override
@@ -158,11 +162,12 @@ public abstract class AbstractFieldMedicEntity extends PathfinderMob {
 
 	/**
 	 * Finalize spawn information.
-	 * @param worldIn the <code>IServerWorld</code> the entity is in
+	 *
+	 * @param worldIn      the <code>IServerWorld</code> the entity is in
 	 * @param difficultyIn the <code>DifficultyInstance</code> of the world
-	 * @param reason the <code>SpawnReason</code> for the entity
-	 * @param spawnDataIn the <code>ILivingEntitySpawnData</code> for the entity
-	 * @param dataTag the <code>CompoundNBT</code> data tag for the entity
+	 * @param reason       the <code>SpawnReason</code> for the entity
+	 * @param spawnDataIn  the <code>ILivingEntitySpawnData</code> for the entity
+	 * @param dataTag      the <code>CompoundNBT</code> data tag for the entity
 	 * @return ILivingEntityData
 	 */
 	@Override
@@ -198,6 +203,7 @@ public abstract class AbstractFieldMedicEntity extends PathfinderMob {
 
 	/**
 	 * Runs when the entity is hurt.
+	 *
 	 * @param source the <code>DamageSource</code> instance
 	 * @param amount the damage amount
 	 * @return boolean
@@ -245,6 +251,7 @@ public abstract class AbstractFieldMedicEntity extends PathfinderMob {
 
 	/**
 	 * Runs when the entity hurts a target.
+	 *
 	 * @param entityIn the <code>Entity</code> being hurt
 	 * @return boolean
 	 */
@@ -270,6 +277,7 @@ public abstract class AbstractFieldMedicEntity extends PathfinderMob {
 
 	/**
 	 * Check for hurt entities in the nearby area, and heal them.
+	 *
 	 * @param checkedEntities a <code>List</code> containing entity classes to check for,
 	 *                        entries must extend CreatureEntity
 	 */
@@ -321,6 +329,7 @@ public abstract class AbstractFieldMedicEntity extends PathfinderMob {
 
 	/**
 	 * Read entity NBT data.
+	 *
 	 * @param compound the <code>CompoundNBT</code> to read from
 	 */
 	@Override

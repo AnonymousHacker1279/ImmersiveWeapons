@@ -72,6 +72,7 @@ public class BearTrapBlockEntity extends BlockEntity implements EntityBlock {
 
 	/**
 	 * Load NBT data.
+	 *
 	 * @param nbt the <code>CompoundNBT</code> to load
 	 */
 	@Override
@@ -84,6 +85,7 @@ public class BearTrapBlockEntity extends BlockEntity implements EntityBlock {
 
 	/**
 	 * Save NBT data.
+	 *
 	 * @param nbt the <code>CompoundNBT</code> to save
 	 */
 	@Override
@@ -99,7 +101,23 @@ public class BearTrapBlockEntity extends BlockEntity implements EntityBlock {
 	}
 
 	/**
+	 * Get trapped entities.
+	 *
+	 * @return MobEntity
+	 */
+	public Mob getTrappedMobEntity() {
+		if (id != null && level instanceof ServerLevel) {
+			Entity entity = ((ServerLevel) level).getEntity(id);
+			id = null;
+			if (entity instanceof Mob)
+				setTrappedMobEntity((Mob) entity);
+		}
+		return trappedMobEntity;
+	}
+
+	/**
 	 * Set trapped entities
+	 *
 	 * @param mobEntity the <code>MobEntity</code> to trap
 	 */
 	public void setTrappedMobEntity(@Nullable Mob mobEntity) {
@@ -119,32 +137,8 @@ public class BearTrapBlockEntity extends BlockEntity implements EntityBlock {
 	}
 
 	/**
-	 * Set trapped players
-	 * @param playerEntity the <code>PlayerEntity</code> to trap
-	 */
-	public void setTrappedPlayerEntity(@Nullable Player playerEntity) {
-		if (hasTrappedPlayerEntity() && playerEntity != null) {
-			id = null;
-			trappedPlayerEntity = playerEntity;
-		}
-	}
-
-	/**
-	 * Get trapped entities.
-	 * @return MobEntity
-	 */
-	public Mob getTrappedMobEntity() {
-		if (id != null && level instanceof ServerLevel) {
-			Entity entity = ((ServerLevel) level).getEntity(id);
-			id = null;
-			if (entity instanceof Mob)
-				setTrappedMobEntity((Mob) entity);
-		}
-		return trappedMobEntity;
-	}
-
-	/**
 	 * Get trapped players.
+	 *
 	 * @return PlayerEntity
 	 */
 	public Player getTrappedPlayerEntity() {
@@ -158,7 +152,20 @@ public class BearTrapBlockEntity extends BlockEntity implements EntityBlock {
 	}
 
 	/**
+	 * Set trapped players
+	 *
+	 * @param playerEntity the <code>PlayerEntity</code> to trap
+	 */
+	public void setTrappedPlayerEntity(@Nullable Player playerEntity) {
+		if (hasTrappedPlayerEntity() && playerEntity != null) {
+			id = null;
+			trappedPlayerEntity = playerEntity;
+		}
+	}
+
+	/**
 	 * Check for trapped entities.
+	 *
 	 * @return boolean
 	 */
 	public boolean hasTrappedEntity() {
@@ -167,6 +174,7 @@ public class BearTrapBlockEntity extends BlockEntity implements EntityBlock {
 
 	/**
 	 * Check for trapped players.
+	 *
 	 * @return boolean
 	 */
 	public boolean hasTrappedPlayerEntity() {
@@ -175,6 +183,7 @@ public class BearTrapBlockEntity extends BlockEntity implements EntityBlock {
 
 	/**
 	 * Check if a specific entity is trapped.
+	 *
 	 * @return boolean
 	 */
 	boolean isEntityTrapped(Mob trappedEntity) {
@@ -183,7 +192,8 @@ public class BearTrapBlockEntity extends BlockEntity implements EntityBlock {
 
 	/**
 	 * Create a block entity for the block.
-	 * @param blockPos the <code>BlockPos</code> the block is at
+	 *
+	 * @param blockPos   the <code>BlockPos</code> the block is at
 	 * @param blockState the <code>BlockState</code> of the block
 	 * @return BlockEntity
 	 */
@@ -198,8 +208,9 @@ public class BearTrapBlockEntity extends BlockEntity implements EntityBlock {
 
 		/**
 		 * Constructor for DoNothingGoal.
+		 *
 		 * @param trappedEntity the <code>MobEntity</code> instance
-		 * @param trap the <code>BearTrapBlockEntity</code> instance
+		 * @param trap          the <code>BearTrapBlockEntity</code> instance
 		 */
 		DoNothingGoal(Mob trappedEntity, BearTrapBlockEntity trap) {
 			setFlags(EnumSet.of(Goal.Flag.MOVE, Goal.Flag.JUMP));
@@ -209,6 +220,7 @@ public class BearTrapBlockEntity extends BlockEntity implements EntityBlock {
 
 		/**
 		 * Check if entities can use the goal.
+		 *
 		 * @return boolean
 		 */
 		@Override

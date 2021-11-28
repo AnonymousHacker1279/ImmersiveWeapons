@@ -39,8 +39,8 @@ import java.util.function.Supplier;
 public class MortarBlock extends HorizontalDirectionalBlock {
 
 	public static final IntegerProperty ROTATION = IntegerProperty.create("rotation", 0, 2);
-	private static final BooleanProperty LOADED = BooleanProperty.create("loaded");
 	protected static final VoxelShape SHAPE = Block.box(2.0D, 0.0D, 2.0D, 14.0D, 10.0D, 14.0D);
+	private static final BooleanProperty LOADED = BooleanProperty.create("loaded");
 
 	/**
 	 * Constructor for MortarBlock.

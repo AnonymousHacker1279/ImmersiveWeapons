@@ -36,8 +36,7 @@ public class TiltrosTeleporter implements ITeleporter {
 		boolean destinationIsUG = level.dimension() == GeneralUtilities.TILTROS;
 		if (entity.level.dimension() != GeneralUtilities.TILTROS && !destinationIsUG) {
 			return null;
-		}
-		else {
+		} else {
 			WorldBorder border = level.getWorldBorder();
 			double minX = Math.max(-2.9999872E7D, border.getMinX() + 16.0D);
 			double minZ = Math.max(-2.9999872E7D, border.getMinZ() + 16.0D);

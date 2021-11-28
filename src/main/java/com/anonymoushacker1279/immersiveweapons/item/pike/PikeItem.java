@@ -17,6 +17,7 @@ public class PikeItem extends Item {
 
 	/**
 	 * Constructor for PikeItem.
+	 *
 	 * @param properties the <code>Properties</code> for the item
 	 */
 	PikeItem(Properties properties) {
@@ -25,10 +26,11 @@ public class PikeItem extends Item {
 
 	/**
 	 * Check if the block can be damaged.
-	 * @param state the <code>BlockState</code> of the block
+	 *
+	 * @param state   the <code>BlockState</code> of the block
 	 * @param worldIn the <code>World</code> the block is in
-	 * @param pos the <code>BlockPos</code> the block is at
-	 * @param player the <code>PlayerEntity</code> damaging the block
+	 * @param pos     the <code>BlockPos</code> the block is at
+	 * @param player  the <code>PlayerEntity</code> damaging the block
 	 * @return boolean
 	 */
 	@Override
@@ -38,6 +40,7 @@ public class PikeItem extends Item {
 
 	/**
 	 * Get the use animation.
+	 *
 	 * @param stack the <code>ItemStack</code> instance
 	 * @return UseAction
 	 */
@@ -48,8 +51,9 @@ public class PikeItem extends Item {
 
 	/**
 	 * Runs when an enemy is hurt.
-	 * @param stack the <code>ItemStack</code> instance
-	 * @param target the <code>LivingEntity</code> target
+	 *
+	 * @param stack    the <code>ItemStack</code> instance
+	 * @param target   the <code>LivingEntity</code> target
 	 * @param attacker the <code>LivingEntity</code> attacker
 	 * @return boolean
 	 */
@@ -61,10 +65,11 @@ public class PikeItem extends Item {
 
 	/**
 	 * Runs when a block is mined.
-	 * @param stack the <code>ItemStack</code> instance
-	 * @param worldIn the <code>World</code> the block is in
-	 * @param state the <code>BlockState</code> of the block
-	 * @param pos the <code>BlockPos</code> the block is at
+	 *
+	 * @param stack        the <code>ItemStack</code> instance
+	 * @param worldIn      the <code>World</code> the block is in
+	 * @param state        the <code>BlockState</code> of the block
+	 * @param pos          the <code>BlockPos</code> the block is at
 	 * @param entityLiving the <code>LivingEntity</code> destroying the block
 	 * @return boolean
 	 */
@@ -78,6 +83,7 @@ public class PikeItem extends Item {
 
 	/**
 	 * Get the enchantment value.
+	 *
 	 * @return int
 	 */
 	@Override
@@ -87,6 +93,7 @@ public class PikeItem extends Item {
 
 	/**
 	 * Get the repair material.
+	 *
 	 * @return Ingredient
 	 */
 	Ingredient getRepairMaterial() {
@@ -95,8 +102,9 @@ public class PikeItem extends Item {
 
 	/**
 	 * Check if the repair item is valid.
+	 *
 	 * @param toRepair the <code>ItemStack</code> to repair
-	 * @param repair the <code>ItemStack</code> to repair the first item
+	 * @param repair   the <code>ItemStack</code> to repair the first item
 	 * @return boolean
 	 */
 	@Override

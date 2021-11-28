@@ -19,6 +19,7 @@ public class ForgeEventSubscriber {
 
 	/**
 	 * Event handler for the RenderBlockOverlayEvent.
+	 *
 	 * @param event the <code>RenderBlockOverlayEvent</code> instance
 	 */
 	@SubscribeEvent
@@ -39,6 +40,7 @@ public class ForgeEventSubscriber {
 
 	/**
 	 * Event handler for the FogDensity event.
+	 *
 	 * @param event the <code>FogDensity</code> instance
 	 */
 	@SubscribeEvent

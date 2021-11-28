@@ -19,6 +19,7 @@ public class FirstAidKitItem extends Item {
 
 	/**
 	 * Constructor for FirstAidKitItem.
+	 *
 	 * @param properties the <code>Properties</code> for the item
 	 */
 	public FirstAidKitItem(Properties properties) {
@@ -27,9 +28,10 @@ public class FirstAidKitItem extends Item {
 
 	/**
 	 * Runs when the player right-clicks.
-	 * @param worldIn the <code>World</code> the player is in
+	 *
+	 * @param worldIn  the <code>World</code> the player is in
 	 * @param playerIn the <code>PlayerEntity</code> performing the action
-	 * @param handIn the <code>Hand</code> the player is using
+	 * @param handIn   the <code>Hand</code> the player is using
 	 * @return ActionResult extending ItemStack
 	 */
 	@Override
@@ -53,10 +55,11 @@ public class FirstAidKitItem extends Item {
 
 	/**
 	 * Runs when the player right-clicks an entity.
-	 * @param stack the <code>ItemStack</code> right-clicked with
+	 *
+	 * @param stack    the <code>ItemStack</code> right-clicked with
 	 * @param playerIn the <code>PlayerEntity</code> performing the action
-	 * @param entity the <code>LivingEntity</code> being interacted with
-	 * @param hand the <code>Hand</code> the player is using
+	 * @param entity   the <code>LivingEntity</code> being interacted with
+	 * @param hand     the <code>Hand</code> the player is using
 	 * @return ActionResultType
 	 */
 	@Override

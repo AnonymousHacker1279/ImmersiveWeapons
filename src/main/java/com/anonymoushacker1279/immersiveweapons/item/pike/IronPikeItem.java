@@ -18,8 +18,9 @@ public class IronPikeItem extends PikeItem {
 
 	/**
 	 * Constructor for IronPikeItem.
-	 * @param properties the <code>Properties</code> for the item
-	 * @param damageIn the damage
+	 *
+	 * @param properties    the <code>Properties</code> for the item
+	 * @param damageIn      the damage
 	 * @param attackSpeedIn the attack speed
 	 */
 	public IronPikeItem(Properties properties, double damageIn, double attackSpeedIn) {

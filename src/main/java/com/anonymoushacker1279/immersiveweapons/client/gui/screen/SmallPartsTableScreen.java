@@ -15,9 +15,10 @@ public class SmallPartsTableScreen extends AbstractContainerScreen<SmallPartsCon
 
 	/**
 	 * Constructor for SmallPartsTableScreen.
-	 * @param container a <code>SmallPartsContainer</code> instance
+	 *
+	 * @param container       a <code>SmallPartsContainer</code> instance
 	 * @param playerInventory a <code>PlayerInventory</code> instance
-	 * @param title the <code>ITextComponent</code> title for the screen
+	 * @param title           the <code>ITextComponent</code> title for the screen
 	 */
 	public SmallPartsTableScreen(SmallPartsContainer container, Inventory playerInventory, Component title) {
 		super(container, playerInventory, title);
@@ -27,10 +28,11 @@ public class SmallPartsTableScreen extends AbstractContainerScreen<SmallPartsCon
 
 	/**
 	 * Render the background of the screen.
-	 * @param matrixStack the <code>MatrixStack</code> instance for the screen
+	 *
+	 * @param matrixStack  the <code>MatrixStack</code> instance for the screen
 	 * @param partialTicks the current partial tick
-	 * @param mouseX the mouse's X position
-	 * @param mouseY the mouse's Y position
+	 * @param mouseX       the mouse's X position
+	 * @param mouseY       the mouse's Y position
 	 */
 	@Override
 	protected void renderBg(@NotNull PoseStack matrixStack, float partialTicks, int mouseX, int mouseY) {
@@ -43,9 +45,10 @@ public class SmallPartsTableScreen extends AbstractContainerScreen<SmallPartsCon
 
 	/**
 	 * Render labels on the screen.
+	 *
 	 * @param matrixStack the <code>MatrixStack</code> instance for the screen
-	 * @param x the X position to render at
-	 * @param y the Y position to render at
+	 * @param x           the X position to render at
+	 * @param y           the Y position to render at
 	 */
 	@Override
 	protected void renderLabels(@NotNull PoseStack matrixStack, int x, int y) {
@@ -55,9 +58,10 @@ public class SmallPartsTableScreen extends AbstractContainerScreen<SmallPartsCon
 
 	/**
 	 * Render the screen.
-	 * @param matrixStack the <code>MatrixStack</code> instance for the screen
-	 * @param mouseX the mouse's X position
-	 * @param mouseY the mouse's Y position
+	 *
+	 * @param matrixStack  the <code>MatrixStack</code> instance for the screen
+	 * @param mouseX       the mouse's X position
+	 * @param mouseY       the mouse's Y position
 	 * @param partialTicks the current partial tick
 	 */
 	@Override

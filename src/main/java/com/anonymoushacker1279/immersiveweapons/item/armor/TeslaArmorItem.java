@@ -35,9 +35,10 @@ public class TeslaArmorItem extends ArmorItem {
 
 	/**
 	 * Constructor for TeslaArmorItem.
+	 *
 	 * @param material the <code>IArmorMaterial</code> for the item
-	 * @param slot the <code>EquipmentSlotType</code>
-	 * @param type type ID
+	 * @param slot     the <code>EquipmentSlotType</code>
+	 * @param type     type ID
 	 */
 	public TeslaArmorItem(ArmorMaterial material, EquipmentSlot slot, int type) {
 		super(material, slot, (new Item.Properties().tab(DeferredRegistryHandler.ITEM_GROUP)));
@@ -47,11 +48,19 @@ public class TeslaArmorItem extends ArmorItem {
 	}
 
 	/**
+	 * Toggle the armor effect.
+	 */
+	static void toggleEffect() {
+		armorIsToggled = !armorIsToggled;
+	}
+
+	/**
 	 * Get the armor texture.
-	 * @param stack the <code>ItemStack</code> instance
+	 *
+	 * @param stack  the <code>ItemStack</code> instance
 	 * @param entity the <code>Entity</code> wearing the armor
-	 * @param slot the <code>EquipmentSlotType</code>
-	 * @param type type ID
+	 * @param slot   the <code>EquipmentSlotType</code>
+	 * @param type   type ID
 	 * @return String
 	 */
 	@Override
@@ -61,8 +70,9 @@ public class TeslaArmorItem extends ArmorItem {
 
 	/**
 	 * Runs once per tick while armor is equipped
-	 * @param stack the <code>ItemStack</code> instance
-	 * @param world the <code>World</code> the player is in
+	 *
+	 * @param stack  the <code>ItemStack</code> instance
+	 * @param world  the <code>World</code> the player is in
 	 * @param player the <code>PlayerEntity</code> wearing the armor
 	 */
 	@Override
@@ -105,15 +115,9 @@ public class TeslaArmorItem extends ArmorItem {
 	}
 
 	/**
-	 * Toggle the armor effect.
-	 */
-	static void toggleEffect() {
-		armorIsToggled = !armorIsToggled;
-	}
-
-	/**
 	 * Play a sound while the armor effect is toggled.
-	 * @param world the <code>World</code> the player is in
+	 *
+	 * @param world  the <code>World</code> the player is in
 	 * @param player the <code>PlayerEntity</code> instance
 	 */
 	private void effectNoise(Level world, Player player) {

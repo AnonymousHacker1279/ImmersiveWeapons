@@ -15,6 +15,7 @@ public class CreativeTabSorter extends CreativeModeTab {
 
 	/**
 	 * Constructor for CreativeTabSorter.
+	 *
 	 * @param label the tab label
 	 */
 	public CreativeTabSorter(String label) {
@@ -23,6 +24,7 @@ public class CreativeTabSorter extends CreativeModeTab {
 
 	/**
 	 * Fill the item list with the proper ordering.
+	 *
 	 * @param itemStack the <code>NonNullList</code> extending ItemStack
 	 */
 	@Override
@@ -37,6 +39,7 @@ public class CreativeTabSorter extends CreativeModeTab {
 
 	/**
 	 * Set the tab icon.
+	 *
 	 * @return ItemStack
 	 */
 	@Override

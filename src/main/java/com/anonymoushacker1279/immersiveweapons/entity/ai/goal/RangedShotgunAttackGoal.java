@@ -24,10 +24,11 @@ public class RangedShotgunAttackGoal<T extends PathfinderMob & RangedAttackMob> 
 
 	/**
 	 * Constructor for RangedShotgunAttackGoal.
-	 * @param mob the <code>MonsterEntity</code> that will be using the goal,
-	 *            must implement IRangedAttackMob
-	 * @param moveSpeedAmpIn the movement speed amplifier
-	 * @param attackCooldownIn the attack cooldown
+	 *
+	 * @param mob                 the <code>MonsterEntity</code> that will be using the goal,
+	 *                            must implement IRangedAttackMob
+	 * @param moveSpeedAmpIn      the movement speed amplifier
+	 * @param attackCooldownIn    the attack cooldown
 	 * @param maxAttackDistanceIn the max attack distance
 	 */
 	public RangedShotgunAttackGoal(T mob, double moveSpeedAmpIn, int attackCooldownIn, float maxAttackDistanceIn) {
@@ -40,6 +41,7 @@ public class RangedShotgunAttackGoal<T extends PathfinderMob & RangedAttackMob> 
 
 	/**
 	 * Set the max attack cooldown.
+	 *
 	 * @param attackCooldownIn the max attack cooldown
 	 */
 	public void setAttackCooldown(int attackCooldownIn) {
@@ -49,6 +51,7 @@ public class RangedShotgunAttackGoal<T extends PathfinderMob & RangedAttackMob> 
 	/**
 	 * Returns whether execution should begin. You can also read and cache any state necessary for execution in this
 	 * method as well.
+	 *
 	 * @return boolean
 	 */
 	@Override
@@ -59,6 +62,7 @@ public class RangedShotgunAttackGoal<T extends PathfinderMob & RangedAttackMob> 
 	/**
 	 * Check if an instance of SimplePistolItem is held
 	 * by the entity
+	 *
 	 * @return boolean
 	 */
 	private boolean isGunInMainHand() {
@@ -67,6 +71,7 @@ public class RangedShotgunAttackGoal<T extends PathfinderMob & RangedAttackMob> 
 
 	/**
 	 * Returns whether an in-progress EntityAIBase should continue executing
+	 *
 	 * @return boolean
 	 */
 	@Override

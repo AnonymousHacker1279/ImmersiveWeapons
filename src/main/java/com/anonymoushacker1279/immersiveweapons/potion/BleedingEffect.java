@@ -25,8 +25,8 @@ import java.util.function.Supplier;
 
 public class BleedingEffect extends MobEffect {
 
-	private int cooldownTicks = 0;
 	public final DamageSource damageSource = new DamageSource("immersiveweapons.bleeding").bypassArmor();
+	private int cooldownTicks = 0;
 
 	/**
 	 * Constructor for BleedingEffect.

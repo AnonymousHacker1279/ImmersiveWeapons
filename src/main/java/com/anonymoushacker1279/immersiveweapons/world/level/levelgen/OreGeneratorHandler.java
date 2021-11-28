@@ -22,6 +22,7 @@ public class OreGeneratorHandler {
 
 	/**
 	 * Initialize ore generation setup.
+	 *
 	 * @param event the <code>FMLCommonSetupEvent</code> instance
 	 */
 	@SubscribeEvent

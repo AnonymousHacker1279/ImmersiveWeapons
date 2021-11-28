@@ -12,10 +12,11 @@ public class TeslaPickaxe extends PickaxeItem {
 
 	/**
 	 * Constructor for TeslaPickaxe.
-	 * @param tier the <code>IItemTier</code>
+	 *
+	 * @param tier           the <code>IItemTier</code>
 	 * @param attackDamageIn attack damage
-	 * @param attackSpeedIn attack speed
-	 * @param properties the <code>Properties</code> for the item
+	 * @param attackSpeedIn  attack speed
+	 * @param properties     the <code>Properties</code> for the item
 	 */
 	public TeslaPickaxe(Tier tier, int attackDamageIn, float attackSpeedIn, Properties properties) {
 		super(tier, attackDamageIn, attackSpeedIn, properties);
@@ -23,8 +24,9 @@ public class TeslaPickaxe extends PickaxeItem {
 
 	/**
 	 * Runs when an entity is hit.
-	 * @param itemStack the <code>ItemStack</code> instance
-	 * @param livingEntity the <code>LivingEntity</code> attacking
+	 *
+	 * @param itemStack     the <code>ItemStack</code> instance
+	 * @param livingEntity  the <code>LivingEntity</code> attacking
 	 * @param livingEntity1 the <code>LivingEntity</code> being hit
 	 * @return boolean
 	 */

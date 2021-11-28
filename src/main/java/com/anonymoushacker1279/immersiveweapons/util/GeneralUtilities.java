@@ -19,6 +19,7 @@ public class GeneralUtilities {
 
 	/**
 	 * Get a random number between a minimum and maximum.
+	 *
 	 * @param min minimum number
 	 * @param max maximum number
 	 * @return float
@@ -29,6 +30,7 @@ public class GeneralUtilities {
 
 	/**
 	 * Get a random number between a minimum and maximum.
+	 *
 	 * @param min minimum number
 	 * @param max maximum number
 	 * @return double
@@ -39,6 +41,7 @@ public class GeneralUtilities {
 
 	/**
 	 * Get a random number between a minimum and maximum.
+	 *
 	 * @param min minimum number
 	 * @param max maximum number
 	 * @return int
@@ -49,7 +52,8 @@ public class GeneralUtilities {
 
 	/**
 	 * Create a stained-glass block from a color.
-	 * @param color the <code>DyeColor</code>
+	 *
+	 * @param color      the <code>DyeColor</code>
 	 * @param properties the <code>Properties</code> for the block
 	 * @return StainedGlassBlock
 	 */

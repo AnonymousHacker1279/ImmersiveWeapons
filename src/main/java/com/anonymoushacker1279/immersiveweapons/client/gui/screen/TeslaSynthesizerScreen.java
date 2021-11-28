@@ -16,9 +16,10 @@ public class TeslaSynthesizerScreen extends AbstractContainerScreen<TeslaSynthes
 
 	/**
 	 * Constructor for TeslaSynthesizerScreen.
-	 * @param container a <code>SmallPartsContainer</code> instance
+	 *
+	 * @param container       a <code>SmallPartsContainer</code> instance
 	 * @param playerInventory a <code>PlayerInventory</code> instance
-	 * @param title the <code>ITextComponent</code> title for the screen
+	 * @param title           the <code>ITextComponent</code> title for the screen
 	 */
 	public TeslaSynthesizerScreen(TeslaSynthesizerContainer container, Inventory playerInventory, Component title) {
 		super(container, playerInventory, title);
@@ -28,10 +29,11 @@ public class TeslaSynthesizerScreen extends AbstractContainerScreen<TeslaSynthes
 
 	/**
 	 * Render the background of the screen.
-	 * @param matrixStack the <code>MatrixStack</code> instance for the screen
+	 *
+	 * @param matrixStack  the <code>MatrixStack</code> instance for the screen
 	 * @param partialTicks the current partial tick
-	 * @param mouseX the mouse's X position
-	 * @param mouseY the mouse's Y position
+	 * @param mouseX       the mouse's X position
+	 * @param mouseY       the mouse's Y position
 	 */
 	@Override
 	protected void renderBg(@NotNull PoseStack matrixStack, float partialTicks, int mouseX, int mouseY) {
@@ -51,9 +53,10 @@ public class TeslaSynthesizerScreen extends AbstractContainerScreen<TeslaSynthes
 
 	/**
 	 * Render labels on the screen.
+	 *
 	 * @param matrixStack the <code>MatrixStack</code> instance for the screen
-	 * @param x the X position to render at
-	 * @param y the Y position to render at
+	 * @param x           the X position to render at
+	 * @param y           the Y position to render at
 	 */
 	@Override
 	protected void renderLabels(@NotNull PoseStack matrixStack, int x, int y) {
@@ -63,9 +66,10 @@ public class TeslaSynthesizerScreen extends AbstractContainerScreen<TeslaSynthes
 
 	/**
 	 * Render the screen.
-	 * @param matrixStack the <code>MatrixStack</code> instance for the screen
-	 * @param mouseX the mouse's X position
-	 * @param mouseY the mouse's Y position
+	 *
+	 * @param matrixStack  the <code>MatrixStack</code> instance for the screen
+	 * @param mouseX       the mouse's X position
+	 * @param mouseY       the mouse's Y position
 	 * @param partialTicks the current partial tick
 	 */
 	@Override

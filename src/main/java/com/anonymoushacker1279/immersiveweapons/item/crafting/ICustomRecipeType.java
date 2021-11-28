@@ -12,6 +12,7 @@ public interface ICustomRecipeType {
 
 	/**
 	 * Register recipe types.
+	 *
 	 * @param key the registry key
 	 * @param <T> <code>IRecipeType</code> extending IRecipe
 	 * @return T extending IRecipe

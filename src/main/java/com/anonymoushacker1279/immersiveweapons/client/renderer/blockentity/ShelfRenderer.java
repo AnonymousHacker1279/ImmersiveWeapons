@@ -24,11 +24,12 @@ public class ShelfRenderer implements BlockEntityRenderer<WallShelfBlockEntity> 
 
 	/**
 	 * Render the tile entity.
-	 * @param tileEntityIn the <code>WallShelfTileEntity</code> instance
-	 * @param partialTicks the current partial tick
-	 * @param matrixStackIn the <code>MatrixStack</code> instance
-	 * @param bufferIn the <code>IRenderTypeBuffer</code> instance
-	 * @param combinedLightIn the combined light value
+	 *
+	 * @param tileEntityIn      the <code>WallShelfTileEntity</code> instance
+	 * @param partialTicks      the current partial tick
+	 * @param matrixStackIn     the <code>MatrixStack</code> instance
+	 * @param bufferIn          the <code>IRenderTypeBuffer</code> instance
+	 * @param combinedLightIn   the combined light value
 	 * @param combinedOverlayIn the combined overlay value
 	 */
 	@Override

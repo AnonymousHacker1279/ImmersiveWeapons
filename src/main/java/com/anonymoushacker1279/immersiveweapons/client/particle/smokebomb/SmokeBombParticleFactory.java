@@ -13,6 +13,7 @@ public class SmokeBombParticleFactory implements ParticleProvider<SmokeBombParti
 
 	/**
 	 * Constructor for SmokeBombParticleFactory.
+	 *
 	 * @param sprite an <code>IAnimatedSprite</code> instance
 	 */
 	public SmokeBombParticleFactory(SpriteSet sprite) {
@@ -21,14 +22,15 @@ public class SmokeBombParticleFactory implements ParticleProvider<SmokeBombParti
 
 	/**
 	 * Create a particle at the given coordinates with velocity.
+	 *
 	 * @param smokeBombParticleData a <code>SmokeBombParticleData</code> instance
-	 * @param world the <code>ClientWorld</code> the particle is in
-	 * @param xPos the X position to spawn at
-	 * @param yPos the Y position to spawn at
-	 * @param zPos the Z position to spawn at
-	 * @param xVelocity the X velocity to spawn with
-	 * @param yVelocity the Y velocity to spawn with
-	 * @param zVelocity the Z velocity to spawn with
+	 * @param world                 the <code>ClientWorld</code> the particle is in
+	 * @param xPos                  the X position to spawn at
+	 * @param yPos                  the Y position to spawn at
+	 * @param zPos                  the Z position to spawn at
+	 * @param xVelocity             the X velocity to spawn with
+	 * @param yVelocity             the Y velocity to spawn with
+	 * @param zVelocity             the Z velocity to spawn with
 	 * @return Particle
 	 */
 	@Override

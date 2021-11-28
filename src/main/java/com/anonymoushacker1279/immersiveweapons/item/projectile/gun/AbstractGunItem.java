@@ -14,6 +14,7 @@ public abstract class AbstractGunItem extends Item {
 
 	/**
 	 * Constructor for AbstractGunItem.
+	 *
 	 * @param properties the <code>Properties</code> for the item
 	 */
 	protected AbstractGunItem(Properties properties) {
@@ -22,8 +23,9 @@ public abstract class AbstractGunItem extends Item {
 
 	/**
 	 * Get ammunition from the hand.
+	 *
 	 * @param livingEntity the <code>LivingEntity</code> instance
-	 * @param isAmmo <code>Predicate</code> extending ItemStack checking for ammo
+	 * @param isAmmo       <code>Predicate</code> extending ItemStack checking for ammo
 	 * @return ItemStack
 	 */
 	protected static ItemStack getHeldAmmo(LivingEntity livingEntity, Predicate<ItemStack> isAmmo) {
@@ -36,6 +38,7 @@ public abstract class AbstractGunItem extends Item {
 
 	/**
 	 * Get ammo predicates.
+	 *
 	 * @return Predicate extending ItemStack
 	 */
 	public Predicate<ItemStack> getAmmoPredicate() {
@@ -44,12 +47,14 @@ public abstract class AbstractGunItem extends Item {
 
 	/**
 	 * Get the predicate to match ammunition when searching the player's inventory, not their main/offhand
+	 *
 	 * @return Predicate extending ItemStack
 	 */
 	public abstract Predicate<ItemStack> getInventoryAmmoPredicate();
 
 	/**
 	 * Return the enchantability factor of the item, most of the time is based on material.
+	 *
 	 * @return int
 	 */
 	@Override

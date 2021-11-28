@@ -22,8 +22,9 @@ public class BulletEntity {
 
 		/**
 		 * Constructor for CopperBulletEntity.
-		 * @param entityType the <code>EntityType</code> instance
-		 * @param world the <code>World</code> the entity is in
+		 *
+		 * @param entityType        the <code>EntityType</code> instance
+		 * @param world             the <code>World</code> the entity is in
 		 * @param knockbackStrength the bullet knockback strength
 		 */
 		public CopperBulletEntity(EntityType<CopperBulletEntity> entityType, Level world, int knockbackStrength) {
@@ -34,8 +35,9 @@ public class BulletEntity {
 
 		/**
 		 * Constructor for CopperBulletEntity.
-		 * @param shooter the <code>LivingEntity</code> shooting the entity
-		 * @param world the <code>World</code> the entity is in
+		 *
+		 * @param shooter         the <code>LivingEntity</code> shooting the entity
+		 * @param world           the <code>World</code> the entity is in
 		 * @param referenceItemIn the reference item
 		 */
 		public CopperBulletEntity(LivingEntity shooter, Level world, Item referenceItemIn) {
@@ -45,10 +47,11 @@ public class BulletEntity {
 
 		/**
 		 * Fire the entity from a position with a velocity and inaccuracy.
-		 * @param x the X position
-		 * @param y the Y position
-		 * @param z the Z position
-		 * @param velocity the velocity
+		 *
+		 * @param x          the X position
+		 * @param y          the Y position
+		 * @param z          the Z position
+		 * @param velocity   the velocity
 		 * @param inaccuracy the inaccuracy modifier
 		 */
 		@Override
@@ -64,6 +67,7 @@ public class BulletEntity {
 
 		/**
 		 * Get the movement modifier.
+		 *
 		 * @return double
 		 */
 		@Override
@@ -75,8 +79,9 @@ public class BulletEntity {
 	public static class WoodBulletEntity extends AbstractBulletEntity {
 		/**
 		 * Constructor for WoodBulletEntity.
-		 * @param entityType the <code>EntityType</code> instance
-		 * @param world the <code>World</code> the entity is in
+		 *
+		 * @param entityType        the <code>EntityType</code> instance
+		 * @param world             the <code>World</code> the entity is in
 		 * @param knockbackStrength the bullet knockback strength
 		 */
 		public WoodBulletEntity(EntityType<WoodBulletEntity> entityType, Level world, int knockbackStrength) {
@@ -87,8 +92,9 @@ public class BulletEntity {
 
 		/**
 		 * Constructor for WoodBulletEntity.
-		 * @param shooter the <code>LivingEntity</code> shooting the entity
-		 * @param world the <code>World</code> the entity is in
+		 *
+		 * @param shooter         the <code>LivingEntity</code> shooting the entity
+		 * @param world           the <code>World</code> the entity is in
 		 * @param referenceItemIn the reference item
 		 */
 		public WoodBulletEntity(LivingEntity shooter, Level world, Item referenceItemIn) {
@@ -98,10 +104,11 @@ public class BulletEntity {
 
 		/**
 		 * Fire the entity from a position with a velocity and inaccuracy.
-		 * @param x the X position
-		 * @param y the Y position
-		 * @param z the Z position
-		 * @param velocity the velocity
+		 *
+		 * @param x          the X position
+		 * @param y          the Y position
+		 * @param z          the Z position
+		 * @param velocity   the velocity
 		 * @param inaccuracy the inaccuracy modifier
 		 */
 		@Override
@@ -117,6 +124,7 @@ public class BulletEntity {
 
 		/**
 		 * Get the movement modifier.
+		 *
 		 * @return double
 		 */
 		@Override
@@ -128,8 +136,9 @@ public class BulletEntity {
 	public static class StoneBulletEntity extends AbstractBulletEntity {
 		/**
 		 * Constructor for StoneBulletEntity.
-		 * @param entityType the <code>EntityType</code> instance
-		 * @param world the <code>World</code> the entity is in
+		 *
+		 * @param entityType        the <code>EntityType</code> instance
+		 * @param world             the <code>World</code> the entity is in
 		 * @param knockbackStrength the bullet knockback strength
 		 */
 		public StoneBulletEntity(EntityType<StoneBulletEntity> entityType, Level world, int knockbackStrength) {
@@ -140,8 +149,9 @@ public class BulletEntity {
 
 		/**
 		 * Constructor for StoneBulletEntity.
-		 * @param shooter the <code>LivingEntity</code> shooting the entity
-		 * @param world the <code>World</code> the entity is in
+		 *
+		 * @param shooter         the <code>LivingEntity</code> shooting the entity
+		 * @param world           the <code>World</code> the entity is in
 		 * @param referenceItemIn the reference item
 		 */
 		public StoneBulletEntity(LivingEntity shooter, Level world, Item referenceItemIn) {
@@ -151,10 +161,11 @@ public class BulletEntity {
 
 		/**
 		 * Fire the entity from a position with a velocity and inaccuracy.
-		 * @param x the X position
-		 * @param y the Y position
-		 * @param z the Z position
-		 * @param velocity the velocity
+		 *
+		 * @param x          the X position
+		 * @param y          the Y position
+		 * @param z          the Z position
+		 * @param velocity   the velocity
 		 * @param inaccuracy the inaccuracy modifier
 		 */
 		@Override
@@ -170,6 +181,7 @@ public class BulletEntity {
 
 		/**
 		 * Get the movement modifier.
+		 *
 		 * @return double
 		 */
 		@Override
@@ -181,8 +193,9 @@ public class BulletEntity {
 	public static class IronBulletEntity extends AbstractBulletEntity {
 		/**
 		 * Constructor for IronBulletEntity.
-		 * @param entityType the <code>EntityType</code> instance
-		 * @param world the <code>World</code> the entity is in
+		 *
+		 * @param entityType        the <code>EntityType</code> instance
+		 * @param world             the <code>World</code> the entity is in
 		 * @param knockbackStrength the bullet knockback strength
 		 */
 		public IronBulletEntity(EntityType<IronBulletEntity> entityType, Level world, int knockbackStrength) {
@@ -193,8 +206,9 @@ public class BulletEntity {
 
 		/**
 		 * Constructor for IronBulletEntity.
-		 * @param shooter the <code>LivingEntity</code> shooting the entity
-		 * @param world the <code>World</code> the entity is in
+		 *
+		 * @param shooter         the <code>LivingEntity</code> shooting the entity
+		 * @param world           the <code>World</code> the entity is in
 		 * @param referenceItemIn the reference item
 		 */
 		public IronBulletEntity(LivingEntity shooter, Level world, Item referenceItemIn) {
@@ -204,10 +218,11 @@ public class BulletEntity {
 
 		/**
 		 * Fire the entity from a position with a velocity and inaccuracy.
-		 * @param x the X position
-		 * @param y the Y position
-		 * @param z the Z position
-		 * @param velocity the velocity
+		 *
+		 * @param x          the X position
+		 * @param y          the Y position
+		 * @param z          the Z position
+		 * @param velocity   the velocity
 		 * @param inaccuracy the inaccuracy modifier
 		 */
 		@Override
@@ -223,6 +238,7 @@ public class BulletEntity {
 
 		/**
 		 * Get the movement modifier.
+		 *
 		 * @return double
 		 */
 		@Override
@@ -234,8 +250,9 @@ public class BulletEntity {
 	public static class CobaltBulletEntity extends AbstractBulletEntity {
 		/**
 		 * Constructor for CobaltBulletEntity.
-		 * @param entityType the <code>EntityType</code> instance
-		 * @param world the <code>World</code> the entity is in
+		 *
+		 * @param entityType        the <code>EntityType</code> instance
+		 * @param world             the <code>World</code> the entity is in
 		 * @param knockbackStrength the bullet knockback strength
 		 */
 		public CobaltBulletEntity(EntityType<CobaltBulletEntity> entityType, Level world, int knockbackStrength) {
@@ -246,8 +263,9 @@ public class BulletEntity {
 
 		/**
 		 * Constructor for CobaltBulletEntity.
-		 * @param shooter the <code>LivingEntity</code> shooting the entity
-		 * @param world the <code>World</code> the entity is in
+		 *
+		 * @param shooter         the <code>LivingEntity</code> shooting the entity
+		 * @param world           the <code>World</code> the entity is in
 		 * @param referenceItemIn the reference item
 		 */
 		public CobaltBulletEntity(LivingEntity shooter, Level world, Item referenceItemIn) {
@@ -257,10 +275,11 @@ public class BulletEntity {
 
 		/**
 		 * Fire the entity from a position with a velocity and inaccuracy.
-		 * @param x the X position
-		 * @param y the Y position
-		 * @param z the Z position
-		 * @param velocity the velocity
+		 *
+		 * @param x          the X position
+		 * @param y          the Y position
+		 * @param z          the Z position
+		 * @param velocity   the velocity
 		 * @param inaccuracy the inaccuracy modifier
 		 */
 		@Override
@@ -276,6 +295,7 @@ public class BulletEntity {
 
 		/**
 		 * Get the movement modifier.
+		 *
 		 * @return double
 		 */
 		@Override
@@ -287,8 +307,9 @@ public class BulletEntity {
 	public static class GoldBulletEntity extends AbstractBulletEntity {
 		/**
 		 * Constructor for GoldBulletEntity.
-		 * @param entityType the <code>EntityType</code> instance
-		 * @param world the <code>World</code> the entity is in
+		 *
+		 * @param entityType        the <code>EntityType</code> instance
+		 * @param world             the <code>World</code> the entity is in
 		 * @param knockbackStrength the bullet knockback strength
 		 */
 		public GoldBulletEntity(EntityType<GoldBulletEntity> entityType, Level world, int knockbackStrength) {
@@ -299,8 +320,9 @@ public class BulletEntity {
 
 		/**
 		 * Constructor for GoldBulletEntity.
-		 * @param shooter the <code>LivingEntity</code> shooting the entity
-		 * @param world the <code>World</code> the entity is in
+		 *
+		 * @param shooter         the <code>LivingEntity</code> shooting the entity
+		 * @param world           the <code>World</code> the entity is in
 		 * @param referenceItemIn the reference item
 		 */
 		public GoldBulletEntity(LivingEntity shooter, Level world, Item referenceItemIn) {
@@ -310,10 +332,11 @@ public class BulletEntity {
 
 		/**
 		 * Fire the entity from a position with a velocity and inaccuracy.
-		 * @param x the X position
-		 * @param y the Y position
-		 * @param z the Z position
-		 * @param velocity the velocity
+		 *
+		 * @param x          the X position
+		 * @param y          the Y position
+		 * @param z          the Z position
+		 * @param velocity   the velocity
 		 * @param inaccuracy the inaccuracy modifier
 		 */
 		@Override
@@ -329,6 +352,7 @@ public class BulletEntity {
 
 		/**
 		 * Get the movement modifier.
+		 *
 		 * @return double
 		 */
 		@Override
@@ -340,8 +364,9 @@ public class BulletEntity {
 	public static class DiamondBulletEntity extends AbstractBulletEntity {
 		/**
 		 * Constructor for DiamondBulletEntity.
-		 * @param entityType the <code>EntityType</code> instance
-		 * @param world the <code>World</code> the entity is in
+		 *
+		 * @param entityType        the <code>EntityType</code> instance
+		 * @param world             the <code>World</code> the entity is in
 		 * @param knockbackStrength the bullet knockback strength
 		 */
 		public DiamondBulletEntity(EntityType<DiamondBulletEntity> entityType, Level world, int knockbackStrength) {
@@ -352,8 +377,9 @@ public class BulletEntity {
 
 		/**
 		 * Constructor for DiamondBulletEntity.
-		 * @param shooter the <code>LivingEntity</code> shooting the entity
-		 * @param world the <code>World</code> the entity is in
+		 *
+		 * @param shooter         the <code>LivingEntity</code> shooting the entity
+		 * @param world           the <code>World</code> the entity is in
 		 * @param referenceItemIn the reference item
 		 */
 		public DiamondBulletEntity(LivingEntity shooter, Level world, Item referenceItemIn) {
@@ -363,6 +389,7 @@ public class BulletEntity {
 
 		/**
 		 * Get the movement modifier.
+		 *
 		 * @return double
 		 */
 		@Override
@@ -372,10 +399,11 @@ public class BulletEntity {
 
 		/**
 		 * Fire the entity from a position with a velocity and inaccuracy.
-		 * @param x the X position
-		 * @param y the Y position
-		 * @param z the Z position
-		 * @param velocity the velocity
+		 *
+		 * @param x          the X position
+		 * @param y          the Y position
+		 * @param z          the Z position
+		 * @param velocity   the velocity
 		 * @param inaccuracy the inaccuracy modifier
 		 */
 		@Override
@@ -393,8 +421,9 @@ public class BulletEntity {
 	public static class NetheriteBulletEntity extends AbstractBulletEntity {
 		/**
 		 * Constructor for NetheriteBulletEntity.
-		 * @param entityType the <code>EntityType</code> instance
-		 * @param world the <code>World</code> the entity is in
+		 *
+		 * @param entityType        the <code>EntityType</code> instance
+		 * @param world             the <code>World</code> the entity is in
 		 * @param knockbackStrength the bullet knockback strength
 		 */
 		public NetheriteBulletEntity(EntityType<NetheriteBulletEntity> entityType, Level world, int knockbackStrength) {
@@ -405,8 +434,9 @@ public class BulletEntity {
 
 		/**
 		 * Constructor for NetheriteBulletEntity.
-		 * @param shooter the <code>LivingEntity</code> shooting the entity
-		 * @param world the <code>World</code> the entity is in
+		 *
+		 * @param shooter         the <code>LivingEntity</code> shooting the entity
+		 * @param world           the <code>World</code> the entity is in
 		 * @param referenceItemIn the reference item
 		 */
 		public NetheriteBulletEntity(LivingEntity shooter, Level world, Item referenceItemIn) {
@@ -416,10 +446,11 @@ public class BulletEntity {
 
 		/**
 		 * Fire the entity from a position with a velocity and inaccuracy.
-		 * @param x the X position
-		 * @param y the Y position
-		 * @param z the Z position
-		 * @param velocity the velocity
+		 *
+		 * @param x          the X position
+		 * @param y          the Y position
+		 * @param z          the Z position
+		 * @param velocity   the velocity
 		 * @param inaccuracy the inaccuracy modifier
 		 */
 		@Override
@@ -435,6 +466,7 @@ public class BulletEntity {
 
 		/**
 		 * Get the movement modifier.
+		 *
 		 * @return double
 		 */
 		@Override
@@ -451,8 +483,9 @@ public class BulletEntity {
 
 		/**
 		 * Constructor for FlareEntity.
-		 * @param entityType the <code>EntityType</code> instance
-		 * @param world the <code>World</code> the entity is in
+		 *
+		 * @param entityType        the <code>EntityType</code> instance
+		 * @param world             the <code>World</code> the entity is in
 		 * @param knockbackStrength the bullet knockback strength
 		 */
 		public FlareEntity(EntityType<FlareEntity> entityType, Level world, int knockbackStrength) {
@@ -463,8 +496,9 @@ public class BulletEntity {
 
 		/**
 		 * Constructor for FlareEntity.
-		 * @param shooter the <code>LivingEntity</code> shooting the entity
-		 * @param world the <code>World</code> the entity is in
+		 *
+		 * @param shooter         the <code>LivingEntity</code> shooting the entity
+		 * @param world           the <code>World</code> the entity is in
 		 * @param referenceItemIn the reference item
 		 */
 		public FlareEntity(LivingEntity shooter, Level world, Item referenceItemIn) {
@@ -474,10 +508,11 @@ public class BulletEntity {
 
 		/**
 		 * Fire the entity from a position with a velocity and inaccuracy.
-		 * @param x the X position
-		 * @param y the Y position
-		 * @param z the Z position
-		 * @param velocity the velocity
+		 *
+		 * @param x          the X position
+		 * @param y          the Y position
+		 * @param z          the Z position
+		 * @param velocity   the velocity
 		 * @param inaccuracy the inaccuracy modifier
 		 */
 		@Override
@@ -518,6 +553,7 @@ public class BulletEntity {
 
 		/**
 		 * Runs when an entity is hit.
+		 *
 		 * @param entity the <code>Entity</code> being hit
 		 */
 		@Override
@@ -527,6 +563,7 @@ public class BulletEntity {
 
 		/**
 		 * Get the movement modifier.
+		 *
 		 * @return double
 		 */
 		@Override
@@ -536,6 +573,7 @@ public class BulletEntity {
 
 		/**
 		 * Get the item associated with this entity.
+		 *
 		 * @return ItemStack
 		 */
 		@Override

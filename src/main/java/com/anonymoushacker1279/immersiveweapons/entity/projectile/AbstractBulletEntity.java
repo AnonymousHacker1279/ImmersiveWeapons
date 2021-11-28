@@ -34,19 +34,20 @@ import org.jetbrains.annotations.NotNull;
 
 public abstract class AbstractBulletEntity extends AbstractArrow {
 
-	Item referenceItem;
+	private static final boolean canBreakGlass = Config.BULLETS_BREAK_GLASS.get();
 	private final SoundEvent hitSound = getDefaultHitGroundSoundEvent();
+	Item referenceItem;
+	int knockbackStrength;
+	boolean shouldStopMoving = false;
 	private BlockState inBlockState;
 	private IntOpenHashSet piercedEntities;
-	int knockbackStrength;
 	private boolean hasAlreadyBrokeGlass = false;
-	boolean shouldStopMoving = false;
-	private static final boolean canBreakGlass = Config.BULLETS_BREAK_GLASS.get();
 
 	/**
 	 * Constructor for AbstractBulletEntity.
+	 *
 	 * @param entityType the <code>EntityType</code> instance
-	 * @param world the <code>World</code> the entity is in
+	 * @param world      the <code>World</code> the entity is in
 	 */
 	AbstractBulletEntity(EntityType<? extends AbstractArrow> entityType, Level world) {
 		super(entityType, world);
@@ -54,9 +55,10 @@ public abstract class AbstractBulletEntity extends AbstractArrow {
 
 	/**
 	 * Constructor for AbstractBulletEntity.
+	 *
 	 * @param entityType the <code>EntityType</code> instance
-	 * @param shooter the <code>LivingEntity</code> shooting the entity
-	 * @param world the <code>World</code> the entity is in
+	 * @param shooter    the <code>LivingEntity</code> shooting the entity
+	 * @param world      the <code>World</code> the entity is in
 	 */
 	AbstractBulletEntity(EntityType<? extends AbstractBulletEntity> entityType, LivingEntity shooter, Level world) {
 		super(entityType, shooter, world);
@@ -64,6 +66,7 @@ public abstract class AbstractBulletEntity extends AbstractArrow {
 
 	/**
 	 * Get the pickup item.
+	 *
 	 * @return ItemStack
 	 */
 	@Override
@@ -73,6 +76,7 @@ public abstract class AbstractBulletEntity extends AbstractArrow {
 
 	/**
 	 * Get the entity spawn packet.
+	 *
 	 * @return IPacket
 	 */
 	@Override
@@ -210,6 +214,7 @@ public abstract class AbstractBulletEntity extends AbstractArrow {
 
 	/**
 	 * Get the movement modifier.
+	 *
 	 * @return double
 	 */
 	public double getMovementModifier() {
@@ -218,6 +223,7 @@ public abstract class AbstractBulletEntity extends AbstractArrow {
 
 	/**
 	 * Runs when an entity is hit.
+	 *
 	 * @param entityRayTraceResult the <code>EntityRayTraceResult</code> instance
 	 */
 	@Override
@@ -303,6 +309,7 @@ public abstract class AbstractBulletEntity extends AbstractArrow {
 
 	/**
 	 * Runs when a block is hit.
+	 *
 	 * @param blockHitResult the <code>BlockHitResult</code> instance
 	 */
 	@Override
@@ -348,6 +355,7 @@ public abstract class AbstractBulletEntity extends AbstractArrow {
 
 	/**
 	 * Additional stuff to do when an entity is hit.
+	 *
 	 * @param entity the <code>Entity</code> being hit
 	 */
 	protected void doWhenHitEntity(Entity entity) {

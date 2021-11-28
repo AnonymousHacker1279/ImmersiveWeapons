@@ -12,11 +12,12 @@ public class TeslaSynthesizerFuelSlot extends Slot {
 
 	/**
 	 * Constructor for TeslaSynthesizerFuelSlot.
-	 * @param teslaSynthesizerFuelSlot the <code>AbstractTeslaSynthesizerContainer</code> instance
+	 *
+	 * @param teslaSynthesizerFuelSlot  the <code>AbstractTeslaSynthesizerContainer</code> instance
 	 * @param teslaSynthesizerInventory the <code>IInventory</code> of the tile entity
-	 * @param slotIndex the slot index
-	 * @param xPos the X position of the slot
-	 * @param yPos the Y position of the slot
+	 * @param slotIndex                 the slot index
+	 * @param xPos                      the X position of the slot
+	 * @param yPos                      the Y position of the slot
 	 */
 	public TeslaSynthesizerFuelSlot(AbstractTeslaSynthesizerContainer teslaSynthesizerFuelSlot, Container teslaSynthesizerInventory, int slotIndex, int xPos, int yPos) {
 		super(teslaSynthesizerInventory, slotIndex, xPos, yPos);
@@ -25,6 +26,7 @@ public class TeslaSynthesizerFuelSlot extends Slot {
 
 	/**
 	 * Check if the stack is allowed to be placed in this slot.
+	 *
 	 * @param stack the <code>ItemStack</code> to be checked
 	 * @return boolean
 	 */
@@ -35,6 +37,7 @@ public class TeslaSynthesizerFuelSlot extends Slot {
 
 	/**
 	 * Get the max stack size.
+	 *
 	 * @param stack the <code>ItemStack</code> to be checked
 	 * @return int
 	 */

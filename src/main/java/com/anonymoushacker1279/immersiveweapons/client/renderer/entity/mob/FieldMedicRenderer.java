@@ -17,6 +17,7 @@ public class FieldMedicRenderer extends HumanoidMobRenderer<FieldMedicEntity, Pl
 
 	/**
 	 * Constructor for FieldMedicRenderer.
+	 *
 	 * @param context an <code>EntityRendererManager</code> instance
 	 */
 	public FieldMedicRenderer(Context context) {
@@ -26,6 +27,7 @@ public class FieldMedicRenderer extends HumanoidMobRenderer<FieldMedicEntity, Pl
 
 	/**
 	 * Get the texture location.
+	 *
 	 * @param entity the <code>AbstractFieldMedicEntity</code> instance
 	 * @return ResourceLocation
 	 */
