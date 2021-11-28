@@ -39,7 +39,7 @@ public class CelestialTowerSummonGoal extends Goal {
 	private int waveSpawnCooldown = 100;
 
 	public CelestialTowerSummonGoal(CelestialTowerEntity pMob) {
-		this.mob = pMob;
+		mob = pMob;
 	}
 
 	/**
@@ -66,6 +66,7 @@ public class CelestialTowerSummonGoal extends Goal {
 			for (int i = fodderMobsToSpawn; i > 0; i--) {
 				BlockPos summonPos = new BlockPos(mob.getX() + GeneralUtilities.getRandomNumber(-16, 17), mob.getY(), mob.getZ() + GeneralUtilities.getRandomNumber(-16, 17));
 				RockSpiderEntity entity = new RockSpiderEntity(DeferredRegistryHandler.ROCK_SPIDER_ENTITY.get(), mob.level);
+				entity.setPersistenceRequired();
 				entity.teleportTo(summonPos.getX(), summonPos.getY(), summonPos.getZ());
 				mob.level.addFreshEntity(entity);
 				PacketHandler.INSTANCE.send(PacketDistributor.TRACKING_CHUNK.with(() -> mob.level.getChunkAt(summonPos)), new CelestialTowerSummonGoalPacketHandler(summonPos, 0));
@@ -73,6 +74,7 @@ public class CelestialTowerSummonGoal extends Goal {
 			for (int i = powerMobsToSpawn; i > 0; i--) {
 				BlockPos summonPos = new BlockPos(mob.getX() + GeneralUtilities.getRandomNumber(-16, 17), mob.getY(), mob.getZ() + GeneralUtilities.getRandomNumber(-16, 17));
 				Zombie entity = new Zombie(EntityType.ZOMBIE, mob.level);
+				entity.setPersistenceRequired();
 				ItemStack sword = new ItemStack(Items.IRON_SWORD);
 				sword.enchant(Enchantments.SHARPNESS, GeneralUtilities.getRandomNumber(2, 4 + mob.getWavesSpawned()));
 				sword.enchant(Enchantments.KNOCKBACK, GeneralUtilities.getRandomNumber(1, 3 + mob.getWavesSpawned()));
@@ -91,6 +93,7 @@ public class CelestialTowerSummonGoal extends Goal {
 			for (int i = mobsToSpawn; i > 0; i--) {
 				BlockPos summonPos = new BlockPos(mob.getX() + GeneralUtilities.getRandomNumber(-16, 17), mob.getY(), mob.getZ() + GeneralUtilities.getRandomNumber(-16, 17));
 				Skeleton entity = new Skeleton(EntityType.SKELETON, mob.level);
+				entity.setPersistenceRequired();
 				ItemStack bow = new ItemStack(Items.BOW);
 				bow.enchant(Enchantments.POWER_ARROWS, GeneralUtilities.getRandomNumber(1, 3 + mob.getWavesSpawned()));
 				bow.enchant(Enchantments.PUNCH_ARROWS, GeneralUtilities.getRandomNumber(1, 2 + mob.getWavesSpawned()));
