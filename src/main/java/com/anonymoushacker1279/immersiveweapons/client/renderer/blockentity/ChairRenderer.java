@@ -21,11 +21,13 @@ public class ChairRenderer extends EntityRenderer<ChairEntity> implements Entity
 	 * @param entity the <code>ChairEntity</code> instance
 	 * @return ResourceLocation
 	 */
+	@SuppressWarnings("ConstantConditions")
 	@Override
 	public @NotNull ResourceLocation getTextureLocation(@NotNull ChairEntity entity) {
 		return null;
 	}
 
+	@SuppressWarnings("ConstantConditions")
 	@Override
 	public @NotNull EntityRenderer<ChairEntity> create(@NotNull Context context) {
 		return null;

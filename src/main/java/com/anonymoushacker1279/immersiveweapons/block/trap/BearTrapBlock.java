@@ -71,7 +71,7 @@ public class BearTrapBlock extends BaseEntityBlock implements SimpleWaterloggedB
 			BearTrapBlockEntity bearTrap = (BearTrapBlockEntity) worldIn.getBlockEntity(pos);
 			ItemStack currentlyHeldItem = player.getMainHandItem();
 			if (bearTrap != null) {
-				if (state.getValue(TRIGGERED) && !bearTrap.hasTrappedEntity() && !bearTrap.hasTrappedPlayerEntity()) {
+				if (state.getValue(TRIGGERED) && !bearTrap.hasTrappedEntity() && bearTrap.hasTrappedPlayerEntity()) {
 					worldIn.setBlock(pos, state.setValue(TRIGGERED, false).setValue(VINES, false), 3);
 					return InteractionResult.SUCCESS;
 				}

@@ -52,7 +52,7 @@ public class AzulStainedOrchidBlock extends FlowerBlock {
 					if (destinationWorld != null && !entity.isPassenger()) {
 						entityWorld.getProfiler().push("tiltros_portal");
 						entity.setPortalCooldown();
-						entity.changeDimension(destinationWorld, new TiltrosTeleporter(destinationWorld));
+						entity.changeDimension(destinationWorld, new TiltrosTeleporter());
 						BlockPos oldEntityPos = entity.blockPosition();
 						entity.teleportTo(oldEntityPos.getX() - 0.5f, oldEntityPos.getY() + 0.5f, oldEntityPos.getZ() + 0.5f);
 						// Build a spawn area with another portal, if one doesn't already exist

@@ -92,7 +92,7 @@ public class CelestialTowerEntity extends Monster {
 
 	@Nullable
 	@Override
-	public SpawnGroupData finalizeSpawn(ServerLevelAccessor pLevel, DifficultyInstance pDifficulty, MobSpawnType pReason, @Nullable SpawnGroupData pSpawnData, @Nullable CompoundTag pDataTag) {
+	public SpawnGroupData finalizeSpawn(@NotNull ServerLevelAccessor pLevel, @NotNull DifficultyInstance pDifficulty, @NotNull MobSpawnType pReason, @Nullable SpawnGroupData pSpawnData, @Nullable CompoundTag pDataTag) {
 		pSpawnData = super.finalizeSpawn(pLevel, pDifficulty, pReason, pSpawnData, pDataTag);
 
 		teleportTo(getX(), getY() + 2, getZ());
@@ -163,7 +163,7 @@ public class CelestialTowerEntity extends Monster {
 	}
 
 	@Override
-	public void addAdditionalSaveData(CompoundTag pCompound) {
+	public void addAdditionalSaveData(@NotNull CompoundTag pCompound) {
 		super.addAdditionalSaveData(pCompound);
 		pCompound.putInt("totalWavesToSpawn", totalWavesToSpawn);
 		pCompound.putInt("waveSizeModifier", waveSizeModifier);
@@ -178,19 +178,19 @@ public class CelestialTowerEntity extends Monster {
 	}
 
 	@Override
-	public void startSeenByPlayer(ServerPlayer pPlayer) {
+	public void startSeenByPlayer(@NotNull ServerPlayer pPlayer) {
 		super.startSeenByPlayer(pPlayer);
 		bossEvent.addPlayer(pPlayer);
 	}
 
 	@Override
-	public void stopSeenByPlayer(ServerPlayer pPlayer) {
+	public void stopSeenByPlayer(@NotNull ServerPlayer pPlayer) {
 		super.stopSeenByPlayer(pPlayer);
 		bossEvent.removePlayer(pPlayer);
 	}
 
 	@Override
-	public boolean checkSpawnRules(LevelAccessor pLevel, MobSpawnType pSpawnReason) {
+	public boolean checkSpawnRules(LevelAccessor pLevel, @NotNull MobSpawnType pSpawnReason) {
 		BlockPos blockPos = blockPosition();
 		boolean flag = pLevel.getBlockState(blockPos.below()).isValidSpawn(pLevel, blockPos.below(), getType());
 		boolean flag1 = pLevel.getBlockStates(new AABB(blockPos.getX() - 16, blockPos.getY() + 1, blockPos.getZ() - 16, blockPos.getX() + 16, blockPos.getY() + 12, blockPos.getZ() + 16))

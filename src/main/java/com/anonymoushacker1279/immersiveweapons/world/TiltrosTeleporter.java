@@ -23,10 +23,7 @@ import java.util.function.Function;
 
 public class TiltrosTeleporter implements ITeleporter {
 
-	protected final ServerLevel level;
-
-	public TiltrosTeleporter(ServerLevel worldIn) {
-		level = worldIn;
+	public TiltrosTeleporter() {
 	}
 
 	public Optional<BlockUtil.FoundRectangle> makePortal(BlockPos pos) {

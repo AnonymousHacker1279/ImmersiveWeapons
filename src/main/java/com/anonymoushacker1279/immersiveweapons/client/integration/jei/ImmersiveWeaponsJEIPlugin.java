@@ -24,6 +24,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Objects;
 import java.util.Set;
 
+@SuppressWarnings("unused")
 @JeiPlugin
 public class ImmersiveWeaponsJEIPlugin implements IModPlugin {
 

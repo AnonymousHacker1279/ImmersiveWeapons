@@ -123,7 +123,7 @@ public class BearTrapBlockEntity extends BlockEntity implements EntityBlock {
 	 * @param playerEntity the <code>PlayerEntity</code> to trap
 	 */
 	public void setTrappedPlayerEntity(@Nullable Player playerEntity) {
-		if (!hasTrappedPlayerEntity() && playerEntity != null) {
+		if (hasTrappedPlayerEntity() && playerEntity != null) {
 			id = null;
 			trappedPlayerEntity = playerEntity;
 		}
@@ -170,7 +170,7 @@ public class BearTrapBlockEntity extends BlockEntity implements EntityBlock {
 	 * @return boolean
 	 */
 	public boolean hasTrappedPlayerEntity() {
-		return getTrappedPlayerEntity() != null;
+		return getTrappedPlayerEntity() == null;
 	}
 
 	/**

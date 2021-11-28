@@ -160,20 +160,6 @@ public class LavaRevenantEntity extends FlyingMob implements Enemy {
 
 	}
 
-	/**
-	 * Called frequently so the entity can update its state every tick as required. For example, zombies and skeletons
-	 * use this to react to sunlight and start to burn.
-	 */
-	@Override
-	public void aiStep() {
-		super.aiStep();
-	}
-
-	@Override
-	protected void customServerAiStep() {
-		super.customServerAiStep();
-	}
-
 	@Override
 	public SpawnGroupData finalizeSpawn(@NotNull ServerLevelAccessor pLevel, @NotNull DifficultyInstance pDifficulty, @NotNull MobSpawnType pReason, @Nullable SpawnGroupData pSpawnData, @Nullable CompoundTag pDataTag) {
 		anchorPoint = blockPosition().above(15);
