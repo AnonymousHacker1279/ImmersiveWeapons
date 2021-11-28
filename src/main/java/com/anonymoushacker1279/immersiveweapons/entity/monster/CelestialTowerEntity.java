@@ -4,6 +4,7 @@ import com.anonymoushacker1279.immersiveweapons.entity.ai.goal.CelestialTowerSum
 import com.anonymoushacker1279.immersiveweapons.entity.ai.goal.HoverGoal;
 import com.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
 import com.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -23,7 +24,10 @@ import net.minecraft.world.entity.ai.goal.FloatGoal;
 import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.ServerLevelAccessor;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.phys.AABB;
 import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
@@ -183,6 +187,18 @@ public class CelestialTowerEntity extends Monster {
 	public void stopSeenByPlayer(ServerPlayer pPlayer) {
 		super.stopSeenByPlayer(pPlayer);
 		this.bossEvent.removePlayer(pPlayer);
+	}
+
+	@Override
+	public boolean checkSpawnRules(LevelAccessor pLevel, MobSpawnType pSpawnReason) {
+		BlockPos blockPos = blockPosition();
+		boolean flag1 = pLevel.getBlockStates(new AABB(blockPos.getX() - 16, blockPos.getY() + 1, blockPos.getZ() - 16, blockPos.getX() + 16, blockPos.getY() + 12, blockPos.getZ() + 16))
+				.allMatch(blockState -> blockState == Blocks.AIR.defaultBlockState());
+		boolean flag2 = pLevel.getBlockStates(new AABB(blockPos.getX() - 16, blockPos.getY() - 1, blockPos.getZ() - 16, blockPos.getX() + 16, blockPos.getY(), blockPos.getZ() + 16))
+				.noneMatch(blockState -> blockState == Blocks.AIR.defaultBlockState());
+		return pSpawnReason == MobSpawnType.SPAWNER || (pLevel.getBlockState(blockPos.below()).isValidSpawn(pLevel, blockPos.below(), getType()) &&
+				flag1 &&
+				flag2);
 	}
 
 	public boolean isDoneSpawningWaves() {

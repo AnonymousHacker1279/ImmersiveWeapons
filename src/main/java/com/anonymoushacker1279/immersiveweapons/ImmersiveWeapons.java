@@ -88,11 +88,12 @@ public class ImmersiveWeapons {
 
 	/**
 	 * Sets up a custom biome. Adds the types to the BiomeDictionary
-	 *      and adds the biome to the BiomeManager.
-	 * @param biome the <code>Biome</code> being setup
+	 * and adds the biome to the BiomeManager.
+	 *
+	 * @param biome     the <code>Biome</code> being setup
 	 * @param biomeType the <code>BiomeType</code> for the biome
-	 * @param weight weight to generate biomes
-	 * @param types the dimension type: leave null for a modded dimension
+	 * @param weight    weight to generate biomes
+	 * @param types     the dimension type: leave null for a modded dimension
 	 */
 	private static void setupBiome(Biome biome, BiomeType biomeType, int weight, BiomeDictionary.Type... types) {
 		BiomeDictionary.addTypes(key(biome), types);
@@ -101,6 +102,7 @@ public class ImmersiveWeapons {
 
 	/**
 	 * Create a ResourceKey for Biomes.
+	 *
 	 * @param biome the <code>Biome</code> being registered
 	 * @return ResourceKey extending Biome
 	 */
@@ -111,6 +113,7 @@ public class ImmersiveWeapons {
 	/**
 	 * Event handler for the FMLCommonSetupEvent.
 	 * Most of this is registry related.
+	 *
 	 * @param event the <code>FMLCommonSetupEvent</code> instance
 	 */
 	public void setup(FMLCommonSetupEvent event) {
@@ -130,6 +133,7 @@ public class ImmersiveWeapons {
 	/**
 	 * Event handler for the BiomeLoadingEvent.
 	 * Configures custom ores, carvers, spawns, structures, etc.
+	 *
 	 * @param event the <code>BiomeLoadingEvent</code> instance
 	 */
 	public void onBiomeLoading(BiomeLoadingEvent event) {
@@ -145,8 +149,10 @@ public class ImmersiveWeapons {
 			}
 
 			if (event.getCategory() != BiomeCategory.OCEAN && event.getCategory() != BiomeCategory.RIVER) {
-				if (Config.WANDERING_WARRIOR_SPAWN.get()) event.getSpawns().addSpawn(MobCategory.MONSTER, new SpawnerData(DeferredRegistryHandler.WANDERING_WARRIOR_ENTITY.get(), 13, 1, 1));
-				if (Config.HANS_SPAWN.get()) event.getSpawns().addSpawn(MobCategory.MONSTER, new SpawnerData(DeferredRegistryHandler.HANS_ENTITY.get(), 1, 1, 1));
+				if (Config.WANDERING_WARRIOR_SPAWN.get())
+					event.getSpawns().addSpawn(MobCategory.MONSTER, new SpawnerData(DeferredRegistryHandler.WANDERING_WARRIOR_ENTITY.get(), 13, 1, 1));
+				if (Config.HANS_SPAWN.get())
+					event.getSpawns().addSpawn(MobCategory.MONSTER, new SpawnerData(DeferredRegistryHandler.HANS_ENTITY.get(), 1, 1, 1));
 			}
 		}
 		if (event.getCategory() == BiomeCategory.NETHER) {
@@ -156,8 +162,12 @@ public class ImmersiveWeapons {
 					.add(() -> OreGeneratorHandler.ORE_NETHER_SULFUR_CONFIG);
 		}
 		if (Objects.requireNonNull(event.getName()).toString().equals("immersiveweapons:tiltros")) {
-			if (Config.LAVA_REVENANT_SPAWN.get()) event.getSpawns().addSpawn(MobCategory.MONSTER, new SpawnerData(DeferredRegistryHandler.LAVA_REVENANT_ENTITY.get(), 1, 0, 1));
-			if (Config.ROCK_SPIDER_SPAWN.get()) event.getSpawns().addSpawn(MobCategory.MONSTER, new SpawnerData(DeferredRegistryHandler.ROCK_SPIDER_ENTITY.get(), 5, 4, 12));
+			if (Config.LAVA_REVENANT_SPAWN.get())
+				event.getSpawns().addSpawn(MobCategory.MONSTER, new SpawnerData(DeferredRegistryHandler.LAVA_REVENANT_ENTITY.get(), 1, 0, 1));
+			if (Config.ROCK_SPIDER_SPAWN.get())
+				event.getSpawns().addSpawn(MobCategory.MONSTER, new SpawnerData(DeferredRegistryHandler.ROCK_SPIDER_ENTITY.get(), 5, 4, 12));
+			if (Config.CELESTIAL_TOWER_SPAWN.get())
+				event.getSpawns().addSpawn(MobCategory.MONSTER, new SpawnerData(DeferredRegistryHandler.CELESTIAL_TOWER_ENTITY.get(), 2, 0, 1));
 		}
 
 		if (event.getCategory() == BiomeCategory.FOREST) {
@@ -201,7 +211,8 @@ public class ImmersiveWeapons {
 	/**
 	 * Event handler for the WorldEvent.Load event.
 	 * Most importantly, we are building a Map
-	 *     to contain our structures.
+	 * to contain our structures.
+	 *
 	 * @param event the <code>WorldEvent.Load</code> instance
 	 */
 	public void worldLoadEvent(WorldEvent.Load event) {

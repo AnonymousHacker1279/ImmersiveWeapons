@@ -17,6 +17,7 @@ public class BiomeBuilder {
 
 	/**
 	 * Get the surface builder.
+	 *
 	 * @param key the <code>ResourceKey</code>, must extend ConfiguredSurfaceBuilder
 	 * @return ConfiguredSurfaceBuilder
 	 */
@@ -26,9 +27,10 @@ public class BiomeBuilder {
 
 	/**
 	 * Make a Battlefield biome.
+	 *
 	 * @param surfaceBuilder the <code>ConfiguredSurfaceBuilder</code> instance
-	 * @param depth the biome depth
-	 * @param scale the biome scale
+	 * @param depth          the biome depth
+	 * @param scale          the biome scale
 	 * @return Biome
 	 */
 	public static Biome makeBattlefieldBiome(ConfiguredSurfaceBuilder<?> surfaceBuilder, float depth, float scale) {
@@ -81,14 +83,16 @@ public class BiomeBuilder {
 
 	/**
 	 * Make an Tiltros biome.
+	 *
 	 * @param surfaceBuilder the <code>ConfiguredSurfaceBuilder</code> instance
-	 * @param depth the biome depth
-	 * @param scale the biome scale
+	 * @param depth          the biome depth
+	 * @param scale          the biome scale
 	 * @return Biome
 	 */
 	public static Biome makeTiltrosBiome(ConfiguredSurfaceBuilder<?> surfaceBuilder, float depth, float scale) {
 		MobSpawnSettings.Builder mobSpawnInfoBuilder = new MobSpawnSettings.Builder()
 				.addMobCharge(DeferredRegistryHandler.LAVA_REVENANT_ENTITY.get(), 4.5D, 0.12D)
+				.addMobCharge(DeferredRegistryHandler.CELESTIAL_TOWER_ENTITY.get(), 5.5D, 0.12D)
 				.setPlayerCanSpawn();
 
 		BiomeGenerationSettings.Builder biomeGenerationSettingBuilder = new BiomeGenerationSettings.Builder()
