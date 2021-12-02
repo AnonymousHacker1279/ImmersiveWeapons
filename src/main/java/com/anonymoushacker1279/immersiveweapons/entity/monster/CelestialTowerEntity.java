@@ -9,6 +9,7 @@ import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerBossEvent;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
@@ -26,7 +27,8 @@ import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.ServerLevelAccessor;
-import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockBehaviour.BlockStateBase;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 import org.jetbrains.annotations.NotNull;
 
@@ -40,6 +42,8 @@ public class CelestialTowerEntity extends Monster {
 	private int waveSizeModifier = 1;
 	private int wavesSpawned = 0;
 	private boolean doneSpawningWaves = false;
+	private static int lastSpawnAttemptTick = -1;
+	private final MinecraftServer server = getServer();
 
 	public CelestialTowerEntity(EntityType<? extends Monster> type, Level level) {
 		super(type, level);
@@ -189,18 +193,49 @@ public class CelestialTowerEntity extends Monster {
 	}
 
 	@Override
-	public boolean checkSpawnRules(LevelAccessor pLevel, @NotNull MobSpawnType pSpawnReason) {
-		BlockPos blockPos = blockPosition();
-		boolean flag = pLevel.getBlockState(blockPos.below()).isValidSpawn(pLevel, blockPos.below(), getType());
-		boolean flag1 = pLevel.getBlockStates(new AABB(blockPos.getX() - 16, blockPos.getY() + 1, blockPos.getZ() - 16, blockPos.getX() + 16, blockPos.getY() + 12, blockPos.getZ() + 16))
-				.filter(blockState -> blockState == Blocks.AIR.defaultBlockState())
-				.count() / 11264.0f >= 0.6f;
-		boolean flag2 = pLevel.getBlockStates(new AABB(blockPos.getX() - 16, blockPos.getY() - 1, blockPos.getZ() - 16, blockPos.getX() + 16, blockPos.getY(), blockPos.getZ() + 16))
-				.filter(blockState -> blockState == Blocks.AIR.defaultBlockState())
-				.count() / 256.0f >= 0.4f;
+	public boolean checkSpawnRules(@NotNull LevelAccessor pLevel, @NotNull MobSpawnType pSpawnReason) {
 		if (pSpawnReason == MobSpawnType.SPAWNER || pSpawnReason == MobSpawnType.SPAWN_EGG) {
 			return true;
-		} else return flag && flag1 && flag2;
+		}
+		if (server.getTickCount() - CelestialTowerEntity.lastSpawnAttemptTick >= 40) {
+			CelestialTowerEntity.lastSpawnAttemptTick = server.getTickCount();
+			BlockPos blockPos = blockPosition();
+			long nearbyCelestialLanterns = level.getBlockStatesIfLoaded(new AABB(blockPos.getX() - 56, blockPos.getY() - 20, blockPos.getZ() - 56, blockPos.getX() + 56, blockPos.getY() + 20, blockPos.getZ() + 56))
+					.filter(blockState -> blockState == DeferredRegistryHandler.CELESTIAL_LANTERN.get().defaultBlockState())
+					.limit(3)
+					.count();
+			if (nearbyCelestialLanterns >= 3) {
+				return false;
+			} else if (nearbyCelestialLanterns == 0) {
+				return canSpawn(level, blockPos);
+			} else if (GeneralUtilities.getRandomNumber(0.0f, 1.0f) <= (
+					nearbyCelestialLanterns == 2 ? 0.125f : 0.25f)) {
+				return canSpawn(level, blockPos);
+			}
+		} else if (CelestialTowerEntity.lastSpawnAttemptTick == -1){
+			CelestialTowerEntity.lastSpawnAttemptTick = server.getTickCount();
+		}
+
+		return false;
+	}
+
+	private boolean canSpawn(LevelAccessor pLevel, BlockPos blockPos) {
+		BlockState belowState = pLevel.getBlockState(blockPos.below());
+		boolean isValidSpawn = belowState.isValidSpawn(pLevel, blockPos.below(), getType());
+		boolean hasSufficientGround = pLevel.getBlockStatesIfLoaded(new AABB(blockPos.getX() - 8, blockPos.getY() - 1, blockPos.getZ() - 8, blockPos.getX() + 8, blockPos.getY(), blockPos.getZ() + 8))
+				.filter(BlockStateBase::isAir)
+				.count() / 256.0f >= 0.8f;
+		return isValidSpawn && hasSufficientGround;
+	}
+
+	@Override
+	public boolean isMaxGroupSizeReached(int pSize) {
+		return pSize > 1;
+	}
+
+	@Override
+	public int getMaxSpawnClusterSize() {
+		return 1;
 	}
 
 	public boolean isDoneSpawningWaves() {

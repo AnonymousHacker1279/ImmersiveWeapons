@@ -278,6 +278,9 @@ public class TooltipHandler {
 		if (stack.getItem() == DeferredRegistryHandler.MORTAR_ITEM.get()) {
 			event.getToolTip().add(new TranslatableComponent("immersiveweapons.tooltip.mortar").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
 		}
+		if (stack.getItem() == DeferredRegistryHandler.CELESTIAL_FRAGMENT.get()) {
+			event.getToolTip().add(new TranslatableComponent("immersiveweapons.tooltip.celestial_fragment").withStyle(ChatFormatting.YELLOW, ChatFormatting.ITALIC));
+		}
 
 
 		// Lore

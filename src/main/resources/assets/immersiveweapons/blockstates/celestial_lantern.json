@@ -1,0 +1,10 @@
+{
+	"variants": {
+		"hanging=false": {
+			"model": "immersiveweapons:block/celestial_lantern"
+		},
+		"hanging=true": {
+			"model": "immersiveweapons:block/celestial_lantern_hanging"
+		}
+	}
+}
