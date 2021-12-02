@@ -3,6 +3,7 @@ package com.anonymoushacker1279.immersiveweapons.entity.monster;
 import com.anonymoushacker1279.immersiveweapons.entity.ai.goal.CelestialTowerSummonGoal;
 import com.anonymoushacker1279.immersiveweapons.entity.ai.goal.HoverGoal;
 import com.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
+import com.anonymoushacker1279.immersiveweapons.util.Config;
 import com.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
@@ -44,6 +45,8 @@ public class CelestialTowerEntity extends Monster {
 	private boolean doneSpawningWaves = false;
 	private static int lastSpawnAttemptTick = -1;
 	private final MinecraftServer server = getServer();
+	private static final int XZ_SPAWN_CHECK_RADIUS = Config.CELESTIAL_TOWER_XZ_SPAWN_CHECK_RADIUS.get();
+	private static final int Y_SPAWN_CHECK_RADIUS = Config.CELESTIAL_TOWER_Y_SPAWN_CHECK_RADIUS.get();
 
 	public CelestialTowerEntity(EntityType<? extends Monster> type, Level level) {
 		super(type, level);
@@ -200,7 +203,7 @@ public class CelestialTowerEntity extends Monster {
 		if (server.getTickCount() - CelestialTowerEntity.lastSpawnAttemptTick >= 40) {
 			CelestialTowerEntity.lastSpawnAttemptTick = server.getTickCount();
 			BlockPos blockPos = blockPosition();
-			long nearbyCelestialLanterns = level.getBlockStatesIfLoaded(new AABB(blockPos.getX() - 56, blockPos.getY() - 20, blockPos.getZ() - 56, blockPos.getX() + 56, blockPos.getY() + 20, blockPos.getZ() + 56))
+			long nearbyCelestialLanterns = level.getBlockStatesIfLoaded(new AABB(blockPos.getX() - XZ_SPAWN_CHECK_RADIUS, blockPos.getY() - Y_SPAWN_CHECK_RADIUS, blockPos.getZ() - XZ_SPAWN_CHECK_RADIUS, blockPos.getX() + XZ_SPAWN_CHECK_RADIUS, blockPos.getY() + Y_SPAWN_CHECK_RADIUS, blockPos.getZ() + XZ_SPAWN_CHECK_RADIUS))
 					.filter(blockState -> blockState == DeferredRegistryHandler.CELESTIAL_LANTERN.get().defaultBlockState())
 					.limit(3)
 					.count();

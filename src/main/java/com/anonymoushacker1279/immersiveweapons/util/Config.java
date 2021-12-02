@@ -20,6 +20,9 @@ public class Config {
 	public static ForgeConfigSpec.ConfigValue<Boolean> ROCK_SPIDER_SPAWN;
 	public static ForgeConfigSpec.ConfigValue<Boolean> CELESTIAL_TOWER_SPAWN;
 	public static ForgeConfigSpec.ConfigValue<Boolean> TILTROS_ENABLED;
+	public static ForgeConfigSpec.ConfigValue<Integer> CELESTIAL_TOWER_XZ_SPAWN_CHECK_RADIUS;
+	public static ForgeConfigSpec.ConfigValue<Integer> CELESTIAL_TOWER_Y_SPAWN_CHECK_RADIUS;
+	public static ForgeConfigSpec.ConfigValue<String> CELESTIAL_TOWER_MINIONS_WAVE_SIZE_MODIFIER;
 	static ForgeConfigSpec.ConfigValue<Integer> MAX_ABANDONED_FACTORY_DISTANCE;
 	static ForgeConfigSpec.ConfigValue<Integer> MIN_ABANDONED_FACTORY_DISTANCE;
 	static ForgeConfigSpec.ConfigValue<Integer> MAX_PITFALL_TRAP_DISTANCE;
@@ -69,6 +72,15 @@ public class Config {
 		LAVA_REVENANT_SPAWN = COMMON_CONFIG_BUILDER.comment("Enable the natural spawning of Lava Revenants - Default true").define("lava_revenant_spawn", true);
 		ROCK_SPIDER_SPAWN = COMMON_CONFIG_BUILDER.comment("Enable the natural spawning of Rock Spiders - Default true").define("rock_spider_spawn", true);
 		CELESTIAL_TOWER_SPAWN = COMMON_CONFIG_BUILDER.comment("Enable the natural spawning of Celestial Towers - Default true").define("celestial_tower_spawn", true);
+
+		CELESTIAL_TOWER_XZ_SPAWN_CHECK_RADIUS = COMMON_CONFIG_BUILDER.comment("Set the X and Z spawn checking radius for the Celestial Tower.\n" +
+				"Setting this higher will negatively impact server ticks in Tiltros, but make Celestial Lanterns more effective - Default 56").define("celestial_tower_xz_spawn_check_radius", 56);
+		CELESTIAL_TOWER_Y_SPAWN_CHECK_RADIUS = COMMON_CONFIG_BUILDER.comment("Set the Y spawn checking radius for the Celestial Tower.\n" +
+				"Setting this higher will negatively impact server ticks in Tiltros, but make Celestial Lanterns more effective - Default 20").define("celestial_tower_y_spawn_check_radius", 20);
+		CELESTIAL_TOWER_MINIONS_WAVE_SIZE_MODIFIER = COMMON_CONFIG_BUILDER.comment("""
+				Multiplier to change the wave size from Celestial Tower summons.
+				Set less than 1 to reduce, greater than 1 to increase.
+				Increasing the wave size will negatively affect the server ticks in Tiltros. - Default 1.0""").define("celestial_tower_minions_wave_size_modifier", "1.0");
 
 		MAX_ABANDONED_FACTORY_DISTANCE = COMMON_CONFIG_BUILDER.comment("Maximum distance in chunks between Abandoned Factories - Default 120").define("max_abandoned_factory_distance", 120);
 		MIN_ABANDONED_FACTORY_DISTANCE = COMMON_CONFIG_BUILDER.comment("Minimum distance in chunks between Abandoned Factories - Default 90").define("min_abandoned_factory_distance", 90);
