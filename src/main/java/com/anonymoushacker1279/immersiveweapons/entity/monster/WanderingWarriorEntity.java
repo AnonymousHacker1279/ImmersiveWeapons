@@ -12,8 +12,9 @@ public class WanderingWarriorEntity extends AbstractWanderingWarriorEntity {
 
 	/**
 	 * Constructor for WanderingWarriorEntity.
+	 *
 	 * @param entityType the <code>EntityType</code> instance
-	 * @param world the <code>World</code> the entity is in
+	 * @param world      the <code>World</code> the entity is in
 	 */
 	public WanderingWarriorEntity(EntityType<? extends WanderingWarriorEntity> entityType, Level world) {
 		super(entityType, world);
@@ -21,6 +22,7 @@ public class WanderingWarriorEntity extends AbstractWanderingWarriorEntity {
 
 	/**
 	 * Get the ambient sound.
+	 *
 	 * @return SoundEvent
 	 */
 	@Override
@@ -30,6 +32,7 @@ public class WanderingWarriorEntity extends AbstractWanderingWarriorEntity {
 
 	/**
 	 * Get the ambient sound interval.
+	 *
 	 * @return int
 	 */
 	@Override
@@ -39,6 +42,7 @@ public class WanderingWarriorEntity extends AbstractWanderingWarriorEntity {
 
 	/**
 	 * Get the hurt sound.
+	 *
 	 * @param damageSourceIn the <code>DamageSource</code> instance
 	 * @return SoundEvent
 	 */
@@ -49,6 +53,7 @@ public class WanderingWarriorEntity extends AbstractWanderingWarriorEntity {
 
 	/**
 	 * Get the death sound.
+	 *
 	 * @return SoundEvent
 	 */
 	@Override
@@ -58,6 +63,7 @@ public class WanderingWarriorEntity extends AbstractWanderingWarriorEntity {
 
 	/**
 	 * Get the step sound.
+	 *
 	 * @return SoundEvent
 	 */
 	@Override

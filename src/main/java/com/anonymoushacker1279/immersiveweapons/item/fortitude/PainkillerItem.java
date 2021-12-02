@@ -14,6 +14,7 @@ public class PainkillerItem extends Item {
 
 	/**
 	 * Constructor for PainkillerItem.
+	 *
 	 * @param properties the <code>Properties</code> for the item
 	 */
 	public PainkillerItem(Properties properties) {
@@ -22,9 +23,10 @@ public class PainkillerItem extends Item {
 
 	/**
 	 * Runs when the player right-clicks.
-	 * @param worldIn the <code>World</code> the player is in
+	 *
+	 * @param worldIn  the <code>World</code> the player is in
 	 * @param playerIn the <code>PlayerEntity</code> performing the action
-	 * @param handIn the <code>Hand</code> the player is using
+	 * @param handIn   the <code>Hand</code> the player is using
 	 * @return ActionResult extending ItemStack
 	 */
 	@Override

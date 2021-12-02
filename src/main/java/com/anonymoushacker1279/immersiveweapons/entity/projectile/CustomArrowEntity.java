@@ -35,7 +35,8 @@ public class CustomArrowEntity {
 
 		/**
 		 * Constructor for CopperArrowEntity.
-		 * @param type the <code>EntityType</code> instance; must extend AbstractArrowEntity
+		 *
+		 * @param type  the <code>EntityType</code> instance; must extend AbstractArrowEntity
 		 * @param world the <code>World</code> the entity is in
 		 */
 		public CopperArrowEntity(EntityType<? extends AbstractArrow> type, Level world) {
@@ -45,8 +46,9 @@ public class CustomArrowEntity {
 
 		/**
 		 * Constructor for CopperArrowEntity.
-		 * @param shooter the <code>LivingEntity</code> shooting the entity
-		 * @param world the <code>World</code> the entity is in
+		 *
+		 * @param shooter         the <code>LivingEntity</code> shooting the entity
+		 * @param world           the <code>World</code> the entity is in
 		 * @param referenceItemIn the reference item
 		 */
 		public CopperArrowEntity(LivingEntity shooter, Level world, Item referenceItemIn) {
@@ -56,10 +58,11 @@ public class CustomArrowEntity {
 
 		/**
 		 * Constructor for CopperArrowEntity.
+		 *
 		 * @param worldIn the <code>World</code> the entity is in
-		 * @param x the X position
-		 * @param y the Y position
-		 * @param z the Z position
+		 * @param x       the X position
+		 * @param y       the Y position
+		 * @param z       the Z position
 		 */
 		public CopperArrowEntity(Level worldIn, double x, double y, double z) {
 			super(DeferredRegistryHandler.COPPER_ARROW_ENTITY.get(), worldIn, x, y, z);
@@ -71,7 +74,8 @@ public class CustomArrowEntity {
 
 		/**
 		 * Constructor for IronArrowEntity.
-		 * @param type the <code>EntityType</code> instance; must extend AbstractArrowEntity
+		 *
+		 * @param type  the <code>EntityType</code> instance; must extend AbstractArrowEntity
 		 * @param world the <code>World</code> the entity is in
 		 */
 		public IronArrowEntity(EntityType<? extends AbstractArrow> type, Level world) {
@@ -81,8 +85,9 @@ public class CustomArrowEntity {
 
 		/**
 		 * Constructor for IronArrowEntity.
-		 * @param shooter the <code>LivingEntity</code> shooting the entity
-		 * @param world the <code>World</code> the entity is in
+		 *
+		 * @param shooter         the <code>LivingEntity</code> shooting the entity
+		 * @param world           the <code>World</code> the entity is in
 		 * @param referenceItemIn the reference item
 		 */
 		public IronArrowEntity(LivingEntity shooter, Level world, Item referenceItemIn) {
@@ -92,10 +97,11 @@ public class CustomArrowEntity {
 
 		/**
 		 * Constructor for IronArrowEntity.
+		 *
 		 * @param worldIn the <code>World</code> the entity is in
-		 * @param x the X position
-		 * @param y the Y position
-		 * @param z the Z position
+		 * @param x       the X position
+		 * @param y       the Y position
+		 * @param z       the Z position
 		 */
 		public IronArrowEntity(Level worldIn, double x, double y, double z) {
 			super(DeferredRegistryHandler.IRON_ARROW_ENTITY.get(), worldIn, x, y, z);
@@ -107,7 +113,8 @@ public class CustomArrowEntity {
 
 		/**
 		 * Constructor for CobaltArrowEntity.
-		 * @param type the <code>EntityType</code> instance; must extend AbstractArrowEntity
+		 *
+		 * @param type  the <code>EntityType</code> instance; must extend AbstractArrowEntity
 		 * @param world the <code>World</code> the entity is in
 		 */
 		public CobaltArrowEntity(EntityType<? extends AbstractArrow> type, Level world) {
@@ -117,8 +124,9 @@ public class CustomArrowEntity {
 
 		/**
 		 * Constructor for CobaltArrowEntity.
-		 * @param shooter the <code>LivingEntity</code> shooting the entity
-		 * @param world the <code>World</code> the entity is in
+		 *
+		 * @param shooter         the <code>LivingEntity</code> shooting the entity
+		 * @param world           the <code>World</code> the entity is in
 		 * @param referenceItemIn the reference item
 		 */
 		public CobaltArrowEntity(LivingEntity shooter, Level world, Item referenceItemIn) {
@@ -128,10 +136,11 @@ public class CustomArrowEntity {
 
 		/**
 		 * Constructor for CobaltArrowEntity.
+		 *
 		 * @param worldIn the <code>World</code> the entity is in
-		 * @param x the X position
-		 * @param y the Y position
-		 * @param z the Z position
+		 * @param x       the X position
+		 * @param y       the Y position
+		 * @param z       the Z position
 		 */
 		public CobaltArrowEntity(Level worldIn, double x, double y, double z) {
 			super(DeferredRegistryHandler.COBALT_ARROW_ENTITY.get(), worldIn, x, y, z);
@@ -143,7 +152,8 @@ public class CustomArrowEntity {
 
 		/**
 		 * Constructor for DiamondArrowEntity.
-		 * @param type the <code>EntityType</code> instance; must extend AbstractArrowEntity
+		 *
+		 * @param type  the <code>EntityType</code> instance; must extend AbstractArrowEntity
 		 * @param world the <code>World</code> the entity is in
 		 */
 		public DiamondArrowEntity(EntityType<? extends AbstractArrow> type, Level world) {
@@ -153,8 +163,9 @@ public class CustomArrowEntity {
 
 		/**
 		 * Constructor for DiamondArrowEntity.
-		 * @param shooter the <code>LivingEntity</code> shooting the entity
-		 * @param world the <code>World</code> the entity is in
+		 *
+		 * @param shooter         the <code>LivingEntity</code> shooting the entity
+		 * @param world           the <code>World</code> the entity is in
 		 * @param referenceItemIn the reference item
 		 */
 		public DiamondArrowEntity(LivingEntity shooter, Level world, Item referenceItemIn) {
@@ -164,10 +175,11 @@ public class CustomArrowEntity {
 
 		/**
 		 * Constructor for DiamondArrowEntity.
+		 *
 		 * @param worldIn the <code>World</code> the entity is in
-		 * @param x the X position
-		 * @param y the Y position
-		 * @param z the Z position
+		 * @param x       the X position
+		 * @param y       the Y position
+		 * @param z       the Z position
 		 */
 		public DiamondArrowEntity(Level worldIn, double x, double y, double z) {
 			super(DeferredRegistryHandler.DIAMOND_ARROW_ENTITY.get(), worldIn, x, y, z);
@@ -179,7 +191,8 @@ public class CustomArrowEntity {
 
 		/**
 		 * Constructor for GoldArrowEntity.
-		 * @param type the <code>EntityType</code> instance; must extend AbstractArrowEntity
+		 *
+		 * @param type  the <code>EntityType</code> instance; must extend AbstractArrowEntity
 		 * @param world the <code>World</code> the entity is in
 		 */
 		public GoldArrowEntity(EntityType<? extends AbstractArrow> type, Level world) {
@@ -189,8 +202,9 @@ public class CustomArrowEntity {
 
 		/**
 		 * Constructor for GoldArrowEntity.
-		 * @param shooter the <code>LivingEntity</code> shooting the entity
-		 * @param world the <code>World</code> the entity is in
+		 *
+		 * @param shooter         the <code>LivingEntity</code> shooting the entity
+		 * @param world           the <code>World</code> the entity is in
 		 * @param referenceItemIn the reference item
 		 */
 		public GoldArrowEntity(LivingEntity shooter, Level world, Item referenceItemIn) {
@@ -200,10 +214,11 @@ public class CustomArrowEntity {
 
 		/**
 		 * Constructor for GoldArrowEntity.
+		 *
 		 * @param worldIn the <code>World</code> the entity is in
-		 * @param x the X position
-		 * @param y the Y position
-		 * @param z the Z position
+		 * @param x       the X position
+		 * @param y       the Y position
+		 * @param z       the Z position
 		 */
 		public GoldArrowEntity(Level worldIn, double x, double y, double z) {
 			super(DeferredRegistryHandler.GOLD_ARROW_ENTITY.get(), worldIn, x, y, z);
@@ -215,7 +230,8 @@ public class CustomArrowEntity {
 
 		/**
 		 * Constructor for StoneArrowEntity.
-		 * @param type the <code>EntityType</code> instance; must extend AbstractArrowEntity
+		 *
+		 * @param type  the <code>EntityType</code> instance; must extend AbstractArrowEntity
 		 * @param world the <code>World</code> the entity is in
 		 */
 		public StoneArrowEntity(EntityType<? extends AbstractArrow> type, Level world) {
@@ -225,8 +241,9 @@ public class CustomArrowEntity {
 
 		/**
 		 * Constructor for StoneArrowEntity.
-		 * @param shooter the <code>LivingEntity</code> shooting the entity
-		 * @param world the <code>World</code> the entity is in
+		 *
+		 * @param shooter         the <code>LivingEntity</code> shooting the entity
+		 * @param world           the <code>World</code> the entity is in
 		 * @param referenceItemIn the reference item
 		 */
 		public StoneArrowEntity(LivingEntity shooter, Level world, Item referenceItemIn) {
@@ -236,10 +253,11 @@ public class CustomArrowEntity {
 
 		/**
 		 * Constructor for StoneArrowEntity.
+		 *
 		 * @param worldIn the <code>World</code> the entity is in
-		 * @param x the X position
-		 * @param y the Y position
-		 * @param z the Z position
+		 * @param x       the X position
+		 * @param y       the Y position
+		 * @param z       the Z position
 		 */
 		public StoneArrowEntity(Level worldIn, double x, double y, double z) {
 			super(DeferredRegistryHandler.STONE_ARROW_ENTITY.get(), worldIn, x, y, z);
@@ -248,10 +266,11 @@ public class CustomArrowEntity {
 
 		/**
 		 * Fire the entity from a position with a velocity and inaccuracy.
-		 * @param x the X position
-		 * @param y the Y position
-		 * @param z the Z position
-		 * @param velocity the velocity
+		 *
+		 * @param x          the X position
+		 * @param y          the Y position
+		 * @param z          the Z position
+		 * @param velocity   the velocity
 		 * @param inaccuracy the inaccuracy modifier
 		 */
 		@Override
@@ -270,7 +289,8 @@ public class CustomArrowEntity {
 
 		/**
 		 * Constructor for WoodArrowEntity.
-		 * @param type the <code>EntityType</code> instance; must extend AbstractArrowEntity
+		 *
+		 * @param type  the <code>EntityType</code> instance; must extend AbstractArrowEntity
 		 * @param world the <code>World</code> the entity is in
 		 */
 		public WoodArrowEntity(EntityType<? extends AbstractArrow> type, Level world) {
@@ -280,8 +300,9 @@ public class CustomArrowEntity {
 
 		/**
 		 * Constructor for WoodArrowEntity.
-		 * @param shooter the <code>LivingEntity</code> shooting the entity
-		 * @param world the <code>World</code> the entity is in
+		 *
+		 * @param shooter         the <code>LivingEntity</code> shooting the entity
+		 * @param world           the <code>World</code> the entity is in
 		 * @param referenceItemIn the reference item
 		 */
 		public WoodArrowEntity(LivingEntity shooter, Level world, Item referenceItemIn) {
@@ -291,10 +312,11 @@ public class CustomArrowEntity {
 
 		/**
 		 * Constructor for WoodArrowEntity.
+		 *
 		 * @param worldIn the <code>World</code> the entity is in
-		 * @param x the X position
-		 * @param y the Y position
-		 * @param z the Z position
+		 * @param x       the X position
+		 * @param y       the Y position
+		 * @param z       the Z position
 		 */
 		public WoodArrowEntity(Level worldIn, double x, double y, double z) {
 			super(DeferredRegistryHandler.WOOD_ARROW_ENTITY.get(), worldIn, x, y, z);
@@ -303,10 +325,11 @@ public class CustomArrowEntity {
 
 		/**
 		 * Fire the entity from a position with a velocity and inaccuracy.
-		 * @param x the X position
-		 * @param y the Y position
-		 * @param z the Z position
-		 * @param velocity the velocity
+		 *
+		 * @param x          the X position
+		 * @param y          the Y position
+		 * @param z          the Z position
+		 * @param velocity   the velocity
 		 * @param inaccuracy the inaccuracy modifier
 		 */
 		@Override
@@ -319,7 +342,8 @@ public class CustomArrowEntity {
 
 		/**
 		 * Constructor for NetheriteArrowEntity.
-		 * @param type the <code>EntityType</code> instance; must extend AbstractArrowEntity
+		 *
+		 * @param type  the <code>EntityType</code> instance; must extend AbstractArrowEntity
 		 * @param world the <code>World</code> the entity is in
 		 */
 		public NetheriteArrowEntity(EntityType<? extends AbstractArrow> type, Level world) {
@@ -329,8 +353,9 @@ public class CustomArrowEntity {
 
 		/**
 		 * Constructor for NetheriteArrowEntity.
-		 * @param shooter the <code>LivingEntity</code> shooting the entity
-		 * @param world the <code>World</code> the entity is in
+		 *
+		 * @param shooter         the <code>LivingEntity</code> shooting the entity
+		 * @param world           the <code>World</code> the entity is in
 		 * @param referenceItemIn the reference item
 		 */
 		public NetheriteArrowEntity(LivingEntity shooter, Level world, Item referenceItemIn) {
@@ -340,10 +365,11 @@ public class CustomArrowEntity {
 
 		/**
 		 * Constructor for NetheriteArrowEntity.
+		 *
 		 * @param worldIn the <code>World</code> the entity is in
-		 * @param x the X position
-		 * @param y the Y position
-		 * @param z the Z position
+		 * @param x       the X position
+		 * @param y       the Y position
+		 * @param z       the Z position
 		 */
 		public NetheriteArrowEntity(Level worldIn, double x, double y, double z) {
 			super(DeferredRegistryHandler.NETHERITE_ARROW_ENTITY.get(), worldIn, x, y, z);
@@ -352,10 +378,11 @@ public class CustomArrowEntity {
 
 		/**
 		 * Fire the entity from a position with a velocity and inaccuracy.
-		 * @param x the X position
-		 * @param y the Y position
-		 * @param z the Z position
-		 * @param velocity the velocity
+		 *
+		 * @param x          the X position
+		 * @param y          the Y position
+		 * @param z          the Z position
+		 * @param velocity   the velocity
 		 * @param inaccuracy the inaccuracy modifier
 		 */
 		@Override
@@ -371,6 +398,7 @@ public class CustomArrowEntity {
 
 		/**
 		 * Get the movement modifier.
+		 *
 		 * @return double
 		 */
 		@Override
@@ -385,7 +413,8 @@ public class CustomArrowEntity {
 
 		/**
 		 * Constructor for SmokeBombArrowEntity.
-		 * @param type the <code>EntityType</code> instance; must extend AbstractArrowEntity
+		 *
+		 * @param type  the <code>EntityType</code> instance; must extend AbstractArrowEntity
 		 * @param world the <code>World</code> the entity is in
 		 */
 		public SmokeBombArrowEntity(EntityType<? extends AbstractArrow> type, Level world) {
@@ -395,8 +424,9 @@ public class CustomArrowEntity {
 
 		/**
 		 * Constructor for SmokeBombArrowEntity.
-		 * @param shooter the <code>LivingEntity</code> shooting the entity
-		 * @param world the <code>World</code> the entity is in
+		 *
+		 * @param shooter         the <code>LivingEntity</code> shooting the entity
+		 * @param world           the <code>World</code> the entity is in
 		 * @param referenceItemIn the reference item
 		 */
 		public SmokeBombArrowEntity(LivingEntity shooter, Level world, Item referenceItemIn) {
@@ -406,10 +436,11 @@ public class CustomArrowEntity {
 
 		/**
 		 * Constructor for SmokeBombArrowEntity.
+		 *
 		 * @param worldIn the <code>World</code> the entity is in
-		 * @param x the X position
-		 * @param y the Y position
-		 * @param z the Z position
+		 * @param x       the X position
+		 * @param y       the Y position
+		 * @param z       the Z position
 		 */
 		public SmokeBombArrowEntity(Level worldIn, double x, double y, double z) {
 			super(DeferredRegistryHandler.SMOKE_BOMB_ARROW_ENTITY.get(), worldIn, x, y, z);
@@ -418,6 +449,7 @@ public class CustomArrowEntity {
 
 		/**
 		 * Set the color of smoke.
+		 *
 		 * @param color an integer representing the color
 		 */
 		public static void setColor(int color) {
@@ -426,6 +458,7 @@ public class CustomArrowEntity {
 
 		/**
 		 * Runs when the entity hits something.
+		 *
 		 * @param rayTraceResult the <code>RayTraceResult</code> instance
 		 */
 		@Override

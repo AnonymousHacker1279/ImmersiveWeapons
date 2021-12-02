@@ -15,7 +15,8 @@ public abstract class AbstractParticleData implements ParticleOptions {
 
 	/**
 	 * Constructor for AbstractParticleData.
-	 * @param tint a <code>Color</code> instance
+	 *
+	 * @param tint     a <code>Color</code> instance
 	 * @param diameter the particle diameter
 	 */
 	public AbstractParticleData(Color tint, double diameter) {
@@ -25,7 +26,8 @@ public abstract class AbstractParticleData implements ParticleOptions {
 
 	/**
 	 * Constructor for AbstractParticleData.
-	 * @param tintRGB an integer for RGB tinting
+	 *
+	 * @param tintRGB  an integer for RGB tinting
 	 * @param diameter the particle diameter
 	 */
 	public AbstractParticleData(int tintRGB, double diameter) {
@@ -35,6 +37,7 @@ public abstract class AbstractParticleData implements ParticleOptions {
 
 	/**
 	 * Clamps diameters to a valid range.
+	 *
 	 * @param diameter the particle diameter
 	 * @return double
 	 */
@@ -46,6 +49,7 @@ public abstract class AbstractParticleData implements ParticleOptions {
 
 	/**
 	 * Get the tint of the particle.
+	 *
 	 * @return Color
 	 */
 	public Color getTint() {
@@ -54,6 +58,7 @@ public abstract class AbstractParticleData implements ParticleOptions {
 
 	/**
 	 * Get the diameter of the particle.
+	 *
 	 * @return double
 	 */
 	public double getDiameter() {
@@ -62,6 +67,7 @@ public abstract class AbstractParticleData implements ParticleOptions {
 
 	/**
 	 * Write particle information to a PacketBuffer.
+	 *
 	 * @param buf a <code>PacketBuffer</code> instance
 	 */
 	@Override
@@ -74,6 +80,7 @@ public abstract class AbstractParticleData implements ParticleOptions {
 
 	/**
 	 * For debugging: Write information to a readable format
+	 *
 	 * @return String
 	 */
 	@Nonnull

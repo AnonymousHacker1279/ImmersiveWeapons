@@ -25,6 +25,7 @@ public class SimplePistolItem extends AbstractGunItem implements Vanishable {
 
 	/**
 	 * Constructor for SimplePistolItem.
+	 *
 	 * @param properties the <code>Properties</code> for the item
 	 */
 	public SimplePistolItem(Properties properties) {
@@ -33,7 +34,8 @@ public class SimplePistolItem extends AbstractGunItem implements Vanishable {
 
 	/**
 	 * Find ammunition.
-	 * @param itemStack the <code>ItemStack</code> to look for
+	 *
+	 * @param itemStack    the <code>ItemStack</code> to look for
 	 * @param entityLiving the <code>LivingEntity</code> to be searched
 	 * @return ItemStack
 	 */
@@ -62,10 +64,11 @@ public class SimplePistolItem extends AbstractGunItem implements Vanishable {
 
 	/**
 	 * Runs when the item is released.
-	 * @param itemStack the <code>ItemStack</code> being used
-	 * @param worldIn the <code>World</code> the entity is in
+	 *
+	 * @param itemStack    the <code>ItemStack</code> being used
+	 * @param worldIn      the <code>World</code> the entity is in
 	 * @param entityLiving the <code>LivingEntity</code> releasing the item
-	 * @param timeLeft the time left from charging
+	 * @param timeLeft     the time left from charging
 	 */
 	@Override
 	public void releaseUsing(@NotNull ItemStack itemStack, @NotNull Level worldIn, @NotNull LivingEntity entityLiving, int timeLeft) {
@@ -144,9 +147,10 @@ public class SimplePistolItem extends AbstractGunItem implements Vanishable {
 
 	/**
 	 * Runs when the player right-clicks.
-	 * @param worldIn the <code>World</code> the player is in
+	 *
+	 * @param worldIn  the <code>World</code> the player is in
 	 * @param playerIn the <code>PlayerEntity</code> performing the action
-	 * @param handIn the <code>Hand</code> the player is using
+	 * @param handIn   the <code>Hand</code> the player is using
 	 * @return ActionResult extending ItemStack
 	 */
 	@Override
@@ -167,6 +171,7 @@ public class SimplePistolItem extends AbstractGunItem implements Vanishable {
 
 	/**
 	 * Get the use duration.
+	 *
 	 * @param stack the <code>ItemStack</code> to check
 	 * @return int
 	 */
@@ -177,6 +182,7 @@ public class SimplePistolItem extends AbstractGunItem implements Vanishable {
 
 	/**
 	 * Get ammo predicates.
+	 *
 	 * @return Predicate extending ItemStack
 	 */
 	@Override
@@ -186,6 +192,7 @@ public class SimplePistolItem extends AbstractGunItem implements Vanishable {
 
 	/**
 	 * Get the repair material.
+	 *
 	 * @return Ingredient
 	 */
 	protected Ingredient getRepairMaterial() {
@@ -194,6 +201,7 @@ public class SimplePistolItem extends AbstractGunItem implements Vanishable {
 
 	/**
 	 * Get the default ammunition.
+	 *
 	 * @return Item
 	 */
 	public Item defaultAmmo() {
@@ -202,8 +210,9 @@ public class SimplePistolItem extends AbstractGunItem implements Vanishable {
 
 	/**
 	 * Check for a valid repair item.
+	 *
 	 * @param toRepair the <code>ItemStack</code> being repaired
-	 * @param repair the <code>ItemStack</code> to repair the first one
+	 * @param repair   the <code>ItemStack</code> to repair the first one
 	 * @return boolean
 	 */
 	@Override
@@ -213,6 +222,7 @@ public class SimplePistolItem extends AbstractGunItem implements Vanishable {
 
 	/**
 	 * Get the misfire sound.
+	 *
 	 * @return SoundEvent
 	 */
 	SoundEvent getMisfireSound() {
@@ -221,6 +231,7 @@ public class SimplePistolItem extends AbstractGunItem implements Vanishable {
 
 	/**
 	 * Get the fire sound.
+	 *
 	 * @return SoundEvent
 	 */
 	public SoundEvent getFireSound() {

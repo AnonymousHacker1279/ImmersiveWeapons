@@ -34,10 +34,11 @@ public enum CustomItemMaterials implements Tier {
 
 	/**
 	 * Constructor for CustomItemMaterials.
-	 * @param harvestLevelIn the harvest level
-	 * @param maxUsesIn the max uses
-	 * @param efficiencyIn the efficiency
-	 * @param attackDamageIn the attack damage
+	 *
+	 * @param harvestLevelIn   the harvest level
+	 * @param maxUsesIn        the max uses
+	 * @param efficiencyIn     the efficiency
+	 * @param attackDamageIn   the attack damage
 	 * @param enchantabilityIn the enchantability
 	 * @param repairMaterialIn the <code>Supplier</code> extending Ingredient for repairs
 	 */
@@ -52,6 +53,7 @@ public enum CustomItemMaterials implements Tier {
 
 	/**
 	 * Get max uses.
+	 *
 	 * @return int
 	 */
 	@Override
@@ -61,6 +63,7 @@ public enum CustomItemMaterials implements Tier {
 
 	/**
 	 * Get the efficiency.
+	 *
 	 * @return float
 	 */
 	@Override
@@ -70,6 +73,7 @@ public enum CustomItemMaterials implements Tier {
 
 	/**
 	 * Get the attack damage.
+	 *
 	 * @return float
 	 */
 	@Override
@@ -79,6 +83,7 @@ public enum CustomItemMaterials implements Tier {
 
 	/**
 	 * Get the harvest level.
+	 *
 	 * @return int
 	 */
 	@Override
@@ -88,6 +93,7 @@ public enum CustomItemMaterials implements Tier {
 
 	/**
 	 * Get the enchantability.
+	 *
 	 * @return int
 	 */
 	@Override
@@ -97,6 +103,7 @@ public enum CustomItemMaterials implements Tier {
 
 	/**
 	 * Get the repair ingredient.
+	 *
 	 * @return Ingredient
 	 */
 	@Override

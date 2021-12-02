@@ -1,0 +1,57 @@
+{
+	"conditions": [
+		{
+			"condition": "minecraft:alternative",
+			"terms": [
+				{
+					"condition": "forge:loot_table_id",
+					"loot_table_id": "minecraft:chests/simple_dungeon"
+				},
+				{
+					"condition": "forge:loot_table_id",
+					"loot_table_id": "minecraft:chests/abandoned_mineshaft"
+				},
+				{
+					"condition": "forge:loot_table_id",
+					"loot_table_id": "minecraft:chests/buried_treasure"
+				},
+				{
+					"condition": "forge:loot_table_id",
+					"loot_table_id": "minecraft:chests/jungle_temple"
+				},
+				{
+					"condition": "forge:loot_table_id",
+					"loot_table_id": "minecraft:chests/shipwreck_treasure"
+				},
+				{
+					"condition": "forge:loot_table_id",
+					"loot_table_id": "minecraft:chests/stronghold_corridor"
+				},
+				{
+					"condition": "forge:loot_table_id",
+					"loot_table_id": "minecraft:chests/stronghold_crossing"
+				},
+				{
+					"condition": "forge:loot_table_id",
+					"loot_table_id": "minecraft:chests/stronghold_library"
+				},
+				{
+					"condition": "forge:loot_table_id",
+					"loot_table_id": "minecraft:chests/underwater_ruin_big"
+				},
+				{
+					"condition": "forge:loot_table_id",
+					"loot_table_id": "minecraft:chests/underwater_ruin_small"
+				},
+				{
+					"condition": "forge:loot_table_id",
+					"loot_table_id": "minecraft:chests/woodland_mansion"
+				}
+			]
+		}
+	],
+	"min_quantity": 0,
+	"max_quantity": 2,
+	"chance_to_roll": 0.3,
+	"type": "immersiveweapons:azul_keystone_fragment_in_chests"
+}

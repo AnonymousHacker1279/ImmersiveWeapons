@@ -16,6 +16,7 @@ public class MinutemanRenderer extends HumanoidMobRenderer<MinutemanEntity, Play
 
 	/**
 	 * Constructor for MinutemanRenderer.
+	 *
 	 * @param context a <code>Context</code> instance
 	 */
 	public MinutemanRenderer(Context context) {
@@ -25,6 +26,7 @@ public class MinutemanRenderer extends HumanoidMobRenderer<MinutemanEntity, Play
 
 	/**
 	 * Get the texture location.
+	 *
 	 * @param entity the <code>MinutemanEntity</code> instance
 	 * @return ResourceLocation
 	 */

@@ -22,6 +22,7 @@ import org.jetbrains.annotations.NotNull;
 public class BattlefieldVillage extends StructureFeature<NoneFeatureConfiguration> {
 	/**
 	 * Constructor for BattlefieldVillage.
+	 *
 	 * @param codec the <code>Codec</code> extending NoneFeatureConfiguration
 	 */
 	public BattlefieldVillage(Codec<NoneFeatureConfiguration> codec) {
@@ -30,6 +31,7 @@ public class BattlefieldVillage extends StructureFeature<NoneFeatureConfiguratio
 
 	/**
 	 * Get the factory start.
+	 *
 	 * @return IStartFactory extending NoneFeatureConfiguration
 	 */
 	@Override
@@ -39,6 +41,7 @@ public class BattlefieldVillage extends StructureFeature<NoneFeatureConfiguratio
 
 	/**
 	 * Get the generation stage.
+	 *
 	 * @return Decoration
 	 */
 	@Override
@@ -49,12 +52,14 @@ public class BattlefieldVillage extends StructureFeature<NoneFeatureConfiguratio
 
 	public static class Start extends StructureStart<NoneFeatureConfiguration> {
 		private static JigsawConfiguration structurePoolFeatureConfig = null;
+
 		/**
 		 * Constructor for Start.
+		 *
 		 * @param structure the <code>StructureFeature</code> extending NoneFeatureConfiguration
-		 * @param chunkPos the <code>ChunkPos</code> position
+		 * @param chunkPos  the <code>ChunkPos</code> position
 		 * @param reference the reference ID
-		 * @param seed the world seed
+		 * @param seed      the world seed
 		 */
 		public Start(StructureFeature<NoneFeatureConfiguration> structure, ChunkPos chunkPos, int reference, long seed) {
 			super(structure, chunkPos, reference, seed);
@@ -62,13 +67,14 @@ public class BattlefieldVillage extends StructureFeature<NoneFeatureConfiguratio
 
 		/**
 		 * Generate structure pieces.
-		 * @param registryAccess the <code>RegistryAccess</code> instance
-		 * @param generator the <code>ChunkGenerator</code>
+		 *
+		 * @param registryAccess   the <code>RegistryAccess</code> instance
+		 * @param generator        the <code>ChunkGenerator</code>
 		 * @param structureManager the <code>StructureManager</code>
-		 * @param chunkPos the <code>ChunkPos</code> position
-		 * @param biome the <code>Biome</code> the structure is in
-		 * @param config the <code>NoneFeatureConfiguration</code> instance
-		 * @param heightAccessor the <code>LevelHeightAccessor</code> instance
+		 * @param chunkPos         the <code>ChunkPos</code> position
+		 * @param biome            the <code>Biome</code> the structure is in
+		 * @param config           the <code>NoneFeatureConfiguration</code> instance
+		 * @param heightAccessor   the <code>LevelHeightAccessor</code> instance
 		 */
 		@Override
 		public void generatePieces(@NotNull RegistryAccess registryAccess, ChunkGenerator generator, @NotNull StructureManager structureManager, ChunkPos chunkPos, @NotNull Biome biome, @NotNull NoneFeatureConfiguration config, @NotNull LevelHeightAccessor heightAccessor) {

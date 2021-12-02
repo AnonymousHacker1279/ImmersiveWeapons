@@ -15,6 +15,7 @@ public class SmokeBombParticleType extends ParticleType<SmokeBombParticleData> {
 
 	/**
 	 * Get the particle codec.
+	 *
 	 * @return Codec extending SmokeBombParticleData
 	 */
 	@Override

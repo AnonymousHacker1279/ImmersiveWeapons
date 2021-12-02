@@ -28,7 +28,8 @@ public abstract class AbstractCustomArrowEntity extends AbstractArrow {
 
 	/**
 	 * Constructor for AbstractCustomArrowEntity.
-	 * @param type the <code>EntityType</code> instance; must extend AbstractArrowEntity
+	 *
+	 * @param type  the <code>EntityType</code> instance; must extend AbstractArrowEntity
 	 * @param world the <code>World</code> the entity is in
 	 */
 	AbstractCustomArrowEntity(EntityType<? extends AbstractArrow> type, Level world) {
@@ -38,9 +39,10 @@ public abstract class AbstractCustomArrowEntity extends AbstractArrow {
 
 	/**
 	 * Constructor for AbstractCustomArrowEntity.
-	 * @param type the <code>EntityType</code> instance; must extend AbstractArrowEntity
+	 *
+	 * @param type    the <code>EntityType</code> instance; must extend AbstractArrowEntity
 	 * @param shooter the <code>LivingEntity</code> shooting the entity
-	 * @param world the <code>World</code> the entity is in
+	 * @param world   the <code>World</code> the entity is in
 	 */
 	AbstractCustomArrowEntity(EntityType<? extends AbstractCustomArrowEntity> type, LivingEntity shooter, Level world) {
 		super(type, shooter, world);
@@ -49,11 +51,12 @@ public abstract class AbstractCustomArrowEntity extends AbstractArrow {
 
 	/**
 	 * Constructor for AbstractCustomArrowEntity.
-	 * @param type the <code>EntityType</code> instance; must extend AbstractArrowEntity
+	 *
+	 * @param type  the <code>EntityType</code> instance; must extend AbstractArrowEntity
 	 * @param world the <code>World</code> the entity is in
-	 * @param x the X position
-	 * @param y the Y position
-	 * @param z the Z position
+	 * @param x     the X position
+	 * @param y     the Y position
+	 * @param z     the Z position
 	 */
 	AbstractCustomArrowEntity(EntityType<? extends AbstractCustomArrowEntity> type, Level world, double x, double y, double z) {
 		super(type, x, y, z, world);
@@ -62,6 +65,7 @@ public abstract class AbstractCustomArrowEntity extends AbstractArrow {
 
 	/**
 	 * Get the pickup item.
+	 *
 	 * @return ItemStack
 	 */
 	@Override
@@ -71,6 +75,7 @@ public abstract class AbstractCustomArrowEntity extends AbstractArrow {
 
 	/**
 	 * Get the entity spawn packet.
+	 *
 	 * @return IPacket
 	 */
 	@Override
@@ -203,6 +208,7 @@ public abstract class AbstractCustomArrowEntity extends AbstractArrow {
 
 	/**
 	 * Get the movement modifier.
+	 *
 	 * @return double
 	 */
 	public double getMovementModifier() {

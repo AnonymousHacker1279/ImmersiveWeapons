@@ -34,6 +34,18 @@ public class AdvancementProvider implements DataProvider {
 	}
 
 	/**
+	 * Create model paths.
+	 *
+	 * @param path        the <code>Path</code> to save at
+	 * @param advancement the <code>Advancement</code> to use
+	 * @return Path
+	 */
+	private static Path createPath(Path path, Advancement advancement) {
+		String namespace = advancement.getId().getNamespace();
+		return path.resolve("data/" + namespace + "/advancements/" + advancement.getId().getPath() + ".json");
+	}
+
+	/**
 	 * Run the model provider.
 	 *
 	 * @param hashCache the <code>HashCache</code> instance
@@ -62,18 +74,6 @@ public class AdvancementProvider implements DataProvider {
 		}
 	}
 
-	/**
-	 * Create model paths.
-	 *
-	 * @param path        the <code>Path</code> to save at
-	 * @param advancement the <code>Advancement</code> to use
-	 * @return Path
-	 */
-	private static Path createPath(Path path, Advancement advancement) {
-		String namespace = advancement.getId().getNamespace();
-		return path.resolve("data/" + namespace + "/advancements/" + advancement.getId().getPath() + ".json");
-	}
-	
 	/**
 	 * Get the name of the provider.
 	 *

@@ -25,8 +25,8 @@ import org.jetbrains.annotations.NotNull;
 
 public class CampChairBlock extends HorizontalDirectionalBlock implements SimpleWaterloggedBlock {
 
-	protected static final VoxelShape SHAPE = Block.box(1.0D, 0.0D, 1.0D, 15.0D, 6.0D, 15.0D);
 	public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
+	protected static final VoxelShape SHAPE = Block.box(1.0D, 0.0D, 1.0D, 15.0D, 6.0D, 15.0D);
 
 	/**
 	 * Constructor for CampChairBlock.

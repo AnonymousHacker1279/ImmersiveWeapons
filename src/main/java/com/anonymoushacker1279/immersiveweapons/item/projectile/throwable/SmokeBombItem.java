@@ -18,6 +18,7 @@ public class SmokeBombItem extends Item {
 
 	/**
 	 * Constructor for SmokeBombItem.
+	 *
 	 * @param properties the <code>Properties</code> for the item
 	 */
 	public SmokeBombItem(Properties properties, int color) {
@@ -27,9 +28,10 @@ public class SmokeBombItem extends Item {
 
 	/**
 	 * Runs when the player right-clicks.
-	 * @param worldIn the <code>World</code> the player is in
+	 *
+	 * @param worldIn  the <code>World</code> the player is in
 	 * @param playerIn the <code>PlayerEntity</code> performing the action
-	 * @param handIn the <code>Hand</code> the player is using
+	 * @param handIn   the <code>Hand</code> the player is using
 	 * @return ActionResult extending ItemStack
 	 */
 	@Override

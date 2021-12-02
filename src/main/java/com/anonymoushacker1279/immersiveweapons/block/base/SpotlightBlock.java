@@ -24,8 +24,8 @@ import java.util.Random;
 
 public class SpotlightBlock extends HorizontalDirectionalBlock implements SimpleWaterloggedBlock {
 
-	private static final BooleanProperty LIT = BlockStateProperties.LIT;
 	public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
+	private static final BooleanProperty LIT = BlockStateProperties.LIT;
 
 	/**
 	 * Constructor for SpotlightBlock.

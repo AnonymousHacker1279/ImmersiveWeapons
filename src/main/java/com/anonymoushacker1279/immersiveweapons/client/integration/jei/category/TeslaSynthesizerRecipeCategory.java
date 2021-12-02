@@ -31,6 +31,7 @@ public class TeslaSynthesizerRecipeCategory implements IRecipeCategory<TeslaSynt
 
 	/**
 	 * Constructor for TeslaSynthesizerRecipeCategory.
+	 *
 	 * @param guiHelper a <code>IGuiHelper</code> instance
 	 */
 	public TeslaSynthesizerRecipeCategory(IGuiHelper guiHelper) {
@@ -40,6 +41,7 @@ public class TeslaSynthesizerRecipeCategory implements IRecipeCategory<TeslaSynt
 
 	/**
 	 * Get the UID of the category.
+	 *
 	 * @return ResourceLocation
 	 */
 	@Override
@@ -49,6 +51,7 @@ public class TeslaSynthesizerRecipeCategory implements IRecipeCategory<TeslaSynt
 
 	/**
 	 * Get the recipe class for this category.
+	 *
 	 * @return Class extending TeslaSynthesizerRecipe
 	 */
 	@Override
@@ -58,6 +61,7 @@ public class TeslaSynthesizerRecipeCategory implements IRecipeCategory<TeslaSynt
 
 	/**
 	 * Get the title of the recipe category.
+	 *
 	 * @return String
 	 */
 	@Override
@@ -67,6 +71,7 @@ public class TeslaSynthesizerRecipeCategory implements IRecipeCategory<TeslaSynt
 
 	/**
 	 * Get the background.
+	 *
 	 * @return IDrawable
 	 */
 	@Override
@@ -76,6 +81,7 @@ public class TeslaSynthesizerRecipeCategory implements IRecipeCategory<TeslaSynt
 
 	/**
 	 * Get the icon.
+	 *
 	 * @return IDrawable
 	 */
 	@Override
@@ -85,7 +91,8 @@ public class TeslaSynthesizerRecipeCategory implements IRecipeCategory<TeslaSynt
 
 	/**
 	 * Set the ingredients in a recipe.
-	 * @param recipe a <code>TeslaSynthesizerRecipe</code> instance
+	 *
+	 * @param recipe      a <code>TeslaSynthesizerRecipe</code> instance
 	 * @param ingredients the <code>IIngredients</code> being passed
 	 */
 	@Override
@@ -99,9 +106,10 @@ public class TeslaSynthesizerRecipeCategory implements IRecipeCategory<TeslaSynt
 
 	/**
 	 * Set up the recipe layout.
+	 *
 	 * @param recipeLayout a <code>IRecipeLayout</code> instance
-	 * @param recipe a <code>TeslaSynthesizerRecipe</code> instance
-	 * @param ingredients the <code>IIngredients</code> being passed
+	 * @param recipe       a <code>TeslaSynthesizerRecipe</code> instance
+	 * @param ingredients  the <code>IIngredients</code> being passed
 	 */
 	@Override
 	public void setRecipe(IRecipeLayout recipeLayout, @NotNull TeslaSynthesizerRecipe recipe, @NotNull IIngredients ingredients) {

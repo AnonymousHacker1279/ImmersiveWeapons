@@ -2,8 +2,11 @@ package com.anonymoushacker1279.immersiveweapons.util;
 
 import com.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import com.anonymoushacker1279.immersiveweapons.block.base.MortarBlock.MortarBlockPacketHandler;
+import com.anonymoushacker1279.immersiveweapons.block.misc.portal.statue.warrior.WarriorStatueTorso.WarriorStatueTorsoPacketHandler;
 import com.anonymoushacker1279.immersiveweapons.block.trap.SpikeTrapBlock.SpikeTrapBlockPacketHandler;
 import com.anonymoushacker1279.immersiveweapons.blockentity.PanicAlarmBlockEntity.PanicAlarmPacketHandler;
+import com.anonymoushacker1279.immersiveweapons.entity.ai.goal.CelestialTowerSummonGoal.CelestialTowerSummonGoalPacketHandler;
+import com.anonymoushacker1279.immersiveweapons.entity.monster.LavaRevenantEntity.LavaRevenantEntityPacketHandler;
 import com.anonymoushacker1279.immersiveweapons.entity.projectile.CustomArrowEntity.SmokeBombArrowEntity.SmokeBombArrowEntityPacketHandler;
 import com.anonymoushacker1279.immersiveweapons.entity.projectile.SmokeBombEntity.SmokeBombEntityPacketHandler;
 import com.anonymoushacker1279.immersiveweapons.item.armor.CobaltArmorItem.CobaltArmorItemPacketHandler;
@@ -77,11 +80,29 @@ public class PacketHandler {
 				SpikeTrapBlockPacketHandler::decode,
 				SpikeTrapBlockPacketHandler::handle
 		);
-		PacketHandler.INSTANCE.registerMessage(networkId,
+		PacketHandler.INSTANCE.registerMessage(networkId++,
 				BleedingEffectPacketHandler.class,
 				BleedingEffectPacketHandler::encode,
 				BleedingEffectPacketHandler::decode,
 				BleedingEffectPacketHandler::handle
+		);
+		PacketHandler.INSTANCE.registerMessage(networkId++,
+				WarriorStatueTorsoPacketHandler.class,
+				WarriorStatueTorsoPacketHandler::encode,
+				WarriorStatueTorsoPacketHandler::decode,
+				WarriorStatueTorsoPacketHandler::handle
+		);
+		PacketHandler.INSTANCE.registerMessage(networkId++,
+				LavaRevenantEntityPacketHandler.class,
+				LavaRevenantEntityPacketHandler::encode,
+				LavaRevenantEntityPacketHandler::decode,
+				LavaRevenantEntityPacketHandler::handle
+		);
+		PacketHandler.INSTANCE.registerMessage(networkId,
+				CelestialTowerSummonGoalPacketHandler.class,
+				CelestialTowerSummonGoalPacketHandler::encode,
+				CelestialTowerSummonGoalPacketHandler::decode,
+				CelestialTowerSummonGoalPacketHandler::handle
 		);
 	}
 }

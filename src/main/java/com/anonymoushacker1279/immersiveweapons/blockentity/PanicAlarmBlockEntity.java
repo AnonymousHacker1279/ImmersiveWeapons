@@ -40,18 +40,6 @@ public class PanicAlarmBlockEntity extends BlockEntity implements EntityBlock {
 	}
 
 	/**
-	 * Create a block entity for the block.
-	 * @param blockPos the <code>BlockPos</code> the block is at
-	 * @param blockState the <code>BlockState</code> of the block
-	 * @return BlockEntity
-	 */
-	@Nullable
-	@Override
-	public BlockEntity newBlockEntity(@NotNull BlockPos blockPos, @NotNull BlockState blockState) {
-		return new PanicAlarmBlockEntity(blockPos, blockState);
-	}
-
-	/**
 	 * Runs once each tick. Handle scanning and spawning entities.
 	 */
 	public static void serverTick(Level level, BlockPos blockPos, PanicAlarmBlockEntity panicAlarmBlockEntity) {
@@ -77,7 +65,21 @@ public class PanicAlarmBlockEntity extends BlockEntity implements EntityBlock {
 	}
 
 	/**
+	 * Create a block entity for the block.
+	 *
+	 * @param blockPos   the <code>BlockPos</code> the block is at
+	 * @param blockState the <code>BlockState</code> of the block
+	 * @return BlockEntity
+	 */
+	@Nullable
+	@Override
+	public BlockEntity newBlockEntity(@NotNull BlockPos blockPos, @NotNull BlockState blockState) {
+		return new PanicAlarmBlockEntity(blockPos, blockState);
+	}
+
+	/**
 	 * Get the power status.
+	 *
 	 * @return boolean
 	 */
 	public boolean isPowered() {
@@ -86,6 +88,7 @@ public class PanicAlarmBlockEntity extends BlockEntity implements EntityBlock {
 
 	/**
 	 * Set the power status.
+	 *
 	 * @param isPowered if the device should be powered
 	 */
 	public void setPowered(boolean isPowered) {
@@ -94,6 +97,7 @@ public class PanicAlarmBlockEntity extends BlockEntity implements EntityBlock {
 
 	/**
 	 * Set the cooldown.
+	 *
 	 * @param cooldown the cooldown time
 	 */
 	private void setCooldown(int cooldown) {
@@ -102,6 +106,7 @@ public class PanicAlarmBlockEntity extends BlockEntity implements EntityBlock {
 
 	/**
 	 * Handle changing of alarm sounds.
+	 *
 	 * @param activator the <code>PlayerEntity</code> interacting with the block entity
 	 */
 	public void changeAlarmSound(Player activator) {
@@ -123,6 +128,7 @@ public class PanicAlarmBlockEntity extends BlockEntity implements EntityBlock {
 
 	/**
 	 * Save NBT data.
+	 *
 	 * @param nbt the <code>CompoundNBT</code> to save
 	 */
 	@Override
@@ -136,6 +142,7 @@ public class PanicAlarmBlockEntity extends BlockEntity implements EntityBlock {
 
 	/**
 	 * Load NBT data.
+	 *
 	 * @param nbt the <code>CompoundNBT</code> to load
 	 */
 	@Override

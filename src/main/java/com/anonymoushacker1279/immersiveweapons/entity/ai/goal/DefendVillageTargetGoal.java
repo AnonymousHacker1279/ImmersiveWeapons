@@ -20,6 +20,7 @@ public class DefendVillageTargetGoal extends TargetGoal {
 
 	/**
 	 * Constructor for DefendVillageTargetGoal.
+	 *
 	 * @param mobEntity the <code>MobEntity</code> instance
 	 */
 	public DefendVillageTargetGoal(Mob mobEntity) {
@@ -31,6 +32,7 @@ public class DefendVillageTargetGoal extends TargetGoal {
 	/**
 	 * Returns whether execution should begin. You can also read and cache any state necessary for execution in this
 	 * method as well.
+	 *
 	 * @return boolean
 	 */
 	@Override

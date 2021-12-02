@@ -14,6 +14,7 @@ public abstract class AbstractBottleItem extends Item {
 
 	/**
 	 * Constructor for AbstractBottleItem.
+	 *
 	 * @param properties the <code>Properties</code> for the item
 	 */
 	AbstractBottleItem(Properties properties) {
@@ -22,9 +23,10 @@ public abstract class AbstractBottleItem extends Item {
 
 	/**
 	 * Runs when the item is used.
-	 * @param worldIn the <code>World</code> the player is in
+	 *
+	 * @param worldIn  the <code>World</code> the player is in
 	 * @param playerIn the <code>PlayerEntity</code> instance
-	 * @param handIn the <code>Hand</code> the player is using
+	 * @param handIn   the <code>Hand</code> the player is using
 	 */
 	@Override
 	public @NotNull InteractionResultHolder<ItemStack> use(@NotNull Level worldIn, Player playerIn, @NotNull InteractionHand handIn) {
@@ -41,6 +43,7 @@ public abstract class AbstractBottleItem extends Item {
 
 	/**
 	 * Additional code to run when the item is used.
+	 *
 	 * @param playerIn the <code>PlayerEntity</code> instance
 	 */
 	protected void onUse(Player playerIn) {
@@ -48,6 +51,7 @@ public abstract class AbstractBottleItem extends Item {
 
 	/**
 	 * Get the item cooldown.
+	 *
 	 * @return int
 	 */
 	private int getCooldown() {
@@ -56,6 +60,7 @@ public abstract class AbstractBottleItem extends Item {
 
 	/**
 	 * Check if the item has a container item.
+	 *
 	 * @param stack the <code>ItemStack</code> to be checked
 	 * @return boolean
 	 */
@@ -66,6 +71,7 @@ public abstract class AbstractBottleItem extends Item {
 
 	/**
 	 * Get the container item.
+	 *
 	 * @param stack the <code>ItemStack</code> instance
 	 * @return ItemStack
 	 */
@@ -76,6 +82,7 @@ public abstract class AbstractBottleItem extends Item {
 
 	/**
 	 * Get the use animation.
+	 *
 	 * @param stack the <code>ItemStack</code> instance
 	 * @return UseAction
 	 */

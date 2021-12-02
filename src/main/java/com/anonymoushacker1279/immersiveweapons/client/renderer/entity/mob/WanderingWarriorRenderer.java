@@ -17,6 +17,7 @@ public class WanderingWarriorRenderer extends HumanoidMobRenderer<WanderingWarri
 
 	/**
 	 * Constructor for WanderingWarriorRenderer.
+	 *
 	 * @param context a <code>Context</code> instance
 	 */
 	public WanderingWarriorRenderer(Context context) {
@@ -26,6 +27,7 @@ public class WanderingWarriorRenderer extends HumanoidMobRenderer<WanderingWarri
 
 	/**
 	 * Get the texture location.
+	 *
 	 * @param entity the <code>WanderingWarriorEntity</code> instance
 	 * @return ResourceLocation
 	 */

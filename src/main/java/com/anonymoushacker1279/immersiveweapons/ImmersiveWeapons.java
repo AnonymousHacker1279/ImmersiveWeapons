@@ -19,6 +19,7 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.properties.WoodType;
 import net.minecraft.world.level.levelgen.FlatLevelSource;
 import net.minecraft.world.level.levelgen.GenerationStep;
+import net.minecraft.world.level.levelgen.GenerationStep.Carving;
 import net.minecraft.world.level.levelgen.GenerationStep.Decoration;
 import net.minecraft.world.level.levelgen.StructureSettings;
 import net.minecraft.world.level.levelgen.VerticalAnchor;
@@ -87,11 +88,12 @@ public class ImmersiveWeapons {
 
 	/**
 	 * Sets up a custom biome. Adds the types to the BiomeDictionary
-	 *      and adds the biome to the BiomeManager.
-	 * @param biome the <code>Biome</code> being setup
+	 * and adds the biome to the BiomeManager.
+	 *
+	 * @param biome     the <code>Biome</code> being setup
 	 * @param biomeType the <code>BiomeType</code> for the biome
-	 * @param weight weight to generate biomes
-	 * @param types the dimension type: leave null for a modded dimension
+	 * @param weight    weight to generate biomes
+	 * @param types     the dimension type: leave null for a modded dimension
 	 */
 	private static void setupBiome(Biome biome, BiomeType biomeType, int weight, BiomeDictionary.Type... types) {
 		BiomeDictionary.addTypes(key(biome), types);
@@ -100,6 +102,7 @@ public class ImmersiveWeapons {
 
 	/**
 	 * Create a ResourceKey for Biomes.
+	 *
 	 * @param biome the <code>Biome</code> being registered
 	 * @return ResourceKey extending Biome
 	 */
@@ -110,6 +113,7 @@ public class ImmersiveWeapons {
 	/**
 	 * Event handler for the FMLCommonSetupEvent.
 	 * Most of this is registry related.
+	 *
 	 * @param event the <code>FMLCommonSetupEvent</code> instance
 	 */
 	public void setup(FMLCommonSetupEvent event) {
@@ -118,6 +122,7 @@ public class ImmersiveWeapons {
 		event.enqueueWork(() -> {
 			WoodType.register(CustomWoodTypes.BURNED_OAK);
 			setupBiome(DeferredRegistryHandler.BATTLEFIELD.get(), BiomeManager.BiomeType.WARM, 3, Type.PLAINS, Type.OVERWORLD);
+			setupBiome(DeferredRegistryHandler.TILTROS.get(), BiomeType.COOL, 0, Type.PLAINS, Type.OVERWORLD);
 			Structures.setupStructures();
 			Structures.registerAllPieces();
 			ConfiguredStructures.registerConfiguredStructures();
@@ -128,23 +133,41 @@ public class ImmersiveWeapons {
 	/**
 	 * Event handler for the BiomeLoadingEvent.
 	 * Configures custom ores, carvers, spawns, structures, etc.
+	 *
 	 * @param event the <code>BiomeLoadingEvent</code> instance
 	 */
 	public void onBiomeLoading(BiomeLoadingEvent event) {
 		// Biome modifications
 		BiomeGenerationSettingsBuilder generation = event.getGeneration();
-		if (event.getCategory() != Biome.BiomeCategory.NETHER || event.getCategory() != Biome.BiomeCategory.THEEND) {
-			event.getGeneration().getFeatures(GenerationStep.Decoration.UNDERGROUND_ORES)
+		if (event.getCategory() != BiomeCategory.NETHER && event.getCategory() != BiomeCategory.THEEND && !Objects.requireNonNull(event.getName()).toString().equals("immersiveweapons:tiltros")) {
+			event.getGeneration().getFeatures(Decoration.UNDERGROUND_ORES)
 					.add(() -> OreGeneratorHandler.ORE_COBALT_CONFIG);
 
+			if (event.getCategory() == BiomeCategory.RIVER || event.getCategory() == BiomeCategory.OCEAN) {
+				event.getGeneration().getFeatures(Decoration.UNDERGROUND_ORES)
+						.add(() -> OreGeneratorHandler.ORE_SULFUR_CONFIG);
+			}
+
 			if (event.getCategory() != BiomeCategory.OCEAN && event.getCategory() != BiomeCategory.RIVER) {
-				if (Config.WANDERING_WARRIOR_SPAWN.get()) event.getSpawns().addSpawn(MobCategory.MONSTER, new SpawnerData(DeferredRegistryHandler.WANDERING_WARRIOR_ENTITY.get(), 13, 1, 1));
-				if (Config.HANS_SPAWN.get()) event.getSpawns().addSpawn(MobCategory.MONSTER, new SpawnerData(DeferredRegistryHandler.HANS_ENTITY.get(), 1, 1, 1));
+				if (Config.WANDERING_WARRIOR_SPAWN.get())
+					event.getSpawns().addSpawn(MobCategory.MONSTER, new SpawnerData(DeferredRegistryHandler.WANDERING_WARRIOR_ENTITY.get(), 13, 1, 1));
+				if (Config.HANS_SPAWN.get())
+					event.getSpawns().addSpawn(MobCategory.MONSTER, new SpawnerData(DeferredRegistryHandler.HANS_ENTITY.get(), 1, 1, 1));
 			}
 		}
-		if (event.getCategory() == Biome.BiomeCategory.NETHER) {
+		if (event.getCategory() == BiomeCategory.NETHER) {
 			event.getGeneration().getFeatures(GenerationStep.Decoration.UNDERGROUND_ORES)
 					.add(() -> OreGeneratorHandler.ORE_MOLTEN_CONFIG);
+			event.getGeneration().getFeatures(Decoration.UNDERGROUND_ORES)
+					.add(() -> OreGeneratorHandler.ORE_NETHER_SULFUR_CONFIG);
+		}
+		if (Objects.requireNonNull(event.getName()).toString().equals("immersiveweapons:tiltros")) {
+			if (Config.LAVA_REVENANT_SPAWN.get())
+				event.getSpawns().addSpawn(MobCategory.MONSTER, new SpawnerData(DeferredRegistryHandler.LAVA_REVENANT_ENTITY.get(), 1, 0, 1));
+			if (Config.ROCK_SPIDER_SPAWN.get())
+				event.getSpawns().addSpawn(MobCategory.MONSTER, new SpawnerData(DeferredRegistryHandler.ROCK_SPIDER_ENTITY.get(), 5, 4, 12));
+			if (Config.CELESTIAL_TOWER_SPAWN.get())
+				event.getSpawns().addSpawn(MobCategory.MONSTER, new SpawnerData(DeferredRegistryHandler.CELESTIAL_TOWER_ENTITY.get(), 2, 0, 1));
 		}
 
 		if (event.getCategory() == BiomeCategory.FOREST) {
@@ -178,14 +201,18 @@ public class ImmersiveWeapons {
 			generation.addStructureStart(ConfiguredStructures.CONFIGURED_GRAVEYARD);
 			generation.addFeature(Decoration.VEGETAL_DECORATION, ConfiguredStructures.CONFIGURED_WOODEN_SPIKES);
 			generation.addFeature(Decoration.VEGETAL_DECORATION, ConfiguredStructures.CONFIGURED_BURNED_OAK_TREE);
-			generation.addCarver(GenerationStep.Carving.AIR, new ConfiguredWorldCarver<>(CanyonWorldCarver.CANYON, new CanyonCarverConfiguration(0.15F, BiasedToBottomHeight.of(VerticalAnchor.absolute(68), VerticalAnchor.absolute(70), 2), ConstantFloat.of(0.5F), VerticalAnchor.aboveBottom(20), false, CarverDebugSettings.of(false, Blocks.WARPED_BUTTON.defaultBlockState()), UniformFloat.of(-0.125F, 0.125F), new CanyonCarverConfiguration.CanyonShapeConfiguration(UniformFloat.of(0.5F, 0.75F), TrapezoidFloat.of(0.0F, 4.0F, 1.0F), 3, UniformFloat.of(0.75F, 1.0F), 0.5F, 0.0F))));
+			generation.addCarver(Carving.AIR, new ConfiguredWorldCarver<>(CanyonWorldCarver.CANYON, new CanyonCarverConfiguration(0.15F, BiasedToBottomHeight.of(VerticalAnchor.absolute(68), VerticalAnchor.absolute(70), 2), ConstantFloat.of(0.5F), VerticalAnchor.aboveBottom(20), false, CarverDebugSettings.of(false, Blocks.WARPED_BUTTON.defaultBlockState()), UniformFloat.of(-0.125F, 0.125F), new CanyonCarverConfiguration.CanyonShapeConfiguration(UniformFloat.of(0.5F, 0.75F), TrapezoidFloat.of(0.0F, 4.0F, 1.0F), 3, UniformFloat.of(0.75F, 1.0F), 0.5F, 0.0F))));
+		}
+		if (Objects.requireNonNull(event.getName()).toString().equals(Objects.requireNonNull(DeferredRegistryHandler.TILTROS.get().getRegistryName()).toString())) {
+			generation.addCarver(Carving.AIR, new ConfiguredWorldCarver<>(CanyonWorldCarver.CANYON, new CanyonCarverConfiguration(0.15F, BiasedToBottomHeight.of(VerticalAnchor.absolute(68), VerticalAnchor.absolute(70), 2), ConstantFloat.of(0.65F), VerticalAnchor.aboveBottom(10), false, CarverDebugSettings.of(false, Blocks.WARPED_BUTTON.defaultBlockState()), UniformFloat.of(-0.125F, 0.125F), new CanyonCarverConfiguration.CanyonShapeConfiguration(UniformFloat.of(0.0F, 1.0F), TrapezoidFloat.of(0.0F, 106.0F, 2.0F), 3, UniformFloat.of(0.75F, 1.0F), 1.0F, 0.0F))));
 		}
 	}
 
 	/**
 	 * Event handler for the WorldEvent.Load event.
 	 * Most importantly, we are building a Map
-	 *     to contain our structures.
+	 * to contain our structures.
+	 *
 	 * @param event the <code>WorldEvent.Load</code> instance
 	 */
 	public void worldLoadEvent(WorldEvent.Load event) {

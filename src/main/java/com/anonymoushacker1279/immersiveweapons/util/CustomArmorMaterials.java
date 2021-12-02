@@ -43,14 +43,15 @@ public enum CustomArmorMaterials implements ArmorMaterial {
 
 	/**
 	 * Constructor for CustomArmorMaterials.
-	 * @param nameIn the material name
-	 * @param maxDamageFactorIn the max damage factor
+	 *
+	 * @param nameIn                   the material name
+	 * @param maxDamageFactorIn        the max damage factor
 	 * @param damageReductionAmountsIn the reduction amount
-	 * @param enchantabilityIn the enchantability level
-	 * @param equipSoundIn the equipping <code>SoundEvent</code>
-	 * @param toughnessIn the toughness level
-	 * @param repairMaterialSupplier the <code>Supplier</code> extending Ingredient for repairs
-	 * @param knockbackResistanceIn the knockback resistance
+	 * @param enchantabilityIn         the enchantability level
+	 * @param equipSoundIn             the equipping <code>SoundEvent</code>
+	 * @param toughnessIn              the toughness level
+	 * @param repairMaterialSupplier   the <code>Supplier</code> extending Ingredient for repairs
+	 * @param knockbackResistanceIn    the knockback resistance
 	 */
 	CustomArmorMaterials(String nameIn, int maxDamageFactorIn, int[] damageReductionAmountsIn, int enchantabilityIn, SoundEvent equipSoundIn, float toughnessIn, Supplier<Ingredient> repairMaterialSupplier, float knockbackResistanceIn) {
 		name = nameIn;
@@ -65,6 +66,7 @@ public enum CustomArmorMaterials implements ArmorMaterial {
 
 	/**
 	 * Get durability for a slot.
+	 *
 	 * @param slotIn the <code>EquipmentSlotType</code>
 	 * @return int
 	 */
@@ -75,6 +77,7 @@ public enum CustomArmorMaterials implements ArmorMaterial {
 
 	/**
 	 * Get the defense for a slot.
+	 *
 	 * @param slotIn the <code>EquipmentSlotType</code>
 	 * @return int
 	 */
@@ -85,6 +88,7 @@ public enum CustomArmorMaterials implements ArmorMaterial {
 
 	/**
 	 * Get the enchantment value.
+	 *
 	 * @return int
 	 */
 	@Override
@@ -94,6 +98,7 @@ public enum CustomArmorMaterials implements ArmorMaterial {
 
 	/**
 	 * Get the equipping sound.
+	 *
 	 * @return SoundEvent
 	 */
 	@Override
@@ -103,6 +108,7 @@ public enum CustomArmorMaterials implements ArmorMaterial {
 
 	/**
 	 * Get the repair ingredient.
+	 *
 	 * @return Ingredient
 	 */
 	@Override
@@ -112,6 +118,7 @@ public enum CustomArmorMaterials implements ArmorMaterial {
 
 	/**
 	 * Get the name.
+	 *
 	 * @return String
 	 */
 	@Override
@@ -122,6 +129,7 @@ public enum CustomArmorMaterials implements ArmorMaterial {
 
 	/**
 	 * Get the toughness.
+	 *
 	 * @return float
 	 */
 	@Override
@@ -131,6 +139,7 @@ public enum CustomArmorMaterials implements ArmorMaterial {
 
 	/**
 	 * Get the knockback resistance.
+	 *
 	 * @return float
 	 */
 	@Override

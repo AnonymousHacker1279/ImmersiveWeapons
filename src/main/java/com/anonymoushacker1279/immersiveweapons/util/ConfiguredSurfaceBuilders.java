@@ -13,6 +13,7 @@ import net.minecraft.world.level.levelgen.surfacebuilders.SurfaceBuilderBaseConf
 public class ConfiguredSurfaceBuilders {
 
 	public static final ResourceKey<ConfiguredSurfaceBuilder<?>> BATTLEFIELD = key("battlefield");
+	public static final ResourceKey<ConfiguredSurfaceBuilder<?>> TILTROS = key("tiltros");
 
 	/**
 	 * Register surface builders.
@@ -24,11 +25,18 @@ public class ConfiguredSurfaceBuilders {
 						new SurfaceBuilderBaseConfiguration(Blocks.GRASS_BLOCK.defaultBlockState(), Blocks.COARSE_DIRT.defaultBlockState(), Blocks.STONE.defaultBlockState())
 				)
 		);
+		register(TILTROS,
+				new ConfiguredSurfaceBuilder<>(
+						SurfaceBuilder.NOPE,
+						new SurfaceBuilderBaseConfiguration(Blocks.AIR.defaultBlockState(), Blocks.AIR.defaultBlockState(), Blocks.AIR.defaultBlockState())
+				)
+		);
 	}
 
 	/**
 	 * Register a configured surface builder.
-	 * @param key the <code>ResourceKey</code>, must extend ConfiguredSurfaceBuilder
+	 *
+	 * @param key                      the <code>ResourceKey</code>, must extend ConfiguredSurfaceBuilder
 	 * @param configuredSurfaceBuilder the <code>ConfiguredSurfaceBuilder</code> instance
 	 */
 	private static void register(ResourceKey<ConfiguredSurfaceBuilder<?>> key, ConfiguredSurfaceBuilder<?> configuredSurfaceBuilder) {
@@ -37,6 +45,7 @@ public class ConfiguredSurfaceBuilders {
 
 	/**
 	 * Create resource keys.
+	 *
 	 * @param name the name
 	 * @return ResourceKey extending ConfiguredSurfaceBuilder
 	 */

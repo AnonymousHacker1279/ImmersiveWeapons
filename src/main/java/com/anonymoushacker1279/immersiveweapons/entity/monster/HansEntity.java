@@ -21,15 +21,28 @@ public class HansEntity extends AbstractWanderingWarriorEntity {
 
 	/**
 	 * Constructor for HansEntity.
+	 *
 	 * @param entityType the <code>EntityType</code> instance
-	 * @param world the <code>World</code> the entity is in
+	 * @param world      the <code>World</code> the entity is in
 	 */
 	public HansEntity(EntityType<? extends HansEntity> entityType, Level world) {
 		super(entityType, world);
 	}
 
 	/**
+	 * Register this entity's attributes.
+	 *
+	 * @return AttributeModifierMap.MutableAttribute
+	 */
+	public static AttributeSupplier.Builder registerAttributes() {
+		return Monster.createMonsterAttributes()
+				.add(Attributes.MOVEMENT_SPEED, 0.35D)
+				.add(Attributes.ARMOR, 20.0D);
+	}
+
+	/**
 	 * Get the ambient sound.
+	 *
 	 * @return SoundEvent
 	 */
 	@Override
@@ -39,6 +52,7 @@ public class HansEntity extends AbstractWanderingWarriorEntity {
 
 	/**
 	 * Get the ambient sound interval.
+	 *
 	 * @return int
 	 */
 	@Override
@@ -48,6 +62,7 @@ public class HansEntity extends AbstractWanderingWarriorEntity {
 
 	/**
 	 * Get the hurt sound.
+	 *
 	 * @param damageSourceIn the <code>DamageSource</code> instance
 	 * @return SoundEvent
 	 */
@@ -58,6 +73,7 @@ public class HansEntity extends AbstractWanderingWarriorEntity {
 
 	/**
 	 * Get the death sound.
+	 *
 	 * @return SoundEvent
 	 */
 	@Override
@@ -67,6 +83,7 @@ public class HansEntity extends AbstractWanderingWarriorEntity {
 
 	/**
 	 * Get the step sound.
+	 *
 	 * @return SoundEvent
 	 */
 	@Override
@@ -75,17 +92,8 @@ public class HansEntity extends AbstractWanderingWarriorEntity {
 	}
 
 	/**
-	 * Register this entity's attributes.
-	 * @return AttributeModifierMap.MutableAttribute
-	 */
-	public static AttributeSupplier.Builder registerAttributes() {
-		return Monster.createMonsterAttributes()
-				.add(Attributes.MOVEMENT_SPEED, 0.35D)
-				.add(Attributes.ARMOR, 20.0D);
-	}
-
-	/**
 	 * Gives armor or weapon for entity based on given DifficultyInstance
+	 *
 	 * @param difficulty the <code>DifficultyInstance</code> of the world
 	 */
 	@Override
@@ -96,6 +104,7 @@ public class HansEntity extends AbstractWanderingWarriorEntity {
 
 	/**
 	 * Runs when the entity is hurt.
+	 *
 	 * @param source the <code>DamageSource</code> instance
 	 * @param amount the damage amount
 	 * @return boolean

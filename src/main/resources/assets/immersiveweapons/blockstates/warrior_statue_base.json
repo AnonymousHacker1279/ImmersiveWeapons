@@ -1,0 +1,19 @@
+{
+	"variants": {
+		"facing=north": {
+			"model": "immersiveweapons:block/warrior_statue_base",
+			"y": 180
+		},
+		"facing=south": {
+			"model": "immersiveweapons:block/warrior_statue_base"
+		},
+		"facing=west": {
+			"model": "immersiveweapons:block/warrior_statue_base",
+			"y": 90
+		},
+		"facing=east": {
+			"model": "immersiveweapons:block/warrior_statue_base",
+			"y": 270
+		}
+	}
+}

@@ -17,9 +17,12 @@ public class OreGeneratorHandler {
 
 	public static ConfiguredFeature<?, ?> ORE_MOLTEN_CONFIG;
 	public static ConfiguredFeature<?, ?> ORE_COBALT_CONFIG;
+	public static ConfiguredFeature<?, ?> ORE_SULFUR_CONFIG;
+	public static ConfiguredFeature<?, ?> ORE_NETHER_SULFUR_CONFIG;
 
 	/**
 	 * Initialize ore generation setup.
+	 *
 	 * @param event the <code>FMLCommonSetupEvent</code> instance
 	 */
 	@SubscribeEvent
@@ -37,7 +40,23 @@ public class OreGeneratorHandler {
 						new OreConfiguration(
 								Predicates.NATURAL_STONE,
 								DeferredRegistryHandler.COBALT_ORE.get().defaultBlockState(), 4)
-				).range(new RangeDecoratorConfiguration(BiasedToBottomHeight.of(VerticalAnchor.bottom(), VerticalAnchor.belowTop(24), 4))).squared().count(4)
+				).range(new RangeDecoratorConfiguration(BiasedToBottomHeight.of(VerticalAnchor.bottom(), VerticalAnchor.belowTop(24), 4))).squared().count(8)
+		);
+
+		ORE_SULFUR_CONFIG = Registry.register(BuiltinRegistries.CONFIGURED_FEATURE, "ore_sulfur",
+				Feature.ORE.configured(
+						new OreConfiguration(
+								Predicates.NATURAL_STONE,
+								DeferredRegistryHandler.SULFUR_ORE.get().defaultBlockState(), 8)
+				).range(new RangeDecoratorConfiguration(BiasedToBottomHeight.of(VerticalAnchor.bottom(), VerticalAnchor.top(), 4))).squared().count(14)
+		);
+
+		ORE_NETHER_SULFUR_CONFIG = Registry.register(BuiltinRegistries.CONFIGURED_FEATURE, "ore_nether_sulfur",
+				Feature.ORE.configured(
+						new OreConfiguration(
+								Predicates.NETHERRACK,
+								DeferredRegistryHandler.NETHER_SULFUR_ORE.get().defaultBlockState(), 12)
+				).range(new RangeDecoratorConfiguration(BiasedToBottomHeight.of(VerticalAnchor.bottom(), VerticalAnchor.top(), 6))).squared().count(16)
 		);
 	}
 }

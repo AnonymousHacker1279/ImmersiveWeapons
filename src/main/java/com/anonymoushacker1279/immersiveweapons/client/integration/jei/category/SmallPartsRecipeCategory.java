@@ -30,6 +30,7 @@ public class SmallPartsRecipeCategory implements IRecipeCategory<SmallPartsRecip
 
 	/**
 	 * Constructor for SmallPartsRecipeCategory.
+	 *
 	 * @param guiHelper a <code>IGuiHelper</code> instance
 	 */
 	public SmallPartsRecipeCategory(IGuiHelper guiHelper) {
@@ -39,6 +40,7 @@ public class SmallPartsRecipeCategory implements IRecipeCategory<SmallPartsRecip
 
 	/**
 	 * Get the UID of the category.
+	 *
 	 * @return ResourceLocation
 	 */
 	@Override
@@ -48,6 +50,7 @@ public class SmallPartsRecipeCategory implements IRecipeCategory<SmallPartsRecip
 
 	/**
 	 * Get the recipe class for this category.
+	 *
 	 * @return Class extending SmallPartsRecipe
 	 */
 	@Override
@@ -57,6 +60,7 @@ public class SmallPartsRecipeCategory implements IRecipeCategory<SmallPartsRecip
 
 	/**
 	 * Get the title of the recipe category.
+	 *
 	 * @return String
 	 */
 	@Override
@@ -66,6 +70,7 @@ public class SmallPartsRecipeCategory implements IRecipeCategory<SmallPartsRecip
 
 	/**
 	 * Get the background.
+	 *
 	 * @return IDrawable
 	 */
 	@Override
@@ -75,6 +80,7 @@ public class SmallPartsRecipeCategory implements IRecipeCategory<SmallPartsRecip
 
 	/**
 	 * Get the icon.
+	 *
 	 * @return IDrawable
 	 */
 	@Override
@@ -84,7 +90,8 @@ public class SmallPartsRecipeCategory implements IRecipeCategory<SmallPartsRecip
 
 	/**
 	 * Set the ingredients in a recipe.
-	 * @param recipe a <code>SmallPartsRecipe</code> instance
+	 *
+	 * @param recipe      a <code>SmallPartsRecipe</code> instance
 	 * @param ingredients the <code>IIngredients</code> being passed
 	 */
 	@Override
@@ -98,9 +105,10 @@ public class SmallPartsRecipeCategory implements IRecipeCategory<SmallPartsRecip
 
 	/**
 	 * Set up the recipe layout.
+	 *
 	 * @param recipeLayout a <code>IRecipeLayout</code> instance
-	 * @param recipe a <code>SmallPartsRecipe</code> instance
-	 * @param ingredients the <code>IIngredients</code> being passed
+	 * @param recipe       a <code>SmallPartsRecipe</code> instance
+	 * @param ingredients  the <code>IIngredients</code> being passed
 	 */
 	@Override
 	public void setRecipe(IRecipeLayout recipeLayout, @NotNull SmallPartsRecipe recipe, @NotNull IIngredients ingredients) {

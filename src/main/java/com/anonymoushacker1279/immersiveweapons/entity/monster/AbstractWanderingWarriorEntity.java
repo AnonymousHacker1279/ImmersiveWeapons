@@ -47,7 +47,8 @@ public abstract class AbstractWanderingWarriorEntity extends Monster {
 
 	/**
 	 * Constructor for AbstractWanderingWarriorEntity.
-	 * @param type the <code>EntityType</code> instance
+	 *
+	 * @param type    the <code>EntityType</code> instance
 	 * @param worldIn the <code>World</code> the entity is in
 	 */
 	AbstractWanderingWarriorEntity(EntityType<? extends Monster> type, Level worldIn) {
@@ -57,6 +58,7 @@ public abstract class AbstractWanderingWarriorEntity extends Monster {
 
 	/**
 	 * Register this entity's attributes.
+	 *
 	 * @return AttributeModifierMap.MutableAttribute
 	 */
 	public static AttributeSupplier.Builder registerAttributes() {
@@ -82,7 +84,8 @@ public abstract class AbstractWanderingWarriorEntity extends Monster {
 
 	/**
 	 * Play the step sound.
-	 * @param pos the <code>BlockPos</code> the entity is at
+	 *
+	 * @param pos     the <code>BlockPos</code> the entity is at
 	 * @param blockIn the <code>BlockState</code> of the block being stepped on
 	 */
 	@Override
@@ -105,6 +108,7 @@ public abstract class AbstractWanderingWarriorEntity extends Monster {
 
 	/**
 	 * Gives armor or weapon for entity based on given DifficultyInstance
+	 *
 	 * @param difficulty the <code>DifficultyInstance</code> of the world
 	 */
 	@Override
@@ -149,11 +153,12 @@ public abstract class AbstractWanderingWarriorEntity extends Monster {
 
 	/**
 	 * Finalize spawn information.
-	 * @param worldIn the <code>IServerWorld</code> the entity is in
+	 *
+	 * @param worldIn      the <code>IServerWorld</code> the entity is in
 	 * @param difficultyIn the <code>DifficultyInstance</code> of the world
-	 * @param reason the <code>SpawnReason</code> for the entity
-	 * @param spawnDataIn the <code>ILivingEntitySpawnData</code> for the entity
-	 * @param dataTag the <code>CompoundNBT</code> data tag for the entity
+	 * @param reason       the <code>SpawnReason</code> for the entity
+	 * @param spawnDataIn  the <code>ILivingEntitySpawnData</code> for the entity
+	 * @param dataTag      the <code>CompoundNBT</code> data tag for the entity
 	 * @return ILivingEntityData
 	 */
 	@Override
@@ -191,6 +196,7 @@ public abstract class AbstractWanderingWarriorEntity extends Monster {
 
 	/**
 	 * Read entity NBT data.
+	 *
 	 * @param compound the <code>CompoundNBT</code> to read from
 	 */
 	@Override

@@ -44,7 +44,7 @@ public class CustomBoatItem extends Item {
 			if (!entities.isEmpty()) {
 				Vec3 eyePosition = player.getEyePosition();
 
-				for(Entity entity : entities) {
+				for (Entity entity : entities) {
 					AABB aabb = entity.getBoundingBox().inflate(entity.getPickRadius());
 					if (aabb.contains(eyePosition)) {
 						return InteractionResultHolder.pass(itemStack);

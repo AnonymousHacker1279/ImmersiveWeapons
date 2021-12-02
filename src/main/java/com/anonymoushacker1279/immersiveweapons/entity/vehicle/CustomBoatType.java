@@ -1,7 +1,5 @@
 package com.anonymoushacker1279.immersiveweapons.entity.vehicle;
 
-import com.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.ItemLike;
 
 import java.util.ArrayList;
@@ -13,15 +11,13 @@ public class CustomBoatType {
 	private final String name;
 	private ItemLike boatItem;
 
-	private CustomBoatType(int id, String name, ResourceLocation texture) {
+	private CustomBoatType(int id, String name) {
 		this.id = id;
 		this.name = name;
 	}
 
 	public static CustomBoatType register(String name) {
-		CustomBoatType type = new CustomBoatType(VALUES.size(), name,
-				new ResourceLocation(ImmersiveWeapons.MOD_ID, "textures/entity/boat/" + name + ".png")
-		);
+		CustomBoatType type = new CustomBoatType(VALUES.size(), name);
 		VALUES.add(type);
 		return type;
 	}

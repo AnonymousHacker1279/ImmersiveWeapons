@@ -24,6 +24,7 @@ public class VentusStaff extends Item {
 
 	/**
 	 * Constructor for VentusStaff.
+	 *
 	 * @param properties the <code>Properties</code> for the item
 	 */
 	public VentusStaff(Properties properties) {
@@ -32,9 +33,10 @@ public class VentusStaff extends Item {
 
 	/**
 	 * Runs when the player right-clicks.
-	 * @param worldIn the <code>World</code> the player is in
+	 *
+	 * @param worldIn  the <code>World</code> the player is in
 	 * @param playerIn the <code>PlayerEntity</code> performing the action
-	 * @param handIn the <code>Hand</code> the player is using
+	 * @param handIn   the <code>Hand</code> the player is using
 	 * @return ActionResult extending ItemStack
 	 */
 	@Override
@@ -70,8 +72,9 @@ public class VentusStaff extends Item {
 
 	/**
 	 * Check for a valid repair item.
+	 *
 	 * @param toRepair the <code>ItemStack</code> being repaired
-	 * @param repair the <code>ItemStack</code> to repair the first one
+	 * @param repair   the <code>ItemStack</code> to repair the first one
 	 * @return boolean
 	 */
 	@Override

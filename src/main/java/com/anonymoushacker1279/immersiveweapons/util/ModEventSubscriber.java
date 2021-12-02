@@ -1,9 +1,7 @@
 package com.anonymoushacker1279.immersiveweapons.util;
 
 import com.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
-import com.anonymoushacker1279.immersiveweapons.entity.monster.AbstractDyingSoldierEntity;
-import com.anonymoushacker1279.immersiveweapons.entity.monster.AbstractWanderingWarriorEntity;
-import com.anonymoushacker1279.immersiveweapons.entity.monster.HansEntity;
+import com.anonymoushacker1279.immersiveweapons.entity.monster.*;
 import com.anonymoushacker1279.immersiveweapons.entity.passive.AbstractFieldMedicEntity;
 import com.anonymoushacker1279.immersiveweapons.entity.passive.AbstractMinutemanEntity;
 import com.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
@@ -18,6 +16,7 @@ public class ModEventSubscriber {
 
 	/**
 	 * Event handler for the RegistryEvent.Register event.
+	 *
 	 * @param event the <code>RegistryEvent.Register</code> instance
 	 */
 	@SubscribeEvent
@@ -50,6 +49,7 @@ public class ModEventSubscriber {
 
 	/**
 	 * Event handler for the EntityAttributeCreationEvent.
+	 *
 	 * @param event the <code>EntityAttributeCreationEvent</code> instance
 	 */
 	@SubscribeEvent
@@ -59,5 +59,8 @@ public class ModEventSubscriber {
 		event.put(DeferredRegistryHandler.FIELD_MEDIC_ENTITY.get(), AbstractFieldMedicEntity.registerAttributes().build());
 		event.put(DeferredRegistryHandler.WANDERING_WARRIOR_ENTITY.get(), AbstractWanderingWarriorEntity.registerAttributes().build());
 		event.put(DeferredRegistryHandler.HANS_ENTITY.get(), HansEntity.registerAttributes().build());
+		event.put(DeferredRegistryHandler.LAVA_REVENANT_ENTITY.get(), LavaRevenantEntity.registerAttributes().build());
+		event.put(DeferredRegistryHandler.ROCK_SPIDER_ENTITY.get(), RockSpiderEntity.registerAttributes().build());
+		event.put(DeferredRegistryHandler.CELESTIAL_TOWER_ENTITY.get(), CelestialTowerEntity.registerAttributes().build());
 	}
 }

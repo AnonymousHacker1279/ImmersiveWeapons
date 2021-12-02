@@ -38,9 +38,9 @@ import org.jetbrains.annotations.NotNull;
 public class BearTrapBlock extends BaseEntityBlock implements SimpleWaterloggedBlock {
 
 	public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
+	protected static final VoxelShape SHAPE = Block.box(0.0D, 0.0D, 0.0D, 16.0D, 2.0D, 16.0D);
 	private static final BooleanProperty TRIGGERED = BooleanProperty.create("triggered");
 	private static final BooleanProperty VINES = BooleanProperty.create("vines");
-	protected static final VoxelShape SHAPE = Block.box(0.0D, 0.0D, 0.0D, 16.0D, 2.0D, 16.0D);
 
 	/**
 	 * Constructor for BearTrapBlock.
@@ -71,7 +71,7 @@ public class BearTrapBlock extends BaseEntityBlock implements SimpleWaterloggedB
 			BearTrapBlockEntity bearTrap = (BearTrapBlockEntity) worldIn.getBlockEntity(pos);
 			ItemStack currentlyHeldItem = player.getMainHandItem();
 			if (bearTrap != null) {
-				if (state.getValue(TRIGGERED) && !bearTrap.hasTrappedEntity() && !bearTrap.hasTrappedPlayerEntity()) {
+				if (state.getValue(TRIGGERED) && !bearTrap.hasTrappedEntity() && bearTrap.hasTrappedPlayerEntity()) {
 					worldIn.setBlock(pos, state.setValue(TRIGGERED, false).setValue(VINES, false), 3);
 					return InteractionResult.SUCCESS;
 				}

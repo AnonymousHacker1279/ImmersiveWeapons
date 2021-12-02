@@ -34,8 +34,9 @@ public class MortarShellEntity extends Projectile implements ItemSupplier {
 
 	/**
 	 * Constructor for MortarShellEntity.
-	 * @param entityType the <code>EntityType</code> instance; must extend MolotovEntity
-	 * @param world the <code>World</code> the entity is in
+	 *
+	 * @param entityType the <code>EntityType</code> instance; must extend MortarShellEntity
+	 * @param world      the <code>World</code> the entity is in
 	 */
 	public MortarShellEntity(EntityType<? extends Projectile> entityType, Level world) {
 		super(entityType, world);
@@ -43,8 +44,9 @@ public class MortarShellEntity extends Projectile implements ItemSupplier {
 
 	/**
 	 * Constructor for MortarShellEntity.
-	 * @param world the <code>World</code> the entity is in
-	 * @param pos the <code>BlockPos</code> the entity should spawn at
+	 *
+	 * @param world   the <code>World</code> the entity is in
+	 * @param pos     the <code>BlockPos</code> the entity should spawn at
 	 * @param yOffset the Y offset to spawn at
 	 */
 	private MortarShellEntity(Level world, BlockPos pos, double yOffset) {
@@ -54,8 +56,9 @@ public class MortarShellEntity extends Projectile implements ItemSupplier {
 
 	/**
 	 * Create the entity and set its initial movement.
-	 * @param world the <code>World</code> the entity is in
-	 * @param pos the <code>BlockPos</code> the entity is at
+	 *
+	 * @param world   the <code>World</code> the entity is in
+	 * @param pos     the <code>BlockPos</code> the entity is at
 	 * @param yOffset the Y offset to spawn at
 	 */
 	public static void create(Level world, BlockPos pos, double yOffset, BlockState state) {
@@ -145,6 +148,7 @@ public class MortarShellEntity extends Projectile implements ItemSupplier {
 
 	/**
 	 * Runs when an entity/block is hit.
+	 *
 	 * @param rayTraceResult the <code>RayTraceResult</code> instance
 	 */
 	@Override
@@ -161,6 +165,7 @@ public class MortarShellEntity extends Projectile implements ItemSupplier {
 
 	/**
 	 * Determines if an entity can be hit.
+	 *
 	 * @param entity the <code>Entity</code> to check
 	 * @return boolean
 	 */
@@ -183,6 +188,7 @@ public class MortarShellEntity extends Projectile implements ItemSupplier {
 
 	/**
 	 * Get the entity spawn packet.
+	 *
 	 * @return IPacket
 	 */
 	@Override
@@ -192,6 +198,7 @@ public class MortarShellEntity extends Projectile implements ItemSupplier {
 
 	/**
 	 * Get the reference item.
+	 *
 	 * @return ItemStack
 	 */
 	@Override

@@ -18,15 +18,16 @@ public class GenericParticle extends TextureSheetParticle {
 
 	/**
 	 * Constructor for GenericParticle.
-	 * @param world the <code>ClientWorld</code> the particle is in
-	 * @param x the X position to spawn at
-	 * @param y the Y position to spawn at
-	 * @param z the Z position to spawn at
+	 *
+	 * @param world     the <code>ClientWorld</code> the particle is in
+	 * @param x         the X position to spawn at
+	 * @param y         the Y position to spawn at
+	 * @param z         the Z position to spawn at
 	 * @param velocityX the X velocity to spawn with
 	 * @param velocityY the Y velocity to spawn with
 	 * @param velocityZ the Z velocity to spawn with
-	 * @param tint the <code>Color</code> to spawn with
-	 * @param diameter the diameter to spawn at
+	 * @param tint      the <code>Color</code> to spawn with
+	 * @param diameter  the diameter to spawn at
 	 */
 	public GenericParticle(ClientLevel world, double x, double y, double z, double velocityX, double velocityY, double velocityZ, Color tint, double diameter) {
 		super(world, x, y, z, velocityX, velocityY, velocityZ);
@@ -55,6 +56,7 @@ public class GenericParticle extends TextureSheetParticle {
 
 	/**
 	 * Get the lighting color.
+	 *
 	 * @param partialTick the current partial tick
 	 * @return int
 	 */
@@ -73,6 +75,7 @@ public class GenericParticle extends TextureSheetParticle {
 
 	/**
 	 * Get the render type.
+	 *
 	 * @return IParticleRenderType
 	 */
 	@Override

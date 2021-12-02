@@ -1,6 +1,7 @@
 {
 	"replace": false,
 	"entries": [
-		"immersiveweapons:log_shards"
+		"immersiveweapons:log_shards",
+		"immersiveweapons:azul_keystone_fragment_in_chests"
 	]
 }

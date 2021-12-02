@@ -16,6 +16,7 @@ public class DyingSoldierRenderer extends HumanoidMobRenderer<DyingSoldierEntity
 
 	/**
 	 * Constructor for DyingSoldierRenderer.
+	 *
 	 * @param context a <code>Context</code> instance
 	 */
 	public DyingSoldierRenderer(Context context) {
@@ -25,6 +26,7 @@ public class DyingSoldierRenderer extends HumanoidMobRenderer<DyingSoldierEntity
 
 	/**
 	 * Get the texture location.
+	 *
 	 * @param entity the <code>DyingSoldierEntity</code> instance
 	 * @return ResourceLocation
 	 */

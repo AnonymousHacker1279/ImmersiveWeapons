@@ -24,10 +24,11 @@ public class LogShardsLootModifierHandler extends LootModifier {
 
 	/**
 	 * Constructor for LogShardsLootModifierHandler.
+	 *
 	 * @param conditionsIn the <code>ILootCondition</code>s
-	 * @param tag the block tag string
-	 * @param numShards the number of shards
-	 * @param reward the returned item
+	 * @param tag          the block tag string
+	 * @param numShards    the number of shards
+	 * @param reward       the returned item
 	 */
 	LogShardsLootModifierHandler(LootItemCondition[] conditionsIn, String tag, int numShards, Item reward) {
 		super(conditionsIn);
@@ -38,8 +39,9 @@ public class LogShardsLootModifierHandler extends LootModifier {
 
 	/**
 	 * Apply loot table modifications.
+	 *
 	 * @param generatedLoot the <code>List</code> of generated items
-	 * @param context the <code>LootContext</code> instance
+	 * @param context       the <code>LootContext</code> instance
 	 * @return List extending ItemStack
 	 */
 	@Override
@@ -68,8 +70,9 @@ public class LogShardsLootModifierHandler extends LootModifier {
 
 		/**
 		 * Read from JSON.
-		 * @param name the <code>ResourceLocation</code> to read from
-		 * @param object the <code>JsonObject</code> instance
+		 *
+		 * @param name         the <code>ResourceLocation</code> to read from
+		 * @param object       the <code>JsonObject</code> instance
 		 * @param conditionsIn the <code>ILootCondition</code>s
 		 * @return LogShardsLootModifierHandler
 		 */
@@ -83,6 +86,7 @@ public class LogShardsLootModifierHandler extends LootModifier {
 
 		/**
 		 * Write to JSON.
+		 *
 		 * @param instance the <code>LogShardsLootModifierHandler</code> instance
 		 * @return JsonObject
 		 */

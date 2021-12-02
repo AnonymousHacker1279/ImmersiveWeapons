@@ -30,11 +30,11 @@ import org.jetbrains.annotations.NotNull;
 
 public class BarrelTapBlock extends HorizontalDirectionalBlock implements SimpleWaterloggedBlock {
 
+	public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
 	private static final VoxelShape SHAPE_NORTH = Block.box(7.0D, 4.0D, 0.0D, 9.0D, 7.0D, 3.0D);
 	private static final VoxelShape SHAPE_SOUTH = Block.box(7.0D, 4.0D, 13.0D, 9.0D, 7.0D, 16.0D);
 	private static final VoxelShape SHAPE_EAST = Block.box(0.0D, 4.0D, 7.0D, 3.0D, 7.0D, 9.0D);
 	private static final VoxelShape SHAPE_WEST = Block.box(13.0D, 4.0D, 7.0D, 16.0D, 7.0D, 9.0D);
-	public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
 	private String directionToUse = "north"; // Default: check North for a barrel
 
 	/**

@@ -17,6 +17,7 @@ public class HansRenderer extends HumanoidMobRenderer<HansEntity, PlayerModel<Ha
 
 	/**
 	 * Constructor for HansRenderer.
+	 *
 	 * @param context an <code>EntityRendererManager</code> instance
 	 */
 	public HansRenderer(Context context) {
@@ -26,6 +27,7 @@ public class HansRenderer extends HumanoidMobRenderer<HansEntity, PlayerModel<Ha
 
 	/**
 	 * Get the texture location.
+	 *
 	 * @param entity the <code>HansEntity</code> instance
 	 * @return ResourceLocation
 	 */

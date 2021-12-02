@@ -18,8 +18,9 @@ public class GoldPikeItem extends PikeItem {
 
 	/**
 	 * Constructor for GoldPikeItem.
-	 * @param properties the <code>Properties</code> for the item
-	 * @param damageIn the damage
+	 *
+	 * @param properties    the <code>Properties</code> for the item
+	 * @param damageIn      the damage
 	 * @param attackSpeedIn the attack speed
 	 */
 	public GoldPikeItem(Properties properties, double damageIn, double attackSpeedIn) {

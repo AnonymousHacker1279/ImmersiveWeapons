@@ -20,6 +20,7 @@ public class TeslaSynthesizerBlockEntity extends AbstractTeslaSynthesizerBlockEn
 
 	/**
 	 * Get the default name.
+	 *
 	 * @return ITextComponent
 	 */
 	@Override
@@ -29,7 +30,8 @@ public class TeslaSynthesizerBlockEntity extends AbstractTeslaSynthesizerBlockEn
 
 	/**
 	 * Create a new menu.
-	 * @param id the menu ID
+	 *
+	 * @param id     the menu ID
 	 * @param player the <code>PlayerEntity</code> instance
 	 * @return Container
 	 */

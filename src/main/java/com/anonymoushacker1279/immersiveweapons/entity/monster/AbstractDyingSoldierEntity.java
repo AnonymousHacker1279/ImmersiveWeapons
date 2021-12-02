@@ -63,7 +63,8 @@ public abstract class AbstractDyingSoldierEntity extends Monster implements Rang
 
 	/**
 	 * Constructor for AbstractDyingSoldierEntity.
-	 * @param type the <code>EntityType</code> instance
+	 *
+	 * @param type    the <code>EntityType</code> instance
 	 * @param worldIn the <code>World</code> the entity is in
 	 */
 	AbstractDyingSoldierEntity(EntityType<? extends AbstractDyingSoldierEntity> type, Level worldIn) {
@@ -73,6 +74,7 @@ public abstract class AbstractDyingSoldierEntity extends Monster implements Rang
 
 	/**
 	 * Register this entity's attributes.
+	 *
 	 * @return AttributeModifierMap.MutableAttribute
 	 */
 	public static AttributeSupplier.Builder registerAttributes() {
@@ -102,7 +104,8 @@ public abstract class AbstractDyingSoldierEntity extends Monster implements Rang
 
 	/**
 	 * Play the step sound.
-	 * @param pos the <code>BlockPos</code> the entity is at
+	 *
+	 * @param pos     the <code>BlockPos</code> the entity is at
 	 * @param blockIn the <code>BlockState</code> of the block being stepped on
 	 */
 	@Override
@@ -114,6 +117,7 @@ public abstract class AbstractDyingSoldierEntity extends Monster implements Rang
 
 	/**
 	 * Get the mob type.
+	 *
 	 * @return CreatureAttribute
 	 */
 	@Override
@@ -134,6 +138,7 @@ public abstract class AbstractDyingSoldierEntity extends Monster implements Rang
 
 	/**
 	 * Gives armor or weapon for entity based on given DifficultyInstance
+	 *
 	 * @param difficulty the <code>DifficultyInstance</code> of the world
 	 */
 	@Override
@@ -144,11 +149,12 @@ public abstract class AbstractDyingSoldierEntity extends Monster implements Rang
 
 	/**
 	 * Finalize spawn information.
-	 * @param worldIn the <code>IServerWorld</code> the entity is in
+	 *
+	 * @param worldIn      the <code>IServerWorld</code> the entity is in
 	 * @param difficultyIn the <code>DifficultyInstance</code> of the world
-	 * @param reason the <code>SpawnReason</code> for the entity
-	 * @param spawnDataIn the <code>ILivingEntitySpawnData</code> for the entity
-	 * @param dataTag the <code>CompoundNBT</code> data tag for the entity
+	 * @param reason       the <code>SpawnReason</code> for the entity
+	 * @param spawnDataIn  the <code>ILivingEntitySpawnData</code> for the entity
+	 * @param dataTag      the <code>CompoundNBT</code> data tag for the entity
 	 * @return ILivingEntityData
 	 */
 	@Override
@@ -196,7 +202,8 @@ public abstract class AbstractDyingSoldierEntity extends Monster implements Rang
 
 	/**
 	 * Attack the specified entity using a ranged attack.
-	 * @param target the <code>LivingEntity</code> being targeted
+	 *
+	 * @param target         the <code>LivingEntity</code> being targeted
 	 * @param distanceFactor the distance factor
 	 */
 	@Override
@@ -216,7 +223,8 @@ public abstract class AbstractDyingSoldierEntity extends Monster implements Rang
 
 	/**
 	 * Fires an arrow.
-	 * @param arrowStack the <code>ItemStack</code> of the arrow
+	 *
+	 * @param arrowStack     the <code>ItemStack</code> of the arrow
 	 * @param distanceFactor the distance factor for firing
 	 * @return AbstractArrowEntity
 	 */
@@ -230,6 +238,7 @@ public abstract class AbstractDyingSoldierEntity extends Monster implements Rang
 
 	/**
 	 * Check if the entity can fire a projectile.
+	 *
 	 * @param projectileWeaponItem the <code>ProjectileWeaponItem</code> instance
 	 * @return boolean
 	 */
@@ -240,6 +249,7 @@ public abstract class AbstractDyingSoldierEntity extends Monster implements Rang
 
 	/**
 	 * Read entity NBT data.
+	 *
 	 * @param compound the <code>CompoundNBT</code> to read from
 	 */
 	@Override
@@ -250,8 +260,9 @@ public abstract class AbstractDyingSoldierEntity extends Monster implements Rang
 
 	/**
 	 * Set item slots.
+	 *
 	 * @param slotIn the <code>EquipmentSlotType</code> to set
-	 * @param stack the <code>ItemStack</code> to set in the slot
+	 * @param stack  the <code>ItemStack</code> to set in the slot
 	 */
 	@Override
 	public void setItemSlot(@NotNull EquipmentSlot slotIn, @NotNull ItemStack stack) {
@@ -264,6 +275,7 @@ public abstract class AbstractDyingSoldierEntity extends Monster implements Rang
 
 	/**
 	 * Get the standing eye height of the entity.
+	 *
 	 * @param poseIn the <code>Pose</code> instance
 	 * @param sizeIn the <code>EntitySize</code> of the entity
 	 * @return float
@@ -275,6 +287,7 @@ public abstract class AbstractDyingSoldierEntity extends Monster implements Rang
 
 	/**
 	 * Get the Y offset of the entity.
+	 *
 	 * @return double
 	 */
 	@Override

@@ -21,6 +21,7 @@ public class UsedSyringeItem extends Item {
 
 	/**
 	 * Constructor for UsedSyringeItem.
+	 *
 	 * @param properties the <code>Properties</code> for the item
 	 */
 	public UsedSyringeItem(Properties properties) {
@@ -29,9 +30,10 @@ public class UsedSyringeItem extends Item {
 
 	/**
 	 * Runs when the player right-clicks.
-	 * @param worldIn the <code>World</code> the player is in
+	 *
+	 * @param worldIn  the <code>World</code> the player is in
 	 * @param playerIn the <code>PlayerEntity</code> performing the action
-	 * @param handIn the <code>Hand</code> the player is using
+	 * @param handIn   the <code>Hand</code> the player is using
 	 * @return ActionResult extending ItemStack
 	 */
 	@Override

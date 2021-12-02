@@ -1,6 +1,11 @@
 package com.anonymoushacker1279.immersiveweapons.util;
 
+import com.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
+import net.minecraft.core.Registry;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.DyeColor;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.StainedGlassBlock;
 import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
 
@@ -9,9 +14,12 @@ import java.util.UUID;
 public class GeneralUtilities {
 
 	public static final UUID ATTACK_REACH_MODIFIER = UUID.fromString("9f470b49-0445-4341-ae85-55b9e5ec2a1c");
+	public static final ResourceKey<Level> TILTROS = ResourceKey.create(Registry.DIMENSION_REGISTRY, new ResourceLocation(ImmersiveWeapons.MOD_ID, "tiltros"));
+
 
 	/**
 	 * Get a random number between a minimum and maximum.
+	 *
 	 * @param min minimum number
 	 * @param max maximum number
 	 * @return float
@@ -22,6 +30,7 @@ public class GeneralUtilities {
 
 	/**
 	 * Get a random number between a minimum and maximum.
+	 *
 	 * @param min minimum number
 	 * @param max maximum number
 	 * @return double
@@ -32,6 +41,7 @@ public class GeneralUtilities {
 
 	/**
 	 * Get a random number between a minimum and maximum.
+	 *
 	 * @param min minimum number
 	 * @param max maximum number
 	 * @return int
@@ -42,7 +52,8 @@ public class GeneralUtilities {
 
 	/**
 	 * Create a stained-glass block from a color.
-	 * @param color the <code>DyeColor</code>
+	 *
+	 * @param color      the <code>DyeColor</code>
 	 * @param properties the <code>Properties</code> for the block
 	 * @return StainedGlassBlock
 	 */

@@ -1,0 +1,22 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"pattern": [
+		"xyx",
+		"yzy",
+		"xyx"
+	],
+	"key": {
+		"x": {
+			"item": "minecraft:iron_nugget"
+		},
+		"y": {
+			"tag": "forge:glass_panes"
+		},
+		"z": {
+			"item": "immersiveweapons:celestial_fragment"
+		}
+	},
+	"result": {
+		"item": "immersiveweapons:celestial_lantern"
+	}
+}

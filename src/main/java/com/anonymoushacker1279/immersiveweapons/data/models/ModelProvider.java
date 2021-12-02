@@ -36,6 +36,18 @@ public class ModelProvider implements DataProvider {
 	}
 
 	/**
+	 * Create model paths.
+	 *
+	 * @param path             the <code>Path</code> to save at
+	 * @param resourceLocation the <code>ResourceLocation</code> to use
+	 * @return Path
+	 */
+	private static Path createModelPath(Path path, ResourceLocation resourceLocation) {
+		String namespace = resourceLocation.getNamespace();
+		return path.resolve("assets/" + namespace + "/models/" + resourceLocation.getPath() + ".json");
+	}
+
+	/**
 	 * Run the model provider.
 	 *
 	 * @param hashCache the <code>HashCache</code> instance
@@ -76,18 +88,6 @@ public class ModelProvider implements DataProvider {
 			}
 
 		});
-	}
-
-	/**
-	 * Create model paths.
-	 *
-	 * @param path             the <code>Path</code> to save at
-	 * @param resourceLocation the <code>ResourceLocation</code> to use
-	 * @return Path
-	 */
-	private static Path createModelPath(Path path, ResourceLocation resourceLocation) {
-		String namespace = resourceLocation.getNamespace();
-		return path.resolve("assets/" + namespace + "/models/" + resourceLocation.getPath() + ".json");
 	}
 
 	/**

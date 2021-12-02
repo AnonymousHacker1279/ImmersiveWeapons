@@ -77,7 +77,8 @@ public abstract class AbstractMinutemanEntity extends PathfinderMob implements R
 
 	/**
 	 * Constructor for AbstractMinutemanEntity.
-	 * @param type the <code>EntityType</code> instance
+	 *
+	 * @param type    the <code>EntityType</code> instance
 	 * @param worldIn the <code>World</code> the entity is in
 	 */
 	AbstractMinutemanEntity(EntityType<? extends AbstractMinutemanEntity> type, Level worldIn) {
@@ -87,6 +88,7 @@ public abstract class AbstractMinutemanEntity extends PathfinderMob implements R
 
 	/**
 	 * Register this entity's attributes.
+	 *
 	 * @return AttributeModifierMap.MutableAttribute
 	 */
 	public static AttributeSupplier.Builder registerAttributes() {
@@ -117,7 +119,8 @@ public abstract class AbstractMinutemanEntity extends PathfinderMob implements R
 
 	/**
 	 * Play the step sound.
-	 * @param pos the <code>BlockPos</code> the entity is at
+	 *
+	 * @param pos     the <code>BlockPos</code> the entity is at
 	 * @param blockIn the <code>BlockState</code> of the block being stepped on
 	 */
 	@Override
@@ -151,6 +154,7 @@ public abstract class AbstractMinutemanEntity extends PathfinderMob implements R
 
 	/**
 	 * Gives armor or weapon for entity based on given DifficultyInstance
+	 *
 	 * @param difficulty the <code>DifficultyInstance</code> of the world
 	 */
 	@Override
@@ -161,11 +165,12 @@ public abstract class AbstractMinutemanEntity extends PathfinderMob implements R
 
 	/**
 	 * Finalize spawn information.
-	 * @param worldIn the <code>IServerWorld</code> the entity is in
+	 *
+	 * @param worldIn      the <code>IServerWorld</code> the entity is in
 	 * @param difficultyIn the <code>DifficultyInstance</code> of the world
-	 * @param reason the <code>SpawnReason</code> for the entity
-	 * @param spawnDataIn the <code>ILivingEntitySpawnData</code> for the entity
-	 * @param dataTag the <code>CompoundNBT</code> data tag for the entity
+	 * @param reason       the <code>SpawnReason</code> for the entity
+	 * @param spawnDataIn  the <code>ILivingEntitySpawnData</code> for the entity
+	 * @param dataTag      the <code>CompoundNBT</code> data tag for the entity
 	 * @return ILivingEntityData
 	 */
 	@Override
@@ -213,6 +218,7 @@ public abstract class AbstractMinutemanEntity extends PathfinderMob implements R
 
 	/**
 	 * Handle push behavior.
+	 *
 	 * @param entityIn the <code>Entity</code> being pushed
 	 */
 	@Override
@@ -225,6 +231,7 @@ public abstract class AbstractMinutemanEntity extends PathfinderMob implements R
 
 	/**
 	 * Determine if the given entity can be attacked.
+	 *
 	 * @param typeIn the <code>EntityType</code> being checked
 	 * @return boolean
 	 */
@@ -235,7 +242,8 @@ public abstract class AbstractMinutemanEntity extends PathfinderMob implements R
 
 	/**
 	 * Attack the specified entity using a ranged attack.
-	 * @param target the <code>LivingEntity</code> being targeted
+	 *
+	 * @param target         the <code>LivingEntity</code> being targeted
 	 * @param distanceFactor the distance factor
 	 */
 	@Override
@@ -258,6 +266,7 @@ public abstract class AbstractMinutemanEntity extends PathfinderMob implements R
 
 	/**
 	 * Get the projectile for the entity's weapon.
+	 *
 	 * @param weapon the <code>ItemStack</code> instance
 	 * @return ItemStack
 	 */
@@ -274,7 +283,8 @@ public abstract class AbstractMinutemanEntity extends PathfinderMob implements R
 
 	/**
 	 * Fires an arrow.
-	 * @param arrowStack the <code>ItemStack</code> of the arrow
+	 *
+	 * @param arrowStack     the <code>ItemStack</code> of the arrow
 	 * @param distanceFactor the distance factor for firing
 	 * @return AbstractArrowEntity
 	 */
@@ -288,6 +298,7 @@ public abstract class AbstractMinutemanEntity extends PathfinderMob implements R
 
 	/**
 	 * Runs when the entity is hurt.
+	 *
 	 * @param source the <code>DamageSource</code> instance
 	 * @param amount the damage amount
 	 * @return boolean
@@ -322,6 +333,7 @@ public abstract class AbstractMinutemanEntity extends PathfinderMob implements R
 
 	/**
 	 * Check if the entity can fire a projectile.
+	 *
 	 * @param projectileWeaponItem the <code>ProjectileItemWeapon</code> instance
 	 * @return boolean
 	 */
@@ -332,6 +344,7 @@ public abstract class AbstractMinutemanEntity extends PathfinderMob implements R
 
 	/**
 	 * Read entity NBT data.
+	 *
 	 * @param compound the <code>CompoundNBT</code> to read from
 	 */
 	@Override
@@ -343,6 +356,7 @@ public abstract class AbstractMinutemanEntity extends PathfinderMob implements R
 
 	/**
 	 * Write entity NBT data.
+	 *
 	 * @param compound the <code>CompoundNBT</code> to write to
 	 */
 	@Override
@@ -353,8 +367,9 @@ public abstract class AbstractMinutemanEntity extends PathfinderMob implements R
 
 	/**
 	 * Set item slots.
+	 *
 	 * @param slotIn the <code>EquipmentSlotType</code> to set
-	 * @param stack the <code>ItemStack</code> to set in the slot
+	 * @param stack  the <code>ItemStack</code> to set in the slot
 	 */
 	@Override
 	public void setItemSlot(@NotNull EquipmentSlot slotIn, @NotNull ItemStack stack) {
@@ -366,6 +381,7 @@ public abstract class AbstractMinutemanEntity extends PathfinderMob implements R
 
 	/**
 	 * Get the standing eye height of the entity.
+	 *
 	 * @param poseIn the <code>Pose</code> instance
 	 * @param sizeIn the <code>EntitySize</code> of the entity
 	 * @return float
@@ -377,6 +393,7 @@ public abstract class AbstractMinutemanEntity extends PathfinderMob implements R
 
 	/**
 	 * Get the Y offset of the entity.
+	 *
 	 * @return double
 	 */
 	@Override
@@ -394,6 +411,7 @@ public abstract class AbstractMinutemanEntity extends PathfinderMob implements R
 
 	/**
 	 * Get the remaining anger time
+	 *
 	 * @return int
 	 */
 	@Override
@@ -403,6 +421,7 @@ public abstract class AbstractMinutemanEntity extends PathfinderMob implements R
 
 	/**
 	 * Set the remaining anger time
+	 *
 	 * @param time the new remaining anger time
 	 */
 	@Override
@@ -412,6 +431,7 @@ public abstract class AbstractMinutemanEntity extends PathfinderMob implements R
 
 	/**
 	 * Get anger target
+	 *
 	 * @return UUID
 	 */
 	@Override
@@ -421,6 +441,7 @@ public abstract class AbstractMinutemanEntity extends PathfinderMob implements R
 
 	/**
 	 * Set the anger target
+	 *
 	 * @param target the <code>UUID</code> of the target
 	 */
 	@Override

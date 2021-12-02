@@ -31,10 +31,11 @@ public class BattlefieldCampPieces {
 
 	/**
 	 * Start building structure pieces.
+	 *
 	 * @param structureManager the <code>TemplateManager</code> instance
-	 * @param pos the <code>BlockPos</code> position
-	 * @param rotation the <code>Rotation</code>
-	 * @param pieceList the <code>List</code> of pieces; must extend StructurePiece
+	 * @param pos              the <code>BlockPos</code> position
+	 * @param rotation         the <code>Rotation</code>
+	 * @param pieceList        the <code>List</code> of pieces; must extend StructurePiece
 	 */
 	public static void start(StructureManager structureManager, BlockPos pos, Rotation rotation, List<StructurePiece> pieceList) {
 		int x = pos.getX();
@@ -51,9 +52,10 @@ public class BattlefieldCampPieces {
 
 		/**
 		 * Constructor for Piece.
+		 *
 		 * @param structureManager the <code>StructureManager</code> instance
-		 * @param pos the <code>BlockPos</code> position
-		 * @param rotationIn the <code>Rotation</code>
+		 * @param pos              the <code>BlockPos</code> position
+		 * @param rotationIn       the <code>Rotation</code>
 		 */
 		Piece(StructureManager structureManager, BlockPos pos, Rotation rotationIn) {
 			super(Structures.BF_C, 0, structureManager, BattlefieldCampPieces.CENTER, BattlefieldCampPieces.CENTER.toString(), makeSettings(rotationIn, BattlefieldCampPieces.CENTER), makePosition(pos));
@@ -61,8 +63,9 @@ public class BattlefieldCampPieces {
 
 		/**
 		 * Constructor for Piece.
+		 *
 		 * @param level the <code>ServerLevel</code> the structure is in
-		 * @param tag the <code>CompoundTag</code> data
+		 * @param tag   the <code>CompoundTag</code> data
 		 */
 		public Piece(ServerLevel level, CompoundTag tag) {
 			super(Structures.BF_C, tag, level, (resourceLocation) -> makeSettings(Rotation.valueOf(tag.getString("Rot")), resourceLocation));
@@ -70,7 +73,8 @@ public class BattlefieldCampPieces {
 
 		/**
 		 * Make structure settings
-		 * @param rotationIn the <code>Rotation</code> of the structure
+		 *
+		 * @param rotationIn         the <code>Rotation</code> of the structure
 		 * @param resourceLocationIn the <code>ResourceLocation</code> of the structure
 		 * @return StructurePlaceSettings
 		 */
@@ -82,6 +86,7 @@ public class BattlefieldCampPieces {
 
 		/**
 		 * Make a structure position.
+		 *
 		 * @param blockPos the <code>BlockPos</code> the piece is at
 		 * @return BlockPos
 		 */
@@ -92,8 +97,9 @@ public class BattlefieldCampPieces {
 
 		/**
 		 * Add additional save data to NBT.
+		 *
 		 * @param level the <code>ServerLevel</code> instance
-		 * @param tag the <code>CompoundNBT</code> data
+		 * @param tag   the <code>CompoundNBT</code> data
 		 */
 		@Override
 		protected void addAdditionalSaveData(@NotNull ServerLevel level, @NotNull CompoundTag tag) {
@@ -104,11 +110,12 @@ public class BattlefieldCampPieces {
 
 		/**
 		 * Handle data markers.
-		 * @param function the <code>String</code> function
-		 * @param pos the <code>BlockPos</code> position
+		 *
+		 * @param function            the <code>String</code> function
+		 * @param pos                 the <code>BlockPos</code> position
 		 * @param serverLevelAccessor the <code>ServerLevelAccessor</code>
-		 * @param rand the <code>Random</code> instance
-		 * @param sbb the <code>MutableBoundingBox</code>
+		 * @param rand                the <code>Random</code> instance
+		 * @param sbb                 the <code>MutableBoundingBox</code>
 		 */
 		@Override
 		protected void handleDataMarker(@NotNull String function, @NotNull BlockPos pos, @NotNull ServerLevelAccessor serverLevelAccessor, @NotNull Random rand, @NotNull BoundingBox sbb) {

@@ -24,7 +24,8 @@ public class SmallPartsContainer extends ItemCombinerMenu {
 
 	/**
 	 * Constructor for SmallPartsContainer.
-	 * @param id the ID of the container
+	 *
+	 * @param id  the ID of the container
 	 * @param inv the <code>PlayerInventory</code> instance
 	 */
 	public SmallPartsContainer(int id, Inventory inv) {
@@ -33,8 +34,9 @@ public class SmallPartsContainer extends ItemCombinerMenu {
 
 	/**
 	 * Constructor for SmallPartsContainer.
-	 * @param id the ID of the container
-	 * @param inv the <code>PlayerInventory</code> instance
+	 *
+	 * @param id               the ID of the container
+	 * @param inv              the <code>PlayerInventory</code> instance
 	 * @param worldPosCallable the <code>IWorldPosCallable</code> instance
 	 */
 	public SmallPartsContainer(int id, Inventory inv, ContainerLevelAccess worldPosCallable) {
@@ -45,6 +47,7 @@ public class SmallPartsContainer extends ItemCombinerMenu {
 
 	/**
 	 * Check for a valid block.
+	 *
 	 * @param blockState the <code>BlockState</code> of the block
 	 * @return boolean
 	 */
@@ -55,7 +58,8 @@ public class SmallPartsContainer extends ItemCombinerMenu {
 
 	/**
 	 * Check if the player can pick up a recipe.
-	 * @param playerEntity the <code>PlayerEntity</code> instance
+	 *
+	 * @param playerEntity  the <code>PlayerEntity</code> instance
 	 * @param matchesRecipe set the recipe match
 	 * @return boolean
 	 */
@@ -66,7 +70,8 @@ public class SmallPartsContainer extends ItemCombinerMenu {
 
 	/**
 	 * Runs when the result is taken from the container.
-	 * @param player the <code>Player</code> instance
+	 *
+	 * @param player    the <code>Player</code> instance
 	 * @param itemStack the <code>ItemStack</code> being taken
 	 */
 	@Override
@@ -80,6 +85,7 @@ public class SmallPartsContainer extends ItemCombinerMenu {
 
 	/**
 	 * Shrink a stack in a slot.
+	 *
 	 * @param index the slot index
 	 */
 	private void shrinkStackInSlot(int index) {
@@ -107,6 +113,7 @@ public class SmallPartsContainer extends ItemCombinerMenu {
 
 	/**
 	 * Check if a stack should be quick-moved.
+	 *
 	 * @param itemStack the <code>ItemStack</code> being checked
 	 * @return boolean
 	 */
@@ -117,7 +124,8 @@ public class SmallPartsContainer extends ItemCombinerMenu {
 
 	/**
 	 * Check if the specified slot is valid for stack merging.
-	 * @param stack the <code>ItemStack</code> being merged
+	 *
+	 * @param stack  the <code>ItemStack</code> being merged
 	 * @param slotIn the <code>Slot</code> instance
 	 * @return boolean
 	 */

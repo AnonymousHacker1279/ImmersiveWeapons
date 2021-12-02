@@ -22,9 +22,10 @@ public class MoltenArmorItem extends ArmorItem {
 
 	/**
 	 * Constructor for MoltenArmorItem.
+	 *
 	 * @param material the <code>IArmorMaterial</code> for the item
-	 * @param slot the <code>EquipmentSlotType</code>
-	 * @param type type ID
+	 * @param slot     the <code>EquipmentSlotType</code>
+	 * @param type     type ID
 	 */
 	public MoltenArmorItem(ArmorMaterial material, EquipmentSlot slot, int type) {
 		super(material, slot, (new Item.Properties().tab(DeferredRegistryHandler.ITEM_GROUP).fireResistant()));
@@ -35,10 +36,11 @@ public class MoltenArmorItem extends ArmorItem {
 
 	/**
 	 * Get the armor texture.
-	 * @param stack the <code>ItemStack</code> instance
+	 *
+	 * @param stack  the <code>ItemStack</code> instance
 	 * @param entity the <code>Entity</code> wearing the armor
-	 * @param slot the <code>EquipmentSlotType</code>
-	 * @param type type ID
+	 * @param slot   the <code>EquipmentSlotType</code>
+	 * @param type   type ID
 	 * @return String
 	 */
 	@Override
@@ -48,8 +50,9 @@ public class MoltenArmorItem extends ArmorItem {
 
 	/**
 	 * Runs once per tick while armor is equipped
-	 * @param stack the <code>ItemStack</code> instance
-	 * @param world the <code>World</code> the player is in
+	 *
+	 * @param stack  the <code>ItemStack</code> instance
+	 * @param world  the <code>World</code> the player is in
 	 * @param player the <code>PlayerEntity</code> wearing the armor
 	 */
 	@Override

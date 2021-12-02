@@ -11,6 +11,7 @@ public class FlareGunItem extends SimplePistolItem {
 
 	/**
 	 * Constructor for FlareGunItem.
+	 *
 	 * @param properties the <code>Properties</code> for the item
 	 */
 	public FlareGunItem(Properties properties) {
@@ -19,6 +20,7 @@ public class FlareGunItem extends SimplePistolItem {
 
 	/**
 	 * Get the default ammunition.
+	 *
 	 * @return Item
 	 */
 	@Override
@@ -28,6 +30,7 @@ public class FlareGunItem extends SimplePistolItem {
 
 	/**
 	 * Get ammo predicates.
+	 *
 	 * @return Predicate extending ItemStack
 	 */
 	@Override
@@ -37,6 +40,7 @@ public class FlareGunItem extends SimplePistolItem {
 
 	/**
 	 * Get the fire sound.
+	 *
 	 * @return SoundEvent
 	 */
 	@Override

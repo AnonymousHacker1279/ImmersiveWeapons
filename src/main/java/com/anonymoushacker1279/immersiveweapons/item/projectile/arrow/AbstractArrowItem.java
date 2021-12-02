@@ -20,8 +20,9 @@ public abstract class AbstractArrowItem extends ArrowItem {
 
 	/**
 	 * Constructor for AbstractArrowItem.
+	 *
 	 * @param properties the <code>Properties</code> for the item
-	 * @param damageIn the damage to deal on impact
+	 * @param damageIn   the damage to deal on impact
 	 */
 	protected AbstractArrowItem(Properties properties, double damageIn) {
 		super(properties);
@@ -30,6 +31,7 @@ public abstract class AbstractArrowItem extends ArrowItem {
 
 	/**
 	 * Set item references.
+	 *
 	 * @param refIn the <code>RegistryObject</code> reference, must extend Item
 	 */
 	public void setItemReference(RegistryObject<? extends Item> refIn) {
@@ -38,8 +40,9 @@ public abstract class AbstractArrowItem extends ArrowItem {
 
 	/**
 	 * Create an arrow item.
+	 *
 	 * @param worldIn the <code>World</code> the shooter is in
-	 * @param stack the <code>ItemStack</code> being shot
+	 * @param stack   the <code>ItemStack</code> being shot
 	 * @param shooter the <code>LivingEntity</code> shooting the arrow
 	 * @return AbstractArrow
 	 */
@@ -53,8 +56,9 @@ public abstract class AbstractArrowItem extends ArrowItem {
 
 	/**
 	 * Check if the arrow is infinite. A more flexible check than Vanilla provides.
-	 * @param stack the <code>ItemStack</code> being checked
-	 * @param bow the <code>ItemStack</code> containing the bow that's firing
+	 *
+	 * @param stack  the <code>ItemStack</code> being checked
+	 * @param bow    the <code>ItemStack</code> containing the bow that's firing
 	 * @param player the <code>PlayerEntity</code> firing the bow
 	 * @return boolean
 	 */

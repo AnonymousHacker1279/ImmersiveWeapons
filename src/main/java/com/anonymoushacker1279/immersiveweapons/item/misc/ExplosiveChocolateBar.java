@@ -14,6 +14,7 @@ public class ExplosiveChocolateBar extends Item {
 
 	/**
 	 * Constructor for ExplosiveChocolateBar.
+	 *
 	 * @param properties the <code>Properties</code> for the item
 	 */
 	public ExplosiveChocolateBar(Properties properties) {
@@ -22,8 +23,9 @@ public class ExplosiveChocolateBar extends Item {
 
 	/**
 	 * Runs when the item is no longer being used.
-	 * @param stack the <code>ItemStack</code> instance
-	 * @param worldIn the <code>World</code> the entity is in
+	 *
+	 * @param stack        the <code>ItemStack</code> instance
+	 * @param worldIn      the <code>World</code> the entity is in
 	 * @param entityLiving the <code>LivingEntity</code> using the item
 	 * @return ItemStack
 	 */

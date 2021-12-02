@@ -3,23 +3,22 @@ package com.anonymoushacker1279.immersiveweapons.client;
 import com.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import com.anonymoushacker1279.immersiveweapons.client.gui.screen.SmallPartsTableScreen;
 import com.anonymoushacker1279.immersiveweapons.client.gui.screen.TeslaSynthesizerScreen;
+import com.anonymoushacker1279.immersiveweapons.client.model.CelestialTowerModel;
 import com.anonymoushacker1279.immersiveweapons.client.particle.blood.BloodParticleFactory;
 import com.anonymoushacker1279.immersiveweapons.client.particle.smokebomb.SmokeBombParticleFactory;
 import com.anonymoushacker1279.immersiveweapons.client.renderer.blockentity.ChairRenderer;
 import com.anonymoushacker1279.immersiveweapons.client.renderer.blockentity.ShelfRenderer;
-import com.anonymoushacker1279.immersiveweapons.client.renderer.entity.arrow.*;
-import com.anonymoushacker1279.immersiveweapons.client.renderer.entity.bullet.*;
+import com.anonymoushacker1279.immersiveweapons.client.renderer.dimension.TiltrosDimensionSpecialEffects;
 import com.anonymoushacker1279.immersiveweapons.client.renderer.entity.misc.BurnedOakBoatRenderer;
 import com.anonymoushacker1279.immersiveweapons.client.renderer.entity.mob.*;
+import com.anonymoushacker1279.immersiveweapons.client.renderer.entity.projectile.arrow.*;
+import com.anonymoushacker1279.immersiveweapons.client.renderer.entity.projectile.bullet.*;
 import com.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
 import com.anonymoushacker1279.immersiveweapons.util.CustomWoodTypes;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.MenuScreens;
-import net.minecraft.client.renderer.BiomeColors;
-import net.minecraft.client.renderer.ItemBlockRenderTypes;
-import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.renderer.Sheets;
+import net.minecraft.client.renderer.*;
 import net.minecraft.client.renderer.blockentity.SignRenderer;
 import net.minecraft.client.renderer.entity.ThrownItemRenderer;
 import net.minecraft.client.renderer.item.ClampedItemPropertyFunction;
@@ -48,6 +47,7 @@ public class ClientModEventSubscriber {
 
 	/**
 	 * Event handler for the FMLClientSetupEvent.
+	 *
 	 * @param event the <code>FMLClientSetupEvent</code> instance
 	 */
 	@SubscribeEvent
@@ -82,9 +82,11 @@ public class ClientModEventSubscriber {
 		ItemBlockRenderTypes.setRenderLayer(DeferredRegistryHandler.CORRUGATED_IRON_PANEL_BARS.get(), RenderType.cutout());
 		ItemBlockRenderTypes.setRenderLayer(DeferredRegistryHandler.TESLA_SYNTHESIZER.get(), RenderType.translucent());
 		ItemBlockRenderTypes.setRenderLayer(DeferredRegistryHandler.CLOUD.get(), RenderType.translucent());
-		ItemBlockRenderTypes.setRenderLayer(DeferredRegistryHandler.BURNED_OAK_BRANCH.get(), RenderType.cutout());
-		ItemBlockRenderTypes.setRenderLayer(DeferredRegistryHandler.BURNED_OAK_DOOR.get(), RenderType.cutout());
-		ItemBlockRenderTypes.setRenderLayer(DeferredRegistryHandler.BURNED_OAK_TRAPDOOR.get(), RenderType.cutout());
+		ItemBlockRenderTypes.setRenderLayer(DeferredRegistryHandler.BURNED_OAK_BRANCH.get(), RenderType.cutoutMipped());
+		ItemBlockRenderTypes.setRenderLayer(DeferredRegistryHandler.BURNED_OAK_DOOR.get(), RenderType.cutoutMipped());
+		ItemBlockRenderTypes.setRenderLayer(DeferredRegistryHandler.BURNED_OAK_TRAPDOOR.get(), RenderType.cutoutMipped());
+		ItemBlockRenderTypes.setRenderLayer(DeferredRegistryHandler.AZUL_STAINED_ORCHID.get(), RenderType.cutoutMipped());
+		ItemBlockRenderTypes.setRenderLayer(DeferredRegistryHandler.CELESTIAL_LANTERN.get(), RenderType.cutoutMipped());
 
 		mc.getBlockColors().register((color1, color2, color3, color4) -> BiomeColors.getAverageGrassColor(Objects.requireNonNull(color2), Objects.requireNonNull(color3)), DeferredRegistryHandler.PITFALL.get());
 
@@ -93,10 +95,13 @@ public class ClientModEventSubscriber {
 		event.enqueueWork(() -> Sheets.addWoodType(CustomWoodTypes.BURNED_OAK));
 
 		event.enqueueWork(ClientModEventSubscriber::registerPropertyGetters);
+
+		DimensionSpecialEffects.EFFECTS.put(new ResourceLocation(ImmersiveWeapons.MOD_ID, "tiltros"), new TiltrosDimensionSpecialEffects());
 	}
 
 	/**
 	 * Event handler for the EntityRenderersEvent.RegisterRenderers
+	 *
 	 * @param event the <code>RegisterRenderers</code> instance
 	 */
 	@SubscribeEvent
@@ -130,12 +135,26 @@ public class ClientModEventSubscriber {
 		event.registerEntityRenderer(DeferredRegistryHandler.CHAIR_ENTITY.get(), ChairRenderer::new);
 		event.registerEntityRenderer(DeferredRegistryHandler.BURNED_OAK_BOAT_ENTITY.get(), BurnedOakBoatRenderer::new);
 		event.registerEntityRenderer(DeferredRegistryHandler.MUD_BALL_ENTITY.get(), ThrownItemRenderer::new);
+		event.registerEntityRenderer(DeferredRegistryHandler.LAVA_REVENANT_ENTITY.get(), LavaRevenantRenderer::new);
+		event.registerEntityRenderer(DeferredRegistryHandler.ROCK_SPIDER_ENTITY.get(), RockSpiderRenderer::new);
+		event.registerEntityRenderer(DeferredRegistryHandler.CELESTIAL_TOWER_ENTITY.get(), CelestialTowerRenderer::new);
 		event.registerBlockEntityRenderer(DeferredRegistryHandler.WALL_SHELF_BLOCK_ENTITY.get(), context -> new ShelfRenderer());
 		event.registerBlockEntityRenderer(DeferredRegistryHandler.BURNED_OAK_SIGN_ENTITY.get(), SignRenderer::new);
 	}
 
 	/**
+	 * Event handler for the RegisterLayerDefinitions.
+	 *
+	 * @param event the <code>RegisterLayerDefinitions</code> instance
+	 */
+	@SubscribeEvent
+	public static void registerLayers(EntityRenderersEvent.RegisterLayerDefinitions event) {
+		event.registerLayerDefinition(CelestialTowerModel.LAYER_LOCATION, CelestialTowerModel::createBodyLayer);
+	}
+
+	/**
 	 * Event handler for the ParticleFactoryRegisterEvent.
+	 *
 	 * @param event the <code>ParticleFactoryRegisterEvent</code> instance
 	 */
 	@SubscribeEvent
@@ -151,9 +170,10 @@ public class ClientModEventSubscriber {
 
 	/**
 	 * Register an item property getter.
-	 * @param item the <code>ItemLike</code> instance
+	 *
+	 * @param item             the <code>ItemLike</code> instance
 	 * @param resourceLocation the <code>ResourceLocation</code> of the item
-	 * @param propertyValue the <code>ClampedItemPropertyFunction</code> value
+	 * @param propertyValue    the <code>ClampedItemPropertyFunction</code> value
 	 */
 	public static void registerPropertyGetter(ItemLike item, ResourceLocation resourceLocation, ClampedItemPropertyFunction propertyValue) {
 		ItemProperties.register(item.asItem(), resourceLocation, propertyValue);

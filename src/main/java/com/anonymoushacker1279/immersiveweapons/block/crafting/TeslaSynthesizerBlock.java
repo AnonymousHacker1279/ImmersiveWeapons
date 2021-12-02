@@ -37,8 +37,8 @@ import java.util.Random;
 
 public class TeslaSynthesizerBlock extends Block implements EntityBlock, SimpleWaterloggedBlock {
 
-	protected static final VoxelShape SHAPE = Block.box(0.0D, 0.0D, 0.0D, 16.0D, 6.0D, 16.0D);
 	public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
+	protected static final VoxelShape SHAPE = Block.box(0.0D, 0.0D, 0.0D, 16.0D, 6.0D, 16.0D);
 	private static final Component CONTAINER_NAME = new TranslatableComponent("container.immersiveweapons.tesla_synthesizer");
 
 	/**

@@ -10,6 +10,19 @@ import java.nio.file.Path;
 public class Config {
 
 	private static final ForgeConfigSpec.Builder COMMON_CONFIG_BUILDER = new ForgeConfigSpec.Builder();
+	public static ForgeConfigSpec.ConfigValue<Boolean> TESLA_ARMOR_EFFECT_SOUND;
+	public static ForgeConfigSpec.ConfigValue<Integer> MAX_SMOKE_BOMB_PARTICLES;
+	public static ForgeConfigSpec.ConfigValue<Boolean> BULLETS_BREAK_GLASS;
+	public static ForgeConfigSpec.ConfigValue<Boolean> DYING_SOLDIER_SPAWN;
+	public static ForgeConfigSpec.ConfigValue<Boolean> WANDERING_WARRIOR_SPAWN;
+	public static ForgeConfigSpec.ConfigValue<Boolean> HANS_SPAWN;
+	public static ForgeConfigSpec.ConfigValue<Boolean> LAVA_REVENANT_SPAWN;
+	public static ForgeConfigSpec.ConfigValue<Boolean> ROCK_SPIDER_SPAWN;
+	public static ForgeConfigSpec.ConfigValue<Boolean> CELESTIAL_TOWER_SPAWN;
+	public static ForgeConfigSpec.ConfigValue<Boolean> TILTROS_ENABLED;
+	public static ForgeConfigSpec.ConfigValue<Integer> CELESTIAL_TOWER_XZ_SPAWN_CHECK_RADIUS;
+	public static ForgeConfigSpec.ConfigValue<Integer> CELESTIAL_TOWER_Y_SPAWN_CHECK_RADIUS;
+	public static ForgeConfigSpec.ConfigValue<String> CELESTIAL_TOWER_MINIONS_WAVE_SIZE_MODIFIER;
 	static ForgeConfigSpec.ConfigValue<Integer> MAX_ABANDONED_FACTORY_DISTANCE;
 	static ForgeConfigSpec.ConfigValue<Integer> MIN_ABANDONED_FACTORY_DISTANCE;
 	static ForgeConfigSpec.ConfigValue<Integer> MAX_PITFALL_TRAP_DISTANCE;
@@ -18,12 +31,6 @@ public class Config {
 	static ForgeConfigSpec.ConfigValue<Integer> MIN_BEAR_TRAP_DISTANCE;
 	static ForgeConfigSpec.ConfigValue<Integer> MAX_LANDMINE_TRAP_DISTANCE;
 	static ForgeConfigSpec.ConfigValue<Integer> MIN_LANDMINE_TRAP_DISTANCE;
-	public static ForgeConfigSpec.ConfigValue<Boolean> TESLA_ARMOR_EFFECT_SOUND;
-	public static ForgeConfigSpec.ConfigValue<Integer> MAX_SMOKE_BOMB_PARTICLES;
-	public static ForgeConfigSpec.ConfigValue<Boolean> BULLETS_BREAK_GLASS;
-	public static ForgeConfigSpec.ConfigValue<Boolean> DYING_SOLDIER_SPAWN;
-	public static ForgeConfigSpec.ConfigValue<Boolean> WANDERING_WARRIOR_SPAWN;
-	public static ForgeConfigSpec.ConfigValue<Boolean> HANS_SPAWN;
 	static ForgeConfigSpec.ConfigValue<Integer> MAX_UNDERGROUND_BUNKER_DISTANCE;
 	static ForgeConfigSpec.ConfigValue<Integer> MIN_UNDERGROUND_BUNKER_DISTANCE;
 	static ForgeConfigSpec.ConfigValue<Integer> MAX_BATTLEFIELD_CAMP_DISTANCE;
@@ -57,10 +64,23 @@ public class Config {
 		TESLA_ARMOR_EFFECT_SOUND = COMMON_CONFIG_BUILDER.comment("Enable the Tesla Armor effect sound - Default true").define("tesla_armor_effect_sound", true);
 		MAX_SMOKE_BOMB_PARTICLES = COMMON_CONFIG_BUILDER.comment("Set the maximum number of particles produced by the smoke bomb - Default 96\nSetting this higher can make clients laggy, setting to 0 effectively disables it").define("max_smoke_bomb_particles", 96);
 		BULLETS_BREAK_GLASS = COMMON_CONFIG_BUILDER.comment("Enable bullets breaking glass - Default true").define("bullets_break_glass", true);
+		TILTROS_ENABLED = COMMON_CONFIG_BUILDER.comment("Enable the Tiltros dimension portal - Default true").define("tiltros_enabled", true);
 
 		DYING_SOLDIER_SPAWN = COMMON_CONFIG_BUILDER.comment("Enable the natural spawning of Dying Soldiers - Default true").define("dying_soldiers_spawn", true);
 		WANDERING_WARRIOR_SPAWN = COMMON_CONFIG_BUILDER.comment("Enable the natural spawning of Wandering Warriors - Default true").define("wandering_warriors_spawn", true);
 		HANS_SPAWN = COMMON_CONFIG_BUILDER.comment("Enable the natural spawning of Hans the Almighty - Default true").define("hans_spawn", true);
+		LAVA_REVENANT_SPAWN = COMMON_CONFIG_BUILDER.comment("Enable the natural spawning of Lava Revenants - Default true").define("lava_revenant_spawn", true);
+		ROCK_SPIDER_SPAWN = COMMON_CONFIG_BUILDER.comment("Enable the natural spawning of Rock Spiders - Default true").define("rock_spider_spawn", true);
+		CELESTIAL_TOWER_SPAWN = COMMON_CONFIG_BUILDER.comment("Enable the natural spawning of Celestial Towers - Default true").define("celestial_tower_spawn", true);
+
+		CELESTIAL_TOWER_XZ_SPAWN_CHECK_RADIUS = COMMON_CONFIG_BUILDER.comment("Set the X and Z spawn checking radius for the Celestial Tower.\n" +
+				"Setting this higher will negatively impact server ticks in Tiltros, but make Celestial Lanterns more effective - Default 56").define("celestial_tower_xz_spawn_check_radius", 56);
+		CELESTIAL_TOWER_Y_SPAWN_CHECK_RADIUS = COMMON_CONFIG_BUILDER.comment("Set the Y spawn checking radius for the Celestial Tower.\n" +
+				"Setting this higher will negatively impact server ticks in Tiltros, but make Celestial Lanterns more effective - Default 20").define("celestial_tower_y_spawn_check_radius", 20);
+		CELESTIAL_TOWER_MINIONS_WAVE_SIZE_MODIFIER = COMMON_CONFIG_BUILDER.comment("""
+				Multiplier to change the wave size from Celestial Tower summons.
+				Set less than 1 to reduce, greater than 1 to increase.
+				Increasing the wave size will negatively affect the server ticks in Tiltros. - Default 1.0""").define("celestial_tower_minions_wave_size_modifier", "1.0");
 
 		MAX_ABANDONED_FACTORY_DISTANCE = COMMON_CONFIG_BUILDER.comment("Maximum distance in chunks between Abandoned Factories - Default 120").define("max_abandoned_factory_distance", 120);
 		MIN_ABANDONED_FACTORY_DISTANCE = COMMON_CONFIG_BUILDER.comment("Minimum distance in chunks between Abandoned Factories - Default 90").define("min_abandoned_factory_distance", 90);
@@ -107,6 +127,7 @@ public class Config {
 
 	/**
 	 * Setup a configuration file.
+	 *
 	 * @param path the <code>Path</code> of the file
 	 */
 	public static void setup(Path path) {
