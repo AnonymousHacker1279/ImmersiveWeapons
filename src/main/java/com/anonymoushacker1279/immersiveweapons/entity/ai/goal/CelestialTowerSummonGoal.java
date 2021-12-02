@@ -37,6 +37,7 @@ public class CelestialTowerSummonGoal extends Goal {
 
 	private final CelestialTowerEntity mob;
 	private int waveSpawnCooldown = 100;
+	private AABB searchBox;
 
 	public CelestialTowerSummonGoal(CelestialTowerEntity pMob) {
 		mob = pMob;
@@ -64,7 +65,7 @@ public class CelestialTowerSummonGoal extends Goal {
 			mobsToSpawn = mobsToSpawn - powerMobsToSpawn; //Reduce the total number left to spawn
 
 			for (int i = fodderMobsToSpawn; i > 0; i--) {
-				BlockPos summonPos = new BlockPos(mob.getX() + GeneralUtilities.getRandomNumber(-16, 17), mob.getY(), mob.getZ() + GeneralUtilities.getRandomNumber(-16, 17));
+				BlockPos summonPos = new BlockPos(mob.getX() + GeneralUtilities.getRandomNumber(-8, 9), mob.getY(), mob.getZ() + GeneralUtilities.getRandomNumber(-8, 9));
 				RockSpiderEntity entity = new RockSpiderEntity(DeferredRegistryHandler.ROCK_SPIDER_ENTITY.get(), mob.level);
 				entity.setPersistenceRequired();
 				entity.teleportTo(summonPos.getX(), summonPos.getY(), summonPos.getZ());
@@ -72,7 +73,7 @@ public class CelestialTowerSummonGoal extends Goal {
 				PacketHandler.INSTANCE.send(PacketDistributor.TRACKING_CHUNK.with(() -> mob.level.getChunkAt(summonPos)), new CelestialTowerSummonGoalPacketHandler(summonPos, 0));
 			}
 			for (int i = powerMobsToSpawn; i > 0; i--) {
-				BlockPos summonPos = new BlockPos(mob.getX() + GeneralUtilities.getRandomNumber(-16, 17), mob.getY(), mob.getZ() + GeneralUtilities.getRandomNumber(-16, 17));
+				BlockPos summonPos = new BlockPos(mob.getX() + GeneralUtilities.getRandomNumber(-8, 9), mob.getY(), mob.getZ() + GeneralUtilities.getRandomNumber(-8, 9));
 				Zombie entity = new Zombie(EntityType.ZOMBIE, mob.level);
 				entity.setPersistenceRequired();
 				ItemStack sword = new ItemStack(Items.IRON_SWORD);
@@ -91,7 +92,7 @@ public class CelestialTowerSummonGoal extends Goal {
 				PacketHandler.INSTANCE.send(PacketDistributor.TRACKING_CHUNK.with(() -> mob.level.getChunkAt(summonPos)), new CelestialTowerSummonGoalPacketHandler(summonPos, 0));
 			}
 			for (int i = mobsToSpawn; i > 0; i--) {
-				BlockPos summonPos = new BlockPos(mob.getX() + GeneralUtilities.getRandomNumber(-16, 17), mob.getY(), mob.getZ() + GeneralUtilities.getRandomNumber(-16, 17));
+				BlockPos summonPos = new BlockPos(mob.getX() + GeneralUtilities.getRandomNumber(-8, 9), mob.getY(), mob.getZ() + GeneralUtilities.getRandomNumber(-8, 9));
 				Skeleton entity = new Skeleton(EntityType.SKELETON, mob.level);
 				entity.setPersistenceRequired();
 				ItemStack bow = new ItemStack(Items.BOW);
@@ -131,7 +132,9 @@ public class CelestialTowerSummonGoal extends Goal {
 
 	// Only return major mobs in the area; "fodder" entities are ignored
 	private int getEligibleMobsInArea() {
-		AABB searchBox = new AABB(mob.getX() - 32, mob.getY() - 32, mob.getZ() - 32, mob.getX() + 32, mob.getY() + 32, mob.getZ() + 32);
+		if (searchBox == null) {
+			searchBox = new AABB(mob.getX() - 32, mob.getY() - 16, mob.getZ() - 32, mob.getX() + 16, mob.getY() + 16, mob.getZ() + 32);
+		}
 		int mobs;
 		mobs = mob.level.getNearbyEntities(Skeleton.class, TargetingConditions.forNonCombat(), mob, searchBox).size();
 		mobs = mobs + mob.level.getNearbyEntities(Zombie.class, TargetingConditions.forNonCombat(), mob, searchBox).size();
