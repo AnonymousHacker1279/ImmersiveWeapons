@@ -1,12 +1,12 @@
 ![Immersive Weapons Logo](logo.png)
 
-# Immersive Weapons for Minecraft 1.17.1/1.16.5/1.16.4/1.15.2
+# Immersive Weapons for Minecraft 1.18/1.17.1/1.16.5/1.16.4/1.15.2
 
 ![CodeQL](https://github.com/AnonymousHacker1279/ImmersiveWeapons-Mod/workflows/CodeQL/badge.svg)
 [![](http://cf.way2muchnoise.eu/full_494454_Downloads.svg)](https://www.curseforge.com/minecraft/mc-mods/immersive-weapons)
 [![](http://cf.way2muchnoise.eu/versions/494454.svg)](https://www.curseforge.com/minecraft/mc-mods/immersive-weapons)
 [![CodeFactor](https://www.codefactor.io/repository/github/anonymoushacker1279/immersiveweapons/badge/master)](https://www.codefactor.io/repository/github/anonymoushacker1279/immersiveweapons/overview/master)
-## A weapons mod for Minecraft 1.17.1/1.16.5/1.16.4/1.15.2
+## A weapons mod for Minecraft 1.18/1.17.1/1.16.5/1.16.4/1.15.2
 
 Immersive Weapons is <s>a weapons mod</s> more than just a weapons mod aiming to spice up your combat skills.
 
@@ -53,10 +53,14 @@ cases, an older version will receive bugfixes should the community describe an i
 
 | MC Version | Immersive Weapons Version Support |
 | :-- | :-- |
-| 1.17.1 | [Latest](https://github.com/AnonymousHacker1279/ImmersiveWeapons/releases) |
+| 1.18 | [Latest](https://github.com/AnonymousHacker1279/ImmersiveWeapons/releases) |
+| 1.17.1 | [1.12.1](https://github.com/AnonymousHacker1279/ImmersiveWeapons/releases/tag/v1.12.1) |
 | 1.16.5 | [1.4.2](https://github.com/AnonymousHacker1279/ImmersiveWeapons/releases/tag/v1.4.2) |
 | 1.16.4 | [1.1.1](https://github.com/AnonymousHacker1279/ImmersiveWeapons/releases/tag/v1.1.1) |
 | 1.15.2 | [N/A - Build From Source](https://github.com/AnonymousHacker1279/ImmersiveWeapons/tree/1.15.2-dev) |
+
+***Note: 1.18 releases are currently in an alpha state due to major breaking changes in the Forge API and MC 1.18.
+Expect missing features and game-breaking bugs.***
 
 ## Contributing
 
