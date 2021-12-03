@@ -35,7 +35,7 @@ apply plugin: 'net.minecraftforge.gradle'
 apply plugin: 'org.parchmentmc.librarian.forgegradle'
 apply plugin: 'maven-publish'
 
-version = '1.17.1-1.12.0'
+version = '1.17.1-1.12.1'
 group = 'com.anonymoushacker1279.immersiveweapons' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 
 java.toolchain.languageVersion = JavaLanguageVersion.of(16)
