@@ -1,14 +1,7 @@
 package com.anonymoushacker1279.immersiveweapons.world.level.levelgen;
 
-import com.google.common.collect.ImmutableList;
-import com.mojang.datafixers.util.Pair;
-import net.minecraft.data.worldgen.Features;
-import net.minecraft.data.worldgen.Pools;
-import net.minecraft.data.worldgen.ProcessorLists;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.level.levelgen.feature.structures.StructurePoolElement;
-import net.minecraft.world.level.levelgen.feature.structures.StructureTemplatePool;
-
+// TODO: Rework when Forge API updates
+/*
 public class BattlefieldVillagePools {
 
 	public static final StructureTemplatePool jigsawPattern = Pools.register(new StructureTemplatePool(new ResourceLocation("village/plains/town_centers"), new ResourceLocation("empty"), ImmutableList.of(Pair.of(StructurePoolElement.legacy("village/plains/town_centers/plains_fountain_01", ProcessorLists.MOSSIFY_20_PERCENT), 50), Pair.of(StructurePoolElement.legacy("village/plains/town_centers/plains_meeting_point_1", ProcessorLists.MOSSIFY_20_PERCENT), 50), Pair.of(StructurePoolElement.legacy("village/plains/town_centers/plains_meeting_point_2"), 50), Pair.of(StructurePoolElement.legacy("village/plains/town_centers/plains_meeting_point_3", ProcessorLists.MOSSIFY_70_PERCENT), 50)), StructureTemplatePool.Projection.RIGID));
@@ -27,4 +20,4 @@ public class BattlefieldVillagePools {
 		Pools.register(new StructureTemplatePool(new ResourceLocation("village/common/iron_golem"), new ResourceLocation("empty"), ImmutableList.of(Pair.of(StructurePoolElement.legacy("village/common/iron_golem"), 1)), StructureTemplatePool.Projection.RIGID));
 		Pools.register(new StructureTemplatePool(new ResourceLocation("village/common/well_bottoms"), new ResourceLocation("empty"), ImmutableList.of(Pair.of(StructurePoolElement.legacy("village/common/well_bottom"), 1)), StructureTemplatePool.Projection.RIGID));
 	}
-}
+}*/

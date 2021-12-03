@@ -1,8 +1,6 @@
 package com.anonymoushacker1279.immersiveweapons.util;
 
-import com.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import com.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
-import com.anonymoushacker1279.immersiveweapons.world.structures.*;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import net.minecraft.core.Registry;
@@ -11,14 +9,15 @@ import net.minecraft.world.level.levelgen.StructureSettings;
 import net.minecraft.world.level.levelgen.feature.StructureFeature;
 import net.minecraft.world.level.levelgen.feature.StructurePieceType;
 import net.minecraft.world.level.levelgen.feature.configurations.StructureFeatureConfiguration;
-import net.minecraftforge.fmllegacy.RegistryObject;
+import net.minecraftforge.registries.RegistryObject;
 
 import java.util.Objects;
 import java.util.function.Supplier;
 
 public class Structures {
 
-	public static final StructurePieceType AF = AbandonedFactoryPieces.Piece::new;
+	// TODO: Rework when Forge API updates
+	/*public static final StructurePieceType AF = AbandonedFactoryPieces.Piece::new;
 	public static final StructurePieceType PT = PitfallTrapPieces.Piece::new;
 	public static final StructurePieceType BT = BearTrapPieces.Piece::new;
 	public static final StructurePieceType LT = LandmineTrapPieces.Piece::new;
@@ -30,7 +29,7 @@ public class Structures {
 	public static final StructurePieceType BF_H2 = BattlefieldHousePieces.PieceTwo::new;
 	public static final StructurePieceType OH = OuthousePieces.Piece::new;
 	public static final StructurePieceType WT = WaterTowerPieces.Piece::new;
-	public static final StructurePieceType GY = GraveyardPieces.Piece::new;
+	public static final StructurePieceType GY = GraveyardPieces.Piece::new;*/
 
 	/**
 	 * Setup a structure.
@@ -73,7 +72,8 @@ public class Structures {
 	 * Setup structures.
 	 */
 	public static void setupStructures() {
-		setupStructure(
+		// TODO: Rework when Forge API updates
+		/*setupStructure(
 				DeferredRegistryHandler.ABANDONED_FACTORY_STRUCTURE.get(),
 				new StructureFeatureConfiguration(
 						Config.MAX_ABANDONED_FACTORY_DISTANCE.get(),
@@ -163,14 +163,15 @@ public class Structures {
 						Config.MAX_GRAVEYARD_DISTANCE.get(),
 						Config.MIN_GRAVEYARD_DISTANCE.get(),
 						346751289),
-				false);
+				false);*/
 	}
 
 	/**
 	 * Register pieces.
 	 */
 	public static void registerAllPieces() {
-		registerStructurePiece(AF, new ResourceLocation(ImmersiveWeapons.MOD_ID, "af"));
+		// TODO: Rework when Forge API updates
+		/*registerStructurePiece(AF, new ResourceLocation(ImmersiveWeapons.MOD_ID, "af"));
 		registerStructurePiece(PT, new ResourceLocation(ImmersiveWeapons.MOD_ID, "pt"));
 		registerStructurePiece(BT, new ResourceLocation(ImmersiveWeapons.MOD_ID, "bt"));
 		registerStructurePiece(LT, new ResourceLocation(ImmersiveWeapons.MOD_ID, "lt"));
@@ -182,7 +183,7 @@ public class Structures {
 		registerStructurePiece(BF_H2, new ResourceLocation(ImmersiveWeapons.MOD_ID, "bf_h2"));
 		registerStructurePiece(OH, new ResourceLocation(ImmersiveWeapons.MOD_ID, "oh"));
 		registerStructurePiece(WT, new ResourceLocation(ImmersiveWeapons.MOD_ID, "wt"));
-		registerStructurePiece(GY, new ResourceLocation(ImmersiveWeapons.MOD_ID, "gy"));
+		registerStructurePiece(GY, new ResourceLocation(ImmersiveWeapons.MOD_ID, "gy"));*/
 	}
 
 	/**

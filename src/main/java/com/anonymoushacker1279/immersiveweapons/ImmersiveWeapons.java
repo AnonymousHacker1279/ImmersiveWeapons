@@ -3,41 +3,20 @@ package com.anonymoushacker1279.immersiveweapons;
 import com.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
 import com.anonymoushacker1279.immersiveweapons.init.DispenserBehaviorRegistry;
 import com.anonymoushacker1279.immersiveweapons.init.PostSetupHandler;
-import com.anonymoushacker1279.immersiveweapons.util.*;
-import com.anonymoushacker1279.immersiveweapons.world.level.levelgen.OreGeneratorHandler;
+import com.anonymoushacker1279.immersiveweapons.util.Config;
+import com.anonymoushacker1279.immersiveweapons.util.CustomWoodTypes;
+import com.anonymoushacker1279.immersiveweapons.util.PacketHandler;
+import com.anonymoushacker1279.immersiveweapons.util.Structures;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.server.level.ServerLevel;
-import net.minecraft.util.valueproviders.ConstantFloat;
-import net.minecraft.util.valueproviders.TrapezoidFloat;
-import net.minecraft.util.valueproviders.UniformFloat;
 import net.minecraft.world.entity.MobCategory;
-import net.minecraft.world.level.Level;
 import net.minecraft.world.level.biome.Biome;
-import net.minecraft.world.level.biome.Biome.BiomeCategory;
 import net.minecraft.world.level.biome.MobSpawnSettings.SpawnerData;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.properties.WoodType;
-import net.minecraft.world.level.levelgen.FlatLevelSource;
-import net.minecraft.world.level.levelgen.GenerationStep;
-import net.minecraft.world.level.levelgen.GenerationStep.Carving;
-import net.minecraft.world.level.levelgen.GenerationStep.Decoration;
-import net.minecraft.world.level.levelgen.StructureSettings;
-import net.minecraft.world.level.levelgen.VerticalAnchor;
-import net.minecraft.world.level.levelgen.carver.CanyonCarverConfiguration;
-import net.minecraft.world.level.levelgen.carver.CanyonWorldCarver;
-import net.minecraft.world.level.levelgen.carver.CarverDebugSettings;
-import net.minecraft.world.level.levelgen.carver.ConfiguredWorldCarver;
-import net.minecraft.world.level.levelgen.feature.StructureFeature;
-import net.minecraft.world.level.levelgen.feature.configurations.StructureFeatureConfiguration;
-import net.minecraft.world.level.levelgen.heightproviders.BiasedToBottomHeight;
 import net.minecraftforge.common.BiomeDictionary;
-import net.minecraftforge.common.BiomeDictionary.Type;
 import net.minecraftforge.common.BiomeManager;
 import net.minecraftforge.common.BiomeManager.BiomeType;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.common.world.BiomeGenerationSettingsBuilder;
 import net.minecraftforge.event.world.BiomeLoadingEvent;
-import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.common.Mod;
@@ -48,8 +27,6 @@ import net.minecraftforge.registries.ForgeRegistries;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Objects;
 
 // The value here should match an entry in the META-INF/mods.toml file
@@ -66,8 +43,9 @@ public class ImmersiveWeapons {
 		// Load configuration
 		Config.setup(FMLPaths.CONFIGDIR.get().resolve(MOD_ID + ".toml"));
 
+		// TODO: Rework when Forge API updates
 		// Register surface builders
-		ConfiguredSurfaceBuilders.register();
+		// ConfiguredSurfaceBuilders.register();
 
 		// Initialize deferred registry
 		DeferredRegistryHandler.init();
@@ -79,7 +57,8 @@ public class ImmersiveWeapons {
 		IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
 		modEventBus.addListener(this::setup);
 		IEventBus forgeBus = MinecraftForge.EVENT_BUS;
-		forgeBus.addListener(EventPriority.NORMAL, this::worldLoadEvent);
+		// TODO: Rework when Forge API updates
+		// forgeBus.addListener(EventPriority.NORMAL, this::worldLoadEvent);
 		forgeBus.addListener(EventPriority.HIGH, this::onBiomeLoading);
 
 		// Register packet handlers
@@ -117,15 +96,18 @@ public class ImmersiveWeapons {
 	 * @param event the <code>FMLCommonSetupEvent</code> instance
 	 */
 	public void setup(FMLCommonSetupEvent event) {
-		OreGeneratorHandler.init(event);
+		// TODO: Rework when Forge API updates
+		// OreGeneratorHandler.init(event);
 		DispenserBehaviorRegistry.init();
 		event.enqueueWork(() -> {
 			WoodType.register(CustomWoodTypes.BURNED_OAK);
-			setupBiome(DeferredRegistryHandler.BATTLEFIELD.get(), BiomeManager.BiomeType.WARM, 3, Type.PLAINS, Type.OVERWORLD);
-			setupBiome(DeferredRegistryHandler.TILTROS.get(), BiomeType.COOL, 0, Type.PLAINS, Type.OVERWORLD);
+			// TODO: Rework when Forge API updates
+			// setupBiome(DeferredRegistryHandler.BATTLEFIELD.get(), BiomeManager.BiomeType.WARM, 3, Type.PLAINS, Type.OVERWORLD);
+			// setupBiome(DeferredRegistryHandler.TILTROS.get(), BiomeType.COOL, 0, Type.PLAINS, Type.OVERWORLD);
 			Structures.setupStructures();
 			Structures.registerAllPieces();
-			ConfiguredStructures.registerConfiguredStructures();
+			// TODO: Rework when Forge API updates
+			// ConfiguredStructures.registerConfiguredStructures();
 		});
 		PostSetupHandler.init();
 	}
@@ -138,7 +120,8 @@ public class ImmersiveWeapons {
 	 */
 	public void onBiomeLoading(BiomeLoadingEvent event) {
 		// Biome modifications
-		BiomeGenerationSettingsBuilder generation = event.getGeneration();
+		// TODO: Rework when Forge API updates
+		/*BiomeGenerationSettingsBuilder generation = event.getGeneration();
 		if (event.getCategory() != BiomeCategory.NETHER && event.getCategory() != BiomeCategory.THEEND && !Objects.requireNonNull(event.getName()).toString().equals("immersiveweapons:tiltros")) {
 			event.getGeneration().getFeatures(Decoration.UNDERGROUND_ORES)
 					.add(() -> OreGeneratorHandler.ORE_COBALT_CONFIG);
@@ -160,7 +143,7 @@ public class ImmersiveWeapons {
 					.add(() -> OreGeneratorHandler.ORE_MOLTEN_CONFIG);
 			event.getGeneration().getFeatures(Decoration.UNDERGROUND_ORES)
 					.add(() -> OreGeneratorHandler.ORE_NETHER_SULFUR_CONFIG);
-		}
+		}*/
 		if (Objects.requireNonNull(event.getName()).toString().equals("immersiveweapons:tiltros")) {
 			if (Config.LAVA_REVENANT_SPAWN.get())
 				event.getSpawns().addSpawn(MobCategory.MONSTER, new SpawnerData(DeferredRegistryHandler.LAVA_REVENANT_ENTITY.get(), 1, 0, 1));
@@ -170,7 +153,8 @@ public class ImmersiveWeapons {
 				event.getSpawns().addSpawn(MobCategory.MONSTER, new SpawnerData(DeferredRegistryHandler.CELESTIAL_TOWER_ENTITY.get(), 2, 0, 1));
 		}
 
-		if (event.getCategory() == BiomeCategory.FOREST) {
+		// TODO: Rework when Forge API updates
+		/*if (event.getCategory() == BiomeCategory.FOREST) {
 			generation.addStructureStart(ConfiguredStructures.CONFIGURED_ABANDONED_FACTORY);
 			generation.addStructureStart(ConfiguredStructures.CONFIGURED_UNDERGROUND_BUNKER);
 			generation.addStructureStart(ConfiguredStructures.CONFIGURED_BEAR_TRAP);
@@ -205,7 +189,7 @@ public class ImmersiveWeapons {
 		}
 		if (Objects.requireNonNull(event.getName()).toString().equals(Objects.requireNonNull(DeferredRegistryHandler.TILTROS.get().getRegistryName()).toString())) {
 			generation.addCarver(Carving.AIR, new ConfiguredWorldCarver<>(CanyonWorldCarver.CANYON, new CanyonCarverConfiguration(0.15F, BiasedToBottomHeight.of(VerticalAnchor.absolute(68), VerticalAnchor.absolute(70), 2), ConstantFloat.of(0.65F), VerticalAnchor.aboveBottom(10), false, CarverDebugSettings.of(false, Blocks.WARPED_BUTTON.defaultBlockState()), UniformFloat.of(-0.125F, 0.125F), new CanyonCarverConfiguration.CanyonShapeConfiguration(UniformFloat.of(0.0F, 1.0F), TrapezoidFloat.of(0.0F, 106.0F, 2.0F), 3, UniformFloat.of(0.75F, 1.0F), 1.0F, 0.0F))));
-		}
+		}*/
 	}
 
 	/**
@@ -215,7 +199,8 @@ public class ImmersiveWeapons {
 	 *
 	 * @param event the <code>WorldEvent.Load</code> instance
 	 */
-	public void worldLoadEvent(WorldEvent.Load event) {
+	// TODO: Rework when Forge API updates
+	/*public void worldLoadEvent(WorldEvent.Load event) {
 		if (event.getWorld() instanceof ServerLevel serverWorld) {
 
 			if (serverWorld.getChunkSource().getGenerator() instanceof FlatLevelSource &&
@@ -223,7 +208,7 @@ public class ImmersiveWeapons {
 				return;
 			}
 
-			Map<StructureFeature<?>, StructureFeatureConfiguration> tempMap = new HashMap<>(serverWorld.getChunkSource().generator.getSettings().structureConfig());
+			Map<StructureFeature<?>, StructureFeatureConfiguration> tempMap = new HashMap<>(serverWorld.getChunkSource().getGenerator().getSettings().structureConfig());
 			tempMap.put(DeferredRegistryHandler.ABANDONED_FACTORY_STRUCTURE.get(), StructureSettings.DEFAULTS.get(DeferredRegistryHandler.ABANDONED_FACTORY_STRUCTURE.get()));
 			tempMap.put(DeferredRegistryHandler.PITFALL_TRAP_STRUCTURE.get(), StructureSettings.DEFAULTS.get(DeferredRegistryHandler.PITFALL_TRAP_STRUCTURE.get()));
 			tempMap.put(DeferredRegistryHandler.BEAR_TRAP_STRUCTURE.get(), StructureSettings.DEFAULTS.get(DeferredRegistryHandler.BEAR_TRAP_STRUCTURE.get()));
@@ -237,7 +222,7 @@ public class ImmersiveWeapons {
 			tempMap.put(DeferredRegistryHandler.OUTHOUSE_STRUCTURE.get(), StructureSettings.DEFAULTS.get(DeferredRegistryHandler.OUTHOUSE_STRUCTURE.get()));
 			tempMap.put(DeferredRegistryHandler.WATER_TOWER_STRUCTURE.get(), StructureSettings.DEFAULTS.get(DeferredRegistryHandler.WATER_TOWER_STRUCTURE.get()));
 			tempMap.put(DeferredRegistryHandler.GRAVEYARD_STRUCTURE.get(), StructureSettings.DEFAULTS.get(DeferredRegistryHandler.GRAVEYARD_STRUCTURE.get()));
-			serverWorld.getChunkSource().generator.getSettings().structureConfig = tempMap;
+			serverWorld.getChunkSource().getGenerator().getSettings().structureConfig = tempMap;
 		}
-	}
+	}*/
 }

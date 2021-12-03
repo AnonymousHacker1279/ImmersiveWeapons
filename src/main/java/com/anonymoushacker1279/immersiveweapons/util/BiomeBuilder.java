@@ -1,41 +1,33 @@
 package com.anonymoushacker1279.immersiveweapons.util;
 
-import com.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
-import net.minecraft.data.BuiltinRegistries;
-import net.minecraft.data.worldgen.BiomeDefaultFeatures;
-import net.minecraft.data.worldgen.Features;
-import net.minecraft.data.worldgen.StructureFeatures;
-import net.minecraft.resources.ResourceKey;
-import net.minecraft.world.entity.MobCategory;
-import net.minecraft.world.level.biome.*;
-import net.minecraft.world.level.biome.Biome.BiomeCategory;
-import net.minecraft.world.level.biome.MobSpawnSettings.SpawnerData;
-import net.minecraft.world.level.levelgen.GenerationStep.Decoration;
-import net.minecraft.world.level.levelgen.surfacebuilders.ConfiguredSurfaceBuilder;
-
+// TODO: Rework when Forge API updates
+/*
 public class BiomeBuilder {
 
-	/**
+	*/
+/**
 	 * Get the surface builder.
 	 *
 	 * @param key the <code>ResourceKey</code>, must extend ConfiguredSurfaceBuilder
 	 * @return ConfiguredSurfaceBuilder
-	 */
+	 *//*
+
 	public static ConfiguredSurfaceBuilder<?> getSurfaceBuilder(ResourceKey<ConfiguredSurfaceBuilder<?>> key) {
 		return BuiltinRegistries.CONFIGURED_SURFACE_BUILDER.getOrThrow(key);
 	}
 
-	/**
+	*/
+/**
 	 * Make a Battlefield biome.
 	 *
 	 * @param surfaceBuilder the <code>ConfiguredSurfaceBuilder</code> instance
 	 * @param depth          the biome depth
 	 * @param scale          the biome scale
 	 * @return Biome
-	 */
+	 *//*
+
 	public static Biome makeBattlefieldBiome(ConfiguredSurfaceBuilder<?> surfaceBuilder, float depth, float scale) {
-		MobSpawnSettings.Builder mobSpawnInfoBuilder = new MobSpawnSettings.Builder()
-				.setPlayerCanSpawn();
+		MobSpawnSettings.Builder mobSpawnInfoBuilder = new MobSpawnSettings.Builder();
 
 		if (Config.DYING_SOLDIER_SPAWN.get()) {
 			mobSpawnInfoBuilder.addSpawn(MobCategory.MONSTER, new SpawnerData(DeferredRegistryHandler.DYING_SOLDIER_ENTITY.get(), 50, 1, 4));
@@ -81,19 +73,20 @@ public class BiomeBuilder {
 				.build();
 	}
 
-	/**
+	*/
+/**
 	 * Make an Tiltros biome.
 	 *
 	 * @param surfaceBuilder the <code>ConfiguredSurfaceBuilder</code> instance
 	 * @param depth          the biome depth
 	 * @param scale          the biome scale
 	 * @return Biome
-	 */
+	 *//*
+
 	public static Biome makeTiltrosBiome(ConfiguredSurfaceBuilder<?> surfaceBuilder, float depth, float scale) {
 		MobSpawnSettings.Builder mobSpawnInfoBuilder = new MobSpawnSettings.Builder()
 				.addMobCharge(DeferredRegistryHandler.LAVA_REVENANT_ENTITY.get(), 4.5D, 0.12D)
-				.addMobCharge(DeferredRegistryHandler.CELESTIAL_TOWER_ENTITY.get(), 25.0D, 0.02D)
-				.setPlayerCanSpawn();
+				.addMobCharge(DeferredRegistryHandler.CELESTIAL_TOWER_ENTITY.get(), 25.0D, 0.02D);
 
 		BiomeGenerationSettings.Builder biomeGenerationSettingBuilder = new BiomeGenerationSettings.Builder()
 				.surfaceBuilder(surfaceBuilder)
@@ -128,4 +121,4 @@ public class BiomeBuilder {
 				.generationSettings(biomeGenerationSettingBuilder.build())
 				.build();
 	}
-}
+}*/

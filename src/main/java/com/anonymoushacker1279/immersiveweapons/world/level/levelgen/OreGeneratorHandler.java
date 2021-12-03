@@ -1,17 +1,6 @@
 package com.anonymoushacker1279.immersiveweapons.world.level.levelgen;
 
-import com.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
-import net.minecraft.core.Registry;
-import net.minecraft.data.BuiltinRegistries;
-import net.minecraft.world.level.levelgen.VerticalAnchor;
 import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
-import net.minecraft.world.level.levelgen.feature.Feature;
-import net.minecraft.world.level.levelgen.feature.configurations.OreConfiguration;
-import net.minecraft.world.level.levelgen.feature.configurations.OreConfiguration.Predicates;
-import net.minecraft.world.level.levelgen.feature.configurations.RangeDecoratorConfiguration;
-import net.minecraft.world.level.levelgen.heightproviders.BiasedToBottomHeight;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 
 public class OreGeneratorHandler {
 
@@ -25,7 +14,8 @@ public class OreGeneratorHandler {
 	 *
 	 * @param event the <code>FMLCommonSetupEvent</code> instance
 	 */
-	@SubscribeEvent
+	// TODO: Rework when Forge API updates
+	/*@SubscribeEvent
 	public static void init(FMLCommonSetupEvent event) {
 		ORE_MOLTEN_CONFIG = Registry.register(BuiltinRegistries.CONFIGURED_FEATURE, "ore_molten",
 				Feature.ORE.configured(
@@ -58,5 +48,5 @@ public class OreGeneratorHandler {
 								DeferredRegistryHandler.NETHER_SULFUR_ORE.get().defaultBlockState(), 12)
 				).range(new RangeDecoratorConfiguration(BiasedToBottomHeight.of(VerticalAnchor.bottom(), VerticalAnchor.top(), 6))).squared().count(16)
 		);
-	}
+	}*/
 }

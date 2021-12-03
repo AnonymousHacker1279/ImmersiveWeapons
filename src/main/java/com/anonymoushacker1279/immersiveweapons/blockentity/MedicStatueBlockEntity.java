@@ -17,7 +17,6 @@ import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
 import java.util.List;
-import java.util.Objects;
 
 public class MedicStatueBlockEntity extends BlockEntity implements EntityBlock {
 
@@ -35,7 +34,9 @@ public class MedicStatueBlockEntity extends BlockEntity implements EntityBlock {
 	 * Runs once each tick. Handle scanning and spawning entities.
 	 */
 	public static void serverTick(Level level, BlockPos blockPos, MedicStatueBlockEntity medicStatueBlockEntity) {
-		if (Objects.equals(level.getBiome(blockPos).getRegistryName(), DeferredRegistryHandler.BATTLEFIELD.get().getRegistryName()) && medicStatueBlockEntity.cooldown == 0) {
+		// TODO: Rework when Forge API updates
+		// if (Objects.equals(level.getBiome(blockPos).getRegistryName(), DeferredRegistryHandler.BATTLEFIELD.get().getRegistryName()) && medicStatueBlockEntity.cooldown == 0) {
+		if (medicStatueBlockEntity.cooldown == 0) {
 			List<FieldMedicEntity> listOfMedicsInArea = level.getEntitiesOfClass(FieldMedicEntity.class, new AABB(medicStatueBlockEntity.getBlockPos().getX() - 48, medicStatueBlockEntity.getBlockPos().getY() - 16, medicStatueBlockEntity.getBlockPos().getZ() - 48, medicStatueBlockEntity.getBlockPos().getX() + 48, medicStatueBlockEntity.getBlockPos().getY() + 16, medicStatueBlockEntity.getBlockPos().getZ() + 48));
 			medicStatueBlockEntity.scannedMedics = listOfMedicsInArea.size();
 

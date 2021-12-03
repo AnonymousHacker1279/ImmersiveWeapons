@@ -122,7 +122,7 @@ public class WallShelfBlockEntity extends BlockEntity implements EntityBlock, Cl
 	 */
 	@Override
 	public ClientboundBlockEntityDataPacket getUpdatePacket() {
-		return new ClientboundBlockEntityDataPacket(worldPosition, 13, getUpdateTag());
+		return ClientboundBlockEntityDataPacket.create(this);
 	}
 
 	/**

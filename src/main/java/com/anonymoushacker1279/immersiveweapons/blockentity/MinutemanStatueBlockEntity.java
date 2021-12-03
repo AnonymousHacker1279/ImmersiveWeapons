@@ -17,7 +17,6 @@ import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
 import java.util.List;
-import java.util.Objects;
 
 public class MinutemanStatueBlockEntity extends BlockEntity implements EntityBlock {
 
@@ -35,7 +34,9 @@ public class MinutemanStatueBlockEntity extends BlockEntity implements EntityBlo
 	 * Runs once each tick. Handle scanning and spawning entities.
 	 */
 	public static void serverTick(Level level, BlockPos blockPos, MinutemanStatueBlockEntity minutemanStatueBlockEntity) {
-		if (Objects.equals(level.getBiome(blockPos).getRegistryName(), DeferredRegistryHandler.BATTLEFIELD.get().getRegistryName()) && minutemanStatueBlockEntity.cooldown == 0) {
+		// TODO: Rework when Forge API updates
+		// if (Objects.equals(level.getBiome(blockPos).getRegistryName(), DeferredRegistryHandler.BATTLEFIELD.get().getRegistryName()) && minutemanStatueBlockEntity.cooldown == 0) {
+		if (minutemanStatueBlockEntity.cooldown == 0) {
 			List<MinutemanEntity> listOfMinutemenInArea = level.getEntitiesOfClass(MinutemanEntity.class, new AABB(minutemanStatueBlockEntity.getBlockPos().getX() - 48, minutemanStatueBlockEntity.getBlockPos().getY() - 16, minutemanStatueBlockEntity.getBlockPos().getZ() - 48, minutemanStatueBlockEntity.getBlockPos().getX() + 48, minutemanStatueBlockEntity.getBlockPos().getY() + 16, minutemanStatueBlockEntity.getBlockPos().getZ() + 48));
 			minutemanStatueBlockEntity.scannedMinutemen = listOfMinutemenInArea.size();
 

@@ -79,7 +79,7 @@ public class SpotlightBlock extends HorizontalDirectionalBlock implements Simple
 	@Override
 	public @NotNull BlockState updateShape(BlockState stateIn, @NotNull Direction facing, @NotNull BlockState facingState, @NotNull LevelAccessor worldIn, @NotNull BlockPos currentPos, @NotNull BlockPos facingPos) {
 		if (stateIn.getValue(WATERLOGGED)) {
-			worldIn.getLiquidTicks().scheduleTick(currentPos, Fluids.WATER, Fluids.WATER.getTickDelay(worldIn));
+			worldIn.scheduleTick(currentPos, Fluids.WATER, Fluids.WATER.getTickDelay(worldIn));
 		}
 		return facing.getOpposite() == stateIn.getValue(FACING) && !stateIn.canSurvive(worldIn, currentPos) ? Blocks.AIR.defaultBlockState() : stateIn;
 	}
@@ -119,7 +119,7 @@ public class SpotlightBlock extends HorizontalDirectionalBlock implements Simple
 			boolean flag = state.getValue(LIT);
 			if (flag != worldIn.hasNeighborSignal(pos)) {
 				if (flag) {
-					worldIn.getBlockTicks().scheduleTick(pos, this, 1);
+					worldIn.scheduleTick(pos, this, 1);
 				} else {
 					worldIn.setBlock(pos, state.cycle(LIT), 3);
 				}

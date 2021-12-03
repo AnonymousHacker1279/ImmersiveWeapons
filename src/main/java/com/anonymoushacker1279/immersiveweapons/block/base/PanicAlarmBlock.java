@@ -142,7 +142,7 @@ public class PanicAlarmBlock extends HorizontalDirectionalBlock implements Simpl
 	public void neighborChanged(@NotNull BlockState state, Level worldIn, @NotNull BlockPos pos, @NotNull Block blockIn, @NotNull BlockPos fromPos, boolean isMoving) {
 		if (!worldIn.isClientSide) {
 			playSiren(worldIn, pos);
-			worldIn.getBlockTicks().scheduleTick(pos, state.getBlock(), 5);
+			worldIn.scheduleTick(pos, state.getBlock(), 5);
 		}
 	}
 
@@ -161,7 +161,7 @@ public class PanicAlarmBlock extends HorizontalDirectionalBlock implements Simpl
 		if (!oldState.is(state.getBlock())) {
 			if (worldIn.hasNeighborSignal(pos)) {
 				if (!worldIn.isClientSide) {
-					worldIn.getBlockTicks().scheduleTick(pos, state.getBlock(), 5);
+					worldIn.scheduleTick(pos, state.getBlock(), 5);
 				}
 			}
 		}
@@ -180,7 +180,7 @@ public class PanicAlarmBlock extends HorizontalDirectionalBlock implements Simpl
 	public void tick(@NotNull BlockState state, ServerLevel worldIn, @NotNull BlockPos pos, @NotNull Random rand) {
 		if (!worldIn.isClientSide) {
 			playSiren(worldIn, pos);
-			worldIn.getBlockTicks().scheduleTick(pos, state.getBlock(), 5);
+			worldIn.scheduleTick(pos, state.getBlock(), 5);
 		}
 	}
 

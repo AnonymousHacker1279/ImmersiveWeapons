@@ -31,7 +31,7 @@ public class ForgeEventSubscriber {
 				event.getPlayer().getItemBySlot(EquipmentSlot.LEGS).getItem() == DeferredRegistryHandler.MOLTEN_LEGGINGS.get() &&
 				event.getPlayer().getItemBySlot(EquipmentSlot.FEET).getItem() == DeferredRegistryHandler.MOLTEN_BOOTS.get()) {
 			if (event.getPlayer().isInLava()) {
-				if (event.getBlockForOverlay() == Blocks.FIRE.defaultBlockState()) {
+				if (event.getBlockState() == Blocks.FIRE.defaultBlockState()) {
 					event.setCanceled(true);
 				}
 			}
