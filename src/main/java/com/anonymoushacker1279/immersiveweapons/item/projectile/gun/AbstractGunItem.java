@@ -1,6 +1,6 @@
 package com.anonymoushacker1279.immersiveweapons.item.projectile.gun;
 
-import net.minecraft.tags.ItemTags;
+import com.anonymoushacker1279.immersiveweapons.data.tags.groups.immersiveweapons.ImmersiveWeaponsItemTagGroups;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.Item;
@@ -9,8 +9,8 @@ import net.minecraft.world.item.ItemStack;
 import java.util.function.Predicate;
 
 public abstract class AbstractGunItem extends Item {
-	protected static final Predicate<ItemStack> MUSKET_BALLS = (stack) -> stack.is(ItemTags.bind("immersiveweapons:projectiles/musket_ball"));
-	protected static final Predicate<ItemStack> FLARES = (stack) -> stack.is(ItemTags.bind("immersiveweapons:projectiles/flares"));
+	protected static final Predicate<ItemStack> MUSKET_BALLS = (stack) -> stack.is(ImmersiveWeaponsItemTagGroups.MUSKET_BALLS);
+	protected static final Predicate<ItemStack> FLARES = (stack) -> stack.is(ImmersiveWeaponsItemTagGroups.FLARES);
 
 	/**
 	 * Constructor for AbstractGunItem.

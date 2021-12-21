@@ -3,7 +3,7 @@
 		{
 			"condition": "minecraft:match_tool",
 			"predicate": {
-				"tag": "forge:pickaxes"
+				"item": "minecraft:pickaxe"
 			}
 		}
 	],

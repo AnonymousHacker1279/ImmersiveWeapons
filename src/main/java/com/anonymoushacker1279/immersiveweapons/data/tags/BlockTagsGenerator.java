@@ -1,0 +1,168 @@
+package com.anonymoushacker1279.immersiveweapons.data.tags;
+
+import com.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
+import com.anonymoushacker1279.immersiveweapons.data.tags.groups.forge.ForgeBlockTagGroups;
+import com.anonymoushacker1279.immersiveweapons.data.tags.groups.immersiveweapons.ImmersiveWeaponsBlockTagGroups;
+import com.anonymoushacker1279.immersiveweapons.data.tags.groups.minecraft.MinecraftBlockTagGroups;
+import com.anonymoushacker1279.immersiveweapons.data.tags.lists.BlockTagLists;
+import com.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
+import net.minecraft.data.DataGenerator;
+import net.minecraft.data.tags.BlockTagsProvider;
+import net.minecraft.tags.BlockTags;
+import net.minecraft.world.level.block.Block;
+import net.minecraftforge.common.data.ExistingFileHelper;
+import net.minecraftforge.registries.RegistryObject;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class BlockTagsGenerator extends BlockTagsProvider {
+
+	/**
+	 * Constructor for BlockTagsGenerator.
+	 *
+	 * @param gen                the <code>DataGenerator</code> instance
+	 * @param existingFileHelper the <code>ExistingFileHelper</code> instance
+	 */
+	public BlockTagsGenerator(DataGenerator gen, ExistingFileHelper existingFileHelper) {
+		super(gen, ImmersiveWeapons.MOD_ID, existingFileHelper);
+	}
+
+	/**
+	 * Add tags to data generation.
+	 */
+	@Override
+	protected void addTags() {
+		BlockTagLists.init();
+
+		addForgeTags();
+		addImmersiveWeaponsTags();
+		addMinecraftTags();
+		addMiningBlockTags();
+	}
+
+	/**
+	 * Add tags under the Forge namespace
+	 */
+	private void addForgeTags() {
+		// Bulletproof glass tag
+		for (Block block : BlockTagLists.BULLETPROOF_GLASS) {
+			tag(ForgeBlockTagGroups.BULLETPROOF_GLASS).add(block);
+		}
+
+		// Glass tag
+		tag(ForgeBlockTagGroups.GLASS).addTag(ForgeBlockTagGroups.BULLETPROOF_GLASS);
+
+		// Stained glass tag
+		for (Block block : BlockTagLists.STAINED_GLASS) {
+			tag(ForgeBlockTagGroups.STAINED_GLASS).add(block);
+		}
+
+		// Ore tags
+		tag(ForgeBlockTagGroups.COBALT_ORE).add(DeferredRegistryHandler.COBALT_ORE.get());
+		tag(ForgeBlockTagGroups.ORES).addTag(ForgeBlockTagGroups.COBALT_ORE);
+	}
+
+	/**
+	 * Add tags under the Immersive Weapons namespace
+	 */
+	private void addImmersiveWeaponsTags() {
+		// Burned oak logs tag
+		for (Block block : BlockTagLists.BURNED_OAK_LOGS) {
+			tag(ImmersiveWeaponsBlockTagGroups.BURNED_OAK_LOGS).add(block);
+		}
+	}
+
+	/**
+	 * Add tags under the Minecraft namespace
+	 */
+	private void addMinecraftTags() {
+		// Fence tag
+		tag(MinecraftBlockTagGroups.FENCES).add(DeferredRegistryHandler.BARBED_WIRE_FENCE.get());
+
+		// Burnable logs tag
+		tag(MinecraftBlockTagGroups.LOGS_THAT_BURN).addTag(ImmersiveWeaponsBlockTagGroups.BURNED_OAK_LOGS);
+
+		// Planks tag
+		tag(MinecraftBlockTagGroups.PLANKS).add(DeferredRegistryHandler.BURNED_OAK_PLANKS.get());
+
+		// Slabs tag
+		tag(MinecraftBlockTagGroups.SLABS).add(DeferredRegistryHandler.CLOUD_MARBLE_BRICK_SLAB.get());
+
+		// Stairs tag
+		tag(MinecraftBlockTagGroups.STAIRS).add(DeferredRegistryHandler.CLOUD_MARBLE_BRICK_STAIRS.get());
+
+		// Standing signs tag
+		tag(MinecraftBlockTagGroups.STANDING_SIGNS).add(DeferredRegistryHandler.BURNED_OAK_SIGN.get());
+
+		// Wall signs tag
+		tag(MinecraftBlockTagGroups.WALL_SIGNS).add(DeferredRegistryHandler.BURNED_OAK_SIGN.get());
+
+		// Wooden buttons tag
+		tag(MinecraftBlockTagGroups.WOODEN_BUTTONS).add(DeferredRegistryHandler.BURNED_OAK_BUTTON.get());
+
+		// Wooden doors tag
+		tag(MinecraftBlockTagGroups.WOODEN_DOORS).add(DeferredRegistryHandler.BURNED_OAK_DOOR.get());
+
+		// Wooden fences tag
+		tag(MinecraftBlockTagGroups.WOODEN_FENCES).add(DeferredRegistryHandler.BURNED_OAK_FENCE.get());
+
+		// Wooden pressure plates tag
+		tag(MinecraftBlockTagGroups.WOODEN_PRESSURE_PLATES).add(DeferredRegistryHandler.BURNED_OAK_PRESSURE_PLATE.get());
+
+		// Wooden slabs tag
+		tag(MinecraftBlockTagGroups.WOODEN_SLABS).add(DeferredRegistryHandler.BURNED_OAK_SLAB.get());
+
+		// Wooden stairs tag
+		tag(MinecraftBlockTagGroups.WOODEN_STAIRS).add(DeferredRegistryHandler.BURNED_OAK_STAIRS.get());
+
+		// Wooden trapdoors tag
+		tag(MinecraftBlockTagGroups.WOODEN_TRAPDOORS).add(DeferredRegistryHandler.BURNED_OAK_TRAPDOOR.get());
+	}
+
+	/**
+	 * Add block tags for mining with tools
+	 */
+	private void addMiningBlockTags() {
+		List<Block> blocks = new ArrayList<>(1);
+		DeferredRegistryHandler.BLOCKS.getEntries().stream().map(RegistryObject::get).forEach(blocks::add);
+
+		int tagStage = 0;
+		int tier = 0;
+		for (Block block : blocks) {
+			if (block == DeferredRegistryHandler.SMALL_PARTS_TABLE.get()) {
+				tagStage = 1;
+			} else if (block == DeferredRegistryHandler.SANDBAG.get()) {
+				tagStage = 2;
+			} else if (block == DeferredRegistryHandler.BULLETPROOF_GLASS.get()) {
+				tagStage = 3;
+			}
+
+			if (block == DeferredRegistryHandler.BULLETPROOF_GLASS.get() || block == DeferredRegistryHandler.SMALL_PARTS_TABLE.get() || block == DeferredRegistryHandler.SANDBAG.get()) {
+				tier = 0;
+			} else if (block == DeferredRegistryHandler.SPOTLIGHT.get() || block == DeferredRegistryHandler.WOODEN_SPIKES.get() || block == DeferredRegistryHandler.PUNJI_STICKS.get()) {
+				tier = 1;
+			} else if (block == DeferredRegistryHandler.BARBED_WIRE_FENCE.get()) {
+				tier = 2;
+			} else if (block == DeferredRegistryHandler.MOLTEN_ORE.get()) {
+				tier = 3;
+			}
+
+			if (tagStage != 3) {
+				switch (tagStage) {
+					case 1 -> tag(BlockTags.bind(BlockTags.MINEABLE_WITH_AXE.getName().toString())).add(block);
+					case 2 -> tag(BlockTags.bind(BlockTags.MINEABLE_WITH_SHOVEL.getName().toString())).add(block);
+					default -> tag(BlockTags.bind(BlockTags.MINEABLE_WITH_PICKAXE.getName().toString())).add(block);
+				}
+			}
+
+			if (tier != 0) {
+				switch (tier) {
+					case 2 -> tag(BlockTags.bind(BlockTags.NEEDS_IRON_TOOL.getName().toString())).add(block);
+					case 3 -> tag(BlockTags.bind(BlockTags.NEEDS_DIAMOND_TOOL.getName().toString())).add(block);
+					default -> tag(BlockTags.bind(BlockTags.NEEDS_STONE_TOOL.getName().toString())).add(block);
+				}
+			}
+		}
+	}
+}

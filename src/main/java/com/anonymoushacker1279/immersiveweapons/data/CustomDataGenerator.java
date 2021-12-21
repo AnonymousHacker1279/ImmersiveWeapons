@@ -2,7 +2,8 @@ package com.anonymoushacker1279.immersiveweapons.data;
 
 import com.anonymoushacker1279.immersiveweapons.data.advancements.AdvancementProvider;
 import com.anonymoushacker1279.immersiveweapons.data.models.ModelProvider;
-import com.anonymoushacker1279.immersiveweapons.data.tags.TagsGenerator;
+import com.anonymoushacker1279.immersiveweapons.data.tags.BlockTagsGenerator;
+import com.anonymoushacker1279.immersiveweapons.data.tags.ItemTagsGenerator;
 import net.minecraft.data.DataGenerator;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -27,7 +28,9 @@ public class CustomDataGenerator {
 		}
 		if (event.includeServer()) {
 			generator.addProvider(new AdvancementProvider(generator));
-			generator.addProvider(new TagsGenerator(generator, event.getExistingFileHelper()));
+			BlockTagsGenerator blockTagsGenerator = new BlockTagsGenerator(generator, event.getExistingFileHelper());
+			generator.addProvider(blockTagsGenerator);
+			generator.addProvider(new ItemTagsGenerator(generator, blockTagsGenerator, event.getExistingFileHelper()));
 		}
 	}
 }

@@ -10,7 +10,7 @@
 			"item": "minecraft:redstone_lamp"
 		},
 		"y": {
-			"tag": "forge:concrete/black"
+			"item": "minecraft:black_concrete"
 		},
 		"z": {
 			"tag": "forge:ingots/metal"
