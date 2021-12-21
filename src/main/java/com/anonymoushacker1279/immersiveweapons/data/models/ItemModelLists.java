@@ -35,14 +35,6 @@ public class ItemModelLists {
 		ignoredItems.add(DeferredRegistryHandler.SMOKE_BOMB_PURPLE.get());
 		ignoredItems.add(DeferredRegistryHandler.SMOKE_BOMB_YELLOW.get());
 		ignoredItems.add(DeferredRegistryHandler.EXPLOSIVE_CHOCOLATE_BAR.get());
-		ignoredItems.add(DeferredRegistryHandler.DYING_SOLDIER_SPAWN_EGG.get());
-		ignoredItems.add(DeferredRegistryHandler.MINUTEMAN_SPAWN_EGG.get());
-		ignoredItems.add(DeferredRegistryHandler.FIELD_MEDIC_SPAWN_EGG.get());
-		ignoredItems.add(DeferredRegistryHandler.WANDERING_WARRIOR_SPAWN_EGG.get());
-		ignoredItems.add(DeferredRegistryHandler.HANS_SPAWN_EGG.get());
-		ignoredItems.add(DeferredRegistryHandler.LAVA_REVENANT_SPAWN_EGG.get());
-		ignoredItems.add(DeferredRegistryHandler.ROCK_SPIDER_SPAWN_EGG.get());
-		ignoredItems.add(DeferredRegistryHandler.CELESTIAL_TOWER_SPAWN_EGG.get());
 		ignoredItems.add(DeferredRegistryHandler.MRE.get());
 		ignoredItems.add(DeferredRegistryHandler.WOOD_GAUNTLET.get());
 		ignoredItems.add(DeferredRegistryHandler.STONE_GAUNTLET.get());
