@@ -1,5 +1,6 @@
 package com.anonymoushacker1279.immersiveweapons.data.models;
 
+import com.anonymoushacker1279.immersiveweapons.data.models.lists.ItemModelLists;
 import com.anonymoushacker1279.immersiveweapons.data.models.model.AdvancedModelTemplate;
 import com.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
 import com.google.gson.JsonElement;

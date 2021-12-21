@@ -1,4 +1,4 @@
-package com.anonymoushacker1279.immersiveweapons.data.models;
+package com.anonymoushacker1279.immersiveweapons.data.models.lists;
 
 import com.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
 import net.minecraft.world.item.Item;
@@ -8,12 +8,12 @@ import java.util.List;
 
 public class ItemModelLists {
 
-	protected static final List<Item> ignoredItems = new ArrayList<>(1);
+	public static final List<Item> ignoredItems = new ArrayList<>(1);
 
 	/**
 	 * Initialize the lists.
 	 */
-	protected static void init() {
+	public static void init() {
 		ignoredItems.add(DeferredRegistryHandler.BLUNDERBUSS.get());
 		ignoredItems.add(DeferredRegistryHandler.FLINTLOCK_PISTOL.get());
 		ignoredItems.add(DeferredRegistryHandler.FLARE_GUN.get());
