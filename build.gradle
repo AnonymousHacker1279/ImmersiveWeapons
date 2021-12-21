@@ -35,7 +35,7 @@ apply plugin: 'net.minecraftforge.gradle'
 apply plugin: 'org.parchmentmc.librarian.forgegradle'
 apply plugin: 'maven-publish'
 
-version = '1.18.1-1.13.0-beta3'
+version = '1.18.1-1.13.0-beta4'
 group = 'com.anonymoushacker1279.immersiveweapons' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 
 java.toolchain.languageVersion = JavaLanguageVersion.of(17)
@@ -106,7 +106,7 @@ dependencies {
 	// Specify the version of Minecraft to use, If this is any group other then 'net.minecraft' it is assumed
 	// that the dep is a ForgeGradle 'patcher' dependency. And it's patches will be applied.
 	// The userdev artifact is a special name and will get all sorts of transformations applied to it.
-	minecraft 'net.minecraftforge:forge:1.18.1-39.0.5'
+	minecraft 'net.minecraftforge:forge:1.18.1-39.0.7'
 
 	// Include JEI
 	implementation fg.deobf("mezz.jei:jei-1.18.1:9.1.0.47")
