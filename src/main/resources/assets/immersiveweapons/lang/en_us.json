@@ -510,6 +510,7 @@
 	"advancements.immersiveweapons.tiltros.tiltros.title": "Welcome to Tiltros",
 	"advancements.immersiveweapons.tiltros.tiltros.description": "A ravaged landscape lost in space",
 	"biome.immersiveweapons.battlefield": "Battlefield",
+	"loot.immersiveweapons.chest.village.battlefield.medic_station.iron_axe": "The Amputator",
 	"immersiveweapons.boss.celestial_tower.waves": "Wave %s of %s",
 	"itemGroup.ImmersiveWeaponsTab": "Immersive Weapons"
 }
