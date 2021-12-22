@@ -70,25 +70,4 @@ public class FieldMedicEntity extends AbstractFieldMedicEntity {
 	protected SoundEvent getStepSound() {
 		return DeferredRegistryHandler.FIELD_MEDIC_STEP.get();
 	}
-
-	/**
-	 * Set custom loot parameters.
-	 *
-	 * @param source        the <code>DamageSource</code> instance
-	 * @param looting       the level of looting enchantment on an item
-	 * @param recentlyHitIn if the entity was recently hit
-	 */
-	@Override
-	protected void dropCustomDeathLoot(@NotNull DamageSource source, int looting, boolean recentlyHitIn) {
-		super.dropCustomDeathLoot(source, looting, recentlyHitIn);
-		int lootingModifier = looting * 2;
-		if (lootingModifier >= 85) {
-			spawnAtLocation(DeferredRegistryHandler.USED_SYRINGE.get());
-		} else {
-			int i = GeneralUtilities.getRandomNumber(1, 85 - lootingModifier);
-			if (i == 1) {
-				spawnAtLocation(DeferredRegistryHandler.USED_SYRINGE.get());
-			}
-		}
-	}
 }
