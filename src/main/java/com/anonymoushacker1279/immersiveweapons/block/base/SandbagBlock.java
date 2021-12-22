@@ -23,7 +23,7 @@ import org.jetbrains.annotations.NotNull;
 
 public class SandbagBlock extends HorizontalDirectionalBlock {
 
-	private static final IntegerProperty BAGS = IntegerProperty.create("bags", 1, 4);
+	public static final IntegerProperty BAGS = IntegerProperty.create("bags", 1, 4);
 	private static final VoxelShape SHAPE_1 = Block.box(0.0D, 0.0D, 0.0D, 16.0D, 4.0D, 16.0D);
 	private static final VoxelShape SHAPE_2 = Block.box(0.0D, 0.0D, 0.0D, 16.0D, 8.0D, 16.0D);
 	private static final VoxelShape SHAPE_3 = Block.box(0.0D, 0.0D, 0.0D, 16.0D, 12.0D, 16.0D);

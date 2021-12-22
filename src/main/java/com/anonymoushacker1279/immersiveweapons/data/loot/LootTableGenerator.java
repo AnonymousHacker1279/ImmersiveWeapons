@@ -19,6 +19,7 @@ public class LootTableGenerator extends LootTableProvider {
 
 	private final List<Pair<Supplier<Consumer<BiConsumer<ResourceLocation, Builder>>>, LootContextParamSet>> subProviders =
 			ImmutableList.of(
+					Pair.of(BlockLootTables::new, LootContextParamSets.BLOCK),
 					Pair.of(ChestLootTables::new, LootContextParamSets.CHEST),
 					Pair.of(EntityLootTables::new, LootContextParamSets.ENTITY));
 
