@@ -1,6 +1,0 @@
-{
-	"parent": "minecraft:block/button_inventory",
-	"textures": {
-		"texture": "immersiveweapons:block/burned_oak_planks"
-	}
-}
