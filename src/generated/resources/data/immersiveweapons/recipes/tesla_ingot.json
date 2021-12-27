@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "tesla",
+  "pattern": [
+    "ab "
+  ],
+  "key": {
+    "a": {
+      "tag": "immersiveweapons:ingots/electric"
+    },
+    "b": {
+      "item": "immersiveweapons:conductive_alloy"
+    }
+  },
+  "result": {
+    "item": "immersiveweapons:tesla_ingot"
+  }
+}

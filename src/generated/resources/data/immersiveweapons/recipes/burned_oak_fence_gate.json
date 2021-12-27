@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "burned_oak",
+  "pattern": [
+    "bab",
+    "bab"
+  ],
+  "key": {
+    "a": {
+      "item": "immersiveweapons:burned_oak_planks"
+    },
+    "b": {
+      "item": "minecraft:stick"
+    }
+  },
+  "result": {
+    "item": "immersiveweapons:burned_oak_fence_gate"
+  }
+}

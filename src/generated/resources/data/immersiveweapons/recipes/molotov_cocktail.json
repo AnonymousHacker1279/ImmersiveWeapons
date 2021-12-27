@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "molotov_cocktail",
+  "pattern": [
+    " a ",
+    " b "
+  ],
+  "key": {
+    "a": {
+      "tag": "forge:string"
+    },
+    "b": {
+      "item": "immersiveweapons:bottle_of_alcohol"
+    }
+  },
+  "result": {
+    "item": "immersiveweapons:molotov_cocktail"
+  }
+}

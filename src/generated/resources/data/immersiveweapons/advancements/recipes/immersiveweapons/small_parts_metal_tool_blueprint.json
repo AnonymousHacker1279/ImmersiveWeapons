@@ -1,0 +1,34 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "immersiveweapons:small_parts_metal_tool_blueprint"
+    ]
+  },
+  "criteria": {
+    "small_parts_table": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "immersiveweapons:small_parts_table"
+            ]
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "immersiveweapons:small_parts_metal_tool_blueprint"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "small_parts_table",
+      "has_the_recipe"
+    ]
+  ]
+}

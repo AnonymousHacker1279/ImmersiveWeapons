@@ -1,0 +1,34 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "immersiveweapons:cloud_marble_brick_stairs"
+    ]
+  },
+  "criteria": {
+    "cloud_marble_bricks": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "immersiveweapons:cloud_marble_bricks"
+            ]
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "immersiveweapons:cloud_marble_brick_stairs"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "cloud_marble_bricks",
+      "has_the_recipe"
+    ]
+  ]
+}

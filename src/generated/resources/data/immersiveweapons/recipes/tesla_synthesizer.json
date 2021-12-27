@@ -1,0 +1,32 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "tesla",
+  "pattern": [
+    "fff",
+    "cde",
+    "aba"
+  ],
+  "key": {
+    "a": {
+      "item": "minecraft:netherite_block"
+    },
+    "b": {
+      "item": "immersiveweapons:molten_block"
+    },
+    "c": {
+      "tag": "forge:ingots/copper"
+    },
+    "d": {
+      "tag": "forge:glass_panes"
+    },
+    "e": {
+      "tag": "forge:ingots/iron"
+    },
+    "f": {
+      "item": "immersiveweapons:tesla_ingot"
+    }
+  },
+  "result": {
+    "item": "immersiveweapons:tesla_synthesizer"
+  }
+}

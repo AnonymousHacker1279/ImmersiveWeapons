@@ -122,7 +122,7 @@ public record TeslaSynthesizerRecipe(ResourceLocation recipeId,
 	 */
 	@Override
 	public @NotNull RecipeSerializer<?> getSerializer() {
-		return DeferredRegistryHandler.TESLA_SYNTHEZISER_RECIPE_SERIALIZER.get();
+		return DeferredRegistryHandler.TESLA_SYNTHESIZER_RECIPE_SERIALIZER.get();
 	}
 
 	/**

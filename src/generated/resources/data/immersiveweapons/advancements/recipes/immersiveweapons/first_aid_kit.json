@@ -1,0 +1,34 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "immersiveweapons:first_aid_kit"
+    ]
+  },
+  "criteria": {
+    "painkillers": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "immersiveweapons:painkillers"
+            ]
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "immersiveweapons:first_aid_kit"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "painkillers",
+      "has_the_recipe"
+    ]
+  ]
+}

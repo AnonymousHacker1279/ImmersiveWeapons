@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "lights",
+  "pattern": [
+    "aba",
+    "bcb",
+    "aba"
+  ],
+  "key": {
+    "a": {
+      "tag": "forge:nuggets/iron"
+    },
+    "b": {
+      "tag": "forge:glass_panes"
+    },
+    "c": {
+      "item": "immersiveweapons:celestial_fragment"
+    }
+  },
+  "result": {
+    "item": "immersiveweapons:celestial_lantern"
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "immersiveweapons:burned_oak_boat"
+    ]
+  },
+  "criteria": {
+    "water": {
+      "trigger": "minecraft:enter_block",
+      "conditions": {
+        "block": "minecraft:water"
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "immersiveweapons:burned_oak_boat"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "water",
+      "has_the_recipe"
+    ]
+  ]
+}

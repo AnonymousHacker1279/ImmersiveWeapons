@@ -1,0 +1,34 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "immersiveweapons:dried_mud_from_smelting_mud"
+    ]
+  },
+  "criteria": {
+    "has_mud": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "immersiveweapons:mud"
+            ]
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "immersiveweapons:dried_mud_from_smelting_mud"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_mud",
+      "has_the_recipe"
+    ]
+  ]
+}

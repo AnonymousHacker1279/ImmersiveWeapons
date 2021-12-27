@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "diamond",
+  "pattern": [
+    " a ",
+    " b ",
+    " c "
+  ],
+  "key": {
+    "a": {
+      "item": "immersiveweapons:diamond_pike_head"
+    },
+    "b": {
+      "tag": "forge:gems/diamond"
+    },
+    "c": {
+      "item": "immersiveweapons:wood_tool_rod"
+    }
+  },
+  "result": {
+    "item": "immersiveweapons:diamond_pike"
+  }
+}

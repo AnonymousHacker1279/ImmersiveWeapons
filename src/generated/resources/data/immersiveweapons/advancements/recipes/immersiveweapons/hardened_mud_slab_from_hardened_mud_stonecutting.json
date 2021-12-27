@@ -1,0 +1,34 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "immersiveweapons:hardened_mud_slab_from_hardened_mud_stonecutting"
+    ]
+  },
+  "criteria": {
+    "hardened_mud": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "immersiveweapons:hardened_mud"
+            ]
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "immersiveweapons:hardened_mud_slab_from_hardened_mud_stonecutting"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "hardened_mud",
+      "has_the_recipe"
+    ]
+  ]
+}

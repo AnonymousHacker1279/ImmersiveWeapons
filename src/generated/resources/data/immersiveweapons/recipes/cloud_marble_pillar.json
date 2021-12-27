@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "cloud_marble",
+  "pattern": [
+    "a  ",
+    "a  "
+  ],
+  "key": {
+    "a": {
+      "item": "immersiveweapons:cloud_marble_brick_slab"
+    }
+  },
+  "result": {
+    "item": "immersiveweapons:cloud_marble_pillar"
+  }
+}

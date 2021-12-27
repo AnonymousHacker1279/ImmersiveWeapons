@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "shelves",
+  "pattern": [
+    "bab",
+    "bab"
+  ],
+  "key": {
+    "a": {
+      "tag": "minecraft:wooden_slabs"
+    },
+    "b": {
+      "tag": "forge:ingots/metal"
+    }
+  },
+  "result": {
+    "item": "immersiveweapons:wall_shelf"
+  }
+}

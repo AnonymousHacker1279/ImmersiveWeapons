@@ -1,0 +1,34 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "immersiveweapons:flintlock_pistol"
+    ]
+  },
+  "criteria": {
+    "small_parts_iron": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "immersiveweapons:small_parts_iron"
+            ]
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "immersiveweapons:flintlock_pistol"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "small_parts_iron",
+      "has_the_recipe"
+    ]
+  ]
+}

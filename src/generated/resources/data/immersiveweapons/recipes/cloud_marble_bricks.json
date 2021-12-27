@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "cloud_marble",
+  "pattern": [
+    "aa ",
+    "aa "
+  ],
+  "key": {
+    "a": {
+      "item": "immersiveweapons:cloud_marble"
+    }
+  },
+  "result": {
+    "item": "immersiveweapons:cloud_marble_bricks",
+    "count": 4
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "cobalt",
+  "pattern": [
+    " a ",
+    " b "
+  ],
+  "key": {
+    "a": {
+      "tag": "forge:ingots/cobalt"
+    },
+    "b": {
+      "tag": "forge:nuggets/cobalt"
+    }
+  },
+  "result": {
+    "item": "immersiveweapons:cobalt_pike_head"
+  }
+}

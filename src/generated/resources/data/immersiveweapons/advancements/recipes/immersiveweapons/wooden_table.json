@@ -1,0 +1,34 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "immersiveweapons:wooden_table"
+    ]
+  },
+  "criteria": {
+    "oak_slab": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "minecraft:oak_slab"
+            ]
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "immersiveweapons:wooden_table"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "oak_slab",
+      "has_the_recipe"
+    ]
+  ]
+}

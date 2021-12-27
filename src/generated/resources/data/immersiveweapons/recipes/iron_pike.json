@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "iron",
+  "pattern": [
+    " a ",
+    " b ",
+    " c "
+  ],
+  "key": {
+    "a": {
+      "item": "immersiveweapons:iron_pike_head"
+    },
+    "b": {
+      "tag": "forge:ingots/iron"
+    },
+    "c": {
+      "item": "immersiveweapons:wood_tool_rod"
+    }
+  },
+  "result": {
+    "item": "immersiveweapons:iron_pike"
+  }
+}

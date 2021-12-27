@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "traps",
+  "pattern": [
+    "aba",
+    " c "
+  ],
+  "key": {
+    "a": {
+      "tag": "forge:ingots/iron"
+    },
+    "b": {
+      "item": "minecraft:heavy_weighted_pressure_plate"
+    },
+    "c": {
+      "tag": "forge:dusts/redstone"
+    }
+  },
+  "result": {
+    "item": "immersiveweapons:bear_trap"
+  }
+}

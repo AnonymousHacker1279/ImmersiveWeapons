@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "immersiveweapons:mortar"
+    ]
+  },
+  "criteria": {
+    "metal_ingots": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "tag": "forge:ingots/metal"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "immersiveweapons:mortar"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "metal_ingots",
+      "has_the_recipe"
+    ]
+  ]
+}

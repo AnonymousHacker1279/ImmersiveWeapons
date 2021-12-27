@@ -1,0 +1,34 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "immersiveweapons:spotlight"
+    ]
+  },
+  "criteria": {
+    "redstone_lamp": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "minecraft:redstone_lamp"
+            ]
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "immersiveweapons:spotlight"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "redstone_lamp",
+      "has_the_recipe"
+    ]
+  ]
+}

@@ -10,6 +10,7 @@ import net.minecraft.data.DataGenerator;
 import net.minecraft.data.tags.BlockTagsProvider;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.level.block.Block;
+import net.minecraftforge.common.Tags.Blocks;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.registries.RegistryObject;
 
@@ -51,7 +52,7 @@ public class BlockTagsGenerator extends BlockTagsProvider {
 		}
 
 		// Glass tag
-		tag(ForgeBlockTagGroups.GLASS).addTag(ForgeBlockTagGroups.BULLETPROOF_GLASS);
+		tag(Blocks.GLASS).addTag(ForgeBlockTagGroups.BULLETPROOF_GLASS);
 
 		// Stained glass tag
 		for (Block block : BlockTagLists.STAINED_GLASS) {
@@ -59,8 +60,8 @@ public class BlockTagsGenerator extends BlockTagsProvider {
 		}
 
 		// Ore tags
-		tag(ForgeBlockTagGroups.COBALT_ORE).add(DeferredRegistryHandler.COBALT_ORE.get());
-		tag(ForgeBlockTagGroups.ORES).addTag(ForgeBlockTagGroups.COBALT_ORE);
+		tag(ForgeBlockTagGroups.COBALT_ORES).add(DeferredRegistryHandler.COBALT_ORE.get());
+		tag(Blocks.ORES).addTag(ForgeBlockTagGroups.COBALT_ORES);
 	}
 
 	/**

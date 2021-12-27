@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "artillery",
+  "pattern": [
+    "b b",
+    "aba"
+  ],
+  "key": {
+    "a": {
+      "tag": "forge:ingots/metal"
+    },
+    "b": {
+      "tag": "forge:stone"
+    }
+  },
+  "result": {
+    "item": "immersiveweapons:mortar"
+  }
+}

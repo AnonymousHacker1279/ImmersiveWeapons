@@ -1,0 +1,34 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "immersiveweapons:molotov_cocktail"
+    ]
+  },
+  "criteria": {
+    "bottle_of_alcohol": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "immersiveweapons:bottle_of_alcohol"
+            ]
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "immersiveweapons:molotov_cocktail"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "bottle_of_alcohol",
+      "has_the_recipe"
+    ]
+  ]
+}

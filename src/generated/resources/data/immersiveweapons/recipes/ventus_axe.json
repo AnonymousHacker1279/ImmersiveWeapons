@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "ventus",
+  "pattern": [
+    "aa ",
+    "ab ",
+    " b "
+  ],
+  "key": {
+    "a": {
+      "tag": "immersiveweapons:shards/ventus"
+    },
+    "b": {
+      "item": "minecraft:stick"
+    }
+  },
+  "result": {
+    "item": "immersiveweapons:ventus_axe"
+  }
+}

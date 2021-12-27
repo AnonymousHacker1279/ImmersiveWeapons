@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "cobalt",
+  "pattern": [
+    "aa ",
+    " b ",
+    " b "
+  ],
+  "key": {
+    "a": {
+      "tag": "forge:ingots/cobalt"
+    },
+    "b": {
+      "item": "minecraft:stick"
+    }
+  },
+  "result": {
+    "item": "immersiveweapons:cobalt_hoe"
+  }
+}

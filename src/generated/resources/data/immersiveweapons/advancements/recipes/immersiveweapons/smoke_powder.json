@@ -1,0 +1,34 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "immersiveweapons:smoke_powder"
+    ]
+  },
+  "criteria": {
+    "mortar_and_pestle": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "immersiveweapons:mortar_and_pestle"
+            ]
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "immersiveweapons:smoke_powder"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "mortar_and_pestle",
+      "has_the_recipe"
+    ]
+  ]
+}

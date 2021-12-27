@@ -1,0 +1,34 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "immersiveweapons:gauntlet_scaffolding_blueprint"
+    ]
+  },
+  "criteria": {
+    "small_parts_table": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "immersiveweapons:small_parts_table"
+            ]
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "immersiveweapons:gauntlet_scaffolding_blueprint"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "small_parts_table",
+      "has_the_recipe"
+    ]
+  ]
+}

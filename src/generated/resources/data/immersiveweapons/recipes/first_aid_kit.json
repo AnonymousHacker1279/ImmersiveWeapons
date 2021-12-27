@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "group": "first_aid",
+  "ingredients": [
+    {
+      "item": "immersiveweapons:bandage"
+    },
+    {
+      "item": "immersiveweapons:bandage"
+    },
+    {
+      "item": "immersiveweapons:painkillers"
+    }
+  ],
+  "result": {
+    "item": "immersiveweapons:first_aid_kit"
+  }
+}

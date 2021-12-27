@@ -1,21 +1,14 @@
 package com.anonymoushacker1279.immersiveweapons;
 
-import com.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
-import com.anonymoushacker1279.immersiveweapons.init.DispenserBehaviorRegistry;
-import com.anonymoushacker1279.immersiveweapons.init.PostSetupHandler;
-import com.anonymoushacker1279.immersiveweapons.util.Config;
-import com.anonymoushacker1279.immersiveweapons.util.CustomWoodTypes;
-import com.anonymoushacker1279.immersiveweapons.util.PacketHandler;
-import com.anonymoushacker1279.immersiveweapons.util.Structures;
+import com.anonymoushacker1279.immersiveweapons.init.*;
+import com.anonymoushacker1279.immersiveweapons.util.*;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.biome.MobSpawnSettings.SpawnerData;
 import net.minecraft.world.level.block.state.properties.WoodType;
-import net.minecraftforge.common.BiomeDictionary;
-import net.minecraftforge.common.BiomeManager;
+import net.minecraftforge.common.*;
 import net.minecraftforge.common.BiomeManager.BiomeType;
-import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.world.BiomeLoadingEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.IEventBus;

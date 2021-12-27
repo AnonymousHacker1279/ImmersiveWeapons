@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "flag",
+  "pattern": [
+    "bcb",
+    "cbc",
+    "a  "
+  ],
+  "key": {
+    "a": {
+      "item": "immersiveweapons:flag_pole"
+    },
+    "b": {
+      "item": "minecraft:white_wool"
+    },
+    "c": {
+      "item": "minecraft:black_wool"
+    }
+  },
+  "result": {
+    "item": "immersiveweapons:troll_flag"
+  }
+}

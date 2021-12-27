@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "smoke_bomb",
+  "pattern": [
+    " cb",
+    " a ",
+    " a "
+  ],
+  "key": {
+    "a": {
+      "item": "minecraft:bamboo"
+    },
+    "b": {
+      "item": "immersiveweapons:small_parts_metal_throwable_bomb"
+    },
+    "c": {
+      "item": "immersiveweapons:smoke_powder"
+    }
+  },
+  "result": {
+    "item": "immersiveweapons:smoke_bomb",
+    "count": 2
+  }
+}

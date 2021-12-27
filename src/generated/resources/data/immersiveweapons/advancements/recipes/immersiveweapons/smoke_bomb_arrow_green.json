@@ -1,0 +1,34 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "immersiveweapons:smoke_bomb_arrow_green"
+    ]
+  },
+  "criteria": {
+    "smoke_powder": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "immersiveweapons:smoke_powder"
+            ]
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "immersiveweapons:smoke_bomb_arrow_green"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "smoke_powder",
+      "has_the_recipe"
+    ]
+  ]
+}

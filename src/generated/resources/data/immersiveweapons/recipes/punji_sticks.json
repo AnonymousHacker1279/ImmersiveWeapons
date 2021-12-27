@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "traps",
+  "pattern": [
+    "bbb",
+    "bcb",
+    "aaa"
+  ],
+  "key": {
+    "a": {
+      "item": "minecraft:dirt"
+    },
+    "b": {
+      "item": "minecraft:bamboo"
+    },
+    "c": {
+      "item": "minecraft:spider_eye"
+    }
+  },
+  "result": {
+    "item": "immersiveweapons:punji_sticks",
+    "count": 3
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "immersiveweapons:molten_ingot_from_molten_block"
+    ]
+  },
+  "criteria": {
+    "molten_shard": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "tag": "immersiveweapons:shards/molten"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "immersiveweapons:molten_ingot_from_molten_block"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "molten_shard",
+      "has_the_recipe"
+    ]
+  ]
+}

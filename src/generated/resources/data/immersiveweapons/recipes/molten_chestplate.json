@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "molten",
+  "pattern": [
+    "a a",
+    "aaa",
+    "aaa"
+  ],
+  "key": {
+    "a": {
+      "tag": "immersiveweapons:ingots/molten"
+    }
+  },
+  "result": {
+    "item": "immersiveweapons:molten_chestplate"
+  }
+}

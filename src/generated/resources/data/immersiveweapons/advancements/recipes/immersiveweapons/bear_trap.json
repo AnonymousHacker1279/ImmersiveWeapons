@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "immersiveweapons:bear_trap"
+    ]
+  },
+  "criteria": {
+    "redstone": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "tag": "forge:dusts/redstone"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "immersiveweapons:bear_trap"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "redstone",
+      "has_the_recipe"
+    ]
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "smoke_bomb",
+  "pattern": [
+    "aab",
+    "aac"
+  ],
+  "key": {
+    "a": {
+      "item": "minecraft:arrow"
+    },
+    "b": {
+      "item": "immersiveweapons:smoke_powder"
+    },
+    "c": {
+      "tag": "forge:dyes/yellow"
+    }
+  },
+  "result": {
+    "item": "immersiveweapons:smoke_bomb_arrow_yellow",
+    "count": 4
+  }
+}

@@ -3,6 +3,7 @@ package com.anonymoushacker1279.immersiveweapons.data;
 import com.anonymoushacker1279.immersiveweapons.data.advancements.AdvancementProvider;
 import com.anonymoushacker1279.immersiveweapons.data.loot.LootTableGenerator;
 import com.anonymoushacker1279.immersiveweapons.data.models.ModelProvider;
+import com.anonymoushacker1279.immersiveweapons.data.recipes.RecipeGenerator;
 import com.anonymoushacker1279.immersiveweapons.data.tags.BlockTagsGenerator;
 import com.anonymoushacker1279.immersiveweapons.data.tags.ItemTagsGenerator;
 import net.minecraft.data.DataGenerator;
@@ -30,6 +31,7 @@ public class CustomDataGenerator {
 		if (event.includeServer()) {
 			generator.addProvider(new AdvancementProvider(generator));
 			generator.addProvider(new LootTableGenerator(generator));
+			generator.addProvider(new RecipeGenerator(generator));
 			BlockTagsGenerator blockTagsGenerator = new BlockTagsGenerator(generator, event.getExistingFileHelper());
 			generator.addProvider(blockTagsGenerator);
 			generator.addProvider(new ItemTagsGenerator(generator, blockTagsGenerator, event.getExistingFileHelper()));

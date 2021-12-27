@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "copper",
+  "pattern": [
+    "aaa",
+    "a a",
+    "a a"
+  ],
+  "key": {
+    "a": {
+      "tag": "forge:ingots/copper"
+    }
+  },
+  "result": {
+    "item": "immersiveweapons:copper_leggings"
+  }
+}

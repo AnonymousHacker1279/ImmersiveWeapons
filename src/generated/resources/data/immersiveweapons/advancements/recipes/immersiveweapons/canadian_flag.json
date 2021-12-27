@@ -1,0 +1,34 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "immersiveweapons:canadian_flag"
+    ]
+  },
+  "criteria": {
+    "flag_pole": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "immersiveweapons:flag_pole"
+            ]
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "immersiveweapons:canadian_flag"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "flag_pole",
+      "has_the_recipe"
+    ]
+  ]
+}

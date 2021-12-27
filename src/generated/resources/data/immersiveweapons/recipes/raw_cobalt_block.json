@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "cobalt",
+  "pattern": [
+    "aaa",
+    "aaa",
+    "aaa"
+  ],
+  "key": {
+    "a": {
+      "item": "immersiveweapons:raw_cobalt"
+    }
+  },
+  "result": {
+    "item": "immersiveweapons:raw_cobalt_block"
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "immersiveweapons:barbed_wire"
+    ]
+  },
+  "criteria": {
+    "iron_ingot": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "tag": "forge:ingots/iron"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "immersiveweapons:barbed_wire"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "iron_ingot",
+      "has_the_recipe"
+    ]
+  ]
+}

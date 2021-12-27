@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "copper",
+  "pattern": [
+    "aaa",
+    "aba"
+  ],
+  "key": {
+    "a": {
+      "tag": "forge:ingots/copper"
+    },
+    "b": {
+      "item": "immersiveweapons:gauntlet_scaffolding"
+    }
+  },
+  "result": {
+    "item": "immersiveweapons:copper_gauntlet"
+  }
+}

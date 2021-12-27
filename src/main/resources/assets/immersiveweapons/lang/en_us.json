@@ -512,5 +512,5 @@
 	"biome.immersiveweapons.battlefield": "Battlefield",
 	"loot.immersiveweapons.chest.village.battlefield.medic_station.iron_axe": "The Amputator",
 	"immersiveweapons.boss.celestial_tower.waves": "Wave %s of %s",
-	"itemGroup.ImmersiveWeaponsTab": "Immersive Weapons"
+	"itemGroup.immersiveweapons": "Immersive Weapons"
 }

@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "immersiveweapons:corrugated_iron_panel_flat_bars"
+    ]
+  },
+  "criteria": {
+    "iron_block": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "tag": "forge:storage_blocks/iron"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "immersiveweapons:corrugated_iron_panel_flat_bars"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "iron_block",
+      "has_the_recipe"
+    ]
+  ]
+}

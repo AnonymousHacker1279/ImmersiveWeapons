@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "copper",
+  "pattern": [
+    " a ",
+    " b ",
+    " c "
+  ],
+  "key": {
+    "a": {
+      "item": "immersiveweapons:copper_pike_head"
+    },
+    "b": {
+      "tag": "forge:ingots/copper"
+    },
+    "c": {
+      "item": "immersiveweapons:wood_tool_rod"
+    }
+  },
+  "result": {
+    "item": "immersiveweapons:copper_pike"
+  }
+}

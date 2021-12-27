@@ -1,9 +1,0 @@
-{
-	"type": "minecraft:blasting",
-	"ingredient": {
-		"item": "immersiveweapons:dried_mud"
-	},
-	"result": "immersiveweapons:hardened_mud",
-	"experience": 0.1,
-	"cookingtime": 50
-}

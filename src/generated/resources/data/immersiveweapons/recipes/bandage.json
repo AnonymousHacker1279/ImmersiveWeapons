@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "first_aid",
+  "pattern": [
+    "aba"
+  ],
+  "key": {
+    "a": {
+      "tag": "forge:string"
+    },
+    "b": {
+      "tag": "minecraft:wool"
+    }
+  },
+  "result": {
+    "item": "immersiveweapons:bandage",
+    "count": 2
+  }
+}

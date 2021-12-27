@@ -1,0 +1,34 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "immersiveweapons:punji_sticks"
+    ]
+  },
+  "criteria": {
+    "bamboo": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "minecraft:bamboo"
+            ]
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "immersiveweapons:punji_sticks"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "bamboo",
+      "has_the_recipe"
+    ]
+  ]
+}

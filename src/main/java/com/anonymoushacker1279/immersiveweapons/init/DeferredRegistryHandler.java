@@ -153,7 +153,7 @@ public class DeferredRegistryHandler {
 		TREE_DECORATORS.register(modEventBus);
 	}
 
-	public static final CreativeModeTab ITEM_GROUP = new CreativeTabSorter("ImmersiveWeaponsTab");
+	public static final CreativeModeTab ITEM_GROUP = new CreativeTabSorter(ImmersiveWeapons.MOD_ID);
 
 	// Tools
 	public static final RegistryObject<MoltenSword> MOLTEN_SWORD = ITEMS.register("molten_sword", () -> new MoltenSword(CustomItemMaterials.MOLTEN, 4, -2.1f, new Properties().tab(DeferredRegistryHandler.ITEM_GROUP).fireResistant()));
@@ -613,7 +613,7 @@ public class DeferredRegistryHandler {
 
 	// Recipes
 	public static final RegistryObject<RecipeSerializer<SmallPartsRecipe>> SMALL_PARTS_RECIPE_SERIALIZER = RECIPE_SERIALIZER.register("small_parts", SmallPartsRecipe.Serializer::new);
-	public static final RegistryObject<RecipeSerializer<TeslaSynthesizerRecipe>> TESLA_SYNTHEZISER_RECIPE_SERIALIZER = RECIPE_SERIALIZER.register("tesla_synthesizer", TeslaSynthesizerRecipe.Serializer::new);
+	public static final RegistryObject<RecipeSerializer<TeslaSynthesizerRecipe>> TESLA_SYNTHESIZER_RECIPE_SERIALIZER = RECIPE_SERIALIZER.register("tesla_synthesizer", TeslaSynthesizerRecipe.Serializer::new);
 
 	// Loot Table Modifiers
 	public static final RegistryObject<LogShardsLootModifierHandler.Serializer> WOOD_LOGS_MODIFIER = GLOBAL_LOOT_MODIFIER_SERIALIZER.register("log_shards", LogShardsLootModifierHandler.Serializer::new);

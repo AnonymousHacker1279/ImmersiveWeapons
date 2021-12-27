@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "group": "food",
+  "ingredients": [
+    {
+      "item": "immersiveweapons:chocolate_bar"
+    },
+    {
+      "item": "minecraft:gunpowder"
+    },
+    {
+      "item": "minecraft:gunpowder"
+    },
+    {
+      "item": "minecraft:gunpowder"
+    }
+  ],
+  "result": {
+    "item": "immersiveweapons:explosive_chocolate_bar"
+  }
+}

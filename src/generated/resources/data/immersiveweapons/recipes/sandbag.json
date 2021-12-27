@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "sandbags",
+  "pattern": [
+    "bbb",
+    "bab",
+    "bbb"
+  ],
+  "key": {
+    "a": {
+      "tag": "forge:sand"
+    },
+    "b": {
+      "item": "immersiveweapons:cloth_scrap"
+    }
+  },
+  "result": {
+    "item": "immersiveweapons:sandbag",
+    "count": 2
+  }
+}

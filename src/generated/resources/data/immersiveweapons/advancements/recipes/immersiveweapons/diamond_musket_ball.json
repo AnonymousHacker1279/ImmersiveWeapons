@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "immersiveweapons:diamond_musket_ball"
+    ]
+  },
+  "criteria": {
+    "diamond_shard": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "tag": "immersiveweapons:shards/diamond"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "immersiveweapons:diamond_musket_ball"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "diamond_shard",
+      "has_the_recipe"
+    ]
+  ]
+}

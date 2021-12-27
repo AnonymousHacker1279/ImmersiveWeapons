@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "ventus",
+  "pattern": [
+    "aaa",
+    "a a"
+  ],
+  "key": {
+    "a": {
+      "tag": "immersiveweapons:shards/ventus"
+    }
+  },
+  "result": {
+    "item": "immersiveweapons:ventus_helmet"
+  }
+}
