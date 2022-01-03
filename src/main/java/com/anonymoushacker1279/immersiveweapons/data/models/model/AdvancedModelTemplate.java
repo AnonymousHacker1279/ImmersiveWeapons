@@ -16,15 +16,14 @@ public class AdvancedModelTemplate extends ModelTemplate {
 		super(pModel, pSuffix, pRequiredSlots);
 	}
 
-	public ResourceLocation createSpawnEgg(ResourceLocation pModelLocation, BiConsumer<ResourceLocation, Supplier<JsonElement>> pModelOutput) {
+	public void createItem(ResourceLocation pModelLocation, BiConsumer<ResourceLocation, Supplier<JsonElement>> pModelOutput) {
 		pModelOutput.accept(pModelLocation, () -> {
-			JsonObject jsonobject = new JsonObject();
+			JsonObject jsonObject = new JsonObject();
 			this.model.ifPresent((resourceLocation) -> {
-				jsonobject.addProperty("parent", resourceLocation.toString());
+				jsonObject.addProperty("parent", resourceLocation.toString());
 			});
 
-			return jsonobject;
+			return jsonObject;
 		});
-		return pModelLocation;
 	}
 }

@@ -1,5 +1,6 @@
 package com.anonymoushacker1279.immersiveweapons.data.models;
 
+import com.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import com.anonymoushacker1279.immersiveweapons.data.models.lists.ItemModelLists;
 import com.anonymoushacker1279.immersiveweapons.data.models.model.AdvancedModelTemplate;
 import com.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
@@ -46,7 +47,17 @@ public class ItemModelGenerator {
 	 *
 	 */
 	private void generateSpawnEggItem(Item item) {
-		ItemModelGenerator.FLAT_SPAWN_EGG_ITEM.createSpawnEgg(ModelLocationUtils.getModelLocation(item), output);
+		ItemModelGenerator.FLAT_SPAWN_EGG_ITEM.createItem(ModelLocationUtils.getModelLocation(item), output);
+	}
+
+	/**
+	 * Generate a basic block item.
+	 *
+	 */
+	private void generateBlockItem(Item item) {
+		AdvancedModelTemplate BASIC_BLOCK_ITEM = new AdvancedModelTemplate(Optional.of(new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/" + item.toString())), Optional.empty(), TextureSlot.LAYER0);
+
+		BASIC_BLOCK_ITEM.createItem(ModelLocationUtils.getModelLocation(item), output);
 	}
 
 	/**
@@ -80,6 +91,8 @@ public class ItemModelGenerator {
 						generateSpawnEggItem(item);
 					}
 				}
+			} else {
+				generateBlockItem(item);
 			}
 		}
 	}

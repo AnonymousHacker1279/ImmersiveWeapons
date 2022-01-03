@@ -14,6 +14,7 @@ public class ItemModelLists {
 	 * Initialize the lists.
 	 */
 	public static void init() {
+		// Items
 		ignoredItems.add(DeferredRegistryHandler.BLUNDERBUSS.get());
 		ignoredItems.add(DeferredRegistryHandler.FLINTLOCK_PISTOL.get());
 		ignoredItems.add(DeferredRegistryHandler.FLARE_GUN.get());
@@ -44,5 +45,25 @@ public class ItemModelLists {
 		ignoredItems.add(DeferredRegistryHandler.COBALT_GAUNTLET.get());
 		ignoredItems.add(DeferredRegistryHandler.DIAMOND_GAUNTLET.get());
 		ignoredItems.add(DeferredRegistryHandler.NETHERITE_GAUNTLET.get());
+		ignoredItems.add(DeferredRegistryHandler.BURNED_OAK_BOAT.get());
+		// Block Items
+		ignoredItems.add(DeferredRegistryHandler.CLOUD_MARBLE_BRICK_STAIRS_ITEM.get());
+		ignoredItems.add(DeferredRegistryHandler.CLOUD_MARBLE_BRICK_SLAB_ITEM.get());
+		ignoredItems.add(DeferredRegistryHandler.BURNED_OAK_STAIRS_ITEM.get());
+		ignoredItems.add(DeferredRegistryHandler.BURNED_OAK_SLAB_ITEM.get());
+		ignoredItems.add(DeferredRegistryHandler.BURNED_OAK_FENCE_ITEM.get());
+		ignoredItems.add(DeferredRegistryHandler.BURNED_OAK_DOOR_ITEM.get());
+		ignoredItems.add(DeferredRegistryHandler.BURNED_OAK_TRAPDOOR_ITEM.get());
+		ignoredItems.add(DeferredRegistryHandler.BURNED_OAK_SIGN_ITEM.get());
+		ignoredItems.add(DeferredRegistryHandler.BURNED_OAK_BUTTON_ITEM.get());
+		ignoredItems.add(DeferredRegistryHandler.HARDENED_MUD_STAIRS_ITEM.get());
+		ignoredItems.add(DeferredRegistryHandler.HARDENED_MUD_SLAB_ITEM.get());
+		ignoredItems.add(DeferredRegistryHandler.AZUL_STAINED_ORCHID_ITEM.get());
+		ignoredItems.add(DeferredRegistryHandler.BEAR_TRAP_ITEM.get());
+		ignoredItems.add(DeferredRegistryHandler.LANDMINE_ITEM.get());
+		ignoredItems.add(DeferredRegistryHandler.SPIKE_TRAP_ITEM.get());
+		ignoredItems.add(DeferredRegistryHandler.SANDBAG_ITEM.get());
+		ignoredItems.add(DeferredRegistryHandler.SPOTLIGHT_ITEM.get());
+		ignoredItems.add(DeferredRegistryHandler.MORTAR_ITEM.get());
 	}
 }
