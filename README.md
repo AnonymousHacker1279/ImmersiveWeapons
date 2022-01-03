@@ -53,14 +53,14 @@ cases, an older version will receive bugfixes should the community describe an i
 
 | MC Version | Immersive Weapons Version Support |
 | :-- | :-- |
-| 1.18 | [Latest](https://github.com/AnonymousHacker1279/ImmersiveWeapons/releases) |
+| 1.18/1.18.1 | [(BETA) Latest](https://github.com/AnonymousHacker1279/ImmersiveWeapons/releases) |
 | 1.17.1 | [1.12.1](https://github.com/AnonymousHacker1279/ImmersiveWeapons/releases/tag/v1.12.1) |
 | 1.16.5 | [1.4.2](https://github.com/AnonymousHacker1279/ImmersiveWeapons/releases/tag/v1.4.2) |
 | 1.16.4 | [1.1.1](https://github.com/AnonymousHacker1279/ImmersiveWeapons/releases/tag/v1.1.1) |
 | 1.15.2 | [N/A - Build From Source](https://github.com/AnonymousHacker1279/ImmersiveWeapons/tree/1.15.2-dev) |
 
-***Note: 1.18 releases are currently in an alpha state due to major breaking changes in the Forge API and MC 1.18.
-Expect missing features and game-breaking bugs.***
+***Note: 1.18.x releases are currently in a beta state due to major breaking changes in the Forge API and MC 1.18.
+Expect missing features and potential game-breaking bugs.***
 
 ## Contributing
 
