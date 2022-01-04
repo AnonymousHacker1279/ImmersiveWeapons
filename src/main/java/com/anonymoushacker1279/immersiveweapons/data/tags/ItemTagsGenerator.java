@@ -66,6 +66,13 @@ public class ItemTagsGenerator extends ItemTagsProvider {
 
 		// Dust tags
 		tag(ForgeItemTagGroups.SULFUR_DUSTS).add(DeferredRegistryHandler.SULFUR.get());
+
+		// Pickaxe tags
+		tag(ForgeItemTagGroups.PICKAXES).add(Items.WOODEN_PICKAXE, Items.STONE_PICKAXE, Items.GOLDEN_PICKAXE,
+				Items.IRON_PICKAXE, Items.DIAMOND_PICKAXE, Items.NETHERITE_PICKAXE,
+				DeferredRegistryHandler.COPPER_PICKAXE.get(), DeferredRegistryHandler.COBALT_PICKAXE.get(),
+				DeferredRegistryHandler.MOLTEN_PICKAXE.get(), DeferredRegistryHandler.VENTUS_PICKAXE.get(),
+				DeferredRegistryHandler.TESLA_PICKAXE.get());
 	}
 
 	/**

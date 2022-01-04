@@ -14,4 +14,5 @@ public class ForgeItemTagGroups {
 	public static final Named<Item> COPPER_NUGGETS = ItemTags.bind("forge:nuggets/copper");
 	public static final Named<Item> METAL_NUGGETS = ItemTags.bind("forge:nuggets/metal");
 	public static final Named<Item> SULFUR_DUSTS = ItemTags.bind("forge:dusts/sulfur");
+	public static final Named<Item> PICKAXES = ItemTags.bind("forge:pickaxes");
 }
