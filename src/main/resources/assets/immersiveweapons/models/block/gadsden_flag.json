@@ -2,7 +2,7 @@
 	"credit": "Made with Blockbench",
 	"textures": {
 		"0": "immersiveweapons:custom/iron_light",
-		"1": "immersiveweapons:custom/flags/gadsden_flag",
+		"1": "immersiveweapons:block/flags/gadsden_flag",
 		"particle": "immersiveweapons:custom/iron_light"
 	},
 	"elements": [

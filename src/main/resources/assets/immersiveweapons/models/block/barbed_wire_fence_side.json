@@ -2,7 +2,7 @@
 	"credit": "Made with Blockbench",
 	"textures": {
 		"1": "immersiveweapons:custom/iron",
-		"particle": "immersiveweapons:custom/iron_block"
+		"particle": "minecraft:block/iron_block"
 	},
 	"elements": [
 		{

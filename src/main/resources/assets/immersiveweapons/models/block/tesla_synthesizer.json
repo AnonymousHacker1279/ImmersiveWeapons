@@ -1,13 +1,13 @@
 {
 	"credit": "Made with Blockbench",
 	"textures": {
-		"0": "immersiveweapons:custom/netherite_block",
+		"0": "minecraft:block/netherite_block",
 		"1": "immersiveweapons:custom/gold_32x",
 		"2": "immersiveweapons:block/molten_block",
-		"3": "immersiveweapons:custom/glass",
+		"3": "minecraft:block/glass",
 		"4": "immersiveweapons:custom/copper",
 		"5": "immersiveweapons:custom/iron_32x",
-		"particle": "immersiveweapons:custom/netherite_block"
+		"particle": "minecraft:block/netherite_block"
 	},
 	"elements": [
 		{
