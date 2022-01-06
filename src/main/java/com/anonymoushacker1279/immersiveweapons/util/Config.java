@@ -31,6 +31,9 @@ public class Config {
 	static ForgeConfigSpec.ConfigValue<Integer> MIN_CLOUD_ISLAND_DISTANCE;
 	static ForgeConfigSpec.ConfigValue<Integer> MAX_CAMPSITE_DISTANCE;
 	static ForgeConfigSpec.ConfigValue<Integer> MIN_CAMPSITE_DISTANCE;
+	public static ForgeConfigSpec.ConfigValue<Boolean> DYING_SOLDIER_SPAWN;
+	public static ForgeConfigSpec.ConfigValue<Boolean> WANDERING_WARRIOR_SPAWN;
+	public static ForgeConfigSpec.ConfigValue<Boolean> HANS_SPAWN;
 	private static ForgeConfigSpec COMMON_CONFIG;
 
 	static {
@@ -43,6 +46,10 @@ public class Config {
 	 */
 	private static void initConfig() {
 		COMMON_CONFIG_BUILDER.push(ImmersiveWeapons.MOD_ID + "-common");
+
+		DYING_SOLDIER_SPAWN = COMMON_CONFIG_BUILDER.comment("Enable the natural spawning of Dying Soldiers - Default true").define("dying_soldiers_spawn", true);
+		WANDERING_WARRIOR_SPAWN = COMMON_CONFIG_BUILDER.comment("Enable the natural spawning of Wandering Warriors - Default true").define("wandering_warriors_spawn", true);
+		HANS_SPAWN = COMMON_CONFIG_BUILDER.comment("Enable the natural spawning of Hans the Almighty - Default true").define("hans_spawn", true);
 
 		MAX_ABANDONED_FACTORY_DISTANCE = COMMON_CONFIG_BUILDER.comment("Maximum distance in chunks between Abandoned Factories - Default 120").define("max_abandoned_factory_distance", 120);
 		MIN_ABANDONED_FACTORY_DISTANCE = COMMON_CONFIG_BUILDER.comment("Minimum distance in chunks between Abandoned Factories - Default 90").define("min_abandoned_factory_distance", 90);
