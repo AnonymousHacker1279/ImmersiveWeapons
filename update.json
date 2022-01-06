@@ -7,8 +7,8 @@
 		"1.18-recommended": "1.18.1-1.13.0-beta6",
 		"1.17.1-latest": "1.17.1-1.12.1",
 		"1.17.1-recommended": "1.17.1-1.12.1",
-		"1.16.5-latest": "1.16.5-1.4.2",
-		"1.16.5-recommended": "1.16.5-1.4.2",
+		"1.16.5-latest": "1.16.5-1.4.3",
+		"1.16.5-recommended": "1.16.5-1.4.3",
 		"1.16.4-latest": "1.16.5-1.1.1",
 		"1.16.4-recommended": "1.16.5-1.1.1"
 	},
@@ -49,6 +49,7 @@
 		"1.17.1-1.5.0": "Initial 1.17.1 release - https://github.com/AnonymousHacker1279/ImmersiveWeapons/releases/tag/v1.5.0"
 	},
 	"1.16.5": {
+		"1.16.5-1.4.3": "Bugfixes - https://github.com/AnonymousHacker1279/ImmersiveWeapons/releases/tag/v1.4.3",
 		"1.16.5-1.4.2": "Bugfixes - https://github.com/AnonymousHacker1279/ImmersiveWeapons/releases/tag/v1.4.2",
 		"1.16.5-1.4.1": "Bugfixes - https://github.com/AnonymousHacker1279/ImmersiveWeapons/releases/tag/v1.4.1",
 		"1.16.5-1.4.0": "Bugfixes, optimizations, and improvements - https://github.com/AnonymousHacker1279/ImmersiveWeapons/releases/tag/v1.4.0",
