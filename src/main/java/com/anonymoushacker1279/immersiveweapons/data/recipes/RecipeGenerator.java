@@ -152,7 +152,7 @@ public class RecipeGenerator extends RecipeProvider {
 		createCloudMarbleBricks(DeferredRegistryHandler.CLOUD_MARBLE_BRICKS_ITEM.get(),
 				DeferredRegistryHandler.CLOUD_MARBLE_ITEM.get());
 		createCloudMarblePillar(DeferredRegistryHandler.CLOUD_MARBLE_PILLAR_ITEM.get(),
-				DeferredRegistryHandler.CLOUD_MARBLE_BRICK_SLAB_ITEM.get());
+				DeferredRegistryHandler.CLOUD_MARBLE_ITEM.get());
 	}
 
 	private void createMudItems() {
@@ -1357,7 +1357,7 @@ public class RecipeGenerator extends RecipeProvider {
 		ShapedRecipeBuilder builder = ShapedRecipeBuilder.shaped(arrowItem, 4)
 				.group("wood")
 				.unlockedBy("wood_shard", has(ImmersiveWeaponsItemTagGroups.WOOD_SHARDS));
-		createArrow(builder, ItemTags.PLANKS);
+		createArrow(builder, ImmersiveWeaponsItemTagGroups.WOOD_SHARDS);
 	}
 
 	private static void createStoneArrow(ItemLike arrowItem) {
@@ -1578,7 +1578,7 @@ public class RecipeGenerator extends RecipeProvider {
 	private static void createDiamondShard(ItemLike shardItem) {
 		ShapelessRecipeBuilder builder = ShapelessRecipeBuilder.shapeless(shardItem, 4)
 				.unlockedBy("diamond", has(Tags.Items.GEMS_DIAMOND));
-		createShard(builder, Items.OBSIDIAN);
+		createShard(builder, Items.DIAMOND);
 	}
 
 	private static void createCloudMarbleBrickSlab(ItemLike slabItem, ItemLike material) {
@@ -1623,11 +1623,11 @@ public class RecipeGenerator extends RecipeProvider {
 				.pattern("a  ")
 				.pattern("a  ")
 				.group("cloud_marble")
-				.unlockedBy("cloud_marble", has(DeferredRegistryHandler.CLOUD_MARBLE_BRICK_SLAB_ITEM.get()))
+				.unlockedBy("cloud_marble", has(DeferredRegistryHandler.CLOUD_MARBLE_BRICKS_ITEM.get()))
 				.save(finishedRecipeConsumer);
 		SingleItemRecipeBuilder.stonecutting(Ingredient.of(material), bricksItem)
 				.group("cloud_marble")
-				.unlockedBy("cloud_marble", has(DeferredRegistryHandler.CLOUD_MARBLE_BRICK_SLAB_ITEM.get()))
+				.unlockedBy("cloud_marble", has(DeferredRegistryHandler.CLOUD_MARBLE_BRICKS_ITEM.get()))
 				.save(finishedRecipeConsumer, ImmersiveWeapons.MOD_ID + ":" + getConversionRecipeName(bricksItem, material) + "_stonecutting");
 	}
 
@@ -1683,7 +1683,7 @@ public class RecipeGenerator extends RecipeProvider {
 	}
 
 	private static void createBurnedOakPlanks(ItemLike planksItem) {
-		ShapelessRecipeBuilder.shapeless(planksItem)
+		ShapelessRecipeBuilder.shapeless(planksItem, 4)
 				.requires(ImmersiveWeaponsItemTagGroups.BURNED_OAK_LOGS)
 				.group("burned_oak")
 				.unlockedBy("burned_oak_log", has(ImmersiveWeaponsItemTagGroups.BURNED_OAK_LOGS))
