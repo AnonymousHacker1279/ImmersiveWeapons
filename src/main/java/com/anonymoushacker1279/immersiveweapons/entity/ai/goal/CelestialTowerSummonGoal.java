@@ -5,12 +5,10 @@ import com.anonymoushacker1279.immersiveweapons.entity.monster.RockSpiderEntity;
 import com.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
 import com.anonymoushacker1279.immersiveweapons.util.Config;
 import com.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
-import com.anonymoushacker1279.immersiveweapons.util.PacketHandler;
-import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.BossEvent.BossBarColor;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.EntityType;
@@ -24,15 +22,8 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.phys.AABB;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.fml.DistExecutor;
-import net.minecraftforge.network.NetworkEvent;
-import net.minecraftforge.network.NetworkEvent.Context;
-import net.minecraftforge.network.PacketDistributor;
 
 import java.util.Objects;
-import java.util.function.Supplier;
 
 public class CelestialTowerSummonGoal extends Goal {
 
@@ -73,7 +64,7 @@ public class CelestialTowerSummonGoal extends Goal {
 				entity.setPersistenceRequired();
 				entity.teleportTo(summonPos.getX(), summonPos.getY(), summonPos.getZ());
 				mob.level.addFreshEntity(entity);
-				PacketHandler.INSTANCE.send(PacketDistributor.TRACKING_CHUNK.with(() -> mob.level.getChunkAt(summonPos)), new CelestialTowerSummonGoalPacketHandler(summonPos, 0));
+				((ServerLevel) mob.level).sendParticles(ParticleTypes.POOF, mob.position().x, mob.position().y, mob.position().z, 1, GeneralUtilities.getRandomNumber(-0.03d, 0.03d), GeneralUtilities.getRandomNumber(-0.1d, -0.08d), GeneralUtilities.getRandomNumber(-0.03d, 0.03d), 1.0f);
 			}
 			for (int i = powerMobsToSpawn; i > 0; i--) {
 				BlockPos summonPos = new BlockPos(mob.getX() + GeneralUtilities.getRandomNumber(-8, 9), mob.getY(), mob.getZ() + GeneralUtilities.getRandomNumber(-8, 9));
@@ -92,7 +83,7 @@ public class CelestialTowerSummonGoal extends Goal {
 				entity.setItemInHand(InteractionHand.MAIN_HAND, sword);
 				entity.teleportTo(summonPos.getX(), summonPos.getY(), summonPos.getZ());
 				mob.level.addFreshEntity(entity);
-				PacketHandler.INSTANCE.send(PacketDistributor.TRACKING_CHUNK.with(() -> mob.level.getChunkAt(summonPos)), new CelestialTowerSummonGoalPacketHandler(summonPos, 0));
+				((ServerLevel) mob.level).sendParticles(ParticleTypes.POOF, mob.position().x, mob.position().y, mob.position().z, 1, GeneralUtilities.getRandomNumber(-0.03d, 0.03d), GeneralUtilities.getRandomNumber(-0.1d, -0.08d), GeneralUtilities.getRandomNumber(-0.03d, 0.03d), 1.0f);
 			}
 			for (int i = mobsToSpawn; i > 0; i--) {
 				BlockPos summonPos = new BlockPos(mob.getX() + GeneralUtilities.getRandomNumber(-8, 9), mob.getY(), mob.getZ() + GeneralUtilities.getRandomNumber(-8, 9));
@@ -107,12 +98,12 @@ public class CelestialTowerSummonGoal extends Goal {
 				entity.setItemInHand(InteractionHand.MAIN_HAND, bow);
 				entity.teleportTo(summonPos.getX(), summonPos.getY(), summonPos.getZ());
 				mob.level.addFreshEntity(entity);
-				PacketHandler.INSTANCE.send(PacketDistributor.TRACKING_CHUNK.with(() -> mob.level.getChunkAt(summonPos)), new CelestialTowerSummonGoalPacketHandler(summonPos, 0));
+				((ServerLevel) mob.level).sendParticles(ParticleTypes.POOF, mob.position().x, mob.position().y, mob.position().z, 1, GeneralUtilities.getRandomNumber(-0.03d, 0.03d), GeneralUtilities.getRandomNumber(-0.1d, -0.08d), GeneralUtilities.getRandomNumber(-0.03d, 0.03d), 1.0f);
 			}
 
 			// Spawn some particles
 			for (int i = 96; i > 0; i--) {
-				PacketHandler.INSTANCE.send(PacketDistributor.TRACKING_CHUNK.with(() -> mob.level.getChunkAt(mob.blockPosition())), new CelestialTowerSummonGoalPacketHandler(mob.blockPosition(), 1));
+				((ServerLevel) mob.level).sendParticles(ParticleTypes.FLAME, mob.position().x, mob.position().y, mob.position().z, 1, GeneralUtilities.getRandomNumber(-0.03d, 0.03d), GeneralUtilities.getRandomNumber(-0.1d, -0.08d), GeneralUtilities.getRandomNumber(-0.03d, 0.03d), 1.0f);
 			}
 
 			mob.setWavesSpawned(mob.getWavesSpawned() + 1); // Increment the total spawned waves
@@ -146,66 +137,5 @@ public class CelestialTowerSummonGoal extends Goal {
 
 	private boolean isWavesPastHalf() {
 		return mob.getTotalWavesToSpawn() / 2 <= mob.getWavesSpawned();
-	}
-
-	public record CelestialTowerSummonGoalPacketHandler(BlockPos blockPos, int type) {
-
-		/**
-		 * Constructor for CelestialTowerSummonGoalPacketHandler.
-		 *
-		 * @param blockPos the <code>BlockPos</code> the packet came from
-		 * @param type     the particles to summon
-		 */
-		public CelestialTowerSummonGoalPacketHandler {
-		}
-
-		/**
-		 * Encodes a packet
-		 *
-		 * @param msg          the <code>CelestialTowerSummonGoalPacketHandler</code> message being sent
-		 * @param packetBuffer the <code>PacketBuffer</code> containing packet data
-		 */
-		public static void encode(CelestialTowerSummonGoalPacketHandler msg, FriendlyByteBuf packetBuffer) {
-			packetBuffer.writeBlockPos(msg.blockPos).writeInt(msg.type);
-		}
-
-		/**
-		 * Decodes a packet
-		 *
-		 * @param packetBuffer the <code>PacketBuffer</code> containing packet data
-		 * @return CelestialTowerSummonGoalPacketHandler
-		 */
-		public static CelestialTowerSummonGoalPacketHandler decode(FriendlyByteBuf packetBuffer) {
-			return new CelestialTowerSummonGoalPacketHandler(packetBuffer.readBlockPos(), packetBuffer.readInt());
-		}
-
-		/**
-		 * Handles an incoming packet, by sending it to the client/server
-		 *
-		 * @param msg             the <code>CelestialTowerSummonGoalPacketHandler</code> message being sent
-		 * @param contextSupplier the <code>Supplier</code> providing context
-		 */
-		public static void handle(CelestialTowerSummonGoalPacketHandler msg, Supplier<Context> contextSupplier) {
-			NetworkEvent.Context context = contextSupplier.get();
-			context.enqueueWork(() -> DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> handleOnClient(msg)));
-			context.setPacketHandled(true);
-		}
-
-		/**
-		 * Runs specifically on the client, when a packet is received
-		 *
-		 * @param msg the <code>CelestialTowerSummonGoalPacketHandler</code> message being sent
-		 */
-		@OnlyIn(Dist.CLIENT)
-		private static void handleOnClient(CelestialTowerSummonGoalPacketHandler msg) {
-			Minecraft minecraft = Minecraft.getInstance();
-			if (minecraft.level != null) {
-				if (msg.type == 0) {
-					minecraft.level.addParticle(ParticleTypes.POOF, msg.blockPos.getX(), msg.blockPos.getY(), msg.blockPos.getZ(), GeneralUtilities.getRandomNumber(-0.03d, 0.03d), GeneralUtilities.getRandomNumber(-0.1d, -0.08d), GeneralUtilities.getRandomNumber(-0.03d, 0.03d));
-				} else if (msg.type == 1) {
-					minecraft.level.addParticle(ParticleTypes.FLAME, msg.blockPos.getX(), msg.blockPos.getY() + 9, msg.blockPos.getZ(), GeneralUtilities.getRandomNumber(-0.6d, 0.81d), GeneralUtilities.getRandomNumber(0.3d, 0.4d), GeneralUtilities.getRandomNumber(-0.6d, 0.81d));
-				}
-			}
-		}
 	}
 }

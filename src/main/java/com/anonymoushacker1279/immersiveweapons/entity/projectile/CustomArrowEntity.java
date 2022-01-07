@@ -2,9 +2,7 @@ package com.anonymoushacker1279.immersiveweapons.entity.projectile;
 
 import com.anonymoushacker1279.immersiveweapons.client.particle.smokebomb.SmokeBombParticleData;
 import com.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
-import com.anonymoushacker1279.immersiveweapons.util.Config;
-import com.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
-import com.anonymoushacker1279.immersiveweapons.util.PacketHandler;
+import com.anonymoushacker1279.immersiveweapons.util.*;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleOptions;
@@ -464,20 +462,94 @@ public class CustomArrowEntity {
 		@Override
 		public void onHit(@NotNull HitResult rayTraceResult) {
 			super.onHit(rayTraceResult);
-			if (!level.isClientSide) {
-				PacketHandler.INSTANCE.send(PacketDistributor.TRACKING_CHUNK.with(() -> level.getChunkAt(blockPosition())), new SmokeBombArrowEntityPacketHandler(blockPosition(), configMaxParticles, color));
+			if (level.isClientSide) {
+				ParticleOptions particleData = makeParticle();
+				for (int i = 0; i < configMaxParticles; ++i) {
+					level.addParticle(particleData, true, position().x, position().y, position().z, GeneralUtilities.getRandomNumber(-0.03, 0.03d), GeneralUtilities.getRandomNumber(-0.02d, 0.02d), GeneralUtilities.getRandomNumber(-0.03d, 0.03d));
+				}
+			} else {
+				PacketHandler.INSTANCE.send(PacketDistributor.TRACKING_CHUNK.with(() -> level.getChunkAt(blockPosition())), new SmokeBombArrowEntityPacketHandler(blockPosition()));
 			}
 		}
 
-		public record SmokeBombArrowEntityPacketHandler(BlockPos blockPos, int configMaxParticles,
-		                                                int color) {
+		/**
+		 * Create a new particle.
+		 *
+		 * @return IParticleData
+		 */
+		static ParticleOptions makeParticle() {
+			Color tint = getTint(GeneralUtilities.getRandomNumber(0, 2));
+			double diameter = getDiameter(GeneralUtilities.getRandomNumber(1.0d, 5.5d));
+
+			return new SmokeBombParticleData(tint, diameter);
+		}
+
+		/**
+		 * Get the particle diameter.
+		 *
+		 * @param random a random number
+		 * @return double
+		 */
+		private static double getDiameter(double random) {
+			final double MIN_DIAMETER = 0.5;
+			final double MAX_DIAMETER = 5.5;
+			return MIN_DIAMETER + (MAX_DIAMETER - MIN_DIAMETER) * random;
+		}
+
+		/**
+		 * Get the particle tint.
+		 *
+		 * @param random a random number
+		 * @return Color
+		 */
+		private static Color getTint(int random) {
+			Color[] tints = {
+					new Color(1.00f, 1.00f, 1.00f),  // no tint (white)
+					new Color(1.00f, 0.97f, 1.00f),  // off-white
+					new Color(1.00f, 1.00f, 0.97f),  // off-white 2
+			};
+			Color[] tintsRed = {
+					new Color(1.00f, 0.25f, 0.25f),  // tint (red)
+					new Color(1.00f, 0.30f, 0.25f),  // off-red
+					new Color(1.00f, 0.25f, 0.30f),  // off-red 2
+			};
+			Color[] tintsGreen = {
+					new Color(0.25f, 1.00f, 0.25f),  // tint (green)
+					new Color(0.30f, 1.00f, 0.25f),  // off-green
+					new Color(0.25f, 1.00f, 0.30f),  // off-green 2
+			};
+			Color[] tintsBlue = {
+					new Color(0.25f, 0.25f, 1.00f),  // tint (blue)
+					new Color(0.30f, 0.25f, 1.00f),  // off-blue
+					new Color(0.25f, 0.30f, 1.00f),  // off-blue 2
+			};
+			Color[] tintsPurple = {
+					new Color(1.00f, 0.25f, 1.00f),  // tint (purple)
+					new Color(1.00f, 0.30f, 1.00f),  // off-purple
+					new Color(1.00f, 0.35f, 1.00f),  // off-purple 2
+			};
+			Color[] tintsYellow = {
+					new Color(1.00f, 1.00f, 0.25f),  // tint (yellow)
+					new Color(1.00f, 1.00f, 0.30f),  // off-yellow
+					new Color(1.00f, 1.00f, 0.35f),  // off-yellow 2
+			};
+
+			return switch (color) {
+				case 1 -> tintsRed[random];
+				case 2 -> tintsGreen[random];
+				case 3 -> tintsBlue[random];
+				case 4 -> tintsPurple[random];
+				case 5 -> tintsYellow[random];
+				default -> tints[random];
+			};
+		}
+
+		public record SmokeBombArrowEntityPacketHandler(BlockPos blockPos) {
 
 			/**
 			 * Constructor for SmokeBombArrowEntityPacketHandler.
 			 *
-			 * @param blockPos           the <code>BlockPos</code> of the block where the packet was sent
-			 * @param configMaxParticles the max particles to generate
-			 * @param color              an integer representing the color
+			 * @param blockPos the <code>BlockPos</code> of the block where the packet was sent
 			 */
 			public SmokeBombArrowEntityPacketHandler {
 			}
@@ -489,7 +561,7 @@ public class CustomArrowEntity {
 			 * @param packetBuffer the <code>PacketBuffer</code> containing packet data
 			 */
 			public static void encode(SmokeBombArrowEntityPacketHandler msg, FriendlyByteBuf packetBuffer) {
-				packetBuffer.writeBlockPos(msg.blockPos).writeInt(msg.configMaxParticles).writeInt(msg.color);
+				packetBuffer.writeBlockPos(msg.blockPos);
 			}
 
 			/**
@@ -499,7 +571,7 @@ public class CustomArrowEntity {
 			 * @return SmokeBombArrowEntityPacketHandler
 			 */
 			public static SmokeBombArrowEntityPacketHandler decode(FriendlyByteBuf packetBuffer) {
-				return new SmokeBombArrowEntityPacketHandler(packetBuffer.readBlockPos(), packetBuffer.readInt(), packetBuffer.readInt());
+				return new SmokeBombArrowEntityPacketHandler(packetBuffer.readBlockPos());
 			}
 
 			/**
@@ -524,86 +596,7 @@ public class CustomArrowEntity {
 				Minecraft minecraft = Minecraft.getInstance();
 				if (minecraft.level != null) {
 					minecraft.level.playLocalSound(msg.blockPos, DeferredRegistryHandler.SMOKE_BOMB_HISS.get(), SoundSource.NEUTRAL, 0.1f, 0.6f, true);
-
-					ParticleOptions particleData = makeParticle(msg);
-					for (int i = 0; i < msg.configMaxParticles; ++i) {
-						minecraft.level.addParticle(particleData, true, msg.blockPos.getX(), msg.blockPos.getY(), msg.blockPos.getZ(), GeneralUtilities.getRandomNumber(-0.03, 0.03d), GeneralUtilities.getRandomNumber(-0.02d, 0.02d), GeneralUtilities.getRandomNumber(-0.03d, 0.03d));
-					}
 				}
-			}
-
-			/**
-			 * Create a new particle.
-			 *
-			 * @param msg the <code>SmokeBombArrowEntityPacketHandler</code> message
-			 * @return IParticleData
-			 */
-			static ParticleOptions makeParticle(SmokeBombArrowEntityPacketHandler msg) {
-				Color tint = getTint(GeneralUtilities.getRandomNumber(0, 2), msg);
-				double diameter = getDiameter(GeneralUtilities.getRandomNumber(1.0d, 5.5d));
-
-				return new SmokeBombParticleData(tint, diameter);
-			}
-
-			/**
-			 * Get the particle diameter.
-			 *
-			 * @param random a random number
-			 * @return double
-			 */
-			private static double getDiameter(double random) {
-				final double MIN_DIAMETER = 0.5;
-				final double MAX_DIAMETER = 5.5;
-				return MIN_DIAMETER + (MAX_DIAMETER - MIN_DIAMETER) * random;
-			}
-
-			/**
-			 * Get the particle tint.
-			 *
-			 * @param random a random number
-			 * @param msg    the <code>SmokeBombArrowEntityPacketHandler</code> message
-			 * @return Color
-			 */
-			private static Color getTint(int random, SmokeBombArrowEntityPacketHandler msg) {
-				Color[] tints = {
-						new Color(1.00f, 1.00f, 1.00f),  // no tint (white)
-						new Color(1.00f, 0.97f, 1.00f),  // off-white
-						new Color(1.00f, 1.00f, 0.97f),  // off-white 2
-				};
-				Color[] tintsRed = {
-						new Color(1.00f, 0.25f, 0.25f),  // tint (red)
-						new Color(1.00f, 0.30f, 0.25f),  // off-red
-						new Color(1.00f, 0.25f, 0.30f),  // off-red 2
-				};
-				Color[] tintsGreen = {
-						new Color(0.25f, 1.00f, 0.25f),  // tint (green)
-						new Color(0.30f, 1.00f, 0.25f),  // off-green
-						new Color(0.25f, 1.00f, 0.30f),  // off-green 2
-				};
-				Color[] tintsBlue = {
-						new Color(0.25f, 0.25f, 1.00f),  // tint (blue)
-						new Color(0.30f, 0.25f, 1.00f),  // off-blue
-						new Color(0.25f, 0.30f, 1.00f),  // off-blue 2
-				};
-				Color[] tintsPurple = {
-						new Color(1.00f, 0.25f, 1.00f),  // tint (purple)
-						new Color(1.00f, 0.30f, 1.00f),  // off-purple
-						new Color(1.00f, 0.35f, 1.00f),  // off-purple 2
-				};
-				Color[] tintsYellow = {
-						new Color(1.00f, 1.00f, 0.25f),  // tint (yellow)
-						new Color(1.00f, 1.00f, 0.30f),  // off-yellow
-						new Color(1.00f, 1.00f, 0.35f),  // off-yellow 2
-				};
-
-				return switch (msg.color) {
-					case 1 -> tintsRed[random];
-					case 2 -> tintsGreen[random];
-					case 3 -> tintsBlue[random];
-					case 4 -> tintsPurple[random];
-					case 5 -> tintsYellow[random];
-					default -> tints[random];
-				};
 			}
 		}
 	}

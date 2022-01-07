@@ -10,14 +10,9 @@ import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ArmorItem;
-import net.minecraft.world.item.ArmorMaterial;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.*;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.fml.DistExecutor;
@@ -29,7 +24,7 @@ import java.util.function.Supplier;
 
 public class TeslaArmorItem extends ArmorItem {
 
-	private static boolean armorIsToggled = false;
+	private static boolean effectEnabled = false;
 	private boolean isLeggings = false;
 	private int countdown = 0;
 
@@ -48,10 +43,10 @@ public class TeslaArmorItem extends ArmorItem {
 	}
 
 	/**
-	 * Toggle the armor effect.
+	 * Set the armor effect.
 	 */
-	static void toggleEffect() {
-		armorIsToggled = !armorIsToggled;
+	static void setEffectState(boolean state) {
+		effectEnabled = state;
 	}
 
 	/**
@@ -83,20 +78,20 @@ public class TeslaArmorItem extends ArmorItem {
 				player.getItemBySlot(EquipmentSlot.FEET).getItem() == DeferredRegistryHandler.TESLA_BOOTS.get()) {
 			if (world.isClientSide) {
 				if (ClientModEventSubscriber.toggleArmorEffect.consumeClick()) {
-					PacketHandler.INSTANCE.sendToServer(new TeslaArmorItemPacketHandler(true));
-					if (armorIsToggled) {
+					PacketHandler.INSTANCE.sendToServer(new TeslaArmorItemPacketHandler(!effectEnabled));
+					if (effectEnabled) {
 						world.playSound(player, player.blockPosition(), DeferredRegistryHandler.TESLA_ARMOR_POWER_DOWN.get(), SoundSource.PLAYERS, 0.9f, 1.0f);
 					} else {
 						world.playSound(player, player.blockPosition(), DeferredRegistryHandler.TESLA_ARMOR_POWER_UP.get(), SoundSource.PLAYERS, 0.9f, 1.0f);
 						countdown = 0;
 					}
 					if (!Minecraft.getInstance().isLocalServer()) {
-						toggleEffect();
+						setEffectState(!effectEnabled);
 					}
 				}
 			}
 
-			if (armorIsToggled) {
+			if (effectEnabled) {
 				List<Entity> entity = world.getEntities(player, player.getBoundingBox().move(-3, -3, -3).expandTowards(6, 6, 6));
 
 				if (!entity.isEmpty()) {
@@ -129,12 +124,12 @@ public class TeslaArmorItem extends ArmorItem {
 		}
 	}
 
-	public record TeslaArmorItemPacketHandler(boolean clientSide) {
+	public record TeslaArmorItemPacketHandler(boolean state) {
 
 		/**
 		 * Constructor for TeslaArmorItemPacketHandler.
 		 *
-		 * @param clientSide if the packet is from the client
+		 * @param state the state of the armor effect
 		 */
 		public TeslaArmorItemPacketHandler {
 		}
@@ -146,7 +141,7 @@ public class TeslaArmorItem extends ArmorItem {
 		 * @param packetBuffer the <code>PacketBuffer</code> containing packet data
 		 */
 		public static void encode(TeslaArmorItemPacketHandler msg, FriendlyByteBuf packetBuffer) {
-			packetBuffer.writeBoolean(msg.clientSide);
+			packetBuffer.writeBoolean(msg.state);
 		}
 
 		/**
@@ -164,18 +159,18 @@ public class TeslaArmorItem extends ArmorItem {
 		 *
 		 * @param contextSupplier the <code>Supplier</code> providing context
 		 */
-		public static void handle(Supplier<Context> contextSupplier) {
+		public static void handle(TeslaArmorItemPacketHandler msg, Supplier<Context> contextSupplier) {
 			NetworkEvent.Context context = contextSupplier.get();
-			context.enqueueWork(() -> DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> TeslaArmorItemPacketHandler::handleOnServer));
-			context.enqueueWork(() -> DistExecutor.unsafeRunWhenOn(Dist.DEDICATED_SERVER, () -> TeslaArmorItemPacketHandler::handleOnServer));
+			context.enqueueWork(() -> DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> run(msg)));
+			context.enqueueWork(() -> DistExecutor.unsafeRunWhenOn(Dist.DEDICATED_SERVER, () -> () -> run(msg)));
 			context.setPacketHandled(true);
 		}
 
 		/**
 		 * Runs specifically on the server, when a packet is received
 		 */
-		private static void handleOnServer() {
-			TeslaArmorItem.toggleEffect();
+		private static void run(TeslaArmorItemPacketHandler msg) {
+			TeslaArmorItem.setEffectState(msg.state);
 		}
 	}
 }

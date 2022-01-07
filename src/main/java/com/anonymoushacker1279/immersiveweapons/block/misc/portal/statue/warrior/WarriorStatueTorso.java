@@ -8,6 +8,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
@@ -17,10 +18,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.HorizontalDirectionalBlock;
-import net.minecraft.world.level.block.SimpleWaterloggedBlock;
+import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
@@ -173,7 +171,9 @@ public class WarriorStatueTorso extends HorizontalDirectionalBlock implements Si
 					worldIn.setBlock(pos.below().relative(state.getValue(FACING)), DeferredRegistryHandler.AZUL_STAINED_ORCHID.get().defaultBlockState(), 3);
 
 					PacketHandler.INSTANCE.send(PacketDistributor.NEAR.with(() -> new TargetPoint(pos.getX(), pos.getY(), pos.getZ(), 12, worldIn.dimension())), new WarriorStatueTorsoPacketHandler(pos, 1));
-
+					for (int i = 0; i < 25; i++) {
+						((ServerLevel) worldIn).sendParticles(ParticleTypes.DRIPPING_WATER, pos.getX() + 0.5d + GeneralUtilities.getRandomNumber(-1.0d, 1.0d), pos.getY() + GeneralUtilities.getRandomNumber(-2.0d, 1.5d), pos.getZ() + 0.5d + GeneralUtilities.getRandomNumber(-1.0d, 1.0d), 1, GeneralUtilities.getRandomNumber(-0.03d, 0.03d), GeneralUtilities.getRandomNumber(-0.1d, -0.08d), GeneralUtilities.getRandomNumber(-0.03d, 0.03d), 1.0f);
+					}
 					return InteractionResult.CONSUME;
 				} else {
 					PacketHandler.INSTANCE.send(PacketDistributor.NEAR.with(() -> new TargetPoint(pos.getX(), pos.getY(), pos.getZ(), 12, worldIn.dimension())), new WarriorStatueTorsoPacketHandler(pos, 2));
@@ -254,9 +254,6 @@ public class WarriorStatueTorso extends HorizontalDirectionalBlock implements Si
 			if (minecraft.level != null) {
 				if (msg.soundType == 1) {
 					minecraft.level.playLocalSound(msg.blockPos, SoundEvents.END_PORTAL_FRAME_FILL, SoundSource.BLOCKS, 0.6f, 1.0f, false);
-					for (int i = 0; i < 25; i++) {
-						minecraft.level.addParticle(ParticleTypes.DRIPPING_WATER, msg.blockPos.getX() + 0.5d + GeneralUtilities.getRandomNumber(-1.0d, 1.0d), msg.blockPos.getY() + GeneralUtilities.getRandomNumber(-2.0d, 1.5d), msg.blockPos.getZ() + 0.5d + GeneralUtilities.getRandomNumber(-1.0d, 1.0d), GeneralUtilities.getRandomNumber(-0.03d, 0.03d), GeneralUtilities.getRandomNumber(-0.1d, -0.08d), GeneralUtilities.getRandomNumber(-0.03d, 0.03d));
-					}
 				} else if (msg.soundType == 2) {
 					minecraft.level.playLocalSound(msg.blockPos, SoundEvents.ENDERMITE_AMBIENT, SoundSource.BLOCKS, 0.6f, GeneralUtilities.getRandomNumber(0.4f, 0.8f), false);
 				}
