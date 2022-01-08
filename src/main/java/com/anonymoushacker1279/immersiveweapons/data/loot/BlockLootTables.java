@@ -39,24 +39,24 @@ public class BlockLootTables implements Consumer<BiConsumer<ResourceLocation, Bu
 
 	@Override
 	public void accept(BiConsumer<ResourceLocation, Builder> resourceLocationBuilderBiConsumer) {
-		this.addTables();
+		addTables();
 		Set<ResourceLocation> set = Sets.newHashSet();
 
 		List<RegistryObject<Block>> knownBlocks = getKnownBlocks();
 
-		for(RegistryObject<Block> blockRegistryObject : knownBlocks) {
+		for (RegistryObject<Block> blockRegistryObject : knownBlocks) {
 			Block block = blockRegistryObject.get();
 			ResourceLocation lootTable = block.getLootTable();
 			if (lootTable != BuiltInLootTables.EMPTY && set.add(lootTable)) {
-				LootTable.Builder builder = this.map.remove(lootTable);
+				LootTable.Builder builder = map.remove(lootTable);
 				if (builder != null) {
 					resourceLocationBuilderBiConsumer.accept(lootTable, builder);
 				}
 			}
 		}
 
-		if (!this.map.isEmpty()) {
-			throw new IllegalStateException("Created block loot tables for non-blocks: " + this.map.keySet());
+		if (!map.isEmpty()) {
+			throw new IllegalStateException("Created block loot tables for non-blocks: " + map.keySet());
 		}
 	}
 
@@ -129,9 +129,11 @@ public class BlockLootTables implements Consumer<BiConsumer<ResourceLocation, Bu
 		// Complex block drops
 		add(DeferredRegistryHandler.BURNED_OAK_BRANCH.get(), (leafLikeDrop) -> createLeafLikeDrop(leafLikeDrop, Items.STICK, NORMAL_LEAVES_SAPLING_CHANCES));
 		add(DeferredRegistryHandler.COBALT_ORE.get(), (block) -> createOreDrop(block, DeferredRegistryHandler.RAW_COBALT.get()));
+		add(DeferredRegistryHandler.DEEPSLATE_COBALT_ORE.get(), (block) -> createOreDrop(block, DeferredRegistryHandler.RAW_COBALT.get()));
 		add(DeferredRegistryHandler.MOLTEN_ORE.get(), (block) -> createOreDrop(block, DeferredRegistryHandler.MOLTEN_SHARD.get()));
-		add(DeferredRegistryHandler.SULFUR_ORE.get(), (block) -> createOreDrop(block, DeferredRegistryHandler.SULFUR.get()));
-		add(DeferredRegistryHandler.NETHER_SULFUR_ORE.get(), (block) -> createOreDrop(block, DeferredRegistryHandler.SULFUR.get()));
+		add(DeferredRegistryHandler.SULFUR_ORE.get(), (block) -> createOreDrop(block, DeferredRegistryHandler.SULFUR.get(), 2, 4));
+		add(DeferredRegistryHandler.DEEPSLATE_SULFUR_ORE.get(), (block) -> createOreDrop(block, DeferredRegistryHandler.SULFUR.get(), 2, 4));
+		add(DeferredRegistryHandler.NETHER_SULFUR_ORE.get(), (block) -> createOreDrop(block, DeferredRegistryHandler.SULFUR.get(), 2, 4));
 		add(DeferredRegistryHandler.PITFALL.get(), (leafLikeDrop) -> createLeafLikeDrop(leafLikeDrop, Items.STICK, NORMAL_LEAVES_SAPLING_CHANCES));
 		add(DeferredRegistryHandler.VENTUS_ORE.get(), (block) -> createOreDrop(block, DeferredRegistryHandler.VENTUS_SHARD.get()));
 		add(DeferredRegistryHandler.LANDMINE.get(), (block) -> LootTable.lootTable()
@@ -212,24 +214,28 @@ public class BlockLootTables implements Consumer<BiConsumer<ResourceLocation, Bu
 		return createSilkTouchDispatchTable(pBlock, applyExplosionDecay(LootItem.lootTableItem(pItem).apply(ApplyBonusCount.addOreBonusCount(Enchantments.BLOCK_FORTUNE))));
 	}
 
+	protected static LootTable.Builder createOreDrop(Block pBlock, Item pItem, int baseCount, int maxCount) {
+		return createSilkTouchDispatchTable(pBlock, applyExplosionDecay(LootItem.lootTableItem(pItem).apply(SetItemCountFunction.setCount(UniformGenerator.between(baseCount, maxCount))).apply(ApplyBonusCount.addOreBonusCount(Enchantments.BLOCK_FORTUNE))));
+	}
+
 	protected static LootTable.Builder createSilkTouchDispatchTable(Block pBlock, LootPoolEntryContainer.Builder<?> pAlternativeEntryBuilder) {
 		return createSelfDropDispatchTable(pBlock, HAS_SILK_TOUCH, pAlternativeEntryBuilder);
 	}
 
 	public void dropSelf(Block pBlock) {
-		this.dropOther(pBlock, pBlock);
+		dropOther(pBlock, pBlock);
 	}
 
 	public void dropOther(Block pBlock, ItemLike pDrop) {
-		this.add(pBlock, createSingleItemTable(pDrop));
+		add(pBlock, createSingleItemTable(pDrop));
 	}
 
 	protected void add(Block pBlock, LootTable.Builder pLootTableBuilder) {
-		this.map.put(pBlock.getLootTable(), pLootTableBuilder);
+		map.put(pBlock.getLootTable(), pLootTableBuilder);
 	}
 
 	protected void add(Block pBlock, Function<Block, Builder> pFactory) {
-		this.add(pBlock, pFactory.apply(pBlock));
+		add(pBlock, pFactory.apply(pBlock));
 	}
 
 	protected static LootTable.Builder createSingleItemTable(ItemLike itemLike) {

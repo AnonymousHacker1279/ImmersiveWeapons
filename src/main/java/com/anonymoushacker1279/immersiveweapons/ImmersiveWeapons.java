@@ -2,15 +2,12 @@ package com.anonymoushacker1279.immersiveweapons;
 
 import com.anonymoushacker1279.immersiveweapons.init.*;
 import com.anonymoushacker1279.immersiveweapons.util.*;
+import com.anonymoushacker1279.immersiveweapons.world.level.levelgen.OreGeneratorHandler;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.level.biome.Biome;
-import net.minecraft.world.level.biome.MobSpawnSettings.SpawnerData;
 import net.minecraft.world.level.block.state.properties.WoodType;
 import net.minecraftforge.common.*;
 import net.minecraftforge.common.BiomeManager.BiomeType;
-import net.minecraftforge.event.world.BiomeLoadingEvent;
-import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
@@ -49,10 +46,6 @@ public class ImmersiveWeapons {
 		// Add event listeners
 		IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
 		modEventBus.addListener(this::setup);
-		IEventBus forgeBus = MinecraftForge.EVENT_BUS;
-		// TODO: Rework when Forge API updates
-		// forgeBus.addListener(EventPriority.NORMAL, this::worldLoadEvent);
-		forgeBus.addListener(EventPriority.HIGH, this::onBiomeLoading);
 
 		// Register packet handlers
 		PacketHandler.registerPackets();
@@ -89,9 +82,8 @@ public class ImmersiveWeapons {
 	 * @param event the <code>FMLCommonSetupEvent</code> instance
 	 */
 	public void setup(FMLCommonSetupEvent event) {
-		// TODO: Rework when Forge API updates
-		// OreGeneratorHandler.init(event);
 		DispenserBehaviorRegistry.init();
+		OreGeneratorHandler.init();
 		event.enqueueWork(() -> {
 			WoodType.register(CustomWoodTypes.BURNED_OAK);
 			// TODO: Rework when Forge API updates
@@ -104,118 +96,4 @@ public class ImmersiveWeapons {
 		});
 		PostSetupHandler.init();
 	}
-
-	/**
-	 * Event handler for the BiomeLoadingEvent.
-	 * Configures custom ores, carvers, spawns, structures, etc.
-	 *
-	 * @param event the <code>BiomeLoadingEvent</code> instance
-	 */
-	public void onBiomeLoading(BiomeLoadingEvent event) {
-		// Biome modifications
-		// TODO: Rework when Forge API updates
-		/*BiomeGenerationSettingsBuilder generation = event.getGeneration();
-		if (event.getCategory() != BiomeCategory.NETHER && event.getCategory() != BiomeCategory.THEEND && !Objects.requireNonNull(event.getName()).toString().equals("immersiveweapons:tiltros")) {
-			event.getGeneration().getFeatures(Decoration.UNDERGROUND_ORES)
-					.add(() -> OreGeneratorHandler.ORE_COBALT_CONFIG);
-
-			if (event.getCategory() == BiomeCategory.RIVER || event.getCategory() == BiomeCategory.OCEAN) {
-				event.getGeneration().getFeatures(Decoration.UNDERGROUND_ORES)
-						.add(() -> OreGeneratorHandler.ORE_SULFUR_CONFIG);
-			}
-
-			if (event.getCategory() != BiomeCategory.OCEAN && event.getCategory() != BiomeCategory.RIVER) {
-				if (Config.WANDERING_WARRIOR_SPAWN.get())
-					event.getSpawns().addSpawn(MobCategory.MONSTER, new SpawnerData(DeferredRegistryHandler.WANDERING_WARRIOR_ENTITY.get(), 13, 1, 1));
-				if (Config.HANS_SPAWN.get())
-					event.getSpawns().addSpawn(MobCategory.MONSTER, new SpawnerData(DeferredRegistryHandler.HANS_ENTITY.get(), 1, 1, 1));
-			}
-		}
-		if (event.getCategory() == BiomeCategory.NETHER) {
-			event.getGeneration().getFeatures(GenerationStep.Decoration.UNDERGROUND_ORES)
-					.add(() -> OreGeneratorHandler.ORE_MOLTEN_CONFIG);
-			event.getGeneration().getFeatures(Decoration.UNDERGROUND_ORES)
-					.add(() -> OreGeneratorHandler.ORE_NETHER_SULFUR_CONFIG);
-		}*/
-		if (Objects.requireNonNull(event.getName()).toString().equals("immersiveweapons:tiltros")) {
-			if (Config.LAVA_REVENANT_SPAWN.get())
-				event.getSpawns().addSpawn(MobCategory.MONSTER, new SpawnerData(DeferredRegistryHandler.LAVA_REVENANT_ENTITY.get(), 1, 0, 1));
-			if (Config.ROCK_SPIDER_SPAWN.get())
-				event.getSpawns().addSpawn(MobCategory.MONSTER, new SpawnerData(DeferredRegistryHandler.ROCK_SPIDER_ENTITY.get(), 5, 4, 12));
-			if (Config.CELESTIAL_TOWER_SPAWN.get())
-				event.getSpawns().addSpawn(MobCategory.MONSTER, new SpawnerData(DeferredRegistryHandler.CELESTIAL_TOWER_ENTITY.get(), 2, 0, 1));
-		}
-
-		// TODO: Rework when Forge API updates
-		/*if (event.getCategory() == BiomeCategory.FOREST) {
-			generation.addStructureStart(ConfiguredStructures.CONFIGURED_ABANDONED_FACTORY);
-			generation.addStructureStart(ConfiguredStructures.CONFIGURED_UNDERGROUND_BUNKER);
-			generation.addStructureStart(ConfiguredStructures.CONFIGURED_BEAR_TRAP);
-			generation.addStructureStart(ConfiguredStructures.CONFIGURED_OUTHOUSE);
-		}
-		if (event.getCategory() == BiomeCategory.PLAINS) {
-			generation.addStructureStart(ConfiguredStructures.CONFIGURED_ABANDONED_FACTORY);
-			generation.addStructureStart(ConfiguredStructures.CONFIGURED_CAMPSITE);
-			generation.addStructureStart(ConfiguredStructures.CONFIGURED_OUTHOUSE);
-			generation.addStructureStart(ConfiguredStructures.CONFIGURED_WATER_TOWER);
-		}
-		if (event.getCategory() == BiomeCategory.JUNGLE) {
-			generation.addStructureStart(ConfiguredStructures.CONFIGURED_PITFALL_TRAP);
-		}
-		if (event.getCategory() == BiomeCategory.DESERT) {
-			generation.addStructureStart(ConfiguredStructures.CONFIGURED_LANDMINE_TRAP);
-			generation.addStructureStart(ConfiguredStructures.CONFIGURED_CAMPSITE);
-		}
-		if (event.getCategory() == BiomeCategory.TAIGA) {
-			generation.addStructureStart(ConfiguredStructures.CONFIGURED_CLOUD_ISLAND);
-		}
-		if (Objects.requireNonNull(event.getName()).toString().equals(Objects.requireNonNull(DeferredRegistryHandler.BATTLEFIELD.get().getRegistryName()).toString())) {
-			generation.addStructureStart(ConfiguredStructures.CONFIGURED_BATTLEFIELD_CAMP);
-			generation.addStructureStart(ConfiguredStructures.CONFIGURED_UNDERGROUND_BUNKER);
-			generation.addStructureStart(ConfiguredStructures.CONFIGURED_BEAR_TRAP);
-			generation.addStructureStart(ConfiguredStructures.CONFIGURED_BATTLEFIELD_VILLAGE);
-			generation.addStructureStart(ConfiguredStructures.CONFIGURED_BATTLEFIELD_HOUSE);
-			generation.addStructureStart(ConfiguredStructures.CONFIGURED_GRAVEYARD);
-			generation.addFeature(Decoration.VEGETAL_DECORATION, ConfiguredStructures.CONFIGURED_WOODEN_SPIKES);
-			generation.addFeature(Decoration.VEGETAL_DECORATION, ConfiguredStructures.CONFIGURED_BURNED_OAK_TREE);
-			generation.addCarver(Carving.AIR, new ConfiguredWorldCarver<>(CanyonWorldCarver.CANYON, new CanyonCarverConfiguration(0.15F, BiasedToBottomHeight.of(VerticalAnchor.absolute(68), VerticalAnchor.absolute(70), 2), ConstantFloat.of(0.5F), VerticalAnchor.aboveBottom(20), false, CarverDebugSettings.of(false, Blocks.WARPED_BUTTON.defaultBlockState()), UniformFloat.of(-0.125F, 0.125F), new CanyonCarverConfiguration.CanyonShapeConfiguration(UniformFloat.of(0.5F, 0.75F), TrapezoidFloat.of(0.0F, 4.0F, 1.0F), 3, UniformFloat.of(0.75F, 1.0F), 0.5F, 0.0F))));
-		}
-		if (Objects.requireNonNull(event.getName()).toString().equals(Objects.requireNonNull(DeferredRegistryHandler.TILTROS.get().getRegistryName()).toString())) {
-			generation.addCarver(Carving.AIR, new ConfiguredWorldCarver<>(CanyonWorldCarver.CANYON, new CanyonCarverConfiguration(0.15F, BiasedToBottomHeight.of(VerticalAnchor.absolute(68), VerticalAnchor.absolute(70), 2), ConstantFloat.of(0.65F), VerticalAnchor.aboveBottom(10), false, CarverDebugSettings.of(false, Blocks.WARPED_BUTTON.defaultBlockState()), UniformFloat.of(-0.125F, 0.125F), new CanyonCarverConfiguration.CanyonShapeConfiguration(UniformFloat.of(0.0F, 1.0F), TrapezoidFloat.of(0.0F, 106.0F, 2.0F), 3, UniformFloat.of(0.75F, 1.0F), 1.0F, 0.0F))));
-		}*/
-	}
-
-	/**
-	 * Event handler for the WorldEvent.Load event.
-	 * Most importantly, we are building a Map
-	 * to contain our structures.
-	 *
-	 * @param event the <code>WorldEvent.Load</code> instance
-	 */
-	// TODO: Rework when Forge API updates
-	/*public void worldLoadEvent(WorldEvent.Load event) {
-		if (event.getWorld() instanceof ServerLevel serverWorld) {
-
-			if (serverWorld.getChunkSource().getGenerator() instanceof FlatLevelSource &&
-					serverWorld.dimension().equals(Level.OVERWORLD)) {
-				return;
-			}
-
-			Map<StructureFeature<?>, StructureFeatureConfiguration> tempMap = new HashMap<>(serverWorld.getChunkSource().getGenerator().getSettings().structureConfig());
-			tempMap.put(DeferredRegistryHandler.ABANDONED_FACTORY_STRUCTURE.get(), StructureSettings.DEFAULTS.get(DeferredRegistryHandler.ABANDONED_FACTORY_STRUCTURE.get()));
-			tempMap.put(DeferredRegistryHandler.PITFALL_TRAP_STRUCTURE.get(), StructureSettings.DEFAULTS.get(DeferredRegistryHandler.PITFALL_TRAP_STRUCTURE.get()));
-			tempMap.put(DeferredRegistryHandler.BEAR_TRAP_STRUCTURE.get(), StructureSettings.DEFAULTS.get(DeferredRegistryHandler.BEAR_TRAP_STRUCTURE.get()));
-			tempMap.put(DeferredRegistryHandler.LANDMINE_TRAP_STRUCTURE.get(), StructureSettings.DEFAULTS.get(DeferredRegistryHandler.LANDMINE_TRAP_STRUCTURE.get()));
-			tempMap.put(DeferredRegistryHandler.UNDERGROUND_BUNKER_STRUCTURE.get(), StructureSettings.DEFAULTS.get(DeferredRegistryHandler.UNDERGROUND_BUNKER_STRUCTURE.get()));
-			tempMap.put(DeferredRegistryHandler.BATTLEFIELD_CAMP_STRUCTURE.get(), StructureSettings.DEFAULTS.get(DeferredRegistryHandler.BATTLEFIELD_CAMP_STRUCTURE.get()));
-			tempMap.put(DeferredRegistryHandler.BATTLEFIELD_VILLAGE_STRUCTURE.get(), StructureSettings.DEFAULTS.get(DeferredRegistryHandler.BATTLEFIELD_VILLAGE_STRUCTURE.get()));
-			tempMap.put(DeferredRegistryHandler.CLOUD_ISLAND_STRUCTURE.get(), StructureSettings.DEFAULTS.get(DeferredRegistryHandler.CLOUD_ISLAND_STRUCTURE.get()));
-			tempMap.put(DeferredRegistryHandler.CAMPSITE_STRUCTURE.get(), StructureSettings.DEFAULTS.get(DeferredRegistryHandler.CAMPSITE_STRUCTURE.get()));
-			tempMap.put(DeferredRegistryHandler.BATTLEFIELD_HOUSE_STRUCTURE.get(), StructureSettings.DEFAULTS.get(DeferredRegistryHandler.BATTLEFIELD_HOUSE_STRUCTURE.get()));
-			tempMap.put(DeferredRegistryHandler.OUTHOUSE_STRUCTURE.get(), StructureSettings.DEFAULTS.get(DeferredRegistryHandler.OUTHOUSE_STRUCTURE.get()));
-			tempMap.put(DeferredRegistryHandler.WATER_TOWER_STRUCTURE.get(), StructureSettings.DEFAULTS.get(DeferredRegistryHandler.WATER_TOWER_STRUCTURE.get()));
-			tempMap.put(DeferredRegistryHandler.GRAVEYARD_STRUCTURE.get(), StructureSettings.DEFAULTS.get(DeferredRegistryHandler.GRAVEYARD_STRUCTURE.get()));
-			serverWorld.getChunkSource().getGenerator().getSettings().structureConfig = tempMap;
-		}
-	}*/
 }

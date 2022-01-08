@@ -1,4 +1,4 @@
-package com.anonymoushacker1279.immersiveweapons.util;
+package com.anonymoushacker1279.immersiveweapons.events;
 
 import com.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import com.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
@@ -15,7 +15,7 @@ import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
 
 @EventBusSubscriber(modid = ImmersiveWeapons.MOD_ID, bus = Bus.FORGE, value = Dist.CLIENT)
-public class ForgeEventSubscriber {
+public class ClientForgeEventSubscriber {
 
 	/**
 	 * Event handler for the RenderBlockOverlayEvent.

@@ -1,4 +1,4 @@
-package com.anonymoushacker1279.immersiveweapons.client;
+package com.anonymoushacker1279.immersiveweapons.events;
 
 import com.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import com.anonymoushacker1279.immersiveweapons.client.gui.screen.SmallPartsTableScreen;
@@ -79,7 +79,7 @@ public class ClientModEventSubscriber {
 		ItemBlockRenderTypes.setRenderLayer(DeferredRegistryHandler.BROWN_STAINED_BULLETPROOF_GLASS.get(), RenderType.translucent());
 		ItemBlockRenderTypes.setRenderLayer(DeferredRegistryHandler.GREEN_STAINED_BULLETPROOF_GLASS.get(), RenderType.translucent());
 		ItemBlockRenderTypes.setRenderLayer(DeferredRegistryHandler.RED_STAINED_BULLETPROOF_GLASS.get(), RenderType.translucent());
-		ItemBlockRenderTypes.setRenderLayer(DeferredRegistryHandler.CORRUGATED_IRON_PANEL_BARS.get(), RenderType.cutout());
+		ItemBlockRenderTypes.setRenderLayer(DeferredRegistryHandler.CORRUGATED_IRON_PANEL_BARS.get(), RenderType.cutoutMipped());
 		ItemBlockRenderTypes.setRenderLayer(DeferredRegistryHandler.TESLA_SYNTHESIZER.get(), RenderType.translucent());
 		ItemBlockRenderTypes.setRenderLayer(DeferredRegistryHandler.CLOUD.get(), RenderType.translucent());
 		ItemBlockRenderTypes.setRenderLayer(DeferredRegistryHandler.BURNED_OAK_BRANCH.get(), RenderType.cutoutMipped());
@@ -87,6 +87,13 @@ public class ClientModEventSubscriber {
 		ItemBlockRenderTypes.setRenderLayer(DeferredRegistryHandler.BURNED_OAK_TRAPDOOR.get(), RenderType.cutoutMipped());
 		ItemBlockRenderTypes.setRenderLayer(DeferredRegistryHandler.AZUL_STAINED_ORCHID.get(), RenderType.cutoutMipped());
 		ItemBlockRenderTypes.setRenderLayer(DeferredRegistryHandler.CELESTIAL_LANTERN.get(), RenderType.cutoutMipped());
+		ItemBlockRenderTypes.setRenderLayer(DeferredRegistryHandler.COBALT_ORE.get(), RenderType.cutoutMipped());
+		ItemBlockRenderTypes.setRenderLayer(DeferredRegistryHandler.DEEPSLATE_COBALT_ORE.get(), RenderType.cutoutMipped());
+		ItemBlockRenderTypes.setRenderLayer(DeferredRegistryHandler.SULFUR_ORE.get(), RenderType.translucent());
+		ItemBlockRenderTypes.setRenderLayer(DeferredRegistryHandler.DEEPSLATE_SULFUR_ORE.get(), RenderType.translucent());
+		ItemBlockRenderTypes.setRenderLayer(DeferredRegistryHandler.NETHER_SULFUR_ORE.get(), RenderType.translucent());
+		ItemBlockRenderTypes.setRenderLayer(DeferredRegistryHandler.ELECTRIC_ORE.get(), RenderType.translucent());
+		ItemBlockRenderTypes.setRenderLayer(DeferredRegistryHandler.MOLTEN_ORE.get(), RenderType.translucent());
 
 		mc.getBlockColors().register((color1, color2, color3, color4) -> BiomeColors.getAverageGrassColor(Objects.requireNonNull(color2), Objects.requireNonNull(color3)), DeferredRegistryHandler.PITFALL.get());
 

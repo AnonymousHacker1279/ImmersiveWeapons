@@ -1,5 +1,6 @@
 package com.anonymoushacker1279.immersiveweapons.data.models;
 
+import com.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import com.anonymoushacker1279.immersiveweapons.data.tags.lists.BlockTagLists;
 import com.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
 import com.google.common.collect.*;
@@ -24,8 +25,9 @@ public class BlockModelGenerator {
 	final BiConsumer<ResourceLocation, Supplier<JsonElement>> modelOutput;
 	private final Consumer<Item> skippedAutoModelsOutput;
 	final List<Block> nonOrientableTrapdoor = ImmutableList.of(Blocks.OAK_TRAPDOOR, Blocks.DARK_OAK_TRAPDOOR, Blocks.IRON_TRAPDOOR);
-	final Map<Block, BlockStateGeneratorSupplier> fullBlockModelCustomGenerators = ImmutableMap.<Block, BlockStateGeneratorSupplier>builder().put(Blocks.STONE, BlockModelGenerator::createMirroredCubeGenerator).put(Blocks.DEEPSLATE, BlockModelGenerator::createMirroredColumnGenerator).build();
-	final Map<Block, TexturedModel> texturedModels = ImmutableMap.<Block, TexturedModel>builder().build();
+	final Map<Block, BlockStateGeneratorSupplier> fullBlockModelCustomGenerators = ImmutableMap.<Block, BlockStateGeneratorSupplier> builder().put(Blocks.STONE, BlockModelGenerator::createMirroredCubeGenerator).put(Blocks.DEEPSLATE, BlockModelGenerator::createMirroredColumnGenerator).build();
+	final Map<Block, TexturedModel> texturedModels = ImmutableMap.<Block, TexturedModel> builder().build();
+
 	public BlockModelGenerator(Consumer<BlockStateGenerator> pBlockStateOutput, BiConsumer<ResourceLocation, Supplier<JsonElement>> pModelOutput, Consumer<Item> pSkippedAutoModelsOutput) {
 		blockStateOutput = pBlockStateOutput;
 		modelOutput = pModelOutput;
@@ -80,16 +82,20 @@ public class BlockModelGenerator {
 		createHorizontallyRotatedBlock(DeferredRegistryHandler.TESLA_BLOCK.get(), TexturedModel.CUBE);
 
 		// Other simple blocks
-		createTrivialCube(DeferredRegistryHandler.COBALT_ORE.get());
 		createTrivialCube(DeferredRegistryHandler.COBALT_BLOCK.get());
 		createTrivialCube(DeferredRegistryHandler.RAW_COBALT_BLOCK.get());
-		createTrivialCube(DeferredRegistryHandler.MOLTEN_ORE.get());
 		createTrivialCube(DeferredRegistryHandler.MOLTEN_BLOCK.get());
-		createTrivialCube(DeferredRegistryHandler.ELECTRIC_ORE.get());
-		createTrivialCube(DeferredRegistryHandler.SULFUR_ORE.get());
-		createTrivialCube(DeferredRegistryHandler.NETHER_SULFUR_ORE.get());
 		createTrivialCube(DeferredRegistryHandler.VENTUS_ORE.get());
 		createTrivialCube(DeferredRegistryHandler.CLOUD.get());
+
+		// Blockstates
+		createSimpleCubeBlockstate(DeferredRegistryHandler.COBALT_ORE.get());
+		createSimpleCubeBlockstate(DeferredRegistryHandler.SULFUR_ORE.get());
+		createSimpleCubeBlockstate(DeferredRegistryHandler.NETHER_SULFUR_ORE.get());
+		createSimpleCubeBlockstate(DeferredRegistryHandler.ELECTRIC_ORE.get());
+		createSimpleCubeBlockstate(DeferredRegistryHandler.MOLTEN_ORE.get());
+		createSimpleCubeBlockstate(DeferredRegistryHandler.DEEPSLATE_COBALT_ORE.get());
+		createSimpleCubeBlockstate(DeferredRegistryHandler.DEEPSLATE_SULFUR_ORE.get());
 	}
 
 	private List<Block> combineBlockLists(List<Block> blockList1, List<Block> blockList2) {
@@ -98,21 +104,29 @@ public class BlockModelGenerator {
 		return new ArrayList<>(set);
 	}
 
+	private void createSimpleCubeBlockstate(Block block) {
+		blockStateOutput.accept(MultiVariantGenerator.multiVariant(block, Variant.variant().with(VariantProperties.MODEL, getModelLocationForBlockstateIW(block))));
+	}
+
+	private ResourceLocation getModelLocationForBlockstateIW(Block block) {
+		return new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/" + Objects.requireNonNull(block.getRegistryName()).getPath());
+	}
+
 	private void createRotatedPillarWithHorizontalVariant(Block pRotatedPillarBlock, TexturedModel.Provider pModelProvider, TexturedModel.Provider pHorizontalModelProvider) {
-		ResourceLocation resourceLocation = pModelProvider.create(pRotatedPillarBlock, this.modelOutput);
-		ResourceLocation resourceLocation1 = pHorizontalModelProvider.create(pRotatedPillarBlock, this.modelOutput);
-		this.blockStateOutput.accept(createRotatedPillarWithHorizontalVariant(pRotatedPillarBlock, resourceLocation, resourceLocation1));
+		ResourceLocation resourceLocation = pModelProvider.create(pRotatedPillarBlock, modelOutput);
+		ResourceLocation resourceLocation1 = pHorizontalModelProvider.create(pRotatedPillarBlock, modelOutput);
+		blockStateOutput.accept(createRotatedPillarWithHorizontalVariant(pRotatedPillarBlock, resourceLocation, resourceLocation1));
 	}
 
 	private void createCraftingTableLike(Block pCraftingTableBlock, Block pCraftingTableMaterialBlock, BiFunction<Block, Block, TextureMapping> pTextureMappingGetter) {
 		TextureMapping texturemapping = pTextureMappingGetter.apply(pCraftingTableBlock, pCraftingTableMaterialBlock);
-		blockStateOutput.accept(createSimpleBlock(pCraftingTableBlock, ModelTemplates.CUBE.create(pCraftingTableBlock, texturemapping, this.modelOutput)));
+		blockStateOutput.accept(createSimpleBlock(pCraftingTableBlock, ModelTemplates.CUBE.create(pCraftingTableBlock, texturemapping, modelOutput)));
 	}
 
 	private void createHorizontallyRotatedBlock(Block pHorizontallyRotatedBlock, TexturedModel.Provider pProvider) {
-		ResourceLocation resourcelocation = pProvider.create(pHorizontallyRotatedBlock, this.modelOutput);
-		this.blockStateOutput.accept(MultiVariantGenerator.multiVariant(pHorizontallyRotatedBlock, Variant.variant()
-				.with(VariantProperties.MODEL, resourcelocation))
+		ResourceLocation resourcelocation = pProvider.create(pHorizontallyRotatedBlock, modelOutput);
+		blockStateOutput.accept(MultiVariantGenerator.multiVariant(pHorizontallyRotatedBlock, Variant.variant()
+						.with(VariantProperties.MODEL, resourcelocation))
 				.with(createHorizontalFacingDispatch()));
 	}
 
@@ -242,7 +256,7 @@ public class BlockModelGenerator {
 	}
 
 	void skipAutoItemBlock(Block pBlock) {
-		this.skippedAutoModelsOutput.accept(pBlock.asItem());
+		skippedAutoModelsOutput.accept(pBlock.asItem());
 	}
 
 	static BlockStateGenerator createSlab(Block pSlabBlock, ResourceLocation pBottomHalfModelLocation, ResourceLocation pTopHalfModelLocation, ResourceLocation pDoubleModelLocation) {
@@ -255,11 +269,11 @@ public class BlockModelGenerator {
 
 	void createTrapdoor(Block pTrapdoorBlock) {
 		TextureMapping texturemapping = TextureMapping.defaultTexture(pTrapdoorBlock);
-		ResourceLocation resourceLocation = ModelTemplates.TRAPDOOR_TOP.create(pTrapdoorBlock, texturemapping, this.modelOutput);
-		ResourceLocation resourceLocation1 = ModelTemplates.TRAPDOOR_BOTTOM.create(pTrapdoorBlock, texturemapping, this.modelOutput);
-		ResourceLocation resourceLocation2 = ModelTemplates.TRAPDOOR_OPEN.create(pTrapdoorBlock, texturemapping, this.modelOutput);
-		this.blockStateOutput.accept(createTrapdoor(pTrapdoorBlock, resourceLocation, resourceLocation1, resourceLocation2));
-		this.delegateItemModel(pTrapdoorBlock, resourceLocation1);
+		ResourceLocation resourceLocation = ModelTemplates.TRAPDOOR_TOP.create(pTrapdoorBlock, texturemapping, modelOutput);
+		ResourceLocation resourceLocation1 = ModelTemplates.TRAPDOOR_BOTTOM.create(pTrapdoorBlock, texturemapping, modelOutput);
+		ResourceLocation resourceLocation2 = ModelTemplates.TRAPDOOR_OPEN.create(pTrapdoorBlock, texturemapping, modelOutput);
+		blockStateOutput.accept(createTrapdoor(pTrapdoorBlock, resourceLocation, resourceLocation1, resourceLocation2));
+		delegateItemModel(pTrapdoorBlock, resourceLocation1);
 	}
 
 	private static BlockStateGenerator createTrapdoor(Block pTrapdoorBlock, ResourceLocation pTopModelLocation, ResourceLocation pBottomModelLocation, ResourceLocation pOpenModelLocation) {
@@ -268,11 +282,11 @@ public class BlockModelGenerator {
 
 	void createOrientableTrapdoor(Block pOrientableTrapdoorBlock) {
 		TextureMapping texturemapping = TextureMapping.defaultTexture(pOrientableTrapdoorBlock);
-		ResourceLocation resourceLocation = ModelTemplates.ORIENTABLE_TRAPDOOR_TOP.create(pOrientableTrapdoorBlock, texturemapping, this.modelOutput);
-		ResourceLocation resourceLocation1 = ModelTemplates.ORIENTABLE_TRAPDOOR_BOTTOM.create(pOrientableTrapdoorBlock, texturemapping, this.modelOutput);
-		ResourceLocation resourceLocation2 = ModelTemplates.ORIENTABLE_TRAPDOOR_OPEN.create(pOrientableTrapdoorBlock, texturemapping, this.modelOutput);
-		this.blockStateOutput.accept(createOrientableTrapdoor(pOrientableTrapdoorBlock, resourceLocation, resourceLocation1, resourceLocation2));
-		this.delegateItemModel(pOrientableTrapdoorBlock, resourceLocation1);
+		ResourceLocation resourceLocation = ModelTemplates.ORIENTABLE_TRAPDOOR_TOP.create(pOrientableTrapdoorBlock, texturemapping, modelOutput);
+		ResourceLocation resourceLocation1 = ModelTemplates.ORIENTABLE_TRAPDOOR_BOTTOM.create(pOrientableTrapdoorBlock, texturemapping, modelOutput);
+		ResourceLocation resourceLocation2 = ModelTemplates.ORIENTABLE_TRAPDOOR_OPEN.create(pOrientableTrapdoorBlock, texturemapping, modelOutput);
+		blockStateOutput.accept(createOrientableTrapdoor(pOrientableTrapdoorBlock, resourceLocation, resourceLocation1, resourceLocation2));
+		delegateItemModel(pOrientableTrapdoorBlock, resourceLocation1);
 	}
 
 	private static BlockStateGenerator createOrientableTrapdoor(Block pOrientableTrapdoorBlock, ResourceLocation pTopModelLocation, ResourceLocation pBottomModelLocation, ResourceLocation pOpenModelLocation) {
@@ -317,7 +331,7 @@ public class BlockModelGenerator {
 			if (fullBlock == null) {
 				throw new IllegalStateException("Full block not generated yet");
 			} else {
-				for(Block block : pBlocks) {
+				for (Block block : pBlocks) {
 					blockStateOutput.accept(createSimpleBlock(block, fullBlock));
 					delegateItemModel(block, fullBlock);
 				}

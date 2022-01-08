@@ -5,8 +5,9 @@ import com.anonymoushacker1279.immersiveweapons.data.tags.groups.forge.ForgeItem
 import com.anonymoushacker1279.immersiveweapons.data.tags.groups.immersiveweapons.ImmersiveWeaponsItemTagGroups;
 import com.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
 import com.google.common.collect.ImmutableList;
-import net.minecraft.advancements.critereon.*;
 import net.minecraft.advancements.critereon.EntityPredicate.Composite;
+import net.minecraft.advancements.critereon.InventoryChangeTrigger;
+import net.minecraft.advancements.critereon.ItemPredicate;
 import net.minecraft.advancements.critereon.ItemPredicate.Builder;
 import net.minecraft.advancements.critereon.MinMaxBounds.Ints;
 import net.minecraft.data.DataGenerator;
@@ -27,10 +28,12 @@ import java.util.Objects;
 import java.util.function.Consumer;
 
 public class RecipeGenerator extends RecipeProvider {
-	
+
 	static Consumer<FinishedRecipe> finishedRecipeConsumer;
 
-	private static final ImmutableList<ItemLike> COBALT_SMELTABLES = ImmutableList.of(DeferredRegistryHandler.COBALT_ORE_ITEM.get(), DeferredRegistryHandler.RAW_COBALT.get());
+	private static final ImmutableList<ItemLike> COBALT_SMELTABLES = ImmutableList.of(
+			DeferredRegistryHandler.COBALT_ORE_ITEM.get(), DeferredRegistryHandler.DEEPSLATE_COBALT_ORE_ITEM.get(),
+			DeferredRegistryHandler.RAW_COBALT.get());
 
 	public RecipeGenerator(DataGenerator pGenerator) {
 		super(pGenerator);
@@ -39,7 +42,7 @@ public class RecipeGenerator extends RecipeProvider {
 	@Override
 	protected void buildCraftingRecipes(@NotNull Consumer<FinishedRecipe> pFinishedRecipeConsumer) {
 		finishedRecipeConsumer = pFinishedRecipeConsumer;
-		
+
 		createFlagItems();
 		createGlassItems();
 		createBurnedOakItems();
@@ -2200,7 +2203,7 @@ public class RecipeGenerator extends RecipeProvider {
 
 	private static void oreCooking(SimpleCookingSerializer<?> pCookingSerializer, List<ItemLike> pIngredients,
 	                               ItemLike pResult, float pExperience, int pCookingTime, String pGroup, String pRecipeName) {
-		for(ItemLike itemlike : pIngredients) {
+		for (ItemLike itemlike : pIngredients) {
 			SimpleCookingRecipeBuilder.cooking(Ingredient.of(itemlike), pResult, pExperience, pCookingTime, pCookingSerializer)
 					.group(pGroup).unlockedBy(getHasName(itemlike), has(itemlike))
 					.save(finishedRecipeConsumer, ImmersiveWeapons.MOD_ID + ":" + getItemName(pResult) + pRecipeName + "_" + getItemName(itemlike));
@@ -2217,7 +2220,7 @@ public class RecipeGenerator extends RecipeProvider {
 
 	private static void netheriteSmithing(Item baseItem, Item pResultItem) {
 		UpgradeRecipeBuilder.smithing(Ingredient.of(baseItem),
-				Ingredient.of(Items.NETHERITE_INGOT), pResultItem)
+						Ingredient.of(Items.NETHERITE_INGOT), pResultItem)
 				.unlocks("has_netherite_ingot", has(Items.NETHERITE_INGOT))
 				.save(finishedRecipeConsumer, ImmersiveWeapons.MOD_ID + ":" + getItemName(pResultItem) + "_smithing");
 	}
@@ -2225,7 +2228,7 @@ public class RecipeGenerator extends RecipeProvider {
 	private static void teslaSynthesizing(ItemLike block, ItemLike material1, ItemLike material2, int cookTime,
 	                                      ItemLike result) {
 		TeslaSynthesizerRecipeBuilder.synthesizing(Ingredient.of(block), Ingredient.of(material1), Ingredient.of(material2),
-				cookTime, result.asItem())
+						cookTime, result.asItem())
 				.unlocks("tesla_ingot", has(ImmersiveWeaponsItemTagGroups.TESLA_INGOTS))
 				.save(finishedRecipeConsumer, ImmersiveWeapons.MOD_ID + ":" + getItemName(result) + "_tesla_synthesizing");
 	}

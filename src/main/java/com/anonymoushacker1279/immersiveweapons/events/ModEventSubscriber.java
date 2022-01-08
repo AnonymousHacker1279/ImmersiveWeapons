@@ -1,4 +1,4 @@
-package com.anonymoushacker1279.immersiveweapons.util;
+package com.anonymoushacker1279.immersiveweapons.events;
 
 import com.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import com.anonymoushacker1279.immersiveweapons.entity.monster.*;

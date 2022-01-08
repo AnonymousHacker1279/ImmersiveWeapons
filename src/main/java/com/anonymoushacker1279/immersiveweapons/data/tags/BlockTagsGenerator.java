@@ -60,7 +60,7 @@ public class BlockTagsGenerator extends BlockTagsProvider {
 		}
 
 		// Ore tags
-		tag(ForgeBlockTagGroups.COBALT_ORES).add(DeferredRegistryHandler.COBALT_ORE.get());
+		tag(ForgeBlockTagGroups.COBALT_ORES).add(DeferredRegistryHandler.COBALT_ORE.get()).add(DeferredRegistryHandler.DEEPSLATE_COBALT_ORE.get());
 		tag(Blocks.ORES).addTag(ForgeBlockTagGroups.COBALT_ORES);
 	}
 

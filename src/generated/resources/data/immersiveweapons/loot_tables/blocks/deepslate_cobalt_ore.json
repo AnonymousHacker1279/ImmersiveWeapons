@@ -25,20 +25,11 @@
                   }
                 }
               ],
-              "name": "immersiveweapons:sulfur_ore"
+              "name": "immersiveweapons:deepslate_cobalt_ore"
             },
             {
               "type": "minecraft:item",
               "functions": [
-                {
-                  "function": "minecraft:set_count",
-                  "count": {
-                    "type": "minecraft:uniform",
-                    "min": 2.0,
-                    "max": 4.0
-                  },
-                  "add": false
-                },
                 {
                   "function": "minecraft:apply_bonus",
                   "enchantment": "minecraft:fortune",
@@ -48,7 +39,7 @@
                   "function": "minecraft:explosion_decay"
                 }
               ],
-              "name": "immersiveweapons:sulfur"
+              "name": "immersiveweapons:raw_cobalt"
             }
           ]
         }

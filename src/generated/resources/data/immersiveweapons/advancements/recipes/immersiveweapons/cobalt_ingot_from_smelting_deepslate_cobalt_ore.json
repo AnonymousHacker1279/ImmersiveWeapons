@@ -2,17 +2,17 @@
   "parent": "minecraft:recipes/root",
   "rewards": {
     "recipes": [
-      "immersiveweapons:cloud_marble_pillar_from_cloud_marble_brick_slab_stonecutting"
+      "immersiveweapons:cobalt_ingot_from_smelting_deepslate_cobalt_ore"
     ]
   },
   "criteria": {
-    "cloud_marble": {
+    "has_deepslate_cobalt_ore": {
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
           {
             "items": [
-              "immersiveweapons:cloud_marble_bricks"
+              "immersiveweapons:deepslate_cobalt_ore"
             ]
           }
         ]
@@ -21,13 +21,13 @@
     "has_the_recipe": {
       "trigger": "minecraft:recipe_unlocked",
       "conditions": {
-        "recipe": "immersiveweapons:cloud_marble_pillar_from_cloud_marble_brick_slab_stonecutting"
+        "recipe": "immersiveweapons:cobalt_ingot_from_smelting_deepslate_cobalt_ore"
       }
     }
   },
   "requirements": [
     [
-      "cloud_marble",
+      "has_deepslate_cobalt_ore",
       "has_the_recipe"
     ]
   ]

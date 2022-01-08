@@ -1,7 +1,7 @@
 package com.anonymoushacker1279.immersiveweapons.item.armor;
 
 import com.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
-import com.anonymoushacker1279.immersiveweapons.client.ClientModEventSubscriber;
+import com.anonymoushacker1279.immersiveweapons.events.ClientModEventSubscriber;
 import com.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
 import com.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
 import com.anonymoushacker1279.immersiveweapons.util.PacketHandler;

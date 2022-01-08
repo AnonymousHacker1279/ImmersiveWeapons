@@ -251,6 +251,8 @@
 	"block.immersiveweapons.sulfur_ore": "Sulfur Ore",
 	"block.immersiveweapons.nether_sulfur_ore": "Nether Sulfur Ore",
 	"block.immersiveweapons.celestial_lantern": "Linterna Celestial",
+	"block.immersiveweapons.deepslate_cobalt_ore": "Deepslate Cobalt Ore",
+	"block.immersiveweapons.deepslate_sulfur_ore": "Azufre de azufre",
 	"entity.immersiveweapons.dying_soldier": "Soldado que muere",
 	"entity.immersiveweapons.minuteman": "Minuteman",
 	"entity.immersiveweapons.field_medic": "Field Medic",
