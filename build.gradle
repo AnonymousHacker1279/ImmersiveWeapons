@@ -96,7 +96,7 @@ sourceSets.main.resources { srcDir 'src/generated/resources' }
 dependencies {
 	implementation 'org.jetbrains:annotations:23.0.0'
 
-	minecraft 'net.minecraftforge:forge:1.18.1-39.0.11'
+	minecraft 'net.minecraftforge:forge:1.18.1-39.0.14'
 
 	// Include JEI
 	implementation fg.deobf("mezz.jei:jei-1.18.1:9.1.2.54")
