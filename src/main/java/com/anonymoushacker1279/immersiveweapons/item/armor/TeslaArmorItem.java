@@ -1,9 +1,9 @@
 package com.anonymoushacker1279.immersiveweapons.item.armor;
 
 import com.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
+import com.anonymoushacker1279.immersiveweapons.config.ClientConfig;
 import com.anonymoushacker1279.immersiveweapons.events.ClientModEventSubscriber;
 import com.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
-import com.anonymoushacker1279.immersiveweapons.util.Config;
 import com.anonymoushacker1279.immersiveweapons.util.PacketHandler;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.FriendlyByteBuf;
@@ -116,7 +116,7 @@ public class TeslaArmorItem extends ArmorItem {
 	 * @param player the <code>PlayerEntity</code> instance
 	 */
 	private void effectNoise(Level world, Player player) {
-		if (countdown == 0 && Config.TESLA_ARMOR_EFFECT_SOUND.get()) {
+		if (countdown == 0 && ClientConfig.TESLA_ARMOR_EFFECT_SOUND.get()) {
 			world.playSound(player, player.blockPosition(), DeferredRegistryHandler.TESLA_ARMOR_EFFECT.get(), SoundSource.NEUTRAL, 0.65f, 1);
 			countdown = 120;
 		} else if (countdown > 0) {

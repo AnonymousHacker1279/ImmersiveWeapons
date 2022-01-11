@@ -1,8 +1,8 @@
 package com.anonymoushacker1279.immersiveweapons.world.level.levelgen;
 
 import com.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
+import com.anonymoushacker1279.immersiveweapons.config.ServerConfig;
 import com.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
-import com.anonymoushacker1279.immersiveweapons.util.Config;
 import net.minecraft.data.worldgen.features.FeatureUtils;
 import net.minecraft.data.worldgen.features.OreFeatures;
 import net.minecraft.data.worldgen.placement.PlacementUtils;
@@ -28,12 +28,12 @@ public class OreGeneratorHandler {
 	public static PlacedFeature DEEPSLATE_SULFUR_ORE_FEATURE;
 	public static PlacedFeature DEEPSLATE_COBALT_ORE_FEATURE;
 
-	static List<Integer> MOLTEN_ORE_CONFIG = Config.MOLTEN_ORE_CONFIG.get();
-	static List<Integer> NETHER_SULFUR_ORE_CONFIG = Config.NETHER_SULFUR_ORE_CONFIG.get();
-	static List<Integer> SULFUR_ORE_CONFIG = Config.SULFUR_ORE_CONFIG.get();
-	static List<Integer> COBALT_ORE_CONFIG = Config.COBALT_ORE_CONFIG.get();
-	static List<Integer> DEEPSLATE_SULFUR_ORE_CONFIG = Config.DEEPSLATE_SULFUR_ORE_CONFIG.get();
-	static List<Integer> DEEPSLATE_COBALT_ORE_CONFIG = Config.DEEPSLATE_COBALT_ORE_CONFIG.get();
+	static List<Integer> MOLTEN_ORE_CONFIG = ServerConfig.MOLTEN_ORE_CONFIG.get();
+	static List<Integer> NETHER_SULFUR_ORE_CONFIG = ServerConfig.NETHER_SULFUR_ORE_CONFIG.get();
+	static List<Integer> SULFUR_ORE_CONFIG = ServerConfig.SULFUR_ORE_CONFIG.get();
+	static List<Integer> COBALT_ORE_CONFIG = ServerConfig.COBALT_ORE_CONFIG.get();
+	static List<Integer> DEEPSLATE_SULFUR_ORE_CONFIG = ServerConfig.DEEPSLATE_SULFUR_ORE_CONFIG.get();
+	static List<Integer> DEEPSLATE_COBALT_ORE_CONFIG = ServerConfig.DEEPSLATE_COBALT_ORE_CONFIG.get();
 
 	/**
 	 * Initialize ore generation setup.

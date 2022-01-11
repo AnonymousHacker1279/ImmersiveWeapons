@@ -1,9 +1,9 @@
 package com.anonymoushacker1279.immersiveweapons.entity.monster;
 
+import com.anonymoushacker1279.immersiveweapons.config.ServerConfig;
 import com.anonymoushacker1279.immersiveweapons.entity.ai.goal.CelestialTowerSummonGoal;
 import com.anonymoushacker1279.immersiveweapons.entity.ai.goal.HoverGoal;
 import com.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
-import com.anonymoushacker1279.immersiveweapons.util.Config;
 import com.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
@@ -25,9 +25,7 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.FloatGoal;
 import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
 import net.minecraft.world.entity.monster.Monster;
-import net.minecraft.world.level.Level;
-import net.minecraft.world.level.LevelAccessor;
-import net.minecraft.world.level.ServerLevelAccessor;
+import net.minecraft.world.level.*;
 import net.minecraft.world.level.block.state.BlockBehaviour.BlockStateBase;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
@@ -45,8 +43,8 @@ public class CelestialTowerEntity extends Monster {
 	private boolean doneSpawningWaves = false;
 	private static int lastSpawnAttemptTick = -1;
 	private final MinecraftServer server = getServer();
-	private static final int XZ_SPAWN_CHECK_RADIUS = Config.CELESTIAL_TOWER_XZ_SPAWN_CHECK_RADIUS.get();
-	private static final int Y_SPAWN_CHECK_RADIUS = Config.CELESTIAL_TOWER_Y_SPAWN_CHECK_RADIUS.get();
+	private static final int XZ_SPAWN_CHECK_RADIUS = ServerConfig.CELESTIAL_TOWER_XZ_SPAWN_CHECK_RADIUS.get();
+	private static final int Y_SPAWN_CHECK_RADIUS = ServerConfig.CELESTIAL_TOWER_Y_SPAWN_CHECK_RADIUS.get();
 
 	public CelestialTowerEntity(EntityType<? extends Monster> type, Level level) {
 		super(type, level);
@@ -215,7 +213,7 @@ public class CelestialTowerEntity extends Monster {
 					nearbyCelestialLanterns == 2 ? 0.125f : 0.25f)) {
 				return canSpawn(level, blockPos);
 			}
-		} else if (CelestialTowerEntity.lastSpawnAttemptTick == -1){
+		} else if (CelestialTowerEntity.lastSpawnAttemptTick == -1) {
 			CelestialTowerEntity.lastSpawnAttemptTick = server.getTickCount();
 		}
 

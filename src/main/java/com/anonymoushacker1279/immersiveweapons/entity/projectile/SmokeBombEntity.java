@@ -1,8 +1,8 @@
 package com.anonymoushacker1279.immersiveweapons.entity.projectile;
 
 import com.anonymoushacker1279.immersiveweapons.client.particle.smokebomb.SmokeBombParticleData;
+import com.anonymoushacker1279.immersiveweapons.config.ServerConfig;
 import com.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
-import com.anonymoushacker1279.immersiveweapons.util.Config;
 import com.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
 import com.anonymoushacker1279.immersiveweapons.util.PacketHandler;
 import net.minecraft.core.particles.ParticleOptions;
@@ -18,10 +18,8 @@ import net.minecraft.world.phys.HitResult;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.DistExecutor;
-import net.minecraftforge.network.NetworkEvent;
+import net.minecraftforge.network.*;
 import net.minecraftforge.network.NetworkEvent.Context;
-import net.minecraftforge.network.NetworkHooks;
-import net.minecraftforge.network.PacketDistributor;
 import org.jetbrains.annotations.NotNull;
 
 import java.awt.*;
@@ -31,7 +29,7 @@ public class SmokeBombEntity extends ThrowableItemProjectile {
 
 	private static final byte VANILLA_IMPACT_STATUS_ID = 3;
 	private static int color;
-	private final int configMaxParticles = Config.MAX_SMOKE_BOMB_PARTICLES.get();
+	private final int configMaxParticles = ServerConfig.MAX_SMOKE_BOMB_PARTICLES.get();
 
 	/**
 	 * Constructor for SmokeBombEntity.

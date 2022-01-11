@@ -1,7 +1,7 @@
 package com.anonymoushacker1279.immersiveweapons.entity.projectile;
 
+import com.anonymoushacker1279.immersiveweapons.config.ServerConfig;
 import com.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
-import com.anonymoushacker1279.immersiveweapons.util.Config;
 import it.unimi.dsi.fastutil.ints.IntOpenHashSet;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
@@ -12,9 +12,7 @@ import net.minecraft.sounds.SoundEvent;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.util.Mth;
 import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.item.Item;
@@ -34,7 +32,7 @@ import org.jetbrains.annotations.NotNull;
 
 public abstract class AbstractBulletEntity extends AbstractArrow {
 
-	private static final boolean canBreakGlass = Config.BULLETS_BREAK_GLASS.get();
+	private static final boolean canBreakGlass = ServerConfig.BULLETS_BREAK_GLASS.get();
 	private final SoundEvent hitSound = getDefaultHitGroundSoundEvent();
 	Item referenceItem;
 	int knockbackStrength;

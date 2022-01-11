@@ -1,8 +1,8 @@
 package com.anonymoushacker1279.immersiveweapons.block.decoration;
 
 import com.anonymoushacker1279.immersiveweapons.block.misc.portal.statue.warrior.WarriorStatueTorso;
+import com.anonymoushacker1279.immersiveweapons.config.ServerConfig;
 import com.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
-import com.anonymoushacker1279.immersiveweapons.util.Config;
 import com.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
 import com.anonymoushacker1279.immersiveweapons.world.TiltrosTeleporter;
 import net.minecraft.core.BlockPos;
@@ -37,7 +37,7 @@ public class AzulStainedOrchidBlock extends FlowerBlock {
 
 	@Override
 	public void entityInside(@NotNull BlockState state, @NotNull Level level, @NotNull BlockPos pos, @NotNull Entity entity) {
-		if (Config.TILTROS_ENABLED.get()) {
+		if (ServerConfig.TILTROS_ENABLED.get()) {
 			entity.playSound(SoundEvents.ENDERMAN_AMBIENT, 0.05f, 0.075f);
 			if (!entity.isPassenger() && !entity.isVehicle() && entity.canChangeDimensions() && teleportDelay <= 0) {
 				teleportDelay = 80;

@@ -1,5 +1,7 @@
 package com.anonymoushacker1279.immersiveweapons;
 
+import com.anonymoushacker1279.immersiveweapons.config.ClientConfig;
+import com.anonymoushacker1279.immersiveweapons.config.ServerConfig;
 import com.anonymoushacker1279.immersiveweapons.init.*;
 import com.anonymoushacker1279.immersiveweapons.util.*;
 import com.anonymoushacker1279.immersiveweapons.world.level.levelgen.OreGeneratorHandler;
@@ -31,7 +33,8 @@ public class ImmersiveWeapons {
 	// Mod setup begins here
 	public ImmersiveWeapons() {
 		// Load configuration
-		Config.setup(FMLPaths.CONFIGDIR.get().resolve(MOD_ID + ".toml"));
+		ServerConfig.setup(FMLPaths.CONFIGDIR.get().resolve(MOD_ID + "-server.toml"));
+		ClientConfig.setup(FMLPaths.CONFIGDIR.get().resolve(MOD_ID + "-client.toml"));
 
 		// TODO: Rework when Forge API updates
 		// Register surface builders

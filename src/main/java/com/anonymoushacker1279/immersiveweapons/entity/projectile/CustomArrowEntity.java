@@ -1,8 +1,10 @@
 package com.anonymoushacker1279.immersiveweapons.entity.projectile;
 
 import com.anonymoushacker1279.immersiveweapons.client.particle.smokebomb.SmokeBombParticleData;
+import com.anonymoushacker1279.immersiveweapons.config.ServerConfig;
 import com.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
-import com.anonymoushacker1279.immersiveweapons.util.*;
+import com.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
+import com.anonymoushacker1279.immersiveweapons.util.PacketHandler;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleOptions;
@@ -407,7 +409,7 @@ public class CustomArrowEntity {
 
 	public static class SmokeBombArrowEntity extends AbstractCustomArrowEntity {
 		private static int color = 0;
-		private final int configMaxParticles = Config.MAX_SMOKE_BOMB_PARTICLES.get();
+		private final int configMaxParticles = ServerConfig.MAX_SMOKE_BOMB_PARTICLES.get();
 
 		/**
 		 * Constructor for SmokeBombArrowEntity.

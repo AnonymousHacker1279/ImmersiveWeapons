@@ -1,8 +1,8 @@
 package com.anonymoushacker1279.immersiveweapons.events;
 
 import com.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
+import com.anonymoushacker1279.immersiveweapons.config.ServerConfig;
 import com.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
-import com.anonymoushacker1279.immersiveweapons.util.Config;
 import com.anonymoushacker1279.immersiveweapons.world.level.levelgen.OreGeneratorHandler;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.level.biome.Biome.BiomeCategory;
@@ -40,9 +40,9 @@ public class ForgeEventSubscriber {
 			}
 
 			if (event.getCategory() != BiomeCategory.OCEAN && event.getCategory() != BiomeCategory.RIVER) {
-				if (Config.WANDERING_WARRIOR_SPAWN.get())
+				if (ServerConfig.WANDERING_WARRIOR_SPAWN.get())
 					event.getSpawns().addSpawn(MobCategory.MONSTER, new SpawnerData(DeferredRegistryHandler.WANDERING_WARRIOR_ENTITY.get(), 13, 1, 1));
-				if (Config.HANS_SPAWN.get())
+				if (ServerConfig.HANS_SPAWN.get())
 					event.getSpawns().addSpawn(MobCategory.MONSTER, new SpawnerData(DeferredRegistryHandler.HANS_ENTITY.get(), 1, 1, 1));
 			}
 		}
@@ -51,11 +51,11 @@ public class ForgeEventSubscriber {
 			generation.addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, OreGeneratorHandler.NETHER_SULFUR_ORE_FEATURE);
 		}
 		if (Objects.requireNonNull(event.getName()).toString().equals("immersiveweapons:tiltros")) {
-			if (Config.LAVA_REVENANT_SPAWN.get())
+			if (ServerConfig.LAVA_REVENANT_SPAWN.get())
 				event.getSpawns().addSpawn(MobCategory.MONSTER, new SpawnerData(DeferredRegistryHandler.LAVA_REVENANT_ENTITY.get(), 1, 0, 1));
-			if (Config.ROCK_SPIDER_SPAWN.get())
+			if (ServerConfig.ROCK_SPIDER_SPAWN.get())
 				event.getSpawns().addSpawn(MobCategory.MONSTER, new SpawnerData(DeferredRegistryHandler.ROCK_SPIDER_ENTITY.get(), 5, 4, 12));
-			if (Config.CELESTIAL_TOWER_SPAWN.get())
+			if (ServerConfig.CELESTIAL_TOWER_SPAWN.get())
 				event.getSpawns().addSpawn(MobCategory.MONSTER, new SpawnerData(DeferredRegistryHandler.CELESTIAL_TOWER_ENTITY.get(), 2, 0, 1));
 		}
 
