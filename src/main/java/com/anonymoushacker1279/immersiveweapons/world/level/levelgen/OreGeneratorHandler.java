@@ -2,6 +2,7 @@ package com.anonymoushacker1279.immersiveweapons.world.level.levelgen;
 
 import com.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import com.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
+import com.anonymoushacker1279.immersiveweapons.util.Config;
 import net.minecraft.data.worldgen.features.FeatureUtils;
 import net.minecraft.data.worldgen.features.OreFeatures;
 import net.minecraft.data.worldgen.placement.PlacementUtils;
@@ -27,6 +28,13 @@ public class OreGeneratorHandler {
 	public static PlacedFeature DEEPSLATE_SULFUR_ORE_FEATURE;
 	public static PlacedFeature DEEPSLATE_COBALT_ORE_FEATURE;
 
+	static List<Integer> MOLTEN_ORE_CONFIG = Config.MOLTEN_ORE_CONFIG.get();
+	static List<Integer> NETHER_SULFUR_ORE_CONFIG = Config.NETHER_SULFUR_ORE_CONFIG.get();
+	static List<Integer> SULFUR_ORE_CONFIG = Config.SULFUR_ORE_CONFIG.get();
+	static List<Integer> COBALT_ORE_CONFIG = Config.COBALT_ORE_CONFIG.get();
+	static List<Integer> DEEPSLATE_SULFUR_ORE_CONFIG = Config.DEEPSLATE_SULFUR_ORE_CONFIG.get();
+	static List<Integer> DEEPSLATE_COBALT_ORE_CONFIG = Config.DEEPSLATE_COBALT_ORE_CONFIG.get();
+
 	/**
 	 * Initialize ore generation setup.
 	 */
@@ -40,7 +48,7 @@ public class OreGeneratorHandler {
 	}
 
 	public static void setupMoltenOre() {
-		int orePerVein = 4, veinsPerChunk = 8, maxY = 64;
+		int orePerVein = MOLTEN_ORE_CONFIG.get(0), veinsPerChunk = MOLTEN_ORE_CONFIG.get(1), maxY = MOLTEN_ORE_CONFIG.get(2);
 
 		BlockState blockState = DeferredRegistryHandler.MOLTEN_ORE.get().defaultBlockState();
 
@@ -57,7 +65,7 @@ public class OreGeneratorHandler {
 	}
 
 	public static void setupNetherSulfurOre() {
-		int orePerVein = 12, veinsPerChunk = 16;
+		int orePerVein = NETHER_SULFUR_ORE_CONFIG.get(0), veinsPerChunk = NETHER_SULFUR_ORE_CONFIG.get(1);
 
 		BlockState blockState = DeferredRegistryHandler.NETHER_SULFUR_ORE.get().defaultBlockState();
 
@@ -74,7 +82,7 @@ public class OreGeneratorHandler {
 	}
 
 	public static void setupSulfurOre() {
-		int orePerVein = 8, veinsPerChunk = 14;
+		int orePerVein = SULFUR_ORE_CONFIG.get(0), veinsPerChunk = SULFUR_ORE_CONFIG.get(1);
 
 		BlockState blockState = DeferredRegistryHandler.SULFUR_ORE.get().defaultBlockState();
 
@@ -91,7 +99,7 @@ public class OreGeneratorHandler {
 	}
 
 	public static void setupCobaltOre() {
-		int orePerVein = 6, veinsPerChunk = 12, belowTop = 24;
+		int orePerVein = COBALT_ORE_CONFIG.get(0), veinsPerChunk = COBALT_ORE_CONFIG.get(1), belowTop = COBALT_ORE_CONFIG.get(2);
 
 		BlockState blockState = DeferredRegistryHandler.COBALT_ORE.get().defaultBlockState();
 
@@ -108,7 +116,7 @@ public class OreGeneratorHandler {
 	}
 
 	public static void setupDeepslateSulfurOre() {
-		int orePerVein = 8, veinsPerChunk = 14;
+		int orePerVein = DEEPSLATE_SULFUR_ORE_CONFIG.get(0), veinsPerChunk = DEEPSLATE_SULFUR_ORE_CONFIG.get(1);
 
 		BlockState blockState = DeferredRegistryHandler.DEEPSLATE_SULFUR_ORE.get().defaultBlockState();
 
@@ -125,7 +133,7 @@ public class OreGeneratorHandler {
 	}
 
 	public static void setupDeepslateCobaltOre() {
-		int orePerVein = 8, veinsPerChunk = 16;
+		int orePerVein = DEEPSLATE_COBALT_ORE_CONFIG.get(0), veinsPerChunk = DEEPSLATE_COBALT_ORE_CONFIG.get(1);
 
 		BlockState blockState = DeferredRegistryHandler.DEEPSLATE_COBALT_ORE.get().defaultBlockState();
 

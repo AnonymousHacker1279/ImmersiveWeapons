@@ -32,7 +32,7 @@ apply plugin: 'net.minecraftforge.gradle'
 apply plugin: 'org.parchmentmc.librarian.forgegradle'
 apply plugin: 'maven-publish'
 
-version = '1.18.1-1.13.0-beta7'
+version = '1.18.1-1.13.0-beta8'
 group = 'com.anonymoushacker1279.immersiveweapons'
 
 java.toolchain.languageVersion = JavaLanguageVersion.of(17)
@@ -96,13 +96,13 @@ sourceSets.main.resources { srcDir 'src/generated/resources' }
 dependencies {
 	implementation 'org.jetbrains:annotations:23.0.0'
 
-	minecraft 'net.minecraftforge:forge:1.18.1-39.0.14'
+	minecraft 'net.minecraftforge:forge:1.18.1-39.0.17'
 
 	// Include JEI
-	implementation fg.deobf("mezz.jei:jei-1.18.1:9.1.2.54")
+	implementation fg.deobf("mezz.jei:jei-1.18.1:9.2.1.69")
 
 	// Include WTHIT
-	implementation fg.deobf("mcp.mobius.waila:wthit:forge-4.4.0")
+	implementation fg.deobf("mcp.mobius.waila:wthit:forge-4.4.1")
 }
 
 // Add properties to JAR manifest

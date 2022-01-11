@@ -5,6 +5,7 @@ import com.electronwill.nightconfig.core.io.WritingMode;
 import net.minecraftforge.common.ForgeConfigSpec;
 
 import java.nio.file.Path;
+import java.util.*;
 
 public class Config {
 
@@ -22,6 +23,12 @@ public class Config {
 	public static ForgeConfigSpec.ConfigValue<Integer> CELESTIAL_TOWER_XZ_SPAWN_CHECK_RADIUS;
 	public static ForgeConfigSpec.ConfigValue<Integer> CELESTIAL_TOWER_Y_SPAWN_CHECK_RADIUS;
 	public static ForgeConfigSpec.ConfigValue<String> CELESTIAL_TOWER_MINIONS_WAVE_SIZE_MODIFIER;
+	public static ForgeConfigSpec.ConfigValue<List<Integer>> MOLTEN_ORE_CONFIG;
+	public static ForgeConfigSpec.ConfigValue<List<Integer>> NETHER_SULFUR_ORE_CONFIG;
+	public static ForgeConfigSpec.ConfigValue<List<Integer>> SULFUR_ORE_CONFIG;
+	public static ForgeConfigSpec.ConfigValue<List<Integer>> DEEPSLATE_SULFUR_ORE_CONFIG;
+	public static ForgeConfigSpec.ConfigValue<List<Integer>> COBALT_ORE_CONFIG;
+	public static ForgeConfigSpec.ConfigValue<List<Integer>> DEEPSLATE_COBALT_ORE_CONFIG;
 	static ForgeConfigSpec.ConfigValue<Integer> MAX_ABANDONED_FACTORY_DISTANCE;
 	static ForgeConfigSpec.ConfigValue<Integer> MIN_ABANDONED_FACTORY_DISTANCE;
 	static ForgeConfigSpec.ConfigValue<Integer> MAX_PITFALL_TRAP_DISTANCE;
@@ -271,6 +278,39 @@ public class Config {
 				.define("min_graveyard_distance", 30);
 		COMMON_CONFIG_BUILDER.pop();
 
+		COMMON_CONFIG_BUILDER.pop();
+
+		COMMON_CONFIG_BUILDER.push("Ore Generation");
+		List<Integer> molten_ore_config_list = new ArrayList<>(1);
+		molten_ore_config_list.addAll(Arrays.asList(4, 8, 64));
+		MOLTEN_ORE_CONFIG = COMMON_CONFIG_BUILDER
+				.comment("Configuration for Molten Ore. Specified as a list. [ore_per_vein, veins_per_chunk, max_y]. Default: [4, 8, 64]")
+				.define("molten_ore_config", molten_ore_config_list);
+		List<Integer> nether_sulfur_ore_config_list = new ArrayList<>(1);
+		nether_sulfur_ore_config_list.addAll(Arrays.asList(12, 16));
+		NETHER_SULFUR_ORE_CONFIG = COMMON_CONFIG_BUILDER
+				.comment("Configuration for Nether Sulfur Ore. Specified as a list. [ore_per_vein, veins_per_chunk]. Default: [12, 16]")
+				.define("nether_sulfur_ore_config", nether_sulfur_ore_config_list);
+		List<Integer> sulfur_ore_config_list = new ArrayList<>(1);
+		sulfur_ore_config_list.addAll(Arrays.asList(8, 14));
+		SULFUR_ORE_CONFIG = COMMON_CONFIG_BUILDER
+				.comment("Configuration for Sulfur Ore. Specified as a list. [ore_per_vein, veins_per_chunk]. Default: [8, 14]")
+				.define("sulfur_ore_config", sulfur_ore_config_list);
+		List<Integer> cobalt_ore_config_list = new ArrayList<>(1);
+		cobalt_ore_config_list.addAll(Arrays.asList(6, 12, 24));
+		COBALT_ORE_CONFIG = COMMON_CONFIG_BUILDER
+				.comment("Configuration for Cobalt Ore. Specified as a list. [ore_per_vein, veins_per_chunk, blocks_below_top]. Default: [6, 12, 24]")
+				.define("cobalt_ore_config", cobalt_ore_config_list);
+		List<Integer> deepslate_sulfur_ore_config_list = new ArrayList<>(1);
+		deepslate_sulfur_ore_config_list.addAll(Arrays.asList(8, 14));
+		DEEPSLATE_SULFUR_ORE_CONFIG = COMMON_CONFIG_BUILDER
+				.comment("Configuration for Deepslate Sulfur Ore. Specified as a list. [ore_per_vein, veins_per_chunk]. Default: [8, 14]")
+				.define("deepslate_sulfur_ore_config", deepslate_sulfur_ore_config_list);
+		List<Integer> deepslate_cobalt_ore_config_list = new ArrayList<>(1);
+		deepslate_cobalt_ore_config_list.addAll(Arrays.asList(8, 16));
+		DEEPSLATE_COBALT_ORE_CONFIG = COMMON_CONFIG_BUILDER
+				.comment("Configuration for Deepslate Cobalt Ore. Specified as a list. [ore_per_vein, veins_per_chunk]. Default: [8, 16]")
+				.define("deepslate_cobalt_ore_config", deepslate_cobalt_ore_config_list);
 		COMMON_CONFIG_BUILDER.pop();
 
 		COMMON_CONFIG_BUILDER.pop();
