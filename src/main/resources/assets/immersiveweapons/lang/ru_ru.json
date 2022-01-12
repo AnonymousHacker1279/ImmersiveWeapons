@@ -552,5 +552,11 @@
 	"config.immersiveweapons.min_water_tower_distance": "Минимальное расстояние в бункерах между Водные башни - По умолчанию 12",
 	"config.immersiveweapons.max_graveyard_distance": "Максимальное расстояние в бункерах между Graveyards - По умолчанию 50",
 	"config.immersiveweapons.min_graveyard_distance": "Минимальное расстояние в бункерах между Graveyards - По умолчанию 30",
+	"config.immersiveweapons.molten_ore_config": "Конфигурация для Molten Ore. Указанный как список. [ore_per_vein, veins_per_chunk, max_y.] По умолчанию: [4, 8, 64]",
+	"config.immersiveweapons.nether_sulfur_ore_config": "Конфигурация для Nether Sulfur Ore. Уточнена как список. [ore_per_vein, veins_per_chunk.] По умолчанию: [12, 16]",
+	"config.immersiveweapons.sulfur_ore_config": "Конфигурация для Sulfur Ore. Указанный как список. [ore_per_vein, veins_per_chunk.] По умолчанию: [8, 14]",
+	"config.immersiveweapons.cobalt_ore_config": "Конфигурация для Cobalt Ore. Указанный как список. [ore_per_vein, veins_per_chunk, blocks_below_top.] По умолчанию: [6, 12, 24]",
+	"config.immersiveweapons.deepslate_sulfur_ore_config": "Конфигурация для Deepslate Sulfur Ore. Уточнена как список. [ore_per_vein, veins_per_chunk.] По умолчанию: [8, 14]",
+	"config.immersiveweapons.deepslate_cobalt_ore_config": "Конфигурация для Deepslate Cobalt Ore. Указанный как список. [ore_per_vein, veins_per_chunk.] По умолчанию: [8, 16]",
 	"itemGroup.immersiveweapons": "Иммерсивное оружие"
 }

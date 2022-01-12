@@ -552,5 +552,11 @@
 	"config.immersiveweapons.min_water_tower_distance": "Distancia mínima en pedazos entre Water Towers - Default 12",
 	"config.immersiveweapons.max_graveyard_distance": "Distancia máxima en trozos entre Cementerios - Predeterminado 50",
 	"config.immersiveweapons.min_graveyard_distance": "Distancia mínima en pedazos entre Cementerios - Predeterminado 30",
+	"config.immersiveweapons.molten_ore_config": "Configuración para mineral de fundición. Especificado como una lista. [ore_per_vein, venas_per_chunk, max_y.] Default: [4, 8, 64]",
+	"config.immersiveweapons.nether_sulfur_ore_config": "Configuración para el mineral de azufre. Especificado como lista. [ore_per_vein, venas_per_chunk.] Default: [12, 16]",
+	"config.immersiveweapons.sulfur_ore_config": "Configuración para mineral de azufre. Especificado como una lista. [ore_per_vein, venas_per_chunk.] Default: [8, 14]",
+	"config.immersiveweapons.cobalt_ore_config": "Configuración para mineral de cobalto. Especificado como una lista. [ore_per_vein, venas_per_chunk, blocks_below_top.] Default: [6, 12, 24]",
+	"config.immersiveweapons.deepslate_sulfur_ore_config": "Configuración para el mineral de azufre de azufre. Especificado como lista. [ore_per_vein, venas_per_chunk.] Default: [8, 14]",
+	"config.immersiveweapons.deepslate_cobalt_ore_config": "Configuración para el mineral de cobalto de profundidad. Especificado como una lista. [ore_per_vein, venas_per_chunk.] Default: [8, 16]",
 	"itemGroup.immersiveweapons": "Armas inmersivas"
 }

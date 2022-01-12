@@ -14,7 +14,7 @@ public class ClientConfig {
 	public static ForgeConfigSpec.ConfigValue<Boolean> TESLA_ARMOR_EFFECT_SOUND;
 
 	/*
-	 * Initialize the server configuration file.
+	 * Initialize the client configuration file.
 	 */
 	static {
 		CONFIG_BUILDER.push("Client Configuration");
