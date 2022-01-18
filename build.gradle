@@ -32,7 +32,7 @@ apply plugin: 'net.minecraftforge.gradle'
 apply plugin: 'org.parchmentmc.librarian.forgegradle'
 apply plugin: 'maven-publish'
 
-version = '1.18.1-1.13.0-beta8'
+version = '1.18.1-1.13.0-beta9'
 group = 'com.anonymoushacker1279.immersiveweapons'
 
 java.toolchain.languageVersion = JavaLanguageVersion.of(17)
@@ -96,7 +96,7 @@ sourceSets.main.resources { srcDir 'src/generated/resources' }
 dependencies {
 	implementation 'org.jetbrains:annotations:23.0.0'
 
-	minecraft 'net.minecraftforge:forge:1.18.1-39.0.17'
+	minecraft 'net.minecraftforge:forge:1.18.1-39.0.43'
 
 	// Include JEI
 	implementation fg.deobf("mezz.jei:jei-1.18.1:9.2.1.69")

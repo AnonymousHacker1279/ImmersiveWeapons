@@ -50,6 +50,7 @@ import com.anonymoushacker1279.immersiveweapons.potion.*;
 import com.anonymoushacker1279.immersiveweapons.util.*;
 import com.anonymoushacker1279.immersiveweapons.world.food.FoodItemProperties;
 import com.anonymoushacker1279.immersiveweapons.world.level.levelgen.feature.treedecorators.BurnedBranchDecorator;
+import com.anonymoushacker1279.immersiveweapons.world.level.levelgen.structures.*;
 import com.anonymoushacker1279.immersiveweapons.world.level.loot.AzulKeystoneFragmentInChestsLootModifierHandler;
 import com.anonymoushacker1279.immersiveweapons.world.level.loot.LogShardsLootModifierHandler;
 import com.google.common.collect.Sets;
@@ -68,6 +69,7 @@ import net.minecraft.world.level.block.PressurePlateBlock.Sensitivity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.levelgen.feature.StructureFeature;
+import net.minecraft.world.level.levelgen.feature.configurations.JigsawConfiguration;
 import net.minecraft.world.level.levelgen.feature.treedecorators.TreeDecoratorType;
 import net.minecraft.world.level.material.Material;
 import net.minecraftforge.common.ForgeSpawnEggItem;
@@ -610,38 +612,22 @@ public class DeferredRegistryHandler {
 	public static final RegistryObject<BlockEntityType<TeslaSynthesizerBlockEntity>> TESLA_SYNTHESIZER_BLOCK_ENTITY = BLOCK_ENTITIES.register("tesla_synthesizer", () -> new BlockEntityType<>(TeslaSynthesizerBlockEntity::new, Sets.newHashSet(TESLA_SYNTHESIZER.get()), null));
 	public static final RegistryObject<BlockEntityType<BurnedOakSignEntity>> BURNED_OAK_SIGN_ENTITY = BLOCK_ENTITIES.register("custom_sign", () -> BlockEntityType.Builder.of(BurnedOakSignEntity::new, BURNED_OAK_SIGN.get(), BURNED_OAK_WALL_SIGN.get()).build(null));
 
-	// TODO: Rework when Forge API updates
-	// Biomes
-	/*public static final RegistryObject<Biome> BATTLEFIELD = BIOMES.register("battlefield", () -> BiomeBuilder.makeBattlefieldBiome(
-			BiomeBuilder.getSurfaceBuilder(ConfiguredSurfaceBuilders.BATTLEFIELD),
-			0.18f, 0.1f)
-	);
-	public static final RegistryObject<Biome> TILTROS = BIOMES.register("tiltros", () -> BiomeBuilder.makeTiltrosBiome(
-			BiomeBuilder.getSurfaceBuilder(ConfiguredSurfaceBuilders.TILTROS),
-			0.24f, 0.7f)
-	);*/
-
 	// Effects
 	public static final RegistryObject<MorphineEffect> MORPHINE_EFFECT = EFFECTS.register("morphine", () -> new MorphineEffect(MobEffectCategory.NEUTRAL, 3484189));
 	public static final RegistryObject<BleedingEffect> BLEEDING_EFFECT = EFFECTS.register("bleeding", () -> new BleedingEffect(MobEffectCategory.HARMFUL, 8392463));
 	public static final RegistryObject<AlcoholEffect> ALCOHOL_EFFECT = EFFECTS.register("alcohol", () -> new AlcoholEffect(MobEffectCategory.NEUTRAL, 14465637));
 
-	// TODO: Rework when Forge API updates
-	// Structures
-	/*public static final RegistryObject<StructureFeature<NoneFeatureConfiguration>> ABANDONED_FACTORY_STRUCTURE = Structures.setupStructure("abandoned_factory", () -> (new AbandonedFactory(NoneFeatureConfiguration.CODEC)));
-	public static final RegistryObject<StructureFeature<NoneFeatureConfiguration>> PITFALL_TRAP_STRUCTURE = Structures.setupStructure("pitfall_trap", () -> (new PitfallTrap(NoneFeatureConfiguration.CODEC)));
-	public static final RegistryObject<StructureFeature<NoneFeatureConfiguration>> BEAR_TRAP_STRUCTURE = Structures.setupStructure("bear_trap", () -> (new BearTrap(NoneFeatureConfiguration.CODEC)));
-	public static final RegistryObject<StructureFeature<NoneFeatureConfiguration>> LANDMINE_TRAP_STRUCTURE = Structures.setupStructure("landmine_trap", () -> (new LandmineTrap(NoneFeatureConfiguration.CODEC)));
-	public static final RegistryObject<StructureFeature<NoneFeatureConfiguration>> UNDERGROUND_BUNKER_STRUCTURE = Structures.setupStructure("underground_bunker", () -> (new UndergroundBunker(NoneFeatureConfiguration.CODEC)));
-	public static final RegistryObject<StructureFeature<NoneFeatureConfiguration>> BATTLEFIELD_CAMP_STRUCTURE = Structures.setupStructure("battlefield_camp", () -> (new BattlefieldCamp(NoneFeatureConfiguration.CODEC)));
-	public static final RegistryObject<StructureFeature<NoneFeatureConfiguration>> BATTLEFIELD_VILLAGE_STRUCTURE = Structures.setupStructure("battlefield_village", () -> (new BattlefieldVillage(NoneFeatureConfiguration.CODEC)));
-	public static final RegistryObject<StructureFeature<NoneFeatureConfiguration>> CLOUD_ISLAND_STRUCTURE = Structures.setupStructure("cloud_island", () -> (new CloudIsland(NoneFeatureConfiguration.CODEC)));
-	public static final RegistryObject<StructureFeature<NoneFeatureConfiguration>> CAMPSITE_STRUCTURE = Structures.setupStructure("campsite", () -> (new Campsite(NoneFeatureConfiguration.CODEC)));
-	public static final RegistryObject<StructureFeature<NoneFeatureConfiguration>> BATTLEFIELD_HOUSE_STRUCTURE = Structures.setupStructure("battlefield_house", () -> (new BattlefieldHouse(NoneFeatureConfiguration.CODEC)));
-	public static final RegistryObject<StructureFeature<NoneFeatureConfiguration>> OUTHOUSE_STRUCTURE = Structures.setupStructure("outhouse", () -> (new Outhouse(NoneFeatureConfiguration.CODEC)));
-	public static final RegistryObject<StructureFeature<NoneFeatureConfiguration>> WATER_TOWER_STRUCTURE = Structures.setupStructure("water_tower", () -> (new WaterTower(NoneFeatureConfiguration.CODEC)));
-	public static final RegistryObject<StructureFeature<NoneFeatureConfiguration>> GRAVEYARD_STRUCTURE = Structures.setupStructure("graveyard", () -> (new Graveyard(NoneFeatureConfiguration.CODEC)));*/
-
 	// Tree Decorators
 	public static final RegistryObject<TreeDecoratorType<BurnedBranchDecorator>> BURNED_BRANCH_DECORATOR = TREE_DECORATORS.register("burned_branch", () -> new TreeDecoratorType<>(BurnedBranchDecorator.CODEC));
+
+	// Structures
+	public static final RegistryObject<StructureFeature<JigsawConfiguration>> ABANDONED_FACTORY_STRUCTURE = STRUCTURES.register("abandoned_factory", AbandonedFactoryStructure::new);
+	public static final RegistryObject<StructureFeature<JigsawConfiguration>> BEAR_TRAP_STRUCTURE = STRUCTURES.register("bear_trap", BearTrapStructure::new);
+	public static final RegistryObject<StructureFeature<JigsawConfiguration>> CAMPSITE_STRUCTURE = STRUCTURES.register("campsite", CampsiteStructure::new);
+	public static final RegistryObject<StructureFeature<JigsawConfiguration>> CLOUD_ISLAND_STRUCTURE = STRUCTURES.register("cloud_island", CloudIslandStructure::new);
+	public static final RegistryObject<StructureFeature<JigsawConfiguration>> LANDMINE_TRAP_STRUCTURE = STRUCTURES.register("landmine_trap", LandmineTrapStructure::new);
+	public static final RegistryObject<StructureFeature<JigsawConfiguration>> OUTHOUSE_STRUCTURE = STRUCTURES.register("outhouse", OuthouseStructure::new);
+	public static final RegistryObject<StructureFeature<JigsawConfiguration>> PITFALL_TRAP_STRUCTURE = STRUCTURES.register("pitfall_trap", PitfallTrapStructure::new);
+	public static final RegistryObject<StructureFeature<JigsawConfiguration>> UNDERGROUND_BUNKER_STRUCTURE = STRUCTURES.register("underground_bunker", UndergroundBunkerStructure::new);
+	public static final RegistryObject<StructureFeature<JigsawConfiguration>> WATER_TOWER_STRUCTURE = STRUCTURES.register("water_tower", WaterTowerStructure::new);
 }
