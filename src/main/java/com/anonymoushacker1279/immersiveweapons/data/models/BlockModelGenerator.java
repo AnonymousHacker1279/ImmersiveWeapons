@@ -444,11 +444,10 @@ public class BlockModelGenerator {
 			logMapping = textureMapping;
 		}
 
-		public WoodProvider wood(Block pWoodBlock) {
+		public void wood(Block pWoodBlock) {
 			TextureMapping textureMapping = logMapping.copyAndUpdate(TextureSlot.END, logMapping.get(TextureSlot.SIDE));
 			ResourceLocation resourceLocation = ModelTemplates.CUBE_COLUMN.create(pWoodBlock, textureMapping, modelOutput);
 			blockStateOutput.accept(createAxisAlignedPillarBlock(pWoodBlock, resourceLocation));
-			return this;
 		}
 
 		public WoodProvider log(Block pLogBlock) {

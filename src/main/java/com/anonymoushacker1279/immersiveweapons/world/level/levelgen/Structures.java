@@ -32,23 +32,23 @@ public class Structures {
 	 * I cannot get my own pool here during initialization, so I use PlainVillagePools.START.
 	 * I'll modify this pool at runtime later in #createPiecesGenerator
 	 */
-	public static ConfiguredStructureFeature<?, ?> CONFIGURED_ABANDONED_FACTORY = DeferredRegistryHandler.ABANDONED_FACTORY_STRUCTURE.get()
+	public static final ConfiguredStructureFeature<?, ?> CONFIGURED_ABANDONED_FACTORY = DeferredRegistryHandler.ABANDONED_FACTORY_STRUCTURE.get()
 			.configured(new JigsawConfiguration(() -> PlainVillagePools.START, 0));
-	public static ConfiguredStructureFeature<?, ?> CONFIGURED_BEAR_TRAP = DeferredRegistryHandler.BEAR_TRAP_STRUCTURE.get()
+	public static final ConfiguredStructureFeature<?, ?> CONFIGURED_BEAR_TRAP = DeferredRegistryHandler.BEAR_TRAP_STRUCTURE.get()
 			.configured(new JigsawConfiguration(() -> PlainVillagePools.START, 0));
-	public static ConfiguredStructureFeature<?, ?> CONFIGURED_CAMPSITE = DeferredRegistryHandler.CAMPSITE_STRUCTURE.get()
+	public static final ConfiguredStructureFeature<?, ?> CONFIGURED_CAMPSITE = DeferredRegistryHandler.CAMPSITE_STRUCTURE.get()
 			.configured(new JigsawConfiguration(() -> PlainVillagePools.START, 0));
-	public static ConfiguredStructureFeature<?, ?> CONFIGURED_CLOUD_ISLAND = DeferredRegistryHandler.CLOUD_ISLAND_STRUCTURE.get()
+	public static final ConfiguredStructureFeature<?, ?> CONFIGURED_CLOUD_ISLAND = DeferredRegistryHandler.CLOUD_ISLAND_STRUCTURE.get()
 			.configured(new JigsawConfiguration(() -> PlainVillagePools.START, 0));
-	public static ConfiguredStructureFeature<?, ?> CONFIGURED_LANDMINE_TRAP = DeferredRegistryHandler.LANDMINE_TRAP_STRUCTURE.get()
+	public static final ConfiguredStructureFeature<?, ?> CONFIGURED_LANDMINE_TRAP = DeferredRegistryHandler.LANDMINE_TRAP_STRUCTURE.get()
 			.configured(new JigsawConfiguration(() -> PlainVillagePools.START, 0));
-	public static ConfiguredStructureFeature<?, ?> CONFIGURED_OUTHOUSE = DeferredRegistryHandler.OUTHOUSE_STRUCTURE.get()
+	public static final ConfiguredStructureFeature<?, ?> CONFIGURED_OUTHOUSE = DeferredRegistryHandler.OUTHOUSE_STRUCTURE.get()
 			.configured(new JigsawConfiguration(() -> PlainVillagePools.START, 0));
-	public static ConfiguredStructureFeature<?, ?> CONFIGURED_PITFALL_TRAP = DeferredRegistryHandler.PITFALL_TRAP_STRUCTURE.get()
+	public static final ConfiguredStructureFeature<?, ?> CONFIGURED_PITFALL_TRAP = DeferredRegistryHandler.PITFALL_TRAP_STRUCTURE.get()
 			.configured(new JigsawConfiguration(() -> PlainVillagePools.START, 0));
-	public static ConfiguredStructureFeature<?, ?> CONFIGURED_UNDERGROUND_BUNKER = DeferredRegistryHandler.UNDERGROUND_BUNKER_STRUCTURE.get()
+	public static final ConfiguredStructureFeature<?, ?> CONFIGURED_UNDERGROUND_BUNKER = DeferredRegistryHandler.UNDERGROUND_BUNKER_STRUCTURE.get()
 			.configured(new JigsawConfiguration(() -> PlainVillagePools.START, 0));
-	public static ConfiguredStructureFeature<?, ?> CONFIGURED_WATER_TOWER = DeferredRegistryHandler.WATER_TOWER_STRUCTURE.get()
+	public static final ConfiguredStructureFeature<?, ?> CONFIGURED_WATER_TOWER = DeferredRegistryHandler.WATER_TOWER_STRUCTURE.get()
 			.configured(new JigsawConfiguration(() -> PlainVillagePools.START, 0));
 
 

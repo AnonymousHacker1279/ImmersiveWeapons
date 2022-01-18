@@ -28,12 +28,12 @@ public class OreGeneratorHandler {
 	public static PlacedFeature DEEPSLATE_SULFUR_ORE_FEATURE;
 	public static PlacedFeature DEEPSLATE_COBALT_ORE_FEATURE;
 
-	static List<Integer> MOLTEN_ORE_CONFIG = ServerConfig.MOLTEN_ORE_CONFIG.get();
-	static List<Integer> NETHER_SULFUR_ORE_CONFIG = ServerConfig.NETHER_SULFUR_ORE_CONFIG.get();
-	static List<Integer> SULFUR_ORE_CONFIG = ServerConfig.SULFUR_ORE_CONFIG.get();
-	static List<Integer> COBALT_ORE_CONFIG = ServerConfig.COBALT_ORE_CONFIG.get();
-	static List<Integer> DEEPSLATE_SULFUR_ORE_CONFIG = ServerConfig.DEEPSLATE_SULFUR_ORE_CONFIG.get();
-	static List<Integer> DEEPSLATE_COBALT_ORE_CONFIG = ServerConfig.DEEPSLATE_COBALT_ORE_CONFIG.get();
+	static final List<Integer> MOLTEN_ORE_CONFIG = ServerConfig.MOLTEN_ORE_CONFIG.get();
+	static final List<Integer> NETHER_SULFUR_ORE_CONFIG = ServerConfig.NETHER_SULFUR_ORE_CONFIG.get();
+	static final List<Integer> SULFUR_ORE_CONFIG = ServerConfig.SULFUR_ORE_CONFIG.get();
+	static final List<Integer> COBALT_ORE_CONFIG = ServerConfig.COBALT_ORE_CONFIG.get();
+	static final List<Integer> DEEPSLATE_SULFUR_ORE_CONFIG = ServerConfig.DEEPSLATE_SULFUR_ORE_CONFIG.get();
+	static final List<Integer> DEEPSLATE_COBALT_ORE_CONFIG = ServerConfig.DEEPSLATE_COBALT_ORE_CONFIG.get();
 
 	/**
 	 * Initialize ore generation setup.

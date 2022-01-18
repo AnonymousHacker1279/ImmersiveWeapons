@@ -9,21 +9,11 @@ import org.jetbrains.annotations.NotNull;
 import java.util.function.Supplier;
 
 public enum CustomItemMaterials implements Tier {
-	MOLTEN(3, 1900, 8.2F, 3.0F, 17, () -> {
-		return Ingredient.of(DeferredRegistryHandler.MOLTEN_INGOT.get());
-	}),
-	COPPER(2, 180, 5.9F, 2.0F, 12, () -> {
-		return Ingredient.of(Items.COPPER_INGOT);
-	}),
-	TESLA(4, 2100, 18.0F, 3.0F, 20, () -> {
-		return Ingredient.of(DeferredRegistryHandler.TESLA_INGOT.get());
-	}),
-	COBALT(2, 300, 6.2F, 3.0F, 15, () -> {
-		return Ingredient.of(DeferredRegistryHandler.COBALT_INGOT.get());
-	}),
-	VENTUS(3, 1900, 8.6F, 3.0F, 16, () -> {
-		return Ingredient.of(DeferredRegistryHandler.VENTUS_SHARD.get());
-	});
+	MOLTEN(3, 1900, 8.2F, 3.0F, 17, () -> Ingredient.of(DeferredRegistryHandler.MOLTEN_INGOT.get())),
+	COPPER(2, 180, 5.9F, 2.0F, 12, () -> Ingredient.of(Items.COPPER_INGOT)),
+	TESLA(4, 2100, 18.0F, 3.0F, 20, () -> Ingredient.of(DeferredRegistryHandler.TESLA_INGOT.get())),
+	COBALT(2, 300, 6.2F, 3.0F, 15, () -> Ingredient.of(DeferredRegistryHandler.COBALT_INGOT.get())),
+	VENTUS(3, 1900, 8.6F, 3.0F, 16, () -> Ingredient.of(DeferredRegistryHandler.VENTUS_SHARD.get()));
 
 	private final int harvestLevel;
 	private final int maxUses;

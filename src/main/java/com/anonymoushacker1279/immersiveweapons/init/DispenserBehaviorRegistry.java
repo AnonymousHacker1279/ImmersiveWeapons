@@ -14,7 +14,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.DispenserBlock;
 import org.jetbrains.annotations.NotNull;
 
-@SuppressWarnings("ConstantConditions")
 public class DispenserBehaviorRegistry implements DispenseItemBehavior {
 
 	/**

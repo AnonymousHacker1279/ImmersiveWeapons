@@ -35,8 +35,6 @@ public class LootTableGenerator extends LootTableProvider {
 
 	@Override
 	protected void validate(Map<ResourceLocation, LootTable> map, @NotNull ValidationContext validationContext) {
-		map.forEach((resourceLocation, lootTable) -> {
-			LootTables.validate(validationContext, resourceLocation, lootTable);
-		});
+		map.forEach((resourceLocation, lootTable) -> LootTables.validate(validationContext, resourceLocation, lootTable));
 	}
 }

@@ -15,21 +15,11 @@ import java.util.function.Supplier;
 
 public enum CustomArmorMaterials implements ArmorMaterial {
 
-	MOLTEN("molten", 39, new int[]{5, 6, 9, 4}, 15, SoundEvents.ARMOR_EQUIP_NETHERITE, 3.5F, () -> {
-		return Ingredient.of(DeferredRegistryHandler.MOLTEN_PLATE.get());
-	}, 0.12F),
-	COPPER("copper", 15, new int[]{1, 4, 5, 1}, 9, SoundEvents.ARMOR_EQUIP_IRON, 0.0F, () -> {
-		return Ingredient.of(Items.COPPER_INGOT);
-	}, 0.0F),
-	TESLA("tesla", 42, new int[]{7, 8, 11, 6}, 20, SoundEvents.ARMOR_EQUIP_GOLD, 3.0F, () -> {
-		return Ingredient.of(DeferredRegistryHandler.TESLA_INGOT.get());
-	}, 0.05F),
-	COBALT("cobalt", 16, new int[]{3, 5, 6, 3}, 10, SoundEvents.ARMOR_EQUIP_IRON, 0.0F, () -> {
-		return Ingredient.of(DeferredRegistryHandler.COBALT_INGOT.get());
-	}, 0.0F),
-	VENTUS("ventus", 39, new int[]{5, 6, 9, 5}, 14, SoundEvents.ARMOR_EQUIP_NETHERITE, 2.5F, () -> {
-		return Ingredient.of(DeferredRegistryHandler.VENTUS_SHARD.get());
-	}, 0.02F);
+	MOLTEN("molten", 39, new int[]{5, 6, 9, 4}, 15, SoundEvents.ARMOR_EQUIP_NETHERITE, 3.5F, () -> Ingredient.of(DeferredRegistryHandler.MOLTEN_PLATE.get()), 0.12F),
+	COPPER("copper", 15, new int[]{1, 4, 5, 1}, 9, SoundEvents.ARMOR_EQUIP_IRON, 0.0F, () -> Ingredient.of(Items.COPPER_INGOT), 0.0F),
+	TESLA("tesla", 42, new int[]{7, 8, 11, 6}, 20, SoundEvents.ARMOR_EQUIP_GOLD, 3.0F, () -> Ingredient.of(DeferredRegistryHandler.TESLA_INGOT.get()), 0.05F),
+	COBALT("cobalt", 16, new int[]{3, 5, 6, 3}, 10, SoundEvents.ARMOR_EQUIP_IRON, 0.0F, () -> Ingredient.of(DeferredRegistryHandler.COBALT_INGOT.get()), 0.0F),
+	VENTUS("ventus", 39, new int[]{5, 6, 9, 5}, 14, SoundEvents.ARMOR_EQUIP_NETHERITE, 2.5F, () -> Ingredient.of(DeferredRegistryHandler.VENTUS_SHARD.get()), 0.02F);
 
 	static final int[] MAX_DAMAGE_ARRAY = new int[]{13, 15, 16, 11};
 	private final String name;

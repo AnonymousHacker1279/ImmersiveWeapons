@@ -19,9 +19,7 @@ public class AdvancedModelTemplate extends ModelTemplate {
 	public void createItem(ResourceLocation pModelLocation, BiConsumer<ResourceLocation, Supplier<JsonElement>> pModelOutput) {
 		pModelOutput.accept(pModelLocation, () -> {
 			JsonObject jsonObject = new JsonObject();
-			this.model.ifPresent((resourceLocation) -> {
-				jsonObject.addProperty("parent", resourceLocation.toString());
-			});
+			model.ifPresent((resourceLocation) -> jsonObject.addProperty("parent", resourceLocation.toString()));
 
 			return jsonObject;
 		});

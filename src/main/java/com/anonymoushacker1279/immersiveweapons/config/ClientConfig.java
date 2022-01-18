@@ -11,7 +11,7 @@ public class ClientConfig {
 	private static final ForgeConfigSpec.Builder CONFIG_BUILDER = new ForgeConfigSpec.Builder();
 	private static final ForgeConfigSpec CONFIG;
 
-	public static ForgeConfigSpec.ConfigValue<Boolean> TESLA_ARMOR_EFFECT_SOUND;
+	public static final ForgeConfigSpec.ConfigValue<Boolean> TESLA_ARMOR_EFFECT_SOUND;
 
 	/*
 	 * Initialize the client configuration file.
