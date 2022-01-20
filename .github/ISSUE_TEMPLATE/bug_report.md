@@ -1,7 +1,5 @@
 ---
-name: Bug report
-about: Create a report to help improve Immersive Weapons
-title: "[BUG] Short line describing the issue"
+name: Bug report about: Create a report to help improve Immersive Weapons title: "[BUG] Short line describing the issue"
 labels: ''
 assignees: ''
 
@@ -20,10 +18,11 @@ A clear and concise description of what you expected to happen.
 If applicable, add screenshots to help explain your problem.
 
 **Setup**
- - Forge Version
- - Immersive Weapons Version
- - Other installed mods
-- Debug and latest logs (saves/logs folder in your .minecraft directory)
+
+- Forge Version
+- Immersive Weapons Version
+- Other installed mods
+- Debug and latest logs (saves/logs folder in your `.minecraft` directory)
 
 **Additional context**
 Add any other context about the problem here.
