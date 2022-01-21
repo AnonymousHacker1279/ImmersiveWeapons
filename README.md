@@ -1,12 +1,13 @@
 ![Immersive Weapons Logo](logo.png)
 
-# Immersive Weapons for Minecraft 1.18/1.17.1/1.16.5/1.16.4/1.15.2
+# Immersive Weapons for Minecraft 1.18.1/1.18/1.17.1/1.16.5/1.16.4/1.15.2
 
 ![CodeQL](https://github.com/AnonymousHacker1279/ImmersiveWeapons-Mod/workflows/CodeQL/badge.svg)
 [![](http://cf.way2muchnoise.eu/full_494454_Downloads.svg)](https://www.curseforge.com/minecraft/mc-mods/immersive-weapons)
 [![](http://cf.way2muchnoise.eu/versions/494454.svg)](https://www.curseforge.com/minecraft/mc-mods/immersive-weapons)
 [![CodeFactor](https://www.codefactor.io/repository/github/anonymoushacker1279/immersiveweapons/badge/master)](https://www.codefactor.io/repository/github/anonymoushacker1279/immersiveweapons/overview/master)
-## A weapons mod for Minecraft 1.18/1.17.1/1.16.5/1.16.4/1.15.2
+
+## A weapons mod for Minecraft 1.18.1/1.18/1.17.1/1.16.5/1.16.4/1.15.2
 
 Immersive Weapons is <s>a weapons mod</s> more than just a weapons mod aiming to spice up your combat skills.
 
@@ -55,13 +56,14 @@ You should always update to the latest bugfix/patch version. Updating to the lat
 but can be treated with a lower priority. Read the update changelogs associated with new releases for any important
 information about that release.
 
-This table lists the latest Immersive Weapons version for a Minecraft version. If anything is listed other than **
-Latest**, consider it to be at the End of Life. In some cases, an older version will receive bugfixes should the
+This table lists the latest Immersive Weapons version for a Minecraft version. If anything is listed other than **Latest**,
+consider it to be at the End of Life. In some cases, an older version will receive bugfixes should the
 community describe an interest in it (This excludes versions listed as **N/A - Build From Source**).
 
 | MC Version | Immersive Weapons Version Support | 
 | :-- | :-- | 
-| 1.18/1.18.1 | [(BETA) Latest](https://github.com/AnonymousHacker1279/ImmersiveWeapons/releases) |
+| 1.18.1 | [(BETA) Latest](https://github.com/AnonymousHacker1279/ImmersiveWeapons/releases) |
+| 1.18 | [(BETA) 1.13.0-beta9](https://github.com/AnonymousHacker1279/ImmersiveWeapons/releases/tag/v1.13.0-beta9) |
 | 1.17.1 | [1.12.1](https://github.com/AnonymousHacker1279/ImmersiveWeapons/releases/tag/v1.12.1) |
 | 1.16.5 | [1.4.3](https://github.com/AnonymousHacker1279/ImmersiveWeapons/releases/tag/v1.4.3) |
 | 1.16.4 | [1.1.1](https://github.com/AnonymousHacker1279/ImmersiveWeapons/releases/tag/v1.1.1) |
