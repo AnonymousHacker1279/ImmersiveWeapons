@@ -86,18 +86,17 @@ public class BearTrapBlockEntity extends BlockEntity implements EntityBlock {
 	/**
 	 * Save NBT data.
 	 *
-	 * @param nbt the <code>CompoundNBT</code> to save
+	 * @param pTag the <code>CompoundNBT</code> to save
 	 */
 	@Override
-	public @NotNull CompoundTag save(@NotNull CompoundTag nbt) {
-		super.save(nbt);
+	protected void saveAdditional(@NotNull CompoundTag pTag) {
+		super.saveAdditional(pTag);
 		if (trappedMobEntity != null && trappedMobEntity.isAlive()) {
-			nbt.putUUID("trapped_entity", trappedMobEntity.getUUID());
+			pTag.putUUID("trapped_entity", trappedMobEntity.getUUID());
 		}
 		if (trappedPlayerEntity != null && trappedPlayerEntity.isAlive()) {
-			nbt.putUUID("trapped_entity", trappedPlayerEntity.getUUID());
+			pTag.putUUID("trapped_entity", trappedPlayerEntity.getUUID());
 		}
-		return nbt;
 	}
 
 	/**

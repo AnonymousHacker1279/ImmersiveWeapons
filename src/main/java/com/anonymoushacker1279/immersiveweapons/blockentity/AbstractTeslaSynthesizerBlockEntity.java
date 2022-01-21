@@ -7,9 +7,7 @@ import com.google.common.collect.Maps;
 import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
 import net.minecraft.SharedConstants;
 import net.minecraft.Util;
-import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
-import net.minecraft.core.NonNullList;
+import net.minecraft.core.*;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.ItemTags;
@@ -18,9 +16,7 @@ import net.minecraft.world.ContainerHelper;
 import net.minecraft.world.WorldlyContainer;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.player.StackedContents;
-import net.minecraft.world.inventory.ContainerData;
-import net.minecraft.world.inventory.RecipeHolder;
-import net.minecraft.world.inventory.StackedContentsCompatible;
+import net.minecraft.world.inventory.*;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Recipe;
@@ -258,19 +254,18 @@ public abstract class AbstractTeslaSynthesizerBlockEntity extends BaseContainerB
 	/**
 	 * Save NBT data.
 	 *
-	 * @param nbt the <code>CompoundNBT</code> to save
+	 * @param pTag the <code>CompoundNBT</code> to save
 	 */
 	@Override
-	public @NotNull CompoundTag save(@NotNull CompoundTag nbt) {
-		super.save(nbt);
-		nbt.putInt("BurnTime", burnTime);
-		nbt.putInt("CookTime", cookTime);
-		nbt.putInt("CookTimeTotal", cookTimeTotal);
-		ContainerHelper.saveAllItems(nbt, items);
+	protected void saveAdditional(@NotNull CompoundTag pTag) {
+		super.saveAdditional(pTag);
+		pTag.putInt("BurnTime", burnTime);
+		pTag.putInt("CookTime", cookTime);
+		pTag.putInt("CookTimeTotal", cookTimeTotal);
+		ContainerHelper.saveAllItems(pTag, items);
 		CompoundTag compoundTag = new CompoundTag();
 		recipes.forEach((recipeId, craftedAmount) -> compoundTag.putInt(recipeId.toString(), craftedAmount));
-		nbt.put("RecipesUsed", compoundTag);
-		return nbt;
+		pTag.put("RecipesUsed", compoundTag);
 	}
 
 	/**

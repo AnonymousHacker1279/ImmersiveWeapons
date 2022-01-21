@@ -95,14 +95,13 @@ public class MedicStatueBlockEntity extends BlockEntity implements EntityBlock {
 	/**
 	 * Save NBT data.
 	 *
-	 * @param nbt the <code>CompoundNBT</code> to save
+	 * @param pTag the <code>CompoundNBT</code> to save
 	 */
 	@Override
-	public @NotNull CompoundTag save(@NotNull CompoundTag nbt) {
-		super.save(nbt);
-		nbt.putInt("scanCooldown", cooldown);
-		nbt.putInt("scannedMedics", scannedMedics);
-		return nbt;
+	protected void saveAdditional(@NotNull CompoundTag pTag) {
+		super.saveAdditional(pTag);
+		pTag.putInt("scanCooldown", cooldown);
+		pTag.putInt("scannedMedics", scannedMedics);
 	}
 
 	/**

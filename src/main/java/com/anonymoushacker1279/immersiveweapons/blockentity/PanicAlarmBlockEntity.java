@@ -129,15 +129,14 @@ public class PanicAlarmBlockEntity extends BlockEntity implements EntityBlock {
 	/**
 	 * Save NBT data.
 	 *
-	 * @param nbt the <code>CompoundNBT</code> to save
+	 * @param pTag the <code>CompoundNBT</code> to save
 	 */
 	@Override
-	public @NotNull CompoundTag save(@NotNull CompoundTag nbt) {
-		super.save(nbt);
-		nbt.putInt("cooldown", cooldown);
-		nbt.putBoolean("isPowered", isPowered);
-		nbt.putInt("currentlyPlayingSound", currentlyPlayingSound);
-		return nbt;
+	protected void saveAdditional(@NotNull CompoundTag pTag) {
+		super.saveAdditional(pTag);
+		pTag.putInt("cooldown", cooldown);
+		pTag.putBoolean("isPowered", isPowered);
+		pTag.putInt("currentlyPlayingSound", currentlyPlayingSound);
 	}
 
 	/**

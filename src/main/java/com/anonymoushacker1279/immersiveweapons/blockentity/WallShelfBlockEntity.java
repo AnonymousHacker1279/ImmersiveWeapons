@@ -6,9 +6,7 @@ import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.Connection;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
-import net.minecraft.world.Clearable;
-import net.minecraft.world.ContainerHelper;
-import net.minecraft.world.Containers;
+import net.minecraft.world.*;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -95,12 +93,11 @@ public class WallShelfBlockEntity extends BlockEntity implements EntityBlock, Cl
 	/**
 	 * Save NBT data.
 	 *
-	 * @param nbt the <code>CompoundNBT</code> to save
+	 * @param pTag the <code>CompoundNBT</code> to save
 	 */
 	@Override
-	public @NotNull CompoundTag save(@NotNull CompoundTag nbt) {
-		writeItems(nbt);
-		return nbt;
+	protected void saveAdditional(@NotNull CompoundTag pTag) {
+		writeItems(pTag);
 	}
 
 	/**
@@ -110,7 +107,7 @@ public class WallShelfBlockEntity extends BlockEntity implements EntityBlock, Cl
 	 * @return CompoundNBT
 	 */
 	private CompoundTag writeItems(CompoundTag nbt) {
-		super.save(nbt);
+		super.saveAdditional(nbt);
 		ContainerHelper.saveAllItems(nbt, inventory, true);
 		return nbt;
 	}
