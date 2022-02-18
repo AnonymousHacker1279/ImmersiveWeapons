@@ -14,7 +14,10 @@
       "item": "minecraft:bamboo"
     },
     "c": {
-      "item": "minecraft:spider_eye"
+      "type": "forge:nbt",
+      "item": "minecraft:potion",
+      "count": 1,
+      "nbt": "{Potion:\"minecraft:poison\"}"
     }
   },
   "result": {

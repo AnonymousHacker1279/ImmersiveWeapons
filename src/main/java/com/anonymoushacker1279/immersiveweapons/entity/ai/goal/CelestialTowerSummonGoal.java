@@ -1,6 +1,6 @@
 package com.anonymoushacker1279.immersiveweapons.entity.ai.goal;
 
-import com.anonymoushacker1279.immersiveweapons.config.ServerConfig;
+import com.anonymoushacker1279.immersiveweapons.config.CommonConfig;
 import com.anonymoushacker1279.immersiveweapons.entity.monster.CelestialTowerEntity;
 import com.anonymoushacker1279.immersiveweapons.entity.monster.RockSpiderEntity;
 import com.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
@@ -30,7 +30,7 @@ public class CelestialTowerSummonGoal extends Goal {
 	private final CelestialTowerEntity mob;
 	private int waveSpawnCooldown = 100;
 	private AABB searchBox;
-	private static final float MINION_WAVE_SIZE_MODIFIER = Float.parseFloat(ServerConfig.CELESTIAL_TOWER_MINIONS_WAVE_SIZE_MODIFIER.get());
+	private static final float MINION_WAVE_SIZE_MODIFIER = Float.parseFloat(CommonConfig.CELESTIAL_TOWER_MINIONS_WAVE_SIZE_MODIFIER.get());
 
 	public CelestialTowerSummonGoal(CelestialTowerEntity pMob) {
 		mob = pMob;

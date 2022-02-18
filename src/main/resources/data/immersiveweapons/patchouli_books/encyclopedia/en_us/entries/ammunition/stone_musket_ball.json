@@ -1,0 +1,17 @@
+{
+	"name": "Stone Musket Ball",
+	"icon": "immersiveweapons:stone_musket_ball",
+	"category": "immersiveweapons:ammunition",
+	"pages": [
+		{
+			"type": "patchouli:text",
+			"text": "High velocity rocks...$(br2)Its generally bad practice to shoot rocks out of a firearm. While its a bit stronger than $(l:ammunition/wood_musket_ball)wooden musket balls$(), it will fall much faster and so you'll need to be closer to your target."
+		},
+		{
+			"type": "patchouli:crafting",
+			"recipe": "immersiveweapons:stone_musket_ball",
+			"text": "$(o)Deals $(l)2.20$()$(o) base damage. See $(l:ammunition/bullet_velocities_info)Guide: Bullet Damage$()$(o) for more information.$(br2)$(l)15%$()$(o) chance to misfire."
+		}
+	],
+	"advancement": "immersiveweapons:stone_shard"
+}

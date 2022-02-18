@@ -1,0 +1,22 @@
+{
+	"name": "Tesla",
+	"icon": "immersiveweapons:tesla_ingot",
+	"category": "immersiveweapons:resources",
+	"pages": [
+		{
+			"type": "patchouli:text",
+			"text": "Tesla is generally regarded as the most powerful resource. The sheer strength of items forged from this resource lends to its rarity; so you'll have a lot of work ahead to find some."
+		},
+		{
+			"type": "patchouli:crafting",
+			"recipe": "immersiveweapons:tesla_ingot",
+			"recipe2": "immersiveweapons:conductive_alloy"
+		},
+		{
+			"type": "patchouli:spotlight",
+			"item": "immersiveweapons:electric_ingot",
+			"link_recipe": true,
+			"text": "Electric ingots are obtained by smelting Electric ore."
+		}
+	]
+}

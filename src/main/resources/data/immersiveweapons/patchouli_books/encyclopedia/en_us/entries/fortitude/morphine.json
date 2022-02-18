@@ -1,0 +1,23 @@
+{
+	"name": "Morphine",
+	"icon": "immersiveweapons:morphine",
+	"category": "immersiveweapons:fortitude",
+	"pages": [
+		{
+			"type": "patchouli:text",
+			"text": "Sometimes you need a bit more... $(o)everything.$()$(br2)Jabbing yourself with a bit of morphine will grant Resistance, Absorption, and Speed for 45 seconds. Of course, doing hard drugs will have downsides! After the initial effects wear off, you'll receive Weakness, Mining Fatigue, and Slowness."
+		},
+		{
+			"type": "patchouli:crafting",
+			"recipe": "immersiveweapons:morphine",
+			"recipe2": "immersiveweapons:syringe"
+		},
+		{
+			"type": "patchouli:spotlight",
+			"item": "immersiveweapons:used_syringe",
+			"link_recipe": true,
+			"text": "After a morphine syringe is used, you'll be rewarded with a used syringe. If you're sick enough to poke yourself with these, you might get hepatitis!"
+		}
+	],
+	"advancement": "immersiveweapons:recipes/immersiveweapons/syringe"
+}

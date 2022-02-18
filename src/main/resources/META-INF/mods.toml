@@ -8,7 +8,7 @@ modId = "immersiveweapons" #mandatory
 version = "${file.jarVersion}" #mandatory
 displayName = "Immersive Weapons" #mandatory
 displayURL = "https://www.curseforge.com/minecraft/mc-mods/immersive-weapons" #optional
-updateJSONURL = "https://raw.githubusercontent.com/AnonymousHacker1279/ImmersiveWeapons/1.18.x-dev/update.json"
+updateJSONURL = "https://raw.githubusercontent.com/AnonymousHacker1279/ImmersiveWeapons/1.14.0-update-indev/update.json"
 logoFile = "logo.png" #optional
 credits = "Written by AnonymousHacker1279 and visually designed with the help of Jonny-fox and gamingwarrior68 with pain and suffering" #optional
 authors = "AnonymousHacker1279" #optional
@@ -27,5 +27,12 @@ side = "BOTH"
 modId = "minecraft"
 mandatory = true
 versionRange = "[1.18.1,1.19)"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies.immersiveweapons]]
+modId = "patchouli"
+mandatory = false
+versionRange = "[1.18.1-64,)"
 ordering = "NONE"
 side = "BOTH"

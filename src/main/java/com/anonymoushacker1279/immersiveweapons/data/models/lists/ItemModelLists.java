@@ -8,7 +8,7 @@ import java.util.List;
 
 public class ItemModelLists {
 
-	public static final List<Item> ignoredItems = new ArrayList<>(1);
+	public static final List<Item> ignoredItems = new ArrayList<>(75);
 
 	/**
 	 * Initialize the lists.

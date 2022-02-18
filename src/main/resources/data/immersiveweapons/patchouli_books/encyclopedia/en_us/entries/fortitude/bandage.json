@@ -1,0 +1,16 @@
+{
+	"name": "Bandage",
+	"icon": "immersiveweapons:bandage",
+	"category": "immersiveweapons:fortitude",
+	"pages": [
+		{
+			"type": "patchouli:text",
+			"text": "If you need quick healing, a bandage will help. And, they're cheap to make. Upon use, you'll be granted 12 seconds of Regeneration.$(br2)If you're under the effect of Bleeding, bandages will instantly clear it.$(br2)If you're on the verge of death, a $(l:fortitude/first_aid_kit)first aid kit$() might be more appropriate."
+		},
+		{
+			"type": "patchouli:crafting",
+			"recipe": "immersiveweapons:bandage"
+		}
+	],
+	"advancement": "immersiveweapons:recipes/immersiveweapons/bandage"
+}

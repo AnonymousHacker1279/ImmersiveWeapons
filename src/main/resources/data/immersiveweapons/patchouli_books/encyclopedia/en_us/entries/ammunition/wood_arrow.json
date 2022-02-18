@@ -1,0 +1,17 @@
+{
+	"name": "Wooden Arrow",
+	"icon": "immersiveweapons:wood_arrow",
+	"category": "immersiveweapons:ammunition",
+	"pages": [
+		{
+			"type": "patchouli:text",
+			"text": "$(o)Who in the right mind would make a wooden arrow?$()$(br2)Yes, its as weak as it sounds. If you hit someone with this you'll probably just make them mad."
+		},
+		{
+			"type": "patchouli:crafting",
+			"recipe": "immersiveweapons:wood_arrow",
+			"text": "$(o)Deals 35% $(#FF5555)less$(0) damage than regular arrows."
+		}
+	],
+	"advancement": "immersiveweapons:wood_shard"
+}

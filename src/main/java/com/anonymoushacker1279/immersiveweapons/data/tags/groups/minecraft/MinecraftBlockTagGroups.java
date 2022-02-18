@@ -20,4 +20,5 @@ public class MinecraftBlockTagGroups {
 	public static final Named<Block> WOODEN_SLABS = BlockTags.bind("minecraft:wooden_slabs");
 	public static final Named<Block> WOODEN_STAIRS = BlockTags.bind("minecraft:wooden_stairs");
 	public static final Named<Block> WOODEN_TRAPDOORS = BlockTags.bind("minecraft:wooden_trapdoors");
+	public static final Named<Block> NON_FLAMMABLE_WOOD = BlockTags.bind("minecraft:non_flammable_wood");
 }

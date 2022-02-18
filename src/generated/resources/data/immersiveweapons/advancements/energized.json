@@ -2,8 +2,7 @@
   "parent": "immersiveweapons:tesla_ingot",
   "display": {
     "icon": {
-      "item": "immersiveweapons:tesla_pickaxe",
-      "nbt": "{Damage:0}"
+      "item": "immersiveweapons:tesla_block"
     },
     "title": {
       "translate": "advancements.immersiveweapons.energized.title"
@@ -11,43 +10,33 @@
     "description": {
       "translate": "advancements.immersiveweapons.energized.description"
     },
-    "frame": "goal",
+    "frame": "challenge",
     "show_toast": true,
     "announce_to_chat": true,
     "hidden": false
   },
   "rewards": {
-    "experience": 100
+    "experience": 150
   },
   "criteria": {
-    "hold": {
-      "trigger": "minecraft:inventory_changed",
+    "have_advancements": {
+      "trigger": "minecraft:location",
       "conditions": {
-        "items": [
+        "player": [
           {
-            "items": [
-              "immersiveweapons:tesla_sword"
-            ]
-          },
-          {
-            "items": [
-              "immersiveweapons:tesla_pickaxe"
-            ]
-          },
-          {
-            "items": [
-              "immersiveweapons:tesla_axe"
-            ]
-          },
-          {
-            "items": [
-              "immersiveweapons:tesla_shovel"
-            ]
-          },
-          {
-            "items": [
-              "immersiveweapons:tesla_hoe"
-            ]
+            "condition": "minecraft:entity_properties",
+            "predicate": {
+              "player": {
+                "advancements": {
+                  "immersiveweapons:tesla_shovel": true,
+                  "immersiveweapons:tesla_axe": true,
+                  "immersiveweapons:tesla_hoe": true,
+                  "immersiveweapons:tesla_pickaxe": true,
+                  "immersiveweapons:tesla_sword": true
+                }
+              }
+            },
+            "entity": "this"
           }
         ]
       }
@@ -55,7 +44,7 @@
   },
   "requirements": [
     [
-      "hold"
+      "have_advancements"
     ]
   ]
 }

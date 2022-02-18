@@ -1,0 +1,16 @@
+{
+	"name": "Spike Trap",
+	"icon": "immersiveweapons:spike_trap",
+	"category": "immersiveweapons:defense",
+	"pages": [
+		{
+			"type": "patchouli:text",
+			"text": "A good way to make defenses that can be toggled on or off is to use spike traps.$(br2)By default, they're deactivated and allow anything to pass through. When activated with redstone, they damage anything that passes through."
+		},
+		{
+			"type": "patchouli:crafting",
+			"recipe": "immersiveweapons:spike_trap"
+		}
+	],
+	"advancement": "minecraft:story/smelt_iron"
+}

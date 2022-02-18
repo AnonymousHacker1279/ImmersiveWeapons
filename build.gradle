@@ -26,20 +26,20 @@ repositories {
 		name "Bai Maven"
 		url "https://maven.bai.lol"
 	}
+	maven {
+		url 'https://maven.blamejared.com'
+	}
 }
 
 apply plugin: 'net.minecraftforge.gradle'
 apply plugin: 'org.parchmentmc.librarian.forgegradle'
 apply plugin: 'maven-publish'
 
-version = '1.18.1-1.13.0-beta10'
-group = 'com.anonymoushacker1279.immersiveweapons'
-
 java.toolchain.languageVersion = JavaLanguageVersion.of(17)
 
 println('Java: ' + System.getProperty('java.version') + ' JVM: ' + System.getProperty('java.vm.version') + '(' + System.getProperty('java.vendor') + ') Arch: ' + System.getProperty('os.arch'))
 minecraft {
-	mappings channel: 'parchment', version: '2021.12.19-1.18.1'
+	mappings channel: mappings_channel, version: mappings_version
 
 	accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
 
@@ -50,6 +50,10 @@ minecraft {
 			property 'forge.logging.markers', 'REGISTRIES'
 
 			property 'forge.logging.console.level', 'debug'
+
+			// For Patchouli to work in-dev
+			property 'mixin.env.remapRefMap', 'true'
+			property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
 
 			mods {
 				immersiveweapons {
@@ -65,6 +69,10 @@ minecraft {
 
 			property 'forge.logging.console.level', 'debug'
 
+			// For Patchouli to work in-dev
+			property 'mixin.env.remapRefMap', 'true'
+			property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
+
 			mods {
 				immersiveweapons {
 					source sourceSets.main
@@ -78,6 +86,10 @@ minecraft {
 			property 'forge.logging.markers', 'REGISTRIES'
 
 			property 'forge.logging.console.level', 'debug'
+
+			// For Patchouli to work in-dev
+			property 'mixin.env.remapRefMap', 'true'
+			property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
 
 			args '--mod', 'immersiveweapons', '--all', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources/')
 
@@ -96,13 +108,43 @@ sourceSets.main.resources { srcDir 'src/generated/resources' }
 dependencies {
 	implementation 'org.jetbrains:annotations:23.0.0'
 
-	minecraft 'net.minecraftforge:forge:1.18.1-39.0.55'
+	minecraft forge_version
 
 	// Include JEI
-	implementation fg.deobf("mezz.jei:jei-1.18.1:9.2.1.69")
+	implementation fg.deobf(jei_version)
 
 	// Include WTHIT
-	implementation fg.deobf("mcp.mobius.waila:wthit:forge-4.4.1")
+	implementation fg.deobf(wthit_version)
+
+	// Include Patchouli
+	compileOnly fg.deobf(patchouli_version + ":api")
+	runtimeOnly fg.deobf(patchouli_version)
+}
+
+// This block of code expands all the gradle properties in the specified resource targets.
+// It copies them into the targets and expands all the defined properties.
+def resourceTargets = ['data/immersiveweapons/patchouli_books/encyclopedia/book.json']
+def intoTargets = ["$rootDir/out/production/resources/", "$rootDir/out/production/${project.name}.main/", "$rootDir/bin/main/"]
+def replaceProperties = [build_version: version]
+processResources {
+	inputs.properties replaceProperties
+	replaceProperties.put 'project', project
+
+	filesMatching(resourceTargets) {
+		expand replaceProperties
+	}
+
+	intoTargets.each { target ->
+		if (file(target).exists()) {
+			copy {
+				from(sourceSets.main.resources) {
+					include resourceTargets
+					expand replaceProperties
+				}
+				into target
+			}
+		}
+	}
 }
 
 // Add properties to JAR manifest

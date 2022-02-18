@@ -1,0 +1,17 @@
+{
+	"name": "Stone Arrow",
+	"icon": "immersiveweapons:stone_arrow",
+	"category": "immersiveweapons:ammunition",
+	"pages": [
+		{
+			"type": "patchouli:text",
+			"text": "$(o)The kind of arrow a peasant would use.$()$(br2)I suppose impaling someone with a stone would hurt. But it's nowhere near as effective as other arrows.$(br2)Not to mention the extra weight makes it fall faster."
+		},
+		{
+			"type": "patchouli:crafting",
+			"recipe": "immersiveweapons:stone_arrow",
+			"text": "$(o)Deals 15% $(#FF5555)less$(0) damage than regular arrows."
+		}
+	],
+	"advancement": "immersiveweapons:stone_shard"
+}

@@ -1,0 +1,17 @@
+{
+	"name": "Stone Gauntlet",
+	"icon": "immersiveweapons:stone_gauntlet",
+	"category": "immersiveweapons:gauntlets",
+	"pages": [
+		{
+			"type": "patchouli:text",
+			"text": "Stone gauntlets aren't much better than wooden ones. Still heavy, blunt, and weak. I guess it looks cool though.$(br2)$(o)'Oi, com'ere and lemme beat ya with my stone fist!$()"
+		},
+		{
+			"type": "patchouli:crafting",
+			"recipe": "immersiveweapons:stone_gauntlet",
+			"text": "$(o)Has a 25% chance to inflict $(#FF5555)Bleeding$()."
+		}
+	],
+	"advancement": "minecraft:story/mine_stone"
+}

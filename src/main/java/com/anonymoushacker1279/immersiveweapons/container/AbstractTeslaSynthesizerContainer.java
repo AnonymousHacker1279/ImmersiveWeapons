@@ -9,8 +9,6 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.*;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 import org.jetbrains.annotations.NotNull;
 
 public abstract class AbstractTeslaSynthesizerContainer extends AbstractContainerMenu {
@@ -32,41 +30,41 @@ public abstract class AbstractTeslaSynthesizerContainer extends AbstractContaine
 	/**
 	 * Constructor for AbstractTeslaSynthesizerContainer.
 	 *
-	 * @param containerType   the <code>ContainerType</code> of the container
-	 * @param id              the ID of the container
-	 * @param playerInventory the <code>PlayerInventory</code> instance
-	 * @param iInventory      the <code>IInventory</code> instance
-	 * @param iIntArray       the <code>IIntArray</code> instance
+	 * @param containerType the <code>ContainerType</code> of the container
+	 * @param id            the ID of the container
+	 * @param inventory     the player inventory
+	 * @param container     the container
+	 * @param containerData the container data
 	 */
-	AbstractTeslaSynthesizerContainer(MenuType<?> containerType, int id, Inventory playerInventory, Container iInventory, ContainerData iIntArray) {
+	AbstractTeslaSynthesizerContainer(MenuType<?> containerType, int id, Inventory inventory, Container container, ContainerData containerData) {
 		super(containerType, id);
-		checkContainerSize(iInventory, 5);
-		checkContainerDataCount(iIntArray, 4);
-		teslaSynthesizerInventory = iInventory;
-		teslaSynthesizerData = iIntArray;
+		checkContainerSize(container, 5);
+		checkContainerDataCount(containerData, 4);
+		teslaSynthesizerInventory = container;
+		teslaSynthesizerData = containerData;
 		// First ingredient slot
-		addSlot(new Slot(iInventory, 0, 6, 17));
+		addSlot(new Slot(container, 0, 6, 17));
 		// Second ingredient slot
-		addSlot(new Slot(iInventory, 1, 31, 17));
+		addSlot(new Slot(container, 1, 31, 17));
 		// Third ingredient slot
-		addSlot(new Slot(iInventory, 2, 56, 17));
+		addSlot(new Slot(container, 2, 56, 17));
 		// Fuel slot
-		addSlot(new TeslaSynthesizerFuelSlot(this, iInventory, 3, 56, 53));
+		addSlot(new TeslaSynthesizerFuelSlot(this, container, 3, 56, 53));
 		// Result slot
-		addSlot(new TeslaSynthesizerResultSlot(iInventory, 4, 116, 35));
+		addSlot(new TeslaSynthesizerResultSlot(container, 4, 116, 35));
 
 		// Player inventory slots
 		for (int i = 0; i < 3; ++i) {
 			for (int j = 0; j < 9; ++j) {
-				addSlot(new Slot(playerInventory, j + i * 9 + 9, 8 + j * 18, 84 + i * 18));
+				addSlot(new Slot(inventory, j + i * 9 + 9, 8 + j * 18, 84 + i * 18));
 			}
 		}
 
 		for (int k = 0; k < 9; ++k) {
-			addSlot(new Slot(playerInventory, k, 8 + k * 18, 142));
+			addSlot(new Slot(inventory, k, 8 + k * 18, 142));
 		}
 
-		addDataSlots(iIntArray);
+		addDataSlots(containerData);
 	}
 
 	/**
@@ -89,48 +87,55 @@ public abstract class AbstractTeslaSynthesizerContainer extends AbstractContaine
 	 */
 	@Override
 	public @NotNull ItemStack quickMoveStack(@NotNull Player playerIn, int index) {
-		ItemStack itemstack = ItemStack.EMPTY;
+		ItemStack itemStack = ItemStack.EMPTY;
 		Slot slot = slots.get(index);
 		if (slot.hasItem()) {
-			ItemStack itemStack1 = slot.getItem();
-			itemstack = itemStack1.copy();
-			if (index == 4) {
-				if (!moveItemStackTo(itemStack1, 3, 39, true)) {
+			ItemStack slotItem = slot.getItem();
+			itemStack = slotItem.copy();
+
+			if (index == 4) { // Result slot
+				// Try moving the result into any of the player inventory slots
+				if (!moveItemStackTo(slotItem, 3, 39, true)) {
 					return ItemStack.EMPTY;
 				}
-				slot.onQuickCraft(itemStack1, itemstack);
-			} else if (index != 2 && index != 1 && index != 0) {
-				if (isFuel(itemStack1)) {
-					if (!moveItemStackTo(itemStack1, 3, 4, false)) {
+
+				slot.onQuickCraft(slotItem, itemStack);
+			} else if (index != 2 && index != 1 && index != 0) { // Anything but the ingredient slots
+
+				// Check if the item is a fuel
+				if (isFuel(slotItem)) {
+					// Try moving the item into the fuel slot
+					if (!moveItemStackTo(slotItem, 3, 3, false)) {
 						return ItemStack.EMPTY;
 					}
-				} else if (!moveItemStackTo(itemStack1, 0, 3, false)) {
+				} else if (!moveItemStackTo(slotItem, 0, 2, false)) {
 					return ItemStack.EMPTY;
 				} else if (index < 30) {
-					if (!moveItemStackTo(itemStack1, 30, 39, false)) {
+
+					if (!moveItemStackTo(slotItem, 30, 39, false)) {
 						return ItemStack.EMPTY;
 					}
-				} else if (index < 39 && !moveItemStackTo(itemStack1, 3, 30, false)) {
+				} else if (index < 39 && !moveItemStackTo(slotItem, 3, 30, false)) {
 					return ItemStack.EMPTY;
 				}
-			} else if (!moveItemStackTo(itemStack1, 3, 39, false)) {
+			} else if (!moveItemStackTo(slotItem, 3, 39, false)) {
 				return ItemStack.EMPTY;
 			}
 
-			if (itemStack1.isEmpty()) {
+			if (slotItem.isEmpty()) {
 				slot.set(ItemStack.EMPTY);
 			} else {
 				slot.setChanged();
 			}
 
-			if (itemStack1.getCount() == itemstack.getCount()) {
+			if (slotItem.getCount() == itemStack.getCount()) {
 				return ItemStack.EMPTY;
 			}
 
-			slot.onTake(playerIn, itemStack1);
+			slot.onTake(playerIn, slotItem);
 		}
 
-		return itemstack;
+		return itemStack;
 	}
 
 	/**
@@ -148,7 +153,6 @@ public abstract class AbstractTeslaSynthesizerContainer extends AbstractContaine
 	 *
 	 * @return int
 	 */
-	@OnlyIn(Dist.CLIENT)
 	public int getCookProgressionScaled() {
 		int i = teslaSynthesizerData.get(2);
 		int j = teslaSynthesizerData.get(3);
@@ -160,7 +164,6 @@ public abstract class AbstractTeslaSynthesizerContainer extends AbstractContaine
 	 *
 	 * @return int
 	 */
-	@OnlyIn(Dist.CLIENT)
 	public int getBurnLeftScaled() {
 		int i = teslaSynthesizerData.get(1);
 		if (i == 0) {
@@ -175,7 +178,6 @@ public abstract class AbstractTeslaSynthesizerContainer extends AbstractContaine
 	 *
 	 * @return boolean
 	 */
-	@OnlyIn(Dist.CLIENT)
 	public boolean isBurning() {
 		return teslaSynthesizerData.get(0) > 0;
 	}

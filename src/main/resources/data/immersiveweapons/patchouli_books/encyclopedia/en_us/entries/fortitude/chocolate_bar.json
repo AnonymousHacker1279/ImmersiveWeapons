@@ -1,0 +1,17 @@
+{
+	"name": "Chocolate Bar",
+	"icon": "immersiveweapons:chocolate_bar",
+	"category": "immersiveweapons:fortitude",
+	"pages": [
+		{
+			"type": "patchouli:text",
+			"text": "Who doesn't love some chocolate?$(br2)Be careful though. As you've probably learned, don't accept everything from strangers! A chocolate bar may be laced with explosives."
+		},
+		{
+			"type": "patchouli:crafting",
+			"recipe": "immersiveweapons:chocolate_bar",
+			"recipe2": "immersiveweapons:explosive_chocolate_bar"
+		}
+	],
+	"advancement": "immersiveweapons:recipes/immersiveweapons/chocolate_bar"
+}

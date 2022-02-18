@@ -1,0 +1,17 @@
+{
+	"name": "Flare Gun",
+	"icon": "immersiveweapons:flare_gun",
+	"category": "immersiveweapons:firearms",
+	"pages": [
+		{
+			"type": "patchouli:text",
+			"text": "A bit different than your regular firearm. Instead of firing dense projectiles, this fires a flare. It is designed for marking points of interest with bright burning colors.$(br2)Sure, you can still shoot stuff with it. It'll just catch whoever you're pointing at on fire."
+		},
+		{
+			"type": "patchouli:crafting",
+			"recipe": "immersiveweapons:flare_gun",
+			"text": "Reload Time: $(l)3 seconds$()$(br2)Ammunition Type: $(l)Flares"
+		}
+	],
+	"advancement": "immersiveweapons:recipes/immersiveweapons/small_parts_iron_tinkering"
+}

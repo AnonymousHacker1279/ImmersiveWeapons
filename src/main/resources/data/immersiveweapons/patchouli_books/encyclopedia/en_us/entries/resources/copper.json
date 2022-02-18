@@ -1,0 +1,15 @@
+{
+	"name": "Copper",
+	"icon": "immersiveweapons:copper_nugget",
+	"category": "immersiveweapons:resources",
+	"pages": [
+		{
+			"type": "patchouli:text",
+			"text": "Copper is quite easy to find throughout the world. It's not spectacular in terms of properties, but it'll get you to better resources."
+		},
+		{
+			"type": "patchouli:crafting",
+			"recipe": "immersiveweapons:copper_nugget"
+		}
+	]
+}

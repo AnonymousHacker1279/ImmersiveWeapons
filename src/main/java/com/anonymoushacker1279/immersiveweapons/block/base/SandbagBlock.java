@@ -1,11 +1,13 @@
 package com.anonymoushacker1279.immersiveweapons.block.base;
 
 import com.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
+import com.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
@@ -17,8 +19,6 @@ import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 import org.jetbrains.annotations.NotNull;
 
 public class SandbagBlock extends HorizontalDirectionalBlock {
@@ -91,7 +91,6 @@ public class SandbagBlock extends HorizontalDirectionalBlock {
 	 */
 	@SuppressWarnings("deprecation")
 	@Override
-	@OnlyIn(Dist.CLIENT)
 	public float getShadeBrightness(@NotNull BlockState state, @NotNull BlockGetter reader, @NotNull BlockPos pos) {
 		return 1.0F;
 	}
@@ -110,7 +109,10 @@ public class SandbagBlock extends HorizontalDirectionalBlock {
 	 */
 	@SuppressWarnings("deprecation")
 	@Override
-	public @NotNull InteractionResult use(@NotNull BlockState state, @NotNull Level worldIn, @NotNull BlockPos pos, Player player, @NotNull InteractionHand handIn, @NotNull BlockHitResult blockRayTraceResult) {
+	public @NotNull InteractionResult use(@NotNull BlockState state, @NotNull Level worldIn, @NotNull BlockPos pos,
+	                                      Player player, @NotNull InteractionHand handIn,
+	                                      @NotNull BlockHitResult blockRayTraceResult) {
+
 		if (player.getMainHandItem().getItem() == DeferredRegistryHandler.SANDBAG_ITEM.get()) {
 			if (state.getValue(BAGS) == 1) {
 				worldIn.setBlock(pos, state.setValue(BAGS, 2).setValue(FACING, state.getValue(FACING)), 3);
@@ -135,5 +137,19 @@ public class SandbagBlock extends HorizontalDirectionalBlock {
 			}
 		}
 		return InteractionResult.PASS;
+	}
+
+	@SuppressWarnings("deprecation")
+	@Override
+	public void onProjectileHit(Level level, @NotNull BlockState state, @NotNull BlockHitResult hitResult,
+	                            @NotNull Projectile projectile) {
+
+		if (level.isClientSide) {
+			level.addParticle(DeferredRegistryHandler.SAND_CLOUD_PARTICLE.get(),
+					projectile.getX(), projectile.getY(), projectile.getZ(),
+					GeneralUtilities.getRandomNumber(-0.01d, 0.01d),
+					GeneralUtilities.getRandomNumber(-0.01d, 0.01d),
+					GeneralUtilities.getRandomNumber(-0.01d, 0.01d));
+		}
 	}
 }

@@ -5,23 +5,17 @@ import com.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResult;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.*;
-import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.world.level.block.entity.BlockEntityTicker;
-import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.entity.*;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
-import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.NotNull;
@@ -50,14 +44,16 @@ public class PanicAlarmBlock extends HorizontalDirectionalBlock implements Simpl
 	 * Set the shape of the block.
 	 *
 	 * @param state            the <code>BlockState</code> of the block
-	 * @param reader           the <code>IBlockReader</code> for the block
+	 * @param reader           the <code>BlockGetter</code> for the block
 	 * @param pos              the <code>BlockPos</code> the block is at
-	 * @param selectionContext the <code>ISelectionContext</code> of the block
+	 * @param collisionContext the <code>CollisionContext</code> of the block
 	 * @return VoxelShape
 	 */
 	@SuppressWarnings("deprecation")
 	@Override
-	public @NotNull VoxelShape getShape(BlockState state, @NotNull BlockGetter reader, @NotNull BlockPos pos, @NotNull CollisionContext selectionContext) {
+	public @NotNull VoxelShape getShape(BlockState state, @NotNull BlockGetter reader, @NotNull BlockPos pos,
+	                                    @NotNull CollisionContext collisionContext) {
+
 		return switch (state.getValue(FACING)) {
 			case SOUTH -> SHAPE_SOUTH;
 			case EAST -> SHAPE_EAST;
@@ -69,7 +65,7 @@ public class PanicAlarmBlock extends HorizontalDirectionalBlock implements Simpl
 	/**
 	 * Create the BlockState definition.
 	 *
-	 * @param builder the <code>StateContainer.Builder</code> of the block
+	 * @param builder the <code>StateDefinition.Builder</code> of the block
 	 */
 	@Override
 	public void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
@@ -98,20 +94,27 @@ public class PanicAlarmBlock extends HorizontalDirectionalBlock implements Simpl
 	 * @return BlockEntityTicker
 	 */
 	@Override
-	public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, @NotNull BlockState blockState, @NotNull BlockEntityType<T> blockEntityType) {
-		return level.isClientSide ? null : BaseEntityBlock.createTickerHelper(blockEntityType, DeferredRegistryHandler.PANIC_ALARM_BLOCK_ENTITY.get(), (level1, blockPos, blockState1, panicAlarmBlockEntity) -> PanicAlarmBlockEntity.serverTick(level1, blockPos, panicAlarmBlockEntity));
+	public <T extends BlockEntity> BlockEntityTicker<T> getTicker(@NotNull Level level, @NotNull BlockState blockState,
+	                                                              @NotNull BlockEntityType<T> blockEntityType) {
+
+		return level.isClientSide ? null : BaseEntityBlock.createTickerHelper(blockEntityType,
+				DeferredRegistryHandler.PANIC_ALARM_BLOCK_ENTITY.get(),
+				(level1, blockPos, blockState1, panicAlarmBlockEntity) ->
+						panicAlarmBlockEntity.tick(level1, blockPos));
 	}
 
 	/**
 	 * Set placement properties.
 	 * Sets the facing direction of the block for placement.
 	 *
-	 * @param context the <code>BlockItemUseContext</code> during placement
+	 * @param context the <code>BlockPlaceContext</code> during placement
 	 * @return BlockState
 	 */
 	@Override
 	public BlockState getStateForPlacement(BlockPlaceContext context) {
-		return defaultBlockState().setValue(FACING, context.getHorizontalDirection().getOpposite()).setValue(WATERLOGGED, context.getLevel().getFluidState(context.getClickedPos()).getType() == Fluids.WATER);
+		return defaultBlockState()
+				.setValue(FACING, context.getHorizontalDirection().getOpposite())
+				.setValue(WATERLOGGED, context.getLevel().getFluidState(context.getClickedPos()).getType() == Fluids.WATER);
 	}
 
 	/**
@@ -131,7 +134,7 @@ public class PanicAlarmBlock extends HorizontalDirectionalBlock implements Simpl
 	 * Runs when neighboring blocks change state.
 	 *
 	 * @param state    the <code>BlockState</code> of the block
-	 * @param worldIn  the <code>World</code> the block is in
+	 * @param level    the <code>Level</code> the block is in
 	 * @param pos      the <code>BlockPos</code> the block is at
 	 * @param blockIn  the <code>Block</code> that is changing
 	 * @param fromPos  the <code>BlockPos</code> of the changing block
@@ -139,10 +142,12 @@ public class PanicAlarmBlock extends HorizontalDirectionalBlock implements Simpl
 	 */
 	@SuppressWarnings("deprecation")
 	@Override
-	public void neighborChanged(@NotNull BlockState state, Level worldIn, @NotNull BlockPos pos, @NotNull Block blockIn, @NotNull BlockPos fromPos, boolean isMoving) {
-		if (!worldIn.isClientSide) {
-			playSiren(worldIn, pos);
-			worldIn.scheduleTick(pos, state.getBlock(), 5);
+	public void neighborChanged(@NotNull BlockState state, Level level, @NotNull BlockPos pos, @NotNull Block blockIn,
+	                            @NotNull BlockPos fromPos, boolean isMoving) {
+
+		if (!level.isClientSide) {
+			checkPowered(level, pos);
+			level.scheduleTick(pos, state.getBlock(), 5);
 		}
 	}
 
@@ -150,18 +155,18 @@ public class PanicAlarmBlock extends HorizontalDirectionalBlock implements Simpl
 	 * Runs when neighboring blocks change state.
 	 *
 	 * @param state    the <code>BlockState</code> of the block
-	 * @param worldIn  the <code>World</code> the block is in
+	 * @param level    the <code>Level</code> the block is in
 	 * @param pos      the <code>BlockPos</code> the block is at
 	 * @param oldState the <code>BlockState</code> the block previously had
 	 * @param isMoving determines if the block is moving
 	 */
 	@SuppressWarnings("deprecation")
 	@Override
-	public void onPlace(BlockState state, @NotNull Level worldIn, @NotNull BlockPos pos, BlockState oldState, boolean isMoving) {
+	public void onPlace(BlockState state, @NotNull Level level, @NotNull BlockPos pos, BlockState oldState, boolean isMoving) {
 		if (!oldState.is(state.getBlock())) {
-			if (worldIn.hasNeighborSignal(pos)) {
-				if (!worldIn.isClientSide) {
-					worldIn.scheduleTick(pos, state.getBlock(), 5);
+			if (level.hasNeighborSignal(pos)) {
+				if (!level.isClientSide) {
+					level.scheduleTick(pos, state.getBlock(), 5);
 				}
 			}
 		}
@@ -170,74 +175,39 @@ public class PanicAlarmBlock extends HorizontalDirectionalBlock implements Simpl
 	/**
 	 * Runs once every tick
 	 *
-	 * @param state   the <code>BlockState</code> of the block
-	 * @param worldIn the <code>ServerWorld</code> of the block
-	 * @param pos     the <code>BlockPos</code> the block is at
-	 * @param rand    a <code>Random</code> instance
+	 * @param state       the <code>BlockState</code> of the block
+	 * @param serverLevel the <code>ServerLevel</code> of the block
+	 * @param pos         the <code>BlockPos</code> the block is at
+	 * @param rand        a <code>Random</code> instance
 	 */
 	@SuppressWarnings("deprecation")
 	@Override
-	public void tick(@NotNull BlockState state, ServerLevel worldIn, @NotNull BlockPos pos, @NotNull Random rand) {
-		if (!worldIn.isClientSide) {
-			playSiren(worldIn, pos);
-			worldIn.scheduleTick(pos, state.getBlock(), 5);
+	public void tick(@NotNull BlockState state, ServerLevel serverLevel, @NotNull BlockPos pos, @NotNull Random rand) {
+		if (!serverLevel.isClientSide) {
+			checkPowered(serverLevel, pos);
+			serverLevel.scheduleTick(pos, state.getBlock(), 5);
 		}
 	}
 
 	/**
 	 * Plays a sound when powered.
 	 *
-	 * @param worldIn the <code>World</code> the block is at
-	 * @param pos     the <code>BlockPos</code> the block is at
+	 * @param level the <code>Level</code> the block is at
+	 * @param pos   the <code>BlockPos</code> the block is at
 	 */
-	private void playSiren(Level worldIn, BlockPos pos) {
-		BlockState state = worldIn.getBlockState(pos);
-		if (state.getBlock() != DeferredRegistryHandler.PANIC_ALARM.get()) {
-			return;
-		}
-		BlockEntity tileEntity = worldIn.getBlockEntity(pos);
+	private void checkPowered(Level level, BlockPos pos) {
+		BlockEntity blockEntity = level.getBlockEntity(pos);
 
-		if (tileEntity instanceof PanicAlarmBlockEntity panicAlarmTileEntity) {
-			if (worldIn.getBestNeighborSignal(pos) > 0) {
-				boolean isPowered = panicAlarmTileEntity.isPowered();
-
-				if (!isPowered) {
+		if (blockEntity instanceof PanicAlarmBlockEntity panicAlarmTileEntity) {
+			if (level.getBestNeighborSignal(pos) > 0) {
+				if (!panicAlarmTileEntity.isPowered()) {
 					panicAlarmTileEntity.setPowered(true);
 				}
 			} else {
-				boolean isPowered = panicAlarmTileEntity.isPowered();
-
-				if (isPowered) {
+				if (panicAlarmTileEntity.isPowered()) {
 					panicAlarmTileEntity.setPowered(false);
 				}
 			}
 		}
-	}
-
-	/**
-	 * Runs when the block is activated.
-	 * Allows the block to respond to user interaction.
-	 *
-	 * @param state               the <code>BlockState</code> of the block
-	 * @param worldIn             the <code>World</code> the block is in
-	 * @param pos                 the <code>BlockPos</code> the block is at
-	 * @param player              the <code>PlayerEntity</code> interacting with the block
-	 * @param handIn              the <code>Hand</code> the PlayerEntity used
-	 * @param blockRayTraceResult the <code>BlockRayTraceResult</code> of the interaction
-	 * @return ActionResultType
-	 */
-	@SuppressWarnings("deprecation")
-	@Override
-	public @NotNull InteractionResult use(@NotNull BlockState state, Level worldIn, @NotNull BlockPos pos, @NotNull Player player, @NotNull InteractionHand handIn, @NotNull BlockHitResult blockRayTraceResult) {
-		BlockEntity tileEntity = worldIn.getBlockEntity(pos);
-		if (tileEntity instanceof PanicAlarmBlockEntity) {
-			if (!worldIn.isClientSide && handIn == InteractionHand.MAIN_HAND) {
-				((PanicAlarmBlockEntity) tileEntity).changeAlarmSound(player);
-				return InteractionResult.SUCCESS;
-			} else {
-				return InteractionResult.PASS;
-			}
-		}
-		return InteractionResult.FAIL;
 	}
 }

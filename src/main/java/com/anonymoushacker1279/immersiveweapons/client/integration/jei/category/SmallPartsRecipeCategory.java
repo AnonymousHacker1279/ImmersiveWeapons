@@ -33,6 +33,7 @@ public class SmallPartsRecipeCategory implements IRecipeCategory<SmallPartsRecip
 	 *
 	 * @param guiHelper a <code>IGuiHelper</code> instance
 	 */
+	@SuppressWarnings("deprecation")
 	public SmallPartsRecipeCategory(IGuiHelper guiHelper) {
 		icon = guiHelper.createDrawableIngredient(new ItemStack(DeferredRegistryHandler.SMALL_PARTS_TABLE.get()));
 		background = guiHelper.createDrawable(GUI_TEXTURE, 0, 0, 125, 18);

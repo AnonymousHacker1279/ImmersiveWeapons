@@ -1,8 +1,8 @@
 package com.anonymoushacker1279.immersiveweapons.block.misc.portal.statue.warrior;
 
 import com.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
+import com.anonymoushacker1279.immersiveweapons.init.PacketHandler;
 import com.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
-import com.anonymoushacker1279.immersiveweapons.util.PacketHandler;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -29,7 +29,6 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.network.NetworkEvent;
 import net.minecraftforge.network.NetworkEvent.Context;
@@ -109,11 +108,11 @@ public class WarriorStatueTorso extends HorizontalDirectionalBlock implements Si
 	 */
 	@SuppressWarnings("deprecation")
 	@Override
-	@OnlyIn(Dist.CLIENT)
 	public float getShadeBrightness(@NotNull BlockState state, @NotNull BlockGetter reader, @NotNull BlockPos pos) {
 		return 1.0F;
 	}
 
+	@SuppressWarnings("deprecation")
 	@Override
 	public @NotNull FluidState getFluidState(BlockState state) {
 		return state.getValue(WATERLOGGED) ? Fluids.WATER.getSource(false) : super.getFluidState(state);
@@ -248,7 +247,6 @@ public class WarriorStatueTorso extends HorizontalDirectionalBlock implements Si
 		 *
 		 * @param msg the <code>WarriorStatueTorsoPacketHandler</code> message being sent
 		 */
-		@OnlyIn(Dist.CLIENT)
 		private static void handleOnClient(WarriorStatueTorsoPacketHandler msg) {
 			Minecraft minecraft = Minecraft.getInstance();
 			if (minecraft.level != null) {

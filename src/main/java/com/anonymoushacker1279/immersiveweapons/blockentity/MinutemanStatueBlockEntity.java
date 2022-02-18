@@ -1,6 +1,6 @@
 package com.anonymoushacker1279.immersiveweapons.blockentity;
 
-import com.anonymoushacker1279.immersiveweapons.entity.passive.MinutemanEntity;
+import com.anonymoushacker1279.immersiveweapons.entity.neutral.MinutemanEntity;
 import com.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
 import com.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
 import net.minecraft.core.BlockPos;

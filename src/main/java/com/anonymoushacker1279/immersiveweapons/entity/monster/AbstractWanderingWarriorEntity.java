@@ -4,9 +4,7 @@ import com.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.sounds.SoundEvent;
-import net.minecraft.world.Difficulty;
-import net.minecraft.world.DifficultyInstance;
-import net.minecraft.world.InteractionHand;
+import net.minecraft.world.*;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -16,9 +14,7 @@ import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.monster.Creeper;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
+import net.minecraft.world.item.*;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.Blocks;
@@ -77,7 +73,8 @@ public abstract class AbstractWanderingWarriorEntity extends Monster {
 		goalSelector.addGoal(100, new RandomLookAroundGoal(this));
 		goalSelector.addGoal(4, new OpenDoorGoal(this, false));
 		goalSelector.addGoal(1, new FloatGoal(this));
-		targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Monster.class, 1, true, true, (targetPredicate) -> !(targetPredicate instanceof Creeper)));
+		targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Monster.class, 1,
+				true, true, (targetPredicate) -> !(targetPredicate instanceof Creeper)));
 		targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, Player.class, true));
 		targetSelector.addGoal(2, new HurtByTargetGoal(this));
 	}
@@ -124,24 +121,19 @@ public abstract class AbstractWanderingWarriorEntity extends Monster {
 			setItemInHand(InteractionHand.MAIN_HAND, new ItemStack(DeferredRegistryHandler.COPPER_SWORD.get()));
 		}
 		// Populate armor
-		boolean flag = true;
 		int armorTier = 0;
-		if (this.random.nextFloat() < 0.1F) {
-			armorTier++;
-		}
-		if (this.random.nextFloat() < 0.1F) {
+		if (this.random.nextFloat() < 0.2F) {
 			armorTier++;
 		}
 		float difficultyModifier = level.getDifficulty() == Difficulty.HARD ? 0.3F : 0.75F;
 		for (EquipmentSlot equipmentSlot : EquipmentSlot.values()) {
 			if (equipmentSlot.getType() == EquipmentSlot.Type.ARMOR) {
-				ItemStack itemstack = getItemBySlot(equipmentSlot);
-				if (!flag && this.random.nextFloat() < difficultyModifier) {
+				ItemStack itemBySlot = getItemBySlot(equipmentSlot);
+				if (this.random.nextFloat() < difficultyModifier) {
 					break;
 				}
 
-				flag = false;
-				if (itemstack.isEmpty()) {
+				if (itemBySlot.isEmpty()) {
 					Item item = getEquipmentForSlot(equipmentSlot, armorTier);
 					if (item != null) {
 						setItemSlot(equipmentSlot, new ItemStack(item));
@@ -169,10 +161,10 @@ public abstract class AbstractWanderingWarriorEntity extends Monster {
 		setCombatTask();
 		setCanPickUpLoot(random.nextFloat() < 0.55F * difficultyIn.getSpecialMultiplier());
 		if (getItemBySlot(EquipmentSlot.HEAD).isEmpty()) {
-			LocalDate localdate = LocalDate.now();
-			int i = localdate.get(ChronoField.DAY_OF_MONTH);
-			int j = localdate.get(ChronoField.MONTH_OF_YEAR);
-			if (j == 10 && i == 31 && random.nextFloat() < 0.25F) {
+			LocalDate date = LocalDate.now();
+			int day = date.get(ChronoField.DAY_OF_MONTH);
+			int month = date.get(ChronoField.MONTH_OF_YEAR);
+			if (month == 10 && day == 31 && random.nextFloat() < 0.25F) {
 				setItemSlot(EquipmentSlot.HEAD, new ItemStack(random.nextFloat() < 0.1F ? Blocks.JACK_O_LANTERN : Blocks.CARVED_PUMPKIN));
 				armorDropChances[EquipmentSlot.HEAD.getIndex()] = 0.0F;
 			}

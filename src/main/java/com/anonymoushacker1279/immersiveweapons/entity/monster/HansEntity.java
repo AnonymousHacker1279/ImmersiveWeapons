@@ -111,7 +111,9 @@ public class HansEntity extends AbstractWanderingWarriorEntity {
 	 */
 	@Override
 	public boolean hurt(@NotNull DamageSource source, float amount) {
-		if (amount > 0 && source.getEntity() instanceof Player || source.getEntity() instanceof Mob || source.getEntity() instanceof PathfinderMob) {
+		if (amount > 0 && source.getEntity() instanceof Player || source.getEntity() instanceof Mob
+				|| source.getEntity() instanceof PathfinderMob) {
+
 			if (source.isCreativePlayer()) {
 				super.hurt(source, amount);
 				return false;

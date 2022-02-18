@@ -1,6 +1,7 @@
 package com.anonymoushacker1279.immersiveweapons.init;
 
 import com.anonymoushacker1279.immersiveweapons.item.gauntlet.*;
+import com.anonymoushacker1279.immersiveweapons.item.materials.CustomArmorMaterials;
 import com.anonymoushacker1279.immersiveweapons.item.pike.*;
 import com.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
 import com.google.common.collect.ImmutableMap;
@@ -130,5 +131,8 @@ public class PostSetupHandler {
 
 		// Add custom logs to be stripped in AxeItem
 		AxeItem.STRIPPABLES = new ImmutableMap.Builder<Block, Block>().putAll(AxeItem.STRIPPABLES).put(DeferredRegistryHandler.BURNED_OAK_LOG.get(), DeferredRegistryHandler.STRIPPED_BURNED_OAK_LOG.get()).put(DeferredRegistryHandler.BURNED_OAK_WOOD.get(), DeferredRegistryHandler.STRIPPED_BURNED_OAK_WOOD.get()).build();
+
+		// Set custom armor equip sounds, as these don't exist during the initialization of materials
+		CustomArmorMaterials.TESLA.setEquipSound(DeferredRegistryHandler.TESLA_ARMOR_EQUIP.get());
 	}
 }

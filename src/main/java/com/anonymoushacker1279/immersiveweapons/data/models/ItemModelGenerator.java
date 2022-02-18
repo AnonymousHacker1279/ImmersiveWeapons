@@ -10,12 +10,8 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.minecraftforge.registries.RegistryObject;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.function.BiConsumer;
-import java.util.function.Predicate;
-import java.util.function.Supplier;
+import java.util.*;
+import java.util.function.*;
 
 public class ItemModelGenerator {
 
@@ -44,7 +40,6 @@ public class ItemModelGenerator {
 
 	/**
 	 * Generate a spawn egg item.
-	 *
 	 */
 	private void generateSpawnEggItem(Item item) {
 		ItemModelGenerator.FLAT_SPAWN_EGG_ITEM.createItem(ModelLocationUtils.getModelLocation(item), output);
@@ -52,7 +47,6 @@ public class ItemModelGenerator {
 
 	/**
 	 * Generate a basic block item.
-	 *
 	 */
 	private void generateBlockItem(Item item) {
 		AdvancedModelTemplate BASIC_BLOCK_ITEM = new AdvancedModelTemplate(Optional.of(new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/" + item.toString())), Optional.empty(), TextureSlot.LAYER0);
@@ -65,7 +59,7 @@ public class ItemModelGenerator {
 	 */
 	public void run() {
 		ItemModelLists.init();
-		List<Item> items = new ArrayList<>(1);
+		List<Item> items = new ArrayList<>(250);
 		List<Item> ignoredItems = ItemModelLists.ignoredItems;
 
 		DeferredRegistryHandler.ITEMS.getEntries().stream().map(RegistryObject::get).filter(Predicate.not(ignoredItems::contains)).forEach(items::add);

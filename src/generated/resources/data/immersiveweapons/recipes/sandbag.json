@@ -3,7 +3,7 @@
   "group": "sandbags",
   "pattern": [
     "bbb",
-    "bab",
+    "aaa",
     "bbb"
   ],
   "key": {
@@ -16,6 +16,6 @@
   },
   "result": {
     "item": "immersiveweapons:sandbag",
-    "count": 2
+    "count": 6
   }
 }

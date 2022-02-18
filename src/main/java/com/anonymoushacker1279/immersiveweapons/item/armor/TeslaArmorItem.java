@@ -2,9 +2,9 @@ package com.anonymoushacker1279.immersiveweapons.item.armor;
 
 import com.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import com.anonymoushacker1279.immersiveweapons.config.ClientConfig;
-import com.anonymoushacker1279.immersiveweapons.events.ClientModEventSubscriber;
+import com.anonymoushacker1279.immersiveweapons.event.ClientModEventSubscriber;
 import com.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
-import com.anonymoushacker1279.immersiveweapons.util.PacketHandler;
+import com.anonymoushacker1279.immersiveweapons.init.PacketHandler;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.sounds.SoundSource;

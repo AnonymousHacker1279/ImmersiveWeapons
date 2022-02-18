@@ -1,6 +1,6 @@
 package com.anonymoushacker1279.immersiveweapons.entity.monster;
 
-import com.anonymoushacker1279.immersiveweapons.config.ServerConfig;
+import com.anonymoushacker1279.immersiveweapons.config.CommonConfig;
 import com.anonymoushacker1279.immersiveweapons.entity.ai.goal.CelestialTowerSummonGoal;
 import com.anonymoushacker1279.immersiveweapons.entity.ai.goal.HoverGoal;
 import com.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
@@ -36,15 +36,16 @@ import java.util.Objects;
 
 public class CelestialTowerEntity extends Monster {
 
-	public final ServerBossEvent bossEvent = (ServerBossEvent) (new ServerBossEvent(getDisplayName(), BossBarColor.RED, BossBarOverlay.PROGRESS)).setDarkenScreen(true);
+	public final ServerBossEvent bossEvent = (ServerBossEvent) (new ServerBossEvent(getDisplayName(), BossBarColor.RED,
+			BossBarOverlay.PROGRESS)).setDarkenScreen(true);
 	private int totalWavesToSpawn = 3;
 	private int waveSizeModifier = 1;
 	private int wavesSpawned = 0;
 	private boolean doneSpawningWaves = false;
 	private static int lastSpawnAttemptTick = -1;
 	private final MinecraftServer server = getServer();
-	private static final int XZ_SPAWN_CHECK_RADIUS = ServerConfig.CELESTIAL_TOWER_XZ_SPAWN_CHECK_RADIUS.get();
-	private static final int Y_SPAWN_CHECK_RADIUS = ServerConfig.CELESTIAL_TOWER_Y_SPAWN_CHECK_RADIUS.get();
+	private static final int XZ_SPAWN_CHECK_RADIUS = CommonConfig.CELESTIAL_TOWER_XZ_SPAWN_CHECK_RADIUS.get();
+	private static final int Y_SPAWN_CHECK_RADIUS = CommonConfig.CELESTIAL_TOWER_Y_SPAWN_CHECK_RADIUS.get();
 
 	public CelestialTowerEntity(EntityType<? extends Monster> type, Level level) {
 		super(type, level);
@@ -96,7 +97,10 @@ public class CelestialTowerEntity extends Monster {
 
 	@Nullable
 	@Override
-	public SpawnGroupData finalizeSpawn(@NotNull ServerLevelAccessor pLevel, @NotNull DifficultyInstance pDifficulty, @NotNull MobSpawnType pReason, @Nullable SpawnGroupData pSpawnData, @Nullable CompoundTag pDataTag) {
+	public SpawnGroupData finalizeSpawn(@NotNull ServerLevelAccessor pLevel, @NotNull DifficultyInstance pDifficulty,
+	                                    @NotNull MobSpawnType pReason, @Nullable SpawnGroupData pSpawnData,
+	                                    @Nullable CompoundTag pDataTag) {
+
 		pSpawnData = super.finalizeSpawn(pLevel, pDifficulty, pReason, pSpawnData, pDataTag);
 
 		teleportTo(getX(), getY() + 2, getZ());
@@ -118,7 +122,8 @@ public class CelestialTowerEntity extends Monster {
 			xpReward = 75;
 		}
 
-		Objects.requireNonNull(getAttribute(Attributes.ARMOR)).setBaseValue(getAttributeBaseValue(Attributes.ARMOR) + (totalWavesToSpawn * 5));
+		Objects.requireNonNull(getAttribute(Attributes.ARMOR)).setBaseValue(getAttributeBaseValue(Attributes.ARMOR)
+				+ (totalWavesToSpawn * 5));
 
 		return pSpawnData;
 	}
@@ -126,7 +131,11 @@ public class CelestialTowerEntity extends Monster {
 	@Override
 	public void tick() {
 		super.tick();
-		level.addParticle(ParticleTypes.LAVA, getX() + GeneralUtilities.getRandomNumber(-1d, 1.01d), getY(), getZ() + GeneralUtilities.getRandomNumber(-1d, 1.01d), GeneralUtilities.getRandomNumber(-0.03d, 0.03d), GeneralUtilities.getRandomNumber(-0.1d, -0.08d), GeneralUtilities.getRandomNumber(-0.03d, 0.03d));
+		level.addParticle(ParticleTypes.LAVA, getX() + GeneralUtilities.getRandomNumber(-1d, 1.01d), getY(),
+				getZ() + GeneralUtilities.getRandomNumber(-1d, 1.01d),
+				GeneralUtilities.getRandomNumber(-0.03d, 0.03d),
+				GeneralUtilities.getRandomNumber(-0.1d, -0.08d),
+				GeneralUtilities.getRandomNumber(-0.03d, 0.03d));
 	}
 
 	@Override
@@ -161,7 +170,8 @@ public class CelestialTowerEntity extends Monster {
 		doneSpawningWaves = pCompound.getBoolean("doneSpawningWaves");
 
 		if (wavesSpawned > 0) {
-			bossEvent.setName(new TranslatableComponent("immersiveweapons.boss.celestial_tower.waves", wavesSpawned, totalWavesToSpawn));
+			bossEvent.setName(new TranslatableComponent("immersiveweapons.boss.celestial_tower.waves", wavesSpawned,
+					totalWavesToSpawn));
 			bossEvent.setProgress((float) wavesSpawned / totalWavesToSpawn);
 		}
 	}
@@ -201,7 +211,10 @@ public class CelestialTowerEntity extends Monster {
 		if (server.getTickCount() - CelestialTowerEntity.lastSpawnAttemptTick >= 40) {
 			CelestialTowerEntity.lastSpawnAttemptTick = server.getTickCount();
 			BlockPos blockPos = blockPosition();
-			long nearbyCelestialLanterns = level.getBlockStatesIfLoaded(new AABB(blockPos.getX() - XZ_SPAWN_CHECK_RADIUS, blockPos.getY() - Y_SPAWN_CHECK_RADIUS, blockPos.getZ() - XZ_SPAWN_CHECK_RADIUS, blockPos.getX() + XZ_SPAWN_CHECK_RADIUS, blockPos.getY() + Y_SPAWN_CHECK_RADIUS, blockPos.getZ() + XZ_SPAWN_CHECK_RADIUS))
+			long nearbyCelestialLanterns = level.getBlockStatesIfLoaded(new AABB(blockPos.getX() - XZ_SPAWN_CHECK_RADIUS,
+							blockPos.getY() - Y_SPAWN_CHECK_RADIUS, blockPos.getZ() - XZ_SPAWN_CHECK_RADIUS,
+							blockPos.getX() + XZ_SPAWN_CHECK_RADIUS, blockPos.getY() + Y_SPAWN_CHECK_RADIUS,
+							blockPos.getZ() + XZ_SPAWN_CHECK_RADIUS))
 					.filter(blockState -> blockState == DeferredRegistryHandler.CELESTIAL_LANTERN.get().defaultBlockState())
 					.limit(3)
 					.count();
@@ -223,7 +236,9 @@ public class CelestialTowerEntity extends Monster {
 	private boolean canSpawn(LevelAccessor pLevel, BlockPos blockPos) {
 		BlockState belowState = pLevel.getBlockState(blockPos.below());
 		boolean isValidSpawn = belowState.isValidSpawn(pLevel, blockPos.below(), getType());
-		boolean hasSufficientGround = pLevel.getBlockStatesIfLoaded(new AABB(blockPos.getX() - 8, blockPos.getY() - 1, blockPos.getZ() - 8, blockPos.getX() + 8, blockPos.getY(), blockPos.getZ() + 8))
+		boolean hasSufficientGround = pLevel.getBlockStatesIfLoaded(new AABB(blockPos.getX() - 8,
+						blockPos.getY() - 1, blockPos.getZ() - 8, blockPos.getX() + 8, blockPos.getY(),
+						blockPos.getZ() + 8))
 				.filter(BlockStateBase::isAir)
 				.count() / 256.0f >= 0.8f;
 		return isValidSpawn && hasSufficientGround;

@@ -1,0 +1,19 @@
+{
+	"name": "Netherite Pike",
+	"icon": "immersiveweapons:netherite_pike",
+	"category": "immersiveweapons:pikes",
+	"pages": [
+		{
+			"type": "patchouli:text",
+			"text": "With extreme precision and strength, netherite pikes can tear through nearly anything. They'll last for ages too.$(br2)The best pike you can get your hands on."
+		},
+		{
+			"type": "patchouli:spotlight",
+			"item": "immersiveweapons:netherite_pike",
+			"link_recipe": true,
+			"title": "Smithing",
+			"text": "This item is crafted using the $(l)smithing table$().$(br)You need a $(l:pikes/diamond)diamond pike$(), and a netherite ingot."
+		}
+	],
+	"advancement": "immersiveweapons:netherite_ingot"
+}

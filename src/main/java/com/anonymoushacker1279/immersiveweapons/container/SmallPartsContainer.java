@@ -6,9 +6,7 @@ import com.anonymoushacker1279.immersiveweapons.item.crafting.SmallPartsRecipe;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.inventory.ContainerLevelAccess;
-import net.minecraft.world.inventory.ItemCombinerMenu;
-import net.minecraft.world.inventory.Slot;
+import net.minecraft.world.inventory.*;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
@@ -26,7 +24,7 @@ public class SmallPartsContainer extends ItemCombinerMenu {
 	 * Constructor for SmallPartsContainer.
 	 *
 	 * @param id  the ID of the container
-	 * @param inv the <code>PlayerInventory</code> instance
+	 * @param inv the <code>Inventory</code> instance
 	 */
 	public SmallPartsContainer(int id, Inventory inv) {
 		this(id, inv, ContainerLevelAccess.NULL);
@@ -35,12 +33,12 @@ public class SmallPartsContainer extends ItemCombinerMenu {
 	/**
 	 * Constructor for SmallPartsContainer.
 	 *
-	 * @param id               the ID of the container
-	 * @param inv              the <code>PlayerInventory</code> instance
-	 * @param worldPosCallable the <code>IWorldPosCallable</code> instance
+	 * @param id     the ID of the container
+	 * @param inv    the <code>Inventory</code> instance
+	 * @param access the <code>ContainerLevelAccess</code> instance
 	 */
-	public SmallPartsContainer(int id, Inventory inv, ContainerLevelAccess worldPosCallable) {
-		super(DeferredRegistryHandler.SMALL_PARTS_TABLE_CONTAINER.get(), id, inv, worldPosCallable);
+	public SmallPartsContainer(int id, Inventory inv, ContainerLevelAccess access) {
+		super(DeferredRegistryHandler.SMALL_PARTS_TABLE_CONTAINER.get(), id, inv, access);
 		world = inv.player.level;
 		smallPartsRecipeList = world.getRecipeManager().getAllRecipesFor(ICustomRecipeType.SMALL_PARTS);
 	}
@@ -59,12 +57,12 @@ public class SmallPartsContainer extends ItemCombinerMenu {
 	/**
 	 * Check if the player can pick up a recipe.
 	 *
-	 * @param playerEntity  the <code>PlayerEntity</code> instance
+	 * @param player        the <code>Player</code> instance
 	 * @param matchesRecipe set the recipe match
 	 * @return boolean
 	 */
 	@Override
-	protected boolean mayPickup(@NotNull Player playerEntity, boolean matchesRecipe) {
+	protected boolean mayPickup(@NotNull Player player, boolean matchesRecipe) {
 		return smallPartsRecipe != null && smallPartsRecipe.matches(inputSlots, world);
 	}
 
@@ -78,20 +76,13 @@ public class SmallPartsContainer extends ItemCombinerMenu {
 	protected void onTake(@NotNull Player player, ItemStack itemStack) {
 		itemStack.onCraftedBy(player.level, player, itemStack.getCount());
 		resultSlots.awardUsedRecipes(player);
-		shrinkStackInSlot(0);
 		// Normally we would destroy both items here. However, we don't want to destroy the blueprint item.
-		world.playSound(player, player.blockPosition(), DeferredRegistryHandler.SMALL_PARTS_TABLE_USED.get(), SoundSource.NEUTRAL, 1f, 1);
-	}
+		ItemStack materialSlotItem = inputSlots.getItem(0);
+		materialSlotItem.shrink(1);
+		inputSlots.setItem(0, materialSlotItem);
 
-	/**
-	 * Shrink a stack in a slot.
-	 *
-	 * @param index the slot index
-	 */
-	private void shrinkStackInSlot(int index) {
-		ItemStack itemstack = inputSlots.getItem(index);
-		itemstack.shrink(1);
-		inputSlots.setItem(index, itemstack);
+		world.playSound(player, player.blockPosition(), DeferredRegistryHandler.SMALL_PARTS_TABLE_USED.get(),
+				SoundSource.NEUTRAL, 1f, 1);
 	}
 
 	/**
@@ -99,14 +90,16 @@ public class SmallPartsContainer extends ItemCombinerMenu {
 	 */
 	@Override
 	public void createResult() {
-		List<SmallPartsRecipe> list = world.getRecipeManager().getRecipesFor(ICustomRecipeType.SMALL_PARTS, inputSlots, world);
-		if (list.isEmpty()) {
+		List<SmallPartsRecipe> recipes = world.getRecipeManager()
+				.getRecipesFor(ICustomRecipeType.SMALL_PARTS, inputSlots, world);
+
+		if (recipes.isEmpty()) {
 			resultSlots.setItem(0, ItemStack.EMPTY);
 		} else {
-			smallPartsRecipe = list.get(0);
-			ItemStack itemstack = smallPartsRecipe.assemble(inputSlots);
+			smallPartsRecipe = recipes.get(0);
+			ItemStack assembledRecipe = smallPartsRecipe.assemble(inputSlots);
 			resultSlots.setRecipeUsed(smallPartsRecipe);
-			resultSlots.setItem(0, itemstack);
+			resultSlots.setItem(0, assembledRecipe);
 		}
 
 	}
@@ -133,5 +126,4 @@ public class SmallPartsContainer extends ItemCombinerMenu {
 	public boolean canTakeItemForPickAll(@NotNull ItemStack stack, Slot slotIn) {
 		return slotIn.container != resultSlots && super.canTakeItemForPickAll(stack, slotIn);
 	}
-
 }

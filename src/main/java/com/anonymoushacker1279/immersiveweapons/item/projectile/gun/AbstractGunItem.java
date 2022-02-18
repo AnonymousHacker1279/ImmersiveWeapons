@@ -9,6 +9,7 @@ import net.minecraft.world.item.ItemStack;
 import java.util.function.Predicate;
 
 public abstract class AbstractGunItem extends Item {
+
 	protected static final Predicate<ItemStack> MUSKET_BALLS = (stack) -> stack.is(ImmersiveWeaponsItemTagGroups.MUSKET_BALLS);
 	protected static final Predicate<ItemStack> FLARES = (stack) -> stack.is(ImmersiveWeaponsItemTagGroups.FLARES);
 
@@ -32,7 +33,8 @@ public abstract class AbstractGunItem extends Item {
 		if (isAmmo.test(livingEntity.getItemInHand(InteractionHand.OFF_HAND))) {
 			return livingEntity.getItemInHand(InteractionHand.OFF_HAND);
 		} else {
-			return isAmmo.test(livingEntity.getItemInHand(InteractionHand.MAIN_HAND)) ? livingEntity.getItemInHand(InteractionHand.MAIN_HAND) : ItemStack.EMPTY;
+			return isAmmo.test(livingEntity.getItemInHand(InteractionHand.MAIN_HAND)) ?
+					livingEntity.getItemInHand(InteractionHand.MAIN_HAND) : ItemStack.EMPTY;
 		}
 	}
 

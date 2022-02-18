@@ -1,16 +1,14 @@
 package com.anonymoushacker1279.immersiveweapons.entity.monster;
 
 import com.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
+import com.anonymoushacker1279.immersiveweapons.init.PacketHandler;
 import com.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
-import com.anonymoushacker1279.immersiveweapons.util.PacketHandler;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.network.syncher.EntityDataAccessor;
-import net.minecraft.network.syncher.EntityDataSerializers;
-import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.network.syncher.*;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
@@ -19,9 +17,7 @@ import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.entity.ai.control.BodyRotationControl;
-import net.minecraft.world.entity.ai.control.LookControl;
-import net.minecraft.world.entity.ai.control.MoveControl;
+import net.minecraft.world.entity.ai.control.*;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.ai.targeting.TargetingConditions;
 import net.minecraft.world.entity.monster.Enemy;
@@ -32,7 +28,6 @@ import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.network.NetworkEvent;
 import net.minecraftforge.network.NetworkEvent.Context;
@@ -40,16 +35,14 @@ import net.minecraftforge.network.PacketDistributor;
 import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
-import java.util.Comparator;
-import java.util.EnumSet;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 import java.util.function.Supplier;
 
 public class LavaRevenantEntity extends FlyingMob implements Enemy {
 
 	public static final int TICKS_PER_FLAP = Mth.ceil(24.166098F);
-	private static final EntityDataAccessor<Integer> ID_SIZE = SynchedEntityData.defineId(LavaRevenantEntity.class, EntityDataSerializers.INT);
+	private static final EntityDataAccessor<Integer> ID_SIZE = SynchedEntityData.defineId(LavaRevenantEntity.class,
+			EntityDataSerializers.INT);
 	Vec3 moveTargetPoint = Vec3.ZERO;
 	BlockPos anchorPoint = BlockPos.ZERO;
 	LavaRevenantEntity.AttackPhase attackPhase = LavaRevenantEntity.AttackPhase.CIRCLE;
@@ -145,24 +138,34 @@ public class LavaRevenantEntity extends FlyingMob implements Enemy {
 	public void tick() {
 		super.tick();
 		if (level.isClientSide) {
-			float f = Mth.cos((float) (getUniqueFlapTickOffset() + tickCount) * 7.448451F * ((float) Math.PI / 180F) + (float) Math.PI);
-			float f1 = Mth.cos((float) (getUniqueFlapTickOffset() + tickCount + 1) * 7.448451F * ((float) Math.PI / 180F) + (float) Math.PI);
-			if (f > 0.0F && f1 <= 0.0F) {
-				level.playLocalSound(getX(), getY(), getZ(), DeferredRegistryHandler.LAVA_REVENANT_FLAP.get(), getSoundSource(), 0.95F + random.nextFloat() * 0.05F, 0.95F + random.nextFloat() * 0.05F, false);
+			float flapTick = Mth.cos((float) (getUniqueFlapTickOffset() + tickCount) * 7.448451F
+					* ((float) Math.PI / 180F) + (float) Math.PI);
+			float flapTick1 = Mth.cos((float) (getUniqueFlapTickOffset() + tickCount + 1) * 7.448451F
+					* ((float) Math.PI / 180F) + (float) Math.PI);
+
+			if (flapTick > 0.0F && flapTick1 <= 0.0F) {
+				level.playLocalSound(getX(), getY(), getZ(), DeferredRegistryHandler.LAVA_REVENANT_FLAP.get(),
+						getSoundSource(), 0.95F + random.nextFloat() * 0.05F,
+						0.95F + random.nextFloat() * 0.05F, false);
 			}
 
 			int size = getSize();
 			float xSizeModifier = Mth.cos(getYRot() * ((float) Math.PI / 180F)) * (7.0F * (float) size);
 			float zSizeModifier = Mth.sin(getYRot() * ((float) Math.PI / 180F)) * (7.0f * (float) size);
-			float ySizeModifier = (0.3F + f * 0.45F) * ((float) size * 0.2F + 1.5F);
-			level.addParticle(ParticleTypes.LAVA, getX() + (double) xSizeModifier, getY() + (double) ySizeModifier, getZ() + (double) zSizeModifier, 0.0D, 0.0D, 0.0D);
-			level.addParticle(ParticleTypes.LAVA, getX() - (double) xSizeModifier, getY() + (double) ySizeModifier, getZ() - (double) zSizeModifier, 0.0D, 0.0D, 0.0D);
+			float ySizeModifier = (0.3F + flapTick * 0.45F) * ((float) size * 0.2F + 1.5F);
+
+			level.addParticle(ParticleTypes.LAVA, getX() + (double) xSizeModifier, getY() + (double) ySizeModifier,
+					getZ() + (double) zSizeModifier, 0.0D, 0.0D, 0.0D);
+			level.addParticle(ParticleTypes.LAVA, getX() - (double) xSizeModifier, getY() + (double) ySizeModifier,
+					getZ() - (double) zSizeModifier, 0.0D, 0.0D, 0.0D);
 		}
 
 	}
 
 	@Override
-	public SpawnGroupData finalizeSpawn(@NotNull ServerLevelAccessor pLevel, @NotNull DifficultyInstance pDifficulty, @NotNull MobSpawnType pReason, @Nullable SpawnGroupData pSpawnData, @Nullable CompoundTag pDataTag) {
+	public SpawnGroupData finalizeSpawn(@NotNull ServerLevelAccessor pLevel, @NotNull DifficultyInstance pDifficulty,
+	                                    @NotNull MobSpawnType pReason, @Nullable SpawnGroupData pSpawnData,
+	                                    @Nullable CompoundTag pDataTag) {
 		anchorPoint = blockPosition().above(15);
 		setSize(GeneralUtilities.getRandomNumber(1, 4));
 		setHealth(getMaxHealth());
@@ -170,7 +173,7 @@ public class LavaRevenantEntity extends FlyingMob implements Enemy {
 	}
 
 	/**
-	 * (abstract) Protected helper method to read subclass entity data from NBT.
+	 * Helper method to read subclass entity data from NBT.
 	 */
 	@Override
 	public void readAdditionalSaveData(@NotNull CompoundTag pCompound) {
@@ -239,10 +242,10 @@ public class LavaRevenantEntity extends FlyingMob implements Enemy {
 
 	@Override
 	public @NotNull EntityDimensions getDimensions(@NotNull Pose pPose) {
-		int i = getSize();
+		int size = getSize();
 		EntityDimensions dimensions = super.getDimensions(pPose);
-		float f = (dimensions.width + 0.2F * (float) i) / dimensions.width;
-		return dimensions.scale(f);
+		float scaleFactor = (dimensions.width + 0.2F * (float) size) / dimensions.width;
+		return dimensions.scale(scaleFactor);
 	}
 
 	enum AttackPhase {
@@ -310,11 +313,12 @@ public class LavaRevenantEntity extends FlyingMob implements Enemy {
 		 *
 		 * @param msg the <code>LavaRevenantEntityPacketHandler</code> message being sent
 		 */
-		@OnlyIn(Dist.CLIENT)
 		private static void handleOnClient(LavaRevenantEntityPacketHandler msg) {
 			Minecraft minecraft = Minecraft.getInstance();
 			if (minecraft.level != null) {
-				minecraft.level.playLocalSound(msg.blockPos.getX(), msg.blockPos.getY(), msg.blockPos.getZ(), DeferredRegistryHandler.LAVA_REVENANT_BITE.get(), SoundSource.HOSTILE, 0.3F, GeneralUtilities.getRandomNumber(0.0f, 1.0f) * 0.1F + 0.9F, false);
+				minecraft.level.playLocalSound(msg.blockPos.getX(), msg.blockPos.getY(), msg.blockPos.getZ(),
+						DeferredRegistryHandler.LAVA_REVENANT_BITE.get(), SoundSource.HOSTILE, 0.3F,
+						GeneralUtilities.getRandomNumber(0.0f, 1.0f) * 0.1F + 0.9F, false);
 			}
 		}
 	}
@@ -333,11 +337,12 @@ public class LavaRevenantEntity extends FlyingMob implements Enemy {
 				--nextScanTick;
 			} else {
 				nextScanTick = 60;
-				List<Player> list = level.getNearbyPlayers(attackTargeting, LavaRevenantEntity.this, getBoundingBox().inflate(128.0D, 96.0D, 128.0D));
-				if (!list.isEmpty()) {
-					list.sort(Comparator.<Entity, Double> comparing(Entity::getY).reversed());
+				List<Player> nearbyPlayers = level.getNearbyPlayers(attackTargeting, LavaRevenantEntity.this,
+						getBoundingBox().inflate(128.0D, 96.0D, 128.0D));
+				if (!nearbyPlayers.isEmpty()) {
+					nearbyPlayers.sort(Comparator.<Entity, Double> comparing(Entity::getY).reversed());
 
-					for (Player player : list) {
+					for (Player player : nearbyPlayers) {
 						if (canAttack(player, TargetingConditions.DEFAULT)) {
 							setTarget(player);
 							return true;
@@ -354,8 +359,8 @@ public class LavaRevenantEntity extends FlyingMob implements Enemy {
 		 */
 		@Override
 		public boolean canContinueToUse() {
-			LivingEntity livingentity = getTarget();
-			return livingentity != null && canAttack(livingentity, TargetingConditions.DEFAULT);
+			LivingEntity target = getTarget();
+			return target != null && canAttack(target, TargetingConditions.DEFAULT);
 		}
 	}
 
@@ -368,8 +373,8 @@ public class LavaRevenantEntity extends FlyingMob implements Enemy {
 		 */
 		@Override
 		public boolean canUse() {
-			LivingEntity livingentity = getTarget();
-			return livingentity != null && canAttack(getTarget(), TargetingConditions.DEFAULT);
+			LivingEntity target = getTarget();
+			return target != null && canAttack(getTarget(), TargetingConditions.DEFAULT);
 		}
 
 		/**
@@ -387,7 +392,8 @@ public class LavaRevenantEntity extends FlyingMob implements Enemy {
 		 */
 		@Override
 		public void stop() {
-			anchorPoint = level.getHeightmapPos(Heightmap.Types.MOTION_BLOCKING, anchorPoint).above(30 + random.nextInt(20));
+			anchorPoint = level.getHeightmapPos(Heightmap.Types.MOTION_BLOCKING, anchorPoint)
+					.above(30 + random.nextInt(20));
 		}
 
 		/**
@@ -401,7 +407,8 @@ public class LavaRevenantEntity extends FlyingMob implements Enemy {
 					attackPhase = LavaRevenantEntity.AttackPhase.SWOOP;
 					setAnchorAboveTarget();
 					nextSweepTick = (8 + random.nextInt(4)) * 20;
-					playSound(DeferredRegistryHandler.LAVA_REVENANT_SWOOP.get(), 10.0F, 0.95F + random.nextFloat() * 0.1F);
+					playSound(DeferredRegistryHandler.LAVA_REVENANT_SWOOP.get(), 10.0F,
+							0.95F + random.nextFloat() * 0.1F);
 				}
 			}
 
@@ -501,7 +508,8 @@ public class LavaRevenantEntity extends FlyingMob implements Enemy {
 			}
 
 			angle += clockwise * 15.0F * ((float) Math.PI / 180F);
-			moveTargetPoint = Vec3.atLowerCornerOf(anchorPoint).add(distance * Mth.cos(angle), -4.0F + height, distance * Mth.sin(angle));
+			moveTargetPoint = Vec3.atLowerCornerOf(anchorPoint).add(distance * Mth.cos(angle), -4.0F + height,
+					distance * Mth.sin(angle));
 		}
 	}
 
@@ -519,36 +527,36 @@ public class LavaRevenantEntity extends FlyingMob implements Enemy {
 				speed = 0.1F;
 			}
 
-			float f = (float) (moveTargetPoint.x - getX());
-			float f1 = (float) (moveTargetPoint.y - getY());
-			float f2 = (float) (moveTargetPoint.z - getZ());
-			double d0 = Mth.sqrt(f * f + f2 * f2);
-			if (Math.abs(d0) > (double) 1.0E-5F) {
-				double d1 = 1.0D - (double) Mth.abs(f1 * 0.7F) / d0;
-				f = (float) ((double) f * d1);
-				f2 = (float) ((double) f2 * d1);
-				d0 = Mth.sqrt(f * f + f2 * f2);
-				double d2 = Mth.sqrt(f * f + f2 * f2 + f1 * f1);
-				float f3 = getYRot();
-				float f4 = (float) Mth.atan2(f2, f);
-				float f5 = Mth.wrapDegrees(getYRot() + 90.0F);
-				float f6 = Mth.wrapDegrees(f4 * (180F / (float) Math.PI));
-				setYRot(Mth.approachDegrees(f5, f6, 4.0F) - 90.0F);
+			float deltaTargetX = (float) (moveTargetPoint.x - getX());
+			float deltaTargetY = (float) (moveTargetPoint.y - getY());
+			float deltaTargetZ = (float) (moveTargetPoint.z - getZ());
+			double sqrtXZ = Mth.sqrt(deltaTargetX * deltaTargetX + deltaTargetZ * deltaTargetZ);
+			if (Math.abs(sqrtXZ) > (double) 1.0E-5F) {
+				double d1 = 1.0D - (double) Mth.abs(deltaTargetY * 0.7F) / sqrtXZ;
+				deltaTargetX = (float) ((double) deltaTargetX * d1);
+				deltaTargetZ = (float) ((double) deltaTargetZ * d1);
+				sqrtXZ = Mth.sqrt(deltaTargetX * deltaTargetX + deltaTargetZ * deltaTargetZ);
+				double sqrtXZY = Mth.sqrt(deltaTargetX * deltaTargetX + deltaTargetZ * deltaTargetZ + deltaTargetY * deltaTargetY);
+				float yRotation = getYRot();
+				float angle = (float) Mth.atan2(deltaTargetZ, deltaTargetX);
+				float yRotationWrapped90 = Mth.wrapDegrees(getYRot() + 90.0F);
+				float angleWrapped = Mth.wrapDegrees(angle * (180F / (float) Math.PI));
+				setYRot(Mth.approachDegrees(yRotationWrapped90, angleWrapped, 4.0F) - 90.0F);
 				yBodyRot = getYRot();
-				if (Mth.degreesDifferenceAbs(f3, getYRot()) < 3.0F) {
+				if (Mth.degreesDifferenceAbs(yRotation, getYRot()) < 3.0F) {
 					speed = Mth.approach(speed, 1.8F, 0.005F * (1.8F / speed));
 				} else {
 					speed = Mth.approach(speed, 0.2F, 0.025F);
 				}
 
-				float f7 = (float) (-(Mth.atan2(-f1, d0) * (double) (180F / (float) Math.PI)));
-				setXRot(f7);
-				float f8 = getYRot() + 90.0F;
-				double d3 = (double) (speed * Mth.cos(f8 * ((float) Math.PI / 180F))) * Math.abs((double) f / d2);
-				double d4 = (double) (speed * Mth.sin(f8 * ((float) Math.PI / 180F))) * Math.abs((double) f2 / d2);
-				double d5 = (double) (speed * Mth.sin(f7 * ((float) Math.PI / 180F))) * Math.abs((double) f1 / d2);
-				Vec3 vec3 = getDeltaMovement();
-				setDeltaMovement(vec3.add((new Vec3(d3, d5, d4)).subtract(vec3).scale(0.2D)));
+				float xRotation = (float) (-(Mth.atan2(-deltaTargetY, sqrtXZ) * (double) (180F / (float) Math.PI)));
+				setXRot(xRotation);
+				float yRotationPlus90 = getYRot() + 90.0F;
+				double x = (double) (speed * Mth.cos(yRotationPlus90 * ((float) Math.PI / 180F))) * Math.abs((double) deltaTargetX / sqrtXZY);
+				double y = (double) (speed * Mth.sin(yRotationPlus90 * ((float) Math.PI / 180F))) * Math.abs((double) deltaTargetZ / sqrtXZY);
+				double z = (double) (speed * Mth.sin(xRotation * ((float) Math.PI / 180F))) * Math.abs((double) deltaTargetY / sqrtXZY);
+				Vec3 deltaMovement = getDeltaMovement();
+				setDeltaMovement(deltaMovement.add((new Vec3(x, z, y)).subtract(deltaMovement).scale(0.2D)));
 			}
 
 		}
@@ -579,12 +587,12 @@ public class LavaRevenantEntity extends FlyingMob implements Enemy {
 		 */
 		@Override
 		public boolean canContinueToUse() {
-			LivingEntity livingentity = getTarget();
-			if (livingentity == null) {
+			LivingEntity target = getTarget();
+			if (target == null) {
 				return false;
-			} else if (!livingentity.isAlive()) {
+			} else if (!target.isAlive()) {
 				return false;
-			} else if (!(livingentity instanceof Player) || !livingentity.isSpectator() && !((Player) livingentity).isCreative()) {
+			} else if (!(target instanceof Player) || !target.isSpectator() && !((Player) target).isCreative()) {
 				return canUse();
 			} else {
 				return false;
@@ -612,14 +620,15 @@ public class LavaRevenantEntity extends FlyingMob implements Enemy {
 		 */
 		@Override
 		public void tick() {
-			LivingEntity livingentity = getTarget();
-			if (livingentity != null) {
-				moveTargetPoint = new Vec3(livingentity.getX(), livingentity.getY(0.5D), livingentity.getZ());
-				if (getBoundingBox().inflate(0.2F).intersects(livingentity.getBoundingBox())) {
-					doHurtTarget(livingentity);
+			LivingEntity target = getTarget();
+			if (target != null) {
+				moveTargetPoint = new Vec3(target.getX(), target.getY(0.5D), target.getZ());
+				if (getBoundingBox().inflate(0.2F).intersects(target.getBoundingBox())) {
+					doHurtTarget(target);
 					attackPhase = LavaRevenantEntity.AttackPhase.CIRCLE;
 					if (!isSilent()) {
-						PacketHandler.INSTANCE.send(PacketDistributor.TRACKING_CHUNK.with(() -> level.getChunkAt(blockPosition())), new LavaRevenantEntityPacketHandler(blockPosition()));
+						PacketHandler.INSTANCE.send(PacketDistributor.TRACKING_CHUNK.with(() ->
+								level.getChunkAt(blockPosition())), new LavaRevenantEntityPacketHandler(blockPosition()));
 					}
 				} else if (horizontalCollision || hurtTime > 0) {
 					attackPhase = LavaRevenantEntity.AttackPhase.CIRCLE;

@@ -1,0 +1,22 @@
+{
+	"name": "Using the Encyclopedia",
+	"icon": "immersiveweapons:blank_blueprint",
+	"category": "immersiveweapons:getting_started",
+	"pages": [
+		{
+			"type": "patchouli:text",
+			"text": "As the landing of this book states, the Encyclopedia is your go-to solution for finding information.$(br2)The Encyclopedia provides descriptions for various items you might find (only those from Immersive Weapons, and no I don't care about the 4th wall right now :D)."
+		},
+		{
+			"type": "patchouli:text",
+			"text": "You might have noticed that many of the entries are $(#FF5555)locked$(). To unlock entries, complete advancements. As you complete advancements and unlock recipes, more entries in the Encyclopedia will appear.$(br2)Not everything is locked. General information and most resource entries are always unlocked."
+		},
+		{
+			"type": "patchouli:text",
+			"text": "Once entries are unlocked, your Encyclopedia will mark the new entries so you can easily find them.$(br2)While it's recommended that you always keep an Encyclopedia with you, you'll still unlock entries without it being present in your inventory. And if you use a different Encyclopedia, all of your entries will appear."
+		}
+	],
+	"priority": true,
+	"read_by_default": true,
+	"sortnum": 0
+}

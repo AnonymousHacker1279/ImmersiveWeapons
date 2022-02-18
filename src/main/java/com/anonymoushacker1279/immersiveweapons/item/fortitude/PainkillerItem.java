@@ -26,8 +26,8 @@ public class PainkillerItem extends Item {
 	 *
 	 * @param worldIn  the <code>World</code> the player is in
 	 * @param playerIn the <code>PlayerEntity</code> performing the action
-	 * @param handIn   the <code>Hand</code> the player is using
-	 * @return ActionResult extending ItemStack
+	 * @param handIn   the <code>InteractionHand</code> the player is using
+	 * @return InteractionResultHolder extending ItemStack
 	 */
 	@Override
 	public @NotNull InteractionResultHolder<ItemStack> use(@NotNull Level worldIn, Player playerIn, @NotNull InteractionHand handIn) {

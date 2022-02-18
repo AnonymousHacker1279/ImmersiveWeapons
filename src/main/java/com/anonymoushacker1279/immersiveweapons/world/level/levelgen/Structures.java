@@ -1,7 +1,7 @@
 package com.anonymoushacker1279.immersiveweapons.world.level.levelgen;
 
 import com.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
-import com.anonymoushacker1279.immersiveweapons.config.ServerConfig;
+import com.anonymoushacker1279.immersiveweapons.config.CommonConfig;
 import com.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
 import com.google.common.collect.*;
 import net.minecraft.core.Registry;
@@ -24,6 +24,7 @@ import net.minecraft.world.level.levelgen.structure.pieces.PieceGeneratorSupplie
 import net.minecraftforge.event.world.WorldEvent;
 
 import java.util.*;
+import java.util.Map.Entry;
 
 public class Structures {
 
@@ -57,24 +58,24 @@ public class Structures {
 	 * I'm not using a Forge registry because there are none for configured structures.
 	 */
 	public static void registerConfiguredStructures() {
-		Registry.register(BuiltinRegistries.CONFIGURED_STRUCTURE_FEATURE, new ResourceLocation(ImmersiveWeapons.MOD_ID, "abandoned_factory"),
-				CONFIGURED_ABANDONED_FACTORY);
-		Registry.register(BuiltinRegistries.CONFIGURED_STRUCTURE_FEATURE, new ResourceLocation(ImmersiveWeapons.MOD_ID, "bear_trap"),
-				CONFIGURED_BEAR_TRAP);
-		Registry.register(BuiltinRegistries.CONFIGURED_STRUCTURE_FEATURE, new ResourceLocation(ImmersiveWeapons.MOD_ID, "campsite"),
-				CONFIGURED_CAMPSITE);
-		Registry.register(BuiltinRegistries.CONFIGURED_STRUCTURE_FEATURE, new ResourceLocation(ImmersiveWeapons.MOD_ID, "cloud_island"),
-				CONFIGURED_CLOUD_ISLAND);
-		Registry.register(BuiltinRegistries.CONFIGURED_STRUCTURE_FEATURE, new ResourceLocation(ImmersiveWeapons.MOD_ID, "landmine_trap"),
-				CONFIGURED_LANDMINE_TRAP);
-		Registry.register(BuiltinRegistries.CONFIGURED_STRUCTURE_FEATURE, new ResourceLocation(ImmersiveWeapons.MOD_ID, "outhouse"),
-				CONFIGURED_OUTHOUSE);
-		Registry.register(BuiltinRegistries.CONFIGURED_STRUCTURE_FEATURE, new ResourceLocation(ImmersiveWeapons.MOD_ID, "pitfall_trap"),
-				CONFIGURED_PITFALL_TRAP);
-		Registry.register(BuiltinRegistries.CONFIGURED_STRUCTURE_FEATURE, new ResourceLocation(ImmersiveWeapons.MOD_ID, "underground_bunker"),
-				CONFIGURED_UNDERGROUND_BUNKER);
-		Registry.register(BuiltinRegistries.CONFIGURED_STRUCTURE_FEATURE, new ResourceLocation(ImmersiveWeapons.MOD_ID, "water_tower"),
-				CONFIGURED_WATER_TOWER);
+		Registry.register(BuiltinRegistries.CONFIGURED_STRUCTURE_FEATURE, new ResourceLocation(ImmersiveWeapons.MOD_ID,
+				"abandoned_factory"), CONFIGURED_ABANDONED_FACTORY);
+		Registry.register(BuiltinRegistries.CONFIGURED_STRUCTURE_FEATURE, new ResourceLocation(ImmersiveWeapons.MOD_ID,
+				"bear_trap"), CONFIGURED_BEAR_TRAP);
+		Registry.register(BuiltinRegistries.CONFIGURED_STRUCTURE_FEATURE, new ResourceLocation(ImmersiveWeapons.MOD_ID,
+				"campsite"), CONFIGURED_CAMPSITE);
+		Registry.register(BuiltinRegistries.CONFIGURED_STRUCTURE_FEATURE, new ResourceLocation(ImmersiveWeapons.MOD_ID,
+				"cloud_island"), CONFIGURED_CLOUD_ISLAND);
+		Registry.register(BuiltinRegistries.CONFIGURED_STRUCTURE_FEATURE, new ResourceLocation(ImmersiveWeapons.MOD_ID,
+				"landmine_trap"), CONFIGURED_LANDMINE_TRAP);
+		Registry.register(BuiltinRegistries.CONFIGURED_STRUCTURE_FEATURE, new ResourceLocation(ImmersiveWeapons.MOD_ID,
+				"outhouse"), CONFIGURED_OUTHOUSE);
+		Registry.register(BuiltinRegistries.CONFIGURED_STRUCTURE_FEATURE, new ResourceLocation(ImmersiveWeapons.MOD_ID,
+				"pitfall_trap"), CONFIGURED_PITFALL_TRAP);
+		Registry.register(BuiltinRegistries.CONFIGURED_STRUCTURE_FEATURE, new ResourceLocation(ImmersiveWeapons.MOD_ID,
+				"underground_bunker"), CONFIGURED_UNDERGROUND_BUNKER);
+		Registry.register(BuiltinRegistries.CONFIGURED_STRUCTURE_FEATURE, new ResourceLocation(ImmersiveWeapons.MOD_ID,
+				"water_tower"), CONFIGURED_WATER_TOWER);
 	}
 
 	/**
@@ -84,64 +85,64 @@ public class Structures {
 		setupStructure(
 				DeferredRegistryHandler.ABANDONED_FACTORY_STRUCTURE.get(),
 				new StructureFeatureConfiguration(
-						ServerConfig.MAX_ABANDONED_FACTORY_DISTANCE.get(),
-						ServerConfig.MIN_ABANDONED_FACTORY_DISTANCE.get(),
+						CommonConfig.MAX_ABANDONED_FACTORY_DISTANCE.get(),
+						CommonConfig.MIN_ABANDONED_FACTORY_DISTANCE.get(),
 						959874384),
 				true);
 		setupStructure(
 				DeferredRegistryHandler.BEAR_TRAP_STRUCTURE.get(),
 				new StructureFeatureConfiguration(
-						ServerConfig.MAX_BEAR_TRAP_DISTANCE.get(),
-						ServerConfig.MIN_BEAR_TRAP_DISTANCE.get(),
+						CommonConfig.MAX_BEAR_TRAP_DISTANCE.get(),
+						CommonConfig.MIN_BEAR_TRAP_DISTANCE.get(),
 						794532168),
 				false);
 		setupStructure(
 				DeferredRegistryHandler.CAMPSITE_STRUCTURE.get(),
 				new StructureFeatureConfiguration(
-						ServerConfig.MAX_CAMPSITE_DISTANCE.get(),
-						ServerConfig.MIN_CAMPSITE_DISTANCE.get(),
+						CommonConfig.MAX_CAMPSITE_DISTANCE.get(),
+						CommonConfig.MIN_CAMPSITE_DISTANCE.get(),
 						671249835),
 				true);
 		setupStructure(
 				DeferredRegistryHandler.CLOUD_ISLAND_STRUCTURE.get(),
 				new StructureFeatureConfiguration(
-						ServerConfig.MAX_CLOUD_ISLAND_DISTANCE.get(),
-						ServerConfig.MIN_CLOUD_ISLAND_DISTANCE.get(),
+						CommonConfig.MAX_CLOUD_ISLAND_DISTANCE.get(),
+						CommonConfig.MIN_CLOUD_ISLAND_DISTANCE.get(),
 						349821657),
 				false);
 		setupStructure(
 				DeferredRegistryHandler.LANDMINE_TRAP_STRUCTURE.get(),
 				new StructureFeatureConfiguration(
-						ServerConfig.MAX_LANDMINE_TRAP_DISTANCE.get(),
-						ServerConfig.MIN_LANDMINE_TRAP_DISTANCE.get(),
+						CommonConfig.MAX_LANDMINE_TRAP_DISTANCE.get(),
+						CommonConfig.MIN_LANDMINE_TRAP_DISTANCE.get(),
 						959874384),
 				true);
 		setupStructure(
 				DeferredRegistryHandler.OUTHOUSE_STRUCTURE.get(),
 				new StructureFeatureConfiguration(
-						ServerConfig.MAX_OUTHOUSE_DISTANCE.get(),
-						ServerConfig.MIN_OUTHOUSE_DISTANCE.get(),
+						CommonConfig.MAX_OUTHOUSE_DISTANCE.get(),
+						CommonConfig.MIN_OUTHOUSE_DISTANCE.get(),
 						845721365),
 				false);
 		setupStructure(
 				DeferredRegistryHandler.PITFALL_TRAP_STRUCTURE.get(),
 				new StructureFeatureConfiguration(
-						ServerConfig.MAX_PITFALL_TRAP_DISTANCE.get(),
-						ServerConfig.MIN_PITFALL_TRAP_DISTANCE.get(),
+						CommonConfig.MAX_PITFALL_TRAP_DISTANCE.get(),
+						CommonConfig.MIN_PITFALL_TRAP_DISTANCE.get(),
 						875412395),
 				false);
 		setupStructure(
 				DeferredRegistryHandler.UNDERGROUND_BUNKER_STRUCTURE.get(),
 				new StructureFeatureConfiguration(
-						ServerConfig.MAX_UNDERGROUND_BUNKER_DISTANCE.get(),
-						ServerConfig.MIN_UNDERGROUND_BUNKER_DISTANCE.get(),
+						CommonConfig.MAX_UNDERGROUND_BUNKER_DISTANCE.get(),
+						CommonConfig.MIN_UNDERGROUND_BUNKER_DISTANCE.get(),
 						548796135),
 				false);
 		setupStructure(
 				DeferredRegistryHandler.WATER_TOWER_STRUCTURE.get(),
 				new StructureFeatureConfiguration(
-						ServerConfig.MAX_WATER_TOWER_DISTANCE.get(),
-						ServerConfig.MIN_WATER_TOWER_DISTANCE.get(),
+						CommonConfig.MAX_WATER_TOWER_DISTANCE.get(),
+						CommonConfig.MIN_WATER_TOWER_DISTANCE.get(),
 						246975135),
 				true);
 	}
@@ -179,7 +180,8 @@ public class Structures {
 
 		// Add the structure to all the noise generator settings
 		BuiltinRegistries.NOISE_GENERATOR_SETTINGS.entrySet().forEach(settings -> {
-			Map<StructureFeature<?>, StructureFeatureConfiguration> structureMap = settings.getValue().structureSettings().structureConfig();
+			Map<StructureFeature<?>, StructureFeatureConfiguration> structureMap = settings.getValue()
+					.structureSettings().structureConfig();
 
 			// Be careful with mods that make the structure map immutable (like datapacks do)
 			if (structureMap instanceof ImmutableMap) {
@@ -218,8 +220,8 @@ public class Structures {
 			 */
 
 			// Create a mutable map, which biomes will be added to for now
-			HashMap<StructureFeature<?>, HashMultimap<ConfiguredStructureFeature<?, ?>, ResourceKey<Biome>>> structureToMultiMap =
-					new HashMap<>(1);
+			HashMap<StructureFeature<?>, HashMultimap<ConfiguredStructureFeature<?, ?>, ResourceKey<Biome>>>
+					structureToMultiMap = new HashMap<>(1);
 
 			// Add the resource key of all biomes that the configured structures can spawn in.
 			for (Map.Entry<ResourceKey<Biome>, Biome> biomeEntry :
@@ -254,8 +256,9 @@ public class Structures {
 			}
 
 			// Grab the map that holds what ConfigureStructures a structure has and what biomes it can spawn in.
-			ImmutableMap.Builder<StructureFeature<?>, ImmutableMultimap<ConfiguredStructureFeature<?, ?>, ResourceKey<Biome>>> tempStructureToMultiMap =
-					ImmutableMap.builder();
+			ImmutableMap.Builder<StructureFeature<?>, ImmutableMultimap<ConfiguredStructureFeature<?, ?>,
+					ResourceKey<Biome>>> tempStructureToMultiMap = ImmutableMap.builder();
+
 			worldStructureConfig.configuredStructures.entrySet()
 					.stream()
 					.filter(entry -> !structureToMultiMap.containsKey(entry.getKey()))
@@ -280,17 +283,24 @@ public class Structures {
 				structureToMultimap.get(configuredStructureFeature.feature);
 
 		if (configuredStructureToBiomeMultiMap.containsValue(biomeRegistryKey)) {
+			Optional<Entry<ConfiguredStructureFeature<?, ?>, ResourceKey<Biome>>> keyEntry =
+					configuredStructureToBiomeMultiMap.entries()
+							.stream()
+							.filter(e -> e.getValue() == biomeRegistryKey)
+							.findFirst();
+
+			int keyID = 0; // This should always be set below, but the IDE throws a fit if I call all this directly in the logger
+			if (keyEntry.isPresent()) {
+				keyID = BuiltinRegistries.CONFIGURED_STRUCTURE_FEATURE.getId(keyEntry.get().getKey());
+			}
+
 			ImmersiveWeapons.LOGGER.error("""
 							    Detected 2 ConfiguredStructureFeatures that share the same base StructureFeature trying to be added to same biome. One will be prevented from spawning.
 							    The two conflicting ConfiguredStructures are: {}, {}
 							    The biome that is attempting to be shared: {}
 							""",
 					BuiltinRegistries.CONFIGURED_STRUCTURE_FEATURE.getId(configuredStructureFeature),
-					BuiltinRegistries.CONFIGURED_STRUCTURE_FEATURE.getId(configuredStructureToBiomeMultiMap.entries()
-							.stream()
-							.filter(e -> e.getValue() == biomeRegistryKey)
-							.findFirst()
-							.get().getKey()),
+					keyID,
 					biomeRegistryKey
 			);
 		} else {
@@ -301,7 +311,9 @@ public class Structures {
 	/**
 	 * Create a copy of a piece generator context with another config. This is used by the structures.
 	 */
-	public static PieceGeneratorSupplier.Context<JigsawConfiguration> createContextWithConfig(PieceGeneratorSupplier.Context<JigsawConfiguration> context, JigsawConfiguration newConfig) {
+	public static PieceGeneratorSupplier.Context<JigsawConfiguration>
+	createContextWithConfig(PieceGeneratorSupplier.Context<JigsawConfiguration> context, JigsawConfiguration newConfig) {
+
 		return new PieceGeneratorSupplier.Context<>(
 				context.chunkGenerator(),
 				context.biomeSource(),

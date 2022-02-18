@@ -3,27 +3,18 @@ package com.anonymoushacker1279.immersiveweapons.data.models;
 import com.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonElement;
-import net.minecraft.core.Registry;
-import net.minecraft.data.DataGenerator;
-import net.minecraft.data.DataProvider;
-import net.minecraft.data.HashCache;
+import com.google.gson.*;
+import net.minecraft.data.*;
 import net.minecraft.data.models.blockstates.BlockStateGenerator;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
+import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.NotNull;
 
 import java.nio.file.Path;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Set;
-import java.util.function.BiConsumer;
-import java.util.function.BiFunction;
-import java.util.function.Consumer;
-import java.util.function.Supplier;
+import java.util.*;
+import java.util.function.*;
 
 public class ModelProvider implements DataProvider {
 
@@ -92,7 +83,9 @@ public class ModelProvider implements DataProvider {
 	 * @param biFunction the <code>BiFunction</code> path
 	 * @param <T>        the provider
 	 */
-	private <T> void saveCollection(HashCache hashCache, Path path, Map<T, ? extends Supplier<JsonElement>> map, BiFunction<Path, T, Path> biFunction) {
+	private <T> void saveCollection(HashCache hashCache, Path path, Map<T, ? extends Supplier<JsonElement>> map,
+	                                BiFunction<Path, T, Path> biFunction) {
+
 		map.forEach((t, supplier) -> {
 			Path save = biFunction.apply(path, t);
 
@@ -106,8 +99,9 @@ public class ModelProvider implements DataProvider {
 	}
 
 	private static Path createBlockStatePath(Path path, Block block) {
-		ResourceLocation resourcelocation = Registry.BLOCK.getKey(block);
-		return path.resolve("assets/" + resourcelocation.getNamespace() + "/blockstates/" + resourcelocation.getPath() + ".json");
+		ResourceLocation namespace = ForgeRegistries.BLOCKS.getKey(block);
+		return path.resolve("assets/" + Objects.requireNonNull(namespace).getNamespace() + "/blockstates/"
+				+ namespace.getPath() + ".json");
 	}
 
 	/**

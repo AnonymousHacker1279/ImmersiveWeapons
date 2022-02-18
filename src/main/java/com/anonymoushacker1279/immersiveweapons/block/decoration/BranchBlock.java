@@ -1,12 +1,10 @@
 package com.anonymoushacker1279.immersiveweapons.block.decoration;
 
 import com.anonymoushacker1279.immersiveweapons.block.core.BasicOrientableBlock;
-import com.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
+import com.anonymoushacker1279.immersiveweapons.data.tags.groups.immersiveweapons.ImmersiveWeaponsBlockTagGroups;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.world.level.BlockGetter;
-import net.minecraft.world.level.LevelAccessor;
-import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.*;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
@@ -34,14 +32,16 @@ public class BranchBlock extends BasicOrientableBlock {
 	 * Set the shape of the block.
 	 *
 	 * @param state            the <code>BlockState</code> of the block
-	 * @param reader           the <code>IBlockReader</code> for the block
+	 * @param reader           the <code>BlockGetter</code> for the block
 	 * @param pos              the <code>BlockPos</code> the block is at
-	 * @param selectionContext the <code>ISelectionContext</code> of the block
+	 * @param collisionContext the <code>CollisionContext</code> of the block
 	 * @return VoxelShape
 	 */
 	@SuppressWarnings("deprecation")
 	@Override
-	public @NotNull VoxelShape getShape(BlockState state, @NotNull BlockGetter reader, @NotNull BlockPos pos, @NotNull CollisionContext selectionContext) {
+	public @NotNull VoxelShape getShape(BlockState state, @NotNull BlockGetter reader, @NotNull BlockPos pos,
+	                                    @NotNull CollisionContext collisionContext) {
+
 		return switch (state.getValue(FACING)) {
 			case SOUTH -> SHAPE_SOUTH;
 			case EAST -> SHAPE_EAST;
@@ -62,23 +62,26 @@ public class BranchBlock extends BasicOrientableBlock {
 	@Override
 	public boolean canSurvive(BlockState state, LevelReader reader, BlockPos pos) {
 		BlockState blockstate = reader.getBlockState(pos.relative(state.getValue(FACING)));
-		return blockstate.is(DeferredRegistryHandler.BURNED_OAK_LOG.get());
+		return blockstate.is(ImmersiveWeaponsBlockTagGroups.BURNED_OAK_LOGS);
 	}
 
 	/**
 	 * Update the block's shape.
 	 *
-	 * @param state     the new <code>BlockState</code> of the block
-	 * @param direction the <code>Direction</code> the block is facing
-	 * @param state1    the old <code>BlockState</code> of the block
-	 * @param accessor  the <code>LevelAccessor</code> for the block
-	 * @param pos       the new <code>BlockPos</code> the block is at
-	 * @param pos1      the old <code>BlockPos</code> the block was at
+	 * @param state         the new <code>BlockState</code> of the block
+	 * @param direction     the <code>Direction</code> the block is facing
+	 * @param neighborState the neighbor <code>BlockState</code> of the block
+	 * @param level         the <code>LevelAccessor</code> for the block
+	 * @param pos           the new <code>BlockPos</code> the block is at
+	 * @param neighborPos   the old <code>BlockPos</code> the block was at
 	 * @return BlockState
 	 */
 	@SuppressWarnings("deprecation")
 	@Override
-	public @NotNull BlockState updateShape(BlockState state, @NotNull Direction direction, @NotNull BlockState state1, @NotNull LevelAccessor accessor, @NotNull BlockPos pos, @NotNull BlockPos pos1) {
-		return direction == state.getValue(FACING) && !state.canSurvive(accessor, pos) ? Blocks.AIR.defaultBlockState() : super.updateShape(state, direction, state1, accessor, pos, pos1);
+	public @NotNull BlockState updateShape(BlockState state, @NotNull Direction direction, @NotNull BlockState neighborState,
+	                                       @NotNull LevelAccessor level, @NotNull BlockPos pos, @NotNull BlockPos neighborPos) {
+
+		return direction == state.getValue(FACING) && !state.canSurvive(level, pos) ? Blocks.AIR.defaultBlockState()
+				: super.updateShape(state, direction, neighborState, level, pos, neighborPos);
 	}
 }
