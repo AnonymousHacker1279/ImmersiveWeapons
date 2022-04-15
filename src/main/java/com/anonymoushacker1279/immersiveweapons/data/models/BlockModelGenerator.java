@@ -21,18 +21,18 @@ import java.util.function.*;
 
 public class BlockModelGenerator {
 
-	final Consumer<BlockStateGenerator> blockStateOutput;
-	final BiConsumer<ResourceLocation, Supplier<JsonElement>> modelOutput;
+	private final Consumer<BlockStateGenerator> blockStateOutput;
+	private final BiConsumer<ResourceLocation, Supplier<JsonElement>> modelOutput;
 	private final Consumer<Item> skippedAutoModelsOutput;
 
-	final List<Block> nonOrientableTrapdoor = ImmutableList.of(Blocks.OAK_TRAPDOOR, Blocks.DARK_OAK_TRAPDOOR,
+	private final List<Block> nonOrientableTrapdoor = ImmutableList.of(Blocks.OAK_TRAPDOOR, Blocks.DARK_OAK_TRAPDOOR,
 			Blocks.IRON_TRAPDOOR);
 
-	final Map<Block, BlockStateGeneratorSupplier> fullBlockModelCustomGenerators = ImmutableMap.<Block, BlockStateGeneratorSupplier> builder()
+	private final Map<Block, BlockStateGeneratorSupplier> fullBlockModelCustomGenerators = ImmutableMap.<Block, BlockStateGeneratorSupplier> builder()
 			.put(Blocks.STONE, BlockModelGenerator::createMirroredCubeGenerator)
 			.put(Blocks.DEEPSLATE, BlockModelGenerator::createMirroredColumnGenerator).build();
 
-	final Map<Block, TexturedModel> texturedModels = ImmutableMap.<Block, TexturedModel> builder().build();
+	private final Map<Block, TexturedModel> texturedModels = ImmutableMap.<Block, TexturedModel> builder().build();
 
 	public BlockModelGenerator(Consumer<BlockStateGenerator> pBlockStateOutput, BiConsumer<ResourceLocation,
 			Supplier<JsonElement>> pModelOutput, Consumer<Item> pSkippedAutoModelsOutput) {
@@ -181,7 +181,7 @@ public class BlockModelGenerator {
 		return MultiVariantGenerator.multiVariant(pBlock, Variant.variant().with(VariantProperties.MODEL, pModelLocation));
 	}
 
-	void createDoor(Block pDoorBlock) {
+	private void createDoor(Block pDoorBlock) {
 		TextureMapping door = TextureMapping.door(pDoorBlock);
 		ResourceLocation resourceLocation = ModelTemplates.DOOR_BOTTOM.create(pDoorBlock, door, modelOutput);
 		ResourceLocation resourceLocation1 = ModelTemplates.DOOR_BOTTOM_HINGE.create(pDoorBlock, door, modelOutput);
@@ -238,7 +238,7 @@ public class BlockModelGenerator {
 						DoubleBlockHalf.UPPER, pTopHalfModelLocation, pTopHalfRightHingeModelLocation));
 	}
 
-	void createSimpleFlatItemModel(Item pFlatItem) {
+	private void createSimpleFlatItemModel(Item pFlatItem) {
 		ModelTemplates.FLAT_ITEM.create(ModelLocationUtils.getModelLocation(pFlatItem), TextureMapping.layer0(pFlatItem),
 				modelOutput);
 	}
@@ -309,7 +309,7 @@ public class BlockModelGenerator {
 								.with(VariantProperties.Y_ROT, VariantProperties.Rotation.R180));
 	}
 
-	static BlockStateGenerator createAxisAlignedPillarBlock(Block pAxisAlignedPillarBlock, ResourceLocation pModelLocation) {
+	private static BlockStateGenerator createAxisAlignedPillarBlock(Block pAxisAlignedPillarBlock, ResourceLocation pModelLocation) {
 		return MultiVariantGenerator.multiVariant(pAxisAlignedPillarBlock, Variant.variant()
 				.with(VariantProperties.MODEL, pModelLocation)).with(createRotatedPillar());
 	}
@@ -321,7 +321,7 @@ public class BlockModelGenerator {
 						.with(VariantProperties.Y_ROT, VariantProperties.Rotation.R90));
 	}
 
-	static BlockStateGenerator createRotatedPillarWithHorizontalVariant(Block pRotatedPillarBlock, ResourceLocation pModelLocation
+	private static BlockStateGenerator createRotatedPillarWithHorizontalVariant(Block pRotatedPillarBlock, ResourceLocation pModelLocation
 			, ResourceLocation pHorizontalModelLocation) {
 		return MultiVariantGenerator.multiVariant(pRotatedPillarBlock)
 				.with(PropertyDispatch.property(BlockStateProperties.AXIS)
@@ -338,12 +338,12 @@ public class BlockModelGenerator {
 		return new WoodProvider(TextureMapping.logColumn(pLogBlock));
 	}
 
-	void delegateItemModel(Block pBlock, ResourceLocation pDelegateModelLocation) {
+	private void delegateItemModel(Block pBlock, ResourceLocation pDelegateModelLocation) {
 		modelOutput.accept(ModelLocationUtils.getModelLocation(pBlock.asItem()), new DelegatedModel(pDelegateModelLocation));
 	}
 
-	static BlockStateGenerator createButton(Block pButtonBlock, ResourceLocation pUnpoweredModelLocation,
-	                                        ResourceLocation pPoweredModelLocation) {
+	private static BlockStateGenerator createButton(Block pButtonBlock, ResourceLocation pUnpoweredModelLocation,
+	                                                ResourceLocation pPoweredModelLocation) {
 
 		return MultiVariantGenerator.multiVariant(pButtonBlock)
 				.with(PropertyDispatch.property(BlockStateProperties.POWERED)
@@ -401,8 +401,8 @@ public class BlockModelGenerator {
 										.with(VariantProperties.X_ROT, VariantProperties.Rotation.R180)));
 	}
 
-	static BlockStateGenerator createWall(Block pWallBlock, ResourceLocation pPostModelLocation,
-	                                      ResourceLocation pLowSideModelLocation, ResourceLocation pTallSideModelLocation) {
+	private static BlockStateGenerator createWall(Block pWallBlock, ResourceLocation pPostModelLocation,
+	                                              ResourceLocation pLowSideModelLocation, ResourceLocation pTallSideModelLocation) {
 
 		return MultiPartGenerator.multiPart(pWallBlock)
 				.with(Condition.condition().term(BlockStateProperties.UP, true),
@@ -448,8 +448,8 @@ public class BlockModelGenerator {
 								.with(VariantProperties.UV_LOCK, true));
 	}
 
-	static BlockStateGenerator createFence(Block pFenceBlock, ResourceLocation pFencePostModelLocation,
-	                                       ResourceLocation pFenceSideModelLocation) {
+	private static BlockStateGenerator createFence(Block pFenceBlock, ResourceLocation pFencePostModelLocation,
+	                                               ResourceLocation pFenceSideModelLocation) {
 
 		return MultiPartGenerator.multiPart(pFenceBlock)
 				.with(Variant.variant()
@@ -474,10 +474,10 @@ public class BlockModelGenerator {
 								.with(VariantProperties.UV_LOCK, true));
 	}
 
-	static BlockStateGenerator createFenceGate(Block pFenceGateBlock, ResourceLocation pOpenModelLocation,
-	                                           ResourceLocation pClosedModelLocation,
-	                                           ResourceLocation pWallOpenModelLocation,
-	                                           ResourceLocation pWallClosedModelLocation) {
+	private static BlockStateGenerator createFenceGate(Block pFenceGateBlock, ResourceLocation pOpenModelLocation,
+	                                                   ResourceLocation pClosedModelLocation,
+	                                                   ResourceLocation pWallOpenModelLocation,
+	                                                   ResourceLocation pWallClosedModelLocation) {
 
 		return MultiVariantGenerator.multiVariant(pFenceGateBlock,
 						Variant.variant()
@@ -512,8 +512,8 @@ public class BlockModelGenerator {
 								.with(VariantProperties.Y_ROT, VariantProperties.Rotation.R270));
 	}
 
-	static BlockStateGenerator createPressurePlate(Block pPressurePlateBlock, ResourceLocation pUnpoweredModelLocation,
-	                                               ResourceLocation pPoweredModelLocation) {
+	private static BlockStateGenerator createPressurePlate(Block pPressurePlateBlock, ResourceLocation pUnpoweredModelLocation,
+	                                                       ResourceLocation pPoweredModelLocation) {
 
 		return MultiVariantGenerator.multiVariant(pPressurePlateBlock)
 				.with(createBooleanModelDispatch(BlockStateProperties.POWERED, pPoweredModelLocation,
@@ -530,12 +530,12 @@ public class BlockModelGenerator {
 				.select(false, Variant.variant().with(VariantProperties.MODEL, pFalseModelLocation));
 	}
 
-	void skipAutoItemBlock(Block pBlock) {
+	private void skipAutoItemBlock(Block pBlock) {
 		skippedAutoModelsOutput.accept(pBlock.asItem());
 	}
 
-	static BlockStateGenerator createSlab(Block pSlabBlock, ResourceLocation pBottomHalfModelLocation,
-	                                      ResourceLocation pTopHalfModelLocation, ResourceLocation pDoubleModelLocation) {
+	private static BlockStateGenerator createSlab(Block pSlabBlock, ResourceLocation pBottomHalfModelLocation,
+	                                              ResourceLocation pTopHalfModelLocation, ResourceLocation pDoubleModelLocation) {
 
 		return MultiVariantGenerator.multiVariant(pSlabBlock)
 				.with(PropertyDispatch.property(BlockStateProperties.SLAB_TYPE)
@@ -550,9 +550,9 @@ public class BlockModelGenerator {
 										.with(VariantProperties.MODEL, pDoubleModelLocation)));
 	}
 
-	static BlockStateGenerator createStairs(Block pStairsBlock, ResourceLocation pInnerModelLocation,
-	                                        ResourceLocation pStraightModelLocation,
-	                                        ResourceLocation pOuterModelLocation) {
+	private static BlockStateGenerator createStairs(Block pStairsBlock, ResourceLocation pInnerModelLocation,
+	                                                ResourceLocation pStraightModelLocation,
+	                                                ResourceLocation pOuterModelLocation) {
 
 		return MultiVariantGenerator.multiVariant(pStairsBlock)
 				.with(PropertyDispatch
@@ -765,7 +765,7 @@ public class BlockModelGenerator {
 										.with(VariantProperties.UV_LOCK, true)));
 	}
 
-	void createTrapdoor(Block pTrapdoorBlock) {
+	private void createTrapdoor(Block pTrapdoorBlock) {
 		TextureMapping textureMapping = TextureMapping.defaultTexture(pTrapdoorBlock);
 		ResourceLocation resourceLocation = ModelTemplates.TRAPDOOR_TOP.create(pTrapdoorBlock, textureMapping, modelOutput);
 		ResourceLocation resourceLocation1 = ModelTemplates.TRAPDOOR_BOTTOM.create(pTrapdoorBlock, textureMapping, modelOutput);
@@ -837,7 +837,7 @@ public class BlockModelGenerator {
 										.with(VariantProperties.Y_ROT, VariantProperties.Rotation.R270)));
 	}
 
-	void createOrientableTrapdoor(Block pOrientableTrapdoorBlock) {
+	private void createOrientableTrapdoor(Block pOrientableTrapdoorBlock) {
 		TextureMapping textureMapping = TextureMapping.defaultTexture(pOrientableTrapdoorBlock);
 		ResourceLocation resourceLocation = ModelTemplates.ORIENTABLE_TRAPDOOR_TOP
 				.create(pOrientableTrapdoorBlock, textureMapping, modelOutput);
