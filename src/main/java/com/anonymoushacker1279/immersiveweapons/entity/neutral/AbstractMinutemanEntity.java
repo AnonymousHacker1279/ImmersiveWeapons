@@ -28,8 +28,7 @@ import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.entity.projectile.ProjectileUtil;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ProjectileWeaponItem;
-import net.minecraft.world.level.Level;
-import net.minecraft.world.level.ServerLevelAccessor;
+import net.minecraft.world.level.*;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
@@ -74,11 +73,11 @@ public abstract class AbstractMinutemanEntity extends PathfinderMob implements R
 	/**
 	 * Constructor for AbstractMinutemanEntity.
 	 *
-	 * @param type    the <code>EntityType</code> instance
-	 * @param worldIn the <code>World</code> the entity is in
+	 * @param type  the <code>EntityType</code> instance
+	 * @param level the <code>Level</code> the entity is in
 	 */
-	AbstractMinutemanEntity(EntityType<? extends AbstractMinutemanEntity> type, Level worldIn) {
-		super(type, worldIn);
+	AbstractMinutemanEntity(EntityType<? extends AbstractMinutemanEntity> type, Level level) {
+		super(type, level);
 		setCombatTask();
 	}
 
@@ -99,22 +98,29 @@ public abstract class AbstractMinutemanEntity extends PathfinderMob implements R
 	@Override
 	protected void registerGoals() {
 		goalSelector.addGoal(1, new FloatGoal(this));
-		goalSelector.addGoal(4, new WaterAvoidingRandomStrollGoal(this, 1.0D));
-		goalSelector.addGoal(2, new MoveBackToVillageGoal(this, 0.6D, false));
-		goalSelector.addGoal(4, new MoveThroughVillageGoal(this, 1.0D, false,
+		goalSelector.addGoal(4, new WaterAvoidingRandomStrollGoal(this, 0.8D, 0.35f));
+		goalSelector.addGoal(3, new MoveBackToVillageGoal(this, 0.65D, false));
+		goalSelector.addGoal(3, new MoveThroughVillageGoal(this, 1.0D, false,
 				6, () -> true));
-		goalSelector.addGoal(8, new LookAtPlayerGoal(this, Player.class, 8.0F));
-		goalSelector.addGoal(100, new RandomLookAroundGoal(this));
-		goalSelector.addGoal(4, new OpenDoorGoal(this, true));
+		goalSelector.addGoal(5, new LookAtPlayerGoal(this, Player.class, 8.0F));
+		goalSelector.addGoal(5, new RandomLookAroundGoal(this));
+		goalSelector.addGoal(3, new OpenDoorGoal(this, true));
+		goalSelector.addGoal(5, new MoveToBlockGoal(this, 0.65D, 24) {
+			@Override
+			protected boolean isValidTarget(@NotNull LevelReader pLevel, @NotNull BlockPos pPos) {
+				return pLevel.getBlockState(pPos).is(DeferredRegistryHandler.CAMP_CHAIR.get());
+			}
+		});
+
 		targetSelector.addGoal(1, new HurtByTargetGoal(this, MinutemanEntity.class, IronGolem.class));
 		targetSelector.addGoal(4, new DefendVillageTargetGoal(this));
 		targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, AbstractDyingSoldierEntity.class,
 				true));
 		targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, Player.class, 8,
 				true, false, this::isAngryAt));
-		targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Monster.class, 10,
+		targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, Monster.class, 10,
 				true, false, (targetPredicate) -> !(targetPredicate instanceof Creeper)));
-		targetSelector.addGoal(5, new ResetUniversalAngerTargetGoal<>(this, false));
+		targetSelector.addGoal(6, new ResetUniversalAngerTargetGoal<>(this, false));
 	}
 
 	/**
