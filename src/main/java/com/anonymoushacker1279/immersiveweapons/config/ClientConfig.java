@@ -1,48 +1,38 @@
 package com.anonymoushacker1279.immersiveweapons.config;
 
-import com.electronwill.nightconfig.core.file.CommentedFileConfig;
-import com.electronwill.nightconfig.core.io.WritingMode;
 import net.minecraftforge.common.ForgeConfigSpec;
-
-import java.nio.file.Path;
+import net.minecraftforge.common.ForgeConfigSpec.Builder;
+import org.apache.commons.lang3.tuple.Pair;
 
 public class ClientConfig {
 
-	private static final ForgeConfigSpec.Builder CONFIG_BUILDER = new ForgeConfigSpec.Builder();
-	private static final ForgeConfigSpec CONFIG;
+	public static final ForgeConfigSpec CLIENT_SPEC;
+	public static final ClientConfig CLIENT;
 
-	public static final ForgeConfigSpec.ConfigValue<Boolean> TESLA_ARMOR_EFFECT_SOUND;
+	public static ForgeConfigSpec.ConfigValue<Boolean> TESLA_ARMOR_EFFECT_SOUND;
+	public static ForgeConfigSpec.ConfigValue<Integer> PANIC_ALARM_RANGE;
 
-	/*
-	 * Initialize the client configuration file.
-	 */
-	static {
-		CONFIG_BUILDER.push("Client Configuration");
+	ClientConfig(ForgeConfigSpec.Builder builder) {
+		builder.push("Client Configuration");
 
-		CONFIG_BUILDER.push("Sounds");
-		TESLA_ARMOR_EFFECT_SOUND = CONFIG_BUILDER
+		builder.push("Sounds");
+		TESLA_ARMOR_EFFECT_SOUND = builder
 				.comment("Enable the Tesla Armor effect sound - Default true")
 				.translation("config.immersiveweapons.tesla_armor_effect_sound")
 				.define("tesla_armor_effect_sound", true);
-		CONFIG_BUILDER.pop();
+		PANIC_ALARM_RANGE = builder
+				.comment("Set the range of the Panic Alarm's sound - Default 48")
+				.translation("config.immersiveweapons.panic_alarm_range")
+				.define("panic_alarm_range", 48);
+		builder.pop();
 
-		CONFIG_BUILDER.pop();
-		CONFIG = CONFIG_BUILDER.build();
+		builder.pop();
 	}
 
-	/**
-	 * Setup a configuration file.
-	 *
-	 * @param path the <code>Path</code> of the file
-	 */
-	public static void setup(Path path) {
-		CommentedFileConfig configData = CommentedFileConfig.builder(path)
-				.sync()
-				.autosave()
-				.writingMode(WritingMode.REPLACE)
-				.build();
+	static {
+		Pair<ClientConfig, ForgeConfigSpec> clientForgeConfigSpecPair = new Builder().configure(ClientConfig::new);
 
-		configData.load();
-		CONFIG.setConfig(configData);
+		CLIENT_SPEC = clientForgeConfigSpecPair.getRight();
+		CLIENT = clientForgeConfigSpecPair.getLeft();
 	}
 }

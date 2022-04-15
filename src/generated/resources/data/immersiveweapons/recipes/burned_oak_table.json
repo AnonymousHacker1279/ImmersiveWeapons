@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "tables",
+  "pattern": [
+    "a",
+    "b"
+  ],
+  "key": {
+    "a": {
+      "item": "immersiveweapons:burned_oak_slab"
+    },
+    "b": {
+      "item": "immersiveweapons:burned_oak_fence"
+    }
+  },
+  "result": {
+    "item": "immersiveweapons:burned_oak_table"
+  }
+}

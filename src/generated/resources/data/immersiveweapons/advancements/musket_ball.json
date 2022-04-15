@@ -1,0 +1,35 @@
+{
+  "parent": "immersiveweapons:root",
+  "display": {
+    "icon": {
+      "item": "immersiveweapons:gold_musket_ball"
+    },
+    "title": {
+      "translate": "advancements.immersiveweapons.musket_ball.title"
+    },
+    "description": {
+      "translate": "advancements.immersiveweapons.musket_ball.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "hold": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "tag": "immersiveweapons:projectiles/musket_balls"
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "hold"
+    ]
+  ]
+}

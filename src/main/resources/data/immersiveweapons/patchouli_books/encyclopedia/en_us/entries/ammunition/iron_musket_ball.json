@@ -1,0 +1,17 @@
+{
+	"name": "Iron Musket Ball",
+	"icon": "immersiveweapons:iron_musket_ball",
+	"category": "immersiveweapons:ammunition",
+	"pages": [
+		{
+			"type": "patchouli:text",
+			"text": "Dense and powerful. It packs a punch that your opponents won't soon forget. A good choice for rangers.$(br2)This can provide quite the advantage in battles."
+		},
+		{
+			"type": "patchouli:crafting",
+			"recipe": "immersiveweapons:iron_musket_ball",
+			"text": "$(o)Deals $(l)2.65$()$(o) base damage. See $(l:ammunition/bullet_velocities_info)Guide: Bullet Damage$()$(o) for more information."
+		}
+	],
+	"advancement": "minecraft:story/smelt_iron"
+}

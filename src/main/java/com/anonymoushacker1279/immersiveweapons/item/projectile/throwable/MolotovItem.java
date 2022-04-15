@@ -33,20 +33,23 @@ public class MolotovItem extends Item {
 	 */
 	@Override
 	public @NotNull InteractionResultHolder<ItemStack> use(Level worldIn, Player playerIn, @NotNull InteractionHand handIn) {
-		ItemStack itemstack = playerIn.getItemInHand(handIn);
-		worldIn.playLocalSound(playerIn.getX(), playerIn.getY(), playerIn.getZ(), DeferredRegistryHandler.GENERIC_WHOOSH.get(), SoundSource.NEUTRAL, 0.5F, 0.4F / (GeneralUtilities.getRandomNumber(0.2f, 0.6f) + 0.8F), false);
+		ItemStack itemInHand = playerIn.getItemInHand(handIn);
+		worldIn.playLocalSound(playerIn.getX(), playerIn.getY(), playerIn.getZ(),
+				DeferredRegistryHandler.GENERIC_WHOOSH.get(), SoundSource.NEUTRAL,
+				0.5F, 0.4F / (GeneralUtilities.getRandomNumber(0.2f, 0.6f) + 0.8F), false);
+
 		if (!worldIn.isClientSide) {
 			MolotovEntity molotovEntity = new MolotovEntity(worldIn, playerIn);
-			molotovEntity.setItem(itemstack);
-			molotovEntity.shootFromRotation(playerIn, playerIn.xRot, playerIn.yRot, 0.01F, 1F, 1.0F);
+			molotovEntity.setItem(itemInHand);
+			molotovEntity.shootFromRotation(playerIn, playerIn.xRot, playerIn.yRot, -20.0F, 0.5F, 1.0F);
 			worldIn.addFreshEntity(molotovEntity);
 		}
 
 		if (!playerIn.isCreative()) {
-			itemstack.shrink(1);
-			playerIn.getCooldowns().addCooldown(this, 100);    // Helps to prevent spamming
+			itemInHand.shrink(1);
+			playerIn.getCooldowns().addCooldown(this, 100);
 		}
 
-		return InteractionResultHolder.sidedSuccess(itemstack, worldIn.isClientSide());
+		return InteractionResultHolder.sidedSuccess(itemInHand, worldIn.isClientSide());
 	}
 }

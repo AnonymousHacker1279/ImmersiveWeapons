@@ -2,17 +2,13 @@ package com.anonymoushacker1279.immersiveweapons.entity.monster;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.syncher.EntityDataAccessor;
-import net.minecraft.network.syncher.EntityDataSerializers;
-import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.network.syncher.*;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.effect.MobEffect;
-import net.minecraft.world.effect.MobEffectInstance;
-import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.effect.*;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -39,7 +35,8 @@ import java.util.Random;
 
 public class RockSpiderEntity extends Monster {
 
-	private static final EntityDataAccessor<Byte> DATA_FLAGS_ID = SynchedEntityData.defineId(RockSpiderEntity.class, EntityDataSerializers.BYTE);
+	private static final EntityDataAccessor<Byte> DATA_FLAGS_ID = SynchedEntityData.defineId(RockSpiderEntity.class,
+			EntityDataSerializers.BYTE);
 
 	public RockSpiderEntity(EntityType<? extends RockSpiderEntity> entityType, Level level) {
 		super(entityType, level);
@@ -173,11 +170,16 @@ public class RockSpiderEntity extends Monster {
 
 	@Override
 	@Nullable
-	public SpawnGroupData finalizeSpawn(@NotNull ServerLevelAccessor pLevel, @NotNull DifficultyInstance pDifficulty, @NotNull MobSpawnType pReason, @Nullable SpawnGroupData pSpawnData, @Nullable CompoundTag pDataTag) {
+	public SpawnGroupData finalizeSpawn(@NotNull ServerLevelAccessor pLevel, @NotNull DifficultyInstance pDifficulty,
+	                                    @NotNull MobSpawnType pReason, @Nullable SpawnGroupData pSpawnData,
+	                                    @Nullable CompoundTag pDataTag) {
+
 		pSpawnData = super.finalizeSpawn(pLevel, pDifficulty, pReason, pSpawnData, pDataTag);
 		if (pSpawnData == null) {
 			pSpawnData = new RockSpiderEffectsGroupData();
-			if (pLevel.getDifficulty() == Difficulty.HARD && pLevel.getRandom().nextFloat() < 0.1F * pDifficulty.getSpecialMultiplier()) {
+			if (pLevel.getDifficulty() == Difficulty.HARD
+					&& pLevel.getRandom().nextFloat() < 0.1F * pDifficulty.getSpecialMultiplier()) {
+
 				((RockSpiderEffectsGroupData) pSpawnData).setRandomEffect(pLevel.getRandom());
 			}
 		}
@@ -190,7 +192,9 @@ public class RockSpiderEntity extends Monster {
 		}
 
 		// To keep the entity from dying of falls upon spawn in Tiltros
-		if (pReason == MobSpawnType.NATURAL && pLevel.getBlockState(blockPosition().below()) == Blocks.AIR.defaultBlockState()) {
+		if (pReason == MobSpawnType.NATURAL
+				&& pLevel.getBlockState(blockPosition().below()) == Blocks.AIR.defaultBlockState()) {
+
 			addEffect(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, 50, 255, true, true));
 		}
 
@@ -240,12 +244,12 @@ public class RockSpiderEntity extends Monster {
 		public MobEffect effect;
 
 		public void setRandomEffect(Random pRand) {
-			int i = pRand.nextInt(5);
-			if (i <= 1) {
+			int random = pRand.nextInt(5);
+			if (random <= 1) {
 				effect = MobEffects.MOVEMENT_SPEED;
-			} else if (i <= 2) {
+			} else if (random <= 2) {
 				effect = MobEffects.DAMAGE_BOOST;
-			} else if (i <= 3) {
+			} else if (random <= 3) {
 				effect = MobEffects.REGENERATION;
 			} else {
 				effect = MobEffects.INVISIBILITY;
@@ -265,8 +269,8 @@ public class RockSpiderEntity extends Monster {
 		 */
 		@Override
 		public boolean canUse() {
-			float f = mob.getBrightness();
-			return !(f >= 0.5F) && super.canUse();
+			float brightness = mob.getBrightness();
+			return !(brightness >= 0.5F) && super.canUse();
 		}
 	}
 }

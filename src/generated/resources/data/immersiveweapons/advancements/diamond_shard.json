@@ -1,0 +1,37 @@
+{
+  "parent": "immersiveweapons:shards",
+  "display": {
+    "icon": {
+      "item": "immersiveweapons:diamond_shard"
+    },
+    "title": {
+      "translate": "advancements.immersiveweapons.diamond_shard.title"
+    },
+    "description": {
+      "translate": "advancements.immersiveweapons.diamond_shard.description"
+    },
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "hold": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "immersiveweapons:diamond_shard"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "hold"
+    ]
+  ]
+}

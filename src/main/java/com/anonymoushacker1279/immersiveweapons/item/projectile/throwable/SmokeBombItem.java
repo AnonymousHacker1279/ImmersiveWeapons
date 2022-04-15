@@ -36,20 +36,24 @@ public class SmokeBombItem extends Item {
 	 */
 	@Override
 	public @NotNull InteractionResultHolder<ItemStack> use(Level worldIn, Player playerIn, @NotNull InteractionHand handIn) {
-		ItemStack itemstack = playerIn.getItemInHand(handIn);
-		worldIn.playSound(null, playerIn.getX(), playerIn.getY(), playerIn.getZ(), DeferredRegistryHandler.GENERIC_WHOOSH.get(), SoundSource.NEUTRAL, 0.5F, 0.4F / (GeneralUtilities.getRandomNumber(0.2f, 0.6f) + 0.8F));
+		ItemStack itemInHand = playerIn.getItemInHand(handIn);
+		worldIn.playSound(null, playerIn.getX(), playerIn.getY(), playerIn.getZ(),
+				DeferredRegistryHandler.GENERIC_WHOOSH.get(), SoundSource.NEUTRAL,
+				0.5F, 0.4F / (GeneralUtilities.getRandomNumber(0.2f, 0.6f) + 0.8F));
+
 		if (!worldIn.isClientSide) {
 			SmokeBombEntity.setColor(color);
 			SmokeBombEntity smokeBombEntity = new SmokeBombEntity(worldIn, playerIn);
-			smokeBombEntity.setItem(itemstack);
-			smokeBombEntity.shootFromRotation(playerIn, playerIn.xRot, playerIn.yRot, 0.0F, 1.5F, 1.0F);
+			smokeBombEntity.setItem(itemInHand);
+			smokeBombEntity.shootFromRotation(playerIn, playerIn.xRot, playerIn.yRot, -20.0F, 0.5F, 1.0F);
 			worldIn.addFreshEntity(smokeBombEntity);
 		}
+
 		if (!playerIn.isCreative()) {
-			itemstack.shrink(1);
-			playerIn.getCooldowns().addCooldown(this, 100);    // Helps to prevent spamming, mostly to reduce the total particles in an area
+			itemInHand.shrink(1);
+			playerIn.getCooldowns().addCooldown(this, 100);
 		}
 
-		return InteractionResultHolder.sidedSuccess(itemstack, worldIn.isClientSide());
+		return InteractionResultHolder.sidedSuccess(itemInHand, worldIn.isClientSide());
 	}
 }

@@ -1,15 +1,17 @@
 package com.anonymoushacker1279.immersiveweapons.block.trap;
 
+import com.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
+import com.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.HorizontalDirectionalBlock;
-import net.minecraft.world.level.block.SimpleWaterloggedBlock;
+import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
@@ -46,7 +48,9 @@ public class WoodenSpikesBlock extends HorizontalDirectionalBlock implements Sim
 	 */
 	@Override
 	public BlockState getStateForPlacement(BlockPlaceContext context) {
-		return defaultBlockState().setValue(FACING, context.getHorizontalDirection().getOpposite()).setValue(WATERLOGGED, context.getLevel().getFluidState(context.getClickedPos()).getType() == Fluids.WATER);
+		return defaultBlockState()
+				.setValue(FACING, context.getHorizontalDirection().getOpposite())
+				.setValue(WATERLOGGED, context.getLevel().getFluidState(context.getClickedPos()).getType() == Fluids.WATER);
 	}
 
 	/**
@@ -76,14 +80,16 @@ public class WoodenSpikesBlock extends HorizontalDirectionalBlock implements Sim
 	 * Set the shape of the block.
 	 *
 	 * @param state            the <code>BlockState</code> of the block
-	 * @param reader           the <code>IBlockReader</code> for the block
+	 * @param reader           the <code>BlockGetter</code> for the block
 	 * @param pos              the <code>BlockPos</code> the block is at
-	 * @param selectionContext the <code>ISelectionContext</code> of the block
+	 * @param selectionContext the <code>CollisionContext</code> of the block
 	 * @return VoxelShape
 	 */
 	@SuppressWarnings("deprecation")
 	@Override
-	public @NotNull VoxelShape getShape(@NotNull BlockState state, @NotNull BlockGetter reader, @NotNull BlockPos pos, @NotNull CollisionContext selectionContext) {
+	public @NotNull VoxelShape getShape(@NotNull BlockState state, @NotNull BlockGetter reader, @NotNull BlockPos pos,
+	                                    @NotNull CollisionContext selectionContext) {
+
 		return SHAPE;
 	}
 
@@ -91,7 +97,7 @@ public class WoodenSpikesBlock extends HorizontalDirectionalBlock implements Sim
 	 * Determines if skylight should pass through the block.
 	 *
 	 * @param state  the <code>BlockState</code> of the block
-	 * @param reader the <code>IBlockReader</code> for the block
+	 * @param reader the <code>BlockGetter</code> for the block
 	 * @param pos    the <code>BlockPos</code> the block is at
 	 * @return boolean
 	 */
@@ -115,10 +121,19 @@ public class WoodenSpikesBlock extends HorizontalDirectionalBlock implements Sim
 		if (entity instanceof LivingEntity) {
 			entity.makeStuckInBlock(state, new Vec3(0.85F, 0.80D, 0.85F));
 			if (!level.isClientSide && (entity.xOld != entity.getX() || entity.zOld != entity.getZ())) {
-				double d0 = Math.abs(entity.getX() - entity.xOld);
-				double d1 = Math.abs(entity.getZ() - entity.zOld);
-				if (d0 >= (double) 0.003F || d1 >= (double) 0.003F) {
+				double deltaX = Math.abs(entity.getX() - entity.xOld);
+				double deltaZ = Math.abs(entity.getZ() - entity.zOld);
+				if (deltaX >= (double) 0.003F || deltaZ >= (double) 0.003F) {
 					entity.hurt(damageSource, 1.5F);
+
+					if (entity instanceof Player player && player.isCreative()) {
+						return;
+					}
+
+					if (GeneralUtilities.getRandomNumber(0.0f, 1.0f) <= 0.15f) {
+						((LivingEntity) entity).addEffect(new MobEffectInstance(DeferredRegistryHandler.BLEEDING_EFFECT.get(),
+								200, 0, true, false));
+					}
 				}
 			}
 		}

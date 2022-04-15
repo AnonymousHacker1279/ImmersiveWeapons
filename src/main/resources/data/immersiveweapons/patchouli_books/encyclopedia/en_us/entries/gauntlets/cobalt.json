@@ -1,0 +1,17 @@
+{
+	"name": "Cobalt Gauntlet",
+	"icon": "immersiveweapons:cobalt_gauntlet",
+	"category": "immersiveweapons:gauntlets",
+	"pages": [
+		{
+			"type": "patchouli:text",
+			"text": "A $(o)very slightly$() better version of the $(l:gauntlets/iron)iron gauntlet$(). The only practical differences are in durability. This gauntlet only nets you a 5% higher chance to inflict Bleeding.$(br2)If you have plenty of cobalt, then its a good investment. Otherwise, there really isn't a reason to use this over iron."
+		},
+		{
+			"type": "patchouli:crafting",
+			"recipe": "immersiveweapons:cobalt_gauntlet",
+			"text": "$(o)Has a 60% chance to inflict $(#FF5555)Bleeding$()."
+		}
+	],
+	"advancement": "immersiveweapons:cobalt_ingot"
+}

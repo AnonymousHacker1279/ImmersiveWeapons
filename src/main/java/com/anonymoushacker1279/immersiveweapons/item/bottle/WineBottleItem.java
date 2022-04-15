@@ -19,7 +19,7 @@ public class WineBottleItem extends AbstractBottleItem {
 	/**
 	 * Additional code to run when the item is used.
 	 *
-	 * @param playerIn the <code>PlayerEntity</code> instance
+	 * @param playerIn the <code>Player</code> instance
 	 */
 	@Override
 	protected void onUse(Player playerIn) {

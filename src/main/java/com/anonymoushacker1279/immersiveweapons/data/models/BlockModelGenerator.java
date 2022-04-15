@@ -21,14 +21,22 @@ import java.util.function.*;
 
 public class BlockModelGenerator {
 
-	final Consumer<BlockStateGenerator> blockStateOutput;
-	final BiConsumer<ResourceLocation, Supplier<JsonElement>> modelOutput;
+	private final Consumer<BlockStateGenerator> blockStateOutput;
+	private final BiConsumer<ResourceLocation, Supplier<JsonElement>> modelOutput;
 	private final Consumer<Item> skippedAutoModelsOutput;
-	final List<Block> nonOrientableTrapdoor = ImmutableList.of(Blocks.OAK_TRAPDOOR, Blocks.DARK_OAK_TRAPDOOR, Blocks.IRON_TRAPDOOR);
-	final Map<Block, BlockStateGeneratorSupplier> fullBlockModelCustomGenerators = ImmutableMap.<Block, BlockStateGeneratorSupplier> builder().put(Blocks.STONE, BlockModelGenerator::createMirroredCubeGenerator).put(Blocks.DEEPSLATE, BlockModelGenerator::createMirroredColumnGenerator).build();
-	final Map<Block, TexturedModel> texturedModels = ImmutableMap.<Block, TexturedModel> builder().build();
 
-	public BlockModelGenerator(Consumer<BlockStateGenerator> pBlockStateOutput, BiConsumer<ResourceLocation, Supplier<JsonElement>> pModelOutput, Consumer<Item> pSkippedAutoModelsOutput) {
+	private final List<Block> nonOrientableTrapdoor = ImmutableList.of(Blocks.OAK_TRAPDOOR, Blocks.DARK_OAK_TRAPDOOR,
+			Blocks.IRON_TRAPDOOR);
+
+	private final Map<Block, BlockStateGeneratorSupplier> fullBlockModelCustomGenerators = ImmutableMap.<Block, BlockStateGeneratorSupplier> builder()
+			.put(Blocks.STONE, BlockModelGenerator::createMirroredCubeGenerator)
+			.put(Blocks.DEEPSLATE, BlockModelGenerator::createMirroredColumnGenerator).build();
+
+	private final Map<Block, TexturedModel> texturedModels = ImmutableMap.<Block, TexturedModel> builder().build();
+
+	public BlockModelGenerator(Consumer<BlockStateGenerator> pBlockStateOutput, BiConsumer<ResourceLocation,
+			Supplier<JsonElement>> pModelOutput, Consumer<Item> pSkippedAutoModelsOutput) {
+
 		blockStateOutput = pBlockStateOutput;
 		modelOutput = pModelOutput;
 		skippedAutoModelsOutput = pSkippedAutoModelsOutput;
@@ -70,13 +78,16 @@ public class BlockModelGenerator {
 
 		// Cloud Marble blocks
 		createTrivialCube(DeferredRegistryHandler.CLOUD_MARBLE.get());
-		createRotatedPillarWithHorizontalVariant(DeferredRegistryHandler.CLOUD_MARBLE_PILLAR.get(), TexturedModel.COLUMN_ALT, TexturedModel.COLUMN_HORIZONTAL_ALT);
+		createRotatedPillarWithHorizontalVariant(DeferredRegistryHandler.CLOUD_MARBLE_PILLAR.get(),
+				TexturedModel.COLUMN_ALT, TexturedModel.COLUMN_HORIZONTAL_ALT);
+
 		family(DeferredRegistryHandler.CLOUD_MARBLE_BRICKS.get())
 				.slab(DeferredRegistryHandler.CLOUD_MARBLE_BRICK_SLAB.get())
 				.stairs(DeferredRegistryHandler.CLOUD_MARBLE_BRICK_STAIRS.get());
 
 		// Multi textured blocks
-		createCraftingTableLike(DeferredRegistryHandler.SMALL_PARTS_TABLE.get(), Blocks.OAK_PLANKS, TextureMapping::fletchingTable);
+		createCraftingTableLike(DeferredRegistryHandler.SMALL_PARTS_TABLE.get(), Blocks.OAK_PLANKS,
+				TextureMapping::fletchingTable);
 
 		// Horizontally-oriented blocks
 		createHorizontallyRotatedBlock(DeferredRegistryHandler.TESLA_BLOCK.get(), TexturedModel.CUBE);
@@ -87,6 +98,7 @@ public class BlockModelGenerator {
 		createTrivialCube(DeferredRegistryHandler.MOLTEN_BLOCK.get());
 		createTrivialCube(DeferredRegistryHandler.VENTUS_ORE.get());
 		createTrivialCube(DeferredRegistryHandler.CLOUD.get());
+		createTrivialCube(DeferredRegistryHandler.RAW_SULFUR_BLOCK.get());
 
 		// Blockstates
 		createSimpleCubeBlockstate(DeferredRegistryHandler.COBALT_ORE.get());
@@ -96,6 +108,10 @@ public class BlockModelGenerator {
 		createSimpleCubeBlockstate(DeferredRegistryHandler.MOLTEN_ORE.get());
 		createSimpleCubeBlockstate(DeferredRegistryHandler.DEEPSLATE_COBALT_ORE.get());
 		createSimpleCubeBlockstate(DeferredRegistryHandler.DEEPSLATE_SULFUR_ORE.get());
+
+		for (Block block : BlockTagLists.TABLES) {
+			createSimpleCubeBlockstate(block);
+		}
 	}
 
 	private List<Block> combineBlockLists(List<Block> blockList1, List<Block> blockList2) {
@@ -105,28 +121,35 @@ public class BlockModelGenerator {
 	}
 
 	private void createSimpleCubeBlockstate(Block block) {
-		blockStateOutput.accept(MultiVariantGenerator.multiVariant(block, Variant.variant().with(VariantProperties.MODEL, getModelLocationForBlockstateIW(block))));
+		blockStateOutput.accept(MultiVariantGenerator.multiVariant(block, Variant.variant().with(VariantProperties.MODEL,
+				getModelLocationForBlockstateIW(block))));
 	}
 
 	private ResourceLocation getModelLocationForBlockstateIW(Block block) {
-		return new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/" + Objects.requireNonNull(block.getRegistryName()).getPath());
+		return new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/" +
+				Objects.requireNonNull(block.getRegistryName()).getPath());
 	}
 
-	private void createRotatedPillarWithHorizontalVariant(Block pRotatedPillarBlock, TexturedModel.Provider pModelProvider, TexturedModel.Provider pHorizontalModelProvider) {
+	private void createRotatedPillarWithHorizontalVariant(Block pRotatedPillarBlock, TexturedModel.Provider pModelProvider,
+	                                                      TexturedModel.Provider pHorizontalModelProvider) {
+
 		ResourceLocation resourceLocation = pModelProvider.create(pRotatedPillarBlock, modelOutput);
 		ResourceLocation resourceLocation1 = pHorizontalModelProvider.create(pRotatedPillarBlock, modelOutput);
 		blockStateOutput.accept(createRotatedPillarWithHorizontalVariant(pRotatedPillarBlock, resourceLocation, resourceLocation1));
 	}
 
-	private void createCraftingTableLike(Block pCraftingTableBlock, Block pCraftingTableMaterialBlock, BiFunction<Block, Block, TextureMapping> pTextureMappingGetter) {
-		TextureMapping texturemapping = pTextureMappingGetter.apply(pCraftingTableBlock, pCraftingTableMaterialBlock);
-		blockStateOutput.accept(createSimpleBlock(pCraftingTableBlock, ModelTemplates.CUBE.create(pCraftingTableBlock, texturemapping, modelOutput)));
+	private void createCraftingTableLike(Block pCraftingTableBlock, Block pCraftingTableMaterialBlock,
+	                                     BiFunction<Block, Block, TextureMapping> pTextureMappingGetter) {
+
+		TextureMapping textureMapping = pTextureMappingGetter.apply(pCraftingTableBlock, pCraftingTableMaterialBlock);
+		blockStateOutput.accept(createSimpleBlock(pCraftingTableBlock, ModelTemplates.CUBE
+				.create(pCraftingTableBlock, textureMapping, modelOutput)));
 	}
 
 	private void createHorizontallyRotatedBlock(Block pHorizontallyRotatedBlock, TexturedModel.Provider pProvider) {
-		ResourceLocation resourcelocation = pProvider.create(pHorizontallyRotatedBlock, modelOutput);
+		ResourceLocation resourceLocation = pProvider.create(pHorizontallyRotatedBlock, modelOutput);
 		blockStateOutput.accept(MultiVariantGenerator.multiVariant(pHorizontallyRotatedBlock, Variant.variant()
-						.with(VariantProperties.MODEL, resourcelocation))
+						.with(VariantProperties.MODEL, resourceLocation))
 				.with(createHorizontalFacingDispatch()));
 	}
 
@@ -142,8 +165,8 @@ public class BlockModelGenerator {
 	}
 
 	private BlockFamilyProvider family(Block pBlock) {
-		TexturedModel texturedmodel = texturedModels.getOrDefault(pBlock, TexturedModel.CUBE.get(pBlock));
-		return (new BlockFamilyProvider(texturedmodel.getMapping(), pBlock)).fullBlock(pBlock, texturedmodel.getTemplate());
+		TexturedModel model = texturedModels.getOrDefault(pBlock, TexturedModel.CUBE.get(pBlock));
+		return (new BlockFamilyProvider(model.getMapping(), pBlock)).fullBlock(pBlock, model.getTemplate());
 	}
 
 	private void createTrivialCube(Block pBlock) {
@@ -158,7 +181,7 @@ public class BlockModelGenerator {
 		return MultiVariantGenerator.multiVariant(pBlock, Variant.variant().with(VariantProperties.MODEL, pModelLocation));
 	}
 
-	void createDoor(Block pDoorBlock) {
+	private void createDoor(Block pDoorBlock) {
 		TextureMapping door = TextureMapping.door(pDoorBlock);
 		ResourceLocation resourceLocation = ModelTemplates.DOOR_BOTTOM.create(pDoorBlock, door, modelOutput);
 		ResourceLocation resourceLocation1 = ModelTemplates.DOOR_BOTTOM_HINGE.create(pDoorBlock, door, modelOutput);
@@ -168,33 +191,125 @@ public class BlockModelGenerator {
 		blockStateOutput.accept(createDoor(pDoorBlock, resourceLocation, resourceLocation1, resourceLocation2, resourceLocation3));
 	}
 
-	private static BlockStateGenerator createMirroredCubeGenerator(Block block, ResourceLocation resourceLocation1, TextureMapping textureMapping, BiConsumer<ResourceLocation, Supplier<JsonElement>> supplierBiConsumer) {
+	private static BlockStateGenerator createMirroredCubeGenerator(Block block, ResourceLocation resourceLocation1,
+	                                                               TextureMapping textureMapping,
+	                                                               BiConsumer<ResourceLocation, Supplier<JsonElement>> supplierBiConsumer) {
+
 		ResourceLocation resourceLocation = ModelTemplates.CUBE_MIRRORED_ALL.create(block, textureMapping, supplierBiConsumer);
 		return createRotatedVariant(block, resourceLocation1, resourceLocation);
 	}
 
-	private static BlockStateGenerator createMirroredColumnGenerator(Block block, ResourceLocation resourceLocation, TextureMapping textureMapping, BiConsumer<ResourceLocation, Supplier<JsonElement>> locationSupplierBiConsumer) {
+	private static BlockStateGenerator createMirroredColumnGenerator(Block block, ResourceLocation resourceLocation,
+	                                                                 TextureMapping textureMapping,
+	                                                                 BiConsumer<ResourceLocation, Supplier<JsonElement>> locationSupplierBiConsumer) {
+
 		ResourceLocation resourcelocation = ModelTemplates.CUBE_COLUMN_MIRRORED.create(block, textureMapping, locationSupplierBiConsumer);
 		return createRotatedVariant(block, resourceLocation, resourcelocation).with(createRotatedPillar());
 	}
 
-	private static MultiVariantGenerator createRotatedVariant(Block pBlock, ResourceLocation pNormalModelLocation, ResourceLocation pMirroredModelLocation) {
-		return MultiVariantGenerator.multiVariant(pBlock, Variant.variant().with(VariantProperties.MODEL, pNormalModelLocation), Variant.variant().with(VariantProperties.MODEL, pMirroredModelLocation), Variant.variant().with(VariantProperties.MODEL, pNormalModelLocation).with(VariantProperties.Y_ROT, VariantProperties.Rotation.R180), Variant.variant().with(VariantProperties.MODEL, pMirroredModelLocation).with(VariantProperties.Y_ROT, VariantProperties.Rotation.R180));
+	private static MultiVariantGenerator createRotatedVariant(Block pBlock, ResourceLocation pNormalModelLocation,
+	                                                          ResourceLocation pMirroredModelLocation) {
+
+		return MultiVariantGenerator.multiVariant(pBlock,
+				Variant.variant()
+						.with(VariantProperties.MODEL, pNormalModelLocation),
+				Variant.variant()
+						.with(VariantProperties.MODEL, pMirroredModelLocation),
+				Variant.variant()
+						.with(VariantProperties.MODEL, pNormalModelLocation)
+						.with(VariantProperties.Y_ROT, VariantProperties.Rotation.R180),
+				Variant.variant()
+						.with(VariantProperties.MODEL, pMirroredModelLocation)
+						.with(VariantProperties.Y_ROT, VariantProperties.Rotation.R180));
 	}
 
-	private static BlockStateGenerator createDoor(Block pDoorBlock, ResourceLocation pBottomHalfModelLocation, ResourceLocation pBottomHalfRightHingeModelLocation, ResourceLocation pTopHalfModelLocation, ResourceLocation pTopHalfRightHingeModelLocation) {
-		return MultiVariantGenerator.multiVariant(pDoorBlock).with(configureDoorHalf(configureDoorHalf(PropertyDispatch.properties(BlockStateProperties.HORIZONTAL_FACING, BlockStateProperties.DOUBLE_BLOCK_HALF, BlockStateProperties.DOOR_HINGE, BlockStateProperties.OPEN), DoubleBlockHalf.LOWER, pBottomHalfModelLocation, pBottomHalfRightHingeModelLocation), DoubleBlockHalf.UPPER, pTopHalfModelLocation, pTopHalfRightHingeModelLocation));
+	private static BlockStateGenerator createDoor(Block pDoorBlock, ResourceLocation pBottomHalfModelLocation,
+	                                              ResourceLocation pBottomHalfRightHingeModelLocation,
+	                                              ResourceLocation pTopHalfModelLocation,
+	                                              ResourceLocation pTopHalfRightHingeModelLocation) {
+
+		return MultiVariantGenerator.multiVariant(pDoorBlock)
+				.with(configureDoorHalf(configureDoorHalf(PropertyDispatch
+										.properties(BlockStateProperties.HORIZONTAL_FACING,
+												BlockStateProperties.DOUBLE_BLOCK_HALF,
+												BlockStateProperties.DOOR_HINGE,
+												BlockStateProperties.OPEN)
+								, DoubleBlockHalf.LOWER, pBottomHalfModelLocation, pBottomHalfRightHingeModelLocation),
+						DoubleBlockHalf.UPPER, pTopHalfModelLocation, pTopHalfRightHingeModelLocation));
 	}
 
-	void createSimpleFlatItemModel(Item pFlatItem) {
-		ModelTemplates.FLAT_ITEM.create(ModelLocationUtils.getModelLocation(pFlatItem), TextureMapping.layer0(pFlatItem), modelOutput);
+	private void createSimpleFlatItemModel(Item pFlatItem) {
+		ModelTemplates.FLAT_ITEM.create(ModelLocationUtils.getModelLocation(pFlatItem), TextureMapping.layer0(pFlatItem),
+				modelOutput);
 	}
 
-	private static PropertyDispatch.C4<Direction, DoubleBlockHalf, DoorHingeSide, Boolean> configureDoorHalf(PropertyDispatch.C4<Direction, DoubleBlockHalf, DoorHingeSide, Boolean> pDoorProperties, DoubleBlockHalf pDoorHalf, ResourceLocation pDoorModelLocation, ResourceLocation pDoorRightHingeModelLocation) {
-		return pDoorProperties.select(Direction.EAST, pDoorHalf, DoorHingeSide.LEFT, false, Variant.variant().with(VariantProperties.MODEL, pDoorModelLocation)).select(Direction.SOUTH, pDoorHalf, DoorHingeSide.LEFT, false, Variant.variant().with(VariantProperties.MODEL, pDoorModelLocation).with(VariantProperties.Y_ROT, VariantProperties.Rotation.R90)).select(Direction.WEST, pDoorHalf, DoorHingeSide.LEFT, false, Variant.variant().with(VariantProperties.MODEL, pDoorModelLocation).with(VariantProperties.Y_ROT, VariantProperties.Rotation.R180)).select(Direction.NORTH, pDoorHalf, DoorHingeSide.LEFT, false, Variant.variant().with(VariantProperties.MODEL, pDoorModelLocation).with(VariantProperties.Y_ROT, VariantProperties.Rotation.R270)).select(Direction.EAST, pDoorHalf, DoorHingeSide.RIGHT, false, Variant.variant().with(VariantProperties.MODEL, pDoorRightHingeModelLocation)).select(Direction.SOUTH, pDoorHalf, DoorHingeSide.RIGHT, false, Variant.variant().with(VariantProperties.MODEL, pDoorRightHingeModelLocation).with(VariantProperties.Y_ROT, VariantProperties.Rotation.R90)).select(Direction.WEST, pDoorHalf, DoorHingeSide.RIGHT, false, Variant.variant().with(VariantProperties.MODEL, pDoorRightHingeModelLocation).with(VariantProperties.Y_ROT, VariantProperties.Rotation.R180)).select(Direction.NORTH, pDoorHalf, DoorHingeSide.RIGHT, false, Variant.variant().with(VariantProperties.MODEL, pDoorRightHingeModelLocation).with(VariantProperties.Y_ROT, VariantProperties.Rotation.R270)).select(Direction.EAST, pDoorHalf, DoorHingeSide.LEFT, true, Variant.variant().with(VariantProperties.MODEL, pDoorRightHingeModelLocation).with(VariantProperties.Y_ROT, VariantProperties.Rotation.R90)).select(Direction.SOUTH, pDoorHalf, DoorHingeSide.LEFT, true, Variant.variant().with(VariantProperties.MODEL, pDoorRightHingeModelLocation).with(VariantProperties.Y_ROT, VariantProperties.Rotation.R180)).select(Direction.WEST, pDoorHalf, DoorHingeSide.LEFT, true, Variant.variant().with(VariantProperties.MODEL, pDoorRightHingeModelLocation).with(VariantProperties.Y_ROT, VariantProperties.Rotation.R270)).select(Direction.NORTH, pDoorHalf, DoorHingeSide.LEFT, true, Variant.variant().with(VariantProperties.MODEL, pDoorRightHingeModelLocation)).select(Direction.EAST, pDoorHalf, DoorHingeSide.RIGHT, true, Variant.variant().with(VariantProperties.MODEL, pDoorModelLocation).with(VariantProperties.Y_ROT, VariantProperties.Rotation.R270)).select(Direction.SOUTH, pDoorHalf, DoorHingeSide.RIGHT, true, Variant.variant().with(VariantProperties.MODEL, pDoorModelLocation)).select(Direction.WEST, pDoorHalf, DoorHingeSide.RIGHT, true, Variant.variant().with(VariantProperties.MODEL, pDoorModelLocation).with(VariantProperties.Y_ROT, VariantProperties.Rotation.R90)).select(Direction.NORTH, pDoorHalf, DoorHingeSide.RIGHT, true, Variant.variant().with(VariantProperties.MODEL, pDoorModelLocation).with(VariantProperties.Y_ROT, VariantProperties.Rotation.R180));
+	private static PropertyDispatch.C4<Direction, DoubleBlockHalf, DoorHingeSide, Boolean>
+	configureDoorHalf(PropertyDispatch.C4<Direction, DoubleBlockHalf, DoorHingeSide, Boolean> pDoorProperties,
+	                  DoubleBlockHalf pDoorHalf, ResourceLocation pDoorModelLocation,
+	                  ResourceLocation pDoorRightHingeModelLocation) {
+
+		return pDoorProperties.select(Direction.EAST, pDoorHalf, DoorHingeSide.LEFT, false,
+						Variant.variant()
+								.with(VariantProperties.MODEL, pDoorModelLocation))
+				.select(Direction.SOUTH, pDoorHalf, DoorHingeSide.LEFT, false,
+						Variant.variant()
+								.with(VariantProperties.MODEL, pDoorModelLocation)
+								.with(VariantProperties.Y_ROT, VariantProperties.Rotation.R90))
+				.select(Direction.WEST, pDoorHalf, DoorHingeSide.LEFT, false,
+						Variant.variant()
+								.with(VariantProperties.MODEL, pDoorModelLocation)
+								.with(VariantProperties.Y_ROT, VariantProperties.Rotation.R180))
+				.select(Direction.NORTH, pDoorHalf, DoorHingeSide.LEFT, false,
+						Variant.variant()
+								.with(VariantProperties.MODEL, pDoorModelLocation)
+								.with(VariantProperties.Y_ROT, VariantProperties.Rotation.R270))
+				.select(Direction.EAST, pDoorHalf, DoorHingeSide.RIGHT, false,
+						Variant.variant()
+								.with(VariantProperties.MODEL, pDoorRightHingeModelLocation))
+				.select(Direction.SOUTH, pDoorHalf, DoorHingeSide.RIGHT, false,
+						Variant.variant()
+								.with(VariantProperties.MODEL, pDoorRightHingeModelLocation)
+								.with(VariantProperties.Y_ROT, VariantProperties.Rotation.R90))
+				.select(Direction.WEST, pDoorHalf, DoorHingeSide.RIGHT, false,
+						Variant.variant()
+								.with(VariantProperties.MODEL, pDoorRightHingeModelLocation)
+								.with(VariantProperties.Y_ROT, VariantProperties.Rotation.R180))
+				.select(Direction.NORTH, pDoorHalf, DoorHingeSide.RIGHT, false,
+						Variant.variant()
+								.with(VariantProperties.MODEL, pDoorRightHingeModelLocation)
+								.with(VariantProperties.Y_ROT, VariantProperties.Rotation.R270))
+				.select(Direction.EAST, pDoorHalf, DoorHingeSide.LEFT, true,
+						Variant.variant()
+								.with(VariantProperties.MODEL, pDoorRightHingeModelLocation)
+								.with(VariantProperties.Y_ROT, VariantProperties.Rotation.R90))
+				.select(Direction.SOUTH, pDoorHalf, DoorHingeSide.LEFT, true,
+						Variant.variant()
+								.with(VariantProperties.MODEL, pDoorRightHingeModelLocation)
+								.with(VariantProperties.Y_ROT, VariantProperties.Rotation.R180))
+				.select(Direction.WEST, pDoorHalf, DoorHingeSide.LEFT, true,
+						Variant.variant().with(VariantProperties.MODEL, pDoorRightHingeModelLocation)
+								.with(VariantProperties.Y_ROT, VariantProperties.Rotation.R270))
+				.select(Direction.NORTH, pDoorHalf, DoorHingeSide.LEFT, true,
+						Variant.variant()
+								.with(VariantProperties.MODEL, pDoorRightHingeModelLocation))
+				.select(Direction.EAST, pDoorHalf, DoorHingeSide.RIGHT, true,
+						Variant.variant()
+								.with(VariantProperties.MODEL, pDoorModelLocation)
+								.with(VariantProperties.Y_ROT, VariantProperties.Rotation.R270))
+				.select(Direction.SOUTH, pDoorHalf, DoorHingeSide.RIGHT, true,
+						Variant.variant()
+								.with(VariantProperties.MODEL, pDoorModelLocation))
+				.select(Direction.WEST, pDoorHalf, DoorHingeSide.RIGHT, true,
+						Variant.variant()
+								.with(VariantProperties.MODEL, pDoorModelLocation)
+								.with(VariantProperties.Y_ROT, VariantProperties.Rotation.R90))
+				.select(Direction.NORTH, pDoorHalf, DoorHingeSide.RIGHT, true,
+						Variant.variant()
+								.with(VariantProperties.MODEL, pDoorModelLocation)
+								.with(VariantProperties.Y_ROT, VariantProperties.Rotation.R180));
 	}
 
-	static BlockStateGenerator createAxisAlignedPillarBlock(Block pAxisAlignedPillarBlock, ResourceLocation pModelLocation) {
+	private static BlockStateGenerator createAxisAlignedPillarBlock(Block pAxisAlignedPillarBlock, ResourceLocation pModelLocation) {
 		return MultiVariantGenerator.multiVariant(pAxisAlignedPillarBlock, Variant.variant()
 				.with(VariantProperties.MODEL, pModelLocation)).with(createRotatedPillar());
 	}
@@ -206,7 +321,7 @@ public class BlockModelGenerator {
 						.with(VariantProperties.Y_ROT, VariantProperties.Rotation.R90));
 	}
 
-	static BlockStateGenerator createRotatedPillarWithHorizontalVariant(Block pRotatedPillarBlock, ResourceLocation pModelLocation
+	private static BlockStateGenerator createRotatedPillarWithHorizontalVariant(Block pRotatedPillarBlock, ResourceLocation pModelLocation
 			, ResourceLocation pHorizontalModelLocation) {
 		return MultiVariantGenerator.multiVariant(pRotatedPillarBlock)
 				.with(PropertyDispatch.property(BlockStateProperties.AXIS)
@@ -223,93 +338,611 @@ public class BlockModelGenerator {
 		return new WoodProvider(TextureMapping.logColumn(pLogBlock));
 	}
 
-	void delegateItemModel(Block pBlock, ResourceLocation pDelegateModelLocation) {
+	private void delegateItemModel(Block pBlock, ResourceLocation pDelegateModelLocation) {
 		modelOutput.accept(ModelLocationUtils.getModelLocation(pBlock.asItem()), new DelegatedModel(pDelegateModelLocation));
 	}
 
-	static BlockStateGenerator createButton(Block pButtonBlock, ResourceLocation pUnpoweredModelLocation, ResourceLocation pPoweredModelLocation) {
-		return MultiVariantGenerator.multiVariant(pButtonBlock).with(PropertyDispatch.property(BlockStateProperties.POWERED).select(false, Variant.variant().with(VariantProperties.MODEL, pUnpoweredModelLocation)).select(true, Variant.variant().with(VariantProperties.MODEL, pPoweredModelLocation))).with(PropertyDispatch.properties(BlockStateProperties.ATTACH_FACE, BlockStateProperties.HORIZONTAL_FACING).select(AttachFace.FLOOR, Direction.EAST, Variant.variant().with(VariantProperties.Y_ROT, VariantProperties.Rotation.R90)).select(AttachFace.FLOOR, Direction.WEST, Variant.variant().with(VariantProperties.Y_ROT, VariantProperties.Rotation.R270)).select(AttachFace.FLOOR, Direction.SOUTH, Variant.variant().with(VariantProperties.Y_ROT, VariantProperties.Rotation.R180)).select(AttachFace.FLOOR, Direction.NORTH, Variant.variant()).select(AttachFace.WALL, Direction.EAST, Variant.variant().with(VariantProperties.Y_ROT, VariantProperties.Rotation.R90).with(VariantProperties.X_ROT, VariantProperties.Rotation.R90).with(VariantProperties.UV_LOCK, true)).select(AttachFace.WALL, Direction.WEST, Variant.variant().with(VariantProperties.Y_ROT, VariantProperties.Rotation.R270).with(VariantProperties.X_ROT, VariantProperties.Rotation.R90).with(VariantProperties.UV_LOCK, true)).select(AttachFace.WALL, Direction.SOUTH, Variant.variant().with(VariantProperties.Y_ROT, VariantProperties.Rotation.R180).with(VariantProperties.X_ROT, VariantProperties.Rotation.R90).with(VariantProperties.UV_LOCK, true)).select(AttachFace.WALL, Direction.NORTH, Variant.variant().with(VariantProperties.X_ROT, VariantProperties.Rotation.R90).with(VariantProperties.UV_LOCK, true)).select(AttachFace.CEILING, Direction.EAST, Variant.variant().with(VariantProperties.Y_ROT, VariantProperties.Rotation.R270).with(VariantProperties.X_ROT, VariantProperties.Rotation.R180)).select(AttachFace.CEILING, Direction.WEST, Variant.variant().with(VariantProperties.Y_ROT, VariantProperties.Rotation.R90).with(VariantProperties.X_ROT, VariantProperties.Rotation.R180)).select(AttachFace.CEILING, Direction.SOUTH, Variant.variant().with(VariantProperties.X_ROT, VariantProperties.Rotation.R180)).select(AttachFace.CEILING, Direction.NORTH, Variant.variant().with(VariantProperties.Y_ROT, VariantProperties.Rotation.R180).with(VariantProperties.X_ROT, VariantProperties.Rotation.R180)));
+	private static BlockStateGenerator createButton(Block pButtonBlock, ResourceLocation pUnpoweredModelLocation,
+	                                                ResourceLocation pPoweredModelLocation) {
+
+		return MultiVariantGenerator.multiVariant(pButtonBlock)
+				.with(PropertyDispatch.property(BlockStateProperties.POWERED)
+						.select(false,
+								Variant.variant()
+										.with(VariantProperties.MODEL, pUnpoweredModelLocation))
+						.select(true,
+								Variant.variant()
+										.with(VariantProperties.MODEL, pPoweredModelLocation)))
+				.with(PropertyDispatch.properties(BlockStateProperties.ATTACH_FACE, BlockStateProperties.HORIZONTAL_FACING)
+						.select(AttachFace.FLOOR, Direction.EAST,
+								Variant.variant()
+										.with(VariantProperties.Y_ROT, VariantProperties.Rotation.R90))
+						.select(AttachFace.FLOOR, Direction.WEST,
+								Variant.variant()
+										.with(VariantProperties.Y_ROT, VariantProperties.Rotation.R270))
+						.select(AttachFace.FLOOR, Direction.SOUTH,
+								Variant.variant()
+										.with(VariantProperties.Y_ROT, VariantProperties.Rotation.R180))
+						.select(AttachFace.FLOOR, Direction.NORTH,
+								Variant.variant())
+						.select(AttachFace.WALL, Direction.EAST,
+								Variant.variant()
+										.with(VariantProperties.Y_ROT, VariantProperties.Rotation.R90)
+										.with(VariantProperties.X_ROT, VariantProperties.Rotation.R90)
+										.with(VariantProperties.UV_LOCK, true))
+						.select(AttachFace.WALL, Direction.WEST,
+								Variant.variant()
+										.with(VariantProperties.Y_ROT, VariantProperties.Rotation.R270)
+										.with(VariantProperties.X_ROT, VariantProperties.Rotation.R90)
+										.with(VariantProperties.UV_LOCK, true))
+						.select(AttachFace.WALL, Direction.SOUTH,
+								Variant.variant()
+										.with(VariantProperties.Y_ROT, VariantProperties.Rotation.R180)
+										.with(VariantProperties.X_ROT, VariantProperties.Rotation.R90)
+										.with(VariantProperties.UV_LOCK, true))
+						.select(AttachFace.WALL, Direction.NORTH,
+								Variant.variant()
+										.with(VariantProperties.X_ROT, VariantProperties.Rotation.R90)
+										.with(VariantProperties.UV_LOCK, true))
+						.select(AttachFace.CEILING, Direction.EAST,
+								Variant.variant()
+										.with(VariantProperties.Y_ROT, VariantProperties.Rotation.R270)
+										.with(VariantProperties.X_ROT, VariantProperties.Rotation.R180))
+						.select(AttachFace.CEILING, Direction.WEST,
+								Variant.variant()
+										.with(VariantProperties.Y_ROT, VariantProperties.Rotation.R90)
+										.with(VariantProperties.X_ROT, VariantProperties.Rotation.R180))
+						.select(AttachFace.CEILING, Direction.SOUTH,
+								Variant.variant()
+										.with(VariantProperties.X_ROT, VariantProperties.Rotation.R180))
+						.select(AttachFace.CEILING, Direction.NORTH,
+								Variant.variant()
+										.with(VariantProperties.Y_ROT, VariantProperties.Rotation.R180)
+										.with(VariantProperties.X_ROT, VariantProperties.Rotation.R180)));
 	}
 
-	static BlockStateGenerator createWall(Block pWallBlock, ResourceLocation pPostModelLocation, ResourceLocation pLowSideModelLocation, ResourceLocation pTallSideModelLocation) {
-		return MultiPartGenerator.multiPart(pWallBlock).with(Condition.condition().term(BlockStateProperties.UP, true), Variant.variant().with(VariantProperties.MODEL, pPostModelLocation)).with(Condition.condition().term(BlockStateProperties.NORTH_WALL, WallSide.LOW), Variant.variant().with(VariantProperties.MODEL, pLowSideModelLocation).with(VariantProperties.UV_LOCK, true)).with(Condition.condition().term(BlockStateProperties.EAST_WALL, WallSide.LOW), Variant.variant().with(VariantProperties.MODEL, pLowSideModelLocation).with(VariantProperties.Y_ROT, VariantProperties.Rotation.R90).with(VariantProperties.UV_LOCK, true)).with(Condition.condition().term(BlockStateProperties.SOUTH_WALL, WallSide.LOW), Variant.variant().with(VariantProperties.MODEL, pLowSideModelLocation).with(VariantProperties.Y_ROT, VariantProperties.Rotation.R180).with(VariantProperties.UV_LOCK, true)).with(Condition.condition().term(BlockStateProperties.WEST_WALL, WallSide.LOW), Variant.variant().with(VariantProperties.MODEL, pLowSideModelLocation).with(VariantProperties.Y_ROT, VariantProperties.Rotation.R270).with(VariantProperties.UV_LOCK, true)).with(Condition.condition().term(BlockStateProperties.NORTH_WALL, WallSide.TALL), Variant.variant().with(VariantProperties.MODEL, pTallSideModelLocation).with(VariantProperties.UV_LOCK, true)).with(Condition.condition().term(BlockStateProperties.EAST_WALL, WallSide.TALL), Variant.variant().with(VariantProperties.MODEL, pTallSideModelLocation).with(VariantProperties.Y_ROT, VariantProperties.Rotation.R90).with(VariantProperties.UV_LOCK, true)).with(Condition.condition().term(BlockStateProperties.SOUTH_WALL, WallSide.TALL), Variant.variant().with(VariantProperties.MODEL, pTallSideModelLocation).with(VariantProperties.Y_ROT, VariantProperties.Rotation.R180).with(VariantProperties.UV_LOCK, true)).with(Condition.condition().term(BlockStateProperties.WEST_WALL, WallSide.TALL), Variant.variant().with(VariantProperties.MODEL, pTallSideModelLocation).with(VariantProperties.Y_ROT, VariantProperties.Rotation.R270).with(VariantProperties.UV_LOCK, true));
+	private static BlockStateGenerator createWall(Block pWallBlock, ResourceLocation pPostModelLocation,
+	                                              ResourceLocation pLowSideModelLocation, ResourceLocation pTallSideModelLocation) {
+
+		return MultiPartGenerator.multiPart(pWallBlock)
+				.with(Condition.condition().term(BlockStateProperties.UP, true),
+						Variant.variant()
+								.with(VariantProperties.MODEL, pPostModelLocation))
+				.with(Condition.condition().term(BlockStateProperties.NORTH_WALL, WallSide.LOW),
+						Variant.variant()
+								.with(VariantProperties.MODEL, pLowSideModelLocation)
+								.with(VariantProperties.UV_LOCK, true))
+				.with(Condition.condition().term(BlockStateProperties.EAST_WALL, WallSide.LOW),
+						Variant.variant()
+								.with(VariantProperties.MODEL, pLowSideModelLocation)
+								.with(VariantProperties.Y_ROT, VariantProperties.Rotation.R90)
+								.with(VariantProperties.UV_LOCK, true))
+				.with(Condition.condition().term(BlockStateProperties.SOUTH_WALL, WallSide.LOW),
+						Variant.variant()
+								.with(VariantProperties.MODEL, pLowSideModelLocation)
+								.with(VariantProperties.Y_ROT, VariantProperties.Rotation.R180)
+								.with(VariantProperties.UV_LOCK, true))
+				.with(Condition.condition().term(BlockStateProperties.WEST_WALL, WallSide.LOW),
+						Variant.variant()
+								.with(VariantProperties.MODEL, pLowSideModelLocation)
+								.with(VariantProperties.Y_ROT, VariantProperties.Rotation.R270)
+								.with(VariantProperties.UV_LOCK, true))
+				.with(Condition.condition().term(BlockStateProperties.NORTH_WALL, WallSide.TALL),
+						Variant.variant()
+								.with(VariantProperties.MODEL, pTallSideModelLocation)
+								.with(VariantProperties.UV_LOCK, true))
+				.with(Condition.condition().term(BlockStateProperties.EAST_WALL, WallSide.TALL),
+						Variant.variant()
+								.with(VariantProperties.MODEL, pTallSideModelLocation)
+								.with(VariantProperties.Y_ROT, VariantProperties.Rotation.R90)
+								.with(VariantProperties.UV_LOCK, true))
+				.with(Condition.condition().term(BlockStateProperties.SOUTH_WALL, WallSide.TALL),
+						Variant.variant()
+								.with(VariantProperties.MODEL, pTallSideModelLocation)
+								.with(VariantProperties.Y_ROT, VariantProperties.Rotation.R180)
+								.with(VariantProperties.UV_LOCK, true))
+				.with(Condition.condition().term(BlockStateProperties.WEST_WALL, WallSide.TALL),
+						Variant.variant()
+								.with(VariantProperties.MODEL, pTallSideModelLocation)
+								.with(VariantProperties.Y_ROT, VariantProperties.Rotation.R270)
+								.with(VariantProperties.UV_LOCK, true));
 	}
 
-	static BlockStateGenerator createFence(Block pFenceBlock, ResourceLocation pFencePostModelLocation, ResourceLocation pFenceSideModelLocation) {
-		return MultiPartGenerator.multiPart(pFenceBlock).with(Variant.variant().with(VariantProperties.MODEL, pFencePostModelLocation)).with(Condition.condition().term(BlockStateProperties.NORTH, true), Variant.variant().with(VariantProperties.MODEL, pFenceSideModelLocation).with(VariantProperties.UV_LOCK, true)).with(Condition.condition().term(BlockStateProperties.EAST, true), Variant.variant().with(VariantProperties.MODEL, pFenceSideModelLocation).with(VariantProperties.Y_ROT, VariantProperties.Rotation.R90).with(VariantProperties.UV_LOCK, true)).with(Condition.condition().term(BlockStateProperties.SOUTH, true), Variant.variant().with(VariantProperties.MODEL, pFenceSideModelLocation).with(VariantProperties.Y_ROT, VariantProperties.Rotation.R180).with(VariantProperties.UV_LOCK, true)).with(Condition.condition().term(BlockStateProperties.WEST, true), Variant.variant().with(VariantProperties.MODEL, pFenceSideModelLocation).with(VariantProperties.Y_ROT, VariantProperties.Rotation.R270).with(VariantProperties.UV_LOCK, true));
+	private static BlockStateGenerator createFence(Block pFenceBlock, ResourceLocation pFencePostModelLocation,
+	                                               ResourceLocation pFenceSideModelLocation) {
+
+		return MultiPartGenerator.multiPart(pFenceBlock)
+				.with(Variant.variant()
+						.with(VariantProperties.MODEL, pFencePostModelLocation))
+				.with(Condition.condition().term(BlockStateProperties.NORTH, true),
+						Variant.variant().with(VariantProperties.MODEL, pFenceSideModelLocation)
+								.with(VariantProperties.UV_LOCK, true))
+				.with(Condition.condition().term(BlockStateProperties.EAST, true),
+						Variant.variant()
+								.with(VariantProperties.MODEL, pFenceSideModelLocation)
+								.with(VariantProperties.Y_ROT, VariantProperties.Rotation.R90)
+								.with(VariantProperties.UV_LOCK, true))
+				.with(Condition.condition().term(BlockStateProperties.SOUTH, true),
+						Variant.variant()
+								.with(VariantProperties.MODEL, pFenceSideModelLocation)
+								.with(VariantProperties.Y_ROT, VariantProperties.Rotation.R180)
+								.with(VariantProperties.UV_LOCK, true))
+				.with(Condition.condition().term(BlockStateProperties.WEST, true),
+						Variant.variant()
+								.with(VariantProperties.MODEL, pFenceSideModelLocation)
+								.with(VariantProperties.Y_ROT, VariantProperties.Rotation.R270)
+								.with(VariantProperties.UV_LOCK, true));
 	}
 
-	static BlockStateGenerator createFenceGate(Block pFenceGateBlock, ResourceLocation pOpenModelLocation, ResourceLocation pClosedModelLocation, ResourceLocation pWallOpenModelLocation, ResourceLocation pWallClosedModelLocation) {
-		return MultiVariantGenerator.multiVariant(pFenceGateBlock, Variant.variant().with(VariantProperties.UV_LOCK, true)).with(createHorizontalFacingDispatchAlt()).with(PropertyDispatch.properties(BlockStateProperties.IN_WALL, BlockStateProperties.OPEN).select(false, false, Variant.variant().with(VariantProperties.MODEL, pClosedModelLocation)).select(true, false, Variant.variant().with(VariantProperties.MODEL, pWallClosedModelLocation)).select(false, true, Variant.variant().with(VariantProperties.MODEL, pOpenModelLocation)).select(true, true, Variant.variant().with(VariantProperties.MODEL, pWallOpenModelLocation)));
+	private static BlockStateGenerator createFenceGate(Block pFenceGateBlock, ResourceLocation pOpenModelLocation,
+	                                                   ResourceLocation pClosedModelLocation,
+	                                                   ResourceLocation pWallOpenModelLocation,
+	                                                   ResourceLocation pWallClosedModelLocation) {
+
+		return MultiVariantGenerator.multiVariant(pFenceGateBlock,
+						Variant.variant()
+								.with(VariantProperties.UV_LOCK, true))
+				.with(createHorizontalFacingDispatchAlt())
+				.with(PropertyDispatch.properties(BlockStateProperties.IN_WALL, BlockStateProperties.OPEN)
+						.select(false, false,
+								Variant.variant()
+										.with(VariantProperties.MODEL, pClosedModelLocation))
+						.select(true, false,
+								Variant.variant()
+										.with(VariantProperties.MODEL, pWallClosedModelLocation))
+						.select(false, true,
+								Variant.variant()
+										.with(VariantProperties.MODEL, pOpenModelLocation))
+						.select(true, true,
+								Variant.variant()
+										.with(VariantProperties.MODEL, pWallOpenModelLocation)));
 	}
 
 	private static PropertyDispatch createHorizontalFacingDispatchAlt() {
-		return PropertyDispatch.property(BlockStateProperties.HORIZONTAL_FACING).select(Direction.SOUTH, Variant.variant()).select(Direction.WEST, Variant.variant().with(VariantProperties.Y_ROT, VariantProperties.Rotation.R90)).select(Direction.NORTH, Variant.variant().with(VariantProperties.Y_ROT, VariantProperties.Rotation.R180)).select(Direction.EAST, Variant.variant().with(VariantProperties.Y_ROT, VariantProperties.Rotation.R270));
+		return PropertyDispatch.property(BlockStateProperties.HORIZONTAL_FACING)
+				.select(Direction.SOUTH, Variant.variant())
+				.select(Direction.WEST,
+						Variant.variant()
+								.with(VariantProperties.Y_ROT, VariantProperties.Rotation.R90))
+				.select(Direction.NORTH,
+						Variant.variant()
+								.with(VariantProperties.Y_ROT, VariantProperties.Rotation.R180))
+				.select(Direction.EAST,
+						Variant.variant()
+								.with(VariantProperties.Y_ROT, VariantProperties.Rotation.R270));
 	}
 
-	static BlockStateGenerator createPressurePlate(Block pPressurePlateBlock, ResourceLocation pUnpoweredModelLocation, ResourceLocation pPoweredModelLocation) {
-		return MultiVariantGenerator.multiVariant(pPressurePlateBlock).with(createBooleanModelDispatch(BlockStateProperties.POWERED, pPoweredModelLocation, pUnpoweredModelLocation));
+	private static BlockStateGenerator createPressurePlate(Block pPressurePlateBlock, ResourceLocation pUnpoweredModelLocation,
+	                                                       ResourceLocation pPoweredModelLocation) {
+
+		return MultiVariantGenerator.multiVariant(pPressurePlateBlock)
+				.with(createBooleanModelDispatch(BlockStateProperties.POWERED, pPoweredModelLocation,
+						pUnpoweredModelLocation));
 	}
 
-	private static PropertyDispatch createBooleanModelDispatch(BooleanProperty pProperty, ResourceLocation pTrueModelLocation, ResourceLocation pFalseModelLocation) {
-		return PropertyDispatch.property(pProperty).select(true, Variant.variant().with(VariantProperties.MODEL, pTrueModelLocation)).select(false, Variant.variant().with(VariantProperties.MODEL, pFalseModelLocation));
+	private static PropertyDispatch createBooleanModelDispatch(BooleanProperty pProperty,
+	                                                           ResourceLocation pTrueModelLocation,
+	                                                           ResourceLocation pFalseModelLocation) {
+
+		return PropertyDispatch.property(pProperty).select(true,
+						Variant.variant()
+								.with(VariantProperties.MODEL, pTrueModelLocation))
+				.select(false, Variant.variant().with(VariantProperties.MODEL, pFalseModelLocation));
 	}
 
-	void skipAutoItemBlock(Block pBlock) {
+	private void skipAutoItemBlock(Block pBlock) {
 		skippedAutoModelsOutput.accept(pBlock.asItem());
 	}
 
-	static BlockStateGenerator createSlab(Block pSlabBlock, ResourceLocation pBottomHalfModelLocation, ResourceLocation pTopHalfModelLocation, ResourceLocation pDoubleModelLocation) {
-		return MultiVariantGenerator.multiVariant(pSlabBlock).with(PropertyDispatch.property(BlockStateProperties.SLAB_TYPE).select(SlabType.BOTTOM, Variant.variant().with(VariantProperties.MODEL, pBottomHalfModelLocation)).select(SlabType.TOP, Variant.variant().with(VariantProperties.MODEL, pTopHalfModelLocation)).select(SlabType.DOUBLE, Variant.variant().with(VariantProperties.MODEL, pDoubleModelLocation)));
+	private static BlockStateGenerator createSlab(Block pSlabBlock, ResourceLocation pBottomHalfModelLocation,
+	                                              ResourceLocation pTopHalfModelLocation, ResourceLocation pDoubleModelLocation) {
+
+		return MultiVariantGenerator.multiVariant(pSlabBlock)
+				.with(PropertyDispatch.property(BlockStateProperties.SLAB_TYPE)
+						.select(SlabType.BOTTOM,
+								Variant.variant()
+										.with(VariantProperties.MODEL, pBottomHalfModelLocation))
+						.select(SlabType.TOP,
+								Variant.variant()
+										.with(VariantProperties.MODEL, pTopHalfModelLocation))
+						.select(SlabType.DOUBLE,
+								Variant.variant()
+										.with(VariantProperties.MODEL, pDoubleModelLocation)));
 	}
 
-	static BlockStateGenerator createStairs(Block pStairsBlock, ResourceLocation pInnerModelLocation, ResourceLocation pStraightModelLocation, ResourceLocation pOuterModelLocation) {
-		return MultiVariantGenerator.multiVariant(pStairsBlock).with(PropertyDispatch.properties(BlockStateProperties.HORIZONTAL_FACING, BlockStateProperties.HALF, BlockStateProperties.STAIRS_SHAPE).select(Direction.EAST, Half.BOTTOM, StairsShape.STRAIGHT, Variant.variant().with(VariantProperties.MODEL, pStraightModelLocation)).select(Direction.WEST, Half.BOTTOM, StairsShape.STRAIGHT, Variant.variant().with(VariantProperties.MODEL, pStraightModelLocation).with(VariantProperties.Y_ROT, VariantProperties.Rotation.R180).with(VariantProperties.UV_LOCK, true)).select(Direction.SOUTH, Half.BOTTOM, StairsShape.STRAIGHT, Variant.variant().with(VariantProperties.MODEL, pStraightModelLocation).with(VariantProperties.Y_ROT, VariantProperties.Rotation.R90).with(VariantProperties.UV_LOCK, true)).select(Direction.NORTH, Half.BOTTOM, StairsShape.STRAIGHT, Variant.variant().with(VariantProperties.MODEL, pStraightModelLocation).with(VariantProperties.Y_ROT, VariantProperties.Rotation.R270).with(VariantProperties.UV_LOCK, true)).select(Direction.EAST, Half.BOTTOM, StairsShape.OUTER_RIGHT, Variant.variant().with(VariantProperties.MODEL, pOuterModelLocation)).select(Direction.WEST, Half.BOTTOM, StairsShape.OUTER_RIGHT, Variant.variant().with(VariantProperties.MODEL, pOuterModelLocation).with(VariantProperties.Y_ROT, VariantProperties.Rotation.R180).with(VariantProperties.UV_LOCK, true)).select(Direction.SOUTH, Half.BOTTOM, StairsShape.OUTER_RIGHT, Variant.variant().with(VariantProperties.MODEL, pOuterModelLocation).with(VariantProperties.Y_ROT, VariantProperties.Rotation.R90).with(VariantProperties.UV_LOCK, true)).select(Direction.NORTH, Half.BOTTOM, StairsShape.OUTER_RIGHT, Variant.variant().with(VariantProperties.MODEL, pOuterModelLocation).with(VariantProperties.Y_ROT, VariantProperties.Rotation.R270).with(VariantProperties.UV_LOCK, true)).select(Direction.EAST, Half.BOTTOM, StairsShape.OUTER_LEFT, Variant.variant().with(VariantProperties.MODEL, pOuterModelLocation).with(VariantProperties.Y_ROT, VariantProperties.Rotation.R270).with(VariantProperties.UV_LOCK, true)).select(Direction.WEST, Half.BOTTOM, StairsShape.OUTER_LEFT, Variant.variant().with(VariantProperties.MODEL, pOuterModelLocation).with(VariantProperties.Y_ROT, VariantProperties.Rotation.R90).with(VariantProperties.UV_LOCK, true)).select(Direction.SOUTH, Half.BOTTOM, StairsShape.OUTER_LEFT, Variant.variant().with(VariantProperties.MODEL, pOuterModelLocation)).select(Direction.NORTH, Half.BOTTOM, StairsShape.OUTER_LEFT, Variant.variant().with(VariantProperties.MODEL, pOuterModelLocation).with(VariantProperties.Y_ROT, VariantProperties.Rotation.R180).with(VariantProperties.UV_LOCK, true)).select(Direction.EAST, Half.BOTTOM, StairsShape.INNER_RIGHT, Variant.variant().with(VariantProperties.MODEL, pInnerModelLocation)).select(Direction.WEST, Half.BOTTOM, StairsShape.INNER_RIGHT, Variant.variant().with(VariantProperties.MODEL, pInnerModelLocation).with(VariantProperties.Y_ROT, VariantProperties.Rotation.R180).with(VariantProperties.UV_LOCK, true)).select(Direction.SOUTH, Half.BOTTOM, StairsShape.INNER_RIGHT, Variant.variant().with(VariantProperties.MODEL, pInnerModelLocation).with(VariantProperties.Y_ROT, VariantProperties.Rotation.R90).with(VariantProperties.UV_LOCK, true)).select(Direction.NORTH, Half.BOTTOM, StairsShape.INNER_RIGHT, Variant.variant().with(VariantProperties.MODEL, pInnerModelLocation).with(VariantProperties.Y_ROT, VariantProperties.Rotation.R270).with(VariantProperties.UV_LOCK, true)).select(Direction.EAST, Half.BOTTOM, StairsShape.INNER_LEFT, Variant.variant().with(VariantProperties.MODEL, pInnerModelLocation).with(VariantProperties.Y_ROT, VariantProperties.Rotation.R270).with(VariantProperties.UV_LOCK, true)).select(Direction.WEST, Half.BOTTOM, StairsShape.INNER_LEFT, Variant.variant().with(VariantProperties.MODEL, pInnerModelLocation).with(VariantProperties.Y_ROT, VariantProperties.Rotation.R90).with(VariantProperties.UV_LOCK, true)).select(Direction.SOUTH, Half.BOTTOM, StairsShape.INNER_LEFT, Variant.variant().with(VariantProperties.MODEL, pInnerModelLocation)).select(Direction.NORTH, Half.BOTTOM, StairsShape.INNER_LEFT, Variant.variant().with(VariantProperties.MODEL, pInnerModelLocation).with(VariantProperties.Y_ROT, VariantProperties.Rotation.R180).with(VariantProperties.UV_LOCK, true)).select(Direction.EAST, Half.TOP, StairsShape.STRAIGHT, Variant.variant().with(VariantProperties.MODEL, pStraightModelLocation).with(VariantProperties.X_ROT, VariantProperties.Rotation.R180).with(VariantProperties.UV_LOCK, true)).select(Direction.WEST, Half.TOP, StairsShape.STRAIGHT, Variant.variant().with(VariantProperties.MODEL, pStraightModelLocation).with(VariantProperties.X_ROT, VariantProperties.Rotation.R180).with(VariantProperties.Y_ROT, VariantProperties.Rotation.R180).with(VariantProperties.UV_LOCK, true)).select(Direction.SOUTH, Half.TOP, StairsShape.STRAIGHT, Variant.variant().with(VariantProperties.MODEL, pStraightModelLocation).with(VariantProperties.X_ROT, VariantProperties.Rotation.R180).with(VariantProperties.Y_ROT, VariantProperties.Rotation.R90).with(VariantProperties.UV_LOCK, true)).select(Direction.NORTH, Half.TOP, StairsShape.STRAIGHT, Variant.variant().with(VariantProperties.MODEL, pStraightModelLocation).with(VariantProperties.X_ROT, VariantProperties.Rotation.R180).with(VariantProperties.Y_ROT, VariantProperties.Rotation.R270).with(VariantProperties.UV_LOCK, true)).select(Direction.EAST, Half.TOP, StairsShape.OUTER_RIGHT, Variant.variant().with(VariantProperties.MODEL, pOuterModelLocation).with(VariantProperties.X_ROT, VariantProperties.Rotation.R180).with(VariantProperties.Y_ROT, VariantProperties.Rotation.R90).with(VariantProperties.UV_LOCK, true)).select(Direction.WEST, Half.TOP, StairsShape.OUTER_RIGHT, Variant.variant().with(VariantProperties.MODEL, pOuterModelLocation).with(VariantProperties.X_ROT, VariantProperties.Rotation.R180).with(VariantProperties.Y_ROT, VariantProperties.Rotation.R270).with(VariantProperties.UV_LOCK, true)).select(Direction.SOUTH, Half.TOP, StairsShape.OUTER_RIGHT, Variant.variant().with(VariantProperties.MODEL, pOuterModelLocation).with(VariantProperties.X_ROT, VariantProperties.Rotation.R180).with(VariantProperties.Y_ROT, VariantProperties.Rotation.R180).with(VariantProperties.UV_LOCK, true)).select(Direction.NORTH, Half.TOP, StairsShape.OUTER_RIGHT, Variant.variant().with(VariantProperties.MODEL, pOuterModelLocation).with(VariantProperties.X_ROT, VariantProperties.Rotation.R180).with(VariantProperties.UV_LOCK, true)).select(Direction.EAST, Half.TOP, StairsShape.OUTER_LEFT, Variant.variant().with(VariantProperties.MODEL, pOuterModelLocation).with(VariantProperties.X_ROT, VariantProperties.Rotation.R180).with(VariantProperties.UV_LOCK, true)).select(Direction.WEST, Half.TOP, StairsShape.OUTER_LEFT, Variant.variant().with(VariantProperties.MODEL, pOuterModelLocation).with(VariantProperties.X_ROT, VariantProperties.Rotation.R180).with(VariantProperties.Y_ROT, VariantProperties.Rotation.R180).with(VariantProperties.UV_LOCK, true)).select(Direction.SOUTH, Half.TOP, StairsShape.OUTER_LEFT, Variant.variant().with(VariantProperties.MODEL, pOuterModelLocation).with(VariantProperties.X_ROT, VariantProperties.Rotation.R180).with(VariantProperties.Y_ROT, VariantProperties.Rotation.R90).with(VariantProperties.UV_LOCK, true)).select(Direction.NORTH, Half.TOP, StairsShape.OUTER_LEFT, Variant.variant().with(VariantProperties.MODEL, pOuterModelLocation).with(VariantProperties.X_ROT, VariantProperties.Rotation.R180).with(VariantProperties.Y_ROT, VariantProperties.Rotation.R270).with(VariantProperties.UV_LOCK, true)).select(Direction.EAST, Half.TOP, StairsShape.INNER_RIGHT, Variant.variant().with(VariantProperties.MODEL, pInnerModelLocation).with(VariantProperties.X_ROT, VariantProperties.Rotation.R180).with(VariantProperties.Y_ROT, VariantProperties.Rotation.R90).with(VariantProperties.UV_LOCK, true)).select(Direction.WEST, Half.TOP, StairsShape.INNER_RIGHT, Variant.variant().with(VariantProperties.MODEL, pInnerModelLocation).with(VariantProperties.X_ROT, VariantProperties.Rotation.R180).with(VariantProperties.Y_ROT, VariantProperties.Rotation.R270).with(VariantProperties.UV_LOCK, true)).select(Direction.SOUTH, Half.TOP, StairsShape.INNER_RIGHT, Variant.variant().with(VariantProperties.MODEL, pInnerModelLocation).with(VariantProperties.X_ROT, VariantProperties.Rotation.R180).with(VariantProperties.Y_ROT, VariantProperties.Rotation.R180).with(VariantProperties.UV_LOCK, true)).select(Direction.NORTH, Half.TOP, StairsShape.INNER_RIGHT, Variant.variant().with(VariantProperties.MODEL, pInnerModelLocation).with(VariantProperties.X_ROT, VariantProperties.Rotation.R180).with(VariantProperties.UV_LOCK, true)).select(Direction.EAST, Half.TOP, StairsShape.INNER_LEFT, Variant.variant().with(VariantProperties.MODEL, pInnerModelLocation).with(VariantProperties.X_ROT, VariantProperties.Rotation.R180).with(VariantProperties.UV_LOCK, true)).select(Direction.WEST, Half.TOP, StairsShape.INNER_LEFT, Variant.variant().with(VariantProperties.MODEL, pInnerModelLocation).with(VariantProperties.X_ROT, VariantProperties.Rotation.R180).with(VariantProperties.Y_ROT, VariantProperties.Rotation.R180).with(VariantProperties.UV_LOCK, true)).select(Direction.SOUTH, Half.TOP, StairsShape.INNER_LEFT, Variant.variant().with(VariantProperties.MODEL, pInnerModelLocation).with(VariantProperties.X_ROT, VariantProperties.Rotation.R180).with(VariantProperties.Y_ROT, VariantProperties.Rotation.R90).with(VariantProperties.UV_LOCK, true)).select(Direction.NORTH, Half.TOP, StairsShape.INNER_LEFT, Variant.variant().with(VariantProperties.MODEL, pInnerModelLocation).with(VariantProperties.X_ROT, VariantProperties.Rotation.R180).with(VariantProperties.Y_ROT, VariantProperties.Rotation.R270).with(VariantProperties.UV_LOCK, true)));
+	private static BlockStateGenerator createStairs(Block pStairsBlock, ResourceLocation pInnerModelLocation,
+	                                                ResourceLocation pStraightModelLocation,
+	                                                ResourceLocation pOuterModelLocation) {
+
+		return MultiVariantGenerator.multiVariant(pStairsBlock)
+				.with(PropertyDispatch
+						.properties(BlockStateProperties.HORIZONTAL_FACING, BlockStateProperties.HALF,
+								BlockStateProperties.STAIRS_SHAPE)
+						.select(Direction.EAST, Half.BOTTOM, StairsShape.STRAIGHT,
+								Variant.variant()
+										.with(VariantProperties.MODEL, pStraightModelLocation))
+						.select(Direction.WEST, Half.BOTTOM, StairsShape.STRAIGHT,
+								Variant.variant()
+										.with(VariantProperties.MODEL, pStraightModelLocation)
+										.with(VariantProperties.Y_ROT, VariantProperties.Rotation.R180)
+										.with(VariantProperties.UV_LOCK, true))
+						.select(Direction.SOUTH, Half.BOTTOM, StairsShape.STRAIGHT,
+								Variant.variant()
+										.with(VariantProperties.MODEL, pStraightModelLocation)
+										.with(VariantProperties.Y_ROT, VariantProperties.Rotation.R90)
+										.with(VariantProperties.UV_LOCK, true))
+						.select(Direction.NORTH, Half.BOTTOM, StairsShape.STRAIGHT,
+								Variant.variant()
+										.with(VariantProperties.MODEL, pStraightModelLocation)
+										.with(VariantProperties.Y_ROT, VariantProperties.Rotation.R270)
+										.with(VariantProperties.UV_LOCK, true))
+						.select(Direction.EAST, Half.BOTTOM, StairsShape.OUTER_RIGHT,
+								Variant.variant()
+										.with(VariantProperties.MODEL, pOuterModelLocation))
+						.select(Direction.WEST, Half.BOTTOM, StairsShape.OUTER_RIGHT,
+								Variant.variant()
+										.with(VariantProperties.MODEL, pOuterModelLocation)
+										.with(VariantProperties.Y_ROT, VariantProperties.Rotation.R180)
+										.with(VariantProperties.UV_LOCK, true))
+						.select(Direction.SOUTH, Half.BOTTOM, StairsShape.OUTER_RIGHT,
+								Variant.variant()
+										.with(VariantProperties.MODEL, pOuterModelLocation)
+										.with(VariantProperties.Y_ROT, VariantProperties.Rotation.R90)
+										.with(VariantProperties.UV_LOCK, true))
+						.select(Direction.NORTH, Half.BOTTOM, StairsShape.OUTER_RIGHT,
+								Variant.variant()
+										.with(VariantProperties.MODEL, pOuterModelLocation)
+										.with(VariantProperties.Y_ROT, VariantProperties.Rotation.R270)
+										.with(VariantProperties.UV_LOCK, true))
+						.select(Direction.EAST, Half.BOTTOM, StairsShape.OUTER_LEFT,
+								Variant.variant()
+										.with(VariantProperties.MODEL, pOuterModelLocation)
+										.with(VariantProperties.Y_ROT, VariantProperties.Rotation.R270)
+										.with(VariantProperties.UV_LOCK, true))
+						.select(Direction.WEST, Half.BOTTOM, StairsShape.OUTER_LEFT,
+								Variant.variant()
+										.with(VariantProperties.MODEL, pOuterModelLocation)
+										.with(VariantProperties.Y_ROT, VariantProperties.Rotation.R90)
+										.with(VariantProperties.UV_LOCK, true))
+						.select(Direction.SOUTH, Half.BOTTOM, StairsShape.OUTER_LEFT,
+								Variant.variant()
+										.with(VariantProperties.MODEL, pOuterModelLocation))
+						.select(Direction.NORTH, Half.BOTTOM, StairsShape.OUTER_LEFT,
+								Variant.variant()
+										.with(VariantProperties.MODEL, pOuterModelLocation)
+										.with(VariantProperties.Y_ROT, VariantProperties.Rotation.R180)
+										.with(VariantProperties.UV_LOCK, true))
+						.select(Direction.EAST, Half.BOTTOM, StairsShape.INNER_RIGHT,
+								Variant.variant()
+										.with(VariantProperties.MODEL, pInnerModelLocation))
+						.select(Direction.WEST, Half.BOTTOM, StairsShape.INNER_RIGHT,
+								Variant.variant()
+										.with(VariantProperties.MODEL, pInnerModelLocation)
+										.with(VariantProperties.Y_ROT, VariantProperties.Rotation.R180)
+										.with(VariantProperties.UV_LOCK, true))
+						.select(Direction.SOUTH, Half.BOTTOM, StairsShape.INNER_RIGHT,
+								Variant.variant()
+										.with(VariantProperties.MODEL, pInnerModelLocation)
+										.with(VariantProperties.Y_ROT, VariantProperties.Rotation.R90)
+										.with(VariantProperties.UV_LOCK, true))
+						.select(Direction.NORTH, Half.BOTTOM, StairsShape.INNER_RIGHT,
+								Variant.variant()
+										.with(VariantProperties.MODEL, pInnerModelLocation)
+										.with(VariantProperties.Y_ROT, VariantProperties.Rotation.R270)
+										.with(VariantProperties.UV_LOCK, true))
+						.select(Direction.EAST, Half.BOTTOM, StairsShape.INNER_LEFT,
+								Variant.variant()
+										.with(VariantProperties.MODEL, pInnerModelLocation)
+										.with(VariantProperties.Y_ROT, VariantProperties.Rotation.R270)
+										.with(VariantProperties.UV_LOCK, true))
+						.select(Direction.WEST, Half.BOTTOM, StairsShape.INNER_LEFT,
+								Variant.variant()
+										.with(VariantProperties.MODEL, pInnerModelLocation)
+										.with(VariantProperties.Y_ROT, VariantProperties.Rotation.R90)
+										.with(VariantProperties.UV_LOCK, true))
+						.select(Direction.SOUTH, Half.BOTTOM, StairsShape.INNER_LEFT,
+								Variant.variant()
+										.with(VariantProperties.MODEL, pInnerModelLocation))
+						.select(Direction.NORTH, Half.BOTTOM, StairsShape.INNER_LEFT,
+								Variant.variant()
+										.with(VariantProperties.MODEL, pInnerModelLocation)
+										.with(VariantProperties.Y_ROT, VariantProperties.Rotation.R180)
+										.with(VariantProperties.UV_LOCK, true))
+						.select(Direction.EAST, Half.TOP, StairsShape.STRAIGHT,
+								Variant.variant()
+										.with(VariantProperties.MODEL, pStraightModelLocation)
+										.with(VariantProperties.X_ROT, VariantProperties.Rotation.R180)
+										.with(VariantProperties.UV_LOCK, true))
+						.select(Direction.WEST, Half.TOP, StairsShape.STRAIGHT,
+								Variant.variant()
+										.with(VariantProperties.MODEL, pStraightModelLocation)
+										.with(VariantProperties.X_ROT, VariantProperties.Rotation.R180)
+										.with(VariantProperties.Y_ROT, VariantProperties.Rotation.R180)
+										.with(VariantProperties.UV_LOCK, true))
+						.select(Direction.SOUTH, Half.TOP, StairsShape.STRAIGHT,
+								Variant.variant()
+										.with(VariantProperties.MODEL, pStraightModelLocation)
+										.with(VariantProperties.X_ROT, VariantProperties.Rotation.R180)
+										.with(VariantProperties.Y_ROT, VariantProperties.Rotation.R90)
+										.with(VariantProperties.UV_LOCK, true))
+						.select(Direction.NORTH, Half.TOP, StairsShape.STRAIGHT,
+								Variant.variant()
+										.with(VariantProperties.MODEL, pStraightModelLocation)
+										.with(VariantProperties.X_ROT, VariantProperties.Rotation.R180)
+										.with(VariantProperties.Y_ROT, VariantProperties.Rotation.R270)
+										.with(VariantProperties.UV_LOCK, true))
+						.select(Direction.EAST, Half.TOP, StairsShape.OUTER_RIGHT,
+								Variant.variant()
+										.with(VariantProperties.MODEL, pOuterModelLocation)
+										.with(VariantProperties.X_ROT, VariantProperties.Rotation.R180)
+										.with(VariantProperties.Y_ROT, VariantProperties.Rotation.R90)
+										.with(VariantProperties.UV_LOCK, true))
+						.select(Direction.WEST, Half.TOP, StairsShape.OUTER_RIGHT,
+								Variant.variant()
+										.with(VariantProperties.MODEL, pOuterModelLocation)
+										.with(VariantProperties.X_ROT, VariantProperties.Rotation.R180)
+										.with(VariantProperties.Y_ROT, VariantProperties.Rotation.R270)
+										.with(VariantProperties.UV_LOCK, true))
+						.select(Direction.SOUTH, Half.TOP, StairsShape.OUTER_RIGHT,
+								Variant.variant()
+										.with(VariantProperties.MODEL, pOuterModelLocation)
+										.with(VariantProperties.X_ROT, VariantProperties.Rotation.R180)
+										.with(VariantProperties.Y_ROT, VariantProperties.Rotation.R180)
+										.with(VariantProperties.UV_LOCK, true))
+						.select(Direction.NORTH, Half.TOP, StairsShape.OUTER_RIGHT,
+								Variant.variant()
+										.with(VariantProperties.MODEL, pOuterModelLocation)
+										.with(VariantProperties.X_ROT, VariantProperties.Rotation.R180)
+										.with(VariantProperties.UV_LOCK, true))
+						.select(Direction.EAST, Half.TOP, StairsShape.OUTER_LEFT,
+								Variant.variant()
+										.with(VariantProperties.MODEL, pOuterModelLocation)
+										.with(VariantProperties.X_ROT, VariantProperties.Rotation.R180)
+										.with(VariantProperties.UV_LOCK, true))
+						.select(Direction.WEST, Half.TOP, StairsShape.OUTER_LEFT,
+								Variant.variant()
+										.with(VariantProperties.MODEL, pOuterModelLocation)
+										.with(VariantProperties.X_ROT, VariantProperties.Rotation.R180)
+										.with(VariantProperties.Y_ROT, VariantProperties.Rotation.R180)
+										.with(VariantProperties.UV_LOCK, true))
+						.select(Direction.SOUTH, Half.TOP, StairsShape.OUTER_LEFT,
+								Variant.variant()
+										.with(VariantProperties.MODEL, pOuterModelLocation)
+										.with(VariantProperties.X_ROT, VariantProperties.Rotation.R180)
+										.with(VariantProperties.Y_ROT, VariantProperties.Rotation.R90)
+										.with(VariantProperties.UV_LOCK, true))
+						.select(Direction.NORTH, Half.TOP, StairsShape.OUTER_LEFT,
+								Variant.variant()
+										.with(VariantProperties.MODEL, pOuterModelLocation)
+										.with(VariantProperties.X_ROT, VariantProperties.Rotation.R180)
+										.with(VariantProperties.Y_ROT, VariantProperties.Rotation.R270)
+										.with(VariantProperties.UV_LOCK, true))
+						.select(Direction.EAST, Half.TOP, StairsShape.INNER_RIGHT,
+								Variant.variant()
+										.with(VariantProperties.MODEL, pInnerModelLocation)
+										.with(VariantProperties.X_ROT, VariantProperties.Rotation.R180)
+										.with(VariantProperties.Y_ROT, VariantProperties.Rotation.R90)
+										.with(VariantProperties.UV_LOCK, true))
+						.select(Direction.WEST, Half.TOP, StairsShape.INNER_RIGHT,
+								Variant.variant()
+										.with(VariantProperties.MODEL, pInnerModelLocation)
+										.with(VariantProperties.X_ROT, VariantProperties.Rotation.R180)
+										.with(VariantProperties.Y_ROT, VariantProperties.Rotation.R270)
+										.with(VariantProperties.UV_LOCK, true))
+						.select(Direction.SOUTH, Half.TOP, StairsShape.INNER_RIGHT,
+								Variant.variant()
+										.with(VariantProperties.MODEL, pInnerModelLocation)
+										.with(VariantProperties.X_ROT, VariantProperties.Rotation.R180)
+										.with(VariantProperties.Y_ROT, VariantProperties.Rotation.R180)
+										.with(VariantProperties.UV_LOCK, true))
+						.select(Direction.NORTH, Half.TOP, StairsShape.INNER_RIGHT,
+								Variant.variant()
+										.with(VariantProperties.MODEL, pInnerModelLocation)
+										.with(VariantProperties.X_ROT, VariantProperties.Rotation.R180)
+										.with(VariantProperties.UV_LOCK, true))
+						.select(Direction.EAST, Half.TOP, StairsShape.INNER_LEFT,
+								Variant.variant()
+										.with(VariantProperties.MODEL, pInnerModelLocation)
+										.with(VariantProperties.X_ROT, VariantProperties.Rotation.R180)
+										.with(VariantProperties.UV_LOCK, true))
+						.select(Direction.WEST, Half.TOP, StairsShape.INNER_LEFT,
+								Variant.variant()
+										.with(VariantProperties.MODEL, pInnerModelLocation)
+										.with(VariantProperties.X_ROT, VariantProperties.Rotation.R180)
+										.with(VariantProperties.Y_ROT, VariantProperties.Rotation.R180)
+										.with(VariantProperties.UV_LOCK, true))
+						.select(Direction.SOUTH, Half.TOP, StairsShape.INNER_LEFT,
+								Variant.variant()
+										.with(VariantProperties.MODEL, pInnerModelLocation)
+										.with(VariantProperties.X_ROT, VariantProperties.Rotation.R180)
+										.with(VariantProperties.Y_ROT, VariantProperties.Rotation.R90)
+										.with(VariantProperties.UV_LOCK, true))
+						.select(Direction.NORTH, Half.TOP, StairsShape.INNER_LEFT,
+								Variant.variant()
+										.with(VariantProperties.MODEL, pInnerModelLocation)
+										.with(VariantProperties.X_ROT, VariantProperties.Rotation.R180)
+										.with(VariantProperties.Y_ROT, VariantProperties.Rotation.R270)
+										.with(VariantProperties.UV_LOCK, true)));
 	}
 
-	void createTrapdoor(Block pTrapdoorBlock) {
-		TextureMapping texturemapping = TextureMapping.defaultTexture(pTrapdoorBlock);
-		ResourceLocation resourceLocation = ModelTemplates.TRAPDOOR_TOP.create(pTrapdoorBlock, texturemapping, modelOutput);
-		ResourceLocation resourceLocation1 = ModelTemplates.TRAPDOOR_BOTTOM.create(pTrapdoorBlock, texturemapping, modelOutput);
-		ResourceLocation resourceLocation2 = ModelTemplates.TRAPDOOR_OPEN.create(pTrapdoorBlock, texturemapping, modelOutput);
+	private void createTrapdoor(Block pTrapdoorBlock) {
+		TextureMapping textureMapping = TextureMapping.defaultTexture(pTrapdoorBlock);
+		ResourceLocation resourceLocation = ModelTemplates.TRAPDOOR_TOP.create(pTrapdoorBlock, textureMapping, modelOutput);
+		ResourceLocation resourceLocation1 = ModelTemplates.TRAPDOOR_BOTTOM.create(pTrapdoorBlock, textureMapping, modelOutput);
+		ResourceLocation resourceLocation2 = ModelTemplates.TRAPDOOR_OPEN.create(pTrapdoorBlock, textureMapping, modelOutput);
 		blockStateOutput.accept(createTrapdoor(pTrapdoorBlock, resourceLocation, resourceLocation1, resourceLocation2));
 		delegateItemModel(pTrapdoorBlock, resourceLocation1);
 	}
 
-	private static BlockStateGenerator createTrapdoor(Block pTrapdoorBlock, ResourceLocation pTopModelLocation, ResourceLocation pBottomModelLocation, ResourceLocation pOpenModelLocation) {
-		return MultiVariantGenerator.multiVariant(pTrapdoorBlock).with(PropertyDispatch.properties(BlockStateProperties.HORIZONTAL_FACING, BlockStateProperties.HALF, BlockStateProperties.OPEN).select(Direction.NORTH, Half.BOTTOM, false, Variant.variant().with(VariantProperties.MODEL, pBottomModelLocation)).select(Direction.SOUTH, Half.BOTTOM, false, Variant.variant().with(VariantProperties.MODEL, pBottomModelLocation)).select(Direction.EAST, Half.BOTTOM, false, Variant.variant().with(VariantProperties.MODEL, pBottomModelLocation)).select(Direction.WEST, Half.BOTTOM, false, Variant.variant().with(VariantProperties.MODEL, pBottomModelLocation)).select(Direction.NORTH, Half.TOP, false, Variant.variant().with(VariantProperties.MODEL, pTopModelLocation)).select(Direction.SOUTH, Half.TOP, false, Variant.variant().with(VariantProperties.MODEL, pTopModelLocation)).select(Direction.EAST, Half.TOP, false, Variant.variant().with(VariantProperties.MODEL, pTopModelLocation)).select(Direction.WEST, Half.TOP, false, Variant.variant().with(VariantProperties.MODEL, pTopModelLocation)).select(Direction.NORTH, Half.BOTTOM, true, Variant.variant().with(VariantProperties.MODEL, pOpenModelLocation)).select(Direction.SOUTH, Half.BOTTOM, true, Variant.variant().with(VariantProperties.MODEL, pOpenModelLocation).with(VariantProperties.Y_ROT, VariantProperties.Rotation.R180)).select(Direction.EAST, Half.BOTTOM, true, Variant.variant().with(VariantProperties.MODEL, pOpenModelLocation).with(VariantProperties.Y_ROT, VariantProperties.Rotation.R90)).select(Direction.WEST, Half.BOTTOM, true, Variant.variant().with(VariantProperties.MODEL, pOpenModelLocation).with(VariantProperties.Y_ROT, VariantProperties.Rotation.R270)).select(Direction.NORTH, Half.TOP, true, Variant.variant().with(VariantProperties.MODEL, pOpenModelLocation)).select(Direction.SOUTH, Half.TOP, true, Variant.variant().with(VariantProperties.MODEL, pOpenModelLocation).with(VariantProperties.Y_ROT, VariantProperties.Rotation.R180)).select(Direction.EAST, Half.TOP, true, Variant.variant().with(VariantProperties.MODEL, pOpenModelLocation).with(VariantProperties.Y_ROT, VariantProperties.Rotation.R90)).select(Direction.WEST, Half.TOP, true, Variant.variant().with(VariantProperties.MODEL, pOpenModelLocation).with(VariantProperties.Y_ROT, VariantProperties.Rotation.R270)));
+	private static BlockStateGenerator createTrapdoor(Block pTrapdoorBlock, ResourceLocation pTopModelLocation,
+	                                                  ResourceLocation pBottomModelLocation,
+	                                                  ResourceLocation pOpenModelLocation) {
+
+		return MultiVariantGenerator.multiVariant(pTrapdoorBlock)
+				.with(PropertyDispatch
+						.properties(BlockStateProperties.HORIZONTAL_FACING, BlockStateProperties.HALF, BlockStateProperties.OPEN)
+						.select(Direction.NORTH, Half.BOTTOM, false,
+								Variant.variant()
+										.with(VariantProperties.MODEL, pBottomModelLocation))
+						.select(Direction.SOUTH, Half.BOTTOM, false,
+								Variant.variant()
+										.with(VariantProperties.MODEL, pBottomModelLocation))
+						.select(Direction.EAST, Half.BOTTOM, false,
+								Variant.variant()
+										.with(VariantProperties.MODEL, pBottomModelLocation))
+						.select(Direction.WEST, Half.BOTTOM, false,
+								Variant.variant()
+										.with(VariantProperties.MODEL, pBottomModelLocation))
+						.select(Direction.NORTH, Half.TOP, false,
+								Variant.variant()
+										.with(VariantProperties.MODEL, pTopModelLocation))
+						.select(Direction.SOUTH, Half.TOP, false,
+								Variant.variant()
+										.with(VariantProperties.MODEL, pTopModelLocation))
+						.select(Direction.EAST, Half.TOP, false,
+								Variant.variant()
+										.with(VariantProperties.MODEL, pTopModelLocation))
+						.select(Direction.WEST, Half.TOP, false,
+								Variant.variant()
+										.with(VariantProperties.MODEL, pTopModelLocation))
+						.select(Direction.NORTH, Half.BOTTOM, true,
+								Variant.variant()
+										.with(VariantProperties.MODEL, pOpenModelLocation))
+						.select(Direction.SOUTH, Half.BOTTOM, true,
+								Variant.variant()
+										.with(VariantProperties.MODEL, pOpenModelLocation)
+										.with(VariantProperties.Y_ROT, VariantProperties.Rotation.R180))
+						.select(Direction.EAST, Half.BOTTOM, true,
+								Variant.variant()
+										.with(VariantProperties.MODEL, pOpenModelLocation)
+										.with(VariantProperties.Y_ROT, VariantProperties.Rotation.R90))
+						.select(Direction.WEST, Half.BOTTOM, true,
+								Variant.variant()
+										.with(VariantProperties.MODEL, pOpenModelLocation)
+										.with(VariantProperties.Y_ROT, VariantProperties.Rotation.R270))
+						.select(Direction.NORTH, Half.TOP, true,
+								Variant.variant()
+										.with(VariantProperties.MODEL, pOpenModelLocation))
+						.select(Direction.SOUTH, Half.TOP, true,
+								Variant.variant()
+										.with(VariantProperties.MODEL, pOpenModelLocation)
+										.with(VariantProperties.Y_ROT, VariantProperties.Rotation.R180))
+						.select(Direction.EAST, Half.TOP, true,
+								Variant.variant()
+										.with(VariantProperties.MODEL, pOpenModelLocation)
+										.with(VariantProperties.Y_ROT, VariantProperties.Rotation.R90))
+						.select(Direction.WEST, Half.TOP, true,
+								Variant.variant()
+										.with(VariantProperties.MODEL, pOpenModelLocation)
+										.with(VariantProperties.Y_ROT, VariantProperties.Rotation.R270)));
 	}
 
-	void createOrientableTrapdoor(Block pOrientableTrapdoorBlock) {
-		TextureMapping texturemapping = TextureMapping.defaultTexture(pOrientableTrapdoorBlock);
-		ResourceLocation resourceLocation = ModelTemplates.ORIENTABLE_TRAPDOOR_TOP.create(pOrientableTrapdoorBlock, texturemapping, modelOutput);
-		ResourceLocation resourceLocation1 = ModelTemplates.ORIENTABLE_TRAPDOOR_BOTTOM.create(pOrientableTrapdoorBlock, texturemapping, modelOutput);
-		ResourceLocation resourceLocation2 = ModelTemplates.ORIENTABLE_TRAPDOOR_OPEN.create(pOrientableTrapdoorBlock, texturemapping, modelOutput);
-		blockStateOutput.accept(createOrientableTrapdoor(pOrientableTrapdoorBlock, resourceLocation, resourceLocation1, resourceLocation2));
+	private void createOrientableTrapdoor(Block pOrientableTrapdoorBlock) {
+		TextureMapping textureMapping = TextureMapping.defaultTexture(pOrientableTrapdoorBlock);
+		ResourceLocation resourceLocation = ModelTemplates.ORIENTABLE_TRAPDOOR_TOP
+				.create(pOrientableTrapdoorBlock, textureMapping, modelOutput);
+
+		ResourceLocation resourceLocation1 = ModelTemplates.ORIENTABLE_TRAPDOOR_BOTTOM
+				.create(pOrientableTrapdoorBlock, textureMapping, modelOutput);
+
+		ResourceLocation resourceLocation2 = ModelTemplates.ORIENTABLE_TRAPDOOR_OPEN
+				.create(pOrientableTrapdoorBlock, textureMapping, modelOutput);
+
+		blockStateOutput.accept(createOrientableTrapdoor(pOrientableTrapdoorBlock, resourceLocation, resourceLocation1,
+				resourceLocation2));
+
 		delegateItemModel(pOrientableTrapdoorBlock, resourceLocation1);
 	}
 
-	private static BlockStateGenerator createOrientableTrapdoor(Block pOrientableTrapdoorBlock, ResourceLocation pTopModelLocation, ResourceLocation pBottomModelLocation, ResourceLocation pOpenModelLocation) {
-		return MultiVariantGenerator.multiVariant(pOrientableTrapdoorBlock).with(PropertyDispatch.properties(BlockStateProperties.HORIZONTAL_FACING, BlockStateProperties.HALF, BlockStateProperties.OPEN).select(Direction.NORTH, Half.BOTTOM, false, Variant.variant().with(VariantProperties.MODEL, pBottomModelLocation)).select(Direction.SOUTH, Half.BOTTOM, false, Variant.variant().with(VariantProperties.MODEL, pBottomModelLocation).with(VariantProperties.Y_ROT, VariantProperties.Rotation.R180)).select(Direction.EAST, Half.BOTTOM, false, Variant.variant().with(VariantProperties.MODEL, pBottomModelLocation).with(VariantProperties.Y_ROT, VariantProperties.Rotation.R90)).select(Direction.WEST, Half.BOTTOM, false, Variant.variant().with(VariantProperties.MODEL, pBottomModelLocation).with(VariantProperties.Y_ROT, VariantProperties.Rotation.R270)).select(Direction.NORTH, Half.TOP, false, Variant.variant().with(VariantProperties.MODEL, pTopModelLocation)).select(Direction.SOUTH, Half.TOP, false, Variant.variant().with(VariantProperties.MODEL, pTopModelLocation).with(VariantProperties.Y_ROT, VariantProperties.Rotation.R180)).select(Direction.EAST, Half.TOP, false, Variant.variant().with(VariantProperties.MODEL, pTopModelLocation).with(VariantProperties.Y_ROT, VariantProperties.Rotation.R90)).select(Direction.WEST, Half.TOP, false, Variant.variant().with(VariantProperties.MODEL, pTopModelLocation).with(VariantProperties.Y_ROT, VariantProperties.Rotation.R270)).select(Direction.NORTH, Half.BOTTOM, true, Variant.variant().with(VariantProperties.MODEL, pOpenModelLocation)).select(Direction.SOUTH, Half.BOTTOM, true, Variant.variant().with(VariantProperties.MODEL, pOpenModelLocation).with(VariantProperties.Y_ROT, VariantProperties.Rotation.R180)).select(Direction.EAST, Half.BOTTOM, true, Variant.variant().with(VariantProperties.MODEL, pOpenModelLocation).with(VariantProperties.Y_ROT, VariantProperties.Rotation.R90)).select(Direction.WEST, Half.BOTTOM, true, Variant.variant().with(VariantProperties.MODEL, pOpenModelLocation).with(VariantProperties.Y_ROT, VariantProperties.Rotation.R270)).select(Direction.NORTH, Half.TOP, true, Variant.variant().with(VariantProperties.MODEL, pOpenModelLocation).with(VariantProperties.X_ROT, VariantProperties.Rotation.R180).with(VariantProperties.Y_ROT, VariantProperties.Rotation.R180)).select(Direction.SOUTH, Half.TOP, true, Variant.variant().with(VariantProperties.MODEL, pOpenModelLocation).with(VariantProperties.X_ROT, VariantProperties.Rotation.R180).with(VariantProperties.Y_ROT, VariantProperties.Rotation.R0)).select(Direction.EAST, Half.TOP, true, Variant.variant().with(VariantProperties.MODEL, pOpenModelLocation).with(VariantProperties.X_ROT, VariantProperties.Rotation.R180).with(VariantProperties.Y_ROT, VariantProperties.Rotation.R270)).select(Direction.WEST, Half.TOP, true, Variant.variant().with(VariantProperties.MODEL, pOpenModelLocation).with(VariantProperties.X_ROT, VariantProperties.Rotation.R180).with(VariantProperties.Y_ROT, VariantProperties.Rotation.R90)));
+	private static BlockStateGenerator createOrientableTrapdoor(Block pOrientableTrapdoorBlock,
+	                                                            ResourceLocation pTopModelLocation,
+	                                                            ResourceLocation pBottomModelLocation,
+	                                                            ResourceLocation pOpenModelLocation) {
+
+		return MultiVariantGenerator.multiVariant(pOrientableTrapdoorBlock)
+				.with(PropertyDispatch
+						.properties(BlockStateProperties.HORIZONTAL_FACING, BlockStateProperties.HALF, BlockStateProperties.OPEN)
+						.select(Direction.NORTH, Half.BOTTOM, false,
+								Variant.variant()
+										.with(VariantProperties.MODEL, pBottomModelLocation))
+						.select(Direction.SOUTH, Half.BOTTOM, false,
+								Variant.variant()
+										.with(VariantProperties.MODEL, pBottomModelLocation)
+										.with(VariantProperties.Y_ROT, VariantProperties.Rotation.R180))
+						.select(Direction.EAST, Half.BOTTOM, false,
+								Variant.variant()
+										.with(VariantProperties.MODEL, pBottomModelLocation)
+										.with(VariantProperties.Y_ROT, VariantProperties.Rotation.R90))
+						.select(Direction.WEST, Half.BOTTOM, false,
+								Variant.variant()
+										.with(VariantProperties.MODEL, pBottomModelLocation)
+										.with(VariantProperties.Y_ROT, VariantProperties.Rotation.R270))
+						.select(Direction.NORTH, Half.TOP, false,
+								Variant.variant()
+										.with(VariantProperties.MODEL, pTopModelLocation))
+						.select(Direction.SOUTH, Half.TOP, false,
+								Variant.variant()
+										.with(VariantProperties.MODEL, pTopModelLocation)
+										.with(VariantProperties.Y_ROT, VariantProperties.Rotation.R180))
+						.select(Direction.EAST, Half.TOP, false,
+								Variant.variant()
+										.with(VariantProperties.MODEL, pTopModelLocation)
+										.with(VariantProperties.Y_ROT, VariantProperties.Rotation.R90))
+						.select(Direction.WEST, Half.TOP, false,
+								Variant.variant()
+										.with(VariantProperties.MODEL, pTopModelLocation)
+										.with(VariantProperties.Y_ROT, VariantProperties.Rotation.R270))
+						.select(Direction.NORTH, Half.BOTTOM, true,
+								Variant.variant()
+										.with(VariantProperties.MODEL, pOpenModelLocation))
+						.select(Direction.SOUTH, Half.BOTTOM, true,
+								Variant.variant()
+										.with(VariantProperties.MODEL, pOpenModelLocation)
+										.with(VariantProperties.Y_ROT, VariantProperties.Rotation.R180))
+						.select(Direction.EAST, Half.BOTTOM, true,
+								Variant.variant()
+										.with(VariantProperties.MODEL, pOpenModelLocation)
+										.with(VariantProperties.Y_ROT, VariantProperties.Rotation.R90))
+						.select(Direction.WEST, Half.BOTTOM, true,
+								Variant.variant()
+										.with(VariantProperties.MODEL, pOpenModelLocation)
+										.with(VariantProperties.Y_ROT, VariantProperties.Rotation.R270))
+						.select(Direction.NORTH, Half.TOP, true,
+								Variant.variant()
+										.with(VariantProperties.MODEL, pOpenModelLocation)
+										.with(VariantProperties.X_ROT, VariantProperties.Rotation.R180)
+										.with(VariantProperties.Y_ROT, VariantProperties.Rotation.R180))
+						.select(Direction.SOUTH, Half.TOP, true,
+								Variant.variant()
+										.with(VariantProperties.MODEL, pOpenModelLocation)
+										.with(VariantProperties.X_ROT, VariantProperties.Rotation.R180)
+										.with(VariantProperties.Y_ROT, VariantProperties.Rotation.R0))
+						.select(Direction.EAST, Half.TOP, true,
+								Variant.variant()
+										.with(VariantProperties.MODEL, pOpenModelLocation)
+										.with(VariantProperties.X_ROT, VariantProperties.Rotation.R180)
+										.with(VariantProperties.Y_ROT, VariantProperties.Rotation.R270))
+						.select(Direction.WEST, Half.TOP, true,
+								Variant.variant()
+										.with(VariantProperties.MODEL, pOpenModelLocation)
+										.with(VariantProperties.X_ROT, VariantProperties.Rotation.R180)
+										.with(VariantProperties.Y_ROT, VariantProperties.Rotation.R90)));
 	}
 
 
 	@FunctionalInterface
 	interface BlockStateGeneratorSupplier {
-		BlockStateGenerator create(Block pBlock, ResourceLocation pModelLocation, TextureMapping pTextureMapping, BiConsumer<ResourceLocation, Supplier<JsonElement>> pModelOutput);
+		BlockStateGenerator create(Block pBlock, ResourceLocation pModelLocation, TextureMapping pTextureMapping,
+		                           BiConsumer<ResourceLocation, Supplier<JsonElement>> pModelOutput);
 	}
 
 	class BlockFamilyProvider {
 		private final TextureMapping mapping;
 		private final Map<ModelTemplate, ResourceLocation> models = Maps.newHashMap();
 		@Nullable
-		private BlockFamily family;
+		private final BlockFamily family;
 		@Nullable
 		private ResourceLocation fullBlock;
-
-		public BlockFamilyProvider(TextureMapping textureMapping) {
-			mapping = textureMapping;
-		}
 
 		public BlockFamilyProvider(TextureMapping textureMapping, Block block) {
 			mapping = textureMapping;
@@ -325,19 +958,6 @@ public class BlockModelGenerator {
 			}
 
 			return this;
-		}
-
-		public BlockFamilyProvider fullBlockCopies(Block... pBlocks) {
-			if (fullBlock == null) {
-				throw new IllegalStateException("Full block not generated yet");
-			} else {
-				for (Block block : pBlocks) {
-					blockStateOutput.accept(createSimpleBlock(block, fullBlock));
-					delegateItemModel(block, fullBlock);
-				}
-
-				return this;
-			}
 		}
 
 		public BlockFamilyProvider button(Block pButtonBlock) {
@@ -432,7 +1052,8 @@ public class BlockModelGenerator {
 		}
 
 		private ResourceLocation getOrCreateModel(ModelTemplate pModelTemplate, Block pBlock) {
-			return models.computeIfAbsent(pModelTemplate, (resourceLocation) -> resourceLocation.create(pBlock, mapping, modelOutput));
+			return models.computeIfAbsent(pModelTemplate, (resourceLocation) -> resourceLocation.create(pBlock, mapping,
+					modelOutput));
 		}
 
 	}

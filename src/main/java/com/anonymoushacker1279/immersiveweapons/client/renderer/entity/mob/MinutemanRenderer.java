@@ -1,7 +1,7 @@
 package com.anonymoushacker1279.immersiveweapons.client.renderer.entity.mob;
 
 import com.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
-import com.anonymoushacker1279.immersiveweapons.entity.passive.MinutemanEntity;
+import com.anonymoushacker1279.immersiveweapons.entity.neutral.MinutemanEntity;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.model.PlayerModel;
 import net.minecraft.client.model.geom.ModelLayers;

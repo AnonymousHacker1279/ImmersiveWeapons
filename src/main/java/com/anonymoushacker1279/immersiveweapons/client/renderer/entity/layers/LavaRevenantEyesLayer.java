@@ -2,7 +2,7 @@ package com.anonymoushacker1279.immersiveweapons.client.renderer.entity.layers;
 
 import com.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import com.anonymoushacker1279.immersiveweapons.client.model.LavaRevenantModel;
-import com.anonymoushacker1279.immersiveweapons.entity.monster.LavaRevenantEntity;
+import com.anonymoushacker1279.immersiveweapons.entity.monster.lava_revenant.LavaRevenantEntity;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
 import net.minecraft.client.renderer.entity.layers.EyesLayer;

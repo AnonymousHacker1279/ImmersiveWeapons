@@ -31,7 +31,7 @@ public class EntityLootTables implements Consumer<BiConsumer<ResourceLocation, B
 	private final Map<ResourceLocation, LootTable.Builder> map = Maps.newHashMap();
 
 	protected void addTables() {
-		this.add(DeferredRegistryHandler.ROCK_SPIDER_ENTITY.get(), LootTable.lootTable()
+		add(DeferredRegistryHandler.ROCK_SPIDER_ENTITY.get(), LootTable.lootTable()
 				.withPool(LootPool.lootPool()
 						.setRolls(ConstantValue.exactly(1.0F))
 						.add(LootItem.lootTableItem(Items.STRING)
@@ -49,7 +49,7 @@ public class EntityLootTables implements Consumer<BiConsumer<ResourceLocation, B
 								.apply(LootingEnchantFunction.lootingMultiplier(UniformGenerator.between(0.0F, 1.0F))))
 						.when(LootItemKilledByPlayerCondition.killedByPlayer())));
 
-		this.add(DeferredRegistryHandler.DYING_SOLDIER_ENTITY.get(), LootTable.lootTable()
+		add(DeferredRegistryHandler.DYING_SOLDIER_ENTITY.get(), LootTable.lootTable()
 				.withPool(LootPool.lootPool()
 						.setRolls(ConstantValue.exactly(1.0F))
 						.add(LootItem.lootTableItem(Items.ROTTEN_FLESH)
@@ -69,12 +69,12 @@ public class EntityLootTables implements Consumer<BiConsumer<ResourceLocation, B
 								.apply(LootingEnchantFunction.lootingMultiplier(UniformGenerator.between(0.0F, 1.0F))))
 						.add(LootItem.lootTableItem(Items.POTATO)
 								.apply(LootingEnchantFunction.lootingMultiplier(UniformGenerator.between(0.0F, 1.0F))))
-								.apply(SmeltItemFunction.smelted()
-										.when(LootItemEntityPropertyCondition.hasProperties(LootContext.EntityTarget.THIS, ENTITY_ON_FIRE)))
+						.apply(SmeltItemFunction.smelted()
+								.when(LootItemEntityPropertyCondition.hasProperties(LootContext.EntityTarget.THIS, ENTITY_ON_FIRE)))
 						.when(LootItemKilledByPlayerCondition.killedByPlayer())
 						.when(LootItemRandomChanceWithLootingCondition.randomChanceAndLootingBoost(0.035F, 0.02F))));
 
-		this.add(DeferredRegistryHandler.WANDERING_WARRIOR_ENTITY.get(), LootTable.lootTable()
+		add(DeferredRegistryHandler.WANDERING_WARRIOR_ENTITY.get(), LootTable.lootTable()
 				.withPool(LootPool.lootPool()
 						.setRolls(ConstantValue.exactly(1.0F))
 						.add(LootItem.lootTableItem(Items.LEATHER)
@@ -82,7 +82,7 @@ public class EntityLootTables implements Consumer<BiConsumer<ResourceLocation, B
 								.apply(LootingEnchantFunction.lootingMultiplier(UniformGenerator.between(0.0F, 2.0F))))
 						.when(LootItemKilledByPlayerCondition.killedByPlayer())));
 
-		this.add(DeferredRegistryHandler.HANS_ENTITY.get(), LootTable.lootTable()
+		add(DeferredRegistryHandler.HANS_ENTITY.get(), LootTable.lootTable()
 				.withPool(LootPool.lootPool()
 						.setRolls(ConstantValue.exactly(1.0F))
 						.add(LootItem.lootTableItem(Items.LEATHER)
@@ -95,7 +95,7 @@ public class EntityLootTables implements Consumer<BiConsumer<ResourceLocation, B
 						.when(LootItemKilledByPlayerCondition.killedByPlayer())
 						.when(LootItemRandomChanceWithLootingCondition.randomChanceAndLootingBoost(0.025F, 0.01F))));
 
-		this.add(DeferredRegistryHandler.MINUTEMAN_ENTITY.get(), LootTable.lootTable()
+		add(DeferredRegistryHandler.MINUTEMAN_ENTITY.get(), LootTable.lootTable()
 				.withPool(LootPool.lootPool()
 						.setRolls(ConstantValue.exactly(1.0F))
 						.add(LootItem.lootTableItem(Items.GUNPOWDER)
@@ -109,6 +109,11 @@ public class EntityLootTables implements Consumer<BiConsumer<ResourceLocation, B
 						.when(LootItemKilledByPlayerCondition.killedByPlayer()))
 				.withPool(LootPool.lootPool()
 						.setRolls(ConstantValue.exactly(1.0F))
+						.add(LootItem.lootTableItem(DeferredRegistryHandler.BLUNDERBUSS.get()))
+						.when(LootItemKilledByPlayerCondition.killedByPlayer())
+						.when(LootItemRandomChanceWithLootingCondition.randomChanceAndLootingBoost(0.017F, 0.05F)))
+				.withPool(LootPool.lootPool()
+						.setRolls(ConstantValue.exactly(1.0F))
 						.add(LootItem.lootTableItem(DeferredRegistryHandler.CHOCOLATE_BAR.get())
 								.apply(LootingEnchantFunction.lootingMultiplier(UniformGenerator.between(0.0F, 1.0F))))
 						.add(LootItem.lootTableItem(Items.CARROT)
@@ -120,14 +125,21 @@ public class EntityLootTables implements Consumer<BiConsumer<ResourceLocation, B
 						.when(LootItemKilledByPlayerCondition.killedByPlayer())
 						.when(LootItemRandomChanceWithLootingCondition.randomChanceAndLootingBoost(0.035F, 0.02F))));
 
-		this.add(DeferredRegistryHandler.FIELD_MEDIC_ENTITY.get(), LootTable.lootTable()
+		add(DeferredRegistryHandler.FIELD_MEDIC_ENTITY.get(), LootTable.lootTable()
 				.withPool(LootPool.lootPool()
 						.setRolls(ConstantValue.exactly(1.0F))
 						.add(LootItem.lootTableItem(DeferredRegistryHandler.USED_SYRINGE.get()))
 						.when(LootItemKilledByPlayerCondition.killedByPlayer())
 						.when(LootItemRandomChanceWithLootingCondition.randomChanceAndLootingBoost(0.015F, 0.03F))));
 
-		this.add(DeferredRegistryHandler.CELESTIAL_TOWER_ENTITY.get(), LootTable.lootTable()
+		add(DeferredRegistryHandler.DYING_SOLDIER_ENTITY.get(), LootTable.lootTable()
+				.withPool(LootPool.lootPool()
+						.setRolls(ConstantValue.exactly(1.0F))
+						.add(LootItem.lootTableItem(DeferredRegistryHandler.FLINTLOCK_PISTOL.get()))
+						.when(LootItemKilledByPlayerCondition.killedByPlayer())
+						.when(LootItemRandomChanceWithLootingCondition.randomChanceAndLootingBoost(0.020F, 0.05F))));
+
+		add(DeferredRegistryHandler.CELESTIAL_TOWER_ENTITY.get(), LootTable.lootTable()
 				.withPool(LootPool.lootPool()
 						.setRolls(ConstantValue.exactly(1.0F))
 						.add(LootItem.lootTableItem(DeferredRegistryHandler.CELESTIAL_FRAGMENT.get())
@@ -136,8 +148,9 @@ public class EntityLootTables implements Consumer<BiConsumer<ResourceLocation, B
 						.when(LootItemKilledByPlayerCondition.killedByPlayer())));
 	}
 
+	@Override
 	public void accept(BiConsumer<ResourceLocation, LootTable.Builder> biConsumer) {
-		this.addTables();
+		addTables();
 		Set<ResourceLocation> set = Sets.newHashSet();
 
 		List<RegistryObject<EntityType<?>>> knownEntities = getKnownEntities();
@@ -146,23 +159,23 @@ public class EntityLootTables implements Consumer<BiConsumer<ResourceLocation, B
 			EntityType<?> entityType = registryEntityType.get();
 			ResourceLocation lootTable = entityType.getDefaultLootTable();
 			if (isNonLiving(entityType)) {
-				if (lootTable != BuiltInLootTables.EMPTY && this.map.remove(lootTable) != null) {
+				if (lootTable != BuiltInLootTables.EMPTY && map.remove(lootTable) != null) {
 					throw new IllegalStateException(String.format("Strange loot table '%s' for '%s', a LivingEntity should not have loot", lootTable, ForgeRegistries.ENTITIES.getKey(entityType)));
 				}
 			} else if (lootTable != BuiltInLootTables.EMPTY && set.add(lootTable)) {
-				LootTable.Builder builder = this.map.remove(lootTable);
+				LootTable.Builder builder = map.remove(lootTable);
 				if (builder != null) {
 					biConsumer.accept(lootTable, builder);
 				}
 			}
 		}
 
-		this.map.forEach(biConsumer);
+		map.forEach(biConsumer);
 	}
 
 	protected List<RegistryObject<EntityType<?>>> getKnownEntities() {
 		return StreamSupport.stream(Spliterators.spliteratorUnknownSize(DeferredRegistryHandler.ENTITY_TYPES.getEntries().stream().iterator(), 0),
-						false).collect(Collectors.toList());
+				false).collect(Collectors.toList());
 	}
 
 	protected boolean isNonLiving(EntityType<?> entityType) {
@@ -170,10 +183,10 @@ public class EntityLootTables implements Consumer<BiConsumer<ResourceLocation, B
 	}
 
 	protected void add(EntityType<?> pEntityType, LootTable.Builder pLootTableBuilder) {
-		this.add(pEntityType.getDefaultLootTable(), pLootTableBuilder);
+		add(pEntityType.getDefaultLootTable(), pLootTableBuilder);
 	}
 
 	protected void add(ResourceLocation pLootTableId, LootTable.Builder pLootTableBuilder) {
-		this.map.put(pLootTableId, pLootTableBuilder);
+		map.put(pLootTableId, pLootTableBuilder);
 	}
 }

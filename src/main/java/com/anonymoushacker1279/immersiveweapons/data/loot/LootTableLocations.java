@@ -18,6 +18,9 @@ public class LootTableLocations {
 	public static final ResourceLocation UNDERGROUND_BUNKER = register("chests/underground_bunker");
 	public static final ResourceLocation BATTLEFIELD_VILLAGE_MEDIC_STATION = register("chests/village/battlefield/medic_station");
 
+	public static final ResourceLocation HANS_HUT = register("chests/hans_hut");
+	public static final ResourceLocation HANS_HUT_CASK = register("chests/hans_hut_cask");
+
 	private static ResourceLocation register(String pId) {
 		return register(new ResourceLocation(ImmersiveWeapons.MOD_ID, pId));
 	}

@@ -2,19 +2,22 @@ package com.anonymoushacker1279.immersiveweapons.entity.projectile;
 
 import com.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
 import com.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.Mth;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.projectile.ItemSupplier;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 import org.jetbrains.annotations.NotNull;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class BulletEntity {
 
@@ -71,7 +74,7 @@ public class BulletEntity {
 		 * @return double
 		 */
 		@Override
-		public double getMovementModifier() {
+		public double getGravityModifier() {
 			return 0.0355d;
 		}
 	}
@@ -128,7 +131,7 @@ public class BulletEntity {
 		 * @return double
 		 */
 		@Override
-		public double getMovementModifier() {
+		public double getGravityModifier() {
 			return 0.035d;
 		}
 	}
@@ -185,7 +188,7 @@ public class BulletEntity {
 		 * @return double
 		 */
 		@Override
-		public double getMovementModifier() {
+		public double getGravityModifier() {
 			return 0.02d;
 		}
 	}
@@ -242,7 +245,7 @@ public class BulletEntity {
 		 * @return double
 		 */
 		@Override
-		public double getMovementModifier() {
+		public double getGravityModifier() {
 			return 0.0355d;
 		}
 	}
@@ -299,7 +302,7 @@ public class BulletEntity {
 		 * @return double
 		 */
 		@Override
-		public double getMovementModifier() {
+		public double getGravityModifier() {
 			return 0.0355d;
 		}
 	}
@@ -356,7 +359,7 @@ public class BulletEntity {
 		 * @return double
 		 */
 		@Override
-		public double getMovementModifier() {
+		public double getGravityModifier() {
 			return 0.0355d;
 		}
 	}
@@ -393,7 +396,7 @@ public class BulletEntity {
 		 * @return double
 		 */
 		@Override
-		public double getMovementModifier() {
+		public double getGravityModifier() {
 			return 0.0385d;
 		}
 
@@ -470,16 +473,19 @@ public class BulletEntity {
 		 * @return double
 		 */
 		@Override
-		public double getMovementModifier() {
+		public double getGravityModifier() {
 			return 0.04d;
 		}
 	}
 
-	@OnlyIn(value = Dist.CLIENT, _interface = ItemSupplier.class)
 	public static class FlareEntity extends AbstractBulletEntity implements ItemSupplier {
 
 		private int explodeDelay = 10;
 		private int deathDelay = 300;
+		private BlockPos previousLightPosition = BlockPos.ZERO;
+		private final List<BlockPos> lightPositions = new ArrayList<>(3);
+		static final BlockState lightState = Blocks.LIGHT.defaultBlockState();
+		static final BlockState airState = Blocks.AIR.defaultBlockState();
 
 		/**
 		 * Constructor for FlareEntity.
@@ -528,8 +534,13 @@ public class BulletEntity {
 
 		@Override
 		protected void doWhileTicking() {
-			if (level.isClientSide && explodeDelay != 0) {
-				level.addParticle(ParticleTypes.FIREWORK, getX(), getY() - 0.3D, getZ(), random.nextGaussian() * 0.05D, -getDeltaMovement().y * 0.5D, random.nextGaussian() * 0.05D);
+			double x = getX();
+			double y = getY();
+			double z = getZ();
+			Vec3 deltaMovement = getDeltaMovement();
+
+			if (level.isClientSide && explodeDelay != 0 && (tickCount % 4) >= 2) {
+				level.addParticle(ParticleTypes.FIREWORK, x, y - 0.3D, z, random.nextGaussian() * 0.05D, -deltaMovement.y * 0.5D, random.nextGaussian() * 0.05D);
 			}
 
 			shouldStopMoving = false;
@@ -538,15 +549,42 @@ public class BulletEntity {
 			} else {
 				if (deathDelay >= 0) {
 					shouldStopMoving = true;
-					if (level.isClientSide) {
-						for (int i = 0; i <= 8; i++) {
-							level.addAlwaysVisibleParticle(ParticleTypes.FLAME, true, getX(), getY(), getZ(), random.nextGaussian() * 0.1D, -getDeltaMovement().y * 0.25D, random.nextGaussian() * 0.1D);
-							level.addAlwaysVisibleParticle(ParticleTypes.SMOKE, true, getX(), getY(), getZ(), random.nextGaussian() * 0.1D, -getDeltaMovement().y * 0.25D, random.nextGaussian() * 0.1D);
+					if (level.isClientSide && (tickCount % 4) == 0) {
+						for (int i = 8; --i >= 0; ) {
+							level.addAlwaysVisibleParticle(ParticleTypes.FLAME, true, x, y, z, random.nextGaussian() * 0.1D, -deltaMovement.y * 0.25D, random.nextGaussian() * 0.1D);
 						}
 					}
 					deathDelay--;
 				} else {
+					// Remove all lights before dying
+					if (!lightPositions.isEmpty()) {
+						for (BlockPos pos : lightPositions) {
+							if (level.getBlockState(pos) == lightState) {
+								level.removeBlock(pos, false);
+							}
+						}
+						lightPositions.clear();
+					}
 					kill();
+				}
+			}
+
+			if (tickCount % 4 >= 1) {
+				BlockPos currentPosition = blockPosition();
+				if (!level.isClientSide && currentPosition != previousLightPosition) {
+					if (!lightPositions.isEmpty()) {
+						for (BlockPos pos : lightPositions) {
+							if (level.getBlockState(pos) == lightState) {
+								level.removeBlock(pos, false);
+							}
+						}
+						lightPositions.clear();
+					}
+					if (level.getBlockState(currentPosition) == airState) {
+						level.setBlock(currentPosition, lightState, 3);
+						lightPositions.add(currentPosition);
+					}
+					previousLightPosition = currentPosition;
 				}
 			}
 		}
@@ -567,7 +605,7 @@ public class BulletEntity {
 		 * @return double
 		 */
 		@Override
-		public double getMovementModifier() {
+		public double getGravityModifier() {
 			return 0.0355d;
 		}
 
@@ -579,6 +617,70 @@ public class BulletEntity {
 		@Override
 		public @NotNull ItemStack getItem() {
 			return new ItemStack(DeferredRegistryHandler.FLARE.get());
+		}
+
+		/**
+		 * Add additional save data.
+		 *
+		 * @param pCompound the <code>CompoundTag</code> containing the save data
+		 */
+		@Override
+		public void addAdditionalSaveData(@NotNull CompoundTag pCompound) {
+			super.addAdditionalSaveData(pCompound);
+
+			if (!lightPositions.isEmpty()) {
+				List<Integer> xPositions = new ArrayList<>(3);
+				List<Integer> yPositions = new ArrayList<>(3);
+				List<Integer> zPositions = new ArrayList<>(3);
+				for (BlockPos pos : lightPositions) {
+					xPositions.add(pos.getX());
+					yPositions.add(pos.getY());
+					zPositions.add(pos.getZ());
+				}
+
+				pCompound.putIntArray("xPositions", xPositions);
+				pCompound.putIntArray("yPositions", yPositions);
+				pCompound.putIntArray("zPositions", zPositions);
+			}
+		}
+
+		/**
+		 * Read additional save data.
+		 *
+		 * @param pCompound the <code>CompoundTag</code> containing the save data
+		 */
+		@Override
+		public void readAdditionalSaveData(@NotNull CompoundTag pCompound) {
+			super.readAdditionalSaveData(pCompound);
+
+			int[] xPositions = pCompound.getIntArray("xPositions");
+			int[] yPositions = pCompound.getIntArray("yPositions");
+			int[] zPositions = pCompound.getIntArray("zPositions");
+
+			// Each item in xPositions should match an entry in y/zPositions, so build a list of BlockPos
+			// with each individual position
+			int iteration = 0;
+			for (Integer integer : xPositions) {
+				lightPositions.add(new BlockPos(integer, yPositions[iteration], zPositions[iteration]));
+				iteration++;
+			}
+		}
+
+		/**
+		 * Remove all lights when the entity is killed via commands.
+		 */
+		@Override
+		public void kill() {
+			super.kill();
+
+			if (!lightPositions.isEmpty()) {
+				for (BlockPos pos : lightPositions) {
+					if (level.getBlockState(pos) == lightState) {
+						level.removeBlock(pos, false);
+					}
+				}
+				lightPositions.clear();
+			}
 		}
 	}
 }

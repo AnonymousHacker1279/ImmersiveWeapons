@@ -1,7 +1,7 @@
 package com.anonymoushacker1279.immersiveweapons.data.loot;
 
 import com.anonymoushacker1279.immersiveweapons.block.base.SandbagBlock;
-import com.anonymoushacker1279.immersiveweapons.block.misc.portal.statue.warrior.WarriorStatueTorso;
+import com.anonymoushacker1279.immersiveweapons.block.misc.warrior_statue.WarriorStatueTorso;
 import com.anonymoushacker1279.immersiveweapons.block.trap.LandmineBlock;
 import com.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
 import com.google.common.collect.Maps;
@@ -124,7 +124,7 @@ public class BlockLootTables implements Consumer<BiConsumer<ResourceLocation, Bu
 		dropSelf(DeferredRegistryHandler.WARRIOR_STATUE_BASE.get());
 		dropSelf(DeferredRegistryHandler.WARRIOR_STATUE_HEAD.get());
 		dropSelf(DeferredRegistryHandler.WOODEN_SPIKES.get());
-		dropSelf(DeferredRegistryHandler.WOODEN_TABLE.get());
+		dropSelf(DeferredRegistryHandler.OAK_TABLE.get());
 
 		// Complex block drops
 		add(DeferredRegistryHandler.BURNED_OAK_BRANCH.get(), (leafLikeDrop) -> createLeafLikeDrop(leafLikeDrop, Items.STICK, NORMAL_LEAVES_SAPLING_CHANCES));

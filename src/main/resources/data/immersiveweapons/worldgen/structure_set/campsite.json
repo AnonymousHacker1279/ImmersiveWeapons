@@ -1,0 +1,14 @@
+{
+	"structures": [
+		{
+			"structure": "immersiveweapons:campsite",
+			"weight": 1
+		}
+	],
+	"placement": {
+		"salt": 671249835,
+		"spacing": 12,
+		"separation": 5,
+		"type": "minecraft:random_spread"
+	}
+}

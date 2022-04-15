@@ -132,7 +132,7 @@ public record TeslaSynthesizerRecipe(ResourceLocation recipeId,
 	 */
 	@Override
 	public @NotNull RecipeType<?> getType() {
-		return ICustomRecipeType.TESLA_SYNTHESIZER;
+		return CustomRecipeTypes.TESLA_SYNTHESIZER;
 	}
 
 	/**

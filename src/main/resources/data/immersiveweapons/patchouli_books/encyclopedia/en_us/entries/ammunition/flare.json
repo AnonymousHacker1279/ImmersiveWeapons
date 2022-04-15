@@ -1,0 +1,17 @@
+{
+	"name": "Flare",
+	"icon": "immersiveweapons:flare",
+	"category": "immersiveweapons:ammunition",
+	"pages": [
+		{
+			"type": "patchouli:text",
+			"text": "Have you ever needed to mark a point that was visible from far away?$(br2)Well, that's what flares are for. They'll release particles so you can see it from far away. And of course, they'll light up areas like caves too."
+		},
+		{
+			"type": "patchouli:crafting",
+			"recipe": "immersiveweapons:flare",
+			"text": "$(o)Deals $(l)1.0$()$(o) base damage. See $(l:ammunition/bullet_velocities_info)Guide: Bullet Damage$()$(o) for more information. Hitting entities will catch them on fire."
+		}
+	],
+	"advancement": "immersiveweapons:recipes/immersiveweapons/smoke_powder"
+}

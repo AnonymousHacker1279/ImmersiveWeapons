@@ -1,0 +1,30 @@
+{
+	"name": "Cobalt Blocks",
+	"icon": "immersiveweapons:cobalt_block",
+	"category": "immersiveweapons:decoration",
+	"pages": [
+		{
+			"type": "patchouli:text",
+			"text": "For items, cobalt is typically the 'better-than-iron-but-not-diamond' resource. But it also has uses in decoration.$(br2)Along with the ores themselves, you can craft raw cobalt and normal cobalt blocks."
+		},
+		{
+			"type": "patchouli:crafting",
+			"recipe": "immersiveweapons:cobalt_block",
+			"recipe2": "immersiveweapons:raw_cobalt_block"
+		},
+		{
+			"type": "patchouli:spotlight",
+			"item": "immersiveweapons:cobalt_ore",
+			"link_recipe": true,
+			"text": "$(o)Cobalt ore can be found occasionally underground above deepslate layers."
+		}
+	,
+		{
+			"type": "patchouli:spotlight",
+			"item": "immersiveweapons:deepslate_cobalt_ore",
+			"link_recipe": true,
+			"text": "$(o)Deepslate cobalt ore can be found relatively commonly under deepslate layers."
+		}
+	],
+	"advancement": "immersiveweapons:cobalt_ingot"
+}

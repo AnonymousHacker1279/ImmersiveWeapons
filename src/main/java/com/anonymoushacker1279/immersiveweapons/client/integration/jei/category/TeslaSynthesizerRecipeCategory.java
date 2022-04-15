@@ -34,6 +34,7 @@ public class TeslaSynthesizerRecipeCategory implements IRecipeCategory<TeslaSynt
 	 *
 	 * @param guiHelper a <code>IGuiHelper</code> instance
 	 */
+	@SuppressWarnings("deprecation")
 	public TeslaSynthesizerRecipeCategory(IGuiHelper guiHelper) {
 		icon = guiHelper.createDrawableIngredient(new ItemStack(DeferredRegistryHandler.TESLA_SYNTHESIZER.get()));
 		background = guiHelper.createDrawable(GUI_TEXTURE, 0, 0, 132, 54);

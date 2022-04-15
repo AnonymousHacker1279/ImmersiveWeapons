@@ -1,0 +1,19 @@
+{
+	"name": "Netherite Gauntlet",
+	"icon": "immersiveweapons:netherite_gauntlet",
+	"category": "immersiveweapons:gauntlets",
+	"pages": [
+		{
+			"type": "patchouli:text",
+			"text": "You could probably punch through concrete with this. And with its insane durability, you could do that for quite a while.$(br2)With its high chance to inflict Bleeding, you can rack up a lot of extra damage."
+		},
+		{
+			"type": "patchouli:spotlight",
+			"item": "immersiveweapons:netherite_gauntlet",
+			"link_recipe": true,
+			"title": "Smithing",
+			"text": "This item is crafted using the $(l)smithing table$().$(br)You need a $(l:gauntlets/diamond)diamond gauntlet$(), and a netherite ingot.$(br2)$(o)Has a 85% chance to inflict $(#FF5555)Bleeding$()."
+		}
+	],
+	"advancement": "immersiveweapons:netherite_ingot"
+}

@@ -1,0 +1,60 @@
+{
+	"name": "Small Parts Table",
+	"icon": "immersiveweapons:small_parts_table",
+	"category": "immersiveweapons:crafting",
+	"pages": [
+		{
+			"type": "patchouli:text",
+			"text": "When you craft items like flintlocks, blunderbusses, smoke bombs, etc., you'll need to use some small parts that can't be crafted with a standard crafting table.$(br2)The small parts table allows you to fabricate small pieces from a material and a blueprint."
+		},
+		{
+			"type": "patchouli:crafting",
+			"recipe": "immersiveweapons:small_parts_table",
+			"text": "The blueprint that you need for a specific type of part can vary. You will always use a blank blueprint as a base for all blueprints. The blueprints are crafted using a standard crafting table."
+		},
+		{
+			"type": "patchouli:crafting",
+			"recipe": "immersiveweapons:blank_blueprint",
+			"text": "Crafting a blueprint involves laying pieces into the blank from a crafting table. On the following pages, you'll find the recipes for various blueprints."
+		},
+		{
+			"type": "patchouli:crafting",
+			"title": "Blueprints",
+			"recipe": "immersiveweapons:small_parts_blueprint",
+			"recipe2": "immersiveweapons:small_parts_metal_throwable_bomb_blueprint"
+		},
+		{
+			"type": "patchouli:crafting",
+			"title": "Blueprints",
+			"recipe": "immersiveweapons:small_parts_metal_tool_blueprint",
+			"recipe2": "immersiveweapons:gauntlet_scaffolding_blueprint"
+		},
+		{
+			"type": "patchouli:spotlight",
+			"item": "immersiveweapons:small_parts_iron",
+			"link_recipe": true,
+			"text": "$(l)Requires:$() Iron ingot, generic small parts blueprint"
+		},
+		{
+			"type": "patchouli:spotlight",
+			"item": "immersiveweapons:small_parts_metal_throwable_bomb",
+			"title": "Generic, Throwable Bomb",
+			"link_recipe": true,
+			"text": "$(l)Requires:$() Any metal ingot, metal throwable bomb blueprint"
+		},
+		{
+			"type": "patchouli:spotlight",
+			"item": "immersiveweapons:small_parts_metal_tool",
+			"title": "Generic, Metal Tool",
+			"link_recipe": true,
+			"text": "$(l)Requires:$() Any metal ingot, metal tool parts blueprint"
+		},
+		{
+			"type": "patchouli:spotlight",
+			"item": "immersiveweapons:gauntlet_scaffolding",
+			"link_recipe": true,
+			"text": "$(l)Requires:$() Any wood plank, gauntlet scaffolding blueprint"
+		}
+	],
+	"advancement": "minecraft:story/smelt_iron"
+}

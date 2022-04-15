@@ -1,0 +1,52 @@
+{
+  "parent": "immersiveweapons:root",
+  "display": {
+    "icon": {
+      "item": "immersiveweapons:cloud"
+    },
+    "title": {
+      "translate": "advancements.immersiveweapons.cloud.title"
+    },
+    "description": {
+      "translate": "advancements.immersiveweapons.cloud.description"
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "hold": {
+      "trigger": "minecraft:location",
+      "conditions": {
+        "player": [
+          {
+            "condition": "minecraft:entity_properties",
+            "predicate": {
+              "stepping_on": {
+                "block": {
+                  "blocks": [
+                    "immersiveweapons:cloud"
+                  ]
+                }
+              },
+              "equipment": {
+                "feet": {
+                  "items": [
+                    "minecraft:air"
+                  ]
+                }
+              }
+            },
+            "entity": "this"
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "hold"
+    ]
+  ]
+}

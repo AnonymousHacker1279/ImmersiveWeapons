@@ -1,0 +1,32 @@
+{
+	"name": "Flags",
+	"icon": "immersiveweapons:gadsden_flag",
+	"category": "immersiveweapons:decoration",
+	"pages": [
+		{
+			"type": "patchouli:text",
+			"text": "Show your spirit and mark your territory with flags. From country flags like American and Mexico, to flags like the Gadsden flag, there's a variety for you to enjoy.$(br2)All flags have to be placed on a Flag Pole block."
+		},
+		{
+			"type": "patchouli:crafting",
+			"recipe": "immersiveweapons:flag_pole",
+			"recipe2": "immersiveweapons:american_flag"
+		},
+		{
+			"type": "patchouli:crafting",
+			"recipe": "immersiveweapons:gadsden_flag",
+			"recipe2": "immersiveweapons:canadian_flag"
+		},
+		{
+			"type": "patchouli:crafting",
+			"recipe": "immersiveweapons:mexican_flag",
+			"recipe2": "immersiveweapons:british_flag"
+		},
+		{
+			"type": "patchouli:crafting",
+			"recipe": "immersiveweapons:troll_flag",
+			"recipe2": "immersiveweapons:immersive_weapons_flag"
+		}
+	],
+	"advancement": "minecraft:story/smelt_iron"
+}

@@ -1,0 +1,17 @@
+{
+	"name": "Wooden Spikes",
+	"icon": "immersiveweapons:wooden_spikes",
+	"category": "immersiveweapons:defense",
+	"pages": [
+		{
+			"type": "patchouli:text",
+			"text": "Barbed wire implements too expensive?$(br2)Well, there is an alternative that's quite a bit cheaper. You can fashion some simple spikes out of some planks and sticks. While they're not going to stop a whole army, they'll keep monsters and the occasional player at bay."
+		},
+		{
+			"type": "patchouli:crafting",
+			"recipe": "immersiveweapons:wooden_spikes",
+			"text": "$(o)Has a chance to inflict Bleeding every time damage is taken from the spikes."
+		}
+	],
+	"advancement": "immersiveweapons:planks"
+}

@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "tables",
+  "pattern": [
+    "a",
+    "b"
+  ],
+  "key": {
+    "a": {
+      "item": "minecraft:oak_slab"
+    },
+    "b": {
+      "item": "minecraft:oak_fence"
+    }
+  },
+  "result": {
+    "item": "immersiveweapons:oak_table"
+  }
+}

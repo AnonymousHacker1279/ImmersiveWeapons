@@ -70,25 +70,4 @@ public class DyingSoldierEntity extends AbstractDyingSoldierEntity {
 	protected SoundEvent getStepSound() {
 		return DeferredRegistryHandler.DYING_SOLDIER_STEP.get();
 	}
-
-	/**
-	 * Set custom loot parameters.
-	 *
-	 * @param source        the <code>DamageSource</code> instance
-	 * @param looting       the level of looting enchantment on an item
-	 * @param recentlyHitIn if the entity was recently hit
-	 */
-	@Override
-	protected void dropCustomDeathLoot(@NotNull DamageSource source, int looting, boolean recentlyHitIn) {
-		super.dropCustomDeathLoot(source, looting, recentlyHitIn);
-		int lootingModifier = looting * 2;
-		if (lootingModifier >= 75) {
-			spawnAtLocation(DeferredRegistryHandler.FLINTLOCK_PISTOL.get());
-		} else {
-			int i = GeneralUtilities.getRandomNumber(1, 75 - lootingModifier);
-			if (i == 1) {
-				spawnAtLocation(DeferredRegistryHandler.FLINTLOCK_PISTOL.get());
-			}
-		}
-	}
 }

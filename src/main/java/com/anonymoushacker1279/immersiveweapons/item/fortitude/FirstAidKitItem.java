@@ -1,11 +1,10 @@
 package com.anonymoushacker1279.immersiveweapons.item.fortitude;
 
+import com.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
 import net.minecraft.ChatFormatting;
 import net.minecraft.Util;
 import net.minecraft.network.chat.TranslatableComponent;
-import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResult;
-import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.*;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.LivingEntity;
@@ -29,53 +28,69 @@ public class FirstAidKitItem extends Item {
 	/**
 	 * Runs when the player right-clicks.
 	 *
-	 * @param worldIn  the <code>World</code> the player is in
-	 * @param playerIn the <code>PlayerEntity</code> performing the action
-	 * @param handIn   the <code>Hand</code> the player is using
-	 * @return ActionResult extending ItemStack
+	 * @param level  the <code>Level</code> the player is in
+	 * @param player the <code>Player</code> performing the action
+	 * @param hand   the <code>InteractionHand</code> the player is using
+	 * @return InteractionResultHolder extending ItemStack
 	 */
 	@Override
-	public @NotNull InteractionResultHolder<ItemStack> use(@NotNull Level worldIn, Player playerIn, @NotNull InteractionHand handIn) {
-		ItemStack itemstack = playerIn.getItemInHand(handIn);
-		if (playerIn.getMaxHealth() - playerIn.getHealth() <= playerIn.getMaxHealth() / 2) { // Only use if at or less than half health
-			if (worldIn.isClientSide) {
-				playerIn.sendMessage(new TranslatableComponent("immersiveweapons.item.first_aid_kit").withStyle(ChatFormatting.RED), Util.NIL_UUID);
+	public @NotNull InteractionResultHolder<ItemStack> use(@NotNull Level level, Player player,
+	                                                       @NotNull InteractionHand hand) {
+
+		ItemStack itemInHand = player.getItemInHand(hand);
+		if (player.getMaxHealth() - player.getHealth() <= player.getMaxHealth() / 2) { // Only use if at or less than half health
+			if (level.isClientSide) {
+				player.sendMessage(new TranslatableComponent("immersiveweapons.item.first_aid_kit")
+						.withStyle(ChatFormatting.RED), Util.NIL_UUID);
 			}
-			return InteractionResultHolder.pass(itemstack);
-		}
-		playerIn.addEffect(new MobEffectInstance(MobEffects.REGENERATION, 240, 1, false, true));
-		playerIn.addEffect(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, 1200, 0, false, true));
-		if (!playerIn.isCreative()) {
-			itemstack.shrink(1);
-			playerIn.getCooldowns().addCooldown(this, 400);
+			return InteractionResultHolder.pass(itemInHand);
 		}
 
-		return InteractionResultHolder.sidedSuccess(itemstack, worldIn.isClientSide());
+		setEffects(player);
+
+		if (!player.isCreative()) {
+			itemInHand.shrink(1);
+			player.getCooldowns().addCooldown(this, 400);
+		}
+
+		return InteractionResultHolder.sidedSuccess(itemInHand, level.isClientSide());
 	}
 
 	/**
 	 * Runs when the player right-clicks an entity.
 	 *
-	 * @param stack    the <code>ItemStack</code> right-clicked with
-	 * @param playerIn the <code>PlayerEntity</code> performing the action
-	 * @param entity   the <code>LivingEntity</code> being interacted with
-	 * @param hand     the <code>Hand</code> the player is using
+	 * @param stack  the <code>ItemStack</code> right-clicked with
+	 * @param player the <code>Player</code> performing the action
+	 * @param entity the <code>LivingEntity</code> being interacted with
+	 * @param hand   the <code>Hand</code> the player is using
 	 * @return ActionResultType
 	 */
 	@Override
-	public @NotNull InteractionResult interactLivingEntity(@NotNull ItemStack stack, @NotNull Player playerIn, LivingEntity entity, @NotNull InteractionHand hand) {
+	public @NotNull InteractionResult interactLivingEntity(@NotNull ItemStack stack, @NotNull Player player,
+	                                                       LivingEntity entity, @NotNull InteractionHand hand) {
+
 		if (entity.level.isClientSide) {
 			return InteractionResult.PASS;
 		}
+
 		if (entity.getMaxHealth() - entity.getHealth() <= entity.getMaxHealth() / 2) { // Only use if at or less than half health
 			return InteractionResult.PASS;
 		}
-		entity.addEffect(new MobEffectInstance(MobEffects.REGENERATION, 160, 1, false, true));
-		entity.addEffect(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, 900, 0, false, true));
-		if (!playerIn.isCreative()) {
+
+		setEffects(entity);
+
+		if (!player.isCreative()) {
 			stack.shrink(1);
 		}
 
 		return InteractionResult.PASS;
+	}
+
+	private void setEffects(LivingEntity entity) {
+		if (entity.hasEffect(DeferredRegistryHandler.BLEEDING_EFFECT.get())) {
+			entity.removeEffect(DeferredRegistryHandler.BLEEDING_EFFECT.get());
+		}
+		entity.addEffect(new MobEffectInstance(MobEffects.REGENERATION, 240, 1, false, true));
+		entity.addEffect(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, 1200, 0, false, true));
 	}
 }

@@ -1,0 +1,22 @@
+{
+	"name": "Ventus Armor",
+	"icon": "immersiveweapons:ventus_chestplate",
+	"category": "immersiveweapons:armor",
+	"pages": [
+		{
+			"type": "patchouli:text",
+			"text": "$(o)Have you ever wanted to have a 13.1ft vertical?$()$(br2)Well, now you can! Upon toggling the armor effect ($(k:immersiveweapons.key.toggleArmorEffect)), you'll be granted $(l)Jump Boost 3 and Slow Falling$()."
+		},
+		{
+			"type": "patchouli:crafting",
+			"recipe": "immersiveweapons:ventus_helmet",
+			"recipe2": "immersiveweapons:ventus_chestplate"
+		},
+		{
+			"type": "patchouli:crafting",
+			"recipe": "immersiveweapons:ventus_leggings",
+			"recipe2": "immersiveweapons:ventus_boots"
+		}
+	],
+	"advancement": "immersiveweapons:ventus_shard"
+}

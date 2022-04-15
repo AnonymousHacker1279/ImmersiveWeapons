@@ -1,0 +1,17 @@
+{
+	"name": "Golden Pike",
+	"icon": "immersiveweapons:gold_pike",
+	"category": "immersiveweapons:pikes",
+	"pages": [
+		{
+			"type": "patchouli:text",
+			"text": "$(o)Oh! Look at me! I have money!$()$(br2)...you say, as you make a pike out of the softest metal around. Seriously, why would you make this? It's a glorified wooden prod."
+		},
+		{
+			"type": "patchouli:crafting",
+			"recipe": "immersiveweapons:gold_pike",
+			"recipe2": "immersiveweapons:gold_pike_head"
+		}
+	],
+	"advancement": "immersiveweapons:gold_ingot"
+}

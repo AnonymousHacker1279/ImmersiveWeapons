@@ -1,0 +1,14 @@
+{
+	"type": "immersiveweapons:cloud_island",
+
+	"config": {
+		"start_pool": "immersiveweapons:cloud_island/start_pool",
+		"size": 1
+	},
+
+	"biomes": "#immersiveweapons:has_structure/cloud_island",
+
+	"adapt_noise": false,
+
+	"spawn_overrides": {}
+}

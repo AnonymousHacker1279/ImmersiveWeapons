@@ -4,9 +4,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.HorizontalDirectionalBlock;
-import net.minecraft.world.level.block.SimpleWaterloggedBlock;
+import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
@@ -39,14 +37,16 @@ public class BiohazardBoxBlock extends HorizontalDirectionalBlock implements Sim
 	 * Set the shape of the block.
 	 *
 	 * @param state            the <code>BlockState</code> of the block
-	 * @param reader           the <code>IBlockReader</code> for the block
+	 * @param reader           the <code>BlockGetter</code> for the block
 	 * @param pos              the <code>BlockPos</code> the block is at
-	 * @param selectionContext the <code>ISelectionContext</code> of the block
+	 * @param collisionContext the <code>CollisionContext</code> of the block
 	 * @return VoxelShape
 	 */
 	@SuppressWarnings("deprecation")
 	@Override
-	public @NotNull VoxelShape getShape(BlockState state, @NotNull BlockGetter reader, @NotNull BlockPos pos, @NotNull CollisionContext selectionContext) {
+	public @NotNull VoxelShape getShape(BlockState state, @NotNull BlockGetter reader, @NotNull BlockPos pos,
+	                                    @NotNull CollisionContext collisionContext) {
+
 		return switch (state.getValue(FACING)) {
 			case SOUTH -> SHAPE_SOUTH;
 			case EAST -> SHAPE_EAST;
@@ -58,7 +58,7 @@ public class BiohazardBoxBlock extends HorizontalDirectionalBlock implements Sim
 	/**
 	 * Create the BlockState definition.
 	 *
-	 * @param builder the <code>StateContainer.Builder</code> of the block
+	 * @param builder the <code>StateDefinition.Builder</code> of the block
 	 */
 	@Override
 	public void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
@@ -69,7 +69,7 @@ public class BiohazardBoxBlock extends HorizontalDirectionalBlock implements Sim
 	 * Set placement properties.
 	 * Sets the facing direction of the block for placement.
 	 *
-	 * @param context the <code>BlockItemUseContext</code> during placement
+	 * @param context the <code>BlockPlaceContext</code> during placement
 	 * @return BlockState
 	 */
 	@Override

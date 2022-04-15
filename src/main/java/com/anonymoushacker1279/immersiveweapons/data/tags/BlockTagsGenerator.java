@@ -60,7 +60,8 @@ public class BlockTagsGenerator extends BlockTagsProvider {
 		}
 
 		// Ore tags
-		tag(ForgeBlockTagGroups.COBALT_ORES).add(DeferredRegistryHandler.COBALT_ORE.get()).add(DeferredRegistryHandler.DEEPSLATE_COBALT_ORE.get());
+		tag(ForgeBlockTagGroups.COBALT_ORES).add(DeferredRegistryHandler.COBALT_ORE.get())
+				.add(DeferredRegistryHandler.DEEPSLATE_COBALT_ORE.get());
 		tag(Blocks.ORES).addTag(ForgeBlockTagGroups.COBALT_ORES);
 	}
 
@@ -119,13 +120,17 @@ public class BlockTagsGenerator extends BlockTagsProvider {
 
 		// Wooden trapdoors tag
 		tag(MinecraftBlockTagGroups.WOODEN_TRAPDOORS).add(DeferredRegistryHandler.BURNED_OAK_TRAPDOOR.get());
+
+		// Non-flammable wood tag
+		tag(MinecraftBlockTagGroups.NON_FLAMMABLE_WOOD).add(DeferredRegistryHandler.WARPED_TABLE.get(),
+				DeferredRegistryHandler.CRIMSON_TABLE.get());
 	}
 
 	/**
 	 * Add block tags for mining with tools
 	 */
 	private void addMiningBlockTags() {
-		List<Block> blocks = new ArrayList<>(1);
+		List<Block> blocks = new ArrayList<>(250);
 		DeferredRegistryHandler.BLOCKS.getEntries().stream().map(RegistryObject::get).forEach(blocks::add);
 
 		int tagStage = 0;
@@ -139,9 +144,15 @@ public class BlockTagsGenerator extends BlockTagsProvider {
 				tagStage = 3;
 			}
 
-			if (block == DeferredRegistryHandler.BULLETPROOF_GLASS.get() || block == DeferredRegistryHandler.SMALL_PARTS_TABLE.get() || block == DeferredRegistryHandler.SANDBAG.get()) {
+			if (block == DeferredRegistryHandler.BULLETPROOF_GLASS.get()
+					|| block == DeferredRegistryHandler.SMALL_PARTS_TABLE.get()
+					|| block == DeferredRegistryHandler.SANDBAG.get()) {
+
 				tier = 0;
-			} else if (block == DeferredRegistryHandler.SPOTLIGHT.get() || block == DeferredRegistryHandler.WOODEN_SPIKES.get() || block == DeferredRegistryHandler.PUNJI_STICKS.get()) {
+			} else if (block == DeferredRegistryHandler.SPOTLIGHT.get()
+					|| block == DeferredRegistryHandler.WOODEN_SPIKES.get()
+					|| block == DeferredRegistryHandler.PUNJI_STICKS.get()) {
+
 				tier = 1;
 			} else if (block == DeferredRegistryHandler.BARBED_WIRE_FENCE.get()) {
 				tier = 2;
@@ -151,17 +162,17 @@ public class BlockTagsGenerator extends BlockTagsProvider {
 
 			if (tagStage != 3) {
 				switch (tagStage) {
-					case 1 -> tag(BlockTags.bind(BlockTags.MINEABLE_WITH_AXE.getName().toString())).add(block);
-					case 2 -> tag(BlockTags.bind(BlockTags.MINEABLE_WITH_SHOVEL.getName().toString())).add(block);
-					default -> tag(BlockTags.bind(BlockTags.MINEABLE_WITH_PICKAXE.getName().toString())).add(block);
+					case 1 -> tag(BlockTags.MINEABLE_WITH_AXE).add(block);
+					case 2 -> tag(BlockTags.MINEABLE_WITH_SHOVEL).add(block);
+					default -> tag(BlockTags.MINEABLE_WITH_PICKAXE).add(block);
 				}
 			}
 
 			if (tier != 0) {
 				switch (tier) {
-					case 2 -> tag(BlockTags.bind(BlockTags.NEEDS_IRON_TOOL.getName().toString())).add(block);
-					case 3 -> tag(BlockTags.bind(BlockTags.NEEDS_DIAMOND_TOOL.getName().toString())).add(block);
-					default -> tag(BlockTags.bind(BlockTags.NEEDS_STONE_TOOL.getName().toString())).add(block);
+					case 2 -> tag(BlockTags.NEEDS_IRON_TOOL).add(block);
+					case 3 -> tag(BlockTags.NEEDS_DIAMOND_TOOL).add(block);
+					default -> tag(BlockTags.NEEDS_STONE_TOOL).add(block);
 				}
 			}
 		}

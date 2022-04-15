@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "tables",
+  "pattern": [
+    "a",
+    "b"
+  ],
+  "key": {
+    "a": {
+      "item": "minecraft:birch_slab"
+    },
+    "b": {
+      "item": "minecraft:birch_fence"
+    }
+  },
+  "result": {
+    "item": "immersiveweapons:birch_table"
+  }
+}

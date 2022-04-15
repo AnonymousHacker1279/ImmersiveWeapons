@@ -8,8 +8,8 @@ import java.util.List;
 
 public class ItemTagLists {
 
-	public static final List<Item> MUSKET_BALLS = new ArrayList<>(1);
-	public static final List<Item> ARROWS = new ArrayList<>(1);
+	public static final List<Item> MUSKET_BALLS = new ArrayList<>(10);
+	public static final List<Item> ARROWS = new ArrayList<>(20);
 
 	/**
 	 * Initialize the lists.

@@ -18,7 +18,8 @@ import java.util.function.BiConsumer;
 
 public class BurnedBranchDecorator extends TreeDecorator {
 
-	public static final Codec<BurnedBranchDecorator> CODEC = Codec.floatRange(0.0F, 1.0F).fieldOf("probability").xmap(BurnedBranchDecorator::new, (decorator) -> decorator.probability).codec();
+	public static final Codec<BurnedBranchDecorator> CODEC = Codec.floatRange(0.0F, 1.0F).fieldOf("probability")
+			.xmap(BurnedBranchDecorator::new, (decorator) -> decorator.probability).codec();
 	private final float probability;
 
 	public BurnedBranchDecorator(float chance) {
@@ -31,16 +32,19 @@ public class BurnedBranchDecorator extends TreeDecorator {
 	}
 
 	@Override
-	public void place(@NotNull LevelSimulatedReader simulatedReader, @NotNull BiConsumer<BlockPos, BlockState> biConsumer, Random random, @NotNull List<BlockPos> pos, @NotNull List<BlockPos> posList) {
-		if (!(random.nextFloat() >= probability)) {
-			int i = pos.get(0).getY();
-			pos.stream().filter((blockPos) -> blockPos.getY() - i <= 8).forEach((blockPos) -> {
+	public void place(@NotNull LevelSimulatedReader simulatedReader, @NotNull BiConsumer<BlockPos, BlockState> biConsumer,
+	                  Random random, @NotNull List<BlockPos> pos, @NotNull List<BlockPos> posList) {
+
+		if (random.nextFloat() <= probability) {
+			pos.forEach((blockPos) -> {
 				for (Direction direction : Direction.Plane.HORIZONTAL) {
-					if (random.nextFloat() <= 0.25F) {
-						Direction direction1 = direction.getOpposite();
-						BlockPos blockpos = blockPos.offset(direction1.getStepX(), 0, direction1.getStepZ());
-						if (Feature.isAir(simulatedReader, blockpos)) {
-							biConsumer.accept(blockpos, DeferredRegistryHandler.BURNED_OAK_BRANCH.get().defaultBlockState().setValue(BranchBlock.FACING, direction));
+					if (random.nextFloat() <= 0.25f) {
+						Direction oppositeDirection = direction.getOpposite();
+						BlockPos position = blockPos.offset(oppositeDirection.getStepX(), 0, oppositeDirection.getStepZ());
+
+						if (Feature.isAir(simulatedReader, position)) {
+							biConsumer.accept(position, DeferredRegistryHandler.BURNED_OAK_BRANCH.get().defaultBlockState()
+									.setValue(BranchBlock.FACING, direction));
 						}
 					}
 				}

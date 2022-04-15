@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "sulfur",
+  "pattern": [
+    "aaa",
+    "aaa",
+    "aaa"
+  ],
+  "key": {
+    "a": {
+      "item": "immersiveweapons:sulfur"
+    }
+  },
+  "result": {
+    "item": "immersiveweapons:raw_sulfur_block"
+  }
+}

@@ -1,0 +1,16 @@
+{
+	"name": "Mortar and Pestle",
+	"icon": "immersiveweapons:mortar_and_pestle",
+	"category": "immersiveweapons:tools",
+	"pages": [
+		{
+			"type": "patchouli:text",
+			"text": "The mortar and pestle is an item for mixing and crushing materials together.$(br2)The primary use for these is to make smoke powder."
+		},
+		{
+			"type": "patchouli:crafting",
+			"recipe": "immersiveweapons:mortar_and_pestle"
+		}
+	],
+	"advancement": "immersiveweapons:recipes/immersiveweapons/mortar_and_pestle"
+}

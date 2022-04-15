@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "tables",
+  "pattern": [
+    "a",
+    "b"
+  ],
+  "key": {
+    "a": {
+      "item": "minecraft:acacia_slab"
+    },
+    "b": {
+      "item": "minecraft:acacia_fence"
+    }
+  },
+  "result": {
+    "item": "immersiveweapons:acacia_table"
+  }
+}

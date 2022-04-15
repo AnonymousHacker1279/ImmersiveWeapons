@@ -1,6 +1,6 @@
 package com.anonymoushacker1279.immersiveweapons.entity.ai.goal;
 
-import com.anonymoushacker1279.immersiveweapons.config.ServerConfig;
+import com.anonymoushacker1279.immersiveweapons.config.CommonConfig;
 import com.anonymoushacker1279.immersiveweapons.entity.monster.CelestialTowerEntity;
 import com.anonymoushacker1279.immersiveweapons.entity.monster.RockSpiderEntity;
 import com.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
@@ -11,6 +11,8 @@ import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.BossEvent.BossBarColor;
 import net.minecraft.world.InteractionHand;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -30,7 +32,7 @@ public class CelestialTowerSummonGoal extends Goal {
 	private final CelestialTowerEntity mob;
 	private int waveSpawnCooldown = 100;
 	private AABB searchBox;
-	private static final float MINION_WAVE_SIZE_MODIFIER = Float.parseFloat(ServerConfig.CELESTIAL_TOWER_MINIONS_WAVE_SIZE_MODIFIER.get());
+	private static final double MINION_WAVE_SIZE_MODIFIER = CommonConfig.CELESTIAL_TOWER_MINIONS_WAVE_SIZE_MODIFIER.get();
 
 	public CelestialTowerSummonGoal(CelestialTowerEntity pMob) {
 		mob = pMob;
@@ -56,61 +58,113 @@ public class CelestialTowerSummonGoal extends Goal {
 			int fodderMobsToSpawn = (int) (mobsToSpawn * 0.3f); // Get the number of "fodder" mobs to spawn
 			mobsToSpawn = mobsToSpawn - fodderMobsToSpawn; // Reduce the total number left to spawn
 			int powerMobsToSpawn = isWavesPastHalf() ? (int) (mobsToSpawn * 0.2f) : 0; // Get the number of "power" mobs to spawn, if over halfway through the waves
-			mobsToSpawn = mobsToSpawn - powerMobsToSpawn; //Reduce the total number left to spawn
+			mobsToSpawn = mobsToSpawn - powerMobsToSpawn; // Reduce the total number left to spawn
 
 			for (int i = fodderMobsToSpawn; i > 0; i--) {
-				BlockPos summonPos = new BlockPos(mob.getX() + GeneralUtilities.getRandomNumber(-8, 9), mob.getY(), mob.getZ() + GeneralUtilities.getRandomNumber(-8, 9));
-				RockSpiderEntity entity = new RockSpiderEntity(DeferredRegistryHandler.ROCK_SPIDER_ENTITY.get(), mob.level);
-				entity.setPersistenceRequired();
-				entity.teleportTo(summonPos.getX(), summonPos.getY(), summonPos.getZ());
-				mob.level.addFreshEntity(entity);
-				((ServerLevel) mob.level).sendParticles(ParticleTypes.POOF, mob.position().x, mob.position().y, mob.position().z, 1, GeneralUtilities.getRandomNumber(-0.03d, 0.03d), GeneralUtilities.getRandomNumber(-0.1d, -0.08d), GeneralUtilities.getRandomNumber(-0.03d, 0.03d), 1.0f);
+				BlockPos summonPos = new BlockPos(mob.getX() + GeneralUtilities.getRandomNumber(-8, 9),
+						mob.getY(),
+						mob.getZ() + GeneralUtilities.getRandomNumber(-8, 9));
+
+				RockSpiderEntity rockSpiderEntity = new RockSpiderEntity(DeferredRegistryHandler.ROCK_SPIDER_ENTITY.get(), mob.level);
+				rockSpiderEntity.setPersistenceRequired();
+				rockSpiderEntity.teleportTo(summonPos.getX(), summonPos.getY(), summonPos.getZ());
+				mob.level.addFreshEntity(rockSpiderEntity);
+				((ServerLevel) mob.level)
+						.sendParticles(ParticleTypes.POOF,
+								mob.position().x,
+								mob.position().y,
+								mob.position().z,
+								1,
+								GeneralUtilities.getRandomNumber(-0.03d, 0.03d),
+								GeneralUtilities.getRandomNumber(-0.1d, -0.08d),
+								GeneralUtilities.getRandomNumber(-0.03d, 0.03d), 1.0f);
+
 			}
 			for (int i = powerMobsToSpawn; i > 0; i--) {
-				BlockPos summonPos = new BlockPos(mob.getX() + GeneralUtilities.getRandomNumber(-8, 9), mob.getY(), mob.getZ() + GeneralUtilities.getRandomNumber(-8, 9));
-				Zombie entity = new Zombie(EntityType.ZOMBIE, mob.level);
-				entity.setPersistenceRequired();
+				BlockPos summonPos = new BlockPos(mob.getX() + GeneralUtilities.getRandomNumber(-8, 9),
+						mob.getY(),
+						mob.getZ() + GeneralUtilities.getRandomNumber(-8, 9));
+
+				Zombie zombieEntity = new Zombie(EntityType.ZOMBIE, mob.level);
+				zombieEntity.setPersistenceRequired();
 				ItemStack sword = new ItemStack(Items.IRON_SWORD);
 				sword.enchant(Enchantments.SHARPNESS, GeneralUtilities.getRandomNumber(2, 4 + mob.getWavesSpawned()));
 				sword.enchant(Enchantments.KNOCKBACK, GeneralUtilities.getRandomNumber(1, 3 + mob.getWavesSpawned()));
 				sword.enchant(Enchantments.FIRE_ASPECT, GeneralUtilities.getRandomNumber(1, 2 + mob.getWavesSpawned()));
-				entity.setItemSlot(EquipmentSlot.HEAD, new ItemStack(Items.IRON_HELMET));
-				entity.setItemSlot(EquipmentSlot.CHEST, new ItemStack(Items.IRON_CHESTPLATE));
-				entity.setItemSlot(EquipmentSlot.LEGS, new ItemStack(Items.IRON_LEGGINGS));
-				entity.setItemSlot(EquipmentSlot.FEET, new ItemStack(Items.IRON_BOOTS));
-				Objects.requireNonNull(entity.getAttribute(Attributes.MAX_HEALTH)).setBaseValue(20 + (GeneralUtilities.getRandomNumber(5, 11) * mob.getWaveSizeModifier()));
-				entity.heal(entity.getMaxHealth());
-				entity.setItemInHand(InteractionHand.MAIN_HAND, sword);
-				entity.teleportTo(summonPos.getX(), summonPos.getY(), summonPos.getZ());
-				mob.level.addFreshEntity(entity);
-				((ServerLevel) mob.level).sendParticles(ParticleTypes.POOF, mob.position().x, mob.position().y, mob.position().z, 1, GeneralUtilities.getRandomNumber(-0.03d, 0.03d), GeneralUtilities.getRandomNumber(-0.1d, -0.08d), GeneralUtilities.getRandomNumber(-0.03d, 0.03d), 1.0f);
+				zombieEntity.setItemSlot(EquipmentSlot.HEAD, new ItemStack(Items.IRON_HELMET));
+				zombieEntity.setItemSlot(EquipmentSlot.CHEST, new ItemStack(Items.IRON_CHESTPLATE));
+				zombieEntity.setItemSlot(EquipmentSlot.LEGS, new ItemStack(Items.IRON_LEGGINGS));
+				zombieEntity.setItemSlot(EquipmentSlot.FEET, new ItemStack(Items.IRON_BOOTS));
+				Objects.requireNonNull(zombieEntity.getAttribute(Attributes.MAX_HEALTH))
+						.setBaseValue(20 + (GeneralUtilities.getRandomNumber(5, 11) * mob.getWaveSizeModifier()));
+
+				zombieEntity.heal(zombieEntity.getMaxHealth());
+				zombieEntity.addEffect(new MobEffectInstance(MobEffects.FIRE_RESISTANCE, 9999, 0, true, true));
+				zombieEntity.setItemInHand(InteractionHand.MAIN_HAND, sword);
+				zombieEntity.teleportTo(summonPos.getX(), summonPos.getY(), summonPos.getZ());
+				mob.level.addFreshEntity(zombieEntity);
+				((ServerLevel) mob.level).sendParticles(ParticleTypes.POOF,
+						mob.position().x,
+						mob.position().y,
+						mob.position().z,
+						1,
+						GeneralUtilities.getRandomNumber(-0.03d, 0.03d),
+						GeneralUtilities.getRandomNumber(-0.1d, -0.08d),
+						GeneralUtilities.getRandomNumber(-0.03d, 0.03d), 1.0f);
+
 			}
 			for (int i = mobsToSpawn; i > 0; i--) {
-				BlockPos summonPos = new BlockPos(mob.getX() + GeneralUtilities.getRandomNumber(-8, 9), mob.getY(), mob.getZ() + GeneralUtilities.getRandomNumber(-8, 9));
-				Skeleton entity = new Skeleton(EntityType.SKELETON, mob.level);
-				entity.setPersistenceRequired();
+				BlockPos summonPos = new BlockPos(mob.getX() + GeneralUtilities.getRandomNumber(-8, 9),
+						mob.getY(),
+						mob.getZ() + GeneralUtilities.getRandomNumber(-8, 9));
+
+				Skeleton skeletonEntity = new Skeleton(EntityType.SKELETON, mob.level);
+				skeletonEntity.setPersistenceRequired();
 				ItemStack bow = new ItemStack(Items.BOW);
 				bow.enchant(Enchantments.POWER_ARROWS, GeneralUtilities.getRandomNumber(1, 3 + mob.getWavesSpawned()));
 				bow.enchant(Enchantments.PUNCH_ARROWS, GeneralUtilities.getRandomNumber(1, 2 + mob.getWavesSpawned()));
-				entity.setItemSlot(EquipmentSlot.HEAD, new ItemStack(Items.IRON_HELMET));
-				Objects.requireNonNull(entity.getAttribute(Attributes.MAX_HEALTH)).setBaseValue(20 + (GeneralUtilities.getRandomNumber(0, 6) * mob.getWaveSizeModifier()));
-				entity.heal(entity.getMaxHealth());
-				entity.setItemInHand(InteractionHand.MAIN_HAND, bow);
-				entity.teleportTo(summonPos.getX(), summonPos.getY(), summonPos.getZ());
-				mob.level.addFreshEntity(entity);
-				((ServerLevel) mob.level).sendParticles(ParticleTypes.POOF, mob.position().x, mob.position().y, mob.position().z, 1, GeneralUtilities.getRandomNumber(-0.03d, 0.03d), GeneralUtilities.getRandomNumber(-0.1d, -0.08d), GeneralUtilities.getRandomNumber(-0.03d, 0.03d), 1.0f);
+				skeletonEntity.setItemSlot(EquipmentSlot.HEAD, new ItemStack(Items.IRON_HELMET));
+				Objects.requireNonNull(skeletonEntity.getAttribute(Attributes.MAX_HEALTH))
+						.setBaseValue(20 + (GeneralUtilities.getRandomNumber(0, 6) * mob.getWaveSizeModifier()));
+
+				skeletonEntity.heal(skeletonEntity.getMaxHealth());
+				skeletonEntity.addEffect(new MobEffectInstance(MobEffects.FIRE_RESISTANCE, 9999, 0, true, true));
+				skeletonEntity.setItemInHand(InteractionHand.MAIN_HAND, bow);
+				skeletonEntity.teleportTo(summonPos.getX(), summonPos.getY(), summonPos.getZ());
+				mob.level.addFreshEntity(skeletonEntity);
+				((ServerLevel) mob.level).sendParticles(ParticleTypes.POOF,
+						mob.position().x,
+						mob.position().y,
+						mob.position().z,
+						1,
+						GeneralUtilities.getRandomNumber(-0.03d, 0.03d),
+						GeneralUtilities.getRandomNumber(-0.1d, -0.08d),
+						GeneralUtilities.getRandomNumber(-0.03d, 0.03d), 1.0f);
 			}
 
 			// Spawn some particles
 			for (int i = 96; i > 0; i--) {
-				((ServerLevel) mob.level).sendParticles(ParticleTypes.FLAME, mob.position().x, mob.position().y, mob.position().z, 1, GeneralUtilities.getRandomNumber(-0.03d, 0.03d), GeneralUtilities.getRandomNumber(-0.1d, -0.08d), GeneralUtilities.getRandomNumber(-0.03d, 0.03d), 1.0f);
+				((ServerLevel) mob.level).sendParticles(ParticleTypes.FLAME,
+						mob.position().x,
+						mob.position().y,
+						mob.position().z,
+						1,
+						GeneralUtilities.getRandomNumber(-0.03d, 0.03d),
+						GeneralUtilities.getRandomNumber(-0.1d, -0.08d),
+						GeneralUtilities.getRandomNumber(-0.03d, 0.03d), 1.0f);
 			}
 
 			mob.setWavesSpawned(mob.getWavesSpawned() + 1); // Increment the total spawned waves
 			mob.bossEvent.setProgress((float) mob.getWavesSpawned() / mob.getTotalWavesToSpawn());
-			mob.bossEvent.setName(new TranslatableComponent("immersiveweapons.boss.celestial_tower.waves", mob.getWavesSpawned(), mob.getTotalWavesToSpawn()));
+			mob.bossEvent.setName(new TranslatableComponent("immersiveweapons.boss.celestial_tower.waves",
+					mob.getWavesSpawned(),
+					mob.getTotalWavesToSpawn()));
+
 			mob.setNoActionTime(0);
-			mob.playSound(DeferredRegistryHandler.CELESTIAL_TOWER_SUMMON.get(), 1.0f, 1.0f + GeneralUtilities.getRandomNumber(-0.3f, 0.2f));
+			mob.playSound(DeferredRegistryHandler.CELESTIAL_TOWER_SUMMON.get(),
+					1.0f,
+					1.0f + GeneralUtilities.getRandomNumber(-0.3f, 0.2f));
+
 			waveSpawnCooldown = 100; // Set the wave spawn cooldown
 		} else if (waveSpawnCooldown > 0) {
 			waveSpawnCooldown--;
@@ -120,17 +174,26 @@ public class CelestialTowerSummonGoal extends Goal {
 			mob.bossEvent.setName(mob.getDisplayName());
 			mob.bossEvent.setProgress(1f);
 			mob.setNoActionTime(0);
-			mob.playSound(DeferredRegistryHandler.CELESTIAL_TOWER_VULNERABLE.get(), 1.0f, 1.0f + GeneralUtilities.getRandomNumber(-0.3f, 0.2f));
+			mob.playSound(DeferredRegistryHandler.CELESTIAL_TOWER_VULNERABLE.get(),
+					1.0f,
+					1.0f + GeneralUtilities.getRandomNumber(-0.3f, 0.2f));
+
 		}
 	}
 
 	// Only return major mobs in the area; "fodder" entities are ignored
 	private int getEligibleMobsInArea() {
 		if (searchBox == null) {
-			searchBox = new AABB(mob.getX() - 32, mob.getY() - 16, mob.getZ() - 32, mob.getX() + 16, mob.getY() + 16, mob.getZ() + 32);
+			searchBox = new AABB(mob.getX() - 32,
+					mob.getY() - 16,
+					mob.getZ() - 32,
+					mob.getX() + 16,
+					mob.getY() + 16,
+					mob.getZ() + 32);
+
 		}
-		int mobs;
-		mobs = mob.level.getNearbyEntities(Skeleton.class, TargetingConditions.forNonCombat(), mob, searchBox).size();
+
+		int mobs = mob.level.getNearbyEntities(Skeleton.class, TargetingConditions.forNonCombat(), mob, searchBox).size();
 		mobs = mobs + mob.level.getNearbyEntities(Zombie.class, TargetingConditions.forNonCombat(), mob, searchBox).size();
 		return mobs;
 	}

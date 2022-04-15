@@ -1,20 +1,33 @@
 package com.anonymoushacker1279.immersiveweapons.data.tags.groups.immersiveweapons;
 
+import com.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.ItemTags;
-import net.minecraft.tags.Tag.Named;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 
 public class ImmersiveWeaponsItemTagGroups {
 
-	public static final Named<Item> BURNED_OAK_LOGS = ItemTags.bind("immersiveweapons:burned_oak_logs");
-	public static final Named<Item> FLARES = ItemTags.bind("immersiveweapons:projectiles/flares");
-	public static final Named<Item> MUSKET_BALLS = ItemTags.bind("immersiveweapons:projectiles/musket_balls");
-	public static final Named<Item> MOLTEN_INGOTS = ItemTags.bind("immersiveweapons:ingots/molten");
-	public static final Named<Item> ELECTRIC_INGOTS = ItemTags.bind("immersiveweapons:ingots/electric");
-	public static final Named<Item> TESLA_INGOTS = ItemTags.bind("immersiveweapons:ingots/tesla");
-	public static final Named<Item> MOLTEN_SHARDS = ItemTags.bind("immersiveweapons:shards/molten");
-	public static final Named<Item> VENTUS_SHARDS = ItemTags.bind("immersiveweapons:shards/ventus");
-	public static final Named<Item> DIAMOND_SHARDS = ItemTags.bind("immersiveweapons:shards/diamond");
-	public static final Named<Item> STONE_SHARDS = ItemTags.bind("immersiveweapons:shards/stone");
-	public static final Named<Item> WOOD_SHARDS = ItemTags.bind("immersiveweapons:shards/wood");
+	public static final TagKey<Item> BURNED_OAK_LOGS = ItemTags.create(new ResourceLocation(ImmersiveWeapons.MOD_ID,
+			"burned_oak_logs"));
+	public static final TagKey<Item> FLARES = ItemTags.create(new ResourceLocation(ImmersiveWeapons.MOD_ID,
+			"projectiles/flares"));
+	public static final TagKey<Item> MUSKET_BALLS = ItemTags.create(new ResourceLocation(ImmersiveWeapons.MOD_ID,
+			"projectiles/musket_balls"));
+	public static final TagKey<Item> MOLTEN_INGOTS = ItemTags.create(new ResourceLocation(ImmersiveWeapons.MOD_ID,
+			"ingots/molten"));
+	public static final TagKey<Item> ELECTRIC_INGOTS = ItemTags.create(new ResourceLocation(ImmersiveWeapons.MOD_ID,
+			"ingots/electric"));
+	public static final TagKey<Item> TESLA_INGOTS = ItemTags.create(new ResourceLocation(ImmersiveWeapons.MOD_ID,
+			"ingots/tesla"));
+	public static final TagKey<Item> MOLTEN_SHARDS = ItemTags.create(new ResourceLocation(ImmersiveWeapons.MOD_ID,
+			"shards/molten"));
+	public static final TagKey<Item> VENTUS_SHARDS = ItemTags.create(new ResourceLocation(ImmersiveWeapons.MOD_ID,
+			"shards/ventus"));
+	public static final TagKey<Item> DIAMOND_SHARDS = ItemTags.create(new ResourceLocation(ImmersiveWeapons.MOD_ID,
+			"shards/diamond"));
+	public static final TagKey<Item> STONE_SHARDS = ItemTags.create(new ResourceLocation(ImmersiveWeapons.MOD_ID,
+			"shards/stone"));
+	public static final TagKey<Item> WOOD_SHARDS = ItemTags.create(new ResourceLocation(ImmersiveWeapons.MOD_ID,
+			"shards/wood"));
 }

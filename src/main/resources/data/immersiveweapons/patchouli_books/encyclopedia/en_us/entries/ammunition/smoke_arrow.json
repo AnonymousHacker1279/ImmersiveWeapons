@@ -1,0 +1,30 @@
+{
+	"name": "Smoke Bomb Arrow",
+	"icon": "immersiveweapons:smoke_bomb_arrow",
+	"category": "immersiveweapons:ammunition",
+	"pages": [
+		{
+			"type": "patchouli:text",
+			"text": "$(o)What if you could launch a smoke bomb far away?$()$(br2)Well, you can. Instead of building a canister, simply imbue an arrow with smoke powder!$(br2)Available in a few colors too."
+		},
+		{
+			"type": "patchouli:crafting",
+			"title": "Gray and Red",
+			"recipe": "immersiveweapons:smoke_bomb_arrow",
+			"recipe2": "immersiveweapons:smoke_bomb_arrow_red"
+		},
+		{
+			"type": "patchouli:crafting",
+			"title": "Green and Blue",
+			"recipe": "immersiveweapons:smoke_bomb_arrow_green",
+			"recipe2": "immersiveweapons:smoke_bomb_arrow_blue"
+		},
+		{
+			"type": "patchouli:crafting",
+			"title": "Purple and Yellow",
+			"recipe": "immersiveweapons:smoke_bomb_arrow_purple",
+			"recipe2": "immersiveweapons:smoke_bomb_arrow_yellow"
+		}
+	],
+	"advancement": "immersiveweapons:recipes/immersiveweapons/smoke_powder"
+}

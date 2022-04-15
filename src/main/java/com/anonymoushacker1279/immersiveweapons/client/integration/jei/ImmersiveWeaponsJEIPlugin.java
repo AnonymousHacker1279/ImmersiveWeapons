@@ -8,9 +8,7 @@ import com.anonymoushacker1279.immersiveweapons.client.integration.jei.category.
 import com.anonymoushacker1279.immersiveweapons.container.SmallPartsContainer;
 import com.anonymoushacker1279.immersiveweapons.container.TeslaSynthesizerContainer;
 import com.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
-import com.anonymoushacker1279.immersiveweapons.item.crafting.ICustomRecipeType;
-import com.anonymoushacker1279.immersiveweapons.item.crafting.SmallPartsRecipe;
-import com.anonymoushacker1279.immersiveweapons.item.crafting.TeslaSynthesizerRecipe;
+import com.anonymoushacker1279.immersiveweapons.item.crafting.*;
 import com.google.common.collect.ImmutableSet;
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
@@ -58,8 +56,8 @@ public class ImmersiveWeaponsJEIPlugin implements IModPlugin {
 	public void registerRecipes(IRecipeRegistration registration) {
 		ClientLevel world = Objects.requireNonNull(Minecraft.getInstance().level);
 
-		Set<SmallPartsRecipe> smallPartsRecipes = ImmutableSet.copyOf(world.getRecipeManager().getAllRecipesFor(ICustomRecipeType.SMALL_PARTS));
-		Set<TeslaSynthesizerRecipe> teslaSynthesizerRecipes = ImmutableSet.copyOf(world.getRecipeManager().getAllRecipesFor(ICustomRecipeType.TESLA_SYNTHESIZER));
+		Set<SmallPartsRecipe> smallPartsRecipes = ImmutableSet.copyOf(world.getRecipeManager().getAllRecipesFor(CustomRecipeTypes.SMALL_PARTS));
+		Set<TeslaSynthesizerRecipe> teslaSynthesizerRecipes = ImmutableSet.copyOf(world.getRecipeManager().getAllRecipesFor(CustomRecipeTypes.TESLA_SYNTHESIZER));
 		registration.addRecipes(smallPartsRecipes, SmallPartsRecipeCategory.UID);
 		registration.addRecipes(teslaSynthesizerRecipes, TeslaSynthesizerRecipeCategory.UID);
 	}

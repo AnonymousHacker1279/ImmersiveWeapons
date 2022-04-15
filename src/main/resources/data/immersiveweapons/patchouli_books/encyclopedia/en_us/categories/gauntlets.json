@@ -1,0 +1,5 @@
+{
+	"name": "Gauntlets",
+	"description": "Beat the life out of your opponents. Trade attack reach, damage, and speed for a chance to inflict Bleeding.$(br2)All gauntlets have a $(#FF5555)reduction of two$() blocks of reach.",
+	"icon": "immersiveweapons:iron_gauntlet"
+}

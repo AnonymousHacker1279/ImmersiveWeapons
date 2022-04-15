@@ -1,0 +1,16 @@
+{
+	"name": "Camp Chair",
+	"icon": "immersiveweapons:camp_chair",
+	"category": "immersiveweapons:decoration",
+	"pages": [
+		{
+			"type": "patchouli:text",
+			"text": "Everyone needs a break from time to time. So build a chair and take a seat!$(br2)Camp chairs are simple devices that allow you to sit down by interacting with them."
+		},
+		{
+			"type": "patchouli:crafting",
+			"recipe": "immersiveweapons:camp_chair"
+		}
+	],
+	"advancement": "immersiveweapons:ingots"
+}

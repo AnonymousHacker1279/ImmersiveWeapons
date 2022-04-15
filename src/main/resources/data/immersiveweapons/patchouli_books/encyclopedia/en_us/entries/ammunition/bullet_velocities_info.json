@@ -1,0 +1,29 @@
+{
+	"name": "Guide: Bullet Damage",
+	"icon": "immersiveweapons:blank_blueprint",
+	"category": "immersiveweapons:ammunition",
+	"pages": [
+		{
+			"type": "patchouli:text",
+			"text": "Confused about how bullet damage is calculated?$(br2)You might be looking at the base damage values for bullets, thinking, '$(o)Why are these all so low? Surely bullets aren't THAT weak?$()'. Well, you're right, they can be much stronger."
+		},
+		{
+			"type": "patchouli:text",
+			"title": "Velocity Bonus",
+			"text": "All bullets have a bonus applied for their velocity at the time of impact. The formula for this bonus is as follows:$(br2)$(l)delta distance vector length x base damage$()$(br2)The maximum damage is clamped at $(l)2.147483647E9D$(), so if a bullet happens to accelerate some absurd amount, it won't deal more damage than this."
+		},
+		{
+			"type": "patchouli:text",
+			"title": "Crit Bonus",
+			"text": "Every time you fire a firearm, you have a $(l)10%$() chance for a bullet to be critical. The critical bonus is as follows:$(br2)$(l)random(current damage / 2 + 2)$()$(br2)Then, the critical bonus is added to the current damage. If the damage were to somehow exceed $(l)2147483647L$(), then it stops adding more."
+		},
+		{
+			"type": "patchouli:text",
+			"title": "An Example",
+			"text": "Say you fire an iron musket ball at a creeper, and the bullet velocity is $(l)3$() (roughly five blocks away). Iron musket balls have a base damage of $(l)2.65$(). So now, calculate the velocity bonus:$(br2)$(l)2.65 x 3 = 7.95$()$(br2)Now that's quite a bit of damage!"
+		}
+	],
+	"priority": true,
+	"read_by_default": true,
+	"advancement": "immersiveweapons:musket_ball"
+}

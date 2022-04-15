@@ -1,13 +1,10 @@
 package com.anonymoushacker1279.immersiveweapons.entity.projectile;
 
-import com.anonymoushacker1279.immersiveweapons.client.particle.smokebomb.SmokeBombParticleData;
-import com.anonymoushacker1279.immersiveweapons.config.ServerConfig;
+import com.anonymoushacker1279.immersiveweapons.client.particle.smoke_bomb.SmokeBombParticleOptions;
+import com.anonymoushacker1279.immersiveweapons.config.CommonConfig;
 import com.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
+import com.anonymoushacker1279.immersiveweapons.init.PacketHandler;
 import com.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
-import com.anonymoushacker1279.immersiveweapons.util.PacketHandler;
-import net.minecraft.client.Minecraft;
-import net.minecraft.core.BlockPos;
-import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
@@ -19,14 +16,12 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.network.NetworkEvent;
 import net.minecraftforge.network.NetworkEvent.Context;
 import net.minecraftforge.network.PacketDistributor;
 import org.jetbrains.annotations.NotNull;
 
-import java.awt.*;
 import java.util.function.Supplier;
 
 public class CustomArrowEntity {
@@ -408,8 +403,10 @@ public class CustomArrowEntity {
 	}
 
 	public static class SmokeBombArrowEntity extends AbstractCustomArrowEntity {
+
 		private static int color = 0;
-		private final int configMaxParticles = ServerConfig.MAX_SMOKE_BOMB_PARTICLES.get();
+		private final int configMaxParticles = CommonConfig.MAX_SMOKE_BOMB_PARTICLES.get();
+		private static final byte VANILLA_IMPACT_STATUS_ID = 3;
 
 		/**
 		 * Constructor for SmokeBombArrowEntity.
@@ -464,142 +461,91 @@ public class CustomArrowEntity {
 		@Override
 		public void onHit(@NotNull HitResult rayTraceResult) {
 			super.onHit(rayTraceResult);
-			if (level.isClientSide) {
-				ParticleOptions particleData = makeParticle();
+			if (!level.isClientSide) {
+				PacketHandler.INSTANCE.send(PacketDistributor.TRACKING_CHUNK.with(() -> level.getChunkAt(blockPosition())),
+						new SmokeBombArrowEntityPacketHandler(color));
+
+				level.broadcastEntityEvent(this, VANILLA_IMPACT_STATUS_ID);
+			}
+		}
+
+		/**
+		 * Handle entity events.
+		 *
+		 * @param statusID the <code>byte</code> containing status ID
+		 */
+		@Override
+		public void handleEntityEvent(byte statusID) {
+			if (statusID == VANILLA_IMPACT_STATUS_ID) {
+				double x = getX();
+				double y = getY();
+				double z = getZ();
+
+				// Spawn smoke particles
 				for (int i = 0; i < configMaxParticles; ++i) {
-					level.addParticle(particleData, true, position().x, position().y, position().z, GeneralUtilities.getRandomNumber(-0.03, 0.03d), GeneralUtilities.getRandomNumber(-0.02d, 0.02d), GeneralUtilities.getRandomNumber(-0.03d, 0.03d));
+					level.addParticle(SmokeBombParticleOptions.getParticleByColor(color),
+							true, x, y, z,
+							GeneralUtilities.getRandomNumber(-0.1d, 0.1d),
+							GeneralUtilities.getRandomNumber(-0.1d, 0.1d),
+							GeneralUtilities.getRandomNumber(-0.1d, 0.1d));
 				}
-			} else {
-				PacketHandler.INSTANCE.send(PacketDistributor.TRACKING_CHUNK.with(() -> level.getChunkAt(blockPosition())), new SmokeBombArrowEntityPacketHandler(blockPosition()));
+
+				// Play a hissing sound
+				level.playLocalSound(x, y, z, DeferredRegistryHandler.SMOKE_BOMB_HISS.get(),
+						SoundSource.NEUTRAL, 0.2f, 0.6f, true);
 			}
+		}
+	}
+
+	public record SmokeBombArrowEntityPacketHandler(int color) {
+
+		/**
+		 * Constructor for SmokeBombArrowEntityPacketHandler.
+		 *
+		 * @param color the color ID
+		 */
+		public SmokeBombArrowEntityPacketHandler {
 		}
 
 		/**
-		 * Create a new particle.
+		 * Encodes a packet
 		 *
-		 * @return IParticleData
+		 * @param msg          the <code>SmokeBombArrowEntityPacketHandler</code> message being sent
+		 * @param packetBuffer the <code>PacketBuffer</code> containing packet data
 		 */
-		static ParticleOptions makeParticle() {
-			Color tint = getTint(GeneralUtilities.getRandomNumber(0, 2));
-			double diameter = getDiameter(GeneralUtilities.getRandomNumber(1.0d, 5.5d));
-
-			return new SmokeBombParticleData(tint, diameter);
+		public static void encode(SmokeBombArrowEntityPacketHandler msg, FriendlyByteBuf packetBuffer) {
+			packetBuffer.writeInt(msg.color);
 		}
 
 		/**
-		 * Get the particle diameter.
+		 * Decodes a packet
 		 *
-		 * @param random a random number
-		 * @return double
+		 * @param packetBuffer the <code>PacketBuffer</code> containing packet data
+		 * @return SmokeBombArrowEntityPacketHandler
 		 */
-		private static double getDiameter(double random) {
-			final double MIN_DIAMETER = 0.5;
-			final double MAX_DIAMETER = 5.5;
-			return MIN_DIAMETER + (MAX_DIAMETER - MIN_DIAMETER) * random;
+		public static SmokeBombArrowEntityPacketHandler decode(FriendlyByteBuf packetBuffer) {
+			return new SmokeBombArrowEntityPacketHandler(packetBuffer.readInt());
 		}
 
 		/**
-		 * Get the particle tint.
+		 * Handles an incoming packet, by sending it to the client/server
 		 *
-		 * @param random a random number
-		 * @return Color
+		 * @param msg             the <code>SmokeBombArrowEntityPacketHandler</code> message being sent
+		 * @param contextSupplier the <code>Supplier</code> providing context
 		 */
-		private static Color getTint(int random) {
-			Color[] tints = {
-					new Color(1.00f, 1.00f, 1.00f),  // no tint (white)
-					new Color(1.00f, 0.97f, 1.00f),  // off-white
-					new Color(1.00f, 1.00f, 0.97f),  // off-white 2
-			};
-			Color[] tintsRed = {
-					new Color(1.00f, 0.25f, 0.25f),  // tint (red)
-					new Color(1.00f, 0.30f, 0.25f),  // off-red
-					new Color(1.00f, 0.25f, 0.30f),  // off-red 2
-			};
-			Color[] tintsGreen = {
-					new Color(0.25f, 1.00f, 0.25f),  // tint (green)
-					new Color(0.30f, 1.00f, 0.25f),  // off-green
-					new Color(0.25f, 1.00f, 0.30f),  // off-green 2
-			};
-			Color[] tintsBlue = {
-					new Color(0.25f, 0.25f, 1.00f),  // tint (blue)
-					new Color(0.30f, 0.25f, 1.00f),  // off-blue
-					new Color(0.25f, 0.30f, 1.00f),  // off-blue 2
-			};
-			Color[] tintsPurple = {
-					new Color(1.00f, 0.25f, 1.00f),  // tint (purple)
-					new Color(1.00f, 0.30f, 1.00f),  // off-purple
-					new Color(1.00f, 0.35f, 1.00f),  // off-purple 2
-			};
-			Color[] tintsYellow = {
-					new Color(1.00f, 1.00f, 0.25f),  // tint (yellow)
-					new Color(1.00f, 1.00f, 0.30f),  // off-yellow
-					new Color(1.00f, 1.00f, 0.35f),  // off-yellow 2
-			};
-
-			return switch (color) {
-				case 1 -> tintsRed[random];
-				case 2 -> tintsGreen[random];
-				case 3 -> tintsBlue[random];
-				case 4 -> tintsPurple[random];
-				case 5 -> tintsYellow[random];
-				default -> tints[random];
-			};
+		public static void handle(SmokeBombArrowEntityPacketHandler msg, Supplier<Context> contextSupplier) {
+			NetworkEvent.Context context = contextSupplier.get();
+			context.enqueueWork(() -> DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> handleOnClient(msg)));
+			context.setPacketHandled(true);
 		}
 
-		public record SmokeBombArrowEntityPacketHandler(BlockPos blockPos) {
-
-			/**
-			 * Constructor for SmokeBombArrowEntityPacketHandler.
-			 *
-			 * @param blockPos the <code>BlockPos</code> of the block where the packet was sent
-			 */
-			public SmokeBombArrowEntityPacketHandler {
-			}
-
-			/**
-			 * Encodes a packet
-			 *
-			 * @param msg          the <code>SmokeBombArrowEntityPacketHandler</code> message being sent
-			 * @param packetBuffer the <code>PacketBuffer</code> containing packet data
-			 */
-			public static void encode(SmokeBombArrowEntityPacketHandler msg, FriendlyByteBuf packetBuffer) {
-				packetBuffer.writeBlockPos(msg.blockPos);
-			}
-
-			/**
-			 * Decodes a packet
-			 *
-			 * @param packetBuffer the <code>PacketBuffer</code> containing packet data
-			 * @return SmokeBombArrowEntityPacketHandler
-			 */
-			public static SmokeBombArrowEntityPacketHandler decode(FriendlyByteBuf packetBuffer) {
-				return new SmokeBombArrowEntityPacketHandler(packetBuffer.readBlockPos());
-			}
-
-			/**
-			 * Handles an incoming packet, by sending it to the client/server
-			 *
-			 * @param msg             the <code>SmokeBombArrowEntityPacketHandler</code> message being sent
-			 * @param contextSupplier the <code>Supplier</code> providing context
-			 */
-			public static void handle(SmokeBombArrowEntityPacketHandler msg, Supplier<Context> contextSupplier) {
-				NetworkEvent.Context context = contextSupplier.get();
-				context.enqueueWork(() -> DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> handleOnClient(msg)));
-				context.setPacketHandled(true);
-			}
-
-			/**
-			 * Runs specifically on the client, when a packet is received
-			 *
-			 * @param msg the <code>SmokeBombArrowEntityPacketHandler</code> message being sent
-			 */
-			@OnlyIn(Dist.CLIENT)
-			private static void handleOnClient(SmokeBombArrowEntityPacketHandler msg) {
-				Minecraft minecraft = Minecraft.getInstance();
-				if (minecraft.level != null) {
-					minecraft.level.playLocalSound(msg.blockPos, DeferredRegistryHandler.SMOKE_BOMB_HISS.get(), SoundSource.NEUTRAL, 0.1f, 0.6f, true);
-				}
-			}
+		/**
+		 * Runs specifically on the client, when a packet is received
+		 *
+		 * @param msg the <code>SmokeBombArrowEntityPacketHandler</code> message being sent
+		 */
+		private static void handleOnClient(SmokeBombArrowEntityPacketHandler msg) {
+			SmokeBombArrowEntity.setColor(msg.color);
 		}
 	}
 }

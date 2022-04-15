@@ -1,0 +1,17 @@
+{
+	"name": "Diamond Musket Ball",
+	"icon": "immersiveweapons:diamond_musket_ball",
+	"category": "immersiveweapons:ammunition",
+	"pages": [
+		{
+			"type": "patchouli:text",
+			"text": "Very sharp, very powerful.$(br2)And very expensive too. Better hope you've got a lot of diamonds you can turn into shards.$(br2)If your opponent lacks sufficient armor, you might be able to destroy them instantly."
+		},
+		{
+			"type": "patchouli:crafting",
+			"recipe": "immersiveweapons:diamond_musket_ball",
+			"text": "$(o)Deals $(l)3.35$()$(o) base damage. See $(l:ammunition/bullet_velocities_info)Guide: Bullet Damage$()$(o) for more information."
+		}
+	],
+	"advancement": "immersiveweapons:diamond_shard"
+}

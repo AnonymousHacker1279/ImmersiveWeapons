@@ -1,0 +1,22 @@
+{
+	"name": "Copper Armor",
+	"icon": "immersiveweapons:copper_chestplate",
+	"category": "immersiveweapons:armor",
+	"pages": [
+		{
+			"type": "patchouli:text",
+			"text": "Better than leather and gold armor, but not quite as good as iron armor.$(br2)If you're struggling to find iron or cobalt, then copper is a good substitute until you can get something better."
+		},
+		{
+			"type": "patchouli:crafting",
+			"recipe": "immersiveweapons:copper_helmet",
+			"recipe2": "immersiveweapons:copper_chestplate"
+		},
+		{
+			"type": "patchouli:crafting",
+			"recipe": "immersiveweapons:copper_leggings",
+			"recipe2": "immersiveweapons:copper_boots"
+		}
+	],
+	"advancement": "immersiveweapons:copper_ingot"
+}

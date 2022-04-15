@@ -1,5 +1,6 @@
 package com.anonymoushacker1279.immersiveweapons.block.trap;
 
+import com.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -26,7 +27,8 @@ public class PunjiSticksBlock extends Block implements SimpleWaterloggedBlock {
 
 	public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
 	protected static final VoxelShape SHAPE = Block.box(0.0D, 0.0D, 0.0D, 16.0D, 1.0D, 16.0D);
-	private final DamageSource damageSource = new DamageSource("immersiveweapons.punji_sticks");
+	private final DamageSource fallDamageSource = new DamageSource("immersiveweapons.punji_sticks").bypassArmor();
+	private final DamageSource normalDamageSource = new DamageSource("immersiveweapons.punji_sticks");
 
 	/**
 	 * Constructor for PunjiSticksBlock.
@@ -101,13 +103,18 @@ public class PunjiSticksBlock extends Block implements SimpleWaterloggedBlock {
 	@Override
 	public void entityInside(@NotNull BlockState state, @NotNull Level level, @NotNull BlockPos pos, @NotNull Entity entity) {
 		if (entity instanceof LivingEntity livingEntity) {
-			if (livingEntity.fallDistance >= 5F) {
-				livingEntity.hurt(damageSource, livingEntity.fallDistance >= 10F ? livingEntity.fallDistance + 20F * 0.5f : 20F);
+			if (livingEntity.fallDistance >= 2.5f) {
+				int featherFallingLevel = GeneralUtilities.getFeatherFallingLevel(livingEntity);
+				float damage = (livingEntity.fallDistance + 10f) *
+						(1.25f - (featherFallingLevel <= 4 ? featherFallingLevel * 0.25f : 1.0f));
+				livingEntity.hurt(fallDamageSource, damage);
 			} else {
-				float damageTodo = (float) livingEntity.getDeltaMovement().dot(new Vec3(1, 1, 1)) / 1.5F;
-				livingEntity.hurt(damageSource, 2F + damageTodo);
+				float damage = (float) (livingEntity.getDeltaMovement().dot(new Vec3(1, 1, 1)) / 1.5f) + 2.0f;
+				livingEntity.hurt(normalDamageSource, damage);
 			}
-			(livingEntity).addEffect(new MobEffectInstance(MobEffects.POISON, 60, 0, false, false));
+			(livingEntity).addEffect(new MobEffectInstance(MobEffects.POISON, 60, 0, false, true));
+
+			livingEntity.makeStuckInBlock(state, new Vec3(0.85F, 0.80D, 0.85F));
 		}
 	}
 }

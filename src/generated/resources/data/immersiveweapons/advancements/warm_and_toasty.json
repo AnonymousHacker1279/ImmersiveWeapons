@@ -1,5 +1,5 @@
 {
-  "parent": "immersiveweapons:molten_plate",
+  "parent": "immersiveweapons:molten_ingot",
   "display": {
     "icon": {
       "item": "immersiveweapons:molten_helmet",

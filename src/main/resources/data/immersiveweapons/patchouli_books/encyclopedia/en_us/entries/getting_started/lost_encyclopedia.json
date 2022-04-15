@@ -1,0 +1,14 @@
+{
+	"name": "Lost Encyclopedia?",
+	"icon": "immersiveweapons:blank_blueprint",
+	"category": "immersiveweapons:getting_started",
+	"pages": [
+		{
+			"type": "patchouli:text",
+			"text": "Every player receives an Encyclopedia when they join a world for the first time. If you've managed to lose it, you can craft another one. Just throw a Golden Sword and a Book into a crafting grid."
+		}
+	],
+	"priority": true,
+	"read_by_default": true,
+	"sortnum": 1
+}

@@ -3,10 +3,7 @@ package com.anonymoushacker1279.immersiveweapons.item.bottle;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
-import net.minecraft.world.item.UseAnim;
+import net.minecraft.world.item.*;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
 
@@ -24,38 +21,29 @@ public abstract class AbstractBottleItem extends Item {
 	/**
 	 * Runs when the item is used.
 	 *
-	 * @param worldIn  the <code>World</code> the player is in
-	 * @param playerIn the <code>PlayerEntity</code> instance
-	 * @param handIn   the <code>Hand</code> the player is using
+	 * @param level    the <code>Level</code> the player is in
+	 * @param playerIn the <code>Player</code> instance
+	 * @param handIn   the <code>InteractionHand</code> the player is using
 	 */
 	@Override
-	public @NotNull InteractionResultHolder<ItemStack> use(@NotNull Level worldIn, Player playerIn, @NotNull InteractionHand handIn) {
-		ItemStack itemstack = playerIn.getItemInHand(handIn);
+	public @NotNull InteractionResultHolder<ItemStack> use(@NotNull Level level, Player playerIn, @NotNull InteractionHand handIn) {
+		ItemStack itemInHand = playerIn.getItemInHand(handIn);
 		onUse(playerIn);
 		if (!playerIn.isCreative()) {
-			itemstack.shrink(1);
+			itemInHand.shrink(1);
 			playerIn.addItem(new ItemStack(Items.GLASS_BOTTLE));
-			playerIn.getCooldowns().addCooldown(this, getCooldown());
+			playerIn.getCooldowns().addCooldown(this, 600);
 		}
 
-		return InteractionResultHolder.sidedSuccess(itemstack, worldIn.isClientSide());
+		return InteractionResultHolder.sidedSuccess(itemInHand, level.isClientSide());
 	}
 
 	/**
 	 * Additional code to run when the item is used.
 	 *
-	 * @param playerIn the <code>PlayerEntity</code> instance
+	 * @param playerIn the <code>Player</code> instance
 	 */
 	protected void onUse(Player playerIn) {
-	}
-
-	/**
-	 * Get the item cooldown.
-	 *
-	 * @return int
-	 */
-	private int getCooldown() {
-		return 600;
 	}
 
 	/**
