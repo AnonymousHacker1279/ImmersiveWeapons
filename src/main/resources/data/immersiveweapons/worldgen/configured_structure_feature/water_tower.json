@@ -1,0 +1,14 @@
+{
+	"type": "minecraft:village",
+
+	"config": {
+		"start_pool": "immersiveweapons:water_tower/start_pool",
+		"size": 1
+	},
+
+	"biomes": "#immersiveweapons:has_structure/water_tower",
+
+	"adapt_noise": true,
+
+	"spawn_overrides": {}
+}

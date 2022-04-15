@@ -8,7 +8,7 @@ import com.anonymoushacker1279.immersiveweapons.block.crafting.*;
 import com.anonymoushacker1279.immersiveweapons.block.decoration.*;
 import com.anonymoushacker1279.immersiveweapons.block.misc.MedicStatueBlock;
 import com.anonymoushacker1279.immersiveweapons.block.misc.MinutemanStatueBlock;
-import com.anonymoushacker1279.immersiveweapons.block.misc.portal.statue.warrior.*;
+import com.anonymoushacker1279.immersiveweapons.block.misc.warrior_statue.*;
 import com.anonymoushacker1279.immersiveweapons.block.properties.WoodTypes;
 import com.anonymoushacker1279.immersiveweapons.block.sign.BurnedOakStandingSignBlock;
 import com.anonymoushacker1279.immersiveweapons.block.sign.BurnedOakWallSignBlock;
@@ -19,6 +19,7 @@ import com.anonymoushacker1279.immersiveweapons.container.SmallPartsContainer;
 import com.anonymoushacker1279.immersiveweapons.container.TeslaSynthesizerContainer;
 import com.anonymoushacker1279.immersiveweapons.entity.misc.ChairEntity;
 import com.anonymoushacker1279.immersiveweapons.entity.monster.*;
+import com.anonymoushacker1279.immersiveweapons.entity.monster.lava_revenant.LavaRevenantEntity;
 import com.anonymoushacker1279.immersiveweapons.entity.neutral.FieldMedicEntity;
 import com.anonymoushacker1279.immersiveweapons.entity.neutral.MinutemanEntity;
 import com.anonymoushacker1279.immersiveweapons.entity.projectile.BulletEntity.*;
@@ -102,7 +103,7 @@ public class DeferredRegistryHandler {
 	// Particle Register
 	public static final DeferredRegister<ParticleType<?>> PARTICLE_TYPES = DeferredRegister.create(ForgeRegistries.PARTICLE_TYPES, ImmersiveWeapons.MOD_ID);
 	// Global Loot Modifier Register
-	public static final DeferredRegister<GlobalLootModifierSerializer<?>> GLOBAL_LOOT_MODIFIER_SERIALIZER = DeferredRegister.create(ForgeRegistries.LOOT_MODIFIER_SERIALIZERS, ImmersiveWeapons.MOD_ID);
+	public static final DeferredRegister<GlobalLootModifierSerializer<?>> GLOBAL_LOOT_MODIFIER_SERIALIZER = DeferredRegister.create(ForgeRegistries.Keys.LOOT_MODIFIER_SERIALIZERS, ImmersiveWeapons.MOD_ID);
 	// Tile Entity Register
 	public static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITIES = DeferredRegister.create(ForgeRegistries.BLOCK_ENTITIES, ImmersiveWeapons.MOD_ID);
 	// Biome Register
@@ -204,7 +205,7 @@ public class DeferredRegistryHandler {
 	public static final RegistryObject<Item> VENTUS_STAFF_CORE = ITEMS.register("ventus_staff_core", () -> new Item(new Properties().tab(ITEM_GROUP)));
 	public static final RegistryObject<Item> AZUL_KEYSTONE = ITEMS.register("azul_keystone", () -> new Item(new Properties().tab(ITEM_GROUP)));
 	public static final RegistryObject<Item> AZUL_KEYSTONE_FRAGMENT = ITEMS.register("azul_keystone_fragment", () -> new Item(new Properties().tab(ITEM_GROUP)));
-	public static final RegistryObject<Item> CELESTIAL_FRAGMENT = ITEMS.register("celestial_fragment", () -> new Item(new Properties().tab(ITEM_GROUP)));
+	public static final RegistryObject<Item> CELESTIAL_FRAGMENT = ITEMS.register("celestial_fragment", () -> new Item(new Properties().tab(ITEM_GROUP).fireResistant()));
 	public static final RegistryObject<Item> WOOD_PIKE_HEAD = ITEMS.register("wood_pike_head", () -> new Item(new Properties().tab(ITEM_GROUP)));
 	public static final RegistryObject<Item> STONE_PIKE_HEAD = ITEMS.register("stone_pike_head", () -> new Item(new Properties().tab(ITEM_GROUP)));
 	public static final RegistryObject<Item> GOLD_PIKE_HEAD = ITEMS.register("gold_pike_head", () -> new Item(new Properties().tab(ITEM_GROUP)));
@@ -452,7 +453,7 @@ public class DeferredRegistryHandler {
 	public static final RegistryObject<EntityType<MortarShellEntity>> MORTAR_SHELL_ENTITY = ENTITY_TYPES.register("mortar_shell", () -> EntityType.Builder.of(MortarShellEntity::new, MobCategory.MISC).sized(0.5f, 0.5f).build(new ResourceLocation(ImmersiveWeapons.MOD_ID, "mortar_shell").toString()));
 	public static final RegistryObject<EntityType<BurnedOakBoatEntity>> BURNED_OAK_BOAT_ENTITY = ENTITY_TYPES.register("burned_oak_boat", () -> EntityType.Builder.<BurnedOakBoatEntity> of(BurnedOakBoatEntity::new, MobCategory.MISC).sized(1.375f, 0.5625f).build(new ResourceLocation(ImmersiveWeapons.MOD_ID, "burned_oak_boat").toString()));
 	public static final RegistryObject<EntityType<MudBallEntity>> MUD_BALL_ENTITY = ENTITY_TYPES.register("mud_ball", () -> EntityType.Builder.<MudBallEntity> of(MudBallEntity::new, MobCategory.MISC).sized(0.25f, 0.25f).build(new ResourceLocation(ImmersiveWeapons.MOD_ID, "mud_ball").toString()));
-	public static final RegistryObject<EntityType<LavaRevenantEntity>> LAVA_REVENANT_ENTITY = ENTITY_TYPES.register("lava_revenant", () -> EntityType.Builder.of(LavaRevenantEntity::new, MobCategory.MONSTER).sized(15.0f, 5.0f).clientTrackingRange(128).fireImmune().build(new ResourceLocation(ImmersiveWeapons.MOD_ID, "lava_revenant").toString()));
+	public static final RegistryObject<EntityType<LavaRevenantEntity>> LAVA_REVENANT_ENTITY = ENTITY_TYPES.register("lava_revenant", () -> EntityType.Builder.of(LavaRevenantEntity::new, MobCategory.MONSTER).sized(16.0f, 6.0f).clientTrackingRange(32).fireImmune().build(new ResourceLocation(ImmersiveWeapons.MOD_ID, "lava_revenant").toString()));
 	public static final RegistryObject<EntityType<RockSpiderEntity>> ROCK_SPIDER_ENTITY = ENTITY_TYPES.register("rock_spider", () -> EntityType.Builder.of(RockSpiderEntity::new, MobCategory.MONSTER).sized(0.30f, 0.30f).clientTrackingRange(16).build(new ResourceLocation(ImmersiveWeapons.MOD_ID, "rock_spider").toString()));
 	public static final RegistryObject<EntityType<CelestialTowerEntity>> CELESTIAL_TOWER_ENTITY = ENTITY_TYPES.register("celestial_tower", () -> EntityType.Builder.of(CelestialTowerEntity::new, MobCategory.MONSTER).sized(8.0f, 9.0f).clientTrackingRange(32).build(new ResourceLocation(ImmersiveWeapons.MOD_ID, "celestial_tower").toString()));
 
@@ -639,6 +640,7 @@ public class DeferredRegistryHandler {
 	public static final RegistryObject<BlockEntityType<MedicStatueBlockEntity>> MEDIC_STATUE_BLOCK_ENTITY = BLOCK_ENTITIES.register("medic_statue", () -> new BlockEntityType<>(MedicStatueBlockEntity::new, Sets.newHashSet(MEDIC_STATUE.get()), null));
 	public static final RegistryObject<BlockEntityType<TeslaSynthesizerBlockEntity>> TESLA_SYNTHESIZER_BLOCK_ENTITY = BLOCK_ENTITIES.register("tesla_synthesizer", () -> new BlockEntityType<>(TeslaSynthesizerBlockEntity::new, Sets.newHashSet(TESLA_SYNTHESIZER.get()), null));
 	public static final RegistryObject<BlockEntityType<BurnedOakSignEntity>> BURNED_OAK_SIGN_ENTITY = BLOCK_ENTITIES.register("custom_sign", () -> BlockEntityType.Builder.of(BurnedOakSignEntity::new, BURNED_OAK_SIGN.get(), BURNED_OAK_WALL_SIGN.get()).build(null));
+	public static final RegistryObject<BlockEntityType<CelestialLanternBlockEntity>> CELESTIAL_LANTERN_BLOCK_ENTITY = BLOCK_ENTITIES.register("celestial_lantern", () -> new BlockEntityType<>(CelestialLanternBlockEntity::new, Sets.newHashSet(CELESTIAL_LANTERN.get()), null));
 
 	// Effects
 	public static final RegistryObject<MorphineEffect> MORPHINE_EFFECT = EFFECTS.register("morphine", () -> new MorphineEffect(MobEffectCategory.NEUTRAL, 3484189));
@@ -649,13 +651,9 @@ public class DeferredRegistryHandler {
 	public static final RegistryObject<TreeDecoratorType<BurnedBranchDecorator>> BURNED_BRANCH_DECORATOR = TREE_DECORATORS.register("burned_branch", () -> new TreeDecoratorType<>(BurnedBranchDecorator.CODEC));
 
 	// Structures
-	public static final RegistryObject<StructureFeature<JigsawConfiguration>> ABANDONED_FACTORY_STRUCTURE = STRUCTURES.register("abandoned_factory", AbandonedFactoryStructure::new);
-	public static final RegistryObject<StructureFeature<JigsawConfiguration>> BEAR_TRAP_STRUCTURE = STRUCTURES.register("bear_trap", BearTrapStructure::new);
-	public static final RegistryObject<StructureFeature<JigsawConfiguration>> CAMPSITE_STRUCTURE = STRUCTURES.register("campsite", CampsiteStructure::new);
 	public static final RegistryObject<StructureFeature<JigsawConfiguration>> CLOUD_ISLAND_STRUCTURE = STRUCTURES.register("cloud_island", CloudIslandStructure::new);
-	public static final RegistryObject<StructureFeature<JigsawConfiguration>> LANDMINE_TRAP_STRUCTURE = STRUCTURES.register("landmine_trap", LandmineTrapStructure::new);
-	public static final RegistryObject<StructureFeature<JigsawConfiguration>> OUTHOUSE_STRUCTURE = STRUCTURES.register("outhouse", OuthouseStructure::new);
+	public static final RegistryObject<StructureFeature<JigsawConfiguration>> HANS_HUT_STRUCTURE = STRUCTURES.register("hans_hut", HansHut::new);
 	public static final RegistryObject<StructureFeature<JigsawConfiguration>> PITFALL_TRAP_STRUCTURE = STRUCTURES.register("pitfall_trap", PitfallTrapStructure::new);
 	public static final RegistryObject<StructureFeature<JigsawConfiguration>> UNDERGROUND_BUNKER_STRUCTURE = STRUCTURES.register("underground_bunker", UndergroundBunkerStructure::new);
-	public static final RegistryObject<StructureFeature<JigsawConfiguration>> WATER_TOWER_STRUCTURE = STRUCTURES.register("water_tower", WaterTowerStructure::new);
+	public static final RegistryObject<StructureFeature<JigsawConfiguration>> DESTROYED_HOUSE = STRUCTURES.register("destroyed_house", DestroyedHouse::new);
 }

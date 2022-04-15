@@ -1,7 +1,7 @@
 package com.anonymoushacker1279.immersiveweapons.blockentity;
 
 import com.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
-import com.anonymoushacker1279.immersiveweapons.item.crafting.ICustomRecipeType;
+import com.anonymoushacker1279.immersiveweapons.item.crafting.CustomRecipeTypes;
 import com.anonymoushacker1279.immersiveweapons.item.crafting.TeslaSynthesizerRecipe;
 import com.google.common.collect.Maps;
 import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
@@ -95,7 +95,7 @@ public abstract class AbstractTeslaSynthesizerBlockEntity extends BaseContainerB
 	 * @return boolean
 	 */
 	private static boolean isNonFlammable(Item item) {
-		return ItemTags.NON_FLAMMABLE_WOOD.contains(item);
+		return item.builtInRegistryHolder().is(ItemTags.NON_FLAMMABLE_WOOD);
 	}
 
 	/**
@@ -160,7 +160,7 @@ public abstract class AbstractTeslaSynthesizerBlockEntity extends BaseContainerB
 				&& !blockEntity.items.get(1).isEmpty() && !blockEntity.items.get(2).isEmpty()) {
 
 			RecipeManager recipeManager = level.getRecipeManager();
-			Recipe<?> synthesizerRecipe = recipeManager.getRecipeFor(ICustomRecipeType.TESLA_SYNTHESIZER, blockEntity, level)
+			Recipe<?> synthesizerRecipe = recipeManager.getRecipeFor(CustomRecipeTypes.TESLA_SYNTHESIZER, blockEntity, level)
 					.orElse(null);
 
 			if (!blockEntity.isBurning() && blockEntity.canSmelt(synthesizerRecipe)) {
@@ -337,7 +337,7 @@ public abstract class AbstractTeslaSynthesizerBlockEntity extends BaseContainerB
 	private int getCookTime() {
 		if (level != null) {
 			Optional<TeslaSynthesizerRecipe> recipe = level.getRecipeManager()
-					.getRecipeFor(ICustomRecipeType.TESLA_SYNTHESIZER, this, level);
+					.getRecipeFor(CustomRecipeTypes.TESLA_SYNTHESIZER, this, level);
 
 			if (recipe.isPresent())
 				return recipe.get().getCookTime();

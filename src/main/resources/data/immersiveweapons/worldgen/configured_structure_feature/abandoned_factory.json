@@ -1,0 +1,26 @@
+{
+	"type": "minecraft:village",
+
+	"config": {
+		"start_pool": "immersiveweapons:abandoned_factory/start_pool",
+		"size": 1
+	},
+
+	"biomes": "#immersiveweapons:has_structure/abandoned_factory",
+
+	"adapt_noise": true,
+
+	"spawn_overrides": {
+		"monster": {
+			"bounding_box": "full",
+			"spawns": [
+				{
+					"type": "minecraft:zombie",
+					"weight": 1,
+					"minCount": 1,
+					"maxCount": 2
+				}
+			]
+		}
+	}
+}

@@ -1,16 +1,17 @@
 package com.anonymoushacker1279.immersiveweapons.entity.monster;
 
+import com.anonymoushacker1279.immersiveweapons.block.decoration.CelestialLanternBlock;
 import com.anonymoushacker1279.immersiveweapons.config.CommonConfig;
 import com.anonymoushacker1279.immersiveweapons.entity.ai.goal.CelestialTowerSummonGoal;
 import com.anonymoushacker1279.immersiveweapons.entity.ai.goal.HoverGoal;
 import com.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
 import com.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Vec3i;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
-import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerBossEvent;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
@@ -26,12 +27,11 @@ import net.minecraft.world.entity.ai.goal.FloatGoal;
 import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.level.*;
-import net.minecraft.world.level.block.state.BlockBehaviour.BlockStateBase;
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.phys.AABB;
+import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
+import java.util.List;
 import java.util.Objects;
 
 public class CelestialTowerEntity extends Monster {
@@ -42,10 +42,7 @@ public class CelestialTowerEntity extends Monster {
 	private int waveSizeModifier = 1;
 	private int wavesSpawned = 0;
 	private boolean doneSpawningWaves = false;
-	private static int lastSpawnAttemptTick = -1;
-	private final MinecraftServer server = getServer();
-	private static final int XZ_SPAWN_CHECK_RADIUS = CommonConfig.CELESTIAL_TOWER_XZ_SPAWN_CHECK_RADIUS.get();
-	private static final int Y_SPAWN_CHECK_RADIUS = CommonConfig.CELESTIAL_TOWER_Y_SPAWN_CHECK_RADIUS.get();
+	private static final int SPAWN_CHECK_RADIUS = CommonConfig.CELESTIAL_TOWER_SPAWN_CHECK_RADIUS.get();
 
 	public CelestialTowerEntity(EntityType<? extends Monster> type, Level level) {
 		super(type, level);
@@ -208,40 +205,28 @@ public class CelestialTowerEntity extends Monster {
 		if (pSpawnReason == MobSpawnType.SPAWNER || pSpawnReason == MobSpawnType.SPAWN_EGG) {
 			return true;
 		}
-		if (server.getTickCount() - CelestialTowerEntity.lastSpawnAttemptTick >= 40) {
-			CelestialTowerEntity.lastSpawnAttemptTick = server.getTickCount();
-			BlockPos blockPos = blockPosition();
-			long nearbyCelestialLanterns = level.getBlockStatesIfLoaded(new AABB(blockPos.getX() - XZ_SPAWN_CHECK_RADIUS,
-							blockPos.getY() - Y_SPAWN_CHECK_RADIUS, blockPos.getZ() - XZ_SPAWN_CHECK_RADIUS,
-							blockPos.getX() + XZ_SPAWN_CHECK_RADIUS, blockPos.getY() + Y_SPAWN_CHECK_RADIUS,
-							blockPos.getZ() + XZ_SPAWN_CHECK_RADIUS))
-					.filter(blockState -> blockState == DeferredRegistryHandler.CELESTIAL_LANTERN.get().defaultBlockState())
-					.limit(3)
-					.count();
-			if (nearbyCelestialLanterns >= 3) {
-				return false;
-			} else if (nearbyCelestialLanterns == 0) {
-				return canSpawn(level, blockPos);
-			} else if (GeneralUtilities.getRandomNumber(0.0f, 1.0f) <= (
-					nearbyCelestialLanterns == 2 ? 0.125f : 0.25f)) {
-				return canSpawn(level, blockPos);
-			}
-		} else if (CelestialTowerEntity.lastSpawnAttemptTick == -1) {
-			CelestialTowerEntity.lastSpawnAttemptTick = server.getTickCount();
+
+		if (!pLevel.getBlockState(blockPosition().below()).isValidSpawn(pLevel, blockPosition().below(), getType())) {
+			return false;
 		}
 
-		return false;
-	}
+		Vec3 position = position();
+		List<BlockPos> ALL_TILTROS_LANTERNS = CelestialLanternBlock.ALL_TILTROS_LANTERNS;
+		int nearbyLanterns = 0;
 
-	private boolean canSpawn(LevelAccessor pLevel, BlockPos blockPos) {
-		BlockState belowState = pLevel.getBlockState(blockPos.below());
-		boolean isValidSpawn = belowState.isValidSpawn(pLevel, blockPos.below(), getType());
-		boolean hasSufficientGround = pLevel.getBlockStatesIfLoaded(new AABB(blockPos.getX() - 8,
-						blockPos.getY() - 1, blockPos.getZ() - 8, blockPos.getX() + 8, blockPos.getY(),
-						blockPos.getZ() + 8))
-				.filter(BlockStateBase::isAir)
-				.count() / 256.0f >= 0.8f;
-		return isValidSpawn && hasSufficientGround;
+		for (BlockPos lanternPos : ALL_TILTROS_LANTERNS) {
+			if (nearbyLanterns < 3) {
+				if (lanternPos.distManhattan(new Vec3i(position.x, position.y, position.z)) < SPAWN_CHECK_RADIUS) {
+					nearbyLanterns++;
+				}
+			}
+		}
+		
+		if (nearbyLanterns == 3) {
+			return false;
+		} else if (nearbyLanterns == 0) {
+			return true;
+		} else return GeneralUtilities.getRandomNumber(0.0f, 1.0f) <= (nearbyLanterns == 2 ? 0.125f : 0.25f);
 	}
 
 	@Override

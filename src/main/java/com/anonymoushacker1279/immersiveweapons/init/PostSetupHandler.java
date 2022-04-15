@@ -27,7 +27,13 @@ public class PostSetupHandler {
 
 		// Pike Special Attributes
 		Builder<Attribute, AttributeModifier> builder = ImmutableMultimap.builder();
-		ImmutableMultimap<Attribute, AttributeModifier> newAttributes = builder.put(ForgeMod.REACH_DISTANCE.get(), new AttributeModifier(GeneralUtilities.ATTACK_REACH_MODIFIER, "Weapon modifier", 0.5d, AttributeModifier.Operation.ADDITION)).build();
+		ImmutableMultimap<Attribute, AttributeModifier> newAttributes =
+				builder.put(ForgeMod.REACH_DISTANCE.get(),
+								new AttributeModifier(GeneralUtilities.ATTACK_REACH_MODIFIER,
+										"Weapon modifier",
+										0.5d,
+										AttributeModifier.Operation.ADDITION))
+						.build();
 		Builder<Attribute, AttributeModifier> combineBuilder = ImmutableMultimap.builder();
 
 		// Wood Pike Item
@@ -79,7 +85,12 @@ public class PostSetupHandler {
 
 		// Gauntlet Special Attributes
 		builder = ImmutableMultimap.builder();
-		newAttributes = builder.put(ForgeMod.REACH_DISTANCE.get(), new AttributeModifier(GeneralUtilities.ATTACK_REACH_MODIFIER, "Weapon modifier", -2.0d, Operation.ADDITION)).build();
+		newAttributes = builder.put(ForgeMod.REACH_DISTANCE.get(),
+						new AttributeModifier(GeneralUtilities.ATTACK_REACH_MODIFIER,
+								"Weapon modifier",
+								-2.0d,
+								Operation.ADDITION))
+				.build();
 		combineBuilder = ImmutableMultimap.builder();
 
 		// Wood Gauntlet Item
@@ -130,7 +141,12 @@ public class PostSetupHandler {
 		NetheriteGauntletItem.gauntletAttributes = combineBuilder.build();
 
 		// Add custom logs to be stripped in AxeItem
-		AxeItem.STRIPPABLES = new ImmutableMap.Builder<Block, Block>().putAll(AxeItem.STRIPPABLES).put(DeferredRegistryHandler.BURNED_OAK_LOG.get(), DeferredRegistryHandler.STRIPPED_BURNED_OAK_LOG.get()).put(DeferredRegistryHandler.BURNED_OAK_WOOD.get(), DeferredRegistryHandler.STRIPPED_BURNED_OAK_WOOD.get()).build();
+		AxeItem.STRIPPABLES = new ImmutableMap.Builder<Block, Block>().putAll(AxeItem.STRIPPABLES)
+				.put(DeferredRegistryHandler.BURNED_OAK_LOG.get(),
+						DeferredRegistryHandler.STRIPPED_BURNED_OAK_LOG.get())
+				.put(DeferredRegistryHandler.BURNED_OAK_WOOD.get(),
+						DeferredRegistryHandler.STRIPPED_BURNED_OAK_WOOD.get())
+				.build();
 
 		// Set custom armor equip sounds, as these don't exist during the initialization of materials
 		CustomArmorMaterials.TESLA.setEquipSound(DeferredRegistryHandler.TESLA_ARMOR_EQUIP.get());

@@ -2,13 +2,11 @@ package com.anonymoushacker1279.immersiveweapons.event;
 
 import com.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import com.anonymoushacker1279.immersiveweapons.config.CommonConfig;
-import com.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
 import com.anonymoushacker1279.immersiveweapons.world.level.levelgen.OreGeneratorHandler;
-import net.minecraft.world.entity.MobCategory;
+import net.minecraft.core.Holder;
 import net.minecraft.world.level.biome.Biome.BiomeCategory;
-import net.minecraft.world.level.biome.MobSpawnSettings.SpawnerData;
+import net.minecraft.world.level.biome.Biomes;
 import net.minecraft.world.level.levelgen.GenerationStep;
-import net.minecraft.world.level.levelgen.GenerationStep.Decoration;
 import net.minecraftforge.common.world.BiomeGenerationSettingsBuilder;
 import net.minecraftforge.event.world.BiomeLoadingEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
@@ -30,33 +28,40 @@ public class ForgeEventSubscriber {
 	@SubscribeEvent(priority = EventPriority.HIGH)
 	public static void onBiomeLoading(BiomeLoadingEvent event) {
 		BiomeGenerationSettingsBuilder generation = event.getGeneration();
-		if (event.getCategory() != BiomeCategory.NETHER && event.getCategory() != BiomeCategory.THEEND) {
-			generation.addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, OreGeneratorHandler.COBALT_ORE_FEATURE);
-			generation.addFeature(Decoration.UNDERGROUND_ORES, OreGeneratorHandler.DEEPSLATE_COBALT_ORE_FEATURE);
+		BiomeCategory biomeCategory = event.getCategory();
 
-			if (event.getCategory() == BiomeCategory.RIVER || event.getCategory() == BiomeCategory.OCEAN) {
-				generation.addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, OreGeneratorHandler.SULFUR_ORE_FEATURE);
-				generation.addFeature(Decoration.UNDERGROUND_ORES, OreGeneratorHandler.DEEPSLATE_SULFUR_ORE_FEATURE);
+		if (biomeCategory == BiomeCategory.NETHER) {
+			if (CommonConfig.ENABLE_MOLTEN_ORE.get()) {
+				generation.addFeature(GenerationStep.Decoration.UNDERGROUND_ORES,
+						Holder.direct(OreGeneratorHandler.MOLTEN_ORE_BLOB_PLACEMENT));
 			}
-
-			if (event.getCategory() != BiomeCategory.OCEAN && event.getCategory() != BiomeCategory.RIVER) {
-				if (CommonConfig.WANDERING_WARRIOR_SPAWN.get())
-					event.getSpawns().addSpawn(MobCategory.MONSTER, new SpawnerData(DeferredRegistryHandler.WANDERING_WARRIOR_ENTITY.get(), 13, 1, 1));
-				if (CommonConfig.HANS_SPAWN.get())
-					event.getSpawns().addSpawn(MobCategory.MONSTER, new SpawnerData(DeferredRegistryHandler.HANS_ENTITY.get(), 1, 1, 1));
+			if (CommonConfig.ENABLE_NETHER_SULFUR_ORE.get()) {
+				generation.addFeature(GenerationStep.Decoration.UNDERGROUND_ORES,
+						Holder.direct(OreGeneratorHandler.NETHER_SULFUR_ORE_BLOB_PLACEMENT));
+			}
+		} else if (biomeCategory != BiomeCategory.THEEND) {
+			if (CommonConfig.ENABLE_COBALT_ORE.get()) {
+				generation.addFeature(GenerationStep.Decoration.UNDERGROUND_ORES,
+						Holder.direct(OreGeneratorHandler.COBALT_ORE_BLOB_PLACEMENT));
+			}
+			if (CommonConfig.ENABLE_DEEPSLATE_COBALT_ORE.get()) {
+				generation.addFeature(GenerationStep.Decoration.UNDERGROUND_ORES,
+						Holder.direct(OreGeneratorHandler.DEEPSLATE_COBALT_ORE_BLOB_PLACEMENT));
 			}
 		}
-		if (event.getCategory() == BiomeCategory.NETHER) {
-			generation.addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, OreGeneratorHandler.MOLTEN_ORE_FEATURE);
-			generation.addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, OreGeneratorHandler.NETHER_SULFUR_ORE_FEATURE);
+
+		if (biomeCategory == BiomeCategory.RIVER || biomeCategory == BiomeCategory.OCEAN) {
+			if (CommonConfig.ENABLE_SULFUR_ORE.get()) {
+				generation.addFeature(GenerationStep.Decoration.UNDERGROUND_ORES,
+						Holder.direct(OreGeneratorHandler.SULFUR_ORE_BLOB_PLACEMENT));
+			}
 		}
-		if (Objects.requireNonNull(event.getName()).toString().equals("immersiveweapons:tiltros")) {
-			if (CommonConfig.LAVA_REVENANT_SPAWN.get())
-				event.getSpawns().addSpawn(MobCategory.MONSTER, new SpawnerData(DeferredRegistryHandler.LAVA_REVENANT_ENTITY.get(), 1, 0, 1));
-			if (CommonConfig.ROCK_SPIDER_SPAWN.get())
-				event.getSpawns().addSpawn(MobCategory.MONSTER, new SpawnerData(DeferredRegistryHandler.ROCK_SPIDER_ENTITY.get(), 5, 4, 12));
-			if (CommonConfig.CELESTIAL_TOWER_SPAWN.get())
-				event.getSpawns().addSpawn(MobCategory.MONSTER, new SpawnerData(DeferredRegistryHandler.CELESTIAL_TOWER_ENTITY.get(), 2, 0, 1));
+		if (Objects.equals(event.getName(), Biomes.LUSH_CAVES.location())
+				|| Objects.equals(event.getName(), Biomes.DRIPSTONE_CAVES.location())) {
+			if (CommonConfig.ENABLE_DEEPSLATE_SULFUR_ORE.get()) {
+				generation.addFeature(GenerationStep.Decoration.UNDERGROUND_ORES,
+						Holder.direct(OreGeneratorHandler.DEEPSLATE_SULFUR_ORE_BLOB_PLACEMENT));
+			}
 		}
 	}
 }

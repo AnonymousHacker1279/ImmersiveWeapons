@@ -1,0 +1,26 @@
+{
+	"type": "minecraft:village",
+
+	"config": {
+		"start_pool": "immersiveweapons:battlefield_camp/start_pool",
+		"size": 1
+	},
+
+	"biomes": "#immersiveweapons:has_structure/battlefield_camp",
+
+	"adapt_noise": true,
+
+	"spawn_overrides": {
+		"monster": {
+			"bounding_box": "full",
+			"spawns": [
+				{
+					"type": "immersiveweapons:dying_soldier",
+					"weight": 1,
+					"minCount": 2,
+					"maxCount": 2
+				}
+			]
+		}
+	}
+}

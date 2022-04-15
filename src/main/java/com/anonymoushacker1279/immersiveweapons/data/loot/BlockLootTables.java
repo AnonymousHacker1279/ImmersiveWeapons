@@ -1,7 +1,7 @@
 package com.anonymoushacker1279.immersiveweapons.data.loot;
 
 import com.anonymoushacker1279.immersiveweapons.block.base.SandbagBlock;
-import com.anonymoushacker1279.immersiveweapons.block.misc.portal.statue.warrior.WarriorStatueTorso;
+import com.anonymoushacker1279.immersiveweapons.block.misc.warrior_statue.WarriorStatueTorso;
 import com.anonymoushacker1279.immersiveweapons.block.trap.LandmineBlock;
 import com.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
 import com.google.common.collect.Maps;

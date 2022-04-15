@@ -1,0 +1,14 @@
+{
+	"structures": [
+		{
+			"structure": "immersiveweapons:bear_trap",
+			"weight": 1
+		}
+	],
+	"placement": {
+		"salt": 794532168,
+		"spacing": 7,
+		"separation": 2,
+		"type": "minecraft:random_spread"
+	}
+}

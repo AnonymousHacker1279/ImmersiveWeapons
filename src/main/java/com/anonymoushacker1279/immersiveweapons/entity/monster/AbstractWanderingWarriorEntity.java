@@ -15,8 +15,7 @@ import net.minecraft.world.entity.monster.Creeper;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.*;
-import net.minecraft.world.level.Level;
-import net.minecraft.world.level.ServerLevelAccessor;
+import net.minecraft.world.level.*;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.NotNull;
@@ -44,18 +43,18 @@ public abstract class AbstractWanderingWarriorEntity extends Monster {
 	/**
 	 * Constructor for AbstractWanderingWarriorEntity.
 	 *
-	 * @param type    the <code>EntityType</code> instance
-	 * @param worldIn the <code>World</code> the entity is in
+	 * @param type  the <code>EntityType</code> instance
+	 * @param level the <code>Level</code> the entity is in
 	 */
-	AbstractWanderingWarriorEntity(EntityType<? extends Monster> type, Level worldIn) {
-		super(type, worldIn);
+	AbstractWanderingWarriorEntity(EntityType<? extends Monster> type, Level level) {
+		super(type, level);
 		setCombatTask();
 	}
 
 	/**
 	 * Register this entity's attributes.
 	 *
-	 * @return AttributeModifierMap.MutableAttribute
+	 * @return AttributeSupplier.Builder
 	 */
 	public static AttributeSupplier.Builder registerAttributes() {
 		return Monster.createMonsterAttributes()
@@ -82,11 +81,11 @@ public abstract class AbstractWanderingWarriorEntity extends Monster {
 	/**
 	 * Play the step sound.
 	 *
-	 * @param pos     the <code>BlockPos</code> the entity is at
-	 * @param blockIn the <code>BlockState</code> of the block being stepped on
+	 * @param pos   the <code>BlockPos</code> the entity is at
+	 * @param state the <code>BlockState</code> of the block being stepped on
 	 */
 	@Override
-	protected void playStepSound(@NotNull BlockPos pos, @NotNull BlockState blockIn) {
+	protected void playStepSound(@NotNull BlockPos pos, @NotNull BlockState state) {
 		playSound(getStepSound(), 0.15F, 1.0F);
 	}
 
@@ -146,31 +145,37 @@ public abstract class AbstractWanderingWarriorEntity extends Monster {
 	/**
 	 * Finalize spawn information.
 	 *
-	 * @param worldIn      the <code>IServerWorld</code> the entity is in
-	 * @param difficultyIn the <code>DifficultyInstance</code> of the world
-	 * @param reason       the <code>SpawnReason</code> for the entity
-	 * @param spawnDataIn  the <code>ILivingEntitySpawnData</code> for the entity
-	 * @param dataTag      the <code>CompoundNBT</code> data tag for the entity
-	 * @return ILivingEntityData
+	 * @param level      the <code>ServerLevelAccessor</code> the entity is in
+	 * @param difficulty the <code>DifficultyInstance</code> of the world
+	 * @param spawnType  the <code>MobSpawnType</code> for the entity
+	 * @param groupData  the <code>SpawnGroupData</code> for the entity
+	 * @param tag        the <code>CompoundTag</code> data tag for the entity
+	 * @return SpawnGroupData
 	 */
 	@Override
-	public SpawnGroupData finalizeSpawn(@NotNull ServerLevelAccessor worldIn, @NotNull DifficultyInstance difficultyIn, @NotNull MobSpawnType reason, @Nullable SpawnGroupData spawnDataIn, @Nullable CompoundTag dataTag) {
-		spawnDataIn = super.finalizeSpawn(worldIn, difficultyIn, reason, spawnDataIn, dataTag);
-		populateDefaultEquipmentSlots(difficultyIn);
-		populateDefaultEquipmentEnchantments(difficultyIn);
+	public SpawnGroupData finalizeSpawn(@NotNull ServerLevelAccessor level, @NotNull DifficultyInstance difficulty,
+	                                    @NotNull MobSpawnType spawnType, @Nullable SpawnGroupData groupData,
+	                                    @Nullable CompoundTag tag) {
+
+		groupData = super.finalizeSpawn(level, difficulty, spawnType, groupData, tag);
+		populateDefaultEquipmentSlots(difficulty);
+		populateDefaultEquipmentEnchantments(difficulty);
 		setCombatTask();
-		setCanPickUpLoot(random.nextFloat() < 0.55F * difficultyIn.getSpecialMultiplier());
+		setCanPickUpLoot(random.nextFloat() < 0.55F * difficulty.getSpecialMultiplier());
+
 		if (getItemBySlot(EquipmentSlot.HEAD).isEmpty()) {
 			LocalDate date = LocalDate.now();
 			int day = date.get(ChronoField.DAY_OF_MONTH);
 			int month = date.get(ChronoField.MONTH_OF_YEAR);
 			if (month == 10 && day == 31 && random.nextFloat() < 0.25F) {
-				setItemSlot(EquipmentSlot.HEAD, new ItemStack(random.nextFloat() < 0.1F ? Blocks.JACK_O_LANTERN : Blocks.CARVED_PUMPKIN));
+				setItemSlot(EquipmentSlot.HEAD,
+						new ItemStack(random.nextFloat() < 0.1F ? Blocks.JACK_O_LANTERN : Blocks.CARVED_PUMPKIN));
+
 				armorDropChances[EquipmentSlot.HEAD.getIndex()] = 0.0F;
 			}
 		}
 
-		return spawnDataIn;
+		return groupData;
 	}
 
 	/**
@@ -189,10 +194,18 @@ public abstract class AbstractWanderingWarriorEntity extends Monster {
 	/**
 	 * Read entity NBT data.
 	 *
-	 * @param compound the <code>CompoundNBT</code> to read from
+	 * @param compound the <code>CompoundTag</code> to read from
 	 */
 	@Override
 	public void readAdditionalSaveData(@NotNull CompoundTag compound) {
 		super.readAdditionalSaveData(compound);
+	}
+
+	@Override
+	public boolean checkSpawnRules(@NotNull LevelAccessor pLevel, @NotNull MobSpawnType pSpawnReason) {
+		boolean walkTargetAboveZero = super.checkSpawnRules(pLevel, pSpawnReason);
+		boolean onGround = pLevel.getBlockState(blockPosition().below()).getFluidState().isEmpty();
+
+		return walkTargetAboveZero && onGround;
 	}
 }

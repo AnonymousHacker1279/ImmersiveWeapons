@@ -3,6 +3,7 @@ package com.anonymoushacker1279.immersiveweapons.blockentity;
 import com.anonymoushacker1279.immersiveweapons.entity.neutral.FieldMedicEntity;
 import com.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
 import com.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
+import com.anonymoushacker1279.immersiveweapons.world.level.levelgen.biomes.BiomesAndDimensions;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
@@ -34,19 +35,24 @@ public class MedicStatueBlockEntity extends BlockEntity implements EntityBlock {
 	 * Runs once each tick. Handle scanning and spawning entities.
 	 */
 	public static void serverTick(Level level, BlockPos blockPos, MedicStatueBlockEntity medicStatueBlockEntity) {
-		// TODO: Rework when Forge API updates
-		// if (Objects.equals(level.getBiome(blockPos).getRegistryName(), DeferredRegistryHandler.BATTLEFIELD.get().getRegistryName()) && medicStatueBlockEntity.cooldown == 0) {
-		if (medicStatueBlockEntity.cooldown == 0) {
-			List<FieldMedicEntity> listOfMedicsInArea = level.getEntitiesOfClass(FieldMedicEntity.class, new AABB(medicStatueBlockEntity.getBlockPos().getX() - 48, medicStatueBlockEntity.getBlockPos().getY() - 16, medicStatueBlockEntity.getBlockPos().getZ() - 48, medicStatueBlockEntity.getBlockPos().getX() + 48, medicStatueBlockEntity.getBlockPos().getY() + 16, medicStatueBlockEntity.getBlockPos().getZ() + 48));
+		if (level.getBiome(blockPos).is(BiomesAndDimensions.BATTLEFIELD) && medicStatueBlockEntity.cooldown == 0) {
+			List<FieldMedicEntity> listOfMedicsInArea = level.getEntitiesOfClass(FieldMedicEntity.class,
+					new AABB(medicStatueBlockEntity.getBlockPos().getX() - 48,
+							medicStatueBlockEntity.getBlockPos().getY() - 16,
+							medicStatueBlockEntity.getBlockPos().getZ() - 48,
+							medicStatueBlockEntity.getBlockPos().getX() + 48,
+							medicStatueBlockEntity.getBlockPos().getY() + 16,
+							medicStatueBlockEntity.getBlockPos().getZ() + 48));
+
 			medicStatueBlockEntity.scannedMedics = listOfMedicsInArea.size();
 
 			if (medicStatueBlockEntity.scannedMedics <= 1) {
 				FieldMedicEntity fieldMedicEntity = DeferredRegistryHandler.FIELD_MEDIC_ENTITY.get().create(level);
 				if (fieldMedicEntity != null) {
 					while (true) {
-						BlockPos blockPos1 = medicStatueBlockEntity.getRandomPositionInArea();
-						if (level.getBlockState(blockPos1) == Blocks.AIR.defaultBlockState()) {
-							fieldMedicEntity.moveTo(blockPos1, 0.0F, 0.0F);
+						BlockPos randomPositionInArea = medicStatueBlockEntity.getRandomPositionInArea();
+						if (level.getBlockState(randomPositionInArea) == Blocks.AIR.defaultBlockState()) {
+							fieldMedicEntity.moveTo(randomPositionInArea, 0.0F, 0.0F);
 							level.addFreshEntity(fieldMedicEntity);
 							medicStatueBlockEntity.spawnParticles();
 							medicStatueBlockEntity.cooldown = 400;
@@ -70,7 +76,7 @@ public class MedicStatueBlockEntity extends BlockEntity implements EntityBlock {
 	@Nullable
 	@Override
 	public BlockEntity newBlockEntity(@NotNull BlockPos blockPos, @NotNull BlockState blockState) {
-		return new MinutemanStatueBlockEntity(blockPos, blockState);
+		return new MedicStatueBlockEntity(blockPos, blockState);
 	}
 
 	/**
@@ -79,7 +85,15 @@ public class MedicStatueBlockEntity extends BlockEntity implements EntityBlock {
 	private void spawnParticles() {
 		ServerLevel serverWorld = (ServerLevel) getLevel();
 		if (serverWorld != null) {
-			serverWorld.sendParticles(ParticleTypes.HAPPY_VILLAGER, getBlockPos().getX() + 0.5d, getBlockPos().getY(), getBlockPos().getZ() + 0.75d, 5, GeneralUtilities.getRandomNumber(-0.05d, 0.05d), GeneralUtilities.getRandomNumber(-0.25d, 0.25d), GeneralUtilities.getRandomNumber(-0.05d, 0.05d), GeneralUtilities.getRandomNumber(-0.15d, 0.15d));
+			serverWorld.sendParticles(ParticleTypes.HAPPY_VILLAGER,
+					getBlockPos().getX() + 0.5d,
+					getBlockPos().getY(),
+					getBlockPos().getZ() + 0.75d,
+					5,
+					GeneralUtilities.getRandomNumber(-0.05d, 0.05d),
+					GeneralUtilities.getRandomNumber(-0.25d, 0.25d),
+					GeneralUtilities.getRandomNumber(-0.05d, 0.05d),
+					GeneralUtilities.getRandomNumber(-0.15d, 0.15d));
 		}
 	}
 
@@ -89,7 +103,9 @@ public class MedicStatueBlockEntity extends BlockEntity implements EntityBlock {
 	 * @return BlockPos
 	 */
 	private BlockPos getRandomPositionInArea() {
-		return new BlockPos(getBlockPos().getX() + GeneralUtilities.getRandomNumber(-15, 15), getBlockPos().getY(), getBlockPos().getZ() + GeneralUtilities.getRandomNumber(-15, 15));
+		return new BlockPos(getBlockPos().getX() + GeneralUtilities.getRandomNumber(-8, 8),
+				getBlockPos().getY(),
+				getBlockPos().getZ() + GeneralUtilities.getRandomNumber(-8, 8));
 	}
 
 	/**

@@ -2,6 +2,7 @@ package com.anonymoushacker1279.immersiveweapons.event;
 
 import com.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import com.anonymoushacker1279.immersiveweapons.entity.monster.*;
+import com.anonymoushacker1279.immersiveweapons.entity.monster.lava_revenant.LavaRevenantEntity;
 import com.anonymoushacker1279.immersiveweapons.entity.neutral.AbstractFieldMedicEntity;
 import com.anonymoushacker1279.immersiveweapons.entity.neutral.AbstractMinutemanEntity;
 import com.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;

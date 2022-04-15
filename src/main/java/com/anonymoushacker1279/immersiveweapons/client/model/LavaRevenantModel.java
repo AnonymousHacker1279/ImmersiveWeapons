@@ -1,6 +1,6 @@
 package com.anonymoushacker1279.immersiveweapons.client.model;
 
-import com.anonymoushacker1279.immersiveweapons.entity.monster.LavaRevenantEntity;
+import com.anonymoushacker1279.immersiveweapons.entity.monster.lava_revenant.LavaRevenantEntity;
 import net.minecraft.client.model.HierarchicalModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.util.Mth;

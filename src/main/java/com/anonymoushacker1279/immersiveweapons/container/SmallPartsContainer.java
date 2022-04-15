@@ -1,7 +1,7 @@
 package com.anonymoushacker1279.immersiveweapons.container;
 
 import com.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
-import com.anonymoushacker1279.immersiveweapons.item.crafting.ICustomRecipeType;
+import com.anonymoushacker1279.immersiveweapons.item.crafting.CustomRecipeTypes;
 import com.anonymoushacker1279.immersiveweapons.item.crafting.SmallPartsRecipe;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.player.Inventory;
@@ -40,7 +40,7 @@ public class SmallPartsContainer extends ItemCombinerMenu {
 	public SmallPartsContainer(int id, Inventory inv, ContainerLevelAccess access) {
 		super(DeferredRegistryHandler.SMALL_PARTS_TABLE_CONTAINER.get(), id, inv, access);
 		world = inv.player.level;
-		smallPartsRecipeList = world.getRecipeManager().getAllRecipesFor(ICustomRecipeType.SMALL_PARTS);
+		smallPartsRecipeList = world.getRecipeManager().getAllRecipesFor(CustomRecipeTypes.SMALL_PARTS);
 	}
 
 	/**
@@ -91,7 +91,7 @@ public class SmallPartsContainer extends ItemCombinerMenu {
 	@Override
 	public void createResult() {
 		List<SmallPartsRecipe> recipes = world.getRecipeManager()
-				.getRecipesFor(ICustomRecipeType.SMALL_PARTS, inputSlots, world);
+				.getRecipesFor(CustomRecipeTypes.SMALL_PARTS, inputSlots, world);
 
 		if (recipes.isEmpty()) {
 			resultSlots.setItem(0, ItemStack.EMPTY);

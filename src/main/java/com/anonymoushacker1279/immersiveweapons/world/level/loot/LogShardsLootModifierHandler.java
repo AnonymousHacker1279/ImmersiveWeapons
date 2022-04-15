@@ -52,7 +52,7 @@ public class LogShardsLootModifierHandler extends LootModifier {
 		//
 		int numShards = 0;
 		for (ItemStack stack : generatedLoot) {
-			if (stack.is(ItemTags.bind(blockTag))) {
+			if (stack.is(ItemTags.create(new ResourceLocation(blockTag)))) {
 				numShards += stack.getCount() + GeneralUtilities.getRandomNumber(2, 5);
 			}
 		}

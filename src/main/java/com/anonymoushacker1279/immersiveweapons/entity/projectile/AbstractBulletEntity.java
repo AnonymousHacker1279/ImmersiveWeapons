@@ -1,6 +1,7 @@
 package com.anonymoushacker1279.immersiveweapons.entity.projectile;
 
 import com.anonymoushacker1279.immersiveweapons.config.CommonConfig;
+import com.anonymoushacker1279.immersiveweapons.data.tags.groups.forge.ForgeBlockTagGroups;
 import com.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
 import it.unimi.dsi.fastutil.ints.IntOpenHashSet;
 import net.minecraft.core.BlockPos;
@@ -24,6 +25,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.*;
 import net.minecraft.world.phys.HitResult.Type;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import net.minecraftforge.common.Tags.Blocks;
 import net.minecraftforge.event.ForgeEventFactory;
 import net.minecraftforge.network.NetworkHooks;
 import org.jetbrains.annotations.NotNull;
@@ -387,7 +389,7 @@ public abstract class AbstractBulletEntity extends AbstractArrow {
 
 		// Check if the bullet hit a permeable block like leaves, if so
 		// keep moving and decrease velocity
-		if (inBlockState.is(BlockTags.bind("minecraft:leaves"))) {
+		if (inBlockState.is(BlockTags.LEAVES)) {
 			push(0, -0.1, 0);
 			shakeTime = 4;
 		} else {
@@ -405,9 +407,9 @@ public abstract class AbstractBulletEntity extends AbstractArrow {
 
 		// Check if glass can be broken, and if it hasn't already broken glass
 		if (canBreakGlass && !hasAlreadyBrokeGlass
-				&& !inBlockState.is(BlockTags.bind("forge:bulletproof_glass"))
-				&& inBlockState.is(BlockTags.bind("forge:glass"))
-				|| inBlockState.is(BlockTags.bind("forge:glass_panes"))) {
+				&& !inBlockState.is(ForgeBlockTagGroups.BULLETPROOF_GLASS)
+				&& inBlockState.is(Blocks.GLASS)
+				|| inBlockState.is(Blocks.GLASS_PANES)) {
 
 			level.destroyBlock(blockHitResult.getBlockPos(), false);
 			hasAlreadyBrokeGlass = true;

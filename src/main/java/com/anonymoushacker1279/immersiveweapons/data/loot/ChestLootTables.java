@@ -35,6 +35,7 @@ public class ChestLootTables implements Consumer<BiConsumer<ResourceLocation, Bu
 								.add(LootItem.lootTableItem(DeferredRegistryHandler.OBSIDIAN_SHARD.get()).setWeight(4))
 								.add(LootItem.lootTableItem(DeferredRegistryHandler.ELECTRIC_INGOT.get()).setWeight(3))
 								.add(LootItem.lootTableItem(DeferredRegistryHandler.TESLA_INGOT.get()).setWeight(1))));
+
 		resourceLocationBuilderBiConsumer.accept(LootTableLocations.BATTLEFIELD_CAMP,
 				LootTable.lootTable()
 						.withPool(LootPool.lootPool()
@@ -53,6 +54,7 @@ public class ChestLootTables implements Consumer<BiConsumer<ResourceLocation, Bu
 										.apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0f, 3.0f))))
 								.add(LootItem.lootTableItem(Items.EMERALD).setWeight(3))
 								.add(LootItem.lootTableItem(DeferredRegistryHandler.FLINTLOCK_PISTOL.get()).setWeight(1))));
+
 		resourceLocationBuilderBiConsumer.accept(LootTableLocations.CAMPSITE,
 				LootTable.lootTable()
 						.withPool(LootPool.lootPool()
@@ -72,6 +74,7 @@ public class ChestLootTables implements Consumer<BiConsumer<ResourceLocation, Bu
 								.add(LootItem.lootTableItem(DeferredRegistryHandler.FLARE.get()).setWeight(3)
 										.apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0f, 4.0f))))
 								.add(LootItem.lootTableItem(DeferredRegistryHandler.FLARE_GUN.get()).setWeight(1))));
+
 		resourceLocationBuilderBiConsumer.accept(LootTableLocations.UNDERGROUND_BUNKER,
 				LootTable.lootTable()
 						.withPool(LootPool.lootPool()
@@ -90,6 +93,7 @@ public class ChestLootTables implements Consumer<BiConsumer<ResourceLocation, Bu
 										.apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0f, 3.0f))))
 								.add(LootItem.lootTableItem(DeferredRegistryHandler.FLINTLOCK_PISTOL.get()).setWeight(2))
 								.add(LootItem.lootTableItem(DeferredRegistryHandler.BLUNDERBUSS.get()).setWeight(1))));
+
 		resourceLocationBuilderBiConsumer.accept(LootTableLocations.BATTLEFIELD_VILLAGE_MEDIC_STATION,
 				LootTable.lootTable()
 						.withPool(LootPool.lootPool()
@@ -102,11 +106,42 @@ public class ChestLootTables implements Consumer<BiConsumer<ResourceLocation, Bu
 										.apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 3.0F))))
 								.add(LootItem.lootTableItem(Items.IRON_AXE).setWeight(4)
 										.apply(EnchantRandomlyFunction.randomApplicableEnchantment())
-										.apply(SetNameFunction.setName(new TranslatableComponent("loot.immersiveweapons.chest.village.battlefield.medic_station.iron_axe").withStyle(ChatFormatting.RED))))
+										.apply(SetNameFunction
+												.setName(new TranslatableComponent("loot.immersiveweapons.chest.village.battlefield.medic_station.iron_axe")
+														.withStyle(ChatFormatting.RED))))
 								.add(LootItem.lootTableItem(DeferredRegistryHandler.USED_SYRINGE.get()).setWeight(4)
 										.apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0f, 3.0f))))
 								.add(LootItem.lootTableItem(DeferredRegistryHandler.SYRINGE.get()).setWeight(2)
 										.apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0f, 2.0f))))
 								.add(LootItem.lootTableItem(DeferredRegistryHandler.MORPHINE.get()).setWeight(1))));
+
+		resourceLocationBuilderBiConsumer.accept(LootTableLocations.HANS_HUT,
+				LootTable.lootTable()
+						.withPool(LootPool.lootPool()
+								.setRolls(UniformGenerator.between(4.0F, 6.0F))
+								.add(LootItem.lootTableItem(Items.SALMON).setWeight(5)
+										.apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 6.0F))))
+								.add(LootItem.lootTableItem(Items.COD).setWeight(5)
+										.apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 6.0F))))
+								.add(LootItem.lootTableItem(DeferredRegistryHandler.BOTTLE_OF_ALCOHOL.get()).setWeight(4)
+										.apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0f, 3.0f))))
+								.add(LootItem.lootTableItem(DeferredRegistryHandler.BOTTLE_OF_WINE.get()).setWeight(4)
+										.apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0f, 3.0f))))
+								.add(LootItem.lootTableItem(Items.IRON_SWORD).setWeight(3)
+										.apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0f, 1.0f)))
+										.apply(EnchantRandomlyFunction.randomApplicableEnchantment()))
+								.add(LootItem.lootTableItem(Items.IRON_HELMET).setWeight(2)
+										.apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0f, 1.0f)))
+										.apply(EnchantRandomlyFunction.randomApplicableEnchantment()))));
+
+
+		resourceLocationBuilderBiConsumer.accept(LootTableLocations.HANS_HUT_CASK,
+				LootTable.lootTable()
+						.withPool(LootPool.lootPool()
+								.setRolls(UniformGenerator.between(6.0F, 9.0F))
+								.add(LootItem.lootTableItem(Items.WHEAT).setWeight(2)
+										.apply(SetItemCountFunction.setCount(UniformGenerator.between(8.0F, 32.0F))))
+								.add(LootItem.lootTableItem(Items.SWEET_BERRIES).setWeight(1)
+										.apply(SetItemCountFunction.setCount(UniformGenerator.between(8.0f, 16.0f))))));
 	}
 }

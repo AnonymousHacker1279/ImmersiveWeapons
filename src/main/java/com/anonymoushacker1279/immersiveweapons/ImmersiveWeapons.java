@@ -4,19 +4,23 @@ import com.anonymoushacker1279.immersiveweapons.block.properties.WoodTypes;
 import com.anonymoushacker1279.immersiveweapons.config.ClientConfig;
 import com.anonymoushacker1279.immersiveweapons.config.CommonConfig;
 import com.anonymoushacker1279.immersiveweapons.init.*;
+import com.anonymoushacker1279.immersiveweapons.item.crafting.CustomRecipeTypes;
 import com.anonymoushacker1279.immersiveweapons.world.level.levelgen.OreGeneratorHandler;
-import com.anonymoushacker1279.immersiveweapons.world.level.levelgen.Structures;
+import com.anonymoushacker1279.immersiveweapons.world.level.levelgen.biomes.IWOverworldBiomesProvider;
+import com.anonymoushacker1279.immersiveweapons.world.level.levelgen.biomes.SurfaceRuleData;
+import com.mojang.logging.LogUtils;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.state.properties.WoodType;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig.Type;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
+import terrablender.api.*;
+import terrablender.api.SurfaceRuleManager.RuleCategory;
 
 // The value here should match an entry in the META-INF/mods.toml file
 @Mod(ImmersiveWeapons.MOD_ID)
@@ -25,7 +29,7 @@ public class ImmersiveWeapons {
 	public static final String MOD_ID = "immersiveweapons";
 
 	// Setup logger
-	public static final Logger LOGGER = LogManager.getLogger();
+	public static final Logger LOGGER = LogUtils.getLogger();
 
 	// Mod setup begins here
 	public ImmersiveWeapons() {
@@ -42,7 +46,6 @@ public class ImmersiveWeapons {
 		// Add event listeners
 		IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
 		modEventBus.addListener(this::setup);
-		MinecraftForge.EVENT_BUS.addListener(EventPriority.NORMAL, Structures::addDimensionalSpacing);
 
 		// Register packet handlers
 		PacketHandler.registerPackets();
@@ -57,10 +60,12 @@ public class ImmersiveWeapons {
 	public void setup(FMLCommonSetupEvent event) {
 		DispenserBehaviorRegistry.init();
 		OreGeneratorHandler.init();
+		CustomRecipeTypes.init();
 		event.enqueueWork(() -> {
 			WoodType.register(WoodTypes.BURNED_OAK);
-			Structures.setupStructures();
-			Structures.registerConfiguredStructures();
+			Regions.register(new IWOverworldBiomesProvider(new ResourceLocation(MOD_ID, "overworld_biome_provider"),
+					RegionType.OVERWORLD, 1));
+			SurfaceRuleManager.addSurfaceRules(RuleCategory.OVERWORLD, MOD_ID, SurfaceRuleData.makeRules());
 		});
 		PostSetupHandler.init();
 	}

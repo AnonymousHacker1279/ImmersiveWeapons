@@ -2,9 +2,9 @@ package com.anonymoushacker1279.immersiveweapons.init;
 
 import com.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import com.anonymoushacker1279.immersiveweapons.block.base.MortarBlock.MortarBlockPacketHandler;
-import com.anonymoushacker1279.immersiveweapons.block.misc.portal.statue.warrior.WarriorStatueTorso.WarriorStatueTorsoPacketHandler;
+import com.anonymoushacker1279.immersiveweapons.block.misc.warrior_statue.WarriorStatueTorso.WarriorStatueTorsoPacketHandler;
 import com.anonymoushacker1279.immersiveweapons.block.trap.SpikeTrapBlock.SpikeTrapBlockPacketHandler;
-import com.anonymoushacker1279.immersiveweapons.entity.monster.LavaRevenantEntity.LavaRevenantEntityPacketHandler;
+import com.anonymoushacker1279.immersiveweapons.entity.monster.lava_revenant.LavaRevenantEntity.LavaRevenantEntityPacketHandler;
 import com.anonymoushacker1279.immersiveweapons.entity.neutral.AbstractFieldMedicEntity.AbstractFieldMedicEntityPacketHandler;
 import com.anonymoushacker1279.immersiveweapons.entity.projectile.CustomArrowEntity.SmokeBombArrowEntityPacketHandler;
 import com.anonymoushacker1279.immersiveweapons.entity.projectile.SmokeBombEntity.SmokeBombEntityPacketHandler;

@@ -109,11 +109,11 @@ public abstract class AbstractMinutemanEntity extends PathfinderMob implements R
 		targetSelector.addGoal(1, new HurtByTargetGoal(this, MinutemanEntity.class, IronGolem.class));
 		targetSelector.addGoal(4, new DefendVillageTargetGoal(this));
 		targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, AbstractDyingSoldierEntity.class,
-				false));
+				true));
 		targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, Player.class, 8,
 				true, false, this::isAngryAt));
 		targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Monster.class, 10,
-				false, false, (targetPredicate) -> !(targetPredicate instanceof Creeper)));
+				true, false, (targetPredicate) -> !(targetPredicate instanceof Creeper)));
 		targetSelector.addGoal(5, new ResetUniversalAngerTargetGoal<>(this, false));
 	}
 

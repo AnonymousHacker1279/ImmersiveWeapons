@@ -4,8 +4,7 @@ import com.anonymoushacker1279.immersiveweapons.data.advancements.AdvancementPro
 import com.anonymoushacker1279.immersiveweapons.data.loot.LootTableGenerator;
 import com.anonymoushacker1279.immersiveweapons.data.models.ModelProvider;
 import com.anonymoushacker1279.immersiveweapons.data.recipes.RecipeGenerator;
-import com.anonymoushacker1279.immersiveweapons.data.tags.BlockTagsGenerator;
-import com.anonymoushacker1279.immersiveweapons.data.tags.ItemTagsGenerator;
+import com.anonymoushacker1279.immersiveweapons.data.tags.*;
 import net.minecraft.data.DataGenerator;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -35,6 +34,7 @@ public class CustomDataGenerator {
 			BlockTagsGenerator blockTagsGenerator = new BlockTagsGenerator(generator, event.getExistingFileHelper());
 			generator.addProvider(blockTagsGenerator);
 			generator.addProvider(new ItemTagsGenerator(generator, blockTagsGenerator, event.getExistingFileHelper()));
+			generator.addProvider(new BiomeTagsGenerator(generator, event.getExistingFileHelper()));
 		}
 	}
 }

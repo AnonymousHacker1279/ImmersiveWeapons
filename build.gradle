@@ -2,6 +2,8 @@ buildscript {
 	repositories {
 		maven { url = 'https://maven.minecraftforge.net' }
 		maven { url = 'https://maven.parchmentmc.org' }
+		maven { url = 'https://repo.spongepowered.org/repository/maven-public/' }
+		mavenCentral()
 	}
 	dependencies {
 		classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '5.1.+', changing: true
@@ -108,22 +110,27 @@ sourceSets.main.resources { srcDir 'src/generated/resources' }
 dependencies {
 	implementation 'org.jetbrains:annotations:23.0.0'
 
-	minecraft forge_version
+	minecraft "net.minecraftforge:forge:${forge_version}"
 
 	// Include JEI
-	implementation fg.deobf(jei_version)
+	implementation fg.deobf("mezz.jei:jei-${jei_version}")
 
 	// Include WTHIT
-	implementation fg.deobf(wthit_version)
+	compileOnly fg.deobf("mcp.mobius.waila:wthit-api:${wthit_version}")
+	runtimeOnly fg.deobf("mcp.mobius.waila:wthit:${wthit_version}")
 
 	// Include Patchouli
-	compileOnly fg.deobf(patchouli_version + ":api")
-	runtimeOnly fg.deobf(patchouli_version)
+	compileOnly fg.deobf("vazkii.patchouli:Patchouli:${patchouli_version}:api")
+	runtimeOnly fg.deobf("vazkii.patchouli:Patchouli:${patchouli_version}")
+
+	// Include TerraBlender
+	implementation fg.deobf("com.github.glitchfiend:TerraBlender-forge:${terrablender_version}")
 }
 
 // This block of code expands all the gradle properties in the specified resource targets.
 // It copies them into the targets and expands all the defined properties.
-def resourceTargets = ['data/immersiveweapons/patchouli_books/encyclopedia/book.json']
+def resourceTargets = ['data/immersiveweapons/patchouli_books/encyclopedia/book.json',
+                       'data/immersiveweapons/patchouli_books/lorebook/book.json']
 def intoTargets = ["$rootDir/out/production/resources/", "$rootDir/out/production/${project.name}.main/", "$rootDir/bin/main/"]
 def replaceProperties = [build_version: version]
 processResources {
@@ -175,4 +182,8 @@ publishing {
 			url "file:///${project.projectDir}/mcmodsrepo"
 		}
 	}
+}
+
+tasks.withType(JavaCompile).configureEach {
+	options.encoding = 'UTF-8' // Use the UTF-8 charset for Java compilation
 }

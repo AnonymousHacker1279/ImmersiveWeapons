@@ -1,25 +1,26 @@
 package com.anonymoushacker1279.immersiveweapons.data.tags.groups.minecraft;
 
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.ItemTags;
-import net.minecraft.tags.Tag.Named;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 
 public class MinecraftItemTagGroups {
-	
-	public static final Named<Item> FENCES = ItemTags.bind("minecraft:fences");
-	public static final Named<Item> LOGS_THAT_BURN = ItemTags.bind("minecraft:logs_that_burn");
-	public static final Named<Item> PLANKS = ItemTags.bind("minecraft:planks");
-	public static final Named<Item> SLABS = ItemTags.bind("minecraft:slabs");
-	public static final Named<Item> STAIRS = ItemTags.bind("minecraft:stairs");
-	public static final Named<Item> SIGNS = ItemTags.bind("minecraft:signs");
-	public static final Named<Item> WOODEN_BUTTONS = ItemTags.bind("minecraft:wooden_buttons");
-	public static final Named<Item> WOODEN_DOORS = ItemTags.bind("minecraft:wooden_doors");
-	public static final Named<Item> WOODEN_FENCES = ItemTags.bind("minecraft:wooden_fences");
-	public static final Named<Item> WOODEN_PRESSURE_PLATES = ItemTags.bind("minecraft:wooden_pressure_plates");
-	public static final Named<Item> WOODEN_SLABS = ItemTags.bind("minecraft:wooden_slabs");
-	public static final Named<Item> WOODEN_STAIRS = ItemTags.bind("minecraft:wooden_stairs");
-	public static final Named<Item> WOODEN_TRAPDOORS = ItemTags.bind("minecraft:wooden_trapdoors");
-	public static final Named<Item> BOATS = ItemTags.bind("minecraft:boats");
-	public static final Named<Item> ARROWS = ItemTags.bind("minecraft:arrows");
+
+	public static final TagKey<Item> FENCES = ItemTags.create(new ResourceLocation("fences"));
+	public static final TagKey<Item> LOGS_THAT_BURN = ItemTags.create(new ResourceLocation("logs_that_burn"));
+	public static final TagKey<Item> PLANKS = ItemTags.create(new ResourceLocation("planks"));
+	public static final TagKey<Item> SLABS = ItemTags.create(new ResourceLocation("slabs"));
+	public static final TagKey<Item> STAIRS = ItemTags.create(new ResourceLocation("stairs"));
+	public static final TagKey<Item> SIGNS = ItemTags.create(new ResourceLocation("signs"));
+	public static final TagKey<Item> WOODEN_BUTTONS = ItemTags.create(new ResourceLocation("wooden_buttons"));
+	public static final TagKey<Item> WOODEN_DOORS = ItemTags.create(new ResourceLocation("wooden_doors"));
+	public static final TagKey<Item> WOODEN_FENCES = ItemTags.create(new ResourceLocation("wooden_fences"));
+	public static final TagKey<Item> WOODEN_PRESSURE_PLATES = ItemTags.create(new ResourceLocation("wooden_pressure_plates"));
+	public static final TagKey<Item> WOODEN_SLABS = ItemTags.create(new ResourceLocation("wooden_slabs"));
+	public static final TagKey<Item> WOODEN_STAIRS = ItemTags.create(new ResourceLocation("wooden_stairs"));
+	public static final TagKey<Item> WOODEN_TRAPDOORS = ItemTags.create(new ResourceLocation("wooden_trapdoors"));
+	public static final TagKey<Item> BOATS = ItemTags.create(new ResourceLocation("boats"));
+	public static final TagKey<Item> ARROWS = ItemTags.create(new ResourceLocation("arrows"));
 
 }

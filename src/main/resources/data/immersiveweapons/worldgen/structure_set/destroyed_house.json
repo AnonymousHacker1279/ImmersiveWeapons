@@ -1,0 +1,14 @@
+{
+	"structures": [
+		{
+			"structure": "immersiveweapons:destroyed_house",
+			"weight": 1
+		}
+	],
+	"placement": {
+		"salt": 615794356,
+		"spacing": 10,
+		"separation": 5,
+		"type": "minecraft:random_spread"
+	}
+}

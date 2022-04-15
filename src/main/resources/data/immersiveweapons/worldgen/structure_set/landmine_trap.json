@@ -1,0 +1,14 @@
+{
+	"structures": [
+		{
+			"structure": "immersiveweapons:landmine_trap",
+			"weight": 1
+		}
+	],
+	"placement": {
+		"salt": 959874384,
+		"spacing": 7,
+		"separation": 4,
+		"type": "minecraft:random_spread"
+	}
+}

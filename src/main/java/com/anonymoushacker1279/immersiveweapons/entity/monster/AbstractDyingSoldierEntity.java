@@ -26,8 +26,7 @@ import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.entity.projectile.ProjectileUtil;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ProjectileWeaponItem;
-import net.minecraft.world.level.Level;
-import net.minecraft.world.level.ServerLevelAccessor;
+import net.minecraft.world.level.*;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.NotNull;
@@ -64,18 +63,18 @@ public abstract class AbstractDyingSoldierEntity extends Monster implements Rang
 	/**
 	 * Constructor for AbstractDyingSoldierEntity.
 	 *
-	 * @param type    the <code>EntityType</code> instance
-	 * @param worldIn the <code>World</code> the entity is in
+	 * @param type  the <code>EntityType</code> instance
+	 * @param level the <code>Level</code> the entity is in
 	 */
-	AbstractDyingSoldierEntity(EntityType<? extends AbstractDyingSoldierEntity> type, Level worldIn) {
-		super(type, worldIn);
+	AbstractDyingSoldierEntity(EntityType<? extends AbstractDyingSoldierEntity> type, Level level) {
+		super(type, level);
 		setCombatTask();
 	}
 
 	/**
 	 * Register this entity's attributes.
 	 *
-	 * @return AttributeModifierMap.MutableAttribute
+	 * @return AttributeSupplier.Builder
 	 */
 	public static AttributeSupplier.Builder registerAttributes() {
 		return Monster.createMonsterAttributes()
@@ -106,11 +105,11 @@ public abstract class AbstractDyingSoldierEntity extends Monster implements Rang
 	/**
 	 * Play the step sound.
 	 *
-	 * @param pos     the <code>BlockPos</code> the entity is at
-	 * @param blockIn the <code>BlockState</code> of the block being stepped on
+	 * @param pos   the <code>BlockPos</code> the entity is at
+	 * @param state the <code>BlockState</code> of the block being stepped on
 	 */
 	@Override
-	protected void playStepSound(@NotNull BlockPos pos, @NotNull BlockState blockIn) {
+	protected void playStepSound(@NotNull BlockPos pos, @NotNull BlockState state) {
 		playSound(getStepSound(), 0.15F, 1.0F);
 	}
 
@@ -119,7 +118,7 @@ public abstract class AbstractDyingSoldierEntity extends Monster implements Rang
 	/**
 	 * Get the mob type.
 	 *
-	 * @return CreatureAttribute
+	 * @return MobType
 	 */
 	@Override
 	public @NotNull MobType getMobType() {
@@ -151,31 +150,37 @@ public abstract class AbstractDyingSoldierEntity extends Monster implements Rang
 	/**
 	 * Finalize spawn information.
 	 *
-	 * @param worldIn      the <code>IServerWorld</code> the entity is in
-	 * @param difficultyIn the <code>DifficultyInstance</code> of the world
-	 * @param reason       the <code>SpawnReason</code> for the entity
-	 * @param spawnDataIn  the <code>ILivingEntitySpawnData</code> for the entity
-	 * @param dataTag      the <code>CompoundNBT</code> data tag for the entity
-	 * @return ILivingEntityData
+	 * @param level      the <code>ServerLevelAccessor</code> the entity is in
+	 * @param difficulty the <code>DifficultyInstance</code> of the world
+	 * @param spawnType  the <code>MobSpawnType</code> for the entity
+	 * @param groupData  the <code>SpawnGroupData</code> for the entity
+	 * @param tag        the <code>CompoundTag</code> data tag for the entity
+	 * @return SpawnGroupData
 	 */
 	@Override
-	public SpawnGroupData finalizeSpawn(@NotNull ServerLevelAccessor worldIn, @NotNull DifficultyInstance difficultyIn, @NotNull MobSpawnType reason, @Nullable SpawnGroupData spawnDataIn, @Nullable CompoundTag dataTag) {
-		spawnDataIn = super.finalizeSpawn(worldIn, difficultyIn, reason, spawnDataIn, dataTag);
-		populateDefaultEquipmentSlots(difficultyIn);
-		populateDefaultEquipmentEnchantments(difficultyIn);
+	public SpawnGroupData finalizeSpawn(@NotNull ServerLevelAccessor level, @NotNull DifficultyInstance difficulty,
+	                                    @NotNull MobSpawnType spawnType, @Nullable SpawnGroupData groupData,
+	                                    @Nullable CompoundTag tag) {
+
+		groupData = super.finalizeSpawn(level, difficulty, spawnType, groupData, tag);
+		populateDefaultEquipmentSlots(difficulty);
+		populateDefaultEquipmentEnchantments(difficulty);
 		setCombatTask();
-		setCanPickUpLoot(random.nextFloat() < 0.55F * difficultyIn.getSpecialMultiplier());
+		setCanPickUpLoot(random.nextFloat() < 0.55F * difficulty.getSpecialMultiplier());
+
 		if (getItemBySlot(EquipmentSlot.HEAD).isEmpty()) {
-			LocalDate localdate = LocalDate.now();
-			int day = localdate.get(ChronoField.DAY_OF_MONTH);
-			int month = localdate.get(ChronoField.MONTH_OF_YEAR);
+			LocalDate date = LocalDate.now();
+			int day = date.get(ChronoField.DAY_OF_MONTH);
+			int month = date.get(ChronoField.MONTH_OF_YEAR);
 			if (month == 10 && day == 31 && random.nextFloat() < 0.25F) {
-				setItemSlot(EquipmentSlot.HEAD, new ItemStack(random.nextFloat() < 0.1F ? Blocks.JACK_O_LANTERN : Blocks.CARVED_PUMPKIN));
+				setItemSlot(EquipmentSlot.HEAD,
+						new ItemStack(random.nextFloat() < 0.1F ? Blocks.JACK_O_LANTERN : Blocks.CARVED_PUMPKIN));
+
 				armorDropChances[EquipmentSlot.HEAD.getIndex()] = 0.0F;
 			}
 		}
 
-		return spawnDataIn;
+		return groupData;
 	}
 
 	/**
@@ -272,12 +277,12 @@ public abstract class AbstractDyingSoldierEntity extends Monster implements Rang
 	/**
 	 * Set item slots.
 	 *
-	 * @param slotIn the <code>EquipmentSlotType</code> to set
-	 * @param stack  the <code>ItemStack</code> to set in the slot
+	 * @param slot  the <code>EquipmentSlot</code> to set
+	 * @param stack the <code>ItemStack</code> to set in the slot
 	 */
 	@Override
-	public void setItemSlot(@NotNull EquipmentSlot slotIn, @NotNull ItemStack stack) {
-		super.setItemSlot(slotIn, stack);
+	public void setItemSlot(@NotNull EquipmentSlot slot, @NotNull ItemStack stack) {
+		super.setItemSlot(slot, stack);
 		if (!level.isClientSide) {
 			setCombatTask();
 		}
@@ -287,12 +292,12 @@ public abstract class AbstractDyingSoldierEntity extends Monster implements Rang
 	/**
 	 * Get the standing eye height of the entity.
 	 *
-	 * @param poseIn the <code>Pose</code> instance
-	 * @param sizeIn the <code>EntitySize</code> of the entity
+	 * @param pose       the <code>Pose</code> instance
+	 * @param dimensions the <code>EntityDimensions</code> of the entity
 	 * @return float
 	 */
 	@Override
-	protected float getStandingEyeHeight(@NotNull Pose poseIn, @NotNull EntityDimensions sizeIn) {
+	protected float getStandingEyeHeight(@NotNull Pose pose, @NotNull EntityDimensions dimensions) {
 		return 1.74F;
 	}
 
@@ -304,5 +309,13 @@ public abstract class AbstractDyingSoldierEntity extends Monster implements Rang
 	@Override
 	public double getMyRidingOffset() {
 		return -0.6D;
+	}
+
+	@Override
+	public boolean checkSpawnRules(@NotNull LevelAccessor pLevel, @NotNull MobSpawnType pSpawnReason) {
+		boolean walkTargetAboveZero = super.checkSpawnRules(pLevel, pSpawnReason);
+		boolean onGround = pLevel.getBlockState(blockPosition().below()).getFluidState().isEmpty();
+
+		return walkTargetAboveZero && onGround;
 	}
 }
