@@ -301,6 +301,7 @@
 	"container.immersiveweapons.tesla_synthesizer": "Tesla Synthesizing",
 	"gui.jei.category.small_parts": "Small Parts Crafting",
 	"gui.jei.category.tesla_synthesizer": "Tesla Synthesizing",
+	"gui.jei.category.tesla_synthesizer.note": "*32x speed",
 	"immersiveweapons.subtitle.armor.tesla.equip": "Tesla armor clanks",
 	"immersiveweapons.subtitle.armor.tesla.effect": "Tesla armor zapping",
 	"immersiveweapons.subtitle.armor.tesla.power_down": "Tesla armor turning off",

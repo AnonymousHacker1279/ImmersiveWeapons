@@ -8,7 +8,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.client.event.EntityViewRenderEvent.FogDensity;
+import net.minecraftforge.client.event.EntityViewRenderEvent.RenderFogEvent;
 import net.minecraftforge.client.event.RenderBlockOverlayEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
@@ -44,7 +44,7 @@ public class ClientForgeEventSubscriber {
 	 * @param event the <code>FogDensity</code> instance
 	 */
 	@SubscribeEvent
-	public static void fogDensityEvent(FogDensity event) {
+	public static void fogDensityEvent(RenderFogEvent event) {
 
 		// Reduce lava fog from players wearing a full set of molten armor
 		Player player = Minecraft.getInstance().player;
@@ -56,7 +56,8 @@ public class ClientForgeEventSubscriber {
 				if (Minecraft.getInstance().level != null) {
 					BlockState state = Minecraft.getInstance().level.getBlockState(player.eyeBlockPosition());
 					if (state.is(Blocks.LAVA)) {
-						event.setDensity(192.0F - (192.0F * 0.02F));
+						event.setNearPlaneDistance(16.0f);
+						event.setFarPlaneDistance(32.0f);
 						event.setCanceled(true);
 					}
 				}
