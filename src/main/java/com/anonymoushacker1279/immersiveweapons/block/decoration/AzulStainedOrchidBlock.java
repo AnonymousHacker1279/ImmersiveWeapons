@@ -35,7 +35,6 @@ public class AzulStainedOrchidBlock extends FlowerBlock {
 		return OffsetType.NONE;
 	}
 
-	@SuppressWarnings("deprecation")
 	@Override
 	public void entityInside(@NotNull BlockState state, @NotNull Level level, @NotNull BlockPos pos, @NotNull Entity entity) {
 		if (CommonConfig.TILTROS_ENABLED.get()) {
@@ -47,8 +46,8 @@ public class AzulStainedOrchidBlock extends FlowerBlock {
 				}
 				Level entityWorld = entity.level;
 				MinecraftServer server = entityWorld.getServer();
-				ResourceKey<Level> destination = entityWorld.dimension() == BiomesAndDimensions.TILTROS ? Level.OVERWORLD
-						: BiomesAndDimensions.TILTROS;
+				ResourceKey<Level> destination = entityWorld.dimension() == BiomesAndDimensions.D_TILTROS ? Level.OVERWORLD
+						: BiomesAndDimensions.D_TILTROS;
 
 				if (server != null) {
 					ServerLevel destinationWorld = server.getLevel(destination);

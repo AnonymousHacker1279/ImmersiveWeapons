@@ -10,8 +10,9 @@ import net.minecraft.world.level.biome.Biome;
 public class BiomesAndDimensions {
 
 	public static final ResourceKey<Biome> BATTLEFIELD = register("battlefield");
+	public static final ResourceKey<Biome> B_TILTROS = register("tiltros");
 
-	public static final ResourceKey<Level> TILTROS = ResourceKey.create(Registry.DIMENSION_REGISTRY,
+	public static final ResourceKey<Level> D_TILTROS = ResourceKey.create(Registry.DIMENSION_REGISTRY,
 			new ResourceLocation(ImmersiveWeapons.MOD_ID, "tiltros"));
 
 	private static ResourceKey<Biome> register(String name) {

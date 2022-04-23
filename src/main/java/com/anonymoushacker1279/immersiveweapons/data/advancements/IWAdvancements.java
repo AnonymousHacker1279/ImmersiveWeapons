@@ -4,6 +4,7 @@ import com.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import com.anonymoushacker1279.immersiveweapons.advancement.EntityDiscoveredTrigger;
 import com.anonymoushacker1279.immersiveweapons.data.tags.groups.immersiveweapons.ImmersiveWeaponsItemTagGroups;
 import com.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
+import com.anonymoushacker1279.immersiveweapons.world.level.levelgen.biomes.BiomesAndDimensions;
 import net.minecraft.ChatFormatting;
 import net.minecraft.advancements.*;
 import net.minecraft.advancements.Advancement.Builder;
@@ -1035,5 +1036,50 @@ public class IWAdvancements implements Consumer<Consumer<Advancement>> {
 						LocationTrigger.TriggerInstance.walkOnBlockWithEquipment(DeferredRegistryHandler.CLOUD.get(),
 								Items.AIR))
 				.save(consumer, "immersiveweapons:cloud");
+
+		// Location advancements
+		Builder.advancement().parent(root)
+				.display(Blocks.SKELETON_SKULL,
+						new TranslatableComponent("advancements.immersiveweapons.battlefield.title"),
+						new TranslatableComponent("advancements.immersiveweapons.battlefield.description"),
+						null, FrameType.TASK, true, true, false)
+				.addCriterion("visit",
+						LocationTrigger.TriggerInstance.located(
+								LocationPredicate.inBiome(BiomesAndDimensions.BATTLEFIELD)))
+				.rewards(AdvancementRewards.Builder.experience(50))
+				.save(consumer, "immersiveweapons:battlefield");
+
+		// Tiltros advancements
+		Advancement warrior_statue = Builder.advancement().parent(root)
+				.display(DeferredRegistryHandler.WARRIOR_STATUE_HEAD.get(),
+						new TranslatableComponent("advancements.immersiveweapons.tiltros.warrior_statue.title"),
+						new TranslatableComponent("advancements.immersiveweapons.tiltros.warrior_statue.description"),
+						null, FrameType.TASK, true, true, true)
+				.addCriterion("hold",
+						InventoryChangeTrigger.TriggerInstance.hasItems(DeferredRegistryHandler.WARRIOR_STATUE_BASE.get(),
+								DeferredRegistryHandler.WARRIOR_STATUE_TORSO.get(),
+								DeferredRegistryHandler.WARRIOR_STATUE_HEAD.get()))
+				.requirements(RequirementsStrategy.AND)
+				.save(consumer, "immersiveweapons:warrior_statue");
+
+		Advancement azul_keystone = Builder.advancement().parent(warrior_statue)
+				.display(DeferredRegistryHandler.AZUL_KEYSTONE.get(),
+						new TranslatableComponent("advancements.immersiveweapons.tiltros.azul_keystone.title"),
+						new TranslatableComponent("advancements.immersiveweapons.tiltros.azul_keystone.description"),
+						null, FrameType.TASK, true, true, true)
+				.addCriterion("hold",
+						InventoryChangeTrigger.TriggerInstance.hasItems(DeferredRegistryHandler.AZUL_KEYSTONE.get()))
+				.save(consumer, "immersiveweapons:azul_keystone");
+
+		Builder.advancement().parent(azul_keystone)
+				.display(DeferredRegistryHandler.AZUL_STAINED_ORCHID_ITEM.get(),
+						new TranslatableComponent("advancements.immersiveweapons.tiltros.biome.title"),
+						new TranslatableComponent("advancements.immersiveweapons.tiltros.biome.description"),
+						null, FrameType.TASK, true, true, false)
+				.addCriterion("visit",
+						LocationTrigger.TriggerInstance.located(
+								LocationPredicate.inBiome(BiomesAndDimensions.B_TILTROS)))
+				.rewards(AdvancementRewards.Builder.experience(50))
+				.save(consumer, "immersiveweapons:tiltros");
 	}
 }
