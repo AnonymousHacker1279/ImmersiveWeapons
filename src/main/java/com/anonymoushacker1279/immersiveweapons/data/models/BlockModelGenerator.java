@@ -43,8 +43,6 @@ public class BlockModelGenerator {
 	}
 
 	public void run() {
-		BlockTagLists.init();
-
 		// Create models and blockstates for all glasses
 		// Combine lists and remove duplicates
 		for (Block block : combineBlockLists(BlockTagLists.BULLETPROOF_GLASS, BlockTagLists.STAINED_GLASS)) {
@@ -99,6 +97,20 @@ public class BlockModelGenerator {
 		createTrivialCube(DeferredRegistryHandler.VENTUS_ORE.get());
 		createTrivialCube(DeferredRegistryHandler.CLOUD.get());
 		createTrivialCube(DeferredRegistryHandler.RAW_SULFUR_BLOCK.get());
+
+		// Skull blocks
+		blockEntityModels(ModelLocationUtils.decorateBlockModelLocation("skull"))
+				.createWithCustomBlockItemModel(ModelTemplates.SKULL_INVENTORY,
+						DeferredRegistryHandler.MINUTEMAN_HEAD.get(),
+						DeferredRegistryHandler.FIELD_MEDIC_HEAD.get(),
+						DeferredRegistryHandler.DYING_SOLDIER_HEAD.get(),
+						DeferredRegistryHandler.WANDERING_WARRIOR_HEAD.get(),
+						DeferredRegistryHandler.HANS_HEAD.get())
+				.createWithoutBlockItem(DeferredRegistryHandler.MINUTEMAN_WALL_HEAD.get(),
+						DeferredRegistryHandler.FIELD_MEDIC_WALL_HEAD.get(),
+						DeferredRegistryHandler.DYING_SOLDIER_WALL_HEAD.get(),
+						DeferredRegistryHandler.WANDERING_WARRIOR_WALL_HEAD.get(),
+						DeferredRegistryHandler.HANS_WALL_HEAD.get());
 
 		// Blockstates
 		createSimpleCubeBlockstate(DeferredRegistryHandler.COBALT_ORE.get());
@@ -929,6 +941,41 @@ public class BlockModelGenerator {
 										.with(VariantProperties.Y_ROT, VariantProperties.Rotation.R90)));
 	}
 
+	private BlockEntityModelGenerator blockEntityModels(ResourceLocation pEntityBlockModelLocation) {
+		return new BlockEntityModelGenerator(pEntityBlockModelLocation);
+	}
+
+	class BlockEntityModelGenerator {
+		private final ResourceLocation baseModel;
+
+		public BlockEntityModelGenerator(ResourceLocation location) {
+			baseModel = location;
+		}
+
+		public BlockEntityModelGenerator create(Block... pBlocks) {
+			for (Block block : pBlocks) {
+				blockStateOutput.accept(createSimpleBlock(block, baseModel));
+			}
+
+			return this;
+		}
+
+		public BlockEntityModelGenerator createWithoutBlockItem(Block... pBlocks) {
+			for (Block block : pBlocks) {
+				skipAutoItemBlock(block);
+			}
+
+			return create(pBlocks);
+		}
+
+		public BlockEntityModelGenerator createWithCustomBlockItemModel(ModelTemplate pModelTemplate, Block... pBlocks) {
+			for (Block block : pBlocks) {
+				pModelTemplate.create(ModelLocationUtils.getModelLocation(block.asItem()), TextureMapping.particle(block), modelOutput);
+			}
+
+			return create(pBlocks);
+		}
+	}
 
 	@FunctionalInterface
 	interface BlockStateGeneratorSupplier {
@@ -1069,12 +1116,6 @@ public class BlockModelGenerator {
 			TextureMapping textureMapping = logMapping.copyAndUpdate(TextureSlot.END, logMapping.get(TextureSlot.SIDE));
 			ResourceLocation resourceLocation = ModelTemplates.CUBE_COLUMN.create(pWoodBlock, textureMapping, modelOutput);
 			blockStateOutput.accept(createAxisAlignedPillarBlock(pWoodBlock, resourceLocation));
-		}
-
-		public WoodProvider log(Block pLogBlock) {
-			ResourceLocation resourceLocation = ModelTemplates.CUBE_COLUMN.create(pLogBlock, logMapping, modelOutput);
-			blockStateOutput.accept(createAxisAlignedPillarBlock(pLogBlock, resourceLocation));
-			return this;
 		}
 
 		public WoodProvider logWithHorizontal(Block pLogBlock) {

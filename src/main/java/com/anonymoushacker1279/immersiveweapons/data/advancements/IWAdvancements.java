@@ -1,12 +1,14 @@
 package com.anonymoushacker1279.immersiveweapons.data.advancements;
 
 import com.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
+import com.anonymoushacker1279.immersiveweapons.advancement.EntityDiscoveredTrigger;
 import com.anonymoushacker1279.immersiveweapons.data.tags.groups.immersiveweapons.ImmersiveWeaponsItemTagGroups;
 import com.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
 import net.minecraft.ChatFormatting;
 import net.minecraft.advancements.*;
 import net.minecraft.advancements.Advancement.Builder;
 import net.minecraft.advancements.critereon.*;
+import net.minecraft.advancements.critereon.EntityPredicate.Composite;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.ItemTags;
@@ -17,8 +19,9 @@ import net.minecraftforge.common.Tags;
 
 import java.util.function.Consumer;
 
-public class ImmersiveWeaponsAdvancements implements Consumer<Consumer<Advancement>> {
-	ImmersiveWeaponsAdvancements() {
+public class IWAdvancements implements Consumer<Consumer<Advancement>> {
+
+	IWAdvancements() {
 	}
 
 	/**
@@ -810,6 +813,127 @@ public class ImmersiveWeaponsAdvancements implements Consumer<Consumer<Advanceme
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(Items.NETHERITE_INGOT))
 				.save(consumer, "immersiveweapons:netherite_ingot");
+
+		// Entity discovery advancements
+		Advancement entity_discovery = Builder.advancement().parent(root)
+				.display(Items.CREEPER_HEAD,
+						new TranslatableComponent("advancements.immersiveweapons.entity_discovery.title"),
+						new TranslatableComponent("advancements.immersiveweapons.entity_discovery.description"),
+						null, FrameType.GOAL, true, true, false)
+				.addCriterion("discover_minuteman", new EntityDiscoveredTrigger.TriggerInstance(
+						Composite.ANY,
+						DeferredRegistryHandler.MINUTEMAN_ENTITY.getId()))
+				.addCriterion("discover_field_medic", new EntityDiscoveredTrigger.TriggerInstance(
+						Composite.ANY,
+						DeferredRegistryHandler.FIELD_MEDIC_ENTITY.getId()))
+				.addCriterion("discover_dying_soldier", new EntityDiscoveredTrigger.TriggerInstance(
+						Composite.ANY,
+						DeferredRegistryHandler.DYING_SOLDIER_ENTITY.getId()))
+				.addCriterion("discover_wandering_warrior", new EntityDiscoveredTrigger.TriggerInstance(
+						Composite.ANY,
+						DeferredRegistryHandler.WANDERING_WARRIOR_ENTITY.getId()))
+				.addCriterion("discover_hans", new EntityDiscoveredTrigger.TriggerInstance(
+						Composite.ANY,
+						DeferredRegistryHandler.HANS_ENTITY.getId()))
+				.addCriterion("discover_lava_revenant", new EntityDiscoveredTrigger.TriggerInstance(
+						Composite.ANY,
+						DeferredRegistryHandler.LAVA_REVENANT_ENTITY.getId()))
+				.addCriterion("discover_rock_spider", new EntityDiscoveredTrigger.TriggerInstance(
+						Composite.ANY,
+						DeferredRegistryHandler.ROCK_SPIDER_ENTITY.getId()))
+				.addCriterion("discover_celestial_tower", new EntityDiscoveredTrigger.TriggerInstance(
+						Composite.ANY,
+						DeferredRegistryHandler.CELESTIAL_TOWER_ENTITY.getId()))
+				.rewards(AdvancementRewards.Builder.experience(150))
+				.save(consumer, "immersiveweapons:entity_discovery");
+
+		Builder.advancement().parent(entity_discovery)
+				.display(DeferredRegistryHandler.MINUTEMAN_HEAD_ITEM.get(),
+						new TranslatableComponent("advancements.immersiveweapons.discover_minuteman.title"),
+						new TranslatableComponent("advancements.immersiveweapons.discover_minuteman.description"),
+						null, FrameType.TASK, true, true, false)
+				.addCriterion("discover", new EntityDiscoveredTrigger.TriggerInstance(
+						Composite.ANY,
+						DeferredRegistryHandler.MINUTEMAN_ENTITY.getId()))
+				.rewards(AdvancementRewards.Builder.experience(20))
+				.save(consumer, "immersiveweapons:discover_minuteman");
+
+		Builder.advancement().parent(entity_discovery)
+				.display(DeferredRegistryHandler.FIELD_MEDIC_HEAD_ITEM.get(),
+						new TranslatableComponent("advancements.immersiveweapons.discover_field_medic.title"),
+						new TranslatableComponent("advancements.immersiveweapons.discover_field_medic.description"),
+						null, FrameType.TASK, true, true, false)
+				.addCriterion("discover", new EntityDiscoveredTrigger.TriggerInstance(
+						Composite.ANY,
+						DeferredRegistryHandler.FIELD_MEDIC_ENTITY.getId()))
+				.rewards(AdvancementRewards.Builder.experience(20))
+				.save(consumer, "immersiveweapons:discover_field_medic");
+
+		Builder.advancement().parent(entity_discovery)
+				.display(DeferredRegistryHandler.DYING_SOLDIER_HEAD_ITEM.get(),
+						new TranslatableComponent("advancements.immersiveweapons.discover_dying_soldier.title"),
+						new TranslatableComponent("advancements.immersiveweapons.discover_dying_soldier.description"),
+						null, FrameType.TASK, true, true, false)
+				.addCriterion("discover", new EntityDiscoveredTrigger.TriggerInstance(
+						Composite.ANY,
+						DeferredRegistryHandler.DYING_SOLDIER_ENTITY.getId()))
+				.rewards(AdvancementRewards.Builder.experience(20))
+				.save(consumer, "immersiveweapons:discover_dying_soldier");
+
+		Builder.advancement().parent(entity_discovery)
+				.display(DeferredRegistryHandler.WANDERING_WARRIOR_HEAD_ITEM.get(),
+						new TranslatableComponent("advancements.immersiveweapons.discover_wandering_warrior.title"),
+						new TranslatableComponent("advancements.immersiveweapons.discover_wandering_warrior.description"),
+						null, FrameType.TASK, true, true, false)
+				.addCriterion("discover", new EntityDiscoveredTrigger.TriggerInstance(
+						Composite.ANY,
+						DeferredRegistryHandler.WANDERING_WARRIOR_ENTITY.getId()))
+				.rewards(AdvancementRewards.Builder.experience(20))
+				.save(consumer, "immersiveweapons:discover_wandering_warrior");
+
+		Builder.advancement().parent(entity_discovery)
+				.display(DeferredRegistryHandler.HANS_HEAD_ITEM.get(),
+						new TranslatableComponent("advancements.immersiveweapons.discover_hans.title"),
+						new TranslatableComponent("advancements.immersiveweapons.discover_hans.description"),
+						null, FrameType.TASK, true, true, false)
+				.addCriterion("discover", new EntityDiscoveredTrigger.TriggerInstance(
+						Composite.ANY,
+						DeferredRegistryHandler.HANS_ENTITY.getId()))
+				.rewards(AdvancementRewards.Builder.experience(20))
+				.save(consumer, "immersiveweapons:discover_hans");
+
+		Builder.advancement().parent(entity_discovery)
+				.display(DeferredRegistryHandler.SULFUR.get(),
+						new TranslatableComponent("advancements.immersiveweapons.discover_lava_revenant.title"),
+						new TranslatableComponent("advancements.immersiveweapons.discover_lava_revenant.description"),
+						null, FrameType.TASK, true, true, false)
+				.addCriterion("discover", new EntityDiscoveredTrigger.TriggerInstance(
+						Composite.ANY,
+						DeferredRegistryHandler.LAVA_REVENANT_ENTITY.getId()))
+				.rewards(AdvancementRewards.Builder.experience(20))
+				.save(consumer, "immersiveweapons:discover_lava_revenant");
+
+		Builder.advancement().parent(entity_discovery)
+				.display(Items.SPIDER_EYE,
+						new TranslatableComponent("advancements.immersiveweapons.discover_rock_spider.title"),
+						new TranslatableComponent("advancements.immersiveweapons.discover_rock_spider.description"),
+						null, FrameType.TASK, true, true, false)
+				.addCriterion("discover", new EntityDiscoveredTrigger.TriggerInstance(
+						Composite.ANY,
+						DeferredRegistryHandler.ROCK_SPIDER_ENTITY.getId()))
+				.rewards(AdvancementRewards.Builder.experience(20))
+				.save(consumer, "immersiveweapons:discover_rock_spider");
+
+		Builder.advancement().parent(entity_discovery)
+				.display(DeferredRegistryHandler.CELESTIAL_FRAGMENT.get(),
+						new TranslatableComponent("advancements.immersiveweapons.discover_celestial_tower.title"),
+						new TranslatableComponent("advancements.immersiveweapons.discover_celestial_tower.description"),
+						null, FrameType.TASK, true, true, false)
+				.addCriterion("discover", new EntityDiscoveredTrigger.TriggerInstance(
+						Composite.ANY,
+						DeferredRegistryHandler.CELESTIAL_TOWER_ENTITY.getId()))
+				.rewards(AdvancementRewards.Builder.experience(20))
+				.save(consumer, "immersiveweapons:discover_celestial_tower");
 
 		// Other advancements
 		Builder.advancement().parent(root)

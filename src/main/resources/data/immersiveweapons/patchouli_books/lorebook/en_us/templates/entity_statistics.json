@@ -1,0 +1,31 @@
+{
+	"processor": "com.anonymoushacker1279.immersiveweapons.client.integration.patchouli.EntityStatisticsProcessor",
+	"components": [
+		{
+			"type": "patchouli:header",
+			"text": "#header",
+			"x": -1,
+			"y": -1
+		},
+		{
+			"type": "patchouli:custom",
+			"class": "com.anonymoushacker1279.immersiveweapons.client.integration.patchouli.EntityStatisticsComponent",
+			"color": "486F38",
+			"statType": "entities_killed",
+			"icon": "minecraft:iron_sword",
+			"entity": "#entity",
+			"x": 0,
+			"y": 15
+		},
+		{
+			"type": "patchouli:custom",
+			"class": "com.anonymoushacker1279.immersiveweapons.client.integration.patchouli.EntityStatisticsComponent",
+			"color": "7D1E20",
+			"statType": "deaths_by_entity",
+			"icon": "minecraft:skeleton_skull",
+			"entity": "#entity",
+			"x": 0,
+			"y": 75
+		}
+	]
+}

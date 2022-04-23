@@ -1,0 +1,21 @@
+{
+	"name": "Wandering Warrior",
+	"icon": "immersiveweapons:wandering_warrior_head",
+	"category": "immersiveweapons:hostile_creatures",
+	"pages": [
+		{
+			"type": "patchouli:text",
+			"text": "$(o)*Inarticulate screeching*$()$(br2)Likely one of the most irritating creatures to encounter, these things run around and want to kill. Nearly everything.$(br)They possess some sort of basic warrior training, but a well-timed strike is usually sufficient for keeping them from landing a hit on you first."
+		},
+		{
+			"type": "patchouli:entity",
+			"entity": "immersiveweapons:wandering_warrior",
+			"text": "$(o)These creatures have quite an extensive history of ruining fun."
+		},
+		{
+			"type": "immersiveweapons:entity_statistics",
+			"entity": "immersiveweapons:wandering_warrior"
+		}
+	],
+	"advancement": "immersiveweapons:discover_wandering_warrior"
+}

@@ -1,0 +1,20 @@
+{
+	"name": "Dying Soldier",
+	"icon": "immersiveweapons:dying_soldier_head",
+	"category": "immersiveweapons:hostile_creatures",
+	"pages": [
+		{
+			"type": "patchouli:text",
+			"text": "Dying soldiers are wanderers of the battlefield plains. They're always alert and ready to attack. $(br2)Though they are in a decaying state, don't be fooled! They're still a threat, packing a punch with their flintlocks and iron musket balls. They are often seen targeting $(l:neutral_creatures/minuteman)minutemen$(), $(l:neutral_creatures/field_medic)field medics$(), iron golems, villagers, and of course, players."
+		},
+		{
+			"type": "patchouli:entity",
+			"entity": "immersiveweapons:dying_soldier"
+		},
+		{
+			"type": "immersiveweapons:entity_statistics",
+			"entity": "immersiveweapons:dying_soldier"
+		}
+	],
+	"advancement": "immersiveweapons:discover_dying_soldier"
+}

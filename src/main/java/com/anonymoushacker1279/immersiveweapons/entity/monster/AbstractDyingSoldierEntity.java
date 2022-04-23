@@ -1,5 +1,6 @@
 package com.anonymoushacker1279.immersiveweapons.entity.monster;
 
+import com.anonymoushacker1279.immersiveweapons.entity.GrantAdvancementOnDiscovery;
 import com.anonymoushacker1279.immersiveweapons.entity.ai.goal.RangedGunAttackGoal;
 import com.anonymoushacker1279.immersiveweapons.entity.neutral.FieldMedicEntity;
 import com.anonymoushacker1279.immersiveweapons.entity.neutral.MinutemanEntity;
@@ -17,6 +18,7 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.*;
 import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
+import net.minecraft.world.entity.ai.targeting.TargetingConditions;
 import net.minecraft.world.entity.animal.IronGolem;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.monster.RangedAttackMob;
@@ -29,6 +31,7 @@ import net.minecraft.world.item.ProjectileWeaponItem;
 import net.minecraft.world.level.*;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.AABB;
 import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
@@ -36,7 +39,7 @@ import java.time.LocalDate;
 import java.time.temporal.ChronoField;
 import java.util.function.Predicate;
 
-public abstract class AbstractDyingSoldierEntity extends Monster implements RangedAttackMob {
+public abstract class AbstractDyingSoldierEntity extends Monster implements RangedAttackMob, GrantAdvancementOnDiscovery {
 
 	private final RangedGunAttackGoal<AbstractDyingSoldierEntity> aiPistolAttack =
 			new RangedGunAttackGoal<>(this, 1.0D, 20, 15.0F);
@@ -100,6 +103,19 @@ public abstract class AbstractDyingSoldierEntity extends Monster implements Rang
 		targetSelector.addGoal(4, new NearestAttackableTargetGoal<>(this, FieldMedicEntity.class, true));
 		targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, Player.class, true));
 		targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, IronGolem.class, true));
+	}
+
+	@Override
+	public void aiStep() {
+		super.aiStep();
+		if (!level.isClientSide) {
+			AABB scanningBox = new AABB(blockPosition().offset(-50, -50, -50),
+					blockPosition().offset(50, 50, 50));
+
+			for (Player player : level.getNearbyPlayers(TargetingConditions.forNonCombat(), this, scanningBox)) {
+				checkForDiscovery(this, player);
+			}
+		}
 	}
 
 	/**

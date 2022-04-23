@@ -58,7 +58,6 @@ public class ItemModelGenerator {
 	 * Run the model generator.
 	 */
 	public void run() {
-		ItemModelLists.init();
 		List<Item> items = new ArrayList<>(250);
 		List<Item> ignoredItems = ItemModelLists.ignoredItems;
 

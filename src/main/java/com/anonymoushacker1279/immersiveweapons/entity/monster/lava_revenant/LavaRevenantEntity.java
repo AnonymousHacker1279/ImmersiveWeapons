@@ -1,5 +1,6 @@
 package com.anonymoushacker1279.immersiveweapons.entity.monster.lava_revenant;
 
+import com.anonymoushacker1279.immersiveweapons.entity.GrantAdvancementOnDiscovery;
 import com.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
 import com.anonymoushacker1279.immersiveweapons.init.PacketHandler;
 import com.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
@@ -32,6 +33,7 @@ import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.ForgeHooks;
+import net.minecraftforge.entity.PartEntity;
 import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.network.NetworkEvent;
 import net.minecraftforge.network.NetworkEvent.Context;
@@ -42,7 +44,7 @@ import javax.annotation.Nullable;
 import java.util.*;
 import java.util.function.Supplier;
 
-public class LavaRevenantEntity extends FlyingMob implements Enemy {
+public class LavaRevenantEntity extends FlyingMob implements Enemy, GrantAdvancementOnDiscovery {
 
 	private static final int TICKS_PER_FLAP = Mth.ceil(24.166098F);
 	private static final EntityDataAccessor<Integer> ID_SIZE = SynchedEntityData.defineId(LavaRevenantEntity.class,
@@ -153,6 +155,19 @@ public class LavaRevenantEntity extends FlyingMob implements Enemy {
 	@Override
 	protected boolean shouldDespawnInPeaceful() {
 		return true;
+	}
+
+	@Override
+	public void aiStep() {
+		super.aiStep();
+		if (!level.isClientSide) {
+			AABB scanningBox = new AABB(blockPosition().offset(-50, -50, -50),
+					blockPosition().offset(50, 50, 50));
+
+			for (Player player : level.getNearbyPlayers(TargetingConditions.forNonCombat(), this, scanningBox)) {
+				checkForDiscovery(this, player);
+			}
+		}
 	}
 
 	/**
@@ -354,7 +369,7 @@ public class LavaRevenantEntity extends FlyingMob implements Enemy {
 	}
 
 	@Override
-	public net.minecraftforge.entity.PartEntity<?>[] getParts() {
+	public PartEntity<?>[] getParts() {
 		return subEntities;
 	}
 

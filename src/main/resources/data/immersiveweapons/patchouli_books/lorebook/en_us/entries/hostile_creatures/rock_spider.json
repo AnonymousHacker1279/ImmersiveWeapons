@@ -1,0 +1,30 @@
+{
+	"name": "Rock Spider",
+	"icon": "immersiveweapons:textures/patchouli/lorebook/entity_icons/rock_spider.png",
+	"category": "immersiveweapons:hostile_creatures",
+	"pages": [
+		{
+			"type": "patchouli:text",
+			"text": "Spiders are already bad for players to deal with. Now, what if they were smaller and harder to hit?$(br2)That's what these are. Blending in well with the stony Tiltros environment, you'll need to keep aware of your surroundings for the scurrying of tiny spiders and watch for little red eyes. They often form hordes which can quickly overwhelm players."
+		},
+		{
+			"type": "patchouli:entity",
+			"entity": "immersiveweapons:rock_spider",
+			"scale": 2.0,
+			"offset": -0.25,
+			"text": "Soul sand or mud traps are effective at slowing these down."
+		},
+		{
+			"type": "immersiveweapons:entity_statistics",
+			"entity": "immersiveweapons:rock_spider"
+		},
+		{
+			"type": "patchouli:image",
+			"images": ["immersiveweapons:textures/patchouli/lorebook/entity_art/rock_spider.png"],
+			"title": "Rock Spider",
+			"border": true,
+			"text": "$(o)Image Credit - AnonymousHacker1279$()"
+		}
+	],
+	"advancement": "immersiveweapons:discover_rock_spider"
+}

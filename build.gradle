@@ -6,10 +6,8 @@ buildscript {
 		mavenCentral()
 	}
 	dependencies {
-		// Temporary for IDEA 2022.1 until the "Invalid Value: -1" thing gets fixed
-		classpath(group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '5.1.+', changing: true) { exclude group: 'org.apache.logging.log4j' }
-		classpath 'org.apache.logging.log4j:log4j-api:2.11.2'
-		classpath 'org.apache.logging.log4j:log4j-core:2.11.2'
+		// FG set to 5.1.34 for now, as it fixes the "Invalid Value: -1" with IDEA 2022.1
+		classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '5.1.34', changing: true
 		classpath 'org.parchmentmc:librarian:1.+'
 	}
 }

@@ -1,0 +1,23 @@
+{
+	"name": "Lava Revenant",
+	"icon": "immersiveweapons:textures/patchouli/lorebook/entity_icons/lava_revenant.png",
+	"category": "immersiveweapons:hostile_creatures",
+	"pages": [
+		{
+			"type": "patchouli:text",
+			"text": "Do you like phantoms? Well, you're gonna LOVE these then!$(br2)Lava Revenants are reconstructed forms of phantoms. These giant, hulking creatures take to the sky and circle a point over land, waiting for poor souls to near. Be wary, because they can blast through most structures! If you plan to hide, better build a quick wall with strong materials."
+		},
+		{
+			"type": "patchouli:entity",
+			"entity": "immersiveweapons:lava_revenant",
+			"scale": 7.0,
+			"offset": -7.75,
+			"text": "I suggest using an Elytra to navigate around these. You won't be able to outrun them."
+		},
+		{
+			"type": "immersiveweapons:entity_statistics",
+			"entity": "immersiveweapons:lava_revenant"
+		}
+	],
+	"advancement": "immersiveweapons:discover_lava_revenant"
+}

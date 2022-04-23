@@ -1,5 +1,6 @@
 package com.anonymoushacker1279.immersiveweapons;
 
+import com.anonymoushacker1279.immersiveweapons.advancement.IWCriteriaTriggers;
 import com.anonymoushacker1279.immersiveweapons.block.properties.WoodTypes;
 import com.anonymoushacker1279.immersiveweapons.config.ClientConfig;
 import com.anonymoushacker1279.immersiveweapons.config.CommonConfig;
@@ -22,7 +23,6 @@ import org.slf4j.Logger;
 import terrablender.api.*;
 import terrablender.api.SurfaceRuleManager.RuleCategory;
 
-// The value here should match an entry in the META-INF/mods.toml file
 @Mod(ImmersiveWeapons.MOD_ID)
 public class ImmersiveWeapons {
 
@@ -61,6 +61,7 @@ public class ImmersiveWeapons {
 		DispenserBehaviorRegistry.init();
 		OreGeneratorHandler.init();
 		CustomRecipeTypes.init();
+		IWCriteriaTriggers.init();
 		event.enqueueWork(() -> {
 			WoodType.register(WoodTypes.BURNED_OAK);
 			Regions.register(new IWOverworldBiomesProvider(new ResourceLocation(MOD_ID, "overworld_biome_provider"),

@@ -1,6 +1,7 @@
 package com.anonymoushacker1279.immersiveweapons.event;
 
 import com.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
+import com.anonymoushacker1279.immersiveweapons.block.decoration.skull.CustomSkullTypes;
 import com.anonymoushacker1279.immersiveweapons.block.properties.WoodTypes;
 import com.anonymoushacker1279.immersiveweapons.client.gui.screen.SmallPartsTableScreen;
 import com.anonymoushacker1279.immersiveweapons.client.gui.screen.TeslaSynthesizerScreen;
@@ -19,8 +20,11 @@ import com.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.MenuScreens;
+import net.minecraft.client.model.SkullModel;
+import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.renderer.*;
 import net.minecraft.client.renderer.blockentity.SignRenderer;
+import net.minecraft.client.renderer.blockentity.SkullBlockRenderer;
 import net.minecraft.client.renderer.entity.ThrownItemRenderer;
 import net.minecraft.client.renderer.item.ClampedItemPropertyFunction;
 import net.minecraft.client.renderer.item.ItemProperties;
@@ -43,8 +47,20 @@ import java.util.Objects;
 public class ClientModEventSubscriber {
 
 	private static final String CATEGORY = "key.categories." + ImmersiveWeapons.MOD_ID;
-	public static final KeyMapping toggleArmorEffect = new KeyMapping(ImmersiveWeapons.MOD_ID + ".key.toggleArmorEffect", 78, CATEGORY); // Keycode is N
+	public static final KeyMapping toggleArmorEffect = new KeyMapping(
+			ImmersiveWeapons.MOD_ID + ".key.toggleArmorEffect", 78, CATEGORY); // Keycode is N
 	private static final Minecraft mc = Minecraft.getInstance();
+
+	private static final ModelLayerLocation MINUTEMAN_HEAD_LAYER = new ModelLayerLocation(
+			DeferredRegistryHandler.MINUTEMAN_HEAD.getId(), "main");
+	private static final ModelLayerLocation FIELD_MEDIC_HEAD_LAYER = new ModelLayerLocation(
+			DeferredRegistryHandler.FIELD_MEDIC_HEAD.getId(), "main");
+	private static final ModelLayerLocation DYING_SOLDIER_HEAD_LAYER = new ModelLayerLocation(
+			DeferredRegistryHandler.DYING_SOLDIER_HEAD.getId(), "main");
+	private static final ModelLayerLocation WANDERING_WARRIOR_HEAD_LAYER = new ModelLayerLocation(
+			DeferredRegistryHandler.WANDERING_WARRIOR_HEAD.getId(), "main");
+	private static final ModelLayerLocation HANS_HEAD_LAYER = new ModelLayerLocation(
+			DeferredRegistryHandler.HANS_HEAD.getId(), "main");
 
 	/**
 	 * Event handler for the FMLClientSetupEvent.
@@ -105,15 +121,32 @@ public class ClientModEventSubscriber {
 		ItemBlockRenderTypes.setRenderLayer(DeferredRegistryHandler.WARPED_TABLE.get(), RenderType.translucent());
 		ItemBlockRenderTypes.setRenderLayer(DeferredRegistryHandler.BURNED_OAK_TABLE.get(), RenderType.translucent());
 
-		mc.getBlockColors().register((color1, color2, color3, color4) -> BiomeColors.getAverageGrassColor(Objects.requireNonNull(color2), Objects.requireNonNull(color3)), DeferredRegistryHandler.PITFALL.get());
+		mc.getBlockColors().register((color1, color2, color3, color4) -> BiomeColors.
+						getAverageGrassColor(Objects.requireNonNull(color2), Objects.requireNonNull(color3)),
+				DeferredRegistryHandler.PITFALL.get());
 
-		mc.getItemColors().register((color1, color2) -> GrassColor.get(0.5d, 1.0d), DeferredRegistryHandler.PITFALL_ITEM.get());
+		mc.getItemColors().register((color1, color2) -> GrassColor.get(0.5d, 1.0d),
+				DeferredRegistryHandler.PITFALL_ITEM.get());
 
-		event.enqueueWork(() -> Sheets.addWoodType(WoodTypes.BURNED_OAK));
+		event.enqueueWork(() -> {
+			SkullBlockRenderer.SKIN_BY_TYPE.put(CustomSkullTypes.MINUTEMAN, new ResourceLocation(ImmersiveWeapons.MOD_ID,
+					"textures/entity/minuteman.png"));
+			SkullBlockRenderer.SKIN_BY_TYPE.put(CustomSkullTypes.FIELD_MEDIC, new ResourceLocation(ImmersiveWeapons.MOD_ID,
+					"textures/entity/field_medic.png"));
+			SkullBlockRenderer.SKIN_BY_TYPE.put(CustomSkullTypes.DYING_SOLDIER, new ResourceLocation(ImmersiveWeapons.MOD_ID,
+					"textures/entity/dying_soldier.png"));
+			SkullBlockRenderer.SKIN_BY_TYPE.put(CustomSkullTypes.WANDERING_WARRIOR, new ResourceLocation(ImmersiveWeapons.MOD_ID,
+					"textures/entity/wandering_warrior.png"));
+			SkullBlockRenderer.SKIN_BY_TYPE.put(CustomSkullTypes.HANS, new ResourceLocation(ImmersiveWeapons.MOD_ID,
+					"textures/entity/hans.png"));
+
+			Sheets.addWoodType(WoodTypes.BURNED_OAK);
+		});
 
 		event.enqueueWork(ClientModEventSubscriber::registerPropertyGetters);
 
-		DimensionSpecialEffects.EFFECTS.put(new ResourceLocation(ImmersiveWeapons.MOD_ID, "tiltros"), new TiltrosDimensionSpecialEffects());
+		DimensionSpecialEffects.EFFECTS.put(new ResourceLocation(ImmersiveWeapons.MOD_ID, "tiltros"),
+				new TiltrosDimensionSpecialEffects());
 	}
 
 	/**
@@ -157,6 +190,7 @@ public class ClientModEventSubscriber {
 		event.registerEntityRenderer(DeferredRegistryHandler.CELESTIAL_TOWER_ENTITY.get(), CelestialTowerRenderer::new);
 		event.registerBlockEntityRenderer(DeferredRegistryHandler.WALL_SHELF_BLOCK_ENTITY.get(), context -> new ShelfRenderer());
 		event.registerBlockEntityRenderer(DeferredRegistryHandler.BURNED_OAK_SIGN_ENTITY.get(), SignRenderer::new);
+		event.registerBlockEntityRenderer(DeferredRegistryHandler.CUSTOM_SKULL_BLOCK_ENTITY.get(), SkullBlockRenderer::new);
 	}
 
 	/**
@@ -167,6 +201,11 @@ public class ClientModEventSubscriber {
 	@SubscribeEvent
 	public static void registerLayers(EntityRenderersEvent.RegisterLayerDefinitions event) {
 		event.registerLayerDefinition(CelestialTowerModel.LAYER_LOCATION, CelestialTowerModel::createBodyLayer);
+		event.registerLayerDefinition(MINUTEMAN_HEAD_LAYER, SkullModel::createMobHeadLayer);
+		event.registerLayerDefinition(FIELD_MEDIC_HEAD_LAYER, SkullModel::createMobHeadLayer);
+		event.registerLayerDefinition(DYING_SOLDIER_HEAD_LAYER, SkullModel::createMobHeadLayer);
+		event.registerLayerDefinition(WANDERING_WARRIOR_HEAD_LAYER, SkullModel::createMobHeadLayer);
+		event.registerLayerDefinition(HANS_HEAD_LAYER, SkullModel::createMobHeadLayer);
 	}
 
 	/**
@@ -181,9 +220,24 @@ public class ClientModEventSubscriber {
 		mc.particleEngine.register(DeferredRegistryHandler.SAND_CLOUD_PARTICLE.get(), SandCloudParticle.Provider::new);
 	}
 
+	@SubscribeEvent
+	public static void registerSkullModel(EntityRenderersEvent.CreateSkullModels event) {
+		event.registerSkullModel(CustomSkullTypes.MINUTEMAN, new SkullModel(event.getEntityModelSet()
+				.bakeLayer(MINUTEMAN_HEAD_LAYER)));
+		event.registerSkullModel(CustomSkullTypes.FIELD_MEDIC, new SkullModel(event.getEntityModelSet()
+				.bakeLayer(FIELD_MEDIC_HEAD_LAYER)));
+		event.registerSkullModel(CustomSkullTypes.DYING_SOLDIER, new SkullModel(event.getEntityModelSet()
+				.bakeLayer(DYING_SOLDIER_HEAD_LAYER)));
+		event.registerSkullModel(CustomSkullTypes.WANDERING_WARRIOR, new SkullModel(event.getEntityModelSet()
+				.bakeLayer(WANDERING_WARRIOR_HEAD_LAYER)));
+		event.registerSkullModel(CustomSkullTypes.HANS, new SkullModel(event.getEntityModelSet()
+				.bakeLayer(HANS_HEAD_LAYER)));
+	}
+
 	private static void registerPropertyGetters() {
 		registerPropertyGetter(DeferredRegistryHandler.IRON_GAUNTLET.get(), prefix("gunslinger"),
-				(stack, clientLevel, livingEntity, i) -> stack.getDisplayName().getString().toLowerCase(Locale.ROOT).equals("[the gunslinger]") ? 1 : 0);
+				(stack, clientLevel, livingEntity, i) -> stack.getDisplayName().getString().toLowerCase(Locale.ROOT)
+						.equals("[the gunslinger]") ? 1 : 0);
 	}
 
 	/**
@@ -193,12 +247,15 @@ public class ClientModEventSubscriber {
 	 * @param resourceLocation the <code>ResourceLocation</code> of the item
 	 * @param propertyValue    the <code>ClampedItemPropertyFunction</code> value
 	 */
-	public static void registerPropertyGetter(ItemLike item, ResourceLocation resourceLocation, ClampedItemPropertyFunction propertyValue) {
+	public static void registerPropertyGetter(ItemLike item, ResourceLocation resourceLocation,
+	                                          ClampedItemPropertyFunction propertyValue) {
+
 		ItemProperties.register(item.asItem(), resourceLocation, propertyValue);
 	}
 
-	/***
+	/**
 	 * Get the prefix of a string.
+	 *
 	 * @param path the path to prefix
 	 * @return ResourceLocation
 	 */

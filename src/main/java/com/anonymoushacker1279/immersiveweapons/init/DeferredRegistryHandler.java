@@ -6,6 +6,9 @@ import com.anonymoushacker1279.immersiveweapons.block.base.mud.*;
 import com.anonymoushacker1279.immersiveweapons.block.core.BasicOrientableBlock;
 import com.anonymoushacker1279.immersiveweapons.block.crafting.*;
 import com.anonymoushacker1279.immersiveweapons.block.decoration.*;
+import com.anonymoushacker1279.immersiveweapons.block.decoration.skull.CustomSkullBlocks.CustomSkullBlock;
+import com.anonymoushacker1279.immersiveweapons.block.decoration.skull.CustomSkullBlocks.CustomWallSkullBlock;
+import com.anonymoushacker1279.immersiveweapons.block.decoration.skull.CustomSkullTypes;
 import com.anonymoushacker1279.immersiveweapons.block.misc.MedicStatueBlock;
 import com.anonymoushacker1279.immersiveweapons.block.misc.MinutemanStatueBlock;
 import com.anonymoushacker1279.immersiveweapons.block.misc.warrior_statue.*;
@@ -422,6 +425,16 @@ public class DeferredRegistryHandler {
 	public static final RegistryObject<CampChairBlock> CAMP_CHAIR = BLOCKS.register("camp_chair", () -> new CampChairBlock(BlockBehaviour.Properties.of(Material.CLOTH_DECORATION).strength(1.0f).sound(SoundType.WOOL).noOcclusion()));
 	public static final RegistryObject<BranchBlock> BURNED_OAK_BRANCH = BLOCKS.register("burned_oak_branch", () -> new BranchBlock(BlockBehaviour.Properties.of(Material.WOOD).strength(0.1f).sound(SoundType.WOOD).noOcclusion().noCollission()));
 	public static final RegistryObject<AzulStainedOrchidBlock> AZUL_STAINED_ORCHID = BLOCKS.register("azul_stained_orchid", () -> new AzulStainedOrchidBlock(MobEffects.LUCK, 30, BlockBehaviour.Properties.of(Material.PLANT).sound(SoundType.GRASS).noCollission().instabreak()));
+	public static final RegistryObject<SkullBlock> MINUTEMAN_HEAD = BLOCKS.register("minuteman_head", () -> new CustomSkullBlock(CustomSkullTypes.MINUTEMAN, BlockBehaviour.Properties.of(Material.DECORATION).strength(1.0f)));
+	public static final RegistryObject<CustomWallSkullBlock> MINUTEMAN_WALL_HEAD = BLOCKS.register("minuteman_wall_head", () -> new CustomWallSkullBlock(CustomSkullTypes.MINUTEMAN, BlockBehaviour.Properties.of(Material.DECORATION).strength(1.0f).lootFrom(() -> MINUTEMAN_HEAD.get())));
+	public static final RegistryObject<SkullBlock> FIELD_MEDIC_HEAD = BLOCKS.register("field_medic_head", () -> new CustomSkullBlock(CustomSkullTypes.FIELD_MEDIC, BlockBehaviour.Properties.of(Material.DECORATION).strength(1.0f)));
+	public static final RegistryObject<CustomWallSkullBlock> FIELD_MEDIC_WALL_HEAD = BLOCKS.register("field_medic_wall_head", () -> new CustomWallSkullBlock(CustomSkullTypes.FIELD_MEDIC, BlockBehaviour.Properties.of(Material.DECORATION).strength(1.0f).lootFrom(() -> FIELD_MEDIC_HEAD.get())));
+	public static final RegistryObject<SkullBlock> DYING_SOLDIER_HEAD = BLOCKS.register("dying_soldier_head", () -> new CustomSkullBlock(CustomSkullTypes.DYING_SOLDIER, BlockBehaviour.Properties.of(Material.DECORATION).strength(1.0f)));
+	public static final RegistryObject<CustomWallSkullBlock> DYING_SOLDIER_WALL_HEAD = BLOCKS.register("dying_soldier_wall_head", () -> new CustomWallSkullBlock(CustomSkullTypes.DYING_SOLDIER, BlockBehaviour.Properties.of(Material.DECORATION).strength(1.0f).lootFrom(() -> DYING_SOLDIER_HEAD.get())));
+	public static final RegistryObject<SkullBlock> WANDERING_WARRIOR_HEAD = BLOCKS.register("wandering_warrior_head", () -> new CustomSkullBlock(CustomSkullTypes.WANDERING_WARRIOR, BlockBehaviour.Properties.of(Material.DECORATION).strength(1.0f)));
+	public static final RegistryObject<CustomWallSkullBlock> WANDERING_WARRIOR_WALL_HEAD = BLOCKS.register("wandering_warrior_wall_head", () -> new CustomWallSkullBlock(CustomSkullTypes.WANDERING_WARRIOR, BlockBehaviour.Properties.of(Material.DECORATION).strength(1.0f).lootFrom(() -> WANDERING_WARRIOR_HEAD.get())));
+	public static final RegistryObject<SkullBlock> HANS_HEAD = BLOCKS.register("hans_head", () -> new CustomSkullBlock(CustomSkullTypes.HANS, BlockBehaviour.Properties.of(Material.DECORATION).strength(1.0f)));
+	public static final RegistryObject<CustomWallSkullBlock> HANS_WALL_HEAD = BLOCKS.register("hans_wall_head", () -> new CustomWallSkullBlock(CustomSkullTypes.HANS, BlockBehaviour.Properties.of(Material.DECORATION).strength(1.0f).lootFrom(() -> HANS_HEAD.get())));
 
 	// Entities
 	public static final RegistryObject<EntityType<WoodArrowEntity>> WOOD_ARROW_ENTITY = ENTITY_TYPES.register("wood_arrow", () -> EntityType.Builder.<WoodArrowEntity> of(WoodArrowEntity::new, MobCategory.MISC).sized(0.5f, 0.5f).build(new ResourceLocation(ImmersiveWeapons.MOD_ID, "wood_arrow").toString()));
@@ -562,6 +575,11 @@ public class DeferredRegistryHandler {
 	public static final RegistryObject<BlockItem> WARRIOR_STATUE_HEAD_ITEM = ITEMS.register("warrior_statue_head", () -> new BlockItem(WARRIOR_STATUE_HEAD.get(), new Properties().tab(ITEM_GROUP)));
 	public static final RegistryObject<BlockItem> AZUL_STAINED_ORCHID_ITEM = ITEMS.register("azul_stained_orchid", () -> new BlockItem(AZUL_STAINED_ORCHID.get(), new Properties().tab(ITEM_GROUP)));
 	public static final RegistryObject<BlockItem> CELESTIAL_LANTERN_ITEM = ITEMS.register("celestial_lantern", () -> new BlockItem(CELESTIAL_LANTERN.get(), new Properties().tab(ITEM_GROUP)));
+	public static final RegistryObject<BlockItem> MINUTEMAN_HEAD_ITEM = ITEMS.register("minuteman_head", () -> new StandingAndWallBlockItem(MINUTEMAN_HEAD.get(), MINUTEMAN_WALL_HEAD.get(), new Properties().tab(ITEM_GROUP)));
+	public static final RegistryObject<BlockItem> FIELD_MEDIC_HEAD_ITEM = ITEMS.register("field_medic_head", () -> new StandingAndWallBlockItem(FIELD_MEDIC_HEAD.get(), FIELD_MEDIC_WALL_HEAD.get(), new Properties().tab(ITEM_GROUP)));
+	public static final RegistryObject<BlockItem> DYING_SOLDIER_HEAD_ITEM = ITEMS.register("dying_soldier_head", () -> new StandingAndWallBlockItem(DYING_SOLDIER_HEAD.get(), DYING_SOLDIER_WALL_HEAD.get(), new Properties().tab(ITEM_GROUP)));
+	public static final RegistryObject<BlockItem> WANDERING_WARRIOR_HEAD_ITEM = ITEMS.register("wandering_warrior_head", () -> new StandingAndWallBlockItem(WANDERING_WARRIOR_HEAD.get(), WANDERING_WARRIOR_WALL_HEAD.get(), new Properties().tab(ITEM_GROUP)));
+	public static final RegistryObject<BlockItem> HANS_HEAD_ITEM = ITEMS.register("hans_head", () -> new StandingAndWallBlockItem(HANS_HEAD.get(), HANS_WALL_HEAD.get(), new Properties().tab(ITEM_GROUP)));
 
 	// Sounds
 	public static final RegistryObject<SoundEvent> TESLA_ARMOR_EFFECT = SOUND_EVENTS.register("tesla_armor_effect", () -> new SoundEvent(new ResourceLocation(ImmersiveWeapons.MOD_ID, "tesla_armor_effect")));
@@ -641,6 +659,7 @@ public class DeferredRegistryHandler {
 	public static final RegistryObject<BlockEntityType<TeslaSynthesizerBlockEntity>> TESLA_SYNTHESIZER_BLOCK_ENTITY = BLOCK_ENTITIES.register("tesla_synthesizer", () -> new BlockEntityType<>(TeslaSynthesizerBlockEntity::new, Sets.newHashSet(TESLA_SYNTHESIZER.get()), null));
 	public static final RegistryObject<BlockEntityType<BurnedOakSignEntity>> BURNED_OAK_SIGN_ENTITY = BLOCK_ENTITIES.register("custom_sign", () -> BlockEntityType.Builder.of(BurnedOakSignEntity::new, BURNED_OAK_SIGN.get(), BURNED_OAK_WALL_SIGN.get()).build(null));
 	public static final RegistryObject<BlockEntityType<CelestialLanternBlockEntity>> CELESTIAL_LANTERN_BLOCK_ENTITY = BLOCK_ENTITIES.register("celestial_lantern", () -> new BlockEntityType<>(CelestialLanternBlockEntity::new, Sets.newHashSet(CELESTIAL_LANTERN.get()), null));
+	public static final RegistryObject<BlockEntityType<CustomSkullBlockEntity>> CUSTOM_SKULL_BLOCK_ENTITY = BLOCK_ENTITIES.register("custom_skull", () -> BlockEntityType.Builder.of(CustomSkullBlockEntity::new, MINUTEMAN_HEAD.get(), MINUTEMAN_WALL_HEAD.get(), FIELD_MEDIC_HEAD.get(), FIELD_MEDIC_WALL_HEAD.get(), DYING_SOLDIER_HEAD.get(), DYING_SOLDIER_WALL_HEAD.get(), WANDERING_WARRIOR_HEAD.get(), WANDERING_WARRIOR_WALL_HEAD.get(), HANS_HEAD.get(), HANS_WALL_HEAD.get()).build(null));
 
 	// Effects
 	public static final RegistryObject<MorphineEffect> MORPHINE_EFFECT = EFFECTS.register("morphine", () -> new MorphineEffect(MobEffectCategory.NEUTRAL, 3484189));

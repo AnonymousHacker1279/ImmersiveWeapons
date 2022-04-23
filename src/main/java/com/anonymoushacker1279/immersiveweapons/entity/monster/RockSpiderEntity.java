@@ -1,5 +1,6 @@
 package com.anonymoushacker1279.immersiveweapons.entity.monster;
 
+import com.anonymoushacker1279.immersiveweapons.entity.GrantAdvancementOnDiscovery;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.*;
@@ -17,6 +18,7 @@ import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import net.minecraft.world.entity.ai.navigation.WallClimberNavigation;
+import net.minecraft.world.entity.ai.targeting.TargetingConditions;
 import net.minecraft.world.entity.animal.IronGolem;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
@@ -24,6 +26,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.living.PotionEvent.PotionApplicableEvent;
@@ -33,7 +36,7 @@ import org.jetbrains.annotations.NotNull;
 import javax.annotation.Nullable;
 import java.util.Random;
 
-public class RockSpiderEntity extends Monster {
+public class RockSpiderEntity extends Monster implements GrantAdvancementOnDiscovery {
 
 	private static final EntityDataAccessor<Byte> DATA_FLAGS_ID = SynchedEntityData.defineId(RockSpiderEntity.class,
 			EntityDataSerializers.BYTE);
@@ -90,7 +93,19 @@ public class RockSpiderEntity extends Monster {
 		if (!level.isClientSide) {
 			setClimbing(horizontalCollision);
 		}
+	}
 
+	@Override
+	public void aiStep() {
+		super.aiStep();
+		if (!level.isClientSide) {
+			AABB scanningBox = new AABB(blockPosition().offset(-50, -50, -50),
+					blockPosition().offset(50, 50, 50));
+
+			for (Player player : level.getNearbyPlayers(TargetingConditions.forNonCombat(), this, scanningBox)) {
+				checkForDiscovery(this, player);
+			}
+		}
 	}
 
 	@Override

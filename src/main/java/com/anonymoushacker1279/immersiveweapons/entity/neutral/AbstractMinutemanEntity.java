@@ -1,5 +1,6 @@
 package com.anonymoushacker1279.immersiveweapons.entity.neutral;
 
+import com.anonymoushacker1279.immersiveweapons.entity.GrantAdvancementOnDiscovery;
 import com.anonymoushacker1279.immersiveweapons.entity.ai.goal.DefendVillageTargetGoal;
 import com.anonymoushacker1279.immersiveweapons.entity.ai.goal.RangedShotgunAttackGoal;
 import com.anonymoushacker1279.immersiveweapons.entity.monster.AbstractDyingSoldierEntity;
@@ -21,6 +22,7 @@ import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.*;
 import net.minecraft.world.entity.ai.goal.target.*;
+import net.minecraft.world.entity.ai.targeting.TargetingConditions;
 import net.minecraft.world.entity.animal.IronGolem;
 import net.minecraft.world.entity.monster.*;
 import net.minecraft.world.entity.player.Player;
@@ -41,7 +43,7 @@ import java.util.List;
 import java.util.UUID;
 import java.util.function.Predicate;
 
-public abstract class AbstractMinutemanEntity extends PathfinderMob implements RangedAttackMob, NeutralMob {
+public abstract class AbstractMinutemanEntity extends PathfinderMob implements RangedAttackMob, NeutralMob, GrantAdvancementOnDiscovery {
 
 	private static final UniformInt tickRange = TimeUtil.rangeOfSeconds(20, 39);
 	private final RangedShotgunAttackGoal<AbstractMinutemanEntity> aiShotgunAttack =
@@ -144,6 +146,13 @@ public abstract class AbstractMinutemanEntity extends PathfinderMob implements R
 		super.aiStep();
 		if (!level.isClientSide) {
 			updatePersistentAnger((ServerLevel) level, true);
+
+			AABB scanningBox = new AABB(blockPosition().offset(-50, -50, -50),
+					blockPosition().offset(50, 50, 50));
+
+			for (Player player : level.getNearbyPlayers(TargetingConditions.forNonCombat(), this, scanningBox)) {
+				checkForDiscovery(this, player);
+			}
 		}
 	}
 
@@ -172,7 +181,7 @@ public abstract class AbstractMinutemanEntity extends PathfinderMob implements R
 	/**
 	 * Finalize spawn information.
 	 *
-	 * @param worldIn      the <code>IServerWorld</code> the entity is in
+	 * @param level        the <code>ServerLevelAccessor</code> the entity is in
 	 * @param difficultyIn the <code>DifficultyInstance</code> of the world
 	 * @param reason       the <code>SpawnReason</code> for the entity
 	 * @param spawnDataIn  the <code>ILivingEntitySpawnData</code> for the entity
@@ -180,11 +189,11 @@ public abstract class AbstractMinutemanEntity extends PathfinderMob implements R
 	 * @return ILivingEntityData
 	 */
 	@Override
-	public SpawnGroupData finalizeSpawn(@NotNull ServerLevelAccessor worldIn, @NotNull DifficultyInstance difficultyIn,
+	public SpawnGroupData finalizeSpawn(@NotNull ServerLevelAccessor level, @NotNull DifficultyInstance difficultyIn,
 	                                    @NotNull MobSpawnType reason, @Nullable SpawnGroupData spawnDataIn,
 	                                    @Nullable CompoundTag dataTag) {
 
-		spawnDataIn = super.finalizeSpawn(worldIn, difficultyIn, reason, spawnDataIn, dataTag);
+		spawnDataIn = super.finalizeSpawn(level, difficultyIn, reason, spawnDataIn, dataTag);
 
 		populateDefaultEquipmentSlots(difficultyIn);
 		populateDefaultEquipmentEnchantments(difficultyIn);

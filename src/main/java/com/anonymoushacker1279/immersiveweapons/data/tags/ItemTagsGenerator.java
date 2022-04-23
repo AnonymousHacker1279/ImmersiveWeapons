@@ -19,11 +19,11 @@ import net.minecraftforge.common.data.ExistingFileHelper;
 
 import javax.annotation.Nullable;
 
-@SuppressWarnings("unchecked")
 public class ItemTagsGenerator extends ItemTagsProvider {
 
 	/**
 	 * Constructor for ItemTagsGenerator.
+	 *
 	 * @param gen                the <code>DataGenerator</code> instance
 	 * @param blockTagsGenerator the <code>BlockTagsGenerator</code> instance
 	 * @param existingFileHelper the <code>ExistingFileHelper</code> instance
@@ -73,6 +73,13 @@ public class ItemTagsGenerator extends ItemTagsProvider {
 				DeferredRegistryHandler.COPPER_PICKAXE.get(), DeferredRegistryHandler.COBALT_PICKAXE.get(),
 				DeferredRegistryHandler.MOLTEN_PICKAXE.get(), DeferredRegistryHandler.VENTUS_PICKAXE.get(),
 				DeferredRegistryHandler.TESLA_PICKAXE.get());
+
+		// Head tags
+		tag(Tags.Items.HEADS).add(DeferredRegistryHandler.MINUTEMAN_HEAD_ITEM.get(),
+				DeferredRegistryHandler.FIELD_MEDIC_HEAD_ITEM.get(),
+				DeferredRegistryHandler.DYING_SOLDIER_HEAD_ITEM.get(),
+				DeferredRegistryHandler.WANDERING_WARRIOR_HEAD_ITEM.get(),
+				DeferredRegistryHandler.HANS_HEAD_ITEM.get());
 	}
 
 	/**

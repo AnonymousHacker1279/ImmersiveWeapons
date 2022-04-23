@@ -11,14 +11,14 @@
 	"adapt_noise": true,
 
 	"spawn_overrides": {
-		"monster": {
+		"creature": {
 			"bounding_box": "full",
 			"spawns": [
 				{
 					"type": "immersiveweapons:minuteman",
 					"weight": 1,
 					"minCount": 1,
-					"maxCount": 2
+					"maxCount": 1
 				}
 			]
 		}

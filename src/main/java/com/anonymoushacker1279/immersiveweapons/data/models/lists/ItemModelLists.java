@@ -10,10 +10,7 @@ public class ItemModelLists {
 
 	public static final List<Item> ignoredItems = new ArrayList<>(75);
 
-	/**
-	 * Initialize the lists.
-	 */
-	public static void init() {
+	static {
 		// Items
 		ignoredItems.add(DeferredRegistryHandler.BLUNDERBUSS.get());
 		ignoredItems.add(DeferredRegistryHandler.FLINTLOCK_PISTOL.get());
@@ -65,5 +62,10 @@ public class ItemModelLists {
 		ignoredItems.add(DeferredRegistryHandler.SANDBAG_ITEM.get());
 		ignoredItems.add(DeferredRegistryHandler.SPOTLIGHT_ITEM.get());
 		ignoredItems.add(DeferredRegistryHandler.MORTAR_ITEM.get());
+		ignoredItems.add(DeferredRegistryHandler.MINUTEMAN_HEAD_ITEM.get());
+		ignoredItems.add(DeferredRegistryHandler.FIELD_MEDIC_HEAD_ITEM.get());
+		ignoredItems.add(DeferredRegistryHandler.DYING_SOLDIER_HEAD_ITEM.get());
+		ignoredItems.add(DeferredRegistryHandler.WANDERING_WARRIOR_HEAD_ITEM.get());
+		ignoredItems.add(DeferredRegistryHandler.HANS_HEAD_ITEM.get());
 	}
 }

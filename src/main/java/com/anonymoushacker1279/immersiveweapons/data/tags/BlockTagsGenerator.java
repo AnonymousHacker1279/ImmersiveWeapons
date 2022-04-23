@@ -34,8 +34,6 @@ public class BlockTagsGenerator extends BlockTagsProvider {
 	 */
 	@Override
 	protected void addTags() {
-		BlockTagLists.init();
-
 		addForgeTags();
 		addImmersiveWeaponsTags();
 		addMinecraftTags();

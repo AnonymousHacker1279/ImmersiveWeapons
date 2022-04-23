@@ -1,5 +1,6 @@
 package com.anonymoushacker1279.immersiveweapons.entity.monster;
 
+import com.anonymoushacker1279.immersiveweapons.entity.GrantAdvancementOnDiscovery;
 import com.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
@@ -11,6 +12,7 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.*;
 import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
+import net.minecraft.world.entity.ai.targeting.TargetingConditions;
 import net.minecraft.world.entity.monster.Creeper;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
@@ -18,13 +20,14 @@ import net.minecraft.world.item.*;
 import net.minecraft.world.level.*;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.AABB;
 import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
 import java.time.LocalDate;
 import java.time.temporal.ChronoField;
 
-public abstract class AbstractWanderingWarriorEntity extends Monster {
+public abstract class AbstractWanderingWarriorEntity extends Monster implements GrantAdvancementOnDiscovery {
 
 	private final MeleeAttackGoal aiAttackOnCollide = new MeleeAttackGoal(this, 1.2D, false) {
 		@Override
@@ -76,6 +79,19 @@ public abstract class AbstractWanderingWarriorEntity extends Monster {
 				true, true, (targetPredicate) -> !(targetPredicate instanceof Creeper)));
 		targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, Player.class, true));
 		targetSelector.addGoal(2, new HurtByTargetGoal(this));
+	}
+
+	@Override
+	public void aiStep() {
+		super.aiStep();
+		if (!level.isClientSide) {
+			AABB scanningBox = new AABB(blockPosition().offset(-50, -50, -50),
+					blockPosition().offset(50, 50, 50));
+
+			for (Player player : level.getNearbyPlayers(TargetingConditions.forNonCombat(), this, scanningBox)) {
+				checkForDiscovery(this, player);
+			}
+		}
 	}
 
 	/**

@@ -2,6 +2,7 @@ package com.anonymoushacker1279.immersiveweapons.entity.monster;
 
 import com.anonymoushacker1279.immersiveweapons.block.decoration.CelestialLanternBlock;
 import com.anonymoushacker1279.immersiveweapons.config.CommonConfig;
+import com.anonymoushacker1279.immersiveweapons.entity.GrantAdvancementOnDiscovery;
 import com.anonymoushacker1279.immersiveweapons.entity.ai.goal.CelestialTowerSummonGoal;
 import com.anonymoushacker1279.immersiveweapons.entity.ai.goal.HoverGoal;
 import com.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
@@ -25,8 +26,11 @@ import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.FloatGoal;
 import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
+import net.minecraft.world.entity.ai.targeting.TargetingConditions;
 import net.minecraft.world.entity.monster.Monster;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.*;
+import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 
@@ -34,7 +38,7 @@ import javax.annotation.Nullable;
 import java.util.List;
 import java.util.Objects;
 
-public class CelestialTowerEntity extends Monster {
+public class CelestialTowerEntity extends Monster implements GrantAdvancementOnDiscovery {
 
 	public final ServerBossEvent bossEvent = (ServerBossEvent) (new ServerBossEvent(getDisplayName(), BossBarColor.RED,
 			BossBarOverlay.PROGRESS)).setDarkenScreen(true);
@@ -136,6 +140,19 @@ public class CelestialTowerEntity extends Monster {
 	}
 
 	@Override
+	public void aiStep() {
+		super.aiStep();
+		if (!level.isClientSide) {
+			AABB scanningBox = new AABB(blockPosition().offset(-50, -50, -50),
+					blockPosition().offset(50, 50, 50));
+
+			for (Player player : level.getNearbyPlayers(TargetingConditions.forNonCombat(), this, scanningBox)) {
+				checkForDiscovery(this, player);
+			}
+		}
+	}
+
+	@Override
 	public boolean hurt(@NotNull DamageSource pSource, float pAmount) {
 		if (pSource == DamageSource.OUT_OF_WORLD) {
 			return super.hurt(pSource, pAmount); // For /kill, as the entity should never fall to death
@@ -221,7 +238,7 @@ public class CelestialTowerEntity extends Monster {
 				}
 			}
 		}
-		
+
 		if (nearbyLanterns == 3) {
 			return false;
 		} else if (nearbyLanterns == 0) {

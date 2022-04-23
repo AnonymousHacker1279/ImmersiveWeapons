@@ -13,10 +13,7 @@ public class BlockTagLists {
 	public static final List<Block> BURNED_OAK_LOGS = new ArrayList<>(5);
 	public static final List<Block> TABLES = new ArrayList<>(9);
 
-	/**
-	 * Initialize the lists.
-	 */
-	public static void init() {
+	static {
 		addBulletproofGlass();
 		addStainedGlass();
 		addBurnedOakLogs();

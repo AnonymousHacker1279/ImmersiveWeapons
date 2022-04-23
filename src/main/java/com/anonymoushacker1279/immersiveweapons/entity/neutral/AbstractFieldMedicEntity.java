@@ -1,5 +1,6 @@
 package com.anonymoushacker1279.immersiveweapons.entity.neutral;
 
+import com.anonymoushacker1279.immersiveweapons.entity.GrantAdvancementOnDiscovery;
 import com.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
 import com.anonymoushacker1279.immersiveweapons.init.PacketHandler;
 import com.anonymoushacker1279.immersiveweapons.item.misc.UsedSyringeItem;
@@ -20,6 +21,7 @@ import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.*;
 import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
+import net.minecraft.world.entity.ai.targeting.TargetingConditions;
 import net.minecraft.world.entity.animal.IronGolem;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.npc.Villager;
@@ -44,7 +46,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Supplier;
 
-public abstract class AbstractFieldMedicEntity extends PathfinderMob {
+public abstract class AbstractFieldMedicEntity extends PathfinderMob implements GrantAdvancementOnDiscovery {
 
 	private final MeleeAttackGoal aiAttackOnCollide = new MeleeAttackGoal(this, 1.2D,
 			false) {
@@ -138,14 +140,23 @@ public abstract class AbstractFieldMedicEntity extends PathfinderMob {
 		if (healCooldown > 0) {
 			healCooldown--;
 		}
-		if (!level.isClientSide && getHealth() <= getMaxHealth()) {
-			if (randomHealTicks >= 20) {
-				heal();
-				randomHealTicks = 0;
-			} else {
-				if (random.nextFloat() <= 0.01f) {
-					randomHealTicks++;
+		if (!level.isClientSide) {
+			if (getHealth() <= getMaxHealth()) {
+				if (randomHealTicks >= 20) {
+					heal();
+					randomHealTicks = 0;
+				} else {
+					if (random.nextFloat() <= 0.01f) {
+						randomHealTicks++;
+					}
 				}
+			}
+
+			AABB scanningBox = new AABB(blockPosition().offset(-50, -50, -50),
+					blockPosition().offset(50, 50, 50));
+
+			for (Player player : level.getNearbyPlayers(TargetingConditions.forNonCombat(), this, scanningBox)) {
+				checkForDiscovery(this, player);
 			}
 		}
 	}
