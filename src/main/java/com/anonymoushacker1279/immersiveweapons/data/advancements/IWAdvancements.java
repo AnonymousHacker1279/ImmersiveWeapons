@@ -1037,8 +1037,8 @@ public class IWAdvancements implements Consumer<Consumer<Advancement>> {
 								Items.AIR))
 				.save(consumer, "immersiveweapons:cloud");
 
-		// Location advancements
-		Builder.advancement().parent(root)
+		// Battlefield advancements
+		Advancement discover_battlefield = Builder.advancement().parent(root)
 				.display(Blocks.SKELETON_SKULL,
 						new TranslatableComponent("advancements.immersiveweapons.battlefield.title"),
 						new TranslatableComponent("advancements.immersiveweapons.battlefield.description"),
@@ -1048,6 +1048,24 @@ public class IWAdvancements implements Consumer<Consumer<Advancement>> {
 								LocationPredicate.inBiome(BiomesAndDimensions.BATTLEFIELD)))
 				.rewards(AdvancementRewards.Builder.experience(50))
 				.save(consumer, "immersiveweapons:battlefield");
+
+		Builder.advancement().parent(discover_battlefield)
+				.display(DeferredRegistryHandler.MINUTEMAN_STATUE_ITEM.get(),
+						new TranslatableComponent("advancements.immersiveweapons.minuteman_statue.title"),
+						new TranslatableComponent("advancements.immersiveweapons.minuteman_statue.description"),
+						null, FrameType.GOAL, true, true, false)
+				.addCriterion("hold", InventoryChangeTrigger.TriggerInstance.hasItems(
+						DeferredRegistryHandler.MINUTEMAN_STATUE_ITEM.get()))
+				.save(consumer, "immersiveweapons:minuteman_statue");
+
+		Builder.advancement().parent(discover_battlefield)
+				.display(DeferredRegistryHandler.MEDIC_STATUE_ITEM.get(),
+						new TranslatableComponent("advancements.immersiveweapons.medic_statue.title"),
+						new TranslatableComponent("advancements.immersiveweapons.medic_statue.description"),
+						null, FrameType.GOAL, true, true, false)
+				.addCriterion("hold", InventoryChangeTrigger.TriggerInstance.hasItems(
+						DeferredRegistryHandler.MEDIC_STATUE_ITEM.get()))
+				.save(consumer, "immersiveweapons:medic_statue");
 
 		// Tiltros advancements
 		Advancement warrior_statue = Builder.advancement().parent(root)
@@ -1075,7 +1093,7 @@ public class IWAdvancements implements Consumer<Consumer<Advancement>> {
 				.display(DeferredRegistryHandler.AZUL_STAINED_ORCHID_ITEM.get(),
 						new TranslatableComponent("advancements.immersiveweapons.tiltros.biome.title"),
 						new TranslatableComponent("advancements.immersiveweapons.tiltros.biome.description"),
-						null, FrameType.TASK, true, true, false)
+						null, FrameType.GOAL, true, true, false)
 				.addCriterion("visit",
 						LocationTrigger.TriggerInstance.located(
 								LocationPredicate.inBiome(BiomesAndDimensions.B_TILTROS)))

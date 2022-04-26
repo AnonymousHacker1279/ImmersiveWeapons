@@ -1,0 +1,16 @@
+{
+	"name": "Minuteman Statue",
+	"icon": "immersiveweapons:minuteman_statue",
+	"category": "immersiveweapons:special_objects",
+	"pages": [
+		{
+			"type": "patchouli:text",
+			"text": "Minuteman statues are magical objects that display anomalous effects within battlefield biomes. They are only found inside the fortified towns you might rarely find within these areas.$(br2)They will spawn a new $(l:neutral_creatures/minuteman)minuteman$() periodically until it has reached a sufficient threshold."
+		},
+		{
+			"type": "patchouli:text",
+			"text": "If you feel no remorse in destroying a town, using these statues may be beneficial in your own fortifications as the minutemen will target nearby enemies.$(br)Of course, damaging one of them will alert the entire army, and you may become overrun!"
+		}
+	],
+	"advancement": "immersiveweapons:minuteman_statue"
+}
