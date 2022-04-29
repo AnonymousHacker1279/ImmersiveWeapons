@@ -62,7 +62,7 @@ community describe an interest in it (This excludes versions listed as **N/A - B
 
 | MC Version | Immersive Weapons Latest Version                                                                             |
 |------------|--------------------------------------------------------------------------------------------------------------|
-| 1.18.2     | [(ALPHA) Latest](https://github.com/AnonymousHacker1279/ImmersiveWeapons/releases)                           |
+| 1.18.2     | [Latest](https://github.com/AnonymousHacker1279/ImmersiveWeapons/releases)                                   |
 | 1.18.1     | [(ALPHA) 1.14.0-alpha1](https://github.com/AnonymousHacker1279/ImmersiveWeapons/releases/tag/v1.14.0-alpha1) |
 | 1.17.1     | [1.12.1](https://github.com/AnonymousHacker1279/ImmersiveWeapons/releases/tag/v1.12.1)                       |
 | 1.16.5     | [1.4.3](https://github.com/AnonymousHacker1279/ImmersiveWeapons/releases/tag/v1.4.3)                         |
