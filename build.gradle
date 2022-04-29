@@ -58,6 +58,8 @@ minecraft {
 			property 'mixin.env.remapRefMap', 'true'
 			property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
 
+			jvmArgs '-Xmx4G'
+
 			mods {
 				immersiveweapons {
 					source sourceSets.main
@@ -75,6 +77,8 @@ minecraft {
 			// For Patchouli to work in-dev
 			property 'mixin.env.remapRefMap', 'true'
 			property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
+
+			jvmArgs '-Xmx4G'
 
 			mods {
 				immersiveweapons {
@@ -95,6 +99,8 @@ minecraft {
 			property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
 
 			args '--mod', 'immersiveweapons', '--all', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources/')
+
+			jvmArgs '-Xmx4G'
 
 			mods {
 				immersiveweapons {

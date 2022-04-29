@@ -276,8 +276,6 @@ public abstract class AbstractBulletEntity extends AbstractArrow {
 	 */
 	@Override
 	protected void onHitEntity(@NotNull EntityHitResult entityRayTraceResult) {
-		super.onHitEntity(entityRayTraceResult);
-
 		Entity entity = entityRayTraceResult.getEntity();
 		float velocityModifier = (float) getDeltaMovement().length();
 		// Determine the damage to be dealt, which is calculated by multiplying the velocity modifier

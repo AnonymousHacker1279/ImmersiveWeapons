@@ -484,6 +484,7 @@ public class BulletEntity {
 		private int deathDelay = 300;
 		private BlockPos previousLightPosition = BlockPos.ZERO;
 		private final List<BlockPos> lightPositions = new ArrayList<>(3);
+		private boolean hasHitEntity = false;
 		static final BlockState lightState = Blocks.LIGHT.defaultBlockState();
 		static final BlockState airState = Blocks.AIR.defaultBlockState();
 
@@ -580,7 +581,7 @@ public class BulletEntity {
 						}
 						lightPositions.clear();
 					}
-					if (level.getBlockState(currentPosition) == airState) {
+					if (!hasHitEntity && level.getBlockState(currentPosition) == airState) {
 						level.setBlock(currentPosition, lightState, 3);
 						lightPositions.add(currentPosition);
 					}
@@ -596,6 +597,7 @@ public class BulletEntity {
 		 */
 		@Override
 		protected void doWhenHitEntity(Entity entity) {
+			hasHitEntity = true;
 			entity.setSecondsOnFire(6);
 		}
 
