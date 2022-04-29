@@ -2,6 +2,7 @@ package com.anonymoushacker1279.immersiveweapons.data.advancements;
 
 import com.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import com.anonymoushacker1279.immersiveweapons.advancement.EntityDiscoveredTrigger;
+import com.anonymoushacker1279.immersiveweapons.advancement.WarriorStatueActivatedTrigger;
 import com.anonymoushacker1279.immersiveweapons.data.tags.groups.immersiveweapons.ImmersiveWeaponsItemTagGroups;
 import com.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
 import com.anonymoushacker1279.immersiveweapons.world.level.levelgen.biomes.BiomesAndDimensions;
@@ -925,7 +926,7 @@ public class IWAdvancements implements Consumer<Consumer<Advancement>> {
 				.rewards(AdvancementRewards.Builder.experience(20))
 				.save(consumer, "immersiveweapons:discover_rock_spider");
 
-		Builder.advancement().parent(entity_discovery)
+		Advancement celestial_tower_discovery = Builder.advancement().parent(entity_discovery)
 				.display(DeferredRegistryHandler.CELESTIAL_FRAGMENT.get(),
 						new TranslatableComponent("advancements.immersiveweapons.discover_celestial_tower.title"),
 						new TranslatableComponent("advancements.immersiveweapons.discover_celestial_tower.description"),
@@ -935,6 +936,16 @@ public class IWAdvancements implements Consumer<Consumer<Advancement>> {
 						DeferredRegistryHandler.CELESTIAL_TOWER_ENTITY.getId()))
 				.rewards(AdvancementRewards.Builder.experience(20))
 				.save(consumer, "immersiveweapons:discover_celestial_tower");
+
+		Builder.advancement().parent(celestial_tower_discovery)
+				.display(DeferredRegistryHandler.CELESTIAL_LANTERN_ITEM.get(),
+						new TranslatableComponent("advancements.immersiveweapons.tiltros.celestial_lantern.title"),
+						new TranslatableComponent("advancements.immersiveweapons.tiltros.celestial_lantern.description"),
+						null, FrameType.GOAL, true, true, false)
+				.addCriterion("hold",
+						InventoryChangeTrigger.TriggerInstance.hasItems(DeferredRegistryHandler.CELESTIAL_LANTERN_ITEM.get()))
+				.rewards(AdvancementRewards.Builder.experience(50))
+				.save(consumer, "immersiveweapons:celestial_lantern");
 
 		// Other advancements
 		Builder.advancement().parent(root)
@@ -1081,7 +1092,7 @@ public class IWAdvancements implements Consumer<Consumer<Advancement>> {
 				.save(consumer, "immersiveweapons:warrior_statue");
 
 		Advancement azul_keystone = Builder.advancement().parent(warrior_statue)
-				.display(DeferredRegistryHandler.AZUL_KEYSTONE.get(),
+				.display(DeferredRegistryHandler.AZUL_KEYSTONE_FRAGMENT.get(),
 						new TranslatableComponent("advancements.immersiveweapons.tiltros.azul_keystone.title"),
 						new TranslatableComponent("advancements.immersiveweapons.tiltros.azul_keystone.description"),
 						null, FrameType.TASK, true, true, true)
@@ -1089,7 +1100,16 @@ public class IWAdvancements implements Consumer<Consumer<Advancement>> {
 						InventoryChangeTrigger.TriggerInstance.hasItems(DeferredRegistryHandler.AZUL_KEYSTONE.get()))
 				.save(consumer, "immersiveweapons:azul_keystone");
 
-		Builder.advancement().parent(azul_keystone)
+		Advancement activated_warrior_statue = Builder.advancement().parent(azul_keystone)
+				.display(DeferredRegistryHandler.AZUL_KEYSTONE.get(),
+						new TranslatableComponent("advancements.immersiveweapons.tiltros.activated_warrior_statue.title"),
+						new TranslatableComponent("advancements.immersiveweapons.tiltros.activated_warrior_statue.description"),
+						null, FrameType.TASK, true, true, true)
+				.addCriterion("activate",
+						new WarriorStatueActivatedTrigger.TriggerInstance(Composite.ANY))
+				.save(consumer, "immersiveweapons:activated_warrior_statue");
+
+		Builder.advancement().parent(activated_warrior_statue)
 				.display(DeferredRegistryHandler.AZUL_STAINED_ORCHID_ITEM.get(),
 						new TranslatableComponent("advancements.immersiveweapons.tiltros.biome.title"),
 						new TranslatableComponent("advancements.immersiveweapons.tiltros.biome.description"),

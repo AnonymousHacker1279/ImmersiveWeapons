@@ -1,5 +1,6 @@
 package com.anonymoushacker1279.immersiveweapons.block.misc.warrior_statue;
 
+import com.anonymoushacker1279.immersiveweapons.advancement.IWCriteriaTriggers;
 import com.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
 import com.anonymoushacker1279.immersiveweapons.init.PacketHandler;
 import com.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
@@ -9,6 +10,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
@@ -69,7 +71,6 @@ public class WarriorStatueTorso extends HorizontalDirectionalBlock implements Si
 	 * @param selectionContext the <code>ISelectionContext</code> of the block
 	 * @return VoxelShape
 	 */
-	@SuppressWarnings("deprecation")
 	@Override
 	public @NotNull VoxelShape getShape(@NotNull BlockState state, @NotNull BlockGetter reader, @NotNull BlockPos pos,
 	                                    @NotNull CollisionContext selectionContext) {
@@ -118,13 +119,11 @@ public class WarriorStatueTorso extends HorizontalDirectionalBlock implements Si
 	 * @param pos    the <code>BlockPos</code> the block is at
 	 * @return float
 	 */
-	@SuppressWarnings("deprecation")
 	@Override
 	public float getShadeBrightness(@NotNull BlockState state, @NotNull BlockGetter reader, @NotNull BlockPos pos) {
 		return 1.0F;
 	}
 
-	@SuppressWarnings("deprecation")
 	@Override
 	public @NotNull FluidState getFluidState(BlockState state) {
 		return state.getValue(WATERLOGGED) ? Fluids.WATER.getSource(false) : super.getFluidState(state);
@@ -140,7 +139,6 @@ public class WarriorStatueTorso extends HorizontalDirectionalBlock implements Si
 	 * @param fromPos  the <code>BlockPos</code> of the changing block
 	 * @param isMoving determines if the block is moving
 	 */
-	@SuppressWarnings("deprecation")
 	@Override
 	public void neighborChanged(@NotNull BlockState state, Level worldIn, @NotNull BlockPos pos, @NotNull Block blockIn, @NotNull BlockPos fromPos, boolean isMoving) {
 		if (!worldIn.isClientSide) {
@@ -163,7 +161,6 @@ public class WarriorStatueTorso extends HorizontalDirectionalBlock implements Si
 	 * @param blockRayTraceResult the <code>BlockRayTraceResult</code> of the interaction
 	 * @return ActionResultType
 	 */
-	@SuppressWarnings("deprecation")
 	@Override
 	public @NotNull InteractionResult use(@NotNull BlockState state, Level worldIn, @NotNull BlockPos pos,
 	                                      @NotNull Player player, @NotNull InteractionHand handIn,
@@ -201,6 +198,9 @@ public class WarriorStatueTorso extends HorizontalDirectionalBlock implements Si
 								GeneralUtilities.getRandomNumber(-0.03d, 0.03d), 1.0f);
 
 					}
+
+					IWCriteriaTriggers.WARRIOR_STATUE_ACTIVATED_TRIGGER.trigger((ServerPlayer) player);
+
 					return InteractionResult.CONSUME;
 				} else {
 					PacketHandler.INSTANCE.send(PacketDistributor.NEAR.with(() -> new TargetPoint(pos.getX(),

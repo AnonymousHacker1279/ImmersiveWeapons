@@ -1,19 +1,22 @@
 {
-  "parent": "immersiveweapons:warrior_statue",
+  "parent": "immersiveweapons:discover_celestial_tower",
   "display": {
     "icon": {
-      "item": "immersiveweapons:azul_keystone_fragment"
+      "item": "immersiveweapons:celestial_lantern"
     },
     "title": {
-      "translate": "advancements.immersiveweapons.tiltros.azul_keystone.title"
+      "translate": "advancements.immersiveweapons.celestial_lantern.title"
     },
     "description": {
-      "translate": "advancements.immersiveweapons.tiltros.azul_keystone.description"
+      "translate": "advancements.immersiveweapons.celestial_lantern.description"
     },
-    "frame": "task",
+    "frame": "goal",
     "show_toast": true,
     "announce_to_chat": true,
-    "hidden": true
+    "hidden": false
+  },
+  "rewards": {
+    "experience": 50
   },
   "criteria": {
     "hold": {
@@ -22,7 +25,7 @@
         "items": [
           {
             "items": [
-              "immersiveweapons:azul_keystone"
+              "immersiveweapons:celestial_lantern"
             ]
           }
         ]

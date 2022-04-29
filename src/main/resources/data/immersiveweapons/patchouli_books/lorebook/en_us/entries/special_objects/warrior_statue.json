@@ -1,0 +1,59 @@
+{
+	"name": "Warrior Statue",
+	"icon": "immersiveweapons:warrior_statue_head",
+	"category": "immersiveweapons:special_objects",
+	"pages": [
+		{
+			"type": "patchouli:text",
+			"text": "Warrior statues are sentries that connect to Tiltros. Constructing a full statue will allow the player to insert an Azul Keystone into its chest cavity. When the keystone is set, a Azul Stained Orchid will be planted in front."
+		},
+		{
+			"type": "patchouli:crafting",
+			"recipe": "immersiveweapons:warrior_statue_head",
+			"recipe2": "immersiveweapons:warrior_statue_torso"
+		},
+		{
+			"type": "patchouli:crafting",
+			"recipe": "immersiveweapons:warrior_statue_base"
+		},
+		{
+			"type": "patchouli:multiblock",
+			"text": "$(o)The unpowered warrior statue.",
+			"multiblock": {
+				"mapping": {
+					"A": "immersiveweapons:warrior_statue_base",
+					"B": "immersiveweapons:warrior_statue_torso[powered=false]",
+					"C": "immersiveweapons:warrior_statue_head"
+				},
+				"pattern": [
+					[" C "],
+					[" B "],
+					["0A "]
+				],
+				"symmetrical": true
+			}
+		},
+		{
+			"type": "patchouli:multiblock",
+			"text": "$(o)The powered warrior statue",
+			"enable_visualize": false,
+			"multiblock": {
+				"mapping": {
+					"A": "immersiveweapons:warrior_statue_base",
+					"B": "immersiveweapons:warrior_statue_torso[powered=true]",
+					"C": "immersiveweapons:warrior_statue_head",
+					"D": "immersiveweapons:azul_stained_orchid",
+					"E": "minecraft:grass_block"
+				},
+				"pattern": [
+					[" C "],
+					[" B "],
+					["DA0"],
+					["E__"]
+				],
+				"symmetrical": true
+			}
+		}
+	],
+	"advancement": "immersiveweapons:warrior_statue"
+}
