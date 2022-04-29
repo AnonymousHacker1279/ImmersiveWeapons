@@ -2,8 +2,7 @@
   "parent": "immersiveweapons:ventus_shard",
   "display": {
     "icon": {
-      "item": "immersiveweapons:ventus_pickaxe",
-      "nbt": "{Damage:0}"
+      "item": "immersiveweapons:ventus_ore"
     },
     "title": {
       "translate": "advancements.immersiveweapons.pretty_windy.title"
@@ -11,43 +10,33 @@
     "description": {
       "translate": "advancements.immersiveweapons.pretty_windy.description"
     },
-    "frame": "goal",
+    "frame": "challenge",
     "show_toast": true,
     "announce_to_chat": true,
     "hidden": false
   },
   "rewards": {
-    "experience": 100
+    "experience": 150
   },
   "criteria": {
-    "hold": {
-      "trigger": "minecraft:inventory_changed",
+    "have_advancements": {
+      "trigger": "minecraft:location",
       "conditions": {
-        "items": [
+        "player": [
           {
-            "items": [
-              "immersiveweapons:ventus_sword"
-            ]
-          },
-          {
-            "items": [
-              "immersiveweapons:ventus_pickaxe"
-            ]
-          },
-          {
-            "items": [
-              "immersiveweapons:ventus_axe"
-            ]
-          },
-          {
-            "items": [
-              "immersiveweapons:ventus_shovel"
-            ]
-          },
-          {
-            "items": [
-              "immersiveweapons:ventus_hoe"
-            ]
+            "condition": "minecraft:entity_properties",
+            "predicate": {
+              "player": {
+                "advancements": {
+                  "immersiveweapons:ventus_pickaxe": true,
+                  "immersiveweapons:ventus_shovel": true,
+                  "immersiveweapons:ventus_sword": true,
+                  "immersiveweapons:ventus_axe": true,
+                  "immersiveweapons:ventus_hoe": true
+                }
+              }
+            },
+            "entity": "this"
           }
         ]
       }
@@ -55,7 +44,7 @@
   },
   "requirements": [
     [
-      "hold"
+      "have_advancements"
     ]
   ]
 }

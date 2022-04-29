@@ -1,0 +1,20 @@
+{
+	"name": "Minuteman",
+	"icon": "immersiveweapons:minuteman_head",
+	"category": "immersiveweapons:neutral_creatures",
+	"pages": [
+		{
+			"type": "patchouli:text",
+			"text": "Minutemen are ready to fight at a moment's notice. These guys can be found defending towns in Battlefields or guarding campsites throughout the world.$(br2)They wield a Blunderbuss and carry copper musket balls. They pose a significant danger to nearby monsters -- and to players who attack them."
+		},
+		{
+			"type": "patchouli:entity",
+			"entity": "immersiveweapons:minuteman"
+		},
+		{
+			"type": "immersiveweapons:entity_statistics",
+			"entity": "immersiveweapons:minuteman"
+		}
+	],
+	"advancement": "immersiveweapons:discover_minuteman"
+}

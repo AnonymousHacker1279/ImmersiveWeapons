@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "immersiveweapons:diamond_pike"
+    ]
+  },
+  "criteria": {
+    "diamond": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "tag": "forge:gems/diamond"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "immersiveweapons:diamond_pike"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "diamond",
+      "has_the_recipe"
+    ]
+  ]
+}

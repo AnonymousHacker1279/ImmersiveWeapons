@@ -1,0 +1,34 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "immersiveweapons:raw_cobalt_block"
+    ]
+  },
+  "criteria": {
+    "raw_cobalt": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "immersiveweapons:raw_cobalt"
+            ]
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "immersiveweapons:raw_cobalt_block"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "raw_cobalt",
+      "has_the_recipe"
+    ]
+  ]
+}

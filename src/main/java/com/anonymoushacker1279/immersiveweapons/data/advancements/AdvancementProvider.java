@@ -6,9 +6,7 @@ import com.google.common.collect.Sets;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import net.minecraft.advancements.Advancement;
-import net.minecraft.data.DataGenerator;
-import net.minecraft.data.DataProvider;
-import net.minecraft.data.HashCache;
+import net.minecraft.data.*;
 import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.NotNull;
 
@@ -22,7 +20,7 @@ public class AdvancementProvider implements DataProvider {
 
 	private static final Gson GSON = (new GsonBuilder()).setPrettyPrinting().create();
 	private final DataGenerator generator;
-	private final List<Consumer<Consumer<Advancement>>> tabs = ImmutableList.of(new ImmersiveWeaponsAdvancements());
+	private final List<Consumer<Consumer<Advancement>>> tabs = ImmutableList.of(new IWAdvancements());
 
 	/**
 	 * Constructor for AdvancementProvider.

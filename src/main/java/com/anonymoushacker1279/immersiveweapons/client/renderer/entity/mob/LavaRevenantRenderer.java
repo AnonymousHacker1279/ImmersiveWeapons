@@ -3,7 +3,7 @@ package com.anonymoushacker1279.immersiveweapons.client.renderer.entity.mob;
 import com.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import com.anonymoushacker1279.immersiveweapons.client.model.LavaRevenantModel;
 import com.anonymoushacker1279.immersiveweapons.client.renderer.entity.layers.LavaRevenantEyesLayer;
-import com.anonymoushacker1279.immersiveweapons.entity.monster.LavaRevenantEntity;
+import com.anonymoushacker1279.immersiveweapons.entity.monster.lava_revenant.LavaRevenantEntity;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Vector3f;
 import net.minecraft.client.model.geom.ModelLayers;

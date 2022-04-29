@@ -1,0 +1,17 @@
+{
+	"name": "Celestial Lantern",
+	"icon": "immersiveweapons:celestial_lantern",
+	"category": "immersiveweapons:special_objects",
+	"pages": [
+		{
+			"type": "patchouli:text",
+			"text": "Celestial lanterns are lighting implements with strange properties. The presence of these lanterns wards off Celestial Towers.$(br2)Having one nearby will ward off towers by 25%, two make 50%, and a third will prevent spawns entirely. It's a good idea to put these near bases to keep towers out of the way."
+		},
+		{
+			"type": "patchouli:crafting",
+			"recipe": "immersiveweapons:celestial_lantern",
+			"text": "The Celestial Fragment ingredient is an exclusive drop from towers, meaning you'll have to destroy some first."
+		}
+	],
+	"advancement": "immersiveweapons:celestial_lantern"
+}

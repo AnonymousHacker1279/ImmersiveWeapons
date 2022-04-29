@@ -1,0 +1,16 @@
+{
+	"name": "Barbed Wire",
+	"icon": "immersiveweapons:barbed_wire",
+	"category": "immersiveweapons:defense",
+	"pages": [
+		{
+			"type": "patchouli:text",
+			"text": "What if I told you, you didn't have to use sweet berries to slow down and hurt enemies?$(br2)Barbed wire acts just like sweet berries in its ability to slow down and harm enemies. Its more effective, and harder to break."
+		},
+		{
+			"type": "patchouli:crafting",
+			"recipe": "immersiveweapons:barbed_wire"
+		}
+	],
+	"advancement": "minecraft:story/smelt_iron"
+}

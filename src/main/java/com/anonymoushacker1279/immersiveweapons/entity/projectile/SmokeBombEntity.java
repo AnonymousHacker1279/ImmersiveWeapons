@@ -1,11 +1,10 @@
 package com.anonymoushacker1279.immersiveweapons.entity.projectile;
 
-import com.anonymoushacker1279.immersiveweapons.client.particle.smokebomb.SmokeBombParticleData;
+import com.anonymoushacker1279.immersiveweapons.client.particle.smoke_bomb.SmokeBombParticleOptions;
+import com.anonymoushacker1279.immersiveweapons.config.CommonConfig;
 import com.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
-import com.anonymoushacker1279.immersiveweapons.util.Config;
+import com.anonymoushacker1279.immersiveweapons.init.PacketHandler;
 import com.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
-import com.anonymoushacker1279.immersiveweapons.util.PacketHandler;
-import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.sounds.SoundSource;
@@ -16,22 +15,18 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.HitResult;
 import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.DistExecutor;
-import net.minecraftforge.fmllegacy.network.NetworkEvent;
-import net.minecraftforge.fmllegacy.network.NetworkEvent.Context;
-import net.minecraftforge.fmllegacy.network.NetworkHooks;
-import net.minecraftforge.fmllegacy.network.PacketDistributor;
+import net.minecraftforge.network.*;
+import net.minecraftforge.network.NetworkEvent.Context;
 import org.jetbrains.annotations.NotNull;
 
-import java.awt.*;
 import java.util.function.Supplier;
 
 public class SmokeBombEntity extends ThrowableItemProjectile {
 
 	private static final byte VANILLA_IMPACT_STATUS_ID = 3;
 	private static int color;
-	private final int configMaxParticles = Config.MAX_SMOKE_BOMB_PARTICLES.get();
+	private final int configMaxParticles = CommonConfig.MAX_SMOKE_BOMB_PARTICLES.get();
 
 	/**
 	 * Constructor for SmokeBombEntity.
@@ -75,78 +70,6 @@ public class SmokeBombEntity extends ThrowableItemProjectile {
 	}
 
 	/**
-	 * Create a particle.
-	 *
-	 * @return IParticleData
-	 */
-	private static ParticleOptions makeParticle() {
-		Color tint = getTint(GeneralUtilities.getRandomNumber(0, 2));
-		double diameter = getDiameter(GeneralUtilities.getRandomNumber(1.0d, 5.5d));
-
-		return new SmokeBombParticleData(tint, diameter);
-	}
-
-	/**
-	 * Get the particle diameter.
-	 *
-	 * @param random a random number
-	 * @return double
-	 */
-	private static double getDiameter(double random) {
-		final double MIN_DIAMETER = 0.5;
-		final double MAX_DIAMETER = 5.5;
-		return MIN_DIAMETER + (MAX_DIAMETER - MIN_DIAMETER) * random;
-	}
-
-	/**
-	 * Tint a particle.
-	 *
-	 * @param random a random number
-	 * @return Color
-	 */
-	private static Color getTint(int random) {
-		Color[] tints = {
-				new Color(1.00f, 1.00f, 1.00f),  // no tint (white)
-				new Color(1.00f, 0.97f, 1.00f),  // off-white
-				new Color(1.00f, 1.00f, 0.97f),  // off-white 2
-		};
-		Color[] tintsRed = {
-				new Color(1.00f, 0.25f, 0.25f),  // tint (red)
-				new Color(1.00f, 0.30f, 0.25f),  // off-red
-				new Color(1.00f, 0.25f, 0.30f),  // off-red 2
-		};
-		Color[] tintsGreen = {
-				new Color(0.25f, 1.00f, 0.25f),  // tint (green)
-				new Color(0.30f, 1.00f, 0.25f),  // off-green
-				new Color(0.25f, 1.00f, 0.30f),  // off-green 2
-		};
-		Color[] tintsBlue = {
-				new Color(0.25f, 0.25f, 1.00f),  // tint (blue)
-				new Color(0.30f, 0.25f, 1.00f),  // off-blue
-				new Color(0.25f, 0.30f, 1.00f),  // off-blue 2
-		};
-		Color[] tintsPurple = {
-				new Color(1.00f, 0.25f, 1.00f),  // tint (purple)
-				new Color(1.00f, 0.30f, 1.00f),  // off-purple
-				new Color(1.00f, 0.35f, 1.00f),  // off-purple 2
-		};
-		Color[] tintsYellow = {
-				new Color(1.00f, 1.00f, 0.25f),  // tint (yellow)
-				new Color(1.00f, 1.00f, 0.30f),  // off-yellow
-				new Color(1.00f, 1.00f, 0.35f),  // off-yellow 2
-		};
-
-		return switch (color) {
-			case 1 -> tintsRed[random];
-			case 2 -> tintsGreen[random];
-			case 3 -> tintsBlue[random];
-			case 4 -> tintsPurple[random];
-			case 5 -> tintsYellow[random];
-			default -> tints[random];
-		};
-	}
-
-	/**
 	 * Get the entity spawn packet.
 	 *
 	 * @return IPacket
@@ -176,8 +99,11 @@ public class SmokeBombEntity extends ThrowableItemProjectile {
 	protected void onHit(@NotNull HitResult rayTraceResult) {
 		super.onHit(rayTraceResult);
 		if (!level.isClientSide) {
-			PacketHandler.INSTANCE.send(PacketDistributor.TRACKING_CHUNK.with(() -> level.getChunkAt(blockPosition())), new SmokeBombEntityPacketHandler(color));
-			level.broadcastEntityEvent(this, VANILLA_IMPACT_STATUS_ID);  // calls handleStatusUpdate which tells the client to render particles
+			// Inform the client of the smoke bomb color
+			PacketHandler.INSTANCE.send(PacketDistributor.TRACKING_CHUNK.with(() -> level.getChunkAt(blockPosition())),
+					new SmokeBombEntityPacketHandler(color));
+
+			level.broadcastEntityEvent(this, VANILLA_IMPACT_STATUS_ID);
 			kill();
 		}
 	}
@@ -190,10 +116,23 @@ public class SmokeBombEntity extends ThrowableItemProjectile {
 	@Override
 	public void handleEntityEvent(byte statusID) {
 		if (statusID == VANILLA_IMPACT_STATUS_ID) {
+			double x = getX();
+			double y = getY();
+			double z = getZ();
+
+			// Spawn smoke particles
 			for (int i = 0; i < configMaxParticles; ++i) {
-				level.addParticle(makeParticle(), true, getX(), getY(), getZ(), GeneralUtilities.getRandomNumber(-0.03, 0.03d), GeneralUtilities.getRandomNumber(-0.02d, 0.02d), GeneralUtilities.getRandomNumber(-0.03d, 0.03d));
+				level.addParticle(SmokeBombParticleOptions.getParticleByColor(color),
+						true, x, y, z,
+						GeneralUtilities.getRandomNumber(-0.1d, 0.1d),
+						GeneralUtilities.getRandomNumber(-0.1d, 0.1d),
+						GeneralUtilities.getRandomNumber(-0.1d, 0.1d));
 			}
-			level.playLocalSound(getX(), getY(), getZ(), DeferredRegistryHandler.SMOKE_BOMB_HISS.get(), SoundSource.NEUTRAL, 1f, 1f, false);
+
+			// Play a hissing sound
+			level.playLocalSound(x, y, z, DeferredRegistryHandler.SMOKE_BOMB_HISS.get(),
+					SoundSource.NEUTRAL, 0.2f, 0.6f, true);
+
 			kill();
 		}
 	}
@@ -245,7 +184,6 @@ public class SmokeBombEntity extends ThrowableItemProjectile {
 		 *
 		 * @param msg the <code>SmokeBombEntityPacketHandler</code> message being sent
 		 */
-		@OnlyIn(Dist.CLIENT)
 		private static void handleOnClient(SmokeBombEntityPacketHandler msg) {
 			SmokeBombEntity.setColor(msg.color);
 		}

@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "burned_oak",
+  "pattern": [
+    "aaa"
+  ],
+  "key": {
+    "a": {
+      "item": "immersiveweapons:burned_oak_planks"
+    }
+  },
+  "result": {
+    "item": "immersiveweapons:burned_oak_slab",
+    "count": 6
+  }
+}

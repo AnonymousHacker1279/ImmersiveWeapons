@@ -1,15 +1,13 @@
 package com.anonymoushacker1279.immersiveweapons.blockentity;
 
 import com.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
-import com.anonymoushacker1279.immersiveweapons.item.crafting.ICustomRecipeType;
+import com.anonymoushacker1279.immersiveweapons.item.crafting.CustomRecipeTypes;
 import com.anonymoushacker1279.immersiveweapons.item.crafting.TeslaSynthesizerRecipe;
 import com.google.common.collect.Maps;
 import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
 import net.minecraft.SharedConstants;
 import net.minecraft.Util;
-import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
-import net.minecraft.core.NonNullList;
+import net.minecraft.core.*;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.ItemTags;
@@ -18,9 +16,7 @@ import net.minecraft.world.ContainerHelper;
 import net.minecraft.world.WorldlyContainer;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.player.StackedContents;
-import net.minecraft.world.inventory.ContainerData;
-import net.minecraft.world.inventory.RecipeHolder;
-import net.minecraft.world.inventory.StackedContentsCompatible;
+import net.minecraft.world.inventory.*;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Recipe;
@@ -85,7 +81,7 @@ public abstract class AbstractTeslaSynthesizerBlockEntity extends BaseContainerB
 	};
 
 	/**
-	 * Constructor for AbstractTeslaTileEntity.
+	 * Constructor for AbstractTeslaBlockEntity.
 	 */
 	AbstractTeslaSynthesizerBlockEntity(BlockPos blockPos, BlockState blockState) {
 		super(DeferredRegistryHandler.TESLA_SYNTHESIZER_BLOCK_ENTITY.get(), blockPos, blockState);
@@ -99,7 +95,7 @@ public abstract class AbstractTeslaSynthesizerBlockEntity extends BaseContainerB
 	 * @return boolean
 	 */
 	private static boolean isNonFlammable(Item item) {
-		return ItemTags.NON_FLAMMABLE_WOOD.contains(item);
+		return item.builtInRegistryHolder().is(ItemTags.NON_FLAMMABLE_WOOD);
 	}
 
 	/**
@@ -152,54 +148,58 @@ public abstract class AbstractTeslaSynthesizerBlockEntity extends BaseContainerB
 	/**
 	 * Runs once per tick. Handle smelting procedures here.
 	 */
-	public static void serverTick(Level level, AbstractTeslaSynthesizerBlockEntity abstractTeslaSynthesizerTileEntity) {
-		boolean flag = abstractTeslaSynthesizerTileEntity.isBurning();
-		boolean flag1 = false;
-		if (abstractTeslaSynthesizerTileEntity.isBurning()) {
-			--abstractTeslaSynthesizerTileEntity.burnTime;
+	public static void serverTick(Level level, AbstractTeslaSynthesizerBlockEntity blockEntity) {
+		boolean isBurning = blockEntity.isBurning();
+		boolean hasChanged = false;
+		if (blockEntity.isBurning()) {
+			--blockEntity.burnTime;
 		}
 
-		ItemStack itemstack = abstractTeslaSynthesizerTileEntity.items.get(3);
-		if (abstractTeslaSynthesizerTileEntity.isBurning() || !itemstack.isEmpty() && !abstractTeslaSynthesizerTileEntity.items.get(0).isEmpty() && !abstractTeslaSynthesizerTileEntity.items.get(1).isEmpty() && !abstractTeslaSynthesizerTileEntity.items.get(2).isEmpty()) {
+		ItemStack fuel = blockEntity.items.get(3);
+		if (blockEntity.isBurning() || !fuel.isEmpty() && !blockEntity.items.get(0).isEmpty()
+				&& !blockEntity.items.get(1).isEmpty() && !blockEntity.items.get(2).isEmpty()) {
+
 			RecipeManager recipeManager = level.getRecipeManager();
-			Recipe<?> iRecipe = recipeManager.getRecipeFor(ICustomRecipeType.TESLA_SYNTHESIZER, abstractTeslaSynthesizerTileEntity, level).orElse(null);
-			if (!abstractTeslaSynthesizerTileEntity.isBurning() && abstractTeslaSynthesizerTileEntity.canSmelt(iRecipe)) {
-				abstractTeslaSynthesizerTileEntity.burnTime = getBurnTime(itemstack);
-				abstractTeslaSynthesizerTileEntity.burnTimeTotal = abstractTeslaSynthesizerTileEntity.burnTime;
-				if (abstractTeslaSynthesizerTileEntity.isBurning()) {
-					flag1 = true;
-					if (itemstack.hasContainerItem())
-						abstractTeslaSynthesizerTileEntity.items.set(3, itemstack.getContainerItem());
-					else if (!itemstack.isEmpty()) {
-						itemstack.shrink(1);
-						if (itemstack.isEmpty()) {
-							abstractTeslaSynthesizerTileEntity.items.set(3, itemstack.getContainerItem());
+			Recipe<?> synthesizerRecipe = recipeManager.getRecipeFor(CustomRecipeTypes.TESLA_SYNTHESIZER, blockEntity, level)
+					.orElse(null);
+
+			if (!blockEntity.isBurning() && blockEntity.canSmelt(synthesizerRecipe)) {
+				blockEntity.burnTime = getBurnTime(fuel);
+				blockEntity.burnTimeTotal = blockEntity.burnTime;
+				if (blockEntity.isBurning()) {
+					hasChanged = true;
+					if (fuel.hasContainerItem())
+						blockEntity.items.set(3, fuel.getContainerItem());
+					else if (!fuel.isEmpty()) {
+						fuel.shrink(1);
+						if (fuel.isEmpty()) {
+							blockEntity.items.set(3, fuel.getContainerItem());
 						}
 					}
 				}
 			}
 
-			if (abstractTeslaSynthesizerTileEntity.isBurning() && abstractTeslaSynthesizerTileEntity.canSmelt(iRecipe)) {
-				++abstractTeslaSynthesizerTileEntity.cookTime;
-				if (abstractTeslaSynthesizerTileEntity.cookTime == abstractTeslaSynthesizerTileEntity.cookTimeTotal) {
-					abstractTeslaSynthesizerTileEntity.cookTime = 0;
-					abstractTeslaSynthesizerTileEntity.cookTimeTotal = abstractTeslaSynthesizerTileEntity.getCookTime();
-					abstractTeslaSynthesizerTileEntity.smelt(iRecipe);
-					flag1 = true;
+			if (blockEntity.isBurning() && blockEntity.canSmelt(synthesizerRecipe)) {
+				++blockEntity.cookTime;
+				if (blockEntity.cookTime == blockEntity.cookTimeTotal) {
+					blockEntity.cookTime = 0;
+					blockEntity.cookTimeTotal = blockEntity.getCookTime();
+					blockEntity.smelt(synthesizerRecipe);
+					hasChanged = true;
 				}
 			} else {
-				abstractTeslaSynthesizerTileEntity.cookTime = 0;
+				blockEntity.cookTime = 0;
 			}
-		} else if (!abstractTeslaSynthesizerTileEntity.isBurning() && abstractTeslaSynthesizerTileEntity.cookTime > 0) {
-			abstractTeslaSynthesizerTileEntity.cookTime = Mth.clamp(abstractTeslaSynthesizerTileEntity.cookTime - 2, 0, abstractTeslaSynthesizerTileEntity.cookTimeTotal);
+		} else if (!blockEntity.isBurning() && blockEntity.cookTime > 0) {
+			blockEntity.cookTime = Mth.clamp(blockEntity.cookTime - 2, 0, blockEntity.cookTimeTotal);
 		}
 
-		if (flag != abstractTeslaSynthesizerTileEntity.isBurning()) {
-			flag1 = true;
+		if (isBurning != blockEntity.isBurning()) {
+			hasChanged = true;
 		}
 
-		if (flag1) {
-			abstractTeslaSynthesizerTileEntity.setChanged();
+		if (hasChanged) {
+			blockEntity.setChanged();
 		}
 
 	}
@@ -249,8 +249,8 @@ public abstract class AbstractTeslaSynthesizerBlockEntity extends BaseContainerB
 		burnTimeTotal = getBurnTime(items.get(3));
 		CompoundTag compoundTag = nbt.getCompound("RecipesUsed");
 
-		for (String s : compoundTag.getAllKeys()) {
-			recipes.put(new ResourceLocation(s), compoundTag.getInt(s));
+		for (String string : compoundTag.getAllKeys()) {
+			recipes.put(new ResourceLocation(string), compoundTag.getInt(string));
 		}
 
 	}
@@ -258,19 +258,18 @@ public abstract class AbstractTeslaSynthesizerBlockEntity extends BaseContainerB
 	/**
 	 * Save NBT data.
 	 *
-	 * @param nbt the <code>CompoundNBT</code> to save
+	 * @param pTag the <code>CompoundNBT</code> to save
 	 */
 	@Override
-	public @NotNull CompoundTag save(@NotNull CompoundTag nbt) {
-		super.save(nbt);
-		nbt.putInt("BurnTime", burnTime);
-		nbt.putInt("CookTime", cookTime);
-		nbt.putInt("CookTimeTotal", cookTimeTotal);
-		ContainerHelper.saveAllItems(nbt, items);
+	protected void saveAdditional(@NotNull CompoundTag pTag) {
+		super.saveAdditional(pTag);
+		pTag.putInt("BurnTime", burnTime);
+		pTag.putInt("CookTime", cookTime);
+		pTag.putInt("CookTimeTotal", cookTimeTotal);
+		ContainerHelper.saveAllItems(pTag, items);
 		CompoundTag compoundTag = new CompoundTag();
 		recipes.forEach((recipeId, craftedAmount) -> compoundTag.putInt(recipeId.toString(), craftedAmount));
-		nbt.put("RecipesUsed", compoundTag);
-		return nbt;
+		pTag.put("RecipesUsed", compoundTag);
 	}
 
 	/**
@@ -281,19 +280,20 @@ public abstract class AbstractTeslaSynthesizerBlockEntity extends BaseContainerB
 	 */
 	private boolean canSmelt(@Nullable Recipe<?> recipeIn) {
 		if (!items.get(0).isEmpty() && !items.get(1).isEmpty() && !items.get(2).isEmpty() && recipeIn != null) {
-			ItemStack itemstack = recipeIn.getResultItem();
-			if (itemstack.isEmpty()) {
+			ItemStack resultItem = recipeIn.getResultItem();
+			if (resultItem.isEmpty()) {
 				return false;
 			} else {
-				ItemStack itemStack1 = items.get(4);
-				if (itemStack1.isEmpty()) {
+				ItemStack output = items.get(4);
+				if (output.isEmpty()) {
 					return true;
-				} else if (!itemStack1.sameItem(itemstack)) {
+				} else if (!output.sameItem(resultItem)) {
 					return false;
-				} else if (itemStack1.getCount() + itemstack.getCount() <= getMaxStackSize() && itemStack1.getCount() + itemstack.getCount() <= itemStack1.getMaxStackSize()) { // Forge fix: make furnace respect stack sizes in furnace recipes
+				} else if (output.getCount() + resultItem.getCount() <= getMaxStackSize() && output.getCount()
+						+ resultItem.getCount() <= output.getMaxStackSize()) {
 					return true;
 				} else {
-					return itemStack1.getCount() + itemstack.getCount() <= itemstack.getMaxStackSize();
+					return output.getCount() + resultItem.getCount() <= resultItem.getMaxStackSize();
 				}
 			}
 		} else {
@@ -336,9 +336,11 @@ public abstract class AbstractTeslaSynthesizerBlockEntity extends BaseContainerB
 	 */
 	private int getCookTime() {
 		if (level != null) {
-			Optional<TeslaSynthesizerRecipe> optional = level.getRecipeManager().getRecipeFor(ICustomRecipeType.TESLA_SYNTHESIZER, this, level);
-			if (optional.isPresent())
-				return optional.get().getCookTime();
+			Optional<TeslaSynthesizerRecipe> recipe = level.getRecipeManager()
+					.getRecipeFor(CustomRecipeTypes.TESLA_SYNTHESIZER, this, level);
+
+			if (recipe.isPresent())
+				return recipe.get().getCookTime();
 		}
 		return 0;
 	}
@@ -452,8 +454,8 @@ public abstract class AbstractTeslaSynthesizerBlockEntity extends BaseContainerB
 	 */
 	@Override
 	public void setItem(int index, ItemStack stack) {
-		ItemStack itemstack = items.get(index);
-		boolean flag = !stack.isEmpty() && stack.sameItem(itemstack) && ItemStack.tagMatches(stack, itemstack);
+		ItemStack itemStack = items.get(index);
+		boolean flag = !stack.isEmpty() && stack.sameItem(itemStack) && ItemStack.tagMatches(stack, itemStack);
 		items.set(index, stack);
 		if (stack.getCount() > getMaxStackSize()) {
 			stack.setCount(getMaxStackSize());
@@ -478,7 +480,9 @@ public abstract class AbstractTeslaSynthesizerBlockEntity extends BaseContainerB
 		if ((level != null ? level.getBlockEntity(worldPosition) : null) != this) {
 			return false;
 		} else {
-			return player.distanceToSqr((double) worldPosition.getX() + 0.5D, (double) worldPosition.getY() + 0.5D, (double) worldPosition.getZ() + 0.5D) <= 64.0D;
+			return player.distanceToSqr((double) worldPosition.getX() + 0.5D,
+					(double) worldPosition.getY() + 0.5D,
+					(double) worldPosition.getZ() + 0.5D) <= 64.0D;
 		}
 	}
 
@@ -519,8 +523,8 @@ public abstract class AbstractTeslaSynthesizerBlockEntity extends BaseContainerB
 	@Override
 	public void setRecipeUsed(@Nullable Recipe<?> recipe) {
 		if (recipe != null) {
-			ResourceLocation resourcelocation = recipe.getId();
-			recipes.addTo(resourcelocation, 1);
+			ResourceLocation recipeId = recipe.getId();
+			recipes.addTo(recipeId, 1);
 		}
 
 	}
@@ -541,8 +545,8 @@ public abstract class AbstractTeslaSynthesizerBlockEntity extends BaseContainerB
 	 */
 	@Override
 	public void fillStackedContents(@NotNull StackedContents helper) {
-		for (ItemStack itemstack : items) {
-			helper.accountStack(itemstack);
+		for (ItemStack itemStack : items) {
+			helper.accountStack(itemStack);
 		}
 
 	}

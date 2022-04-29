@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "group": "shard",
+  "ingredients": [
+    {
+      "item": "minecraft:cobblestone"
+    }
+  ],
+  "result": {
+    "item": "immersiveweapons:stone_shard",
+    "count": 3
+  }
+}

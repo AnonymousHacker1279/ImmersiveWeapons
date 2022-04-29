@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "immersiveweapons:burned_oak_planks"
+    ]
+  },
+  "criteria": {
+    "burned_oak_log": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "tag": "immersiveweapons:burned_oak_logs"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "immersiveweapons:burned_oak_planks"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "burned_oak_log",
+      "has_the_recipe"
+    ]
+  ]
+}

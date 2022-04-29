@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:stonecutting",
+  "group": "mud",
+  "ingredient": {
+    "item": "immersiveweapons:hardened_mud"
+  },
+  "result": "immersiveweapons:hardened_mud_slab",
+  "count": 2
+}

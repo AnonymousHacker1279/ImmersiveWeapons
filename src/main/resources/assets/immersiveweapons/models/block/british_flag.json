@@ -2,7 +2,7 @@
 	"credit": "Made with Blockbench",
 	"textures": {
 		"0": "immersiveweapons:custom/iron_light",
-		"1": "immersiveweapons:custom/flags/british_flag",
+		"1": "immersiveweapons:block/flags/british_flag",
 		"particle": "immersiveweapons:custom/iron_light"
 	},
 	"elements": [

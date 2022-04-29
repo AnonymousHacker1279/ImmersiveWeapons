@@ -1,8 +1,7 @@
 package com.anonymoushacker1279.immersiveweapons.item.fortitude;
 
-import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResult;
-import net.minecraft.world.InteractionResultHolder;
+import com.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
+import net.minecraft.world.*;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.LivingEntity;
@@ -26,43 +25,57 @@ public class BandageItem extends Item {
 	/**
 	 * Runs when the player right-clicks.
 	 *
-	 * @param worldIn  the <code>World</code> the player is in
-	 * @param playerIn the <code>PlayerEntity</code> performing the action
-	 * @param handIn   the <code>Hand</code> the player is using
-	 * @return ActionResult extending ItemStack
+	 * @param level  the <code>Level</code> the player is in
+	 * @param player the <code>Player</code> performing the action
+	 * @param handIn the <code>Hand</code> the player is using
+	 * @return InteractionResultHolder extending ItemStack
 	 */
 	@Override
-	public @NotNull InteractionResultHolder<ItemStack> use(@NotNull Level worldIn, Player playerIn, @NotNull InteractionHand handIn) {
-		ItemStack itemstack = playerIn.getItemInHand(handIn);
-		playerIn.addEffect(new MobEffectInstance(MobEffects.REGENERATION, 240, 0, false, true));
-		if (!playerIn.isCreative()) {
-			itemstack.shrink(1);
-			playerIn.getCooldowns().addCooldown(this, 300);
+	public @NotNull InteractionResultHolder<ItemStack> use(@NotNull Level level, Player player,
+	                                                       @NotNull InteractionHand handIn) {
+
+		ItemStack itemInHand = player.getItemInHand(handIn);
+
+		setEffects(player);
+
+		if (!player.isCreative()) {
+			itemInHand.shrink(1);
+			player.getCooldowns().addCooldown(this, 300);
 		}
 
-		return InteractionResultHolder.sidedSuccess(itemstack, worldIn.isClientSide());
+		return InteractionResultHolder.sidedSuccess(itemInHand, level.isClientSide());
 	}
 
 	/**
 	 * Runs when the player right-clicks an entity.
 	 *
-	 * @param stack    the <code>ItemStack</code> right-clicked with
-	 * @param playerIn the <code>PlayerEntity</code> performing the action
-	 * @param entity   the <code>LivingEntity</code> being interacted with
-	 * @param hand     the <code>Hand</code> the player is using
-	 * @return ActionResultType
+	 * @param stack  the <code>ItemStack</code> right-clicked with
+	 * @param player the <code>Player</code> performing the action
+	 * @param entity the <code>LivingEntity</code> being interacted with
+	 * @param hand   the <code>Hand</code> the player is using
+	 * @return InteractionResult
 	 */
 	@Override
-	public @NotNull InteractionResult interactLivingEntity(@NotNull ItemStack stack, @NotNull Player playerIn, LivingEntity entity, @NotNull InteractionHand hand) {
+	public @NotNull InteractionResult interactLivingEntity(@NotNull ItemStack stack, @NotNull Player player,
+	                                                       LivingEntity entity, @NotNull InteractionHand hand) {
+
 		if (entity.level.isClientSide) {
 			return InteractionResult.PASS;
 		}
 
-		entity.addEffect(new MobEffectInstance(MobEffects.REGENERATION, 160, 0, false, true));
-		if (!playerIn.isCreative()) {
+		setEffects(entity);
+
+		if (!player.isCreative()) {
 			stack.shrink(1);
 		}
 
 		return InteractionResult.PASS;
+	}
+
+	private void setEffects(LivingEntity entity) {
+		if (entity.hasEffect(DeferredRegistryHandler.BLEEDING_EFFECT.get())) {
+			entity.removeEffect(DeferredRegistryHandler.BLEEDING_EFFECT.get());
+		}
+		entity.addEffect(new MobEffectInstance(MobEffects.REGENERATION, 240, 0, false, true));
 	}
 }

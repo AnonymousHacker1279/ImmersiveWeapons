@@ -20,7 +20,7 @@ import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraftforge.event.ForgeEventFactory;
-import net.minecraftforge.fmllegacy.network.NetworkHooks;
+import net.minecraftforge.network.NetworkHooks;
 import org.jetbrains.annotations.NotNull;
 
 public abstract class AbstractCustomArrowEntity extends AbstractArrow {

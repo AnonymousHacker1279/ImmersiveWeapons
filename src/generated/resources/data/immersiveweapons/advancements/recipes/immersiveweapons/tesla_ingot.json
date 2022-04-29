@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "immersiveweapons:tesla_ingot"
+    ]
+  },
+  "criteria": {
+    "electric_ingot": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "tag": "immersiveweapons:ingots/electric"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "immersiveweapons:tesla_ingot"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "electric_ingot",
+      "has_the_recipe"
+    ]
+  ]
+}

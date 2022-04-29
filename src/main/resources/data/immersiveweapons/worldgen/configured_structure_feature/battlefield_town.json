@@ -1,0 +1,26 @@
+{
+	"type": "minecraft:village",
+
+	"config": {
+		"start_pool": "immersiveweapons:battlefield_town/start_pool",
+		"size": 1
+	},
+
+	"biomes": "#immersiveweapons:has_structure/battlefield_town",
+
+	"adapt_noise": true,
+
+	"spawn_overrides": {
+		"creature": {
+			"bounding_box": "full",
+			"spawns": [
+				{
+					"type": "minecraft:cat",
+					"weight": 1,
+					"minCount": 1,
+					"maxCount": 2
+				}
+			]
+		}
+	}
+}

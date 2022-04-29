@@ -1,0 +1,14 @@
+{
+	"type": "minecraft:village",
+
+	"config": {
+		"start_pool": "immersiveweapons:bear_trap/start_pool",
+		"size": 1
+	},
+
+	"biomes": "#immersiveweapons:has_structure/bear_trap",
+
+	"adapt_noise": true,
+
+	"spawn_overrides": {}
+}

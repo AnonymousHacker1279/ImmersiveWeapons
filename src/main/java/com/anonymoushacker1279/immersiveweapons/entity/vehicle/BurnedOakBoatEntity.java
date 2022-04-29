@@ -8,7 +8,7 @@ import net.minecraft.world.entity.vehicle.Boat;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.fmllegacy.network.NetworkHooks;
+import net.minecraftforge.network.NetworkHooks;
 import org.jetbrains.annotations.NotNull;
 
 public class BurnedOakBoatEntity extends Boat {

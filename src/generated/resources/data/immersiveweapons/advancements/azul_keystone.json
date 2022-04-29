@@ -2,7 +2,7 @@
   "parent": "immersiveweapons:warrior_statue",
   "display": {
     "icon": {
-      "item": "immersiveweapons:azul_keystone"
+      "item": "immersiveweapons:azul_keystone_fragment"
     },
     "title": {
       "translate": "advancements.immersiveweapons.tiltros.azul_keystone.title"

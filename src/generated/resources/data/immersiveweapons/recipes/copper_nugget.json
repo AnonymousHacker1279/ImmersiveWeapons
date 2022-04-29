@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "group": "copper",
+  "ingredients": [
+    {
+      "tag": "forge:ingots/copper"
+    }
+  ],
+  "result": {
+    "item": "immersiveweapons:copper_nugget",
+    "count": 9
+  }
+}

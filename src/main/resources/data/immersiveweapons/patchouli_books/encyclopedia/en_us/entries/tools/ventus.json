@@ -1,0 +1,31 @@
+{
+	"name": "Ventus Tools",
+	"icon": "immersiveweapons:ventus_pickaxe",
+	"category": "immersiveweapons:tools",
+	"pages": [
+		{
+			"type": "patchouli:text",
+			"text": "$(#AAAAAA)It's pretty light.$()$(br2)Ventus tools are crafted with precision from the airy Ventus substance. Upon hitting your target, Ventus particles will attach and $(l)carry them up into the air!$()$(br2)A specialty item, the Ventus Staff, can be used to push nearby entities away from you."
+		},
+		{
+			"type": "patchouli:crafting",
+			"recipe": "immersiveweapons:ventus_sword",
+			"recipe2": "immersiveweapons:ventus_pickaxe"
+		},
+		{
+			"type": "patchouli:crafting",
+			"recipe": "immersiveweapons:ventus_axe",
+			"recipe2": "immersiveweapons:ventus_shovel"
+		},
+		{
+			"type": "patchouli:crafting",
+			"recipe": "immersiveweapons:ventus_hoe",
+			"recipe2": "immersiveweapons:ventus_staff"
+		},
+		{
+			"type": "patchouli:crafting",
+			"recipe": "immersiveweapons:ventus_staff_core"
+		}
+	],
+	"advancement": "immersiveweapons:ventus_shard"
+}

@@ -1,0 +1,34 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "immersiveweapons:mortar_shell"
+    ]
+  },
+  "criteria": {
+    "tnt": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "minecraft:tnt"
+            ]
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "immersiveweapons:mortar_shell"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "tnt",
+      "has_the_recipe"
+    ]
+  ]
+}

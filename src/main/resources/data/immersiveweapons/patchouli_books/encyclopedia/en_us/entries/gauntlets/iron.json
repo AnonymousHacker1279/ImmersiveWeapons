@@ -1,0 +1,17 @@
+{
+	"name": "Iron Gauntlet",
+	"icon": "immersiveweapons:iron_gauntlet",
+	"category": "immersiveweapons:gauntlets",
+	"pages": [
+		{
+			"type": "patchouli:text",
+			"text": "This is what would be considered the mid-range gauntlet. Not too powerful when compared to swords or pikes, but it has a high enough chance to inflict Bleeding to be worth using."
+		},
+		{
+			"type": "patchouli:crafting",
+			"recipe": "immersiveweapons:iron_gauntlet",
+			"text": "$(o)Has a 55% chance to inflict $(#FF5555)Bleeding$()."
+		}
+	],
+	"advancement": "minecraft:story/smelt_iron"
+}

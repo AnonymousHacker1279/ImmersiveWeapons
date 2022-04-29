@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "aca",
+    "aba"
+  ],
+  "key": {
+    "a": {
+      "tag": "forge:ingots/iron"
+    },
+    "b": {
+      "tag": "minecraft:planks"
+    },
+    "c": {
+      "tag": "forge:ingots/copper"
+    }
+  },
+  "result": {
+    "item": "immersiveweapons:small_parts_table"
+  }
+}

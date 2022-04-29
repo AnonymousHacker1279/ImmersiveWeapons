@@ -14,7 +14,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.DispenserBlock;
 import org.jetbrains.annotations.NotNull;
 
-@SuppressWarnings("ConstantConditions")
 public class DispenserBehaviorRegistry implements DispenseItemBehavior {
 
 	/**
@@ -233,12 +232,13 @@ public class DispenserBehaviorRegistry implements DispenseItemBehavior {
 	/**
 	 * Custom dispense behavior.
 	 *
-	 * @param iBlockSource the <code>IBlockSource</code> instance
-	 * @param itemStack    the <code>ItemStack</code> being dispensed
+	 * @param source    the <code>BlockSource</code> instance
+	 * @param itemStack the <code>ItemStack</code> being dispensed
 	 * @return ItemStack
 	 */
+	@SuppressWarnings("ConstantConditions")
 	@Override
-	public @NotNull ItemStack dispense(@NotNull BlockSource iBlockSource, @NotNull ItemStack itemStack) {
+	public @NotNull ItemStack dispense(@NotNull BlockSource source, @NotNull ItemStack itemStack) {
 		return null;
 	}
 }

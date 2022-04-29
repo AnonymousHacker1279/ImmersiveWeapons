@@ -1,0 +1,34 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "immersiveweapons:explosive_chocolate_bar"
+    ]
+  },
+  "criteria": {
+    "chocolate_bar": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "immersiveweapons:chocolate_bar"
+            ]
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "immersiveweapons:explosive_chocolate_bar"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "chocolate_bar",
+      "has_the_recipe"
+    ]
+  ]
+}

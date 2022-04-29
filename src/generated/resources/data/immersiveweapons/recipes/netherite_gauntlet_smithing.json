@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:smithing",
+  "base": {
+    "item": "immersiveweapons:diamond_gauntlet"
+  },
+  "addition": {
+    "item": "minecraft:netherite_ingot"
+  },
+  "result": {
+    "item": "immersiveweapons:netherite_gauntlet"
+  }
+}

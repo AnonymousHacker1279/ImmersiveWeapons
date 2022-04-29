@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "stone",
+  "pattern": [
+    "aaa",
+    "aba"
+  ],
+  "key": {
+    "a": {
+      "tag": "minecraft:stone_tool_materials"
+    },
+    "b": {
+      "item": "immersiveweapons:gauntlet_scaffolding"
+    }
+  },
+  "result": {
+    "item": "immersiveweapons:stone_gauntlet"
+  }
+}

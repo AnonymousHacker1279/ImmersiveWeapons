@@ -1,0 +1,26 @@
+{
+	"name": "Molten Tools",
+	"icon": "immersiveweapons:molten_pickaxe",
+	"category": "immersiveweapons:tools",
+	"pages": [
+		{
+			"type": "patchouli:text",
+			"text": "$(#AA0000)Quite literally forged in fire.$()$(br2)Molten tools are formed from a dense lava, granting them not only high damage and durability, but the ability to catch enemies on fire $(l)without needing a Fire Aspect enchantment.$()"
+		},
+		{
+			"type": "patchouli:crafting",
+			"recipe": "immersiveweapons:molten_sword",
+			"recipe2": "immersiveweapons:molten_pickaxe"
+		},
+		{
+			"type": "patchouli:crafting",
+			"recipe": "immersiveweapons:molten_axe",
+			"recipe2": "immersiveweapons:molten_shovel"
+		},
+		{
+			"type": "patchouli:crafting",
+			"recipe": "immersiveweapons:molten_hoe"
+		}
+	],
+	"advancement": "immersiveweapons:molten_ingot"
+}

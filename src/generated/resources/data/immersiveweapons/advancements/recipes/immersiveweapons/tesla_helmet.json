@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "immersiveweapons:tesla_helmet"
+    ]
+  },
+  "criteria": {
+    "tesla_ingot": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "tag": "immersiveweapons:ingots/tesla"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "immersiveweapons:tesla_helmet"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "tesla_ingot",
+      "has_the_recipe"
+    ]
+  ]
+}

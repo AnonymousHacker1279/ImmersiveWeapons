@@ -1,0 +1,34 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "minecraft:gunpowder"
+    ]
+  },
+  "criteria": {
+    "sulfur": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "immersiveweapons:sulfur"
+            ]
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "minecraft:gunpowder"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "sulfur",
+      "has_the_recipe"
+    ]
+  ]
+}

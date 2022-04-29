@@ -1,0 +1,37 @@
+{
+  "parent": "immersiveweapons:ingots",
+  "display": {
+    "icon": {
+      "item": "immersiveweapons:cobalt_ingot"
+    },
+    "title": {
+      "translate": "advancements.immersiveweapons.cobalt_ingot.title"
+    },
+    "description": {
+      "translate": "advancements.immersiveweapons.cobalt_ingot.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "hold": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "immersiveweapons:cobalt_ingot"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "hold"
+    ]
+  ]
+}

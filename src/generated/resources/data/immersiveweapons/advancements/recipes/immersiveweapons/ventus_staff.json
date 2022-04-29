@@ -1,0 +1,34 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "immersiveweapons:ventus_staff"
+    ]
+  },
+  "criteria": {
+    "ventus_staff_core": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "immersiveweapons:ventus_staff_core"
+            ]
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "immersiveweapons:ventus_staff"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "ventus_staff_core",
+      "has_the_recipe"
+    ]
+  ]
+}

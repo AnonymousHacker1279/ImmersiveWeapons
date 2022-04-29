@@ -1,0 +1,18 @@
+{
+	"name": "Biohazard Box",
+	"icon": "immersiveweapons:biohazard_box",
+	"category": "immersiveweapons:decoration",
+	"pages": [
+		{
+			"type": "patchouli:text",
+			"text": "When you go through medic stations in Battlefield Villages, you might come across a strange looking box that seems to host hazardous material. Well thankfully for you, these are completely harmless and are just for decoration.$(br2)They're not craft-able; you'll have to break these and carry em with you."
+		},
+		{
+			"type": "patchouli:spotlight",
+			"item": "immersiveweapons:biohazard_box",
+			"link_recipe": true,
+			"text": "$(o)Looks deadly, but its not. In fact, its one of the nicer things you'll find in a Battlefield."
+		}
+	],
+	"advancement": "immersiveweapons:biohazard_box"
+}

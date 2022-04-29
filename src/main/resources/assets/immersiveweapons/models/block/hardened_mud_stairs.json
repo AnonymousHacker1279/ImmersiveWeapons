@@ -1,8 +1,0 @@
-{
-	"parent": "minecraft:block/stairs",
-	"textures": {
-		"bottom": "immersiveweapons:block/hardened_mud",
-		"top": "immersiveweapons:block/hardened_mud",
-		"side": "immersiveweapons:block/hardened_mud"
-	}
-}

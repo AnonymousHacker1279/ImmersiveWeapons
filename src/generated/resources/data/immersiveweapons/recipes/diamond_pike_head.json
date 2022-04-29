@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "diamond",
+  "pattern": [
+    " a ",
+    " b "
+  ],
+  "key": {
+    "a": {
+      "tag": "forge:gems/diamond"
+    },
+    "b": {
+      "tag": "immersiveweapons:shards/diamond"
+    }
+  },
+  "result": {
+    "item": "immersiveweapons:diamond_pike_head"
+  }
+}

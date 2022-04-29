@@ -1,20 +1,17 @@
 package com.anonymoushacker1279.immersiveweapons.entity.projectile;
 
+import com.anonymoushacker1279.immersiveweapons.config.CommonConfig;
+import com.anonymoushacker1279.immersiveweapons.data.tags.groups.forge.ForgeBlockTagGroups;
 import com.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
-import com.anonymoushacker1279.immersiveweapons.util.Config;
 import it.unimi.dsi.fastutil.ints.IntOpenHashSet;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.protocol.Packet;
-import net.minecraft.network.protocol.game.ClientboundGameEventPacket;
-import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.util.Mth;
 import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.item.Item;
@@ -28,13 +25,14 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.*;
 import net.minecraft.world.phys.HitResult.Type;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import net.minecraftforge.common.Tags.Blocks;
 import net.minecraftforge.event.ForgeEventFactory;
-import net.minecraftforge.fmllegacy.network.NetworkHooks;
+import net.minecraftforge.network.NetworkHooks;
 import org.jetbrains.annotations.NotNull;
 
 public abstract class AbstractBulletEntity extends AbstractArrow {
 
-	private static final boolean canBreakGlass = Config.BULLETS_BREAK_GLASS.get();
+	private static final boolean canBreakGlass = CommonConfig.BULLETS_BREAK_GLASS.get();
 	private final SoundEvent hitSound = getDefaultHitGroundSoundEvent();
 	Item referenceItem;
 	int knockbackStrength;
@@ -90,28 +88,39 @@ public abstract class AbstractBulletEntity extends AbstractArrow {
 	@Override
 	public void tick() {
 		super.tick();
+
+		// Run extra stuff while ticking, useful for classes extending this class
+		// but not needing to overwrite the entire tick function.
 		doWhileTicking();
-		boolean flag = isNoPhysics();
-		Vec3 vector3d = getDeltaMovement();
-		double yRot;
-		double xRot;
+
+		boolean isNoPhysics = isNoPhysics();
+		Vec3 deltaMovement = getDeltaMovement();
+
+		double yRotation;
+		double xRotation;
+		// Make the bullet rotate
 		if (xRotO == 0.0F && yRotO == 0.0F) {
-			double d = vector3d.horizontalDistanceSqr();
-			yRot = (Mth.atan2(vector3d.x, vector3d.z) * (180F / (float) Math.PI));
-			xRot = (Mth.atan2(vector3d.y, d) * (180F / (float) Math.PI));
-			yRotO = (float) yRot;
-			xRotO = (float) xRot;
+			double horizontalDistanceSquareRoot = deltaMovement.horizontalDistanceSqr();
+			yRotation = (Mth.atan2(deltaMovement.x, deltaMovement.z) * (180F / (float) Math.PI));
+			xRotation = (Mth.atan2(deltaMovement.y, horizontalDistanceSquareRoot) * (180F / (float) Math.PI));
+			yRotO = (float) yRotation;
+			xRotO = (float) xRotation;
 		}
 
-		BlockPos blockpos = blockPosition();
-		BlockState blockstate = level.getBlockState(blockpos);
-		if (!blockstate.isAir() && !flag) {
-			VoxelShape voxelshape = blockstate.getBlockSupportShape(level, blockpos);
-			if (!voxelshape.isEmpty()) {
-				Vec3 vector3d1 = position();
+		BlockPos currentBlockPosition = blockPosition();
+		BlockState blockStateAtCurrentPosition = level.getBlockState(currentBlockPosition);
+		// Check if the block at the current position is air, and that it has physics enabled
+		if (!blockStateAtCurrentPosition.isAir() && !isNoPhysics) {
+			VoxelShape currentPositionBlockSupportShape = blockStateAtCurrentPosition.getBlockSupportShape(level,
+					currentBlockPosition);
 
-				for (AABB aabb : voxelshape.toAabbs()) {
-					if (aabb.move(blockpos).contains(vector3d1)) {
+			// Check the hitboxes first, if this isn't an air block
+			if (!currentPositionBlockSupportShape.isEmpty()) {
+				Vec3 position = position();
+
+				for (AABB aabb : currentPositionBlockSupportShape.toAabbs()) {
+					// Check if the bullet reached the hitbox of the non-air block
+					if (aabb.move(currentBlockPosition).contains(position)) {
 						inGround = true;
 						break;
 					}
@@ -119,54 +128,78 @@ public abstract class AbstractBulletEntity extends AbstractArrow {
 			}
 		}
 
+		// If the shake time is above zero, tick it down
 		if (shakeTime > 0) {
-			--shakeTime;
+			shakeTime--;
 		}
 
+		// If the bullet is in water or rain, clear any fire
 		if (isInWaterOrRain()) {
 			clearFire();
 		}
 
-		if (inGround && !flag) {
-			if (inBlockState != blockstate && shouldFall()) {
+		// Check if the bullet is in the ground, and if it has physics enabled
+		if (inGround && !isNoPhysics) {
+			/* If the current blockstate is not the same as the previous one, and it should start falling,
+			 begin the fall process. This runs when the block the bullet is under is broken. Otherwise,
+			 tick for despawn. */
+			if (inBlockState != blockStateAtCurrentPosition && shouldFall()) {
 				startFalling();
 			} else if (!level.isClientSide) {
 				tickDespawn();
 			}
 
-			++inGroundTime;
+			inGroundTime++;
 		} else {
+			// At this point, the bullet is still in the air
+
 			inGroundTime = 0;
-			Vec3 vector3d2 = position();
-			Vec3 vector3d3 = vector3d2.add(vector3d);
-			HitResult hitResult = level.clip(new ClipContext(vector3d2, vector3d3, Block.COLLIDER, Fluid.NONE, this));
+			Vec3 currentPosition = position();
+			Vec3 newPosition = currentPosition.add(deltaMovement);
+			HitResult hitResult = level.clip(new ClipContext(currentPosition, newPosition, Block.COLLIDER, Fluid.NONE,
+					this));
+
+			// If there's a block between the current position and the new one, set the
+			// location to the hit location of the clip (includes hitboxes).
 			if (hitResult.getType() != Type.MISS) {
-				vector3d3 = hitResult.getLocation();
+				newPosition = hitResult.getLocation();
 			}
 
+			// Loop while the entity is alive
 			while (isAlive()) {
-				EntityHitResult entityHitResult = findHitEntity(vector3d2, vector3d3);
+				// Check for hit entities
+				EntityHitResult entityHitResult = findHitEntity(currentPosition, newPosition);
 				if (entityHitResult != null) {
 					hitResult = entityHitResult;
 				}
 
 				if (hitResult != null && hitResult.getType() == Type.ENTITY) {
 					Entity entity = null;
+					// Get the entity being hit
 					if (hitResult instanceof EntityHitResult) {
 						entity = ((EntityHitResult) hitResult).getEntity();
 					}
-					Entity entity1 = getOwner();
-					if (entity instanceof Player && entity1 instanceof Player && !((Player) entity1).canHarmPlayer((Player) entity)) {
+					// Get the owner of the bullet
+					Entity owner = getOwner();
+					// Check if the entity is a player, and if so, if they are allowed
+					// to be harmed by the owner
+					if (entity instanceof Player && owner instanceof Player
+							&& !((Player) owner).canHarmPlayer((Player) entity)) {
+
 						hitResult = null;
 						entityHitResult = null;
 					}
 				}
 
-				if (hitResult != null && hitResult.getType() != Type.MISS && !flag && !ForgeEventFactory.onProjectileImpact(this, hitResult)) {
+				// If something was hit, and physics are enabled, execute necessary code
+				if (hitResult != null && hitResult.getType() != Type.MISS && !isNoPhysics
+						&& !ForgeEventFactory.onProjectileImpact(this, hitResult)) {
+
 					onHit(hitResult);
 					hasImpulse = true;
 				}
 
+				// If an entity wasn't hit, and the piercing level is below or equal to zero, break
 				if (entityHitResult == null || getPierceLevel() <= 0) {
 					break;
 				}
@@ -174,40 +207,55 @@ public abstract class AbstractBulletEntity extends AbstractArrow {
 				hitResult = null;
 			}
 
-			vector3d = getDeltaMovement();
-			double d3 = vector3d.x;
-			double d4 = vector3d.y;
-			double d0 = vector3d.z;
+			// Get the current delta movement values
+			deltaMovement = getDeltaMovement();
+			double deltaMovementX = deltaMovement.x;
+			double deltaMovementY = deltaMovement.y;
+			double deltaMovementZ = deltaMovement.z;
+			// Add particles behind the bullet if it is a "critical" one
 			if (isCritArrow()) {
 				for (int i = 0; i < 4; ++i) {
-					level.addParticle(ParticleTypes.CRIT, getX() + d3 * i / 4.0D, getY() + d4 * i / 4.0D, getZ() + d0 * i / 4.0D, -d3, -d4 + 0.2D, -d0);
+					level.addParticle(ParticleTypes.CRIT,
+							getX() + deltaMovementX * i / 4.0D,
+							getY() + deltaMovementY * i / 4.0D,
+							getZ() + deltaMovementZ * i / 4.0D,
+							-deltaMovementX,
+							-deltaMovementY + 0.2D,
+							-deltaMovementZ);
 				}
 			}
 
-			double d5 = getX() + d3;
-			double d1 = getY() + d4;
-			double d2 = getZ() + d0;
+			double newPositionX = getX() + deltaMovementX;
+			double newPositionY = getY() + deltaMovementY;
+			double newPositionZ = getZ() + deltaMovementZ;
 
-			float f2 = 0.99F;
+			float inertia = 0.99F;
+			// Check if the bullet is in water
 			if (isInWater()) {
 				for (int j = 0; j < 4; ++j) {
-					level.addParticle(ParticleTypes.BUBBLE, d5 - d3 * 0.25D, d1 - d4 * 0.25D, d2 - d0 * 0.25D, d3, d4, d0);
+					level.addParticle(ParticleTypes.BUBBLE,
+							newPositionX - deltaMovementX * 0.25D,
+							newPositionY - deltaMovementY * 0.25D,
+							newPositionZ - deltaMovementZ * 0.25D,
+							deltaMovementX, deltaMovementY, deltaMovementZ);
 				}
 
-				f2 = getWaterInertia();
+				inertia = getWaterInertia();
 			}
 
-			setDeltaMovement(vector3d.scale(f2));
-			if (!isNoGravity() && !flag) {
-				Vec3 vector3d4 = getDeltaMovement();
+			setDeltaMovement(deltaMovement.scale(inertia));
+
+			// Set movement and position
+			if (!isNoGravity() && !isNoPhysics) {
+				Vec3 deltaMovement1 = getDeltaMovement();
 				if (shouldStopMoving) {
 					setDeltaMovement(0, 0, 0);
 				} else {
-					setDeltaMovement(vector3d4.x, vector3d4.y + getMovementModifier(), vector3d4.z);
+					setDeltaMovement(deltaMovement1.x, deltaMovement1.y + getGravityModifier(), deltaMovement1.z);
 				}
 			}
 
-			setPos(d5, d1, d2);
+			setPos(newPositionX, newPositionY, newPositionZ);
 			checkInsideBlocks();
 		}
 	}
@@ -217,7 +265,7 @@ public abstract class AbstractBulletEntity extends AbstractArrow {
 	 *
 	 * @return double
 	 */
-	public double getMovementModifier() {
+	public double getGravityModifier() {
 		return 0.0d;
 	}
 
@@ -228,15 +276,20 @@ public abstract class AbstractBulletEntity extends AbstractArrow {
 	 */
 	@Override
 	protected void onHitEntity(@NotNull EntityHitResult entityRayTraceResult) {
-		super.onHitEntity(entityRayTraceResult);
 		Entity entity = entityRayTraceResult.getEntity();
-		float f = (float) getDeltaMovement().length();
-		int i = Mth.ceil(Mth.clamp(f * baseDamage, 0.0D, 2.147483647E9D));
+		float velocityModifier = (float) getDeltaMovement().length();
+		// Determine the damage to be dealt, which is calculated by multiplying the velocity modifier
+		// and the base damage. It's clamped if the velocity is extremely high.
+		int damage = Mth.ceil(Mth.clamp(velocityModifier * baseDamage, 0.0D, 2.147483647E9D));
+
+		// Check the piercing level, if its above zero then start piercing entities
 		if (getPierceLevel() > 0) {
 			if (piercedEntities == null) {
 				piercedEntities = new IntOpenHashSet(5);
 			}
 
+			// If we've pierced the maximum number of entities,
+			// destroy the bullet
 			if (piercedEntities.size() >= getPierceLevel() + 1) {
 				kill();
 				return;
@@ -245,42 +298,59 @@ public abstract class AbstractBulletEntity extends AbstractArrow {
 			piercedEntities.add(entity.getId());
 		}
 
+		// Add crit modifier if the bullet is critical
 		if (isCritArrow()) {
-			long j = random.nextInt(i / 2 + 2);
-			i = (int) Math.min(j + i, 2147483647L);
+			long randomCritModifier = random.nextInt(damage / 2 + 2);
+			damage = (int) Math.min(randomCritModifier + damage, 2147483647L);
 		}
 
 		Entity owner = getOwner();
-		DamageSource damagesource;
+		DamageSource damageSource;
+
+		// If the arrow owner doesn't exist (null), set the indirect entity to itself
 		if (owner == null) {
-			damagesource = DamageSource.arrow(this, this);
+			damageSource = DamageSource.arrow(this, this);
 		} else {
-			damagesource = DamageSource.arrow(this, owner);
+			damageSource = DamageSource.arrow(this, owner);
+
+			// Disable invulnerability for bullets; specifically with the blunderbuss, otherwise
+			// multiple shots on the same target will simply bounce back
+			entity.invulnerableTime = 0;
+			entity.setInvulnerable(false);
+
+			// Extra code to run when an entity is hit
+			doWhenHitEntity(entity);
+
 			if (owner instanceof LivingEntity) {
-				entity.invulnerableTime = 0;
-				entity.setInvulnerable(false);
-				doWhenHitEntity(entity);
 				((LivingEntity) owner).setLastHurtMob(entity);
 			}
 		}
 
-		boolean flag = entity.getType() == EntityType.ENDERMAN;
-		int k = entity.getRemainingFireTicks();
-		if (isOnFire() && !flag) {
+		boolean isEnderman = entity.getType() == EntityType.ENDERMAN;
+		int remainingFireTicks = entity.getRemainingFireTicks();
+
+		// Set the entity on fire if the bullet is on fire, except
+		// for when the entity is an enderman
+		if (isOnFire() && !isEnderman) {
 			entity.setSecondsOnFire(5);
 		}
 
-		if (entity.hurt(damagesource, i)) {
-			if (flag) {
+		if (entity.hurt(damageSource, damage)) {
+			if (isEnderman) {
 				return;
 			}
 
 			if (entity instanceof LivingEntity livingEntity) {
 
+				// Apply knockback if the strength is above zero
 				if (knockbackStrength > 0) {
-					Vec3 vector3d = getDeltaMovement().multiply(1.0D, 0.0D, 1.0D).normalize().scale(knockbackStrength * 0.6D);
-					if (vector3d.lengthSqr() > 0.0D) {
-						livingEntity.push(vector3d.x, 0.1D, vector3d.z);
+					Vec3 scaledDeltaMovement = getDeltaMovement()
+							.multiply(1.0D, 0.0D, 1.0D)
+							.normalize()
+							.scale(knockbackStrength * 0.6D);
+
+					if (scaledDeltaMovement.lengthSqr() > 0.0D) {
+						livingEntity.push(scaledDeltaMovement.x, 0.1D, scaledDeltaMovement.z);
 					}
 				}
 
@@ -289,10 +359,8 @@ public abstract class AbstractBulletEntity extends AbstractArrow {
 					EnchantmentHelper.doPostDamageEffects((LivingEntity) owner, livingEntity);
 				}
 
+				// Code to run after the entity is hurt
 				doPostHurtEffects(livingEntity);
-				if (livingEntity != owner && livingEntity instanceof Player && owner instanceof ServerPlayer && !isSilent()) {
-					((ServerPlayer) owner).connection.send(new ClientboundGameEventPacket(ClientboundGameEventPacket.ARROW_HIT_PLAYER, 0.0F));
-				}
 			}
 
 			playSound(hitSound, 1.0F, 1.2F / (random.nextFloat() * 0.2F + 0.9F));
@@ -300,7 +368,8 @@ public abstract class AbstractBulletEntity extends AbstractArrow {
 				kill();
 			}
 		} else {
-			entity.setRemainingFireTicks(k);
+			entity.setRemainingFireTicks(remainingFireTicks);
+
 			if (!level.isClientSide && getDeltaMovement().lengthSqr() < 1.0E-7D) {
 				kill();
 			}
@@ -316,14 +385,16 @@ public abstract class AbstractBulletEntity extends AbstractArrow {
 	protected void onHitBlock(BlockHitResult blockHitResult) {
 		inBlockState = level.getBlockState(blockHitResult.getBlockPos());
 
-		if (inBlockState.is(BlockTags.bind("minecraft:leaves"))) {
+		// Check if the bullet hit a permeable block like leaves, if so
+		// keep moving and decrease velocity
+		if (inBlockState.is(BlockTags.LEAVES)) {
 			push(0, -0.1, 0);
 			shakeTime = 4;
 		} else {
-			Vec3 vector3d = blockHitResult.getLocation().subtract(getX(), getY(), getZ());
-			setDeltaMovement(vector3d);
-			Vec3 vector3d1 = vector3d.normalize().scale(0.05F);
-			setPosRaw(getX() - vector3d1.x, getY() - vector3d1.y, getZ() - vector3d1.z);
+			Vec3 locationMinusCurrentPosition = blockHitResult.getLocation().subtract(getX(), getY(), getZ());
+			setDeltaMovement(locationMinusCurrentPosition);
+			Vec3 scaledPosition = locationMinusCurrentPosition.normalize().scale(0.05F);
+			setPosRaw(getX() - scaledPosition.x, getY() - scaledPosition.y, getZ() - scaledPosition.z);
 			inGround = true;
 			shakeTime = 2;
 			setCritArrow(false);
@@ -332,10 +403,17 @@ public abstract class AbstractBulletEntity extends AbstractArrow {
 			resetPiercedEntities();
 		}
 
-		if (canBreakGlass && !hasAlreadyBrokeGlass && !inBlockState.is(BlockTags.bind("forge:bulletproof_glass")) && inBlockState.is(BlockTags.bind("forge:glass")) || inBlockState.is(BlockTags.bind("forge:glass_panes"))) {
+		// Check if glass can be broken, and if it hasn't already broken glass
+		if (canBreakGlass && !hasAlreadyBrokeGlass
+				&& !inBlockState.is(ForgeBlockTagGroups.BULLETPROOF_GLASS)
+				&& inBlockState.is(Blocks.GLASS)
+				|| inBlockState.is(Blocks.GLASS_PANES)) {
+
 			level.destroyBlock(blockHitResult.getBlockPos(), false);
 			hasAlreadyBrokeGlass = true;
 		}
+
+		inBlockState.onProjectileHit(level, inBlockState, blockHitResult, this);
 	}
 
 	/**

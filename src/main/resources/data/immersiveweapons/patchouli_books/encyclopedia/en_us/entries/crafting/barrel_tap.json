@@ -1,0 +1,21 @@
+{
+	"name": "Barrel Tap",
+	"icon": "immersiveweapons:barrel_tap",
+	"category": "immersiveweapons:crafting",
+	"pages": [
+		{
+			"type": "patchouli:text",
+			"text": "If you plan to make resources like alcohol and wine, you'll need to ferment materials in a barrel and extract them via a barrel tap.$(br2)Thanks to cutting edge technologies (and developer laziness), this process of fermentation is instant."
+		},
+		{
+			"type": "patchouli:crafting",
+			"recipe": "immersiveweapons:barrel_tap",
+			"text": "Recipes for items that use the barrel tap can be found on the following page."
+		},
+		{
+			"type": "patchouli:text",
+			"text": "$(l)Bottle of Alcohol$()$(br2)Place at least 16 wheat in one stack inside a barrel, and right-click the tap with an empty bottle.$(br2)$(l)Bottle of Wine$()$(br2)Place at least 16 sweet berries in one stack inside a barrel, and right-click the tap with an empty bottle."
+		}
+	],
+	"advancement": "minecraft:story/smelt_iron"
+}

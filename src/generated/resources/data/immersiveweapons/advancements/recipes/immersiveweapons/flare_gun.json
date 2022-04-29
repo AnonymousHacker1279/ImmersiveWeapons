@@ -1,0 +1,34 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "immersiveweapons:flare_gun"
+    ]
+  },
+  "criteria": {
+    "small_parts_iron": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "immersiveweapons:small_parts_iron"
+            ]
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "immersiveweapons:flare_gun"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "small_parts_iron",
+      "has_the_recipe"
+    ]
+  ]
+}

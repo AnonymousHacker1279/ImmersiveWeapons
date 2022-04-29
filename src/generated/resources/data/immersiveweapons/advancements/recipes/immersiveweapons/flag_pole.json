@@ -1,0 +1,34 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "immersiveweapons:flag_pole"
+    ]
+  },
+  "criteria": {
+    "iron": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "immersiveweapons:flag_pole"
+            ]
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "immersiveweapons:flag_pole"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "iron",
+      "has_the_recipe"
+    ]
+  ]
+}

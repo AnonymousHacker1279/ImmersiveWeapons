@@ -1,0 +1,15 @@
+{
+	"name": "Sulfur",
+	"icon": "immersiveweapons:sulfur",
+	"category": "immersiveweapons:resources",
+	"pages": [
+		{
+			"type": "patchouli:text",
+			"text": "Sulfur doesn't have any major uses. It can be used to craft gunpowder, which is useful for stocking up on musket balls.$(br2)You could also decorate with it, but it sure isn't pretty."
+		},
+		{
+			"type": "patchouli:crafting",
+			"recipe": "immersiveweapons:sulfur"
+		}
+	]
+}

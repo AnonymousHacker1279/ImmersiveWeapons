@@ -2,12 +2,13 @@ package com.anonymoushacker1279.immersiveweapons.block.base;
 
 import com.anonymoushacker1279.immersiveweapons.entity.projectile.MortarShellEntity;
 import com.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
-import com.anonymoushacker1279.immersiveweapons.util.PacketHandler;
+import com.anonymoushacker1279.immersiveweapons.init.PacketHandler;
+import com.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -27,11 +28,10 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.DistExecutor;
-import net.minecraftforge.fmllegacy.network.NetworkEvent;
-import net.minecraftforge.fmllegacy.network.NetworkEvent.Context;
-import net.minecraftforge.fmllegacy.network.PacketDistributor;
+import net.minecraftforge.network.NetworkEvent;
+import net.minecraftforge.network.NetworkEvent.Context;
+import net.minecraftforge.network.PacketDistributor;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.function.Supplier;
@@ -85,7 +85,9 @@ public class MortarBlock extends HorizontalDirectionalBlock {
 	 */
 	@SuppressWarnings("deprecation")
 	@Override
-	public @NotNull VoxelShape getShape(@NotNull BlockState state, @NotNull BlockGetter reader, @NotNull BlockPos pos, @NotNull CollisionContext selectionContext) {
+	public @NotNull VoxelShape getShape(@NotNull BlockState state, @NotNull BlockGetter reader, @NotNull BlockPos pos,
+	                                    @NotNull CollisionContext selectionContext) {
+
 		return SHAPE;
 	}
 
@@ -103,29 +105,38 @@ public class MortarBlock extends HorizontalDirectionalBlock {
 	 */
 	@SuppressWarnings("deprecation")
 	@Override
-	public @NotNull InteractionResult use(@NotNull BlockState state, Level worldIn, @NotNull BlockPos pos, @NotNull Player player, @NotNull InteractionHand handIn, @NotNull BlockHitResult blockRayTraceResult) {
+	public @NotNull InteractionResult use(@NotNull BlockState state, Level worldIn, @NotNull BlockPos pos,
+	                                      @NotNull Player player, @NotNull InteractionHand handIn,
+	                                      @NotNull BlockHitResult blockRayTraceResult) {
+
 		if (!worldIn.isClientSide && handIn.equals(InteractionHand.MAIN_HAND)) {
 			ItemStack itemStack = player.getMainHandItem();
+			// If the mortar is loaded and the player is holding flint and steel, fire the shell
 			if (state.getValue(LOADED) && itemStack.getItem() == Items.FLINT_AND_STEEL) {
 				if (!player.isCreative()) {
 					itemStack.setDamageValue(itemStack.getDamageValue() - 1);
 				}
 				fire(worldIn, pos, state);
 				return InteractionResult.CONSUME;
+
+				// If the mortar is not loaded and the player is holding a mortar shell	, load the mortar
 			} else if (!state.getValue(LOADED) && itemStack.getItem() == DeferredRegistryHandler.MORTAR_SHELL.get()) {
 				worldIn.setBlock(pos, state.setValue(LOADED, true), 3);
 				if (!player.isCreative()) {
 					itemStack.shrink(1);
 				}
 				return InteractionResult.CONSUME;
-			} else if (itemStack.getItem() == Items.AIR && player.isCrouching()) {
-				if (state.getValue(LOADED)) {
-					if (!player.isCreative()) {
-						player.getInventory().add(new ItemStack(DeferredRegistryHandler.MORTAR_SHELL.get()));
-					}
-					worldIn.setBlock(pos, state.setValue(LOADED, false), 3);
+
+				// If the player is crouching, not holding anything, and the mortar is loaded, remove the shell
+				// and give it to the player
+			} else if (itemStack.getItem() == Items.AIR && player.isCrouching() && state.getValue(LOADED)) {
+				if (!player.isCreative()) {
+					player.getInventory().add(new ItemStack(DeferredRegistryHandler.MORTAR_SHELL.get()));
 				}
+				worldIn.setBlock(pos, state.setValue(LOADED, false), 3);
 				return InteractionResult.SUCCESS;
+
+				// If the player isn't holding anything, cycle through the rotations
 			} else if (itemStack.getItem() == Items.AIR) {
 				if (state.getValue(ROTATION) < 2) {
 					worldIn.setBlock(pos, state.setValue(ROTATION, state.getValue(ROTATION) + 1), 3);
@@ -137,7 +148,7 @@ public class MortarBlock extends HorizontalDirectionalBlock {
 			return InteractionResult.SUCCESS;
 		}
 
-		return InteractionResult.PASS;
+		return InteractionResult.CONSUME_PARTIAL;
 	}
 
 	/**
@@ -152,7 +163,9 @@ public class MortarBlock extends HorizontalDirectionalBlock {
 	 */
 	@SuppressWarnings("deprecation")
 	@Override
-	public void neighborChanged(@NotNull BlockState state, Level worldIn, @NotNull BlockPos pos, @NotNull Block blockIn, @NotNull BlockPos fromPos, boolean isMoving) {
+	public void neighborChanged(@NotNull BlockState state, Level worldIn, @NotNull BlockPos pos, @NotNull Block blockIn,
+	                            @NotNull BlockPos fromPos, boolean isMoving) {
+
 		if (!worldIn.isClientSide) {
 			if (state.getValue(LOADED) && worldIn.hasNeighborSignal(pos)) {
 				fire(worldIn, pos, state);
@@ -168,7 +181,9 @@ public class MortarBlock extends HorizontalDirectionalBlock {
 	 * @param state   the <code>BlockState</code> of the block
 	 */
 	private void fire(Level worldIn, BlockPos pos, BlockState state) {
-		PacketHandler.INSTANCE.send(PacketDistributor.TRACKING_CHUNK.with(() -> worldIn.getChunkAt(pos)), new MortarBlockPacketHandler(pos));
+		PacketHandler.INSTANCE.send(PacketDistributor.TRACKING_CHUNK.with(() -> worldIn.getChunkAt(pos)),
+				new MortarBlockPacketHandler(pos));
+
 		worldIn.setBlock(pos, state.setValue(LOADED, false), 3);
 		MortarShellEntity.create(worldIn, pos, 1f, state);
 	}
@@ -220,11 +235,13 @@ public class MortarBlock extends HorizontalDirectionalBlock {
 		 *
 		 * @param msg the <code>MortarBlockPacketHandler</code> message being sent
 		 */
-		@OnlyIn(Dist.CLIENT)
 		private static void handleOnClient(MortarBlockPacketHandler msg) {
 			Minecraft minecraft = Minecraft.getInstance();
 			if (minecraft.level != null) {
-				minecraft.level.playLocalSound(msg.blockPos, SoundEvents.TNT_PRIMED, SoundSource.BLOCKS, 0.7f, 1f, false);
+				minecraft.level.playLocalSound(msg.blockPos, DeferredRegistryHandler.MORTAR_FIRE.get(), SoundSource.BLOCKS, 1f,
+						GeneralUtilities.getRandomNumber(0.1f, 0.5f) + 0.5f, true);
+				minecraft.level.addParticle(ParticleTypes.LARGE_SMOKE, msg.blockPos.getX(), msg.blockPos.getY(), msg.blockPos.getZ(),
+						0.0f, 0.2f, 0.0f);
 			}
 		}
 	}

@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "diamond",
+  "pattern": [
+    " a ",
+    " b ",
+    " c "
+  ],
+  "key": {
+    "a": {
+      "tag": "immersiveweapons:shards/diamond"
+    },
+    "b": {
+      "item": "minecraft:stick"
+    },
+    "c": {
+      "item": "minecraft:feather"
+    }
+  },
+  "result": {
+    "item": "immersiveweapons:diamond_arrow",
+    "count": 4
+  }
+}

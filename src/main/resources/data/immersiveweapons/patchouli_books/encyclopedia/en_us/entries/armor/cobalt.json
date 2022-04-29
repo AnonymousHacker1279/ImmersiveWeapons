@@ -1,0 +1,22 @@
+{
+	"name": "Cobalt Armor",
+	"icon": "immersiveweapons:cobalt_chestplate",
+	"category": "immersiveweapons:armor",
+	"pages": [
+		{
+			"type": "patchouli:text",
+			"text": "A bit stronger than iron.$(br2)Cobalt armor, while not quite as strong as diamond armor, its still strong enough to provide ample protection against most things. And its durable enough to last a while."
+		},
+		{
+			"type": "patchouli:crafting",
+			"recipe": "immersiveweapons:cobalt_helmet",
+			"recipe2": "immersiveweapons:cobalt_chestplate"
+		},
+		{
+			"type": "patchouli:crafting",
+			"recipe": "immersiveweapons:cobalt_leggings",
+			"recipe2": "immersiveweapons:cobalt_boots"
+		}
+	],
+	"advancement": "immersiveweapons:cobalt_ingot"
+}

@@ -1,12 +1,47 @@
 {
 	"homepage": "https://www.curseforge.com/minecraft/mc-mods/immersive-weapons",
 	"promos": {
+		"1.18.2-latest": "1.18.2-1.15.0",
+		"1.18.2-recommended": "1.18.2-1.15.0",
+		"1.18.1-latest": "1.18.1-1.14.0-alpha1",
+		"1.18.1-recommended": "1.18.1-1.13.0-beta10",
+		"1.18-latest": "1.18.1-1.13.0-beta9",
+		"1.18-recommended": "1.18.1-1.13.0-beta9",
 		"1.17.1-latest": "1.17.1-1.12.1",
 		"1.17.1-recommended": "1.17.1-1.12.1",
 		"1.16.5-latest": "1.16.5-1.4.3",
 		"1.16.5-recommended": "1.16.5-1.4.3",
 		"1.16.4-latest": "1.16.5-1.1.1",
 		"1.16.4-recommended": "1.16.5-1.1.1"
+	},
+	"1.18.2": {
+		"1.18.2-1.15.0": "Full 1.18.2 Release - https://github.com/AnonymousHacker1279/ImmersiveWeapons/releases/tag/v1.15.0",
+		"1.18.2-1.15.0-alpha2": "Bugfixes and Improvements - https://github.com/AnonymousHacker1279/ImmersiveWeapons/releases/tag/v1.15.0-alpha2",
+		"1.18.2-1.15.0-alpha1": "Initial 1.18.2 Release - https://github.com/AnonymousHacker1279/ImmersiveWeapons/releases/tag/v1.15.0-alpha1"
+	},
+	"1.18.1": {
+		"1.18.1-1.14.0-alpha1": "Major Rewrites, Improvements, and Additions - https://github.com/AnonymousHacker1279/ImmersiveWeapons/releases/tag/v1.14.0-alpha1",
+		"1.18.1-1.13.0-beta10": "Support Latest Forge Versions - https://github.com/AnonymousHacker1279/ImmersiveWeapons/releases/tag/v1.13.0-beta10",
+		"1.18.1-1.13.0-beta9": "Improvements and Cleanup - https://github.com/AnonymousHacker1279/ImmersiveWeapons/releases/tag/v1.13.0-beta9",
+		"1.18.1-1.13.0-beta8": "Improvements - https://github.com/AnonymousHacker1279/ImmersiveWeapons/releases/tag/v1.13.0-beta8",
+		"1.18.1-1.13.0-beta7": "Bugfixes, Improvements, and Optimization - https://github.com/AnonymousHacker1279/ImmersiveWeapons/releases/tag/v1.13.0-beta7",
+		"1.18.1-1.13.0-beta6": "Bugfixes - https://github.com/AnonymousHacker1279/ImmersiveWeapons/releases/tag/v1.13.0-beta6",
+		"1.18.1-1.13.0-beta5": "Bugfixes and Optimization - https://github.com/AnonymousHacker1279/ImmersiveWeapons/releases/tag/v1.13.0-beta5",
+		"1.18.1-1.13.0-beta4": "Improvements - https://github.com/AnonymousHacker1279/ImmersiveWeapons/releases/tag/v1.13.0-beta4",
+		"1.18.1-1.13.0-beta3": "Bugfixes - https://github.com/AnonymousHacker1279/ImmersiveWeapons/releases/tag/v1.13.0-beta3",
+		"1.18.1-1.13.0-beta2": "Reimplement JEI integration - https://github.com/AnonymousHacker1279/ImmersiveWeapons/releases/tag/v1.13.0-beta2",
+		"1.18-1.13.0-beta1": "Initial 1.18 Release - https://github.com/AnonymousHacker1279/ImmersiveWeapons/releases/tag/v1.13.0-beta1"
+	},
+	"1.18": {
+		"1.18.1-1.13.0-beta9": "Improvements and Cleanup - https://github.com/AnonymousHacker1279/ImmersiveWeapons/releases/tag/v1.13.0-beta9",
+		"1.18.1-1.13.0-beta8": "Improvements - https://github.com/AnonymousHacker1279/ImmersiveWeapons/releases/tag/v1.13.0-beta8",
+		"1.18.1-1.13.0-beta7": "Bugfixes, Improvements, and Optimization - https://github.com/AnonymousHacker1279/ImmersiveWeapons/releases/tag/v1.13.0-beta7",
+		"1.18.1-1.13.0-beta6": "Bugfixes - https://github.com/AnonymousHacker1279/ImmersiveWeapons/releases/tag/v1.13.0-beta6",
+		"1.18.1-1.13.0-beta5": "Bugfixes and Optimization - https://github.com/AnonymousHacker1279/ImmersiveWeapons/releases/tag/v1.13.0-beta5",
+		"1.18.1-1.13.0-beta4": "Improvements - https://github.com/AnonymousHacker1279/ImmersiveWeapons/releases/tag/v1.13.0-beta4",
+		"1.18.1-1.13.0-beta3": "Bugfixes - https://github.com/AnonymousHacker1279/ImmersiveWeapons/releases/tag/v1.13.0-beta3",
+		"1.18.1-1.13.0-beta2": "Reimplement JEI integration - https://github.com/AnonymousHacker1279/ImmersiveWeapons/releases/tag/v1.13.0-beta2",
+		"1.18-1.13.0-beta1": "Initial 1.18 Release - https://github.com/AnonymousHacker1279/ImmersiveWeapons/releases/tag/v1.13.0-beta1"
 	},
 	"1.17.1": {
 		"1.17.1-1.12.1": "Bugfixes - https://github.com/AnonymousHacker1279/ImmersiveWeapons/releases/tag/v1.12.1",

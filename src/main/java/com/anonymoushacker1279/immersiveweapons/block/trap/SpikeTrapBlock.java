@@ -1,7 +1,7 @@
 package com.anonymoushacker1279.immersiveweapons.block.trap;
 
 import com.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
-import com.anonymoushacker1279.immersiveweapons.util.PacketHandler;
+import com.anonymoushacker1279.immersiveweapons.init.PacketHandler;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -12,13 +12,8 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.context.BlockPlaceContext;
-import net.minecraft.world.level.BlockGetter;
-import net.minecraft.world.level.Level;
-import net.minecraft.world.level.LevelAccessor;
-import net.minecraft.world.level.LevelReader;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.SimpleWaterloggedBlock;
+import net.minecraft.world.level.*;
+import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
@@ -28,12 +23,11 @@ import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.DistExecutor;
-import net.minecraftforge.fmllegacy.network.NetworkEvent;
-import net.minecraftforge.fmllegacy.network.NetworkEvent.Context;
-import net.minecraftforge.fmllegacy.network.PacketDistributor;
-import net.minecraftforge.fmllegacy.network.PacketDistributor.TargetPoint;
+import net.minecraftforge.network.NetworkEvent;
+import net.minecraftforge.network.NetworkEvent.Context;
+import net.minecraftforge.network.PacketDistributor;
+import net.minecraftforge.network.PacketDistributor.TargetPoint;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.function.Supplier;
@@ -85,7 +79,7 @@ public class SpikeTrapBlock extends Block implements SimpleWaterloggedBlock {
 	@Override
 	public @NotNull BlockState updateShape(BlockState stateIn, @NotNull Direction facing, @NotNull BlockState facingState, @NotNull LevelAccessor worldIn, @NotNull BlockPos currentPos, @NotNull BlockPos facingPos) {
 		if (stateIn.getValue(WATERLOGGED)) {
-			worldIn.getLiquidTicks().scheduleTick(currentPos, Fluids.WATER, Fluids.WATER.getTickDelay(worldIn));
+			worldIn.scheduleTick(currentPos, Fluids.WATER, Fluids.WATER.getTickDelay(worldIn));
 		}
 
 		return facing == Direction.DOWN && !stateIn.canSurvive(worldIn, currentPos) ? Blocks.AIR.defaultBlockState() : super.updateShape(stateIn, facing, facingState, worldIn, currentPos, facingPos);
@@ -248,7 +242,6 @@ public class SpikeTrapBlock extends Block implements SimpleWaterloggedBlock {
 		 *
 		 * @param msg the <code>SpikeTrapBlockPacketHandler</code> message being sent
 		 */
-		@OnlyIn(Dist.CLIENT)
 		private static void handleOnClient(SpikeTrapBlockPacketHandler msg) {
 			Minecraft minecraft = Minecraft.getInstance();
 			if (minecraft.level != null) {

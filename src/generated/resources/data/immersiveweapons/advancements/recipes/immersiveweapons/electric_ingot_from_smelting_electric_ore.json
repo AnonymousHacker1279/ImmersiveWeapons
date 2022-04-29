@@ -1,0 +1,34 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "immersiveweapons:electric_ingot_from_smelting_electric_ore"
+    ]
+  },
+  "criteria": {
+    "has_electric_ore": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "immersiveweapons:electric_ore"
+            ]
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "immersiveweapons:electric_ingot_from_smelting_electric_ore"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_electric_ore",
+      "has_the_recipe"
+    ]
+  ]
+}

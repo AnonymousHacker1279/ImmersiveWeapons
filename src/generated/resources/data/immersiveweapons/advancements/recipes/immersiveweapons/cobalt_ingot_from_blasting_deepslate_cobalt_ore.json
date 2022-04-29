@@ -1,0 +1,34 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "immersiveweapons:cobalt_ingot_from_blasting_deepslate_cobalt_ore"
+    ]
+  },
+  "criteria": {
+    "has_deepslate_cobalt_ore": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "immersiveweapons:deepslate_cobalt_ore"
+            ]
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "immersiveweapons:cobalt_ingot_from_blasting_deepslate_cobalt_ore"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_deepslate_cobalt_ore",
+      "has_the_recipe"
+    ]
+  ]
+}

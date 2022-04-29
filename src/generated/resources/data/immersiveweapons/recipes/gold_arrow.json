@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "gold",
+  "pattern": [
+    " a ",
+    " b ",
+    " c "
+  ],
+  "key": {
+    "a": {
+      "tag": "forge:ingots/gold"
+    },
+    "b": {
+      "item": "minecraft:stick"
+    },
+    "c": {
+      "item": "minecraft:feather"
+    }
+  },
+  "result": {
+    "item": "immersiveweapons:gold_arrow",
+    "count": 4
+  }
+}

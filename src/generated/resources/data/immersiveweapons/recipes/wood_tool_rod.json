@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "rods",
+  "pattern": [
+    " a ",
+    "a  "
+  ],
+  "key": {
+    "a": {
+      "tag": "minecraft:planks"
+    }
+  },
+  "result": {
+    "item": "immersiveweapons:wood_tool_rod"
+  }
+}

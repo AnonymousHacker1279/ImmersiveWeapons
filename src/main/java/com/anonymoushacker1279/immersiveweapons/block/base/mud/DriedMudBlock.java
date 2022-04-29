@@ -18,6 +18,7 @@ public class DriedMudBlock extends Block {
 		super(properties);
 	}
 
+	@SuppressWarnings("deprecation")
 	@Override
 	public void randomTick(@NotNull BlockState pState, ServerLevel pLevel, @NotNull BlockPos pPos, @NotNull Random pRandom) {
 		if (pLevel.isRainingAt(pPos)) {

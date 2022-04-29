@@ -10,7 +10,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.fmllegacy.RegistryObject;
+import net.minecraftforge.registries.RegistryObject;
 import org.jetbrains.annotations.NotNull;
 
 public abstract class AbstractArrowItem extends ArrowItem {

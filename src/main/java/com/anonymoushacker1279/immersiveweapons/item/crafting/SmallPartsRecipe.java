@@ -129,7 +129,7 @@ public record SmallPartsRecipe(ResourceLocation recipeId,
 	 */
 	@Override
 	public @NotNull RecipeType<?> getType() {
-		return ICustomRecipeType.SMALL_PARTS;
+		return CustomRecipeTypes.SMALL_PARTS;
 	}
 
 	/**

@@ -1,0 +1,22 @@
+{
+	"name": "Where to Begin",
+	"icon": "immersiveweapons:blank_blueprint",
+	"category": "immersiveweapons:getting_started",
+	"pages": [
+		{
+			"type": "patchouli:text",
+			"text": "You should begin your journey as you would normally - chop down a tree, get some cobblestone, etc. Before you even start with Immersive Weapons, you'll need some basic resources."
+		},
+		{
+			"type": "patchouli:text",
+			"text": "A part of the experience is experimentation. Try doing things differently than you normally would.$(br2)Perhaps try breaking a log with a pickaxe? Or maybe put a cobblestone block in your crafting grid by itself."
+		},
+		{
+			"type": "patchouli:text",
+			"text": "As you progress, item tiers of wood and stone will be insufficient.$(br2)A decent tier to work with is iron. If you're struggling to find iron, copper is a good substitute. Those will get you through most challenges, before you have a good supply of high end items."
+		}
+	],
+	"priority": true,
+	"read_by_default": true,
+	"sortnum": 2
+}

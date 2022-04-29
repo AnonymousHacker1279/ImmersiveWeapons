@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "group": "smoke_bomb",
+  "ingredients": [
+    {
+      "item": "immersiveweapons:mortar_and_pestle"
+    },
+    {
+      "item": "minecraft:gunpowder"
+    },
+    {
+      "tag": "minecraft:coals"
+    },
+    {
+      "tag": "minecraft:leaves"
+    }
+  ],
+  "result": {
+    "item": "immersiveweapons:smoke_powder",
+    "count": 4
+  }
+}

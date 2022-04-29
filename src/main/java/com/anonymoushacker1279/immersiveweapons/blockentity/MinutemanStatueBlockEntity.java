@@ -1,8 +1,9 @@
 package com.anonymoushacker1279.immersiveweapons.blockentity;
 
-import com.anonymoushacker1279.immersiveweapons.entity.passive.MinutemanEntity;
+import com.anonymoushacker1279.immersiveweapons.entity.neutral.MinutemanEntity;
 import com.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
 import com.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
+import com.anonymoushacker1279.immersiveweapons.world.level.levelgen.biomes.BiomesAndDimensions;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
@@ -17,7 +18,6 @@ import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
 import java.util.List;
-import java.util.Objects;
 
 public class MinutemanStatueBlockEntity extends BlockEntity implements EntityBlock {
 
@@ -35,17 +35,24 @@ public class MinutemanStatueBlockEntity extends BlockEntity implements EntityBlo
 	 * Runs once each tick. Handle scanning and spawning entities.
 	 */
 	public static void serverTick(Level level, BlockPos blockPos, MinutemanStatueBlockEntity minutemanStatueBlockEntity) {
-		if (Objects.equals(level.getBiome(blockPos).getRegistryName(), DeferredRegistryHandler.BATTLEFIELD.get().getRegistryName()) && minutemanStatueBlockEntity.cooldown == 0) {
-			List<MinutemanEntity> listOfMinutemenInArea = level.getEntitiesOfClass(MinutemanEntity.class, new AABB(minutemanStatueBlockEntity.getBlockPos().getX() - 48, minutemanStatueBlockEntity.getBlockPos().getY() - 16, minutemanStatueBlockEntity.getBlockPos().getZ() - 48, minutemanStatueBlockEntity.getBlockPos().getX() + 48, minutemanStatueBlockEntity.getBlockPos().getY() + 16, minutemanStatueBlockEntity.getBlockPos().getZ() + 48));
+		if (level.getBiome(blockPos).is(BiomesAndDimensions.BATTLEFIELD) && minutemanStatueBlockEntity.cooldown == 0) {
+			List<MinutemanEntity> listOfMinutemenInArea = level.getEntitiesOfClass(MinutemanEntity.class,
+					new AABB(minutemanStatueBlockEntity.getBlockPos().getX() - 48,
+							minutemanStatueBlockEntity.getBlockPos().getY() - 16,
+							minutemanStatueBlockEntity.getBlockPos().getZ() - 48,
+							minutemanStatueBlockEntity.getBlockPos().getX() + 48,
+							minutemanStatueBlockEntity.getBlockPos().getY() + 16,
+							minutemanStatueBlockEntity.getBlockPos().getZ() + 48));
+
 			minutemanStatueBlockEntity.scannedMinutemen = listOfMinutemenInArea.size();
 
 			if (minutemanStatueBlockEntity.scannedMinutemen <= 16) {
 				MinutemanEntity minutemanEntity = DeferredRegistryHandler.MINUTEMAN_ENTITY.get().create(level);
 				if (minutemanEntity != null) {
 					while (true) {
-						BlockPos blockPos1 = minutemanStatueBlockEntity.getRandomPositionInArea();
-						if (level.getBlockState(blockPos1) == Blocks.AIR.defaultBlockState()) {
-							minutemanEntity.moveTo(blockPos1, 0.0F, 0.0F);
+						BlockPos randomPositionInArea = minutemanStatueBlockEntity.getRandomPositionInArea();
+						if (level.getBlockState(randomPositionInArea) == Blocks.AIR.defaultBlockState()) {
+							minutemanEntity.moveTo(randomPositionInArea, 0.0F, 0.0F);
 							level.addFreshEntity(minutemanEntity);
 							minutemanStatueBlockEntity.spawnParticles();
 							minutemanStatueBlockEntity.cooldown = 400;
@@ -78,7 +85,15 @@ public class MinutemanStatueBlockEntity extends BlockEntity implements EntityBlo
 	private void spawnParticles() {
 		ServerLevel serverWorld = (ServerLevel) getLevel();
 		if (serverWorld != null) {
-			serverWorld.sendParticles(ParticleTypes.HAPPY_VILLAGER, getBlockPos().getX() + 0.5d, getBlockPos().getY(), getBlockPos().getZ() + 0.75d, 5, GeneralUtilities.getRandomNumber(-0.05d, 0.05d), GeneralUtilities.getRandomNumber(-0.25d, 0.25d), GeneralUtilities.getRandomNumber(-0.05d, 0.05d), GeneralUtilities.getRandomNumber(-0.15d, 0.15d));
+			serverWorld.sendParticles(ParticleTypes.HAPPY_VILLAGER,
+					getBlockPos().getX() + 0.5d,
+					getBlockPos().getY(),
+					getBlockPos().getZ() + 0.75d,
+					5,
+					GeneralUtilities.getRandomNumber(-0.05d, 0.05d),
+					GeneralUtilities.getRandomNumber(-0.25d, 0.25d),
+					GeneralUtilities.getRandomNumber(-0.05d, 0.05d),
+					GeneralUtilities.getRandomNumber(-0.15d, 0.15d));
 		}
 	}
 
@@ -88,20 +103,21 @@ public class MinutemanStatueBlockEntity extends BlockEntity implements EntityBlo
 	 * @return BlockPos
 	 */
 	private BlockPos getRandomPositionInArea() {
-		return new BlockPos(getBlockPos().getX() + GeneralUtilities.getRandomNumber(-15, 15), getBlockPos().getY(), getBlockPos().getZ() + GeneralUtilities.getRandomNumber(-15, 15));
+		return new BlockPos(getBlockPos().getX() + GeneralUtilities.getRandomNumber(-15, 15),
+				getBlockPos().getY(),
+				getBlockPos().getZ() + GeneralUtilities.getRandomNumber(-15, 15));
 	}
 
 	/**
 	 * Save NBT data.
 	 *
-	 * @param nbt the <code>CompoundNBT</code> to save
+	 * @param pTag the <code>CompoundNBT</code> to save
 	 */
 	@Override
-	public @NotNull CompoundTag save(@NotNull CompoundTag nbt) {
-		super.save(nbt);
-		nbt.putInt("scanCooldown", cooldown);
-		nbt.putInt("scannedMinutemen", scannedMinutemen);
-		return nbt;
+	protected void saveAdditional(@NotNull CompoundTag pTag) {
+		super.saveAdditional(pTag);
+		pTag.putInt("scanCooldown", cooldown);
+		pTag.putInt("scannedMinutemen", scannedMinutemen);
 	}
 
 	/**

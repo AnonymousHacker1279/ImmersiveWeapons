@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "group": "burned_oak",
+  "ingredients": [
+    {
+      "tag": "immersiveweapons:burned_oak_logs"
+    }
+  ],
+  "result": {
+    "item": "immersiveweapons:burned_oak_planks",
+    "count": 4
+  }
+}

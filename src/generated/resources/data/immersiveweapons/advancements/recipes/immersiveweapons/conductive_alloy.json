@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "immersiveweapons:conductive_alloy"
+    ]
+  },
+  "criteria": {
+    "gold": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "tag": "forge:ingots/gold"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "immersiveweapons:conductive_alloy"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "gold",
+      "has_the_recipe"
+    ]
+  ]
+}

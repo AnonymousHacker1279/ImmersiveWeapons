@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "diamond",
+  "pattern": [
+    "aaa",
+    "aba"
+  ],
+  "key": {
+    "a": {
+      "tag": "forge:gems/diamond"
+    },
+    "b": {
+      "item": "immersiveweapons:gauntlet_scaffolding"
+    }
+  },
+  "result": {
+    "item": "immersiveweapons:diamond_gauntlet"
+  }
+}

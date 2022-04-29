@@ -1,0 +1,34 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "immersiveweapons:obsidian_shard"
+    ]
+  },
+  "criteria": {
+    "obsidian": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "minecraft:obsidian"
+            ]
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "immersiveweapons:obsidian_shard"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "obsidian",
+      "has_the_recipe"
+    ]
+  ]
+}

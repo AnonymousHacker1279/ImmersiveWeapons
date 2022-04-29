@@ -1,0 +1,37 @@
+{
+	"name": "Punji Sticks",
+	"icon": "immersiveweapons:punji_sticks",
+	"category": "immersiveweapons:defense",
+	"pages": [
+		{
+			"type": "patchouli:text",
+			"text": "Punish opponents via Vietnam war tactics.$(br2)One of the most dangerous traps, punji sticks will impale enemies falling onto them. The more blocks they fall, the more damage they take. $(br2)$(l)Even for those in $(l:armor/tesla)Tesla Armor$()$(l), punji sticks are a threat."
+		},
+		{
+			"type": "patchouli:crafting",
+			"recipe": "immersiveweapons:punji_sticks",
+			"text": "$(o)Damage scales with the number of blocks an entity falls.$(br2)Inflicts Poison for a short amount of time after contact."
+		},
+		{
+			"type": "patchouli:text",
+			"title": "Damage Calculation",
+			"text": "If the entity simply touches the block (hasn't fallen 2.5 blocks or more), damage is dealt based on the movement speed inside of the block. Things get more interesting as you fall more blocks.$(br2)Firstly, $(l)falling onto punji sticks ignores all armor, just like fall damage.$()"
+		},
+		{
+			"type": "patchouli:text",
+			"title": "Damage Calculation",
+			"text": "The only way armor will reduce damage is if its enchanted with Protection or Feather Falling. For protection, the regular protection reduction applies. Feather falling has a different impact. For reference, this is the equation used to calculate damage:$(br2)(fall distance + 10f) * (1.25f - (feather falling level <= 4 ? feather falling level * 0.25f : 0.25f))"
+		},
+		{
+			"type": "patchouli:text",
+			"title": "Damage Calculation",
+			"text": "That basically says 'Take the fall distance and add 10. Then, take 1.25 and subtract the level of feather falling times 0.25, and multiply the damage times this'. So if you have no feather falling, it adds 25% onto the base damage. If you have one level, its -25%, then -50%, and -75%. Any higher than level 4 just does -75%."
+		},
+		{
+			"type": "patchouli:text",
+			"title": "Damage Calculation",
+			"text": "The damage scaling of punji sticks make them incredibly deadly, even to players with $(l:armor/tesla)Tesla Armor$(), as the armor doesn't provide any protection without enchantments. However, players with $(l:armor/ventus)Ventus Armor$() can use their slow fall ability to negate the damage."
+		}
+	],
+	"advancement": "immersiveweapons:bamboo"
+}

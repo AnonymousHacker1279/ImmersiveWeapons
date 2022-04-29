@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "diamond",
+  "pattern": [
+    " a ",
+    "aba"
+  ],
+  "key": {
+    "a": {
+      "tag": "immersiveweapons:shards/diamond"
+    },
+    "b": {
+      "item": "minecraft:gunpowder"
+    }
+  },
+  "result": {
+    "item": "immersiveweapons:diamond_musket_ball",
+    "count": 8
+  }
+}

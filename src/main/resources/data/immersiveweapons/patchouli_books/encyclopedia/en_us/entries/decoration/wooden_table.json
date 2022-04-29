@@ -1,0 +1,36 @@
+{
+	"name": "Wooden Tables",
+	"icon": "immersiveweapons:oak_table",
+	"category": "immersiveweapons:decoration",
+	"pages": [
+		{
+			"type": "patchouli:text",
+			"text": "Making tables with pressure plates and fences is old-school. Make a simple table the right way.$(br2)There's a wide variety of tables for decoration."
+		},
+		{
+			"type": "patchouli:crafting",
+			"recipe": "immersiveweapons:oak_table",
+			"recipe2": "immersiveweapons:spruce_table"
+		},
+		{
+			"type": "patchouli:crafting",
+			"recipe": "immersiveweapons:birch_table",
+			"recipe2": "immersiveweapons:jungle_table"
+		},
+		{
+			"type": "patchouli:crafting",
+			"recipe": "immersiveweapons:acacia_table",
+			"recipe2": "immersiveweapons:dark_oak_table"
+		},
+		{
+			"type": "patchouli:crafting",
+			"recipe": "immersiveweapons:crimson_table",
+			"recipe2": "immersiveweapons:warped_table"
+		},
+		{
+			"type": "patchouli:crafting",
+			"recipe": "immersiveweapons:burned_oak_table"
+		}
+	],
+	"advancement": "immersiveweapons:planks"
+}

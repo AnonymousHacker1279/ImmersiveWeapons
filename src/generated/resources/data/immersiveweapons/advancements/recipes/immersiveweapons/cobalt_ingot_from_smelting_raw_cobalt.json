@@ -1,0 +1,34 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "immersiveweapons:cobalt_ingot_from_smelting_raw_cobalt"
+    ]
+  },
+  "criteria": {
+    "has_raw_cobalt": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "immersiveweapons:raw_cobalt"
+            ]
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "immersiveweapons:cobalt_ingot_from_smelting_raw_cobalt"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_raw_cobalt",
+      "has_the_recipe"
+    ]
+  ]
+}

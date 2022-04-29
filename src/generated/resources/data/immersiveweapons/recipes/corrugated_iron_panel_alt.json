@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "group": "corrugated_iron",
+  "ingredients": [
+    {
+      "item": "immersiveweapons:corrugated_iron_panel_flat"
+    }
+  ],
+  "result": {
+    "item": "immersiveweapons:corrugated_iron_panel"
+  }
+}

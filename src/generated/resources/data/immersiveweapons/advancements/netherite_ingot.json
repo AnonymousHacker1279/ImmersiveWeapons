@@ -1,0 +1,37 @@
+{
+  "parent": "immersiveweapons:ingots",
+  "display": {
+    "icon": {
+      "item": "minecraft:netherite_ingot"
+    },
+    "title": {
+      "translate": "advancements.immersiveweapons.netherite_ingot.title"
+    },
+    "description": {
+      "translate": "advancements.immersiveweapons.netherite_ingot.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "hold": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "minecraft:netherite_ingot"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "hold"
+    ]
+  ]
+}

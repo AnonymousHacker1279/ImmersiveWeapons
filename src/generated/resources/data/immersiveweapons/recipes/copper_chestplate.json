@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "copper",
+  "pattern": [
+    "a a",
+    "aaa",
+    "aaa"
+  ],
+  "key": {
+    "a": {
+      "tag": "forge:ingots/copper"
+    }
+  },
+  "result": {
+    "item": "immersiveweapons:copper_chestplate"
+  }
+}

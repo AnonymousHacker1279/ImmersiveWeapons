@@ -7,30 +7,20 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.context.BlockPlaceContext;
-import net.minecraft.world.level.BlockGetter;
-import net.minecraft.world.level.Explosion;
-import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.RenderShape;
-import net.minecraft.world.level.block.SimpleWaterloggedBlock;
-import net.minecraft.world.level.block.state.BlockBehaviour;
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.*;
+import net.minecraft.world.level.block.*;
+import net.minecraft.world.level.block.state.*;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.BlockHitResult;
-import net.minecraft.world.phys.shapes.CollisionContext;
-import net.minecraft.world.phys.shapes.Shapes;
-import net.minecraft.world.phys.shapes.VoxelShape;
+import net.minecraft.world.phys.shapes.*;
 import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
@@ -39,10 +29,10 @@ public class LandmineBlock extends Block implements SimpleWaterloggedBlock {
 
 	public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
 	protected static final VoxelShape SHAPE = Block.box(2.0D, 0.0D, 2.0D, 14.0D, 3.5D, 14.0D);
-	private static final BooleanProperty ARMED = BooleanProperty.create("armed");
-	private static final BooleanProperty SAND = BooleanProperty.create("sand");
-	private static final BooleanProperty VINES = BooleanProperty.create("vines");
-	private static final DamageSource damageSource = new DamageSource("immersiveweapons.landmine");
+	public static final BooleanProperty ARMED = BooleanProperty.create("armed");
+	public static final BooleanProperty SAND = BooleanProperty.create("sand");
+	public static final BooleanProperty VINES = BooleanProperty.create("vines");
+	public static final DamageSource damageSource = new DamageSource("immersiveweapons.landmine");
 
 	/**
 	 * Constructor for LandmineBlock.
@@ -98,12 +88,14 @@ public class LandmineBlock extends Block implements SimpleWaterloggedBlock {
 				if (!player.isCreative()) {
 					currentlyHeldItem.shrink(1);
 				}
+				return InteractionResult.CONSUME;
 			}
 			if (!state.getValue(SAND) && !state.getValue(VINES) && currentlyHeldItem.getItem() == Items.SAND) {
 				worldIn.setBlock(pos, state.setValue(SAND, true), 3);
 				if (!player.isCreative()) {
 					currentlyHeldItem.shrink(1);
 				}
+				return InteractionResult.CONSUME;
 			}
 		}
 		return InteractionResult.PASS;

@@ -1,0 +1,16 @@
+{
+	"name": "Painkillers",
+	"icon": "immersiveweapons:painkillers",
+	"category": "immersiveweapons:fortitude",
+	"pages": [
+		{
+			"type": "patchouli:text",
+			"text": "$(o)$(l:https://www.youtube.com/watch?v=kO_EdmtR5Ck)Faster than a bullet, terrifying scream...$()$(br2)For those of you who like tanking damage, painkillers will help keep you alive. Upon use, you'll be granted Resistance for a full minute."
+		},
+		{
+			"type": "patchouli:crafting",
+			"recipe": "immersiveweapons:painkillers"
+		}
+	],
+	"advancement": "immersiveweapons:recipes/immersiveweapons/painkillers"
+}

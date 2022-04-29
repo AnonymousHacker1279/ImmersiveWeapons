@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "group": "food",
+  "ingredients": [
+    {
+      "item": "minecraft:carrot"
+    },
+    {
+      "item": "minecraft:potato"
+    },
+    {
+      "item": "minecraft:beetroot"
+    },
+    {
+      "item": "minecraft:cooked_chicken"
+    }
+  ],
+  "result": {
+    "item": "immersiveweapons:mre"
+  }
+}

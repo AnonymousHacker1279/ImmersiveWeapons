@@ -1,0 +1,50 @@
+{
+  "parent": "immersiveweapons:copper_ingot",
+  "display": {
+    "icon": {
+      "item": "minecraft:copper_block"
+    },
+    "title": {
+      "translate": "advancements.immersiveweapons.copper_tools.title"
+    },
+    "description": {
+      "translate": "advancements.immersiveweapons.copper_tools.description"
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "rewards": {
+    "experience": 25
+  },
+  "criteria": {
+    "have_advancements": {
+      "trigger": "minecraft:location",
+      "conditions": {
+        "player": [
+          {
+            "condition": "minecraft:entity_properties",
+            "predicate": {
+              "player": {
+                "advancements": {
+                  "immersiveweapons:copper_sword": true,
+                  "immersiveweapons:copper_shovel": true,
+                  "immersiveweapons:copper_axe": true,
+                  "immersiveweapons:copper_hoe": true,
+                  "immersiveweapons:copper_pickaxe": true
+                }
+              }
+            },
+            "entity": "this"
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "have_advancements"
+    ]
+  ]
+}

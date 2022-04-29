@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "stained_bulletproof_glass",
+  "pattern": [
+    "aaa",
+    "aba",
+    "aaa"
+  ],
+  "key": {
+    "a": {
+      "item": "immersiveweapons:bulletproof_glass"
+    },
+    "b": {
+      "tag": "forge:dyes/black"
+    }
+  },
+  "result": {
+    "item": "immersiveweapons:black_stained_bulletproof_glass",
+    "count": 8
+  }
+}

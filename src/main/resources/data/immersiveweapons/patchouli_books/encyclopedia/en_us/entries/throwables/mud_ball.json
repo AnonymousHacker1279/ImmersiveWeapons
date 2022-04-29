@@ -1,0 +1,17 @@
+{
+	"name": "Mud Ball",
+	"icon": "immersiveweapons:mud_ball",
+	"category": "immersiveweapons:throwables",
+	"pages": [
+		{
+			"type": "patchouli:text",
+			"text": "$(o)Why?$()$(br2)Well, if you've ever been in need of a snowball but you lack the snow, you can always make mud and turn that into mud balls!"
+		},
+		{
+			"type": "patchouli:crafting",
+			"recipe": "immersiveweapons:mud_ball",
+			"text": "$(o)Eww. A snowball is much cleaner."
+		}
+	],
+	"advancement": "immersiveweapons:mud"
+}

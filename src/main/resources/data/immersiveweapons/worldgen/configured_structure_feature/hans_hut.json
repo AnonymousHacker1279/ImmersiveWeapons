@@ -1,0 +1,14 @@
+{
+	"type": "immersiveweapons:hans_hut",
+
+	"config": {
+		"start_pool": "immersiveweapons:hans_hut/start_pool",
+		"size": 1
+	},
+
+	"biomes": "#immersiveweapons:has_structure/hans_hut",
+
+	"adapt_noise": true,
+
+	"spawn_overrides": {}
+}

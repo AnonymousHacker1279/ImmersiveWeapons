@@ -1,30 +1,25 @@
 package com.anonymoushacker1279.immersiveweapons.item.armor;
 
 import com.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
-import com.anonymoushacker1279.immersiveweapons.client.ClientModEventSubscriber;
+import com.anonymoushacker1279.immersiveweapons.event.ClientModEventSubscriber;
 import com.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
+import com.anonymoushacker1279.immersiveweapons.init.PacketHandler;
 import com.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
-import com.anonymoushacker1279.immersiveweapons.util.PacketHandler;
 import net.minecraft.client.Minecraft;
-import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ArmorItem;
-import net.minecraft.world.item.ArmorMaterial;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.*;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.fml.DistExecutor;
-import net.minecraftforge.fmllegacy.network.NetworkEvent;
-import net.minecraftforge.fmllegacy.network.NetworkEvent.Context;
-import net.minecraftforge.fmllegacy.network.PacketDistributor;
+import net.minecraftforge.network.NetworkEvent;
+import net.minecraftforge.network.NetworkEvent.Context;
 
 import java.util.function.Supplier;
 
@@ -48,10 +43,10 @@ public class CobaltArmorItem extends ArmorItem {
 	}
 
 	/**
-	 * Toggle the armor effect.
+	 * Set the armor effect.
 	 */
-	static void toggleEffect() {
-		effectEnabled = !effectEnabled;
+	static void setEffectState(boolean state) {
+		effectEnabled = state;
 	}
 
 	/**
@@ -84,9 +79,9 @@ public class CobaltArmorItem extends ArmorItem {
 			if (player.getUUID().toString().equals("380df991-f603-344c-a090-369bad2a924a") || player.getUUID().toString().equals("94f11dac-d1bc-46da-877b-c69f533f2da2")) {
 				if (world.isClientSide) {
 					if (ClientModEventSubscriber.toggleArmorEffect.consumeClick()) {
-						PacketHandler.INSTANCE.sendToServer(new CobaltArmorItemPacketHandler(false, player.blockPosition(), player.position()));
-						if (!Minecraft.getInstance().hasSingleplayerServer()) {
-							toggleEffect();
+						PacketHandler.INSTANCE.sendToServer(new CobaltArmorItemPacketHandler(!effectEnabled));
+						if (!Minecraft.getInstance().isLocalServer()) {
+							setEffectState(!effectEnabled);
 						}
 					}
 				}
@@ -97,22 +92,20 @@ public class CobaltArmorItem extends ArmorItem {
 					player.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SPEED, 1, 1, false, false));
 
 					if (!world.isClientSide) {
-						PacketHandler.INSTANCE.send(PacketDistributor.TRACKING_CHUNK.with(() -> world.getChunkAt(player.blockPosition())), new CobaltArmorItemPacketHandler(true, player.blockPosition(), player.position()));
+						((ServerLevel) world).sendParticles(ParticleTypes.SOUL_FIRE_FLAME, player.position().x, player.position().y + 2.2D, player.position().z, 1, GeneralUtilities.getRandomNumber(-0.01d, 0.01d), GeneralUtilities.getRandomNumber(0.0d, 0.001d), GeneralUtilities.getRandomNumber(-0.01d, 0.01d), 0.01f);
+						((ServerLevel) world).sendParticles(ParticleTypes.FLAME, player.position().x, player.position().y + 2.2D, player.position().z, 1, GeneralUtilities.getRandomNumber(-0.01d, 0.01d), GeneralUtilities.getRandomNumber(0.0d, 0.001d), GeneralUtilities.getRandomNumber(-0.01d, 0.01d), 0.01f);
 					}
 				}
 			}
 		}
 	}
 
-	public record CobaltArmorItemPacketHandler(boolean isParticles, BlockPos blockPos,
-	                                           Vec3 vector3d) {
+	public record CobaltArmorItemPacketHandler(boolean effectState) {
 
 		/**
 		 * Constructor for CobaltArmorItemPacketHandler.
 		 *
-		 * @param isParticles if the packet is for rendering particles
-		 * @param blockPos    the <code>BlockPos</code> the packet came from
-		 * @param vector3d    the <code>Vector3d</code> of the player position
+		 * @param effectState the state of the armor effect
 		 */
 		public CobaltArmorItemPacketHandler {
 		}
@@ -124,9 +117,7 @@ public class CobaltArmorItem extends ArmorItem {
 		 * @param packetBuffer the <code>PacketBuffer</code> containing packet data
 		 */
 		public static void encode(CobaltArmorItemPacketHandler msg, FriendlyByteBuf packetBuffer) {
-			packetBuffer.writeBoolean(msg.isParticles);
-			packetBuffer.writeBlockPos(msg.blockPos);
-			packetBuffer.writeDouble(msg.vector3d.x).writeDouble(msg.vector3d.y).writeDouble(msg.vector3d.z);
+			packetBuffer.writeBoolean(msg.effectState);
 		}
 
 		/**
@@ -136,7 +127,7 @@ public class CobaltArmorItem extends ArmorItem {
 		 * @return CobaltArmorItemPacketHandler
 		 */
 		public static CobaltArmorItemPacketHandler decode(FriendlyByteBuf packetBuffer) {
-			return new CobaltArmorItemPacketHandler(packetBuffer.readBoolean(), packetBuffer.readBlockPos(), new Vec3(packetBuffer.readDouble(), packetBuffer.readDouble(), packetBuffer.readDouble()));
+			return new CobaltArmorItemPacketHandler(packetBuffer.readBoolean());
 		}
 
 		/**
@@ -147,33 +138,16 @@ public class CobaltArmorItem extends ArmorItem {
 		 */
 		public static void handle(CobaltArmorItemPacketHandler msg, Supplier<Context> contextSupplier) {
 			NetworkEvent.Context context = contextSupplier.get();
-			if (msg.isParticles) {
-				context.enqueueWork(() -> DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> handleOnClient(msg)));
-			} else {
-				context.enqueueWork(() -> DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> CobaltArmorItemPacketHandler::handleOnServer));
-				context.enqueueWork(() -> DistExecutor.unsafeRunWhenOn(Dist.DEDICATED_SERVER, () -> CobaltArmorItemPacketHandler::handleOnServer));
-			}
+			context.enqueueWork(() -> DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> run(msg)));
+			context.enqueueWork(() -> DistExecutor.unsafeRunWhenOn(Dist.DEDICATED_SERVER, () -> () -> run(msg)));
 			context.setPacketHandled(true);
 		}
 
 		/**
-		 * Runs specifically on the server, when a packet is received
+		 * Runs when a packet is received
 		 */
-		private static void handleOnServer() {
-			CobaltArmorItem.toggleEffect();
-		}
-
-		/**
-		 * Runs specifically on the client, when a packet is received
-		 *
-		 * @param msg the <code>CobaltArmorItemPacketHandler</code> message being sent
-		 */
-		private static void handleOnClient(CobaltArmorItemPacketHandler msg) {
-			Minecraft minecraft = Minecraft.getInstance();
-			if (minecraft.level != null) {
-				minecraft.level.addParticle(ParticleTypes.SOUL_FIRE_FLAME, msg.vector3d.x, msg.vector3d.y + 2.2D, msg.vector3d.z, GeneralUtilities.getRandomNumber(-0.03d, 0.03d), GeneralUtilities.getRandomNumber(0.0d, 0.03d), GeneralUtilities.getRandomNumber(-0.03d, 0.03d));
-				minecraft.level.addParticle(ParticleTypes.FLAME, msg.vector3d.x, msg.vector3d.y + 2.2D, msg.vector3d.z, GeneralUtilities.getRandomNumber(-0.03d, 0.03d), GeneralUtilities.getRandomNumber(0.0d, 0.03d), GeneralUtilities.getRandomNumber(-0.03d, 0.03d));
-			}
+		private static void run(CobaltArmorItemPacketHandler msg) {
+			CobaltArmorItem.setEffectState(msg.effectState);
 		}
 	}
 }

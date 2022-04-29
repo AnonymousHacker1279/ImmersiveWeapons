@@ -1,0 +1,17 @@
+{
+	"name": "Iron Pike",
+	"icon": "immersiveweapons:iron_pike",
+	"category": "immersiveweapons:pikes",
+	"pages": [
+		{
+			"type": "patchouli:text",
+			"text": "Now here's a decent quality pike. Good damage and durability, and not too expensive.$(br2)While it's not the mightiest, it certainly has its place."
+		},
+		{
+			"type": "patchouli:crafting",
+			"recipe": "immersiveweapons:iron_pike",
+			"recipe2": "immersiveweapons:iron_pike_head"
+		}
+	],
+	"advancement": "minecraft:story/smelt_iron"
+}

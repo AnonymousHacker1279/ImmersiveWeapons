@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "immersiveweapons:wood_pike_head"
+    ]
+  },
+  "criteria": {
+    "planks": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "tag": "minecraft:planks"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "immersiveweapons:wood_pike_head"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "planks",
+      "has_the_recipe"
+    ]
+  ]
+}

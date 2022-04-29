@@ -2,21 +2,22 @@ buildscript {
 	repositories {
 		maven { url = 'https://maven.minecraftforge.net' }
 		maven { url = 'https://maven.parchmentmc.org' }
+		maven { url = 'https://repo.spongepowered.org/repository/maven-public/' }
+		mavenCentral()
 	}
 	dependencies {
-		classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '5.1.+', changing: true
+		// FG set to 5.1.34 for now, as it fixes the "Invalid Value: -1" with IDEA 2022.1
+		classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '5.1.34', changing: true
 		classpath 'org.parchmentmc:librarian:1.+'
 	}
 }
 
 repositories {
 	maven {
-		// location of the maven that hosts JEI files
 		name "Progwml6 Maven"
 		url "https://dvs1.progwml6.com/files/maven/"
 	}
 	maven {
-		// location of a maven mirror for JEI files, as a fallback
 		name "ModMaven"
 		url "https://modmaven.dev/"
 	}
@@ -28,27 +29,23 @@ repositories {
 		name "Bai Maven"
 		url "https://maven.bai.lol"
 	}
+	maven {
+		url 'https://maven.blamejared.com'
+	}
 }
 
-// Only edit below this line, the above code adds and enables the necessary things for Forge to be setup.
 apply plugin: 'net.minecraftforge.gradle'
 apply plugin: 'org.parchmentmc.librarian.forgegradle'
 apply plugin: 'maven-publish'
 
-version = '1.17.1-1.12.1'
-group = 'com.anonymoushacker1279.immersiveweapons' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
-
-java.toolchain.languageVersion = JavaLanguageVersion.of(16)
+java.toolchain.languageVersion = JavaLanguageVersion.of(17)
 
 println('Java: ' + System.getProperty('java.version') + ' JVM: ' + System.getProperty('java.vm.version') + '(' + System.getProperty('java.vendor') + ') Arch: ' + System.getProperty('os.arch'))
 minecraft {
-	mappings channel: 'parchment', version: '2021.10.31-1.17.1'
-	// makeObfSourceJar = false // an Srg named sources jar is made by default. uncomment this to disable.
+	mappings channel: mappings_channel, version: mappings_version
 
 	accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
 
-	// Default run configurations.
-	// These can be tweaked, removed, or duplicated as needed.
 	runs {
 		client {
 			workingDirectory project.file('run')
@@ -56,6 +53,12 @@ minecraft {
 			property 'forge.logging.markers', 'REGISTRIES'
 
 			property 'forge.logging.console.level', 'debug'
+
+			// For Patchouli to work in-dev
+			property 'mixin.env.remapRefMap', 'true'
+			property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
+
+			jvmArgs '-Xmx4G'
 
 			mods {
 				immersiveweapons {
@@ -71,6 +74,12 @@ minecraft {
 
 			property 'forge.logging.console.level', 'debug'
 
+			// For Patchouli to work in-dev
+			property 'mixin.env.remapRefMap', 'true'
+			property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
+
+			jvmArgs '-Xmx4G'
+
 			mods {
 				immersiveweapons {
 					source sourceSets.main
@@ -85,8 +94,13 @@ minecraft {
 
 			property 'forge.logging.console.level', 'debug'
 
-			// Specify the modid for data generation, where to output the resulting resource, and where to look for existing resources.
+			// For Patchouli to work in-dev
+			property 'mixin.env.remapRefMap', 'true'
+			property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
+
 			args '--mod', 'immersiveweapons', '--all', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources/')
+
+			jvmArgs '-Xmx4G'
 
 			mods {
 				immersiveweapons {
@@ -101,18 +115,50 @@ minecraft {
 sourceSets.main.resources { srcDir 'src/generated/resources' }
 
 dependencies {
-	implementation 'org.jetbrains:annotations:22.0.0'
+	implementation 'org.jetbrains:annotations:23.0.0'
 
-	// Specify the version of Minecraft to use, If this is any group other then 'net.minecraft' it is assumed
-	// that the dep is a ForgeGradle 'patcher' dependency. And it's patches will be applied.
-	// The userdev artifact is a special name and will get all sorts of transformations applied to it.
-	minecraft 'net.minecraftforge:forge:1.17.1-37.1.0'
+	minecraft "net.minecraftforge:forge:${forge_version}"
 
 	// Include JEI
-	implementation fg.deobf("mezz.jei:jei-1.17.1:8.2.0.34")
+	implementation fg.deobf("mezz.jei:jei-${jei_version}")
 
 	// Include WTHIT
-	implementation fg.deobf("mcp.mobius.waila:wthit:forge-3.11.2")
+	compileOnly fg.deobf("mcp.mobius.waila:wthit-api:${wthit_version}")
+	runtimeOnly fg.deobf("mcp.mobius.waila:wthit:${wthit_version}")
+
+	// Include Patchouli
+	compileOnly fg.deobf("vazkii.patchouli:Patchouli:${patchouli_version}:api")
+	runtimeOnly fg.deobf("vazkii.patchouli:Patchouli:${patchouli_version}")
+
+	// Include TerraBlender
+	implementation fg.deobf("com.github.glitchfiend:TerraBlender-forge:${terrablender_version}")
+}
+
+// This block of code expands all the gradle properties in the specified resource targets.
+// It copies them into the targets and expands all the defined properties.
+def resourceTargets = ['data/immersiveweapons/patchouli_books/encyclopedia/book.json',
+                       'data/immersiveweapons/patchouli_books/lorebook/book.json']
+def intoTargets = ["$rootDir/out/production/resources/", "$rootDir/out/production/${project.name}.main/", "$rootDir/bin/main/"]
+def replaceProperties = [build_version: version]
+processResources {
+	inputs.properties replaceProperties
+	replaceProperties.put 'project', project
+
+	filesMatching(resourceTargets) {
+		expand replaceProperties
+	}
+
+	intoTargets.each { target ->
+		if (file(target).exists()) {
+			copy {
+				from(sourceSets.main.resources) {
+					include resourceTargets
+					expand replaceProperties
+				}
+				into target
+			}
+		}
+	}
 }
 
 // Add properties to JAR manifest
@@ -130,11 +176,7 @@ jar {
 	}
 }
 
-// Example configuration to allow publishing using the maven-publish task
-// This is the preferred method to reobfuscate your jar file
 jar.finalizedBy('reobfJar')
-// However if you are in a multi-project build, dev time needs unobfed jar files, so you can delay the obfuscation until publishing by doing
-//publish.dependsOn('reobfJar')
 
 publishing {
 	publications {
@@ -147,4 +189,8 @@ publishing {
 			url "file:///${project.projectDir}/mcmodsrepo"
 		}
 	}
+}
+
+tasks.withType(JavaCompile).configureEach {
+	options.encoding = 'UTF-8' // Use the UTF-8 charset for Java compilation
 }

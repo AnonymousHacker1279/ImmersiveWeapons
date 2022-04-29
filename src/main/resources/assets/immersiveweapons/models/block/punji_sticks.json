@@ -1,9 +1,9 @@
 {
 	"credit": "Made with Blockbench",
 	"textures": {
-		"0": "immersiveweapons:custom/dirt",
-		"1": "immersiveweapons:custom/bamboo_stalk",
-		"particle": "immersiveweapons:custom/dirt"
+		"0": "minecraft:block/dirt",
+		"1": "minecraft:block/bamboo_stalk",
+		"particle": "minecraft:block/dirt"
 	},
 	"elements": [
 		{

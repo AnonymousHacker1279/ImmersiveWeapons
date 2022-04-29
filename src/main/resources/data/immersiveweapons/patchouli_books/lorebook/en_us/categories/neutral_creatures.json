@@ -1,0 +1,5 @@
+{
+	"name": "Neutral Creatures",
+	"description": "Not every creature wants you dead on sight, but they'll still put up a fight if you attack them first.",
+	"icon": "minecraft:player_head{SkullOwner:'MHF_golem'}"
+}

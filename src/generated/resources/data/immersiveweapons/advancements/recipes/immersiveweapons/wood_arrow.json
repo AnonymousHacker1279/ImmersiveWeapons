@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "immersiveweapons:wood_arrow"
+    ]
+  },
+  "criteria": {
+    "wood_shard": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "tag": "immersiveweapons:shards/wood"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "immersiveweapons:wood_arrow"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "wood_shard",
+      "has_the_recipe"
+    ]
+  ]
+}

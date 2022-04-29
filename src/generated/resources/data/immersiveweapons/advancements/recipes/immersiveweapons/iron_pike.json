@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "immersiveweapons:iron_pike"
+    ]
+  },
+  "criteria": {
+    "iron": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "tag": "forge:ingots/iron"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "immersiveweapons:iron_pike"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "iron",
+      "has_the_recipe"
+    ]
+  ]
+}

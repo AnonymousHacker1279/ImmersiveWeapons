@@ -1,0 +1,40 @@
+{
+  "parent": "immersiveweapons:discover_celestial_tower",
+  "display": {
+    "icon": {
+      "item": "immersiveweapons:celestial_lantern"
+    },
+    "title": {
+      "translate": "advancements.immersiveweapons.celestial_lantern.title"
+    },
+    "description": {
+      "translate": "advancements.immersiveweapons.celestial_lantern.description"
+    },
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "rewards": {
+    "experience": 50
+  },
+  "criteria": {
+    "hold": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "immersiveweapons:celestial_lantern"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "hold"
+    ]
+  ]
+}

@@ -1,9 +1,9 @@
 {
 	"credit": "Made with Blockbench",
 	"textures": {
-		"0": "immersiveweapons:custom/cracked_polished_blackstone_bricks",
+		"0": "minecraft:block/cracked_polished_blackstone_bricks",
 		"1": "immersiveweapons:block/minuteman_statue",
-		"particle": "immersiveweapons:custom/cracked_polished_blackstone_bricks"
+		"particle": "minecraft:block/cracked_polished_blackstone_bricks"
 	},
 	"elements": [
 		{

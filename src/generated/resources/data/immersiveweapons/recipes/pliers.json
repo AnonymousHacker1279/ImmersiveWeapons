@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "pliers",
+  "pattern": [
+    " c ",
+    " b ",
+    "a a"
+  ],
+  "key": {
+    "a": {
+      "item": "minecraft:leather"
+    },
+    "b": {
+      "item": "immersiveweapons:small_parts_metal_tool"
+    },
+    "c": {
+      "tag": "forge:ingots/metal"
+    }
+  },
+  "result": {
+    "item": "immersiveweapons:pliers"
+  }
+}

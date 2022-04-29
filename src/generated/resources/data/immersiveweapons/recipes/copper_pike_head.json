@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "copper",
+  "pattern": [
+    " a ",
+    " b "
+  ],
+  "key": {
+    "a": {
+      "tag": "forge:ingots/copper"
+    },
+    "b": {
+      "tag": "forge:nuggets/copper"
+    }
+  },
+  "result": {
+    "item": "immersiveweapons:copper_pike_head"
+  }
+}

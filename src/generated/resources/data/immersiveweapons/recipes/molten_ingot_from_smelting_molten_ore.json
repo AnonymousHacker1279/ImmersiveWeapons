@@ -1,0 +1,10 @@
+{
+  "type": "minecraft:smelting",
+  "group": "molten",
+  "ingredient": {
+    "item": "immersiveweapons:molten_ore"
+  },
+  "result": "immersiveweapons:molten_ingot",
+  "experience": 1.2,
+  "cookingtime": 1200
+}

@@ -1,0 +1,34 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "immersiveweapons:molten_ingot_from_smelting_molten_ore"
+    ]
+  },
+  "criteria": {
+    "has_molten_ore": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "immersiveweapons:molten_ore"
+            ]
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "immersiveweapons:molten_ingot_from_smelting_molten_ore"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_molten_ore",
+      "has_the_recipe"
+    ]
+  ]
+}

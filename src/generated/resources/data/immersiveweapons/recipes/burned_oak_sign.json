@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "burned_oak",
+  "pattern": [
+    "aaa",
+    "aaa",
+    " b "
+  ],
+  "key": {
+    "a": {
+      "item": "immersiveweapons:burned_oak_planks"
+    },
+    "b": {
+      "item": "minecraft:stick"
+    }
+  },
+  "result": {
+    "item": "immersiveweapons:burned_oak_sign",
+    "count": 3
+  }
+}
