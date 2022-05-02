@@ -122,9 +122,10 @@ dependencies {
 	// Include JEI
 	implementation fg.deobf("mezz.jei:jei-${jei_version}")
 
-	// Include WTHIT
-	compileOnly fg.deobf("mcp.mobius.waila:wthit-api:${wthit_version}")
-	runtimeOnly fg.deobf("mcp.mobius.waila:wthit:${wthit_version}")
+	// Include WTHIT and badpackets
+	compileOnly fg.deobf("mcp.mobius.waila:wthit-api:forge-${wthit_version}")
+	runtimeOnly fg.deobf("mcp.mobius.waila:wthit:forge-${wthit_version}")
+	implementation fg.deobf("lol.bai:badpackets:forge-${badpackets_version}")
 
 	// Include Patchouli
 	compileOnly fg.deobf("vazkii.patchouli:Patchouli:${patchouli_version}:api")

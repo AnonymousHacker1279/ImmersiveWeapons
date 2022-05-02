@@ -649,6 +649,7 @@ public class DeferredRegistryHandler {
 	});
 	public static final RegistryObject<SimpleParticleType> BLOOD_PARTICLE = PARTICLE_TYPES.register("blood", () -> new SimpleParticleType(false));
 	public static final RegistryObject<SimpleParticleType> SAND_CLOUD_PARTICLE = PARTICLE_TYPES.register("sand_cloud", () -> new SimpleParticleType(false));
+	public static final RegistryObject<SimpleParticleType> MUZZLE_FLASH_PARTICLE = PARTICLE_TYPES.register("muzzle_flash", () -> new SimpleParticleType(false));
 
 	// Block Entities
 	public static final RegistryObject<BlockEntityType<BearTrapBlockEntity>> BEAR_TRAP_BLOCK_ENTITY = BLOCK_ENTITIES.register("bear_trap", () -> new BlockEntityType<>(BearTrapBlockEntity::new, Sets.newHashSet(BEAR_TRAP.get()), null));

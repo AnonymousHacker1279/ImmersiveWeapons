@@ -22,6 +22,7 @@ import net.minecraft.world.level.ClipContext.Block;
 import net.minecraft.world.level.ClipContext.Fluid;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.phys.*;
 import net.minecraft.world.phys.HitResult.Type;
 import net.minecraft.world.phys.shapes.VoxelShape;
@@ -45,10 +46,10 @@ public abstract class AbstractBulletEntity extends AbstractArrow {
 	 * Constructor for AbstractBulletEntity.
 	 *
 	 * @param entityType the <code>EntityType</code> instance
-	 * @param world      the <code>World</code> the entity is in
+	 * @param level      the <code>Level</code> the entity is in
 	 */
-	AbstractBulletEntity(EntityType<? extends AbstractArrow> entityType, Level world) {
-		super(entityType, world);
+	AbstractBulletEntity(EntityType<? extends AbstractArrow> entityType, Level level) {
+		super(entityType, level);
 	}
 
 	/**
@@ -56,10 +57,10 @@ public abstract class AbstractBulletEntity extends AbstractArrow {
 	 *
 	 * @param entityType the <code>EntityType</code> instance
 	 * @param shooter    the <code>LivingEntity</code> shooting the entity
-	 * @param world      the <code>World</code> the entity is in
+	 * @param level      the <code>Level</code> the entity is in
 	 */
-	AbstractBulletEntity(EntityType<? extends AbstractBulletEntity> entityType, LivingEntity shooter, Level world) {
-		super(entityType, shooter, world);
+	AbstractBulletEntity(EntityType<? extends AbstractBulletEntity> entityType, LivingEntity shooter, Level level) {
+		super(entityType, shooter, level);
 	}
 
 	/**
@@ -75,7 +76,7 @@ public abstract class AbstractBulletEntity extends AbstractArrow {
 	/**
 	 * Get the entity spawn packet.
 	 *
-	 * @return IPacket
+	 * @return Packet
 	 */
 	@Override
 	public @NotNull Packet<?> getAddEntityPacket() {
@@ -87,7 +88,16 @@ public abstract class AbstractBulletEntity extends AbstractArrow {
 	 */
 	@Override
 	public void tick() {
-		super.tick();
+		if (!hasBeenShot) {
+			gameEvent(GameEvent.PROJECTILE_SHOOT, getOwner(), blockPosition());
+			hasBeenShot = true;
+		}
+
+		if (!leftOwner) {
+			leftOwner = checkLeftOwner();
+		}
+
+		baseTick();
 
 		// Run extra stuff while ticking, useful for classes extending this class
 		// but not needing to overwrite the entire tick function.
@@ -99,7 +109,7 @@ public abstract class AbstractBulletEntity extends AbstractArrow {
 		double yRotation;
 		double xRotation;
 		// Make the bullet rotate
-		if (xRotO == 0.0F && yRotO == 0.0F) {
+		if (xRotO == 0.0F && yRotO == 0.0F && !inGround) {
 			double horizontalDistanceSquareRoot = deltaMovement.horizontalDistanceSqr();
 			yRotation = (Mth.atan2(deltaMovement.x, deltaMovement.z) * (180F / (float) Math.PI));
 			xRotation = (Mth.atan2(deltaMovement.y, horizontalDistanceSquareRoot) * (180F / (float) Math.PI));
@@ -166,45 +176,36 @@ public abstract class AbstractBulletEntity extends AbstractArrow {
 			}
 
 			// Loop while the entity is alive
-			while (isAlive()) {
-				// Check for hit entities
-				EntityHitResult entityHitResult = findHitEntity(currentPosition, newPosition);
-				if (entityHitResult != null) {
-					hitResult = entityHitResult;
+
+			// Check for hit entities
+			EntityHitResult entityHitResult = findHitEntity(currentPosition, newPosition);
+			if (entityHitResult != null) {
+				hitResult = entityHitResult;
+			}
+
+			if (hitResult.getType() == Type.ENTITY) {
+				Entity entity = null;
+				// Get the entity being hit
+				if (hitResult instanceof EntityHitResult) {
+					entity = ((EntityHitResult) hitResult).getEntity();
 				}
+				// Get the owner of the bullet
+				Entity owner = getOwner();
+				// Check if the entity is a player, and if so, if they are allowed
+				// to be harmed by the owner
+				if (entity instanceof Player && owner instanceof Player
+						&& !((Player) owner).canHarmPlayer((Player) entity)) {
 
-				if (hitResult != null && hitResult.getType() == Type.ENTITY) {
-					Entity entity = null;
-					// Get the entity being hit
-					if (hitResult instanceof EntityHitResult) {
-						entity = ((EntityHitResult) hitResult).getEntity();
-					}
-					// Get the owner of the bullet
-					Entity owner = getOwner();
-					// Check if the entity is a player, and if so, if they are allowed
-					// to be harmed by the owner
-					if (entity instanceof Player && owner instanceof Player
-							&& !((Player) owner).canHarmPlayer((Player) entity)) {
-
-						hitResult = null;
-						entityHitResult = null;
-					}
+					hitResult = null;
 				}
+			}
 
-				// If something was hit, and physics are enabled, execute necessary code
-				if (hitResult != null && hitResult.getType() != Type.MISS && !isNoPhysics
-						&& !ForgeEventFactory.onProjectileImpact(this, hitResult)) {
+			// If something was hit, and physics are enabled, execute necessary code
+			if (hitResult != null && hitResult.getType() != Type.MISS && !isNoPhysics
+					&& !ForgeEventFactory.onProjectileImpact(this, hitResult)) {
 
-					onHit(hitResult);
-					hasImpulse = true;
-				}
-
-				// If an entity wasn't hit, and the piercing level is below or equal to zero, break
-				if (entityHitResult == null || getPierceLevel() <= 0) {
-					break;
-				}
-
-				hitResult = null;
+				onHit(hitResult);
+				hasImpulse = true;
 			}
 
 			// Get the current delta movement values
@@ -228,6 +229,17 @@ public abstract class AbstractBulletEntity extends AbstractArrow {
 			double newPositionX = getX() + deltaMovementX;
 			double newPositionY = getY() + deltaMovementY;
 			double newPositionZ = getZ() + deltaMovementZ;
+			double horizontalDistance = deltaMovement.horizontalDistance();
+
+			if (isNoPhysics) {
+				setYRot((float) (Mth.atan2(-deltaMovementX, -deltaMovementZ) * (double) (180F / (float) Math.PI)));
+			} else {
+				setYRot((float) (Mth.atan2(deltaMovementX, deltaMovementZ) * (double) (180F / (float) Math.PI)));
+			}
+
+			setXRot((float) (Mth.atan2(deltaMovementY, horizontalDistance) * (double) (180F / (float) Math.PI)));
+			setXRot(lerpRotation(xRotO, getXRot()));
+			setYRot(lerpRotation(yRotO, getYRot()));
 
 			float inertia = 0.99F;
 			// Check if the bullet is in water
@@ -251,7 +263,7 @@ public abstract class AbstractBulletEntity extends AbstractArrow {
 				if (shouldStopMoving) {
 					setDeltaMovement(0, 0, 0);
 				} else {
-					setDeltaMovement(deltaMovement1.x, deltaMovement1.y + getGravityModifier(), deltaMovement1.z);
+					setDeltaMovement(deltaMovement1.x, deltaMovement1.y - getGravityModifier(), deltaMovement1.z);
 				}
 			}
 
@@ -266,7 +278,7 @@ public abstract class AbstractBulletEntity extends AbstractArrow {
 	 * @return double
 	 */
 	public double getGravityModifier() {
-		return 0.0d;
+		return 1d;
 	}
 
 	/**
@@ -282,15 +294,17 @@ public abstract class AbstractBulletEntity extends AbstractArrow {
 		// and the base damage. It's clamped if the velocity is extremely high.
 		int damage = Mth.ceil(Mth.clamp(velocityModifier * baseDamage, 0.0D, 2.147483647E9D));
 
+		int pierceLevel = getPierceLevel();
+
 		// Check the piercing level, if its above zero then start piercing entities
-		if (getPierceLevel() > 0) {
+		if (pierceLevel > 0) {
 			if (piercedEntities == null) {
 				piercedEntities = new IntOpenHashSet(5);
 			}
 
 			// If we've pierced the maximum number of entities,
 			// destroy the bullet
-			if (piercedEntities.size() >= getPierceLevel() + 1) {
+			if (piercedEntities.size() >= pierceLevel + 1) {
 				kill();
 				return;
 			}
@@ -364,7 +378,7 @@ public abstract class AbstractBulletEntity extends AbstractArrow {
 			}
 
 			playSound(hitSound, 1.0F, 1.2F / (random.nextFloat() * 0.2F + 0.9F));
-			if (getPierceLevel() <= 0) {
+			if (pierceLevel <= 0) {
 				kill();
 			}
 		} else {
@@ -414,6 +428,22 @@ public abstract class AbstractBulletEntity extends AbstractArrow {
 		}
 
 		inBlockState.onProjectileHit(level, inBlockState, blockHitResult, this);
+	}
+
+	private boolean checkLeftOwner() {
+		Entity owner = getOwner();
+		if (owner != null) {
+			for (Entity entityInWorld : level.getEntities(this, getBoundingBox()
+							.expandTowards(getDeltaMovement()).inflate(1.0D),
+					(entity) -> !entity.isSpectator() && entity.isPickable())) {
+
+				if (entityInWorld.getRootVehicle() == owner.getRootVehicle()) {
+					return false;
+				}
+			}
+		}
+
+		return true;
 	}
 
 	/**

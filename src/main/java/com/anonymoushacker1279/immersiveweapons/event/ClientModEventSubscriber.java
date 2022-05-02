@@ -6,8 +6,7 @@ import com.anonymoushacker1279.immersiveweapons.block.properties.WoodTypes;
 import com.anonymoushacker1279.immersiveweapons.client.gui.screen.SmallPartsTableScreen;
 import com.anonymoushacker1279.immersiveweapons.client.gui.screen.TeslaSynthesizerScreen;
 import com.anonymoushacker1279.immersiveweapons.client.model.CelestialTowerModel;
-import com.anonymoushacker1279.immersiveweapons.client.particle.BloodParticle;
-import com.anonymoushacker1279.immersiveweapons.client.particle.SandCloudParticle;
+import com.anonymoushacker1279.immersiveweapons.client.particle.*;
 import com.anonymoushacker1279.immersiveweapons.client.particle.smoke_bomb.SmokeBombParticle;
 import com.anonymoushacker1279.immersiveweapons.client.renderer.blockentity.ChairRenderer;
 import com.anonymoushacker1279.immersiveweapons.client.renderer.blockentity.ShelfRenderer;
@@ -218,6 +217,7 @@ public class ClientModEventSubscriber {
 		mc.particleEngine.register(DeferredRegistryHandler.SMOKE_BOMB_PARTICLE.get(), SmokeBombParticle.Provider::new);
 		mc.particleEngine.register(DeferredRegistryHandler.BLOOD_PARTICLE.get(), BloodParticle.Provider::new);
 		mc.particleEngine.register(DeferredRegistryHandler.SAND_CLOUD_PARTICLE.get(), SandCloudParticle.Provider::new);
+		mc.particleEngine.register(DeferredRegistryHandler.MUZZLE_FLASH_PARTICLE.get(), MuzzleFlashParticle.Provider::new);
 	}
 
 	@SubscribeEvent

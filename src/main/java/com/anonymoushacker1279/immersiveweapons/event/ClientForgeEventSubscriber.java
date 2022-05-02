@@ -39,9 +39,9 @@ public class ClientForgeEventSubscriber {
 	}
 
 	/**
-	 * Event handler for the FogDensity event.
+	 * Event handler for the RenderFogEvent event.
 	 *
-	 * @param event the <code>FogDensity</code> instance
+	 * @param event the <code>RenderFogEvent</code> instance
 	 */
 	@SubscribeEvent
 	public static void fogDensityEvent(RenderFogEvent event) {

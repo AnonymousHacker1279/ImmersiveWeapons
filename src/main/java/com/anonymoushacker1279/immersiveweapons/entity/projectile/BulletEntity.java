@@ -75,7 +75,7 @@ public class BulletEntity {
 		 */
 		@Override
 		public double getGravityModifier() {
-			return 0.0355d;
+			return 0.035d;
 		}
 	}
 
@@ -132,7 +132,7 @@ public class BulletEntity {
 		 */
 		@Override
 		public double getGravityModifier() {
-			return 0.035d;
+			return 0.055d;
 		}
 	}
 
@@ -189,7 +189,7 @@ public class BulletEntity {
 		 */
 		@Override
 		public double getGravityModifier() {
-			return 0.02d;
+			return 0.075d;
 		}
 	}
 
@@ -246,7 +246,7 @@ public class BulletEntity {
 		 */
 		@Override
 		public double getGravityModifier() {
-			return 0.0355d;
+			return 0.035d;
 		}
 	}
 
@@ -303,7 +303,7 @@ public class BulletEntity {
 		 */
 		@Override
 		public double getGravityModifier() {
-			return 0.0355d;
+			return 0.035d;
 		}
 	}
 
@@ -360,7 +360,7 @@ public class BulletEntity {
 		 */
 		@Override
 		public double getGravityModifier() {
-			return 0.0355d;
+			return 0.03d;
 		}
 	}
 
@@ -397,7 +397,7 @@ public class BulletEntity {
 		 */
 		@Override
 		public double getGravityModifier() {
-			return 0.0385d;
+			return 0.01d;
 		}
 
 		/**
@@ -474,7 +474,7 @@ public class BulletEntity {
 		 */
 		@Override
 		public double getGravityModifier() {
-			return 0.04d;
+			return 0.005d;
 		}
 	}
 
@@ -608,7 +608,7 @@ public class BulletEntity {
 		 */
 		@Override
 		public double getGravityModifier() {
-			return 0.0355d;
+			return 0.035d;
 		}
 
 		/**
