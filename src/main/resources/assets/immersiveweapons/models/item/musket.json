@@ -7,7 +7,7 @@
 		"3": "immersiveweapons:custom/greyc",
 		"4": "immersiveweapons:custom/black",
 		"5": "immersiveweapons:custom/brass",
-		"6": "minecraft:spyglass_model",
+		"6": "minecraft:item/spyglass_model",
 		"particle": "immersiveweapons:custom/brown"
 	},
 	"elements": [

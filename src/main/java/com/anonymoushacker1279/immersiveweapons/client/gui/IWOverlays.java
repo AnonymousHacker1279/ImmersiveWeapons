@@ -1,5 +1,6 @@
 package com.anonymoushacker1279.immersiveweapons.client.gui;
 
+import com.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import com.anonymoushacker1279.immersiveweapons.item.projectile.gun.AbstractGunItem;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.*;
@@ -10,7 +11,7 @@ import net.minecraftforge.client.gui.OverlayRegistry;
 
 public class IWOverlays {
 
-	public static final ResourceLocation SCOPE_LOCATION = new ResourceLocation("textures/misc/spyglass_scope.png");
+	public static final ResourceLocation SCOPE_LOCATION = new ResourceLocation(ImmersiveWeapons.MOD_ID + ":textures/gui/overlay/musket_scope.png");
 
 	public static IIngameOverlay SCOPE_ELEMENT;
 
