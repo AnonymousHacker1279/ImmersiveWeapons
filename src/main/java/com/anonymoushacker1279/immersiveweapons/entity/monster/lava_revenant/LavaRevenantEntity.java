@@ -342,7 +342,7 @@ public class LavaRevenantEntity extends FlyingMob implements Enemy, GrantAdvance
 					BlockState state = level.getBlockState(pos);
 					if (!state.isAir() && state.getMaterial() != Material.FIRE) {
 						if (ForgeHooks.canEntityDestroy(level, pos, this)
-								&& state.getDestroySpeed(level, pos) < 5.0f) {
+								&& state.getDestroySpeed(level, pos) <= 1.5f) {
 
 							blockRemoved = level.removeBlock(pos, false) || blockRemoved;
 						} else {

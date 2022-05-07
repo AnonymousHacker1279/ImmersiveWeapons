@@ -1,5 +1,6 @@
 package com.anonymoushacker1279.immersiveweapons.item.projectile.gun;
 
+import com.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import com.anonymoushacker1279.immersiveweapons.data.tags.groups.immersiveweapons.ImmersiveWeaponsItemTagGroups;
 import com.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
 import com.anonymoushacker1279.immersiveweapons.item.projectile.arrow.AbstractArrowItem;
@@ -19,16 +20,23 @@ import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec2;
 import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.client.event.EntityViewRenderEvent.FieldOfView;
 import net.minecraftforge.event.ForgeEventFactory;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
+import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.function.Predicate;
 
-
+@EventBusSubscriber(modid = ImmersiveWeapons.MOD_ID, bus = Bus.FORGE, value = Dist.CLIENT)
 public abstract class AbstractGunItem extends Item implements Vanishable {
 
 	protected static final Predicate<ItemStack> MUSKET_BALLS = (stack) -> stack.is(ImmersiveWeaponsItemTagGroups.MUSKET_BALLS);
 	protected static final Predicate<ItemStack> FLARES = (stack) -> stack.is(ImmersiveWeaponsItemTagGroups.FLARES);
+
+	private static double playerFOV = 70.0d;
 
 	/**
 	 * Constructor for AbstractGunItem.
@@ -43,7 +51,7 @@ public abstract class AbstractGunItem extends Item implements Vanishable {
 	 * Runs when the item is released.
 	 *
 	 * @param itemStack    the <code>ItemStack</code> being used
-	 * @param level        the <code>World</code> the entity is in
+	 * @param level        the <code>Level</code> the entity is in
 	 * @param livingEntity the <code>LivingEntity</code> releasing the item
 	 * @param timeLeft     the time left from charging
 	 */
@@ -117,7 +125,7 @@ public abstract class AbstractGunItem extends Item implements Vanishable {
 					}
 				}
 
-				float forwards = 0.45f;
+				double forwards = 0.67 - (playerFOV * 0.001);
 				float left = -0.35f;
 
 				Vec2 rotationVector = player.getRotationVector();
@@ -379,5 +387,12 @@ public abstract class AbstractGunItem extends Item implements Vanishable {
 				entity.broadcastBreakEvent(player.getUsedItemHand()));
 
 		level.addFreshEntity(abstractBulletEntity);
+	}
+
+	@SubscribeEvent
+	public static void playerFOVEvent(FieldOfView event) {
+		if (event.getFOV() != 70) {
+			playerFOV = event.getFOV();
+		}
 	}
 }

@@ -5,10 +5,10 @@
       "item": "immersiveweapons:celestial_lantern"
     },
     "title": {
-      "translate": "advancements.immersiveweapons.celestial_lantern.title"
+      "translate": "advancements.immersiveweapons.tiltros.celestial_lantern.title"
     },
     "description": {
-      "translate": "advancements.immersiveweapons.celestial_lantern.description"
+      "translate": "advancements.immersiveweapons.tiltros.celestial_lantern.description"
     },
     "frame": "goal",
     "show_toast": true,

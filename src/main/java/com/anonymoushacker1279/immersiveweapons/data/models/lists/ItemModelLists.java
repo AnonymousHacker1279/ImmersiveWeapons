@@ -43,6 +43,14 @@ public class ItemModelLists {
 		ignoredItems.add(DeferredRegistryHandler.DIAMOND_GAUNTLET.get());
 		ignoredItems.add(DeferredRegistryHandler.NETHERITE_GAUNTLET.get());
 		ignoredItems.add(DeferredRegistryHandler.BURNED_OAK_BOAT.get());
+		ignoredItems.add(DeferredRegistryHandler.WOOD_MUSKET_BALL.get());
+		ignoredItems.add(DeferredRegistryHandler.STONE_MUSKET_BALL.get());
+		ignoredItems.add(DeferredRegistryHandler.GOLD_MUSKET_BALL.get());
+		ignoredItems.add(DeferredRegistryHandler.COPPER_MUSKET_BALL.get());
+		ignoredItems.add(DeferredRegistryHandler.IRON_MUSKET_BALL.get());
+		ignoredItems.add(DeferredRegistryHandler.COBALT_MUSKET_BALL.get());
+		ignoredItems.add(DeferredRegistryHandler.DIAMOND_MUSKET_BALL.get());
+		ignoredItems.add(DeferredRegistryHandler.NETHERITE_MUSKET_BALL.get());
 		// Block Items
 		ignoredItems.add(DeferredRegistryHandler.CLOUD_MARBLE_BRICK_STAIRS_ITEM.get());
 		ignoredItems.add(DeferredRegistryHandler.CLOUD_MARBLE_BRICK_SLAB_ITEM.get());

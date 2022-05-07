@@ -1,37 +1,38 @@
-package com.anonymoushacker1279.immersiveweapons.client.particle;
+package com.anonymoushacker1279.immersiveweapons.client.particle.bullet_impact;
 
 import com.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
+import com.mojang.math.Vector3f;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.particle.*;
-import net.minecraft.core.particles.SimpleParticleType;
 import net.minecraft.util.Mth;
 import org.jetbrains.annotations.NotNull;
 
-public class SandCloudParticle extends TextureSheetParticle {
+public class BulletImpactParticle extends TextureSheetParticle {
 
 	protected static SpriteSet sprites;
 
-	public static class Provider implements ParticleProvider<SimpleParticleType> {
+	public static class Provider implements ParticleProvider<BulletImpactParticleOptions> {
 
 		public Provider(SpriteSet pSprites) {
 			sprites = pSprites;
 		}
 
 		@Override
-		public Particle createParticle(@NotNull SimpleParticleType pType, @NotNull ClientLevel pLevel, double pX, double pY, double pZ,
+		public Particle createParticle(@NotNull BulletImpactParticleOptions pType, @NotNull ClientLevel pLevel, double pX, double pY, double pZ,
 		                               double pXSpeed, double pYSpeed, double pZSpeed) {
 
-			return new SandCloudParticle(pLevel, pX, pY, pZ, pXSpeed, pYSpeed, pZSpeed, sprites);
+			return new BulletImpactParticle(pLevel, pX, pY, pZ, pXSpeed, pYSpeed, pZSpeed, sprites, pType.getColor());
 		}
 	}
 
-	protected SandCloudParticle(ClientLevel level, double x, double y, double z,
-	                            double xSpeed, double ySpeed,
-	                            double zSpeed, SpriteSet spriteSet) {
+	protected BulletImpactParticle(ClientLevel level, double x, double y, double z,
+	                               double xSpeed, double ySpeed,
+	                               double zSpeed, SpriteSet spriteSet, Vector3f color) {
 
 		super(level, x, y, z, 0.0D, 0.0D, 0.0D);
+
 		friction = 0.96F;
-		gravity = (float) 0.075;
+		gravity = (float) 0.175;
 		speedUpWhenYMotionIsBlocked = true;
 		sprites = spriteSet;
 		xd *= (float) 0.0;
@@ -41,15 +42,19 @@ public class SandCloudParticle extends TextureSheetParticle {
 		yd += ySpeed;
 		zd += zSpeed;
 		float vibrancyModifier = GeneralUtilities.getRandomNumber(0.6f, 1.0f);
-		rCol = vibrancyModifier;
-		gCol = vibrancyModifier;
-		bCol = vibrancyModifier;
-		quadSize *= 0.75F * (float) 3.5;
+		rCol = randomizeColor(color.x(), vibrancyModifier);
+		gCol = randomizeColor(color.y(), vibrancyModifier);
+		bCol = randomizeColor(color.z(), vibrancyModifier);
+		quadSize *= 2.5f;
 		lifetime = (int) ((double) 20 / ((double) level.random.nextFloat() * 0.8D + 0.2D));
-		lifetime = (int) ((float) lifetime * (float) 3.5);
+		lifetime = (int) ((float) lifetime * (float) 1.5);
 		lifetime = Math.max(lifetime, 1);
 		setSpriteFromAge(spriteSet);
 		hasPhysics = true;
+	}
+
+	protected float randomizeColor(float color, float multiplier) {
+		return (random.nextFloat() * 0.05F + 0.95F) * color * multiplier;
 	}
 
 	@Override

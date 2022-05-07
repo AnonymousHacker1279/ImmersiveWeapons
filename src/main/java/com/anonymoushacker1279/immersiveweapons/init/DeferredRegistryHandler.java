@@ -17,6 +17,7 @@ import com.anonymoushacker1279.immersiveweapons.block.sign.BurnedOakStandingSign
 import com.anonymoushacker1279.immersiveweapons.block.sign.BurnedOakWallSignBlock;
 import com.anonymoushacker1279.immersiveweapons.block.trap.*;
 import com.anonymoushacker1279.immersiveweapons.blockentity.*;
+import com.anonymoushacker1279.immersiveweapons.client.particle.bullet_impact.BulletImpactParticleOptions;
 import com.anonymoushacker1279.immersiveweapons.client.particle.smoke_bomb.SmokeBombParticleOptions;
 import com.anonymoushacker1279.immersiveweapons.container.SmallPartsContainer;
 import com.anonymoushacker1279.immersiveweapons.container.TeslaSynthesizerContainer;
@@ -648,7 +649,13 @@ public class DeferredRegistryHandler {
 		}
 	});
 	public static final RegistryObject<SimpleParticleType> BLOOD_PARTICLE = PARTICLE_TYPES.register("blood", () -> new SimpleParticleType(false));
-	public static final RegistryObject<SimpleParticleType> SAND_CLOUD_PARTICLE = PARTICLE_TYPES.register("sand_cloud", () -> new SimpleParticleType(false));
+	public static final RegistryObject<ParticleType<BulletImpactParticleOptions>> BULLET_IMPACT_PARTICLE = PARTICLE_TYPES.register("bullet_impact", () -> new ParticleType<>(false, BulletImpactParticleOptions.DESERIALIZER) {
+		final Function<ParticleType<BulletImpactParticleOptions>, Codec<BulletImpactParticleOptions>> codec = (type) -> BulletImpactParticleOptions.CODEC;
+
+		public @NotNull Codec<BulletImpactParticleOptions> codec() {
+			return codec.apply(this);
+		}
+	});
 	public static final RegistryObject<SimpleParticleType> MUZZLE_FLASH_PARTICLE = PARTICLE_TYPES.register("muzzle_flash", () -> new SimpleParticleType(false));
 
 	// Block Entities

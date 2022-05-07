@@ -1,8 +1,10 @@
 package com.anonymoushacker1279.immersiveweapons.entity.projectile;
 
+import com.anonymoushacker1279.immersiveweapons.client.particle.bullet_impact.BulletImpactParticleOptions;
 import com.anonymoushacker1279.immersiveweapons.config.CommonConfig;
 import com.anonymoushacker1279.immersiveweapons.data.tags.groups.forge.ForgeBlockTagGroups;
 import com.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
+import com.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
 import it.unimi.dsi.fastutil.ints.IntOpenHashSet;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
@@ -18,9 +20,9 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.ClipContext;
-import net.minecraft.world.level.ClipContext.Block;
 import net.minecraft.world.level.ClipContext.Fluid;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.phys.*;
@@ -35,12 +37,14 @@ public abstract class AbstractBulletEntity extends AbstractArrow {
 
 	private static final boolean canBreakGlass = CommonConfig.BULLETS_BREAK_GLASS.get();
 	private final SoundEvent hitSound = getDefaultHitGroundSoundEvent();
+	private static final byte VANILLA_IMPACT_STATUS_ID = 3;
 	Item referenceItem;
 	int knockbackStrength;
 	boolean shouldStopMoving = false;
 	private BlockState inBlockState;
 	private IntOpenHashSet piercedEntities;
 	private boolean hasAlreadyBrokeGlass = false;
+	private Vec3 hitEntityPosition = Vec3.ZERO;
 
 	/**
 	 * Constructor for AbstractBulletEntity.
@@ -166,7 +170,7 @@ public abstract class AbstractBulletEntity extends AbstractArrow {
 			inGroundTime = 0;
 			Vec3 currentPosition = position();
 			Vec3 newPosition = currentPosition.add(deltaMovement);
-			HitResult hitResult = level.clip(new ClipContext(currentPosition, newPosition, Block.COLLIDER, Fluid.NONE,
+			HitResult hitResult = level.clip(new ClipContext(currentPosition, newPosition, ClipContext.Block.COLLIDER, Fluid.NONE,
 					this));
 
 			// If there's a block between the current position and the new one, set the
@@ -296,6 +300,9 @@ public abstract class AbstractBulletEntity extends AbstractArrow {
 
 		int pierceLevel = getPierceLevel();
 
+		// Extra code to run when an entity is hit
+		doWhenHitEntity(entity, entityRayTraceResult);
+
 		// Check the piercing level, if its above zero then start piercing entities
 		if (pierceLevel > 0) {
 			if (piercedEntities == null) {
@@ -331,9 +338,6 @@ public abstract class AbstractBulletEntity extends AbstractArrow {
 			// multiple shots on the same target will simply bounce back
 			entity.invulnerableTime = 0;
 			entity.setInvulnerable(false);
-
-			// Extra code to run when an entity is hit
-			doWhenHitEntity(entity);
 
 			if (owner instanceof LivingEntity) {
 				((LivingEntity) owner).setLastHurtMob(entity);
@@ -398,16 +402,18 @@ public abstract class AbstractBulletEntity extends AbstractArrow {
 	@Override
 	protected void onHitBlock(BlockHitResult blockHitResult) {
 		inBlockState = level.getBlockState(blockHitResult.getBlockPos());
+		boolean didPassThroughBlock = false;
 
 		// Check if the bullet hit a permeable block like leaves, if so
 		// keep moving and decrease velocity
 		if (inBlockState.is(BlockTags.LEAVES)) {
 			push(0, -0.1, 0);
 			shakeTime = 4;
+			didPassThroughBlock = true;
 		} else {
 			Vec3 locationMinusCurrentPosition = blockHitResult.getLocation().subtract(getX(), getY(), getZ());
 			setDeltaMovement(locationMinusCurrentPosition);
-			Vec3 scaledPosition = locationMinusCurrentPosition.normalize().scale(0.05F);
+			Vec3 scaledPosition = locationMinusCurrentPosition.normalize().scale(0.0025F);
 			setPosRaw(getX() - scaledPosition.x, getY() - scaledPosition.y, getZ() - scaledPosition.z);
 			inGround = true;
 			shakeTime = 2;
@@ -428,6 +434,14 @@ public abstract class AbstractBulletEntity extends AbstractArrow {
 		}
 
 		inBlockState.onProjectileHit(level, inBlockState, blockHitResult, this);
+
+		if (!didPassThroughBlock && level.isClientSide) {
+			level.addParticle(new BulletImpactParticleOptions(1.0F, Block.getId(inBlockState)),
+					blockHitResult.getLocation().x, blockHitResult.getLocation().y, blockHitResult.getLocation().z,
+					GeneralUtilities.getRandomNumber(-0.01d, 0.01d),
+					GeneralUtilities.getRandomNumber(-0.01d, 0.01d),
+					GeneralUtilities.getRandomNumber(-0.01d, 0.01d));
+		}
 	}
 
 	private boolean checkLeftOwner() {
@@ -444,6 +458,24 @@ public abstract class AbstractBulletEntity extends AbstractArrow {
 		}
 
 		return true;
+	}
+
+	/**
+	 * Handle entity events.
+	 *
+	 * @param statusID the <code>byte</code> containing status ID
+	 */
+	@Override
+	public void handleEntityEvent(byte statusID) {
+		if (statusID == VANILLA_IMPACT_STATUS_ID) {
+			for (int i = 0; i <= 16; i++) {
+				level.addParticle(DeferredRegistryHandler.BLOOD_PARTICLE.get(),
+						position().x, position().y, position().z,
+						GeneralUtilities.getRandomNumber(-0.03d, 0.03d),
+						GeneralUtilities.getRandomNumber(-0.03d, 0.03d),
+						GeneralUtilities.getRandomNumber(-0.03d, 0.03d));
+			}
+		}
 	}
 
 	/**
@@ -466,6 +498,8 @@ public abstract class AbstractBulletEntity extends AbstractArrow {
 	 *
 	 * @param entity the <code>Entity</code> being hit
 	 */
-	protected void doWhenHitEntity(Entity entity) {
+	protected void doWhenHitEntity(Entity entity, EntityHitResult entityHitResult) {
+		hitEntityPosition = new Vec3(entity.position().x, entityHitResult.getLocation().y, entity.position().z);
+		level.broadcastEntityEvent(this, VANILLA_IMPACT_STATUS_ID);
 	}
 }
