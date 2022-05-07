@@ -14,6 +14,7 @@ public class ItemModelLists {
 		// Items
 		ignoredItems.add(DeferredRegistryHandler.BLUNDERBUSS.get());
 		ignoredItems.add(DeferredRegistryHandler.FLINTLOCK_PISTOL.get());
+		ignoredItems.add(DeferredRegistryHandler.MUSKET.get());
 		ignoredItems.add(DeferredRegistryHandler.FLARE_GUN.get());
 		ignoredItems.add(DeferredRegistryHandler.WOOD_PIKE.get());
 		ignoredItems.add(DeferredRegistryHandler.STONE_PIKE.get());

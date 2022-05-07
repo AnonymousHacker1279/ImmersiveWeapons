@@ -3,6 +3,7 @@ package com.anonymoushacker1279.immersiveweapons.event;
 import com.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import com.anonymoushacker1279.immersiveweapons.block.decoration.skull.CustomSkullTypes;
 import com.anonymoushacker1279.immersiveweapons.block.properties.WoodTypes;
+import com.anonymoushacker1279.immersiveweapons.client.gui.IWOverlays;
 import com.anonymoushacker1279.immersiveweapons.client.gui.screen.SmallPartsTableScreen;
 import com.anonymoushacker1279.immersiveweapons.client.gui.screen.TeslaSynthesizerScreen;
 import com.anonymoushacker1279.immersiveweapons.client.model.CelestialTowerModel;
@@ -148,6 +149,8 @@ public class ClientModEventSubscriber {
 
 		DimensionSpecialEffects.EFFECTS.put(new ResourceLocation(ImmersiveWeapons.MOD_ID, "tiltros"),
 				new TiltrosDimensionSpecialEffects());
+
+		IWOverlays.init();
 	}
 
 	/**

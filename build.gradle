@@ -58,7 +58,7 @@ minecraft {
 			property 'mixin.env.remapRefMap', 'true'
 			property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
 
-			jvmArgs '-Xmx4G'
+			jvmArgs '-Xmx4G', '-XX:+UseShenandoahGC'
 
 			mods {
 				immersiveweapons {
@@ -78,7 +78,7 @@ minecraft {
 			property 'mixin.env.remapRefMap', 'true'
 			property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
 
-			jvmArgs '-Xmx4G'
+			jvmArgs '-Xmx4G', '-XX:+UseShenandoahGC'
 
 			mods {
 				immersiveweapons {
@@ -100,7 +100,7 @@ minecraft {
 
 			args '--mod', 'immersiveweapons', '--all', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources/')
 
-			jvmArgs '-Xmx4G'
+			jvmArgs '-Xmx4G', '-XX:+UseShenandoahGC'
 
 			mods {
 				immersiveweapons {

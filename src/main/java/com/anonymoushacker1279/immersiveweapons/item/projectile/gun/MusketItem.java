@@ -12,14 +12,14 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
 
-public class SimpleShotgunItem extends AbstractGunItem {
+public class MusketItem extends AbstractGunItem {
 
 	/**
-	 * Constructor for SimpleShotgunItem.
+	 * Constructor for MusketItem.
 	 *
 	 * @param properties the <code>Properties</code> for the item
 	 */
-	public SimpleShotgunItem(Properties properties) {
+	public MusketItem(Properties properties) {
 		super(properties);
 	}
 
@@ -28,20 +28,17 @@ public class SimpleShotgunItem extends AbstractGunItem {
 		BulletEntity bulletEntity = bulletItem.createBullet(level, ammo, player);
 
 		bulletEntity.setFiringItem(firingItem.getItem());
-		
-		bulletEntity.shootFromRotation(player,
-				player.xRot + GeneralUtilities.getRandomNumber(-5.0f, 5.0f),
-				player.yRot + GeneralUtilities.getRandomNumber(-5.0f, 5.0f),
-				0.0F, 1.7F, 2.0F);
+
+		bulletEntity.shootFromRotation(player, player.xRot, player.yRot,
+				0.0F, 4.0F, 0.15F);
 
 		// Roll for random crits
-		if (GeneralUtilities.getRandomNumber(0f, 1f) <= 0.1f) {
+		if (GeneralUtilities.getRandomNumber(0f, 1f) <= 0.2f) {
 			bulletEntity.setCritArrow(true);
 		}
 
 		bulletEntity.setOwner(player);
 		bulletEntity.pickup = Pickup.DISALLOWED;
-		bulletEntity.setKnockback(3);
 
 		firingItem.hurtAndBreak(1, player, (entity) ->
 				entity.broadcastBreakEvent(player.getUsedItemHand()));
@@ -57,7 +54,7 @@ public class SimpleShotgunItem extends AbstractGunItem {
 	@Override
 	public SoundEvent getFireSound() {
 		return DeferredRegistryHandler.BLUNDERBUSS_FIRE.get();
-	}
+	} // TODO: Custom fire sound
 
 	/**
 	 * Get the repair material.
@@ -66,26 +63,26 @@ public class SimpleShotgunItem extends AbstractGunItem {
 	 */
 	@Override
 	protected Ingredient getRepairMaterial() {
-		return Ingredient.of(Items.GOLD_INGOT);
+		return Ingredient.of(Items.IRON_INGOT);
 	}
 
 	@Override
 	public int getCooldown() {
-		return 100;
+		return 200;
 	}
 
 	@Override
 	public float getMaxYRecoil() {
-		return -1.5f;
+		return -0.15f;
 	}
 
 	@Override
 	public float getMaxXRecoil() {
-		return -13.0f;
+		return -2.0f;
 	}
 
 	@Override
-	public int getMaxBulletsToFire() {
-		return 4;
+	public boolean canScope() {
+		return true;
 	}
 }

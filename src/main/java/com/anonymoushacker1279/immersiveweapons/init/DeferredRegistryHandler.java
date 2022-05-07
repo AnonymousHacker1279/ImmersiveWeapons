@@ -26,7 +26,7 @@ import com.anonymoushacker1279.immersiveweapons.entity.monster.*;
 import com.anonymoushacker1279.immersiveweapons.entity.monster.lava_revenant.LavaRevenantEntity;
 import com.anonymoushacker1279.immersiveweapons.entity.neutral.FieldMedicEntity;
 import com.anonymoushacker1279.immersiveweapons.entity.neutral.MinutemanEntity;
-import com.anonymoushacker1279.immersiveweapons.entity.projectile.BulletEntity.*;
+import com.anonymoushacker1279.immersiveweapons.entity.projectile.BulletEntities.*;
 import com.anonymoushacker1279.immersiveweapons.entity.projectile.CustomArrowEntity.*;
 import com.anonymoushacker1279.immersiveweapons.entity.projectile.*;
 import com.anonymoushacker1279.immersiveweapons.entity.vehicle.BurnedOakBoatEntity;
@@ -178,6 +178,7 @@ public class DeferredRegistryHandler {
 	public static final RegistryObject<NetheritePikeItem> NETHERITE_PIKE = ITEMS.register("netherite_pike", () -> new NetheritePikeItem(new Properties().durability(2031).tab(ITEM_GROUP).fireResistant(), 8.0d, -2.6d));
 	public static final RegistryObject<SimplePistolItem> FLINTLOCK_PISTOL = ITEMS.register("flintlock_pistol", () -> new SimplePistolItem(new Properties().tab(ITEM_GROUP).durability(499)));
 	public static final RegistryObject<SimpleShotgunItem> BLUNDERBUSS = ITEMS.register("blunderbuss", () -> new SimpleShotgunItem(new Properties().tab(ITEM_GROUP).durability(449)));
+	public static final RegistryObject<MusketItem> MUSKET = ITEMS.register("musket", () -> new MusketItem(new Properties().tab(ITEM_GROUP).durability(499)));
 	public static final RegistryObject<FlareGunItem> FLARE_GUN = ITEMS.register("flare_gun", () -> new FlareGunItem(new Properties().tab(ITEM_GROUP).durability(399)));
 	public static final RegistryObject<WoodGauntletItem> WOOD_GAUNTLET = ITEMS.register("wood_gauntlet", () -> new WoodGauntletItem(Tiers.WOOD, 2, -2.3f, new Properties().tab(ITEM_GROUP), 0.15f));
 	public static final RegistryObject<StoneGauntletItem> STONE_GAUNTLET = ITEMS.register("stone_gauntlet", () -> new StoneGauntletItem(Tiers.STONE, 2, -2.3f, new Properties().tab(ITEM_GROUP), 0.25f));

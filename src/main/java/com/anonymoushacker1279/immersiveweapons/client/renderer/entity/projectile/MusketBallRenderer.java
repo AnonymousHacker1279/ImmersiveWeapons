@@ -1,6 +1,6 @@
 package com.anonymoushacker1279.immersiveweapons.client.renderer.entity.projectile;
 
-import com.anonymoushacker1279.immersiveweapons.entity.projectile.AbstractBulletEntity;
+import com.anonymoushacker1279.immersiveweapons.entity.projectile.BulletEntity;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Vector3f;
 import net.minecraft.client.Minecraft;
@@ -12,14 +12,14 @@ import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.NotNull;
 
-public class MusketBallRenderer<T extends AbstractBulletEntity> extends EntityRenderer<T> {
+public class MusketBallRenderer<T extends BulletEntity> extends EntityRenderer<T> {
 
 	public MusketBallRenderer(EntityRendererProvider.Context context) {
 		super(context);
 	}
 
 	@Override
-	public void render(AbstractBulletEntity entity, float entityYaw, float partialTicks, PoseStack poseStack, MultiBufferSource renderTypeBuffer, int light) {
+	public void render(BulletEntity entity, float entityYaw, float partialTicks, PoseStack poseStack, MultiBufferSource renderTypeBuffer, int light) {
 		poseStack.pushPose();
 
 		poseStack.mulPose(Vector3f.YP.rotationDegrees(180.0F));

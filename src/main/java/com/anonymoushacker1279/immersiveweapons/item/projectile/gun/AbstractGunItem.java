@@ -1,19 +1,22 @@
 package com.anonymoushacker1279.immersiveweapons.item.projectile.gun;
 
 import com.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
+import com.anonymoushacker1279.immersiveweapons.client.gui.IWOverlays;
 import com.anonymoushacker1279.immersiveweapons.data.tags.groups.immersiveweapons.ImmersiveWeaponsItemTagGroups;
+import com.anonymoushacker1279.immersiveweapons.entity.projectile.BulletEntity;
 import com.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
-import com.anonymoushacker1279.immersiveweapons.item.projectile.arrow.AbstractArrowItem;
+import com.anonymoushacker1279.immersiveweapons.item.projectile.bullet.AbstractBulletItem;
 import com.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
+import net.minecraft.client.Minecraft;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.entity.projectile.AbstractArrow.Pickup;
 import net.minecraft.world.item.*;
 import net.minecraft.world.item.crafting.Ingredient;
@@ -22,6 +25,9 @@ import net.minecraft.world.phys.Vec2;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.EntityViewRenderEvent.FieldOfView;
+import net.minecraftforge.client.event.RenderGameOverlayEvent;
+import net.minecraftforge.client.event.RenderGameOverlayEvent.ElementType;
+import net.minecraftforge.client.gui.ForgeIngameGui;
 import net.minecraftforge.event.ForgeEventFactory;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
@@ -37,6 +43,8 @@ public abstract class AbstractGunItem extends Item implements Vanishable {
 	protected static final Predicate<ItemStack> FLARES = (stack) -> stack.is(ImmersiveWeaponsItemTagGroups.FLARES);
 
 	private static double playerFOV = 70.0d;
+	public static double changingPlayerFOV = -1;
+	public static float scopeScale = 0.5f;
 
 	/**
 	 * Constructor for AbstractGunItem.
@@ -60,6 +68,9 @@ public abstract class AbstractGunItem extends Item implements Vanishable {
 	                         int timeLeft) {
 
 		if (livingEntity instanceof Player player) {
+			changingPlayerFOV = -1;
+			scopeScale = 0.5f;
+
 			boolean isCreative = player.isCreative();
 			boolean misfire = false;
 			ItemStack ammo = findAmmo(itemStack, livingEntity);
@@ -117,11 +128,11 @@ public abstract class AbstractGunItem extends Item implements Vanishable {
 						false);
 
 				if (!level.isClientSide) {
-					AbstractArrowItem customArrowItem = (AbstractArrowItem) (ammo.getItem() instanceof AbstractArrowItem
+					AbstractBulletItem bulletItem = (AbstractBulletItem) (ammo.getItem() instanceof AbstractBulletItem
 							? ammo.getItem() : defaultAmmo());
 
 					for (int i = 0; i < bulletsToFire; ++i) {
-						fireBullets(customArrowItem, level, ammo, player, itemStack);
+						fireBullets(bulletItem, level, ammo, player, itemStack);
 					}
 				}
 
@@ -263,6 +274,24 @@ public abstract class AbstractGunItem extends Item implements Vanishable {
 		}
 	}
 
+	@Override
+	public void onUsingTick(ItemStack stack, LivingEntity player, int count) {
+		if (player.level.isClientSide && canScope()) {
+			changingPlayerFOV = 15.0f;
+		}
+	}
+
+	@Override
+	public void inventoryTick(ItemStack pStack, Level pLevel, Entity pEntity, int pSlotId, boolean pIsSelected) {
+		if (pEntity instanceof Player player) {
+			if (player.level.isClientSide && !player.getUseItem().is(DeferredRegistryHandler.MUSKET.get())) {
+				if (changingPlayerFOV != -1) {
+					changingPlayerFOV = -1;
+				}
+			}
+		}
+	}
+
 	/**
 	 * Get ammo predicates.
 	 *
@@ -370,29 +399,60 @@ public abstract class AbstractGunItem extends Item implements Vanishable {
 		return -7.0f;
 	}
 
-	protected void fireBullets(AbstractArrowItem customArrowItem, Level level, ItemStack ammo, Player player, ItemStack itemStack) {
-		AbstractArrow abstractBulletEntity = customArrowItem.createArrow(level, ammo, player);
-		abstractBulletEntity.shootFromRotation(player, player.xRot, player.yRot,
-				0.0F, 3.0F, 1.5F);
+	public boolean canScope() {
+		return false;
+	}
+
+	protected void fireBullets(AbstractBulletItem bulletItem, Level level, ItemStack ammo, Player player, ItemStack firingItem) {
+		BulletEntity bulletEntity = bulletItem.createBullet(level, ammo, player);
+
+		bulletEntity.setFiringItem(firingItem.getItem());
+
+		bulletEntity.shootFromRotation(player, player.xRot, player.yRot,
+				0.0F, 2.5F, 1.75F);
 
 		// Roll for random crits
 		if (GeneralUtilities.getRandomNumber(0f, 1f) <= 0.1f) {
-			abstractBulletEntity.setCritArrow(true);
+			bulletEntity.setCritArrow(true);
 		}
 
-		abstractBulletEntity.setOwner(player);
-		abstractBulletEntity.pickup = Pickup.DISALLOWED;
+		bulletEntity.setOwner(player);
+		bulletEntity.pickup = Pickup.DISALLOWED;
 
-		itemStack.hurtAndBreak(1, player, (entity) ->
+		firingItem.hurtAndBreak(1, player, (entity) ->
 				entity.broadcastBreakEvent(player.getUsedItemHand()));
 
-		level.addFreshEntity(abstractBulletEntity);
+		level.addFreshEntity(bulletEntity);
 	}
 
 	@SubscribeEvent
 	public static void playerFOVEvent(FieldOfView event) {
 		if (event.getFOV() != 70) {
 			playerFOV = event.getFOV();
+		}
+		if (changingPlayerFOV != -1) {
+			event.setFOV(changingPlayerFOV);
+		}
+	}
+
+	@SubscribeEvent
+	public static void renderOverlayEvent(RenderGameOverlayEvent.Post event) {
+		if (changingPlayerFOV != -1 && event.getType() == ElementType.LAYER) {
+			Minecraft minecraft = Minecraft.getInstance();
+
+			if (minecraft.options.getCameraType().isFirstPerson()) {
+				int screenHeight = event.getWindow().getGuiScaledHeight();
+				int screenWidth = event.getWindow().getGuiScaledWidth();
+
+				float deltaFrame = minecraft.getDeltaFrameTime();
+				scopeScale = Mth.lerp(0.5F * deltaFrame, scopeScale, 1.125F);
+
+				IWOverlays.SCOPE_ELEMENT.render((ForgeIngameGui) minecraft.gui,
+						event.getMatrixStack(),
+						event.getPartialTicks(),
+						screenWidth,
+						screenHeight);
+			}
 		}
 	}
 }

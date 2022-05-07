@@ -1,16 +1,15 @@
 package com.anonymoushacker1279.immersiveweapons.item.projectile.bullet;
 
-import com.anonymoushacker1279.immersiveweapons.entity.projectile.BulletEntity;
-import com.anonymoushacker1279.immersiveweapons.entity.projectile.BulletEntity.CobaltBulletEntity;
+import com.anonymoushacker1279.immersiveweapons.entity.projectile.BulletEntities;
+import com.anonymoushacker1279.immersiveweapons.entity.projectile.BulletEntities.CobaltBulletEntity;
 import com.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
-import com.anonymoushacker1279.immersiveweapons.item.projectile.arrow.AbstractArrowItem;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.projectile.AbstractArrow.Pickup;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
 
-public class CobaltBulletItem extends AbstractArrowItem {
+public class CobaltBulletItem extends AbstractBulletItem {
 
 	/**
 	 * Constructor for CobaltBulletItem.
@@ -24,7 +23,7 @@ public class CobaltBulletItem extends AbstractArrowItem {
 	}
 
 	/**
-	 * Create an arrow item.
+	 * Create a bullet item.
 	 *
 	 * @param level   the <code>Level</code> the shooter is in
 	 * @param stack   the <code>ItemStack</code> being shot
@@ -32,8 +31,8 @@ public class CobaltBulletItem extends AbstractArrowItem {
 	 * @return CobaltBulletEntity
 	 */
 	@Override
-	public @NotNull BulletEntity.CobaltBulletEntity createArrow(@NotNull Level level, @NotNull ItemStack stack, @NotNull LivingEntity shooter) {
-		CobaltBulletEntity bulletEntity = new CobaltBulletEntity(shooter, level, ref.get().asItem());
+	public @NotNull BulletEntities.CobaltBulletEntity createBullet(@NotNull Level level, @NotNull ItemStack stack, @NotNull LivingEntity shooter) {
+		CobaltBulletEntity bulletEntity = new CobaltBulletEntity(shooter, level, referenceItem.get().asItem());
 		bulletEntity.setBaseDamage(damage);
 		bulletEntity.pickup = Pickup.DISALLOWED;
 		bulletEntity.setSoundEvent(DeferredRegistryHandler.BULLET_WHIZZ.get());

@@ -1,15 +1,14 @@
 package com.anonymoushacker1279.immersiveweapons.item.projectile.bullet;
 
-import com.anonymoushacker1279.immersiveweapons.entity.projectile.BulletEntity.CopperBulletEntity;
+import com.anonymoushacker1279.immersiveweapons.entity.projectile.BulletEntities.CopperBulletEntity;
 import com.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
-import com.anonymoushacker1279.immersiveweapons.item.projectile.arrow.AbstractArrowItem;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.projectile.AbstractArrow.Pickup;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
 
-public class CopperBulletItem extends AbstractArrowItem {
+public class CopperBulletItem extends AbstractBulletItem {
 
 	/**
 	 * Constructor for CopperBulletItem.
@@ -23,7 +22,7 @@ public class CopperBulletItem extends AbstractArrowItem {
 	}
 
 	/**
-	 * Create an arrow item.
+	 * Create a bullet item.
 	 *
 	 * @param level   the <code>Level</code> the shooter is in
 	 * @param stack   the <code>ItemStack</code> being shot
@@ -31,8 +30,8 @@ public class CopperBulletItem extends AbstractArrowItem {
 	 * @return CopperBulletItem
 	 */
 	@Override
-	public @NotNull CopperBulletEntity createArrow(@NotNull Level level, @NotNull ItemStack stack, @NotNull LivingEntity shooter) {
-		CopperBulletEntity bulletEntity = new CopperBulletEntity(shooter, level, ref.get().asItem());
+	public @NotNull CopperBulletEntity createBullet(@NotNull Level level, @NotNull ItemStack stack, @NotNull LivingEntity shooter) {
+		CopperBulletEntity bulletEntity = new CopperBulletEntity(shooter, level, referenceItem.get().asItem());
 		bulletEntity.setBaseDamage(damage);
 		bulletEntity.pickup = Pickup.DISALLOWED;
 		bulletEntity.setSoundEvent(DeferredRegistryHandler.BULLET_WHIZZ.get());

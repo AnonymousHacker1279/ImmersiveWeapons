@@ -1,15 +1,14 @@
 package com.anonymoushacker1279.immersiveweapons.item.projectile.bullet;
 
-import com.anonymoushacker1279.immersiveweapons.entity.projectile.BulletEntity.FlareEntity;
+import com.anonymoushacker1279.immersiveweapons.entity.projectile.BulletEntities.FlareEntity;
 import com.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
-import com.anonymoushacker1279.immersiveweapons.item.projectile.arrow.AbstractArrowItem;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.projectile.AbstractArrow.Pickup;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
 
-public class FlareItem extends AbstractArrowItem {
+public class FlareItem extends AbstractBulletItem {
 
 	/**
 	 * Constructor for FlareItem.
@@ -23,7 +22,7 @@ public class FlareItem extends AbstractArrowItem {
 	}
 
 	/**
-	 * Create an arrow item.
+	 * Create a bullet item.
 	 *
 	 * @param level   the <code>Level</code> the shooter is in
 	 * @param stack   the <code>ItemStack</code> being shot
@@ -31,8 +30,8 @@ public class FlareItem extends AbstractArrowItem {
 	 * @return FlareEntity
 	 */
 	@Override
-	public @NotNull FlareEntity createArrow(@NotNull Level level, @NotNull ItemStack stack, @NotNull LivingEntity shooter) {
-		FlareEntity flareEntity = new FlareEntity(shooter, level, ref.get().asItem());
+	public @NotNull FlareEntity createBullet(@NotNull Level level, @NotNull ItemStack stack, @NotNull LivingEntity shooter) {
+		FlareEntity flareEntity = new FlareEntity(shooter, level, referenceItem.get().asItem());
 		flareEntity.setBaseDamage(damage);
 		flareEntity.pickup = Pickup.DISALLOWED;
 		flareEntity.setSoundEvent(DeferredRegistryHandler.BULLET_WHIZZ.get());
