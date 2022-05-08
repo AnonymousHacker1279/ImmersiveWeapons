@@ -4,6 +4,7 @@ import com.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import com.anonymoushacker1279.immersiveweapons.item.projectile.gun.AbstractGunItem;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.*;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.client.gui.IIngameOverlay;
@@ -19,7 +20,8 @@ public class IWOverlays {
 		SCOPE_ELEMENT = OverlayRegistry.registerOverlayTop("Scope", (gui, poseStack, partialTick, screenWidth, screenHeight) -> {
 			gui.setupOverlayRenderState(true, false);
 
-			if (AbstractGunItem.changingPlayerFOV != -1) {
+			Minecraft minecraft = Minecraft.getInstance();
+			if (AbstractGunItem.changingPlayerFOV != -1 && minecraft.options.getCameraType().isFirstPerson()) {
 				renderScope(screenWidth, screenHeight, AbstractGunItem.scopeScale);
 			}
 		});
@@ -27,7 +29,7 @@ public class IWOverlays {
 
 	private static void renderScope(int screenWidth, int screenHeight, float scopeScale) {
 		RenderSystem.depthMask(false);
-		RenderSystem.setShaderColor(1.0f, 1.0f, 1.0f, 0.1f);
+		RenderSystem.setShaderColor(0.0f, 0.0f, 0.0f, 0.1f);
 		RenderSystem.setShader(GameRenderer::getPositionTexShader);
 		RenderSystem.setShaderTexture(0, SCOPE_LOCATION);
 		Tesselator tesselator = Tesselator.getInstance();

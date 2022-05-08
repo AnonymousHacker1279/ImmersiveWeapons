@@ -178,7 +178,9 @@ public class DeferredRegistryHandler {
 	public static final RegistryObject<NetheritePikeItem> NETHERITE_PIKE = ITEMS.register("netherite_pike", () -> new NetheritePikeItem(new Properties().durability(2031).tab(ITEM_GROUP).fireResistant(), 8.0d, -2.6d));
 	public static final RegistryObject<SimplePistolItem> FLINTLOCK_PISTOL = ITEMS.register("flintlock_pistol", () -> new SimplePistolItem(new Properties().tab(ITEM_GROUP).durability(499)));
 	public static final RegistryObject<SimpleShotgunItem> BLUNDERBUSS = ITEMS.register("blunderbuss", () -> new SimpleShotgunItem(new Properties().tab(ITEM_GROUP).durability(449)));
-	public static final RegistryObject<MusketItem> MUSKET = ITEMS.register("musket", () -> new MusketItem(new Properties().tab(ITEM_GROUP).durability(499)));
+	public static final RegistryObject<MusketItem> MUSKET = ITEMS.register("musket", () -> new MusketItem(new Properties().tab(ITEM_GROUP).durability(499), false));
+	public static final RegistryObject<MusketItem> MUSKET_SCOPE = ITEMS.register("musket_scope", () -> new MusketItem(new Properties().tab(ITEM_GROUP).durability(499), true));
+
 	public static final RegistryObject<FlareGunItem> FLARE_GUN = ITEMS.register("flare_gun", () -> new FlareGunItem(new Properties().tab(ITEM_GROUP).durability(399)));
 	public static final RegistryObject<WoodGauntletItem> WOOD_GAUNTLET = ITEMS.register("wood_gauntlet", () -> new WoodGauntletItem(Tiers.WOOD, 2, -2.3f, new Properties().tab(ITEM_GROUP), 0.15f));
 	public static final RegistryObject<StoneGauntletItem> STONE_GAUNTLET = ITEMS.register("stone_gauntlet", () -> new StoneGauntletItem(Tiers.STONE, 2, -2.3f, new Properties().tab(ITEM_GROUP), 0.25f));
@@ -628,6 +630,7 @@ public class DeferredRegistryHandler {
 	public static final RegistryObject<SoundEvent> CELESTIAL_TOWER_SUMMON = SOUND_EVENTS.register("celestial_tower_summon", () -> new SoundEvent(new ResourceLocation(ImmersiveWeapons.MOD_ID, "celestial_tower_summon")));
 	public static final RegistryObject<SoundEvent> CELESTIAL_TOWER_VULNERABLE = SOUND_EVENTS.register("celestial_tower_vulnerable", () -> new SoundEvent(new ResourceLocation(ImmersiveWeapons.MOD_ID, "celestial_tower_vulnerable")));
 	public static final RegistryObject<SoundEvent> MORTAR_FIRE = SOUND_EVENTS.register("mortar_fire", () -> new SoundEvent(new ResourceLocation(ImmersiveWeapons.MOD_ID, "mortar_fire")));
+	public static final RegistryObject<SoundEvent> MUSKET_FIRE = SOUND_EVENTS.register("musket_fire", () -> new SoundEvent(new ResourceLocation(ImmersiveWeapons.MOD_ID, "musket_fire")));
 
 	// Containers
 	public static final RegistryObject<MenuType<SmallPartsContainer>> SMALL_PARTS_TABLE_CONTAINER = CONTAINER_TYPES.register("small_parts_table", () -> IForgeMenuType.create((id, inv, data) -> new SmallPartsContainer(id, inv)));

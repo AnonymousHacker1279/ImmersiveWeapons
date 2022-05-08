@@ -42,6 +42,8 @@ public abstract class AbstractGunItem extends Item implements Vanishable {
 	protected static final Predicate<ItemStack> MUSKET_BALLS = (stack) -> stack.is(ImmersiveWeaponsItemTagGroups.MUSKET_BALLS);
 	protected static final Predicate<ItemStack> FLARES = (stack) -> stack.is(ImmersiveWeaponsItemTagGroups.FLARES);
 
+	private static final Minecraft minecraft = Minecraft.getInstance();
+
 	private static double playerFOV = 70.0d;
 	public static double changingPlayerFOV = -1;
 	public static float scopeScale = 0.5f;
@@ -284,7 +286,7 @@ public abstract class AbstractGunItem extends Item implements Vanishable {
 	@Override
 	public void inventoryTick(ItemStack pStack, Level pLevel, Entity pEntity, int pSlotId, boolean pIsSelected) {
 		if (pEntity instanceof Player player) {
-			if (player.level.isClientSide && !player.getUseItem().is(DeferredRegistryHandler.MUSKET.get())) {
+			if (player.level.isClientSide && !player.getUseItem().is(DeferredRegistryHandler.MUSKET_SCOPE.get())) {
 				if (changingPlayerFOV != -1) {
 					changingPlayerFOV = -1;
 				}
@@ -430,7 +432,7 @@ public abstract class AbstractGunItem extends Item implements Vanishable {
 		if (event.getFOV() != 70) {
 			playerFOV = event.getFOV();
 		}
-		if (changingPlayerFOV != -1) {
+		if (changingPlayerFOV != -1 && minecraft.options.getCameraType().isFirstPerson()) {
 			event.setFOV(changingPlayerFOV);
 		}
 	}
@@ -438,8 +440,6 @@ public abstract class AbstractGunItem extends Item implements Vanishable {
 	@SubscribeEvent
 	public static void renderOverlayEvent(RenderGameOverlayEvent.Post event) {
 		if (changingPlayerFOV != -1 && event.getType() == ElementType.LAYER) {
-			Minecraft minecraft = Minecraft.getInstance();
-
 			if (minecraft.options.getCameraType().isFirstPerson()) {
 				int screenHeight = event.getWindow().getGuiScaledHeight();
 				int screenWidth = event.getWindow().getGuiScaledWidth();

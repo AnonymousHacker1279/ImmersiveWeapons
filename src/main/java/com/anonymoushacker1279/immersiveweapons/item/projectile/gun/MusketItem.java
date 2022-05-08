@@ -14,13 +14,16 @@ import net.minecraft.world.level.Level;
 
 public class MusketItem extends AbstractGunItem {
 
+	private final boolean hasScope;
+
 	/**
 	 * Constructor for MusketItem.
 	 *
 	 * @param properties the <code>Properties</code> for the item
 	 */
-	public MusketItem(Properties properties) {
+	public MusketItem(Properties properties, boolean hasScope) {
 		super(properties);
+		this.hasScope = hasScope;
 	}
 
 	@Override
@@ -53,8 +56,8 @@ public class MusketItem extends AbstractGunItem {
 	 */
 	@Override
 	public SoundEvent getFireSound() {
-		return DeferredRegistryHandler.BLUNDERBUSS_FIRE.get();
-	} // TODO: Custom fire sound
+		return DeferredRegistryHandler.MUSKET_FIRE.get();
+	}
 
 	/**
 	 * Get the repair material.
@@ -83,6 +86,6 @@ public class MusketItem extends AbstractGunItem {
 
 	@Override
 	public boolean canScope() {
-		return true;
+		return hasScope;
 	}
 }

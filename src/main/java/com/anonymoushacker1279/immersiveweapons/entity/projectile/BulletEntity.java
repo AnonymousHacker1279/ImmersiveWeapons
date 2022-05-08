@@ -167,7 +167,6 @@ public class BulletEntity extends AbstractArrow {
 			inGroundTime++;
 		} else {
 			// At this point, the bullet is still in the air
-
 			inGroundTime = 0;
 			Vec3 currentPosition = position();
 			Vec3 newPosition = currentPosition.add(deltaMovement);
@@ -179,8 +178,6 @@ public class BulletEntity extends AbstractArrow {
 			if (hitResult.getType() != Type.MISS) {
 				newPosition = hitResult.getLocation();
 			}
-
-			// Loop while the entity is alive
 
 			// Check for hit entities
 			EntityHitResult entityHitResult = findHitEntity(currentPosition, newPosition);
@@ -387,7 +384,6 @@ public class BulletEntity extends AbstractArrow {
 				doPostHurtEffects(livingEntity);
 			}
 
-			playSound(hitSound, 1.0F, 1.2F / (random.nextFloat() * 0.2F + 0.9F));
 			if (pierceLevel <= 0) {
 				kill();
 			}
@@ -421,6 +417,7 @@ public class BulletEntity extends AbstractArrow {
 			setDeltaMovement(locationMinusCurrentPosition);
 			Vec3 scaledPosition = locationMinusCurrentPosition.normalize().scale(0.0025F);
 			setPosRaw(getX() - scaledPosition.x, getY() - scaledPosition.y, getZ() - scaledPosition.z);
+			playSound(DeferredRegistryHandler.BULLET_WHIZZ.get(), 1.0F, 1.2F / (random.nextFloat() * 0.2F + 0.9F));
 			inGround = true;
 			shakeTime = 2;
 			setCritArrow(false);

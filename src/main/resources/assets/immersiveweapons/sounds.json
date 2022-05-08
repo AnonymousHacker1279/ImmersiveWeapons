@@ -485,5 +485,13 @@
 				"name": "immersiveweapons:entity/celestial_tower/vulnerable/vulnerable_1"
 			}
 		]
+	},
+	"musket_fire": {
+		"subtitle": "immersiveweapons.subtitle.item.gun.musket_fire",
+		"sounds": [
+			{
+				"name": "immersiveweapons:musket_fire"
+			}
+		]
 	}
 }
