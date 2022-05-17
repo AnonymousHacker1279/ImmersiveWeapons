@@ -2,7 +2,7 @@
   "parent": "minecraft:recipes/root",
   "rewards": {
     "recipes": [
-      "immersiveweapons:small_parts_metal_throwable_bomb_tinkering"
+      "immersiveweapons:ingots_iron_tinkering"
     ]
   },
   "criteria": {
@@ -19,7 +19,7 @@
     "has_the_recipe": {
       "trigger": "minecraft:recipe_unlocked",
       "conditions": {
-        "recipe": "immersiveweapons:small_parts_metal_throwable_bomb_tinkering"
+        "recipe": "immersiveweapons:ingots_iron_tinkering"
       }
     }
   },

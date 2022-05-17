@@ -1,0 +1,11 @@
+{
+  "type": "immersiveweapons:small_parts",
+  "material": {
+    "tag": "forge:ingots/iron"
+  },
+  "craftables": [
+    "immersiveweapons:small_parts_iron",
+    "immersiveweapons:small_parts_metal_throwable_bomb",
+    "immersiveweapons:small_parts_metal_tool"
+  ]
+}

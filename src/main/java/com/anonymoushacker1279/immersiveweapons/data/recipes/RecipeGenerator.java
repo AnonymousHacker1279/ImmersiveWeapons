@@ -25,8 +25,7 @@ import net.minecraftforge.common.crafting.NBTIngredient;
 import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 import java.util.function.Consumer;
 
 public class RecipeGenerator extends RecipeProvider {
@@ -316,62 +315,24 @@ public class RecipeGenerator extends RecipeProvider {
 	}
 
 	private void createSmallPartsItems() {
-		smallPartsTinkering(Tags.Items.INGOTS_IRON, DeferredRegistryHandler.SMALL_PARTS_BLUEPRINT.get(),
-				DeferredRegistryHandler.SMALL_PARTS_IRON.get());
-		smallPartsTinkering(ForgeItemTagGroups.METAL_INGOTS, DeferredRegistryHandler.SMALL_PARTS_METAL_THROWABLE_BOMB_BLUEPRINT.get(),
-				DeferredRegistryHandler.SMALL_PARTS_METAL_THROWABLE_BOMB.get());
-		smallPartsTinkering(ForgeItemTagGroups.METAL_INGOTS, DeferredRegistryHandler.SMALL_PARTS_METAL_TOOL_BLUEPRINT.get(),
-				DeferredRegistryHandler.SMALL_PARTS_METAL_TOOL.get());
-		smallPartsTinkering(ItemTags.PLANKS, DeferredRegistryHandler.GAUNTLET_SCAFFOLDING_BLUEPRINT.get(),
-				DeferredRegistryHandler.GAUNTLET_SCAFFOLDING.get());
-		createSmallPartsTable(DeferredRegistryHandler.SMALL_PARTS_TABLE_ITEM.get());
+		List<Item> IRON_INGOT_CRAFTABLES = new ArrayList<>(5);
+		List<Item> METAL_INGOT_CRAFTABLES = new ArrayList<>(5);
+		List<Item> PLANK_CRAFTABLES = new ArrayList<>(5);
 
-		// Create blueprints
-		ShapedRecipeBuilder.shaped(DeferredRegistryHandler.BLANK_BLUEPRINT.get())
-				.define('a', Items.STICK)
-				.define('b', Items.PAPER)
-				.pattern(" a ")
-				.pattern(" b ")
-				.group("small_parts")
-				.unlockedBy("paper", has(Items.PAPER))
-				.save(finishedRecipeConsumer);
-		ShapedRecipeBuilder.shaped(DeferredRegistryHandler.SMALL_PARTS_BLUEPRINT.get())
-				.define('a', DeferredRegistryHandler.BLANK_BLUEPRINT.get())
-				.define('b', ForgeItemTagGroups.METAL_NUGGETS)
-				.pattern(" b ")
-				.pattern("b b")
-				.pattern(" ba")
-				.group("small_parts")
-				.unlockedBy("small_parts_table", has(DeferredRegistryHandler.SMALL_PARTS_TABLE.get()))
-				.save(finishedRecipeConsumer);
-		ShapedRecipeBuilder.shaped(DeferredRegistryHandler.SMALL_PARTS_METAL_THROWABLE_BOMB_BLUEPRINT.get())
-				.define('a', DeferredRegistryHandler.BLANK_BLUEPRINT.get())
-				.define('b', ForgeItemTagGroups.METAL_NUGGETS)
-				.pattern("b  ")
-				.pattern("b b")
-				.pattern("  a")
-				.group("small_parts")
-				.unlockedBy("small_parts_table", has(DeferredRegistryHandler.SMALL_PARTS_TABLE.get()))
-				.save(finishedRecipeConsumer);
-		ShapedRecipeBuilder.shaped(DeferredRegistryHandler.SMALL_PARTS_METAL_TOOL_BLUEPRINT.get())
-				.define('a', DeferredRegistryHandler.BLANK_BLUEPRINT.get())
-				.define('b', ForgeItemTagGroups.METAL_NUGGETS)
-				.pattern("b  ")
-				.pattern(" bb")
-				.pattern("  a")
-				.group("small_parts")
-				.unlockedBy("small_parts_table", has(DeferredRegistryHandler.SMALL_PARTS_TABLE.get()))
-				.save(finishedRecipeConsumer);
-		ShapedRecipeBuilder.shaped(DeferredRegistryHandler.GAUNTLET_SCAFFOLDING_BLUEPRINT.get())
-				.define('a', DeferredRegistryHandler.BLANK_BLUEPRINT.get())
-				.define('b', ItemTags.PLANKS)
-				.define('c', Items.STICK)
-				.pattern("ccc")
-				.pattern("ccc")
-				.pattern("bba")
-				.group("small_parts")
-				.unlockedBy("small_parts_table", has(DeferredRegistryHandler.SMALL_PARTS_TABLE.get()))
-				.save(finishedRecipeConsumer);
+		IRON_INGOT_CRAFTABLES.add(DeferredRegistryHandler.SMALL_PARTS_IRON.get());
+		IRON_INGOT_CRAFTABLES.add(DeferredRegistryHandler.SMALL_PARTS_METAL_THROWABLE_BOMB.get());
+		IRON_INGOT_CRAFTABLES.add(DeferredRegistryHandler.SMALL_PARTS_METAL_TOOL.get());
+
+		METAL_INGOT_CRAFTABLES.add(DeferredRegistryHandler.SMALL_PARTS_METAL_THROWABLE_BOMB.get());
+		METAL_INGOT_CRAFTABLES.add(DeferredRegistryHandler.SMALL_PARTS_METAL_TOOL.get());
+
+		PLANK_CRAFTABLES.add(DeferredRegistryHandler.GAUNTLET_SCAFFOLDING.get());
+
+		smallPartsTinkering(Tags.Items.INGOTS_IRON, IRON_INGOT_CRAFTABLES);
+		smallPartsTinkering(ForgeItemTagGroups.METAL_INGOTS, METAL_INGOT_CRAFTABLES);
+		smallPartsTinkering(ItemTags.PLANKS, PLANK_CRAFTABLES);
+
+		createSmallPartsTable(DeferredRegistryHandler.SMALL_PARTS_TABLE_ITEM.get());
 	}
 
 	private void createSmokeBombs() {
@@ -1160,13 +1121,6 @@ public class RecipeGenerator extends RecipeProvider {
 		create3x3Object(builder, ImmersiveWeaponsItemTagGroups.MOLTEN_INGOTS);
 	}
 
-	private static void createMoltenPlate(ItemLike plateItem) {
-		ShapedRecipeBuilder builder = ShapedRecipeBuilder.shaped(plateItem)
-				.group("molten")
-				.unlockedBy("molten_ingot", has(ImmersiveWeaponsItemTagGroups.MOLTEN_INGOTS));
-		createPlateItem(builder, ImmersiveWeaponsItemTagGroups.MOLTEN_INGOTS);
-	}
-
 	private static void createVentusSword(ItemLike swordItem) {
 		ShapedRecipeBuilder builder = ShapedRecipeBuilder.shaped(swordItem)
 				.group("ventus")
@@ -1340,13 +1294,6 @@ public class RecipeGenerator extends RecipeProvider {
 				.group("tesla")
 				.unlockedBy("tesla_ingot", has(ImmersiveWeaponsItemTagGroups.TESLA_INGOTS));
 		create3x3Object(builder, ImmersiveWeaponsItemTagGroups.TESLA_INGOTS);
-	}
-
-	private static void createTeslaPlate(ItemLike plateItem) {
-		ShapedRecipeBuilder builder = ShapedRecipeBuilder.shaped(plateItem)
-				.group("tesla")
-				.unlockedBy("tesla_ingot", has(ImmersiveWeaponsItemTagGroups.TESLA_INGOTS));
-		createPlateItem(builder, ImmersiveWeaponsItemTagGroups.TESLA_INGOTS);
 	}
 
 	private static void createTeslaSynthesizer(ItemLike synthesizerItem) {
@@ -2268,10 +2215,10 @@ public class RecipeGenerator extends RecipeProvider {
 				.save(finishedRecipeConsumer, ImmersiveWeapons.MOD_ID + ":" + getItemName(result) + "_tesla_synthesizing");
 	}
 
-	private static void smallPartsTinkering(TagKey<Item> material, ItemLike blueprint, ItemLike result) {
-		SmallPartsRecipeBuilder.tinker(Ingredient.of(material), Ingredient.of(blueprint), result.asItem())
+	private static void smallPartsTinkering(TagKey<Item> material, List<Item> craftables) {
+		SmallPartsRecipeBuilder.tinker(Ingredient.of(material), craftables)
 				.unlocks("copper_ingot", has(ForgeItemTagGroups.COPPER_INGOTS))
-				.save(finishedRecipeConsumer, ImmersiveWeapons.MOD_ID + ":" + getItemName(result) + "_tinkering");
+				.save(finishedRecipeConsumer, ImmersiveWeapons.MOD_ID + ":" + getTagName(material) + "_tinkering");
 	}
 
 	protected static String getConversionRecipeName(ItemLike pResult, ItemLike pIngredient) {
@@ -2280,6 +2227,10 @@ public class RecipeGenerator extends RecipeProvider {
 
 	protected static @NotNull String getItemName(ItemLike pItemLike) {
 		return Objects.requireNonNull(ForgeRegistries.ITEMS.getKey(pItemLike.asItem())).getPath();
+	}
+
+	protected static String getTagName(TagKey<Item> tagKey) {
+		return tagKey.location().getPath().replace('/', '_');
 	}
 
 	protected static String getHasName(ItemLike pItemLike) {

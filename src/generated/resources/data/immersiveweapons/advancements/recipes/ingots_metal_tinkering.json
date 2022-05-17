@@ -2,18 +2,16 @@
   "parent": "minecraft:recipes/root",
   "rewards": {
     "recipes": [
-      "immersiveweapons:small_parts_metal_tool_blueprint"
+      "immersiveweapons:ingots_metal_tinkering"
     ]
   },
   "criteria": {
-    "small_parts_table": {
+    "copper_ingot": {
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
           {
-            "items": [
-              "immersiveweapons:small_parts_table"
-            ]
+            "tag": "forge:ingots/copper"
           }
         ]
       }
@@ -21,13 +19,13 @@
     "has_the_recipe": {
       "trigger": "minecraft:recipe_unlocked",
       "conditions": {
-        "recipe": "immersiveweapons:small_parts_metal_tool_blueprint"
+        "recipe": "immersiveweapons:ingots_metal_tinkering"
       }
     }
   },
   "requirements": [
     [
-      "small_parts_table",
+      "copper_ingot",
       "has_the_recipe"
     ]
   ]

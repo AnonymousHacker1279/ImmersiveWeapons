@@ -1,13 +1,10 @@
 package com.anonymoushacker1279.immersiveweapons.item.projectile.gun;
 
-import com.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
-import com.anonymoushacker1279.immersiveweapons.client.gui.IWOverlays;
 import com.anonymoushacker1279.immersiveweapons.data.tags.groups.immersiveweapons.ImmersiveWeaponsItemTagGroups;
 import com.anonymoushacker1279.immersiveweapons.entity.projectile.BulletEntity;
 import com.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
 import com.anonymoushacker1279.immersiveweapons.item.projectile.bullet.AbstractBulletItem;
 import com.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
-import net.minecraft.client.Minecraft;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundSource;
@@ -23,28 +20,17 @@ import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec2;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.client.event.EntityViewRenderEvent.FieldOfView;
-import net.minecraftforge.client.event.RenderGameOverlayEvent;
-import net.minecraftforge.client.event.RenderGameOverlayEvent.ElementType;
-import net.minecraftforge.client.gui.ForgeIngameGui;
 import net.minecraftforge.event.ForgeEventFactory;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.function.Predicate;
 
-@EventBusSubscriber(modid = ImmersiveWeapons.MOD_ID, bus = Bus.FORGE, value = Dist.CLIENT)
 public abstract class AbstractGunItem extends Item implements Vanishable {
 
 	protected static final Predicate<ItemStack> MUSKET_BALLS = (stack) -> stack.is(ImmersiveWeaponsItemTagGroups.MUSKET_BALLS);
 	protected static final Predicate<ItemStack> FLARES = (stack) -> stack.is(ImmersiveWeaponsItemTagGroups.FLARES);
 
-	private static final Minecraft minecraft = Minecraft.getInstance();
-
-	private static double playerFOV = 70.0d;
+	public static double playerFOV = 70.0d;
 	public static double changingPlayerFOV = -1;
 	public static float scopeScale = 0.5f;
 
@@ -425,34 +411,5 @@ public abstract class AbstractGunItem extends Item implements Vanishable {
 				entity.broadcastBreakEvent(player.getUsedItemHand()));
 
 		level.addFreshEntity(bulletEntity);
-	}
-
-	@SubscribeEvent
-	public static void playerFOVEvent(FieldOfView event) {
-		if (event.getFOV() != 70) {
-			playerFOV = event.getFOV();
-		}
-		if (changingPlayerFOV != -1 && minecraft.options.getCameraType().isFirstPerson()) {
-			event.setFOV(changingPlayerFOV);
-		}
-	}
-
-	@SubscribeEvent
-	public static void renderOverlayEvent(RenderGameOverlayEvent.Post event) {
-		if (changingPlayerFOV != -1 && event.getType() == ElementType.LAYER) {
-			if (minecraft.options.getCameraType().isFirstPerson()) {
-				int screenHeight = event.getWindow().getGuiScaledHeight();
-				int screenWidth = event.getWindow().getGuiScaledWidth();
-
-				float deltaFrame = minecraft.getDeltaFrameTime();
-				scopeScale = Mth.lerp(0.5F * deltaFrame, scopeScale, 1.125F);
-
-				IWOverlays.SCOPE_ELEMENT.render((ForgeIngameGui) minecraft.gui,
-						event.getMatrixStack(),
-						event.getPartialTicks(),
-						screenWidth,
-						screenHeight);
-			}
-		}
 	}
 }

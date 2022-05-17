@@ -1,16 +1,17 @@
-package com.anonymoushacker1279.immersiveweapons.block.crafting;
+package com.anonymoushacker1279.immersiveweapons.block.crafting.small_parts;
 
 import com.anonymoushacker1279.immersiveweapons.container.SmallPartsContainer;
 import net.minecraft.core.BlockPos;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.ListTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResult;
-import net.minecraft.world.MenuProvider;
-import net.minecraft.world.SimpleMenuProvider;
+import net.minecraft.world.*;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.ContainerLevelAccess;
+import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockBehaviour;
@@ -18,6 +19,8 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraftforge.network.NetworkHooks;
 import org.jetbrains.annotations.NotNull;
+
+import javax.annotation.Nullable;
 
 public class SmallPartsTable extends Block {
 
@@ -40,7 +43,6 @@ public class SmallPartsTable extends Block {
 	 * @param pos     the <code>BlockPos</code> the block is at
 	 * @return INamedContainerProvider
 	 */
-	@SuppressWarnings("deprecation")
 	@Override
 	public MenuProvider getMenuProvider(@NotNull BlockState state, @NotNull Level worldIn, @NotNull BlockPos pos) {
 		return new SimpleMenuProvider((id, inventory, player) -> new SmallPartsContainer(id, inventory, ContainerLevelAccess.create(worldIn, pos)), CONTAINER_NAME);
@@ -58,7 +60,6 @@ public class SmallPartsTable extends Block {
 	 * @param blockRayTraceResult the <code>BlockRayTraceResult</code> of the interaction
 	 * @return ActionResultType
 	 */
-	@SuppressWarnings("deprecation")
 	@Override
 	public @NotNull InteractionResult use(@NotNull BlockState state, Level worldIn, @NotNull BlockPos pos, @NotNull Player player, @NotNull InteractionHand handIn, @NotNull BlockHitResult blockRayTraceResult) {
 		if (worldIn.isClientSide) {
@@ -67,5 +68,16 @@ public class SmallPartsTable extends Block {
 			NetworkHooks.openGui((ServerPlayer) player, state.getMenuProvider(worldIn, pos), pos);
 			return InteractionResult.CONSUME;
 		}
+	}
+
+	@Nullable
+	public static ListTag getItemPatterns(ItemStack pStack) {
+		ListTag listtag = null;
+		CompoundTag compoundtag = BlockItem.getBlockEntityData(pStack);
+		if (compoundtag != null && compoundtag.contains("Patterns", 9)) {
+			listtag = compoundtag.getList("Patterns", 10).copy();
+		}
+
+		return listtag;
 	}
 }

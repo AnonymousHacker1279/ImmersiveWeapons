@@ -1,0 +1,9 @@
+{
+  "type": "immersiveweapons:small_parts",
+  "material": {
+    "tag": "minecraft:planks"
+  },
+  "craftables": [
+    "immersiveweapons:gauntlet_scaffolding"
+  ]
+}

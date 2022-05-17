@@ -1,129 +1,214 @@
 package com.anonymoushacker1279.immersiveweapons.container;
 
+import com.anonymoushacker1279.immersiveweapons.block.crafting.small_parts.SmallPartsCraftables;
 import com.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
-import com.anonymoushacker1279.immersiveweapons.item.crafting.CustomRecipeTypes;
-import com.anonymoushacker1279.immersiveweapons.item.crafting.SmallPartsRecipe;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.Container;
+import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.*;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.state.BlockState;
-import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
-public class SmallPartsContainer extends ItemCombinerMenu {
+public class SmallPartsContainer extends AbstractContainerMenu {
 
-	private final Level world;
-	private final List<SmallPartsRecipe> smallPartsRecipeList;
-	private SmallPartsRecipe smallPartsRecipe;
+	private static final int INV_SLOT_START = 4;
+	private static final int INV_SLOT_END_USE_ROW_SLOT_START = 31;
+	private static final int USE_ROW_SLOT_END = 38;
+	private final ContainerLevelAccess access;
+	final DataSlot selectedPartsPatternIndex = DataSlot.standalone();
+	Runnable slotUpdateListener = () -> {
+	};
+	final Slot materialSlot;
+	private final Slot resultSlot;
+	long lastSoundTime;
+	private final Container inputContainer = new SimpleContainer(1) {
+		@Override
+		public void setChanged() {
+			super.setChanged();
+			slotsChanged(this);
+			slotUpdateListener.run();
+		}
+	};
+	private final Container outputContainer = new SimpleContainer(1) {
+		@Override
+		public void setChanged() {
+			super.setChanged();
+			slotUpdateListener.run();
+		}
+	};
 
-	/**
-	 * Constructor for SmallPartsContainer.
-	 *
-	 * @param id  the ID of the container
-	 * @param inv the <code>Inventory</code> instance
-	 */
-	public SmallPartsContainer(int id, Inventory inv) {
-		this(id, inv, ContainerLevelAccess.NULL);
+	public SmallPartsContainer(int containerID, Inventory inventory) {
+		this(containerID, inventory, ContainerLevelAccess.NULL);
+	}
+
+	public SmallPartsContainer(int containerID, Inventory inventory, ContainerLevelAccess levelAccess) {
+		super(DeferredRegistryHandler.SMALL_PARTS_TABLE_CONTAINER.get(), containerID);
+		access = levelAccess;
+		materialSlot = addSlot(new Slot(inputContainer, 0, 23, 36) {
+			/**
+			 * Check if the stack is allowed to be placed in this slot, used for armor slots as well as furnace fuel.
+			 */
+			@Override
+			public boolean mayPlace(ItemStack stack) {
+				return true;
+			}
+		});
+		resultSlot = addSlot(new Slot(outputContainer, 0, 143, 58) {
+			/**
+			 * Check if the stack is allowed to be placed in this slot, used for armor slots as well as furnace fuel.
+			 */
+			@Override
+			public boolean mayPlace(ItemStack stack) {
+				return false;
+			}
+
+			@Override
+			public void onTake(Player player, ItemStack stack) {
+				materialSlot.remove(1);
+				if (!materialSlot.hasItem()) {
+					selectedPartsPatternIndex.set(0);
+				}
+
+				levelAccess.execute((level, pos) -> {
+					long gameTime = level.getGameTime();
+					if (lastSoundTime != gameTime) {
+						level.playSound(null, pos, SoundEvents.UI_LOOM_TAKE_RESULT, SoundSource.BLOCKS, 1.0F, 1.0F);
+						lastSoundTime = gameTime;
+					}
+
+				});
+				super.onTake(player, stack);
+			}
+		});
+
+		for (int i = 0; i < 3; ++i) {
+			for (int j = 0; j < 9; ++j) {
+				addSlot(new Slot(inventory, j + i * 9 + 9, 8 + j * 18, 84 + i * 18));
+			}
+		}
+
+		for (int k = 0; k < 9; ++k) {
+			addSlot(new Slot(inventory, k, 8 + k * 18, 142));
+		}
+
+		addDataSlot(selectedPartsPatternIndex);
+	}
+
+	public int getSelectedPartsPatternIndex() {
+		return selectedPartsPatternIndex.get();
 	}
 
 	/**
-	 * Constructor for SmallPartsContainer.
-	 *
-	 * @param id     the ID of the container
-	 * @param inv    the <code>Inventory</code> instance
-	 * @param access the <code>ContainerLevelAccess</code> instance
-	 */
-	public SmallPartsContainer(int id, Inventory inv, ContainerLevelAccess access) {
-		super(DeferredRegistryHandler.SMALL_PARTS_TABLE_CONTAINER.get(), id, inv, access);
-		world = inv.player.level;
-		smallPartsRecipeList = world.getRecipeManager().getAllRecipesFor(CustomRecipeTypes.SMALL_PARTS);
-	}
-
-	/**
-	 * Check for a valid block.
-	 *
-	 * @param blockState the <code>BlockState</code> of the block
-	 * @return boolean
+	 * Determines whether supplied player can use this container
 	 */
 	@Override
-	protected boolean isValidBlock(BlockState blockState) {
-		return blockState.is(DeferredRegistryHandler.SMALL_PARTS_TABLE.get());
+	public boolean stillValid(Player pPlayer) {
+		return stillValid(access, pPlayer, DeferredRegistryHandler.SMALL_PARTS_TABLE.get());
 	}
 
-	/**
-	 * Check if the player can pick up a recipe.
-	 *
-	 * @param player        the <code>Player</code> instance
-	 * @param matchesRecipe set the recipe match
-	 * @return boolean
-	 */
 	@Override
-	protected boolean mayPickup(@NotNull Player player, boolean matchesRecipe) {
-		return smallPartsRecipe != null && smallPartsRecipe.matches(inputSlots, world);
-	}
-
-	/**
-	 * Runs when the result is taken from the container.
-	 *
-	 * @param player    the <code>Player</code> instance
-	 * @param itemStack the <code>ItemStack</code> being taken
-	 */
-	@Override
-	protected void onTake(@NotNull Player player, ItemStack itemStack) {
-		itemStack.onCraftedBy(player.level, player, itemStack.getCount());
-		resultSlots.awardUsedRecipes(player);
-		// Normally we would destroy both items here. However, we don't want to destroy the blueprint item.
-		ItemStack materialSlotItem = inputSlots.getItem(0);
-		materialSlotItem.shrink(1);
-		inputSlots.setItem(0, materialSlotItem);
-
-		world.playSound(player, player.blockPosition(), DeferredRegistryHandler.SMALL_PARTS_TABLE_USED.get(),
-				SoundSource.NEUTRAL, 1f, 1);
-	}
-
-	/**
-	 * Create a result from a recipe.
-	 */
-	@Override
-	public void createResult() {
-		List<SmallPartsRecipe> recipes = world.getRecipeManager()
-				.getRecipesFor(CustomRecipeTypes.SMALL_PARTS, inputSlots, world);
-
-		if (recipes.isEmpty()) {
-			resultSlots.setItem(0, ItemStack.EMPTY);
+	public boolean clickMenuButton(Player pPlayer, int pId) {
+		if (pId > 0 && pId <= SmallPartsCraftables.ALL_CRAFTABLES.size()) {
+			selectedPartsPatternIndex.set(pId);
+			setupResultSlot();
+			return true;
 		} else {
-			smallPartsRecipe = recipes.get(0);
-			ItemStack assembledRecipe = smallPartsRecipe.assemble(inputSlots);
-			resultSlots.setRecipeUsed(smallPartsRecipe);
-			resultSlots.setItem(0, assembledRecipe);
+			return false;
+		}
+	}
+
+	/**
+	 * Callback for when the crafting matrix is changed.
+	 */
+	@Override
+	public void slotsChanged(Container pInventory) {
+		resultSlot.set(ItemStack.EMPTY);
+		selectedPartsPatternIndex.set(0);
+
+		setupResultSlot();
+		broadcastChanges();
+	}
+
+	public void registerUpdateListener(Runnable runnable) {
+		slotUpdateListener = runnable;
+	}
+
+	/**
+	 * Handle when the stack in slot {@code index} is shift-clicked. Normally this moves the stack between the player
+	 * inventory and the other inventory(s).
+	 */
+	@Override
+	public ItemStack quickMoveStack(Player pPlayer, int pIndex) {
+		ItemStack stack = ItemStack.EMPTY;
+		Slot slot = slots.get(pIndex);
+		if (slot.hasItem()) {
+			ItemStack slotStack = slot.getItem();
+			stack = slotStack.copy();
+			if (pIndex == resultSlot.index) {
+				if (!moveItemStackTo(slotStack, INV_SLOT_START, USE_ROW_SLOT_END, true)) {
+					return ItemStack.EMPTY;
+				}
+
+				slot.onQuickCraft(slotStack, stack);
+			} else if (pIndex != materialSlot.index) {
+				if (!moveItemStackTo(slotStack, materialSlot.index, materialSlot.index + 1, false)) {
+					return ItemStack.EMPTY;
+				} else if (pIndex >= INV_SLOT_START && pIndex < INV_SLOT_END_USE_ROW_SLOT_START) {
+					if (!moveItemStackTo(slotStack, INV_SLOT_END_USE_ROW_SLOT_START, USE_ROW_SLOT_END, false)) {
+						return ItemStack.EMPTY;
+					}
+				} else if (pIndex >= INV_SLOT_END_USE_ROW_SLOT_START && pIndex < USE_ROW_SLOT_END && !moveItemStackTo(slotStack, INV_SLOT_START, INV_SLOT_END_USE_ROW_SLOT_START, false)) {
+					return ItemStack.EMPTY;
+				}
+			} else if (!moveItemStackTo(slotStack, INV_SLOT_START, USE_ROW_SLOT_END, false)) {
+				return ItemStack.EMPTY;
+			}
+
+			if (slotStack.isEmpty()) {
+				slot.set(ItemStack.EMPTY);
+			} else {
+				slot.setChanged();
+			}
+
+			if (slotStack.getCount() == stack.getCount()) {
+				return ItemStack.EMPTY;
+			}
+
+			slot.onTake(pPlayer, slotStack);
+		}
+
+		return stack;
+	}
+
+	/**
+	 * Called when the container is closed.
+	 */
+	@Override
+	public void removed(Player pPlayer) {
+		super.removed(pPlayer);
+		access.execute((level, pos) -> {
+			clearContainer(pPlayer, inputContainer);
+		});
+	}
+
+	private void setupResultSlot() {
+		ItemStack material = materialSlot.getItem();
+		List<Item> resultPatterns = SmallPartsCraftables.getAvailableCraftables(material);
+
+		if (selectedPartsPatternIndex.get() > 0 && resultPatterns.size() >= selectedPartsPatternIndex.get() - 1) {
+			if (!material.isEmpty()) {
+				resultSlot.set(new ItemStack(resultPatterns.get(selectedPartsPatternIndex.get() - 1)));
+			}
 		}
 
 	}
 
-	/**
-	 * Check if a stack should be quick-moved.
-	 *
-	 * @param itemStack the <code>ItemStack</code> being checked
-	 * @return boolean
-	 */
-	@Override
-	protected boolean shouldQuickMoveToAdditionalSlot(@NotNull ItemStack itemStack) {
-		return smallPartsRecipeList.stream().anyMatch((smallPartsRecipe) -> smallPartsRecipe.isValidAdditionItem(itemStack));
-	}
-
-	/**
-	 * Check if the specified slot is valid for stack merging.
-	 *
-	 * @param stack  the <code>ItemStack</code> being merged
-	 * @param slotIn the <code>Slot</code> instance
-	 * @return boolean
-	 */
-	@Override
-	public boolean canTakeItemForPickAll(@NotNull ItemStack stack, Slot slotIn) {
-		return slotIn.container != resultSlots && super.canTakeItemForPickAll(stack, slotIn);
+	public Slot getMaterialSlot() {
+		return materialSlot;
 	}
 }

@@ -2,7 +2,7 @@
   "parent": "minecraft:recipes/root",
   "rewards": {
     "recipes": [
-      "immersiveweapons:gauntlet_scaffolding_tinkering"
+      "immersiveweapons:planks_tinkering"
     ]
   },
   "criteria": {
@@ -19,7 +19,7 @@
     "has_the_recipe": {
       "trigger": "minecraft:recipe_unlocked",
       "conditions": {
-        "recipe": "immersiveweapons:gauntlet_scaffolding_tinkering"
+        "recipe": "immersiveweapons:planks_tinkering"
       }
     }
   },
