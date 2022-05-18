@@ -18,7 +18,7 @@ import com.anonymoushacker1279.immersiveweapons.client.renderer.entity.misc.Burn
 import com.anonymoushacker1279.immersiveweapons.client.renderer.entity.mob.*;
 import com.anonymoushacker1279.immersiveweapons.client.renderer.entity.projectile.FlareRenderer;
 import com.anonymoushacker1279.immersiveweapons.client.renderer.entity.projectile.MusketBallRenderer;
-import com.anonymoushacker1279.immersiveweapons.client.renderer.entity.projectile.arrow.*;
+import com.anonymoushacker1279.immersiveweapons.client.renderer.entity.projectile.arrow.CustomArrowRenderer;
 import com.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
@@ -161,15 +161,33 @@ public class ClientModEventSubscriber {
 	 */
 	@SubscribeEvent
 	public static void entityRenderers(EntityRenderersEvent.RegisterRenderers event) {
-		event.registerEntityRenderer(DeferredRegistryHandler.COPPER_ARROW_ENTITY.get(), CopperArrowRenderer::new);
-		event.registerEntityRenderer(DeferredRegistryHandler.IRON_ARROW_ENTITY.get(), IronArrowRenderer::new);
-		event.registerEntityRenderer(DeferredRegistryHandler.COBALT_ARROW_ENTITY.get(), CobaltArrowRenderer::new);
-		event.registerEntityRenderer(DeferredRegistryHandler.DIAMOND_ARROW_ENTITY.get(), DiamondArrowRenderer::new);
-		event.registerEntityRenderer(DeferredRegistryHandler.GOLD_ARROW_ENTITY.get(), GoldArrowRenderer::new);
-		event.registerEntityRenderer(DeferredRegistryHandler.STONE_ARROW_ENTITY.get(), StoneArrowRenderer::new);
-		event.registerEntityRenderer(DeferredRegistryHandler.WOOD_ARROW_ENTITY.get(), WoodArrowRenderer::new);
-		event.registerEntityRenderer(DeferredRegistryHandler.NETHERITE_ARROW_ENTITY.get(), NetheriteArrowRenderer::new);
-		event.registerEntityRenderer(DeferredRegistryHandler.SMOKE_BOMB_ARROW_ENTITY.get(), SmokeBombArrowRenderer::new);
+		event.registerEntityRenderer(DeferredRegistryHandler.WOOD_ARROW_ENTITY.get(), context ->
+				new CustomArrowRenderer<>(context, new ResourceLocation(ImmersiveWeapons.MOD_ID,
+						"textures/entity/projectiles/wood_arrow.png")));
+		event.registerEntityRenderer(DeferredRegistryHandler.STONE_ARROW_ENTITY.get(), context ->
+				new CustomArrowRenderer<>(context, new ResourceLocation(ImmersiveWeapons.MOD_ID,
+						"textures/entity/projectiles/stone_arrow.png")));
+		event.registerEntityRenderer(DeferredRegistryHandler.GOLD_ARROW_ENTITY.get(), context ->
+				new CustomArrowRenderer<>(context, new ResourceLocation(ImmersiveWeapons.MOD_ID,
+						"textures/entity/projectiles/gold_arrow.png")));
+		event.registerEntityRenderer(DeferredRegistryHandler.COPPER_ARROW_ENTITY.get(), context ->
+				new CustomArrowRenderer<>(context, new ResourceLocation(ImmersiveWeapons.MOD_ID,
+						"textures/entity/projectiles/copper_arrow.png")));
+		event.registerEntityRenderer(DeferredRegistryHandler.IRON_ARROW_ENTITY.get(), context ->
+				new CustomArrowRenderer<>(context, new ResourceLocation(ImmersiveWeapons.MOD_ID,
+						"textures/entity/projectiles/iron_arrow.png")));
+		event.registerEntityRenderer(DeferredRegistryHandler.COBALT_ARROW_ENTITY.get(), context ->
+				new CustomArrowRenderer<>(context, new ResourceLocation(ImmersiveWeapons.MOD_ID,
+						"textures/entity/projectiles/cobalt_arrow.png")));
+		event.registerEntityRenderer(DeferredRegistryHandler.DIAMOND_ARROW_ENTITY.get(), context ->
+				new CustomArrowRenderer<>(context, new ResourceLocation(ImmersiveWeapons.MOD_ID,
+						"textures/entity/projectiles/diamond_arrow.png")));
+		event.registerEntityRenderer(DeferredRegistryHandler.NETHERITE_ARROW_ENTITY.get(), context ->
+				new CustomArrowRenderer<>(context, new ResourceLocation(ImmersiveWeapons.MOD_ID,
+						"textures/entity/projectiles/netherite_arrow.png")));
+		event.registerEntityRenderer(DeferredRegistryHandler.SMOKE_BOMB_ARROW_ENTITY.get(), context ->
+				new CustomArrowRenderer<>(context, new ResourceLocation(ImmersiveWeapons.MOD_ID,
+						"textures/entity/projectiles/smoke_bomb_arrow.png")));
 		event.registerEntityRenderer(DeferredRegistryHandler.WOOD_BULLET_ENTITY.get(), MusketBallRenderer::new);
 		event.registerEntityRenderer(DeferredRegistryHandler.STONE_BULLET_ENTITY.get(), MusketBallRenderer::new);
 		event.registerEntityRenderer(DeferredRegistryHandler.GOLD_BULLET_ENTITY.get(), MusketBallRenderer::new);
