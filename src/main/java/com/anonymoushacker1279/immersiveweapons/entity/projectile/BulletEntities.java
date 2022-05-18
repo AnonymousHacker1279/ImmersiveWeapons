@@ -451,8 +451,8 @@ public class BulletEntities {
 
 	public static class FlareEntity extends BulletEntity implements ItemSupplier {
 
-		private int explodeDelay = 10;
-		private int deathDelay = 300;
+		private int explodeDelay = 60;
+		private int deathDelay = 600;
 		private BlockPos previousLightPosition = BlockPos.ZERO;
 		private final List<BlockPos> lightPositions = new ArrayList<>(3);
 		private boolean hasHitEntity = false;
@@ -502,6 +502,7 @@ public class BulletEntities {
 			float xRot = (float) (Mth.atan2(vector3d.y, horizontalDistanceSqr) * (180F / (float) Math.PI));
 			yRotO = yRot;
 			xRotO = xRot;
+			setSecondsOnFire(30);
 		}
 
 		@Override
@@ -580,7 +581,12 @@ public class BulletEntities {
 		 */
 		@Override
 		public double getGravityModifier() {
-			return 0.035d;
+			return 0.005d;
+		}
+
+		@Override
+		protected float getDefaultInertia() {
+			return 0.85f;
 		}
 
 		/**

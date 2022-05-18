@@ -16,6 +16,7 @@ import com.anonymoushacker1279.immersiveweapons.client.renderer.blockentity.Shel
 import com.anonymoushacker1279.immersiveweapons.client.renderer.dimension.TiltrosDimensionSpecialEffects;
 import com.anonymoushacker1279.immersiveweapons.client.renderer.entity.misc.BurnedOakBoatRenderer;
 import com.anonymoushacker1279.immersiveweapons.client.renderer.entity.mob.*;
+import com.anonymoushacker1279.immersiveweapons.client.renderer.entity.projectile.FlareRenderer;
 import com.anonymoushacker1279.immersiveweapons.client.renderer.entity.projectile.MusketBallRenderer;
 import com.anonymoushacker1279.immersiveweapons.client.renderer.entity.projectile.arrow.*;
 import com.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
@@ -177,7 +178,7 @@ public class ClientModEventSubscriber {
 		event.registerEntityRenderer(DeferredRegistryHandler.COBALT_BULLET_ENTITY.get(), MusketBallRenderer::new);
 		event.registerEntityRenderer(DeferredRegistryHandler.DIAMOND_BULLET_ENTITY.get(), MusketBallRenderer::new);
 		event.registerEntityRenderer(DeferredRegistryHandler.NETHERITE_BULLET_ENTITY.get(), MusketBallRenderer::new);
-		event.registerEntityRenderer(DeferredRegistryHandler.FLARE_ENTITY.get(), ThrownItemRenderer::new);
+		event.registerEntityRenderer(DeferredRegistryHandler.FLARE_ENTITY.get(), FlareRenderer::new);
 		event.registerEntityRenderer(DeferredRegistryHandler.MORTAR_SHELL_ENTITY.get(), ThrownItemRenderer::new);
 		event.registerEntityRenderer(DeferredRegistryHandler.SMOKE_BOMB_ENTITY.get(), ThrownItemRenderer::new);
 		event.registerEntityRenderer(DeferredRegistryHandler.MOLOTOV_COCKTAIL_ENTITY.get(), ThrownItemRenderer::new);

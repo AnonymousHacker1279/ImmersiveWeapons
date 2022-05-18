@@ -42,6 +42,7 @@ public class BulletEntity extends AbstractArrow {
 	Item referenceItem;
 	int knockbackStrength;
 	boolean shouldStopMoving = false;
+	float inertia = 0.99F;
 	private BlockState inBlockState;
 	private IntOpenHashSet piercedEntities;
 	private boolean hasAlreadyBrokeGlass = false;
@@ -239,12 +240,12 @@ public class BulletEntity extends AbstractArrow {
 				setYRot((float) (Mth.atan2(deltaMovementX, deltaMovementZ) * (double) (180F / (float) Math.PI)));
 			}
 
-			setXRot((float) (Mth.atan2(deltaMovementY, horizontalDistance) * (double) (180F / (float) Math.PI)));
+			setXRot((float) (Mth.atan2(-deltaMovementY, horizontalDistance) * (double) (180F / (float) Math.PI)));
 			setXRot(lerpRotation(xRotO, getXRot()));
 			setYRot(lerpRotation(yRotO, getYRot()));
 
-			float inertia = 0.99F;
 			// Check if the bullet is in water
+			inertia = getDefaultInertia();
 			if (isInWater()) {
 				for (int j = 0; j < 4; ++j) {
 					level.addParticle(ParticleTypes.BUBBLE,
@@ -417,12 +418,12 @@ public class BulletEntity extends AbstractArrow {
 			setDeltaMovement(locationMinusCurrentPosition);
 			Vec3 scaledPosition = locationMinusCurrentPosition.normalize().scale(0.0025F);
 			setPosRaw(getX() - scaledPosition.x, getY() - scaledPosition.y, getZ() - scaledPosition.z);
-			playSound(DeferredRegistryHandler.BULLET_WHIZZ.get(), 1.0F, 1.2F / (random.nextFloat() * 0.2F + 0.9F));
+			playSound(hitSound, 1.0F, 1.2F / (random.nextFloat() * 0.2F + 0.9F));
 			inGround = true;
 			shakeTime = 2;
 			setCritArrow(false);
 			setPierceLevel((byte) 0);
-			setSoundEvent(DeferredRegistryHandler.BULLET_WHIZZ.get());
+			setSoundEvent(hitSound);
 			resetPiercedEntities();
 		}
 
@@ -488,6 +489,15 @@ public class BulletEntity extends AbstractArrow {
 		if (piercedEntities != null) {
 			piercedEntities.clear();
 		}
+	}
+
+	@Override
+	protected @NotNull SoundEvent getDefaultHitGroundSoundEvent() {
+		return DeferredRegistryHandler.BULLET_WHIZZ.get();
+	}
+
+	protected float getDefaultInertia() {
+		return 0.99f;
 	}
 
 	/**
