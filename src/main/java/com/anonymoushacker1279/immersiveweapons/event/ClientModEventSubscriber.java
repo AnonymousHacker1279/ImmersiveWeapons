@@ -16,9 +16,7 @@ import com.anonymoushacker1279.immersiveweapons.client.renderer.blockentity.Shel
 import com.anonymoushacker1279.immersiveweapons.client.renderer.dimension.TiltrosDimensionSpecialEffects;
 import com.anonymoushacker1279.immersiveweapons.client.renderer.entity.misc.BurnedOakBoatRenderer;
 import com.anonymoushacker1279.immersiveweapons.client.renderer.entity.mob.*;
-import com.anonymoushacker1279.immersiveweapons.client.renderer.entity.projectile.FlareRenderer;
-import com.anonymoushacker1279.immersiveweapons.client.renderer.entity.projectile.MusketBallRenderer;
-import com.anonymoushacker1279.immersiveweapons.client.renderer.entity.projectile.arrow.CustomArrowRenderer;
+import com.anonymoushacker1279.immersiveweapons.client.renderer.entity.projectile.*;
 import com.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;

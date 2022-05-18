@@ -1,4 +1,4 @@
-package com.anonymoushacker1279.immersiveweapons.client.renderer.entity.projectile.arrow;
+package com.anonymoushacker1279.immersiveweapons.client.renderer.entity.projectile;
 
 import net.minecraft.client.renderer.entity.*;
 import net.minecraft.resources.ResourceLocation;
