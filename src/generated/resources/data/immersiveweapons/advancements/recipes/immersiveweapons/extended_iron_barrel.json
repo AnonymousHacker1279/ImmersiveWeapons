@@ -2,17 +2,17 @@
   "parent": "minecraft:recipes/root",
   "rewards": {
     "recipes": [
-      "immersiveweapons:flare_gun"
+      "immersiveweapons:extended_iron_barrel"
     ]
   },
   "criteria": {
-    "flintlock_assembly": {
+    "iron_barrel": {
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
           {
             "items": [
-              "immersiveweapons:flintlock_assembly"
+              "immersiveweapons:iron_barrel"
             ]
           }
         ]
@@ -21,13 +21,13 @@
     "has_the_recipe": {
       "trigger": "minecraft:recipe_unlocked",
       "conditions": {
-        "recipe": "immersiveweapons:flare_gun"
+        "recipe": "immersiveweapons:extended_iron_barrel"
       }
     }
   },
   "requirements": [
     [
-      "flintlock_assembly",
+      "iron_barrel",
       "has_the_recipe"
     ]
   ]

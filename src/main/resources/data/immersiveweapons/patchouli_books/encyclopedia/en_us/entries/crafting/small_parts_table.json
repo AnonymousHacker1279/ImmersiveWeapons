@@ -5,55 +5,80 @@
 	"pages": [
 		{
 			"type": "patchouli:text",
-			"text": "When you craft items like flintlocks, blunderbusses, smoke bombs, etc., you'll need to use some small parts that can't be crafted with a standard crafting table.$(br2)The small parts table allows you to fabricate small pieces from a material and a blueprint."
+			"text": "When you craft items like flintlocks, blunderbusses, smoke bombs, etc., you'll need to use some small parts that can't be crafted with a standard crafting table.$(br2)The small parts table allows you to fabricate small pieces from materials."
 		},
 		{
 			"type": "patchouli:crafting",
 			"recipe": "immersiveweapons:small_parts_table",
-			"text": "The blueprint that you need for a specific type of part can vary. You will always use a blank blueprint as a base for all blueprints. The blueprints are crafted using a standard crafting table."
-		},
-		{
-			"type": "patchouli:crafting",
-			"recipe": "immersiveweapons:blank_blueprint",
-			"text": "Crafting a blueprint involves laying pieces into the blank from a crafting table. On the following pages, you'll find the recipes for various blueprints."
-		},
-		{
-			"type": "patchouli:crafting",
-			"title": "Blueprints",
-			"recipe": "immersiveweapons:small_parts_blueprint",
-			"recipe2": "immersiveweapons:small_parts_metal_throwable_bomb_blueprint"
-		},
-		{
-			"type": "patchouli:crafting",
-			"title": "Blueprints",
-			"recipe": "immersiveweapons:small_parts_metal_tool_blueprint",
-			"recipe2": "immersiveweapons:gauntlet_scaffolding_blueprint"
-		},
-		{
-			"type": "patchouli:spotlight",
-			"item": "immersiveweapons:small_parts_iron",
-			"link_recipe": true,
-			"text": "$(l)Requires:$() Iron ingot, generic small parts blueprint"
+			"text": "The small parts table is a critical resource for creating advanced weapons."
 		},
 		{
 			"type": "patchouli:spotlight",
 			"item": "immersiveweapons:small_parts_metal_throwable_bomb",
 			"title": "Generic, Throwable Bomb",
 			"link_recipe": true,
-			"text": "$(l)Requires:$() Any metal ingot, metal throwable bomb blueprint"
+			"text": "$(l)Requires:$() Any metal ingot$(br)$(l)Used for:$() Smoke bombs"
 		},
 		{
 			"type": "patchouli:spotlight",
 			"item": "immersiveweapons:small_parts_metal_tool",
 			"title": "Generic, Metal Tool",
 			"link_recipe": true,
-			"text": "$(l)Requires:$() Any metal ingot, metal tool parts blueprint"
+			"text": "$(l)Requires:$() Any metal ingot$(br)$(l)Used for:$() Pliers"
 		},
 		{
 			"type": "patchouli:spotlight",
 			"item": "immersiveweapons:gauntlet_scaffolding",
 			"link_recipe": true,
-			"text": "$(l)Requires:$() Any wood plank, gauntlet scaffolding blueprint"
+			"text": "$(l)Requires:$() Any wood plank$(br)$(l)Used for:$() Gauntlets"
+		},
+		{
+			"type": "patchouli:spotlight",
+			"item": "immersiveweapons:heavy_wooden_stock",
+			"link_recipe": true,
+			"text": "$(l)Requires:$() Any wood plank$(br)$(l)Used for:$() Blunderbuss, muskets"
+		},
+		{
+			"type": "patchouli:spotlight",
+			"item": "immersiveweapons:wooden_pistol_handle",
+			"link_recipe": true,
+			"text": "$(l)Requires:$() Any wood plank$(br)$(l)Used for:$() Flintlock Pistol, Flare Gun"
+		},
+		{
+			"type": "patchouli:spotlight",
+			"item": "immersiveweapons:flintlock_assembly",
+			"link_recipe": true,
+			"text": "$(l)Requires:$() Iron ingot$(br)$(l)Used for:$() All firearms"
+		},
+		{
+			"type": "patchouli:spotlight",
+			"item": "immersiveweapons:iron_barrel",
+			"link_recipe": true,
+			"text": "$(l)Requires:$() Iron ingot$(br)$(l)Used for:$() Flintlock Pistol, Extended Iron Barrel"
+		},
+		{
+			"type": "patchouli:spotlight",
+			"item": "immersiveweapons:short_iron_barrel",
+			"link_recipe": true,
+			"text": "$(l)Requires:$() Iron ingot$(br)$(l)Used for:$() Flare Gun"
+		},
+		{
+			"type": "patchouli:spotlight",
+			"item": "immersiveweapons:wide_golden_barrel",
+			"link_recipe": true,
+			"text": "$(l)Requires:$() Gold ingot$(br)$(l)Used for:$() Blunderbuss"
+		},
+		{
+			"type": "patchouli:spotlight",
+			"item": "immersiveweapons:trigger_assembly",
+			"link_recipe": true,
+			"text": "$(l)Requires:$() Gold ingot$(br)$(l)Used for:$() ALl firearms"
+		},
+		{
+			"type": "patchouli:spotlight",
+			"item": "immersiveweapons:scope_mount",
+			"link_recipe": true,
+			"text": "$(l)Requires:$() Gold ingot$(br)$(l)Used for:$() Musket (Scope)"
 		}
 	],
 	"advancement": "minecraft:story/smelt_iron"

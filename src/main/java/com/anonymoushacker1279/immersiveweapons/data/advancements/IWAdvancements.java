@@ -517,16 +517,16 @@ public class IWAdvancements implements Consumer<Consumer<Advancement>> {
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemPredicate.Builder.item().of(ImmersiveWeaponsItemTagGroups.MUSKET_BALLS).build()))
 				.save(consumer, "immersiveweapons:musket_ball");
 
-		Advancement craftBlankBlueprint = Builder.advancement().parent(root)
-				.display(DeferredRegistryHandler.BLANK_BLUEPRINT.get(),
-						new TranslatableComponent("advancements.immersiveweapons.blueprint.title"),
-						new TranslatableComponent("advancements.immersiveweapons.blueprint.description"),
+		Advancement smallPartsTable = Builder.advancement().parent(root)
+				.display(DeferredRegistryHandler.SMALL_PARTS_TABLE.get(),
+						new TranslatableComponent("advancements.immersiveweapons.small_parts_table.title"),
+						new TranslatableComponent("advancements.immersiveweapons.small_parts_table.description"),
 						null, FrameType.TASK, true, true, false)
 				.addCriterion("hold",
-						InventoryChangeTrigger.TriggerInstance.hasItems(DeferredRegistryHandler.BLANK_BLUEPRINT.get()))
-				.save(consumer, "immersiveweapons:blueprint");
+						InventoryChangeTrigger.TriggerInstance.hasItems(DeferredRegistryHandler.SMALL_PARTS_TABLE.get()))
+				.save(consumer, "immersiveweapons:small_partss_table");
 
-		Builder.advancement().parent(craftBlankBlueprint)
+		Builder.advancement().parent(smallPartsTable)
 				.display(DeferredRegistryHandler.FLINTLOCK_PISTOL.get(),
 						new TranslatableComponent("advancements.immersiveweapons.flintlock_pistol.title"),
 						new TranslatableComponent("advancements.immersiveweapons.flintlock_pistol.description"),
@@ -535,7 +535,7 @@ public class IWAdvancements implements Consumer<Consumer<Advancement>> {
 						InventoryChangeTrigger.TriggerInstance.hasItems(DeferredRegistryHandler.FLINTLOCK_PISTOL.get()))
 				.save(consumer, "immersiveweapons:flintlock_pistol");
 
-		Builder.advancement().parent(craftBlankBlueprint)
+		Builder.advancement().parent(smallPartsTable)
 				.display(DeferredRegistryHandler.BLUNDERBUSS.get(),
 						new TranslatableComponent("advancements.immersiveweapons.blunderbuss.title"),
 						new TranslatableComponent("advancements.immersiveweapons.blunderbuss.description"),
@@ -544,7 +544,28 @@ public class IWAdvancements implements Consumer<Consumer<Advancement>> {
 						InventoryChangeTrigger.TriggerInstance.hasItems(DeferredRegistryHandler.BLUNDERBUSS.get()))
 				.save(consumer, "immersiveweapons:blunderbuss");
 
-		Builder.advancement().parent(craftBlankBlueprint)
+		Builder.advancement().parent(smallPartsTable)
+				.display(DeferredRegistryHandler.FLARE_GUN.get(),
+						new TranslatableComponent("advancements.immersiveweapons.flare_gun.title"),
+						new TranslatableComponent("advancements.immersiveweapons.flare_gun.description"),
+						null, FrameType.GOAL, true, true, false)
+				.addCriterion("hold",
+						InventoryChangeTrigger.TriggerInstance.hasItems(DeferredRegistryHandler.FLARE_GUN.get()))
+				.save(consumer, "immersiveweapons:flare_gun");
+
+		Builder.advancement().parent(smallPartsTable)
+				.display(DeferredRegistryHandler.MUSKET.get(),
+						new TranslatableComponent("advancements.immersiveweapons.musket.title"),
+						new TranslatableComponent("advancements.immersiveweapons.musket.description"),
+						null, FrameType.GOAL, true, true, false)
+				.addCriterion("hold",
+						InventoryChangeTrigger.TriggerInstance.hasItems(DeferredRegistryHandler.MUSKET.get()))
+				.addCriterion("hold1",
+						InventoryChangeTrigger.TriggerInstance.hasItems(DeferredRegistryHandler.MUSKET_SCOPE.get()))
+				.requirements(RequirementsStrategy.OR)
+				.save(consumer, "immersiveweapons:musket");
+
+		Builder.advancement().parent(smallPartsTable)
 				.display(DeferredRegistryHandler.SMOKE_BOMB.get(),
 						new TranslatableComponent("advancements.immersiveweapons.smoke_bomb.title"),
 						new TranslatableComponent("advancements.immersiveweapons.smoke_bomb.description"),

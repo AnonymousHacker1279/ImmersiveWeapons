@@ -1,22 +1,22 @@
 {
   "type": "minecraft:crafting_shaped",
-  "group": "flare_gun",
+  "group": "firearm",
   "pattern": [
-    "bc ",
-    "ad "
+    "abd",
+    " c "
   ],
   "key": {
     "a": {
-      "tag": "minecraft:planks"
+      "item": "immersiveweapons:wooden_pistol_handle"
     },
     "b": {
-      "item": "immersiveweapons:small_parts_iron"
+      "item": "immersiveweapons:flintlock_assembly"
     },
     "c": {
-      "tag": "forge:ingots/iron"
+      "item": "immersiveweapons:trigger_assembly"
     },
     "d": {
-      "tag": "forge:nuggets/metal"
+      "item": "immersiveweapons:short_iron_barrel"
     }
   },
   "result": {

@@ -84,7 +84,7 @@ public class BlockModelGenerator {
 				.stairs(DeferredRegistryHandler.CLOUD_MARBLE_BRICK_STAIRS.get());
 
 		// Multi textured blocks
-		createCraftingTableLike(DeferredRegistryHandler.SMALL_PARTS_TABLE.get(), Blocks.OAK_PLANKS,
+		createRotatableCraftingTableLike(DeferredRegistryHandler.SMALL_PARTS_TABLE.get(), Blocks.OAK_PLANKS,
 				TextureMapping::fletchingTable);
 
 		// Horizontally-oriented blocks
@@ -150,12 +150,13 @@ public class BlockModelGenerator {
 		blockStateOutput.accept(createRotatedPillarWithHorizontalVariant(pRotatedPillarBlock, resourceLocation, resourceLocation1));
 	}
 
-	private void createCraftingTableLike(Block pCraftingTableBlock, Block pCraftingTableMaterialBlock,
-	                                     BiFunction<Block, Block, TextureMapping> pTextureMappingGetter) {
+	private void createRotatableCraftingTableLike(Block pCraftingTableBlock, Block pCraftingTableMaterialBlock,
+	                                              BiFunction<Block, Block, TextureMapping> pTextureMappingGetter) {
 
 		TextureMapping textureMapping = pTextureMappingGetter.apply(pCraftingTableBlock, pCraftingTableMaterialBlock);
 		blockStateOutput.accept(createSimpleBlock(pCraftingTableBlock, ModelTemplates.CUBE
-				.create(pCraftingTableBlock, textureMapping, modelOutput)));
+				.create(pCraftingTableBlock, textureMapping, modelOutput))
+				.with(createHorizontalFacingDispatch()));
 	}
 
 	private void createHorizontallyRotatedBlock(Block pHorizontallyRotatedBlock, TexturedModel.Provider pProvider) {

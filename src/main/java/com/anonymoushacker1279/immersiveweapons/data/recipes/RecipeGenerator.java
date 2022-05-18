@@ -316,23 +316,45 @@ public class RecipeGenerator extends RecipeProvider {
 
 	private void createSmallPartsItems() {
 		List<Item> IRON_INGOT_CRAFTABLES = new ArrayList<>(5);
+		List<Item> GOLD_INGOT_CRAFTABLES = new ArrayList<>(5);
 		List<Item> METAL_INGOT_CRAFTABLES = new ArrayList<>(5);
 		List<Item> PLANK_CRAFTABLES = new ArrayList<>(5);
+		
+		IRON_INGOT_CRAFTABLES.add(DeferredRegistryHandler.FLINTLOCK_ASSEMBLY.get());
+		IRON_INGOT_CRAFTABLES.add(DeferredRegistryHandler.IRON_BARREL.get());
 
-		IRON_INGOT_CRAFTABLES.add(DeferredRegistryHandler.SMALL_PARTS_IRON.get());
-		IRON_INGOT_CRAFTABLES.add(DeferredRegistryHandler.SMALL_PARTS_METAL_THROWABLE_BOMB.get());
-		IRON_INGOT_CRAFTABLES.add(DeferredRegistryHandler.SMALL_PARTS_METAL_TOOL.get());
+		GOLD_INGOT_CRAFTABLES.add(DeferredRegistryHandler.WIDE_GOLDEN_BARREL.get());
+		GOLD_INGOT_CRAFTABLES.add(DeferredRegistryHandler.TRIGGER_ASSEMBLY.get());
+		GOLD_INGOT_CRAFTABLES.add(DeferredRegistryHandler.SCOPE_MOUNT.get());
 
 		METAL_INGOT_CRAFTABLES.add(DeferredRegistryHandler.SMALL_PARTS_METAL_THROWABLE_BOMB.get());
 		METAL_INGOT_CRAFTABLES.add(DeferredRegistryHandler.SMALL_PARTS_METAL_TOOL.get());
 
 		PLANK_CRAFTABLES.add(DeferredRegistryHandler.GAUNTLET_SCAFFOLDING.get());
+		PLANK_CRAFTABLES.add(DeferredRegistryHandler.HEAVY_WOODEN_STOCK.get());
+		PLANK_CRAFTABLES.add(DeferredRegistryHandler.WOODEN_PISTOL_HANDLE.get());
 
 		smallPartsTinkering(Tags.Items.INGOTS_IRON, IRON_INGOT_CRAFTABLES);
+		smallPartsTinkering(Tags.Items.INGOTS_GOLD, GOLD_INGOT_CRAFTABLES);
 		smallPartsTinkering(ForgeItemTagGroups.METAL_INGOTS, METAL_INGOT_CRAFTABLES);
 		smallPartsTinkering(ItemTags.PLANKS, PLANK_CRAFTABLES);
 
 		createSmallPartsTable(DeferredRegistryHandler.SMALL_PARTS_TABLE_ITEM.get());
+
+		ShapedRecipeBuilder.shaped(DeferredRegistryHandler.EXTENDED_IRON_BARREL.get())
+				.define('a', DeferredRegistryHandler.IRON_BARREL.get())
+				.pattern("aa")
+				.group("small_parts")
+				.unlockedBy("iron_barrel", has(DeferredRegistryHandler.IRON_BARREL.get()))
+				.save(finishedRecipeConsumer);
+		ShapedRecipeBuilder.shaped(DeferredRegistryHandler.SCOPE.get())
+				.define('a', Items.SPYGLASS)
+				.define('b', DeferredRegistryHandler.SCOPE_MOUNT.get())
+				.pattern("a")
+				.pattern("b")
+				.group("small_parts")
+				.unlockedBy("spyglass", has(Items.SPYGLASS))
+				.save(finishedRecipeConsumer);
 	}
 
 	private void createSmokeBombs() {
@@ -624,21 +646,66 @@ public class RecipeGenerator extends RecipeProvider {
 	}
 
 	private void createWeapons() {
-		createPistolLikeGun(DeferredRegistryHandler.FLINTLOCK_PISTOL.get(), Tags.Items.INGOTS_IRON);
-		createPistolLikeGun(DeferredRegistryHandler.BLUNDERBUSS.get(), Tags.Items.INGOTS_GOLD);
-
-		// Flare gun
-		ShapedRecipeBuilder.shaped(DeferredRegistryHandler.FLARE_GUN.get())
-				.define('a', ItemTags.PLANKS)
-				.define('b', DeferredRegistryHandler.SMALL_PARTS_IRON.get())
-				.define('c', Tags.Items.INGOTS_IRON)
-				.define('d', ForgeItemTagGroups.METAL_NUGGETS)
-				.pattern("bc ")
-				.pattern("ad ")
-				.group("flare_gun")
-				.unlockedBy("small_parts_iron", has(DeferredRegistryHandler.SMALL_PARTS_IRON.get()))
+		ShapedRecipeBuilder.shaped(DeferredRegistryHandler.FLINTLOCK_PISTOL.get())
+				.define('a', DeferredRegistryHandler.WOODEN_PISTOL_HANDLE.get())
+				.define('b', DeferredRegistryHandler.FLINTLOCK_ASSEMBLY.get())
+				.define('c', DeferredRegistryHandler.TRIGGER_ASSEMBLY.get())
+				.define('d', DeferredRegistryHandler.IRON_BARREL.get())
+				.pattern("abd")
+				.pattern(" c ")
+				.group("firearm")
+				.unlockedBy("flintlock_assembly", has(DeferredRegistryHandler.FLINTLOCK_ASSEMBLY.get()))
 				.save(finishedRecipeConsumer);
-		// Flare
+		ShapedRecipeBuilder.shaped(DeferredRegistryHandler.BLUNDERBUSS.get())
+				.define('a', DeferredRegistryHandler.HEAVY_WOODEN_STOCK.get())
+				.define('b', DeferredRegistryHandler.FLINTLOCK_ASSEMBLY.get())
+				.define('c', DeferredRegistryHandler.TRIGGER_ASSEMBLY.get())
+				.define('d', DeferredRegistryHandler.WIDE_GOLDEN_BARREL.get())
+				.pattern("abd")
+				.pattern(" c ")
+				.group("firearm")
+				.unlockedBy("flintlock_assembly", has(DeferredRegistryHandler.FLINTLOCK_ASSEMBLY.get()))
+				.save(finishedRecipeConsumer);
+		ShapedRecipeBuilder.shaped(DeferredRegistryHandler.MUSKET.get())
+				.define('a', DeferredRegistryHandler.HEAVY_WOODEN_STOCK.get())
+				.define('b', DeferredRegistryHandler.FLINTLOCK_ASSEMBLY.get())
+				.define('c', DeferredRegistryHandler.TRIGGER_ASSEMBLY.get())
+				.define('d', DeferredRegistryHandler.EXTENDED_IRON_BARREL.get())
+				.pattern("abd")
+				.pattern(" c ")
+				.group("firearm")
+				.unlockedBy("flintlock_assembly", has(DeferredRegistryHandler.FLINTLOCK_ASSEMBLY.get()))
+				.save(finishedRecipeConsumer);
+		ShapedRecipeBuilder.shaped(DeferredRegistryHandler.MUSKET_SCOPE.get())
+				.define('a', DeferredRegistryHandler.HEAVY_WOODEN_STOCK.get())
+				.define('b', DeferredRegistryHandler.FLINTLOCK_ASSEMBLY.get())
+				.define('c', DeferredRegistryHandler.TRIGGER_ASSEMBLY.get())
+				.define('d', DeferredRegistryHandler.EXTENDED_IRON_BARREL.get())
+				.define('e', DeferredRegistryHandler.SCOPE.get())
+				.pattern(" e ")
+				.pattern("abd")
+				.pattern(" c ")
+				.group("firearm")
+				.unlockedBy("flintlock_assembly", has(DeferredRegistryHandler.FLINTLOCK_ASSEMBLY.get()))
+				.save(finishedRecipeConsumer);
+		ShapedRecipeBuilder.shaped(DeferredRegistryHandler.MUSKET_SCOPE.get())
+				.define('a', DeferredRegistryHandler.SCOPE.get())
+				.define('b', DeferredRegistryHandler.MUSKET.get())
+				.pattern("a")
+				.pattern("b")
+				.group("firearm")
+				.unlockedBy("musket", has(DeferredRegistryHandler.MUSKET.get()))
+				.save(finishedRecipeConsumer, ImmersiveWeapons.MOD_ID + ":" + getItemName(DeferredRegistryHandler.MUSKET_SCOPE.get()) + "_alt");
+		ShapedRecipeBuilder.shaped(DeferredRegistryHandler.FLARE_GUN.get())
+				.define('a', DeferredRegistryHandler.WOODEN_PISTOL_HANDLE.get())
+				.define('b', DeferredRegistryHandler.FLINTLOCK_ASSEMBLY.get())
+				.define('c', DeferredRegistryHandler.TRIGGER_ASSEMBLY.get())
+				.define('d', DeferredRegistryHandler.SHORT_IRON_BARREL.get())
+				.pattern("abd")
+				.pattern(" c ")
+				.group("firearm")
+				.unlockedBy("flintlock_assembly", has(DeferredRegistryHandler.FLINTLOCK_ASSEMBLY.get()))
+				.save(finishedRecipeConsumer);
 		ShapedRecipeBuilder.shaped(DeferredRegistryHandler.FLARE.get(), 3)
 				.define('a', ForgeItemTagGroups.COPPER_NUGGETS)
 				.define('b', Items.PAPER)
@@ -646,10 +713,9 @@ public class RecipeGenerator extends RecipeProvider {
 				.pattern(" a ")
 				.pattern(" b ")
 				.pattern(" c ")
-				.group("flare_gun")
+				.group("firearm")
 				.unlockedBy("smoke_powder", has(DeferredRegistryHandler.SMOKE_POWDER.get()))
 				.save(finishedRecipeConsumer);
-		// Molotov cocktail
 		ShapedRecipeBuilder.shaped(DeferredRegistryHandler.MOLOTOV_COCKTAIL.get())
 				.define('a', Tags.Items.STRING)
 				.define('b', DeferredRegistryHandler.BOTTLE_OF_ALCOHOL.get())
@@ -1992,12 +2058,6 @@ public class RecipeGenerator extends RecipeProvider {
 				.save(finishedRecipeConsumer);
 	}
 
-	private static void createPlateItem(ShapedRecipeBuilder builder, TagKey<Item> material) {
-		builder.define('a', material)
-				.pattern("aa ")
-				.save(finishedRecipeConsumer);
-	}
-
 	private static void create3x3Object(ShapedRecipeBuilder builder, TagKey<Item> material) {
 		builder.define('a', material)
 				.pattern("aaa")
@@ -2143,19 +2203,6 @@ public class RecipeGenerator extends RecipeProvider {
 	private static void createShard(ShapelessRecipeBuilder builder, ItemLike material) {
 		builder.requires(material)
 				.group("shard")
-				.save(finishedRecipeConsumer);
-	}
-
-	private static void createPistolLikeGun(ItemLike gunItem, TagKey<Item> material) {
-		ShapedRecipeBuilder.shaped(gunItem)
-				.define('a', ItemTags.PLANKS)
-				.define('b', DeferredRegistryHandler.SMALL_PARTS_IRON.get())
-				.define('c', material)
-				.define('d', ForgeItemTagGroups.METAL_NUGGETS)
-				.pattern("bcc")
-				.pattern("ad ")
-				.group("gun")
-				.unlockedBy("small_parts_iron", has(DeferredRegistryHandler.SMALL_PARTS_IRON.get()))
 				.save(finishedRecipeConsumer);
 	}
 

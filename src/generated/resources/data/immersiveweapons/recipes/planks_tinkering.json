@@ -4,6 +4,8 @@
     "tag": "minecraft:planks"
   },
   "craftables": [
-    "immersiveweapons:gauntlet_scaffolding"
+    "immersiveweapons:gauntlet_scaffolding",
+    "immersiveweapons:heavy_wooden_stock",
+    "immersiveweapons:wooden_pistol_handle"
   ]
 }

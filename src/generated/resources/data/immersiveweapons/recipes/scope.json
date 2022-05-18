@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "small_parts",
+  "pattern": [
+    "a",
+    "b"
+  ],
+  "key": {
+    "a": {
+      "item": "minecraft:spyglass"
+    },
+    "b": {
+      "item": "immersiveweapons:scope_mount"
+    }
+  },
+  "result": {
+    "item": "immersiveweapons:scope"
+  }
+}

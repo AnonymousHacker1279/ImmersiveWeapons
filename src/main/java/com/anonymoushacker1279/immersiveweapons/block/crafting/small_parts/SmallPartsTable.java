@@ -2,27 +2,23 @@ package com.anonymoushacker1279.immersiveweapons.block.crafting.small_parts;
 
 import com.anonymoushacker1279.immersiveweapons.container.SmallPartsContainer;
 import net.minecraft.core.BlockPos;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.ListTag;
+import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.*;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.ContainerLevelAccess;
-import net.minecraft.world.item.BlockItem;
-import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.state.BlockBehaviour;
-import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.HorizontalDirectionalBlock;
+import net.minecraft.world.level.block.state.*;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraftforge.network.NetworkHooks;
 import org.jetbrains.annotations.NotNull;
 
-import javax.annotation.Nullable;
-
-public class SmallPartsTable extends Block {
+public class SmallPartsTable extends HorizontalDirectionalBlock {
 
 	private static final Component CONTAINER_NAME = new TranslatableComponent("container.immersiveweapons.small_parts_table");
 
@@ -33,6 +29,7 @@ public class SmallPartsTable extends Block {
 	 */
 	public SmallPartsTable(BlockBehaviour.Properties properties) {
 		super(properties);
+		registerDefaultState(stateDefinition.any().setValue(FACING, Direction.NORTH));
 	}
 
 	/**
@@ -70,14 +67,25 @@ public class SmallPartsTable extends Block {
 		}
 	}
 
-	@Nullable
-	public static ListTag getItemPatterns(ItemStack pStack) {
-		ListTag listtag = null;
-		CompoundTag compoundtag = BlockItem.getBlockEntityData(pStack);
-		if (compoundtag != null && compoundtag.contains("Patterns", 9)) {
-			listtag = compoundtag.getList("Patterns", 10).copy();
-		}
+	/**
+	 * Create the BlockState definition.
+	 *
+	 * @param builder the <code>StateDefinition.Builder</code> of the block
+	 */
+	@Override
+	public void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
+		builder.add(FACING);
+	}
 
-		return listtag;
+	/**
+	 * Set placement properties.
+	 * Sets the facing direction of the block for placement.
+	 *
+	 * @param context the <code>BlockPlaceContext</code> during placement
+	 * @return BlockState
+	 */
+	@Override
+	public BlockState getStateForPlacement(BlockPlaceContext context) {
+		return defaultBlockState().setValue(FACING, context.getHorizontalDirection().getOpposite());
 	}
 }

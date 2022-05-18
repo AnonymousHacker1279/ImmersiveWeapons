@@ -16,10 +16,10 @@
       "item": "immersiveweapons:trigger_assembly"
     },
     "d": {
-      "item": "immersiveweapons:wide_golden_barrel"
+      "item": "immersiveweapons:extended_iron_barrel"
     }
   },
   "result": {
-    "item": "immersiveweapons:blunderbuss"
+    "item": "immersiveweapons:musket"
   }
 }

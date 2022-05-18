@@ -2,7 +2,6 @@ package com.anonymoushacker1279.immersiveweapons.container;
 
 import com.anonymoushacker1279.immersiveweapons.block.crafting.small_parts.SmallPartsCraftables;
 import com.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
-import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.Container;
 import net.minecraft.world.SimpleContainer;
@@ -77,7 +76,7 @@ public class SmallPartsContainer extends AbstractContainerMenu {
 				levelAccess.execute((level, pos) -> {
 					long gameTime = level.getGameTime();
 					if (lastSoundTime != gameTime) {
-						level.playSound(null, pos, SoundEvents.UI_LOOM_TAKE_RESULT, SoundSource.BLOCKS, 1.0F, 1.0F);
+						level.playSound(null, pos, DeferredRegistryHandler.SMALL_PARTS_TABLE_USED.get(), SoundSource.BLOCKS, 1.0F, 1.0F);
 						lastSoundTime = gameTime;
 					}
 

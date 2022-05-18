@@ -2,17 +2,17 @@
   "parent": "minecraft:recipes/root",
   "rewards": {
     "recipes": [
-      "immersiveweapons:flare_gun"
+      "immersiveweapons:musket_scope_alt"
     ]
   },
   "criteria": {
-    "flintlock_assembly": {
+    "musket": {
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
           {
             "items": [
-              "immersiveweapons:flintlock_assembly"
+              "immersiveweapons:musket"
             ]
           }
         ]
@@ -21,13 +21,13 @@
     "has_the_recipe": {
       "trigger": "minecraft:recipe_unlocked",
       "conditions": {
-        "recipe": "immersiveweapons:flare_gun"
+        "recipe": "immersiveweapons:musket_scope_alt"
       }
     }
   },
   "requirements": [
     [
-      "flintlock_assembly",
+      "musket",
       "has_the_recipe"
     ]
   ]

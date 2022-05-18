@@ -2,6 +2,7 @@
   "type": "minecraft:crafting_shaped",
   "group": "firearm",
   "pattern": [
+    " e ",
     "abd",
     " c "
   ],
@@ -16,10 +17,13 @@
       "item": "immersiveweapons:trigger_assembly"
     },
     "d": {
-      "item": "immersiveweapons:wide_golden_barrel"
+      "item": "immersiveweapons:extended_iron_barrel"
+    },
+    "e": {
+      "item": "immersiveweapons:scope"
     }
   },
   "result": {
-    "item": "immersiveweapons:blunderbuss"
+    "item": "immersiveweapons:musket_scope"
   }
 }

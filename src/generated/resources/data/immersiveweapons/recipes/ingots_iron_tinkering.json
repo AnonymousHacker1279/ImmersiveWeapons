@@ -4,8 +4,7 @@
     "tag": "forge:ingots/iron"
   },
   "craftables": [
-    "immersiveweapons:small_parts_iron",
-    "immersiveweapons:small_parts_metal_throwable_bomb",
-    "immersiveweapons:small_parts_metal_tool"
+    "immersiveweapons:flintlock_assembly",
+    "immersiveweapons:iron_barrel"
   ]
 }

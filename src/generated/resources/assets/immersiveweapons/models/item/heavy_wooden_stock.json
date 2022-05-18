@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "immersiveweapons:item/blank_blueprint"
+    "layer0": "immersiveweapons:item/heavy_wooden_stock"
   }
 }

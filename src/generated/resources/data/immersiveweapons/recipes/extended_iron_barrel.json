@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "small_parts",
+  "pattern": [
+    "aa"
+  ],
+  "key": {
+    "a": {
+      "item": "immersiveweapons:iron_barrel"
+    }
+  },
+  "result": {
+    "item": "immersiveweapons:extended_iron_barrel"
+  }
+}

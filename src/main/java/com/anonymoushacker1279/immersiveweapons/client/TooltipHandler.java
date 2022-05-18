@@ -45,6 +45,9 @@ public class TooltipHandler {
 		if (stack.getItem() == DeferredRegistryHandler.FLARE_GUN.get()) {
 			event.getToolTip().add(new TranslatableComponent("immersiveweapons.tooltip.flare_gun").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
 		}
+		if (stack.getItem() == DeferredRegistryHandler.MUSKET.get() || stack.getItem() == DeferredRegistryHandler.MUSKET_SCOPE.get()) {
+			event.getToolTip().add(new TranslatableComponent("immersiveweapons.tooltip.musket").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
+		}
 
 		// Arrows
 		if (stack.getItem() == DeferredRegistryHandler.COPPER_ARROW.get()) {
