@@ -4,7 +4,7 @@ import com.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import com.anonymoushacker1279.immersiveweapons.block.crafting.small_parts.SmallPartsCraftables;
 import com.anonymoushacker1279.immersiveweapons.client.gui.IWOverlays;
 import com.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
-import com.anonymoushacker1279.immersiveweapons.item.projectile.gun.AbstractGunItem;
+import com.anonymoushacker1279.immersiveweapons.item.projectile.gun.data.GunData;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -85,22 +85,22 @@ public class ClientForgeEventSubscriber {
 	@SubscribeEvent
 	public static void playerFOVEvent(FieldOfView event) {
 		if (event.getFOV() != 70) {
-			AbstractGunItem.playerFOV = event.getFOV();
+			GunData.playerFOV = event.getFOV();
 		}
-		if (AbstractGunItem.changingPlayerFOV != -1 && minecraft.options.getCameraType().isFirstPerson()) {
-			event.setFOV(AbstractGunItem.changingPlayerFOV);
+		if (GunData.changingPlayerFOV != -1 && minecraft.options.getCameraType().isFirstPerson()) {
+			event.setFOV(GunData.changingPlayerFOV);
 		}
 	}
 
 	@SubscribeEvent
 	public static void renderOverlayEvent(RenderGameOverlayEvent.Post event) {
-		if (AbstractGunItem.changingPlayerFOV != -1 && event.getType() == ElementType.LAYER) {
+		if (GunData.changingPlayerFOV != -1 && event.getType() == ElementType.LAYER) {
 			if (minecraft.options.getCameraType().isFirstPerson()) {
 				int screenHeight = event.getWindow().getGuiScaledHeight();
 				int screenWidth = event.getWindow().getGuiScaledWidth();
 
-				float deltaFrame = minecraft.getDeltaFrameTime();
-				AbstractGunItem.scopeScale = Mth.lerp(0.5F * deltaFrame, AbstractGunItem.scopeScale, 1.125F);
+				float deltaFrame = minecraft.getDeltaFrameTime() / 8;
+				GunData.scopeScale = Mth.lerp(0.25F * deltaFrame, GunData.scopeScale, 1.125F);
 
 				IWOverlays.SCOPE_ELEMENT.render((ForgeIngameGui) minecraft.gui,
 						event.getMatrixStack(),

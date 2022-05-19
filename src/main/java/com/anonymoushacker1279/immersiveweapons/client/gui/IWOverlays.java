@@ -1,7 +1,7 @@
 package com.anonymoushacker1279.immersiveweapons.client.gui;
 
 import com.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
-import com.anonymoushacker1279.immersiveweapons.item.projectile.gun.AbstractGunItem;
+import com.anonymoushacker1279.immersiveweapons.item.projectile.gun.data.GunData;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.*;
 import net.minecraft.client.Minecraft;
@@ -21,8 +21,8 @@ public class IWOverlays {
 			gui.setupOverlayRenderState(true, false);
 
 			Minecraft minecraft = Minecraft.getInstance();
-			if (AbstractGunItem.changingPlayerFOV != -1 && minecraft.options.getCameraType().isFirstPerson()) {
-				renderScope(screenWidth, screenHeight, AbstractGunItem.scopeScale);
+			if (GunData.changingPlayerFOV != -1 && minecraft.options.getCameraType().isFirstPerson()) {
+				renderScope(screenWidth, screenHeight, GunData.scopeScale);
 			}
 		});
 	}

@@ -3,9 +3,12 @@ package com.anonymoushacker1279.immersiveweapons.item.projectile.gun;
 import com.anonymoushacker1279.immersiveweapons.data.tags.groups.immersiveweapons.ImmersiveWeaponsItemTagGroups;
 import com.anonymoushacker1279.immersiveweapons.entity.projectile.BulletEntity;
 import com.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
+import com.anonymoushacker1279.immersiveweapons.init.PacketHandler;
 import com.anonymoushacker1279.immersiveweapons.item.projectile.bullet.AbstractBulletItem;
+import com.anonymoushacker1279.immersiveweapons.item.projectile.gun.data.GunData;
 import com.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
@@ -21,6 +24,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec2;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.event.ForgeEventFactory;
+import net.minecraftforge.network.PacketDistributor;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.function.Predicate;
@@ -29,10 +33,6 @@ public abstract class AbstractGunItem extends Item implements Vanishable {
 
 	protected static final Predicate<ItemStack> MUSKET_BALLS = (stack) -> stack.is(ImmersiveWeaponsItemTagGroups.MUSKET_BALLS);
 	protected static final Predicate<ItemStack> FLARES = (stack) -> stack.is(ImmersiveWeaponsItemTagGroups.FLARES);
-
-	public static double playerFOV = 70.0d;
-	public static double changingPlayerFOV = -1;
-	public static float scopeScale = 0.5f;
 
 	/**
 	 * Constructor for AbstractGunItem.
@@ -56,8 +56,10 @@ public abstract class AbstractGunItem extends Item implements Vanishable {
 	                         int timeLeft) {
 
 		if (livingEntity instanceof Player player) {
-			changingPlayerFOV = -1;
-			scopeScale = 0.5f;
+			if (level.isClientSide) {
+				GunData.changingPlayerFOV = -1;
+				GunData.scopeScale = 0.5f;
+			}
 
 			boolean isCreative = player.isCreative();
 			boolean misfire = false;
@@ -124,7 +126,7 @@ public abstract class AbstractGunItem extends Item implements Vanishable {
 					}
 				}
 
-				double forwards = 0.67 - (playerFOV * 0.001);
+				double forwards = 0.67 - (GunData.playerFOV * 0.001);
 				float left = -0.35f;
 
 				Vec2 rotationVector = player.getRotationVector();
@@ -264,18 +266,18 @@ public abstract class AbstractGunItem extends Item implements Vanishable {
 
 	@Override
 	public void onUsingTick(ItemStack stack, LivingEntity player, int count) {
-		if (player.level.isClientSide && canScope()) {
-			changingPlayerFOV = 15.0f;
+		if (!player.level.isClientSide && canScope()) {
+			PacketHandler.INSTANCE.send(PacketDistributor.PLAYER.with(() -> (ServerPlayer) player),
+					new GunScopePacketHandler(GunData.playerFOV, 15.0d, GunData.scopeScale));
 		}
 	}
 
 	@Override
 	public void inventoryTick(ItemStack pStack, Level pLevel, Entity pEntity, int pSlotId, boolean pIsSelected) {
 		if (pEntity instanceof Player player) {
-			if (player.level.isClientSide && !player.getUseItem().is(DeferredRegistryHandler.MUSKET_SCOPE.get())) {
-				if (changingPlayerFOV != -1) {
-					changingPlayerFOV = -1;
-				}
+			if (pLevel.isClientSide && !player.getUseItem().is(DeferredRegistryHandler.MUSKET_SCOPE.get())) {
+				GunData.changingPlayerFOV = -1;
+				GunData.scopeScale = 0.5f;
 			}
 		}
 	}

@@ -11,6 +11,7 @@ import com.anonymoushacker1279.immersiveweapons.entity.projectile.SmokeBombEntit
 import com.anonymoushacker1279.immersiveweapons.item.armor.CobaltArmorItem.CobaltArmorItemPacketHandler;
 import com.anonymoushacker1279.immersiveweapons.item.armor.TeslaArmorItem.TeslaArmorItemPacketHandler;
 import com.anonymoushacker1279.immersiveweapons.item.armor.VentusArmorItem.VentusArmorItemPacketHandler;
+import com.anonymoushacker1279.immersiveweapons.item.projectile.gun.GunScopePacketHandler;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.network.NetworkRegistry;
 import net.minecraftforge.network.simple.SimpleChannel;
@@ -84,11 +85,17 @@ public class PacketHandler {
 				LavaRevenantEntityPacketHandler::decode,
 				LavaRevenantEntityPacketHandler::handle
 		);
-		PacketHandler.INSTANCE.registerMessage(networkId,
+		PacketHandler.INSTANCE.registerMessage(networkId++,
 				AbstractFieldMedicEntityPacketHandler.class,
 				AbstractFieldMedicEntityPacketHandler::encode,
 				AbstractFieldMedicEntityPacketHandler::decode,
 				AbstractFieldMedicEntityPacketHandler::handle
+		);
+		PacketHandler.INSTANCE.registerMessage(networkId,
+				GunScopePacketHandler.class,
+				GunScopePacketHandler::encode,
+				GunScopePacketHandler::decode,
+				GunScopePacketHandler::handle
 		);
 	}
 }
