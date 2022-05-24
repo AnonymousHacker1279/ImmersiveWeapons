@@ -374,7 +374,7 @@ public abstract class AbstractGunItem extends Item implements Vanishable {
 	 * @return int
 	 */
 	public int getBulletsToFire(ItemStack itemStack) {
-		return Math.min(itemStack.getCount(), 4);
+		return Math.min(itemStack.getCount(), getMaxBulletsToFire());
 	}
 
 	public int getCooldown() {
