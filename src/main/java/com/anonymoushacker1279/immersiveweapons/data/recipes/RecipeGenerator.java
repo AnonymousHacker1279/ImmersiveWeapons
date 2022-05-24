@@ -319,9 +319,10 @@ public class RecipeGenerator extends RecipeProvider {
 		List<Item> GOLD_INGOT_CRAFTABLES = new ArrayList<>(5);
 		List<Item> METAL_INGOT_CRAFTABLES = new ArrayList<>(5);
 		List<Item> PLANK_CRAFTABLES = new ArrayList<>(5);
-		
+
 		IRON_INGOT_CRAFTABLES.add(DeferredRegistryHandler.FLINTLOCK_ASSEMBLY.get());
 		IRON_INGOT_CRAFTABLES.add(DeferredRegistryHandler.IRON_BARREL.get());
+		IRON_INGOT_CRAFTABLES.add(DeferredRegistryHandler.SHORT_IRON_BARREL.get());
 
 		GOLD_INGOT_CRAFTABLES.add(DeferredRegistryHandler.WIDE_GOLDEN_BARREL.get());
 		GOLD_INGOT_CRAFTABLES.add(DeferredRegistryHandler.TRIGGER_ASSEMBLY.get());

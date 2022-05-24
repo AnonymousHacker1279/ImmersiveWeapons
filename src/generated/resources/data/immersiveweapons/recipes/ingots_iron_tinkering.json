@@ -5,6 +5,7 @@
   },
   "craftables": [
     "immersiveweapons:flintlock_assembly",
-    "immersiveweapons:iron_barrel"
+    "immersiveweapons:iron_barrel",
+    "immersiveweapons:short_iron_barrel"
   ]
 }
