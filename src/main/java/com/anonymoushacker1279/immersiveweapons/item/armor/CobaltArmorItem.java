@@ -1,7 +1,7 @@
 package com.anonymoushacker1279.immersiveweapons.item.armor;
 
 import com.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
-import com.anonymoushacker1279.immersiveweapons.event.ClientModEventSubscriber;
+import com.anonymoushacker1279.immersiveweapons.client.IWKeyBinds;
 import com.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
 import com.anonymoushacker1279.immersiveweapons.init.PacketHandler;
 import com.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
@@ -78,7 +78,7 @@ public class CobaltArmorItem extends ArmorItem {
 				player.getItemBySlot(EquipmentSlot.FEET).getItem() == DeferredRegistryHandler.COBALT_BOOTS.get()) {
 			if (player.getUUID().toString().equals("380df991-f603-344c-a090-369bad2a924a") || player.getUUID().toString().equals("94f11dac-d1bc-46da-877b-c69f533f2da2")) {
 				if (world.isClientSide) {
-					if (ClientModEventSubscriber.toggleArmorEffect.consumeClick()) {
+					if (IWKeyBinds.TOGGLE_ARMOR_EFFECT.consumeClick()) {
 						PacketHandler.INSTANCE.sendToServer(new CobaltArmorItemPacketHandler(!effectEnabled));
 						if (!Minecraft.getInstance().isLocalServer()) {
 							setEffectState(!effectEnabled);

@@ -1,7 +1,7 @@
 package com.anonymoushacker1279.immersiveweapons.item.armor;
 
 import com.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
-import com.anonymoushacker1279.immersiveweapons.event.ClientModEventSubscriber;
+import com.anonymoushacker1279.immersiveweapons.client.IWKeyBinds;
 import com.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
 import com.anonymoushacker1279.immersiveweapons.init.PacketHandler;
 import com.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
@@ -77,7 +77,7 @@ public class VentusArmorItem extends ArmorItem {
 				player.getItemBySlot(EquipmentSlot.FEET).getItem() == DeferredRegistryHandler.VENTUS_BOOTS.get()) {
 
 			if (world.isClientSide) {
-				if (ClientModEventSubscriber.toggleArmorEffect.consumeClick()) {
+				if (IWKeyBinds.TOGGLE_ARMOR_EFFECT.consumeClick()) {
 					PacketHandler.INSTANCE.sendToServer(new VentusArmorItemPacketHandler(!effectEnabled));
 					if (!Minecraft.getInstance().isLocalServer()) {
 						setEffectState(!effectEnabled);

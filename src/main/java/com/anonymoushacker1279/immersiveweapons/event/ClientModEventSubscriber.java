@@ -3,6 +3,7 @@ package com.anonymoushacker1279.immersiveweapons.event;
 import com.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import com.anonymoushacker1279.immersiveweapons.block.decoration.skull.CustomSkullTypes;
 import com.anonymoushacker1279.immersiveweapons.block.properties.WoodTypes;
+import com.anonymoushacker1279.immersiveweapons.client.IWKeyBinds;
 import com.anonymoushacker1279.immersiveweapons.client.gui.IWOverlays;
 import com.anonymoushacker1279.immersiveweapons.client.gui.screen.SmallPartsTableScreen;
 import com.anonymoushacker1279.immersiveweapons.client.gui.screen.TeslaSynthesizerScreen;
@@ -18,7 +19,6 @@ import com.anonymoushacker1279.immersiveweapons.client.renderer.entity.misc.Burn
 import com.anonymoushacker1279.immersiveweapons.client.renderer.entity.mob.*;
 import com.anonymoushacker1279.immersiveweapons.client.renderer.entity.projectile.*;
 import com.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
-import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.model.SkullModel;
@@ -47,9 +47,6 @@ import java.util.Objects;
 @EventBusSubscriber(modid = ImmersiveWeapons.MOD_ID, bus = Bus.MOD, value = Dist.CLIENT)
 public class ClientModEventSubscriber {
 
-	private static final String CATEGORY = "key.categories." + ImmersiveWeapons.MOD_ID;
-	public static final KeyMapping toggleArmorEffect = new KeyMapping(
-			ImmersiveWeapons.MOD_ID + ".key.toggleArmorEffect", 78, CATEGORY); // Keycode is N
 	private static final Minecraft mc = Minecraft.getInstance();
 
 	private static final ModelLayerLocation MINUTEMAN_HEAD_LAYER = new ModelLayerLocation(
@@ -77,7 +74,7 @@ public class ClientModEventSubscriber {
 		MenuScreens.register(DeferredRegistryHandler.TESLA_SYNTHESIZER_CONTAINER.get(), TeslaSynthesizerScreen::new);
 
 		// Register key binds
-		ClientRegistry.registerKeyBinding(toggleArmorEffect);
+		ClientRegistry.registerKeyBinding(IWKeyBinds.TOGGLE_ARMOR_EFFECT);
 
 		// Register block renderers
 		ItemBlockRenderTypes.setRenderLayer(DeferredRegistryHandler.BULLETPROOF_GLASS.get(), RenderType.cutoutMipped());
