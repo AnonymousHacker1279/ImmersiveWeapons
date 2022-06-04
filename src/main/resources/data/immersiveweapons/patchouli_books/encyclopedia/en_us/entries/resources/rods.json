@@ -1,6 +1,6 @@
 {
 	"name": "Rods",
-	"icon": "immersiveweapons:wood_tool_rod",
+	"icon": "immersiveweapons:wooden_tool_rod",
 	"category": "immersiveweapons:resources",
 	"pages": [
 		{
@@ -9,7 +9,7 @@
 		},
 		{
 			"type": "patchouli:crafting",
-			"recipe": "immersiveweapons:wood_tool_rod",
+			"recipe": "immersiveweapons:wooden_tool_rod",
 			"recipe2": "immersiveweapons:obsidian_rod"
 		}
 	],

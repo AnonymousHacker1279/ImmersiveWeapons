@@ -408,12 +408,12 @@ public class IWAdvancements implements Consumer<Consumer<Advancement>> {
 
 		// Tool advancements
 		Advancement craftToolRod = Builder.advancement().parent(root)
-				.display(DeferredRegistryHandler.WOOD_TOOL_ROD.get(),
+				.display(DeferredRegistryHandler.WOODEN_TOOL_ROD.get(),
 						new TranslatableComponent("advancements.immersiveweapons.tool_rod.title"),
 						new TranslatableComponent("advancements.immersiveweapons.tool_rod.description"),
 						null, FrameType.TASK, true, true, false)
 				.addCriterion("hold",
-						InventoryChangeTrigger.TriggerInstance.hasItems(DeferredRegistryHandler.WOOD_TOOL_ROD.get()))
+						InventoryChangeTrigger.TriggerInstance.hasItems(DeferredRegistryHandler.WOODEN_TOOL_ROD.get()))
 				.save(consumer, "immersiveweapons:tool_rod");
 
 		Builder.advancement().parent(craftToolRod)
@@ -422,7 +422,7 @@ public class IWAdvancements implements Consumer<Consumer<Advancement>> {
 						new TranslatableComponent("advancements.immersiveweapons.pike.description"),
 						null, FrameType.TASK, true, true, false)
 				.addCriterion("hold",
-						InventoryChangeTrigger.TriggerInstance.hasItems(DeferredRegistryHandler.WOOD_PIKE.get()))
+						InventoryChangeTrigger.TriggerInstance.hasItems(DeferredRegistryHandler.WOODEN_PIKE.get()))
 				.addCriterion("hold1",
 						InventoryChangeTrigger.TriggerInstance.hasItems(DeferredRegistryHandler.STONE_PIKE.get()))
 				.addCriterion("hold2",
@@ -430,7 +430,7 @@ public class IWAdvancements implements Consumer<Consumer<Advancement>> {
 				.addCriterion("hold3",
 						InventoryChangeTrigger.TriggerInstance.hasItems(DeferredRegistryHandler.COPPER_PIKE.get()))
 				.addCriterion("hold4",
-						InventoryChangeTrigger.TriggerInstance.hasItems(DeferredRegistryHandler.GOLD_PIKE.get()))
+						InventoryChangeTrigger.TriggerInstance.hasItems(DeferredRegistryHandler.GOLDEN_PIKE.get()))
 				.addCriterion("hold5",
 						InventoryChangeTrigger.TriggerInstance.hasItems(DeferredRegistryHandler.DIAMOND_PIKE.get()))
 				.addCriterion("hold6",
@@ -452,7 +452,7 @@ public class IWAdvancements implements Consumer<Consumer<Advancement>> {
 				.addCriterion("hold2",
 						InventoryChangeTrigger.TriggerInstance.hasItems(DeferredRegistryHandler.STONE_SHARD.get()))
 				.addCriterion("hold3",
-						InventoryChangeTrigger.TriggerInstance.hasItems(DeferredRegistryHandler.WOOD_SHARD.get()))
+						InventoryChangeTrigger.TriggerInstance.hasItems(DeferredRegistryHandler.WOODEN_SHARD.get()))
 				.addCriterion("hold4",
 						InventoryChangeTrigger.TriggerInstance.hasItems(DeferredRegistryHandler.DIAMOND_SHARD.get()))
 				.addCriterion("hold5",
@@ -461,13 +461,13 @@ public class IWAdvancements implements Consumer<Consumer<Advancement>> {
 				.save(consumer, "immersiveweapons:shards");
 
 		Builder.advancement().parent(shards)
-				.display(DeferredRegistryHandler.WOOD_SHARD.get(),
-						new TranslatableComponent("advancements.immersiveweapons.wood_shard.title"),
-						new TranslatableComponent("advancements.immersiveweapons.wood_shard.description"),
+				.display(DeferredRegistryHandler.WOODEN_SHARD.get(),
+						new TranslatableComponent("advancements.immersiveweapons.wooden_shard.title"),
+						new TranslatableComponent("advancements.immersiveweapons.wooden_shard.description"),
 						null, FrameType.GOAL, true, true, false)
 				.addCriterion("hold",
-						InventoryChangeTrigger.TriggerInstance.hasItems(DeferredRegistryHandler.WOOD_SHARD.get()))
-				.save(consumer, "immersiveweapons:wood_shard");
+						InventoryChangeTrigger.TriggerInstance.hasItems(DeferredRegistryHandler.WOODEN_SHARD.get()))
+				.save(consumer, "immersiveweapons:wooden_shard");
 
 		Builder.advancement().parent(shards)
 				.display(DeferredRegistryHandler.STONE_SHARD.get(),
@@ -509,7 +509,7 @@ public class IWAdvancements implements Consumer<Consumer<Advancement>> {
 				.save(consumer, "immersiveweapons:netherite_projectile");
 
 		Builder.advancement().parent(root)
-				.display(DeferredRegistryHandler.GOLD_MUSKET_BALL.get(),
+				.display(DeferredRegistryHandler.GOLDEN_MUSKET_BALL.get(),
 						new TranslatableComponent("advancements.immersiveweapons.musket_ball.title"),
 						new TranslatableComponent("advancements.immersiveweapons.musket_ball.description"),
 						null, FrameType.TASK, true, true, false)
@@ -524,7 +524,7 @@ public class IWAdvancements implements Consumer<Consumer<Advancement>> {
 						null, FrameType.TASK, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(DeferredRegistryHandler.SMALL_PARTS_TABLE.get()))
-				.save(consumer, "immersiveweapons:small_partss_table");
+				.save(consumer, "immersiveweapons:small_parts_table");
 
 		Builder.advancement().parent(smallPartsTable)
 				.display(DeferredRegistryHandler.FLINTLOCK_PISTOL.get(),
@@ -566,13 +566,13 @@ public class IWAdvancements implements Consumer<Consumer<Advancement>> {
 				.save(consumer, "immersiveweapons:musket");
 
 		Builder.advancement().parent(smallPartsTable)
-				.display(DeferredRegistryHandler.SMOKE_BOMB.get(),
-						new TranslatableComponent("advancements.immersiveweapons.smoke_bomb.title"),
-						new TranslatableComponent("advancements.immersiveweapons.smoke_bomb.description"),
+				.display(DeferredRegistryHandler.SMOKE_GRENADE.get(),
+						new TranslatableComponent("advancements.immersiveweapons.smoke_grenade.title"),
+						new TranslatableComponent("advancements.immersiveweapons.smoke_grenade.description"),
 						null, FrameType.GOAL, true, true, false)
 				.addCriterion("hold",
-						InventoryChangeTrigger.TriggerInstance.hasItems(DeferredRegistryHandler.SMOKE_BOMB.get()))
-				.save(consumer, "immersiveweapons:smoke_bomb");
+						InventoryChangeTrigger.TriggerInstance.hasItems(DeferredRegistryHandler.SMOKE_GRENADE_GREEN.get()))
+				.save(consumer, "immersiveweapons:smoke_grenade");
 
 
 		Advancement craftAlcohol = Builder.advancement().parent(root)
@@ -617,11 +617,11 @@ public class IWAdvancements implements Consumer<Consumer<Advancement>> {
 						new TranslatableComponent("advancements.immersiveweapons.gauntlet.description"),
 						null, FrameType.TASK, true, true, false)
 				.addCriterion("hold",
-						InventoryChangeTrigger.TriggerInstance.hasItems(DeferredRegistryHandler.WOOD_GAUNTLET.get()))
+						InventoryChangeTrigger.TriggerInstance.hasItems(DeferredRegistryHandler.WOODEN_GAUNTLET.get()))
 				.addCriterion("hold1",
 						InventoryChangeTrigger.TriggerInstance.hasItems(DeferredRegistryHandler.STONE_GAUNTLET.get()))
 				.addCriterion("hold2",
-						InventoryChangeTrigger.TriggerInstance.hasItems(DeferredRegistryHandler.GOLD_GAUNTLET.get()))
+						InventoryChangeTrigger.TriggerInstance.hasItems(DeferredRegistryHandler.GOLDEN_GAUNTLET.get()))
 				.addCriterion("hold3",
 						InventoryChangeTrigger.TriggerInstance.hasItems(DeferredRegistryHandler.COPPER_GAUNTLET.get()))
 				.addCriterion("hold4",

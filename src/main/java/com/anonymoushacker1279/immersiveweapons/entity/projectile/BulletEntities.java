@@ -22,7 +22,7 @@ import java.util.List;
 
 public class BulletEntities {
 
-	public static class WoodBulletEntity extends BulletEntity {
+	public static class WoodenMusketBallEntity extends BulletEntity {
 		/**
 		 * Constructor for WoodBulletEntity.
 		 *
@@ -30,10 +30,10 @@ public class BulletEntities {
 		 * @param world             the <code>World</code> the entity is in
 		 * @param knockbackStrength the bullet knockback strength
 		 */
-		public WoodBulletEntity(EntityType<WoodBulletEntity> entityType, Level world, int knockbackStrength) {
+		public WoodenMusketBallEntity(EntityType<WoodenMusketBallEntity> entityType, Level world, int knockbackStrength) {
 			super(entityType, world);
 			this.knockbackStrength = knockbackStrength;
-			referenceItem = DeferredRegistryHandler.WOOD_MUSKET_BALL.get();
+			referenceItem = DeferredRegistryHandler.WOODEN_MUSKET_BALL.get();
 		}
 
 		/**
@@ -43,8 +43,8 @@ public class BulletEntities {
 		 * @param world           the <code>World</code> the entity is in
 		 * @param referenceItemIn the reference item
 		 */
-		public WoodBulletEntity(LivingEntity shooter, Level world, Item referenceItemIn) {
-			super(DeferredRegistryHandler.WOOD_BULLET_ENTITY.get(), shooter, world);
+		public WoodenMusketBallEntity(LivingEntity shooter, Level world, Item referenceItemIn) {
+			super(DeferredRegistryHandler.WOODEN_MUSKET_BALL_ENTITY.get(), shooter, world);
 			referenceItem = referenceItemIn;
 		}
 
@@ -74,7 +74,7 @@ public class BulletEntities {
 		}
 	}
 
-	public static class StoneBulletEntity extends BulletEntity {
+	public static class StoneMusketBallEntity extends BulletEntity {
 		/**
 		 * Constructor for StoneBulletEntity.
 		 *
@@ -82,7 +82,7 @@ public class BulletEntities {
 		 * @param world             the <code>World</code> the entity is in
 		 * @param knockbackStrength the bullet knockback strength
 		 */
-		public StoneBulletEntity(EntityType<StoneBulletEntity> entityType, Level world, int knockbackStrength) {
+		public StoneMusketBallEntity(EntityType<StoneMusketBallEntity> entityType, Level world, int knockbackStrength) {
 			super(entityType, world);
 			this.knockbackStrength = knockbackStrength;
 			referenceItem = DeferredRegistryHandler.STONE_MUSKET_BALL.get();
@@ -95,8 +95,8 @@ public class BulletEntities {
 		 * @param world           the <code>World</code> the entity is in
 		 * @param referenceItemIn the reference item
 		 */
-		public StoneBulletEntity(LivingEntity shooter, Level world, Item referenceItemIn) {
-			super(DeferredRegistryHandler.STONE_BULLET_ENTITY.get(), shooter, world);
+		public StoneMusketBallEntity(LivingEntity shooter, Level world, Item referenceItemIn) {
+			super(DeferredRegistryHandler.STONE_MUSKET_BALL_ENTITY.get(), shooter, world);
 			referenceItem = referenceItemIn;
 		}
 
@@ -126,7 +126,7 @@ public class BulletEntities {
 		}
 	}
 
-	public static class GoldBulletEntity extends BulletEntity {
+	public static class GoldenMusketBallEntity extends BulletEntity {
 		/**
 		 * Constructor for GoldBulletEntity.
 		 *
@@ -134,10 +134,10 @@ public class BulletEntities {
 		 * @param world             the <code>World</code> the entity is in
 		 * @param knockbackStrength the bullet knockback strength
 		 */
-		public GoldBulletEntity(EntityType<GoldBulletEntity> entityType, Level world, int knockbackStrength) {
+		public GoldenMusketBallEntity(EntityType<GoldenMusketBallEntity> entityType, Level world, int knockbackStrength) {
 			super(entityType, world);
 			this.knockbackStrength = knockbackStrength;
-			referenceItem = DeferredRegistryHandler.GOLD_MUSKET_BALL.get();
+			referenceItem = DeferredRegistryHandler.GOLDEN_MUSKET_BALL.get();
 		}
 
 		/**
@@ -147,8 +147,8 @@ public class BulletEntities {
 		 * @param world           the <code>World</code> the entity is in
 		 * @param referenceItemIn the reference item
 		 */
-		public GoldBulletEntity(LivingEntity shooter, Level world, Item referenceItemIn) {
-			super(DeferredRegistryHandler.GOLD_BULLET_ENTITY.get(), shooter, world);
+		public GoldenMusketBallEntity(LivingEntity shooter, Level world, Item referenceItemIn) {
+			super(DeferredRegistryHandler.GOLDEN_MUSKET_BALL_ENTITY.get(), shooter, world);
 			referenceItem = referenceItemIn;
 		}
 
@@ -178,7 +178,7 @@ public class BulletEntities {
 		}
 	}
 
-	public static class CopperBulletEntity extends BulletEntity {
+	public static class CopperMusketBallEntity extends BulletEntity {
 
 		/**
 		 * Constructor for CopperBulletEntity.
@@ -187,7 +187,7 @@ public class BulletEntities {
 		 * @param world             the <code>World</code> the entity is in
 		 * @param knockbackStrength the bullet knockback strength
 		 */
-		public CopperBulletEntity(EntityType<CopperBulletEntity> entityType, Level world, int knockbackStrength) {
+		public CopperMusketBallEntity(EntityType<CopperMusketBallEntity> entityType, Level world, int knockbackStrength) {
 			super(entityType, world);
 			this.knockbackStrength = knockbackStrength;
 			referenceItem = DeferredRegistryHandler.COPPER_MUSKET_BALL.get();
@@ -200,8 +200,8 @@ public class BulletEntities {
 		 * @param world           the <code>World</code> the entity is in
 		 * @param referenceItemIn the reference item
 		 */
-		public CopperBulletEntity(LivingEntity shooter, Level world, Item referenceItemIn) {
-			super(DeferredRegistryHandler.COPPER_BULLET_ENTITY.get(), shooter, world);
+		public CopperMusketBallEntity(LivingEntity shooter, Level world, Item referenceItemIn) {
+			super(DeferredRegistryHandler.COPPER_MUSKET_BALL_ENTITY.get(), shooter, world);
 			referenceItem = referenceItemIn;
 		}
 
@@ -231,7 +231,7 @@ public class BulletEntities {
 		}
 	}
 
-	public static class IronBulletEntity extends BulletEntity {
+	public static class IronMusketBallEntity extends BulletEntity {
 		/**
 		 * Constructor for IronBulletEntity.
 		 *
@@ -239,7 +239,7 @@ public class BulletEntities {
 		 * @param world             the <code>World</code> the entity is in
 		 * @param knockbackStrength the bullet knockback strength
 		 */
-		public IronBulletEntity(EntityType<IronBulletEntity> entityType, Level world, int knockbackStrength) {
+		public IronMusketBallEntity(EntityType<IronMusketBallEntity> entityType, Level world, int knockbackStrength) {
 			super(entityType, world);
 			this.knockbackStrength = knockbackStrength;
 			referenceItem = DeferredRegistryHandler.IRON_MUSKET_BALL.get();
@@ -252,8 +252,8 @@ public class BulletEntities {
 		 * @param world           the <code>World</code> the entity is in
 		 * @param referenceItemIn the reference item
 		 */
-		public IronBulletEntity(LivingEntity shooter, Level world, Item referenceItemIn) {
-			super(DeferredRegistryHandler.IRON_BULLET_ENTITY.get(), shooter, world);
+		public IronMusketBallEntity(LivingEntity shooter, Level world, Item referenceItemIn) {
+			super(DeferredRegistryHandler.IRON_MUSKET_BALL_ENTITY.get(), shooter, world);
 			referenceItem = referenceItemIn;
 		}
 
@@ -283,7 +283,7 @@ public class BulletEntities {
 		}
 	}
 
-	public static class CobaltBulletEntity extends BulletEntity {
+	public static class CobaltMusketBallEntity extends BulletEntity {
 		/**
 		 * Constructor for CobaltBulletEntity.
 		 *
@@ -291,7 +291,7 @@ public class BulletEntities {
 		 * @param world             the <code>World</code> the entity is in
 		 * @param knockbackStrength the bullet knockback strength
 		 */
-		public CobaltBulletEntity(EntityType<CobaltBulletEntity> entityType, Level world, int knockbackStrength) {
+		public CobaltMusketBallEntity(EntityType<CobaltMusketBallEntity> entityType, Level world, int knockbackStrength) {
 			super(entityType, world);
 			this.knockbackStrength = knockbackStrength;
 			referenceItem = DeferredRegistryHandler.COBALT_MUSKET_BALL.get();
@@ -304,8 +304,8 @@ public class BulletEntities {
 		 * @param world           the <code>World</code> the entity is in
 		 * @param referenceItemIn the reference item
 		 */
-		public CobaltBulletEntity(LivingEntity shooter, Level world, Item referenceItemIn) {
-			super(DeferredRegistryHandler.COBALT_BULLET_ENTITY.get(), shooter, world);
+		public CobaltMusketBallEntity(LivingEntity shooter, Level world, Item referenceItemIn) {
+			super(DeferredRegistryHandler.COBALT_MUSKET_BALL_ENTITY.get(), shooter, world);
 			referenceItem = referenceItemIn;
 		}
 
@@ -335,7 +335,7 @@ public class BulletEntities {
 		}
 	}
 
-	public static class DiamondBulletEntity extends BulletEntity {
+	public static class DiamondMusketBallEntity extends BulletEntity {
 		/**
 		 * Constructor for DiamondBulletEntity.
 		 *
@@ -343,7 +343,7 @@ public class BulletEntities {
 		 * @param world             the <code>World</code> the entity is in
 		 * @param knockbackStrength the bullet knockback strength
 		 */
-		public DiamondBulletEntity(EntityType<DiamondBulletEntity> entityType, Level world, int knockbackStrength) {
+		public DiamondMusketBallEntity(EntityType<DiamondMusketBallEntity> entityType, Level world, int knockbackStrength) {
 			super(entityType, world);
 			this.knockbackStrength = knockbackStrength;
 			referenceItem = DeferredRegistryHandler.DIAMOND_MUSKET_BALL.get();
@@ -356,8 +356,8 @@ public class BulletEntities {
 		 * @param world           the <code>World</code> the entity is in
 		 * @param referenceItemIn the reference item
 		 */
-		public DiamondBulletEntity(LivingEntity shooter, Level world, Item referenceItemIn) {
-			super(DeferredRegistryHandler.DIAMOND_BULLET_ENTITY.get(), shooter, world);
+		public DiamondMusketBallEntity(LivingEntity shooter, Level world, Item referenceItemIn) {
+			super(DeferredRegistryHandler.DIAMOND_MUSKET_BALL_ENTITY.get(), shooter, world);
 			referenceItem = referenceItemIn;
 		}
 
@@ -392,7 +392,7 @@ public class BulletEntities {
 		}
 	}
 
-	public static class NetheriteBulletEntity extends BulletEntity {
+	public static class NetheriteMusketBallEntity extends BulletEntity {
 		/**
 		 * Constructor for NetheriteBulletEntity.
 		 *
@@ -400,7 +400,7 @@ public class BulletEntities {
 		 * @param world             the <code>World</code> the entity is in
 		 * @param knockbackStrength the bullet knockback strength
 		 */
-		public NetheriteBulletEntity(EntityType<NetheriteBulletEntity> entityType, Level world, int knockbackStrength) {
+		public NetheriteMusketBallEntity(EntityType<NetheriteMusketBallEntity> entityType, Level world, int knockbackStrength) {
 			super(entityType, world);
 			this.knockbackStrength = knockbackStrength;
 			referenceItem = DeferredRegistryHandler.NETHERITE_MUSKET_BALL.get();
@@ -413,8 +413,8 @@ public class BulletEntities {
 		 * @param world           the <code>World</code> the entity is in
 		 * @param referenceItemIn the reference item
 		 */
-		public NetheriteBulletEntity(LivingEntity shooter, Level world, Item referenceItemIn) {
-			super(DeferredRegistryHandler.NETHERITE_BULLET_ENTITY.get(), shooter, world);
+		public NetheriteMusketBallEntity(LivingEntity shooter, Level world, Item referenceItemIn) {
+			super(DeferredRegistryHandler.NETHERITE_MUSKET_BALL_ENTITY.get(), shooter, world);
 			referenceItem = referenceItemIn;
 		}
 

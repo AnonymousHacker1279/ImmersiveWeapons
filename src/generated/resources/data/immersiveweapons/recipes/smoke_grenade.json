@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "smoke_grenade",
+  "pattern": [
+    " cb",
+    " a ",
+    " a "
+  ],
+  "key": {
+    "a": {
+      "item": "minecraft:bamboo"
+    },
+    "b": {
+      "item": "immersiveweapons:grenade_assembly"
+    },
+    "c": {
+      "item": "immersiveweapons:smoke_powder"
+    }
+  },
+  "result": {
+    "item": "immersiveweapons:smoke_grenade",
+    "count": 2
+  }
+}

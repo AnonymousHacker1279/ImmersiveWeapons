@@ -14,15 +14,15 @@
 		},
 		{
 			"type": "patchouli:spotlight",
-			"item": "immersiveweapons:small_parts_metal_throwable_bomb",
-			"title": "Generic, Throwable Bomb",
+			"item": "immersiveweapons:grenade_assembly",
+			"title": "Grenade Assembly",
 			"link_recipe": true,
 			"text": "$(l)Requires:$() Any metal ingot$(br)$(l)Used for:$() Smoke bombs"
 		},
 		{
 			"type": "patchouli:spotlight",
-			"item": "immersiveweapons:small_parts_metal_tool",
-			"title": "Generic, Metal Tool",
+			"item": "immersiveweapons:tool_joint",
+			"title": "Tool Joint",
 			"link_recipe": true,
 			"text": "$(l)Requires:$() Any metal ingot$(br)$(l)Used for:$() Pliers"
 		},

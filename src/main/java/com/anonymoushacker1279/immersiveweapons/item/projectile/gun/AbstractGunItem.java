@@ -69,7 +69,7 @@ public abstract class AbstractGunItem extends Item implements Vanishable {
 			int bulletsToFire = isCreative ? getMaxBulletsToFire() : getBulletsToFire(ammo);
 
 			// Roll for misfire
-			if (ammo.getItem() == DeferredRegistryHandler.WOOD_MUSKET_BALL.get()) {
+			if (ammo.getItem() == DeferredRegistryHandler.WOODEN_MUSKET_BALL.get()) {
 				if (GeneralUtilities.getRandomNumber(1, 10) <= 3) {
 					misfire = true;
 				}

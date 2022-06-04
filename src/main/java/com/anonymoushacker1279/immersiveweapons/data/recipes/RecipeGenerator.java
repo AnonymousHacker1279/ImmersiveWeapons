@@ -55,7 +55,7 @@ public class RecipeGenerator extends RecipeProvider {
 		createTeslaItems();
 		createVanillaTieredItems();
 		createSmallPartsItems();
-		createSmokeBombs();
+		createSmokeGrenades();
 		createCorrugatedIronItems();
 		createShardItems();
 		createWarriorStatueItems();
@@ -283,33 +283,33 @@ public class RecipeGenerator extends RecipeProvider {
 	}
 
 	private void createVanillaTieredItems() {
-		createWoodArrow(DeferredRegistryHandler.WOOD_ARROW.get());
+		createWoodenArrow(DeferredRegistryHandler.WOODEN_ARROW.get());
 		createStoneArrow(DeferredRegistryHandler.STONE_ARROW.get());
-		createGoldArrow(DeferredRegistryHandler.GOLD_ARROW.get());
+		createGoldenArrow(DeferredRegistryHandler.GOLDEN_ARROW.get());
 		createIronArrow(DeferredRegistryHandler.IRON_ARROW.get());
 		createDiamondArrow(DeferredRegistryHandler.DIAMOND_ARROW.get());
 		createNetheriteArrow(DeferredRegistryHandler.NETHERITE_ARROW.get());
-		createWoodMusketBall(DeferredRegistryHandler.WOOD_MUSKET_BALL.get());
+		createWoodenMusketBall(DeferredRegistryHandler.WOODEN_MUSKET_BALL.get());
 		createStoneMusketBall(DeferredRegistryHandler.STONE_MUSKET_BALL.get());
-		createGoldMusketBall(DeferredRegistryHandler.GOLD_MUSKET_BALL.get());
+		createGoldenMusketBall(DeferredRegistryHandler.GOLDEN_MUSKET_BALL.get());
 		createIronMusketBall(DeferredRegistryHandler.IRON_MUSKET_BALL.get());
 		createDiamondMusketBall(DeferredRegistryHandler.DIAMOND_MUSKET_BALL.get());
 		createNetheriteMusketBall(DeferredRegistryHandler.NETHERITE_MUSKET_BALL.get());
-		createWoodGauntlet(DeferredRegistryHandler.WOOD_GAUNTLET.get());
+		createWoodenGauntlet(DeferredRegistryHandler.WOODEN_GAUNTLET.get());
 		createStoneGauntlet(DeferredRegistryHandler.STONE_GAUNTLET.get());
-		createGoldGauntlet(DeferredRegistryHandler.GOLD_GAUNTLET.get());
+		createGoldenGauntlet(DeferredRegistryHandler.GOLDEN_GAUNTLET.get());
 		createIronGauntlet(DeferredRegistryHandler.IRON_GAUNTLET.get());
 		createDiamondGauntlet(DeferredRegistryHandler.DIAMOND_GAUNTLET.get());
 		netheriteSmithing(DeferredRegistryHandler.DIAMOND_GAUNTLET.get(), DeferredRegistryHandler.NETHERITE_GAUNTLET.get());
-		createWoodPike(DeferredRegistryHandler.WOOD_PIKE.get(), DeferredRegistryHandler.WOOD_PIKE_HEAD.get());
+		createWoodenPike(DeferredRegistryHandler.WOODEN_PIKE.get(), DeferredRegistryHandler.WOODEN_PIKE_HEAD.get());
 		createStonePike(DeferredRegistryHandler.STONE_PIKE.get(), DeferredRegistryHandler.STONE_PIKE_HEAD.get());
-		createGoldPike(DeferredRegistryHandler.GOLD_PIKE.get(), DeferredRegistryHandler.GOLD_PIKE_HEAD.get());
+		createGoldenPike(DeferredRegistryHandler.GOLDEN_PIKE.get(), DeferredRegistryHandler.GOLDEN_PIKE_HEAD.get());
 		createIronPike(DeferredRegistryHandler.IRON_PIKE.get(), DeferredRegistryHandler.IRON_PIKE_HEAD.get());
 		createDiamondPike(DeferredRegistryHandler.DIAMOND_PIKE.get(), DeferredRegistryHandler.DIAMOND_PIKE_HEAD.get());
 		netheriteSmithing(DeferredRegistryHandler.DIAMOND_PIKE.get(), DeferredRegistryHandler.NETHERITE_PIKE.get());
-		createWoodPikeHead(DeferredRegistryHandler.WOOD_PIKE_HEAD.get());
+		createWoodenPikeHead(DeferredRegistryHandler.WOODEN_PIKE_HEAD.get());
 		createStonePikeHead(DeferredRegistryHandler.STONE_PIKE_HEAD.get());
-		createGoldPikeHead(DeferredRegistryHandler.GOLD_PIKE_HEAD.get());
+		createGoldenPikeHead(DeferredRegistryHandler.GOLDEN_PIKE_HEAD.get());
 		createIronPikeHead(DeferredRegistryHandler.IRON_PIKE_HEAD.get());
 		createDiamondPikeHead(DeferredRegistryHandler.DIAMOND_PIKE_HEAD.get());
 	}
@@ -328,8 +328,8 @@ public class RecipeGenerator extends RecipeProvider {
 		GOLD_INGOT_CRAFTABLES.add(DeferredRegistryHandler.TRIGGER_ASSEMBLY.get());
 		GOLD_INGOT_CRAFTABLES.add(DeferredRegistryHandler.SCOPE_MOUNT.get());
 
-		METAL_INGOT_CRAFTABLES.add(DeferredRegistryHandler.SMALL_PARTS_METAL_THROWABLE_BOMB.get());
-		METAL_INGOT_CRAFTABLES.add(DeferredRegistryHandler.SMALL_PARTS_METAL_TOOL.get());
+		METAL_INGOT_CRAFTABLES.add(DeferredRegistryHandler.GRENADE_ASSEMBLY.get());
+		METAL_INGOT_CRAFTABLES.add(DeferredRegistryHandler.TOOL_JOINT.get());
 
 		PLANK_CRAFTABLES.add(DeferredRegistryHandler.GAUNTLET_SCAFFOLDING.get());
 		PLANK_CRAFTABLES.add(DeferredRegistryHandler.HEAVY_WOODEN_STOCK.get());
@@ -358,19 +358,19 @@ public class RecipeGenerator extends RecipeProvider {
 				.save(finishedRecipeConsumer);
 	}
 
-	private void createSmokeBombs() {
-		createSmokeBomb(DeferredRegistryHandler.SMOKE_BOMB.get());
-		createColoredSmokeBomb(DeferredRegistryHandler.SMOKE_BOMB_BLUE.get(), Tags.Items.DYES_BLUE);
-		createColoredSmokeBomb(DeferredRegistryHandler.SMOKE_BOMB_GREEN.get(), Tags.Items.DYES_GREEN);
-		createColoredSmokeBomb(DeferredRegistryHandler.SMOKE_BOMB_RED.get(), Tags.Items.DYES_RED);
-		createColoredSmokeBomb(DeferredRegistryHandler.SMOKE_BOMB_PURPLE.get(), Tags.Items.DYES_PURPLE);
-		createColoredSmokeBomb(DeferredRegistryHandler.SMOKE_BOMB_YELLOW.get(), Tags.Items.DYES_YELLOW);
-		createSmokeBombArrow(DeferredRegistryHandler.SMOKE_BOMB_ARROW.get());
-		createColoredSmokeBombArrow(DeferredRegistryHandler.SMOKE_BOMB_ARROW_BLUE.get(), Tags.Items.DYES_BLUE);
-		createColoredSmokeBombArrow(DeferredRegistryHandler.SMOKE_BOMB_ARROW_GREEN.get(), Tags.Items.DYES_GREEN);
-		createColoredSmokeBombArrow(DeferredRegistryHandler.SMOKE_BOMB_ARROW_RED.get(), Tags.Items.DYES_RED);
-		createColoredSmokeBombArrow(DeferredRegistryHandler.SMOKE_BOMB_ARROW_PURPLE.get(), Tags.Items.DYES_PURPLE);
-		createColoredSmokeBombArrow(DeferredRegistryHandler.SMOKE_BOMB_ARROW_YELLOW.get(), Tags.Items.DYES_YELLOW);
+	private void createSmokeGrenades() {
+		createSmokeGrenade(DeferredRegistryHandler.SMOKE_GRENADE.get());
+		createColoredSmokeGrenade(DeferredRegistryHandler.SMOKE_GRENADE_BLUE.get(), Tags.Items.DYES_BLUE);
+		createColoredSmokeGrenade(DeferredRegistryHandler.SMOKE_GRENADE_GREEN.get(), Tags.Items.DYES_GREEN);
+		createColoredSmokeGrenade(DeferredRegistryHandler.SMOKE_GRENADE_RED.get(), Tags.Items.DYES_RED);
+		createColoredSmokeGrenade(DeferredRegistryHandler.SMOKE_GRENADE_PURPLE.get(), Tags.Items.DYES_PURPLE);
+		createColoredSmokeGrenade(DeferredRegistryHandler.SMOKE_GRENADE_YELLOW.get(), Tags.Items.DYES_YELLOW);
+		createSmokeGrenadeArrow(DeferredRegistryHandler.SMOKE_GRENADE_ARROW.get());
+		createColoredSmokeGrenadeArrow(DeferredRegistryHandler.SMOKE_GRENADE_ARROW_BLUE.get(), Tags.Items.DYES_BLUE);
+		createColoredSmokeGrenadeArrow(DeferredRegistryHandler.SMOKE_GRENADE_ARROW_GREEN.get(), Tags.Items.DYES_GREEN);
+		createColoredSmokeGrenadeArrow(DeferredRegistryHandler.SMOKE_GRENADE_ARROW_RED.get(), Tags.Items.DYES_RED);
+		createColoredSmokeGrenadeArrow(DeferredRegistryHandler.SMOKE_GRENADE_ARROW_PURPLE.get(), Tags.Items.DYES_PURPLE);
+		createColoredSmokeGrenadeArrow(DeferredRegistryHandler.SMOKE_GRENADE_ARROW_YELLOW.get(), Tags.Items.DYES_YELLOW);
 
 		// Create smoke powder
 		ShapelessRecipeBuilder.shapeless(DeferredRegistryHandler.SMOKE_POWDER.get(), 4)
@@ -378,7 +378,7 @@ public class RecipeGenerator extends RecipeProvider {
 				.requires(Items.GUNPOWDER)
 				.requires(ItemTags.COALS)
 				.requires(ItemTags.LEAVES)
-				.group("smoke_bomb")
+				.group("smoke_grenade")
 				.unlockedBy("mortar_and_pestle", has(DeferredRegistryHandler.MORTAR_AND_PESTLE.get()))
 				.save(finishedRecipeConsumer);
 	}
@@ -822,13 +822,13 @@ public class RecipeGenerator extends RecipeProvider {
 		// Pliers
 		ShapedRecipeBuilder.shaped(DeferredRegistryHandler.PLIERS.get())
 				.define('a', Items.LEATHER)
-				.define('b', DeferredRegistryHandler.SMALL_PARTS_METAL_TOOL.get())
+				.define('b', DeferredRegistryHandler.TOOL_JOINT.get())
 				.define('c', ForgeItemTagGroups.METAL_INGOTS)
 				.pattern(" c ")
 				.pattern(" b ")
 				.pattern("a a")
 				.group("pliers")
-				.unlockedBy("small_parts_metal_tool", has(DeferredRegistryHandler.SMALL_PARTS_METAL_TOOL.get()))
+				.unlockedBy("small_parts_metal_tool", has(DeferredRegistryHandler.TOOL_JOINT.get()))
 				.save(finishedRecipeConsumer);
 		// Gunpowder (from sulfur)
 		ShapelessRecipeBuilder.shapeless(Items.GUNPOWDER)
@@ -837,8 +837,8 @@ public class RecipeGenerator extends RecipeProvider {
 				.group("gunpowder")
 				.unlockedBy("sulfur", has(DeferredRegistryHandler.SULFUR.get()))
 				.save(finishedRecipeConsumer);
-		// Wood tool rod
-		ShapedRecipeBuilder.shaped(DeferredRegistryHandler.WOOD_TOOL_ROD.get())
+		// Wooden tool rod
+		ShapedRecipeBuilder.shaped(DeferredRegistryHandler.WOODEN_TOOL_ROD.get())
 				.define('a', ItemTags.PLANKS)
 				.pattern(" a ")
 				.pattern("a  ")
@@ -1379,11 +1379,11 @@ public class RecipeGenerator extends RecipeProvider {
 				.save(finishedRecipeConsumer);
 	}
 
-	private static void createWoodArrow(ItemLike arrowItem) {
+	private static void createWoodenArrow(ItemLike arrowItem) {
 		ShapedRecipeBuilder builder = ShapedRecipeBuilder.shaped(arrowItem, 4)
 				.group("wood")
-				.unlockedBy("wood_shard", has(ImmersiveWeaponsItemTagGroups.WOOD_SHARDS));
-		createArrow(builder, ImmersiveWeaponsItemTagGroups.WOOD_SHARDS);
+				.unlockedBy("wooden_shard", has(ImmersiveWeaponsItemTagGroups.WOODEN_SHARDS));
+		createArrow(builder, ImmersiveWeaponsItemTagGroups.WOODEN_SHARDS);
 	}
 
 	private static void createStoneArrow(ItemLike arrowItem) {
@@ -1393,7 +1393,7 @@ public class RecipeGenerator extends RecipeProvider {
 		createArrow(builder, ImmersiveWeaponsItemTagGroups.STONE_SHARDS);
 	}
 
-	private static void createGoldArrow(ItemLike arrowItem) {
+	private static void createGoldenArrow(ItemLike arrowItem) {
 		ShapedRecipeBuilder builder = ShapedRecipeBuilder.shaped(arrowItem, 4)
 				.group("gold")
 				.unlockedBy("gold_ingot", has(Tags.Items.INGOTS_GOLD));
@@ -1426,11 +1426,11 @@ public class RecipeGenerator extends RecipeProvider {
 				.save(finishedRecipeConsumer);
 	}
 
-	private static void createWoodMusketBall(ItemLike musketBallItem) {
+	private static void createWoodenMusketBall(ItemLike musketBallItem) {
 		ShapedRecipeBuilder builder = ShapedRecipeBuilder.shaped(musketBallItem, 8)
 				.group("wood")
-				.unlockedBy("wood_shard", has(ImmersiveWeaponsItemTagGroups.WOOD_SHARDS));
-		createMusketBall(builder, ImmersiveWeaponsItemTagGroups.WOOD_SHARDS);
+				.unlockedBy("wooden_shard", has(ImmersiveWeaponsItemTagGroups.WOODEN_SHARDS));
+		createMusketBall(builder, ImmersiveWeaponsItemTagGroups.WOODEN_SHARDS);
 	}
 
 	private static void createStoneMusketBall(ItemLike musketBallItem) {
@@ -1440,7 +1440,7 @@ public class RecipeGenerator extends RecipeProvider {
 		createMusketBall(builder, ImmersiveWeaponsItemTagGroups.STONE_SHARDS);
 	}
 
-	private static void createGoldMusketBall(ItemLike musketBallItem) {
+	private static void createGoldenMusketBall(ItemLike musketBallItem) {
 		ShapedRecipeBuilder builder = ShapedRecipeBuilder.shaped(musketBallItem, 8)
 				.group("gold")
 				.unlockedBy("gold_ingot", has(Tags.Items.INGOTS_GOLD));
@@ -1473,7 +1473,7 @@ public class RecipeGenerator extends RecipeProvider {
 				.save(finishedRecipeConsumer);
 	}
 
-	private static void createWoodGauntlet(ItemLike gauntletItem) {
+	private static void createWoodenGauntlet(ItemLike gauntletItem) {
 		ShapedRecipeBuilder builder = ShapedRecipeBuilder.shaped(gauntletItem)
 				.group("wood")
 				.unlockedBy("planks", has(ItemTags.PLANKS));
@@ -1487,7 +1487,7 @@ public class RecipeGenerator extends RecipeProvider {
 		createGauntlet(builder, ItemTags.STONE_TOOL_MATERIALS);
 	}
 
-	private static void createGoldGauntlet(ItemLike gauntletItem) {
+	private static void createGoldenGauntlet(ItemLike gauntletItem) {
 		ShapedRecipeBuilder builder = ShapedRecipeBuilder.shaped(gauntletItem)
 				.group("gold")
 				.unlockedBy("gold", has(Tags.Items.INGOTS_GOLD));
@@ -1508,7 +1508,7 @@ public class RecipeGenerator extends RecipeProvider {
 		createGauntlet(builder, Tags.Items.GEMS_DIAMOND);
 	}
 
-	private static void createWoodPike(ItemLike pikeItem, ItemLike pikeHead) {
+	private static void createWoodenPike(ItemLike pikeItem, ItemLike pikeHead) {
 		ShapedRecipeBuilder builder = ShapedRecipeBuilder.shaped(pikeItem)
 				.group("wood")
 				.unlockedBy("planks", has(ItemTags.PLANKS));
@@ -1522,7 +1522,7 @@ public class RecipeGenerator extends RecipeProvider {
 		createPike(builder, ItemTags.STONE_TOOL_MATERIALS, pikeHead);
 	}
 
-	private static void createGoldPike(ItemLike pikeItem, ItemLike pikeHead) {
+	private static void createGoldenPike(ItemLike pikeItem, ItemLike pikeHead) {
 		ShapedRecipeBuilder builder = ShapedRecipeBuilder.shaped(pikeItem)
 				.group("gold")
 				.unlockedBy("gold", has(Tags.Items.INGOTS_GOLD));
@@ -1543,11 +1543,11 @@ public class RecipeGenerator extends RecipeProvider {
 		createPike(builder, Tags.Items.GEMS_DIAMOND, pikeHead);
 	}
 
-	private static void createWoodPikeHead(ItemLike pikeHeadItem) {
+	private static void createWoodenPikeHead(ItemLike pikeHeadItem) {
 		ShapedRecipeBuilder builder = ShapedRecipeBuilder.shaped(pikeHeadItem)
 				.group("wood")
 				.unlockedBy("planks", has(ItemTags.PLANKS));
-		createPikeHead(builder, ItemTags.PLANKS, ImmersiveWeaponsItemTagGroups.WOOD_SHARDS);
+		createPikeHead(builder, ItemTags.PLANKS, ImmersiveWeaponsItemTagGroups.WOODEN_SHARDS);
 	}
 
 	private static void createStonePikeHead(ItemLike pikeHeadItem) {
@@ -1557,7 +1557,7 @@ public class RecipeGenerator extends RecipeProvider {
 		createPikeHead(builder, ItemTags.STONE_TOOL_MATERIALS, ImmersiveWeaponsItemTagGroups.STONE_SHARDS);
 	}
 
-	private static void createGoldPikeHead(ItemLike pikeHeadItem) {
+	private static void createGoldenPikeHead(ItemLike pikeHeadItem) {
 		ShapedRecipeBuilder builder = ShapedRecipeBuilder.shaped(pikeHeadItem)
 				.group("gold")
 				.unlockedBy("gold", has(Tags.Items.INGOTS_GOLD));
@@ -2036,7 +2036,7 @@ public class RecipeGenerator extends RecipeProvider {
 	private static void createPike(ShapedRecipeBuilder builder, TagKey<Item> material, ItemLike pikeHead) {
 		builder.define('a', pikeHead)
 				.define('b', material)
-				.define('c', DeferredRegistryHandler.WOOD_TOOL_ROD.get())
+				.define('c', DeferredRegistryHandler.WOODEN_TOOL_ROD.get())
 				.pattern(" a ")
 				.pattern(" b ")
 				.pattern(" c ")
@@ -2101,52 +2101,52 @@ public class RecipeGenerator extends RecipeProvider {
 				.save(finishedRecipeConsumer);
 	}
 
-	private static void createSmokeBomb(ItemLike smokeBombItem) {
-		ShapedRecipeBuilder.shaped(smokeBombItem, 2)
+	private static void createSmokeGrenade(ItemLike smokeGrenadeItem) {
+		ShapedRecipeBuilder.shaped(smokeGrenadeItem, 2)
 				.define('a', Items.BAMBOO)
-				.define('b', DeferredRegistryHandler.SMALL_PARTS_METAL_THROWABLE_BOMB.get())
+				.define('b', DeferredRegistryHandler.GRENADE_ASSEMBLY.get())
 				.define('c', DeferredRegistryHandler.SMOKE_POWDER.get())
 				.pattern(" cb")
 				.pattern(" a ")
 				.pattern(" a ")
-				.group("smoke_bomb")
+				.group("smoke_grenade")
 				.unlockedBy("smoke_powder", has(DeferredRegistryHandler.SMOKE_POWDER.get()))
 				.save(finishedRecipeConsumer);
 	}
 
-	private static void createColoredSmokeBomb(ItemLike smokeBombItem, TagKey<Item> colorTag) {
-		ShapedRecipeBuilder.shaped(smokeBombItem, 2)
+	private static void createColoredSmokeGrenade(ItemLike smokeGrenadeItem, TagKey<Item> colorTag) {
+		ShapedRecipeBuilder.shaped(smokeGrenadeItem, 2)
 				.define('a', Items.BAMBOO)
-				.define('b', DeferredRegistryHandler.SMALL_PARTS_METAL_THROWABLE_BOMB.get())
+				.define('b', DeferredRegistryHandler.GRENADE_ASSEMBLY.get())
 				.define('c', DeferredRegistryHandler.SMOKE_POWDER.get())
 				.define('d', colorTag)
 				.pattern("dcb")
 				.pattern(" a ")
 				.pattern(" a ")
-				.group("smoke_bomb")
+				.group("smoke_grenade")
 				.unlockedBy("smoke_powder", has(DeferredRegistryHandler.SMOKE_POWDER.get()))
 				.save(finishedRecipeConsumer);
 	}
 
-	private static void createSmokeBombArrow(ItemLike arrowItem) {
+	private static void createSmokeGrenadeArrow(ItemLike arrowItem) {
 		ShapedRecipeBuilder.shaped(arrowItem, 4)
 				.define('a', Items.ARROW)
 				.define('b', DeferredRegistryHandler.SMOKE_POWDER.get())
 				.pattern("aab")
 				.pattern("aa ")
-				.group("smoke_bomb")
+				.group("smoke_grenade")
 				.unlockedBy("smoke_powder", has(DeferredRegistryHandler.SMOKE_POWDER.get()))
 				.save(finishedRecipeConsumer);
 	}
 
-	private static void createColoredSmokeBombArrow(ItemLike arrowItem, TagKey<Item> colorTag) {
+	private static void createColoredSmokeGrenadeArrow(ItemLike arrowItem, TagKey<Item> colorTag) {
 		ShapedRecipeBuilder.shaped(arrowItem, 4)
 				.define('a', Items.ARROW)
 				.define('b', DeferredRegistryHandler.SMOKE_POWDER.get())
 				.define('c', colorTag)
 				.pattern("aab")
 				.pattern("aac")
-				.group("smoke_bomb")
+				.group("smoke_grenade")
 				.unlockedBy("smoke_powder", has(DeferredRegistryHandler.SMOKE_POWDER.get()))
 				.save(finishedRecipeConsumer);
 	}

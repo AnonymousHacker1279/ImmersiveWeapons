@@ -105,7 +105,7 @@ public class ItemTagsGenerator extends ItemTagsProvider {
 		tag(ImmersiveWeaponsItemTagGroups.VENTUS_SHARDS).add(DeferredRegistryHandler.VENTUS_SHARD.get());
 		tag(ImmersiveWeaponsItemTagGroups.DIAMOND_SHARDS).add(DeferredRegistryHandler.DIAMOND_SHARD.get());
 		tag(ImmersiveWeaponsItemTagGroups.STONE_SHARDS).add(DeferredRegistryHandler.STONE_SHARD.get());
-		tag(ImmersiveWeaponsItemTagGroups.WOOD_SHARDS).add(DeferredRegistryHandler.WOOD_SHARD.get());
+		tag(ImmersiveWeaponsItemTagGroups.WOODEN_SHARDS).add(DeferredRegistryHandler.WOODEN_SHARD.get());
 	}
 
 	/**

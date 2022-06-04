@@ -85,11 +85,11 @@
 			}
 		]
 	},
-	"smoke_bomb_hiss": {
-		"subtitle": "immersiveweapons.subtitle.item.smoke_bomb_hiss",
+	"smoke_grenade_hiss": {
+		"subtitle": "immersiveweapons.subtitle.item.smoke_grenade_hiss",
 		"sounds": [
 			{
-				"name": "immersiveweapons:smoke_bomb_hiss",
+				"name": "immersiveweapons:smoke_grenade_hiss",
 				"stream": true
 			}
 		]

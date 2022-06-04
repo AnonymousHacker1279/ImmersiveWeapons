@@ -1,0 +1,17 @@
+{
+	"name": "Wooden Gauntlet",
+	"icon": "immersiveweapons:wooden_gauntlet",
+	"category": "immersiveweapons:gauntlets",
+	"pages": [
+		{
+			"type": "patchouli:text",
+			"text": "Wooden gauntlets are the weakest of all gauntlets. Heavy, blunt, and weak.$(br2)Why not just lob a plank at someone?"
+		},
+		{
+			"type": "patchouli:crafting",
+			"recipe": "immersiveweapons:wooden_gauntlet",
+			"text": "$(o)Has a 15% chance to inflict $(#FF5555)Bleeding$()."
+		}
+	],
+	"advancement": "immersiveweapons:planks"
+}

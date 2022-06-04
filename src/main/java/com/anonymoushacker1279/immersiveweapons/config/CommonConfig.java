@@ -11,7 +11,7 @@ public class CommonConfig {
 	public static final CommonConfig COMMON;
 
 	// General settings
-	public static ForgeConfigSpec.ConfigValue<Integer> MAX_SMOKE_BOMB_PARTICLES;
+	public static ForgeConfigSpec.ConfigValue<Integer> MAX_SMOKE_GRENADE_PARTICLES;
 	public static ForgeConfigSpec.ConfigValue<Boolean> BULLETS_BREAK_GLASS;
 	public static ForgeConfigSpec.ConfigValue<Boolean> TILTROS_ENABLED;
 
@@ -68,11 +68,11 @@ public class CommonConfig {
 		builder.push("Server Configuration");
 
 		builder.push("Miscellaneous");
-		MAX_SMOKE_BOMB_PARTICLES = builder
-				.comment("Set the maximum number of particles produced by the smoke bomb - Default 96\n" +
+		MAX_SMOKE_GRENADE_PARTICLES = builder
+				.comment("Set the maximum number of particles produced by the smoke grenade - Default 96\n" +
 						"Setting this higher can make clients laggy, setting to 0 effectively disables it")
-				.translation("config.immersiveweapons.max_smoke_bomb_particles")
-				.define("Max smoke bomb particles", 96);
+				.translation("config.immersiveweapons.max_smoke_grenade_particles")
+				.define("Max smoke grenade particles", 96);
 		BULLETS_BREAK_GLASS = builder
 				.comment("Enable bullets breaking glass - Default true")
 				.translation("config.immersiveweapons.bullets_break_glass")

@@ -1,5 +1,5 @@
 {
-  "parent": "immersiveweapons:small_partss_table",
+  "parent": "immersiveweapons:small_parts_table",
   "display": {
     "icon": {
       "item": "immersiveweapons:flare_gun",

@@ -11,7 +11,7 @@
       "item": "minecraft:leather"
     },
     "b": {
-      "item": "immersiveweapons:small_parts_metal_tool"
+      "item": "immersiveweapons:tool_joint"
     },
     "c": {
       "tag": "forge:ingots/metal"

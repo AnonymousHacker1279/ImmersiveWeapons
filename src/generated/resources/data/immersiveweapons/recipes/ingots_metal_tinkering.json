@@ -4,7 +4,7 @@
     "tag": "forge:ingots/metal"
   },
   "craftables": [
-    "immersiveweapons:small_parts_metal_throwable_bomb",
-    "immersiveweapons:small_parts_metal_tool"
+    "immersiveweapons:grenade_assembly",
+    "immersiveweapons:tool_joint"
   ]
 }

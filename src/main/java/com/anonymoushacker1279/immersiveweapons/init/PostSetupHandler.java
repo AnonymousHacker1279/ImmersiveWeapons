@@ -37,9 +37,9 @@ public class PostSetupHandler {
 		Builder<Attribute, AttributeModifier> combineBuilder = ImmutableMultimap.builder();
 
 		// Wood Pike Item
-		combineBuilder.putAll(WoodPikeItem.pikeAttributes);
+		combineBuilder.putAll(WoodenPikeItem.pikeAttributes);
 		combineBuilder.putAll(newAttributes);
-		WoodPikeItem.pikeAttributes = combineBuilder.build();
+		WoodenPikeItem.pikeAttributes = combineBuilder.build();
 
 		// Stone Pike Item
 		combineBuilder = ImmutableMultimap.builder();
@@ -49,9 +49,9 @@ public class PostSetupHandler {
 
 		// Gold Pike Item
 		combineBuilder = ImmutableMultimap.builder();
-		combineBuilder.putAll(GoldPikeItem.pikeAttributes);
+		combineBuilder.putAll(GoldenPikeItem.pikeAttributes);
 		combineBuilder.putAll(newAttributes);
-		GoldPikeItem.pikeAttributes = combineBuilder.build();
+		GoldenPikeItem.pikeAttributes = combineBuilder.build();
 
 		// Copper Pike Item
 		combineBuilder = ImmutableMultimap.builder();
@@ -94,9 +94,9 @@ public class PostSetupHandler {
 		combineBuilder = ImmutableMultimap.builder();
 
 		// Wood Gauntlet Item
-		combineBuilder.putAll(WoodGauntletItem.gauntletAttributes);
+		combineBuilder.putAll(WoodenGauntletItem.gauntletAttributes);
 		combineBuilder.putAll(newAttributes);
-		WoodGauntletItem.gauntletAttributes = combineBuilder.build();
+		WoodenGauntletItem.gauntletAttributes = combineBuilder.build();
 
 		// Stone Gauntlet Item
 		combineBuilder = ImmutableMultimap.builder();
@@ -106,9 +106,9 @@ public class PostSetupHandler {
 
 		// Gold Gauntlet Item
 		combineBuilder = ImmutableMultimap.builder();
-		combineBuilder.putAll(GoldGauntletItem.gauntletAttributes);
+		combineBuilder.putAll(GoldenGauntletItem.gauntletAttributes);
 		combineBuilder.putAll(newAttributes);
-		GoldGauntletItem.gauntletAttributes = combineBuilder.build();
+		GoldenGauntletItem.gauntletAttributes = combineBuilder.build();
 
 		// Copper Gauntlet Item
 		combineBuilder = ImmutableMultimap.builder();

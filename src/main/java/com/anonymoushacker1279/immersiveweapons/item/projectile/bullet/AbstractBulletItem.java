@@ -37,7 +37,7 @@ public abstract class AbstractBulletItem extends ArrowItem {
 	}
 
 	public @NotNull BulletEntity createBullet(@NotNull Level level, @NotNull ItemStack stack, @NotNull LivingEntity shooter) {
-		BulletEntity bulletEntity = new BulletEntity(DeferredRegistryHandler.IRON_BULLET_ENTITY.get(), shooter, level);
+		BulletEntity bulletEntity = new BulletEntity(DeferredRegistryHandler.IRON_MUSKET_BALL_ENTITY.get(), shooter, level);
 		bulletEntity.setBaseDamage(damage);
 		bulletEntity.setOwner(shooter);
 		return bulletEntity;

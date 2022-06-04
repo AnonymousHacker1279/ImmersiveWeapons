@@ -1,6 +1,6 @@
 package com.anonymoushacker1279.immersiveweapons.entity.projectile;
 
-import com.anonymoushacker1279.immersiveweapons.client.particle.smoke_bomb.SmokeBombParticleOptions;
+import com.anonymoushacker1279.immersiveweapons.client.particle.smoke_grenade.SmokeGrenadeParticleOptions;
 import com.anonymoushacker1279.immersiveweapons.config.CommonConfig;
 import com.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
 import com.anonymoushacker1279.immersiveweapons.init.PacketHandler;
@@ -182,7 +182,7 @@ public class CustomArrowEntity {
 		}
 	}
 
-	public static class GoldArrowEntity extends AbstractCustomArrowEntity {
+	public static class GoldenArrowEntity extends AbstractCustomArrowEntity {
 
 		/**
 		 * Constructor for GoldArrowEntity.
@@ -190,9 +190,9 @@ public class CustomArrowEntity {
 		 * @param type  the <code>EntityType</code> instance; must extend AbstractArrowEntity
 		 * @param world the <code>World</code> the entity is in
 		 */
-		public GoldArrowEntity(EntityType<? extends AbstractArrow> type, Level world) {
+		public GoldenArrowEntity(EntityType<? extends AbstractArrow> type, Level world) {
 			super(type, world);
-			referenceItem = DeferredRegistryHandler.GOLD_ARROW.get();
+			referenceItem = DeferredRegistryHandler.GOLDEN_ARROW.get();
 		}
 
 		/**
@@ -202,8 +202,8 @@ public class CustomArrowEntity {
 		 * @param world           the <code>World</code> the entity is in
 		 * @param referenceItemIn the reference item
 		 */
-		public GoldArrowEntity(LivingEntity shooter, Level world, Item referenceItemIn) {
-			super(DeferredRegistryHandler.GOLD_ARROW_ENTITY.get(), shooter, world);
+		public GoldenArrowEntity(LivingEntity shooter, Level world, Item referenceItemIn) {
+			super(DeferredRegistryHandler.GOLDEN_ARROW_ENTITY.get(), shooter, world);
 			referenceItem = referenceItemIn;
 		}
 
@@ -215,9 +215,9 @@ public class CustomArrowEntity {
 		 * @param y       the Y position
 		 * @param z       the Z position
 		 */
-		public GoldArrowEntity(Level worldIn, double x, double y, double z) {
-			super(DeferredRegistryHandler.GOLD_ARROW_ENTITY.get(), worldIn, x, y, z);
-			referenceItem = DeferredRegistryHandler.GOLD_ARROW.get();
+		public GoldenArrowEntity(Level worldIn, double x, double y, double z) {
+			super(DeferredRegistryHandler.GOLDEN_ARROW_ENTITY.get(), worldIn, x, y, z);
+			referenceItem = DeferredRegistryHandler.GOLDEN_ARROW.get();
 		}
 	}
 
@@ -280,7 +280,7 @@ public class CustomArrowEntity {
 		}
 	}
 
-	public static class WoodArrowEntity extends AbstractCustomArrowEntity {
+	public static class WoodenArrowEntity extends AbstractCustomArrowEntity {
 
 		/**
 		 * Constructor for WoodArrowEntity.
@@ -288,9 +288,9 @@ public class CustomArrowEntity {
 		 * @param type  the <code>EntityType</code> instance; must extend AbstractArrowEntity
 		 * @param world the <code>World</code> the entity is in
 		 */
-		public WoodArrowEntity(EntityType<? extends AbstractArrow> type, Level world) {
+		public WoodenArrowEntity(EntityType<? extends AbstractArrow> type, Level world) {
 			super(type, world);
-			referenceItem = DeferredRegistryHandler.WOOD_ARROW.get();
+			referenceItem = DeferredRegistryHandler.WOODEN_ARROW.get();
 		}
 
 		/**
@@ -300,8 +300,8 @@ public class CustomArrowEntity {
 		 * @param world           the <code>World</code> the entity is in
 		 * @param referenceItemIn the reference item
 		 */
-		public WoodArrowEntity(LivingEntity shooter, Level world, Item referenceItemIn) {
-			super(DeferredRegistryHandler.WOOD_ARROW_ENTITY.get(), shooter, world);
+		public WoodenArrowEntity(LivingEntity shooter, Level world, Item referenceItemIn) {
+			super(DeferredRegistryHandler.WOODEN_ARROW_ENTITY.get(), shooter, world);
 			referenceItem = referenceItemIn;
 		}
 
@@ -313,9 +313,9 @@ public class CustomArrowEntity {
 		 * @param y       the Y position
 		 * @param z       the Z position
 		 */
-		public WoodArrowEntity(Level worldIn, double x, double y, double z) {
-			super(DeferredRegistryHandler.WOOD_ARROW_ENTITY.get(), worldIn, x, y, z);
-			referenceItem = DeferredRegistryHandler.WOOD_ARROW.get();
+		public WoodenArrowEntity(Level worldIn, double x, double y, double z) {
+			super(DeferredRegistryHandler.WOODEN_ARROW_ENTITY.get(), worldIn, x, y, z);
+			referenceItem = DeferredRegistryHandler.WOODEN_ARROW.get();
 		}
 
 		/**
@@ -402,32 +402,32 @@ public class CustomArrowEntity {
 		}
 	}
 
-	public static class SmokeBombArrowEntity extends AbstractCustomArrowEntity {
+	public static class SmokeGrenadeArrowEntity extends AbstractCustomArrowEntity {
 
 		private static int color = 0;
-		private final int configMaxParticles = CommonConfig.MAX_SMOKE_BOMB_PARTICLES.get();
+		private final int configMaxParticles = CommonConfig.MAX_SMOKE_GRENADE_PARTICLES.get();
 		private static final byte VANILLA_IMPACT_STATUS_ID = 3;
 
 		/**
-		 * Constructor for SmokeBombArrowEntity.
+		 * Constructor for SmokeGrenadeArrowEntity.
 		 *
 		 * @param type  the <code>EntityType</code> instance; must extend AbstractArrowEntity
 		 * @param world the <code>World</code> the entity is in
 		 */
-		public SmokeBombArrowEntity(EntityType<? extends AbstractArrow> type, Level world) {
+		public SmokeGrenadeArrowEntity(EntityType<? extends AbstractArrow> type, Level world) {
 			super(type, world);
-			referenceItem = DeferredRegistryHandler.SMOKE_BOMB_ARROW.get();
+			referenceItem = DeferredRegistryHandler.SMOKE_GRENADE_ARROW.get();
 		}
 
 		/**
-		 * Constructor for SmokeBombArrowEntity.
+		 * Constructor for SmokeGrenadeArrowEntity.
 		 *
 		 * @param shooter         the <code>LivingEntity</code> shooting the entity
 		 * @param world           the <code>World</code> the entity is in
 		 * @param referenceItemIn the reference item
 		 */
-		public SmokeBombArrowEntity(LivingEntity shooter, Level world, Item referenceItemIn) {
-			super(DeferredRegistryHandler.SMOKE_BOMB_ARROW_ENTITY.get(), shooter, world);
+		public SmokeGrenadeArrowEntity(LivingEntity shooter, Level world, Item referenceItemIn) {
+			super(DeferredRegistryHandler.SMOKE_GRENADE_ARROW_ENTITY.get(), shooter, world);
 			referenceItem = referenceItemIn;
 		}
 
@@ -439,9 +439,9 @@ public class CustomArrowEntity {
 		 * @param y       the Y position
 		 * @param z       the Z position
 		 */
-		public SmokeBombArrowEntity(Level worldIn, double x, double y, double z) {
-			super(DeferredRegistryHandler.SMOKE_BOMB_ARROW_ENTITY.get(), worldIn, x, y, z);
-			referenceItem = DeferredRegistryHandler.SMOKE_BOMB_ARROW.get();
+		public SmokeGrenadeArrowEntity(Level worldIn, double x, double y, double z) {
+			super(DeferredRegistryHandler.SMOKE_GRENADE_ARROW_ENTITY.get(), worldIn, x, y, z);
+			referenceItem = DeferredRegistryHandler.SMOKE_GRENADE_ARROW.get();
 		}
 
 		/**
@@ -450,7 +450,7 @@ public class CustomArrowEntity {
 		 * @param color an integer representing the color
 		 */
 		public static void setColor(int color) {
-			SmokeBombArrowEntity.color = color;
+			SmokeGrenadeArrowEntity.color = color;
 		}
 
 		/**
@@ -463,7 +463,7 @@ public class CustomArrowEntity {
 			super.onHit(rayTraceResult);
 			if (!level.isClientSide) {
 				PacketHandler.INSTANCE.send(PacketDistributor.TRACKING_CHUNK.with(() -> level.getChunkAt(blockPosition())),
-						new SmokeBombArrowEntityPacketHandler(color));
+						new SmokeGrenadeArrowEntityPacketHandler(color));
 
 				level.broadcastEntityEvent(this, VANILLA_IMPACT_STATUS_ID);
 			}
@@ -483,7 +483,7 @@ public class CustomArrowEntity {
 
 				// Spawn smoke particles
 				for (int i = 0; i < configMaxParticles; ++i) {
-					level.addParticle(SmokeBombParticleOptions.getParticleByColor(color),
+					level.addParticle(SmokeGrenadeParticleOptions.getParticleByColor(color),
 							true, x, y, z,
 							GeneralUtilities.getRandomNumber(-0.1d, 0.1d),
 							GeneralUtilities.getRandomNumber(-0.1d, 0.1d),
@@ -491,29 +491,29 @@ public class CustomArrowEntity {
 				}
 
 				// Play a hissing sound
-				level.playLocalSound(x, y, z, DeferredRegistryHandler.SMOKE_BOMB_HISS.get(),
+				level.playLocalSound(x, y, z, DeferredRegistryHandler.SMOKE_GRENADE_HISS.get(),
 						SoundSource.NEUTRAL, 0.2f, 0.6f, true);
 			}
 		}
 	}
 
-	public record SmokeBombArrowEntityPacketHandler(int color) {
+	public record SmokeGrenadeArrowEntityPacketHandler(int color) {
 
 		/**
-		 * Constructor for SmokeBombArrowEntityPacketHandler.
+		 * Constructor for SmokeGrenadeArrowEntityPacketHandler.
 		 *
 		 * @param color the color ID
 		 */
-		public SmokeBombArrowEntityPacketHandler {
+		public SmokeGrenadeArrowEntityPacketHandler {
 		}
 
 		/**
 		 * Encodes a packet
 		 *
-		 * @param msg          the <code>SmokeBombArrowEntityPacketHandler</code> message being sent
+		 * @param msg          the <code>SmokeGrenadeArrowEntityPacketHandler</code> message being sent
 		 * @param packetBuffer the <code>PacketBuffer</code> containing packet data
 		 */
-		public static void encode(SmokeBombArrowEntityPacketHandler msg, FriendlyByteBuf packetBuffer) {
+		public static void encode(SmokeGrenadeArrowEntityPacketHandler msg, FriendlyByteBuf packetBuffer) {
 			packetBuffer.writeInt(msg.color);
 		}
 
@@ -521,19 +521,19 @@ public class CustomArrowEntity {
 		 * Decodes a packet
 		 *
 		 * @param packetBuffer the <code>PacketBuffer</code> containing packet data
-		 * @return SmokeBombArrowEntityPacketHandler
+		 * @return SmokeGrenadeArrowEntityPacketHandler
 		 */
-		public static SmokeBombArrowEntityPacketHandler decode(FriendlyByteBuf packetBuffer) {
-			return new SmokeBombArrowEntityPacketHandler(packetBuffer.readInt());
+		public static SmokeGrenadeArrowEntityPacketHandler decode(FriendlyByteBuf packetBuffer) {
+			return new SmokeGrenadeArrowEntityPacketHandler(packetBuffer.readInt());
 		}
 
 		/**
 		 * Handles an incoming packet, by sending it to the client/server
 		 *
-		 * @param msg             the <code>SmokeBombArrowEntityPacketHandler</code> message being sent
+		 * @param msg             the <code>SmokeGrenadeArrowEntityPacketHandler</code> message being sent
 		 * @param contextSupplier the <code>Supplier</code> providing context
 		 */
-		public static void handle(SmokeBombArrowEntityPacketHandler msg, Supplier<Context> contextSupplier) {
+		public static void handle(SmokeGrenadeArrowEntityPacketHandler msg, Supplier<Context> contextSupplier) {
 			NetworkEvent.Context context = contextSupplier.get();
 			context.enqueueWork(() -> DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> handleOnClient(msg)));
 			context.setPacketHandled(true);
@@ -542,10 +542,10 @@ public class CustomArrowEntity {
 		/**
 		 * Runs specifically on the client, when a packet is received
 		 *
-		 * @param msg the <code>SmokeBombArrowEntityPacketHandler</code> message being sent
+		 * @param msg the <code>SmokeGrenadeArrowEntityPacketHandler</code> message being sent
 		 */
-		private static void handleOnClient(SmokeBombArrowEntityPacketHandler msg) {
-			SmokeBombArrowEntity.setColor(msg.color);
+		private static void handleOnClient(SmokeGrenadeArrowEntityPacketHandler msg) {
+			SmokeGrenadeArrowEntity.setColor(msg.color);
 		}
 	}
 }

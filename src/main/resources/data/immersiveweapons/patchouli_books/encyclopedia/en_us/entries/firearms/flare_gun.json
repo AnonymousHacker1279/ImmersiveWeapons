@@ -13,5 +13,5 @@
 			"text": "Reload Time: $(l)3 seconds$()$(br2)Ammunition Type: $(l)Flares"
 		}
 	],
-	"advancement": "immersiveweapons:recipes/immersiveweapons/small_parts_iron_tinkering"
+	"advancement": "immersiveweapons:recipes/immersiveweapons/flare_gun"
 }

@@ -1,0 +1,17 @@
+{
+	"name": "Wooden Musket Ball",
+	"icon": "immersiveweapons:wooden_musket_ball",
+	"category": "immersiveweapons:ammunition",
+	"pages": [
+		{
+			"type": "patchouli:text",
+			"text": "$(o)Why does this even exist?$()$(br2)It should go without saying that you shouldn't shove a block of wood into a gun, but if you $(o)really$()want to, I won't stop you."
+		},
+		{
+			"type": "patchouli:crafting",
+			"recipe": "immersiveweapons:wooden_musket_ball",
+			"text": "$(o)Deals $(l)2.0$()$(o) base damage. See $(l:ammunition/bullet_velocities_info)Guide: Bullet Damage$()$(o) for more information.$(br2)$(l)30%$()$(o) chance to misfire."
+		}
+	],
+	"advancement": "immersiveweapons:wooden_shard"
+}

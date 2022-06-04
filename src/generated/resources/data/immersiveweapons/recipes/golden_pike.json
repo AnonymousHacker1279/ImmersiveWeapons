@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "gold",
+  "pattern": [
+    " a ",
+    " b ",
+    " c "
+  ],
+  "key": {
+    "a": {
+      "item": "immersiveweapons:golden_pike_head"
+    },
+    "b": {
+      "tag": "forge:ingots/gold"
+    },
+    "c": {
+      "item": "immersiveweapons:wooden_tool_rod"
+    }
+  },
+  "result": {
+    "item": "immersiveweapons:golden_pike"
+  }
+}
