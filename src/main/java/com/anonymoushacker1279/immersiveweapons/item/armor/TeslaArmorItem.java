@@ -1,8 +1,8 @@
 package com.anonymoushacker1279.immersiveweapons.item.armor;
 
 import com.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
+import com.anonymoushacker1279.immersiveweapons.client.IWKeyBinds;
 import com.anonymoushacker1279.immersiveweapons.config.ClientConfig;
-import com.anonymoushacker1279.immersiveweapons.event.ClientModEventSubscriber;
 import com.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
 import com.anonymoushacker1279.immersiveweapons.init.PacketHandler;
 import net.minecraft.client.Minecraft;
@@ -77,7 +77,7 @@ public class TeslaArmorItem extends ArmorItem {
 				player.getItemBySlot(EquipmentSlot.LEGS).getItem() == DeferredRegistryHandler.TESLA_LEGGINGS.get() &&
 				player.getItemBySlot(EquipmentSlot.FEET).getItem() == DeferredRegistryHandler.TESLA_BOOTS.get()) {
 			if (world.isClientSide) {
-				if (ClientModEventSubscriber.toggleArmorEffect.consumeClick()) {
+				if (IWKeyBinds.TOGGLE_ARMOR_EFFECT.consumeClick()) {
 					PacketHandler.INSTANCE.sendToServer(new TeslaArmorItemPacketHandler(!effectEnabled));
 					if (effectEnabled) {
 						world.playSound(player, player.blockPosition(), DeferredRegistryHandler.TESLA_ARMOR_POWER_DOWN.get(), SoundSource.PLAYERS, 0.9f, 1.0f);

@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "firearm",
+  "pattern": [
+    "a",
+    "b"
+  ],
+  "key": {
+    "a": {
+      "item": "immersiveweapons:scope"
+    },
+    "b": {
+      "item": "immersiveweapons:musket"
+    }
+  },
+  "result": {
+    "item": "immersiveweapons:musket_scope"
+  }
+}

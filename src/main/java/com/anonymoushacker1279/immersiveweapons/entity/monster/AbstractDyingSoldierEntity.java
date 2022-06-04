@@ -4,8 +4,10 @@ import com.anonymoushacker1279.immersiveweapons.entity.GrantAdvancementOnDiscove
 import com.anonymoushacker1279.immersiveweapons.entity.ai.goal.RangedGunAttackGoal;
 import com.anonymoushacker1279.immersiveweapons.entity.neutral.FieldMedicEntity;
 import com.anonymoushacker1279.immersiveweapons.entity.neutral.MinutemanEntity;
+import com.anonymoushacker1279.immersiveweapons.entity.projectile.BulletEntity;
 import com.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
 import com.anonymoushacker1279.immersiveweapons.item.projectile.arrow.AbstractArrowItem;
+import com.anonymoushacker1279.immersiveweapons.item.projectile.bullet.AbstractBulletItem;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.sounds.SoundEvent;
@@ -24,7 +26,6 @@ import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.monster.RangedAttackMob;
 import net.minecraft.world.entity.npc.Villager;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.entity.projectile.ProjectileUtil;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ProjectileWeaponItem;
@@ -232,40 +233,39 @@ public abstract class AbstractDyingSoldierEntity extends Monster implements Rang
 	 */
 	@Override
 	public void performRangedAttack(@NotNull LivingEntity target, float distanceFactor) {
-		AbstractArrow abstractBulletEntity = fireArrow(new ItemStack(DeferredRegistryHandler.IRON_MUSKET_BALL.get()),
+		BulletEntity bulletEntity = fireBullet(new ItemStack(DeferredRegistryHandler.IRON_MUSKET_BALL.get()),
 				distanceFactor);
 
 		double deltaX = target.getX() - getX();
-		double deltaY = target.getY(0.1D) - abstractBulletEntity.getY();
+		double deltaY = target.getY(0.1D) - bulletEntity.getY();
 		double deltaZ = target.getZ() - getZ();
 		double sqrtXZ = Mth.sqrt((float) (deltaX * deltaX + deltaZ * deltaZ));
 
-		abstractBulletEntity.setKnockback(3);
-		abstractBulletEntity.setOwner(this);
+		bulletEntity.setKnockback(3);
+		bulletEntity.setOwner(this);
 
-		abstractBulletEntity.shoot(deltaX, deltaY + sqrtXZ * 0.2D, deltaZ, 1.6F,
+		bulletEntity.shoot(deltaX, deltaY + sqrtXZ * 0.2D, deltaZ, 1.6F,
 				(float) (14 - level.getDifficulty().getId() * 4));
 		playSound(DeferredRegistryHandler.FLINTLOCK_PISTOL_FIRE.get(), 1.0F,
 				1.0F / (getRandom().nextFloat() * 0.4F + 0.8F));
-		level.addFreshEntity(abstractBulletEntity);
+		level.addFreshEntity(bulletEntity);
 	}
 
 	/**
-	 * Fires an arrow. Technically, all projectiles coming from this entity will be bullets,
-	 * though they use a modified arrow entity for this.
+	 * Fires a bullet.
 	 *
 	 * @param arrowStack     the <code>ItemStack</code> of the arrow
 	 * @param distanceFactor the distance factor for firing
-	 * @return AbstractArrowEntity
+	 * @return BulletEntity
 	 */
-	private AbstractArrow fireArrow(ItemStack arrowStack, float distanceFactor) {
-		AbstractArrowItem arrowItem = (AbstractArrowItem) (arrowStack.getItem() instanceof AbstractArrowItem
+	private BulletEntity fireBullet(ItemStack arrowStack, float distanceFactor) {
+		AbstractBulletItem bulletItem = (AbstractBulletItem) (arrowStack.getItem() instanceof AbstractArrowItem
 				? arrowStack.getItem() : DeferredRegistryHandler.IRON_MUSKET_BALL.get());
 
-		AbstractArrow abstractArrowEntity = arrowItem.createArrow(level, arrowStack, this);
-		abstractArrowEntity.setEnchantmentEffectsFromEntity(this, distanceFactor);
+		BulletEntity bulletEntity = bulletItem.createBullet(level, arrowStack, this);
+		bulletEntity.setEnchantmentEffectsFromEntity(this, distanceFactor);
 
-		return abstractArrowEntity;
+		return bulletEntity;
 	}
 
 	/**

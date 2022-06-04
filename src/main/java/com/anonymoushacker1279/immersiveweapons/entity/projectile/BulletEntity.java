@@ -1,688 +1,517 @@
 package com.anonymoushacker1279.immersiveweapons.entity.projectile;
 
+import com.anonymoushacker1279.immersiveweapons.client.particle.bullet_impact.BulletImpactParticleOptions;
+import com.anonymoushacker1279.immersiveweapons.config.CommonConfig;
+import com.anonymoushacker1279.immersiveweapons.data.tags.groups.forge.ForgeBlockTagGroups;
 import com.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
+import com.anonymoushacker1279.immersiveweapons.item.projectile.gun.MusketItem;
 import com.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
+import it.unimi.dsi.fastutil.ints.IntOpenHashSet;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.protocol.Packet;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.util.Mth;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.*;
-import net.minecraft.world.entity.projectile.ItemSupplier;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.level.ClipContext;
+import net.minecraft.world.level.ClipContext.Fluid;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.level.gameevent.GameEvent;
+import net.minecraft.world.phys.*;
+import net.minecraft.world.phys.HitResult.Type;
+import net.minecraft.world.phys.shapes.VoxelShape;
+import net.minecraftforge.common.Tags.Blocks;
+import net.minecraftforge.event.ForgeEventFactory;
+import net.minecraftforge.network.NetworkHooks;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
-import java.util.List;
+public class BulletEntity extends AbstractArrow {
 
-public class BulletEntity {
+	private static final boolean canBreakGlass = CommonConfig.BULLETS_BREAK_GLASS.get();
+	private final SoundEvent hitSound = getDefaultHitGroundSoundEvent();
+	private static final byte VANILLA_IMPACT_STATUS_ID = 3;
+	Item referenceItem;
+	int knockbackStrength;
+	boolean shouldStopMoving = false;
+	float inertia = 0.99F;
+	private BlockState inBlockState;
+	private IntOpenHashSet piercedEntities;
+	private boolean hasAlreadyBrokeGlass = false;
+	private Item firingItem = DeferredRegistryHandler.FLINTLOCK_PISTOL.get();
 
-	public static class CopperBulletEntity extends AbstractBulletEntity {
-
-		/**
-		 * Constructor for CopperBulletEntity.
-		 *
-		 * @param entityType        the <code>EntityType</code> instance
-		 * @param world             the <code>World</code> the entity is in
-		 * @param knockbackStrength the bullet knockback strength
-		 */
-		public CopperBulletEntity(EntityType<CopperBulletEntity> entityType, Level world, int knockbackStrength) {
-			super(entityType, world);
-			this.knockbackStrength = knockbackStrength;
-			referenceItem = DeferredRegistryHandler.COPPER_MUSKET_BALL.get();
-		}
-
-		/**
-		 * Constructor for CopperBulletEntity.
-		 *
-		 * @param shooter         the <code>LivingEntity</code> shooting the entity
-		 * @param world           the <code>World</code> the entity is in
-		 * @param referenceItemIn the reference item
-		 */
-		public CopperBulletEntity(LivingEntity shooter, Level world, Item referenceItemIn) {
-			super(DeferredRegistryHandler.COPPER_BULLET_ENTITY.get(), shooter, world);
-			referenceItem = referenceItemIn;
-		}
-
-		/**
-		 * Fire the entity from a position with a velocity and inaccuracy.
-		 *
-		 * @param x          the X position
-		 * @param y          the Y position
-		 * @param z          the Z position
-		 * @param velocity   the velocity
-		 * @param inaccuracy the inaccuracy modifier
-		 */
-		@Override
-		public void shoot(double x, double y, double z, float velocity, float inaccuracy) {
-			Vec3 vector3d = (new Vec3(x, y, z)).normalize().add(random.nextGaussian() * 0.0025F * (GeneralUtilities.getRandomNumber(0.2f, 1.1f)), 0.00025F * (GeneralUtilities.getRandomNumber(0.2f, 1.1f)), random.nextGaussian() * 0.0025F).scale(velocity);
-			setDeltaMovement(vector3d);
-			double horizontalDistanceSqr = vector3d.horizontalDistanceSqr();
-			float yRot = (float) (Mth.atan2(vector3d.x, vector3d.z) * (180F / (float) Math.PI));
-			float xRot = (float) (Mth.atan2(vector3d.y, horizontalDistanceSqr) * (180F / (float) Math.PI));
-			yRotO = yRot;
-			xRotO = xRot;
-		}
-
-		/**
-		 * Get the movement modifier.
-		 *
-		 * @return double
-		 */
-		@Override
-		public double getGravityModifier() {
-			return 0.0355d;
-		}
+	/**
+	 * Constructor for AbstractBulletEntity.
+	 *
+	 * @param entityType the <code>EntityType</code> instance
+	 * @param level      the <code>Level</code> the entity is in
+	 */
+	public BulletEntity(EntityType<? extends AbstractArrow> entityType, Level level) {
+		super(entityType, level);
 	}
 
-	public static class WoodBulletEntity extends AbstractBulletEntity {
-		/**
-		 * Constructor for WoodBulletEntity.
-		 *
-		 * @param entityType        the <code>EntityType</code> instance
-		 * @param world             the <code>World</code> the entity is in
-		 * @param knockbackStrength the bullet knockback strength
-		 */
-		public WoodBulletEntity(EntityType<WoodBulletEntity> entityType, Level world, int knockbackStrength) {
-			super(entityType, world);
-			this.knockbackStrength = knockbackStrength;
-			referenceItem = DeferredRegistryHandler.WOOD_MUSKET_BALL.get();
-		}
-
-		/**
-		 * Constructor for WoodBulletEntity.
-		 *
-		 * @param shooter         the <code>LivingEntity</code> shooting the entity
-		 * @param world           the <code>World</code> the entity is in
-		 * @param referenceItemIn the reference item
-		 */
-		public WoodBulletEntity(LivingEntity shooter, Level world, Item referenceItemIn) {
-			super(DeferredRegistryHandler.WOOD_BULLET_ENTITY.get(), shooter, world);
-			referenceItem = referenceItemIn;
-		}
-
-		/**
-		 * Fire the entity from a position with a velocity and inaccuracy.
-		 *
-		 * @param x          the X position
-		 * @param y          the Y position
-		 * @param z          the Z position
-		 * @param velocity   the velocity
-		 * @param inaccuracy the inaccuracy modifier
-		 */
-		@Override
-		public void shoot(double x, double y, double z, float velocity, float inaccuracy) {
-			Vec3 vector3d = (new Vec3(x, y, z)).normalize().add(random.nextGaussian() * 0.0075F * (GeneralUtilities.getRandomNumber(3.2f, 5.1f)), -0.0095F * (GeneralUtilities.getRandomNumber(3.2f, 5.1f)), random.nextGaussian() * 0.0075F).scale(velocity);
-			setDeltaMovement(vector3d);
-			double horizontalDistanceSqr = vector3d.horizontalDistanceSqr();
-			float yRot = (float) (Mth.atan2(vector3d.x, vector3d.z) * (180F / (float) Math.PI));
-			float xRot = (float) (Mth.atan2(vector3d.y, horizontalDistanceSqr) * (180F / (float) Math.PI));
-			yRotO = yRot;
-			xRotO = xRot;
-		}
-
-		/**
-		 * Get the movement modifier.
-		 *
-		 * @return double
-		 */
-		@Override
-		public double getGravityModifier() {
-			return 0.035d;
-		}
+	/**
+	 * Constructor for BulletEntity.
+	 *
+	 * @param entityType the <code>EntityType</code> instance
+	 * @param shooter    the <code>LivingEntity</code> shooting the entity
+	 * @param level      the <code>Level</code> the entity is in
+	 */
+	public BulletEntity(EntityType<? extends BulletEntity> entityType, LivingEntity shooter, Level level) {
+		super(entityType, shooter, level);
 	}
 
-	public static class StoneBulletEntity extends AbstractBulletEntity {
-		/**
-		 * Constructor for StoneBulletEntity.
-		 *
-		 * @param entityType        the <code>EntityType</code> instance
-		 * @param world             the <code>World</code> the entity is in
-		 * @param knockbackStrength the bullet knockback strength
-		 */
-		public StoneBulletEntity(EntityType<StoneBulletEntity> entityType, Level world, int knockbackStrength) {
-			super(entityType, world);
-			this.knockbackStrength = knockbackStrength;
-			referenceItem = DeferredRegistryHandler.STONE_MUSKET_BALL.get();
-		}
-
-		/**
-		 * Constructor for StoneBulletEntity.
-		 *
-		 * @param shooter         the <code>LivingEntity</code> shooting the entity
-		 * @param world           the <code>World</code> the entity is in
-		 * @param referenceItemIn the reference item
-		 */
-		public StoneBulletEntity(LivingEntity shooter, Level world, Item referenceItemIn) {
-			super(DeferredRegistryHandler.STONE_BULLET_ENTITY.get(), shooter, world);
-			referenceItem = referenceItemIn;
-		}
-
-		/**
-		 * Fire the entity from a position with a velocity and inaccuracy.
-		 *
-		 * @param x          the X position
-		 * @param y          the Y position
-		 * @param z          the Z position
-		 * @param velocity   the velocity
-		 * @param inaccuracy the inaccuracy modifier
-		 */
-		@Override
-		public void shoot(double x, double y, double z, float velocity, float inaccuracy) {
-			Vec3 vector3d = (new Vec3(x, y, z)).normalize().add(random.nextGaussian() * 0.0075F * (GeneralUtilities.getRandomNumber(2.4f, 4.1f)), -0.0170F * (GeneralUtilities.getRandomNumber(2.4f, 4.1f)), random.nextGaussian() * 0.0075F).scale(velocity);
-			setDeltaMovement(vector3d);
-			double horizontalDistanceSqr = vector3d.horizontalDistanceSqr();
-			float yRot = (float) (Mth.atan2(vector3d.x, vector3d.z) * (180F / (float) Math.PI));
-			float xRot = (float) (Mth.atan2(vector3d.y, horizontalDistanceSqr) * (180F / (float) Math.PI));
-			yRotO = yRot;
-			xRotO = xRot;
-		}
-
-		/**
-		 * Get the movement modifier.
-		 *
-		 * @return double
-		 */
-		@Override
-		public double getGravityModifier() {
-			return 0.02d;
-		}
+	/**
+	 * Get the pickup item.
+	 *
+	 * @return ItemStack
+	 */
+	@Override
+	public @NotNull ItemStack getPickupItem() {
+		return new ItemStack(referenceItem);
 	}
 
-	public static class IronBulletEntity extends AbstractBulletEntity {
-		/**
-		 * Constructor for IronBulletEntity.
-		 *
-		 * @param entityType        the <code>EntityType</code> instance
-		 * @param world             the <code>World</code> the entity is in
-		 * @param knockbackStrength the bullet knockback strength
-		 */
-		public IronBulletEntity(EntityType<IronBulletEntity> entityType, Level world, int knockbackStrength) {
-			super(entityType, world);
-			this.knockbackStrength = knockbackStrength;
-			referenceItem = DeferredRegistryHandler.IRON_MUSKET_BALL.get();
-		}
-
-		/**
-		 * Constructor for IronBulletEntity.
-		 *
-		 * @param shooter         the <code>LivingEntity</code> shooting the entity
-		 * @param world           the <code>World</code> the entity is in
-		 * @param referenceItemIn the reference item
-		 */
-		public IronBulletEntity(LivingEntity shooter, Level world, Item referenceItemIn) {
-			super(DeferredRegistryHandler.IRON_BULLET_ENTITY.get(), shooter, world);
-			referenceItem = referenceItemIn;
-		}
-
-		/**
-		 * Fire the entity from a position with a velocity and inaccuracy.
-		 *
-		 * @param x          the X position
-		 * @param y          the Y position
-		 * @param z          the Z position
-		 * @param velocity   the velocity
-		 * @param inaccuracy the inaccuracy modifier
-		 */
-		@Override
-		public void shoot(double x, double y, double z, float velocity, float inaccuracy) {
-			Vec3 vector3d = (new Vec3(x, y, z)).normalize().add(random.nextGaussian() * 0.0025F * (GeneralUtilities.getRandomNumber(0.2f, 1.1f)), 0.00025F * (GeneralUtilities.getRandomNumber(0.2f, 1.1f)), random.nextGaussian() * 0.0025F).scale(velocity);
-			setDeltaMovement(vector3d);
-			double horizontalDistanceSqr = vector3d.horizontalDistanceSqr();
-			float yRot = (float) (Mth.atan2(vector3d.x, vector3d.z) * (180F / (float) Math.PI));
-			float xRot = (float) (Mth.atan2(vector3d.y, horizontalDistanceSqr) * (180F / (float) Math.PI));
-			yRotO = yRot;
-			xRotO = xRot;
-		}
-
-		/**
-		 * Get the movement modifier.
-		 *
-		 * @return double
-		 */
-		@Override
-		public double getGravityModifier() {
-			return 0.0355d;
-		}
+	/**
+	 * Get the entity spawn packet.
+	 *
+	 * @return Packet
+	 */
+	@Override
+	public @NotNull Packet<?> getAddEntityPacket() {
+		return NetworkHooks.getEntitySpawningPacket(this);
 	}
 
-	public static class CobaltBulletEntity extends AbstractBulletEntity {
-		/**
-		 * Constructor for CobaltBulletEntity.
-		 *
-		 * @param entityType        the <code>EntityType</code> instance
-		 * @param world             the <code>World</code> the entity is in
-		 * @param knockbackStrength the bullet knockback strength
-		 */
-		public CobaltBulletEntity(EntityType<CobaltBulletEntity> entityType, Level world, int knockbackStrength) {
-			super(entityType, world);
-			this.knockbackStrength = knockbackStrength;
-			referenceItem = DeferredRegistryHandler.COBALT_MUSKET_BALL.get();
+	/**
+	 * Runs once each tick.
+	 */
+	@Override
+	public void tick() {
+		if (!hasBeenShot) {
+			gameEvent(GameEvent.PROJECTILE_SHOOT, getOwner(), blockPosition());
+			hasBeenShot = true;
 		}
 
-		/**
-		 * Constructor for CobaltBulletEntity.
-		 *
-		 * @param shooter         the <code>LivingEntity</code> shooting the entity
-		 * @param world           the <code>World</code> the entity is in
-		 * @param referenceItemIn the reference item
-		 */
-		public CobaltBulletEntity(LivingEntity shooter, Level world, Item referenceItemIn) {
-			super(DeferredRegistryHandler.COBALT_BULLET_ENTITY.get(), shooter, world);
-			referenceItem = referenceItemIn;
+		if (!leftOwner) {
+			leftOwner = checkLeftOwner();
 		}
 
-		/**
-		 * Fire the entity from a position with a velocity and inaccuracy.
-		 *
-		 * @param x          the X position
-		 * @param y          the Y position
-		 * @param z          the Z position
-		 * @param velocity   the velocity
-		 * @param inaccuracy the inaccuracy modifier
-		 */
-		@Override
-		public void shoot(double x, double y, double z, float velocity, float inaccuracy) {
-			Vec3 vector3d = (new Vec3(x, y, z)).normalize().add(random.nextGaussian() * 0.0025F * (GeneralUtilities.getRandomNumber(0.2f, 1.1f)), 0.00025F * (GeneralUtilities.getRandomNumber(0.2f, 1.1f)), random.nextGaussian() * 0.0025F).scale(velocity);
-			setDeltaMovement(vector3d);
-			double horizontalDistanceSqr = vector3d.horizontalDistanceSqr();
-			float yRot = (float) (Mth.atan2(vector3d.x, vector3d.z) * (180F / (float) Math.PI));
-			float xRot = (float) (Mth.atan2(vector3d.y, horizontalDistanceSqr) * (180F / (float) Math.PI));
-			yRotO = yRot;
-			xRotO = xRot;
+		baseTick();
+
+		// Run extra stuff while ticking, useful for classes extending this class
+		// but not needing to overwrite the entire tick function.
+		doWhileTicking();
+
+		boolean isNoPhysics = isNoPhysics();
+		Vec3 deltaMovement = getDeltaMovement();
+
+		double yRotation;
+		double xRotation;
+		// Make the bullet rotate
+		if (xRotO == 0.0F && yRotO == 0.0F && !inGround) {
+			double horizontalDistanceSquareRoot = deltaMovement.horizontalDistanceSqr();
+			yRotation = (Mth.atan2(deltaMovement.x, deltaMovement.z) * (180F / (float) Math.PI));
+			xRotation = (Mth.atan2(deltaMovement.y, horizontalDistanceSquareRoot) * (180F / (float) Math.PI));
+			yRotO = (float) yRotation;
+			xRotO = (float) xRotation;
 		}
 
-		/**
-		 * Get the movement modifier.
-		 *
-		 * @return double
-		 */
-		@Override
-		public double getGravityModifier() {
-			return 0.0355d;
-		}
-	}
+		BlockPos currentBlockPosition = blockPosition();
+		BlockState blockStateAtCurrentPosition = level.getBlockState(currentBlockPosition);
+		// Check if the block at the current position is air, and that it has physics enabled
+		if (!blockStateAtCurrentPosition.isAir() && !isNoPhysics) {
+			VoxelShape currentPositionBlockSupportShape = blockStateAtCurrentPosition.getBlockSupportShape(level,
+					currentBlockPosition);
 
-	public static class GoldBulletEntity extends AbstractBulletEntity {
-		/**
-		 * Constructor for GoldBulletEntity.
-		 *
-		 * @param entityType        the <code>EntityType</code> instance
-		 * @param world             the <code>World</code> the entity is in
-		 * @param knockbackStrength the bullet knockback strength
-		 */
-		public GoldBulletEntity(EntityType<GoldBulletEntity> entityType, Level world, int knockbackStrength) {
-			super(entityType, world);
-			this.knockbackStrength = knockbackStrength;
-			referenceItem = DeferredRegistryHandler.GOLD_MUSKET_BALL.get();
+			// Check the hitboxes first, if this isn't an air block
+			if (!currentPositionBlockSupportShape.isEmpty()) {
+				Vec3 position = position();
+
+				for (AABB aabb : currentPositionBlockSupportShape.toAabbs()) {
+					// Check if the bullet reached the hitbox of the non-air block
+					if (aabb.move(currentBlockPosition).contains(position)) {
+						inGround = true;
+						break;
+					}
+				}
+			}
 		}
 
-		/**
-		 * Constructor for GoldBulletEntity.
-		 *
-		 * @param shooter         the <code>LivingEntity</code> shooting the entity
-		 * @param world           the <code>World</code> the entity is in
-		 * @param referenceItemIn the reference item
-		 */
-		public GoldBulletEntity(LivingEntity shooter, Level world, Item referenceItemIn) {
-			super(DeferredRegistryHandler.GOLD_BULLET_ENTITY.get(), shooter, world);
-			referenceItem = referenceItemIn;
+		// If the shake time is above zero, tick it down
+		if (shakeTime > 0) {
+			shakeTime--;
 		}
 
-		/**
-		 * Fire the entity from a position with a velocity and inaccuracy.
-		 *
-		 * @param x          the X position
-		 * @param y          the Y position
-		 * @param z          the Z position
-		 * @param velocity   the velocity
-		 * @param inaccuracy the inaccuracy modifier
-		 */
-		@Override
-		public void shoot(double x, double y, double z, float velocity, float inaccuracy) {
-			Vec3 vector3d = (new Vec3(x, y, z)).normalize().add(random.nextGaussian() * 0.0025F * (GeneralUtilities.getRandomNumber(0.2f, 1.1f)), 0.00025F * (GeneralUtilities.getRandomNumber(0.2f, 1.1f)), random.nextGaussian() * 0.0025F).scale(velocity);
-			setDeltaMovement(vector3d);
-			double horizontalDistanceSqr = vector3d.horizontalDistanceSqr();
-			float yRot = (float) (Mth.atan2(vector3d.x, vector3d.z) * (180F / (float) Math.PI));
-			float xRot = (float) (Mth.atan2(vector3d.y, horizontalDistanceSqr) * (180F / (float) Math.PI));
-			yRotO = yRot;
-			xRotO = xRot;
+		// If the bullet is in water or rain, clear any fire
+		if (isInWaterOrRain()) {
+			clearFire();
 		}
 
-		/**
-		 * Get the movement modifier.
-		 *
-		 * @return double
-		 */
-		@Override
-		public double getGravityModifier() {
-			return 0.0355d;
-		}
-	}
-
-	public static class DiamondBulletEntity extends AbstractBulletEntity {
-		/**
-		 * Constructor for DiamondBulletEntity.
-		 *
-		 * @param entityType        the <code>EntityType</code> instance
-		 * @param world             the <code>World</code> the entity is in
-		 * @param knockbackStrength the bullet knockback strength
-		 */
-		public DiamondBulletEntity(EntityType<DiamondBulletEntity> entityType, Level world, int knockbackStrength) {
-			super(entityType, world);
-			this.knockbackStrength = knockbackStrength;
-			referenceItem = DeferredRegistryHandler.DIAMOND_MUSKET_BALL.get();
-		}
-
-		/**
-		 * Constructor for DiamondBulletEntity.
-		 *
-		 * @param shooter         the <code>LivingEntity</code> shooting the entity
-		 * @param world           the <code>World</code> the entity is in
-		 * @param referenceItemIn the reference item
-		 */
-		public DiamondBulletEntity(LivingEntity shooter, Level world, Item referenceItemIn) {
-			super(DeferredRegistryHandler.DIAMOND_BULLET_ENTITY.get(), shooter, world);
-			referenceItem = referenceItemIn;
-		}
-
-		/**
-		 * Get the movement modifier.
-		 *
-		 * @return double
-		 */
-		@Override
-		public double getGravityModifier() {
-			return 0.0385d;
-		}
-
-		/**
-		 * Fire the entity from a position with a velocity and inaccuracy.
-		 *
-		 * @param x          the X position
-		 * @param y          the Y position
-		 * @param z          the Z position
-		 * @param velocity   the velocity
-		 * @param inaccuracy the inaccuracy modifier
-		 */
-		@Override
-		public void shoot(double x, double y, double z, float velocity, float inaccuracy) {
-			Vec3 vector3d = (new Vec3(x, y, z)).normalize().add(random.nextGaussian() * 0.0025F * (GeneralUtilities.getRandomNumber(0.2f, 0.9f)), 0.00025F * (GeneralUtilities.getRandomNumber(0.2f, 0.9f)), random.nextGaussian() * 0.0025F).scale(velocity);
-			setDeltaMovement(vector3d);
-			double horizontalDistanceSqr = vector3d.horizontalDistanceSqr();
-			float yRot = (float) (Mth.atan2(vector3d.x, vector3d.z) * (180F / (float) Math.PI));
-			float xRot = (float) (Mth.atan2(vector3d.y, horizontalDistanceSqr) * (180F / (float) Math.PI));
-			yRotO = yRot;
-			xRotO = xRot;
-		}
-	}
-
-	public static class NetheriteBulletEntity extends AbstractBulletEntity {
-		/**
-		 * Constructor for NetheriteBulletEntity.
-		 *
-		 * @param entityType        the <code>EntityType</code> instance
-		 * @param world             the <code>World</code> the entity is in
-		 * @param knockbackStrength the bullet knockback strength
-		 */
-		public NetheriteBulletEntity(EntityType<NetheriteBulletEntity> entityType, Level world, int knockbackStrength) {
-			super(entityType, world);
-			this.knockbackStrength = knockbackStrength;
-			referenceItem = DeferredRegistryHandler.NETHERITE_MUSKET_BALL.get();
-		}
-
-		/**
-		 * Constructor for NetheriteBulletEntity.
-		 *
-		 * @param shooter         the <code>LivingEntity</code> shooting the entity
-		 * @param world           the <code>World</code> the entity is in
-		 * @param referenceItemIn the reference item
-		 */
-		public NetheriteBulletEntity(LivingEntity shooter, Level world, Item referenceItemIn) {
-			super(DeferredRegistryHandler.NETHERITE_BULLET_ENTITY.get(), shooter, world);
-			referenceItem = referenceItemIn;
-		}
-
-		/**
-		 * Fire the entity from a position with a velocity and inaccuracy.
-		 *
-		 * @param x          the X position
-		 * @param y          the Y position
-		 * @param z          the Z position
-		 * @param velocity   the velocity
-		 * @param inaccuracy the inaccuracy modifier
-		 */
-		@Override
-		public void shoot(double x, double y, double z, float velocity, float inaccuracy) {
-			Vec3 vector3d = (new Vec3(x, y, z)).normalize().add(random.nextGaussian() * 0.0020F * (GeneralUtilities.getRandomNumber(0.2f, 0.7f)), 0.0020F * (GeneralUtilities.getRandomNumber(0.2f, 0.7f)), random.nextGaussian() * 0.0020F).scale(velocity);
-			setDeltaMovement(vector3d);
-			double horizontalDistanceSqr = vector3d.horizontalDistanceSqr();
-			float yRot = (float) (Mth.atan2(vector3d.x, vector3d.z) * (180F / (float) Math.PI));
-			float xRot = (float) (Mth.atan2(vector3d.y, horizontalDistanceSqr) * (180F / (float) Math.PI));
-			yRotO = yRot;
-			xRotO = xRot;
-		}
-
-		/**
-		 * Get the movement modifier.
-		 *
-		 * @return double
-		 */
-		@Override
-		public double getGravityModifier() {
-			return 0.04d;
-		}
-	}
-
-	public static class FlareEntity extends AbstractBulletEntity implements ItemSupplier {
-
-		private int explodeDelay = 10;
-		private int deathDelay = 300;
-		private BlockPos previousLightPosition = BlockPos.ZERO;
-		private final List<BlockPos> lightPositions = new ArrayList<>(3);
-		private boolean hasHitEntity = false;
-		static final BlockState lightState = Blocks.LIGHT.defaultBlockState();
-		static final BlockState airState = Blocks.AIR.defaultBlockState();
-
-		/**
-		 * Constructor for FlareEntity.
-		 *
-		 * @param entityType        the <code>EntityType</code> instance
-		 * @param world             the <code>World</code> the entity is in
-		 * @param knockbackStrength the bullet knockback strength
-		 */
-		public FlareEntity(EntityType<FlareEntity> entityType, Level world, int knockbackStrength) {
-			super(entityType, world);
-			this.knockbackStrength = knockbackStrength;
-			referenceItem = DeferredRegistryHandler.FLARE.get();
-		}
-
-		/**
-		 * Constructor for FlareEntity.
-		 *
-		 * @param shooter         the <code>LivingEntity</code> shooting the entity
-		 * @param world           the <code>World</code> the entity is in
-		 * @param referenceItemIn the reference item
-		 */
-		public FlareEntity(LivingEntity shooter, Level world, Item referenceItemIn) {
-			super(DeferredRegistryHandler.FLARE_ENTITY.get(), shooter, world);
-			referenceItem = referenceItemIn;
-		}
-
-		/**
-		 * Fire the entity from a position with a velocity and inaccuracy.
-		 *
-		 * @param x          the X position
-		 * @param y          the Y position
-		 * @param z          the Z position
-		 * @param velocity   the velocity
-		 * @param inaccuracy the inaccuracy modifier
-		 */
-		@Override
-		public void shoot(double x, double y, double z, float velocity, float inaccuracy) {
-			Vec3 vector3d = (new Vec3(x, y, z)).normalize().add(random.nextGaussian() * 0.0025F * (GeneralUtilities.getRandomNumber(0.2f, 1.1f)), 0.00025F * (GeneralUtilities.getRandomNumber(0.2f, 1.1f)), random.nextGaussian() * 0.0025F).scale(velocity);
-			setDeltaMovement(vector3d);
-			double horizontalDistanceSqr = vector3d.horizontalDistanceSqr();
-			float yRot = (float) (Mth.atan2(vector3d.x, vector3d.z) * (180F / (float) Math.PI));
-			float xRot = (float) (Mth.atan2(vector3d.y, horizontalDistanceSqr) * (180F / (float) Math.PI));
-			yRotO = yRot;
-			xRotO = xRot;
-		}
-
-		@Override
-		protected void doWhileTicking() {
-			double x = getX();
-			double y = getY();
-			double z = getZ();
-			Vec3 deltaMovement = getDeltaMovement();
-
-			if (level.isClientSide && explodeDelay != 0 && (tickCount % 4) >= 2) {
-				level.addParticle(ParticleTypes.FIREWORK, x, y - 0.3D, z, random.nextGaussian() * 0.05D, -deltaMovement.y * 0.5D, random.nextGaussian() * 0.05D);
+		// Check if the bullet is in the ground, and if it has physics enabled
+		if (inGround && !isNoPhysics) {
+			/* If the current blockstate is not the same as the previous one, and it should start falling,
+			 begin the fall process. This runs when the block the bullet is under is broken. Otherwise,
+			 tick for despawn. */
+			if (inBlockState != blockStateAtCurrentPosition && shouldFall()) {
+				startFalling();
+			} else if (!level.isClientSide) {
+				tickDespawn();
 			}
 
-			shouldStopMoving = false;
-			if (explodeDelay >= 0) {
-				explodeDelay--;
+			inGroundTime++;
+		} else {
+			// At this point, the bullet is still in the air
+			inGroundTime = 0;
+			Vec3 currentPosition = position();
+			Vec3 newPosition = currentPosition.add(deltaMovement);
+			HitResult hitResult = level.clip(new ClipContext(currentPosition, newPosition, ClipContext.Block.COLLIDER, Fluid.NONE,
+					this));
+
+			// If there's a block between the current position and the new one, set the
+			// location to the hit location of the clip (includes hitboxes).
+			if (hitResult.getType() != Type.MISS) {
+				newPosition = hitResult.getLocation();
+			}
+
+			// Check for hit entities
+			EntityHitResult entityHitResult = findHitEntity(currentPosition, newPosition);
+			if (entityHitResult != null) {
+				hitResult = entityHitResult;
+			}
+
+			if (hitResult.getType() == Type.ENTITY) {
+				Entity entity = null;
+				// Get the entity being hit
+				if (hitResult instanceof EntityHitResult) {
+					entity = ((EntityHitResult) hitResult).getEntity();
+				}
+				// Get the owner of the bullet
+				Entity owner = getOwner();
+				// Check if the entity is a player, and if so, if they are allowed
+				// to be harmed by the owner
+				if (entity instanceof Player && owner instanceof Player
+						&& !((Player) owner).canHarmPlayer((Player) entity)) {
+
+					hitResult = null;
+				}
+			}
+
+			// If something was hit, and physics are enabled, execute necessary code
+			if (hitResult != null && hitResult.getType() != Type.MISS && !isNoPhysics
+					&& !ForgeEventFactory.onProjectileImpact(this, hitResult)) {
+
+				onHit(hitResult);
+				hasImpulse = true;
+			}
+
+			// Get the current delta movement values
+			deltaMovement = getDeltaMovement();
+			double deltaMovementX = deltaMovement.x;
+			double deltaMovementY = deltaMovement.y;
+			double deltaMovementZ = deltaMovement.z;
+			// Add particles behind the bullet if it is a "critical" one
+			if (isCritArrow()) {
+				for (int i = 0; i < 4; ++i) {
+					level.addParticle(ParticleTypes.CRIT,
+							getX() + deltaMovementX * i / 4.0D,
+							getY() + deltaMovementY * i / 4.0D,
+							getZ() + deltaMovementZ * i / 4.0D,
+							-deltaMovementX,
+							-deltaMovementY + 0.2D,
+							-deltaMovementZ);
+				}
+			}
+
+			double newPositionX = getX() + deltaMovementX;
+			double newPositionY = getY() + deltaMovementY;
+			double newPositionZ = getZ() + deltaMovementZ;
+			double horizontalDistance = deltaMovement.horizontalDistance();
+
+			if (isNoPhysics) {
+				setYRot((float) (Mth.atan2(-deltaMovementX, -deltaMovementZ) * (double) (180F / (float) Math.PI)));
 			} else {
-				if (deathDelay >= 0) {
-					shouldStopMoving = true;
-					if (level.isClientSide && (tickCount % 4) == 0) {
-						for (int i = 8; --i >= 0; ) {
-							level.addAlwaysVisibleParticle(ParticleTypes.FLAME, true, x, y, z, random.nextGaussian() * 0.1D, -deltaMovement.y * 0.25D, random.nextGaussian() * 0.1D);
-						}
-					}
-					deathDelay--;
+				setYRot((float) (Mth.atan2(deltaMovementX, deltaMovementZ) * (double) (180F / (float) Math.PI)));
+			}
+
+			setXRot((float) (Mth.atan2(-deltaMovementY, horizontalDistance) * (double) (180F / (float) Math.PI)));
+			setXRot(lerpRotation(xRotO, getXRot()));
+			setYRot(lerpRotation(yRotO, getYRot()));
+
+			// Check if the bullet is in water
+			inertia = getDefaultInertia();
+			if (isInWater()) {
+				for (int j = 0; j < 4; ++j) {
+					level.addParticle(ParticleTypes.BUBBLE,
+							newPositionX - deltaMovementX * 0.25D,
+							newPositionY - deltaMovementY * 0.25D,
+							newPositionZ - deltaMovementZ * 0.25D,
+							deltaMovementX, deltaMovementY, deltaMovementZ);
+				}
+
+				inertia = getWaterInertia();
+			}
+
+			setDeltaMovement(deltaMovement.scale(inertia));
+
+			// Set movement and position
+			if (!isNoGravity() && !isNoPhysics) {
+				Vec3 deltaMovement1 = getDeltaMovement();
+				if (shouldStopMoving) {
+					setDeltaMovement(0, 0, 0);
 				} else {
-					// Remove all lights before dying
-					if (!lightPositions.isEmpty()) {
-						for (BlockPos pos : lightPositions) {
-							if (level.getBlockState(pos) == lightState) {
-								level.removeBlock(pos, false);
-							}
-						}
-						lightPositions.clear();
-					}
-					kill();
+					double gravityModifier = firingItem instanceof MusketItem ? getGravityModifier() / 4 : getGravityModifier();
+					setDeltaMovement(deltaMovement1.x, deltaMovement1.y - gravityModifier, deltaMovement1.z);
 				}
 			}
 
-			if (tickCount % 4 >= 1) {
-				BlockPos currentPosition = blockPosition();
-				if (!level.isClientSide && currentPosition != previousLightPosition) {
-					if (!lightPositions.isEmpty()) {
-						for (BlockPos pos : lightPositions) {
-							if (level.getBlockState(pos) == lightState) {
-								level.removeBlock(pos, false);
-							}
-						}
-						lightPositions.clear();
+			setPos(newPositionX, newPositionY, newPositionZ);
+			checkInsideBlocks();
+		}
+	}
+
+	/**
+	 * Get the movement modifier.
+	 *
+	 * @return double
+	 */
+	public double getGravityModifier() {
+		return 1.0d;
+	}
+
+	public void setFiringItem(Item stack) {
+		firingItem = stack;
+	}
+
+	/**
+	 * Runs when an entity is hit.
+	 *
+	 * @param entityRayTraceResult the <code>EntityRayTraceResult</code> instance
+	 */
+	@Override
+	protected void onHitEntity(@NotNull EntityHitResult entityRayTraceResult) {
+		Entity entity = entityRayTraceResult.getEntity();
+		float velocityModifier = (float) getDeltaMovement().length();
+		// Determine the damage to be dealt, which is calculated by multiplying the velocity modifier
+		// and the base damage. It's clamped if the velocity is extremely high.
+		int damage = Mth.ceil(Mth.clamp(velocityModifier * baseDamage, 0.0D, 2.147483647E9D));
+
+		int pierceLevel = getPierceLevel();
+
+		// Extra code to run when an entity is hit
+		doWhenHitEntity(entity, entityRayTraceResult);
+
+		// Check the piercing level, if its above zero then start piercing entities
+		if (pierceLevel > 0) {
+			if (piercedEntities == null) {
+				piercedEntities = new IntOpenHashSet(5);
+			}
+
+			// If we've pierced the maximum number of entities,
+			// destroy the bullet
+			if (piercedEntities.size() >= pierceLevel + 1) {
+				kill();
+				return;
+			}
+
+			piercedEntities.add(entity.getId());
+		}
+
+		// Add crit modifier if the bullet is critical
+		if (isCritArrow()) {
+			long randomCritModifier = random.nextInt(damage / 2 + 2);
+			damage = (int) Math.min(randomCritModifier + damage, 2147483647L);
+		}
+
+		Entity owner = getOwner();
+		DamageSource damageSource;
+
+		// If the arrow owner doesn't exist (null), set the indirect entity to itself
+		if (owner == null) {
+			damageSource = DamageSource.arrow(this, this);
+		} else {
+			damageSource = DamageSource.arrow(this, owner);
+
+			// Disable invulnerability for bullets; specifically with the blunderbuss, otherwise
+			// multiple shots on the same target will simply bounce back
+			entity.invulnerableTime = 0;
+			entity.setInvulnerable(false);
+
+			if (owner instanceof LivingEntity) {
+				((LivingEntity) owner).setLastHurtMob(entity);
+			}
+		}
+
+		boolean isEnderman = entity.getType() == EntityType.ENDERMAN;
+		int remainingFireTicks = entity.getRemainingFireTicks();
+
+		// Set the entity on fire if the bullet is on fire, except
+		// for when the entity is an enderman
+		if (isOnFire() && !isEnderman) {
+			entity.setSecondsOnFire(5);
+		}
+
+		if (entity.hurt(damageSource, damage)) {
+			if (isEnderman) {
+				return;
+			}
+
+			if (entity instanceof LivingEntity livingEntity) {
+
+				// Apply knockback if the strength is above zero
+				if (knockbackStrength > 0) {
+					Vec3 scaledDeltaMovement = getDeltaMovement()
+							.multiply(1.0D, 0.0D, 1.0D)
+							.normalize()
+							.scale(knockbackStrength * 0.6D);
+
+					if (scaledDeltaMovement.lengthSqr() > 0.0D) {
+						livingEntity.push(scaledDeltaMovement.x, 0.1D, scaledDeltaMovement.z);
 					}
-					if (!hasHitEntity && level.getBlockState(currentPosition) == airState) {
-						level.setBlock(currentPosition, lightState, 3);
-						lightPositions.add(currentPosition);
-					}
-					previousLightPosition = currentPosition;
+				}
+
+				if (!level.isClientSide && owner instanceof LivingEntity) {
+					EnchantmentHelper.doPostHurtEffects(livingEntity, owner);
+					EnchantmentHelper.doPostDamageEffects((LivingEntity) owner, livingEntity);
+				}
+
+				// Code to run after the entity is hurt
+				doPostHurtEffects(livingEntity);
+			}
+
+			if (pierceLevel <= 0) {
+				kill();
+			}
+		} else {
+			entity.setRemainingFireTicks(remainingFireTicks);
+
+			if (!level.isClientSide && getDeltaMovement().lengthSqr() < 1.0E-7D) {
+				kill();
+			}
+		}
+	}
+
+	/**
+	 * Runs when a block is hit.
+	 *
+	 * @param blockHitResult the <code>BlockHitResult</code> instance
+	 */
+	@Override
+	protected void onHitBlock(BlockHitResult blockHitResult) {
+		inBlockState = level.getBlockState(blockHitResult.getBlockPos());
+		boolean didPassThroughBlock = false;
+
+		// Check if the bullet hit a permeable block like leaves, if so
+		// keep moving and decrease velocity
+		if (inBlockState.is(BlockTags.LEAVES)) {
+			push(0, -0.1, 0);
+			shakeTime = 4;
+			didPassThroughBlock = true;
+		} else {
+			Vec3 locationMinusCurrentPosition = blockHitResult.getLocation().subtract(getX(), getY(), getZ());
+			setDeltaMovement(locationMinusCurrentPosition);
+			Vec3 scaledPosition = locationMinusCurrentPosition.normalize().scale(0.0025F);
+			setPosRaw(getX() - scaledPosition.x, getY() - scaledPosition.y, getZ() - scaledPosition.z);
+			playSound(hitSound, 1.0F, 1.2F / (random.nextFloat() * 0.2F + 0.9F));
+			inGround = true;
+			shakeTime = 2;
+			setCritArrow(false);
+			setPierceLevel((byte) 0);
+			setSoundEvent(hitSound);
+			resetPiercedEntities();
+		}
+
+		// Check if glass can be broken, and if it hasn't already broken glass
+		if (canBreakGlass && !hasAlreadyBrokeGlass
+				&& !inBlockState.is(ForgeBlockTagGroups.BULLETPROOF_GLASS)
+				&& inBlockState.is(Blocks.GLASS)
+				|| inBlockState.is(Blocks.GLASS_PANES)) {
+
+			level.destroyBlock(blockHitResult.getBlockPos(), false);
+			hasAlreadyBrokeGlass = true;
+		}
+
+		inBlockState.onProjectileHit(level, inBlockState, blockHitResult, this);
+
+		if (!didPassThroughBlock && level.isClientSide) {
+			level.addParticle(new BulletImpactParticleOptions(1.0F, Block.getId(inBlockState)),
+					blockHitResult.getLocation().x, blockHitResult.getLocation().y, blockHitResult.getLocation().z,
+					GeneralUtilities.getRandomNumber(-0.01d, 0.01d),
+					GeneralUtilities.getRandomNumber(-0.01d, 0.01d),
+					GeneralUtilities.getRandomNumber(-0.01d, 0.01d));
+		}
+	}
+
+	private boolean checkLeftOwner() {
+		Entity owner = getOwner();
+		if (owner != null) {
+			for (Entity entityInWorld : level.getEntities(this, getBoundingBox()
+							.expandTowards(getDeltaMovement()).inflate(1.0D),
+					(entity) -> !entity.isSpectator() && entity.isPickable())) {
+
+				if (entityInWorld.getRootVehicle() == owner.getRootVehicle()) {
+					return false;
 				}
 			}
 		}
 
-		/**
-		 * Runs when an entity is hit.
-		 *
-		 * @param entity the <code>Entity</code> being hit
-		 */
-		@Override
-		protected void doWhenHitEntity(Entity entity) {
-			hasHitEntity = true;
-			entity.setSecondsOnFire(6);
-		}
+		return true;
+	}
 
-		/**
-		 * Get the movement modifier.
-		 *
-		 * @return double
-		 */
-		@Override
-		public double getGravityModifier() {
-			return 0.0355d;
-		}
-
-		/**
-		 * Get the item associated with this entity.
-		 *
-		 * @return ItemStack
-		 */
-		@Override
-		public @NotNull ItemStack getItem() {
-			return new ItemStack(DeferredRegistryHandler.FLARE.get());
-		}
-
-		/**
-		 * Add additional save data.
-		 *
-		 * @param pCompound the <code>CompoundTag</code> containing the save data
-		 */
-		@Override
-		public void addAdditionalSaveData(@NotNull CompoundTag pCompound) {
-			super.addAdditionalSaveData(pCompound);
-
-			if (!lightPositions.isEmpty()) {
-				List<Integer> xPositions = new ArrayList<>(3);
-				List<Integer> yPositions = new ArrayList<>(3);
-				List<Integer> zPositions = new ArrayList<>(3);
-				for (BlockPos pos : lightPositions) {
-					xPositions.add(pos.getX());
-					yPositions.add(pos.getY());
-					zPositions.add(pos.getZ());
-				}
-
-				pCompound.putIntArray("xPositions", xPositions);
-				pCompound.putIntArray("yPositions", yPositions);
-				pCompound.putIntArray("zPositions", zPositions);
+	/**
+	 * Handle entity events.
+	 *
+	 * @param statusID the <code>byte</code> containing status ID
+	 */
+	@Override
+	public void handleEntityEvent(byte statusID) {
+		if (statusID == VANILLA_IMPACT_STATUS_ID) {
+			for (int i = 0; i <= 16; i++) {
+				level.addParticle(DeferredRegistryHandler.BLOOD_PARTICLE.get(),
+						position().x, position().y, position().z,
+						GeneralUtilities.getRandomNumber(-0.03d, 0.03d),
+						GeneralUtilities.getRandomNumber(-0.03d, 0.03d),
+						GeneralUtilities.getRandomNumber(-0.03d, 0.03d));
 			}
 		}
+	}
 
-		/**
-		 * Read additional save data.
-		 *
-		 * @param pCompound the <code>CompoundTag</code> containing the save data
-		 */
-		@Override
-		public void readAdditionalSaveData(@NotNull CompoundTag pCompound) {
-			super.readAdditionalSaveData(pCompound);
-
-			int[] xPositions = pCompound.getIntArray("xPositions");
-			int[] yPositions = pCompound.getIntArray("yPositions");
-			int[] zPositions = pCompound.getIntArray("zPositions");
-
-			// Each item in xPositions should match an entry in y/zPositions, so build a list of BlockPos
-			// with each individual position
-			int iteration = 0;
-			for (Integer integer : xPositions) {
-				lightPositions.add(new BlockPos(integer, yPositions[iteration], zPositions[iteration]));
-				iteration++;
-			}
+	/**
+	 * Reset the pierced entities list.
+	 */
+	private void resetPiercedEntities() {
+		if (piercedEntities != null) {
+			piercedEntities.clear();
 		}
+	}
 
-		/**
-		 * Remove all lights when the entity is killed via commands.
-		 */
-		@Override
-		public void kill() {
-			super.kill();
+	@Override
+	protected @NotNull SoundEvent getDefaultHitGroundSoundEvent() {
+		return DeferredRegistryHandler.BULLET_WHIZZ.get();
+	}
 
-			if (!lightPositions.isEmpty()) {
-				for (BlockPos pos : lightPositions) {
-					if (level.getBlockState(pos) == lightState) {
-						level.removeBlock(pos, false);
-					}
-				}
-				lightPositions.clear();
-			}
-		}
+	protected float getDefaultInertia() {
+		return 0.99f;
+	}
+
+	/**
+	 * Additional stuff to do while ticking.
+	 */
+	protected void doWhileTicking() {
+	}
+
+	/**
+	 * Additional stuff to do when an entity is hit.
+	 *
+	 * @param entity the <code>Entity</code> being hit
+	 */
+	protected void doWhenHitEntity(Entity entity, EntityHitResult entityHitResult) {
+		level.broadcastEntityEvent(this, VANILLA_IMPACT_STATUS_ID);
 	}
 }

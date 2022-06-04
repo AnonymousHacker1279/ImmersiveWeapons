@@ -2,7 +2,7 @@
   "parent": "immersiveweapons:root",
   "display": {
     "icon": {
-      "item": "immersiveweapons:gold_musket_ball"
+      "item": "immersiveweapons:golden_musket_ball"
     },
     "title": {
       "translate": "advancements.immersiveweapons.musket_ball.title"

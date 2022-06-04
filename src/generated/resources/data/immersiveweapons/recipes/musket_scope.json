@@ -1,0 +1,29 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "firearm",
+  "pattern": [
+    " e ",
+    "abd",
+    " c "
+  ],
+  "key": {
+    "a": {
+      "item": "immersiveweapons:heavy_wooden_stock"
+    },
+    "b": {
+      "item": "immersiveweapons:flintlock_assembly"
+    },
+    "c": {
+      "item": "immersiveweapons:trigger_assembly"
+    },
+    "d": {
+      "item": "immersiveweapons:extended_iron_barrel"
+    },
+    "e": {
+      "item": "immersiveweapons:scope"
+    }
+  },
+  "result": {
+    "item": "immersiveweapons:musket_scope"
+  }
+}

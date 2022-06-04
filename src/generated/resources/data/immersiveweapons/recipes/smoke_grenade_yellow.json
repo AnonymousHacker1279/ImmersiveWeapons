@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "smoke_grenade",
+  "pattern": [
+    "dcb",
+    " a ",
+    " a "
+  ],
+  "key": {
+    "a": {
+      "item": "minecraft:bamboo"
+    },
+    "b": {
+      "item": "immersiveweapons:grenade_assembly"
+    },
+    "c": {
+      "item": "immersiveweapons:smoke_powder"
+    },
+    "d": {
+      "tag": "forge:dyes/yellow"
+    }
+  },
+  "result": {
+    "item": "immersiveweapons:smoke_grenade_yellow",
+    "count": 2
+  }
+}

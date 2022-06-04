@@ -1,31 +1,32 @@
 package com.anonymoushacker1279.immersiveweapons.item.crafting;
 
 import com.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
-import com.google.gson.JsonObject;
+import com.google.gson.*;
 import net.minecraft.core.NonNullList;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.GsonHelper;
 import net.minecraft.world.Container;
-import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.*;
 import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.level.Level;
+import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.ForgeRegistryEntry;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public record SmallPartsRecipe(ResourceLocation recipeId,
                                Ingredient material,
-                               Ingredient blueprint,
-                               ItemStack result) implements Recipe<Container> {
+                               List<Item> craftables) implements Recipe<Container> {
 
 	/**
 	 * Constructor for SmallPartsRecipe.
 	 *
-	 * @param recipeId  the <code>ResourceLocation</code> for the recipe
-	 * @param material  the first <code>Ingredient</code>
-	 * @param blueprint the second <code>Ingredient</code>
-	 * @param result    the result <code>ItemStack</code>
+	 * @param recipeId   the <code>ResourceLocation</code> for the recipe
+	 * @param material   the first <code>Ingredient</code>
+	 * @param craftables a <code>List</code> containing <code>Item</code>s that are formed from the material
 	 */
 	public SmallPartsRecipe {
 	}
@@ -39,7 +40,7 @@ public record SmallPartsRecipe(ResourceLocation recipeId,
 	 */
 	@Override
 	public boolean matches(Container inv, @NotNull Level worldIn) {
-		return material.test(inv.getItem(0)) && blueprint.test(inv.getItem(1));
+		return false;
 	}
 
 	/**
@@ -50,13 +51,7 @@ public record SmallPartsRecipe(ResourceLocation recipeId,
 	 */
 	@Override
 	public @NotNull ItemStack assemble(Container inv) {
-		ItemStack itemstack = result.copy();
-		CompoundTag compoundTag = inv.getItem(0).getTag();
-		if (compoundTag != null) {
-			itemstack.setTag(compoundTag.copy());
-		}
-
-		return itemstack;
+		return new ItemStack(Items.AIR);
 	}
 
 	/**
@@ -68,7 +63,7 @@ public record SmallPartsRecipe(ResourceLocation recipeId,
 	 */
 	@Override
 	public boolean canCraftInDimensions(int width, int height) {
-		return width * height >= 2;
+		return false;
 	}
 
 	/**
@@ -79,17 +74,7 @@ public record SmallPartsRecipe(ResourceLocation recipeId,
 	 */
 	@Override
 	public @NotNull ItemStack getResultItem() {
-		return result;
-	}
-
-	/**
-	 * Check if the given ItemStack is a valid addition item.
-	 *
-	 * @param blueprint the <code>ItemStack</code> instance
-	 * @return boolean
-	 */
-	public boolean isValidAdditionItem(ItemStack blueprint) {
-		return this.blueprint.test(blueprint);
+		return new ItemStack(Items.AIR);
 	}
 
 	/**
@@ -141,7 +126,6 @@ public record SmallPartsRecipe(ResourceLocation recipeId,
 	public @NotNull NonNullList<Ingredient> getIngredients() {
 		NonNullList<Ingredient> defaultedList = NonNullList.create();
 		defaultedList.add(material);
-		defaultedList.add(blueprint);
 		return defaultedList;
 	}
 
@@ -155,38 +139,54 @@ public record SmallPartsRecipe(ResourceLocation recipeId,
 		 */
 		@Override
 		public @NotNull SmallPartsRecipe fromJson(@NotNull ResourceLocation recipeId, @NotNull JsonObject json) {
-			Ingredient ingredient = Ingredient.fromJson(GsonHelper.getAsJsonObject(json, "material"));
-			Ingredient ingredient1 = Ingredient.fromJson(GsonHelper.getAsJsonObject(json, "blueprint"));
-			ItemStack itemstack = new ItemStack(ShapedRecipe.itemFromJson(GsonHelper.getAsJsonObject(json, "result")));
-			return new SmallPartsRecipe(recipeId, ingredient, ingredient1, itemstack);
+			Ingredient material = Ingredient.fromJson(GsonHelper.getAsJsonObject(json, "material"));
+			JsonArray craftablesArray = GsonHelper.getAsJsonArray(json, "craftables");
+
+			List<Item> craftables = new ArrayList<>(craftablesArray.size());
+			for (JsonElement element : craftablesArray) {
+				craftables.add(ForgeRegistries.ITEMS.getValue(ResourceLocation.tryParse(element.getAsString())));
+			}
+
+			return new SmallPartsRecipe(recipeId, material, craftables);
 		}
 
 		/**
 		 * Serialize from JSON on the network.
 		 *
 		 * @param recipeId the <code>ResourceLocation</code> for the recipe
-		 * @param buffer   the <code>PacketBuffer</code> instance
+		 * @param buffer   the <code>FriendlyByteBuf</code> instance
 		 * @return SmallPartsRecipe
 		 */
 		@Override
 		public SmallPartsRecipe fromNetwork(@NotNull ResourceLocation recipeId, @NotNull FriendlyByteBuf buffer) {
-			Ingredient ingredient = Ingredient.fromNetwork(buffer);
-			Ingredient ingredient1 = Ingredient.fromNetwork(buffer);
-			ItemStack itemstack = buffer.readItem();
-			return new SmallPartsRecipe(recipeId, ingredient, ingredient1, itemstack);
+			Ingredient material = Ingredient.fromNetwork(buffer);
+
+			String craft = buffer.readUtf();
+			String s = craft.replace("[", "").replace("]", "").replace(" ", "");
+			String[] s1 = s.split(",");
+
+			List<Item> craftables = new ArrayList<>(s1.length);
+			for (String s2 : s1) {
+				craftables.add(ForgeRegistries.ITEMS.getValue(ResourceLocation.tryParse(s2)));
+			}
+
+			return new SmallPartsRecipe(recipeId, material, craftables);
 		}
 
 		/**
 		 * Serialize to JSON on the network.
 		 *
-		 * @param buffer the <code>PacketBuffer</code> instance
+		 * @param buffer the <code>FriendlyByteBuf</code> instance
 		 * @param recipe the <code>SmallPartsRecipe</code> instance
 		 */
 		@Override
 		public void toNetwork(@NotNull FriendlyByteBuf buffer, SmallPartsRecipe recipe) {
 			recipe.material.toNetwork(buffer);
-			recipe.blueprint.toNetwork(buffer);
-			buffer.writeItem(recipe.result);
+			List<ResourceLocation> craftables = new ArrayList<>(recipe.craftables.size());
+			for (Item item : recipe.craftables) {
+				craftables.add(item.getRegistryName());
+			}
+			buffer.writeUtf(craftables.toString());
 		}
 	}
 }

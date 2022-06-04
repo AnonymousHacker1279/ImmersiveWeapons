@@ -9,6 +9,7 @@ import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.context.BlockPlaceContext;
@@ -71,7 +72,6 @@ public class LandmineBlock extends Block implements SimpleWaterloggedBlock {
 	 * @param blockRayTraceResult the <code>BlockRayTraceResult</code> of the interaction
 	 * @return ActionResultType
 	 */
-	@SuppressWarnings("deprecation")
 	@Override
 	public @NotNull InteractionResult use(@NotNull BlockState state, Level worldIn, @NotNull BlockPos pos, @NotNull Player player, @NotNull InteractionHand handIn, @NotNull BlockHitResult blockRayTraceResult) {
 		if (!worldIn.isClientSide) {
@@ -110,7 +110,6 @@ public class LandmineBlock extends Block implements SimpleWaterloggedBlock {
 	 * @param selectionContext the <code>ISelectionContext</code> of the block
 	 * @return VoxelShape
 	 */
-	@SuppressWarnings("deprecation")
 	@Override
 	public @NotNull VoxelShape getShape(@NotNull BlockState state, @NotNull BlockGetter reader, @NotNull BlockPos pos, @NotNull CollisionContext selectionContext) {
 		return SHAPE;
@@ -125,7 +124,6 @@ public class LandmineBlock extends Block implements SimpleWaterloggedBlock {
 	 * @param selectionContext the <code>ISelectionContext</code> of the block
 	 * @return VoxelShape
 	 */
-	@SuppressWarnings("deprecation")
 	@Override
 	public @NotNull VoxelShape getCollisionShape(@NotNull BlockState state, @NotNull BlockGetter reader, @NotNull BlockPos pos, @NotNull CollisionContext selectionContext) {
 		return Shapes.empty();
@@ -137,7 +135,6 @@ public class LandmineBlock extends Block implements SimpleWaterloggedBlock {
 	 * @param state the <code>BlockState</code> of the block
 	 * @return BlockRenderType
 	 */
-	@SuppressWarnings("deprecation")
 	@Override
 	public @NotNull RenderShape getRenderShape(@NotNull BlockState state) {
 		return RenderShape.MODEL;
@@ -152,16 +149,21 @@ public class LandmineBlock extends Block implements SimpleWaterloggedBlock {
 	 * @param pos    the <code>BlockPos</code> the block is at
 	 * @param entity the <code>Entity</code> passing through the block
 	 */
-	@SuppressWarnings("deprecation")
 	@Override
 	public void entityInside(BlockState state, @NotNull Level level, @NotNull BlockPos pos, @NotNull Entity entity) {
 		if (state.getValue(ARMED) && !state.getValue(WATERLOGGED)) {
 			if (entity instanceof Mob) {
 				explode(level, pos, (LivingEntity) entity);
+				return;
 			}
 			if (entity instanceof Player && !((Player) entity).isCreative()) {
 				explode(level, pos, (LivingEntity) entity);
+				return;
 			}
+		}
+		if (entity instanceof Projectile) {
+			explode(level, pos, null);
+			level.removeBlock(pos, false);
 		}
 	}
 
@@ -184,7 +186,6 @@ public class LandmineBlock extends Block implements SimpleWaterloggedBlock {
 	 * @param state the <code>BlockState</code> of the block
 	 * @return FluidState
 	 */
-	@SuppressWarnings("deprecation")
 	@Override
 	public @NotNull FluidState getFluidState(BlockState state) {
 		return state.getValue(WATERLOGGED) ? Fluids.WATER.getSource(false) : super.getFluidState(state);

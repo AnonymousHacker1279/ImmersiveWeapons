@@ -1,22 +1,22 @@
 {
   "type": "minecraft:crafting_shaped",
-  "group": "gun",
+  "group": "firearm",
   "pattern": [
-    "bcc",
-    "ad "
+    "abd",
+    " c "
   ],
   "key": {
     "a": {
-      "tag": "minecraft:planks"
+      "item": "immersiveweapons:heavy_wooden_stock"
     },
     "b": {
-      "item": "immersiveweapons:small_parts_iron"
+      "item": "immersiveweapons:flintlock_assembly"
     },
     "c": {
-      "tag": "forge:ingots/gold"
+      "item": "immersiveweapons:trigger_assembly"
     },
     "d": {
-      "tag": "forge:nuggets/metal"
+      "item": "immersiveweapons:wide_golden_barrel"
     }
   },
   "result": {

@@ -1,0 +1,34 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "immersiveweapons:extended_iron_barrel"
+    ]
+  },
+  "criteria": {
+    "iron_barrel": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "immersiveweapons:iron_barrel"
+            ]
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "immersiveweapons:extended_iron_barrel"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "iron_barrel",
+      "has_the_recipe"
+    ]
+  ]
+}

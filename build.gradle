@@ -6,8 +6,7 @@ buildscript {
 		mavenCentral()
 	}
 	dependencies {
-		// FG set to 5.1.34 for now, as it fixes the "Invalid Value: -1" with IDEA 2022.1
-		classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '5.1.34', changing: true
+		classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '5.1.+', changing: true
 		classpath 'org.parchmentmc:librarian:1.+'
 	}
 }
@@ -58,7 +57,7 @@ minecraft {
 			property 'mixin.env.remapRefMap', 'true'
 			property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
 
-			jvmArgs '-Xmx4G'
+			jvmArgs '-Xmx4G', '-XX:+UseShenandoahGC'
 
 			mods {
 				immersiveweapons {
@@ -78,7 +77,7 @@ minecraft {
 			property 'mixin.env.remapRefMap', 'true'
 			property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
 
-			jvmArgs '-Xmx4G'
+			jvmArgs '-Xmx4G', '-XX:+UseShenandoahGC'
 
 			mods {
 				immersiveweapons {
@@ -100,7 +99,7 @@ minecraft {
 
 			args '--mod', 'immersiveweapons', '--all', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources/')
 
-			jvmArgs '-Xmx4G'
+			jvmArgs '-Xmx4G', '-XX:+UseShenandoahGC'
 
 			mods {
 				immersiveweapons {
@@ -122,9 +121,10 @@ dependencies {
 	// Include JEI
 	implementation fg.deobf("mezz.jei:jei-${jei_version}")
 
-	// Include WTHIT
-	compileOnly fg.deobf("mcp.mobius.waila:wthit-api:${wthit_version}")
-	runtimeOnly fg.deobf("mcp.mobius.waila:wthit:${wthit_version}")
+	// Include WTHIT and badpackets
+	compileOnly fg.deobf("mcp.mobius.waila:wthit-api:forge-${wthit_version}")
+	runtimeOnly fg.deobf("mcp.mobius.waila:wthit:forge-${wthit_version}")
+	implementation fg.deobf("lol.bai:badpackets:forge-${badpackets_version}")
 
 	// Include Patchouli
 	compileOnly fg.deobf("vazkii.patchouli:Patchouli:${patchouli_version}:api")

@@ -6,13 +6,13 @@
     ]
   },
   "criteria": {
-    "small_parts_iron": {
+    "flintlock_assembly": {
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
           {
             "items": [
-              "immersiveweapons:small_parts_iron"
+              "immersiveweapons:flintlock_assembly"
             ]
           }
         ]
@@ -27,7 +27,7 @@
   },
   "requirements": [
     [
-      "small_parts_iron",
+      "flintlock_assembly",
       "has_the_recipe"
     ]
   ]

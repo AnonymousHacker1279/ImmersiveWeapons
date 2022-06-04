@@ -2,7 +2,7 @@
   "parent": "immersiveweapons:root",
   "display": {
     "icon": {
-      "item": "immersiveweapons:wood_tool_rod"
+      "item": "immersiveweapons:wooden_tool_rod"
     },
     "title": {
       "translate": "advancements.immersiveweapons.tool_rod.title"
@@ -22,7 +22,7 @@
         "items": [
           {
             "items": [
-              "immersiveweapons:wood_tool_rod"
+              "immersiveweapons:wooden_tool_rod"
             ]
           }
         ]

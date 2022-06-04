@@ -1,19 +1,19 @@
 {
   "replace": false,
   "values": [
-    "immersiveweapons:wood_arrow",
+    "immersiveweapons:wooden_arrow",
     "immersiveweapons:stone_arrow",
     "immersiveweapons:copper_arrow",
     "immersiveweapons:iron_arrow",
     "immersiveweapons:cobalt_arrow",
-    "immersiveweapons:gold_arrow",
+    "immersiveweapons:golden_arrow",
     "immersiveweapons:diamond_arrow",
     "immersiveweapons:netherite_arrow",
-    "immersiveweapons:smoke_bomb_arrow",
-    "immersiveweapons:smoke_bomb_arrow_red",
-    "immersiveweapons:smoke_bomb_arrow_green",
-    "immersiveweapons:smoke_bomb_arrow_blue",
-    "immersiveweapons:smoke_bomb_arrow_purple",
-    "immersiveweapons:smoke_bomb_arrow_yellow"
+    "immersiveweapons:smoke_grenade_arrow",
+    "immersiveweapons:smoke_grenade_arrow_red",
+    "immersiveweapons:smoke_grenade_arrow_green",
+    "immersiveweapons:smoke_grenade_arrow_blue",
+    "immersiveweapons:smoke_grenade_arrow_purple",
+    "immersiveweapons:smoke_grenade_arrow_yellow"
   ]
 }

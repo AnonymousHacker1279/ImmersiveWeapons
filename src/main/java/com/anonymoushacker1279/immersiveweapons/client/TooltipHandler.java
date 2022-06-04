@@ -45,6 +45,9 @@ public class TooltipHandler {
 		if (stack.getItem() == DeferredRegistryHandler.FLARE_GUN.get()) {
 			event.getToolTip().add(new TranslatableComponent("immersiveweapons.tooltip.flare_gun").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
 		}
+		if (stack.getItem() == DeferredRegistryHandler.MUSKET.get() || stack.getItem() == DeferredRegistryHandler.MUSKET_SCOPE.get()) {
+			event.getToolTip().add(new TranslatableComponent("immersiveweapons.tooltip.musket").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
+		}
 
 		// Arrows
 		if (stack.getItem() == DeferredRegistryHandler.COPPER_ARROW.get()) {
@@ -59,57 +62,57 @@ public class TooltipHandler {
 		if (stack.getItem() == DeferredRegistryHandler.DIAMOND_ARROW.get()) {
 			event.getToolTip().add(new TranslatableComponent("immersiveweapons.tooltip.diamond_arrow").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
 		}
-		if (stack.getItem() == DeferredRegistryHandler.GOLD_ARROW.get()) {
-			event.getToolTip().add(new TranslatableComponent("immersiveweapons.tooltip.gold_arrow").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
+		if (stack.getItem() == DeferredRegistryHandler.GOLDEN_ARROW.get()) {
+			event.getToolTip().add(new TranslatableComponent("immersiveweapons.tooltip.golden_arrow").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
 		}
 		if (stack.getItem() == DeferredRegistryHandler.STONE_ARROW.get()) {
 			event.getToolTip().add(new TranslatableComponent("immersiveweapons.tooltip.stone_arrow").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
 		}
-		if (stack.getItem() == DeferredRegistryHandler.WOOD_ARROW.get()) {
-			event.getToolTip().add(new TranslatableComponent("immersiveweapons.tooltip.wood_arrow").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
+		if (stack.getItem() == DeferredRegistryHandler.WOODEN_ARROW.get()) {
+			event.getToolTip().add(new TranslatableComponent("immersiveweapons.tooltip.wooden_arrow").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
 		}
 		if (stack.getItem() == DeferredRegistryHandler.NETHERITE_ARROW.get()) {
 			event.getToolTip().add(new TranslatableComponent("immersiveweapons.tooltip.netherite_arrow").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
 		}
-		if (stack.getItem() == DeferredRegistryHandler.SMOKE_BOMB_ARROW.get()) {
-			event.getToolTip().add(new TranslatableComponent("immersiveweapons.tooltip.smoke_bomb_arrow").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
-			event.getToolTip().add(new TranslatableComponent("immersiveweapons.tooltip.smoke_bomb").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
+		if (stack.getItem() == DeferredRegistryHandler.SMOKE_GRENADE_ARROW.get()) {
+			event.getToolTip().add(new TranslatableComponent("immersiveweapons.tooltip.smoke_grenade_arrow").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
+			event.getToolTip().add(new TranslatableComponent("immersiveweapons.tooltip.smoke_grenade").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
 		}
-		if (stack.getItem() == DeferredRegistryHandler.SMOKE_BOMB_ARROW_RED.get()) {
-			event.getToolTip().add(new TranslatableComponent("immersiveweapons.tooltip.smoke_bomb_arrow").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
-			event.getToolTip().add(new TranslatableComponent("immersiveweapons.tooltip.smoke_bomb").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
-			event.getToolTip().add(new TranslatableComponent("immersiveweapons.tooltip.smoke_bomb_red").withStyle(ChatFormatting.RED, ChatFormatting.ITALIC));
+		if (stack.getItem() == DeferredRegistryHandler.SMOKE_GRENADE_ARROW_RED.get()) {
+			event.getToolTip().add(new TranslatableComponent("immersiveweapons.tooltip.smoke_grenade_arrow").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
+			event.getToolTip().add(new TranslatableComponent("immersiveweapons.tooltip.smoke_grenade").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
+			event.getToolTip().add(new TranslatableComponent("immersiveweapons.tooltip.smoke_grenade_red").withStyle(ChatFormatting.RED, ChatFormatting.ITALIC));
 		}
-		if (stack.getItem() == DeferredRegistryHandler.SMOKE_BOMB_ARROW_GREEN.get()) {
-			event.getToolTip().add(new TranslatableComponent("immersiveweapons.tooltip.smoke_bomb_arrow").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
-			event.getToolTip().add(new TranslatableComponent("immersiveweapons.tooltip.smoke_bomb").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
-			event.getToolTip().add(new TranslatableComponent("immersiveweapons.tooltip.smoke_bomb_green").withStyle(ChatFormatting.GREEN, ChatFormatting.ITALIC));
+		if (stack.getItem() == DeferredRegistryHandler.SMOKE_GRENADE_ARROW_GREEN.get()) {
+			event.getToolTip().add(new TranslatableComponent("immersiveweapons.tooltip.smoke_grenade_arrow").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
+			event.getToolTip().add(new TranslatableComponent("immersiveweapons.tooltip.smoke_grenade").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
+			event.getToolTip().add(new TranslatableComponent("immersiveweapons.tooltip.smoke_grenade_green").withStyle(ChatFormatting.GREEN, ChatFormatting.ITALIC));
 		}
-		if (stack.getItem() == DeferredRegistryHandler.SMOKE_BOMB_ARROW_BLUE.get()) {
-			event.getToolTip().add(new TranslatableComponent("immersiveweapons.tooltip.smoke_bomb_arrow").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
-			event.getToolTip().add(new TranslatableComponent("immersiveweapons.tooltip.smoke_bomb").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
-			event.getToolTip().add(new TranslatableComponent("immersiveweapons.tooltip.smoke_bomb_blue").withStyle(ChatFormatting.BLUE, ChatFormatting.ITALIC));
+		if (stack.getItem() == DeferredRegistryHandler.SMOKE_GRENADE_ARROW_BLUE.get()) {
+			event.getToolTip().add(new TranslatableComponent("immersiveweapons.tooltip.smoke_grenade_arrow").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
+			event.getToolTip().add(new TranslatableComponent("immersiveweapons.tooltip.smoke_grenade").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
+			event.getToolTip().add(new TranslatableComponent("immersiveweapons.tooltip.smoke_grenade_blue").withStyle(ChatFormatting.BLUE, ChatFormatting.ITALIC));
 		}
-		if (stack.getItem() == DeferredRegistryHandler.SMOKE_BOMB_ARROW_PURPLE.get()) {
-			event.getToolTip().add(new TranslatableComponent("immersiveweapons.tooltip.smoke_bomb_arrow").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
-			event.getToolTip().add(new TranslatableComponent("immersiveweapons.tooltip.smoke_bomb").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
-			event.getToolTip().add(new TranslatableComponent("immersiveweapons.tooltip.smoke_bomb_purple").withStyle(ChatFormatting.LIGHT_PURPLE, ChatFormatting.ITALIC));
+		if (stack.getItem() == DeferredRegistryHandler.SMOKE_GRENADE_ARROW_PURPLE.get()) {
+			event.getToolTip().add(new TranslatableComponent("immersiveweapons.tooltip.smoke_grenade_arrow").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
+			event.getToolTip().add(new TranslatableComponent("immersiveweapons.tooltip.smoke_grenade").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
+			event.getToolTip().add(new TranslatableComponent("immersiveweapons.tooltip.smoke_grenade_purple").withStyle(ChatFormatting.LIGHT_PURPLE, ChatFormatting.ITALIC));
 		}
-		if (stack.getItem() == DeferredRegistryHandler.SMOKE_BOMB_ARROW_YELLOW.get()) {
-			event.getToolTip().add(new TranslatableComponent("immersiveweapons.tooltip.smoke_bomb_arrow").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
-			event.getToolTip().add(new TranslatableComponent("immersiveweapons.tooltip.smoke_bomb").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
-			event.getToolTip().add(new TranslatableComponent("immersiveweapons.tooltip.smoke_bomb_yellow").withStyle(ChatFormatting.YELLOW, ChatFormatting.ITALIC));
+		if (stack.getItem() == DeferredRegistryHandler.SMOKE_GRENADE_ARROW_YELLOW.get()) {
+			event.getToolTip().add(new TranslatableComponent("immersiveweapons.tooltip.smoke_grenade_arrow").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
+			event.getToolTip().add(new TranslatableComponent("immersiveweapons.tooltip.smoke_grenade").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
+			event.getToolTip().add(new TranslatableComponent("immersiveweapons.tooltip.smoke_grenade_yellow").withStyle(ChatFormatting.YELLOW, ChatFormatting.ITALIC));
 		}
 
 		// Bullets
-		if (stack.getItem() == DeferredRegistryHandler.WOOD_MUSKET_BALL.get()) {
-			event.getToolTip().add(new TranslatableComponent("immersiveweapons.tooltip.wood_musket_ball").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
+		if (stack.getItem() == DeferredRegistryHandler.WOODEN_MUSKET_BALL.get()) {
+			event.getToolTip().add(new TranslatableComponent("immersiveweapons.tooltip.wooden_musket_ball").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
 		}
 		if (stack.getItem() == DeferredRegistryHandler.STONE_MUSKET_BALL.get()) {
 			event.getToolTip().add(new TranslatableComponent("immersiveweapons.tooltip.stone_musket_ball").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
 		}
-		if (stack.getItem() == DeferredRegistryHandler.GOLD_MUSKET_BALL.get()) {
-			event.getToolTip().add(new TranslatableComponent("immersiveweapons.tooltip.gold_musket_ball").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
+		if (stack.getItem() == DeferredRegistryHandler.GOLDEN_MUSKET_BALL.get()) {
+			event.getToolTip().add(new TranslatableComponent("immersiveweapons.tooltip.golden_musket_ball").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
 		}
 		if (stack.getItem() == DeferredRegistryHandler.COPPER_MUSKET_BALL.get()) {
 			event.getToolTip().add(new TranslatableComponent("immersiveweapons.tooltip.copper_musket_ball").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
@@ -128,7 +131,7 @@ public class TooltipHandler {
 		}
 
 		// Pikes
-		if (stack.getItem() == DeferredRegistryHandler.WOOD_PIKE.get() || stack.getItem() == DeferredRegistryHandler.STONE_PIKE.get() || stack.getItem() == DeferredRegistryHandler.GOLD_PIKE.get() || stack.getItem() == DeferredRegistryHandler.COPPER_PIKE.get() || stack.getItem() == DeferredRegistryHandler.IRON_PIKE.get() || stack.getItem() == DeferredRegistryHandler.COBALT_PIKE.get() || stack.getItem() == DeferredRegistryHandler.DIAMOND_PIKE.get() || stack.getItem() == DeferredRegistryHandler.NETHERITE_PIKE.get()) {
+		if (stack.getItem() == DeferredRegistryHandler.WOODEN_PIKE.get() || stack.getItem() == DeferredRegistryHandler.STONE_PIKE.get() || stack.getItem() == DeferredRegistryHandler.GOLDEN_PIKE.get() || stack.getItem() == DeferredRegistryHandler.COPPER_PIKE.get() || stack.getItem() == DeferredRegistryHandler.IRON_PIKE.get() || stack.getItem() == DeferredRegistryHandler.COBALT_PIKE.get() || stack.getItem() == DeferredRegistryHandler.DIAMOND_PIKE.get() || stack.getItem() == DeferredRegistryHandler.NETHERITE_PIKE.get()) {
 			event.getToolTip().add(new TranslatableComponent("immersiveweapons.tooltip.pike").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
 		}
 
@@ -144,28 +147,28 @@ public class TooltipHandler {
 		}
 
 		// Throwables
-		if (stack.getItem() == DeferredRegistryHandler.SMOKE_BOMB.get()) {
-			event.getToolTip().add(new TranslatableComponent("immersiveweapons.tooltip.smoke_bomb").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
+		if (stack.getItem() == DeferredRegistryHandler.SMOKE_GRENADE.get()) {
+			event.getToolTip().add(new TranslatableComponent("immersiveweapons.tooltip.smoke_grenade").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
 		}
-		if (stack.getItem() == DeferredRegistryHandler.SMOKE_BOMB_RED.get()) {
-			event.getToolTip().add(new TranslatableComponent("immersiveweapons.tooltip.smoke_bomb").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
-			event.getToolTip().add(new TranslatableComponent("immersiveweapons.tooltip.smoke_bomb_red").withStyle(ChatFormatting.RED, ChatFormatting.ITALIC));
+		if (stack.getItem() == DeferredRegistryHandler.SMOKE_GRENADE_RED.get()) {
+			event.getToolTip().add(new TranslatableComponent("immersiveweapons.tooltip.smoke_grenade").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
+			event.getToolTip().add(new TranslatableComponent("immersiveweapons.tooltip.smoke_grenade_red").withStyle(ChatFormatting.RED, ChatFormatting.ITALIC));
 		}
-		if (stack.getItem() == DeferredRegistryHandler.SMOKE_BOMB_GREEN.get()) {
-			event.getToolTip().add(new TranslatableComponent("immersiveweapons.tooltip.smoke_bomb").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
-			event.getToolTip().add(new TranslatableComponent("immersiveweapons.tooltip.smoke_bomb_green").withStyle(ChatFormatting.GREEN, ChatFormatting.ITALIC));
+		if (stack.getItem() == DeferredRegistryHandler.SMOKE_GRENADE_GREEN.get()) {
+			event.getToolTip().add(new TranslatableComponent("immersiveweapons.tooltip.smoke_grenade").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
+			event.getToolTip().add(new TranslatableComponent("immersiveweapons.tooltip.smoke_grenade_green").withStyle(ChatFormatting.GREEN, ChatFormatting.ITALIC));
 		}
-		if (stack.getItem() == DeferredRegistryHandler.SMOKE_BOMB_BLUE.get()) {
-			event.getToolTip().add(new TranslatableComponent("immersiveweapons.tooltip.smoke_bomb").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
-			event.getToolTip().add(new TranslatableComponent("immersiveweapons.tooltip.smoke_bomb_blue").withStyle(ChatFormatting.BLUE, ChatFormatting.ITALIC));
+		if (stack.getItem() == DeferredRegistryHandler.SMOKE_GRENADE_BLUE.get()) {
+			event.getToolTip().add(new TranslatableComponent("immersiveweapons.tooltip.smoke_grenade").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
+			event.getToolTip().add(new TranslatableComponent("immersiveweapons.tooltip.smoke_grenade_blue").withStyle(ChatFormatting.BLUE, ChatFormatting.ITALIC));
 		}
-		if (stack.getItem() == DeferredRegistryHandler.SMOKE_BOMB_PURPLE.get()) {
-			event.getToolTip().add(new TranslatableComponent("immersiveweapons.tooltip.smoke_bomb").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
-			event.getToolTip().add(new TranslatableComponent("immersiveweapons.tooltip.smoke_bomb_purple").withStyle(ChatFormatting.LIGHT_PURPLE, ChatFormatting.ITALIC));
+		if (stack.getItem() == DeferredRegistryHandler.SMOKE_GRENADE_PURPLE.get()) {
+			event.getToolTip().add(new TranslatableComponent("immersiveweapons.tooltip.smoke_grenade").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
+			event.getToolTip().add(new TranslatableComponent("immersiveweapons.tooltip.smoke_grenade_purple").withStyle(ChatFormatting.LIGHT_PURPLE, ChatFormatting.ITALIC));
 		}
-		if (stack.getItem() == DeferredRegistryHandler.SMOKE_BOMB_YELLOW.get()) {
-			event.getToolTip().add(new TranslatableComponent("immersiveweapons.tooltip.smoke_bomb").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
-			event.getToolTip().add(new TranslatableComponent("immersiveweapons.tooltip.smoke_bomb_yellow").withStyle(ChatFormatting.YELLOW, ChatFormatting.ITALIC));
+		if (stack.getItem() == DeferredRegistryHandler.SMOKE_GRENADE_YELLOW.get()) {
+			event.getToolTip().add(new TranslatableComponent("immersiveweapons.tooltip.smoke_grenade").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
+			event.getToolTip().add(new TranslatableComponent("immersiveweapons.tooltip.smoke_grenade_yellow").withStyle(ChatFormatting.YELLOW, ChatFormatting.ITALIC));
 		}
 		if (stack.getItem() == DeferredRegistryHandler.MOLOTOV_COCKTAIL.get()) {
 			event.getToolTip().add(new TranslatableComponent("immersiveweapons.tooltip.molotov_cocktail").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
@@ -203,17 +206,17 @@ public class TooltipHandler {
 		}
 
 		// Gauntlets
-		if (stack.getItem() == DeferredRegistryHandler.WOOD_GAUNTLET.get()) {
+		if (stack.getItem() == DeferredRegistryHandler.WOODEN_GAUNTLET.get()) {
 			event.getToolTip().add(new TranslatableComponent("immersiveweapons.tooltip.gauntlet").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
-			event.getToolTip().add(new TranslatableComponent("immersiveweapons.tooltip.wood_gauntlet").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
+			event.getToolTip().add(new TranslatableComponent("immersiveweapons.tooltip.wooden_gauntlet").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
 		}
 		if (stack.getItem() == DeferredRegistryHandler.STONE_GAUNTLET.get()) {
 			event.getToolTip().add(new TranslatableComponent("immersiveweapons.tooltip.gauntlet").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
 			event.getToolTip().add(new TranslatableComponent("immersiveweapons.tooltip.stone_gauntlet").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
 		}
-		if (stack.getItem() == DeferredRegistryHandler.GOLD_GAUNTLET.get()) {
+		if (stack.getItem() == DeferredRegistryHandler.GOLDEN_GAUNTLET.get()) {
 			event.getToolTip().add(new TranslatableComponent("immersiveweapons.tooltip.gauntlet").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
-			event.getToolTip().add(new TranslatableComponent("immersiveweapons.tooltip.gold_gauntlet").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
+			event.getToolTip().add(new TranslatableComponent("immersiveweapons.tooltip.golden_gauntlet").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
 		}
 		if (stack.getItem() == DeferredRegistryHandler.COPPER_GAUNTLET.get()) {
 			event.getToolTip().add(new TranslatableComponent("immersiveweapons.tooltip.gauntlet").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));

@@ -1,0 +1,34 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "immersiveweapons:musket_scope"
+    ]
+  },
+  "criteria": {
+    "flintlock_assembly": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "immersiveweapons:flintlock_assembly"
+            ]
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "immersiveweapons:musket_scope"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "flintlock_assembly",
+      "has_the_recipe"
+    ]
+  ]
+}

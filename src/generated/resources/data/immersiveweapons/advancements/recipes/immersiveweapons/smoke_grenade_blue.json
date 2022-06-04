@@ -1,0 +1,34 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "immersiveweapons:smoke_grenade_blue"
+    ]
+  },
+  "criteria": {
+    "smoke_powder": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "immersiveweapons:smoke_powder"
+            ]
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "immersiveweapons:smoke_grenade_blue"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "smoke_powder",
+      "has_the_recipe"
+    ]
+  ]
+}

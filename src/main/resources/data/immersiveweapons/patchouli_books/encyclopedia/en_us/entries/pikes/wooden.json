@@ -1,0 +1,17 @@
+{
+	"name": "Wooden Pike",
+	"icon": "immersiveweapons:wooden_pike",
+	"category": "immersiveweapons:pikes",
+	"pages": [
+		{
+			"type": "patchouli:text",
+			"text": "Wooden pikes are the weakest of all pikes. Dull, heavy, and easy to break.$(br2)You're probably better off throwing a feather at someone."
+		},
+		{
+			"type": "patchouli:crafting",
+			"recipe": "immersiveweapons:wooden_pike",
+			"recipe2": "immersiveweapons:wooden_pike_head"
+		}
+	],
+	"advancement": "immersiveweapons:wooden_shard"
+}

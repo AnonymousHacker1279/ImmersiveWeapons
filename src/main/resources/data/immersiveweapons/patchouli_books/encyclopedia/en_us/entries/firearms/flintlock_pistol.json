@@ -1,0 +1,17 @@
+{
+	"name": "Flintlock Pistol",
+	"icon": "immersiveweapons:flintlock_pistol",
+	"category": "immersiveweapons:firearms",
+	"pages": [
+		{
+			"type": "patchouli:text",
+			"text": "A primitive firearm, but a powerful one. Send musket balls flying at sufficient velocities to terminate your opponents.$(br2)The pistol excels in medium-range combat."
+		},
+		{
+			"type": "patchouli:crafting",
+			"recipe": "immersiveweapons:flintlock_pistol",
+			"text": "Reload Time: $(l)3 seconds"
+		}
+	],
+	"advancement": "immersiveweapons:recipes/immersiveweapons/flintlock_pistol"
+}

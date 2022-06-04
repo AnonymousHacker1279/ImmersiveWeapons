@@ -6,11 +6,12 @@ import com.anonymoushacker1279.immersiveweapons.block.misc.warrior_statue.Warrio
 import com.anonymoushacker1279.immersiveweapons.block.trap.SpikeTrapBlock.SpikeTrapBlockPacketHandler;
 import com.anonymoushacker1279.immersiveweapons.entity.monster.lava_revenant.LavaRevenantEntity.LavaRevenantEntityPacketHandler;
 import com.anonymoushacker1279.immersiveweapons.entity.neutral.AbstractFieldMedicEntity.AbstractFieldMedicEntityPacketHandler;
-import com.anonymoushacker1279.immersiveweapons.entity.projectile.CustomArrowEntity.SmokeBombArrowEntityPacketHandler;
-import com.anonymoushacker1279.immersiveweapons.entity.projectile.SmokeBombEntity.SmokeBombEntityPacketHandler;
+import com.anonymoushacker1279.immersiveweapons.entity.projectile.CustomArrowEntity.SmokeGrenadeArrowEntityPacketHandler;
+import com.anonymoushacker1279.immersiveweapons.entity.projectile.SmokeGrenadeEntity.SmokeGrenadeEntityPacketHandler;
 import com.anonymoushacker1279.immersiveweapons.item.armor.CobaltArmorItem.CobaltArmorItemPacketHandler;
 import com.anonymoushacker1279.immersiveweapons.item.armor.TeslaArmorItem.TeslaArmorItemPacketHandler;
 import com.anonymoushacker1279.immersiveweapons.item.armor.VentusArmorItem.VentusArmorItemPacketHandler;
+import com.anonymoushacker1279.immersiveweapons.item.projectile.gun.GunScopePacketHandler;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.network.NetworkRegistry;
 import net.minecraftforge.network.simple.SimpleChannel;
@@ -31,16 +32,16 @@ public class PacketHandler {
 	public static void registerPackets() {
 		int networkId = 0;
 		PacketHandler.INSTANCE.registerMessage(networkId++,
-				SmokeBombEntityPacketHandler.class,
-				SmokeBombEntityPacketHandler::encode,
-				SmokeBombEntityPacketHandler::decode,
-				SmokeBombEntityPacketHandler::handle
+				SmokeGrenadeEntityPacketHandler.class,
+				SmokeGrenadeEntityPacketHandler::encode,
+				SmokeGrenadeEntityPacketHandler::decode,
+				SmokeGrenadeEntityPacketHandler::handle
 		);
 		PacketHandler.INSTANCE.registerMessage(networkId++,
-				SmokeBombArrowEntityPacketHandler.class,
-				SmokeBombArrowEntityPacketHandler::encode,
-				SmokeBombArrowEntityPacketHandler::decode,
-				SmokeBombArrowEntityPacketHandler::handle
+				SmokeGrenadeArrowEntityPacketHandler.class,
+				SmokeGrenadeArrowEntityPacketHandler::encode,
+				SmokeGrenadeArrowEntityPacketHandler::decode,
+				SmokeGrenadeArrowEntityPacketHandler::handle
 		);
 		PacketHandler.INSTANCE.registerMessage(networkId++,
 				CobaltArmorItemPacketHandler.class,
@@ -84,11 +85,17 @@ public class PacketHandler {
 				LavaRevenantEntityPacketHandler::decode,
 				LavaRevenantEntityPacketHandler::handle
 		);
-		PacketHandler.INSTANCE.registerMessage(networkId,
+		PacketHandler.INSTANCE.registerMessage(networkId++,
 				AbstractFieldMedicEntityPacketHandler.class,
 				AbstractFieldMedicEntityPacketHandler::encode,
 				AbstractFieldMedicEntityPacketHandler::decode,
 				AbstractFieldMedicEntityPacketHandler::handle
+		);
+		PacketHandler.INSTANCE.registerMessage(networkId,
+				GunScopePacketHandler.class,
+				GunScopePacketHandler::encode,
+				GunScopePacketHandler::decode,
+				GunScopePacketHandler::handle
 		);
 	}
 }

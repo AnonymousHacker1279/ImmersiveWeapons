@@ -1,5 +1,5 @@
 {
-  "parent": "immersiveweapons:blueprint",
+  "parent": "immersiveweapons:small_parts_table",
   "display": {
     "icon": {
       "item": "immersiveweapons:flintlock_pistol",

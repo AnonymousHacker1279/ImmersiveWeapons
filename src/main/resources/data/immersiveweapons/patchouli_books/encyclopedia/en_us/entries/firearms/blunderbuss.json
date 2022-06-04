@@ -13,5 +13,5 @@
 			"text": "Reload Time: $(l)5 seconds"
 		}
 	],
-	"advancement": "immersiveweapons:recipes/immersiveweapons/small_parts_iron_tinkering"
+	"advancement": "immersiveweapons:recipes/immersiveweapons/blunderbuss"
 }

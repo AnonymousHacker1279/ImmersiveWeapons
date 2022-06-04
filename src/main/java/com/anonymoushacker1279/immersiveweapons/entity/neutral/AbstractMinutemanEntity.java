@@ -4,8 +4,9 @@ import com.anonymoushacker1279.immersiveweapons.entity.GrantAdvancementOnDiscove
 import com.anonymoushacker1279.immersiveweapons.entity.ai.goal.DefendVillageTargetGoal;
 import com.anonymoushacker1279.immersiveweapons.entity.ai.goal.RangedShotgunAttackGoal;
 import com.anonymoushacker1279.immersiveweapons.entity.monster.AbstractDyingSoldierEntity;
+import com.anonymoushacker1279.immersiveweapons.entity.projectile.BulletEntity;
 import com.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
-import com.anonymoushacker1279.immersiveweapons.item.projectile.arrow.AbstractArrowItem;
+import com.anonymoushacker1279.immersiveweapons.item.projectile.bullet.AbstractBulletItem;
 import com.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
@@ -26,7 +27,6 @@ import net.minecraft.world.entity.ai.targeting.TargetingConditions;
 import net.minecraft.world.entity.animal.IronGolem;
 import net.minecraft.world.entity.monster.*;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.entity.projectile.ProjectileUtil;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ProjectileWeaponItem;
@@ -276,21 +276,21 @@ public abstract class AbstractMinutemanEntity extends PathfinderMob implements R
 	public void performRangedAttack(@NotNull LivingEntity target, float distanceFactor) {
 		// Fire four bullets for the blunderbuss
 		for (int i = 0; i <= 4; i++) {
-			AbstractArrow abstractBulletEntity = fireArrow(new ItemStack(DeferredRegistryHandler.COPPER_MUSKET_BALL.get()),
+			BulletEntity bulletEntity = fireBullet(new ItemStack(DeferredRegistryHandler.COPPER_MUSKET_BALL.get()),
 					distanceFactor);
 
 			double deltaX = target.getX() - getX();
-			double deltaY = target.getY(0.1D) - abstractBulletEntity.getY();
+			double deltaY = target.getY(0.1D) - bulletEntity.getY();
 			double deltaZ = target.getZ() - getZ();
 			double sqrtXZ = Mth.sqrt((float) (deltaX * deltaX + deltaZ * deltaZ));
 
-			abstractBulletEntity.setKnockback(3);
-			abstractBulletEntity.setOwner(this);
+			bulletEntity.setKnockback(3);
+			bulletEntity.setOwner(this);
 
-			abstractBulletEntity.shoot(deltaX + GeneralUtilities.getRandomNumber(-1.0f, 1.0f),
+			bulletEntity.shoot(deltaX + GeneralUtilities.getRandomNumber(-1.0f, 1.0f),
 					deltaY + sqrtXZ * 0.2D + GeneralUtilities.getRandomNumber(-0.375f, 0.375f), deltaZ, 1.6F,
 					18 - level.getDifficulty().getId() * 4 + GeneralUtilities.getRandomNumber(0.2f, 0.8f));
-			level.addFreshEntity(abstractBulletEntity);
+			level.addFreshEntity(bulletEntity);
 		}
 		playSound(DeferredRegistryHandler.BLUNDERBUSS_FIRE.get(), 1.0F,
 				1.0F / (getRandom().nextFloat() * 0.4F + 0.8F));
@@ -314,21 +314,20 @@ public abstract class AbstractMinutemanEntity extends PathfinderMob implements R
 	}
 
 	/**
-	 * Fires an arrow. Technically, all projectiles coming from this entity will be bullets,
-	 * though they use a modified arrow entity for this.
+	 * Fires a bullet.
 	 *
-	 * @param arrowStack     the <code>ItemStack</code> of the arrow
+	 * @param bulletStack    the <code>ItemStack</code> of the bullet
 	 * @param distanceFactor the distance factor for firing
-	 * @return AbstractArrowEntity
+	 * @return BulletEntity
 	 */
-	private AbstractArrow fireArrow(ItemStack arrowStack, float distanceFactor) {
-		AbstractArrowItem arrowItem = (AbstractArrowItem) (arrowStack.getItem() instanceof AbstractArrowItem
-				? arrowStack.getItem() : DeferredRegistryHandler.COPPER_MUSKET_BALL.get());
+	private BulletEntity fireBullet(ItemStack bulletStack, float distanceFactor) {
+		AbstractBulletItem arrowItem = (AbstractBulletItem) (bulletStack.getItem() instanceof AbstractBulletItem
+				? bulletStack.getItem() : DeferredRegistryHandler.COPPER_MUSKET_BALL.get());
 
-		AbstractArrow abstractArrowEntity = arrowItem.createArrow(level, arrowStack, this);
-		abstractArrowEntity.setEnchantmentEffectsFromEntity(this, distanceFactor);
+		BulletEntity bulletEntity = arrowItem.createBullet(level, bulletStack, this);
+		bulletEntity.setEnchantmentEffectsFromEntity(this, distanceFactor);
 
-		return abstractArrowEntity;
+		return bulletEntity;
 	}
 
 	/**

@@ -1,6 +1,6 @@
 {
   "type": "minecraft:crafting_shaped",
-  "group": "flare_gun",
+  "group": "firearm",
   "pattern": [
     " a ",
     " b ",
