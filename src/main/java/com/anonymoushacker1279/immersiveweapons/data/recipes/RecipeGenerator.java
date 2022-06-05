@@ -870,28 +870,28 @@ public class RecipeGenerator extends RecipeProvider {
 		ShapedRecipeBuilder builder = ShapedRecipeBuilder.shaped(pickaxeItem)
 				.group("cobalt")
 				.unlockedBy("cobalt_ingot", has(ForgeItemTagGroups.COBALT_INGOTS));
-		createPickaxe(builder, ForgeItemTagGroups.COBALT_INGOTS);
+		createPickaxe(builder, ForgeItemTagGroups.COBALT_INGOTS, Items.STICK);
 	}
 
 	private static void createCobaltAxe(ItemLike axeItem) {
 		ShapedRecipeBuilder builder = ShapedRecipeBuilder.shaped(axeItem)
 				.group("cobalt")
 				.unlockedBy("cobalt_ingot", has(ForgeItemTagGroups.COBALT_INGOTS));
-		createAxe(builder, ForgeItemTagGroups.COBALT_INGOTS);
+		createAxe(builder, ForgeItemTagGroups.COBALT_INGOTS, Items.STICK);
 	}
 
 	private static void createCobaltShovel(ItemLike shovelItem) {
 		ShapedRecipeBuilder builder = ShapedRecipeBuilder.shaped(shovelItem)
 				.group("cobalt")
 				.unlockedBy("cobalt_ingot", has(ForgeItemTagGroups.COBALT_INGOTS));
-		createShovel(builder, ForgeItemTagGroups.COBALT_INGOTS);
+		createShovel(builder, ForgeItemTagGroups.COBALT_INGOTS, Items.STICK);
 	}
 
 	private static void createCobaltHoe(ItemLike hoeItem) {
 		ShapedRecipeBuilder builder = ShapedRecipeBuilder.shaped(hoeItem)
 				.group("cobalt")
 				.unlockedBy("cobalt_ingot", has(ForgeItemTagGroups.COBALT_INGOTS));
-		createHoe(builder, ForgeItemTagGroups.COBALT_INGOTS);
+		createHoe(builder, ForgeItemTagGroups.COBALT_INGOTS, Items.STICK);
 	}
 
 	private static void createCobaltHelmet(ItemLike helmetItem) {
@@ -1012,28 +1012,28 @@ public class RecipeGenerator extends RecipeProvider {
 		ShapedRecipeBuilder builder = ShapedRecipeBuilder.shaped(pickaxeItem)
 				.group("copper")
 				.unlockedBy("copper_ingot", has(ForgeItemTagGroups.COPPER_INGOTS));
-		createPickaxe(builder, ForgeItemTagGroups.COPPER_INGOTS);
+		createPickaxe(builder, ForgeItemTagGroups.COPPER_INGOTS, Items.STICK);
 	}
 
 	private static void createCopperAxe(ItemLike axeItem) {
 		ShapedRecipeBuilder builder = ShapedRecipeBuilder.shaped(axeItem)
 				.group("copper")
 				.unlockedBy("copper_ingot", has(ForgeItemTagGroups.COPPER_INGOTS));
-		createAxe(builder, ForgeItemTagGroups.COPPER_INGOTS);
+		createAxe(builder, ForgeItemTagGroups.COPPER_INGOTS, Items.STICK);
 	}
 
 	private static void createCopperShovel(ItemLike shovelItem) {
 		ShapedRecipeBuilder builder = ShapedRecipeBuilder.shaped(shovelItem)
 				.group("copper")
 				.unlockedBy("copper_ingot", has(ForgeItemTagGroups.COPPER_INGOTS));
-		createShovel(builder, ForgeItemTagGroups.COPPER_INGOTS);
+		createShovel(builder, ForgeItemTagGroups.COPPER_INGOTS, Items.STICK);
 	}
 
 	private static void createCopperHoe(ItemLike hoeItem) {
 		ShapedRecipeBuilder builder = ShapedRecipeBuilder.shaped(hoeItem)
 				.group("copper")
 				.unlockedBy("copper_ingot", has(ForgeItemTagGroups.COPPER_INGOTS));
-		createHoe(builder, ForgeItemTagGroups.COPPER_INGOTS);
+		createHoe(builder, ForgeItemTagGroups.COPPER_INGOTS, Items.STICK);
 	}
 
 	private static void createCopperHelmet(ItemLike helmetItem) {
@@ -1117,28 +1117,28 @@ public class RecipeGenerator extends RecipeProvider {
 		ShapedRecipeBuilder builder = ShapedRecipeBuilder.shaped(pickaxeItem)
 				.group("molten")
 				.unlockedBy("molten_ingot", has(DeferredRegistryHandler.MOLTEN_INGOT.get()));
-		createPickaxe(builder, ImmersiveWeaponsItemTagGroups.MOLTEN_INGOTS);
+		createPickaxe(builder, ImmersiveWeaponsItemTagGroups.MOLTEN_INGOTS, DeferredRegistryHandler.OBSIDIAN_ROD.get());
 	}
 
 	private static void createMoltenAxe(ItemLike axeItem) {
 		ShapedRecipeBuilder builder = ShapedRecipeBuilder.shaped(axeItem)
 				.group("molten")
 				.unlockedBy("molten_ingot", has(DeferredRegistryHandler.MOLTEN_INGOT.get()));
-		createAxe(builder, ImmersiveWeaponsItemTagGroups.MOLTEN_INGOTS);
+		createAxe(builder, ImmersiveWeaponsItemTagGroups.MOLTEN_INGOTS, DeferredRegistryHandler.OBSIDIAN_ROD.get());
 	}
 
 	private static void createMoltenShovel(ItemLike shovelItem) {
 		ShapedRecipeBuilder builder = ShapedRecipeBuilder.shaped(shovelItem)
 				.group("molten")
 				.unlockedBy("molten_ingot", has(DeferredRegistryHandler.MOLTEN_INGOT.get()));
-		createShovel(builder, ImmersiveWeaponsItemTagGroups.MOLTEN_INGOTS);
+		createShovel(builder, ImmersiveWeaponsItemTagGroups.MOLTEN_INGOTS, DeferredRegistryHandler.OBSIDIAN_ROD.get());
 	}
 
 	private static void createMoltenHoe(ItemLike hoeItem) {
 		ShapedRecipeBuilder builder = ShapedRecipeBuilder.shaped(hoeItem)
 				.group("molten")
 				.unlockedBy("molten_ingot", has(DeferredRegistryHandler.MOLTEN_INGOT.get()));
-		createHoe(builder, ImmersiveWeaponsItemTagGroups.MOLTEN_INGOTS);
+		createHoe(builder, ImmersiveWeaponsItemTagGroups.MOLTEN_INGOTS, DeferredRegistryHandler.OBSIDIAN_ROD.get());
 	}
 
 	private static void createMoltenHelmet(ItemLike helmetItem) {
@@ -1207,28 +1207,28 @@ public class RecipeGenerator extends RecipeProvider {
 		ShapedRecipeBuilder builder = ShapedRecipeBuilder.shaped(pickaxeItem)
 				.group("ventus")
 				.unlockedBy("ventus_shard", has(DeferredRegistryHandler.VENTUS_SHARD.get()));
-		createPickaxe(builder, ImmersiveWeaponsItemTagGroups.VENTUS_SHARDS);
+		createPickaxe(builder, ImmersiveWeaponsItemTagGroups.VENTUS_SHARDS, DeferredRegistryHandler.OBSIDIAN_ROD.get());
 	}
 
 	private static void createVentusAxe(ItemLike axeItem) {
 		ShapedRecipeBuilder builder = ShapedRecipeBuilder.shaped(axeItem)
 				.group("ventus")
 				.unlockedBy("ventus_shard", has(DeferredRegistryHandler.VENTUS_SHARD.get()));
-		createAxe(builder, ImmersiveWeaponsItemTagGroups.VENTUS_SHARDS);
+		createAxe(builder, ImmersiveWeaponsItemTagGroups.VENTUS_SHARDS, DeferredRegistryHandler.OBSIDIAN_ROD.get());
 	}
 
 	private static void createVentusShovel(ItemLike shovelItem) {
 		ShapedRecipeBuilder builder = ShapedRecipeBuilder.shaped(shovelItem)
 				.group("ventus")
 				.unlockedBy("ventus_shard", has(DeferredRegistryHandler.VENTUS_SHARD.get()));
-		createShovel(builder, ImmersiveWeaponsItemTagGroups.VENTUS_SHARDS);
+		createShovel(builder, ImmersiveWeaponsItemTagGroups.VENTUS_SHARDS, DeferredRegistryHandler.OBSIDIAN_ROD.get());
 	}
 
 	private static void createVentusHoe(ItemLike hoeItem) {
 		ShapedRecipeBuilder builder = ShapedRecipeBuilder.shaped(hoeItem)
 				.group("ventus")
 				.unlockedBy("ventus_shard", has(DeferredRegistryHandler.VENTUS_SHARD.get()));
-		createHoe(builder, ImmersiveWeaponsItemTagGroups.VENTUS_SHARDS);
+		createHoe(builder, ImmersiveWeaponsItemTagGroups.VENTUS_SHARDS, DeferredRegistryHandler.OBSIDIAN_ROD.get());
 	}
 
 	private static void createVentusHelmet(ItemLike helmetItem) {
@@ -1294,28 +1294,28 @@ public class RecipeGenerator extends RecipeProvider {
 		ShapedRecipeBuilder builder = ShapedRecipeBuilder.shaped(pickaxeItem)
 				.group("tesla")
 				.unlockedBy("tesla_ingot", has(ImmersiveWeaponsItemTagGroups.TESLA_INGOTS));
-		createPickaxe(builder, ImmersiveWeaponsItemTagGroups.TESLA_INGOTS);
+		createPickaxe(builder, ImmersiveWeaponsItemTagGroups.TESLA_INGOTS, DeferredRegistryHandler.OBSIDIAN_ROD.get());
 	}
 
 	private static void createTeslaAxe(ItemLike axeItem) {
 		ShapedRecipeBuilder builder = ShapedRecipeBuilder.shaped(axeItem)
 				.group("tesla")
 				.unlockedBy("tesla_ingot", has(ImmersiveWeaponsItemTagGroups.TESLA_INGOTS));
-		createAxe(builder, ImmersiveWeaponsItemTagGroups.TESLA_INGOTS);
+		createAxe(builder, ImmersiveWeaponsItemTagGroups.TESLA_INGOTS, DeferredRegistryHandler.OBSIDIAN_ROD.get());
 	}
 
 	private static void createTeslaShovel(ItemLike shovelItem) {
 		ShapedRecipeBuilder builder = ShapedRecipeBuilder.shaped(shovelItem)
 				.group("tesla")
 				.unlockedBy("tesla_ingot", has(ImmersiveWeaponsItemTagGroups.TESLA_INGOTS));
-		createShovel(builder, ImmersiveWeaponsItemTagGroups.TESLA_INGOTS);
+		createShovel(builder, ImmersiveWeaponsItemTagGroups.TESLA_INGOTS, DeferredRegistryHandler.OBSIDIAN_ROD.get());
 	}
 
 	private static void createTeslaHoe(ItemLike hoeItem) {
 		ShapedRecipeBuilder builder = ShapedRecipeBuilder.shaped(hoeItem)
 				.group("tesla")
 				.unlockedBy("tesla_ingot", has(ImmersiveWeaponsItemTagGroups.TESLA_INGOTS));
-		createHoe(builder, ImmersiveWeaponsItemTagGroups.TESLA_INGOTS);
+		createHoe(builder, ImmersiveWeaponsItemTagGroups.TESLA_INGOTS, DeferredRegistryHandler.OBSIDIAN_ROD.get());
 	}
 
 	private static void createTeslaHelmet(ItemLike helmetItem) {
@@ -1967,36 +1967,36 @@ public class RecipeGenerator extends RecipeProvider {
 				.save(finishedRecipeConsumer);
 	}
 
-	private static void createPickaxe(ShapedRecipeBuilder builder, TagKey<Item> material) {
+	private static void createPickaxe(ShapedRecipeBuilder builder, TagKey<Item> material, Item stick) {
 		builder.define('a', material)
-				.define('b', Items.STICK)
+				.define('b', stick)
 				.pattern("aaa")
 				.pattern(" b ")
 				.pattern(" b ")
 				.save(finishedRecipeConsumer);
 	}
 
-	private static void createAxe(ShapedRecipeBuilder builder, TagKey<Item> material) {
+	private static void createAxe(ShapedRecipeBuilder builder, TagKey<Item> material, Item stick) {
 		builder.define('a', material)
-				.define('b', Items.STICK)
+				.define('b', stick)
 				.pattern("aa ")
 				.pattern("ab ")
 				.pattern(" b ")
 				.save(finishedRecipeConsumer);
 	}
 
-	private static void createShovel(ShapedRecipeBuilder builder, TagKey<Item> material) {
+	private static void createShovel(ShapedRecipeBuilder builder, TagKey<Item> material, Item stick) {
 		builder.define('a', material)
-				.define('b', Items.STICK)
+				.define('b', stick)
 				.pattern(" a ")
 				.pattern(" b ")
 				.pattern(" b ")
 				.save(finishedRecipeConsumer);
 	}
 
-	private static void createHoe(ShapedRecipeBuilder builder, TagKey<Item> material) {
+	private static void createHoe(ShapedRecipeBuilder builder, TagKey<Item> material, Item stick) {
 		builder.define('a', material)
-				.define('b', Items.STICK)
+				.define('b', stick)
 				.pattern("aa ")
 				.pattern(" b ")
 				.pattern(" b ")
