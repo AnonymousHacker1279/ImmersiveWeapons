@@ -51,7 +51,7 @@
 		"subtitle": "immersiveweapons.subtitle.item.gun.flintlock_fire",
 		"sounds": [
 			{
-				"name": "immersiveweapons:flintlock_pistol_fire"
+				"name": "immersiveweapons:item/flintlock_pistol/fire/fire"
 			}
 		]
 	},
@@ -81,7 +81,7 @@
 		"subtitle": "immersiveweapons.subtitle.block.small_parts_table_used",
 		"sounds": [
 			{
-				"name": "immersiveweapons:small_parts_table_used"
+				"name": "immersiveweapons:block/small_parts_table/used/used"
 			}
 		]
 	},
@@ -89,7 +89,7 @@
 		"subtitle": "immersiveweapons.subtitle.item.smoke_grenade_hiss",
 		"sounds": [
 			{
-				"name": "immersiveweapons:smoke_grenade_hiss",
+				"name": "immersiveweapons:item/smoke_grenade/activate/hiss",
 				"stream": true
 			}
 		]
@@ -106,7 +106,7 @@
 		"subtitle": "immersiveweapons.subtitle.item.gun.blunderbuss_fire",
 		"sounds": [
 			{
-				"name": "immersiveweapons:blunderbuss_fire"
+				"name": "immersiveweapons:item/blunderbuss/fire/fire"
 			}
 		]
 	},
@@ -114,7 +114,7 @@
 		"subtitle": "immersiveweapons.subtitle.block.barbed_wire_rattle",
 		"sounds": [
 			{
-				"name": "immersiveweapons:barbed_wire_rattle"
+				"name": "immersiveweapons:block/barbed_wire/rattle/rattle"
 			}
 		]
 	},
@@ -122,7 +122,7 @@
 		"subtitle": "immersiveweapons.subtitle.block.bear_trap_close",
 		"sounds": [
 			{
-				"name": "immersiveweapons:bear_trap_close"
+				"name": "immersiveweapons:block/bear_trap/close/close"
 			}
 		]
 	},
@@ -130,7 +130,7 @@
 		"subtitle": "immersiveweapons.subtitle.block.spike_trap_extend",
 		"sounds": [
 			{
-				"name": "immersiveweapons:spike_trap_extend"
+				"name": "immersiveweapons:block/spike_trap/extend/extend"
 			}
 		]
 	},
@@ -138,7 +138,7 @@
 		"subtitle": "immersiveweapons.subtitle.block.spike_trap_retract",
 		"sounds": [
 			{
-				"name": "immersiveweapons:spike_trap_retract"
+				"name": "immersiveweapons:block/spike_trap/retract/retract"
 			}
 		]
 	},
@@ -241,7 +241,7 @@
 		"subtitle": "immersiveweapons.subtitle.item.gun.flare_gun_fire",
 		"sounds": [
 			{
-				"name": "immersiveweapons:flare_gun_fire"
+				"name": "immersiveweapons:item/flare_gun/fire/fire"
 			}
 		]
 	},
@@ -490,7 +490,7 @@
 		"subtitle": "immersiveweapons.subtitle.item.gun.musket_fire",
 		"sounds": [
 			{
-				"name": "immersiveweapons:musket_fire"
+				"name": "immersiveweapons:item/musket/fire/fire"
 			}
 		]
 	}
