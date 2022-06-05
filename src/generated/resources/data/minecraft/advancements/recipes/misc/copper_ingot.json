@@ -2,16 +2,16 @@
   "parent": "minecraft:recipes/root",
   "rewards": {
     "recipes": [
-      "immersiveweapons:wooden_musket_ball"
+      "minecraft:copper_ingot"
     ]
   },
   "criteria": {
-    "wooden_shard": {
+    "copper_nugget": {
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
           {
-            "tag": "immersiveweapons:shards/wood"
+            "tag": "forge:nuggets/copper"
           }
         ]
       }
@@ -19,13 +19,13 @@
     "has_the_recipe": {
       "trigger": "minecraft:recipe_unlocked",
       "conditions": {
-        "recipe": "immersiveweapons:wooden_musket_ball"
+        "recipe": "minecraft:copper_ingot"
       }
     }
   },
   "requirements": [
     [
-      "wooden_shard",
+      "copper_nugget",
       "has_the_recipe"
     ]
   ]

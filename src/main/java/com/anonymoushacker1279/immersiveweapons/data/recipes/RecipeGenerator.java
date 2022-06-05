@@ -233,6 +233,7 @@ public class RecipeGenerator extends RecipeProvider {
 		createCopperGauntlet(DeferredRegistryHandler.COPPER_GAUNTLET.get());
 		createCopperPike(DeferredRegistryHandler.COPPER_PIKE.get(), DeferredRegistryHandler.COPPER_PIKE_HEAD.get());
 		createCopperPikeHead(DeferredRegistryHandler.COPPER_PIKE_HEAD.get());
+		createCopperIngot(Items.COPPER_INGOT);
 		createCopperNugget(DeferredRegistryHandler.COPPER_NUGGET.get());
 		createCopperMusketBall(DeferredRegistryHandler.COPPER_MUSKET_BALL.get());
 	}
@@ -1082,6 +1083,13 @@ public class RecipeGenerator extends RecipeProvider {
 				.group("copper")
 				.unlockedBy("copper_ingot", has(ForgeItemTagGroups.COPPER_INGOTS));
 		createPikeHead(builder, ForgeItemTagGroups.COPPER_INGOTS, ForgeItemTagGroups.COPPER_NUGGETS);
+	}
+
+	private static void createCopperIngot(ItemLike ingotItem) {
+		ShapedRecipeBuilder builder = ShapedRecipeBuilder.shaped(ingotItem)
+				.group("copper")
+				.unlockedBy("copper_nugget", has(ForgeItemTagGroups.COPPER_NUGGETS));
+		create3x3Object(builder, ForgeItemTagGroups.COPPER_NUGGETS);
 	}
 
 	private static void createCopperNugget(ItemLike nuggetItem) {
