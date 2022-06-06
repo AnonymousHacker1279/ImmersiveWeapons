@@ -95,7 +95,7 @@
 		"subtitle": "immersiveweapons.subtitle.block.mortar.fire",
 		"sounds": [
 			{
-				"name": "immersiveweapons:block/mortar/fire/fire_0"
+				"name": "immersiveweapons:block/mortar/fire/fire"
 			}
 		]
 	},
@@ -111,13 +111,13 @@
 		"subtitle": "immersiveweapons.subtitle.item.gun.bullet_whizz",
 		"sounds": [
 			{
+				"name": "immersiveweapons:bullet/bullet_whizz_0"
+			},
+			{
 				"name": "immersiveweapons:bullet/bullet_whizz_1"
 			},
 			{
 				"name": "immersiveweapons:bullet/bullet_whizz_2"
-			},
-			{
-				"name": "immersiveweapons:bullet/bullet_whizz_3"
 			}
 		]
 	},
@@ -198,7 +198,7 @@
 		"subtitle": "immersiveweapons.subtitle.block.alarm.panic_alarm",
 		"sounds": [
 			{
-				"name": "immersiveweapons:block/panic_alarm/alarm/panic_alarm"
+				"name": "immersiveweapons:block/panic_alarm/alarm/alarm"
 			}
 		]
 	},
@@ -206,19 +206,22 @@
 		"subtitle": "immersiveweapons.subtitle.entity.dying_soldier.ambient",
 		"sounds": [
 			{
+				"name": "immersiveweapons:entity/dying_soldier/ambient/ambient_0"
+			},
+			{
 				"name": "immersiveweapons:entity/dying_soldier/ambient/ambient_1"
 			},
 			{
 				"name": "immersiveweapons:entity/dying_soldier/ambient/ambient_2"
-			},
-			{
-				"name": "immersiveweapons:entity/dying_soldier/ambient/ambient_3"
 			}
 		]
 	},
 	"dying_soldier_step": {
 		"subtitle": "immersiveweapons.subtitle.entity.dying_soldier.step",
 		"sounds": [
+			{
+				"name": "immersiveweapons:entity/dying_soldier/step/step_0"
+			},
 			{
 				"name": "immersiveweapons:entity/dying_soldier/step/step_1"
 			},
@@ -227,9 +230,6 @@
 			},
 			{
 				"name": "immersiveweapons:entity/dying_soldier/step/step_3"
-			},
-			{
-				"name": "immersiveweapons:entity/dying_soldier/step/step_4"
 			}
 		]
 	},
@@ -245,13 +245,13 @@
 		"subtitle": "immersiveweapons.subtitle.entity.dying_soldier.hurt",
 		"sounds": [
 			{
+				"name": "immersiveweapons:entity/dying_soldier/hurt/hurt_0"
+			},
+			{
 				"name": "immersiveweapons:entity/dying_soldier/hurt/hurt_1"
 			},
 			{
 				"name": "immersiveweapons:entity/dying_soldier/hurt/hurt_2"
-			},
-			{
-				"name": "immersiveweapons:entity/dying_soldier/hurt/hurt_3"
 			}
 		]
 	},
@@ -259,7 +259,7 @@
 		"subtitle": "immersiveweapons.subtitle.biome.battlefield.ambient",
 		"sounds": [
 			{
-				"name": "immersiveweapons:biome/battlefield/battlefield_ambient",
+				"name": "immersiveweapons:biome/battlefield/ambient/ambient",
 				"stream": true
 			}
 		]
@@ -268,6 +268,9 @@
 		"subtitle": "immersiveweapons.subtitle.entity.field_medic.ambient",
 		"sounds": [
 			{
+				"name": "immersiveweapons:entity/field_medic/ambient/ambient_0"
+			},
+			{
 				"name": "immersiveweapons:entity/field_medic/ambient/ambient_1"
 			},
 			{
@@ -275,9 +278,6 @@
 			},
 			{
 				"name": "immersiveweapons:entity/field_medic/ambient/ambient_3"
-			},
-			{
-				"name": "immersiveweapons:entity/field_medic/ambient/ambient_4"
 			}
 		]
 	},
@@ -301,10 +301,10 @@
 		"subtitle": "immersiveweapons.subtitle.entity.wandering_warrior.ambient",
 		"sounds": [
 			{
-				"name": "immersiveweapons:entity/wandering_warrior/ambient/ambient_1"
+				"name": "immersiveweapons:entity/wandering_warrior/ambient/ambient_0"
 			},
 			{
-				"name": "immersiveweapons:entity/wandering_warrior/ambient/ambient_2"
+				"name": "immersiveweapons:entity/wandering_warrior/ambient/ambient_1"
 			}
 		]
 	},
@@ -312,13 +312,13 @@
 		"subtitle": "immersiveweapons.subtitle.entity.wandering_warrior.hurt",
 		"sounds": [
 			{
+				"name": "immersiveweapons:entity/wandering_warrior/hurt/hurt_0"
+			},
+			{
 				"name": "immersiveweapons:entity/wandering_warrior/hurt/hurt_1"
 			},
 			{
 				"name": "immersiveweapons:entity/wandering_warrior/hurt/hurt_2"
-			},
-			{
-				"name": "immersiveweapons:entity/wandering_warrior/hurt/hurt_3"
 			}
 		]
 	},
@@ -334,6 +334,9 @@
 		"subtitle": "immersiveweapons.subtitle.entity.wandering_warrior.step",
 		"sounds": [
 			{
+				"name": "immersiveweapons:entity/wandering_warrior/step/step_0"
+			},
+			{
 				"name": "immersiveweapons:entity/wandering_warrior/step/step_1"
 			},
 			{
@@ -341,9 +344,6 @@
 			},
 			{
 				"name": "immersiveweapons:entity/wandering_warrior/step/step_3"
-			},
-			{
-				"name": "immersiveweapons:entity/wandering_warrior/step/step_4"
 			}
 		]
 	},
@@ -351,13 +351,13 @@
 		"subtitle": "immersiveweapons.subtitle.entity.field_medic.hurt",
 		"sounds": [
 			{
+				"name": "immersiveweapons:entity/field_medic/hurt/hurt_0"
+			},
+			{
 				"name": "immersiveweapons:entity/field_medic/hurt/hurt_1"
 			},
 			{
 				"name": "immersiveweapons:entity/field_medic/hurt/hurt_2"
-			},
-			{
-				"name": "immersiveweapons:entity/field_medic/hurt/hurt_3"
 			}
 		]
 	},
@@ -373,6 +373,9 @@
 		"subtitle": "immersiveweapons.subtitle.entity.field_medic.step",
 		"sounds": [
 			{
+				"name": "immersiveweapons:entity/field_medic/step/step_0"
+			},
+			{
 				"name": "immersiveweapons:entity/field_medic/step/step_1"
 			},
 			{
@@ -380,9 +383,6 @@
 			},
 			{
 				"name": "immersiveweapons:entity/field_medic/step/step_3"
-			},
-			{
-				"name": "immersiveweapons:entity/field_medic/step/step_4"
 			}
 		]
 	},
@@ -390,7 +390,7 @@
 		"subtitle": "immersiveweapons.subtitle.biome.tiltros.ambient",
 		"sounds": [
 			{
-				"name": "immersiveweapons:biome/tiltros/ambient/ambient_1",
+				"name": "immersiveweapons:biome/tiltros/ambient/ambient",
 				"stream": true
 			}
 		]
@@ -399,13 +399,13 @@
 		"subtitle": "immersiveweapons.subtitle.entity.lava_revenant.ambient",
 		"sounds": [
 			{
+				"name": "immersiveweapons:entity/lava_revenant/ambient/ambient_0"
+			},
+			{
 				"name": "immersiveweapons:entity/lava_revenant/ambient/ambient_1"
 			},
 			{
 				"name": "immersiveweapons:entity/lava_revenant/ambient/ambient_2"
-			},
-			{
-				"name": "immersiveweapons:entity/lava_revenant/ambient/ambient_3"
 			}
 		]
 	},
@@ -413,13 +413,13 @@
 		"subtitle": "immersiveweapons.subtitle.entity.lava_revenant.hurt",
 		"sounds": [
 			{
+				"name": "immersiveweapons:entity/lava_revenant/hurt/hurt_0"
+			},
+			{
 				"name": "immersiveweapons:entity/lava_revenant/hurt/hurt_1"
 			},
 			{
 				"name": "immersiveweapons:entity/lava_revenant/hurt/hurt_2"
-			},
-			{
-				"name": "immersiveweapons:entity/lava_revenant/hurt/hurt_3"
 			}
 		]
 	},
@@ -427,19 +427,22 @@
 		"subtitle": "immersiveweapons.subtitle.entity.lava_revenant.death",
 		"sounds": [
 			{
+				"name": "immersiveweapons:entity/lava_revenant/death/death_0"
+			},
+			{
 				"name": "immersiveweapons:entity/lava_revenant/death/death_1"
 			},
 			{
 				"name": "immersiveweapons:entity/lava_revenant/death/death_2"
-			},
-			{
-				"name": "immersiveweapons:entity/lava_revenant/death/death_3"
 			}
 		]
 	},
 	"lava_revenant_flap": {
 		"subtitle": "immersiveweapons.subtitle.entity.lava_revenant.flap",
 		"sounds": [
+			{
+				"name": "immersiveweapons:entity/lava_revenant/flap/flap_0"
+			},
 			{
 				"name": "immersiveweapons:entity/lava_revenant/flap/flap_1"
 			},
@@ -454,15 +457,15 @@
 			},
 			{
 				"name": "immersiveweapons:entity/lava_revenant/flap/flap_5"
-			},
-			{
-				"name": "immersiveweapons:entity/lava_revenant/flap/flap_6"
 			}
 		]
 	},
 	"lava_revenant_swoop": {
 		"subtitle": "immersiveweapons.subtitle.entity.lava_revenant.swoop",
 		"sounds": [
+			{
+				"name": "immersiveweapons:entity/lava_revenant/swoop/swoop_0"
+			},
 			{
 				"name": "immersiveweapons:entity/lava_revenant/swoop/swoop_1"
 			},
@@ -471,9 +474,6 @@
 			},
 			{
 				"name": "immersiveweapons:entity/lava_revenant/swoop/swoop_3"
-			},
-			{
-				"name": "immersiveweapons:entity/lava_revenant/swoop/swoop_4"
 			}
 		]
 	},
@@ -481,10 +481,10 @@
 		"subtitle": "immersiveweapons.subtitle.entity.lava_revenant.bite",
 		"sounds": [
 			{
-				"name": "immersiveweapons:entity/lava_revenant/bite/bite_1"
+				"name": "immersiveweapons:entity/lava_revenant/bite/bite_0"
 			},
 			{
-				"name": "immersiveweapons:entity/lava_revenant/bite/bite_2"
+				"name": "immersiveweapons:entity/lava_revenant/bite/bite_1"
 			}
 		]
 	},
@@ -492,14 +492,14 @@
 		"subtitle": "immersiveweapons.subtitle.entity.celestial_tower.ambient",
 		"sounds": [
 			{
-				"name": "immersiveweapons:entity/celestial_tower/ambient/ambient_1",
+				"name": "immersiveweapons:entity/celestial_tower/ambient/ambient_0",
 				"stream": true
 			},
 			{
-				"name": "immersiveweapons:entity/celestial_tower/ambient/ambient_2"
+				"name": "immersiveweapons:entity/celestial_tower/ambient/ambient_1"
 			},
 			{
-				"name": "immersiveweapons:entity/celestial_tower/ambient/ambient_3"
+				"name": "immersiveweapons:entity/celestial_tower/ambient/ambient_2"
 			}
 		]
 	},
@@ -507,10 +507,10 @@
 		"subtitle": "immersiveweapons.subtitle.entity.celestial_tower.hurt",
 		"sounds": [
 			{
-				"name": "immersiveweapons:entity/celestial_tower/hurt/hurt_1"
+				"name": "immersiveweapons:entity/celestial_tower/hurt/hurt_0"
 			},
 			{
-				"name": "immersiveweapons:entity/celestial_tower/hurt/hurt_2"
+				"name": "immersiveweapons:entity/celestial_tower/hurt/hurt_1"
 			}
 		]
 	},
@@ -518,7 +518,7 @@
 		"subtitle": "immersiveweapons.subtitle.entity.celestial_tower.death",
 		"sounds": [
 			{
-				"name": "immersiveweapons:entity/celestial_tower/death/death_1"
+				"name": "immersiveweapons:entity/celestial_tower/death/death"
 			}
 		]
 	},
@@ -526,7 +526,7 @@
 		"subtitle": "immersiveweapons.subtitle.entity.celestial_tower.summon",
 		"sounds": [
 			{
-				"name": "immersiveweapons:entity/celestial_tower/summon/summon_1"
+				"name": "immersiveweapons:entity/celestial_tower/summon/summon"
 			}
 		]
 	},
@@ -534,7 +534,7 @@
 		"subtitle": "immersiveweapons.subtitle.entity.celestial_tower.vulnerable",
 		"sounds": [
 			{
-				"name": "immersiveweapons:entity/celestial_tower/vulnerable/vulnerable_1"
+				"name": "immersiveweapons:entity/celestial_tower/vulnerable/vulnerable"
 			}
 		]
 	},

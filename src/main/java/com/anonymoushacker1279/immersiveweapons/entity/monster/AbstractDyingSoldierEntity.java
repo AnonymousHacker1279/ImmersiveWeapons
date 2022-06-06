@@ -8,7 +8,6 @@ import com.anonymoushacker1279.immersiveweapons.entity.projectile.BulletEntity;
 import com.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
 import com.anonymoushacker1279.immersiveweapons.item.projectile.arrow.AbstractArrowItem;
 import com.anonymoushacker1279.immersiveweapons.item.projectile.bullet.AbstractBulletItem;
-import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.util.Mth;
@@ -31,7 +30,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ProjectileWeaponItem;
 import net.minecraft.world.level.*;
 import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 import org.jetbrains.annotations.NotNull;
 
@@ -117,17 +115,6 @@ public abstract class AbstractDyingSoldierEntity extends Monster implements Rang
 				checkForDiscovery(this, player);
 			}
 		}
-	}
-
-	/**
-	 * Play the step sound.
-	 *
-	 * @param pos   the <code>BlockPos</code> the entity is at
-	 * @param state the <code>BlockState</code> of the block being stepped on
-	 */
-	@Override
-	protected void playStepSound(@NotNull BlockPos pos, @NotNull BlockState state) {
-		playSound(getStepSound(), 0.15F, 1.0F);
 	}
 
 	protected abstract SoundEvent getStepSound();

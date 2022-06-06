@@ -301,7 +301,7 @@ public abstract class AbstractFieldMedicEntity extends PathfinderMob implements 
 					if (randomNumber <= 0.3f) {
 						entityIn.hurt(UsedSyringeItem.damageSource, 8.0F);
 						// :)
-						if (randomNumber <= 0.05f) {
+						if (randomNumber <= 0.005f) {
 							PacketHandler.INSTANCE.send(PacketDistributor.TRACKING_CHUNK.with(() ->
 											level.getChunkAt(blockPosition())),
 									new AbstractFieldMedicEntityPacketHandler(blockPosition()));
