@@ -34,8 +34,6 @@ import com.anonymoushacker1279.immersiveweapons.entity.projectile.*;
 import com.anonymoushacker1279.immersiveweapons.entity.vehicle.BurnedOakBoatEntity;
 import com.anonymoushacker1279.immersiveweapons.entity.vehicle.CustomBoatType;
 import com.anonymoushacker1279.immersiveweapons.item.armor.*;
-import com.anonymoushacker1279.immersiveweapons.item.bottle.AlcoholBottleItem;
-import com.anonymoushacker1279.immersiveweapons.item.bottle.WineBottleItem;
 import com.anonymoushacker1279.immersiveweapons.item.crafting.SmallPartsRecipe;
 import com.anonymoushacker1279.immersiveweapons.item.crafting.TeslaSynthesizerRecipe;
 import com.anonymoushacker1279.immersiveweapons.item.fortitude.*;
@@ -44,6 +42,8 @@ import com.anonymoushacker1279.immersiveweapons.item.materials.CustomArmorMateri
 import com.anonymoushacker1279.immersiveweapons.item.materials.CustomItemMaterials;
 import com.anonymoushacker1279.immersiveweapons.item.misc.UsedSyringeItem;
 import com.anonymoushacker1279.immersiveweapons.item.pike.*;
+import com.anonymoushacker1279.immersiveweapons.item.potion.AlcoholItem;
+import com.anonymoushacker1279.immersiveweapons.item.potion.WineItem;
 import com.anonymoushacker1279.immersiveweapons.item.projectile.arrow.*;
 import com.anonymoushacker1279.immersiveweapons.item.projectile.bullet.*;
 import com.anonymoushacker1279.immersiveweapons.item.projectile.gun.*;
@@ -268,8 +268,8 @@ public class DeferredRegistryHandler {
 	public static final RegistryObject<MolotovItem> MOLOTOV_COCKTAIL = ITEMS.register("molotov_cocktail", () -> new MolotovItem(new Properties().tab(ITEM_GROUP).stacksTo(16)));
 	public static final RegistryObject<Item> SMOKE_POWDER = ITEMS.register("smoke_powder", () -> new Item(new Properties().tab(ITEM_GROUP)));
 	public static final RegistryObject<BasicContainerItem> MORTAR_AND_PESTLE = ITEMS.register("mortar_and_pestle", () -> new BasicContainerItem(new Properties().tab(ITEM_GROUP)));
-	public static final RegistryObject<AlcoholBottleItem> BOTTLE_OF_ALCOHOL = ITEMS.register("bottle_of_alcohol", () -> new AlcoholBottleItem(new Properties().tab(ITEM_GROUP).stacksTo(16)));
-	public static final RegistryObject<WineBottleItem> BOTTLE_OF_WINE = ITEMS.register("bottle_of_wine", () -> new WineBottleItem(new Properties().tab(ITEM_GROUP).stacksTo(16)));
+	public static final RegistryObject<AlcoholItem> BOTTLE_OF_ALCOHOL = ITEMS.register("bottle_of_alcohol", () -> new AlcoholItem(new Properties().tab(ITEM_GROUP).stacksTo(16)));
+	public static final RegistryObject<WineItem> BOTTLE_OF_WINE = ITEMS.register("bottle_of_wine", () -> new WineItem(new Properties().tab(ITEM_GROUP).stacksTo(16)));
 	public static final RegistryObject<Item> PLIERS = ITEMS.register("pliers", () -> new Item(new Properties().tab(ITEM_GROUP).stacksTo(1)));
 	public static final RegistryObject<ChocolateBarItem> CHOCOLATE_BAR = ITEMS.register("chocolate_bar", () -> new ChocolateBarItem(new Properties().tab(ITEM_GROUP).food(FoodItemProperties.CHOCOLATE_BAR), false));
 	public static final RegistryObject<ChocolateBarItem> EXPLOSIVE_CHOCOLATE_BAR = ITEMS.register("explosive_chocolate_bar", () -> new ChocolateBarItem(new Properties().tab(ITEM_GROUP).food(FoodItemProperties.CHOCOLATE_BAR), true));
