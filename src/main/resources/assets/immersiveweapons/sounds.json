@@ -39,6 +39,58 @@
 			}
 		]
 	},
+	"molten_armor_equip": {
+		"subtitle": "immersiveweapons.subtitle.armor.molten.equip",
+		"sounds": [
+			{
+				"name": "immersiveweapons:armor/equip/molten/equip_0"
+			},
+			{
+				"name": "immersiveweapons:armor/equip/molten/equip_1"
+			},{
+				"name": "immersiveweapons:armor/equip/molten/equip_2"
+			}
+		]
+	},
+	"ventus_armor_equip": {
+		"subtitle": "immersiveweapons.subtitle.armor.ventus.equip",
+		"sounds": [
+			{
+				"name": "immersiveweapons:armor/equip/ventus/equip_0"
+			},
+			{
+				"name": "immersiveweapons:armor/equip/ventus/equip_1"
+			},{
+				"name": "immersiveweapons:armor/equip/ventus/equip_2"
+			}
+		]
+	},
+	"copper_armor_equip": {
+		"subtitle": "immersiveweapons.subtitle.armor.copper.equip",
+		"sounds": [
+			{
+				"name": "immersiveweapons:armor/equip/copper/equip_0"
+			},
+			{
+				"name": "immersiveweapons:armor/equip/copper/equip_1"
+			},{
+				"name": "immersiveweapons:armor/equip/copper/equip_2"
+			}
+		]
+	},
+	"cobalt_armor_equip": {
+		"subtitle": "immersiveweapons.subtitle.armor.cobalt.equip",
+		"sounds": [
+			{
+				"name": "immersiveweapons:armor/equip/cobalt/equip_0"
+			},
+			{
+				"name": "immersiveweapons:armor/equip/cobalt/equip_1"
+			},{
+				"name": "immersiveweapons:armor/equip/cobalt/equip_2"
+			}
+		]
+	},
 	"mortar_fire": {
 		"subtitle": "immersiveweapons.subtitle.block.mortar.fire",
 		"sounds": [

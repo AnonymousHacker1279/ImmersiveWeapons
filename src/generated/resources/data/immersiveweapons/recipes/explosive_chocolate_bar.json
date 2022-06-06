@@ -6,10 +6,32 @@
       "item": "immersiveweapons:chocolate_bar"
     },
     {
+      "item": "immersiveweapons:chocolate_bar"
+    },
+    {
+      "item": "immersiveweapons:chocolate_bar"
+    },
+    {
+      "item": "immersiveweapons:chocolate_bar"
+    },
+    {
+      "item": "immersiveweapons:chocolate_bar"
+    },
+    {
+      "item": "immersiveweapons:chocolate_bar"
+    },
+    {
+      "item": "immersiveweapons:chocolate_bar"
+    },
+    {
+      "item": "immersiveweapons:chocolate_bar"
+    },
+    {
       "item": "minecraft:tnt"
     }
   ],
   "result": {
-    "item": "immersiveweapons:explosive_chocolate_bar"
+    "item": "immersiveweapons:explosive_chocolate_bar",
+    "count": 8
   }
 }

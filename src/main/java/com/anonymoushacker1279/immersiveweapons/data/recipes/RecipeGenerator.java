@@ -619,15 +619,15 @@ public class RecipeGenerator extends RecipeProvider {
 
 	private void createFoodItems() {
 		// Chocolate bar
-		ShapelessRecipeBuilder.shapeless(DeferredRegistryHandler.CHOCOLATE_BAR.get())
+		ShapelessRecipeBuilder.shapeless(DeferredRegistryHandler.CHOCOLATE_BAR.get(), 8)
 				.requires(Items.COCOA_BEANS, 8)
 				.requires(Items.MILK_BUCKET)
 				.group("food")
 				.unlockedBy("cocoa_beans", has(Items.COCOA_BEANS))
 				.save(finishedRecipeConsumer);
 		// Explosive chocolate bar
-		ShapelessRecipeBuilder.shapeless(DeferredRegistryHandler.EXPLOSIVE_CHOCOLATE_BAR.get())
-				.requires(DeferredRegistryHandler.CHOCOLATE_BAR.get())
+		ShapelessRecipeBuilder.shapeless(DeferredRegistryHandler.EXPLOSIVE_CHOCOLATE_BAR.get(), 8)
+				.requires(DeferredRegistryHandler.CHOCOLATE_BAR.get(), 8)
 				.requires(Items.TNT)
 				.group("food")
 				.unlockedBy("chocolate_bar", has(DeferredRegistryHandler.CHOCOLATE_BAR.get()))

@@ -31,6 +31,7 @@
     }
   ],
   "result": {
-    "item": "immersiveweapons:chocolate_bar"
+    "item": "immersiveweapons:chocolate_bar",
+    "count": 8
   }
 }

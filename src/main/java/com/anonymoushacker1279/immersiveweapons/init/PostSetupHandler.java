@@ -36,7 +36,7 @@ public class PostSetupHandler {
 						.build();
 		Builder<Attribute, AttributeModifier> combineBuilder = ImmutableMultimap.builder();
 
-		// Wood Pike Item
+		// Wooden Pike Item
 		combineBuilder.putAll(WoodenPikeItem.pikeAttributes);
 		combineBuilder.putAll(newAttributes);
 		WoodenPikeItem.pikeAttributes = combineBuilder.build();
@@ -47,7 +47,7 @@ public class PostSetupHandler {
 		combineBuilder.putAll(newAttributes);
 		StonePikeItem.pikeAttributes = combineBuilder.build();
 
-		// Gold Pike Item
+		// Golden Pike Item
 		combineBuilder = ImmutableMultimap.builder();
 		combineBuilder.putAll(GoldenPikeItem.pikeAttributes);
 		combineBuilder.putAll(newAttributes);
@@ -93,7 +93,7 @@ public class PostSetupHandler {
 				.build();
 		combineBuilder = ImmutableMultimap.builder();
 
-		// Wood Gauntlet Item
+		// Wooden Gauntlet Item
 		combineBuilder.putAll(WoodenGauntletItem.gauntletAttributes);
 		combineBuilder.putAll(newAttributes);
 		WoodenGauntletItem.gauntletAttributes = combineBuilder.build();
@@ -104,7 +104,7 @@ public class PostSetupHandler {
 		combineBuilder.putAll(newAttributes);
 		StoneGauntletItem.gauntletAttributes = combineBuilder.build();
 
-		// Gold Gauntlet Item
+		// Golden Gauntlet Item
 		combineBuilder = ImmutableMultimap.builder();
 		combineBuilder.putAll(GoldenGauntletItem.gauntletAttributes);
 		combineBuilder.putAll(newAttributes);
@@ -150,5 +150,9 @@ public class PostSetupHandler {
 
 		// Set custom armor equip sounds, as these don't exist during the initialization of materials
 		CustomArmorMaterials.TESLA.setEquipSound(DeferredRegistryHandler.TESLA_ARMOR_EQUIP.get());
+		CustomArmorMaterials.MOLTEN.setEquipSound(DeferredRegistryHandler.MOLTEN_ARMOR_EQUIP.get());
+		CustomArmorMaterials.VENTUS.setEquipSound(DeferredRegistryHandler.VENTUS_ARMOR_EQUIP.get());
+		CustomArmorMaterials.COPPER.setEquipSound(DeferredRegistryHandler.COPPER_ARMOR_EQUIP.get());
+		CustomArmorMaterials.COBALT.setEquipSound(DeferredRegistryHandler.COBALT_ARMOR_EQUIP.get());
 	}
 }
