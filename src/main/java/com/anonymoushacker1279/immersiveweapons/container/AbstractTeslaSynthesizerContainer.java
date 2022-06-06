@@ -19,25 +19,25 @@ public abstract class AbstractTeslaSynthesizerContainer extends AbstractContaine
 	/**
 	 * Constructor for AbstractTeslaSynthesizerContainer.
 	 *
-	 * @param containerType   the <code>ContainerType</code> of the container
-	 * @param id              the ID of the container
-	 * @param playerInventory the <code>PlayerInventory</code> instance
+	 * @param menuType  the <code>MenuType</code> of the container
+	 * @param id        the ID of the container
+	 * @param inventory the <code>Inventory</code> instance
 	 */
-	AbstractTeslaSynthesizerContainer(MenuType<?> containerType, int id, Inventory playerInventory) {
-		this(containerType, id, playerInventory, new SimpleContainer(5), new SimpleContainerData(4));
+	AbstractTeslaSynthesizerContainer(MenuType<?> menuType, int id, Inventory inventory) {
+		this(menuType, id, inventory, new SimpleContainer(5), new SimpleContainerData(4));
 	}
 
 	/**
 	 * Constructor for AbstractTeslaSynthesizerContainer.
 	 *
-	 * @param containerType the <code>ContainerType</code> of the container
+	 * @param menuType      the <code>MenuType</code> of the container
 	 * @param id            the ID of the container
 	 * @param inventory     the player inventory
 	 * @param container     the container
 	 * @param containerData the container data
 	 */
-	AbstractTeslaSynthesizerContainer(MenuType<?> containerType, int id, Inventory inventory, Container container, ContainerData containerData) {
-		super(containerType, id);
+	AbstractTeslaSynthesizerContainer(MenuType<?> menuType, int id, Inventory inventory, Container container, ContainerData containerData) {
+		super(menuType, id);
 		checkContainerSize(container, 5);
 		checkContainerDataCount(containerData, 4);
 		teslaSynthesizerInventory = container;
@@ -181,5 +181,4 @@ public abstract class AbstractTeslaSynthesizerContainer extends AbstractContaine
 	public boolean isBurning() {
 		return teslaSynthesizerData.get(0) > 0;
 	}
-
 }
