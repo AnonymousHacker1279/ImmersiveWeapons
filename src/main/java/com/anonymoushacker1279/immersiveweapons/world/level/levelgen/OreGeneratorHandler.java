@@ -1,5 +1,6 @@
 package com.anonymoushacker1279.immersiveweapons.world.level.levelgen;
 
+import com.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import com.anonymoushacker1279.immersiveweapons.config.CommonConfig;
 import com.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
 import net.minecraft.core.Holder;
@@ -28,6 +29,8 @@ public class OreGeneratorHandler {
 	public static PlacedFeature DEEPSLATE_COBALT_ORE_BLOB_PLACEMENT;
 
 	public static void init() {
+		ImmersiveWeapons.LOGGER.info("Initializing ore generation handler");
+
 		MOLTEN_ORE_BLOB_PLACEMENT = new PlacedFeature(
 				Holder.direct(new ConfiguredFeature<>(Feature.SCATTERED_ORE,
 						new OreConfiguration(OreReplacementTargets.MOLTEN_ORE_TARGETS, CommonConfig.MOLTEN_ORE_SIZE.get(),

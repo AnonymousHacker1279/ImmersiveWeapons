@@ -2,7 +2,6 @@ package com.anonymoushacker1279.immersiveweapons.entity.monster;
 
 import com.anonymoushacker1279.immersiveweapons.entity.GrantAdvancementOnDiscovery;
 import com.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
-import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.*;
@@ -19,7 +18,6 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.*;
 import net.minecraft.world.level.*;
 import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 import org.jetbrains.annotations.NotNull;
 
@@ -92,17 +90,6 @@ public abstract class AbstractWanderingWarriorEntity extends Monster implements 
 				checkForDiscovery(this, player);
 			}
 		}
-	}
-
-	/**
-	 * Play the step sound.
-	 *
-	 * @param pos   the <code>BlockPos</code> the entity is at
-	 * @param state the <code>BlockState</code> of the block being stepped on
-	 */
-	@Override
-	protected void playStepSound(@NotNull BlockPos pos, @NotNull BlockState state) {
-		playSound(getStepSound(), 0.15F, 1.0F);
 	}
 
 	protected abstract SoundEvent getStepSound();
@@ -220,8 +207,14 @@ public abstract class AbstractWanderingWarriorEntity extends Monster implements 
 	@Override
 	public boolean checkSpawnRules(@NotNull LevelAccessor pLevel, @NotNull MobSpawnType pSpawnReason) {
 		boolean walkTargetAboveZero = super.checkSpawnRules(pLevel, pSpawnReason);
-		boolean onGround = pLevel.getBlockState(blockPosition().below()).getFluidState().isEmpty();
+		boolean notInWater = pLevel.getBlockState(blockPosition().below()).getFluidState().isEmpty();
+		boolean onGround = !pLevel.getBlockState(blockPosition().below()).isAir();
 
-		return walkTargetAboveZero && onGround;
+		return walkTargetAboveZero && notInWater && onGround;
+	}
+
+	@Override
+	public boolean checkSpawnObstruction(@NotNull LevelReader pLevel) {
+		return super.checkSpawnObstruction(pLevel) && pLevel.canSeeSky(blockPosition());
 	}
 }

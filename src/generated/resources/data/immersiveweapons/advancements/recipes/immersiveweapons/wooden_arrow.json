@@ -6,7 +6,7 @@
     ]
   },
   "criteria": {
-    "wood_shard": {
+    "wooden_shard": {
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
@@ -25,7 +25,7 @@
   },
   "requirements": [
     [
-      "wood_shard",
+      "wooden_shard",
       "has_the_recipe"
     ]
   ]

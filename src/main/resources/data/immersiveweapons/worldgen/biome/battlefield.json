@@ -23,18 +23,6 @@
 	"spawners": {
 		"monster": [
 			{
-				"type": "immersiveweapons:dying_soldier",
-				"weight": 95,
-				"minCount": 2,
-				"maxCount": 6
-			},
-			{
-				"type": "immersiveweapons:wandering_warrior",
-				"weight": 75,
-				"minCount": 1,
-				"maxCount": 1
-			},
-			{
 				"type": "minecraft:spider",
 				"weight": 100,
 				"minCount": 4,

@@ -5,12 +5,9 @@ import com.anonymoushacker1279.immersiveweapons.item.crafting.CustomRecipeTypes;
 import com.anonymoushacker1279.immersiveweapons.item.crafting.TeslaSynthesizerRecipe;
 import com.google.common.collect.Maps;
 import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
-import net.minecraft.SharedConstants;
-import net.minecraft.Util;
 import net.minecraft.core.*;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.tags.ItemTags;
 import net.minecraft.util.Mth;
 import net.minecraft.world.ContainerHelper;
 import net.minecraft.world.WorldlyContainer;
@@ -89,16 +86,6 @@ public abstract class AbstractTeslaSynthesizerBlockEntity extends BaseContainerB
 	}
 
 	/**
-	 * Check if a fuel source is blacklisted.
-	 *
-	 * @param item the <code>Item</code> to check
-	 * @return boolean
-	 */
-	private static boolean isNonFlammable(Item item) {
-		return item.builtInRegistryHolder().is(ItemTags.NON_FLAMMABLE_WOOD);
-	}
-
-	/**
 	 * Add an item burn time to the map.
 	 *
 	 * @param map          the burn time <code>Map</code> extending Item, Integer
@@ -106,14 +93,7 @@ public abstract class AbstractTeslaSynthesizerBlockEntity extends BaseContainerB
 	 * @param burnTimeIn   the burn time
 	 */
 	private static void addItemBurnTime(Map<Item, Integer> map, ItemLike itemProvider, int burnTimeIn) {
-		Item item = itemProvider.asItem();
-		if (isNonFlammable(item)) {
-			if (SharedConstants.IS_RUNNING_IN_IDE) {
-				throw Util.pauseInIde(new IllegalStateException("A developer tried to explicitly make fire resistant item " + item.getName(new ItemStack(item)).getString() + " a furnace fuel. That will not work!"));
-			}
-		} else {
-			map.put(item, burnTimeIn);
-		}
+		map.put(itemProvider.asItem(), burnTimeIn);
 	}
 
 	/**
@@ -155,9 +135,12 @@ public abstract class AbstractTeslaSynthesizerBlockEntity extends BaseContainerB
 			--blockEntity.burnTime;
 		}
 
+		ItemStack material1 = blockEntity.items.get(0);
+		ItemStack material2 = blockEntity.items.get(1);
+		ItemStack material3 = blockEntity.items.get(2);
 		ItemStack fuel = blockEntity.items.get(3);
-		if (blockEntity.isBurning() || !fuel.isEmpty() && !blockEntity.items.get(0).isEmpty()
-				&& !blockEntity.items.get(1).isEmpty() && !blockEntity.items.get(2).isEmpty()) {
+		if (blockEntity.isBurning() || !material1.isEmpty()
+				&& !material2.isEmpty() && !material3.isEmpty() && !fuel.isEmpty()) {
 
 			RecipeManager recipeManager = level.getRecipeManager();
 			Recipe<?> synthesizerRecipe = recipeManager.getRecipeFor(CustomRecipeTypes.TESLA_SYNTHESIZER, blockEntity, level)
@@ -201,7 +184,6 @@ public abstract class AbstractTeslaSynthesizerBlockEntity extends BaseContainerB
 		if (hasChanged) {
 			blockEntity.setChanged();
 		}
-
 	}
 
 	/**
@@ -339,8 +321,9 @@ public abstract class AbstractTeslaSynthesizerBlockEntity extends BaseContainerB
 			Optional<TeslaSynthesizerRecipe> recipe = level.getRecipeManager()
 					.getRecipeFor(CustomRecipeTypes.TESLA_SYNTHESIZER, this, level);
 
-			if (recipe.isPresent())
+			if (recipe.isPresent()) {
 				return recipe.get().getCookTime();
+			}
 		}
 		return 0;
 	}
@@ -377,8 +360,8 @@ public abstract class AbstractTeslaSynthesizerBlockEntity extends BaseContainerB
 	 */
 	@Override
 	public boolean isEmpty() {
-		for (ItemStack itemstack : items) {
-			if (!itemstack.isEmpty()) {
+		for (ItemStack itemStack : items) {
+			if (!itemStack.isEmpty()) {
 				return false;
 			}
 		}
@@ -461,12 +444,13 @@ public abstract class AbstractTeslaSynthesizerBlockEntity extends BaseContainerB
 			stack.setCount(getMaxStackSize());
 		}
 
-		if (index == 0 || index == 1 || index == 2 && !flag) {
-			cookTimeTotal = getCookTime();
-			cookTime = 0;
-			setChanged();
+		if (!flag) {
+			if (index == 0 || index == 1 || index == 2) {
+				cookTimeTotal = getCookTime();
+				cookTime = 0;
+				setChanged();
+			}
 		}
-
 	}
 
 	/**

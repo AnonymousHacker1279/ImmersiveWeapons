@@ -1,5 +1,6 @@
 package com.anonymoushacker1279.immersiveweapons.init;
 
+import com.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import com.anonymoushacker1279.immersiveweapons.entity.projectile.CustomArrowEntity.*;
 import com.anonymoushacker1279.immersiveweapons.entity.projectile.MolotovEntity;
 import com.anonymoushacker1279.immersiveweapons.entity.projectile.SmokeGrenadeEntity;
@@ -20,6 +21,35 @@ public class DispenserBehaviorRegistry implements DispenseItemBehavior {
 	 * Initialize the dispenser behavior registry.
 	 */
 	public static void init() {
+		ImmersiveWeapons.LOGGER.info("Initializing dispenser behavior registry");
+
+		DispenserBlock.registerBehavior(DeferredRegistryHandler.WOODEN_ARROW.get(), new AbstractProjectileDispenseBehavior() {
+			@Override
+			protected @NotNull Projectile getProjectile(@NotNull Level worldIn, @NotNull Position position, @NotNull ItemStack stackIn) {
+				WoodenArrowEntity arrowEntity = new WoodenArrowEntity(worldIn, position.x(), position.y(), position.z());
+				arrowEntity.pickup = AbstractArrow.Pickup.ALLOWED;
+				arrowEntity.setBaseDamage(1.65d);
+				return arrowEntity;
+			}
+		});
+		DispenserBlock.registerBehavior(DeferredRegistryHandler.STONE_ARROW.get(), new AbstractProjectileDispenseBehavior() {
+			@Override
+			protected @NotNull Projectile getProjectile(@NotNull Level worldIn, @NotNull Position position, @NotNull ItemStack stackIn) {
+				StoneArrowEntity arrowEntity = new StoneArrowEntity(worldIn, position.x(), position.y(), position.z());
+				arrowEntity.pickup = AbstractArrow.Pickup.ALLOWED;
+				arrowEntity.setBaseDamage(1.85d);
+				return arrowEntity;
+			}
+		});
+		DispenserBlock.registerBehavior(DeferredRegistryHandler.GOLDEN_ARROW.get(), new AbstractProjectileDispenseBehavior() {
+			@Override
+			protected @NotNull Projectile getProjectile(@NotNull Level worldIn, @NotNull Position position, @NotNull ItemStack stackIn) {
+				GoldenArrowEntity arrowEntity = new GoldenArrowEntity(worldIn, position.x(), position.y(), position.z());
+				arrowEntity.pickup = AbstractArrow.Pickup.ALLOWED;
+				arrowEntity.setBaseDamage(2.10d);
+				return arrowEntity;
+			}
+		});
 		DispenserBlock.registerBehavior(DeferredRegistryHandler.COPPER_ARROW.get(), new AbstractProjectileDispenseBehavior() {
 			@Override
 			protected @NotNull Projectile getProjectile(@NotNull Level worldIn, @NotNull Position position, @NotNull ItemStack stackIn) {
@@ -56,33 +86,6 @@ public class DispenserBehaviorRegistry implements DispenseItemBehavior {
 				return arrowEntity;
 			}
 		});
-		DispenserBlock.registerBehavior(DeferredRegistryHandler.GOLDEN_ARROW.get(), new AbstractProjectileDispenseBehavior() {
-			@Override
-			protected @NotNull Projectile getProjectile(@NotNull Level worldIn, @NotNull Position position, @NotNull ItemStack stackIn) {
-				GoldenArrowEntity arrowEntity = new GoldenArrowEntity(worldIn, position.x(), position.y(), position.z());
-				arrowEntity.pickup = AbstractArrow.Pickup.ALLOWED;
-				arrowEntity.setBaseDamage(2.10d);
-				return arrowEntity;
-			}
-		});
-		DispenserBlock.registerBehavior(DeferredRegistryHandler.STONE_ARROW.get(), new AbstractProjectileDispenseBehavior() {
-			@Override
-			protected @NotNull Projectile getProjectile(@NotNull Level worldIn, @NotNull Position position, @NotNull ItemStack stackIn) {
-				StoneArrowEntity arrowEntity = new StoneArrowEntity(worldIn, position.x(), position.y(), position.z());
-				arrowEntity.pickup = AbstractArrow.Pickup.ALLOWED;
-				arrowEntity.setBaseDamage(1.85d);
-				return arrowEntity;
-			}
-		});
-		DispenserBlock.registerBehavior(DeferredRegistryHandler.WOODEN_ARROW.get(), new AbstractProjectileDispenseBehavior() {
-			@Override
-			protected @NotNull Projectile getProjectile(@NotNull Level worldIn, @NotNull Position position, @NotNull ItemStack stackIn) {
-				WoodenArrowEntity arrowEntity = new WoodenArrowEntity(worldIn, position.x(), position.y(), position.z());
-				arrowEntity.pickup = AbstractArrow.Pickup.ALLOWED;
-				arrowEntity.setBaseDamage(1.65d);
-				return arrowEntity;
-			}
-		});
 		DispenserBlock.registerBehavior(DeferredRegistryHandler.NETHERITE_ARROW.get(), new AbstractProjectileDispenseBehavior() {
 			@Override
 			protected @NotNull Projectile getProjectile(@NotNull Level worldIn, @NotNull Position position, @NotNull ItemStack stackIn) {
@@ -91,7 +94,6 @@ public class DispenserBehaviorRegistry implements DispenseItemBehavior {
 				arrowEntity.setBaseDamage(5.75d);
 				return arrowEntity;
 			}
-
 		});
 		DispenserBlock.registerBehavior(DeferredRegistryHandler.SMOKE_GRENADE.get(), new AbstractProjectileDispenseBehavior() {
 			@Override
@@ -101,7 +103,6 @@ public class DispenserBehaviorRegistry implements DispenseItemBehavior {
 				SmokeGrenadeEntity.setColor(0);
 				return smokeGrenadeEntity;
 			}
-
 		});
 		DispenserBlock.registerBehavior(DeferredRegistryHandler.SMOKE_GRENADE_RED.get(), new AbstractProjectileDispenseBehavior() {
 			@Override
@@ -111,7 +112,6 @@ public class DispenserBehaviorRegistry implements DispenseItemBehavior {
 				SmokeGrenadeEntity.setColor(1);
 				return smokeGrenadeEntity;
 			}
-
 		});
 		DispenserBlock.registerBehavior(DeferredRegistryHandler.SMOKE_GRENADE_GREEN.get(), new AbstractProjectileDispenseBehavior() {
 			@Override
@@ -121,7 +121,6 @@ public class DispenserBehaviorRegistry implements DispenseItemBehavior {
 				SmokeGrenadeEntity.setColor(2);
 				return smokeGrenadeEntity;
 			}
-
 		});
 		DispenserBlock.registerBehavior(DeferredRegistryHandler.SMOKE_GRENADE_BLUE.get(), new AbstractProjectileDispenseBehavior() {
 			@Override
@@ -131,7 +130,6 @@ public class DispenserBehaviorRegistry implements DispenseItemBehavior {
 				SmokeGrenadeEntity.setColor(3);
 				return smokeGrenadeEntity;
 			}
-
 		});
 		DispenserBlock.registerBehavior(DeferredRegistryHandler.SMOKE_GRENADE_PURPLE.get(), new AbstractProjectileDispenseBehavior() {
 			@Override
@@ -141,7 +139,6 @@ public class DispenserBehaviorRegistry implements DispenseItemBehavior {
 				SmokeGrenadeEntity.setColor(4);
 				return smokeGrenadeEntity;
 			}
-
 		});
 		DispenserBlock.registerBehavior(DeferredRegistryHandler.SMOKE_GRENADE_YELLOW.get(), new AbstractProjectileDispenseBehavior() {
 			@Override
@@ -151,7 +148,6 @@ public class DispenserBehaviorRegistry implements DispenseItemBehavior {
 				SmokeGrenadeEntity.setColor(5);
 				return smokeGrenadeEntity;
 			}
-
 		});
 		DispenserBlock.registerBehavior(DeferredRegistryHandler.SMOKE_GRENADE_ARROW.get(), new AbstractProjectileDispenseBehavior() {
 			@Override
@@ -161,7 +157,6 @@ public class DispenserBehaviorRegistry implements DispenseItemBehavior {
 				smokeGrenadeArrowEntity.push(5, 5, 5);
 				return smokeGrenadeArrowEntity;
 			}
-
 		});
 		DispenserBlock.registerBehavior(DeferredRegistryHandler.SMOKE_GRENADE_ARROW_RED.get(), new AbstractProjectileDispenseBehavior() {
 			@Override
@@ -172,7 +167,6 @@ public class DispenserBehaviorRegistry implements DispenseItemBehavior {
 				SmokeGrenadeArrowEntity.setColor(1);
 				return smokeGrenadeArrowEntity;
 			}
-
 		});
 		DispenserBlock.registerBehavior(DeferredRegistryHandler.SMOKE_GRENADE_ARROW_GREEN.get(), new AbstractProjectileDispenseBehavior() {
 			@Override
@@ -183,7 +177,6 @@ public class DispenserBehaviorRegistry implements DispenseItemBehavior {
 				SmokeGrenadeArrowEntity.setColor(2);
 				return smokeGrenadeArrowEntity;
 			}
-
 		});
 		DispenserBlock.registerBehavior(DeferredRegistryHandler.SMOKE_GRENADE_ARROW_BLUE.get(), new AbstractProjectileDispenseBehavior() {
 			@Override
@@ -194,7 +187,6 @@ public class DispenserBehaviorRegistry implements DispenseItemBehavior {
 				SmokeGrenadeArrowEntity.setColor(3);
 				return smokeGrenadeArrowEntity;
 			}
-
 		});
 		DispenserBlock.registerBehavior(DeferredRegistryHandler.SMOKE_GRENADE_ARROW_PURPLE.get(), new AbstractProjectileDispenseBehavior() {
 			@Override
@@ -205,7 +197,6 @@ public class DispenserBehaviorRegistry implements DispenseItemBehavior {
 				SmokeGrenadeArrowEntity.setColor(4);
 				return smokeGrenadeArrowEntity;
 			}
-
 		});
 		DispenserBlock.registerBehavior(DeferredRegistryHandler.SMOKE_GRENADE_ARROW_YELLOW.get(), new AbstractProjectileDispenseBehavior() {
 			@Override
@@ -216,7 +207,6 @@ public class DispenserBehaviorRegistry implements DispenseItemBehavior {
 				SmokeGrenadeArrowEntity.setColor(5);
 				return smokeGrenadeArrowEntity;
 			}
-
 		});
 		DispenserBlock.registerBehavior(DeferredRegistryHandler.MOLOTOV_COCKTAIL.get(), new AbstractProjectileDispenseBehavior() {
 			@Override
@@ -225,7 +215,6 @@ public class DispenserBehaviorRegistry implements DispenseItemBehavior {
 				molotovEntity.push(5, 5, 5);
 				return molotovEntity;
 			}
-
 		});
 	}
 

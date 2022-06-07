@@ -30,6 +30,8 @@ public class PacketHandler {
 	 * Register packet information.
 	 */
 	public static void registerPackets() {
+		ImmersiveWeapons.LOGGER.info("Registering packet handlers");
+
 		int networkId = 0;
 		PacketHandler.INSTANCE.registerMessage(networkId++,
 				SmokeGrenadeEntityPacketHandler.class,

@@ -34,8 +34,6 @@ import com.anonymoushacker1279.immersiveweapons.entity.projectile.*;
 import com.anonymoushacker1279.immersiveweapons.entity.vehicle.BurnedOakBoatEntity;
 import com.anonymoushacker1279.immersiveweapons.entity.vehicle.CustomBoatType;
 import com.anonymoushacker1279.immersiveweapons.item.armor.*;
-import com.anonymoushacker1279.immersiveweapons.item.bottle.AlcoholBottleItem;
-import com.anonymoushacker1279.immersiveweapons.item.bottle.WineBottleItem;
 import com.anonymoushacker1279.immersiveweapons.item.crafting.SmallPartsRecipe;
 import com.anonymoushacker1279.immersiveweapons.item.crafting.TeslaSynthesizerRecipe;
 import com.anonymoushacker1279.immersiveweapons.item.fortitude.*;
@@ -44,6 +42,8 @@ import com.anonymoushacker1279.immersiveweapons.item.materials.CustomArmorMateri
 import com.anonymoushacker1279.immersiveweapons.item.materials.CustomItemMaterials;
 import com.anonymoushacker1279.immersiveweapons.item.misc.UsedSyringeItem;
 import com.anonymoushacker1279.immersiveweapons.item.pike.*;
+import com.anonymoushacker1279.immersiveweapons.item.potion.AlcoholItem;
+import com.anonymoushacker1279.immersiveweapons.item.potion.WineItem;
 import com.anonymoushacker1279.immersiveweapons.item.projectile.arrow.*;
 import com.anonymoushacker1279.immersiveweapons.item.projectile.bullet.*;
 import com.anonymoushacker1279.immersiveweapons.item.projectile.gun.*;
@@ -125,6 +125,7 @@ public class DeferredRegistryHandler {
 	 * Initialize deferred registers.
 	 */
 	public static void init() {
+		ImmersiveWeapons.LOGGER.info("Initializing deferred registry");
 		IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
 		ITEMS.register(modEventBus);
 		BLOCKS.register(modEventBus);
@@ -268,8 +269,8 @@ public class DeferredRegistryHandler {
 	public static final RegistryObject<MolotovItem> MOLOTOV_COCKTAIL = ITEMS.register("molotov_cocktail", () -> new MolotovItem(new Properties().tab(ITEM_GROUP).stacksTo(16)));
 	public static final RegistryObject<Item> SMOKE_POWDER = ITEMS.register("smoke_powder", () -> new Item(new Properties().tab(ITEM_GROUP)));
 	public static final RegistryObject<BasicContainerItem> MORTAR_AND_PESTLE = ITEMS.register("mortar_and_pestle", () -> new BasicContainerItem(new Properties().tab(ITEM_GROUP)));
-	public static final RegistryObject<AlcoholBottleItem> BOTTLE_OF_ALCOHOL = ITEMS.register("bottle_of_alcohol", () -> new AlcoholBottleItem(new Properties().tab(ITEM_GROUP).stacksTo(16)));
-	public static final RegistryObject<WineBottleItem> BOTTLE_OF_WINE = ITEMS.register("bottle_of_wine", () -> new WineBottleItem(new Properties().tab(ITEM_GROUP).stacksTo(16)));
+	public static final RegistryObject<AlcoholItem> BOTTLE_OF_ALCOHOL = ITEMS.register("bottle_of_alcohol", () -> new AlcoholItem(new Properties().tab(ITEM_GROUP).stacksTo(16)));
+	public static final RegistryObject<WineItem> BOTTLE_OF_WINE = ITEMS.register("bottle_of_wine", () -> new WineItem(new Properties().tab(ITEM_GROUP).stacksTo(16)));
 	public static final RegistryObject<Item> PLIERS = ITEMS.register("pliers", () -> new Item(new Properties().tab(ITEM_GROUP).stacksTo(1)));
 	public static final RegistryObject<ChocolateBarItem> CHOCOLATE_BAR = ITEMS.register("chocolate_bar", () -> new ChocolateBarItem(new Properties().tab(ITEM_GROUP).food(FoodItemProperties.CHOCOLATE_BAR), false));
 	public static final RegistryObject<ChocolateBarItem> EXPLOSIVE_CHOCOLATE_BAR = ITEMS.register("explosive_chocolate_bar", () -> new ChocolateBarItem(new Properties().tab(ITEM_GROUP).food(FoodItemProperties.CHOCOLATE_BAR), true));
@@ -436,15 +437,15 @@ public class DeferredRegistryHandler {
 	public static final RegistryObject<BranchBlock> BURNED_OAK_BRANCH = BLOCKS.register("burned_oak_branch", () -> new BranchBlock(BlockBehaviour.Properties.of(Material.WOOD).strength(0.1f).sound(SoundType.WOOD).noOcclusion().noCollission()));
 	public static final RegistryObject<AzulStainedOrchidBlock> AZUL_STAINED_ORCHID = BLOCKS.register("azul_stained_orchid", () -> new AzulStainedOrchidBlock(MobEffects.LUCK, 30, BlockBehaviour.Properties.of(Material.PLANT).sound(SoundType.GRASS).noCollission().instabreak()));
 	public static final RegistryObject<SkullBlock> MINUTEMAN_HEAD = BLOCKS.register("minuteman_head", () -> new CustomSkullBlock(CustomSkullTypes.MINUTEMAN, BlockBehaviour.Properties.of(Material.DECORATION).strength(1.0f)));
-	public static final RegistryObject<CustomWallSkullBlock> MINUTEMAN_WALL_HEAD = BLOCKS.register("minuteman_wall_head", () -> new CustomWallSkullBlock(CustomSkullTypes.MINUTEMAN, BlockBehaviour.Properties.of(Material.DECORATION).strength(1.0f).lootFrom(() -> MINUTEMAN_HEAD.get())));
+	public static final RegistryObject<CustomWallSkullBlock> MINUTEMAN_WALL_HEAD = BLOCKS.register("minuteman_wall_head", () -> new CustomWallSkullBlock(CustomSkullTypes.MINUTEMAN, BlockBehaviour.Properties.of(Material.DECORATION).strength(1.0f).lootFrom(MINUTEMAN_HEAD)));
 	public static final RegistryObject<SkullBlock> FIELD_MEDIC_HEAD = BLOCKS.register("field_medic_head", () -> new CustomSkullBlock(CustomSkullTypes.FIELD_MEDIC, BlockBehaviour.Properties.of(Material.DECORATION).strength(1.0f)));
-	public static final RegistryObject<CustomWallSkullBlock> FIELD_MEDIC_WALL_HEAD = BLOCKS.register("field_medic_wall_head", () -> new CustomWallSkullBlock(CustomSkullTypes.FIELD_MEDIC, BlockBehaviour.Properties.of(Material.DECORATION).strength(1.0f).lootFrom(() -> FIELD_MEDIC_HEAD.get())));
+	public static final RegistryObject<CustomWallSkullBlock> FIELD_MEDIC_WALL_HEAD = BLOCKS.register("field_medic_wall_head", () -> new CustomWallSkullBlock(CustomSkullTypes.FIELD_MEDIC, BlockBehaviour.Properties.of(Material.DECORATION).strength(1.0f).lootFrom(FIELD_MEDIC_HEAD)));
 	public static final RegistryObject<SkullBlock> DYING_SOLDIER_HEAD = BLOCKS.register("dying_soldier_head", () -> new CustomSkullBlock(CustomSkullTypes.DYING_SOLDIER, BlockBehaviour.Properties.of(Material.DECORATION).strength(1.0f)));
-	public static final RegistryObject<CustomWallSkullBlock> DYING_SOLDIER_WALL_HEAD = BLOCKS.register("dying_soldier_wall_head", () -> new CustomWallSkullBlock(CustomSkullTypes.DYING_SOLDIER, BlockBehaviour.Properties.of(Material.DECORATION).strength(1.0f).lootFrom(() -> DYING_SOLDIER_HEAD.get())));
+	public static final RegistryObject<CustomWallSkullBlock> DYING_SOLDIER_WALL_HEAD = BLOCKS.register("dying_soldier_wall_head", () -> new CustomWallSkullBlock(CustomSkullTypes.DYING_SOLDIER, BlockBehaviour.Properties.of(Material.DECORATION).strength(1.0f).lootFrom(DYING_SOLDIER_HEAD)));
 	public static final RegistryObject<SkullBlock> WANDERING_WARRIOR_HEAD = BLOCKS.register("wandering_warrior_head", () -> new CustomSkullBlock(CustomSkullTypes.WANDERING_WARRIOR, BlockBehaviour.Properties.of(Material.DECORATION).strength(1.0f)));
-	public static final RegistryObject<CustomWallSkullBlock> WANDERING_WARRIOR_WALL_HEAD = BLOCKS.register("wandering_warrior_wall_head", () -> new CustomWallSkullBlock(CustomSkullTypes.WANDERING_WARRIOR, BlockBehaviour.Properties.of(Material.DECORATION).strength(1.0f).lootFrom(() -> WANDERING_WARRIOR_HEAD.get())));
+	public static final RegistryObject<CustomWallSkullBlock> WANDERING_WARRIOR_WALL_HEAD = BLOCKS.register("wandering_warrior_wall_head", () -> new CustomWallSkullBlock(CustomSkullTypes.WANDERING_WARRIOR, BlockBehaviour.Properties.of(Material.DECORATION).strength(1.0f).lootFrom(WANDERING_WARRIOR_HEAD)));
 	public static final RegistryObject<SkullBlock> HANS_HEAD = BLOCKS.register("hans_head", () -> new CustomSkullBlock(CustomSkullTypes.HANS, BlockBehaviour.Properties.of(Material.DECORATION).strength(1.0f)));
-	public static final RegistryObject<CustomWallSkullBlock> HANS_WALL_HEAD = BLOCKS.register("hans_wall_head", () -> new CustomWallSkullBlock(CustomSkullTypes.HANS, BlockBehaviour.Properties.of(Material.DECORATION).strength(1.0f).lootFrom(() -> HANS_HEAD.get())));
+	public static final RegistryObject<CustomWallSkullBlock> HANS_WALL_HEAD = BLOCKS.register("hans_wall_head", () -> new CustomWallSkullBlock(CustomSkullTypes.HANS, BlockBehaviour.Properties.of(Material.DECORATION).strength(1.0f).lootFrom(HANS_HEAD)));
 
 	// Entities
 	public static final RegistryObject<EntityType<WoodenArrowEntity>> WOODEN_ARROW_ENTITY = ENTITY_TYPES.register("wooden_arrow", () -> EntityType.Builder.<WoodenArrowEntity> of(WoodenArrowEntity::new, MobCategory.MISC).sized(0.5f, 0.5f).build(new ResourceLocation(ImmersiveWeapons.MOD_ID, "wood_arrow").toString()));
@@ -596,6 +597,10 @@ public class DeferredRegistryHandler {
 	public static final RegistryObject<SoundEvent> TESLA_ARMOR_POWER_DOWN = SOUND_EVENTS.register("tesla_armor_power_down", () -> new SoundEvent(new ResourceLocation(ImmersiveWeapons.MOD_ID, "tesla_armor_power_down")));
 	public static final RegistryObject<SoundEvent> TESLA_ARMOR_POWER_UP = SOUND_EVENTS.register("tesla_armor_power_up", () -> new SoundEvent(new ResourceLocation(ImmersiveWeapons.MOD_ID, "tesla_armor_power_up")));
 	public static final RegistryObject<SoundEvent> TESLA_ARMOR_EQUIP = SOUND_EVENTS.register("tesla_armor_equip", () -> new SoundEvent(new ResourceLocation(ImmersiveWeapons.MOD_ID, "tesla_armor_equip")));
+	public static final RegistryObject<SoundEvent> MOLTEN_ARMOR_EQUIP = SOUND_EVENTS.register("molten_armor_equip", () -> new SoundEvent(new ResourceLocation(ImmersiveWeapons.MOD_ID, "molten_armor_equip")));
+	public static final RegistryObject<SoundEvent> VENTUS_ARMOR_EQUIP = SOUND_EVENTS.register("ventus_armor_equip", () -> new SoundEvent(new ResourceLocation(ImmersiveWeapons.MOD_ID, "ventus_armor_equip")));
+	public static final RegistryObject<SoundEvent> COPPER_ARMOR_EQUIP = SOUND_EVENTS.register("copper_armor_equip", () -> new SoundEvent(new ResourceLocation(ImmersiveWeapons.MOD_ID, "copper_armor_equip")));
+	public static final RegistryObject<SoundEvent> COBALT_ARMOR_EQUIP = SOUND_EVENTS.register("cobalt_armor_equip", () -> new SoundEvent(new ResourceLocation(ImmersiveWeapons.MOD_ID, "cobalt_armor_equip")));
 	public static final RegistryObject<SoundEvent> FLINTLOCK_PISTOL_FIRE = SOUND_EVENTS.register("flintlock_pistol_fire", () -> new SoundEvent(new ResourceLocation(ImmersiveWeapons.MOD_ID, "flintlock_pistol_fire")));
 	public static final RegistryObject<SoundEvent> BULLET_WHIZZ = SOUND_EVENTS.register("bullet_whizz", () -> new SoundEvent(new ResourceLocation(ImmersiveWeapons.MOD_ID, "bullet_whizz")));
 	public static final RegistryObject<SoundEvent> FLINTLOCK_PISTOL_MISFIRE = SOUND_EVENTS.register("flintlock_pistol_misfire", () -> new SoundEvent(new ResourceLocation(ImmersiveWeapons.MOD_ID, "flintlock_pistol_misfire")));

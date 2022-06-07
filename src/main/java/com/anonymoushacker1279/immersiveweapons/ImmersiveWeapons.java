@@ -33,7 +33,10 @@ public class ImmersiveWeapons {
 
 	// Mod setup begins here
 	public ImmersiveWeapons() {
+		LOGGER.info("Immersive Weapons is starting");
+
 		// Load configuration
+		LOGGER.info("Registering configuration files");
 		ModLoadingContext.get().registerConfig(Type.COMMON, CommonConfig.COMMON_SPEC);
 		ModLoadingContext.get().registerConfig(Type.CLIENT, ClientConfig.CLIENT_SPEC);
 
