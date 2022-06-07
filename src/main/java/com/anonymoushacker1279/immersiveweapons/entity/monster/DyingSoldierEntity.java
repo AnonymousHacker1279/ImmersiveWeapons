@@ -61,13 +61,4 @@ public class DyingSoldierEntity extends AbstractDyingSoldierEntity {
 		return DeferredRegistryHandler.DYING_SOLDIER_DEATH.get();
 	}
 
-	/**
-	 * Get the step sound.
-	 *
-	 * @return SoundEvent
-	 */
-	@Override
-	protected SoundEvent getStepSound() {
-		return DeferredRegistryHandler.DYING_SOLDIER_STEP.get();
-	}
 }

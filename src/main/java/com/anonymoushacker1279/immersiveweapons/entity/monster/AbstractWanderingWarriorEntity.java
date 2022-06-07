@@ -207,8 +207,14 @@ public abstract class AbstractWanderingWarriorEntity extends Monster implements 
 	@Override
 	public boolean checkSpawnRules(@NotNull LevelAccessor pLevel, @NotNull MobSpawnType pSpawnReason) {
 		boolean walkTargetAboveZero = super.checkSpawnRules(pLevel, pSpawnReason);
-		boolean onGround = pLevel.getBlockState(blockPosition().below()).getFluidState().isEmpty();
+		boolean notInWater = pLevel.getBlockState(blockPosition().below()).getFluidState().isEmpty();
+		boolean onGround = !pLevel.getBlockState(blockPosition().below()).isAir();
 
-		return walkTargetAboveZero && onGround;
+		return walkTargetAboveZero && notInWater && onGround;
+	}
+
+	@Override
+	public boolean checkSpawnObstruction(@NotNull LevelReader pLevel) {
+		return super.checkSpawnObstruction(pLevel) && pLevel.canSeeSky(blockPosition());
 	}
 }

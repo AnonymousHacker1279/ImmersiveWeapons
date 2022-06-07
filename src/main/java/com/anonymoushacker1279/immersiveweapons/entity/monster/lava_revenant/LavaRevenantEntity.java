@@ -24,8 +24,8 @@ import net.minecraft.world.entity.ai.targeting.TargetingConditions;
 import net.minecraft.world.entity.monster.Enemy;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.level.Level;
-import net.minecraft.world.level.ServerLevelAccessor;
+import net.minecraft.world.level.*;
+import net.minecraft.world.level.block.state.BlockBehaviour.BlockStateBase;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.material.Material;
@@ -65,7 +65,7 @@ public class LavaRevenantEntity extends FlyingMob implements Enemy, GrantAdvance
 
 	public LavaRevenantEntity(EntityType<? extends LavaRevenantEntity> entityType, Level level) {
 		super(entityType, level);
-		xpReward = 25;
+		xpReward = 25 * getSize();
 		moveControl = new LavaRevenantMoveControl(this);
 		lookControl = new LavaRevenantLookControl(this);
 
@@ -97,7 +97,7 @@ public class LavaRevenantEntity extends FlyingMob implements Enemy, GrantAdvance
 
 	@Override
 	public boolean removeWhenFarAway(double pDistanceToClosestPlayer) {
-		return pDistanceToClosestPlayer >= 768;
+		return pDistanceToClosestPlayer >= 512;
 	}
 
 	@Override
@@ -463,6 +463,22 @@ public class LavaRevenantEntity extends FlyingMob implements Enemy, GrantAdvance
 		EntityDimensions dimensions = super.getDimensions(pPose);
 		float scaleFactor = (dimensions.width + 0.2F * (float) size) / dimensions.width;
 		return dimensions.scale(scaleFactor);
+	}
+
+	@Override
+	public boolean checkSpawnRules(@NotNull LevelAccessor pLevel, @NotNull MobSpawnType pSpawnReason) {
+		boolean notInWater = pLevel.getBlockState(blockPosition().below()).getFluidState().isEmpty();
+		boolean inAir = pLevel.getBlockState(blockPosition().below()).isAir();
+
+		return notInWater && inAir;
+	}
+
+	@Override
+	public boolean checkSpawnObstruction(@NotNull LevelReader pLevel) {
+		AABB box = new AABB(blockPosition()).inflate(8);
+		boolean hasSpace = pLevel.getBlockStates(box).allMatch(BlockStateBase::isAir);
+
+		return super.checkSpawnObstruction(pLevel) && hasSpace && blockPosition().getY() > 32;
 	}
 
 	enum AttackPhase {

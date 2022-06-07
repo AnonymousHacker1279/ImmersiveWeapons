@@ -9,7 +9,6 @@ import com.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
 import com.anonymoushacker1279.immersiveweapons.item.projectile.arrow.AbstractArrowItem;
 import com.anonymoushacker1279.immersiveweapons.item.projectile.bullet.AbstractBulletItem;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.sounds.SoundEvent;
 import net.minecraft.util.Mth;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.DifficultyInstance;
@@ -116,8 +115,6 @@ public abstract class AbstractDyingSoldierEntity extends Monster implements Rang
 			}
 		}
 	}
-
-	protected abstract SoundEvent getStepSound();
 
 	/**
 	 * Get the mob type.
@@ -317,8 +314,14 @@ public abstract class AbstractDyingSoldierEntity extends Monster implements Rang
 	@Override
 	public boolean checkSpawnRules(@NotNull LevelAccessor pLevel, @NotNull MobSpawnType pSpawnReason) {
 		boolean walkTargetAboveZero = super.checkSpawnRules(pLevel, pSpawnReason);
-		boolean onGround = pLevel.getBlockState(blockPosition().below()).getFluidState().isEmpty();
+		boolean notInWater = pLevel.getBlockState(blockPosition().below()).getFluidState().isEmpty();
+		boolean onGround = !pLevel.getBlockState(blockPosition().below()).isAir();
 
-		return walkTargetAboveZero && onGround;
+		return walkTargetAboveZero && notInWater && onGround;
+	}
+
+	@Override
+	public boolean checkSpawnObstruction(@NotNull LevelReader pLevel) {
+		return super.checkSpawnObstruction(pLevel) && pLevel.canSeeSky(blockPosition());
 	}
 }

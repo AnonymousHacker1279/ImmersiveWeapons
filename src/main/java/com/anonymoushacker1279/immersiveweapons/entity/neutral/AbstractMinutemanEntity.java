@@ -30,7 +30,8 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.ProjectileUtil;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ProjectileWeaponItem;
-import net.minecraft.world.level.*;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
@@ -107,12 +108,6 @@ public abstract class AbstractMinutemanEntity extends PathfinderMob implements R
 		goalSelector.addGoal(5, new LookAtPlayerGoal(this, Player.class, 8.0F));
 		goalSelector.addGoal(5, new RandomLookAroundGoal(this));
 		goalSelector.addGoal(3, new OpenDoorGoal(this, true));
-		goalSelector.addGoal(5, new MoveToBlockGoal(this, 0.65D, 24) {
-			@Override
-			protected boolean isValidTarget(@NotNull LevelReader pLevel, @NotNull BlockPos pPos) {
-				return pLevel.getBlockState(pPos).is(DeferredRegistryHandler.CAMP_CHAIR.get());
-			}
-		});
 
 		targetSelector.addGoal(1, new HurtByTargetGoal(this, MinutemanEntity.class, IronGolem.class));
 		targetSelector.addGoal(4, new DefendVillageTargetGoal(this));

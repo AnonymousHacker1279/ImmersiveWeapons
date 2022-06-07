@@ -10,17 +10,5 @@
 
 	"adapt_noise": true,
 
-	"spawn_overrides": {
-		"creature": {
-			"bounding_box": "full",
-			"spawns": [
-				{
-					"type": "immersiveweapons:minuteman",
-					"weight": 1,
-					"minCount": 1,
-					"maxCount": 1
-				}
-			]
-		}
-	}
+	"spawn_overrides": {}
 }

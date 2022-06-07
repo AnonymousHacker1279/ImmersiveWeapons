@@ -22,8 +22,7 @@ import net.minecraft.world.entity.ai.targeting.TargetingConditions;
 import net.minecraft.world.entity.animal.IronGolem;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.level.Level;
-import net.minecraft.world.level.ServerLevelAccessor;
+import net.minecraft.world.level.*;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
@@ -206,19 +205,20 @@ public class RockSpiderEntity extends Monster implements GrantAdvancementOnDisco
 			}
 		}
 
-		// To keep the entity from dying of falls upon spawn in Tiltros
-		if (pReason == MobSpawnType.NATURAL
-				&& pLevel.getBlockState(blockPosition().below()) == Blocks.AIR.defaultBlockState()) {
-
-			addEffect(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, 50, 255, true, true));
-		}
-
 		return pSpawnData;
 	}
 
 	@Override
 	protected float getStandingEyeHeight(@NotNull Pose pPose, @NotNull EntityDimensions pSize) {
 		return 0.15F;
+	}
+
+	@Override
+	public boolean checkSpawnRules(@NotNull LevelAccessor pLevel, @NotNull MobSpawnType pSpawnReason) {
+		boolean notInWater = pLevel.getBlockState(blockPosition().below()).getFluidState().isEmpty();
+		boolean onGround = !pLevel.getBlockState(blockPosition().below()).isAir();
+
+		return notInWater && onGround;
 	}
 
 	static class RockSpiderAttackGoal extends MeleeAttackGoal {

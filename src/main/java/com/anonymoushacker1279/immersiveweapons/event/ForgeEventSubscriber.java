@@ -4,14 +4,17 @@ import com.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import com.anonymoushacker1279.immersiveweapons.config.CommonConfig;
 import com.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
 import com.anonymoushacker1279.immersiveweapons.world.level.levelgen.OreGeneratorHandler;
+import com.anonymoushacker1279.immersiveweapons.world.level.levelgen.biomes.BiomesAndDimensions;
 import com.google.common.collect.ImmutableList;
 import net.minecraft.core.Holder;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.biome.Biome.BiomeCategory;
 import net.minecraft.world.level.biome.Biomes;
+import net.minecraft.world.level.biome.MobSpawnSettings.SpawnerData;
 import net.minecraft.world.level.levelgen.GenerationStep;
 import net.minecraftforge.common.world.BiomeGenerationSettingsBuilder;
 import net.minecraftforge.event.RegistryEvent.MissingMappings;
@@ -56,6 +59,39 @@ public class ForgeEventSubscriber {
 				generation.addFeature(GenerationStep.Decoration.UNDERGROUND_ORES,
 						Holder.direct(OreGeneratorHandler.DEEPSLATE_COBALT_ORE_BLOB_PLACEMENT));
 			}
+
+			if (biomeCategory != BiomeCategory.RIVER && biomeCategory != BiomeCategory.OCEAN
+					&& biomeCategory != BiomeCategory.ICY && biomeCategory != BiomeCategory.MUSHROOM
+					&& biomeCategory != BiomeCategory.UNDERGROUND && biomeCategory != BiomeCategory.NONE) {
+
+				if (Objects.equals(event.getName(), BiomesAndDimensions.BATTLEFIELD.location())) {
+					if (CommonConfig.ENABLE_DYING_SOLDIER_SPAWN.get()) {
+						event.getSpawns().addSpawn(MobCategory.MONSTER,
+								new SpawnerData(DeferredRegistryHandler.DYING_SOLDIER_ENTITY.get(),
+										CommonConfig.DYING_SOLDIER_SPAWN_WEIGHT.get(),
+										CommonConfig.DYING_SOLDIER_SPAWN_MIN_COUNT.get(),
+										CommonConfig.DYING_SOLDIER_SPAWN_MAX_COUNT.get()));
+						event.getSpawns().addMobCharge(DeferredRegistryHandler.HANS_ENTITY.get(), 0.1f, 2.5f);
+					}
+				}
+
+				if (CommonConfig.ENABLE_WANDERING_WARRIOR_SPAWN.get()) {
+					event.getSpawns().addSpawn(MobCategory.MONSTER,
+							new SpawnerData(DeferredRegistryHandler.WANDERING_WARRIOR_ENTITY.get(),
+									CommonConfig.WANDERING_WARRIOR_SPAWN_WEIGHT.get(),
+									CommonConfig.WANDERING_WARRIOR_SPAWN_MIN_COUNT.get(),
+									CommonConfig.WANDERING_WARRIOR_SPAWN_MAX_COUNT.get()));
+					event.getSpawns().addMobCharge(DeferredRegistryHandler.WANDERING_WARRIOR_ENTITY.get(), 0.1f, 0.8f);
+				}
+				if (CommonConfig.ENABLE_HANS_SPAWN.get()) {
+					event.getSpawns().addSpawn(MobCategory.MONSTER,
+							new SpawnerData(DeferredRegistryHandler.HANS_ENTITY.get(),
+									CommonConfig.HANS_SPAWN_WEIGHT.get(),
+									CommonConfig.HANS_SPAWN_MIN_COUNT.get(),
+									CommonConfig.HANS_SPAWN_MAX_COUNT.get()));
+					event.getSpawns().addMobCharge(DeferredRegistryHandler.HANS_ENTITY.get(), 0.1f, 0.1f);
+				}
+			}
 		}
 
 		if (biomeCategory == BiomeCategory.RIVER || biomeCategory == BiomeCategory.OCEAN) {
@@ -69,6 +105,32 @@ public class ForgeEventSubscriber {
 			if (CommonConfig.ENABLE_DEEPSLATE_SULFUR_ORE.get()) {
 				generation.addFeature(GenerationStep.Decoration.UNDERGROUND_ORES,
 						Holder.direct(OreGeneratorHandler.DEEPSLATE_SULFUR_ORE_BLOB_PLACEMENT));
+			}
+		}
+		if (Objects.equals(event.getName(), BiomesAndDimensions.B_TILTROS.location())) {
+			if (CommonConfig.ENABLE_ROCK_SPIDER_SPAWN.get()) {
+				event.getSpawns().addSpawn(MobCategory.MONSTER,
+						new SpawnerData(DeferredRegistryHandler.ROCK_SPIDER_ENTITY.get(),
+								CommonConfig.ROCK_SPIDER_SPAWN_WEIGHT.get(),
+								CommonConfig.ROCK_SPIDER_SPAWN_MIN_COUNT.get(),
+								CommonConfig.ROCK_SPIDER_SPAWN_MAX_COUNT.get()));
+				event.getSpawns().addMobCharge(DeferredRegistryHandler.ROCK_SPIDER_ENTITY.get(), 0.1f, 2.0f);
+			}
+			if (CommonConfig.ENABLE_LAVA_REVENANT_SPAWN.get()) {
+				event.getSpawns().addSpawn(MobCategory.MONSTER,
+						new SpawnerData(DeferredRegistryHandler.LAVA_REVENANT_ENTITY.get(),
+								CommonConfig.LAVA_REVENANT_SPAWN_WEIGHT.get(),
+								CommonConfig.LAVA_REVENANT_SPAWN_MIN_COUNT.get(),
+								CommonConfig.LAVA_REVENANT_SPAWN_MAX_COUNT.get()));
+				event.getSpawns().addMobCharge(DeferredRegistryHandler.LAVA_REVENANT_ENTITY.get(), 0.1f, 0.3f);
+			}
+			if (CommonConfig.ENABLE_CELESTIAL_TOWER_SPAWN.get()) {
+				event.getSpawns().addSpawn(MobCategory.MONSTER,
+						new SpawnerData(DeferredRegistryHandler.CELESTIAL_TOWER_ENTITY.get(),
+								CommonConfig.CELESTIAL_TOWER_SPAWN_WEIGHT.get(),
+								CommonConfig.CELESTIAL_TOWER_SPAWN_MIN_COUNT.get(),
+								CommonConfig.CELESTIAL_TOWER_SPAWN_MAX_COUNT.get()));
+				event.getSpawns().addMobCharge(DeferredRegistryHandler.CELESTIAL_TOWER_ENTITY.get(), 0.1f, 0.1f);
 			}
 		}
 	}

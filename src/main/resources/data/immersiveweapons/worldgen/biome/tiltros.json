@@ -3,7 +3,7 @@
 	"downfall": 0,
 	"precipitation": "none",
 	"temperature_modifier": "none",
-	"category": "extreme_hills",
+	"category": "none",
 	"effects": {
 		"sky_color": 461620,
 		"fog_color": 2830199,
@@ -19,28 +19,7 @@
 			"replace_current_music": true
 		}
 	},
-	"spawners": {
-		"monster": [
-			{
-				"type": "immersiveweapons:rock_spider",
-				"weight": 65,
-				"minCount": 2,
-				"maxCount": 4
-			},
-			{
-				"type": "immersiveweapons:lava_revenant",
-				"weight": 35,
-				"minCount": 1,
-				"maxCount": 1
-			},
-			{
-				"type": "immersiveweapons:celestial_tower",
-				"weight": 15,
-				"minCount": 1,
-				"maxCount": 1
-			}
-		]
-	},
+	"spawners": {},
 	"spawn_costs": {},
 	"carvers": {
 		"air": [
