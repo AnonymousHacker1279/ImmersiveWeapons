@@ -17,6 +17,8 @@ public class IWOverlays {
 	public static IIngameOverlay SCOPE_ELEMENT;
 
 	public static void init() {
+		ImmersiveWeapons.LOGGER.info("Initializing overlays");
+
 		SCOPE_ELEMENT = OverlayRegistry.registerOverlayTop("Scope", (gui, poseStack, partialTick, screenWidth, screenHeight) -> {
 			gui.setupOverlayRenderState(true, false);
 

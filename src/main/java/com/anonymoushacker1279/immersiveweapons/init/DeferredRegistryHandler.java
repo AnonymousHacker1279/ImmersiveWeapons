@@ -125,6 +125,7 @@ public class DeferredRegistryHandler {
 	 * Initialize deferred registers.
 	 */
 	public static void init() {
+		ImmersiveWeapons.LOGGER.info("Initializing deferred registry");
 		IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
 		ITEMS.register(modEventBus);
 		BLOCKS.register(modEventBus);

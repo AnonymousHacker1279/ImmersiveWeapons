@@ -66,8 +66,8 @@ public class ClientModEventSubscriber {
 	 * @param event the <code>FMLClientSetupEvent</code> instance
 	 */
 	@SubscribeEvent
-	public static void onClientSetup(FMLClientSetupEvent event) {
-		ImmersiveWeapons.LOGGER.debug("Performing client-side setup");
+	public static void clientSetup(FMLClientSetupEvent event) {
+		ImmersiveWeapons.LOGGER.debug("Initializing client setup");
 
 		// Register GUI screens
 		MenuScreens.register(DeferredRegistryHandler.SMALL_PARTS_TABLE_CONTAINER.get(), SmallPartsTableScreen::new);
@@ -156,6 +156,8 @@ public class ClientModEventSubscriber {
 	 */
 	@SubscribeEvent
 	public static void entityRenderers(EntityRenderersEvent.RegisterRenderers event) {
+		ImmersiveWeapons.LOGGER.info("Registering entity renderers");
+
 		event.registerEntityRenderer(DeferredRegistryHandler.WOODEN_ARROW_ENTITY.get(), context ->
 				new CustomArrowRenderer<>(context, new ResourceLocation(ImmersiveWeapons.MOD_ID,
 						"textures/entity/projectiles/wood_arrow.png")));
@@ -218,6 +220,8 @@ public class ClientModEventSubscriber {
 	 */
 	@SubscribeEvent
 	public static void registerLayers(EntityRenderersEvent.RegisterLayerDefinitions event) {
+		ImmersiveWeapons.LOGGER.info("Registering entity layer definitions");
+
 		event.registerLayerDefinition(CelestialTowerModel.LAYER_LOCATION, CelestialTowerModel::createBodyLayer);
 		event.registerLayerDefinition(MINUTEMAN_HEAD_LAYER, SkullModel::createMobHeadLayer);
 		event.registerLayerDefinition(FIELD_MEDIC_HEAD_LAYER, SkullModel::createMobHeadLayer);
@@ -232,7 +236,9 @@ public class ClientModEventSubscriber {
 	 * @param event the <code>ParticleFactoryRegisterEvent</code> instance
 	 */
 	@SubscribeEvent
-	public static void onParticleFactoryRegistration(ParticleFactoryRegisterEvent event) {
+	public static void registerParticleFactories(ParticleFactoryRegisterEvent event) {
+		ImmersiveWeapons.LOGGER.info("Registering particle factories");
+
 		mc.particleEngine.register(DeferredRegistryHandler.SMOKE_GRENADE_PARTICLE.get(), SmokeGrenadeParticle.Provider::new);
 		mc.particleEngine.register(DeferredRegistryHandler.BLOOD_PARTICLE.get(), BloodParticle.Provider::new);
 		mc.particleEngine.register(DeferredRegistryHandler.BULLET_IMPACT_PARTICLE.get(), BulletImpactParticle.Provider::new);

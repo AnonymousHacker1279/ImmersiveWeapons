@@ -79,6 +79,7 @@ public class ClientForgeEventSubscriber {
 	 */
 	@SubscribeEvent
 	public static void recipesUpdatedEvent(RecipesUpdatedEvent event) {
+		ImmersiveWeapons.LOGGER.info("Recipes have updated, re-initializing custom crafting systems");
 		SmallPartsCraftables.init(event.getRecipeManager());
 	}
 

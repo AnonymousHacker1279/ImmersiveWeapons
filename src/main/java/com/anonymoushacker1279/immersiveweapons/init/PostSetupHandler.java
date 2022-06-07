@@ -1,5 +1,6 @@
 package com.anonymoushacker1279.immersiveweapons.init;
 
+import com.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import com.anonymoushacker1279.immersiveweapons.item.gauntlet.*;
 import com.anonymoushacker1279.immersiveweapons.item.materials.CustomArmorMaterials;
 import com.anonymoushacker1279.immersiveweapons.item.pike.*;
@@ -22,6 +23,7 @@ public class PostSetupHandler {
 	 * Initialize attributes which must be applied after setup.
 	 */
 	public static void init() {
+		ImmersiveWeapons.LOGGER.info("Initializing post-setup handler");
 
 		hasCompletedClientSetup = true;
 

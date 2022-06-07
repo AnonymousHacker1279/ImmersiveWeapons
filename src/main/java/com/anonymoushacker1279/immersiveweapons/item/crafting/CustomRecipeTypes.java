@@ -11,6 +11,8 @@ public class CustomRecipeTypes {
 	public static RecipeType<TeslaSynthesizerRecipe> TESLA_SYNTHESIZER;
 
 	public static void init() {
+		ImmersiveWeapons.LOGGER.info("Initializing custom recipe types");
+
 		SMALL_PARTS = register(ImmersiveWeapons.MOD_ID + ":small_parts");
 		TESLA_SYNTHESIZER = register(ImmersiveWeapons.MOD_ID + ":tesla_synthesizer");
 	}

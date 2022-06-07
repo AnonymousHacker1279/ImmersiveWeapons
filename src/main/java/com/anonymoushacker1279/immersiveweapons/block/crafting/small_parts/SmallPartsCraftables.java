@@ -1,5 +1,6 @@
 package com.anonymoushacker1279.immersiveweapons.block.crafting.small_parts;
 
+import com.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import com.anonymoushacker1279.immersiveweapons.item.crafting.CustomRecipeTypes;
 import com.anonymoushacker1279.immersiveweapons.item.crafting.SmallPartsRecipe;
 import com.mojang.datafixers.util.Pair;
@@ -14,6 +15,8 @@ public class SmallPartsCraftables {
 	public static final List<Pair<Item, Item>> ALL_CRAFTABLES = new ArrayList<>(15);
 
 	public static void init(RecipeManager manager) {
+		ImmersiveWeapons.LOGGER.info("Initializing small parts system");
+
 		List<SmallPartsRecipe> recipes = manager.getAllRecipesFor(CustomRecipeTypes.SMALL_PARTS);
 
 		for (SmallPartsRecipe recipe : recipes) {

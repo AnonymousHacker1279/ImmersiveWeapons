@@ -37,7 +37,7 @@ public class ForgeEventSubscriber {
 	 * @param event the <code>BiomeLoadingEvent</code> instance
 	 */
 	@SubscribeEvent(priority = EventPriority.HIGH)
-	public static void onBiomeLoading(BiomeLoadingEvent event) {
+	public static void biomeLoading(BiomeLoadingEvent event) {
 		BiomeGenerationSettingsBuilder generation = event.getGeneration();
 		BiomeCategory biomeCategory = event.getCategory();
 

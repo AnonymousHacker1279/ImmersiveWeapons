@@ -21,7 +21,9 @@ public class ModEventSubscriber {
 	 * @param event the <code>RegistryEvent.Register</code> instance
 	 */
 	@SubscribeEvent
-	public static void onRegisterItems(RegistryEvent.Register<Item> event) {
+	public static void registerItems(RegistryEvent.Register<Item> event) {
+		ImmersiveWeapons.LOGGER.info("Registering item references");
+
 		DeferredRegistryHandler.COPPER_ARROW.get().setItemReference(DeferredRegistryHandler.COPPER_ARROW);
 		DeferredRegistryHandler.IRON_ARROW.get().setItemReference(DeferredRegistryHandler.IRON_ARROW);
 		DeferredRegistryHandler.COBALT_ARROW.get().setItemReference(DeferredRegistryHandler.COBALT_ARROW);
@@ -55,6 +57,8 @@ public class ModEventSubscriber {
 	 */
 	@SubscribeEvent
 	public static void entityAttributeCreationEvent(EntityAttributeCreationEvent event) {
+		ImmersiveWeapons.LOGGER.info("Applying entity attributes");
+
 		event.put(DeferredRegistryHandler.DYING_SOLDIER_ENTITY.get(), AbstractDyingSoldierEntity.registerAttributes().build());
 		event.put(DeferredRegistryHandler.MINUTEMAN_ENTITY.get(), AbstractMinutemanEntity.registerAttributes().build());
 		event.put(DeferredRegistryHandler.FIELD_MEDIC_ENTITY.get(), AbstractFieldMedicEntity.registerAttributes().build());
