@@ -31,7 +31,7 @@ public class FlareItem extends AbstractBulletItem {
 	 */
 	@Override
 	public @NotNull FlareEntity createBullet(@NotNull Level level, @NotNull ItemStack stack, @NotNull LivingEntity shooter) {
-		FlareEntity flareEntity = new FlareEntity(shooter, level, referenceItem.get().asItem());
+		FlareEntity flareEntity = new FlareEntity(shooter, level);
 		flareEntity.setBaseDamage(damage);
 		flareEntity.pickup = Pickup.DISALLOWED;
 		flareEntity.setSoundEvent(DeferredRegistryHandler.BULLET_WHIZZ.get());

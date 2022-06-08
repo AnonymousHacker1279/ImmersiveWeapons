@@ -1,7 +1,7 @@
 package com.anonymoushacker1279.immersiveweapons.init;
 
 import com.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
-import com.anonymoushacker1279.immersiveweapons.entity.projectile.CustomArrowEntity.*;
+import com.anonymoushacker1279.immersiveweapons.entity.projectile.ArrowEntities.*;
 import com.anonymoushacker1279.immersiveweapons.entity.projectile.MolotovEntity;
 import com.anonymoushacker1279.immersiveweapons.entity.projectile.SmokeGrenadeEntity;
 import net.minecraft.core.BlockSource;

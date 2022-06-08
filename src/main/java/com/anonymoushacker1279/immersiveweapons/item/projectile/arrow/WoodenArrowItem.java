@@ -1,7 +1,7 @@
 package com.anonymoushacker1279.immersiveweapons.item.projectile.arrow;
 
-import com.anonymoushacker1279.immersiveweapons.entity.projectile.CustomArrowEntity;
-import com.anonymoushacker1279.immersiveweapons.entity.projectile.CustomArrowEntity.WoodenArrowEntity;
+import com.anonymoushacker1279.immersiveweapons.entity.projectile.ArrowEntities;
+import com.anonymoushacker1279.immersiveweapons.entity.projectile.ArrowEntities.WoodenArrowEntity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -29,8 +29,8 @@ public class WoodenArrowItem extends AbstractArrowItem {
 	 * @return WoodArrowEntity
 	 */
 	@Override
-	public @NotNull CustomArrowEntity.WoodenArrowEntity createArrow(@NotNull Level worldIn, @NotNull ItemStack stack, @NotNull LivingEntity shooter) {
-		WoodenArrowEntity arrowEntity = new WoodenArrowEntity(shooter, worldIn, ref.get().asItem());
+	public @NotNull ArrowEntities.WoodenArrowEntity createArrow(@NotNull Level worldIn, @NotNull ItemStack stack, @NotNull LivingEntity shooter) {
+		WoodenArrowEntity arrowEntity = new WoodenArrowEntity(shooter, worldIn);
 		arrowEntity.setBaseDamage(damage);
 		return arrowEntity;
 	}

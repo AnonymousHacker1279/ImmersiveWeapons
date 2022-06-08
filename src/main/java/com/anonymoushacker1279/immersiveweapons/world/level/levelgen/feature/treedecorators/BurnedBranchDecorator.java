@@ -5,16 +5,9 @@ import com.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
 import com.mojang.serialization.Codec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.world.level.LevelSimulatedReader;
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.treedecorators.TreeDecorator;
 import net.minecraft.world.level.levelgen.feature.treedecorators.TreeDecoratorType;
 import org.jetbrains.annotations.NotNull;
-
-import java.util.List;
-import java.util.Random;
-import java.util.function.BiConsumer;
 
 public class BurnedBranchDecorator extends TreeDecorator {
 
@@ -32,18 +25,16 @@ public class BurnedBranchDecorator extends TreeDecorator {
 	}
 
 	@Override
-	public void place(@NotNull LevelSimulatedReader simulatedReader, @NotNull BiConsumer<BlockPos, BlockState> biConsumer,
-	                  Random random, @NotNull List<BlockPos> pos, @NotNull List<BlockPos> posList) {
-
-		if (random.nextFloat() <= probability) {
-			pos.forEach((blockPos) -> {
+	public void place(Context context) {
+		if (context.random().nextFloat() <= probability) {
+			context.logs().forEach((blockPos) -> {
 				for (Direction direction : Direction.Plane.HORIZONTAL) {
-					if (random.nextFloat() <= 0.25f) {
+					if (context.random().nextFloat() <= 0.25f) {
 						Direction oppositeDirection = direction.getOpposite();
 						BlockPos position = blockPos.offset(oppositeDirection.getStepX(), 0, oppositeDirection.getStepZ());
 
-						if (Feature.isAir(simulatedReader, position)) {
-							biConsumer.accept(position, DeferredRegistryHandler.BURNED_OAK_BRANCH.get().defaultBlockState()
+						if (context.isAir(position)) {
+							context.setBlock(position, DeferredRegistryHandler.BURNED_OAK_BRANCH.get().defaultBlockState()
 									.setValue(BranchBlock.FACING, direction));
 						}
 					}

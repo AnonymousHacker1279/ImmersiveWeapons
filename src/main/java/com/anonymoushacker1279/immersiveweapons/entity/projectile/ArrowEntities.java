@@ -11,7 +11,6 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.projectile.AbstractArrow;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
@@ -24,200 +23,57 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.function.Supplier;
 
-public class CustomArrowEntity {
+public class ArrowEntities {
 
-	public static class CopperArrowEntity extends AbstractCustomArrowEntity {
+	public static class WoodenArrowEntity extends AbstractCustomArrowEntity {
 
 		/**
-		 * Constructor for CopperArrowEntity.
+		 * Constructor for WoodenArrowEntity.
 		 *
 		 * @param type  the <code>EntityType</code> instance; must extend AbstractArrowEntity
 		 * @param world the <code>World</code> the entity is in
 		 */
-		public CopperArrowEntity(EntityType<? extends AbstractArrow> type, Level world) {
+		public WoodenArrowEntity(EntityType<? extends AbstractArrow> type, Level world) {
 			super(type, world);
-			referenceItem = DeferredRegistryHandler.COPPER_ARROW.get();
+			referenceItem = DeferredRegistryHandler.WOODEN_ARROW.get();
 		}
 
 		/**
-		 * Constructor for CopperArrowEntity.
+		 * Constructor for WoodenArrowEntity.
 		 *
 		 * @param shooter         the <code>LivingEntity</code> shooting the entity
 		 * @param world           the <code>World</code> the entity is in
-		 * @param referenceItemIn the reference item
 		 */
-		public CopperArrowEntity(LivingEntity shooter, Level world, Item referenceItemIn) {
-			super(DeferredRegistryHandler.COPPER_ARROW_ENTITY.get(), shooter, world);
-			referenceItem = referenceItemIn;
+		public WoodenArrowEntity(LivingEntity shooter, Level world) {
+			super(DeferredRegistryHandler.WOODEN_ARROW_ENTITY.get(), shooter, world);
+			referenceItem = DeferredRegistryHandler.WOODEN_ARROW.get();
 		}
 
 		/**
-		 * Constructor for CopperArrowEntity.
+		 * Constructor for WoodenArrowEntity.
 		 *
 		 * @param worldIn the <code>World</code> the entity is in
 		 * @param x       the X position
 		 * @param y       the Y position
 		 * @param z       the Z position
 		 */
-		public CopperArrowEntity(Level worldIn, double x, double y, double z) {
-			super(DeferredRegistryHandler.COPPER_ARROW_ENTITY.get(), worldIn, x, y, z);
-			referenceItem = DeferredRegistryHandler.COPPER_ARROW.get();
-		}
-	}
-
-	public static class IronArrowEntity extends AbstractCustomArrowEntity {
-
-		/**
-		 * Constructor for IronArrowEntity.
-		 *
-		 * @param type  the <code>EntityType</code> instance; must extend AbstractArrowEntity
-		 * @param world the <code>World</code> the entity is in
-		 */
-		public IronArrowEntity(EntityType<? extends AbstractArrow> type, Level world) {
-			super(type, world);
-			referenceItem = DeferredRegistryHandler.IRON_ARROW.get();
+		public WoodenArrowEntity(Level worldIn, double x, double y, double z) {
+			super(DeferredRegistryHandler.WOODEN_ARROW_ENTITY.get(), worldIn, x, y, z);
+			referenceItem = DeferredRegistryHandler.WOODEN_ARROW.get();
 		}
 
 		/**
-		 * Constructor for IronArrowEntity.
+		 * Fire the entity from a position with a velocity and inaccuracy.
 		 *
-		 * @param shooter         the <code>LivingEntity</code> shooting the entity
-		 * @param world           the <code>World</code> the entity is in
-		 * @param referenceItemIn the reference item
+		 * @param x          the X position
+		 * @param y          the Y position
+		 * @param z          the Z position
+		 * @param velocity   the velocity
+		 * @param inaccuracy the inaccuracy modifier
 		 */
-		public IronArrowEntity(LivingEntity shooter, Level world, Item referenceItemIn) {
-			super(DeferredRegistryHandler.IRON_ARROW_ENTITY.get(), shooter, world);
-			referenceItem = referenceItemIn;
-		}
-
-		/**
-		 * Constructor for IronArrowEntity.
-		 *
-		 * @param worldIn the <code>World</code> the entity is in
-		 * @param x       the X position
-		 * @param y       the Y position
-		 * @param z       the Z position
-		 */
-		public IronArrowEntity(Level worldIn, double x, double y, double z) {
-			super(DeferredRegistryHandler.IRON_ARROW_ENTITY.get(), worldIn, x, y, z);
-			referenceItem = DeferredRegistryHandler.IRON_ARROW.get();
-		}
-	}
-
-	public static class CobaltArrowEntity extends AbstractCustomArrowEntity {
-
-		/**
-		 * Constructor for CobaltArrowEntity.
-		 *
-		 * @param type  the <code>EntityType</code> instance; must extend AbstractArrowEntity
-		 * @param world the <code>World</code> the entity is in
-		 */
-		public CobaltArrowEntity(EntityType<? extends AbstractArrow> type, Level world) {
-			super(type, world);
-			referenceItem = DeferredRegistryHandler.COBALT_ARROW.get();
-		}
-
-		/**
-		 * Constructor for CobaltArrowEntity.
-		 *
-		 * @param shooter         the <code>LivingEntity</code> shooting the entity
-		 * @param world           the <code>World</code> the entity is in
-		 * @param referenceItemIn the reference item
-		 */
-		public CobaltArrowEntity(LivingEntity shooter, Level world, Item referenceItemIn) {
-			super(DeferredRegistryHandler.COBALT_ARROW_ENTITY.get(), shooter, world);
-			referenceItem = referenceItemIn;
-		}
-
-		/**
-		 * Constructor for CobaltArrowEntity.
-		 *
-		 * @param worldIn the <code>World</code> the entity is in
-		 * @param x       the X position
-		 * @param y       the Y position
-		 * @param z       the Z position
-		 */
-		public CobaltArrowEntity(Level worldIn, double x, double y, double z) {
-			super(DeferredRegistryHandler.COBALT_ARROW_ENTITY.get(), worldIn, x, y, z);
-			referenceItem = DeferredRegistryHandler.COBALT_ARROW.get();
-		}
-	}
-
-	public static class DiamondArrowEntity extends AbstractCustomArrowEntity {
-
-		/**
-		 * Constructor for DiamondArrowEntity.
-		 *
-		 * @param type  the <code>EntityType</code> instance; must extend AbstractArrowEntity
-		 * @param world the <code>World</code> the entity is in
-		 */
-		public DiamondArrowEntity(EntityType<? extends AbstractArrow> type, Level world) {
-			super(type, world);
-			referenceItem = DeferredRegistryHandler.DIAMOND_ARROW.get();
-		}
-
-		/**
-		 * Constructor for DiamondArrowEntity.
-		 *
-		 * @param shooter         the <code>LivingEntity</code> shooting the entity
-		 * @param world           the <code>World</code> the entity is in
-		 * @param referenceItemIn the reference item
-		 */
-		public DiamondArrowEntity(LivingEntity shooter, Level world, Item referenceItemIn) {
-			super(DeferredRegistryHandler.DIAMOND_ARROW_ENTITY.get(), shooter, world);
-			referenceItem = referenceItemIn;
-		}
-
-		/**
-		 * Constructor for DiamondArrowEntity.
-		 *
-		 * @param worldIn the <code>World</code> the entity is in
-		 * @param x       the X position
-		 * @param y       the Y position
-		 * @param z       the Z position
-		 */
-		public DiamondArrowEntity(Level worldIn, double x, double y, double z) {
-			super(DeferredRegistryHandler.DIAMOND_ARROW_ENTITY.get(), worldIn, x, y, z);
-			referenceItem = DeferredRegistryHandler.DIAMOND_ARROW.get();
-		}
-	}
-
-	public static class GoldenArrowEntity extends AbstractCustomArrowEntity {
-
-		/**
-		 * Constructor for GoldArrowEntity.
-		 *
-		 * @param type  the <code>EntityType</code> instance; must extend AbstractArrowEntity
-		 * @param world the <code>World</code> the entity is in
-		 */
-		public GoldenArrowEntity(EntityType<? extends AbstractArrow> type, Level world) {
-			super(type, world);
-			referenceItem = DeferredRegistryHandler.GOLDEN_ARROW.get();
-		}
-
-		/**
-		 * Constructor for GoldArrowEntity.
-		 *
-		 * @param shooter         the <code>LivingEntity</code> shooting the entity
-		 * @param world           the <code>World</code> the entity is in
-		 * @param referenceItemIn the reference item
-		 */
-		public GoldenArrowEntity(LivingEntity shooter, Level world, Item referenceItemIn) {
-			super(DeferredRegistryHandler.GOLDEN_ARROW_ENTITY.get(), shooter, world);
-			referenceItem = referenceItemIn;
-		}
-
-		/**
-		 * Constructor for GoldArrowEntity.
-		 *
-		 * @param worldIn the <code>World</code> the entity is in
-		 * @param x       the X position
-		 * @param y       the Y position
-		 * @param z       the Z position
-		 */
-		public GoldenArrowEntity(Level worldIn, double x, double y, double z) {
-			super(DeferredRegistryHandler.GOLDEN_ARROW_ENTITY.get(), worldIn, x, y, z);
-			referenceItem = DeferredRegistryHandler.GOLDEN_ARROW.get();
+		@Override
+		public void shoot(double x, double y, double z, float velocity, float inaccuracy) {
+			super.shoot(x, y, z, velocity, (inaccuracy + GeneralUtilities.getRandomNumber(5.8f, 7.2f)));
 		}
 	}
 
@@ -239,11 +95,10 @@ public class CustomArrowEntity {
 		 *
 		 * @param shooter         the <code>LivingEntity</code> shooting the entity
 		 * @param world           the <code>World</code> the entity is in
-		 * @param referenceItemIn the reference item
 		 */
-		public StoneArrowEntity(LivingEntity shooter, Level world, Item referenceItemIn) {
+		public StoneArrowEntity(LivingEntity shooter, Level world) {
 			super(DeferredRegistryHandler.STONE_ARROW_ENTITY.get(), shooter, world);
-			referenceItem = referenceItemIn;
+			referenceItem = DeferredRegistryHandler.STONE_ARROW.get();
 		}
 
 		/**
@@ -280,56 +135,193 @@ public class CustomArrowEntity {
 		}
 	}
 
-	public static class WoodenArrowEntity extends AbstractCustomArrowEntity {
+	public static class GoldenArrowEntity extends AbstractCustomArrowEntity {
 
 		/**
-		 * Constructor for WoodArrowEntity.
+		 * Constructor for GoldenArrowEntity.
 		 *
 		 * @param type  the <code>EntityType</code> instance; must extend AbstractArrowEntity
 		 * @param world the <code>World</code> the entity is in
 		 */
-		public WoodenArrowEntity(EntityType<? extends AbstractArrow> type, Level world) {
+		public GoldenArrowEntity(EntityType<? extends AbstractArrow> type, Level world) {
 			super(type, world);
-			referenceItem = DeferredRegistryHandler.WOODEN_ARROW.get();
+			referenceItem = DeferredRegistryHandler.GOLDEN_ARROW.get();
 		}
 
 		/**
-		 * Constructor for WoodArrowEntity.
+		 * Constructor for GoldenArrowEntity.
 		 *
 		 * @param shooter         the <code>LivingEntity</code> shooting the entity
 		 * @param world           the <code>World</code> the entity is in
-		 * @param referenceItemIn the reference item
 		 */
-		public WoodenArrowEntity(LivingEntity shooter, Level world, Item referenceItemIn) {
-			super(DeferredRegistryHandler.WOODEN_ARROW_ENTITY.get(), shooter, world);
-			referenceItem = referenceItemIn;
+		public GoldenArrowEntity(LivingEntity shooter, Level world) {
+			super(DeferredRegistryHandler.GOLDEN_ARROW_ENTITY.get(), shooter, world);
+			referenceItem = DeferredRegistryHandler.GOLDEN_ARROW.get();
 		}
 
 		/**
-		 * Constructor for WoodArrowEntity.
+		 * Constructor for GoldenArrowEntity.
 		 *
 		 * @param worldIn the <code>World</code> the entity is in
 		 * @param x       the X position
 		 * @param y       the Y position
 		 * @param z       the Z position
 		 */
-		public WoodenArrowEntity(Level worldIn, double x, double y, double z) {
-			super(DeferredRegistryHandler.WOODEN_ARROW_ENTITY.get(), worldIn, x, y, z);
-			referenceItem = DeferredRegistryHandler.WOODEN_ARROW.get();
+		public GoldenArrowEntity(Level worldIn, double x, double y, double z) {
+			super(DeferredRegistryHandler.GOLDEN_ARROW_ENTITY.get(), worldIn, x, y, z);
+			referenceItem = DeferredRegistryHandler.GOLDEN_ARROW.get();
+		}
+	}
+
+	public static class CopperArrowEntity extends AbstractCustomArrowEntity {
+
+		/**
+		 * Constructor for CopperArrowEntity.
+		 *
+		 * @param type  the <code>EntityType</code> instance; must extend AbstractArrowEntity
+		 * @param world the <code>World</code> the entity is in
+		 */
+		public CopperArrowEntity(EntityType<? extends AbstractArrow> type, Level world) {
+			super(type, world);
+			referenceItem = DeferredRegistryHandler.COPPER_ARROW.get();
 		}
 
 		/**
-		 * Fire the entity from a position with a velocity and inaccuracy.
+		 * Constructor for CopperArrowEntity.
 		 *
-		 * @param x          the X position
-		 * @param y          the Y position
-		 * @param z          the Z position
-		 * @param velocity   the velocity
-		 * @param inaccuracy the inaccuracy modifier
+		 * @param shooter         the <code>LivingEntity</code> shooting the entity
+		 * @param world           the <code>World</code> the entity is in
 		 */
-		@Override
-		public void shoot(double x, double y, double z, float velocity, float inaccuracy) {
-			super.shoot(x, y, z, velocity, (inaccuracy + GeneralUtilities.getRandomNumber(5.8f, 7.2f)));
+		public CopperArrowEntity(LivingEntity shooter, Level world) {
+			super(DeferredRegistryHandler.COPPER_ARROW_ENTITY.get(), shooter, world);
+			referenceItem = DeferredRegistryHandler.COPPER_ARROW.get();
+		}
+
+		/**
+		 * Constructor for CopperArrowEntity.
+		 *
+		 * @param worldIn the <code>World</code> the entity is in
+		 * @param x       the X position
+		 * @param y       the Y position
+		 * @param z       the Z position
+		 */
+		public CopperArrowEntity(Level worldIn, double x, double y, double z) {
+			super(DeferredRegistryHandler.COPPER_ARROW_ENTITY.get(), worldIn, x, y, z);
+			referenceItem = DeferredRegistryHandler.COPPER_ARROW.get();
+		}
+	}
+
+	public static class IronArrowEntity extends AbstractCustomArrowEntity {
+
+		/**
+		 * Constructor for IronArrowEntity.
+		 *
+		 * @param type  the <code>EntityType</code> instance; must extend AbstractArrowEntity
+		 * @param world the <code>World</code> the entity is in
+		 */
+		public IronArrowEntity(EntityType<? extends AbstractArrow> type, Level world) {
+			super(type, world);
+			referenceItem = DeferredRegistryHandler.IRON_ARROW.get();
+		}
+
+		/**
+		 * Constructor for IronArrowEntity.
+		 *
+		 * @param shooter         the <code>LivingEntity</code> shooting the entity
+		 * @param world           the <code>World</code> the entity is in
+		 */
+		public IronArrowEntity(LivingEntity shooter, Level world) {
+			super(DeferredRegistryHandler.IRON_ARROW_ENTITY.get(), shooter, world);
+			referenceItem = DeferredRegistryHandler.IRON_ARROW.get();
+		}
+
+		/**
+		 * Constructor for IronArrowEntity.
+		 *
+		 * @param worldIn the <code>World</code> the entity is in
+		 * @param x       the X position
+		 * @param y       the Y position
+		 * @param z       the Z position
+		 */
+		public IronArrowEntity(Level worldIn, double x, double y, double z) {
+			super(DeferredRegistryHandler.IRON_ARROW_ENTITY.get(), worldIn, x, y, z);
+			referenceItem = DeferredRegistryHandler.IRON_ARROW.get();
+		}
+	}
+
+	public static class CobaltArrowEntity extends AbstractCustomArrowEntity {
+
+		/**
+		 * Constructor for CobaltArrowEntity.
+		 *
+		 * @param type  the <code>EntityType</code> instance; must extend AbstractArrowEntity
+		 * @param world the <code>World</code> the entity is in
+		 */
+		public CobaltArrowEntity(EntityType<? extends AbstractArrow> type, Level world) {
+			super(type, world);
+			referenceItem = DeferredRegistryHandler.COBALT_ARROW.get();
+		}
+
+		/**
+		 * Constructor for CobaltArrowEntity.
+		 *
+		 * @param shooter         the <code>LivingEntity</code> shooting the entity
+		 * @param world           the <code>World</code> the entity is in
+		 */
+		public CobaltArrowEntity(LivingEntity shooter, Level world) {
+			super(DeferredRegistryHandler.COBALT_ARROW_ENTITY.get(), shooter, world);
+			referenceItem = DeferredRegistryHandler.COBALT_ARROW.get();
+		}
+
+		/**
+		 * Constructor for CobaltArrowEntity.
+		 *
+		 * @param worldIn the <code>World</code> the entity is in
+		 * @param x       the X position
+		 * @param y       the Y position
+		 * @param z       the Z position
+		 */
+		public CobaltArrowEntity(Level worldIn, double x, double y, double z) {
+			super(DeferredRegistryHandler.COBALT_ARROW_ENTITY.get(), worldIn, x, y, z);
+			referenceItem = DeferredRegistryHandler.COBALT_ARROW.get();
+		}
+	}
+
+	public static class DiamondArrowEntity extends AbstractCustomArrowEntity {
+
+		/**
+		 * Constructor for DiamondArrowEntity.
+		 *
+		 * @param type  the <code>EntityType</code> instance; must extend AbstractArrowEntity
+		 * @param world the <code>World</code> the entity is in
+		 */
+		public DiamondArrowEntity(EntityType<? extends AbstractArrow> type, Level world) {
+			super(type, world);
+			referenceItem = DeferredRegistryHandler.DIAMOND_ARROW.get();
+		}
+
+		/**
+		 * Constructor for DiamondArrowEntity.
+		 *
+		 * @param shooter         the <code>LivingEntity</code> shooting the entity
+		 * @param world           the <code>World</code> the entity is in
+		 */
+		public DiamondArrowEntity(LivingEntity shooter, Level world) {
+			super(DeferredRegistryHandler.DIAMOND_ARROW_ENTITY.get(), shooter, world);
+			referenceItem = DeferredRegistryHandler.DIAMOND_ARROW.get();
+		}
+
+		/**
+		 * Constructor for DiamondArrowEntity.
+		 *
+		 * @param worldIn the <code>World</code> the entity is in
+		 * @param x       the X position
+		 * @param y       the Y position
+		 * @param z       the Z position
+		 */
+		public DiamondArrowEntity(Level worldIn, double x, double y, double z) {
+			super(DeferredRegistryHandler.DIAMOND_ARROW_ENTITY.get(), worldIn, x, y, z);
+			referenceItem = DeferredRegistryHandler.DIAMOND_ARROW.get();
 		}
 	}
 
@@ -351,11 +343,10 @@ public class CustomArrowEntity {
 		 *
 		 * @param shooter         the <code>LivingEntity</code> shooting the entity
 		 * @param world           the <code>World</code> the entity is in
-		 * @param referenceItemIn the reference item
 		 */
-		public NetheriteArrowEntity(LivingEntity shooter, Level world, Item referenceItemIn) {
+		public NetheriteArrowEntity(LivingEntity shooter, Level world) {
 			super(DeferredRegistryHandler.NETHERITE_ARROW_ENTITY.get(), shooter, world);
-			referenceItem = referenceItemIn;
+			referenceItem = DeferredRegistryHandler.NETHERITE_ARROW.get();
 		}
 
 		/**
@@ -424,11 +415,10 @@ public class CustomArrowEntity {
 		 *
 		 * @param shooter         the <code>LivingEntity</code> shooting the entity
 		 * @param world           the <code>World</code> the entity is in
-		 * @param referenceItemIn the reference item
 		 */
-		public SmokeGrenadeArrowEntity(LivingEntity shooter, Level world, Item referenceItemIn) {
+		public SmokeGrenadeArrowEntity(LivingEntity shooter, Level world) {
 			super(DeferredRegistryHandler.SMOKE_GRENADE_ARROW_ENTITY.get(), shooter, world);
-			referenceItem = referenceItemIn;
+			referenceItem = DeferredRegistryHandler.SMOKE_GRENADE_ARROW.get();
 		}
 
 		/**

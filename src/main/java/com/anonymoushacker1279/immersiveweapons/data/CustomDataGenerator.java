@@ -24,17 +24,15 @@ public class CustomDataGenerator {
 
 		DataGenerator generator = event.getGenerator();
 
-		if (event.includeClient()) {
-			generator.addProvider(new ModelProvider(generator));
-		}
-		if (event.includeServer()) {
-			generator.addProvider(new AdvancementProvider(generator));
-			generator.addProvider(new LootTableGenerator(generator));
-			generator.addProvider(new RecipeGenerator(generator));
-			BlockTagsGenerator blockTagsGenerator = new BlockTagsGenerator(generator, event.getExistingFileHelper());
-			generator.addProvider(blockTagsGenerator);
-			generator.addProvider(new ItemTagsGenerator(generator, blockTagsGenerator, event.getExistingFileHelper()));
-			generator.addProvider(new BiomeTagsGenerator(generator, event.getExistingFileHelper()));
-		}
+		generator.addProvider(event.includeClient(), new ModelProvider(generator));
+
+		generator.addProvider(event.includeServer(), new AdvancementProvider(generator));
+		generator.addProvider(event.includeServer(), new LootTableGenerator(generator));
+		generator.addProvider(event.includeServer(), new RecipeGenerator(generator));
+		BlockTagsGenerator blockTagsGenerator = new BlockTagsGenerator(generator, event.getExistingFileHelper());
+		generator.addProvider(event.includeServer(), blockTagsGenerator);
+		generator.addProvider(event.includeServer(), new ItemTagsGenerator(generator, blockTagsGenerator, event.getExistingFileHelper()));
+		generator.addProvider(event.includeServer(), new BiomeTagsGenerator(generator, event.getExistingFileHelper()));
+
 	}
 }

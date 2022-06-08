@@ -15,7 +15,6 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.FlowerBlock;
-import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 import org.jetbrains.annotations.NotNull;
@@ -28,11 +27,6 @@ public class AzulStainedOrchidBlock extends FlowerBlock {
 
 	public AzulStainedOrchidBlock(MobEffect mobEffect, int effectDuration, Properties properties) {
 		super(mobEffect, effectDuration, properties);
-	}
-
-	@Override
-	public BlockBehaviour.@NotNull OffsetType getOffsetType() {
-		return OffsetType.NONE;
 	}
 
 	@Override

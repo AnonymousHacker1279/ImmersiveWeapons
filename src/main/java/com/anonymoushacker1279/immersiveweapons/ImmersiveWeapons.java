@@ -5,12 +5,8 @@ import com.anonymoushacker1279.immersiveweapons.block.properties.WoodTypes;
 import com.anonymoushacker1279.immersiveweapons.config.ClientConfig;
 import com.anonymoushacker1279.immersiveweapons.config.CommonConfig;
 import com.anonymoushacker1279.immersiveweapons.init.*;
-import com.anonymoushacker1279.immersiveweapons.item.crafting.CustomRecipeTypes;
 import com.anonymoushacker1279.immersiveweapons.world.level.levelgen.OreGeneratorHandler;
-import com.anonymoushacker1279.immersiveweapons.world.level.levelgen.biomes.IWOverworldBiomesProvider;
-import com.anonymoushacker1279.immersiveweapons.world.level.levelgen.biomes.SurfaceRuleData;
 import com.mojang.logging.LogUtils;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.state.properties.WoodType;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -20,8 +16,6 @@ import net.minecraftforge.fml.config.ModConfig.Type;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import org.slf4j.Logger;
-import terrablender.api.*;
-import terrablender.api.SurfaceRuleManager.RuleCategory;
 
 @Mod(ImmersiveWeapons.MOD_ID)
 public class ImmersiveWeapons {
@@ -63,13 +57,13 @@ public class ImmersiveWeapons {
 	public void setup(FMLCommonSetupEvent event) {
 		DispenserBehaviorRegistry.init();
 		OreGeneratorHandler.init();
-		CustomRecipeTypes.init();
 		IWCriteriaTriggers.init();
 		event.enqueueWork(() -> {
 			WoodType.register(WoodTypes.BURNED_OAK);
-			Regions.register(new IWOverworldBiomesProvider(new ResourceLocation(MOD_ID, "overworld_biome_provider"),
+			// TODO: Re-implement when TerraBlender is available
+			/*Regions.register(new IWOverworldBiomesProvider(new ResourceLocation(MOD_ID, "overworld_biome_provider"),
 					RegionType.OVERWORLD, 1));
-			SurfaceRuleManager.addSurfaceRules(RuleCategory.OVERWORLD, MOD_ID, SurfaceRuleData.makeRules());
+			SurfaceRuleManager.addSurfaceRules(RuleCategory.OVERWORLD, MOD_ID, SurfaceRuleData.makeRules());*/
 		});
 		PostSetupHandler.init();
 	}

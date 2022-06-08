@@ -2,8 +2,7 @@ package com.anonymoushacker1279.immersiveweapons.item.fortitude;
 
 import com.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
 import net.minecraft.ChatFormatting;
-import net.minecraft.Util;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.*;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
@@ -40,8 +39,8 @@ public class FirstAidKitItem extends Item {
 		ItemStack itemInHand = player.getItemInHand(hand);
 		if (player.getMaxHealth() - player.getHealth() <= player.getMaxHealth() / 2) { // Only use if at or less than half health
 			if (level.isClientSide) {
-				player.sendMessage(new TranslatableComponent("immersiveweapons.item.first_aid_kit")
-						.withStyle(ChatFormatting.RED), Util.NIL_UUID);
+				player.displayClientMessage(Component.translatable("immersiveweapons.item.first_aid_kit")
+						.withStyle(ChatFormatting.RED), true);
 			}
 			return InteractionResultHolder.pass(itemInHand);
 		}

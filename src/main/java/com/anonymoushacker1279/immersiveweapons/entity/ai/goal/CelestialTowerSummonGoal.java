@@ -7,7 +7,7 @@ import com.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
 import com.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.BossEvent.BossBarColor;
 import net.minecraft.world.InteractionHand;
@@ -156,7 +156,7 @@ public class CelestialTowerSummonGoal extends Goal {
 
 			mob.setWavesSpawned(mob.getWavesSpawned() + 1); // Increment the total spawned waves
 			mob.bossEvent.setProgress((float) mob.getWavesSpawned() / mob.getTotalWavesToSpawn());
-			mob.bossEvent.setName(new TranslatableComponent("immersiveweapons.boss.celestial_tower.waves",
+			mob.bossEvent.setName(Component.translatable("immersiveweapons.boss.celestial_tower.waves",
 					mob.getWavesSpawned(),
 					mob.getTotalWavesToSpawn()));
 

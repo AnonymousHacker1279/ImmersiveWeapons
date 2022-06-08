@@ -4,6 +4,7 @@ import com.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
 import com.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
+import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.GsonHelper;
 import net.minecraft.world.item.ItemStack;
@@ -12,8 +13,6 @@ import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
 import net.minecraftforge.common.loot.GlobalLootModifierSerializer;
 import net.minecraftforge.common.loot.LootModifier;
 import org.jetbrains.annotations.NotNull;
-
-import java.util.List;
 
 public class AzulKeystoneFragmentInChestsLootModifierHandler extends LootModifier {
 
@@ -29,7 +28,7 @@ public class AzulKeystoneFragmentInChestsLootModifierHandler extends LootModifie
 	}
 
 	@Override
-	protected @NotNull List<ItemStack> doApply(List<ItemStack> generatedLoot, LootContext context) {
+	protected @NotNull ObjectArrayList<ItemStack> doApply(ObjectArrayList<ItemStack> generatedLoot, LootContext context) {
 		if (rollChance <= GeneralUtilities.getRandomNumber(0.0f, 1.00001f)) {
 			int lootQuantity = GeneralUtilities.getRandomNumber(minQuantity, maxQuantity + 1);
 

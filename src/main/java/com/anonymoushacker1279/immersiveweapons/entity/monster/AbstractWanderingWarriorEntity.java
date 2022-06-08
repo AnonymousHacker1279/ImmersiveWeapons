@@ -4,6 +4,7 @@ import com.anonymoushacker1279.immersiveweapons.entity.GrantAdvancementOnDiscove
 import com.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.sounds.SoundEvent;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.*;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
@@ -111,8 +112,8 @@ public abstract class AbstractWanderingWarriorEntity extends Monster implements 
 	 * @param difficulty the <code>DifficultyInstance</code> of the world
 	 */
 	@Override
-	protected void populateDefaultEquipmentSlots(@NotNull DifficultyInstance difficulty) {
-		super.populateDefaultEquipmentSlots(difficulty);
+	protected void populateDefaultEquipmentSlots(RandomSource randomSource, @NotNull DifficultyInstance difficulty) {
+		super.populateDefaultEquipmentSlots(randomSource, difficulty);
 		// Populate weapons
 		float random = this.random.nextFloat();
 		if (random <= 0.5) {
@@ -161,8 +162,8 @@ public abstract class AbstractWanderingWarriorEntity extends Monster implements 
 	                                    @Nullable CompoundTag tag) {
 
 		groupData = super.finalizeSpawn(level, difficulty, spawnType, groupData, tag);
-		populateDefaultEquipmentSlots(difficulty);
-		populateDefaultEquipmentEnchantments(difficulty);
+		populateDefaultEquipmentSlots(random, difficulty);
+		populateDefaultEquipmentEnchantments(random, difficulty);
 		setCombatTask();
 		setCanPickUpLoot(random.nextFloat() < 0.55F * difficulty.getSpecialMultiplier());
 
@@ -188,7 +189,7 @@ public abstract class AbstractWanderingWarriorEntity extends Monster implements 
 		if (!level.isClientSide) {
 			goalSelector.removeGoal(aiAttackOnCollide);
 			if (getItemInHand(InteractionHand.MAIN_HAND).getItem() == Items.AIR) {
-				populateDefaultEquipmentSlots(level.getCurrentDifficultyAt(blockPosition()));
+				populateDefaultEquipmentSlots(random, level.getCurrentDifficultyAt(blockPosition()));
 			}
 			goalSelector.addGoal(1, aiAttackOnCollide);
 		}

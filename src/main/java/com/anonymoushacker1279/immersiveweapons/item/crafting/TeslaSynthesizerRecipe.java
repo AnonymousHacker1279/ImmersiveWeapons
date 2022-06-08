@@ -11,7 +11,6 @@ import net.minecraft.world.Container;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.registries.ForgeRegistryEntry;
 import org.jetbrains.annotations.NotNull;
 
 public record TeslaSynthesizerRecipe(ResourceLocation recipeId,
@@ -132,7 +131,7 @@ public record TeslaSynthesizerRecipe(ResourceLocation recipeId,
 	 */
 	@Override
 	public @NotNull RecipeType<?> getType() {
-		return CustomRecipeTypes.TESLA_SYNTHESIZER;
+		return DeferredRegistryHandler.TESLA_SYNTHESIZER_RECIPE_TYPE.get();
 	}
 
 	/**
@@ -149,7 +148,8 @@ public record TeslaSynthesizerRecipe(ResourceLocation recipeId,
 		return defaultedList;
 	}
 
-	public static class Serializer extends ForgeRegistryEntry<RecipeSerializer<?>> implements RecipeSerializer<TeslaSynthesizerRecipe> {
+	public static class Serializer implements RecipeSerializer<TeslaSynthesizerRecipe> {
+
 		/**
 		 * Serialize from JSON.
 		 *

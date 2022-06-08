@@ -32,7 +32,7 @@ public class DiamondMusketBallItem extends AbstractBulletItem {
 	 */
 	@Override
 	public @NotNull BulletEntities.DiamondMusketBallEntity createBullet(@NotNull Level level, @NotNull ItemStack stack, @NotNull LivingEntity shooter) {
-		DiamondMusketBallEntity bulletEntity = new DiamondMusketBallEntity(shooter, level, referenceItem.get().asItem());
+		DiamondMusketBallEntity bulletEntity = new DiamondMusketBallEntity(shooter, level);
 		bulletEntity.setBaseDamage(damage);
 		bulletEntity.pickup = Pickup.DISALLOWED;
 		bulletEntity.setSoundEvent(DeferredRegistryHandler.BULLET_WHIZZ.get());

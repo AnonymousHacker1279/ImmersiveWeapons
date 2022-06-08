@@ -3,24 +3,23 @@ package com.anonymoushacker1279.immersiveweapons.block.base.mud;
 import com.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.Random;
-
-public class MudBlock extends Block {
+// TODO: Mark for removal since vanilla provides a mud block
+public class IWMudBlock extends Block {
 
 	float chanceToDry = 0.10f;
 
-	public MudBlock(Properties properties) {
+	public IWMudBlock(Properties properties) {
 		super(properties);
 	}
 
-	@SuppressWarnings("deprecation")
 	@Override
-	public void randomTick(@NotNull BlockState pState, ServerLevel pLevel, @NotNull BlockPos pPos, @NotNull Random pRandom) {
+	public void randomTick(@NotNull BlockState pState, ServerLevel pLevel, @NotNull BlockPos pPos, @NotNull RandomSource pRandom) {
 		if (pLevel.isRainingAt(pPos)) {
 			chanceToDry = 0.03f;
 		}

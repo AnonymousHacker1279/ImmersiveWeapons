@@ -251,11 +251,11 @@ public class BlockLootTables implements Consumer<BiConsumer<ResourceLocation, Bu
 		return LootTable.lootTable().withPool(applyExplosionCondition(LootPool.lootPool().setRolls(ConstantValue.exactly(1.0F)).add(LootItem.lootTableItem(itemLike))));
 	}
 
-	protected static <T> T applyExplosionCondition(ConditionUserBuilder<T> pCondition) {
+	protected static <T extends ConditionUserBuilder<T>> T applyExplosionCondition(ConditionUserBuilder<T> pCondition) {
 		return pCondition.when(ExplosionCondition.survivesExplosion());
 	}
 
-	protected static <T> T applyExplosionDecay(FunctionUserBuilder<T> pFunction) {
+	protected static <T extends FunctionUserBuilder<T>> T applyExplosionDecay(FunctionUserBuilder<T> pFunction) {
 		return pFunction.apply(ApplyExplosionDecay.explosionDecay());
 	}
 }

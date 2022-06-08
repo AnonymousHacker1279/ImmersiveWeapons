@@ -10,6 +10,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
@@ -83,7 +84,7 @@ public class SmallPartsRecipeBuilder {
 			JsonArray resultArray = new JsonArray();
 
 			for (Item item : craftables) {
-				resultArray.add(String.valueOf(item.getRegistryName()));
+				resultArray.add(String.valueOf(ForgeRegistries.ITEMS.getKey(item)));
 			}
 
 			json.add("craftables", resultArray);

@@ -2,7 +2,7 @@ package com.anonymoushacker1279.immersiveweapons.data.loot;
 
 import com.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
 import net.minecraft.ChatFormatting;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.storage.loot.LootPool;
@@ -107,7 +107,7 @@ public class ChestLootTables implements Consumer<BiConsumer<ResourceLocation, Bu
 								.add(LootItem.lootTableItem(Items.IRON_AXE).setWeight(4)
 										.apply(EnchantRandomlyFunction.randomApplicableEnchantment())
 										.apply(SetNameFunction
-												.setName(new TranslatableComponent("loot.immersiveweapons.chest.village.battlefield.medic_station.iron_axe")
+												.setName(Component.translatable("loot.immersiveweapons.chest.village.battlefield.medic_station.iron_axe")
 														.withStyle(ChatFormatting.RED))))
 								.add(LootItem.lootTableItem(DeferredRegistryHandler.USED_SYRINGE.get()).setWeight(4)
 										.apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0f, 3.0f))))

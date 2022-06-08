@@ -32,7 +32,7 @@ public class NetheriteMusketBallItem extends AbstractBulletItem {
 	 */
 	@Override
 	public @NotNull BulletEntities.NetheriteMusketBallEntity createBullet(@NotNull Level level, @NotNull ItemStack stack, @NotNull LivingEntity shooter) {
-		NetheriteMusketBallEntity bulletEntity = new NetheriteMusketBallEntity(shooter, level, referenceItem.get().asItem());
+		NetheriteMusketBallEntity bulletEntity = new NetheriteMusketBallEntity(shooter, level);
 		bulletEntity.setBaseDamage(damage);
 		bulletEntity.pickup = Pickup.DISALLOWED;
 		bulletEntity.setSoundEvent(DeferredRegistryHandler.BULLET_WHIZZ.get());

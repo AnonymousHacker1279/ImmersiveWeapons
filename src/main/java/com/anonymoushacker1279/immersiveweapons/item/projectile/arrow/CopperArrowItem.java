@@ -1,6 +1,6 @@
 package com.anonymoushacker1279.immersiveweapons.item.projectile.arrow;
 
-import com.anonymoushacker1279.immersiveweapons.entity.projectile.CustomArrowEntity.CopperArrowEntity;
+import com.anonymoushacker1279.immersiveweapons.entity.projectile.ArrowEntities.CopperArrowEntity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -29,7 +29,7 @@ public class CopperArrowItem extends AbstractArrowItem {
 	 */
 	@Override
 	public @NotNull CopperArrowEntity createArrow(@NotNull Level worldIn, @NotNull ItemStack stack, @NotNull LivingEntity shooter) {
-		CopperArrowEntity arrowEntity = new CopperArrowEntity(shooter, worldIn, ref.get().asItem());
+		CopperArrowEntity arrowEntity = new CopperArrowEntity(shooter, worldIn);
 		arrowEntity.setBaseDamage(damage);
 		return arrowEntity;
 	}

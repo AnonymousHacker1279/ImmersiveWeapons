@@ -11,7 +11,7 @@ import net.minecraft.advancements.*;
 import net.minecraft.advancements.Advancement.Builder;
 import net.minecraft.advancements.critereon.*;
 import net.minecraft.advancements.critereon.EntityPredicate.Composite;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.Items;
@@ -36,21 +36,21 @@ public class IWAdvancements implements Consumer<Consumer<Advancement>> {
 		// Root advancement
 		Advancement root = Builder.advancement()
 				.display(DeferredRegistryHandler.TESLA_SWORD.get(),
-						new TranslatableComponent("advancements.immersiveweapons.root.title")
+						Component.translatable("advancements.immersiveweapons.root.title")
 								.withStyle(ChatFormatting.RED),
-						new TranslatableComponent("advancements.immersiveweapons.root.description"),
+						Component.translatable("advancements.immersiveweapons.root.description"),
 						new ResourceLocation(ImmersiveWeapons.MOD_ID, "textures/block/red_stained_bulletproof_glass.png"),
 						FrameType.TASK, false, false, false)
 				.addCriterion("exist",
-						LocationTrigger.TriggerInstance.located(LocationPredicate.inDimension(Level.OVERWORLD)))
+						PlayerTrigger.TriggerInstance.located(LocationPredicate.inDimension(Level.OVERWORLD)))
 				.rewards(AdvancementRewards.Builder.loot(new ResourceLocation(ImmersiveWeapons.MOD_ID, "grant_encyclopedia_book_on_first_join")))
 				.save(consumer, "immersiveweapons:root");
 
 		// Molten advancements
 		Advancement obtainMoltenShard = Builder.advancement().parent(root)
 				.display(DeferredRegistryHandler.MOLTEN_SHARD.get(),
-						new TranslatableComponent("advancements.immersiveweapons.molten_shard.title"),
-						new TranslatableComponent("advancements.immersiveweapons.molten_shard.description"),
+						Component.translatable("advancements.immersiveweapons.molten_shard.title"),
+						Component.translatable("advancements.immersiveweapons.molten_shard.description"),
 						null, FrameType.TASK, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(DeferredRegistryHandler.MOLTEN_SHARD.get()))
@@ -58,8 +58,8 @@ public class IWAdvancements implements Consumer<Consumer<Advancement>> {
 
 		Advancement smeltMoltenIngot = Builder.advancement().parent(obtainMoltenShard)
 				.display(DeferredRegistryHandler.MOLTEN_INGOT.get(),
-						new TranslatableComponent("advancements.immersiveweapons.molten_ingot.title"),
-						new TranslatableComponent("advancements.immersiveweapons.molten_ingot.description"),
+						Component.translatable("advancements.immersiveweapons.molten_ingot.title"),
+						Component.translatable("advancements.immersiveweapons.molten_ingot.description"),
 						null, FrameType.TASK, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(DeferredRegistryHandler.MOLTEN_INGOT.get()))
@@ -67,8 +67,8 @@ public class IWAdvancements implements Consumer<Consumer<Advancement>> {
 
 		Builder.advancement().parent(smeltMoltenIngot)
 				.display(DeferredRegistryHandler.MOLTEN_SWORD.get(),
-						new TranslatableComponent("advancements.immersiveweapons.molten_sword.title"),
-						new TranslatableComponent("advancements.immersiveweapons.molten_sword.description"),
+						Component.translatable("advancements.immersiveweapons.molten_sword.title"),
+						Component.translatable("advancements.immersiveweapons.molten_sword.description"),
 						null, FrameType.GOAL, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(DeferredRegistryHandler.MOLTEN_SWORD.get()))
@@ -77,8 +77,8 @@ public class IWAdvancements implements Consumer<Consumer<Advancement>> {
 
 		Builder.advancement().parent(smeltMoltenIngot)
 				.display(DeferredRegistryHandler.MOLTEN_PICKAXE.get(),
-						new TranslatableComponent("advancements.immersiveweapons.molten_pickaxe.title"),
-						new TranslatableComponent("advancements.immersiveweapons.molten_pickaxe.description"),
+						Component.translatable("advancements.immersiveweapons.molten_pickaxe.title"),
+						Component.translatable("advancements.immersiveweapons.molten_pickaxe.description"),
 						null, FrameType.GOAL, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(DeferredRegistryHandler.MOLTEN_PICKAXE.get()))
@@ -87,8 +87,8 @@ public class IWAdvancements implements Consumer<Consumer<Advancement>> {
 
 		Builder.advancement().parent(smeltMoltenIngot)
 				.display(DeferredRegistryHandler.MOLTEN_AXE.get(),
-						new TranslatableComponent("advancements.immersiveweapons.molten_axe.title"),
-						new TranslatableComponent("advancements.immersiveweapons.molten_axe.description"),
+						Component.translatable("advancements.immersiveweapons.molten_axe.title"),
+						Component.translatable("advancements.immersiveweapons.molten_axe.description"),
 						null, FrameType.GOAL, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(DeferredRegistryHandler.MOLTEN_AXE.get()))
@@ -97,8 +97,8 @@ public class IWAdvancements implements Consumer<Consumer<Advancement>> {
 
 		Builder.advancement().parent(smeltMoltenIngot)
 				.display(DeferredRegistryHandler.MOLTEN_SHOVEL.get(),
-						new TranslatableComponent("advancements.immersiveweapons.molten_shovel.title"),
-						new TranslatableComponent("advancements.immersiveweapons.molten_shovel.description"),
+						Component.translatable("advancements.immersiveweapons.molten_shovel.title"),
+						Component.translatable("advancements.immersiveweapons.molten_shovel.description"),
 						null, FrameType.GOAL, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(DeferredRegistryHandler.MOLTEN_SHOVEL.get()))
@@ -107,8 +107,8 @@ public class IWAdvancements implements Consumer<Consumer<Advancement>> {
 
 		Builder.advancement().parent(smeltMoltenIngot)
 				.display(DeferredRegistryHandler.MOLTEN_HOE.get(),
-						new TranslatableComponent("advancements.immersiveweapons.molten_hoe.title"),
-						new TranslatableComponent("advancements.immersiveweapons.molten_hoe.description"),
+						Component.translatable("advancements.immersiveweapons.molten_hoe.title"),
+						Component.translatable("advancements.immersiveweapons.molten_hoe.description"),
 						null, FrameType.CHALLENGE, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(DeferredRegistryHandler.MOLTEN_HOE.get()))
@@ -117,12 +117,12 @@ public class IWAdvancements implements Consumer<Consumer<Advancement>> {
 
 		Builder.advancement().parent(smeltMoltenIngot) // TODO: Tagged for advancement rename
 				.display(DeferredRegistryHandler.MOLTEN_BLOCK_ITEM.get(),
-						new TranslatableComponent("advancements.immersiveweapons.play_with_fire.title"),
-						new TranslatableComponent("advancements.immersiveweapons.play_with_fire.description"),
+						Component.translatable("advancements.immersiveweapons.play_with_fire.title"),
+						Component.translatable("advancements.immersiveweapons.play_with_fire.description"),
 						null, FrameType.CHALLENGE, true, true, false)
 				.addCriterion("have_advancements",
-						LocationTrigger.TriggerInstance.located(
-								EntityPredicate.Builder.entity().player(
+						PlayerTrigger.TriggerInstance.located(
+								EntityPredicate.Builder.entity().subPredicate(
 										PlayerPredicate.Builder.player().checkAdvancementDone(
 												new ResourceLocation(ImmersiveWeapons.MOD_ID, "molten_sword"), true
 										).checkAdvancementDone(
@@ -142,8 +142,8 @@ public class IWAdvancements implements Consumer<Consumer<Advancement>> {
 
 		Advancement warmAndToasty = Builder.advancement().parent(smeltMoltenIngot) // TODO: Tagged for advancement rename
 				.display(DeferredRegistryHandler.MOLTEN_HELMET.get(),
-						new TranslatableComponent("advancements.immersiveweapons.warm_and_toasty.title"),
-						new TranslatableComponent("advancements.immersiveweapons.warm_and_toasty.description"),
+						Component.translatable("advancements.immersiveweapons.warm_and_toasty.title"),
+						Component.translatable("advancements.immersiveweapons.warm_and_toasty.description"),
 						null, FrameType.GOAL, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(DeferredRegistryHandler.MOLTEN_HELMET.get(),
@@ -154,8 +154,8 @@ public class IWAdvancements implements Consumer<Consumer<Advancement>> {
 
 		Builder.advancement().parent(warmAndToasty)
 				.display(Items.LAVA_BUCKET,
-						new TranslatableComponent("advancements.immersiveweapons.lava_bath.title"),
-						new TranslatableComponent("advancements.immersiveweapons.lava_bath.description"),
+						Component.translatable("advancements.immersiveweapons.lava_bath.title"),
+						Component.translatable("advancements.immersiveweapons.lava_bath.description"),
 						null, FrameType.CHALLENGE, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(DeferredRegistryHandler.MOLTEN_HELMET.get(),
@@ -168,8 +168,8 @@ public class IWAdvancements implements Consumer<Consumer<Advancement>> {
 		// Tesla Advancements
 		Advancement craftConductiveAlloy = Builder.advancement().parent(root)
 				.display(DeferredRegistryHandler.CONDUCTIVE_ALLOY.get(),
-						new TranslatableComponent("advancements.immersiveweapons.conductive_alloy.title"),
-						new TranslatableComponent("advancements.immersiveweapons.conductive_alloy.description"),
+						Component.translatable("advancements.immersiveweapons.conductive_alloy.title"),
+						Component.translatable("advancements.immersiveweapons.conductive_alloy.description"),
 						null, FrameType.TASK, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(DeferredRegistryHandler.CONDUCTIVE_ALLOY.get()))
@@ -177,8 +177,8 @@ public class IWAdvancements implements Consumer<Consumer<Advancement>> {
 
 		Advancement obtainElectricIngot = Builder.advancement().parent(craftConductiveAlloy)
 				.display(DeferredRegistryHandler.ELECTRIC_INGOT.get(),
-						new TranslatableComponent("advancements.immersiveweapons.electric_ingot.title"),
-						new TranslatableComponent("advancements.immersiveweapons.electric_ingot.description"),
+						Component.translatable("advancements.immersiveweapons.electric_ingot.title"),
+						Component.translatable("advancements.immersiveweapons.electric_ingot.description"),
 						null, FrameType.TASK, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(DeferredRegistryHandler.ELECTRIC_INGOT.get()))
@@ -186,8 +186,8 @@ public class IWAdvancements implements Consumer<Consumer<Advancement>> {
 
 		Advancement craftTeslaIngot = Builder.advancement().parent(obtainElectricIngot)
 				.display(DeferredRegistryHandler.TESLA_INGOT.get(),
-						new TranslatableComponent("advancements.immersiveweapons.tesla_ingot.title"),
-						new TranslatableComponent("advancements.immersiveweapons.tesla_ingot.description"),
+						Component.translatable("advancements.immersiveweapons.tesla_ingot.title"),
+						Component.translatable("advancements.immersiveweapons.tesla_ingot.description"),
 						null, FrameType.TASK, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(DeferredRegistryHandler.TESLA_INGOT.get()))
@@ -195,8 +195,8 @@ public class IWAdvancements implements Consumer<Consumer<Advancement>> {
 
 		Builder.advancement().parent(craftTeslaIngot)
 				.display(DeferredRegistryHandler.TESLA_SWORD.get(),
-						new TranslatableComponent("advancements.immersiveweapons.tesla_sword.title"),
-						new TranslatableComponent("advancements.immersiveweapons.tesla_sword.description"),
+						Component.translatable("advancements.immersiveweapons.tesla_sword.title"),
+						Component.translatable("advancements.immersiveweapons.tesla_sword.description"),
 						null, FrameType.GOAL, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(DeferredRegistryHandler.TESLA_SWORD.get()))
@@ -205,8 +205,8 @@ public class IWAdvancements implements Consumer<Consumer<Advancement>> {
 
 		Builder.advancement().parent(craftTeslaIngot)
 				.display(DeferredRegistryHandler.TESLA_PICKAXE.get(),
-						new TranslatableComponent("advancements.immersiveweapons.tesla_pickaxe.title"),
-						new TranslatableComponent("advancements.immersiveweapons.tesla_pickaxe.description"),
+						Component.translatable("advancements.immersiveweapons.tesla_pickaxe.title"),
+						Component.translatable("advancements.immersiveweapons.tesla_pickaxe.description"),
 						null, FrameType.GOAL, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(DeferredRegistryHandler.TESLA_PICKAXE.get()))
@@ -215,8 +215,8 @@ public class IWAdvancements implements Consumer<Consumer<Advancement>> {
 
 		Builder.advancement().parent(craftTeslaIngot)
 				.display(DeferredRegistryHandler.TESLA_AXE.get(),
-						new TranslatableComponent("advancements.immersiveweapons.tesla_axe.title"),
-						new TranslatableComponent("advancements.immersiveweapons.tesla_axe.description"),
+						Component.translatable("advancements.immersiveweapons.tesla_axe.title"),
+						Component.translatable("advancements.immersiveweapons.tesla_axe.description"),
 						null, FrameType.GOAL, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(DeferredRegistryHandler.TESLA_AXE.get()))
@@ -225,8 +225,8 @@ public class IWAdvancements implements Consumer<Consumer<Advancement>> {
 
 		Builder.advancement().parent(craftTeslaIngot)
 				.display(DeferredRegistryHandler.TESLA_SHOVEL.get(),
-						new TranslatableComponent("advancements.immersiveweapons.tesla_shovel.title"),
-						new TranslatableComponent("advancements.immersiveweapons.tesla_shovel.description"),
+						Component.translatable("advancements.immersiveweapons.tesla_shovel.title"),
+						Component.translatable("advancements.immersiveweapons.tesla_shovel.description"),
 						null, FrameType.GOAL, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(DeferredRegistryHandler.TESLA_SHOVEL.get()))
@@ -235,8 +235,8 @@ public class IWAdvancements implements Consumer<Consumer<Advancement>> {
 
 		Builder.advancement().parent(craftTeslaIngot)
 				.display(DeferredRegistryHandler.TESLA_HOE.get(),
-						new TranslatableComponent("advancements.immersiveweapons.tesla_hoe.title"),
-						new TranslatableComponent("advancements.immersiveweapons.tesla_hoe.description"),
+						Component.translatable("advancements.immersiveweapons.tesla_hoe.title"),
+						Component.translatable("advancements.immersiveweapons.tesla_hoe.description"),
 						null, FrameType.CHALLENGE, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(DeferredRegistryHandler.TESLA_HOE.get()))
@@ -245,12 +245,12 @@ public class IWAdvancements implements Consumer<Consumer<Advancement>> {
 
 		Builder.advancement().parent(craftTeslaIngot) // TODO: Tagged for advancement rename
 				.display(DeferredRegistryHandler.TESLA_BLOCK_ITEM.get(),
-						new TranslatableComponent("advancements.immersiveweapons.energized.title"),
-						new TranslatableComponent("advancements.immersiveweapons.energized.description"),
+						Component.translatable("advancements.immersiveweapons.energized.title"),
+						Component.translatable("advancements.immersiveweapons.energized.description"),
 						null, FrameType.CHALLENGE, true, true, false)
 				.addCriterion("have_advancements",
-						LocationTrigger.TriggerInstance.located(
-								EntityPredicate.Builder.entity().player(
+						PlayerTrigger.TriggerInstance.located(
+								EntityPredicate.Builder.entity().subPredicate(
 										PlayerPredicate.Builder.player().checkAdvancementDone(
 												new ResourceLocation(ImmersiveWeapons.MOD_ID, "tesla_sword"), true
 										).checkAdvancementDone(
@@ -270,8 +270,8 @@ public class IWAdvancements implements Consumer<Consumer<Advancement>> {
 
 		Builder.advancement().parent(craftTeslaIngot) // TODO: Tagged for advancement rename
 				.display(DeferredRegistryHandler.TESLA_HELMET.get(),
-						new TranslatableComponent("advancements.immersiveweapons.tesla_coil.title"),
-						new TranslatableComponent("advancements.immersiveweapons.tesla_coil.description"),
+						Component.translatable("advancements.immersiveweapons.tesla_coil.title"),
+						Component.translatable("advancements.immersiveweapons.tesla_coil.description"),
 						null, FrameType.GOAL, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(DeferredRegistryHandler.TESLA_HELMET.get(),
@@ -282,8 +282,8 @@ public class IWAdvancements implements Consumer<Consumer<Advancement>> {
 
 		Builder.advancement().parent(craftTeslaIngot)
 				.display(DeferredRegistryHandler.TESLA_SYNTHESIZER.get(),
-						new TranslatableComponent("advancements.immersiveweapons.tesla_synthesizer.title"),
-						new TranslatableComponent("advancements.immersiveweapons.tesla_synthesizer.description"),
+						Component.translatable("advancements.immersiveweapons.tesla_synthesizer.title"),
+						Component.translatable("advancements.immersiveweapons.tesla_synthesizer.description"),
 						null, FrameType.TASK, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(DeferredRegistryHandler.TESLA_SYNTHESIZER.get()))
@@ -293,8 +293,8 @@ public class IWAdvancements implements Consumer<Consumer<Advancement>> {
 		// Ventus Advancements
 		Advancement obtainVentusShard = Builder.advancement().parent(root)
 				.display(DeferredRegistryHandler.VENTUS_SHARD.get(),
-						new TranslatableComponent("advancements.immersiveweapons.ventus_shard.title"),
-						new TranslatableComponent("advancements.immersiveweapons.ventus_shard.description"),
+						Component.translatable("advancements.immersiveweapons.ventus_shard.title"),
+						Component.translatable("advancements.immersiveweapons.ventus_shard.description"),
 						null, FrameType.TASK, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(DeferredRegistryHandler.VENTUS_SHARD.get()))
@@ -302,8 +302,8 @@ public class IWAdvancements implements Consumer<Consumer<Advancement>> {
 
 		Builder.advancement().parent(obtainVentusShard)
 				.display(DeferredRegistryHandler.VENTUS_SWORD.get(),
-						new TranslatableComponent("advancements.immersiveweapons.ventus_sword.title"),
-						new TranslatableComponent("advancements.immersiveweapons.ventus_sword.description"),
+						Component.translatable("advancements.immersiveweapons.ventus_sword.title"),
+						Component.translatable("advancements.immersiveweapons.ventus_sword.description"),
 						null, FrameType.GOAL, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(DeferredRegistryHandler.VENTUS_SWORD.get()))
@@ -312,8 +312,8 @@ public class IWAdvancements implements Consumer<Consumer<Advancement>> {
 
 		Builder.advancement().parent(obtainVentusShard)
 				.display(DeferredRegistryHandler.VENTUS_PICKAXE.get(),
-						new TranslatableComponent("advancements.immersiveweapons.ventus_pickaxe.title"),
-						new TranslatableComponent("advancements.immersiveweapons.ventus_pickaxe.description"),
+						Component.translatable("advancements.immersiveweapons.ventus_pickaxe.title"),
+						Component.translatable("advancements.immersiveweapons.ventus_pickaxe.description"),
 						null, FrameType.GOAL, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(DeferredRegistryHandler.VENTUS_PICKAXE.get()))
@@ -322,8 +322,8 @@ public class IWAdvancements implements Consumer<Consumer<Advancement>> {
 
 		Builder.advancement().parent(obtainVentusShard)
 				.display(DeferredRegistryHandler.VENTUS_AXE.get(),
-						new TranslatableComponent("advancements.immersiveweapons.ventus_axe.title"),
-						new TranslatableComponent("advancements.immersiveweapons.ventus_axe.description"),
+						Component.translatable("advancements.immersiveweapons.ventus_axe.title"),
+						Component.translatable("advancements.immersiveweapons.ventus_axe.description"),
 						null, FrameType.GOAL, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(DeferredRegistryHandler.VENTUS_AXE.get()))
@@ -332,8 +332,8 @@ public class IWAdvancements implements Consumer<Consumer<Advancement>> {
 
 		Builder.advancement().parent(obtainVentusShard)
 				.display(DeferredRegistryHandler.VENTUS_SHOVEL.get(),
-						new TranslatableComponent("advancements.immersiveweapons.ventus_shovel.title"),
-						new TranslatableComponent("advancements.immersiveweapons.ventus_shovel.description"),
+						Component.translatable("advancements.immersiveweapons.ventus_shovel.title"),
+						Component.translatable("advancements.immersiveweapons.ventus_shovel.description"),
 						null, FrameType.GOAL, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(DeferredRegistryHandler.VENTUS_SHOVEL.get()))
@@ -342,8 +342,8 @@ public class IWAdvancements implements Consumer<Consumer<Advancement>> {
 
 		Builder.advancement().parent(obtainVentusShard)
 				.display(DeferredRegistryHandler.VENTUS_HOE.get(),
-						new TranslatableComponent("advancements.immersiveweapons.ventus_hoe.title"),
-						new TranslatableComponent("advancements.immersiveweapons.ventus_hoe.description"),
+						Component.translatable("advancements.immersiveweapons.ventus_hoe.title"),
+						Component.translatable("advancements.immersiveweapons.ventus_hoe.description"),
 						null, FrameType.CHALLENGE, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(DeferredRegistryHandler.VENTUS_HOE.get()))
@@ -352,12 +352,12 @@ public class IWAdvancements implements Consumer<Consumer<Advancement>> {
 
 		Builder.advancement().parent(obtainVentusShard) // TODO: Tagged for advancement rename
 				.display(DeferredRegistryHandler.VENTUS_ORE_ITEM.get(),
-						new TranslatableComponent("advancements.immersiveweapons.pretty_windy.title"),
-						new TranslatableComponent("advancements.immersiveweapons.pretty_windy.description"),
+						Component.translatable("advancements.immersiveweapons.pretty_windy.title"),
+						Component.translatable("advancements.immersiveweapons.pretty_windy.description"),
 						null, FrameType.CHALLENGE, true, true, false)
 				.addCriterion("have_advancements",
-						LocationTrigger.TriggerInstance.located(
-								EntityPredicate.Builder.entity().player(
+						PlayerTrigger.TriggerInstance.located(
+								EntityPredicate.Builder.entity().subPredicate(
 										PlayerPredicate.Builder.player().checkAdvancementDone(
 												new ResourceLocation(ImmersiveWeapons.MOD_ID, "ventus_sword"), true
 										).checkAdvancementDone(
@@ -377,8 +377,8 @@ public class IWAdvancements implements Consumer<Consumer<Advancement>> {
 
 		Builder.advancement().parent(obtainVentusShard) // TODO: Tagged for advancement rename
 				.display(DeferredRegistryHandler.VENTUS_HELMET.get(),
-						new TranslatableComponent("advancements.immersiveweapons.almost_flying.title"),
-						new TranslatableComponent("advancements.immersiveweapons.almost_flying.description"),
+						Component.translatable("advancements.immersiveweapons.almost_flying.title"),
+						Component.translatable("advancements.immersiveweapons.almost_flying.description"),
 						null, FrameType.GOAL, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(DeferredRegistryHandler.VENTUS_HELMET.get(),
@@ -389,8 +389,8 @@ public class IWAdvancements implements Consumer<Consumer<Advancement>> {
 
 		Advancement craftVentusStaffCore = Builder.advancement().parent(obtainVentusShard)
 				.display(DeferredRegistryHandler.VENTUS_STAFF_CORE.get(),
-						new TranslatableComponent("advancements.immersiveweapons.ventus_staff_core.title"),
-						new TranslatableComponent("advancements.immersiveweapons.ventus_staff_core.description"),
+						Component.translatable("advancements.immersiveweapons.ventus_staff_core.title"),
+						Component.translatable("advancements.immersiveweapons.ventus_staff_core.description"),
 						null, FrameType.TASK, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(DeferredRegistryHandler.VENTUS_STAFF_CORE.get()))
@@ -398,8 +398,8 @@ public class IWAdvancements implements Consumer<Consumer<Advancement>> {
 
 		Builder.advancement().parent(craftVentusStaffCore)
 				.display(DeferredRegistryHandler.VENTUS_STAFF.get(),
-						new TranslatableComponent("advancements.immersiveweapons.ventus_staff.title"),
-						new TranslatableComponent("advancements.immersiveweapons.ventus_staff.description"),
+						Component.translatable("advancements.immersiveweapons.ventus_staff.title"),
+						Component.translatable("advancements.immersiveweapons.ventus_staff.description"),
 						null, FrameType.GOAL, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(DeferredRegistryHandler.VENTUS_STAFF.get()))
@@ -409,8 +409,8 @@ public class IWAdvancements implements Consumer<Consumer<Advancement>> {
 		// Tool advancements
 		Advancement craftToolRod = Builder.advancement().parent(root)
 				.display(DeferredRegistryHandler.WOODEN_TOOL_ROD.get(),
-						new TranslatableComponent("advancements.immersiveweapons.tool_rod.title"),
-						new TranslatableComponent("advancements.immersiveweapons.tool_rod.description"),
+						Component.translatable("advancements.immersiveweapons.tool_rod.title"),
+						Component.translatable("advancements.immersiveweapons.tool_rod.description"),
 						null, FrameType.TASK, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(DeferredRegistryHandler.WOODEN_TOOL_ROD.get()))
@@ -418,8 +418,8 @@ public class IWAdvancements implements Consumer<Consumer<Advancement>> {
 
 		Builder.advancement().parent(craftToolRod)
 				.display(DeferredRegistryHandler.IRON_PIKE.get(),
-						new TranslatableComponent("advancements.immersiveweapons.pike.title"),
-						new TranslatableComponent("advancements.immersiveweapons.pike.description"),
+						Component.translatable("advancements.immersiveweapons.pike.title"),
+						Component.translatable("advancements.immersiveweapons.pike.description"),
 						null, FrameType.TASK, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(DeferredRegistryHandler.WOODEN_PIKE.get()))
@@ -442,8 +442,8 @@ public class IWAdvancements implements Consumer<Consumer<Advancement>> {
 
 		Advancement shards = Builder.advancement().parent(root)
 				.display(DeferredRegistryHandler.STONE_SHARD.get(),
-						new TranslatableComponent("advancements.immersiveweapons.shards.title"),
-						new TranslatableComponent("advancements.immersiveweapons.shards.description"),
+						Component.translatable("advancements.immersiveweapons.shards.title"),
+						Component.translatable("advancements.immersiveweapons.shards.description"),
 						null, FrameType.TASK, false, false, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(DeferredRegistryHandler.MOLTEN_SHARD.get()))
@@ -462,8 +462,8 @@ public class IWAdvancements implements Consumer<Consumer<Advancement>> {
 
 		Builder.advancement().parent(shards)
 				.display(DeferredRegistryHandler.WOODEN_SHARD.get(),
-						new TranslatableComponent("advancements.immersiveweapons.wooden_shard.title"),
-						new TranslatableComponent("advancements.immersiveweapons.wooden_shard.description"),
+						Component.translatable("advancements.immersiveweapons.wooden_shard.title"),
+						Component.translatable("advancements.immersiveweapons.wooden_shard.description"),
 						null, FrameType.GOAL, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(DeferredRegistryHandler.WOODEN_SHARD.get()))
@@ -471,8 +471,8 @@ public class IWAdvancements implements Consumer<Consumer<Advancement>> {
 
 		Builder.advancement().parent(shards)
 				.display(DeferredRegistryHandler.STONE_SHARD.get(),
-						new TranslatableComponent("advancements.immersiveweapons.stone_shard.title"),
-						new TranslatableComponent("advancements.immersiveweapons.stone_shard.description"),
+						Component.translatable("advancements.immersiveweapons.stone_shard.title"),
+						Component.translatable("advancements.immersiveweapons.stone_shard.description"),
 						null, FrameType.GOAL, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(DeferredRegistryHandler.STONE_SHARD.get()))
@@ -480,8 +480,8 @@ public class IWAdvancements implements Consumer<Consumer<Advancement>> {
 
 		Builder.advancement().parent(shards)
 				.display(DeferredRegistryHandler.DIAMOND_SHARD.get(),
-						new TranslatableComponent("advancements.immersiveweapons.diamond_shard.title"),
-						new TranslatableComponent("advancements.immersiveweapons.diamond_shard.description"),
+						Component.translatable("advancements.immersiveweapons.diamond_shard.title"),
+						Component.translatable("advancements.immersiveweapons.diamond_shard.description"),
 						null, FrameType.GOAL, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(DeferredRegistryHandler.DIAMOND_SHARD.get()))
@@ -489,8 +489,8 @@ public class IWAdvancements implements Consumer<Consumer<Advancement>> {
 
 		Builder.advancement().parent(shards)
 				.display(DeferredRegistryHandler.OBSIDIAN_SHARD.get(),
-						new TranslatableComponent("advancements.immersiveweapons.obsidian_shard.title"),
-						new TranslatableComponent("advancements.immersiveweapons.obsidian_shard.description"),
+						Component.translatable("advancements.immersiveweapons.obsidian_shard.title"),
+						Component.translatable("advancements.immersiveweapons.obsidian_shard.description"),
 						null, FrameType.GOAL, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(DeferredRegistryHandler.OBSIDIAN_SHARD.get()))
@@ -498,8 +498,8 @@ public class IWAdvancements implements Consumer<Consumer<Advancement>> {
 
 		Builder.advancement().parent(root)
 				.display(DeferredRegistryHandler.NETHERITE_ARROW.get(),
-						new TranslatableComponent("advancements.immersiveweapons.netherite_projectile.title"),
-						new TranslatableComponent("advancements.immersiveweapons.netherite_projectile.description"),
+						Component.translatable("advancements.immersiveweapons.netherite_projectile.title"),
+						Component.translatable("advancements.immersiveweapons.netherite_projectile.description"),
 						null, FrameType.CHALLENGE, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(DeferredRegistryHandler.NETHERITE_ARROW.get()))
@@ -510,8 +510,8 @@ public class IWAdvancements implements Consumer<Consumer<Advancement>> {
 
 		Builder.advancement().parent(root)
 				.display(DeferredRegistryHandler.GOLDEN_MUSKET_BALL.get(),
-						new TranslatableComponent("advancements.immersiveweapons.musket_ball.title"),
-						new TranslatableComponent("advancements.immersiveweapons.musket_ball.description"),
+						Component.translatable("advancements.immersiveweapons.musket_ball.title"),
+						Component.translatable("advancements.immersiveweapons.musket_ball.description"),
 						null, FrameType.TASK, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemPredicate.Builder.item().of(ImmersiveWeaponsItemTagGroups.MUSKET_BALLS).build()))
@@ -519,8 +519,8 @@ public class IWAdvancements implements Consumer<Consumer<Advancement>> {
 
 		Advancement smallPartsTable = Builder.advancement().parent(root)
 				.display(DeferredRegistryHandler.SMALL_PARTS_TABLE.get(),
-						new TranslatableComponent("advancements.immersiveweapons.small_parts_table.title"),
-						new TranslatableComponent("advancements.immersiveweapons.small_parts_table.description"),
+						Component.translatable("advancements.immersiveweapons.small_parts_table.title"),
+						Component.translatable("advancements.immersiveweapons.small_parts_table.description"),
 						null, FrameType.TASK, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(DeferredRegistryHandler.SMALL_PARTS_TABLE.get()))
@@ -528,8 +528,8 @@ public class IWAdvancements implements Consumer<Consumer<Advancement>> {
 
 		Builder.advancement().parent(smallPartsTable)
 				.display(DeferredRegistryHandler.FLINTLOCK_PISTOL.get(),
-						new TranslatableComponent("advancements.immersiveweapons.flintlock_pistol.title"),
-						new TranslatableComponent("advancements.immersiveweapons.flintlock_pistol.description"),
+						Component.translatable("advancements.immersiveweapons.flintlock_pistol.title"),
+						Component.translatable("advancements.immersiveweapons.flintlock_pistol.description"),
 						null, FrameType.GOAL, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(DeferredRegistryHandler.FLINTLOCK_PISTOL.get()))
@@ -537,8 +537,8 @@ public class IWAdvancements implements Consumer<Consumer<Advancement>> {
 
 		Builder.advancement().parent(smallPartsTable)
 				.display(DeferredRegistryHandler.BLUNDERBUSS.get(),
-						new TranslatableComponent("advancements.immersiveweapons.blunderbuss.title"),
-						new TranslatableComponent("advancements.immersiveweapons.blunderbuss.description"),
+						Component.translatable("advancements.immersiveweapons.blunderbuss.title"),
+						Component.translatable("advancements.immersiveweapons.blunderbuss.description"),
 						null, FrameType.GOAL, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(DeferredRegistryHandler.BLUNDERBUSS.get()))
@@ -546,8 +546,8 @@ public class IWAdvancements implements Consumer<Consumer<Advancement>> {
 
 		Builder.advancement().parent(smallPartsTable)
 				.display(DeferredRegistryHandler.FLARE_GUN.get(),
-						new TranslatableComponent("advancements.immersiveweapons.flare_gun.title"),
-						new TranslatableComponent("advancements.immersiveweapons.flare_gun.description"),
+						Component.translatable("advancements.immersiveweapons.flare_gun.title"),
+						Component.translatable("advancements.immersiveweapons.flare_gun.description"),
 						null, FrameType.GOAL, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(DeferredRegistryHandler.FLARE_GUN.get()))
@@ -555,8 +555,8 @@ public class IWAdvancements implements Consumer<Consumer<Advancement>> {
 
 		Builder.advancement().parent(smallPartsTable)
 				.display(DeferredRegistryHandler.MUSKET.get(),
-						new TranslatableComponent("advancements.immersiveweapons.musket.title"),
-						new TranslatableComponent("advancements.immersiveweapons.musket.description"),
+						Component.translatable("advancements.immersiveweapons.musket.title"),
+						Component.translatable("advancements.immersiveweapons.musket.description"),
 						null, FrameType.GOAL, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(DeferredRegistryHandler.MUSKET.get()))
@@ -567,8 +567,8 @@ public class IWAdvancements implements Consumer<Consumer<Advancement>> {
 
 		Builder.advancement().parent(smallPartsTable)
 				.display(DeferredRegistryHandler.SMOKE_GRENADE.get(),
-						new TranslatableComponent("advancements.immersiveweapons.smoke_grenade.title"),
-						new TranslatableComponent("advancements.immersiveweapons.smoke_grenade.description"),
+						Component.translatable("advancements.immersiveweapons.smoke_grenade.title"),
+						Component.translatable("advancements.immersiveweapons.smoke_grenade.description"),
 						null, FrameType.GOAL, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(DeferredRegistryHandler.SMOKE_GRENADE_GREEN.get()))
@@ -577,16 +577,16 @@ public class IWAdvancements implements Consumer<Consumer<Advancement>> {
 
 		Advancement craftAlcohol = Builder.advancement().parent(root)
 				.display(DeferredRegistryHandler.BOTTLE_OF_ALCOHOL.get(),
-						new TranslatableComponent("advancements.immersiveweapons.bottle_of_alcohol.title"),
-						new TranslatableComponent("advancements.immersiveweapons.bottle_of_alcohol.description"),
+						Component.translatable("advancements.immersiveweapons.bottle_of_alcohol.title"),
+						Component.translatable("advancements.immersiveweapons.bottle_of_alcohol.description"),
 						null, FrameType.TASK, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(DeferredRegistryHandler.BOTTLE_OF_ALCOHOL.get()))
 				.save(consumer, "immersiveweapons:bottle_of_alcohol");
 		Builder.advancement().parent(craftAlcohol)
 				.display(DeferredRegistryHandler.MOLOTOV_COCKTAIL.get(),
-						new TranslatableComponent("advancements.immersiveweapons.molotov_cocktail.title"),
-						new TranslatableComponent("advancements.immersiveweapons.molotov_cocktail.description"),
+						Component.translatable("advancements.immersiveweapons.molotov_cocktail.title"),
+						Component.translatable("advancements.immersiveweapons.molotov_cocktail.description"),
 						null, FrameType.GOAL, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(DeferredRegistryHandler.MOLOTOV_COCKTAIL.get()))
@@ -595,16 +595,16 @@ public class IWAdvancements implements Consumer<Consumer<Advancement>> {
 
 		Advancement craftBandage = Builder.advancement().parent(root)
 				.display(DeferredRegistryHandler.BANDAGE.get(),
-						new TranslatableComponent("advancements.immersiveweapons.bandage.title"),
-						new TranslatableComponent("advancements.immersiveweapons.bandage.description"),
+						Component.translatable("advancements.immersiveweapons.bandage.title"),
+						Component.translatable("advancements.immersiveweapons.bandage.description"),
 						null, FrameType.TASK, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(DeferredRegistryHandler.BANDAGE.get()))
 				.save(consumer, "immersiveweapons:bandage");
 		Builder.advancement().parent(craftBandage)
 				.display(DeferredRegistryHandler.FIRST_AID_KIT.get(),
-						new TranslatableComponent("advancements.immersiveweapons.first_aid_kit.title"),
-						new TranslatableComponent("advancements.immersiveweapons.first_aid_kit.description"),
+						Component.translatable("advancements.immersiveweapons.first_aid_kit.title"),
+						Component.translatable("advancements.immersiveweapons.first_aid_kit.description"),
 						null, FrameType.GOAL, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(DeferredRegistryHandler.FIRST_AID_KIT.get()))
@@ -613,8 +613,8 @@ public class IWAdvancements implements Consumer<Consumer<Advancement>> {
 
 		Builder.advancement().parent(root)
 				.display(DeferredRegistryHandler.IRON_GAUNTLET.get(),
-						new TranslatableComponent("advancements.immersiveweapons.gauntlet.title"),
-						new TranslatableComponent("advancements.immersiveweapons.gauntlet.description"),
+						Component.translatable("advancements.immersiveweapons.gauntlet.title"),
+						Component.translatable("advancements.immersiveweapons.gauntlet.description"),
 						null, FrameType.TASK, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(DeferredRegistryHandler.WOODEN_GAUNTLET.get()))
@@ -638,8 +638,8 @@ public class IWAdvancements implements Consumer<Consumer<Advancement>> {
 		// General ingot advancements
 		Advancement ingots = Builder.advancement().parent(root)
 				.display(Items.IRON_INGOT,
-						new TranslatableComponent("advancements.immersiveweapons.ingots.title"),
-						new TranslatableComponent("advancements.immersiveweapons.ingots.description"),
+						Component.translatable("advancements.immersiveweapons.ingots.title"),
+						Component.translatable("advancements.immersiveweapons.ingots.description"),
 						null, FrameType.TASK, false, false, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(
@@ -649,8 +649,8 @@ public class IWAdvancements implements Consumer<Consumer<Advancement>> {
 
 		Builder.advancement().parent(root)
 				.display(Items.GOLD_NUGGET,
-						new TranslatableComponent("advancements.immersiveweapons.nuggets.title"),
-						new TranslatableComponent("advancements.immersiveweapons.nuggets.description"),
+						Component.translatable("advancements.immersiveweapons.nuggets.title"),
+						Component.translatable("advancements.immersiveweapons.nuggets.description"),
 						null, FrameType.TASK, false, false, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(
@@ -661,8 +661,8 @@ public class IWAdvancements implements Consumer<Consumer<Advancement>> {
 		// Copper advancements
 		Advancement copperIngot = Builder.advancement().parent(ingots)
 				.display(Items.COPPER_INGOT,
-						new TranslatableComponent("advancements.immersiveweapons.copper_ingot.title"),
-						new TranslatableComponent("advancements.immersiveweapons.copper_ingot.description"),
+						Component.translatable("advancements.immersiveweapons.copper_ingot.title"),
+						Component.translatable("advancements.immersiveweapons.copper_ingot.description"),
 						null, FrameType.TASK, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(Items.COPPER_INGOT))
@@ -670,8 +670,8 @@ public class IWAdvancements implements Consumer<Consumer<Advancement>> {
 
 		Builder.advancement().parent(copperIngot)
 				.display(DeferredRegistryHandler.COPPER_SWORD.get(),
-						new TranslatableComponent("advancements.immersiveweapons.copper_sword.title"),
-						new TranslatableComponent("advancements.immersiveweapons.copper_sword.description"),
+						Component.translatable("advancements.immersiveweapons.copper_sword.title"),
+						Component.translatable("advancements.immersiveweapons.copper_sword.description"),
 						null, FrameType.TASK, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(DeferredRegistryHandler.COPPER_SWORD.get()))
@@ -679,8 +679,8 @@ public class IWAdvancements implements Consumer<Consumer<Advancement>> {
 
 		Builder.advancement().parent(copperIngot)
 				.display(DeferredRegistryHandler.COPPER_PICKAXE.get(),
-						new TranslatableComponent("advancements.immersiveweapons.copper_pickaxe.title"),
-						new TranslatableComponent("advancements.immersiveweapons.copper_pickaxe.description"),
+						Component.translatable("advancements.immersiveweapons.copper_pickaxe.title"),
+						Component.translatable("advancements.immersiveweapons.copper_pickaxe.description"),
 						null, FrameType.TASK, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(DeferredRegistryHandler.COPPER_PICKAXE.get()))
@@ -688,8 +688,8 @@ public class IWAdvancements implements Consumer<Consumer<Advancement>> {
 
 		Builder.advancement().parent(copperIngot)
 				.display(DeferredRegistryHandler.COPPER_AXE.get(),
-						new TranslatableComponent("advancements.immersiveweapons.copper_axe.title"),
-						new TranslatableComponent("advancements.immersiveweapons.copper_axe.description"),
+						Component.translatable("advancements.immersiveweapons.copper_axe.title"),
+						Component.translatable("advancements.immersiveweapons.copper_axe.description"),
 						null, FrameType.GOAL, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(DeferredRegistryHandler.COPPER_AXE.get()))
@@ -697,8 +697,8 @@ public class IWAdvancements implements Consumer<Consumer<Advancement>> {
 
 		Builder.advancement().parent(copperIngot)
 				.display(DeferredRegistryHandler.COPPER_SHOVEL.get(),
-						new TranslatableComponent("advancements.immersiveweapons.copper_shovel.title"),
-						new TranslatableComponent("advancements.immersiveweapons.copper_shovel.description"),
+						Component.translatable("advancements.immersiveweapons.copper_shovel.title"),
+						Component.translatable("advancements.immersiveweapons.copper_shovel.description"),
 						null, FrameType.GOAL, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(DeferredRegistryHandler.COPPER_SHOVEL.get()))
@@ -706,8 +706,8 @@ public class IWAdvancements implements Consumer<Consumer<Advancement>> {
 
 		Builder.advancement().parent(copperIngot)
 				.display(DeferredRegistryHandler.COPPER_HOE.get(),
-						new TranslatableComponent("advancements.immersiveweapons.copper_hoe.title"),
-						new TranslatableComponent("advancements.immersiveweapons.copper_hoe.description"),
+						Component.translatable("advancements.immersiveweapons.copper_hoe.title"),
+						Component.translatable("advancements.immersiveweapons.copper_hoe.description"),
 						null, FrameType.GOAL, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(DeferredRegistryHandler.COPPER_HOE.get()))
@@ -715,12 +715,12 @@ public class IWAdvancements implements Consumer<Consumer<Advancement>> {
 
 		Builder.advancement().parent(copperIngot)
 				.display(Items.COPPER_BLOCK,
-						new TranslatableComponent("advancements.immersiveweapons.copper_tools.title"),
-						new TranslatableComponent("advancements.immersiveweapons.copper_tools.description"),
+						Component.translatable("advancements.immersiveweapons.copper_tools.title"),
+						Component.translatable("advancements.immersiveweapons.copper_tools.description"),
 						null, FrameType.CHALLENGE, true, true, false)
 				.addCriterion("have_advancements",
-						LocationTrigger.TriggerInstance.located(
-								EntityPredicate.Builder.entity().player(
+						PlayerTrigger.TriggerInstance.located(
+								EntityPredicate.Builder.entity().subPredicate(
 										PlayerPredicate.Builder.player().checkAdvancementDone(
 												new ResourceLocation(ImmersiveWeapons.MOD_ID, "copper_sword"), true
 										).checkAdvancementDone(
@@ -741,8 +741,8 @@ public class IWAdvancements implements Consumer<Consumer<Advancement>> {
 		// Cobalt advancements
 		Advancement cobaltIngot = Builder.advancement().parent(ingots)
 				.display(DeferredRegistryHandler.COBALT_INGOT.get(),
-						new TranslatableComponent("advancements.immersiveweapons.cobalt_ingot.title"),
-						new TranslatableComponent("advancements.immersiveweapons.cobalt_ingot.description"),
+						Component.translatable("advancements.immersiveweapons.cobalt_ingot.title"),
+						Component.translatable("advancements.immersiveweapons.cobalt_ingot.description"),
 						null, FrameType.TASK, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(DeferredRegistryHandler.COBALT_INGOT.get()))
@@ -750,8 +750,8 @@ public class IWAdvancements implements Consumer<Consumer<Advancement>> {
 
 		Builder.advancement().parent(cobaltIngot)
 				.display(DeferredRegistryHandler.COBALT_SWORD.get(),
-						new TranslatableComponent("advancements.immersiveweapons.cobalt_sword.title"),
-						new TranslatableComponent("advancements.immersiveweapons.cobalt_sword.description"),
+						Component.translatable("advancements.immersiveweapons.cobalt_sword.title"),
+						Component.translatable("advancements.immersiveweapons.cobalt_sword.description"),
 						null, FrameType.TASK, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(DeferredRegistryHandler.COBALT_SWORD.get()))
@@ -759,8 +759,8 @@ public class IWAdvancements implements Consumer<Consumer<Advancement>> {
 
 		Builder.advancement().parent(cobaltIngot)
 				.display(DeferredRegistryHandler.COBALT_PICKAXE.get(),
-						new TranslatableComponent("advancements.immersiveweapons.cobalt_pickaxe.title"),
-						new TranslatableComponent("advancements.immersiveweapons.cobalt_pickaxe.description"),
+						Component.translatable("advancements.immersiveweapons.cobalt_pickaxe.title"),
+						Component.translatable("advancements.immersiveweapons.cobalt_pickaxe.description"),
 						null, FrameType.TASK, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(DeferredRegistryHandler.COBALT_PICKAXE.get()))
@@ -768,8 +768,8 @@ public class IWAdvancements implements Consumer<Consumer<Advancement>> {
 
 		Builder.advancement().parent(cobaltIngot)
 				.display(DeferredRegistryHandler.COBALT_AXE.get(),
-						new TranslatableComponent("advancements.immersiveweapons.cobalt_axe.title"),
-						new TranslatableComponent("advancements.immersiveweapons.cobalt_axe.description"),
+						Component.translatable("advancements.immersiveweapons.cobalt_axe.title"),
+						Component.translatable("advancements.immersiveweapons.cobalt_axe.description"),
 						null, FrameType.GOAL, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(DeferredRegistryHandler.COBALT_AXE.get()))
@@ -777,8 +777,8 @@ public class IWAdvancements implements Consumer<Consumer<Advancement>> {
 
 		Builder.advancement().parent(cobaltIngot)
 				.display(DeferredRegistryHandler.COBALT_SHOVEL.get(),
-						new TranslatableComponent("advancements.immersiveweapons.cobalt_shovel.title"),
-						new TranslatableComponent("advancements.immersiveweapons.cobalt_shovel.description"),
+						Component.translatable("advancements.immersiveweapons.cobalt_shovel.title"),
+						Component.translatable("advancements.immersiveweapons.cobalt_shovel.description"),
 						null, FrameType.GOAL, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(DeferredRegistryHandler.COBALT_SHOVEL.get()))
@@ -786,8 +786,8 @@ public class IWAdvancements implements Consumer<Consumer<Advancement>> {
 
 		Builder.advancement().parent(cobaltIngot)
 				.display(DeferredRegistryHandler.COBALT_HOE.get(),
-						new TranslatableComponent("advancements.immersiveweapons.cobalt_hoe.title"),
-						new TranslatableComponent("advancements.immersiveweapons.cobalt_hoe.description"),
+						Component.translatable("advancements.immersiveweapons.cobalt_hoe.title"),
+						Component.translatable("advancements.immersiveweapons.cobalt_hoe.description"),
 						null, FrameType.GOAL, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(DeferredRegistryHandler.COBALT_HOE.get()))
@@ -795,12 +795,12 @@ public class IWAdvancements implements Consumer<Consumer<Advancement>> {
 
 		Builder.advancement().parent(cobaltIngot)
 				.display(DeferredRegistryHandler.COBALT_BLOCK_ITEM.get(),
-						new TranslatableComponent("advancements.immersiveweapons.cobalt_tools.title"),
-						new TranslatableComponent("advancements.immersiveweapons.cobalt_tools.description"),
+						Component.translatable("advancements.immersiveweapons.cobalt_tools.title"),
+						Component.translatable("advancements.immersiveweapons.cobalt_tools.description"),
 						null, FrameType.CHALLENGE, true, true, false)
 				.addCriterion("have_advancements",
-						LocationTrigger.TriggerInstance.located(
-								EntityPredicate.Builder.entity().player(
+						PlayerTrigger.TriggerInstance.located(
+								EntityPredicate.Builder.entity().subPredicate(
 										PlayerPredicate.Builder.player().checkAdvancementDone(
 												new ResourceLocation(ImmersiveWeapons.MOD_ID, "cobalt_sword"), true
 										).checkAdvancementDone(
@@ -821,8 +821,8 @@ public class IWAdvancements implements Consumer<Consumer<Advancement>> {
 		// Other ingots, without families
 		Builder.advancement().parent(ingots)
 				.display(Items.GOLD_INGOT,
-						new TranslatableComponent("advancements.immersiveweapons.gold_ingot.title"),
-						new TranslatableComponent("advancements.immersiveweapons.gold_ingot.description"),
+						Component.translatable("advancements.immersiveweapons.gold_ingot.title"),
+						Component.translatable("advancements.immersiveweapons.gold_ingot.description"),
 						null, FrameType.TASK, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(Items.GOLD_INGOT))
@@ -830,8 +830,8 @@ public class IWAdvancements implements Consumer<Consumer<Advancement>> {
 
 		Builder.advancement().parent(ingots)
 				.display(Items.NETHERITE_INGOT,
-						new TranslatableComponent("advancements.immersiveweapons.netherite_ingot.title"),
-						new TranslatableComponent("advancements.immersiveweapons.netherite_ingot.description"),
+						Component.translatable("advancements.immersiveweapons.netherite_ingot.title"),
+						Component.translatable("advancements.immersiveweapons.netherite_ingot.description"),
 						null, FrameType.TASK, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(Items.NETHERITE_INGOT))
@@ -840,8 +840,8 @@ public class IWAdvancements implements Consumer<Consumer<Advancement>> {
 		// Entity discovery advancements
 		Advancement entity_discovery = Builder.advancement().parent(root)
 				.display(Items.CREEPER_HEAD,
-						new TranslatableComponent("advancements.immersiveweapons.entity_discovery.title"),
-						new TranslatableComponent("advancements.immersiveweapons.entity_discovery.description"),
+						Component.translatable("advancements.immersiveweapons.entity_discovery.title"),
+						Component.translatable("advancements.immersiveweapons.entity_discovery.description"),
 						null, FrameType.GOAL, true, true, false)
 				.addCriterion("discover_minuteman", new EntityDiscoveredTrigger.TriggerInstance(
 						Composite.ANY,
@@ -872,8 +872,8 @@ public class IWAdvancements implements Consumer<Consumer<Advancement>> {
 
 		Builder.advancement().parent(entity_discovery)
 				.display(DeferredRegistryHandler.MINUTEMAN_HEAD_ITEM.get(),
-						new TranslatableComponent("advancements.immersiveweapons.discover_minuteman.title"),
-						new TranslatableComponent("advancements.immersiveweapons.discover_minuteman.description"),
+						Component.translatable("advancements.immersiveweapons.discover_minuteman.title"),
+						Component.translatable("advancements.immersiveweapons.discover_minuteman.description"),
 						null, FrameType.TASK, true, true, false)
 				.addCriterion("discover", new EntityDiscoveredTrigger.TriggerInstance(
 						Composite.ANY,
@@ -883,8 +883,8 @@ public class IWAdvancements implements Consumer<Consumer<Advancement>> {
 
 		Builder.advancement().parent(entity_discovery)
 				.display(DeferredRegistryHandler.FIELD_MEDIC_HEAD_ITEM.get(),
-						new TranslatableComponent("advancements.immersiveweapons.discover_field_medic.title"),
-						new TranslatableComponent("advancements.immersiveweapons.discover_field_medic.description"),
+						Component.translatable("advancements.immersiveweapons.discover_field_medic.title"),
+						Component.translatable("advancements.immersiveweapons.discover_field_medic.description"),
 						null, FrameType.TASK, true, true, false)
 				.addCriterion("discover", new EntityDiscoveredTrigger.TriggerInstance(
 						Composite.ANY,
@@ -894,8 +894,8 @@ public class IWAdvancements implements Consumer<Consumer<Advancement>> {
 
 		Builder.advancement().parent(entity_discovery)
 				.display(DeferredRegistryHandler.DYING_SOLDIER_HEAD_ITEM.get(),
-						new TranslatableComponent("advancements.immersiveweapons.discover_dying_soldier.title"),
-						new TranslatableComponent("advancements.immersiveweapons.discover_dying_soldier.description"),
+						Component.translatable("advancements.immersiveweapons.discover_dying_soldier.title"),
+						Component.translatable("advancements.immersiveweapons.discover_dying_soldier.description"),
 						null, FrameType.TASK, true, true, false)
 				.addCriterion("discover", new EntityDiscoveredTrigger.TriggerInstance(
 						Composite.ANY,
@@ -905,8 +905,8 @@ public class IWAdvancements implements Consumer<Consumer<Advancement>> {
 
 		Builder.advancement().parent(entity_discovery)
 				.display(DeferredRegistryHandler.WANDERING_WARRIOR_HEAD_ITEM.get(),
-						new TranslatableComponent("advancements.immersiveweapons.discover_wandering_warrior.title"),
-						new TranslatableComponent("advancements.immersiveweapons.discover_wandering_warrior.description"),
+						Component.translatable("advancements.immersiveweapons.discover_wandering_warrior.title"),
+						Component.translatable("advancements.immersiveweapons.discover_wandering_warrior.description"),
 						null, FrameType.TASK, true, true, false)
 				.addCriterion("discover", new EntityDiscoveredTrigger.TriggerInstance(
 						Composite.ANY,
@@ -916,8 +916,8 @@ public class IWAdvancements implements Consumer<Consumer<Advancement>> {
 
 		Builder.advancement().parent(entity_discovery)
 				.display(DeferredRegistryHandler.HANS_HEAD_ITEM.get(),
-						new TranslatableComponent("advancements.immersiveweapons.discover_hans.title"),
-						new TranslatableComponent("advancements.immersiveweapons.discover_hans.description"),
+						Component.translatable("advancements.immersiveweapons.discover_hans.title"),
+						Component.translatable("advancements.immersiveweapons.discover_hans.description"),
 						null, FrameType.TASK, true, true, false)
 				.addCriterion("discover", new EntityDiscoveredTrigger.TriggerInstance(
 						Composite.ANY,
@@ -927,8 +927,8 @@ public class IWAdvancements implements Consumer<Consumer<Advancement>> {
 
 		Builder.advancement().parent(entity_discovery)
 				.display(DeferredRegistryHandler.SULFUR.get(),
-						new TranslatableComponent("advancements.immersiveweapons.discover_lava_revenant.title"),
-						new TranslatableComponent("advancements.immersiveweapons.discover_lava_revenant.description"),
+						Component.translatable("advancements.immersiveweapons.discover_lava_revenant.title"),
+						Component.translatable("advancements.immersiveweapons.discover_lava_revenant.description"),
 						null, FrameType.TASK, true, true, false)
 				.addCriterion("discover", new EntityDiscoveredTrigger.TriggerInstance(
 						Composite.ANY,
@@ -938,8 +938,8 @@ public class IWAdvancements implements Consumer<Consumer<Advancement>> {
 
 		Builder.advancement().parent(entity_discovery)
 				.display(Items.SPIDER_EYE,
-						new TranslatableComponent("advancements.immersiveweapons.discover_rock_spider.title"),
-						new TranslatableComponent("advancements.immersiveweapons.discover_rock_spider.description"),
+						Component.translatable("advancements.immersiveweapons.discover_rock_spider.title"),
+						Component.translatable("advancements.immersiveweapons.discover_rock_spider.description"),
 						null, FrameType.TASK, true, true, false)
 				.addCriterion("discover", new EntityDiscoveredTrigger.TriggerInstance(
 						Composite.ANY,
@@ -949,8 +949,8 @@ public class IWAdvancements implements Consumer<Consumer<Advancement>> {
 
 		Advancement celestial_tower_discovery = Builder.advancement().parent(entity_discovery)
 				.display(DeferredRegistryHandler.CELESTIAL_FRAGMENT.get(),
-						new TranslatableComponent("advancements.immersiveweapons.discover_celestial_tower.title"),
-						new TranslatableComponent("advancements.immersiveweapons.discover_celestial_tower.description"),
+						Component.translatable("advancements.immersiveweapons.discover_celestial_tower.title"),
+						Component.translatable("advancements.immersiveweapons.discover_celestial_tower.description"),
 						null, FrameType.TASK, true, true, false)
 				.addCriterion("discover", new EntityDiscoveredTrigger.TriggerInstance(
 						Composite.ANY,
@@ -960,8 +960,8 @@ public class IWAdvancements implements Consumer<Consumer<Advancement>> {
 
 		Builder.advancement().parent(celestial_tower_discovery)
 				.display(DeferredRegistryHandler.CELESTIAL_LANTERN_ITEM.get(),
-						new TranslatableComponent("advancements.immersiveweapons.tiltros.celestial_lantern.title"),
-						new TranslatableComponent("advancements.immersiveweapons.tiltros.celestial_lantern.description"),
+						Component.translatable("advancements.immersiveweapons.tiltros.celestial_lantern.title"),
+						Component.translatable("advancements.immersiveweapons.tiltros.celestial_lantern.description"),
 						null, FrameType.GOAL, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(DeferredRegistryHandler.CELESTIAL_LANTERN_ITEM.get()))
@@ -971,8 +971,8 @@ public class IWAdvancements implements Consumer<Consumer<Advancement>> {
 		// Other advancements
 		Builder.advancement().parent(root)
 				.display(DeferredRegistryHandler.USED_SYRINGE.get(),
-						new TranslatableComponent("advancements.immersiveweapons.used_syringe.title"),
-						new TranslatableComponent("advancements.immersiveweapons.used_syringe.description"),
+						Component.translatable("advancements.immersiveweapons.used_syringe.title"),
+						Component.translatable("advancements.immersiveweapons.used_syringe.description"),
 						null, FrameType.CHALLENGE, true, true, true)
 				.addCriterion("hold",
 						KilledTrigger.TriggerInstance.entityKilledPlayer(EntityPredicate.ANY,
@@ -987,8 +987,8 @@ public class IWAdvancements implements Consumer<Consumer<Advancement>> {
 
 		Builder.advancement().parent(root)
 				.display(DeferredRegistryHandler.BEAR_TRAP.get(),
-						new TranslatableComponent("advancements.immersiveweapons.traps.title"),
-						new TranslatableComponent("advancements.immersiveweapons.traps.description"),
+						Component.translatable("advancements.immersiveweapons.traps.title"),
+						Component.translatable("advancements.immersiveweapons.traps.description"),
 						null, FrameType.GOAL, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(DeferredRegistryHandler.BEAR_TRAP.get()))
@@ -1011,8 +1011,8 @@ public class IWAdvancements implements Consumer<Consumer<Advancement>> {
 
 		Builder.advancement().parent(root)
 				.display(Items.OAK_PLANKS,
-						new TranslatableComponent("advancements.immersiveweapons.planks.title"),
-						new TranslatableComponent("advancements.immersiveweapons.planks.description"),
+						Component.translatable("advancements.immersiveweapons.planks.title"),
+						Component.translatable("advancements.immersiveweapons.planks.description"),
 						null, FrameType.TASK, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemPredicate.Builder.item()
@@ -1021,8 +1021,8 @@ public class IWAdvancements implements Consumer<Consumer<Advancement>> {
 
 		Builder.advancement().parent(root)
 				.display(DeferredRegistryHandler.MUD_ITEM.get(),
-						new TranslatableComponent("advancements.immersiveweapons.mud.title"),
-						new TranslatableComponent("advancements.immersiveweapons.mud.description"),
+						Component.translatable("advancements.immersiveweapons.mud.title"),
+						Component.translatable("advancements.immersiveweapons.mud.description"),
 						null, FrameType.GOAL, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemPredicate.Builder.item()
@@ -1031,8 +1031,8 @@ public class IWAdvancements implements Consumer<Consumer<Advancement>> {
 
 		Builder.advancement().parent(root)
 				.display(Items.BAMBOO,
-						new TranslatableComponent("advancements.immersiveweapons.bamboo.title"),
-						new TranslatableComponent("advancements.immersiveweapons.bamboo.description"),
+						Component.translatable("advancements.immersiveweapons.bamboo.title"),
+						Component.translatable("advancements.immersiveweapons.bamboo.description"),
 						null, FrameType.TASK, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemPredicate.Builder.item()
@@ -1041,8 +1041,8 @@ public class IWAdvancements implements Consumer<Consumer<Advancement>> {
 
 		Builder.advancement().parent(root)
 				.display(DeferredRegistryHandler.CLOUD_MARBLE_ITEM.get(),
-						new TranslatableComponent("advancements.immersiveweapons.cloud_marble.title"),
-						new TranslatableComponent("advancements.immersiveweapons.cloud_marble.description"),
+						Component.translatable("advancements.immersiveweapons.cloud_marble.title"),
+						Component.translatable("advancements.immersiveweapons.cloud_marble.description"),
 						null, FrameType.GOAL, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemPredicate.Builder.item()
@@ -1051,8 +1051,8 @@ public class IWAdvancements implements Consumer<Consumer<Advancement>> {
 
 		Builder.advancement().parent(root)
 				.display(DeferredRegistryHandler.BIOHAZARD_BOX_ITEM.get(),
-						new TranslatableComponent("advancements.immersiveweapons.biohazard_box.title"),
-						new TranslatableComponent("advancements.immersiveweapons.biohazard_box.description"),
+						Component.translatable("advancements.immersiveweapons.biohazard_box.title"),
+						Component.translatable("advancements.immersiveweapons.biohazard_box.description"),
 						null, FrameType.GOAL, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemPredicate.Builder.item()
@@ -1061,30 +1061,30 @@ public class IWAdvancements implements Consumer<Consumer<Advancement>> {
 
 		Builder.advancement().parent(root)
 				.display(DeferredRegistryHandler.CLOUD_ITEM.get(),
-						new TranslatableComponent("advancements.immersiveweapons.cloud.title"),
-						new TranslatableComponent("advancements.immersiveweapons.cloud.description"),
+						Component.translatable("advancements.immersiveweapons.cloud.title"),
+						Component.translatable("advancements.immersiveweapons.cloud.description"),
 						null, FrameType.CHALLENGE, true, true, false)
 				.addCriterion("hold",
-						LocationTrigger.TriggerInstance.walkOnBlockWithEquipment(DeferredRegistryHandler.CLOUD.get(),
+						PlayerTrigger.TriggerInstance.walkOnBlockWithEquipment(DeferredRegistryHandler.CLOUD.get(),
 								Items.AIR))
 				.save(consumer, "immersiveweapons:cloud");
 
 		// Battlefield advancements
 		Advancement discover_battlefield = Builder.advancement().parent(root)
 				.display(Blocks.SKELETON_SKULL,
-						new TranslatableComponent("advancements.immersiveweapons.battlefield.title"),
-						new TranslatableComponent("advancements.immersiveweapons.battlefield.description"),
+						Component.translatable("advancements.immersiveweapons.battlefield.title"),
+						Component.translatable("advancements.immersiveweapons.battlefield.description"),
 						null, FrameType.TASK, true, true, false)
 				.addCriterion("visit",
-						LocationTrigger.TriggerInstance.located(
+						PlayerTrigger.TriggerInstance.located(
 								LocationPredicate.inBiome(BiomesAndDimensions.BATTLEFIELD)))
 				.rewards(AdvancementRewards.Builder.experience(50))
 				.save(consumer, "immersiveweapons:battlefield");
 
 		Builder.advancement().parent(discover_battlefield)
 				.display(DeferredRegistryHandler.MINUTEMAN_STATUE_ITEM.get(),
-						new TranslatableComponent("advancements.immersiveweapons.minuteman_statue.title"),
-						new TranslatableComponent("advancements.immersiveweapons.minuteman_statue.description"),
+						Component.translatable("advancements.immersiveweapons.minuteman_statue.title"),
+						Component.translatable("advancements.immersiveweapons.minuteman_statue.description"),
 						null, FrameType.GOAL, true, true, false)
 				.addCriterion("hold", InventoryChangeTrigger.TriggerInstance.hasItems(
 						DeferredRegistryHandler.MINUTEMAN_STATUE_ITEM.get()))
@@ -1092,8 +1092,8 @@ public class IWAdvancements implements Consumer<Consumer<Advancement>> {
 
 		Builder.advancement().parent(discover_battlefield)
 				.display(DeferredRegistryHandler.MEDIC_STATUE_ITEM.get(),
-						new TranslatableComponent("advancements.immersiveweapons.medic_statue.title"),
-						new TranslatableComponent("advancements.immersiveweapons.medic_statue.description"),
+						Component.translatable("advancements.immersiveweapons.medic_statue.title"),
+						Component.translatable("advancements.immersiveweapons.medic_statue.description"),
 						null, FrameType.GOAL, true, true, false)
 				.addCriterion("hold", InventoryChangeTrigger.TriggerInstance.hasItems(
 						DeferredRegistryHandler.MEDIC_STATUE_ITEM.get()))
@@ -1102,8 +1102,8 @@ public class IWAdvancements implements Consumer<Consumer<Advancement>> {
 		// Tiltros advancements
 		Advancement warrior_statue = Builder.advancement().parent(root)
 				.display(DeferredRegistryHandler.WARRIOR_STATUE_HEAD.get(),
-						new TranslatableComponent("advancements.immersiveweapons.tiltros.warrior_statue.title"),
-						new TranslatableComponent("advancements.immersiveweapons.tiltros.warrior_statue.description"),
+						Component.translatable("advancements.immersiveweapons.tiltros.warrior_statue.title"),
+						Component.translatable("advancements.immersiveweapons.tiltros.warrior_statue.description"),
 						null, FrameType.TASK, true, true, true)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(DeferredRegistryHandler.WARRIOR_STATUE_BASE.get(),
@@ -1114,8 +1114,8 @@ public class IWAdvancements implements Consumer<Consumer<Advancement>> {
 
 		Advancement azul_keystone = Builder.advancement().parent(warrior_statue)
 				.display(DeferredRegistryHandler.AZUL_KEYSTONE_FRAGMENT.get(),
-						new TranslatableComponent("advancements.immersiveweapons.tiltros.azul_keystone.title"),
-						new TranslatableComponent("advancements.immersiveweapons.tiltros.azul_keystone.description"),
+						Component.translatable("advancements.immersiveweapons.tiltros.azul_keystone.title"),
+						Component.translatable("advancements.immersiveweapons.tiltros.azul_keystone.description"),
 						null, FrameType.TASK, true, true, true)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(DeferredRegistryHandler.AZUL_KEYSTONE.get()))
@@ -1123,8 +1123,8 @@ public class IWAdvancements implements Consumer<Consumer<Advancement>> {
 
 		Advancement activated_warrior_statue = Builder.advancement().parent(azul_keystone)
 				.display(DeferredRegistryHandler.AZUL_KEYSTONE.get(),
-						new TranslatableComponent("advancements.immersiveweapons.tiltros.activated_warrior_statue.title"),
-						new TranslatableComponent("advancements.immersiveweapons.tiltros.activated_warrior_statue.description"),
+						Component.translatable("advancements.immersiveweapons.tiltros.activated_warrior_statue.title"),
+						Component.translatable("advancements.immersiveweapons.tiltros.activated_warrior_statue.description"),
 						null, FrameType.TASK, true, true, true)
 				.addCriterion("activate",
 						new WarriorStatueActivatedTrigger.TriggerInstance(Composite.ANY))
@@ -1132,11 +1132,11 @@ public class IWAdvancements implements Consumer<Consumer<Advancement>> {
 
 		Builder.advancement().parent(activated_warrior_statue)
 				.display(DeferredRegistryHandler.AZUL_STAINED_ORCHID_ITEM.get(),
-						new TranslatableComponent("advancements.immersiveweapons.tiltros.biome.title"),
-						new TranslatableComponent("advancements.immersiveweapons.tiltros.biome.description"),
+						Component.translatable("advancements.immersiveweapons.tiltros.biome.title"),
+						Component.translatable("advancements.immersiveweapons.tiltros.biome.description"),
 						null, FrameType.GOAL, true, true, false)
 				.addCriterion("visit",
-						LocationTrigger.TriggerInstance.located(
+						PlayerTrigger.TriggerInstance.located(
 								LocationPredicate.inBiome(BiomesAndDimensions.B_TILTROS)))
 				.rewards(AdvancementRewards.Builder.experience(50))
 				.save(consumer, "immersiveweapons:tiltros");

@@ -12,8 +12,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
-import net.minecraft.util.Mth;
-import net.minecraft.util.TimeUtil;
+import net.minecraft.util.*;
 import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.DifficultyInstance;
@@ -168,8 +167,8 @@ public abstract class AbstractMinutemanEntity extends PathfinderMob implements R
 	 * @param difficulty the <code>DifficultyInstance</code> of the world
 	 */
 	@Override
-	protected void populateDefaultEquipmentSlots(@NotNull DifficultyInstance difficulty) {
-		super.populateDefaultEquipmentSlots(difficulty);
+	protected void populateDefaultEquipmentSlots(RandomSource randomSource, @NotNull DifficultyInstance difficulty) {
+		super.populateDefaultEquipmentSlots(randomSource, difficulty);
 		setItemSlot(EquipmentSlot.MAINHAND, new ItemStack(DeferredRegistryHandler.BLUNDERBUSS.get()));
 	}
 
@@ -190,8 +189,8 @@ public abstract class AbstractMinutemanEntity extends PathfinderMob implements R
 
 		spawnDataIn = super.finalizeSpawn(level, difficultyIn, reason, spawnDataIn, dataTag);
 
-		populateDefaultEquipmentSlots(difficultyIn);
-		populateDefaultEquipmentEnchantments(difficultyIn);
+		populateDefaultEquipmentSlots(random, difficultyIn);
+		populateDefaultEquipmentEnchantments(random, difficultyIn);
 		setCombatTask();
 		setCanPickUpLoot(random.nextFloat() < 0.55F * difficultyIn.getSpecialMultiplier());
 
@@ -229,7 +228,7 @@ public abstract class AbstractMinutemanEntity extends PathfinderMob implements R
 				aiShotgunAttack.setAttackCooldown(cooldown);
 				goalSelector.addGoal(16, aiShotgunAttack);
 			} else {
-				populateDefaultEquipmentSlots(level.getCurrentDifficultyAt(blockPosition()));
+				populateDefaultEquipmentSlots(random, level.getCurrentDifficultyAt(blockPosition()));
 				goalSelector.addGoal(12, aiAttackOnCollide);
 			}
 		}

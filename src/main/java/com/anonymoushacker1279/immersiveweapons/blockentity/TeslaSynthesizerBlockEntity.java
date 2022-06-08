@@ -3,7 +3,6 @@ package com.anonymoushacker1279.immersiveweapons.blockentity;
 import com.anonymoushacker1279.immersiveweapons.container.TeslaSynthesizerContainer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.level.block.state.BlockState;
@@ -25,7 +24,7 @@ public class TeslaSynthesizerBlockEntity extends AbstractTeslaSynthesizerBlockEn
 	 */
 	@Override
 	protected @NotNull Component getDefaultName() {
-		return new TranslatableComponent("container.immersiveweapons.tesla_synthesizer");
+		return Component.translatable("container.immersiveweapons.tesla_synthesizer");
 	}
 
 	/**

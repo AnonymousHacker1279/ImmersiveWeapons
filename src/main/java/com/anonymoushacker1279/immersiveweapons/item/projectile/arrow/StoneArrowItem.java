@@ -1,6 +1,6 @@
 package com.anonymoushacker1279.immersiveweapons.item.projectile.arrow;
 
-import com.anonymoushacker1279.immersiveweapons.entity.projectile.CustomArrowEntity.StoneArrowEntity;
+import com.anonymoushacker1279.immersiveweapons.entity.projectile.ArrowEntities.StoneArrowEntity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -29,7 +29,7 @@ public class StoneArrowItem extends AbstractArrowItem {
 	 */
 	@Override
 	public @NotNull StoneArrowEntity createArrow(@NotNull Level worldIn, @NotNull ItemStack stack, @NotNull LivingEntity shooter) {
-		StoneArrowEntity arrowEntity = new StoneArrowEntity(shooter, worldIn, ref.get().asItem());
+		StoneArrowEntity arrowEntity = new StoneArrowEntity(shooter, worldIn);
 		arrowEntity.setBaseDamage(damage);
 		return arrowEntity;
 	}

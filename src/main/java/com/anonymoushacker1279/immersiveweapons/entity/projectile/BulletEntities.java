@@ -8,7 +8,6 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.projectile.ItemSupplier;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
@@ -39,13 +38,12 @@ public class BulletEntities {
 		/**
 		 * Constructor for WoodBulletEntity.
 		 *
-		 * @param shooter         the <code>LivingEntity</code> shooting the entity
-		 * @param world           the <code>World</code> the entity is in
-		 * @param referenceItemIn the reference item
+		 * @param shooter the <code>LivingEntity</code> shooting the entity
+		 * @param world   the <code>World</code> the entity is in
 		 */
-		public WoodenMusketBallEntity(LivingEntity shooter, Level world, Item referenceItemIn) {
+		public WoodenMusketBallEntity(LivingEntity shooter, Level world) {
 			super(DeferredRegistryHandler.WOODEN_MUSKET_BALL_ENTITY.get(), shooter, world);
-			referenceItem = referenceItemIn;
+			referenceItem = DeferredRegistryHandler.WOODEN_MUSKET_BALL.get();
 		}
 
 		/**
@@ -91,13 +89,12 @@ public class BulletEntities {
 		/**
 		 * Constructor for StoneBulletEntity.
 		 *
-		 * @param shooter         the <code>LivingEntity</code> shooting the entity
-		 * @param world           the <code>World</code> the entity is in
-		 * @param referenceItemIn the reference item
+		 * @param shooter the <code>LivingEntity</code> shooting the entity
+		 * @param world   the <code>World</code> the entity is in
 		 */
-		public StoneMusketBallEntity(LivingEntity shooter, Level world, Item referenceItemIn) {
+		public StoneMusketBallEntity(LivingEntity shooter, Level world) {
 			super(DeferredRegistryHandler.STONE_MUSKET_BALL_ENTITY.get(), shooter, world);
-			referenceItem = referenceItemIn;
+			referenceItem = DeferredRegistryHandler.STONE_MUSKET_BALL.get();
 		}
 
 		/**
@@ -143,13 +140,12 @@ public class BulletEntities {
 		/**
 		 * Constructor for GoldBulletEntity.
 		 *
-		 * @param shooter         the <code>LivingEntity</code> shooting the entity
-		 * @param world           the <code>World</code> the entity is in
-		 * @param referenceItemIn the reference item
+		 * @param shooter the <code>LivingEntity</code> shooting the entity
+		 * @param world   the <code>World</code> the entity is in
 		 */
-		public GoldenMusketBallEntity(LivingEntity shooter, Level world, Item referenceItemIn) {
+		public GoldenMusketBallEntity(LivingEntity shooter, Level world) {
 			super(DeferredRegistryHandler.GOLDEN_MUSKET_BALL_ENTITY.get(), shooter, world);
-			referenceItem = referenceItemIn;
+			referenceItem = DeferredRegistryHandler.GOLDEN_MUSKET_BALL.get();
 		}
 
 		/**
@@ -196,13 +192,12 @@ public class BulletEntities {
 		/**
 		 * Constructor for CopperBulletEntity.
 		 *
-		 * @param shooter         the <code>LivingEntity</code> shooting the entity
-		 * @param world           the <code>World</code> the entity is in
-		 * @param referenceItemIn the reference item
+		 * @param shooter the <code>LivingEntity</code> shooting the entity
+		 * @param world   the <code>World</code> the entity is in
 		 */
-		public CopperMusketBallEntity(LivingEntity shooter, Level world, Item referenceItemIn) {
+		public CopperMusketBallEntity(LivingEntity shooter, Level world) {
 			super(DeferredRegistryHandler.COPPER_MUSKET_BALL_ENTITY.get(), shooter, world);
-			referenceItem = referenceItemIn;
+			referenceItem = DeferredRegistryHandler.COPPER_MUSKET_BALL.get();
 		}
 
 		/**
@@ -248,13 +243,12 @@ public class BulletEntities {
 		/**
 		 * Constructor for IronBulletEntity.
 		 *
-		 * @param shooter         the <code>LivingEntity</code> shooting the entity
-		 * @param world           the <code>World</code> the entity is in
-		 * @param referenceItemIn the reference item
+		 * @param shooter the <code>LivingEntity</code> shooting the entity
+		 * @param world   the <code>World</code> the entity is in
 		 */
-		public IronMusketBallEntity(LivingEntity shooter, Level world, Item referenceItemIn) {
+		public IronMusketBallEntity(LivingEntity shooter, Level world) {
 			super(DeferredRegistryHandler.IRON_MUSKET_BALL_ENTITY.get(), shooter, world);
-			referenceItem = referenceItemIn;
+			referenceItem = DeferredRegistryHandler.IRON_MUSKET_BALL.get();
 		}
 
 		/**
@@ -284,6 +278,7 @@ public class BulletEntities {
 	}
 
 	public static class CobaltMusketBallEntity extends BulletEntity {
+
 		/**
 		 * Constructor for CobaltBulletEntity.
 		 *
@@ -300,13 +295,12 @@ public class BulletEntities {
 		/**
 		 * Constructor for CobaltBulletEntity.
 		 *
-		 * @param shooter         the <code>LivingEntity</code> shooting the entity
-		 * @param world           the <code>World</code> the entity is in
-		 * @param referenceItemIn the reference item
+		 * @param shooter the <code>LivingEntity</code> shooting the entity
+		 * @param world   the <code>World</code> the entity is in
 		 */
-		public CobaltMusketBallEntity(LivingEntity shooter, Level world, Item referenceItemIn) {
+		public CobaltMusketBallEntity(LivingEntity shooter, Level world) {
 			super(DeferredRegistryHandler.COBALT_MUSKET_BALL_ENTITY.get(), shooter, world);
-			referenceItem = referenceItemIn;
+			referenceItem = DeferredRegistryHandler.COBALT_MUSKET_BALL.get();
 		}
 
 		/**
@@ -352,13 +346,12 @@ public class BulletEntities {
 		/**
 		 * Constructor for DiamondBulletEntity.
 		 *
-		 * @param shooter         the <code>LivingEntity</code> shooting the entity
-		 * @param world           the <code>World</code> the entity is in
-		 * @param referenceItemIn the reference item
+		 * @param shooter the <code>LivingEntity</code> shooting the entity
+		 * @param world   the <code>World</code> the entity is in
 		 */
-		public DiamondMusketBallEntity(LivingEntity shooter, Level world, Item referenceItemIn) {
+		public DiamondMusketBallEntity(LivingEntity shooter, Level world) {
 			super(DeferredRegistryHandler.DIAMOND_MUSKET_BALL_ENTITY.get(), shooter, world);
-			referenceItem = referenceItemIn;
+			referenceItem = DeferredRegistryHandler.DIAMOND_MUSKET_BALL.get();
 		}
 
 		/**
@@ -409,13 +402,12 @@ public class BulletEntities {
 		/**
 		 * Constructor for NetheriteBulletEntity.
 		 *
-		 * @param shooter         the <code>LivingEntity</code> shooting the entity
-		 * @param world           the <code>World</code> the entity is in
-		 * @param referenceItemIn the reference item
+		 * @param shooter the <code>LivingEntity</code> shooting the entity
+		 * @param world   the <code>World</code> the entity is in
 		 */
-		public NetheriteMusketBallEntity(LivingEntity shooter, Level world, Item referenceItemIn) {
+		public NetheriteMusketBallEntity(LivingEntity shooter, Level world) {
 			super(DeferredRegistryHandler.NETHERITE_MUSKET_BALL_ENTITY.get(), shooter, world);
-			referenceItem = referenceItemIn;
+			referenceItem = DeferredRegistryHandler.NETHERITE_MUSKET_BALL.get();
 		}
 
 		/**
@@ -475,13 +467,12 @@ public class BulletEntities {
 		/**
 		 * Constructor for FlareEntity.
 		 *
-		 * @param shooter         the <code>LivingEntity</code> shooting the entity
-		 * @param world           the <code>World</code> the entity is in
-		 * @param referenceItemIn the reference item
+		 * @param shooter the <code>LivingEntity</code> shooting the entity
+		 * @param world   the <code>World</code> the entity is in
 		 */
-		public FlareEntity(LivingEntity shooter, Level world, Item referenceItemIn) {
+		public FlareEntity(LivingEntity shooter, Level world) {
 			super(DeferredRegistryHandler.FLARE_ENTITY.get(), shooter, world);
-			referenceItem = referenceItemIn;
+			referenceItem = DeferredRegistryHandler.FLARE.get();
 		}
 
 		/**

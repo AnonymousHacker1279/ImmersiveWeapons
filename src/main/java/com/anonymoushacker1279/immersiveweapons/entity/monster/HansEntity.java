@@ -3,6 +3,7 @@ package com.anonymoushacker1279.immersiveweapons.entity.monster;
 import com.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
 import com.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
 import net.minecraft.sounds.SoundEvent;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.damagesource.DamageSource;
@@ -97,7 +98,7 @@ public class HansEntity extends AbstractWanderingWarriorEntity {
 	 * @param difficulty the <code>DifficultyInstance</code> of the world
 	 */
 	@Override
-	public void populateDefaultEquipmentSlots(@NotNull DifficultyInstance difficulty) {
+	public void populateDefaultEquipmentSlots(RandomSource random, @NotNull DifficultyInstance difficulty) {
 		setItemSlot(EquipmentSlot.HEAD, new ItemStack(Items.IRON_HELMET));
 		setItemInHand(InteractionHand.MAIN_HAND, new ItemStack(Items.IRON_SWORD));
 	}

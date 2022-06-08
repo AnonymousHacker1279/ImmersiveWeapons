@@ -14,6 +14,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.properties.*;
+import net.minecraftforge.registries.ForgeRegistries;
 
 import javax.annotation.Nullable;
 import java.util.*;
@@ -139,7 +140,7 @@ public class BlockModelGenerator {
 
 	private ResourceLocation getModelLocationForBlockstateIW(Block block) {
 		return new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/" +
-				Objects.requireNonNull(block.getRegistryName()).getPath());
+				Objects.requireNonNull(ForgeRegistries.BLOCKS.getKey(block)).getPath());
 	}
 
 	private void createRotatedPillarWithHorizontalVariant(Block pRotatedPillarBlock, TexturedModel.Provider pModelProvider,
@@ -196,12 +197,16 @@ public class BlockModelGenerator {
 
 	private void createDoor(Block pDoorBlock) {
 		TextureMapping door = TextureMapping.door(pDoorBlock);
-		ResourceLocation resourceLocation = ModelTemplates.DOOR_BOTTOM.create(pDoorBlock, door, modelOutput);
-		ResourceLocation resourceLocation1 = ModelTemplates.DOOR_BOTTOM_HINGE.create(pDoorBlock, door, modelOutput);
-		ResourceLocation resourceLocation2 = ModelTemplates.DOOR_TOP.create(pDoorBlock, door, modelOutput);
-		ResourceLocation resourceLocation3 = ModelTemplates.DOOR_TOP_HINGE.create(pDoorBlock, door, modelOutput);
+		ResourceLocation bottomLeft = ModelTemplates.DOOR_BOTTOM_LEFT.create(pDoorBlock, door, modelOutput);
+		ResourceLocation bottomLeftOpen = ModelTemplates.DOOR_BOTTOM_LEFT_OPEN.create(pDoorBlock, door, modelOutput);
+		ResourceLocation bottomRight = ModelTemplates.DOOR_BOTTOM_RIGHT.create(pDoorBlock, door, modelOutput);
+		ResourceLocation bottomRightOpen = ModelTemplates.DOOR_BOTTOM_RIGHT_OPEN.create(pDoorBlock, door, modelOutput);
+		ResourceLocation topLeft = ModelTemplates.DOOR_TOP_LEFT.create(pDoorBlock, door, modelOutput);
+		ResourceLocation topLeftOpen = ModelTemplates.DOOR_TOP_LEFT_OPEN.create(pDoorBlock, door, modelOutput);
+		ResourceLocation topRight = ModelTemplates.DOOR_TOP_RIGHT.create(pDoorBlock, door, modelOutput);
+		ResourceLocation topRightOpen = ModelTemplates.DOOR_TOP_RIGHT_OPEN.create(pDoorBlock, door, modelOutput);
 		createSimpleFlatItemModel(pDoorBlock.asItem());
-		blockStateOutput.accept(createDoor(pDoorBlock, resourceLocation, resourceLocation1, resourceLocation2, resourceLocation3));
+		blockStateOutput.accept(createDoor(pDoorBlock, bottomLeft, bottomLeftOpen, bottomRight, bottomRightOpen, topLeft, topLeftOpen, topRight, topRightOpen));
 	}
 
 	private static BlockStateGenerator createMirroredCubeGenerator(Block block, ResourceLocation resourceLocation1,
@@ -236,19 +241,22 @@ public class BlockModelGenerator {
 						.with(VariantProperties.Y_ROT, VariantProperties.Rotation.R180));
 	}
 
-	private static BlockStateGenerator createDoor(Block pDoorBlock, ResourceLocation pBottomHalfModelLocation,
-	                                              ResourceLocation pBottomHalfRightHingeModelLocation,
-	                                              ResourceLocation pTopHalfModelLocation,
-	                                              ResourceLocation pTopHalfRightHingeModelLocation) {
-
-		return MultiVariantGenerator.multiVariant(pDoorBlock)
+	private static BlockStateGenerator createDoor(Block doorBlock, ResourceLocation bottomLeft,
+	                                              ResourceLocation bottomLeftOpen,
+	                                              ResourceLocation bottomRight,
+	                                              ResourceLocation bottomRightOpen,
+	                                              ResourceLocation topLeft,
+	                                              ResourceLocation topLeftOpen,
+	                                              ResourceLocation topRight,
+	                                              ResourceLocation topRightOpen) {
+		return MultiVariantGenerator.multiVariant(doorBlock)
 				.with(configureDoorHalf(configureDoorHalf(PropertyDispatch
-										.properties(BlockStateProperties.HORIZONTAL_FACING,
-												BlockStateProperties.DOUBLE_BLOCK_HALF,
-												BlockStateProperties.DOOR_HINGE,
-												BlockStateProperties.OPEN)
-								, DoubleBlockHalf.LOWER, pBottomHalfModelLocation, pBottomHalfRightHingeModelLocation),
-						DoubleBlockHalf.UPPER, pTopHalfModelLocation, pTopHalfRightHingeModelLocation));
+						.properties(BlockStateProperties.HORIZONTAL_FACING,
+								BlockStateProperties.DOUBLE_BLOCK_HALF,
+								BlockStateProperties.DOOR_HINGE,
+								BlockStateProperties.OPEN),
+						DoubleBlockHalf.LOWER, bottomLeft, bottomLeftOpen, bottomRight, bottomRightOpen),
+						DoubleBlockHalf.UPPER, topLeft, topLeftOpen, topRight, topRightOpen));
 	}
 
 	private void createSimpleFlatItemModel(Item pFlatItem) {
@@ -257,69 +265,14 @@ public class BlockModelGenerator {
 	}
 
 	private static PropertyDispatch.C4<Direction, DoubleBlockHalf, DoorHingeSide, Boolean>
-	configureDoorHalf(PropertyDispatch.C4<Direction, DoubleBlockHalf, DoorHingeSide, Boolean> pDoorProperties,
-	                  DoubleBlockHalf pDoorHalf, ResourceLocation pDoorModelLocation,
-	                  ResourceLocation pDoorRightHingeModelLocation) {
+	configureDoorHalf(PropertyDispatch.C4<Direction, DoubleBlockHalf, DoorHingeSide, Boolean> propertyDispatch,
+	                  DoubleBlockHalf doubleBlockHalf,
+	                  ResourceLocation p_236307_,
+	                  ResourceLocation p_236308_,
+	                  ResourceLocation p_236309_,
+	                  ResourceLocation p_236310_) {
 
-		return pDoorProperties.select(Direction.EAST, pDoorHalf, DoorHingeSide.LEFT, false,
-						Variant.variant()
-								.with(VariantProperties.MODEL, pDoorModelLocation))
-				.select(Direction.SOUTH, pDoorHalf, DoorHingeSide.LEFT, false,
-						Variant.variant()
-								.with(VariantProperties.MODEL, pDoorModelLocation)
-								.with(VariantProperties.Y_ROT, VariantProperties.Rotation.R90))
-				.select(Direction.WEST, pDoorHalf, DoorHingeSide.LEFT, false,
-						Variant.variant()
-								.with(VariantProperties.MODEL, pDoorModelLocation)
-								.with(VariantProperties.Y_ROT, VariantProperties.Rotation.R180))
-				.select(Direction.NORTH, pDoorHalf, DoorHingeSide.LEFT, false,
-						Variant.variant()
-								.with(VariantProperties.MODEL, pDoorModelLocation)
-								.with(VariantProperties.Y_ROT, VariantProperties.Rotation.R270))
-				.select(Direction.EAST, pDoorHalf, DoorHingeSide.RIGHT, false,
-						Variant.variant()
-								.with(VariantProperties.MODEL, pDoorRightHingeModelLocation))
-				.select(Direction.SOUTH, pDoorHalf, DoorHingeSide.RIGHT, false,
-						Variant.variant()
-								.with(VariantProperties.MODEL, pDoorRightHingeModelLocation)
-								.with(VariantProperties.Y_ROT, VariantProperties.Rotation.R90))
-				.select(Direction.WEST, pDoorHalf, DoorHingeSide.RIGHT, false,
-						Variant.variant()
-								.with(VariantProperties.MODEL, pDoorRightHingeModelLocation)
-								.with(VariantProperties.Y_ROT, VariantProperties.Rotation.R180))
-				.select(Direction.NORTH, pDoorHalf, DoorHingeSide.RIGHT, false,
-						Variant.variant()
-								.with(VariantProperties.MODEL, pDoorRightHingeModelLocation)
-								.with(VariantProperties.Y_ROT, VariantProperties.Rotation.R270))
-				.select(Direction.EAST, pDoorHalf, DoorHingeSide.LEFT, true,
-						Variant.variant()
-								.with(VariantProperties.MODEL, pDoorRightHingeModelLocation)
-								.with(VariantProperties.Y_ROT, VariantProperties.Rotation.R90))
-				.select(Direction.SOUTH, pDoorHalf, DoorHingeSide.LEFT, true,
-						Variant.variant()
-								.with(VariantProperties.MODEL, pDoorRightHingeModelLocation)
-								.with(VariantProperties.Y_ROT, VariantProperties.Rotation.R180))
-				.select(Direction.WEST, pDoorHalf, DoorHingeSide.LEFT, true,
-						Variant.variant().with(VariantProperties.MODEL, pDoorRightHingeModelLocation)
-								.with(VariantProperties.Y_ROT, VariantProperties.Rotation.R270))
-				.select(Direction.NORTH, pDoorHalf, DoorHingeSide.LEFT, true,
-						Variant.variant()
-								.with(VariantProperties.MODEL, pDoorRightHingeModelLocation))
-				.select(Direction.EAST, pDoorHalf, DoorHingeSide.RIGHT, true,
-						Variant.variant()
-								.with(VariantProperties.MODEL, pDoorModelLocation)
-								.with(VariantProperties.Y_ROT, VariantProperties.Rotation.R270))
-				.select(Direction.SOUTH, pDoorHalf, DoorHingeSide.RIGHT, true,
-						Variant.variant()
-								.with(VariantProperties.MODEL, pDoorModelLocation))
-				.select(Direction.WEST, pDoorHalf, DoorHingeSide.RIGHT, true,
-						Variant.variant()
-								.with(VariantProperties.MODEL, pDoorModelLocation)
-								.with(VariantProperties.Y_ROT, VariantProperties.Rotation.R90))
-				.select(Direction.NORTH, pDoorHalf, DoorHingeSide.RIGHT, true,
-						Variant.variant()
-								.with(VariantProperties.MODEL, pDoorModelLocation)
-								.with(VariantProperties.Y_ROT, VariantProperties.Rotation.R180));
+		return propertyDispatch.select(Direction.EAST, doubleBlockHalf, DoorHingeSide.LEFT, false, Variant.variant().with(VariantProperties.MODEL, p_236307_)).select(Direction.SOUTH, doubleBlockHalf, DoorHingeSide.LEFT, false, Variant.variant().with(VariantProperties.MODEL, p_236307_).with(VariantProperties.Y_ROT, VariantProperties.Rotation.R90)).select(Direction.WEST, doubleBlockHalf, DoorHingeSide.LEFT, false, Variant.variant().with(VariantProperties.MODEL, p_236307_).with(VariantProperties.Y_ROT, VariantProperties.Rotation.R180)).select(Direction.NORTH, doubleBlockHalf, DoorHingeSide.LEFT, false, Variant.variant().with(VariantProperties.MODEL, p_236307_).with(VariantProperties.Y_ROT, VariantProperties.Rotation.R270)).select(Direction.EAST, doubleBlockHalf, DoorHingeSide.RIGHT, false, Variant.variant().with(VariantProperties.MODEL, p_236309_)).select(Direction.SOUTH, doubleBlockHalf, DoorHingeSide.RIGHT, false, Variant.variant().with(VariantProperties.MODEL, p_236309_).with(VariantProperties.Y_ROT, VariantProperties.Rotation.R90)).select(Direction.WEST, doubleBlockHalf, DoorHingeSide.RIGHT, false, Variant.variant().with(VariantProperties.MODEL, p_236309_).with(VariantProperties.Y_ROT, VariantProperties.Rotation.R180)).select(Direction.NORTH, doubleBlockHalf, DoorHingeSide.RIGHT, false, Variant.variant().with(VariantProperties.MODEL, p_236309_).with(VariantProperties.Y_ROT, VariantProperties.Rotation.R270)).select(Direction.EAST, doubleBlockHalf, DoorHingeSide.LEFT, true, Variant.variant().with(VariantProperties.MODEL, p_236308_).with(VariantProperties.Y_ROT, VariantProperties.Rotation.R90)).select(Direction.SOUTH, doubleBlockHalf, DoorHingeSide.LEFT, true, Variant.variant().with(VariantProperties.MODEL, p_236308_).with(VariantProperties.Y_ROT, VariantProperties.Rotation.R180)).select(Direction.WEST, doubleBlockHalf, DoorHingeSide.LEFT, true, Variant.variant().with(VariantProperties.MODEL, p_236308_).with(VariantProperties.Y_ROT, VariantProperties.Rotation.R270)).select(Direction.NORTH, doubleBlockHalf, DoorHingeSide.LEFT, true, Variant.variant().with(VariantProperties.MODEL, p_236308_)).select(Direction.EAST, doubleBlockHalf, DoorHingeSide.RIGHT, true, Variant.variant().with(VariantProperties.MODEL, p_236310_).with(VariantProperties.Y_ROT, VariantProperties.Rotation.R270)).select(Direction.SOUTH, doubleBlockHalf, DoorHingeSide.RIGHT, true, Variant.variant().with(VariantProperties.MODEL, p_236310_)).select(Direction.WEST, doubleBlockHalf, DoorHingeSide.RIGHT, true, Variant.variant().with(VariantProperties.MODEL, p_236310_).with(VariantProperties.Y_ROT, VariantProperties.Rotation.R90)).select(Direction.NORTH, doubleBlockHalf, DoorHingeSide.RIGHT, true, Variant.variant().with(VariantProperties.MODEL, p_236310_).with(VariantProperties.Y_ROT, VariantProperties.Rotation.R180));
 	}
 
 	private static BlockStateGenerator createAxisAlignedPillarBlock(Block pAxisAlignedPillarBlock, ResourceLocation pModelLocation) {
