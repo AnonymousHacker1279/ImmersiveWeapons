@@ -10,7 +10,6 @@ import net.minecraft.world.item.*;
 import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.registries.ForgeRegistryEntry;
 import org.jetbrains.annotations.NotNull;
 import tech.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
 
@@ -114,7 +113,7 @@ public record SmallPartsRecipe(ResourceLocation recipeId,
 	 */
 	@Override
 	public @NotNull RecipeType<?> getType() {
-		return CustomRecipeTypes.SMALL_PARTS;
+		return DeferredRegistryHandler.SMALL_PARTS_RECIPE_TYPE.get();
 	}
 
 	/**
@@ -129,7 +128,7 @@ public record SmallPartsRecipe(ResourceLocation recipeId,
 		return defaultedList;
 	}
 
-	public static class Serializer extends ForgeRegistryEntry<RecipeSerializer<?>> implements RecipeSerializer<SmallPartsRecipe> {
+	public static class Serializer implements RecipeSerializer<SmallPartsRecipe> {
 		/**
 		 * Serialize from JSON.
 		 *
@@ -184,7 +183,7 @@ public record SmallPartsRecipe(ResourceLocation recipeId,
 			recipe.material.toNetwork(buffer);
 			List<ResourceLocation> craftables = new ArrayList<>(recipe.craftables.size());
 			for (Item item : recipe.craftables) {
-				craftables.add(item.getRegistryName());
+				craftables.add(ForgeRegistries.ITEMS.getKey(item));
 			}
 			buffer.writeUtf(craftables.toString());
 		}

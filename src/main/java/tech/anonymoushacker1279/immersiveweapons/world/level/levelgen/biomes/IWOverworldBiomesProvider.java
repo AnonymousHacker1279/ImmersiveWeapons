@@ -1,4 +1,5 @@
-package tech.anonymoushacker1279.immersiveweapons.world.level.levelgen.biomes;
+/*
+package com.anonymoushacker1279.immersiveweapons.world.level.levelgen.biomes;
 
 import com.mojang.datafixers.util.Pair;
 import net.minecraft.core.Registry;
@@ -30,4 +31,5 @@ public class IWOverworldBiomesProvider extends Region {
 				0.5f,
 				BiomesAndDimensions.BATTLEFIELD);
 	}
-}
+}*/
+// TODO: Re-implement when TerraBlender is available

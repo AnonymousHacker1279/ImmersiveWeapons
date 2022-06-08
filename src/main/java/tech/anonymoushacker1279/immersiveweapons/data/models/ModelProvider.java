@@ -19,7 +19,8 @@ import java.util.function.*;
 public class ModelProvider implements DataProvider {
 
 	private static final Gson GSON = (new GsonBuilder()).setPrettyPrinting().disableHtmlEscaping().create();
-	private final DataGenerator generator;
+	private final DataGenerator.PathProvider blockStatePathProvider;
+	private final DataGenerator.PathProvider modelPathProvider;
 
 	/**
 	 * Constructor for ModelProvider.
@@ -27,7 +28,8 @@ public class ModelProvider implements DataProvider {
 	 * @param dataGenerator the <code>DataGenerator</code> instance
 	 */
 	public ModelProvider(DataGenerator dataGenerator) {
-		generator = dataGenerator;
+		blockStatePathProvider = dataGenerator.createPathProvider(DataGenerator.Target.RESOURCE_PACK, "blockstates");
+		modelPathProvider = dataGenerator.createPathProvider(DataGenerator.Target.RESOURCE_PACK, "models");
 	}
 
 	/**
@@ -45,11 +47,10 @@ public class ModelProvider implements DataProvider {
 	/**
 	 * Run the model provider.
 	 *
-	 * @param hashCache the <code>HashCache</code> instance
+	 * @param cachedOutput the <code>CachedOutput</code> instance
 	 */
 	@Override
-	public void run(@NotNull HashCache hashCache) {
-		Path getOutputFolder = generator.getOutputFolder();
+	public void run(@NotNull CachedOutput cachedOutput) {
 		Map<ResourceLocation, Supplier<JsonElement>> locationSupplierHashMap = Maps.newHashMap();
 		Set<Item> itemHashSet = Sets.newHashSet();
 		BiConsumer<ResourceLocation, Supplier<JsonElement>> locationSupplierBiConsumer = (location, elementSupplier) -> {
@@ -70,29 +71,18 @@ public class ModelProvider implements DataProvider {
 		Consumer<Item> modelGenerator = itemHashSet::add;
 		(new BlockModelGenerator(blockStateGeneratorConsumer, locationSupplierBiConsumer, modelGenerator)).run();
 		(new ItemModelGenerator(locationSupplierBiConsumer)).run();
-		saveCollection(hashCache, getOutputFolder, locationSupplierHashMap, ModelProvider::createModelPath);
-		saveCollection(hashCache, getOutputFolder, blockStateGeneratorHashMap, ModelProvider::createBlockStatePath);
+		saveCollection(cachedOutput, locationSupplierHashMap, blockStatePathProvider::json);
+		saveCollection(cachedOutput, locationSupplierHashMap, modelPathProvider::json);
 	}
 
-	/**
-	 * Save collections.
-	 *
-	 * @param hashCache  the <code>HashCache</code> instance
-	 * @param path       the <code>Path</code> to save at
-	 * @param map        the <code>Map</code> extending Supplier, extending JsonElement
-	 * @param biFunction the <code>BiFunction</code> path
-	 * @param <T>        the provider
-	 */
-	private <T> void saveCollection(HashCache hashCache, Path path, Map<T, ? extends Supplier<JsonElement>> map,
-	                                BiFunction<Path, T, Path> biFunction) {
-
+	private <T> void saveCollection(CachedOutput cachedOutput, Map<T, ? extends Supplier<JsonElement>> map, Function<T, Path> pathFunction) {
 		map.forEach((t, supplier) -> {
-			Path save = biFunction.apply(path, t);
+			Path path = pathFunction.apply(t);
 
 			try {
-				DataProvider.save(GSON, hashCache, supplier.get(), save);
-			} catch (Exception e) {
-				ImmersiveWeapons.LOGGER.error("Couldn't save {}", save, e);
+				DataProvider.saveStable(cachedOutput, supplier.get(), path);
+			} catch (Exception exception) {
+				ImmersiveWeapons.LOGGER.error("Couldn't save {}", path, exception);
 			}
 
 		});

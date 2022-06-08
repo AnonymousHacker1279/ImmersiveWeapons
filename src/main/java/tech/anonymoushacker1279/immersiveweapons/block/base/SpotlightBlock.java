@@ -3,6 +3,7 @@ package tech.anonymoushacker1279.immersiveweapons.block.base;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.*;
 import net.minecraft.world.level.block.*;
@@ -14,7 +15,8 @@ import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class SpotlightBlock extends HorizontalDirectionalBlock implements SimpleWaterloggedBlock {
 
@@ -53,7 +55,6 @@ public class SpotlightBlock extends HorizontalDirectionalBlock implements Simple
 	 * @param pos    the <code>BlocKPos</code> the block is at
 	 * @return boolean
 	 */
-	@SuppressWarnings("deprecation")
 	@Override
 	public boolean canSurvive(BlockState state, LevelReader reader, BlockPos pos) {
 		Direction direction = state.getValue(FACING);
@@ -73,7 +74,6 @@ public class SpotlightBlock extends HorizontalDirectionalBlock implements Simple
 	 * @param facingPos     the <code>BlocKPos</code> the facing block is at
 	 * @return BlockState
 	 */
-	@SuppressWarnings("deprecation")
 	@Override
 	public @NotNull BlockState updateShape(BlockState stateIn, @NotNull Direction facing, @NotNull BlockState facingState,
 	                                       @NotNull LevelAccessor levelAccessor, @NotNull BlockPos currentPos, @NotNull BlockPos facingPos) {
@@ -99,7 +99,6 @@ public class SpotlightBlock extends HorizontalDirectionalBlock implements Simple
 	 * @param state the <code>BlockState</code> of the block
 	 * @return FluidState
 	 */
-	@SuppressWarnings("deprecation")
 	@Override
 	public @NotNull FluidState getFluidState(BlockState state) {
 		return state.getValue(WATERLOGGED) ? Fluids.WATER.getSource(false) : super.getFluidState(state);
@@ -115,7 +114,6 @@ public class SpotlightBlock extends HorizontalDirectionalBlock implements Simple
 	 * @param fromPos  the <code>BlockPos</code> of the changing block
 	 * @param isMoving determines if the block is moving
 	 */
-	@SuppressWarnings("deprecation")
 	@Override
 	public void neighborChanged(@NotNull BlockState state, Level level, @NotNull BlockPos pos, @NotNull Block blockIn,
 	                            @NotNull BlockPos fromPos, boolean isMoving) {
@@ -142,7 +140,6 @@ public class SpotlightBlock extends HorizontalDirectionalBlock implements Simple
 	 * @param oldState the <code>BlockState</code> the block previously had
 	 * @param isMoving determines if the block is moving
 	 */
-	@SuppressWarnings("deprecation")
 	@Override
 	public void onPlace(BlockState state, @NotNull Level level, @NotNull BlockPos pos, BlockState oldState, boolean isMoving) {
 		if (!oldState.is(state.getBlock())) {
@@ -161,9 +158,8 @@ public class SpotlightBlock extends HorizontalDirectionalBlock implements Simple
 	 * @param pos         the <code>BlockPos</code> the block is at
 	 * @param rand        a <code>Random</code> instance
 	 */
-	@SuppressWarnings("deprecation")
 	@Override
-	public void tick(BlockState state, @NotNull ServerLevel serverLevel, @NotNull BlockPos pos, @NotNull Random rand) {
+	public void tick(BlockState state, @NotNull ServerLevel serverLevel, @NotNull BlockPos pos, @NotNull RandomSource rand) {
 		if (state.getValue(LIT) && !serverLevel.hasNeighborSignal(pos)) {
 			stateToggled(pos, serverLevel, state, true);
 			serverLevel.setBlock(pos, state.setValue(LIT, false), 3);

@@ -32,7 +32,7 @@ public class GoldenMusketBallItem extends AbstractBulletItem {
 	 */
 	@Override
 	public @NotNull BulletEntities.GoldenMusketBallEntity createBullet(@NotNull Level level, @NotNull ItemStack stack, @NotNull LivingEntity shooter) {
-		GoldenMusketBallEntity bulletEntity = new GoldenMusketBallEntity(shooter, level, referenceItem.get().asItem());
+		GoldenMusketBallEntity bulletEntity = new GoldenMusketBallEntity(shooter, level);
 		bulletEntity.setBaseDamage(damage);
 		bulletEntity.pickup = Pickup.DISALLOWED;
 		bulletEntity.setSoundEvent(DeferredRegistryHandler.BULLET_WHIZZ.get());

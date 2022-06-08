@@ -3,7 +3,6 @@ package tech.anonymoushacker1279.immersiveweapons.block.crafting.small_parts;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.*;
 import net.minecraft.world.entity.player.Player;
@@ -20,7 +19,7 @@ import tech.anonymoushacker1279.immersiveweapons.container.SmallPartsContainer;
 
 public class SmallPartsTable extends HorizontalDirectionalBlock {
 
-	private static final Component CONTAINER_NAME = new TranslatableComponent("container.immersiveweapons.small_parts_table");
+	private static final Component CONTAINER_NAME = Component.translatable("container.immersiveweapons.small_parts_table");
 
 	/**
 	 * Constructor for SmallPartsTable.

@@ -46,10 +46,10 @@ public class AdvancementProvider implements DataProvider {
 	/**
 	 * Run the model provider.
 	 *
-	 * @param hashCache the <code>HashCache</code> instance
+	 * @param cachedOutput the <code>CachedOutput</code> instance
 	 */
 	@Override
-	public void run(@NotNull HashCache hashCache) {
+	public void run(@NotNull CachedOutput cachedOutput) {
 		Path outputFolder = generator.getOutputFolder();
 		Set<ResourceLocation> resourceLocations = Sets.newHashSet();
 		Consumer<Advancement> advancementConsumer = (advancement) -> {
@@ -59,7 +59,7 @@ public class AdvancementProvider implements DataProvider {
 				Path path = createPath(outputFolder, advancement);
 
 				try {
-					DataProvider.save(GSON, hashCache, advancement.deconstruct().serializeToJson(), path);
+					DataProvider.saveStable(cachedOutput, advancement.deconstruct().serializeToJson(), path);
 				} catch (IOException exception) {
 					ImmersiveWeapons.LOGGER.error("Couldn't save advancement {}", path, exception);
 				}

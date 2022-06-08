@@ -73,7 +73,7 @@ public abstract class CustomPotionItem extends Item {
 			}
 		}
 
-		pLevel.gameEvent(pEntityLiving, GameEvent.DRINKING_FINISH, pEntityLiving.eyeBlockPosition());
+		pEntityLiving.gameEvent(GameEvent.DRINK);
 		return pStack;
 	}
 

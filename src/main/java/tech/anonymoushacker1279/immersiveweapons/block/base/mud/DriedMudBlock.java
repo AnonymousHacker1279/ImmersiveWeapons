@@ -2,13 +2,12 @@ package tech.anonymoushacker1279.immersiveweapons.block.base.mud;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.NotNull;
 import tech.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
-
-import java.util.Random;
 
 public class DriedMudBlock extends Block {
 
@@ -18,9 +17,8 @@ public class DriedMudBlock extends Block {
 		super(properties);
 	}
 
-	@SuppressWarnings("deprecation")
 	@Override
-	public void randomTick(@NotNull BlockState pState, ServerLevel pLevel, @NotNull BlockPos pPos, @NotNull Random pRandom) {
+	public void randomTick(@NotNull BlockState pState, ServerLevel pLevel, @NotNull BlockPos pPos, @NotNull RandomSource pRandom) {
 		if (pLevel.isRainingAt(pPos)) {
 			chanceToMoisten = 0.13f;
 		}

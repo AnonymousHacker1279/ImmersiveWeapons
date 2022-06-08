@@ -2,11 +2,11 @@ package tech.anonymoushacker1279.immersiveweapons.item.projectile.bullet;
 
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.*;
+import net.minecraft.world.item.ArrowItem;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.registries.RegistryObject;
 import org.jetbrains.annotations.NotNull;
 import tech.anonymoushacker1279.immersiveweapons.entity.projectile.BulletEntity;
 import tech.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
@@ -14,7 +14,6 @@ import tech.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
 public abstract class AbstractBulletItem extends ArrowItem {
 
 	public double damage;
-	protected RegistryObject<? extends Item> referenceItem;
 
 	/**
 	 * Constructor for AbstractBulletItem.
@@ -25,15 +24,6 @@ public abstract class AbstractBulletItem extends ArrowItem {
 	protected AbstractBulletItem(Properties properties, double damageIn) {
 		super(properties);
 		damage = damageIn;
-	}
-
-	/**
-	 * Set item references.
-	 *
-	 * @param reference the <code>RegistryObject</code> reference, must extend Item
-	 */
-	public void setItemReference(RegistryObject<? extends Item> reference) {
-		referenceItem = reference;
 	}
 
 	public @NotNull BulletEntity createBullet(@NotNull Level level, @NotNull ItemStack stack, @NotNull LivingEntity shooter) {

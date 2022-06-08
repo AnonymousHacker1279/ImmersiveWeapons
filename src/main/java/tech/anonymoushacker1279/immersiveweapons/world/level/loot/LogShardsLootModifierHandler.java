@@ -1,6 +1,7 @@
 package tech.anonymoushacker1279.immersiveweapons.world.level.loot;
 
 import com.google.gson.JsonObject;
+import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.util.GsonHelper;
@@ -13,8 +14,6 @@ import net.minecraftforge.common.loot.LootModifier;
 import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.NotNull;
 import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
-
-import java.util.List;
 
 public class LogShardsLootModifierHandler extends LootModifier {
 
@@ -45,11 +44,7 @@ public class LogShardsLootModifierHandler extends LootModifier {
 	 * @return List extending ItemStack
 	 */
 	@Override
-	public @NotNull List<ItemStack> doApply(List<ItemStack> generatedLoot, LootContext context) {
-		//
-		// Additional conditions can be checked, though as much as possible should be parameterized via JSON data.
-		// It is better to write a new ILootCondition implementation than to do things here.
-		//
+	public @NotNull ObjectArrayList<ItemStack> doApply(ObjectArrayList<ItemStack> generatedLoot, LootContext context) {
 		int numShards = 0;
 		for (ItemStack stack : generatedLoot) {
 			if (stack.is(ItemTags.create(new ResourceLocation(blockTag)))) {

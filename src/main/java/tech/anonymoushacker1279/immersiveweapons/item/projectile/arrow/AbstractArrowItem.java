@@ -1,20 +1,19 @@
-package tech.anonymoushacker1279.immersiveweapons.item.projectile.arrow;
+package com.anonymoushacker1279.immersiveweapons.item.projectile.arrow;
 
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.entity.projectile.Arrow;
-import net.minecraft.world.item.*;
+import net.minecraft.world.item.ArrowItem;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.registries.RegistryObject;
 import org.jetbrains.annotations.NotNull;
 
 public abstract class AbstractArrowItem extends ArrowItem {
 
 	public double damage;
-	protected RegistryObject<? extends Item> ref;
 
 	/**
 	 * Constructor for AbstractArrowItem.
@@ -25,15 +24,6 @@ public abstract class AbstractArrowItem extends ArrowItem {
 	protected AbstractArrowItem(Properties properties, double damageIn) {
 		super(properties);
 		damage = damageIn;
-	}
-
-	/**
-	 * Set item references.
-	 *
-	 * @param refIn the <code>RegistryObject</code> reference, must extend Item
-	 */
-	public void setItemReference(RegistryObject<? extends Item> refIn) {
-		ref = refIn;
 	}
 
 	/**

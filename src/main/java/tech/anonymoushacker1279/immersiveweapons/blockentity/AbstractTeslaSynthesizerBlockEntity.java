@@ -1,5 +1,7 @@
-package tech.anonymoushacker1279.immersiveweapons.blockentity;
+package com.anonymoushacker1279.immersiveweapons.blockentity;
 
+import com.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
+import com.anonymoushacker1279.immersiveweapons.item.crafting.TeslaSynthesizerRecipe;
 import com.google.common.collect.Maps;
 import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
 import net.minecraft.core.*;
@@ -27,9 +29,6 @@ import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.wrapper.SidedInvWrapper;
 import org.jetbrains.annotations.NotNull;
-import tech.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
-import tech.anonymoushacker1279.immersiveweapons.item.crafting.CustomRecipeTypes;
-import tech.anonymoushacker1279.immersiveweapons.item.crafting.TeslaSynthesizerRecipe;
 
 import javax.annotation.Nullable;
 import java.util.Map;
@@ -143,7 +142,7 @@ public abstract class AbstractTeslaSynthesizerBlockEntity extends BaseContainerB
 				&& !material2.isEmpty() && !material3.isEmpty() && !fuel.isEmpty()) {
 
 			RecipeManager recipeManager = level.getRecipeManager();
-			Recipe<?> synthesizerRecipe = recipeManager.getRecipeFor(CustomRecipeTypes.TESLA_SYNTHESIZER, blockEntity, level)
+			Recipe<?> synthesizerRecipe = recipeManager.getRecipeFor(DeferredRegistryHandler.TESLA_SYNTHESIZER_RECIPE_TYPE.get(), blockEntity, level)
 					.orElse(null);
 
 			if (!blockEntity.isBurning() && blockEntity.canSmelt(synthesizerRecipe)) {
@@ -319,7 +318,7 @@ public abstract class AbstractTeslaSynthesizerBlockEntity extends BaseContainerB
 	private int getCookTime() {
 		if (level != null) {
 			Optional<TeslaSynthesizerRecipe> recipe = level.getRecipeManager()
-					.getRecipeFor(CustomRecipeTypes.TESLA_SYNTHESIZER, this, level);
+					.getRecipeFor(DeferredRegistryHandler.TESLA_SYNTHESIZER_RECIPE_TYPE.get(), this, level);
 
 			if (recipe.isPresent()) {
 				return recipe.get().getCookTime();

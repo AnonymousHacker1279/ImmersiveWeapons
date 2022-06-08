@@ -1,12 +1,12 @@
-package tech.anonymoushacker1279.immersiveweapons.item.projectile.arrow;
+package com.anonymoushacker1279.immersiveweapons.item.projectile.arrow;
 
+import com.anonymoushacker1279.immersiveweapons.entity.projectile.ArrowEntities;
+import com.anonymoushacker1279.immersiveweapons.entity.projectile.ArrowEntities.SmokeGrenadeArrowEntity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.projectile.AbstractArrow.Pickup;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
-import tech.anonymoushacker1279.immersiveweapons.entity.projectile.CustomArrowEntity;
-import tech.anonymoushacker1279.immersiveweapons.entity.projectile.CustomArrowEntity.SmokeGrenadeArrowEntity;
 
 public class SmokeGrenadeArrowItem extends AbstractArrowItem {
 
@@ -33,8 +33,8 @@ public class SmokeGrenadeArrowItem extends AbstractArrowItem {
 	 * @return SmokeGrenadeArrowEntity
 	 */
 	@Override
-	public @NotNull CustomArrowEntity.SmokeGrenadeArrowEntity createArrow(@NotNull Level worldIn, @NotNull ItemStack stack, @NotNull LivingEntity shooter) {
-		SmokeGrenadeArrowEntity arrowEntity = new SmokeGrenadeArrowEntity(shooter, worldIn, ref.get().asItem());
+	public @NotNull ArrowEntities.SmokeGrenadeArrowEntity createArrow(@NotNull Level worldIn, @NotNull ItemStack stack, @NotNull LivingEntity shooter) {
+		SmokeGrenadeArrowEntity arrowEntity = new SmokeGrenadeArrowEntity(shooter, worldIn);
 		arrowEntity.setBaseDamage(damage);
 		arrowEntity.pickup = Pickup.DISALLOWED;
 		SmokeGrenadeArrowEntity.setColor(color);

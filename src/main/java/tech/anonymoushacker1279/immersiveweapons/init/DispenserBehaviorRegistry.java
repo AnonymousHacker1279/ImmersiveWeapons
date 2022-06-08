@@ -1,5 +1,9 @@
-package tech.anonymoushacker1279.immersiveweapons.init;
+package com.anonymoushacker1279.immersiveweapons.init;
 
+import com.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
+import com.anonymoushacker1279.immersiveweapons.entity.projectile.ArrowEntities.*;
+import com.anonymoushacker1279.immersiveweapons.entity.projectile.MolotovEntity;
+import com.anonymoushacker1279.immersiveweapons.entity.projectile.SmokeGrenadeEntity;
 import net.minecraft.core.BlockSource;
 import net.minecraft.core.Position;
 import net.minecraft.core.dispenser.AbstractProjectileDispenseBehavior;
@@ -10,10 +14,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.DispenserBlock;
 import org.jetbrains.annotations.NotNull;
-import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
-import tech.anonymoushacker1279.immersiveweapons.entity.projectile.CustomArrowEntity.*;
-import tech.anonymoushacker1279.immersiveweapons.entity.projectile.MolotovEntity;
-import tech.anonymoushacker1279.immersiveweapons.entity.projectile.SmokeGrenadeEntity;
 
 public class DispenserBehaviorRegistry implements DispenseItemBehavior {
 

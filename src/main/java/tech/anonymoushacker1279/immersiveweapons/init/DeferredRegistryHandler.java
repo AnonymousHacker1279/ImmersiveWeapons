@@ -1,5 +1,64 @@
-package tech.anonymoushacker1279.immersiveweapons.init;
+package com.anonymoushacker1279.immersiveweapons.init;
 
+import com.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
+import com.anonymoushacker1279.immersiveweapons.block.base.*;
+import com.anonymoushacker1279.immersiveweapons.block.base.mud.*;
+import com.anonymoushacker1279.immersiveweapons.block.core.BasicOrientableBlock;
+import com.anonymoushacker1279.immersiveweapons.block.crafting.BarrelTapBlock;
+import com.anonymoushacker1279.immersiveweapons.block.crafting.TeslaSynthesizerBlock;
+import com.anonymoushacker1279.immersiveweapons.block.crafting.small_parts.SmallPartsTable;
+import com.anonymoushacker1279.immersiveweapons.block.decoration.*;
+import com.anonymoushacker1279.immersiveweapons.block.decoration.skull.CustomSkullBlocks.CustomSkullBlock;
+import com.anonymoushacker1279.immersiveweapons.block.decoration.skull.CustomSkullBlocks.CustomWallSkullBlock;
+import com.anonymoushacker1279.immersiveweapons.block.decoration.skull.CustomSkullTypes;
+import com.anonymoushacker1279.immersiveweapons.block.misc.MedicStatueBlock;
+import com.anonymoushacker1279.immersiveweapons.block.misc.MinutemanStatueBlock;
+import com.anonymoushacker1279.immersiveweapons.block.misc.warrior_statue.*;
+import com.anonymoushacker1279.immersiveweapons.block.properties.WoodTypes;
+import com.anonymoushacker1279.immersiveweapons.block.sign.BurnedOakStandingSignBlock;
+import com.anonymoushacker1279.immersiveweapons.block.sign.BurnedOakWallSignBlock;
+import com.anonymoushacker1279.immersiveweapons.block.trap.*;
+import com.anonymoushacker1279.immersiveweapons.blockentity.*;
+import com.anonymoushacker1279.immersiveweapons.client.particle.bullet_impact.BulletImpactParticleOptions;
+import com.anonymoushacker1279.immersiveweapons.client.particle.smoke_grenade.SmokeGrenadeParticleOptions;
+import com.anonymoushacker1279.immersiveweapons.container.SmallPartsContainer;
+import com.anonymoushacker1279.immersiveweapons.container.TeslaSynthesizerContainer;
+import com.anonymoushacker1279.immersiveweapons.entity.misc.ChairEntity;
+import com.anonymoushacker1279.immersiveweapons.entity.monster.*;
+import com.anonymoushacker1279.immersiveweapons.entity.monster.lava_revenant.LavaRevenantEntity;
+import com.anonymoushacker1279.immersiveweapons.entity.neutral.FieldMedicEntity;
+import com.anonymoushacker1279.immersiveweapons.entity.neutral.MinutemanEntity;
+import com.anonymoushacker1279.immersiveweapons.entity.projectile.ArrowEntities.*;
+import com.anonymoushacker1279.immersiveweapons.entity.projectile.BulletEntities.*;
+import com.anonymoushacker1279.immersiveweapons.entity.projectile.*;
+import com.anonymoushacker1279.immersiveweapons.entity.vehicle.BurnedOakBoatEntity;
+import com.anonymoushacker1279.immersiveweapons.entity.vehicle.CustomBoatType;
+import com.anonymoushacker1279.immersiveweapons.item.armor.*;
+import com.anonymoushacker1279.immersiveweapons.item.crafting.SmallPartsRecipe;
+import com.anonymoushacker1279.immersiveweapons.item.crafting.TeslaSynthesizerRecipe;
+import com.anonymoushacker1279.immersiveweapons.item.fortitude.*;
+import com.anonymoushacker1279.immersiveweapons.item.gauntlet.*;
+import com.anonymoushacker1279.immersiveweapons.item.materials.CustomArmorMaterials;
+import com.anonymoushacker1279.immersiveweapons.item.materials.CustomItemMaterials;
+import com.anonymoushacker1279.immersiveweapons.item.misc.UsedSyringeItem;
+import com.anonymoushacker1279.immersiveweapons.item.pike.*;
+import com.anonymoushacker1279.immersiveweapons.item.potion.AlcoholItem;
+import com.anonymoushacker1279.immersiveweapons.item.potion.WineItem;
+import com.anonymoushacker1279.immersiveweapons.item.projectile.arrow.*;
+import com.anonymoushacker1279.immersiveweapons.item.projectile.bullet.*;
+import com.anonymoushacker1279.immersiveweapons.item.projectile.gun.*;
+import com.anonymoushacker1279.immersiveweapons.item.projectile.throwable.*;
+import com.anonymoushacker1279.immersiveweapons.item.tool.molten.*;
+import com.anonymoushacker1279.immersiveweapons.item.tool.tesla.*;
+import com.anonymoushacker1279.immersiveweapons.item.tool.ventus.*;
+import com.anonymoushacker1279.immersiveweapons.item.utility.*;
+import com.anonymoushacker1279.immersiveweapons.potion.*;
+import com.anonymoushacker1279.immersiveweapons.util.CreativeTab;
+import com.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
+import com.anonymoushacker1279.immersiveweapons.world.food.FoodItemProperties;
+import com.anonymoushacker1279.immersiveweapons.world.level.levelgen.feature.treedecorators.BurnedBranchDecorator;
+import com.anonymoushacker1279.immersiveweapons.world.level.loot.AzulKeystoneFragmentInChestsLootModifierHandler;
+import com.anonymoushacker1279.immersiveweapons.world.level.loot.LogShardsLootModifierHandler;
 import com.google.common.collect.Sets;
 import com.mojang.serialization.Codec;
 import net.minecraft.core.particles.ParticleType;
@@ -12,13 +71,14 @@ import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.item.*;
 import net.minecraft.world.item.Item.Properties;
 import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.PressurePlateBlock.Sensitivity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
-import net.minecraft.world.level.levelgen.feature.StructureFeature;
-import net.minecraft.world.level.levelgen.feature.configurations.JigsawConfiguration;
+import net.minecraft.world.level.block.state.BlockBehaviour.OffsetType;
+import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.treedecorators.TreeDecoratorType;
 import net.minecraft.world.level.material.Material;
 import net.minecraftforge.common.ForgeSpawnEggItem;
@@ -28,67 +88,6 @@ import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.*;
 import org.jetbrains.annotations.NotNull;
-import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
-import tech.anonymoushacker1279.immersiveweapons.block.base.*;
-import tech.anonymoushacker1279.immersiveweapons.block.base.mud.*;
-import tech.anonymoushacker1279.immersiveweapons.block.core.BasicOrientableBlock;
-import tech.anonymoushacker1279.immersiveweapons.block.crafting.BarrelTapBlock;
-import tech.anonymoushacker1279.immersiveweapons.block.crafting.TeslaSynthesizerBlock;
-import tech.anonymoushacker1279.immersiveweapons.block.crafting.small_parts.SmallPartsTable;
-import tech.anonymoushacker1279.immersiveweapons.block.decoration.*;
-import tech.anonymoushacker1279.immersiveweapons.block.decoration.skull.CustomSkullBlocks.CustomSkullBlock;
-import tech.anonymoushacker1279.immersiveweapons.block.decoration.skull.CustomSkullBlocks.CustomWallSkullBlock;
-import tech.anonymoushacker1279.immersiveweapons.block.decoration.skull.CustomSkullTypes;
-import tech.anonymoushacker1279.immersiveweapons.block.misc.MedicStatueBlock;
-import tech.anonymoushacker1279.immersiveweapons.block.misc.MinutemanStatueBlock;
-import tech.anonymoushacker1279.immersiveweapons.block.misc.warrior_statue.*;
-import tech.anonymoushacker1279.immersiveweapons.block.properties.WoodTypes;
-import tech.anonymoushacker1279.immersiveweapons.block.sign.BurnedOakStandingSignBlock;
-import tech.anonymoushacker1279.immersiveweapons.block.sign.BurnedOakWallSignBlock;
-import tech.anonymoushacker1279.immersiveweapons.block.trap.*;
-import tech.anonymoushacker1279.immersiveweapons.blockentity.*;
-import tech.anonymoushacker1279.immersiveweapons.client.particle.bullet_impact.BulletImpactParticleOptions;
-import tech.anonymoushacker1279.immersiveweapons.client.particle.smoke_grenade.SmokeGrenadeParticleOptions;
-import tech.anonymoushacker1279.immersiveweapons.container.SmallPartsContainer;
-import tech.anonymoushacker1279.immersiveweapons.container.TeslaSynthesizerContainer;
-import tech.anonymoushacker1279.immersiveweapons.entity.misc.ChairEntity;
-import tech.anonymoushacker1279.immersiveweapons.entity.monster.*;
-import tech.anonymoushacker1279.immersiveweapons.entity.monster.lava_revenant.LavaRevenantEntity;
-import tech.anonymoushacker1279.immersiveweapons.entity.neutral.FieldMedicEntity;
-import tech.anonymoushacker1279.immersiveweapons.entity.neutral.MinutemanEntity;
-import tech.anonymoushacker1279.immersiveweapons.entity.projectile.BulletEntities.*;
-import tech.anonymoushacker1279.immersiveweapons.entity.projectile.CustomArrowEntity.*;
-import tech.anonymoushacker1279.immersiveweapons.entity.projectile.*;
-import tech.anonymoushacker1279.immersiveweapons.entity.vehicle.BurnedOakBoatEntity;
-import tech.anonymoushacker1279.immersiveweapons.entity.vehicle.CustomBoatType;
-import tech.anonymoushacker1279.immersiveweapons.item.armor.*;
-import tech.anonymoushacker1279.immersiveweapons.item.crafting.SmallPartsRecipe;
-import tech.anonymoushacker1279.immersiveweapons.item.crafting.TeslaSynthesizerRecipe;
-import tech.anonymoushacker1279.immersiveweapons.item.fortitude.*;
-import tech.anonymoushacker1279.immersiveweapons.item.gauntlet.*;
-import tech.anonymoushacker1279.immersiveweapons.item.materials.CustomArmorMaterials;
-import tech.anonymoushacker1279.immersiveweapons.item.materials.CustomItemMaterials;
-import tech.anonymoushacker1279.immersiveweapons.item.misc.UsedSyringeItem;
-import tech.anonymoushacker1279.immersiveweapons.item.pike.*;
-import tech.anonymoushacker1279.immersiveweapons.item.potion.AlcoholItem;
-import tech.anonymoushacker1279.immersiveweapons.item.potion.WineItem;
-import tech.anonymoushacker1279.immersiveweapons.item.projectile.arrow.*;
-import tech.anonymoushacker1279.immersiveweapons.item.projectile.bullet.*;
-import tech.anonymoushacker1279.immersiveweapons.item.projectile.gun.*;
-import tech.anonymoushacker1279.immersiveweapons.item.projectile.throwable.*;
-import tech.anonymoushacker1279.immersiveweapons.item.tool.molten.*;
-import tech.anonymoushacker1279.immersiveweapons.item.tool.tesla.*;
-import tech.anonymoushacker1279.immersiveweapons.item.tool.ventus.*;
-import tech.anonymoushacker1279.immersiveweapons.item.utility.*;
-import tech.anonymoushacker1279.immersiveweapons.potion.*;
-import tech.anonymoushacker1279.immersiveweapons.util.CreativeTab;
-import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
-import tech.anonymoushacker1279.immersiveweapons.world.food.FoodItemProperties;
-import tech.anonymoushacker1279.immersiveweapons.world.level.levelgen.feature.treedecorators.BurnedBranchDecorator;
-import tech.anonymoushacker1279.immersiveweapons.world.level.levelgen.structures.*;
-import tech.anonymoushacker1279.immersiveweapons.world.level.loot.AzulKeystoneFragmentInChestsLootModifierHandler;
-import tech.anonymoushacker1279.immersiveweapons.world.level.loot.LogShardsLootModifierHandler;
-import tech.anonymoushacker1279.immersiveweapons.world.level.loot.LogShardsLootModifierHandler.Serializer;
 
 import java.util.function.Function;
 
@@ -107,6 +106,8 @@ public class DeferredRegistryHandler {
 	public static final DeferredRegister<MenuType<?>> CONTAINER_TYPES = DeferredRegister.create(ForgeRegistries.CONTAINERS, ImmersiveWeapons.MOD_ID);
 	// Recipe Register
 	public static final DeferredRegister<RecipeSerializer<?>> RECIPE_SERIALIZER = DeferredRegister.create(ForgeRegistries.RECIPE_SERIALIZERS, ImmersiveWeapons.MOD_ID);
+	// Recipe Type Serializer
+	public static final DeferredRegister<RecipeType<?>> RECIPE_TYPES = DeferredRegister.create(ForgeRegistries.RECIPE_TYPES, ImmersiveWeapons.MOD_ID);
 	// Particle Register
 	public static final DeferredRegister<ParticleType<?>> PARTICLE_TYPES = DeferredRegister.create(ForgeRegistries.PARTICLE_TYPES, ImmersiveWeapons.MOD_ID);
 	// Global Loot Modifier Register
@@ -118,7 +119,7 @@ public class DeferredRegistryHandler {
 	// Effect Register
 	public static final DeferredRegister<MobEffect> EFFECTS = DeferredRegister.create(ForgeRegistries.MOB_EFFECTS, ImmersiveWeapons.MOD_ID);
 	// Structure Register
-	public static final DeferredRegister<StructureFeature<?>> STRUCTURES = DeferredRegister.create(ForgeRegistries.STRUCTURE_FEATURES, ImmersiveWeapons.MOD_ID);
+	public static final DeferredRegister<Feature<?>> STRUCTURE_FEATURES = DeferredRegister.create(ForgeRegistries.FEATURES, ImmersiveWeapons.MOD_ID);
 	// Tree Decorators Register
 	public static final DeferredRegister<TreeDecoratorType<?>> TREE_DECORATORS = DeferredRegister.create(ForgeRegistries.TREE_DECORATOR_TYPES, ImmersiveWeapons.MOD_ID);
 
@@ -134,12 +135,13 @@ public class DeferredRegistryHandler {
 		SOUND_EVENTS.register(modEventBus);
 		CONTAINER_TYPES.register(modEventBus);
 		RECIPE_SERIALIZER.register(modEventBus);
+		RECIPE_TYPES.register(modEventBus);
 		PARTICLE_TYPES.register(modEventBus);
 		GLOBAL_LOOT_MODIFIER_SERIALIZER.register(modEventBus);
 		BLOCK_ENTITIES.register(modEventBus);
 		BIOMES.register(modEventBus);
 		EFFECTS.register(modEventBus);
-		STRUCTURES.register(modEventBus);
+		STRUCTURE_FEATURES.register(modEventBus);
 		TREE_DECORATORS.register(modEventBus);
 	}
 
@@ -344,15 +346,15 @@ public class DeferredRegistryHandler {
 	public static final RegistryObject<WarriorStatueBase> WARRIOR_STATUE_BASE = BLOCKS.register("warrior_statue_base", () -> new WarriorStatueBase(BlockBehaviour.Properties.of(Material.STONE).strength(4.0f).sound(SoundType.STONE).noOcclusion()));
 	public static final RegistryObject<WarriorStatueTorso> WARRIOR_STATUE_TORSO = BLOCKS.register("warrior_statue_torso", () -> new WarriorStatueTorso(BlockBehaviour.Properties.of(Material.STONE).strength(4.0f).sound(SoundType.STONE).noOcclusion()));
 	public static final RegistryObject<WarriorStatueHead> WARRIOR_STATUE_HEAD = BLOCKS.register("warrior_statue_head", () -> new WarriorStatueHead(BlockBehaviour.Properties.of(Material.STONE).strength(4.0f).sound(SoundType.STONE).noOcclusion()));
-	public static final RegistryObject<OreBlock> SULFUR_ORE = BLOCKS.register("sulfur_ore", () -> new OreBlock(BlockBehaviour.Properties.of(Material.STONE).strength(4.0f).sound(SoundType.STONE).requiresCorrectToolForDrops()));
-	public static final RegistryObject<OreBlock> DEEPSLATE_SULFUR_ORE = BLOCKS.register("deepslate_sulfur_ore", () -> new OreBlock(BlockBehaviour.Properties.of(Material.STONE).strength(4.5f).sound(SoundType.DEEPSLATE).requiresCorrectToolForDrops()));
-	public static final RegistryObject<OreBlock> NETHER_SULFUR_ORE = BLOCKS.register("nether_sulfur_ore", () -> new OreBlock(BlockBehaviour.Properties.of(Material.STONE).strength(0.4f).sound(SoundType.STONE).requiresCorrectToolForDrops()));
+	public static final RegistryObject<DropExperienceBlock> SULFUR_ORE = BLOCKS.register("sulfur_ore", () -> new DropExperienceBlock(BlockBehaviour.Properties.of(Material.STONE).strength(4.0f).sound(SoundType.STONE).requiresCorrectToolForDrops()));
+	public static final RegistryObject<DropExperienceBlock> DEEPSLATE_SULFUR_ORE = BLOCKS.register("deepslate_sulfur_ore", () -> new DropExperienceBlock(BlockBehaviour.Properties.of(Material.STONE).strength(4.5f).sound(SoundType.DEEPSLATE).requiresCorrectToolForDrops()));
+	public static final RegistryObject<DropExperienceBlock> NETHER_SULFUR_ORE = BLOCKS.register("nether_sulfur_ore", () -> new DropExperienceBlock(BlockBehaviour.Properties.of(Material.STONE).strength(0.4f).sound(SoundType.STONE).requiresCorrectToolForDrops()));
 	public static final RegistryObject<Block> RAW_SULFUR_BLOCK = BLOCKS.register("raw_sulfur_block", () -> new Block(BlockBehaviour.Properties.of(Material.STONE).strength(0.4f).sound(SoundType.STONE).requiresCorrectToolForDrops()));
 	// Iron tier
 	public static final RegistryObject<BarbedWireFenceBlock> BARBED_WIRE_FENCE = BLOCKS.register("barbed_wire_fence", () -> new BarbedWireFenceBlock(BlockBehaviour.Properties.of(Material.METAL).strength(7.0f, 8.0f).sound(SoundType.METAL).noOcclusion()));
-	public static final RegistryObject<OreBlock> COBALT_ORE = BLOCKS.register("cobalt_ore", () -> new OreBlock(BlockBehaviour.Properties.of(Material.STONE).strength(4.0f).sound(SoundType.STONE).requiresCorrectToolForDrops()));
-	public static final RegistryObject<OreBlock> DEEPSLATE_COBALT_ORE = BLOCKS.register("deepslate_cobalt_ore", () -> new OreBlock(BlockBehaviour.Properties.of(Material.STONE).strength(4.5f).sound(SoundType.DEEPSLATE).requiresCorrectToolForDrops()));
-	public static final RegistryObject<OreBlock> VENTUS_ORE = BLOCKS.register("ventus_ore", () -> new OreBlock(BlockBehaviour.Properties.of(Material.STONE).strength(3.5f, 6.0f).sound(SoundType.STONE).requiresCorrectToolForDrops()));
+	public static final RegistryObject<DropExperienceBlock> COBALT_ORE = BLOCKS.register("cobalt_ore", () -> new DropExperienceBlock(BlockBehaviour.Properties.of(Material.STONE).strength(4.0f).sound(SoundType.STONE).requiresCorrectToolForDrops()));
+	public static final RegistryObject<DropExperienceBlock> DEEPSLATE_COBALT_ORE = BLOCKS.register("deepslate_cobalt_ore", () -> new DropExperienceBlock(BlockBehaviour.Properties.of(Material.STONE).strength(4.5f).sound(SoundType.DEEPSLATE).requiresCorrectToolForDrops()));
+	public static final RegistryObject<DropExperienceBlock> VENTUS_ORE = BLOCKS.register("ventus_ore", () -> new DropExperienceBlock(BlockBehaviour.Properties.of(Material.STONE).strength(3.5f, 6.0f).sound(SoundType.STONE).requiresCorrectToolForDrops()));
 	public static final RegistryObject<Block> COBALT_BLOCK = BLOCKS.register("cobalt_block", () -> new Block(BlockBehaviour.Properties.of(Material.METAL).sound(SoundType.METAL).strength(6.0f).requiresCorrectToolForDrops()));
 	public static final RegistryObject<Block> RAW_COBALT_BLOCK = BLOCKS.register("raw_cobalt_block", () -> new Block(BlockBehaviour.Properties.of(Material.METAL).sound(SoundType.METAL).strength(4.0f).requiresCorrectToolForDrops()));
 	public static final RegistryObject<BearTrapBlock> BEAR_TRAP = BLOCKS.register("bear_trap", () -> new BearTrapBlock(BlockBehaviour.Properties.of(Material.METAL).noOcclusion().strength(2.0f).sound(SoundType.METAL)));
@@ -360,8 +362,8 @@ public class DeferredRegistryHandler {
 	public static final RegistryObject<SpikeTrapBlock> SPIKE_TRAP = BLOCKS.register("spike_trap", () -> new SpikeTrapBlock(BlockBehaviour.Properties.of(Material.METAL).strength(2.0f).sound(SoundType.METAL).noOcclusion().noCollission()));
 	public static final RegistryObject<CelestialLanternBlock> CELESTIAL_LANTERN = BLOCKS.register("celestial_lantern", () -> new CelestialLanternBlock(BlockBehaviour.Properties.of(Material.METAL).strength(3.5f).sound(SoundType.LANTERN).requiresCorrectToolForDrops().lightLevel((blockState) -> 15).noOcclusion()));
 	// Diamond tier
-	public static final RegistryObject<OreBlock> MOLTEN_ORE = BLOCKS.register("molten_ore", () -> new OreBlock(BlockBehaviour.Properties.of(Material.STONE).strength(6.0f, 8.0f).sound(SoundType.STONE).requiresCorrectToolForDrops()));
-	public static final RegistryObject<OreBlock> ELECTRIC_ORE = BLOCKS.register("electric_ore", () -> new OreBlock(BlockBehaviour.Properties.of(Material.STONE).strength(6.0f, 8.0f).sound(SoundType.STONE).requiresCorrectToolForDrops()));
+	public static final RegistryObject<DropExperienceBlock> MOLTEN_ORE = BLOCKS.register("molten_ore", () -> new DropExperienceBlock(BlockBehaviour.Properties.of(Material.STONE).strength(6.0f, 8.0f).sound(SoundType.STONE).requiresCorrectToolForDrops()));
+	public static final RegistryObject<DropExperienceBlock> ELECTRIC_ORE = BLOCKS.register("electric_ore", () -> new DropExperienceBlock(BlockBehaviour.Properties.of(Material.STONE).strength(6.0f, 8.0f).sound(SoundType.STONE).requiresCorrectToolForDrops()));
 	public static final RegistryObject<Block> MOLTEN_BLOCK = BLOCKS.register("molten_block", () -> new Block(BlockBehaviour.Properties.of(Material.METAL).strength(45.0f, 1100.0f).sound(SoundType.METAL).requiresCorrectToolForDrops()));
 	public static final RegistryObject<BasicOrientableBlock> TESLA_BLOCK = BLOCKS.register("tesla_block", () -> new BasicOrientableBlock(BlockBehaviour.Properties.of(Material.METAL).strength(25.0f).sound(SoundType.METAL).requiresCorrectToolForDrops()));
 	public static final RegistryObject<TeslaSynthesizerBlock> TESLA_SYNTHESIZER = BLOCKS.register("tesla_synthesizer", () -> new TeslaSynthesizerBlock(BlockBehaviour.Properties.of(Material.METAL).strength(10.0f).sound(SoundType.METAL).requiresCorrectToolForDrops().noOcclusion()));
@@ -390,7 +392,7 @@ public class DeferredRegistryHandler {
 	// Breakable via shovel
 	// Wood tier
 	public static final RegistryObject<SandbagBlock> SANDBAG = BLOCKS.register("sandbag", () -> new SandbagBlock(BlockBehaviour.Properties.of(Material.SAND).strength(4.0f, 5.0f).sound(SoundType.SAND).noOcclusion()));
-	public static final RegistryObject<Block> MUD = BLOCKS.register("mud", () -> new MudBlock(BlockBehaviour.Properties.of(Material.DIRT).strength(0.8f, 0.3f).sound(SoundType.WET_GRASS).speedFactor(0.75f).randomTicks()));
+	public static final RegistryObject<Block> MUD = BLOCKS.register("mud", () -> new IWMudBlock(BlockBehaviour.Properties.of(Material.DIRT).strength(0.8f, 0.3f).sound(SoundType.WET_GRASS).speedFactor(0.75f).randomTicks()));
 	public static final RegistryObject<Block> DRIED_MUD = BLOCKS.register("dried_mud", () -> new DriedMudBlock(BlockBehaviour.Properties.of(Material.DIRT).strength(1.0f, 0.7f).sound(SoundType.ROOTED_DIRT).randomTicks()));
 	public static final RegistryObject<Block> HARDENED_MUD = BLOCKS.register("hardened_mud", () -> new Block(BlockBehaviour.Properties.of(Material.DIRT).strength(2.0f, 1.0f).sound(SoundType.ROOTED_DIRT)));
 	public static final RegistryObject<StairBlock> HARDENED_MUD_STAIRS = BLOCKS.register("hardened_mud_stairs", () -> new StairBlock(() -> HARDENED_MUD.get().defaultBlockState(), BlockBehaviour.Properties.copy(BURNED_OAK_PLANKS.get())));
@@ -436,7 +438,7 @@ public class DeferredRegistryHandler {
 	public static final RegistryObject<HalfTransparentBlock> CLOUD = BLOCKS.register("cloud", () -> new HalfTransparentBlock(BlockBehaviour.Properties.of(Material.STRUCTURAL_AIR).strength(0.7f).sound(SoundType.SNOW).noOcclusion()));
 	public static final RegistryObject<CampChairBlock> CAMP_CHAIR = BLOCKS.register("camp_chair", () -> new CampChairBlock(BlockBehaviour.Properties.of(Material.CLOTH_DECORATION).strength(1.0f).sound(SoundType.WOOL).noOcclusion()));
 	public static final RegistryObject<BranchBlock> BURNED_OAK_BRANCH = BLOCKS.register("burned_oak_branch", () -> new BranchBlock(BlockBehaviour.Properties.of(Material.WOOD).strength(0.1f).sound(SoundType.WOOD).noOcclusion().noCollission()));
-	public static final RegistryObject<AzulStainedOrchidBlock> AZUL_STAINED_ORCHID = BLOCKS.register("azul_stained_orchid", () -> new AzulStainedOrchidBlock(MobEffects.LUCK, 30, BlockBehaviour.Properties.of(Material.PLANT).sound(SoundType.GRASS).noCollission().instabreak()));
+	public static final RegistryObject<AzulStainedOrchidBlock> AZUL_STAINED_ORCHID = BLOCKS.register("azul_stained_orchid", () -> new AzulStainedOrchidBlock(MobEffects.LUCK, 30, BlockBehaviour.Properties.of(Material.PLANT).sound(SoundType.GRASS).noCollission().instabreak().offsetType(OffsetType.NONE)));
 	public static final RegistryObject<SkullBlock> MINUTEMAN_HEAD = BLOCKS.register("minuteman_head", () -> new CustomSkullBlock(CustomSkullTypes.MINUTEMAN, BlockBehaviour.Properties.of(Material.DECORATION).strength(1.0f)));
 	public static final RegistryObject<CustomWallSkullBlock> MINUTEMAN_WALL_HEAD = BLOCKS.register("minuteman_wall_head", () -> new CustomWallSkullBlock(CustomSkullTypes.MINUTEMAN, BlockBehaviour.Properties.of(Material.DECORATION).strength(1.0f).lootFrom(MINUTEMAN_HEAD)));
 	public static final RegistryObject<SkullBlock> FIELD_MEDIC_HEAD = BLOCKS.register("field_medic_head", () -> new CustomSkullBlock(CustomSkullTypes.FIELD_MEDIC, BlockBehaviour.Properties.of(Material.DECORATION).strength(1.0f)));
@@ -477,6 +479,7 @@ public class DeferredRegistryHandler {
 	public static final RegistryObject<EntityType<HansEntity>> HANS_ENTITY = ENTITY_TYPES.register("hans", () -> EntityType.Builder.of(HansEntity::new, MobCategory.MONSTER).sized(0.6f, 1.99f).clientTrackingRange(16).build(new ResourceLocation(ImmersiveWeapons.MOD_ID, "hans").toString()));
 	public static final RegistryObject<EntityType<MortarShellEntity>> MORTAR_SHELL_ENTITY = ENTITY_TYPES.register("mortar_shell", () -> EntityType.Builder.of(MortarShellEntity::new, MobCategory.MISC).sized(0.5f, 0.5f).build(new ResourceLocation(ImmersiveWeapons.MOD_ID, "mortar_shell").toString()));
 	public static final RegistryObject<EntityType<BurnedOakBoatEntity>> BURNED_OAK_BOAT_ENTITY = ENTITY_TYPES.register("burned_oak_boat", () -> EntityType.Builder.<BurnedOakBoatEntity> of(BurnedOakBoatEntity::new, MobCategory.MISC).sized(1.375f, 0.5625f).build(new ResourceLocation(ImmersiveWeapons.MOD_ID, "burned_oak_boat").toString()));
+	public static final RegistryObject<EntityType<BurnedOakBoatEntity>> BURNED_OAK_CHEST_BOAT_ENTITY = ENTITY_TYPES.register("burned_oak_chest_boat", () -> EntityType.Builder.<BurnedOakBoatEntity> of(BurnedOakBoatEntity::new, MobCategory.MISC).sized(1.375f, 0.5625f).build(new ResourceLocation(ImmersiveWeapons.MOD_ID, "burned_oak_chest_boat").toString()));
 	public static final RegistryObject<EntityType<MudBallEntity>> MUD_BALL_ENTITY = ENTITY_TYPES.register("mud_ball", () -> EntityType.Builder.<MudBallEntity> of(MudBallEntity::new, MobCategory.MISC).sized(0.25f, 0.25f).build(new ResourceLocation(ImmersiveWeapons.MOD_ID, "mud_ball").toString()));
 	public static final RegistryObject<EntityType<LavaRevenantEntity>> LAVA_REVENANT_ENTITY = ENTITY_TYPES.register("lava_revenant", () -> EntityType.Builder.of(LavaRevenantEntity::new, MobCategory.MONSTER).sized(16.0f, 6.0f).clientTrackingRange(32).fireImmune().build(new ResourceLocation(ImmersiveWeapons.MOD_ID, "lava_revenant").toString()));
 	public static final RegistryObject<EntityType<RockSpiderEntity>> ROCK_SPIDER_ENTITY = ENTITY_TYPES.register("rock_spider", () -> EntityType.Builder.of(RockSpiderEntity::new, MobCategory.MONSTER).sized(0.30f, 0.30f).clientTrackingRange(16).build(new ResourceLocation(ImmersiveWeapons.MOD_ID, "rock_spider").toString()));
@@ -652,8 +655,22 @@ public class DeferredRegistryHandler {
 	public static final RegistryObject<RecipeSerializer<SmallPartsRecipe>> SMALL_PARTS_RECIPE_SERIALIZER = RECIPE_SERIALIZER.register("small_parts", SmallPartsRecipe.Serializer::new);
 	public static final RegistryObject<RecipeSerializer<TeslaSynthesizerRecipe>> TESLA_SYNTHESIZER_RECIPE_SERIALIZER = RECIPE_SERIALIZER.register("tesla_synthesizer", TeslaSynthesizerRecipe.Serializer::new);
 
+	// Recipe Types
+	public static final RegistryObject<RecipeType<SmallPartsRecipe>> SMALL_PARTS_RECIPE_TYPE = RECIPE_TYPES.register("small_parts", () -> new RecipeType<>() {
+		@Override
+		public String toString() {
+			return ImmersiveWeapons.MOD_ID + ":small_parts";
+		}
+	});
+	public static final RegistryObject<RecipeType<TeslaSynthesizerRecipe>> TESLA_SYNTHESIZER_RECIPE_TYPE = RECIPE_TYPES.register("tesla_synthesizer", () -> new RecipeType<>() {
+		@Override
+		public String toString() {
+			return ImmersiveWeapons.MOD_ID + ":tesla_synthesizer";
+		}
+	});
+
 	// Loot Table Modifiers
-	public static final RegistryObject<Serializer> WOOD_LOGS_MODIFIER = GLOBAL_LOOT_MODIFIER_SERIALIZER.register("log_shards", LogShardsLootModifierHandler.Serializer::new);
+	public static final RegistryObject<LogShardsLootModifierHandler.Serializer> WOOD_LOGS_MODIFIER = GLOBAL_LOOT_MODIFIER_SERIALIZER.register("log_shards", LogShardsLootModifierHandler.Serializer::new);
 	public static final RegistryObject<AzulKeystoneFragmentInChestsLootModifierHandler.Serializer> AZUL_KEYSTONE_FRAGMENT_IN_CHESTS_MODIFIER = GLOBAL_LOOT_MODIFIER_SERIALIZER.register("azul_keystone_fragment_in_chests", AzulKeystoneFragmentInChestsLootModifierHandler.Serializer::new);
 
 	// Particles
@@ -692,11 +709,4 @@ public class DeferredRegistryHandler {
 
 	// Tree Decorators
 	public static final RegistryObject<TreeDecoratorType<BurnedBranchDecorator>> BURNED_BRANCH_DECORATOR = TREE_DECORATORS.register("burned_branch", () -> new TreeDecoratorType<>(BurnedBranchDecorator.CODEC));
-
-	// Structures
-	public static final RegistryObject<StructureFeature<JigsawConfiguration>> CLOUD_ISLAND_STRUCTURE = STRUCTURES.register("cloud_island", CloudIslandStructure::new);
-	public static final RegistryObject<StructureFeature<JigsawConfiguration>> HANS_HUT_STRUCTURE = STRUCTURES.register("hans_hut", HansHut::new);
-	public static final RegistryObject<StructureFeature<JigsawConfiguration>> PITFALL_TRAP_STRUCTURE = STRUCTURES.register("pitfall_trap", PitfallTrapStructure::new);
-	public static final RegistryObject<StructureFeature<JigsawConfiguration>> UNDERGROUND_BUNKER_STRUCTURE = STRUCTURES.register("underground_bunker", UndergroundBunkerStructure::new);
-	public static final RegistryObject<StructureFeature<JigsawConfiguration>> DESTROYED_HOUSE = STRUCTURES.register("destroyed_house", DestroyedHouse::new);
 }

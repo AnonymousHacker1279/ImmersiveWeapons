@@ -3,8 +3,8 @@ package tech.anonymoushacker1279.immersiveweapons.block.crafting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.*;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.BlockGetter;
@@ -28,13 +28,12 @@ import tech.anonymoushacker1279.immersiveweapons.container.TeslaSynthesizerConta
 import tech.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
 
 import javax.annotation.Nullable;
-import java.util.Random;
 
 public class TeslaSynthesizerBlock extends Block implements EntityBlock, SimpleWaterloggedBlock {
 
 	public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
 	protected static final VoxelShape SHAPE = Block.box(0.0D, 0.0D, 0.0D, 16.0D, 6.0D, 16.0D);
-	private static final Component CONTAINER_NAME = new TranslatableComponent("container.immersiveweapons.tesla_synthesizer");
+	private static final Component CONTAINER_NAME = Component.translatable("container.immersiveweapons.tesla_synthesizer");
 
 	/**
 	 * Constructor for TeslaSynthesizerBlock.
@@ -82,7 +81,6 @@ public class TeslaSynthesizerBlock extends Block implements EntityBlock, SimpleW
 	 * @param selectionContext the <code>ISelectionContext</code> of the block
 	 * @return VoxelShape
 	 */
-	@SuppressWarnings("deprecation")
 	@Override
 	public @NotNull VoxelShape getShape(@NotNull BlockState state, @NotNull BlockGetter reader, @NotNull BlockPos pos, @NotNull CollisionContext selectionContext) {
 		return SHAPE;
@@ -105,7 +103,6 @@ public class TeslaSynthesizerBlock extends Block implements EntityBlock, SimpleW
 	 * @param state the <code>BlockState</code> of the block
 	 * @return FluidState
 	 */
-	@SuppressWarnings("deprecation")
 	@Override
 	public @NotNull FluidState getFluidState(BlockState state) {
 		return state.getValue(WATERLOGGED) ? Fluids.WATER.getSource(false) : super.getFluidState(state);
@@ -119,7 +116,6 @@ public class TeslaSynthesizerBlock extends Block implements EntityBlock, SimpleW
 	 * @param pos     the <code>BlockPos</code> the block is at
 	 * @return INamedContainerProvider
 	 */
-	@SuppressWarnings("deprecation")
 	@Override
 	public MenuProvider getMenuProvider(@NotNull BlockState state, @NotNull Level worldIn, @NotNull BlockPos pos) {
 		return new SimpleMenuProvider((id, inventory, player) -> new TeslaSynthesizerContainer(id, inventory), CONTAINER_NAME);
@@ -137,7 +133,6 @@ public class TeslaSynthesizerBlock extends Block implements EntityBlock, SimpleW
 	 * @param blockRayTraceResult the <code>BlockRayTraceResult</code> of the interaction
 	 * @return ActionResultType
 	 */
-	@SuppressWarnings("deprecation")
 	@Override
 	public @NotNull InteractionResult use(@NotNull BlockState state, Level worldIn, @NotNull BlockPos pos, @NotNull Player player, @NotNull InteractionHand handIn, @NotNull BlockHitResult blockRayTraceResult) {
 		if (worldIn.isClientSide) {
@@ -160,7 +155,6 @@ public class TeslaSynthesizerBlock extends Block implements EntityBlock, SimpleW
 	 * @param newState the <code>BlockState</code> the block now has
 	 * @param isMoving determines if the block is moving
 	 */
-	@SuppressWarnings("deprecation")
 	@Override
 	public void onRemove(BlockState state, @NotNull Level worldIn, @NotNull BlockPos pos, BlockState newState, boolean isMoving) {
 		if (!state.is(newState.getBlock())) {
@@ -183,7 +177,7 @@ public class TeslaSynthesizerBlock extends Block implements EntityBlock, SimpleW
 	 * @param rand    a <code>Random</code> instance
 	 */
 	@Override
-	public void animateTick(@NotNull BlockState stateIn, Level worldIn, BlockPos pos, @NotNull Random rand) {
+	public void animateTick(@NotNull BlockState stateIn, Level worldIn, BlockPos pos, @NotNull RandomSource rand) {
 		worldIn.addParticle(ParticleTypes.SOUL_FIRE_FLAME, pos.getX() + 0.5D, pos.getY() + 0.4D, pos.getZ() + 0.5D, 0.0D, 0.0D, 0.0D);
 	}
 }

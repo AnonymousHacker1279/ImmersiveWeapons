@@ -5,6 +5,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.*;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.damagesource.DamageSource;
@@ -33,7 +34,6 @@ import org.jetbrains.annotations.NotNull;
 import tech.anonymoushacker1279.immersiveweapons.entity.GrantAdvancementOnDiscovery;
 
 import javax.annotation.Nullable;
-import java.util.Random;
 
 public class RockSpiderEntity extends Monster implements GrantAdvancementOnDiscovery {
 
@@ -194,7 +194,7 @@ public class RockSpiderEntity extends Monster implements GrantAdvancementOnDisco
 			if (pLevel.getDifficulty() == Difficulty.HARD
 					&& pLevel.getRandom().nextFloat() < 0.1F * pDifficulty.getSpecialMultiplier()) {
 
-				((RockSpiderEffectsGroupData) pSpawnData).setRandomEffect(pLevel.getRandom());
+				((RockSpiderEffectsGroupData) pSpawnData).setRandomEffect(random);
 			}
 		}
 
@@ -240,7 +240,7 @@ public class RockSpiderEntity extends Monster implements GrantAdvancementOnDisco
 		 */
 		@Override
 		public boolean canContinueToUse() {
-			float f = mob.getBrightness();
+			float f = mob.getLightLevelDependentMagicValue();
 			if (f >= 0.5F && mob.getRandom().nextInt(100) == 0) {
 				mob.setTarget(null);
 				return false;
@@ -258,7 +258,7 @@ public class RockSpiderEntity extends Monster implements GrantAdvancementOnDisco
 	public static class RockSpiderEffectsGroupData implements SpawnGroupData {
 		public MobEffect effect;
 
-		public void setRandomEffect(Random pRand) {
+		public void setRandomEffect(RandomSource pRand) {
 			int random = pRand.nextInt(5);
 			if (random <= 1) {
 				effect = MobEffects.MOVEMENT_SPEED;
@@ -284,7 +284,7 @@ public class RockSpiderEntity extends Monster implements GrantAdvancementOnDisco
 		 */
 		@Override
 		public boolean canUse() {
-			float brightness = mob.getBrightness();
+			float brightness = mob.getLightLevelDependentMagicValue();
 			return !(brightness >= 0.5F) && super.canUse();
 		}
 	}

@@ -32,7 +32,7 @@ public class WoodenMusketBallItem extends AbstractBulletItem {
 	 */
 	@Override
 	public @NotNull BulletEntities.WoodenMusketBallEntity createBullet(@NotNull Level level, @NotNull ItemStack stack, @NotNull LivingEntity shooter) {
-		WoodenMusketBallEntity bulletEntity = new WoodenMusketBallEntity(shooter, level, referenceItem.get().asItem());
+		WoodenMusketBallEntity bulletEntity = new WoodenMusketBallEntity(shooter, level);
 		bulletEntity.setBaseDamage(damage);
 		bulletEntity.pickup = Pickup.DISALLOWED;
 		bulletEntity.setSoundEvent(DeferredRegistryHandler.BULLET_WHIZZ.get());

@@ -173,16 +173,6 @@ public abstract class AbstractFieldMedicEntity extends PathfinderMob implements 
 	}
 
 	/**
-	 * Gives armor or weapon for entity based on given DifficultyInstance
-	 *
-	 * @param difficulty the <code>DifficultyInstance</code> of the world
-	 */
-	@Override
-	protected void populateDefaultEquipmentSlots(@NotNull DifficultyInstance difficulty) {
-		super.populateDefaultEquipmentSlots(difficulty);
-	}
-
-	/**
 	 * Finalize spawn information.
 	 *
 	 * @param worldIn      the <code>IServerWorld</code> the entity is in
@@ -198,8 +188,8 @@ public abstract class AbstractFieldMedicEntity extends PathfinderMob implements 
 	                                    @Nullable CompoundTag dataTag) {
 
 		spawnDataIn = super.finalizeSpawn(worldIn, difficultyIn, reason, spawnDataIn, dataTag);
-		populateDefaultEquipmentSlots(difficultyIn);
-		populateDefaultEquipmentEnchantments(difficultyIn);
+		populateDefaultEquipmentSlots(random, difficultyIn);
+		populateDefaultEquipmentEnchantments(random, difficultyIn);
 		setCombatTask();
 		setCanPickUpLoot(random.nextFloat() < 0.55F * difficultyIn.getSpecialMultiplier());
 

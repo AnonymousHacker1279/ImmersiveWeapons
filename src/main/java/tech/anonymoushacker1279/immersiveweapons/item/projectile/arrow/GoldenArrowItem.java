@@ -1,11 +1,11 @@
-package tech.anonymoushacker1279.immersiveweapons.item.projectile.arrow;
+package com.anonymoushacker1279.immersiveweapons.item.projectile.arrow;
 
+import com.anonymoushacker1279.immersiveweapons.entity.projectile.ArrowEntities;
+import com.anonymoushacker1279.immersiveweapons.entity.projectile.ArrowEntities.GoldenArrowEntity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
-import tech.anonymoushacker1279.immersiveweapons.entity.projectile.CustomArrowEntity;
-import tech.anonymoushacker1279.immersiveweapons.entity.projectile.CustomArrowEntity.GoldenArrowEntity;
 
 public class GoldenArrowItem extends AbstractArrowItem {
 
@@ -29,8 +29,8 @@ public class GoldenArrowItem extends AbstractArrowItem {
 	 * @return GoldArrowEntity
 	 */
 	@Override
-	public @NotNull CustomArrowEntity.GoldenArrowEntity createArrow(@NotNull Level worldIn, @NotNull ItemStack stack, @NotNull LivingEntity shooter) {
-		GoldenArrowEntity arrowEntity = new GoldenArrowEntity(shooter, worldIn, ref.get().asItem());
+	public @NotNull ArrowEntities.GoldenArrowEntity createArrow(@NotNull Level worldIn, @NotNull ItemStack stack, @NotNull LivingEntity shooter) {
+		GoldenArrowEntity arrowEntity = new GoldenArrowEntity(shooter, worldIn);
 		arrowEntity.setBaseDamage(damage);
 		return arrowEntity;
 	}

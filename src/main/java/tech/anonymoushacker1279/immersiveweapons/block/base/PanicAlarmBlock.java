@@ -3,6 +3,7 @@ package tech.anonymoushacker1279.immersiveweapons.block.base;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
@@ -19,8 +20,6 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.NotNull;
 import tech.anonymoushacker1279.immersiveweapons.blockentity.PanicAlarmBlockEntity;
 import tech.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
-
-import java.util.Random;
 
 public class PanicAlarmBlock extends HorizontalDirectionalBlock implements SimpleWaterloggedBlock, EntityBlock {
 
@@ -49,7 +48,6 @@ public class PanicAlarmBlock extends HorizontalDirectionalBlock implements Simpl
 	 * @param collisionContext the <code>CollisionContext</code> of the block
 	 * @return VoxelShape
 	 */
-	@SuppressWarnings("deprecation")
 	@Override
 	public @NotNull VoxelShape getShape(BlockState state, @NotNull BlockGetter reader, @NotNull BlockPos pos,
 	                                    @NotNull CollisionContext collisionContext) {
@@ -124,7 +122,6 @@ public class PanicAlarmBlock extends HorizontalDirectionalBlock implements Simpl
 	 * @param state the <code>BlockState</code> of the block
 	 * @return FluidState
 	 */
-	@SuppressWarnings("deprecation")
 	@Override
 	public @NotNull FluidState getFluidState(BlockState state) {
 		return state.getValue(WATERLOGGED) ? Fluids.WATER.getSource(false) : super.getFluidState(state);
@@ -140,7 +137,6 @@ public class PanicAlarmBlock extends HorizontalDirectionalBlock implements Simpl
 	 * @param fromPos  the <code>BlockPos</code> of the changing block
 	 * @param isMoving determines if the block is moving
 	 */
-	@SuppressWarnings("deprecation")
 	@Override
 	public void neighborChanged(@NotNull BlockState state, Level level, @NotNull BlockPos pos, @NotNull Block blockIn,
 	                            @NotNull BlockPos fromPos, boolean isMoving) {
@@ -160,7 +156,6 @@ public class PanicAlarmBlock extends HorizontalDirectionalBlock implements Simpl
 	 * @param oldState the <code>BlockState</code> the block previously had
 	 * @param isMoving determines if the block is moving
 	 */
-	@SuppressWarnings("deprecation")
 	@Override
 	public void onPlace(BlockState state, @NotNull Level level, @NotNull BlockPos pos, BlockState oldState, boolean isMoving) {
 		if (!oldState.is(state.getBlock())) {
@@ -178,11 +173,10 @@ public class PanicAlarmBlock extends HorizontalDirectionalBlock implements Simpl
 	 * @param state       the <code>BlockState</code> of the block
 	 * @param serverLevel the <code>ServerLevel</code> of the block
 	 * @param pos         the <code>BlockPos</code> the block is at
-	 * @param rand        a <code>Random</code> instance
+	 * @param random        a <code>RandomSource</code> instance
 	 */
-	@SuppressWarnings("deprecation")
 	@Override
-	public void tick(@NotNull BlockState state, ServerLevel serverLevel, @NotNull BlockPos pos, @NotNull Random rand) {
+	public void tick(@NotNull BlockState state, ServerLevel serverLevel, @NotNull BlockPos pos, @NotNull RandomSource random) {
 		if (!serverLevel.isClientSide) {
 			checkPowered(serverLevel, pos);
 			serverLevel.scheduleTick(pos, state.getBlock(), 5);

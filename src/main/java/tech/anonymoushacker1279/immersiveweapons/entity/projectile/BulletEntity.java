@@ -95,7 +95,7 @@ public class BulletEntity extends AbstractArrow {
 	@Override
 	public void tick() {
 		if (!hasBeenShot) {
-			gameEvent(GameEvent.PROJECTILE_SHOOT, getOwner(), blockPosition());
+			gameEvent(GameEvent.PROJECTILE_SHOOT, getOwner());
 			hasBeenShot = true;
 		}
 

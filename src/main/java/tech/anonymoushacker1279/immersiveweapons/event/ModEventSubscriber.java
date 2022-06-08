@@ -1,54 +1,17 @@
-package tech.anonymoushacker1279.immersiveweapons.event;
+package com.anonymoushacker1279.immersiveweapons.event;
 
-import net.minecraft.world.item.Item;
-import net.minecraftforge.event.RegistryEvent;
+import com.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
+import com.anonymoushacker1279.immersiveweapons.entity.monster.*;
+import com.anonymoushacker1279.immersiveweapons.entity.monster.lava_revenant.LavaRevenantEntity;
+import com.anonymoushacker1279.immersiveweapons.entity.neutral.AbstractFieldMedicEntity;
+import com.anonymoushacker1279.immersiveweapons.entity.neutral.AbstractMinutemanEntity;
+import com.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
 import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
-import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
-import tech.anonymoushacker1279.immersiveweapons.entity.monster.*;
-import tech.anonymoushacker1279.immersiveweapons.entity.monster.lava_revenant.LavaRevenantEntity;
-import tech.anonymoushacker1279.immersiveweapons.entity.neutral.AbstractFieldMedicEntity;
-import tech.anonymoushacker1279.immersiveweapons.entity.neutral.AbstractMinutemanEntity;
-import tech.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
 
 @EventBusSubscriber(modid = ImmersiveWeapons.MOD_ID, bus = EventBusSubscriber.Bus.MOD)
 public class ModEventSubscriber {
-
-	/**
-	 * Event handler for the RegistryEvent.Register event.
-	 *
-	 * @param event the <code>RegistryEvent.Register</code> instance
-	 */
-	@SubscribeEvent
-	public static void registerItems(RegistryEvent.Register<Item> event) {
-		ImmersiveWeapons.LOGGER.info("Registering item references");
-
-		DeferredRegistryHandler.COPPER_ARROW.get().setItemReference(DeferredRegistryHandler.COPPER_ARROW);
-		DeferredRegistryHandler.IRON_ARROW.get().setItemReference(DeferredRegistryHandler.IRON_ARROW);
-		DeferredRegistryHandler.COBALT_ARROW.get().setItemReference(DeferredRegistryHandler.COBALT_ARROW);
-		DeferredRegistryHandler.DIAMOND_ARROW.get().setItemReference(DeferredRegistryHandler.DIAMOND_ARROW);
-		DeferredRegistryHandler.GOLDEN_ARROW.get().setItemReference(DeferredRegistryHandler.GOLDEN_ARROW);
-		DeferredRegistryHandler.STONE_ARROW.get().setItemReference(DeferredRegistryHandler.STONE_ARROW);
-		DeferredRegistryHandler.WOODEN_ARROW.get().setItemReference(DeferredRegistryHandler.WOODEN_ARROW);
-		DeferredRegistryHandler.NETHERITE_ARROW.get().setItemReference(DeferredRegistryHandler.NETHERITE_ARROW);
-		DeferredRegistryHandler.SMOKE_GRENADE_ARROW.get().setItemReference(DeferredRegistryHandler.SMOKE_GRENADE_ARROW);
-		DeferredRegistryHandler.SMOKE_GRENADE_ARROW_RED.get().setItemReference(DeferredRegistryHandler.SMOKE_GRENADE_ARROW_RED);
-		DeferredRegistryHandler.SMOKE_GRENADE_ARROW_GREEN.get().setItemReference(DeferredRegistryHandler.SMOKE_GRENADE_ARROW_GREEN);
-		DeferredRegistryHandler.SMOKE_GRENADE_ARROW_BLUE.get().setItemReference(DeferredRegistryHandler.SMOKE_GRENADE_ARROW_BLUE);
-		DeferredRegistryHandler.SMOKE_GRENADE_ARROW_PURPLE.get().setItemReference(DeferredRegistryHandler.SMOKE_GRENADE_ARROW_PURPLE);
-		DeferredRegistryHandler.SMOKE_GRENADE_ARROW_YELLOW.get().setItemReference(DeferredRegistryHandler.SMOKE_GRENADE_ARROW_YELLOW);
-
-		DeferredRegistryHandler.COPPER_MUSKET_BALL.get().setItemReference(DeferredRegistryHandler.COPPER_MUSKET_BALL);
-		DeferredRegistryHandler.WOODEN_MUSKET_BALL.get().setItemReference(DeferredRegistryHandler.WOODEN_MUSKET_BALL);
-		DeferredRegistryHandler.STONE_MUSKET_BALL.get().setItemReference(DeferredRegistryHandler.STONE_MUSKET_BALL);
-		DeferredRegistryHandler.IRON_MUSKET_BALL.get().setItemReference(DeferredRegistryHandler.IRON_MUSKET_BALL);
-		DeferredRegistryHandler.COBALT_MUSKET_BALL.get().setItemReference(DeferredRegistryHandler.COBALT_MUSKET_BALL);
-		DeferredRegistryHandler.GOLDEN_MUSKET_BALL.get().setItemReference(DeferredRegistryHandler.GOLDEN_MUSKET_BALL);
-		DeferredRegistryHandler.DIAMOND_MUSKET_BALL.get().setItemReference(DeferredRegistryHandler.DIAMOND_MUSKET_BALL);
-		DeferredRegistryHandler.NETHERITE_MUSKET_BALL.get().setItemReference(DeferredRegistryHandler.NETHERITE_MUSKET_BALL);
-		DeferredRegistryHandler.FLARE.get().setItemReference(DeferredRegistryHandler.FLARE);
-	}
 
 	/**
 	 * Event handler for the EntityAttributeCreationEvent.
