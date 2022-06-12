@@ -3,6 +3,7 @@
   "block": {
     "item": "minecraft:stone"
   },
+  "cookTime": 24000,
   "material1": {
     "item": "minecraft:lapis_lazuli"
   },
@@ -11,6 +12,5 @@
   },
   "result": {
     "item": "immersiveweapons:electric_ingot"
-  },
-  "cookTime": 24000
+  }
 }

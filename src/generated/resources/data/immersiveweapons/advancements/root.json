@@ -1,40 +1,48 @@
 {
+  "criteria": {
+    "exist": {
+      "conditions": {
+        "player": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "location": {
+                "dimension": "minecraft:overworld"
+              }
+            }
+          }
+        ]
+      },
+      "trigger": "minecraft:location"
+    }
+  },
   "display": {
-    "icon": {
-      "item": "immersiveweapons:tesla_sword",
-      "nbt": "{Damage:0}"
-    },
-    "title": {
-      "color": "red",
-      "translate": "advancements.immersiveweapons.root.title"
-    },
+    "announce_to_chat": false,
+    "background": "immersiveweapons:textures/block/red_stained_bulletproof_glass.png",
     "description": {
       "translate": "advancements.immersiveweapons.root.description"
     },
     "frame": "task",
-    "show_toast": false,
-    "announce_to_chat": false,
     "hidden": false,
-    "background": "immersiveweapons:textures/block/red_stained_bulletproof_glass.png"
-  },
-  "rewards": {
-    "loot": [
-      "immersiveweapons:grant_encyclopedia_book_on_first_join"
-    ]
-  },
-  "criteria": {
-    "exist": {
-      "trigger": "minecraft:location",
-      "conditions": {
-        "location": {
-          "dimension": "minecraft:overworld"
-        }
-      }
+    "icon": {
+      "item": "immersiveweapons:tesla_sword",
+      "nbt": "{Damage:0}"
+    },
+    "show_toast": false,
+    "title": {
+      "color": "red",
+      "translate": "advancements.immersiveweapons.root.title"
     }
   },
   "requirements": [
     [
       "exist"
     ]
-  ]
+  ],
+  "rewards": {
+    "loot": [
+      "immersiveweapons:grant_encyclopedia_book_on_first_join"
+    ]
+  }
 }

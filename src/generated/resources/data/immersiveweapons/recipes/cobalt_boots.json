@@ -1,15 +1,15 @@
 {
   "type": "minecraft:crafting_shaped",
   "group": "cobalt",
-  "pattern": [
-    "a a",
-    "a a"
-  ],
   "key": {
     "a": {
       "tag": "forge:ingots/cobalt"
     }
   },
+  "pattern": [
+    "a a",
+    "a a"
+  ],
   "result": {
     "item": "immersiveweapons:cobalt_boots"
   }

@@ -1,11 +1,6 @@
 {
   "type": "minecraft:crafting_shaped",
   "group": "stone",
-  "pattern": [
-    " a ",
-    " b ",
-    " c "
-  ],
   "key": {
     "a": {
       "tag": "immersiveweapons:shards/stone"
@@ -17,8 +12,13 @@
       "item": "minecraft:feather"
     }
   },
+  "pattern": [
+    " a ",
+    " b ",
+    " c "
+  ],
   "result": {
-    "item": "immersiveweapons:stone_arrow",
-    "count": 4
+    "count": 4,
+    "item": "immersiveweapons:stone_arrow"
   }
 }

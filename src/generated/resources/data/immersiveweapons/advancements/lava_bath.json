@@ -1,26 +1,7 @@
 {
   "parent": "immersiveweapons:warm_and_toasty",
-  "display": {
-    "icon": {
-      "item": "minecraft:lava_bucket"
-    },
-    "title": {
-      "translate": "advancements.immersiveweapons.lava_bath.title"
-    },
-    "description": {
-      "translate": "advancements.immersiveweapons.lava_bath.description"
-    },
-    "frame": "challenge",
-    "show_toast": true,
-    "announce_to_chat": true,
-    "hidden": false
-  },
-  "rewards": {
-    "experience": 35
-  },
   "criteria": {
     "hold": {
-      "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
           {
@@ -44,13 +25,29 @@
             ]
           }
         ]
-      }
+      },
+      "trigger": "minecraft:inventory_changed"
     },
     "swim": {
-      "trigger": "minecraft:enter_block",
       "conditions": {
         "block": "minecraft:lava"
-      }
+      },
+      "trigger": "minecraft:enter_block"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.immersiveweapons.lava_bath.description"
+    },
+    "frame": "challenge",
+    "hidden": false,
+    "icon": {
+      "item": "minecraft:lava_bucket"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.immersiveweapons.lava_bath.title"
     }
   },
   "requirements": [
@@ -60,5 +57,8 @@
     [
       "swim"
     ]
-  ]
+  ],
+  "rewards": {
+    "experience": 35
+  }
 }

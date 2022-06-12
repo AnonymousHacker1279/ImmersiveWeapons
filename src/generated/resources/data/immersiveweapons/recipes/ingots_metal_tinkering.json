@@ -1,10 +1,10 @@
 {
   "type": "immersiveweapons:small_parts",
-  "material": {
-    "tag": "forge:ingots/metal"
-  },
   "craftables": [
     "immersiveweapons:grenade_assembly",
     "immersiveweapons:tool_joint"
-  ]
+  ],
+  "material": {
+    "tag": "forge:ingots/metal"
+  }
 }

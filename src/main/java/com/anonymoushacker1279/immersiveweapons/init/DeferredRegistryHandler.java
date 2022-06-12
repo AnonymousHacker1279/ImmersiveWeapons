@@ -72,7 +72,6 @@ import net.minecraft.world.item.*;
 import net.minecraft.world.item.Item.Properties;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
-import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.PressurePlateBlock.Sensitivity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -114,8 +113,6 @@ public class DeferredRegistryHandler {
 	public static final DeferredRegister<GlobalLootModifierSerializer<?>> GLOBAL_LOOT_MODIFIER_SERIALIZER = DeferredRegister.create(ForgeRegistries.Keys.LOOT_MODIFIER_SERIALIZERS, ImmersiveWeapons.MOD_ID);
 	// Tile Entity Register
 	public static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITIES = DeferredRegister.create(ForgeRegistries.BLOCK_ENTITIES, ImmersiveWeapons.MOD_ID);
-	// Biome Register
-	public static final DeferredRegister<Biome> BIOMES = DeferredRegister.create(ForgeRegistries.BIOMES, ImmersiveWeapons.MOD_ID);
 	// Effect Register
 	public static final DeferredRegister<MobEffect> EFFECTS = DeferredRegister.create(ForgeRegistries.MOB_EFFECTS, ImmersiveWeapons.MOD_ID);
 	// Structure Register
@@ -139,7 +136,6 @@ public class DeferredRegistryHandler {
 		PARTICLE_TYPES.register(modEventBus);
 		GLOBAL_LOOT_MODIFIER_SERIALIZER.register(modEventBus);
 		BLOCK_ENTITIES.register(modEventBus);
-		BIOMES.register(modEventBus);
 		EFFECTS.register(modEventBus);
 		STRUCTURE_FEATURES.register(modEventBus);
 		TREE_DECORATORS.register(modEventBus);

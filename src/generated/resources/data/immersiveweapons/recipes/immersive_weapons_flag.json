@@ -1,11 +1,6 @@
 {
   "type": "minecraft:crafting_shaped",
   "group": "flag",
-  "pattern": [
-    "bcb",
-    "bdb",
-    "a  "
-  ],
   "key": {
     "a": {
       "item": "immersiveweapons:flag_pole"
@@ -20,6 +15,11 @@
       "item": "minecraft:yellow_wool"
     }
   },
+  "pattern": [
+    "bcb",
+    "bdb",
+    "a  "
+  ],
   "result": {
     "item": "immersiveweapons:immersive_weapons_flag"
   }

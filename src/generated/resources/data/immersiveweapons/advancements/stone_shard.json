@@ -1,23 +1,7 @@
 {
   "parent": "immersiveweapons:shards",
-  "display": {
-    "icon": {
-      "item": "immersiveweapons:stone_shard"
-    },
-    "title": {
-      "translate": "advancements.immersiveweapons.stone_shard.title"
-    },
-    "description": {
-      "translate": "advancements.immersiveweapons.stone_shard.description"
-    },
-    "frame": "goal",
-    "show_toast": true,
-    "announce_to_chat": true,
-    "hidden": false
-  },
   "criteria": {
     "hold": {
-      "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
           {
@@ -26,7 +10,23 @@
             ]
           }
         ]
-      }
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.immersiveweapons.stone_shard.description"
+    },
+    "frame": "goal",
+    "hidden": false,
+    "icon": {
+      "item": "immersiveweapons:stone_shard"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.immersiveweapons.stone_shard.title"
     }
   },
   "requirements": [

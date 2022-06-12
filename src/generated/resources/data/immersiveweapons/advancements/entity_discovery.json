@@ -1,71 +1,68 @@
 {
   "parent": "immersiveweapons:root",
+  "criteria": {
+    "discover_celestial_tower": {
+      "conditions": {
+        "entity": "immersiveweapons:celestial_tower"
+      },
+      "trigger": "immersiveweapons:entity_discovered"
+    },
+    "discover_dying_soldier": {
+      "conditions": {
+        "entity": "immersiveweapons:dying_soldier"
+      },
+      "trigger": "immersiveweapons:entity_discovered"
+    },
+    "discover_field_medic": {
+      "conditions": {
+        "entity": "immersiveweapons:field_medic"
+      },
+      "trigger": "immersiveweapons:entity_discovered"
+    },
+    "discover_hans": {
+      "conditions": {
+        "entity": "immersiveweapons:hans"
+      },
+      "trigger": "immersiveweapons:entity_discovered"
+    },
+    "discover_lava_revenant": {
+      "conditions": {
+        "entity": "immersiveweapons:lava_revenant"
+      },
+      "trigger": "immersiveweapons:entity_discovered"
+    },
+    "discover_minuteman": {
+      "conditions": {
+        "entity": "immersiveweapons:minuteman"
+      },
+      "trigger": "immersiveweapons:entity_discovered"
+    },
+    "discover_rock_spider": {
+      "conditions": {
+        "entity": "immersiveweapons:rock_spider"
+      },
+      "trigger": "immersiveweapons:entity_discovered"
+    },
+    "discover_wandering_warrior": {
+      "conditions": {
+        "entity": "immersiveweapons:wandering_warrior"
+      },
+      "trigger": "immersiveweapons:entity_discovered"
+    }
+  },
   "display": {
-    "icon": {
-      "item": "minecraft:creeper_head"
-    },
-    "title": {
-      "translate": "advancements.immersiveweapons.entity_discovery.title"
-    },
+    "announce_to_chat": true,
     "description": {
       "translate": "advancements.immersiveweapons.entity_discovery.description"
     },
     "frame": "goal",
+    "hidden": false,
+    "icon": {
+      "item": "minecraft:creeper_head"
+    },
     "show_toast": true,
-    "announce_to_chat": true,
-    "hidden": false
-  },
-  "rewards": {
-    "experience": 150
-  },
-  "criteria": {
-    "discover_minuteman": {
-      "trigger": "immersiveweapons:entity_discovered",
-      "conditions": {
-        "entity": "immersiveweapons:minuteman"
-      }
-    },
-    "discover_field_medic": {
-      "trigger": "immersiveweapons:entity_discovered",
-      "conditions": {
-        "entity": "immersiveweapons:field_medic"
-      }
-    },
-    "discover_dying_soldier": {
-      "trigger": "immersiveweapons:entity_discovered",
-      "conditions": {
-        "entity": "immersiveweapons:dying_soldier"
-      }
-    },
-    "discover_wandering_warrior": {
-      "trigger": "immersiveweapons:entity_discovered",
-      "conditions": {
-        "entity": "immersiveweapons:wandering_warrior"
-      }
-    },
-    "discover_hans": {
-      "trigger": "immersiveweapons:entity_discovered",
-      "conditions": {
-        "entity": "immersiveweapons:hans"
-      }
-    },
-    "discover_lava_revenant": {
-      "trigger": "immersiveweapons:entity_discovered",
-      "conditions": {
-        "entity": "immersiveweapons:lava_revenant"
-      }
-    },
-    "discover_rock_spider": {
-      "trigger": "immersiveweapons:entity_discovered",
-      "conditions": {
-        "entity": "immersiveweapons:rock_spider"
-      }
-    },
-    "discover_celestial_tower": {
-      "trigger": "immersiveweapons:entity_discovered",
-      "conditions": {
-        "entity": "immersiveweapons:celestial_tower"
-      }
+    "title": {
+      "translate": "advancements.immersiveweapons.entity_discovery.title"
     }
   },
   "requirements": [
@@ -93,5 +90,8 @@
     [
       "discover_celestial_tower"
     ]
-  ]
+  ],
+  "rewards": {
+    "experience": 150
+  }
 }

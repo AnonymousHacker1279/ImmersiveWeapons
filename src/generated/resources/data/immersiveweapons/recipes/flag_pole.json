@@ -1,18 +1,18 @@
 {
   "type": "minecraft:crafting_shaped",
   "group": "flag",
-  "pattern": [
-    " a ",
-    " a ",
-    " a "
-  ],
   "key": {
     "a": {
       "tag": "forge:ingots/iron"
     }
   },
+  "pattern": [
+    " a ",
+    " a ",
+    " a "
+  ],
   "result": {
-    "item": "immersiveweapons:flag_pole",
-    "count": 3
+    "count": 3,
+    "item": "immersiveweapons:flag_pole"
   }
 }

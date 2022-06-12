@@ -1,11 +1,6 @@
 {
   "type": "minecraft:crafting_shaped",
   "group": "azul_keystone",
-  "pattern": [
-    "bbb",
-    "bab",
-    "bbb"
-  ],
   "key": {
     "a": {
       "tag": "forge:gems/diamond"
@@ -14,6 +9,11 @@
       "item": "immersiveweapons:azul_keystone_fragment"
     }
   },
+  "pattern": [
+    "bbb",
+    "bab",
+    "bbb"
+  ],
   "result": {
     "item": "immersiveweapons:azul_keystone"
   }

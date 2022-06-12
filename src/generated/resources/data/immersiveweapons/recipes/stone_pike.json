@@ -1,11 +1,6 @@
 {
   "type": "minecraft:crafting_shaped",
   "group": "stone",
-  "pattern": [
-    " a ",
-    " b ",
-    " c "
-  ],
   "key": {
     "a": {
       "item": "immersiveweapons:stone_pike_head"
@@ -17,6 +12,11 @@
       "item": "immersiveweapons:wooden_tool_rod"
     }
   },
+  "pattern": [
+    " a ",
+    " b ",
+    " c "
+  ],
   "result": {
     "item": "immersiveweapons:stone_pike"
   }

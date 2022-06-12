@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/button_pressed",
+  "textures": {
+    "texture": "immersiveweapons:block/burned_oak_planks"
+  }
+}

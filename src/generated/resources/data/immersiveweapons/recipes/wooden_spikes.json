@@ -1,11 +1,6 @@
 {
   "type": "minecraft:crafting_shaped",
   "group": "traps",
-  "pattern": [
-    "b b",
-    " a ",
-    "b b"
-  ],
   "key": {
     "a": {
       "tag": "minecraft:planks"
@@ -14,6 +9,11 @@
       "item": "minecraft:stick"
     }
   },
+  "pattern": [
+    "b b",
+    " a ",
+    "b b"
+  ],
   "result": {
     "item": "immersiveweapons:wooden_spikes"
   }

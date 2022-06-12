@@ -1,24 +1,24 @@
 {
   "parent": "immersiveweapons:azul_keystone",
+  "criteria": {
+    "activate": {
+      "conditions": {},
+      "trigger": "immersiveweapons:warrior_statue_activated"
+    }
+  },
   "display": {
-    "icon": {
-      "item": "immersiveweapons:azul_keystone"
-    },
-    "title": {
-      "translate": "advancements.immersiveweapons.tiltros.activated_warrior_statue.title"
-    },
+    "announce_to_chat": true,
     "description": {
       "translate": "advancements.immersiveweapons.tiltros.activated_warrior_statue.description"
     },
     "frame": "task",
+    "hidden": true,
+    "icon": {
+      "item": "immersiveweapons:azul_keystone"
+    },
     "show_toast": true,
-    "announce_to_chat": true,
-    "hidden": true
-  },
-  "criteria": {
-    "activate": {
-      "trigger": "immersiveweapons:warrior_statue_activated",
-      "conditions": {}
+    "title": {
+      "translate": "advancements.immersiveweapons.tiltros.activated_warrior_statue.title"
     }
   },
   "requirements": [

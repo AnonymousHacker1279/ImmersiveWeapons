@@ -1,10 +1,6 @@
 {
   "type": "minecraft:crafting_shaped",
   "group": "smoke_grenade",
-  "pattern": [
-    "aab",
-    "aa "
-  ],
   "key": {
     "a": {
       "item": "minecraft:arrow"
@@ -13,8 +9,12 @@
       "item": "immersiveweapons:smoke_powder"
     }
   },
+  "pattern": [
+    "aab",
+    "aa "
+  ],
   "result": {
-    "item": "immersiveweapons:smoke_grenade_arrow",
-    "count": 4
+    "count": 4,
+    "item": "immersiveweapons:smoke_grenade_arrow"
   }
 }

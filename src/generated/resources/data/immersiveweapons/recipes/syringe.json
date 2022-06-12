@@ -1,11 +1,6 @@
 {
   "type": "minecraft:crafting_shaped",
   "group": "first_aid",
-  "pattern": [
-    " a ",
-    " b ",
-    " b "
-  ],
   "key": {
     "a": {
       "tag": "forge:ingots/iron"
@@ -14,8 +9,13 @@
       "tag": "forge:nuggets/iron"
     }
   },
+  "pattern": [
+    " a ",
+    " b ",
+    " b "
+  ],
   "result": {
-    "item": "immersiveweapons:syringe",
-    "count": 2
+    "count": 2,
+    "item": "immersiveweapons:syringe"
   }
 }

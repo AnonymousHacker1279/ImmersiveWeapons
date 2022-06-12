@@ -1,11 +1,6 @@
 {
   "type": "minecraft:crafting_shaped",
   "group": "netherite",
-  "pattern": [
-    "aaa",
-    "aba",
-    "aaa"
-  ],
   "key": {
     "a": {
       "item": "immersiveweapons:diamond_arrow"
@@ -14,8 +9,13 @@
       "tag": "forge:ingots/netherite"
     }
   },
+  "pattern": [
+    "aaa",
+    "aba",
+    "aaa"
+  ],
   "result": {
-    "item": "immersiveweapons:netherite_arrow",
-    "count": 8
+    "count": 8,
+    "item": "immersiveweapons:netherite_arrow"
   }
 }

@@ -1,11 +1,6 @@
 {
   "type": "minecraft:crafting_shaped",
   "group": "ventus",
-  "pattern": [
-    "aaa",
-    "aba",
-    "aaa"
-  ],
   "key": {
     "a": {
       "tag": "immersiveweapons:shards/ventus"
@@ -14,6 +9,11 @@
       "tag": "forge:gems/diamond"
     }
   },
+  "pattern": [
+    "aaa",
+    "aba",
+    "aaa"
+  ],
   "result": {
     "item": "immersiveweapons:ventus_staff_core"
   }

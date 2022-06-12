@@ -1,11 +1,6 @@
 {
   "type": "minecraft:crafting_shaped",
   "group": "artillery",
-  "pattern": [
-    " b ",
-    "bab",
-    " b "
-  ],
   "key": {
     "a": {
       "item": "minecraft:tnt"
@@ -14,6 +9,11 @@
       "tag": "forge:stone"
     }
   },
+  "pattern": [
+    " b ",
+    "bab",
+    " b "
+  ],
   "result": {
     "item": "immersiveweapons:mortar_shell"
   }

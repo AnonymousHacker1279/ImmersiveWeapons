@@ -1,11 +1,6 @@
 {
   "type": "minecraft:crafting_shaped",
   "group": "firearm",
-  "pattern": [
-    " e ",
-    "abd",
-    " c "
-  ],
   "key": {
     "a": {
       "item": "immersiveweapons:heavy_wooden_stock"
@@ -23,6 +18,11 @@
       "item": "immersiveweapons:scope"
     }
   },
+  "pattern": [
+    " e ",
+    "abd",
+    " c "
+  ],
   "result": {
     "item": "immersiveweapons:musket_scope"
   }

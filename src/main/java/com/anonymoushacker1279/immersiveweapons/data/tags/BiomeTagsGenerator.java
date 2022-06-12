@@ -7,24 +7,36 @@ import com.anonymoushacker1279.immersiveweapons.world.level.levelgen.biomes.Biom
 import net.minecraft.data.BuiltinRegistries;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.tags.TagsProvider;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.packs.PackType;
 import net.minecraft.tags.BiomeTags;
+import net.minecraft.tags.TagManager;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.biome.Biomes;
 import net.minecraftforge.common.data.ExistingFileHelper;
+import net.minecraftforge.common.data.ExistingFileHelper.ResourceType;
 import org.jetbrains.annotations.NotNull;
 
 public class BiomeTagsGenerator extends TagsProvider<Biome> {
 
 	public BiomeTagsGenerator(DataGenerator generator, ExistingFileHelper fileHelper) {
 		super(generator, BuiltinRegistries.BIOME, ImmersiveWeapons.MOD_ID, fileHelper);
+
+		fileHelper.trackGenerated(new ResourceLocation(ImmersiveWeapons.MOD_ID, "battlefield"),
+				new ResourceType(PackType.SERVER_DATA, ".json", TagManager.getTagDir(BuiltinRegistries.BIOME.key())));
 	}
 
 	@Override
 	@SuppressWarnings("unchecked")
 	protected void addTags() {
+		// Biome tags
 		tag(ForgeWorldGenTagGroups.IS_PLAINS)
 				.add(Biomes.PLAINS, Biomes.SNOWY_PLAINS, Biomes.SUNFLOWER_PLAINS);
 
+		tag(ImmersiveWeaponsWorldGenTagGroups.IS_BATTLEFIELD)
+				.add(BiomesAndDimensions.BATTLEFIELD);
+
+		// Structure tags
 		tag(ImmersiveWeaponsWorldGenTagGroups.HAS_ABANDONED_FACTORY)
 				.addTags(ForgeWorldGenTagGroups.IS_PLAINS, BiomeTags.IS_FOREST);
 

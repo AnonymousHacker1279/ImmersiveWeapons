@@ -1,11 +1,6 @@
 {
   "type": "minecraft:crafting_shaped",
   "group": "tesla",
-  "pattern": [
-    "aa ",
-    "ab ",
-    " b "
-  ],
   "key": {
     "a": {
       "tag": "immersiveweapons:ingots/tesla"
@@ -14,6 +9,11 @@
       "item": "immersiveweapons:obsidian_rod"
     }
   },
+  "pattern": [
+    "aa ",
+    "ab ",
+    " b "
+  ],
   "result": {
     "item": "immersiveweapons:tesla_axe"
   }

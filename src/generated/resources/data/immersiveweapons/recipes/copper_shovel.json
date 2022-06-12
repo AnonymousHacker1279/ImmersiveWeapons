@@ -1,11 +1,6 @@
 {
   "type": "minecraft:crafting_shaped",
   "group": "copper",
-  "pattern": [
-    " a ",
-    " b ",
-    " b "
-  ],
   "key": {
     "a": {
       "tag": "forge:ingots/copper"
@@ -14,6 +9,11 @@
       "item": "minecraft:stick"
     }
   },
+  "pattern": [
+    " a ",
+    " b ",
+    " b "
+  ],
   "result": {
     "item": "immersiveweapons:copper_shovel"
   }

@@ -1,27 +1,7 @@
 {
   "parent": "immersiveweapons:ventus_shard",
-  "display": {
-    "icon": {
-      "item": "immersiveweapons:ventus_shovel",
-      "nbt": "{Damage:0}"
-    },
-    "title": {
-      "translate": "advancements.immersiveweapons.ventus_shovel.title"
-    },
-    "description": {
-      "translate": "advancements.immersiveweapons.ventus_shovel.description"
-    },
-    "frame": "goal",
-    "show_toast": true,
-    "announce_to_chat": true,
-    "hidden": false
-  },
-  "rewards": {
-    "experience": 35
-  },
   "criteria": {
     "hold": {
-      "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
           {
@@ -30,12 +10,32 @@
             ]
           }
         ]
-      }
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.immersiveweapons.ventus_shovel.description"
+    },
+    "frame": "goal",
+    "hidden": false,
+    "icon": {
+      "item": "immersiveweapons:ventus_shovel",
+      "nbt": "{Damage:0}"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.immersiveweapons.ventus_shovel.title"
     }
   },
   "requirements": [
     [
       "hold"
     ]
-  ]
+  ],
+  "rewards": {
+    "experience": 35
+  }
 }
