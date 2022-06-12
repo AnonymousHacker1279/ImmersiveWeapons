@@ -1,10 +1,6 @@
 {
   "type": "minecraft:crafting_shaped",
   "group": "tables",
-  "pattern": [
-    "a",
-    "b"
-  ],
   "key": {
     "a": {
       "item": "minecraft:jungle_slab"
@@ -13,6 +9,10 @@
       "item": "minecraft:jungle_fence"
     }
   },
+  "pattern": [
+    "a",
+    "b"
+  ],
   "result": {
     "item": "immersiveweapons:jungle_table"
   }

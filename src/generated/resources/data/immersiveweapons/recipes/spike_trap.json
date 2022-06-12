@@ -1,11 +1,6 @@
 {
   "type": "minecraft:crafting_shaped",
   "group": "traps",
-  "pattern": [
-    "ccc",
-    "bbb",
-    " a "
-  ],
   "key": {
     "a": {
       "tag": "forge:dusts/redstone"
@@ -17,6 +12,11 @@
       "tag": "forge:nuggets/iron"
     }
   },
+  "pattern": [
+    "ccc",
+    "bbb",
+    " a "
+  ],
   "result": {
     "item": "immersiveweapons:spike_trap"
   }

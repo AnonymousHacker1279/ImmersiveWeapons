@@ -1,15 +1,15 @@
 {
   "type": "minecraft:crafting_shaped",
   "group": "copper",
-  "pattern": [
-    "aaa",
-    "a a"
-  ],
   "key": {
     "a": {
       "tag": "forge:ingots/copper"
     }
   },
+  "pattern": [
+    "aaa",
+    "a a"
+  ],
   "result": {
     "item": "immersiveweapons:copper_helmet"
   }

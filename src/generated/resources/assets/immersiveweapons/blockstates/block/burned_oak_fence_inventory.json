@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/fence_inventory",
+  "textures": {
+    "texture": "immersiveweapons:block/burned_oak_planks"
+  }
+}

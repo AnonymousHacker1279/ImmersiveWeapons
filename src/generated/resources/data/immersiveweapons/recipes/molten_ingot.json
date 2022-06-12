@@ -1,11 +1,6 @@
 {
   "type": "minecraft:crafting_shaped",
   "group": "molten",
-  "pattern": [
-    "aaa",
-    "aba",
-    "aaa"
-  ],
   "key": {
     "a": {
       "tag": "immersiveweapons:shards/molten"
@@ -14,6 +9,11 @@
       "item": "immersiveweapons:obsidian_shard"
     }
   },
+  "pattern": [
+    "aaa",
+    "aba",
+    "aaa"
+  ],
   "result": {
     "item": "immersiveweapons:molten_ingot"
   }

@@ -1,11 +1,6 @@
 {
   "type": "minecraft:crafting_shaped",
   "group": "cobalt",
-  "pattern": [
-    " a ",
-    " b ",
-    " c "
-  ],
   "key": {
     "a": {
       "tag": "forge:ingots/cobalt"
@@ -17,8 +12,13 @@
       "item": "minecraft:feather"
     }
   },
+  "pattern": [
+    " a ",
+    " b ",
+    " c "
+  ],
   "result": {
-    "item": "immersiveweapons:cobalt_arrow",
-    "count": 4
+    "count": 4,
+    "item": "immersiveweapons:cobalt_arrow"
   }
 }

@@ -1,34 +1,34 @@
 {
   "parent": "immersiveweapons:entity_discovery",
+  "criteria": {
+    "discover": {
+      "conditions": {
+        "entity": "immersiveweapons:celestial_tower"
+      },
+      "trigger": "immersiveweapons:entity_discovered"
+    }
+  },
   "display": {
-    "icon": {
-      "item": "immersiveweapons:celestial_fragment"
-    },
-    "title": {
-      "translate": "advancements.immersiveweapons.discover_celestial_tower.title"
-    },
+    "announce_to_chat": true,
     "description": {
       "translate": "advancements.immersiveweapons.discover_celestial_tower.description"
     },
     "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "immersiveweapons:celestial_fragment"
+    },
     "show_toast": true,
-    "announce_to_chat": true,
-    "hidden": false
-  },
-  "rewards": {
-    "experience": 20
-  },
-  "criteria": {
-    "discover": {
-      "trigger": "immersiveweapons:entity_discovered",
-      "conditions": {
-        "entity": "immersiveweapons:celestial_tower"
-      }
+    "title": {
+      "translate": "advancements.immersiveweapons.discover_celestial_tower.title"
     }
   },
   "requirements": [
     [
       "discover"
     ]
-  ]
+  ],
+  "rewards": {
+    "experience": 20
+  }
 }

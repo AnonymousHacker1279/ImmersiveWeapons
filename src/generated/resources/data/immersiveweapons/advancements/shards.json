@@ -1,23 +1,7 @@
 {
   "parent": "immersiveweapons:root",
-  "display": {
-    "icon": {
-      "item": "immersiveweapons:stone_shard"
-    },
-    "title": {
-      "translate": "advancements.immersiveweapons.shards.title"
-    },
-    "description": {
-      "translate": "advancements.immersiveweapons.shards.description"
-    },
-    "frame": "task",
-    "show_toast": false,
-    "announce_to_chat": false,
-    "hidden": false
-  },
   "criteria": {
     "hold": {
-      "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
           {
@@ -26,10 +10,10 @@
             ]
           }
         ]
-      }
+      },
+      "trigger": "minecraft:inventory_changed"
     },
     "hold1": {
-      "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
           {
@@ -38,10 +22,10 @@
             ]
           }
         ]
-      }
+      },
+      "trigger": "minecraft:inventory_changed"
     },
     "hold2": {
-      "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
           {
@@ -50,10 +34,10 @@
             ]
           }
         ]
-      }
+      },
+      "trigger": "minecraft:inventory_changed"
     },
     "hold3": {
-      "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
           {
@@ -62,10 +46,10 @@
             ]
           }
         ]
-      }
+      },
+      "trigger": "minecraft:inventory_changed"
     },
     "hold4": {
-      "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
           {
@@ -74,10 +58,10 @@
             ]
           }
         ]
-      }
+      },
+      "trigger": "minecraft:inventory_changed"
     },
     "hold5": {
-      "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
           {
@@ -86,7 +70,23 @@
             ]
           }
         ]
-      }
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": false,
+    "description": {
+      "translate": "advancements.immersiveweapons.shards.description"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "immersiveweapons:stone_shard"
+    },
+    "show_toast": false,
+    "title": {
+      "translate": "advancements.immersiveweapons.shards.title"
     }
   },
   "requirements": [

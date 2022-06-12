@@ -1,11 +1,6 @@
 {
   "type": "minecraft:crafting_shaped",
   "group": "cloth_scrap",
-  "pattern": [
-    "bbb",
-    "bab",
-    "bbb"
-  ],
   "key": {
     "a": {
       "tag": "forge:string"
@@ -14,8 +9,13 @@
       "item": "minecraft:grass"
     }
   },
+  "pattern": [
+    "bbb",
+    "bab",
+    "bbb"
+  ],
   "result": {
-    "item": "immersiveweapons:cloth_scrap",
-    "count": 4
+    "count": 4,
+    "item": "immersiveweapons:cloth_scrap"
   }
 }

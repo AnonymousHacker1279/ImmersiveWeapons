@@ -1,30 +1,30 @@
 {
   "parent": "immersiveweapons:root",
-  "display": {
-    "icon": {
-      "item": "minecraft:oak_planks"
-    },
-    "title": {
-      "translate": "advancements.immersiveweapons.planks.title"
-    },
-    "description": {
-      "translate": "advancements.immersiveweapons.planks.description"
-    },
-    "frame": "task",
-    "show_toast": true,
-    "announce_to_chat": true,
-    "hidden": false
-  },
   "criteria": {
     "hold": {
-      "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
           {
             "tag": "minecraft:planks"
           }
         ]
-      }
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.immersiveweapons.planks.description"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "minecraft:oak_planks"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.immersiveweapons.planks.title"
     }
   },
   "requirements": [

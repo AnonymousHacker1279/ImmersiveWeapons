@@ -1,16 +1,16 @@
 {
   "type": "minecraft:crafting_shaped",
   "group": "corrugated_iron",
-  "pattern": [
-    "aaa"
-  ],
   "key": {
     "a": {
       "tag": "forge:storage_blocks/iron"
     }
   },
+  "pattern": [
+    "aaa"
+  ],
   "result": {
-    "item": "immersiveweapons:corrugated_iron_panel",
-    "count": 8
+    "count": 8,
+    "item": "immersiveweapons:corrugated_iron_panel"
   }
 }

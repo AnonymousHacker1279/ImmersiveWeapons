@@ -1,26 +1,7 @@
 {
   "parent": "immersiveweapons:root",
-  "display": {
-    "icon": {
-      "item": "immersiveweapons:netherite_arrow"
-    },
-    "title": {
-      "translate": "advancements.immersiveweapons.netherite_projectile.title"
-    },
-    "description": {
-      "translate": "advancements.immersiveweapons.netherite_projectile.description"
-    },
-    "frame": "challenge",
-    "show_toast": true,
-    "announce_to_chat": true,
-    "hidden": false
-  },
-  "rewards": {
-    "experience": 50
-  },
   "criteria": {
     "hold": {
-      "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
           {
@@ -29,10 +10,10 @@
             ]
           }
         ]
-      }
+      },
+      "trigger": "minecraft:inventory_changed"
     },
     "hold1": {
-      "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
           {
@@ -41,7 +22,23 @@
             ]
           }
         ]
-      }
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.immersiveweapons.netherite_projectile.description"
+    },
+    "frame": "challenge",
+    "hidden": false,
+    "icon": {
+      "item": "immersiveweapons:netherite_arrow"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.immersiveweapons.netherite_projectile.title"
     }
   },
   "requirements": [
@@ -51,5 +48,8 @@
     [
       "hold1"
     ]
-  ]
+  ],
+  "rewards": {
+    "experience": 50
+  }
 }

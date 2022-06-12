@@ -2,24 +2,24 @@
   "type": "minecraft:entity",
   "pools": [
     {
-      "rolls": 1.0,
       "bonus_rolls": 0.0,
+      "conditions": [
+        {
+          "condition": "minecraft:killed_by_player"
+        },
+        {
+          "chance": 0.015,
+          "condition": "minecraft:random_chance_with_looting",
+          "looting_multiplier": 0.03
+        }
+      ],
       "entries": [
         {
           "type": "minecraft:item",
           "name": "immersiveweapons:used_syringe"
         }
       ],
-      "conditions": [
-        {
-          "condition": "minecraft:killed_by_player"
-        },
-        {
-          "condition": "minecraft:random_chance_with_looting",
-          "chance": 0.015,
-          "looting_multiplier": 0.03
-        }
-      ]
+      "rolls": 1.0
     }
   ]
 }

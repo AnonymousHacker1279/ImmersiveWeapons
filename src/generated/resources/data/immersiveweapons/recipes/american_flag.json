@@ -1,11 +1,6 @@
 {
   "type": "minecraft:crafting_shaped",
   "group": "flag",
-  "pattern": [
-    "bcc",
-    "bdd",
-    "a  "
-  ],
   "key": {
     "a": {
       "item": "immersiveweapons:flag_pole"
@@ -20,6 +15,11 @@
       "item": "minecraft:white_wool"
     }
   },
+  "pattern": [
+    "bcc",
+    "bdd",
+    "a  "
+  ],
   "result": {
     "item": "immersiveweapons:american_flag"
   }

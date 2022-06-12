@@ -16,7 +16,7 @@
     }
   ],
   "result": {
-    "item": "immersiveweapons:smoke_powder",
-    "count": 4
+    "count": 4,
+    "item": "immersiveweapons:smoke_powder"
   }
 }

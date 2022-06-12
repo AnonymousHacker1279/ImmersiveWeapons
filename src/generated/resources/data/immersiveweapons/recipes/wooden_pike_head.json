@@ -1,10 +1,6 @@
 {
   "type": "minecraft:crafting_shaped",
   "group": "wood",
-  "pattern": [
-    " a ",
-    " b "
-  ],
   "key": {
     "a": {
       "tag": "minecraft:planks"
@@ -13,6 +9,10 @@
       "tag": "immersiveweapons:shards/wood"
     }
   },
+  "pattern": [
+    " a ",
+    " b "
+  ],
   "result": {
     "item": "immersiveweapons:wooden_pike_head"
   }

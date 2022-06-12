@@ -8,6 +8,5 @@
 			"type": "minecraft:fixed",
 			"biome": "immersiveweapons:tiltros"
 		}
-	},
-	"forge:use_server_seed": true
+	}
 }

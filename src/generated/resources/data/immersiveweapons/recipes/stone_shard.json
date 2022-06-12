@@ -7,7 +7,7 @@
     }
   ],
   "result": {
-    "item": "immersiveweapons:stone_shard",
-    "count": 3
+    "count": 3,
+    "item": "immersiveweapons:stone_shard"
   }
 }

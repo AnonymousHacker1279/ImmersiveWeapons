@@ -1,11 +1,6 @@
 {
   "type": "minecraft:crafting_shaped",
   "group": "barbed_wire",
-  "pattern": [
-    "bab",
-    "aba",
-    "bab"
-  ],
   "key": {
     "a": {
       "tag": "forge:ingots/iron"
@@ -14,8 +9,13 @@
       "tag": "forge:nuggets/metal"
     }
   },
+  "pattern": [
+    "bab",
+    "aba",
+    "bab"
+  ],
   "result": {
-    "item": "immersiveweapons:barbed_wire",
-    "count": 3
+    "count": 3,
+    "item": "immersiveweapons:barbed_wire"
   }
 }

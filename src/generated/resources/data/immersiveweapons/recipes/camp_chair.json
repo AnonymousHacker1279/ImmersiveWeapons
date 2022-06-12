@@ -1,11 +1,6 @@
 {
   "type": "minecraft:crafting_shaped",
   "group": "chairs",
-  "pattern": [
-    "b  ",
-    "bbb",
-    "a a"
-  ],
   "key": {
     "a": {
       "tag": "forge:ingots/metal"
@@ -14,6 +9,11 @@
       "tag": "minecraft:wool"
     }
   },
+  "pattern": [
+    "b  ",
+    "bbb",
+    "a a"
+  ],
   "result": {
     "item": "immersiveweapons:camp_chair"
   }

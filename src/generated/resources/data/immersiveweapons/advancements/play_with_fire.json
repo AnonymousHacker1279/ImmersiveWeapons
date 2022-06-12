@@ -1,50 +1,51 @@
 {
   "parent": "immersiveweapons:molten_ingot",
-  "display": {
-    "icon": {
-      "item": "immersiveweapons:molten_block"
-    },
-    "title": {
-      "translate": "advancements.immersiveweapons.play_with_fire.title"
-    },
-    "description": {
-      "translate": "advancements.immersiveweapons.play_with_fire.description"
-    },
-    "frame": "challenge",
-    "show_toast": true,
-    "announce_to_chat": true,
-    "hidden": false
-  },
-  "rewards": {
-    "experience": 150
-  },
   "criteria": {
     "have_advancements": {
-      "trigger": "minecraft:location",
       "conditions": {
         "player": [
           {
             "condition": "minecraft:entity_properties",
+            "entity": "this",
             "predicate": {
-              "player": {
+              "type_specific": {
+                "type": "player",
                 "advancements": {
-                  "immersiveweapons:molten_pickaxe": true,
-                  "immersiveweapons:molten_shovel": true,
                   "immersiveweapons:molten_axe": true,
                   "immersiveweapons:molten_hoe": true,
+                  "immersiveweapons:molten_pickaxe": true,
+                  "immersiveweapons:molten_shovel": true,
                   "immersiveweapons:molten_sword": true
                 }
               }
-            },
-            "entity": "this"
+            }
           }
         ]
-      }
+      },
+      "trigger": "minecraft:location"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.immersiveweapons.play_with_fire.description"
+    },
+    "frame": "challenge",
+    "hidden": false,
+    "icon": {
+      "item": "immersiveweapons:molten_block"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.immersiveweapons.play_with_fire.title"
     }
   },
   "requirements": [
     [
       "have_advancements"
     ]
-  ]
+  ],
+  "rewards": {
+    "experience": 150
+  }
 }
