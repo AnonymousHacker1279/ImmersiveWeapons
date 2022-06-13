@@ -1,12 +1,12 @@
-package com.anonymoushacker1279.immersiveweapons.item.projectile.arrow;
+package tech.anonymoushacker1279.immersiveweapons.item.projectile.arrow;
 
-import com.anonymoushacker1279.immersiveweapons.entity.projectile.ArrowEntities;
-import com.anonymoushacker1279.immersiveweapons.entity.projectile.ArrowEntities.SmokeGrenadeArrowEntity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.projectile.AbstractArrow.Pickup;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
+import tech.anonymoushacker1279.immersiveweapons.entity.projectile.ArrowEntities;
+import tech.anonymoushacker1279.immersiveweapons.entity.projectile.ArrowEntities.SmokeGrenadeArrowEntity;
 
 public class SmokeGrenadeArrowItem extends AbstractArrowItem {
 

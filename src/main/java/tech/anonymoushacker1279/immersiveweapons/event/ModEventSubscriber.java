@@ -1,14 +1,14 @@
-package com.anonymoushacker1279.immersiveweapons.event;
+package tech.anonymoushacker1279.immersiveweapons.event;
 
-import com.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
-import com.anonymoushacker1279.immersiveweapons.entity.monster.*;
-import com.anonymoushacker1279.immersiveweapons.entity.monster.lava_revenant.LavaRevenantEntity;
-import com.anonymoushacker1279.immersiveweapons.entity.neutral.AbstractFieldMedicEntity;
-import com.anonymoushacker1279.immersiveweapons.entity.neutral.AbstractMinutemanEntity;
-import com.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
 import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
+import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
+import tech.anonymoushacker1279.immersiveweapons.entity.monster.*;
+import tech.anonymoushacker1279.immersiveweapons.entity.monster.lava_revenant.LavaRevenantEntity;
+import tech.anonymoushacker1279.immersiveweapons.entity.neutral.AbstractFieldMedicEntity;
+import tech.anonymoushacker1279.immersiveweapons.entity.neutral.AbstractMinutemanEntity;
+import tech.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
 
 @EventBusSubscriber(modid = ImmersiveWeapons.MOD_ID, bus = EventBusSubscriber.Bus.MOD)
 public class ModEventSubscriber {

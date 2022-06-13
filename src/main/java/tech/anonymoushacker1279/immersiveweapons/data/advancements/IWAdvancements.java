@@ -1,11 +1,5 @@
-package com.anonymoushacker1279.immersiveweapons.data.advancements;
+package tech.anonymoushacker1279.immersiveweapons.data.advancements;
 
-import com.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
-import com.anonymoushacker1279.immersiveweapons.advancement.EntityDiscoveredTrigger;
-import com.anonymoushacker1279.immersiveweapons.advancement.WarriorStatueActivatedTrigger;
-import com.anonymoushacker1279.immersiveweapons.data.tags.groups.immersiveweapons.ImmersiveWeaponsItemTagGroups;
-import com.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
-import com.anonymoushacker1279.immersiveweapons.world.level.levelgen.biomes.BiomesAndDimensions;
 import net.minecraft.ChatFormatting;
 import net.minecraft.advancements.*;
 import net.minecraft.advancements.Advancement.Builder;
@@ -18,6 +12,12 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraftforge.common.Tags;
+import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
+import tech.anonymoushacker1279.immersiveweapons.advancement.EntityDiscoveredTrigger.TriggerInstance;
+import tech.anonymoushacker1279.immersiveweapons.advancement.WarriorStatueActivatedTrigger;
+import tech.anonymoushacker1279.immersiveweapons.data.tags.groups.immersiveweapons.ImmersiveWeaponsItemTagGroups;
+import tech.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
+import tech.anonymoushacker1279.immersiveweapons.world.level.levelgen.biomes.BiomesAndDimensions;
 
 import java.util.function.Consumer;
 
@@ -843,28 +843,28 @@ public class IWAdvancements implements Consumer<Consumer<Advancement>> {
 						Component.translatable("advancements.immersiveweapons.entity_discovery.title"),
 						Component.translatable("advancements.immersiveweapons.entity_discovery.description"),
 						null, FrameType.GOAL, true, true, false)
-				.addCriterion("discover_minuteman", new EntityDiscoveredTrigger.TriggerInstance(
+				.addCriterion("discover_minuteman", new TriggerInstance(
 						Composite.ANY,
 						DeferredRegistryHandler.MINUTEMAN_ENTITY.getId()))
-				.addCriterion("discover_field_medic", new EntityDiscoveredTrigger.TriggerInstance(
+				.addCriterion("discover_field_medic", new TriggerInstance(
 						Composite.ANY,
 						DeferredRegistryHandler.FIELD_MEDIC_ENTITY.getId()))
-				.addCriterion("discover_dying_soldier", new EntityDiscoveredTrigger.TriggerInstance(
+				.addCriterion("discover_dying_soldier", new TriggerInstance(
 						Composite.ANY,
 						DeferredRegistryHandler.DYING_SOLDIER_ENTITY.getId()))
-				.addCriterion("discover_wandering_warrior", new EntityDiscoveredTrigger.TriggerInstance(
+				.addCriterion("discover_wandering_warrior", new TriggerInstance(
 						Composite.ANY,
 						DeferredRegistryHandler.WANDERING_WARRIOR_ENTITY.getId()))
-				.addCriterion("discover_hans", new EntityDiscoveredTrigger.TriggerInstance(
+				.addCriterion("discover_hans", new TriggerInstance(
 						Composite.ANY,
 						DeferredRegistryHandler.HANS_ENTITY.getId()))
-				.addCriterion("discover_lava_revenant", new EntityDiscoveredTrigger.TriggerInstance(
+				.addCriterion("discover_lava_revenant", new TriggerInstance(
 						Composite.ANY,
 						DeferredRegistryHandler.LAVA_REVENANT_ENTITY.getId()))
-				.addCriterion("discover_rock_spider", new EntityDiscoveredTrigger.TriggerInstance(
+				.addCriterion("discover_rock_spider", new TriggerInstance(
 						Composite.ANY,
 						DeferredRegistryHandler.ROCK_SPIDER_ENTITY.getId()))
-				.addCriterion("discover_celestial_tower", new EntityDiscoveredTrigger.TriggerInstance(
+				.addCriterion("discover_celestial_tower", new TriggerInstance(
 						Composite.ANY,
 						DeferredRegistryHandler.CELESTIAL_TOWER_ENTITY.getId()))
 				.rewards(AdvancementRewards.Builder.experience(150))
@@ -875,7 +875,7 @@ public class IWAdvancements implements Consumer<Consumer<Advancement>> {
 						Component.translatable("advancements.immersiveweapons.discover_minuteman.title"),
 						Component.translatable("advancements.immersiveweapons.discover_minuteman.description"),
 						null, FrameType.TASK, true, true, false)
-				.addCriterion("discover", new EntityDiscoveredTrigger.TriggerInstance(
+				.addCriterion("discover", new TriggerInstance(
 						Composite.ANY,
 						DeferredRegistryHandler.MINUTEMAN_ENTITY.getId()))
 				.rewards(AdvancementRewards.Builder.experience(20))
@@ -886,7 +886,7 @@ public class IWAdvancements implements Consumer<Consumer<Advancement>> {
 						Component.translatable("advancements.immersiveweapons.discover_field_medic.title"),
 						Component.translatable("advancements.immersiveweapons.discover_field_medic.description"),
 						null, FrameType.TASK, true, true, false)
-				.addCriterion("discover", new EntityDiscoveredTrigger.TriggerInstance(
+				.addCriterion("discover", new TriggerInstance(
 						Composite.ANY,
 						DeferredRegistryHandler.FIELD_MEDIC_ENTITY.getId()))
 				.rewards(AdvancementRewards.Builder.experience(20))
@@ -897,7 +897,7 @@ public class IWAdvancements implements Consumer<Consumer<Advancement>> {
 						Component.translatable("advancements.immersiveweapons.discover_dying_soldier.title"),
 						Component.translatable("advancements.immersiveweapons.discover_dying_soldier.description"),
 						null, FrameType.TASK, true, true, false)
-				.addCriterion("discover", new EntityDiscoveredTrigger.TriggerInstance(
+				.addCriterion("discover", new TriggerInstance(
 						Composite.ANY,
 						DeferredRegistryHandler.DYING_SOLDIER_ENTITY.getId()))
 				.rewards(AdvancementRewards.Builder.experience(20))
@@ -908,7 +908,7 @@ public class IWAdvancements implements Consumer<Consumer<Advancement>> {
 						Component.translatable("advancements.immersiveweapons.discover_wandering_warrior.title"),
 						Component.translatable("advancements.immersiveweapons.discover_wandering_warrior.description"),
 						null, FrameType.TASK, true, true, false)
-				.addCriterion("discover", new EntityDiscoveredTrigger.TriggerInstance(
+				.addCriterion("discover", new TriggerInstance(
 						Composite.ANY,
 						DeferredRegistryHandler.WANDERING_WARRIOR_ENTITY.getId()))
 				.rewards(AdvancementRewards.Builder.experience(20))
@@ -919,7 +919,7 @@ public class IWAdvancements implements Consumer<Consumer<Advancement>> {
 						Component.translatable("advancements.immersiveweapons.discover_hans.title"),
 						Component.translatable("advancements.immersiveweapons.discover_hans.description"),
 						null, FrameType.TASK, true, true, false)
-				.addCriterion("discover", new EntityDiscoveredTrigger.TriggerInstance(
+				.addCriterion("discover", new TriggerInstance(
 						Composite.ANY,
 						DeferredRegistryHandler.HANS_ENTITY.getId()))
 				.rewards(AdvancementRewards.Builder.experience(20))
@@ -930,7 +930,7 @@ public class IWAdvancements implements Consumer<Consumer<Advancement>> {
 						Component.translatable("advancements.immersiveweapons.discover_lava_revenant.title"),
 						Component.translatable("advancements.immersiveweapons.discover_lava_revenant.description"),
 						null, FrameType.TASK, true, true, false)
-				.addCriterion("discover", new EntityDiscoveredTrigger.TriggerInstance(
+				.addCriterion("discover", new TriggerInstance(
 						Composite.ANY,
 						DeferredRegistryHandler.LAVA_REVENANT_ENTITY.getId()))
 				.rewards(AdvancementRewards.Builder.experience(20))
@@ -941,7 +941,7 @@ public class IWAdvancements implements Consumer<Consumer<Advancement>> {
 						Component.translatable("advancements.immersiveweapons.discover_rock_spider.title"),
 						Component.translatable("advancements.immersiveweapons.discover_rock_spider.description"),
 						null, FrameType.TASK, true, true, false)
-				.addCriterion("discover", new EntityDiscoveredTrigger.TriggerInstance(
+				.addCriterion("discover", new TriggerInstance(
 						Composite.ANY,
 						DeferredRegistryHandler.ROCK_SPIDER_ENTITY.getId()))
 				.rewards(AdvancementRewards.Builder.experience(20))
@@ -952,7 +952,7 @@ public class IWAdvancements implements Consumer<Consumer<Advancement>> {
 						Component.translatable("advancements.immersiveweapons.discover_celestial_tower.title"),
 						Component.translatable("advancements.immersiveweapons.discover_celestial_tower.description"),
 						null, FrameType.TASK, true, true, false)
-				.addCriterion("discover", new EntityDiscoveredTrigger.TriggerInstance(
+				.addCriterion("discover", new TriggerInstance(
 						Composite.ANY,
 						DeferredRegistryHandler.CELESTIAL_TOWER_ENTITY.getId()))
 				.rewards(AdvancementRewards.Builder.experience(20))

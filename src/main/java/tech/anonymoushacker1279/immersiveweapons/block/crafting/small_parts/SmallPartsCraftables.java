@@ -1,11 +1,11 @@
-package com.anonymoushacker1279.immersiveweapons.block.crafting.small_parts;
+package tech.anonymoushacker1279.immersiveweapons.block.crafting.small_parts;
 
-import com.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
-import com.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
-import com.anonymoushacker1279.immersiveweapons.item.crafting.SmallPartsRecipe;
 import com.mojang.datafixers.util.Pair;
 import net.minecraft.world.item.*;
 import net.minecraft.world.item.crafting.RecipeManager;
+import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
+import tech.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
+import tech.anonymoushacker1279.immersiveweapons.item.crafting.SmallPartsRecipe;
 
 import java.util.ArrayList;
 import java.util.List;

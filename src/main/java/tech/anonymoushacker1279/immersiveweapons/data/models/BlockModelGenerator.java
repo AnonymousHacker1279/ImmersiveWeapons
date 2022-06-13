@@ -1,8 +1,5 @@
-package com.anonymoushacker1279.immersiveweapons.data.models;
+package tech.anonymoushacker1279.immersiveweapons.data.models;
 
-import com.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
-import com.anonymoushacker1279.immersiveweapons.data.tags.lists.BlockTagLists;
-import com.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
 import com.google.common.collect.*;
 import com.google.gson.JsonElement;
 import net.minecraft.core.Direction;
@@ -15,6 +12,9 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.properties.*;
 import net.minecraftforge.registries.ForgeRegistries;
+import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
+import tech.anonymoushacker1279.immersiveweapons.data.tags.lists.BlockTagLists;
+import tech.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
 
 import javax.annotation.Nullable;
 import java.util.*;

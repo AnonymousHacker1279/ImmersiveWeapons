@@ -1,11 +1,11 @@
-package com.anonymoushacker1279.immersiveweapons.entity;
+package tech.anonymoushacker1279.immersiveweapons.entity;
 
-import com.anonymoushacker1279.immersiveweapons.advancement.IWCriteriaTriggers;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.registries.ForgeRegistries;
+import tech.anonymoushacker1279.immersiveweapons.advancement.IWCriteriaTriggers;
 
 public interface GrantAdvancementOnDiscovery {
 

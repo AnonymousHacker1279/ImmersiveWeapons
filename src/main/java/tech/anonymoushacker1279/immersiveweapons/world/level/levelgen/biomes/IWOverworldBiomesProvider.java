@@ -1,4 +1,4 @@
-package com.anonymoushacker1279.immersiveweapons.world.level.levelgen.biomes;
+package tech.anonymoushacker1279.immersiveweapons.world.level.levelgen.biomes;
 
 import com.mojang.datafixers.util.Pair;
 import net.minecraft.core.Registry;

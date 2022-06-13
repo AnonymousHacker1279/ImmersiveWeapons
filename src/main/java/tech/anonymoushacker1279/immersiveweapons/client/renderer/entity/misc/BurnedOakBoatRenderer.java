@@ -1,4 +1,4 @@
-package com.anonymoushacker1279.immersiveweapons.client.renderer.entity.misc;
+package tech.anonymoushacker1279.immersiveweapons.client.renderer.entity.misc;
 
 import com.google.common.collect.ImmutableMap;
 import com.mojang.datafixers.util.Pair;

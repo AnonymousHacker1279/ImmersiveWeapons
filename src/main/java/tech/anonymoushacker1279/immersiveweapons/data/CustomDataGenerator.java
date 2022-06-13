@@ -1,15 +1,15 @@
-package com.anonymoushacker1279.immersiveweapons.data;
+package tech.anonymoushacker1279.immersiveweapons.data;
 
-import com.anonymoushacker1279.immersiveweapons.data.advancements.AdvancementProvider;
-import com.anonymoushacker1279.immersiveweapons.data.loot.LootTableGenerator;
-import com.anonymoushacker1279.immersiveweapons.data.models.ModelProvider;
-import com.anonymoushacker1279.immersiveweapons.data.recipes.RecipeGenerator;
-import com.anonymoushacker1279.immersiveweapons.data.tags.*;
 import net.minecraft.data.DataGenerator;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
 import net.minecraftforge.forge.event.lifecycle.GatherDataEvent;
+import tech.anonymoushacker1279.immersiveweapons.data.advancements.AdvancementProvider;
+import tech.anonymoushacker1279.immersiveweapons.data.loot.LootTableGenerator;
+import tech.anonymoushacker1279.immersiveweapons.data.models.ModelProvider;
+import tech.anonymoushacker1279.immersiveweapons.data.recipes.RecipeGenerator;
+import tech.anonymoushacker1279.immersiveweapons.data.tags.*;
 
 @Mod.EventBusSubscriber(bus = Bus.MOD)
 public class CustomDataGenerator {

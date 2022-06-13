@@ -1,13 +1,5 @@
-package com.anonymoushacker1279.immersiveweapons;
+package tech.anonymoushacker1279.immersiveweapons;
 
-import com.anonymoushacker1279.immersiveweapons.advancement.IWCriteriaTriggers;
-import com.anonymoushacker1279.immersiveweapons.block.properties.WoodTypes;
-import com.anonymoushacker1279.immersiveweapons.config.ClientConfig;
-import com.anonymoushacker1279.immersiveweapons.config.CommonConfig;
-import com.anonymoushacker1279.immersiveweapons.init.*;
-import com.anonymoushacker1279.immersiveweapons.world.level.levelgen.OreGeneratorHandler;
-import com.anonymoushacker1279.immersiveweapons.world.level.levelgen.biomes.IWOverworldBiomesProvider;
-import com.anonymoushacker1279.immersiveweapons.world.level.levelgen.biomes.SurfaceRuleData;
 import com.mojang.logging.LogUtils;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.state.properties.WoodType;
@@ -19,6 +11,14 @@ import net.minecraftforge.fml.config.ModConfig.Type;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import org.slf4j.Logger;
+import tech.anonymoushacker1279.immersiveweapons.advancement.IWCriteriaTriggers;
+import tech.anonymoushacker1279.immersiveweapons.block.properties.WoodTypes;
+import tech.anonymoushacker1279.immersiveweapons.config.ClientConfig;
+import tech.anonymoushacker1279.immersiveweapons.config.CommonConfig;
+import tech.anonymoushacker1279.immersiveweapons.init.*;
+import tech.anonymoushacker1279.immersiveweapons.world.level.levelgen.OreGeneratorHandler;
+import tech.anonymoushacker1279.immersiveweapons.world.level.levelgen.biomes.IWOverworldBiomesProvider;
+import tech.anonymoushacker1279.immersiveweapons.world.level.levelgen.biomes.SurfaceRuleData;
 import terrablender.api.*;
 import terrablender.api.SurfaceRuleManager.RuleCategory;
 
