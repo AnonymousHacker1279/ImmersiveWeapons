@@ -5,21 +5,21 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.eventbus.api.Event;
 
 /**
- * This event is fired when a player crafts an item using the small parts table.
+ * This event is fired when a player crafts an item using the tesla synthesizer.
  */
 @SuppressWarnings("unused")
-public class SmallPartsTableCraftEvent extends Event {
+public class TeslaSynthesizerCraftEvent extends Event {
 
 	private final Player player;
 	private final ItemStack craftedItem;
 
 	/**
-	 * This event is fired when a player crafts an item using the small parts table.
+	 * This event is fired when a player crafts an item using the tesla synthesizer.
 	 *
 	 * @param player      the {@link Player} who crafted the item
 	 * @param craftedItem the {@link ItemStack} that was crafted
 	 */
-	public SmallPartsTableCraftEvent(Player player, ItemStack craftedItem) {
+	public TeslaSynthesizerCraftEvent(Player player, ItemStack craftedItem) {
 		this.player = player;
 		this.craftedItem = craftedItem;
 	}

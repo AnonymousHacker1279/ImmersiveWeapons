@@ -23,7 +23,7 @@ import java.util.function.Consumer;
 
 public class IWAdvancements implements Consumer<Consumer<Advancement>> {
 
-	IWAdvancements() {
+	public IWAdvancements() {
 	}
 
 	/**
@@ -43,7 +43,6 @@ public class IWAdvancements implements Consumer<Consumer<Advancement>> {
 						FrameType.TASK, false, false, false)
 				.addCriterion("exist",
 						LocationTrigger.TriggerInstance.located(LocationPredicate.inDimension(Level.OVERWORLD)))
-				.rewards(AdvancementRewards.Builder.loot(new ResourceLocation(ImmersiveWeapons.MOD_ID, "grant_encyclopedia_book_on_first_join")))
 				.save(consumer, "immersiveweapons:root");
 
 		// Molten advancements

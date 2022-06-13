@@ -4,7 +4,9 @@ import net.minecraft.world.Container;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
+import net.minecraftforge.common.MinecraftForge;
 import org.jetbrains.annotations.NotNull;
+import tech.anonymoushacker1279.immersiveweapons.api.events.TeslaSynthesizerCraftEvent;
 
 public class TeslaSynthesizerResultSlot extends Slot {
 
@@ -51,6 +53,7 @@ public class TeslaSynthesizerResultSlot extends Slot {
 	@Override
 	public void onTake(@NotNull Player player, @NotNull ItemStack stack) {
 		checkTakeAchievements(stack);
+		MinecraftForge.EVENT_BUS.post(new TeslaSynthesizerCraftEvent(player, stack));
 		super.onTake(player, stack);
 	}
 }

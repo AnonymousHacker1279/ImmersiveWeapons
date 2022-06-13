@@ -87,13 +87,6 @@ public class SmallPartsContainer extends AbstractContainerMenu {
 
 				MinecraftForge.EVENT_BUS.post(new SmallPartsTableCraftEvent(player, stack));
 
-				// TODO: Move into plugin
-				/*if (ModList.get().isLoaded("pmmo")) {
-					if (player instanceof ServerPlayer serverPlayer) {
-						PMMOPlugin.awardSmallPartsTableCraftXP(serverPlayer);
-					}
-				}*/
-
 				super.onTake(player, stack);
 			}
 		});
