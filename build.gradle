@@ -123,6 +123,11 @@ dependencies {
 	implementation fg.deobf("com.github.glitchfiend:TerraBlender-forge:${terrablender_version}")
 }
 
+java {
+	withSourcesJar()
+	withJavadocJar()
+}
+
 // Add properties to JAR manifest
 jar {
 	manifest {
@@ -138,12 +143,19 @@ jar {
 	}
 }
 
+artifacts {
+	archives javadocJar
+	archives sourcesJar
+}
+
 jar.finalizedBy('reobfJar')
 
 publishing {
 	publications {
 		mavenJava(MavenPublication) {
 			artifact jar
+			artifact sourcesJar
+			artifact javadocJar
 		}
 	}
 	repositories {
