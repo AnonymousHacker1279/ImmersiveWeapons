@@ -17,11 +17,6 @@
     "hidden": false,
     "background": "immersiveweapons:textures/block/red_stained_bulletproof_glass.png"
   },
-  "rewards": {
-    "loot": [
-      "immersiveweapons:grant_encyclopedia_book_on_first_join"
-    ]
-  },
   "criteria": {
     "exist": {
       "trigger": "minecraft:location",
