@@ -17,7 +17,7 @@ import org.jetbrains.annotations.NotNull;
 public class FlagPoleBlock extends Block implements SimpleWaterloggedBlock {
 
 	public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
-	private static final BooleanProperty IS_BASE = BooleanProperty.create("base");
+	public static final BooleanProperty IS_BASE = BooleanProperty.create("base");
 	private static final VoxelShape SHAPE_POLE = Block.box(7.0D, 0.0D, 7.0D, 9.0D, 16.0D, 9.0D);
 	private static final VoxelShape SHAPE_BASE = Shapes.or(SHAPE_POLE, Block.box(3.0D, 0.0D, 3.0D, 13.0D, 2.0D, 13.0D));
 

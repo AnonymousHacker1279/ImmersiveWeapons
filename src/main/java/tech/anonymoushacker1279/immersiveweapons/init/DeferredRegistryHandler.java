@@ -59,8 +59,7 @@ import tech.anonymoushacker1279.immersiveweapons.entity.neutral.MinutemanEntity;
 import tech.anonymoushacker1279.immersiveweapons.entity.projectile.ArrowEntities.*;
 import tech.anonymoushacker1279.immersiveweapons.entity.projectile.BulletEntities.*;
 import tech.anonymoushacker1279.immersiveweapons.entity.projectile.*;
-import tech.anonymoushacker1279.immersiveweapons.entity.vehicle.BurnedOakBoatEntity;
-import tech.anonymoushacker1279.immersiveweapons.entity.vehicle.CustomBoatType;
+import tech.anonymoushacker1279.immersiveweapons.entity.vehicle.*;
 import tech.anonymoushacker1279.immersiveweapons.item.armor.*;
 import tech.anonymoushacker1279.immersiveweapons.item.crafting.SmallPartsRecipe;
 import tech.anonymoushacker1279.immersiveweapons.item.crafting.TeslaSynthesizerRecipe;
@@ -283,6 +282,8 @@ public class DeferredRegistryHandler {
 	public static final RegistryObject<FirstAidKitItem> FIRST_AID_KIT = ITEMS.register("first_aid_kit", () -> new FirstAidKitItem(new Properties().tab(ITEM_GROUP).stacksTo(8)));
 	public static final RegistryObject<Item> CLOTH_SCRAP = ITEMS.register("cloth_scrap", () -> new Item(new Properties().tab(ITEM_GROUP)));
 	public static final RegistryObject<MudBallItem> MUD_BALL = ITEMS.register("mud_ball", () -> new MudBallItem(new Properties().tab(ITEM_GROUP)));
+	public static final RegistryObject<CustomBoatItem> BURNED_OAK_BOAT = ITEMS.register("burned_oak_boat", () -> new CustomBoatItem(CustomBoatType.BURNED_OAK, new Item.Properties().tab(ITEM_GROUP).stacksTo(1), false));
+	public static final RegistryObject<CustomBoatItem> BURNED_OAK_CHEST_BOAT = ITEMS.register("burned_oak_chest_boat", () -> new CustomBoatItem(CustomBoatType.BURNED_OAK, new Item.Properties().tab(ITEM_GROUP).stacksTo(1), true));
 
 	// Armor
 	public static final RegistryObject<MoltenArmorItem> MOLTEN_HELMET = ITEMS.register("molten_helmet", () -> new MoltenArmorItem(CustomArmorMaterials.MOLTEN, EquipmentSlot.HEAD, 1));
@@ -476,7 +477,7 @@ public class DeferredRegistryHandler {
 	public static final RegistryObject<EntityType<HansEntity>> HANS_ENTITY = ENTITY_TYPES.register("hans", () -> EntityType.Builder.of(HansEntity::new, MobCategory.MONSTER).sized(0.6f, 1.99f).clientTrackingRange(16).build(new ResourceLocation(ImmersiveWeapons.MOD_ID, "hans").toString()));
 	public static final RegistryObject<EntityType<MortarShellEntity>> MORTAR_SHELL_ENTITY = ENTITY_TYPES.register("mortar_shell", () -> EntityType.Builder.of(MortarShellEntity::new, MobCategory.MISC).sized(0.5f, 0.5f).build(new ResourceLocation(ImmersiveWeapons.MOD_ID, "mortar_shell").toString()));
 	public static final RegistryObject<EntityType<BurnedOakBoatEntity>> BURNED_OAK_BOAT_ENTITY = ENTITY_TYPES.register("burned_oak_boat", () -> EntityType.Builder.<BurnedOakBoatEntity> of(BurnedOakBoatEntity::new, MobCategory.MISC).sized(1.375f, 0.5625f).build(new ResourceLocation(ImmersiveWeapons.MOD_ID, "burned_oak_boat").toString()));
-	public static final RegistryObject<EntityType<BurnedOakBoatEntity>> BURNED_OAK_CHEST_BOAT_ENTITY = ENTITY_TYPES.register("burned_oak_chest_boat", () -> EntityType.Builder.<BurnedOakBoatEntity> of(BurnedOakBoatEntity::new, MobCategory.MISC).sized(1.375f, 0.5625f).build(new ResourceLocation(ImmersiveWeapons.MOD_ID, "burned_oak_chest_boat").toString()));
+	public static final RegistryObject<EntityType<BurnedOakChestBoat>> BURNED_OAK_CHEST_BOAT_ENTITY = ENTITY_TYPES.register("burned_oak_chest_boat", () -> EntityType.Builder.<BurnedOakChestBoat> of(BurnedOakChestBoat::new, MobCategory.MISC).sized(1.375f, 0.5625f).build(new ResourceLocation(ImmersiveWeapons.MOD_ID, "burned_oak_chest_boat").toString()));
 	public static final RegistryObject<EntityType<MudBallEntity>> MUD_BALL_ENTITY = ENTITY_TYPES.register("mud_ball", () -> EntityType.Builder.<MudBallEntity> of(MudBallEntity::new, MobCategory.MISC).sized(0.25f, 0.25f).build(new ResourceLocation(ImmersiveWeapons.MOD_ID, "mud_ball").toString()));
 	public static final RegistryObject<EntityType<LavaRevenantEntity>> LAVA_REVENANT_ENTITY = ENTITY_TYPES.register("lava_revenant", () -> EntityType.Builder.of(LavaRevenantEntity::new, MobCategory.MONSTER).sized(16.0f, 6.0f).clientTrackingRange(32).fireImmune().build(new ResourceLocation(ImmersiveWeapons.MOD_ID, "lava_revenant").toString()));
 	public static final RegistryObject<EntityType<RockSpiderEntity>> ROCK_SPIDER_ENTITY = ENTITY_TYPES.register("rock_spider", () -> EntityType.Builder.of(RockSpiderEntity::new, MobCategory.MONSTER).sized(0.30f, 0.30f).clientTrackingRange(16).build(new ResourceLocation(ImmersiveWeapons.MOD_ID, "rock_spider").toString()));
@@ -567,7 +568,6 @@ public class DeferredRegistryHandler {
 	public static final RegistryObject<BlockItem> BURNED_OAK_PRESSURE_PLATE_ITEM = ITEMS.register("burned_oak_pressure_plate", () -> new BlockItem(BURNED_OAK_PRESSURE_PLATE.get(), new Properties().tab(ITEM_GROUP)));
 	public static final RegistryObject<SignItem> BURNED_OAK_SIGN_ITEM = ITEMS.register("burned_oak_sign", () -> new SignItem(new Properties().tab(ITEM_GROUP), BURNED_OAK_SIGN.get(), BURNED_OAK_WALL_SIGN.get()));
 	public static final RegistryObject<BlockItem> BURNED_OAK_BUTTON_ITEM = ITEMS.register("burned_oak_button", () -> new BlockItem(BURNED_OAK_BUTTON.get(), new Properties().tab(ITEM_GROUP)));
-	public static final RegistryObject<CustomBoatItem> BURNED_OAK_BOAT = ITEMS.register("burned_oak_boat", () -> new CustomBoatItem(CustomBoatType.register("burned_oak"), new Item.Properties().tab(ITEM_GROUP).stacksTo(1)));
 	public static final RegistryObject<BlockItem> FLAG_POLE_ITEM = ITEMS.register("flag_pole", () -> new BlockItem(FLAG_POLE.get(), new Properties().tab(ITEM_GROUP)));
 	public static final RegistryObject<BlockItem> AMERICAN_FLAG_ITEM = ITEMS.register("american_flag", () -> new BlockItem(AMERICAN_FLAG.get(), new Properties().tab(ITEM_GROUP)));
 	public static final RegistryObject<BlockItem> GADSDEN_FLAG_ITEM = ITEMS.register("gadsden_flag", () -> new BlockItem(GADSDEN_FLAG.get(), new Properties().tab(ITEM_GROUP)));
@@ -674,6 +674,7 @@ public class DeferredRegistryHandler {
 	public static final RegistryObject<ParticleType<SmokeGrenadeParticleOptions>> SMOKE_GRENADE_PARTICLE = PARTICLE_TYPES.register("smoke_grenade", () -> new ParticleType<>(false, SmokeGrenadeParticleOptions.DESERIALIZER) {
 		final Function<ParticleType<SmokeGrenadeParticleOptions>, Codec<SmokeGrenadeParticleOptions>> codec = (type) -> SmokeGrenadeParticleOptions.CODEC;
 
+		@Override
 		public @NotNull Codec<SmokeGrenadeParticleOptions> codec() {
 			return codec.apply(this);
 		}
@@ -682,6 +683,7 @@ public class DeferredRegistryHandler {
 	public static final RegistryObject<ParticleType<BulletImpactParticleOptions>> BULLET_IMPACT_PARTICLE = PARTICLE_TYPES.register("bullet_impact", () -> new ParticleType<>(false, BulletImpactParticleOptions.DESERIALIZER) {
 		final Function<ParticleType<BulletImpactParticleOptions>, Codec<BulletImpactParticleOptions>> codec = (type) -> BulletImpactParticleOptions.CODEC;
 
+		@Override
 		public @NotNull Codec<BulletImpactParticleOptions> codec() {
 			return codec.apply(this);
 		}

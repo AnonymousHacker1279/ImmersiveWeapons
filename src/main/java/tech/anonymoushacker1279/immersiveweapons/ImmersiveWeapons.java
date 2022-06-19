@@ -16,7 +16,6 @@ import tech.anonymoushacker1279.immersiveweapons.block.properties.WoodTypes;
 import tech.anonymoushacker1279.immersiveweapons.config.ClientConfig;
 import tech.anonymoushacker1279.immersiveweapons.config.CommonConfig;
 import tech.anonymoushacker1279.immersiveweapons.init.*;
-import tech.anonymoushacker1279.immersiveweapons.world.level.levelgen.OreGeneratorHandler;
 import tech.anonymoushacker1279.immersiveweapons.world.level.levelgen.biomes.IWOverworldBiomesProvider;
 import tech.anonymoushacker1279.immersiveweapons.world.level.levelgen.biomes.SurfaceRuleData;
 import terrablender.api.*;
@@ -61,7 +60,8 @@ public class ImmersiveWeapons {
 	 */
 	public void setup(FMLCommonSetupEvent event) {
 		DispenserBehaviorRegistry.init();
-		OreGeneratorHandler.init();
+		// TODO: Move to Biome Modifiers
+		// OreGeneratorHandler.init();
 		IWCriteriaTriggers.init();
 		event.enqueueWork(() -> {
 			WoodType.register(WoodTypes.BURNED_OAK);

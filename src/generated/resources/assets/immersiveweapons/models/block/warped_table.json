@@ -1,0 +1,6 @@
+{
+  "parent": "immersiveweapons:block/table",
+  "textures": {
+    "all": "minecraft:block/warped_planks"
+  }
+}

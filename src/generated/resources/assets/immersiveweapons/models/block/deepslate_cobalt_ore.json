@@ -1,0 +1,7 @@
+{
+  "parent": "immersiveweapons:block/simple_overlay",
+  "textures": {
+    "all": "minecraft:block/deepslate",
+    "overlay": "immersiveweapons:block/cobalt_ore"
+  }
+}

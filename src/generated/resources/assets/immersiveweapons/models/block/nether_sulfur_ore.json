@@ -1,0 +1,7 @@
+{
+  "parent": "immersiveweapons:block/simple_overlay",
+  "textures": {
+    "all": "minecraft:block/netherrack",
+    "overlay": "immersiveweapons:block/sulfur_ore"
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/cube_column_horizontal",
+  "textures": {
+    "end": "immersiveweapons:block/burned_oak_log",
+    "side": "immersiveweapons:block/burned_oak_log"
+  }
+}

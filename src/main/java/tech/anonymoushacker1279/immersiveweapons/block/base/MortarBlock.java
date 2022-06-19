@@ -39,8 +39,8 @@ import java.util.function.Supplier;
 public class MortarBlock extends HorizontalDirectionalBlock {
 
 	public static final IntegerProperty ROTATION = IntegerProperty.create("rotation", 0, 2);
+	public static final BooleanProperty LOADED = BooleanProperty.create("loaded");
 	protected static final VoxelShape SHAPE = Block.box(2.0D, 0.0D, 2.0D, 14.0D, 10.0D, 14.0D);
-	private static final BooleanProperty LOADED = BooleanProperty.create("loaded");
 
 	/**
 	 * Constructor for MortarBlock.
@@ -49,13 +49,16 @@ public class MortarBlock extends HorizontalDirectionalBlock {
 	 */
 	public MortarBlock(Properties properties) {
 		super(properties);
-		registerDefaultState(stateDefinition.any().setValue(FACING, Direction.NORTH).setValue(ROTATION, 0).setValue(LOADED, false));
+		registerDefaultState(stateDefinition.any()
+				.setValue(FACING, Direction.NORTH)
+				.setValue(ROTATION, 0)
+				.setValue(LOADED, false));
 	}
 
 	/**
 	 * Create the BlockState definition.
 	 *
-	 * @param builder the <code>StateContainer.Builder</code> of the block
+	 * @param builder the <code>StateDefinition.Builder</code> of the block
 	 */
 	@Override
 	protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
@@ -66,7 +69,7 @@ public class MortarBlock extends HorizontalDirectionalBlock {
 	 * Set placement properties.
 	 * Sets the facing direction of the block for placement.
 	 *
-	 * @param context the <code>BlockItemUseContext</code> during placement
+	 * @param context the <code>BlockPlaceContext</code> during placement
 	 * @return BlockState
 	 */
 	@Override
@@ -78,15 +81,15 @@ public class MortarBlock extends HorizontalDirectionalBlock {
 	 * Set the shape of the block.
 	 *
 	 * @param state            the <code>BlockState</code> of the block
-	 * @param reader           the <code>IBlockReader</code> for the block
+	 * @param getter           the <code>BlockGetter</code> for the block
 	 * @param pos              the <code>BlockPos</code> the block is at
-	 * @param selectionContext the <code>ISelectionContext</code> of the block
+	 * @param collisionContext the <code>CollisionContext</code> of the block
 	 * @return VoxelShape
 	 */
 	@SuppressWarnings("deprecation")
 	@Override
-	public @NotNull VoxelShape getShape(@NotNull BlockState state, @NotNull BlockGetter reader, @NotNull BlockPos pos,
-	                                    @NotNull CollisionContext selectionContext) {
+	public @NotNull VoxelShape getShape(@NotNull BlockState state, @NotNull BlockGetter getter, @NotNull BlockPos pos,
+	                                    @NotNull CollisionContext collisionContext) {
 
 		return SHAPE;
 	}
@@ -95,33 +98,33 @@ public class MortarBlock extends HorizontalDirectionalBlock {
 	 * Runs when the block is activated.
 	 * Allows the block to respond to user interaction.
 	 *
-	 * @param state               the <code>BlockState</code> of the block
-	 * @param worldIn             the <code>World</code> the block is in
-	 * @param pos                 the <code>BlockPos</code> the block is at
-	 * @param player              the <code>PlayerEntity</code> interacting with the block
-	 * @param handIn              the <code>Hand</code> the PlayerEntity used
-	 * @param blockRayTraceResult the <code>BlockRayTraceResult</code> of the interaction
+	 * @param state     the <code>BlockState</code> of the block
+	 * @param level     the <code>Level</code> the block is in
+	 * @param pos       the <code>BlockPos</code> the block is at
+	 * @param player    the <code>PlayerEntity</code> interacting with the block
+	 * @param hand      the <code>InteractionHand</code> the PlayerEntity used
+	 * @param hitResult the <code>BlockHitResult</code> of the interaction
 	 * @return ActionResultType
 	 */
 	@SuppressWarnings("deprecation")
 	@Override
-	public @NotNull InteractionResult use(@NotNull BlockState state, Level worldIn, @NotNull BlockPos pos,
-	                                      @NotNull Player player, @NotNull InteractionHand handIn,
-	                                      @NotNull BlockHitResult blockRayTraceResult) {
+	public @NotNull InteractionResult use(@NotNull BlockState state, Level level, @NotNull BlockPos pos,
+	                                      @NotNull Player player, @NotNull InteractionHand hand,
+	                                      @NotNull BlockHitResult hitResult) {
 
-		if (!worldIn.isClientSide && handIn.equals(InteractionHand.MAIN_HAND)) {
+		if (!level.isClientSide && hand.equals(InteractionHand.MAIN_HAND)) {
 			ItemStack itemStack = player.getMainHandItem();
 			// If the mortar is loaded and the player is holding flint and steel, fire the shell
 			if (state.getValue(LOADED) && itemStack.getItem() == Items.FLINT_AND_STEEL) {
 				if (!player.isCreative()) {
 					itemStack.setDamageValue(itemStack.getDamageValue() - 1);
 				}
-				fire(worldIn, pos, state);
+				fire(level, pos, state);
 				return InteractionResult.CONSUME;
 
 				// If the mortar is not loaded and the player is holding a mortar shell	, load the mortar
 			} else if (!state.getValue(LOADED) && itemStack.getItem() == DeferredRegistryHandler.MORTAR_SHELL.get()) {
-				worldIn.setBlock(pos, state.setValue(LOADED, true), 3);
+				level.setBlock(pos, state.setValue(LOADED, true), 3);
 				if (!player.isCreative()) {
 					itemStack.shrink(1);
 				}
@@ -133,15 +136,15 @@ public class MortarBlock extends HorizontalDirectionalBlock {
 				if (!player.isCreative()) {
 					player.getInventory().add(new ItemStack(DeferredRegistryHandler.MORTAR_SHELL.get()));
 				}
-				worldIn.setBlock(pos, state.setValue(LOADED, false), 3);
+				level.setBlock(pos, state.setValue(LOADED, false), 3);
 				return InteractionResult.SUCCESS;
 
 				// If the player isn't holding anything, cycle through the rotations
 			} else if (itemStack.getItem() == Items.AIR) {
 				if (state.getValue(ROTATION) < 2) {
-					worldIn.setBlock(pos, state.setValue(ROTATION, state.getValue(ROTATION) + 1), 3);
+					level.setBlock(pos, state.setValue(ROTATION, state.getValue(ROTATION) + 1), 3);
 				} else {
-					worldIn.setBlock(pos, state.setValue(ROTATION, 0), 3);
+					level.setBlock(pos, state.setValue(ROTATION, 0), 3);
 				}
 			}
 
@@ -155,20 +158,20 @@ public class MortarBlock extends HorizontalDirectionalBlock {
 	 * Runs when neighboring blocks change state.
 	 *
 	 * @param state    the <code>BlockState</code> of the block
-	 * @param worldIn  the <code>World</code> the block is in
+	 * @param level    the <code>Level</code> the block is in
 	 * @param pos      the <code>BlockPos</code> the block is at
-	 * @param blockIn  the <code>Block</code> that is changing
+	 * @param block    the <code>Block</code> that is changing
 	 * @param fromPos  the <code>BlockPos</code> of the changing block
 	 * @param isMoving determines if the block is moving
 	 */
 	@SuppressWarnings("deprecation")
 	@Override
-	public void neighborChanged(@NotNull BlockState state, Level worldIn, @NotNull BlockPos pos, @NotNull Block blockIn,
+	public void neighborChanged(@NotNull BlockState state, Level level, @NotNull BlockPos pos, @NotNull Block block,
 	                            @NotNull BlockPos fromPos, boolean isMoving) {
 
-		if (!worldIn.isClientSide) {
-			if (state.getValue(LOADED) && worldIn.hasNeighborSignal(pos)) {
-				fire(worldIn, pos, state);
+		if (!level.isClientSide) {
+			if (state.getValue(LOADED) && level.hasNeighborSignal(pos)) {
+				fire(level, pos, state);
 			}
 		}
 	}
@@ -176,16 +179,16 @@ public class MortarBlock extends HorizontalDirectionalBlock {
 	/**
 	 * Fires a mortar shell and sends packets to tracking players.
 	 *
-	 * @param worldIn the <code>World</code> the block is in
-	 * @param pos     the <code>BlockPos</code> the block is at
-	 * @param state   the <code>BlockState</code> of the block
+	 * @param level the <code>Level</code> the block is in
+	 * @param pos   the <code>BlockPos</code> the block is at
+	 * @param state the <code>BlockState</code> of the block
 	 */
-	private void fire(Level worldIn, BlockPos pos, BlockState state) {
-		PacketHandler.INSTANCE.send(PacketDistributor.TRACKING_CHUNK.with(() -> worldIn.getChunkAt(pos)),
+	private void fire(Level level, BlockPos pos, BlockState state) {
+		PacketHandler.INSTANCE.send(PacketDistributor.TRACKING_CHUNK.with(() -> level.getChunkAt(pos)),
 				new MortarBlockPacketHandler(pos));
 
-		worldIn.setBlock(pos, state.setValue(LOADED, false), 3);
-		MortarShellEntity.create(worldIn, pos, 1f, state);
+		level.setBlock(pos, state.setValue(LOADED, false), 3);
+		MortarShellEntity.create(level, pos, 1f, state);
 	}
 
 	public record MortarBlockPacketHandler(BlockPos blockPos) {

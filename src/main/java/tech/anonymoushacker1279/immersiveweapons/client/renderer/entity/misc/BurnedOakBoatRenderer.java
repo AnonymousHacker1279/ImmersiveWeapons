@@ -1,43 +1,36 @@
 package tech.anonymoushacker1279.immersiveweapons.client.renderer.entity.misc;
 
-import com.google.common.collect.ImmutableMap;
 import com.mojang.datafixers.util.Pair;
 import net.minecraft.client.model.BoatModel;
 import net.minecraft.client.model.geom.ModelLayerLocation;
-import net.minecraft.client.model.geom.ModelLayers;
 import net.minecraft.client.renderer.entity.BoatRenderer;
-import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.EntityRendererProvider.Context;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.vehicle.Boat;
-import net.minecraft.world.entity.vehicle.Boat.Type;
 import org.jetbrains.annotations.NotNull;
-
-import java.util.Map;
-import java.util.stream.Stream;
+import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 
 public class BurnedOakBoatRenderer extends BoatRenderer {
 
-	Map<Type, Pair<ResourceLocation, BoatModel>> boatResources;
+	final BoatModel model;
+	final ResourceLocation textureLocation;
 
 	public BurnedOakBoatRenderer(Context context, boolean hasChest) {
 		super(context, hasChest);
 		shadowRadius = 0.8F;
-		boatResources = Stream.of(Type.values()).collect(ImmutableMap.toImmutableMap((type) -> type,
-				(type) -> Pair.of(new ResourceLocation(getTextureLocation(type, hasChest)), createBoatModel(context, type, hasChest))));
-	}
 
-	private static String getTextureLocation(Boat.Type type, boolean hasChest) {
-		return hasChest ? "immersiveweapons:textures/entity/boat/" + type.getName() + "_boat.png" : "immersiveweapons:textures/entity/boat/" + type.getName() + ".png";
-	}
+		ModelLayerLocation modelLayerLocation = hasChest
+				? new ModelLayerLocation(new ResourceLocation("minecraft", "chest_boat/oak"), "main")
+				: new ModelLayerLocation(new ResourceLocation("minecraft", "boat/oak"), "main");
+		model = new BoatModel(context.bakeLayer(modelLayerLocation), hasChest);
 
-	private BoatModel createBoatModel(EntityRendererProvider.Context context, Boat.Type type, boolean hasChest) {
-		ModelLayerLocation location = hasChest ? ModelLayers.createChestBoatModelName(type) : ModelLayers.createBoatModelName(type);
-		return new BoatModel(context.bakeLayer(location), hasChest);
+		textureLocation = hasChest
+				? new ResourceLocation(ImmersiveWeapons.MOD_ID, "textures/entity/chest_boat/burned_oak.png")
+				: new ResourceLocation(ImmersiveWeapons.MOD_ID, "textures/entity/boat/burned_oak.png");
 	}
 
 	@Override
-	public @NotNull Pair<ResourceLocation, BoatModel> getModelWithLocation(Boat boat) {
-		return boatResources.get(boat.getBoatType());
+	public @NotNull Pair<ResourceLocation, BoatModel> getModelWithLocation(@NotNull Boat boat) {
+		return Pair.of(textureLocation, model);
 	}
 }
