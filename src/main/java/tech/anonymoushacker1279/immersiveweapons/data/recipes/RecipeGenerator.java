@@ -125,6 +125,8 @@ public class RecipeGenerator extends RecipeProvider {
 	private void createBurnedOakItems() {
 		createBurnedOakBoat(DeferredRegistryHandler.BURNED_OAK_BOAT.get(),
 				DeferredRegistryHandler.BURNED_OAK_PLANKS_ITEM.get());
+		createBurnedOakChestBoat(DeferredRegistryHandler.BURNED_OAK_CHEST_BOAT.get(),
+				DeferredRegistryHandler.BURNED_OAK_PLANKS_ITEM.get());
 		createBurnedOakButton(DeferredRegistryHandler.BURNED_OAK_BUTTON_ITEM.get(),
 				DeferredRegistryHandler.BURNED_OAK_PLANKS_ITEM.get());
 		createBurnedOakDoor(DeferredRegistryHandler.BURNED_OAK_DOOR_ITEM.get(),
@@ -1670,6 +1672,15 @@ public class RecipeGenerator extends RecipeProvider {
 				.define('a', material)
 				.pattern("a a")
 				.pattern("aaa")
+				.group("burned_oak")
+				.unlockedBy("water", insideOf(Blocks.WATER))
+				.save(finishedRecipeConsumer);
+	}
+
+	private static void createBurnedOakChestBoat(ItemLike chestBoatItem, ItemLike boatItem) {
+		ShapelessRecipeBuilder.shapeless(chestBoatItem)
+				.requires(boatItem)
+				.requires(Items.CHEST)
 				.group("burned_oak")
 				.unlockedBy("water", insideOf(Blocks.WATER))
 				.save(finishedRecipeConsumer);
