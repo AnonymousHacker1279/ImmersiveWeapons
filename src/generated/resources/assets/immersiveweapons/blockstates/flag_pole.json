@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "base=false": {
+      "model": "immersiveweapons:block/flag_pole"
+    },
+    "base=true": {
+      "model": "immersiveweapons:block/flag_pole_base"
+    }
+  }
+}

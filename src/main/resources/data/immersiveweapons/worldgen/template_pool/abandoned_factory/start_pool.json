@@ -1,7 +1,6 @@
 {
 	"name": "immersiveweapons:abandoned_factory/start_pool",
 	"fallback": "minecraft:empty",
-
 	"elements": [
 		{
 			"weight": 1,

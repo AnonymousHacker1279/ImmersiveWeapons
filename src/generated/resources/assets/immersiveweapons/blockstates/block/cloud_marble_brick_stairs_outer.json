@@ -1,8 +1,0 @@
-{
-  "parent": "minecraft:block/outer_stairs",
-  "textures": {
-    "bottom": "immersiveweapons:block/cloud_marble_bricks",
-    "side": "immersiveweapons:block/cloud_marble_bricks",
-    "top": "immersiveweapons:block/cloud_marble_bricks"
-  }
-}

@@ -14,8 +14,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.phys.*;
 import org.jetbrains.annotations.NotNull;
-import tech.anonymoushacker1279.immersiveweapons.entity.vehicle.BurnedOakBoatEntity;
-import tech.anonymoushacker1279.immersiveweapons.entity.vehicle.CustomBoatType;
+import tech.anonymoushacker1279.immersiveweapons.entity.vehicle.*;
 
 import java.util.List;
 import java.util.function.Predicate;
@@ -23,11 +22,12 @@ import java.util.function.Predicate;
 public class CustomBoatItem extends Item {
 	private static final Predicate<Entity> ENTITY_PREDICATE = EntitySelector.NO_SPECTATORS.and(Entity::isPickable);
 	private final CustomBoatType type;
+	private final boolean hasChest;
 
-	public CustomBoatItem(CustomBoatType typeIn, Item.Properties properties) {
+	public CustomBoatItem(CustomBoatType type, Item.Properties properties, boolean hasChest) {
 		super(properties);
-		typeIn.setBoatItem(this);
-		type = typeIn;
+		this.type = type;
+		this.hasChest = hasChest;
 	}
 
 	@Override
@@ -51,7 +51,7 @@ public class CustomBoatItem extends Item {
 			}
 
 			if (hitResult.getType() == HitResult.Type.BLOCK) {
-				BurnedOakBoatEntity boat = new BurnedOakBoatEntity(level, hitResult.getLocation().x, hitResult.getLocation().y, hitResult.getLocation().z);
+				BurnedOakBoatEntity boat = getBoat(level, hitResult);
 				boat.setBoatType(type);
 				boat.setYRot(player.getYRot());
 				if (!level.noCollision(boat, boat.getBoundingBox().inflate(-0.1D))) {
@@ -72,5 +72,11 @@ public class CustomBoatItem extends Item {
 				return InteractionResultHolder.pass(itemStack);
 			}
 		}
+	}
+
+	private BurnedOakBoatEntity getBoat(Level level, HitResult hitResult) {
+		return hasChest
+				? new BurnedOakChestBoat(level, hitResult.getLocation().x, hitResult.getLocation().y, hitResult.getLocation().z)
+				: new BurnedOakBoatEntity(level, hitResult.getLocation().x, hitResult.getLocation().y, hitResult.getLocation().z);
 	}
 }

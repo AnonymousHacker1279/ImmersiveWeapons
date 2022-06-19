@@ -35,8 +35,8 @@ import java.util.function.Supplier;
 public class SpikeTrapBlock extends Block implements SimpleWaterloggedBlock {
 
 	public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
+	public static final BooleanProperty POWERED = BooleanProperty.create("powered");
 	protected static final VoxelShape SHAPE = Block.box(0.0D, 0.0D, 0.0D, 16.0D, 1.0D, 16.0D);
-	private static final BooleanProperty POWERED = BooleanProperty.create("powered");
 	private final DamageSource damageSource = new DamageSource("immersiveweapons.spike_trap");
 
 	/**
@@ -53,48 +53,55 @@ public class SpikeTrapBlock extends Block implements SimpleWaterloggedBlock {
 	 * Set the shape of the block.
 	 *
 	 * @param state            the <code>BlockState</code> of the block
-	 * @param reader           the <code>IBlockReader</code> for the block
+	 * @param blockGetter      the <code>BlockGetter</code> for the block
 	 * @param pos              the <code>BlockPos</code> the block is at
-	 * @param selectionContext the <code>ISelectionContext</code> of the block
+	 * @param collisionContext the <code>CollisionContext</code> of the block
 	 * @return VoxelShape
 	 */
 	@SuppressWarnings("deprecation")
 	@Override
-	public @NotNull VoxelShape getShape(@NotNull BlockState state, @NotNull BlockGetter reader, @NotNull BlockPos pos, @NotNull CollisionContext selectionContext) {
+	public @NotNull VoxelShape getShape(@NotNull BlockState state, @NotNull BlockGetter blockGetter, @NotNull BlockPos pos,
+	                                    @NotNull CollisionContext collisionContext) {
 		return SHAPE;
 	}
 
 	/**
 	 * Updates the block when required.
 	 *
-	 * @param stateIn     the <code>BlockState</code> of the block
-	 * @param facing      the <code>Direction</code> the block is facing
-	 * @param facingState the <code>BlockState</code> of the facing block
-	 * @param worldIn     the <code>IWorld</code> the block is in
-	 * @param currentPos  the <code>BlockPos</code> the block is at
-	 * @param facingPos   the <code>BlocKPos</code> the facing block is at
+	 * @param state         the <code>BlockState</code> of the block
+	 * @param facing        the <code>Direction</code> the block is facing
+	 * @param neighborState the <code>BlockState</code> of the neighbor block
+	 * @param levelAccessor the <code>LevelAccessor</code> the block is in
+	 * @param currentPos    the <code>BlockPos</code> the block is at
+	 * @param facingPos     the <code>BlocKPos</code> the facing block is at
 	 * @return BlockState
 	 */
 	@SuppressWarnings("deprecation")
 	@Override
-	public @NotNull BlockState updateShape(BlockState stateIn, @NotNull Direction facing, @NotNull BlockState facingState, @NotNull LevelAccessor worldIn, @NotNull BlockPos currentPos, @NotNull BlockPos facingPos) {
-		if (stateIn.getValue(WATERLOGGED)) {
-			worldIn.scheduleTick(currentPos, Fluids.WATER, Fluids.WATER.getTickDelay(worldIn));
+	public @NotNull BlockState updateShape(BlockState state, @NotNull Direction facing, @NotNull BlockState neighborState,
+	                                       @NotNull LevelAccessor levelAccessor, @NotNull BlockPos currentPos,
+	                                       @NotNull BlockPos facingPos) {
+
+		if (state.getValue(WATERLOGGED)) {
+			levelAccessor.scheduleTick(currentPos, Fluids.WATER, Fluids.WATER.getTickDelay(levelAccessor));
 		}
 
-		return facing == Direction.DOWN && !stateIn.canSurvive(worldIn, currentPos) ? Blocks.AIR.defaultBlockState() : super.updateShape(stateIn, facing, facingState, worldIn, currentPos, facingPos);
+		return facing == Direction.DOWN && !state.canSurvive(levelAccessor, currentPos)
+				? Blocks.AIR.defaultBlockState()
+				: super.updateShape(state, facing, neighborState, levelAccessor, currentPos, facingPos);
 	}
 
 	/**
 	 * Set placement properties.
 	 * Sets the facing direction of the block for placement.
 	 *
-	 * @param context the <code>BlockItemUseContext</code> during placement
+	 * @param context the <code>BlockPlaceContext</code> during placement
 	 * @return BlockState
 	 */
 	@Override
 	public BlockState getStateForPlacement(BlockPlaceContext context) {
-		return defaultBlockState().setValue(WATERLOGGED, context.getLevel().getFluidState(context.getClickedPos()).getType() == Fluids.WATER);
+		return defaultBlockState().setValue(WATERLOGGED, context.getLevel()
+				.getFluidState(context.getClickedPos()).getType() == Fluids.WATER);
 	}
 
 	/**
@@ -124,7 +131,7 @@ public class SpikeTrapBlock extends Block implements SimpleWaterloggedBlock {
 	 * Determines if the block can exist in a given state.
 	 *
 	 * @param state  the <code>BlockState</code> of the block
-	 * @param reader the <code>IWorldReader</code> for the block
+	 * @param reader the <code>LevelReader</code> for the block
 	 * @param pos    the <code>BlocKPos</code> the block is at
 	 * @return boolean
 	 */
@@ -157,17 +164,17 @@ public class SpikeTrapBlock extends Block implements SimpleWaterloggedBlock {
 	 * Runs when neighboring blocks change state.
 	 *
 	 * @param state    the <code>BlockState</code> of the block
-	 * @param worldIn  the <code>World</code> the block is in
+	 * @param level    the <code>Level</code> the block is in
 	 * @param pos      the <code>BlockPos</code> the block is at
 	 * @param oldState the <code>BlockState</code> the block previously had
 	 * @param isMoving determines if the block is moving
 	 */
 	@SuppressWarnings("deprecation")
 	@Override
-	public void onPlace(BlockState state, @NotNull Level worldIn, @NotNull BlockPos pos, BlockState oldState, boolean isMoving) {
+	public void onPlace(BlockState state, @NotNull Level level, @NotNull BlockPos pos, BlockState oldState, boolean isMoving) {
 		if (!oldState.is(state.getBlock())) {
-			if (worldIn.hasNeighborSignal(pos)) {
-				worldIn.setBlock(pos, state.setValue(POWERED, true), 3);
+			if (level.hasNeighborSignal(pos)) {
+				level.setBlock(pos, state.setValue(POWERED, true), 3);
 			}
 		}
 	}
@@ -176,7 +183,7 @@ public class SpikeTrapBlock extends Block implements SimpleWaterloggedBlock {
 	 * Runs when neighboring blocks change state.
 	 *
 	 * @param state    the <code>BlockState</code> of the block
-	 * @param worldIn  the <code>World</code> the block is in
+	 * @param level    the <code>Level</code> the block is in
 	 * @param pos      the <code>BlockPos</code> the block is at
 	 * @param blockIn  the <code>Block</code> that is changing
 	 * @param fromPos  the <code>BlockPos</code> of the changing block
@@ -184,16 +191,21 @@ public class SpikeTrapBlock extends Block implements SimpleWaterloggedBlock {
 	 */
 	@SuppressWarnings("deprecation")
 	@Override
-	public void neighborChanged(BlockState state, Level worldIn, @NotNull BlockPos pos, @NotNull Block blockIn, @NotNull BlockPos fromPos, boolean isMoving) {
-		boolean flag = worldIn.hasNeighborSignal(pos);
+	public void neighborChanged(BlockState state, Level level, @NotNull BlockPos pos, @NotNull Block blockIn,
+	                            @NotNull BlockPos fromPos, boolean isMoving) {
+		boolean flag = level.hasNeighborSignal(pos);
 		if (flag != state.getValue(POWERED)) {
 			state = state.setValue(POWERED, flag);
 			if (state.getValue(POWERED)) {
-				PacketHandler.INSTANCE.send(PacketDistributor.NEAR.with(() -> new TargetPoint(pos.getX(), pos.getY(), pos.getZ(), 12, worldIn.dimension())), new SpikeTrapBlockPacketHandler(pos, true));
+				PacketHandler.INSTANCE.send(PacketDistributor.NEAR.with(() ->
+								new TargetPoint(pos.getX(), pos.getY(), pos.getZ(), 12, level.dimension())),
+						new SpikeTrapBlockPacketHandler(pos, true));
 			} else {
-				PacketHandler.INSTANCE.send(PacketDistributor.NEAR.with(() -> new TargetPoint(pos.getX(), pos.getY(), pos.getZ(), 12, worldIn.dimension())), new SpikeTrapBlockPacketHandler(pos, false));
+				PacketHandler.INSTANCE.send(PacketDistributor.NEAR.with(() ->
+								new TargetPoint(pos.getX(), pos.getY(), pos.getZ(), 12, level.dimension())),
+						new SpikeTrapBlockPacketHandler(pos, false));
 			}
-			worldIn.setBlock(pos, state.setValue(POWERED, flag), 2);
+			level.setBlock(pos, state.setValue(POWERED, flag), 2);
 		}
 	}
 
@@ -246,9 +258,11 @@ public class SpikeTrapBlock extends Block implements SimpleWaterloggedBlock {
 			Minecraft minecraft = Minecraft.getInstance();
 			if (minecraft.level != null) {
 				if (msg.extend) {
-					minecraft.level.playLocalSound(msg.blockPos, DeferredRegistryHandler.SPIKE_TRAP_EXTEND.get(), SoundSource.BLOCKS, 1.0f, 1.0f, true);
+					minecraft.level.playLocalSound(msg.blockPos, DeferredRegistryHandler.SPIKE_TRAP_EXTEND.get(),
+							SoundSource.BLOCKS, 1.0f, 1.0f, true);
 				} else {
-					minecraft.level.playLocalSound(msg.blockPos, DeferredRegistryHandler.SPIKE_TRAP_RETRACT.get(), SoundSource.BLOCKS, 1.0f, 1.0f, true);
+					minecraft.level.playLocalSound(msg.blockPos, DeferredRegistryHandler.SPIKE_TRAP_RETRACT.get(),
+							SoundSource.BLOCKS, 1.0f, 1.0f, true);
 				}
 			}
 		}

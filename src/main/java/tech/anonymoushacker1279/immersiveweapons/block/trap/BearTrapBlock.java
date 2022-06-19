@@ -32,8 +32,8 @@ public class BearTrapBlock extends BaseEntityBlock implements SimpleWaterloggedB
 
 	public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
 	protected static final VoxelShape SHAPE = Block.box(0.0D, 0.0D, 0.0D, 16.0D, 2.0D, 16.0D);
-	private static final BooleanProperty TRIGGERED = BooleanProperty.create("triggered");
-	private static final BooleanProperty VINES = BooleanProperty.create("vines");
+	public static final BooleanProperty TRIGGERED = BooleanProperty.create("triggered");
+	public static final BooleanProperty VINES = BooleanProperty.create("vines");
 
 	/**
 	 * Constructor for BearTrapBlock.
@@ -42,35 +42,41 @@ public class BearTrapBlock extends BaseEntityBlock implements SimpleWaterloggedB
 	 */
 	public BearTrapBlock(Properties properties) {
 		super(properties);
-		registerDefaultState(stateDefinition.any().setValue(TRIGGERED, Boolean.FALSE).setValue(WATERLOGGED, Boolean.FALSE).setValue(VINES, Boolean.FALSE));
+		registerDefaultState(stateDefinition.any()
+				.setValue(TRIGGERED, Boolean.FALSE)
+				.setValue(WATERLOGGED, Boolean.FALSE)
+				.setValue(VINES, Boolean.FALSE));
 	}
 
 	/**
 	 * Runs when the block is activated.
 	 * Allows the block to respond to user interaction.
 	 *
-	 * @param state               the <code>BlockState</code> of the block
-	 * @param worldIn             the <code>World</code> the block is in
-	 * @param pos                 the <code>BlockPos</code> the block is at
-	 * @param player              the <code>PlayerEntity</code> interacting with the block
-	 * @param handIn              the <code>Hand</code> the PlayerEntity used
-	 * @param blockRayTraceResult the <code>BlockRayTraceResult</code> of the interaction
+	 * @param state     the <code>BlockState</code> of the block
+	 * @param level     the <code>Level</code> the block is in
+	 * @param pos       the <code>BlockPos</code> the block is at
+	 * @param player    the <code>PlayerEntity</code> interacting with the block
+	 * @param hand      the <code>Hand</code> the PlayerEntity used
+	 * @param hitResult the <code>BlockHitResult</code> of the interaction
 	 * @return ActionResultType
 	 */
 	@SuppressWarnings("deprecation")
 	@Override
-	public @NotNull InteractionResult use(@NotNull BlockState state, Level worldIn, @NotNull BlockPos pos, @NotNull Player player, @NotNull InteractionHand handIn, @NotNull BlockHitResult blockRayTraceResult) {
-		if (!worldIn.isClientSide && handIn.equals(InteractionHand.MAIN_HAND)) {
-			BearTrapBlockEntity bearTrap = (BearTrapBlockEntity) worldIn.getBlockEntity(pos);
+	public @NotNull InteractionResult use(@NotNull BlockState state, Level level, @NotNull BlockPos pos,
+	                                      @NotNull Player player, @NotNull InteractionHand hand,
+	                                      @NotNull BlockHitResult hitResult) {
+
+		if (!level.isClientSide && hand.equals(InteractionHand.MAIN_HAND)) {
+			BearTrapBlockEntity bearTrap = (BearTrapBlockEntity) level.getBlockEntity(pos);
 			ItemStack currentlyHeldItem = player.getMainHandItem();
 			if (bearTrap != null) {
 				if (state.getValue(TRIGGERED) && !bearTrap.hasTrappedEntity() && bearTrap.hasTrappedPlayerEntity()) {
-					worldIn.setBlock(pos, state.setValue(TRIGGERED, false).setValue(VINES, false), 3);
+					level.setBlock(pos, state.setValue(TRIGGERED, false).setValue(VINES, false), 3);
 					return InteractionResult.SUCCESS;
 				}
 			}
 			if (!state.getValue(VINES) && currentlyHeldItem.getItem() == Items.VINE) {
-				worldIn.setBlock(pos, state.setValue(VINES, true), 3);
+				level.setBlock(pos, state.setValue(VINES, true), 3);
 				if (!player.isCreative()) {
 					currentlyHeldItem.shrink(1);
 				}
@@ -213,7 +219,8 @@ public class BearTrapBlock extends BaseEntityBlock implements SimpleWaterloggedB
 	 */
 	@Override
 	public BlockState getStateForPlacement(BlockPlaceContext context) {
-		return defaultBlockState().setValue(WATERLOGGED, context.getLevel().getFluidState(context.getClickedPos()).getType() == Fluids.WATER);
+		return defaultBlockState().setValue(WATERLOGGED, context.getLevel()
+				.getFluidState(context.getClickedPos()).getType() == Fluids.WATER);
 	}
 
 	/**

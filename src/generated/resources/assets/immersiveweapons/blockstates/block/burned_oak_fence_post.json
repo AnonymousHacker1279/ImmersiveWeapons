@@ -1,6 +1,0 @@
-{
-  "parent": "minecraft:block/fence_post",
-  "textures": {
-    "texture": "immersiveweapons:block/burned_oak_planks"
-  }
-}

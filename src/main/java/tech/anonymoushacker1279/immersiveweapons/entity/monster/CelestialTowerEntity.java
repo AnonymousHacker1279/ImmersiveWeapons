@@ -45,7 +45,6 @@ public class CelestialTowerEntity extends Monster implements GrantAdvancementOnD
 	private int waveSizeModifier = 1;
 	private int wavesSpawned = 0;
 	private boolean doneSpawningWaves = false;
-	private static final int SPAWN_CHECK_RADIUS = CommonConfig.CELESTIAL_TOWER_SPAWN_CHECK_RADIUS.get();
 
 	public CelestialTowerEntity(EntityType<? extends Monster> type, Level level) {
 		super(type, level);
@@ -232,7 +231,9 @@ public class CelestialTowerEntity extends Monster implements GrantAdvancementOnD
 
 		for (BlockPos lanternPos : ALL_TILTROS_LANTERNS) {
 			if (nearbyLanterns < 3) {
-				if (lanternPos.distManhattan(new Vec3i(position.x, position.y, position.z)) < SPAWN_CHECK_RADIUS) {
+				if (lanternPos.distManhattan(new Vec3i(position.x, position.y, position.z)) <
+						CommonConfig.CELESTIAL_TOWER_SPAWN_CHECK_RADIUS.get()) {
+					
 					nearbyLanterns++;
 				}
 			}

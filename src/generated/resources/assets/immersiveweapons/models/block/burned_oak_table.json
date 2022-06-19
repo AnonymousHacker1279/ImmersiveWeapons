@@ -1,0 +1,6 @@
+{
+  "parent": "immersiveweapons:block/table",
+  "textures": {
+    "all": "immersiveweapons:block/burned_oak_planks"
+  }
+}

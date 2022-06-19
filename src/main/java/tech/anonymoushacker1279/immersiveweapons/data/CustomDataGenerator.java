@@ -7,7 +7,8 @@ import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
 import net.minecraftforge.forge.event.lifecycle.GatherDataEvent;
 import tech.anonymoushacker1279.immersiveweapons.data.advancements.AdvancementProvider;
 import tech.anonymoushacker1279.immersiveweapons.data.loot.LootTableGenerator;
-import tech.anonymoushacker1279.immersiveweapons.data.models.ModelProvider;
+import tech.anonymoushacker1279.immersiveweapons.data.models.BlockStateGenerator;
+import tech.anonymoushacker1279.immersiveweapons.data.models.ItemModelGenerator;
 import tech.anonymoushacker1279.immersiveweapons.data.recipes.RecipeGenerator;
 import tech.anonymoushacker1279.immersiveweapons.data.tags.*;
 
@@ -24,7 +25,8 @@ public class CustomDataGenerator {
 
 		DataGenerator generator = event.getGenerator();
 
-		generator.addProvider(event.includeClient(), new ModelProvider(generator));
+		generator.addProvider(event.includeClient(), new BlockStateGenerator(generator, event.getExistingFileHelper()));
+		generator.addProvider(event.includeClient(), new ItemModelGenerator(generator, event.getExistingFileHelper()));
 
 		generator.addProvider(event.includeServer(), new AdvancementProvider(generator));
 		generator.addProvider(event.includeServer(), new LootTableGenerator(generator));
@@ -33,6 +35,5 @@ public class CustomDataGenerator {
 		generator.addProvider(event.includeServer(), blockTagsGenerator);
 		generator.addProvider(event.includeServer(), new ItemTagsGenerator(generator, blockTagsGenerator, event.getExistingFileHelper()));
 		generator.addProvider(event.includeServer(), new BiomeTagsGenerator(generator, event.getExistingFileHelper()));
-
 	}
 }

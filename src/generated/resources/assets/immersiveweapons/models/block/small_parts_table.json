@@ -1,10 +1,10 @@
 {
   "parent": "minecraft:block/cube",
   "textures": {
-    "down": "minecraft:block/oak_planks",
+    "down": "immersiveweapons:block/small_parts_table_bottom",
     "east": "immersiveweapons:block/small_parts_table_side",
     "north": "immersiveweapons:block/small_parts_table_front",
-    "particle": "immersiveweapons:block/small_parts_table_front",
+    "particle": "minecraft:block/copper_block",
     "south": "immersiveweapons:block/small_parts_table_front",
     "up": "immersiveweapons:block/small_parts_table_top",
     "west": "immersiveweapons:block/small_parts_table_side"

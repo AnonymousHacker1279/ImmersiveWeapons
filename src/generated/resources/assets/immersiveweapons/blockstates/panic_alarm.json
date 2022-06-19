@@ -1,0 +1,34 @@
+{
+  "variants": {
+    "facing=east,waterlogged=false": {
+      "model": "immersiveweapons:block/panic_alarm",
+      "y": 270
+    },
+    "facing=east,waterlogged=true": {
+      "model": "immersiveweapons:block/panic_alarm",
+      "y": 270
+    },
+    "facing=north,waterlogged=false": {
+      "model": "immersiveweapons:block/panic_alarm",
+      "y": 180
+    },
+    "facing=north,waterlogged=true": {
+      "model": "immersiveweapons:block/panic_alarm",
+      "y": 180
+    },
+    "facing=south,waterlogged=false": {
+      "model": "immersiveweapons:block/panic_alarm"
+    },
+    "facing=south,waterlogged=true": {
+      "model": "immersiveweapons:block/panic_alarm"
+    },
+    "facing=west,waterlogged=false": {
+      "model": "immersiveweapons:block/panic_alarm",
+      "y": 90
+    },
+    "facing=west,waterlogged=true": {
+      "model": "immersiveweapons:block/panic_alarm",
+      "y": 90
+    }
+  }
+}

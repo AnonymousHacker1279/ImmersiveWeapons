@@ -1,6 +1,0 @@
-{
-  "parent": "minecraft:block/cube_all",
-  "textures": {
-    "all": "immersiveweapons:block/purple_stained_bulletproof_glass"
-  }
-}

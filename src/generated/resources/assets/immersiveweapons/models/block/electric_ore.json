@@ -1,0 +1,7 @@
+{
+  "parent": "immersiveweapons:block/simple_overlay",
+  "textures": {
+    "all": "minecraft:block/stone",
+    "overlay": "immersiveweapons:block/electric_ore"
+  }
+}

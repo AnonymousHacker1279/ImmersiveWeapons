@@ -1,0 +1,6 @@
+{
+  "parent": "immersiveweapons:block/table",
+  "textures": {
+    "all": "minecraft:block/birch_planks"
+  }
+}

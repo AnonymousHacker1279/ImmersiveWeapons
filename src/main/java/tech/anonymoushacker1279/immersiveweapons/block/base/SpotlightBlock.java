@@ -21,7 +21,7 @@ import java.util.List;
 public class SpotlightBlock extends HorizontalDirectionalBlock implements SimpleWaterloggedBlock {
 
 	public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
-	private static final BooleanProperty LIT = BlockStateProperties.LIT;
+	public static final BooleanProperty LIT = BlockStateProperties.LIT;
 	private static final List<BlockPos> lightPositions = new ArrayList<>(8);
 	private static final BlockState airState = Blocks.AIR.defaultBlockState();
 	private static final BlockState lightState = Blocks.LIGHT.defaultBlockState();
