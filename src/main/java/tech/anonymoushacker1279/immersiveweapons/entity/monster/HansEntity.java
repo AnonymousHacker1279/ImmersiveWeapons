@@ -83,16 +83,6 @@ public class HansEntity extends AbstractWanderingWarriorEntity {
 	}
 
 	/**
-	 * Get the step sound.
-	 *
-	 * @return SoundEvent
-	 */
-	@Override
-	protected SoundEvent getStepSound() {
-		return DeferredRegistryHandler.WANDERING_WARRIOR_STEP.get();
-	}
-
-	/**
 	 * Gives armor or weapon for entity based on given DifficultyInstance
 	 *
 	 * @param difficulty the <code>DifficultyInstance</code> of the world

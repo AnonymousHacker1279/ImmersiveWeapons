@@ -144,7 +144,7 @@ public abstract class AbstractDyingSoldierEntity extends Monster implements Rang
 	 * @param difficulty the <code>DifficultyInstance</code> of the world
 	 */
 	@Override
-	protected void populateDefaultEquipmentSlots(RandomSource randomSource, @NotNull DifficultyInstance difficulty) {
+	protected void populateDefaultEquipmentSlots(@NotNull RandomSource randomSource, @NotNull DifficultyInstance difficulty) {
 		super.populateDefaultEquipmentSlots(randomSource, difficulty);
 		setItemSlot(EquipmentSlot.MAINHAND, new ItemStack(DeferredRegistryHandler.FLINTLOCK_PISTOL.get()));
 	}
@@ -247,7 +247,7 @@ public abstract class AbstractDyingSoldierEntity extends Monster implements Rang
 		AbstractBulletItem bulletItem = (AbstractBulletItem) (arrowStack.getItem() instanceof AbstractArrowItem
 				? arrowStack.getItem() : DeferredRegistryHandler.IRON_MUSKET_BALL.get());
 
-		BulletEntity bulletEntity = bulletItem.createBullet(level, arrowStack, this);
+		BulletEntity bulletEntity = bulletItem.createBullet(level, this);
 		bulletEntity.setEnchantmentEffectsFromEntity(this, distanceFactor);
 
 		return bulletEntity;

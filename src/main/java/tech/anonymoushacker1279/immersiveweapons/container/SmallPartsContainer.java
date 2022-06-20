@@ -8,6 +8,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.*;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import org.jetbrains.annotations.NotNull;
 import tech.anonymoushacker1279.immersiveweapons.block.crafting.small_parts.SmallPartsCraftables;
 import tech.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
 
@@ -53,7 +54,7 @@ public class SmallPartsContainer extends AbstractContainerMenu {
 			 * Check if the stack is allowed to be placed in this slot, used for armor slots as well as furnace fuel.
 			 */
 			@Override
-			public boolean mayPlace(ItemStack stack) {
+			public boolean mayPlace(@NotNull ItemStack stack) {
 				return true;
 			}
 		});
@@ -62,12 +63,12 @@ public class SmallPartsContainer extends AbstractContainerMenu {
 			 * Check if the stack is allowed to be placed in this slot, used for armor slots as well as furnace fuel.
 			 */
 			@Override
-			public boolean mayPlace(ItemStack stack) {
+			public boolean mayPlace(@NotNull ItemStack stack) {
 				return false;
 			}
 
 			@Override
-			public void onTake(Player player, ItemStack stack) {
+			public void onTake(@NotNull Player player, @NotNull ItemStack stack) {
 				materialSlot.remove(1);
 				if (!materialSlot.hasItem()) {
 					selectedPartsPatternIndex.set(0);
@@ -106,12 +107,12 @@ public class SmallPartsContainer extends AbstractContainerMenu {
 	 * Determines whether supplied player can use this container
 	 */
 	@Override
-	public boolean stillValid(Player pPlayer) {
+	public boolean stillValid(@NotNull Player pPlayer) {
 		return stillValid(access, pPlayer, DeferredRegistryHandler.SMALL_PARTS_TABLE.get());
 	}
 
 	@Override
-	public boolean clickMenuButton(Player pPlayer, int pId) {
+	public boolean clickMenuButton(@NotNull Player pPlayer, int pId) {
 		if (pId > 0 && pId <= SmallPartsCraftables.ALL_CRAFTABLES.size()) {
 			selectedPartsPatternIndex.set(pId);
 			setupResultSlot();
@@ -125,7 +126,7 @@ public class SmallPartsContainer extends AbstractContainerMenu {
 	 * Callback for when the crafting matrix is changed.
 	 */
 	@Override
-	public void slotsChanged(Container pInventory) {
+	public void slotsChanged(@NotNull Container pInventory) {
 		resultSlot.set(ItemStack.EMPTY);
 		selectedPartsPatternIndex.set(0);
 
@@ -142,7 +143,7 @@ public class SmallPartsContainer extends AbstractContainerMenu {
 	 * inventory and the other inventory(s).
 	 */
 	@Override
-	public ItemStack quickMoveStack(Player pPlayer, int pIndex) {
+	public @NotNull ItemStack quickMoveStack(@NotNull Player pPlayer, int pIndex) {
 		ItemStack stack = ItemStack.EMPTY;
 		Slot slot = slots.get(pIndex);
 		if (slot.hasItem()) {
@@ -188,11 +189,9 @@ public class SmallPartsContainer extends AbstractContainerMenu {
 	 * Called when the container is closed.
 	 */
 	@Override
-	public void removed(Player pPlayer) {
+	public void removed(@NotNull Player pPlayer) {
 		super.removed(pPlayer);
-		access.execute((level, pos) -> {
-			clearContainer(pPlayer, inputContainer);
-		});
+		access.execute((level, pos) -> clearContainer(pPlayer, inputContainer));
 	}
 
 	private void setupResultSlot() {
