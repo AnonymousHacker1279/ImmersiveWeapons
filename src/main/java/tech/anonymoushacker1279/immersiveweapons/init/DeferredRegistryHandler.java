@@ -18,7 +18,6 @@ import net.minecraft.world.level.block.PressurePlateBlock.Sensitivity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockBehaviour.OffsetType;
-import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.treedecorators.TreeDecoratorType;
 import net.minecraft.world.level.material.Material;
 import net.minecraftforge.common.ForgeSpawnEggItem;
@@ -115,8 +114,6 @@ public class DeferredRegistryHandler {
 	public static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITIES = DeferredRegister.create(ForgeRegistries.BLOCK_ENTITIES, ImmersiveWeapons.MOD_ID);
 	// Effect Register
 	public static final DeferredRegister<MobEffect> EFFECTS = DeferredRegister.create(ForgeRegistries.MOB_EFFECTS, ImmersiveWeapons.MOD_ID);
-	// Structure Register
-	public static final DeferredRegister<Feature<?>> STRUCTURE_FEATURES = DeferredRegister.create(ForgeRegistries.FEATURES, ImmersiveWeapons.MOD_ID);
 	// Tree Decorators Register
 	public static final DeferredRegister<TreeDecoratorType<?>> TREE_DECORATORS = DeferredRegister.create(ForgeRegistries.TREE_DECORATOR_TYPES, ImmersiveWeapons.MOD_ID);
 
@@ -137,7 +134,6 @@ public class DeferredRegistryHandler {
 		GLOBAL_LOOT_MODIFIER_SERIALIZER.register(modEventBus);
 		BLOCK_ENTITIES.register(modEventBus);
 		EFFECTS.register(modEventBus);
-		STRUCTURE_FEATURES.register(modEventBus);
 		TREE_DECORATORS.register(modEventBus);
 	}
 

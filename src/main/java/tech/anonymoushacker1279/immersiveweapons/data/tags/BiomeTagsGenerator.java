@@ -33,6 +33,9 @@ public class BiomeTagsGenerator extends TagsProvider<Biome> {
 		tag(ForgeWorldGenTagGroups.IS_PLAINS)
 				.add(Biomes.PLAINS, Biomes.SNOWY_PLAINS, Biomes.SUNFLOWER_PLAINS);
 
+		tag(ForgeWorldGenTagGroups.IS_WET_CAVE)
+				.add(Biomes.DRIPSTONE_CAVES, Biomes.LUSH_CAVES);
+
 		tag(ImmersiveWeaponsWorldGenTagGroups.IS_BATTLEFIELD)
 				.add(BiomesAndDimensions.BATTLEFIELD);
 
