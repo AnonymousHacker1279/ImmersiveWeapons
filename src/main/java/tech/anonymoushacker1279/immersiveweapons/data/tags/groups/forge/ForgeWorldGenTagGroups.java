@@ -8,4 +8,6 @@ public class ForgeWorldGenTagGroups {
 
 	// For some reason Mojang doesn't have tags for plains biomes...
 	public static final TagKey<Biome> IS_PLAINS = BiomeTags.create("forge:is_plains");
+	public static final TagKey<Biome> IS_WET_CAVE = BiomeTags.create("forge:is_wet_cave");
+
 }

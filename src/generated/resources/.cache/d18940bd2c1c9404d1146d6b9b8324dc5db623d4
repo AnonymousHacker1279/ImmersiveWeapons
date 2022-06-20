@@ -1,5 +1,6 @@
-// 1.19	2022-06-13T20:38:17.3963396	Biome Tags
+// 1.19	2022-06-20T18:10:38.4989958	Biome Tags
 c50b1ecf298ee3b1d8426cab4783914dd52a276e data/forge/tags/worldgen/biome/is_plains.json
+b7856a7c24cb111c6c041fea2fad97bd4b24faa3 data/forge/tags/worldgen/biome/is_wet_cave.json
 5c0d6417dc8d9501750754f0547746a8f45239a0 data/immersiveweapons/tags/worldgen/biome/has_structure/has_abandoned_factory.json
 2be0ac7b32b7093ba99664ba566a138efc41ef8b data/immersiveweapons/tags/worldgen/biome/has_structure/has_battlefield_camp.json
 2be0ac7b32b7093ba99664ba566a138efc41ef8b data/immersiveweapons/tags/worldgen/biome/has_structure/has_battlefield_town.json

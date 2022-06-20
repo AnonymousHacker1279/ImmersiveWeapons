@@ -60,8 +60,6 @@ public class ImmersiveWeapons {
 	 */
 	public void setup(FMLCommonSetupEvent event) {
 		DispenserBehaviorRegistry.init();
-		// TODO: Move to Biome Modifiers
-		// OreGeneratorHandler.init();
 		IWCriteriaTriggers.init();
 		event.enqueueWork(() -> {
 			WoodType.register(WoodTypes.BURNED_OAK);
