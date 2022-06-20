@@ -44,6 +44,7 @@ public class ItemTagsGenerator extends ItemTagsProvider {
 	/**
 	 * Add tags under the Forge namespace
 	 */
+	@SuppressWarnings("unchecked")
 	private void addForgeTags() {
 		// Copy item tags from block tags
 		copy(Blocks.STAINED_GLASS, Tags.Items.STAINED_GLASS);

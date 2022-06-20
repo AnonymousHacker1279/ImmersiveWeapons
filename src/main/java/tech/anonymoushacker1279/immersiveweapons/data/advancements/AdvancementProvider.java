@@ -1,8 +1,6 @@
 package tech.anonymoushacker1279.immersiveweapons.data.advancements;
 
 import com.google.common.collect.Sets;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import net.minecraft.advancements.Advancement;
 import net.minecraft.data.*;
 import net.minecraft.resources.ResourceLocation;
@@ -17,7 +15,6 @@ import java.util.function.Consumer;
 
 public class AdvancementProvider implements DataProvider {
 
-	private static final Gson GSON = (new GsonBuilder()).setPrettyPrinting().create();
 	private final DataGenerator generator;
 	private final List<Consumer<Consumer<Advancement>>> tabs;
 

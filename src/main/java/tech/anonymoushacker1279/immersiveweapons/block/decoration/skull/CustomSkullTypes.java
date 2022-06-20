@@ -7,8 +7,5 @@ public enum CustomSkullTypes implements SkullBlock.Type {
 	FIELD_MEDIC,
 	DYING_SOLDIER,
 	WANDERING_WARRIOR,
-	HANS,
-	LAVA_REVENANT,
-	ROCK_SPIDER,
-	CELESTIAL_TOWER
+	HANS
 }

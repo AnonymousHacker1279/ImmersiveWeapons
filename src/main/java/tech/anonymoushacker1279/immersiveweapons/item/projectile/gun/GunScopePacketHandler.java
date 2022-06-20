@@ -59,6 +59,5 @@ public record GunScopePacketHandler(double playerFOV,
 	private static void handleOnClient(GunScopePacketHandler msg) {
 		GunData.playerFOV = msg.playerFOV;
 		GunData.changingPlayerFOV = msg.changingPlayerFOV;
-		// GunData.scopeScale = msg.scopeScale;
 	}
 }

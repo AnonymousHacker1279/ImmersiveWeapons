@@ -167,7 +167,7 @@ public abstract class AbstractMinutemanEntity extends PathfinderMob implements R
 	 * @param difficulty the <code>DifficultyInstance</code> of the world
 	 */
 	@Override
-	protected void populateDefaultEquipmentSlots(RandomSource randomSource, @NotNull DifficultyInstance difficulty) {
+	protected void populateDefaultEquipmentSlots(@NotNull RandomSource randomSource, @NotNull DifficultyInstance difficulty) {
 		super.populateDefaultEquipmentSlots(randomSource, difficulty);
 		setItemSlot(EquipmentSlot.MAINHAND, new ItemStack(DeferredRegistryHandler.BLUNDERBUSS.get()));
 	}
@@ -318,7 +318,7 @@ public abstract class AbstractMinutemanEntity extends PathfinderMob implements R
 		AbstractBulletItem arrowItem = (AbstractBulletItem) (bulletStack.getItem() instanceof AbstractBulletItem
 				? bulletStack.getItem() : DeferredRegistryHandler.COPPER_MUSKET_BALL.get());
 
-		BulletEntity bulletEntity = arrowItem.createBullet(level, bulletStack, this);
+		BulletEntity bulletEntity = arrowItem.createBullet(level, this);
 		bulletEntity.setEnchantmentEffectsFromEntity(this, distanceFactor);
 
 		return bulletEntity;

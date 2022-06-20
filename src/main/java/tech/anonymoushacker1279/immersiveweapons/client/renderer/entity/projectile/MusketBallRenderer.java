@@ -19,7 +19,7 @@ public class MusketBallRenderer<T extends BulletEntity> extends EntityRenderer<T
 	}
 
 	@Override
-	public void render(BulletEntity entity, float entityYaw, float partialTicks, PoseStack poseStack, MultiBufferSource renderTypeBuffer, int light) {
+	public void render(BulletEntity entity, float entityYaw, float partialTicks, PoseStack poseStack, @NotNull MultiBufferSource renderTypeBuffer, int light) {
 		poseStack.pushPose();
 
 		poseStack.mulPose(Vector3f.YP.rotationDegrees(180.0F));
@@ -35,7 +35,7 @@ public class MusketBallRenderer<T extends BulletEntity> extends EntityRenderer<T
 	}
 
 	@Override
-	public ResourceLocation getTextureLocation(@NotNull T pEntity) {
+	public @NotNull ResourceLocation getTextureLocation(@NotNull T pEntity) {
 		return null;
 	}
 }

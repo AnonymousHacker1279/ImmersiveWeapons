@@ -122,7 +122,7 @@ public abstract class AbstractGunItem extends Item implements Vanishable {
 							? ammo.getItem() : defaultAmmo());
 
 					for (int i = 0; i < bulletsToFire; ++i) {
-						fireBullets(bulletItem, level, ammo, player, itemStack);
+						fireBullets(bulletItem, level, player, itemStack);
 					}
 				}
 
@@ -273,7 +273,7 @@ public abstract class AbstractGunItem extends Item implements Vanishable {
 	}
 
 	@Override
-	public void inventoryTick(ItemStack pStack, Level pLevel, Entity pEntity, int pSlotId, boolean pIsSelected) {
+	public void inventoryTick(@NotNull ItemStack pStack, @NotNull Level pLevel, @NotNull Entity pEntity, int pSlotId, boolean pIsSelected) {
 		if (pEntity instanceof Player player) {
 			if (pLevel.isClientSide && !player.getUseItem().is(DeferredRegistryHandler.MUSKET_SCOPE.get())) {
 				GunData.changingPlayerFOV = -1;
@@ -393,8 +393,8 @@ public abstract class AbstractGunItem extends Item implements Vanishable {
 		return false;
 	}
 
-	protected void fireBullets(AbstractBulletItem bulletItem, Level level, ItemStack ammo, Player player, ItemStack firingItem) {
-		BulletEntity bulletEntity = bulletItem.createBullet(level, ammo, player);
+	protected void fireBullets(AbstractBulletItem bulletItem, Level level, Player player, ItemStack firingItem) {
+		BulletEntity bulletEntity = bulletItem.createBullet(level, player);
 
 		bulletEntity.setFiringItem(firingItem.getItem());
 

@@ -49,7 +49,7 @@ public class BurnedOakBoatEntity extends Boat {
 	}
 
 	@Override
-	protected void checkFallDamage(double pY, boolean pOnGround, BlockState pState, BlockPos pPos) {
+	protected void checkFallDamage(double pY, boolean pOnGround, @NotNull BlockState pState, @NotNull BlockPos pPos) {
 		lastYd = getDeltaMovement().y;
 		if (!isPassenger()) {
 			if (pOnGround) {

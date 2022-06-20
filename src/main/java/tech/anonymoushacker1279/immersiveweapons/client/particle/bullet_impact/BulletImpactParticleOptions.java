@@ -30,9 +30,9 @@ public class BulletImpactParticleOptions implements ParticleOptions {
 					Codec.INT.fieldOf("blockID").forGetter((particleOptions) -> particleOptions.blockID))
 			.apply(particleOptionsInstance, BulletImpactParticleOptions::new));
 
-	protected Vector3f color;
-	protected float scale;
-	protected int blockID;
+	protected final Vector3f color;
+	protected final float scale;
+	protected final int blockID;
 
 	public static final ParticleOptions.Deserializer<BulletImpactParticleOptions> DESERIALIZER = new ParticleOptions.Deserializer<>() {
 		@Override
@@ -86,14 +86,6 @@ public class BulletImpactParticleOptions implements ParticleOptions {
 
 	public Vector3f getColor() {
 		return color;
-	}
-
-	public float getScale() {
-		return scale;
-	}
-
-	public int getBlockID() {
-		return blockID;
 	}
 
 	@Override

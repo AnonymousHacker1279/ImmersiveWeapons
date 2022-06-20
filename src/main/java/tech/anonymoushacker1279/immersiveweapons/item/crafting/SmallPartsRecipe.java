@@ -38,7 +38,7 @@ public record SmallPartsRecipe(ResourceLocation recipeId,
 	 * @return boolean
 	 */
 	@Override
-	public boolean matches(Container inv, @NotNull Level worldIn) {
+	public boolean matches(@NotNull Container inv, @NotNull Level worldIn) {
 		return false;
 	}
 
@@ -49,7 +49,7 @@ public record SmallPartsRecipe(ResourceLocation recipeId,
 	 * @return ItemStack
 	 */
 	@Override
-	public @NotNull ItemStack assemble(Container inv) {
+	public @NotNull ItemStack assemble(@NotNull Container inv) {
 		return new ItemStack(Items.AIR);
 	}
 

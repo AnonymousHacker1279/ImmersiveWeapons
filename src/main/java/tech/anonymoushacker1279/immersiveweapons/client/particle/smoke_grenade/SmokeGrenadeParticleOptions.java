@@ -83,10 +83,6 @@ public class SmokeGrenadeParticleOptions implements ParticleOptions {
 		return color;
 	}
 
-	public float getScale() {
-		return scale;
-	}
-
 	@Override
 	public @NotNull ParticleType<SmokeGrenadeParticleOptions> getType() {
 		return DeferredRegistryHandler.SMOKE_GRENADE_PARTICLE.get();
