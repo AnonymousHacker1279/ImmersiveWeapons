@@ -41,25 +41,25 @@ public class BearTrapBlockEntity extends BlockEntity implements EntityBlock {
 	/**
 	 * Runs once each tick. Handle trapping and releasing entities.
 	 */
-	public static void tick(BlockPos blockPos, BearTrapBlockEntity bearTrapBlockEntity) {
-		Mob trapped = bearTrapBlockEntity.getTrappedMobEntity();
-		Player trappedPlayer = bearTrapBlockEntity.getTrappedPlayerEntity();
+	public void tick(BlockPos blockPos, BearTrapBlockEntity bearTrapBlockEntity) {
+		Mob trapped = getTrappedMobEntity();
+		Player trappedPlayer = getTrappedPlayerEntity();
 
 		if (trapped != null) {
 			// Entity has escaped
 			if (!trapped.getBoundingBox().intersects(new AABB(blockPos)) || !trapped.isAlive()) {
-				bearTrapBlockEntity.setTrappedMobEntity(null);
+				setTrappedMobEntity(null);
 			}
 		}
 
 		if (trappedPlayer != null) {
 			// Player has escaped
 			if (!trappedPlayer.getBoundingBox().intersects(new AABB(blockPos)) || !trappedPlayer.isAlive()) {
-				bearTrapBlockEntity.setTrappedPlayerEntity(null);
-				bearTrapBlockEntity.trappedPlayerEntity = null;
+				setTrappedPlayerEntity(null);
+				trappedPlayerEntity = null;
 			} else {
-				trappedPlayer.makeStuckInBlock(bearTrapBlockEntity.getBlockState(), new Vec3(0.0F, 0.0D, 0.0F));
-				if (bearTrapBlockEntity.level != null && bearTrapBlockEntity.level.isClientSide) {
+				trappedPlayer.makeStuckInBlock(getBlockState(), new Vec3(0.0F, 0.0D, 0.0F));
+				if (level != null && level.isClientSide) {
 					Minecraft.getInstance().options.keyJump.setDown(false);
 					Minecraft.getInstance().options.keyUp.setDown(false);
 					Minecraft.getInstance().options.keyLeft.setDown(false);

@@ -17,7 +17,6 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.NotNull;
 import tech.anonymoushacker1279.immersiveweapons.blockentity.MedicStatueBlockEntity;
-import tech.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
 
 public class MedicStatueBlock extends HorizontalDirectionalBlock implements EntityBlock, SimpleWaterloggedBlock {
 
@@ -56,8 +55,10 @@ public class MedicStatueBlock extends HorizontalDirectionalBlock implements Enti
 	 * @return BlockEntityTicker
 	 */
 	@Override
-	public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, @NotNull BlockState blockState, @NotNull BlockEntityType<T> blockEntityType) {
-		return level.isClientSide ? null : BaseEntityBlock.createTickerHelper(blockEntityType, DeferredRegistryHandler.MEDIC_STATUE_BLOCK_ENTITY.get(), (level1, blockPos, blockState1, medicStatueBlockEntity) -> MedicStatueBlockEntity.serverTick(level1, blockPos, medicStatueBlockEntity));
+	public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, @NotNull BlockState blockState,
+	                                                              @NotNull BlockEntityType<T> blockEntityType) {
+
+		return level.isClientSide ? null : (world, pos, state, entity) -> ((MedicStatueBlockEntity) entity).tick(world, pos);
 	}
 
 	/**

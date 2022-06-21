@@ -19,7 +19,6 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.NotNull;
 import tech.anonymoushacker1279.immersiveweapons.blockentity.PanicAlarmBlockEntity;
-import tech.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
 
 public class PanicAlarmBlock extends HorizontalDirectionalBlock implements SimpleWaterloggedBlock, EntityBlock {
 
@@ -95,10 +94,7 @@ public class PanicAlarmBlock extends HorizontalDirectionalBlock implements Simpl
 	public <T extends BlockEntity> BlockEntityTicker<T> getTicker(@NotNull Level level, @NotNull BlockState blockState,
 	                                                              @NotNull BlockEntityType<T> blockEntityType) {
 
-		return level.isClientSide ? null : BaseEntityBlock.createTickerHelper(blockEntityType,
-				DeferredRegistryHandler.PANIC_ALARM_BLOCK_ENTITY.get(),
-				(level1, blockPos, blockState1, panicAlarmBlockEntity) ->
-						panicAlarmBlockEntity.tick(level1, blockPos));
+		return level.isClientSide ? null : (world, pos, state, entity) -> ((PanicAlarmBlockEntity) entity).tick(world, pos);
 	}
 
 	/**
@@ -173,7 +169,7 @@ public class PanicAlarmBlock extends HorizontalDirectionalBlock implements Simpl
 	 * @param state       the <code>BlockState</code> of the block
 	 * @param serverLevel the <code>ServerLevel</code> of the block
 	 * @param pos         the <code>BlockPos</code> the block is at
-	 * @param random        a <code>RandomSource</code> instance
+	 * @param random      a <code>RandomSource</code> instance
 	 */
 	@Override
 	public void tick(@NotNull BlockState state, ServerLevel serverLevel, @NotNull BlockPos pos, @NotNull RandomSource random) {

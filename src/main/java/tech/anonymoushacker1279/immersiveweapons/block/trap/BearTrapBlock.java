@@ -28,7 +28,7 @@ import org.jetbrains.annotations.NotNull;
 import tech.anonymoushacker1279.immersiveweapons.blockentity.BearTrapBlockEntity;
 import tech.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
 
-public class BearTrapBlock extends BaseEntityBlock implements SimpleWaterloggedBlock {
+public class BearTrapBlock extends Block implements SimpleWaterloggedBlock, EntityBlock {
 
 	public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
 	protected static final VoxelShape SHAPE = Block.box(0.0D, 0.0D, 0.0D, 16.0D, 2.0D, 16.0D);
@@ -58,7 +58,7 @@ public class BearTrapBlock extends BaseEntityBlock implements SimpleWaterloggedB
 	 * @param player    the <code>PlayerEntity</code> interacting with the block
 	 * @param hand      the <code>Hand</code> the PlayerEntity used
 	 * @param hitResult the <code>BlockHitResult</code> of the interaction
-	 * @return ActionResultType
+	 * @return InteractionResult
 	 */
 	@SuppressWarnings("deprecation")
 	@Override
@@ -67,10 +67,10 @@ public class BearTrapBlock extends BaseEntityBlock implements SimpleWaterloggedB
 	                                      @NotNull BlockHitResult hitResult) {
 
 		if (!level.isClientSide && hand.equals(InteractionHand.MAIN_HAND)) {
-			BearTrapBlockEntity bearTrap = (BearTrapBlockEntity) level.getBlockEntity(pos);
+			BearTrapBlockEntity blockEntity = (BearTrapBlockEntity) level.getBlockEntity(pos);
 			ItemStack currentlyHeldItem = player.getMainHandItem();
-			if (bearTrap != null) {
-				if (state.getValue(TRIGGERED) && !bearTrap.hasTrappedEntity() && bearTrap.hasTrappedPlayerEntity()) {
+			if (blockEntity != null) {
+				if (state.getValue(TRIGGERED) && !blockEntity.hasTrappedEntity() && blockEntity.hasTrappedPlayerEntity()) {
 					level.setBlock(pos, state.setValue(TRIGGERED, false).setValue(VINES, false), 3);
 					return InteractionResult.SUCCESS;
 				}
@@ -90,14 +90,14 @@ public class BearTrapBlock extends BaseEntityBlock implements SimpleWaterloggedB
 	 * Set the shape of the block.
 	 *
 	 * @param state            the <code>BlockState</code> of the block
-	 * @param reader           the <code>IBlockReader</code> for the block
+	 * @param getter           the <code>BlockGetter</code> for the block
 	 * @param pos              the <code>BlockPos</code> the block is at
-	 * @param selectionContext the <code>ISelectionContext</code> of the block
+	 * @param collisionContext the <code>CollisionContext</code> of the block
 	 * @return VoxelShape
 	 */
 	@SuppressWarnings("deprecation")
 	@Override
-	public @NotNull VoxelShape getShape(@NotNull BlockState state, @NotNull BlockGetter reader, @NotNull BlockPos pos, @NotNull CollisionContext selectionContext) {
+	public @NotNull VoxelShape getShape(@NotNull BlockState state, @NotNull BlockGetter getter, @NotNull BlockPos pos, @NotNull CollisionContext collisionContext) {
 		return SHAPE;
 	}
 
@@ -105,26 +105,15 @@ public class BearTrapBlock extends BaseEntityBlock implements SimpleWaterloggedB
 	 * Get the collision shape of the block.
 	 *
 	 * @param state            the <code>BlockState</code> of the block
-	 * @param reader           the <code>IBlockReader</code> for the block
+	 * @param getter           the <code>BlockGetter</code> for the block
 	 * @param pos              the <code>BlockPos</code> the block is at
-	 * @param selectionContext the <code>ISelectionContext</code> of the block
+	 * @param collisionContext the <code>CollisionContext</code> of the block
 	 * @return VoxelShape
 	 */
 	@SuppressWarnings("deprecation")
 	@Override
-	public @NotNull VoxelShape getCollisionShape(@NotNull BlockState state, @NotNull BlockGetter reader, @NotNull BlockPos pos, @NotNull CollisionContext selectionContext) {
+	public @NotNull VoxelShape getCollisionShape(@NotNull BlockState state, @NotNull BlockGetter getter, @NotNull BlockPos pos, @NotNull CollisionContext collisionContext) {
 		return Shapes.empty();
-	}
-
-	/**
-	 * Set the RenderShape of the block's model.
-	 *
-	 * @param state the <code>BlockState</code> of the block
-	 * @return BlockRenderType
-	 */
-	@Override
-	public @NotNull RenderShape getRenderShape(@NotNull BlockState state) {
-		return RenderShape.MODEL;
 	}
 
 	/**
@@ -149,8 +138,10 @@ public class BearTrapBlock extends BaseEntityBlock implements SimpleWaterloggedB
 	 * @return BlockEntityTicker
 	 */
 	@Override
-	public <T extends BlockEntity> BlockEntityTicker<T> getTicker(@NotNull Level level, @NotNull BlockState blockState, @NotNull BlockEntityType<T> blockEntityType) {
-		return createTickerHelper(blockEntityType, DeferredRegistryHandler.BEAR_TRAP_BLOCK_ENTITY.get(), (level1, blockPos, blockState1, bearTrapBlockEntity) -> BearTrapBlockEntity.tick(blockPos, bearTrapBlockEntity));
+	public <T extends BlockEntity> BlockEntityTicker<T> getTicker(@NotNull Level level, @NotNull BlockState blockState,
+	                                                              @NotNull BlockEntityType<T> blockEntityType) {
+
+		return (world, pos, state, entity) -> ((BearTrapBlockEntity) entity).tick(pos, (BearTrapBlockEntity) entity);
 	}
 
 	/**
@@ -165,10 +156,10 @@ public class BearTrapBlock extends BaseEntityBlock implements SimpleWaterloggedB
 	@SuppressWarnings("deprecation")
 	@Override
 	public void entityInside(BlockState state, Level level, @NotNull BlockPos pos, @NotNull Entity entity) {
-		BearTrapBlockEntity bearTrap = (BearTrapBlockEntity) level.getBlockEntity(pos);
+		BearTrapBlockEntity blockEntity = (BearTrapBlockEntity) level.getBlockEntity(pos);
 
 		if (state.getValue(TRIGGERED)) {
-			if (bearTrap != null && (bearTrap.getTrappedMobEntity() == entity || bearTrap.getTrappedPlayerEntity() == entity)) {
+			if (blockEntity != null && (blockEntity.getTrappedMobEntity() == entity || blockEntity.getTrappedPlayerEntity() == entity)) {
 				entity.makeStuckInBlock(state, new Vec3(0.0F, 0.0D, 0.0F));
 				if ((entity.xOld != entity.getX() || entity.zOld != entity.getZ())) {
 					double d0 = Math.abs(entity.getX() - entity.xOld);
@@ -190,9 +181,11 @@ public class BearTrapBlock extends BaseEntityBlock implements SimpleWaterloggedB
 					level.setBlock(pos, state.setValue(TRIGGERED, true).setValue(VINES, false), 3);
 				}
 				livingEntity.hurt(BearTrapBlockEntity.damageSource, 2.0F);
-				level.playSound((Player) entity, pos, DeferredRegistryHandler.BEAR_TRAP_CLOSE.get(), SoundSource.BLOCKS, 1f, 1f);
-				if (bearTrap != null) {
-					bearTrap.setTrappedPlayerEntity(livingEntity);
+				level.playSound((Player) entity, pos, DeferredRegistryHandler.BEAR_TRAP_CLOSE.get(), SoundSource.BLOCKS,
+						1f, 1f);
+
+				if (blockEntity != null) {
+					blockEntity.setTrappedPlayerEntity(livingEntity);
 				}
 			}
 		} else if (entity instanceof Mob livingEntity) {
@@ -203,9 +196,11 @@ public class BearTrapBlock extends BaseEntityBlock implements SimpleWaterloggedB
 			}
 			level.setBlock(pos, state.setValue(TRIGGERED, true), 3);
 			livingEntity.hurt(BearTrapBlockEntity.damageSource, 2.0F);
-			level.playLocalSound(pos.getX(), pos.getY(), pos.getZ(), DeferredRegistryHandler.BEAR_TRAP_CLOSE.get(), SoundSource.BLOCKS, 1f, 1f, false);
-			if (bearTrap != null) {
-				bearTrap.setTrappedMobEntity(livingEntity);
+			level.playLocalSound(pos.getX(), pos.getY(), pos.getZ(), DeferredRegistryHandler.BEAR_TRAP_CLOSE.get(),
+					SoundSource.BLOCKS, 1f, 1f, false);
+
+			if (blockEntity != null) {
+				blockEntity.setTrappedMobEntity(livingEntity);
 			}
 		}
 	}
@@ -214,7 +209,7 @@ public class BearTrapBlock extends BaseEntityBlock implements SimpleWaterloggedB
 	 * Set placement properties.
 	 * Sets the facing direction of the block for placement.
 	 *
-	 * @param context the <code>BlockItemUseContext</code> during placement
+	 * @param context the <code>BlockPlaceContext</code> during placement
 	 * @return BlockState
 	 */
 	@Override
@@ -251,21 +246,21 @@ public class BearTrapBlock extends BaseEntityBlock implements SimpleWaterloggedB
 	/**
 	 * Set the block's analog output signal strength.
 	 *
-	 * @param state   the <code>BlockState</code> of the block
-	 * @param worldIn the <code>World</code> the block is in
-	 * @param pos     the <code>BlockPos</code> the block is at
+	 * @param state the <code>BlockState</code> of the block
+	 * @param level the <code>Level</code> the block is in
+	 * @param pos   the <code>BlockPos</code> the block is at
 	 * @return int
 	 */
 	@SuppressWarnings("deprecation")
 	@Override
-	public int getAnalogOutputSignal(BlockState state, @NotNull Level worldIn, @NotNull BlockPos pos) {
+	public int getAnalogOutputSignal(BlockState state, @NotNull Level level, @NotNull BlockPos pos) {
 		return state.getValue(TRIGGERED) ? 15 : 0;
 	}
 
 	/**
 	 * Create the BlockState definition.
 	 *
-	 * @param builder the <code>StateContainer.Builder</code> of the block
+	 * @param builder the <code>StateDefinition.Builder</code> of the block
 	 */
 	@Override
 	protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
@@ -288,14 +283,14 @@ public class BearTrapBlock extends BaseEntityBlock implements SimpleWaterloggedB
 	 * Get the signal of the block.
 	 *
 	 * @param blockState the <code>BlockState</code> of the block
-	 * @param reader     the <code>IBlockReader</code> for the block
+	 * @param getter     the <code>BlockGetter</code> for the block
 	 * @param pos        the <code>BlockPos</code> the block is at
 	 * @param side       the <code>Direction</code> the block is facing
 	 * @return int
 	 */
 	@SuppressWarnings("deprecation")
 	@Override
-	public int getSignal(BlockState blockState, @NotNull BlockGetter reader, @NotNull BlockPos pos, @NotNull Direction side) {
+	public int getSignal(BlockState blockState, @NotNull BlockGetter getter, @NotNull BlockPos pos, @NotNull Direction side) {
 		if (!blockState.isSignalSource()) {
 			return 0;
 		} else {
