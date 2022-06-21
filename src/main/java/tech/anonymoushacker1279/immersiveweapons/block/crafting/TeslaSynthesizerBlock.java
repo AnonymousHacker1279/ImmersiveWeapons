@@ -22,14 +22,12 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraftforge.network.NetworkHooks;
 import org.jetbrains.annotations.NotNull;
-import tech.anonymoushacker1279.immersiveweapons.blockentity.AbstractTeslaSynthesizerBlockEntity;
 import tech.anonymoushacker1279.immersiveweapons.blockentity.TeslaSynthesizerBlockEntity;
 import tech.anonymoushacker1279.immersiveweapons.container.TeslaSynthesizerContainer;
-import tech.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
 
 import javax.annotation.Nullable;
 
-public class TeslaSynthesizerBlock extends Block implements EntityBlock, SimpleWaterloggedBlock {
+public class TeslaSynthesizerBlock extends Block implements SimpleWaterloggedBlock, EntityBlock {
 
 	public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
 	protected static final VoxelShape SHAPE = Block.box(0.0D, 0.0D, 0.0D, 16.0D, 6.0D, 16.0D);
@@ -59,6 +57,23 @@ public class TeslaSynthesizerBlock extends Block implements EntityBlock, SimpleW
 	}
 
 	/**
+	 * Set the shape of the block.
+	 *
+	 * @param state            the <code>BlockState</code> of the block
+	 * @param getter           the <code>BlockGetter</code> for the block
+	 * @param pos              the <code>BlockPos</code> the block is at
+	 * @param collisionContext the <code>CollisionContext</code> of the block
+	 * @return VoxelShape
+	 */
+	@SuppressWarnings("deprecation")
+	@Override
+	public @NotNull VoxelShape getShape(@NotNull BlockState state, @NotNull BlockGetter getter, @NotNull BlockPos pos,
+	                                    @NotNull CollisionContext collisionContext) {
+
+		return SHAPE;
+	}
+
+	/**
 	 * Get the ticker for the block.
 	 *
 	 * @param level           the <code>Level</code> the block is in
@@ -68,28 +83,16 @@ public class TeslaSynthesizerBlock extends Block implements EntityBlock, SimpleW
 	 * @return BlockEntityTicker
 	 */
 	@Override
-	public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, @NotNull BlockState blockState, @NotNull BlockEntityType<T> blockEntityType) {
-		return level.isClientSide ? null : BaseEntityBlock.createTickerHelper(blockEntityType, DeferredRegistryHandler.TESLA_SYNTHESIZER_BLOCK_ENTITY.get(), (level1, blockPos, blockState1, abstractTeslaSynthesizerTileEntity) -> TeslaSynthesizerBlockEntity.serverTick(level1, abstractTeslaSynthesizerTileEntity));
-	}
+	public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, @NotNull BlockState blockState,
+	                                                              @NotNull BlockEntityType<T> blockEntityType) {
 
-	/**
-	 * Set the shape of the block.
-	 *
-	 * @param state            the <code>BlockState</code> of the block
-	 * @param reader           the <code>IBlockReader</code> for the block
-	 * @param pos              the <code>BlockPos</code> the block is at
-	 * @param selectionContext the <code>ISelectionContext</code> of the block
-	 * @return VoxelShape
-	 */
-	@Override
-	public @NotNull VoxelShape getShape(@NotNull BlockState state, @NotNull BlockGetter reader, @NotNull BlockPos pos, @NotNull CollisionContext selectionContext) {
-		return SHAPE;
+		return level.isClientSide ? null : (world, pos, state, entity) -> ((TeslaSynthesizerBlockEntity) entity).tick(world);
 	}
 
 	/**
 	 * Create the BlockState definition.
 	 *
-	 * @param builder the <code>StateContainer.Builder</code> of the block
+	 * @param builder the <code>StateDefinition.Builder</code> of the block
 	 */
 	@Override
 	public void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
@@ -111,13 +114,13 @@ public class TeslaSynthesizerBlock extends Block implements EntityBlock, SimpleW
 	/**
 	 * Get the INamedContainerProvider for the block.
 	 *
-	 * @param state   the <code>BlockState</code> of the block
-	 * @param worldIn the <code>World</code> the block is in
-	 * @param pos     the <code>BlockPos</code> the block is at
-	 * @return INamedContainerProvider
+	 * @param state the <code>BlockState</code> of the block
+	 * @param level the <code>Level</code> the block is in
+	 * @param pos   the <code>BlockPos</code> the block is at
+	 * @return MenuProvider
 	 */
 	@Override
-	public MenuProvider getMenuProvider(@NotNull BlockState state, @NotNull Level worldIn, @NotNull BlockPos pos) {
+	public MenuProvider getMenuProvider(@NotNull BlockState state, @NotNull Level level, @NotNull BlockPos pos) {
 		return new SimpleMenuProvider((id, inventory, player) -> new TeslaSynthesizerContainer(id, inventory), CONTAINER_NAME);
 	}
 
@@ -125,22 +128,25 @@ public class TeslaSynthesizerBlock extends Block implements EntityBlock, SimpleW
 	 * Runs when the block is activated.
 	 * Allows the block to respond to user interaction.
 	 *
-	 * @param state               the <code>BlockState</code> of the block
-	 * @param worldIn             the <code>World</code> the block is in
-	 * @param pos                 the <code>BlockPos</code> the block is at
-	 * @param player              the <code>PlayerEntity</code> interacting with the block
-	 * @param handIn              the <code>Hand</code> the PlayerEntity used
-	 * @param blockRayTraceResult the <code>BlockRayTraceResult</code> of the interaction
-	 * @return ActionResultType
+	 * @param state     the <code>BlockState</code> of the block
+	 * @param level     the <code>Level</code> the block is in
+	 * @param pos       the <code>BlockPos</code> the block is at
+	 * @param player    the <code>Player</code> interacting with the block
+	 * @param hand      the <code>InteractionHand</code> the PlayerEntity used
+	 * @param hitResult the <code>BlockHitResult</code> of the interaction
+	 * @return InteractionResult
 	 */
 	@Override
-	public @NotNull InteractionResult use(@NotNull BlockState state, Level worldIn, @NotNull BlockPos pos, @NotNull Player player, @NotNull InteractionHand handIn, @NotNull BlockHitResult blockRayTraceResult) {
-		if (worldIn.isClientSide) {
+	public @NotNull InteractionResult use(@NotNull BlockState state, Level level, @NotNull BlockPos pos,
+	                                      @NotNull Player player, @NotNull InteractionHand hand,
+	                                      @NotNull BlockHitResult hitResult) {
+
+		if (level.isClientSide) {
 			return InteractionResult.SUCCESS;
 		} else {
-			BlockEntity tileEntity = worldIn.getBlockEntity(pos);
-			if (tileEntity instanceof TeslaSynthesizerBlockEntity) {
-				NetworkHooks.openGui((ServerPlayer) player, (MenuProvider) tileEntity, pos);
+			BlockEntity blockEntity = level.getBlockEntity(pos);
+			if (blockEntity instanceof TeslaSynthesizerBlockEntity) {
+				NetworkHooks.openGui((ServerPlayer) player, (MenuProvider) blockEntity, pos);
 			}
 			return InteractionResult.CONSUME;
 		}
@@ -150,34 +156,38 @@ public class TeslaSynthesizerBlock extends Block implements EntityBlock, SimpleW
 	 * Runs when the block is removed.
 	 *
 	 * @param state    the <code>BlockState</code> of the block
-	 * @param worldIn  the <code>World</code> the block is in
+	 * @param level    the <code>Level</code> the block is in
 	 * @param pos      the <code>BlockPos</code> the block is at
 	 * @param newState the <code>BlockState</code> the block now has
 	 * @param isMoving determines if the block is moving
 	 */
 	@Override
-	public void onRemove(BlockState state, @NotNull Level worldIn, @NotNull BlockPos pos, BlockState newState, boolean isMoving) {
+	public void onRemove(BlockState state, @NotNull Level level, @NotNull BlockPos pos, BlockState newState, boolean isMoving) {
 		if (!state.is(newState.getBlock())) {
-			BlockEntity tileEntity = worldIn.getBlockEntity(pos);
-			if (tileEntity instanceof AbstractTeslaSynthesizerBlockEntity) {
-				Containers.dropContents(worldIn, pos, (AbstractTeslaSynthesizerBlockEntity) tileEntity);
-				worldIn.updateNeighbourForOutputSignal(pos, this);
+			BlockEntity blockEntity = level.getBlockEntity(pos);
+			if (blockEntity instanceof TeslaSynthesizerBlockEntity) {
+				Containers.dropContents(level, pos, (TeslaSynthesizerBlockEntity) blockEntity);
+				level.updateNeighbourForOutputSignal(pos, this);
 			}
 
-			super.onRemove(state, worldIn, pos, newState, isMoving);
+			super.onRemove(state, level, pos, newState, isMoving);
 		}
 	}
 
 	/**
 	 * Runs occasionally to create animations.
 	 *
-	 * @param stateIn the <code>BlockState</code> of the block
-	 * @param worldIn the <code>World</code> the block is in
-	 * @param pos     the <code>BlockPos</code> the block is at
-	 * @param rand    a <code>Random</code> instance
+	 * @param state  the <code>BlockState</code> of the block
+	 * @param level  the <code>Level</code> the block is in
+	 * @param pos    the <code>BlockPos</code> the block is at
+	 * @param random a <code>RandomSource</code> instance
 	 */
 	@Override
-	public void animateTick(@NotNull BlockState stateIn, Level worldIn, BlockPos pos, @NotNull RandomSource rand) {
-		worldIn.addParticle(ParticleTypes.SOUL_FIRE_FLAME, pos.getX() + 0.5D, pos.getY() + 0.4D, pos.getZ() + 0.5D, 0.0D, 0.0D, 0.0D);
+	public void animateTick(@NotNull BlockState state, Level level, BlockPos pos, @NotNull RandomSource random) {
+		level.addParticle(ParticleTypes.SOUL_FIRE_FLAME,
+				pos.getX() + 0.5D,
+				pos.getY() + 0.4D,
+				pos.getZ() + 0.5D,
+				0.0D, 0.0D, 0.0D);
 	}
 }
