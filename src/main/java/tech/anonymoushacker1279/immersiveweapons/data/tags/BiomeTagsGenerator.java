@@ -1,5 +1,6 @@
 package tech.anonymoushacker1279.immersiveweapons.data.tags;
 
+import net.minecraft.core.Registry;
 import net.minecraft.data.BuiltinRegistries;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.tags.TagsProvider;
@@ -23,7 +24,7 @@ public class BiomeTagsGenerator extends TagsProvider<Biome> {
 		super(generator, BuiltinRegistries.BIOME, ImmersiveWeapons.MOD_ID, fileHelper);
 
 		fileHelper.trackGenerated(new ResourceLocation(ImmersiveWeapons.MOD_ID, "battlefield"),
-				new ResourceType(PackType.SERVER_DATA, ".json", TagManager.getTagDir(BuiltinRegistries.BIOME.key())));
+				new ResourceType(PackType.SERVER_DATA, ".json", TagManager.getTagDir(Registry.BIOME_REGISTRY)));
 	}
 
 	@Override
@@ -35,6 +36,9 @@ public class BiomeTagsGenerator extends TagsProvider<Biome> {
 
 		tag(ForgeWorldGenTagGroups.IS_WET_CAVE)
 				.add(Biomes.DRIPSTONE_CAVES, Biomes.LUSH_CAVES);
+
+		tag(BiomeTags.IS_OVERWORLD)
+				.add(BiomesAndDimensions.BATTLEFIELD);
 
 		tag(ImmersiveWeaponsWorldGenTagGroups.IS_BATTLEFIELD)
 				.add(BiomesAndDimensions.BATTLEFIELD);

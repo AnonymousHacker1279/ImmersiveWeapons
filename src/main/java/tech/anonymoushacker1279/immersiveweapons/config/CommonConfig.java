@@ -15,17 +15,7 @@ public class CommonConfig {
 	public static ForgeConfigSpec.ConfigValue<Boolean> TILTROS_ENABLED;
 
 	// Spawn settings
-
-	// Dying Soldier
-	public static ForgeConfigSpec.ConfigValue<Boolean> ENABLE_DYING_SOLDIER_SPAWN;
-	public static ForgeConfigSpec.ConfigValue<Integer> DYING_SOLDIER_SPAWN_WEIGHT;
-	public static ForgeConfigSpec.ConfigValue<Integer> DYING_SOLDIER_SPAWN_MIN_COUNT;
-	public static ForgeConfigSpec.ConfigValue<Integer> DYING_SOLDIER_SPAWN_MAX_COUNT;
-	// Wandering Warrior
-	public static ForgeConfigSpec.ConfigValue<Boolean> ENABLE_WANDERING_WARRIOR_SPAWN;
-	public static ForgeConfigSpec.ConfigValue<Integer> WANDERING_WARRIOR_SPAWN_WEIGHT;
-	public static ForgeConfigSpec.ConfigValue<Integer> WANDERING_WARRIOR_SPAWN_MIN_COUNT;
-	public static ForgeConfigSpec.ConfigValue<Integer> WANDERING_WARRIOR_SPAWN_MAX_COUNT;
+	
 	// Hans
 	public static ForgeConfigSpec.ConfigValue<Boolean> ENABLE_HANS_SPAWN;
 	public static ForgeConfigSpec.ConfigValue<Integer> HANS_SPAWN_WEIGHT;
@@ -71,44 +61,6 @@ public class CommonConfig {
 		builder.pop();
 
 		builder.push("Entity Spawns");
-
-		builder.push("Dying Soldier");
-		ENABLE_DYING_SOLDIER_SPAWN = builder
-				.comment("Enable the natural spawning of Dying Soldiers - Default true")
-				.translation("config.immersiveweapons.dying_soldier_spawn")
-				.define("enable_dying_soldier_spawn", true);
-		DYING_SOLDIER_SPAWN_WEIGHT = builder
-				.comment("Set the spawn weight of Dying Soldiers - Default 95")
-				.translation("config.immersiveweapons.dying_soldier_spawn_weight")
-				.define("dying_soldier_spawn_weight", 95);
-		DYING_SOLDIER_SPAWN_MIN_COUNT = builder
-				.comment("Set the minimum spawn count of Dying Soldiers - Default 2")
-				.translation("config.immersiveweapons.dying_soldier_spawn_min_count")
-				.define("dying_soldier_spawn_min_count", 2);
-		DYING_SOLDIER_SPAWN_MAX_COUNT = builder
-				.comment("Set the maximum spawn count of Dying Soldiers - Default 4")
-				.translation("config.immersiveweapons.dying_soldier_spawn_max_count")
-				.define("dying_soldier_spawn_max_count", 4);
-		builder.pop();
-
-		builder.push("Wandering Warrior");
-		ENABLE_WANDERING_WARRIOR_SPAWN = builder
-				.comment("Enable the natural spawning of Wandering Warriors - Default true")
-				.translation("config.immersiveweapons.enable_wandering_warriors_spawn")
-				.define("enable_wandering_warriors_spawn", true);
-		WANDERING_WARRIOR_SPAWN_WEIGHT = builder
-				.comment("Set the spawn weight of Wandering Warriors - Default 65")
-				.translation("config.immersiveweapons.wandering_warriors_spawn_weight")
-				.define("wandering_warriors_spawn_weight", 65);
-		WANDERING_WARRIOR_SPAWN_MIN_COUNT = builder
-				.comment("Set the minimum spawn count of Wandering Warriors - Default 1")
-				.translation("config.immersiveweapons.wandering_warriors_spawn_min_count")
-				.define("wandering_warriors_spawn_min_count", 1);
-		WANDERING_WARRIOR_SPAWN_MAX_COUNT = builder
-				.comment("Set the maximum spawn count of Wandering Warriors - Default 1")
-				.translation("config.immersiveweapons.wandering_warriors_spawn_max_count")
-				.define("wandering_warriors_spawn_max_count", 1);
-		builder.pop();
 
 		builder.push("Hans");
 		ENABLE_HANS_SPAWN = builder

@@ -14,7 +14,7 @@ public class BiomesAndDimensions {
 
 	public static final ResourceKey<Level> D_TILTROS = ResourceKey.create(Registry.DIMENSION_REGISTRY,
 			new ResourceLocation(ImmersiveWeapons.MOD_ID, "tiltros"));
-
+	
 	private static ResourceKey<Biome> create(String name) {
 		return ResourceKey.create(Registry.BIOME_REGISTRY, new ResourceLocation(ImmersiveWeapons.MOD_ID, name));
 	}

@@ -16,6 +16,7 @@ import tech.anonymoushacker1279.immersiveweapons.data.loot.LootTableGenerator;
 import tech.anonymoushacker1279.immersiveweapons.data.models.BlockStateGenerator;
 import tech.anonymoushacker1279.immersiveweapons.data.models.ItemModelGenerator;
 import tech.anonymoushacker1279.immersiveweapons.data.modifiers.OreBiomeModifiers;
+import tech.anonymoushacker1279.immersiveweapons.data.modifiers.SpawnBiomeModifiers;
 import tech.anonymoushacker1279.immersiveweapons.data.recipes.RecipeGenerator;
 import tech.anonymoushacker1279.immersiveweapons.data.tags.*;
 
@@ -33,10 +34,11 @@ public class CustomDataGenerator {
 		DataGenerator generator = event.getGenerator();
 		RegistryOps<JsonElement> registryOps = RegistryOps.create(JsonOps.INSTANCE, RegistryAccess.builtinCopy());
 
-
+		// Client data
 		generator.addProvider(event.includeClient(), new BlockStateGenerator(generator, event.getExistingFileHelper()));
 		generator.addProvider(event.includeClient(), new ItemModelGenerator(generator, event.getExistingFileHelper()));
 
+		// Server data
 		generator.addProvider(event.includeServer(), new AdvancementProvider(generator));
 		generator.addProvider(event.includeServer(), new LootTableGenerator(generator));
 		generator.addProvider(event.includeServer(), new RecipeGenerator(generator));
@@ -47,6 +49,8 @@ public class CustomDataGenerator {
 		generator.addProvider(event.includeServer(), OreBiomeModifiers.PlacedFeatures.getCodecProvider(generator, event.getExistingFileHelper(),
 				registryOps, Registry.PLACED_FEATURE_REGISTRY));
 		generator.addProvider(event.includeServer(), OreBiomeModifiers.getCodecProvider(generator, event.getExistingFileHelper(),
+				registryOps, Keys.BIOME_MODIFIERS));
+		generator.addProvider(event.includeServer(), SpawnBiomeModifiers.getCodecProvider(generator, event.getExistingFileHelper(),
 				registryOps, Keys.BIOME_MODIFIERS));
 	}
 }
