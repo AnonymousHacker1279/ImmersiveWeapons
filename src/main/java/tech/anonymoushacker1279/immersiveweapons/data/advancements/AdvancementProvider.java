@@ -1,5 +1,6 @@
 package tech.anonymoushacker1279.immersiveweapons.data.advancements;
 
+import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Sets;
 import net.minecraft.advancements.Advancement;
 import net.minecraft.data.*;
@@ -16,16 +17,15 @@ import java.util.function.Consumer;
 public class AdvancementProvider implements DataProvider {
 
 	private final DataGenerator generator;
-	private final List<Consumer<Consumer<Advancement>>> tabs;
+	private final List<Consumer<Consumer<Advancement>>> tabs = ImmutableList.of(new IWAdvancements());
 
 	/**
 	 * Constructor for AdvancementProvider.
 	 *
 	 * @param dataGenerator the <code>DataGenerator</code> instance
 	 */
-	public AdvancementProvider(DataGenerator dataGenerator, List<Consumer<Consumer<Advancement>>> advancements) {
+	public AdvancementProvider(DataGenerator dataGenerator) {
 		generator = dataGenerator;
-		tabs = advancements;
 	}
 
 	/**
