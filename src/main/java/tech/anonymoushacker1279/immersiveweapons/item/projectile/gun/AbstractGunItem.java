@@ -282,6 +282,15 @@ public abstract class AbstractGunItem extends Item implements Vanishable {
 		}
 	}
 
+	@Override
+	public boolean onDroppedByPlayer(ItemStack item, Player player) {
+
+		PacketHandler.INSTANCE.send(PacketDistributor.PLAYER.with(() -> (ServerPlayer) player),
+				new GunScopePacketHandler(GunData.playerFOV, -1, 0.5f));
+
+		return super.onDroppedByPlayer(item, player);
+	}
+
 	/**
 	 * Get ammo predicates.
 	 *
