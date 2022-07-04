@@ -1,8 +1,8 @@
 ![Immersive Weapons Logo](logo.png)
 
-# Immersive Weapons for Minecraft 1.18.2/1.18.1/1.18/1.17.1/1.16.5/1.16.4/1.15.2
+# Immersive Weapons for Minecraft
 
-![CodeQL](https://github.com/AnonymousHacker1279/ImmersiveWeapons-Mod/workflows/CodeQL/badge.svg)
+![CodeQL](https://github.com/AnonymousHacker1279/ImmersiveWeapons/workflows/CodeQL/badge.svg)
 [![](http://cf.way2muchnoise.eu/full_494454_Downloads.svg)](https://www.curseforge.com/minecraft/mc-mods/immersive-weapons)
 [![](http://cf.way2muchnoise.eu/versions/494454.svg)](https://www.curseforge.com/minecraft/mc-mods/immersive-weapons)
 [![CodeFactor](https://www.codefactor.io/repository/github/anonymoushacker1279/immersiveweapons/badge/master)](https://www.codefactor.io/repository/github/anonymoushacker1279/immersiveweapons/overview/master)
@@ -18,7 +18,7 @@ intrusion by invaders.
 A few things that will be the highlight of your experience:
 
 - Tiered Pikes, so you can stab someone from way over there
-- Flintlock Pistol and Blunderbuss, so you can shoot someone from way over there
+- Flintlock Pistol, Blunderbuss, and Musket, so you can shoot someone from way over there
 - New and Powerful Swords, so you can slice someone that isn't way over there
 - Tiered Gauntlets, so you can punch someone that isn't way over there, but not over there enough to use a sword
 - Medical Equipment, so you can survive getting stabbed, shot, and sliced
@@ -30,7 +30,7 @@ A few other notes:
 - This is for the Forge modloading platform. No, I don't plan to port to Fabric, don't ask about it.
 - Yes, you can include it in modpacks, provided it is open source and doesn't have an installer.
 - This is open source. If you want to port to old versions or to Fabric, do it yourself.
-- This is NOT to be reposted to any mod reposting websites. The only places you should download this mod at are the
+- This is NOT to be reposted to any mod reposting websites. The only places you should download this mod are the
   CurseForge page, and this GitHub repository. #StopModReposts
 
 [Interested in the development of this project, or just want to hang out? Join the Official Discord server](https://discord.gg/WNMCTg7TsT)
@@ -62,7 +62,8 @@ community describe an interest in it (This excludes versions listed as **N/A - B
 
 | MC Version | Immersive Weapons Latest Version                                                                             |
 |------------|--------------------------------------------------------------------------------------------------------------|
-| 1.18.2     | [Latest](https://github.com/AnonymousHacker1279/ImmersiveWeapons/releases)                                   |
+| 1.19       | [(ALPHA) Latest](https://github.com/AnonymousHacker1279/ImmersiveWeapons/releases)                           |
+| 1.18.2     | [1.17.0](https://github.com/AnonymousHacker1279/ImmersiveWeapons/releases/tag/v1.17.0)                       |
 | 1.18.1     | [(ALPHA) 1.14.0-alpha1](https://github.com/AnonymousHacker1279/ImmersiveWeapons/releases/tag/v1.14.0-alpha1) |
 | 1.17.1     | [1.12.1](https://github.com/AnonymousHacker1279/ImmersiveWeapons/releases/tag/v1.12.1)                       |
 | 1.16.5     | [1.4.3](https://github.com/AnonymousHacker1279/ImmersiveWeapons/releases/tag/v1.4.3)                         |

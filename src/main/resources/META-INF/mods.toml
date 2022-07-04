@@ -31,13 +31,6 @@ ordering = "NONE"
 side = "BOTH"
 
 [[dependencies.immersiveweapons]]
-modId = "patchouli"
-mandatory = false
-versionRange = "[1.18.2-66,)"
-ordering = "NONE"
-side = "BOTH"
-
-[[dependencies.immersiveweapons]]
 modId = "terrablender"
 mandatory = true
 versionRange = "[1.19-2.0.0.111,)"
