@@ -1,0 +1,14 @@
+{
+	"structures": [
+		{
+			"structure": "immersiveweapons:pitfall_trap",
+			"weight": 1
+		}
+	],
+	"placement": {
+		"salt": 875412395,
+		"spacing": 6,
+		"separation": 2,
+		"type": "minecraft:random_spread"
+	}
+}

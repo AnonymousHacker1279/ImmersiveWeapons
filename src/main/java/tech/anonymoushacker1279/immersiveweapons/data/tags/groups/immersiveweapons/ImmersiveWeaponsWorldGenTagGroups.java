@@ -12,19 +12,19 @@ public class ImmersiveWeaponsWorldGenTagGroups {
 	public static final TagKey<Biome> IS_TILTROS = createBiomeTag("is_tiltros");
 
 	// Structure Tags
-	public static final TagKey<Biome> HAS_ABANDONED_FACTORY = createStructureTag("has_abandoned_factory");
-	public static final TagKey<Biome> HAS_PITFALL_TRAP = createStructureTag("has_pitfall_trap");
-	public static final TagKey<Biome> HAS_BEAR_TRAP = createStructureTag("has_bear_trap");
-	public static final TagKey<Biome> HAS_LANDMINE_TRAP = createStructureTag("has_landmine_trap");
-	public static final TagKey<Biome> HAS_UNDERGROUND_BUNKER = createStructureTag("has_underground_bunker");
-	public static final TagKey<Biome> HAS_CLOUD_ISLAND = createStructureTag("has_cloud_island");
-	public static final TagKey<Biome> HAS_CAMPSITE = createStructureTag("has_campsite");
-	public static final TagKey<Biome> HAS_WATER_TOWER = createStructureTag("has_water_tower");
-	public static final TagKey<Biome> HAS_HANS_HUT = createStructureTag("has_hans_hut");
-	public static final TagKey<Biome> HAS_DESTROYED_HOUSE = createStructureTag("has_destroyed_house");
-	public static final TagKey<Biome> HAS_BATTLEFIELD_CAMP = createStructureTag("has_battlefield_camp");
-	public static final TagKey<Biome> HAS_GRAVEYARD = createStructureTag("has_graveyard");
-	public static final TagKey<Biome> HAS_BATTLEFIELD_TOWN = createStructureTag("has_battlefield_town");
+	public static final TagKey<Biome> HAS_ABANDONED_FACTORY = createStructureTag("abandoned_factory");
+	public static final TagKey<Biome> HAS_PITFALL_TRAP = createStructureTag("pitfall_trap");
+	public static final TagKey<Biome> HAS_BEAR_TRAP = createStructureTag("bear_trap");
+	public static final TagKey<Biome> HAS_LANDMINE_TRAP = createStructureTag("landmine_trap");
+	public static final TagKey<Biome> HAS_UNDERGROUND_BUNKER = createStructureTag("underground_bunker");
+	public static final TagKey<Biome> HAS_CLOUD_ISLAND = createStructureTag("cloud_island");
+	public static final TagKey<Biome> HAS_CAMPSITE = createStructureTag("campsite");
+	public static final TagKey<Biome> HAS_WATER_TOWER = createStructureTag("water_tower");
+	public static final TagKey<Biome> HAS_HANS_HUT = createStructureTag("hans_hut");
+	public static final TagKey<Biome> HAS_DESTROYED_HOUSE = createStructureTag("destroyed_house");
+	public static final TagKey<Biome> HAS_BATTLEFIELD_CAMP = createStructureTag("battlefield_camp");
+	public static final TagKey<Biome> HAS_GRAVEYARD = createStructureTag("graveyard");
+	public static final TagKey<Biome> HAS_BATTLEFIELD_TOWN = createStructureTag("battlefield_town");
 
 	/**
 	 * Helper method for creating a biome tag for containing biomes.

@@ -1,0 +1,14 @@
+{
+	"structures": [
+		{
+			"structure": "immersiveweapons:hans_hut",
+			"weight": 1
+		}
+	],
+	"placement": {
+		"salt": 5973468510,
+		"spacing": 20,
+		"separation": 10,
+		"type": "minecraft:random_spread"
+	}
+}

@@ -1,0 +1,16 @@
+{
+	"name": "immersiveweapons:cloud_island/start_pool",
+	"fallback": "minecraft:empty",
+
+	"elements": [
+		{
+			"weight": 1,
+			"element": {
+				"location": "immersiveweapons:cloud_island",
+				"processors": "minecraft:empty",
+				"projection": "rigid",
+				"element_type": "minecraft:single_pool_element"
+			}
+		}
+	]
+}
