@@ -8,7 +8,9 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.*;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraftforge.common.MinecraftForge;
 import org.jetbrains.annotations.NotNull;
+import tech.anonymoushacker1279.immersiveweapons.api.events.SmallPartsTableCraftEvent;
 import tech.anonymoushacker1279.immersiveweapons.block.crafting.small_parts.SmallPartsCraftables;
 import tech.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
 
@@ -82,6 +84,9 @@ public class SmallPartsContainer extends AbstractContainerMenu {
 					}
 
 				});
+
+				MinecraftForge.EVENT_BUS.post(new SmallPartsTableCraftEvent(player, stack));
+
 				super.onTake(player, stack);
 			}
 		});
