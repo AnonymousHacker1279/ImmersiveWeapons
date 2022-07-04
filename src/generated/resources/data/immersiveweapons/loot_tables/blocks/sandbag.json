@@ -14,7 +14,7 @@
                   "block": "immersiveweapons:sandbag",
                   "condition": "minecraft:block_state_property",
                   "properties": {
-                    "bags": "1"
+                    "bags": "0"
                   }
                 }
               ],
@@ -28,7 +28,7 @@
                   "block": "immersiveweapons:sandbag",
                   "condition": "minecraft:block_state_property",
                   "properties": {
-                    "bags": "2"
+                    "bags": "1"
                   }
                 }
               ],
@@ -42,7 +42,7 @@
                   "block": "immersiveweapons:sandbag",
                   "condition": "minecraft:block_state_property",
                   "properties": {
-                    "bags": "3"
+                    "bags": "2"
                   }
                 }
               ],
@@ -56,7 +56,7 @@
                   "block": "immersiveweapons:sandbag",
                   "condition": "minecraft:block_state_property",
                   "properties": {
-                    "bags": "4"
+                    "bags": "3"
                   }
                 }
               ],

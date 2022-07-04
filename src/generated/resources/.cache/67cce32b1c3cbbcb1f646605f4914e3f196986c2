@@ -1,4 +1,4 @@
-// 1.19	2022-06-13T20:38:17.3973318	LootTables
+// 1.19	2022-07-03T22:08:20.0232929	LootTables
 417e8a0c3f007feccdec9e407fc588c06a8753bd data/immersiveweapons/loot_tables/blocks/acacia_table.json
 ebcd19757c2af28ecaaf5a66eae08aa7563f58fd data/immersiveweapons/loot_tables/blocks/american_flag.json
 e7c1ebb99f1da5ce0c7bbe46c3e5baf56ce1e658 data/immersiveweapons/loot_tables/blocks/barbed_wire.json
@@ -68,7 +68,7 @@ ee35bc2500dda02f99b55d7882c375f8203cae90 data/immersiveweapons/loot_tables/block
 a81224cb7b725b572e724d2e45d5c3981b19c7da data/immersiveweapons/loot_tables/blocks/pitfall.json
 f59e1be75abaceac3be0423fc130f3e9628debbd data/immersiveweapons/loot_tables/blocks/punji_sticks.json
 fdaafa662cc2606fdfe6b74785b1e543494e6d6c data/immersiveweapons/loot_tables/blocks/raw_cobalt_block.json
-9b2fb2817fcba43c6d8687506c71fba33a8c1aa4 data/immersiveweapons/loot_tables/blocks/sandbag.json
+b02b7e317b5d459c2f23616ca1c92cd7e289c143 data/immersiveweapons/loot_tables/blocks/sandbag.json
 987e30810df371abda3d6cb5ee7fa28bbad0d06e data/immersiveweapons/loot_tables/blocks/small_parts_table.json
 ece86879fe81857026f28af3a65f076f25993cd3 data/immersiveweapons/loot_tables/blocks/spike_trap.json
 dd7d02cdbecfdd0ad664d7f7ff071fae7cd7db76 data/immersiveweapons/loot_tables/blocks/spotlight.json
