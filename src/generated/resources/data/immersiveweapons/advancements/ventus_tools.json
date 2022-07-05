@@ -1,5 +1,5 @@
 {
-  "parent": "immersiveweapons:molten_ingot",
+  "parent": "immersiveweapons:ventus_shard",
   "criteria": {
     "have_advancements": {
       "conditions": {
@@ -11,11 +11,11 @@
               "type_specific": {
                 "type": "player",
                 "advancements": {
-                  "immersiveweapons:molten_axe": true,
-                  "immersiveweapons:molten_hoe": true,
-                  "immersiveweapons:molten_pickaxe": true,
-                  "immersiveweapons:molten_shovel": true,
-                  "immersiveweapons:molten_sword": true
+                  "immersiveweapons:ventus_axe": true,
+                  "immersiveweapons:ventus_hoe": true,
+                  "immersiveweapons:ventus_pickaxe": true,
+                  "immersiveweapons:ventus_shovel": true,
+                  "immersiveweapons:ventus_sword": true
                 }
               }
             }
@@ -28,16 +28,16 @@
   "display": {
     "announce_to_chat": true,
     "description": {
-      "translate": "advancements.immersiveweapons.play_with_fire.description"
+      "translate": "advancements.immersiveweapons.ventus_tools.description"
     },
     "frame": "challenge",
     "hidden": false,
     "icon": {
-      "item": "immersiveweapons:molten_block"
+      "item": "immersiveweapons:ventus_ore"
     },
     "show_toast": true,
     "title": {
-      "translate": "advancements.immersiveweapons.play_with_fire.title"
+      "translate": "advancements.immersiveweapons.ventus_tools.title"
     }
   },
   "requirements": [

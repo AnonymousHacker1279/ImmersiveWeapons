@@ -1,27 +1,27 @@
 {
-  "parent": "immersiveweapons:molten_ingot",
+  "parent": "immersiveweapons:ventus_shard",
   "criteria": {
     "hold": {
       "conditions": {
         "items": [
           {
             "items": [
-              "immersiveweapons:molten_helmet"
+              "immersiveweapons:ventus_helmet"
             ]
           },
           {
             "items": [
-              "immersiveweapons:molten_chestplate"
+              "immersiveweapons:ventus_chestplate"
             ]
           },
           {
             "items": [
-              "immersiveweapons:molten_leggings"
+              "immersiveweapons:ventus_leggings"
             ]
           },
           {
             "items": [
-              "immersiveweapons:molten_boots"
+              "immersiveweapons:ventus_boots"
             ]
           }
         ]
@@ -32,17 +32,17 @@
   "display": {
     "announce_to_chat": true,
     "description": {
-      "translate": "advancements.immersiveweapons.warm_and_toasty.description"
+      "translate": "advancements.immersiveweapons.ventus_armor.description"
     },
     "frame": "goal",
     "hidden": false,
     "icon": {
-      "item": "immersiveweapons:molten_helmet",
+      "item": "immersiveweapons:ventus_helmet",
       "nbt": "{Damage:0}"
     },
     "show_toast": true,
     "title": {
-      "translate": "advancements.immersiveweapons.warm_and_toasty.title"
+      "translate": "advancements.immersiveweapons.ventus_armor.title"
     }
   },
   "requirements": [

@@ -115,10 +115,10 @@ public class IWAdvancements implements Consumer<Consumer<Advancement>> {
 				.rewards(AdvancementRewards.Builder.experience(50))
 				.save(consumer, "immersiveweapons:molten_hoe");
 
-		Builder.advancement().parent(smeltMoltenIngot) // TODO: Tagged for advancement rename
+		Builder.advancement().parent(smeltMoltenIngot)
 				.display(DeferredRegistryHandler.MOLTEN_BLOCK_ITEM.get(),
-						Component.translatable("advancements.immersiveweapons.play_with_fire.title"),
-						Component.translatable("advancements.immersiveweapons.play_with_fire.description"),
+						Component.translatable("advancements.immersiveweapons.molten_tools.title"),
+						Component.translatable("advancements.immersiveweapons.molten_tools.description"),
 						null, FrameType.CHALLENGE, true, true, false)
 				.addCriterion("have_advancements",
 						PlayerTrigger.TriggerInstance.located(
@@ -138,24 +138,24 @@ public class IWAdvancements implements Consumer<Consumer<Advancement>> {
 						)
 				)
 				.rewards(AdvancementRewards.Builder.experience(150))
-				.save(consumer, "immersiveweapons:play_with_fire");
+				.save(consumer, "immersiveweapons:molten_tools");
 
-		Advancement warmAndToasty = Builder.advancement().parent(smeltMoltenIngot) // TODO: Tagged for advancement rename
+		Advancement molten_armor = Builder.advancement().parent(smeltMoltenIngot)
 				.display(DeferredRegistryHandler.MOLTEN_HELMET.get(),
-						Component.translatable("advancements.immersiveweapons.warm_and_toasty.title"),
-						Component.translatable("advancements.immersiveweapons.warm_and_toasty.description"),
+						Component.translatable("advancements.immersiveweapons.molten_armor.title"),
+						Component.translatable("advancements.immersiveweapons.molten_armor.description"),
 						null, FrameType.GOAL, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(DeferredRegistryHandler.MOLTEN_HELMET.get(),
 								DeferredRegistryHandler.MOLTEN_CHESTPLATE.get(), DeferredRegistryHandler.MOLTEN_LEGGINGS.get(),
 								DeferredRegistryHandler.MOLTEN_BOOTS.get()))
 				.rewards(AdvancementRewards.Builder.experience(100))
-				.save(consumer, "immersiveweapons:warm_and_toasty");
+				.save(consumer, "immersiveweapons:molten_armor");
 
-		Builder.advancement().parent(warmAndToasty)
+		Builder.advancement().parent(molten_armor)
 				.display(Items.LAVA_BUCKET,
-						Component.translatable("advancements.immersiveweapons.lava_bath.title"),
-						Component.translatable("advancements.immersiveweapons.lava_bath.description"),
+						Component.translatable("advancements.immersiveweapons.swim_in_lava.title"),
+						Component.translatable("advancements.immersiveweapons.swim_in_lava.description"),
 						null, FrameType.CHALLENGE, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(DeferredRegistryHandler.MOLTEN_HELMET.get(),
@@ -163,7 +163,7 @@ public class IWAdvancements implements Consumer<Consumer<Advancement>> {
 								DeferredRegistryHandler.MOLTEN_BOOTS.get()))
 				.addCriterion("swim", EnterBlockTrigger.TriggerInstance.entersBlock(Blocks.LAVA))
 				.rewards(AdvancementRewards.Builder.experience(35))
-				.save(consumer, "immersiveweapons:lava_bath");
+				.save(consumer, "immersiveweapons:swim_in_lava");
 
 		// Tesla Advancements
 		Advancement craftConductiveAlloy = Builder.advancement().parent(root)
@@ -243,10 +243,10 @@ public class IWAdvancements implements Consumer<Consumer<Advancement>> {
 				.rewards(AdvancementRewards.Builder.experience(65))
 				.save(consumer, "immersiveweapons:tesla_hoe");
 
-		Builder.advancement().parent(craftTeslaIngot) // TODO: Tagged for advancement rename
+		Builder.advancement().parent(craftTeslaIngot)
 				.display(DeferredRegistryHandler.TESLA_BLOCK_ITEM.get(),
-						Component.translatable("advancements.immersiveweapons.energized.title"),
-						Component.translatable("advancements.immersiveweapons.energized.description"),
+						Component.translatable("advancements.immersiveweapons.tesla_tools.title"),
+						Component.translatable("advancements.immersiveweapons.tesla_tools.description"),
 						null, FrameType.CHALLENGE, true, true, false)
 				.addCriterion("have_advancements",
 						PlayerTrigger.TriggerInstance.located(
@@ -266,19 +266,19 @@ public class IWAdvancements implements Consumer<Consumer<Advancement>> {
 						)
 				)
 				.rewards(AdvancementRewards.Builder.experience(150))
-				.save(consumer, "immersiveweapons:energized");
+				.save(consumer, "immersiveweapons:tesla_tools");
 
-		Builder.advancement().parent(craftTeslaIngot) // TODO: Tagged for advancement rename
+		Builder.advancement().parent(craftTeslaIngot)
 				.display(DeferredRegistryHandler.TESLA_HELMET.get(),
-						Component.translatable("advancements.immersiveweapons.tesla_coil.title"),
-						Component.translatable("advancements.immersiveweapons.tesla_coil.description"),
+						Component.translatable("advancements.immersiveweapons.tesla_armor.title"),
+						Component.translatable("advancements.immersiveweapons.tesla_armor.description"),
 						null, FrameType.GOAL, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(DeferredRegistryHandler.TESLA_HELMET.get(),
 								DeferredRegistryHandler.TESLA_CHESTPLATE.get(), DeferredRegistryHandler.TESLA_LEGGINGS.get(),
 								DeferredRegistryHandler.TESLA_BOOTS.get()))
 				.rewards(AdvancementRewards.Builder.experience(100))
-				.save(consumer, "immersiveweapons:tesla_coil");
+				.save(consumer, "immersiveweapons:tesla_armor");
 
 		Builder.advancement().parent(craftTeslaIngot)
 				.display(DeferredRegistryHandler.TESLA_SYNTHESIZER.get(),
@@ -350,10 +350,10 @@ public class IWAdvancements implements Consumer<Consumer<Advancement>> {
 				.rewards(AdvancementRewards.Builder.experience(50))
 				.save(consumer, "immersiveweapons:ventus_hoe");
 
-		Builder.advancement().parent(obtainVentusShard) // TODO: Tagged for advancement rename
+		Builder.advancement().parent(obtainVentusShard)
 				.display(DeferredRegistryHandler.VENTUS_ORE_ITEM.get(),
-						Component.translatable("advancements.immersiveweapons.pretty_windy.title"),
-						Component.translatable("advancements.immersiveweapons.pretty_windy.description"),
+						Component.translatable("advancements.immersiveweapons.ventus_tools.title"),
+						Component.translatable("advancements.immersiveweapons.ventus_tools.description"),
 						null, FrameType.CHALLENGE, true, true, false)
 				.addCriterion("have_advancements",
 						PlayerTrigger.TriggerInstance.located(
@@ -373,19 +373,19 @@ public class IWAdvancements implements Consumer<Consumer<Advancement>> {
 						)
 				)
 				.rewards(AdvancementRewards.Builder.experience(150))
-				.save(consumer, "immersiveweapons:pretty_windy");
+				.save(consumer, "immersiveweapons:ventus_tools");
 
-		Builder.advancement().parent(obtainVentusShard) // TODO: Tagged for advancement rename
+		Builder.advancement().parent(obtainVentusShard)
 				.display(DeferredRegistryHandler.VENTUS_HELMET.get(),
-						Component.translatable("advancements.immersiveweapons.almost_flying.title"),
-						Component.translatable("advancements.immersiveweapons.almost_flying.description"),
+						Component.translatable("advancements.immersiveweapons.ventus_armor.title"),
+						Component.translatable("advancements.immersiveweapons.ventus_armor.description"),
 						null, FrameType.GOAL, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(DeferredRegistryHandler.VENTUS_HELMET.get(),
 								DeferredRegistryHandler.VENTUS_CHESTPLATE.get(), DeferredRegistryHandler.VENTUS_LEGGINGS.get(),
 								DeferredRegistryHandler.VENTUS_BOOTS.get()))
 				.rewards(AdvancementRewards.Builder.experience(100))
-				.save(consumer, "immersiveweapons:almost_flying");
+				.save(consumer, "immersiveweapons:ventus_armor");
 
 		Advancement craftVentusStaffCore = Builder.advancement().parent(obtainVentusShard)
 				.display(DeferredRegistryHandler.VENTUS_STAFF_CORE.get(),

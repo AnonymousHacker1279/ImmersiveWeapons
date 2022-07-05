@@ -1,64 +1,56 @@
 {
-  "parent": "immersiveweapons:warm_and_toasty",
+  "parent": "immersiveweapons:tesla_ingot",
   "criteria": {
     "hold": {
       "conditions": {
         "items": [
           {
             "items": [
-              "immersiveweapons:molten_helmet"
+              "immersiveweapons:tesla_helmet"
             ]
           },
           {
             "items": [
-              "immersiveweapons:molten_chestplate"
+              "immersiveweapons:tesla_chestplate"
             ]
           },
           {
             "items": [
-              "immersiveweapons:molten_leggings"
+              "immersiveweapons:tesla_leggings"
             ]
           },
           {
             "items": [
-              "immersiveweapons:molten_boots"
+              "immersiveweapons:tesla_boots"
             ]
           }
         ]
       },
       "trigger": "minecraft:inventory_changed"
-    },
-    "swim": {
-      "conditions": {
-        "block": "minecraft:lava"
-      },
-      "trigger": "minecraft:enter_block"
     }
   },
   "display": {
     "announce_to_chat": true,
     "description": {
-      "translate": "advancements.immersiveweapons.lava_bath.description"
+      "translate": "advancements.immersiveweapons.tesla_armor.description"
     },
-    "frame": "challenge",
+    "frame": "goal",
     "hidden": false,
     "icon": {
-      "item": "minecraft:lava_bucket"
+      "item": "immersiveweapons:tesla_helmet",
+      "nbt": "{Damage:0}"
     },
     "show_toast": true,
     "title": {
-      "translate": "advancements.immersiveweapons.lava_bath.title"
+      "translate": "advancements.immersiveweapons.tesla_armor.title"
     }
   },
   "requirements": [
     [
       "hold"
-    ],
-    [
-      "swim"
     ]
   ],
   "rewards": {
-    "experience": 35
+    "experience": 100
   }
 }

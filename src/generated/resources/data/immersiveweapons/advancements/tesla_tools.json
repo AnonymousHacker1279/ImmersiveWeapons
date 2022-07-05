@@ -28,7 +28,7 @@
   "display": {
     "announce_to_chat": true,
     "description": {
-      "translate": "advancements.immersiveweapons.energized.description"
+      "translate": "advancements.immersiveweapons.tesla_tools.description"
     },
     "frame": "challenge",
     "hidden": false,
@@ -37,7 +37,7 @@
     },
     "show_toast": true,
     "title": {
-      "translate": "advancements.immersiveweapons.energized.title"
+      "translate": "advancements.immersiveweapons.tesla_tools.title"
     }
   },
   "requirements": [

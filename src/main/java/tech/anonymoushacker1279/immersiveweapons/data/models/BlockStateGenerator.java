@@ -130,7 +130,7 @@ public class BlockStateGenerator extends BlockStateProvider {
 				models().getExistingFile(new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/barbed_wire_fence_side")));
 
 		// Generate data for door and trapdoor blocks
-		// TODO: Reimplement when https://github.com/MinecraftForge/MinecraftForge/pull/8687 is merged
+		// TODO: Reimplement when https://github.com/MinecraftForge/MinecraftForge/pull/8821 is merged
 		/*doorBlock(DeferredRegistryHandler.BURNED_OAK_DOOR.get(),
 				new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/burned_oak_door_top"),
 				new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/burned_oak_door_bottom"));*/
