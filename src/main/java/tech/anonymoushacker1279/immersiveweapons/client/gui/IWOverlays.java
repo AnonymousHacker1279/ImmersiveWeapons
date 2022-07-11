@@ -5,8 +5,7 @@ import com.mojang.blaze3d.vertex.*;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraftforge.client.gui.IIngameOverlay;
-import net.minecraftforge.client.gui.OverlayRegistry;
+import net.minecraftforge.client.gui.overlay.IGuiOverlay;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.item.projectile.gun.data.GunData;
 
@@ -14,19 +13,19 @@ public class IWOverlays {
 
 	public static final ResourceLocation SCOPE_LOCATION = new ResourceLocation(ImmersiveWeapons.MOD_ID + ":textures/gui/overlay/musket_scope.png");
 
-	public static IIngameOverlay SCOPE_ELEMENT;
+	public static IGuiOverlay SCOPE_ELEMENT;
 
 	public static void init() {
 		ImmersiveWeapons.LOGGER.info("Initializing overlays");
 
-		SCOPE_ELEMENT = OverlayRegistry.registerOverlayTop("Scope", (gui, poseStack, partialTick, screenWidth, screenHeight) -> {
+		SCOPE_ELEMENT = (gui, poseStack, partialTick, screenWidth, screenHeight) -> {
 			gui.setupOverlayRenderState(true, false);
 
 			Minecraft minecraft = Minecraft.getInstance();
 			if (GunData.changingPlayerFOV != -1 && minecraft.options.getCameraType().isFirstPerson()) {
 				renderScope(screenWidth, screenHeight, GunData.scopeScale);
 			}
-		});
+		};
 	}
 
 	private static void renderScope(int screenWidth, int screenHeight, float scopeScale) {

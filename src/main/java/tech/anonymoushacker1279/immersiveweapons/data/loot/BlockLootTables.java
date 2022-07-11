@@ -3,6 +3,7 @@ package tech.anonymoushacker1279.immersiveweapons.data.loot;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 import net.minecraft.advancements.critereon.*;
+import net.minecraft.data.loot.BlockLoot;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
@@ -71,7 +72,6 @@ public class BlockLootTables implements Consumer<BiConsumer<ResourceLocation, Bu
 		dropSelf(DeferredRegistryHandler.BIOHAZARD_BOX.get());
 		dropSelf(DeferredRegistryHandler.BRITISH_FLAG.get());
 		dropSelf(DeferredRegistryHandler.BURNED_OAK_BUTTON.get());
-		dropSelf(DeferredRegistryHandler.BURNED_OAK_DOOR.get());
 		dropSelf(DeferredRegistryHandler.BURNED_OAK_FENCE.get());
 		dropSelf(DeferredRegistryHandler.BURNED_OAK_FENCE_GATE.get());
 		dropSelf(DeferredRegistryHandler.BURNED_OAK_LOG.get());
@@ -136,6 +136,7 @@ public class BlockLootTables implements Consumer<BiConsumer<ResourceLocation, Bu
 		}
 
 		// Complex block drops
+		add(DeferredRegistryHandler.BURNED_OAK_DOOR.get(), BlockLoot::createDoorTable);
 		add(DeferredRegistryHandler.BURNED_OAK_BRANCH.get(), (leafLikeDrop) -> createLeafLikeDrop(leafLikeDrop, Items.STICK, NORMAL_LEAVES_SAPLING_CHANCES));
 		add(DeferredRegistryHandler.COBALT_ORE.get(), (block) -> createOreDrop(block, DeferredRegistryHandler.RAW_COBALT.get()));
 		add(DeferredRegistryHandler.DEEPSLATE_COBALT_ORE.get(), (block) -> createOreDrop(block, DeferredRegistryHandler.RAW_COBALT.get()));

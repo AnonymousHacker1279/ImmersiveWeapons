@@ -1,4 +1,4 @@
-// 1.19	2022-07-03T22:08:20.0232929	LootTables
+// 1.19	2022-07-09T18:03:05.4812716	LootTables
 417e8a0c3f007feccdec9e407fc588c06a8753bd data/immersiveweapons/loot_tables/blocks/acacia_table.json
 ebcd19757c2af28ecaaf5a66eae08aa7563f58fd data/immersiveweapons/loot_tables/blocks/american_flag.json
 e7c1ebb99f1da5ce0c7bbe46c3e5baf56ce1e658 data/immersiveweapons/loot_tables/blocks/barbed_wire.json
@@ -10,7 +10,7 @@ e2a96ec47fd6ca14a9c8ac074b9bb7d5da40dfdb data/immersiveweapons/loot_tables/block
 2438bbe05b6c9228497b53c29320237e888b0b47 data/immersiveweapons/loot_tables/blocks/british_flag.json
 0f6202fbe98fae8f427839bcb3f3a4769337aee4 data/immersiveweapons/loot_tables/blocks/burned_oak_branch.json
 7d0725c3b8773295ea65e07bb5a45c4ee87fb72d data/immersiveweapons/loot_tables/blocks/burned_oak_button.json
-892b7765505501576b95ac17cf0d6efc1642b548 data/immersiveweapons/loot_tables/blocks/burned_oak_door.json
+068fc7fdf8cdd9f64f53a14a2e23045a73bc9b33 data/immersiveweapons/loot_tables/blocks/burned_oak_door.json
 0fe6bfa4bc9475ee1c56b749c946db1a2a14f64b data/immersiveweapons/loot_tables/blocks/burned_oak_fence.json
 3c7e140d1f3b906b654239a7bc626b7d610cec0b data/immersiveweapons/loot_tables/blocks/burned_oak_fence_gate.json
 c8e1c61b29ad39cc5f1de9656c4bf15e09941fe2 data/immersiveweapons/loot_tables/blocks/burned_oak_log.json

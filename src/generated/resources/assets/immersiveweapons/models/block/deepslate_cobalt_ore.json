@@ -1,5 +1,6 @@
 {
   "parent": "immersiveweapons:block/simple_overlay",
+  "render_type": "minecraft:cutout_mipped",
   "textures": {
     "all": "minecraft:block/deepslate",
     "overlay": "immersiveweapons:block/cobalt_ore"

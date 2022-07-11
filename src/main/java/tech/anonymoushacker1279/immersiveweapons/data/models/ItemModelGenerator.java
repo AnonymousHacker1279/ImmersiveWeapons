@@ -101,6 +101,8 @@ public class ItemModelGenerator extends ItemModelProvider {
 				} else if (item == DeferredRegistryHandler.BURNED_OAK_TRAPDOOR_ITEM.get()) {
 					trapdoorBottom(item.toString(),
 							new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/burned_oak_trapdoor"));
+				} else if (item == DeferredRegistryHandler.BURNED_OAK_DOOR_ITEM.get()) {
+					basicItem(new ResourceLocation(ImmersiveWeapons.MOD_ID, "burned_oak_door"));
 				} else if (item == DeferredRegistryHandler.BURNED_OAK_SIGN_ITEM.get()) {
 					basicItem(new ResourceLocation(ImmersiveWeapons.MOD_ID, "burned_oak_sign"));
 				} else if (item == DeferredRegistryHandler.BURNED_OAK_BUTTON_ITEM.get()) {

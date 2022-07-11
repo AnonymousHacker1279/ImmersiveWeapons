@@ -8,11 +8,10 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.client.event.EntityViewRenderEvent.FieldOfView;
-import net.minecraftforge.client.event.EntityViewRenderEvent.RenderFogEvent;
 import net.minecraftforge.client.event.*;
-import net.minecraftforge.client.event.RenderGameOverlayEvent.ElementType;
-import net.minecraftforge.client.gui.ForgeIngameGui;
+import net.minecraftforge.client.event.ViewportEvent.ComputeFov;
+import net.minecraftforge.client.event.ViewportEvent.RenderFog;
+import net.minecraftforge.client.gui.overlay.ForgeGui;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
@@ -33,7 +32,7 @@ public class ClientForgeEventSubscriber {
 	 * @param event the <code>RenderBlockOverlayEvent</code> instance
 	 */
 	@SubscribeEvent
-	public static void renderBlockOverlayEvent(RenderBlockOverlayEvent event) {
+	public static void renderBlockOverlayEvent(RenderBlockScreenEffectEvent event) {
 		// Remove fire overlay from players wearing a full set of molten armor
 		if (event.getPlayer().getItemBySlot(EquipmentSlot.HEAD).getItem() == DeferredRegistryHandler.MOLTEN_HELMET.get() &&
 				event.getPlayer().getItemBySlot(EquipmentSlot.CHEST).getItem() == DeferredRegistryHandler.MOLTEN_CHESTPLATE.get() &&
@@ -53,7 +52,7 @@ public class ClientForgeEventSubscriber {
 	 * @param event the <code>RenderFogEvent</code> instance
 	 */
 	@SubscribeEvent
-	public static void fogDensityEvent(RenderFogEvent event) {
+	public static void fogDensityEvent(RenderFog event) {
 		// Reduce lava fog from players wearing a full set of molten armor
 		Player player = minecraft.player;
 		if (player != null && player.getItemBySlot(EquipmentSlot.HEAD).getItem() == DeferredRegistryHandler.MOLTEN_HELMET.get() &&
@@ -85,7 +84,7 @@ public class ClientForgeEventSubscriber {
 	}
 
 	@SubscribeEvent
-	public static void playerFOVEvent(FieldOfView event) {
+	public static void playerFOVEvent(ComputeFov event) {
 		if (event.getFOV() != 70) {
 			GunData.playerFOV = event.getFOV();
 		}
@@ -95,8 +94,8 @@ public class ClientForgeEventSubscriber {
 	}
 
 	@SubscribeEvent
-	public static void renderOverlayEvent(RenderGameOverlayEvent.Post event) {
-		if (GunData.changingPlayerFOV != -1 && event.getType() == ElementType.LAYER) {
+	public static void renderOverlayEvent(RenderGuiOverlayEvent.Post event) {
+		if (GunData.changingPlayerFOV != -1) {
 			if (minecraft.options.getCameraType().isFirstPerson()) {
 				int screenHeight = event.getWindow().getGuiScaledHeight();
 				int screenWidth = event.getWindow().getGuiScaledWidth();
@@ -104,7 +103,7 @@ public class ClientForgeEventSubscriber {
 				float deltaFrame = minecraft.getDeltaFrameTime() / 8;
 				GunData.scopeScale = Mth.lerp(0.25F * deltaFrame, GunData.scopeScale, 1.125F);
 
-				IWOverlays.SCOPE_ELEMENT.render((ForgeIngameGui) minecraft.gui,
+				IWOverlays.SCOPE_ELEMENT.render((ForgeGui) minecraft.gui,
 						event.getPoseStack(),
 						event.getPartialTick(),
 						screenWidth,

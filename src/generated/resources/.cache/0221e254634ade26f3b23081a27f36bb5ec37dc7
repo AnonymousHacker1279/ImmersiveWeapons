@@ -1,4 +1,4 @@
-// 1.19	2022-06-18T23:41:17.1755062	Item Models: immersiveweapons
+// 1.19	2022-07-09T17:39:51.994678	Item Models: immersiveweapons
 448c02d5a6b1785fb85114438af53fded3292151 assets/immersiveweapons/models/item/acacia_table.json
 966c00cf853bced7ba6d96b450cfd4417d9c3594 assets/immersiveweapons/models/item/american_flag.json
 8e281bbf3a06fca4c4876c657e84be18191cf4c5 assets/immersiveweapons/models/item/azul_keystone.json
@@ -22,7 +22,7 @@ e5167f13135d5d793205bdfb727d4a608e738b48 assets/immersiveweapons/models/item/bul
 feead9e0b272a688f28844e22b3488d6fd42fac3 assets/immersiveweapons/models/item/burned_oak_branch.json
 1c41b720f969f2f5aac0de7aefc135c2e029ddc4 assets/immersiveweapons/models/item/burned_oak_button.json
 511336fda0a630866e307f17a51cfe7f55376b9a assets/immersiveweapons/models/item/burned_oak_chest_boat.json
-c788dd281d5d9079e09a7b074a54dd19cc7f1efb assets/immersiveweapons/models/item/burned_oak_door.json
+43a96ebcc113ba329a769e307053084c6bd09aa3 assets/immersiveweapons/models/item/burned_oak_door.json
 d674e834ae17c95d9eee847c5f360f0e61c03be0 assets/immersiveweapons/models/item/burned_oak_fence.json
 1d859d8321f880edb2bac09cbae58a77621d169a assets/immersiveweapons/models/item/burned_oak_fence_gate.json
 045d7db601a40324eca28ab049a9c86d25a50173 assets/immersiveweapons/models/item/burned_oak_log.json

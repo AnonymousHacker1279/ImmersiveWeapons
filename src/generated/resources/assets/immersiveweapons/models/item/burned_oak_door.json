@@ -1,3 +1,6 @@
 {
-  "parent": "immersiveweapons:block/burned_oak_door"
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "immersiveweapons:item/burned_oak_door"
+  }
 }

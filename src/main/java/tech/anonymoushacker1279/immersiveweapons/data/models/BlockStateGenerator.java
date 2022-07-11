@@ -33,13 +33,28 @@ public class BlockStateGenerator extends BlockStateProvider {
 			simpleBlock(block);
 		}
 
+		// Generate data for simple, six-sided blocks with custom render types
+		simpleBlock(DeferredRegistryHandler.BULLETPROOF_GLASS.get(), models().cubeAll("bulletproof_glass",
+						new ResourceLocation(ImmersiveWeapons.MOD_ID + ":block/bulletproof_glass"))
+				.renderType("minecraft:cutout_mipped"));
+		simpleBlock(DeferredRegistryHandler.CLOUD.get(), models().cubeAll("cloud",
+						new ResourceLocation(ImmersiveWeapons.MOD_ID + ":block/cloud"))
+				.renderType("minecraft:translucent"));
+		for (Block block : BlockLists.stainedGlassBlocks) {
+			String color = ForgeRegistries.BLOCKS.getKey(block).getPath().split("stained_bulletproof_glass")[0];
+			simpleBlock(block, models().cubeAll(color + "stained_bulletproof_glass",
+							new ResourceLocation(ImmersiveWeapons.MOD_ID + ":block/" + color + "stained_bulletproof_glass"))
+					.renderType("minecraft:translucent"));
+		}
+
 		// Generate data for simple, six-sized blocks that use overlays (ores)
 		for (Block block : BlockLists.stoneBasedOres) {
 			simpleBlock(block, models().withExistingParent(Objects.requireNonNull(ForgeRegistries.BLOCKS.getKey(block)).getPath(),
 							new ResourceLocation(ImmersiveWeapons.MOD_ID, "simple_overlay"))
 					.texture("all", "minecraft:block/stone")
 					.texture("overlay", new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/"
-							+ Objects.requireNonNull(ForgeRegistries.BLOCKS.getKey(block)).getPath())));
+							+ Objects.requireNonNull(ForgeRegistries.BLOCKS.getKey(block)).getPath()))
+					.renderType("minecraft:cutout_mipped"));
 		}
 		for (Block block : BlockLists.deepslateBasedOres) {
 			simpleBlock(block, models().withExistingParent(Objects.requireNonNull(ForgeRegistries.BLOCKS.getKey(block)).getPath(),
@@ -47,7 +62,8 @@ public class BlockStateGenerator extends BlockStateProvider {
 					.texture("all", "minecraft:block/deepslate")
 					.texture("overlay", new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/"
 							+ Objects.requireNonNull(ForgeRegistries.BLOCKS.getKey(block)).getPath()
-							.replace("deepslate_", ""))));
+							.replace("deepslate_", "")))
+					.renderType("minecraft:cutout_mipped"));
 		}
 		for (Block block : BlockLists.netherrackBasedOres) {
 			simpleBlock(block, models().withExistingParent(Objects.requireNonNull(ForgeRegistries.BLOCKS.getKey(block)).getPath(),
@@ -55,7 +71,8 @@ public class BlockStateGenerator extends BlockStateProvider {
 					.texture("all", "minecraft:block/netherrack")
 					.texture("overlay", new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/"
 							+ Objects.requireNonNull(ForgeRegistries.BLOCKS.getKey(block)).getPath()
-							.replace("nether_", ""))));
+							.replace("nether_", "")))
+					.renderType("minecraft:cutout_mipped"));
 		}
 
 		// Generate data for tables
@@ -65,12 +82,14 @@ public class BlockStateGenerator extends BlockStateProvider {
 								new ResourceLocation(ImmersiveWeapons.MOD_ID, "table"))
 						.texture("all", ImmersiveWeapons.MOD_ID
 								+ ":block/" + Objects.requireNonNull(ForgeRegistries.BLOCKS.getKey(block)).getPath()
-								.replace("table", "planks")));
+								.replace("table", "planks"))
+						.renderType("minecraft:cutout_mipped"));
 			} else {
 				simpleBlock(block, models().withExistingParent(Objects.requireNonNull(ForgeRegistries.BLOCKS.getKey(block)).getPath(),
 								new ResourceLocation(ImmersiveWeapons.MOD_ID, "table"))
 						.texture("all", "minecraft:block/" + Objects.requireNonNull(ForgeRegistries.BLOCKS.getKey(block)).getPath()
-								.replace("table", "planks")));
+								.replace("table", "planks"))
+						.renderType("minecraft:cutout_mipped"));
 			}
 		}
 
@@ -130,10 +149,9 @@ public class BlockStateGenerator extends BlockStateProvider {
 				models().getExistingFile(new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/barbed_wire_fence_side")));
 
 		// Generate data for door and trapdoor blocks
-		// TODO: Reimplement when https://github.com/MinecraftForge/MinecraftForge/pull/8821 is merged
-		/*doorBlock(DeferredRegistryHandler.BURNED_OAK_DOOR.get(),
-				new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/burned_oak_door_top"),
-				new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/burned_oak_door_bottom"));*/
+		doorBlock(DeferredRegistryHandler.BURNED_OAK_DOOR.get(),
+				new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/burned_oak_door_bottom"),
+				new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/burned_oak_door_top"));
 		trapdoorBlock(DeferredRegistryHandler.BURNED_OAK_TRAPDOOR.get(),
 				new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/burned_oak_trapdoor"), true);
 
@@ -169,7 +187,8 @@ public class BlockStateGenerator extends BlockStateProvider {
 				.texture("particle", "minecraft:block/copper_block"));
 		simpleBlock(DeferredRegistryHandler.AZUL_STAINED_ORCHID.get(), models()
 				.cross(DeferredRegistryHandler.AZUL_STAINED_ORCHID.getId().toString(),
-						new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/azul_stained_orchid")));
+						new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/azul_stained_orchid"))
+				.renderType("minecraft:cutout_mipped"));
 		getVariantBuilder(DeferredRegistryHandler.BEAR_TRAP.get())
 				.partialState().with(BearTrapBlock.TRIGGERED, true).with(BearTrapBlock.VINES, false)
 				.addModels(new ConfiguredModel(models()

@@ -21,8 +21,6 @@ public class IWOverworldBiomesProvider extends Region {
 	@Override
 	public void addBiomes(Registry<Biome> registry, Consumer<Pair<ParameterPoint, ResourceKey<Biome>>> mapper) {
 
-		addModifiedVanillaOverworldBiomes(mapper, modifier -> {
-			modifier.replaceBiome(Biomes.PLAINS, BiomesAndDimensions.BATTLEFIELD);
-		});
+		addModifiedVanillaOverworldBiomes(mapper, modifier -> modifier.replaceBiome(Biomes.PLAINS, BiomesAndDimensions.BATTLEFIELD));
 	}
 }

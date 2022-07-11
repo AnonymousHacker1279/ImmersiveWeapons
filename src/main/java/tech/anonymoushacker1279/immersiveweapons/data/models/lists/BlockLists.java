@@ -15,6 +15,7 @@ public class BlockLists {
 	public static final List<Block> tableBlocks = new ArrayList<>(25);
 	public static final List<Block> flagBlocks = new ArrayList<>(25);
 	public static final List<Block> headBlocks = new ArrayList<>(25);
+	public static final List<Block> stainedGlassBlocks = new ArrayList<>(25);
 
 	static {
 		simpleBlocks.add(DeferredRegistryHandler.CLOUD_MARBLE.get());
@@ -29,24 +30,6 @@ public class BlockLists {
 		simpleBlocks.add(DeferredRegistryHandler.MUD.get());
 		simpleBlocks.add(DeferredRegistryHandler.DRIED_MUD.get());
 		simpleBlocks.add(DeferredRegistryHandler.HARDENED_MUD.get());
-		simpleBlocks.add(DeferredRegistryHandler.BULLETPROOF_GLASS.get());
-		simpleBlocks.add(DeferredRegistryHandler.WHITE_STAINED_BULLETPROOF_GLASS.get());
-		simpleBlocks.add(DeferredRegistryHandler.LIGHT_GRAY_STAINED_BULLETPROOF_GLASS.get());
-		simpleBlocks.add(DeferredRegistryHandler.GRAY_STAINED_BULLETPROOF_GLASS.get());
-		simpleBlocks.add(DeferredRegistryHandler.BLACK_STAINED_BULLETPROOF_GLASS.get());
-		simpleBlocks.add(DeferredRegistryHandler.ORANGE_STAINED_BULLETPROOF_GLASS.get());
-		simpleBlocks.add(DeferredRegistryHandler.MAGENTA_STAINED_BULLETPROOF_GLASS.get());
-		simpleBlocks.add(DeferredRegistryHandler.LIGHT_BLUE_STAINED_BULLETPROOF_GLASS.get());
-		simpleBlocks.add(DeferredRegistryHandler.YELLOW_STAINED_BULLETPROOF_GLASS.get());
-		simpleBlocks.add(DeferredRegistryHandler.LIME_STAINED_BULLETPROOF_GLASS.get());
-		simpleBlocks.add(DeferredRegistryHandler.PINK_STAINED_BULLETPROOF_GLASS.get());
-		simpleBlocks.add(DeferredRegistryHandler.CYAN_STAINED_BULLETPROOF_GLASS.get());
-		simpleBlocks.add(DeferredRegistryHandler.PURPLE_STAINED_BULLETPROOF_GLASS.get());
-		simpleBlocks.add(DeferredRegistryHandler.BLUE_STAINED_BULLETPROOF_GLASS.get());
-		simpleBlocks.add(DeferredRegistryHandler.BROWN_STAINED_BULLETPROOF_GLASS.get());
-		simpleBlocks.add(DeferredRegistryHandler.GREEN_STAINED_BULLETPROOF_GLASS.get());
-		simpleBlocks.add(DeferredRegistryHandler.RED_STAINED_BULLETPROOF_GLASS.get());
-		simpleBlocks.add(DeferredRegistryHandler.CLOUD.get());
 
 		stoneBasedOres.add(DeferredRegistryHandler.SULFUR_ORE.get());
 		stoneBasedOres.add(DeferredRegistryHandler.ELECTRIC_ORE.get());
@@ -86,5 +69,22 @@ public class BlockLists {
 		headBlocks.add(DeferredRegistryHandler.DYING_SOLDIER_WALL_HEAD.get());
 		headBlocks.add(DeferredRegistryHandler.WANDERING_WARRIOR_WALL_HEAD.get());
 		headBlocks.add(DeferredRegistryHandler.HANS_WALL_HEAD.get());
+
+		stainedGlassBlocks.add(DeferredRegistryHandler.WHITE_STAINED_BULLETPROOF_GLASS.get());
+		stainedGlassBlocks.add(DeferredRegistryHandler.LIGHT_GRAY_STAINED_BULLETPROOF_GLASS.get());
+		stainedGlassBlocks.add(DeferredRegistryHandler.GRAY_STAINED_BULLETPROOF_GLASS.get());
+		stainedGlassBlocks.add(DeferredRegistryHandler.BLACK_STAINED_BULLETPROOF_GLASS.get());
+		stainedGlassBlocks.add(DeferredRegistryHandler.ORANGE_STAINED_BULLETPROOF_GLASS.get());
+		stainedGlassBlocks.add(DeferredRegistryHandler.MAGENTA_STAINED_BULLETPROOF_GLASS.get());
+		stainedGlassBlocks.add(DeferredRegistryHandler.LIGHT_BLUE_STAINED_BULLETPROOF_GLASS.get());
+		stainedGlassBlocks.add(DeferredRegistryHandler.YELLOW_STAINED_BULLETPROOF_GLASS.get());
+		stainedGlassBlocks.add(DeferredRegistryHandler.LIME_STAINED_BULLETPROOF_GLASS.get());
+		stainedGlassBlocks.add(DeferredRegistryHandler.PINK_STAINED_BULLETPROOF_GLASS.get());
+		stainedGlassBlocks.add(DeferredRegistryHandler.CYAN_STAINED_BULLETPROOF_GLASS.get());
+		stainedGlassBlocks.add(DeferredRegistryHandler.PURPLE_STAINED_BULLETPROOF_GLASS.get());
+		stainedGlassBlocks.add(DeferredRegistryHandler.BLUE_STAINED_BULLETPROOF_GLASS.get());
+		stainedGlassBlocks.add(DeferredRegistryHandler.BROWN_STAINED_BULLETPROOF_GLASS.get());
+		stainedGlassBlocks.add(DeferredRegistryHandler.GREEN_STAINED_BULLETPROOF_GLASS.get());
+		stainedGlassBlocks.add(DeferredRegistryHandler.RED_STAINED_BULLETPROOF_GLASS.get());
 	}
 }

@@ -15,7 +15,7 @@ import net.minecraft.core.particles.ParticleType;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.util.Mth;
 import net.minecraft.world.level.block.Block;
-import net.minecraftforge.client.model.data.EmptyModelData;
+import net.minecraftforge.client.model.data.ModelData;
 import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.NotNull;
 import tech.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
@@ -59,7 +59,7 @@ public class BulletImpactParticleOptions implements ParticleOptions {
 		BlockRenderDispatcher blockRendererDispatcher = minecraft.getBlockRenderer();
 		BlockModelShaper blockModelShapes = blockRendererDispatcher.getBlockModelShaper();
 		BakedModel blockModel = blockModelShapes.getBlockModel(Block.stateById(blockID));
-		TextureAtlasSprite textureAtlasSprite = blockModel.getParticleIcon(EmptyModelData.INSTANCE);
+		TextureAtlasSprite textureAtlasSprite = blockModel.getParticleIcon(ModelData.EMPTY);
 
 		int pixelABGR = textureAtlasSprite.getPixelRGBA(0, 0, 0);
 		int r = pixelABGR & 0xff;
