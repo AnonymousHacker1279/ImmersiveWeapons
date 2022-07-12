@@ -11,9 +11,24 @@ public class ClientConfig {
 
 	public static ForgeConfigSpec.ConfigValue<Boolean> TESLA_ARMOR_EFFECT_SOUND;
 	public static ForgeConfigSpec.ConfigValue<Integer> PANIC_ALARM_RANGE;
+	public static ForgeConfigSpec.ConfigValue<Integer> SMOKE_GRENADE_PARTICLES;
+	public static ForgeConfigSpec.ConfigValue<Boolean> FANCY_SMOKE_GRENADE_PARTICLES;
 
 	ClientConfig(ForgeConfigSpec.Builder builder) {
 		builder.push("Client Configuration");
+
+		builder.push("Graphics");
+		SMOKE_GRENADE_PARTICLES = builder
+				.comment("Set the number of particles produced by the smoke grenade\n" +
+						"The server may choose to override this value to encourage fairness. - Default 96")
+				.translation("config.immersiveweapons.smoke_grenade_particles")
+				.define("smoke_grenade_particles", 96);
+		FANCY_SMOKE_GRENADE_PARTICLES = builder
+				.comment("Render smoke grenade particles at 66% of the regular size, spawn 3x more, and add translucency.\n" +
+						"This will negatively impact performance, but make smoke grenades appear more realistic. - Default false")
+				.translation("config.immersiveweapons.fancy_smoke_grenade_particles")
+				.define("fancy_smoke_grenade_particles", false);
+		builder.pop();
 
 		builder.push("Sounds");
 		TESLA_ARMOR_EFFECT_SOUND = builder

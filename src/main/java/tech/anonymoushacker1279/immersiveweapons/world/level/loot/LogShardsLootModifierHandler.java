@@ -24,7 +24,7 @@ public class LogShardsLootModifierHandler extends LootModifier {
 			inst.group(
 					Codec.STRING.fieldOf("blockTag").forGetter(m -> m.blockTag),
 					Codec.INT.fieldOf("numShards").forGetter(m -> m.numShardsToConvert),
-					ForgeRegistries.ITEMS.getCodec().fieldOf("itemReward").forGetter(m -> m.itemReward)
+					ForgeRegistries.ITEMS.getCodec().fieldOf("replacement").forGetter(m -> m.itemReward)
 			)).apply(inst, LogShardsLootModifierHandler::new)
 	));
 

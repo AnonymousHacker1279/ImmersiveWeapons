@@ -52,6 +52,6 @@
 	],
 	"min_quantity": 0,
 	"max_quantity": 2,
-	"chance_to_roll": 0.3,
+	"roll_chance": 0.3,
 	"type": "immersiveweapons:azul_keystone_fragment_in_chests"
 }

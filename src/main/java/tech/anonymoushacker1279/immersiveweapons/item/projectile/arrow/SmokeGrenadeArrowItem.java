@@ -37,7 +37,7 @@ public class SmokeGrenadeArrowItem extends AbstractArrowItem {
 		SmokeGrenadeArrowEntity arrowEntity = new SmokeGrenadeArrowEntity(shooter, worldIn);
 		arrowEntity.setBaseDamage(damage);
 		arrowEntity.pickup = Pickup.DISALLOWED;
-		SmokeGrenadeArrowEntity.setColor(color);
+		arrowEntity.setColor(color);
 		return arrowEntity;
 	}
 }

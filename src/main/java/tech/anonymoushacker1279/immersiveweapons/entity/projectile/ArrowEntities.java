@@ -1,5 +1,7 @@
 package tech.anonymoushacker1279.immersiveweapons.entity.projectile;
 
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
@@ -16,7 +18,8 @@ import net.minecraftforge.network.NetworkEvent.Context;
 import net.minecraftforge.network.PacketDistributor;
 import org.jetbrains.annotations.NotNull;
 import tech.anonymoushacker1279.immersiveweapons.client.particle.smoke_grenade.SmokeGrenadeParticleOptions;
-import tech.anonymoushacker1279.immersiveweapons.config.CommonConfig;
+import tech.anonymoushacker1279.immersiveweapons.config.ClientConfig;
+import tech.anonymoushacker1279.immersiveweapons.entity.projectile.SmokeGrenadeEntity.SmokeGrenadeEntityPacketHandler;
 import tech.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
 import tech.anonymoushacker1279.immersiveweapons.init.PacketHandler;
 import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
@@ -41,8 +44,8 @@ public class ArrowEntities {
 		/**
 		 * Constructor for WoodenArrowEntity.
 		 *
-		 * @param shooter         the <code>LivingEntity</code> shooting the entity
-		 * @param world           the <code>World</code> the entity is in
+		 * @param shooter the <code>LivingEntity</code> shooting the entity
+		 * @param world   the <code>World</code> the entity is in
 		 */
 		public WoodenArrowEntity(LivingEntity shooter, Level world) {
 			super(DeferredRegistryHandler.WOODEN_ARROW_ENTITY.get(), shooter, world);
@@ -93,8 +96,8 @@ public class ArrowEntities {
 		/**
 		 * Constructor for StoneArrowEntity.
 		 *
-		 * @param shooter         the <code>LivingEntity</code> shooting the entity
-		 * @param world           the <code>World</code> the entity is in
+		 * @param shooter the <code>LivingEntity</code> shooting the entity
+		 * @param world   the <code>World</code> the entity is in
 		 */
 		public StoneArrowEntity(LivingEntity shooter, Level world) {
 			super(DeferredRegistryHandler.STONE_ARROW_ENTITY.get(), shooter, world);
@@ -151,8 +154,8 @@ public class ArrowEntities {
 		/**
 		 * Constructor for GoldenArrowEntity.
 		 *
-		 * @param shooter         the <code>LivingEntity</code> shooting the entity
-		 * @param world           the <code>World</code> the entity is in
+		 * @param shooter the <code>LivingEntity</code> shooting the entity
+		 * @param world   the <code>World</code> the entity is in
 		 */
 		public GoldenArrowEntity(LivingEntity shooter, Level world) {
 			super(DeferredRegistryHandler.GOLDEN_ARROW_ENTITY.get(), shooter, world);
@@ -189,8 +192,8 @@ public class ArrowEntities {
 		/**
 		 * Constructor for CopperArrowEntity.
 		 *
-		 * @param shooter         the <code>LivingEntity</code> shooting the entity
-		 * @param world           the <code>World</code> the entity is in
+		 * @param shooter the <code>LivingEntity</code> shooting the entity
+		 * @param world   the <code>World</code> the entity is in
 		 */
 		public CopperArrowEntity(LivingEntity shooter, Level world) {
 			super(DeferredRegistryHandler.COPPER_ARROW_ENTITY.get(), shooter, world);
@@ -227,8 +230,8 @@ public class ArrowEntities {
 		/**
 		 * Constructor for IronArrowEntity.
 		 *
-		 * @param shooter         the <code>LivingEntity</code> shooting the entity
-		 * @param world           the <code>World</code> the entity is in
+		 * @param shooter the <code>LivingEntity</code> shooting the entity
+		 * @param world   the <code>World</code> the entity is in
 		 */
 		public IronArrowEntity(LivingEntity shooter, Level world) {
 			super(DeferredRegistryHandler.IRON_ARROW_ENTITY.get(), shooter, world);
@@ -265,8 +268,8 @@ public class ArrowEntities {
 		/**
 		 * Constructor for CobaltArrowEntity.
 		 *
-		 * @param shooter         the <code>LivingEntity</code> shooting the entity
-		 * @param world           the <code>World</code> the entity is in
+		 * @param shooter the <code>LivingEntity</code> shooting the entity
+		 * @param world   the <code>World</code> the entity is in
 		 */
 		public CobaltArrowEntity(LivingEntity shooter, Level world) {
 			super(DeferredRegistryHandler.COBALT_ARROW_ENTITY.get(), shooter, world);
@@ -303,8 +306,8 @@ public class ArrowEntities {
 		/**
 		 * Constructor for DiamondArrowEntity.
 		 *
-		 * @param shooter         the <code>LivingEntity</code> shooting the entity
-		 * @param world           the <code>World</code> the entity is in
+		 * @param shooter the <code>LivingEntity</code> shooting the entity
+		 * @param world   the <code>World</code> the entity is in
 		 */
 		public DiamondArrowEntity(LivingEntity shooter, Level world) {
 			super(DeferredRegistryHandler.DIAMOND_ARROW_ENTITY.get(), shooter, world);
@@ -341,8 +344,8 @@ public class ArrowEntities {
 		/**
 		 * Constructor for NetheriteArrowEntity.
 		 *
-		 * @param shooter         the <code>LivingEntity</code> shooting the entity
-		 * @param world           the <code>World</code> the entity is in
+		 * @param shooter the <code>LivingEntity</code> shooting the entity
+		 * @param world   the <code>World</code> the entity is in
 		 */
 		public NetheriteArrowEntity(LivingEntity shooter, Level world) {
 			super(DeferredRegistryHandler.NETHERITE_ARROW_ENTITY.get(), shooter, world);
@@ -395,9 +398,7 @@ public class ArrowEntities {
 
 	public static class SmokeGrenadeArrowEntity extends AbstractCustomArrowEntity {
 
-		private static int color = 0;
-		private final int configMaxParticles = CommonConfig.MAX_SMOKE_GRENADE_PARTICLES.get();
-		private static final byte VANILLA_IMPACT_STATUS_ID = 3;
+		private int color = 0;
 
 		/**
 		 * Constructor for SmokeGrenadeArrowEntity.
@@ -413,8 +414,8 @@ public class ArrowEntities {
 		/**
 		 * Constructor for SmokeGrenadeArrowEntity.
 		 *
-		 * @param shooter         the <code>LivingEntity</code> shooting the entity
-		 * @param world           the <code>World</code> the entity is in
+		 * @param shooter the <code>LivingEntity</code> shooting the entity
+		 * @param world   the <code>World</code> the entity is in
 		 */
 		public SmokeGrenadeArrowEntity(LivingEntity shooter, Level world) {
 			super(DeferredRegistryHandler.SMOKE_GRENADE_ARROW_ENTITY.get(), shooter, world);
@@ -439,55 +440,26 @@ public class ArrowEntities {
 		 *
 		 * @param color an integer representing the color
 		 */
-		public static void setColor(int color) {
-			SmokeGrenadeArrowEntity.color = color;
+		public void setColor(int color) {
+			this.color = color;
 		}
 
 		/**
 		 * Runs when the entity hits something.
 		 *
-		 * @param rayTraceResult the <code>RayTraceResult</code> instance
+		 * @param hitResult the <code>HitResult</code> instance
 		 */
 		@Override
-		public void onHit(@NotNull HitResult rayTraceResult) {
-			super.onHit(rayTraceResult);
+		public void onHit(@NotNull HitResult hitResult) {
+			super.onHit(hitResult);
 			if (!level.isClientSide) {
 				PacketHandler.INSTANCE.send(PacketDistributor.TRACKING_CHUNK.with(() -> level.getChunkAt(blockPosition())),
-						new SmokeGrenadeArrowEntityPacketHandler(color));
-
-				level.broadcastEntityEvent(this, VANILLA_IMPACT_STATUS_ID);
-			}
-		}
-
-		/**
-		 * Handle entity events.
-		 *
-		 * @param statusID the <code>byte</code> containing status ID
-		 */
-		@Override
-		public void handleEntityEvent(byte statusID) {
-			if (statusID == VANILLA_IMPACT_STATUS_ID) {
-				double x = getX();
-				double y = getY();
-				double z = getZ();
-
-				// Spawn smoke particles
-				for (int i = 0; i < configMaxParticles; ++i) {
-					level.addParticle(SmokeGrenadeParticleOptions.getParticleByColor(color),
-							true, x, y, z,
-							GeneralUtilities.getRandomNumber(-0.1d, 0.1d),
-							GeneralUtilities.getRandomNumber(-0.1d, 0.1d),
-							GeneralUtilities.getRandomNumber(-0.1d, 0.1d));
-				}
-
-				// Play a hissing sound
-				level.playLocalSound(x, y, z, DeferredRegistryHandler.SMOKE_GRENADE_HISS.get(),
-						SoundSource.NEUTRAL, 0.2f, 0.6f, true);
+						new SmokeGrenadeEntityPacketHandler(getX(), getY(), getZ(), color));
 			}
 		}
 	}
 
-	public record SmokeGrenadeArrowEntityPacketHandler(int color) {
+	public record SmokeGrenadeArrowEntityPacketHandler(double x, double y, double z, int color) {
 
 		/**
 		 * Constructor for SmokeGrenadeArrowEntityPacketHandler.
@@ -504,7 +476,7 @@ public class ArrowEntities {
 		 * @param packetBuffer the <code>PacketBuffer</code> containing packet data
 		 */
 		public static void encode(SmokeGrenadeArrowEntityPacketHandler msg, FriendlyByteBuf packetBuffer) {
-			packetBuffer.writeInt(msg.color);
+			packetBuffer.writeDouble(msg.x).writeDouble(msg.y).writeDouble(msg.z).writeInt(msg.color);
 		}
 
 		/**
@@ -514,7 +486,7 @@ public class ArrowEntities {
 		 * @return SmokeGrenadeArrowEntityPacketHandler
 		 */
 		public static SmokeGrenadeArrowEntityPacketHandler decode(FriendlyByteBuf packetBuffer) {
-			return new SmokeGrenadeArrowEntityPacketHandler(packetBuffer.readInt());
+			return new SmokeGrenadeArrowEntityPacketHandler(packetBuffer.readDouble(), packetBuffer.readDouble(), packetBuffer.readDouble(), packetBuffer.readInt());
 		}
 
 		/**
@@ -535,7 +507,22 @@ public class ArrowEntities {
 		 * @param msg the <code>SmokeGrenadeArrowEntityPacketHandler</code> message being sent
 		 */
 		private static void handleOnClient(SmokeGrenadeArrowEntityPacketHandler msg) {
-			SmokeGrenadeArrowEntity.setColor(msg.color);
+			ClientLevel level = Minecraft.getInstance().level;
+
+			if (level != null) {
+				// Spawn smoke particles
+				for (int i = 0; i < ClientConfig.SMOKE_GRENADE_PARTICLES.get(); ++i) {
+					level.addParticle(SmokeGrenadeParticleOptions.getParticleByColor(msg.color),
+							true, msg.x, msg.y, msg.z,
+							GeneralUtilities.getRandomNumber(-0.1d, 0.1d),
+							GeneralUtilities.getRandomNumber(-0.1d, 0.1d),
+							GeneralUtilities.getRandomNumber(-0.1d, 0.1d));
+				}
+
+				// Play a hissing sound
+				level.playLocalSound(msg.x, msg.y, msg.z, DeferredRegistryHandler.SMOKE_GRENADE_HISS.get(),
+						SoundSource.NEUTRAL, 0.2f, 0.6f, true);
+			}
 		}
 	}
 }
