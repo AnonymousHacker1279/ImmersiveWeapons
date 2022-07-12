@@ -169,12 +169,12 @@ public class TeslaSynthesizerBlockEntity extends BaseContainerBlockEntity implem
 				burnTimeTotal = burnTime;
 				if (isBurning()) {
 					hasChanged = true;
-					if (fuel.hasContainerItem())
-						items.set(3, fuel.getContainerItem());
+					if (fuel.hasCraftingRemainingItem())
+						items.set(3, fuel.getCraftingRemainingItem());
 					else if (!fuel.isEmpty()) {
 						fuel.shrink(1);
 						if (fuel.isEmpty()) {
-							items.set(3, fuel.getContainerItem());
+							items.set(3, fuel.getCraftingRemainingItem());
 						}
 					}
 				}

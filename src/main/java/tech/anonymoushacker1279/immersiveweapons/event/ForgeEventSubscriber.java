@@ -189,7 +189,7 @@ public class ForgeEventSubscriber {
 	 */
 	@SubscribeEvent
 	public static void missingEntityMappings(MissingMappingsEvent event) {
-		List<Mapping<EntityType<?>>> mappings = event.getMappings(ForgeRegistries.ENTITIES.getRegistryKey(), ImmersiveWeapons.MOD_ID);
+		List<Mapping<EntityType<?>>> mappings = event.getMappings(ForgeRegistries.ENTITY_TYPES.getRegistryKey(), ImmersiveWeapons.MOD_ID);
 
 		if (!mappings.isEmpty()) {
 

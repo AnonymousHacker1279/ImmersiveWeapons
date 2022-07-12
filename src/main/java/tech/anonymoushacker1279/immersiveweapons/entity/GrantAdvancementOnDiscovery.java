@@ -11,7 +11,7 @@ public interface GrantAdvancementOnDiscovery {
 
 	default void checkForDiscovery(Entity entity, Player player) {
 		if (isLookingAtMe(entity, player)) {
-			IWCriteriaTriggers.ENTITY_DISCOVERED_TRIGGER.trigger((ServerPlayer) player, ForgeRegistries.ENTITIES.getKey(entity.getType()));
+			IWCriteriaTriggers.ENTITY_DISCOVERED_TRIGGER.trigger((ServerPlayer) player, ForgeRegistries.ENTITY_TYPES.getKey(entity.getType()));
 		}
 	}
 

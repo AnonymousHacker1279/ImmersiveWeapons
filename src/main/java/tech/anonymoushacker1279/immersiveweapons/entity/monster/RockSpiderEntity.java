@@ -28,7 +28,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.entity.living.PotionEvent.PotionApplicableEvent;
+import net.minecraftforge.event.entity.living.MobEffectEvent.Applicable;
 import net.minecraftforge.eventbus.api.Event.Result;
 import org.jetbrains.annotations.NotNull;
 import tech.anonymoushacker1279.immersiveweapons.entity.GrantAdvancementOnDiscovery;
@@ -152,7 +152,7 @@ public class RockSpiderEntity extends Monster implements GrantAdvancementOnDisco
 	@Override
 	public boolean canBeAffected(MobEffectInstance potionEffect) {
 		if (potionEffect.getEffect() == MobEffects.POISON) {
-			PotionApplicableEvent event = new PotionApplicableEvent(this, potionEffect);
+			Applicable event = new Applicable(this, potionEffect);
 			MinecraftForge.EVENT_BUS.post(event);
 			return event.getResult() == Result.ALLOW;
 		}

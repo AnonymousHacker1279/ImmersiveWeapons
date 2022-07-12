@@ -61,7 +61,7 @@ public class SmallPartsTable extends HorizontalDirectionalBlock {
 		if (worldIn.isClientSide) {
 			return InteractionResult.SUCCESS;
 		} else {
-			NetworkHooks.openGui((ServerPlayer) player, state.getMenuProvider(worldIn, pos), pos);
+			NetworkHooks.openScreen((ServerPlayer) player, state.getMenuProvider(worldIn, pos), pos);
 			return InteractionResult.CONSUME;
 		}
 	}

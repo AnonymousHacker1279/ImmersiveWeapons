@@ -65,11 +65,11 @@ public abstract class CustomPotionItem extends Item {
 
 		if (player == null || !player.getAbilities().instabuild) {
 			if (pStack.isEmpty()) {
-				return getContainerItem(pStack);
+				return getCraftingRemainingItem(pStack);
 			}
 
 			if (player != null) {
-				player.getInventory().add(getContainerItem(pStack));
+				player.getInventory().add(getCraftingRemainingItem(pStack));
 			}
 		}
 
@@ -92,7 +92,7 @@ public abstract class CustomPotionItem extends Item {
 	 * @return boolean
 	 */
 	@Override
-	public boolean hasContainerItem(ItemStack stack) {
+	public boolean hasCraftingRemainingItem(ItemStack stack) {
 		return true;
 	}
 
@@ -103,7 +103,7 @@ public abstract class CustomPotionItem extends Item {
 	 * @return ItemStack
 	 */
 	@Override
-	public ItemStack getContainerItem(ItemStack stack) {
+	public ItemStack getCraftingRemainingItem(ItemStack stack) {
 		return new ItemStack(Items.GLASS_BOTTLE);
 	}
 

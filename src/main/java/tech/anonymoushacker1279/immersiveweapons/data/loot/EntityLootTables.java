@@ -160,7 +160,7 @@ public class EntityLootTables implements Consumer<BiConsumer<ResourceLocation, B
 			ResourceLocation lootTable = entityType.getDefaultLootTable();
 			if (isNonLiving(entityType)) {
 				if (lootTable != BuiltInLootTables.EMPTY && map.remove(lootTable) != null) {
-					throw new IllegalStateException(String.format("Strange loot table '%s' for '%s', a LivingEntity should not have loot", lootTable, ForgeRegistries.ENTITIES.getKey(entityType)));
+					throw new IllegalStateException(String.format("Strange loot table '%s' for '%s', a LivingEntity should not have loot", lootTable, ForgeRegistries.ENTITY_TYPES.getKey(entityType)));
 				}
 			} else if (lootTable != BuiltInLootTables.EMPTY && set.add(lootTable)) {
 				LootTable.Builder builder = map.remove(lootTable);

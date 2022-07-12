@@ -146,7 +146,7 @@ public class TeslaSynthesizerBlock extends Block implements SimpleWaterloggedBlo
 		} else {
 			BlockEntity blockEntity = level.getBlockEntity(pos);
 			if (blockEntity instanceof TeslaSynthesizerBlockEntity) {
-				NetworkHooks.openGui((ServerPlayer) player, (MenuProvider) blockEntity, pos);
+				NetworkHooks.openScreen((ServerPlayer) player, (MenuProvider) blockEntity, pos);
 			}
 			return InteractionResult.CONSUME;
 		}
