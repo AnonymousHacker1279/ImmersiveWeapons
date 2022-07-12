@@ -19,7 +19,7 @@ Immersive Weapons is more than just a weapons mod aiming to spice up your combat
 [[dependencies.immersiveweapons]] #optional
 modId = "forge" #mandatory
 mandatory = true #mandatory
-versionRange = "[41.0.94,)" #mandatory
+versionRange = "[41.0.98,)" #mandatory
 ordering = "NONE"
 side = "BOTH"
 

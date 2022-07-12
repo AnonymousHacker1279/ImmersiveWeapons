@@ -149,11 +149,13 @@ public class BlockStateGenerator extends BlockStateProvider {
 				models().getExistingFile(new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/barbed_wire_fence_side")));
 
 		// Generate data for door and trapdoor blocks
-		doorBlock(DeferredRegistryHandler.BURNED_OAK_DOOR.get(),
+		doorBlockWithRenderType(DeferredRegistryHandler.BURNED_OAK_DOOR.get(),
 				new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/burned_oak_door_bottom"),
-				new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/burned_oak_door_top"));
-		trapdoorBlock(DeferredRegistryHandler.BURNED_OAK_TRAPDOOR.get(),
-				new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/burned_oak_trapdoor"), true);
+				new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/burned_oak_door_top"),
+				"minecraft:cutout_mipped");
+		trapdoorBlockWithRenderType(DeferredRegistryHandler.BURNED_OAK_TRAPDOOR.get(),
+				new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/burned_oak_trapdoor"), true,
+				"minecraft:cutout_mipped");
 
 		// Generate data for button blocks
 		buttonBlock(DeferredRegistryHandler.BURNED_OAK_BUTTON.get(),

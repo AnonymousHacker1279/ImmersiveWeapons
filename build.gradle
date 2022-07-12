@@ -120,9 +120,11 @@ dependencies {
 	// TODO: Re-enable after dependencies have upgraded to Forge 41.0.64
 	/*// Include JEI
 	runtimeOnly fg.deobf("mezz.jei:jei-1.19-forge:${jei_version}")
+	*/
 	// Include WTHIT and badpackets
 	runtimeOnly fg.deobf("mcp.mobius.waila:wthit:forge-${wthit_version}")
 	implementation fg.deobf("lol.bai:badpackets:forge-${badpackets_version}")
+	/*
 	// Include Patchouli
 	runtimeOnly fg.deobf("vazkii.patchouli:Patchouli:${patchouli_version}")*/
 }
