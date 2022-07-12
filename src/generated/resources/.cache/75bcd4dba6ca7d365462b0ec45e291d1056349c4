@@ -1,4 +1,4 @@
-// 1.19	2022-06-13T20:38:17.4037804	Tags for minecraft:block
+// 1.19	2022-07-12T17:33:04.8646222	Tags for minecraft:block
 b88afe8a5b09a43ec49c5e718f50ddf6dca840f7 data/forge/tags/blocks/bulletproof_glass.json
 57d28acaeea551737b84b1b7575f947da6f106e0 data/forge/tags/blocks/glass.json
 525866fb3d952fa22ba2e8dc720073ebd2edd5ea data/forge/tags/blocks/ores.json
@@ -7,7 +7,7 @@ e630a581805dfe5291cd771eaee307618d799192 data/forge/tags/blocks/ores/cobalt.json
 7f06b9fdda5caf7acea995b309efbc707e90af07 data/immersiveweapons/tags/blocks/burned_oak_logs.json
 01f0838cb6f763a4b6b286055a8b3b961d87e289 data/minecraft/tags/blocks/fences.json
 b044633ef447efb21b39fd6ebbe59a0f2687bda2 data/minecraft/tags/blocks/logs_that_burn.json
-34faf24b421e19a38815ae0498ff116fff60f8d3 data/minecraft/tags/blocks/mineable/axe.json
+e7d5b1ac537a2f05e37ca9aee0d9a062d7b4f2ac data/minecraft/tags/blocks/mineable/axe.json
 5e17cc1dbea204f5de16d85b25aab5945a5cf5e2 data/minecraft/tags/blocks/mineable/pickaxe.json
 675436e272a9f828f91f61859c69cb1efbb3e100 data/minecraft/tags/blocks/mineable/shovel.json
 1ccf397cb6fa96b577eeb4bc6f838932896876e6 data/minecraft/tags/blocks/needs_diamond_tool.json
