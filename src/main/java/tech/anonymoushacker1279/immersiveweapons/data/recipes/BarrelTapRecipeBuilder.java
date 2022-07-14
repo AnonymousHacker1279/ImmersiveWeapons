@@ -1,6 +1,5 @@
 package tech.anonymoushacker1279.immersiveweapons.data.recipes;
 
-import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import net.minecraft.advancements.*;
 import net.minecraft.advancements.critereon.RecipeUnlockedTrigger;
@@ -11,31 +10,32 @@ import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.NotNull;
-import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
 
 import javax.annotation.Nullable;
-import java.util.List;
+import java.util.Objects;
 import java.util.function.Consumer;
 
-public class SmallPartsRecipeBuilder {
+public class BarrelTapRecipeBuilder {
 
 	private final Ingredient material;
-	private final List<Item> craftables;
+	private final int materialCount;
+	private final Item result;
 	private final Advancement.Builder advancement = Advancement.Builder.advancement();
 	private final RecipeSerializer<?> type;
 
-	public SmallPartsRecipeBuilder(RecipeSerializer<?> type, Ingredient material, List<Item> craftables) {
+	public BarrelTapRecipeBuilder(RecipeSerializer<?> type, Ingredient material, int materialCount, Item result) {
 		this.type = type;
 		this.material = material;
-		this.craftables = craftables;
+		this.materialCount = materialCount;
+		this.result = result;
 	}
 
-	public static SmallPartsRecipeBuilder tinker(Ingredient material, List<Item> craftables) {
-		return new SmallPartsRecipeBuilder(DeferredRegistryHandler.SMALL_PARTS_RECIPE_SERIALIZER.get(), material, craftables);
+	public static BarrelTapRecipeBuilder fermenting(Ingredient block, int cookTime, Item pResult) {
+		return new BarrelTapRecipeBuilder(DeferredRegistryHandler.BARREL_TAP_RECIPE_SERIALIZER.get(), block, cookTime, pResult);
 	}
 
-	public SmallPartsRecipeBuilder unlocks(String pName, CriterionTriggerInstance pCriterion) {
+	public BarrelTapRecipeBuilder unlocks(String pName, CriterionTriggerInstance pCriterion) {
 		advancement.addCriterion(pName, pCriterion);
 		return this;
 	}
@@ -44,14 +44,14 @@ public class SmallPartsRecipeBuilder {
 		save(pFinishedRecipeConsumer, new ResourceLocation(pId));
 	}
 
-	public void save(Consumer<FinishedRecipe> pFinishedRecipeConsumer, ResourceLocation id) {
-		ensureValid(id);
+	public void save(Consumer<FinishedRecipe> pFinishedRecipeConsumer, ResourceLocation pId) {
+		ensureValid(pId);
 		advancement.parent(new ResourceLocation("recipes/root"))
-				.addCriterion("has_the_recipe", RecipeUnlockedTrigger.unlocked(id))
-				.rewards(AdvancementRewards.Builder.recipe(id)).requirements(RequirementsStrategy.OR);
-		pFinishedRecipeConsumer.accept(new SmallPartsRecipeBuilder.Result(id,
-				type, material, craftables, advancement,
-				new ResourceLocation(id.getNamespace(), "recipes/" + ImmersiveWeapons.MOD_ID + "/" + id.getPath())));
+				.addCriterion("has_the_recipe", RecipeUnlockedTrigger.unlocked(pId))
+				.rewards(AdvancementRewards.Builder.recipe(pId)).requirements(RequirementsStrategy.OR);
+		pFinishedRecipeConsumer.accept(new BarrelTapRecipeBuilder.Result(pId, type, material, materialCount, result, advancement,
+				new ResourceLocation(pId.getNamespace(), "recipes/" +
+						Objects.requireNonNull(result.getItemCategory()).getRecipeFolderName() + "/" + pId.getPath())));
 	}
 
 	private void ensureValid(ResourceLocation pId) {
@@ -63,32 +63,31 @@ public class SmallPartsRecipeBuilder {
 	public static class Result implements FinishedRecipe {
 		private final ResourceLocation id;
 		private final Ingredient material;
-		private final List<Item> craftables;
+		private final int materialCount;
+		private final Item result;
 		private final Advancement.Builder advancement;
 		private final ResourceLocation advancementId;
 		private final RecipeSerializer<?> type;
 
-		public Result(ResourceLocation id, RecipeSerializer<?> type, Ingredient material,
-		              List<Item> craftables, Advancement.Builder advancement,
-		              ResourceLocation advancementId) {
-			this.id = id;
-			this.type = type;
+		public Result(ResourceLocation pId, RecipeSerializer<?> pType, Ingredient material,
+		              int materialCount, Item result, Advancement.Builder pAdvancement,
+		              ResourceLocation pAdvancementId) {
+			id = pId;
+			type = pType;
 			this.material = material;
-			this.craftables = craftables;
-			this.advancement = advancement;
-			this.advancementId = advancementId;
+			this.materialCount = materialCount;
+			this.result = result;
+			advancement = pAdvancement;
+			advancementId = pAdvancementId;
 		}
 
 		@Override
-		public void serializeRecipeData(JsonObject json) {
-			json.add("material", material.toJson());
-			JsonArray resultArray = new JsonArray();
-
-			for (Item item : craftables) {
-				resultArray.add(String.valueOf(ForgeRegistries.ITEMS.getKey(item)));
-			}
-
-			json.add("craftables", resultArray);
+		public void serializeRecipeData(JsonObject pJson) {
+			pJson.add("material", material.toJson());
+			pJson.addProperty("materialCount", materialCount);
+			JsonObject resultObject = new JsonObject();
+			resultObject.addProperty("item", Objects.requireNonNull(ForgeRegistries.ITEMS.getKey(result)).toString());
+			pJson.add("result", resultObject);
 		}
 
 		/**

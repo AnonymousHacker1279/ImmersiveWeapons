@@ -55,6 +55,7 @@ public class RecipeGenerator extends RecipeProvider {
 		createTeslaItems();
 		createVanillaTieredItems();
 		createSmallPartsItems();
+		createBarrelTapItems();
 		createSmokeGrenades();
 		createCorrugatedIronItems();
 		createShardItems();
@@ -359,6 +360,11 @@ public class RecipeGenerator extends RecipeProvider {
 				.group("small_parts")
 				.unlockedBy("spyglass", has(Items.SPYGLASS))
 				.save(finishedRecipeConsumer);
+	}
+
+	private void createBarrelTapItems() {
+		barrelTapFermenting(Items.WHEAT, 12, DeferredRegistryHandler.BOTTLE_OF_ALCOHOL.get());
+		barrelTapFermenting(Items.SWEET_BERRIES, 12, DeferredRegistryHandler.BOTTLE_OF_WINE.get());
 	}
 
 	private void createSmokeGrenades() {
@@ -2286,6 +2292,12 @@ public class RecipeGenerator extends RecipeProvider {
 		SmallPartsRecipeBuilder.tinker(Ingredient.of(material), craftables)
 				.unlocks("copper_ingot", has(ForgeItemTagGroups.COPPER_INGOTS))
 				.save(finishedRecipeConsumer, ImmersiveWeapons.MOD_ID + ":" + getTagName(material) + "_tinkering");
+	}
+
+	private static void barrelTapFermenting(ItemLike material, int materialCount, ItemLike result) {
+		BarrelTapRecipeBuilder.fermenting(Ingredient.of(material), materialCount, result.asItem())
+				.unlocks("barrel_tap", has(DeferredRegistryHandler.BARREL_TAP_ITEM.get()))
+				.save(finishedRecipeConsumer, ImmersiveWeapons.MOD_ID + ":" + getItemName(result) + "_fermenting");
 	}
 
 	protected static String getConversionRecipeName(ItemLike pResult, ItemLike pIngredient) {

@@ -66,8 +66,7 @@ import tech.anonymoushacker1279.immersiveweapons.entity.projectile.BulletEntitie
 import tech.anonymoushacker1279.immersiveweapons.entity.projectile.*;
 import tech.anonymoushacker1279.immersiveweapons.entity.vehicle.*;
 import tech.anonymoushacker1279.immersiveweapons.item.armor.*;
-import tech.anonymoushacker1279.immersiveweapons.item.crafting.SmallPartsRecipe;
-import tech.anonymoushacker1279.immersiveweapons.item.crafting.TeslaSynthesizerRecipe;
+import tech.anonymoushacker1279.immersiveweapons.item.crafting.*;
 import tech.anonymoushacker1279.immersiveweapons.item.fortitude.*;
 import tech.anonymoushacker1279.immersiveweapons.item.gauntlet.GauntletItem;
 import tech.anonymoushacker1279.immersiveweapons.item.materials.CustomArmorMaterials;
@@ -651,6 +650,7 @@ public class DeferredRegistryHandler {
 	// Recipes
 	public static final RegistryObject<RecipeSerializer<SmallPartsRecipe>> SMALL_PARTS_RECIPE_SERIALIZER = RECIPE_SERIALIZER.register("small_parts", SmallPartsRecipe.Serializer::new);
 	public static final RegistryObject<RecipeSerializer<TeslaSynthesizerRecipe>> TESLA_SYNTHESIZER_RECIPE_SERIALIZER = RECIPE_SERIALIZER.register("tesla_synthesizer", TeslaSynthesizerRecipe.Serializer::new);
+	public static final RegistryObject<RecipeSerializer<BarrelTapRecipe>> BARREL_TAP_RECIPE_SERIALIZER = RECIPE_SERIALIZER.register("barrel_tap", BarrelTapRecipe.Serializer::new);
 
 	// Recipe Types
 	public static final RegistryObject<RecipeType<SmallPartsRecipe>> SMALL_PARTS_RECIPE_TYPE = RECIPE_TYPES.register("small_parts", () -> new RecipeType<>() {
@@ -663,6 +663,12 @@ public class DeferredRegistryHandler {
 		@Override
 		public String toString() {
 			return ImmersiveWeapons.MOD_ID + ":tesla_synthesizer";
+		}
+	});
+	public static final RegistryObject<RecipeType<BarrelTapRecipe>> BARREL_TAP_RECIPE_TYPE = RECIPE_TYPES.register("barrel_tap", () -> new RecipeType<>() {
+		@Override
+		public String toString() {
+			return ImmersiveWeapons.MOD_ID + ":barrel_tap";
 		}
 	});
 

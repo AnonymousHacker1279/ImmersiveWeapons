@@ -1,33 +1,31 @@
 package tech.anonymoushacker1279.immersiveweapons.item.crafting;
 
-import com.google.gson.*;
+import com.google.gson.JsonObject;
 import net.minecraft.core.NonNullList;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.GsonHelper;
 import net.minecraft.world.Container;
-import net.minecraft.world.item.*;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.NotNull;
 import tech.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
 
-import java.util.ArrayList;
-import java.util.List;
-
-public record SmallPartsRecipe(ResourceLocation recipeId,
-                               Ingredient material,
-                               List<Item> craftables) implements Recipe<Container> {
+public record BarrelTapRecipe(ResourceLocation recipeId,
+                              Ingredient material,
+                              int materialCount,
+                              ItemStack result) implements Recipe<Container> {
 
 	/**
-	 * Constructor for SmallPartsRecipe.
+	 * Constructor for BarrelTapRecipe.
 	 *
-	 * @param recipeId   the <code>ResourceLocation</code> for the recipe
-	 * @param material   the first <code>Ingredient</code>
-	 * @param craftables a <code>List</code> containing <code>Item</code>s that are formed from the material
+	 * @param recipeId      the <code>ResourceLocation</code> for the recipe
+	 * @param material      the first <code>Ingredient</code>
+	 * @param materialCount the number of materials needed for the recipe
+	 * @param result        an <code>ItemStack</code> formed from the material
 	 */
-	public SmallPartsRecipe {
+	public BarrelTapRecipe {
 	}
 
 	/**
@@ -50,7 +48,7 @@ public record SmallPartsRecipe(ResourceLocation recipeId,
 	 */
 	@Override
 	public @NotNull ItemStack assemble(@NotNull Container container) {
-		return new ItemStack(Items.AIR);
+		return result;
 	}
 
 	/**
@@ -65,9 +63,17 @@ public record SmallPartsRecipe(ResourceLocation recipeId,
 		return false;
 	}
 
+	public Ingredient getMaterial() {
+		return material;
+	}
+
+	public int getMaterialCount() {
+		return materialCount;
+	}
+
 	@Override
 	public @NotNull ItemStack getResultItem() {
-		return new ItemStack(Items.AIR);
+		return result.copy();
 	}
 
 	/**
@@ -77,7 +83,7 @@ public record SmallPartsRecipe(ResourceLocation recipeId,
 	 */
 	@Override
 	public @NotNull ItemStack getToastSymbol() {
-		return new ItemStack(DeferredRegistryHandler.SMALL_PARTS_TABLE.get());
+		return new ItemStack(DeferredRegistryHandler.BARREL_TAP.get());
 	}
 
 	/**
@@ -97,7 +103,7 @@ public record SmallPartsRecipe(ResourceLocation recipeId,
 	 */
 	@Override
 	public @NotNull RecipeSerializer<?> getSerializer() {
-		return DeferredRegistryHandler.SMALL_PARTS_RECIPE_SERIALIZER.get();
+		return DeferredRegistryHandler.BARREL_TAP_RECIPE_SERIALIZER.get();
 	}
 
 	/**
@@ -107,7 +113,7 @@ public record SmallPartsRecipe(ResourceLocation recipeId,
 	 */
 	@Override
 	public @NotNull RecipeType<?> getType() {
-		return DeferredRegistryHandler.SMALL_PARTS_RECIPE_TYPE.get();
+		return DeferredRegistryHandler.BARREL_TAP_RECIPE_TYPE.get();
 	}
 
 	/**
@@ -122,7 +128,7 @@ public record SmallPartsRecipe(ResourceLocation recipeId,
 		return defaultedList;
 	}
 
-	public static class Serializer implements RecipeSerializer<SmallPartsRecipe> {
+	public static class Serializer implements RecipeSerializer<BarrelTapRecipe> {
 		/**
 		 * Serialize from JSON.
 		 *
@@ -131,16 +137,12 @@ public record SmallPartsRecipe(ResourceLocation recipeId,
 		 * @return SmallPartsRecipe
 		 */
 		@Override
-		public @NotNull SmallPartsRecipe fromJson(@NotNull ResourceLocation recipeId, @NotNull JsonObject json) {
+		public @NotNull BarrelTapRecipe fromJson(@NotNull ResourceLocation recipeId, @NotNull JsonObject json) {
 			Ingredient material = Ingredient.fromJson(GsonHelper.getAsJsonObject(json, "material"));
-			JsonArray craftablesArray = GsonHelper.getAsJsonArray(json, "craftables");
+			int materialCount = GsonHelper.getAsInt(json, "materialCount");
+			ItemStack result = new ItemStack(ShapedRecipe.itemFromJson(GsonHelper.getAsJsonObject(json, "result")));
 
-			List<Item> craftables = new ArrayList<>(craftablesArray.size());
-			for (JsonElement element : craftablesArray) {
-				craftables.add(ForgeRegistries.ITEMS.getValue(ResourceLocation.tryParse(element.getAsString())));
-			}
-
-			return new SmallPartsRecipe(recipeId, material, craftables);
+			return new BarrelTapRecipe(recipeId, material, materialCount, result);
 		}
 
 		/**
@@ -148,38 +150,28 @@ public record SmallPartsRecipe(ResourceLocation recipeId,
 		 *
 		 * @param recipeId the <code>ResourceLocation</code> for the recipe
 		 * @param buffer   the <code>FriendlyByteBuf</code> instance
-		 * @return SmallPartsRecipe
+		 * @return BarrelTapRecipe
 		 */
 		@Override
-		public SmallPartsRecipe fromNetwork(@NotNull ResourceLocation recipeId, @NotNull FriendlyByteBuf buffer) {
+		public BarrelTapRecipe fromNetwork(@NotNull ResourceLocation recipeId, @NotNull FriendlyByteBuf buffer) {
 			Ingredient material = Ingredient.fromNetwork(buffer);
+			int materialCount = buffer.readInt();
+			ItemStack result = buffer.readItem();
 
-			String craft = buffer.readUtf();
-			String s = craft.replace("[", "").replace("]", "").replace(" ", "");
-			String[] s1 = s.split(",");
-
-			List<Item> craftables = new ArrayList<>(s1.length);
-			for (String s2 : s1) {
-				craftables.add(ForgeRegistries.ITEMS.getValue(ResourceLocation.tryParse(s2)));
-			}
-
-			return new SmallPartsRecipe(recipeId, material, craftables);
+			return new BarrelTapRecipe(recipeId, material, materialCount, result);
 		}
 
 		/**
 		 * Serialize to JSON on the network.
 		 *
 		 * @param buffer the <code>FriendlyByteBuf</code> instance
-		 * @param recipe the <code>SmallPartsRecipe</code> instance
+		 * @param recipe the <code>BarrelTapRecipe</code> instance
 		 */
 		@Override
-		public void toNetwork(@NotNull FriendlyByteBuf buffer, SmallPartsRecipe recipe) {
+		public void toNetwork(@NotNull FriendlyByteBuf buffer, BarrelTapRecipe recipe) {
 			recipe.material.toNetwork(buffer);
-			List<ResourceLocation> craftables = new ArrayList<>(recipe.craftables.size());
-			for (Item item : recipe.craftables) {
-				craftables.add(ForgeRegistries.ITEMS.getKey(item));
-			}
-			buffer.writeUtf(craftables.toString());
+			buffer.writeInt(recipe.materialCount);
+			buffer.writeItem(recipe.result);
 		}
 	}
 }
