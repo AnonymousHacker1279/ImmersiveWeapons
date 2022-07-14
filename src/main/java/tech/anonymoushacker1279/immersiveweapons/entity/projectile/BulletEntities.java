@@ -3,7 +3,6 @@ package tech.anonymoushacker1279.immersiveweapons.entity.projectile;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.util.Mth;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.projectile.ItemSupplier;
 import net.minecraft.world.item.ItemStack;
@@ -45,24 +44,13 @@ public class BulletEntities {
 			referenceItem = DeferredRegistryHandler.WOODEN_MUSKET_BALL.get();
 		}
 
-		/**
-		 * Fire the entity from a position with a velocity and inaccuracy.
-		 *
-		 * @param x          the X position
-		 * @param y          the Y position
-		 * @param z          the Z position
-		 * @param velocity   the velocity
-		 * @param inaccuracy the inaccuracy modifier
-		 */
 		@Override
-		public void shoot(double x, double y, double z, float velocity, float inaccuracy) {
-			Vec3 vector3d = (new Vec3(x, y, z)).normalize().add(random.nextGaussian() * 0.0075F * (GeneralUtilities.getRandomNumber(3.2f, 5.1f)), -0.0095F * (GeneralUtilities.getRandomNumber(3.2f, 5.1f)), random.nextGaussian() * 0.0075F).scale(velocity);
-			setDeltaMovement(vector3d);
-			double horizontalDistanceSqr = vector3d.horizontalDistanceSqr();
-			float yRot = (float) (Mth.atan2(vector3d.x, vector3d.z) * (180F / (float) Math.PI));
-			float xRot = (float) (Mth.atan2(vector3d.y, horizontalDistanceSqr) * (180F / (float) Math.PI));
-			yRotO = yRot;
-			xRotO = xRot;
+		protected Vec3 getShootingVector(double x, double y, double z, float velocity, float inaccuracy) {
+			return new Vec3(x, y, z)
+					.normalize()
+					.add(random.nextGaussian() * 0.0075F * (GeneralUtilities.getRandomNumber(3.2f, 5.1f)),
+							-0.0095F * (GeneralUtilities.getRandomNumber(3.2f, 5.1f)),
+							random.nextGaussian() * 0.0075F).scale(velocity);
 		}
 
 		@Override
@@ -96,24 +84,13 @@ public class BulletEntities {
 			referenceItem = DeferredRegistryHandler.STONE_MUSKET_BALL.get();
 		}
 
-		/**
-		 * Fire the entity from a position with a velocity and inaccuracy.
-		 *
-		 * @param x          the X position
-		 * @param y          the Y position
-		 * @param z          the Z position
-		 * @param velocity   the velocity
-		 * @param inaccuracy the inaccuracy modifier
-		 */
 		@Override
-		public void shoot(double x, double y, double z, float velocity, float inaccuracy) {
-			Vec3 vector3d = (new Vec3(x, y, z)).normalize().add(random.nextGaussian() * 0.0075F * (GeneralUtilities.getRandomNumber(2.4f, 4.1f)), -0.0170F * (GeneralUtilities.getRandomNumber(2.4f, 4.1f)), random.nextGaussian() * 0.0075F).scale(velocity);
-			setDeltaMovement(vector3d);
-			double horizontalDistanceSqr = vector3d.horizontalDistanceSqr();
-			float yRot = (float) (Mth.atan2(vector3d.x, vector3d.z) * (180F / (float) Math.PI));
-			float xRot = (float) (Mth.atan2(vector3d.y, horizontalDistanceSqr) * (180F / (float) Math.PI));
-			yRotO = yRot;
-			xRotO = xRot;
+		protected Vec3 getShootingVector(double x, double y, double z, float velocity, float inaccuracy) {
+			return new Vec3(x, y, z)
+					.normalize()
+					.add(random.nextGaussian() * 0.0075F * (GeneralUtilities.getRandomNumber(2.4f, 4.1f)),
+							-0.0170F * (GeneralUtilities.getRandomNumber(2.4f, 4.1f)),
+							random.nextGaussian() * 0.0075F).scale(velocity);
 		}
 
 		@Override
@@ -147,24 +124,13 @@ public class BulletEntities {
 			referenceItem = DeferredRegistryHandler.GOLDEN_MUSKET_BALL.get();
 		}
 
-		/**
-		 * Fire the entity from a position with a velocity and inaccuracy.
-		 *
-		 * @param x          the X position
-		 * @param y          the Y position
-		 * @param z          the Z position
-		 * @param velocity   the velocity
-		 * @param inaccuracy the inaccuracy modifier
-		 */
 		@Override
-		public void shoot(double x, double y, double z, float velocity, float inaccuracy) {
-			Vec3 vector3d = (new Vec3(x, y, z)).normalize().add(random.nextGaussian() * 0.0025F * (GeneralUtilities.getRandomNumber(0.2f, 1.1f)), 0.00025F * (GeneralUtilities.getRandomNumber(0.2f, 1.1f)), random.nextGaussian() * 0.0025F).scale(velocity);
-			setDeltaMovement(vector3d);
-			double horizontalDistanceSqr = vector3d.horizontalDistanceSqr();
-			float yRot = (float) (Mth.atan2(vector3d.x, vector3d.z) * (180F / (float) Math.PI));
-			float xRot = (float) (Mth.atan2(vector3d.y, horizontalDistanceSqr) * (180F / (float) Math.PI));
-			yRotO = yRot;
-			xRotO = xRot;
+		protected Vec3 getShootingVector(double x, double y, double z, float velocity, float inaccuracy) {
+			return new Vec3(x, y, z)
+					.normalize()
+					.add(random.nextGaussian() * 0.0025F * (GeneralUtilities.getRandomNumber(0.2f, 1.1f)),
+							0.0025F * (GeneralUtilities.getRandomNumber(0.2f, 1.1f)),
+							random.nextGaussian() * 0.0025F).scale(velocity);
 		}
 
 		@Override
@@ -199,24 +165,13 @@ public class BulletEntities {
 			referenceItem = DeferredRegistryHandler.COPPER_MUSKET_BALL.get();
 		}
 
-		/**
-		 * Fire the entity from a position with a velocity and inaccuracy.
-		 *
-		 * @param x          the X position
-		 * @param y          the Y position
-		 * @param z          the Z position
-		 * @param velocity   the velocity
-		 * @param inaccuracy the inaccuracy modifier
-		 */
 		@Override
-		public void shoot(double x, double y, double z, float velocity, float inaccuracy) {
-			Vec3 vector3d = (new Vec3(x, y, z)).normalize().add(random.nextGaussian() * 0.0025F * (GeneralUtilities.getRandomNumber(0.2f, 1.1f)), 0.00025F * (GeneralUtilities.getRandomNumber(0.2f, 1.1f)), random.nextGaussian() * 0.0025F).scale(velocity);
-			setDeltaMovement(vector3d);
-			double horizontalDistanceSqr = vector3d.horizontalDistanceSqr();
-			float yRot = (float) (Mth.atan2(vector3d.x, vector3d.z) * (180F / (float) Math.PI));
-			float xRot = (float) (Mth.atan2(vector3d.y, horizontalDistanceSqr) * (180F / (float) Math.PI));
-			yRotO = yRot;
-			xRotO = xRot;
+		protected Vec3 getShootingVector(double x, double y, double z, float velocity, float inaccuracy) {
+			return new Vec3(x, y, z)
+					.normalize()
+					.add(random.nextGaussian() * 0.0025F * (GeneralUtilities.getRandomNumber(0.2f, 1.1f)),
+							0.0025F * (GeneralUtilities.getRandomNumber(0.2f, 1.1f)),
+							random.nextGaussian() * 0.0025F).scale(velocity);
 		}
 
 		@Override
@@ -250,24 +205,13 @@ public class BulletEntities {
 			referenceItem = DeferredRegistryHandler.IRON_MUSKET_BALL.get();
 		}
 
-		/**
-		 * Fire the entity from a position with a velocity and inaccuracy.
-		 *
-		 * @param x          the X position
-		 * @param y          the Y position
-		 * @param z          the Z position
-		 * @param velocity   the velocity
-		 * @param inaccuracy the inaccuracy modifier
-		 */
 		@Override
-		public void shoot(double x, double y, double z, float velocity, float inaccuracy) {
-			Vec3 vector3d = (new Vec3(x, y, z)).normalize().add(random.nextGaussian() * 0.0025F * (GeneralUtilities.getRandomNumber(0.2f, 1.1f)), 0.00025F * (GeneralUtilities.getRandomNumber(0.2f, 1.1f)), random.nextGaussian() * 0.0025F).scale(velocity);
-			setDeltaMovement(vector3d);
-			double horizontalDistanceSqr = vector3d.horizontalDistanceSqr();
-			float yRot = (float) (Mth.atan2(vector3d.x, vector3d.z) * (180F / (float) Math.PI));
-			float xRot = (float) (Mth.atan2(vector3d.y, horizontalDistanceSqr) * (180F / (float) Math.PI));
-			yRotO = yRot;
-			xRotO = xRot;
+		protected Vec3 getShootingVector(double x, double y, double z, float velocity, float inaccuracy) {
+			return new Vec3(x, y, z)
+					.normalize()
+					.add(random.nextGaussian() * 0.0025F * (GeneralUtilities.getRandomNumber(0.2f, 1.1f)),
+							0.0025F * (GeneralUtilities.getRandomNumber(0.2f, 1.1f)),
+							random.nextGaussian() * 0.0025F).scale(velocity);
 		}
 
 		@Override
@@ -302,24 +246,13 @@ public class BulletEntities {
 			referenceItem = DeferredRegistryHandler.COBALT_MUSKET_BALL.get();
 		}
 
-		/**
-		 * Fire the entity from a position with a velocity and inaccuracy.
-		 *
-		 * @param x          the X position
-		 * @param y          the Y position
-		 * @param z          the Z position
-		 * @param velocity   the velocity
-		 * @param inaccuracy the inaccuracy modifier
-		 */
 		@Override
-		public void shoot(double x, double y, double z, float velocity, float inaccuracy) {
-			Vec3 vector3d = (new Vec3(x, y, z)).normalize().add(random.nextGaussian() * 0.0025F * (GeneralUtilities.getRandomNumber(0.2f, 1.1f)), 0.00025F * (GeneralUtilities.getRandomNumber(0.2f, 1.1f)), random.nextGaussian() * 0.0025F).scale(velocity);
-			setDeltaMovement(vector3d);
-			double horizontalDistanceSqr = vector3d.horizontalDistanceSqr();
-			float yRot = (float) (Mth.atan2(vector3d.x, vector3d.z) * (180F / (float) Math.PI));
-			float xRot = (float) (Mth.atan2(vector3d.y, horizontalDistanceSqr) * (180F / (float) Math.PI));
-			yRotO = yRot;
-			xRotO = xRot;
+		protected Vec3 getShootingVector(double x, double y, double z, float velocity, float inaccuracy) {
+			return new Vec3(x, y, z)
+					.normalize()
+					.add(random.nextGaussian() * 0.0025F * (GeneralUtilities.getRandomNumber(0.2f, 1.1f)),
+							0.0025F * (GeneralUtilities.getRandomNumber(0.2f, 1.1f)),
+							random.nextGaussian() * 0.0025F).scale(velocity);
 		}
 
 		@Override
@@ -363,24 +296,13 @@ public class BulletEntities {
 			return 0.01d;
 		}
 
-		/**
-		 * Fire the entity from a position with a velocity and inaccuracy.
-		 *
-		 * @param x          the X position
-		 * @param y          the Y position
-		 * @param z          the Z position
-		 * @param velocity   the velocity
-		 * @param inaccuracy the inaccuracy modifier
-		 */
 		@Override
-		public void shoot(double x, double y, double z, float velocity, float inaccuracy) {
-			Vec3 vector3d = (new Vec3(x, y, z)).normalize().add(random.nextGaussian() * 0.0025F * (GeneralUtilities.getRandomNumber(0.2f, 0.9f)), 0.00025F * (GeneralUtilities.getRandomNumber(0.2f, 0.9f)), random.nextGaussian() * 0.0025F).scale(velocity);
-			setDeltaMovement(vector3d);
-			double horizontalDistanceSqr = vector3d.horizontalDistanceSqr();
-			float yRot = (float) (Mth.atan2(vector3d.x, vector3d.z) * (180F / (float) Math.PI));
-			float xRot = (float) (Mth.atan2(vector3d.y, horizontalDistanceSqr) * (180F / (float) Math.PI));
-			yRotO = yRot;
-			xRotO = xRot;
+		protected Vec3 getShootingVector(double x, double y, double z, float velocity, float inaccuracy) {
+			return new Vec3(x, y, z)
+					.normalize()
+					.add(random.nextGaussian() * 0.0025F * (GeneralUtilities.getRandomNumber(0.2f, 0.9f)),
+							0.00025F * (GeneralUtilities.getRandomNumber(0.2f, 0.9f)),
+							random.nextGaussian() * 0.0025F).scale(velocity);
 		}
 	}
 
@@ -409,24 +331,13 @@ public class BulletEntities {
 			referenceItem = DeferredRegistryHandler.NETHERITE_MUSKET_BALL.get();
 		}
 
-		/**
-		 * Fire the entity from a position with a velocity and inaccuracy.
-		 *
-		 * @param x          the X position
-		 * @param y          the Y position
-		 * @param z          the Z position
-		 * @param velocity   the velocity
-		 * @param inaccuracy the inaccuracy modifier
-		 */
 		@Override
-		public void shoot(double x, double y, double z, float velocity, float inaccuracy) {
-			Vec3 vector3d = (new Vec3(x, y, z)).normalize().add(random.nextGaussian() * 0.0020F * (GeneralUtilities.getRandomNumber(0.2f, 0.7f)), 0.0020F * (GeneralUtilities.getRandomNumber(0.2f, 0.7f)), random.nextGaussian() * 0.0020F).scale(velocity);
-			setDeltaMovement(vector3d);
-			double horizontalDistanceSqr = vector3d.horizontalDistanceSqr();
-			float yRot = (float) (Mth.atan2(vector3d.x, vector3d.z) * (180F / (float) Math.PI));
-			float xRot = (float) (Mth.atan2(vector3d.y, horizontalDistanceSqr) * (180F / (float) Math.PI));
-			yRotO = yRot;
-			xRotO = xRot;
+		protected Vec3 getShootingVector(double x, double y, double z, float velocity, float inaccuracy) {
+			return new Vec3(x, y, z)
+					.normalize()
+					.add(random.nextGaussian() * 0.002F * (GeneralUtilities.getRandomNumber(0.2f, 0.7f)),
+							0.002F * (GeneralUtilities.getRandomNumber(0.2f, 0.7f)),
+							random.nextGaussian() * 0.002F).scale(velocity);
 		}
 
 		/**
@@ -474,25 +385,16 @@ public class BulletEntities {
 			referenceItem = DeferredRegistryHandler.FLARE.get();
 		}
 
-		/**
-		 * Fire the entity from a position with a velocity and inaccuracy.
-		 *
-		 * @param x          the X position
-		 * @param y          the Y position
-		 * @param z          the Z position
-		 * @param velocity   the velocity
-		 * @param inaccuracy the inaccuracy modifier
-		 */
 		@Override
-		public void shoot(double x, double y, double z, float velocity, float inaccuracy) {
-			Vec3 vector3d = (new Vec3(x, y, z)).normalize().add(random.nextGaussian() * 0.0025F * (GeneralUtilities.getRandomNumber(0.2f, 1.1f)), 0.00025F * (GeneralUtilities.getRandomNumber(0.2f, 1.1f)), random.nextGaussian() * 0.0025F).scale(velocity);
-			setDeltaMovement(vector3d);
-			double horizontalDistanceSqr = vector3d.horizontalDistanceSqr();
-			float yRot = (float) (Mth.atan2(vector3d.x, vector3d.z) * (180F / (float) Math.PI));
-			float xRot = (float) (Mth.atan2(vector3d.y, horizontalDistanceSqr) * (180F / (float) Math.PI));
-			yRotO = yRot;
-			xRotO = xRot;
+		protected Vec3 getShootingVector(double x, double y, double z, float velocity, float inaccuracy) {
+			// Set the flare on fire before firing
 			setSecondsOnFire(30);
+
+			return new Vec3(x, y, z)
+					.normalize()
+					.add(random.nextGaussian() * 0.0025F * (GeneralUtilities.getRandomNumber(0.2f, 1.1f)),
+							0.0025F * (GeneralUtilities.getRandomNumber(0.2f, 1.1f)),
+							random.nextGaussian() * 0.0025F).scale(velocity);
 		}
 
 		@Override

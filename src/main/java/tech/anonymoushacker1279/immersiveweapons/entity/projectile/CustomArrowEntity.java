@@ -18,34 +18,34 @@ import net.minecraftforge.event.ForgeEventFactory;
 import net.minecraftforge.network.NetworkHooks;
 import org.jetbrains.annotations.NotNull;
 
-public abstract class AbstractCustomArrowEntity extends AbstractArrow {
+public class CustomArrowEntity extends AbstractArrow {
 	Item referenceItem;
 
 	/**
-	 * Constructor for AbstractCustomArrowEntity.
+	 * Constructor for CustomArrowEntity.
 	 *
 	 * @param type  the <code>EntityType</code> instance; must extend AbstractArrowEntity
 	 * @param world the <code>World</code> the entity is in
 	 */
-	AbstractCustomArrowEntity(EntityType<? extends AbstractArrow> type, Level world) {
+	CustomArrowEntity(EntityType<? extends AbstractArrow> type, Level world) {
 		super(type, world);
 		referenceItem = null;
 	}
 
 	/**
-	 * Constructor for AbstractCustomArrowEntity.
+	 * Constructor for CustomArrowEntity.
 	 *
 	 * @param type    the <code>EntityType</code> instance; must extend AbstractArrowEntity
 	 * @param shooter the <code>LivingEntity</code> shooting the entity
 	 * @param world   the <code>World</code> the entity is in
 	 */
-	AbstractCustomArrowEntity(EntityType<? extends AbstractCustomArrowEntity> type, LivingEntity shooter, Level world) {
+	CustomArrowEntity(EntityType<? extends CustomArrowEntity> type, LivingEntity shooter, Level world) {
 		super(type, shooter, world);
 		referenceItem = null;
 	}
 
 	/**
-	 * Constructor for AbstractCustomArrowEntity.
+	 * Constructor for CustomArrowEntity.
 	 *
 	 * @param type  the <code>EntityType</code> instance; must extend AbstractArrowEntity
 	 * @param world the <code>World</code> the entity is in
@@ -53,7 +53,7 @@ public abstract class AbstractCustomArrowEntity extends AbstractArrow {
 	 * @param y     the Y position
 	 * @param z     the Z position
 	 */
-	AbstractCustomArrowEntity(EntityType<? extends AbstractCustomArrowEntity> type, Level world, double x, double y, double z) {
+	CustomArrowEntity(EntityType<? extends CustomArrowEntity> type, Level world, double x, double y, double z) {
 		super(type, x, y, z, world);
 		referenceItem = null;
 	}
@@ -208,5 +208,23 @@ public abstract class AbstractCustomArrowEntity extends AbstractArrow {
 	 */
 	public double getMovementModifier() {
 		return 0.0d;
+	}
+
+	@Override
+	public void shoot(double x, double y, double z, float velocity, float inaccuracy) {
+		Vec3 shootingVector = getShootingVector(x, y, z, velocity, inaccuracy);
+
+		setDeltaMovement(shootingVector);
+		double horizontalDistanceSqr = shootingVector.horizontalDistanceSqr();
+		float yRot = (float) (Mth.atan2(shootingVector.x, shootingVector.z) * (180F / (float) Math.PI));
+		float xRot = (float) (Mth.atan2(shootingVector.y, horizontalDistanceSqr) * (180F / (float) Math.PI));
+		yRotO = yRot;
+		xRotO = xRot;
+	}
+
+	protected Vec3 getShootingVector(double x, double y, double z, float velocity, float inaccuracy) {
+		return new Vec3(x, y, z)
+				.normalize()
+				.add(random.nextGaussian() * 0.0075F, -0.0095F, random.nextGaussian() * 0.0075F).scale(velocity);
 	}
 }

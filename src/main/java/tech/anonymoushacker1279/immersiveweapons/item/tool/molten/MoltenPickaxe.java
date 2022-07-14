@@ -9,7 +9,7 @@ public class MoltenPickaxe extends PickaxeItem {
 	/**
 	 * Constructor for MoltenPickaxe.
 	 *
-	 * @param tier           the <code>IItemTier</code>
+	 * @param tier           the <code>Tier</code>
 	 * @param attackDamageIn attack damage
 	 * @param attackSpeedIn  attack speed
 	 * @param properties     the <code>Properties</code> for the item
@@ -21,14 +21,14 @@ public class MoltenPickaxe extends PickaxeItem {
 	/**
 	 * Runs when an entity is hit.
 	 *
-	 * @param itemStack     the <code>ItemStack</code> instance
-	 * @param livingEntity  the <code>LivingEntity</code> attacking
-	 * @param livingEntity1 the <code>LivingEntity</code> being hit
+	 * @param itemStack the <code>ItemStack</code> instance
+	 * @param target    the <code>LivingEntity</code> attacking
+	 * @param attacker  the <code>LivingEntity</code> being hit
 	 * @return boolean
 	 */
 	@Override
-	public boolean hurtEnemy(@NotNull ItemStack itemStack, LivingEntity livingEntity, @NotNull LivingEntity livingEntity1) {
-		livingEntity.setSecondsOnFire(10);
-		return super.hurtEnemy(itemStack, livingEntity, livingEntity1);
+	public boolean hurtEnemy(@NotNull ItemStack itemStack, LivingEntity target, @NotNull LivingEntity attacker) {
+		target.setSecondsOnFire(10);
+		return super.hurtEnemy(itemStack, target, attacker);
 	}
 }

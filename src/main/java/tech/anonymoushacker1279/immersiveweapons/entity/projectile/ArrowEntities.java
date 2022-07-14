@@ -1,6 +1,5 @@
 package tech.anonymoushacker1279.immersiveweapons.entity.projectile;
 
-import net.minecraft.util.Mth;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.projectile.AbstractArrow;
@@ -16,7 +15,7 @@ import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
 
 public class ArrowEntities {
 
-	public static class WoodenArrowEntity extends AbstractCustomArrowEntity {
+	public static class WoodenArrowEntity extends CustomArrowEntity {
 
 		/**
 		 * Constructor for WoodenArrowEntity.
@@ -68,7 +67,7 @@ public class ArrowEntities {
 		}
 	}
 
-	public static class StoneArrowEntity extends AbstractCustomArrowEntity {
+	public static class StoneArrowEntity extends CustomArrowEntity {
 
 		/**
 		 * Constructor for StoneArrowEntity.
@@ -105,28 +104,15 @@ public class ArrowEntities {
 			referenceItem = DeferredRegistryHandler.STONE_ARROW.get();
 		}
 
-		/**
-		 * Fire the entity from a position with a velocity and inaccuracy.
-		 *
-		 * @param x          the X position
-		 * @param y          the Y position
-		 * @param z          the Z position
-		 * @param velocity   the velocity
-		 * @param inaccuracy the inaccuracy modifier
-		 */
 		@Override
-		public void shoot(double x, double y, double z, float velocity, float inaccuracy) {
-			Vec3 vector3d = (new Vec3(x, y, z)).normalize().add(random.nextGaussian() * 0.0075F * inaccuracy, -0.1085F * inaccuracy, random.nextGaussian() * 0.0075F * inaccuracy).scale(velocity);
-			setDeltaMovement(vector3d);
-			double horizontalDistanceSqr = vector3d.horizontalDistanceSqr();
-			float yRot = (float) (Mth.atan2(vector3d.x, vector3d.z) * (180F / (float) Math.PI));
-			float xRot = (float) (Mth.atan2(vector3d.y, horizontalDistanceSqr) * (180F / (float) Math.PI));
-			yRotO = yRot;
-			xRotO = xRot;
+		protected Vec3 getShootingVector(double x, double y, double z, float velocity, float inaccuracy) {
+			return new Vec3(x, y, z)
+					.normalize()
+					.add(random.nextGaussian() * 0.0075F, -0.0095F, random.nextGaussian() * 0.0075F).scale(velocity);
 		}
 	}
 
-	public static class GoldenArrowEntity extends AbstractCustomArrowEntity {
+	public static class GoldenArrowEntity extends CustomArrowEntity {
 
 		/**
 		 * Constructor for GoldenArrowEntity.
@@ -164,7 +150,7 @@ public class ArrowEntities {
 		}
 	}
 
-	public static class CopperArrowEntity extends AbstractCustomArrowEntity {
+	public static class CopperArrowEntity extends CustomArrowEntity {
 
 		/**
 		 * Constructor for CopperArrowEntity.
@@ -202,7 +188,7 @@ public class ArrowEntities {
 		}
 	}
 
-	public static class IronArrowEntity extends AbstractCustomArrowEntity {
+	public static class IronArrowEntity extends CustomArrowEntity {
 
 		/**
 		 * Constructor for IronArrowEntity.
@@ -240,7 +226,7 @@ public class ArrowEntities {
 		}
 	}
 
-	public static class CobaltArrowEntity extends AbstractCustomArrowEntity {
+	public static class CobaltArrowEntity extends CustomArrowEntity {
 
 		/**
 		 * Constructor for CobaltArrowEntity.
@@ -278,7 +264,7 @@ public class ArrowEntities {
 		}
 	}
 
-	public static class DiamondArrowEntity extends AbstractCustomArrowEntity {
+	public static class DiamondArrowEntity extends CustomArrowEntity {
 
 		/**
 		 * Constructor for DiamondArrowEntity.
@@ -316,7 +302,7 @@ public class ArrowEntities {
 		}
 	}
 
-	public static class NetheriteArrowEntity extends AbstractCustomArrowEntity {
+	public static class NetheriteArrowEntity extends CustomArrowEntity {
 
 		/**
 		 * Constructor for NetheriteArrowEntity.
@@ -353,24 +339,13 @@ public class ArrowEntities {
 			referenceItem = DeferredRegistryHandler.NETHERITE_ARROW.get();
 		}
 
-		/**
-		 * Fire the entity from a position with a velocity and inaccuracy.
-		 *
-		 * @param x          the X position
-		 * @param y          the Y position
-		 * @param z          the Z position
-		 * @param velocity   the velocity
-		 * @param inaccuracy the inaccuracy modifier
-		 */
 		@Override
-		public void shoot(double x, double y, double z, float velocity, float inaccuracy) {
-			Vec3 vector3d = (new Vec3(x, y, z)).normalize().add(random.nextGaussian() * 0.0025F * (GeneralUtilities.getRandomNumber(0.2f, 1.1f)), 0.00025F * (GeneralUtilities.getRandomNumber(0.2f, 1.1f)), random.nextGaussian() * 0.0025F).scale(velocity);
-			setDeltaMovement(vector3d);
-			double horizontalDistanceSqr = vector3d.horizontalDistanceSqr();
-			float yRot = (float) (Mth.atan2(vector3d.x, vector3d.z) * (180F / (float) Math.PI));
-			float xRot = (float) (Mth.atan2(vector3d.y, horizontalDistanceSqr) * (180F / (float) Math.PI));
-			yRotO = yRot;
-			xRotO = xRot;
+		protected Vec3 getShootingVector(double x, double y, double z, float velocity, float inaccuracy) {
+			return new Vec3(x, y, z)
+					.normalize()
+					.add(random.nextGaussian() * 0.0025F * (GeneralUtilities.getRandomNumber(0.2f, 1.1f)),
+							0.00025F * (GeneralUtilities.getRandomNumber(0.2f, 1.1f)),
+							random.nextGaussian() * 0.0025F).scale(velocity);
 		}
 
 		/**
@@ -384,7 +359,7 @@ public class ArrowEntities {
 		}
 	}
 
-	public static class SmokeGrenadeArrowEntity extends AbstractCustomArrowEntity {
+	public static class SmokeGrenadeArrowEntity extends CustomArrowEntity {
 
 		private int color = 0;
 
