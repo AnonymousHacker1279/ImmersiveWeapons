@@ -1,9 +1,5 @@
 package tech.anonymoushacker1279.immersiveweapons.entity.projectile;
 
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.multiplayer.ClientLevel;
-import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
@@ -11,20 +7,12 @@ import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.fml.DistExecutor;
-import net.minecraftforge.network.NetworkEvent;
-import net.minecraftforge.network.NetworkEvent.Context;
 import net.minecraftforge.network.PacketDistributor;
 import org.jetbrains.annotations.NotNull;
-import tech.anonymoushacker1279.immersiveweapons.client.particle.smoke_grenade.SmokeGrenadeParticleOptions;
-import tech.anonymoushacker1279.immersiveweapons.config.ClientConfig;
 import tech.anonymoushacker1279.immersiveweapons.entity.projectile.SmokeGrenadeEntity.SmokeGrenadeEntityPacketHandler;
 import tech.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
 import tech.anonymoushacker1279.immersiveweapons.init.PacketHandler;
 import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
-
-import java.util.function.Supplier;
 
 public class ArrowEntities {
 
@@ -455,73 +443,6 @@ public class ArrowEntities {
 			if (!level.isClientSide) {
 				PacketHandler.INSTANCE.send(PacketDistributor.TRACKING_CHUNK.with(() -> level.getChunkAt(blockPosition())),
 						new SmokeGrenadeEntityPacketHandler(getX(), getY(), getZ(), color));
-			}
-		}
-	}
-
-	public record SmokeGrenadeArrowEntityPacketHandler(double x, double y, double z, int color) {
-
-		/**
-		 * Constructor for SmokeGrenadeArrowEntityPacketHandler.
-		 *
-		 * @param color the color ID
-		 */
-		public SmokeGrenadeArrowEntityPacketHandler {
-		}
-
-		/**
-		 * Encodes a packet
-		 *
-		 * @param msg          the <code>SmokeGrenadeArrowEntityPacketHandler</code> message being sent
-		 * @param packetBuffer the <code>PacketBuffer</code> containing packet data
-		 */
-		public static void encode(SmokeGrenadeArrowEntityPacketHandler msg, FriendlyByteBuf packetBuffer) {
-			packetBuffer.writeDouble(msg.x).writeDouble(msg.y).writeDouble(msg.z).writeInt(msg.color);
-		}
-
-		/**
-		 * Decodes a packet
-		 *
-		 * @param packetBuffer the <code>PacketBuffer</code> containing packet data
-		 * @return SmokeGrenadeArrowEntityPacketHandler
-		 */
-		public static SmokeGrenadeArrowEntityPacketHandler decode(FriendlyByteBuf packetBuffer) {
-			return new SmokeGrenadeArrowEntityPacketHandler(packetBuffer.readDouble(), packetBuffer.readDouble(), packetBuffer.readDouble(), packetBuffer.readInt());
-		}
-
-		/**
-		 * Handles an incoming packet, by sending it to the client/server
-		 *
-		 * @param msg             the <code>SmokeGrenadeArrowEntityPacketHandler</code> message being sent
-		 * @param contextSupplier the <code>Supplier</code> providing context
-		 */
-		public static void handle(SmokeGrenadeArrowEntityPacketHandler msg, Supplier<Context> contextSupplier) {
-			NetworkEvent.Context context = contextSupplier.get();
-			context.enqueueWork(() -> DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> handleOnClient(msg)));
-			context.setPacketHandled(true);
-		}
-
-		/**
-		 * Runs specifically on the client, when a packet is received
-		 *
-		 * @param msg the <code>SmokeGrenadeArrowEntityPacketHandler</code> message being sent
-		 */
-		private static void handleOnClient(SmokeGrenadeArrowEntityPacketHandler msg) {
-			ClientLevel level = Minecraft.getInstance().level;
-
-			if (level != null) {
-				// Spawn smoke particles
-				for (int i = 0; i < ClientConfig.SMOKE_GRENADE_PARTICLES.get(); ++i) {
-					level.addParticle(SmokeGrenadeParticleOptions.getParticleByColor(msg.color),
-							true, msg.x, msg.y, msg.z,
-							GeneralUtilities.getRandomNumber(-0.1d, 0.1d),
-							GeneralUtilities.getRandomNumber(-0.1d, 0.1d),
-							GeneralUtilities.getRandomNumber(-0.1d, 0.1d));
-				}
-
-				// Play a hissing sound
-				level.playLocalSound(msg.x, msg.y, msg.z, DeferredRegistryHandler.SMOKE_GRENADE_HISS.get(),
-						SoundSource.NEUTRAL, 0.2f, 0.6f, true);
 			}
 		}
 	}
