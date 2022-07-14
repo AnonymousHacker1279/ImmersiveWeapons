@@ -47,7 +47,7 @@ public abstract class AbstractMinutemanEntity extends PathfinderMob implements R
 
 	private static final UniformInt tickRange = TimeUtil.rangeOfSeconds(20, 39);
 	private final RangedShotgunAttackGoal<AbstractMinutemanEntity> aiShotgunAttack =
-			new RangedShotgunAttackGoal<>(this, 1.0D, 25, 14.0F);
+			new RangedShotgunAttackGoal<>(this, 1.0D, 25, 14.0F, DeferredRegistryHandler.BLUNDERBUSS.get());
 
 	private final MeleeAttackGoal aiAttackOnCollide = new MeleeAttackGoal(this, 1.2D, false) {
 		/**

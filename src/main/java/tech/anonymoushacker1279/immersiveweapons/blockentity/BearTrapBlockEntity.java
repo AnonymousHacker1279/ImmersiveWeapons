@@ -41,7 +41,7 @@ public class BearTrapBlockEntity extends BlockEntity implements EntityBlock {
 	/**
 	 * Runs once each tick. Handle trapping and releasing entities.
 	 */
-	public void tick(BlockPos blockPos, BearTrapBlockEntity bearTrapBlockEntity) {
+	public void tick(BlockPos blockPos) {
 		Mob trapped = getTrappedMobEntity();
 		Player trappedPlayer = getTrappedPlayerEntity();
 

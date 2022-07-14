@@ -1,4 +1,4 @@
-package tech.anonymoushacker1279.immersiveweapons.block.base.mud;
+package tech.anonymoushacker1279.immersiveweapons.block.mud;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;

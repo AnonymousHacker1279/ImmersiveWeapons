@@ -38,12 +38,12 @@ public abstract class AbstractBulletItem extends ArrowItem {
 	 *
 	 * @param stack  the <code>ItemStack</code> being checked
 	 * @param bow    the <code>ItemStack</code> containing the bow that's firing
-	 * @param player the <code>PlayerEntity</code> firing the bow
+	 * @param player the <code>Player</code> firing the bow
 	 * @return boolean
 	 */
 	@Override
 	public boolean isInfinite(@NotNull ItemStack stack, @NotNull ItemStack bow, @NotNull Player player) {
-		int enchant = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.INFINITY_ARROWS, bow);
+		int enchant = EnchantmentHelper.getTagEnchantmentLevel(Enchantments.INFINITY_ARROWS, bow);
 		return enchant > 0;
 	}
 }

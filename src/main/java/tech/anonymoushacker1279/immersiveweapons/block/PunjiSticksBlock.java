@@ -1,4 +1,4 @@
-package tech.anonymoushacker1279.immersiveweapons.block.trap;
+package tech.anonymoushacker1279.immersiveweapons.block;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.damagesource.DamageSource;

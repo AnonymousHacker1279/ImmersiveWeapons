@@ -41,7 +41,7 @@ import java.util.function.Predicate;
 public abstract class AbstractDyingSoldierEntity extends Monster implements RangedAttackMob, GrantAdvancementOnDiscovery {
 
 	private final RangedGunAttackGoal<AbstractDyingSoldierEntity> aiPistolAttack =
-			new RangedGunAttackGoal<>(this, 1.0D, 20, 15.0F);
+			new RangedGunAttackGoal<>(this, 1.0D, 20, 15.0F, DeferredRegistryHandler.FLINTLOCK_PISTOL.get());
 	private final MeleeAttackGoal aiAttackOnCollide = new MeleeAttackGoal(this, 1.2D, false) {
 		/**
 		 * Reset the task's internal state. Called when this task is interrupted by another one

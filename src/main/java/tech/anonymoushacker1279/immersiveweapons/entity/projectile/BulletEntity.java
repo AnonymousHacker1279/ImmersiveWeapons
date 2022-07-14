@@ -305,7 +305,7 @@ public class BulletEntity extends AbstractArrow {
 		int pierceLevel = getPierceLevel();
 
 		// Extra code to run when an entity is hit
-		doWhenHitEntity(entity, entityRayTraceResult);
+		doWhenHitEntity(entity);
 
 		// Check the piercing level, if its above zero then start piercing entities
 		if (pierceLevel > 0) {
@@ -511,7 +511,7 @@ public class BulletEntity extends AbstractArrow {
 	 *
 	 * @param entity the <code>Entity</code> being hit
 	 */
-	protected void doWhenHitEntity(Entity entity, EntityHitResult entityHitResult) {
+	protected void doWhenHitEntity(Entity entity) {
 		level.broadcastEntityEvent(this, VANILLA_IMPACT_STATUS_ID);
 	}
 }

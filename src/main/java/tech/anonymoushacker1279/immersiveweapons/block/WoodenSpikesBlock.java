@@ -1,8 +1,8 @@
-package tech.anonymoushacker1279.immersiveweapons.block.trap;
+package tech.anonymoushacker1279.immersiveweapons.block;
 
 import net.minecraft.core.BlockPos;
-import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -17,23 +17,26 @@ import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.NotNull;
 import tech.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
+import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
 
-public class BarbedWireBlock extends HorizontalDirectionalBlock implements SimpleWaterloggedBlock {
+public class WoodenSpikesBlock extends HorizontalDirectionalBlock implements SimpleWaterloggedBlock {
 
 	public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
-	private final DamageSource damageSource = new DamageSource("immersiveweapons.barbed_wire");
-	private int soundCooldown = 0;
+	protected static final VoxelShape SHAPE = Block.box(1.0D, 0.0D, 1.0D, 15D, 14D, 15D);
+	private final DamageSource damageSource = new DamageSource("immersiveweapons.spike_trap");
 
 	/**
-	 * Constructor for BarbedWireBlock.
+	 * Constructor for WoodenSpikesBlock.
 	 *
 	 * @param properties the <code>Properties</code> of the block
 	 */
-	public BarbedWireBlock(Properties properties) {
+	public WoodenSpikesBlock(Properties properties) {
 		super(properties);
-		registerDefaultState(stateDefinition.any().setValue(WATERLOGGED, false));
+		registerDefaultState(stateDefinition.any().setValue(WATERLOGGED, Boolean.FALSE));
 	}
 
 	/**
@@ -45,7 +48,9 @@ public class BarbedWireBlock extends HorizontalDirectionalBlock implements Simpl
 	 */
 	@Override
 	public BlockState getStateForPlacement(BlockPlaceContext context) {
-		return defaultBlockState().setValue(FACING, context.getHorizontalDirection().getOpposite());
+		return defaultBlockState()
+				.setValue(FACING, context.getHorizontalDirection().getOpposite())
+				.setValue(WATERLOGGED, context.getLevel().getFluidState(context.getClickedPos()).getType() == Fluids.WATER);
 	}
 
 	/**
@@ -72,10 +77,27 @@ public class BarbedWireBlock extends HorizontalDirectionalBlock implements Simpl
 	}
 
 	/**
+	 * Set the shape of the block.
+	 *
+	 * @param state            the <code>BlockState</code> of the block
+	 * @param reader           the <code>BlockGetter</code> for the block
+	 * @param pos              the <code>BlockPos</code> the block is at
+	 * @param selectionContext the <code>CollisionContext</code> of the block
+	 * @return VoxelShape
+	 */
+	@SuppressWarnings("deprecation")
+	@Override
+	public @NotNull VoxelShape getShape(@NotNull BlockState state, @NotNull BlockGetter reader, @NotNull BlockPos pos,
+	                                    @NotNull CollisionContext selectionContext) {
+
+		return SHAPE;
+	}
+
+	/**
 	 * Determines if skylight should pass through the block.
 	 *
 	 * @param state  the <code>BlockState</code> of the block
-	 * @param reader the <code>IBlockReader</code> for the block
+	 * @param reader the <code>BlockGetter</code> for the block
 	 * @param pos    the <code>BlockPos</code> the block is at
 	 * @return boolean
 	 */
@@ -97,19 +119,22 @@ public class BarbedWireBlock extends HorizontalDirectionalBlock implements Simpl
 	@Override
 	public void entityInside(@NotNull BlockState state, @NotNull Level level, @NotNull BlockPos pos, @NotNull Entity entity) {
 		if (entity instanceof LivingEntity) {
-			entity.makeStuckInBlock(state, new Vec3(0.45F, 0.40D, 0.45F));
+			entity.makeStuckInBlock(state, new Vec3(0.85F, 0.80D, 0.85F));
 			if (!level.isClientSide && (entity.xOld != entity.getX() || entity.zOld != entity.getZ())) {
-				double d0 = Math.abs(entity.getX() - entity.xOld);
-				double d1 = Math.abs(entity.getZ() - entity.zOld);
-				if (d0 >= (double) 0.003F || d1 >= (double) 0.003F) {
-					entity.hurt(damageSource, 2.0F);
+				double deltaX = Math.abs(entity.getX() - entity.xOld);
+				double deltaZ = Math.abs(entity.getZ() - entity.zOld);
+				if (deltaX >= (double) 0.003F || deltaZ >= (double) 0.003F) {
+					entity.hurt(damageSource, 1.5F);
+
+					if (entity instanceof Player player && player.isCreative()) {
+						return;
+					}
+
+					if (GeneralUtilities.getRandomNumber(0.0f, 1.0f) <= 0.15f) {
+						((LivingEntity) entity).addEffect(new MobEffectInstance(DeferredRegistryHandler.BLEEDING_EFFECT.get(),
+								200, 0, true, false));
+					}
 				}
-			}
-			if (entity instanceof Player && soundCooldown <= 0) {
-				level.playSound((Player) entity, pos, DeferredRegistryHandler.BARBED_WIRE_RATTLE.get(), SoundSource.BLOCKS, 1f, 1f);
-				soundCooldown = 40;
-			} else {
-				soundCooldown--;
 			}
 		}
 	}

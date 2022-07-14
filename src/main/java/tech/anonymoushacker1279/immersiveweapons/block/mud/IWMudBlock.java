@@ -1,4 +1,4 @@
-package tech.anonymoushacker1279.immersiveweapons.block.base.mud;
+package tech.anonymoushacker1279.immersiveweapons.block.mud;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
@@ -9,7 +9,6 @@ import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.NotNull;
 import tech.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
 
-// TODO: Mark for removal since vanilla provides a mud block
 public class IWMudBlock extends Block {
 
 	float chanceToDry = 0.10f;

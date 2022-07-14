@@ -88,7 +88,7 @@ public class HansEntity extends AbstractWanderingWarriorEntity {
 	 * @param difficulty the <code>DifficultyInstance</code> of the world
 	 */
 	@Override
-	public void populateDefaultEquipmentSlots(RandomSource random, @NotNull DifficultyInstance difficulty) {
+	public void populateDefaultEquipmentSlots(@NotNull RandomSource random, @NotNull DifficultyInstance difficulty) {
 		setItemSlot(EquipmentSlot.HEAD, new ItemStack(Items.IRON_HELMET));
 		setItemInHand(InteractionHand.MAIN_HAND, new ItemStack(Items.IRON_SWORD));
 	}

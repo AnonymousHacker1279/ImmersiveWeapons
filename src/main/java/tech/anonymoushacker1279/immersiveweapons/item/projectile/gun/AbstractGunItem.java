@@ -315,7 +315,7 @@ public abstract class AbstractGunItem extends Item implements Vanishable {
 	 * @return int
 	 */
 	@Override
-	public int getEnchantmentValue() {
+	public int getEnchantmentValue(ItemStack stack) {
 		return 1;
 	}
 

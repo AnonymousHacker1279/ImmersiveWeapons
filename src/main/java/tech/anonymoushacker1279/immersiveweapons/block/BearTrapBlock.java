@@ -1,4 +1,4 @@
-package tech.anonymoushacker1279.immersiveweapons.block.trap;
+package tech.anonymoushacker1279.immersiveweapons.block;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -141,7 +141,7 @@ public class BearTrapBlock extends Block implements SimpleWaterloggedBlock, Enti
 	public <T extends BlockEntity> BlockEntityTicker<T> getTicker(@NotNull Level level, @NotNull BlockState blockState,
 	                                                              @NotNull BlockEntityType<T> blockEntityType) {
 
-		return (world, pos, state, entity) -> ((BearTrapBlockEntity) entity).tick(pos, (BearTrapBlockEntity) entity);
+		return (world, pos, state, entity) -> ((BearTrapBlockEntity) entity).tick(pos);
 	}
 
 	/**
