@@ -1,25 +1,55 @@
 package tech.anonymoushacker1279.immersiveweapons.item.pike;
 
+import com.google.common.collect.ImmutableMultimap;
+import com.google.common.collect.ImmutableMultimap.Builder;
+import com.google.common.collect.Multimap;
 import net.minecraft.core.BlockPos;
-import net.minecraft.tags.ItemTags;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.attributes.*;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.*;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraftforge.common.ForgeMod;
 import org.jetbrains.annotations.NotNull;
+import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
 
 public class PikeItem extends Item {
+
+	public Multimap<Attribute, AttributeModifier> pikeAttributes;
+	public final Ingredient repairIngredient;
 
 	/**
 	 * Constructor for PikeItem.
 	 *
-	 * @param properties the <code>Properties</code> for the item
+	 * @param properties    the <code>Properties</code> for the item
+	 * @param damageIn      the damage
+	 * @param attackSpeedIn the attack speed
 	 */
-	PikeItem(Properties properties) {
+	public PikeItem(Properties properties, double damageIn, double attackSpeedIn, Ingredient repairIngredient) {
 		super(properties);
+
+		this.repairIngredient = repairIngredient;
+
+		// Add damage and attack speed to the pike attributes
+		Builder<Attribute, AttributeModifier> builder = ImmutableMultimap.builder();
+		builder.put(Attributes.ATTACK_DAMAGE, new AttributeModifier(BASE_ATTACK_DAMAGE_UUID, "Tool modifier", damageIn, AttributeModifier.Operation.ADDITION));
+		builder.put(Attributes.ATTACK_SPEED, new AttributeModifier(BASE_ATTACK_SPEED_UUID, "Tool modifier", attackSpeedIn, AttributeModifier.Operation.ADDITION));
+		pikeAttributes = builder.build();
+	}
+
+	public void addReachDistanceAttributes() {
+		Builder<Attribute, AttributeModifier> builder = ImmutableMultimap.builder();
+
+		pikeAttributes = builder.put(ForgeMod.REACH_DISTANCE.get(),
+						new AttributeModifier(GeneralUtilities.ATTACK_REACH_MODIFIER,
+								"Weapon modifier",
+								0.5D,
+								AttributeModifier.Operation.ADDITION))
+				.putAll(pikeAttributes)
+				.build();
 	}
 
 	/**
@@ -65,37 +95,18 @@ public class PikeItem extends Item {
 	 * Runs when a block is mined.
 	 *
 	 * @param stack        the <code>ItemStack</code> instance
-	 * @param worldIn      the <code>World</code> the block is in
+	 * @param level        the <code>Level</code> the block is in
 	 * @param state        the <code>BlockState</code> of the block
 	 * @param pos          the <code>BlockPos</code> the block is at
-	 * @param entityLiving the <code>LivingEntity</code> destroying the block
+	 * @param livingEntity the <code>LivingEntity</code> destroying the block
 	 * @return boolean
 	 */
 	@Override
-	public boolean mineBlock(@NotNull ItemStack stack, @NotNull Level worldIn, BlockState state, @NotNull BlockPos pos, @NotNull LivingEntity entityLiving) {
-		if (state.getDestroySpeed(worldIn, pos) != 0.0D) {
-			stack.hurtAndBreak(2, entityLiving, (entity) -> entity.broadcastBreakEvent(EquipmentSlot.MAINHAND));
+	public boolean mineBlock(@NotNull ItemStack stack, @NotNull Level level, BlockState state, @NotNull BlockPos pos, @NotNull LivingEntity livingEntity) {
+		if (state.getDestroySpeed(level, pos) != 0.0D) {
+			stack.hurtAndBreak(2, livingEntity, (entity) -> entity.broadcastBreakEvent(EquipmentSlot.MAINHAND));
 		}
 		return true;
-	}
-
-	/**
-	 * Get the enchantment value.
-	 *
-	 * @return int
-	 */
-	@Override
-	public int getEnchantmentValue() {
-		return 1;
-	}
-
-	/**
-	 * Get the repair material.
-	 *
-	 * @return Ingredient
-	 */
-	Ingredient getRepairMaterial() {
-		return Ingredient.of(ItemTags.PLANKS);
 	}
 
 	/**
@@ -107,6 +118,11 @@ public class PikeItem extends Item {
 	 */
 	@Override
 	public boolean isValidRepairItem(@NotNull ItemStack toRepair, @NotNull ItemStack repair) {
-		return getRepairMaterial().test(repair) || super.isValidRepairItem(toRepair, repair);
+		return repairIngredient.test(repair) || super.isValidRepairItem(toRepair, repair);
+	}
+
+	@Override
+	public Multimap<Attribute, AttributeModifier> getAttributeModifiers(EquipmentSlot equipmentSlot, ItemStack stack) {
+		return equipmentSlot == EquipmentSlot.MAINHAND ? pikeAttributes : super.getAttributeModifiers(equipmentSlot, stack);
 	}
 }

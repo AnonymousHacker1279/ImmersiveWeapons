@@ -5,7 +5,6 @@ import com.google.common.collect.ImmutableMultimap.Builder;
 import com.google.common.collect.Multimap;
 import net.minecraft.core.BlockPos;
 import net.minecraft.tags.BlockTags;
-import net.minecraft.tags.ItemTags;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
@@ -16,22 +15,43 @@ import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Material;
+import net.minecraftforge.common.ForgeMod;
 import net.minecraftforge.common.ToolActions;
 import org.jetbrains.annotations.NotNull;
 import tech.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
 import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
 
 public class GauntletItem extends TieredItem implements Vanishable {
-	public static Multimap<Attribute, AttributeModifier> gauntletAttributes;
-	private final float bleedChance;
 
-	public GauntletItem(Tier tier, int attackDamageModifier, float attackSpeedModifier, Properties properties, float bleedChance) {
+	public Multimap<Attribute, AttributeModifier> gauntletAttributes;
+	public final Ingredient repairIngredient;
+	private final float bleedChance;
+	private final int bleedLevel;
+
+	public GauntletItem(Tier tier, int attackDamageModifier, float attackSpeedModifier, Properties properties, float bleedChance, int bleedLevel, Ingredient repairIngredient) {
 		super(tier, properties);
+
+		this.repairIngredient = repairIngredient;
+		this.bleedChance = bleedChance;
+		this.bleedLevel = bleedLevel;
+
+		// Add damage and attack speed to the pike attributes
 		Builder<Attribute, AttributeModifier> builder = ImmutableMultimap.builder();
 		builder.put(Attributes.ATTACK_DAMAGE, new AttributeModifier(BASE_ATTACK_DAMAGE_UUID, "Weapon modifier", (float) attackDamageModifier + tier.getAttackDamageBonus(), AttributeModifier.Operation.ADDITION));
 		builder.put(Attributes.ATTACK_SPEED, new AttributeModifier(BASE_ATTACK_SPEED_UUID, "Weapon modifier", attackSpeedModifier, AttributeModifier.Operation.ADDITION));
 		gauntletAttributes = builder.build();
-		this.bleedChance = bleedChance;
+	}
+
+	public void addReachDistanceAttributes() {
+		Builder<Attribute, AttributeModifier> builder = ImmutableMultimap.builder();
+
+		gauntletAttributes = builder.put(ForgeMod.REACH_DISTANCE.get(),
+						new AttributeModifier(GeneralUtilities.ATTACK_REACH_MODIFIER,
+								"Weapon modifier",
+								-2.0D,
+								AttributeModifier.Operation.ADDITION))
+				.putAll(gauntletAttributes)
+				.build();
 	}
 
 	@Override
@@ -80,16 +100,7 @@ public class GauntletItem extends TieredItem implements Vanishable {
 	 */
 	@Override
 	public boolean isValidRepairItem(@NotNull ItemStack toRepair, @NotNull ItemStack repair) {
-		return getRepairMaterial().test(repair) || super.isValidRepairItem(toRepair, repair);
-	}
-
-	/**
-	 * Get the repair material.
-	 *
-	 * @return Ingredient
-	 */
-	Ingredient getRepairMaterial() {
-		return Ingredient.of(ItemTags.PLANKS);
+		return repairIngredient.test(repair) || super.isValidRepairItem(toRepair, repair);
 	}
 
 	/**
@@ -100,7 +111,7 @@ public class GauntletItem extends TieredItem implements Vanishable {
 	public void bleedBehavior(LivingEntity target) {
 		if (GeneralUtilities.getRandomNumber(0.0f, 1.0f) <= bleedChance) {
 			target.addEffect(new MobEffectInstance(DeferredRegistryHandler.BLEEDING_EFFECT.get(), 200,
-					0, true, false));
+					bleedLevel, true, false));
 		}
 	}
 }
