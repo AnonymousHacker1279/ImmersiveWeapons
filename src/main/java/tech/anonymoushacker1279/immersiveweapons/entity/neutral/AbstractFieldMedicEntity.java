@@ -36,7 +36,7 @@ import org.jetbrains.annotations.NotNull;
 import tech.anonymoushacker1279.immersiveweapons.entity.GrantAdvancementOnDiscovery;
 import tech.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
 import tech.anonymoushacker1279.immersiveweapons.init.PacketHandler;
-import tech.anonymoushacker1279.immersiveweapons.item.misc.UsedSyringeItem;
+import tech.anonymoushacker1279.immersiveweapons.item.UsedSyringeItem;
 import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
 
 import javax.annotation.Nullable;

@@ -8,7 +8,7 @@ import tech.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
 public class CreativeTab extends CreativeModeTab {
 
 	/**
-	 * Constructor for CreativeTabSorter.
+	 * Constructor for CreativeTab.
 	 *
 	 * @param label the tab label
 	 */

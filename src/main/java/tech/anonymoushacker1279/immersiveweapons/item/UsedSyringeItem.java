@@ -1,4 +1,4 @@
-package tech.anonymoushacker1279.immersiveweapons.item.misc;
+package tech.anonymoushacker1279.immersiveweapons.item;
 
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;

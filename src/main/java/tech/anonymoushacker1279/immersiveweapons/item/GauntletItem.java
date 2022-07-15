@@ -1,4 +1,4 @@
-package tech.anonymoushacker1279.immersiveweapons.item.gauntlet;
+package tech.anonymoushacker1279.immersiveweapons.item;
 
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.ImmutableMultimap.Builder;

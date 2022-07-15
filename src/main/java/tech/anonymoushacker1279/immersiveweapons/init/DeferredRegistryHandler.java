@@ -65,14 +65,12 @@ import tech.anonymoushacker1279.immersiveweapons.entity.projectile.ArrowEntities
 import tech.anonymoushacker1279.immersiveweapons.entity.projectile.BulletEntities.*;
 import tech.anonymoushacker1279.immersiveweapons.entity.projectile.*;
 import tech.anonymoushacker1279.immersiveweapons.entity.vehicle.*;
+import tech.anonymoushacker1279.immersiveweapons.item.*;
 import tech.anonymoushacker1279.immersiveweapons.item.armor.*;
 import tech.anonymoushacker1279.immersiveweapons.item.crafting.*;
 import tech.anonymoushacker1279.immersiveweapons.item.fortitude.*;
-import tech.anonymoushacker1279.immersiveweapons.item.gauntlet.GauntletItem;
 import tech.anonymoushacker1279.immersiveweapons.item.materials.CustomArmorMaterials;
 import tech.anonymoushacker1279.immersiveweapons.item.materials.CustomItemMaterials;
-import tech.anonymoushacker1279.immersiveweapons.item.misc.UsedSyringeItem;
-import tech.anonymoushacker1279.immersiveweapons.item.pike.PikeItem;
 import tech.anonymoushacker1279.immersiveweapons.item.potion.AlcoholItem;
 import tech.anonymoushacker1279.immersiveweapons.item.potion.WineItem;
 import tech.anonymoushacker1279.immersiveweapons.item.projectile.arrow.*;
