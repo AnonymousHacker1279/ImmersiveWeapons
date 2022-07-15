@@ -1,34 +1,34 @@
 {
   "parent": "immersiveweapons:entity_discovery",
+  "criteria": {
+    "discover": {
+      "conditions": {
+        "entity": "immersiveweapons:hans"
+      },
+      "trigger": "immersiveweapons:entity_discovered"
+    }
+  },
   "display": {
-    "icon": {
-      "item": "immersiveweapons:hans_head"
-    },
-    "title": {
-      "translate": "advancements.immersiveweapons.discover_hans.title"
-    },
+    "announce_to_chat": true,
     "description": {
       "translate": "advancements.immersiveweapons.discover_hans.description"
     },
     "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "immersiveweapons:hans_head"
+    },
     "show_toast": true,
-    "announce_to_chat": true,
-    "hidden": false
-  },
-  "rewards": {
-    "experience": 20
-  },
-  "criteria": {
-    "discover": {
-      "trigger": "immersiveweapons:entity_discovered",
-      "conditions": {
-        "entity": "immersiveweapons:hans"
-      }
+    "title": {
+      "translate": "advancements.immersiveweapons.discover_hans.title"
     }
   },
   "requirements": [
     [
       "discover"
     ]
-  ]
+  ],
+  "rewards": {
+    "experience": 20
+  }
 }

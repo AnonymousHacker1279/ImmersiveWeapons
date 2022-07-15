@@ -60,14 +60,4 @@ public class WanderingWarriorEntity extends AbstractWanderingWarriorEntity {
 	protected SoundEvent getDeathSound() {
 		return DeferredRegistryHandler.WANDERING_WARRIOR_DEATH.get();
 	}
-
-	/**
-	 * Get the step sound.
-	 *
-	 * @return SoundEvent
-	 */
-	@Override
-	protected SoundEvent getStepSound() {
-		return DeferredRegistryHandler.WANDERING_WARRIOR_STEP.get();
-	}
 }

@@ -27,8 +27,8 @@ public class MusketItem extends AbstractGunItem {
 	}
 
 	@Override
-	protected void fireBullets(AbstractBulletItem bulletItem, Level level, ItemStack ammo, Player player, ItemStack firingItem) {
-		BulletEntity bulletEntity = bulletItem.createBullet(level, ammo, player);
+	protected void fireBullets(AbstractBulletItem bulletItem, Level level, Player player, ItemStack firingItem) {
+		BulletEntity bulletEntity = bulletItem.createBullet(level, player);
 
 		bulletEntity.setFiringItem(firingItem.getItem());
 

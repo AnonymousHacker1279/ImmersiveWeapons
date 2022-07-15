@@ -4,7 +4,7 @@ import com.mojang.datafixers.util.Pair;
 import net.minecraft.world.item.*;
 import net.minecraft.world.item.crafting.RecipeManager;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
-import tech.anonymoushacker1279.immersiveweapons.item.crafting.CustomRecipeTypes;
+import tech.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
 import tech.anonymoushacker1279.immersiveweapons.item.crafting.SmallPartsRecipe;
 
 import java.util.ArrayList;
@@ -17,7 +17,7 @@ public class SmallPartsCraftables {
 	public static void init(RecipeManager manager) {
 		ImmersiveWeapons.LOGGER.info("Initializing small parts system");
 
-		List<SmallPartsRecipe> recipes = manager.getAllRecipesFor(CustomRecipeTypes.SMALL_PARTS);
+		List<SmallPartsRecipe> recipes = manager.getAllRecipesFor(DeferredRegistryHandler.SMALL_PARTS_RECIPE_TYPE.get());
 
 		for (SmallPartsRecipe recipe : recipes) {
 			for (Item craftable : recipe.craftables()) {

@@ -95,7 +95,7 @@ public class BulletEntity extends AbstractArrow {
 	@Override
 	public void tick() {
 		if (!hasBeenShot) {
-			gameEvent(GameEvent.PROJECTILE_SHOOT, getOwner(), blockPosition());
+			gameEvent(GameEvent.PROJECTILE_SHOOT, getOwner());
 			hasBeenShot = true;
 		}
 
@@ -305,7 +305,7 @@ public class BulletEntity extends AbstractArrow {
 		int pierceLevel = getPierceLevel();
 
 		// Extra code to run when an entity is hit
-		doWhenHitEntity(entity, entityRayTraceResult);
+		doWhenHitEntity(entity);
 
 		// Check the piercing level, if its above zero then start piercing entities
 		if (pierceLevel > 0) {
@@ -492,6 +492,24 @@ public class BulletEntity extends AbstractArrow {
 	}
 
 	@Override
+	public void shoot(double x, double y, double z, float velocity, float inaccuracy) {
+		Vec3 shootingVector = getShootingVector(x, y, z, velocity, inaccuracy);
+
+		setDeltaMovement(shootingVector);
+		double horizontalDistanceSqr = shootingVector.horizontalDistanceSqr();
+		float yRot = (float) (Mth.atan2(shootingVector.x, shootingVector.z) * (180F / (float) Math.PI));
+		float xRot = (float) (Mth.atan2(shootingVector.y, horizontalDistanceSqr) * (180F / (float) Math.PI));
+		yRotO = yRot;
+		xRotO = xRot;
+	}
+
+	protected Vec3 getShootingVector(double x, double y, double z, float velocity, float inaccuracy) {
+		return new Vec3(x, y, z)
+				.normalize()
+				.add(random.nextGaussian() * 0.0075F, -0.0095F, random.nextGaussian() * 0.0075F).scale(velocity);
+	}
+
+	@Override
 	protected @NotNull SoundEvent getDefaultHitGroundSoundEvent() {
 		return DeferredRegistryHandler.BULLET_WHIZZ.get();
 	}
@@ -511,7 +529,7 @@ public class BulletEntity extends AbstractArrow {
 	 *
 	 * @param entity the <code>Entity</code> being hit
 	 */
-	protected void doWhenHitEntity(Entity entity, EntityHitResult entityHitResult) {
+	protected void doWhenHitEntity(Entity entity) {
 		level.broadcastEntityEvent(this, VANILLA_IMPACT_STATUS_ID);
 	}
 }

@@ -1,36 +1,44 @@
 {
   "parent": "immersiveweapons:root",
+  "criteria": {
+    "visit": {
+      "conditions": {
+        "player": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "location": {
+                "biome": "immersiveweapons:battlefield"
+              }
+            }
+          }
+        ]
+      },
+      "trigger": "minecraft:location"
+    }
+  },
   "display": {
-    "icon": {
-      "item": "minecraft:skeleton_skull"
-    },
-    "title": {
-      "translate": "advancements.immersiveweapons.battlefield.title"
-    },
+    "announce_to_chat": true,
     "description": {
       "translate": "advancements.immersiveweapons.battlefield.description"
     },
     "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "minecraft:skeleton_skull"
+    },
     "show_toast": true,
-    "announce_to_chat": true,
-    "hidden": false
-  },
-  "rewards": {
-    "experience": 50
-  },
-  "criteria": {
-    "visit": {
-      "trigger": "minecraft:location",
-      "conditions": {
-        "location": {
-          "biome": "immersiveweapons:battlefield"
-        }
-      }
+    "title": {
+      "translate": "advancements.immersiveweapons.battlefield.title"
     }
   },
   "requirements": [
     [
       "visit"
     ]
-  ]
+  ],
+  "rewards": {
+    "experience": 50
+  }
 }

@@ -83,10 +83,6 @@ public class SmokeGrenadeParticleOptions implements ParticleOptions {
 		return color;
 	}
 
-	public float getScale() {
-		return scale;
-	}
-
 	@Override
 	public @NotNull ParticleType<SmokeGrenadeParticleOptions> getType() {
 		return DeferredRegistryHandler.SMOKE_GRENADE_PARTICLE.get();
@@ -102,7 +98,7 @@ public class SmokeGrenadeParticleOptions implements ParticleOptions {
 	}
 
 	/**
-	 * Utility for getting particle colors from resources spawning smoke bomb particles.
+	 * Utility for getting particle colors from resources spawning smoke grenade particles.
 	 *
 	 * @param colorID the ID representing the color to be selected.
 	 *                <br>0 -> Gray

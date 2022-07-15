@@ -1,11 +1,6 @@
 {
   "type": "minecraft:crafting_shaped",
   "group": "tesla",
-  "pattern": [
-    "fff",
-    "cde",
-    "aba"
-  ],
   "key": {
     "a": {
       "item": "minecraft:netherite_block"
@@ -26,6 +21,11 @@
       "item": "immersiveweapons:tesla_ingot"
     }
   },
+  "pattern": [
+    "fff",
+    "cde",
+    "aba"
+  ],
   "result": {
     "item": "immersiveweapons:tesla_synthesizer"
   }

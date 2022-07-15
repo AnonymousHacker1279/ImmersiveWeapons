@@ -18,6 +18,7 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import org.jetbrains.annotations.NotNull;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.block.crafting.small_parts.SmallPartsCraftables;
 import tech.anonymoushacker1279.immersiveweapons.container.SmallPartsContainer;
@@ -51,18 +52,13 @@ public class SmallPartsTableScreen extends AbstractContainerScreen<SmallPartsCon
 	}
 
 	@Override
-	protected void init() {
-		super.init();
-	}
-
-	@Override
-	public void render(PoseStack pPoseStack, int pMouseX, int pMouseY, float pPartialTick) {
+	public void render(@NotNull PoseStack pPoseStack, int pMouseX, int pMouseY, float pPartialTick) {
 		super.render(pPoseStack, pMouseX, pMouseY, pPartialTick);
 		renderTooltip(pPoseStack, pMouseX, pMouseY);
 	}
 
 	@Override
-	protected void renderBg(PoseStack pPoseStack, float pPartialTick, int pX, int pY) {
+	protected void renderBg(@NotNull PoseStack pPoseStack, float pPartialTick, int pX, int pY) {
 		renderBackground(pPoseStack);
 		RenderSystem.setShader(GameRenderer::getPositionTexShader);
 		RenderSystem.setShaderTexture(0, BG_LOCATION);

@@ -1,34 +1,34 @@
 {
   "parent": "immersiveweapons:entity_discovery",
+  "criteria": {
+    "discover": {
+      "conditions": {
+        "entity": "immersiveweapons:rock_spider"
+      },
+      "trigger": "immersiveweapons:entity_discovered"
+    }
+  },
   "display": {
-    "icon": {
-      "item": "minecraft:spider_eye"
-    },
-    "title": {
-      "translate": "advancements.immersiveweapons.discover_rock_spider.title"
-    },
+    "announce_to_chat": true,
     "description": {
       "translate": "advancements.immersiveweapons.discover_rock_spider.description"
     },
     "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "minecraft:spider_eye"
+    },
     "show_toast": true,
-    "announce_to_chat": true,
-    "hidden": false
-  },
-  "rewards": {
-    "experience": 20
-  },
-  "criteria": {
-    "discover": {
-      "trigger": "immersiveweapons:entity_discovered",
-      "conditions": {
-        "entity": "immersiveweapons:rock_spider"
-      }
+    "title": {
+      "translate": "advancements.immersiveweapons.discover_rock_spider.title"
     }
   },
   "requirements": [
     [
       "discover"
     ]
-  ]
+  ],
+  "rewards": {
+    "experience": 20
+  }
 }

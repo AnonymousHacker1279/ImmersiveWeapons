@@ -16,6 +16,7 @@
 		"lava_level": {
 			"absolute": 0
 		},
+		"replaceable": "#minecraft:overworld_carver_replaceables",
 		"debug_settings": {
 			"debug_mode": false,
 			"air_state": {

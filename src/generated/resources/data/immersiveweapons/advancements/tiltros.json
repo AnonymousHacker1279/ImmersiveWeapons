@@ -1,36 +1,44 @@
 {
   "parent": "immersiveweapons:activated_warrior_statue",
+  "criteria": {
+    "visit": {
+      "conditions": {
+        "player": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "location": {
+                "biome": "immersiveweapons:tiltros"
+              }
+            }
+          }
+        ]
+      },
+      "trigger": "minecraft:location"
+    }
+  },
   "display": {
-    "icon": {
-      "item": "immersiveweapons:azul_stained_orchid"
-    },
-    "title": {
-      "translate": "advancements.immersiveweapons.tiltros.biome.title"
-    },
+    "announce_to_chat": true,
     "description": {
       "translate": "advancements.immersiveweapons.tiltros.biome.description"
     },
     "frame": "goal",
+    "hidden": false,
+    "icon": {
+      "item": "immersiveweapons:azul_stained_orchid"
+    },
     "show_toast": true,
-    "announce_to_chat": true,
-    "hidden": false
-  },
-  "rewards": {
-    "experience": 50
-  },
-  "criteria": {
-    "visit": {
-      "trigger": "minecraft:location",
-      "conditions": {
-        "location": {
-          "biome": "immersiveweapons:tiltros"
-        }
-      }
+    "title": {
+      "translate": "advancements.immersiveweapons.tiltros.biome.title"
     }
   },
   "requirements": [
     [
       "visit"
     ]
-  ]
+  ],
+  "rewards": {
+    "experience": 50
+  }
 }

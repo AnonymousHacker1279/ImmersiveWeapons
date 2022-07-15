@@ -1,22 +1,32 @@
 package tech.anonymoushacker1279.immersiveweapons.world.level.loot;
 
-import com.google.gson.JsonObject;
+import com.google.common.base.Suppliers;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
+import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.ItemTags;
-import net.minecraft.util.GsonHelper;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
-import net.minecraftforge.common.loot.GlobalLootModifierSerializer;
+import net.minecraftforge.common.loot.IGlobalLootModifier;
 import net.minecraftforge.common.loot.LootModifier;
 import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.NotNull;
 import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
 
-import java.util.List;
+import java.util.function.Supplier;
 
 public class LogShardsLootModifierHandler extends LootModifier {
+
+	public static final Supplier<Codec<LogShardsLootModifierHandler>> CODEC = Suppliers.memoize(() -> RecordCodecBuilder.create(inst -> codecStart(inst).and(
+			inst.group(
+					Codec.STRING.fieldOf("blockTag").forGetter(m -> m.blockTag),
+					Codec.INT.fieldOf("numShards").forGetter(m -> m.numShardsToConvert),
+					ForgeRegistries.ITEMS.getCodec().fieldOf("replacement").forGetter(m -> m.itemReward)
+			)).apply(inst, LogShardsLootModifierHandler::new)
+	));
 
 	private final int numShardsToConvert;
 	private final String blockTag;
@@ -25,7 +35,7 @@ public class LogShardsLootModifierHandler extends LootModifier {
 	/**
 	 * Constructor for LogShardsLootModifierHandler.
 	 *
-	 * @param conditionsIn the <code>ILootCondition</code>s
+	 * @param conditionsIn the <code>LootItemCondition</code>s
 	 * @param tag          the block tag string
 	 * @param numShards    the number of shards
 	 * @param reward       the returned item
@@ -45,11 +55,7 @@ public class LogShardsLootModifierHandler extends LootModifier {
 	 * @return List extending ItemStack
 	 */
 	@Override
-	public @NotNull List<ItemStack> doApply(List<ItemStack> generatedLoot, LootContext context) {
-		//
-		// Additional conditions can be checked, though as much as possible should be parameterized via JSON data.
-		// It is better to write a new ILootCondition implementation than to do things here.
-		//
+	public @NotNull ObjectArrayList<ItemStack> doApply(ObjectArrayList<ItemStack> generatedLoot, LootContext context) {
 		int numShards = 0;
 		for (ItemStack stack : generatedLoot) {
 			if (stack.is(ItemTags.create(new ResourceLocation(blockTag)))) {
@@ -66,33 +72,8 @@ public class LogShardsLootModifierHandler extends LootModifier {
 		return generatedLoot;
 	}
 
-	public static class Serializer extends GlobalLootModifierSerializer<LogShardsLootModifierHandler> {
-
-		/**
-		 * Read from JSON.
-		 *
-		 * @param name         the <code>ResourceLocation</code> to read from
-		 * @param object       the <code>JsonObject</code> instance
-		 * @param conditionsIn the <code>ILootCondition</code>s
-		 * @return LogShardsLootModifierHandler
-		 */
-		@Override
-		public LogShardsLootModifierHandler read(ResourceLocation name, JsonObject object, LootItemCondition[] conditionsIn) {
-			String blockTag = GsonHelper.getAsString(object, "blockTag");
-			int numShards = GsonHelper.getAsInt(object, "numShards");
-			Item replacementItem = ForgeRegistries.ITEMS.getValue(new ResourceLocation(GsonHelper.getAsString(object, "replacement")));
-			return new LogShardsLootModifierHandler(conditionsIn, blockTag, numShards, replacementItem);
-		}
-
-		/**
-		 * Write to JSON.
-		 *
-		 * @param instance the <code>LogShardsLootModifierHandler</code> instance
-		 * @return JsonObject
-		 */
-		@Override
-		public JsonObject write(LogShardsLootModifierHandler instance) {
-			return null;
-		}
+	@Override
+	public Codec<? extends IGlobalLootModifier> codec() {
+		return CODEC.get();
 	}
 }

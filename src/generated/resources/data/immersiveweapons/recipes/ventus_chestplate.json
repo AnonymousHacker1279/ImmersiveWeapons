@@ -1,16 +1,16 @@
 {
   "type": "minecraft:crafting_shaped",
   "group": "ventus",
-  "pattern": [
-    "a a",
-    "aaa",
-    "aaa"
-  ],
   "key": {
     "a": {
       "tag": "immersiveweapons:shards/ventus"
     }
   },
+  "pattern": [
+    "a a",
+    "aaa",
+    "aaa"
+  ],
   "result": {
     "item": "immersiveweapons:ventus_chestplate"
   }

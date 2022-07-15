@@ -1,10 +1,6 @@
 {
   "type": "minecraft:crafting_shaped",
   "group": "traps",
-  "pattern": [
-    " b ",
-    "aca"
-  ],
   "key": {
     "a": {
       "tag": "forge:ingots/metal"
@@ -16,6 +12,10 @@
       "item": "minecraft:tnt"
     }
   },
+  "pattern": [
+    " b ",
+    "aca"
+  ],
   "result": {
     "item": "immersiveweapons:landmine"
   }

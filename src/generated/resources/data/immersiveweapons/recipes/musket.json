@@ -1,10 +1,6 @@
 {
   "type": "minecraft:crafting_shaped",
   "group": "firearm",
-  "pattern": [
-    "abd",
-    " c "
-  ],
   "key": {
     "a": {
       "item": "immersiveweapons:heavy_wooden_stock"
@@ -19,6 +15,10 @@
       "item": "immersiveweapons:extended_iron_barrel"
     }
   },
+  "pattern": [
+    "abd",
+    " c "
+  ],
   "result": {
     "item": "immersiveweapons:musket"
   }

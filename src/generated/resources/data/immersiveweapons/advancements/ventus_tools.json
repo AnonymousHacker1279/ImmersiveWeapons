@@ -1,0 +1,51 @@
+{
+  "parent": "immersiveweapons:ventus_shard",
+  "criteria": {
+    "have_advancements": {
+      "conditions": {
+        "player": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "type_specific": {
+                "type": "player",
+                "advancements": {
+                  "immersiveweapons:ventus_axe": true,
+                  "immersiveweapons:ventus_hoe": true,
+                  "immersiveweapons:ventus_pickaxe": true,
+                  "immersiveweapons:ventus_shovel": true,
+                  "immersiveweapons:ventus_sword": true
+                }
+              }
+            }
+          }
+        ]
+      },
+      "trigger": "minecraft:location"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.immersiveweapons.ventus_tools.description"
+    },
+    "frame": "challenge",
+    "hidden": false,
+    "icon": {
+      "item": "immersiveweapons:ventus_ore"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.immersiveweapons.ventus_tools.title"
+    }
+  },
+  "requirements": [
+    [
+      "have_advancements"
+    ]
+  ],
+  "rewards": {
+    "experience": 150
+  }
+}

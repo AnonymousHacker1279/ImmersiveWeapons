@@ -4,7 +4,8 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
-import tech.anonymoushacker1279.immersiveweapons.entity.projectile.CustomArrowEntity.StoneArrowEntity;
+import tech.anonymoushacker1279.immersiveweapons.entity.projectile.ArrowEntities;
+import tech.anonymoushacker1279.immersiveweapons.entity.projectile.ArrowEntities.StoneArrowEntity;
 
 public class StoneArrowItem extends AbstractArrowItem {
 
@@ -28,8 +29,8 @@ public class StoneArrowItem extends AbstractArrowItem {
 	 * @return StoneArrowEntity
 	 */
 	@Override
-	public @NotNull StoneArrowEntity createArrow(@NotNull Level worldIn, @NotNull ItemStack stack, @NotNull LivingEntity shooter) {
-		StoneArrowEntity arrowEntity = new StoneArrowEntity(shooter, worldIn, ref.get().asItem());
+	public @NotNull ArrowEntities.StoneArrowEntity createArrow(@NotNull Level worldIn, @NotNull ItemStack stack, @NotNull LivingEntity shooter) {
+		StoneArrowEntity arrowEntity = new StoneArrowEntity(shooter, worldIn);
 		arrowEntity.setBaseDamage(damage);
 		return arrowEntity;
 	}

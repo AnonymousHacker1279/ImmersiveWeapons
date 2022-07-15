@@ -1,0 +1,64 @@
+{
+  "parent": "immersiveweapons:molten_armor",
+  "criteria": {
+    "hold": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "immersiveweapons:molten_helmet"
+            ]
+          },
+          {
+            "items": [
+              "immersiveweapons:molten_chestplate"
+            ]
+          },
+          {
+            "items": [
+              "immersiveweapons:molten_leggings"
+            ]
+          },
+          {
+            "items": [
+              "immersiveweapons:molten_boots"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "swim": {
+      "conditions": {
+        "block": "minecraft:lava"
+      },
+      "trigger": "minecraft:enter_block"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.immersiveweapons.swim_in_lava.description"
+    },
+    "frame": "challenge",
+    "hidden": false,
+    "icon": {
+      "item": "minecraft:lava_bucket"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.immersiveweapons.swim_in_lava.title"
+    }
+  },
+  "requirements": [
+    [
+      "hold"
+    ],
+    [
+      "swim"
+    ]
+  ],
+  "rewards": {
+    "experience": 35
+  }
+}

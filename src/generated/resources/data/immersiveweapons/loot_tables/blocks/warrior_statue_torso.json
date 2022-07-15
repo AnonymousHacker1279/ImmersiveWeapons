@@ -2,15 +2,14 @@
   "type": "minecraft:block",
   "pools": [
     {
-      "rolls": 1.0,
       "bonus_rolls": 0.0,
       "entries": [
         {
           "type": "minecraft:item",
           "conditions": [
             {
-              "condition": "minecraft:block_state_property",
               "block": "immersiveweapons:warrior_statue_torso",
+              "condition": "minecraft:block_state_property",
               "properties": {
                 "powered": "true"
               }
@@ -23,18 +22,18 @@
           ],
           "name": "immersiveweapons:azul_keystone"
         }
-      ]
+      ],
+      "rolls": 1.0
     },
     {
-      "rolls": 1.0,
       "bonus_rolls": 0.0,
       "entries": [
         {
           "type": "minecraft:item",
           "conditions": [
             {
-              "condition": "minecraft:block_state_property",
               "block": "immersiveweapons:warrior_statue_torso",
+              "condition": "minecraft:block_state_property",
               "properties": {
                 "powered": "true"
               }
@@ -47,18 +46,18 @@
           ],
           "name": "immersiveweapons:warrior_statue_torso"
         }
-      ]
+      ],
+      "rolls": 1.0
     },
     {
-      "rolls": 1.0,
       "bonus_rolls": 0.0,
       "entries": [
         {
           "type": "minecraft:item",
           "conditions": [
             {
-              "condition": "minecraft:block_state_property",
               "block": "immersiveweapons:warrior_statue_torso",
+              "condition": "minecraft:block_state_property",
               "properties": {
                 "powered": "false"
               }
@@ -71,7 +70,8 @@
           ],
           "name": "immersiveweapons:warrior_statue_torso"
         }
-      ]
+      ],
+      "rolls": 1.0
     }
   ]
 }

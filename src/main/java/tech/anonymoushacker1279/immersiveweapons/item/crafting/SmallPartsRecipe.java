@@ -10,7 +10,6 @@ import net.minecraft.world.item.*;
 import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.registries.ForgeRegistryEntry;
 import org.jetbrains.annotations.NotNull;
 import tech.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
 
@@ -34,23 +33,23 @@ public record SmallPartsRecipe(ResourceLocation recipeId,
 	/**
 	 * Used to check if a recipe matches current crafting inventory.
 	 *
-	 * @param inv     the <code>IInventory</code> instance
-	 * @param worldIn the current <code>World</code>
+	 * @param container the <code>Container</code> instance
+	 * @param level     the current <code>Level</code>
 	 * @return boolean
 	 */
 	@Override
-	public boolean matches(Container inv, @NotNull Level worldIn) {
+	public boolean matches(@NotNull Container container, @NotNull Level level) {
 		return false;
 	}
 
 	/**
 	 * Returns an Item that is the result of this recipe.
 	 *
-	 * @param inv the <code>IInventory</code> instance
+	 * @param container the <code>Container</code> instance
 	 * @return ItemStack
 	 */
 	@Override
-	public @NotNull ItemStack assemble(Container inv) {
+	public @NotNull ItemStack assemble(@NotNull Container container) {
 		return new ItemStack(Items.AIR);
 	}
 
@@ -66,12 +65,6 @@ public record SmallPartsRecipe(ResourceLocation recipeId,
 		return false;
 	}
 
-	/**
-	 * Get the result of this recipe, usually for display purposes (e.g. recipe book). If your recipe has more than one
-	 * possible result (e.g. it's dynamic and depends on its inputs), then return an empty stack.
-	 *
-	 * @return ItemStack
-	 */
 	@Override
 	public @NotNull ItemStack getResultItem() {
 		return new ItemStack(Items.AIR);
@@ -100,7 +93,7 @@ public record SmallPartsRecipe(ResourceLocation recipeId,
 	/**
 	 * Get the recipe serializer.
 	 *
-	 * @return IRecipeSerializer
+	 * @return RecipeSerializer
 	 */
 	@Override
 	public @NotNull RecipeSerializer<?> getSerializer() {
@@ -110,11 +103,11 @@ public record SmallPartsRecipe(ResourceLocation recipeId,
 	/**
 	 * Get the recipe type.
 	 *
-	 * @return IRecipeType
+	 * @return RecipeType
 	 */
 	@Override
 	public @NotNull RecipeType<?> getType() {
-		return CustomRecipeTypes.SMALL_PARTS;
+		return DeferredRegistryHandler.SMALL_PARTS_RECIPE_TYPE.get();
 	}
 
 	/**
@@ -129,7 +122,7 @@ public record SmallPartsRecipe(ResourceLocation recipeId,
 		return defaultedList;
 	}
 
-	public static class Serializer extends ForgeRegistryEntry<RecipeSerializer<?>> implements RecipeSerializer<SmallPartsRecipe> {
+	public static class Serializer implements RecipeSerializer<SmallPartsRecipe> {
 		/**
 		 * Serialize from JSON.
 		 *
@@ -184,7 +177,7 @@ public record SmallPartsRecipe(ResourceLocation recipeId,
 			recipe.material.toNetwork(buffer);
 			List<ResourceLocation> craftables = new ArrayList<>(recipe.craftables.size());
 			for (Item item : recipe.craftables) {
-				craftables.add(item.getRegistryName());
+				craftables.add(ForgeRegistries.ITEMS.getKey(item));
 			}
 			buffer.writeUtf(craftables.toString());
 		}

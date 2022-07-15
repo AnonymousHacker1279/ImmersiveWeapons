@@ -1,11 +1,6 @@
 {
   "type": "minecraft:crafting_shaped",
   "group": "warrior_statue",
-  "pattern": [
-    "aba",
-    "aaa",
-    "a a"
-  ],
   "key": {
     "a": {
       "item": "minecraft:stone"
@@ -14,6 +9,11 @@
       "item": "minecraft:ender_eye"
     }
   },
+  "pattern": [
+    "aba",
+    "aaa",
+    "a a"
+  ],
   "result": {
     "item": "immersiveweapons:warrior_statue_base"
   }

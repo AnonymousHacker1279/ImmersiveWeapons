@@ -22,7 +22,7 @@ public class BasicContainerItem extends Item {
 	 * @return boolean
 	 */
 	@Override
-	public boolean hasContainerItem(ItemStack stack) {
+	public boolean hasCraftingRemainingItem(ItemStack stack) {
 		return true;
 	}
 
@@ -33,7 +33,7 @@ public class BasicContainerItem extends Item {
 	 * @return ItemStack
 	 */
 	@Override
-	public ItemStack getContainerItem(ItemStack stack) {
+	public ItemStack getCraftingRemainingItem(ItemStack stack) {
 		return new ItemStack(asItem());
 	}
 }

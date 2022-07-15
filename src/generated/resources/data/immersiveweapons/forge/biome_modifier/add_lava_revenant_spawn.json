@@ -1,0 +1,10 @@
+{
+  "type": "forge:add_spawns",
+  "biomes": "#immersiveweapons:is_tiltros",
+  "spawners": {
+    "type": "immersiveweapons:lava_revenant",
+    "maxCount": 1,
+    "minCount": 1,
+    "weight": 35
+  }
+}

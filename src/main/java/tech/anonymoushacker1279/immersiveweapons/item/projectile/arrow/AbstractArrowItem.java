@@ -4,17 +4,16 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.entity.projectile.Arrow;
-import net.minecraft.world.item.*;
+import net.minecraft.world.item.ArrowItem;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.registries.RegistryObject;
 import org.jetbrains.annotations.NotNull;
 
 public abstract class AbstractArrowItem extends ArrowItem {
 
 	public double damage;
-	protected RegistryObject<? extends Item> ref;
 
 	/**
 	 * Constructor for AbstractArrowItem.
@@ -25,15 +24,6 @@ public abstract class AbstractArrowItem extends ArrowItem {
 	protected AbstractArrowItem(Properties properties, double damageIn) {
 		super(properties);
 		damage = damageIn;
-	}
-
-	/**
-	 * Set item references.
-	 *
-	 * @param refIn the <code>RegistryObject</code> reference, must extend Item
-	 */
-	public void setItemReference(RegistryObject<? extends Item> refIn) {
-		ref = refIn;
 	}
 
 	/**
@@ -57,12 +47,12 @@ public abstract class AbstractArrowItem extends ArrowItem {
 	 *
 	 * @param stack  the <code>ItemStack</code> being checked
 	 * @param bow    the <code>ItemStack</code> containing the bow that's firing
-	 * @param player the <code>PlayerEntity</code> firing the bow
+	 * @param player the <code>Player</code> firing the bow
 	 * @return boolean
 	 */
 	@Override
 	public boolean isInfinite(@NotNull ItemStack stack, @NotNull ItemStack bow, @NotNull Player player) {
-		int enchant = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.INFINITY_ARROWS, bow);
+		int enchant = EnchantmentHelper.getTagEnchantmentLevel(Enchantments.INFINITY_ARROWS, bow);
 		return enchant > 0;
 	}
 }

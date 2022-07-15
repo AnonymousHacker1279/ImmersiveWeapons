@@ -1,0 +1,56 @@
+{
+  "parent": "immersiveweapons:tesla_ingot",
+  "criteria": {
+    "hold": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "immersiveweapons:tesla_helmet"
+            ]
+          },
+          {
+            "items": [
+              "immersiveweapons:tesla_chestplate"
+            ]
+          },
+          {
+            "items": [
+              "immersiveweapons:tesla_leggings"
+            ]
+          },
+          {
+            "items": [
+              "immersiveweapons:tesla_boots"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.immersiveweapons.tesla_armor.description"
+    },
+    "frame": "goal",
+    "hidden": false,
+    "icon": {
+      "item": "immersiveweapons:tesla_helmet",
+      "nbt": "{Damage:0}"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.immersiveweapons.tesla_armor.title"
+    }
+  },
+  "requirements": [
+    [
+      "hold"
+    ]
+  ],
+  "rewards": {
+    "experience": 100
+  }
+}

@@ -1,10 +1,10 @@
 {
   "type": "minecraft:blasting",
+  "cookingtime": 100,
+  "experience": 0.8,
   "group": "cobalt",
   "ingredient": {
     "item": "immersiveweapons:deepslate_cobalt_ore"
   },
-  "result": "immersiveweapons:cobalt_ingot",
-  "experience": 0.8,
-  "cookingtime": 100
+  "result": "immersiveweapons:cobalt_ingot"
 }

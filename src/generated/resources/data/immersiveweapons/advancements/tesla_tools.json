@@ -1,0 +1,51 @@
+{
+  "parent": "immersiveweapons:tesla_ingot",
+  "criteria": {
+    "have_advancements": {
+      "conditions": {
+        "player": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "type_specific": {
+                "type": "player",
+                "advancements": {
+                  "immersiveweapons:tesla_axe": true,
+                  "immersiveweapons:tesla_hoe": true,
+                  "immersiveweapons:tesla_pickaxe": true,
+                  "immersiveweapons:tesla_shovel": true,
+                  "immersiveweapons:tesla_sword": true
+                }
+              }
+            }
+          }
+        ]
+      },
+      "trigger": "minecraft:location"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.immersiveweapons.tesla_tools.description"
+    },
+    "frame": "challenge",
+    "hidden": false,
+    "icon": {
+      "item": "immersiveweapons:tesla_block"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.immersiveweapons.tesla_tools.title"
+    }
+  },
+  "requirements": [
+    [
+      "have_advancements"
+    ]
+  ],
+  "rewards": {
+    "experience": 150
+  }
+}

@@ -1,5 +1,7 @@
 package tech.anonymoushacker1279.immersiveweapons.entity.projectile;
 
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.sounds.SoundSource;
@@ -15,6 +17,7 @@ import net.minecraftforge.network.*;
 import net.minecraftforge.network.NetworkEvent.Context;
 import org.jetbrains.annotations.NotNull;
 import tech.anonymoushacker1279.immersiveweapons.client.particle.smoke_grenade.SmokeGrenadeParticleOptions;
+import tech.anonymoushacker1279.immersiveweapons.config.ClientConfig;
 import tech.anonymoushacker1279.immersiveweapons.config.CommonConfig;
 import tech.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
 import tech.anonymoushacker1279.immersiveweapons.init.PacketHandler;
@@ -24,40 +27,38 @@ import java.util.function.Supplier;
 
 public class SmokeGrenadeEntity extends ThrowableItemProjectile {
 
-	private static final byte VANILLA_IMPACT_STATUS_ID = 3;
-	private static int color;
-	private final int configMaxParticles = CommonConfig.MAX_SMOKE_GRENADE_PARTICLES.get();
+	private int color;
 
 	/**
 	 * Constructor for SmokeBombEntity.
 	 *
 	 * @param entityType the <code>EntityType</code> instance; must extend SmokeGrenadeEntity
-	 * @param world      the <code>World</code> the entity is in
+	 * @param level      the <code>Level</code> the entity is in
 	 */
-	public SmokeGrenadeEntity(EntityType<? extends SmokeGrenadeEntity> entityType, Level world) {
-		super(entityType, world);
+	public SmokeGrenadeEntity(EntityType<? extends SmokeGrenadeEntity> entityType, Level level) {
+		super(entityType, level);
 	}
 
 	/**
 	 * Constructor for SmokeGrenadeEntity.
 	 *
-	 * @param world        the <code>World</code> the entity is in
+	 * @param level        the <code>Level</code> the entity is in
 	 * @param livingEntity the <code>LivingEntity</code> throwing the entity
 	 */
-	public SmokeGrenadeEntity(Level world, LivingEntity livingEntity) {
-		super(DeferredRegistryHandler.SMOKE_GRENADE_ENTITY.get(), livingEntity, world);
+	public SmokeGrenadeEntity(Level level, LivingEntity livingEntity) {
+		super(DeferredRegistryHandler.SMOKE_GRENADE_ENTITY.get(), livingEntity, level);
 	}
 
 	/**
 	 * Constructor for SmokeGrenadeEntity.
 	 *
-	 * @param world the <code>World</code> the entity is in
+	 * @param level the <code>Level</code> the entity is in
 	 * @param x     the X position
 	 * @param y     the Y position
 	 * @param z     the Z position
 	 */
-	public SmokeGrenadeEntity(Level world, double x, double y, double z) {
-		super(DeferredRegistryHandler.SMOKE_GRENADE_ENTITY.get(), x, y, z, world);
+	public SmokeGrenadeEntity(Level level, double x, double y, double z) {
+		super(DeferredRegistryHandler.SMOKE_GRENADE_ENTITY.get(), x, y, z, level);
 	}
 
 	/**
@@ -65,8 +66,29 @@ public class SmokeGrenadeEntity extends ThrowableItemProjectile {
 	 *
 	 * @param color a color ID
 	 */
-	public static void setColor(int color) {
-		SmokeGrenadeEntity.color = color;
+	public void setColor(int color) {
+		this.color = color;
+	}
+
+	public static void runOnClientImpact(double x, double y, double z, int color, ClientLevel level) {
+		int particles = CommonConfig.FORCE_SMOKE_GRENADE_PARTICLES.get() == -1
+				? ClientConfig.SMOKE_GRENADE_PARTICLES.get()
+				: CommonConfig.FORCE_SMOKE_GRENADE_PARTICLES.get();
+
+		if (ClientConfig.FANCY_SMOKE_GRENADE_PARTICLES.get()) {
+			particles *= 3;
+		}
+
+		for (int i = 0; i < particles; ++i) {
+			level.addParticle(SmokeGrenadeParticleOptions.getParticleByColor(color),
+					true, x, y, z,
+					GeneralUtilities.getRandomNumber(-0.1d, 0.1d),
+					GeneralUtilities.getRandomNumber(-0.1d, 0.1d),
+					GeneralUtilities.getRandomNumber(-0.1d, 0.1d));
+		}
+
+		level.playLocalSound(x, y, z, DeferredRegistryHandler.SMOKE_GRENADE_HISS.get(),
+				SoundSource.NEUTRAL, 0.2f, 0.6f, true);
 	}
 
 	/**
@@ -93,51 +115,21 @@ public class SmokeGrenadeEntity extends ThrowableItemProjectile {
 	/**
 	 * Runs when an entity/block is hit.
 	 *
-	 * @param rayTraceResult the <code>RayTraceResult</code> instance
+	 * @param hitResult the <code>HitResult</code> instance
 	 */
 	@Override
-	protected void onHit(@NotNull HitResult rayTraceResult) {
-		super.onHit(rayTraceResult);
+	protected void onHit(@NotNull HitResult hitResult) {
+		super.onHit(hitResult);
 		if (!level.isClientSide) {
-			// Inform the client of the smoke bomb color
+			// Inform the client of the smoke grenade color
 			PacketHandler.INSTANCE.send(PacketDistributor.TRACKING_CHUNK.with(() -> level.getChunkAt(blockPosition())),
-					new SmokeGrenadeEntityPacketHandler(color));
+					new SmokeGrenadeEntityPacketHandler(getX(), getY(), getZ(), color));
 
-			level.broadcastEntityEvent(this, VANILLA_IMPACT_STATUS_ID);
-			kill();
 		}
+		kill();
 	}
 
-	/**
-	 * Handle entity events.
-	 *
-	 * @param statusID the <code>byte</code> containing status ID
-	 */
-	@Override
-	public void handleEntityEvent(byte statusID) {
-		if (statusID == VANILLA_IMPACT_STATUS_ID) {
-			double x = getX();
-			double y = getY();
-			double z = getZ();
-
-			// Spawn smoke particles
-			for (int i = 0; i < configMaxParticles; ++i) {
-				level.addParticle(SmokeGrenadeParticleOptions.getParticleByColor(color),
-						true, x, y, z,
-						GeneralUtilities.getRandomNumber(-0.1d, 0.1d),
-						GeneralUtilities.getRandomNumber(-0.1d, 0.1d),
-						GeneralUtilities.getRandomNumber(-0.1d, 0.1d));
-			}
-
-			// Play a hissing sound
-			level.playLocalSound(x, y, z, DeferredRegistryHandler.SMOKE_GRENADE_HISS.get(),
-					SoundSource.NEUTRAL, 0.2f, 0.6f, true);
-
-			kill();
-		}
-	}
-
-	public record SmokeGrenadeEntityPacketHandler(int color) {
+	public record SmokeGrenadeEntityPacketHandler(double x, double y, double z, int color) {
 
 		/**
 		 * Constructor for SmokeGrenadeEntityPacketHandler.
@@ -154,7 +146,7 @@ public class SmokeGrenadeEntity extends ThrowableItemProjectile {
 		 * @param packetBuffer the <code>PacketBuffer</code> containing packet data
 		 */
 		public static void encode(SmokeGrenadeEntityPacketHandler msg, FriendlyByteBuf packetBuffer) {
-			packetBuffer.writeInt(msg.color);
+			packetBuffer.writeDouble(msg.x).writeDouble(msg.y).writeDouble(msg.z).writeInt(msg.color);
 		}
 
 		/**
@@ -164,7 +156,7 @@ public class SmokeGrenadeEntity extends ThrowableItemProjectile {
 		 * @return SmokeGrenadeEntityPacketHandler
 		 */
 		public static SmokeGrenadeEntityPacketHandler decode(FriendlyByteBuf packetBuffer) {
-			return new SmokeGrenadeEntityPacketHandler(packetBuffer.readInt());
+			return new SmokeGrenadeEntityPacketHandler(packetBuffer.readDouble(), packetBuffer.readDouble(), packetBuffer.readDouble(), packetBuffer.readInt());
 		}
 
 		/**
@@ -185,7 +177,11 @@ public class SmokeGrenadeEntity extends ThrowableItemProjectile {
 		 * @param msg the <code>SmokeGrenadeEntityPacketHandler</code> message being sent
 		 */
 		private static void handleOnClient(SmokeGrenadeEntityPacketHandler msg) {
-			SmokeGrenadeEntity.setColor(msg.color);
+			ClientLevel level = Minecraft.getInstance().level;
+
+			if (level != null) {
+				runOnClientImpact(msg.x, msg.y, msg.z, msg.color, level);
+			}
 		}
 	}
 }

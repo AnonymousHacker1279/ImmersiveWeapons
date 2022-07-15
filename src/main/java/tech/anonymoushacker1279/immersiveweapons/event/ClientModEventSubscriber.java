@@ -1,10 +1,10 @@
 package tech.anonymoushacker1279.immersiveweapons.event;
 
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.model.SkullModel;
 import net.minecraft.client.model.geom.ModelLayerLocation;
-import net.minecraft.client.renderer.*;
+import net.minecraft.client.renderer.BiomeColors;
+import net.minecraft.client.renderer.Sheets;
 import net.minecraft.client.renderer.blockentity.SignRenderer;
 import net.minecraft.client.renderer.blockentity.SkullBlockRenderer;
 import net.minecraft.client.renderer.entity.ThrownItemRenderer;
@@ -14,9 +14,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.GrassColor;
 import net.minecraft.world.level.ItemLike;
 import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.client.ClientRegistry;
-import net.minecraftforge.client.event.EntityRenderersEvent;
-import net.minecraftforge.client.event.ParticleFactoryRegisterEvent;
+import net.minecraftforge.client.event.*;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
@@ -47,8 +45,6 @@ import java.util.Objects;
 @EventBusSubscriber(modid = ImmersiveWeapons.MOD_ID, bus = Bus.MOD, value = Dist.CLIENT)
 public class ClientModEventSubscriber {
 
-	private static final Minecraft mc = Minecraft.getInstance();
-
 	private static final ModelLayerLocation MINUTEMAN_HEAD_LAYER = new ModelLayerLocation(
 			DeferredRegistryHandler.MINUTEMAN_HEAD.getId(), "main");
 	private static final ModelLayerLocation FIELD_MEDIC_HEAD_LAYER = new ModelLayerLocation(
@@ -73,59 +69,6 @@ public class ClientModEventSubscriber {
 		MenuScreens.register(DeferredRegistryHandler.SMALL_PARTS_TABLE_CONTAINER.get(), SmallPartsTableScreen::new);
 		MenuScreens.register(DeferredRegistryHandler.TESLA_SYNTHESIZER_CONTAINER.get(), TeslaSynthesizerScreen::new);
 
-		// Register key binds
-		ClientRegistry.registerKeyBinding(IWKeyBinds.TOGGLE_ARMOR_EFFECT);
-
-		// Register block renderers
-		ItemBlockRenderTypes.setRenderLayer(DeferredRegistryHandler.BULLETPROOF_GLASS.get(), RenderType.cutoutMipped());
-		ItemBlockRenderTypes.setRenderLayer(DeferredRegistryHandler.WHITE_STAINED_BULLETPROOF_GLASS.get(), RenderType.translucent());
-		ItemBlockRenderTypes.setRenderLayer(DeferredRegistryHandler.LIGHT_GRAY_STAINED_BULLETPROOF_GLASS.get(), RenderType.translucent());
-		ItemBlockRenderTypes.setRenderLayer(DeferredRegistryHandler.GRAY_STAINED_BULLETPROOF_GLASS.get(), RenderType.translucent());
-		ItemBlockRenderTypes.setRenderLayer(DeferredRegistryHandler.BLACK_STAINED_BULLETPROOF_GLASS.get(), RenderType.translucent());
-		ItemBlockRenderTypes.setRenderLayer(DeferredRegistryHandler.ORANGE_STAINED_BULLETPROOF_GLASS.get(), RenderType.translucent());
-		ItemBlockRenderTypes.setRenderLayer(DeferredRegistryHandler.MAGENTA_STAINED_BULLETPROOF_GLASS.get(), RenderType.translucent());
-		ItemBlockRenderTypes.setRenderLayer(DeferredRegistryHandler.LIGHT_BLUE_STAINED_BULLETPROOF_GLASS.get(), RenderType.translucent());
-		ItemBlockRenderTypes.setRenderLayer(DeferredRegistryHandler.YELLOW_STAINED_BULLETPROOF_GLASS.get(), RenderType.translucent());
-		ItemBlockRenderTypes.setRenderLayer(DeferredRegistryHandler.LIME_STAINED_BULLETPROOF_GLASS.get(), RenderType.translucent());
-		ItemBlockRenderTypes.setRenderLayer(DeferredRegistryHandler.PINK_STAINED_BULLETPROOF_GLASS.get(), RenderType.translucent());
-		ItemBlockRenderTypes.setRenderLayer(DeferredRegistryHandler.CYAN_STAINED_BULLETPROOF_GLASS.get(), RenderType.translucent());
-		ItemBlockRenderTypes.setRenderLayer(DeferredRegistryHandler.PURPLE_STAINED_BULLETPROOF_GLASS.get(), RenderType.translucent());
-		ItemBlockRenderTypes.setRenderLayer(DeferredRegistryHandler.BLUE_STAINED_BULLETPROOF_GLASS.get(), RenderType.translucent());
-		ItemBlockRenderTypes.setRenderLayer(DeferredRegistryHandler.BROWN_STAINED_BULLETPROOF_GLASS.get(), RenderType.translucent());
-		ItemBlockRenderTypes.setRenderLayer(DeferredRegistryHandler.GREEN_STAINED_BULLETPROOF_GLASS.get(), RenderType.translucent());
-		ItemBlockRenderTypes.setRenderLayer(DeferredRegistryHandler.RED_STAINED_BULLETPROOF_GLASS.get(), RenderType.translucent());
-		ItemBlockRenderTypes.setRenderLayer(DeferredRegistryHandler.CORRUGATED_IRON_PANEL_BARS.get(), RenderType.cutoutMipped());
-		ItemBlockRenderTypes.setRenderLayer(DeferredRegistryHandler.TESLA_SYNTHESIZER.get(), RenderType.translucent());
-		ItemBlockRenderTypes.setRenderLayer(DeferredRegistryHandler.CLOUD.get(), RenderType.translucent());
-		ItemBlockRenderTypes.setRenderLayer(DeferredRegistryHandler.BURNED_OAK_BRANCH.get(), RenderType.cutoutMipped());
-		ItemBlockRenderTypes.setRenderLayer(DeferredRegistryHandler.BURNED_OAK_DOOR.get(), RenderType.cutoutMipped());
-		ItemBlockRenderTypes.setRenderLayer(DeferredRegistryHandler.BURNED_OAK_TRAPDOOR.get(), RenderType.cutoutMipped());
-		ItemBlockRenderTypes.setRenderLayer(DeferredRegistryHandler.AZUL_STAINED_ORCHID.get(), RenderType.cutoutMipped());
-		ItemBlockRenderTypes.setRenderLayer(DeferredRegistryHandler.CELESTIAL_LANTERN.get(), RenderType.cutoutMipped());
-		ItemBlockRenderTypes.setRenderLayer(DeferredRegistryHandler.COBALT_ORE.get(), RenderType.cutoutMipped());
-		ItemBlockRenderTypes.setRenderLayer(DeferredRegistryHandler.DEEPSLATE_COBALT_ORE.get(), RenderType.cutoutMipped());
-		ItemBlockRenderTypes.setRenderLayer(DeferredRegistryHandler.SULFUR_ORE.get(), RenderType.translucent());
-		ItemBlockRenderTypes.setRenderLayer(DeferredRegistryHandler.DEEPSLATE_SULFUR_ORE.get(), RenderType.translucent());
-		ItemBlockRenderTypes.setRenderLayer(DeferredRegistryHandler.NETHER_SULFUR_ORE.get(), RenderType.translucent());
-		ItemBlockRenderTypes.setRenderLayer(DeferredRegistryHandler.ELECTRIC_ORE.get(), RenderType.translucent());
-		ItemBlockRenderTypes.setRenderLayer(DeferredRegistryHandler.MOLTEN_ORE.get(), RenderType.translucent());
-		ItemBlockRenderTypes.setRenderLayer(DeferredRegistryHandler.OAK_TABLE.get(), RenderType.translucent());
-		ItemBlockRenderTypes.setRenderLayer(DeferredRegistryHandler.SPRUCE_TABLE.get(), RenderType.translucent());
-		ItemBlockRenderTypes.setRenderLayer(DeferredRegistryHandler.BIRCH_TABLE.get(), RenderType.translucent());
-		ItemBlockRenderTypes.setRenderLayer(DeferredRegistryHandler.JUNGLE_TABLE.get(), RenderType.translucent());
-		ItemBlockRenderTypes.setRenderLayer(DeferredRegistryHandler.ACACIA_TABLE.get(), RenderType.translucent());
-		ItemBlockRenderTypes.setRenderLayer(DeferredRegistryHandler.DARK_OAK_TABLE.get(), RenderType.translucent());
-		ItemBlockRenderTypes.setRenderLayer(DeferredRegistryHandler.CRIMSON_TABLE.get(), RenderType.translucent());
-		ItemBlockRenderTypes.setRenderLayer(DeferredRegistryHandler.WARPED_TABLE.get(), RenderType.translucent());
-		ItemBlockRenderTypes.setRenderLayer(DeferredRegistryHandler.BURNED_OAK_TABLE.get(), RenderType.translucent());
-
-		mc.getBlockColors().register((color1, color2, color3, color4) -> BiomeColors.
-						getAverageGrassColor(Objects.requireNonNull(color2), Objects.requireNonNull(color3)),
-				DeferredRegistryHandler.PITFALL.get());
-
-		mc.getItemColors().register((color1, color2) -> GrassColor.get(0.5d, 1.0d),
-				DeferredRegistryHandler.PITFALL_ITEM.get());
-
 		event.enqueueWork(() -> {
 			SkullBlockRenderer.SKIN_BY_TYPE.put(CustomSkullTypes.MINUTEMAN, new ResourceLocation(ImmersiveWeapons.MOD_ID,
 					"textures/entity/minuteman.png"));
@@ -142,9 +85,6 @@ public class ClientModEventSubscriber {
 		});
 
 		event.enqueueWork(ClientModEventSubscriber::registerPropertyGetters);
-
-		DimensionSpecialEffects.EFFECTS.put(new ResourceLocation(ImmersiveWeapons.MOD_ID, "tiltros"),
-				new TiltrosDimensionSpecialEffects());
 
 		IWOverlays.init();
 	}
@@ -203,7 +143,8 @@ public class ClientModEventSubscriber {
 		event.registerEntityRenderer(DeferredRegistryHandler.WANDERING_WARRIOR_ENTITY.get(), WanderingWarriorRenderer::new);
 		event.registerEntityRenderer(DeferredRegistryHandler.HANS_ENTITY.get(), HansRenderer::new);
 		event.registerEntityRenderer(DeferredRegistryHandler.CHAIR_ENTITY.get(), ChairRenderer::new);
-		event.registerEntityRenderer(DeferredRegistryHandler.BURNED_OAK_BOAT_ENTITY.get(), BurnedOakBoatRenderer::new);
+		event.registerEntityRenderer(DeferredRegistryHandler.BURNED_OAK_BOAT_ENTITY.get(), context -> new BurnedOakBoatRenderer(context, false));
+		event.registerEntityRenderer(DeferredRegistryHandler.BURNED_OAK_CHEST_BOAT_ENTITY.get(), context -> new BurnedOakBoatRenderer(context, true));
 		event.registerEntityRenderer(DeferredRegistryHandler.MUD_BALL_ENTITY.get(), ThrownItemRenderer::new);
 		event.registerEntityRenderer(DeferredRegistryHandler.LAVA_REVENANT_ENTITY.get(), LavaRevenantRenderer::new);
 		event.registerEntityRenderer(DeferredRegistryHandler.ROCK_SPIDER_ENTITY.get(), RockSpiderRenderer::new);
@@ -236,13 +177,13 @@ public class ClientModEventSubscriber {
 	 * @param event the <code>ParticleFactoryRegisterEvent</code> instance
 	 */
 	@SubscribeEvent
-	public static void registerParticleFactories(ParticleFactoryRegisterEvent event) {
+	public static void registerParticleFactories(RegisterParticleProvidersEvent event) {
 		ImmersiveWeapons.LOGGER.info("Registering particle factories");
 
-		mc.particleEngine.register(DeferredRegistryHandler.SMOKE_GRENADE_PARTICLE.get(), SmokeGrenadeParticle.Provider::new);
-		mc.particleEngine.register(DeferredRegistryHandler.BLOOD_PARTICLE.get(), BloodParticle.Provider::new);
-		mc.particleEngine.register(DeferredRegistryHandler.BULLET_IMPACT_PARTICLE.get(), BulletImpactParticle.Provider::new);
-		mc.particleEngine.register(DeferredRegistryHandler.MUZZLE_FLASH_PARTICLE.get(), MuzzleFlashParticle.Provider::new);
+		event.register(DeferredRegistryHandler.SMOKE_GRENADE_PARTICLE.get(), SmokeGrenadeParticle.Provider::new);
+		event.register(DeferredRegistryHandler.BLOOD_PARTICLE.get(), BloodParticle.Provider::new);
+		event.register(DeferredRegistryHandler.BULLET_IMPACT_PARTICLE.get(), BulletImpactParticle.Provider::new);
+		event.register(DeferredRegistryHandler.MUZZLE_FLASH_PARTICLE.get(), MuzzleFlashParticle.Provider::new);
 	}
 
 	@SubscribeEvent
@@ -257,6 +198,38 @@ public class ClientModEventSubscriber {
 				.bakeLayer(WANDERING_WARRIOR_HEAD_LAYER)));
 		event.registerSkullModel(CustomSkullTypes.HANS, new SkullModel(event.getEntityModelSet()
 				.bakeLayer(HANS_HEAD_LAYER)));
+	}
+
+	@SubscribeEvent
+	public static void registerKeyBinds(RegisterKeyMappingsEvent event) {
+		ImmersiveWeapons.LOGGER.info("Registering key bindings");
+
+		event.register(IWKeyBinds.TOGGLE_ARMOR_EFFECT);
+	}
+
+	@SubscribeEvent
+	public static void registerDimensionSpecialEffects(RegisterDimensionSpecialEffectsEvent event) {
+		ImmersiveWeapons.LOGGER.info("Registering dimension special effects");
+
+		event.register(new ResourceLocation(ImmersiveWeapons.MOD_ID, "tiltros"),
+				new TiltrosDimensionSpecialEffects());
+	}
+
+	@SubscribeEvent
+	public static void registerItemColorHandlers(RegisterColorHandlersEvent.Item event) {
+		ImmersiveWeapons.LOGGER.info("Registering item color handlers");
+
+		event.register((color1, color2) -> GrassColor.get(0.5d, 1.0d),
+				DeferredRegistryHandler.PITFALL_ITEM.get());
+	}
+
+	@SubscribeEvent
+	public static void registerBlockColorHandlers(RegisterColorHandlersEvent.Block event) {
+		ImmersiveWeapons.LOGGER.info("Registering block color handlers");
+
+		event.register((color1, color2, color3, color4) -> BiomeColors
+						.getAverageGrassColor(Objects.requireNonNull(color2), Objects.requireNonNull(color3)),
+				DeferredRegistryHandler.PITFALL.get());
 	}
 
 	private static void registerPropertyGetters() {

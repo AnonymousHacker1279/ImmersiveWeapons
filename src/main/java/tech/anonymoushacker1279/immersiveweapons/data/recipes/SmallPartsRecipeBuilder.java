@@ -9,7 +9,9 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.NotNull;
+import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
 
 import javax.annotation.Nullable;
@@ -49,7 +51,7 @@ public class SmallPartsRecipeBuilder {
 				.rewards(AdvancementRewards.Builder.recipe(id)).requirements(RequirementsStrategy.OR);
 		pFinishedRecipeConsumer.accept(new SmallPartsRecipeBuilder.Result(id,
 				type, material, craftables, advancement,
-				new ResourceLocation(id.getNamespace(), "recipes/" + id.getPath())));
+				new ResourceLocation(id.getNamespace(), "recipes/" + ImmersiveWeapons.MOD_ID + "/" + id.getPath())));
 	}
 
 	private void ensureValid(ResourceLocation pId) {
@@ -83,7 +85,7 @@ public class SmallPartsRecipeBuilder {
 			JsonArray resultArray = new JsonArray();
 
 			for (Item item : craftables) {
-				resultArray.add(String.valueOf(item.getRegistryName()));
+				resultArray.add(String.valueOf(ForgeRegistries.ITEMS.getKey(item)));
 			}
 
 			json.add("craftables", resultArray);

@@ -1,0 +1,94 @@
+{
+  "variants": {
+    "facing=east,loaded=false,rotation=0": {
+      "model": "immersiveweapons:block/mortar_0_unloaded",
+      "y": 270
+    },
+    "facing=east,loaded=false,rotation=1": {
+      "model": "immersiveweapons:block/mortar_1_unloaded",
+      "y": 270
+    },
+    "facing=east,loaded=false,rotation=2": {
+      "model": "immersiveweapons:block/mortar_2_unloaded",
+      "y": 270
+    },
+    "facing=east,loaded=true,rotation=0": {
+      "model": "immersiveweapons:block/mortar_0_loaded",
+      "y": 270
+    },
+    "facing=east,loaded=true,rotation=1": {
+      "model": "immersiveweapons:block/mortar_1_loaded",
+      "y": 270
+    },
+    "facing=east,loaded=true,rotation=2": {
+      "model": "immersiveweapons:block/mortar_2_loaded",
+      "y": 270
+    },
+    "facing=north,loaded=false,rotation=0": {
+      "model": "immersiveweapons:block/mortar_0_unloaded",
+      "y": 180
+    },
+    "facing=north,loaded=false,rotation=1": {
+      "model": "immersiveweapons:block/mortar_1_unloaded",
+      "y": 180
+    },
+    "facing=north,loaded=false,rotation=2": {
+      "model": "immersiveweapons:block/mortar_2_unloaded",
+      "y": 180
+    },
+    "facing=north,loaded=true,rotation=0": {
+      "model": "immersiveweapons:block/mortar_0_loaded",
+      "y": 180
+    },
+    "facing=north,loaded=true,rotation=1": {
+      "model": "immersiveweapons:block/mortar_1_loaded",
+      "y": 180
+    },
+    "facing=north,loaded=true,rotation=2": {
+      "model": "immersiveweapons:block/mortar_2_loaded",
+      "y": 180
+    },
+    "facing=south,loaded=false,rotation=0": {
+      "model": "immersiveweapons:block/mortar_0_unloaded"
+    },
+    "facing=south,loaded=false,rotation=1": {
+      "model": "immersiveweapons:block/mortar_1_unloaded"
+    },
+    "facing=south,loaded=false,rotation=2": {
+      "model": "immersiveweapons:block/mortar_2_unloaded"
+    },
+    "facing=south,loaded=true,rotation=0": {
+      "model": "immersiveweapons:block/mortar_0_loaded"
+    },
+    "facing=south,loaded=true,rotation=1": {
+      "model": "immersiveweapons:block/mortar_1_loaded"
+    },
+    "facing=south,loaded=true,rotation=2": {
+      "model": "immersiveweapons:block/mortar_2_loaded"
+    },
+    "facing=west,loaded=false,rotation=0": {
+      "model": "immersiveweapons:block/mortar_0_unloaded",
+      "y": 90
+    },
+    "facing=west,loaded=false,rotation=1": {
+      "model": "immersiveweapons:block/mortar_1_unloaded",
+      "y": 90
+    },
+    "facing=west,loaded=false,rotation=2": {
+      "model": "immersiveweapons:block/mortar_2_unloaded",
+      "y": 90
+    },
+    "facing=west,loaded=true,rotation=0": {
+      "model": "immersiveweapons:block/mortar_0_loaded",
+      "y": 90
+    },
+    "facing=west,loaded=true,rotation=1": {
+      "model": "immersiveweapons:block/mortar_1_loaded",
+      "y": 90
+    },
+    "facing=west,loaded=true,rotation=2": {
+      "model": "immersiveweapons:block/mortar_2_loaded",
+      "y": 90
+    }
+  }
+}

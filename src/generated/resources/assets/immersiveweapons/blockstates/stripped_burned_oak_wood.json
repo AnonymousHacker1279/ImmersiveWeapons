@@ -1,7 +1,7 @@
 {
   "variants": {
     "axis=x": {
-      "model": "immersiveweapons:block/stripped_burned_oak_wood",
+      "model": "immersiveweapons:block/stripped_burned_oak_wood_horizontal",
       "x": 90,
       "y": 90
     },
@@ -9,7 +9,7 @@
       "model": "immersiveweapons:block/stripped_burned_oak_wood"
     },
     "axis=z": {
-      "model": "immersiveweapons:block/stripped_burned_oak_wood",
+      "model": "immersiveweapons:block/stripped_burned_oak_wood_horizontal",
       "x": 90
     }
   }

@@ -1,11 +1,6 @@
 {
   "type": "minecraft:crafting_shaped",
   "group": "iron",
-  "pattern": [
-    " a ",
-    " b ",
-    " c "
-  ],
   "key": {
     "a": {
       "tag": "forge:ingots/iron"
@@ -17,8 +12,13 @@
       "item": "minecraft:feather"
     }
   },
+  "pattern": [
+    " a ",
+    " b ",
+    " c "
+  ],
   "result": {
-    "item": "immersiveweapons:iron_arrow",
-    "count": 4
+    "count": 4,
+    "item": "immersiveweapons:iron_arrow"
   }
 }

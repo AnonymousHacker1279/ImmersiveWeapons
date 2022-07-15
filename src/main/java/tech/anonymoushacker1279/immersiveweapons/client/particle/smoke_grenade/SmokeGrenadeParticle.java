@@ -5,6 +5,7 @@ import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.particle.*;
 import net.minecraft.util.Mth;
 import org.jetbrains.annotations.NotNull;
+import tech.anonymoushacker1279.immersiveweapons.config.ClientConfig;
 
 public class SmokeGrenadeParticle extends TextureSheetParticle {
 
@@ -31,22 +32,23 @@ public class SmokeGrenadeParticle extends TextureSheetParticle {
 
 		super(level, x, y, z, 0.0D, 0.0D, 0.0D);
 		friction = 0.96F;
-		gravity = (float) 0.005;
+		gravity = ClientConfig.FANCY_SMOKE_GRENADE_PARTICLES.get() ? 0.02F : 0.05F;
 		speedUpWhenYMotionIsBlocked = true;
 		sprites = spriteSet;
-		xd *= (float) 1.0;
-		yd *= (float) 1.0;
-		zd *= (float) 1.0;
-		xd += xSpeed;
-		yd += ySpeed;
-		zd += zSpeed;
-		float vibrancyModifier = level.random.nextFloat() * 0.4f + 0.6f;
+		xd *= 1.0F;
+		yd *= 1.0F;
+		zd *= 1.0F;
+		xd += ClientConfig.FANCY_SMOKE_GRENADE_PARTICLES.get() ? xSpeed * 0.4f : xSpeed;
+		yd += ClientConfig.FANCY_SMOKE_GRENADE_PARTICLES.get() ? ySpeed * 0.4f : ySpeed;
+		zd += ClientConfig.FANCY_SMOKE_GRENADE_PARTICLES.get() ? zSpeed * 0.4f : zSpeed;
+		float vibrancyModifier = level.random.nextFloat() * 0.4F + 0.6F;
 		rCol = randomizeColor(color.x(), vibrancyModifier);
 		gCol = randomizeColor(color.y(), vibrancyModifier);
 		bCol = randomizeColor(color.z(), vibrancyModifier);
-		quadSize *= 0.75F * (float) 35.0;
+		alpha = ClientConfig.FANCY_SMOKE_GRENADE_PARTICLES.get() ? 0.97F : 1.0F;
+		quadSize *= 0.75F * 35.0F;
 		lifetime = (int) ((double) 90 / ((double) level.random.nextFloat() * 0.8D + 0.2D));
-		lifetime = (int) ((float) lifetime * ((float) 35.0 * 0.1));
+		lifetime = (int) ((float) lifetime * (35.0F * 0.1F));
 		lifetime = Math.max(lifetime, 1);
 		setSpriteFromAge(spriteSet);
 		hasPhysics = true;
@@ -63,7 +65,13 @@ public class SmokeGrenadeParticle extends TextureSheetParticle {
 
 	@Override
 	public float getQuadSize(float pScaleFactor) {
-		return quadSize * Mth.clamp(((float) age + pScaleFactor) / (float) lifetime * 32.0F, 0.0F, 1.0F);
+		float size = quadSize * Mth.clamp(((float) age + pScaleFactor) / (float) lifetime * 32.0F, 0.0F, 1.0F);
+
+		if (ClientConfig.FANCY_SMOKE_GRENADE_PARTICLES.get()) {
+			size *= 0.66F;
+		}
+
+		return size;
 	}
 
 	@Override

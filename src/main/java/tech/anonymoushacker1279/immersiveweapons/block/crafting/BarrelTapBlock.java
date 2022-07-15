@@ -4,7 +4,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.*;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
@@ -22,6 +21,9 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.NotNull;
 import tech.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
+import tech.anonymoushacker1279.immersiveweapons.item.crafting.BarrelTapRecipe;
+
+import java.util.List;
 
 public class BarrelTapBlock extends HorizontalDirectionalBlock implements SimpleWaterloggedBlock {
 
@@ -59,14 +61,14 @@ public class BarrelTapBlock extends HorizontalDirectionalBlock implements Simple
 	 * Set the shape of the block.
 	 *
 	 * @param state            the <code>BlockState</code> of the block
-	 * @param reader           the <code>IBlockReader</code> for the block
+	 * @param getter           the <code>BlockGetter</code> for the block
 	 * @param pos              the <code>BlockPos</code> the block is at
-	 * @param selectionContext the <code>ISelectionContext</code> of the block
+	 * @param collisionContext the <code>CollisionContext</code> of the block
 	 * @return VoxelShape
 	 */
 	@SuppressWarnings("deprecation")
 	@Override
-	public @NotNull VoxelShape getShape(BlockState state, @NotNull BlockGetter reader, @NotNull BlockPos pos, @NotNull CollisionContext selectionContext) {
+	public @NotNull VoxelShape getShape(BlockState state, @NotNull BlockGetter getter, @NotNull BlockPos pos, @NotNull CollisionContext collisionContext) {
 		return switch (state.getValue(FACING)) {
 			case SOUTH -> SHAPE_NORTH;
 			case EAST -> SHAPE_EAST;
@@ -78,7 +80,7 @@ public class BarrelTapBlock extends HorizontalDirectionalBlock implements Simple
 	/**
 	 * Create the BlockState definition.
 	 *
-	 * @param builder the <code>StateContainer.Builder</code> of the block
+	 * @param builder the <code>StateDefinition.Builder</code> of the block
 	 */
 	@Override
 	public void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
@@ -89,7 +91,7 @@ public class BarrelTapBlock extends HorizontalDirectionalBlock implements Simple
 	 * Set placement properties.
 	 * Sets the facing direction of the block for placement.
 	 *
-	 * @param context the <code>BlockItemUseContext</code> during placement
+	 * @param context the <code>BlockPlaceContext</code> during placement
 	 * @return BlockState
 	 */
 	@Override
@@ -101,21 +103,24 @@ public class BarrelTapBlock extends HorizontalDirectionalBlock implements Simple
 	 * Runs when the block is activated.
 	 * Allows the block to respond to user interaction.
 	 *
-	 * @param state               the <code>BlockState</code> of the block
-	 * @param worldIn             the <code>World</code> the block is in
-	 * @param pos                 the <code>BlockPos</code> the block is at
-	 * @param player              the <code>PlayerEntity</code> interacting with the block
-	 * @param handIn              the <code>Hand</code> the PlayerEntity used
-	 * @param blockRayTraceResult the <code>BlockRayTraceResult</code> of the interaction
+	 * @param state     the <code>BlockState</code> of the block
+	 * @param level     the <code>Level</code> the block is in
+	 * @param pos       the <code>BlockPos</code> the block is at
+	 * @param player    the <code>Player</code> interacting with the block
+	 * @param hand      the <code>InteractionHand</code> the PlayerEntity used
+	 * @param hitResult the <code>BlockHitResult</code> of the interaction
 	 * @return ActionResultType
 	 */
 	@SuppressWarnings("deprecation")
 	@Override
-	public @NotNull InteractionResult use(@NotNull BlockState state, Level worldIn, BlockPos pos, @NotNull Player player, @NotNull InteractionHand handIn, @NotNull BlockHitResult blockRayTraceResult) {
-		BlockState blockStateNorth = worldIn.getBlockState(pos.north());
-		BlockState blockStateSouth = worldIn.getBlockState(pos.south());
-		BlockState blockStateEast = worldIn.getBlockState(pos.east());
-		BlockState blockStateWest = worldIn.getBlockState(pos.west());
+	public @NotNull InteractionResult use(@NotNull BlockState state, Level level, BlockPos pos,
+	                                      @NotNull Player player, @NotNull InteractionHand hand,
+	                                      @NotNull BlockHitResult hitResult) {
+
+		BlockState blockStateNorth = level.getBlockState(pos.north());
+		BlockState blockStateSouth = level.getBlockState(pos.south());
+		BlockState blockStateEast = level.getBlockState(pos.east());
+		BlockState blockStateWest = level.getBlockState(pos.west());
 
 		if (blockStateNorth.is(Blocks.BARREL)) {
 			directionToUse = "north";
@@ -127,53 +132,39 @@ public class BarrelTapBlock extends HorizontalDirectionalBlock implements Simple
 			directionToUse = "west";
 		}
 
-		if (worldIn.isClientSide) {
+		if (level.isClientSide) {
 			return InteractionResult.SUCCESS;
 		} else {
 			if (blockStateNorth.is(Blocks.BARREL) || blockStateSouth.is(Blocks.BARREL) || blockStateEast.is(Blocks.BARREL) || blockStateWest.is(Blocks.BARREL)) {
 
-				BlockEntity tileEntity = switch (directionToUse) {
-					case "south" -> worldIn.getBlockEntity(pos.south());
-					case "east" -> worldIn.getBlockEntity(pos.east());
-					case "west" -> worldIn.getBlockEntity(pos.west());
-					default -> worldIn.getBlockEntity(pos.north());
+				BlockEntity blockEntity = switch (directionToUse) {
+					case "south" -> level.getBlockEntity(pos.south());
+					case "east" -> level.getBlockEntity(pos.east());
+					case "west" -> level.getBlockEntity(pos.west());
+					default -> level.getBlockEntity(pos.north());
 				};
 
-				ItemStack itemStack;
+				if (blockEntity != null) {
+					if (player.getMainHandItem().getItem() == Items.GLASS_BOTTLE) {
+						Container container = ((Container) blockEntity);
+						List<BarrelTapRecipe> recipes = level.getRecipeManager()
+								.getAllRecipesFor(DeferredRegistryHandler.BARREL_TAP_RECIPE_TYPE.get());
 
-				if (tileEntity != null) {
-					for (int i = 0; i < ((Container) tileEntity).getContainerSize(); ++i) {
-						itemStack = ((Container) tileEntity).getItem(i);
-
-						// Define the various recipes
-						// They will be checked in order, so items higher in the list
-						// will be made before lower items
-
-						// Bottle of Alcohol
-						if (itemStack.getItem() == Items.WHEAT && itemStack.getCount() >= 16) {
-							if (player.getMainHandItem().getItem() == Items.GLASS_BOTTLE) {
-								player.addItem(new ItemStack(DeferredRegistryHandler.BOTTLE_OF_ALCOHOL.get()));
-								itemStack.shrink(16);
-								if (!player.isCreative()) {
-									player.getMainHandItem().shrink(1);
+						for (BarrelTapRecipe recipe : recipes) {
+							for (int i = 0; i < container.getContainerSize(); ++i) {
+								if (recipe.material().test(container.getItem(i))) {
+									if (container.getItem(i).getCount() >= recipe.getMaterialCount()) {
+										player.getInventory().add(recipe.getResultItem());
+										player.getMainHandItem().shrink(1);
+										container.removeItem(i, recipe.getMaterialCount());
+										return InteractionResult.CONSUME;
+									}
 								}
-								i = ((Container) tileEntity).getContainerSize();
-							}
-						}
-						// Bottle of Wine
-						else if (itemStack.getItem() == Items.SWEET_BERRIES && itemStack.getCount() >= 16) {
-							if (player.getMainHandItem().getItem() == Items.GLASS_BOTTLE) {
-								player.addItem(new ItemStack(DeferredRegistryHandler.BOTTLE_OF_WINE.get()));
-								itemStack.shrink(16);
-								if (!player.isCreative()) {
-									player.getMainHandItem().shrink(1);
-								}
-								i = ((Container) tileEntity).getContainerSize();
 							}
 						}
 					}
 				}
-				return InteractionResult.SUCCESS;
+				return InteractionResult.PASS;
 			}
 			return InteractionResult.FAIL;
 		}

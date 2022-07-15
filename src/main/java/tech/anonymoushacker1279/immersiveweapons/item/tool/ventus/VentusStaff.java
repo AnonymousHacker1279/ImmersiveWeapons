@@ -34,40 +34,47 @@ public class VentusStaff extends Item {
 	/**
 	 * Runs when the player right-clicks.
 	 *
-	 * @param worldIn  the <code>World</code> the player is in
-	 * @param playerIn the <code>PlayerEntity</code> performing the action
-	 * @param handIn   the <code>Hand</code> the player is using
-	 * @return ActionResult extending ItemStack
+	 * @param level  the <code>Level</code> the player is in
+	 * @param player the <code>Player</code> performing the action
+	 * @param hand   the <code>Hand</code> the player is using
+	 * @return InteractionResultHolder extending ItemStack
 	 */
 	@Override
-	public @NotNull InteractionResultHolder<ItemStack> use(@NotNull Level worldIn, Player playerIn, @NotNull InteractionHand handIn) {
-		ItemStack itemstack = playerIn.getItemInHand(handIn);
-		List<Entity> entity = playerIn.level.getEntities(playerIn, playerIn.getBoundingBox().move(-2, 0, -2).expandTowards(4, 2, 4));
+	public @NotNull InteractionResultHolder<ItemStack> use(@NotNull Level level, Player player, @NotNull InteractionHand hand) {
+		ItemStack itemInHand = player.getItemInHand(hand);
+		List<Entity> entities = player.level.getEntities(player,
+				player.getBoundingBox().move(-2, 0, -2).expandTowards(4, 2, 4));
 
-		if (!entity.isEmpty()) {
-			for (Entity element : entity) {
-				if (element.isAlive()) {
-					worldIn.addParticle(ParticleTypes.CLOUD, element.getX(), element.getY() + 0.3d, element.getZ(), GeneralUtilities.getRandomNumber(-0.03d, 0.03d), GeneralUtilities.getRandomNumber(0.0d, 0.03d), GeneralUtilities.getRandomNumber(-0.03d, 0.03d));
-					element.push(playerIn.getLookAngle().get(Axis.X), 1f, playerIn.getLookAngle().get(Axis.Z));
+		if (!entities.isEmpty()) {
+			for (Entity entity : entities) {
+				if (entity.isAlive()) {
+					level.addParticle(ParticleTypes.CLOUD,
+							entity.getX(),
+							entity.getY() + 0.3d,
+							entity.getZ(),
+							GeneralUtilities.getRandomNumber(-0.03d, 0.03d),
+							GeneralUtilities.getRandomNumber(0.0d, 0.03d),
+							GeneralUtilities.getRandomNumber(-0.03d, 0.03d));
 
-					if (!pushedEntity) {
-						pushedEntity = true;
-					}
+					entity.push(player.getLookAngle().get(Axis.X), 1f, player.getLookAngle().get(Axis.Z));
+					pushedEntity = true;
 				}
 			}
 		}
 
 		if (pushedEntity) {
-			worldIn.playLocalSound(playerIn.getX(), playerIn.getY(), playerIn.getZ(), SoundEvents.LIGHTNING_BOLT_THUNDER, SoundSource.PLAYERS, 0.4f, 1.0f, true);
+			level.playLocalSound(player.getX(), player.getY(), player.getZ(),
+					SoundEvents.LIGHTNING_BOLT_THUNDER, SoundSource.PLAYERS, 0.4f, 1.0f, true);
+
 			pushedEntity = false;
 
-			if (!playerIn.isCreative()) {
-				playerIn.getCooldowns().addCooldown(this, 100);
-				itemstack.hurtAndBreak(1, playerIn, (player) -> player.broadcastBreakEvent(EquipmentSlot.MAINHAND));
+			if (!player.isCreative()) {
+				player.getCooldowns().addCooldown(this, 100);
+				itemInHand.hurtAndBreak(1, player, (player1) -> player1.broadcastBreakEvent(EquipmentSlot.MAINHAND));
 			}
 		}
 
-		return InteractionResultHolder.sidedSuccess(itemstack, worldIn.isClientSide());
+		return InteractionResultHolder.sidedSuccess(itemInHand, level.isClientSide());
 	}
 
 	/**

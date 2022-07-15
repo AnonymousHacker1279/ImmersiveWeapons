@@ -2,6 +2,7 @@ package tech.anonymoushacker1279.immersiveweapons.entity.monster;
 
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.Mth;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.entity.*;
@@ -40,7 +41,7 @@ import java.util.function.Predicate;
 public abstract class AbstractDyingSoldierEntity extends Monster implements RangedAttackMob, GrantAdvancementOnDiscovery {
 
 	private final RangedGunAttackGoal<AbstractDyingSoldierEntity> aiPistolAttack =
-			new RangedGunAttackGoal<>(this, 1.0D, 20, 15.0F);
+			new RangedGunAttackGoal<>(this, 1.0D, 20, 15.0F, DeferredRegistryHandler.FLINTLOCK_PISTOL.get());
 	private final MeleeAttackGoal aiAttackOnCollide = new MeleeAttackGoal(this, 1.2D, false) {
 		/**
 		 * Reset the task's internal state. Called when this task is interrupted by another one
@@ -143,8 +144,8 @@ public abstract class AbstractDyingSoldierEntity extends Monster implements Rang
 	 * @param difficulty the <code>DifficultyInstance</code> of the world
 	 */
 	@Override
-	protected void populateDefaultEquipmentSlots(@NotNull DifficultyInstance difficulty) {
-		super.populateDefaultEquipmentSlots(difficulty);
+	protected void populateDefaultEquipmentSlots(@NotNull RandomSource randomSource, @NotNull DifficultyInstance difficulty) {
+		super.populateDefaultEquipmentSlots(randomSource, difficulty);
 		setItemSlot(EquipmentSlot.MAINHAND, new ItemStack(DeferredRegistryHandler.FLINTLOCK_PISTOL.get()));
 	}
 
@@ -164,8 +165,8 @@ public abstract class AbstractDyingSoldierEntity extends Monster implements Rang
 	                                    @Nullable CompoundTag tag) {
 
 		groupData = super.finalizeSpawn(level, difficulty, spawnType, groupData, tag);
-		populateDefaultEquipmentSlots(difficulty);
-		populateDefaultEquipmentEnchantments(difficulty);
+		populateDefaultEquipmentSlots(random, difficulty);
+		populateDefaultEquipmentEnchantments(random, difficulty);
 		setCombatTask();
 		setCanPickUpLoot(random.nextFloat() < 0.55F * difficulty.getSpecialMultiplier());
 
@@ -246,7 +247,7 @@ public abstract class AbstractDyingSoldierEntity extends Monster implements Rang
 		AbstractBulletItem bulletItem = (AbstractBulletItem) (arrowStack.getItem() instanceof AbstractArrowItem
 				? arrowStack.getItem() : DeferredRegistryHandler.IRON_MUSKET_BALL.get());
 
-		BulletEntity bulletEntity = bulletItem.createBullet(level, arrowStack, this);
+		BulletEntity bulletEntity = bulletItem.createBullet(level, this);
 		bulletEntity.setEnchantmentEffectsFromEntity(this, distanceFactor);
 
 		return bulletEntity;

@@ -3,6 +3,7 @@ package tech.anonymoushacker1279.immersiveweapons.data.loot;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 import net.minecraft.advancements.critereon.*;
+import net.minecraft.data.loot.BlockLoot;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
@@ -18,9 +19,9 @@ import net.minecraft.world.level.storage.loot.predicates.*;
 import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
 import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
 import net.minecraftforge.registries.RegistryObject;
-import tech.anonymoushacker1279.immersiveweapons.block.base.SandbagBlock;
+import tech.anonymoushacker1279.immersiveweapons.block.LandmineBlock;
+import tech.anonymoushacker1279.immersiveweapons.block.SandbagBlock;
 import tech.anonymoushacker1279.immersiveweapons.block.misc.warrior_statue.WarriorStatueTorso;
-import tech.anonymoushacker1279.immersiveweapons.block.trap.LandmineBlock;
 import tech.anonymoushacker1279.immersiveweapons.data.tags.lists.BlockTagLists;
 import tech.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
 
@@ -71,7 +72,6 @@ public class BlockLootTables implements Consumer<BiConsumer<ResourceLocation, Bu
 		dropSelf(DeferredRegistryHandler.BIOHAZARD_BOX.get());
 		dropSelf(DeferredRegistryHandler.BRITISH_FLAG.get());
 		dropSelf(DeferredRegistryHandler.BURNED_OAK_BUTTON.get());
-		dropSelf(DeferredRegistryHandler.BURNED_OAK_DOOR.get());
 		dropSelf(DeferredRegistryHandler.BURNED_OAK_FENCE.get());
 		dropSelf(DeferredRegistryHandler.BURNED_OAK_FENCE_GATE.get());
 		dropSelf(DeferredRegistryHandler.BURNED_OAK_LOG.get());
@@ -136,6 +136,7 @@ public class BlockLootTables implements Consumer<BiConsumer<ResourceLocation, Bu
 		}
 
 		// Complex block drops
+		add(DeferredRegistryHandler.BURNED_OAK_DOOR.get(), BlockLoot::createDoorTable);
 		add(DeferredRegistryHandler.BURNED_OAK_BRANCH.get(), (leafLikeDrop) -> createLeafLikeDrop(leafLikeDrop, Items.STICK, NORMAL_LEAVES_SAPLING_CHANCES));
 		add(DeferredRegistryHandler.COBALT_ORE.get(), (block) -> createOreDrop(block, DeferredRegistryHandler.RAW_COBALT.get()));
 		add(DeferredRegistryHandler.DEEPSLATE_COBALT_ORE.get(), (block) -> createOreDrop(block, DeferredRegistryHandler.RAW_COBALT.get()));
@@ -161,19 +162,19 @@ public class BlockLootTables implements Consumer<BiConsumer<ResourceLocation, Bu
 								.apply(SetItemCountFunction.setCount(ConstantValue.exactly(1.0F))
 										.when(LootItemBlockStatePropertyCondition.hasBlockStateProperties(block)
 												.setProperties(StatePropertiesPredicate.Builder.properties()
-														.hasProperty(SandbagBlock.BAGS, 1))))
+														.hasProperty(SandbagBlock.BAGS, 0))))
 								.apply(SetItemCountFunction.setCount(ConstantValue.exactly(2.0F))
 										.when(LootItemBlockStatePropertyCondition.hasBlockStateProperties(block)
 												.setProperties(StatePropertiesPredicate.Builder.properties()
-														.hasProperty(SandbagBlock.BAGS, 2))))
+														.hasProperty(SandbagBlock.BAGS, 1))))
 								.apply(SetItemCountFunction.setCount(ConstantValue.exactly(3.0F))
 										.when(LootItemBlockStatePropertyCondition.hasBlockStateProperties(block)
 												.setProperties(StatePropertiesPredicate.Builder.properties()
-														.hasProperty(SandbagBlock.BAGS, 3))))
+														.hasProperty(SandbagBlock.BAGS, 2))))
 								.apply(SetItemCountFunction.setCount(ConstantValue.exactly(4.0F))
 										.when(LootItemBlockStatePropertyCondition.hasBlockStateProperties(block)
 												.setProperties(StatePropertiesPredicate.Builder.properties()
-														.hasProperty(SandbagBlock.BAGS, 4))))))));
+														.hasProperty(SandbagBlock.BAGS, 3))))))));
 		add(DeferredRegistryHandler.WARRIOR_STATUE_TORSO.get(), (block) -> LootTable.lootTable()
 				.withPool(LootPool.lootPool()
 						.setRolls(ConstantValue.exactly(1.0F))
@@ -251,11 +252,11 @@ public class BlockLootTables implements Consumer<BiConsumer<ResourceLocation, Bu
 		return LootTable.lootTable().withPool(applyExplosionCondition(LootPool.lootPool().setRolls(ConstantValue.exactly(1.0F)).add(LootItem.lootTableItem(itemLike))));
 	}
 
-	protected static <T> T applyExplosionCondition(ConditionUserBuilder<T> pCondition) {
+	protected static <T extends ConditionUserBuilder<T>> T applyExplosionCondition(ConditionUserBuilder<T> pCondition) {
 		return pCondition.when(ExplosionCondition.survivesExplosion());
 	}
 
-	protected static <T> T applyExplosionDecay(FunctionUserBuilder<T> pFunction) {
+	protected static <T extends FunctionUserBuilder<T>> T applyExplosionDecay(FunctionUserBuilder<T> pFunction) {
 		return pFunction.apply(ApplyExplosionDecay.explosionDecay());
 	}
 }

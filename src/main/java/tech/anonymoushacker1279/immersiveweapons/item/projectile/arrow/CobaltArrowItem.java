@@ -4,8 +4,8 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
-import tech.anonymoushacker1279.immersiveweapons.entity.projectile.CustomArrowEntity;
-import tech.anonymoushacker1279.immersiveweapons.entity.projectile.CustomArrowEntity.CobaltArrowEntity;
+import tech.anonymoushacker1279.immersiveweapons.entity.projectile.ArrowEntities;
+import tech.anonymoushacker1279.immersiveweapons.entity.projectile.ArrowEntities.CobaltArrowEntity;
 
 public class CobaltArrowItem extends AbstractArrowItem {
 
@@ -29,8 +29,8 @@ public class CobaltArrowItem extends AbstractArrowItem {
 	 * @return CobaltArrowEntity
 	 */
 	@Override
-	public @NotNull CustomArrowEntity.CobaltArrowEntity createArrow(@NotNull Level worldIn, @NotNull ItemStack stack, @NotNull LivingEntity shooter) {
-		CobaltArrowEntity arrowEntity = new CobaltArrowEntity(shooter, worldIn, ref.get().asItem());
+	public @NotNull ArrowEntities.CobaltArrowEntity createArrow(@NotNull Level worldIn, @NotNull ItemStack stack, @NotNull LivingEntity shooter) {
+		CobaltArrowEntity arrowEntity = new CobaltArrowEntity(shooter, worldIn);
 		arrowEntity.setBaseDamage(damage);
 		return arrowEntity;
 	}

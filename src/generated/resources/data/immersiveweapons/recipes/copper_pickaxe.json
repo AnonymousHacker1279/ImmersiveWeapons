@@ -1,11 +1,6 @@
 {
   "type": "minecraft:crafting_shaped",
   "group": "copper",
-  "pattern": [
-    "aaa",
-    " b ",
-    " b "
-  ],
   "key": {
     "a": {
       "tag": "forge:ingots/copper"
@@ -14,6 +9,11 @@
       "item": "minecraft:stick"
     }
   },
+  "pattern": [
+    "aaa",
+    " b ",
+    " b "
+  ],
   "result": {
     "item": "immersiveweapons:copper_pickaxe"
   }

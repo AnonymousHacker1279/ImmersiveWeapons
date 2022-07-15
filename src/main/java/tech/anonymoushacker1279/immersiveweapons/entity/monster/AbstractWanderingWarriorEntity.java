@@ -1,7 +1,8 @@
 package tech.anonymoushacker1279.immersiveweapons.entity.monster;
 
+import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.sounds.SoundEvent;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.*;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
@@ -16,6 +17,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.*;
 import net.minecraft.world.level.*;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 import org.jetbrains.annotations.NotNull;
 import tech.anonymoushacker1279.immersiveweapons.entity.GrantAdvancementOnDiscovery;
@@ -92,7 +94,16 @@ public abstract class AbstractWanderingWarriorEntity extends Monster implements 
 		}
 	}
 
-	protected abstract SoundEvent getStepSound();
+	/**
+	 * Play the step sound.
+	 *
+	 * @param pos   the <code>BlockPos</code> the entity is at
+	 * @param state the <code>BlockState</code> of the block being stepped on
+	 */
+	@Override
+	protected void playStepSound(@NotNull BlockPos pos, @NotNull BlockState state) {
+		playSound(DeferredRegistryHandler.WANDERING_WARRIOR_STEP.get(), 1.0F, 1.0F);
+	}
 
 	/**
 	 * Handles updating while riding another entity
@@ -111,8 +122,8 @@ public abstract class AbstractWanderingWarriorEntity extends Monster implements 
 	 * @param difficulty the <code>DifficultyInstance</code> of the world
 	 */
 	@Override
-	protected void populateDefaultEquipmentSlots(@NotNull DifficultyInstance difficulty) {
-		super.populateDefaultEquipmentSlots(difficulty);
+	protected void populateDefaultEquipmentSlots(@NotNull RandomSource randomSource, @NotNull DifficultyInstance difficulty) {
+		super.populateDefaultEquipmentSlots(randomSource, difficulty);
 		// Populate weapons
 		float random = this.random.nextFloat();
 		if (random <= 0.5) {
@@ -161,8 +172,8 @@ public abstract class AbstractWanderingWarriorEntity extends Monster implements 
 	                                    @Nullable CompoundTag tag) {
 
 		groupData = super.finalizeSpawn(level, difficulty, spawnType, groupData, tag);
-		populateDefaultEquipmentSlots(difficulty);
-		populateDefaultEquipmentEnchantments(difficulty);
+		populateDefaultEquipmentSlots(random, difficulty);
+		populateDefaultEquipmentEnchantments(random, difficulty);
 		setCombatTask();
 		setCanPickUpLoot(random.nextFloat() < 0.55F * difficulty.getSpecialMultiplier());
 
@@ -188,7 +199,7 @@ public abstract class AbstractWanderingWarriorEntity extends Monster implements 
 		if (!level.isClientSide) {
 			goalSelector.removeGoal(aiAttackOnCollide);
 			if (getItemInHand(InteractionHand.MAIN_HAND).getItem() == Items.AIR) {
-				populateDefaultEquipmentSlots(level.getCurrentDifficultyAt(blockPosition()));
+				populateDefaultEquipmentSlots(random, level.getCurrentDifficultyAt(blockPosition()));
 			}
 			goalSelector.addGoal(1, aiAttackOnCollide);
 		}

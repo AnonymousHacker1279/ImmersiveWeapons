@@ -12,13 +12,10 @@ import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import org.slf4j.Logger;
 import tech.anonymoushacker1279.immersiveweapons.advancement.IWCriteriaTriggers;
-import tech.anonymoushacker1279.immersiveweapons.api.PluginHandler;
 import tech.anonymoushacker1279.immersiveweapons.block.properties.WoodTypes;
 import tech.anonymoushacker1279.immersiveweapons.config.ClientConfig;
 import tech.anonymoushacker1279.immersiveweapons.config.CommonConfig;
 import tech.anonymoushacker1279.immersiveweapons.init.*;
-import tech.anonymoushacker1279.immersiveweapons.item.crafting.CustomRecipeTypes;
-import tech.anonymoushacker1279.immersiveweapons.world.level.levelgen.OreGeneratorHandler;
 import tech.anonymoushacker1279.immersiveweapons.world.level.levelgen.biomes.IWOverworldBiomesProvider;
 import tech.anonymoushacker1279.immersiveweapons.world.level.levelgen.biomes.SurfaceRuleData;
 import terrablender.api.*;
@@ -38,7 +35,7 @@ public class ImmersiveWeapons {
 
 		// Load configuration
 		LOGGER.info("Registering configuration files");
-		ModLoadingContext.get().registerConfig(Type.COMMON, CommonConfig.COMMON_SPEC); // TODO: Change to server config
+		ModLoadingContext.get().registerConfig(Type.COMMON, CommonConfig.COMMON_SPEC);
 		ModLoadingContext.get().registerConfig(Type.CLIENT, ClientConfig.CLIENT_SPEC);
 
 		// Initialize deferred registry
@@ -63,8 +60,6 @@ public class ImmersiveWeapons {
 	 */
 	public void setup(FMLCommonSetupEvent event) {
 		DispenserBehaviorRegistry.init();
-		OreGeneratorHandler.init();
-		CustomRecipeTypes.init();
 		IWCriteriaTriggers.init();
 		event.enqueueWork(() -> {
 			WoodType.register(WoodTypes.BURNED_OAK);
@@ -73,7 +68,5 @@ public class ImmersiveWeapons {
 			SurfaceRuleManager.addSurfaceRules(RuleCategory.OVERWORLD, MOD_ID, SurfaceRuleData.makeRules());
 		});
 		PostSetupHandler.init();
-
-		PluginHandler.initializePlugins(event);
 	}
 }

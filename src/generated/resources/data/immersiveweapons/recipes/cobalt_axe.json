@@ -1,11 +1,6 @@
 {
   "type": "minecraft:crafting_shaped",
   "group": "cobalt",
-  "pattern": [
-    "aa ",
-    "ab ",
-    " b "
-  ],
   "key": {
     "a": {
       "tag": "forge:ingots/cobalt"
@@ -14,6 +9,11 @@
       "item": "minecraft:stick"
     }
   },
+  "pattern": [
+    "aa ",
+    "ab ",
+    " b "
+  ],
   "result": {
     "item": "immersiveweapons:cobalt_axe"
   }

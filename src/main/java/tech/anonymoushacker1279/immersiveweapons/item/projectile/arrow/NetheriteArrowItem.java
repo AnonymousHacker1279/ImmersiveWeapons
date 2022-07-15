@@ -4,7 +4,8 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
-import tech.anonymoushacker1279.immersiveweapons.entity.projectile.CustomArrowEntity.NetheriteArrowEntity;
+import tech.anonymoushacker1279.immersiveweapons.entity.projectile.ArrowEntities;
+import tech.anonymoushacker1279.immersiveweapons.entity.projectile.ArrowEntities.NetheriteArrowEntity;
 
 public class NetheriteArrowItem extends AbstractArrowItem {
 
@@ -28,8 +29,8 @@ public class NetheriteArrowItem extends AbstractArrowItem {
 	 * @return NetheriteArrowEntity
 	 */
 	@Override
-	public @NotNull NetheriteArrowEntity createArrow(@NotNull Level worldIn, @NotNull ItemStack stack, @NotNull LivingEntity shooter) {
-		NetheriteArrowEntity arrowEntity = new NetheriteArrowEntity(shooter, worldIn, ref.get().asItem());
+	public @NotNull ArrowEntities.NetheriteArrowEntity createArrow(@NotNull Level worldIn, @NotNull ItemStack stack, @NotNull LivingEntity shooter) {
+		NetheriteArrowEntity arrowEntity = new NetheriteArrowEntity(shooter, worldIn);
 		arrowEntity.setBaseDamage(damage);
 		return arrowEntity;
 	}

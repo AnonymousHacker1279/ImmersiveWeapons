@@ -4,13 +4,14 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.registries.ForgeRegistries;
 import tech.anonymoushacker1279.immersiveweapons.advancement.IWCriteriaTriggers;
 
 public interface GrantAdvancementOnDiscovery {
 
 	default void checkForDiscovery(Entity entity, Player player) {
 		if (isLookingAtMe(entity, player)) {
-			IWCriteriaTriggers.ENTITY_DISCOVERED_TRIGGER.trigger((ServerPlayer) player, entity.getType().getRegistryName());
+			IWCriteriaTriggers.ENTITY_DISCOVERED_TRIGGER.trigger((ServerPlayer) player, ForgeRegistries.ENTITY_TYPES.getKey(entity.getType()));
 		}
 	}
 

@@ -148,7 +148,7 @@ public class SmallPartsContainer extends AbstractContainerMenu {
 	 * inventory and the other inventory(s).
 	 */
 	@Override
-	public @NotNull ItemStack quickMoveStack(Player pPlayer, int pIndex) {
+	public @NotNull ItemStack quickMoveStack(@NotNull Player pPlayer, int pIndex) {
 		ItemStack stack = ItemStack.EMPTY;
 		Slot slot = slots.get(pIndex);
 		if (slot.hasItem()) {
@@ -196,9 +196,7 @@ public class SmallPartsContainer extends AbstractContainerMenu {
 	@Override
 	public void removed(@NotNull Player pPlayer) {
 		super.removed(pPlayer);
-		access.execute((level, pos) -> {
-			clearContainer(pPlayer, inputContainer);
-		});
+		access.execute((level, pos) -> clearContainer(pPlayer, inputContainer));
 	}
 
 	private void setupResultSlot() {

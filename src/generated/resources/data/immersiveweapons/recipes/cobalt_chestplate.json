@@ -1,16 +1,16 @@
 {
   "type": "minecraft:crafting_shaped",
   "group": "cobalt",
-  "pattern": [
-    "a a",
-    "aaa",
-    "aaa"
-  ],
   "key": {
     "a": {
       "tag": "forge:ingots/cobalt"
     }
   },
+  "pattern": [
+    "a a",
+    "aaa",
+    "aaa"
+  ],
   "result": {
     "item": "immersiveweapons:cobalt_chestplate"
   }

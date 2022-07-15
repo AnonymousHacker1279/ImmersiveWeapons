@@ -1,0 +1,6 @@
+{
+  "parent": "immersiveweapons:block/flag",
+  "textures": {
+    "flag": "immersiveweapons:block/gadsden_flag"
+  }
+}

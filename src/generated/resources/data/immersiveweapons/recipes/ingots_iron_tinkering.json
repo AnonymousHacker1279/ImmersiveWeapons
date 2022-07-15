@@ -1,11 +1,11 @@
 {
   "type": "immersiveweapons:small_parts",
-  "material": {
-    "tag": "forge:ingots/iron"
-  },
   "craftables": [
     "immersiveweapons:flintlock_assembly",
     "immersiveweapons:iron_barrel",
     "immersiveweapons:short_iron_barrel"
-  ]
+  ],
+  "material": {
+    "tag": "forge:ingots/iron"
+  }
 }

@@ -5,38 +5,39 @@ import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.monster.RangedAttackMob;
 import net.minecraft.world.entity.projectile.ProjectileUtil;
-import net.minecraft.world.item.BowItem;
-import tech.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
+import net.minecraft.world.item.Item;
 
 import java.util.EnumSet;
 import java.util.function.Predicate;
 
 public class RangedGunAttackGoal<T extends PathfinderMob & RangedAttackMob> extends Goal {
 
-	private final T entity;
-	private final double moveSpeedAmp;
-	private final float maxAttackDistance;
-	private int attackCooldown;
-	private int attackTime = -1;
-	private int seeTime;
-	private boolean strafingClockwise;
-	private boolean strafingBackwards;
-	private int strafingTime = -1;
+	protected final T entity;
+	protected final double moveSpeedAmp;
+	protected final float maxAttackDistance;
+	protected int attackCooldown;
+	protected int attackTime = -1;
+	protected int seeTime;
+	protected boolean strafingClockwise;
+	protected boolean strafingBackwards;
+	protected int strafingTime = -1;
+	protected Item gunItem;
 
 	/**
 	 * Constructor for RangedGunAttackGoal.
 	 *
-	 * @param mob                 the <code>MonsterEntity</code> that will be using the goal,
-	 *                            must implement IRangedAttackMob
+	 * @param mob                 the mob that will be using a gun
 	 * @param moveSpeedAmpIn      the movement speed amplifier
 	 * @param attackCooldownIn    the attack cooldown
 	 * @param maxAttackDistanceIn the max attack distance
+	 * @param gun                 the gun item
 	 */
-	public RangedGunAttackGoal(T mob, double moveSpeedAmpIn, int attackCooldownIn, float maxAttackDistanceIn) {
+	public RangedGunAttackGoal(T mob, double moveSpeedAmpIn, int attackCooldownIn, float maxAttackDistanceIn, Item gun) {
 		entity = mob;
 		moveSpeedAmp = moveSpeedAmpIn;
 		attackCooldown = attackCooldownIn;
 		maxAttackDistance = maxAttackDistanceIn * maxAttackDistanceIn;
+		gunItem = gun;
 		setFlags(EnumSet.of(Goal.Flag.MOVE, Goal.Flag.LOOK));
 	}
 
@@ -67,7 +68,7 @@ public class RangedGunAttackGoal<T extends PathfinderMob & RangedAttackMob> exte
 	 * @return boolean
 	 */
 	private boolean isGunInMainHand() {
-		return entity.isHolding(DeferredRegistryHandler.FLINTLOCK_PISTOL.get());
+		return entity.isHolding(gunItem);
 	}
 
 	/**
@@ -106,26 +107,26 @@ public class RangedGunAttackGoal<T extends PathfinderMob & RangedAttackMob> exte
 	 */
 	@Override
 	public void tick() {
-		LivingEntity livingentity = entity.getTarget();
-		if (livingentity != null) {
-			double d0 = entity.distanceToSqr(livingentity.getX(), livingentity.getY(), livingentity.getZ());
-			boolean flag = entity.getSensing().hasLineOfSight(livingentity);
-			boolean flag1 = seeTime > 0;
-			if (flag != flag1) {
+		LivingEntity target = entity.getTarget();
+		if (target != null) {
+			double distanceToSqr = entity.distanceToSqr(target.getX(), target.getY(), target.getZ());
+			boolean hasLineOfSight = entity.getSensing().hasLineOfSight(target);
+			boolean seen = seeTime > 0;
+			if (hasLineOfSight != seen) {
 				seeTime = 0;
 			}
 
-			if (flag) {
+			if (hasLineOfSight) {
 				++seeTime;
 			} else {
 				--seeTime;
 			}
 
-			if (!(d0 > (double) maxAttackDistance) && seeTime >= 20) {
+			if (!(distanceToSqr > (double) maxAttackDistance) && seeTime >= 20) {
 				entity.getNavigation().stop();
 				++strafingTime;
 			} else {
-				entity.getNavigation().moveTo(livingentity, moveSpeedAmp);
+				entity.getNavigation().moveTo(target, moveSpeedAmp);
 				strafingTime = -1;
 			}
 
@@ -142,31 +143,31 @@ public class RangedGunAttackGoal<T extends PathfinderMob & RangedAttackMob> exte
 			}
 
 			if (strafingTime > -1) {
-				if (d0 > (double) (maxAttackDistance * 0.75F)) {
+				if (distanceToSqr > (double) (maxAttackDistance * 0.75F)) {
 					strafingBackwards = false;
-				} else if (d0 < (double) (maxAttackDistance * 0.25F)) {
+				} else if (distanceToSqr < (double) (maxAttackDistance * 0.25F)) {
 					strafingBackwards = true;
 				}
 
 				entity.getMoveControl().strafe(strafingBackwards ? -0.5F : 0.5F, strafingClockwise ? 0.5F : -0.5F);
-				entity.lookAt(livingentity, 30.0F, 30.0F);
+				entity.lookAt(target, 30.0F, 30.0F);
 			} else {
-				entity.getLookControl().setLookAt(livingentity, 30.0F, 30.0F);
+				entity.getLookControl().setLookAt(target, 30.0F, 30.0F);
 			}
 
 			if (entity.isUsingItem()) {
-				if (!flag && seeTime < -60) {
+				if (!hasLineOfSight && seeTime < -60) {
 					entity.stopUsingItem();
-				} else if (flag) {
+				} else if (hasLineOfSight) {
 					int i = entity.getTicksUsingItem();
 					if (i >= 20) {
 						entity.stopUsingItem();
-						entity.performRangedAttack(livingentity, BowItem.getPowerForTime(i));
+						entity.performRangedAttack(target, 1);
 						attackTime = attackCooldown;
 					}
 				}
 			} else if (--attackTime <= 0 && seeTime >= -60) {
-				entity.startUsingItem(ProjectileUtil.getWeaponHoldingHand(entity, Predicate.isEqual(DeferredRegistryHandler.FLINTLOCK_PISTOL.get())));
+				entity.startUsingItem(ProjectileUtil.getWeaponHoldingHand(entity, Predicate.isEqual(gunItem)));
 			}
 		}
 	}

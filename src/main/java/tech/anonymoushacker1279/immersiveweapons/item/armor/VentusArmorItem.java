@@ -25,20 +25,17 @@ import java.util.function.Supplier;
 public class VentusArmorItem extends ArmorItem {
 
 	private static boolean effectEnabled = false;
-	private boolean isLeggings = false;
+	private final boolean isLeggings;
 
 	/**
 	 * Constructor for VentusArmorItem.
 	 *
-	 * @param material the <code>IArmorMaterial</code> for the item
-	 * @param slot     the <code>EquipmentSlotType</code>
-	 * @param type     type ID
+	 * @param material the <code>ArmorMaterial</code> for the item
+	 * @param slot     the <code>EquipmentSlot</code>
 	 */
-	public VentusArmorItem(ArmorMaterial material, EquipmentSlot slot, int type) {
-		super(material, slot, (new Item.Properties().tab(DeferredRegistryHandler.ITEM_GROUP)));
-		if (type == 2) {
-			isLeggings = true;
-		}
+	public VentusArmorItem(ArmorMaterial material, EquipmentSlot slot, Properties properties, boolean isLeggings) {
+		super(material, slot, properties);
+		this.isLeggings = isLeggings;
 	}
 
 	/**
@@ -53,46 +50,57 @@ public class VentusArmorItem extends ArmorItem {
 	 *
 	 * @param stack  the <code>ItemStack</code> instance
 	 * @param entity the <code>Entity</code> wearing the armor
-	 * @param slot   the <code>EquipmentSlotType</code>
+	 * @param slot   the <code>EquipmentSlot</code>
 	 * @param type   type ID
 	 * @return String
 	 */
 	@Override
 	public String getArmorTexture(ItemStack stack, Entity entity, EquipmentSlot slot, String type) {
-		return (!isLeggings ? ImmersiveWeapons.MOD_ID + ":textures/armor/ventus_layer_1.png" : ImmersiveWeapons.MOD_ID + ":textures/armor/ventus_layer_2.png");
+		return (!isLeggings
+				? ImmersiveWeapons.MOD_ID + ":textures/armor/ventus_layer_1.png"
+				: ImmersiveWeapons.MOD_ID + ":textures/armor/ventus_layer_2.png");
 	}
 
 	/**
 	 * Runs once per tick while armor is equipped
 	 *
 	 * @param stack  the <code>ItemStack</code> instance
-	 * @param world  the <code>World</code> the player is in
-	 * @param player the <code>PlayerEntity</code> wearing the armor
+	 * @param level  the <code>Level</code> the player is in
+	 * @param player the <code>Player</code> wearing the armor
 	 */
 	@Override
-	public void onArmorTick(ItemStack stack, Level world, Player player) {
+	public void onArmorTick(ItemStack stack, Level level, Player player) {
 		if (player.getItemBySlot(EquipmentSlot.HEAD).getItem() == DeferredRegistryHandler.VENTUS_HELMET.get() &&
 				player.getItemBySlot(EquipmentSlot.CHEST).getItem() == DeferredRegistryHandler.VENTUS_CHESTPLATE.get() &&
 				player.getItemBySlot(EquipmentSlot.LEGS).getItem() == DeferredRegistryHandler.VENTUS_LEGGINGS.get() &&
 				player.getItemBySlot(EquipmentSlot.FEET).getItem() == DeferredRegistryHandler.VENTUS_BOOTS.get()) {
 
-			if (world.isClientSide) {
+			if (level.isClientSide) {
 				if (IWKeyBinds.TOGGLE_ARMOR_EFFECT.consumeClick()) {
 					PacketHandler.INSTANCE.sendToServer(new VentusArmorItemPacketHandler(!effectEnabled));
+
 					if (!Minecraft.getInstance().isLocalServer()) {
 						setEffectState(!effectEnabled);
 					}
 				}
 				if (effectEnabled) {
 					if (Minecraft.getInstance().options.keyJump.consumeClick()) {
-						world.addParticle(ParticleTypes.CLOUD, player.getX(), player.getY() + 0.1d, player.getZ(), GeneralUtilities.getRandomNumber(-0.03d, 0.03d), GeneralUtilities.getRandomNumber(0.0d, 0.03d), GeneralUtilities.getRandomNumber(-0.03d, 0.03d));
+						level.addParticle(ParticleTypes.CLOUD,
+								player.getX(),
+								player.getY() + 0.1d,
+								player.getZ(),
+								GeneralUtilities.getRandomNumber(-0.03d, 0.03d),
+								GeneralUtilities.getRandomNumber(0.0d, 0.03d),
+								GeneralUtilities.getRandomNumber(-0.03d, 0.03d));
 					}
 				}
 			}
 
 			if (effectEnabled) {
-				player.addEffect(new MobEffectInstance(MobEffects.JUMP, 0, 2, false, false));
-				player.addEffect(new MobEffectInstance(MobEffects.SLOW_FALLING, 0, 0, false, false));
+				player.addEffect(new MobEffectInstance(MobEffects.JUMP,
+						0, 2, false, false));
+				player.addEffect(new MobEffectInstance(MobEffects.SLOW_FALLING,
+						0, 0, false, false));
 			}
 		}
 	}

@@ -29,31 +29,31 @@ public class SmokeGrenadeItem extends Item {
 	/**
 	 * Runs when the player right-clicks.
 	 *
-	 * @param worldIn  the <code>World</code> the player is in
-	 * @param playerIn the <code>PlayerEntity</code> performing the action
-	 * @param handIn   the <code>Hand</code> the player is using
-	 * @return ActionResult extending ItemStack
+	 * @param level  the <code>Level</code> the player is in
+	 * @param player the <code>Player</code> performing the action
+	 * @param hand   the <code>InteractionHand</code> the player is using
+	 * @return InteractionResultHolder extending ItemStack
 	 */
 	@Override
-	public @NotNull InteractionResultHolder<ItemStack> use(Level worldIn, Player playerIn, @NotNull InteractionHand handIn) {
-		ItemStack itemInHand = playerIn.getItemInHand(handIn);
-		worldIn.playSound(null, playerIn.getX(), playerIn.getY(), playerIn.getZ(),
+	public @NotNull InteractionResultHolder<ItemStack> use(Level level, Player player, @NotNull InteractionHand hand) {
+		ItemStack itemInHand = player.getItemInHand(hand);
+		level.playSound(null, player.getX(), player.getY(), player.getZ(),
 				DeferredRegistryHandler.GENERIC_WHOOSH.get(), SoundSource.NEUTRAL,
 				0.5F, 0.4F / (GeneralUtilities.getRandomNumber(0.2f, 0.6f) + 0.8F));
 
-		if (!worldIn.isClientSide) {
-			SmokeGrenadeEntity.setColor(color);
-			SmokeGrenadeEntity smokeGrenadeEntity = new SmokeGrenadeEntity(worldIn, playerIn);
+		if (!level.isClientSide) {
+			SmokeGrenadeEntity smokeGrenadeEntity = new SmokeGrenadeEntity(level, player);
+			smokeGrenadeEntity.setColor(color);
 			smokeGrenadeEntity.setItem(itemInHand);
-			smokeGrenadeEntity.shootFromRotation(playerIn, playerIn.xRot, playerIn.yRot, -20.0F, 0.5F, 1.0F);
-			worldIn.addFreshEntity(smokeGrenadeEntity);
+			smokeGrenadeEntity.shootFromRotation(player, player.xRot, player.yRot, -20.0F, 0.5F, 1.0F);
+			level.addFreshEntity(smokeGrenadeEntity);
 		}
 
-		if (!playerIn.isCreative()) {
+		if (!player.isCreative()) {
 			itemInHand.shrink(1);
-			playerIn.getCooldowns().addCooldown(this, 100);
+			player.getCooldowns().addCooldown(this, 100);
 		}
 
-		return InteractionResultHolder.sidedSuccess(itemInHand, worldIn.isClientSide());
+		return InteractionResultHolder.sidedSuccess(itemInHand, level.isClientSide());
 	}
 }

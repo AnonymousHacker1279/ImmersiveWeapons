@@ -15,7 +15,7 @@ import net.minecraft.core.particles.ParticleType;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.util.Mth;
 import net.minecraft.world.level.block.Block;
-import net.minecraftforge.client.model.data.EmptyModelData;
+import net.minecraftforge.client.model.data.ModelData;
 import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.NotNull;
 import tech.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
@@ -30,9 +30,9 @@ public class BulletImpactParticleOptions implements ParticleOptions {
 					Codec.INT.fieldOf("blockID").forGetter((particleOptions) -> particleOptions.blockID))
 			.apply(particleOptionsInstance, BulletImpactParticleOptions::new));
 
-	protected Vector3f color;
-	protected float scale;
-	protected int blockID;
+	protected final Vector3f color;
+	protected final float scale;
+	protected final int blockID;
 
 	public static final ParticleOptions.Deserializer<BulletImpactParticleOptions> DESERIALIZER = new ParticleOptions.Deserializer<>() {
 		@Override
@@ -59,7 +59,7 @@ public class BulletImpactParticleOptions implements ParticleOptions {
 		BlockRenderDispatcher blockRendererDispatcher = minecraft.getBlockRenderer();
 		BlockModelShaper blockModelShapes = blockRendererDispatcher.getBlockModelShaper();
 		BakedModel blockModel = blockModelShapes.getBlockModel(Block.stateById(blockID));
-		TextureAtlasSprite textureAtlasSprite = blockModel.getParticleIcon(EmptyModelData.INSTANCE);
+		TextureAtlasSprite textureAtlasSprite = blockModel.getParticleIcon(ModelData.EMPTY);
 
 		int pixelABGR = textureAtlasSprite.getPixelRGBA(0, 0, 0);
 		int r = pixelABGR & 0xff;
@@ -86,14 +86,6 @@ public class BulletImpactParticleOptions implements ParticleOptions {
 
 	public Vector3f getColor() {
 		return color;
-	}
-
-	public float getScale() {
-		return scale;
-	}
-
-	public int getBlockID() {
-		return blockID;
 	}
 
 	@Override

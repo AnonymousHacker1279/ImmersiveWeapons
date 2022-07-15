@@ -16,7 +16,7 @@ public class DefendVillageTargetGoal extends TargetGoal {
 
 	private final Mob mobEntity;
 	private final TargetingConditions distancePredicate = (TargetingConditions.forCombat()).range(64.0D);
-	private LivingEntity villageAgressorTarget;
+	private LivingEntity villageAggressorTarget;
 
 	/**
 	 * Constructor for DefendVillageTargetGoal.
@@ -46,15 +46,15 @@ public class DefendVillageTargetGoal extends TargetGoal {
 			for (Player playerEntity : list1) {
 				int i = villagerEntity.getPlayerReputation(playerEntity);
 				if (i <= -100) {
-					villageAgressorTarget = playerEntity;
+					villageAggressorTarget = playerEntity;
 				}
 			}
 		}
 
-		if (villageAgressorTarget == null) {
+		if (villageAggressorTarget == null) {
 			return false;
 		} else {
-			return !(villageAgressorTarget instanceof Player) || !villageAgressorTarget.isSpectator() && !((Player) villageAgressorTarget).isCreative();
+			return !(villageAggressorTarget instanceof Player) || !villageAggressorTarget.isSpectator() && !((Player) villageAggressorTarget).isCreative();
 		}
 	}
 
@@ -63,7 +63,7 @@ public class DefendVillageTargetGoal extends TargetGoal {
 	 */
 	@Override
 	public void start() {
-		mobEntity.setTarget(villageAgressorTarget);
+		mobEntity.setTarget(villageAggressorTarget);
 		super.start();
 	}
 }

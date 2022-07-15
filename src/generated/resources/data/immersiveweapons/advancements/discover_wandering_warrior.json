@@ -1,34 +1,34 @@
 {
   "parent": "immersiveweapons:entity_discovery",
+  "criteria": {
+    "discover": {
+      "conditions": {
+        "entity": "immersiveweapons:wandering_warrior"
+      },
+      "trigger": "immersiveweapons:entity_discovered"
+    }
+  },
   "display": {
-    "icon": {
-      "item": "immersiveweapons:wandering_warrior_head"
-    },
-    "title": {
-      "translate": "advancements.immersiveweapons.discover_wandering_warrior.title"
-    },
+    "announce_to_chat": true,
     "description": {
       "translate": "advancements.immersiveweapons.discover_wandering_warrior.description"
     },
     "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "immersiveweapons:wandering_warrior_head"
+    },
     "show_toast": true,
-    "announce_to_chat": true,
-    "hidden": false
-  },
-  "rewards": {
-    "experience": 20
-  },
-  "criteria": {
-    "discover": {
-      "trigger": "immersiveweapons:entity_discovered",
-      "conditions": {
-        "entity": "immersiveweapons:wandering_warrior"
-      }
+    "title": {
+      "translate": "advancements.immersiveweapons.discover_wandering_warrior.title"
     }
   },
   "requirements": [
     [
       "discover"
     ]
-  ]
+  ],
+  "rewards": {
+    "experience": 20
+  }
 }

@@ -2,67 +2,66 @@
   "type": "minecraft:block",
   "pools": [
     {
-      "rolls": 1.0,
       "bonus_rolls": 0.0,
       "entries": [
         {
           "type": "minecraft:item",
           "functions": [
             {
-              "function": "minecraft:set_count",
+              "add": false,
               "conditions": [
                 {
-                  "condition": "minecraft:block_state_property",
                   "block": "immersiveweapons:sandbag",
+                  "condition": "minecraft:block_state_property",
+                  "properties": {
+                    "bags": "0"
+                  }
+                }
+              ],
+              "count": 1.0,
+              "function": "minecraft:set_count"
+            },
+            {
+              "add": false,
+              "conditions": [
+                {
+                  "block": "immersiveweapons:sandbag",
+                  "condition": "minecraft:block_state_property",
                   "properties": {
                     "bags": "1"
                   }
                 }
               ],
-              "count": 1.0,
-              "add": false
+              "count": 2.0,
+              "function": "minecraft:set_count"
             },
             {
-              "function": "minecraft:set_count",
+              "add": false,
               "conditions": [
                 {
-                  "condition": "minecraft:block_state_property",
                   "block": "immersiveweapons:sandbag",
+                  "condition": "minecraft:block_state_property",
                   "properties": {
                     "bags": "2"
                   }
                 }
               ],
-              "count": 2.0,
-              "add": false
+              "count": 3.0,
+              "function": "minecraft:set_count"
             },
             {
-              "function": "minecraft:set_count",
+              "add": false,
               "conditions": [
                 {
-                  "condition": "minecraft:block_state_property",
                   "block": "immersiveweapons:sandbag",
+                  "condition": "minecraft:block_state_property",
                   "properties": {
                     "bags": "3"
                   }
                 }
               ],
-              "count": 3.0,
-              "add": false
-            },
-            {
-              "function": "minecraft:set_count",
-              "conditions": [
-                {
-                  "condition": "minecraft:block_state_property",
-                  "block": "immersiveweapons:sandbag",
-                  "properties": {
-                    "bags": "4"
-                  }
-                }
-              ],
               "count": 4.0,
-              "add": false
+              "function": "minecraft:set_count"
             },
             {
               "function": "minecraft:explosion_decay"
@@ -70,7 +69,8 @@
           ],
           "name": "immersiveweapons:sandbag"
         }
-      ]
+      ],
+      "rolls": 1.0
     }
   ]
 }

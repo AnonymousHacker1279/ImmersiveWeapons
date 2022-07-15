@@ -17,7 +17,7 @@ import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraftforge.common.Tags;
-import net.minecraftforge.common.crafting.NBTIngredient;
+import net.minecraftforge.common.crafting.StrictNBTIngredient;
 import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.NotNull;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
@@ -55,6 +55,7 @@ public class RecipeGenerator extends RecipeProvider {
 		createTeslaItems();
 		createVanillaTieredItems();
 		createSmallPartsItems();
+		createBarrelTapItems();
 		createSmokeGrenades();
 		createCorrugatedIronItems();
 		createShardItems();
@@ -124,6 +125,8 @@ public class RecipeGenerator extends RecipeProvider {
 
 	private void createBurnedOakItems() {
 		createBurnedOakBoat(DeferredRegistryHandler.BURNED_OAK_BOAT.get(),
+				DeferredRegistryHandler.BURNED_OAK_PLANKS_ITEM.get());
+		createBurnedOakChestBoat(DeferredRegistryHandler.BURNED_OAK_CHEST_BOAT.get(),
 				DeferredRegistryHandler.BURNED_OAK_PLANKS_ITEM.get());
 		createBurnedOakButton(DeferredRegistryHandler.BURNED_OAK_BUTTON_ITEM.get(),
 				DeferredRegistryHandler.BURNED_OAK_PLANKS_ITEM.get());
@@ -359,6 +362,11 @@ public class RecipeGenerator extends RecipeProvider {
 				.save(finishedRecipeConsumer);
 	}
 
+	private void createBarrelTapItems() {
+		barrelTapFermenting(Items.WHEAT, 12, DeferredRegistryHandler.BOTTLE_OF_ALCOHOL.get());
+		barrelTapFermenting(Items.SWEET_BERRIES, 12, DeferredRegistryHandler.BOTTLE_OF_WINE.get());
+	}
+
 	private void createSmokeGrenades() {
 		createSmokeGrenade(DeferredRegistryHandler.SMOKE_GRENADE.get());
 		createColoredSmokeGrenade(DeferredRegistryHandler.SMOKE_GRENADE_BLUE.get(), Tags.Items.DYES_BLUE);
@@ -533,7 +541,7 @@ public class RecipeGenerator extends RecipeProvider {
 		ShapedRecipeBuilder.shaped(DeferredRegistryHandler.PUNJI_STICKS_ITEM.get(), 3)
 				.define('a', Items.DIRT)
 				.define('b', Items.BAMBOO)
-				.define('c', new NBTIngredient(PotionUtils.setPotion(new ItemStack(Items.POTION), Potions.POISON)) {
+				.define('c', new StrictNBTIngredient(PotionUtils.setPotion(new ItemStack(Items.POTION), Potions.POISON)) {
 				})
 				.pattern("bbb")
 				.pattern("bcb")
@@ -1675,6 +1683,15 @@ public class RecipeGenerator extends RecipeProvider {
 				.save(finishedRecipeConsumer);
 	}
 
+	private static void createBurnedOakChestBoat(ItemLike chestBoatItem, ItemLike boatItem) {
+		ShapelessRecipeBuilder.shapeless(chestBoatItem)
+				.requires(boatItem)
+				.requires(Items.CHEST)
+				.group("burned_oak")
+				.unlockedBy("water", insideOf(Blocks.WATER))
+				.save(finishedRecipeConsumer);
+	}
+
 	private static void createBurnedOakButton(ItemLike buttonItem, ItemLike material) {
 		ShapelessRecipeBuilder.shapeless(buttonItem)
 				.requires(material)
@@ -2275,6 +2292,12 @@ public class RecipeGenerator extends RecipeProvider {
 		SmallPartsRecipeBuilder.tinker(Ingredient.of(material), craftables)
 				.unlocks("copper_ingot", has(ForgeItemTagGroups.COPPER_INGOTS))
 				.save(finishedRecipeConsumer, ImmersiveWeapons.MOD_ID + ":" + getTagName(material) + "_tinkering");
+	}
+
+	private static void barrelTapFermenting(ItemLike material, int materialCount, ItemLike result) {
+		BarrelTapRecipeBuilder.fermenting(Ingredient.of(material), materialCount, result.asItem())
+				.unlocks("barrel_tap", has(DeferredRegistryHandler.BARREL_TAP_ITEM.get()))
+				.save(finishedRecipeConsumer, ImmersiveWeapons.MOD_ID + ":" + getItemName(result) + "_fermenting");
 	}
 
 	protected static String getConversionRecipeName(ItemLike pResult, ItemLike pIngredient) {

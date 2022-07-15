@@ -2,7 +2,7 @@ package tech.anonymoushacker1279.immersiveweapons.entity.ai.goal;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.BossEvent.BossBarColor;
 import net.minecraft.world.InteractionHand;
@@ -32,7 +32,6 @@ public class CelestialTowerSummonGoal extends Goal {
 	private final CelestialTowerEntity mob;
 	private int waveSpawnCooldown = 100;
 	private AABB searchBox;
-	private static final double MINION_WAVE_SIZE_MODIFIER = CommonConfig.CELESTIAL_TOWER_MINIONS_WAVE_SIZE_MODIFIER.get();
 
 	public CelestialTowerSummonGoal(CelestialTowerEntity pMob) {
 		mob = pMob;
@@ -54,7 +53,7 @@ public class CelestialTowerSummonGoal extends Goal {
 	public void tick() {
 		if (mob.getWavesSpawned() < mob.getTotalWavesToSpawn() && waveSpawnCooldown <= 0) {
 			int mobsToSpawn = (GeneralUtilities.getRandomNumber(8, 12 + mob.getWavesSpawned())) * mob.getWaveSizeModifier(); // Get the total mobs to spawn
-			mobsToSpawn = (int) (mobsToSpawn * MINION_WAVE_SIZE_MODIFIER); // Modify by the configuration option of setting wave sizes
+			mobsToSpawn = (int) (mobsToSpawn * CommonConfig.CELESTIAL_TOWER_MINIONS_WAVE_SIZE_MODIFIER.get()); // Modify by the configuration option of setting wave sizes
 			int fodderMobsToSpawn = (int) (mobsToSpawn * 0.3f); // Get the number of "fodder" mobs to spawn
 			mobsToSpawn = mobsToSpawn - fodderMobsToSpawn; // Reduce the total number left to spawn
 			int powerMobsToSpawn = isWavesPastHalf() ? (int) (mobsToSpawn * 0.2f) : 0; // Get the number of "power" mobs to spawn, if over halfway through the waves
@@ -156,7 +155,7 @@ public class CelestialTowerSummonGoal extends Goal {
 
 			mob.setWavesSpawned(mob.getWavesSpawned() + 1); // Increment the total spawned waves
 			mob.bossEvent.setProgress((float) mob.getWavesSpawned() / mob.getTotalWavesToSpawn());
-			mob.bossEvent.setName(new TranslatableComponent("immersiveweapons.boss.celestial_tower.waves",
+			mob.bossEvent.setName(Component.translatable("immersiveweapons.boss.celestial_tower.waves",
 					mob.getWavesSpawned(),
 					mob.getTotalWavesToSpawn()));
 

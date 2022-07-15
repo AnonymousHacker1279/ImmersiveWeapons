@@ -1,5 +1,6 @@
 {
 	"credit": "Made with Blockbench",
+	"render_type": "minecraft:translucent",
 	"textures": {
 		"0": "minecraft:block/netherite_block",
 		"1": "immersiveweapons:custom/gold_32x",

@@ -1,0 +1,34 @@
+{
+  "variants": {
+    "facing=east,waterlogged=false": {
+      "model": "immersiveweapons:block/canadian_flag",
+      "y": 90
+    },
+    "facing=east,waterlogged=true": {
+      "model": "immersiveweapons:block/canadian_flag",
+      "y": 90
+    },
+    "facing=north,waterlogged=false": {
+      "model": "immersiveweapons:block/canadian_flag"
+    },
+    "facing=north,waterlogged=true": {
+      "model": "immersiveweapons:block/canadian_flag"
+    },
+    "facing=south,waterlogged=false": {
+      "model": "immersiveweapons:block/canadian_flag",
+      "y": 180
+    },
+    "facing=south,waterlogged=true": {
+      "model": "immersiveweapons:block/canadian_flag",
+      "y": 180
+    },
+    "facing=west,waterlogged=false": {
+      "model": "immersiveweapons:block/canadian_flag",
+      "y": 270
+    },
+    "facing=west,waterlogged=true": {
+      "model": "immersiveweapons:block/canadian_flag",
+      "y": 270
+    }
+  }
+}

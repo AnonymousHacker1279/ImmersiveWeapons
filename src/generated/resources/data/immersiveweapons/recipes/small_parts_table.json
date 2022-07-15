@@ -1,9 +1,5 @@
 {
   "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "aca",
-    "aba"
-  ],
   "key": {
     "a": {
       "tag": "forge:ingots/iron"
@@ -15,6 +11,10 @@
       "tag": "forge:ingots/copper"
     }
   },
+  "pattern": [
+    "aca",
+    "aba"
+  ],
   "result": {
     "item": "immersiveweapons:small_parts_table"
   }

@@ -24,7 +24,7 @@ import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
 public class WarriorStatueHead extends HorizontalDirectionalBlock implements SimpleWaterloggedBlock {
 
 	public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
-	private static final BooleanProperty POWERED = BlockStateProperties.POWERED;
+	public static final BooleanProperty POWERED = BlockStateProperties.POWERED;
 	private static final VoxelShape SHAPE_NS = Block.box(3.0D, 0.0D, 3.0D, 13.0D, 11.0D, 10.0D);
 	private static final VoxelShape SHAPE_EW = Block.box(3.0D, 0.0D, 3.0D, 10.0D, 11.0D, 13.0D);
 

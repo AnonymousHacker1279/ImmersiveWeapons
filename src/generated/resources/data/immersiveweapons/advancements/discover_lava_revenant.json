@@ -1,34 +1,34 @@
 {
   "parent": "immersiveweapons:entity_discovery",
+  "criteria": {
+    "discover": {
+      "conditions": {
+        "entity": "immersiveweapons:lava_revenant"
+      },
+      "trigger": "immersiveweapons:entity_discovered"
+    }
+  },
   "display": {
-    "icon": {
-      "item": "immersiveweapons:sulfur"
-    },
-    "title": {
-      "translate": "advancements.immersiveweapons.discover_lava_revenant.title"
-    },
+    "announce_to_chat": true,
     "description": {
       "translate": "advancements.immersiveweapons.discover_lava_revenant.description"
     },
     "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "immersiveweapons:sulfur"
+    },
     "show_toast": true,
-    "announce_to_chat": true,
-    "hidden": false
-  },
-  "rewards": {
-    "experience": 20
-  },
-  "criteria": {
-    "discover": {
-      "trigger": "immersiveweapons:entity_discovered",
-      "conditions": {
-        "entity": "immersiveweapons:lava_revenant"
-      }
+    "title": {
+      "translate": "advancements.immersiveweapons.discover_lava_revenant.title"
     }
   },
   "requirements": [
     [
       "discover"
     ]
-  ]
+  ],
+  "rewards": {
+    "experience": 20
+  }
 }

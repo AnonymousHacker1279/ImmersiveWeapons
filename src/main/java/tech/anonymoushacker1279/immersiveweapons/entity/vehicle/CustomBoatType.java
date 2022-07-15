@@ -1,50 +1,43 @@
 package tech.anonymoushacker1279.immersiveweapons.entity.vehicle;
 
-import net.minecraft.world.level.ItemLike;
+import net.minecraft.world.level.block.Block;
+import tech.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
 
-import java.util.ArrayList;
-import java.util.List;
+public enum CustomBoatType {
+	BURNED_OAK(DeferredRegistryHandler.BURNED_OAK_PLANKS.get(), "burned_oak"),
+	BURNED_OAK_CHEST(DeferredRegistryHandler.BURNED_OAK_PLANKS.get(), "burned_oak_chest");
 
-public class CustomBoatType {
-	private static final List<CustomBoatType> VALUES = new ArrayList<>(1);
-	private final int id;
+	private final Block block;
 	private final String name;
-	private ItemLike boatItem;
 
-	private CustomBoatType(int id, String name) {
-		this.id = id;
+	CustomBoatType(Block block, String name) {
+		this.block = block;
 		this.name = name;
 	}
 
-	public static CustomBoatType register(String name) {
-		CustomBoatType type = new CustomBoatType(VALUES.size(), name);
-		VALUES.add(type);
-		return type;
-	}
+	public static CustomBoatType byId(int id) {
+		CustomBoatType[] type = values();
+		if (id < 0 || id >= type.length) {
+			id = 0;
+		}
 
-	public static CustomBoatType byId(int integer) {
-		return VALUES.get(integer);
+		return type[id];
 	}
 
 	public static CustomBoatType getTypeFromString(String typeName) {
-		for (CustomBoatType type : VALUES) {
-			if (type.getName().equals(typeName)) {
-				return type;
+		CustomBoatType[] type = values();
+
+		for (CustomBoatType customBoatType : type) {
+			if (customBoatType.getName().equals(typeName)) {
+				return customBoatType;
 			}
 		}
-		return VALUES.get(0);
+
+		return type[0];
 	}
 
-	public int getId() {
-		return id;
-	}
-
-	public ItemLike getBoatItem() {
-		return boatItem;
-	}
-
-	public void setBoatItem(ItemLike boatItem) {
-		this.boatItem = boatItem;
+	public Block getBlock() {
+		return block;
 	}
 
 	public String getName() {

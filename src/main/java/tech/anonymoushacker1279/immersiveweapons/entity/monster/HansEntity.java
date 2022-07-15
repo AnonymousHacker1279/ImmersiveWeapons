@@ -1,6 +1,7 @@
 package tech.anonymoushacker1279.immersiveweapons.entity.monster;
 
 import net.minecraft.sounds.SoundEvent;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.damagesource.DamageSource;
@@ -82,22 +83,12 @@ public class HansEntity extends AbstractWanderingWarriorEntity {
 	}
 
 	/**
-	 * Get the step sound.
-	 *
-	 * @return SoundEvent
-	 */
-	@Override
-	protected SoundEvent getStepSound() {
-		return DeferredRegistryHandler.WANDERING_WARRIOR_STEP.get();
-	}
-
-	/**
 	 * Gives armor or weapon for entity based on given DifficultyInstance
 	 *
 	 * @param difficulty the <code>DifficultyInstance</code> of the world
 	 */
 	@Override
-	public void populateDefaultEquipmentSlots(@NotNull DifficultyInstance difficulty) {
+	public void populateDefaultEquipmentSlots(@NotNull RandomSource random, @NotNull DifficultyInstance difficulty) {
 		setItemSlot(EquipmentSlot.HEAD, new ItemStack(Items.IRON_HELMET));
 		setItemInHand(InteractionHand.MAIN_HAND, new ItemStack(Items.IRON_SWORD));
 	}

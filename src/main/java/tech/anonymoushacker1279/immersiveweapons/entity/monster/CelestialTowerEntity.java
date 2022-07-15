@@ -5,7 +5,6 @@ import net.minecraft.core.Vec3i;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.server.level.ServerBossEvent;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
@@ -46,7 +45,6 @@ public class CelestialTowerEntity extends Monster implements GrantAdvancementOnD
 	private int waveSizeModifier = 1;
 	private int wavesSpawned = 0;
 	private boolean doneSpawningWaves = false;
-	private static final int SPAWN_CHECK_RADIUS = CommonConfig.CELESTIAL_TOWER_SPAWN_CHECK_RADIUS.get();
 
 	public CelestialTowerEntity(EntityType<? extends Monster> type, Level level) {
 		super(type, level);
@@ -184,7 +182,7 @@ public class CelestialTowerEntity extends Monster implements GrantAdvancementOnD
 		doneSpawningWaves = pCompound.getBoolean("doneSpawningWaves");
 
 		if (wavesSpawned > 0) {
-			bossEvent.setName(new TranslatableComponent("immersiveweapons.boss.celestial_tower.waves", wavesSpawned,
+			bossEvent.setName(Component.translatable("immersiveweapons.boss.celestial_tower.waves", wavesSpawned,
 					totalWavesToSpawn));
 			bossEvent.setProgress((float) wavesSpawned / totalWavesToSpawn);
 		}
@@ -233,7 +231,9 @@ public class CelestialTowerEntity extends Monster implements GrantAdvancementOnD
 
 		for (BlockPos lanternPos : ALL_TILTROS_LANTERNS) {
 			if (nearbyLanterns < 3) {
-				if (lanternPos.distManhattan(new Vec3i(position.x, position.y, position.z)) < SPAWN_CHECK_RADIUS) {
+				if (lanternPos.distManhattan(new Vec3i(position.x, position.y, position.z)) <
+						CommonConfig.CELESTIAL_TOWER_SPAWN_CHECK_RADIUS.get()) {
+					
 					nearbyLanterns++;
 				}
 			}

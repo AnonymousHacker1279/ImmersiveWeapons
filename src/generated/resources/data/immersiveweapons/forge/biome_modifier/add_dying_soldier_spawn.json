@@ -1,0 +1,10 @@
+{
+  "type": "forge:add_spawns",
+  "biomes": "#immersiveweapons:is_battlefield",
+  "spawners": {
+    "type": "immersiveweapons:dying_soldier",
+    "maxCount": 3,
+    "minCount": 1,
+    "weight": 95
+  }
+}

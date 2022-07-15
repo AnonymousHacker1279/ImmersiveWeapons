@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "lit=false": {
+      "model": "immersiveweapons:block/spotlight_wall_unlit"
+    },
+    "lit=true": {
+      "model": "immersiveweapons:block/spotlight_wall_lit"
+    }
+  }
+}

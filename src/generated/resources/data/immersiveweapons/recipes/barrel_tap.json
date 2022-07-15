@@ -1,11 +1,6 @@
 {
   "type": "minecraft:crafting_shaped",
   "group": "barrel_tap",
-  "pattern": [
-    "  b",
-    "aaa",
-    "  a"
-  ],
   "key": {
     "a": {
       "tag": "forge:ingots/iron"
@@ -14,6 +9,11 @@
       "tag": "forge:nuggets/metal"
     }
   },
+  "pattern": [
+    "  b",
+    "aaa",
+    "  a"
+  ],
   "result": {
     "item": "immersiveweapons:barrel_tap"
   }

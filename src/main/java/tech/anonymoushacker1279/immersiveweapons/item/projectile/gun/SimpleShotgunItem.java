@@ -24,11 +24,11 @@ public class SimpleShotgunItem extends AbstractGunItem {
 	}
 
 	@Override
-	protected void fireBullets(AbstractBulletItem bulletItem, Level level, ItemStack ammo, Player player, ItemStack firingItem) {
-		BulletEntity bulletEntity = bulletItem.createBullet(level, ammo, player);
+	protected void fireBullets(AbstractBulletItem bulletItem, Level level, Player player, ItemStack firingItem) {
+		BulletEntity bulletEntity = bulletItem.createBullet(level, player);
 
 		bulletEntity.setFiringItem(firingItem.getItem());
-		
+
 		bulletEntity.shootFromRotation(player,
 				player.xRot + GeneralUtilities.getRandomNumber(-5.0f, 5.0f),
 				player.yRot + GeneralUtilities.getRandomNumber(-5.0f, 5.0f),

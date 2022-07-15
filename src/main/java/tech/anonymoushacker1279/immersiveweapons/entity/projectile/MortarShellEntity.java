@@ -18,7 +18,7 @@ import net.minecraft.world.phys.*;
 import net.minecraftforge.event.ForgeEventFactory;
 import net.minecraftforge.network.NetworkHooks;
 import org.jetbrains.annotations.NotNull;
-import tech.anonymoushacker1279.immersiveweapons.block.base.MortarBlock;
+import tech.anonymoushacker1279.immersiveweapons.block.MortarBlock;
 import tech.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
 
 public class MortarShellEntity extends Projectile implements ItemSupplier {

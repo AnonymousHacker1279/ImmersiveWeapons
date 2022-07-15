@@ -3,15 +3,12 @@ package tech.anonymoushacker1279.immersiveweapons.entity.projectile;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.util.Mth;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.projectile.ItemSupplier;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 import tech.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
@@ -39,33 +36,21 @@ public class BulletEntities {
 		/**
 		 * Constructor for WoodBulletEntity.
 		 *
-		 * @param shooter         the <code>LivingEntity</code> shooting the entity
-		 * @param world           the <code>World</code> the entity is in
-		 * @param referenceItemIn the reference item
+		 * @param shooter the <code>LivingEntity</code> shooting the entity
+		 * @param world   the <code>World</code> the entity is in
 		 */
-		public WoodenMusketBallEntity(LivingEntity shooter, Level world, Item referenceItemIn) {
+		public WoodenMusketBallEntity(LivingEntity shooter, Level world) {
 			super(DeferredRegistryHandler.WOODEN_MUSKET_BALL_ENTITY.get(), shooter, world);
-			referenceItem = referenceItemIn;
+			referenceItem = DeferredRegistryHandler.WOODEN_MUSKET_BALL.get();
 		}
 
-		/**
-		 * Fire the entity from a position with a velocity and inaccuracy.
-		 *
-		 * @param x          the X position
-		 * @param y          the Y position
-		 * @param z          the Z position
-		 * @param velocity   the velocity
-		 * @param inaccuracy the inaccuracy modifier
-		 */
 		@Override
-		public void shoot(double x, double y, double z, float velocity, float inaccuracy) {
-			Vec3 vector3d = (new Vec3(x, y, z)).normalize().add(random.nextGaussian() * 0.0075F * (GeneralUtilities.getRandomNumber(3.2f, 5.1f)), -0.0095F * (GeneralUtilities.getRandomNumber(3.2f, 5.1f)), random.nextGaussian() * 0.0075F).scale(velocity);
-			setDeltaMovement(vector3d);
-			double horizontalDistanceSqr = vector3d.horizontalDistanceSqr();
-			float yRot = (float) (Mth.atan2(vector3d.x, vector3d.z) * (180F / (float) Math.PI));
-			float xRot = (float) (Mth.atan2(vector3d.y, horizontalDistanceSqr) * (180F / (float) Math.PI));
-			yRotO = yRot;
-			xRotO = xRot;
+		protected Vec3 getShootingVector(double x, double y, double z, float velocity, float inaccuracy) {
+			return new Vec3(x, y, z)
+					.normalize()
+					.add(random.nextGaussian() * 0.0075F * (GeneralUtilities.getRandomNumber(3.2f, 5.1f)),
+							-0.0095F * (GeneralUtilities.getRandomNumber(3.2f, 5.1f)),
+							random.nextGaussian() * 0.0075F).scale(velocity);
 		}
 
 		@Override
@@ -91,33 +76,21 @@ public class BulletEntities {
 		/**
 		 * Constructor for StoneBulletEntity.
 		 *
-		 * @param shooter         the <code>LivingEntity</code> shooting the entity
-		 * @param world           the <code>World</code> the entity is in
-		 * @param referenceItemIn the reference item
+		 * @param shooter the <code>LivingEntity</code> shooting the entity
+		 * @param world   the <code>World</code> the entity is in
 		 */
-		public StoneMusketBallEntity(LivingEntity shooter, Level world, Item referenceItemIn) {
+		public StoneMusketBallEntity(LivingEntity shooter, Level world) {
 			super(DeferredRegistryHandler.STONE_MUSKET_BALL_ENTITY.get(), shooter, world);
-			referenceItem = referenceItemIn;
+			referenceItem = DeferredRegistryHandler.STONE_MUSKET_BALL.get();
 		}
 
-		/**
-		 * Fire the entity from a position with a velocity and inaccuracy.
-		 *
-		 * @param x          the X position
-		 * @param y          the Y position
-		 * @param z          the Z position
-		 * @param velocity   the velocity
-		 * @param inaccuracy the inaccuracy modifier
-		 */
 		@Override
-		public void shoot(double x, double y, double z, float velocity, float inaccuracy) {
-			Vec3 vector3d = (new Vec3(x, y, z)).normalize().add(random.nextGaussian() * 0.0075F * (GeneralUtilities.getRandomNumber(2.4f, 4.1f)), -0.0170F * (GeneralUtilities.getRandomNumber(2.4f, 4.1f)), random.nextGaussian() * 0.0075F).scale(velocity);
-			setDeltaMovement(vector3d);
-			double horizontalDistanceSqr = vector3d.horizontalDistanceSqr();
-			float yRot = (float) (Mth.atan2(vector3d.x, vector3d.z) * (180F / (float) Math.PI));
-			float xRot = (float) (Mth.atan2(vector3d.y, horizontalDistanceSqr) * (180F / (float) Math.PI));
-			yRotO = yRot;
-			xRotO = xRot;
+		protected Vec3 getShootingVector(double x, double y, double z, float velocity, float inaccuracy) {
+			return new Vec3(x, y, z)
+					.normalize()
+					.add(random.nextGaussian() * 0.0075F * (GeneralUtilities.getRandomNumber(2.4f, 4.1f)),
+							-0.0170F * (GeneralUtilities.getRandomNumber(2.4f, 4.1f)),
+							random.nextGaussian() * 0.0075F).scale(velocity);
 		}
 
 		@Override
@@ -143,33 +116,21 @@ public class BulletEntities {
 		/**
 		 * Constructor for GoldBulletEntity.
 		 *
-		 * @param shooter         the <code>LivingEntity</code> shooting the entity
-		 * @param world           the <code>World</code> the entity is in
-		 * @param referenceItemIn the reference item
+		 * @param shooter the <code>LivingEntity</code> shooting the entity
+		 * @param world   the <code>World</code> the entity is in
 		 */
-		public GoldenMusketBallEntity(LivingEntity shooter, Level world, Item referenceItemIn) {
+		public GoldenMusketBallEntity(LivingEntity shooter, Level world) {
 			super(DeferredRegistryHandler.GOLDEN_MUSKET_BALL_ENTITY.get(), shooter, world);
-			referenceItem = referenceItemIn;
+			referenceItem = DeferredRegistryHandler.GOLDEN_MUSKET_BALL.get();
 		}
 
-		/**
-		 * Fire the entity from a position with a velocity and inaccuracy.
-		 *
-		 * @param x          the X position
-		 * @param y          the Y position
-		 * @param z          the Z position
-		 * @param velocity   the velocity
-		 * @param inaccuracy the inaccuracy modifier
-		 */
 		@Override
-		public void shoot(double x, double y, double z, float velocity, float inaccuracy) {
-			Vec3 vector3d = (new Vec3(x, y, z)).normalize().add(random.nextGaussian() * 0.0025F * (GeneralUtilities.getRandomNumber(0.2f, 1.1f)), 0.00025F * (GeneralUtilities.getRandomNumber(0.2f, 1.1f)), random.nextGaussian() * 0.0025F).scale(velocity);
-			setDeltaMovement(vector3d);
-			double horizontalDistanceSqr = vector3d.horizontalDistanceSqr();
-			float yRot = (float) (Mth.atan2(vector3d.x, vector3d.z) * (180F / (float) Math.PI));
-			float xRot = (float) (Mth.atan2(vector3d.y, horizontalDistanceSqr) * (180F / (float) Math.PI));
-			yRotO = yRot;
-			xRotO = xRot;
+		protected Vec3 getShootingVector(double x, double y, double z, float velocity, float inaccuracy) {
+			return new Vec3(x, y, z)
+					.normalize()
+					.add(random.nextGaussian() * 0.0025F * (GeneralUtilities.getRandomNumber(0.2f, 1.1f)),
+							0.0025F * (GeneralUtilities.getRandomNumber(0.2f, 1.1f)),
+							random.nextGaussian() * 0.0025F).scale(velocity);
 		}
 
 		@Override
@@ -196,33 +157,21 @@ public class BulletEntities {
 		/**
 		 * Constructor for CopperBulletEntity.
 		 *
-		 * @param shooter         the <code>LivingEntity</code> shooting the entity
-		 * @param world           the <code>World</code> the entity is in
-		 * @param referenceItemIn the reference item
+		 * @param shooter the <code>LivingEntity</code> shooting the entity
+		 * @param world   the <code>World</code> the entity is in
 		 */
-		public CopperMusketBallEntity(LivingEntity shooter, Level world, Item referenceItemIn) {
+		public CopperMusketBallEntity(LivingEntity shooter, Level world) {
 			super(DeferredRegistryHandler.COPPER_MUSKET_BALL_ENTITY.get(), shooter, world);
-			referenceItem = referenceItemIn;
+			referenceItem = DeferredRegistryHandler.COPPER_MUSKET_BALL.get();
 		}
 
-		/**
-		 * Fire the entity from a position with a velocity and inaccuracy.
-		 *
-		 * @param x          the X position
-		 * @param y          the Y position
-		 * @param z          the Z position
-		 * @param velocity   the velocity
-		 * @param inaccuracy the inaccuracy modifier
-		 */
 		@Override
-		public void shoot(double x, double y, double z, float velocity, float inaccuracy) {
-			Vec3 vector3d = (new Vec3(x, y, z)).normalize().add(random.nextGaussian() * 0.0025F * (GeneralUtilities.getRandomNumber(0.2f, 1.1f)), 0.00025F * (GeneralUtilities.getRandomNumber(0.2f, 1.1f)), random.nextGaussian() * 0.0025F).scale(velocity);
-			setDeltaMovement(vector3d);
-			double horizontalDistanceSqr = vector3d.horizontalDistanceSqr();
-			float yRot = (float) (Mth.atan2(vector3d.x, vector3d.z) * (180F / (float) Math.PI));
-			float xRot = (float) (Mth.atan2(vector3d.y, horizontalDistanceSqr) * (180F / (float) Math.PI));
-			yRotO = yRot;
-			xRotO = xRot;
+		protected Vec3 getShootingVector(double x, double y, double z, float velocity, float inaccuracy) {
+			return new Vec3(x, y, z)
+					.normalize()
+					.add(random.nextGaussian() * 0.0025F * (GeneralUtilities.getRandomNumber(0.2f, 1.1f)),
+							0.0025F * (GeneralUtilities.getRandomNumber(0.2f, 1.1f)),
+							random.nextGaussian() * 0.0025F).scale(velocity);
 		}
 
 		@Override
@@ -248,33 +197,21 @@ public class BulletEntities {
 		/**
 		 * Constructor for IronBulletEntity.
 		 *
-		 * @param shooter         the <code>LivingEntity</code> shooting the entity
-		 * @param world           the <code>World</code> the entity is in
-		 * @param referenceItemIn the reference item
+		 * @param shooter the <code>LivingEntity</code> shooting the entity
+		 * @param world   the <code>World</code> the entity is in
 		 */
-		public IronMusketBallEntity(LivingEntity shooter, Level world, Item referenceItemIn) {
+		public IronMusketBallEntity(LivingEntity shooter, Level world) {
 			super(DeferredRegistryHandler.IRON_MUSKET_BALL_ENTITY.get(), shooter, world);
-			referenceItem = referenceItemIn;
+			referenceItem = DeferredRegistryHandler.IRON_MUSKET_BALL.get();
 		}
 
-		/**
-		 * Fire the entity from a position with a velocity and inaccuracy.
-		 *
-		 * @param x          the X position
-		 * @param y          the Y position
-		 * @param z          the Z position
-		 * @param velocity   the velocity
-		 * @param inaccuracy the inaccuracy modifier
-		 */
 		@Override
-		public void shoot(double x, double y, double z, float velocity, float inaccuracy) {
-			Vec3 vector3d = (new Vec3(x, y, z)).normalize().add(random.nextGaussian() * 0.0025F * (GeneralUtilities.getRandomNumber(0.2f, 1.1f)), 0.00025F * (GeneralUtilities.getRandomNumber(0.2f, 1.1f)), random.nextGaussian() * 0.0025F).scale(velocity);
-			setDeltaMovement(vector3d);
-			double horizontalDistanceSqr = vector3d.horizontalDistanceSqr();
-			float yRot = (float) (Mth.atan2(vector3d.x, vector3d.z) * (180F / (float) Math.PI));
-			float xRot = (float) (Mth.atan2(vector3d.y, horizontalDistanceSqr) * (180F / (float) Math.PI));
-			yRotO = yRot;
-			xRotO = xRot;
+		protected Vec3 getShootingVector(double x, double y, double z, float velocity, float inaccuracy) {
+			return new Vec3(x, y, z)
+					.normalize()
+					.add(random.nextGaussian() * 0.0025F * (GeneralUtilities.getRandomNumber(0.2f, 1.1f)),
+							0.0025F * (GeneralUtilities.getRandomNumber(0.2f, 1.1f)),
+							random.nextGaussian() * 0.0025F).scale(velocity);
 		}
 
 		@Override
@@ -284,6 +221,7 @@ public class BulletEntities {
 	}
 
 	public static class CobaltMusketBallEntity extends BulletEntity {
+
 		/**
 		 * Constructor for CobaltBulletEntity.
 		 *
@@ -300,33 +238,21 @@ public class BulletEntities {
 		/**
 		 * Constructor for CobaltBulletEntity.
 		 *
-		 * @param shooter         the <code>LivingEntity</code> shooting the entity
-		 * @param world           the <code>World</code> the entity is in
-		 * @param referenceItemIn the reference item
+		 * @param shooter the <code>LivingEntity</code> shooting the entity
+		 * @param world   the <code>World</code> the entity is in
 		 */
-		public CobaltMusketBallEntity(LivingEntity shooter, Level world, Item referenceItemIn) {
+		public CobaltMusketBallEntity(LivingEntity shooter, Level world) {
 			super(DeferredRegistryHandler.COBALT_MUSKET_BALL_ENTITY.get(), shooter, world);
-			referenceItem = referenceItemIn;
+			referenceItem = DeferredRegistryHandler.COBALT_MUSKET_BALL.get();
 		}
 
-		/**
-		 * Fire the entity from a position with a velocity and inaccuracy.
-		 *
-		 * @param x          the X position
-		 * @param y          the Y position
-		 * @param z          the Z position
-		 * @param velocity   the velocity
-		 * @param inaccuracy the inaccuracy modifier
-		 */
 		@Override
-		public void shoot(double x, double y, double z, float velocity, float inaccuracy) {
-			Vec3 vector3d = (new Vec3(x, y, z)).normalize().add(random.nextGaussian() * 0.0025F * (GeneralUtilities.getRandomNumber(0.2f, 1.1f)), 0.00025F * (GeneralUtilities.getRandomNumber(0.2f, 1.1f)), random.nextGaussian() * 0.0025F).scale(velocity);
-			setDeltaMovement(vector3d);
-			double horizontalDistanceSqr = vector3d.horizontalDistanceSqr();
-			float yRot = (float) (Mth.atan2(vector3d.x, vector3d.z) * (180F / (float) Math.PI));
-			float xRot = (float) (Mth.atan2(vector3d.y, horizontalDistanceSqr) * (180F / (float) Math.PI));
-			yRotO = yRot;
-			xRotO = xRot;
+		protected Vec3 getShootingVector(double x, double y, double z, float velocity, float inaccuracy) {
+			return new Vec3(x, y, z)
+					.normalize()
+					.add(random.nextGaussian() * 0.0025F * (GeneralUtilities.getRandomNumber(0.2f, 1.1f)),
+							0.0025F * (GeneralUtilities.getRandomNumber(0.2f, 1.1f)),
+							random.nextGaussian() * 0.0025F).scale(velocity);
 		}
 
 		@Override
@@ -352,13 +278,12 @@ public class BulletEntities {
 		/**
 		 * Constructor for DiamondBulletEntity.
 		 *
-		 * @param shooter         the <code>LivingEntity</code> shooting the entity
-		 * @param world           the <code>World</code> the entity is in
-		 * @param referenceItemIn the reference item
+		 * @param shooter the <code>LivingEntity</code> shooting the entity
+		 * @param world   the <code>World</code> the entity is in
 		 */
-		public DiamondMusketBallEntity(LivingEntity shooter, Level world, Item referenceItemIn) {
+		public DiamondMusketBallEntity(LivingEntity shooter, Level world) {
 			super(DeferredRegistryHandler.DIAMOND_MUSKET_BALL_ENTITY.get(), shooter, world);
-			referenceItem = referenceItemIn;
+			referenceItem = DeferredRegistryHandler.DIAMOND_MUSKET_BALL.get();
 		}
 
 		/**
@@ -371,24 +296,13 @@ public class BulletEntities {
 			return 0.01d;
 		}
 
-		/**
-		 * Fire the entity from a position with a velocity and inaccuracy.
-		 *
-		 * @param x          the X position
-		 * @param y          the Y position
-		 * @param z          the Z position
-		 * @param velocity   the velocity
-		 * @param inaccuracy the inaccuracy modifier
-		 */
 		@Override
-		public void shoot(double x, double y, double z, float velocity, float inaccuracy) {
-			Vec3 vector3d = (new Vec3(x, y, z)).normalize().add(random.nextGaussian() * 0.0025F * (GeneralUtilities.getRandomNumber(0.2f, 0.9f)), 0.00025F * (GeneralUtilities.getRandomNumber(0.2f, 0.9f)), random.nextGaussian() * 0.0025F).scale(velocity);
-			setDeltaMovement(vector3d);
-			double horizontalDistanceSqr = vector3d.horizontalDistanceSqr();
-			float yRot = (float) (Mth.atan2(vector3d.x, vector3d.z) * (180F / (float) Math.PI));
-			float xRot = (float) (Mth.atan2(vector3d.y, horizontalDistanceSqr) * (180F / (float) Math.PI));
-			yRotO = yRot;
-			xRotO = xRot;
+		protected Vec3 getShootingVector(double x, double y, double z, float velocity, float inaccuracy) {
+			return new Vec3(x, y, z)
+					.normalize()
+					.add(random.nextGaussian() * 0.0025F * (GeneralUtilities.getRandomNumber(0.2f, 0.9f)),
+							0.00025F * (GeneralUtilities.getRandomNumber(0.2f, 0.9f)),
+							random.nextGaussian() * 0.0025F).scale(velocity);
 		}
 	}
 
@@ -409,33 +323,21 @@ public class BulletEntities {
 		/**
 		 * Constructor for NetheriteBulletEntity.
 		 *
-		 * @param shooter         the <code>LivingEntity</code> shooting the entity
-		 * @param world           the <code>World</code> the entity is in
-		 * @param referenceItemIn the reference item
+		 * @param shooter the <code>LivingEntity</code> shooting the entity
+		 * @param world   the <code>World</code> the entity is in
 		 */
-		public NetheriteMusketBallEntity(LivingEntity shooter, Level world, Item referenceItemIn) {
+		public NetheriteMusketBallEntity(LivingEntity shooter, Level world) {
 			super(DeferredRegistryHandler.NETHERITE_MUSKET_BALL_ENTITY.get(), shooter, world);
-			referenceItem = referenceItemIn;
+			referenceItem = DeferredRegistryHandler.NETHERITE_MUSKET_BALL.get();
 		}
 
-		/**
-		 * Fire the entity from a position with a velocity and inaccuracy.
-		 *
-		 * @param x          the X position
-		 * @param y          the Y position
-		 * @param z          the Z position
-		 * @param velocity   the velocity
-		 * @param inaccuracy the inaccuracy modifier
-		 */
 		@Override
-		public void shoot(double x, double y, double z, float velocity, float inaccuracy) {
-			Vec3 vector3d = (new Vec3(x, y, z)).normalize().add(random.nextGaussian() * 0.0020F * (GeneralUtilities.getRandomNumber(0.2f, 0.7f)), 0.0020F * (GeneralUtilities.getRandomNumber(0.2f, 0.7f)), random.nextGaussian() * 0.0020F).scale(velocity);
-			setDeltaMovement(vector3d);
-			double horizontalDistanceSqr = vector3d.horizontalDistanceSqr();
-			float yRot = (float) (Mth.atan2(vector3d.x, vector3d.z) * (180F / (float) Math.PI));
-			float xRot = (float) (Mth.atan2(vector3d.y, horizontalDistanceSqr) * (180F / (float) Math.PI));
-			yRotO = yRot;
-			xRotO = xRot;
+		protected Vec3 getShootingVector(double x, double y, double z, float velocity, float inaccuracy) {
+			return new Vec3(x, y, z)
+					.normalize()
+					.add(random.nextGaussian() * 0.002F * (GeneralUtilities.getRandomNumber(0.2f, 0.7f)),
+							0.002F * (GeneralUtilities.getRandomNumber(0.2f, 0.7f)),
+							random.nextGaussian() * 0.002F).scale(velocity);
 		}
 
 		/**
@@ -475,34 +377,24 @@ public class BulletEntities {
 		/**
 		 * Constructor for FlareEntity.
 		 *
-		 * @param shooter         the <code>LivingEntity</code> shooting the entity
-		 * @param world           the <code>World</code> the entity is in
-		 * @param referenceItemIn the reference item
+		 * @param shooter the <code>LivingEntity</code> shooting the entity
+		 * @param world   the <code>World</code> the entity is in
 		 */
-		public FlareEntity(LivingEntity shooter, Level world, Item referenceItemIn) {
+		public FlareEntity(LivingEntity shooter, Level world) {
 			super(DeferredRegistryHandler.FLARE_ENTITY.get(), shooter, world);
-			referenceItem = referenceItemIn;
+			referenceItem = DeferredRegistryHandler.FLARE.get();
 		}
 
-		/**
-		 * Fire the entity from a position with a velocity and inaccuracy.
-		 *
-		 * @param x          the X position
-		 * @param y          the Y position
-		 * @param z          the Z position
-		 * @param velocity   the velocity
-		 * @param inaccuracy the inaccuracy modifier
-		 */
 		@Override
-		public void shoot(double x, double y, double z, float velocity, float inaccuracy) {
-			Vec3 vector3d = (new Vec3(x, y, z)).normalize().add(random.nextGaussian() * 0.0025F * (GeneralUtilities.getRandomNumber(0.2f, 1.1f)), 0.00025F * (GeneralUtilities.getRandomNumber(0.2f, 1.1f)), random.nextGaussian() * 0.0025F).scale(velocity);
-			setDeltaMovement(vector3d);
-			double horizontalDistanceSqr = vector3d.horizontalDistanceSqr();
-			float yRot = (float) (Mth.atan2(vector3d.x, vector3d.z) * (180F / (float) Math.PI));
-			float xRot = (float) (Mth.atan2(vector3d.y, horizontalDistanceSqr) * (180F / (float) Math.PI));
-			yRotO = yRot;
-			xRotO = xRot;
+		protected Vec3 getShootingVector(double x, double y, double z, float velocity, float inaccuracy) {
+			// Set the flare on fire before firing
 			setSecondsOnFire(30);
+
+			return new Vec3(x, y, z)
+					.normalize()
+					.add(random.nextGaussian() * 0.0025F * (GeneralUtilities.getRandomNumber(0.2f, 1.1f)),
+							0.0025F * (GeneralUtilities.getRandomNumber(0.2f, 1.1f)),
+							random.nextGaussian() * 0.0025F).scale(velocity);
 		}
 
 		@Override
@@ -565,11 +457,10 @@ public class BulletEntities {
 		/**
 		 * Runs when an entity is hit.
 		 *
-		 * @param entity          the <code>Entity</code> being hit
-		 * @param entityHitResult the <code>EntityHitResult</code> of the entity being hit
+		 * @param entity the <code>Entity</code> being hit
 		 */
 		@Override
-		protected void doWhenHitEntity(Entity entity, EntityHitResult entityHitResult) {
+		protected void doWhenHitEntity(Entity entity) {
 			hasHitEntity = true;
 			entity.setSecondsOnFire(6);
 		}

@@ -4,12 +4,11 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.network.NetworkRegistry;
 import net.minecraftforge.network.simple.SimpleChannel;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
-import tech.anonymoushacker1279.immersiveweapons.block.base.MortarBlock.MortarBlockPacketHandler;
+import tech.anonymoushacker1279.immersiveweapons.block.MortarBlock.MortarBlockPacketHandler;
+import tech.anonymoushacker1279.immersiveweapons.block.SpikeTrapBlock.SpikeTrapBlockPacketHandler;
 import tech.anonymoushacker1279.immersiveweapons.block.misc.warrior_statue.WarriorStatueTorso.WarriorStatueTorsoPacketHandler;
-import tech.anonymoushacker1279.immersiveweapons.block.trap.SpikeTrapBlock.SpikeTrapBlockPacketHandler;
 import tech.anonymoushacker1279.immersiveweapons.entity.monster.lava_revenant.LavaRevenantEntity.LavaRevenantEntityPacketHandler;
 import tech.anonymoushacker1279.immersiveweapons.entity.neutral.AbstractFieldMedicEntity.AbstractFieldMedicEntityPacketHandler;
-import tech.anonymoushacker1279.immersiveweapons.entity.projectile.CustomArrowEntity.SmokeGrenadeArrowEntityPacketHandler;
 import tech.anonymoushacker1279.immersiveweapons.entity.projectile.SmokeGrenadeEntity.SmokeGrenadeEntityPacketHandler;
 import tech.anonymoushacker1279.immersiveweapons.item.armor.CobaltArmorItem.CobaltArmorItemPacketHandler;
 import tech.anonymoushacker1279.immersiveweapons.item.armor.TeslaArmorItem.TeslaArmorItemPacketHandler;
@@ -38,12 +37,6 @@ public class PacketHandler {
 				SmokeGrenadeEntityPacketHandler::encode,
 				SmokeGrenadeEntityPacketHandler::decode,
 				SmokeGrenadeEntityPacketHandler::handle
-		);
-		PacketHandler.INSTANCE.registerMessage(networkId++,
-				SmokeGrenadeArrowEntityPacketHandler.class,
-				SmokeGrenadeArrowEntityPacketHandler::encode,
-				SmokeGrenadeArrowEntityPacketHandler::decode,
-				SmokeGrenadeArrowEntityPacketHandler::handle
 		);
 		PacketHandler.INSTANCE.registerMessage(networkId++,
 				CobaltArmorItemPacketHandler.class,

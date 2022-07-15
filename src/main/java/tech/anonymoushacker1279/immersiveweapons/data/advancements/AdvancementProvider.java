@@ -1,8 +1,7 @@
 package tech.anonymoushacker1279.immersiveweapons.data.advancements;
 
+import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Sets;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import net.minecraft.advancements.Advancement;
 import net.minecraft.data.*;
 import net.minecraft.resources.ResourceLocation;
@@ -17,18 +16,16 @@ import java.util.function.Consumer;
 
 public class AdvancementProvider implements DataProvider {
 
-	private static final Gson GSON = (new GsonBuilder()).setPrettyPrinting().create();
 	private final DataGenerator generator;
-	private final List<Consumer<Consumer<Advancement>>> tabs;
+	private final List<Consumer<Consumer<Advancement>>> tabs = ImmutableList.of(new IWAdvancements());
 
 	/**
 	 * Constructor for AdvancementProvider.
 	 *
 	 * @param dataGenerator the <code>DataGenerator</code> instance
 	 */
-	public AdvancementProvider(DataGenerator dataGenerator, List<Consumer<Consumer<Advancement>>> advancements) {
+	public AdvancementProvider(DataGenerator dataGenerator) {
 		generator = dataGenerator;
-		tabs = advancements;
 	}
 
 	/**
@@ -46,10 +43,10 @@ public class AdvancementProvider implements DataProvider {
 	/**
 	 * Run the model provider.
 	 *
-	 * @param hashCache the <code>HashCache</code> instance
+	 * @param cachedOutput the <code>CachedOutput</code> instance
 	 */
 	@Override
-	public void run(@NotNull HashCache hashCache) {
+	public void run(@NotNull CachedOutput cachedOutput) {
 		Path outputFolder = generator.getOutputFolder();
 		Set<ResourceLocation> resourceLocations = Sets.newHashSet();
 		Consumer<Advancement> advancementConsumer = (advancement) -> {
@@ -59,7 +56,7 @@ public class AdvancementProvider implements DataProvider {
 				Path path = createPath(outputFolder, advancement);
 
 				try {
-					DataProvider.save(GSON, hashCache, advancement.deconstruct().serializeToJson(), path);
+					DataProvider.saveStable(cachedOutput, advancement.deconstruct().serializeToJson(), path);
 				} catch (IOException exception) {
 					ImmersiveWeapons.LOGGER.error("Couldn't save advancement {}", path, exception);
 				}

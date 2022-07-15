@@ -1,14 +1,14 @@
 {
   "type": "minecraft:crafting_shaped",
   "group": "burned_oak",
-  "pattern": [
-    "aa "
-  ],
   "key": {
     "a": {
       "item": "immersiveweapons:burned_oak_planks"
     }
   },
+  "pattern": [
+    "aa "
+  ],
   "result": {
     "item": "immersiveweapons:burned_oak_pressure_plate"
   }
