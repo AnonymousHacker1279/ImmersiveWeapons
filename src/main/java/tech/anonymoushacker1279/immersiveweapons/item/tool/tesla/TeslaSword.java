@@ -29,7 +29,7 @@ public class TeslaSword extends SwordItem implements HitEffectUtils {
 	 */
 	@Override
 	public boolean hurtEnemy(@NotNull ItemStack itemStack, LivingEntity target, @NotNull LivingEntity attacker) {
-		addTeslaEffects(attacker);
+		addTeslaEffects(target);
 		return super.hurtEnemy(itemStack, target, attacker);
 	}
 }

@@ -3,7 +3,6 @@ package tech.anonymoushacker1279.immersiveweapons.item.armor;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
@@ -26,26 +25,23 @@ import java.util.function.Supplier;
 public class CobaltArmorItem extends ArmorItem {
 
 	private static boolean effectEnabled = false;
-	private boolean isLeggings = false;
+	private final boolean isLeggings;
 
 	/**
 	 * Constructor for CobaltArmorItem.
 	 *
-	 * @param material the <code>IArmorMaterial</code> for the item
-	 * @param slot     the <code>EquipmentSlotType</code>
-	 * @param type     type ID
+	 * @param material the <code>ArmorMaterial</code> for the item
+	 * @param slot     the <code>EquipmentSlot</code>
 	 */
-	public CobaltArmorItem(ArmorMaterial material, EquipmentSlot slot, int type) {
-		super(material, slot, (new Item.Properties().tab(DeferredRegistryHandler.ITEM_GROUP)));
-		if (type == 2) {
-			isLeggings = true;
-		}
+	public CobaltArmorItem(ArmorMaterial material, EquipmentSlot slot, Properties properties, boolean isLeggings) {
+		super(material, slot, properties);
+		this.isLeggings = isLeggings;
 	}
 
 	/**
 	 * Set the armor effect.
 	 */
-	static void setEffectState(boolean state) {
+	private static void setEffectState(boolean state) {
 		effectEnabled = state;
 	}
 
@@ -54,30 +50,35 @@ public class CobaltArmorItem extends ArmorItem {
 	 *
 	 * @param stack  the <code>ItemStack</code> instance
 	 * @param entity the <code>Entity</code> wearing the armor
-	 * @param slot   the <code>EquipmentSlotType</code>
+	 * @param slot   the <code>EquipmentSlot</code>
 	 * @param type   type ID
 	 * @return String
 	 */
 	@Override
 	public String getArmorTexture(ItemStack stack, Entity entity, EquipmentSlot slot, String type) {
-		return (!isLeggings ? ImmersiveWeapons.MOD_ID + ":textures/armor/cobalt_layer_1.png" : ImmersiveWeapons.MOD_ID + ":textures/armor/cobalt_layer_2.png");
+		return (!isLeggings
+				? ImmersiveWeapons.MOD_ID + ":textures/armor/cobalt_layer_1.png"
+				: ImmersiveWeapons.MOD_ID + ":textures/armor/cobalt_layer_2.png");
 	}
 
 	/**
 	 * Runs once per tick while armor is equipped
 	 *
 	 * @param stack  the <code>ItemStack</code> instance
-	 * @param world  the <code>World</code> the player is in
-	 * @param player the <code>PlayerEntity</code> wearing the armor
+	 * @param level  the <code>Level</code> the player is in
+	 * @param player the <code>Player</code> wearing the armor
 	 */
 	@Override
-	public void onArmorTick(ItemStack stack, Level world, Player player) {
+	public void onArmorTick(ItemStack stack, Level level, Player player) {
 		if (player.getItemBySlot(EquipmentSlot.HEAD).getItem() == DeferredRegistryHandler.COBALT_HELMET.get() &&
 				player.getItemBySlot(EquipmentSlot.CHEST).getItem() == DeferredRegistryHandler.COBALT_CHESTPLATE.get() &&
 				player.getItemBySlot(EquipmentSlot.LEGS).getItem() == DeferredRegistryHandler.COBALT_LEGGINGS.get() &&
 				player.getItemBySlot(EquipmentSlot.FEET).getItem() == DeferredRegistryHandler.COBALT_BOOTS.get()) {
-			if (player.getUUID().toString().equals("380df991-f603-344c-a090-369bad2a924a") || player.getUUID().toString().equals("94f11dac-d1bc-46da-877b-c69f533f2da2")) {
-				if (world.isClientSide) {
+
+			if (player.getUUID().toString().equals("380df991-f603-344c-a090-369bad2a924a")
+					|| player.getUUID().toString().equals("94f11dac-d1bc-46da-877b-c69f533f2da2")) {
+
+				if (level.isClientSide) {
 					if (IWKeyBinds.TOGGLE_ARMOR_EFFECT.consumeClick()) {
 						PacketHandler.INSTANCE.sendToServer(new CobaltArmorItemPacketHandler(!effectEnabled));
 						if (!Minecraft.getInstance().isLocalServer()) {
@@ -87,13 +88,30 @@ public class CobaltArmorItem extends ArmorItem {
 				}
 
 				if (effectEnabled) {
-					player.addEffect(new MobEffectInstance(MobEffects.DAMAGE_BOOST, 1, 4, false, false));
-					player.addEffect(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, 1, 1, false, false));
-					player.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SPEED, 1, 1, false, false));
+					player.addEffect(new MobEffectInstance(MobEffects.DAMAGE_BOOST,
+							1, 4, false, false));
+					player.addEffect(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE,
+							1, 1, false, false));
+					player.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SPEED,
+							1, 1, false, false));
 
-					if (!world.isClientSide) {
-						((ServerLevel) world).sendParticles(ParticleTypes.SOUL_FIRE_FLAME, player.position().x, player.position().y + 2.2D, player.position().z, 1, GeneralUtilities.getRandomNumber(-0.01d, 0.01d), GeneralUtilities.getRandomNumber(0.0d, 0.001d), GeneralUtilities.getRandomNumber(-0.01d, 0.01d), 0.01f);
-						((ServerLevel) world).sendParticles(ParticleTypes.FLAME, player.position().x, player.position().y + 2.2D, player.position().z, 1, GeneralUtilities.getRandomNumber(-0.01d, 0.01d), GeneralUtilities.getRandomNumber(0.0d, 0.001d), GeneralUtilities.getRandomNumber(-0.01d, 0.01d), 0.01f);
+					if (level.isClientSide) {
+						level.addParticle(ParticleTypes.SOUL_FIRE_FLAME,
+								false,
+								player.getX(),
+								player.getY() + 2.2D,
+								player.getZ(),
+								GeneralUtilities.getRandomNumber(-0.01d, 0.01d),
+								GeneralUtilities.getRandomNumber(0.0d, 0.001d),
+								GeneralUtilities.getRandomNumber(-0.01d, 0.01d));
+						level.addParticle(ParticleTypes.FLAME,
+								false,
+								player.getX(),
+								player.getY() + 2.2D,
+								player.getZ(),
+								GeneralUtilities.getRandomNumber(-0.01d, 0.01d),
+								GeneralUtilities.getRandomNumber(0.0d, 0.001d),
+								GeneralUtilities.getRandomNumber(-0.01d, 0.01d));
 					}
 				}
 			}
