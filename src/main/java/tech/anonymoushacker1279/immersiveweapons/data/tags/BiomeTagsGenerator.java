@@ -43,6 +43,16 @@ public class BiomeTagsGenerator extends TagsProvider<Biome> {
 		tag(ImmersiveWeaponsWorldGenTagGroups.IS_BATTLEFIELD)
 				.add(BiomesAndDimensions.BATTLEFIELD);
 
+		tag(ImmersiveWeaponsWorldGenTagGroups.IS_TILTROS_WASTES)
+				.add(BiomesAndDimensions.TILTROS_WASTES);
+
+		tag(ImmersiveWeaponsWorldGenTagGroups.IS_STARLIGHT_PLAINS)
+				.add(BiomesAndDimensions.STARLIGHT_PLAINS);
+
+		tag(ImmersiveWeaponsWorldGenTagGroups.IS_TILTROS)
+				.add(BiomesAndDimensions.TILTROS_WASTES)
+				.add(BiomesAndDimensions.STARLIGHT_PLAINS);
+
 		// Structure tags
 		tag(ImmersiveWeaponsWorldGenTagGroups.HAS_ABANDONED_FACTORY)
 				.addTags(ForgeWorldGenTagGroups.IS_PLAINS, BiomeTags.IS_FOREST);

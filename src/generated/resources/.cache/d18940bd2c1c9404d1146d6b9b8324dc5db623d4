@@ -1,4 +1,4 @@
-// 1.19	2022-07-03T15:25:24.814961	Biome Tags
+// 1.19	2022-07-15T21:08:29.3119556	Biome Tags
 c50b1ecf298ee3b1d8426cab4783914dd52a276e data/forge/tags/worldgen/biome/is_plains.json
 b7856a7c24cb111c6c041fea2fad97bd4b24faa3 data/forge/tags/worldgen/biome/is_wet_cave.json
 5c0d6417dc8d9501750754f0547746a8f45239a0 data/immersiveweapons/tags/worldgen/biome/has_structure/abandoned_factory.json
@@ -15,4 +15,7 @@ c3d4e55bd4ed5d178abb10df76626eccdab7c209 data/immersiveweapons/tags/worldgen/bio
 5c0d6417dc8d9501750754f0547746a8f45239a0 data/immersiveweapons/tags/worldgen/biome/has_structure/underground_bunker.json
 832581beee9dcc935e17a4bf4291e980990d257a data/immersiveweapons/tags/worldgen/biome/has_structure/water_tower.json
 2be0ac7b32b7093ba99664ba566a138efc41ef8b data/immersiveweapons/tags/worldgen/biome/is_battlefield.json
+2316acfd81055d60e980ef4bf242264d44e22e05 data/immersiveweapons/tags/worldgen/biome/is_starlight_plains.json
+a269c5e287ae30f3909fc759047c3cd5127f20fa data/immersiveweapons/tags/worldgen/biome/is_tiltros.json
+f08895b05da05c6e676e3c8eaf43baa1466d052d data/immersiveweapons/tags/worldgen/biome/is_tiltros_wastes.json
 2be0ac7b32b7093ba99664ba566a138efc41ef8b data/minecraft/tags/worldgen/biome/is_overworld.json

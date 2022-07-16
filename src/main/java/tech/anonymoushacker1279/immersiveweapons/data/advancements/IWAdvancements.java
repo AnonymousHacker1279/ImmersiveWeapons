@@ -1137,7 +1137,7 @@ public class IWAdvancements implements Consumer<Consumer<Advancement>> {
 						null, FrameType.GOAL, true, true, false)
 				.addCriterion("visit",
 						PlayerTrigger.TriggerInstance.located(
-								LocationPredicate.inBiome(BiomesAndDimensions.B_TILTROS)))
+								LocationPredicate.inBiome(BiomesAndDimensions.TILTROS_WASTES)))
 				.rewards(AdvancementRewards.Builder.experience(50))
 				.save(consumer, "immersiveweapons:tiltros");
 	}

@@ -1,4 +1,4 @@
-// 1.19	2022-07-05T18:43:23.2207461	Advancements
+// 1.19	2022-07-15T21:05:17.2892065	Advancements
 6a244ca1d2d4c638812b15e6d56aeaabb4d3117f data/immersiveweapons/advancements/activated_warrior_statue.json
 ab3dddd05ada7b6d6101d6eb306d109edf111bd2 data/immersiveweapons/advancements/azul_keystone.json
 6304b82d03e51608b4062e7b5dbe70ac39f339aa data/immersiveweapons/advancements/bamboo.json
@@ -78,7 +78,7 @@ e08efaf1ff15fcd4a73f221ae3f9f9fd2756f7f6 data/immersiveweapons/advancements/tesl
 7ee425ebad74cf8183c1abdd2ed0d020b33c1fb2 data/immersiveweapons/advancements/tesla_sword.json
 d74d2d5d47c25478559b8c7c21988747f3c95483 data/immersiveweapons/advancements/tesla_synthesizer.json
 97941c3b395543413b8f2df1ba61ddd6a55189c0 data/immersiveweapons/advancements/tesla_tools.json
-ef522baa099b6b7e4f1bf2ea795528038b046e70 data/immersiveweapons/advancements/tiltros.json
+9a88cb24f5a80d14c87600fb11fa7b08afcf98d5 data/immersiveweapons/advancements/tiltros.json
 2d46c5418a3629049ba8874764276627bc856f73 data/immersiveweapons/advancements/tool_rod.json
 c5f807c8f917905e4b248c18485967829b454af9 data/immersiveweapons/advancements/traps.json
 84597d25ad42eb7757a13fa9ca0ab4ab892fce3c data/immersiveweapons/advancements/used_syringe.json

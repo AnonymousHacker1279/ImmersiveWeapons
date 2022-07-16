@@ -33,7 +33,7 @@
 		"shape": {
 			"distance_factor": {
 				"type": "minecraft:constant",
-				"value": 35
+				"value": 15
 			},
 			"thickness": {
 				"type": "minecraft:constant",

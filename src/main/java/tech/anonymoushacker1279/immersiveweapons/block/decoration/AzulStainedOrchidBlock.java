@@ -40,8 +40,8 @@ public class AzulStainedOrchidBlock extends FlowerBlock {
 				}
 				Level entityWorld = entity.level;
 				MinecraftServer server = entityWorld.getServer();
-				ResourceKey<Level> destination = entityWorld.dimension() == BiomesAndDimensions.D_TILTROS ? Level.OVERWORLD
-						: BiomesAndDimensions.D_TILTROS;
+				ResourceKey<Level> destination = entityWorld.dimension() == BiomesAndDimensions.TILTROS ? Level.OVERWORLD
+						: BiomesAndDimensions.TILTROS;
 
 				if (server != null) {
 					ServerLevel destinationWorld = server.getLevel(destination);

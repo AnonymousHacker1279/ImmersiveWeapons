@@ -33,8 +33,8 @@ public class TiltrosTeleporter implements ITeleporter {
 	@Nullable
 	@Override
 	public PortalInfo getPortalInfo(Entity entity, ServerLevel level, Function<ServerLevel, PortalInfo> defaultPortalInfo) {
-		boolean destinationIsUG = level.dimension() == BiomesAndDimensions.D_TILTROS;
-		if (entity.level.dimension() != BiomesAndDimensions.D_TILTROS && !destinationIsUG) {
+		boolean destinationIsUG = level.dimension() == BiomesAndDimensions.TILTROS;
+		if (entity.level.dimension() != BiomesAndDimensions.TILTROS && !destinationIsUG) {
 			return null;
 		} else {
 			WorldBorder border = level.getWorldBorder();

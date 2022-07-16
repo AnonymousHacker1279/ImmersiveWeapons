@@ -2,11 +2,35 @@
 	"type": "immersiveweapons:tiltros",
 	"generator": {
 		"type": "minecraft:noise",
-		"seed": 2031154856,
-		"settings": "minecraft:floating_islands",
+		"settings": "immersiveweapons:tiltros",
 		"biome_source": {
-			"type": "minecraft:fixed",
-			"biome": "immersiveweapons:tiltros"
+			"type": "minecraft:multi_noise",
+			"biomes": [
+				{
+					"biome": "immersiveweapons:tiltros_wastes",
+					"parameters": {
+						"temperature": 0.1,
+						"humidity": 0.3,
+						"continentalness": 1.0,
+						"erosion": 1.0,
+						"weirdness": 1,
+						"depth": 0.3,
+						"offset": 0.0
+					}
+				},
+				{
+					"biome": "immersiveweapons:starlight_plains",
+					"parameters": {
+						"temperature": 0.1,
+						"humidity": 0.3,
+						"continentalness": 1.0,
+						"erosion": 0.7,
+						"weirdness": 0.3,
+						"depth": 0.3,
+						"offset": 1.0
+					}
+				}
+			]
 		}
 	}
 }
