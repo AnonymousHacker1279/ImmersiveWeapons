@@ -10,6 +10,8 @@ public class ImmersiveWeaponsItemTagGroups {
 
 	public static final TagKey<Item> BURNED_OAK_LOGS = ItemTags.create(new ResourceLocation(ImmersiveWeapons.MOD_ID,
 			"burned_oak_logs"));
+	public static final TagKey<Item> STARDUST_LOGS = ItemTags.create(new ResourceLocation(ImmersiveWeapons.MOD_ID,
+			"stardust_logs"));
 	public static final TagKey<Item> FLARES = ItemTags.create(new ResourceLocation(ImmersiveWeapons.MOD_ID,
 			"projectiles/flares"));
 	public static final TagKey<Item> MUSKET_BALLS = ItemTags.create(new ResourceLocation(ImmersiveWeapons.MOD_ID,

@@ -1,6 +1,6 @@
 {
   "type": "forge:add_spawns",
-  "biomes": "#immersiveweapons:is_tiltros",
+  "biomes": "#immersiveweapons:is_tiltros_wastes",
   "spawners": {
     "type": "immersiveweapons:lava_revenant",
     "maxCount": 1,

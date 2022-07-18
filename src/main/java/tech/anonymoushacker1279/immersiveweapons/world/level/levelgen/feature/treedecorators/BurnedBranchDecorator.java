@@ -21,7 +21,7 @@ public class BurnedBranchDecorator extends TreeDecorator {
 
 	@Override
 	protected @NotNull TreeDecoratorType<?> type() {
-		return TreeDecoratorType.COCOA;
+		return DeferredRegistryHandler.BURNED_BRANCH_DECORATOR.get();
 	}
 
 	@Override

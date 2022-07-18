@@ -130,6 +130,21 @@ public class BlockLootTables implements Consumer<BiConsumer<ResourceLocation, Bu
 		dropSelf(DeferredRegistryHandler.DYING_SOLDIER_HEAD.get());
 		dropSelf(DeferredRegistryHandler.WANDERING_WARRIOR_HEAD.get());
 		dropSelf(DeferredRegistryHandler.HANS_HEAD.get());
+		dropSelf(DeferredRegistryHandler.MOONGLOW.get());
+		dropSelf(DeferredRegistryHandler.STARDUST_LOG.get());
+		dropSelf(DeferredRegistryHandler.STARDUST_WOOD.get());
+		dropSelf(DeferredRegistryHandler.STARDUST_PLANKS.get());
+		dropSelf(DeferredRegistryHandler.STARDUST_SLAB.get());
+		dropSelf(DeferredRegistryHandler.STARDUST_STAIRS.get());
+		dropSelf(DeferredRegistryHandler.STARDUST_FENCE.get());
+		dropSelf(DeferredRegistryHandler.STARDUST_FENCE_GATE.get());
+		dropSelf(DeferredRegistryHandler.STARDUST_PRESSURE_PLATE.get());
+		dropSelf(DeferredRegistryHandler.STARDUST_BUTTON.get());
+		dropSelf(DeferredRegistryHandler.STARDUST_SIGN.get());
+		dropSelf(DeferredRegistryHandler.STARDUST_TRAPDOOR.get());
+		dropSelf(DeferredRegistryHandler.STRIPPED_STARDUST_LOG.get());
+		dropSelf(DeferredRegistryHandler.STRIPPED_STARDUST_WOOD.get());
+		dropSelf(DeferredRegistryHandler.STARDUST_SAPLING.get());
 
 		for (Block block : BlockTagLists.TABLES) {
 			dropSelf(block);
@@ -137,6 +152,8 @@ public class BlockLootTables implements Consumer<BiConsumer<ResourceLocation, Bu
 
 		// Complex block drops
 		add(DeferredRegistryHandler.BURNED_OAK_DOOR.get(), BlockLoot::createDoorTable);
+		add(DeferredRegistryHandler.STARDUST_DOOR.get(), BlockLoot::createDoorTable);
+		add(DeferredRegistryHandler.STARDUST_LEAVES.get(), (leafLikeDrop) -> createLeafLikeDrop(leafLikeDrop, DeferredRegistryHandler.STARDUST_SAPLING_ITEM.get(), NORMAL_LEAVES_SAPLING_CHANCES));
 		add(DeferredRegistryHandler.BURNED_OAK_BRANCH.get(), (leafLikeDrop) -> createLeafLikeDrop(leafLikeDrop, Items.STICK, NORMAL_LEAVES_SAPLING_CHANCES));
 		add(DeferredRegistryHandler.COBALT_ORE.get(), (block) -> createOreDrop(block, DeferredRegistryHandler.RAW_COBALT.get()));
 		add(DeferredRegistryHandler.DEEPSLATE_COBALT_ORE.get(), (block) -> createOreDrop(block, DeferredRegistryHandler.RAW_COBALT.get()));

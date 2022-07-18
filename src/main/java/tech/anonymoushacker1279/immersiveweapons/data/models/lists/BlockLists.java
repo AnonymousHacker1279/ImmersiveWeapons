@@ -30,6 +30,7 @@ public class BlockLists {
 		simpleBlocks.add(DeferredRegistryHandler.MUD.get());
 		simpleBlocks.add(DeferredRegistryHandler.DRIED_MUD.get());
 		simpleBlocks.add(DeferredRegistryHandler.HARDENED_MUD.get());
+		simpleBlocks.add(DeferredRegistryHandler.STARDUST_PLANKS.get());
 
 		stoneBasedOres.add(DeferredRegistryHandler.SULFUR_ORE.get());
 		stoneBasedOres.add(DeferredRegistryHandler.ELECTRIC_ORE.get());

@@ -1,0 +1,6 @@
+{
+  "type": "forge:add_features",
+  "biomes": "#immersiveweapons:is_battlefield",
+  "features": "immersiveweapons:burned_oak_tree",
+  "step": "vegetal_decoration"
+}

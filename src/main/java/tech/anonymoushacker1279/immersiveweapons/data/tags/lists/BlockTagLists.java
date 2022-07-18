@@ -12,12 +12,14 @@ public class BlockTagLists {
 	public static final List<Block> STAINED_GLASS = new ArrayList<>(15);
 	public static final List<Block> BURNED_OAK_LOGS = new ArrayList<>(5);
 	public static final List<Block> TABLES = new ArrayList<>(9);
+	public static final List<Block> STARDUST_LOGS = new ArrayList<>(5);
 
 	static {
 		addBulletproofGlass();
 		addStainedGlass();
 		addBurnedOakLogs();
 		addTables();
+		addStardustLogs();
 	}
 
 	private static void addBulletproofGlass() {
@@ -76,5 +78,12 @@ public class BlockTagLists {
 		TABLES.add(DeferredRegistryHandler.CRIMSON_TABLE.get());
 		TABLES.add(DeferredRegistryHandler.WARPED_TABLE.get());
 		TABLES.add(DeferredRegistryHandler.BURNED_OAK_TABLE.get());
+	}
+
+	private static void addStardustLogs() {
+		STARDUST_LOGS.add(DeferredRegistryHandler.STARDUST_LOG.get());
+		STARDUST_LOGS.add(DeferredRegistryHandler.STARDUST_WOOD.get());
+		STARDUST_LOGS.add(DeferredRegistryHandler.STRIPPED_STARDUST_LOG.get());
+		STARDUST_LOGS.add(DeferredRegistryHandler.STRIPPED_STARDUST_WOOD.get());
 	}
 }

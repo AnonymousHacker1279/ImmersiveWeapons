@@ -16,6 +16,21 @@
     "immersiveweapons:burned_oak_sign",
     "immersiveweapons:burned_oak_wall_sign",
     "immersiveweapons:burned_oak_button",
+    "immersiveweapons:stripped_stardust_wood",
+    "immersiveweapons:stripped_stardust_log",
+    "immersiveweapons:stardust_log",
+    "immersiveweapons:stardust_wood",
+    "immersiveweapons:stardust_planks",
+    "immersiveweapons:stardust_stairs",
+    "immersiveweapons:stardust_slab",
+    "immersiveweapons:stardust_fence",
+    "immersiveweapons:stardust_fence_gate",
+    "immersiveweapons:stardust_door",
+    "immersiveweapons:stardust_trapdoor",
+    "immersiveweapons:stardust_pressure_plate",
+    "immersiveweapons:stardust_button",
+    "immersiveweapons:stardust_sign",
+    "immersiveweapons:stardust_wall_sign",
     "immersiveweapons:wooden_spikes"
   ]
 }

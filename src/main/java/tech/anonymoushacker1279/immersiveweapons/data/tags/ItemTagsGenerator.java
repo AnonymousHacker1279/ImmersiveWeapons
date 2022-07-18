@@ -89,6 +89,7 @@ public class ItemTagsGenerator extends ItemTagsProvider {
 	private void addImmersiveWeaponsTags() {
 		// Copy item tags from block tags
 		copy(ImmersiveWeaponsBlockTagGroups.BURNED_OAK_LOGS, ImmersiveWeaponsItemTagGroups.BURNED_OAK_LOGS);
+		copy(ImmersiveWeaponsBlockTagGroups.STARDUST_LOGS, ImmersiveWeaponsItemTagGroups.STARDUST_LOGS);
 
 		// Projectile tags
 		tag(ImmersiveWeaponsItemTagGroups.FLARES).add(DeferredRegistryHandler.FLARE.get());
@@ -126,6 +127,8 @@ public class ItemTagsGenerator extends ItemTagsProvider {
 		copy(MinecraftBlockTagGroups.WOODEN_SLABS, MinecraftItemTagGroups.WOODEN_SLABS);
 		copy(MinecraftBlockTagGroups.WOODEN_STAIRS, MinecraftItemTagGroups.WOODEN_STAIRS);
 		copy(MinecraftBlockTagGroups.WOODEN_TRAPDOORS, MinecraftItemTagGroups.WOODEN_TRAPDOORS);
+		copy(MinecraftBlockTagGroups.SMALL_FLOWERS, MinecraftItemTagGroups.SMALL_FLOWERS);
+		copy(MinecraftBlockTagGroups.LEAVES, MinecraftItemTagGroups.LEAVES);
 
 		// Sign tags
 		tag(MinecraftItemTagGroups.SIGNS).add(DeferredRegistryHandler.BURNED_OAK_SIGN_ITEM.get());

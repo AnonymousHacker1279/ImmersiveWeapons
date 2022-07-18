@@ -1,5 +1,7 @@
 package tech.anonymoushacker1279.immersiveweapons.init;
 
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.FlowerPotBlock;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.item.materials.CustomArmorMaterials;
 
@@ -37,5 +39,19 @@ public class PostSetupHandler {
 		CustomArmorMaterials.VENTUS.setEquipSound(DeferredRegistryHandler.VENTUS_ARMOR_EQUIP.get());
 		CustomArmorMaterials.COPPER.setEquipSound(DeferredRegistryHandler.COPPER_ARMOR_EQUIP.get());
 		CustomArmorMaterials.COBALT.setEquipSound(DeferredRegistryHandler.COBALT_ARMOR_EQUIP.get());
+
+		// Add custom plants to the flower pot block
+		FlowerPotBlock emptyPot = ((FlowerPotBlock) Blocks.FLOWER_POT);
+		emptyPot.addPlant(DeferredRegistryHandler.MOONGLOW.getId(), DeferredRegistryHandler.POTTED_MOONGLOW);
+
+		// Setup custom boats
+		DeferredRegistryHandler.BURNED_OAK_BOAT.get()
+				.setBoatEntityType(DeferredRegistryHandler.BURNED_OAK_BOAT_ENTITY.get());
+		DeferredRegistryHandler.BURNED_OAK_CHEST_BOAT.get()
+				.setBoatEntityType(DeferredRegistryHandler.BURNED_OAK_CHEST_BOAT_ENTITY.get());
+		DeferredRegistryHandler.STARDUST_BOAT.get()
+				.setBoatEntityType(DeferredRegistryHandler.STARDUST_BOAT_ENTITY.get());
+		DeferredRegistryHandler.STARDUST_CHEST_BOAT.get()
+				.setBoatEntityType(DeferredRegistryHandler.STARDUST_CHEST_BOAT_ENTITY.get());
 	}
 }

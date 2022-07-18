@@ -15,8 +15,7 @@ import tech.anonymoushacker1279.immersiveweapons.data.advancements.AdvancementPr
 import tech.anonymoushacker1279.immersiveweapons.data.loot.LootTableGenerator;
 import tech.anonymoushacker1279.immersiveweapons.data.models.BlockStateGenerator;
 import tech.anonymoushacker1279.immersiveweapons.data.models.ItemModelGenerator;
-import tech.anonymoushacker1279.immersiveweapons.data.modifiers.OreBiomeModifiers;
-import tech.anonymoushacker1279.immersiveweapons.data.modifiers.SpawnBiomeModifiers;
+import tech.anonymoushacker1279.immersiveweapons.data.modifiers.*;
 import tech.anonymoushacker1279.immersiveweapons.data.recipes.RecipeGenerator;
 import tech.anonymoushacker1279.immersiveweapons.data.tags.*;
 
@@ -46,11 +45,21 @@ public class CustomDataGenerator {
 		generator.addProvider(event.includeServer(), blockTagsGenerator);
 		generator.addProvider(event.includeServer(), new ItemTagsGenerator(generator, blockTagsGenerator, event.getExistingFileHelper()));
 		generator.addProvider(event.includeServer(), new BiomeTagsGenerator(generator, event.getExistingFileHelper()));
+
+		// Ore biome modifiers
 		generator.addProvider(event.includeServer(), OreBiomeModifiers.PlacedFeatures.getCodecProvider(generator, event.getExistingFileHelper(),
 				registryOps, Registry.PLACED_FEATURE_REGISTRY));
 		generator.addProvider(event.includeServer(), OreBiomeModifiers.getCodecProvider(generator, event.getExistingFileHelper(),
 				registryOps, Keys.BIOME_MODIFIERS));
+
+		// Spawn biome modifiers
 		generator.addProvider(event.includeServer(), SpawnBiomeModifiers.getCodecProvider(generator, event.getExistingFileHelper(),
+				registryOps, Keys.BIOME_MODIFIERS));
+
+		// Feature biome modifiers
+		generator.addProvider(event.includeServer(), FeatureBiomeModifiers.PlacedFeatures.getCodecProvider(generator, event.getExistingFileHelper(),
+				registryOps, Registry.PLACED_FEATURE_REGISTRY));
+		generator.addProvider(event.includeServer(), FeatureBiomeModifiers.getCodecProvider(generator, event.getExistingFileHelper(),
 				registryOps, Keys.BIOME_MODIFIERS));
 	}
 }

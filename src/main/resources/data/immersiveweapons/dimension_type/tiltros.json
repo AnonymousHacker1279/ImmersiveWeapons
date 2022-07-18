@@ -14,6 +14,12 @@
 	"infiniburn": "#minecraft:infiniburn_overworld",
 	"min_y": -64,
 	"height": 256,
-	"monster_spawn_light_level": 6,
+	"monster_spawn_light_level": {
+		"type": "minecraft:biased_to_bottom",
+		"value": {
+			"min_inclusive": 0,
+			"max_inclusive": 6
+		}
+	},
 	"monster_spawn_block_light_limit": 4
 }

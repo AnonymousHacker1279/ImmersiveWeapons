@@ -27,14 +27,13 @@ import tech.anonymoushacker1279.immersiveweapons.client.gui.IWOverlays;
 import tech.anonymoushacker1279.immersiveweapons.client.gui.screen.SmallPartsTableScreen;
 import tech.anonymoushacker1279.immersiveweapons.client.gui.screen.TeslaSynthesizerScreen;
 import tech.anonymoushacker1279.immersiveweapons.client.model.CelestialTowerModel;
-import tech.anonymoushacker1279.immersiveweapons.client.particle.BloodParticle;
-import tech.anonymoushacker1279.immersiveweapons.client.particle.MuzzleFlashParticle;
+import tech.anonymoushacker1279.immersiveweapons.client.particle.*;
 import tech.anonymoushacker1279.immersiveweapons.client.particle.bullet_impact.BulletImpactParticle;
 import tech.anonymoushacker1279.immersiveweapons.client.particle.smoke_grenade.SmokeGrenadeParticle;
 import tech.anonymoushacker1279.immersiveweapons.client.renderer.blockentity.ChairRenderer;
 import tech.anonymoushacker1279.immersiveweapons.client.renderer.blockentity.ShelfRenderer;
 import tech.anonymoushacker1279.immersiveweapons.client.renderer.dimension.TiltrosDimensionSpecialEffects;
-import tech.anonymoushacker1279.immersiveweapons.client.renderer.entity.misc.BurnedOakBoatRenderer;
+import tech.anonymoushacker1279.immersiveweapons.client.renderer.entity.misc.CustomBoatRenderer;
 import tech.anonymoushacker1279.immersiveweapons.client.renderer.entity.mob.*;
 import tech.anonymoushacker1279.immersiveweapons.client.renderer.entity.projectile.*;
 import tech.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
@@ -82,6 +81,7 @@ public class ClientModEventSubscriber {
 					"textures/entity/hans.png"));
 
 			Sheets.addWoodType(WoodTypes.BURNED_OAK);
+			Sheets.addWoodType(WoodTypes.STARDUST);
 		});
 
 		event.enqueueWork(ClientModEventSubscriber::registerPropertyGetters);
@@ -143,8 +143,18 @@ public class ClientModEventSubscriber {
 		event.registerEntityRenderer(DeferredRegistryHandler.WANDERING_WARRIOR_ENTITY.get(), WanderingWarriorRenderer::new);
 		event.registerEntityRenderer(DeferredRegistryHandler.HANS_ENTITY.get(), HansRenderer::new);
 		event.registerEntityRenderer(DeferredRegistryHandler.CHAIR_ENTITY.get(), ChairRenderer::new);
-		event.registerEntityRenderer(DeferredRegistryHandler.BURNED_OAK_BOAT_ENTITY.get(), context -> new BurnedOakBoatRenderer(context, false));
-		event.registerEntityRenderer(DeferredRegistryHandler.BURNED_OAK_CHEST_BOAT_ENTITY.get(), context -> new BurnedOakBoatRenderer(context, true));
+		event.registerEntityRenderer(DeferredRegistryHandler.BURNED_OAK_BOAT_ENTITY.get(),
+				context -> new CustomBoatRenderer(context, false,
+						new ResourceLocation(ImmersiveWeapons.MOD_ID, "textures/entity/boat/burned_oak.png")));
+		event.registerEntityRenderer(DeferredRegistryHandler.BURNED_OAK_CHEST_BOAT_ENTITY.get(),
+				context -> new CustomBoatRenderer(context, true,
+						new ResourceLocation(ImmersiveWeapons.MOD_ID, "textures/entity/chest_boat/burned_oak.png")));
+		event.registerEntityRenderer(DeferredRegistryHandler.STARDUST_BOAT_ENTITY.get(),
+				context -> new CustomBoatRenderer(context, false,
+						new ResourceLocation(ImmersiveWeapons.MOD_ID, "textures/entity/boat/stardust.png")));
+		event.registerEntityRenderer(DeferredRegistryHandler.STARDUST_CHEST_BOAT_ENTITY.get(),
+				context -> new CustomBoatRenderer(context, true,
+						new ResourceLocation(ImmersiveWeapons.MOD_ID, "textures/entity/chest_boat/stardust.png")));
 		event.registerEntityRenderer(DeferredRegistryHandler.MUD_BALL_ENTITY.get(), ThrownItemRenderer::new);
 		event.registerEntityRenderer(DeferredRegistryHandler.LAVA_REVENANT_ENTITY.get(), LavaRevenantRenderer::new);
 		event.registerEntityRenderer(DeferredRegistryHandler.ROCK_SPIDER_ENTITY.get(), RockSpiderRenderer::new);
@@ -152,6 +162,7 @@ public class ClientModEventSubscriber {
 		event.registerBlockEntityRenderer(DeferredRegistryHandler.WALL_SHELF_BLOCK_ENTITY.get(), context -> new ShelfRenderer());
 		event.registerBlockEntityRenderer(DeferredRegistryHandler.BURNED_OAK_SIGN_ENTITY.get(), SignRenderer::new);
 		event.registerBlockEntityRenderer(DeferredRegistryHandler.CUSTOM_SKULL_BLOCK_ENTITY.get(), SkullBlockRenderer::new);
+		event.registerBlockEntityRenderer(DeferredRegistryHandler.STARDUST_SIGN_ENTITY.get(), SignRenderer::new);
 	}
 
 	/**
@@ -184,6 +195,8 @@ public class ClientModEventSubscriber {
 		event.register(DeferredRegistryHandler.BLOOD_PARTICLE.get(), BloodParticle.Provider::new);
 		event.register(DeferredRegistryHandler.BULLET_IMPACT_PARTICLE.get(), BulletImpactParticle.Provider::new);
 		event.register(DeferredRegistryHandler.MUZZLE_FLASH_PARTICLE.get(), MuzzleFlashParticle.Provider::new);
+		event.register(DeferredRegistryHandler.MOONGLOW_PARTICLE.get(), MoonglowParticle.Provider::new);
+		event.register(DeferredRegistryHandler.STARDUST_LEAVES_PARTICLE.get(), StardustLeavesParticle.Provider::new);
 	}
 
 	@SubscribeEvent

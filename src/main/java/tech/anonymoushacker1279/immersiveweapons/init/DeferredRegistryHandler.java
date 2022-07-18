@@ -43,13 +43,13 @@ import tech.anonymoushacker1279.immersiveweapons.block.decoration.*;
 import tech.anonymoushacker1279.immersiveweapons.block.decoration.skull.CustomSkullBlocks.CustomSkullBlock;
 import tech.anonymoushacker1279.immersiveweapons.block.decoration.skull.CustomSkullBlocks.CustomWallSkullBlock;
 import tech.anonymoushacker1279.immersiveweapons.block.decoration.skull.CustomSkullTypes;
+import tech.anonymoushacker1279.immersiveweapons.block.grower.StardustTreeGrower;
 import tech.anonymoushacker1279.immersiveweapons.block.misc.MedicStatueBlock;
 import tech.anonymoushacker1279.immersiveweapons.block.misc.MinutemanStatueBlock;
 import tech.anonymoushacker1279.immersiveweapons.block.misc.warrior_statue.*;
 import tech.anonymoushacker1279.immersiveweapons.block.mud.*;
 import tech.anonymoushacker1279.immersiveweapons.block.properties.WoodTypes;
-import tech.anonymoushacker1279.immersiveweapons.block.sign.BurnedOakStandingSignBlock;
-import tech.anonymoushacker1279.immersiveweapons.block.sign.BurnedOakWallSignBlock;
+import tech.anonymoushacker1279.immersiveweapons.block.sign.*;
 import tech.anonymoushacker1279.immersiveweapons.blockentity.*;
 import tech.anonymoushacker1279.immersiveweapons.client.particle.bullet_impact.BulletImpactParticleOptions;
 import tech.anonymoushacker1279.immersiveweapons.client.particle.smoke_grenade.SmokeGrenadeParticleOptions;
@@ -82,8 +82,7 @@ import tech.anonymoushacker1279.immersiveweapons.item.tool.tesla.*;
 import tech.anonymoushacker1279.immersiveweapons.item.tool.ventus.*;
 import tech.anonymoushacker1279.immersiveweapons.item.utility.*;
 import tech.anonymoushacker1279.immersiveweapons.potion.*;
-import tech.anonymoushacker1279.immersiveweapons.util.CreativeTab;
-import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
+import tech.anonymoushacker1279.immersiveweapons.util.*;
 import tech.anonymoushacker1279.immersiveweapons.world.food.FoodItemProperties;
 import tech.anonymoushacker1279.immersiveweapons.world.level.levelgen.feature.treedecorators.BurnedBranchDecorator;
 import tech.anonymoushacker1279.immersiveweapons.world.level.loot.AzulKeystoneFragmentInChestsLootModifierHandler;
@@ -279,8 +278,10 @@ public class DeferredRegistryHandler {
 	public static final RegistryObject<FirstAidKitItem> FIRST_AID_KIT = ITEMS.register("first_aid_kit", () -> new FirstAidKitItem(new Properties().tab(ITEM_GROUP).stacksTo(8)));
 	public static final RegistryObject<Item> CLOTH_SCRAP = ITEMS.register("cloth_scrap", () -> new Item(new Properties().tab(ITEM_GROUP)));
 	public static final RegistryObject<MudBallItem> MUD_BALL = ITEMS.register("mud_ball", () -> new MudBallItem(new Properties().tab(ITEM_GROUP)));
-	public static final RegistryObject<CustomBoatItem> BURNED_OAK_BOAT = ITEMS.register("burned_oak_boat", () -> new CustomBoatItem(CustomBoatType.BURNED_OAK, new Item.Properties().tab(ITEM_GROUP).stacksTo(1), false));
-	public static final RegistryObject<CustomBoatItem> BURNED_OAK_CHEST_BOAT = ITEMS.register("burned_oak_chest_boat", () -> new CustomBoatItem(CustomBoatType.BURNED_OAK, new Item.Properties().tab(ITEM_GROUP).stacksTo(1), true));
+	public static final RegistryObject<CustomBoatItem> BURNED_OAK_BOAT = ITEMS.register("burned_oak_boat", () -> new CustomBoatItem(CustomBoatType.BURNED_OAK, new Item.Properties().tab(ITEM_GROUP).stacksTo(1)));
+	public static final RegistryObject<CustomBoatItem> BURNED_OAK_CHEST_BOAT = ITEMS.register("burned_oak_chest_boat", () -> new CustomBoatItem(CustomBoatType.BURNED_OAK, new Item.Properties().tab(ITEM_GROUP).stacksTo(1)));
+	public static final RegistryObject<CustomBoatItem> STARDUST_BOAT = ITEMS.register("stardust_boat", () -> new CustomBoatItem(CustomBoatType.STARDUST, new Item.Properties().tab(ITEM_GROUP).stacksTo(1)));
+	public static final RegistryObject<CustomBoatItem> STARDUST_CHEST_BOAT = ITEMS.register("stardust_chest_boat", () -> new CustomBoatItem(CustomBoatType.STARDUST, new Item.Properties().tab(ITEM_GROUP).stacksTo(1)));
 
 	// Armor
 	public static final RegistryObject<MoltenArmorItem> MOLTEN_HELMET = ITEMS.register("molten_helmet", () -> new MoltenArmorItem(CustomArmorMaterials.MOLTEN, EquipmentSlot.HEAD, new Item.Properties().tab(ITEM_GROUP).fireResistant(), false));
@@ -381,6 +382,22 @@ public class DeferredRegistryHandler {
 	public static final RegistryObject<BurnedOakStandingSignBlock> BURNED_OAK_SIGN = BLOCKS.register("burned_oak_sign", () -> new BurnedOakStandingSignBlock(BlockBehaviour.Properties.of(Material.WOOD).noCollission().strength(1.0F).sound(SoundType.WOOD), WoodTypes.BURNED_OAK));
 	public static final RegistryObject<BurnedOakWallSignBlock> BURNED_OAK_WALL_SIGN = BLOCKS.register("burned_oak_wall_sign", () -> new BurnedOakWallSignBlock(BlockBehaviour.Properties.of(Material.WOOD).noCollission().strength(1.0F).sound(SoundType.WOOD), WoodTypes.BURNED_OAK));
 	public static final RegistryObject<ButtonBlock> BURNED_OAK_BUTTON = BLOCKS.register("burned_oak_button", () -> new WoodButtonBlock(BlockBehaviour.Properties.of(Material.WOOD).noCollission().strength(0.4f).sound(SoundType.WOOD)));
+	public static final RegistryObject<RotatedPillarBlock> STRIPPED_STARDUST_WOOD = BLOCKS.register("stripped_stardust_wood", () -> new RotatedPillarBlock(BlockBehaviour.Properties.of(Material.WOOD).strength(2.3f).sound(SoundType.WOOD)));
+	public static final RegistryObject<RotatedPillarBlock> STRIPPED_STARDUST_LOG = BLOCKS.register("stripped_stardust_log", () -> new RotatedPillarBlock(BlockBehaviour.Properties.of(Material.WOOD).strength(2.3f).sound(SoundType.WOOD)));
+	public static final RegistryObject<RotatedPillarBlock> STARDUST_LOG = BLOCKS.register("stardust_log", () -> new StrippablePillarBlock(BlockBehaviour.Properties.of(Material.WOOD).strength(2.3f).sound(SoundType.WOOD).lightLevel((state) -> 12), STRIPPED_STARDUST_LOG.get().defaultBlockState()));
+	public static final RegistryObject<RotatedPillarBlock> STARDUST_WOOD = BLOCKS.register("stardust_wood", () -> new StrippablePillarBlock(BlockBehaviour.Properties.of(Material.WOOD).strength(2.3f).sound(SoundType.WOOD).lightLevel((state) -> 12), STRIPPED_STARDUST_WOOD.get().defaultBlockState()));
+	public static final RegistryObject<Block> STARDUST_PLANKS = BLOCKS.register("stardust_planks", () -> new Block(BlockBehaviour.Properties.of(Material.WOOD).strength(2.3f).sound(SoundType.WOOD)));
+	public static final RegistryObject<StairBlock> STARDUST_STAIRS = BLOCKS.register("stardust_stairs", () -> new StairBlock(() -> STARDUST_PLANKS.get().defaultBlockState(), BlockBehaviour.Properties.copy(STARDUST_PLANKS.get())));
+	public static final RegistryObject<SlabBlock> STARDUST_SLAB = BLOCKS.register("stardust_slab", () -> new SlabBlock(BlockBehaviour.Properties.of(Material.WOOD).strength(2.3f).sound(SoundType.WOOD)));
+	public static final RegistryObject<FenceBlock> STARDUST_FENCE = BLOCKS.register("stardust_fence", () -> new FenceBlock(BlockBehaviour.Properties.of(Material.WOOD).strength(2.3f).sound(SoundType.WOOD)));
+	public static final RegistryObject<FenceGateBlock> STARDUST_FENCE_GATE = BLOCKS.register("stardust_fence_gate", () -> new FenceGateBlock(BlockBehaviour.Properties.of(Material.WOOD).strength(2.3f).sound(SoundType.WOOD)));
+	public static final RegistryObject<DoorBlock> STARDUST_DOOR = BLOCKS.register("stardust_door", () -> new DoorBlock(BlockBehaviour.Properties.of(Material.WOOD).strength(2.3f).sound(SoundType.WOOD)));
+	public static final RegistryObject<TrapDoorBlock> STARDUST_TRAPDOOR = BLOCKS.register("stardust_trapdoor", () -> new TrapDoorBlock(BlockBehaviour.Properties.of(Material.WOOD).strength(2.3f).sound(SoundType.WOOD).noOcclusion()));
+	public static final RegistryObject<PressurePlateBlock> STARDUST_PRESSURE_PLATE = BLOCKS.register("stardust_pressure_plate", () -> new PressurePlateBlock(Sensitivity.EVERYTHING, BlockBehaviour.Properties.of(Material.WOOD).strength(0.7f).sound(SoundType.WOOD).noOcclusion().noCollission()));
+	public static final RegistryObject<ButtonBlock> STARDUST_BUTTON = BLOCKS.register("stardust_button", () -> new WoodButtonBlock(BlockBehaviour.Properties.of(Material.WOOD).noCollission().strength(0.7f).sound(SoundType.WOOD)));
+	public static final RegistryObject<StardustStandingSignBlock> STARDUST_SIGN = BLOCKS.register("stardust_sign", () -> new StardustStandingSignBlock(BlockBehaviour.Properties.of(Material.WOOD).noCollission().strength(1.7F).sound(SoundType.WOOD), WoodTypes.STARDUST));
+	public static final RegistryObject<StardustWallSignBlock> STARDUST_WALL_SIGN = BLOCKS.register("stardust_wall_sign", () -> new StardustWallSignBlock(BlockBehaviour.Properties.of(Material.WOOD).noCollission().strength(1.7F).sound(SoundType.WOOD), WoodTypes.STARDUST));
+
 	// Stone tier
 	public static final RegistryObject<WoodenSpikesBlock> WOODEN_SPIKES = BLOCKS.register("wooden_spikes", () -> new WoodenSpikesBlock(BlockBehaviour.Properties.of(Material.WOOD).strength(3.0f).sound(SoundType.WOOD).requiresCorrectToolForDrops().noOcclusion()));
 
@@ -395,6 +412,10 @@ public class DeferredRegistryHandler {
 	public static final RegistryObject<Block> HARDENED_MUD_WINDOW = BLOCKS.register("hardened_mud_window", () -> new HardenedMudWindowBlock(BlockBehaviour.Properties.of(Material.DIRT).strength(2.0f, 1.0f).sound(SoundType.ROOTED_DIRT).noOcclusion()));
 	// Stone tier
 	public static final RegistryObject<PunjiSticksBlock> PUNJI_STICKS = BLOCKS.register("punji_sticks", () -> new PunjiSticksBlock(BlockBehaviour.Properties.of(Material.BAMBOO).strength(5.0f, 1.0f).sound(SoundType.METAL).requiresCorrectToolForDrops()));
+
+	// Breakable via hoe
+	// Wood tier
+	public static final RegistryObject<StardustLeaves> STARDUST_LEAVES = BLOCKS.register("stardust_leaves", () -> new StardustLeaves(BlockBehaviour.Properties.of(Material.LEAVES).strength(0.3f).randomTicks().sound(SoundType.GRASS).lightLevel((state) -> 12).noOcclusion().isValidSpawn((state, getter, pos, type) -> BlockPredicates.ocelotOrParrot(type)).isSuffocating((state, getter, pos) -> BlockPredicates.never()).isViewBlocking((state, getter, pos) -> BlockPredicates.never())));
 
 	// Breakable without tool
 	public static final RegistryObject<GlassBlock> BULLETPROOF_GLASS = BLOCKS.register("bulletproof_glass", () -> new GlassBlock(BlockBehaviour.Properties.of(Material.GLASS).sound(SoundType.GLASS).noOcclusion().strength(0.5f)));
@@ -444,6 +465,9 @@ public class DeferredRegistryHandler {
 	public static final RegistryObject<CustomWallSkullBlock> WANDERING_WARRIOR_WALL_HEAD = BLOCKS.register("wandering_warrior_wall_head", () -> new CustomWallSkullBlock(CustomSkullTypes.WANDERING_WARRIOR, BlockBehaviour.Properties.of(Material.DECORATION).strength(1.0f).lootFrom(WANDERING_WARRIOR_HEAD)));
 	public static final RegistryObject<SkullBlock> HANS_HEAD = BLOCKS.register("hans_head", () -> new CustomSkullBlock(CustomSkullTypes.HANS, BlockBehaviour.Properties.of(Material.DECORATION).strength(1.0f)));
 	public static final RegistryObject<CustomWallSkullBlock> HANS_WALL_HEAD = BLOCKS.register("hans_wall_head", () -> new CustomWallSkullBlock(CustomSkullTypes.HANS, BlockBehaviour.Properties.of(Material.DECORATION).strength(1.0f).lootFrom(HANS_HEAD)));
+	public static final RegistryObject<MoonglowBlock> MOONGLOW = BLOCKS.register("moonglow", () -> new MoonglowBlock(MobEffects.GLOWING, 10, BlockBehaviour.Properties.of(Material.PLANT).sound(SoundType.GRASS).lightLevel((state) -> 12).noCollission().instabreak().offsetType(OffsetType.XZ)));
+	public static final RegistryObject<FlowerPotBlock> POTTED_MOONGLOW = BLOCKS.register("potted_moonglow", () -> new FlowerPotBlock(() -> (FlowerPotBlock) Blocks.FLOWER_POT, MOONGLOW, BlockBehaviour.Properties.of(Material.DECORATION).lightLevel((state) -> 12).instabreak().noOcclusion()));
+	public static final RegistryObject<SaplingBlock> STARDUST_SAPLING = BLOCKS.register("stardust_sapling", () -> new SaplingBlock(new StardustTreeGrower(), BlockBehaviour.Properties.of(Material.PLANT).strength(0.0f).sound(SoundType.GRASS).noCollission().instabreak().offsetType(OffsetType.NONE)));
 
 	// Entities
 	public static final RegistryObject<EntityType<WoodenArrowEntity>> WOODEN_ARROW_ENTITY = ENTITY_TYPES.register("wooden_arrow", () -> EntityType.Builder.<WoodenArrowEntity> of(WoodenArrowEntity::new, MobCategory.MISC).sized(0.5f, 0.5f).build(new ResourceLocation(ImmersiveWeapons.MOD_ID, "wood_arrow").toString()));
@@ -473,12 +497,14 @@ public class DeferredRegistryHandler {
 	public static final RegistryObject<EntityType<WanderingWarriorEntity>> WANDERING_WARRIOR_ENTITY = ENTITY_TYPES.register("wandering_warrior", () -> EntityType.Builder.of(WanderingWarriorEntity::new, MobCategory.MONSTER).sized(0.6f, 1.99f).clientTrackingRange(16).build(new ResourceLocation(ImmersiveWeapons.MOD_ID, "wandering_warrior").toString()));
 	public static final RegistryObject<EntityType<HansEntity>> HANS_ENTITY = ENTITY_TYPES.register("hans", () -> EntityType.Builder.of(HansEntity::new, MobCategory.MONSTER).sized(0.6f, 1.99f).clientTrackingRange(16).build(new ResourceLocation(ImmersiveWeapons.MOD_ID, "hans").toString()));
 	public static final RegistryObject<EntityType<MortarShellEntity>> MORTAR_SHELL_ENTITY = ENTITY_TYPES.register("mortar_shell", () -> EntityType.Builder.of(MortarShellEntity::new, MobCategory.MISC).sized(0.5f, 0.5f).build(new ResourceLocation(ImmersiveWeapons.MOD_ID, "mortar_shell").toString()));
-	public static final RegistryObject<EntityType<BurnedOakBoatEntity>> BURNED_OAK_BOAT_ENTITY = ENTITY_TYPES.register("burned_oak_boat", () -> EntityType.Builder.<BurnedOakBoatEntity> of(BurnedOakBoatEntity::new, MobCategory.MISC).sized(1.375f, 0.5625f).build(new ResourceLocation(ImmersiveWeapons.MOD_ID, "burned_oak_boat").toString()));
-	public static final RegistryObject<EntityType<BurnedOakChestBoat>> BURNED_OAK_CHEST_BOAT_ENTITY = ENTITY_TYPES.register("burned_oak_chest_boat", () -> EntityType.Builder.<BurnedOakChestBoat> of(BurnedOakChestBoat::new, MobCategory.MISC).sized(1.375f, 0.5625f).build(new ResourceLocation(ImmersiveWeapons.MOD_ID, "burned_oak_chest_boat").toString()));
+	public static final RegistryObject<EntityType<CustomBoatEntity>> BURNED_OAK_BOAT_ENTITY = ENTITY_TYPES.register("burned_oak_boat", () -> EntityType.Builder.<CustomBoatEntity> of((type, level) -> new CustomBoatEntity(type, level, BURNED_OAK_BOAT.get()), MobCategory.MISC).sized(1.375f, 0.5625f).build(new ResourceLocation(ImmersiveWeapons.MOD_ID, "burned_oak_boat").toString()));
+	public static final RegistryObject<EntityType<CustomChestBoatEntity>> BURNED_OAK_CHEST_BOAT_ENTITY = ENTITY_TYPES.register("burned_oak_chest_boat", () -> EntityType.Builder.<CustomChestBoatEntity> of((type, level) -> new CustomChestBoatEntity(type, level, BURNED_OAK_CHEST_BOAT.get()), MobCategory.MISC).sized(1.375f, 0.5625f).build(new ResourceLocation(ImmersiveWeapons.MOD_ID, "burned_oak_chest_boat").toString()));
 	public static final RegistryObject<EntityType<MudBallEntity>> MUD_BALL_ENTITY = ENTITY_TYPES.register("mud_ball", () -> EntityType.Builder.<MudBallEntity> of(MudBallEntity::new, MobCategory.MISC).sized(0.25f, 0.25f).build(new ResourceLocation(ImmersiveWeapons.MOD_ID, "mud_ball").toString()));
 	public static final RegistryObject<EntityType<LavaRevenantEntity>> LAVA_REVENANT_ENTITY = ENTITY_TYPES.register("lava_revenant", () -> EntityType.Builder.of(LavaRevenantEntity::new, MobCategory.MONSTER).sized(16.0f, 6.0f).clientTrackingRange(32).fireImmune().build(new ResourceLocation(ImmersiveWeapons.MOD_ID, "lava_revenant").toString()));
 	public static final RegistryObject<EntityType<RockSpiderEntity>> ROCK_SPIDER_ENTITY = ENTITY_TYPES.register("rock_spider", () -> EntityType.Builder.of(RockSpiderEntity::new, MobCategory.MONSTER).sized(0.30f, 0.30f).clientTrackingRange(16).build(new ResourceLocation(ImmersiveWeapons.MOD_ID, "rock_spider").toString()));
 	public static final RegistryObject<EntityType<CelestialTowerEntity>> CELESTIAL_TOWER_ENTITY = ENTITY_TYPES.register("celestial_tower", () -> EntityType.Builder.of(CelestialTowerEntity::new, MobCategory.MONSTER).sized(8.0f, 9.0f).clientTrackingRange(32).build(new ResourceLocation(ImmersiveWeapons.MOD_ID, "celestial_tower").toString()));
+	public static final RegistryObject<EntityType<CustomBoatEntity>> STARDUST_BOAT_ENTITY = ENTITY_TYPES.register("stardust_boat", () -> EntityType.Builder.<CustomBoatEntity> of((type, level) -> new CustomBoatEntity(type, level, STARDUST_BOAT.get()), MobCategory.MISC).sized(1.375f, 0.5625f).build(new ResourceLocation(ImmersiveWeapons.MOD_ID, "stardust_boat").toString()));
+	public static final RegistryObject<EntityType<CustomChestBoatEntity>> STARDUST_CHEST_BOAT_ENTITY = ENTITY_TYPES.register("stardust_chest_boat", () -> EntityType.Builder.<CustomChestBoatEntity> of((type, level) -> new CustomChestBoatEntity(type, level, STARDUST_CHEST_BOAT.get()), MobCategory.MISC).sized(1.375f, 0.5625f).build(new ResourceLocation(ImmersiveWeapons.MOD_ID, "stardust_chest_boat").toString()));
 
 	// Block Items
 	public static final RegistryObject<BlockItem> MOLTEN_ORE_ITEM = ITEMS.register("molten_ore", () -> new BlockItem(MOLTEN_ORE.get(), new Properties().tab(ITEM_GROUP).fireResistant()));
@@ -589,6 +615,23 @@ public class DeferredRegistryHandler {
 	public static final RegistryObject<BlockItem> DYING_SOLDIER_HEAD_ITEM = ITEMS.register("dying_soldier_head", () -> new StandingAndWallBlockItem(DYING_SOLDIER_HEAD.get(), DYING_SOLDIER_WALL_HEAD.get(), new Properties().tab(ITEM_GROUP)));
 	public static final RegistryObject<BlockItem> WANDERING_WARRIOR_HEAD_ITEM = ITEMS.register("wandering_warrior_head", () -> new StandingAndWallBlockItem(WANDERING_WARRIOR_HEAD.get(), WANDERING_WARRIOR_WALL_HEAD.get(), new Properties().tab(ITEM_GROUP)));
 	public static final RegistryObject<BlockItem> HANS_HEAD_ITEM = ITEMS.register("hans_head", () -> new StandingAndWallBlockItem(HANS_HEAD.get(), HANS_WALL_HEAD.get(), new Properties().tab(ITEM_GROUP)));
+	public static final RegistryObject<BlockItem> MOONGLOW_ITEM = ITEMS.register("moonglow", () -> new BlockItem(MOONGLOW.get(), new Properties().tab(ITEM_GROUP)));
+	public static final RegistryObject<BlockItem> STARDUST_LOG_ITEM = ITEMS.register("stardust_log", () -> new BlockItem(STARDUST_LOG.get(), new Properties().tab(ITEM_GROUP)));
+	public static final RegistryObject<BlockItem> STRIPPED_STARDUST_LOG_ITEM = ITEMS.register("stripped_stardust_log", () -> new BlockItem(STRIPPED_STARDUST_LOG.get(), new Properties().tab(ITEM_GROUP)));
+	public static final RegistryObject<BlockItem> STARDUST_WOOD_ITEM = ITEMS.register("stardust_wood", () -> new BlockItem(STARDUST_WOOD.get(), new Properties().tab(ITEM_GROUP)));
+	public static final RegistryObject<BlockItem> STRIPPED_STARDUST_WOOD_ITEM = ITEMS.register("stripped_stardust_wood", () -> new BlockItem(STRIPPED_STARDUST_WOOD.get(), new Properties().tab(ITEM_GROUP)));
+	public static final RegistryObject<BlockItem> STARDUST_LEAVES_ITEM = ITEMS.register("stardust_leaves", () -> new BlockItem(STARDUST_LEAVES.get(), new Properties().tab(ITEM_GROUP)));
+	public static final RegistryObject<BlockItem> STARDUST_PLANKS_ITEM = ITEMS.register("stardust_planks", () -> new BlockItem(STARDUST_PLANKS.get(), new Properties().tab(ITEM_GROUP)));
+	public static final RegistryObject<BlockItem> STARDUST_SLAB_ITEM = ITEMS.register("stardust_slab", () -> new BlockItem(STARDUST_SLAB.get(), new Properties().tab(ITEM_GROUP)));
+	public static final RegistryObject<BlockItem> STARDUST_STAIRS_ITEM = ITEMS.register("stardust_stairs", () -> new BlockItem(STARDUST_STAIRS.get(), new Properties().tab(ITEM_GROUP)));
+	public static final RegistryObject<BlockItem> STARDUST_FENCE_ITEM = ITEMS.register("stardust_fence", () -> new BlockItem(STARDUST_FENCE.get(), new Properties().tab(ITEM_GROUP)));
+	public static final RegistryObject<BlockItem> STARDUST_FENCE_GATE_ITEM = ITEMS.register("stardust_fence_gate", () -> new BlockItem(STARDUST_FENCE_GATE.get(), new Properties().tab(ITEM_GROUP)));
+	public static final RegistryObject<BlockItem> STARDUST_DOOR_ITEM = ITEMS.register("stardust_door", () -> new BlockItem(STARDUST_DOOR.get(), new Properties().tab(ITEM_GROUP)));
+	public static final RegistryObject<BlockItem> STARDUST_TRAPDOOR_ITEM = ITEMS.register("stardust_trapdoor", () -> new BlockItem(STARDUST_TRAPDOOR.get(), new Properties().tab(ITEM_GROUP)));
+	public static final RegistryObject<BlockItem> STARDUST_BUTTON_ITEM = ITEMS.register("stardust_button", () -> new BlockItem(STARDUST_BUTTON.get(), new Properties().tab(ITEM_GROUP)));
+	public static final RegistryObject<BlockItem> STARDUST_PRESSURE_PLATE_ITEM = ITEMS.register("stardust_pressure_plate", () -> new BlockItem(STARDUST_PRESSURE_PLATE.get(), new Properties().tab(ITEM_GROUP)));
+	public static final RegistryObject<SignItem> STARDUST_SIGN_ITEM = ITEMS.register("stardust_sign", () -> new SignItem(new Properties().tab(ITEM_GROUP), STARDUST_SIGN.get(), STARDUST_WALL_SIGN.get()));
+	public static final RegistryObject<BlockItem> STARDUST_SAPLING_ITEM = ITEMS.register("stardust_sapling", () -> new BlockItem(STARDUST_SAPLING.get(), new Properties().tab(ITEM_GROUP)));
 
 	// Sounds
 	public static final RegistryObject<SoundEvent> TESLA_ARMOR_EFFECT = SOUND_EVENTS.register("tesla_armor_effect", () -> new SoundEvent(new ResourceLocation(ImmersiveWeapons.MOD_ID, "tesla_armor_effect")));
@@ -693,6 +736,8 @@ public class DeferredRegistryHandler {
 		}
 	});
 	public static final RegistryObject<SimpleParticleType> MUZZLE_FLASH_PARTICLE = PARTICLE_TYPES.register("muzzle_flash", () -> new SimpleParticleType(false));
+	public static final RegistryObject<SimpleParticleType> MOONGLOW_PARTICLE = PARTICLE_TYPES.register("moonglow", () -> new SimpleParticleType(false));
+	public static final RegistryObject<SimpleParticleType> STARDUST_LEAVES_PARTICLE = PARTICLE_TYPES.register("stardust_leaves", () -> new SimpleParticleType(false));
 
 	// Block Entities
 	public static final RegistryObject<BlockEntityType<BearTrapBlockEntity>> BEAR_TRAP_BLOCK_ENTITY = BLOCK_ENTITIES.register("bear_trap", () -> new BlockEntityType<>(BearTrapBlockEntity::new, Sets.newHashSet(BEAR_TRAP.get()), null));
@@ -701,9 +746,10 @@ public class DeferredRegistryHandler {
 	public static final RegistryObject<BlockEntityType<MinutemanStatueBlockEntity>> MINUTEMAN_STATUE_BLOCK_ENTITY = BLOCK_ENTITIES.register("minuteman_statue", () -> new BlockEntityType<>(MinutemanStatueBlockEntity::new, Sets.newHashSet(MINUTEMAN_STATUE.get()), null));
 	public static final RegistryObject<BlockEntityType<MedicStatueBlockEntity>> MEDIC_STATUE_BLOCK_ENTITY = BLOCK_ENTITIES.register("medic_statue", () -> new BlockEntityType<>(MedicStatueBlockEntity::new, Sets.newHashSet(MEDIC_STATUE.get()), null));
 	public static final RegistryObject<BlockEntityType<TeslaSynthesizerBlockEntity>> TESLA_SYNTHESIZER_BLOCK_ENTITY = BLOCK_ENTITIES.register("tesla_synthesizer", () -> new BlockEntityType<>(TeslaSynthesizerBlockEntity::new, Sets.newHashSet(TESLA_SYNTHESIZER.get()), null));
-	public static final RegistryObject<BlockEntityType<BurnedOakSignEntity>> BURNED_OAK_SIGN_ENTITY = BLOCK_ENTITIES.register("custom_sign", () -> BlockEntityType.Builder.of(BurnedOakSignEntity::new, BURNED_OAK_SIGN.get(), BURNED_OAK_WALL_SIGN.get()).build(null));
+	public static final RegistryObject<BlockEntityType<BurnedOakSignEntity>> BURNED_OAK_SIGN_ENTITY = BLOCK_ENTITIES.register("burned_oak_sign", () -> BlockEntityType.Builder.of(BurnedOakSignEntity::new, BURNED_OAK_SIGN.get(), BURNED_OAK_WALL_SIGN.get()).build(null));
 	public static final RegistryObject<BlockEntityType<CelestialLanternBlockEntity>> CELESTIAL_LANTERN_BLOCK_ENTITY = BLOCK_ENTITIES.register("celestial_lantern", () -> new BlockEntityType<>(CelestialLanternBlockEntity::new, Sets.newHashSet(CELESTIAL_LANTERN.get()), null));
 	public static final RegistryObject<BlockEntityType<CustomSkullBlockEntity>> CUSTOM_SKULL_BLOCK_ENTITY = BLOCK_ENTITIES.register("custom_skull", () -> BlockEntityType.Builder.of(CustomSkullBlockEntity::new, MINUTEMAN_HEAD.get(), MINUTEMAN_WALL_HEAD.get(), FIELD_MEDIC_HEAD.get(), FIELD_MEDIC_WALL_HEAD.get(), DYING_SOLDIER_HEAD.get(), DYING_SOLDIER_WALL_HEAD.get(), WANDERING_WARRIOR_HEAD.get(), WANDERING_WARRIOR_WALL_HEAD.get(), HANS_HEAD.get(), HANS_WALL_HEAD.get()).build(null));
+	public static final RegistryObject<BlockEntityType<StardustSignEntity>> STARDUST_SIGN_ENTITY = BLOCK_ENTITIES.register("stardust_sign", () -> BlockEntityType.Builder.of(StardustSignEntity::new, STARDUST_SIGN.get(), STARDUST_WALL_SIGN.get()).build(null));
 
 	// Effects
 	public static final RegistryObject<MorphineEffect> MORPHINE_EFFECT = EFFECTS.register("morphine", () -> new MorphineEffect(MobEffectCategory.NEUTRAL, 3484189));

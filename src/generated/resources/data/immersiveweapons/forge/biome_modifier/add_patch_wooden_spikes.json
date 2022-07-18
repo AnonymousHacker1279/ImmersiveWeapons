@@ -1,0 +1,6 @@
+{
+  "type": "forge:add_features",
+  "biomes": "#immersiveweapons:is_battlefield",
+  "features": "immersiveweapons:patch_wooden_spikes",
+  "step": "vegetal_decoration"
+}

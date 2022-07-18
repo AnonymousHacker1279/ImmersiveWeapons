@@ -46,7 +46,7 @@ public class SpawnBiomeModifiers {
 	private static void fillFeatures(RegistryOps<JsonElement> registryOps) {
 		HolderSet.Named<Biome> battlefieldTag = new HolderSet.Named<>(registryOps.registry(Registry.BIOME_REGISTRY).get(), ImmersiveWeaponsWorldGenTagGroups.IS_BATTLEFIELD);
 		HolderSet.Named<Biome> overworldTag = new HolderSet.Named<>(registryOps.registry(Registry.BIOME_REGISTRY).get(), BiomeTags.IS_OVERWORLD);
-		HolderSet.Named<Biome> tiltrosTag = new HolderSet.Named<>(registryOps.registry(Registry.BIOME_REGISTRY).get(), ImmersiveWeaponsWorldGenTagGroups.IS_TILTROS);
+		HolderSet.Named<Biome> tiltrosWastesTag = new HolderSet.Named<>(registryOps.registry(Registry.BIOME_REGISTRY).get(), ImmersiveWeaponsWorldGenTagGroups.IS_TILTROS_WASTES);
 
 		addDyingSoldierSpawn = AddSpawnsBiomeModifier.singleSpawn(
 				battlefieldTag,
@@ -61,15 +61,15 @@ public class SpawnBiomeModifiers {
 				new SpawnerData(DeferredRegistryHandler.HANS_ENTITY.get(), 5, 1, 1)
 		);
 		addRockSpiderSpawn = AddSpawnsBiomeModifier.singleSpawn(
-				tiltrosTag,
+				tiltrosWastesTag,
 				new SpawnerData(DeferredRegistryHandler.ROCK_SPIDER_ENTITY.get(), 65, 2, 4)
 		);
 		addLavaRevenantSpawn = AddSpawnsBiomeModifier.singleSpawn(
-				tiltrosTag,
+				tiltrosWastesTag,
 				new SpawnerData(DeferredRegistryHandler.LAVA_REVENANT_ENTITY.get(), 35, 1, 1)
 		);
 		addCelestialTowerSpawn = AddSpawnsBiomeModifier.singleSpawn(
-				tiltrosTag,
+				tiltrosWastesTag,
 				new SpawnerData(DeferredRegistryHandler.CELESTIAL_TOWER_ENTITY.get(), 5, 1, 1)
 		);
 	}

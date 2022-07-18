@@ -5,7 +5,9 @@ import tech.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
 
 public enum CustomBoatType {
 	BURNED_OAK(DeferredRegistryHandler.BURNED_OAK_PLANKS.get(), "burned_oak"),
-	BURNED_OAK_CHEST(DeferredRegistryHandler.BURNED_OAK_PLANKS.get(), "burned_oak_chest");
+	BURNED_OAK_CHEST(DeferredRegistryHandler.BURNED_OAK_PLANKS.get(), "burned_oak_chest"),
+	STARDUST(DeferredRegistryHandler.STARDUST_PLANKS.get(), "stardust"),
+	STARDUST_CHEST(DeferredRegistryHandler.STARDUST_PLANKS.get(), "stardust_chest");
 
 	private final Block block;
 	private final String name;

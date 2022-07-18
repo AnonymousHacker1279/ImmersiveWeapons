@@ -71,6 +71,11 @@ public class BlockTagsGenerator extends BlockTagsProvider {
 		for (Block block : BlockTagLists.BURNED_OAK_LOGS) {
 			tag(ImmersiveWeaponsBlockTagGroups.BURNED_OAK_LOGS).add(block);
 		}
+
+		// Stardust logs tag
+		for (Block block : BlockTagLists.STARDUST_LOGS) {
+			tag(ImmersiveWeaponsBlockTagGroups.STARDUST_LOGS).add(block);
+		}
 	}
 
 	/**
@@ -81,10 +86,12 @@ public class BlockTagsGenerator extends BlockTagsProvider {
 		tag(MinecraftBlockTagGroups.FENCES).add(DeferredRegistryHandler.BARBED_WIRE_FENCE.get());
 
 		// Burnable logs tag
-		tag(MinecraftBlockTagGroups.LOGS_THAT_BURN).addTag(ImmersiveWeaponsBlockTagGroups.BURNED_OAK_LOGS);
+		tag(MinecraftBlockTagGroups.LOGS_THAT_BURN).addTags(ImmersiveWeaponsBlockTagGroups.BURNED_OAK_LOGS,
+				ImmersiveWeaponsBlockTagGroups.STARDUST_LOGS);
 
 		// Planks tag
-		tag(MinecraftBlockTagGroups.PLANKS).add(DeferredRegistryHandler.BURNED_OAK_PLANKS.get());
+		tag(MinecraftBlockTagGroups.PLANKS).add(DeferredRegistryHandler.BURNED_OAK_PLANKS.get(),
+				DeferredRegistryHandler.STARDUST_PLANKS.get());
 
 		// Slabs tag
 		tag(MinecraftBlockTagGroups.SLABS).add(DeferredRegistryHandler.CLOUD_MARBLE_BRICK_SLAB.get());
@@ -99,29 +106,43 @@ public class BlockTagsGenerator extends BlockTagsProvider {
 		tag(MinecraftBlockTagGroups.WALL_SIGNS).add(DeferredRegistryHandler.BURNED_OAK_SIGN.get());
 
 		// Wooden buttons tag
-		tag(MinecraftBlockTagGroups.WOODEN_BUTTONS).add(DeferredRegistryHandler.BURNED_OAK_BUTTON.get());
+		tag(MinecraftBlockTagGroups.WOODEN_BUTTONS).add(DeferredRegistryHandler.BURNED_OAK_BUTTON.get(),
+				DeferredRegistryHandler.STARDUST_BUTTON.get());
 
 		// Wooden doors tag
-		tag(MinecraftBlockTagGroups.WOODEN_DOORS).add(DeferredRegistryHandler.BURNED_OAK_DOOR.get());
+		tag(MinecraftBlockTagGroups.WOODEN_DOORS).add(DeferredRegistryHandler.BURNED_OAK_DOOR.get(),
+				DeferredRegistryHandler.STARDUST_DOOR.get());
 
 		// Wooden fences tag
-		tag(MinecraftBlockTagGroups.WOODEN_FENCES).add(DeferredRegistryHandler.BURNED_OAK_FENCE.get());
+		tag(MinecraftBlockTagGroups.WOODEN_FENCES).add(DeferredRegistryHandler.BURNED_OAK_FENCE.get(),
+				DeferredRegistryHandler.STARDUST_FENCE.get());
 
 		// Wooden pressure plates tag
-		tag(MinecraftBlockTagGroups.WOODEN_PRESSURE_PLATES).add(DeferredRegistryHandler.BURNED_OAK_PRESSURE_PLATE.get());
+		tag(MinecraftBlockTagGroups.WOODEN_PRESSURE_PLATES).add(DeferredRegistryHandler.BURNED_OAK_PRESSURE_PLATE.get(),
+				DeferredRegistryHandler.STARDUST_PRESSURE_PLATE.get());
 
 		// Wooden slabs tag
-		tag(MinecraftBlockTagGroups.WOODEN_SLABS).add(DeferredRegistryHandler.BURNED_OAK_SLAB.get());
+		tag(MinecraftBlockTagGroups.WOODEN_SLABS).add(DeferredRegistryHandler.BURNED_OAK_SLAB.get(),
+				DeferredRegistryHandler.STARDUST_SLAB.get());
 
 		// Wooden stairs tag
-		tag(MinecraftBlockTagGroups.WOODEN_STAIRS).add(DeferredRegistryHandler.BURNED_OAK_STAIRS.get());
+		tag(MinecraftBlockTagGroups.WOODEN_STAIRS).add(DeferredRegistryHandler.BURNED_OAK_STAIRS.get(),
+				DeferredRegistryHandler.STARDUST_STAIRS.get());
 
 		// Wooden trapdoors tag
-		tag(MinecraftBlockTagGroups.WOODEN_TRAPDOORS).add(DeferredRegistryHandler.BURNED_OAK_TRAPDOOR.get());
+		tag(MinecraftBlockTagGroups.WOODEN_TRAPDOORS).add(DeferredRegistryHandler.BURNED_OAK_TRAPDOOR.get(),
+				DeferredRegistryHandler.STARDUST_TRAPDOOR.get());
 
 		// Non-flammable wood tag
 		tag(MinecraftBlockTagGroups.NON_FLAMMABLE_WOOD).add(DeferredRegistryHandler.WARPED_TABLE.get(),
 				DeferredRegistryHandler.CRIMSON_TABLE.get());
+
+		// Small flowers tag
+		tag(MinecraftBlockTagGroups.SMALL_FLOWERS).add(DeferredRegistryHandler.AZUL_STAINED_ORCHID.get(),
+				DeferredRegistryHandler.MOONGLOW.get());
+
+		// Leaves tag
+		tag(MinecraftBlockTagGroups.LEAVES).add(DeferredRegistryHandler.STARDUST_LEAVES.get());
 	}
 
 	/**
@@ -138,8 +159,10 @@ public class BlockTagsGenerator extends BlockTagsProvider {
 				tagStage = 1;
 			} else if (block == DeferredRegistryHandler.SANDBAG.get()) {
 				tagStage = 2;
-			} else if (block == DeferredRegistryHandler.BULLETPROOF_GLASS.get()) {
+			} else if (block == DeferredRegistryHandler.STARDUST_LEAVES.get()) {
 				tagStage = 3;
+			} else if (block == DeferredRegistryHandler.BULLETPROOF_GLASS.get()) {
+				tagStage = 4;
 			}
 
 			if (block == DeferredRegistryHandler.BULLETPROOF_GLASS.get()
@@ -158,10 +181,11 @@ public class BlockTagsGenerator extends BlockTagsProvider {
 				tier = 3;
 			}
 
-			if (tagStage != 3) {
+			if (tagStage != 4) {
 				switch (tagStage) {
 					case 1 -> tag(BlockTags.MINEABLE_WITH_AXE).add(block);
 					case 2 -> tag(BlockTags.MINEABLE_WITH_SHOVEL).add(block);
+					case 3 -> tag(BlockTags.MINEABLE_WITH_HOE).add(block);
 					default -> tag(BlockTags.MINEABLE_WITH_PICKAXE).add(block);
 				}
 			}

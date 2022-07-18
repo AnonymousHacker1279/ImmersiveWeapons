@@ -113,6 +113,16 @@ public class ItemModelGenerator extends ItemModelProvider {
 							.parent(new ModelFile.UncheckedModelFile("item/generated"))
 							.texture("layer0", new ResourceLocation(ImmersiveWeapons.MOD_ID,
 									"block/azul_stained_orchid"));
+				} else if (item == DeferredRegistryHandler.MOONGLOW_ITEM.get()) {
+					getBuilder(item.toString())
+							.parent(new ModelFile.UncheckedModelFile("item/generated"))
+							.texture("layer0", new ResourceLocation(ImmersiveWeapons.MOD_ID,
+									"block/moonglow"));
+				} else if (item == DeferredRegistryHandler.STARDUST_SAPLING_ITEM.get()) {
+					getBuilder(item.toString())
+							.parent(new ModelFile.UncheckedModelFile("item/generated"))
+							.texture("layer0", new ResourceLocation(ImmersiveWeapons.MOD_ID,
+									"block/stardust_sapling"));
 				} else if (item == DeferredRegistryHandler.BEAR_TRAP_ITEM.get()) {
 					getBuilder(item.toString())
 							.parent(new ModelFile.UncheckedModelFile(new ResourceLocation(ImmersiveWeapons.MOD_ID,
@@ -137,6 +147,19 @@ public class ItemModelGenerator extends ItemModelProvider {
 					getBuilder(item.toString())
 							.parent(new ModelFile.UncheckedModelFile(new ResourceLocation(ImmersiveWeapons.MOD_ID,
 									"block/mortar_0_unloaded")));
+				} else if (item == DeferredRegistryHandler.STARDUST_FENCE_ITEM.get()) {
+					fenceInventory(item.toString(),
+							new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/stardust_planks"));
+				} else if (item == DeferredRegistryHandler.STARDUST_TRAPDOOR_ITEM.get()) {
+					trapdoorBottom(item.toString(),
+							new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/stardust_trapdoor"));
+				} else if (item == DeferredRegistryHandler.STARDUST_DOOR_ITEM.get()) {
+					basicItem(new ResourceLocation(ImmersiveWeapons.MOD_ID, "stardust_door"));
+				} else if (item == DeferredRegistryHandler.STARDUST_SIGN_ITEM.get()) {
+					basicItem(new ResourceLocation(ImmersiveWeapons.MOD_ID, "stardust_sign"));
+				} else if (item == DeferredRegistryHandler.STARDUST_BUTTON_ITEM.get()) {
+					buttonInventory(item.toString(),
+							new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/stardust_planks"));
 				} else if (ItemLists.headItems.contains(item)) {
 					entitySkull(item);
 				} else {
