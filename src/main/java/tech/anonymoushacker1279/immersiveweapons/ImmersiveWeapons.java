@@ -12,6 +12,7 @@ import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import org.slf4j.Logger;
 import tech.anonymoushacker1279.immersiveweapons.advancement.IWCriteriaTriggers;
+import tech.anonymoushacker1279.immersiveweapons.api.PluginHandler;
 import tech.anonymoushacker1279.immersiveweapons.block.properties.WoodTypes;
 import tech.anonymoushacker1279.immersiveweapons.config.ClientConfig;
 import tech.anonymoushacker1279.immersiveweapons.config.CommonConfig;
@@ -68,5 +69,7 @@ public class ImmersiveWeapons {
 			SurfaceRuleManager.addSurfaceRules(RuleCategory.OVERWORLD, MOD_ID, SurfaceRuleData.makeRules());
 		});
 		PostSetupHandler.init();
+
+		PluginHandler.initializePlugins(event);
 	}
 }
