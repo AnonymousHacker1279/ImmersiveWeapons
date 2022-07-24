@@ -17,6 +17,7 @@ import tech.anonymoushacker1279.immersiveweapons.data.models.BlockStateGenerator
 import tech.anonymoushacker1279.immersiveweapons.data.models.ItemModelGenerator;
 import tech.anonymoushacker1279.immersiveweapons.data.modifiers.*;
 import tech.anonymoushacker1279.immersiveweapons.data.recipes.RecipeGenerator;
+import tech.anonymoushacker1279.immersiveweapons.data.recipes.families.WoodFamilyGenerator;
 import tech.anonymoushacker1279.immersiveweapons.data.tags.*;
 
 @Mod.EventBusSubscriber(bus = Bus.MOD)
@@ -41,6 +42,7 @@ public class CustomDataGenerator {
 		generator.addProvider(event.includeServer(), new AdvancementProvider(generator));
 		generator.addProvider(event.includeServer(), new LootTableGenerator(generator));
 		generator.addProvider(event.includeServer(), new RecipeGenerator(generator));
+		generator.addProvider(event.includeServer(), new WoodFamilyGenerator(generator));
 		BlockTagsGenerator blockTagsGenerator = new BlockTagsGenerator(generator, event.getExistingFileHelper());
 		generator.addProvider(event.includeServer(), blockTagsGenerator);
 		generator.addProvider(event.includeServer(), new ItemTagsGenerator(generator, blockTagsGenerator, event.getExistingFileHelper()));

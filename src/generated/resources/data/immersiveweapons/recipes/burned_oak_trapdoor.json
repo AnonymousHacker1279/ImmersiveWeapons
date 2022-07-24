@@ -1,6 +1,6 @@
 {
   "type": "minecraft:crafting_shaped",
-  "group": "burned_oak",
+  "group": "wooden_trapdoor",
   "key": {
     "a": {
       "item": "immersiveweapons:burned_oak_planks"

@@ -1,7 +1,7 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "burned_oak_log": {
+    "has_burned_oak_log": {
       "conditions": {
         "items": [
           {
@@ -20,7 +20,7 @@
   },
   "requirements": [
     [
-      "burned_oak_log",
+      "has_burned_oak_log",
       "has_the_recipe"
     ]
   ],

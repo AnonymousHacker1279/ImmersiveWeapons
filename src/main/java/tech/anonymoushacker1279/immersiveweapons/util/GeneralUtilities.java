@@ -4,17 +4,22 @@ import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.item.DyeColor;
-import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.*;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.biome.Biome;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.StainedGlassBlock;
 import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
+import net.minecraftforge.registries.ForgeRegistries;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 
+import java.util.Objects;
 import java.util.UUID;
 
+/**
+ * A collection of random utility methods for general use.
+ */
 public class GeneralUtilities {
 
 	public static final UUID ATTACK_REACH_MODIFIER = UUID.fromString("9f470b49-0445-4341-ae85-55b9e5ec2a1c");
@@ -106,5 +111,31 @@ public class GeneralUtilities {
 
 	private static TagKey<Biome> createBiomeTagInternal(String pName) {
 		return TagKey.create(Registry.BIOME_REGISTRY, new ResourceLocation(pName));
+	}
+
+	/**
+	 * Returns the {@linkplain ResourceLocation#getPath() path} of the registry name for the given block. This
+	 * is a convenience method which checks if the registry name of the entry exists, to avoid linting warnings about
+	 * the nullability of the {@linkplain net.minecraftforge.registries.IForgeRegistry<Block>#getKey entry's registry name}.
+	 *
+	 * @param block the registry entry
+	 * @return the path of the registry name of the given entry
+	 * @throws NullPointerException if the entry does not have a registry name
+	 */
+	public static ResourceLocation blockRegistryPath(Block block) {
+		return Objects.requireNonNull(ForgeRegistries.BLOCKS.getKey(block), "Registry name");
+	}
+
+	/**
+	 * Returns the {@linkplain ResourceLocation#getPath() path} of the registry name for the given item. This
+	 * is a convenience method which checks if the registry name of the entry exists, to avoid linting warnings about
+	 * the nullability of the {@linkplain net.minecraftforge.registries.IForgeRegistry<Item>#getKey entry's registry name}.
+	 *
+	 * @param item the registry entry
+	 * @return the path of the registry name of the given entry
+	 * @throws NullPointerException if the entry does not have a registry name
+	 */
+	public static ResourceLocation itemRegistryPath(Item item) {
+		return Objects.requireNonNull(ForgeRegistries.ITEMS.getKey(item), "Registry name");
 	}
 }

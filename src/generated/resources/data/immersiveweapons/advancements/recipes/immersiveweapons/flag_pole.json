@@ -11,9 +11,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "immersiveweapons:flag_pole"
-            ]
+            "tag": "forge:ingots/iron"
           }
         ]
       },

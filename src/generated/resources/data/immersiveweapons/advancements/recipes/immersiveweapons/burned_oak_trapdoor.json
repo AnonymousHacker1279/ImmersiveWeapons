@@ -1,7 +1,7 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "burned_oak_planks": {
+    "has_planks": {
       "conditions": {
         "items": [
           {
@@ -22,7 +22,7 @@
   },
   "requirements": [
     [
-      "burned_oak_planks",
+      "has_planks",
       "has_the_recipe"
     ]
   ],

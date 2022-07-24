@@ -15,7 +15,6 @@ import net.minecraft.world.item.alchemy.PotionUtils;
 import net.minecraft.world.item.alchemy.Potions;
 import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.level.ItemLike;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.crafting.StrictNBTIngredient;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -46,7 +45,6 @@ public class RecipeGenerator extends RecipeProvider {
 
 		createFlagItems();
 		createGlassItems();
-		createBurnedOakItems();
 		createCloudMarbleItems();
 		createCobaltItems();
 		createCopperItems();
@@ -70,21 +68,102 @@ public class RecipeGenerator extends RecipeProvider {
 	}
 
 	private void createFlagItems() {
-		createAmericanFlag(DeferredRegistryHandler.AMERICAN_FLAG_ITEM.get(),
-				DeferredRegistryHandler.FLAG_POLE_ITEM.get());
-		createBritishFlag(DeferredRegistryHandler.BRITISH_FLAG_ITEM.get(),
-				DeferredRegistryHandler.FLAG_POLE_ITEM.get());
-		createCanadianFlag(DeferredRegistryHandler.CANADIAN_FLAG_ITEM.get(),
-				DeferredRegistryHandler.FLAG_POLE_ITEM.get());
-		createGadsdenFlag(DeferredRegistryHandler.GADSDEN_FLAG_ITEM.get(),
-				DeferredRegistryHandler.FLAG_POLE_ITEM.get());
-		createMexicanFlag(DeferredRegistryHandler.MEXICAN_FLAG_ITEM.get(),
-				DeferredRegistryHandler.FLAG_POLE_ITEM.get());
-		createTrollFlag(DeferredRegistryHandler.TROLL_FLAG_ITEM.get(),
-				DeferredRegistryHandler.FLAG_POLE_ITEM.get());
-		createImmersiveWeaponsFlag(DeferredRegistryHandler.IMMERSIVE_WEAPONS_FLAG_ITEM.get(),
-				DeferredRegistryHandler.FLAG_POLE_ITEM.get());
-		createFlagPole(DeferredRegistryHandler.FLAG_POLE_ITEM.get());
+		Item FLAG_POLE = DeferredRegistryHandler.FLAG_POLE_ITEM.get();
+
+		ShapedRecipeBuilder.shaped(DeferredRegistryHandler.AMERICAN_FLAG_ITEM.get())
+				.define('a', FLAG_POLE)
+				.define('b', Items.BLUE_WOOL)
+				.define('c', Items.RED_WOOL)
+				.define('d', Items.WHITE_WOOL)
+				.pattern("bcc")
+				.pattern("bdd")
+				.pattern("a  ")
+				.group("flag")
+				.unlockedBy("flag_pole", has(FLAG_POLE))
+				.save(finishedRecipeConsumer);
+
+		ShapedRecipeBuilder.shaped(DeferredRegistryHandler.BRITISH_FLAG_ITEM.get())
+				.define('a', FLAG_POLE)
+				.define('b', Items.BLUE_WOOL)
+				.define('c', Items.RED_WOOL)
+				.define('d', Items.WHITE_WOOL)
+				.pattern("cbc")
+				.pattern("dcd")
+				.pattern("a  ")
+				.group("flag")
+				.unlockedBy("flag_pole", has(FLAG_POLE))
+				.save(finishedRecipeConsumer);
+
+		ShapedRecipeBuilder.shaped(DeferredRegistryHandler.CANADIAN_FLAG_ITEM.get())
+				.define('a', FLAG_POLE)
+				.define('b', Items.RED_WOOL)
+				.define('c', Items.WHITE_WOOL)
+				.pattern("bcb")
+				.pattern("bbb")
+				.pattern("a  ")
+				.group("flag")
+				.unlockedBy("flag_pole", has(FLAG_POLE))
+				.save(finishedRecipeConsumer);
+
+		ShapedRecipeBuilder.shaped(DeferredRegistryHandler.GADSDEN_FLAG_ITEM.get())
+				.define('a', FLAG_POLE)
+				.define('b', Items.YELLOW_WOOL)
+				.define('c', Items.BLACK_WOOL)
+				.define('d', Items.GREEN_WOOL)
+				.pattern("bcb")
+				.pattern("bdb")
+				.pattern("a  ")
+				.group("flag")
+				.unlockedBy("flag_pole", has(FLAG_POLE))
+				.save(finishedRecipeConsumer);
+
+		ShapedRecipeBuilder.shaped(DeferredRegistryHandler.MEXICAN_FLAG_ITEM.get())
+				.define('a', FLAG_POLE)
+				.define('b', Items.GREEN_WOOL)
+				.define('c', Items.WHITE_WOOL)
+				.define('d', Items.BROWN_WOOL)
+				.define('e', Items.RED_WOOL)
+				.pattern("bce")
+				.pattern("bde")
+				.pattern("a  ")
+				.group("flag")
+				.unlockedBy("flag_pole", has(FLAG_POLE))
+				.save(finishedRecipeConsumer);
+
+
+		ShapedRecipeBuilder.shaped(DeferredRegistryHandler.TROLL_FLAG_ITEM.get())
+				.define('a', FLAG_POLE)
+				.define('b', Items.WHITE_WOOL)
+				.define('c', Items.BLACK_WOOL)
+				.pattern("bcb")
+				.pattern("cbc")
+				.pattern("a  ")
+				.group("flag")
+				.unlockedBy("flag_pole", has(FLAG_POLE))
+				.save(finishedRecipeConsumer);
+
+
+		ShapedRecipeBuilder.shaped(DeferredRegistryHandler.IMMERSIVE_WEAPONS_FLAG_ITEM.get())
+				.define('a', FLAG_POLE)
+				.define('b', Items.LIGHT_BLUE_WOOL)
+				.define('c', Items.GOLDEN_SWORD)
+				.define('d', Items.YELLOW_WOOL)
+				.pattern("bcb")
+				.pattern("bdb")
+				.pattern("a  ")
+				.group("flag")
+				.unlockedBy("flag_pole", has(FLAG_POLE))
+				.save(finishedRecipeConsumer);
+
+
+		ShapedRecipeBuilder.shaped(FLAG_POLE, 3)
+				.define('a', Tags.Items.INGOTS_IRON)
+				.pattern(" a ")
+				.pattern(" a ")
+				.pattern(" a ")
+				.group("flag")
+				.unlockedBy("iron", has(Tags.Items.INGOTS_IRON))
+				.save(finishedRecipeConsumer);
 	}
 
 	private void createGlassItems() {
@@ -120,73 +199,131 @@ public class RecipeGenerator extends RecipeProvider {
 				Tags.Items.DYES_WHITE);
 		createBulletproofStainedGlass(DeferredRegistryHandler.YELLOW_STAINED_BULLETPROOF_GLASS_ITEM.get(),
 				Tags.Items.DYES_YELLOW);
-		createBulletproofGlass(DeferredRegistryHandler.BULLETPROOF_GLASS_ITEM.get());
-	}
 
-	private void createBurnedOakItems() {
-		createBurnedOakBoat(DeferredRegistryHandler.BURNED_OAK_BOAT.get(),
-				DeferredRegistryHandler.BURNED_OAK_PLANKS_ITEM.get());
-		createBurnedOakChestBoat(DeferredRegistryHandler.BURNED_OAK_CHEST_BOAT.get(),
-				DeferredRegistryHandler.BURNED_OAK_PLANKS_ITEM.get());
-		createBurnedOakButton(DeferredRegistryHandler.BURNED_OAK_BUTTON_ITEM.get(),
-				DeferredRegistryHandler.BURNED_OAK_PLANKS_ITEM.get());
-		createBurnedOakDoor(DeferredRegistryHandler.BURNED_OAK_DOOR_ITEM.get(),
-				DeferredRegistryHandler.BURNED_OAK_PLANKS_ITEM.get());
-		createBurnedOakFence(DeferredRegistryHandler.BURNED_OAK_FENCE_ITEM.get(),
-				DeferredRegistryHandler.BURNED_OAK_PLANKS_ITEM.get());
-		createBurnedOakFenceGate(DeferredRegistryHandler.BURNED_OAK_FENCE_GATE_ITEM.get(),
-				DeferredRegistryHandler.BURNED_OAK_PLANKS_ITEM.get());
-		createBurnedOakPlanks(DeferredRegistryHandler.BURNED_OAK_PLANKS_ITEM.get());
-		createBurnedOakPressurePlate(DeferredRegistryHandler.BURNED_OAK_PRESSURE_PLATE_ITEM.get(),
-				DeferredRegistryHandler.BURNED_OAK_PLANKS_ITEM.get());
-		createBurnedOakSign(DeferredRegistryHandler.BURNED_OAK_SIGN_ITEM.get(),
-				DeferredRegistryHandler.BURNED_OAK_PLANKS_ITEM.get());
-		createBurnedOakSlab(DeferredRegistryHandler.BURNED_OAK_SLAB_ITEM.get(),
-				DeferredRegistryHandler.BURNED_OAK_PLANKS_ITEM.get());
-		createBurnedOakStairs(DeferredRegistryHandler.BURNED_OAK_STAIRS_ITEM.get(),
-				DeferredRegistryHandler.BURNED_OAK_PLANKS_ITEM.get());
-		createBurnedOakTrapdoor(DeferredRegistryHandler.BURNED_OAK_TRAPDOOR_ITEM.get(),
-				DeferredRegistryHandler.BURNED_OAK_PLANKS_ITEM.get());
-		createBurnedOakWood(DeferredRegistryHandler.BURNED_OAK_WOOD_ITEM.get(),
-				DeferredRegistryHandler.BURNED_OAK_LOG_ITEM.get());
+		ShapedRecipeBuilder.shaped(DeferredRegistryHandler.BULLETPROOF_GLASS_ITEM.get(), 8)
+				.define('a', Items.GLASS)
+				.define('b', Tags.Items.INGOTS_IRON)
+				.pattern("aaa")
+				.pattern("aba")
+				.pattern("aaa")
+				.group("bulletproof_glass")
+				.unlockedBy("glass", has(Items.GLASS))
+				.save(finishedRecipeConsumer);
 	}
 
 	private void createCloudMarbleItems() {
-		createCloudMarbleBrickSlab(DeferredRegistryHandler.CLOUD_MARBLE_BRICK_SLAB_ITEM.get(),
-				DeferredRegistryHandler.CLOUD_MARBLE_BRICKS_ITEM.get());
-		createCloudMarbleStairs(DeferredRegistryHandler.CLOUD_MARBLE_BRICK_STAIRS_ITEM.get(),
-				DeferredRegistryHandler.CLOUD_MARBLE_BRICKS_ITEM.get());
-		createCloudMarbleBricks(DeferredRegistryHandler.CLOUD_MARBLE_BRICKS_ITEM.get(),
-				DeferredRegistryHandler.CLOUD_MARBLE_ITEM.get());
-		createCloudMarblePillar(DeferredRegistryHandler.CLOUD_MARBLE_PILLAR_ITEM.get(),
-				DeferredRegistryHandler.CLOUD_MARBLE_ITEM.get());
+		Item CLOUD_MARBLE_BRICKS = DeferredRegistryHandler.CLOUD_MARBLE_BRICKS_ITEM.get();
+		Item CLOUD_MARBLE_BRICK_SLAB = DeferredRegistryHandler.CLOUD_MARBLE_BRICK_SLAB_ITEM.get();
+		Item CLOUD_MARBLE_BRICK_STAIRS = DeferredRegistryHandler.CLOUD_MARBLE_BRICK_STAIRS_ITEM.get();
+		Item CLOUD_MARBLE = DeferredRegistryHandler.CLOUD_MARBLE_ITEM.get();
+		Item CLOUD_MARBLE_PILLAR = DeferredRegistryHandler.CLOUD_MARBLE_PILLAR_ITEM.get();
+
+		// Slab from crafting table
+		ShapedRecipeBuilder builder = ShapedRecipeBuilder.shaped(CLOUD_MARBLE_BRICK_SLAB, 6)
+				.group("cloud_marble")
+				.unlockedBy("cloud_marble_bricks", has(CLOUD_MARBLE_BRICKS));
+		createSlab(builder, CLOUD_MARBLE_BRICKS);
+		// Slab from stonecutter
+		SingleItemRecipeBuilder.stonecutting(Ingredient.of(CLOUD_MARBLE_BRICKS), CLOUD_MARBLE_BRICK_SLAB, 2)
+				.group("cloud_marble")
+				.unlockedBy("cloud_marble_bricks", has(CLOUD_MARBLE_BRICKS))
+				.save(finishedRecipeConsumer, ImmersiveWeapons.MOD_ID + ":"
+						+ getConversionRecipeName(CLOUD_MARBLE_BRICK_SLAB, CLOUD_MARBLE_BRICKS) + "_stonecutting");
+
+		// Stairs from crafting table
+		builder = ShapedRecipeBuilder.shaped(CLOUD_MARBLE_BRICK_STAIRS, 4)
+				.group("cloud_marble")
+				.unlockedBy("cloud_marble_bricks", has(CLOUD_MARBLE_BRICKS));
+		createStairs(builder, CLOUD_MARBLE_BRICKS);
+		// Stairs from stonecutter
+		SingleItemRecipeBuilder.stonecutting(Ingredient.of(CLOUD_MARBLE_BRICKS), CLOUD_MARBLE_BRICK_STAIRS)
+				.group("cloud_marble")
+				.unlockedBy("cloud_marble_bricks", has(CLOUD_MARBLE_BRICKS))
+				.save(finishedRecipeConsumer, ImmersiveWeapons.MOD_ID + ":"
+						+ getConversionRecipeName(CLOUD_MARBLE_BRICK_STAIRS, CLOUD_MARBLE_BRICKS) + "_stonecutting");
+
+		// Bricks from crafting table
+		ShapedRecipeBuilder.shaped(CLOUD_MARBLE_BRICKS, 4)
+				.define('a', CLOUD_MARBLE)
+				.pattern("aa ")
+				.pattern("aa ")
+				.group("cloud_marble")
+				.unlockedBy("cloud_marble", has(CLOUD_MARBLE))
+				.save(finishedRecipeConsumer);
+		// Bricks from stonecutter
+		SingleItemRecipeBuilder.stonecutting(Ingredient.of(CLOUD_MARBLE), CLOUD_MARBLE_BRICKS)
+				.group("cloud_marble")
+				.unlockedBy("cloud_marble", has(CLOUD_MARBLE))
+				.save(finishedRecipeConsumer, ImmersiveWeapons.MOD_ID + ":"
+						+ getConversionRecipeName(CLOUD_MARBLE_BRICKS, CLOUD_MARBLE) + "_stonecutting");
+
+		// Pillar from crafting table
+		ShapedRecipeBuilder.shaped(CLOUD_MARBLE_PILLAR)
+				.define('a', CLOUD_MARBLE)
+				.pattern("a  ")
+				.pattern("a  ")
+				.group("cloud_marble")
+				.unlockedBy("cloud_marble", has(CLOUD_MARBLE))
+				.save(finishedRecipeConsumer);
+		// Pillar from stonecutter
+		SingleItemRecipeBuilder.stonecutting(Ingredient.of(CLOUD_MARBLE), CLOUD_MARBLE_PILLAR)
+				.group("cloud_marble")
+				.unlockedBy("cloud_marble", has(CLOUD_MARBLE))
+				.save(finishedRecipeConsumer, ImmersiveWeapons.MOD_ID + ":"
+						+ getConversionRecipeName(CLOUD_MARBLE_PILLAR, CLOUD_MARBLE) + "_stonecutting");
 	}
 
 	private void createMudItems() {
-		createSmeltingRecipe(DeferredRegistryHandler.MUD_ITEM.get(), DeferredRegistryHandler.DRIED_MUD_ITEM.get(),
+		Item MUD = DeferredRegistryHandler.MUD_ITEM.get();
+		Item DRIED_MUD = DeferredRegistryHandler.DRIED_MUD_ITEM.get();
+		Item HARDENED_MUD = DeferredRegistryHandler.HARDENED_MUD_ITEM.get();
+		Item HARDENED_MUD_SLAB = DeferredRegistryHandler.HARDENED_MUD_SLAB_ITEM.get();
+		Item HARDENED_MUD_STAIRS = DeferredRegistryHandler.HARDENED_MUD_STAIRS_ITEM.get();
+
+		createSmeltingRecipe(MUD, DRIED_MUD,
 				0.1f, 100, "mud");
-		createBlastingRecipe(DeferredRegistryHandler.MUD_ITEM.get(), DeferredRegistryHandler.DRIED_MUD_ITEM.get(),
+		createBlastingRecipe(MUD, DRIED_MUD,
 				0.1f, 50, "mud");
-		createSmeltingRecipe(DeferredRegistryHandler.DRIED_MUD_ITEM.get(), DeferredRegistryHandler.HARDENED_MUD_ITEM.get(),
+		createSmeltingRecipe(DRIED_MUD, HARDENED_MUD,
 				0.1f, 100, "mud");
-		createBlastingRecipe(DeferredRegistryHandler.DRIED_MUD_ITEM.get(), DeferredRegistryHandler.HARDENED_MUD_ITEM.get(),
+		createBlastingRecipe(DRIED_MUD, HARDENED_MUD,
 				0.1f, 50, "mud");
-		createHardenedMudSlab(DeferredRegistryHandler.HARDENED_MUD_SLAB_ITEM.get(),
-				DeferredRegistryHandler.HARDENED_MUD_ITEM.get());
-		createHardenedMudStairs(DeferredRegistryHandler.HARDENED_MUD_STAIRS_ITEM.get(),
-				DeferredRegistryHandler.HARDENED_MUD_ITEM.get());
+
+		// Slab from crafting table
+		ShapedRecipeBuilder builder = ShapedRecipeBuilder.shaped(HARDENED_MUD_SLAB, 6)
+				.group("mud")
+				.unlockedBy("hardened_mud", has(HARDENED_MUD));
+		createSlab(builder, HARDENED_MUD);
+		// Slab from stonecutter
+		SingleItemRecipeBuilder.stonecutting(Ingredient.of(HARDENED_MUD), HARDENED_MUD_SLAB, 2)
+				.group("mud")
+				.unlockedBy("hardened_mud", has(HARDENED_MUD))
+				.save(finishedRecipeConsumer, ImmersiveWeapons.MOD_ID + ":"
+						+ getConversionRecipeName(HARDENED_MUD_SLAB, HARDENED_MUD) + "_stonecutting");
+
+		// Stairs from crafting table
+		builder = ShapedRecipeBuilder.shaped(HARDENED_MUD_STAIRS, 4)
+				.group("mud")
+				.unlockedBy("hardened_mud", has(HARDENED_MUD));
+		createStairs(builder, HARDENED_MUD);
+		// Stairs from stonecutter
+		SingleItemRecipeBuilder.stonecutting(Ingredient.of(HARDENED_MUD), HARDENED_MUD_STAIRS)
+				.group("mud")
+				.unlockedBy("hardened_mud", has(HARDENED_MUD))
+				.save(finishedRecipeConsumer, ImmersiveWeapons.MOD_ID + ":"
+						+ getConversionRecipeName(HARDENED_MUD_STAIRS, HARDENED_MUD) + "_stonecutting");
 
 		// Hardened mud window
 		ShapedRecipeBuilder.shaped(DeferredRegistryHandler.HARDENED_MUD_WINDOW_ITEM.get(), 8)
-				.define('a', DeferredRegistryHandler.HARDENED_MUD_ITEM.get())
+				.define('a', HARDENED_MUD)
 				.pattern("aaa")
 				.pattern("a a")
 				.pattern("aaa")
 				.group("mud")
-				.unlockedBy("hardened_mud", has(DeferredRegistryHandler.HARDENED_MUD_ITEM.get()))
+				.unlockedBy("hardened_mud", has(HARDENED_MUD))
 				.save(finishedRecipeConsumer);
 		// Mud
-		ShapelessRecipeBuilder.shapeless(DeferredRegistryHandler.MUD_ITEM.get(), 8)
+		ShapelessRecipeBuilder.shapeless(MUD, 8)
 				.requires(Items.WATER_BUCKET)
 				.requires(Items.DIRT, 8)
 				.group("mud")
@@ -1623,287 +1760,6 @@ public class RecipeGenerator extends RecipeProvider {
 		createShard(builder, Items.DIAMOND);
 	}
 
-	private static void createCloudMarbleBrickSlab(ItemLike slabItem, ItemLike material) {
-		ShapedRecipeBuilder builder = ShapedRecipeBuilder.shaped(slabItem, 6)
-				.group("cloud_marble")
-				.unlockedBy("cloud_marble_bricks", has(DeferredRegistryHandler.CLOUD_MARBLE_BRICKS_ITEM.get()));
-		createSlab(builder, material);
-		SingleItemRecipeBuilder.stonecutting(Ingredient.of(material), slabItem, 2)
-				.group("cloud_marble")
-				.unlockedBy("cloud_marble_bricks", has(DeferredRegistryHandler.CLOUD_MARBLE_BRICKS_ITEM.get()))
-				.save(finishedRecipeConsumer, ImmersiveWeapons.MOD_ID + ":" + getConversionRecipeName(slabItem, material) + "_stonecutting");
-	}
-
-	private static void createCloudMarbleStairs(ItemLike stairsItem, ItemLike material) {
-		ShapedRecipeBuilder builder = ShapedRecipeBuilder.shaped(stairsItem, 4)
-				.group("cloud_marble")
-				.unlockedBy("cloud_marble_bricks", has(DeferredRegistryHandler.CLOUD_MARBLE_BRICKS_ITEM.get()));
-		createStairs(builder, material);
-		SingleItemRecipeBuilder.stonecutting(Ingredient.of(material), stairsItem)
-				.group("cloud_marble")
-				.unlockedBy("cloud_marble_bricks", has(DeferredRegistryHandler.CLOUD_MARBLE_BRICKS_ITEM.get()))
-				.save(finishedRecipeConsumer, ImmersiveWeapons.MOD_ID + ":" + getConversionRecipeName(stairsItem, material) + "_stonecutting");
-	}
-
-	private static void createCloudMarbleBricks(ItemLike bricksItem, ItemLike material) {
-		ShapedRecipeBuilder.shaped(bricksItem, 4)
-				.define('a', material)
-				.pattern("aa ")
-				.pattern("aa ")
-				.group("cloud_marble")
-				.unlockedBy("cloud_marble", has(DeferredRegistryHandler.CLOUD_MARBLE_ITEM.get()))
-				.save(finishedRecipeConsumer);
-		SingleItemRecipeBuilder.stonecutting(Ingredient.of(material), bricksItem)
-				.group("cloud_marble")
-				.unlockedBy("cloud_marble", has(DeferredRegistryHandler.CLOUD_MARBLE_ITEM.get()))
-				.save(finishedRecipeConsumer, ImmersiveWeapons.MOD_ID + ":" + getConversionRecipeName(bricksItem, material) + "_stonecutting");
-	}
-
-	private static void createCloudMarblePillar(ItemLike bricksItem, ItemLike material) {
-		ShapedRecipeBuilder.shaped(bricksItem)
-				.define('a', material)
-				.pattern("a  ")
-				.pattern("a  ")
-				.group("cloud_marble")
-				.unlockedBy("cloud_marble", has(DeferredRegistryHandler.CLOUD_MARBLE_BRICKS_ITEM.get()))
-				.save(finishedRecipeConsumer);
-		SingleItemRecipeBuilder.stonecutting(Ingredient.of(material), bricksItem)
-				.group("cloud_marble")
-				.unlockedBy("cloud_marble", has(DeferredRegistryHandler.CLOUD_MARBLE_BRICKS_ITEM.get()))
-				.save(finishedRecipeConsumer, ImmersiveWeapons.MOD_ID + ":" + getConversionRecipeName(bricksItem, material) + "_stonecutting");
-	}
-
-	private static void createBurnedOakBoat(ItemLike boatItem, ItemLike material) {
-		ShapedRecipeBuilder.shaped(boatItem)
-				.define('a', material)
-				.pattern("a a")
-				.pattern("aaa")
-				.group("burned_oak")
-				.unlockedBy("water", insideOf(Blocks.WATER))
-				.save(finishedRecipeConsumer);
-	}
-
-	private static void createBurnedOakChestBoat(ItemLike chestBoatItem, ItemLike boatItem) {
-		ShapelessRecipeBuilder.shapeless(chestBoatItem)
-				.requires(boatItem)
-				.requires(Items.CHEST)
-				.group("burned_oak")
-				.unlockedBy("water", insideOf(Blocks.WATER))
-				.save(finishedRecipeConsumer);
-	}
-
-	private static void createBurnedOakButton(ItemLike buttonItem, ItemLike material) {
-		ShapelessRecipeBuilder.shapeless(buttonItem)
-				.requires(material)
-				.group("burned_oak")
-				.unlockedBy("burned_oak_planks", has(DeferredRegistryHandler.BURNED_OAK_PLANKS_ITEM.get()))
-				.save(finishedRecipeConsumer);
-	}
-
-	private static void createBurnedOakDoor(ItemLike doorItem, ItemLike material) {
-		ShapedRecipeBuilder.shaped(doorItem, 3)
-				.define('a', material)
-				.pattern("aa ")
-				.pattern("aa ")
-				.pattern("aa ")
-				.group("burned_oak")
-				.unlockedBy("burned_oak_planks", has(DeferredRegistryHandler.BURNED_OAK_PLANKS_ITEM.get()))
-				.save(finishedRecipeConsumer);
-	}
-
-	private static void createBurnedOakFence(ItemLike fenceItem, ItemLike material) {
-		ShapedRecipeBuilder.shaped(fenceItem, 3)
-				.define('a', material)
-				.define('b', Items.STICK)
-				.pattern("aba")
-				.pattern("aba")
-				.group("burned_oak")
-				.unlockedBy("burned_oak_planks", has(DeferredRegistryHandler.BURNED_OAK_PLANKS_ITEM.get()))
-				.save(finishedRecipeConsumer);
-	}
-
-	private static void createBurnedOakFenceGate(ItemLike fenceGateItem, ItemLike material) {
-		ShapedRecipeBuilder.shaped(fenceGateItem)
-				.define('a', material)
-				.define('b', Items.STICK)
-				.pattern("bab")
-				.pattern("bab")
-				.group("burned_oak")
-				.unlockedBy("burned_oak_planks", has(DeferredRegistryHandler.BURNED_OAK_PLANKS_ITEM.get()))
-				.save(finishedRecipeConsumer);
-	}
-
-	private static void createBurnedOakPlanks(ItemLike planksItem) {
-		ShapelessRecipeBuilder.shapeless(planksItem, 4)
-				.requires(ImmersiveWeaponsItemTagGroups.BURNED_OAK_LOGS)
-				.group("burned_oak")
-				.unlockedBy("burned_oak_log", has(ImmersiveWeaponsItemTagGroups.BURNED_OAK_LOGS))
-				.save(finishedRecipeConsumer);
-	}
-
-	private static void createBurnedOakPressurePlate(ItemLike pressurePlateItem, ItemLike material) {
-		ShapedRecipeBuilder.shaped(pressurePlateItem)
-				.define('a', material)
-				.pattern("aa ")
-				.group("burned_oak")
-				.unlockedBy("burned_oak_planks", has(DeferredRegistryHandler.BURNED_OAK_PLANKS_ITEM.get()))
-				.save(finishedRecipeConsumer);
-	}
-
-	private static void createBurnedOakSign(ItemLike signItem, ItemLike material) {
-		ShapedRecipeBuilder.shaped(signItem, 3)
-				.define('a', material)
-				.define('b', Items.STICK)
-				.pattern("aaa")
-				.pattern("aaa")
-				.pattern(" b ")
-				.group("burned_oak")
-				.unlockedBy("burned_oak_planks", has(DeferredRegistryHandler.BURNED_OAK_PLANKS_ITEM.get()))
-				.save(finishedRecipeConsumer);
-	}
-
-	private static void createBurnedOakSlab(ItemLike slabItem, ItemLike material) {
-		ShapedRecipeBuilder builder = ShapedRecipeBuilder.shaped(slabItem, 6)
-				.group("burned_oak")
-				.unlockedBy("burned_oak_planks", has(DeferredRegistryHandler.BURNED_OAK_PLANKS_ITEM.get()));
-		createSlab(builder, material);
-	}
-
-	private static void createBurnedOakStairs(ItemLike stairsItem, ItemLike material) {
-		ShapedRecipeBuilder builder = ShapedRecipeBuilder.shaped(stairsItem, 4)
-				.group("burned_oak")
-				.unlockedBy("burned_oak_planks", has(DeferredRegistryHandler.BURNED_OAK_PLANKS_ITEM.get()));
-		createStairs(builder, material);
-	}
-
-	private static void createBurnedOakTrapdoor(ItemLike trapdoorItem, ItemLike material) {
-		ShapedRecipeBuilder.shaped(trapdoorItem, 2)
-				.define('a', material)
-				.pattern("aaa")
-				.pattern("aaa")
-				.group("burned_oak")
-				.unlockedBy("burned_oak_planks", has(DeferredRegistryHandler.BURNED_OAK_PLANKS_ITEM.get()))
-				.save(finishedRecipeConsumer);
-	}
-
-	private static void createBurnedOakWood(ItemLike woodItem, ItemLike material) {
-		ShapedRecipeBuilder.shaped(woodItem, 3)
-				.define('a', material)
-				.pattern("aa ")
-				.pattern("aa ")
-				.group("burned_oak")
-				.unlockedBy("burned_oak_log", has(ImmersiveWeaponsItemTagGroups.BURNED_OAK_LOGS))
-				.save(finishedRecipeConsumer);
-	}
-
-	private static void createAmericanFlag(ItemLike flagItem, ItemLike flagPole) {
-		ShapedRecipeBuilder.shaped(flagItem)
-				.define('a', flagPole)
-				.define('b', Items.BLUE_WOOL)
-				.define('c', Items.RED_WOOL)
-				.define('d', Items.WHITE_WOOL)
-				.pattern("bcc")
-				.pattern("bdd")
-				.pattern("a  ")
-				.group("flag")
-				.unlockedBy("flag_pole", has(DeferredRegistryHandler.FLAG_POLE_ITEM.get()))
-				.save(finishedRecipeConsumer);
-	}
-
-	private static void createBritishFlag(ItemLike flagItem, ItemLike flagPole) {
-		ShapedRecipeBuilder.shaped(flagItem)
-				.define('a', flagPole)
-				.define('b', Items.BLUE_WOOL)
-				.define('c', Items.RED_WOOL)
-				.define('d', Items.WHITE_WOOL)
-				.pattern("cbc")
-				.pattern("dcd")
-				.pattern("a  ")
-				.group("flag")
-				.unlockedBy("flag_pole", has(DeferredRegistryHandler.FLAG_POLE_ITEM.get()))
-				.save(finishedRecipeConsumer);
-	}
-
-	private static void createCanadianFlag(ItemLike flagItem, ItemLike flagPole) {
-		ShapedRecipeBuilder.shaped(flagItem)
-				.define('a', flagPole)
-				.define('b', Items.RED_WOOL)
-				.define('c', Items.WHITE_WOOL)
-				.pattern("bcb")
-				.pattern("bbb")
-				.pattern("a  ")
-				.group("flag")
-				.unlockedBy("flag_pole", has(DeferredRegistryHandler.FLAG_POLE_ITEM.get()))
-				.save(finishedRecipeConsumer);
-	}
-
-	private static void createGadsdenFlag(ItemLike flagItem, ItemLike flagPole) {
-		ShapedRecipeBuilder.shaped(flagItem)
-				.define('a', flagPole)
-				.define('b', Items.YELLOW_WOOL)
-				.define('c', Items.BLACK_WOOL)
-				.define('d', Items.GREEN_WOOL)
-				.pattern("bcb")
-				.pattern("bdb")
-				.pattern("a  ")
-				.group("flag")
-				.unlockedBy("flag_pole", has(DeferredRegistryHandler.FLAG_POLE_ITEM.get()))
-				.save(finishedRecipeConsumer);
-	}
-
-	private static void createMexicanFlag(ItemLike flagItem, ItemLike flagPole) {
-		ShapedRecipeBuilder.shaped(flagItem)
-				.define('a', flagPole)
-				.define('b', Items.GREEN_WOOL)
-				.define('c', Items.WHITE_WOOL)
-				.define('d', Items.BROWN_WOOL)
-				.define('e', Items.RED_WOOL)
-				.pattern("bce")
-				.pattern("bde")
-				.pattern("a  ")
-				.group("flag")
-				.unlockedBy("flag_pole", has(DeferredRegistryHandler.FLAG_POLE_ITEM.get()))
-				.save(finishedRecipeConsumer);
-	}
-
-	private static void createTrollFlag(ItemLike flagItem, ItemLike flagPole) {
-		ShapedRecipeBuilder.shaped(flagItem)
-				.define('a', flagPole)
-				.define('b', Items.WHITE_WOOL)
-				.define('c', Items.BLACK_WOOL)
-				.pattern("bcb")
-				.pattern("cbc")
-				.pattern("a  ")
-				.group("flag")
-				.unlockedBy("flag_pole", has(DeferredRegistryHandler.FLAG_POLE_ITEM.get()))
-				.save(finishedRecipeConsumer);
-	}
-
-	private static void createImmersiveWeaponsFlag(ItemLike flagItem, ItemLike flagPole) {
-		ShapedRecipeBuilder.shaped(flagItem)
-				.define('a', flagPole)
-				.define('b', Items.LIGHT_BLUE_WOOL)
-				.define('c', Items.GOLDEN_SWORD)
-				.define('d', Items.YELLOW_WOOL)
-				.pattern("bcb")
-				.pattern("bdb")
-				.pattern("a  ")
-				.group("flag")
-				.unlockedBy("flag_pole", has(DeferredRegistryHandler.FLAG_POLE_ITEM.get()))
-				.save(finishedRecipeConsumer);
-	}
-
-	private static void createFlagPole(ItemLike flagPoleItem) {
-		ShapedRecipeBuilder.shaped(flagPoleItem, 3)
-				.define('a', Tags.Items.INGOTS_IRON)
-				.pattern(" a ")
-				.pattern(" a ")
-				.pattern(" a ")
-				.group("flag")
-				.unlockedBy("iron", has(DeferredRegistryHandler.FLAG_POLE_ITEM.get()))
-				.save(finishedRecipeConsumer);
-	}
-
 	private static void createBulletproofStainedGlass(ItemLike stainedGlassItem, TagKey<Item> colorTag) {
 		ShapedRecipeBuilder.shaped(stainedGlassItem, 8)
 				.define('a', DeferredRegistryHandler.BULLETPROOF_GLASS.get())
@@ -1914,40 +1770,6 @@ public class RecipeGenerator extends RecipeProvider {
 				.group("stained_bulletproof_glass")
 				.unlockedBy("bulletproof_glass", has(DeferredRegistryHandler.BULLETPROOF_GLASS.get()))
 				.save(finishedRecipeConsumer);
-	}
-
-	private static void createBulletproofGlass(ItemLike glassItem) {
-		ShapedRecipeBuilder.shaped(glassItem, 8)
-				.define('a', Items.GLASS)
-				.define('b', Tags.Items.INGOTS_IRON)
-				.pattern("aaa")
-				.pattern("aba")
-				.pattern("aaa")
-				.group("bulletproof_glass")
-				.unlockedBy("glass", has(Items.GLASS))
-				.save(finishedRecipeConsumer);
-	}
-
-	private static void createHardenedMudSlab(ItemLike slabItem, ItemLike material) {
-		ShapedRecipeBuilder builder = ShapedRecipeBuilder.shaped(slabItem, 6)
-				.group("mud")
-				.unlockedBy("hardened_mud", has(DeferredRegistryHandler.HARDENED_MUD_ITEM.get()));
-		createSlab(builder, material);
-		SingleItemRecipeBuilder.stonecutting(Ingredient.of(material), slabItem, 2)
-				.group("mud")
-				.unlockedBy("hardened_mud", has(DeferredRegistryHandler.HARDENED_MUD_ITEM.get()))
-				.save(finishedRecipeConsumer, ImmersiveWeapons.MOD_ID + ":" + getConversionRecipeName(slabItem, material) + "_stonecutting");
-	}
-
-	private static void createHardenedMudStairs(ItemLike stairsItem, ItemLike material) {
-		ShapedRecipeBuilder builder = ShapedRecipeBuilder.shaped(stairsItem, 4)
-				.group("mud")
-				.unlockedBy("hardened_mud", has(DeferredRegistryHandler.HARDENED_MUD_ITEM.get()));
-		createStairs(builder, material);
-		SingleItemRecipeBuilder.stonecutting(Ingredient.of(material), stairsItem)
-				.group("mud")
-				.unlockedBy("hardened_mud", has(DeferredRegistryHandler.HARDENED_MUD_ITEM.get()))
-				.save(finishedRecipeConsumer, ImmersiveWeapons.MOD_ID + ":" + getConversionRecipeName(stairsItem, material) + "_stonecutting");
 	}
 
 	private static void createRawSulfurBlock(ItemLike blockItem, ItemLike material) {
@@ -2101,8 +1923,7 @@ public class RecipeGenerator extends RecipeProvider {
 	}
 
 	private static void createStairs(ShapedRecipeBuilder builder, ItemLike material) {
-		builder
-				.define('a', material)
+		builder.define('a', material)
 				.pattern("a  ")
 				.pattern("aa ")
 				.pattern("aaa")
@@ -2110,8 +1931,7 @@ public class RecipeGenerator extends RecipeProvider {
 	}
 
 	private static void createSlab(ShapedRecipeBuilder builder, ItemLike material) {
-		builder
-				.define('a', material)
+		builder.define('a', material)
 				.pattern("aaa")
 				.save(finishedRecipeConsumer);
 	}
