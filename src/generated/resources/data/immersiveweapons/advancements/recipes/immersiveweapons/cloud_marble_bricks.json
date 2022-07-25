@@ -1,7 +1,7 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "cloud_marble": {
+    "has_cloud_marble": {
       "conditions": {
         "items": [
           {
@@ -22,7 +22,7 @@
   },
   "requirements": [
     [
-      "cloud_marble",
+      "has_cloud_marble",
       "has_the_recipe"
     ]
   ],

@@ -53,8 +53,8 @@ public class ItemTagsGenerator extends ItemTagsProvider {
 
 		// Ingot tags
 		tag(ForgeItemTagGroups.COBALT_INGOTS).add(DeferredRegistryHandler.COBALT_INGOT.get());
-		tag(ForgeItemTagGroups.COPPER_INGOTS).add(Items.COPPER_INGOT);
-		tag(ForgeItemTagGroups.METAL_INGOTS).addTags(ForgeItemTagGroups.COBALT_INGOTS, ForgeItemTagGroups.COPPER_INGOTS,
+		tag(Tags.Items.INGOTS_COPPER).add(Items.COPPER_INGOT);
+		tag(ForgeItemTagGroups.METAL_INGOTS).addTags(ForgeItemTagGroups.COBALT_INGOTS, Tags.Items.INGOTS_COPPER,
 				Tags.Items.INGOTS_IRON, Tags.Items.INGOTS_GOLD);
 		tag(Tags.Items.INGOTS).addTag(ForgeItemTagGroups.METAL_INGOTS);
 
@@ -108,6 +108,9 @@ public class ItemTagsGenerator extends ItemTagsProvider {
 		tag(ImmersiveWeaponsItemTagGroups.DIAMOND_SHARDS).add(DeferredRegistryHandler.DIAMOND_SHARD.get());
 		tag(ImmersiveWeaponsItemTagGroups.STONE_SHARDS).add(DeferredRegistryHandler.STONE_SHARD.get());
 		tag(ImmersiveWeaponsItemTagGroups.WOODEN_SHARDS).add(DeferredRegistryHandler.WOODEN_SHARD.get());
+
+		// Rod tags
+		tag(ImmersiveWeaponsItemTagGroups.OBSIDIAN_RODS).add(DeferredRegistryHandler.OBSIDIAN_ROD.get());
 	}
 
 	/**

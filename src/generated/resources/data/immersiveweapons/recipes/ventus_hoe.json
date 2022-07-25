@@ -1,18 +1,17 @@
 {
   "type": "minecraft:crafting_shaped",
-  "group": "ventus",
   "key": {
     "a": {
       "tag": "immersiveweapons:shards/ventus"
     },
     "b": {
-      "item": "immersiveweapons:obsidian_rod"
+      "tag": "immersiveweapons:rods/obsidian"
     }
   },
   "pattern": [
-    "aa ",
-    " b ",
-    " b "
+    "aa",
+    " b",
+    " b"
   ],
   "result": {
     "item": "immersiveweapons:ventus_hoe"

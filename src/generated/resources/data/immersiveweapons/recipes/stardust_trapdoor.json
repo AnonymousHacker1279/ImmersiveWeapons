@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "wooden_trapdoor",
+  "key": {
+    "a": {
+      "item": "immersiveweapons:stardust_planks"
+    }
+  },
+  "pattern": [
+    "aaa",
+    "aaa"
+  ],
+  "result": {
+    "count": 2,
+    "item": "immersiveweapons:stardust_trapdoor"
+  }
+}

@@ -32,4 +32,6 @@ public class ImmersiveWeaponsItemTagGroups {
 			"shards/stone"));
 	public static final TagKey<Item> WOODEN_SHARDS = ItemTags.create(new ResourceLocation(ImmersiveWeapons.MOD_ID,
 			"shards/wood"));
+	public static final TagKey<Item> OBSIDIAN_RODS = ItemTags.create(new ResourceLocation(ImmersiveWeapons.MOD_ID,
+			"rods/obsidian"));
 }

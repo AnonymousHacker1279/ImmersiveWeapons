@@ -1,7 +1,7 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "cobalt_ingot": {
+    "has_material": {
       "conditions": {
         "items": [
           {
@@ -20,7 +20,7 @@
   },
   "requirements": [
     [
-      "cobalt_ingot",
+      "has_material",
       "has_the_recipe"
     ]
   ],

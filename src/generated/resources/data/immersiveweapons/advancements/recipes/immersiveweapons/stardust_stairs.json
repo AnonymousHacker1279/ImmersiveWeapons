@@ -1,12 +1,12 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "cloud_marble": {
+    "has_planks": {
       "conditions": {
         "items": [
           {
             "items": [
-              "immersiveweapons:cloud_marble"
+              "immersiveweapons:stardust_planks"
             ]
           }
         ]
@@ -15,20 +15,20 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "immersiveweapons:cloud_marble_pillar_from_cloud_marble_stonecutting"
+        "recipe": "immersiveweapons:stardust_stairs"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
   },
   "requirements": [
     [
-      "cloud_marble",
+      "has_planks",
       "has_the_recipe"
     ]
   ],
   "rewards": {
     "recipes": [
-      "immersiveweapons:cloud_marble_pillar_from_cloud_marble_stonecutting"
+      "immersiveweapons:stardust_stairs"
     ]
   }
 }

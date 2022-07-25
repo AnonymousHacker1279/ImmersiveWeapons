@@ -1,12 +1,11 @@
 {
   "type": "minecraft:crafting_shaped",
-  "group": "molten",
   "key": {
     "a": {
       "tag": "immersiveweapons:ingots/molten"
     },
     "b": {
-      "item": "immersiveweapons:obsidian_rod"
+      "tag": "immersiveweapons:rods/obsidian"
     }
   },
   "pattern": [

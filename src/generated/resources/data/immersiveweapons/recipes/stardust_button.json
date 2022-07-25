@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "group": "wooden_button",
+  "ingredients": [
+    {
+      "item": "immersiveweapons:stardust_planks"
+    }
+  ],
+  "result": {
+    "item": "immersiveweapons:stardust_button"
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "sign",
+  "key": {
+    "a": {
+      "item": "immersiveweapons:stardust_planks"
+    },
+    "b": {
+      "tag": "forge:rods/wooden"
+    }
+  },
+  "pattern": [
+    "aaa",
+    "aaa",
+    " b "
+  ],
+  "result": {
+    "count": 3,
+    "item": "immersiveweapons:stardust_sign"
+  }
+}

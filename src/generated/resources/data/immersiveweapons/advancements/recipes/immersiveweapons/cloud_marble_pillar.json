@@ -1,12 +1,12 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "cloud_marble": {
+    "has_stone": {
       "conditions": {
         "items": [
           {
             "items": [
-              "immersiveweapons:cloud_marble"
+              "immersiveweapons:cloud_marble_bricks"
             ]
           }
         ]
@@ -22,7 +22,7 @@
   },
   "requirements": [
     [
-      "cloud_marble",
+      "has_stone",
       "has_the_recipe"
     ]
   ],

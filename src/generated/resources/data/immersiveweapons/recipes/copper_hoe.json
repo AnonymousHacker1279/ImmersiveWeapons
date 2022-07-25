@@ -1,18 +1,17 @@
 {
   "type": "minecraft:crafting_shaped",
-  "group": "copper",
   "key": {
     "a": {
       "tag": "forge:ingots/copper"
     },
     "b": {
-      "item": "minecraft:stick"
+      "tag": "forge:rods/wooden"
     }
   },
   "pattern": [
-    "aa ",
-    " b ",
-    " b "
+    "aa",
+    " b",
+    " b"
   ],
   "result": {
     "item": "immersiveweapons:copper_hoe"

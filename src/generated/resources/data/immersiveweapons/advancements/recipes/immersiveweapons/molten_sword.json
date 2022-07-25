@@ -1,28 +1,26 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
+    "has_material": {
+      "conditions": {
+        "items": [
+          {
+            "tag": "immersiveweapons:ingots/molten"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
     "has_the_recipe": {
       "conditions": {
         "recipe": "immersiveweapons:molten_sword"
       },
       "trigger": "minecraft:recipe_unlocked"
-    },
-    "molten_ingot": {
-      "conditions": {
-        "items": [
-          {
-            "items": [
-              "immersiveweapons:molten_ingot"
-            ]
-          }
-        ]
-      },
-      "trigger": "minecraft:inventory_changed"
     }
   },
   "requirements": [
     [
-      "molten_ingot",
+      "has_material",
       "has_the_recipe"
     ]
   ],

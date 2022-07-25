@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "wooden_pressure_plate",
+  "key": {
+    "a": {
+      "item": "immersiveweapons:stardust_planks"
+    }
+  },
+  "pattern": [
+    "aa"
+  ],
+  "result": {
+    "item": "immersiveweapons:stardust_pressure_plate"
+  }
+}

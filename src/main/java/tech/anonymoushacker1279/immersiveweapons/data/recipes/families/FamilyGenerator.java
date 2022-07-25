@@ -3,25 +3,35 @@ package tech.anonymoushacker1279.immersiveweapons.data.recipes.families;
 import net.minecraft.advancements.critereon.InventoryChangeTrigger;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.recipes.*;
+import net.minecraft.tags.TagKey;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraftforge.common.Tags;
 import org.jetbrains.annotations.NotNull;
+import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 
 import java.util.function.Consumer;
 
 import static tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities.blockRegistryPath;
 import static tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities.itemRegistryPath;
 
-public class WoodFamilyGenerator extends RecipeProvider {
+public class FamilyGenerator extends RecipeProvider {
 
-	public WoodFamilyGenerator(DataGenerator generator) {
+	public FamilyGenerator(DataGenerator generator) {
 		super(generator);
 	}
 
 	@Override
 	public void buildCraftingRecipes(@NotNull Consumer<FinishedRecipe> consumer) {
+		woodFamilies(consumer);
+		stoneFamilies(consumer);
+		toolFamilies(consumer);
+	}
+
+	private void woodFamilies(@NotNull Consumer<FinishedRecipe> consumer) {
 		for (WoodFamilies family : WoodFamilies.FAMILIES) {
 			Block planks = family.planks().get();
 			final String planksTriggerName = "has_planks";
@@ -142,6 +152,124 @@ public class WoodFamilyGenerator extends RecipeProvider {
 					.group("chest_boat")
 					.unlockedBy("water", insideOf(Blocks.WATER))
 					.save(consumer, itemRegistryPath(family.chestBoat().get()));
+		}
+	}
+
+	private void stoneFamilies(@NotNull Consumer<FinishedRecipe> consumer) {
+		for (StoneFamilies family : StoneFamilies.FAMILIES) {
+			Block stone = family.stone().get();
+			Block bricks = family.bricks().get();
+			final String stoneTriggerName = "has_stone";
+			InventoryChangeTrigger.TriggerInstance bricksTrigger = has(bricks);
+
+			// Bricks from crafting table
+			ShapedRecipeBuilder.shaped(bricks, 4)
+					.define('a', stone)
+					.pattern("aa ")
+					.pattern("aa ")
+					.unlockedBy("has_" + blockRegistryPath(stone).getPath(), has(stone))
+					.save(consumer, blockRegistryPath(bricks));
+			// Bricks from stonecutter
+			SingleItemRecipeBuilder.stonecutting(Ingredient.of(stone), bricks)
+					.unlockedBy("has_" + blockRegistryPath(stone).getPath(), has(stone))
+					.save(consumer, ImmersiveWeapons.MOD_ID + ":"
+							+ getConversionRecipeName(bricks, stone) + "_stonecutting");
+
+			// Slab from crafting table
+			ShapedRecipeBuilder.shaped(family.slab().get(), 6)
+					.pattern("aaa")
+					.define('a', bricks)
+					.unlockedBy(stoneTriggerName, bricksTrigger)
+					.save(consumer, blockRegistryPath(family.slab().get()));
+			// Slab from stonecutter
+			SingleItemRecipeBuilder.stonecutting(Ingredient.of(bricks), family.slab().get())
+					.unlockedBy(stoneTriggerName, bricksTrigger)
+					.save(consumer, ImmersiveWeapons.MOD_ID + ":"
+							+ getConversionRecipeName(family.slab().get(), bricks) + "_stonecutting");
+
+			// Stairs from crafting table
+			ShapedRecipeBuilder.shaped(family.stairs().get(), 4)
+					.pattern("a  ")
+					.pattern("aa ")
+					.pattern("aaa")
+					.define('a', bricks)
+					.unlockedBy(stoneTriggerName, bricksTrigger)
+					.save(consumer, blockRegistryPath(family.stairs().get()));
+			// Stairs from stonecutter
+			SingleItemRecipeBuilder.stonecutting(Ingredient.of(bricks), family.stairs().get())
+					.unlockedBy(stoneTriggerName, bricksTrigger)
+					.save(consumer, ImmersiveWeapons.MOD_ID + ":"
+							+ getConversionRecipeName(family.stairs().get(), bricks) + "_stonecutting");
+
+			// Pillar from crafting table
+			ShapedRecipeBuilder.shaped(family.pillar().get(), 4)
+					.pattern("a")
+					.pattern("a")
+					.define('a', bricks)
+					.unlockedBy(stoneTriggerName, bricksTrigger)
+					.save(consumer, blockRegistryPath(family.pillar().get()));
+			// Pillar from stonecutter
+			SingleItemRecipeBuilder.stonecutting(Ingredient.of(bricks), family.pillar().get())
+					.unlockedBy(stoneTriggerName, bricksTrigger)
+					.save(consumer, ImmersiveWeapons.MOD_ID + ":"
+							+ getConversionRecipeName(family.pillar().get(), bricks) + "_stonecutting");
+		}
+	}
+
+	private void toolFamilies(@NotNull Consumer<FinishedRecipe> consumer) {
+		for (ToolFamilies family : ToolFamilies.FAMILIES) {
+			TagKey<Item> material = family.material();
+			final String materialTriggerName = "has_material";
+
+			// Sword
+			ShapedRecipeBuilder.shaped(family.sword().get())
+					.pattern("a")
+					.pattern("a")
+					.pattern("b")
+					.define('a', material)
+					.define('b', family.handle())
+					.unlockedBy(materialTriggerName, has(material))
+					.save(consumer, itemRegistryPath(family.sword().get()));
+
+			// Pickaxe
+			ShapedRecipeBuilder.shaped(family.pickaxe().get())
+					.pattern("aaa")
+					.pattern(" b ")
+					.pattern(" b ")
+					.define('a', material)
+					.define('b', family.handle())
+					.unlockedBy(materialTriggerName, has(material))
+					.save(consumer, itemRegistryPath(family.pickaxe().get()));
+
+			// Axe
+			ShapedRecipeBuilder.shaped(family.axe().get())
+					.pattern("aa")
+					.pattern("ab")
+					.pattern(" b")
+					.define('a', material)
+					.define('b', family.handle())
+					.unlockedBy(materialTriggerName, has(material))
+					.save(consumer, itemRegistryPath(family.axe().get()));
+
+			// Shovel
+			ShapedRecipeBuilder.shaped(family.shovel().get())
+					.pattern("a")
+					.pattern("b")
+					.pattern("b")
+					.define('a', material)
+					.define('b', family.handle())
+					.unlockedBy(materialTriggerName, has(material))
+					.save(consumer, itemRegistryPath(family.shovel().get()));
+
+			// Hoe
+			ShapedRecipeBuilder.shaped(family.hoe().get())
+					.pattern("aa")
+					.pattern(" b")
+					.pattern(" b")
+					.define('a', material)
+					.define('b', family.handle())
+					.unlockedBy(materialTriggerName, has(material))
+					.save(consumer, itemRegistryPath(family.hoe().get()));
 		}
 	}
 }

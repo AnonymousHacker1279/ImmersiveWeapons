@@ -1,4 +1,4 @@
-// 1.19	2022-07-17T12:22:21.0563265	Tags for minecraft:item
+// 1.19	2022-07-24T19:54:55.4408778	Tags for minecraft:item
 7812421cb798a33dd4aa081983f747b4b387b6b1 data/forge/tags/items/dusts/sulfur.json
 753cf9bbbab4a7c8fa21fb252f45ba34ea53b1a9 data/forge/tags/items/heads.json
 d0a9f992cc7cf54fc79540ef168ca74783db0d4c data/forge/tags/items/ingots.json
@@ -19,6 +19,7 @@ eca79b45a470b5dd16eb66cab63c8b095f84552a data/immersiveweapons/tags/items/ingots
 964b9d2d320a116d7f7d67bdffaa45ba57cd44a7 data/immersiveweapons/tags/items/ingots/tesla.json
 389e9c9a679de3566d9860ad9479d3b63ad5e641 data/immersiveweapons/tags/items/projectiles/flares.json
 854737249430586cf97015b48c39e393b7dae91e data/immersiveweapons/tags/items/projectiles/musket_balls.json
+d3e87bd7cd3981a2fc69ff484e0057f6f33db639 data/immersiveweapons/tags/items/rods/obsidian.json
 9c6141fe2c8d2d00775004515683f019f5ceaaa0 data/immersiveweapons/tags/items/shards/diamond.json
 b5b4277852ee7b5a99c7256d668e8efb323193f3 data/immersiveweapons/tags/items/shards/molten.json
 255cde9d4698e9a466178923fe9f01a6e9b1d689 data/immersiveweapons/tags/items/shards/stone.json

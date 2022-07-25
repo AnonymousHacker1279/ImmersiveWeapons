@@ -58,5 +58,29 @@ public record WoodFamilies(Supplier<? extends Block> planks,
 			ImmersiveWeaponsItemTagGroups.BURNED_OAK_LOGS
 	);
 
-	public static final Collection<WoodFamilies> FAMILIES = ImmutableList.of(BURNED_OAK);
+	public static final WoodFamilies STARDUST = new WoodFamilies(
+			DeferredRegistryHandler.STARDUST_PLANKS,
+			DeferredRegistryHandler.STARDUST_SLAB,
+			DeferredRegistryHandler.STARDUST_STAIRS,
+			DeferredRegistryHandler.STARDUST_PRESSURE_PLATE,
+			DeferredRegistryHandler.STARDUST_BUTTON,
+			DeferredRegistryHandler.STARDUST_FENCE,
+			DeferredRegistryHandler.STARDUST_FENCE_GATE,
+			DeferredRegistryHandler.STARDUST_DOOR,
+			DeferredRegistryHandler.STARDUST_TRAPDOOR,
+			DeferredRegistryHandler.STARDUST_SIGN,
+			DeferredRegistryHandler.STARDUST_WALL_SIGN,
+			DeferredRegistryHandler.STARDUST_LOG,
+			DeferredRegistryHandler.STRIPPED_STARDUST_LOG,
+			DeferredRegistryHandler.STARDUST_WOOD,
+			DeferredRegistryHandler.STRIPPED_STARDUST_WOOD,
+			DeferredRegistryHandler.STARDUST_LEAVES,
+			DeferredRegistryHandler.STARDUST_SAPLING,
+			DeferredRegistryHandler.STARDUST_BOAT,
+			DeferredRegistryHandler.STARDUST_CHEST_BOAT,
+			ImmersiveWeaponsBlockTagGroups.STARDUST_LOGS,
+			ImmersiveWeaponsItemTagGroups.STARDUST_LOGS
+	);
+
+	public static final Collection<WoodFamilies> FAMILIES = ImmutableList.of(BURNED_OAK, STARDUST);
 }

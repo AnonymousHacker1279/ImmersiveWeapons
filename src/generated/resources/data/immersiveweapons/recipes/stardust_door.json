@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "wooden_door",
+  "key": {
+    "a": {
+      "item": "immersiveweapons:stardust_planks"
+    }
+  },
+  "pattern": [
+    "aa",
+    "aa",
+    "aa"
+  ],
+  "result": {
+    "count": 3,
+    "item": "immersiveweapons:stardust_door"
+  }
+}

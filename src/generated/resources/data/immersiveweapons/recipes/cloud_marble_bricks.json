@@ -1,6 +1,5 @@
 {
   "type": "minecraft:crafting_shaped",
-  "group": "cloud_marble",
   "key": {
     "a": {
       "item": "immersiveweapons:cloud_marble"

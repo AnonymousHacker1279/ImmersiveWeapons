@@ -45,7 +45,6 @@ public class RecipeGenerator extends RecipeProvider {
 
 		createFlagItems();
 		createGlassItems();
-		createCloudMarbleItems();
 		createCobaltItems();
 		createCopperItems();
 		createMoltenItems();
@@ -211,68 +210,6 @@ public class RecipeGenerator extends RecipeProvider {
 				.save(finishedRecipeConsumer);
 	}
 
-	private void createCloudMarbleItems() {
-		Item CLOUD_MARBLE_BRICKS = DeferredRegistryHandler.CLOUD_MARBLE_BRICKS_ITEM.get();
-		Item CLOUD_MARBLE_BRICK_SLAB = DeferredRegistryHandler.CLOUD_MARBLE_BRICK_SLAB_ITEM.get();
-		Item CLOUD_MARBLE_BRICK_STAIRS = DeferredRegistryHandler.CLOUD_MARBLE_BRICK_STAIRS_ITEM.get();
-		Item CLOUD_MARBLE = DeferredRegistryHandler.CLOUD_MARBLE_ITEM.get();
-		Item CLOUD_MARBLE_PILLAR = DeferredRegistryHandler.CLOUD_MARBLE_PILLAR_ITEM.get();
-
-		// Slab from crafting table
-		ShapedRecipeBuilder builder = ShapedRecipeBuilder.shaped(CLOUD_MARBLE_BRICK_SLAB, 6)
-				.group("cloud_marble")
-				.unlockedBy("cloud_marble_bricks", has(CLOUD_MARBLE_BRICKS));
-		createSlab(builder, CLOUD_MARBLE_BRICKS);
-		// Slab from stonecutter
-		SingleItemRecipeBuilder.stonecutting(Ingredient.of(CLOUD_MARBLE_BRICKS), CLOUD_MARBLE_BRICK_SLAB, 2)
-				.group("cloud_marble")
-				.unlockedBy("cloud_marble_bricks", has(CLOUD_MARBLE_BRICKS))
-				.save(finishedRecipeConsumer, ImmersiveWeapons.MOD_ID + ":"
-						+ getConversionRecipeName(CLOUD_MARBLE_BRICK_SLAB, CLOUD_MARBLE_BRICKS) + "_stonecutting");
-
-		// Stairs from crafting table
-		builder = ShapedRecipeBuilder.shaped(CLOUD_MARBLE_BRICK_STAIRS, 4)
-				.group("cloud_marble")
-				.unlockedBy("cloud_marble_bricks", has(CLOUD_MARBLE_BRICKS));
-		createStairs(builder, CLOUD_MARBLE_BRICKS);
-		// Stairs from stonecutter
-		SingleItemRecipeBuilder.stonecutting(Ingredient.of(CLOUD_MARBLE_BRICKS), CLOUD_MARBLE_BRICK_STAIRS)
-				.group("cloud_marble")
-				.unlockedBy("cloud_marble_bricks", has(CLOUD_MARBLE_BRICKS))
-				.save(finishedRecipeConsumer, ImmersiveWeapons.MOD_ID + ":"
-						+ getConversionRecipeName(CLOUD_MARBLE_BRICK_STAIRS, CLOUD_MARBLE_BRICKS) + "_stonecutting");
-
-		// Bricks from crafting table
-		ShapedRecipeBuilder.shaped(CLOUD_MARBLE_BRICKS, 4)
-				.define('a', CLOUD_MARBLE)
-				.pattern("aa ")
-				.pattern("aa ")
-				.group("cloud_marble")
-				.unlockedBy("cloud_marble", has(CLOUD_MARBLE))
-				.save(finishedRecipeConsumer);
-		// Bricks from stonecutter
-		SingleItemRecipeBuilder.stonecutting(Ingredient.of(CLOUD_MARBLE), CLOUD_MARBLE_BRICKS)
-				.group("cloud_marble")
-				.unlockedBy("cloud_marble", has(CLOUD_MARBLE))
-				.save(finishedRecipeConsumer, ImmersiveWeapons.MOD_ID + ":"
-						+ getConversionRecipeName(CLOUD_MARBLE_BRICKS, CLOUD_MARBLE) + "_stonecutting");
-
-		// Pillar from crafting table
-		ShapedRecipeBuilder.shaped(CLOUD_MARBLE_PILLAR)
-				.define('a', CLOUD_MARBLE)
-				.pattern("a  ")
-				.pattern("a  ")
-				.group("cloud_marble")
-				.unlockedBy("cloud_marble", has(CLOUD_MARBLE))
-				.save(finishedRecipeConsumer);
-		// Pillar from stonecutter
-		SingleItemRecipeBuilder.stonecutting(Ingredient.of(CLOUD_MARBLE), CLOUD_MARBLE_PILLAR)
-				.group("cloud_marble")
-				.unlockedBy("cloud_marble", has(CLOUD_MARBLE))
-				.save(finishedRecipeConsumer, ImmersiveWeapons.MOD_ID + ":"
-						+ getConversionRecipeName(CLOUD_MARBLE_PILLAR, CLOUD_MARBLE) + "_stonecutting");
-	}
-
 	private void createMudItems() {
 		Item MUD = DeferredRegistryHandler.MUD_ITEM.get();
 		Item DRIED_MUD = DeferredRegistryHandler.DRIED_MUD_ITEM.get();
@@ -339,11 +276,6 @@ public class RecipeGenerator extends RecipeProvider {
 
 	private void createCobaltItems() {
 		createCobaltArrow(DeferredRegistryHandler.COBALT_ARROW.get());
-		createCobaltSword(DeferredRegistryHandler.COBALT_SWORD.get());
-		createCobaltPickaxe(DeferredRegistryHandler.COBALT_PICKAXE.get());
-		createCobaltAxe(DeferredRegistryHandler.COBALT_AXE.get());
-		createCobaltShovel(DeferredRegistryHandler.COBALT_SHOVEL.get());
-		createCobaltHoe(DeferredRegistryHandler.COBALT_HOE.get());
 		createCobaltHelmet(DeferredRegistryHandler.COBALT_HELMET.get());
 		createCobaltChestplate(DeferredRegistryHandler.COBALT_CHESTPLATE.get());
 		createCobaltLeggings(DeferredRegistryHandler.COBALT_LEGGINGS.get());
@@ -361,11 +293,6 @@ public class RecipeGenerator extends RecipeProvider {
 
 	private void createCopperItems() {
 		createCopperArrow(DeferredRegistryHandler.COPPER_ARROW.get());
-		createCopperSword(DeferredRegistryHandler.COPPER_SWORD.get());
-		createCopperPickaxe(DeferredRegistryHandler.COPPER_PICKAXE.get());
-		createCopperAxe(DeferredRegistryHandler.COPPER_AXE.get());
-		createCopperShovel(DeferredRegistryHandler.COPPER_SHOVEL.get());
-		createCopperHoe(DeferredRegistryHandler.COPPER_HOE.get());
 		createCopperHelmet(DeferredRegistryHandler.COPPER_HELMET.get());
 		createCopperChestplate(DeferredRegistryHandler.COPPER_CHESTPLATE.get());
 		createCopperLeggings(DeferredRegistryHandler.COPPER_LEGGINGS.get());
@@ -379,11 +306,6 @@ public class RecipeGenerator extends RecipeProvider {
 	}
 
 	private void createMoltenItems() {
-		createMoltenSword(DeferredRegistryHandler.MOLTEN_SWORD.get());
-		createMoltenPickaxe(DeferredRegistryHandler.MOLTEN_PICKAXE.get());
-		createMoltenAxe(DeferredRegistryHandler.MOLTEN_AXE.get());
-		createMoltenShovel(DeferredRegistryHandler.MOLTEN_SHOVEL.get());
-		createMoltenHoe(DeferredRegistryHandler.MOLTEN_HOE.get());
 		createMoltenHelmet(DeferredRegistryHandler.MOLTEN_HELMET.get());
 		createMoltenChestplate(DeferredRegistryHandler.MOLTEN_CHESTPLATE.get());
 		createMoltenLeggings(DeferredRegistryHandler.MOLTEN_LEGGINGS.get());
@@ -393,11 +315,6 @@ public class RecipeGenerator extends RecipeProvider {
 	}
 
 	private void createVentusItems() {
-		createVentusSword(DeferredRegistryHandler.VENTUS_SWORD.get());
-		createVentusPickaxe(DeferredRegistryHandler.VENTUS_PICKAXE.get());
-		createVentusAxe(DeferredRegistryHandler.VENTUS_AXE.get());
-		createVentusShovel(DeferredRegistryHandler.VENTUS_SHOVEL.get());
-		createVentusHoe(DeferredRegistryHandler.VENTUS_HOE.get());
 		createVentusHelmet(DeferredRegistryHandler.VENTUS_HELMET.get());
 		createVentusChestplate(DeferredRegistryHandler.VENTUS_CHESTPLATE.get());
 		createVentusLeggings(DeferredRegistryHandler.VENTUS_LEGGINGS.get());
@@ -407,11 +324,6 @@ public class RecipeGenerator extends RecipeProvider {
 	}
 
 	private void createTeslaItems() {
-		createTeslaSword(DeferredRegistryHandler.TESLA_SWORD.get());
-		createTeslaPickaxe(DeferredRegistryHandler.TESLA_PICKAXE.get());
-		createTeslaAxe(DeferredRegistryHandler.TESLA_AXE.get());
-		createTeslaShovel(DeferredRegistryHandler.TESLA_SHOVEL.get());
-		createTeslaHoe(DeferredRegistryHandler.TESLA_HOE.get());
 		createTeslaHelmet(DeferredRegistryHandler.TESLA_HELMET.get());
 		createTeslaChestplate(DeferredRegistryHandler.TESLA_CHESTPLATE.get());
 		createTeslaLeggings(DeferredRegistryHandler.TESLA_LEGGINGS.get());
@@ -942,7 +854,7 @@ public class RecipeGenerator extends RecipeProvider {
 				.save(finishedRecipeConsumer);
 		// Conductive alloy
 		ShapedRecipeBuilder.shaped(DeferredRegistryHandler.CONDUCTIVE_ALLOY.get())
-				.define('a', ForgeItemTagGroups.COPPER_INGOTS)
+				.define('a', Tags.Items.INGOTS_COPPER)
 				.define('b', Tags.Items.INGOTS_GOLD)
 				.pattern("ab")
 				.group("conductive_alloy")
@@ -1142,92 +1054,92 @@ public class RecipeGenerator extends RecipeProvider {
 	private static void createCopperArrow(ItemLike arrowItem) {
 		ShapedRecipeBuilder builder = ShapedRecipeBuilder.shaped(arrowItem, 4)
 				.group("copper")
-				.unlockedBy("cobalt_ingot", has(ForgeItemTagGroups.COPPER_INGOTS));
-		createArrow(builder, ForgeItemTagGroups.COPPER_INGOTS);
+				.unlockedBy("cobalt_ingot", has(Tags.Items.INGOTS_COPPER));
+		createArrow(builder, Tags.Items.INGOTS_COPPER);
 	}
 
 	private static void createCopperSword(ItemLike swordItem) {
 		ShapedRecipeBuilder builder = ShapedRecipeBuilder.shaped(swordItem)
 				.group("copper")
-				.unlockedBy("copper_ingot", has(ForgeItemTagGroups.COPPER_INGOTS));
-		createSword(builder, ForgeItemTagGroups.COPPER_INGOTS, Items.STICK);
+				.unlockedBy("copper_ingot", has(Tags.Items.INGOTS_COPPER));
+		createSword(builder, Tags.Items.INGOTS_COPPER, Items.STICK);
 	}
 
 	private static void createCopperPickaxe(ItemLike pickaxeItem) {
 		ShapedRecipeBuilder builder = ShapedRecipeBuilder.shaped(pickaxeItem)
 				.group("copper")
-				.unlockedBy("copper_ingot", has(ForgeItemTagGroups.COPPER_INGOTS));
-		createPickaxe(builder, ForgeItemTagGroups.COPPER_INGOTS, Items.STICK);
+				.unlockedBy("copper_ingot", has(Tags.Items.INGOTS_COPPER));
+		createPickaxe(builder, Tags.Items.INGOTS_COPPER, Items.STICK);
 	}
 
 	private static void createCopperAxe(ItemLike axeItem) {
 		ShapedRecipeBuilder builder = ShapedRecipeBuilder.shaped(axeItem)
 				.group("copper")
-				.unlockedBy("copper_ingot", has(ForgeItemTagGroups.COPPER_INGOTS));
-		createAxe(builder, ForgeItemTagGroups.COPPER_INGOTS, Items.STICK);
+				.unlockedBy("copper_ingot", has(Tags.Items.INGOTS_COPPER));
+		createAxe(builder, Tags.Items.INGOTS_COPPER, Items.STICK);
 	}
 
 	private static void createCopperShovel(ItemLike shovelItem) {
 		ShapedRecipeBuilder builder = ShapedRecipeBuilder.shaped(shovelItem)
 				.group("copper")
-				.unlockedBy("copper_ingot", has(ForgeItemTagGroups.COPPER_INGOTS));
-		createShovel(builder, ForgeItemTagGroups.COPPER_INGOTS, Items.STICK);
+				.unlockedBy("copper_ingot", has(Tags.Items.INGOTS_COPPER));
+		createShovel(builder, Tags.Items.INGOTS_COPPER, Items.STICK);
 	}
 
 	private static void createCopperHoe(ItemLike hoeItem) {
 		ShapedRecipeBuilder builder = ShapedRecipeBuilder.shaped(hoeItem)
 				.group("copper")
-				.unlockedBy("copper_ingot", has(ForgeItemTagGroups.COPPER_INGOTS));
-		createHoe(builder, ForgeItemTagGroups.COPPER_INGOTS, Items.STICK);
+				.unlockedBy("copper_ingot", has(Tags.Items.INGOTS_COPPER));
+		createHoe(builder, Tags.Items.INGOTS_COPPER, Items.STICK);
 	}
 
 	private static void createCopperHelmet(ItemLike helmetItem) {
 		ShapedRecipeBuilder builder = ShapedRecipeBuilder.shaped(helmetItem)
 				.group("copper")
-				.unlockedBy("copper_ingot", has(ForgeItemTagGroups.COPPER_INGOTS));
-		createHelmet(builder, ForgeItemTagGroups.COPPER_INGOTS);
+				.unlockedBy("copper_ingot", has(Tags.Items.INGOTS_COPPER));
+		createHelmet(builder, Tags.Items.INGOTS_COPPER);
 	}
 
 	private static void createCopperChestplate(ItemLike chestplateItem) {
 		ShapedRecipeBuilder builder = ShapedRecipeBuilder.shaped(chestplateItem)
 				.group("copper")
-				.unlockedBy("copper_ingot", has(ForgeItemTagGroups.COPPER_INGOTS));
-		createChestplate(builder, ForgeItemTagGroups.COPPER_INGOTS);
+				.unlockedBy("copper_ingot", has(Tags.Items.INGOTS_COPPER));
+		createChestplate(builder, Tags.Items.INGOTS_COPPER);
 	}
 
 	private static void createCopperLeggings(ItemLike leggingsItem) {
 		ShapedRecipeBuilder builder = ShapedRecipeBuilder.shaped(leggingsItem)
 				.group("copper")
-				.unlockedBy("copper_ingot", has(ForgeItemTagGroups.COPPER_INGOTS));
-		createLeggings(builder, ForgeItemTagGroups.COPPER_INGOTS);
+				.unlockedBy("copper_ingot", has(Tags.Items.INGOTS_COPPER));
+		createLeggings(builder, Tags.Items.INGOTS_COPPER);
 	}
 
 	private static void createCopperBoots(ItemLike bootsItem) {
 		ShapedRecipeBuilder builder = ShapedRecipeBuilder.shaped(bootsItem)
 				.group("copper")
-				.unlockedBy("copper_ingot", has(ForgeItemTagGroups.COPPER_INGOTS));
-		createBoots(builder, ForgeItemTagGroups.COPPER_INGOTS);
+				.unlockedBy("copper_ingot", has(Tags.Items.INGOTS_COPPER));
+		createBoots(builder, Tags.Items.INGOTS_COPPER);
 	}
 
 	private static void createCopperGauntlet(ItemLike gauntletItem) {
 		ShapedRecipeBuilder builder = ShapedRecipeBuilder.shaped(gauntletItem)
 				.group("copper")
-				.unlockedBy("copper_ingot", has(ForgeItemTagGroups.COPPER_INGOTS));
-		createGauntlet(builder, ForgeItemTagGroups.COPPER_INGOTS);
+				.unlockedBy("copper_ingot", has(Tags.Items.INGOTS_COPPER));
+		createGauntlet(builder, Tags.Items.INGOTS_COPPER);
 	}
 
 	private static void createCopperPike(ItemLike pikeItem, ItemLike pikeHead) {
 		ShapedRecipeBuilder builder = ShapedRecipeBuilder.shaped(pikeItem)
 				.group("copper")
-				.unlockedBy("copper_ingot", has(ForgeItemTagGroups.COPPER_INGOTS));
-		createPike(builder, ForgeItemTagGroups.COPPER_INGOTS, pikeHead);
+				.unlockedBy("copper_ingot", has(Tags.Items.INGOTS_COPPER));
+		createPike(builder, Tags.Items.INGOTS_COPPER, pikeHead);
 	}
 
 	private static void createCopperPikeHead(ItemLike pikeItem) {
 		ShapedRecipeBuilder builder = ShapedRecipeBuilder.shaped(pikeItem)
 				.group("copper")
-				.unlockedBy("copper_ingot", has(ForgeItemTagGroups.COPPER_INGOTS));
-		createPikeHead(builder, ForgeItemTagGroups.COPPER_INGOTS, ForgeItemTagGroups.COPPER_NUGGETS);
+				.unlockedBy("copper_ingot", has(Tags.Items.INGOTS_COPPER));
+		createPikeHead(builder, Tags.Items.INGOTS_COPPER, ForgeItemTagGroups.COPPER_NUGGETS);
 	}
 
 	private static void createCopperIngot(ItemLike ingotItem) {
@@ -1240,15 +1152,15 @@ public class RecipeGenerator extends RecipeProvider {
 	private static void createCopperNugget(ItemLike nuggetItem) {
 		ShapelessRecipeBuilder builder = ShapelessRecipeBuilder.shapeless(nuggetItem, 9)
 				.group("copper")
-				.unlockedBy("copper_ingot", has(ForgeItemTagGroups.COPPER_INGOTS));
-		createNuggetFromIngot(builder, ForgeItemTagGroups.COPPER_INGOTS);
+				.unlockedBy("copper_ingot", has(Tags.Items.INGOTS_COPPER));
+		createNuggetFromIngot(builder, Tags.Items.INGOTS_COPPER);
 	}
 
 	private static void createCopperMusketBall(ItemLike musketBallItem) {
 		ShapedRecipeBuilder builder = ShapedRecipeBuilder.shaped(musketBallItem, 8)
 				.group("copper")
-				.unlockedBy("copper_ingot", has(ForgeItemTagGroups.COPPER_INGOTS));
-		createMusketBall(builder, ForgeItemTagGroups.COPPER_INGOTS);
+				.unlockedBy("copper_ingot", has(Tags.Items.INGOTS_COPPER));
+		createMusketBall(builder, Tags.Items.INGOTS_COPPER);
 	}
 
 	private static void createMoltenSword(ItemLike swordItem) {
@@ -1520,7 +1432,7 @@ public class RecipeGenerator extends RecipeProvider {
 		ShapedRecipeBuilder.shaped(synthesizerItem)
 				.define('a', Items.NETHERITE_BLOCK)
 				.define('b', DeferredRegistryHandler.MOLTEN_BLOCK_ITEM.get())
-				.define('c', ForgeItemTagGroups.COPPER_INGOTS)
+				.define('c', Tags.Items.INGOTS_COPPER)
 				.define('d', Tags.Items.GLASS_PANES)
 				.define('e', Tags.Items.INGOTS_IRON)
 				.define('f', DeferredRegistryHandler.TESLA_INGOT.get())
@@ -1735,10 +1647,10 @@ public class RecipeGenerator extends RecipeProvider {
 		ShapedRecipeBuilder.shaped(smallPartsTableItem)
 				.define('a', Tags.Items.INGOTS_IRON)
 				.define('b', ItemTags.PLANKS)
-				.define('c', ForgeItemTagGroups.COPPER_INGOTS)
+				.define('c', Tags.Items.INGOTS_COPPER)
 				.pattern("aca")
 				.pattern("aba")
-				.unlockedBy("copper_ingot", has(ForgeItemTagGroups.COPPER_INGOTS))
+				.unlockedBy("copper_ingot", has(Tags.Items.INGOTS_COPPER))
 				.save(finishedRecipeConsumer);
 	}
 
@@ -2110,7 +2022,7 @@ public class RecipeGenerator extends RecipeProvider {
 
 	private static void smallPartsTinkering(TagKey<Item> material, List<Item> craftables) {
 		SmallPartsRecipeBuilder.tinker(Ingredient.of(material), craftables)
-				.unlocks("copper_ingot", has(ForgeItemTagGroups.COPPER_INGOTS))
+				.unlocks("copper_ingot", has(Tags.Items.INGOTS_COPPER))
 				.save(finishedRecipeConsumer, ImmersiveWeapons.MOD_ID + ":" + getTagName(material) + "_tinkering");
 	}
 
