@@ -27,6 +27,8 @@ import tech.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
 import java.util.*;
 import java.util.function.Consumer;
 
+import static tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities.itemRegistryPath;
+
 public class RecipeGenerator extends RecipeProvider {
 
 	static Consumer<FinishedRecipe> finishedRecipeConsumer;
@@ -50,7 +52,7 @@ public class RecipeGenerator extends RecipeProvider {
 		createMoltenItems();
 		createVentusItems();
 		createTeslaItems();
-		createVanillaTieredItems();
+		createSmithingItems();
 		createSmallPartsItems();
 		createBarrelTapItems();
 		createSmokeGrenades();
@@ -275,59 +277,38 @@ public class RecipeGenerator extends RecipeProvider {
 	}
 
 	private void createCobaltItems() {
-		createCobaltArrow(DeferredRegistryHandler.COBALT_ARROW.get());
-		createCobaltHelmet(DeferredRegistryHandler.COBALT_HELMET.get());
-		createCobaltChestplate(DeferredRegistryHandler.COBALT_CHESTPLATE.get());
-		createCobaltLeggings(DeferredRegistryHandler.COBALT_LEGGINGS.get());
-		createCobaltBoots(DeferredRegistryHandler.COBALT_BOOTS.get());
-		createCobaltGauntlet(DeferredRegistryHandler.COBALT_GAUNTLET.get());
-		createCobaltPike(DeferredRegistryHandler.COBALT_PIKE.get(), DeferredRegistryHandler.COBALT_PIKE_HEAD.get());
-		createCobaltPikeHead(DeferredRegistryHandler.COBALT_PIKE_HEAD.get());
 		createCobaltIngot(DeferredRegistryHandler.COBALT_INGOT.get(), DeferredRegistryHandler.COBALT_BLOCK_ITEM.get());
 		createCobaltBlock(DeferredRegistryHandler.COBALT_BLOCK_ITEM.get());
 		createCobaltNugget(DeferredRegistryHandler.COBALT_NUGGET.get());
-		createCobaltMusketBall(DeferredRegistryHandler.COBALT_MUSKET_BALL.get());
 		createRawCobalt(DeferredRegistryHandler.RAW_COBALT.get(), DeferredRegistryHandler.RAW_COBALT_BLOCK_ITEM.get());
 		createRawCobaltBlock(DeferredRegistryHandler.RAW_COBALT_BLOCK_ITEM.get(), DeferredRegistryHandler.RAW_COBALT.get());
 	}
 
 	private void createCopperItems() {
-		createCopperArrow(DeferredRegistryHandler.COPPER_ARROW.get());
-		createCopperHelmet(DeferredRegistryHandler.COPPER_HELMET.get());
-		createCopperChestplate(DeferredRegistryHandler.COPPER_CHESTPLATE.get());
-		createCopperLeggings(DeferredRegistryHandler.COPPER_LEGGINGS.get());
-		createCopperBoots(DeferredRegistryHandler.COPPER_BOOTS.get());
-		createCopperGauntlet(DeferredRegistryHandler.COPPER_GAUNTLET.get());
-		createCopperPike(DeferredRegistryHandler.COPPER_PIKE.get(), DeferredRegistryHandler.COPPER_PIKE_HEAD.get());
-		createCopperPikeHead(DeferredRegistryHandler.COPPER_PIKE_HEAD.get());
-		createCopperIngot(Items.COPPER_INGOT);
-		createCopperNugget(DeferredRegistryHandler.COPPER_NUGGET.get());
-		createCopperMusketBall(DeferredRegistryHandler.COPPER_MUSKET_BALL.get());
+		// Copper ingot
+		ShapedRecipeBuilder shapedRecipeBuilder = ShapedRecipeBuilder.shaped(Items.COPPER_INGOT)
+				.group("copper_ingot")
+				.unlockedBy("copper_nugget", has(ForgeItemTagGroups.COPPER_NUGGETS));
+		create3x3Object(shapedRecipeBuilder, ForgeItemTagGroups.COPPER_NUGGETS);
+
+		// Copper nugget
+		ShapelessRecipeBuilder shapelessRecipeBuilder = ShapelessRecipeBuilder.shapeless(DeferredRegistryHandler.COPPER_NUGGET.get(), 9)
+				.group("copper_nugget")
+				.unlockedBy("copper_ingot", has(Tags.Items.INGOTS_COPPER));
+		createNuggetFromIngot(shapelessRecipeBuilder, Tags.Items.INGOTS_COPPER);
 	}
 
 	private void createMoltenItems() {
-		createMoltenHelmet(DeferredRegistryHandler.MOLTEN_HELMET.get());
-		createMoltenChestplate(DeferredRegistryHandler.MOLTEN_CHESTPLATE.get());
-		createMoltenLeggings(DeferredRegistryHandler.MOLTEN_LEGGINGS.get());
-		createMoltenBoots(DeferredRegistryHandler.MOLTEN_BOOTS.get());
 		createMoltenIngot(DeferredRegistryHandler.MOLTEN_INGOT.get(), DeferredRegistryHandler.MOLTEN_BLOCK_ITEM.get());
 		createMoltenBlock(DeferredRegistryHandler.MOLTEN_BLOCK_ITEM.get());
 	}
 
 	private void createVentusItems() {
-		createVentusHelmet(DeferredRegistryHandler.VENTUS_HELMET.get());
-		createVentusChestplate(DeferredRegistryHandler.VENTUS_CHESTPLATE.get());
-		createVentusLeggings(DeferredRegistryHandler.VENTUS_LEGGINGS.get());
-		createVentusBoots(DeferredRegistryHandler.VENTUS_BOOTS.get());
 		createVentusStaffCore(DeferredRegistryHandler.VENTUS_STAFF_CORE.get());
 		createVentusStaff(DeferredRegistryHandler.VENTUS_STAFF.get(), DeferredRegistryHandler.VENTUS_STAFF_CORE.get());
 	}
 
 	private void createTeslaItems() {
-		createTeslaHelmet(DeferredRegistryHandler.TESLA_HELMET.get());
-		createTeslaChestplate(DeferredRegistryHandler.TESLA_CHESTPLATE.get());
-		createTeslaLeggings(DeferredRegistryHandler.TESLA_LEGGINGS.get());
-		createTeslaBoots(DeferredRegistryHandler.TESLA_BOOTS.get());
 		createTeslaIngot(DeferredRegistryHandler.TESLA_INGOT.get(), DeferredRegistryHandler.TESLA_BLOCK_ITEM.get());
 		createTeslaBlock(DeferredRegistryHandler.TESLA_BLOCK_ITEM.get());
 		createTeslaSynthesizer(DeferredRegistryHandler.TESLA_SYNTHESIZER_ITEM.get());
@@ -335,36 +316,31 @@ public class RecipeGenerator extends RecipeProvider {
 				DeferredRegistryHandler.ELECTRIC_INGOT.get());
 	}
 
-	private void createVanillaTieredItems() {
-		createWoodenArrow(DeferredRegistryHandler.WOODEN_ARROW.get());
-		createStoneArrow(DeferredRegistryHandler.STONE_ARROW.get());
-		createGoldenArrow(DeferredRegistryHandler.GOLDEN_ARROW.get());
-		createIronArrow(DeferredRegistryHandler.IRON_ARROW.get());
-		createDiamondArrow(DeferredRegistryHandler.DIAMOND_ARROW.get());
-		createNetheriteArrow(DeferredRegistryHandler.NETHERITE_ARROW.get());
-		createWoodenMusketBall(DeferredRegistryHandler.WOODEN_MUSKET_BALL.get());
-		createStoneMusketBall(DeferredRegistryHandler.STONE_MUSKET_BALL.get());
-		createGoldenMusketBall(DeferredRegistryHandler.GOLDEN_MUSKET_BALL.get());
-		createIronMusketBall(DeferredRegistryHandler.IRON_MUSKET_BALL.get());
-		createDiamondMusketBall(DeferredRegistryHandler.DIAMOND_MUSKET_BALL.get());
-		createNetheriteMusketBall(DeferredRegistryHandler.NETHERITE_MUSKET_BALL.get());
-		createWoodenGauntlet(DeferredRegistryHandler.WOODEN_GAUNTLET.get());
-		createStoneGauntlet(DeferredRegistryHandler.STONE_GAUNTLET.get());
-		createGoldenGauntlet(DeferredRegistryHandler.GOLDEN_GAUNTLET.get());
-		createIronGauntlet(DeferredRegistryHandler.IRON_GAUNTLET.get());
-		createDiamondGauntlet(DeferredRegistryHandler.DIAMOND_GAUNTLET.get());
+	private void createSmithingItems() {
+		// Netherite arrow
+		ShapedRecipeBuilder.shaped(DeferredRegistryHandler.NETHERITE_ARROW.get(), 8)
+				.define('a', DeferredRegistryHandler.DIAMOND_ARROW.get())
+				.define('b', Tags.Items.INGOTS_NETHERITE)
+				.pattern("aaa")
+				.pattern("aba")
+				.pattern("aaa")
+				.group("netherite")
+				.unlockedBy("netherite_ingot", has(Tags.Items.INGOTS_NETHERITE))
+				.save(finishedRecipeConsumer);
+
+		// Netherite musket ball
+		ShapedRecipeBuilder.shaped(DeferredRegistryHandler.NETHERITE_MUSKET_BALL.get(), 8)
+				.define('a', DeferredRegistryHandler.DIAMOND_MUSKET_BALL.get())
+				.define('b', Tags.Items.INGOTS_NETHERITE)
+				.pattern("aaa")
+				.pattern("aba")
+				.pattern("aaa")
+				.group("netherite")
+				.unlockedBy("netherite_ingot", has(Tags.Items.INGOTS_NETHERITE))
+				.save(finishedRecipeConsumer);
+
 		netheriteSmithing(DeferredRegistryHandler.DIAMOND_GAUNTLET.get(), DeferredRegistryHandler.NETHERITE_GAUNTLET.get());
-		createWoodenPike(DeferredRegistryHandler.WOODEN_PIKE.get(), DeferredRegistryHandler.WOODEN_PIKE_HEAD.get());
-		createStonePike(DeferredRegistryHandler.STONE_PIKE.get(), DeferredRegistryHandler.STONE_PIKE_HEAD.get());
-		createGoldenPike(DeferredRegistryHandler.GOLDEN_PIKE.get(), DeferredRegistryHandler.GOLDEN_PIKE_HEAD.get());
-		createIronPike(DeferredRegistryHandler.IRON_PIKE.get(), DeferredRegistryHandler.IRON_PIKE_HEAD.get());
-		createDiamondPike(DeferredRegistryHandler.DIAMOND_PIKE.get(), DeferredRegistryHandler.DIAMOND_PIKE_HEAD.get());
 		netheriteSmithing(DeferredRegistryHandler.DIAMOND_PIKE.get(), DeferredRegistryHandler.NETHERITE_PIKE.get());
-		createWoodenPikeHead(DeferredRegistryHandler.WOODEN_PIKE_HEAD.get());
-		createStonePikeHead(DeferredRegistryHandler.STONE_PIKE_HEAD.get());
-		createGoldenPikeHead(DeferredRegistryHandler.GOLDEN_PIKE_HEAD.get());
-		createIronPikeHead(DeferredRegistryHandler.IRON_PIKE_HEAD.get());
-		createDiamondPikeHead(DeferredRegistryHandler.DIAMOND_PIKE_HEAD.get());
 	}
 
 	private void createSmallPartsItems() {
@@ -909,95 +885,58 @@ public class RecipeGenerator extends RecipeProvider {
 		createSulfur(DeferredRegistryHandler.SULFUR.get(), DeferredRegistryHandler.RAW_SULFUR_BLOCK_ITEM.get());
 	}
 
-	private static void createCobaltArrow(ItemLike arrowItem) {
-		ShapedRecipeBuilder builder = ShapedRecipeBuilder.shaped(arrowItem, 4)
-				.group("cobalt")
-				.unlockedBy("cobalt_ingot", has(ForgeItemTagGroups.COBALT_INGOTS));
-		createArrow(builder, ForgeItemTagGroups.COBALT_INGOTS);
+	public static void createArrow(ArrowItem arrow, TagKey<Item> material) {
+		ShapedRecipeBuilder.shaped(arrow, 4)
+				.pattern("a")
+				.pattern("b")
+				.pattern("c")
+				.define('a', material)
+				.define('b', Items.STICK)
+				.define('c', Items.FEATHER)
+				.unlockedBy("has_material", has(material))
+				.save(finishedRecipeConsumer, itemRegistryPath(arrow));
 	}
 
-	private static void createCobaltSword(ItemLike swordItem) {
-		ShapedRecipeBuilder builder = ShapedRecipeBuilder.shaped(swordItem)
-				.group("cobalt")
-				.unlockedBy("cobalt_ingot", has(ForgeItemTagGroups.COBALT_INGOTS));
-		createSword(builder, ForgeItemTagGroups.COBALT_INGOTS, Items.STICK);
+	public static void createPikeHead(Item pikeHead, TagKey<Item> material, TagKey<Item> nugget) {
+		ShapedRecipeBuilder.shaped(pikeHead)
+				.pattern("a")
+				.pattern("b")
+				.define('a', nugget)
+				.define('b', material)
+				.unlockedBy("has_material", has(material))
+				.save(finishedRecipeConsumer, itemRegistryPath(pikeHead));
 	}
 
-	private static void createCobaltPickaxe(ItemLike pickaxeItem) {
-		ShapedRecipeBuilder builder = ShapedRecipeBuilder.shaped(pickaxeItem)
-				.group("cobalt")
-				.unlockedBy("cobalt_ingot", has(ForgeItemTagGroups.COBALT_INGOTS));
-		createPickaxe(builder, ForgeItemTagGroups.COBALT_INGOTS, Items.STICK);
+	public static void createPike(Item pike, TagKey<Item> material, Item pikeHead) {
+		ShapedRecipeBuilder.shaped(pike)
+				.pattern("a")
+				.pattern("b")
+				.pattern("c")
+				.define('a', pikeHead)
+				.define('b', material)
+				.define('c', DeferredRegistryHandler.WOODEN_TOOL_ROD.get())
+				.unlockedBy("has_material", has(material))
+				.save(finishedRecipeConsumer, itemRegistryPath(pike));
 	}
 
-	private static void createCobaltAxe(ItemLike axeItem) {
-		ShapedRecipeBuilder builder = ShapedRecipeBuilder.shaped(axeItem)
-				.group("cobalt")
-				.unlockedBy("cobalt_ingot", has(ForgeItemTagGroups.COBALT_INGOTS));
-		createAxe(builder, ForgeItemTagGroups.COBALT_INGOTS, Items.STICK);
+	public static void createGauntlet(Item gauntlet, TagKey<Item> material) {
+		ShapedRecipeBuilder.shaped(gauntlet)
+				.pattern("aaa")
+				.pattern("aba")
+				.define('a', material)
+				.define('b', DeferredRegistryHandler.GAUNTLET_SCAFFOLDING.get())
+				.unlockedBy("has_material", has(material))
+				.save(finishedRecipeConsumer, itemRegistryPath(gauntlet));
 	}
 
-	private static void createCobaltShovel(ItemLike shovelItem) {
-		ShapedRecipeBuilder builder = ShapedRecipeBuilder.shaped(shovelItem)
-				.group("cobalt")
-				.unlockedBy("cobalt_ingot", has(ForgeItemTagGroups.COBALT_INGOTS));
-		createShovel(builder, ForgeItemTagGroups.COBALT_INGOTS, Items.STICK);
-	}
-
-	private static void createCobaltHoe(ItemLike hoeItem) {
-		ShapedRecipeBuilder builder = ShapedRecipeBuilder.shaped(hoeItem)
-				.group("cobalt")
-				.unlockedBy("cobalt_ingot", has(ForgeItemTagGroups.COBALT_INGOTS));
-		createHoe(builder, ForgeItemTagGroups.COBALT_INGOTS, Items.STICK);
-	}
-
-	private static void createCobaltHelmet(ItemLike helmetItem) {
-		ShapedRecipeBuilder builder = ShapedRecipeBuilder.shaped(helmetItem)
-				.group("cobalt")
-				.unlockedBy("cobalt_ingot", has(ForgeItemTagGroups.COBALT_INGOTS));
-		createHelmet(builder, ForgeItemTagGroups.COBALT_INGOTS);
-	}
-
-	private static void createCobaltChestplate(ItemLike chestplateItem) {
-		ShapedRecipeBuilder builder = ShapedRecipeBuilder.shaped(chestplateItem)
-				.group("cobalt")
-				.unlockedBy("cobalt_ingot", has(ForgeItemTagGroups.COBALT_INGOTS));
-		createChestplate(builder, ForgeItemTagGroups.COBALT_INGOTS);
-	}
-
-	private static void createCobaltLeggings(ItemLike leggingsItem) {
-		ShapedRecipeBuilder builder = ShapedRecipeBuilder.shaped(leggingsItem)
-				.group("cobalt")
-				.unlockedBy("cobalt_ingot", has(ForgeItemTagGroups.COBALT_INGOTS));
-		createLeggings(builder, ForgeItemTagGroups.COBALT_INGOTS);
-	}
-
-	private static void createCobaltBoots(ItemLike bootsItem) {
-		ShapedRecipeBuilder builder = ShapedRecipeBuilder.shaped(bootsItem)
-				.group("cobalt")
-				.unlockedBy("cobalt_ingot", has(ForgeItemTagGroups.COBALT_INGOTS));
-		createBoots(builder, ForgeItemTagGroups.COBALT_INGOTS);
-	}
-
-	private static void createCobaltGauntlet(ItemLike gauntletItem) {
-		ShapedRecipeBuilder builder = ShapedRecipeBuilder.shaped(gauntletItem)
-				.group("cobalt")
-				.unlockedBy("cobalt_ingot", has(ForgeItemTagGroups.COBALT_INGOTS));
-		createGauntlet(builder, ForgeItemTagGroups.COBALT_INGOTS);
-	}
-
-	private static void createCobaltPike(ItemLike pikeItem, ItemLike pikeHead) {
-		ShapedRecipeBuilder builder = ShapedRecipeBuilder.shaped(pikeItem)
-				.group("cobalt")
-				.unlockedBy("cobalt_ingot", has(ForgeItemTagGroups.COBALT_INGOTS));
-		createPike(builder, ForgeItemTagGroups.COBALT_INGOTS, pikeHead);
-	}
-
-	private static void createCobaltPikeHead(ItemLike pikeItem) {
-		ShapedRecipeBuilder builder = ShapedRecipeBuilder.shaped(pikeItem)
-				.group("cobalt")
-				.unlockedBy("cobalt_ingot", has(ForgeItemTagGroups.COBALT_INGOTS));
-		createPikeHead(builder, ForgeItemTagGroups.COBALT_INGOTS, ForgeItemTagGroups.COBALT_NUGGETS);
+	public static void createMusketBall(Item musketBall, TagKey<Item> material) {
+		ShapedRecipeBuilder.shaped(musketBall)
+				.define('a', material)
+				.define('b', Items.GUNPOWDER)
+				.pattern(" a ")
+				.pattern("aba")
+				.unlockedBy("has_material", has(material))
+				.save(finishedRecipeConsumer);
 	}
 
 	private static void createCobaltIngot(ItemLike ingotItem, ItemLike ingotBlock) {
@@ -1044,188 +983,6 @@ public class RecipeGenerator extends RecipeProvider {
 		createNuggetFromIngot(builder, ForgeItemTagGroups.COBALT_INGOTS);
 	}
 
-	private static void createCobaltMusketBall(ItemLike musketBallItem) {
-		ShapedRecipeBuilder builder = ShapedRecipeBuilder.shaped(musketBallItem, 8)
-				.group("cobalt")
-				.unlockedBy("cobalt_ingot", has(ForgeItemTagGroups.COBALT_INGOTS));
-		createMusketBall(builder, ForgeItemTagGroups.COBALT_INGOTS);
-	}
-
-	private static void createCopperArrow(ItemLike arrowItem) {
-		ShapedRecipeBuilder builder = ShapedRecipeBuilder.shaped(arrowItem, 4)
-				.group("copper")
-				.unlockedBy("cobalt_ingot", has(Tags.Items.INGOTS_COPPER));
-		createArrow(builder, Tags.Items.INGOTS_COPPER);
-	}
-
-	private static void createCopperSword(ItemLike swordItem) {
-		ShapedRecipeBuilder builder = ShapedRecipeBuilder.shaped(swordItem)
-				.group("copper")
-				.unlockedBy("copper_ingot", has(Tags.Items.INGOTS_COPPER));
-		createSword(builder, Tags.Items.INGOTS_COPPER, Items.STICK);
-	}
-
-	private static void createCopperPickaxe(ItemLike pickaxeItem) {
-		ShapedRecipeBuilder builder = ShapedRecipeBuilder.shaped(pickaxeItem)
-				.group("copper")
-				.unlockedBy("copper_ingot", has(Tags.Items.INGOTS_COPPER));
-		createPickaxe(builder, Tags.Items.INGOTS_COPPER, Items.STICK);
-	}
-
-	private static void createCopperAxe(ItemLike axeItem) {
-		ShapedRecipeBuilder builder = ShapedRecipeBuilder.shaped(axeItem)
-				.group("copper")
-				.unlockedBy("copper_ingot", has(Tags.Items.INGOTS_COPPER));
-		createAxe(builder, Tags.Items.INGOTS_COPPER, Items.STICK);
-	}
-
-	private static void createCopperShovel(ItemLike shovelItem) {
-		ShapedRecipeBuilder builder = ShapedRecipeBuilder.shaped(shovelItem)
-				.group("copper")
-				.unlockedBy("copper_ingot", has(Tags.Items.INGOTS_COPPER));
-		createShovel(builder, Tags.Items.INGOTS_COPPER, Items.STICK);
-	}
-
-	private static void createCopperHoe(ItemLike hoeItem) {
-		ShapedRecipeBuilder builder = ShapedRecipeBuilder.shaped(hoeItem)
-				.group("copper")
-				.unlockedBy("copper_ingot", has(Tags.Items.INGOTS_COPPER));
-		createHoe(builder, Tags.Items.INGOTS_COPPER, Items.STICK);
-	}
-
-	private static void createCopperHelmet(ItemLike helmetItem) {
-		ShapedRecipeBuilder builder = ShapedRecipeBuilder.shaped(helmetItem)
-				.group("copper")
-				.unlockedBy("copper_ingot", has(Tags.Items.INGOTS_COPPER));
-		createHelmet(builder, Tags.Items.INGOTS_COPPER);
-	}
-
-	private static void createCopperChestplate(ItemLike chestplateItem) {
-		ShapedRecipeBuilder builder = ShapedRecipeBuilder.shaped(chestplateItem)
-				.group("copper")
-				.unlockedBy("copper_ingot", has(Tags.Items.INGOTS_COPPER));
-		createChestplate(builder, Tags.Items.INGOTS_COPPER);
-	}
-
-	private static void createCopperLeggings(ItemLike leggingsItem) {
-		ShapedRecipeBuilder builder = ShapedRecipeBuilder.shaped(leggingsItem)
-				.group("copper")
-				.unlockedBy("copper_ingot", has(Tags.Items.INGOTS_COPPER));
-		createLeggings(builder, Tags.Items.INGOTS_COPPER);
-	}
-
-	private static void createCopperBoots(ItemLike bootsItem) {
-		ShapedRecipeBuilder builder = ShapedRecipeBuilder.shaped(bootsItem)
-				.group("copper")
-				.unlockedBy("copper_ingot", has(Tags.Items.INGOTS_COPPER));
-		createBoots(builder, Tags.Items.INGOTS_COPPER);
-	}
-
-	private static void createCopperGauntlet(ItemLike gauntletItem) {
-		ShapedRecipeBuilder builder = ShapedRecipeBuilder.shaped(gauntletItem)
-				.group("copper")
-				.unlockedBy("copper_ingot", has(Tags.Items.INGOTS_COPPER));
-		createGauntlet(builder, Tags.Items.INGOTS_COPPER);
-	}
-
-	private static void createCopperPike(ItemLike pikeItem, ItemLike pikeHead) {
-		ShapedRecipeBuilder builder = ShapedRecipeBuilder.shaped(pikeItem)
-				.group("copper")
-				.unlockedBy("copper_ingot", has(Tags.Items.INGOTS_COPPER));
-		createPike(builder, Tags.Items.INGOTS_COPPER, pikeHead);
-	}
-
-	private static void createCopperPikeHead(ItemLike pikeItem) {
-		ShapedRecipeBuilder builder = ShapedRecipeBuilder.shaped(pikeItem)
-				.group("copper")
-				.unlockedBy("copper_ingot", has(Tags.Items.INGOTS_COPPER));
-		createPikeHead(builder, Tags.Items.INGOTS_COPPER, ForgeItemTagGroups.COPPER_NUGGETS);
-	}
-
-	private static void createCopperIngot(ItemLike ingotItem) {
-		ShapedRecipeBuilder builder = ShapedRecipeBuilder.shaped(ingotItem)
-				.group("copper")
-				.unlockedBy("copper_nugget", has(ForgeItemTagGroups.COPPER_NUGGETS));
-		create3x3Object(builder, ForgeItemTagGroups.COPPER_NUGGETS);
-	}
-
-	private static void createCopperNugget(ItemLike nuggetItem) {
-		ShapelessRecipeBuilder builder = ShapelessRecipeBuilder.shapeless(nuggetItem, 9)
-				.group("copper")
-				.unlockedBy("copper_ingot", has(Tags.Items.INGOTS_COPPER));
-		createNuggetFromIngot(builder, Tags.Items.INGOTS_COPPER);
-	}
-
-	private static void createCopperMusketBall(ItemLike musketBallItem) {
-		ShapedRecipeBuilder builder = ShapedRecipeBuilder.shaped(musketBallItem, 8)
-				.group("copper")
-				.unlockedBy("copper_ingot", has(Tags.Items.INGOTS_COPPER));
-		createMusketBall(builder, Tags.Items.INGOTS_COPPER);
-	}
-
-	private static void createMoltenSword(ItemLike swordItem) {
-		ShapedRecipeBuilder builder = ShapedRecipeBuilder.shaped(swordItem)
-				.group("molten")
-				.unlockedBy("molten_ingot", has(DeferredRegistryHandler.MOLTEN_INGOT.get()));
-		createSword(builder, ImmersiveWeaponsItemTagGroups.MOLTEN_INGOTS, DeferredRegistryHandler.OBSIDIAN_ROD.get());
-	}
-
-	private static void createMoltenPickaxe(ItemLike pickaxeItem) {
-		ShapedRecipeBuilder builder = ShapedRecipeBuilder.shaped(pickaxeItem)
-				.group("molten")
-				.unlockedBy("molten_ingot", has(DeferredRegistryHandler.MOLTEN_INGOT.get()));
-		createPickaxe(builder, ImmersiveWeaponsItemTagGroups.MOLTEN_INGOTS, DeferredRegistryHandler.OBSIDIAN_ROD.get());
-	}
-
-	private static void createMoltenAxe(ItemLike axeItem) {
-		ShapedRecipeBuilder builder = ShapedRecipeBuilder.shaped(axeItem)
-				.group("molten")
-				.unlockedBy("molten_ingot", has(DeferredRegistryHandler.MOLTEN_INGOT.get()));
-		createAxe(builder, ImmersiveWeaponsItemTagGroups.MOLTEN_INGOTS, DeferredRegistryHandler.OBSIDIAN_ROD.get());
-	}
-
-	private static void createMoltenShovel(ItemLike shovelItem) {
-		ShapedRecipeBuilder builder = ShapedRecipeBuilder.shaped(shovelItem)
-				.group("molten")
-				.unlockedBy("molten_ingot", has(DeferredRegistryHandler.MOLTEN_INGOT.get()));
-		createShovel(builder, ImmersiveWeaponsItemTagGroups.MOLTEN_INGOTS, DeferredRegistryHandler.OBSIDIAN_ROD.get());
-	}
-
-	private static void createMoltenHoe(ItemLike hoeItem) {
-		ShapedRecipeBuilder builder = ShapedRecipeBuilder.shaped(hoeItem)
-				.group("molten")
-				.unlockedBy("molten_ingot", has(DeferredRegistryHandler.MOLTEN_INGOT.get()));
-		createHoe(builder, ImmersiveWeaponsItemTagGroups.MOLTEN_INGOTS, DeferredRegistryHandler.OBSIDIAN_ROD.get());
-	}
-
-	private static void createMoltenHelmet(ItemLike helmetItem) {
-		ShapedRecipeBuilder builder = ShapedRecipeBuilder.shaped(helmetItem)
-				.group("molten")
-				.unlockedBy("molten_ingot", has(DeferredRegistryHandler.MOLTEN_INGOT.get()));
-		createHelmet(builder, ImmersiveWeaponsItemTagGroups.MOLTEN_INGOTS);
-	}
-
-	private static void createMoltenChestplate(ItemLike chestplateItem) {
-		ShapedRecipeBuilder builder = ShapedRecipeBuilder.shaped(chestplateItem)
-				.group("molten")
-				.unlockedBy("molten_ingot", has(DeferredRegistryHandler.MOLTEN_INGOT.get()));
-		createChestplate(builder, ImmersiveWeaponsItemTagGroups.MOLTEN_INGOTS);
-	}
-
-	private static void createMoltenLeggings(ItemLike leggingsItem) {
-		ShapedRecipeBuilder builder = ShapedRecipeBuilder.shaped(leggingsItem)
-				.group("molten")
-				.unlockedBy("molten_ingot", has(DeferredRegistryHandler.MOLTEN_INGOT.get()));
-		createLeggings(builder, ImmersiveWeaponsItemTagGroups.MOLTEN_INGOTS);
-	}
-
-	private static void createMoltenBoots(ItemLike bootsItem) {
-		ShapedRecipeBuilder builder = ShapedRecipeBuilder.shaped(bootsItem)
-				.group("molten")
-				.unlockedBy("molten_ingot", has(DeferredRegistryHandler.MOLTEN_INGOT.get()));
-		createBoots(builder, ImmersiveWeaponsItemTagGroups.MOLTEN_INGOTS);
-	}
-
 	private static void createMoltenIngot(ItemLike ingotItem, ItemLike ingotBlock) {
 		ShapedRecipeBuilder.shaped(ingotItem)
 				.define('a', ImmersiveWeaponsItemTagGroups.MOLTEN_SHARDS)
@@ -1253,69 +1010,6 @@ public class RecipeGenerator extends RecipeProvider {
 		create3x3Object(builder, ImmersiveWeaponsItemTagGroups.MOLTEN_INGOTS);
 	}
 
-	private static void createVentusSword(ItemLike swordItem) {
-		ShapedRecipeBuilder builder = ShapedRecipeBuilder.shaped(swordItem)
-				.group("ventus")
-				.unlockedBy("ventus_shard", has(DeferredRegistryHandler.VENTUS_SHARD.get()));
-		createSword(builder, ImmersiveWeaponsItemTagGroups.VENTUS_SHARDS, DeferredRegistryHandler.OBSIDIAN_ROD.get());
-	}
-
-	private static void createVentusPickaxe(ItemLike pickaxeItem) {
-		ShapedRecipeBuilder builder = ShapedRecipeBuilder.shaped(pickaxeItem)
-				.group("ventus")
-				.unlockedBy("ventus_shard", has(DeferredRegistryHandler.VENTUS_SHARD.get()));
-		createPickaxe(builder, ImmersiveWeaponsItemTagGroups.VENTUS_SHARDS, DeferredRegistryHandler.OBSIDIAN_ROD.get());
-	}
-
-	private static void createVentusAxe(ItemLike axeItem) {
-		ShapedRecipeBuilder builder = ShapedRecipeBuilder.shaped(axeItem)
-				.group("ventus")
-				.unlockedBy("ventus_shard", has(DeferredRegistryHandler.VENTUS_SHARD.get()));
-		createAxe(builder, ImmersiveWeaponsItemTagGroups.VENTUS_SHARDS, DeferredRegistryHandler.OBSIDIAN_ROD.get());
-	}
-
-	private static void createVentusShovel(ItemLike shovelItem) {
-		ShapedRecipeBuilder builder = ShapedRecipeBuilder.shaped(shovelItem)
-				.group("ventus")
-				.unlockedBy("ventus_shard", has(DeferredRegistryHandler.VENTUS_SHARD.get()));
-		createShovel(builder, ImmersiveWeaponsItemTagGroups.VENTUS_SHARDS, DeferredRegistryHandler.OBSIDIAN_ROD.get());
-	}
-
-	private static void createVentusHoe(ItemLike hoeItem) {
-		ShapedRecipeBuilder builder = ShapedRecipeBuilder.shaped(hoeItem)
-				.group("ventus")
-				.unlockedBy("ventus_shard", has(DeferredRegistryHandler.VENTUS_SHARD.get()));
-		createHoe(builder, ImmersiveWeaponsItemTagGroups.VENTUS_SHARDS, DeferredRegistryHandler.OBSIDIAN_ROD.get());
-	}
-
-	private static void createVentusHelmet(ItemLike helmetItem) {
-		ShapedRecipeBuilder builder = ShapedRecipeBuilder.shaped(helmetItem)
-				.group("ventus")
-				.unlockedBy("ventus_shard", has(DeferredRegistryHandler.VENTUS_SHARD.get()));
-		createHelmet(builder, ImmersiveWeaponsItemTagGroups.VENTUS_SHARDS);
-	}
-
-	private static void createVentusChestplate(ItemLike chestplateItem) {
-		ShapedRecipeBuilder builder = ShapedRecipeBuilder.shaped(chestplateItem)
-				.group("ventus")
-				.unlockedBy("ventus_shard", has(DeferredRegistryHandler.VENTUS_SHARD.get()));
-		createChestplate(builder, ImmersiveWeaponsItemTagGroups.VENTUS_SHARDS);
-	}
-
-	private static void createVentusLeggings(ItemLike leggingsItem) {
-		ShapedRecipeBuilder builder = ShapedRecipeBuilder.shaped(leggingsItem)
-				.group("ventus")
-				.unlockedBy("ventus_shard", has(DeferredRegistryHandler.VENTUS_SHARD.get()));
-		createLeggings(builder, ImmersiveWeaponsItemTagGroups.VENTUS_SHARDS);
-	}
-
-	private static void createVentusBoots(ItemLike bootsItem) {
-		ShapedRecipeBuilder builder = ShapedRecipeBuilder.shaped(bootsItem)
-				.group("ventus")
-				.unlockedBy("ventus_shard", has(DeferredRegistryHandler.VENTUS_SHARD.get()));
-		createBoots(builder, ImmersiveWeaponsItemTagGroups.VENTUS_SHARDS);
-	}
-
 	private static void createVentusStaffCore(ItemLike coreItem) {
 		ShapedRecipeBuilder.shaped(coreItem)
 				.define('a', ImmersiveWeaponsItemTagGroups.VENTUS_SHARDS)
@@ -1338,69 +1032,6 @@ public class RecipeGenerator extends RecipeProvider {
 				.group("ventus")
 				.unlockedBy("ventus_staff_core", has(DeferredRegistryHandler.VENTUS_STAFF_CORE.get()))
 				.save(finishedRecipeConsumer);
-	}
-
-	private static void createTeslaSword(ItemLike swordItem) {
-		ShapedRecipeBuilder builder = ShapedRecipeBuilder.shaped(swordItem)
-				.group("tesla")
-				.unlockedBy("tesla_ingot", has(ImmersiveWeaponsItemTagGroups.TESLA_INGOTS));
-		createSword(builder, ImmersiveWeaponsItemTagGroups.TESLA_INGOTS, DeferredRegistryHandler.OBSIDIAN_ROD.get());
-	}
-
-	private static void createTeslaPickaxe(ItemLike pickaxeItem) {
-		ShapedRecipeBuilder builder = ShapedRecipeBuilder.shaped(pickaxeItem)
-				.group("tesla")
-				.unlockedBy("tesla_ingot", has(ImmersiveWeaponsItemTagGroups.TESLA_INGOTS));
-		createPickaxe(builder, ImmersiveWeaponsItemTagGroups.TESLA_INGOTS, DeferredRegistryHandler.OBSIDIAN_ROD.get());
-	}
-
-	private static void createTeslaAxe(ItemLike axeItem) {
-		ShapedRecipeBuilder builder = ShapedRecipeBuilder.shaped(axeItem)
-				.group("tesla")
-				.unlockedBy("tesla_ingot", has(ImmersiveWeaponsItemTagGroups.TESLA_INGOTS));
-		createAxe(builder, ImmersiveWeaponsItemTagGroups.TESLA_INGOTS, DeferredRegistryHandler.OBSIDIAN_ROD.get());
-	}
-
-	private static void createTeslaShovel(ItemLike shovelItem) {
-		ShapedRecipeBuilder builder = ShapedRecipeBuilder.shaped(shovelItem)
-				.group("tesla")
-				.unlockedBy("tesla_ingot", has(ImmersiveWeaponsItemTagGroups.TESLA_INGOTS));
-		createShovel(builder, ImmersiveWeaponsItemTagGroups.TESLA_INGOTS, DeferredRegistryHandler.OBSIDIAN_ROD.get());
-	}
-
-	private static void createTeslaHoe(ItemLike hoeItem) {
-		ShapedRecipeBuilder builder = ShapedRecipeBuilder.shaped(hoeItem)
-				.group("tesla")
-				.unlockedBy("tesla_ingot", has(ImmersiveWeaponsItemTagGroups.TESLA_INGOTS));
-		createHoe(builder, ImmersiveWeaponsItemTagGroups.TESLA_INGOTS, DeferredRegistryHandler.OBSIDIAN_ROD.get());
-	}
-
-	private static void createTeslaHelmet(ItemLike helmetItem) {
-		ShapedRecipeBuilder builder = ShapedRecipeBuilder.shaped(helmetItem)
-				.group("tesla")
-				.unlockedBy("tesla_ingot", has(ImmersiveWeaponsItemTagGroups.TESLA_INGOTS));
-		createHelmet(builder, ImmersiveWeaponsItemTagGroups.TESLA_INGOTS);
-	}
-
-	private static void createTeslaChestplate(ItemLike chestplateItem) {
-		ShapedRecipeBuilder builder = ShapedRecipeBuilder.shaped(chestplateItem)
-				.group("tesla")
-				.unlockedBy("tesla_ingot", has(ImmersiveWeaponsItemTagGroups.TESLA_INGOTS));
-		createChestplate(builder, ImmersiveWeaponsItemTagGroups.TESLA_INGOTS);
-	}
-
-	private static void createTeslaLeggings(ItemLike leggingsItem) {
-		ShapedRecipeBuilder builder = ShapedRecipeBuilder.shaped(leggingsItem)
-				.group("tesla")
-				.unlockedBy("tesla_ingot", has(ImmersiveWeaponsItemTagGroups.TESLA_INGOTS));
-		createLeggings(builder, ImmersiveWeaponsItemTagGroups.TESLA_INGOTS);
-	}
-
-	private static void createTeslaBoots(ItemLike bootsItem) {
-		ShapedRecipeBuilder builder = ShapedRecipeBuilder.shaped(bootsItem)
-				.group("tesla")
-				.unlockedBy("tesla_ingot", has(ImmersiveWeaponsItemTagGroups.TESLA_INGOTS));
-		createBoots(builder, ImmersiveWeaponsItemTagGroups.TESLA_INGOTS);
 	}
 
 	private static void createTeslaIngot(ItemLike ingotItem, ItemLike ingotBlock) {
@@ -1444,203 +1075,8 @@ public class RecipeGenerator extends RecipeProvider {
 				.save(finishedRecipeConsumer);
 	}
 
-	private static void createWoodenArrow(ItemLike arrowItem) {
-		ShapedRecipeBuilder builder = ShapedRecipeBuilder.shaped(arrowItem, 4)
-				.group("wood")
-				.unlockedBy("wooden_shard", has(ImmersiveWeaponsItemTagGroups.WOODEN_SHARDS));
-		createArrow(builder, ImmersiveWeaponsItemTagGroups.WOODEN_SHARDS);
-	}
-
-	private static void createStoneArrow(ItemLike arrowItem) {
-		ShapedRecipeBuilder builder = ShapedRecipeBuilder.shaped(arrowItem, 4)
-				.group("stone")
-				.unlockedBy("stone_shard", has(ImmersiveWeaponsItemTagGroups.STONE_SHARDS));
-		createArrow(builder, ImmersiveWeaponsItemTagGroups.STONE_SHARDS);
-	}
-
-	private static void createGoldenArrow(ItemLike arrowItem) {
-		ShapedRecipeBuilder builder = ShapedRecipeBuilder.shaped(arrowItem, 4)
-				.group("gold")
-				.unlockedBy("gold_ingot", has(Tags.Items.INGOTS_GOLD));
-		createArrow(builder, Tags.Items.INGOTS_GOLD);
-	}
-
-	private static void createIronArrow(ItemLike arrowItem) {
-		ShapedRecipeBuilder builder = ShapedRecipeBuilder.shaped(arrowItem, 4)
-				.group("iron")
-				.unlockedBy("iron_ingot", has(Tags.Items.INGOTS_IRON));
-		createArrow(builder, Tags.Items.INGOTS_IRON);
-	}
-
-	private static void createDiamondArrow(ItemLike arrowItem) {
-		ShapedRecipeBuilder builder = ShapedRecipeBuilder.shaped(arrowItem, 4)
-				.group("diamond")
-				.unlockedBy("diamond_shard", has(ImmersiveWeaponsItemTagGroups.DIAMOND_SHARDS));
-		createArrow(builder, ImmersiveWeaponsItemTagGroups.DIAMOND_SHARDS);
-	}
-
-	private static void createNetheriteArrow(ItemLike arrowItem) {
-		ShapedRecipeBuilder.shaped(arrowItem, 8)
-				.define('a', DeferredRegistryHandler.DIAMOND_ARROW.get())
-				.define('b', Tags.Items.INGOTS_NETHERITE)
-				.pattern("aaa")
-				.pattern("aba")
-				.pattern("aaa")
-				.group("netherite")
-				.unlockedBy("netherite_ingot", has(Tags.Items.INGOTS_NETHERITE))
-				.save(finishedRecipeConsumer);
-	}
-
-	private static void createWoodenMusketBall(ItemLike musketBallItem) {
-		ShapedRecipeBuilder builder = ShapedRecipeBuilder.shaped(musketBallItem, 8)
-				.group("wood")
-				.unlockedBy("wooden_shard", has(ImmersiveWeaponsItemTagGroups.WOODEN_SHARDS));
-		createMusketBall(builder, ImmersiveWeaponsItemTagGroups.WOODEN_SHARDS);
-	}
-
-	private static void createStoneMusketBall(ItemLike musketBallItem) {
-		ShapedRecipeBuilder builder = ShapedRecipeBuilder.shaped(musketBallItem, 8)
-				.group("stone")
-				.unlockedBy("stone_shard", has(ImmersiveWeaponsItemTagGroups.STONE_SHARDS));
-		createMusketBall(builder, ImmersiveWeaponsItemTagGroups.STONE_SHARDS);
-	}
-
-	private static void createGoldenMusketBall(ItemLike musketBallItem) {
-		ShapedRecipeBuilder builder = ShapedRecipeBuilder.shaped(musketBallItem, 8)
-				.group("gold")
-				.unlockedBy("gold_ingot", has(Tags.Items.INGOTS_GOLD));
-		createMusketBall(builder, Tags.Items.INGOTS_GOLD);
-	}
-
-	private static void createIronMusketBall(ItemLike musketBallItem) {
-		ShapedRecipeBuilder builder = ShapedRecipeBuilder.shaped(musketBallItem, 8)
-				.group("iron")
-				.unlockedBy("iron_ingot", has(Tags.Items.INGOTS_IRON));
-		createMusketBall(builder, Tags.Items.INGOTS_IRON);
-	}
-
-	private static void createDiamondMusketBall(ItemLike musketBallItem) {
-		ShapedRecipeBuilder builder = ShapedRecipeBuilder.shaped(musketBallItem, 8)
-				.group("diamond")
-				.unlockedBy("diamond_shard", has(ImmersiveWeaponsItemTagGroups.DIAMOND_SHARDS));
-		createMusketBall(builder, ImmersiveWeaponsItemTagGroups.DIAMOND_SHARDS);
-	}
-
 	private static void createNetheriteMusketBall(ItemLike musketBallItem) {
-		ShapedRecipeBuilder.shaped(musketBallItem, 8)
-				.define('a', DeferredRegistryHandler.DIAMOND_MUSKET_BALL.get())
-				.define('b', Tags.Items.INGOTS_NETHERITE)
-				.pattern("aaa")
-				.pattern("aba")
-				.pattern("aaa")
-				.group("netherite")
-				.unlockedBy("netherite_ingot", has(Tags.Items.INGOTS_NETHERITE))
-				.save(finishedRecipeConsumer);
-	}
 
-	private static void createWoodenGauntlet(ItemLike gauntletItem) {
-		ShapedRecipeBuilder builder = ShapedRecipeBuilder.shaped(gauntletItem)
-				.group("wood")
-				.unlockedBy("planks", has(ItemTags.PLANKS));
-		createGauntlet(builder, ItemTags.PLANKS);
-	}
-
-	private static void createStoneGauntlet(ItemLike gauntletItem) {
-		ShapedRecipeBuilder builder = ShapedRecipeBuilder.shaped(gauntletItem)
-				.group("stone")
-				.unlockedBy("stone", has(ItemTags.STONE_TOOL_MATERIALS));
-		createGauntlet(builder, ItemTags.STONE_TOOL_MATERIALS);
-	}
-
-	private static void createGoldenGauntlet(ItemLike gauntletItem) {
-		ShapedRecipeBuilder builder = ShapedRecipeBuilder.shaped(gauntletItem)
-				.group("gold")
-				.unlockedBy("gold", has(Tags.Items.INGOTS_GOLD));
-		createGauntlet(builder, Tags.Items.INGOTS_GOLD);
-	}
-
-	private static void createIronGauntlet(ItemLike gauntletItem) {
-		ShapedRecipeBuilder builder = ShapedRecipeBuilder.shaped(gauntletItem)
-				.group("iron")
-				.unlockedBy("iron", has(Tags.Items.INGOTS_IRON));
-		createGauntlet(builder, Tags.Items.INGOTS_IRON);
-	}
-
-	private static void createDiamondGauntlet(ItemLike gauntletItem) {
-		ShapedRecipeBuilder builder = ShapedRecipeBuilder.shaped(gauntletItem)
-				.group("diamond")
-				.unlockedBy("diamond", has(Tags.Items.GEMS_DIAMOND));
-		createGauntlet(builder, Tags.Items.GEMS_DIAMOND);
-	}
-
-	private static void createWoodenPike(ItemLike pikeItem, ItemLike pikeHead) {
-		ShapedRecipeBuilder builder = ShapedRecipeBuilder.shaped(pikeItem)
-				.group("wood")
-				.unlockedBy("planks", has(ItemTags.PLANKS));
-		createPike(builder, ItemTags.PLANKS, pikeHead);
-	}
-
-	private static void createStonePike(ItemLike pikeItem, ItemLike pikeHead) {
-		ShapedRecipeBuilder builder = ShapedRecipeBuilder.shaped(pikeItem)
-				.group("stone")
-				.unlockedBy("stone", has(ItemTags.STONE_TOOL_MATERIALS));
-		createPike(builder, ItemTags.STONE_TOOL_MATERIALS, pikeHead);
-	}
-
-	private static void createGoldenPike(ItemLike pikeItem, ItemLike pikeHead) {
-		ShapedRecipeBuilder builder = ShapedRecipeBuilder.shaped(pikeItem)
-				.group("gold")
-				.unlockedBy("gold", has(Tags.Items.INGOTS_GOLD));
-		createPike(builder, Tags.Items.INGOTS_GOLD, pikeHead);
-	}
-
-	private static void createIronPike(ItemLike pikeItem, ItemLike pikeHead) {
-		ShapedRecipeBuilder builder = ShapedRecipeBuilder.shaped(pikeItem)
-				.group("iron")
-				.unlockedBy("iron", has(Tags.Items.INGOTS_IRON));
-		createPike(builder, Tags.Items.INGOTS_IRON, pikeHead);
-	}
-
-	private static void createDiamondPike(ItemLike pikeItem, ItemLike pikeHead) {
-		ShapedRecipeBuilder builder = ShapedRecipeBuilder.shaped(pikeItem)
-				.group("diamond")
-				.unlockedBy("diamond", has(Tags.Items.GEMS_DIAMOND));
-		createPike(builder, Tags.Items.GEMS_DIAMOND, pikeHead);
-	}
-
-	private static void createWoodenPikeHead(ItemLike pikeHeadItem) {
-		ShapedRecipeBuilder builder = ShapedRecipeBuilder.shaped(pikeHeadItem)
-				.group("wood")
-				.unlockedBy("planks", has(ItemTags.PLANKS));
-		createPikeHead(builder, ItemTags.PLANKS, ImmersiveWeaponsItemTagGroups.WOODEN_SHARDS);
-	}
-
-	private static void createStonePikeHead(ItemLike pikeHeadItem) {
-		ShapedRecipeBuilder builder = ShapedRecipeBuilder.shaped(pikeHeadItem)
-				.group("stone")
-				.unlockedBy("stone", has(ItemTags.STONE_TOOL_MATERIALS));
-		createPikeHead(builder, ItemTags.STONE_TOOL_MATERIALS, ImmersiveWeaponsItemTagGroups.STONE_SHARDS);
-	}
-
-	private static void createGoldenPikeHead(ItemLike pikeHeadItem) {
-		ShapedRecipeBuilder builder = ShapedRecipeBuilder.shaped(pikeHeadItem)
-				.group("gold")
-				.unlockedBy("gold", has(Tags.Items.INGOTS_GOLD));
-		createPikeHead(builder, Tags.Items.INGOTS_GOLD, Tags.Items.NUGGETS_GOLD);
-	}
-
-	private static void createIronPikeHead(ItemLike pikeHeadItem) {
-		ShapedRecipeBuilder builder = ShapedRecipeBuilder.shaped(pikeHeadItem)
-				.group("iron")
-				.unlockedBy("iron", has(Tags.Items.INGOTS_IRON));
-		createPikeHead(builder, Tags.Items.INGOTS_IRON, Tags.Items.NUGGETS_IRON);
-	}
-
-	private static void createDiamondPikeHead(ItemLike pikeHeadItem) {
-		ShapedRecipeBuilder builder = ShapedRecipeBuilder.shaped(pikeHeadItem)
-				.group("diamond")
-				.unlockedBy("diamond", has(Tags.Items.GEMS_DIAMOND));
-		createPikeHead(builder, Tags.Items.GEMS_DIAMOND, ImmersiveWeaponsItemTagGroups.DIAMOND_SHARDS);
 	}
 
 	private static void createSmallPartsTable(ItemLike smallPartsTableItem) {
@@ -1709,81 +1145,6 @@ public class RecipeGenerator extends RecipeProvider {
 				.save(finishedRecipeConsumer);
 	}
 
-	private static void createSword(ShapedRecipeBuilder builder, TagKey<Item> material, Item stick) {
-		builder.define('a', material)
-				.define('b', stick)
-				.pattern(" a ")
-				.pattern(" a ")
-				.pattern(" b ")
-				.save(finishedRecipeConsumer);
-	}
-
-	private static void createPickaxe(ShapedRecipeBuilder builder, TagKey<Item> material, Item stick) {
-		builder.define('a', material)
-				.define('b', stick)
-				.pattern("aaa")
-				.pattern(" b ")
-				.pattern(" b ")
-				.save(finishedRecipeConsumer);
-	}
-
-	private static void createAxe(ShapedRecipeBuilder builder, TagKey<Item> material, Item stick) {
-		builder.define('a', material)
-				.define('b', stick)
-				.pattern("aa ")
-				.pattern("ab ")
-				.pattern(" b ")
-				.save(finishedRecipeConsumer);
-	}
-
-	private static void createShovel(ShapedRecipeBuilder builder, TagKey<Item> material, Item stick) {
-		builder.define('a', material)
-				.define('b', stick)
-				.pattern(" a ")
-				.pattern(" b ")
-				.pattern(" b ")
-				.save(finishedRecipeConsumer);
-	}
-
-	private static void createHoe(ShapedRecipeBuilder builder, TagKey<Item> material, Item stick) {
-		builder.define('a', material)
-				.define('b', stick)
-				.pattern("aa ")
-				.pattern(" b ")
-				.pattern(" b ")
-				.save(finishedRecipeConsumer);
-	}
-
-	private static void createHelmet(ShapedRecipeBuilder builder, TagKey<Item> material) {
-		builder.define('a', material)
-				.pattern("aaa")
-				.pattern("a a")
-				.save(finishedRecipeConsumer);
-	}
-
-	private static void createChestplate(ShapedRecipeBuilder builder, TagKey<Item> material) {
-		builder.define('a', material)
-				.pattern("a a")
-				.pattern("aaa")
-				.pattern("aaa")
-				.save(finishedRecipeConsumer);
-	}
-
-	private static void createLeggings(ShapedRecipeBuilder builder, TagKey<Item> material) {
-		builder.define('a', material)
-				.pattern("aaa")
-				.pattern("a a")
-				.pattern("a a")
-				.save(finishedRecipeConsumer);
-	}
-
-	private static void createBoots(ShapedRecipeBuilder builder, TagKey<Item> material) {
-		builder.define('a', material)
-				.pattern("a a")
-				.pattern("a a")
-				.save(finishedRecipeConsumer);
-	}
-
 	private static void createGauntlet(ShapedRecipeBuilder builder, TagKey<Item> material) {
 		builder.define('a', material)
 				.define('b', DeferredRegistryHandler.GAUNTLET_SCAFFOLDING.get())
@@ -1807,14 +1168,6 @@ public class RecipeGenerator extends RecipeProvider {
 				.define('b', material1)
 				.pattern(" a ")
 				.pattern(" b ")
-				.save(finishedRecipeConsumer);
-	}
-
-	private static void createMusketBall(ShapedRecipeBuilder builder, TagKey<Item> material) {
-		builder.define('a', material)
-				.define('b', Items.GUNPOWDER)
-				.pattern(" a ")
-				.pattern("aba")
 				.save(finishedRecipeConsumer);
 	}
 

@@ -1,6 +1,5 @@
 {
   "type": "minecraft:crafting_shaped",
-  "group": "gold",
   "key": {
     "a": {
       "tag": "forge:ingots/gold"
@@ -14,7 +13,6 @@
     "aba"
   ],
   "result": {
-    "count": 8,
     "item": "immersiveweapons:golden_musket_ball"
   }
 }

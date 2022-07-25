@@ -1,6 +1,5 @@
 {
   "type": "minecraft:crafting_shaped",
-  "group": "cobalt",
   "key": {
     "a": {
       "tag": "forge:ingots/cobalt"
@@ -14,7 +13,6 @@
     "aba"
   ],
   "result": {
-    "count": 8,
     "item": "immersiveweapons:cobalt_musket_ball"
   }
 }

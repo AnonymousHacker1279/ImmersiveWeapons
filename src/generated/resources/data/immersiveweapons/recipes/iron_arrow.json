@@ -1,6 +1,5 @@
 {
   "type": "minecraft:crafting_shaped",
-  "group": "iron",
   "key": {
     "a": {
       "tag": "forge:ingots/iron"
@@ -13,9 +12,9 @@
     }
   },
   "pattern": [
-    " a ",
-    " b ",
-    " c "
+    "a",
+    "b",
+    "c"
   ],
   "result": {
     "count": 4,

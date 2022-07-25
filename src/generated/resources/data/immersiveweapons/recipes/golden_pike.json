@@ -1,6 +1,5 @@
 {
   "type": "minecraft:crafting_shaped",
-  "group": "gold",
   "key": {
     "a": {
       "item": "immersiveweapons:golden_pike_head"
@@ -13,9 +12,9 @@
     }
   },
   "pattern": [
-    " a ",
-    " b ",
-    " c "
+    "a",
+    "b",
+    "c"
   ],
   "result": {
     "item": "immersiveweapons:golden_pike"

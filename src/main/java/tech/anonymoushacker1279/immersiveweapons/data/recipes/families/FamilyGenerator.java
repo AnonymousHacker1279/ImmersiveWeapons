@@ -12,6 +12,7 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraftforge.common.Tags;
 import org.jetbrains.annotations.NotNull;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
+import tech.anonymoushacker1279.immersiveweapons.data.recipes.RecipeGenerator;
 
 import java.util.function.Consumer;
 
@@ -29,6 +30,8 @@ public class FamilyGenerator extends RecipeProvider {
 		woodFamilies(consumer);
 		stoneFamilies(consumer);
 		toolFamilies(consumer);
+		armorFamilies(consumer);
+		vanillaTieredItemFamilies();
 	}
 
 	private void woodFamilies(@NotNull Consumer<FinishedRecipe> consumer) {
@@ -270,6 +273,95 @@ public class FamilyGenerator extends RecipeProvider {
 					.define('b', family.handle())
 					.unlockedBy(materialTriggerName, has(material))
 					.save(consumer, itemRegistryPath(family.hoe().get()));
+
+			// Start doing null checks because not all tool families have these items.
+
+			// Gauntlet
+			if (family.gauntlet() != null) {
+				RecipeGenerator.createGauntlet(family.gauntlet().get(), material);
+			}
+
+			// Pike
+			if (family.pike() != null) {
+				RecipeGenerator.createPike(family.pike().get(), material, family.pikeHead().get());
+			}
+
+			// Pike head
+			if (family.pikeHead() != null) {
+				RecipeGenerator.createPikeHead(family.pikeHead().get(), material, family.nugget());
+			}
+
+			// Arrow
+			if (family.arrow() != null) {
+				RecipeGenerator.createArrow(family.arrow().get(), family.material());
+			}
+
+			// Musket ball
+			if (family.musketBall() != null) {
+				RecipeGenerator.createMusketBall(family.musketBall().get(), family.material());
+			}
+		}
+	}
+
+	private void armorFamilies(@NotNull Consumer<FinishedRecipe> consumer) {
+		for (ArmorFamilies family : ArmorFamilies.FAMILIES) {
+			TagKey<Item> material = family.material();
+			final String materialTriggerName = "has_material";
+
+			// Helmet
+			ShapedRecipeBuilder.shaped(family.helmet().get())
+					.pattern("aaa")
+					.pattern("a a")
+					.define('a', material)
+					.unlockedBy(materialTriggerName, has(material))
+					.save(consumer, itemRegistryPath(family.helmet().get()));
+
+			// Chestplate
+			ShapedRecipeBuilder.shaped(family.chestplate().get())
+					.pattern("a a")
+					.pattern("aaa")
+					.pattern("aaa")
+					.define('a', material)
+					.unlockedBy(materialTriggerName, has(material))
+					.save(consumer, itemRegistryPath(family.chestplate().get()));
+
+			// Leggings
+			ShapedRecipeBuilder.shaped(family.leggings().get())
+					.pattern("aaa")
+					.pattern("a a")
+					.pattern("a a")
+					.define('a', material)
+					.unlockedBy(materialTriggerName, has(material))
+					.save(consumer, itemRegistryPath(family.leggings().get()));
+
+			// Boots
+			ShapedRecipeBuilder.shaped(family.boots().get())
+					.pattern("a a")
+					.pattern("a a")
+					.define('a', material)
+					.unlockedBy(materialTriggerName, has(material))
+					.save(consumer, itemRegistryPath(family.boots().get()));
+		}
+	}
+
+	private void vanillaTieredItemFamilies() {
+		for (VanillaTieredItemFamilies family : VanillaTieredItemFamilies.FAMILIES) {
+			TagKey<Item> material = family.material();
+
+			// Gauntlet
+			RecipeGenerator.createGauntlet(family.gauntlet().get(), material);
+
+			// Pike
+			RecipeGenerator.createPike(family.pike().get(), material, family.pikeHead().get());
+
+			// Pike head
+			RecipeGenerator.createPikeHead(family.pikeHead().get(), material, family.nugget());
+
+			// Arrow
+			RecipeGenerator.createArrow(family.arrow().get(), family.material());
+
+			// Musket ball
+			RecipeGenerator.createMusketBall(family.musketBall().get(), family.material());
 		}
 	}
 }

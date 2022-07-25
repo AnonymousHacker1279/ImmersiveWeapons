@@ -1,13 +1,7 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_the_recipe": {
-      "conditions": {
-        "recipe": "immersiveweapons:stone_pike_head"
-      },
-      "trigger": "minecraft:recipe_unlocked"
-    },
-    "stone": {
+    "has_material": {
       "conditions": {
         "items": [
           {
@@ -16,11 +10,17 @@
         ]
       },
       "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "immersiveweapons:stone_pike_head"
+      },
+      "trigger": "minecraft:recipe_unlocked"
     }
   },
   "requirements": [
     [
-      "stone",
+      "has_material",
       "has_the_recipe"
     ]
   ],

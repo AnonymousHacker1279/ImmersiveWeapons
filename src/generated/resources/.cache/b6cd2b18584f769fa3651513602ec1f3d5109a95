@@ -1,4 +1,4 @@
-// 1.19	2022-07-18T18:52:48.4355822	Block States: immersiveweapons
+// 1.19	2022-07-24T22:35:57.0367459	Block States: immersiveweapons
 2381b8f723e478a6cb0187829cd03c3111a4552e assets/immersiveweapons/blockstates/acacia_table.json
 3e619086656c84696fbaa499ad728416033b20a7 assets/immersiveweapons/blockstates/american_flag.json
 b38054d7e8c87935693ee04016cd26135164606d assets/immersiveweapons/blockstates/azul_stained_orchid.json
@@ -118,7 +118,7 @@ b77b6c7b09bf2952aec9672758f2cbd0e9671be4 assets/immersiveweapons/blockstates/str
 5df90b1c3913129b4effa665205b7bf1ac25d215 assets/immersiveweapons/blockstates/stripped_stardust_log.json
 1d626f55d6fc8c8774a97adbd9e237c97a5ef3c3 assets/immersiveweapons/blockstates/stripped_stardust_wood.json
 27b57a16e4f12bc03e33544d8771f4efd66e3f46 assets/immersiveweapons/blockstates/sulfur_ore.json
-78bc40b037946a2a408e6efa05a5d9a2baf15283 assets/immersiveweapons/blockstates/tesla_block.json
+e5ddc963ae60a3ac8401113f1856c56daf199e33 assets/immersiveweapons/blockstates/tesla_block.json
 fcbae0f4e0da351e855e6eefb8066f4680dae745 assets/immersiveweapons/blockstates/tesla_synthesizer.json
 ccf29b0d34075aef42b79a6ee131b784239a58d1 assets/immersiveweapons/blockstates/troll_flag.json
 e2d8a93b13e7c4729b945067a58cab62654a8ab6 assets/immersiveweapons/blockstates/ventus_ore.json

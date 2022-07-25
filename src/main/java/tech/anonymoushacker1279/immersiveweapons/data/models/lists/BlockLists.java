@@ -25,7 +25,6 @@ public class BlockLists {
 		simpleBlocks.add(DeferredRegistryHandler.COBALT_BLOCK.get());
 		simpleBlocks.add(DeferredRegistryHandler.RAW_COBALT_BLOCK.get());
 		simpleBlocks.add(DeferredRegistryHandler.MOLTEN_BLOCK.get());
-		simpleBlocks.add(DeferredRegistryHandler.TESLA_BLOCK.get());
 		simpleBlocks.add(DeferredRegistryHandler.BURNED_OAK_PLANKS.get());
 		simpleBlocks.add(DeferredRegistryHandler.MUD.get());
 		simpleBlocks.add(DeferredRegistryHandler.DRIED_MUD.get());

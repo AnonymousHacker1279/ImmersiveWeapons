@@ -1,6 +1,5 @@
 {
   "type": "minecraft:crafting_shaped",
-  "group": "cobalt",
   "key": {
     "a": {
       "tag": "forge:ingots/cobalt"

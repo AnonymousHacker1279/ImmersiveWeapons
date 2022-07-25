@@ -1,11 +1,11 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "diamond_shard": {
+    "has_material": {
       "conditions": {
         "items": [
           {
-            "tag": "immersiveweapons:shards/diamond"
+            "tag": "forge:gems/diamond"
           }
         ]
       },
@@ -20,7 +20,7 @@
   },
   "requirements": [
     [
-      "diamond_shard",
+      "has_material",
       "has_the_recipe"
     ]
   ],

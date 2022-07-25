@@ -1,9 +1,8 @@
 {
   "type": "minecraft:crafting_shaped",
-  "group": "stone",
   "key": {
     "a": {
-      "tag": "immersiveweapons:shards/stone"
+      "tag": "minecraft:stone_tool_materials"
     },
     "b": {
       "item": "minecraft:stick"
@@ -13,9 +12,9 @@
     }
   },
   "pattern": [
-    " a ",
-    " b ",
-    " c "
+    "a",
+    "b",
+    "c"
   ],
   "result": {
     "count": 4,

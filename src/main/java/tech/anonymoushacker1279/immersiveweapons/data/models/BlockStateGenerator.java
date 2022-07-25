@@ -414,5 +414,7 @@ public class BlockStateGenerator extends BlockStateProvider {
 				models().getExistingFile(new ResourceLocation(ImmersiveWeapons.MOD_ID, "tesla_synthesizer")));
 		simpleBlock(DeferredRegistryHandler.PITFALL.get(),
 				models().getExistingFile(new ResourceLocation(ImmersiveWeapons.MOD_ID, "pitfall")));
+		horizontalBlock(DeferredRegistryHandler.TESLA_BLOCK.get(),
+				models().cubeAll("tesla_block", new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/tesla_block")));
 	}
 }

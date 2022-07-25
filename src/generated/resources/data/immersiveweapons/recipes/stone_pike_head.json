@@ -1,17 +1,16 @@
 {
   "type": "minecraft:crafting_shaped",
-  "group": "stone",
   "key": {
     "a": {
-      "tag": "minecraft:stone_tool_materials"
+      "tag": "immersiveweapons:shards/stone"
     },
     "b": {
-      "tag": "immersiveweapons:shards/stone"
+      "tag": "minecraft:stone_tool_materials"
     }
   },
   "pattern": [
-    " a ",
-    " b "
+    "a",
+    "b"
   ],
   "result": {
     "item": "immersiveweapons:stone_pike_head"

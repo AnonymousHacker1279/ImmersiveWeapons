@@ -1,6 +1,5 @@
 {
   "type": "minecraft:crafting_shaped",
-  "group": "ventus",
   "key": {
     "a": {
       "tag": "immersiveweapons:shards/ventus"
