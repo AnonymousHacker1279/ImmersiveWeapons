@@ -384,8 +384,8 @@ public class DeferredRegistryHandler {
 	public static final RegistryObject<ButtonBlock> BURNED_OAK_BUTTON = BLOCKS.register("burned_oak_button", () -> new WoodButtonBlock(BlockBehaviour.Properties.of(Material.WOOD).noCollission().strength(0.4f).sound(SoundType.WOOD)));
 	public static final RegistryObject<RotatedPillarBlock> STRIPPED_STARDUST_WOOD = BLOCKS.register("stripped_stardust_wood", () -> new RotatedPillarBlock(BlockBehaviour.Properties.of(Material.WOOD).strength(2.3f).sound(SoundType.WOOD)));
 	public static final RegistryObject<RotatedPillarBlock> STRIPPED_STARDUST_LOG = BLOCKS.register("stripped_stardust_log", () -> new RotatedPillarBlock(BlockBehaviour.Properties.of(Material.WOOD).strength(2.3f).sound(SoundType.WOOD)));
-	public static final RegistryObject<RotatedPillarBlock> STARDUST_LOG = BLOCKS.register("stardust_log", () -> new StrippablePillarBlock(BlockBehaviour.Properties.of(Material.WOOD).strength(2.3f).sound(SoundType.WOOD).lightLevel((state) -> 12), STRIPPED_STARDUST_LOG.get().defaultBlockState()));
-	public static final RegistryObject<RotatedPillarBlock> STARDUST_WOOD = BLOCKS.register("stardust_wood", () -> new StrippablePillarBlock(BlockBehaviour.Properties.of(Material.WOOD).strength(2.3f).sound(SoundType.WOOD).lightLevel((state) -> 12), STRIPPED_STARDUST_WOOD.get().defaultBlockState()));
+	public static final RegistryObject<RotatedPillarBlock> STARDUST_LOG = BLOCKS.register("stardust_log", () -> new StrippablePillarBlock(BlockBehaviour.Properties.of(Material.WOOD).strength(2.3f).sound(SoundType.WOOD), STRIPPED_STARDUST_LOG.get().defaultBlockState()));
+	public static final RegistryObject<RotatedPillarBlock> STARDUST_WOOD = BLOCKS.register("stardust_wood", () -> new StrippablePillarBlock(BlockBehaviour.Properties.of(Material.WOOD).strength(2.3f).sound(SoundType.WOOD), STRIPPED_STARDUST_WOOD.get().defaultBlockState()));
 	public static final RegistryObject<Block> STARDUST_PLANKS = BLOCKS.register("stardust_planks", () -> new Block(BlockBehaviour.Properties.of(Material.WOOD).strength(2.3f).sound(SoundType.WOOD)));
 	public static final RegistryObject<StairBlock> STARDUST_STAIRS = BLOCKS.register("stardust_stairs", () -> new StairBlock(() -> STARDUST_PLANKS.get().defaultBlockState(), BlockBehaviour.Properties.copy(STARDUST_PLANKS.get())));
 	public static final RegistryObject<SlabBlock> STARDUST_SLAB = BLOCKS.register("stardust_slab", () -> new SlabBlock(BlockBehaviour.Properties.of(Material.WOOD).strength(2.3f).sound(SoundType.WOOD)));
@@ -415,7 +415,7 @@ public class DeferredRegistryHandler {
 
 	// Breakable via hoe
 	// Wood tier
-	public static final RegistryObject<StardustLeaves> STARDUST_LEAVES = BLOCKS.register("stardust_leaves", () -> new StardustLeaves(BlockBehaviour.Properties.of(Material.LEAVES).strength(0.3f).randomTicks().sound(SoundType.GRASS).lightLevel((state) -> 12).noOcclusion().isValidSpawn((state, getter, pos, type) -> BlockPredicates.ocelotOrParrot(type)).isSuffocating((state, getter, pos) -> BlockPredicates.never()).isViewBlocking((state, getter, pos) -> BlockPredicates.never())));
+	public static final RegistryObject<StardustLeaves> STARDUST_LEAVES = BLOCKS.register("stardust_leaves", () -> new StardustLeaves(BlockBehaviour.Properties.of(Material.LEAVES).strength(0.3f).randomTicks().sound(SoundType.GRASS).noOcclusion().isValidSpawn((state, getter, pos, type) -> BlockPredicates.ocelotOrParrot(type)).isSuffocating((state, getter, pos) -> BlockPredicates.never()).isViewBlocking((state, getter, pos) -> BlockPredicates.never())));
 
 	// Breakable without tool
 	public static final RegistryObject<GlassBlock> BULLETPROOF_GLASS = BLOCKS.register("bulletproof_glass", () -> new GlassBlock(BlockBehaviour.Properties.of(Material.GLASS).sound(SoundType.GLASS).noOcclusion().strength(0.5f)));

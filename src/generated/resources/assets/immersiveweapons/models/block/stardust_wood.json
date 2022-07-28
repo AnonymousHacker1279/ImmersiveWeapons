@@ -1,7 +1,81 @@
 {
   "parent": "minecraft:block/cube_column",
+  "elements": [
+    {
+      "faces": {
+        "down": {
+          "texture": "#side"
+        },
+        "east": {
+          "texture": "#side"
+        },
+        "north": {
+          "texture": "#side"
+        },
+        "south": {
+          "texture": "#side"
+        },
+        "up": {
+          "texture": "#side"
+        },
+        "west": {
+          "texture": "#side"
+        }
+      },
+      "from": [
+        0,
+        0,
+        0
+      ],
+      "to": [
+        16,
+        16,
+        16
+      ]
+    },
+    {
+      "faces": {
+        "down": {
+          "emissivity": 15,
+          "texture": "#overlay"
+        },
+        "east": {
+          "emissivity": 15,
+          "texture": "#overlay"
+        },
+        "north": {
+          "emissivity": 15,
+          "texture": "#overlay"
+        },
+        "south": {
+          "emissivity": 15,
+          "texture": "#overlay"
+        },
+        "up": {
+          "emissivity": 15,
+          "texture": "#overlay"
+        },
+        "west": {
+          "emissivity": 15,
+          "texture": "#overlay"
+        }
+      },
+      "from": [
+        0,
+        0,
+        0
+      ],
+      "to": [
+        16,
+        16,
+        16
+      ]
+    }
+  ],
+  "render_type": "minecraft:cutout_mipped",
   "textures": {
     "end": "immersiveweapons:block/stardust_log",
+    "overlay": "immersiveweapons:block/stardust_granule_overlay",
     "side": "immersiveweapons:block/stardust_log"
   }
 }

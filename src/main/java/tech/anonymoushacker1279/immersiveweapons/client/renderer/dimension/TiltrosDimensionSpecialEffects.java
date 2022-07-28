@@ -93,4 +93,9 @@ public class TiltrosDimensionSpecialEffects extends DimensionSpecialEffects {
 
 		return true;
 	}
+
+	@Override
+	public void adjustLightmapColors(ClientLevel level, float partialTicks, float skyDarken, float skyLight, float blockLight, int pixelX, int pixelY, Vector3f colors) {
+		colors.set(colors.x() + 0.12f, colors.y(), colors.z() + 0.22f);
+	}
 }

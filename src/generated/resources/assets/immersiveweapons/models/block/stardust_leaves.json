@@ -1,7 +1,86 @@
 {
   "parent": "minecraft:block/cube_all",
+  "elements": [
+    {
+      "faces": {
+        "down": {
+          "texture": "#all"
+        },
+        "east": {
+          "texture": "#all"
+        },
+        "north": {
+          "texture": "#all"
+        },
+        "south": {
+          "texture": "#all"
+        },
+        "up": {
+          "texture": "#all"
+        },
+        "west": {
+          "texture": "#all"
+        }
+      },
+      "from": [
+        0,
+        0,
+        0
+      ],
+      "to": [
+        16,
+        16,
+        16
+      ]
+    },
+    {
+      "faces": {
+        "down": {
+          "emissivity": 15,
+          "rotation": 90,
+          "texture": "#overlay"
+        },
+        "east": {
+          "emissivity": 15,
+          "rotation": 90,
+          "texture": "#overlay"
+        },
+        "north": {
+          "emissivity": 15,
+          "rotation": 90,
+          "texture": "#overlay"
+        },
+        "south": {
+          "emissivity": 15,
+          "rotation": 90,
+          "texture": "#overlay"
+        },
+        "up": {
+          "emissivity": 15,
+          "rotation": 90,
+          "texture": "#overlay"
+        },
+        "west": {
+          "emissivity": 15,
+          "rotation": 90,
+          "texture": "#overlay"
+        }
+      },
+      "from": [
+        0,
+        0,
+        0
+      ],
+      "to": [
+        16,
+        16,
+        16
+      ]
+    }
+  ],
   "render_type": "minecraft:cutout_mipped",
   "textures": {
-    "all": "immersiveweapons:block/stardust_leaves"
+    "all": "immersiveweapons:block/stardust_leaves",
+    "overlay": "immersiveweapons:block/stardust_granule_overlay"
   }
 }
