@@ -9,6 +9,7 @@ import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.level.biome.*;
 import net.minecraft.world.level.biome.Biome.Precipitation;
 import net.minecraft.world.level.biome.Biome.TemperatureModifier;
+import net.minecraft.world.level.biome.BiomeGenerationSettings.Builder;
 import net.minecraft.world.level.biome.BiomeSpecialEffects.GrassColorModifier;
 import net.minecraft.world.level.biome.MobSpawnSettings.SpawnerData;
 import net.minecraft.world.level.levelgen.GenerationStep.Carving;
@@ -29,8 +30,18 @@ import java.util.Optional;
 public class BiomesGenerator {
 
 	protected static Biome BATTLEFIELD_BIOME;
+	protected static Biome TILTROS_WASTES_BIOME;
+	protected static Biome STARLIGHT_PLAINS_BIOME;
+
+	private static Optional<? extends Registry<PlacedFeature>> FEATURE_REGISTRY;
+	private static Optional<? extends Registry<ConfiguredWorldCarver<?>>> CARVER_REGISTRY;
 
 	public static void init() {
+		FEATURE_REGISTRY =
+				CustomDataGenerator.REGISTRY_BUILTIN_COPY.registry(Registry.PLACED_FEATURE_REGISTRY);
+		CARVER_REGISTRY =
+				CustomDataGenerator.REGISTRY_BUILTIN_COPY.registry(Registry.CONFIGURED_CARVER_REGISTRY);
+
 		BATTLEFIELD_BIOME = new Biome.BiomeBuilder()
 				.temperature(0.8f)
 				.downfall(0.3f)
@@ -52,9 +63,51 @@ public class BiomesGenerator {
 				.mobSpawnSettings(getBattlefieldSpawns())
 				.generationSettings(getBattlefieldGenerationSettings())
 				.build();
+
+		// TODO: Custom ambient sounds for these biomes
+
+		TILTROS_WASTES_BIOME = new Biome.BiomeBuilder()
+				.temperature(0.6f)
+				.downfall(0.0f)
+				.precipitation(Precipitation.NONE)
+				.temperatureAdjustment(TemperatureModifier.NONE)
+				.specialEffects(new BiomeSpecialEffects.Builder()
+						.skyColor(461620)
+						.fogColor(2830199)
+						.waterColor(7031172)
+						.waterFogColor(4732021)
+						.grassColorOverride(16113331)
+						.foliageColorOverride(14665365)
+						.grassColorModifier(GrassColorModifier.NONE)
+						.ambientLoopSound(DeferredRegistryHandler.TILTROS_AMBIENT.get())
+						.build())
+				.mobSpawnSettings(getTiltrosWastesSpawns())
+				.generationSettings(getTiltrosWastesGenerationSettings())
+				.build();
+
+		STARLIGHT_PLAINS_BIOME = new Biome.BiomeBuilder()
+				.temperature(0.8f)
+				.downfall(0.0f)
+				.precipitation(Precipitation.NONE)
+				.temperatureAdjustment(TemperatureModifier.NONE)
+				.specialEffects(new BiomeSpecialEffects.Builder()
+						.skyColor(461620)
+						.fogColor(2830199)
+						.waterColor(16316908)
+						.waterFogColor(13356221)
+						.grassColorOverride(12312020)
+						.foliageColorOverride(13885404)
+						.grassColorModifier(GrassColorModifier.NONE)
+						.ambientLoopSound(DeferredRegistryHandler.TILTROS_AMBIENT.get())
+						.build())
+				.mobSpawnSettings(getStarlightPlainsSpawns())
+				.generationSettings(getStarlightPlainsGenerationSettings())
+				.build();
 	}
 
 	protected static final ResourceLocation BATTLEFIELD = new ResourceLocation(ImmersiveWeapons.MOD_ID, "battlefield");
+	protected static final ResourceLocation TILTROS_WASTES = new ResourceLocation(ImmersiveWeapons.MOD_ID, "tiltros_wastes");
+	protected static final ResourceLocation STARLIGHT_PLAINS = new ResourceLocation(ImmersiveWeapons.MOD_ID, "starlight_plains");
 
 	public static JsonCodecProvider<Biome> getCodecProvider(DataGenerator generator,
 	                                                        ExistingFileHelper existingFileHelper,
@@ -68,6 +121,8 @@ public class BiomesGenerator {
 	private static HashMap<ResourceLocation, Biome> getPlacedFeatures() {
 		HashMap<ResourceLocation, Biome> placedFeatures = new HashMap<>(10);
 		placedFeatures.put(BATTLEFIELD, BATTLEFIELD_BIOME);
+		placedFeatures.put(TILTROS_WASTES, TILTROS_WASTES_BIOME);
+		placedFeatures.put(STARLIGHT_PLAINS, STARLIGHT_PLAINS_BIOME);
 
 		return placedFeatures;
 	}
@@ -82,28 +137,72 @@ public class BiomesGenerator {
 		return spawnBuilder.build();
 	}
 
+	private static MobSpawnSettings getTiltrosWastesSpawns() {
+		MobSpawnSettings.Builder spawnBuilder = new MobSpawnSettings.Builder()
+				.creatureGenerationProbability(0.65f)
+				.addSpawn(MobCategory.MONSTER, new SpawnerData(
+						DeferredRegistryHandler.ROCK_SPIDER_ENTITY.get(), 65, 2, 4))
+				.addSpawn(MobCategory.MONSTER, new SpawnerData(
+						DeferredRegistryHandler.LAVA_REVENANT_ENTITY.get(), 35, 1, 1))
+				.addSpawn(MobCategory.MONSTER, new SpawnerData(
+						DeferredRegistryHandler.CELESTIAL_TOWER_ENTITY.get(), 5, 1, 1));
+
+		return spawnBuilder.build();
+	}
+
+	// TODO: Add more mobs to this biome
+	private static MobSpawnSettings getStarlightPlainsSpawns() {
+		MobSpawnSettings.Builder spawnBuilder = new MobSpawnSettings.Builder()
+				.creatureGenerationProbability(0.65f);
+
+		return spawnBuilder.build();
+	}
+
 	private static BiomeGenerationSettings getBattlefieldGenerationSettings() {
-		Optional<? extends Registry<PlacedFeature>> featureRegistry =
-				CustomDataGenerator.REGISTRY_BUILTIN_COPY.registry(Registry.PLACED_FEATURE_REGISTRY);
-		Optional<? extends Registry<ConfiguredWorldCarver<?>>> carverRegistry =
-				CustomDataGenerator.REGISTRY_BUILTIN_COPY.registry(Registry.CONFIGURED_CARVER_REGISTRY);
-
 		BiomeGenerationSettings.Builder generationBuilder = new BiomeGenerationSettings.Builder()
-				.addCarver(Carving.AIR, carverRegistry.get().getOrCreateHolderOrThrow(CarversGenerator.TRENCH_KEY))
-				.addFeature(Decoration.VEGETAL_DECORATION, featureRegistry.get().getOrCreateHolderOrThrow(BiomeFeatures.PATCH_WOODEN_SPIKES_KEY))
-				.addFeature(Decoration.VEGETAL_DECORATION, featureRegistry.get().getOrCreateHolderOrThrow(BiomeFeatures.BURNED_OAK_TREE_KEY));
+				.addCarver(Carving.AIR, CARVER_REGISTRY.get().getOrCreateHolderOrThrow(CarversGenerator.TRENCH_KEY))
+				.addFeature(Decoration.VEGETAL_DECORATION, FEATURE_REGISTRY.get().getOrCreateHolderOrThrow(BiomeFeatures.PATCH_WOODEN_SPIKES_KEY))
+				.addFeature(Decoration.VEGETAL_DECORATION, FEATURE_REGISTRY.get().getOrCreateHolderOrThrow(BiomeFeatures.BURNED_OAK_TREE_KEY));
 
-		VanillaFeatures.addDefaultCarversAndLakes(featureRegistry.get(), carverRegistry.get(), generationBuilder);
-		VanillaFeatures.addDefaultCrystalFormations(featureRegistry.get(), generationBuilder);
-		VanillaFeatures.addDefaultMonsterRoom(featureRegistry.get(), generationBuilder);
-		VanillaFeatures.addDefaultUndergroundVariety(featureRegistry.get(), generationBuilder);
-		VanillaFeatures.addDefaultSprings(featureRegistry.get(), generationBuilder);
-		VanillaFeatures.addSurfaceFreezing(featureRegistry.get(), generationBuilder);
-		VanillaFeatures.addPlainVegetation(featureRegistry.get(), generationBuilder);
-		VanillaFeatures.addDefaultMushrooms(featureRegistry.get(), generationBuilder);
-		VanillaFeatures.addDefaultExtraVegetation(featureRegistry.get(), generationBuilder);
-		VanillaFeatures.addDefaultOres(featureRegistry.get(), generationBuilder);
+		getPlainsLikeFeatures(generationBuilder, true);
 
 		return generationBuilder.build();
+	}
+
+	private static BiomeGenerationSettings getTiltrosWastesGenerationSettings() {
+		BiomeGenerationSettings.Builder generationBuilder = new BiomeGenerationSettings.Builder()
+				.addCarver(Carving.AIR, CARVER_REGISTRY.get().getOrCreateHolderOrThrow(CarversGenerator.TILTROS_WASTES_KEY));
+
+		getPlainsLikeFeatures(generationBuilder, false);
+		VanillaFeatures.addPlainGrass(FEATURE_REGISTRY.get(), generationBuilder);
+
+		return generationBuilder.build();
+	}
+
+	private static BiomeGenerationSettings getStarlightPlainsGenerationSettings() {
+		BiomeGenerationSettings.Builder generationBuilder = new BiomeGenerationSettings.Builder()
+				.addFeature(Decoration.VEGETAL_DECORATION, FEATURE_REGISTRY.get().getOrCreateHolderOrThrow(BiomeFeatures.PATCH_MOONGLOW_KEY))
+				.addFeature(Decoration.VEGETAL_DECORATION, FEATURE_REGISTRY.get().getOrCreateHolderOrThrow(BiomeFeatures.STARDUST_TREE_KEY));
+
+		getPlainsLikeFeatures(generationBuilder, false);
+		VanillaFeatures.addPlainGrass(FEATURE_REGISTRY.get(), generationBuilder);
+
+		return generationBuilder.build();
+	}
+
+	private static void getPlainsLikeFeatures(Builder generationBuilder, boolean includeVegetation) {
+		VanillaFeatures.addDefaultCarversAndLakes(FEATURE_REGISTRY.get(), CARVER_REGISTRY.get(), generationBuilder);
+		VanillaFeatures.addDefaultCrystalFormations(FEATURE_REGISTRY.get(), generationBuilder);
+		VanillaFeatures.addDefaultMonsterRoom(FEATURE_REGISTRY.get(), generationBuilder);
+		VanillaFeatures.addDefaultUndergroundVariety(FEATURE_REGISTRY.get(), generationBuilder);
+		VanillaFeatures.addDefaultOres(FEATURE_REGISTRY.get(), generationBuilder);
+		VanillaFeatures.addSurfaceFreezing(FEATURE_REGISTRY.get(), generationBuilder);
+		VanillaFeatures.addDefaultSprings(FEATURE_REGISTRY.get(), generationBuilder);
+
+		if (includeVegetation) {
+			VanillaFeatures.addPlainVegetation(FEATURE_REGISTRY.get(), generationBuilder);
+			VanillaFeatures.addDefaultMushrooms(FEATURE_REGISTRY.get(), generationBuilder);
+			VanillaFeatures.addDefaultExtraVegetation(FEATURE_REGISTRY.get(), generationBuilder);
+		}
 	}
 }

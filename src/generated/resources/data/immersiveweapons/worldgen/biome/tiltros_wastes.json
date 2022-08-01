@@ -1,0 +1,108 @@
+{
+  "carvers": {
+    "air": [
+      "immersiveweapons:tiltros_wastes",
+      "minecraft:cave",
+      "minecraft:cave_extra_underground",
+      "minecraft:canyon"
+    ]
+  },
+  "creature_spawn_probability": 0.65,
+  "downfall": 0.0,
+  "effects": {
+    "ambient_sound": "immersiveweapons:tiltros_ambient",
+    "fog_color": 2830199,
+    "foliage_color": 14665365,
+    "grass_color": 16113331,
+    "sky_color": 461620,
+    "water_color": 7031172,
+    "water_fog_color": 4732021
+  },
+  "features": [
+    [],
+    [
+      "minecraft:lake_lava_underground",
+      "minecraft:lake_lava_surface"
+    ],
+    [
+      "minecraft:amethyst_geode"
+    ],
+    [
+      "minecraft:monster_room",
+      "minecraft:monster_room_deep"
+    ],
+    [],
+    [],
+    [
+      "minecraft:ore_dirt",
+      "minecraft:ore_gravel",
+      "minecraft:ore_granite_upper",
+      "minecraft:ore_granite_lower",
+      "minecraft:ore_diorite_upper",
+      "minecraft:ore_diorite_lower",
+      "minecraft:ore_andesite_upper",
+      "minecraft:ore_andesite_lower",
+      "minecraft:ore_tuff",
+      "minecraft:ore_coal_upper",
+      "minecraft:ore_coal_lower",
+      "minecraft:ore_iron_upper",
+      "minecraft:ore_iron_middle",
+      "minecraft:ore_iron_small",
+      "minecraft:ore_gold",
+      "minecraft:ore_gold_lower",
+      "minecraft:ore_redstone",
+      "minecraft:ore_redstone_lower",
+      "minecraft:ore_diamond",
+      "minecraft:ore_diamond_large",
+      "minecraft:ore_diamond_buried",
+      "minecraft:ore_lapis",
+      "minecraft:ore_lapis_buried",
+      "minecraft:ore_copper",
+      "minecraft:underwater_magma"
+    ],
+    [],
+    [
+      "minecraft:spring_water",
+      "minecraft:spring_lava"
+    ],
+    [
+      "minecraft:glow_lichen",
+      "minecraft:patch_grass_plain"
+    ],
+    [
+      "minecraft:freeze_top_layer"
+    ]
+  ],
+  "precipitation": "none",
+  "spawn_costs": {},
+  "spawners": {
+    "ambient": [],
+    "axolotls": [],
+    "creature": [],
+    "misc": [],
+    "monster": [
+      {
+        "type": "immersiveweapons:rock_spider",
+        "maxCount": 4,
+        "minCount": 2,
+        "weight": 65
+      },
+      {
+        "type": "immersiveweapons:lava_revenant",
+        "maxCount": 1,
+        "minCount": 1,
+        "weight": 35
+      },
+      {
+        "type": "immersiveweapons:celestial_tower",
+        "maxCount": 1,
+        "minCount": 1,
+        "weight": 5
+      }
+    ],
+    "underground_water_creature": [],
+    "water_ambient": [],
+    "water_creature": []
+  },
+  "temperature": 0.6
+}

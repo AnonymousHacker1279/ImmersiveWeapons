@@ -26,5 +26,5 @@ gradlew.bat
 .vs
 .vscode
 
-# Files from Forge MDK
-forge*changelog.txt
+# Datagen cache
+/src/generated/resources/.cache/

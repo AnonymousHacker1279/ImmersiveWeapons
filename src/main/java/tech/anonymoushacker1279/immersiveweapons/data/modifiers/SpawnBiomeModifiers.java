@@ -13,7 +13,6 @@ import net.minecraftforge.common.data.JsonCodecProvider;
 import net.minecraftforge.common.world.BiomeModifier;
 import net.minecraftforge.common.world.ForgeBiomeModifiers.AddSpawnsBiomeModifier;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
-import tech.anonymoushacker1279.immersiveweapons.data.tags.groups.immersiveweapons.ImmersiveWeaponsWorldGenTagGroups;
 import tech.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
 
 import java.util.HashMap;
@@ -24,12 +23,6 @@ public class SpawnBiomeModifiers {
 	private static BiomeModifier addWanderingWarriorSpawn;
 	private static final ResourceLocation ADD_HANS_SPAWN = new ResourceLocation(ImmersiveWeapons.MOD_ID, "add_hans_spawn");
 	private static BiomeModifier addHansSpawn;
-	private static final ResourceLocation ADD_ROCK_SPIDER_SPAWN = new ResourceLocation(ImmersiveWeapons.MOD_ID, "add_rock_spider_spawn");
-	private static BiomeModifier addRockSpiderSpawn;
-	private static final ResourceLocation ADD_LAVA_REVENANT_SPAWN = new ResourceLocation(ImmersiveWeapons.MOD_ID, "add_lava_revenant_spawn");
-	private static BiomeModifier addLavaRevenantSpawn;
-	private static final ResourceLocation ADD_CELESTIAL_TOWER_SPAWN = new ResourceLocation(ImmersiveWeapons.MOD_ID, "add_celestial_tower_spawn");
-	private static BiomeModifier addCelestialTowerSpawn;
 
 	public static JsonCodecProvider<BiomeModifier> getCodecProvider(DataGenerator generator,
 	                                                                ExistingFileHelper existingFileHelper,
@@ -43,7 +36,6 @@ public class SpawnBiomeModifiers {
 
 	private static void fillFeatures(RegistryOps<JsonElement> registryOps) {
 		HolderSet.Named<Biome> overworldTag = new HolderSet.Named<>(registryOps.registry(Registry.BIOME_REGISTRY).get(), BiomeTags.IS_OVERWORLD);
-		HolderSet.Named<Biome> tiltrosWastesTag = new HolderSet.Named<>(registryOps.registry(Registry.BIOME_REGISTRY).get(), ImmersiveWeaponsWorldGenTagGroups.IS_TILTROS_WASTES);
 
 		addWanderingWarriorSpawn = AddSpawnsBiomeModifier.singleSpawn(
 				overworldTag,
@@ -53,27 +45,12 @@ public class SpawnBiomeModifiers {
 				overworldTag,
 				new SpawnerData(DeferredRegistryHandler.HANS_ENTITY.get(), 5, 1, 1)
 		);
-		addRockSpiderSpawn = AddSpawnsBiomeModifier.singleSpawn(
-				tiltrosWastesTag,
-				new SpawnerData(DeferredRegistryHandler.ROCK_SPIDER_ENTITY.get(), 65, 2, 4)
-		);
-		addLavaRevenantSpawn = AddSpawnsBiomeModifier.singleSpawn(
-				tiltrosWastesTag,
-				new SpawnerData(DeferredRegistryHandler.LAVA_REVENANT_ENTITY.get(), 35, 1, 1)
-		);
-		addCelestialTowerSpawn = AddSpawnsBiomeModifier.singleSpawn(
-				tiltrosWastesTag,
-				new SpawnerData(DeferredRegistryHandler.CELESTIAL_TOWER_ENTITY.get(), 5, 1, 1)
-		);
 	}
 
 	private static HashMap<ResourceLocation, BiomeModifier> getBiomeModifiers() {
 		HashMap<ResourceLocation, BiomeModifier> modifiers = new HashMap<>(10);
 		modifiers.put(ADD_WANDERING_WARRIOR_SPAWN, addWanderingWarriorSpawn);
 		modifiers.put(ADD_HANS_SPAWN, addHansSpawn);
-		modifiers.put(ADD_ROCK_SPIDER_SPAWN, addRockSpiderSpawn);
-		modifiers.put(ADD_LAVA_REVENANT_SPAWN, addLavaRevenantSpawn);
-		modifiers.put(ADD_CELESTIAL_TOWER_SPAWN, addCelestialTowerSpawn);
 
 		return modifiers;
 	}

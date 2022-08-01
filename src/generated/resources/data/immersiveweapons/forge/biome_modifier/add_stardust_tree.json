@@ -1,6 +1,0 @@
-{
-  "type": "forge:add_features",
-  "biomes": "#immersiveweapons:is_starlight_plains",
-  "features": "immersiveweapons:stardust_tree",
-  "step": "vegetal_decoration"
-}

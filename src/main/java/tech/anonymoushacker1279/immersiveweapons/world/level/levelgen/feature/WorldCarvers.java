@@ -10,10 +10,12 @@ import net.minecraft.world.level.levelgen.carver.CanyonCarverConfiguration;
 import net.minecraft.world.level.levelgen.carver.CanyonCarverConfiguration.CanyonShapeConfiguration;
 import net.minecraft.world.level.levelgen.carver.CarverDebugSettings;
 import net.minecraft.world.level.levelgen.heightproviders.BiasedToBottomHeight;
+import net.minecraft.world.level.levelgen.heightproviders.TrapezoidHeight;
 
 public class WorldCarvers {
 
 	public static CanyonCarverConfiguration TRENCH_CARVER_CONFIGURATION;
+	public static CanyonCarverConfiguration TILTROS_WASTES_CARVER_CONFIGURATION;
 
 	public static void init() {
 		TRENCH_CARVER_CONFIGURATION = new CanyonCarverConfiguration(
@@ -33,6 +35,26 @@ public class WorldCarvers {
 						ConstantFloat.of(2.0f),
 						1,
 						1
+				)
+		);
+
+		TILTROS_WASTES_CARVER_CONFIGURATION = new CanyonCarverConfiguration(
+				0.65f,
+				TrapezoidHeight.of(VerticalAnchor.absolute(0),
+						VerticalAnchor.absolute(256),
+						64),
+				ConstantFloat.of(3.0f),
+				VerticalAnchor.absolute(-48),
+				CarverDebugSettings.DEFAULT,
+				new HolderSet.Named<>(Registry.BLOCK, BlockTags.OVERWORLD_CARVER_REPLACEABLES),
+				UniformFloat.of(3.0f, 7.0f),
+				new CanyonShapeConfiguration(
+						ConstantFloat.of(15.0f),
+						ConstantFloat.of(4.0f),
+						3,
+						ConstantFloat.of(3.0f),
+						3,
+						3
 				)
 		);
 	}

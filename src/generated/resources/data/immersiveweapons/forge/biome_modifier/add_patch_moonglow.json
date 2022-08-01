@@ -1,6 +1,0 @@
-{
-  "type": "forge:add_features",
-  "biomes": "#immersiveweapons:is_starlight_plains",
-  "features": "immersiveweapons:patch_moonglow",
-  "step": "vegetal_decoration"
-}

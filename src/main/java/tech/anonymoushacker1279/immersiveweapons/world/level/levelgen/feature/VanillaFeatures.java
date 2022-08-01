@@ -70,6 +70,11 @@ public class VanillaFeatures {
 		pBuilder.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, getFeatureHolder(featureRegistry, VegetationPlacements.PATCH_GRASS_PLAIN));
 	}
 
+	public static void addPlainGrass(Registry<PlacedFeature> featureRegistry,
+	                                 BiomeGenerationSettings.Builder pBuilder) {
+		pBuilder.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, getFeatureHolder(featureRegistry, VegetationPlacements.PATCH_GRASS_PLAIN));
+	}
+
 	public static void addDefaultMushrooms(Registry<PlacedFeature> featureRegistry,
 	                                       BiomeGenerationSettings.Builder pBuilder) {
 		pBuilder.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, getFeatureHolder(featureRegistry, VegetationPlacements.BROWN_MUSHROOM_NORMAL));

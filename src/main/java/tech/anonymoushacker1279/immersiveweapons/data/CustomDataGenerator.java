@@ -13,12 +13,12 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
 import net.minecraftforge.registries.ForgeRegistries.Keys;
 import tech.anonymoushacker1279.immersiveweapons.data.advancements.AdvancementProvider;
-import tech.anonymoushacker1279.immersiveweapons.data.features.BiomesGenerator;
-import tech.anonymoushacker1279.immersiveweapons.data.features.CarversGenerator;
+import tech.anonymoushacker1279.immersiveweapons.data.features.*;
 import tech.anonymoushacker1279.immersiveweapons.data.loot.LootTableGenerator;
 import tech.anonymoushacker1279.immersiveweapons.data.models.BlockStateGenerator;
 import tech.anonymoushacker1279.immersiveweapons.data.models.ItemModelGenerator;
-import tech.anonymoushacker1279.immersiveweapons.data.modifiers.*;
+import tech.anonymoushacker1279.immersiveweapons.data.modifiers.OreBiomeModifiers;
+import tech.anonymoushacker1279.immersiveweapons.data.modifiers.SpawnBiomeModifiers;
 import tech.anonymoushacker1279.immersiveweapons.data.recipes.RecipeGenerator;
 import tech.anonymoushacker1279.immersiveweapons.data.recipes.families.FamilyGenerator;
 import tech.anonymoushacker1279.immersiveweapons.data.tags.*;
@@ -71,11 +71,9 @@ public class CustomDataGenerator {
 		generator.addProvider(event.includeServer(), SpawnBiomeModifiers.getCodecProvider(generator, event.getExistingFileHelper(),
 				registryOps, Keys.BIOME_MODIFIERS));
 
-		// Feature biome modifiers
-		generator.addProvider(event.includeServer(), FeatureBiomeModifiers.PlacedFeatures.getCodecProvider(generator, event.getExistingFileHelper(),
+		// Placed feature generator
+		generator.addProvider(event.includeServer(), PlacedFeaturesGenerator.getCodecProvider(generator, event.getExistingFileHelper(),
 				registryOps, Registry.PLACED_FEATURE_REGISTRY));
-		generator.addProvider(event.includeServer(), FeatureBiomeModifiers.getCodecProvider(generator, event.getExistingFileHelper(),
-				registryOps, Keys.BIOME_MODIFIERS));
 
 		// Carver generator
 		generator.addProvider(event.includeServer(), CarversGenerator.getCodecProvider(generator, event.getExistingFileHelper(),
