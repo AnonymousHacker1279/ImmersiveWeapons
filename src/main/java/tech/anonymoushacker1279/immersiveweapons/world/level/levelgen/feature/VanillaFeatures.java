@@ -82,6 +82,26 @@ public class VanillaFeatures {
 		pBuilder.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, getFeatureHolder(featureRegistry, VegetationPlacements.PATCH_PUMPKIN));
 	}
 
+	public static void addDefaultOres(Registry<PlacedFeature> featureRegistry,
+	                                  BiomeGenerationSettings.Builder pBuilder) {
+		pBuilder.addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, getFeatureHolder(featureRegistry, OrePlacements.ORE_COAL_UPPER));
+		pBuilder.addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, getFeatureHolder(featureRegistry, OrePlacements.ORE_COAL_LOWER));
+		pBuilder.addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, getFeatureHolder(featureRegistry, OrePlacements.ORE_IRON_UPPER));
+		pBuilder.addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, getFeatureHolder(featureRegistry, OrePlacements.ORE_IRON_MIDDLE));
+		pBuilder.addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, getFeatureHolder(featureRegistry, OrePlacements.ORE_IRON_SMALL));
+		pBuilder.addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, getFeatureHolder(featureRegistry, OrePlacements.ORE_GOLD));
+		pBuilder.addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, getFeatureHolder(featureRegistry, OrePlacements.ORE_GOLD_LOWER));
+		pBuilder.addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, getFeatureHolder(featureRegistry, OrePlacements.ORE_REDSTONE));
+		pBuilder.addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, getFeatureHolder(featureRegistry, OrePlacements.ORE_REDSTONE_LOWER));
+		pBuilder.addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, getFeatureHolder(featureRegistry, OrePlacements.ORE_DIAMOND));
+		pBuilder.addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, getFeatureHolder(featureRegistry, OrePlacements.ORE_DIAMOND_LARGE));
+		pBuilder.addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, getFeatureHolder(featureRegistry, OrePlacements.ORE_DIAMOND_BURIED));
+		pBuilder.addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, getFeatureHolder(featureRegistry, OrePlacements.ORE_LAPIS));
+		pBuilder.addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, getFeatureHolder(featureRegistry, OrePlacements.ORE_LAPIS_BURIED));
+		pBuilder.addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, getFeatureHolder(featureRegistry, OrePlacements.ORE_COPPER));
+		pBuilder.addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, getFeatureHolder(featureRegistry, CavePlacements.UNDERWATER_MAGMA));
+	}
+
 	/**
 	 * Gets a {@link Holder} for the given {@link PlacedFeature} holder. Useful for adding vanilla features
 	 * from a builtinCopy() of a registry.

@@ -102,6 +102,7 @@ public class BiomesGenerator {
 		VanillaFeatures.addPlainVegetation(featureRegistry.get(), generationBuilder);
 		VanillaFeatures.addDefaultMushrooms(featureRegistry.get(), generationBuilder);
 		VanillaFeatures.addDefaultExtraVegetation(featureRegistry.get(), generationBuilder);
+		VanillaFeatures.addDefaultOres(featureRegistry.get(), generationBuilder);
 
 		return generationBuilder.build();
 	}
