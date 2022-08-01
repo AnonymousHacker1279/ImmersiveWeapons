@@ -1,0 +1,274 @@
+{
+  "carvers": {
+    "air": {
+      "type": "minecraft:canyon",
+      "config": {
+        "lava_level": {
+          "absolute": 0
+        },
+        "probability": 0.35,
+        "replaceable": "#minecraft:overworld_carver_replaceables",
+        "shape": {
+          "distance_factor": 15.0,
+          "horizontal_radius_factor": 2.0,
+          "thickness": 1.0,
+          "vertical_radius_center_factor": 1.0,
+          "vertical_radius_default_factor": 1.0,
+          "width_smoothness": 2
+        },
+        "vertical_rotation": {
+          "type": "minecraft:uniform",
+          "value": {
+            "max_exclusive": 16.0,
+            "min_inclusive": 0.0
+          }
+        },
+        "y": {
+          "type": "minecraft:biased_to_bottom",
+          "inner": 68,
+          "max_inclusive": {
+            "absolute": 172
+          },
+          "min_inclusive": {
+            "absolute": 0
+          }
+        },
+        "yScale": 0.75
+      }
+    }
+  },
+  "downfall": 0.3,
+  "effects": {
+    "additions_sound": {
+      "sound": "immersiveweapons:flintlock_pistol_fire",
+      "tick_chance": 0.0015
+    },
+    "ambient_sound": "immersiveweapons:battlefield_ambient",
+    "fog_color": 9464960,
+    "foliage_color": 4468277,
+    "grass_color": 5576464,
+    "sky_color": 7628662,
+    "water_color": 5580620,
+    "water_fog_color": 5258098
+  },
+  "features": [
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [
+      {
+        "feature": {
+          "type": "minecraft:block_pile",
+          "config": {
+            "state_provider": {
+              "type": "minecraft:simple_state_provider",
+              "state": {
+                "Name": "immersiveweapons:wooden_spikes",
+                "Properties": {
+                  "facing": "north",
+                  "waterlogged": "false"
+                }
+              }
+            }
+          }
+        },
+        "placement": [
+          {
+            "type": "minecraft:heightmap",
+            "heightmap": "MOTION_BLOCKING"
+          },
+          {
+            "type": "minecraft:biome"
+          },
+          {
+            "type": "minecraft:in_square"
+          },
+          {
+            "type": "minecraft:count",
+            "count": {
+              "type": "minecraft:uniform",
+              "value": {
+                "max_inclusive": 12,
+                "min_inclusive": 4
+              }
+            }
+          },
+          {
+            "type": "minecraft:rarity_filter",
+            "chance": 16
+          }
+        ]
+      },
+      {
+        "feature": {
+          "type": "minecraft:tree",
+          "config": {
+            "decorators": [
+              {
+                "type": "immersiveweapons:burned_branch",
+                "probability": 0.95
+              }
+            ],
+            "dirt_provider": {
+              "type": "minecraft:simple_state_provider",
+              "state": {
+                "Name": "minecraft:dirt"
+              }
+            },
+            "foliage_placer": {
+              "type": "minecraft:blob_foliage_placer",
+              "height": 0,
+              "offset": 0,
+              "radius": 0
+            },
+            "foliage_provider": {
+              "type": "minecraft:simple_state_provider",
+              "state": {
+                "Name": "minecraft:air"
+              }
+            },
+            "force_dirt": false,
+            "ignore_vines": true,
+            "minimum_size": {
+              "type": "minecraft:two_layers_feature_size",
+              "limit": 1,
+              "lower_size": 0,
+              "upper_size": 1
+            },
+            "trunk_placer": {
+              "type": "minecraft:straight_trunk_placer",
+              "base_height": 7,
+              "height_rand_a": 3,
+              "height_rand_b": 3
+            },
+            "trunk_provider": {
+              "type": "minecraft:simple_state_provider",
+              "state": {
+                "Name": "immersiveweapons:burned_oak_log",
+                "Properties": {
+                  "axis": "y"
+                }
+              }
+            }
+          }
+        },
+        "placement": [
+          {
+            "type": "minecraft:heightmap",
+            "heightmap": "WORLD_SURFACE"
+          },
+          {
+            "type": "minecraft:biome"
+          },
+          {
+            "type": "minecraft:in_square"
+          },
+          {
+            "type": "minecraft:rarity_filter",
+            "chance": 16
+          },
+          {
+            "type": "minecraft:block_predicate_filter",
+            "predicate": {
+              "type": "minecraft:would_survive",
+              "state": {
+                "Name": "minecraft:oak_sapling",
+                "Properties": {
+                  "stage": "0"
+                }
+              }
+            }
+          }
+        ]
+      }
+    ]
+  ],
+  "precipitation": "rain",
+  "spawn_costs": {},
+  "spawners": {
+    "ambient": [
+      {
+        "type": "minecraft:bat",
+        "maxCount": 8,
+        "minCount": 8,
+        "weight": 10
+      }
+    ],
+    "axolotls": [],
+    "creature": [],
+    "misc": [],
+    "monster": [
+      {
+        "type": "immersiveweapons:dying_soldier",
+        "maxCount": 3,
+        "minCount": 1,
+        "weight": 95
+      },
+      {
+        "type": "minecraft:spider",
+        "maxCount": 4,
+        "minCount": 4,
+        "weight": 100
+      },
+      {
+        "type": "minecraft:zombie",
+        "maxCount": 4,
+        "minCount": 4,
+        "weight": 95
+      },
+      {
+        "type": "minecraft:zombie_villager",
+        "maxCount": 1,
+        "minCount": 1,
+        "weight": 5
+      },
+      {
+        "type": "minecraft:skeleton",
+        "maxCount": 4,
+        "minCount": 4,
+        "weight": 100
+      },
+      {
+        "type": "minecraft:creeper",
+        "maxCount": 4,
+        "minCount": 4,
+        "weight": 100
+      },
+      {
+        "type": "minecraft:slime",
+        "maxCount": 4,
+        "minCount": 4,
+        "weight": 100
+      },
+      {
+        "type": "minecraft:enderman",
+        "maxCount": 4,
+        "minCount": 1,
+        "weight": 10
+      },
+      {
+        "type": "minecraft:witch",
+        "maxCount": 1,
+        "minCount": 1,
+        "weight": 5
+      }
+    ],
+    "underground_water_creature": [
+      {
+        "type": "minecraft:glow_squid",
+        "maxCount": 6,
+        "minCount": 4,
+        "weight": 10
+      }
+    ],
+    "water_ambient": [],
+    "water_creature": []
+  },
+  "temperature": 0.8
+}

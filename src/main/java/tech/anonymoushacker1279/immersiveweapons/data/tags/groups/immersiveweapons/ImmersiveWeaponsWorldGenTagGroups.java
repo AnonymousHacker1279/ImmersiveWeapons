@@ -11,6 +11,7 @@ public class ImmersiveWeaponsWorldGenTagGroups {
 	public static final TagKey<Biome> IS_TILTROS = GeneralUtilities.createBiomeTag("is_tiltros");
 	public static final TagKey<Biome> IS_TILTROS_WASTES = GeneralUtilities.createBiomeTag("is_tiltros_wastes");
 	public static final TagKey<Biome> IS_STARLIGHT_PLAINS = GeneralUtilities.createBiomeTag("is_starlight_plains");
+	public static final TagKey<Biome> IS_DEADMANS_DESERT = GeneralUtilities.createBiomeTag("is_deadmans_desert");
 
 	// Structure Tags
 	public static final TagKey<Biome> HAS_ABANDONED_FACTORY = GeneralUtilities.createStructureTag("abandoned_factory");

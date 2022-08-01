@@ -415,7 +415,7 @@ public class DeferredRegistryHandler {
 
 	// Breakable via hoe
 	// Wood tier
-	public static final RegistryObject<StardustLeaves> STARDUST_LEAVES = BLOCKS.register("stardust_leaves", () -> new StardustLeaves(BlockBehaviour.Properties.of(Material.LEAVES).strength(0.3f).randomTicks().sound(SoundType.GRASS).noOcclusion().isValidSpawn((state, getter, pos, type) -> BlockPredicates.ocelotOrParrot(type)).isSuffocating((state, getter, pos) -> BlockPredicates.never()).isViewBlocking((state, getter, pos) -> BlockPredicates.never())));
+	public static final RegistryObject<StardustLeavesBlock> STARDUST_LEAVES = BLOCKS.register("stardust_leaves", () -> new StardustLeavesBlock(BlockBehaviour.Properties.of(Material.LEAVES).strength(0.3f).randomTicks().sound(SoundType.GRASS).noOcclusion().isValidSpawn((state, getter, pos, type) -> BlockPredicates.ocelotOrParrot(type)).isSuffocating((state, getter, pos) -> BlockPredicates.never()).isViewBlocking((state, getter, pos) -> BlockPredicates.never())));
 
 	// Breakable without tool
 	public static final RegistryObject<GlassBlock> BULLETPROOF_GLASS = BLOCKS.register("bulletproof_glass", () -> new GlassBlock(BlockBehaviour.Properties.of(Material.GLASS).sound(SoundType.GLASS).noOcclusion().strength(0.5f)));

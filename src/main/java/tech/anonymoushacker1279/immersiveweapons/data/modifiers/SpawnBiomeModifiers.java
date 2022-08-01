@@ -20,8 +20,6 @@ import java.util.HashMap;
 
 public class SpawnBiomeModifiers {
 
-	private static final ResourceLocation ADD_DYING_SOLDIER_SPAWN = new ResourceLocation(ImmersiveWeapons.MOD_ID, "add_dying_soldier_spawn");
-	private static BiomeModifier addDyingSoldierSpawn;
 	private static final ResourceLocation ADD_WANDERING_WARRIOR_SPAWN = new ResourceLocation(ImmersiveWeapons.MOD_ID, "add_wandering_warrior_spawn");
 	private static BiomeModifier addWanderingWarriorSpawn;
 	private static final ResourceLocation ADD_HANS_SPAWN = new ResourceLocation(ImmersiveWeapons.MOD_ID, "add_hans_spawn");
@@ -44,14 +42,9 @@ public class SpawnBiomeModifiers {
 	}
 
 	private static void fillFeatures(RegistryOps<JsonElement> registryOps) {
-		HolderSet.Named<Biome> battlefieldTag = new HolderSet.Named<>(registryOps.registry(Registry.BIOME_REGISTRY).get(), ImmersiveWeaponsWorldGenTagGroups.IS_BATTLEFIELD);
 		HolderSet.Named<Biome> overworldTag = new HolderSet.Named<>(registryOps.registry(Registry.BIOME_REGISTRY).get(), BiomeTags.IS_OVERWORLD);
 		HolderSet.Named<Biome> tiltrosWastesTag = new HolderSet.Named<>(registryOps.registry(Registry.BIOME_REGISTRY).get(), ImmersiveWeaponsWorldGenTagGroups.IS_TILTROS_WASTES);
 
-		addDyingSoldierSpawn = AddSpawnsBiomeModifier.singleSpawn(
-				battlefieldTag,
-				new SpawnerData(DeferredRegistryHandler.DYING_SOLDIER_ENTITY.get(), 95, 1, 3)
-		);
 		addWanderingWarriorSpawn = AddSpawnsBiomeModifier.singleSpawn(
 				overworldTag,
 				new SpawnerData(DeferredRegistryHandler.WANDERING_WARRIOR_ENTITY.get(), 65, 1, 1)
@@ -76,7 +69,6 @@ public class SpawnBiomeModifiers {
 
 	private static HashMap<ResourceLocation, BiomeModifier> getBiomeModifiers() {
 		HashMap<ResourceLocation, BiomeModifier> modifiers = new HashMap<>(10);
-		modifiers.put(ADD_DYING_SOLDIER_SPAWN, addDyingSoldierSpawn);
 		modifiers.put(ADD_WANDERING_WARRIOR_SPAWN, addWanderingWarriorSpawn);
 		modifiers.put(ADD_HANS_SPAWN, addHansSpawn);
 		modifiers.put(ADD_ROCK_SPIDER_SPAWN, addRockSpiderSpawn);

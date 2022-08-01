@@ -1,7 +1,3 @@
-// 1.19	2022-07-28T16:40:47.8921445	worldgen/placed_feature generator for immersiveweapons
-35b03bf62d54fd33494476a6a65f61dfbd32d06f data/immersiveweapons/worldgen/placed_feature/ore_cobalt.json
-c91fa39f613970f15afc04b0a8e980727ac5db06 data/immersiveweapons/worldgen/placed_feature/ore_deepslate_cobalt.json
-7ceecbb4b812f58c7e8197ab2d9682f6de97b742 data/immersiveweapons/worldgen/placed_feature/ore_deepslate_sulfur.json
-f12173993a78c20769d43655121fa04f6c6fb941 data/immersiveweapons/worldgen/placed_feature/ore_molten.json
-6800837b130502b7af84207d736fba1461461e82 data/immersiveweapons/worldgen/placed_feature/ore_nether_sulfur.json
-7512a7cffd3b1c1f79517ab15cf0adcaf53ca229 data/immersiveweapons/worldgen/placed_feature/ore_sulfur.json
+// 1.19	2022-07-31T18:17:14.409033	worldgen/placed_feature generator for immersiveweapons
+88ff1933049f27aad3bdcf285ca787ec51376669 data/immersiveweapons/worldgen/placed_feature/patch_moonglow.json
+54a1fe57993bb46dae2a70b5fb2f5bb9a76c0447 data/immersiveweapons/worldgen/placed_feature/stardust_tree.json

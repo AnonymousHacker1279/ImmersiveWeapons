@@ -9,9 +9,9 @@ import org.jetbrains.annotations.NotNull;
 import tech.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
 import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
 
-public class StardustLeaves extends LeavesBlock {
+public class StardustLeavesBlock extends LeavesBlock {
 
-	public StardustLeaves(Properties properties) {
+	public StardustLeavesBlock(Properties properties) {
 		super(properties);
 	}
 
