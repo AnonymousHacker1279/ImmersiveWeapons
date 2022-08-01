@@ -21,6 +21,7 @@ import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.data.CustomDataGenerator;
 import tech.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
 import tech.anonymoushacker1279.immersiveweapons.world.level.levelgen.feature.BiomeFeatures;
+import tech.anonymoushacker1279.immersiveweapons.world.level.levelgen.feature.VanillaFeatures;
 
 import java.util.HashMap;
 import java.util.Optional;
@@ -45,7 +46,7 @@ public class BiomesGenerator {
 						.grassColorModifier(GrassColorModifier.NONE)
 						.ambientLoopSound(DeferredRegistryHandler.BATTLEFIELD_AMBIENT.get())
 						.ambientAdditionsSound(new AmbientAdditionsSettings(
-								DeferredRegistryHandler.FLINTLOCK_PISTOL_FIRE.get(), 0.0015d
+								DeferredRegistryHandler.FLINTLOCK_PISTOL_FIRE.get(), 0.00002d
 						))
 						.build())
 				.mobSpawnSettings(getBattlefieldSpawns())
@@ -82,22 +83,25 @@ public class BiomesGenerator {
 	}
 
 	private static BiomeGenerationSettings getBattlefieldGenerationSettings() {
-		Optional<? extends Registry<PlacedFeature>> featureRegistry = CustomDataGenerator.REGISTRY_BUILTIN_COPY.registry(Registry.PLACED_FEATURE_REGISTRY);
-		Optional<? extends Registry<ConfiguredWorldCarver<?>>> carverRegistry = CustomDataGenerator.REGISTRY_BUILTIN_COPY.registry(Registry.CONFIGURED_CARVER_REGISTRY);
-		BiomeGenerationSettings.Builder generationBuilder = new BiomeGenerationSettings.Builder()
-				.addCarver(Carving.AIR, carverRegistry.get().getHolder(CarversGenerator.TRENCH_KEY).get())
-				.addFeature(Decoration.VEGETAL_DECORATION, featureRegistry.get().getHolder(BiomeFeatures.PATCH_WOODEN_SPIKES_KEY).get())
-				.addFeature(Decoration.VEGETAL_DECORATION, featureRegistry.get().getHolder(BiomeFeatures.BURNED_OAK_TREE_KEY).get());
+		Optional<? extends Registry<PlacedFeature>> featureRegistry =
+				CustomDataGenerator.REGISTRY_BUILTIN_COPY.registry(Registry.PLACED_FEATURE_REGISTRY);
+		Optional<? extends Registry<ConfiguredWorldCarver<?>>> carverRegistry =
+				CustomDataGenerator.REGISTRY_BUILTIN_COPY.registry(Registry.CONFIGURED_CARVER_REGISTRY);
 
-		/*BiomeDefaultFeatures.addDefaultCarversAndLakes(generationBuilder);
-		BiomeDefaultFeatures.addDefaultCrystalFormations(generationBuilder);
-		BiomeDefaultFeatures.addDefaultMonsterRoom(generationBuilder);
-		BiomeDefaultFeatures.addDefaultUndergroundVariety(generationBuilder);
-		BiomeDefaultFeatures.addDefaultSprings(generationBuilder);
-		BiomeDefaultFeatures.addSurfaceFreezing(generationBuilder);
-		BiomeDefaultFeatures.addPlainVegetation(generationBuilder);
-		BiomeDefaultFeatures.addDefaultMushrooms(generationBuilder);
-		BiomeDefaultFeatures.addDefaultExtraVegetation(generationBuilder);*/
+		BiomeGenerationSettings.Builder generationBuilder = new BiomeGenerationSettings.Builder()
+				.addCarver(Carving.AIR, carverRegistry.get().getOrCreateHolderOrThrow(CarversGenerator.TRENCH_KEY))
+				.addFeature(Decoration.VEGETAL_DECORATION, featureRegistry.get().getOrCreateHolderOrThrow(BiomeFeatures.PATCH_WOODEN_SPIKES_KEY))
+				.addFeature(Decoration.VEGETAL_DECORATION, featureRegistry.get().getOrCreateHolderOrThrow(BiomeFeatures.BURNED_OAK_TREE_KEY));
+
+		VanillaFeatures.addDefaultCarversAndLakes(featureRegistry.get(), carverRegistry.get(), generationBuilder);
+		VanillaFeatures.addDefaultCrystalFormations(featureRegistry.get(), generationBuilder);
+		VanillaFeatures.addDefaultMonsterRoom(featureRegistry.get(), generationBuilder);
+		VanillaFeatures.addDefaultUndergroundVariety(featureRegistry.get(), generationBuilder);
+		VanillaFeatures.addDefaultSprings(featureRegistry.get(), generationBuilder);
+		VanillaFeatures.addSurfaceFreezing(featureRegistry.get(), generationBuilder);
+		VanillaFeatures.addPlainVegetation(featureRegistry.get(), generationBuilder);
+		VanillaFeatures.addDefaultMushrooms(featureRegistry.get(), generationBuilder);
+		VanillaFeatures.addDefaultExtraVegetation(featureRegistry.get(), generationBuilder);
 
 		return generationBuilder.build();
 	}
