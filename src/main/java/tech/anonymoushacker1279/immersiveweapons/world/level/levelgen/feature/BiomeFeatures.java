@@ -32,6 +32,7 @@ public class BiomeFeatures {
 	public static PlacedFeature PATCH_MOONGLOW_FEATURE;
 	public static Holder<ConfiguredFeature<?, ?>> STARDUST_TREE_FEATURE_HOLDER;
 	public static PlacedFeature STARDUST_TREE_FEATURE;
+	public static PlacedFeature PATCH_DEATHWEED_FEATURE;
 
 	public static void init() {
 		PATCH_WOODEN_SPIKES_FEATURE = new PlacedFeature(
@@ -100,6 +101,20 @@ public class BiomeFeatures {
 				BlockPredicateFilter.forPredicate(
 						BlockPredicate.wouldSurvive(DeferredRegistryHandler.STARDUST_SAPLING.get().defaultBlockState(), BlockPos.ZERO))
 		));
+
+		PATCH_DEATHWEED_FEATURE = new PlacedFeature(
+				Holder.direct(new ConfiguredFeature<>(Feature.RANDOM_PATCH,
+						new RandomPatchConfiguration(8, 6, 2,
+								PlacementUtils.onlyWhenEmpty(Feature.SIMPLE_BLOCK,
+										new SimpleBlockConfiguration(BlockStateProvider.simple(
+												DeferredRegistryHandler.DEATHWEED.get()
+										)))))
+				), List.of(
+				HeightmapPlacement.onHeightmap(Types.WORLD_SURFACE),
+				BiomeFilter.biome(),
+				InSquarePlacement.spread(),
+				RarityFilter.onAverageOnceEvery(3)
+		));
 	}
 
 	public static final ResourceLocation PATCH_WOODEN_SPIKES = new ResourceLocation(ImmersiveWeapons.MOD_ID, "patch_wooden_spikes");
@@ -113,4 +128,7 @@ public class BiomeFeatures {
 
 	public static final ResourceLocation STARDUST_TREE = new ResourceLocation(ImmersiveWeapons.MOD_ID, "stardust_tree");
 	public static final ResourceKey<PlacedFeature> STARDUST_TREE_KEY = ResourceKey.create(Registry.PLACED_FEATURE_REGISTRY, STARDUST_TREE);
+
+	public static final ResourceLocation PATCH_DEATHWEED = new ResourceLocation(ImmersiveWeapons.MOD_ID, "patch_deathweed");
+	public static final ResourceKey<PlacedFeature> PATCH_DEATHWEED_KEY = ResourceKey.create(Registry.PLACED_FEATURE_REGISTRY, PATCH_DEATHWEED);
 }

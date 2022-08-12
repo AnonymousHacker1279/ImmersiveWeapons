@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "immersiveweapons:block/cut_blood_sandstone_slab"
+    },
+    "type=double": {
+      "model": "immersiveweapons:block/cut_blood_sandstone"
+    },
+    "type=top": {
+      "model": "immersiveweapons:block/cut_blood_sandstone_slab_top"
+    }
+  }
+}

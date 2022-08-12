@@ -10,17 +10,17 @@ import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
 
 public class BleedingEffect extends MobEffect {
 
-	public final DamageSource damageSource = new DamageSource("immersiveweapons.bleeding").bypassArmor();
+	public static final DamageSource damageSource = new DamageSource("immersiveweapons.bleeding").bypassArmor();
 	private int cooldownTicks = 0;
 
 	/**
 	 * Constructor for BleedingEffect.
 	 *
-	 * @param typeIn        the <code>EffectType</code> instance
-	 * @param liquidColorIn the liquid color
+	 * @param effectCategory the <code>MobEffectCategory</code> instance
+	 * @param liquidColorIn  the liquid color
 	 */
-	public BleedingEffect(MobEffectCategory typeIn, int liquidColorIn) {
-		super(typeIn, liquidColorIn);
+	public BleedingEffect(MobEffectCategory effectCategory, int liquidColorIn) {
+		super(effectCategory, liquidColorIn);
 	}
 
 	/**

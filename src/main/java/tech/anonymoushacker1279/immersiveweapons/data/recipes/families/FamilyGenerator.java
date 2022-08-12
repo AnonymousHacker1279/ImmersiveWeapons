@@ -6,14 +6,13 @@ import net.minecraft.data.recipes.*;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraftforge.common.Tags;
 import org.jetbrains.annotations.NotNull;
-import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.data.recipes.RecipeGenerator;
 
+import java.util.List;
 import java.util.function.Consumer;
 
 import static tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities.blockRegistryPath;
@@ -28,7 +27,7 @@ public class FamilyGenerator extends RecipeProvider {
 	@Override
 	public void buildCraftingRecipes(@NotNull Consumer<FinishedRecipe> consumer) {
 		woodFamilies(consumer);
-		stoneFamilies(consumer);
+		stoneFamilies();
 		toolFamilies(consumer);
 		armorFamilies(consumer);
 		vanillaTieredItemFamilies();
@@ -113,22 +112,10 @@ public class FamilyGenerator extends RecipeProvider {
 					.save(consumer, blockRegistryPath(family.standingSign().get()));
 
 			// Slab
-			ShapedRecipeBuilder.shaped(family.slab().get(), 6)
-					.pattern("aaa")
-					.define('a', planks)
-					.group("wooden_slab")
-					.unlockedBy(planksTriggerName, planksTrigger)
-					.save(consumer, blockRegistryPath(family.slab().get()));
+			RecipeGenerator.CraftingTableRecipes.slab(family.slab().get(), planks, planksTriggerName, planksTrigger);
 
 			// Stairs
-			ShapedRecipeBuilder.shaped(family.stairs().get(), 4)
-					.pattern("a  ")
-					.pattern("aa ")
-					.pattern("aaa")
-					.define('a', planks)
-					.group("wooden_stairs")
-					.unlockedBy(planksTriggerName, planksTrigger)
-					.save(consumer, blockRegistryPath(family.stairs().get()));
+			RecipeGenerator.CraftingTableRecipes.stairs(family.stairs().get(), planks, planksTriggerName, planksTrigger);
 
 			// Trapdoor
 			ShapedRecipeBuilder.shaped(family.trapdoor().get(), 2)
@@ -158,64 +145,66 @@ public class FamilyGenerator extends RecipeProvider {
 		}
 	}
 
-	private void stoneFamilies(@NotNull Consumer<FinishedRecipe> consumer) {
+	private void stoneFamilies() {
 		for (StoneFamilies family : StoneFamilies.FAMILIES) {
 			Block stone = family.stone().get();
 			Block bricks = family.bricks().get();
 			final String stoneTriggerName = "has_stone";
 			InventoryChangeTrigger.TriggerInstance bricksTrigger = has(bricks);
 
-			// Bricks from crafting table
-			ShapedRecipeBuilder.shaped(bricks, 4)
-					.define('a', stone)
-					.pattern("aa ")
-					.pattern("aa ")
-					.unlockedBy("has_" + blockRegistryPath(stone).getPath(), has(stone))
-					.save(consumer, blockRegistryPath(bricks));
-			// Bricks from stonecutter
-			SingleItemRecipeBuilder.stonecutting(Ingredient.of(stone), bricks)
-					.unlockedBy("has_" + blockRegistryPath(stone).getPath(), has(stone))
-					.save(consumer, ImmersiveWeapons.MOD_ID + ":"
-							+ getConversionRecipeName(bricks, stone) + "_stonecutting");
+			RecipeGenerator.CraftingTableRecipes.bricks(bricks, stone);
+			if (family.bricksHaveStonecutterRecipe()) {
+				RecipeGenerator.StonecutterRecipes.bricks(bricks, stone);
+			}
 
-			// Slab from crafting table
-			ShapedRecipeBuilder.shaped(family.slab().get(), 6)
-					.pattern("aaa")
-					.define('a', bricks)
-					.unlockedBy(stoneTriggerName, bricksTrigger)
-					.save(consumer, blockRegistryPath(family.slab().get()));
-			// Slab from stonecutter
-			SingleItemRecipeBuilder.stonecutting(Ingredient.of(bricks), family.slab().get())
-					.unlockedBy(stoneTriggerName, bricksTrigger)
-					.save(consumer, ImmersiveWeapons.MOD_ID + ":"
-							+ getConversionRecipeName(family.slab().get(), bricks) + "_stonecutting");
+			RecipeGenerator.CraftingTableRecipes.slab(family.slab().get(), bricks, stoneTriggerName, bricksTrigger);
+			RecipeGenerator.StonecutterRecipes.slab(family.slab().get(), bricks, stoneTriggerName, bricksTrigger);
 
-			// Stairs from crafting table
-			ShapedRecipeBuilder.shaped(family.stairs().get(), 4)
-					.pattern("a  ")
-					.pattern("aa ")
-					.pattern("aaa")
-					.define('a', bricks)
-					.unlockedBy(stoneTriggerName, bricksTrigger)
-					.save(consumer, blockRegistryPath(family.stairs().get()));
-			// Stairs from stonecutter
-			SingleItemRecipeBuilder.stonecutting(Ingredient.of(bricks), family.stairs().get())
-					.unlockedBy(stoneTriggerName, bricksTrigger)
-					.save(consumer, ImmersiveWeapons.MOD_ID + ":"
-							+ getConversionRecipeName(family.stairs().get(), bricks) + "_stonecutting");
+			RecipeGenerator.CraftingTableRecipes.stairs(family.stairs().get(), bricks, stoneTriggerName, bricksTrigger);
+			RecipeGenerator.StonecutterRecipes.stairs(family.stairs().get(), bricks, stoneTriggerName, bricksTrigger);
 
-			// Pillar from crafting table
-			ShapedRecipeBuilder.shaped(family.pillar().get(), 4)
-					.pattern("a")
-					.pattern("a")
-					.define('a', bricks)
-					.unlockedBy(stoneTriggerName, bricksTrigger)
-					.save(consumer, blockRegistryPath(family.pillar().get()));
-			// Pillar from stonecutter
-			SingleItemRecipeBuilder.stonecutting(Ingredient.of(bricks), family.pillar().get())
-					.unlockedBy(stoneTriggerName, bricksTrigger)
-					.save(consumer, ImmersiveWeapons.MOD_ID + ":"
-							+ getConversionRecipeName(family.pillar().get(), bricks) + "_stonecutting");
+			RecipeGenerator.CraftingTableRecipes.wall(family.wall().get(), bricks, stoneTriggerName, bricksTrigger);
+			RecipeGenerator.StonecutterRecipes.wall(family.wall().get(), bricks, stoneTriggerName, bricksTrigger);
+
+			// Start null checking these entries, because not every family has one.
+			if (family.pillar() != null) {
+				RecipeGenerator.CraftingTableRecipes.pillar(family.pillar().get(), bricks, stoneTriggerName, bricksTrigger);
+				RecipeGenerator.StonecutterRecipes.pillar(family.pillar().get(), bricks, stoneTriggerName, bricksTrigger);
+			}
+
+			if (family.chiseled() != null) {
+				RecipeGenerator.CraftingTableRecipes.chiseled(family.chiseled().get(), bricks, stoneTriggerName, bricksTrigger);
+				RecipeGenerator.StonecutterRecipes.chiseled(family.chiseled().get(), bricks, stoneTriggerName, bricksTrigger);
+			}
+
+			if (family.cut() != null) {
+				RecipeGenerator.CraftingTableRecipes.cut(family.cut().get(), bricks, stoneTriggerName, bricksTrigger);
+				RecipeGenerator.StonecutterRecipes.cut(family.cut().get(), bricks, stoneTriggerName, bricksTrigger);
+
+				if (family.cutSlab() != null) {
+					RecipeGenerator.CraftingTableRecipes.slab(family.cutSlab().get(), family.cut().get(), stoneTriggerName, bricksTrigger);
+					RecipeGenerator.StonecutterRecipes.slab(family.cutSlab().get(), family.cut().get(), stoneTriggerName, bricksTrigger);
+				}
+			}
+
+			if (family.smooth() != null) {
+				RecipeGenerator.createSmeltingRecipe(
+						List.of(family.bricks().get()),
+						family.smooth().get(),
+						0.1f,
+						200,
+						null);
+
+				if (family.smoothSlab() != null) {
+					RecipeGenerator.CraftingTableRecipes.slab(family.smoothSlab().get(), family.smooth().get(), stoneTriggerName, bricksTrigger);
+					RecipeGenerator.StonecutterRecipes.slab(family.smoothSlab().get(), family.smooth().get(), stoneTriggerName, bricksTrigger);
+				}
+
+				if (family.smoothStairs() != null) {
+					RecipeGenerator.CraftingTableRecipes.stairs(family.smoothStairs().get(), family.smooth().get(), stoneTriggerName, bricksTrigger);
+					RecipeGenerator.StonecutterRecipes.stairs(family.smoothStairs().get(), family.smooth().get(), stoneTriggerName, bricksTrigger);
+				}
+			}
 		}
 	}
 

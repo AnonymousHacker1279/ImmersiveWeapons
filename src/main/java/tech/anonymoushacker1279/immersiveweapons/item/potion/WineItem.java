@@ -9,7 +9,7 @@ import java.util.List;
 public class WineItem extends CustomPotionItem {
 
 	/**
-	 * Constructor for WineBottleItem.
+	 * Constructor for WineItem.
 	 *
 	 * @param properties the <code>Properties</code> for the item
 	 */

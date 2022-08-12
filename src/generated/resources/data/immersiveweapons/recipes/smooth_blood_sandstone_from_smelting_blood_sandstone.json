@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:smelting",
+  "cookingtime": 200,
+  "experience": 0.1,
+  "ingredient": {
+    "item": "immersiveweapons:blood_sandstone"
+  },
+  "result": "immersiveweapons:smooth_blood_sandstone"
+}

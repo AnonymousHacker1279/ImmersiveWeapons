@@ -107,6 +107,43 @@ public class VanillaFeatures {
 		pBuilder.addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, getFeatureHolder(featureRegistry, CavePlacements.UNDERWATER_MAGMA));
 	}
 
+	public static void getOverworldBaseGeneration(Registry<PlacedFeature> featureRegistry,
+	                                              Registry<ConfiguredWorldCarver<?>> carverRegistry,
+	                                              Builder generationBuilder) {
+		VanillaFeatures.addDefaultCarversAndLakes(featureRegistry, carverRegistry, generationBuilder);
+		VanillaFeatures.addDefaultCrystalFormations(featureRegistry, generationBuilder);
+		VanillaFeatures.addDefaultMonsterRoom(featureRegistry, generationBuilder);
+		VanillaFeatures.addDefaultUndergroundVariety(featureRegistry, generationBuilder);
+		VanillaFeatures.addDefaultOres(featureRegistry, generationBuilder);
+		VanillaFeatures.addSurfaceFreezing(featureRegistry, generationBuilder);
+		VanillaFeatures.addDefaultSprings(featureRegistry, generationBuilder);
+	}
+
+	public static void getPlainsLikeGeneration(Registry<PlacedFeature> featureRegistry,
+	                                           Builder generationBuilder) {
+		VanillaFeatures.addPlainVegetation(featureRegistry, generationBuilder);
+		VanillaFeatures.addDefaultMushrooms(featureRegistry, generationBuilder);
+		VanillaFeatures.addDefaultExtraVegetation(featureRegistry, generationBuilder);
+	}
+
+	public static void addDefaultSoftDisks(Registry<PlacedFeature> featureRegistry,
+	                                       BiomeGenerationSettings.Builder pBuilder) {
+		pBuilder.addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, getFeatureHolder(featureRegistry, MiscOverworldPlacements.DISK_SAND));
+		pBuilder.addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, getFeatureHolder(featureRegistry, MiscOverworldPlacements.DISK_CLAY));
+		pBuilder.addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, getFeatureHolder(featureRegistry, MiscOverworldPlacements.DISK_GRAVEL));
+	}
+
+	public static void addFossilDecoration(Registry<PlacedFeature> featureRegistry,
+	                                       BiomeGenerationSettings.Builder pBuilder) {
+		pBuilder.addFeature(GenerationStep.Decoration.UNDERGROUND_STRUCTURES, getFeatureHolder(featureRegistry, CavePlacements.FOSSIL_UPPER));
+		pBuilder.addFeature(GenerationStep.Decoration.UNDERGROUND_STRUCTURES, getFeatureHolder(featureRegistry, CavePlacements.FOSSIL_LOWER));
+	}
+
+	public static void addDesertVegetation(Registry<PlacedFeature> featureRegistry,
+	                                       BiomeGenerationSettings.Builder pBuilder) {
+		pBuilder.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, getFeatureHolder(featureRegistry, VegetationPlacements.PATCH_DEAD_BUSH_2));
+	}
+
 	/**
 	 * Gets a {@link Holder} for the given {@link PlacedFeature} holder. Useful for adding vanilla features
 	 * from a builtinCopy() of a registry.

@@ -24,4 +24,7 @@ public class MinecraftBlockTagGroups {
 	public static final TagKey<Block> NON_FLAMMABLE_WOOD = BlockTags.create(new ResourceLocation("non_flammable_wood"));
 	public static final TagKey<Block> SMALL_FLOWERS = BlockTags.create(new ResourceLocation("small_flowers"));
 	public static final TagKey<Block> LEAVES = BlockTags.create(new ResourceLocation("leaves"));
+	public static final TagKey<Block> SAND = BlockTags.create(new ResourceLocation("sand"));
+	public static final TagKey<Block> SAPLINGS = BlockTags.create(new ResourceLocation("saplings"));
+	public static final TagKey<Block> WALLS = BlockTags.create(new ResourceLocation("walls"));
 }

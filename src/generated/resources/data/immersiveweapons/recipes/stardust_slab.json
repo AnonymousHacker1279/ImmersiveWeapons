@@ -1,6 +1,5 @@
 {
   "type": "minecraft:crafting_shaped",
-  "group": "wooden_slab",
   "key": {
     "a": {
       "item": "immersiveweapons:stardust_planks"

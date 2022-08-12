@@ -94,10 +94,14 @@ public class BlockTagsGenerator extends BlockTagsProvider {
 				DeferredRegistryHandler.STARDUST_PLANKS.get());
 
 		// Slabs tag
-		tag(MinecraftBlockTagGroups.SLABS).add(DeferredRegistryHandler.CLOUD_MARBLE_BRICK_SLAB.get());
+		tag(MinecraftBlockTagGroups.SLABS).add(DeferredRegistryHandler.CLOUD_MARBLE_BRICK_SLAB.get(),
+				DeferredRegistryHandler.BLOOD_SANDSTONE_SLAB.get(),
+				DeferredRegistryHandler.SMOOTH_BLOOD_SANDSTONE_SLAB.get());
 
 		// Stairs tag
-		tag(MinecraftBlockTagGroups.STAIRS).add(DeferredRegistryHandler.CLOUD_MARBLE_BRICK_STAIRS.get());
+		tag(MinecraftBlockTagGroups.STAIRS).add(DeferredRegistryHandler.CLOUD_MARBLE_BRICK_STAIRS.get(),
+				DeferredRegistryHandler.BLOOD_SANDSTONE_STAIRS.get(),
+				DeferredRegistryHandler.SMOOTH_BLOOD_SANDSTONE_STAIRS.get());
 
 		// Standing signs tag
 		tag(MinecraftBlockTagGroups.STANDING_SIGNS).add(DeferredRegistryHandler.BURNED_OAK_SIGN.get());
@@ -143,6 +147,16 @@ public class BlockTagsGenerator extends BlockTagsProvider {
 
 		// Leaves tag
 		tag(MinecraftBlockTagGroups.LEAVES).add(DeferredRegistryHandler.STARDUST_LEAVES.get());
+
+		// Sand tag
+		tag(MinecraftBlockTagGroups.SAND).add(DeferredRegistryHandler.BLOOD_SAND.get());
+
+		// Saplings tag
+		tag(MinecraftBlockTagGroups.SAPLINGS).add(DeferredRegistryHandler.STARDUST_SAPLING.get());
+
+		// Walls tag
+		tag(MinecraftBlockTagGroups.WALLS).add(DeferredRegistryHandler.CLOUD_MARBLE_BRICK_WALL.get(),
+				DeferredRegistryHandler.BLOOD_SANDSTONE_WALL.get());
 	}
 
 	/**

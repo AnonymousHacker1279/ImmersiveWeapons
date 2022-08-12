@@ -27,7 +27,19 @@
 						"erosion": 0.7,
 						"weirdness": 0.3,
 						"depth": 0.3,
-						"offset": 1.0
+						"offset": 0.0
+					}
+				},
+				{
+					"biome": "immersiveweapons:deadmans_desert",
+					"parameters": {
+						"temperature": 0.5,
+						"humidity": 0.1,
+						"continentalness": 1.0,
+						"erosion": 0.75,
+						"weirdness": 0.1,
+						"depth": 0.3,
+						"offset": 0.0
 					}
 				}
 			]

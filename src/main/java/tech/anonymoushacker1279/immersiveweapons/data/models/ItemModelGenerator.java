@@ -123,6 +123,11 @@ public class ItemModelGenerator extends ItemModelProvider {
 							.parent(new ModelFile.UncheckedModelFile("item/generated"))
 							.texture("layer0", new ResourceLocation(ImmersiveWeapons.MOD_ID,
 									"block/stardust_sapling"));
+				} else if (item == DeferredRegistryHandler.DEATHWEED_ITEM.get()) {
+					getBuilder(item.toString())
+							.parent(new ModelFile.UncheckedModelFile("item/generated"))
+							.texture("layer0", new ResourceLocation(ImmersiveWeapons.MOD_ID,
+									"block/deathweed"));
 				} else if (item == DeferredRegistryHandler.BEAR_TRAP_ITEM.get()) {
 					getBuilder(item.toString())
 							.parent(new ModelFile.UncheckedModelFile(new ResourceLocation(ImmersiveWeapons.MOD_ID,
@@ -160,6 +165,12 @@ public class ItemModelGenerator extends ItemModelProvider {
 				} else if (item == DeferredRegistryHandler.STARDUST_BUTTON_ITEM.get()) {
 					buttonInventory(item.toString(),
 							new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/stardust_planks"));
+				} else if (item == DeferredRegistryHandler.CLOUD_MARBLE_BRICK_WALL_ITEM.get()) {
+					wallInventory(item.toString(),
+							new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/cloud_marble_bricks"));
+				} else if (item == DeferredRegistryHandler.BLOOD_SANDSTONE_WALL_ITEM.get()) {
+					wallInventory(item.toString(),
+							new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/blood_sandstone"));
 				} else if (ItemLists.headItems.contains(item)) {
 					entitySkull(item);
 				} else {

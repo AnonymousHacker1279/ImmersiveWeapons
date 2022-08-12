@@ -11,11 +11,11 @@ public class MorphineEffect extends MobEffect {
 	/**
 	 * Constructor for MorphineEffect.
 	 *
-	 * @param typeIn        the <code>EffectType</code> instance
-	 * @param liquidColorIn the liquid color
+	 * @param effectCategory the <code>MobEffectCategory</code> instance
+	 * @param liquidColorIn  the liquid color
 	 */
-	public MorphineEffect(MobEffectCategory typeIn, int liquidColorIn) {
-		super(typeIn, liquidColorIn);
+	public MorphineEffect(MobEffectCategory effectCategory, int liquidColorIn) {
+		super(effectCategory, liquidColorIn);
 	}
 
 	/**

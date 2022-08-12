@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "a": {
+      "item": "immersiveweapons:blood_sand"
+    }
+  },
+  "pattern": [
+    "aa ",
+    "aa "
+  ],
+  "result": {
+    "count": 4,
+    "item": "immersiveweapons:blood_sandstone"
+  }
+}

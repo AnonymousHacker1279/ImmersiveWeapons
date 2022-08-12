@@ -68,12 +68,65 @@ public class ItemTagsGenerator extends ItemTagsProvider {
 		// Dust tags
 		tag(ForgeItemTagGroups.SULFUR_DUSTS).add(DeferredRegistryHandler.SULFUR.get());
 
-		// Pickaxe tags
-		tag(ForgeItemTagGroups.PICKAXES).add(Items.WOODEN_PICKAXE, Items.STONE_PICKAXE, Items.GOLDEN_PICKAXE,
-				Items.IRON_PICKAXE, Items.DIAMOND_PICKAXE, Items.NETHERITE_PICKAXE,
-				DeferredRegistryHandler.COPPER_PICKAXE.get(), DeferredRegistryHandler.COBALT_PICKAXE.get(),
-				DeferredRegistryHandler.MOLTEN_PICKAXE.get(), DeferredRegistryHandler.VENTUS_PICKAXE.get(),
-				DeferredRegistryHandler.TESLA_PICKAXE.get());
+		// Tool tags
+
+		// Sword
+		tag(Tags.Items.TOOLS_SWORDS).add(DeferredRegistryHandler.COPPER_SWORD.get(),
+				DeferredRegistryHandler.COBALT_SWORD.get(),
+				DeferredRegistryHandler.MOLTEN_SWORD.get(),
+				DeferredRegistryHandler.TESLA_SWORD.get(),
+				DeferredRegistryHandler.VENTUS_SWORD.get());
+		// Pickaxe
+		tag(Tags.Items.TOOLS_PICKAXES).add(DeferredRegistryHandler.COPPER_PICKAXE.get(),
+				DeferredRegistryHandler.COBALT_PICKAXE.get(),
+				DeferredRegistryHandler.MOLTEN_PICKAXE.get(),
+				DeferredRegistryHandler.TESLA_PICKAXE.get(),
+				DeferredRegistryHandler.VENTUS_PICKAXE.get());
+		// Axe
+		tag(Tags.Items.TOOLS_AXES).add(DeferredRegistryHandler.COPPER_AXE.get(),
+				DeferredRegistryHandler.COBALT_AXE.get(),
+				DeferredRegistryHandler.MOLTEN_AXE.get(),
+				DeferredRegistryHandler.TESLA_AXE.get(),
+				DeferredRegistryHandler.VENTUS_AXE.get());
+		// Shovel
+		tag(Tags.Items.TOOLS_SHOVELS).add(DeferredRegistryHandler.COPPER_SHOVEL.get(),
+				DeferredRegistryHandler.COBALT_SHOVEL.get(),
+				DeferredRegistryHandler.MOLTEN_SHOVEL.get(),
+				DeferredRegistryHandler.TESLA_SHOVEL.get(),
+				DeferredRegistryHandler.VENTUS_SHOVEL.get());
+		// Hoe
+		tag(Tags.Items.TOOLS_HOES).add(DeferredRegistryHandler.COPPER_HOE.get(),
+				DeferredRegistryHandler.COBALT_HOE.get(),
+				DeferredRegistryHandler.MOLTEN_HOE.get(),
+				DeferredRegistryHandler.TESLA_HOE.get(),
+				DeferredRegistryHandler.VENTUS_HOE.get());
+
+		// Armor tags
+
+		// Helmet
+		tag(Tags.Items.ARMORS_HELMETS).add(DeferredRegistryHandler.COPPER_HELMET.get(),
+				DeferredRegistryHandler.COBALT_HELMET.get(),
+				DeferredRegistryHandler.MOLTEN_HELMET.get(),
+				DeferredRegistryHandler.TESLA_HELMET.get(),
+				DeferredRegistryHandler.VENTUS_HELMET.get());
+		// Chestplate
+		tag(Tags.Items.ARMORS_CHESTPLATES).add(DeferredRegistryHandler.COPPER_CHESTPLATE.get(),
+				DeferredRegistryHandler.COBALT_CHESTPLATE.get(),
+				DeferredRegistryHandler.MOLTEN_CHESTPLATE.get(),
+				DeferredRegistryHandler.TESLA_CHESTPLATE.get(),
+				DeferredRegistryHandler.VENTUS_CHESTPLATE.get());
+		// Leggings
+		tag(Tags.Items.ARMORS_LEGGINGS).add(DeferredRegistryHandler.COPPER_LEGGINGS.get(),
+				DeferredRegistryHandler.COBALT_LEGGINGS.get(),
+				DeferredRegistryHandler.MOLTEN_LEGGINGS.get(),
+				DeferredRegistryHandler.TESLA_LEGGINGS.get(),
+				DeferredRegistryHandler.VENTUS_LEGGINGS.get());
+		// Boots
+		tag(Tags.Items.ARMORS_BOOTS).add(DeferredRegistryHandler.COPPER_BOOTS.get(),
+				DeferredRegistryHandler.COBALT_BOOTS.get(),
+				DeferredRegistryHandler.MOLTEN_BOOTS.get(),
+				DeferredRegistryHandler.TESLA_BOOTS.get(),
+				DeferredRegistryHandler.VENTUS_BOOTS.get());
 
 		// Head tags
 		tag(Tags.Items.HEADS).add(DeferredRegistryHandler.MINUTEMAN_HEAD_ITEM.get(),
@@ -132,6 +185,9 @@ public class ItemTagsGenerator extends ItemTagsProvider {
 		copy(MinecraftBlockTagGroups.WOODEN_TRAPDOORS, MinecraftItemTagGroups.WOODEN_TRAPDOORS);
 		copy(MinecraftBlockTagGroups.SMALL_FLOWERS, MinecraftItemTagGroups.SMALL_FLOWERS);
 		copy(MinecraftBlockTagGroups.LEAVES, MinecraftItemTagGroups.LEAVES);
+		copy(MinecraftBlockTagGroups.SAND, MinecraftItemTagGroups.SAND);
+		copy(MinecraftBlockTagGroups.SAPLINGS, MinecraftItemTagGroups.SAPLINGS);
+		copy(MinecraftBlockTagGroups.WALLS, MinecraftItemTagGroups.WALLS);
 
 		// Sign tags
 		tag(MinecraftItemTagGroups.SIGNS).add(DeferredRegistryHandler.BURNED_OAK_SIGN_ITEM.get());

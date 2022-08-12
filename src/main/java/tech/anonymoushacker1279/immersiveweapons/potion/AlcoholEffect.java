@@ -11,11 +11,11 @@ public class AlcoholEffect extends MobEffect {
 	/**
 	 * Constructor for AlcoholEffect.
 	 *
-	 * @param typeIn        the <code>EffectType</code> instance
-	 * @param liquidColorIn the liquid color
+	 * @param effectCategory the <code>MobEffectCategory</code> instance
+	 * @param liquidColorIn  the liquid color
 	 */
-	public AlcoholEffect(MobEffectCategory typeIn, int liquidColorIn) {
-		super(typeIn, liquidColorIn);
+	public AlcoholEffect(MobEffectCategory effectCategory, int liquidColorIn) {
+		super(effectCategory, liquidColorIn);
 	}
 
 	/**

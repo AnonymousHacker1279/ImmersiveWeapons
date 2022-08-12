@@ -90,6 +90,7 @@ public class BlockLootTables implements Consumer<BiConsumer<ResourceLocation, Bu
 		dropSelf(DeferredRegistryHandler.CLOUD_MARBLE_BRICK_STAIRS.get());
 		dropSelf(DeferredRegistryHandler.CLOUD_MARBLE_BRICKS.get());
 		dropSelf(DeferredRegistryHandler.CLOUD_MARBLE_PILLAR.get());
+		dropSelf(DeferredRegistryHandler.CLOUD_MARBLE_BRICK_WALL.get());
 		dropSelf(DeferredRegistryHandler.COBALT_BLOCK.get());
 		dropSelf(DeferredRegistryHandler.CORRUGATED_IRON_PANEL.get());
 		dropSelf(DeferredRegistryHandler.CORRUGATED_IRON_PANEL_BARS.get());
@@ -145,6 +146,17 @@ public class BlockLootTables implements Consumer<BiConsumer<ResourceLocation, Bu
 		dropSelf(DeferredRegistryHandler.STRIPPED_STARDUST_LOG.get());
 		dropSelf(DeferredRegistryHandler.STRIPPED_STARDUST_WOOD.get());
 		dropSelf(DeferredRegistryHandler.STARDUST_SAPLING.get());
+		dropSelf(DeferredRegistryHandler.BLOOD_SAND.get());
+		dropSelf(DeferredRegistryHandler.BLOOD_SANDSTONE.get());
+		dropSelf(DeferredRegistryHandler.BLOOD_SANDSTONE_SLAB.get());
+		dropSelf(DeferredRegistryHandler.BLOOD_SANDSTONE_STAIRS.get());
+		dropSelf(DeferredRegistryHandler.BLOOD_SANDSTONE_WALL.get());
+		dropSelf(DeferredRegistryHandler.CHISELED_BLOOD_SANDSTONE.get());
+		dropSelf(DeferredRegistryHandler.CUT_BLOOD_SANDSTONE.get());
+		dropSelf(DeferredRegistryHandler.CUT_BLOOD_SANDSTONE_SLAB.get());
+		dropSelf(DeferredRegistryHandler.SMOOTH_BLOOD_SANDSTONE.get());
+		dropSelf(DeferredRegistryHandler.SMOOTH_BLOOD_SANDSTONE_SLAB.get());
+		dropSelf(DeferredRegistryHandler.SMOOTH_BLOOD_SANDSTONE_STAIRS.get());
 
 		for (Block block : BlockTagLists.TABLES) {
 			dropSelf(block);

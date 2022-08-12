@@ -12,6 +12,7 @@ public class BiomesAndDimensions {
 	public static final ResourceKey<Biome> BATTLEFIELD = create("battlefield");
 	public static final ResourceKey<Biome> TILTROS_WASTES = create("tiltros_wastes");
 	public static final ResourceKey<Biome> STARLIGHT_PLAINS = create("starlight_plains");
+	public static final ResourceKey<Biome> DEADMANS_DESERT = create("deadmans_desert");
 
 	public static final ResourceKey<Level> TILTROS = ResourceKey.create(Registry.DIMENSION_REGISTRY,
 			new ResourceLocation(ImmersiveWeapons.MOD_ID, "tiltros"));

@@ -49,9 +49,13 @@ public class BiomeTagsGenerator extends TagsProvider<Biome> {
 		tag(ImmersiveWeaponsWorldGenTagGroups.IS_STARLIGHT_PLAINS)
 				.add(BiomesAndDimensions.STARLIGHT_PLAINS);
 
+		tag(ImmersiveWeaponsWorldGenTagGroups.IS_DEADMANS_DESERT)
+				.add(BiomesAndDimensions.DEADMANS_DESERT);
+
 		tag(ImmersiveWeaponsWorldGenTagGroups.IS_TILTROS)
 				.add(BiomesAndDimensions.TILTROS_WASTES)
-				.add(BiomesAndDimensions.STARLIGHT_PLAINS);
+				.add(BiomesAndDimensions.STARLIGHT_PLAINS)
+				.add(BiomesAndDimensions.DEADMANS_DESERT);
 
 		// Structure tags
 		tag(ImmersiveWeaponsWorldGenTagGroups.HAS_ABANDONED_FACTORY)

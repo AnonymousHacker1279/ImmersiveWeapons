@@ -1,7 +1,13 @@
 package tech.anonymoushacker1279.immersiveweapons.init;
 
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.alchemy.PotionUtils;
+import net.minecraft.world.item.alchemy.Potions;
+import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.FlowerPotBlock;
+import net.minecraftforge.common.brewing.BrewingRecipeRegistry;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.item.materials.CustomArmorMaterials;
 
@@ -43,6 +49,7 @@ public class PostSetupHandler {
 		// Add custom plants to the flower pot block
 		FlowerPotBlock emptyPot = ((FlowerPotBlock) Blocks.FLOWER_POT);
 		emptyPot.addPlant(DeferredRegistryHandler.MOONGLOW.getId(), DeferredRegistryHandler.POTTED_MOONGLOW);
+		emptyPot.addPlant(DeferredRegistryHandler.DEATHWEED.getId(), DeferredRegistryHandler.POTTED_DEATHWEED);
 
 		// Setup custom boats
 		DeferredRegistryHandler.BURNED_OAK_BOAT.get()
@@ -53,5 +60,33 @@ public class PostSetupHandler {
 				.setBoatEntityType(DeferredRegistryHandler.STARDUST_BOAT_ENTITY.get());
 		DeferredRegistryHandler.STARDUST_CHEST_BOAT.get()
 				.setBoatEntityType(DeferredRegistryHandler.STARDUST_CHEST_BOAT_ENTITY.get());
+
+		// Set brewing recipes, as these are not done via JSON like other recipes
+		// Celestial potions
+		BrewingRecipeRegistry.addRecipe(Ingredient.of(PotionUtils.setPotion(new ItemStack(Items.POTION), Potions.AWKWARD)),
+				Ingredient.of(DeferredRegistryHandler.MOONGLOW_ITEM.get()),
+				PotionUtils.setPotion(new ItemStack(Items.POTION), DeferredRegistryHandler.CELESTIAL_BREW_POTION.get()));
+		BrewingRecipeRegistry.addRecipe(Ingredient.of(PotionUtils.setPotion(new ItemStack(Items.POTION), DeferredRegistryHandler.CELESTIAL_BREW_POTION.get())),
+				Ingredient.of(Items.REDSTONE),
+				PotionUtils.setPotion(new ItemStack(Items.POTION), DeferredRegistryHandler.LONG_CELESTIAL_BREW_POTION.get()));
+		// Death potions
+		BrewingRecipeRegistry.addRecipe(Ingredient.of(PotionUtils.setPotion(new ItemStack(Items.POTION), Potions.AWKWARD)),
+				Ingredient.of(DeferredRegistryHandler.DEATHWEED_ITEM.get()),
+				PotionUtils.setPotion(new ItemStack(Items.POTION), DeferredRegistryHandler.DEATH_POTION.get()));
+		BrewingRecipeRegistry.addRecipe(Ingredient.of(PotionUtils.setPotion(new ItemStack(Items.POTION), DeferredRegistryHandler.DEATH_POTION.get())),
+				Ingredient.of(Items.GLOWSTONE_DUST),
+				PotionUtils.setPotion(new ItemStack(Items.POTION), DeferredRegistryHandler.STRONG_DEATH_POTION.get()));
+		BrewingRecipeRegistry.addRecipe(Ingredient.of(PotionUtils.setPotion(new ItemStack(Items.POTION), DeferredRegistryHandler.DEATH_POTION.get())),
+				Ingredient.of(Items.REDSTONE),
+				PotionUtils.setPotion(new ItemStack(Items.POTION), DeferredRegistryHandler.LONG_DEATH_POTION.get()));
+		BrewingRecipeRegistry.addRecipe(Ingredient.of(PotionUtils.setPotion(new ItemStack(Items.POTION), Potions.STRENGTH)),
+				Ingredient.of(Items.FERMENTED_SPIDER_EYE),
+				PotionUtils.setPotion(new ItemStack(Items.POTION), DeferredRegistryHandler.DEATH_POTION.get()));
+		BrewingRecipeRegistry.addRecipe(Ingredient.of(PotionUtils.setPotion(new ItemStack(Items.POTION), Potions.STRONG_STRENGTH)),
+				Ingredient.of(Items.FERMENTED_SPIDER_EYE),
+				PotionUtils.setPotion(new ItemStack(Items.POTION), DeferredRegistryHandler.STRONG_DEATH_POTION.get()));
+		BrewingRecipeRegistry.addRecipe(Ingredient.of(PotionUtils.setPotion(new ItemStack(Items.POTION), Potions.LONG_STRENGTH)),
+				Ingredient.of(Items.FERMENTED_SPIDER_EYE),
+				PotionUtils.setPotion(new ItemStack(Items.POTION), DeferredRegistryHandler.LONG_DEATH_POTION.get()));
 	}
 }

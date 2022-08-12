@@ -197,6 +197,7 @@ public class ClientModEventSubscriber {
 		event.register(DeferredRegistryHandler.MUZZLE_FLASH_PARTICLE.get(), MuzzleFlashParticle.Provider::new);
 		event.register(DeferredRegistryHandler.MOONGLOW_PARTICLE.get(), MoonglowParticle.Provider::new);
 		event.register(DeferredRegistryHandler.STARDUST_LEAVES_PARTICLE.get(), StardustLeavesParticle.Provider::new);
+		event.register(DeferredRegistryHandler.DEADMANS_DESERT_AMBIENT_PARTICLE.get(), DeadmansDesertAmbientParticle.Provider::new);
 	}
 
 	@SubscribeEvent

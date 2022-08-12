@@ -21,6 +21,4 @@ public class ForgeItemTagGroups {
 			"nuggets/metal"));
 	public static final TagKey<Item> SULFUR_DUSTS = ItemTags.create(new ResourceLocation("forge",
 			"dusts/sulfur"));
-	public static final TagKey<Item> PICKAXES = ItemTags.create(new ResourceLocation("forge",
-			"pickaxes"));
 }

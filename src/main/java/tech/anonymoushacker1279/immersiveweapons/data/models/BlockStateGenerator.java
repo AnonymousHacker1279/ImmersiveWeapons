@@ -134,6 +134,13 @@ public class BlockStateGenerator extends BlockStateProvider {
 							":block/" + Objects.requireNonNull(ForgeRegistries.BLOCKS.getKey(block)).getPath()));
 		}
 
+		// Generate data for cube-bottom-top blocks
+		simpleBlock(DeferredRegistryHandler.BLOOD_SANDSTONE.get(), models()
+				.cubeBottomTop("blood_sandstone",
+						new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/blood_sandstone"),
+						new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/blood_sandstone_bottom"),
+						new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/blood_sandstone_top")));
+
 		// Generate data for rotatable pillar blocks
 		axisBlock(DeferredRegistryHandler.CLOUD_MARBLE_PILLAR.get());
 		logBlock(DeferredRegistryHandler.BURNED_OAK_LOG.get());
@@ -232,7 +239,6 @@ public class BlockStateGenerator extends BlockStateProvider {
 								.emissivity(15)
 								.end()).end());
 
-
 		// Generate data for stair blocks
 		stairsBlock(DeferredRegistryHandler.CLOUD_MARBLE_BRICK_STAIRS.get(),
 				new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/cloud_marble_bricks"));
@@ -242,6 +248,22 @@ public class BlockStateGenerator extends BlockStateProvider {
 				new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/burned_oak_planks"));
 		stairsBlock(DeferredRegistryHandler.STARDUST_STAIRS.get(),
 				new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/stardust_planks"));
+		stairsBlock(DeferredRegistryHandler.BLOOD_SANDSTONE_STAIRS.get(),
+				new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/blood_sandstone"));
+		stairsBlock(DeferredRegistryHandler.SMOOTH_BLOOD_SANDSTONE_STAIRS.get(),
+				new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/blood_sandstone_top"));
+
+		// Do these here because it's required for variants.
+		simpleBlock(DeferredRegistryHandler.SMOOTH_BLOOD_SANDSTONE.get(), models()
+				.cubeAll("smooth_blood_sandstone", new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/blood_sandstone_top")));
+		horizontalBlock(DeferredRegistryHandler.CHISELED_BLOOD_SANDSTONE.get(),
+				new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/chiseled_blood_sandstone"),
+				new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/chiseled_blood_sandstone"),
+				new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/blood_sandstone_top"));
+		horizontalBlock(DeferredRegistryHandler.CUT_BLOOD_SANDSTONE.get(),
+				new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/cut_blood_sandstone"),
+				new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/cut_blood_sandstone"),
+				new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/blood_sandstone_top"));
 
 		// Generate data for slab blocks
 		slabBlock(DeferredRegistryHandler.CLOUD_MARBLE_BRICK_SLAB.get(),
@@ -256,6 +278,17 @@ public class BlockStateGenerator extends BlockStateProvider {
 		slabBlock(DeferredRegistryHandler.STARDUST_SLAB.get(),
 				new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/stardust_planks"),
 				new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/stardust_planks"));
+		slabBlock(DeferredRegistryHandler.BLOOD_SANDSTONE_SLAB.get(),
+				new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/blood_sandstone"),
+				new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/blood_sandstone"));
+		slabBlock(DeferredRegistryHandler.CUT_BLOOD_SANDSTONE_SLAB.get(),
+				new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/cut_blood_sandstone"),
+				new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/cut_blood_sandstone"),
+				new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/blood_sandstone_top"),
+				new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/blood_sandstone_top"));
+		slabBlock(DeferredRegistryHandler.SMOOTH_BLOOD_SANDSTONE_SLAB.get(),
+				new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/smooth_blood_sandstone"),
+				new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/blood_sandstone_top"));
 
 		// Generate data for fence and fence gate blocks
 		fenceBlock(DeferredRegistryHandler.BURNED_OAK_FENCE.get(),
@@ -269,6 +302,12 @@ public class BlockStateGenerator extends BlockStateProvider {
 				new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/stardust_planks"));
 		fenceGateBlock(DeferredRegistryHandler.STARDUST_FENCE_GATE.get(),
 				new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/stardust_planks"));
+
+		// Generate data for wall blocks
+		wallBlock(DeferredRegistryHandler.CLOUD_MARBLE_BRICK_WALL.get(),
+				new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/cloud_marble_bricks"));
+		wallBlock(DeferredRegistryHandler.BLOOD_SANDSTONE_WALL.get(),
+				new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/blood_sandstone"));
 
 		// Generate data for door and trapdoor blocks
 		doorBlockWithRenderType(DeferredRegistryHandler.BURNED_OAK_DOOR.get(),
@@ -325,6 +364,10 @@ public class BlockStateGenerator extends BlockStateProvider {
 				.cross(DeferredRegistryHandler.STARDUST_SAPLING.getId().toString(),
 						new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/stardust_sapling"))
 				.renderType("minecraft:cutout_mipped"));
+		simpleBlock(DeferredRegistryHandler.DEATHWEED.get(), models()
+				.cross(DeferredRegistryHandler.DEATHWEED.getId().toString(),
+						new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/deathweed"))
+				.renderType("minecraft:cutout_mipped"));
 
 		// Generate data for miscellaneous blocks not covered above
 		horizontalBlock(DeferredRegistryHandler.SMALL_PARTS_TABLE.get(), models()
@@ -340,6 +383,11 @@ public class BlockStateGenerator extends BlockStateProvider {
 				.withExistingParent(DeferredRegistryHandler.POTTED_MOONGLOW.getId().toString(),
 						"minecraft:block/flower_pot_cross")
 				.texture("plant", new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/moonglow"))
+				.renderType("minecraft:cutout_mipped"));
+		simpleBlock(DeferredRegistryHandler.POTTED_DEATHWEED.get(), models()
+				.withExistingParent(DeferredRegistryHandler.POTTED_DEATHWEED.getId().toString(),
+						"minecraft:block/flower_pot_cross")
+				.texture("plant", new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/deathweed"))
 				.renderType("minecraft:cutout_mipped"));
 
 		getVariantBuilder(DeferredRegistryHandler.BEAR_TRAP.get())

@@ -1,6 +1,7 @@
 package tech.anonymoushacker1279.immersiveweapons.data.recipes;
 
 import com.google.common.collect.ImmutableList;
+import net.minecraft.advancements.CriterionTriggerInstance;
 import net.minecraft.advancements.critereon.EntityPredicate.Composite;
 import net.minecraft.advancements.critereon.InventoryChangeTrigger;
 import net.minecraft.advancements.critereon.ItemPredicate;
@@ -15,6 +16,7 @@ import net.minecraft.world.item.alchemy.PotionUtils;
 import net.minecraft.world.item.alchemy.Potions;
 import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.level.ItemLike;
+import net.minecraft.world.level.block.Block;
 import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.crafting.StrictNBTIngredient;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -27,6 +29,7 @@ import tech.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
 import java.util.*;
 import java.util.function.Consumer;
 
+import static tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities.blockRegistryPath;
 import static tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities.itemRegistryPath;
 
 public class RecipeGenerator extends RecipeProvider {
@@ -1260,8 +1263,8 @@ public class RecipeGenerator extends RecipeProvider {
 				.save(finishedRecipeConsumer);
 	}
 
-	private static void createSmeltingRecipe(List<ItemLike> pIngredients,
-	                                         ItemLike pResult, float pExperience, int pCookingTime, String pGroup) {
+	public static void createSmeltingRecipe(List<ItemLike> pIngredients,
+	                                        ItemLike pResult, float pExperience, int pCookingTime, String pGroup) {
 		oreCooking(RecipeSerializer.SMELTING_RECIPE, pIngredients, pResult, pExperience,
 				pCookingTime, pGroup, "_from_smelting");
 	}
@@ -1342,5 +1345,123 @@ public class RecipeGenerator extends RecipeProvider {
 
 	protected static String getHasName(ItemLike pItemLike) {
 		return "has_" + getItemName(pItemLike);
+	}
+
+	public static class CraftingTableRecipes {
+
+		public static void bricks(Block bricks, ItemLike material) {
+			ShapedRecipeBuilder.shaped(bricks, 4)
+					.define('a', material)
+					.pattern("aa ")
+					.pattern("aa ")
+					.unlockedBy("has_" + blockRegistryPath(bricks).getPath(), has(material))
+					.save(finishedRecipeConsumer, blockRegistryPath(bricks));
+		}
+
+		public static void slab(Block slab, ItemLike material, String triggerName, CriterionTriggerInstance trigger) {
+			ShapedRecipeBuilder.shaped(slab, 6)
+					.pattern("aaa")
+					.define('a', material)
+					.unlockedBy(triggerName, trigger)
+					.save(finishedRecipeConsumer, blockRegistryPath(slab));
+		}
+
+		public static void stairs(Block stairs, ItemLike material, String triggerName, CriterionTriggerInstance trigger) {
+			ShapedRecipeBuilder.shaped(stairs, 4)
+					.pattern("a  ")
+					.pattern("aa ")
+					.pattern("aaa")
+					.define('a', material)
+					.unlockedBy(triggerName, trigger)
+					.save(finishedRecipeConsumer, blockRegistryPath(stairs));
+		}
+
+		public static void wall(Block wall, ItemLike material, String triggerName, CriterionTriggerInstance trigger) {
+			ShapedRecipeBuilder.shaped(wall, 6)
+					.pattern("aaa")
+					.pattern("aaa")
+					.define('a', material)
+					.unlockedBy(triggerName, trigger)
+					.save(finishedRecipeConsumer, blockRegistryPath(wall));
+		}
+
+		public static void pillar(Block pillar, ItemLike material, String triggerName, CriterionTriggerInstance trigger) {
+			ShapedRecipeBuilder.shaped(pillar, 4)
+					.pattern("a")
+					.pattern("a")
+					.define('a', material)
+					.unlockedBy(triggerName, trigger)
+					.save(finishedRecipeConsumer, blockRegistryPath(pillar));
+		}
+
+		public static void chiseled(Block chiseled, ItemLike material, String triggerName, CriterionTriggerInstance trigger) {
+			ShapedRecipeBuilder.shaped(chiseled)
+					.pattern("a")
+					.pattern("a")
+					.define('a', material)
+					.unlockedBy(triggerName, trigger)
+					.save(finishedRecipeConsumer, blockRegistryPath(chiseled));
+		}
+
+		public static void cut(Block cut, ItemLike material, String triggerName, CriterionTriggerInstance trigger) {
+			ShapedRecipeBuilder.shaped(cut, 4)
+					.pattern("aa")
+					.pattern("aa")
+					.define('a', material)
+					.unlockedBy(triggerName, trigger)
+					.save(finishedRecipeConsumer, blockRegistryPath(cut));
+		}
+	}
+
+	public static class StonecutterRecipes {
+
+		public static void bricks(Block bricks, ItemLike material) {
+			SingleItemRecipeBuilder.stonecutting(Ingredient.of(material), bricks)
+					.unlockedBy("has_" + blockRegistryPath(bricks).getPath(), has(material))
+					.save(finishedRecipeConsumer, ImmersiveWeapons.MOD_ID + ":"
+							+ getConversionRecipeName(bricks, material) + "_stonecutting");
+		}
+
+		public static void slab(Block slab, ItemLike material, String triggerName, CriterionTriggerInstance trigger) {
+			SingleItemRecipeBuilder.stonecutting(Ingredient.of(material), slab, 2)
+					.unlockedBy(triggerName, trigger)
+					.save(finishedRecipeConsumer, ImmersiveWeapons.MOD_ID + ":"
+							+ getConversionRecipeName(slab, material) + "_stonecutting");
+		}
+
+		public static void stairs(Block stairs, ItemLike material, String triggerName, CriterionTriggerInstance trigger) {
+			SingleItemRecipeBuilder.stonecutting(Ingredient.of(material), stairs)
+					.unlockedBy(triggerName, trigger)
+					.save(finishedRecipeConsumer, ImmersiveWeapons.MOD_ID + ":"
+							+ getConversionRecipeName(stairs, material) + "_stonecutting");
+		}
+
+		public static void wall(Block wall, ItemLike material, String triggerName, CriterionTriggerInstance trigger) {
+			SingleItemRecipeBuilder.stonecutting(Ingredient.of(material), wall)
+					.unlockedBy(triggerName, trigger)
+					.save(finishedRecipeConsumer, ImmersiveWeapons.MOD_ID + ":"
+							+ getConversionRecipeName(wall, material) + "_stonecutting");
+		}
+
+		public static void pillar(Block pillar, ItemLike material, String triggerName, CriterionTriggerInstance trigger) {
+			SingleItemRecipeBuilder.stonecutting(Ingredient.of(material), pillar)
+					.unlockedBy(triggerName, trigger)
+					.save(finishedRecipeConsumer, ImmersiveWeapons.MOD_ID + ":"
+							+ getConversionRecipeName(pillar, material) + "_stonecutting");
+		}
+
+		public static void chiseled(Block chiseled, ItemLike material, String triggerName, CriterionTriggerInstance trigger) {
+			SingleItemRecipeBuilder.stonecutting(Ingredient.of(material), chiseled)
+					.unlockedBy(triggerName, trigger)
+					.save(finishedRecipeConsumer, ImmersiveWeapons.MOD_ID + ":"
+							+ getConversionRecipeName(chiseled, material) + "_stonecutting");
+		}
+
+		public static void cut(Block cut, ItemLike material, String triggerName, CriterionTriggerInstance trigger) {
+			SingleItemRecipeBuilder.stonecutting(Ingredient.of(material), cut)
+					.unlockedBy(triggerName, trigger)
+					.save(finishedRecipeConsumer, ImmersiveWeapons.MOD_ID + ":"
+							+ getConversionRecipeName(cut, material) + "_stonecutting");
+		}
 	}
 }
