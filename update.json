@@ -1,8 +1,8 @@
 {
 	"homepage": "https://www.curseforge.com/minecraft/mc-mods/immersive-weapons",
 	"promos": {
-		"1.19-latest": "1.19-1.18.1",
-		"1.19-recommended": "1.19-1.18.1",
+		"1.19-latest": "1.19-1.18.2",
+		"1.19-recommended": "1.19-1.18.2",
 		"1.18.2-latest": "1.18.2-1.17.0",
 		"1.18.2-recommended": "1.18.2-1.17.0",
 		"1.18.1-latest": "1.18.1-1.14.0-alpha1",
@@ -17,6 +17,7 @@
 		"1.16.4-recommended": "1.16.5-1.1.1"
 	},
 	"1.19": {
+		"1.19-1.18.2": "Translation updates - https://github.com/AnonymousHacker1279/ImmersiveWeapons/releases/tag/v1.18.2",
 		"1.19-1.18.1": "Bugfixes - https://github.com/AnonymousHacker1279/ImmersiveWeapons/releases/tag/v1.18.1",
 		"1.19-1.18.0": "Full 1.19 Release - https://github.com/AnonymousHacker1279/ImmersiveWeapons/releases/tag/v1.18.0",
 		"1.19-1.18.0-beta1": "Support modern Forge versions, again - https://github.com/AnonymousHacker1279/ImmersiveWeapons/releases/tag/v1.18.0-beta1",
