@@ -210,6 +210,11 @@ public abstract class AbstractWanderingWarriorEntity extends Monster implements 
 		boolean notInWater = pLevel.getBlockState(blockPosition().below()).getFluidState().isEmpty();
 		boolean onGround = !pLevel.getBlockState(blockPosition().below()).isAir();
 
+		// If the reason is NATURAL, check the light level
+		if (pSpawnReason == MobSpawnType.NATURAL) {
+			return walkTargetAboveZero && notInWater && onGround && isDarkEnoughToSpawn((ServerLevelAccessor) pLevel, blockPosition(), pLevel.getRandom());
+		}
+
 		return walkTargetAboveZero && notInWater && onGround;
 	}
 
