@@ -158,7 +158,15 @@ public class ClientForgeEventSubscriber {
 				}
 			}
 			// Increase the chance that the next damage taken will be neutralized.
-			celestialProtectionChanceForNoDamage += damage * 0.01f;
+			if (entity.getItemBySlot(EquipmentSlot.HEAD).getItem() == DeferredRegistryHandler.ASTRAL_HELMET.get() &&
+					entity.getItemBySlot(EquipmentSlot.CHEST).getItem() == DeferredRegistryHandler.ASTRAL_CHESTPLATE.get() &&
+					entity.getItemBySlot(EquipmentSlot.LEGS).getItem() == DeferredRegistryHandler.ASTRAL_LEGGINGS.get() &&
+					entity.getItemBySlot(EquipmentSlot.FEET).getItem() == DeferredRegistryHandler.ASTRAL_BOOTS.get()) {
+
+				celestialProtectionChanceForNoDamage += damage * 0.03f;
+			} else {
+				celestialProtectionChanceForNoDamage += damage * 0.01f;
+			}
 
 			// This effect grants a 5% damage reduction to all damage taken, unless they rolled for no damage.
 			damage = damage * 0.95f;

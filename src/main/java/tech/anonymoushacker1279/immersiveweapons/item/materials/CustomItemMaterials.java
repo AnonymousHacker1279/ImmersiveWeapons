@@ -1,103 +1,44 @@
 package tech.anonymoushacker1279.immersiveweapons.item.materials;
 
-import net.minecraft.world.item.Items;
-import net.minecraft.world.item.Tier;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.BlockTags;
+import net.minecraft.world.item.*;
 import net.minecraft.world.item.crafting.Ingredient;
-import org.jetbrains.annotations.NotNull;
+import net.minecraftforge.common.ForgeTier;
+import net.minecraftforge.common.TierSortingRegistry;
 import tech.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
 
-import java.util.function.Supplier;
+import java.util.List;
 
-public enum CustomItemMaterials implements Tier {
-	MOLTEN(3, 1900, 8.2F, 3.0F, 17, () -> Ingredient.of(DeferredRegistryHandler.MOLTEN_INGOT.get())),
-	COPPER(2, 180, 5.9F, 2.0F, 12, () -> Ingredient.of(Items.COPPER_INGOT)),
-	TESLA(4, 2100, 18.0F, 3.0F, 20, () -> Ingredient.of(DeferredRegistryHandler.TESLA_INGOT.get())),
-	COBALT(2, 300, 6.2F, 3.0F, 15, () -> Ingredient.of(DeferredRegistryHandler.COBALT_INGOT.get())),
-	VENTUS(3, 1900, 8.6F, 3.0F, 16, () -> Ingredient.of(DeferredRegistryHandler.VENTUS_SHARD.get()));
-
-	private final int harvestLevel;
-	private final int maxUses;
-	private final float efficiency;
-	private final float attackDamage;
-	private final int enchantability;
-	private final Supplier<Ingredient> repairMaterial;
-
-	/**
-	 * Constructor for CustomItemMaterials.
-	 *
-	 * @param harvestLevelIn   the harvest level
-	 * @param maxUsesIn        the max uses
-	 * @param efficiencyIn     the efficiency
-	 * @param attackDamageIn   the attack damage
-	 * @param enchantabilityIn the enchantability
-	 * @param repairMaterialIn the <code>Supplier</code> extending Ingredient for repairs
-	 */
-	CustomItemMaterials(int harvestLevelIn, int maxUsesIn, float efficiencyIn, float attackDamageIn, int enchantabilityIn, Supplier<Ingredient> repairMaterialIn) {
-		harvestLevel = harvestLevelIn;
-		maxUses = maxUsesIn;
-		efficiency = efficiencyIn;
-		attackDamage = attackDamageIn;
-		enchantability = enchantabilityIn;
-		repairMaterial = repairMaterialIn;
-	}
-
-	/**
-	 * Get max uses.
-	 *
-	 * @return int
-	 */
-	@Override
-	public int getUses() {
-		return maxUses;
-	}
-
-	/**
-	 * Get the efficiency.
-	 *
-	 * @return float
-	 */
-	@Override
-	public float getSpeed() {
-		return efficiency;
-	}
-
-	/**
-	 * Get the attack damage.
-	 *
-	 * @return float
-	 */
-	@Override
-	public float getAttackDamageBonus() {
-		return attackDamage;
-	}
-
-	/**
-	 * Get the harvest level.
-	 *
-	 * @return int
-	 */
-	@Override
-	public int getLevel() {
-		return harvestLevel;
-	}
-
-	/**
-	 * Get the enchantability.
-	 *
-	 * @return int
-	 */
-	@Override
-	public int getEnchantmentValue() {
-		return enchantability;
-	}
-
-	/**
-	 * Get the repair ingredient.
-	 *
-	 * @return Ingredient
-	 */
-	@Override
-	public @NotNull Ingredient getRepairIngredient() {
-		return repairMaterial.get();
-	}
+public class CustomItemMaterials {
+	public static final Tier COPPER = TierSortingRegistry.registerTier(
+			new ForgeTier(2, 180, 5.9F, 2.0f, 12, BlockTags.create(new ResourceLocation("")),
+					() -> Ingredient.of(Items.COPPER_INGOT)),
+			new ResourceLocation("immersiveweapons:copper"),
+			List.of(Tiers.IRON), List.of(Tiers.DIAMOND));
+	public static final Tier COBALT = TierSortingRegistry.registerTier(
+			new ForgeTier(2, 300, 6.2F, 3.0f, 15, BlockTags.create(new ResourceLocation("")),
+					() -> Ingredient.of(Items.COPPER_INGOT)),
+			new ResourceLocation("immersiveweapons:cobalt"),
+			List.of(Tiers.IRON), List.of(Tiers.DIAMOND));
+	public static final Tier MOLTEN = TierSortingRegistry.registerTier(
+			new ForgeTier(4, 1900, 10.2F, 3.0F, 17, BlockTags.create(new ResourceLocation("")),
+					() -> Ingredient.of(DeferredRegistryHandler.MOLTEN_INGOT.get())),
+			new ResourceLocation("immersiveweapons:molten"),
+			List.of(Tiers.NETHERITE), List.of());
+	public static final Tier TESLA = TierSortingRegistry.registerTier(
+			new ForgeTier(4, 2100, 18.0F, 3.0F, 20, BlockTags.create(new ResourceLocation("")),
+					() -> Ingredient.of(DeferredRegistryHandler.TESLA_INGOT.get())),
+			new ResourceLocation("immersiveweapons:tesla"),
+			List.of(Tiers.NETHERITE), List.of());
+	public static final Tier VENTUS = TierSortingRegistry.registerTier(
+			new ForgeTier(4, 1900, 12.6F, 3.0F, 16, BlockTags.create(new ResourceLocation("")),
+					() -> Ingredient.of(DeferredRegistryHandler.VENTUS_SHARD.get())),
+			new ResourceLocation("immersiveweapons:ventus"),
+			List.of(Tiers.NETHERITE), List.of());
+	public static final Tier ASTRAL = TierSortingRegistry.registerTier(
+			new ForgeTier(4, 600, 24.0F, 3.0F, 22, BlockTags.create(new ResourceLocation("")),
+					() -> Ingredient.of(DeferredRegistryHandler.ASTRAL_INGOT.get())),
+			new ResourceLocation("immersiveweapons:astral"),
+			List.of(Tiers.NETHERITE), List.of());
 }

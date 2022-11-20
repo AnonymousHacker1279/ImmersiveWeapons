@@ -171,6 +171,11 @@ public class ItemModelGenerator extends ItemModelProvider {
 				} else if (item == DeferredRegistryHandler.BLOOD_SANDSTONE_WALL_ITEM.get()) {
 					wallInventory(item.toString(),
 							new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/blood_sandstone"));
+				} else if (item == DeferredRegistryHandler.ASTRAL_CRYSTAL_ITEM.get()) {
+					getBuilder(item.toString())
+							.parent(new ModelFile.UncheckedModelFile("item/generated"))
+							.texture("layer0", new ResourceLocation(ImmersiveWeapons.MOD_ID,
+									"block/astral_crystal"));
 				} else if (ItemLists.headItems.contains(item)) {
 					entitySkull(item);
 				} else {

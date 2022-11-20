@@ -95,5 +95,17 @@ public record ToolFamilies(TagKey<Item> material,
 			null, null, null, null, null
 	);
 
-	public static final Collection<ToolFamilies> FAMILIES = ImmutableList.of(COPPER, COBALT, MOLTEN, VENTUS, TESLA);
+	public static final ToolFamilies ASTRAL = new ToolFamilies(
+			ImmersiveWeaponsItemTagGroups.ASTRAL_INGOTS,
+			null,
+			ImmersiveWeaponsItemTagGroups.OBSIDIAN_RODS,
+			DeferredRegistryHandler.ASTRAL_SWORD,
+			DeferredRegistryHandler.ASTRAL_PICKAXE,
+			DeferredRegistryHandler.ASTRAL_AXE,
+			DeferredRegistryHandler.ASTRAL_SHOVEL,
+			DeferredRegistryHandler.ASTRAL_HOE,
+			null, null, null, null, null
+	);
+
+	public static final Collection<ToolFamilies> FAMILIES = ImmutableList.of(COPPER, COBALT, MOLTEN, VENTUS, TESLA, ASTRAL);
 }

@@ -204,7 +204,8 @@ public class BiomesGenerator {
 
 	private static BiomeGenerationSettings getTiltrosWastesGenerationSettings() {
 		BiomeGenerationSettings.Builder generationBuilder = new BiomeGenerationSettings.Builder()
-				.addCarver(Carving.AIR, CARVER_REGISTRY.get().getOrCreateHolderOrThrow(CarversGenerator.TILTROS_WASTES_KEY));
+				.addCarver(Carving.AIR, CARVER_REGISTRY.get().getOrCreateHolderOrThrow(CarversGenerator.TILTROS_WASTES_KEY))
+				.addFeature(Decoration.LOCAL_MODIFICATIONS, FEATURE_REGISTRY.get().getOrCreateHolderOrThrow(BiomeFeatures.ASTRAL_GEODE_KEY));
 
 		VanillaFeatures.getOverworldBaseGeneration(FEATURE_REGISTRY.get(), CARVER_REGISTRY.get(), generationBuilder);
 		VanillaFeatures.addPlainGrass(FEATURE_REGISTRY.get(), generationBuilder);

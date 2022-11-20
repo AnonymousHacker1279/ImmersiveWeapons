@@ -3,6 +3,7 @@ package tech.anonymoushacker1279.immersiveweapons.block.decoration;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffect;
+import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.BlockGetter;
@@ -35,10 +36,15 @@ public class DeathweedBlock extends FlowerBlock {
 
 	@Override
 	public void entityInside(@NotNull BlockState state, @NotNull Level level, @NotNull BlockPos pos, @NotNull Entity entity) {
-		if (entity instanceof LivingEntity) {
+		if (entity instanceof LivingEntity livingEntity) {
 			if (!level.isClientSide) {
-				if (entity.tickCount % 8 == 0 && GeneralUtilities.getRandomNumber(0.0f, 1.0f) <= 0.65f) {
-					entity.hurt(DAMAGE_SOURCE, 1.0f);
+				float chance = GeneralUtilities.getRandomNumber(0.0f, 1.0f);
+				if (livingEntity.tickCount % 8 == 0 && chance <= 0.65f) {
+					livingEntity.hurt(DAMAGE_SOURCE, 1.0f);
+
+					if (chance <= 0.25f) {
+						livingEntity.addEffect(new MobEffectInstance(DeferredRegistryHandler.DAMAGE_VULNERABILITY_EFFECT.get(), 200));
+					}
 				}
 			}
 		}

@@ -75,31 +75,36 @@ public class ItemTagsGenerator extends ItemTagsProvider {
 				DeferredRegistryHandler.COBALT_SWORD.get(),
 				DeferredRegistryHandler.MOLTEN_SWORD.get(),
 				DeferredRegistryHandler.TESLA_SWORD.get(),
-				DeferredRegistryHandler.VENTUS_SWORD.get());
+				DeferredRegistryHandler.VENTUS_SWORD.get(),
+				DeferredRegistryHandler.ASTRAL_SWORD.get());
 		// Pickaxe
 		tag(Tags.Items.TOOLS_PICKAXES).add(DeferredRegistryHandler.COPPER_PICKAXE.get(),
 				DeferredRegistryHandler.COBALT_PICKAXE.get(),
 				DeferredRegistryHandler.MOLTEN_PICKAXE.get(),
 				DeferredRegistryHandler.TESLA_PICKAXE.get(),
-				DeferredRegistryHandler.VENTUS_PICKAXE.get());
+				DeferredRegistryHandler.VENTUS_PICKAXE.get(),
+				DeferredRegistryHandler.ASTRAL_PICKAXE.get());
 		// Axe
 		tag(Tags.Items.TOOLS_AXES).add(DeferredRegistryHandler.COPPER_AXE.get(),
 				DeferredRegistryHandler.COBALT_AXE.get(),
 				DeferredRegistryHandler.MOLTEN_AXE.get(),
 				DeferredRegistryHandler.TESLA_AXE.get(),
-				DeferredRegistryHandler.VENTUS_AXE.get());
+				DeferredRegistryHandler.VENTUS_AXE.get(),
+				DeferredRegistryHandler.ASTRAL_AXE.get());
 		// Shovel
 		tag(Tags.Items.TOOLS_SHOVELS).add(DeferredRegistryHandler.COPPER_SHOVEL.get(),
 				DeferredRegistryHandler.COBALT_SHOVEL.get(),
 				DeferredRegistryHandler.MOLTEN_SHOVEL.get(),
 				DeferredRegistryHandler.TESLA_SHOVEL.get(),
-				DeferredRegistryHandler.VENTUS_SHOVEL.get());
+				DeferredRegistryHandler.VENTUS_SHOVEL.get(),
+				DeferredRegistryHandler.ASTRAL_SHOVEL.get());
 		// Hoe
 		tag(Tags.Items.TOOLS_HOES).add(DeferredRegistryHandler.COPPER_HOE.get(),
 				DeferredRegistryHandler.COBALT_HOE.get(),
 				DeferredRegistryHandler.MOLTEN_HOE.get(),
 				DeferredRegistryHandler.TESLA_HOE.get(),
-				DeferredRegistryHandler.VENTUS_HOE.get());
+				DeferredRegistryHandler.VENTUS_HOE.get(),
+				DeferredRegistryHandler.ASTRAL_HOE.get());
 
 		// Armor tags
 
@@ -154,6 +159,7 @@ public class ItemTagsGenerator extends ItemTagsProvider {
 		tag(ImmersiveWeaponsItemTagGroups.MOLTEN_INGOTS).add(DeferredRegistryHandler.MOLTEN_INGOT.get());
 		tag(ImmersiveWeaponsItemTagGroups.ELECTRIC_INGOTS).add(DeferredRegistryHandler.ELECTRIC_INGOT.get());
 		tag(ImmersiveWeaponsItemTagGroups.TESLA_INGOTS).add(DeferredRegistryHandler.TESLA_INGOT.get());
+		tag(ImmersiveWeaponsItemTagGroups.ASTRAL_INGOTS).add(DeferredRegistryHandler.ASTRAL_INGOT.get());
 
 		// Shard tags
 		tag(ImmersiveWeaponsItemTagGroups.MOLTEN_SHARDS).add(DeferredRegistryHandler.MOLTEN_SHARD.get());

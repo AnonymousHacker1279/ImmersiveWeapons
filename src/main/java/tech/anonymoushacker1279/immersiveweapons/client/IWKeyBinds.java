@@ -15,4 +15,9 @@ public class IWKeyBinds {
 			Type.KEYSYM,
 			InputConstants.KEY_N,
 			CATEGORY);
+	public static final KeyMapping ASTRAL_ARMOR_DASH_EFFECT = new KeyMapping(ImmersiveWeapons.MOD_ID + ".key.astralArmorDashEffect",
+			KeyConflictContext.IN_GAME,
+			Type.MOUSE,
+			5, // Mouse button 5
+			CATEGORY);
 }

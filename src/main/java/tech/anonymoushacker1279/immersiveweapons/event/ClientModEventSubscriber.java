@@ -30,8 +30,7 @@ import tech.anonymoushacker1279.immersiveweapons.client.model.CelestialTowerMode
 import tech.anonymoushacker1279.immersiveweapons.client.particle.*;
 import tech.anonymoushacker1279.immersiveweapons.client.particle.bullet_impact.BulletImpactParticle;
 import tech.anonymoushacker1279.immersiveweapons.client.particle.smoke_grenade.SmokeGrenadeParticle;
-import tech.anonymoushacker1279.immersiveweapons.client.renderer.blockentity.ChairRenderer;
-import tech.anonymoushacker1279.immersiveweapons.client.renderer.blockentity.ShelfRenderer;
+import tech.anonymoushacker1279.immersiveweapons.client.renderer.blockentity.*;
 import tech.anonymoushacker1279.immersiveweapons.client.renderer.dimension.TiltrosDimensionSpecialEffects;
 import tech.anonymoushacker1279.immersiveweapons.client.renderer.entity.misc.CustomBoatRenderer;
 import tech.anonymoushacker1279.immersiveweapons.client.renderer.entity.mob.*;
@@ -163,6 +162,7 @@ public class ClientModEventSubscriber {
 		event.registerBlockEntityRenderer(DeferredRegistryHandler.BURNED_OAK_SIGN_ENTITY.get(), SignRenderer::new);
 		event.registerBlockEntityRenderer(DeferredRegistryHandler.CUSTOM_SKULL_BLOCK_ENTITY.get(), SkullBlockRenderer::new);
 		event.registerBlockEntityRenderer(DeferredRegistryHandler.STARDUST_SIGN_ENTITY.get(), SignRenderer::new);
+		event.registerBlockEntityRenderer(DeferredRegistryHandler.ASTRAL_CRYSTAL_BLOCK_ENTITY.get(), context -> new AstralCrystalRenderer());
 	}
 
 	/**
@@ -219,6 +219,7 @@ public class ClientModEventSubscriber {
 		ImmersiveWeapons.LOGGER.info("Registering key bindings");
 
 		event.register(IWKeyBinds.TOGGLE_ARMOR_EFFECT);
+		event.register(IWKeyBinds.ASTRAL_ARMOR_DASH_EFFECT);
 	}
 
 	@SubscribeEvent

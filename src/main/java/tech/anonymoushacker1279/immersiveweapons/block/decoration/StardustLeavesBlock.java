@@ -21,7 +21,7 @@ public class StardustLeavesBlock extends LeavesBlock {
 			if (randomSource.nextFloat() <= 0.15f) {
 				level.addParticle(DeferredRegistryHandler.STARDUST_LEAVES_PARTICLE.get(),
 						pos.getX() + 0.5D + (GeneralUtilities.getRandomNumber(-0.1D, 0.1D)),
-						pos.getY() + 0.0D + (GeneralUtilities.getRandomNumber(-0.1D, 0.1D)),
+						pos.getY() + (GeneralUtilities.getRandomNumber(-0.1D, 0.1D)),
 						pos.getZ() + 0.5D + (GeneralUtilities.getRandomNumber(-0.1D, 0.1D)),
 						(GeneralUtilities.getRandomNumber(-0.03D, 0.03D)),
 						(GeneralUtilities.getRandomNumber(-0.03D, -0.01D)),

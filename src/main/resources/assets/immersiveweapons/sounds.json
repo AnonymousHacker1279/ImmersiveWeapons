@@ -545,5 +545,18 @@
 				"name": "immersiveweapons:item/musket/fire/fire"
 			}
 		]
+	},
+	"astral_armor_equip": {
+		"subtitle": "immersiveweapons.subtitle.armor.astral.equip",
+		"sounds": [
+			{
+				"name": "immersiveweapons:armor/equip/astral/equip_0"
+			},
+			{
+				"name": "immersiveweapons:armor/equip/astral/equip_1"
+			},{
+				"name": "immersiveweapons:armor/equip/astral/equip_2"
+			}
+		]
 	}
 }

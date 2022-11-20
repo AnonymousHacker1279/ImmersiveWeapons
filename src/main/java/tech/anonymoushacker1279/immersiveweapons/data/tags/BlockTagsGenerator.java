@@ -193,6 +193,8 @@ public class BlockTagsGenerator extends BlockTagsProvider {
 				tier = 2;
 			} else if (block == DeferredRegistryHandler.MOLTEN_ORE.get()) {
 				tier = 3;
+			} else if (block == DeferredRegistryHandler.ASTRAL_ORE.get()) {
+				tier = 4;
 			}
 
 			if (tagStage != 4) {
@@ -208,6 +210,7 @@ public class BlockTagsGenerator extends BlockTagsProvider {
 				switch (tier) {
 					case 2 -> tag(BlockTags.NEEDS_IRON_TOOL).add(block);
 					case 3 -> tag(BlockTags.NEEDS_DIAMOND_TOOL).add(block);
+					case 4 -> tag(Blocks.NEEDS_NETHERITE_TOOL).add(block);
 					default -> tag(BlockTags.NEEDS_STONE_TOOL).add(block);
 				}
 			}

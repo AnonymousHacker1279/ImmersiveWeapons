@@ -38,10 +38,10 @@
     "immersiveweapons:deepslate_sulfur_ore",
     "immersiveweapons:nether_sulfur_ore",
     "immersiveweapons:raw_sulfur_block",
+    "immersiveweapons:astral_crystal",
     "immersiveweapons:barbed_wire_fence",
     "immersiveweapons:cobalt_ore",
     "immersiveweapons:deepslate_cobalt_ore",
-    "immersiveweapons:ventus_ore",
     "immersiveweapons:cobalt_block",
     "immersiveweapons:raw_cobalt_block",
     "immersiveweapons:bear_trap",
@@ -50,8 +50,10 @@
     "immersiveweapons:celestial_lantern",
     "immersiveweapons:molten_ore",
     "immersiveweapons:electric_ore",
+    "immersiveweapons:ventus_ore",
     "immersiveweapons:molten_block",
     "immersiveweapons:tesla_block",
-    "immersiveweapons:tesla_synthesizer"
+    "immersiveweapons:tesla_synthesizer",
+    "immersiveweapons:astral_ore"
   ]
 }

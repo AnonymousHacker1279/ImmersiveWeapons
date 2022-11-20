@@ -45,6 +45,7 @@ public class PostSetupHandler {
 		CustomArmorMaterials.VENTUS.setEquipSound(DeferredRegistryHandler.VENTUS_ARMOR_EQUIP.get());
 		CustomArmorMaterials.COPPER.setEquipSound(DeferredRegistryHandler.COPPER_ARMOR_EQUIP.get());
 		CustomArmorMaterials.COBALT.setEquipSound(DeferredRegistryHandler.COBALT_ARMOR_EQUIP.get());
+		CustomArmorMaterials.ASTRAL.setEquipSound(DeferredRegistryHandler.ASTRAL_ARMOR_EQUIP.get());
 
 		// Add custom plants to the flower pot block
 		FlowerPotBlock emptyPot = ((FlowerPotBlock) Blocks.FLOWER_POT);

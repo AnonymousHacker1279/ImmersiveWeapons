@@ -30,6 +30,7 @@ public class PlacedFeaturesGenerator {
 		placedFeatures.put(BiomeFeatures.PATCH_MOONGLOW, BiomeFeatures.PATCH_MOONGLOW_FEATURE);
 		placedFeatures.put(BiomeFeatures.STARDUST_TREE, BiomeFeatures.STARDUST_TREE_FEATURE);
 		placedFeatures.put(BiomeFeatures.PATCH_DEATHWEED, BiomeFeatures.PATCH_DEATHWEED_FEATURE);
+		placedFeatures.put(BiomeFeatures.ASTRAL_GEODE, BiomeFeatures.ASTRAL_GEODE_FEATURE);
 
 		return placedFeatures;
 	}

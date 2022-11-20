@@ -4,9 +4,11 @@ import net.minecraft.core.*;
 import net.minecraft.data.worldgen.placement.PlacementUtils;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.util.valueproviders.ConstantInt;
 import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.levelgen.*;
 import net.minecraft.world.level.levelgen.Heightmap.Types;
 import net.minecraft.world.level.levelgen.blockpredicates.BlockPredicate;
 import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
@@ -33,6 +35,7 @@ public class BiomeFeatures {
 	public static Holder<ConfiguredFeature<?, ?>> STARDUST_TREE_FEATURE_HOLDER;
 	public static PlacedFeature STARDUST_TREE_FEATURE;
 	public static PlacedFeature PATCH_DEATHWEED_FEATURE;
+	public static PlacedFeature ASTRAL_GEODE_FEATURE;
 
 	public static void init() {
 		PATCH_WOODEN_SPIKES_FEATURE = new PlacedFeature(
@@ -115,6 +118,48 @@ public class BiomeFeatures {
 				InSquarePlacement.spread(),
 				RarityFilter.onAverageOnceEvery(3)
 		));
+
+		ASTRAL_GEODE_FEATURE = new PlacedFeature(
+				Holder.direct(new ConfiguredFeature<>(Feature.GEODE,
+						new GeodeConfiguration(
+								new GeodeBlockSettings(
+										BlockStateProvider.simple(Blocks.AIR.defaultBlockState()),
+										BlockStateProvider.simple(Blocks.SMOOTH_QUARTZ.defaultBlockState()),
+										BlockStateProvider.simple(DeferredRegistryHandler.ASTRAL_ORE.get().defaultBlockState()),
+										BlockStateProvider.simple(Blocks.CALCITE.defaultBlockState()),
+										BlockStateProvider.simple(Blocks.TUFF.defaultBlockState()),
+										List.of(DeferredRegistryHandler.ASTRAL_CRYSTAL.get().defaultBlockState()),
+										BlockTags.FEATURES_CANNOT_REPLACE,
+										BlockTags.GEODE_INVALID_BLOCKS
+								),
+								new GeodeLayerSettings(
+										1.7d,
+										2.2d,
+										3.2d,
+										4.2d
+								),
+								new GeodeCrackSettings(
+										0.65f,
+										1.4d,
+										1
+								),
+								0.05d,
+								0.05d,
+								false,
+								UniformInt.of(3, 5),
+								UniformInt.of(3, 4),
+								UniformInt.of(1, 2),
+								16,
+								-16,
+								0.035d,
+								1
+						)
+				)), List.of(
+				HeightmapPlacement.onHeightmap(Types.WORLD_SURFACE),
+				BiomeFilter.biome(),
+				InSquarePlacement.spread(),
+				RarityFilter.onAverageOnceEvery(4)
+		));
 	}
 
 	public static final ResourceLocation PATCH_WOODEN_SPIKES = new ResourceLocation(ImmersiveWeapons.MOD_ID, "patch_wooden_spikes");
@@ -131,4 +176,7 @@ public class BiomeFeatures {
 
 	public static final ResourceLocation PATCH_DEATHWEED = new ResourceLocation(ImmersiveWeapons.MOD_ID, "patch_deathweed");
 	public static final ResourceKey<PlacedFeature> PATCH_DEATHWEED_KEY = ResourceKey.create(Registry.PLACED_FEATURE_REGISTRY, PATCH_DEATHWEED);
+
+	public static final ResourceLocation ASTRAL_GEODE = new ResourceLocation(ImmersiveWeapons.MOD_ID, "astral_geode");
+	public static final ResourceKey<PlacedFeature> ASTRAL_GEODE_KEY = ResourceKey.create(Registry.PLACED_FEATURE_REGISTRY, ASTRAL_GEODE);
 }

@@ -6,10 +6,12 @@ import net.minecraftforge.network.simple.SimpleChannel;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.block.MortarBlock.MortarBlockPacketHandler;
 import tech.anonymoushacker1279.immersiveweapons.block.SpikeTrapBlock.SpikeTrapBlockPacketHandler;
+import tech.anonymoushacker1279.immersiveweapons.block.decoration.AstralCrystalBlock.AstralCrystalBlockPacketHandler;
 import tech.anonymoushacker1279.immersiveweapons.block.misc.warrior_statue.WarriorStatueTorso.WarriorStatueTorsoPacketHandler;
 import tech.anonymoushacker1279.immersiveweapons.entity.monster.lava_revenant.LavaRevenantEntity.LavaRevenantEntityPacketHandler;
 import tech.anonymoushacker1279.immersiveweapons.entity.neutral.AbstractFieldMedicEntity.AbstractFieldMedicEntityPacketHandler;
 import tech.anonymoushacker1279.immersiveweapons.entity.projectile.SmokeGrenadeEntity.SmokeGrenadeEntityPacketHandler;
+import tech.anonymoushacker1279.immersiveweapons.item.armor.AstralArmorItem.AstralArmorItemPacketHandler;
 import tech.anonymoushacker1279.immersiveweapons.item.armor.CobaltArmorItem.CobaltArmorItemPacketHandler;
 import tech.anonymoushacker1279.immersiveweapons.item.armor.TeslaArmorItem.TeslaArmorItemPacketHandler;
 import tech.anonymoushacker1279.immersiveweapons.item.armor.VentusArmorItem.VentusArmorItemPacketHandler;
@@ -86,11 +88,23 @@ public class PacketHandler {
 				AbstractFieldMedicEntityPacketHandler::decode,
 				AbstractFieldMedicEntityPacketHandler::handle
 		);
-		PacketHandler.INSTANCE.registerMessage(networkId,
+		PacketHandler.INSTANCE.registerMessage(networkId++,
 				GunScopePacketHandler.class,
 				GunScopePacketHandler::encode,
 				GunScopePacketHandler::decode,
 				GunScopePacketHandler::handle
+		);
+		PacketHandler.INSTANCE.registerMessage(networkId++,
+				AstralArmorItemPacketHandler.class,
+				AstralArmorItemPacketHandler::encode,
+				AstralArmorItemPacketHandler::decode,
+				AstralArmorItemPacketHandler::handle
+		);
+		PacketHandler.INSTANCE.registerMessage(networkId,
+				AstralCrystalBlockPacketHandler.class,
+				AstralCrystalBlockPacketHandler::encode,
+				AstralCrystalBlockPacketHandler::decode,
+				AstralCrystalBlockPacketHandler::handle
 		);
 	}
 }

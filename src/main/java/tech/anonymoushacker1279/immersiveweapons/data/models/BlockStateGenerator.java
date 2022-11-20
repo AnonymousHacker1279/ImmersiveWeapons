@@ -1,9 +1,9 @@
 package tech.anonymoushacker1279.immersiveweapons.data.models;
 
+import net.minecraft.core.Direction;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.RotatedPillarBlock;
+import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraftforge.client.model.generators.BlockStateProvider;
 import net.minecraftforge.client.model.generators.ConfiguredModel;
@@ -99,6 +99,12 @@ public class BlockStateGenerator extends BlockStateProvider {
 							.replace("nether_", "")))
 					.renderType("minecraft:cutout_mipped"));
 		}
+		// Astral ore uses smooth quartz for a base
+		simpleBlock(DeferredRegistryHandler.ASTRAL_ORE.get(), models().withExistingParent(ForgeRegistries.BLOCKS.getKey(DeferredRegistryHandler.ASTRAL_ORE.get()).getPath(),
+						new ResourceLocation(ImmersiveWeapons.MOD_ID, "simple_overlay"))
+				.texture("all", "minecraft:block/quartz_block_bottom")
+				.texture("overlay", new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/astral_ore"))
+				.renderType("minecraft:cutout_mipped"));
 
 		// Generate data for tables
 		for (Block block : BlockLists.tableBlocks) {
@@ -351,7 +357,7 @@ public class BlockStateGenerator extends BlockStateProvider {
 			));
 		}
 
-		// Generate data for flower blocks
+		// Generate data for cross blocks
 		simpleBlock(DeferredRegistryHandler.AZUL_STAINED_ORCHID.get(), models()
 				.cross(DeferredRegistryHandler.AZUL_STAINED_ORCHID.getId().toString(),
 						new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/azul_stained_orchid"))
@@ -526,6 +532,49 @@ public class BlockStateGenerator extends BlockStateProvider {
 
 					return ConfiguredModel.builder()
 							.modelFile(models().getExistingFile(new ResourceLocation(ImmersiveWeapons.MOD_ID, path)))
+							.build();
+				});
+		getVariantBuilder(DeferredRegistryHandler.ASTRAL_CRYSTAL.get())
+				.forAllStates(state -> {
+					Direction facing = state.getValue(AmethystClusterBlock.FACING);
+
+					int xRot;
+					int yRot;
+
+					switch (facing) {
+						case NORTH -> {
+							xRot = 270;
+							yRot = 180;
+						}
+						case SOUTH -> {
+							xRot = 90;
+							yRot = 180;
+						}
+						case EAST -> {
+							xRot = 270;
+							yRot = 270;
+						}
+						case WEST -> {
+							xRot = 90;
+							yRot = 270;
+						}
+						case DOWN -> {
+							xRot = 180;
+							yRot = 0;
+						}
+						default -> {
+							xRot = 0;
+							yRot = 0;
+						}
+					}
+
+					return ConfiguredModel.builder()
+							.modelFile(models()
+									.cross(DeferredRegistryHandler.ASTRAL_CRYSTAL.getId().toString(),
+											new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/astral_crystal"))
+									.renderType("minecraft:cutout_mipped"))
+							.rotationY(yRot)
+							.rotationX(xRot)
 							.build();
 				});
 

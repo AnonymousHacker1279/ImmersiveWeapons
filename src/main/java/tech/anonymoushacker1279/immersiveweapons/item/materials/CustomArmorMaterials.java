@@ -13,7 +13,7 @@ import java.util.function.Supplier;
 
 public enum CustomArmorMaterials implements ArmorMaterial {
 
-	MOLTEN("molten", 39, new int[]{5, 6, 9, 4}, 15, SoundEvents.ARMOR_EQUIP_NETHERITE,
+	MOLTEN("molten", 39, new int[]{5, 6, 9, 4}, 15, SoundEvents.ARMOR_EQUIP_IRON,
 			3.25F, () -> Ingredient.of(DeferredRegistryHandler.MOLTEN_INGOT.get()), 0.12F),
 	COPPER("copper", 13, new int[]{1, 4, 5, 1}, 9, SoundEvents.ARMOR_EQUIP_IRON,
 			0.0F, () -> Ingredient.of(Items.COPPER_INGOT), 0.0F),
@@ -21,8 +21,10 @@ public enum CustomArmorMaterials implements ArmorMaterial {
 			3.5F, () -> Ingredient.of(DeferredRegistryHandler.TESLA_INGOT.get()), 0.05F),
 	COBALT("cobalt", 19, new int[]{3, 5, 6, 3}, 10, SoundEvents.ARMOR_EQUIP_IRON,
 			0.0F, () -> Ingredient.of(DeferredRegistryHandler.COBALT_INGOT.get()), 0.0F),
-	VENTUS("ventus", 39, new int[]{5, 6, 9, 5}, 14, SoundEvents.ARMOR_EQUIP_NETHERITE,
-			2.75F, () -> Ingredient.of(DeferredRegistryHandler.VENTUS_SHARD.get()), 0.02F);
+	VENTUS("ventus", 39, new int[]{5, 6, 9, 5}, 14, SoundEvents.ARMOR_EQUIP_IRON,
+			2.75F, () -> Ingredient.of(DeferredRegistryHandler.VENTUS_SHARD.get()), 0.02F),
+	ASTRAL("astral", 25, new int[]{4, 5, 6, 4}, 22, SoundEvents.ARMOR_EQUIP_IRON,
+			1.8F, () -> Ingredient.of(DeferredRegistryHandler.ASTRAL_INGOT.get()), 0.0F);
 
 	static final int[] HEALTH_PER_SLOT = new int[]{13, 15, 16, 11};
 	private final String name;

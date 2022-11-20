@@ -157,6 +157,8 @@ public class BlockLootTables implements Consumer<BiConsumer<ResourceLocation, Bu
 		dropSelf(DeferredRegistryHandler.SMOOTH_BLOOD_SANDSTONE.get());
 		dropSelf(DeferredRegistryHandler.SMOOTH_BLOOD_SANDSTONE_SLAB.get());
 		dropSelf(DeferredRegistryHandler.SMOOTH_BLOOD_SANDSTONE_STAIRS.get());
+		dropSelf(DeferredRegistryHandler.DEATHWEED.get());
+		dropSelf(DeferredRegistryHandler.ASTRAL_CRYSTAL.get());
 
 		for (Block block : BlockTagLists.TABLES) {
 			dropSelf(block);
@@ -173,6 +175,7 @@ public class BlockLootTables implements Consumer<BiConsumer<ResourceLocation, Bu
 		add(DeferredRegistryHandler.SULFUR_ORE.get(), (block) -> createOreDrop(block, DeferredRegistryHandler.SULFUR.get(), 2, 4));
 		add(DeferredRegistryHandler.DEEPSLATE_SULFUR_ORE.get(), (block) -> createOreDrop(block, DeferredRegistryHandler.SULFUR.get(), 2, 4));
 		add(DeferredRegistryHandler.NETHER_SULFUR_ORE.get(), (block) -> createOreDrop(block, DeferredRegistryHandler.SULFUR.get(), 2, 4));
+		add(DeferredRegistryHandler.ASTRAL_ORE.get(), (block) -> createOreDrop(block, DeferredRegistryHandler.RAW_ASTRAL.get(), 1, 3));
 		add(DeferredRegistryHandler.PITFALL.get(), (leafLikeDrop) -> createLeafLikeDrop(leafLikeDrop, Items.STICK, NORMAL_LEAVES_SAPLING_CHANCES));
 		add(DeferredRegistryHandler.VENTUS_ORE.get(), (block) -> createOreDrop(block, DeferredRegistryHandler.VENTUS_SHARD.get()));
 		add(DeferredRegistryHandler.LANDMINE.get(), (block) -> LootTable.lootTable()
