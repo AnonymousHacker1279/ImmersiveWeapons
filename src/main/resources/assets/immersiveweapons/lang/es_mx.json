@@ -642,11 +642,12 @@
 	"advancements.immersiveweapons.discover_hans.description": "TESTIGO DEL PODER DE LOS GRANDES, ARRODILLATE ANTE SU ALTEZA",
 	"advancements.immersiveweapons.discover_lava_revenant.title": "Fantasma de Tiltros",
 	"advancements.immersiveweapons.discover_lava_revenant.description": "Descubre un Revenante de lava, un fantasma renacido de los fosos de lava de Tiltros",
-	"advancements.immersiveweapons.discover_rock_spider.title": "Arañas	pero más pequeño",
+	"advancements.immersiveweapons.discover_rock_spider.title": "Arañas pero más pequeño",
 	"advancements.immersiveweapons.discover_rock_spider.description": "Descubre una araña de piedra, una araña que nace de piedra que es pequeña pero es potente",
 	"advancements.immersiveweapons.discover_celestial_tower.title": "Otra Presencia Mundial",
 	"advancements.immersiveweapons.discover_celestial_tower.description": "Descubre una torre celestial, un extraño dispositivo de otro mundo capaz de convocar a los muertos para luchar",
 	"biome.immersiveweapons.battlefield": "Campo de batalla",
 	"biome.immersiveweapons.tiltros": "Tiltros",
 	"loot.immersiveweapons.chest.village.battlefield.medic_station.iron_axe": "El Amputador",
-	"immersiveweapons.boss.celestial_tower.waves": "Porcentajes de onda de %s",
+	"immersiveweapons.boss.celestial_tower.waves": "Porcentajes de onda de %s"
+}
