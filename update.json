@@ -26,6 +26,9 @@
 		"1.19-1.18.0-alpha1": "Initial 1.19 Release - https://github.com/AnonymousHacker1279/ImmersiveWeapons/releases/tag/v1.18.0-alpha1"
 	},
 	"1.18.2": {
+		"1.18.2-1.17.4": "Bugfixes - https://github.com/AnonymousHacker1279/ImmersiveWeapons/releases/tag/v1.17.4",
+		"1.18.2-1.17.3": "Translation updates - https://github.com/AnonymousHacker1279/ImmersiveWeapons/releases/tag/v1.17.3",
+		"1.18.2-1.17.2": "Bugfixes - https://github.com/AnonymousHacker1279/ImmersiveWeapons/releases/tag/v1.17.2",
 		"1.18.2-1.17.1": "Bugfixes - https://github.com/AnonymousHacker1279/ImmersiveWeapons/releases/tag/v1.17.1",
 		"1.18.2-1.17.0": "Create plugin API and move 3rd-party integrations to separate mod - https://github.com/AnonymousHacker1279/ImmersiveWeapons/releases/tag/v1.17.0",
 		"1.18.2-1.16.1": "Improvements and bugfixes - https://github.com/AnonymousHacker1279/ImmersiveWeapons/releases/tag/v1.16.1",
