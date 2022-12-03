@@ -27,5 +27,6 @@ public class ImmersiveWeaponsWorldGenTagGroups {
 	public static final TagKey<Biome> HAS_BATTLEFIELD_CAMP = GeneralUtilities.createStructureTag("battlefield_camp");
 	public static final TagKey<Biome> HAS_GRAVEYARD = GeneralUtilities.createStructureTag("graveyard");
 	public static final TagKey<Biome> HAS_BATTLEFIELD_TOWN = GeneralUtilities.createStructureTag("battlefield_town");
+	public static final TagKey<Biome> HAS_CELESTIAL_ASTEROID = GeneralUtilities.createStructureTag("celestial_asteroid");
 
 }

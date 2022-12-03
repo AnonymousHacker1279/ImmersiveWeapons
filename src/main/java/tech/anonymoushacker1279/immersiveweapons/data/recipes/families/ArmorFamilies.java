@@ -65,5 +65,13 @@ public record ArmorFamilies(TagKey<Item> material,
 			DeferredRegistryHandler.ASTRAL_BOOTS
 	);
 
-	public static final ImmutableList<ArmorFamilies> FAMILIES = ImmutableList.of(COPPER, COBALT, MOLTEN, VENTUS, TESLA, ASTRAL);
+	public static final ArmorFamilies STARSTORM = new ArmorFamilies(
+			ImmersiveWeaponsItemTagGroups.STARSTORM_INGOTS,
+			DeferredRegistryHandler.STARSTORM_HELMET,
+			DeferredRegistryHandler.STARSTORM_CHESTPLATE,
+			DeferredRegistryHandler.STARSTORM_LEGGINGS,
+			DeferredRegistryHandler.STARSTORM_BOOTS
+	);
+
+	public static final ImmutableList<ArmorFamilies> FAMILIES = ImmutableList.of(COPPER, COBALT, MOLTEN, VENTUS, TESLA, ASTRAL, STARSTORM);
 }

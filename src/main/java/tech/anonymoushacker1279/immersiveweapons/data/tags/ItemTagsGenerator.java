@@ -160,6 +160,7 @@ public class ItemTagsGenerator extends ItemTagsProvider {
 		tag(ImmersiveWeaponsItemTagGroups.ELECTRIC_INGOTS).add(DeferredRegistryHandler.ELECTRIC_INGOT.get());
 		tag(ImmersiveWeaponsItemTagGroups.TESLA_INGOTS).add(DeferredRegistryHandler.TESLA_INGOT.get());
 		tag(ImmersiveWeaponsItemTagGroups.ASTRAL_INGOTS).add(DeferredRegistryHandler.ASTRAL_INGOT.get());
+		tag(ImmersiveWeaponsItemTagGroups.STARSTORM_INGOTS).add(DeferredRegistryHandler.STARSTORM_INGOT.get());
 
 		// Shard tags
 		tag(ImmersiveWeaponsItemTagGroups.MOLTEN_SHARDS).add(DeferredRegistryHandler.MOLTEN_SHARD.get());

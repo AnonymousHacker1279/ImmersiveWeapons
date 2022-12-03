@@ -1,5 +1,8 @@
 {
   "values": [
-    "immersiveweapons:astral_ore"
+    "immersiveweapons:astral_ore",
+    "immersiveweapons:astral_block",
+    "immersiveweapons:starstorm_crystal",
+    "immersiveweapons:starstorm_block"
   ]
 }

@@ -406,6 +406,218 @@ public class IWAdvancements implements Consumer<Consumer<Advancement>> {
 				.rewards(AdvancementRewards.Builder.experience(35))
 				.save(consumer, "immersiveweapons:ventus_staff");
 
+		// Astral advancements
+		Advancement obtainAstralCrystal = Builder.advancement().parent(root)
+				.display(DeferredRegistryHandler.ASTRAL_CRYSTAL.get(),
+						Component.translatable("advancements.immersiveweapons.astral_crystal.title"),
+						Component.translatable("advancements.immersiveweapons.astral_crystal.description"),
+						null, FrameType.TASK, true, true, false)
+				.addCriterion("hold",
+						InventoryChangeTrigger.TriggerInstance.hasItems(DeferredRegistryHandler.ASTRAL_CRYSTAL.get()))
+				.save(consumer, "immersiveweapons:astral_crystal");
+
+		Advancement obtainAstralIngot = Builder.advancement().parent(obtainAstralCrystal)
+				.display(DeferredRegistryHandler.ASTRAL_INGOT.get(),
+						Component.translatable("advancements.immersiveweapons.astral_ingot.title"),
+						Component.translatable("advancements.immersiveweapons.astral_ingot.description"),
+						null, FrameType.TASK, true, true, false)
+				.addCriterion("hold",
+						InventoryChangeTrigger.TriggerInstance.hasItems(DeferredRegistryHandler.ASTRAL_INGOT.get()))
+				.save(consumer, "immersiveweapons:astral_ingot");
+
+		Builder.advancement().parent(obtainAstralIngot)
+				.display(DeferredRegistryHandler.ASTRAL_SWORD.get(),
+						Component.translatable("advancements.immersiveweapons.astral_sword.title"),
+						Component.translatable("advancements.immersiveweapons.astral_sword.description"),
+						null, FrameType.GOAL, true, true, false)
+				.addCriterion("hold",
+						InventoryChangeTrigger.TriggerInstance.hasItems(DeferredRegistryHandler.ASTRAL_SWORD.get()))
+				.rewards(AdvancementRewards.Builder.experience(35))
+				.save(consumer, "immersiveweapons:astral_sword");
+
+		Builder.advancement().parent(obtainAstralIngot)
+				.display(DeferredRegistryHandler.ASTRAL_PICKAXE.get(),
+						Component.translatable("advancements.immersiveweapons.astral_pickaxe.title"),
+						Component.translatable("advancements.immersiveweapons.astral_pickaxe.description"),
+						null, FrameType.GOAL, true, true, false)
+				.addCriterion("hold",
+						InventoryChangeTrigger.TriggerInstance.hasItems(DeferredRegistryHandler.ASTRAL_PICKAXE.get()))
+				.rewards(AdvancementRewards.Builder.experience(35))
+				.save(consumer, "immersiveweapons:astral_pickaxe");
+
+		Builder.advancement().parent(obtainAstralIngot)
+				.display(DeferredRegistryHandler.ASTRAL_AXE.get(),
+						Component.translatable("advancements.immersiveweapons.astral_axe.title"),
+						Component.translatable("advancements.immersiveweapons.astral_axe.description"),
+						null, FrameType.GOAL, true, true, false)
+				.addCriterion("hold",
+						InventoryChangeTrigger.TriggerInstance.hasItems(DeferredRegistryHandler.ASTRAL_AXE.get()))
+				.rewards(AdvancementRewards.Builder.experience(35))
+				.save(consumer, "immersiveweapons:astral_axe");
+
+		Builder.advancement().parent(obtainAstralIngot)
+				.display(DeferredRegistryHandler.ASTRAL_SHOVEL.get(),
+						Component.translatable("advancements.immersiveweapons.astral_shovel.title"),
+						Component.translatable("advancements.immersiveweapons.astral_shovel.description"),
+						null, FrameType.GOAL, true, true, false)
+				.addCriterion("hold",
+						InventoryChangeTrigger.TriggerInstance.hasItems(DeferredRegistryHandler.ASTRAL_SHOVEL.get()))
+				.rewards(AdvancementRewards.Builder.experience(35))
+				.save(consumer, "immersiveweapons:astral_shovel");
+
+		Builder.advancement().parent(obtainAstralIngot)
+				.display(DeferredRegistryHandler.ASTRAL_HOE.get(),
+						Component.translatable("advancements.immersiveweapons.astral_hoe.title"),
+						Component.translatable("advancements.immersiveweapons.astral_hoe.description"),
+						null, FrameType.CHALLENGE, true, true, false)
+				.addCriterion("hold",
+						InventoryChangeTrigger.TriggerInstance.hasItems(DeferredRegistryHandler.ASTRAL_HOE.get()))
+				.rewards(AdvancementRewards.Builder.experience(50))
+				.save(consumer, "immersiveweapons:astral_hoe");
+
+		Builder.advancement().parent(obtainAstralIngot)
+				.display(DeferredRegistryHandler.ASTRAL_BLOCK_ITEM.get(),
+						Component.translatable("advancements.immersiveweapons.astral_tools.title"),
+						Component.translatable("advancements.immersiveweapons.astral_tools.description"),
+						null, FrameType.CHALLENGE, true, true, false)
+				.addCriterion("have_advancements",
+						PlayerTrigger.TriggerInstance.located(
+								EntityPredicate.Builder.entity().subPredicate(
+										PlayerPredicate.Builder.player().checkAdvancementDone(
+												new ResourceLocation(ImmersiveWeapons.MOD_ID, "astral_sword"), true
+										).checkAdvancementDone(
+												new ResourceLocation(ImmersiveWeapons.MOD_ID, "astral_pickaxe"), true
+										).checkAdvancementDone(
+												new ResourceLocation(ImmersiveWeapons.MOD_ID, "astral_axe"), true
+										).checkAdvancementDone(
+												new ResourceLocation(ImmersiveWeapons.MOD_ID, "astral_shovel"), true
+										).checkAdvancementDone(
+												new ResourceLocation(ImmersiveWeapons.MOD_ID, "astral_hoe"), true
+										).build()
+								).build()
+						)
+				)
+				.rewards(AdvancementRewards.Builder.experience(150))
+				.save(consumer, "immersiveweapons:astral_tools");
+
+		Builder.advancement().parent(obtainAstralIngot)
+				.display(DeferredRegistryHandler.ASTRAL_HELMET.get(),
+						Component.translatable("advancements.immersiveweapons.astral_armor.title"),
+						Component.translatable("advancements.immersiveweapons.astral_armor.description"),
+						null, FrameType.GOAL, true, true, false)
+				.addCriterion("hold",
+						InventoryChangeTrigger.TriggerInstance.hasItems(DeferredRegistryHandler.ASTRAL_HELMET.get(),
+								DeferredRegistryHandler.ASTRAL_CHESTPLATE.get(), DeferredRegistryHandler.ASTRAL_LEGGINGS.get(),
+								DeferredRegistryHandler.ASTRAL_BOOTS.get()))
+				.rewards(AdvancementRewards.Builder.experience(100))
+				.save(consumer, "immersiveweapons:astral_armor");
+
+		// Starstorm advancements
+		Advancement obtainStarstormCrystal = Builder.advancement().parent(root)
+				.display(DeferredRegistryHandler.STARSTORM_CRYSTAL.get(),
+						Component.translatable("advancements.immersiveweapons.starstorm_crystal.title"),
+						Component.translatable("advancements.immersiveweapons.starstorm_crystal.description"),
+						null, FrameType.TASK, true, true, false)
+				.addCriterion("hold",
+						InventoryChangeTrigger.TriggerInstance.hasItems(DeferredRegistryHandler.STARSTORM_CRYSTAL.get()))
+				.save(consumer, "immersiveweapons:starstorm_crystal");
+
+		Advancement obtainStarstormIngot = Builder.advancement().parent(obtainStarstormCrystal)
+				.display(DeferredRegistryHandler.STARSTORM_INGOT.get(),
+						Component.translatable("advancements.immersiveweapons.starstorm_ingot.title"),
+						Component.translatable("advancements.immersiveweapons.starstorm_ingot.description"),
+						null, FrameType.TASK, true, true, false)
+				.addCriterion("hold",
+						InventoryChangeTrigger.TriggerInstance.hasItems(DeferredRegistryHandler.STARSTORM_INGOT.get()))
+				.save(consumer, "immersiveweapons:starstorm_ingot");
+
+		Builder.advancement().parent(obtainStarstormIngot)
+				.display(DeferredRegistryHandler.STARSTORM_SWORD.get(),
+						Component.translatable("advancements.immersiveweapons.starstorm_sword.title"),
+						Component.translatable("advancements.immersiveweapons.starstorm_sword.description"),
+						null, FrameType.TASK, true, true, false)
+				.addCriterion("hold",
+						InventoryChangeTrigger.TriggerInstance.hasItems(DeferredRegistryHandler.STARSTORM_SWORD.get()))
+				.rewards(AdvancementRewards.Builder.experience(35))
+				.save(consumer, "immersiveweapons:starstorm_sword");
+
+		Builder.advancement().parent(obtainStarstormIngot)
+				.display(DeferredRegistryHandler.STARSTORM_PICKAXE.get(),
+						Component.translatable("advancements.immersiveweapons.starstorm_pickaxe.title"),
+						Component.translatable("advancements.immersiveweapons.starstorm_pickaxe.description"),
+						null, FrameType.TASK, true, true, false)
+				.addCriterion("hold",
+						InventoryChangeTrigger.TriggerInstance.hasItems(DeferredRegistryHandler.STARSTORM_PICKAXE.get()))
+				.rewards(AdvancementRewards.Builder.experience(35))
+				.save(consumer, "immersiveweapons:starstorm_pickaxe");
+
+		Builder.advancement().parent(obtainStarstormIngot)
+				.display(DeferredRegistryHandler.STARSTORM_AXE.get(),
+						Component.translatable("advancements.immersiveweapons.starstorm_axe.title"),
+						Component.translatable("advancements.immersiveweapons.starstorm_axe.description"),
+						null, FrameType.TASK, true, true, false)
+				.addCriterion("hold",
+						InventoryChangeTrigger.TriggerInstance.hasItems(DeferredRegistryHandler.STARSTORM_AXE.get()))
+				.rewards(AdvancementRewards.Builder.experience(35))
+				.save(consumer, "immersiveweapons:starstorm_axe");
+
+		Builder.advancement().parent(obtainStarstormIngot)
+				.display(DeferredRegistryHandler.STARSTORM_SHOVEL.get(),
+						Component.translatable("advancements.immersiveweapons.starstorm_shovel.title"),
+						Component.translatable("advancements.immersiveweapons.starstorm_shovel.description"),
+						null, FrameType.TASK, true, true, false)
+				.addCriterion("hold",
+						InventoryChangeTrigger.TriggerInstance.hasItems(DeferredRegistryHandler.STARSTORM_SHOVEL.get()))
+				.rewards(AdvancementRewards.Builder.experience(35))
+				.save(consumer, "immersiveweapons:starstorm_shovel");
+
+		Builder.advancement().parent(obtainStarstormIngot)
+				.display(DeferredRegistryHandler.STARSTORM_HOE.get(),
+						Component.translatable("advancements.immersiveweapons.starstorm_hoe.title"),
+						Component.translatable("advancements.immersiveweapons.starstorm_hoe.description"),
+						null, FrameType.CHALLENGE, true, true, false)
+				.addCriterion("hold",
+						InventoryChangeTrigger.TriggerInstance.hasItems(DeferredRegistryHandler.STARSTORM_HOE.get()))
+				.rewards(AdvancementRewards.Builder.experience(50))
+				.save(consumer, "immersiveweapons:starstorm_hoe");
+
+		Builder.advancement().parent(obtainStarstormIngot)
+				.display(DeferredRegistryHandler.STARSTORM_BLOCK_ITEM.get(),
+						Component.translatable("advancements.immersiveweapons.starstorm_tools.title"),
+						Component.translatable("advancements.immersiveweapons.starstorm_tools.description"),
+						null, FrameType.CHALLENGE, true, true, false)
+				.addCriterion("have_advancements",
+						PlayerTrigger.TriggerInstance.located(
+								EntityPredicate.Builder.entity().subPredicate(
+										PlayerPredicate.Builder.player().checkAdvancementDone(
+												new ResourceLocation(ImmersiveWeapons.MOD_ID, "starstorm_sword"), true
+										).checkAdvancementDone(
+												new ResourceLocation(ImmersiveWeapons.MOD_ID, "starstorm_pickaxe"), true
+										).checkAdvancementDone(
+												new ResourceLocation(ImmersiveWeapons.MOD_ID, "starstorm_axe"), true
+										).checkAdvancementDone(
+												new ResourceLocation(ImmersiveWeapons.MOD_ID, "starstorm_shovel"), true
+										).checkAdvancementDone(
+												new ResourceLocation(ImmersiveWeapons.MOD_ID, "starstorm_hoe"), true
+										).build()
+								).build()
+						)
+				)
+				.rewards(AdvancementRewards.Builder.experience(150))
+				.save(consumer, "immersiveweapons:starstorm_tools");
+
+		Builder.advancement().parent(obtainStarstormIngot)
+				.display(DeferredRegistryHandler.STARSTORM_HELMET.get(),
+						Component.translatable("advancements.immersiveweapons.starstorm_armor.title"),
+						Component.translatable("advancements.immersiveweapons.starstorm_armor.description"),
+						null, FrameType.GOAL, true, true, false)
+				.addCriterion("hold",
+						InventoryChangeTrigger.TriggerInstance.hasItems(DeferredRegistryHandler.STARSTORM_HELMET.get(),
+								DeferredRegistryHandler.STARSTORM_CHESTPLATE.get(), DeferredRegistryHandler.STARSTORM_LEGGINGS.get(),
+								DeferredRegistryHandler.STARSTORM_BOOTS.get()))
+				.rewards(AdvancementRewards.Builder.experience(100))
+				.save(consumer, "immersiveweapons:starstorm_armor");
+
 		// Tool advancements
 		Advancement craftToolRod = Builder.advancement().parent(root)
 				.display(DeferredRegistryHandler.WOODEN_TOOL_ROD.get(),

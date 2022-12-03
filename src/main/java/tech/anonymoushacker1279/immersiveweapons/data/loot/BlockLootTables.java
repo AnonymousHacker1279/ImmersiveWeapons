@@ -159,6 +159,9 @@ public class BlockLootTables implements Consumer<BiConsumer<ResourceLocation, Bu
 		dropSelf(DeferredRegistryHandler.SMOOTH_BLOOD_SANDSTONE_STAIRS.get());
 		dropSelf(DeferredRegistryHandler.DEATHWEED.get());
 		dropSelf(DeferredRegistryHandler.ASTRAL_CRYSTAL.get());
+		dropSelf(DeferredRegistryHandler.ASTRAL_BLOCK.get());
+		dropSelf(DeferredRegistryHandler.STARSTORM_CRYSTAL.get());
+		dropSelf(DeferredRegistryHandler.STARSTORM_BLOCK.get());
 
 		for (Block block : BlockTagLists.TABLES) {
 			dropSelf(block);

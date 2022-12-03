@@ -55,6 +55,8 @@ public class RecipeGenerator extends RecipeProvider {
 		createMoltenItems();
 		createVentusItems();
 		createTeslaItems();
+		createAstralItems();
+		createStarstormItems();
 		createSmithingItems();
 		createSmallPartsItems();
 		createBarrelTapItems();
@@ -348,6 +350,32 @@ public class RecipeGenerator extends RecipeProvider {
 				.group("tesla")
 				.unlockedBy("tesla_ingot", has(ImmersiveWeaponsItemTagGroups.TESLA_INGOTS));
 		create3x3Object(builder, ImmersiveWeaponsItemTagGroups.TESLA_INGOTS);
+	}
+
+	private void createAstralItems() {
+		ShapelessRecipeBuilder builder = ShapelessRecipeBuilder.shapeless(DeferredRegistryHandler.ASTRAL_INGOT.get(), 9)
+				.group("astral")
+				.unlockedBy("astral_block", has(DeferredRegistryHandler.ASTRAL_BLOCK_ITEM.get()));
+		createIngotFromBlock(builder, DeferredRegistryHandler.ASTRAL_BLOCK_ITEM.get());
+
+		// Astral block
+		ShapedRecipeBuilder builder1 = ShapedRecipeBuilder.shaped(DeferredRegistryHandler.ASTRAL_BLOCK_ITEM.get())
+				.group("astral")
+				.unlockedBy("astral_ingot", has(ImmersiveWeaponsItemTagGroups.ASTRAL_INGOTS));
+		create3x3Object(builder1, ImmersiveWeaponsItemTagGroups.ASTRAL_INGOTS);
+	}
+
+	private void createStarstormItems() {
+		ShapelessRecipeBuilder builder = ShapelessRecipeBuilder.shapeless(DeferredRegistryHandler.STARSTORM_INGOT.get(), 9)
+				.group("starstorm")
+				.unlockedBy("starstorm_block", has(DeferredRegistryHandler.STARSTORM_BLOCK_ITEM.get()));
+		createIngotFromBlock(builder, DeferredRegistryHandler.STARSTORM_BLOCK_ITEM.get());
+
+		// Starstorm block
+		ShapedRecipeBuilder builder1 = ShapedRecipeBuilder.shaped(DeferredRegistryHandler.STARSTORM_BLOCK_ITEM.get())
+				.group("starstorm")
+				.unlockedBy("starstorm_ingot", has(ImmersiveWeaponsItemTagGroups.STARSTORM_INGOTS));
+		create3x3Object(builder1, ImmersiveWeaponsItemTagGroups.STARSTORM_INGOTS);
 	}
 
 	private void createSmithingItems() {

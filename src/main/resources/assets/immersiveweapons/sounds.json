@@ -558,5 +558,18 @@
 				"name": "immersiveweapons:armor/equip/astral/equip_2"
 			}
 		]
+	},
+	"starstorm_armor_equip": {
+		"subtitle": "immersiveweapons.subtitle.armor.starstorm.equip",
+		"sounds": [
+			{
+				"name": "immersiveweapons:armor/equip/starstorm/equip_0"
+			},
+			{
+				"name": "immersiveweapons:armor/equip/starstorm/equip_1"
+			},{
+				"name": "immersiveweapons:armor/equip/starstorm/equip_2"
+			}
+		]
 	}
 }

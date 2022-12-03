@@ -578,6 +578,50 @@ public class BlockStateGenerator extends BlockStateProvider {
 							.build();
 				});
 
+		getVariantBuilder(DeferredRegistryHandler.STARSTORM_CRYSTAL.get())
+				.forAllStates(state -> {
+					Direction facing = state.getValue(AmethystClusterBlock.FACING);
+
+					int xRot;
+					int yRot;
+
+					switch (facing) {
+						case NORTH -> {
+							xRot = 270;
+							yRot = 180;
+						}
+						case SOUTH -> {
+							xRot = 90;
+							yRot = 180;
+						}
+						case EAST -> {
+							xRot = 270;
+							yRot = 270;
+						}
+						case WEST -> {
+							xRot = 90;
+							yRot = 270;
+						}
+						case DOWN -> {
+							xRot = 180;
+							yRot = 0;
+						}
+						default -> {
+							xRot = 0;
+							yRot = 0;
+						}
+					}
+
+					return ConfiguredModel.builder()
+							.modelFile(models()
+									.cross(DeferredRegistryHandler.STARSTORM_CRYSTAL.getId().toString(),
+											new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/starstorm_crystal"))
+									.renderType("minecraft:cutout_mipped"))
+							.rotationY(yRot)
+							.rotationX(xRot)
+							.build();
+				});
+
 		horizontalBlock(DeferredRegistryHandler.BARBED_WIRE.get(),
 				models().getExistingFile(new ResourceLocation(ImmersiveWeapons.MOD_ID, "barbed_wire")));
 		horizontalBlock(DeferredRegistryHandler.WOODEN_SPIKES.get(),

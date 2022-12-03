@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "a": {
+      "tag": "immersiveweapons:ingots/starstorm"
+    },
+    "b": {
+      "tag": "immersiveweapons:rods/obsidian"
+    }
+  },
+  "pattern": [
+    "aa",
+    "ab",
+    " b"
+  ],
+  "result": {
+    "item": "immersiveweapons:starstorm_axe"
+  }
+}

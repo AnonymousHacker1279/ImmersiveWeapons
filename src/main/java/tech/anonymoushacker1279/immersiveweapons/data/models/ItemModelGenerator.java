@@ -176,6 +176,11 @@ public class ItemModelGenerator extends ItemModelProvider {
 							.parent(new ModelFile.UncheckedModelFile("item/generated"))
 							.texture("layer0", new ResourceLocation(ImmersiveWeapons.MOD_ID,
 									"block/astral_crystal"));
+				} else if (item == DeferredRegistryHandler.STARSTORM_CRYSTAL_ITEM.get()) {
+					getBuilder(item.toString())
+							.parent(new ModelFile.UncheckedModelFile("item/generated"))
+							.texture("layer0", new ResourceLocation(ImmersiveWeapons.MOD_ID,
+									"block/starstorm_crystal"));
 				} else if (ItemLists.headItems.contains(item)) {
 					entitySkull(item);
 				} else {

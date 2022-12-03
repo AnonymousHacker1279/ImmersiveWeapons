@@ -29,6 +29,12 @@ repositories {
 	maven {
 		url 'https://maven.blamejared.com'
 	}
+	maven {
+		url "https://cursemaven.com"
+		content {
+			includeGroup "curse.maven"
+		}
+	}
 }
 
 java.toolchain.languageVersion = JavaLanguageVersion.of(17)
@@ -124,6 +130,8 @@ dependencies {
 	implementation fg.deobf("lol.bai:badpackets:forge-${badpackets_version}")
 	// Include Patchouli
 	runtimeOnly fg.deobf("vazkii.patchouli:Patchouli:${patchouli_version}")
+	// Include MmmMmmMmmMmm (Target Dummy)
+	runtimeOnly fg.deobf("curse.maven:mmmmmmmmmmmm-225738:${target_dummy_version}")
 }
 
 java {

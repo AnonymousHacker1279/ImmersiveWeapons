@@ -54,6 +54,9 @@
     "immersiveweapons:molten_block",
     "immersiveweapons:tesla_block",
     "immersiveweapons:tesla_synthesizer",
-    "immersiveweapons:astral_ore"
+    "immersiveweapons:astral_ore",
+    "immersiveweapons:astral_block",
+    "immersiveweapons:starstorm_crystal",
+    "immersiveweapons:starstorm_block"
   ]
 }

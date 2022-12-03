@@ -2,9 +2,14 @@ package tech.anonymoushacker1279.immersiveweapons.event;
 
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
-import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
+import net.minecraftforge.client.event.RecipesUpdatedEvent;
 import net.minecraftforge.client.event.RegisterGuiOverlaysEvent;
+import net.minecraftforge.event.TickEvent.PlayerTickEvent;
+import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
@@ -12,14 +17,19 @@ import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.MissingMappingsEvent;
 import net.minecraftforge.registries.MissingMappingsEvent.Mapping;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
+import tech.anonymoushacker1279.immersiveweapons.block.crafting.small_parts.SmallPartsCraftables;
 import tech.anonymoushacker1279.immersiveweapons.client.gui.IWOverlays;
 import tech.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
+import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
+import tech.anonymoushacker1279.immersiveweapons.world.level.levelgen.biomes.BiomesAndDimensions;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 @EventBusSubscriber(modid = ImmersiveWeapons.MOD_ID, bus = Bus.FORGE)
 public class ForgeEventSubscriber {
+
+	public static final DamageSource DEADMANS_DESERT_DAMAGE_SOURCE = new DamageSource("immersiveweapons.deadmans_desert").bypassArmor();
+
 
 	@SubscribeEvent
 	public static void registerGuiOverlaysEvent(RegisterGuiOverlaysEvent event) {
@@ -263,6 +273,95 @@ public class ForgeEventSubscriber {
 
 			ImmersiveWeapons.LOGGER.warn("Sound event remapping complete. Remapped entries: {}", remappedSoundEvents);
 			ImmersiveWeapons.LOGGER.warn("{}/{} sounds remapped.", remappedSoundEvents.size(), mappings.size());
+		}
+	}
+
+	/**
+	 * Event handler for the RecipesUpdatedEvent event.
+	 *
+	 * @param event the <code>RecipesUpdatedEvent</code> instance
+	 */
+	@SubscribeEvent
+	public static void recipesUpdatedEvent(RecipesUpdatedEvent event) {
+		ImmersiveWeapons.LOGGER.info("Recipes have updated, re-initializing custom crafting systems");
+		SmallPartsCraftables.init(event.getRecipeManager());
+	}
+
+	@SubscribeEvent
+	public static void playerTickEvent(PlayerTickEvent event) {
+		// Passive damage from the Deadman's Desert biome
+		Player player = event.player;
+		// Only check every 8 ticks, and make sure the player is not in creative mode
+		if (player.tickCount % 8 == 0 && !player.isCreative()) {
+			if (player.level.getBiome(player.blockPosition()).is(BiomesAndDimensions.DEADMANS_DESERT)) {
+				// If the player is under the effects of Celestial Protection, they are immune to damage
+				if (!player.hasEffect(DeferredRegistryHandler.CELESTIAL_PROTECTION_EFFECT.get())) {
+					player.hurt(DEADMANS_DESERT_DAMAGE_SOURCE, 1);
+				}
+			}
+		}
+	}
+
+	private static float celestialProtectionChanceForNoDamage = 0.0f;
+
+	@SubscribeEvent
+	public static void livingHurtEvent(LivingHurtEvent event) {
+		LivingEntity entity = event.getEntity();
+
+		// Handle stuff for the celestial protection effect
+		if (entity.hasEffect(DeferredRegistryHandler.CELESTIAL_PROTECTION_EFFECT.get())) {
+			float damage = event.getAmount();
+
+			// Check if the damage should be neutralized.
+			if (celestialProtectionChanceForNoDamage >= 1.0f) {
+				event.setCanceled(true);
+				celestialProtectionChanceForNoDamage = 0.0f;
+				return;
+			} else if (celestialProtectionChanceForNoDamage > 0.0f) {
+				if (GeneralUtilities.getRandomNumber(0, 1.0f) <= celestialProtectionChanceForNoDamage) {
+					event.setCanceled(true);
+					celestialProtectionChanceForNoDamage = 0.0f;
+				}
+			}
+			// Increase the chance that the next damage taken will be neutralized.
+			if (entity.getItemBySlot(EquipmentSlot.HEAD).getItem() == DeferredRegistryHandler.ASTRAL_HELMET.get() &&
+					entity.getItemBySlot(EquipmentSlot.CHEST).getItem() == DeferredRegistryHandler.ASTRAL_CHESTPLATE.get() &&
+					entity.getItemBySlot(EquipmentSlot.LEGS).getItem() == DeferredRegistryHandler.ASTRAL_LEGGINGS.get() &&
+					entity.getItemBySlot(EquipmentSlot.FEET).getItem() == DeferredRegistryHandler.ASTRAL_BOOTS.get()) {
+
+				celestialProtectionChanceForNoDamage += damage * 0.03f;
+			} else {
+				celestialProtectionChanceForNoDamage += damage * 0.01f;
+			}
+
+			// This effect grants a 5% damage reduction to all damage taken, unless they rolled for no damage.
+			damage = damage * 0.95f;
+			event.setAmount(damage);
+		}
+
+		// Handle stuff for the damage vulnerability effect
+		if (entity.hasEffect(DeferredRegistryHandler.DAMAGE_VULNERABILITY_EFFECT.get())) {
+			int level = Objects.requireNonNull(entity.getEffect(DeferredRegistryHandler.DAMAGE_VULNERABILITY_EFFECT.get()))
+					.getAmplifier();
+			float damage = event.getAmount();
+
+			// Each level of the effect results in a 10% increase in damage taken.
+			damage *= (level + 1) * 1.1f;
+			event.setAmount(damage);
+		}
+
+
+		// Handle stuff for the Starstorm Armor set bonus (increase all outgoing damage by 20%)
+		if (event.getSource().getEntity() instanceof Player player) {
+			if (player.getItemBySlot(EquipmentSlot.HEAD).getItem() == DeferredRegistryHandler.STARSTORM_HELMET.get() &&
+					player.getItemBySlot(EquipmentSlot.CHEST).getItem() == DeferredRegistryHandler.STARSTORM_CHESTPLATE.get() &&
+					player.getItemBySlot(EquipmentSlot.LEGS).getItem() == DeferredRegistryHandler.STARSTORM_LEGGINGS.get() &&
+					player.getItemBySlot(EquipmentSlot.FEET).getItem() == DeferredRegistryHandler.STARSTORM_BOOTS.get()) {
+
+				float damage = event.getAmount();
+				damage *= 1.2f;
+				event.setAmount(damage);
+			}
 		}
 	}
 }

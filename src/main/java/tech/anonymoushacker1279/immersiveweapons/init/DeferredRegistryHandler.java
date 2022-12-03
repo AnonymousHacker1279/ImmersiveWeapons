@@ -165,10 +165,10 @@ public class DeferredRegistryHandler {
 	public static final RegistryObject<AxeItem> COBALT_AXE = ITEMS.register("cobalt_axe", () -> new AxeItem(CustomItemMaterials.COBALT, 3, -3.0f, new Properties().tab(ITEM_GROUP)));
 	public static final RegistryObject<ShovelItem> COBALT_SHOVEL = ITEMS.register("cobalt_shovel", () -> new ShovelItem(CustomItemMaterials.COBALT, -1, -2.7f, new Properties().tab(ITEM_GROUP)));
 	public static final RegistryObject<HoeItem> COBALT_HOE = ITEMS.register("cobalt_hoe", () -> new HoeItem(CustomItemMaterials.COBALT, -3, -3.0f, new Properties().tab(ITEM_GROUP)));
-	public static final RegistryObject<VentusSword> VENTUS_SWORD = ITEMS.register("ventus_sword", () -> new VentusSword(CustomItemMaterials.VENTUS, 4, -2.0f, new Properties().tab(ITEM_GROUP)));
+	public static final RegistryObject<VentusSword> VENTUS_SWORD = ITEMS.register("ventus_sword", () -> new VentusSword(CustomItemMaterials.VENTUS, 4, -1.5f, new Properties().tab(ITEM_GROUP)));
 	public static final RegistryObject<VentusPickaxe> VENTUS_PICKAXE = ITEMS.register("ventus_pickaxe", () -> new VentusPickaxe(CustomItemMaterials.VENTUS, 3, -2.2f, new Properties().tab(ITEM_GROUP)));
-	public static final RegistryObject<VentusAxe> VENTUS_AXE = ITEMS.register("ventus_axe", () -> new VentusAxe(CustomItemMaterials.VENTUS, 6, -2.9f, new Properties().tab(ITEM_GROUP)));
-	public static final RegistryObject<VentusShovel> VENTUS_SHOVEL = ITEMS.register("ventus_shovel", () -> new VentusShovel(CustomItemMaterials.VENTUS, 0, -2.9f, new Properties().tab(ITEM_GROUP)));
+	public static final RegistryObject<VentusAxe> VENTUS_AXE = ITEMS.register("ventus_axe", () -> new VentusAxe(CustomItemMaterials.VENTUS, 6, -2.6f, new Properties().tab(ITEM_GROUP)));
+	public static final RegistryObject<VentusShovel> VENTUS_SHOVEL = ITEMS.register("ventus_shovel", () -> new VentusShovel(CustomItemMaterials.VENTUS, -1, -2.9f, new Properties().tab(ITEM_GROUP)));
 	public static final RegistryObject<VentusHoe> VENTUS_HOE = ITEMS.register("ventus_hoe", () -> new VentusHoe(CustomItemMaterials.VENTUS, -3, 1.0f, new Properties().tab(ITEM_GROUP)));
 	public static final RegistryObject<VentusStaff> VENTUS_STAFF = ITEMS.register("ventus_staff", () -> new VentusStaff(new Properties().durability(300).tab(ITEM_GROUP)));
 	public static final RegistryObject<SwordItem> ASTRAL_SWORD = ITEMS.register("astral_sword", () -> new SwordItem(CustomItemMaterials.ASTRAL, 4, -1.0f, new Properties().tab(ITEM_GROUP)));
@@ -176,6 +176,11 @@ public class DeferredRegistryHandler {
 	public static final RegistryObject<AxeItem> ASTRAL_AXE = ITEMS.register("astral_axe", () -> new AxeItem(CustomItemMaterials.ASTRAL, 5, -1.4f, new Properties().tab(ITEM_GROUP)));
 	public static final RegistryObject<ShovelItem> ASTRAL_SHOVEL = ITEMS.register("astral_shovel", () -> new ShovelItem(CustomItemMaterials.ASTRAL, -1, -1.4f, new Properties().tab(ITEM_GROUP)));
 	public static final RegistryObject<HoeItem> ASTRAL_HOE = ITEMS.register("astral_hoe", () -> new HoeItem(CustomItemMaterials.ASTRAL, -3, 1.0f, new Properties().tab(ITEM_GROUP)));
+	public static final RegistryObject<SwordItem> STARSTORM_SWORD = ITEMS.register("starstorm_sword", () -> new SwordItem(CustomItemMaterials.STARSTORM, 4, -1.7f, new Properties().tab(ITEM_GROUP)));
+	public static final RegistryObject<PickaxeItem> STARSTORM_PICKAXE = ITEMS.register("starstorm_pickaxe", () -> new PickaxeItem(CustomItemMaterials.STARSTORM, 3, -1.2f, new Properties().tab(ITEM_GROUP)));
+	public static final RegistryObject<AxeItem> STARSTORM_AXE = ITEMS.register("starstorm_axe", () -> new AxeItem(CustomItemMaterials.STARSTORM, 6, -2.6f, new Properties().tab(ITEM_GROUP)));
+	public static final RegistryObject<ShovelItem> STARSTORM_SHOVEL = ITEMS.register("starstorm_shovel", () -> new ShovelItem(CustomItemMaterials.STARSTORM, -2, -1.4f, new Properties().tab(ITEM_GROUP)));
+	public static final RegistryObject<HoeItem> STARSTORM_HOE = ITEMS.register("starstorm_hoe", () -> new HoeItem(CustomItemMaterials.STARSTORM, -5, 1.0f, new Properties().tab(ITEM_GROUP)));
 	public static final RegistryObject<PikeItem> WOODEN_PIKE = ITEMS.register("wooden_pike", () -> new PikeItem(new Properties().durability(59).tab(ITEM_GROUP), 4.0d, -2.6d, Ingredient.of(ItemTags.PLANKS)));
 	public static final RegistryObject<PikeItem> STONE_PIKE = ITEMS.register("stone_pike", () -> new PikeItem(new Properties().durability(131).tab(ITEM_GROUP), 5.0d, -2.6d, Ingredient.of(ItemTags.STONE_TOOL_MATERIALS)));
 	public static final RegistryObject<PikeItem> GOLDEN_PIKE = ITEMS.register("golden_pike", () -> new PikeItem(new Properties().durability(32).tab(ITEM_GROUP), 4.0d, -2.6d, Ingredient.of(Tags.Items.INGOTS_GOLD)));
@@ -215,6 +220,7 @@ public class DeferredRegistryHandler {
 	public static final RegistryObject<Item> TESLA_INGOT = ITEMS.register("tesla_ingot", () -> new Item(new Properties().tab(ITEM_GROUP)));
 	public static final RegistryObject<Item> RAW_ASTRAL = ITEMS.register("raw_astral", () -> new Item(new Properties().tab(ITEM_GROUP)));
 	public static final RegistryObject<Item> ASTRAL_INGOT = ITEMS.register("astral_ingot", () -> new Item(new Properties().tab(ITEM_GROUP)));
+	public static final RegistryObject<Item> STARSTORM_INGOT = ITEMS.register("starstorm_ingot", () -> new Item(new Properties().tab(ITEM_GROUP)));
 	public static final RegistryObject<Item> RAW_COBALT = ITEMS.register("raw_cobalt", () -> new Item(new Properties().tab(ITEM_GROUP)));
 	public static final RegistryObject<Item> COBALT_INGOT = ITEMS.register("cobalt_ingot", () -> new Item(new Properties().tab(ITEM_GROUP)));
 	public static final RegistryObject<Item> SULFUR = ITEMS.register("sulfur", () -> new Item(new Properties().tab(ITEM_GROUP)));
@@ -319,6 +325,10 @@ public class DeferredRegistryHandler {
 	public static final RegistryObject<AstralArmorItem> ASTRAL_CHESTPLATE = ITEMS.register("astral_chestplate", () -> new AstralArmorItem(CustomArmorMaterials.ASTRAL, EquipmentSlot.CHEST, new Item.Properties().tab(ITEM_GROUP), false));
 	public static final RegistryObject<AstralArmorItem> ASTRAL_LEGGINGS = ITEMS.register("astral_leggings", () -> new AstralArmorItem(CustomArmorMaterials.ASTRAL, EquipmentSlot.LEGS, new Item.Properties().tab(ITEM_GROUP), true));
 	public static final RegistryObject<AstralArmorItem> ASTRAL_BOOTS = ITEMS.register("astral_boots", () -> new AstralArmorItem(CustomArmorMaterials.ASTRAL, EquipmentSlot.FEET, new Item.Properties().tab(ITEM_GROUP), false));
+	public static final RegistryObject<StarstormArmorItem> STARSTORM_HELMET = ITEMS.register("starstorm_helmet", () -> new StarstormArmorItem(CustomArmorMaterials.STARSTORM, EquipmentSlot.HEAD, new Item.Properties().tab(ITEM_GROUP), false));
+	public static final RegistryObject<StarstormArmorItem> STARSTORM_CHESTPLATE = ITEMS.register("starstorm_chestplate", () -> new StarstormArmorItem(CustomArmorMaterials.STARSTORM, EquipmentSlot.CHEST, new Item.Properties().tab(ITEM_GROUP), false));
+	public static final RegistryObject<StarstormArmorItem> STARSTORM_LEGGINGS = ITEMS.register("starstorm_leggings", () -> new StarstormArmorItem(CustomArmorMaterials.STARSTORM, EquipmentSlot.LEGS, new Item.Properties().tab(ITEM_GROUP), true));
+	public static final RegistryObject<StarstormArmorItem> STARSTORM_BOOTS = ITEMS.register("starstorm_boots", () -> new StarstormArmorItem(CustomArmorMaterials.STARSTORM, EquipmentSlot.FEET, new Item.Properties().tab(ITEM_GROUP), false));
 
 	// Spawn eggs
 	public static final RegistryObject<ForgeSpawnEggItem> DYING_SOLDIER_SPAWN_EGG = ITEMS.register("dying_soldier_spawn_egg", () -> new ForgeSpawnEggItem(DeferredRegistryHandler.DYING_SOLDIER_ENTITY, 0x7a6851, 0x783d22, (new Item.Properties()).tab(ITEM_GROUP).stacksTo(16)));
@@ -329,6 +339,7 @@ public class DeferredRegistryHandler {
 	public static final RegistryObject<ForgeSpawnEggItem> LAVA_REVENANT_SPAWN_EGG = ITEMS.register("lava_revenant_spawn_egg", () -> new ForgeSpawnEggItem(DeferredRegistryHandler.LAVA_REVENANT_ENTITY, 0x640000, 0x990000, (new Item.Properties().tab(ITEM_GROUP).stacksTo(16))));
 	public static final RegistryObject<ForgeSpawnEggItem> ROCK_SPIDER_SPAWN_EGG = ITEMS.register("rock_spider_spawn_egg", () -> new ForgeSpawnEggItem(DeferredRegistryHandler.ROCK_SPIDER_ENTITY, 0x7f7f7f, 0xa80e0e, (new Item.Properties().tab(ITEM_GROUP).stacksTo(16))));
 	public static final RegistryObject<ForgeSpawnEggItem> CELESTIAL_TOWER_SPAWN_EGG = ITEMS.register("celestial_tower_spawn_egg", () -> new ForgeSpawnEggItem(DeferredRegistryHandler.CELESTIAL_TOWER_ENTITY, 0x63353d, 0xb3754b, (new Item.Properties().tab(ITEM_GROUP).stacksTo(16))));
+	public static final RegistryObject<ForgeSpawnEggItem> STARMITE_SPAWN_EGG = ITEMS.register("starmite_spawn_egg", () -> new ForgeSpawnEggItem(DeferredRegistryHandler.STARMITE_ENTITY, 0x8f4f1c, 0xa55c1e, (new Item.Properties().tab(ITEM_GROUP).stacksTo(16))));
 
 	// Blocks
 	// Breakable via pickaxe
@@ -389,10 +400,13 @@ public class DeferredRegistryHandler {
 	public static final RegistryObject<DropExperienceBlock> ELECTRIC_ORE = BLOCKS.register("electric_ore", () -> new DropExperienceBlock(BlockBehaviour.Properties.of(Material.STONE).strength(6.0f, 8.0f).sound(SoundType.STONE).requiresCorrectToolForDrops()));
 	public static final RegistryObject<DropExperienceBlock> VENTUS_ORE = BLOCKS.register("ventus_ore", () -> new DropExperienceBlock(BlockBehaviour.Properties.of(Material.STONE).strength(3.5f, 6.0f).sound(SoundType.STONE).requiresCorrectToolForDrops()));
 	public static final RegistryObject<Block> MOLTEN_BLOCK = BLOCKS.register("molten_block", () -> new Block(BlockBehaviour.Properties.of(Material.METAL).strength(45.0f, 1100.0f).sound(SoundType.METAL).requiresCorrectToolForDrops()));
-	public static final RegistryObject<Block> TESLA_BLOCK = BLOCKS.register("tesla_block", () -> new BasicOrientableBlock(BlockBehaviour.Properties.of(Material.METAL).strength(25.0f).sound(SoundType.METAL).requiresCorrectToolForDrops()));
+	public static final RegistryObject<Block> TESLA_BLOCK = BLOCKS.register("tesla_block", () -> new BasicOrientableBlock(BlockBehaviour.Properties.of(Material.METAL).strength(35.0f).sound(SoundType.METAL).requiresCorrectToolForDrops()));
 	public static final RegistryObject<TeslaSynthesizerBlock> TESLA_SYNTHESIZER = BLOCKS.register("tesla_synthesizer", () -> new TeslaSynthesizerBlock(BlockBehaviour.Properties.of(Material.METAL).strength(10.0f).sound(SoundType.METAL).requiresCorrectToolForDrops().noOcclusion()));
 	// Netherite tier
 	public static final RegistryObject<DropExperienceBlock> ASTRAL_ORE = BLOCKS.register("astral_ore", () -> new DropExperienceBlock(BlockBehaviour.Properties.of(Material.STONE).strength(8.0f, 10.0f).sound(SoundType.STONE).requiresCorrectToolForDrops()));
+	public static final RegistryObject<Block> ASTRAL_BLOCK = BLOCKS.register("astral_block", () -> new Block(BlockBehaviour.Properties.of(Material.STONE).strength(25.0f).sound(SoundType.STONE).requiresCorrectToolForDrops()));
+	public static final RegistryObject<AmethystClusterBlock> STARSTORM_CRYSTAL = BLOCKS.register("starstorm_crystal", () -> new StarstormCrystalBlock(7, 3, BlockBehaviour.Properties.of(Material.AMETHYST).randomTicks().strength(0.4f).sound(SoundType.AMETHYST_CLUSTER).requiresCorrectToolForDrops().lightLevel((blockState) -> 6)));
+	public static final RegistryObject<Block> STARSTORM_BLOCK = BLOCKS.register("starstorm_block", () -> new Block(BlockBehaviour.Properties.of(Material.AMETHYST).strength(30.0f).sound(SoundType.AMETHYST).requiresCorrectToolForDrops()));
 
 	// Breakable via axe
 	// Wood tier
@@ -538,6 +552,7 @@ public class DeferredRegistryHandler {
 	public static final RegistryObject<EntityType<CelestialTowerEntity>> CELESTIAL_TOWER_ENTITY = ENTITY_TYPES.register("celestial_tower", () -> EntityType.Builder.of(CelestialTowerEntity::new, MobCategory.MONSTER).sized(8.0f, 9.0f).clientTrackingRange(32).build(new ResourceLocation(ImmersiveWeapons.MOD_ID, "celestial_tower").toString()));
 	public static final RegistryObject<EntityType<CustomBoatEntity>> STARDUST_BOAT_ENTITY = ENTITY_TYPES.register("stardust_boat", () -> EntityType.Builder.<CustomBoatEntity> of((type, level) -> new CustomBoatEntity(type, level, STARDUST_BOAT.get()), MobCategory.MISC).sized(1.375f, 0.5625f).build(new ResourceLocation(ImmersiveWeapons.MOD_ID, "stardust_boat").toString()));
 	public static final RegistryObject<EntityType<CustomChestBoatEntity>> STARDUST_CHEST_BOAT_ENTITY = ENTITY_TYPES.register("stardust_chest_boat", () -> EntityType.Builder.<CustomChestBoatEntity> of((type, level) -> new CustomChestBoatEntity(type, level, STARDUST_CHEST_BOAT.get()), MobCategory.MISC).sized(1.375f, 0.5625f).build(new ResourceLocation(ImmersiveWeapons.MOD_ID, "stardust_chest_boat").toString()));
+	public static final RegistryObject<EntityType<StarmiteEntity>> STARMITE_ENTITY = ENTITY_TYPES.register("starmite", () -> EntityType.Builder.of(StarmiteEntity::new, MobCategory.MISC).sized(0.4f, 0.3f).clientTrackingRange(8).build(new ResourceLocation(ImmersiveWeapons.MOD_ID, "starmite").toString()));
 
 	// Block Items
 	public static final RegistryObject<BlockItem> MOLTEN_ORE_ITEM = ITEMS.register("molten_ore", () -> new BlockItem(MOLTEN_ORE.get(), new Properties().tab(ITEM_GROUP).fireResistant()));
@@ -551,6 +566,8 @@ public class DeferredRegistryHandler {
 	public static final RegistryObject<BlockItem> RAW_SULFUR_BLOCK_ITEM = ITEMS.register("raw_sulfur_block", () -> new BlockItem(RAW_SULFUR_BLOCK.get(), new Properties().tab(ITEM_GROUP)));
 	public static final RegistryObject<BlockItem> MOLTEN_BLOCK_ITEM = ITEMS.register("molten_block", () -> new BlockItem(MOLTEN_BLOCK.get(), new Properties().tab(ITEM_GROUP).fireResistant()));
 	public static final RegistryObject<BlockItem> TESLA_BLOCK_ITEM = ITEMS.register("tesla_block", () -> new BlockItem(TESLA_BLOCK.get(), new Properties().tab(ITEM_GROUP)));
+	public static final RegistryObject<BlockItem> ASTRAL_BLOCK_ITEM = ITEMS.register("astral_block", () -> new BlockItem(ASTRAL_BLOCK.get(), new Properties().tab(ITEM_GROUP)));
+	public static final RegistryObject<BlockItem> STARSTORM_BLOCK_ITEM = ITEMS.register("starstorm_block", () -> new BlockItem(STARSTORM_BLOCK.get(), new Properties().tab(ITEM_GROUP)));
 	public static final RegistryObject<BlockItem> COBALT_BLOCK_ITEM = ITEMS.register("cobalt_block", () -> new BlockItem(COBALT_BLOCK.get(), new Properties().tab(ITEM_GROUP)));
 	public static final RegistryObject<BlockItem> RAW_COBALT_BLOCK_ITEM = ITEMS.register("raw_cobalt_block", () -> new BlockItem(RAW_COBALT_BLOCK.get(), new Properties().tab(ITEM_GROUP)));
 	public static final RegistryObject<BlockItem> SMALL_PARTS_TABLE_ITEM = ITEMS.register("small_parts_table", () -> new BlockItem(SMALL_PARTS_TABLE.get(), new Properties().tab(ITEM_GROUP)));
@@ -680,6 +697,7 @@ public class DeferredRegistryHandler {
 	public static final RegistryObject<BlockItem> DEATHWEED_ITEM = ITEMS.register("deathweed", () -> new BlockItem(DEATHWEED.get(), new Properties().tab(ITEM_GROUP)));
 	public static final RegistryObject<BlockItem> ASTRAL_ORE_ITEM = ITEMS.register("astral_ore", () -> new BlockItem(ASTRAL_ORE.get(), new Properties().tab(ITEM_GROUP)));
 	public static final RegistryObject<BlockItem> ASTRAL_CRYSTAL_ITEM = ITEMS.register("astral_crystal", () -> new BlockItem(ASTRAL_CRYSTAL.get(), new Properties().tab(ITEM_GROUP)));
+	public static final RegistryObject<BlockItem> STARSTORM_CRYSTAL_ITEM = ITEMS.register("starstorm_crystal", () -> new BlockItem(STARSTORM_CRYSTAL.get(), new Properties().tab(ITEM_GROUP)));
 
 	// Sounds
 	public static final RegistryObject<SoundEvent> TESLA_ARMOR_EFFECT = SOUND_EVENTS.register("tesla_armor_effect", () -> new SoundEvent(new ResourceLocation(ImmersiveWeapons.MOD_ID, "tesla_armor_effect")));
@@ -691,6 +709,7 @@ public class DeferredRegistryHandler {
 	public static final RegistryObject<SoundEvent> COPPER_ARMOR_EQUIP = SOUND_EVENTS.register("copper_armor_equip", () -> new SoundEvent(new ResourceLocation(ImmersiveWeapons.MOD_ID, "copper_armor_equip")));
 	public static final RegistryObject<SoundEvent> COBALT_ARMOR_EQUIP = SOUND_EVENTS.register("cobalt_armor_equip", () -> new SoundEvent(new ResourceLocation(ImmersiveWeapons.MOD_ID, "cobalt_armor_equip")));
 	public static final RegistryObject<SoundEvent> ASTRAL_ARMOR_EQUIP = SOUND_EVENTS.register("astral_armor_equip", () -> new SoundEvent(new ResourceLocation(ImmersiveWeapons.MOD_ID, "astral_armor_equip")));
+	public static final RegistryObject<SoundEvent> STARSTORM_ARMOR_EQUIP = SOUND_EVENTS.register("starstorm_armor_equip", () -> new SoundEvent(new ResourceLocation(ImmersiveWeapons.MOD_ID, "starstorm_armor_equip")));
 	public static final RegistryObject<SoundEvent> FLINTLOCK_PISTOL_FIRE = SOUND_EVENTS.register("flintlock_pistol_fire", () -> new SoundEvent(new ResourceLocation(ImmersiveWeapons.MOD_ID, "flintlock_pistol_fire")));
 	public static final RegistryObject<SoundEvent> BULLET_WHIZZ = SOUND_EVENTS.register("bullet_whizz", () -> new SoundEvent(new ResourceLocation(ImmersiveWeapons.MOD_ID, "bullet_whizz")));
 	public static final RegistryObject<SoundEvent> FLINTLOCK_PISTOL_MISFIRE = SOUND_EVENTS.register("flintlock_pistol_misfire", () -> new SoundEvent(new ResourceLocation(ImmersiveWeapons.MOD_ID, "flintlock_pistol_misfire")));

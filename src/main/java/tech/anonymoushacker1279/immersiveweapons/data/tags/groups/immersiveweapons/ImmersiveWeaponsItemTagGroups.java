@@ -36,4 +36,6 @@ public class ImmersiveWeaponsItemTagGroups {
 			"rods/obsidian"));
 	public static final TagKey<Item> ASTRAL_INGOTS = ItemTags.create(new ResourceLocation(ImmersiveWeapons.MOD_ID,
 			"ingots/astral"));
+	public static final TagKey<Item> STARSTORM_INGOTS = ItemTags.create(new ResourceLocation(ImmersiveWeapons.MOD_ID,
+			"ingots/starstorm"));
 }

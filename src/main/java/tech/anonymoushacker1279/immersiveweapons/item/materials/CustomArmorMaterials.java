@@ -24,7 +24,9 @@ public enum CustomArmorMaterials implements ArmorMaterial {
 	VENTUS("ventus", 39, new int[]{5, 6, 9, 5}, 14, SoundEvents.ARMOR_EQUIP_IRON,
 			2.75F, () -> Ingredient.of(DeferredRegistryHandler.VENTUS_SHARD.get()), 0.02F),
 	ASTRAL("astral", 25, new int[]{4, 5, 6, 4}, 22, SoundEvents.ARMOR_EQUIP_IRON,
-			1.8F, () -> Ingredient.of(DeferredRegistryHandler.ASTRAL_INGOT.get()), 0.0F);
+			1.8F, () -> Ingredient.of(DeferredRegistryHandler.ASTRAL_INGOT.get()), 0.0F),
+	STARSTORM("starstorm", 32, new int[]{5, 5, 6, 4}, 15, SoundEvents.ARMOR_EQUIP_IRON,
+			2.2F, () -> Ingredient.of(DeferredRegistryHandler.STARSTORM_INGOT.get()), 0.0F);
 
 	static final int[] HEALTH_PER_SLOT = new int[]{13, 15, 16, 11};
 	private final String name;

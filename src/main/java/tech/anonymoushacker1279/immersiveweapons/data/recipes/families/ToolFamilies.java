@@ -107,5 +107,17 @@ public record ToolFamilies(TagKey<Item> material,
 			null, null, null, null, null
 	);
 
-	public static final Collection<ToolFamilies> FAMILIES = ImmutableList.of(COPPER, COBALT, MOLTEN, VENTUS, TESLA, ASTRAL);
+	public static final ToolFamilies STARSTORM = new ToolFamilies(
+			ImmersiveWeaponsItemTagGroups.STARSTORM_INGOTS,
+			null,
+			ImmersiveWeaponsItemTagGroups.OBSIDIAN_RODS,
+			DeferredRegistryHandler.STARSTORM_SWORD,
+			DeferredRegistryHandler.STARSTORM_PICKAXE,
+			DeferredRegistryHandler.STARSTORM_AXE,
+			DeferredRegistryHandler.STARSTORM_SHOVEL,
+			DeferredRegistryHandler.STARSTORM_HOE,
+			null, null, null, null, null
+	);
+
+	public static final Collection<ToolFamilies> FAMILIES = ImmutableList.of(COPPER, COBALT, MOLTEN, VENTUS, TESLA, ASTRAL, STARSTORM);
 }

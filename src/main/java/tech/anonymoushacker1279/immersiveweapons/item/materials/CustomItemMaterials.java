@@ -41,4 +41,9 @@ public class CustomItemMaterials {
 					() -> Ingredient.of(DeferredRegistryHandler.ASTRAL_INGOT.get())),
 			new ResourceLocation("immersiveweapons:astral"),
 			List.of(Tiers.NETHERITE), List.of());
+	public static final Tier STARSTORM = TierSortingRegistry.registerTier(
+			new ForgeTier(4, 1800, 14.0F, 5.0F, 20, BlockTags.create(new ResourceLocation("")),
+					() -> Ingredient.of(DeferredRegistryHandler.ASTRAL_INGOT.get())),
+			new ResourceLocation("immersiveweapons:starstorm"),
+			List.of(Tiers.NETHERITE), List.of());
 }
