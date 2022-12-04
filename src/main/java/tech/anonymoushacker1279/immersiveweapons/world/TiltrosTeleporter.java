@@ -1,79 +1,105 @@
 package tech.anonymoushacker1279.immersiveweapons.world;
 
-import net.minecraft.BlockUtil;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.state.properties.BlockStateProperties;
-import net.minecraft.world.level.border.WorldBorder;
-import net.minecraft.world.level.dimension.DimensionType;
-import net.minecraft.world.level.portal.PortalInfo;
-import net.minecraft.world.level.portal.PortalShape;
-import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.phys.AABB;
 import net.minecraftforge.common.util.ITeleporter;
-import tech.anonymoushacker1279.immersiveweapons.world.level.levelgen.biomes.BiomesAndDimensions;
+import tech.anonymoushacker1279.immersiveweapons.block.misc.warrior_statue.WarriorStatueTorso;
+import tech.anonymoushacker1279.immersiveweapons.blockentity.AzulStainedOrchidBlockEntity;
+import tech.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
 
-import javax.annotation.Nullable;
-import java.util.Optional;
 import java.util.function.Function;
+import java.util.stream.Stream;
 
 public class TiltrosTeleporter implements ITeleporter {
 
-	public TiltrosTeleporter() {
+	final BlockPos targetPos;
+	final BlockPos currentPos;
+
+	public TiltrosTeleporter(BlockPos targetPos, BlockPos currentPos) {
+		this.targetPos = targetPos;
+		this.currentPos = currentPos;
 	}
 
-	public Optional<BlockUtil.FoundRectangle> makePortal(BlockPos pos) {
-		return Optional.of(new BlockUtil.FoundRectangle(pos.immutable(), 1, 1));
-	}
-
-	@Nullable
 	@Override
-	public PortalInfo getPortalInfo(Entity entity, ServerLevel level, Function<ServerLevel, PortalInfo> defaultPortalInfo) {
-		boolean destinationIsUG = level.dimension() == BiomesAndDimensions.TILTROS;
-		if (entity.level.dimension() != BiomesAndDimensions.TILTROS && !destinationIsUG) {
-			return null;
-		} else {
-			WorldBorder border = level.getWorldBorder();
-			double minX = Math.max(-2.9999872E7D, border.getMinX() + 16.0D);
-			double minZ = Math.max(-2.9999872E7D, border.getMinZ() + 16.0D);
-			double maxX = Math.min(2.9999872E7D, border.getMaxX() - 16.0D);
-			double maxZ = Math.min(2.9999872E7D, border.getMaxZ() - 16.0D);
-			double coordinateDifference = DimensionType.getTeleportationScale(entity.level.dimensionType(),
-					level.dimensionType());
+	public Entity placeEntity(Entity entity, ServerLevel currentWorld, ServerLevel destWorld, float yaw, Function<Boolean, Entity> repositionEntity) {
+		repositionEntity.apply(false);
 
-			BlockPos portalPosition = new BlockPos(Mth.clamp(entity.getX() * coordinateDifference, minX, maxX),
-					entity.getY(),
-					Mth.clamp(entity.getZ() * coordinateDifference, minZ, maxZ));
+		BlockPos teleportPos = targetPos.relative(entity.getDirection().getOpposite());
 
-			return getOrMakePortal(portalPosition).map((result) -> {
-				BlockState portalEntranceState = entity.level.getBlockState(entity.portalEntrancePos);
-				Direction.Axis axis;
-				Vec3 portalShape;
-				if (portalEntranceState.hasProperty(BlockStateProperties.HORIZONTAL_AXIS)) {
-					axis = portalEntranceState.getValue(BlockStateProperties.HORIZONTAL_AXIS);
-					BlockUtil.FoundRectangle rectangle = BlockUtil.getLargestRectangleAround(entity.portalEntrancePos,
-							axis, 21, Direction.Axis.Y, 21,
-							(pos) -> entity.level.getBlockState(pos) == portalEntranceState);
+		// Teleport the player to the target position
+		entity.teleportTo(teleportPos.getX(), teleportPos.getY(), teleportPos.getZ());
 
-					portalShape = PortalShape.getRelativePosition(rectangle, axis, entity.position(),
-							entity.getDimensions(entity.getPose()));
-				} else {
-					axis = Direction.Axis.X;
-					portalShape = new Vec3(0.5D, 0.0D, 0.0D);
-				}
+		// Build a spawn area with another portal, if one doesn't already exist
+		Stream<BlockState> destinationBlockStates = destWorld.getBlockStates(
+				new AABB(targetPos.getX() - 2,
+						targetPos.getY() - 2,
+						targetPos.getZ() - 2,
+						targetPos.getX() + 2,
+						targetPos.getY() + 2,
+						targetPos.getZ() + 2));
 
-				return PortalShape.createPortalInfo(level, result, axis, portalShape,
-						entity.getDimensions(entity.getPose()), entity.getDeltaMovement(), entity.getYRot(), entity.getXRot());
-			}).orElse(null);
+		if (destinationBlockStates.noneMatch(blockState ->
+				blockState == DeferredRegistryHandler.AZUL_STAINED_ORCHID.get().defaultBlockState())) {
+
+			destWorld.destroyBlock(targetPos.above(), true);
+			destWorld.destroyBlock(targetPos.below(), true);
+			destWorld.setBlock(targetPos.below(),
+					Blocks.GRASS_BLOCK.defaultBlockState(), 3);
+			destWorld.destroyBlock(targetPos, true);
+
+			// An Azul Stained Orchid goes here, set its NBT to include the current position
+			destWorld.setBlock(targetPos,
+					DeferredRegistryHandler.AZUL_STAINED_ORCHID.get().defaultBlockState(), 3);
+
+			if (destWorld.getBlockEntity(targetPos) instanceof AzulStainedOrchidBlockEntity blockEntity) {
+				blockEntity.setTargetPos(currentPos);
+			}
+
+			destWorld.destroyBlock(targetPos.relative(entity.getDirection()), true);
+			destWorld.destroyBlock(targetPos.relative(entity.getDirection()).above(), true);
+			destWorld.destroyBlock(targetPos.relative(entity.getDirection()).below(), true);
+			destWorld.setBlock(targetPos.relative(entity.getDirection()).below(),
+					Blocks.STONE_BRICKS.defaultBlockState(), 3);
+			destWorld.destroyBlock(targetPos.relative(entity.getDirection().getClockWise()), true);
+			destWorld.destroyBlock(targetPos.relative(entity.getDirection().getClockWise()).above(), true);
+			destWorld.destroyBlock(targetPos.relative(entity.getDirection().getClockWise()).below(), true);
+			destWorld.setBlock(targetPos.relative(entity.getDirection().getClockWise()).below(),
+					Blocks.STONE_BRICKS.defaultBlockState(), 3);
+			destWorld.destroyBlock(targetPos.relative(entity.getDirection().getCounterClockWise()), true);
+			destWorld.destroyBlock(targetPos.relative(entity.getDirection().getCounterClockWise()).above(), true);
+			destWorld.destroyBlock(targetPos.relative(entity.getDirection().getCounterClockWise()).below(), true);
+			destWorld.setBlock(targetPos.relative(entity.getDirection().getCounterClockWise()).below(),
+					Blocks.STONE_BRICKS.defaultBlockState(), 3);
+			destWorld.destroyBlock(targetPos.relative(entity.getDirection().getOpposite()), true);
+			destWorld.destroyBlock(targetPos.relative(entity.getDirection().getOpposite()).above(), true);
+			destWorld.destroyBlock(targetPos.relative(entity.getDirection().getOpposite()).below(), true);
+			destWorld.setBlock(targetPos.relative(entity.getDirection().getOpposite()).below(),
+					Blocks.STONE_BRICKS.defaultBlockState(), 3);
+			destWorld.destroyBlock(targetPos.relative(entity.getDirection()), true);
+			destWorld.setBlock(targetPos.relative(entity.getDirection()),
+					DeferredRegistryHandler.WARRIOR_STATUE_BASE.get().defaultBlockState()
+							.setValue(WarriorStatueTorso.FACING,
+									entity.getDirection().getOpposite()), 3);
+			destWorld.destroyBlock(targetPos.relative(entity.getDirection()).above(), true);
+			destWorld.setBlock(targetPos.relative(entity.getDirection()).above(),
+					DeferredRegistryHandler.WARRIOR_STATUE_TORSO.get().defaultBlockState()
+							.setValue(WarriorStatueTorso.FACING,
+									entity.getDirection().getOpposite())
+							.setValue(WarriorStatueTorso.POWERED, true), 3);
+			destWorld.destroyBlock(targetPos.relative(entity.getDirection()).above(2), true);
+			destWorld.setBlock(targetPos.relative(entity.getDirection()).above(2),
+					DeferredRegistryHandler.WARRIOR_STATUE_HEAD.get().defaultBlockState()
+							.setValue(WarriorStatueTorso.FACING,
+									entity.getDirection().getOpposite())
+							.setValue(WarriorStatueTorso.POWERED, true), 3);
 		}
-	}
 
-	protected Optional<BlockUtil.FoundRectangle> getOrMakePortal(BlockPos pos) {
-		return makePortal(pos);
+		return entity;
 	}
 
 	@Override

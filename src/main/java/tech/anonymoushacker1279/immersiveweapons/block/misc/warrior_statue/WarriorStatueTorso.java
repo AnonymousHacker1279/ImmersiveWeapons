@@ -209,7 +209,7 @@ public class WarriorStatueTorso extends HorizontalDirectionalBlock implements Si
 				}
 			}
 
-			return InteractionResult.SUCCESS;
+			return InteractionResult.PASS;
 		}
 
 		return InteractionResult.PASS;

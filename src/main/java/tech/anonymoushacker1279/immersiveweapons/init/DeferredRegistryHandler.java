@@ -820,6 +820,7 @@ public class DeferredRegistryHandler {
 	public static final RegistryObject<BlockEntityType<CustomSkullBlockEntity>> CUSTOM_SKULL_BLOCK_ENTITY = BLOCK_ENTITIES.register("custom_skull", () -> BlockEntityType.Builder.of(CustomSkullBlockEntity::new, MINUTEMAN_HEAD.get(), MINUTEMAN_WALL_HEAD.get(), FIELD_MEDIC_HEAD.get(), FIELD_MEDIC_WALL_HEAD.get(), DYING_SOLDIER_HEAD.get(), DYING_SOLDIER_WALL_HEAD.get(), WANDERING_WARRIOR_HEAD.get(), WANDERING_WARRIOR_WALL_HEAD.get(), HANS_HEAD.get(), HANS_WALL_HEAD.get()).build(null));
 	public static final RegistryObject<BlockEntityType<StardustSignEntity>> STARDUST_SIGN_ENTITY = BLOCK_ENTITIES.register("stardust_sign", () -> BlockEntityType.Builder.of(StardustSignEntity::new, STARDUST_SIGN.get(), STARDUST_WALL_SIGN.get()).build(null));
 	public static final RegistryObject<BlockEntityType<AstralCrystalBlockEntity>> ASTRAL_CRYSTAL_BLOCK_ENTITY = BLOCK_ENTITIES.register("astral_crystal", () -> new BlockEntityType<>(AstralCrystalBlockEntity::new, Sets.newHashSet(ASTRAL_CRYSTAL.get()), null));
+	public static final RegistryObject<BlockEntityType<AzulStainedOrchidBlockEntity>> AZUL_STAINED_ORCHID_BLOCK_ENTITY = BLOCK_ENTITIES.register("azul_stained_orchid", () -> new BlockEntityType<>(AzulStainedOrchidBlockEntity::new, Sets.newHashSet(AZUL_STAINED_ORCHID.get()), null));
 
 	// Effects
 	public static final RegistryObject<MorphineEffect> MORPHINE_EFFECT = EFFECTS.register("morphine", () -> new MorphineEffect(MobEffectCategory.NEUTRAL, 3484189));
