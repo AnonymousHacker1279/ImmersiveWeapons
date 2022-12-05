@@ -899,6 +899,15 @@ public class RecipeGenerator extends RecipeProvider {
 				.group("azul_keystone")
 				.unlockedBy("azul_keystone_fragment", has(DeferredRegistryHandler.AZUL_KEYSTONE_FRAGMENT.get()))
 				.save(finishedRecipeConsumer);
+		// Azul Locator
+		ShapedRecipeBuilder.shaped(DeferredRegistryHandler.AZUL_LOCATOR.get())
+				.define('a', Tags.Items.INGOTS_GOLD)
+				.define('b', DeferredRegistryHandler.AZUL_KEYSTONE_FRAGMENT.get())
+				.pattern("aba")
+				.pattern(" a ")
+				.group("azul_keystone")
+				.unlockedBy("azul_keystone_fragment", has(DeferredRegistryHandler.AZUL_KEYSTONE_FRAGMENT.get()))
+				.save(finishedRecipeConsumer);
 		// Cloth scrap
 		ShapedRecipeBuilder.shaped(DeferredRegistryHandler.CLOTH_SCRAP.get(), 4)
 				.define('a', Tags.Items.STRING)

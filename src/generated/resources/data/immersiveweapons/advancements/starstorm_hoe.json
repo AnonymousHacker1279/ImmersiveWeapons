@@ -19,7 +19,7 @@
     "description": {
       "translate": "advancements.immersiveweapons.starstorm_hoe.description"
     },
-    "frame": "task",
+    "frame": "challenge",
     "hidden": false,
     "icon": {
       "item": "immersiveweapons:starstorm_hoe",

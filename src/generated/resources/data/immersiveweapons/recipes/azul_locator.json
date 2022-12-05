@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "azul_keystone",
+  "key": {
+    "a": {
+      "tag": "forge:ingots/gold"
+    },
+    "b": {
+      "item": "immersiveweapons:azul_keystone_fragment"
+    }
+  },
+  "pattern": [
+    "aba",
+    " a "
+  ],
+  "result": {
+    "item": "immersiveweapons:azul_locator"
+  }
+}

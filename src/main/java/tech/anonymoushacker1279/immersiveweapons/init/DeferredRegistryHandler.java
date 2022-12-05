@@ -227,6 +227,7 @@ public class DeferredRegistryHandler {
 	public static final RegistryObject<Item> VENTUS_STAFF_CORE = ITEMS.register("ventus_staff_core", () -> new Item(new Properties().tab(ITEM_GROUP)));
 	public static final RegistryObject<Item> AZUL_KEYSTONE = ITEMS.register("azul_keystone", () -> new Item(new Properties().tab(ITEM_GROUP)));
 	public static final RegistryObject<Item> AZUL_KEYSTONE_FRAGMENT = ITEMS.register("azul_keystone_fragment", () -> new Item(new Properties().tab(ITEM_GROUP)));
+	public static final RegistryObject<AzulLocatorItem> AZUL_LOCATOR = ITEMS.register("azul_locator", () -> new AzulLocatorItem(new Properties().tab(ITEM_GROUP).durability(1)));
 	public static final RegistryObject<Item> CELESTIAL_FRAGMENT = ITEMS.register("celestial_fragment", () -> new Item(new Properties().tab(ITEM_GROUP).fireResistant()));
 	public static final RegistryObject<Item> WOODEN_PIKE_HEAD = ITEMS.register("wooden_pike_head", () -> new Item(new Properties().tab(ITEM_GROUP)));
 	public static final RegistryObject<Item> STONE_PIKE_HEAD = ITEMS.register("stone_pike_head", () -> new Item(new Properties().tab(ITEM_GROUP)));
