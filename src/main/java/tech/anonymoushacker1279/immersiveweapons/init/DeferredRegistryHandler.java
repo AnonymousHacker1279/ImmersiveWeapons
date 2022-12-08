@@ -57,6 +57,7 @@ import tech.anonymoushacker1279.immersiveweapons.client.particle.smoke_grenade.S
 import tech.anonymoushacker1279.immersiveweapons.container.SmallPartsContainer;
 import tech.anonymoushacker1279.immersiveweapons.container.TeslaSynthesizerContainer;
 import tech.anonymoushacker1279.immersiveweapons.data.tags.groups.forge.ForgeItemTagGroups;
+import tech.anonymoushacker1279.immersiveweapons.entity.ambient.FireflyEntity;
 import tech.anonymoushacker1279.immersiveweapons.entity.misc.ChairEntity;
 import tech.anonymoushacker1279.immersiveweapons.entity.monster.*;
 import tech.anonymoushacker1279.immersiveweapons.entity.monster.lava_revenant.LavaRevenantEntity;
@@ -341,6 +342,7 @@ public class DeferredRegistryHandler {
 	public static final RegistryObject<ForgeSpawnEggItem> ROCK_SPIDER_SPAWN_EGG = ITEMS.register("rock_spider_spawn_egg", () -> new ForgeSpawnEggItem(DeferredRegistryHandler.ROCK_SPIDER_ENTITY, 0x7f7f7f, 0xa80e0e, (new Item.Properties().tab(ITEM_GROUP).stacksTo(16))));
 	public static final RegistryObject<ForgeSpawnEggItem> CELESTIAL_TOWER_SPAWN_EGG = ITEMS.register("celestial_tower_spawn_egg", () -> new ForgeSpawnEggItem(DeferredRegistryHandler.CELESTIAL_TOWER_ENTITY, 0x63353d, 0xb3754b, (new Item.Properties().tab(ITEM_GROUP).stacksTo(16))));
 	public static final RegistryObject<ForgeSpawnEggItem> STARMITE_SPAWN_EGG = ITEMS.register("starmite_spawn_egg", () -> new ForgeSpawnEggItem(DeferredRegistryHandler.STARMITE_ENTITY, 0x8f4f1c, 0xa55c1e, (new Item.Properties().tab(ITEM_GROUP).stacksTo(16))));
+	public static final RegistryObject<ForgeSpawnEggItem> FIREFLY_SPAWN_EGG = ITEMS.register("firefly_spawn_egg", () -> new ForgeSpawnEggItem(DeferredRegistryHandler.FIREFLY_ENTITY, 0x703a2a, 0x43e88d, (new Item.Properties().tab(ITEM_GROUP).stacksTo(16))));
 
 	// Blocks
 	// Breakable via pickaxe
@@ -553,7 +555,8 @@ public class DeferredRegistryHandler {
 	public static final RegistryObject<EntityType<CelestialTowerEntity>> CELESTIAL_TOWER_ENTITY = ENTITY_TYPES.register("celestial_tower", () -> EntityType.Builder.of(CelestialTowerEntity::new, MobCategory.MONSTER).sized(8.0f, 9.0f).clientTrackingRange(32).build(new ResourceLocation(ImmersiveWeapons.MOD_ID, "celestial_tower").toString()));
 	public static final RegistryObject<EntityType<CustomBoatEntity>> STARDUST_BOAT_ENTITY = ENTITY_TYPES.register("stardust_boat", () -> EntityType.Builder.<CustomBoatEntity> of((type, level) -> new CustomBoatEntity(type, level, STARDUST_BOAT.get()), MobCategory.MISC).sized(1.375f, 0.5625f).build(new ResourceLocation(ImmersiveWeapons.MOD_ID, "stardust_boat").toString()));
 	public static final RegistryObject<EntityType<CustomChestBoatEntity>> STARDUST_CHEST_BOAT_ENTITY = ENTITY_TYPES.register("stardust_chest_boat", () -> EntityType.Builder.<CustomChestBoatEntity> of((type, level) -> new CustomChestBoatEntity(type, level, STARDUST_CHEST_BOAT.get()), MobCategory.MISC).sized(1.375f, 0.5625f).build(new ResourceLocation(ImmersiveWeapons.MOD_ID, "stardust_chest_boat").toString()));
-	public static final RegistryObject<EntityType<StarmiteEntity>> STARMITE_ENTITY = ENTITY_TYPES.register("starmite", () -> EntityType.Builder.of(StarmiteEntity::new, MobCategory.MISC).sized(0.4f, 0.3f).clientTrackingRange(8).build(new ResourceLocation(ImmersiveWeapons.MOD_ID, "starmite").toString()));
+	public static final RegistryObject<EntityType<StarmiteEntity>> STARMITE_ENTITY = ENTITY_TYPES.register("starmite", () -> EntityType.Builder.of(StarmiteEntity::new, MobCategory.MONSTER).sized(0.4f, 0.3f).clientTrackingRange(8).build(new ResourceLocation(ImmersiveWeapons.MOD_ID, "starmite").toString()));
+	public static final RegistryObject<EntityType<FireflyEntity>> FIREFLY_ENTITY = ENTITY_TYPES.register("firefly", () -> EntityType.Builder.of(FireflyEntity::new, MobCategory.AMBIENT).sized(0.15f, 0.15f).clientTrackingRange(8).build(new ResourceLocation(ImmersiveWeapons.MOD_ID, "firefly").toString()));
 
 	// Block Items
 	public static final RegistryObject<BlockItem> MOLTEN_ORE_ITEM = ITEMS.register("molten_ore", () -> new BlockItem(MOLTEN_ORE.get(), new Properties().tab(ITEM_GROUP).fireResistant()));
@@ -752,6 +755,7 @@ public class DeferredRegistryHandler {
 	public static final RegistryObject<SoundEvent> CELESTIAL_TOWER_VULNERABLE = SOUND_EVENTS.register("celestial_tower_vulnerable", () -> new SoundEvent(new ResourceLocation(ImmersiveWeapons.MOD_ID, "celestial_tower_vulnerable")));
 	public static final RegistryObject<SoundEvent> MORTAR_FIRE = SOUND_EVENTS.register("mortar_fire", () -> new SoundEvent(new ResourceLocation(ImmersiveWeapons.MOD_ID, "mortar_fire")));
 	public static final RegistryObject<SoundEvent> MUSKET_FIRE = SOUND_EVENTS.register("musket_fire", () -> new SoundEvent(new ResourceLocation(ImmersiveWeapons.MOD_ID, "musket_fire")));
+	public static final RegistryObject<SoundEvent> FIREFLY_FLYING = SOUND_EVENTS.register("firefly_flying", () -> new SoundEvent(new ResourceLocation(ImmersiveWeapons.MOD_ID, "firefly_flying")));
 
 	// Containers
 	public static final RegistryObject<MenuType<SmallPartsContainer>> SMALL_PARTS_TABLE_CONTAINER = MENU_TYPES.register("small_parts_table", () -> IForgeMenuType.create((id, inv, data) -> new SmallPartsContainer(id, inv)));

@@ -571,5 +571,18 @@
 				"name": "immersiveweapons:armor/equip/starstorm/equip_2"
 			}
 		]
+	},
+	"firefly_flying": {
+		"subtitle": "immersiveweapons.subtitle.entity.firefly.flying",
+		"sounds": [
+			{
+				"name": "immersiveweapons:entity/firefly/flying/flying_0"
+			},
+			{
+				"name": "immersiveweapons:entity/firefly/flying/flying_1"
+			},{
+				"name": "immersiveweapons:entity/firefly/flying/flying_2"
+			}
+		]
 	}
 }

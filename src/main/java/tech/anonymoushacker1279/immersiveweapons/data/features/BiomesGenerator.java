@@ -177,7 +177,9 @@ public class BiomesGenerator {
 	// TODO: Add more mobs to this biome
 	private static MobSpawnSettings getStarlightPlainsSpawns() {
 		MobSpawnSettings.Builder spawnBuilder = new MobSpawnSettings.Builder()
-				.creatureGenerationProbability(0.65f);
+				.creatureGenerationProbability(0.75f)
+				.addSpawn(MobCategory.AMBIENT, new SpawnerData(
+						DeferredRegistryHandler.FIREFLY_ENTITY.get(), 100, 1, 4));
 
 		return spawnBuilder.build();
 	}
@@ -235,6 +237,4 @@ public class BiomesGenerator {
 
 		return generationBuilder.build();
 	}
-
-
 }
