@@ -1,11 +1,12 @@
 {
-	"name": "immersiveweapons:celestial_asteroid/start_pool",
+	"name": "immersiveweapons:bear_trap",
 	"fallback": "minecraft:empty",
+
 	"elements": [
 		{
 			"weight": 1,
 			"element": {
-				"location": "immersiveweapons:celestial_asteroid",
+				"location": "immersiveweapons:bear_trap",
 				"processors": "minecraft:empty",
 				"projection": "rigid",
 				"element_type": "minecraft:single_pool_element"

@@ -21,6 +21,9 @@ public class LootTableLocations {
 	public static final ResourceLocation HANS_HUT = register("chests/hans_hut");
 	public static final ResourceLocation HANS_HUT_CASK = register("chests/hans_hut_cask");
 
+	public static final ResourceLocation BIODOME_MEDICINE_BARREL = register("chests/biodome/medicine_barrel");
+	public static final ResourceLocation BIODOME_CHEST = register("chests/biodome/chest");
+
 	private static ResourceLocation register(String pId) {
 		return register(new ResourceLocation(ImmersiveWeapons.MOD_ID, pId));
 	}

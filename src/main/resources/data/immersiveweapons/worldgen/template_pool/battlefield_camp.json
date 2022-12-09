@@ -1,12 +1,12 @@
 {
-	"name": "immersiveweapons:water_tower/start_pool",
+	"name": "immersiveweapons:battlefield_camp",
 	"fallback": "minecraft:empty",
 
 	"elements": [
 		{
 			"weight": 1,
 			"element": {
-				"location": "immersiveweapons:water_tower",
+				"location": "immersiveweapons:battlefield_camp",
 				"processors": "minecraft:empty",
 				"projection": "rigid",
 				"element_type": "minecraft:single_pool_element"

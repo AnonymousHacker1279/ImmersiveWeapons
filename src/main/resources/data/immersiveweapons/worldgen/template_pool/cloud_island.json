@@ -1,12 +1,12 @@
 {
-	"name": "immersiveweapons:battlefield_town/start_pool",
+	"name": "immersiveweapons:cloud_island",
 	"fallback": "minecraft:empty",
 
 	"elements": [
 		{
 			"weight": 1,
 			"element": {
-				"location": "immersiveweapons:battlefield_town",
+				"location": "immersiveweapons:cloud_island",
 				"processors": "minecraft:empty",
 				"projection": "rigid",
 				"element_type": "minecraft:single_pool_element"

@@ -1,5 +1,5 @@
 {
-	"name": "immersiveweapons:destroyed_house/start_pool",
+	"name": "immersiveweapons:destroyed_house",
 	"fallback": "minecraft:empty",
 
 	"elements": [

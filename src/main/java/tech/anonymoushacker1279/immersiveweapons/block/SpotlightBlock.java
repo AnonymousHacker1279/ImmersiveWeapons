@@ -2,8 +2,6 @@ package tech.anonymoushacker1279.immersiveweapons.block;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.server.level.ServerLevel;
-import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.*;
 import net.minecraft.world.level.block.*;
@@ -147,22 +145,6 @@ public class SpotlightBlock extends HorizontalDirectionalBlock implements Simple
 				stateToggled(pos, level, state, false);
 				level.setBlock(pos, state.setValue(LIT, true), 3);
 			}
-		}
-	}
-
-	/**
-	 * Runs once every tick
-	 *
-	 * @param state       the <code>BlockState</code> of the block
-	 * @param serverLevel the <code>ServerLevel</code> of the block
-	 * @param pos         the <code>BlockPos</code> the block is at
-	 * @param rand        a <code>Random</code> instance
-	 */
-	@Override
-	public void tick(BlockState state, @NotNull ServerLevel serverLevel, @NotNull BlockPos pos, @NotNull RandomSource rand) {
-		if (state.getValue(LIT) && !serverLevel.hasNeighborSignal(pos)) {
-			stateToggled(pos, serverLevel, state, true);
-			serverLevel.setBlock(pos, state.setValue(LIT, false), 3);
 		}
 	}
 

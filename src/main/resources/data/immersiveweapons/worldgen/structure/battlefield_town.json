@@ -1,6 +1,6 @@
 {
 	"type": "minecraft:jigsaw",
-	"start_pool": "immersiveweapons:battlefield_town/start_pool",
+	"start_pool": "immersiveweapons:battlefield_town",
 	"size": 1,
 	"max_distance_from_center": 80,
 	"biomes": "#immersiveweapons:has_structure/battlefield_town",

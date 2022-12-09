@@ -1,0 +1,14 @@
+{
+	"structures": [
+		{
+			"structure": "immersiveweapons:biodome",
+			"weight": 1
+		}
+	],
+	"placement": {
+		"salt": 4976135446,
+		"spacing": 12,
+		"separation": 7,
+		"type": "minecraft:random_spread"
+	}
+}

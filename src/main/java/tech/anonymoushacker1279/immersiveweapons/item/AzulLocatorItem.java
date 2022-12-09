@@ -46,6 +46,7 @@ public class AzulLocatorItem extends Item {
 					if (spawnPos == null) {
 						player.displayClientMessage(Component.translatable("immersiveweapons.item.azul_locator.no_spawn")
 								.withStyle(ChatFormatting.RED), true);
+						player.getCooldowns().addCooldown(this, 60);
 					} else {
 						player.teleportTo(spawnPos.getX() + 0.5f, spawnPos.getY(), spawnPos.getZ() + 0.5f);
 						player.displayClientMessage(Component.translatable("immersiveweapons.item.azul_locator.teleported")

@@ -8,6 +8,7 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraftforge.client.model.generators.BlockStateProvider;
 import net.minecraftforge.client.model.generators.ConfiguredModel;
 import net.minecraftforge.client.model.generators.ModelBuilder.FaceRotation;
+import net.minecraftforge.client.model.generators.ModelFile.ExistingModelFile;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.registries.ForgeRegistries;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
@@ -482,12 +483,14 @@ public class BlockStateGenerator extends BlockStateProvider {
 							.build();
 				});
 		getVariantBuilder(DeferredRegistryHandler.SPOTLIGHT.get())
-				.partialState().with(SpotlightBlock.LIT, false)
-				.addModels(new ConfiguredModel(models()
-						.getExistingFile(new ResourceLocation(ImmersiveWeapons.MOD_ID, "spotlight_wall_unlit"))))
-				.partialState().with(SpotlightBlock.LIT, true)
-				.addModels(new ConfiguredModel(models()
-						.getExistingFile(new ResourceLocation(ImmersiveWeapons.MOD_ID, "spotlight_wall_lit"))));
+				.forAllStates(state -> {
+					boolean lit = state.getValue(SpotlightBlock.LIT);
+					ExistingModelFile model = models().getExistingFile(new ResourceLocation(ImmersiveWeapons.MOD_ID, "spotlight_wall_" + (lit ? "lit" : "unlit")));
+					return ConfiguredModel.builder()
+							.modelFile(model)
+							.rotationY(((int) state.getValue(BlockStateProperties.HORIZONTAL_FACING).toYRot() + 180) % 360)
+							.build();
+				});
 		getVariantBuilder(DeferredRegistryHandler.MORTAR.get())
 				.forAllStates(state -> {
 					int rotation_level = state.getValue(MortarBlock.ROTATION);
@@ -660,5 +663,7 @@ public class BlockStateGenerator extends BlockStateProvider {
 				models().getExistingFile(new ResourceLocation(ImmersiveWeapons.MOD_ID, "pitfall")));
 		horizontalBlock(DeferredRegistryHandler.TESLA_BLOCK.get(),
 				models().cubeAll("tesla_block", new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/tesla_block")));
+		simpleBlock(DeferredRegistryHandler.BIODOME_LIFE_SUPPORT_UNIT.get(),
+				models().getExistingFile(new ResourceLocation(ImmersiveWeapons.MOD_ID, "biodome_life_support_unit")));
 	}
 }

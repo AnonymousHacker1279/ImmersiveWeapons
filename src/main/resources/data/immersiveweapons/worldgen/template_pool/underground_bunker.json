@@ -1,12 +1,12 @@
 {
-	"name": "immersiveweapons:hans_hut/start_pool",
+	"name": "immersiveweapons:underground_bunker",
 	"fallback": "minecraft:empty",
 
 	"elements": [
 		{
 			"weight": 1,
 			"element": {
-				"location": "immersiveweapons:hans_hut",
+				"location": "immersiveweapons:underground_bunker",
 				"processors": "minecraft:empty",
 				"projection": "rigid",
 				"element_type": "minecraft:single_pool_element"

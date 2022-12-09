@@ -1,12 +1,12 @@
 {
-	"name": "immersiveweapons:campsite/start_pool",
+	"name": "immersiveweapons:hans_hut",
 	"fallback": "minecraft:empty",
 
 	"elements": [
 		{
 			"weight": 1,
 			"element": {
-				"location": "immersiveweapons:campsite",
+				"location": "immersiveweapons:hans_hut",
 				"processors": "minecraft:empty",
 				"projection": "rigid",
 				"element_type": "minecraft:single_pool_element"

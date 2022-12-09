@@ -388,6 +388,7 @@ public class DeferredRegistryHandler {
 	public static final RegistryObject<DropExperienceBlock> NETHER_SULFUR_ORE = BLOCKS.register("nether_sulfur_ore", () -> new DropExperienceBlock(BlockBehaviour.Properties.of(Material.STONE).strength(0.4f).sound(SoundType.STONE).requiresCorrectToolForDrops()));
 	public static final RegistryObject<Block> RAW_SULFUR_BLOCK = BLOCKS.register("raw_sulfur_block", () -> new Block(BlockBehaviour.Properties.of(Material.STONE).strength(0.4f).sound(SoundType.STONE).requiresCorrectToolForDrops()));
 	public static final RegistryObject<AstralCrystalBlock> ASTRAL_CRYSTAL = BLOCKS.register("astral_crystal", () -> new AstralCrystalBlock(7, 3, BlockBehaviour.Properties.of(Material.STONE).randomTicks().strength(0.4f).sound(SoundType.STONE).requiresCorrectToolForDrops().lightLevel((blockState) -> 6)));
+	public static final RegistryObject<BiodomeLifeSupportUnitBlock> BIODOME_LIFE_SUPPORT_UNIT = BLOCKS.register("biodome_life_support_unit", () -> new BiodomeLifeSupportUnitBlock(BlockBehaviour.Properties.of(Material.METAL).strength(4.0f).sound(SoundType.METAL).requiresCorrectToolForDrops()));
 	// Iron tier
 	public static final RegistryObject<BarbedWireFenceBlock> BARBED_WIRE_FENCE = BLOCKS.register("barbed_wire_fence", () -> new BarbedWireFenceBlock(BlockBehaviour.Properties.of(Material.METAL).strength(7.0f, 8.0f).sound(SoundType.METAL).noOcclusion()));
 	public static final RegistryObject<DropExperienceBlock> COBALT_ORE = BLOCKS.register("cobalt_ore", () -> new DropExperienceBlock(BlockBehaviour.Properties.of(Material.STONE).strength(4.0f).sound(SoundType.STONE).requiresCorrectToolForDrops()));
@@ -702,6 +703,7 @@ public class DeferredRegistryHandler {
 	public static final RegistryObject<BlockItem> ASTRAL_ORE_ITEM = ITEMS.register("astral_ore", () -> new BlockItem(ASTRAL_ORE.get(), new Properties().tab(ITEM_GROUP)));
 	public static final RegistryObject<BlockItem> ASTRAL_CRYSTAL_ITEM = ITEMS.register("astral_crystal", () -> new BlockItem(ASTRAL_CRYSTAL.get(), new Properties().tab(ITEM_GROUP)));
 	public static final RegistryObject<BlockItem> STARSTORM_CRYSTAL_ITEM = ITEMS.register("starstorm_crystal", () -> new BlockItem(STARSTORM_CRYSTAL.get(), new Properties().tab(ITEM_GROUP)));
+	public static final RegistryObject<BlockItem> BIODOME_LIFE_SUPPORT_UNIT_ITEM = ITEMS.register("biodome_life_support_unit", () -> new BlockItem(BIODOME_LIFE_SUPPORT_UNIT.get(), new Properties().tab(ITEM_GROUP)));
 
 	// Sounds
 	public static final RegistryObject<SoundEvent> TESLA_ARMOR_EFFECT = SOUND_EVENTS.register("tesla_armor_effect", () -> new SoundEvent(new ResourceLocation(ImmersiveWeapons.MOD_ID, "tesla_armor_effect")));
@@ -826,6 +828,7 @@ public class DeferredRegistryHandler {
 	public static final RegistryObject<BlockEntityType<StardustSignEntity>> STARDUST_SIGN_ENTITY = BLOCK_ENTITIES.register("stardust_sign", () -> BlockEntityType.Builder.of(StardustSignEntity::new, STARDUST_SIGN.get(), STARDUST_WALL_SIGN.get()).build(null));
 	public static final RegistryObject<BlockEntityType<AstralCrystalBlockEntity>> ASTRAL_CRYSTAL_BLOCK_ENTITY = BLOCK_ENTITIES.register("astral_crystal", () -> new BlockEntityType<>(AstralCrystalBlockEntity::new, Sets.newHashSet(ASTRAL_CRYSTAL.get()), null));
 	public static final RegistryObject<BlockEntityType<AzulStainedOrchidBlockEntity>> AZUL_STAINED_ORCHID_BLOCK_ENTITY = BLOCK_ENTITIES.register("azul_stained_orchid", () -> new BlockEntityType<>(AzulStainedOrchidBlockEntity::new, Sets.newHashSet(AZUL_STAINED_ORCHID.get()), null));
+	public static final RegistryObject<BlockEntityType<BiodomeLifeSupportUnitBlockEntity>> BIODOME_LIFE_SUPPORT_UNIT_BLOCK_ENTITY = BLOCK_ENTITIES.register("biodome_life_support_unit", () -> new BlockEntityType<>(BiodomeLifeSupportUnitBlockEntity::new, Sets.newHashSet(BIODOME_LIFE_SUPPORT_UNIT.get()), null));
 
 	// Effects
 	public static final RegistryObject<MorphineEffect> MORPHINE_EFFECT = EFFECTS.register("morphine", () -> new MorphineEffect(MobEffectCategory.NEUTRAL, 3484189));

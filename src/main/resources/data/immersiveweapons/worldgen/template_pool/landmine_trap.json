@@ -1,12 +1,12 @@
 {
-	"name": "immersiveweapons:bear_trap/start_pool",
+	"name": "immersiveweapons:landmine_trap",
 	"fallback": "minecraft:empty",
 
 	"elements": [
 		{
 			"weight": 1,
 			"element": {
-				"location": "immersiveweapons:bear_trap",
+				"location": "immersiveweapons:landmine_trap",
 				"processors": "minecraft:empty",
 				"projection": "rigid",
 				"element_type": "minecraft:single_pool_element"

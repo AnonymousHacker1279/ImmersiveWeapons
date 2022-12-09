@@ -1,9 +1,9 @@
 {
 	"type": "minecraft:jigsaw",
-	"start_pool": "immersiveweapons:hans_hut",
+	"start_pool": "immersiveweapons:biodome",
 	"size": 1,
 	"max_distance_from_center": 80,
-	"biomes": "#immersiveweapons:has_structure/hans_hut",
+	"biomes": "#immersiveweapons:has_structure/biodome",
 	"step": "surface_structures",
 	"terrain_adaptation": "beard_thin",
 	"start_height": {

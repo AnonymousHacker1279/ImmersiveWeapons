@@ -9,6 +9,7 @@ import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.LootTable.Builder;
 import net.minecraft.world.level.storage.loot.entries.LootItem;
 import net.minecraft.world.level.storage.loot.functions.*;
+import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
 import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
 import tech.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
 
@@ -143,5 +144,83 @@ public class ChestLootTables implements Consumer<BiConsumer<ResourceLocation, Bu
 										.apply(SetItemCountFunction.setCount(UniformGenerator.between(8.0F, 32.0F))))
 								.add(LootItem.lootTableItem(Items.SWEET_BERRIES).setWeight(1)
 										.apply(SetItemCountFunction.setCount(UniformGenerator.between(8.0f, 16.0f))))));
+
+
+		resourceLocationBuilderBiConsumer.accept(LootTableLocations.BIODOME_CHEST,
+				LootTable.lootTable()
+						.withPool(LootPool.lootPool()
+								.setRolls(UniformGenerator.between(3.0F, 5.0F))
+								.add(LootItem.lootTableItem(DeferredRegistryHandler.COBALT_SWORD.get()).setWeight(4)
+										.apply(SetItemCountFunction.setCount(ConstantValue.exactly(1)))
+										.apply(EnchantRandomlyFunction.randomApplicableEnchantment()))
+								.add(LootItem.lootTableItem(DeferredRegistryHandler.COBALT_PICKAXE.get()).setWeight(4)
+										.apply(SetItemCountFunction.setCount(ConstantValue.exactly(1)))
+										.apply(EnchantRandomlyFunction.randomApplicableEnchantment()))
+								.add(LootItem.lootTableItem(DeferredRegistryHandler.COBALT_SHOVEL.get()).setWeight(4)
+										.apply(SetItemCountFunction.setCount(ConstantValue.exactly(1)))
+										.apply(EnchantRandomlyFunction.randomApplicableEnchantment()))
+								.add(LootItem.lootTableItem(DeferredRegistryHandler.COBALT_AXE.get()).setWeight(4)
+										.apply(SetItemCountFunction.setCount(ConstantValue.exactly(1)))
+										.apply(EnchantRandomlyFunction.randomApplicableEnchantment()))
+								.add(LootItem.lootTableItem(DeferredRegistryHandler.COBALT_HOE.get()).setWeight(4)
+										.apply(SetItemCountFunction.setCount(ConstantValue.exactly(1)))
+										.apply(EnchantRandomlyFunction.randomApplicableEnchantment()))
+								.add(LootItem.lootTableItem(DeferredRegistryHandler.COBALT_HELMET.get()).setWeight(4)
+										.apply(SetItemCountFunction.setCount(ConstantValue.exactly(1)))
+										.apply(EnchantRandomlyFunction.randomApplicableEnchantment()))
+								.add(LootItem.lootTableItem(DeferredRegistryHandler.COBALT_CHESTPLATE.get()).setWeight(4)
+										.apply(SetItemCountFunction.setCount(ConstantValue.exactly(1)))
+										.apply(EnchantRandomlyFunction.randomApplicableEnchantment()))
+								.add(LootItem.lootTableItem(DeferredRegistryHandler.COBALT_LEGGINGS.get()).setWeight(4)
+										.apply(SetItemCountFunction.setCount(ConstantValue.exactly(1)))
+										.apply(EnchantRandomlyFunction.randomApplicableEnchantment()))
+								.add(LootItem.lootTableItem(DeferredRegistryHandler.COBALT_BOOTS.get()).setWeight(4)
+										.apply(SetItemCountFunction.setCount(ConstantValue.exactly(1)))
+										.apply(EnchantRandomlyFunction.randomApplicableEnchantment()))
+								.add(LootItem.lootTableItem(Items.BOW).setWeight(3)
+										.apply(SetItemCountFunction.setCount(ConstantValue.exactly(1)))
+										.apply(EnchantRandomlyFunction.randomApplicableEnchantment()))
+								.add(LootItem.lootTableItem(DeferredRegistryHandler.COBALT_ARROW.get()).setWeight(3)
+										.apply(SetItemCountFunction.setCount(UniformGenerator.between(8.0f, 32.0f))))
+								.add(LootItem.lootTableItem(Items.CROSSBOW).setWeight(3)
+										.apply(SetItemCountFunction.setCount(ConstantValue.exactly(1)))
+										.apply(EnchantRandomlyFunction.randomApplicableEnchantment()))
+								.add(LootItem.lootTableItem(DeferredRegistryHandler.FLINTLOCK_PISTOL.get()).setWeight(2)
+										.apply(SetItemCountFunction.setCount(ConstantValue.exactly(1)))
+										.apply(EnchantRandomlyFunction.randomApplicableEnchantment()))
+								.add(LootItem.lootTableItem(DeferredRegistryHandler.MUSKET.get()).setWeight(2)
+										.apply(SetItemCountFunction.setCount(ConstantValue.exactly(1)))
+										.apply(EnchantRandomlyFunction.randomApplicableEnchantment()))
+								.add(LootItem.lootTableItem(DeferredRegistryHandler.COBALT_INGOT.get()).setWeight(6)
+										.apply(SetItemCountFunction.setCount(UniformGenerator.between(4.0f, 12.0f))))
+						));
+
+
+		resourceLocationBuilderBiConsumer.accept(LootTableLocations.BIODOME_MEDICINE_BARREL,
+				// This should contain food and medicine
+				LootTable.lootTable()
+						.withPool(LootPool.lootPool()
+								.setRolls(UniformGenerator.between(3.0f, 6.0f))
+								.add(LootItem.lootTableItem(Items.BREAD).setWeight(3)
+										.apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0f, 3.0f))))
+								.add(LootItem.lootTableItem(Items.COOKED_BEEF).setWeight(3)
+										.apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0f, 3.0f))))
+								.add(LootItem.lootTableItem(Items.COOKED_CHICKEN).setWeight(3)
+										.apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0f, 3.0f))))
+								.add(LootItem.lootTableItem(Items.COOKED_COD).setWeight(3)
+										.apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0f, 3.0f))))
+								.add(LootItem.lootTableItem(Items.COOKED_MUTTON).setWeight(3)
+										.apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0f, 3.0f))))
+								.add(LootItem.lootTableItem(Items.COOKED_PORKCHOP).setWeight(3)
+										.apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0f, 3.0f))))
+								.add(LootItem.lootTableItem(Items.COOKED_RABBIT).setWeight(3)
+										.apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0f, 3.0f))))
+								.add(LootItem.lootTableItem(Items.COOKED_SALMON).setWeight(3)
+										.apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0f, 3.0f))))
+								.add(LootItem.lootTableItem(DeferredRegistryHandler.FIRST_AID_KIT.get()).setWeight(2)
+										.apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0f, 2.0f))))
+								.add(LootItem.lootTableItem(DeferredRegistryHandler.BANDAGE.get()).setWeight(3)
+										.apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0f, 3.0f))))
+						));
 	}
 }

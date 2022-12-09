@@ -1,12 +1,12 @@
 {
-	"name": "immersiveweapons:outhouse/start_pool",
+	"name": "immersiveweapons:battlefield_town",
 	"fallback": "minecraft:empty",
 
 	"elements": [
 		{
 			"weight": 1,
 			"element": {
-				"location": "immersiveweapons:outhouse",
+				"location": "immersiveweapons:battlefield_town",
 				"processors": "minecraft:empty",
 				"projection": "rigid",
 				"element_type": "minecraft:single_pool_element"

@@ -1,12 +1,11 @@
 {
-	"name": "immersiveweapons:landmine_trap/start_pool",
+	"name": "immersiveweapons:biodome",
 	"fallback": "minecraft:empty",
-
 	"elements": [
 		{
 			"weight": 1,
 			"element": {
-				"location": "immersiveweapons:landmine_trap",
+				"location": "immersiveweapons:biodome",
 				"processors": "minecraft:empty",
 				"projection": "rigid",
 				"element_type": "minecraft:single_pool_element"

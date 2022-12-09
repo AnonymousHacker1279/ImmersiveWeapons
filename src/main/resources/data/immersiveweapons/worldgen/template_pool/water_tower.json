@@ -1,12 +1,12 @@
 {
-	"name": "immersiveweapons:pitfall_trap/start_pool",
+	"name": "immersiveweapons:water_tower",
 	"fallback": "minecraft:empty",
 
 	"elements": [
 		{
 			"weight": 1,
 			"element": {
-				"location": "immersiveweapons:pitfall_trap",
+				"location": "immersiveweapons:water_tower",
 				"processors": "minecraft:empty",
 				"projection": "rigid",
 				"element_type": "minecraft:single_pool_element"

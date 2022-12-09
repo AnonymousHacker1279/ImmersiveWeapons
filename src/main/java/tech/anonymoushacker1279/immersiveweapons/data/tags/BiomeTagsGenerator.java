@@ -101,6 +101,9 @@ public class BiomeTagsGenerator extends TagsProvider<Biome> {
 
 		tag(ImmersiveWeaponsWorldGenTagGroups.HAS_CELESTIAL_ASTEROID)
 				.add(BiomesAndDimensions.DEADMANS_DESERT);
+
+		tag(ImmersiveWeaponsWorldGenTagGroups.HAS_BIODOME)
+				.add(BiomesAndDimensions.DEADMANS_DESERT);
 	}
 
 	@Override
