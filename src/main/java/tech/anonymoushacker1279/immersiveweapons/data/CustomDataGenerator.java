@@ -12,6 +12,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
 import net.minecraftforge.registries.ForgeRegistries.Keys;
+import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.data.advancements.AdvancementProvider;
 import tech.anonymoushacker1279.immersiveweapons.data.features.*;
 import tech.anonymoushacker1279.immersiveweapons.data.loot.LootTableGenerator;
@@ -21,6 +22,7 @@ import tech.anonymoushacker1279.immersiveweapons.data.modifiers.OreBiomeModifier
 import tech.anonymoushacker1279.immersiveweapons.data.modifiers.SpawnBiomeModifiers;
 import tech.anonymoushacker1279.immersiveweapons.data.recipes.RecipeGenerator;
 import tech.anonymoushacker1279.immersiveweapons.data.recipes.families.FamilyGenerator;
+import tech.anonymoushacker1279.immersiveweapons.data.sounds.SoundGenerator;
 import tech.anonymoushacker1279.immersiveweapons.data.tags.*;
 import tech.anonymoushacker1279.immersiveweapons.world.level.levelgen.feature.BiomeFeatures;
 import tech.anonymoushacker1279.immersiveweapons.world.level.levelgen.feature.WorldCarvers;
@@ -45,6 +47,7 @@ public class CustomDataGenerator {
 		// Client data
 		generator.addProvider(event.includeClient(), new BlockStateGenerator(generator, event.getExistingFileHelper()));
 		generator.addProvider(event.includeClient(), new ItemModelGenerator(generator, event.getExistingFileHelper()));
+		generator.addProvider(event.includeClient(), new SoundGenerator(generator, ImmersiveWeapons.MOD_ID, event.getExistingFileHelper()));
 
 		// Server data
 		generator.addProvider(event.includeServer(), new AdvancementProvider(generator));
