@@ -7,7 +7,6 @@ import net.minecraft.client.renderer.entity.EntityRendererProvider.Context;
 import net.minecraft.client.renderer.entity.HumanoidMobRenderer;
 import net.minecraft.client.renderer.entity.layers.HumanoidArmorLayer;
 import net.minecraft.resources.ResourceLocation;
-import org.jetbrains.annotations.NotNull;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.entity.neutral.MinutemanEntity;
 
@@ -31,7 +30,7 @@ public class MinutemanRenderer extends HumanoidMobRenderer<MinutemanEntity, Play
 	 * @return ResourceLocation
 	 */
 	@Override
-	public @NotNull ResourceLocation getTextureLocation(@NotNull MinutemanEntity entity) {
+	public ResourceLocation getTextureLocation(MinutemanEntity entity) {
 		return MINUTEMAN_TEXTURE;
 	}
 }

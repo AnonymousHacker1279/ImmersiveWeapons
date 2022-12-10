@@ -7,7 +7,6 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import org.jetbrains.annotations.NotNull;
 import tech.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
 
 public class MorphineItem extends Item {
@@ -30,8 +29,8 @@ public class MorphineItem extends Item {
 	 * @return InteractionResultHolder extending ItemStack
 	 */
 	@Override
-	public @NotNull InteractionResultHolder<ItemStack> use(@NotNull Level worldIn, Player playerIn,
-	                                                       @NotNull InteractionHand handIn) {
+	public InteractionResultHolder<ItemStack> use(Level worldIn, Player playerIn,
+	                                              InteractionHand handIn) {
 
 		ItemStack itemInHand = playerIn.getItemInHand(handIn);
 
@@ -56,8 +55,8 @@ public class MorphineItem extends Item {
 	 * @return InteractionResult
 	 */
 	@Override
-	public @NotNull InteractionResult interactLivingEntity(@NotNull ItemStack stack, @NotNull Player playerIn,
-	                                                       LivingEntity entity, @NotNull InteractionHand hand) {
+	public InteractionResult interactLivingEntity(ItemStack stack, Player playerIn,
+	                                              LivingEntity entity, InteractionHand hand) {
 
 		if (entity.level.isClientSide) {
 			return InteractionResult.PASS;

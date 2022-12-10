@@ -4,7 +4,6 @@ import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.alchemy.Potion;
-import org.jetbrains.annotations.NotNull;
 import tech.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
 
 public class CustomPotion extends Potion {
@@ -19,7 +18,7 @@ public class CustomPotion extends Potion {
 	}
 
 	@Override
-	public @NotNull String getName(@NotNull String prefix) {
+	public String getName(String prefix) {
 		prefix = prefix.replace("item.minecraft.", "")
 				.replace(".effect", "");
 		return super.getName("potion.immersiveweapons." + prefix);

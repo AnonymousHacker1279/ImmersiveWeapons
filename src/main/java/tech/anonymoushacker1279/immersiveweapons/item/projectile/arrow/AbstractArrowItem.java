@@ -9,7 +9,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.Level;
-import org.jetbrains.annotations.NotNull;
 
 public abstract class AbstractArrowItem extends ArrowItem {
 
@@ -35,7 +34,7 @@ public abstract class AbstractArrowItem extends ArrowItem {
 	 * @return AbstractArrow
 	 */
 	@Override
-	public @NotNull AbstractArrow createArrow(@NotNull Level worldIn, @NotNull ItemStack stack, @NotNull LivingEntity shooter) {
+	public AbstractArrow createArrow(Level worldIn, ItemStack stack, LivingEntity shooter) {
 		AbstractArrow arrowEntity = new Arrow(worldIn, shooter);
 		arrowEntity.setBaseDamage(damage);
 		arrowEntity.setOwner(shooter);
@@ -51,7 +50,7 @@ public abstract class AbstractArrowItem extends ArrowItem {
 	 * @return boolean
 	 */
 	@Override
-	public boolean isInfinite(@NotNull ItemStack stack, @NotNull ItemStack bow, @NotNull Player player) {
+	public boolean isInfinite(ItemStack stack, ItemStack bow, Player player) {
 		int enchant = EnchantmentHelper.getTagEnchantmentLevel(Enchantments.INFINITY_ARROWS, bow);
 		return enchant > 0;
 	}

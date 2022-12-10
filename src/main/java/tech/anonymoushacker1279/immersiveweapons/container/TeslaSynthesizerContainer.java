@@ -6,7 +6,6 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.*;
 import net.minecraft.world.item.ItemStack;
-import org.jetbrains.annotations.NotNull;
 import tech.anonymoushacker1279.immersiveweapons.blockentity.TeslaSynthesizerBlockEntity;
 import tech.anonymoushacker1279.immersiveweapons.container.slot.TeslaSynthesizerFuelSlot;
 import tech.anonymoushacker1279.immersiveweapons.container.slot.TeslaSynthesizerResultSlot;
@@ -73,7 +72,7 @@ public class TeslaSynthesizerContainer extends AbstractContainerMenu {
 	 * @return boolean
 	 */
 	@Override
-	public boolean stillValid(@NotNull Player playerIn) {
+	public boolean stillValid(Player playerIn) {
 		return teslaSynthesizerInventory.stillValid(playerIn);
 	}
 
@@ -85,7 +84,7 @@ public class TeslaSynthesizerContainer extends AbstractContainerMenu {
 	 * @return ItemStack
 	 */
 	@Override
-	public @NotNull ItemStack quickMoveStack(@NotNull Player playerIn, int index) {
+	public ItemStack quickMoveStack(Player playerIn, int index) {
 		ItemStack itemStack = ItemStack.EMPTY;
 		Slot slot = slots.get(index);
 		if (slot.hasItem()) {

@@ -12,7 +12,6 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import org.jetbrains.annotations.NotNull;
 import tech.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
 import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
 
@@ -40,7 +39,7 @@ public class VentusStaff extends Item {
 	 * @return InteractionResultHolder extending ItemStack
 	 */
 	@Override
-	public @NotNull InteractionResultHolder<ItemStack> use(@NotNull Level level, Player player, @NotNull InteractionHand hand) {
+	public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
 		ItemStack itemInHand = player.getItemInHand(hand);
 		List<Entity> entities = player.level.getEntities(player,
 				player.getBoundingBox().move(-2, 0, -2).expandTowards(4, 2, 4));
@@ -85,7 +84,7 @@ public class VentusStaff extends Item {
 	 * @return boolean
 	 */
 	@Override
-	public boolean isValidRepairItem(@NotNull ItemStack toRepair, ItemStack repair) {
+	public boolean isValidRepairItem(ItemStack toRepair, ItemStack repair) {
 		return repair.getItem() == DeferredRegistryHandler.VENTUS_SHARD.get();
 	}
 }

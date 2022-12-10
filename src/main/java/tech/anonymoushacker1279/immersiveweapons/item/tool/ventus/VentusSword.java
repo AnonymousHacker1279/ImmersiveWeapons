@@ -4,7 +4,6 @@ import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.*;
-import org.jetbrains.annotations.NotNull;
 
 public class VentusSword extends SwordItem {
 
@@ -29,7 +28,7 @@ public class VentusSword extends SwordItem {
 	 * @return boolean
 	 */
 	@Override
-	public boolean hurtEnemy(@NotNull ItemStack itemStack, LivingEntity target, @NotNull LivingEntity attacker) {
+	public boolean hurtEnemy(ItemStack itemStack, LivingEntity target, LivingEntity attacker) {
 		target.addEffect(new MobEffectInstance(MobEffects.LEVITATION, 60, 2, false, false));
 		return super.hurtEnemy(itemStack, target, attacker);
 	}

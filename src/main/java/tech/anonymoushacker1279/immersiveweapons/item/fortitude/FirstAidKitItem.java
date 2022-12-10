@@ -10,7 +10,6 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import org.jetbrains.annotations.NotNull;
 import tech.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
 
 public class FirstAidKitItem extends Item {
@@ -33,8 +32,8 @@ public class FirstAidKitItem extends Item {
 	 * @return InteractionResultHolder extending ItemStack
 	 */
 	@Override
-	public @NotNull InteractionResultHolder<ItemStack> use(@NotNull Level level, Player player,
-	                                                       @NotNull InteractionHand hand) {
+	public InteractionResultHolder<ItemStack> use(Level level, Player player,
+	                                              InteractionHand hand) {
 
 		ItemStack itemInHand = player.getItemInHand(hand);
 		if (player.getMaxHealth() - player.getHealth() <= player.getMaxHealth() / 2) { // Only use if at or less than half health
@@ -65,8 +64,8 @@ public class FirstAidKitItem extends Item {
 	 * @return ActionResultType
 	 */
 	@Override
-	public @NotNull InteractionResult interactLivingEntity(@NotNull ItemStack stack, @NotNull Player player,
-	                                                       LivingEntity entity, @NotNull InteractionHand hand) {
+	public InteractionResult interactLivingEntity(ItemStack stack, Player player,
+	                                              LivingEntity entity, InteractionHand hand) {
 
 		if (entity.level.isClientSide) {
 			return InteractionResult.PASS;

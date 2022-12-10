@@ -7,7 +7,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.Level;
-import org.jetbrains.annotations.NotNull;
 import tech.anonymoushacker1279.immersiveweapons.entity.projectile.BulletEntity;
 import tech.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
 
@@ -26,7 +25,7 @@ public abstract class AbstractBulletItem extends ArrowItem {
 		damage = damageIn;
 	}
 
-	public @NotNull BulletEntity createBullet(@NotNull Level level, @NotNull LivingEntity shooter) {
+	public BulletEntity createBullet(Level level, LivingEntity shooter) {
 		BulletEntity bulletEntity = new BulletEntity(DeferredRegistryHandler.IRON_MUSKET_BALL_ENTITY.get(), shooter, level);
 		bulletEntity.setBaseDamage(damage);
 		bulletEntity.setOwner(shooter);
@@ -42,7 +41,7 @@ public abstract class AbstractBulletItem extends ArrowItem {
 	 * @return boolean
 	 */
 	@Override
-	public boolean isInfinite(@NotNull ItemStack stack, @NotNull ItemStack bow, @NotNull Player player) {
+	public boolean isInfinite(ItemStack stack, ItemStack bow, Player player) {
 		int enchant = EnchantmentHelper.getTagEnchantmentLevel(Enchantments.INFINITY_ARROWS, bow);
 		return enchant > 0;
 	}

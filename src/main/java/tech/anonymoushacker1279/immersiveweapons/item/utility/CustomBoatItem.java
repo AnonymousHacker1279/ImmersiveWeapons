@@ -12,7 +12,7 @@ import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.phys.*;
-import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import tech.anonymoushacker1279.immersiveweapons.entity.vehicle.CustomBoatEntity;
 import tech.anonymoushacker1279.immersiveweapons.entity.vehicle.CustomBoatType;
 
@@ -24,6 +24,7 @@ public class CustomBoatItem extends Item {
 
 	private static final Predicate<Entity> ENTITY_PREDICATE = EntitySelector.NO_SPECTATORS.and(Entity::isPickable);
 	private final CustomBoatType type;
+	@Nullable
 	private EntityType<? extends CustomBoatEntity> boatEntityType;
 
 	public CustomBoatItem(CustomBoatType type, Item.Properties properties) {
@@ -41,7 +42,7 @@ public class CustomBoatItem extends Item {
 	}
 
 	@Override
-	public @NotNull InteractionResultHolder<ItemStack> use(@NotNull Level level, Player player, @NotNull InteractionHand hand) {
+	public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
 		ItemStack itemStack = player.getItemInHand(hand);
 		HitResult hitResult = getPlayerPOVHitResult(level, player, ClipContext.Fluid.ANY);
 		if (hitResult.getType() == HitResult.Type.MISS) {

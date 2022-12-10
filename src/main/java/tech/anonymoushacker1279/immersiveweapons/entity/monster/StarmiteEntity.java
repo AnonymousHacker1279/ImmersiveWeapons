@@ -8,8 +8,9 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.monster.Endermite;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
+import tech.anonymoushacker1279.immersiveweapons.entity.GrantAdvancementOnDiscovery;
 
-public class StarmiteEntity extends Endermite {
+public class StarmiteEntity extends Endermite implements GrantAdvancementOnDiscovery {
 
 	public StarmiteEntity(EntityType<? extends StarmiteEntity> entityType, Level level) {
 		super(entityType, level);
@@ -35,5 +36,11 @@ public class StarmiteEntity extends Endermite {
 	@Override
 	protected void playStepSound(BlockPos pPos, BlockState pBlock) {
 		playSound(SoundEvents.ENDERMITE_STEP, 0.15F, 1.0F);
+	}
+
+	@Override
+	public void aiStep() {
+		super.aiStep();
+		checkForDiscovery(this);
 	}
 }

@@ -12,23 +12,22 @@ import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.Heightmap;
-import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import tech.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
 import tech.anonymoushacker1279.immersiveweapons.world.TiltrosTeleporter;
 import tech.anonymoushacker1279.immersiveweapons.world.level.levelgen.biomes.BiomesAndDimensions;
 
-import javax.annotation.Nullable;
-
 public class AzulStainedOrchidBlockEntity extends BlockEntity implements EntityBlock {
 
 	int teleportDelay = 100;
+	@Nullable
 	BlockPos targetPos;
 
 	public AzulStainedOrchidBlockEntity(BlockPos pos, BlockState state) {
 		super(DeferredRegistryHandler.AZUL_STAINED_ORCHID_BLOCK_ENTITY.get(), pos, state);
 	}
 
-	public void entityInside(@NotNull BlockPos pos, @NotNull Entity entity) {
+	public void entityInside(BlockPos pos, Entity entity) {
 		entity.playSound(SoundEvents.ENDERMAN_AMBIENT, 0.05f, 0.075f);
 		if (!entity.isPassenger() && !entity.isVehicle() && entity.canChangeDimensions() && !entity.isOnPortalCooldown() && teleportDelay <= 0) {
 			teleportDelay = 100;
@@ -126,7 +125,7 @@ public class AzulStainedOrchidBlockEntity extends BlockEntity implements EntityB
 	 * @param pTag the <code>CompoundNBT</code> to save
 	 */
 	@Override
-	protected void saveAdditional(@NotNull CompoundTag pTag) {
+	protected void saveAdditional(CompoundTag pTag) {
 		super.saveAdditional(pTag);
 		pTag.putInt("teleportDelay", teleportDelay);
 		if (targetPos != null) {
@@ -142,7 +141,7 @@ public class AzulStainedOrchidBlockEntity extends BlockEntity implements EntityB
 	 * @param nbt the <code>CompoundNBT</code> to load
 	 */
 	@Override
-	public void load(@NotNull CompoundTag nbt) {
+	public void load(CompoundTag nbt) {
 		super.load(nbt);
 		teleportDelay = nbt.getInt("teleportDelay");
 		if (nbt.contains("targetX") && nbt.contains("targetY") && nbt.contains("targetZ")) {

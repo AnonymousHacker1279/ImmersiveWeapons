@@ -6,7 +6,6 @@ import net.minecraft.client.model.geom.ModelLayers;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.resources.ResourceLocation;
-import org.jetbrains.annotations.NotNull;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.client.model.LavaRevenantModel;
 import tech.anonymoushacker1279.immersiveweapons.client.renderer.entity.layers.LavaRevenantEyesLayer;
@@ -25,7 +24,7 @@ public class LavaRevenantRenderer extends MobRenderer<LavaRevenantEntity, LavaRe
 	 * Returns the location of an entity's texture.
 	 */
 	@Override
-	public @NotNull ResourceLocation getTextureLocation(@NotNull LavaRevenantEntity pEntity) {
+	public ResourceLocation getTextureLocation(LavaRevenantEntity pEntity) {
 		return TEXTURE_LOCATION;
 	}
 
@@ -38,7 +37,7 @@ public class LavaRevenantRenderer extends MobRenderer<LavaRevenantEntity, LavaRe
 	}
 
 	@Override
-	protected void setupRotations(@NotNull LavaRevenantEntity pEntityLiving, @NotNull PoseStack pMatrixStack, float pAgeInTicks, float pRotationYaw, float pPartialTicks) {
+	protected void setupRotations(LavaRevenantEntity pEntityLiving, PoseStack pMatrixStack, float pAgeInTicks, float pRotationYaw, float pPartialTicks) {
 		super.setupRotations(pEntityLiving, pMatrixStack, pAgeInTicks, pRotationYaw, pPartialTicks);
 		pMatrixStack.mulPose(Vector3f.XP.rotationDegrees(pEntityLiving.getXRot()));
 	}

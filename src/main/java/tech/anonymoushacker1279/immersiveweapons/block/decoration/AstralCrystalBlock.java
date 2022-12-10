@@ -25,7 +25,6 @@ import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.network.NetworkEvent;
 import net.minecraftforge.network.NetworkEvent.Context;
 import net.minecraftforge.network.PacketDistributor;
-import org.jetbrains.annotations.NotNull;
 import tech.anonymoushacker1279.immersiveweapons.blockentity.AstralCrystalBlockEntity;
 import tech.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
 import tech.anonymoushacker1279.immersiveweapons.init.PacketHandler;
@@ -49,7 +48,7 @@ public class AstralCrystalBlock extends AmethystClusterBlock implements EntityBl
 	 * @return BlockEntity
 	 */
 	@Override
-	public BlockEntity newBlockEntity(@NotNull BlockPos blockPos, @NotNull BlockState blockState) {
+	public BlockEntity newBlockEntity(BlockPos blockPos, BlockState blockState) {
 		return new AstralCrystalBlockEntity(blockPos, blockState);
 	}
 
@@ -67,7 +66,7 @@ public class AstralCrystalBlock extends AmethystClusterBlock implements EntityBl
 	 */
 	@SuppressWarnings("deprecation")
 	@Override
-	public @NotNull InteractionResult use(@NotNull BlockState state, Level level, @NotNull BlockPos pos, @NotNull Player player, @NotNull InteractionHand hand, @NotNull BlockHitResult hitResult) {
+	public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
 		if (isBuiltOnPlatform(level, pos)) {
 			BlockEntity blockEntity = level.getBlockEntity(pos);
 			if (blockEntity instanceof AstralCrystalBlockEntity crystalBlockEntity) {
@@ -102,7 +101,7 @@ public class AstralCrystalBlock extends AmethystClusterBlock implements EntityBl
 	 */
 	@SuppressWarnings("deprecation")
 	@Override
-	public void onRemove(BlockState state, @NotNull Level level, @NotNull BlockPos pos, BlockState newState, boolean isMoving) {
+	public void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean isMoving) {
 		if (!state.is(newState.getBlock())) {
 			BlockEntity blockEntity = level.getBlockEntity(pos);
 			if (blockEntity instanceof AstralCrystalBlockEntity crystalBlockEntity) {
@@ -237,18 +236,20 @@ public class AstralCrystalBlock extends AmethystClusterBlock implements EntityBl
 			int y = msg.pos.getY();
 			int z = msg.pos.getZ();
 
-			level.addParticle(ParticleTypes.EXPLOSION_EMITTER,
-					x + 0.5D + (GeneralUtilities.getRandomNumber(-0.2D, 0.2D)),
-					y + 0.4D + (GeneralUtilities.getRandomNumber(0.2D, 0.5D)),
-					z + 0.5D + (GeneralUtilities.getRandomNumber(-0.2D, 0.2D)),
-					(GeneralUtilities.getRandomNumber(-0.16D, 0.16D)),
-					(GeneralUtilities.getRandomNumber(0.13D, 0.16D)),
-					(GeneralUtilities.getRandomNumber(-0.16D, 0.16D)));
+			if (level != null) {
+				level.addParticle(ParticleTypes.EXPLOSION_EMITTER,
+						x + 0.5D + (GeneralUtilities.getRandomNumber(-0.2D, 0.2D)),
+						y + 0.4D + (GeneralUtilities.getRandomNumber(0.2D, 0.5D)),
+						z + 0.5D + (GeneralUtilities.getRandomNumber(-0.2D, 0.2D)),
+						(GeneralUtilities.getRandomNumber(-0.16D, 0.16D)),
+						(GeneralUtilities.getRandomNumber(0.13D, 0.16D)),
+						(GeneralUtilities.getRandomNumber(-0.16D, 0.16D)));
 
-			level.playLocalSound(x, y, z, SoundEvents.AMETHYST_BLOCK_CHIME, SoundSource.BLOCKS, 1.0f, 1.3f, false);
+				level.playLocalSound(x, y, z, SoundEvents.AMETHYST_BLOCK_CHIME, SoundSource.BLOCKS, 1.0f, 1.3f, false);
 
-			if (level.getBlockEntity(msg.pos) instanceof AstralCrystalBlockEntity crystalBlockEntity) {
-				crystalBlockEntity.getInventory().clear();
+				if (level.getBlockEntity(msg.pos) instanceof AstralCrystalBlockEntity crystalBlockEntity) {
+					crystalBlockEntity.getInventory().clear();
+				}
 			}
 		}
 	}

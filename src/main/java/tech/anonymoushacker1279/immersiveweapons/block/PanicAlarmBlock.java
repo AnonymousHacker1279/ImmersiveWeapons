@@ -17,7 +17,6 @@ import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import org.jetbrains.annotations.NotNull;
 import tech.anonymoushacker1279.immersiveweapons.blockentity.PanicAlarmBlockEntity;
 
 public class PanicAlarmBlock extends HorizontalDirectionalBlock implements SimpleWaterloggedBlock, EntityBlock {
@@ -48,8 +47,8 @@ public class PanicAlarmBlock extends HorizontalDirectionalBlock implements Simpl
 	 * @return VoxelShape
 	 */
 	@Override
-	public @NotNull VoxelShape getShape(BlockState state, @NotNull BlockGetter reader, @NotNull BlockPos pos,
-	                                    @NotNull CollisionContext collisionContext) {
+	public VoxelShape getShape(BlockState state, BlockGetter reader, BlockPos pos,
+	                           CollisionContext collisionContext) {
 
 		return switch (state.getValue(FACING)) {
 			case SOUTH -> SHAPE_SOUTH;
@@ -77,7 +76,7 @@ public class PanicAlarmBlock extends HorizontalDirectionalBlock implements Simpl
 	 * @return BlockEntity
 	 */
 	@Override
-	public BlockEntity newBlockEntity(@NotNull BlockPos blockPos, @NotNull BlockState blockState) {
+	public BlockEntity newBlockEntity(BlockPos blockPos, BlockState blockState) {
 		return new PanicAlarmBlockEntity(blockPos, blockState);
 	}
 
@@ -91,8 +90,8 @@ public class PanicAlarmBlock extends HorizontalDirectionalBlock implements Simpl
 	 * @return BlockEntityTicker
 	 */
 	@Override
-	public <T extends BlockEntity> BlockEntityTicker<T> getTicker(@NotNull Level level, @NotNull BlockState blockState,
-	                                                              @NotNull BlockEntityType<T> blockEntityType) {
+	public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState blockState,
+	                                                              BlockEntityType<T> blockEntityType) {
 
 		return level.isClientSide ? null : (world, pos, state, entity) -> ((PanicAlarmBlockEntity) entity).tick(world, pos);
 	}
@@ -119,7 +118,7 @@ public class PanicAlarmBlock extends HorizontalDirectionalBlock implements Simpl
 	 * @return FluidState
 	 */
 	@Override
-	public @NotNull FluidState getFluidState(BlockState state) {
+	public FluidState getFluidState(BlockState state) {
 		return state.getValue(WATERLOGGED) ? Fluids.WATER.getSource(false) : super.getFluidState(state);
 	}
 
@@ -134,8 +133,8 @@ public class PanicAlarmBlock extends HorizontalDirectionalBlock implements Simpl
 	 * @param isMoving determines if the block is moving
 	 */
 	@Override
-	public void neighborChanged(@NotNull BlockState state, Level level, @NotNull BlockPos pos, @NotNull Block blockIn,
-	                            @NotNull BlockPos fromPos, boolean isMoving) {
+	public void neighborChanged(BlockState state, Level level, BlockPos pos, Block blockIn,
+	                            BlockPos fromPos, boolean isMoving) {
 
 		if (!level.isClientSide) {
 			checkPowered(level, pos);
@@ -153,7 +152,7 @@ public class PanicAlarmBlock extends HorizontalDirectionalBlock implements Simpl
 	 * @param isMoving determines if the block is moving
 	 */
 	@Override
-	public void onPlace(BlockState state, @NotNull Level level, @NotNull BlockPos pos, BlockState oldState, boolean isMoving) {
+	public void onPlace(BlockState state, Level level, BlockPos pos, BlockState oldState, boolean isMoving) {
 		if (!oldState.is(state.getBlock())) {
 			if (level.hasNeighborSignal(pos)) {
 				if (!level.isClientSide) {
@@ -172,7 +171,7 @@ public class PanicAlarmBlock extends HorizontalDirectionalBlock implements Simpl
 	 * @param random      a <code>RandomSource</code> instance
 	 */
 	@Override
-	public void tick(@NotNull BlockState state, ServerLevel serverLevel, @NotNull BlockPos pos, @NotNull RandomSource random) {
+	public void tick(BlockState state, ServerLevel serverLevel, BlockPos pos, RandomSource random) {
 		if (!serverLevel.isClientSide) {
 			checkPowered(serverLevel, pos);
 			serverLevel.scheduleTick(pos, state.getBlock(), 5);

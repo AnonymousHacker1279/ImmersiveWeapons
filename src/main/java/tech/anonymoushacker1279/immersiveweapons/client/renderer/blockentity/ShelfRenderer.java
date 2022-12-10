@@ -10,7 +10,6 @@ import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.core.Direction;
 import net.minecraft.core.NonNullList;
 import net.minecraft.world.item.ItemStack;
-import org.jetbrains.annotations.NotNull;
 import tech.anonymoushacker1279.immersiveweapons.block.decoration.ShelfBlock;
 import tech.anonymoushacker1279.immersiveweapons.blockentity.WallShelfBlockEntity;
 
@@ -33,7 +32,7 @@ public class ShelfRenderer implements BlockEntityRenderer<WallShelfBlockEntity> 
 	 * @param combinedOverlayIn the combined overlay value
 	 */
 	@Override
-	public void render(WallShelfBlockEntity tileEntityIn, float partialTicks, @NotNull PoseStack matrixStackIn, @NotNull MultiBufferSource bufferIn, int combinedLightIn, int combinedOverlayIn) {
+	public void render(WallShelfBlockEntity tileEntityIn, float partialTicks, PoseStack matrixStackIn, MultiBufferSource bufferIn, int combinedLightIn, int combinedOverlayIn) {
 		Direction direction = tileEntityIn.getBlockState().getValue(ShelfBlock.FACING);
 		NonNullList<ItemStack> tileEntityInventory = tileEntityIn.getInventory();
 

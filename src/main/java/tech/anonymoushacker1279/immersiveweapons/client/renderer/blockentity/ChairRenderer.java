@@ -3,7 +3,6 @@ package tech.anonymoushacker1279.immersiveweapons.client.renderer.blockentity;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.resources.ResourceLocation;
-import org.jetbrains.annotations.NotNull;
 import tech.anonymoushacker1279.immersiveweapons.entity.misc.ChairEntity;
 
 public class ChairRenderer extends EntityRenderer<ChairEntity> implements EntityRendererProvider<ChairEntity> {
@@ -23,15 +22,13 @@ public class ChairRenderer extends EntityRenderer<ChairEntity> implements Entity
 	 * @param entity the <code>ChairEntity</code> instance
 	 * @return ResourceLocation
 	 */
-	@SuppressWarnings("ConstantConditions")
 	@Override
-	public @NotNull ResourceLocation getTextureLocation(@NotNull ChairEntity entity) {
+	public ResourceLocation getTextureLocation(ChairEntity entity) {
 		return null;
 	}
 
-	@SuppressWarnings("ConstantConditions")
 	@Override
-	public @NotNull EntityRenderer<ChairEntity> create(@NotNull Context context) {
+	public EntityRenderer<ChairEntity> create(Context context) {
 		return null;
 	}
 }

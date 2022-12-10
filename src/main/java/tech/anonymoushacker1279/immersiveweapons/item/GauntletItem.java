@@ -17,7 +17,6 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Material;
 import net.minecraftforge.common.ForgeMod;
 import net.minecraftforge.common.ToolActions;
-import org.jetbrains.annotations.NotNull;
 import tech.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
 import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
 
@@ -55,25 +54,25 @@ public class GauntletItem extends TieredItem implements Vanishable {
 	}
 
 	@Override
-	public boolean canAttackBlock(@NotNull BlockState state, @NotNull Level level, @NotNull BlockPos pos, Player player) {
+	public boolean canAttackBlock(BlockState state, Level level, BlockPos pos, Player player) {
 		return !player.isCreative();
 	}
 
 	@Override
-	public float getDestroySpeed(@NotNull ItemStack stack, BlockState state) {
+	public float getDestroySpeed(ItemStack stack, BlockState state) {
 		Material material = state.getMaterial();
 		return material != Material.PLANT && material != Material.REPLACEABLE_PLANT && !state.is(BlockTags.LEAVES) && material != Material.VEGETABLE ? 1.0F : 1.5F;
 	}
 
 	@Override
-	public boolean hurtEnemy(@NotNull ItemStack stack, @NotNull LivingEntity target, @NotNull LivingEntity attacker) {
+	public boolean hurtEnemy(ItemStack stack, LivingEntity target, LivingEntity attacker) {
 		bleedBehavior(target);
 		stack.hurtAndBreak(1, attacker, (breakEvent) -> breakEvent.broadcastBreakEvent(EquipmentSlot.MAINHAND));
 		return true;
 	}
 
 	@Override
-	public boolean mineBlock(@NotNull ItemStack stack, @NotNull Level level, BlockState state, @NotNull BlockPos pos, @NotNull LivingEntity livingEntity) {
+	public boolean mineBlock(ItemStack stack, Level level, BlockState state, BlockPos pos, LivingEntity livingEntity) {
 		if (state.getDestroySpeed(level, pos) != 0.0F) {
 			stack.hurtAndBreak(2, livingEntity, (breakEvent) -> breakEvent.broadcastBreakEvent(EquipmentSlot.MAINHAND));
 		}
@@ -82,7 +81,7 @@ public class GauntletItem extends TieredItem implements Vanishable {
 	}
 
 	@Override
-	public @NotNull Multimap<Attribute, AttributeModifier> getAttributeModifiers(EquipmentSlot equipmentSlot, ItemStack stack) {
+	public Multimap<Attribute, AttributeModifier> getAttributeModifiers(EquipmentSlot equipmentSlot, ItemStack stack) {
 		return equipmentSlot == EquipmentSlot.MAINHAND ? gauntletAttributes : super.getAttributeModifiers(equipmentSlot, stack);
 	}
 
@@ -99,7 +98,7 @@ public class GauntletItem extends TieredItem implements Vanishable {
 	 * @return boolean
 	 */
 	@Override
-	public boolean isValidRepairItem(@NotNull ItemStack toRepair, @NotNull ItemStack repair) {
+	public boolean isValidRepairItem(ItemStack toRepair, ItemStack repair) {
 		return repairIngredient.test(repair) || super.isValidRepairItem(toRepair, repair);
 	}
 

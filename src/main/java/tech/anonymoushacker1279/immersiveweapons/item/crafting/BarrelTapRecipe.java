@@ -9,7 +9,6 @@ import net.minecraft.world.Container;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.level.Level;
-import org.jetbrains.annotations.NotNull;
 import tech.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
 
 public record BarrelTapRecipe(ResourceLocation recipeId,
@@ -36,7 +35,7 @@ public record BarrelTapRecipe(ResourceLocation recipeId,
 	 * @return boolean
 	 */
 	@Override
-	public boolean matches(@NotNull Container container, @NotNull Level level) {
+	public boolean matches(Container container, Level level) {
 		return false;
 	}
 
@@ -47,7 +46,7 @@ public record BarrelTapRecipe(ResourceLocation recipeId,
 	 * @return ItemStack
 	 */
 	@Override
-	public @NotNull ItemStack assemble(@NotNull Container container) {
+	public ItemStack assemble(Container container) {
 		return result;
 	}
 
@@ -72,7 +71,7 @@ public record BarrelTapRecipe(ResourceLocation recipeId,
 	}
 
 	@Override
-	public @NotNull ItemStack getResultItem() {
+	public ItemStack getResultItem() {
 		return result.copy();
 	}
 
@@ -82,7 +81,7 @@ public record BarrelTapRecipe(ResourceLocation recipeId,
 	 * @return ItemStack
 	 */
 	@Override
-	public @NotNull ItemStack getToastSymbol() {
+	public ItemStack getToastSymbol() {
 		return new ItemStack(DeferredRegistryHandler.BARREL_TAP.get());
 	}
 
@@ -92,7 +91,7 @@ public record BarrelTapRecipe(ResourceLocation recipeId,
 	 * @return ResourceLocation
 	 */
 	@Override
-	public @NotNull ResourceLocation getId() {
+	public ResourceLocation getId() {
 		return recipeId;
 	}
 
@@ -102,7 +101,7 @@ public record BarrelTapRecipe(ResourceLocation recipeId,
 	 * @return RecipeSerializer
 	 */
 	@Override
-	public @NotNull RecipeSerializer<?> getSerializer() {
+	public RecipeSerializer<?> getSerializer() {
 		return DeferredRegistryHandler.BARREL_TAP_RECIPE_SERIALIZER.get();
 	}
 
@@ -112,7 +111,7 @@ public record BarrelTapRecipe(ResourceLocation recipeId,
 	 * @return RecipeType
 	 */
 	@Override
-	public @NotNull RecipeType<?> getType() {
+	public RecipeType<?> getType() {
 		return DeferredRegistryHandler.BARREL_TAP_RECIPE_TYPE.get();
 	}
 
@@ -122,7 +121,7 @@ public record BarrelTapRecipe(ResourceLocation recipeId,
 	 * @return NonNullList extending Ingredient
 	 */
 	@Override
-	public @NotNull NonNullList<Ingredient> getIngredients() {
+	public NonNullList<Ingredient> getIngredients() {
 		NonNullList<Ingredient> defaultedList = NonNullList.create();
 		defaultedList.add(material);
 		return defaultedList;
@@ -137,7 +136,7 @@ public record BarrelTapRecipe(ResourceLocation recipeId,
 		 * @return SmallPartsRecipe
 		 */
 		@Override
-		public @NotNull BarrelTapRecipe fromJson(@NotNull ResourceLocation recipeId, @NotNull JsonObject json) {
+		public BarrelTapRecipe fromJson(ResourceLocation recipeId, JsonObject json) {
 			Ingredient material = Ingredient.fromJson(GsonHelper.getAsJsonObject(json, "material"));
 			int materialCount = GsonHelper.getAsInt(json, "materialCount");
 			ItemStack result = new ItemStack(ShapedRecipe.itemFromJson(GsonHelper.getAsJsonObject(json, "result")));
@@ -153,7 +152,7 @@ public record BarrelTapRecipe(ResourceLocation recipeId,
 		 * @return BarrelTapRecipe
 		 */
 		@Override
-		public BarrelTapRecipe fromNetwork(@NotNull ResourceLocation recipeId, @NotNull FriendlyByteBuf buffer) {
+		public BarrelTapRecipe fromNetwork(ResourceLocation recipeId, FriendlyByteBuf buffer) {
 			Ingredient material = Ingredient.fromNetwork(buffer);
 			int materialCount = buffer.readInt();
 			ItemStack result = buffer.readItem();
@@ -168,7 +167,7 @@ public record BarrelTapRecipe(ResourceLocation recipeId,
 		 * @param recipe the <code>BarrelTapRecipe</code> instance
 		 */
 		@Override
-		public void toNetwork(@NotNull FriendlyByteBuf buffer, BarrelTapRecipe recipe) {
+		public void toNetwork(FriendlyByteBuf buffer, BarrelTapRecipe recipe) {
 			recipe.material.toNetwork(buffer);
 			buffer.writeInt(recipe.materialCount);
 			buffer.writeItem(recipe.result);

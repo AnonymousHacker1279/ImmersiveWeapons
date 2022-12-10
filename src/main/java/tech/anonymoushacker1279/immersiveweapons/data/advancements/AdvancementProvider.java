@@ -5,7 +5,6 @@ import com.google.common.collect.Sets;
 import net.minecraft.advancements.Advancement;
 import net.minecraft.data.*;
 import net.minecraft.resources.ResourceLocation;
-import org.jetbrains.annotations.NotNull;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 
 import java.io.IOException;
@@ -46,7 +45,7 @@ public class AdvancementProvider implements DataProvider {
 	 * @param cachedOutput the <code>CachedOutput</code> instance
 	 */
 	@Override
-	public void run(@NotNull CachedOutput cachedOutput) {
+	public void run(CachedOutput cachedOutput) {
 		Path outputFolder = generator.getOutputFolder();
 		Set<ResourceLocation> resourceLocations = Sets.newHashSet();
 		Consumer<Advancement> advancementConsumer = (advancement) -> {
@@ -75,7 +74,7 @@ public class AdvancementProvider implements DataProvider {
 	 * @return String
 	 */
 	@Override
-	public @NotNull String getName() {
+	public String getName() {
 		return "Advancements";
 	}
 }

@@ -4,7 +4,6 @@ import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.particle.*;
 import net.minecraft.core.particles.SimpleParticleType;
 import net.minecraft.util.Mth;
-import org.jetbrains.annotations.NotNull;
 import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
 
 public class MuzzleFlashParticle extends TextureSheetParticle {
@@ -18,7 +17,7 @@ public class MuzzleFlashParticle extends TextureSheetParticle {
 		}
 
 		@Override
-		public Particle createParticle(@NotNull SimpleParticleType pType, @NotNull ClientLevel pLevel, double pX, double pY, double pZ,
+		public Particle createParticle(SimpleParticleType pType, ClientLevel pLevel, double pX, double pY, double pZ,
 		                               double pXSpeed, double pYSpeed, double pZSpeed) {
 
 			return new MuzzleFlashParticle(pLevel, pX, pY, pZ, pXSpeed, pYSpeed, pZSpeed, sprites);
@@ -54,7 +53,7 @@ public class MuzzleFlashParticle extends TextureSheetParticle {
 	}
 
 	@Override
-	public @NotNull ParticleRenderType getRenderType() {
+	public ParticleRenderType getRenderType() {
 		return ParticleRenderType.PARTICLE_SHEET_TRANSLUCENT;
 	}
 

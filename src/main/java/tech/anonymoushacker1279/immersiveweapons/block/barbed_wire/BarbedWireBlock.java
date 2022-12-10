@@ -12,7 +12,6 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
-import org.jetbrains.annotations.NotNull;
 
 public class BarbedWireBlock extends HorizontalDirectionalBlock implements SimpleWaterloggedBlock, BarbedWireUtils {
 
@@ -50,7 +49,7 @@ public class BarbedWireBlock extends HorizontalDirectionalBlock implements Simpl
 	 */
 	@SuppressWarnings("deprecation")
 	@Override
-	public @NotNull FluidState getFluidState(BlockState state) {
+	public FluidState getFluidState(BlockState state) {
 		return state.getValue(WATERLOGGED) ? Fluids.WATER.getSource(false) : super.getFluidState(state);
 	}
 
@@ -73,7 +72,7 @@ public class BarbedWireBlock extends HorizontalDirectionalBlock implements Simpl
 	 * @return boolean
 	 */
 	@Override
-	public boolean propagatesSkylightDown(@NotNull BlockState state, @NotNull BlockGetter reader, @NotNull BlockPos pos) {
+	public boolean propagatesSkylightDown(BlockState state, BlockGetter reader, BlockPos pos) {
 		return true;
 	}
 
@@ -88,7 +87,7 @@ public class BarbedWireBlock extends HorizontalDirectionalBlock implements Simpl
 	 */
 	@SuppressWarnings("deprecation")
 	@Override
-	public void entityInside(@NotNull BlockState state, @NotNull Level level, @NotNull BlockPos pos, @NotNull Entity entity) {
+	public void entityInside(BlockState state, Level level, BlockPos pos, Entity entity) {
 		handleEntityContact(state, level, pos, entity);
 	}
 }

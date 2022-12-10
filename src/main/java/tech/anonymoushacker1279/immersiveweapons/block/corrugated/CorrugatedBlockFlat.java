@@ -13,7 +13,6 @@ import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import org.jetbrains.annotations.NotNull;
 
 public class CorrugatedBlockFlat extends HorizontalDirectionalBlock implements SimpleWaterloggedBlock {
 
@@ -42,7 +41,7 @@ public class CorrugatedBlockFlat extends HorizontalDirectionalBlock implements S
 	 */
 	@SuppressWarnings("deprecation")
 	@Override
-	public @NotNull VoxelShape getShape(BlockState state, @NotNull BlockGetter reader, @NotNull BlockPos pos, @NotNull CollisionContext selectionContext) {
+	public VoxelShape getShape(BlockState state, BlockGetter reader, BlockPos pos, CollisionContext selectionContext) {
 		Vec3 vector3d = state.getOffset(reader, pos);
 		return SHAPE_FLAT.move(vector3d.x, vector3d.y, vector3d.z);
 	}
@@ -78,7 +77,7 @@ public class CorrugatedBlockFlat extends HorizontalDirectionalBlock implements S
 	 */
 	@SuppressWarnings("deprecation")
 	@Override
-	public @NotNull FluidState getFluidState(BlockState state) {
+	public FluidState getFluidState(BlockState state) {
 		return state.getValue(WATERLOGGED) ? Fluids.WATER.getSource(false) : super.getFluidState(state);
 	}
 }

@@ -10,7 +10,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
-import org.jetbrains.annotations.NotNull;
 import tech.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
 import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
 
@@ -486,7 +485,7 @@ public class BulletEntities {
 		 * @return ItemStack
 		 */
 		@Override
-		public @NotNull ItemStack getItem() {
+		public ItemStack getItem() {
 			return new ItemStack(DeferredRegistryHandler.FLARE.get());
 		}
 
@@ -496,7 +495,7 @@ public class BulletEntities {
 		 * @param pCompound the <code>CompoundTag</code> containing the save data
 		 */
 		@Override
-		public void addAdditionalSaveData(@NotNull CompoundTag pCompound) {
+		public void addAdditionalSaveData(CompoundTag pCompound) {
 			super.addAdditionalSaveData(pCompound);
 
 			if (!lightPositions.isEmpty()) {
@@ -521,7 +520,7 @@ public class BulletEntities {
 		 * @param pCompound the <code>CompoundTag</code> containing the save data
 		 */
 		@Override
-		public void readAdditionalSaveData(@NotNull CompoundTag pCompound) {
+		public void readAdditionalSaveData(CompoundTag pCompound) {
 			super.readAdditionalSaveData(pCompound);
 
 			int[] xPositions = pCompound.getIntArray("xPositions");

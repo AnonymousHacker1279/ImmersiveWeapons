@@ -7,6 +7,7 @@ import net.minecraft.world.item.Items;
 import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.Tags.Blocks;
 import net.minecraftforge.common.data.ExistingFileHelper;
+import org.jetbrains.annotations.Nullable;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.data.tags.groups.forge.ForgeBlockTagGroups;
 import tech.anonymoushacker1279.immersiveweapons.data.tags.groups.forge.ForgeItemTagGroups;
@@ -16,8 +17,6 @@ import tech.anonymoushacker1279.immersiveweapons.data.tags.groups.minecraft.Mine
 import tech.anonymoushacker1279.immersiveweapons.data.tags.groups.minecraft.MinecraftItemTagGroups;
 import tech.anonymoushacker1279.immersiveweapons.data.tags.lists.ItemTagLists;
 import tech.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
-
-import javax.annotation.Nullable;
 
 public class ItemTagsGenerator extends ItemTagsProvider {
 

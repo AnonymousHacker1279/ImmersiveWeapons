@@ -17,7 +17,6 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.*;
 import net.minecraftforge.event.ForgeEventFactory;
 import net.minecraftforge.network.NetworkHooks;
-import org.jetbrains.annotations.NotNull;
 import tech.anonymoushacker1279.immersiveweapons.block.MortarBlock;
 import tech.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
 
@@ -163,7 +162,7 @@ public class MortarShellEntity extends Projectile implements ItemSupplier {
 	 * @return boolean
 	 */
 	@Override
-	protected boolean canHitEntity(@NotNull Entity entity) {
+	protected boolean canHitEntity(Entity entity) {
 		return true;
 	}
 
@@ -172,11 +171,11 @@ public class MortarShellEntity extends Projectile implements ItemSupplier {
 	}
 
 	@Override
-	protected void readAdditionalSaveData(@NotNull CompoundTag nbt) {
+	protected void readAdditionalSaveData(CompoundTag nbt) {
 	}
 
 	@Override
-	protected void addAdditionalSaveData(@NotNull CompoundTag nbt) {
+	protected void addAdditionalSaveData(CompoundTag nbt) {
 	}
 
 	/**
@@ -185,7 +184,7 @@ public class MortarShellEntity extends Projectile implements ItemSupplier {
 	 * @return IPacket
 	 */
 	@Override
-	public @NotNull Packet<?> getAddEntityPacket() {
+	public Packet<?> getAddEntityPacket() {
 		return NetworkHooks.getEntitySpawningPacket(this);
 	}
 
@@ -195,7 +194,7 @@ public class MortarShellEntity extends Projectile implements ItemSupplier {
 	 * @return ItemStack
 	 */
 	@Override
-	public @NotNull ItemStack getItem() {
+	public ItemStack getItem() {
 		return new ItemStack(DeferredRegistryHandler.MORTAR_SHELL.get());
 	}
 }

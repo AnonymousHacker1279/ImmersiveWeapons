@@ -18,22 +18,19 @@ import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import net.minecraft.world.entity.ai.navigation.WallClimberNavigation;
-import net.minecraft.world.entity.ai.targeting.TargetingConditions;
 import net.minecraft.world.entity.animal.IronGolem;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.*;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.living.MobEffectEvent.Applicable;
 import net.minecraftforge.eventbus.api.Event.Result;
-import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import tech.anonymoushacker1279.immersiveweapons.entity.GrantAdvancementOnDiscovery;
 
-import javax.annotation.Nullable;
 
 public class RockSpiderEntity extends Monster implements GrantAdvancementOnDiscovery {
 
@@ -73,7 +70,7 @@ public class RockSpiderEntity extends Monster implements GrantAdvancementOnDisco
 	}
 
 	@Override
-	protected @NotNull PathNavigation createNavigation(@NotNull Level pLevel) {
+	protected PathNavigation createNavigation(Level pLevel) {
 		return new WallClimberNavigation(this, pLevel);
 	}
 
@@ -97,14 +94,7 @@ public class RockSpiderEntity extends Monster implements GrantAdvancementOnDisco
 	@Override
 	public void aiStep() {
 		super.aiStep();
-		if (!level.isClientSide) {
-			AABB scanningBox = new AABB(blockPosition().offset(-50, -50, -50),
-					blockPosition().offset(50, 50, 50));
-
-			for (Player player : level.getNearbyPlayers(TargetingConditions.forNonCombat(), this, scanningBox)) {
-				checkForDiscovery(this, player);
-			}
-		}
+		checkForDiscovery(this);
 	}
 
 	@Override
@@ -113,7 +103,7 @@ public class RockSpiderEntity extends Monster implements GrantAdvancementOnDisco
 	}
 
 	@Override
-	protected SoundEvent getHurtSound(@NotNull DamageSource pDamageSource) {
+	protected SoundEvent getHurtSound(DamageSource pDamageSource) {
 		return SoundEvents.SPIDER_HURT;
 	}
 
@@ -123,7 +113,7 @@ public class RockSpiderEntity extends Monster implements GrantAdvancementOnDisco
 	}
 
 	@Override
-	protected void playStepSound(@NotNull BlockPos pPos, @NotNull BlockState pBlock) {
+	protected void playStepSound(BlockPos pPos, BlockState pBlock) {
 		playSound(SoundEvents.SPIDER_STEP, 0.15F, 1.0F);
 	}
 
@@ -137,7 +127,7 @@ public class RockSpiderEntity extends Monster implements GrantAdvancementOnDisco
 	}
 
 	@Override
-	public void makeStuckInBlock(BlockState pState, @NotNull Vec3 pMotionMultiplier) {
+	public void makeStuckInBlock(BlockState pState, Vec3 pMotionMultiplier) {
 		if (!pState.is(Blocks.COBWEB)) {
 			super.makeStuckInBlock(pState, pMotionMultiplier);
 		}
@@ -145,7 +135,7 @@ public class RockSpiderEntity extends Monster implements GrantAdvancementOnDisco
 	}
 
 	@Override
-	public @NotNull MobType getMobType() {
+	public MobType getMobType() {
 		return MobType.ARTHROPOD;
 	}
 
@@ -184,8 +174,8 @@ public class RockSpiderEntity extends Monster implements GrantAdvancementOnDisco
 
 	@Override
 	@Nullable
-	public SpawnGroupData finalizeSpawn(@NotNull ServerLevelAccessor pLevel, @NotNull DifficultyInstance pDifficulty,
-	                                    @NotNull MobSpawnType pReason, @Nullable SpawnGroupData pSpawnData,
+	public SpawnGroupData finalizeSpawn(ServerLevelAccessor pLevel, DifficultyInstance pDifficulty,
+	                                    MobSpawnType pReason, @Nullable SpawnGroupData pSpawnData,
 	                                    @Nullable CompoundTag pDataTag) {
 
 		pSpawnData = super.finalizeSpawn(pLevel, pDifficulty, pReason, pSpawnData, pDataTag);
@@ -209,12 +199,12 @@ public class RockSpiderEntity extends Monster implements GrantAdvancementOnDisco
 	}
 
 	@Override
-	protected float getStandingEyeHeight(@NotNull Pose pPose, @NotNull EntityDimensions pSize) {
+	protected float getStandingEyeHeight(Pose pPose, EntityDimensions pSize) {
 		return 0.15F;
 	}
 
 	@Override
-	public boolean checkSpawnRules(@NotNull LevelAccessor pLevel, @NotNull MobSpawnType pSpawnReason) {
+	public boolean checkSpawnRules(LevelAccessor pLevel, MobSpawnType pSpawnReason) {
 		boolean notInWater = pLevel.getBlockState(blockPosition().below()).getFluidState().isEmpty();
 		boolean onGround = !pLevel.getBlockState(blockPosition().below()).isAir();
 
@@ -256,15 +246,16 @@ public class RockSpiderEntity extends Monster implements GrantAdvancementOnDisco
 	}
 
 	public static class RockSpiderEffectsGroupData implements SpawnGroupData {
+		@Nullable
 		public MobEffect effect;
 
 		public void setRandomEffect(RandomSource pRand) {
 			int random = pRand.nextInt(5);
 			if (random <= 1) {
 				effect = MobEffects.MOVEMENT_SPEED;
-			} else if (random <= 2) {
+			} else if (random == 2) {
 				effect = MobEffects.DAMAGE_BOOST;
-			} else if (random <= 3) {
+			} else if (random == 3) {
 				effect = MobEffects.REGENERATION;
 			} else {
 				effect = MobEffects.INVISIBILITY;

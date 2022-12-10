@@ -4,7 +4,6 @@ import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
 import net.minecraft.client.renderer.entity.layers.EyesLayer;
 import net.minecraft.resources.ResourceLocation;
-import org.jetbrains.annotations.NotNull;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.client.model.LavaRevenantModel;
 import tech.anonymoushacker1279.immersiveweapons.entity.monster.lava_revenant.LavaRevenantEntity;
@@ -17,7 +16,7 @@ public class LavaRevenantEyesLayer<T extends LavaRevenantEntity> extends EyesLay
 	}
 
 	@Override
-	public @NotNull RenderType renderType() {
+	public RenderType renderType() {
 		return EYES;
 	}
 }

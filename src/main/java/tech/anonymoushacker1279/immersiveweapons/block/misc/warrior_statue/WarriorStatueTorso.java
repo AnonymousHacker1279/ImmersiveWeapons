@@ -32,7 +32,6 @@ import net.minecraftforge.network.NetworkEvent;
 import net.minecraftforge.network.NetworkEvent.Context;
 import net.minecraftforge.network.PacketDistributor;
 import net.minecraftforge.network.PacketDistributor.TargetPoint;
-import org.jetbrains.annotations.NotNull;
 import tech.anonymoushacker1279.immersiveweapons.advancement.IWCriteriaTriggers;
 import tech.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
 import tech.anonymoushacker1279.immersiveweapons.init.PacketHandler;
@@ -72,8 +71,8 @@ public class WarriorStatueTorso extends HorizontalDirectionalBlock implements Si
 	 * @return VoxelShape
 	 */
 	@Override
-	public @NotNull VoxelShape getShape(@NotNull BlockState state, @NotNull BlockGetter reader, @NotNull BlockPos pos,
-	                                    @NotNull CollisionContext selectionContext) {
+	public VoxelShape getShape(BlockState state, BlockGetter reader, BlockPos pos,
+	                           CollisionContext selectionContext) {
 
 		return switch (state.getValue(FACING)) {
 			case SOUTH -> SHAPE.move(0.0D, 0.0D, -0.1D);
@@ -120,12 +119,12 @@ public class WarriorStatueTorso extends HorizontalDirectionalBlock implements Si
 	 * @return float
 	 */
 	@Override
-	public float getShadeBrightness(@NotNull BlockState state, @NotNull BlockGetter reader, @NotNull BlockPos pos) {
+	public float getShadeBrightness(BlockState state, BlockGetter reader, BlockPos pos) {
 		return 1.0F;
 	}
 
 	@Override
-	public @NotNull FluidState getFluidState(BlockState state) {
+	public FluidState getFluidState(BlockState state) {
 		return state.getValue(WATERLOGGED) ? Fluids.WATER.getSource(false) : super.getFluidState(state);
 	}
 
@@ -140,7 +139,7 @@ public class WarriorStatueTorso extends HorizontalDirectionalBlock implements Si
 	 * @param isMoving determines if the block is moving
 	 */
 	@Override
-	public void neighborChanged(@NotNull BlockState state, Level worldIn, @NotNull BlockPos pos, @NotNull Block blockIn, @NotNull BlockPos fromPos, boolean isMoving) {
+	public void neighborChanged(BlockState state, Level worldIn, BlockPos pos, Block blockIn, BlockPos fromPos, boolean isMoving) {
 		if (!worldIn.isClientSide) {
 			if (worldIn.getBlockState(pos.below()).getBlock() != DeferredRegistryHandler.WARRIOR_STATUE_BASE.get()) {
 				worldIn.destroyBlock(pos, true);
@@ -162,9 +161,9 @@ public class WarriorStatueTorso extends HorizontalDirectionalBlock implements Si
 	 * @return ActionResultType
 	 */
 	@Override
-	public @NotNull InteractionResult use(@NotNull BlockState state, Level worldIn, @NotNull BlockPos pos,
-	                                      @NotNull Player player, @NotNull InteractionHand handIn,
-	                                      @NotNull BlockHitResult blockRayTraceResult) {
+	public InteractionResult use(BlockState state, Level worldIn, BlockPos pos,
+	                             Player player, InteractionHand handIn,
+	                             BlockHitResult blockRayTraceResult) {
 
 		if (!worldIn.isClientSide && handIn.equals(InteractionHand.MAIN_HAND)) {
 			if (worldIn.getBlockState(pos.above()).getBlock() == DeferredRegistryHandler.WARRIOR_STATUE_HEAD.get()) {
@@ -224,7 +223,7 @@ public class WarriorStatueTorso extends HorizontalDirectionalBlock implements Si
 	 * @param player  the <code>PlayerEntity</code> destroying the block
 	 */
 	@Override
-	public void playerWillDestroy(@NotNull Level worldIn, @NotNull BlockPos pos, @NotNull BlockState state, @NotNull Player player) {
+	public void playerWillDestroy(Level worldIn, BlockPos pos, BlockState state, Player player) {
 		if (worldIn.getBlockState(pos.above()).getBlock() == DeferredRegistryHandler.WARRIOR_STATUE_HEAD.get()) {
 			worldIn.destroyBlock(pos.above(), true, null);
 		}

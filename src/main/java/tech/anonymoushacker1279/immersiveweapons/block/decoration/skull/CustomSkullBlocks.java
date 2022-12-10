@@ -5,7 +5,6 @@ import net.minecraft.world.level.block.SkullBlock;
 import net.minecraft.world.level.block.WallSkullBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import org.jetbrains.annotations.NotNull;
 import tech.anonymoushacker1279.immersiveweapons.blockentity.CustomSkullBlockEntity;
 
 public class CustomSkullBlocks {
@@ -16,7 +15,7 @@ public class CustomSkullBlocks {
 		}
 
 		@Override
-		public BlockEntity newBlockEntity(@NotNull BlockPos pos, @NotNull BlockState state) {
+		public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
 			return new CustomSkullBlockEntity(pos, state);
 		}
 	}
@@ -28,7 +27,7 @@ public class CustomSkullBlocks {
 		}
 
 		@Override
-		public BlockEntity newBlockEntity(@NotNull BlockPos pos, @NotNull BlockState state) {
+		public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
 			return new CustomSkullBlockEntity(pos, state);
 		}
 	}

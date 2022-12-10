@@ -18,7 +18,6 @@ import net.minecraft.world.phys.Vec2;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.event.ForgeEventFactory;
 import net.minecraftforge.network.PacketDistributor;
-import org.jetbrains.annotations.NotNull;
 import tech.anonymoushacker1279.immersiveweapons.data.tags.groups.immersiveweapons.ImmersiveWeaponsItemTagGroups;
 import tech.anonymoushacker1279.immersiveweapons.entity.projectile.BulletEntity;
 import tech.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
@@ -52,7 +51,7 @@ public abstract class AbstractGunItem extends Item implements Vanishable {
 	 * @param timeLeft     the time left from charging
 	 */
 	@Override
-	public void releaseUsing(@NotNull ItemStack itemStack, @NotNull Level level, @NotNull LivingEntity livingEntity,
+	public void releaseUsing(ItemStack itemStack, Level level, LivingEntity livingEntity,
 	                         int timeLeft) {
 
 		if (livingEntity instanceof Player player) {
@@ -215,7 +214,7 @@ public abstract class AbstractGunItem extends Item implements Vanishable {
 	 * @return boolean
 	 */
 	@Override
-	public boolean isValidRepairItem(@NotNull ItemStack toRepair, @NotNull ItemStack repair) {
+	public boolean isValidRepairItem(ItemStack toRepair, ItemStack repair) {
 		return getRepairMaterial().test(repair) || super.isValidRepairItem(toRepair, repair);
 	}
 
@@ -244,8 +243,8 @@ public abstract class AbstractGunItem extends Item implements Vanishable {
 	 * @return ActionResult extending ItemStack
 	 */
 	@Override
-	public @NotNull InteractionResultHolder<ItemStack> use(@NotNull Level worldIn, Player playerIn,
-	                                                       @NotNull InteractionHand handIn) {
+	public InteractionResultHolder<ItemStack> use(Level worldIn, Player playerIn,
+	                                              InteractionHand handIn) {
 
 		ItemStack itemInHand = playerIn.getItemInHand(handIn);
 		boolean hasAmmo = !findAmmo(itemInHand, playerIn).isEmpty();
@@ -273,7 +272,7 @@ public abstract class AbstractGunItem extends Item implements Vanishable {
 	}
 
 	@Override
-	public void inventoryTick(@NotNull ItemStack pStack, @NotNull Level pLevel, @NotNull Entity pEntity, int pSlotId, boolean pIsSelected) {
+	public void inventoryTick(ItemStack pStack, Level pLevel, Entity pEntity, int pSlotId, boolean pIsSelected) {
 		if (pEntity instanceof Player player) {
 			if (pLevel.isClientSide && !player.getUseItem().is(DeferredRegistryHandler.MUSKET_SCOPE.get())) {
 				GunData.changingPlayerFOV = -1;
@@ -345,7 +344,7 @@ public abstract class AbstractGunItem extends Item implements Vanishable {
 	 * @return int
 	 */
 	@Override
-	public int getUseDuration(@NotNull ItemStack stack) {
+	public int getUseDuration(ItemStack stack) {
 		return 100;
 	}
 

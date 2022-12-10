@@ -10,7 +10,6 @@ import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
-import org.jetbrains.annotations.NotNull;
 import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
 
 public abstract class AbstractStatueBlockEntity extends BlockEntity implements EntityBlock {
@@ -74,7 +73,7 @@ public abstract class AbstractStatueBlockEntity extends BlockEntity implements E
 	 * @param pTag the <code>CompoundNBT</code> to save
 	 */
 	@Override
-	protected void saveAdditional(@NotNull CompoundTag pTag) {
+	protected void saveAdditional(CompoundTag pTag) {
 		super.saveAdditional(pTag);
 		pTag.putInt("scanCooldown", cooldown);
 		pTag.putInt("scannedEntities", scannedEntities);
@@ -86,7 +85,7 @@ public abstract class AbstractStatueBlockEntity extends BlockEntity implements E
 	 * @param nbt the <code>CompoundNBT</code> to load
 	 */
 	@Override
-	public void load(@NotNull CompoundTag nbt) {
+	public void load(CompoundTag nbt) {
 		super.load(nbt);
 		cooldown = nbt.getInt("scanCooldown");
 		scannedEntities = nbt.getInt("scannedEntities");

@@ -33,13 +33,12 @@ import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.network.NetworkEvent;
 import net.minecraftforge.network.NetworkEvent.Context;
 import net.minecraftforge.network.PacketDistributor;
-import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import tech.anonymoushacker1279.immersiveweapons.entity.GrantAdvancementOnDiscovery;
 import tech.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
 import tech.anonymoushacker1279.immersiveweapons.init.PacketHandler;
 import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
 
-import javax.annotation.Nullable;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Supplier;
@@ -101,8 +100,7 @@ public class LavaRevenantEntity extends FlyingMob implements Enemy, GrantAdvance
 	}
 
 	@Override
-	protected @NotNull
-	BodyRotationControl createBodyControl() {
+	protected BodyRotationControl createBodyControl() {
 		return new LavaRevenantBodyRotationControl(this);
 	}
 
@@ -135,12 +133,12 @@ public class LavaRevenantEntity extends FlyingMob implements Enemy, GrantAdvance
 	}
 
 	@Override
-	protected float getStandingEyeHeight(@NotNull Pose pPose, EntityDimensions pSize) {
+	protected float getStandingEyeHeight(Pose pPose, EntityDimensions pSize) {
 		return pSize.height * 0.35F;
 	}
 
 	@Override
-	public void onSyncedDataUpdated(@NotNull EntityDataAccessor<?> pKey) {
+	public void onSyncedDataUpdated(EntityDataAccessor<?> pKey) {
 		if (ID_SIZE.equals(pKey)) {
 			updateSizeInfo();
 		}
@@ -160,14 +158,7 @@ public class LavaRevenantEntity extends FlyingMob implements Enemy, GrantAdvance
 	@Override
 	public void aiStep() {
 		super.aiStep();
-		if (!level.isClientSide) {
-			AABB scanningBox = new AABB(blockPosition().offset(-50, -50, -50),
-					blockPosition().offset(50, 50, 50));
-
-			for (Player player : level.getNearbyPlayers(TargetingConditions.forNonCombat(), this, scanningBox)) {
-				checkForDiscovery(this, player);
-			}
-		}
+		checkForDiscovery(this);
 	}
 
 	/**
@@ -374,8 +365,8 @@ public class LavaRevenantEntity extends FlyingMob implements Enemy, GrantAdvance
 	}
 
 	@Override
-	public SpawnGroupData finalizeSpawn(@NotNull ServerLevelAccessor pLevel, @NotNull DifficultyInstance pDifficulty,
-	                                    @NotNull MobSpawnType pReason, @Nullable SpawnGroupData pSpawnData,
+	public SpawnGroupData finalizeSpawn(ServerLevelAccessor pLevel, DifficultyInstance pDifficulty,
+	                                    MobSpawnType pReason, @Nullable SpawnGroupData pSpawnData,
 	                                    @Nullable CompoundTag pDataTag) {
 
 		anchorPoint = blockPosition().above(15);
@@ -388,7 +379,7 @@ public class LavaRevenantEntity extends FlyingMob implements Enemy, GrantAdvance
 	 * Helper method to read subclass entity data from NBT.
 	 */
 	@Override
-	public void readAdditionalSaveData(@NotNull CompoundTag pCompound) {
+	public void readAdditionalSaveData(CompoundTag pCompound) {
 		super.readAdditionalSaveData(pCompound);
 		if (pCompound.contains("AX")) {
 			anchorPoint = new BlockPos(pCompound.getInt("AX"),
@@ -400,7 +391,7 @@ public class LavaRevenantEntity extends FlyingMob implements Enemy, GrantAdvance
 	}
 
 	@Override
-	public void addAdditionalSaveData(@NotNull CompoundTag pCompound) {
+	public void addAdditionalSaveData(CompoundTag pCompound) {
 		super.addAdditionalSaveData(pCompound);
 		pCompound.putInt("AX", anchorPoint.getX());
 		pCompound.putInt("AY", anchorPoint.getY());
@@ -417,8 +408,7 @@ public class LavaRevenantEntity extends FlyingMob implements Enemy, GrantAdvance
 	}
 
 	@Override
-	public @NotNull
-	SoundSource getSoundSource() {
+	public SoundSource getSoundSource() {
 		return SoundSource.HOSTILE;
 	}
 
@@ -428,7 +418,7 @@ public class LavaRevenantEntity extends FlyingMob implements Enemy, GrantAdvance
 	}
 
 	@Override
-	protected SoundEvent getHurtSound(@NotNull DamageSource pDamageSource) {
+	protected SoundEvent getHurtSound(DamageSource pDamageSource) {
 		return DeferredRegistryHandler.LAVA_REVENANT_HURT.get();
 	}
 
@@ -438,8 +428,7 @@ public class LavaRevenantEntity extends FlyingMob implements Enemy, GrantAdvance
 	}
 
 	@Override
-	public @NotNull
-	MobType getMobType() {
+	public MobType getMobType() {
 		return MobType.UNDEAD;
 	}
 
@@ -452,13 +441,12 @@ public class LavaRevenantEntity extends FlyingMob implements Enemy, GrantAdvance
 	}
 
 	@Override
-	public boolean canAttackType(@NotNull EntityType<?> pType) {
+	public boolean canAttackType(EntityType<?> pType) {
 		return true;
 	}
 
 	@Override
-	public @NotNull
-	EntityDimensions getDimensions(@NotNull Pose pPose) {
+	public EntityDimensions getDimensions(Pose pPose) {
 		int size = getSize();
 		EntityDimensions dimensions = super.getDimensions(pPose);
 		float scaleFactor = (dimensions.width + 0.2F * (float) size) / dimensions.width;
@@ -466,7 +454,7 @@ public class LavaRevenantEntity extends FlyingMob implements Enemy, GrantAdvance
 	}
 
 	@Override
-	public boolean checkSpawnRules(@NotNull LevelAccessor pLevel, @NotNull MobSpawnType pSpawnReason) {
+	public boolean checkSpawnRules(LevelAccessor pLevel, MobSpawnType pSpawnReason) {
 		boolean notInWater = pLevel.getBlockState(blockPosition().below()).getFluidState().isEmpty();
 		boolean inAir = pLevel.getBlockState(blockPosition().below()).isAir();
 
@@ -474,7 +462,7 @@ public class LavaRevenantEntity extends FlyingMob implements Enemy, GrantAdvance
 	}
 
 	@Override
-	public boolean checkSpawnObstruction(@NotNull LevelReader pLevel) {
+	public boolean checkSpawnObstruction(LevelReader pLevel) {
 
 		if (blockPosition().getY() > 0) {
 			if (super.checkSpawnObstruction(pLevel)) {

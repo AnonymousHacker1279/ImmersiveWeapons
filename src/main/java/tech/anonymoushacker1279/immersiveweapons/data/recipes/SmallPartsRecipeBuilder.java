@@ -10,11 +10,10 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraftforge.registries.ForgeRegistries;
-import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
 
-import javax.annotation.Nullable;
 import java.util.List;
 import java.util.function.Consumer;
 
@@ -95,12 +94,12 @@ public class SmallPartsRecipeBuilder {
 		 * Gets the ID for the recipe.
 		 */
 		@Override
-		public @NotNull ResourceLocation getId() {
+		public ResourceLocation getId() {
 			return id;
 		}
 
 		@Override
-		public @NotNull RecipeSerializer<?> getType() {
+		public RecipeSerializer<?> getType() {
 			return type;
 		}
 

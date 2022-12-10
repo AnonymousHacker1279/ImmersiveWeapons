@@ -8,7 +8,6 @@ import net.minecraft.client.renderer.block.model.ItemTransforms;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.core.NonNullList;
 import net.minecraft.world.item.ItemStack;
-import org.jetbrains.annotations.NotNull;
 import tech.anonymoushacker1279.immersiveweapons.blockentity.AstralCrystalBlockEntity;
 
 public class AstralCrystalRenderer implements BlockEntityRenderer<AstralCrystalBlockEntity> {
@@ -17,8 +16,8 @@ public class AstralCrystalRenderer implements BlockEntityRenderer<AstralCrystalB
 	}
 
 	@Override
-	public void render(AstralCrystalBlockEntity entity, float partialTick, @NotNull PoseStack poseStack,
-	                   @NotNull MultiBufferSource buffer, int packedLight, int packedOverlay) {
+	public void render(AstralCrystalBlockEntity entity, float partialTick, PoseStack poseStack,
+	                   MultiBufferSource buffer, int packedLight, int packedOverlay) {
 		NonNullList<ItemStack> inventory = entity.getInventory();
 
 		for (ItemStack itemStack : inventory) {
@@ -52,7 +51,9 @@ public class AstralCrystalRenderer implements BlockEntityRenderer<AstralCrystalB
 				poseStack.mulPose(Vector3f.XN.rotationDegrees(45f));
 
 				// All the items should smoothly rotate around the center of the block
-				poseStack.mulPose(Vector3f.ZP.rotationDegrees((Minecraft.getInstance().level.getGameTime() + partialTick) * 2f));
+				if (Minecraft.getInstance().level != null) {
+					poseStack.mulPose(Vector3f.ZP.rotationDegrees((Minecraft.getInstance().level.getGameTime() + partialTick) * 2f));
+				}
 
 				// Actually render the item
 				Minecraft.getInstance().getItemRenderer().renderStatic(itemStack, ItemTransforms.TransformType.FIXED, packedLight, packedOverlay, poseStack, buffer, 0);

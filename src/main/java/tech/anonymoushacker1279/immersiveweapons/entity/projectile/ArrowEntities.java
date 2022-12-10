@@ -7,7 +7,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.network.PacketDistributor;
-import org.jetbrains.annotations.NotNull;
 import tech.anonymoushacker1279.immersiveweapons.entity.projectile.SmokeGrenadeEntity.SmokeGrenadeEntityPacketHandler;
 import tech.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
 import tech.anonymoushacker1279.immersiveweapons.init.PacketHandler;
@@ -413,7 +412,7 @@ public class ArrowEntities {
 		 * @param hitResult the <code>HitResult</code> instance
 		 */
 		@Override
-		public void onHit(@NotNull HitResult hitResult) {
+		public void onHit(HitResult hitResult) {
 			super.onHit(hitResult);
 			if (!level.isClientSide) {
 				PacketHandler.INSTANCE.send(PacketDistributor.TRACKING_CHUNK.with(() -> level.getChunkAt(blockPosition())),

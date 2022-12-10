@@ -9,7 +9,6 @@ import net.minecraft.world.level.storage.loot.*;
 import net.minecraft.world.level.storage.loot.LootTable.Builder;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSet;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
-import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 import java.util.Map;
@@ -29,12 +28,12 @@ public class LootTableGenerator extends LootTableProvider {
 	}
 
 	@Override
-	protected @NotNull List<Pair<Supplier<Consumer<BiConsumer<ResourceLocation, Builder>>>, LootContextParamSet>> getTables() {
+	protected List<Pair<Supplier<Consumer<BiConsumer<ResourceLocation, Builder>>>, LootContextParamSet>> getTables() {
 		return subProviders;
 	}
 
 	@Override
-	protected void validate(Map<ResourceLocation, LootTable> map, @NotNull ValidationContext validationContext) {
+	protected void validate(Map<ResourceLocation, LootTable> map, ValidationContext validationContext) {
 		map.forEach((resourceLocation, lootTable) -> LootTables.validate(validationContext, resourceLocation, lootTable));
 	}
 }

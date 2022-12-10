@@ -9,7 +9,6 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
-import org.jetbrains.annotations.NotNull;
 import tech.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
 
 public class MudBallEntity extends ThrowableItemProjectile {
@@ -23,7 +22,7 @@ public class MudBallEntity extends ThrowableItemProjectile {
 	}
 
 	@Override
-	protected @NotNull Item getDefaultItem() {
+	protected Item getDefaultItem() {
 		return DeferredRegistryHandler.MUD_BALL.get();
 	}
 
@@ -43,7 +42,7 @@ public class MudBallEntity extends ThrowableItemProjectile {
 	}
 
 	@Override
-	protected void onHitEntity(@NotNull EntityHitResult pResult) {
+	protected void onHitEntity(EntityHitResult pResult) {
 		super.onHitEntity(pResult);
 		Entity entity = pResult.getEntity();
 		int i = entity instanceof Blaze ? 3 : 0;
@@ -51,7 +50,7 @@ public class MudBallEntity extends ThrowableItemProjectile {
 	}
 
 	@Override
-	protected void onHit(@NotNull HitResult pResult) {
+	protected void onHit(HitResult pResult) {
 		super.onHit(pResult);
 		if (!level.isClientSide) {
 			level.broadcastEntityEvent(this, (byte) 3);

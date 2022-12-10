@@ -10,10 +10,8 @@ import net.minecraft.client.renderer.*;
 import net.minecraft.client.renderer.FogRenderer.FogMode;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.phys.Vec3;
-import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
-
-import javax.annotation.Nullable;
 
 public class TiltrosDimensionSpecialEffects extends DimensionSpecialEffects {
 
@@ -25,7 +23,7 @@ public class TiltrosDimensionSpecialEffects extends DimensionSpecialEffects {
 	}
 
 	@Override
-	public @NotNull Vec3 getBrightnessDependentFogColor(Vec3 scale, float pBrightness) {
+	public Vec3 getBrightnessDependentFogColor(Vec3 scale, float pBrightness) {
 		return scale.scale(0.15F);
 	}
 
@@ -41,9 +39,9 @@ public class TiltrosDimensionSpecialEffects extends DimensionSpecialEffects {
 	}
 
 	@Override
-	public boolean renderSky(@NotNull ClientLevel level, int ticks, float partialTick, @NotNull PoseStack poseStack,
-	                         @NotNull Camera camera, @NotNull Matrix4f projectionMatrix, boolean isFoggy,
-	                         @NotNull Runnable setupFog) {
+	public boolean renderSky(ClientLevel level, int ticks, float partialTick, PoseStack poseStack,
+	                         Camera camera, Matrix4f projectionMatrix, boolean isFoggy,
+	                         Runnable setupFog) {
 
 		FogRenderer.setupFog(camera, FogMode.FOG_SKY, 32.0f, false, partialTick);
 

@@ -20,7 +20,6 @@ import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import org.jetbrains.annotations.NotNull;
 import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
 
 public class PunjiSticksBlock extends Block implements SimpleWaterloggedBlock {
@@ -51,7 +50,7 @@ public class PunjiSticksBlock extends Block implements SimpleWaterloggedBlock {
 	 */
 	@SuppressWarnings("deprecation")
 	@Override
-	public @NotNull VoxelShape getShape(@NotNull BlockState state, @NotNull BlockGetter reader, @NotNull BlockPos pos, @NotNull CollisionContext selectionContext) {
+	public VoxelShape getShape(BlockState state, BlockGetter reader, BlockPos pos, CollisionContext selectionContext) {
 		return SHAPE;
 	}
 
@@ -76,7 +75,7 @@ public class PunjiSticksBlock extends Block implements SimpleWaterloggedBlock {
 	 */
 	@SuppressWarnings("deprecation")
 	@Override
-	public @NotNull FluidState getFluidState(BlockState state) {
+	public FluidState getFluidState(BlockState state) {
 		return state.getValue(WATERLOGGED) ? Fluids.WATER.getSource(false) : super.getFluidState(state);
 	}
 
@@ -101,7 +100,7 @@ public class PunjiSticksBlock extends Block implements SimpleWaterloggedBlock {
 	 */
 	@SuppressWarnings("deprecation")
 	@Override
-	public void entityInside(@NotNull BlockState state, @NotNull Level level, @NotNull BlockPos pos, @NotNull Entity entity) {
+	public void entityInside(BlockState state, Level level, BlockPos pos, Entity entity) {
 		if (entity instanceof LivingEntity livingEntity) {
 			if (livingEntity.fallDistance >= 2.5f) {
 				int featherFallingLevel = GeneralUtilities.getFeatherFallingLevel(livingEntity);

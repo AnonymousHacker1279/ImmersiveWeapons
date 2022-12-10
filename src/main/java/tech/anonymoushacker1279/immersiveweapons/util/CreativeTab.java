@@ -4,7 +4,6 @@ import net.minecraft.core.NonNullList;
 import net.minecraft.world.item.*;
 import net.minecraft.world.item.alchemy.PotionUtils;
 import net.minecraftforge.registries.RegistryObject;
-import org.jetbrains.annotations.NotNull;
 import tech.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
 
 import java.util.*;
@@ -26,12 +25,12 @@ public class CreativeTab extends CreativeModeTab {
 	 * @return ItemStack
 	 */
 	@Override
-	public @NotNull ItemStack makeIcon() {
+	public ItemStack makeIcon() {
 		return new ItemStack(DeferredRegistryHandler.TESLA_SWORD.get());
 	}
 
 	@Override
-	public void fillItemList(@NotNull NonNullList<ItemStack> itemStack) {
+	public void fillItemList(NonNullList<ItemStack> itemStack) {
 		Collection<RegistryObject<Item>> registryObjects = DeferredRegistryHandler.ITEMS.getEntries();
 		List<Item> items = new ArrayList<>(registryObjects.size());
 		registryObjects.stream().map(RegistryObject::get).forEach(items::add);

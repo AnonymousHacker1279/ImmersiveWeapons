@@ -26,7 +26,6 @@ import net.minecraftforge.network.NetworkEvent;
 import net.minecraftforge.network.NetworkEvent.Context;
 import net.minecraftforge.network.PacketDistributor;
 import net.minecraftforge.network.PacketDistributor.TargetPoint;
-import org.jetbrains.annotations.NotNull;
 import tech.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
 import tech.anonymoushacker1279.immersiveweapons.init.PacketHandler;
 
@@ -60,8 +59,8 @@ public class SpikeTrapBlock extends Block implements SimpleWaterloggedBlock {
 	 */
 	@SuppressWarnings("deprecation")
 	@Override
-	public @NotNull VoxelShape getShape(@NotNull BlockState state, @NotNull BlockGetter blockGetter, @NotNull BlockPos pos,
-	                                    @NotNull CollisionContext collisionContext) {
+	public VoxelShape getShape(BlockState state, BlockGetter blockGetter, BlockPos pos,
+	                           CollisionContext collisionContext) {
 		return SHAPE;
 	}
 
@@ -78,9 +77,9 @@ public class SpikeTrapBlock extends Block implements SimpleWaterloggedBlock {
 	 */
 	@SuppressWarnings("deprecation")
 	@Override
-	public @NotNull BlockState updateShape(BlockState state, @NotNull Direction facing, @NotNull BlockState neighborState,
-	                                       @NotNull LevelAccessor levelAccessor, @NotNull BlockPos currentPos,
-	                                       @NotNull BlockPos facingPos) {
+	public BlockState updateShape(BlockState state, Direction facing, BlockState neighborState,
+	                              LevelAccessor levelAccessor, BlockPos currentPos,
+	                              BlockPos facingPos) {
 
 		if (state.getValue(WATERLOGGED)) {
 			levelAccessor.scheduleTick(currentPos, Fluids.WATER, Fluids.WATER.getTickDelay(levelAccessor));
@@ -113,7 +112,7 @@ public class SpikeTrapBlock extends Block implements SimpleWaterloggedBlock {
 	 */
 	@SuppressWarnings("deprecation")
 	@Override
-	public @NotNull FluidState getFluidState(BlockState state) {
+	public FluidState getFluidState(BlockState state) {
 		return state.getValue(WATERLOGGED) ? Fluids.WATER.getSource(false) : super.getFluidState(state);
 	}
 
@@ -137,7 +136,7 @@ public class SpikeTrapBlock extends Block implements SimpleWaterloggedBlock {
 	 */
 	@SuppressWarnings("deprecation")
 	@Override
-	public boolean canSurvive(@NotNull BlockState state, @NotNull LevelReader reader, BlockPos pos) {
+	public boolean canSurvive(BlockState state, LevelReader reader, BlockPos pos) {
 		return Block.canSupportCenter(reader, pos.below(), Direction.UP);
 	}
 
@@ -152,7 +151,7 @@ public class SpikeTrapBlock extends Block implements SimpleWaterloggedBlock {
 	 */
 	@SuppressWarnings("deprecation")
 	@Override
-	public void entityInside(@NotNull BlockState state, @NotNull Level level, @NotNull BlockPos pos, @NotNull Entity entity) {
+	public void entityInside(BlockState state, Level level, BlockPos pos, Entity entity) {
 		if (entity instanceof Player || entity instanceof Mob) {
 			if (state.getValue(POWERED)) {
 				entity.hurt(damageSource, 2f);
@@ -171,7 +170,7 @@ public class SpikeTrapBlock extends Block implements SimpleWaterloggedBlock {
 	 */
 	@SuppressWarnings("deprecation")
 	@Override
-	public void onPlace(BlockState state, @NotNull Level level, @NotNull BlockPos pos, BlockState oldState, boolean isMoving) {
+	public void onPlace(BlockState state, Level level, BlockPos pos, BlockState oldState, boolean isMoving) {
 		if (!oldState.is(state.getBlock())) {
 			if (level.hasNeighborSignal(pos)) {
 				level.setBlock(pos, state.setValue(POWERED, true), 3);
@@ -191,8 +190,8 @@ public class SpikeTrapBlock extends Block implements SimpleWaterloggedBlock {
 	 */
 	@SuppressWarnings("deprecation")
 	@Override
-	public void neighborChanged(BlockState state, Level level, @NotNull BlockPos pos, @NotNull Block blockIn,
-	                            @NotNull BlockPos fromPos, boolean isMoving) {
+	public void neighborChanged(BlockState state, Level level, BlockPos pos, Block blockIn,
+	                            BlockPos fromPos, boolean isMoving) {
 		boolean flag = level.hasNeighborSignal(pos);
 		if (flag != state.getValue(POWERED)) {
 			state = state.setValue(POWERED, flag);

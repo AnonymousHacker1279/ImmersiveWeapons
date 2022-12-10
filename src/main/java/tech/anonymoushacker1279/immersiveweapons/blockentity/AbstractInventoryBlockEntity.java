@@ -11,7 +11,6 @@ import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
-import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
 
@@ -87,7 +86,7 @@ public abstract class AbstractInventoryBlockEntity extends BlockEntity implement
 	 * @param nbt the <code>CompoundNBT</code> to load
 	 */
 	@Override
-	public void load(@NotNull CompoundTag nbt) {
+	public void load(CompoundTag nbt) {
 		super.load(nbt);
 		inventory.clear();
 		ContainerHelper.loadAllItems(nbt, inventory);
@@ -99,7 +98,7 @@ public abstract class AbstractInventoryBlockEntity extends BlockEntity implement
 	 * @param tag the <code>CompoundNBT</code> to save
 	 */
 	@Override
-	protected void saveAdditional(@NotNull CompoundTag tag) {
+	protected void saveAdditional(CompoundTag tag) {
 		writeItems(tag);
 	}
 
@@ -131,7 +130,7 @@ public abstract class AbstractInventoryBlockEntity extends BlockEntity implement
 	 * @return CompoundTag
 	 */
 	@Override
-	public @NotNull CompoundTag getUpdateTag() {
+	public CompoundTag getUpdateTag() {
 		return writeItems(new CompoundTag());
 	}
 

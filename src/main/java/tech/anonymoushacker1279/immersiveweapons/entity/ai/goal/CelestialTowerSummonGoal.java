@@ -18,6 +18,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.phys.AABB;
+import org.jetbrains.annotations.Nullable;
 import tech.anonymoushacker1279.immersiveweapons.config.CommonConfig;
 import tech.anonymoushacker1279.immersiveweapons.entity.monster.CelestialTowerEntity;
 import tech.anonymoushacker1279.immersiveweapons.entity.monster.RockSpiderEntity;
@@ -30,6 +31,7 @@ public class CelestialTowerSummonGoal extends Goal {
 
 	private final CelestialTowerEntity mob;
 	private int waveSpawnCooldown = 100;
+	@Nullable
 	private AABB searchBox;
 
 	public CelestialTowerSummonGoal(CelestialTowerEntity pMob) {
@@ -181,11 +183,10 @@ public class CelestialTowerSummonGoal extends Goal {
 				GeneralUtilities.getRandomNumber(-0.03d, 0.03d), 1.0f);
 	}
 
-	private Mob spawnEntity(ServerLevel level, Mob mob, BlockPos summonPos) {
+	private void spawnEntity(ServerLevel level, Mob mob, BlockPos summonPos) {
 		mob.setPersistenceRequired();
 		mob.teleportTo(summonPos.getX(), summonPos.getY(), summonPos.getZ());
 		mob.heal(mob.getMaxHealth());
 		level.addFreshEntity(mob);
-		return mob;
 	}
 }

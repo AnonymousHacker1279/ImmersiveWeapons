@@ -16,10 +16,10 @@ import net.minecraft.world.phys.*;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraftforge.event.ForgeEventFactory;
 import net.minecraftforge.network.NetworkHooks;
-import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 public class CustomArrowEntity extends AbstractArrow {
-	Item referenceItem;
+	@Nullable Item referenceItem;
 
 	/**
 	 * Constructor for CustomArrowEntity.
@@ -64,7 +64,7 @@ public class CustomArrowEntity extends AbstractArrow {
 	 * @return ItemStack
 	 */
 	@Override
-	public @NotNull ItemStack getPickupItem() {
+	public ItemStack getPickupItem() {
 		return new ItemStack(referenceItem);
 	}
 
@@ -74,7 +74,7 @@ public class CustomArrowEntity extends AbstractArrow {
 	 * @return IPacket
 	 */
 	@Override
-	public @NotNull Packet<?> getAddEntityPacket() {
+	public Packet<?> getAddEntityPacket() {
 		return NetworkHooks.getEntitySpawningPacket(this);
 	}
 

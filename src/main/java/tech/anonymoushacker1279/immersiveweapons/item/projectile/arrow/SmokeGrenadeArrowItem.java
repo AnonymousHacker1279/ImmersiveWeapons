@@ -4,7 +4,6 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.projectile.AbstractArrow.Pickup;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import org.jetbrains.annotations.NotNull;
 import tech.anonymoushacker1279.immersiveweapons.entity.projectile.ArrowEntities;
 import tech.anonymoushacker1279.immersiveweapons.entity.projectile.ArrowEntities.SmokeGrenadeArrowEntity;
 
@@ -33,7 +32,7 @@ public class SmokeGrenadeArrowItem extends AbstractArrowItem {
 	 * @return SmokeGrenadeArrowEntity
 	 */
 	@Override
-	public @NotNull ArrowEntities.SmokeGrenadeArrowEntity createArrow(@NotNull Level worldIn, @NotNull ItemStack stack, @NotNull LivingEntity shooter) {
+	public ArrowEntities.SmokeGrenadeArrowEntity createArrow(Level worldIn, ItemStack stack, LivingEntity shooter) {
 		SmokeGrenadeArrowEntity arrowEntity = new SmokeGrenadeArrowEntity(shooter, worldIn);
 		arrowEntity.setBaseDamage(damage);
 		arrowEntity.pickup = Pickup.DISALLOWED;

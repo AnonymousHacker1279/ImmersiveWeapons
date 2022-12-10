@@ -6,6 +6,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.client.gui.overlay.IGuiOverlay;
+import org.jetbrains.annotations.Nullable;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.item.projectile.gun.data.GunData;
 
@@ -13,6 +14,7 @@ public class IWOverlays {
 
 	public static final ResourceLocation SCOPE_LOCATION = new ResourceLocation(ImmersiveWeapons.MOD_ID + ":textures/gui/overlay/musket_scope.png");
 
+	@Nullable
 	public static IGuiOverlay SCOPE_ELEMENT;
 
 	public static void init() {
@@ -51,18 +53,22 @@ public class IWOverlays {
 		RenderSystem.setShader(GameRenderer::getPositionColorShader);
 		RenderSystem.disableTexture();
 		bufferbuilder.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_COLOR);
-		bufferbuilder.vertex(0.0D, screenHeight, -90.0D).color(0, 0, 0, 255).endVertex();
-		bufferbuilder.vertex(screenWidth, screenHeight, -90.0D).color(0, 0, 0, 255).endVertex();
-		bufferbuilder.vertex(screenWidth, y1, -90.0D).color(0, 0, 0, 255).endVertex();
-		bufferbuilder.vertex(0.0D, y1, -90.0D).color(0, 0, 0, 255).endVertex();
+		buildEdges(bufferbuilder, y1,
+				bufferbuilder.vertex(0.0D, screenHeight, -90.0D),
+				bufferbuilder.vertex(screenWidth, screenHeight, -90.0D),
+				bufferbuilder.vertex(screenWidth, y1, -90.0D),
+				screenWidth, screenHeight);
+
 		bufferbuilder.vertex(0.0D, y, -90.0D).color(0, 0, 0, 255).endVertex();
 		bufferbuilder.vertex(screenWidth, y, -90.0D).color(0, 0, 0, 255).endVertex();
 		bufferbuilder.vertex(screenWidth, 0.0D, -90.0D).color(0, 0, 0, 255).endVertex();
 		bufferbuilder.vertex(0.0D, 0.0D, -90.0D).color(0, 0, 0, 255).endVertex();
-		bufferbuilder.vertex(0.0D, y1, -90.0D).color(0, 0, 0, 255).endVertex();
-		bufferbuilder.vertex(x, y1, -90.0D).color(0, 0, 0, 255).endVertex();
-		bufferbuilder.vertex(x, y, -90.0D).color(0, 0, 0, 255).endVertex();
-		bufferbuilder.vertex(0.0D, y, -90.0D).color(0, 0, 0, 255).endVertex();
+		buildEdges(bufferbuilder, y,
+				bufferbuilder.vertex(0.0D, y1, -90.0D),
+				bufferbuilder.vertex(x, y1, -90.0D),
+				bufferbuilder.vertex(x, y, -90.0D),
+				screenWidth, screenHeight);
+
 		bufferbuilder.vertex(x1, y1, -90.0D).color(0, 0, 0, 255).endVertex();
 		bufferbuilder.vertex(screenWidth, y1, -90.0D).color(0, 0, 0, 255).endVertex();
 		bufferbuilder.vertex(screenWidth, y, -90.0D).color(0, 0, 0, 255).endVertex();
@@ -72,5 +78,12 @@ public class IWOverlays {
 		RenderSystem.depthMask(true);
 		RenderSystem.enableDepthTest();
 		RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
+	}
+
+	private static void buildEdges(BufferBuilder bufferbuilder, float y1, VertexConsumer vertex, VertexConsumer vertex2, VertexConsumer vertex3, int screenWidth, int screenHeight) {
+		vertex.color(0, 0, 0, 255).endVertex();
+		vertex2.color(0, 0, 0, 255).endVertex();
+		vertex3.color(0, 0, 0, 255).endVertex();
+		bufferbuilder.vertex(0.0D, y1, -90.0D).color(0, 0, 0, 255).endVertex();
 	}
 }

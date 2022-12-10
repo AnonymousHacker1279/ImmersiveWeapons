@@ -13,7 +13,6 @@ import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import org.jetbrains.annotations.NotNull;
 
 public class WarriorStatueBase extends HorizontalDirectionalBlock implements SimpleWaterloggedBlock {
 
@@ -51,7 +50,7 @@ public class WarriorStatueBase extends HorizontalDirectionalBlock implements Sim
 	 */
 	@SuppressWarnings("deprecation")
 	@Override
-	public @NotNull VoxelShape getShape(@NotNull BlockState state, @NotNull BlockGetter reader, @NotNull BlockPos pos, @NotNull CollisionContext selectionContext) {
+	public VoxelShape getShape(BlockState state, BlockGetter reader, BlockPos pos, CollisionContext selectionContext) {
 		return switch (state.getValue(FACING)) {
 			case SOUTH -> SHAPE.move(0.0D, 0.0D, -0.1D);
 			case EAST -> SHAPE.move(-0.1D, 0.0D, 0.0D);
@@ -82,13 +81,13 @@ public class WarriorStatueBase extends HorizontalDirectionalBlock implements Sim
 	 */
 	@SuppressWarnings("deprecation")
 	@Override
-	public float getShadeBrightness(@NotNull BlockState state, @NotNull BlockGetter reader, @NotNull BlockPos pos) {
+	public float getShadeBrightness(BlockState state, BlockGetter reader, BlockPos pos) {
 		return 1.0F;
 	}
 
 	@SuppressWarnings("deprecation")
 	@Override
-	public @NotNull FluidState getFluidState(BlockState state) {
+	public FluidState getFluidState(BlockState state) {
 		return state.getValue(WATERLOGGED) ? Fluids.WATER.getSource(false) : super.getFluidState(state);
 	}
 }

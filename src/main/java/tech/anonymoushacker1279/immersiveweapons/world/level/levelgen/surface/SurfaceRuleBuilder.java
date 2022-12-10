@@ -8,6 +8,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.SurfaceRules;
 import net.minecraft.world.level.levelgen.SurfaceRules.RuleSource;
 import net.minecraft.world.level.levelgen.placement.CaveSurface;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
 import java.util.function.Supplier;
@@ -18,7 +19,9 @@ public class SurfaceRuleBuilder {
 	private static final Map<String, SurfaceRuleEntry> RULES_CACHE = Maps.newHashMap();
 	private static final SurfaceRuleBuilder INSTANCE = new SurfaceRuleBuilder();
 	private final List<SurfaceRuleEntry> rules = Lists.newArrayList();
+	@Nullable
 	private SurfaceRuleEntry entryInstance;
+	@Nullable
 	private ResourceKey<Biome> biomeKey;
 
 	private SurfaceRuleBuilder() {
@@ -48,7 +51,7 @@ public class SurfaceRuleBuilder {
 	 * @return same {@link SurfaceRuleBuilder} instance.
 	 */
 	public SurfaceRuleBuilder surface(BlockState state) {
-		entryInstance = getFromCache("surface_" + state.toString(), () -> {
+		entryInstance = getFromCache("surface_" + state, () -> {
 			RuleSource rule = SurfaceRules.state(state);
 			rule = SurfaceRules.ifTrue(SurfaceRules.ON_FLOOR, rule);
 			rule = SurfaceRules.ifTrue(SurfaceRules.waterBlockCheck(1, 0), rule);
@@ -67,7 +70,7 @@ public class SurfaceRuleBuilder {
 	 * @return same {@link SurfaceRuleBuilder} instance.
 	 */
 	public SurfaceRuleBuilder subsurface(BlockState state, int depth) {
-		entryInstance = getFromCache("subsurface_" + depth + "_" + state.toString(), () -> {
+		entryInstance = getFromCache("subsurface_" + depth + "_" + state, () -> {
 			RuleSource rule = SurfaceRules.state(state);
 			rule = SurfaceRules.ifTrue(SurfaceRules.stoneDepthCheck(depth, false, 0, CaveSurface.FLOOR), rule);
 			rule = SurfaceRules.ifTrue(SurfaceRules.waterBlockCheck(1, 0), rule);
@@ -85,7 +88,7 @@ public class SurfaceRuleBuilder {
 	 * @return same {@link SurfaceRuleBuilder} instance.
 	 */
 	public SurfaceRuleBuilder filler(BlockState state) {
-		entryInstance = getFromCache("fill_" + state.toString(), () -> new SurfaceRuleEntry(10, SurfaceRules.state(state)));
+		entryInstance = getFromCache("fill_" + state, () -> new SurfaceRuleEntry(10, SurfaceRules.state(state)));
 		rules.add(entryInstance);
 		return this;
 	}

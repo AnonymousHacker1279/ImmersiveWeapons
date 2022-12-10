@@ -11,10 +11,9 @@ import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
-import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import tech.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
 
-import javax.annotation.Nullable;
 
 public class BiodomeLifeSupportUnitBlockEntity extends BlockEntity implements EntityBlock {
 
@@ -65,7 +64,7 @@ public class BiodomeLifeSupportUnitBlockEntity extends BlockEntity implements En
 	}
 
 	@Override
-	protected void saveAdditional(@NotNull CompoundTag pTag) {
+	protected void saveAdditional(CompoundTag pTag) {
 		super.saveAdditional(pTag);
 
 		pTag.putInt("cooldown", cooldown);
@@ -73,7 +72,7 @@ public class BiodomeLifeSupportUnitBlockEntity extends BlockEntity implements En
 	}
 
 	@Override
-	public void load(@NotNull CompoundTag nbt) {
+	public void load(CompoundTag nbt) {
 		super.load(nbt);
 
 		cooldown = nbt.getInt("cooldown");

@@ -20,7 +20,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.crafting.StrictNBTIngredient;
 import net.minecraftforge.registries.ForgeRegistries;
-import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.data.tags.groups.forge.ForgeItemTagGroups;
 import tech.anonymoushacker1279.immersiveweapons.data.tags.groups.immersiveweapons.ImmersiveWeaponsItemTagGroups;
@@ -45,7 +45,7 @@ public class RecipeGenerator extends RecipeProvider {
 	}
 
 	@Override
-	protected void buildCraftingRecipes(@NotNull Consumer<FinishedRecipe> pFinishedRecipeConsumer) {
+	protected void buildCraftingRecipes(Consumer<FinishedRecipe> pFinishedRecipeConsumer) {
 		finishedRecipeConsumer = pFinishedRecipeConsumer;
 
 		createFlagItems();
@@ -1301,7 +1301,7 @@ public class RecipeGenerator extends RecipeProvider {
 	}
 
 	public static void createSmeltingRecipe(List<ItemLike> pIngredients,
-	                                        ItemLike pResult, float pExperience, int pCookingTime, String pGroup) {
+	                                        ItemLike pResult, float pExperience, int pCookingTime, @Nullable String pGroup) {
 		oreCooking(RecipeSerializer.SMELTING_RECIPE, pIngredients, pResult, pExperience,
 				pCookingTime, pGroup, "_from_smelting");
 	}
@@ -1325,7 +1325,7 @@ public class RecipeGenerator extends RecipeProvider {
 	}
 
 	private static void oreCooking(SimpleCookingSerializer<?> pCookingSerializer, List<ItemLike> pIngredients,
-	                               ItemLike pResult, float pExperience, int pCookingTime, String pGroup, String pRecipeName) {
+	                               ItemLike pResult, float pExperience, int pCookingTime, @Nullable String pGroup, String pRecipeName) {
 		for (ItemLike itemlike : pIngredients) {
 			SimpleCookingRecipeBuilder.cooking(Ingredient.of(itemlike), pResult, pExperience, pCookingTime, pCookingSerializer)
 					.group(pGroup).unlockedBy(getHasName(itemlike), has(itemlike))
@@ -1372,7 +1372,7 @@ public class RecipeGenerator extends RecipeProvider {
 		return getItemName(pResult) + "_from_" + getItemName(pIngredient);
 	}
 
-	protected static @NotNull String getItemName(ItemLike pItemLike) {
+	protected static String getItemName(ItemLike pItemLike) {
 		return Objects.requireNonNull(ForgeRegistries.ITEMS.getKey(pItemLike.asItem())).getPath();
 	}
 

@@ -45,7 +45,7 @@ public class BlockStateGenerator extends BlockStateProvider {
 						new ResourceLocation(ImmersiveWeapons.MOD_ID + ":block/cloud"))
 				.renderType("minecraft:translucent"));
 		for (Block block : BlockLists.stainedGlassBlocks) {
-			String color = ForgeRegistries.BLOCKS.getKey(block).getPath().split("stained_bulletproof_glass")[0];
+			String color = Objects.requireNonNull(ForgeRegistries.BLOCKS.getKey(block)).getPath().split("stained_bulletproof_glass")[0];
 			simpleBlock(block, models().cubeAll(color + "stained_bulletproof_glass",
 							new ResourceLocation(ImmersiveWeapons.MOD_ID + ":block/" + color + "stained_bulletproof_glass"))
 					.renderType("minecraft:translucent"));
@@ -54,24 +54,20 @@ public class BlockStateGenerator extends BlockStateProvider {
 		ResourceLocation stardust_leaves_all = new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/stardust_leaves");
 		Block stardust_leaves = DeferredRegistryHandler.STARDUST_LEAVES.get();
 		simpleBlock(DeferredRegistryHandler.STARDUST_LEAVES.get(),
-				models().withExistingParent(ForgeRegistries.BLOCKS.getKey(stardust_leaves).getPath(), "minecraft:block/cube_all")
+				models().withExistingParent(Objects.requireNonNull(ForgeRegistries.BLOCKS.getKey(stardust_leaves)).getPath(), "minecraft:block/cube_all")
 						.texture("all", stardust_leaves_all)
 						.texture("overlay", stardust_granule_overlay)
 						.renderType("minecraft:cutout_mipped")
 						.element()
-						.allFaces((direction, faceBuilder) -> {
-							faceBuilder.uvs(0, 0, 16, 16)
-									.texture("#all")
-									.end();
-						}).end()
+						.allFaces((direction, faceBuilder) -> faceBuilder.uvs(0, 0, 16, 16)
+								.texture("#all")
+								.end()).end()
 						.element()
-						.allFaces((direction, faceBuilder) -> {
-							faceBuilder.uvs(0, 0, 16, 16)
-									.texture("#overlay")
-									.rotation(FaceRotation.CLOCKWISE_90)
-									.emissivity(15)
-									.end();
-						}).end());
+						.allFaces((direction, faceBuilder) -> faceBuilder.uvs(0, 0, 16, 16)
+								.texture("#overlay")
+								.rotation(FaceRotation.CLOCKWISE_90)
+								.emissivity(15)
+								.end()).end());
 
 		// Generate data for simple, six-sized blocks that use overlays (ores)
 		for (Block block : BlockLists.stoneBasedOres) {
@@ -101,7 +97,7 @@ public class BlockStateGenerator extends BlockStateProvider {
 					.renderType("minecraft:cutout_mipped"));
 		}
 		// Astral ore uses smooth quartz for a base
-		simpleBlock(DeferredRegistryHandler.ASTRAL_ORE.get(), models().withExistingParent(ForgeRegistries.BLOCKS.getKey(DeferredRegistryHandler.ASTRAL_ORE.get()).getPath(),
+		simpleBlock(DeferredRegistryHandler.ASTRAL_ORE.get(), models().withExistingParent(Objects.requireNonNull(ForgeRegistries.BLOCKS.getKey(DeferredRegistryHandler.ASTRAL_ORE.get())).getPath(),
 						new ResourceLocation(ImmersiveWeapons.MOD_ID, "simple_overlay"))
 				.texture("all", "minecraft:block/quartz_block_bottom")
 				.texture("overlay", new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/astral_ore"))
@@ -167,7 +163,7 @@ public class BlockStateGenerator extends BlockStateProvider {
 		ResourceLocation stardust_log_top = new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/stardust_log_top");
 		RotatedPillarBlock stardust_log = DeferredRegistryHandler.STARDUST_LOG.get();
 		axisBlock(DeferredRegistryHandler.STARDUST_LOG.get(),
-				models().withExistingParent(ForgeRegistries.BLOCKS.getKey(stardust_log).getPath(), "minecraft:block/cube_column")
+				models().withExistingParent(Objects.requireNonNull(ForgeRegistries.BLOCKS.getKey(stardust_log)).getPath(), "minecraft:block/cube_column")
 						.texture("side", stardust_log_side)
 						.texture("end", stardust_log_top)
 						.texture("overlay", stardust_granule_overlay)
@@ -191,7 +187,7 @@ public class BlockStateGenerator extends BlockStateProvider {
 								case UP, DOWN -> faceBuilder.texture("#end").end();
 							}
 						}).end(),
-				models().withExistingParent(ForgeRegistries.BLOCKS.getKey(stardust_log).getPath() + "_horizontal", "minecraft:block/cube_column_horizontal")
+				models().withExistingParent(Objects.requireNonNull(ForgeRegistries.BLOCKS.getKey(stardust_log)).getPath() + "_horizontal", "minecraft:block/cube_column_horizontal")
 						.texture("side", stardust_log_side)
 						.texture("end", stardust_log_top)
 						.texture("overlay", stardust_granule_overlay)
@@ -217,7 +213,7 @@ public class BlockStateGenerator extends BlockStateProvider {
 						}).end());
 		RotatedPillarBlock stardust_wood = DeferredRegistryHandler.STARDUST_WOOD.get();
 		axisBlock(stardust_wood,
-				models().withExistingParent(ForgeRegistries.BLOCKS.getKey(stardust_wood).getPath(), "minecraft:block/cube_column")
+				models().withExistingParent(Objects.requireNonNull(ForgeRegistries.BLOCKS.getKey(stardust_wood)).getPath(), "minecraft:block/cube_column")
 						.texture("side", stardust_log_side)
 						.texture("end", stardust_log_side)
 						.texture("overlay", stardust_granule_overlay)
@@ -231,7 +227,7 @@ public class BlockStateGenerator extends BlockStateProvider {
 								.texture("#overlay")
 								.emissivity(15)
 								.end()).end(),
-				models().withExistingParent(ForgeRegistries.BLOCKS.getKey(stardust_wood).getPath() + "_horizontal", "minecraft:block/cube_column_horizontal")
+				models().withExistingParent(Objects.requireNonNull(ForgeRegistries.BLOCKS.getKey(stardust_wood)).getPath() + "_horizontal", "minecraft:block/cube_column_horizontal")
 						.texture("side", stardust_log_side)
 						.texture("end", stardust_log_side)
 						.texture("overlay", stardust_granule_overlay)

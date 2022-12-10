@@ -15,7 +15,6 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.network.*;
 import net.minecraftforge.network.NetworkEvent.Context;
-import org.jetbrains.annotations.NotNull;
 import tech.anonymoushacker1279.immersiveweapons.client.particle.smoke_grenade.SmokeGrenadeParticleOptions;
 import tech.anonymoushacker1279.immersiveweapons.config.ClientConfig;
 import tech.anonymoushacker1279.immersiveweapons.config.CommonConfig;
@@ -97,7 +96,7 @@ public class SmokeGrenadeEntity extends ThrowableItemProjectile {
 	 * @return IPacket
 	 */
 	@Override
-	public @NotNull Packet<?> getAddEntityPacket() {
+	public Packet<?> getAddEntityPacket() {
 		return NetworkHooks.getEntitySpawningPacket(this);
 	}
 
@@ -108,7 +107,7 @@ public class SmokeGrenadeEntity extends ThrowableItemProjectile {
 	 * @return Item
 	 */
 	@Override
-	protected @NotNull Item getDefaultItem() {
+	protected Item getDefaultItem() {
 		return DeferredRegistryHandler.SMOKE_GRENADE.get();
 	}
 
@@ -118,7 +117,7 @@ public class SmokeGrenadeEntity extends ThrowableItemProjectile {
 	 * @param hitResult the <code>HitResult</code> instance
 	 */
 	@Override
-	protected void onHit(@NotNull HitResult hitResult) {
+	protected void onHit(HitResult hitResult) {
 		super.onHit(hitResult);
 		if (!level.isClientSide) {
 			// Inform the client of the smoke grenade color

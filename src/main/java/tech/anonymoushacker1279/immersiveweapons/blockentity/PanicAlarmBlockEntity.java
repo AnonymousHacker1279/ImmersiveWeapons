@@ -9,11 +9,9 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import tech.anonymoushacker1279.immersiveweapons.config.ClientConfig;
 import tech.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
-
-import javax.annotation.Nullable;
 
 public class PanicAlarmBlockEntity extends BlockEntity implements EntityBlock {
 
@@ -52,7 +50,7 @@ public class PanicAlarmBlockEntity extends BlockEntity implements EntityBlock {
 	 */
 	@Nullable
 	@Override
-	public BlockEntity newBlockEntity(@NotNull BlockPos blockPos, @NotNull BlockState blockState) {
+	public BlockEntity newBlockEntity(BlockPos blockPos, BlockState blockState) {
 		return new PanicAlarmBlockEntity(blockPos, blockState);
 	}
 
@@ -84,7 +82,7 @@ public class PanicAlarmBlockEntity extends BlockEntity implements EntityBlock {
 	 * @param pTag the <code>CompoundNBT</code> to save
 	 */
 	@Override
-	protected void saveAdditional(@NotNull CompoundTag pTag) {
+	protected void saveAdditional(CompoundTag pTag) {
 		super.saveAdditional(pTag);
 
 		pTag.putInt("cooldown", cooldown);
@@ -97,7 +95,7 @@ public class PanicAlarmBlockEntity extends BlockEntity implements EntityBlock {
 	 * @param nbt the <code>CompoundNBT</code> to load
 	 */
 	@Override
-	public void load(@NotNull CompoundTag nbt) {
+	public void load(CompoundTag nbt) {
 		super.load(nbt);
 
 		cooldown = nbt.getInt("cooldown");

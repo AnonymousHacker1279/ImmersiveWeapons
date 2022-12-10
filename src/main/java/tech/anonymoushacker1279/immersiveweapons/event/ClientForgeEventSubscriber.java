@@ -92,11 +92,13 @@ public class ClientForgeEventSubscriber {
 				float deltaFrame = minecraft.getDeltaFrameTime() / 8;
 				GunData.scopeScale = Mth.lerp(0.25F * deltaFrame, GunData.scopeScale, 1.125F);
 
-				IWOverlays.SCOPE_ELEMENT.render((ForgeGui) minecraft.gui,
-						event.getPoseStack(),
-						event.getPartialTick(),
-						screenWidth,
-						screenHeight);
+				if (IWOverlays.SCOPE_ELEMENT != null) {
+					IWOverlays.SCOPE_ELEMENT.render((ForgeGui) minecraft.gui,
+							event.getPoseStack(),
+							event.getPartialTick(),
+							screenWidth,
+							screenHeight);
+				}
 			}
 		}
 	}

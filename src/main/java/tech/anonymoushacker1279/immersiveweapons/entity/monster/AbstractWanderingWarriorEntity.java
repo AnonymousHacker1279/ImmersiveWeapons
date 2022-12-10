@@ -10,7 +10,6 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.*;
 import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
-import net.minecraft.world.entity.ai.targeting.TargetingConditions;
 import net.minecraft.world.entity.monster.Creeper;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
@@ -18,12 +17,10 @@ import net.minecraft.world.item.*;
 import net.minecraft.world.level.*;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.phys.AABB;
-import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import tech.anonymoushacker1279.immersiveweapons.entity.GrantAdvancementOnDiscovery;
 import tech.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
 
-import javax.annotation.Nullable;
 import java.time.LocalDate;
 import java.time.temporal.ChronoField;
 
@@ -84,14 +81,7 @@ public abstract class AbstractWanderingWarriorEntity extends Monster implements 
 	@Override
 	public void aiStep() {
 		super.aiStep();
-		if (!level.isClientSide) {
-			AABB scanningBox = new AABB(blockPosition().offset(-50, -50, -50),
-					blockPosition().offset(50, 50, 50));
-
-			for (Player player : level.getNearbyPlayers(TargetingConditions.forNonCombat(), this, scanningBox)) {
-				checkForDiscovery(this, player);
-			}
-		}
+		checkForDiscovery(this);
 	}
 
 	/**
@@ -101,7 +91,7 @@ public abstract class AbstractWanderingWarriorEntity extends Monster implements 
 	 * @param state the <code>BlockState</code> of the block being stepped on
 	 */
 	@Override
-	protected void playStepSound(@NotNull BlockPos pos, @NotNull BlockState state) {
+	protected void playStepSound(BlockPos pos, BlockState state) {
 		playSound(DeferredRegistryHandler.WANDERING_WARRIOR_STEP.get(), 1.0F, 1.0F);
 	}
 
@@ -122,7 +112,7 @@ public abstract class AbstractWanderingWarriorEntity extends Monster implements 
 	 * @param difficulty the <code>DifficultyInstance</code> of the world
 	 */
 	@Override
-	protected void populateDefaultEquipmentSlots(@NotNull RandomSource randomSource, @NotNull DifficultyInstance difficulty) {
+	protected void populateDefaultEquipmentSlots(RandomSource randomSource, DifficultyInstance difficulty) {
 		super.populateDefaultEquipmentSlots(randomSource, difficulty);
 		// Populate weapons
 		float random = this.random.nextFloat();
@@ -167,8 +157,8 @@ public abstract class AbstractWanderingWarriorEntity extends Monster implements 
 	 * @return SpawnGroupData
 	 */
 	@Override
-	public SpawnGroupData finalizeSpawn(@NotNull ServerLevelAccessor level, @NotNull DifficultyInstance difficulty,
-	                                    @NotNull MobSpawnType spawnType, @Nullable SpawnGroupData groupData,
+	public SpawnGroupData finalizeSpawn(ServerLevelAccessor level, DifficultyInstance difficulty,
+	                                    MobSpawnType spawnType, @Nullable SpawnGroupData groupData,
 	                                    @Nullable CompoundTag tag) {
 
 		groupData = super.finalizeSpawn(level, difficulty, spawnType, groupData, tag);
@@ -211,12 +201,12 @@ public abstract class AbstractWanderingWarriorEntity extends Monster implements 
 	 * @param compound the <code>CompoundTag</code> to read from
 	 */
 	@Override
-	public void readAdditionalSaveData(@NotNull CompoundTag compound) {
+	public void readAdditionalSaveData(CompoundTag compound) {
 		super.readAdditionalSaveData(compound);
 	}
 
 	@Override
-	public boolean checkSpawnRules(@NotNull LevelAccessor pLevel, @NotNull MobSpawnType pSpawnReason) {
+	public boolean checkSpawnRules(LevelAccessor pLevel, MobSpawnType pSpawnReason) {
 		boolean walkTargetAboveZero = super.checkSpawnRules(pLevel, pSpawnReason);
 		boolean notInWater = pLevel.getBlockState(blockPosition().below()).getFluidState().isEmpty();
 		boolean onGround = !pLevel.getBlockState(blockPosition().below()).isAir();
@@ -225,7 +215,7 @@ public abstract class AbstractWanderingWarriorEntity extends Monster implements 
 	}
 
 	@Override
-	public boolean checkSpawnObstruction(@NotNull LevelReader pLevel) {
+	public boolean checkSpawnObstruction(LevelReader pLevel) {
 		return super.checkSpawnObstruction(pLevel) && pLevel.canSeeSky(blockPosition());
 	}
 }

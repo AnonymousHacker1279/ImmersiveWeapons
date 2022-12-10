@@ -4,6 +4,7 @@ import com.google.common.collect.ImmutableList;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.*;
+import org.jetbrains.annotations.Nullable;
 import tech.anonymoushacker1279.immersiveweapons.data.tags.groups.immersiveweapons.ImmersiveWeaponsBlockTagGroups;
 import tech.anonymoushacker1279.immersiveweapons.data.tags.groups.immersiveweapons.ImmersiveWeaponsItemTagGroups;
 import tech.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
@@ -27,8 +28,8 @@ public record WoodFamilies(Supplier<? extends Block> planks,
                            Supplier<? extends RotatedPillarBlock> strippedLog,
                            Supplier<? extends RotatedPillarBlock> wood,
                            Supplier<? extends RotatedPillarBlock> strippedWood,
-                           Supplier<? extends LeavesBlock> leaves,
-                           Supplier<? extends SaplingBlock> sapling,
+                           @Nullable Supplier<? extends LeavesBlock> leaves,
+                           @Nullable Supplier<? extends SaplingBlock> sapling,
                            Supplier<? extends CustomBoatItem> boat,
                            Supplier<? extends CustomBoatItem> chestBoat,
                            TagKey<Block> logsBlockTag,

@@ -6,7 +6,6 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Explosion;
 import net.minecraft.world.level.Level;
-import org.jetbrains.annotations.NotNull;
 
 public class ChocolateBarItem extends Item {
 
@@ -33,7 +32,7 @@ public class ChocolateBarItem extends Item {
 	 * @return ItemStack
 	 */
 	@Override
-	public @NotNull ItemStack finishUsingItem(@NotNull ItemStack stack, @NotNull Level level, @NotNull LivingEntity entity) {
+	public ItemStack finishUsingItem(ItemStack stack, Level level, LivingEntity entity) {
 		if (isExplosive) {
 			level.explode(null, damageSource, null, entity.position().x, entity.position().y,
 					entity.position().z, 2.0F, false, Explosion.BlockInteraction.NONE);

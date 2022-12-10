@@ -9,7 +9,6 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import org.jetbrains.annotations.NotNull;
 import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
 
 public class UsedSyringeItem extends Item {
@@ -34,8 +33,8 @@ public class UsedSyringeItem extends Item {
 	 * @return InteractionResultHolder extending ItemStack
 	 */
 	@Override
-	public @NotNull InteractionResultHolder<ItemStack> use(@NotNull Level level, Player playerIn,
-	                                                       @NotNull InteractionHand handIn) {
+	public InteractionResultHolder<ItemStack> use(Level level, Player playerIn,
+	                                              InteractionHand handIn) {
 
 		ItemStack itemInHand = playerIn.getItemInHand(handIn);
 

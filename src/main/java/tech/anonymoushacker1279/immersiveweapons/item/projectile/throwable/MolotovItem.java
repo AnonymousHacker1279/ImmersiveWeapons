@@ -7,7 +7,6 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import org.jetbrains.annotations.NotNull;
 import tech.anonymoushacker1279.immersiveweapons.entity.projectile.MolotovEntity;
 import tech.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
 import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
@@ -32,7 +31,7 @@ public class MolotovItem extends Item {
 	 * @return ActionResult extending ItemStack
 	 */
 	@Override
-	public @NotNull InteractionResultHolder<ItemStack> use(Level worldIn, Player playerIn, @NotNull InteractionHand handIn) {
+	public InteractionResultHolder<ItemStack> use(Level worldIn, Player playerIn, InteractionHand handIn) {
 		ItemStack itemInHand = playerIn.getItemInHand(handIn);
 		worldIn.playLocalSound(playerIn.getX(), playerIn.getY(), playerIn.getZ(),
 				DeferredRegistryHandler.GENERIC_WHOOSH.get(), SoundSource.NEUTRAL,

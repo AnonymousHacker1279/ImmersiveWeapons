@@ -11,7 +11,6 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.*;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.gameevent.GameEvent;
-import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,12 +34,12 @@ public abstract class CustomPotionItem extends Item {
 	 * @param hand   the <code>InteractionHand</code> the player is using
 	 */
 	@Override
-	public @NotNull InteractionResultHolder<ItemStack> use(@NotNull Level level, @NotNull Player player, @NotNull InteractionHand hand) {
+	public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
 		return ItemUtils.startUsingInstantly(level, player, hand);
 	}
 
 	@Override
-	public @NotNull ItemStack finishUsingItem(@NotNull ItemStack pStack, @NotNull Level pLevel, @NotNull LivingEntity pEntityLiving) {
+	public ItemStack finishUsingItem(ItemStack pStack, Level pLevel, LivingEntity pEntityLiving) {
 		Player player = pEntityLiving instanceof Player ? (Player) pEntityLiving : null;
 		if (player instanceof ServerPlayer) {
 			CriteriaTriggers.CONSUME_ITEM.trigger((ServerPlayer) player, pStack);
@@ -81,7 +80,7 @@ public abstract class CustomPotionItem extends Item {
 	 * How long it takes to use or consume an item
 	 */
 	@Override
-	public int getUseDuration(@NotNull ItemStack pStack) {
+	public int getUseDuration(ItemStack pStack) {
 		return 32;
 	}
 
@@ -114,7 +113,7 @@ public abstract class CustomPotionItem extends Item {
 	 * @return UseAction
 	 */
 	@Override
-	public @NotNull UseAnim getUseAnimation(@NotNull ItemStack stack) {
+	public UseAnim getUseAnimation(ItemStack stack) {
 		return UseAnim.DRINK;
 	}
 

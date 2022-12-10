@@ -7,7 +7,6 @@ import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.client.renderer.entity.layers.SpiderEyesLayer;
 import net.minecraft.resources.ResourceLocation;
-import org.jetbrains.annotations.NotNull;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.entity.monster.RockSpiderEntity;
 
@@ -21,12 +20,12 @@ public class RockSpiderRenderer<T extends RockSpiderEntity> extends MobRenderer<
 	}
 
 	@Override
-	protected float getFlipDegrees(@NotNull T livingEntity) {
+	protected float getFlipDegrees(T livingEntity) {
 		return 180.0F;
 	}
 
 	@Override
-	protected void scale(@NotNull T pLivingEntity, PoseStack pMatrixStack, float pPartialTickTime) {
+	protected void scale(T pLivingEntity, PoseStack pMatrixStack, float pPartialTickTime) {
 		pMatrixStack.scale(0.25f, 0.25f, 0.25f);
 	}
 
@@ -34,7 +33,7 @@ public class RockSpiderRenderer<T extends RockSpiderEntity> extends MobRenderer<
 	 * Returns the location of an entity's texture.
 	 */
 	@Override
-	public @NotNull ResourceLocation getTextureLocation(@NotNull T pEntity) {
+	public ResourceLocation getTextureLocation(T pEntity) {
 		return TEXTURE_LOCATION;
 	}
 }

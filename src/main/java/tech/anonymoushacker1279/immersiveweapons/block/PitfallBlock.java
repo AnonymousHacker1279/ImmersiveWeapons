@@ -9,7 +9,6 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.shapes.*;
-import org.jetbrains.annotations.NotNull;
 
 public class PitfallBlock extends Block {
 
@@ -35,8 +34,8 @@ public class PitfallBlock extends Block {
 	 */
 	@SuppressWarnings("deprecation")
 	@Override
-	public @NotNull VoxelShape getShape(@NotNull BlockState state, @NotNull BlockGetter reader, @NotNull BlockPos pos,
-	                                    @NotNull CollisionContext collisionContext) {
+	public VoxelShape getShape(BlockState state, BlockGetter reader, BlockPos pos,
+	                           CollisionContext collisionContext) {
 
 		return SHAPE;
 	}
@@ -52,8 +51,8 @@ public class PitfallBlock extends Block {
 	 */
 	@SuppressWarnings("deprecation")
 	@Override
-	public @NotNull VoxelShape getCollisionShape(@NotNull BlockState state, @NotNull BlockGetter reader,
-	                                             @NotNull BlockPos pos, @NotNull CollisionContext collisionContext) {
+	public VoxelShape getCollisionShape(BlockState state, BlockGetter reader,
+	                                    BlockPos pos, CollisionContext collisionContext) {
 
 		return Shapes.empty();
 	}
@@ -71,9 +70,9 @@ public class PitfallBlock extends Block {
 	 */
 	@SuppressWarnings("deprecation")
 	@Override
-	public @NotNull BlockState updateShape(BlockState stateIn, @NotNull Direction facing, @NotNull BlockState facingState,
-	                                       @NotNull LevelAccessor levelAccessor, @NotNull BlockPos currentPos,
-	                                       @NotNull BlockPos facingPos) {
+	public BlockState updateShape(BlockState stateIn, Direction facing, BlockState facingState,
+	                              LevelAccessor levelAccessor, BlockPos currentPos,
+	                              BlockPos facingPos) {
 
 		return !stateIn.canSurvive(levelAccessor, currentPos) ? Blocks.AIR.defaultBlockState()
 				: super.updateShape(stateIn, facing, facingState, levelAccessor, currentPos, facingPos);
@@ -89,7 +88,7 @@ public class PitfallBlock extends Block {
 	 */
 	@SuppressWarnings("deprecation")
 	@Override
-	public boolean canSurvive(@NotNull BlockState state, @NotNull LevelReader reader, @NotNull BlockPos pos) {
+	public boolean canSurvive(BlockState state, LevelReader reader, BlockPos pos) {
 		for (Direction facing : new Direction[]{Direction.EAST, Direction.WEST, Direction.SOUTH, Direction.NORTH}) {
 
 			BlockPos relativePosition = pos.relative(facing);
@@ -111,7 +110,7 @@ public class PitfallBlock extends Block {
 	 */
 	@SuppressWarnings("deprecation")
 	@Override
-	public void entityInside(@NotNull BlockState state, @NotNull Level level, @NotNull BlockPos pos, @NotNull Entity entity) {
+	public void entityInside(BlockState state, Level level, BlockPos pos, Entity entity) {
 		if (entity instanceof LivingEntity && !level.isClientSide) {
 			level.destroyBlock(pos, true);
 		}

@@ -3,7 +3,6 @@ package tech.anonymoushacker1279.immersiveweapons.client.model;
 import net.minecraft.client.model.HierarchicalModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.util.Mth;
-import org.jetbrains.annotations.NotNull;
 import tech.anonymoushacker1279.immersiveweapons.entity.monster.lava_revenant.LavaRevenantEntity;
 
 public class LavaRevenantModel<T extends LavaRevenantEntity> extends HierarchicalModel<T> {
@@ -27,7 +26,7 @@ public class LavaRevenantModel<T extends LavaRevenantEntity> extends Hierarchica
 	}
 
 	@Override
-	public @NotNull ModelPart root() {
+	public ModelPart root() {
 		return root;
 	}
 

@@ -5,11 +5,10 @@ import net.minecraft.nbt.*;
 import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import tech.anonymoushacker1279.immersiveweapons.block.decoration.CelestialLanternBlock;
 import tech.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
 
-import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,7 +30,7 @@ public class CelestialLanternBlockEntity extends BlockEntity implements EntityBl
 	 */
 	@Nullable
 	@Override
-	public BlockEntity newBlockEntity(@NotNull BlockPos blockPos, @NotNull BlockState blockState) {
+	public BlockEntity newBlockEntity(BlockPos blockPos, BlockState blockState) {
 		return new CelestialLanternBlockEntity(blockPos, blockState);
 	}
 
@@ -41,7 +40,7 @@ public class CelestialLanternBlockEntity extends BlockEntity implements EntityBl
 	 * @param tag the <code>CompoundNBT</code> to save
 	 */
 	@Override
-	protected void saveAdditional(@NotNull CompoundTag tag) {
+	protected void saveAdditional(CompoundTag tag) {
 		super.saveAdditional(tag);
 
 		ListTag listTag = new ListTag();
@@ -57,7 +56,7 @@ public class CelestialLanternBlockEntity extends BlockEntity implements EntityBl
 	 * @param tag the <code>CompoundTag</code> to load
 	 */
 	@Override
-	public void load(@NotNull CompoundTag tag) {
+	public void load(CompoundTag tag) {
 		super.load(tag);
 		ListTag SAVED_LANTERNS = (ListTag) tag.get("tiltros_lanterns");
 		if (SAVED_LANTERNS != null) {

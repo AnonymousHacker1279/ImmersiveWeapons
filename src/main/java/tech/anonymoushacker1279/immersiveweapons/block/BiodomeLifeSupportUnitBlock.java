@@ -10,10 +10,8 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition.Builder;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
-import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import tech.anonymoushacker1279.immersiveweapons.blockentity.BiodomeLifeSupportUnitBlockEntity;
-
-import javax.annotation.Nullable;
 
 public class BiodomeLifeSupportUnitBlock extends Block implements EntityBlock {
 
@@ -35,8 +33,8 @@ public class BiodomeLifeSupportUnitBlock extends Block implements EntityBlock {
 	}
 
 	@Override
-	public void neighborChanged(@NotNull BlockState state, Level level, @NotNull BlockPos pos, @NotNull Block blockIn,
-	                            @NotNull BlockPos fromPos, boolean isMoving) {
+	public void neighborChanged(BlockState state, Level level, BlockPos pos, Block blockIn,
+	                            BlockPos fromPos, boolean isMoving) {
 
 		if (!level.isClientSide) {
 			boolean isPowered = level.hasNeighborSignal(pos);
@@ -56,7 +54,7 @@ public class BiodomeLifeSupportUnitBlock extends Block implements EntityBlock {
 	}
 
 	@Override
-	public void onPlace(BlockState state, @NotNull Level level, @NotNull BlockPos pos, BlockState oldState, boolean isMoving) {
+	public void onPlace(BlockState state, Level level, BlockPos pos, BlockState oldState, boolean isMoving) {
 		if (!oldState.is(state.getBlock())) {
 			if (level.hasNeighborSignal(pos)) {
 				if (level.getBlockEntity(pos) instanceof BiodomeLifeSupportUnitBlockEntity blockEntity) {
@@ -74,8 +72,8 @@ public class BiodomeLifeSupportUnitBlock extends Block implements EntityBlock {
 	}
 
 	@Override
-	public <T extends BlockEntity> BlockEntityTicker<T> getTicker(@NotNull Level level, @NotNull BlockState blockState,
-	                                                              @NotNull BlockEntityType<T> blockEntityType) {
+	public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState blockState,
+	                                                              BlockEntityType<T> blockEntityType) {
 
 		return level.isClientSide ? null : (world, pos, state, entity) -> ((BiodomeLifeSupportUnitBlockEntity) entity).tick(world, pos);
 	}

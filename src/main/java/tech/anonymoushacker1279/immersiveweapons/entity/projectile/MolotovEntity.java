@@ -13,7 +13,6 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.HitResult;
 import net.minecraftforge.network.NetworkHooks;
-import org.jetbrains.annotations.NotNull;
 import tech.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
 
 import java.util.ArrayList;
@@ -63,7 +62,7 @@ public class MolotovEntity extends ThrowableItemProjectile {
 	 * @return IPacket
 	 */
 	@Override
-	public @NotNull Packet<?> getAddEntityPacket() {
+	public Packet<?> getAddEntityPacket() {
 		return NetworkHooks.getEntitySpawningPacket(this);
 	}
 
@@ -74,7 +73,7 @@ public class MolotovEntity extends ThrowableItemProjectile {
 	 * @return Item
 	 */
 	@Override
-	protected @NotNull Item getDefaultItem() {
+	protected Item getDefaultItem() {
 		return DeferredRegistryHandler.MOLOTOV_COCKTAIL.get();
 	}
 
@@ -84,7 +83,7 @@ public class MolotovEntity extends ThrowableItemProjectile {
 	 * @param rayTraceResult the <code>RayTraceResult</code> instance
 	 */
 	@Override
-	protected void onHit(@NotNull HitResult rayTraceResult) {
+	protected void onHit(HitResult rayTraceResult) {
 		super.onHit(rayTraceResult);
 		if (!level.isClientSide) {
 			level.broadcastEntityEvent(this, VANILLA_IMPACT_STATUS_ID);

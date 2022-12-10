@@ -4,7 +4,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.entity.SignBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import org.jetbrains.annotations.NotNull;
 import tech.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
 
 public class BurnedOakSignEntity extends SignBlockEntity {
@@ -14,7 +13,7 @@ public class BurnedOakSignEntity extends SignBlockEntity {
 	}
 
 	@Override
-	public @NotNull BlockEntityType<BurnedOakSignEntity> getType() {
+	public BlockEntityType<BurnedOakSignEntity> getType() {
 		return DeferredRegistryHandler.BURNED_OAK_SIGN_ENTITY.get();
 	}
 }

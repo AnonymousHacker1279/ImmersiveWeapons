@@ -19,10 +19,9 @@ public class FireflyModel<T extends FireflyEntity> extends EntityModel<T> {
 	private final ModelPart body;
 	private final ModelPart rightWing;
 	private final ModelPart leftWing;
-	private final ModelPart main;
 
 	public FireflyModel(ModelPart root) {
-		main = root.getChild("main");
+		ModelPart main = root.getChild("main");
 		wings = main.getChild("wings");
 		body = main.getChild("body");
 
@@ -39,19 +38,19 @@ public class FireflyModel<T extends FireflyEntity> extends EntityModel<T> {
 		PartDefinition wings = main.addOrReplaceChild("wings", CubeListBuilder.create(),
 				PartPose.offset(1.5F, 22.0F, 0.0F));
 
-		PartDefinition rightWing = wings.addOrReplaceChild("right_wing", CubeListBuilder.create()
+		wings.addOrReplaceChild("right_wing", CubeListBuilder.create()
 						.texOffs(0, 7)
 						.addBox(-1.0F, 0.5F, -1.0F, 3.0F, 0.0F, 2.0F,
 								new CubeDeformation(0.0F)),
 				PartPose.offsetAndRotation(-3.5F, 0.0F, 0.0F, 0.0F, 0.0F, 0.5672F));
 
-		PartDefinition leftWing = wings.addOrReplaceChild("left_wing", CubeListBuilder.create()
+		wings.addOrReplaceChild("left_wing", CubeListBuilder.create()
 						.texOffs(6, 7)
 						.addBox(-1.5F, 0.75F, -1.0F, 3.0F, 0.0F, 2.0F,
 								new CubeDeformation(0.0F)),
 				PartPose.offsetAndRotation(0.0F, 0.0F, 0.0F, 0.0F, 0.0F, -0.5672F));
 
-		PartDefinition body = main.addOrReplaceChild("body", CubeListBuilder.create()
+		main.addOrReplaceChild("body", CubeListBuilder.create()
 						.texOffs(0, 0)
 						.addBox(-1.0F, -1.0F, -3.0F, 2.0F, 1.0F, 6.0F,
 								new CubeDeformation(0.0F)),

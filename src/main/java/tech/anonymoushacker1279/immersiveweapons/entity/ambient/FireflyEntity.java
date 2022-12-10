@@ -19,15 +19,15 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult.Type;
 import net.minecraft.world.phys.Vec3;
+import org.jetbrains.annotations.Nullable;
 import tech.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
-
-import javax.annotation.Nullable;
 
 public class FireflyEntity extends AmbientCreature {
 	private static final EntityDataAccessor<Byte> DATA_ID_FLAGS = SynchedEntityData.defineId(FireflyEntity.class, EntityDataSerializers.BYTE);
 	private static final TargetingConditions RESTING_TARGETING = TargetingConditions.forNonCombat().range(2.0D);
 	@Nullable
 	private BlockPos targetBlockPosition;
+	@Nullable
 	private Vec3 targetPosition;
 
 	public FireflyEntity(EntityType<? extends FireflyEntity> type, Level level) {
@@ -130,6 +130,7 @@ public class FireflyEntity extends AmbientCreature {
 					}
 
 					Vec3 current = getEyePosition(1.0F);
+					assert targetPosition != null;
 					Vec3 delta = targetPosition.subtract(current);
 					double distance = delta.length();
 					if (distance > 0.05d) {
@@ -172,7 +173,9 @@ public class FireflyEntity extends AmbientCreature {
 			}
 
 			double xDiff = (double) targetBlockPosition.getX() - getX();
+			assert targetBlockPosition != null;
 			double yDiff = (double) targetBlockPosition.getY() - getY();
+			assert targetBlockPosition != null;
 			double zDiff = (double) targetBlockPosition.getZ() - getZ();
 
 			Vec3 deltaMovement = getDeltaMovement();

@@ -5,12 +5,11 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
-import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import tech.anonymoushacker1279.immersiveweapons.entity.neutral.MinutemanEntity;
 import tech.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
 import tech.anonymoushacker1279.immersiveweapons.world.level.levelgen.biomes.BiomesAndDimensions;
 
-import javax.annotation.Nullable;
 import java.util.List;
 
 public class MinutemanStatueBlockEntity extends AbstractStatueBlockEntity {
@@ -57,7 +56,7 @@ public class MinutemanStatueBlockEntity extends AbstractStatueBlockEntity {
 	 */
 	@Nullable
 	@Override
-	public BlockEntity newBlockEntity(@NotNull BlockPos blockPos, @NotNull BlockState blockState) {
+	public BlockEntity newBlockEntity(BlockPos blockPos, BlockState blockState) {
 		return new MinutemanStatueBlockEntity(blockPos, blockState);
 	}
 }

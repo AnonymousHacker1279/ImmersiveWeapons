@@ -14,7 +14,6 @@ import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
-import org.jetbrains.annotations.NotNull;
 import tech.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
 import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
 
@@ -68,7 +67,7 @@ public class HansEntity extends AbstractWanderingWarriorEntity {
 	 * @return SoundEvent
 	 */
 	@Override
-	protected SoundEvent getHurtSound(@NotNull DamageSource damageSourceIn) {
+	protected SoundEvent getHurtSound(DamageSource damageSourceIn) {
 		return DeferredRegistryHandler.WANDERING_WARRIOR_HURT.get();
 	}
 
@@ -88,7 +87,7 @@ public class HansEntity extends AbstractWanderingWarriorEntity {
 	 * @param difficulty the <code>DifficultyInstance</code> of the world
 	 */
 	@Override
-	public void populateDefaultEquipmentSlots(@NotNull RandomSource random, @NotNull DifficultyInstance difficulty) {
+	public void populateDefaultEquipmentSlots(RandomSource random, DifficultyInstance difficulty) {
 		setItemSlot(EquipmentSlot.HEAD, new ItemStack(Items.IRON_HELMET));
 		setItemInHand(InteractionHand.MAIN_HAND, new ItemStack(Items.IRON_SWORD));
 	}
@@ -101,7 +100,7 @@ public class HansEntity extends AbstractWanderingWarriorEntity {
 	 * @return boolean
 	 */
 	@Override
-	public boolean hurt(@NotNull DamageSource source, float amount) {
+	public boolean hurt(DamageSource source, float amount) {
 		if (amount > 0 && source.getEntity() instanceof Player || source.getEntity() instanceof Mob
 				|| source.getEntity() instanceof PathfinderMob) {
 

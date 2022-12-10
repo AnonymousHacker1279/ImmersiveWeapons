@@ -21,11 +21,9 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraftforge.network.NetworkHooks;
-import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import tech.anonymoushacker1279.immersiveweapons.blockentity.TeslaSynthesizerBlockEntity;
 import tech.anonymoushacker1279.immersiveweapons.container.TeslaSynthesizerContainer;
-
-import javax.annotation.Nullable;
 
 public class TeslaSynthesizerBlock extends Block implements SimpleWaterloggedBlock, EntityBlock {
 
@@ -52,7 +50,7 @@ public class TeslaSynthesizerBlock extends Block implements SimpleWaterloggedBlo
 	 */
 	@Nullable
 	@Override
-	public BlockEntity newBlockEntity(@NotNull BlockPos blockPos, @NotNull BlockState blockState) {
+	public BlockEntity newBlockEntity(BlockPos blockPos, BlockState blockState) {
 		return new TeslaSynthesizerBlockEntity(blockPos, blockState);
 	}
 
@@ -67,8 +65,8 @@ public class TeslaSynthesizerBlock extends Block implements SimpleWaterloggedBlo
 	 */
 	@SuppressWarnings("deprecation")
 	@Override
-	public @NotNull VoxelShape getShape(@NotNull BlockState state, @NotNull BlockGetter getter, @NotNull BlockPos pos,
-	                                    @NotNull CollisionContext collisionContext) {
+	public VoxelShape getShape(BlockState state, BlockGetter getter, BlockPos pos,
+	                           CollisionContext collisionContext) {
 
 		return SHAPE;
 	}
@@ -83,8 +81,8 @@ public class TeslaSynthesizerBlock extends Block implements SimpleWaterloggedBlo
 	 * @return BlockEntityTicker
 	 */
 	@Override
-	public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, @NotNull BlockState blockState,
-	                                                              @NotNull BlockEntityType<T> blockEntityType) {
+	public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState blockState,
+	                                                              BlockEntityType<T> blockEntityType) {
 
 		return level.isClientSide ? null : (world, pos, state, entity) -> ((TeslaSynthesizerBlockEntity) entity).tick(world);
 	}
@@ -107,7 +105,7 @@ public class TeslaSynthesizerBlock extends Block implements SimpleWaterloggedBlo
 	 * @return FluidState
 	 */
 	@Override
-	public @NotNull FluidState getFluidState(BlockState state) {
+	public FluidState getFluidState(BlockState state) {
 		return state.getValue(WATERLOGGED) ? Fluids.WATER.getSource(false) : super.getFluidState(state);
 	}
 
@@ -120,7 +118,7 @@ public class TeslaSynthesizerBlock extends Block implements SimpleWaterloggedBlo
 	 * @return MenuProvider
 	 */
 	@Override
-	public MenuProvider getMenuProvider(@NotNull BlockState state, @NotNull Level level, @NotNull BlockPos pos) {
+	public MenuProvider getMenuProvider(BlockState state, Level level, BlockPos pos) {
 		return new SimpleMenuProvider((id, inventory, player) -> new TeslaSynthesizerContainer(id, inventory), CONTAINER_NAME);
 	}
 
@@ -137,9 +135,9 @@ public class TeslaSynthesizerBlock extends Block implements SimpleWaterloggedBlo
 	 * @return InteractionResult
 	 */
 	@Override
-	public @NotNull InteractionResult use(@NotNull BlockState state, Level level, @NotNull BlockPos pos,
-	                                      @NotNull Player player, @NotNull InteractionHand hand,
-	                                      @NotNull BlockHitResult hitResult) {
+	public InteractionResult use(BlockState state, Level level, BlockPos pos,
+	                             Player player, InteractionHand hand,
+	                             BlockHitResult hitResult) {
 
 		if (level.isClientSide) {
 			return InteractionResult.SUCCESS;
@@ -162,7 +160,7 @@ public class TeslaSynthesizerBlock extends Block implements SimpleWaterloggedBlo
 	 * @param isMoving determines if the block is moving
 	 */
 	@Override
-	public void onRemove(BlockState state, @NotNull Level level, @NotNull BlockPos pos, BlockState newState, boolean isMoving) {
+	public void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean isMoving) {
 		if (!state.is(newState.getBlock())) {
 			BlockEntity blockEntity = level.getBlockEntity(pos);
 			if (blockEntity instanceof TeslaSynthesizerBlockEntity) {
@@ -183,7 +181,7 @@ public class TeslaSynthesizerBlock extends Block implements SimpleWaterloggedBlo
 	 * @param random a <code>RandomSource</code> instance
 	 */
 	@Override
-	public void animateTick(@NotNull BlockState state, Level level, BlockPos pos, @NotNull RandomSource random) {
+	public void animateTick(BlockState state, Level level, BlockPos pos, RandomSource random) {
 		level.addParticle(ParticleTypes.SOUL_FIRE_FLAME,
 				pos.getX() + 0.5D,
 				pos.getY() + 0.4D,

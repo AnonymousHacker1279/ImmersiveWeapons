@@ -11,8 +11,4 @@ public class BlockPredicates {
 	public static boolean never() {
 		return false;
 	}
-
-	public static boolean always() {
-		return true;
-	}
 }

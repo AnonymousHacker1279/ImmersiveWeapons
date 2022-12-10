@@ -10,7 +10,6 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
 import net.minecraftforge.network.NetworkHooks;
-import org.jetbrains.annotations.NotNull;
 import tech.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
 
 import java.util.List;
@@ -27,6 +26,7 @@ public class ChairEntity extends Entity {
 	 */
 	public ChairEntity(EntityType<?> entityType, Level world) {
 		super(entityType, world);
+		source = BlockPos.ZERO;
 	}
 
 	/**
@@ -70,9 +70,6 @@ public class ChairEntity extends Entity {
 	@Override
 	public void tick() {
 		super.tick();
-		if (source == null) {
-			source = blockPosition();
-		}
 		if (!level.isClientSide) {
 			if (getPassengers().isEmpty() || level.isEmptyBlock(source)) {
 				kill();
@@ -88,7 +85,7 @@ public class ChairEntity extends Entity {
 	 * @return boolean
 	 */
 	@Override
-	protected boolean canRide(@NotNull Entity entity) {
+	protected boolean canRide(Entity entity) {
 		return true;
 	}
 
@@ -97,11 +94,11 @@ public class ChairEntity extends Entity {
 	}
 
 	@Override
-	protected void readAdditionalSaveData(@NotNull CompoundTag nbt) {
+	protected void readAdditionalSaveData(CompoundTag nbt) {
 	}
 
 	@Override
-	protected void addAdditionalSaveData(@NotNull CompoundTag nbt) {
+	protected void addAdditionalSaveData(CompoundTag nbt) {
 	}
 
 	/**
@@ -110,7 +107,7 @@ public class ChairEntity extends Entity {
 	 * @return IPacket
 	 */
 	@Override
-	public @NotNull Packet<?> getAddEntityPacket() {
+	public Packet<?> getAddEntityPacket() {
 		return NetworkHooks.getEntitySpawningPacket(this);
 	}
 }

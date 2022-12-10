@@ -7,7 +7,6 @@ import net.minecraft.client.renderer.entity.BoatRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider.Context;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.vehicle.Boat;
-import org.jetbrains.annotations.NotNull;
 
 public class CustomBoatRenderer extends BoatRenderer {
 
@@ -27,7 +26,7 @@ public class CustomBoatRenderer extends BoatRenderer {
 	}
 
 	@Override
-	public @NotNull Pair<ResourceLocation, BoatModel> getModelWithLocation(@NotNull Boat boat) {
+	public Pair<ResourceLocation, BoatModel> getModelWithLocation(Boat boat) {
 		return Pair.of(textureLocation, model);
 	}
 }

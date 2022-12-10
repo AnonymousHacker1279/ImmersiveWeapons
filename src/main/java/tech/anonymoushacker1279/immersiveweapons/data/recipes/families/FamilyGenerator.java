@@ -9,7 +9,6 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraftforge.common.Tags;
-import org.jetbrains.annotations.NotNull;
 import tech.anonymoushacker1279.immersiveweapons.data.recipes.RecipeGenerator;
 
 import java.util.List;
@@ -25,7 +24,7 @@ public class FamilyGenerator extends RecipeProvider {
 	}
 
 	@Override
-	public void buildCraftingRecipes(@NotNull Consumer<FinishedRecipe> consumer) {
+	public void buildCraftingRecipes(Consumer<FinishedRecipe> consumer) {
 		woodFamilies(consumer);
 		stoneFamilies();
 		toolFamilies(consumer);
@@ -33,7 +32,7 @@ public class FamilyGenerator extends RecipeProvider {
 		vanillaTieredItemFamilies();
 	}
 
-	private void woodFamilies(@NotNull Consumer<FinishedRecipe> consumer) {
+	private void woodFamilies(Consumer<FinishedRecipe> consumer) {
 		for (WoodFamilies family : WoodFamilies.FAMILIES) {
 			Block planks = family.planks().get();
 			final String planksTriggerName = "has_planks";
@@ -208,7 +207,7 @@ public class FamilyGenerator extends RecipeProvider {
 		}
 	}
 
-	private void toolFamilies(@NotNull Consumer<FinishedRecipe> consumer) {
+	private void toolFamilies(Consumer<FinishedRecipe> consumer) {
 		for (ToolFamilies family : ToolFamilies.FAMILIES) {
 			TagKey<Item> material = family.material();
 			final String materialTriggerName = "has_material";
@@ -272,12 +271,16 @@ public class FamilyGenerator extends RecipeProvider {
 
 			// Pike
 			if (family.pike() != null) {
-				RecipeGenerator.createPike(family.pike().get(), material, family.pikeHead().get());
+				if (family.pikeHead() != null) {
+					RecipeGenerator.createPike(family.pike().get(), material, family.pikeHead().get());
+				}
 			}
 
 			// Pike head
 			if (family.pikeHead() != null) {
-				RecipeGenerator.createPikeHead(family.pikeHead().get(), material, family.nugget());
+				if (family.nugget() != null) {
+					RecipeGenerator.createPikeHead(family.pikeHead().get(), material, family.nugget());
+				}
 			}
 
 			// Arrow
@@ -292,7 +295,7 @@ public class FamilyGenerator extends RecipeProvider {
 		}
 	}
 
-	private void armorFamilies(@NotNull Consumer<FinishedRecipe> consumer) {
+	private void armorFamilies(Consumer<FinishedRecipe> consumer) {
 		for (ArmorFamilies family : ArmorFamilies.FAMILIES) {
 			TagKey<Item> material = family.material();
 			final String materialTriggerName = "has_material";

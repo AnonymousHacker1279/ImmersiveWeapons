@@ -18,13 +18,10 @@ import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.FloatGoal;
 import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
-import net.minecraft.world.entity.ai.targeting.TargetingConditions;
 import net.minecraft.world.entity.monster.Monster;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.*;
-import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
-import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import tech.anonymoushacker1279.immersiveweapons.block.decoration.CelestialLanternBlock;
 import tech.anonymoushacker1279.immersiveweapons.config.CommonConfig;
 import tech.anonymoushacker1279.immersiveweapons.entity.GrantAdvancementOnDiscovery;
@@ -33,7 +30,6 @@ import tech.anonymoushacker1279.immersiveweapons.entity.ai.goal.HoverGoal;
 import tech.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
 import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
 
-import javax.annotation.Nullable;
 import java.util.*;
 
 public class CelestialTowerEntity extends Monster implements GrantAdvancementOnDiscovery {
@@ -44,7 +40,7 @@ public class CelestialTowerEntity extends Monster implements GrantAdvancementOnD
 	private int waveSizeModifier = 1;
 	private int wavesSpawned = 0;
 	private boolean doneSpawningWaves = false;
-	public static List<CelestialTowerEntity> ALL_TOWERS = new ArrayList<>(3);
+	public final static List<CelestialTowerEntity> ALL_TOWERS = new ArrayList<>(3);
 
 	public CelestialTowerEntity(EntityType<? extends Monster> type, Level level) {
 		super(type, level);
@@ -75,7 +71,7 @@ public class CelestialTowerEntity extends Monster implements GrantAdvancementOnD
 
 
 	@Override
-	protected SoundEvent getHurtSound(@NotNull DamageSource pDamageSource) {
+	protected SoundEvent getHurtSound(DamageSource pDamageSource) {
 		return DeferredRegistryHandler.CELESTIAL_TOWER_HURT.get();
 	}
 
@@ -85,19 +81,19 @@ public class CelestialTowerEntity extends Monster implements GrantAdvancementOnD
 	}
 
 	@Override
-	public @NotNull MobType getMobType() {
+	public MobType getMobType() {
 		return MobType.UNDEFINED;
 	}
 
 	@Override
-	protected float getStandingEyeHeight(@NotNull Pose pPose, @NotNull EntityDimensions pSize) {
+	protected float getStandingEyeHeight(Pose pPose, EntityDimensions pSize) {
 		return 9F;
 	}
 
 	@Nullable
 	@Override
-	public SpawnGroupData finalizeSpawn(@NotNull ServerLevelAccessor pLevel, @NotNull DifficultyInstance pDifficulty,
-	                                    @NotNull MobSpawnType pReason, @Nullable SpawnGroupData pSpawnData,
+	public SpawnGroupData finalizeSpawn(ServerLevelAccessor pLevel, DifficultyInstance pDifficulty,
+	                                    MobSpawnType pReason, @Nullable SpawnGroupData pSpawnData,
 	                                    @Nullable CompoundTag pDataTag) {
 
 		pSpawnData = super.finalizeSpawn(pLevel, pDifficulty, pReason, pSpawnData, pDataTag);
@@ -141,18 +137,11 @@ public class CelestialTowerEntity extends Monster implements GrantAdvancementOnD
 	@Override
 	public void aiStep() {
 		super.aiStep();
-		if (!level.isClientSide) {
-			AABB scanningBox = new AABB(blockPosition().offset(-50, -50, -50),
-					blockPosition().offset(50, 50, 50));
-
-			for (Player player : level.getNearbyPlayers(TargetingConditions.forNonCombat(), this, scanningBox)) {
-				checkForDiscovery(this, player);
-			}
-		}
+		checkForDiscovery(this);
 	}
 
 	@Override
-	public boolean hurt(@NotNull DamageSource pSource, float pAmount) {
+	public boolean hurt(DamageSource pSource, float pAmount) {
 		if (pSource == DamageSource.OUT_OF_WORLD) {
 			return super.hurt(pSource, pAmount); // For /kill, as the entity should never fall to death
 		}
@@ -181,7 +170,7 @@ public class CelestialTowerEntity extends Monster implements GrantAdvancementOnD
 	}
 
 	@Override
-	public void readAdditionalSaveData(@NotNull CompoundTag pCompound) {
+	public void readAdditionalSaveData(CompoundTag pCompound) {
 		super.readAdditionalSaveData(pCompound);
 		if (hasCustomName()) {
 			bossEvent.setName(getDisplayName());
@@ -196,10 +185,15 @@ public class CelestialTowerEntity extends Monster implements GrantAdvancementOnD
 					totalWavesToSpawn));
 			bossEvent.setProgress((float) wavesSpawned / totalWavesToSpawn);
 		}
+
+		// If loading the world, check if the tower is in the list
+		if (!ALL_TOWERS.contains(this)) {
+			ALL_TOWERS.add(this);
+		}
 	}
 
 	@Override
-	public void addAdditionalSaveData(@NotNull CompoundTag pCompound) {
+	public void addAdditionalSaveData(CompoundTag pCompound) {
 		super.addAdditionalSaveData(pCompound);
 		pCompound.putInt("totalWavesToSpawn", totalWavesToSpawn);
 		pCompound.putInt("waveSizeModifier", waveSizeModifier);
@@ -214,19 +208,19 @@ public class CelestialTowerEntity extends Monster implements GrantAdvancementOnD
 	}
 
 	@Override
-	public void startSeenByPlayer(@NotNull ServerPlayer pPlayer) {
+	public void startSeenByPlayer(ServerPlayer pPlayer) {
 		super.startSeenByPlayer(pPlayer);
 		bossEvent.addPlayer(pPlayer);
 	}
 
 	@Override
-	public void stopSeenByPlayer(@NotNull ServerPlayer pPlayer) {
+	public void stopSeenByPlayer(ServerPlayer pPlayer) {
 		super.stopSeenByPlayer(pPlayer);
 		bossEvent.removePlayer(pPlayer);
 	}
 
 	@Override
-	public boolean checkSpawnRules(@NotNull LevelAccessor pLevel, @NotNull MobSpawnType pSpawnReason) {
+	public boolean checkSpawnRules(LevelAccessor pLevel, MobSpawnType pSpawnReason) {
 		if (pSpawnReason == MobSpawnType.SPAWNER || pSpawnReason == MobSpawnType.SPAWN_EGG) {
 			return true;
 		}

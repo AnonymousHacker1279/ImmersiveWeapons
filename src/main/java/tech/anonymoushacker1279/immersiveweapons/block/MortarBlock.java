@@ -28,7 +28,6 @@ import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.network.NetworkEvent;
 import net.minecraftforge.network.NetworkEvent.Context;
 import net.minecraftforge.network.PacketDistributor;
-import org.jetbrains.annotations.NotNull;
 import tech.anonymoushacker1279.immersiveweapons.entity.projectile.MortarShellEntity;
 import tech.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
 import tech.anonymoushacker1279.immersiveweapons.init.PacketHandler;
@@ -88,8 +87,8 @@ public class MortarBlock extends HorizontalDirectionalBlock {
 	 */
 	@SuppressWarnings("deprecation")
 	@Override
-	public @NotNull VoxelShape getShape(@NotNull BlockState state, @NotNull BlockGetter getter, @NotNull BlockPos pos,
-	                                    @NotNull CollisionContext collisionContext) {
+	public VoxelShape getShape(BlockState state, BlockGetter getter, BlockPos pos,
+	                           CollisionContext collisionContext) {
 
 		return SHAPE;
 	}
@@ -108,9 +107,9 @@ public class MortarBlock extends HorizontalDirectionalBlock {
 	 */
 	@SuppressWarnings("deprecation")
 	@Override
-	public @NotNull InteractionResult use(@NotNull BlockState state, Level level, @NotNull BlockPos pos,
-	                                      @NotNull Player player, @NotNull InteractionHand hand,
-	                                      @NotNull BlockHitResult hitResult) {
+	public InteractionResult use(BlockState state, Level level, BlockPos pos,
+	                             Player player, InteractionHand hand,
+	                             BlockHitResult hitResult) {
 
 		if (!level.isClientSide && hand.equals(InteractionHand.MAIN_HAND)) {
 			ItemStack itemStack = player.getMainHandItem();
@@ -166,8 +165,8 @@ public class MortarBlock extends HorizontalDirectionalBlock {
 	 */
 	@SuppressWarnings("deprecation")
 	@Override
-	public void neighborChanged(@NotNull BlockState state, Level level, @NotNull BlockPos pos, @NotNull Block block,
-	                            @NotNull BlockPos fromPos, boolean isMoving) {
+	public void neighborChanged(BlockState state, Level level, BlockPos pos, Block block,
+	                            BlockPos fromPos, boolean isMoving) {
 
 		if (!level.isClientSide) {
 			if (state.getValue(LOADED) && level.hasNeighborSignal(pos)) {

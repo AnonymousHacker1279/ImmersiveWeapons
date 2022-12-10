@@ -4,7 +4,6 @@ import com.google.gson.JsonObject;
 import net.minecraft.advancements.critereon.*;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
-import org.jetbrains.annotations.NotNull;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 
 public class WarriorStatueActivatedTrigger extends SimpleCriterionTrigger<WarriorStatueActivatedTrigger.TriggerInstance> {
@@ -12,14 +11,14 @@ public class WarriorStatueActivatedTrigger extends SimpleCriterionTrigger<Warrio
 	public static final ResourceLocation ID = new ResourceLocation(ImmersiveWeapons.MOD_ID, "warrior_statue_activated");
 
 	@Override
-	public @NotNull ResourceLocation getId() {
+	public ResourceLocation getId() {
 		return ID;
 	}
 
 	@Override
-	protected WarriorStatueActivatedTrigger.@NotNull TriggerInstance createInstance(@NotNull JsonObject pJson,
-	                                                                                EntityPredicate.@NotNull Composite pPlayer,
-	                                                                                @NotNull DeserializationContext pContext) {
+	protected WarriorStatueActivatedTrigger.TriggerInstance createInstance(JsonObject pJson,
+	                                                                       EntityPredicate.Composite pPlayer,
+	                                                                       DeserializationContext pContext) {
 
 		return new WarriorStatueActivatedTrigger.TriggerInstance(pPlayer);
 	}

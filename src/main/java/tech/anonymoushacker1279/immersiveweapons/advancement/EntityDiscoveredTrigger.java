@@ -5,7 +5,6 @@ import net.minecraft.advancements.critereon.*;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.GsonHelper;
-import org.jetbrains.annotations.NotNull;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 
 public class EntityDiscoveredTrigger extends SimpleCriterionTrigger<EntityDiscoveredTrigger.TriggerInstance> {
@@ -13,18 +12,19 @@ public class EntityDiscoveredTrigger extends SimpleCriterionTrigger<EntityDiscov
 	public static final ResourceLocation ID = new ResourceLocation(ImmersiveWeapons.MOD_ID, "entity_discovered");
 
 	@Override
-	public @NotNull ResourceLocation getId() {
+	public ResourceLocation getId() {
 		return ID;
 	}
 
 	@Override
-	protected EntityDiscoveredTrigger.@NotNull TriggerInstance createInstance(@NotNull JsonObject pJson,
-	                                                                          EntityPredicate.@NotNull Composite pPlayer,
-	                                                                          @NotNull DeserializationContext pContext) {
+	protected EntityDiscoveredTrigger.TriggerInstance createInstance(JsonObject pJson,
+	                                                                 EntityPredicate.Composite pPlayer,
+	                                                                 DeserializationContext pContext) {
 
 		ResourceLocation entityLocation = pJson.has("entity")
 				? new ResourceLocation(GsonHelper.getAsString(pJson, "entity")) : null;
 
+		assert entityLocation != null;
 		return new EntityDiscoveredTrigger.TriggerInstance(pPlayer, entityLocation);
 	}
 
@@ -48,16 +48,14 @@ public class EntityDiscoveredTrigger extends SimpleCriterionTrigger<EntityDiscov
 		}
 
 		@Override
-		public @NotNull JsonObject serializeToJson(@NotNull SerializationContext pConditions) {
+		public JsonObject serializeToJson(SerializationContext pConditions) {
 			JsonObject jsonObject = super.serializeToJson(pConditions);
-			if (entityLocation != null) {
-				jsonObject.addProperty("entity", entityLocation.toString());
-			}
+			jsonObject.addProperty("entity", entityLocation.toString());
 			return jsonObject;
 		}
 
 		public boolean matches(ResourceLocation entityLocation) {
-			return this.entityLocation == null || this.entityLocation.equals(entityLocation);
+			return this.entityLocation.equals(entityLocation);
 		}
 	}
 }

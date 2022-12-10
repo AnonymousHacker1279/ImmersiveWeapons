@@ -3,7 +3,6 @@ package tech.anonymoushacker1279.immersiveweapons.container.slot;
 import net.minecraft.world.Container;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
-import org.jetbrains.annotations.NotNull;
 import tech.anonymoushacker1279.immersiveweapons.container.TeslaSynthesizerContainer;
 
 public class TeslaSynthesizerFuelSlot extends Slot {
@@ -31,7 +30,7 @@ public class TeslaSynthesizerFuelSlot extends Slot {
 	 * @return boolean
 	 */
 	@Override
-	public boolean mayPlace(@NotNull ItemStack stack) {
+	public boolean mayPlace(ItemStack stack) {
 		return abstractTeslaSynthesizerContainer.isFuel(stack);
 	}
 
@@ -42,7 +41,7 @@ public class TeslaSynthesizerFuelSlot extends Slot {
 	 * @return int
 	 */
 	@Override
-	public int getMaxStackSize(@NotNull ItemStack stack) {
+	public int getMaxStackSize(ItemStack stack) {
 		return super.getMaxStackSize(stack);
 	}
 }

@@ -12,7 +12,6 @@ import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.network.NetworkHooks;
-import org.jetbrains.annotations.NotNull;
 
 public class CustomBoatEntity extends Boat {
 
@@ -24,7 +23,7 @@ public class CustomBoatEntity extends Boat {
 	}
 
 	@Override
-	public @NotNull Item getDropItem() {
+	public Item getDropItem() {
 		return dropItem;
 	}
 
@@ -41,7 +40,7 @@ public class CustomBoatEntity extends Boat {
 	}
 
 	@Override
-	protected void checkFallDamage(double pY, boolean pOnGround, @NotNull BlockState pState, @NotNull BlockPos pPos) {
+	protected void checkFallDamage(double pY, boolean pOnGround, BlockState pState, BlockPos pPos) {
 		lastYd = getDeltaMovement().y;
 
 		if (!isPassenger()) {
@@ -75,7 +74,7 @@ public class CustomBoatEntity extends Boat {
 		}
 	}
 
-	public void setBoatType(@NotNull CustomBoatType boatType) {
+	public void setBoatType(CustomBoatType boatType) {
 		entityData.set(DATA_ID_TYPE, boatType.ordinal());
 	}
 
@@ -84,7 +83,7 @@ public class CustomBoatEntity extends Boat {
 	}
 
 	@Override
-	public @NotNull Packet<?> getAddEntityPacket() {
+	public Packet<?> getAddEntityPacket() {
 		return NetworkHooks.getEntitySpawningPacket(this);
 	}
 }

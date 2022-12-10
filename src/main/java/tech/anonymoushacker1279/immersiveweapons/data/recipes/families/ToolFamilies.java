@@ -4,6 +4,7 @@ import com.google.common.collect.ImmutableList;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.*;
 import net.minecraftforge.common.Tags;
+import org.jetbrains.annotations.Nullable;
 import tech.anonymoushacker1279.immersiveweapons.data.tags.groups.forge.ForgeItemTagGroups;
 import tech.anonymoushacker1279.immersiveweapons.data.tags.groups.immersiveweapons.ImmersiveWeaponsItemTagGroups;
 import tech.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
@@ -14,18 +15,18 @@ import java.util.Collection;
 import java.util.function.Supplier;
 
 public record ToolFamilies(TagKey<Item> material,
-                           TagKey<Item> nugget,
+                           @Nullable TagKey<Item> nugget,
                            TagKey<Item> handle,
                            Supplier<? extends SwordItem> sword,
                            Supplier<? extends PickaxeItem> pickaxe,
                            Supplier<? extends AxeItem> axe,
                            Supplier<? extends ShovelItem> shovel,
                            Supplier<? extends HoeItem> hoe,
-                           Supplier<? extends GauntletItem> gauntlet,
-                           Supplier<? extends PikeItem> pike,
-                           Supplier<? extends Item> pikeHead,
-                           Supplier<? extends ArrowItem> arrow,
-                           Supplier<? extends Item> musketBall) {
+                           @Nullable Supplier<? extends GauntletItem> gauntlet,
+                           @Nullable Supplier<? extends PikeItem> pike,
+                           @Nullable Supplier<? extends Item> pikeHead,
+                           @Nullable Supplier<? extends ArrowItem> arrow,
+                           @Nullable Supplier<? extends Item> musketBall) {
 
 	public static final ToolFamilies COPPER = new ToolFamilies(
 			Tags.Items.INGOTS_COPPER,

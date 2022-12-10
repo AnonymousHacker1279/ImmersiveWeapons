@@ -35,7 +35,9 @@ public class ForgeEventSubscriber {
 
 	@SubscribeEvent
 	public static void registerGuiOverlaysEvent(RegisterGuiOverlaysEvent event) {
-		event.registerAbove(new ResourceLocation("vignette"), ImmersiveWeapons.MOD_ID + ":scope", IWOverlays.SCOPE_ELEMENT);
+		if (IWOverlays.SCOPE_ELEMENT != null) {
+			event.registerAbove(new ResourceLocation("vignette"), ImmersiveWeapons.MOD_ID + ":scope", IWOverlays.SCOPE_ELEMENT);
+		}
 	}
 
 	/**

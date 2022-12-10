@@ -29,7 +29,6 @@ import net.minecraftforge.common.loot.IGlobalLootModifier;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.*;
-import org.jetbrains.annotations.NotNull;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.block.*;
 import tech.anonymoushacker1279.immersiveweapons.block.barbed_wire.BarbedWireBlock;
@@ -92,7 +91,7 @@ import tech.anonymoushacker1279.immersiveweapons.world.level.loot.LogShardsLootM
 
 import java.util.function.Function;
 
-@SuppressWarnings({"unused", "ConstantConditions"})
+@SuppressWarnings({"unused"})
 public class DeferredRegistryHandler {
 
 	// Item Register
@@ -797,7 +796,7 @@ public class DeferredRegistryHandler {
 		final Function<ParticleType<SmokeGrenadeParticleOptions>, Codec<SmokeGrenadeParticleOptions>> codec = (type) -> SmokeGrenadeParticleOptions.CODEC;
 
 		@Override
-		public @NotNull Codec<SmokeGrenadeParticleOptions> codec() {
+		public Codec<SmokeGrenadeParticleOptions> codec() {
 			return codec.apply(this);
 		}
 	});
@@ -806,7 +805,7 @@ public class DeferredRegistryHandler {
 		final Function<ParticleType<BulletImpactParticleOptions>, Codec<BulletImpactParticleOptions>> codec = (type) -> BulletImpactParticleOptions.CODEC;
 
 		@Override
-		public @NotNull Codec<BulletImpactParticleOptions> codec() {
+		public Codec<BulletImpactParticleOptions> codec() {
 			return codec.apply(this);
 		}
 	});

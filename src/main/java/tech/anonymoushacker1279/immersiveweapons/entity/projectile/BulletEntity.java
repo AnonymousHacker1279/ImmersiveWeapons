@@ -11,22 +11,22 @@ import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.AbstractArrow;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.*;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.ClipContext.Fluid;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.phys.*;
 import net.minecraft.world.phys.HitResult.Type;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.minecraftforge.common.Tags.Blocks;
+import net.minecraftforge.common.Tags;
 import net.minecraftforge.event.ForgeEventFactory;
 import net.minecraftforge.network.NetworkHooks;
-import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import tech.anonymoushacker1279.immersiveweapons.client.particle.bullet_impact.BulletImpactParticleOptions;
 import tech.anonymoushacker1279.immersiveweapons.config.CommonConfig;
 import tech.anonymoushacker1279.immersiveweapons.data.tags.groups.forge.ForgeBlockTagGroups;
@@ -39,11 +39,12 @@ public class BulletEntity extends AbstractArrow {
 	private static final boolean canBreakGlass = CommonConfig.BULLETS_BREAK_GLASS.get();
 	private final SoundEvent hitSound = getDefaultHitGroundSoundEvent();
 	private static final byte VANILLA_IMPACT_STATUS_ID = 3;
-	Item referenceItem;
+	Item referenceItem = Items.AIR;
 	int knockbackStrength;
 	boolean shouldStopMoving = false;
 	float inertia = 0.99F;
-	private BlockState inBlockState;
+	private BlockState inBlockState = Blocks.AIR.defaultBlockState();
+	@Nullable
 	private IntOpenHashSet piercedEntities;
 	private boolean hasAlreadyBrokeGlass = false;
 	private Item firingItem = DeferredRegistryHandler.FLINTLOCK_PISTOL.get();
@@ -75,7 +76,7 @@ public class BulletEntity extends AbstractArrow {
 	 * @return ItemStack
 	 */
 	@Override
-	public @NotNull ItemStack getPickupItem() {
+	public ItemStack getPickupItem() {
 		return new ItemStack(referenceItem);
 	}
 
@@ -85,7 +86,7 @@ public class BulletEntity extends AbstractArrow {
 	 * @return Packet
 	 */
 	@Override
-	public @NotNull Packet<?> getAddEntityPacket() {
+	public Packet<?> getAddEntityPacket() {
 		return NetworkHooks.getEntitySpawningPacket(this);
 	}
 
@@ -295,7 +296,7 @@ public class BulletEntity extends AbstractArrow {
 	 * @param entityRayTraceResult the <code>EntityRayTraceResult</code> instance
 	 */
 	@Override
-	protected void onHitEntity(@NotNull EntityHitResult entityRayTraceResult) {
+	protected void onHitEntity(EntityHitResult entityRayTraceResult) {
 		Entity entity = entityRayTraceResult.getEntity();
 		float velocityModifier = (float) getDeltaMovement().length();
 		// Determine the damage to be dealt, which is calculated by multiplying the velocity modifier
@@ -430,8 +431,8 @@ public class BulletEntity extends AbstractArrow {
 		// Check if glass can be broken, and if it hasn't already broken glass
 		if (canBreakGlass && !hasAlreadyBrokeGlass
 				&& !inBlockState.is(ForgeBlockTagGroups.BULLETPROOF_GLASS)
-				&& inBlockState.is(Blocks.GLASS)
-				|| inBlockState.is(Blocks.GLASS_PANES)) {
+				&& inBlockState.is(Tags.Blocks.GLASS)
+				|| inBlockState.is(Tags.Blocks.GLASS_PANES)) {
 
 			level.destroyBlock(blockHitResult.getBlockPos(), false);
 			hasAlreadyBrokeGlass = true;
@@ -510,7 +511,7 @@ public class BulletEntity extends AbstractArrow {
 	}
 
 	@Override
-	protected @NotNull SoundEvent getDefaultHitGroundSoundEvent() {
+	protected SoundEvent getDefaultHitGroundSoundEvent() {
 		return DeferredRegistryHandler.BULLET_WHIZZ.get();
 	}
 

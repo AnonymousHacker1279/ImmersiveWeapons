@@ -4,12 +4,13 @@ import com.mojang.math.Vector3f;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.particle.*;
 import net.minecraft.util.Mth;
-import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
 
 public class BulletImpactParticle extends TextureSheetParticle {
 
-	protected static SpriteSet sprites;
+	@Nullable
+	static SpriteSet sprites;
 
 	public static class Provider implements ParticleProvider<BulletImpactParticleOptions> {
 
@@ -18,10 +19,13 @@ public class BulletImpactParticle extends TextureSheetParticle {
 		}
 
 		@Override
-		public Particle createParticle(@NotNull BulletImpactParticleOptions pType, @NotNull ClientLevel pLevel, double pX, double pY, double pZ,
+		public Particle createParticle(BulletImpactParticleOptions pType, ClientLevel pLevel, double pX, double pY, double pZ,
 		                               double pXSpeed, double pYSpeed, double pZSpeed) {
 
-			return new BulletImpactParticle(pLevel, pX, pY, pZ, pXSpeed, pYSpeed, pZSpeed, sprites, pType.getColor());
+			if (sprites != null) {
+				return new BulletImpactParticle(pLevel, pX, pY, pZ, pXSpeed, pYSpeed, pZSpeed, sprites, pType.getColor());
+			}
+			return null;
 		}
 	}
 
@@ -58,7 +62,7 @@ public class BulletImpactParticle extends TextureSheetParticle {
 	}
 
 	@Override
-	public @NotNull ParticleRenderType getRenderType() {
+	public ParticleRenderType getRenderType() {
 		return ParticleRenderType.PARTICLE_SHEET_OPAQUE;
 	}
 
@@ -70,6 +74,8 @@ public class BulletImpactParticle extends TextureSheetParticle {
 	@Override
 	public void tick() {
 		super.tick();
-		setSpriteFromAge(sprites);
+		if (sprites != null) {
+			setSpriteFromAge(sprites);
+		}
 	}
 }

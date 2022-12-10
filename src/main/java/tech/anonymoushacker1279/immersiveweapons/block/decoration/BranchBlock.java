@@ -8,7 +8,6 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import org.jetbrains.annotations.NotNull;
 import tech.anonymoushacker1279.immersiveweapons.block.core.BasicOrientableBlock;
 import tech.anonymoushacker1279.immersiveweapons.data.tags.groups.immersiveweapons.ImmersiveWeaponsBlockTagGroups;
 
@@ -39,8 +38,8 @@ public class BranchBlock extends BasicOrientableBlock {
 	 */
 	@SuppressWarnings("deprecation")
 	@Override
-	public @NotNull VoxelShape getShape(BlockState state, @NotNull BlockGetter reader, @NotNull BlockPos pos,
-	                                    @NotNull CollisionContext collisionContext) {
+	public VoxelShape getShape(BlockState state, BlockGetter reader, BlockPos pos,
+	                           CollisionContext collisionContext) {
 
 		return switch (state.getValue(FACING)) {
 			case SOUTH -> SHAPE_SOUTH;
@@ -78,8 +77,8 @@ public class BranchBlock extends BasicOrientableBlock {
 	 */
 	@SuppressWarnings("deprecation")
 	@Override
-	public @NotNull BlockState updateShape(BlockState state, @NotNull Direction direction, @NotNull BlockState neighborState,
-	                                       @NotNull LevelAccessor level, @NotNull BlockPos pos, @NotNull BlockPos neighborPos) {
+	public BlockState updateShape(BlockState state, Direction direction, BlockState neighborState,
+	                              LevelAccessor level, BlockPos pos, BlockPos neighborPos) {
 
 		return direction == state.getValue(FACING) && !state.canSurvive(level, pos) ? Blocks.AIR.defaultBlockState()
 				: super.updateShape(state, direction, neighborState, level, pos, neighborPos);

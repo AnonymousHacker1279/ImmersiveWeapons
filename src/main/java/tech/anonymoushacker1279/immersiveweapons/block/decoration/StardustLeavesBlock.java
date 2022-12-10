@@ -5,7 +5,6 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.LeavesBlock;
 import net.minecraft.world.level.block.state.BlockState;
-import org.jetbrains.annotations.NotNull;
 import tech.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
 import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
 
@@ -16,7 +15,7 @@ public class StardustLeavesBlock extends LeavesBlock {
 	}
 
 	@Override
-	public void animateTick(@NotNull BlockState state, Level level, BlockPos pos, @NotNull RandomSource randomSource) {
+	public void animateTick(BlockState state, Level level, BlockPos pos, RandomSource randomSource) {
 		if (level.getBlockState(pos.below()).isAir()) {
 			if (randomSource.nextFloat() <= 0.15f) {
 				level.addParticle(DeferredRegistryHandler.STARDUST_LEAVES_PARTICLE.get(),

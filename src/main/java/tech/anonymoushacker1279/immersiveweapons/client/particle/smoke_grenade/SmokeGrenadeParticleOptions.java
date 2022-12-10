@@ -11,7 +11,6 @@ import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.util.Mth;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.registries.ForgeRegistries;
-import org.jetbrains.annotations.NotNull;
 import tech.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
 
 import java.util.Locale;
@@ -29,8 +28,8 @@ public class SmokeGrenadeParticleOptions implements ParticleOptions {
 
 	public static final ParticleOptions.Deserializer<SmokeGrenadeParticleOptions> DESERIALIZER = new ParticleOptions.Deserializer<>() {
 		@Override
-		public @NotNull SmokeGrenadeParticleOptions fromCommand(@NotNull ParticleType<SmokeGrenadeParticleOptions> particleType,
-		                                                        @NotNull StringReader reader) throws CommandSyntaxException {
+		public SmokeGrenadeParticleOptions fromCommand(ParticleType<SmokeGrenadeParticleOptions> particleType,
+		                                               StringReader reader) throws CommandSyntaxException {
 
 			Vector3f vector3f = SmokeGrenadeParticleOptions.readVector3f(reader);
 			reader.expect(' ');
@@ -39,8 +38,8 @@ public class SmokeGrenadeParticleOptions implements ParticleOptions {
 		}
 
 		@Override
-		public @NotNull SmokeGrenadeParticleOptions fromNetwork(@NotNull ParticleType<SmokeGrenadeParticleOptions> particleType,
-		                                                        @NotNull FriendlyByteBuf byteBuf) {
+		public SmokeGrenadeParticleOptions fromNetwork(ParticleType<SmokeGrenadeParticleOptions> particleType,
+		                                               FriendlyByteBuf byteBuf) {
 
 			return new SmokeGrenadeParticleOptions(SmokeGrenadeParticleOptions.readVector3f(byteBuf), byteBuf.readFloat());
 		}
@@ -74,7 +73,7 @@ public class SmokeGrenadeParticleOptions implements ParticleOptions {
 	}
 
 	@Override
-	public @NotNull String writeToString() {
+	public String writeToString() {
 		return String.format(Locale.ROOT, "%s %.2f %.2f %.2f %.2f", ForgeRegistries.PARTICLE_TYPES
 				.getKey(getType()), color.x(), color.y(), color.z(), scale);
 	}
@@ -84,7 +83,7 @@ public class SmokeGrenadeParticleOptions implements ParticleOptions {
 	}
 
 	@Override
-	public @NotNull ParticleType<SmokeGrenadeParticleOptions> getType() {
+	public ParticleType<SmokeGrenadeParticleOptions> getType() {
 		return DeferredRegistryHandler.SMOKE_GRENADE_PARTICLE.get();
 	}
 

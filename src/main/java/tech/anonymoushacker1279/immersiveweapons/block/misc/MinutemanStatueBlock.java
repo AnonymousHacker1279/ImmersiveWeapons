@@ -15,7 +15,6 @@ import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import org.jetbrains.annotations.NotNull;
 import tech.anonymoushacker1279.immersiveweapons.blockentity.MinutemanStatueBlockEntity;
 
 public class MinutemanStatueBlock extends HorizontalDirectionalBlock implements EntityBlock, SimpleWaterloggedBlock {
@@ -41,7 +40,7 @@ public class MinutemanStatueBlock extends HorizontalDirectionalBlock implements 
 	 * @return BlockEntity
 	 */
 	@Override
-	public BlockEntity newBlockEntity(@NotNull BlockPos blockPos, @NotNull BlockState blockState) {
+	public BlockEntity newBlockEntity(BlockPos blockPos, BlockState blockState) {
 		return new MinutemanStatueBlockEntity(blockPos, blockState);
 	}
 
@@ -55,8 +54,8 @@ public class MinutemanStatueBlock extends HorizontalDirectionalBlock implements 
 	 * @return BlockEntityTicker
 	 */
 	@Override
-	public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, @NotNull BlockState blockState,
-	                                                              @NotNull BlockEntityType<T> blockEntityType) {
+	public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState blockState,
+	                                                              BlockEntityType<T> blockEntityType) {
 
 		return level.isClientSide ? null : (world, pos, state, entity) -> ((MinutemanStatueBlockEntity) entity).tick(world, pos);
 	}
@@ -72,7 +71,7 @@ public class MinutemanStatueBlock extends HorizontalDirectionalBlock implements 
 	 */
 	@SuppressWarnings("deprecation")
 	@Override
-	public @NotNull VoxelShape getShape(@NotNull BlockState state, @NotNull BlockGetter reader, @NotNull BlockPos pos, @NotNull CollisionContext selectionContext) {
+	public VoxelShape getShape(BlockState state, BlockGetter reader, BlockPos pos, CollisionContext selectionContext) {
 		return SHAPE;
 	}
 
@@ -107,7 +106,7 @@ public class MinutemanStatueBlock extends HorizontalDirectionalBlock implements 
 	 */
 	@SuppressWarnings("deprecation")
 	@Override
-	public @NotNull FluidState getFluidState(BlockState state) {
+	public FluidState getFluidState(BlockState state) {
 		return state.getValue(WATERLOGGED) ? Fluids.WATER.getSource(false) : super.getFluidState(state);
 	}
 }

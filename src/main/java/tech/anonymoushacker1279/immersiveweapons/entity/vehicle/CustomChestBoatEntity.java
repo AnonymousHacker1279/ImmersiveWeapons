@@ -17,9 +17,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.gameevent.GameEvent;
-import org.jetbrains.annotations.NotNull;
-
-import javax.annotation.Nullable;
+import org.jetbrains.annotations.Nullable;
 
 public class CustomChestBoatEntity extends CustomBoatEntity implements HasCustomInventoryScreen, ContainerEntity {
 
@@ -55,13 +53,13 @@ public class CustomChestBoatEntity extends CustomBoatEntity implements HasCustom
 	}
 
 	@Override
-	public void destroy(@NotNull DamageSource damageSource) {
+	public void destroy(DamageSource damageSource) {
 		super.destroy(damageSource);
 		chestVehicleDestroyed(damageSource, level, this);
 	}
 
 	@Override
-	public void remove(Entity.@NotNull RemovalReason removalReason) {
+	public void remove(Entity.RemovalReason removalReason) {
 		if (!level.isClientSide && removalReason.shouldDestroy()) {
 			Containers.dropContents(level, this, this);
 		}
@@ -70,7 +68,7 @@ public class CustomChestBoatEntity extends CustomBoatEntity implements HasCustom
 	}
 
 	@Override
-	public @NotNull InteractionResult interact(@NotNull Player player, @NotNull InteractionHand hand) {
+	public InteractionResult interact(Player player, InteractionHand hand) {
 		return canAddPassenger(player) && !player.isSecondaryUseActive() ? super.interact(player, hand) : interactWithChestVehicle(this::gameEvent, player);
 	}
 
@@ -100,7 +98,7 @@ public class CustomChestBoatEntity extends CustomBoatEntity implements HasCustom
 	 * Returns the stack in the given slot.
 	 */
 	@Override
-	public @NotNull ItemStack getItem(int index) {
+	public ItemStack getItem(int index) {
 		return getChestVehicleItem(index);
 	}
 
@@ -108,7 +106,7 @@ public class CustomChestBoatEntity extends CustomBoatEntity implements HasCustom
 	 * Removes up to a specified number of items from an inventory slot and returns them in a new stack.
 	 */
 	@Override
-	public @NotNull ItemStack removeItem(int index, int count) {
+	public ItemStack removeItem(int index, int count) {
 		return removeChestVehicleItem(index, count);
 	}
 
@@ -116,7 +114,7 @@ public class CustomChestBoatEntity extends CustomBoatEntity implements HasCustom
 	 * Removes a stack from the given slot and returns it.
 	 */
 	@Override
-	public @NotNull ItemStack removeItemNoUpdate(int index) {
+	public ItemStack removeItemNoUpdate(int index) {
 		return removeChestVehicleItemNoUpdate(index);
 	}
 
@@ -124,12 +122,12 @@ public class CustomChestBoatEntity extends CustomBoatEntity implements HasCustom
 	 * Sets the given item stack to the specified slot in the inventory (can be crafting or armor sections).
 	 */
 	@Override
-	public void setItem(int index, @NotNull ItemStack stack) {
+	public void setItem(int index, ItemStack stack) {
 		setChestVehicleItem(index, stack);
 	}
 
 	@Override
-	public @NotNull SlotAccess getSlot(int slot) {
+	public SlotAccess getSlot(int slot) {
 		return getChestVehicleSlot(slot);
 	}
 
@@ -138,13 +136,13 @@ public class CustomChestBoatEntity extends CustomBoatEntity implements HasCustom
 	}
 
 	@Override
-	public boolean stillValid(@NotNull Player player) {
+	public boolean stillValid(Player player) {
 		return isChestVehicleStillValid(player);
 	}
 
 	@Override
 	@Nullable
-	public AbstractContainerMenu createMenu(int containerId, @NotNull Inventory inventory, @NotNull Player player) {
+	public AbstractContainerMenu createMenu(int containerId, Inventory inventory, Player player) {
 		if (lootTable != null && player.isSpectator()) {
 			return null;
 		} else {
@@ -179,7 +177,7 @@ public class CustomChestBoatEntity extends CustomBoatEntity implements HasCustom
 	}
 
 	@Override
-	public @NotNull NonNullList<ItemStack> getItemStacks() {
+	public NonNullList<ItemStack> getItemStacks() {
 		return itemStacks;
 	}
 

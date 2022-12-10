@@ -12,7 +12,6 @@ import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.shapes.*;
-import org.jetbrains.annotations.NotNull;
 
 public class HardenedMudWindowBlock extends HorizontalDirectionalBlock implements SimpleWaterloggedBlock {
 
@@ -34,7 +33,7 @@ public class HardenedMudWindowBlock extends HorizontalDirectionalBlock implement
 
 	@SuppressWarnings("deprecation")
 	@Override
-	public @NotNull VoxelShape getShape(BlockState state, @NotNull BlockGetter reader, @NotNull BlockPos pos, @NotNull CollisionContext selectionContext) {
+	public VoxelShape getShape(BlockState state, BlockGetter reader, BlockPos pos, CollisionContext selectionContext) {
 		if (state.getValue(FACING) == Direction.NORTH || state.getValue(FACING) == Direction.SOUTH) {
 			return SHAPE_NS;
 		} else {
@@ -54,13 +53,13 @@ public class HardenedMudWindowBlock extends HorizontalDirectionalBlock implement
 
 	@SuppressWarnings("deprecation")
 	@Override
-	public float getShadeBrightness(@NotNull BlockState state, @NotNull BlockGetter reader, @NotNull BlockPos pos) {
+	public float getShadeBrightness(BlockState state, BlockGetter reader, BlockPos pos) {
 		return 1.0F;
 	}
 
 	@SuppressWarnings("deprecation")
 	@Override
-	public @NotNull FluidState getFluidState(BlockState state) {
+	public FluidState getFluidState(BlockState state) {
 		return state.getValue(WATERLOGGED) ? Fluids.WATER.getSource(false) : super.getFluidState(state);
 	}
 }

@@ -13,7 +13,6 @@ import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import org.jetbrains.annotations.NotNull;
 
 public class BiohazardBoxBlock extends HorizontalDirectionalBlock implements SimpleWaterloggedBlock {
 
@@ -44,8 +43,8 @@ public class BiohazardBoxBlock extends HorizontalDirectionalBlock implements Sim
 	 */
 	@SuppressWarnings("deprecation")
 	@Override
-	public @NotNull VoxelShape getShape(BlockState state, @NotNull BlockGetter reader, @NotNull BlockPos pos,
-	                                    @NotNull CollisionContext collisionContext) {
+	public VoxelShape getShape(BlockState state, BlockGetter reader, BlockPos pos,
+	                           CollisionContext collisionContext) {
 
 		return switch (state.getValue(FACING)) {
 			case SOUTH -> SHAPE_SOUTH;
@@ -86,7 +85,7 @@ public class BiohazardBoxBlock extends HorizontalDirectionalBlock implements Sim
 	 */
 	@SuppressWarnings("deprecation")
 	@Override
-	public @NotNull FluidState getFluidState(BlockState state) {
+	public FluidState getFluidState(BlockState state) {
 		return state.getValue(WATERLOGGED) ? Fluids.WATER.getSource(false) : super.getFluidState(state);
 	}
 }

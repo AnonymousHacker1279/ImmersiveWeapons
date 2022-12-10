@@ -5,7 +5,6 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.common.MinecraftForge;
-import org.jetbrains.annotations.NotNull;
 import tech.anonymoushacker1279.immersiveweapons.api.events.TeslaSynthesizerCraftEvent;
 
 public class TeslaSynthesizerResultSlot extends Slot {
@@ -29,7 +28,7 @@ public class TeslaSynthesizerResultSlot extends Slot {
 	 * @return boolean
 	 */
 	@Override
-	public boolean mayPlace(@NotNull ItemStack stack) {
+	public boolean mayPlace(ItemStack stack) {
 		return false;
 	}
 
@@ -40,7 +39,7 @@ public class TeslaSynthesizerResultSlot extends Slot {
 	 * @return ItemStack
 	 */
 	@Override
-	public @NotNull ItemStack remove(int amount) {
+	public ItemStack remove(int amount) {
 		return super.remove(amount);
 	}
 
@@ -51,7 +50,7 @@ public class TeslaSynthesizerResultSlot extends Slot {
 	 * @param stack  the <code>ItemStack</code> being taken
 	 */
 	@Override
-	public void onTake(@NotNull Player player, @NotNull ItemStack stack) {
+	public void onTake(Player player, ItemStack stack) {
 		checkTakeAchievements(stack);
 		MinecraftForge.EVENT_BUS.post(new TeslaSynthesizerCraftEvent(player, stack));
 		super.onTake(player, stack);

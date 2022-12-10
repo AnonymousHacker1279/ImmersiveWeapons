@@ -2,7 +2,6 @@ package tech.anonymoushacker1279.immersiveweapons.item.tool.molten;
 
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.*;
-import org.jetbrains.annotations.NotNull;
 
 public class MoltenPickaxe extends PickaxeItem {
 
@@ -27,7 +26,7 @@ public class MoltenPickaxe extends PickaxeItem {
 	 * @return boolean
 	 */
 	@Override
-	public boolean hurtEnemy(@NotNull ItemStack itemStack, LivingEntity target, @NotNull LivingEntity attacker) {
+	public boolean hurtEnemy(ItemStack itemStack, LivingEntity target, LivingEntity attacker) {
 		target.setSecondsOnFire(10);
 		return super.hurtEnemy(itemStack, target, attacker);
 	}

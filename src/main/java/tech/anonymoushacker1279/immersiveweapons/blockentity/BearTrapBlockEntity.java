@@ -15,10 +15,9 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
-import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import tech.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
 
-import javax.annotation.Nullable;
 import java.util.EnumSet;
 import java.util.UUID;
 
@@ -27,8 +26,11 @@ public class BearTrapBlockEntity extends BlockEntity implements EntityBlock {
 	public static final DamageSource damageSource = new DamageSource("immersiveweapons.bear_trap");
 	@Nullable
 	private Mob trappedMobEntity;
+	@Nullable
 	private Player trappedPlayerEntity;
+	@Nullable
 	private Goal doNothingGoal;
+	@Nullable
 	private UUID id;
 
 	/**
@@ -76,7 +78,7 @@ public class BearTrapBlockEntity extends BlockEntity implements EntityBlock {
 	 * @param nbt the <code>CompoundNBT</code> to load
 	 */
 	@Override
-	public void load(@NotNull CompoundTag nbt) {
+	public void load(CompoundTag nbt) {
 		super.load(nbt);
 		if (nbt.hasUUID("trapped_entity")) {
 			id = nbt.getUUID("trapped_entity");
@@ -89,7 +91,7 @@ public class BearTrapBlockEntity extends BlockEntity implements EntityBlock {
 	 * @param pTag the <code>CompoundNBT</code> to save
 	 */
 	@Override
-	protected void saveAdditional(@NotNull CompoundTag pTag) {
+	protected void saveAdditional(CompoundTag pTag) {
 		super.saveAdditional(pTag);
 		if (trappedMobEntity != null && trappedMobEntity.isAlive()) {
 			pTag.putUUID("trapped_entity", trappedMobEntity.getUUID());
@@ -104,12 +106,14 @@ public class BearTrapBlockEntity extends BlockEntity implements EntityBlock {
 	 *
 	 * @return MobEntity
 	 */
+	@Nullable
 	public Mob getTrappedMobEntity() {
-		if (id != null && level instanceof ServerLevel) {
-			Entity entity = ((ServerLevel) level).getEntity(id);
+		if (id != null && level instanceof ServerLevel serverLevel) {
+			Entity entity = serverLevel.getEntity(id);
 			id = null;
-			if (entity instanceof Mob)
-				setTrappedMobEntity((Mob) entity);
+			if (entity instanceof Mob mob) {
+				setTrappedMobEntity(mob);
+			}
 		}
 		return trappedMobEntity;
 	}
@@ -121,7 +125,7 @@ public class BearTrapBlockEntity extends BlockEntity implements EntityBlock {
 	 */
 	public void setTrappedMobEntity(@Nullable Mob mobEntity) {
 		if (mobEntity == null) {
-			if (trappedMobEntity != null) {
+			if (trappedMobEntity != null && doNothingGoal != null) {
 				trappedMobEntity.goalSelector.removeGoal(doNothingGoal);
 			}
 			id = null;
@@ -140,6 +144,7 @@ public class BearTrapBlockEntity extends BlockEntity implements EntityBlock {
 	 *
 	 * @return PlayerEntity
 	 */
+	@Nullable
 	public Player getTrappedPlayerEntity() {
 		if (id != null && level instanceof ServerLevel) {
 			Entity entity = ((ServerLevel) level).getEntity(id);
@@ -197,7 +202,7 @@ public class BearTrapBlockEntity extends BlockEntity implements EntityBlock {
 	 * @return BlockEntity
 	 */
 	@Override
-	public BlockEntity newBlockEntity(@NotNull BlockPos blockPos, @NotNull BlockState blockState) {
+	public BlockEntity newBlockEntity(BlockPos blockPos, BlockState blockState) {
 		return new BearTrapBlockEntity(blockPos, blockState);
 	}
 

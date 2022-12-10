@@ -2,7 +2,6 @@ package tech.anonymoushacker1279.immersiveweapons.potion;
 
 import net.minecraft.world.effect.*;
 import net.minecraft.world.entity.LivingEntity;
-import org.jetbrains.annotations.NotNull;
 
 public class MorphineEffect extends MobEffect {
 
@@ -25,7 +24,7 @@ public class MorphineEffect extends MobEffect {
 	 * @param amplifier    the effect amplifier
 	 */
 	@Override
-	public void applyEffectTick(@NotNull LivingEntity livingEntity, int amplifier) {
+	public void applyEffectTick(LivingEntity livingEntity, int amplifier) {
 		if (duration > 900) {
 			livingEntity.addEffect(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, duration - 900, amplifier, false, false));
 			livingEntity.addEffect(new MobEffectInstance(MobEffects.HEALTH_BOOST, duration - 900, amplifier, false, false));

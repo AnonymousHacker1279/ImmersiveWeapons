@@ -3,7 +3,6 @@ package tech.anonymoushacker1279.immersiveweapons.item.projectile.bullet;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.projectile.AbstractArrow.Pickup;
 import net.minecraft.world.level.Level;
-import org.jetbrains.annotations.NotNull;
 import tech.anonymoushacker1279.immersiveweapons.entity.projectile.BulletEntities;
 import tech.anonymoushacker1279.immersiveweapons.entity.projectile.BulletEntities.StoneMusketBallEntity;
 import tech.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
@@ -29,7 +28,7 @@ public class StoneMusketBallItem extends AbstractBulletItem {
 	 * @return StoneBulletItem
 	 */
 	@Override
-	public @NotNull BulletEntities.StoneMusketBallEntity createBullet(@NotNull Level level, @NotNull LivingEntity shooter) {
+	public BulletEntities.StoneMusketBallEntity createBullet(Level level, LivingEntity shooter) {
 		StoneMusketBallEntity bulletEntity = new StoneMusketBallEntity(shooter, level);
 		bulletEntity.setBaseDamage(damage);
 		bulletEntity.pickup = Pickup.DISALLOWED;
