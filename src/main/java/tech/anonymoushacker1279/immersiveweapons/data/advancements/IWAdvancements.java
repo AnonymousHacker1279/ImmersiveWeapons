@@ -1079,6 +1079,9 @@ public class IWAdvancements implements Consumer<Consumer<Advancement>> {
 				.addCriterion("discover_celestial_tower", new TriggerInstance(
 						Composite.ANY,
 						DeferredRegistryHandler.CELESTIAL_TOWER_ENTITY.getId()))
+				.addCriterion("discover_starmite", new TriggerInstance(
+						Composite.ANY,
+						DeferredRegistryHandler.STARMITE_ENTITY.getId()))
 				.rewards(AdvancementRewards.Builder.experience(150))
 				.save(consumer, "immersiveweapons:entity_discovery");
 
@@ -1158,6 +1161,17 @@ public class IWAdvancements implements Consumer<Consumer<Advancement>> {
 						DeferredRegistryHandler.ROCK_SPIDER_ENTITY.getId()))
 				.rewards(AdvancementRewards.Builder.experience(20))
 				.save(consumer, "immersiveweapons:discover_rock_spider");
+
+		Builder.advancement().parent(entity_discovery)
+				.display(DeferredRegistryHandler.STARSTORM_CRYSTAL.get(),
+						Component.translatable("advancements.immersiveweapons.discover_starmite.title"),
+						Component.translatable("advancements.immersiveweapons.discover_starmite.description"),
+						null, FrameType.TASK, true, true, false)
+				.addCriterion("discover", new TriggerInstance(
+						Composite.ANY,
+						DeferredRegistryHandler.STARMITE_ENTITY.getId()))
+				.rewards(AdvancementRewards.Builder.experience(20))
+				.save(consumer, "immersiveweapons:discover_starmite");
 
 		Advancement celestial_tower_discovery = Builder.advancement().parent(entity_discovery)
 				.display(DeferredRegistryHandler.CELESTIAL_FRAGMENT.get(),

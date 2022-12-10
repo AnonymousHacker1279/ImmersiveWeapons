@@ -43,6 +43,12 @@
       },
       "trigger": "immersiveweapons:entity_discovered"
     },
+    "discover_starmite": {
+      "conditions": {
+        "entity": "immersiveweapons:starmite"
+      },
+      "trigger": "immersiveweapons:entity_discovered"
+    },
     "discover_wandering_warrior": {
       "conditions": {
         "entity": "immersiveweapons:wandering_warrior"
@@ -89,6 +95,9 @@
     ],
     [
       "discover_celestial_tower"
+    ],
+    [
+      "discover_starmite"
     ]
   ],
   "rewards": {
