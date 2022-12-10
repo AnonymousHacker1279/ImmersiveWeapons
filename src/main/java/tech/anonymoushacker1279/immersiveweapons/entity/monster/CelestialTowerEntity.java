@@ -34,8 +34,7 @@ import tech.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
 import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
 
 import javax.annotation.Nullable;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 public class CelestialTowerEntity extends Monster implements GrantAdvancementOnDiscovery {
 
@@ -45,6 +44,7 @@ public class CelestialTowerEntity extends Monster implements GrantAdvancementOnD
 	private int waveSizeModifier = 1;
 	private int wavesSpawned = 0;
 	private boolean doneSpawningWaves = false;
+	public static List<CelestialTowerEntity> ALL_TOWERS = new ArrayList<>(3);
 
 	public CelestialTowerEntity(EntityType<? extends Monster> type, Level level) {
 		super(type, level);
@@ -103,6 +103,7 @@ public class CelestialTowerEntity extends Monster implements GrantAdvancementOnD
 		pSpawnData = super.finalizeSpawn(pLevel, pDifficulty, pReason, pSpawnData, pDataTag);
 
 		teleportTo(getX(), getY() + 2, getZ());
+		ALL_TOWERS.add(this);
 
 		bossEvent.setProgress(0f);
 
@@ -171,6 +172,15 @@ public class CelestialTowerEntity extends Monster implements GrantAdvancementOnD
 	}
 
 	@Override
+	public void die(DamageSource damageSource) {
+		super.die(damageSource);
+
+		if (!level.isClientSide) {
+			ALL_TOWERS.remove(this);
+		}
+	}
+
+	@Override
 	public void readAdditionalSaveData(@NotNull CompoundTag pCompound) {
 		super.readAdditionalSaveData(pCompound);
 		if (hasCustomName()) {
@@ -221,19 +231,25 @@ public class CelestialTowerEntity extends Monster implements GrantAdvancementOnD
 			return true;
 		}
 
+		// Check if there are other Celestial Towers within a distance of 750 blocks
+		for (CelestialTowerEntity tower : ALL_TOWERS) {
+			if (tower.blockPosition().closerThan(blockPosition(), 750)) {
+				return false;
+			}
+		}
+
 		if (!pLevel.getBlockState(blockPosition().below()).isValidSpawn(pLevel, blockPosition().below(), getType())) {
 			return false;
 		}
 
 		Vec3 position = position();
-		List<BlockPos> ALL_TILTROS_LANTERNS = CelestialLanternBlock.ALL_TILTROS_LANTERNS;
 		int nearbyLanterns = 0;
 
-		for (BlockPos lanternPos : ALL_TILTROS_LANTERNS) {
+		for (BlockPos lanternPos : CelestialLanternBlock.ALL_TILTROS_LANTERNS) {
 			if (nearbyLanterns < 3) {
 				if (lanternPos.distManhattan(new Vec3i(position.x, position.y, position.z)) <
 						CommonConfig.CELESTIAL_TOWER_SPAWN_CHECK_RADIUS.get()) {
-					
+
 					nearbyLanterns++;
 				}
 			}

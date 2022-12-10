@@ -8,8 +8,7 @@ import net.minecraft.world.BossEvent.BossBarColor;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.ai.targeting.TargetingConditions;
@@ -59,25 +58,16 @@ public class CelestialTowerSummonGoal extends Goal {
 			int powerMobsToSpawn = isWavesPastHalf() ? (int) (mobsToSpawn * 0.2f) : 0; // Get the number of "power" mobs to spawn, if over halfway through the waves
 			mobsToSpawn = mobsToSpawn - powerMobsToSpawn; // Reduce the total number left to spawn
 
+			ServerLevel serverLevel = (ServerLevel) mob.level;
+
 			for (int i = fodderMobsToSpawn; i > 0; i--) {
 				BlockPos summonPos = new BlockPos(mob.getX() + GeneralUtilities.getRandomNumber(-8, 9),
 						mob.getY(),
 						mob.getZ() + GeneralUtilities.getRandomNumber(-8, 9));
 
 				RockSpiderEntity rockSpiderEntity = new RockSpiderEntity(DeferredRegistryHandler.ROCK_SPIDER_ENTITY.get(), mob.level);
-				rockSpiderEntity.setPersistenceRequired();
-				rockSpiderEntity.teleportTo(summonPos.getX(), summonPos.getY(), summonPos.getZ());
-				mob.level.addFreshEntity(rockSpiderEntity);
-				((ServerLevel) mob.level)
-						.sendParticles(ParticleTypes.POOF,
-								mob.position().x,
-								mob.position().y,
-								mob.position().z,
-								1,
-								GeneralUtilities.getRandomNumber(-0.03d, 0.03d),
-								GeneralUtilities.getRandomNumber(-0.1d, -0.08d),
-								GeneralUtilities.getRandomNumber(-0.03d, 0.03d), 1.0f);
-
+				spawnEntity(serverLevel, rockSpiderEntity, summonPos);
+				spawnEntityParticles(serverLevel);
 			}
 			for (int i = powerMobsToSpawn; i > 0; i--) {
 				BlockPos summonPos = new BlockPos(mob.getX() + GeneralUtilities.getRandomNumber(-8, 9),
@@ -85,7 +75,6 @@ public class CelestialTowerSummonGoal extends Goal {
 						mob.getZ() + GeneralUtilities.getRandomNumber(-8, 9));
 
 				Zombie zombieEntity = new Zombie(EntityType.ZOMBIE, mob.level);
-				zombieEntity.setPersistenceRequired();
 				ItemStack sword = new ItemStack(Items.IRON_SWORD);
 				sword.enchant(Enchantments.SHARPNESS, GeneralUtilities.getRandomNumber(2, 4 + mob.getWavesSpawned()));
 				sword.enchant(Enchantments.KNOCKBACK, GeneralUtilities.getRandomNumber(1, 3 + mob.getWavesSpawned()));
@@ -97,20 +86,10 @@ public class CelestialTowerSummonGoal extends Goal {
 				Objects.requireNonNull(zombieEntity.getAttribute(Attributes.MAX_HEALTH))
 						.setBaseValue(20 + (GeneralUtilities.getRandomNumber(5, 11) * mob.getWaveSizeModifier()));
 
-				zombieEntity.heal(zombieEntity.getMaxHealth());
-				zombieEntity.addEffect(new MobEffectInstance(MobEffects.FIRE_RESISTANCE, 9999, 0, true, true));
 				zombieEntity.setItemInHand(InteractionHand.MAIN_HAND, sword);
-				zombieEntity.teleportTo(summonPos.getX(), summonPos.getY(), summonPos.getZ());
-				mob.level.addFreshEntity(zombieEntity);
-				((ServerLevel) mob.level).sendParticles(ParticleTypes.POOF,
-						mob.position().x,
-						mob.position().y,
-						mob.position().z,
-						1,
-						GeneralUtilities.getRandomNumber(-0.03d, 0.03d),
-						GeneralUtilities.getRandomNumber(-0.1d, -0.08d),
-						GeneralUtilities.getRandomNumber(-0.03d, 0.03d), 1.0f);
-
+				zombieEntity.addEffect(new MobEffectInstance(MobEffects.FIRE_RESISTANCE, 9999, 0, true, true));
+				spawnEntity(serverLevel, zombieEntity, summonPos);
+				spawnEntityParticles(serverLevel);
 			}
 			for (int i = mobsToSpawn; i > 0; i--) {
 				BlockPos summonPos = new BlockPos(mob.getX() + GeneralUtilities.getRandomNumber(-8, 9),
@@ -118,7 +97,6 @@ public class CelestialTowerSummonGoal extends Goal {
 						mob.getZ() + GeneralUtilities.getRandomNumber(-8, 9));
 
 				Skeleton skeletonEntity = new Skeleton(EntityType.SKELETON, mob.level);
-				skeletonEntity.setPersistenceRequired();
 				ItemStack bow = new ItemStack(Items.BOW);
 				bow.enchant(Enchantments.POWER_ARROWS, GeneralUtilities.getRandomNumber(1, 3 + mob.getWavesSpawned()));
 				bow.enchant(Enchantments.PUNCH_ARROWS, GeneralUtilities.getRandomNumber(1, 2 + mob.getWavesSpawned()));
@@ -126,19 +104,10 @@ public class CelestialTowerSummonGoal extends Goal {
 				Objects.requireNonNull(skeletonEntity.getAttribute(Attributes.MAX_HEALTH))
 						.setBaseValue(20 + (GeneralUtilities.getRandomNumber(0, 6) * mob.getWaveSizeModifier()));
 
-				skeletonEntity.heal(skeletonEntity.getMaxHealth());
-				skeletonEntity.addEffect(new MobEffectInstance(MobEffects.FIRE_RESISTANCE, 9999, 0, true, true));
 				skeletonEntity.setItemInHand(InteractionHand.MAIN_HAND, bow);
-				skeletonEntity.teleportTo(summonPos.getX(), summonPos.getY(), summonPos.getZ());
-				mob.level.addFreshEntity(skeletonEntity);
-				((ServerLevel) mob.level).sendParticles(ParticleTypes.POOF,
-						mob.position().x,
-						mob.position().y,
-						mob.position().z,
-						1,
-						GeneralUtilities.getRandomNumber(-0.03d, 0.03d),
-						GeneralUtilities.getRandomNumber(-0.1d, -0.08d),
-						GeneralUtilities.getRandomNumber(-0.03d, 0.03d), 1.0f);
+				skeletonEntity.addEffect(new MobEffectInstance(MobEffects.FIRE_RESISTANCE, 9999, 0, true, true));
+				spawnEntity(serverLevel, skeletonEntity, summonPos);
+				spawnEntityParticles(serverLevel);
 			}
 
 			// Spawn some particles
@@ -199,5 +168,24 @@ public class CelestialTowerSummonGoal extends Goal {
 
 	private boolean isWavesPastHalf() {
 		return mob.getTotalWavesToSpawn() / 2 <= mob.getWavesSpawned();
+	}
+
+	private void spawnEntityParticles(ServerLevel level) {
+		level.sendParticles(ParticleTypes.POOF,
+				mob.position().x,
+				mob.position().y,
+				mob.position().z,
+				1,
+				GeneralUtilities.getRandomNumber(-0.03d, 0.03d),
+				GeneralUtilities.getRandomNumber(-0.1d, -0.08d),
+				GeneralUtilities.getRandomNumber(-0.03d, 0.03d), 1.0f);
+	}
+
+	private Mob spawnEntity(ServerLevel level, Mob mob, BlockPos summonPos) {
+		mob.setPersistenceRequired();
+		mob.teleportTo(summonPos.getX(), summonPos.getY(), summonPos.getZ());
+		mob.heal(mob.getMaxHealth());
+		level.addFreshEntity(mob);
+		return mob;
 	}
 }

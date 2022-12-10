@@ -93,12 +93,6 @@
         "maxCount": 1,
         "minCount": 1,
         "weight": 35
-      },
-      {
-        "type": "immersiveweapons:celestial_tower",
-        "maxCount": 1,
-        "minCount": 1,
-        "weight": 5
       }
     ],
     "underground_water_creature": [],

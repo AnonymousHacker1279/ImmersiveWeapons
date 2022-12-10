@@ -21,7 +21,6 @@ import net.minecraft.world.entity.monster.Enemy;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.*;
-import net.minecraft.world.level.block.state.BlockBehaviour.BlockStateBase;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.material.Material;
@@ -42,6 +41,7 @@ import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
 
 import javax.annotation.Nullable;
 import java.util.*;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Supplier;
 
 public class LavaRevenantEntity extends FlyingMob implements Enemy, GrantAdvancementOnDiscovery {
@@ -475,10 +475,23 @@ public class LavaRevenantEntity extends FlyingMob implements Enemy, GrantAdvance
 
 	@Override
 	public boolean checkSpawnObstruction(@NotNull LevelReader pLevel) {
-		AABB box = new AABB(blockPosition()).inflate(8);
-		boolean hasSpace = pLevel.getBlockStates(box).allMatch(BlockStateBase::isAir);
 
-		return super.checkSpawnObstruction(pLevel) && hasSpace && blockPosition().getY() > 32;
+		if (blockPosition().getY() > 0) {
+			if (super.checkSpawnObstruction(pLevel)) {
+				AABB box = new AABB(blockPosition()).inflate(4);
+
+				// At least 60% of the blocks must be air
+				AtomicInteger airBlocks = new AtomicInteger();
+				level.getBlockStates(box).forEach(state -> {
+					if (!state.isAir()) {
+						airBlocks.getAndIncrement();
+					}
+				});
+				return airBlocks.get() >= box.getSize() * 0.6;
+			}
+		}
+
+		return false;
 	}
 
 	enum AttackPhase {

@@ -167,9 +167,7 @@ public class BiomesGenerator {
 				.addSpawn(MobCategory.MONSTER, new SpawnerData(
 						DeferredRegistryHandler.ROCK_SPIDER_ENTITY.get(), 65, 2, 4))
 				.addSpawn(MobCategory.MONSTER, new SpawnerData(
-						DeferredRegistryHandler.LAVA_REVENANT_ENTITY.get(), 35, 1, 1))
-				.addSpawn(MobCategory.MONSTER, new SpawnerData(
-						DeferredRegistryHandler.CELESTIAL_TOWER_ENTITY.get(), 5, 1, 1));
+						DeferredRegistryHandler.LAVA_REVENANT_ENTITY.get(), 35, 1, 1));
 
 		return spawnBuilder.build();
 	}
@@ -187,7 +185,9 @@ public class BiomesGenerator {
 	// TODO: Also add more mobs to this biome
 	private static MobSpawnSettings getDeadmansDesertSpawns() {
 		MobSpawnSettings.Builder spawnBuilder = new MobSpawnSettings.Builder()
-				.creatureGenerationProbability(0.85f);
+				.creatureGenerationProbability(0.85f)
+				.addSpawn(MobCategory.MONSTER, new SpawnerData(
+						DeferredRegistryHandler.CELESTIAL_TOWER_ENTITY.get(), 5, 1, 1));
 
 		return spawnBuilder.build();
 	}
