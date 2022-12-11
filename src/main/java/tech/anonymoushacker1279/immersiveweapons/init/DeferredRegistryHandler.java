@@ -757,6 +757,10 @@ public class DeferredRegistryHandler {
 	public static final RegistryObject<SoundEvent> MORTAR_FIRE = SOUND_EVENTS.register("mortar_fire", () -> new SoundEvent(new ResourceLocation(ImmersiveWeapons.MOD_ID, "mortar_fire")));
 	public static final RegistryObject<SoundEvent> MUSKET_FIRE = SOUND_EVENTS.register("musket_fire", () -> new SoundEvent(new ResourceLocation(ImmersiveWeapons.MOD_ID, "musket_fire")));
 	public static final RegistryObject<SoundEvent> FIREFLY_FLYING = SOUND_EVENTS.register("firefly_flying", () -> new SoundEvent(new ResourceLocation(ImmersiveWeapons.MOD_ID, "firefly_flying")));
+	public static final RegistryObject<SoundEvent> STARMITE_AMBIENT = SOUND_EVENTS.register("starmite_ambient", () -> new SoundEvent(new ResourceLocation(ImmersiveWeapons.MOD_ID, "starmite_ambient")));
+	public static final RegistryObject<SoundEvent> STARMITE_HURT = SOUND_EVENTS.register("starmite_hurt", () -> new SoundEvent(new ResourceLocation(ImmersiveWeapons.MOD_ID, "starmite_hurt")));
+	public static final RegistryObject<SoundEvent> STARMITE_DEATH = SOUND_EVENTS.register("starmite_death", () -> new SoundEvent(new ResourceLocation(ImmersiveWeapons.MOD_ID, "starmite_death")));
+	public static final RegistryObject<SoundEvent> STARMITE_STEP = SOUND_EVENTS.register("starmite_step", () -> new SoundEvent(new ResourceLocation(ImmersiveWeapons.MOD_ID, "starmite_step")));
 
 	// Containers
 	public static final RegistryObject<MenuType<SmallPartsContainer>> SMALL_PARTS_TABLE_CONTAINER = MENU_TYPES.register("small_parts_table", () -> IForgeMenuType.create((id, inv, data) -> new SmallPartsContainer(id, inv)));

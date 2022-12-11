@@ -497,6 +497,26 @@ public class SoundGenerator extends SoundDefinitionsProvider {
 								"entity/firefly/flying/flying_2"),
 						SoundType.SOUND)));
 
+		add(DeferredRegistryHandler.STARMITE_AMBIENT.get(), definition()
+				.subtitle("immersiveweapons.subtitle.entity.starmite.ambient")
+				.with(Sound.sound(new ResourceLocation("entity.silverfish.ambient"),
+						SoundType.EVENT)));
+
+		add(DeferredRegistryHandler.STARMITE_HURT.get(), definition()
+				.subtitle("immersiveweapons.subtitle.entity.starmite.hurt")
+				.with(Sound.sound(new ResourceLocation("entity.silverfish.hurt"),
+						SoundType.EVENT)));
+
+		add(DeferredRegistryHandler.STARMITE_DEATH.get(), definition()
+				.subtitle("immersiveweapons.subtitle.entity.starmite.death")
+				.with(Sound.sound(new ResourceLocation("entity.silverfish.death"),
+						SoundType.EVENT)));
+
+		add(DeferredRegistryHandler.STARMITE_STEP.get(), definition()
+				.subtitle("immersiveweapons.subtitle.entity.starmite.step")
+				.with(Sound.sound(new ResourceLocation("entity.silverfish.step"),
+						SoundType.EVENT)));
+
 		add(DeferredRegistryHandler.BATTLEFIELD_AMBIENT.get(), definition()
 				.subtitle("immersiveweapons.subtitle.biome.battlefield.ambient")
 				.with(Sound.sound(new ResourceLocation(ImmersiveWeapons.MOD_ID,

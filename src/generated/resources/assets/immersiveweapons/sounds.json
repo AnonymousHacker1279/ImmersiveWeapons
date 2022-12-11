@@ -20,7 +20,7 @@
         "stream": true
       }
     ],
-    "subtitle": "immersiveweapons.subtitle.entity.battlefield.ambient"
+    "subtitle": "immersiveweapons.subtitle.biome.battlefield.ambient"
   },
   "bear_trap_close": {
     "sounds": [
@@ -296,6 +296,42 @@
     ],
     "subtitle": "immersiveweapons.subtitle.block.spike_trap.retract"
   },
+  "starmite_ambient": {
+    "sounds": [
+      {
+        "type": "event",
+        "name": "entity.silverfish.ambient"
+      }
+    ],
+    "subtitle": "immersiveweapons.subtitle.entity.starmite.ambient"
+  },
+  "starmite_death": {
+    "sounds": [
+      {
+        "type": "event",
+        "name": "entity.silverfish.death"
+      }
+    ],
+    "subtitle": "immersiveweapons.subtitle.entity.starmite.death"
+  },
+  "starmite_hurt": {
+    "sounds": [
+      {
+        "type": "event",
+        "name": "entity.silverfish.hurt"
+      }
+    ],
+    "subtitle": "immersiveweapons.subtitle.entity.starmite.hurt"
+  },
+  "starmite_step": {
+    "sounds": [
+      {
+        "type": "event",
+        "name": "entity.silverfish.step"
+      }
+    ],
+    "subtitle": "immersiveweapons.subtitle.entity.starmite.step"
+  },
   "starstorm_armor_equip": {
     "sounds": [
       "immersiveweapons:armor/equip/starstorm/equip_0",
@@ -340,7 +376,7 @@
         "stream": true
       }
     ],
-    "subtitle": "immersiveweapons.subtitle.entity.tiltros.ambient"
+    "subtitle": "immersiveweapons.subtitle.biome.tiltros.ambient"
   },
   "ventus_armor_equip": {
     "sounds": [
