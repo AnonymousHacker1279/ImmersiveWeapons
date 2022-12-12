@@ -8,8 +8,7 @@ import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.network.PacketDistributor;
 import tech.anonymoushacker1279.immersiveweapons.entity.projectile.SmokeGrenadeEntity.SmokeGrenadeEntityPacketHandler;
-import tech.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
-import tech.anonymoushacker1279.immersiveweapons.init.PacketHandler;
+import tech.anonymoushacker1279.immersiveweapons.init.*;
 import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
 
 public class ArrowEntities {
@@ -24,7 +23,7 @@ public class ArrowEntities {
 		 */
 		public WoodenArrowEntity(EntityType<? extends AbstractArrow> type, Level world) {
 			super(type, world);
-			referenceItem = DeferredRegistryHandler.WOODEN_ARROW.get();
+			referenceItem = ItemRegistry.WOODEN_ARROW.get();
 		}
 
 		/**
@@ -34,8 +33,8 @@ public class ArrowEntities {
 		 * @param world   the <code>World</code> the entity is in
 		 */
 		public WoodenArrowEntity(LivingEntity shooter, Level world) {
-			super(DeferredRegistryHandler.WOODEN_ARROW_ENTITY.get(), shooter, world);
-			referenceItem = DeferredRegistryHandler.WOODEN_ARROW.get();
+			super(EntityRegistry.WOODEN_ARROW_ENTITY.get(), shooter, world);
+			referenceItem = ItemRegistry.WOODEN_ARROW.get();
 		}
 
 		/**
@@ -47,8 +46,8 @@ public class ArrowEntities {
 		 * @param z       the Z position
 		 */
 		public WoodenArrowEntity(Level worldIn, double x, double y, double z) {
-			super(DeferredRegistryHandler.WOODEN_ARROW_ENTITY.get(), worldIn, x, y, z);
-			referenceItem = DeferredRegistryHandler.WOODEN_ARROW.get();
+			super(EntityRegistry.WOODEN_ARROW_ENTITY.get(), worldIn, x, y, z);
+			referenceItem = ItemRegistry.WOODEN_ARROW.get();
 		}
 
 		/**
@@ -76,7 +75,7 @@ public class ArrowEntities {
 		 */
 		public StoneArrowEntity(EntityType<? extends AbstractArrow> type, Level world) {
 			super(type, world);
-			referenceItem = DeferredRegistryHandler.STONE_ARROW.get();
+			referenceItem = ItemRegistry.STONE_ARROW.get();
 		}
 
 		/**
@@ -86,8 +85,8 @@ public class ArrowEntities {
 		 * @param world   the <code>World</code> the entity is in
 		 */
 		public StoneArrowEntity(LivingEntity shooter, Level world) {
-			super(DeferredRegistryHandler.STONE_ARROW_ENTITY.get(), shooter, world);
-			referenceItem = DeferredRegistryHandler.STONE_ARROW.get();
+			super(EntityRegistry.STONE_ARROW_ENTITY.get(), shooter, world);
+			referenceItem = ItemRegistry.STONE_ARROW.get();
 		}
 
 		/**
@@ -99,8 +98,8 @@ public class ArrowEntities {
 		 * @param z       the Z position
 		 */
 		public StoneArrowEntity(Level worldIn, double x, double y, double z) {
-			super(DeferredRegistryHandler.STONE_ARROW_ENTITY.get(), worldIn, x, y, z);
-			referenceItem = DeferredRegistryHandler.STONE_ARROW.get();
+			super(EntityRegistry.STONE_ARROW_ENTITY.get(), worldIn, x, y, z);
+			referenceItem = ItemRegistry.STONE_ARROW.get();
 		}
 
 		@Override
@@ -121,7 +120,7 @@ public class ArrowEntities {
 		 */
 		public GoldenArrowEntity(EntityType<? extends AbstractArrow> type, Level world) {
 			super(type, world);
-			referenceItem = DeferredRegistryHandler.GOLDEN_ARROW.get();
+			referenceItem = ItemRegistry.GOLDEN_ARROW.get();
 		}
 
 		/**
@@ -131,8 +130,8 @@ public class ArrowEntities {
 		 * @param world   the <code>World</code> the entity is in
 		 */
 		public GoldenArrowEntity(LivingEntity shooter, Level world) {
-			super(DeferredRegistryHandler.GOLDEN_ARROW_ENTITY.get(), shooter, world);
-			referenceItem = DeferredRegistryHandler.GOLDEN_ARROW.get();
+			super(EntityRegistry.GOLDEN_ARROW_ENTITY.get(), shooter, world);
+			referenceItem = ItemRegistry.GOLDEN_ARROW.get();
 		}
 
 		/**
@@ -144,8 +143,8 @@ public class ArrowEntities {
 		 * @param z       the Z position
 		 */
 		public GoldenArrowEntity(Level worldIn, double x, double y, double z) {
-			super(DeferredRegistryHandler.GOLDEN_ARROW_ENTITY.get(), worldIn, x, y, z);
-			referenceItem = DeferredRegistryHandler.GOLDEN_ARROW.get();
+			super(EntityRegistry.GOLDEN_ARROW_ENTITY.get(), worldIn, x, y, z);
+			referenceItem = ItemRegistry.GOLDEN_ARROW.get();
 		}
 	}
 
@@ -159,7 +158,7 @@ public class ArrowEntities {
 		 */
 		public CopperArrowEntity(EntityType<? extends AbstractArrow> type, Level world) {
 			super(type, world);
-			referenceItem = DeferredRegistryHandler.COPPER_ARROW.get();
+			referenceItem = ItemRegistry.COPPER_ARROW.get();
 		}
 
 		/**
@@ -169,8 +168,8 @@ public class ArrowEntities {
 		 * @param world   the <code>World</code> the entity is in
 		 */
 		public CopperArrowEntity(LivingEntity shooter, Level world) {
-			super(DeferredRegistryHandler.COPPER_ARROW_ENTITY.get(), shooter, world);
-			referenceItem = DeferredRegistryHandler.COPPER_ARROW.get();
+			super(EntityRegistry.COPPER_ARROW_ENTITY.get(), shooter, world);
+			referenceItem = ItemRegistry.COPPER_ARROW.get();
 		}
 
 		/**
@@ -182,8 +181,8 @@ public class ArrowEntities {
 		 * @param z       the Z position
 		 */
 		public CopperArrowEntity(Level worldIn, double x, double y, double z) {
-			super(DeferredRegistryHandler.COPPER_ARROW_ENTITY.get(), worldIn, x, y, z);
-			referenceItem = DeferredRegistryHandler.COPPER_ARROW.get();
+			super(EntityRegistry.COPPER_ARROW_ENTITY.get(), worldIn, x, y, z);
+			referenceItem = ItemRegistry.COPPER_ARROW.get();
 		}
 	}
 
@@ -197,7 +196,7 @@ public class ArrowEntities {
 		 */
 		public IronArrowEntity(EntityType<? extends AbstractArrow> type, Level world) {
 			super(type, world);
-			referenceItem = DeferredRegistryHandler.IRON_ARROW.get();
+			referenceItem = ItemRegistry.IRON_ARROW.get();
 		}
 
 		/**
@@ -207,8 +206,8 @@ public class ArrowEntities {
 		 * @param world   the <code>World</code> the entity is in
 		 */
 		public IronArrowEntity(LivingEntity shooter, Level world) {
-			super(DeferredRegistryHandler.IRON_ARROW_ENTITY.get(), shooter, world);
-			referenceItem = DeferredRegistryHandler.IRON_ARROW.get();
+			super(EntityRegistry.IRON_ARROW_ENTITY.get(), shooter, world);
+			referenceItem = ItemRegistry.IRON_ARROW.get();
 		}
 
 		/**
@@ -220,8 +219,8 @@ public class ArrowEntities {
 		 * @param z       the Z position
 		 */
 		public IronArrowEntity(Level worldIn, double x, double y, double z) {
-			super(DeferredRegistryHandler.IRON_ARROW_ENTITY.get(), worldIn, x, y, z);
-			referenceItem = DeferredRegistryHandler.IRON_ARROW.get();
+			super(EntityRegistry.IRON_ARROW_ENTITY.get(), worldIn, x, y, z);
+			referenceItem = ItemRegistry.IRON_ARROW.get();
 		}
 	}
 
@@ -235,7 +234,7 @@ public class ArrowEntities {
 		 */
 		public CobaltArrowEntity(EntityType<? extends AbstractArrow> type, Level world) {
 			super(type, world);
-			referenceItem = DeferredRegistryHandler.COBALT_ARROW.get();
+			referenceItem = ItemRegistry.COBALT_ARROW.get();
 		}
 
 		/**
@@ -245,8 +244,8 @@ public class ArrowEntities {
 		 * @param world   the <code>World</code> the entity is in
 		 */
 		public CobaltArrowEntity(LivingEntity shooter, Level world) {
-			super(DeferredRegistryHandler.COBALT_ARROW_ENTITY.get(), shooter, world);
-			referenceItem = DeferredRegistryHandler.COBALT_ARROW.get();
+			super(EntityRegistry.COBALT_ARROW_ENTITY.get(), shooter, world);
+			referenceItem = ItemRegistry.COBALT_ARROW.get();
 		}
 
 		/**
@@ -258,8 +257,8 @@ public class ArrowEntities {
 		 * @param z       the Z position
 		 */
 		public CobaltArrowEntity(Level worldIn, double x, double y, double z) {
-			super(DeferredRegistryHandler.COBALT_ARROW_ENTITY.get(), worldIn, x, y, z);
-			referenceItem = DeferredRegistryHandler.COBALT_ARROW.get();
+			super(EntityRegistry.COBALT_ARROW_ENTITY.get(), worldIn, x, y, z);
+			referenceItem = ItemRegistry.COBALT_ARROW.get();
 		}
 	}
 
@@ -273,7 +272,7 @@ public class ArrowEntities {
 		 */
 		public DiamondArrowEntity(EntityType<? extends AbstractArrow> type, Level world) {
 			super(type, world);
-			referenceItem = DeferredRegistryHandler.DIAMOND_ARROW.get();
+			referenceItem = ItemRegistry.DIAMOND_ARROW.get();
 		}
 
 		/**
@@ -283,8 +282,8 @@ public class ArrowEntities {
 		 * @param world   the <code>World</code> the entity is in
 		 */
 		public DiamondArrowEntity(LivingEntity shooter, Level world) {
-			super(DeferredRegistryHandler.DIAMOND_ARROW_ENTITY.get(), shooter, world);
-			referenceItem = DeferredRegistryHandler.DIAMOND_ARROW.get();
+			super(EntityRegistry.DIAMOND_ARROW_ENTITY.get(), shooter, world);
+			referenceItem = ItemRegistry.DIAMOND_ARROW.get();
 		}
 
 		/**
@@ -296,8 +295,8 @@ public class ArrowEntities {
 		 * @param z       the Z position
 		 */
 		public DiamondArrowEntity(Level worldIn, double x, double y, double z) {
-			super(DeferredRegistryHandler.DIAMOND_ARROW_ENTITY.get(), worldIn, x, y, z);
-			referenceItem = DeferredRegistryHandler.DIAMOND_ARROW.get();
+			super(EntityRegistry.DIAMOND_ARROW_ENTITY.get(), worldIn, x, y, z);
+			referenceItem = ItemRegistry.DIAMOND_ARROW.get();
 		}
 	}
 
@@ -311,7 +310,7 @@ public class ArrowEntities {
 		 */
 		public NetheriteArrowEntity(EntityType<? extends AbstractArrow> type, Level world) {
 			super(type, world);
-			referenceItem = DeferredRegistryHandler.NETHERITE_ARROW.get();
+			referenceItem = ItemRegistry.NETHERITE_ARROW.get();
 		}
 
 		/**
@@ -321,8 +320,8 @@ public class ArrowEntities {
 		 * @param world   the <code>World</code> the entity is in
 		 */
 		public NetheriteArrowEntity(LivingEntity shooter, Level world) {
-			super(DeferredRegistryHandler.NETHERITE_ARROW_ENTITY.get(), shooter, world);
-			referenceItem = DeferredRegistryHandler.NETHERITE_ARROW.get();
+			super(EntityRegistry.NETHERITE_ARROW_ENTITY.get(), shooter, world);
+			referenceItem = ItemRegistry.NETHERITE_ARROW.get();
 		}
 
 		/**
@@ -334,8 +333,8 @@ public class ArrowEntities {
 		 * @param z       the Z position
 		 */
 		public NetheriteArrowEntity(Level worldIn, double x, double y, double z) {
-			super(DeferredRegistryHandler.NETHERITE_ARROW_ENTITY.get(), worldIn, x, y, z);
-			referenceItem = DeferredRegistryHandler.NETHERITE_ARROW.get();
+			super(EntityRegistry.NETHERITE_ARROW_ENTITY.get(), worldIn, x, y, z);
+			referenceItem = ItemRegistry.NETHERITE_ARROW.get();
 		}
 
 		@Override
@@ -370,7 +369,7 @@ public class ArrowEntities {
 		 */
 		public SmokeGrenadeArrowEntity(EntityType<? extends AbstractArrow> type, Level world) {
 			super(type, world);
-			referenceItem = DeferredRegistryHandler.SMOKE_GRENADE_ARROW.get();
+			referenceItem = ItemRegistry.SMOKE_GRENADE_ARROW.get();
 		}
 
 		/**
@@ -380,8 +379,8 @@ public class ArrowEntities {
 		 * @param world   the <code>World</code> the entity is in
 		 */
 		public SmokeGrenadeArrowEntity(LivingEntity shooter, Level world) {
-			super(DeferredRegistryHandler.SMOKE_GRENADE_ARROW_ENTITY.get(), shooter, world);
-			referenceItem = DeferredRegistryHandler.SMOKE_GRENADE_ARROW.get();
+			super(EntityRegistry.SMOKE_GRENADE_ARROW_ENTITY.get(), shooter, world);
+			referenceItem = ItemRegistry.SMOKE_GRENADE_ARROW.get();
 		}
 
 		/**
@@ -393,8 +392,8 @@ public class ArrowEntities {
 		 * @param z       the Z position
 		 */
 		public SmokeGrenadeArrowEntity(Level worldIn, double x, double y, double z) {
-			super(DeferredRegistryHandler.SMOKE_GRENADE_ARROW_ENTITY.get(), worldIn, x, y, z);
-			referenceItem = DeferredRegistryHandler.SMOKE_GRENADE_ARROW.get();
+			super(EntityRegistry.SMOKE_GRENADE_ARROW_ENTITY.get(), worldIn, x, y, z);
+			referenceItem = ItemRegistry.SMOKE_GRENADE_ARROW.get();
 		}
 
 		/**

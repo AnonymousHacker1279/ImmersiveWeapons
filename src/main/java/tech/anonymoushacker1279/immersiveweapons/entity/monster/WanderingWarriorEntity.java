@@ -4,7 +4,7 @@ import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.Level;
-import tech.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
+import tech.anonymoushacker1279.immersiveweapons.init.SoundEventRegistry;
 import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
 
 public class WanderingWarriorEntity extends AbstractWanderingWarriorEntity {
@@ -26,7 +26,7 @@ public class WanderingWarriorEntity extends AbstractWanderingWarriorEntity {
 	 */
 	@Override
 	protected SoundEvent getAmbientSound() {
-		return DeferredRegistryHandler.WANDERING_WARRIOR_AMBIENT.get();
+		return SoundEventRegistry.WANDERING_WARRIOR_AMBIENT.get();
 	}
 
 	/**
@@ -47,7 +47,7 @@ public class WanderingWarriorEntity extends AbstractWanderingWarriorEntity {
 	 */
 	@Override
 	protected SoundEvent getHurtSound(DamageSource damageSourceIn) {
-		return DeferredRegistryHandler.WANDERING_WARRIOR_HURT.get();
+		return SoundEventRegistry.WANDERING_WARRIOR_HURT.get();
 	}
 
 	/**
@@ -57,6 +57,6 @@ public class WanderingWarriorEntity extends AbstractWanderingWarriorEntity {
 	 */
 	@Override
 	protected SoundEvent getDeathSound() {
-		return DeferredRegistryHandler.WANDERING_WARRIOR_DEATH.get();
+		return SoundEventRegistry.WANDERING_WARRIOR_DEATH.get();
 	}
 }

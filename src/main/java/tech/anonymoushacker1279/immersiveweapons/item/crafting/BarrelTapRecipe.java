@@ -9,7 +9,7 @@ import net.minecraft.world.Container;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.level.Level;
-import tech.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
+import tech.anonymoushacker1279.immersiveweapons.init.*;
 
 public record BarrelTapRecipe(ResourceLocation recipeId,
                               Ingredient material,
@@ -82,7 +82,7 @@ public record BarrelTapRecipe(ResourceLocation recipeId,
 	 */
 	@Override
 	public ItemStack getToastSymbol() {
-		return new ItemStack(DeferredRegistryHandler.BARREL_TAP.get());
+		return new ItemStack(BlockRegistry.BARREL_TAP.get());
 	}
 
 	/**
@@ -102,7 +102,7 @@ public record BarrelTapRecipe(ResourceLocation recipeId,
 	 */
 	@Override
 	public RecipeSerializer<?> getSerializer() {
-		return DeferredRegistryHandler.BARREL_TAP_RECIPE_SERIALIZER.get();
+		return RecipeSerializerRegistry.BARREL_TAP_RECIPE_SERIALIZER.get();
 	}
 
 	/**
@@ -112,7 +112,7 @@ public record BarrelTapRecipe(ResourceLocation recipeId,
 	 */
 	@Override
 	public RecipeType<?> getType() {
-		return DeferredRegistryHandler.BARREL_TAP_RECIPE_TYPE.get();
+		return RecipeTypeRegistry.BARREL_TAP_RECIPE_TYPE.get();
 	}
 
 	/**

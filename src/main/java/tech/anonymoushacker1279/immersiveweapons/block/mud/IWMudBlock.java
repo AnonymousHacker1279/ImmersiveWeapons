@@ -6,7 +6,7 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
-import tech.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
+import tech.anonymoushacker1279.immersiveweapons.init.BlockRegistry;
 
 public class IWMudBlock extends Block {
 
@@ -22,7 +22,7 @@ public class IWMudBlock extends Block {
 			changeStateChance = 0.03f;
 		}
 		if (canDry(pLevel, pPos) && pRandom.nextFloat() <= changeStateChance) {
-			pLevel.setBlockAndUpdate(pPos, DeferredRegistryHandler.DRIED_MUD.get().defaultBlockState());
+			pLevel.setBlockAndUpdate(pPos, BlockRegistry.DRIED_MUD.get().defaultBlockState());
 		}
 	}
 

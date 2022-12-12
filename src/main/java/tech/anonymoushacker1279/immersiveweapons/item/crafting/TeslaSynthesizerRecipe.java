@@ -10,7 +10,7 @@ import net.minecraft.world.Container;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.level.Level;
-import tech.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
+import tech.anonymoushacker1279.immersiveweapons.init.*;
 
 public record TeslaSynthesizerRecipe(ResourceLocation recipeId,
                                      Ingredient blockIngredient,
@@ -100,7 +100,7 @@ public record TeslaSynthesizerRecipe(ResourceLocation recipeId,
 	 */
 	@Override
 	public ItemStack getToastSymbol() {
-		return new ItemStack(DeferredRegistryHandler.TESLA_SYNTHESIZER.get());
+		return new ItemStack(BlockRegistry.TESLA_SYNTHESIZER.get());
 	}
 
 	/**
@@ -120,7 +120,7 @@ public record TeslaSynthesizerRecipe(ResourceLocation recipeId,
 	 */
 	@Override
 	public RecipeSerializer<?> getSerializer() {
-		return DeferredRegistryHandler.TESLA_SYNTHESIZER_RECIPE_SERIALIZER.get();
+		return RecipeSerializerRegistry.TESLA_SYNTHESIZER_RECIPE_SERIALIZER.get();
 	}
 
 	/**
@@ -130,7 +130,7 @@ public record TeslaSynthesizerRecipe(ResourceLocation recipeId,
 	 */
 	@Override
 	public RecipeType<?> getType() {
-		return DeferredRegistryHandler.TESLA_SYNTHESIZER_RECIPE_TYPE.get();
+		return RecipeTypeRegistry.TESLA_SYNTHESIZER_RECIPE_TYPE.get();
 	}
 
 	/**

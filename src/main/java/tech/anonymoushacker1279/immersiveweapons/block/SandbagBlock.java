@@ -16,7 +16,7 @@ import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import tech.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
+import tech.anonymoushacker1279.immersiveweapons.init.BlockItemRegistry;
 
 public class SandbagBlock extends HorizontalDirectionalBlock {
 
@@ -109,7 +109,7 @@ public class SandbagBlock extends HorizontalDirectionalBlock {
 	                             Player player, InteractionHand hand,
 	                             BlockHitResult hitResult) {
 
-		if (player.getMainHandItem().getItem() == DeferredRegistryHandler.SANDBAG_ITEM.get()) {
+		if (player.getMainHandItem().getItem() == BlockItemRegistry.SANDBAG_ITEM.get()) {
 			if (state.getValue(BAGS) == 0) {
 				level.setBlock(pos, state.setValue(BAGS, 1).setValue(FACING, state.getValue(FACING)), 3);
 				if (!player.isCreative()) {

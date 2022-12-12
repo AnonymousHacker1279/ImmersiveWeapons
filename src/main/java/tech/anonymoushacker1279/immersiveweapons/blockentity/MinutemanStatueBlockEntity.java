@@ -7,7 +7,8 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 import org.jetbrains.annotations.Nullable;
 import tech.anonymoushacker1279.immersiveweapons.entity.neutral.MinutemanEntity;
-import tech.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
+import tech.anonymoushacker1279.immersiveweapons.init.BlockEntityRegistry;
+import tech.anonymoushacker1279.immersiveweapons.init.EntityRegistry;
 import tech.anonymoushacker1279.immersiveweapons.world.level.levelgen.biomes.BiomesAndDimensions;
 
 import java.util.List;
@@ -18,7 +19,7 @@ public class MinutemanStatueBlockEntity extends AbstractStatueBlockEntity {
 	 * Constructor for MinutemanStatueBlockEntity.
 	 */
 	public MinutemanStatueBlockEntity(BlockPos blockPos, BlockState blockState) {
-		super(DeferredRegistryHandler.MINUTEMAN_STATUE_BLOCK_ENTITY.get(), blockPos, blockState);
+		super(BlockEntityRegistry.MINUTEMAN_STATUE_BLOCK_ENTITY.get(), blockPos, blockState);
 	}
 
 	/**
@@ -37,7 +38,7 @@ public class MinutemanStatueBlockEntity extends AbstractStatueBlockEntity {
 			scannedEntities = listOfMinutemenInArea.size();
 
 			if (scannedEntities <= 16) {
-				MinutemanEntity minutemanEntity = DeferredRegistryHandler.MINUTEMAN_ENTITY.get().create(level);
+				MinutemanEntity minutemanEntity = EntityRegistry.MINUTEMAN_ENTITY.get().create(level);
 				if (minutemanEntity != null) {
 					attemptSpawnEntity(minutemanEntity);
 				}

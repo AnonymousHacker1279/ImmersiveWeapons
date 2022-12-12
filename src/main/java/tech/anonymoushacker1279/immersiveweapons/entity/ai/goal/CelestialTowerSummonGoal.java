@@ -22,7 +22,8 @@ import org.jetbrains.annotations.Nullable;
 import tech.anonymoushacker1279.immersiveweapons.config.CommonConfig;
 import tech.anonymoushacker1279.immersiveweapons.entity.monster.CelestialTowerEntity;
 import tech.anonymoushacker1279.immersiveweapons.entity.monster.RockSpiderEntity;
-import tech.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
+import tech.anonymoushacker1279.immersiveweapons.init.EntityRegistry;
+import tech.anonymoushacker1279.immersiveweapons.init.SoundEventRegistry;
 import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
 
 import java.util.Objects;
@@ -67,7 +68,7 @@ public class CelestialTowerSummonGoal extends Goal {
 						mob.getY(),
 						mob.getZ() + GeneralUtilities.getRandomNumber(-8, 9));
 
-				RockSpiderEntity rockSpiderEntity = new RockSpiderEntity(DeferredRegistryHandler.ROCK_SPIDER_ENTITY.get(), mob.level);
+				RockSpiderEntity rockSpiderEntity = new RockSpiderEntity(EntityRegistry.ROCK_SPIDER_ENTITY.get(), mob.level);
 				spawnEntity(serverLevel, rockSpiderEntity, summonPos);
 				spawnEntityParticles(serverLevel);
 			}
@@ -131,7 +132,7 @@ public class CelestialTowerSummonGoal extends Goal {
 					mob.getTotalWavesToSpawn()));
 
 			mob.setNoActionTime(0);
-			mob.playSound(DeferredRegistryHandler.CELESTIAL_TOWER_SUMMON.get(),
+			mob.playSound(SoundEventRegistry.CELESTIAL_TOWER_SUMMON.get(),
 					1.0f,
 					1.0f + GeneralUtilities.getRandomNumber(-0.3f, 0.2f));
 
@@ -144,7 +145,7 @@ public class CelestialTowerSummonGoal extends Goal {
 			mob.bossEvent.setName(mob.getDisplayName());
 			mob.bossEvent.setProgress(1f);
 			mob.setNoActionTime(0);
-			mob.playSound(DeferredRegistryHandler.CELESTIAL_TOWER_VULNERABLE.get(),
+			mob.playSound(SoundEventRegistry.CELESTIAL_TOWER_VULNERABLE.get(),
 					1.0f,
 					1.0f + GeneralUtilities.getRandomNumber(-0.3f, 0.2f));
 

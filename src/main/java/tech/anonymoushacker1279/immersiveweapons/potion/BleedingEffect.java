@@ -4,7 +4,7 @@ import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.entity.LivingEntity;
-import tech.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
+import tech.anonymoushacker1279.immersiveweapons.init.ParticleTypesRegistry;
 import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
 
 public class BleedingEffect extends MobEffect {
@@ -38,7 +38,7 @@ public class BleedingEffect extends MobEffect {
 				cooldownTicks--;
 			}
 		} else {
-			livingEntity.level.addParticle(DeferredRegistryHandler.BLOOD_PARTICLE.get(),
+			livingEntity.level.addParticle(ParticleTypesRegistry.BLOOD_PARTICLE.get(),
 					livingEntity.position().x, livingEntity.position().y + GeneralUtilities.getRandomNumber(0.3d, livingEntity.getEyeHeight()),
 					livingEntity.position().z, GeneralUtilities.getRandomNumber(-0.03d, 0.03d),
 					GeneralUtilities.getRandomNumber(-0.1d, -0.08d), GeneralUtilities.getRandomNumber(-0.03d, 0.03d));

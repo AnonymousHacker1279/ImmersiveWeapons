@@ -5,7 +5,7 @@ import net.minecraft.world.entity.projectile.AbstractArrow.Pickup;
 import net.minecraft.world.level.Level;
 import tech.anonymoushacker1279.immersiveweapons.entity.projectile.BulletEntities;
 import tech.anonymoushacker1279.immersiveweapons.entity.projectile.BulletEntities.StoneMusketBallEntity;
-import tech.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
+import tech.anonymoushacker1279.immersiveweapons.init.SoundEventRegistry;
 
 public class StoneMusketBallItem extends AbstractBulletItem {
 
@@ -32,7 +32,7 @@ public class StoneMusketBallItem extends AbstractBulletItem {
 		StoneMusketBallEntity bulletEntity = new StoneMusketBallEntity(shooter, level);
 		bulletEntity.setBaseDamage(damage);
 		bulletEntity.pickup = Pickup.DISALLOWED;
-		bulletEntity.setSoundEvent(DeferredRegistryHandler.BULLET_WHIZZ.get());
+		bulletEntity.setSoundEvent(SoundEventRegistry.BULLET_WHIZZ.get());
 		return bulletEntity;
 	}
 }

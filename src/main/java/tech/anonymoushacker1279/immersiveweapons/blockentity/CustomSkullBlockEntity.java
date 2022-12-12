@@ -4,7 +4,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.entity.SkullBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import tech.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
+import tech.anonymoushacker1279.immersiveweapons.init.BlockEntityRegistry;
 
 public class CustomSkullBlockEntity extends SkullBlockEntity {
 
@@ -14,6 +14,6 @@ public class CustomSkullBlockEntity extends SkullBlockEntity {
 
 	@Override
 	public BlockEntityType<?> getType() {
-		return DeferredRegistryHandler.CUSTOM_SKULL_BLOCK_ENTITY.get();
+		return BlockEntityRegistry.CUSTOM_SKULL_BLOCK_ENTITY.get();
 	}
 }

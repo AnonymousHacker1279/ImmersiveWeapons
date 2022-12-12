@@ -30,7 +30,7 @@ import org.jetbrains.annotations.Nullable;
 import tech.anonymoushacker1279.immersiveweapons.client.particle.bullet_impact.BulletImpactParticleOptions;
 import tech.anonymoushacker1279.immersiveweapons.config.CommonConfig;
 import tech.anonymoushacker1279.immersiveweapons.data.tags.groups.forge.ForgeBlockTagGroups;
-import tech.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
+import tech.anonymoushacker1279.immersiveweapons.init.*;
 import tech.anonymoushacker1279.immersiveweapons.item.projectile.gun.MusketItem;
 import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
 
@@ -47,7 +47,7 @@ public class BulletEntity extends AbstractArrow {
 	@Nullable
 	private IntOpenHashSet piercedEntities;
 	private boolean hasAlreadyBrokeGlass = false;
-	private Item firingItem = DeferredRegistryHandler.FLINTLOCK_PISTOL.get();
+	private Item firingItem = ItemRegistry.FLINTLOCK_PISTOL.get();
 
 	/**
 	 * Constructor for AbstractBulletEntity.
@@ -474,7 +474,7 @@ public class BulletEntity extends AbstractArrow {
 	public void handleEntityEvent(byte statusID) {
 		if (statusID == VANILLA_IMPACT_STATUS_ID) {
 			for (int i = 0; i <= 16; i++) {
-				level.addParticle(DeferredRegistryHandler.BLOOD_PARTICLE.get(),
+				level.addParticle(ParticleTypesRegistry.BLOOD_PARTICLE.get(),
 						position().x, position().y, position().z,
 						GeneralUtilities.getRandomNumber(-0.03d, 0.03d),
 						GeneralUtilities.getRandomNumber(-0.03d, 0.03d),
@@ -512,7 +512,7 @@ public class BulletEntity extends AbstractArrow {
 
 	@Override
 	protected SoundEvent getDefaultHitGroundSoundEvent() {
-		return DeferredRegistryHandler.BULLET_WHIZZ.get();
+		return SoundEventRegistry.BULLET_WHIZZ.get();
 	}
 
 	protected float getDefaultInertia() {

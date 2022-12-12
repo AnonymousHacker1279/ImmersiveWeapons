@@ -25,7 +25,7 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.*;
 import tech.anonymoushacker1279.immersiveweapons.blockentity.BearTrapBlockEntity;
-import tech.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
+import tech.anonymoushacker1279.immersiveweapons.init.SoundEventRegistry;
 
 public class BearTrapBlock extends Block implements SimpleWaterloggedBlock, EntityBlock {
 
@@ -180,7 +180,7 @@ public class BearTrapBlock extends Block implements SimpleWaterloggedBlock, Enti
 					level.setBlock(pos, state.setValue(TRIGGERED, true).setValue(VINES, false), 3);
 				}
 				livingEntity.hurt(BearTrapBlockEntity.damageSource, 2.0F);
-				level.playSound((Player) entity, pos, DeferredRegistryHandler.BEAR_TRAP_CLOSE.get(), SoundSource.BLOCKS,
+				level.playSound((Player) entity, pos, SoundEventRegistry.BEAR_TRAP_CLOSE.get(), SoundSource.BLOCKS,
 						1f, 1f);
 
 				if (blockEntity != null) {
@@ -195,7 +195,7 @@ public class BearTrapBlock extends Block implements SimpleWaterloggedBlock, Enti
 			}
 			level.setBlock(pos, state.setValue(TRIGGERED, true), 3);
 			livingEntity.hurt(BearTrapBlockEntity.damageSource, 2.0F);
-			level.playLocalSound(pos.getX(), pos.getY(), pos.getZ(), DeferredRegistryHandler.BEAR_TRAP_CLOSE.get(),
+			level.playLocalSound(pos.getX(), pos.getY(), pos.getZ(), SoundEventRegistry.BEAR_TRAP_CLOSE.get(),
 					SoundSource.BLOCKS, 1f, 1f, false);
 
 			if (blockEntity != null) {

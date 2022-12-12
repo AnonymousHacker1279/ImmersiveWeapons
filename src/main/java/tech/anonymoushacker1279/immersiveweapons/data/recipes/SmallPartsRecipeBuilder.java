@@ -12,7 +12,7 @@ import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.Nullable;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
-import tech.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
+import tech.anonymoushacker1279.immersiveweapons.init.RecipeSerializerRegistry;
 
 import java.util.List;
 import java.util.function.Consumer;
@@ -31,7 +31,7 @@ public class SmallPartsRecipeBuilder {
 	}
 
 	public static SmallPartsRecipeBuilder tinker(Ingredient material, List<Item> craftables) {
-		return new SmallPartsRecipeBuilder(DeferredRegistryHandler.SMALL_PARTS_RECIPE_SERIALIZER.get(), material, craftables);
+		return new SmallPartsRecipeBuilder(RecipeSerializerRegistry.SMALL_PARTS_RECIPE_SERIALIZER.get(), material, craftables);
 	}
 
 	public SmallPartsRecipeBuilder unlocks(String pName, CriterionTriggerInstance pCriterion) {

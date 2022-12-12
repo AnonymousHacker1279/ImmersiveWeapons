@@ -17,7 +17,7 @@ import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import tech.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
+import tech.anonymoushacker1279.immersiveweapons.init.BlockRegistry;
 import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
 
 public class WarriorStatueHead extends HorizontalDirectionalBlock implements SimpleWaterloggedBlock {
@@ -112,7 +112,7 @@ public class WarriorStatueHead extends HorizontalDirectionalBlock implements Sim
 	@Override
 	public void playerWillDestroy(Level worldIn, BlockPos pos, BlockState state, Player player) {
 		if (state.getValue(POWERED)) {
-			worldIn.setBlock(pos.below(), DeferredRegistryHandler.WARRIOR_STATUE_TORSO.get().defaultBlockState().setValue(FACING, state.getValue(FACING)).setValue(POWERED, false), 3);
+			worldIn.setBlock(pos.below(), BlockRegistry.WARRIOR_STATUE_TORSO.get().defaultBlockState().setValue(FACING, state.getValue(FACING)).setValue(POWERED, false), 3);
 		}
 
 		super.playerWillDestroy(worldIn, pos, state, player);

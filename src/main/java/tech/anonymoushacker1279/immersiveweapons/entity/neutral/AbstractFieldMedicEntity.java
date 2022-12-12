@@ -34,8 +34,7 @@ import net.minecraftforge.network.NetworkEvent.Context;
 import net.minecraftforge.network.PacketDistributor;
 import org.jetbrains.annotations.Nullable;
 import tech.anonymoushacker1279.immersiveweapons.entity.GrantAdvancementOnDiscovery;
-import tech.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
-import tech.anonymoushacker1279.immersiveweapons.init.PacketHandler;
+import tech.anonymoushacker1279.immersiveweapons.init.*;
 import tech.anonymoushacker1279.immersiveweapons.item.UsedSyringeItem;
 import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
 
@@ -213,7 +212,7 @@ public abstract class AbstractFieldMedicEntity extends PathfinderMob implements 
 	private void setCombatTask() {
 		if (!level.isClientSide) {
 			goalSelector.removeGoal(aiAttackOnCollide);
-			setItemInHand(InteractionHand.MAIN_HAND, new ItemStack(DeferredRegistryHandler.USED_SYRINGE.get()));
+			setItemInHand(InteractionHand.MAIN_HAND, new ItemStack(ItemRegistry.USED_SYRINGE.get()));
 			goalSelector.addGoal(1, aiAttackOnCollide);
 		}
 	}
@@ -262,11 +261,11 @@ public abstract class AbstractFieldMedicEntity extends PathfinderMob implements 
 	private void heal() {
 		healCooldown = 100;
 		if (getHealth() <= getMaxHealth() / 2) {
-			setItemInHand(InteractionHand.OFF_HAND, new ItemStack(DeferredRegistryHandler.FIRST_AID_KIT.get()));
+			setItemInHand(InteractionHand.OFF_HAND, new ItemStack(ItemRegistry.FIRST_AID_KIT.get()));
 			addEffect(new MobEffectInstance(MobEffects.REGENERATION, 240, 1, false, true));
 			addEffect(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, 1200, 0, false, true));
 		} else {
-			setItemInHand(InteractionHand.OFF_HAND, new ItemStack(DeferredRegistryHandler.BANDAGE.get()));
+			setItemInHand(InteractionHand.OFF_HAND, new ItemStack(ItemRegistry.BANDAGE.get()));
 			addEffect(new MobEffectInstance(MobEffects.REGENERATION, 240, 0, false, true));
 		}
 	}
@@ -281,7 +280,7 @@ public abstract class AbstractFieldMedicEntity extends PathfinderMob implements 
 	public boolean doHurtTarget(Entity entityIn) {
 		boolean canHurtTarget = super.doHurtTarget(entityIn);
 		if (canHurtTarget) {
-			if (getMainHandItem().getItem() == DeferredRegistryHandler.USED_SYRINGE.get()) {
+			if (getMainHandItem().getItem() == ItemRegistry.USED_SYRINGE.get()) {
 				float randomNumber = GeneralUtilities.getRandomNumber(0f, 1f);
 				// Poison chance
 				if (randomNumber <= 0.8f) {
@@ -342,11 +341,11 @@ public abstract class AbstractFieldMedicEntity extends PathfinderMob implements 
 			getNavigation().moveTo(currentlyTargetedEntity, 1.0D);
 			if (distanceTo(currentlyTargetedEntity) <= 1.5 && hasLineOfSight(currentlyTargetedEntity)) {
 				if (currentlyTargetedEntity.getHealth() <= currentlyTargetedEntity.getMaxHealth() / 2) {
-					setItemInHand(InteractionHand.MAIN_HAND, new ItemStack(DeferredRegistryHandler.FIRST_AID_KIT.get()));
+					setItemInHand(InteractionHand.MAIN_HAND, new ItemStack(ItemRegistry.FIRST_AID_KIT.get()));
 					currentlyTargetedEntity.addEffect(new MobEffectInstance(MobEffects.REGENERATION, 240, 1, false, true));
 					currentlyTargetedEntity.addEffect(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, 1200, 0, false, true));
 				} else {
-					setItemInHand(InteractionHand.MAIN_HAND, new ItemStack(DeferredRegistryHandler.BANDAGE.get()));
+					setItemInHand(InteractionHand.MAIN_HAND, new ItemStack(ItemRegistry.BANDAGE.get()));
 					currentlyTargetedEntity.addEffect(new MobEffectInstance(MobEffects.REGENERATION, 240, 0, false, true));
 				}
 				lastTargetedEntity = currentlyTargetedEntity;
@@ -418,7 +417,7 @@ public abstract class AbstractFieldMedicEntity extends PathfinderMob implements 
 			Minecraft minecraft = Minecraft.getInstance();
 			if (minecraft.level != null) {
 				minecraft.level.playLocalSound(msg.blockPos.getX(), msg.blockPos.getY(), msg.blockPos.getZ(),
-						DeferredRegistryHandler.FIELD_MEDIC_ATTACK.get(), SoundSource.HOSTILE,
+						SoundEventRegistry.FIELD_MEDIC_ATTACK.get(), SoundSource.HOSTILE,
 						1.0f, 1.0f, false);
 			}
 		}

@@ -16,7 +16,8 @@ import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
 import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
-import tech.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
+import tech.anonymoushacker1279.immersiveweapons.init.EntityRegistry;
+import tech.anonymoushacker1279.immersiveweapons.init.ItemRegistry;
 
 import java.util.*;
 import java.util.function.BiConsumer;
@@ -31,7 +32,7 @@ public class EntityLootTables implements Consumer<BiConsumer<ResourceLocation, B
 	private final Map<ResourceLocation, LootTable.Builder> map = Maps.newHashMap();
 
 	protected void addTables() {
-		add(DeferredRegistryHandler.ROCK_SPIDER_ENTITY.get(), LootTable.lootTable()
+		add(EntityRegistry.ROCK_SPIDER_ENTITY.get(), LootTable.lootTable()
 				.withPool(LootPool.lootPool()
 						.setRolls(ConstantValue.exactly(1.0F))
 						.add(LootItem.lootTableItem(Items.STRING)
@@ -49,7 +50,7 @@ public class EntityLootTables implements Consumer<BiConsumer<ResourceLocation, B
 								.apply(LootingEnchantFunction.lootingMultiplier(UniformGenerator.between(0.0F, 1.0F))))
 						.when(LootItemKilledByPlayerCondition.killedByPlayer())));
 
-		add(DeferredRegistryHandler.DYING_SOLDIER_ENTITY.get(), LootTable.lootTable()
+		add(EntityRegistry.DYING_SOLDIER_ENTITY.get(), LootTable.lootTable()
 				.withPool(LootPool.lootPool()
 						.setRolls(ConstantValue.exactly(1.0F))
 						.add(LootItem.lootTableItem(Items.ROTTEN_FLESH)
@@ -57,13 +58,13 @@ public class EntityLootTables implements Consumer<BiConsumer<ResourceLocation, B
 								.apply(LootingEnchantFunction.lootingMultiplier(UniformGenerator.between(0.0F, 1.0F)))))
 				.withPool(LootPool.lootPool()
 						.setRolls(ConstantValue.exactly(1.0F))
-						.add(LootItem.lootTableItem(DeferredRegistryHandler.IRON_MUSKET_BALL.get())
+						.add(LootItem.lootTableItem(ItemRegistry.IRON_MUSKET_BALL.get())
 								.apply(SetItemCountFunction.setCount(UniformGenerator.between(0.0F, 4.0F)))
 								.apply(LootingEnchantFunction.lootingMultiplier(UniformGenerator.between(0.0F, 1.0F))))
 						.when(LootItemKilledByPlayerCondition.killedByPlayer()))
 				.withPool(LootPool.lootPool()
 						.setRolls(ConstantValue.exactly(1.0F))
-						.add(LootItem.lootTableItem(DeferredRegistryHandler.CHOCOLATE_BAR.get())
+						.add(LootItem.lootTableItem(ItemRegistry.CHOCOLATE_BAR.get())
 								.apply(LootingEnchantFunction.lootingMultiplier(UniformGenerator.between(0.0F, 1.0F))))
 						.add(LootItem.lootTableItem(Items.CARROT)
 								.apply(LootingEnchantFunction.lootingMultiplier(UniformGenerator.between(0.0F, 1.0F))))
@@ -74,7 +75,7 @@ public class EntityLootTables implements Consumer<BiConsumer<ResourceLocation, B
 						.when(LootItemKilledByPlayerCondition.killedByPlayer())
 						.when(LootItemRandomChanceWithLootingCondition.randomChanceAndLootingBoost(0.035F, 0.02F))));
 
-		add(DeferredRegistryHandler.WANDERING_WARRIOR_ENTITY.get(), LootTable.lootTable()
+		add(EntityRegistry.WANDERING_WARRIOR_ENTITY.get(), LootTable.lootTable()
 				.withPool(LootPool.lootPool()
 						.setRolls(ConstantValue.exactly(1.0F))
 						.add(LootItem.lootTableItem(Items.LEATHER)
@@ -82,7 +83,7 @@ public class EntityLootTables implements Consumer<BiConsumer<ResourceLocation, B
 								.apply(LootingEnchantFunction.lootingMultiplier(UniformGenerator.between(0.0F, 2.0F))))
 						.when(LootItemKilledByPlayerCondition.killedByPlayer())));
 
-		add(DeferredRegistryHandler.HANS_ENTITY.get(), LootTable.lootTable()
+		add(EntityRegistry.HANS_ENTITY.get(), LootTable.lootTable()
 				.withPool(LootPool.lootPool()
 						.setRolls(ConstantValue.exactly(1.0F))
 						.add(LootItem.lootTableItem(Items.LEATHER)
@@ -95,7 +96,7 @@ public class EntityLootTables implements Consumer<BiConsumer<ResourceLocation, B
 						.when(LootItemKilledByPlayerCondition.killedByPlayer())
 						.when(LootItemRandomChanceWithLootingCondition.randomChanceAndLootingBoost(0.025F, 0.01F))));
 
-		add(DeferredRegistryHandler.MINUTEMAN_ENTITY.get(), LootTable.lootTable()
+		add(EntityRegistry.MINUTEMAN_ENTITY.get(), LootTable.lootTable()
 				.withPool(LootPool.lootPool()
 						.setRolls(ConstantValue.exactly(1.0F))
 						.add(LootItem.lootTableItem(Items.GUNPOWDER)
@@ -103,18 +104,18 @@ public class EntityLootTables implements Consumer<BiConsumer<ResourceLocation, B
 								.apply(LootingEnchantFunction.lootingMultiplier(UniformGenerator.between(0.0F, 1.0F)))))
 				.withPool(LootPool.lootPool()
 						.setRolls(ConstantValue.exactly(1.0F))
-						.add(LootItem.lootTableItem(DeferredRegistryHandler.COPPER_MUSKET_BALL.get())
+						.add(LootItem.lootTableItem(ItemRegistry.COPPER_MUSKET_BALL.get())
 								.apply(SetItemCountFunction.setCount(UniformGenerator.between(0.0F, 4.0F)))
 								.apply(LootingEnchantFunction.lootingMultiplier(UniformGenerator.between(0.0F, 1.0F))))
 						.when(LootItemKilledByPlayerCondition.killedByPlayer()))
 				.withPool(LootPool.lootPool()
 						.setRolls(ConstantValue.exactly(1.0F))
-						.add(LootItem.lootTableItem(DeferredRegistryHandler.BLUNDERBUSS.get()))
+						.add(LootItem.lootTableItem(ItemRegistry.BLUNDERBUSS.get()))
 						.when(LootItemKilledByPlayerCondition.killedByPlayer())
 						.when(LootItemRandomChanceWithLootingCondition.randomChanceAndLootingBoost(0.017F, 0.05F)))
 				.withPool(LootPool.lootPool()
 						.setRolls(ConstantValue.exactly(1.0F))
-						.add(LootItem.lootTableItem(DeferredRegistryHandler.CHOCOLATE_BAR.get())
+						.add(LootItem.lootTableItem(ItemRegistry.CHOCOLATE_BAR.get())
 								.apply(LootingEnchantFunction.lootingMultiplier(UniformGenerator.between(0.0F, 1.0F))))
 						.add(LootItem.lootTableItem(Items.CARROT)
 								.apply(LootingEnchantFunction.lootingMultiplier(UniformGenerator.between(0.0F, 1.0F))))
@@ -125,24 +126,24 @@ public class EntityLootTables implements Consumer<BiConsumer<ResourceLocation, B
 						.when(LootItemKilledByPlayerCondition.killedByPlayer())
 						.when(LootItemRandomChanceWithLootingCondition.randomChanceAndLootingBoost(0.035F, 0.02F))));
 
-		add(DeferredRegistryHandler.FIELD_MEDIC_ENTITY.get(), LootTable.lootTable()
+		add(EntityRegistry.FIELD_MEDIC_ENTITY.get(), LootTable.lootTable()
 				.withPool(LootPool.lootPool()
 						.setRolls(ConstantValue.exactly(1.0F))
-						.add(LootItem.lootTableItem(DeferredRegistryHandler.USED_SYRINGE.get()))
+						.add(LootItem.lootTableItem(ItemRegistry.USED_SYRINGE.get()))
 						.when(LootItemKilledByPlayerCondition.killedByPlayer())
 						.when(LootItemRandomChanceWithLootingCondition.randomChanceAndLootingBoost(0.015F, 0.03F))));
 
-		add(DeferredRegistryHandler.DYING_SOLDIER_ENTITY.get(), LootTable.lootTable()
+		add(EntityRegistry.DYING_SOLDIER_ENTITY.get(), LootTable.lootTable()
 				.withPool(LootPool.lootPool()
 						.setRolls(ConstantValue.exactly(1.0F))
-						.add(LootItem.lootTableItem(DeferredRegistryHandler.FLINTLOCK_PISTOL.get()))
+						.add(LootItem.lootTableItem(ItemRegistry.FLINTLOCK_PISTOL.get()))
 						.when(LootItemKilledByPlayerCondition.killedByPlayer())
 						.when(LootItemRandomChanceWithLootingCondition.randomChanceAndLootingBoost(0.020F, 0.05F))));
 
-		add(DeferredRegistryHandler.CELESTIAL_TOWER_ENTITY.get(), LootTable.lootTable()
+		add(EntityRegistry.CELESTIAL_TOWER_ENTITY.get(), LootTable.lootTable()
 				.withPool(LootPool.lootPool()
 						.setRolls(ConstantValue.exactly(1.0F))
-						.add(LootItem.lootTableItem(DeferredRegistryHandler.CELESTIAL_FRAGMENT.get())
+						.add(LootItem.lootTableItem(ItemRegistry.CELESTIAL_FRAGMENT.get())
 								.apply(SetItemCountFunction.setCount(UniformGenerator.between(0.0F, 3.0F)))
 								.apply(LootingEnchantFunction.lootingMultiplier(UniformGenerator.between(0.0F, 2.0F))))
 						.when(LootItemKilledByPlayerCondition.killedByPlayer())));
@@ -174,7 +175,7 @@ public class EntityLootTables implements Consumer<BiConsumer<ResourceLocation, B
 	}
 
 	protected List<RegistryObject<EntityType<?>>> getKnownEntities() {
-		return StreamSupport.stream(Spliterators.spliteratorUnknownSize(DeferredRegistryHandler.ENTITY_TYPES.getEntries().stream().iterator(), 0),
+		return StreamSupport.stream(Spliterators.spliteratorUnknownSize(EntityRegistry.ENTITY_TYPES.getEntries().stream().iterator(), 0),
 				false).collect(Collectors.toList());
 	}
 

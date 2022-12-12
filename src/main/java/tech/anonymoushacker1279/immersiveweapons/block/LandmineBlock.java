@@ -22,7 +22,7 @@ import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.*;
 import org.jetbrains.annotations.Nullable;
-import tech.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
+import tech.anonymoushacker1279.immersiveweapons.init.ItemRegistry;
 
 public class LandmineBlock extends Block implements SimpleWaterloggedBlock {
 
@@ -74,11 +74,11 @@ public class LandmineBlock extends Block implements SimpleWaterloggedBlock {
 	public InteractionResult use(BlockState state, Level worldIn, BlockPos pos, Player player, InteractionHand handIn, BlockHitResult blockRayTraceResult) {
 		if (!worldIn.isClientSide) {
 			ItemStack currentlyHeldItem = player.getMainHandItem();
-			if (state.getValue(ARMED) && currentlyHeldItem.getItem() == DeferredRegistryHandler.PLIERS.get()) {
+			if (state.getValue(ARMED) && currentlyHeldItem.getItem() == ItemRegistry.PLIERS.get()) {
 				worldIn.setBlock(pos, state.setValue(ARMED, false), 3);
 				return InteractionResult.PASS;
 			}
-			if (!state.getValue(ARMED) && currentlyHeldItem.getItem() != DeferredRegistryHandler.PLIERS.get()) {
+			if (!state.getValue(ARMED) && currentlyHeldItem.getItem() != ItemRegistry.PLIERS.get()) {
 				worldIn.setBlock(pos, state.setValue(ARMED, true), 3);
 			}
 			if (!state.getValue(VINES) && !state.getValue(SAND) && currentlyHeldItem.getItem() == Items.VINE) {

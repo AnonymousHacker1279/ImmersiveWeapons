@@ -13,7 +13,7 @@ import net.minecraftforge.common.data.JsonCodecProvider;
 import net.minecraftforge.common.world.BiomeModifier;
 import net.minecraftforge.common.world.ForgeBiomeModifiers.AddSpawnsBiomeModifier;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
-import tech.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
+import tech.anonymoushacker1279.immersiveweapons.init.EntityRegistry;
 
 import java.util.HashMap;
 
@@ -39,11 +39,11 @@ public class SpawnBiomeModifiers {
 
 		addWanderingWarriorSpawn = AddSpawnsBiomeModifier.singleSpawn(
 				overworldTag,
-				new SpawnerData(DeferredRegistryHandler.WANDERING_WARRIOR_ENTITY.get(), 65, 1, 1)
+				new SpawnerData(EntityRegistry.WANDERING_WARRIOR_ENTITY.get(), 65, 1, 1)
 		);
 		addHansSpawn = AddSpawnsBiomeModifier.singleSpawn(
 				overworldTag,
-				new SpawnerData(DeferredRegistryHandler.HANS_ENTITY.get(), 5, 1, 1)
+				new SpawnerData(EntityRegistry.HANS_ENTITY.get(), 5, 1, 1)
 		);
 	}
 

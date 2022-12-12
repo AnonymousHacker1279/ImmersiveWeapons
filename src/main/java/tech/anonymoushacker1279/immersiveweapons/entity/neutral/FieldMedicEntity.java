@@ -4,7 +4,7 @@ import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.Level;
-import tech.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
+import tech.anonymoushacker1279.immersiveweapons.init.SoundEventRegistry;
 import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
 
 public class FieldMedicEntity extends AbstractFieldMedicEntity {
@@ -26,7 +26,7 @@ public class FieldMedicEntity extends AbstractFieldMedicEntity {
 	 */
 	@Override
 	protected SoundEvent getAmbientSound() {
-		return DeferredRegistryHandler.FIELD_MEDIC_AMBIENT.get();
+		return SoundEventRegistry.FIELD_MEDIC_AMBIENT.get();
 	}
 
 	/**
@@ -47,7 +47,7 @@ public class FieldMedicEntity extends AbstractFieldMedicEntity {
 	 */
 	@Override
 	protected SoundEvent getHurtSound(DamageSource damageSourceIn) {
-		return DeferredRegistryHandler.FIELD_MEDIC_HURT.get();
+		return SoundEventRegistry.FIELD_MEDIC_HURT.get();
 	}
 
 	/**
@@ -57,7 +57,7 @@ public class FieldMedicEntity extends AbstractFieldMedicEntity {
 	 */
 	@Override
 	protected SoundEvent getDeathSound() {
-		return DeferredRegistryHandler.FIELD_MEDIC_DEATH.get();
+		return SoundEventRegistry.FIELD_MEDIC_DEATH.get();
 	}
 
 	/**
@@ -67,6 +67,6 @@ public class FieldMedicEntity extends AbstractFieldMedicEntity {
 	 */
 	@Override
 	protected SoundEvent getStepSound() {
-		return DeferredRegistryHandler.FIELD_MEDIC_STEP.get();
+		return SoundEventRegistry.FIELD_MEDIC_STEP.get();
 	}
 }

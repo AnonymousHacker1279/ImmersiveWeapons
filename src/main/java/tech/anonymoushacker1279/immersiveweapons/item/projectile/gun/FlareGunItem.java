@@ -3,7 +3,8 @@ package tech.anonymoushacker1279.immersiveweapons.item.projectile.gun;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import tech.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
+import tech.anonymoushacker1279.immersiveweapons.init.ItemRegistry;
+import tech.anonymoushacker1279.immersiveweapons.init.SoundEventRegistry;
 
 import java.util.function.Predicate;
 
@@ -25,7 +26,7 @@ public class FlareGunItem extends SimplePistolItem {
 	 */
 	@Override
 	public Item defaultAmmo() {
-		return DeferredRegistryHandler.FLARE.get();
+		return ItemRegistry.FLARE.get();
 	}
 
 	/**
@@ -45,6 +46,6 @@ public class FlareGunItem extends SimplePistolItem {
 	 */
 	@Override
 	public SoundEvent getFireSound() {
-		return DeferredRegistryHandler.FLARE_GUN_FIRE.get();
+		return SoundEventRegistry.FLARE_GUN_FIRE.get();
 	}
 }

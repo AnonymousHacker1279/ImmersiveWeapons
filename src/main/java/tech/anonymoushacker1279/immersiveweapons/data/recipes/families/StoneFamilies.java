@@ -3,7 +3,7 @@ package tech.anonymoushacker1279.immersiveweapons.data.recipes.families;
 import com.google.common.collect.ImmutableList;
 import net.minecraft.world.level.block.Block;
 import org.jetbrains.annotations.Nullable;
-import tech.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
+import tech.anonymoushacker1279.immersiveweapons.init.BlockRegistry;
 
 import java.util.Collection;
 import java.util.function.Supplier;
@@ -23,28 +23,28 @@ public record StoneFamilies(Supplier<? extends Block> stone,
                             @Nullable Supplier<? extends Block> smoothStairs) {
 
 	public static final StoneFamilies CLOUD_MARBLE = new StoneFamilies(
-			DeferredRegistryHandler.CLOUD_MARBLE,
-			DeferredRegistryHandler.CLOUD_MARBLE_BRICKS, true,
-			DeferredRegistryHandler.CLOUD_MARBLE_BRICK_SLAB,
-			DeferredRegistryHandler.CLOUD_MARBLE_BRICK_STAIRS,
-			DeferredRegistryHandler.CLOUD_MARBLE_BRICK_WALL,
-			DeferredRegistryHandler.CLOUD_MARBLE_PILLAR,
+			BlockRegistry.CLOUD_MARBLE,
+			BlockRegistry.CLOUD_MARBLE_BRICKS, true,
+			BlockRegistry.CLOUD_MARBLE_BRICK_SLAB,
+			BlockRegistry.CLOUD_MARBLE_BRICK_STAIRS,
+			BlockRegistry.CLOUD_MARBLE_BRICK_WALL,
+			BlockRegistry.CLOUD_MARBLE_PILLAR,
 			null, null, null, null, null, null
 	);
 
 	public static final StoneFamilies BLOOD_SANDSTONE = new StoneFamilies(
-			DeferredRegistryHandler.BLOOD_SAND,
-			DeferredRegistryHandler.BLOOD_SANDSTONE, false,
-			DeferredRegistryHandler.BLOOD_SANDSTONE_SLAB,
-			DeferredRegistryHandler.BLOOD_SANDSTONE_STAIRS,
-			DeferredRegistryHandler.BLOOD_SANDSTONE_WALL,
+			BlockRegistry.BLOOD_SAND,
+			BlockRegistry.BLOOD_SANDSTONE, false,
+			BlockRegistry.BLOOD_SANDSTONE_SLAB,
+			BlockRegistry.BLOOD_SANDSTONE_STAIRS,
+			BlockRegistry.BLOOD_SANDSTONE_WALL,
 			null,
-			DeferredRegistryHandler.CHISELED_BLOOD_SANDSTONE,
-			DeferredRegistryHandler.CUT_BLOOD_SANDSTONE,
-			DeferredRegistryHandler.CUT_BLOOD_SANDSTONE_SLAB,
-			DeferredRegistryHandler.SMOOTH_BLOOD_SANDSTONE,
-			DeferredRegistryHandler.SMOOTH_BLOOD_SANDSTONE_SLAB,
-			DeferredRegistryHandler.SMOOTH_BLOOD_SANDSTONE_STAIRS
+			BlockRegistry.CHISELED_BLOOD_SANDSTONE,
+			BlockRegistry.CUT_BLOOD_SANDSTONE,
+			BlockRegistry.CUT_BLOOD_SANDSTONE_SLAB,
+			BlockRegistry.SMOOTH_BLOOD_SANDSTONE,
+			BlockRegistry.SMOOTH_BLOOD_SANDSTONE_SLAB,
+			BlockRegistry.SMOOTH_BLOOD_SANDSTONE_STAIRS
 	);
 
 	public static final Collection<StoneFamilies> FAMILIES = ImmutableList.of(CLOUD_MARBLE, BLOOD_SANDSTONE);

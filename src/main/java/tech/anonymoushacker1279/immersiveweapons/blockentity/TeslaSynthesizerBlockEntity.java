@@ -28,9 +28,9 @@ import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.wrapper.SidedInvWrapper;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import tech.anonymoushacker1279.immersiveweapons.container.TeslaSynthesizerContainer;
-import tech.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
+import tech.anonymoushacker1279.immersiveweapons.init.*;
 import tech.anonymoushacker1279.immersiveweapons.item.crafting.TeslaSynthesizerRecipe;
+import tech.anonymoushacker1279.immersiveweapons.menu.TeslaSynthesizerMenu;
 
 import java.util.Map;
 import java.util.Optional;
@@ -81,7 +81,7 @@ public class TeslaSynthesizerBlockEntity extends BaseContainerBlockEntity implem
 	 * Constructor for AbstractTeslaBlockEntity.
 	 */
 	public TeslaSynthesizerBlockEntity(BlockPos blockPos, BlockState blockState) {
-		super(DeferredRegistryHandler.TESLA_SYNTHESIZER_BLOCK_ENTITY.get(), blockPos, blockState);
+		super(BlockEntityRegistry.TESLA_SYNTHESIZER_BLOCK_ENTITY.get(), blockPos, blockState);
 		setupBurnTimes();
 	}
 
@@ -99,7 +99,7 @@ public class TeslaSynthesizerBlockEntity extends BaseContainerBlockEntity implem
 	 */
 	@Override
 	protected AbstractContainerMenu createMenu(int id, Inventory player) {
-		return new TeslaSynthesizerContainer(id, player, this, teslaSynthesizerData);
+		return new TeslaSynthesizerMenu(id, player, this, teslaSynthesizerData);
 	}
 
 	/**
@@ -161,7 +161,7 @@ public class TeslaSynthesizerBlockEntity extends BaseContainerBlockEntity implem
 
 			RecipeManager recipeManager = level.getRecipeManager();
 			Recipe<?> synthesizerRecipe = recipeManager
-					.getRecipeFor(DeferredRegistryHandler.TESLA_SYNTHESIZER_RECIPE_TYPE.get(), this, level)
+					.getRecipeFor(RecipeTypeRegistry.TESLA_SYNTHESIZER_RECIPE_TYPE.get(), this, level)
 					.orElse(null);
 
 			if (!isBurning() && canSmelt(synthesizerRecipe)) {
@@ -221,7 +221,7 @@ public class TeslaSynthesizerBlockEntity extends BaseContainerBlockEntity implem
 	 * Set up the burn time map
 	 */
 	private void setupBurnTimes() {
-		addItemBurnTime(burnTimesMap, DeferredRegistryHandler.MOLTEN_INGOT.get(), 24000); // 20 minutes
+		addItemBurnTime(burnTimesMap, ItemRegistry.MOLTEN_INGOT.get(), 24000); // 20 minutes
 	}
 
 	/**
@@ -337,7 +337,7 @@ public class TeslaSynthesizerBlockEntity extends BaseContainerBlockEntity implem
 	private int getCookTime() {
 		if (level != null) {
 			Optional<TeslaSynthesizerRecipe> recipe = level.getRecipeManager()
-					.getRecipeFor(DeferredRegistryHandler.TESLA_SYNTHESIZER_RECIPE_TYPE.get(), this, level);
+					.getRecipeFor(RecipeTypeRegistry.TESLA_SYNTHESIZER_RECIPE_TYPE.get(), this, level);
 
 			if (recipe.isPresent()) {
 				return recipe.get().getCookTime();

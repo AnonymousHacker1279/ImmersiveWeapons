@@ -4,7 +4,7 @@ import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.alchemy.Potion;
-import tech.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
+import tech.anonymoushacker1279.immersiveweapons.init.ItemRegistry;
 
 public class CustomPotion extends Potion {
 
@@ -14,7 +14,7 @@ public class CustomPotion extends Potion {
 
 	@Override
 	public boolean allowedInCreativeTab(Item item, CreativeModeTab tab, boolean isDefaultTab) {
-		return tab == DeferredRegistryHandler.ITEM_GROUP;
+		return tab == ItemRegistry.ITEM_GROUP;
 	}
 
 	@Override

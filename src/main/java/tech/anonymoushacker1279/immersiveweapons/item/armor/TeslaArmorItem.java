@@ -16,8 +16,7 @@ import net.minecraftforge.network.NetworkEvent.Context;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.client.IWKeyBinds;
 import tech.anonymoushacker1279.immersiveweapons.config.ClientConfig;
-import tech.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
-import tech.anonymoushacker1279.immersiveweapons.init.PacketHandler;
+import tech.anonymoushacker1279.immersiveweapons.init.*;
 
 import java.util.List;
 import java.util.function.Supplier;
@@ -71,10 +70,10 @@ public class TeslaArmorItem extends ArmorItem {
 	 */
 	@Override
 	public void onArmorTick(ItemStack stack, Level level, Player player) {
-		if (player.getItemBySlot(EquipmentSlot.HEAD).getItem() == DeferredRegistryHandler.TESLA_HELMET.get() &&
-				player.getItemBySlot(EquipmentSlot.CHEST).getItem() == DeferredRegistryHandler.TESLA_CHESTPLATE.get() &&
-				player.getItemBySlot(EquipmentSlot.LEGS).getItem() == DeferredRegistryHandler.TESLA_LEGGINGS.get() &&
-				player.getItemBySlot(EquipmentSlot.FEET).getItem() == DeferredRegistryHandler.TESLA_BOOTS.get()) {
+		if (player.getItemBySlot(EquipmentSlot.HEAD).getItem() == ItemRegistry.TESLA_HELMET.get() &&
+				player.getItemBySlot(EquipmentSlot.CHEST).getItem() == ItemRegistry.TESLA_CHESTPLATE.get() &&
+				player.getItemBySlot(EquipmentSlot.LEGS).getItem() == ItemRegistry.TESLA_LEGGINGS.get() &&
+				player.getItemBySlot(EquipmentSlot.FEET).getItem() == ItemRegistry.TESLA_BOOTS.get()) {
 
 			if (level.isClientSide) {
 				if (IWKeyBinds.TOGGLE_ARMOR_EFFECT.consumeClick()) {
@@ -82,7 +81,7 @@ public class TeslaArmorItem extends ArmorItem {
 					if (effectEnabled) {
 						level.playSound(player,
 								player.blockPosition(),
-								DeferredRegistryHandler.TESLA_ARMOR_POWER_DOWN.get(),
+								SoundEventRegistry.TESLA_ARMOR_POWER_DOWN.get(),
 								SoundSource.PLAYERS,
 								0.9f,
 								1.0f);
@@ -90,7 +89,7 @@ public class TeslaArmorItem extends ArmorItem {
 					} else {
 						level.playSound(player,
 								player.blockPosition(),
-								DeferredRegistryHandler.TESLA_ARMOR_POWER_UP.get(),
+								SoundEventRegistry.TESLA_ARMOR_POWER_UP.get(),
 								SoundSource.PLAYERS,
 								0.9f,
 								1.0f);
@@ -138,7 +137,7 @@ public class TeslaArmorItem extends ArmorItem {
 		if (countdown == 0 && ClientConfig.TESLA_ARMOR_EFFECT_SOUND.get()) {
 			level.playSound(player,
 					player.blockPosition(),
-					DeferredRegistryHandler.TESLA_ARMOR_EFFECT.get(),
+					SoundEventRegistry.TESLA_ARMOR_EFFECT.get(),
 					SoundSource.NEUTRAL,
 					0.65f,
 					1);

@@ -35,8 +35,8 @@ import net.minecraftforge.network.NetworkEvent.Context;
 import net.minecraftforge.network.PacketDistributor;
 import org.jetbrains.annotations.Nullable;
 import tech.anonymoushacker1279.immersiveweapons.entity.GrantAdvancementOnDiscovery;
-import tech.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
 import tech.anonymoushacker1279.immersiveweapons.init.PacketHandler;
+import tech.anonymoushacker1279.immersiveweapons.init.SoundEventRegistry;
 import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
 
 import java.util.*;
@@ -179,7 +179,7 @@ public class LavaRevenantEntity extends FlyingMob implements Enemy, GrantAdvance
 			}
 
 			if (flapTick > 0.0F && nextFlapTick <= 0.0F) {
-				level.playLocalSound(getX(), getY(), getZ(), DeferredRegistryHandler.LAVA_REVENANT_FLAP.get(),
+				level.playLocalSound(getX(), getY(), getZ(), SoundEventRegistry.LAVA_REVENANT_FLAP.get(),
 						getSoundSource(), 0.95F + random.nextFloat() * 0.05F,
 						0.95F + random.nextFloat() * 0.05F, false);
 			}
@@ -414,17 +414,17 @@ public class LavaRevenantEntity extends FlyingMob implements Enemy, GrantAdvance
 
 	@Override
 	protected SoundEvent getAmbientSound() {
-		return DeferredRegistryHandler.LAVA_REVENANT_AMBIENT.get();
+		return SoundEventRegistry.LAVA_REVENANT_AMBIENT.get();
 	}
 
 	@Override
 	protected SoundEvent getHurtSound(DamageSource pDamageSource) {
-		return DeferredRegistryHandler.LAVA_REVENANT_HURT.get();
+		return SoundEventRegistry.LAVA_REVENANT_HURT.get();
 	}
 
 	@Override
 	protected SoundEvent getDeathSound() {
-		return DeferredRegistryHandler.LAVA_REVENANT_DEATH.get();
+		return SoundEventRegistry.LAVA_REVENANT_DEATH.get();
 	}
 
 	@Override
@@ -551,7 +551,7 @@ public class LavaRevenantEntity extends FlyingMob implements Enemy, GrantAdvance
 			Minecraft minecraft = Minecraft.getInstance();
 			if (minecraft.level != null) {
 				minecraft.level.playLocalSound(msg.blockPos.getX(), msg.blockPos.getY(), msg.blockPos.getZ(),
-						DeferredRegistryHandler.LAVA_REVENANT_BITE.get(), SoundSource.HOSTILE, 0.3F,
+						SoundEventRegistry.LAVA_REVENANT_BITE.get(), SoundSource.HOSTILE, 0.3F,
 						GeneralUtilities.getRandomNumber(0.0f, 1.0f) * 0.1F + 0.9F, false);
 			}
 		}
@@ -641,7 +641,7 @@ public class LavaRevenantEntity extends FlyingMob implements Enemy, GrantAdvance
 					attackPhase = LavaRevenantEntity.AttackPhase.SWOOP;
 					setAnchorAboveTarget();
 					nextSweepTick = (8 + random.nextInt(4)) * 20;
-					playSound(DeferredRegistryHandler.LAVA_REVENANT_SWOOP.get(), 10.0F,
+					playSound(SoundEventRegistry.LAVA_REVENANT_SWOOP.get(), 10.0F,
 							0.95F + random.nextFloat() * 0.1F);
 				}
 			}

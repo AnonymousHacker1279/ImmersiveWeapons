@@ -6,26 +6,26 @@ import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.ArmorMaterial;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
-import tech.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
+import tech.anonymoushacker1279.immersiveweapons.init.ItemRegistry;
 
 import java.util.function.Supplier;
 
 public enum CustomArmorMaterials implements ArmorMaterial {
 
 	MOLTEN("molten", 39, new int[]{5, 6, 9, 4}, 15,
-			3.25F, () -> Ingredient.of(DeferredRegistryHandler.MOLTEN_INGOT.get()), 0.12F),
+			3.25F, () -> Ingredient.of(ItemRegistry.MOLTEN_INGOT.get()), 0.12F),
 	COPPER("copper", 13, new int[]{1, 4, 5, 1}, 9,
 			0.0F, () -> Ingredient.of(Items.COPPER_INGOT), 0.0F),
 	TESLA("tesla", 42, new int[]{7, 8, 11, 6}, 20,
-			3.5F, () -> Ingredient.of(DeferredRegistryHandler.TESLA_INGOT.get()), 0.05F),
+			3.5F, () -> Ingredient.of(ItemRegistry.TESLA_INGOT.get()), 0.05F),
 	COBALT("cobalt", 19, new int[]{3, 5, 6, 3}, 10,
-			0.0F, () -> Ingredient.of(DeferredRegistryHandler.COBALT_INGOT.get()), 0.0F),
+			0.0F, () -> Ingredient.of(ItemRegistry.COBALT_INGOT.get()), 0.0F),
 	VENTUS("ventus", 39, new int[]{5, 6, 9, 5}, 14,
-			2.75F, () -> Ingredient.of(DeferredRegistryHandler.VENTUS_SHARD.get()), 0.02F),
+			2.75F, () -> Ingredient.of(ItemRegistry.VENTUS_SHARD.get()), 0.02F),
 	ASTRAL("astral", 25, new int[]{4, 5, 6, 4}, 22,
-			1.8F, () -> Ingredient.of(DeferredRegistryHandler.ASTRAL_INGOT.get()), 0.0F),
+			1.8F, () -> Ingredient.of(ItemRegistry.ASTRAL_INGOT.get()), 0.0F),
 	STARSTORM("starstorm", 32, new int[]{5, 5, 6, 4}, 15,
-			2.2F, () -> Ingredient.of(DeferredRegistryHandler.STARSTORM_INGOT.get()), 0.0F);
+			2.2F, () -> Ingredient.of(ItemRegistry.STARSTORM_INGOT.get()), 0.0F);
 
 	static final int[] HEALTH_PER_SLOT = new int[]{13, 15, 16, 11};
 	private final String name;

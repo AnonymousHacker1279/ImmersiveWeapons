@@ -19,7 +19,8 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.Nullable;
 import tech.anonymoushacker1279.immersiveweapons.entity.GrantAdvancementOnDiscovery;
-import tech.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
+import tech.anonymoushacker1279.immersiveweapons.init.ItemRegistry;
+import tech.anonymoushacker1279.immersiveweapons.init.SoundEventRegistry;
 
 import java.time.LocalDate;
 import java.time.temporal.ChronoField;
@@ -92,7 +93,7 @@ public abstract class AbstractWanderingWarriorEntity extends Monster implements 
 	 */
 	@Override
 	protected void playStepSound(BlockPos pos, BlockState state) {
-		playSound(DeferredRegistryHandler.WANDERING_WARRIOR_STEP.get(), 1.0F, 1.0F);
+		playSound(SoundEventRegistry.WANDERING_WARRIOR_STEP.get(), 1.0F, 1.0F);
 	}
 
 	/**
@@ -119,9 +120,9 @@ public abstract class AbstractWanderingWarriorEntity extends Monster implements 
 		if (random <= 0.5) {
 			setItemInHand(InteractionHand.MAIN_HAND, new ItemStack(Items.IRON_SWORD));
 		} else if (random <= 0.3) {
-			setItemInHand(InteractionHand.MAIN_HAND, new ItemStack(DeferredRegistryHandler.COBALT_SWORD.get()));
+			setItemInHand(InteractionHand.MAIN_HAND, new ItemStack(ItemRegistry.COBALT_SWORD.get()));
 		} else {
-			setItemInHand(InteractionHand.MAIN_HAND, new ItemStack(DeferredRegistryHandler.COPPER_SWORD.get()));
+			setItemInHand(InteractionHand.MAIN_HAND, new ItemStack(ItemRegistry.COPPER_SWORD.get()));
 		}
 		// Populate armor
 		int armorTier = 0;

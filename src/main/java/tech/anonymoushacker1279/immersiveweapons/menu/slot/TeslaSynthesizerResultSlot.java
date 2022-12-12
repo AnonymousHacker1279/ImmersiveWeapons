@@ -1,4 +1,4 @@
-package tech.anonymoushacker1279.immersiveweapons.container.slot;
+package tech.anonymoushacker1279.immersiveweapons.menu.slot;
 
 import net.minecraft.world.Container;
 import net.minecraft.world.entity.player.Player;
@@ -12,13 +12,13 @@ public class TeslaSynthesizerResultSlot extends Slot {
 	/**
 	 * Constructor for TeslaSynthesizerResultSlot.
 	 *
-	 * @param inventoryIn the <code>IInventory</code> of the tile entity
-	 * @param slotIndex   the slot index
-	 * @param xPosition   the X position of the slot
-	 * @param yPosition   the Y position of the slot
+	 * @param container the <code>Container</code> object
+	 * @param slotIndex the slot index
+	 * @param xPosition the X position of the slot
+	 * @param yPosition the Y position of the slot
 	 */
-	public TeslaSynthesizerResultSlot(Container inventoryIn, int slotIndex, int xPosition, int yPosition) {
-		super(inventoryIn, slotIndex, xPosition, yPosition);
+	public TeslaSynthesizerResultSlot(Container container, int slotIndex, int xPosition, int yPosition) {
+		super(container, slotIndex, xPosition, yPosition);
 	}
 
 	/**
@@ -44,9 +44,9 @@ public class TeslaSynthesizerResultSlot extends Slot {
 	}
 
 	/**
-	 * Runs when the stack is taken from the tile entity.
+	 * Runs when the stack is taken from the object.
 	 *
-	 * @param player the <code>PlayerEntity</code> instance
+	 * @param player the <code>Player</code> instance
 	 * @param stack  the <code>ItemStack</code> being taken
 	 */
 	@Override

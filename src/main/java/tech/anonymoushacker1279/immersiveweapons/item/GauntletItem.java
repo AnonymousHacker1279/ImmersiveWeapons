@@ -17,7 +17,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Material;
 import net.minecraftforge.common.ForgeMod;
 import net.minecraftforge.common.ToolActions;
-import tech.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
+import tech.anonymoushacker1279.immersiveweapons.init.EffectRegistry;
 import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
 
 public class GauntletItem extends TieredItem implements Vanishable {
@@ -109,7 +109,7 @@ public class GauntletItem extends TieredItem implements Vanishable {
 	 */
 	public void bleedBehavior(LivingEntity target) {
 		if (GeneralUtilities.getRandomNumber(0.0f, 1.0f) <= bleedChance) {
-			target.addEffect(new MobEffectInstance(DeferredRegistryHandler.BLEEDING_EFFECT.get(), 200,
+			target.addEffect(new MobEffectInstance(EffectRegistry.BLEEDING_EFFECT.get(), 200,
 					bleedLevel, true, false));
 		}
 	}

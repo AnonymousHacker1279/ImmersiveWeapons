@@ -29,8 +29,7 @@ import net.minecraftforge.network.NetworkEvent;
 import net.minecraftforge.network.NetworkEvent.Context;
 import net.minecraftforge.network.PacketDistributor;
 import tech.anonymoushacker1279.immersiveweapons.entity.projectile.MortarShellEntity;
-import tech.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
-import tech.anonymoushacker1279.immersiveweapons.init.PacketHandler;
+import tech.anonymoushacker1279.immersiveweapons.init.*;
 import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
 
 import java.util.function.Supplier;
@@ -122,7 +121,7 @@ public class MortarBlock extends HorizontalDirectionalBlock {
 				return InteractionResult.CONSUME;
 
 				// If the mortar is not loaded and the player is holding a mortar shell	, load the mortar
-			} else if (!state.getValue(LOADED) && itemStack.getItem() == DeferredRegistryHandler.MORTAR_SHELL.get()) {
+			} else if (!state.getValue(LOADED) && itemStack.getItem() == ItemRegistry.MORTAR_SHELL.get()) {
 				level.setBlock(pos, state.setValue(LOADED, true), 3);
 				if (!player.isCreative()) {
 					itemStack.shrink(1);
@@ -133,7 +132,7 @@ public class MortarBlock extends HorizontalDirectionalBlock {
 				// and give it to the player
 			} else if (itemStack.getItem() == Items.AIR && player.isCrouching() && state.getValue(LOADED)) {
 				if (!player.isCreative()) {
-					player.getInventory().add(new ItemStack(DeferredRegistryHandler.MORTAR_SHELL.get()));
+					player.getInventory().add(new ItemStack(ItemRegistry.MORTAR_SHELL.get()));
 				}
 				level.setBlock(pos, state.setValue(LOADED, false), 3);
 				return InteractionResult.SUCCESS;
@@ -240,7 +239,7 @@ public class MortarBlock extends HorizontalDirectionalBlock {
 		private static void handleOnClient(MortarBlockPacketHandler msg) {
 			Minecraft minecraft = Minecraft.getInstance();
 			if (minecraft.level != null) {
-				minecraft.level.playLocalSound(msg.blockPos, DeferredRegistryHandler.MORTAR_FIRE.get(), SoundSource.BLOCKS, 1f,
+				minecraft.level.playLocalSound(msg.blockPos, SoundEventRegistry.MORTAR_FIRE.get(), SoundSource.BLOCKS, 1f,
 						GeneralUtilities.getRandomNumber(0.1f, 0.5f) + 0.5f, true);
 				minecraft.level.addParticle(ParticleTypes.LARGE_SMOKE, msg.blockPos.getX(), msg.blockPos.getY(), msg.blockPos.getZ(),
 						0.0f, 0.2f, 0.0f);

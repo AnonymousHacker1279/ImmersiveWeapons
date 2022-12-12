@@ -21,12 +21,12 @@ import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.Nullable;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.block.crafting.small_parts.SmallPartsCraftables;
-import tech.anonymoushacker1279.immersiveweapons.container.SmallPartsContainer;
+import tech.anonymoushacker1279.immersiveweapons.menu.SmallPartsMenu;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class SmallPartsTableScreen extends AbstractContainerScreen<SmallPartsContainer> {
+public class SmallPartsTableScreen extends AbstractContainerScreen<SmallPartsMenu> {
 
 	private static final ResourceLocation BG_LOCATION = new ResourceLocation(ImmersiveWeapons.MOD_ID + ":textures/gui/container/small_parts_table.png");
 	private static int TOTAL_PATTERN_ROWS = 0;
@@ -44,7 +44,7 @@ public class SmallPartsTableScreen extends AbstractContainerScreen<SmallPartsCon
 	private boolean scrolling;
 	private int startIndex = 1;
 
-	public SmallPartsTableScreen(SmallPartsContainer pMenu, Inventory pPlayerInventory, Component pTitle) {
+	public SmallPartsTableScreen(SmallPartsMenu pMenu, Inventory pPlayerInventory, Component pTitle) {
 		super(pMenu, pPlayerInventory, pTitle);
 		pMenu.registerUpdateListener(this::containerChanged);
 		titleLabelY = 5;

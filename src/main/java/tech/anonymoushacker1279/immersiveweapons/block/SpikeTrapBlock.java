@@ -26,8 +26,8 @@ import net.minecraftforge.network.NetworkEvent;
 import net.minecraftforge.network.NetworkEvent.Context;
 import net.minecraftforge.network.PacketDistributor;
 import net.minecraftforge.network.PacketDistributor.TargetPoint;
-import tech.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
 import tech.anonymoushacker1279.immersiveweapons.init.PacketHandler;
+import tech.anonymoushacker1279.immersiveweapons.init.SoundEventRegistry;
 
 import java.util.function.Supplier;
 
@@ -257,10 +257,10 @@ public class SpikeTrapBlock extends Block implements SimpleWaterloggedBlock {
 			Minecraft minecraft = Minecraft.getInstance();
 			if (minecraft.level != null) {
 				if (msg.extend) {
-					minecraft.level.playLocalSound(msg.blockPos, DeferredRegistryHandler.SPIKE_TRAP_EXTEND.get(),
+					minecraft.level.playLocalSound(msg.blockPos, SoundEventRegistry.SPIKE_TRAP_EXTEND.get(),
 							SoundSource.BLOCKS, 1.0f, 1.0f, true);
 				} else {
-					minecraft.level.playLocalSound(msg.blockPos, DeferredRegistryHandler.SPIKE_TRAP_RETRACT.get(),
+					minecraft.level.playLocalSound(msg.blockPos, SoundEventRegistry.SPIKE_TRAP_RETRACT.get(),
 							SoundSource.BLOCKS, 1.0f, 1.0f, true);
 				}
 			}

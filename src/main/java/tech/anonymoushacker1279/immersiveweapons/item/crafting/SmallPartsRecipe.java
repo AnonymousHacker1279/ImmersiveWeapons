@@ -10,7 +10,7 @@ import net.minecraft.world.item.*;
 import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.registries.ForgeRegistries;
-import tech.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
+import tech.anonymoushacker1279.immersiveweapons.init.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -76,7 +76,7 @@ public record SmallPartsRecipe(ResourceLocation recipeId,
 	 */
 	@Override
 	public ItemStack getToastSymbol() {
-		return new ItemStack(DeferredRegistryHandler.SMALL_PARTS_TABLE.get());
+		return new ItemStack(BlockRegistry.SMALL_PARTS_TABLE.get());
 	}
 
 	/**
@@ -96,7 +96,7 @@ public record SmallPartsRecipe(ResourceLocation recipeId,
 	 */
 	@Override
 	public RecipeSerializer<?> getSerializer() {
-		return DeferredRegistryHandler.SMALL_PARTS_RECIPE_SERIALIZER.get();
+		return RecipeSerializerRegistry.SMALL_PARTS_RECIPE_SERIALIZER.get();
 	}
 
 	/**
@@ -106,7 +106,7 @@ public record SmallPartsRecipe(ResourceLocation recipeId,
 	 */
 	@Override
 	public RecipeType<?> getType() {
-		return DeferredRegistryHandler.SMALL_PARTS_RECIPE_TYPE.get();
+		return RecipeTypeRegistry.SMALL_PARTS_RECIPE_TYPE.get();
 	}
 
 	/**

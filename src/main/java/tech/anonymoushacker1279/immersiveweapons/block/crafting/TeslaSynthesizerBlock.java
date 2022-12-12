@@ -23,7 +23,7 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraftforge.network.NetworkHooks;
 import org.jetbrains.annotations.Nullable;
 import tech.anonymoushacker1279.immersiveweapons.blockentity.TeslaSynthesizerBlockEntity;
-import tech.anonymoushacker1279.immersiveweapons.container.TeslaSynthesizerContainer;
+import tech.anonymoushacker1279.immersiveweapons.menu.TeslaSynthesizerMenu;
 
 public class TeslaSynthesizerBlock extends Block implements SimpleWaterloggedBlock, EntityBlock {
 
@@ -119,7 +119,7 @@ public class TeslaSynthesizerBlock extends Block implements SimpleWaterloggedBlo
 	 */
 	@Override
 	public MenuProvider getMenuProvider(BlockState state, Level level, BlockPos pos) {
-		return new SimpleMenuProvider((id, inventory, player) -> new TeslaSynthesizerContainer(id, inventory), CONTAINER_NAME);
+		return new SimpleMenuProvider((id, inventory, player) -> new TeslaSynthesizerMenu(id, inventory), CONTAINER_NAME);
 	}
 
 	/**

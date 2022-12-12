@@ -1,13 +1,13 @@
 package tech.anonymoushacker1279.immersiveweapons.entity.vehicle;
 
 import net.minecraft.world.level.block.Block;
-import tech.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
+import tech.anonymoushacker1279.immersiveweapons.init.BlockRegistry;
 
 public enum CustomBoatType {
-	BURNED_OAK(DeferredRegistryHandler.BURNED_OAK_PLANKS.get(), "burned_oak"),
-	BURNED_OAK_CHEST(DeferredRegistryHandler.BURNED_OAK_PLANKS.get(), "burned_oak_chest"),
-	STARDUST(DeferredRegistryHandler.STARDUST_PLANKS.get(), "stardust"),
-	STARDUST_CHEST(DeferredRegistryHandler.STARDUST_PLANKS.get(), "stardust_chest");
+	BURNED_OAK(BlockRegistry.BURNED_OAK_PLANKS.get(), "burned_oak"),
+	BURNED_OAK_CHEST(BlockRegistry.BURNED_OAK_PLANKS.get(), "burned_oak_chest"),
+	STARDUST(BlockRegistry.STARDUST_PLANKS.get(), "stardust"),
+	STARDUST_CHEST(BlockRegistry.STARDUST_PLANKS.get(), "stardust_chest");
 
 	private final Block block;
 	private final String name;

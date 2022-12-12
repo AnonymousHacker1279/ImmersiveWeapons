@@ -7,7 +7,8 @@ import net.minecraft.world.level.block.*;
 import org.jetbrains.annotations.Nullable;
 import tech.anonymoushacker1279.immersiveweapons.data.tags.groups.immersiveweapons.ImmersiveWeaponsBlockTagGroups;
 import tech.anonymoushacker1279.immersiveweapons.data.tags.groups.immersiveweapons.ImmersiveWeaponsItemTagGroups;
-import tech.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
+import tech.anonymoushacker1279.immersiveweapons.init.BlockRegistry;
+import tech.anonymoushacker1279.immersiveweapons.init.ItemRegistry;
 import tech.anonymoushacker1279.immersiveweapons.item.utility.CustomBoatItem;
 
 import java.util.Collection;
@@ -36,49 +37,49 @@ public record WoodFamilies(Supplier<? extends Block> planks,
                            TagKey<Item> logsItemTag) {
 
 	public static final WoodFamilies BURNED_OAK = new WoodFamilies(
-			DeferredRegistryHandler.BURNED_OAK_PLANKS,
-			DeferredRegistryHandler.BURNED_OAK_SLAB,
-			DeferredRegistryHandler.BURNED_OAK_STAIRS,
-			DeferredRegistryHandler.BURNED_OAK_PRESSURE_PLATE,
-			DeferredRegistryHandler.BURNED_OAK_BUTTON,
-			DeferredRegistryHandler.BURNED_OAK_FENCE,
-			DeferredRegistryHandler.BURNED_OAK_FENCE_GATE,
-			DeferredRegistryHandler.BURNED_OAK_DOOR,
-			DeferredRegistryHandler.BURNED_OAK_TRAPDOOR,
-			DeferredRegistryHandler.BURNED_OAK_SIGN,
-			DeferredRegistryHandler.BURNED_OAK_WALL_SIGN,
-			DeferredRegistryHandler.BURNED_OAK_LOG,
-			DeferredRegistryHandler.STRIPPED_BURNED_OAK_LOG,
-			DeferredRegistryHandler.BURNED_OAK_WOOD,
-			DeferredRegistryHandler.STRIPPED_BURNED_OAK_WOOD,
+			BlockRegistry.BURNED_OAK_PLANKS,
+			BlockRegistry.BURNED_OAK_SLAB,
+			BlockRegistry.BURNED_OAK_STAIRS,
+			BlockRegistry.BURNED_OAK_PRESSURE_PLATE,
+			BlockRegistry.BURNED_OAK_BUTTON,
+			BlockRegistry.BURNED_OAK_FENCE,
+			BlockRegistry.BURNED_OAK_FENCE_GATE,
+			BlockRegistry.BURNED_OAK_DOOR,
+			BlockRegistry.BURNED_OAK_TRAPDOOR,
+			BlockRegistry.BURNED_OAK_SIGN,
+			BlockRegistry.BURNED_OAK_WALL_SIGN,
+			BlockRegistry.BURNED_OAK_LOG,
+			BlockRegistry.STRIPPED_BURNED_OAK_LOG,
+			BlockRegistry.BURNED_OAK_WOOD,
+			BlockRegistry.STRIPPED_BURNED_OAK_WOOD,
 			null,
 			null,
-			DeferredRegistryHandler.BURNED_OAK_BOAT,
-			DeferredRegistryHandler.BURNED_OAK_CHEST_BOAT,
+			ItemRegistry.BURNED_OAK_BOAT,
+			ItemRegistry.BURNED_OAK_CHEST_BOAT,
 			ImmersiveWeaponsBlockTagGroups.BURNED_OAK_LOGS,
 			ImmersiveWeaponsItemTagGroups.BURNED_OAK_LOGS
 	);
 
 	public static final WoodFamilies STARDUST = new WoodFamilies(
-			DeferredRegistryHandler.STARDUST_PLANKS,
-			DeferredRegistryHandler.STARDUST_SLAB,
-			DeferredRegistryHandler.STARDUST_STAIRS,
-			DeferredRegistryHandler.STARDUST_PRESSURE_PLATE,
-			DeferredRegistryHandler.STARDUST_BUTTON,
-			DeferredRegistryHandler.STARDUST_FENCE,
-			DeferredRegistryHandler.STARDUST_FENCE_GATE,
-			DeferredRegistryHandler.STARDUST_DOOR,
-			DeferredRegistryHandler.STARDUST_TRAPDOOR,
-			DeferredRegistryHandler.STARDUST_SIGN,
-			DeferredRegistryHandler.STARDUST_WALL_SIGN,
-			DeferredRegistryHandler.STARDUST_LOG,
-			DeferredRegistryHandler.STRIPPED_STARDUST_LOG,
-			DeferredRegistryHandler.STARDUST_WOOD,
-			DeferredRegistryHandler.STRIPPED_STARDUST_WOOD,
-			DeferredRegistryHandler.STARDUST_LEAVES,
-			DeferredRegistryHandler.STARDUST_SAPLING,
-			DeferredRegistryHandler.STARDUST_BOAT,
-			DeferredRegistryHandler.STARDUST_CHEST_BOAT,
+			BlockRegistry.STARDUST_PLANKS,
+			BlockRegistry.STARDUST_SLAB,
+			BlockRegistry.STARDUST_STAIRS,
+			BlockRegistry.STARDUST_PRESSURE_PLATE,
+			BlockRegistry.STARDUST_BUTTON,
+			BlockRegistry.STARDUST_FENCE,
+			BlockRegistry.STARDUST_FENCE_GATE,
+			BlockRegistry.STARDUST_DOOR,
+			BlockRegistry.STARDUST_TRAPDOOR,
+			BlockRegistry.STARDUST_SIGN,
+			BlockRegistry.STARDUST_WALL_SIGN,
+			BlockRegistry.STARDUST_LOG,
+			BlockRegistry.STRIPPED_STARDUST_LOG,
+			BlockRegistry.STARDUST_WOOD,
+			BlockRegistry.STRIPPED_STARDUST_WOOD,
+			BlockRegistry.STARDUST_LEAVES,
+			BlockRegistry.STARDUST_SAPLING,
+			ItemRegistry.STARDUST_BOAT,
+			ItemRegistry.STARDUST_CHEST_BOAT,
 			ImmersiveWeaponsBlockTagGroups.STARDUST_LOGS,
 			ImmersiveWeaponsItemTagGroups.STARDUST_LOGS
 	);

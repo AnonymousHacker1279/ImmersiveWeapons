@@ -1,13 +1,13 @@
-package tech.anonymoushacker1279.immersiveweapons.container.slot;
+package tech.anonymoushacker1279.immersiveweapons.menu.slot;
 
 import net.minecraft.world.Container;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
-import tech.anonymoushacker1279.immersiveweapons.container.TeslaSynthesizerContainer;
+import tech.anonymoushacker1279.immersiveweapons.menu.TeslaSynthesizerMenu;
 
 public class TeslaSynthesizerFuelSlot extends Slot {
 
-	private final TeslaSynthesizerContainer abstractTeslaSynthesizerContainer;
+	private final TeslaSynthesizerMenu abstractTeslaSynthesizerContainer;
 
 	/**
 	 * Constructor for TeslaSynthesizerFuelSlot.
@@ -18,7 +18,7 @@ public class TeslaSynthesizerFuelSlot extends Slot {
 	 * @param xPos                      the X position of the slot
 	 * @param yPos                      the Y position of the slot
 	 */
-	public TeslaSynthesizerFuelSlot(TeslaSynthesizerContainer teslaSynthesizerFuelSlot, Container teslaSynthesizerInventory, int slotIndex, int xPos, int yPos) {
+	public TeslaSynthesizerFuelSlot(TeslaSynthesizerMenu teslaSynthesizerFuelSlot, Container teslaSynthesizerInventory, int slotIndex, int xPos, int yPos) {
 		super(teslaSynthesizerInventory, slotIndex, xPos, yPos);
 		abstractTeslaSynthesizerContainer = teslaSynthesizerFuelSlot;
 	}

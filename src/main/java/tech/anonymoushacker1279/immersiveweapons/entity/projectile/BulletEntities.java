@@ -10,7 +10,8 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
-import tech.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
+import tech.anonymoushacker1279.immersiveweapons.init.EntityRegistry;
+import tech.anonymoushacker1279.immersiveweapons.init.ItemRegistry;
 import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
 
 import java.util.ArrayList;
@@ -29,7 +30,7 @@ public class BulletEntities {
 		public WoodenMusketBallEntity(EntityType<WoodenMusketBallEntity> entityType, Level world, int knockbackStrength) {
 			super(entityType, world);
 			this.knockbackStrength = knockbackStrength;
-			referenceItem = DeferredRegistryHandler.WOODEN_MUSKET_BALL.get();
+			referenceItem = ItemRegistry.WOODEN_MUSKET_BALL.get();
 		}
 
 		/**
@@ -39,8 +40,8 @@ public class BulletEntities {
 		 * @param world   the <code>World</code> the entity is in
 		 */
 		public WoodenMusketBallEntity(LivingEntity shooter, Level world) {
-			super(DeferredRegistryHandler.WOODEN_MUSKET_BALL_ENTITY.get(), shooter, world);
-			referenceItem = DeferredRegistryHandler.WOODEN_MUSKET_BALL.get();
+			super(EntityRegistry.WOODEN_MUSKET_BALL_ENTITY.get(), shooter, world);
+			referenceItem = ItemRegistry.WOODEN_MUSKET_BALL.get();
 		}
 
 		@Override
@@ -69,7 +70,7 @@ public class BulletEntities {
 		public StoneMusketBallEntity(EntityType<StoneMusketBallEntity> entityType, Level world, int knockbackStrength) {
 			super(entityType, world);
 			this.knockbackStrength = knockbackStrength;
-			referenceItem = DeferredRegistryHandler.STONE_MUSKET_BALL.get();
+			referenceItem = ItemRegistry.STONE_MUSKET_BALL.get();
 		}
 
 		/**
@@ -79,8 +80,8 @@ public class BulletEntities {
 		 * @param world   the <code>World</code> the entity is in
 		 */
 		public StoneMusketBallEntity(LivingEntity shooter, Level world) {
-			super(DeferredRegistryHandler.STONE_MUSKET_BALL_ENTITY.get(), shooter, world);
-			referenceItem = DeferredRegistryHandler.STONE_MUSKET_BALL.get();
+			super(EntityRegistry.STONE_MUSKET_BALL_ENTITY.get(), shooter, world);
+			referenceItem = ItemRegistry.STONE_MUSKET_BALL.get();
 		}
 
 		@Override
@@ -109,7 +110,7 @@ public class BulletEntities {
 		public GoldenMusketBallEntity(EntityType<GoldenMusketBallEntity> entityType, Level world, int knockbackStrength) {
 			super(entityType, world);
 			this.knockbackStrength = knockbackStrength;
-			referenceItem = DeferredRegistryHandler.GOLDEN_MUSKET_BALL.get();
+			referenceItem = ItemRegistry.GOLDEN_MUSKET_BALL.get();
 		}
 
 		/**
@@ -119,8 +120,8 @@ public class BulletEntities {
 		 * @param world   the <code>World</code> the entity is in
 		 */
 		public GoldenMusketBallEntity(LivingEntity shooter, Level world) {
-			super(DeferredRegistryHandler.GOLDEN_MUSKET_BALL_ENTITY.get(), shooter, world);
-			referenceItem = DeferredRegistryHandler.GOLDEN_MUSKET_BALL.get();
+			super(EntityRegistry.GOLDEN_MUSKET_BALL_ENTITY.get(), shooter, world);
+			referenceItem = ItemRegistry.GOLDEN_MUSKET_BALL.get();
 		}
 
 		@Override
@@ -150,7 +151,7 @@ public class BulletEntities {
 		public CopperMusketBallEntity(EntityType<CopperMusketBallEntity> entityType, Level world, int knockbackStrength) {
 			super(entityType, world);
 			this.knockbackStrength = knockbackStrength;
-			referenceItem = DeferredRegistryHandler.COPPER_MUSKET_BALL.get();
+			referenceItem = ItemRegistry.COPPER_MUSKET_BALL.get();
 		}
 
 		/**
@@ -160,8 +161,8 @@ public class BulletEntities {
 		 * @param world   the <code>World</code> the entity is in
 		 */
 		public CopperMusketBallEntity(LivingEntity shooter, Level world) {
-			super(DeferredRegistryHandler.COPPER_MUSKET_BALL_ENTITY.get(), shooter, world);
-			referenceItem = DeferredRegistryHandler.COPPER_MUSKET_BALL.get();
+			super(EntityRegistry.COPPER_MUSKET_BALL_ENTITY.get(), shooter, world);
+			referenceItem = ItemRegistry.COPPER_MUSKET_BALL.get();
 		}
 
 		@Override
@@ -190,7 +191,7 @@ public class BulletEntities {
 		public IronMusketBallEntity(EntityType<IronMusketBallEntity> entityType, Level world, int knockbackStrength) {
 			super(entityType, world);
 			this.knockbackStrength = knockbackStrength;
-			referenceItem = DeferredRegistryHandler.IRON_MUSKET_BALL.get();
+			referenceItem = ItemRegistry.IRON_MUSKET_BALL.get();
 		}
 
 		/**
@@ -200,8 +201,8 @@ public class BulletEntities {
 		 * @param world   the <code>World</code> the entity is in
 		 */
 		public IronMusketBallEntity(LivingEntity shooter, Level world) {
-			super(DeferredRegistryHandler.IRON_MUSKET_BALL_ENTITY.get(), shooter, world);
-			referenceItem = DeferredRegistryHandler.IRON_MUSKET_BALL.get();
+			super(EntityRegistry.IRON_MUSKET_BALL_ENTITY.get(), shooter, world);
+			referenceItem = ItemRegistry.IRON_MUSKET_BALL.get();
 		}
 
 		@Override
@@ -231,7 +232,7 @@ public class BulletEntities {
 		public CobaltMusketBallEntity(EntityType<CobaltMusketBallEntity> entityType, Level world, int knockbackStrength) {
 			super(entityType, world);
 			this.knockbackStrength = knockbackStrength;
-			referenceItem = DeferredRegistryHandler.COBALT_MUSKET_BALL.get();
+			referenceItem = ItemRegistry.COBALT_MUSKET_BALL.get();
 		}
 
 		/**
@@ -241,8 +242,8 @@ public class BulletEntities {
 		 * @param world   the <code>World</code> the entity is in
 		 */
 		public CobaltMusketBallEntity(LivingEntity shooter, Level world) {
-			super(DeferredRegistryHandler.COBALT_MUSKET_BALL_ENTITY.get(), shooter, world);
-			referenceItem = DeferredRegistryHandler.COBALT_MUSKET_BALL.get();
+			super(EntityRegistry.COBALT_MUSKET_BALL_ENTITY.get(), shooter, world);
+			referenceItem = ItemRegistry.COBALT_MUSKET_BALL.get();
 		}
 
 		@Override
@@ -271,7 +272,7 @@ public class BulletEntities {
 		public DiamondMusketBallEntity(EntityType<DiamondMusketBallEntity> entityType, Level world, int knockbackStrength) {
 			super(entityType, world);
 			this.knockbackStrength = knockbackStrength;
-			referenceItem = DeferredRegistryHandler.DIAMOND_MUSKET_BALL.get();
+			referenceItem = ItemRegistry.DIAMOND_MUSKET_BALL.get();
 		}
 
 		/**
@@ -281,8 +282,8 @@ public class BulletEntities {
 		 * @param world   the <code>World</code> the entity is in
 		 */
 		public DiamondMusketBallEntity(LivingEntity shooter, Level world) {
-			super(DeferredRegistryHandler.DIAMOND_MUSKET_BALL_ENTITY.get(), shooter, world);
-			referenceItem = DeferredRegistryHandler.DIAMOND_MUSKET_BALL.get();
+			super(EntityRegistry.DIAMOND_MUSKET_BALL_ENTITY.get(), shooter, world);
+			referenceItem = ItemRegistry.DIAMOND_MUSKET_BALL.get();
 		}
 
 		/**
@@ -316,7 +317,7 @@ public class BulletEntities {
 		public NetheriteMusketBallEntity(EntityType<NetheriteMusketBallEntity> entityType, Level world, int knockbackStrength) {
 			super(entityType, world);
 			this.knockbackStrength = knockbackStrength;
-			referenceItem = DeferredRegistryHandler.NETHERITE_MUSKET_BALL.get();
+			referenceItem = ItemRegistry.NETHERITE_MUSKET_BALL.get();
 		}
 
 		/**
@@ -326,8 +327,8 @@ public class BulletEntities {
 		 * @param world   the <code>World</code> the entity is in
 		 */
 		public NetheriteMusketBallEntity(LivingEntity shooter, Level world) {
-			super(DeferredRegistryHandler.NETHERITE_MUSKET_BALL_ENTITY.get(), shooter, world);
-			referenceItem = DeferredRegistryHandler.NETHERITE_MUSKET_BALL.get();
+			super(EntityRegistry.NETHERITE_MUSKET_BALL_ENTITY.get(), shooter, world);
+			referenceItem = ItemRegistry.NETHERITE_MUSKET_BALL.get();
 		}
 
 		@Override
@@ -370,7 +371,7 @@ public class BulletEntities {
 		public FlareEntity(EntityType<FlareEntity> entityType, Level world, int knockbackStrength) {
 			super(entityType, world);
 			this.knockbackStrength = knockbackStrength;
-			referenceItem = DeferredRegistryHandler.FLARE.get();
+			referenceItem = ItemRegistry.FLARE.get();
 		}
 
 		/**
@@ -380,8 +381,8 @@ public class BulletEntities {
 		 * @param world   the <code>World</code> the entity is in
 		 */
 		public FlareEntity(LivingEntity shooter, Level world) {
-			super(DeferredRegistryHandler.FLARE_ENTITY.get(), shooter, world);
-			referenceItem = DeferredRegistryHandler.FLARE.get();
+			super(EntityRegistry.FLARE_ENTITY.get(), shooter, world);
+			referenceItem = ItemRegistry.FLARE.get();
 		}
 
 		@Override
@@ -486,7 +487,7 @@ public class BulletEntities {
 		 */
 		@Override
 		public ItemStack getItem() {
-			return new ItemStack(DeferredRegistryHandler.FLARE.get());
+			return new ItemStack(ItemRegistry.FLARE.get());
 		}
 
 		/**

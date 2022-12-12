@@ -8,7 +8,7 @@ import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.Level;
 import tech.anonymoushacker1279.immersiveweapons.entity.projectile.BulletEntity;
-import tech.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
+import tech.anonymoushacker1279.immersiveweapons.init.EntityRegistry;
 
 public abstract class AbstractBulletItem extends ArrowItem {
 
@@ -26,7 +26,7 @@ public abstract class AbstractBulletItem extends ArrowItem {
 	}
 
 	public BulletEntity createBullet(Level level, LivingEntity shooter) {
-		BulletEntity bulletEntity = new BulletEntity(DeferredRegistryHandler.IRON_MUSKET_BALL_ENTITY.get(), shooter, level);
+		BulletEntity bulletEntity = new BulletEntity(EntityRegistry.IRON_MUSKET_BALL_ENTITY.get(), shooter, level);
 		bulletEntity.setBaseDamage(damage);
 		bulletEntity.setOwner(shooter);
 		return bulletEntity;

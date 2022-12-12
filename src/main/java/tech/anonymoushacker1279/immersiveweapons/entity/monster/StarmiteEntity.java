@@ -8,32 +8,32 @@ import net.minecraft.world.entity.monster.Endermite;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import tech.anonymoushacker1279.immersiveweapons.entity.GrantAdvancementOnDiscovery;
-import tech.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
+import tech.anonymoushacker1279.immersiveweapons.init.SoundEventRegistry;
 
 public class StarmiteEntity extends Endermite implements GrantAdvancementOnDiscovery {
 
 	public StarmiteEntity(EntityType<? extends StarmiteEntity> entityType, Level level) {
 		super(entityType, level);
 	}
-	
+
 	@Override
 	protected SoundEvent getAmbientSound() {
-		return DeferredRegistryHandler.STARMITE_AMBIENT.get();
+		return SoundEventRegistry.STARMITE_AMBIENT.get();
 	}
 
 	@Override
 	protected SoundEvent getHurtSound(DamageSource pDamageSource) {
-		return DeferredRegistryHandler.STARMITE_HURT.get();
+		return SoundEventRegistry.STARMITE_HURT.get();
 	}
 
 	@Override
 	protected SoundEvent getDeathSound() {
-		return DeferredRegistryHandler.STARMITE_DEATH.get();
+		return SoundEventRegistry.STARMITE_DEATH.get();
 	}
 
 	@Override
 	protected void playStepSound(BlockPos pPos, BlockState pBlock) {
-		playSound(DeferredRegistryHandler.STARMITE_STEP.get(), 0.15F, 1.0F);
+		playSound(SoundEventRegistry.STARMITE_STEP.get(), 0.15F, 1.0F);
 	}
 
 	@Override

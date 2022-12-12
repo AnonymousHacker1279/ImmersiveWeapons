@@ -4,7 +4,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.entity.SignBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import tech.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
+import tech.anonymoushacker1279.immersiveweapons.init.BlockEntityRegistry;
 
 public class StardustSignEntity extends SignBlockEntity {
 
@@ -14,6 +14,6 @@ public class StardustSignEntity extends SignBlockEntity {
 
 	@Override
 	public BlockEntityType<StardustSignEntity> getType() {
-		return DeferredRegistryHandler.STARDUST_SIGN_ENTITY.get();
+		return BlockEntityRegistry.STARDUST_SIGN_ENTITY.get();
 	}
 }

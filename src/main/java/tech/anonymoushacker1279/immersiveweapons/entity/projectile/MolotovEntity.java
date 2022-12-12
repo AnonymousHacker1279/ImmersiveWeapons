@@ -13,7 +13,8 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.HitResult;
 import net.minecraftforge.network.NetworkHooks;
-import tech.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
+import tech.anonymoushacker1279.immersiveweapons.init.EntityRegistry;
+import tech.anonymoushacker1279.immersiveweapons.init.ItemRegistry;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,7 +42,7 @@ public class MolotovEntity extends ThrowableItemProjectile {
 	 * @param livingEntity the <code>LivingEntity</code> throwing the entity
 	 */
 	public MolotovEntity(Level world, LivingEntity livingEntity) {
-		super(DeferredRegistryHandler.MOLOTOV_COCKTAIL_ENTITY.get(), livingEntity, world);
+		super(EntityRegistry.MOLOTOV_COCKTAIL_ENTITY.get(), livingEntity, world);
 	}
 
 	/**
@@ -53,7 +54,7 @@ public class MolotovEntity extends ThrowableItemProjectile {
 	 * @param z     the Z position
 	 */
 	public MolotovEntity(Level world, double x, double y, double z) {
-		super(DeferredRegistryHandler.MOLOTOV_COCKTAIL_ENTITY.get(), x, y, z, world);
+		super(EntityRegistry.MOLOTOV_COCKTAIL_ENTITY.get(), x, y, z, world);
 	}
 
 	/**
@@ -74,7 +75,7 @@ public class MolotovEntity extends ThrowableItemProjectile {
 	 */
 	@Override
 	protected Item getDefaultItem() {
-		return DeferredRegistryHandler.MOLOTOV_COCKTAIL.get();
+		return ItemRegistry.MOLOTOV_COCKTAIL.get();
 	}
 
 	/**

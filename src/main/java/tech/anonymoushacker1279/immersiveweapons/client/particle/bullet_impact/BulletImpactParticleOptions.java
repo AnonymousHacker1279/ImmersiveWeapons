@@ -17,7 +17,7 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.level.block.Block;
 import net.minecraftforge.client.model.data.ModelData;
 import net.minecraftforge.registries.ForgeRegistries;
-import tech.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
+import tech.anonymoushacker1279.immersiveweapons.init.ParticleTypesRegistry;
 
 import java.util.Locale;
 
@@ -89,6 +89,6 @@ public class BulletImpactParticleOptions implements ParticleOptions {
 
 	@Override
 	public ParticleType<BulletImpactParticleOptions> getType() {
-		return DeferredRegistryHandler.BULLET_IMPACT_PARTICLE.get();
+		return ParticleTypesRegistry.BULLET_IMPACT_PARTICLE.get();
 	}
 }

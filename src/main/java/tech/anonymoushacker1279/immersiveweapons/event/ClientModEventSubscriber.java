@@ -36,7 +36,7 @@ import tech.anonymoushacker1279.immersiveweapons.client.renderer.dimension.Tiltr
 import tech.anonymoushacker1279.immersiveweapons.client.renderer.entity.misc.CustomBoatRenderer;
 import tech.anonymoushacker1279.immersiveweapons.client.renderer.entity.mob.*;
 import tech.anonymoushacker1279.immersiveweapons.client.renderer.entity.projectile.*;
-import tech.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
+import tech.anonymoushacker1279.immersiveweapons.init.*;
 
 import java.util.Locale;
 import java.util.Objects;
@@ -45,15 +45,15 @@ import java.util.Objects;
 public class ClientModEventSubscriber {
 
 	private static final ModelLayerLocation MINUTEMAN_HEAD_LAYER = new ModelLayerLocation(
-			DeferredRegistryHandler.MINUTEMAN_HEAD.getId(), "main");
+			BlockRegistry.MINUTEMAN_HEAD.getId(), "main");
 	private static final ModelLayerLocation FIELD_MEDIC_HEAD_LAYER = new ModelLayerLocation(
-			DeferredRegistryHandler.FIELD_MEDIC_HEAD.getId(), "main");
+			BlockRegistry.FIELD_MEDIC_HEAD.getId(), "main");
 	private static final ModelLayerLocation DYING_SOLDIER_HEAD_LAYER = new ModelLayerLocation(
-			DeferredRegistryHandler.DYING_SOLDIER_HEAD.getId(), "main");
+			BlockRegistry.DYING_SOLDIER_HEAD.getId(), "main");
 	private static final ModelLayerLocation WANDERING_WARRIOR_HEAD_LAYER = new ModelLayerLocation(
-			DeferredRegistryHandler.WANDERING_WARRIOR_HEAD.getId(), "main");
+			BlockRegistry.WANDERING_WARRIOR_HEAD.getId(), "main");
 	private static final ModelLayerLocation HANS_HEAD_LAYER = new ModelLayerLocation(
-			DeferredRegistryHandler.HANS_HEAD.getId(), "main");
+			BlockRegistry.HANS_HEAD.getId(), "main");
 
 	/**
 	 * Event handler for the FMLClientSetupEvent.
@@ -65,8 +65,8 @@ public class ClientModEventSubscriber {
 		ImmersiveWeapons.LOGGER.debug("Initializing client setup");
 
 		// Register GUI screens
-		MenuScreens.register(DeferredRegistryHandler.SMALL_PARTS_TABLE_CONTAINER.get(), SmallPartsTableScreen::new);
-		MenuScreens.register(DeferredRegistryHandler.TESLA_SYNTHESIZER_CONTAINER.get(), TeslaSynthesizerScreen::new);
+		MenuScreens.register(MenuTypeRegistry.SMALL_PARTS_TABLE_MENU.get(), SmallPartsTableScreen::new);
+		MenuScreens.register(MenuTypeRegistry.TESLA_SYNTHESIZER_MENU.get(), TeslaSynthesizerScreen::new);
 
 		event.enqueueWork(() -> {
 			SkullBlockRenderer.SKIN_BY_TYPE.put(CustomSkullTypes.MINUTEMAN, new ResourceLocation(ImmersiveWeapons.MOD_ID,
@@ -98,74 +98,74 @@ public class ClientModEventSubscriber {
 	public static void entityRenderers(EntityRenderersEvent.RegisterRenderers event) {
 		ImmersiveWeapons.LOGGER.info("Registering entity renderers");
 
-		event.registerEntityRenderer(DeferredRegistryHandler.WOODEN_ARROW_ENTITY.get(), context ->
+		event.registerEntityRenderer(EntityRegistry.WOODEN_ARROW_ENTITY.get(), context ->
 				new CustomArrowRenderer<>(context, new ResourceLocation(ImmersiveWeapons.MOD_ID,
 						"textures/entity/projectiles/wood_arrow.png")));
-		event.registerEntityRenderer(DeferredRegistryHandler.STONE_ARROW_ENTITY.get(), context ->
+		event.registerEntityRenderer(EntityRegistry.STONE_ARROW_ENTITY.get(), context ->
 				new CustomArrowRenderer<>(context, new ResourceLocation(ImmersiveWeapons.MOD_ID,
 						"textures/entity/projectiles/stone_arrow.png")));
-		event.registerEntityRenderer(DeferredRegistryHandler.GOLDEN_ARROW_ENTITY.get(), context ->
+		event.registerEntityRenderer(EntityRegistry.GOLDEN_ARROW_ENTITY.get(), context ->
 				new CustomArrowRenderer<>(context, new ResourceLocation(ImmersiveWeapons.MOD_ID,
 						"textures/entity/projectiles/gold_arrow.png")));
-		event.registerEntityRenderer(DeferredRegistryHandler.COPPER_ARROW_ENTITY.get(), context ->
+		event.registerEntityRenderer(EntityRegistry.COPPER_ARROW_ENTITY.get(), context ->
 				new CustomArrowRenderer<>(context, new ResourceLocation(ImmersiveWeapons.MOD_ID,
 						"textures/entity/projectiles/copper_arrow.png")));
-		event.registerEntityRenderer(DeferredRegistryHandler.IRON_ARROW_ENTITY.get(), context ->
+		event.registerEntityRenderer(EntityRegistry.IRON_ARROW_ENTITY.get(), context ->
 				new CustomArrowRenderer<>(context, new ResourceLocation(ImmersiveWeapons.MOD_ID,
 						"textures/entity/projectiles/iron_arrow.png")));
-		event.registerEntityRenderer(DeferredRegistryHandler.COBALT_ARROW_ENTITY.get(), context ->
+		event.registerEntityRenderer(EntityRegistry.COBALT_ARROW_ENTITY.get(), context ->
 				new CustomArrowRenderer<>(context, new ResourceLocation(ImmersiveWeapons.MOD_ID,
 						"textures/entity/projectiles/cobalt_arrow.png")));
-		event.registerEntityRenderer(DeferredRegistryHandler.DIAMOND_ARROW_ENTITY.get(), context ->
+		event.registerEntityRenderer(EntityRegistry.DIAMOND_ARROW_ENTITY.get(), context ->
 				new CustomArrowRenderer<>(context, new ResourceLocation(ImmersiveWeapons.MOD_ID,
 						"textures/entity/projectiles/diamond_arrow.png")));
-		event.registerEntityRenderer(DeferredRegistryHandler.NETHERITE_ARROW_ENTITY.get(), context ->
+		event.registerEntityRenderer(EntityRegistry.NETHERITE_ARROW_ENTITY.get(), context ->
 				new CustomArrowRenderer<>(context, new ResourceLocation(ImmersiveWeapons.MOD_ID,
 						"textures/entity/projectiles/netherite_arrow.png")));
-		event.registerEntityRenderer(DeferredRegistryHandler.SMOKE_GRENADE_ARROW_ENTITY.get(), context ->
+		event.registerEntityRenderer(EntityRegistry.SMOKE_GRENADE_ARROW_ENTITY.get(), context ->
 				new CustomArrowRenderer<>(context, new ResourceLocation(ImmersiveWeapons.MOD_ID,
 						"textures/entity/projectiles/smoke_bomb_arrow.png")));
-		event.registerEntityRenderer(DeferredRegistryHandler.WOODEN_MUSKET_BALL_ENTITY.get(), MusketBallRenderer::new);
-		event.registerEntityRenderer(DeferredRegistryHandler.STONE_MUSKET_BALL_ENTITY.get(), MusketBallRenderer::new);
-		event.registerEntityRenderer(DeferredRegistryHandler.GOLDEN_MUSKET_BALL_ENTITY.get(), MusketBallRenderer::new);
-		event.registerEntityRenderer(DeferredRegistryHandler.COPPER_MUSKET_BALL_ENTITY.get(), MusketBallRenderer::new);
-		event.registerEntityRenderer(DeferredRegistryHandler.IRON_MUSKET_BALL_ENTITY.get(), MusketBallRenderer::new);
-		event.registerEntityRenderer(DeferredRegistryHandler.COBALT_MUSKET_BALL_ENTITY.get(), MusketBallRenderer::new);
-		event.registerEntityRenderer(DeferredRegistryHandler.DIAMOND_MUSKET_BALL_ENTITY.get(), MusketBallRenderer::new);
-		event.registerEntityRenderer(DeferredRegistryHandler.NETHERITE_MUSKET_BALL_ENTITY.get(), MusketBallRenderer::new);
-		event.registerEntityRenderer(DeferredRegistryHandler.FLARE_ENTITY.get(), FlareRenderer::new);
-		event.registerEntityRenderer(DeferredRegistryHandler.MORTAR_SHELL_ENTITY.get(), ThrownItemRenderer::new);
-		event.registerEntityRenderer(DeferredRegistryHandler.SMOKE_GRENADE_ENTITY.get(), ThrownItemRenderer::new);
-		event.registerEntityRenderer(DeferredRegistryHandler.MOLOTOV_COCKTAIL_ENTITY.get(), ThrownItemRenderer::new);
-		event.registerEntityRenderer(DeferredRegistryHandler.DYING_SOLDIER_ENTITY.get(), DyingSoldierRenderer::new);
-		event.registerEntityRenderer(DeferredRegistryHandler.MINUTEMAN_ENTITY.get(), MinutemanRenderer::new);
-		event.registerEntityRenderer(DeferredRegistryHandler.FIELD_MEDIC_ENTITY.get(), FieldMedicRenderer::new);
-		event.registerEntityRenderer(DeferredRegistryHandler.WANDERING_WARRIOR_ENTITY.get(), WanderingWarriorRenderer::new);
-		event.registerEntityRenderer(DeferredRegistryHandler.HANS_ENTITY.get(), HansRenderer::new);
-		event.registerEntityRenderer(DeferredRegistryHandler.CHAIR_ENTITY.get(), ChairRenderer::new);
-		event.registerEntityRenderer(DeferredRegistryHandler.BURNED_OAK_BOAT_ENTITY.get(),
+		event.registerEntityRenderer(EntityRegistry.WOODEN_MUSKET_BALL_ENTITY.get(), MusketBallRenderer::new);
+		event.registerEntityRenderer(EntityRegistry.STONE_MUSKET_BALL_ENTITY.get(), MusketBallRenderer::new);
+		event.registerEntityRenderer(EntityRegistry.GOLDEN_MUSKET_BALL_ENTITY.get(), MusketBallRenderer::new);
+		event.registerEntityRenderer(EntityRegistry.COPPER_MUSKET_BALL_ENTITY.get(), MusketBallRenderer::new);
+		event.registerEntityRenderer(EntityRegistry.IRON_MUSKET_BALL_ENTITY.get(), MusketBallRenderer::new);
+		event.registerEntityRenderer(EntityRegistry.COBALT_MUSKET_BALL_ENTITY.get(), MusketBallRenderer::new);
+		event.registerEntityRenderer(EntityRegistry.DIAMOND_MUSKET_BALL_ENTITY.get(), MusketBallRenderer::new);
+		event.registerEntityRenderer(EntityRegistry.NETHERITE_MUSKET_BALL_ENTITY.get(), MusketBallRenderer::new);
+		event.registerEntityRenderer(EntityRegistry.FLARE_ENTITY.get(), FlareRenderer::new);
+		event.registerEntityRenderer(EntityRegistry.MORTAR_SHELL_ENTITY.get(), ThrownItemRenderer::new);
+		event.registerEntityRenderer(EntityRegistry.SMOKE_GRENADE_ENTITY.get(), ThrownItemRenderer::new);
+		event.registerEntityRenderer(EntityRegistry.MOLOTOV_COCKTAIL_ENTITY.get(), ThrownItemRenderer::new);
+		event.registerEntityRenderer(EntityRegistry.DYING_SOLDIER_ENTITY.get(), DyingSoldierRenderer::new);
+		event.registerEntityRenderer(EntityRegistry.MINUTEMAN_ENTITY.get(), MinutemanRenderer::new);
+		event.registerEntityRenderer(EntityRegistry.FIELD_MEDIC_ENTITY.get(), FieldMedicRenderer::new);
+		event.registerEntityRenderer(EntityRegistry.WANDERING_WARRIOR_ENTITY.get(), WanderingWarriorRenderer::new);
+		event.registerEntityRenderer(EntityRegistry.HANS_ENTITY.get(), HansRenderer::new);
+		event.registerEntityRenderer(EntityRegistry.CHAIR_ENTITY.get(), ChairRenderer::new);
+		event.registerEntityRenderer(EntityRegistry.BURNED_OAK_BOAT_ENTITY.get(),
 				context -> new CustomBoatRenderer(context, false,
 						new ResourceLocation(ImmersiveWeapons.MOD_ID, "textures/entity/boat/burned_oak.png")));
-		event.registerEntityRenderer(DeferredRegistryHandler.BURNED_OAK_CHEST_BOAT_ENTITY.get(),
+		event.registerEntityRenderer(EntityRegistry.BURNED_OAK_CHEST_BOAT_ENTITY.get(),
 				context -> new CustomBoatRenderer(context, true,
 						new ResourceLocation(ImmersiveWeapons.MOD_ID, "textures/entity/chest_boat/burned_oak.png")));
-		event.registerEntityRenderer(DeferredRegistryHandler.STARDUST_BOAT_ENTITY.get(),
+		event.registerEntityRenderer(EntityRegistry.STARDUST_BOAT_ENTITY.get(),
 				context -> new CustomBoatRenderer(context, false,
 						new ResourceLocation(ImmersiveWeapons.MOD_ID, "textures/entity/boat/stardust.png")));
-		event.registerEntityRenderer(DeferredRegistryHandler.STARDUST_CHEST_BOAT_ENTITY.get(),
+		event.registerEntityRenderer(EntityRegistry.STARDUST_CHEST_BOAT_ENTITY.get(),
 				context -> new CustomBoatRenderer(context, true,
 						new ResourceLocation(ImmersiveWeapons.MOD_ID, "textures/entity/chest_boat/stardust.png")));
-		event.registerEntityRenderer(DeferredRegistryHandler.MUD_BALL_ENTITY.get(), ThrownItemRenderer::new);
-		event.registerEntityRenderer(DeferredRegistryHandler.LAVA_REVENANT_ENTITY.get(), LavaRevenantRenderer::new);
-		event.registerEntityRenderer(DeferredRegistryHandler.ROCK_SPIDER_ENTITY.get(), RockSpiderRenderer::new);
-		event.registerEntityRenderer(DeferredRegistryHandler.CELESTIAL_TOWER_ENTITY.get(), CelestialTowerRenderer::new);
-		event.registerEntityRenderer(DeferredRegistryHandler.STARMITE_ENTITY.get(), StarmiteRenderer::new);
-		event.registerEntityRenderer(DeferredRegistryHandler.FIREFLY_ENTITY.get(), FireflyRenderer::new);
-		event.registerBlockEntityRenderer(DeferredRegistryHandler.WALL_SHELF_BLOCK_ENTITY.get(), context -> new ShelfRenderer());
-		event.registerBlockEntityRenderer(DeferredRegistryHandler.BURNED_OAK_SIGN_ENTITY.get(), SignRenderer::new);
-		event.registerBlockEntityRenderer(DeferredRegistryHandler.CUSTOM_SKULL_BLOCK_ENTITY.get(), SkullBlockRenderer::new);
-		event.registerBlockEntityRenderer(DeferredRegistryHandler.STARDUST_SIGN_ENTITY.get(), SignRenderer::new);
-		event.registerBlockEntityRenderer(DeferredRegistryHandler.ASTRAL_CRYSTAL_BLOCK_ENTITY.get(), context -> new AstralCrystalRenderer());
+		event.registerEntityRenderer(EntityRegistry.MUD_BALL_ENTITY.get(), ThrownItemRenderer::new);
+		event.registerEntityRenderer(EntityRegistry.LAVA_REVENANT_ENTITY.get(), LavaRevenantRenderer::new);
+		event.registerEntityRenderer(EntityRegistry.ROCK_SPIDER_ENTITY.get(), RockSpiderRenderer::new);
+		event.registerEntityRenderer(EntityRegistry.CELESTIAL_TOWER_ENTITY.get(), CelestialTowerRenderer::new);
+		event.registerEntityRenderer(EntityRegistry.STARMITE_ENTITY.get(), StarmiteRenderer::new);
+		event.registerEntityRenderer(EntityRegistry.FIREFLY_ENTITY.get(), FireflyRenderer::new);
+		event.registerBlockEntityRenderer(BlockEntityRegistry.WALL_SHELF_BLOCK_ENTITY.get(), context -> new ShelfRenderer());
+		event.registerBlockEntityRenderer(BlockEntityRegistry.BURNED_OAK_SIGN_ENTITY.get(), SignRenderer::new);
+		event.registerBlockEntityRenderer(BlockEntityRegistry.CUSTOM_SKULL_BLOCK_ENTITY.get(), SkullBlockRenderer::new);
+		event.registerBlockEntityRenderer(BlockEntityRegistry.STARDUST_SIGN_ENTITY.get(), SignRenderer::new);
+		event.registerBlockEntityRenderer(BlockEntityRegistry.ASTRAL_CRYSTAL_BLOCK_ENTITY.get(), context -> new AstralCrystalRenderer());
 	}
 
 	/**
@@ -195,13 +195,13 @@ public class ClientModEventSubscriber {
 	public static void registerParticleFactories(RegisterParticleProvidersEvent event) {
 		ImmersiveWeapons.LOGGER.info("Registering particle factories");
 
-		event.register(DeferredRegistryHandler.SMOKE_GRENADE_PARTICLE.get(), SmokeGrenadeParticle.Provider::new);
-		event.register(DeferredRegistryHandler.BLOOD_PARTICLE.get(), BloodParticle.Provider::new);
-		event.register(DeferredRegistryHandler.BULLET_IMPACT_PARTICLE.get(), BulletImpactParticle.Provider::new);
-		event.register(DeferredRegistryHandler.MUZZLE_FLASH_PARTICLE.get(), MuzzleFlashParticle.Provider::new);
-		event.register(DeferredRegistryHandler.MOONGLOW_PARTICLE.get(), MoonglowParticle.Provider::new);
-		event.register(DeferredRegistryHandler.STARDUST_LEAVES_PARTICLE.get(), StardustLeavesParticle.Provider::new);
-		event.register(DeferredRegistryHandler.DEADMANS_DESERT_AMBIENT_PARTICLE.get(), DeadmansDesertAmbientParticle.Provider::new);
+		event.register(ParticleTypesRegistry.SMOKE_GRENADE_PARTICLE.get(), SmokeGrenadeParticle.Provider::new);
+		event.register(ParticleTypesRegistry.BLOOD_PARTICLE.get(), BloodParticle.Provider::new);
+		event.register(ParticleTypesRegistry.BULLET_IMPACT_PARTICLE.get(), BulletImpactParticle.Provider::new);
+		event.register(ParticleTypesRegistry.MUZZLE_FLASH_PARTICLE.get(), MuzzleFlashParticle.Provider::new);
+		event.register(ParticleTypesRegistry.MOONGLOW_PARTICLE.get(), MoonglowParticle.Provider::new);
+		event.register(ParticleTypesRegistry.STARDUST_LEAVES_PARTICLE.get(), StardustLeavesParticle.Provider::new);
+		event.register(ParticleTypesRegistry.DEADMANS_DESERT_AMBIENT_PARTICLE.get(), DeadmansDesertAmbientParticle.Provider::new);
 	}
 
 	@SubscribeEvent
@@ -239,7 +239,7 @@ public class ClientModEventSubscriber {
 		ImmersiveWeapons.LOGGER.info("Registering item color handlers");
 
 		event.register((color1, color2) -> GrassColor.get(0.5d, 1.0d),
-				DeferredRegistryHandler.PITFALL_ITEM.get());
+				BlockItemRegistry.PITFALL_ITEM.get());
 	}
 
 	@SubscribeEvent
@@ -248,11 +248,11 @@ public class ClientModEventSubscriber {
 
 		event.register((color1, color2, color3, color4) -> BiomeColors
 						.getAverageGrassColor(Objects.requireNonNull(color2), Objects.requireNonNull(color3)),
-				DeferredRegistryHandler.PITFALL.get());
+				BlockRegistry.PITFALL.get());
 	}
 
 	private static void registerPropertyGetters() {
-		registerPropertyGetter(DeferredRegistryHandler.IRON_GAUNTLET.get(), prefix("gunslinger"),
+		registerPropertyGetter(ItemRegistry.IRON_GAUNTLET.get(), prefix("gunslinger"),
 				(stack, clientLevel, livingEntity, i) -> stack.getDisplayName().getString().toLowerCase(Locale.ROOT)
 						.equals("[the gunslinger]") ? 1 : 0);
 	}

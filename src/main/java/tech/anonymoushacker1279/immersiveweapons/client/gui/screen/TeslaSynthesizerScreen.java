@@ -7,9 +7,9 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
-import tech.anonymoushacker1279.immersiveweapons.container.TeslaSynthesizerContainer;
+import tech.anonymoushacker1279.immersiveweapons.menu.TeslaSynthesizerMenu;
 
-public class TeslaSynthesizerScreen extends AbstractContainerScreen<TeslaSynthesizerContainer> {
+public class TeslaSynthesizerScreen extends AbstractContainerScreen<TeslaSynthesizerMenu> {
 
 	private static final ResourceLocation GUI_TEXTURE = new ResourceLocation(ImmersiveWeapons.MOD_ID, "textures/gui/container/tesla_synthesizer.png");
 
@@ -20,7 +20,7 @@ public class TeslaSynthesizerScreen extends AbstractContainerScreen<TeslaSynthes
 	 * @param playerInventory a <code>PlayerInventory</code> instance
 	 * @param title           the <code>ITextComponent</code> title for the screen
 	 */
-	public TeslaSynthesizerScreen(TeslaSynthesizerContainer container, Inventory playerInventory, Component title) {
+	public TeslaSynthesizerScreen(TeslaSynthesizerMenu container, Inventory playerInventory, Component title) {
 		super(container, playerInventory, title);
 		titleLabelX = 75;
 		titleLabelY = 18;

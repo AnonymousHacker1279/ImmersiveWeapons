@@ -19,7 +19,7 @@ import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import tech.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
+import tech.anonymoushacker1279.immersiveweapons.init.EffectRegistry;
 import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
 
 public class WoodenSpikesBlock extends HorizontalDirectionalBlock implements SimpleWaterloggedBlock {
@@ -130,7 +130,7 @@ public class WoodenSpikesBlock extends HorizontalDirectionalBlock implements Sim
 					}
 
 					if (GeneralUtilities.getRandomNumber(0.0f, 1.0f) <= 0.15f) {
-						((LivingEntity) entity).addEffect(new MobEffectInstance(DeferredRegistryHandler.BLEEDING_EFFECT.get(),
+						((LivingEntity) entity).addEffect(new MobEffectInstance(EffectRegistry.BLEEDING_EFFECT.get(),
 								200, 0, true, false));
 					}
 				}

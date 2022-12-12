@@ -27,7 +27,7 @@ import tech.anonymoushacker1279.immersiveweapons.config.CommonConfig;
 import tech.anonymoushacker1279.immersiveweapons.entity.GrantAdvancementOnDiscovery;
 import tech.anonymoushacker1279.immersiveweapons.entity.ai.goal.CelestialTowerSummonGoal;
 import tech.anonymoushacker1279.immersiveweapons.entity.ai.goal.HoverGoal;
-import tech.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
+import tech.anonymoushacker1279.immersiveweapons.init.SoundEventRegistry;
 import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
 
 import java.util.*;
@@ -66,18 +66,18 @@ public class CelestialTowerEntity extends Monster implements GrantAdvancementOnD
 
 	@Override
 	protected SoundEvent getAmbientSound() {
-		return DeferredRegistryHandler.CELESTIAL_TOWER_AMBIENT.get();
+		return SoundEventRegistry.CELESTIAL_TOWER_AMBIENT.get();
 	}
 
 
 	@Override
 	protected SoundEvent getHurtSound(DamageSource pDamageSource) {
-		return DeferredRegistryHandler.CELESTIAL_TOWER_HURT.get();
+		return SoundEventRegistry.CELESTIAL_TOWER_HURT.get();
 	}
 
 	@Override
 	protected SoundEvent getDeathSound() {
-		return DeferredRegistryHandler.CELESTIAL_TOWER_DEATH.get();
+		return SoundEventRegistry.CELESTIAL_TOWER_DEATH.get();
 	}
 
 	@Override

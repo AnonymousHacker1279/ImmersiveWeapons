@@ -26,7 +26,7 @@ import net.minecraftforge.network.NetworkEvent;
 import net.minecraftforge.network.NetworkEvent.Context;
 import net.minecraftforge.network.PacketDistributor;
 import tech.anonymoushacker1279.immersiveweapons.blockentity.AstralCrystalBlockEntity;
-import tech.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
+import tech.anonymoushacker1279.immersiveweapons.init.ItemRegistry;
 import tech.anonymoushacker1279.immersiveweapons.init.PacketHandler;
 import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
 
@@ -77,7 +77,7 @@ public class AstralCrystalBlock extends AmethystClusterBlock implements EntityBl
 					return InteractionResult.SUCCESS;
 				}
 				if (!level.isClientSide) {
-					if (itemStack.is(DeferredRegistryHandler.RAW_ASTRAL.get())) {
+					if (itemStack.is(ItemRegistry.RAW_ASTRAL.get())) {
 						crystalBlockEntity.addItem(player.isCreative() ? itemStack.copy() : itemStack);
 						return InteractionResult.SUCCESS;
 					}
@@ -115,7 +115,7 @@ public class AstralCrystalBlock extends AmethystClusterBlock implements EntityBl
 	public void animateTick(BlockState state, Level level, BlockPos pos, RandomSource random) {
 		if (level.getBlockEntity(pos) instanceof AstralCrystalBlockEntity entity && isBuiltOnPlatform(level, pos)) {
 			int astralInInventory = entity.getInventory().stream().map(ItemStack::getItem)
-					.filter(item -> item == DeferredRegistryHandler.RAW_ASTRAL.get()).toArray().length;
+					.filter(item -> item == ItemRegistry.RAW_ASTRAL.get()).toArray().length;
 			float particleChance = astralInInventory * 0.25f;
 
 			if (random.nextFloat() <= particleChance) {
@@ -135,14 +135,14 @@ public class AstralCrystalBlock extends AmethystClusterBlock implements EntityBl
 		if (entity instanceof ItemEntity itemEntity && isBuiltOnPlatform(level, pos)) {
 			if (level.getBlockEntity(pos) instanceof AstralCrystalBlockEntity crystalBlockEntity) {
 				int astralInInventory = crystalBlockEntity.getInventory().stream().map(ItemStack::getItem)
-						.filter(item -> item == DeferredRegistryHandler.RAW_ASTRAL.get()).toArray().length;
+						.filter(item -> item == ItemRegistry.RAW_ASTRAL.get()).toArray().length;
 
 				if (!level.isClientSide) {
 					if (astralInInventory == 4) {
 						ItemStack itemStack = itemEntity.getItem();
 						if (itemStack.getItem() == Items.AMETHYST_SHARD) {
 							level.addFreshEntity(new ItemEntity(level, itemEntity.getX(), itemEntity.getY() + 0.5f, itemEntity.getZ(),
-									new ItemStack(DeferredRegistryHandler.ASTRAL_INGOT.get())));
+									new ItemStack(ItemRegistry.ASTRAL_INGOT.get())));
 
 							crystalBlockEntity.getInventory().clear();
 							level.destroyBlock(pos, false);

@@ -13,7 +13,7 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.Heightmap;
 import org.jetbrains.annotations.Nullable;
-import tech.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
+import tech.anonymoushacker1279.immersiveweapons.init.BlockEntityRegistry;
 import tech.anonymoushacker1279.immersiveweapons.world.TiltrosTeleporter;
 import tech.anonymoushacker1279.immersiveweapons.world.level.levelgen.biomes.BiomesAndDimensions;
 
@@ -24,7 +24,7 @@ public class AzulStainedOrchidBlockEntity extends BlockEntity implements EntityB
 	BlockPos targetPos;
 
 	public AzulStainedOrchidBlockEntity(BlockPos pos, BlockState state) {
-		super(DeferredRegistryHandler.AZUL_STAINED_ORCHID_BLOCK_ENTITY.get(), pos, state);
+		super(BlockEntityRegistry.AZUL_STAINED_ORCHID_BLOCK_ENTITY.get(), pos, state);
 	}
 
 	public void entityInside(BlockPos pos, Entity entity) {

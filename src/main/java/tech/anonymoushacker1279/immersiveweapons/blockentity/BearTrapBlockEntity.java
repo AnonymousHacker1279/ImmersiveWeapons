@@ -16,7 +16,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Nullable;
-import tech.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
+import tech.anonymoushacker1279.immersiveweapons.init.BlockEntityRegistry;
 
 import java.util.EnumSet;
 import java.util.UUID;
@@ -37,7 +37,7 @@ public class BearTrapBlockEntity extends BlockEntity implements EntityBlock {
 	 * Constructor for BearTrapBlockEntity.
 	 */
 	public BearTrapBlockEntity(BlockPos blockPos, BlockState blockState) {
-		super(DeferredRegistryHandler.BEAR_TRAP_BLOCK_ENTITY.get(), blockPos, blockState);
+		super(BlockEntityRegistry.BEAR_TRAP_BLOCK_ENTITY.get(), blockPos, blockState);
 	}
 
 	/**

@@ -11,7 +11,8 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.FlowerBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.PlantType;
-import tech.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
+import tech.anonymoushacker1279.immersiveweapons.init.BlockRegistry;
+import tech.anonymoushacker1279.immersiveweapons.init.EffectRegistry;
 import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
 
 public class DeathweedBlock extends FlowerBlock {
@@ -25,7 +26,7 @@ public class DeathweedBlock extends FlowerBlock {
 
 	@Override
 	protected boolean mayPlaceOn(BlockState state, BlockGetter level, BlockPos pos) {
-		return state.is(DeferredRegistryHandler.BLOOD_SAND.get());
+		return state.is(BlockRegistry.BLOOD_SAND.get());
 	}
 
 	@Override
@@ -42,7 +43,7 @@ public class DeathweedBlock extends FlowerBlock {
 					livingEntity.hurt(DAMAGE_SOURCE, 1.0f);
 
 					if (chance <= 0.25f) {
-						livingEntity.addEffect(new MobEffectInstance(DeferredRegistryHandler.DAMAGE_VULNERABILITY_EFFECT.get(), 200));
+						livingEntity.addEffect(new MobEffectInstance(EffectRegistry.DAMAGE_VULNERABILITY_EFFECT.get(), 200));
 					}
 				}
 			}

@@ -4,7 +4,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.Nullable;
-import tech.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
+import tech.anonymoushacker1279.immersiveweapons.init.BlockEntityRegistry;
 
 public class WallShelfBlockEntity extends AbstractInventoryBlockEntity {
 
@@ -12,7 +12,7 @@ public class WallShelfBlockEntity extends AbstractInventoryBlockEntity {
 	 * Constructor for WallShelfBlockEntity.
 	 */
 	public WallShelfBlockEntity(BlockPos blockPos, BlockState blockState) {
-		super(DeferredRegistryHandler.WALL_SHELF_BLOCK_ENTITY.get(), blockPos, blockState);
+		super(BlockEntityRegistry.WALL_SHELF_BLOCK_ENTITY.get(), blockPos, blockState);
 	}
 
 	/**

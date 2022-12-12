@@ -9,7 +9,8 @@ import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.registries.RegistryObject;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.data.models.lists.ItemLists;
-import tech.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
+import tech.anonymoushacker1279.immersiveweapons.init.BlockItemRegistry;
+import tech.anonymoushacker1279.immersiveweapons.init.ItemRegistry;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -67,7 +68,7 @@ public class ItemModelGenerator extends ItemModelProvider {
 	protected void registerModels() {
 		List<Item> items = new ArrayList<>(250);
 
-		DeferredRegistryHandler.ITEMS.getEntries().stream().map(RegistryObject::get)
+		ItemRegistry.ITEMS.getEntries().stream().map(RegistryObject::get)
 				.filter(Predicate.not(ItemLists.modelGeneratorIgnoredItems::contains)).forEach(items::add);
 
 		boolean isAtBlockItems = false;
@@ -75,11 +76,11 @@ public class ItemModelGenerator extends ItemModelProvider {
 		boolean isAtSpawnEggItems = false;
 
 		for (Item item : items) {
-			if (item == DeferredRegistryHandler.MOLTEN_ORE_ITEM.get()) {
+			if (item == BlockItemRegistry.MOLTEN_ORE_ITEM.get()) {
 				isAtBlockItems = true;
-			} else if (item == DeferredRegistryHandler.STONE_SHARD.get()) {
+			} else if (item == ItemRegistry.WOODEN_SHARD.get()) {
 				isPastToolItems = true;
-			} else if (item == DeferredRegistryHandler.DYING_SOLDIER_SPAWN_EGG.get()) {
+			} else if (item == ItemRegistry.DYING_SOLDIER_SPAWN_EGG.get()) {
 				isAtSpawnEggItems = true;
 			}
 
@@ -95,88 +96,88 @@ public class ItemModelGenerator extends ItemModelProvider {
 				}
 			} else {
 				// Some block items are special
-				if (item == DeferredRegistryHandler.BURNED_OAK_FENCE_ITEM.get()) {
+				if (item == BlockItemRegistry.BURNED_OAK_FENCE_ITEM.get()) {
 					fenceInventory(item.toString(),
 							new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/burned_oak_planks"));
-				} else if (item == DeferredRegistryHandler.BURNED_OAK_TRAPDOOR_ITEM.get()) {
+				} else if (item == BlockItemRegistry.BURNED_OAK_TRAPDOOR_ITEM.get()) {
 					trapdoorBottom(item.toString(),
 							new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/burned_oak_trapdoor"));
-				} else if (item == DeferredRegistryHandler.BURNED_OAK_DOOR_ITEM.get()) {
+				} else if (item == BlockItemRegistry.BURNED_OAK_DOOR_ITEM.get()) {
 					basicItem(new ResourceLocation(ImmersiveWeapons.MOD_ID, "burned_oak_door"));
-				} else if (item == DeferredRegistryHandler.BURNED_OAK_SIGN_ITEM.get()) {
+				} else if (item == BlockItemRegistry.BURNED_OAK_SIGN_ITEM.get()) {
 					basicItem(new ResourceLocation(ImmersiveWeapons.MOD_ID, "burned_oak_sign"));
-				} else if (item == DeferredRegistryHandler.BURNED_OAK_BUTTON_ITEM.get()) {
+				} else if (item == BlockItemRegistry.BURNED_OAK_BUTTON_ITEM.get()) {
 					buttonInventory(item.toString(),
 							new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/burned_oak_planks"));
-				} else if (item == DeferredRegistryHandler.AZUL_STAINED_ORCHID_ITEM.get()) {
+				} else if (item == BlockItemRegistry.AZUL_STAINED_ORCHID_ITEM.get()) {
 					getBuilder(item.toString())
 							.parent(new ModelFile.UncheckedModelFile("item/generated"))
 							.texture("layer0", new ResourceLocation(ImmersiveWeapons.MOD_ID,
 									"block/azul_stained_orchid"));
-				} else if (item == DeferredRegistryHandler.MOONGLOW_ITEM.get()) {
+				} else if (item == BlockItemRegistry.MOONGLOW_ITEM.get()) {
 					getBuilder(item.toString())
 							.parent(new ModelFile.UncheckedModelFile("item/generated"))
 							.texture("layer0", new ResourceLocation(ImmersiveWeapons.MOD_ID,
 									"block/moonglow"));
-				} else if (item == DeferredRegistryHandler.STARDUST_SAPLING_ITEM.get()) {
+				} else if (item == BlockItemRegistry.STARDUST_SAPLING_ITEM.get()) {
 					getBuilder(item.toString())
 							.parent(new ModelFile.UncheckedModelFile("item/generated"))
 							.texture("layer0", new ResourceLocation(ImmersiveWeapons.MOD_ID,
 									"block/stardust_sapling"));
-				} else if (item == DeferredRegistryHandler.DEATHWEED_ITEM.get()) {
+				} else if (item == BlockItemRegistry.DEATHWEED_ITEM.get()) {
 					getBuilder(item.toString())
 							.parent(new ModelFile.UncheckedModelFile("item/generated"))
 							.texture("layer0", new ResourceLocation(ImmersiveWeapons.MOD_ID,
 									"block/deathweed"));
-				} else if (item == DeferredRegistryHandler.BEAR_TRAP_ITEM.get()) {
+				} else if (item == BlockItemRegistry.BEAR_TRAP_ITEM.get()) {
 					getBuilder(item.toString())
 							.parent(new ModelFile.UncheckedModelFile(new ResourceLocation(ImmersiveWeapons.MOD_ID,
 									"block/bear_trap_closed")));
-				} else if (item == DeferredRegistryHandler.LANDMINE_ITEM.get()) {
+				} else if (item == BlockItemRegistry.LANDMINE_ITEM.get()) {
 					getBuilder(item.toString())
 							.parent(new ModelFile.UncheckedModelFile(new ResourceLocation(ImmersiveWeapons.MOD_ID,
 									"block/landmine_disarmed")));
-				} else if (item == DeferredRegistryHandler.SPIKE_TRAP_ITEM.get()) {
+				} else if (item == BlockItemRegistry.SPIKE_TRAP_ITEM.get()) {
 					getBuilder(item.toString())
 							.parent(new ModelFile.UncheckedModelFile(new ResourceLocation(ImmersiveWeapons.MOD_ID,
 									"block/spike_trap_activated")));
-				} else if (item == DeferredRegistryHandler.SANDBAG_ITEM.get()) {
+				} else if (item == BlockItemRegistry.SANDBAG_ITEM.get()) {
 					getBuilder(item.toString())
 							.parent(new ModelFile.UncheckedModelFile(new ResourceLocation(ImmersiveWeapons.MOD_ID,
 									"block/sandbag_0")));
-				} else if (item == DeferredRegistryHandler.SPOTLIGHT_ITEM.get()) {
+				} else if (item == BlockItemRegistry.SPOTLIGHT_ITEM.get()) {
 					getBuilder(item.toString())
 							.parent(new ModelFile.UncheckedModelFile(new ResourceLocation(ImmersiveWeapons.MOD_ID,
 									"block/spotlight_wall_unlit")));
-				} else if (item == DeferredRegistryHandler.MORTAR_ITEM.get()) {
+				} else if (item == BlockItemRegistry.MORTAR_ITEM.get()) {
 					getBuilder(item.toString())
 							.parent(new ModelFile.UncheckedModelFile(new ResourceLocation(ImmersiveWeapons.MOD_ID,
 									"block/mortar_0_unloaded")));
-				} else if (item == DeferredRegistryHandler.STARDUST_FENCE_ITEM.get()) {
+				} else if (item == BlockItemRegistry.STARDUST_FENCE_ITEM.get()) {
 					fenceInventory(item.toString(),
 							new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/stardust_planks"));
-				} else if (item == DeferredRegistryHandler.STARDUST_TRAPDOOR_ITEM.get()) {
+				} else if (item == BlockItemRegistry.STARDUST_TRAPDOOR_ITEM.get()) {
 					trapdoorBottom(item.toString(),
 							new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/stardust_trapdoor"));
-				} else if (item == DeferredRegistryHandler.STARDUST_DOOR_ITEM.get()) {
+				} else if (item == BlockItemRegistry.STARDUST_DOOR_ITEM.get()) {
 					basicItem(new ResourceLocation(ImmersiveWeapons.MOD_ID, "stardust_door"));
-				} else if (item == DeferredRegistryHandler.STARDUST_SIGN_ITEM.get()) {
+				} else if (item == BlockItemRegistry.STARDUST_SIGN_ITEM.get()) {
 					basicItem(new ResourceLocation(ImmersiveWeapons.MOD_ID, "stardust_sign"));
-				} else if (item == DeferredRegistryHandler.STARDUST_BUTTON_ITEM.get()) {
+				} else if (item == BlockItemRegistry.STARDUST_BUTTON_ITEM.get()) {
 					buttonInventory(item.toString(),
 							new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/stardust_planks"));
-				} else if (item == DeferredRegistryHandler.CLOUD_MARBLE_BRICK_WALL_ITEM.get()) {
+				} else if (item == BlockItemRegistry.CLOUD_MARBLE_BRICK_WALL_ITEM.get()) {
 					wallInventory(item.toString(),
 							new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/cloud_marble_bricks"));
-				} else if (item == DeferredRegistryHandler.BLOOD_SANDSTONE_WALL_ITEM.get()) {
+				} else if (item == BlockItemRegistry.BLOOD_SANDSTONE_WALL_ITEM.get()) {
 					wallInventory(item.toString(),
 							new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/blood_sandstone"));
-				} else if (item == DeferredRegistryHandler.ASTRAL_CRYSTAL_ITEM.get()) {
+				} else if (item == BlockItemRegistry.ASTRAL_CRYSTAL_ITEM.get()) {
 					getBuilder(item.toString())
 							.parent(new ModelFile.UncheckedModelFile("item/generated"))
 							.texture("layer0", new ResourceLocation(ImmersiveWeapons.MOD_ID,
 									"block/astral_crystal"));
-				} else if (item == DeferredRegistryHandler.STARSTORM_CRYSTAL_ITEM.get()) {
+				} else if (item == BlockItemRegistry.STARSTORM_CRYSTAL_ITEM.get()) {
 					getBuilder(item.toString())
 							.parent(new ModelFile.UncheckedModelFile("item/generated"))
 							.texture("layer0", new ResourceLocation(ImmersiveWeapons.MOD_ID,

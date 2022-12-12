@@ -18,7 +18,8 @@ import net.minecraft.world.phys.*;
 import net.minecraftforge.event.ForgeEventFactory;
 import net.minecraftforge.network.NetworkHooks;
 import tech.anonymoushacker1279.immersiveweapons.block.MortarBlock;
-import tech.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
+import tech.anonymoushacker1279.immersiveweapons.init.EntityRegistry;
+import tech.anonymoushacker1279.immersiveweapons.init.ItemRegistry;
 
 public class MortarShellEntity extends Projectile implements ItemSupplier {
 
@@ -42,7 +43,7 @@ public class MortarShellEntity extends Projectile implements ItemSupplier {
 	 * @param yOffset the Y offset to spawn at
 	 */
 	private MortarShellEntity(Level world, BlockPos pos, double yOffset) {
-		this(DeferredRegistryHandler.MORTAR_SHELL_ENTITY.get(), world);
+		this(EntityRegistry.MORTAR_SHELL_ENTITY.get(), world);
 		setPos(pos.getX() + 0.5D, pos.getY() + yOffset, pos.getZ() + 0.5D);
 	}
 
@@ -195,6 +196,6 @@ public class MortarShellEntity extends Projectile implements ItemSupplier {
 	 */
 	@Override
 	public ItemStack getItem() {
-		return new ItemStack(DeferredRegistryHandler.MORTAR_SHELL.get());
+		return new ItemStack(ItemRegistry.MORTAR_SHELL.get());
 	}
 }

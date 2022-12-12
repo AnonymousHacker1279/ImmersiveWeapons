@@ -9,7 +9,8 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
-import tech.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
+import tech.anonymoushacker1279.immersiveweapons.init.EntityRegistry;
+import tech.anonymoushacker1279.immersiveweapons.init.ItemRegistry;
 
 public class MudBallEntity extends ThrowableItemProjectile {
 
@@ -18,12 +19,12 @@ public class MudBallEntity extends ThrowableItemProjectile {
 	}
 
 	public MudBallEntity(Level level, LivingEntity livingEntity) {
-		super(DeferredRegistryHandler.MUD_BALL_ENTITY.get(), livingEntity, level);
+		super(EntityRegistry.MUD_BALL_ENTITY.get(), livingEntity, level);
 	}
 
 	@Override
 	protected Item getDefaultItem() {
-		return DeferredRegistryHandler.MUD_BALL.get();
+		return ItemRegistry.MUD_BALL.get();
 	}
 
 	private ParticleOptions getParticle() {

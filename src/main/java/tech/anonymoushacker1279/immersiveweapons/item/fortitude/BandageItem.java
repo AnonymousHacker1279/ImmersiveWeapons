@@ -8,7 +8,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import tech.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
+import tech.anonymoushacker1279.immersiveweapons.init.EffectRegistry;
 
 public class BandageItem extends Item {
 
@@ -72,8 +72,8 @@ public class BandageItem extends Item {
 	}
 
 	private void setEffects(LivingEntity entity) {
-		if (entity.hasEffect(DeferredRegistryHandler.BLEEDING_EFFECT.get())) {
-			entity.removeEffect(DeferredRegistryHandler.BLEEDING_EFFECT.get());
+		if (entity.hasEffect(EffectRegistry.BLEEDING_EFFECT.get())) {
+			entity.removeEffect(EffectRegistry.BLEEDING_EFFECT.get());
 		}
 		entity.addEffect(new MobEffectInstance(MobEffects.REGENERATION, 240, 0, false, true));
 	}

@@ -1,7 +1,7 @@
 package tech.anonymoushacker1279.immersiveweapons.data.models.lists;
 
 import net.minecraft.world.level.block.Block;
-import tech.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
+import tech.anonymoushacker1279.immersiveweapons.init.BlockRegistry;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,76 +18,76 @@ public class BlockLists {
 	public static final List<Block> stainedGlassBlocks = new ArrayList<>(25);
 
 	static {
-		simpleBlocks.add(DeferredRegistryHandler.CLOUD_MARBLE.get());
-		simpleBlocks.add(DeferredRegistryHandler.CLOUD_MARBLE_BRICKS.get());
-		simpleBlocks.add(DeferredRegistryHandler.RAW_SULFUR_BLOCK.get());
-		simpleBlocks.add(DeferredRegistryHandler.VENTUS_ORE.get());
-		simpleBlocks.add(DeferredRegistryHandler.COBALT_BLOCK.get());
-		simpleBlocks.add(DeferredRegistryHandler.RAW_COBALT_BLOCK.get());
-		simpleBlocks.add(DeferredRegistryHandler.MOLTEN_BLOCK.get());
-		simpleBlocks.add(DeferredRegistryHandler.BURNED_OAK_PLANKS.get());
-		simpleBlocks.add(DeferredRegistryHandler.MUD.get());
-		simpleBlocks.add(DeferredRegistryHandler.DRIED_MUD.get());
-		simpleBlocks.add(DeferredRegistryHandler.HARDENED_MUD.get());
-		simpleBlocks.add(DeferredRegistryHandler.STARDUST_PLANKS.get());
-		simpleBlocks.add(DeferredRegistryHandler.BLOOD_SAND.get());
-		simpleBlocks.add(DeferredRegistryHandler.ASTRAL_BLOCK.get());
-		simpleBlocks.add(DeferredRegistryHandler.STARSTORM_BLOCK.get());
+		simpleBlocks.add(BlockRegistry.CLOUD_MARBLE.get());
+		simpleBlocks.add(BlockRegistry.CLOUD_MARBLE_BRICKS.get());
+		simpleBlocks.add(BlockRegistry.RAW_SULFUR_BLOCK.get());
+		simpleBlocks.add(BlockRegistry.VENTUS_ORE.get());
+		simpleBlocks.add(BlockRegistry.COBALT_BLOCK.get());
+		simpleBlocks.add(BlockRegistry.RAW_COBALT_BLOCK.get());
+		simpleBlocks.add(BlockRegistry.MOLTEN_BLOCK.get());
+		simpleBlocks.add(BlockRegistry.BURNED_OAK_PLANKS.get());
+		simpleBlocks.add(BlockRegistry.MUD.get());
+		simpleBlocks.add(BlockRegistry.DRIED_MUD.get());
+		simpleBlocks.add(BlockRegistry.HARDENED_MUD.get());
+		simpleBlocks.add(BlockRegistry.STARDUST_PLANKS.get());
+		simpleBlocks.add(BlockRegistry.BLOOD_SAND.get());
+		simpleBlocks.add(BlockRegistry.ASTRAL_BLOCK.get());
+		simpleBlocks.add(BlockRegistry.STARSTORM_BLOCK.get());
 
-		stoneBasedOres.add(DeferredRegistryHandler.SULFUR_ORE.get());
-		stoneBasedOres.add(DeferredRegistryHandler.ELECTRIC_ORE.get());
-		stoneBasedOres.add(DeferredRegistryHandler.COBALT_ORE.get());
+		stoneBasedOres.add(BlockRegistry.SULFUR_ORE.get());
+		stoneBasedOres.add(BlockRegistry.ELECTRIC_ORE.get());
+		stoneBasedOres.add(BlockRegistry.COBALT_ORE.get());
 
-		deepslateBasedOres.add(DeferredRegistryHandler.DEEPSLATE_SULFUR_ORE.get());
-		deepslateBasedOres.add(DeferredRegistryHandler.DEEPSLATE_COBALT_ORE.get());
+		deepslateBasedOres.add(BlockRegistry.DEEPSLATE_SULFUR_ORE.get());
+		deepslateBasedOres.add(BlockRegistry.DEEPSLATE_COBALT_ORE.get());
 
-		netherrackBasedOres.add(DeferredRegistryHandler.MOLTEN_ORE.get());
-		netherrackBasedOres.add(DeferredRegistryHandler.NETHER_SULFUR_ORE.get());
+		netherrackBasedOres.add(BlockRegistry.MOLTEN_ORE.get());
+		netherrackBasedOres.add(BlockRegistry.NETHER_SULFUR_ORE.get());
 
-		tableBlocks.add(DeferredRegistryHandler.OAK_TABLE.get());
-		tableBlocks.add(DeferredRegistryHandler.SPRUCE_TABLE.get());
-		tableBlocks.add(DeferredRegistryHandler.BIRCH_TABLE.get());
-		tableBlocks.add(DeferredRegistryHandler.JUNGLE_TABLE.get());
-		tableBlocks.add(DeferredRegistryHandler.ACACIA_TABLE.get());
-		tableBlocks.add(DeferredRegistryHandler.DARK_OAK_TABLE.get());
-		tableBlocks.add(DeferredRegistryHandler.CRIMSON_TABLE.get());
-		tableBlocks.add(DeferredRegistryHandler.WARPED_TABLE.get());
-		tableBlocks.add(DeferredRegistryHandler.BURNED_OAK_TABLE.get());
+		tableBlocks.add(BlockRegistry.OAK_TABLE.get());
+		tableBlocks.add(BlockRegistry.SPRUCE_TABLE.get());
+		tableBlocks.add(BlockRegistry.BIRCH_TABLE.get());
+		tableBlocks.add(BlockRegistry.JUNGLE_TABLE.get());
+		tableBlocks.add(BlockRegistry.ACACIA_TABLE.get());
+		tableBlocks.add(BlockRegistry.DARK_OAK_TABLE.get());
+		tableBlocks.add(BlockRegistry.CRIMSON_TABLE.get());
+		tableBlocks.add(BlockRegistry.WARPED_TABLE.get());
+		tableBlocks.add(BlockRegistry.BURNED_OAK_TABLE.get());
 
-		flagBlocks.add(DeferredRegistryHandler.AMERICAN_FLAG.get());
-		flagBlocks.add(DeferredRegistryHandler.GADSDEN_FLAG.get());
-		flagBlocks.add(DeferredRegistryHandler.CANADIAN_FLAG.get());
-		flagBlocks.add(DeferredRegistryHandler.MEXICAN_FLAG.get());
-		flagBlocks.add(DeferredRegistryHandler.BRITISH_FLAG.get());
-		flagBlocks.add(DeferredRegistryHandler.TROLL_FLAG.get());
-		flagBlocks.add(DeferredRegistryHandler.IMMERSIVE_WEAPONS_FLAG.get());
+		flagBlocks.add(BlockRegistry.AMERICAN_FLAG.get());
+		flagBlocks.add(BlockRegistry.GADSDEN_FLAG.get());
+		flagBlocks.add(BlockRegistry.CANADIAN_FLAG.get());
+		flagBlocks.add(BlockRegistry.MEXICAN_FLAG.get());
+		flagBlocks.add(BlockRegistry.BRITISH_FLAG.get());
+		flagBlocks.add(BlockRegistry.TROLL_FLAG.get());
+		flagBlocks.add(BlockRegistry.IMMERSIVE_WEAPONS_FLAG.get());
 
-		headBlocks.add(DeferredRegistryHandler.MINUTEMAN_HEAD.get());
-		headBlocks.add(DeferredRegistryHandler.FIELD_MEDIC_HEAD.get());
-		headBlocks.add(DeferredRegistryHandler.DYING_SOLDIER_HEAD.get());
-		headBlocks.add(DeferredRegistryHandler.WANDERING_WARRIOR_HEAD.get());
-		headBlocks.add(DeferredRegistryHandler.HANS_HEAD.get());
-		headBlocks.add(DeferredRegistryHandler.MINUTEMAN_WALL_HEAD.get());
-		headBlocks.add(DeferredRegistryHandler.FIELD_MEDIC_WALL_HEAD.get());
-		headBlocks.add(DeferredRegistryHandler.DYING_SOLDIER_WALL_HEAD.get());
-		headBlocks.add(DeferredRegistryHandler.WANDERING_WARRIOR_WALL_HEAD.get());
-		headBlocks.add(DeferredRegistryHandler.HANS_WALL_HEAD.get());
+		headBlocks.add(BlockRegistry.MINUTEMAN_HEAD.get());
+		headBlocks.add(BlockRegistry.FIELD_MEDIC_HEAD.get());
+		headBlocks.add(BlockRegistry.DYING_SOLDIER_HEAD.get());
+		headBlocks.add(BlockRegistry.WANDERING_WARRIOR_HEAD.get());
+		headBlocks.add(BlockRegistry.HANS_HEAD.get());
+		headBlocks.add(BlockRegistry.MINUTEMAN_WALL_HEAD.get());
+		headBlocks.add(BlockRegistry.FIELD_MEDIC_WALL_HEAD.get());
+		headBlocks.add(BlockRegistry.DYING_SOLDIER_WALL_HEAD.get());
+		headBlocks.add(BlockRegistry.WANDERING_WARRIOR_WALL_HEAD.get());
+		headBlocks.add(BlockRegistry.HANS_WALL_HEAD.get());
 
-		stainedGlassBlocks.add(DeferredRegistryHandler.WHITE_STAINED_BULLETPROOF_GLASS.get());
-		stainedGlassBlocks.add(DeferredRegistryHandler.LIGHT_GRAY_STAINED_BULLETPROOF_GLASS.get());
-		stainedGlassBlocks.add(DeferredRegistryHandler.GRAY_STAINED_BULLETPROOF_GLASS.get());
-		stainedGlassBlocks.add(DeferredRegistryHandler.BLACK_STAINED_BULLETPROOF_GLASS.get());
-		stainedGlassBlocks.add(DeferredRegistryHandler.ORANGE_STAINED_BULLETPROOF_GLASS.get());
-		stainedGlassBlocks.add(DeferredRegistryHandler.MAGENTA_STAINED_BULLETPROOF_GLASS.get());
-		stainedGlassBlocks.add(DeferredRegistryHandler.LIGHT_BLUE_STAINED_BULLETPROOF_GLASS.get());
-		stainedGlassBlocks.add(DeferredRegistryHandler.YELLOW_STAINED_BULLETPROOF_GLASS.get());
-		stainedGlassBlocks.add(DeferredRegistryHandler.LIME_STAINED_BULLETPROOF_GLASS.get());
-		stainedGlassBlocks.add(DeferredRegistryHandler.PINK_STAINED_BULLETPROOF_GLASS.get());
-		stainedGlassBlocks.add(DeferredRegistryHandler.CYAN_STAINED_BULLETPROOF_GLASS.get());
-		stainedGlassBlocks.add(DeferredRegistryHandler.PURPLE_STAINED_BULLETPROOF_GLASS.get());
-		stainedGlassBlocks.add(DeferredRegistryHandler.BLUE_STAINED_BULLETPROOF_GLASS.get());
-		stainedGlassBlocks.add(DeferredRegistryHandler.BROWN_STAINED_BULLETPROOF_GLASS.get());
-		stainedGlassBlocks.add(DeferredRegistryHandler.GREEN_STAINED_BULLETPROOF_GLASS.get());
-		stainedGlassBlocks.add(DeferredRegistryHandler.RED_STAINED_BULLETPROOF_GLASS.get());
+		stainedGlassBlocks.add(BlockRegistry.WHITE_STAINED_BULLETPROOF_GLASS.get());
+		stainedGlassBlocks.add(BlockRegistry.LIGHT_GRAY_STAINED_BULLETPROOF_GLASS.get());
+		stainedGlassBlocks.add(BlockRegistry.GRAY_STAINED_BULLETPROOF_GLASS.get());
+		stainedGlassBlocks.add(BlockRegistry.BLACK_STAINED_BULLETPROOF_GLASS.get());
+		stainedGlassBlocks.add(BlockRegistry.ORANGE_STAINED_BULLETPROOF_GLASS.get());
+		stainedGlassBlocks.add(BlockRegistry.MAGENTA_STAINED_BULLETPROOF_GLASS.get());
+		stainedGlassBlocks.add(BlockRegistry.LIGHT_BLUE_STAINED_BULLETPROOF_GLASS.get());
+		stainedGlassBlocks.add(BlockRegistry.YELLOW_STAINED_BULLETPROOF_GLASS.get());
+		stainedGlassBlocks.add(BlockRegistry.LIME_STAINED_BULLETPROOF_GLASS.get());
+		stainedGlassBlocks.add(BlockRegistry.PINK_STAINED_BULLETPROOF_GLASS.get());
+		stainedGlassBlocks.add(BlockRegistry.CYAN_STAINED_BULLETPROOF_GLASS.get());
+		stainedGlassBlocks.add(BlockRegistry.PURPLE_STAINED_BULLETPROOF_GLASS.get());
+		stainedGlassBlocks.add(BlockRegistry.BLUE_STAINED_BULLETPROOF_GLASS.get());
+		stainedGlassBlocks.add(BlockRegistry.BROWN_STAINED_BULLETPROOF_GLASS.get());
+		stainedGlassBlocks.add(BlockRegistry.GREEN_STAINED_BULLETPROOF_GLASS.get());
+		stainedGlassBlocks.add(BlockRegistry.RED_STAINED_BULLETPROOF_GLASS.get());
 	}
 }

@@ -7,7 +7,8 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import tech.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
+import tech.anonymoushacker1279.immersiveweapons.init.EffectRegistry;
+import tech.anonymoushacker1279.immersiveweapons.init.ItemRegistry;
 
 public class MorphineItem extends Item {
 
@@ -38,7 +39,7 @@ public class MorphineItem extends Item {
 
 		if (!playerIn.isCreative()) {
 			itemInHand.shrink(1);
-			playerIn.getInventory().add(new ItemStack(DeferredRegistryHandler.USED_SYRINGE.get()));
+			playerIn.getInventory().add(new ItemStack(ItemRegistry.USED_SYRINGE.get()));
 			playerIn.getCooldowns().addCooldown(this, 2400);
 		}
 
@@ -66,7 +67,7 @@ public class MorphineItem extends Item {
 
 		if (!playerIn.isCreative()) {
 			stack.shrink(1);
-			playerIn.getInventory().add(new ItemStack(DeferredRegistryHandler.USED_SYRINGE.get()));
+			playerIn.getInventory().add(new ItemStack(ItemRegistry.USED_SYRINGE.get()));
 			playerIn.getCooldowns().addCooldown(this, 2400);
 		}
 
@@ -74,7 +75,7 @@ public class MorphineItem extends Item {
 	}
 
 	private void setEffects(LivingEntity entity) {
-		entity.addEffect(new MobEffectInstance(DeferredRegistryHandler.MORPHINE_EFFECT.get(), 1800, 0,
+		entity.addEffect(new MobEffectInstance(EffectRegistry.MORPHINE_EFFECT.get(), 1800, 0,
 				false, true));
 	}
 }

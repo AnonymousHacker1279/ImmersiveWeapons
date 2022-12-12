@@ -11,7 +11,7 @@ import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.util.Mth;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.registries.ForgeRegistries;
-import tech.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
+import tech.anonymoushacker1279.immersiveweapons.init.ParticleTypesRegistry;
 
 import java.util.Locale;
 
@@ -84,7 +84,7 @@ public class SmokeGrenadeParticleOptions implements ParticleOptions {
 
 	@Override
 	public ParticleType<SmokeGrenadeParticleOptions> getType() {
-		return DeferredRegistryHandler.SMOKE_GRENADE_PARTICLE.get();
+		return ParticleTypesRegistry.SMOKE_GRENADE_PARTICLE.get();
 	}
 
 	public static class SmokeGrenadeColors {

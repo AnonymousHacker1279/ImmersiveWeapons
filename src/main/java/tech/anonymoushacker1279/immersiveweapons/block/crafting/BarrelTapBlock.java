@@ -19,7 +19,7 @@ import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import tech.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
+import tech.anonymoushacker1279.immersiveweapons.init.RecipeTypeRegistry;
 import tech.anonymoushacker1279.immersiveweapons.item.crafting.BarrelTapRecipe;
 
 import java.util.List;
@@ -147,7 +147,7 @@ public class BarrelTapBlock extends HorizontalDirectionalBlock implements Simple
 					if (player.getMainHandItem().getItem() == Items.GLASS_BOTTLE) {
 						Container container = ((Container) blockEntity);
 						List<BarrelTapRecipe> recipes = level.getRecipeManager()
-								.getAllRecipesFor(DeferredRegistryHandler.BARREL_TAP_RECIPE_TYPE.get());
+								.getAllRecipesFor(RecipeTypeRegistry.BARREL_TAP_RECIPE_TYPE.get());
 
 						for (BarrelTapRecipe recipe : recipes) {
 							for (int i = 0; i < container.getContainerSize(); ++i) {

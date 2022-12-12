@@ -10,7 +10,7 @@ import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.Nullable;
-import tech.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
+import tech.anonymoushacker1279.immersiveweapons.init.RecipeSerializerRegistry;
 
 import java.util.Objects;
 import java.util.function.Consumer;
@@ -31,7 +31,7 @@ public class BarrelTapRecipeBuilder {
 	}
 
 	public static BarrelTapRecipeBuilder fermenting(Ingredient block, int cookTime, Item pResult) {
-		return new BarrelTapRecipeBuilder(DeferredRegistryHandler.BARREL_TAP_RECIPE_SERIALIZER.get(), block, cookTime, pResult);
+		return new BarrelTapRecipeBuilder(RecipeSerializerRegistry.BARREL_TAP_RECIPE_SERIALIZER.get(), block, cookTime, pResult);
 	}
 
 	public BarrelTapRecipeBuilder unlocks(String pName, CriterionTriggerInstance pCriterion) {

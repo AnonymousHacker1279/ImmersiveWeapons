@@ -27,7 +27,8 @@ import tech.anonymoushacker1279.immersiveweapons.entity.ai.goal.RangedGunAttackG
 import tech.anonymoushacker1279.immersiveweapons.entity.neutral.FieldMedicEntity;
 import tech.anonymoushacker1279.immersiveweapons.entity.neutral.MinutemanEntity;
 import tech.anonymoushacker1279.immersiveweapons.entity.projectile.BulletEntity;
-import tech.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
+import tech.anonymoushacker1279.immersiveweapons.init.ItemRegistry;
+import tech.anonymoushacker1279.immersiveweapons.init.SoundEventRegistry;
 import tech.anonymoushacker1279.immersiveweapons.item.projectile.arrow.AbstractArrowItem;
 import tech.anonymoushacker1279.immersiveweapons.item.projectile.bullet.AbstractBulletItem;
 
@@ -38,7 +39,7 @@ import java.util.function.Predicate;
 public abstract class AbstractDyingSoldierEntity extends Monster implements RangedAttackMob, GrantAdvancementOnDiscovery {
 
 	private final RangedGunAttackGoal<AbstractDyingSoldierEntity> aiPistolAttack =
-			new RangedGunAttackGoal<>(this, 1.0D, 20, 15.0F, DeferredRegistryHandler.FLINTLOCK_PISTOL.get());
+			new RangedGunAttackGoal<>(this, 1.0D, 20, 15.0F, ItemRegistry.FLINTLOCK_PISTOL.get());
 	private final MeleeAttackGoal aiAttackOnCollide = new MeleeAttackGoal(this, 1.2D, false) {
 		/**
 		 * Reset the task's internal state. Called when this task is interrupted by another one
@@ -136,7 +137,7 @@ public abstract class AbstractDyingSoldierEntity extends Monster implements Rang
 	@Override
 	protected void populateDefaultEquipmentSlots(RandomSource randomSource, DifficultyInstance difficulty) {
 		super.populateDefaultEquipmentSlots(randomSource, difficulty);
-		setItemSlot(EquipmentSlot.MAINHAND, new ItemStack(DeferredRegistryHandler.FLINTLOCK_PISTOL.get()));
+		setItemSlot(EquipmentSlot.MAINHAND, new ItemStack(ItemRegistry.FLINTLOCK_PISTOL.get()));
 	}
 
 	/**
@@ -183,9 +184,9 @@ public abstract class AbstractDyingSoldierEntity extends Monster implements Rang
 			goalSelector.removeGoal(aiAttackOnCollide);
 			goalSelector.removeGoal(aiPistolAttack);
 			ItemStack itemInHand = getItemInHand(ProjectileUtil.getWeaponHoldingHand(this,
-					Predicate.isEqual(DeferredRegistryHandler.FLINTLOCK_PISTOL.get())));
+					Predicate.isEqual(ItemRegistry.FLINTLOCK_PISTOL.get())));
 
-			if (itemInHand.getItem() == DeferredRegistryHandler.FLINTLOCK_PISTOL.get()) {
+			if (itemInHand.getItem() == ItemRegistry.FLINTLOCK_PISTOL.get()) {
 				int cooldown = 20;
 				if (level.getDifficulty() != Difficulty.HARD) {
 					cooldown = 40;
@@ -208,7 +209,7 @@ public abstract class AbstractDyingSoldierEntity extends Monster implements Rang
 	 */
 	@Override
 	public void performRangedAttack(LivingEntity target, float distanceFactor) {
-		BulletEntity bulletEntity = fireBullet(new ItemStack(DeferredRegistryHandler.IRON_MUSKET_BALL.get()),
+		BulletEntity bulletEntity = fireBullet(new ItemStack(ItemRegistry.IRON_MUSKET_BALL.get()),
 				distanceFactor);
 
 		double deltaX = target.getX() - getX();
@@ -221,7 +222,7 @@ public abstract class AbstractDyingSoldierEntity extends Monster implements Rang
 
 		bulletEntity.shoot(deltaX, deltaY + sqrtXZ * 0.2D, deltaZ, 1.6F,
 				(float) (14 - level.getDifficulty().getId() * 4));
-		playSound(DeferredRegistryHandler.FLINTLOCK_PISTOL_FIRE.get(), 1.0F,
+		playSound(SoundEventRegistry.FLINTLOCK_PISTOL_FIRE.get(), 1.0F,
 				1.0F / (getRandom().nextFloat() * 0.4F + 0.8F));
 		level.addFreshEntity(bulletEntity);
 	}
@@ -235,7 +236,7 @@ public abstract class AbstractDyingSoldierEntity extends Monster implements Rang
 	 */
 	private BulletEntity fireBullet(ItemStack arrowStack, float distanceFactor) {
 		AbstractBulletItem bulletItem = (AbstractBulletItem) (arrowStack.getItem() instanceof AbstractArrowItem
-				? arrowStack.getItem() : DeferredRegistryHandler.IRON_MUSKET_BALL.get());
+				? arrowStack.getItem() : ItemRegistry.IRON_MUSKET_BALL.get());
 
 		BulletEntity bulletEntity = bulletItem.createBullet(level, this);
 		bulletEntity.setEnchantmentEffectsFromEntity(this, distanceFactor);
@@ -251,7 +252,7 @@ public abstract class AbstractDyingSoldierEntity extends Monster implements Rang
 	 */
 	@Override
 	public boolean canFireProjectileWeapon(ProjectileWeaponItem projectileWeaponItem) {
-		return projectileWeaponItem == DeferredRegistryHandler.FLINTLOCK_PISTOL.get().asItem();
+		return projectileWeaponItem == ItemRegistry.FLINTLOCK_PISTOL.get().asItem();
 	}
 
 	/**

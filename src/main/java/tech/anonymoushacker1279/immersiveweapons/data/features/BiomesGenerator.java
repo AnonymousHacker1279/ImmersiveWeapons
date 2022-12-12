@@ -19,7 +19,7 @@ import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.common.data.JsonCodecProvider;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.data.CustomDataGenerator;
-import tech.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
+import tech.anonymoushacker1279.immersiveweapons.init.*;
 import tech.anonymoushacker1279.immersiveweapons.world.level.levelgen.feature.BiomeFeatures;
 import tech.anonymoushacker1279.immersiveweapons.world.level.levelgen.feature.VanillaFeatures;
 
@@ -55,9 +55,9 @@ public class BiomesGenerator {
 						.grassColorOverride(5576464)
 						.foliageColorOverride(4468277)
 						.grassColorModifier(GrassColorModifier.NONE)
-						.ambientLoopSound(DeferredRegistryHandler.BATTLEFIELD_AMBIENT.get())
+						.ambientLoopSound(SoundEventRegistry.BATTLEFIELD_AMBIENT.get())
 						.ambientAdditionsSound(new AmbientAdditionsSettings(
-								DeferredRegistryHandler.FLINTLOCK_PISTOL_FIRE.get(), 0.00002d
+								SoundEventRegistry.FLINTLOCK_PISTOL_FIRE.get(), 0.00002d
 						))
 						.build())
 				.mobSpawnSettings(getBattlefieldSpawns())
@@ -79,7 +79,7 @@ public class BiomesGenerator {
 						.grassColorOverride(16113331)
 						.foliageColorOverride(14665365)
 						.grassColorModifier(GrassColorModifier.NONE)
-						.ambientLoopSound(DeferredRegistryHandler.TILTROS_AMBIENT.get())
+						.ambientLoopSound(SoundEventRegistry.TILTROS_AMBIENT.get())
 						.build())
 				.mobSpawnSettings(getTiltrosWastesSpawns())
 				.generationSettings(getTiltrosWastesGenerationSettings())
@@ -98,7 +98,7 @@ public class BiomesGenerator {
 						.grassColorOverride(12312020)
 						.foliageColorOverride(13885404)
 						.grassColorModifier(GrassColorModifier.NONE)
-						.ambientLoopSound(DeferredRegistryHandler.TILTROS_AMBIENT.get())
+						.ambientLoopSound(SoundEventRegistry.TILTROS_AMBIENT.get())
 						.build())
 				.mobSpawnSettings(getStarlightPlainsSpawns())
 				.generationSettings(getStarlightPlainsGenerationSettings())
@@ -117,9 +117,9 @@ public class BiomesGenerator {
 						.grassColorOverride(6176026)
 						.foliageColorOverride(6242850)
 						.grassColorModifier(GrassColorModifier.NONE)
-						.ambientLoopSound(DeferredRegistryHandler.TILTROS_AMBIENT.get())
+						.ambientLoopSound(SoundEventRegistry.TILTROS_AMBIENT.get())
 						.ambientParticle(new AmbientParticleSettings(
-								DeferredRegistryHandler.DEADMANS_DESERT_AMBIENT_PARTICLE.get(), 0.002f
+								ParticleTypesRegistry.DEADMANS_DESERT_AMBIENT_PARTICLE.get(), 0.002f
 						))
 						.build())
 				.mobSpawnSettings(getDeadmansDesertSpawns())
@@ -154,7 +154,7 @@ public class BiomesGenerator {
 	private static MobSpawnSettings getBattlefieldSpawns() {
 		MobSpawnSettings.Builder spawnBuilder = new MobSpawnSettings.Builder()
 				.addSpawn(MobCategory.MONSTER, new SpawnerData(
-						DeferredRegistryHandler.DYING_SOLDIER_ENTITY.get(), 95, 1, 3));
+						EntityRegistry.DYING_SOLDIER_ENTITY.get(), 95, 1, 3));
 
 		BiomeDefaultFeatures.commonSpawns(spawnBuilder);
 
@@ -165,9 +165,9 @@ public class BiomesGenerator {
 		MobSpawnSettings.Builder spawnBuilder = new MobSpawnSettings.Builder()
 				.creatureGenerationProbability(0.65f)
 				.addSpawn(MobCategory.MONSTER, new SpawnerData(
-						DeferredRegistryHandler.ROCK_SPIDER_ENTITY.get(), 65, 2, 4))
+						EntityRegistry.ROCK_SPIDER_ENTITY.get(), 65, 2, 4))
 				.addSpawn(MobCategory.MONSTER, new SpawnerData(
-						DeferredRegistryHandler.LAVA_REVENANT_ENTITY.get(), 35, 1, 1));
+						EntityRegistry.LAVA_REVENANT_ENTITY.get(), 35, 1, 1));
 
 		return spawnBuilder.build();
 	}
@@ -177,7 +177,7 @@ public class BiomesGenerator {
 		MobSpawnSettings.Builder spawnBuilder = new MobSpawnSettings.Builder()
 				.creatureGenerationProbability(0.75f)
 				.addSpawn(MobCategory.AMBIENT, new SpawnerData(
-						DeferredRegistryHandler.FIREFLY_ENTITY.get(), 100, 1, 4));
+						EntityRegistry.FIREFLY_ENTITY.get(), 100, 1, 4));
 
 		return spawnBuilder.build();
 	}
@@ -187,7 +187,7 @@ public class BiomesGenerator {
 		MobSpawnSettings.Builder spawnBuilder = new MobSpawnSettings.Builder()
 				.creatureGenerationProbability(0.85f)
 				.addSpawn(MobCategory.MONSTER, new SpawnerData(
-						DeferredRegistryHandler.CELESTIAL_TOWER_ENTITY.get(), 5, 1, 1));
+						EntityRegistry.CELESTIAL_TOWER_ENTITY.get(), 5, 1, 1));
 
 		return spawnBuilder.build();
 	}

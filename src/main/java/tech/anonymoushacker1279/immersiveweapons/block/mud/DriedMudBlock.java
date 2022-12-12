@@ -4,7 +4,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.block.state.BlockState;
-import tech.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
+import tech.anonymoushacker1279.immersiveweapons.init.BlockRegistry;
 
 public class DriedMudBlock extends IWMudBlock {
 
@@ -19,7 +19,7 @@ public class DriedMudBlock extends IWMudBlock {
 			changeStateChance = 0.13f;
 		}
 		if (!canDry(pLevel, pPos) && pRandom.nextFloat() <= changeStateChance) {
-			pLevel.setBlockAndUpdate(pPos, DeferredRegistryHandler.MUD.get().defaultBlockState());
+			pLevel.setBlockAndUpdate(pPos, BlockRegistry.MUD.get().defaultBlockState());
 		}
 	}
 }

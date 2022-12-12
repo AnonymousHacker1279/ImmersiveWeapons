@@ -7,7 +7,7 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.Nullable;
 import tech.anonymoushacker1279.immersiveweapons.block.decoration.CelestialLanternBlock;
-import tech.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
+import tech.anonymoushacker1279.immersiveweapons.init.BlockEntityRegistry;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,7 +18,7 @@ public class CelestialLanternBlockEntity extends BlockEntity implements EntityBl
 	 * Constructor for CelestialLanternBlockEntity.
 	 */
 	public CelestialLanternBlockEntity(BlockPos blockPos, BlockState blockState) {
-		super(DeferredRegistryHandler.CELESTIAL_LANTERN_BLOCK_ENTITY.get(), blockPos, blockState);
+		super(BlockEntityRegistry.CELESTIAL_LANTERN_BLOCK_ENTITY.get(), blockPos, blockState);
 	}
 
 	/**

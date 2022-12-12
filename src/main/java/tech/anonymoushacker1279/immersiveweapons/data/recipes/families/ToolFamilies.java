@@ -7,7 +7,7 @@ import net.minecraftforge.common.Tags;
 import org.jetbrains.annotations.Nullable;
 import tech.anonymoushacker1279.immersiveweapons.data.tags.groups.forge.ForgeItemTagGroups;
 import tech.anonymoushacker1279.immersiveweapons.data.tags.groups.immersiveweapons.ImmersiveWeaponsItemTagGroups;
-import tech.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
+import tech.anonymoushacker1279.immersiveweapons.init.ItemRegistry;
 import tech.anonymoushacker1279.immersiveweapons.item.GauntletItem;
 import tech.anonymoushacker1279.immersiveweapons.item.PikeItem;
 
@@ -32,43 +32,43 @@ public record ToolFamilies(TagKey<Item> material,
 			Tags.Items.INGOTS_COPPER,
 			ForgeItemTagGroups.COPPER_NUGGETS,
 			Tags.Items.RODS_WOODEN,
-			DeferredRegistryHandler.COPPER_SWORD,
-			DeferredRegistryHandler.COPPER_PICKAXE,
-			DeferredRegistryHandler.COPPER_AXE,
-			DeferredRegistryHandler.COPPER_SHOVEL,
-			DeferredRegistryHandler.COPPER_HOE,
-			DeferredRegistryHandler.COPPER_GAUNTLET,
-			DeferredRegistryHandler.COPPER_PIKE,
-			DeferredRegistryHandler.COPPER_PIKE_HEAD,
-			DeferredRegistryHandler.COPPER_ARROW,
-			DeferredRegistryHandler.COPPER_MUSKET_BALL
+			ItemRegistry.COPPER_SWORD,
+			ItemRegistry.COPPER_PICKAXE,
+			ItemRegistry.COPPER_AXE,
+			ItemRegistry.COPPER_SHOVEL,
+			ItemRegistry.COPPER_HOE,
+			ItemRegistry.COPPER_GAUNTLET,
+			ItemRegistry.COPPER_PIKE,
+			ItemRegistry.COPPER_PIKE_HEAD,
+			ItemRegistry.COPPER_ARROW,
+			ItemRegistry.COPPER_MUSKET_BALL
 	);
 
 	public static final ToolFamilies COBALT = new ToolFamilies(
 			ForgeItemTagGroups.COBALT_INGOTS,
 			ForgeItemTagGroups.COBALT_NUGGETS,
 			Tags.Items.RODS_WOODEN,
-			DeferredRegistryHandler.COBALT_SWORD,
-			DeferredRegistryHandler.COBALT_PICKAXE,
-			DeferredRegistryHandler.COBALT_AXE,
-			DeferredRegistryHandler.COBALT_SHOVEL,
-			DeferredRegistryHandler.COBALT_HOE,
-			DeferredRegistryHandler.COBALT_GAUNTLET,
-			DeferredRegistryHandler.COBALT_PIKE,
-			DeferredRegistryHandler.COBALT_PIKE_HEAD,
-			DeferredRegistryHandler.COBALT_ARROW,
-			DeferredRegistryHandler.COBALT_MUSKET_BALL
+			ItemRegistry.COBALT_SWORD,
+			ItemRegistry.COBALT_PICKAXE,
+			ItemRegistry.COBALT_AXE,
+			ItemRegistry.COBALT_SHOVEL,
+			ItemRegistry.COBALT_HOE,
+			ItemRegistry.COBALT_GAUNTLET,
+			ItemRegistry.COBALT_PIKE,
+			ItemRegistry.COBALT_PIKE_HEAD,
+			ItemRegistry.COBALT_ARROW,
+			ItemRegistry.COBALT_MUSKET_BALL
 	);
 
 	public static final ToolFamilies MOLTEN = new ToolFamilies(
 			ImmersiveWeaponsItemTagGroups.MOLTEN_INGOTS,
 			null,
 			ImmersiveWeaponsItemTagGroups.OBSIDIAN_RODS,
-			DeferredRegistryHandler.MOLTEN_SWORD,
-			DeferredRegistryHandler.MOLTEN_PICKAXE,
-			DeferredRegistryHandler.MOLTEN_AXE,
-			DeferredRegistryHandler.MOLTEN_SHOVEL,
-			DeferredRegistryHandler.MOLTEN_HOE,
+			ItemRegistry.MOLTEN_SWORD,
+			ItemRegistry.MOLTEN_PICKAXE,
+			ItemRegistry.MOLTEN_AXE,
+			ItemRegistry.MOLTEN_SHOVEL,
+			ItemRegistry.MOLTEN_HOE,
 			null, null, null, null, null
 	);
 
@@ -76,11 +76,11 @@ public record ToolFamilies(TagKey<Item> material,
 			ImmersiveWeaponsItemTagGroups.VENTUS_SHARDS,
 			null,
 			ImmersiveWeaponsItemTagGroups.OBSIDIAN_RODS,
-			DeferredRegistryHandler.VENTUS_SWORD,
-			DeferredRegistryHandler.VENTUS_PICKAXE,
-			DeferredRegistryHandler.VENTUS_AXE,
-			DeferredRegistryHandler.VENTUS_SHOVEL,
-			DeferredRegistryHandler.VENTUS_HOE,
+			ItemRegistry.VENTUS_SWORD,
+			ItemRegistry.VENTUS_PICKAXE,
+			ItemRegistry.VENTUS_AXE,
+			ItemRegistry.VENTUS_SHOVEL,
+			ItemRegistry.VENTUS_HOE,
 			null, null, null, null, null
 	);
 
@@ -88,11 +88,11 @@ public record ToolFamilies(TagKey<Item> material,
 			ImmersiveWeaponsItemTagGroups.TESLA_INGOTS,
 			null,
 			ImmersiveWeaponsItemTagGroups.OBSIDIAN_RODS,
-			DeferredRegistryHandler.TESLA_SWORD,
-			DeferredRegistryHandler.TESLA_PICKAXE,
-			DeferredRegistryHandler.TESLA_AXE,
-			DeferredRegistryHandler.TESLA_SHOVEL,
-			DeferredRegistryHandler.TESLA_HOE,
+			ItemRegistry.TESLA_SWORD,
+			ItemRegistry.TESLA_PICKAXE,
+			ItemRegistry.TESLA_AXE,
+			ItemRegistry.TESLA_SHOVEL,
+			ItemRegistry.TESLA_HOE,
 			null, null, null, null, null
 	);
 
@@ -100,11 +100,11 @@ public record ToolFamilies(TagKey<Item> material,
 			ImmersiveWeaponsItemTagGroups.ASTRAL_INGOTS,
 			null,
 			ImmersiveWeaponsItemTagGroups.OBSIDIAN_RODS,
-			DeferredRegistryHandler.ASTRAL_SWORD,
-			DeferredRegistryHandler.ASTRAL_PICKAXE,
-			DeferredRegistryHandler.ASTRAL_AXE,
-			DeferredRegistryHandler.ASTRAL_SHOVEL,
-			DeferredRegistryHandler.ASTRAL_HOE,
+			ItemRegistry.ASTRAL_SWORD,
+			ItemRegistry.ASTRAL_PICKAXE,
+			ItemRegistry.ASTRAL_AXE,
+			ItemRegistry.ASTRAL_SHOVEL,
+			ItemRegistry.ASTRAL_HOE,
 			null, null, null, null, null
 	);
 
@@ -112,11 +112,11 @@ public record ToolFamilies(TagKey<Item> material,
 			ImmersiveWeaponsItemTagGroups.STARSTORM_INGOTS,
 			null,
 			ImmersiveWeaponsItemTagGroups.OBSIDIAN_RODS,
-			DeferredRegistryHandler.STARSTORM_SWORD,
-			DeferredRegistryHandler.STARSTORM_PICKAXE,
-			DeferredRegistryHandler.STARSTORM_AXE,
-			DeferredRegistryHandler.STARSTORM_SHOVEL,
-			DeferredRegistryHandler.STARSTORM_HOE,
+			ItemRegistry.STARSTORM_SWORD,
+			ItemRegistry.STARSTORM_PICKAXE,
+			ItemRegistry.STARSTORM_AXE,
+			ItemRegistry.STARSTORM_SHOVEL,
+			ItemRegistry.STARSTORM_HOE,
 			null, null, null, null, null
 	);
 

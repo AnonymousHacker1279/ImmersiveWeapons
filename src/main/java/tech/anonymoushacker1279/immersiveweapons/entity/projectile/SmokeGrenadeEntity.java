@@ -18,8 +18,7 @@ import net.minecraftforge.network.NetworkEvent.Context;
 import tech.anonymoushacker1279.immersiveweapons.client.particle.smoke_grenade.SmokeGrenadeParticleOptions;
 import tech.anonymoushacker1279.immersiveweapons.config.ClientConfig;
 import tech.anonymoushacker1279.immersiveweapons.config.CommonConfig;
-import tech.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
-import tech.anonymoushacker1279.immersiveweapons.init.PacketHandler;
+import tech.anonymoushacker1279.immersiveweapons.init.*;
 import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
 
 import java.util.function.Supplier;
@@ -45,7 +44,7 @@ public class SmokeGrenadeEntity extends ThrowableItemProjectile {
 	 * @param livingEntity the <code>LivingEntity</code> throwing the entity
 	 */
 	public SmokeGrenadeEntity(Level level, LivingEntity livingEntity) {
-		super(DeferredRegistryHandler.SMOKE_GRENADE_ENTITY.get(), livingEntity, level);
+		super(EntityRegistry.SMOKE_GRENADE_ENTITY.get(), livingEntity, level);
 	}
 
 	/**
@@ -57,7 +56,7 @@ public class SmokeGrenadeEntity extends ThrowableItemProjectile {
 	 * @param z     the Z position
 	 */
 	public SmokeGrenadeEntity(Level level, double x, double y, double z) {
-		super(DeferredRegistryHandler.SMOKE_GRENADE_ENTITY.get(), x, y, z, level);
+		super(EntityRegistry.SMOKE_GRENADE_ENTITY.get(), x, y, z, level);
 	}
 
 	/**
@@ -86,7 +85,7 @@ public class SmokeGrenadeEntity extends ThrowableItemProjectile {
 					GeneralUtilities.getRandomNumber(-0.1d, 0.1d));
 		}
 
-		level.playLocalSound(x, y, z, DeferredRegistryHandler.SMOKE_GRENADE_HISS.get(),
+		level.playLocalSound(x, y, z, SoundEventRegistry.SMOKE_GRENADE_HISS.get(),
 				SoundSource.NEUTRAL, 0.2f, 0.6f, true);
 	}
 
@@ -108,7 +107,7 @@ public class SmokeGrenadeEntity extends ThrowableItemProjectile {
 	 */
 	@Override
 	protected Item getDefaultItem() {
-		return DeferredRegistryHandler.SMOKE_GRENADE.get();
+		return ItemRegistry.SMOKE_GRENADE.get();
 	}
 
 	/**

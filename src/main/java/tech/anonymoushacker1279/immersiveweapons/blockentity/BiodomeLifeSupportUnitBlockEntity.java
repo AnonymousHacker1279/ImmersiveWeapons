@@ -12,7 +12,8 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 import org.jetbrains.annotations.Nullable;
-import tech.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
+import tech.anonymoushacker1279.immersiveweapons.init.BlockEntityRegistry;
+import tech.anonymoushacker1279.immersiveweapons.init.EffectRegistry;
 
 
 public class BiodomeLifeSupportUnitBlockEntity extends BlockEntity implements EntityBlock {
@@ -21,7 +22,7 @@ public class BiodomeLifeSupportUnitBlockEntity extends BlockEntity implements En
 	boolean isPowered = false;
 
 	public BiodomeLifeSupportUnitBlockEntity(BlockPos blockPos, BlockState blockState) {
-		super(DeferredRegistryHandler.BIODOME_LIFE_SUPPORT_UNIT_BLOCK_ENTITY.get(), blockPos, blockState);
+		super(BlockEntityRegistry.BIODOME_LIFE_SUPPORT_UNIT_BLOCK_ENTITY.get(), blockPos, blockState);
 	}
 
 	@Nullable
@@ -39,7 +40,7 @@ public class BiodomeLifeSupportUnitBlockEntity extends BlockEntity implements En
 			// Get all players in a radius of 5 blocks
 			serverLevel.getEntitiesOfClass(Player.class, new AABB(pos).inflate(5), player -> true).forEach(player -> {
 				// Grant the Celestial Protection effect
-				player.addEffect(new MobEffectInstance(DeferredRegistryHandler.CELESTIAL_PROTECTION_EFFECT.get(), 360, 0, true, true));
+				player.addEffect(new MobEffectInstance(EffectRegistry.CELESTIAL_PROTECTION_EFFECT.get(), 360, 0, true, true));
 			});
 
 			// Spawn particles in a circle around the block

@@ -10,7 +10,7 @@ import net.minecraft.world.phys.AABB;
 import net.minecraftforge.common.util.ITeleporter;
 import tech.anonymoushacker1279.immersiveweapons.block.misc.warrior_statue.WarriorStatueTorso;
 import tech.anonymoushacker1279.immersiveweapons.blockentity.AzulStainedOrchidBlockEntity;
-import tech.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
+import tech.anonymoushacker1279.immersiveweapons.init.BlockRegistry;
 
 import java.util.function.Function;
 import java.util.stream.Stream;
@@ -44,7 +44,7 @@ public class TiltrosTeleporter implements ITeleporter {
 						targetPos.getZ() + 2));
 
 		if (destinationBlockStates.noneMatch(blockState ->
-				blockState == DeferredRegistryHandler.AZUL_STAINED_ORCHID.get().defaultBlockState())) {
+				blockState == BlockRegistry.AZUL_STAINED_ORCHID.get().defaultBlockState())) {
 
 			destWorld.destroyBlock(targetPos.above(), true);
 			destWorld.destroyBlock(targetPos.below(), true);
@@ -54,7 +54,7 @@ public class TiltrosTeleporter implements ITeleporter {
 
 			// An Azul Stained Orchid goes here, set its NBT to include the current position
 			destWorld.setBlock(targetPos,
-					DeferredRegistryHandler.AZUL_STAINED_ORCHID.get().defaultBlockState(), 3);
+					BlockRegistry.AZUL_STAINED_ORCHID.get().defaultBlockState(), 3);
 
 			if (destWorld.getBlockEntity(targetPos) instanceof AzulStainedOrchidBlockEntity blockEntity) {
 				blockEntity.setTargetPos(currentPos);
@@ -82,18 +82,18 @@ public class TiltrosTeleporter implements ITeleporter {
 					Blocks.STONE_BRICKS.defaultBlockState(), 3);
 			destWorld.destroyBlock(targetPos.relative(entity.getDirection()), true);
 			destWorld.setBlock(targetPos.relative(entity.getDirection()),
-					DeferredRegistryHandler.WARRIOR_STATUE_BASE.get().defaultBlockState()
+					BlockRegistry.WARRIOR_STATUE_BASE.get().defaultBlockState()
 							.setValue(WarriorStatueTorso.FACING,
 									entity.getDirection().getOpposite()), 3);
 			destWorld.destroyBlock(targetPos.relative(entity.getDirection()).above(), true);
 			destWorld.setBlock(targetPos.relative(entity.getDirection()).above(),
-					DeferredRegistryHandler.WARRIOR_STATUE_TORSO.get().defaultBlockState()
+					BlockRegistry.WARRIOR_STATUE_TORSO.get().defaultBlockState()
 							.setValue(WarriorStatueTorso.FACING,
 									entity.getDirection().getOpposite())
 							.setValue(WarriorStatueTorso.POWERED, true), 3);
 			destWorld.destroyBlock(targetPos.relative(entity.getDirection()).above(2), true);
 			destWorld.setBlock(targetPos.relative(entity.getDirection()).above(2),
-					DeferredRegistryHandler.WARRIOR_STATUE_HEAD.get().defaultBlockState()
+					BlockRegistry.WARRIOR_STATUE_HEAD.get().defaultBlockState()
 							.setValue(WarriorStatueTorso.FACING,
 									entity.getDirection().getOpposite())
 							.setValue(WarriorStatueTorso.POWERED, true), 3);

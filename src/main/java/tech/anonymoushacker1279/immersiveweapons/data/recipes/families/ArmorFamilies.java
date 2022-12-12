@@ -7,7 +7,7 @@ import net.minecraft.world.item.Item;
 import net.minecraftforge.common.Tags.Items;
 import tech.anonymoushacker1279.immersiveweapons.data.tags.groups.forge.ForgeItemTagGroups;
 import tech.anonymoushacker1279.immersiveweapons.data.tags.groups.immersiveweapons.ImmersiveWeaponsItemTagGroups;
-import tech.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
+import tech.anonymoushacker1279.immersiveweapons.init.ItemRegistry;
 
 import java.util.function.Supplier;
 
@@ -19,58 +19,58 @@ public record ArmorFamilies(TagKey<Item> material,
 
 	public static final ArmorFamilies COPPER = new ArmorFamilies(
 			Items.INGOTS_COPPER,
-			DeferredRegistryHandler.COPPER_HELMET,
-			DeferredRegistryHandler.COPPER_CHESTPLATE,
-			DeferredRegistryHandler.COPPER_LEGGINGS,
-			DeferredRegistryHandler.COPPER_BOOTS
+			ItemRegistry.COPPER_HELMET,
+			ItemRegistry.COPPER_CHESTPLATE,
+			ItemRegistry.COPPER_LEGGINGS,
+			ItemRegistry.COPPER_BOOTS
 	);
 
 	public static final ArmorFamilies COBALT = new ArmorFamilies(
 			ForgeItemTagGroups.COBALT_INGOTS,
-			DeferredRegistryHandler.COBALT_HELMET,
-			DeferredRegistryHandler.COBALT_CHESTPLATE,
-			DeferredRegistryHandler.COBALT_LEGGINGS,
-			DeferredRegistryHandler.COBALT_BOOTS
+			ItemRegistry.COBALT_HELMET,
+			ItemRegistry.COBALT_CHESTPLATE,
+			ItemRegistry.COBALT_LEGGINGS,
+			ItemRegistry.COBALT_BOOTS
 	);
 
 	public static final ArmorFamilies MOLTEN = new ArmorFamilies(
 			ImmersiveWeaponsItemTagGroups.MOLTEN_INGOTS,
-			DeferredRegistryHandler.MOLTEN_HELMET,
-			DeferredRegistryHandler.MOLTEN_CHESTPLATE,
-			DeferredRegistryHandler.MOLTEN_LEGGINGS,
-			DeferredRegistryHandler.MOLTEN_BOOTS
+			ItemRegistry.MOLTEN_HELMET,
+			ItemRegistry.MOLTEN_CHESTPLATE,
+			ItemRegistry.MOLTEN_LEGGINGS,
+			ItemRegistry.MOLTEN_BOOTS
 	);
 
 	public static final ArmorFamilies VENTUS = new ArmorFamilies(
 			ImmersiveWeaponsItemTagGroups.VENTUS_SHARDS,
-			DeferredRegistryHandler.VENTUS_HELMET,
-			DeferredRegistryHandler.VENTUS_CHESTPLATE,
-			DeferredRegistryHandler.VENTUS_LEGGINGS,
-			DeferredRegistryHandler.VENTUS_BOOTS
+			ItemRegistry.VENTUS_HELMET,
+			ItemRegistry.VENTUS_CHESTPLATE,
+			ItemRegistry.VENTUS_LEGGINGS,
+			ItemRegistry.VENTUS_BOOTS
 	);
 
 	public static final ArmorFamilies TESLA = new ArmorFamilies(
 			ImmersiveWeaponsItemTagGroups.TESLA_INGOTS,
-			DeferredRegistryHandler.TESLA_HELMET,
-			DeferredRegistryHandler.TESLA_CHESTPLATE,
-			DeferredRegistryHandler.TESLA_LEGGINGS,
-			DeferredRegistryHandler.TESLA_BOOTS
+			ItemRegistry.TESLA_HELMET,
+			ItemRegistry.TESLA_CHESTPLATE,
+			ItemRegistry.TESLA_LEGGINGS,
+			ItemRegistry.TESLA_BOOTS
 	);
 
 	public static final ArmorFamilies ASTRAL = new ArmorFamilies(
 			ImmersiveWeaponsItemTagGroups.ASTRAL_INGOTS,
-			DeferredRegistryHandler.ASTRAL_HELMET,
-			DeferredRegistryHandler.ASTRAL_CHESTPLATE,
-			DeferredRegistryHandler.ASTRAL_LEGGINGS,
-			DeferredRegistryHandler.ASTRAL_BOOTS
+			ItemRegistry.ASTRAL_HELMET,
+			ItemRegistry.ASTRAL_CHESTPLATE,
+			ItemRegistry.ASTRAL_LEGGINGS,
+			ItemRegistry.ASTRAL_BOOTS
 	);
 
 	public static final ArmorFamilies STARSTORM = new ArmorFamilies(
 			ImmersiveWeaponsItemTagGroups.STARSTORM_INGOTS,
-			DeferredRegistryHandler.STARSTORM_HELMET,
-			DeferredRegistryHandler.STARSTORM_CHESTPLATE,
-			DeferredRegistryHandler.STARSTORM_LEGGINGS,
-			DeferredRegistryHandler.STARSTORM_BOOTS
+			ItemRegistry.STARSTORM_HELMET,
+			ItemRegistry.STARSTORM_CHESTPLATE,
+			ItemRegistry.STARSTORM_LEGGINGS,
+			ItemRegistry.STARSTORM_BOOTS
 	);
 
 	public static final ImmutableList<ArmorFamilies> FAMILIES = ImmutableList.of(COPPER, COBALT, MOLTEN, VENTUS, TESLA, ASTRAL, STARSTORM);

@@ -1,4 +1,4 @@
-package tech.anonymoushacker1279.immersiveweapons.container;
+package tech.anonymoushacker1279.immersiveweapons.menu;
 
 import net.minecraft.world.Container;
 import net.minecraft.world.SimpleContainer;
@@ -7,35 +7,35 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.*;
 import net.minecraft.world.item.ItemStack;
 import tech.anonymoushacker1279.immersiveweapons.blockentity.TeslaSynthesizerBlockEntity;
-import tech.anonymoushacker1279.immersiveweapons.container.slot.TeslaSynthesizerFuelSlot;
-import tech.anonymoushacker1279.immersiveweapons.container.slot.TeslaSynthesizerResultSlot;
-import tech.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
+import tech.anonymoushacker1279.immersiveweapons.init.MenuTypeRegistry;
+import tech.anonymoushacker1279.immersiveweapons.menu.slot.TeslaSynthesizerFuelSlot;
+import tech.anonymoushacker1279.immersiveweapons.menu.slot.TeslaSynthesizerResultSlot;
 
-public class TeslaSynthesizerContainer extends AbstractContainerMenu {
+public class TeslaSynthesizerMenu extends AbstractContainerMenu {
 
 	private final Container teslaSynthesizerInventory;
 	private final ContainerData teslaSynthesizerData;
 
 	/**
-	 * Constructor for TeslaSynthesizerContainer.
+	 * Constructor for TeslaSynthesizerMenu.
 	 *
 	 * @param id        the ID of the container
 	 * @param inventory the <code>Inventory</code> instance
 	 */
-	public TeslaSynthesizerContainer(int id, Inventory inventory) {
+	public TeslaSynthesizerMenu(int id, Inventory inventory) {
 		this(id, inventory, new SimpleContainer(5), new SimpleContainerData(4));
 	}
 
 	/**
-	 * Constructor for AbstractTeslaSynthesizerContainer.
+	 * Constructor for TeslaSynthesizerMenu.
 	 *
 	 * @param id            the ID of the container
 	 * @param inventory     the player inventory
 	 * @param container     the container
 	 * @param containerData the container data
 	 */
-	public TeslaSynthesizerContainer(int id, Inventory inventory, Container container, ContainerData containerData) {
-		super(DeferredRegistryHandler.TESLA_SYNTHESIZER_CONTAINER.get(), id);
+	public TeslaSynthesizerMenu(int id, Inventory inventory, Container container, ContainerData containerData) {
+		super(MenuTypeRegistry.TESLA_SYNTHESIZER_MENU.get(), id);
 		checkContainerSize(container, 5);
 		checkContainerDataCount(containerData, 4);
 		teslaSynthesizerInventory = container;

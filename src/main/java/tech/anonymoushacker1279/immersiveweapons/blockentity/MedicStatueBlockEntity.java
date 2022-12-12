@@ -7,7 +7,8 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 import org.jetbrains.annotations.Nullable;
 import tech.anonymoushacker1279.immersiveweapons.entity.neutral.FieldMedicEntity;
-import tech.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
+import tech.anonymoushacker1279.immersiveweapons.init.BlockEntityRegistry;
+import tech.anonymoushacker1279.immersiveweapons.init.EntityRegistry;
 import tech.anonymoushacker1279.immersiveweapons.world.level.levelgen.biomes.BiomesAndDimensions;
 
 import java.util.List;
@@ -18,7 +19,7 @@ public class MedicStatueBlockEntity extends AbstractStatueBlockEntity {
 	 * Constructor for MedicStatueBlockEntity.
 	 */
 	public MedicStatueBlockEntity(BlockPos blockPos, BlockState blockState) {
-		super(DeferredRegistryHandler.MEDIC_STATUE_BLOCK_ENTITY.get(), blockPos, blockState);
+		super(BlockEntityRegistry.MEDIC_STATUE_BLOCK_ENTITY.get(), blockPos, blockState);
 	}
 
 	/**
@@ -37,7 +38,7 @@ public class MedicStatueBlockEntity extends AbstractStatueBlockEntity {
 			scannedEntities = listOfMedicsInArea.size();
 
 			if (scannedEntities <= 1) {
-				FieldMedicEntity fieldMedicEntity = DeferredRegistryHandler.FIELD_MEDIC_ENTITY.get().create(level);
+				FieldMedicEntity fieldMedicEntity = EntityRegistry.FIELD_MEDIC_ENTITY.get().create(level);
 				if (fieldMedicEntity != null) {
 					attemptSpawnEntity(fieldMedicEntity);
 				}

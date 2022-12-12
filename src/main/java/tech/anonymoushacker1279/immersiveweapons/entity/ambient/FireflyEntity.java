@@ -20,7 +20,7 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult.Type;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Nullable;
-import tech.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
+import tech.anonymoushacker1279.immersiveweapons.init.SoundEventRegistry;
 
 public class FireflyEntity extends AmbientCreature {
 	private static final EntityDataAccessor<Byte> DATA_ID_FLAGS = SynchedEntityData.defineId(FireflyEntity.class, EntityDataSerializers.BYTE);
@@ -149,14 +149,14 @@ public class FireflyEntity extends AmbientCreature {
 					setResting(false);
 					targetPosition = null;
 					if (!isSilent) {
-						playSound(DeferredRegistryHandler.FIREFLY_FLYING.get());
+						playSound(SoundEventRegistry.FIREFLY_FLYING.get());
 					}
 				}
 			} else {
 				setResting(false);
 				targetPosition = null;
 				if (!isSilent) {
-					playSound(DeferredRegistryHandler.FIREFLY_FLYING.get());
+					playSound(SoundEventRegistry.FIREFLY_FLYING.get());
 				}
 			}
 		} else {

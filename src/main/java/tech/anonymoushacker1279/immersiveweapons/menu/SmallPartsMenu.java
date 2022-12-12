@@ -1,4 +1,4 @@
-package tech.anonymoushacker1279.immersiveweapons.container;
+package tech.anonymoushacker1279.immersiveweapons.menu;
 
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.Container;
@@ -11,11 +11,11 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.common.MinecraftForge;
 import tech.anonymoushacker1279.immersiveweapons.api.events.SmallPartsTableCraftEvent;
 import tech.anonymoushacker1279.immersiveweapons.block.crafting.small_parts.SmallPartsCraftables;
-import tech.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
+import tech.anonymoushacker1279.immersiveweapons.init.*;
 
 import java.util.List;
 
-public class SmallPartsContainer extends AbstractContainerMenu {
+public class SmallPartsMenu extends AbstractContainerMenu {
 
 	private static final int INV_SLOT_START = 4;
 	private static final int INV_SLOT_END_USE_ROW_SLOT_START = 31;
@@ -43,12 +43,12 @@ public class SmallPartsContainer extends AbstractContainerMenu {
 		}
 	};
 
-	public SmallPartsContainer(int containerID, Inventory inventory) {
+	public SmallPartsMenu(int containerID, Inventory inventory) {
 		this(containerID, inventory, ContainerLevelAccess.NULL);
 	}
 
-	public SmallPartsContainer(int containerID, Inventory inventory, ContainerLevelAccess levelAccess) {
-		super(DeferredRegistryHandler.SMALL_PARTS_TABLE_CONTAINER.get(), containerID);
+	public SmallPartsMenu(int containerID, Inventory inventory, ContainerLevelAccess levelAccess) {
+		super(MenuTypeRegistry.SMALL_PARTS_TABLE_MENU.get(), containerID);
 		access = levelAccess;
 		materialSlot = addSlot(new Slot(inputContainer, 0, 23, 36) {
 			/**
@@ -78,7 +78,7 @@ public class SmallPartsContainer extends AbstractContainerMenu {
 				levelAccess.execute((level, pos) -> {
 					long gameTime = level.getGameTime();
 					if (lastSoundTime != gameTime) {
-						level.playSound(null, pos, DeferredRegistryHandler.SMALL_PARTS_TABLE_USED.get(), SoundSource.BLOCKS, 1.0F, 1.0F);
+						level.playSound(null, pos, SoundEventRegistry.SMALL_PARTS_TABLE_USED.get(), SoundSource.BLOCKS, 1.0F, 1.0F);
 						lastSoundTime = gameTime;
 					}
 
@@ -112,7 +112,7 @@ public class SmallPartsContainer extends AbstractContainerMenu {
 	 */
 	@Override
 	public boolean stillValid(Player pPlayer) {
-		return stillValid(access, pPlayer, DeferredRegistryHandler.SMALL_PARTS_TABLE.get());
+		return stillValid(access, pPlayer, BlockRegistry.SMALL_PARTS_TABLE.get());
 	}
 
 	@Override

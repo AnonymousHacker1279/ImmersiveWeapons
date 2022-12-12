@@ -4,12 +4,12 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.Nullable;
-import tech.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
+import tech.anonymoushacker1279.immersiveweapons.init.BlockEntityRegistry;
 
 public class AstralCrystalBlockEntity extends AbstractInventoryBlockEntity {
 
 	public AstralCrystalBlockEntity(BlockPos blockPos, BlockState blockState) {
-		super(DeferredRegistryHandler.ASTRAL_CRYSTAL_BLOCK_ENTITY.get(), blockPos, blockState);
+		super(BlockEntityRegistry.ASTRAL_CRYSTAL_BLOCK_ENTITY.get(), blockPos, blockState);
 	}
 
 	/**

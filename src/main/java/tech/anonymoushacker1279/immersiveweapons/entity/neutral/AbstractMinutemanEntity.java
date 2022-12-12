@@ -32,7 +32,7 @@ import tech.anonymoushacker1279.immersiveweapons.entity.ai.goal.DefendVillageTar
 import tech.anonymoushacker1279.immersiveweapons.entity.ai.goal.RangedShotgunAttackGoal;
 import tech.anonymoushacker1279.immersiveweapons.entity.monster.AbstractDyingSoldierEntity;
 import tech.anonymoushacker1279.immersiveweapons.entity.projectile.BulletEntity;
-import tech.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
+import tech.anonymoushacker1279.immersiveweapons.init.*;
 import tech.anonymoushacker1279.immersiveweapons.item.projectile.bullet.AbstractBulletItem;
 import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
 
@@ -46,7 +46,7 @@ public abstract class AbstractMinutemanEntity extends PathfinderMob implements R
 
 	private static final UniformInt tickRange = TimeUtil.rangeOfSeconds(20, 39);
 	private final RangedShotgunAttackGoal<AbstractMinutemanEntity> aiShotgunAttack =
-			new RangedShotgunAttackGoal<>(this, 1.0D, 25, 14.0F, DeferredRegistryHandler.BLUNDERBUSS.get());
+			new RangedShotgunAttackGoal<>(this, 1.0D, 25, 14.0F, ItemRegistry.BLUNDERBUSS.get());
 
 	private final MeleeAttackGoal aiAttackOnCollide = new MeleeAttackGoal(this, 1.2D, false) {
 		/**
@@ -169,7 +169,7 @@ public abstract class AbstractMinutemanEntity extends PathfinderMob implements R
 	@Override
 	protected void populateDefaultEquipmentSlots(RandomSource randomSource, DifficultyInstance difficulty) {
 		super.populateDefaultEquipmentSlots(randomSource, difficulty);
-		setItemSlot(EquipmentSlot.MAINHAND, new ItemStack(DeferredRegistryHandler.BLUNDERBUSS.get()));
+		setItemSlot(EquipmentSlot.MAINHAND, new ItemStack(ItemRegistry.BLUNDERBUSS.get()));
 	}
 
 	/**
@@ -217,9 +217,9 @@ public abstract class AbstractMinutemanEntity extends PathfinderMob implements R
 			goalSelector.removeGoal(aiAttackOnCollide);
 			goalSelector.removeGoal(aiShotgunAttack);
 			ItemStack itemInHand = getItemInHand(ProjectileUtil.getWeaponHoldingHand(this,
-					Predicate.isEqual(DeferredRegistryHandler.BLUNDERBUSS.get())));
+					Predicate.isEqual(ItemRegistry.BLUNDERBUSS.get())));
 
-			if (itemInHand.getItem() == DeferredRegistryHandler.BLUNDERBUSS.get()) {
+			if (itemInHand.getItem() == ItemRegistry.BLUNDERBUSS.get()) {
 				int cooldown = 25;
 				if (level.getDifficulty() != Difficulty.HARD) {
 					cooldown = 45;
@@ -257,7 +257,7 @@ public abstract class AbstractMinutemanEntity extends PathfinderMob implements R
 	 */
 	@Override
 	public boolean canAttackType(EntityType<?> typeIn) {
-		return typeIn != DeferredRegistryHandler.MINUTEMAN_ENTITY.get() && typeIn != EntityType.CREEPER;
+		return typeIn != EntityRegistry.MINUTEMAN_ENTITY.get() && typeIn != EntityType.CREEPER;
 	}
 
 	/**
@@ -270,7 +270,7 @@ public abstract class AbstractMinutemanEntity extends PathfinderMob implements R
 	public void performRangedAttack(LivingEntity target, float distanceFactor) {
 		// Fire four bullets for the blunderbuss
 		for (int i = 0; i <= 4; i++) {
-			BulletEntity bulletEntity = fireBullet(new ItemStack(DeferredRegistryHandler.COPPER_MUSKET_BALL.get()),
+			BulletEntity bulletEntity = fireBullet(new ItemStack(ItemRegistry.COPPER_MUSKET_BALL.get()),
 					distanceFactor);
 
 			double deltaX = target.getX() - getX();
@@ -286,7 +286,7 @@ public abstract class AbstractMinutemanEntity extends PathfinderMob implements R
 					18 - level.getDifficulty().getId() * 4 + GeneralUtilities.getRandomNumber(0.2f, 0.8f));
 			level.addFreshEntity(bulletEntity);
 		}
-		playSound(DeferredRegistryHandler.BLUNDERBUSS_FIRE.get(), 1.0F,
+		playSound(SoundEventRegistry.BLUNDERBUSS_FIRE.get(), 1.0F,
 				1.0F / (getRandom().nextFloat() * 0.4F + 0.8F));
 	}
 
@@ -301,7 +301,7 @@ public abstract class AbstractMinutemanEntity extends PathfinderMob implements R
 		if (weapon.getItem() instanceof ProjectileWeaponItem) {
 			Predicate<ItemStack> predicate = ((ProjectileWeaponItem) weapon.getItem()).getSupportedHeldProjectiles();
 			ItemStack heldProjectile = ProjectileWeaponItem.getHeldProjectile(this, predicate);
-			return heldProjectile.isEmpty() ? new ItemStack(DeferredRegistryHandler.COPPER_MUSKET_BALL.get()) : heldProjectile;
+			return heldProjectile.isEmpty() ? new ItemStack(ItemRegistry.COPPER_MUSKET_BALL.get()) : heldProjectile;
 		} else {
 			return ItemStack.EMPTY;
 		}
@@ -316,7 +316,7 @@ public abstract class AbstractMinutemanEntity extends PathfinderMob implements R
 	 */
 	private BulletEntity fireBullet(ItemStack bulletStack, float distanceFactor) {
 		AbstractBulletItem arrowItem = (AbstractBulletItem) (bulletStack.getItem() instanceof AbstractBulletItem
-				? bulletStack.getItem() : DeferredRegistryHandler.COPPER_MUSKET_BALL.get());
+				? bulletStack.getItem() : ItemRegistry.COPPER_MUSKET_BALL.get());
 
 		BulletEntity bulletEntity = arrowItem.createBullet(level, this);
 		bulletEntity.setEnchantmentEffectsFromEntity(this, distanceFactor);
@@ -348,7 +348,7 @@ public abstract class AbstractMinutemanEntity extends PathfinderMob implements R
 				setTarget((LivingEntity) source.getEntity());
 				setPersistentAngerTarget(source.getEntity().getUUID());
 
-				if (getTarget() != null && getTarget().getType() == DeferredRegistryHandler.MINUTEMAN_ENTITY.get()) {
+				if (getTarget() != null && getTarget().getType() == EntityRegistry.MINUTEMAN_ENTITY.get()) {
 					setTarget(null);
 					return false;
 				}
@@ -376,7 +376,7 @@ public abstract class AbstractMinutemanEntity extends PathfinderMob implements R
 	 */
 	@Override
 	public boolean canFireProjectileWeapon(ProjectileWeaponItem projectileWeaponItem) {
-		return projectileWeaponItem == DeferredRegistryHandler.BLUNDERBUSS.get().asItem();
+		return projectileWeaponItem == ItemRegistry.BLUNDERBUSS.get().asItem();
 	}
 
 	/**

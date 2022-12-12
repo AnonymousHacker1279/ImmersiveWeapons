@@ -1,7 +1,7 @@
 package tech.anonymoushacker1279.immersiveweapons.data.tags.lists;
 
 import net.minecraft.world.level.block.Block;
-import tech.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
+import tech.anonymoushacker1279.immersiveweapons.init.BlockRegistry;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,67 +23,67 @@ public class BlockTagLists {
 	}
 
 	private static void addBulletproofGlass() {
-		BULLETPROOF_GLASS.add(DeferredRegistryHandler.BULLETPROOF_GLASS.get());
-		BULLETPROOF_GLASS.add(DeferredRegistryHandler.WHITE_STAINED_BULLETPROOF_GLASS.get());
-		BULLETPROOF_GLASS.add(DeferredRegistryHandler.LIGHT_GRAY_STAINED_BULLETPROOF_GLASS.get());
-		BULLETPROOF_GLASS.add(DeferredRegistryHandler.GRAY_STAINED_BULLETPROOF_GLASS.get());
-		BULLETPROOF_GLASS.add(DeferredRegistryHandler.BLACK_STAINED_BULLETPROOF_GLASS.get());
-		BULLETPROOF_GLASS.add(DeferredRegistryHandler.ORANGE_STAINED_BULLETPROOF_GLASS.get());
-		BULLETPROOF_GLASS.add(DeferredRegistryHandler.MAGENTA_STAINED_BULLETPROOF_GLASS.get());
-		BULLETPROOF_GLASS.add(DeferredRegistryHandler.LIGHT_BLUE_STAINED_BULLETPROOF_GLASS.get());
-		BULLETPROOF_GLASS.add(DeferredRegistryHandler.YELLOW_STAINED_BULLETPROOF_GLASS.get());
-		BULLETPROOF_GLASS.add(DeferredRegistryHandler.LIME_STAINED_BULLETPROOF_GLASS.get());
-		BULLETPROOF_GLASS.add(DeferredRegistryHandler.PINK_STAINED_BULLETPROOF_GLASS.get());
-		BULLETPROOF_GLASS.add(DeferredRegistryHandler.CYAN_STAINED_BULLETPROOF_GLASS.get());
-		BULLETPROOF_GLASS.add(DeferredRegistryHandler.PURPLE_STAINED_BULLETPROOF_GLASS.get());
-		BULLETPROOF_GLASS.add(DeferredRegistryHandler.BLUE_STAINED_BULLETPROOF_GLASS.get());
-		BULLETPROOF_GLASS.add(DeferredRegistryHandler.BROWN_STAINED_BULLETPROOF_GLASS.get());
-		BULLETPROOF_GLASS.add(DeferredRegistryHandler.GREEN_STAINED_BULLETPROOF_GLASS.get());
-		BULLETPROOF_GLASS.add(DeferredRegistryHandler.RED_STAINED_BULLETPROOF_GLASS.get());
+		BULLETPROOF_GLASS.add(BlockRegistry.BULLETPROOF_GLASS.get());
+		BULLETPROOF_GLASS.add(BlockRegistry.WHITE_STAINED_BULLETPROOF_GLASS.get());
+		BULLETPROOF_GLASS.add(BlockRegistry.LIGHT_GRAY_STAINED_BULLETPROOF_GLASS.get());
+		BULLETPROOF_GLASS.add(BlockRegistry.GRAY_STAINED_BULLETPROOF_GLASS.get());
+		BULLETPROOF_GLASS.add(BlockRegistry.BLACK_STAINED_BULLETPROOF_GLASS.get());
+		BULLETPROOF_GLASS.add(BlockRegistry.ORANGE_STAINED_BULLETPROOF_GLASS.get());
+		BULLETPROOF_GLASS.add(BlockRegistry.MAGENTA_STAINED_BULLETPROOF_GLASS.get());
+		BULLETPROOF_GLASS.add(BlockRegistry.LIGHT_BLUE_STAINED_BULLETPROOF_GLASS.get());
+		BULLETPROOF_GLASS.add(BlockRegistry.YELLOW_STAINED_BULLETPROOF_GLASS.get());
+		BULLETPROOF_GLASS.add(BlockRegistry.LIME_STAINED_BULLETPROOF_GLASS.get());
+		BULLETPROOF_GLASS.add(BlockRegistry.PINK_STAINED_BULLETPROOF_GLASS.get());
+		BULLETPROOF_GLASS.add(BlockRegistry.CYAN_STAINED_BULLETPROOF_GLASS.get());
+		BULLETPROOF_GLASS.add(BlockRegistry.PURPLE_STAINED_BULLETPROOF_GLASS.get());
+		BULLETPROOF_GLASS.add(BlockRegistry.BLUE_STAINED_BULLETPROOF_GLASS.get());
+		BULLETPROOF_GLASS.add(BlockRegistry.BROWN_STAINED_BULLETPROOF_GLASS.get());
+		BULLETPROOF_GLASS.add(BlockRegistry.GREEN_STAINED_BULLETPROOF_GLASS.get());
+		BULLETPROOF_GLASS.add(BlockRegistry.RED_STAINED_BULLETPROOF_GLASS.get());
 	}
 
 	private static void addStainedGlass() {
-		STAINED_GLASS.add(DeferredRegistryHandler.WHITE_STAINED_BULLETPROOF_GLASS.get());
-		STAINED_GLASS.add(DeferredRegistryHandler.LIGHT_GRAY_STAINED_BULLETPROOF_GLASS.get());
-		STAINED_GLASS.add(DeferredRegistryHandler.GRAY_STAINED_BULLETPROOF_GLASS.get());
-		STAINED_GLASS.add(DeferredRegistryHandler.BLACK_STAINED_BULLETPROOF_GLASS.get());
-		STAINED_GLASS.add(DeferredRegistryHandler.ORANGE_STAINED_BULLETPROOF_GLASS.get());
-		STAINED_GLASS.add(DeferredRegistryHandler.MAGENTA_STAINED_BULLETPROOF_GLASS.get());
-		STAINED_GLASS.add(DeferredRegistryHandler.LIGHT_BLUE_STAINED_BULLETPROOF_GLASS.get());
-		STAINED_GLASS.add(DeferredRegistryHandler.YELLOW_STAINED_BULLETPROOF_GLASS.get());
-		STAINED_GLASS.add(DeferredRegistryHandler.LIME_STAINED_BULLETPROOF_GLASS.get());
-		STAINED_GLASS.add(DeferredRegistryHandler.PINK_STAINED_BULLETPROOF_GLASS.get());
-		STAINED_GLASS.add(DeferredRegistryHandler.CYAN_STAINED_BULLETPROOF_GLASS.get());
-		STAINED_GLASS.add(DeferredRegistryHandler.PURPLE_STAINED_BULLETPROOF_GLASS.get());
-		STAINED_GLASS.add(DeferredRegistryHandler.BLUE_STAINED_BULLETPROOF_GLASS.get());
-		STAINED_GLASS.add(DeferredRegistryHandler.BROWN_STAINED_BULLETPROOF_GLASS.get());
-		STAINED_GLASS.add(DeferredRegistryHandler.GREEN_STAINED_BULLETPROOF_GLASS.get());
-		STAINED_GLASS.add(DeferredRegistryHandler.RED_STAINED_BULLETPROOF_GLASS.get());
+		STAINED_GLASS.add(BlockRegistry.WHITE_STAINED_BULLETPROOF_GLASS.get());
+		STAINED_GLASS.add(BlockRegistry.LIGHT_GRAY_STAINED_BULLETPROOF_GLASS.get());
+		STAINED_GLASS.add(BlockRegistry.GRAY_STAINED_BULLETPROOF_GLASS.get());
+		STAINED_GLASS.add(BlockRegistry.BLACK_STAINED_BULLETPROOF_GLASS.get());
+		STAINED_GLASS.add(BlockRegistry.ORANGE_STAINED_BULLETPROOF_GLASS.get());
+		STAINED_GLASS.add(BlockRegistry.MAGENTA_STAINED_BULLETPROOF_GLASS.get());
+		STAINED_GLASS.add(BlockRegistry.LIGHT_BLUE_STAINED_BULLETPROOF_GLASS.get());
+		STAINED_GLASS.add(BlockRegistry.YELLOW_STAINED_BULLETPROOF_GLASS.get());
+		STAINED_GLASS.add(BlockRegistry.LIME_STAINED_BULLETPROOF_GLASS.get());
+		STAINED_GLASS.add(BlockRegistry.PINK_STAINED_BULLETPROOF_GLASS.get());
+		STAINED_GLASS.add(BlockRegistry.CYAN_STAINED_BULLETPROOF_GLASS.get());
+		STAINED_GLASS.add(BlockRegistry.PURPLE_STAINED_BULLETPROOF_GLASS.get());
+		STAINED_GLASS.add(BlockRegistry.BLUE_STAINED_BULLETPROOF_GLASS.get());
+		STAINED_GLASS.add(BlockRegistry.BROWN_STAINED_BULLETPROOF_GLASS.get());
+		STAINED_GLASS.add(BlockRegistry.GREEN_STAINED_BULLETPROOF_GLASS.get());
+		STAINED_GLASS.add(BlockRegistry.RED_STAINED_BULLETPROOF_GLASS.get());
 	}
 
 	private static void addBurnedOakLogs() {
-		BURNED_OAK_LOGS.add(DeferredRegistryHandler.BURNED_OAK_LOG.get());
-		BURNED_OAK_LOGS.add(DeferredRegistryHandler.BURNED_OAK_WOOD.get());
-		BURNED_OAK_LOGS.add(DeferredRegistryHandler.STRIPPED_BURNED_OAK_LOG.get());
-		BURNED_OAK_LOGS.add(DeferredRegistryHandler.STRIPPED_BURNED_OAK_WOOD.get());
+		BURNED_OAK_LOGS.add(BlockRegistry.BURNED_OAK_LOG.get());
+		BURNED_OAK_LOGS.add(BlockRegistry.BURNED_OAK_WOOD.get());
+		BURNED_OAK_LOGS.add(BlockRegistry.STRIPPED_BURNED_OAK_LOG.get());
+		BURNED_OAK_LOGS.add(BlockRegistry.STRIPPED_BURNED_OAK_WOOD.get());
 	}
 
 	private static void addTables() {
-		TABLES.add(DeferredRegistryHandler.OAK_TABLE.get());
-		TABLES.add(DeferredRegistryHandler.SPRUCE_TABLE.get());
-		TABLES.add(DeferredRegistryHandler.BIRCH_TABLE.get());
-		TABLES.add(DeferredRegistryHandler.JUNGLE_TABLE.get());
-		TABLES.add(DeferredRegistryHandler.ACACIA_TABLE.get());
-		TABLES.add(DeferredRegistryHandler.DARK_OAK_TABLE.get());
-		TABLES.add(DeferredRegistryHandler.CRIMSON_TABLE.get());
-		TABLES.add(DeferredRegistryHandler.WARPED_TABLE.get());
-		TABLES.add(DeferredRegistryHandler.BURNED_OAK_TABLE.get());
+		TABLES.add(BlockRegistry.OAK_TABLE.get());
+		TABLES.add(BlockRegistry.SPRUCE_TABLE.get());
+		TABLES.add(BlockRegistry.BIRCH_TABLE.get());
+		TABLES.add(BlockRegistry.JUNGLE_TABLE.get());
+		TABLES.add(BlockRegistry.ACACIA_TABLE.get());
+		TABLES.add(BlockRegistry.DARK_OAK_TABLE.get());
+		TABLES.add(BlockRegistry.CRIMSON_TABLE.get());
+		TABLES.add(BlockRegistry.WARPED_TABLE.get());
+		TABLES.add(BlockRegistry.BURNED_OAK_TABLE.get());
 	}
 
 	private static void addStardustLogs() {
-		STARDUST_LOGS.add(DeferredRegistryHandler.STARDUST_LOG.get());
-		STARDUST_LOGS.add(DeferredRegistryHandler.STARDUST_WOOD.get());
-		STARDUST_LOGS.add(DeferredRegistryHandler.STRIPPED_STARDUST_LOG.get());
-		STARDUST_LOGS.add(DeferredRegistryHandler.STRIPPED_STARDUST_WOOD.get());
+		STARDUST_LOGS.add(BlockRegistry.STARDUST_LOG.get());
+		STARDUST_LOGS.add(BlockRegistry.STARDUST_WOOD.get());
+		STARDUST_LOGS.add(BlockRegistry.STRIPPED_STARDUST_LOG.get());
+		STARDUST_LOGS.add(BlockRegistry.STRIPPED_STARDUST_WOOD.get());
 	}
 }

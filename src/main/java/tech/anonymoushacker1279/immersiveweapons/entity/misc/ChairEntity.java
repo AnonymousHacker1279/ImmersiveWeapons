@@ -10,7 +10,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
 import net.minecraftforge.network.NetworkHooks;
-import tech.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
+import tech.anonymoushacker1279.immersiveweapons.init.EntityRegistry;
 
 import java.util.List;
 
@@ -37,7 +37,7 @@ public class ChairEntity extends Entity {
 	 * @param yOffset the Y offset to spawn at
 	 */
 	private ChairEntity(Level world, BlockPos pos, double yOffset) {
-		this(DeferredRegistryHandler.CHAIR_ENTITY.get(), world);
+		this(EntityRegistry.CHAIR_ENTITY.get(), world);
 		source = pos;
 		setPos(pos.getX() + 0.5D, pos.getY() + yOffset, pos.getZ() + 0.5D);
 	}

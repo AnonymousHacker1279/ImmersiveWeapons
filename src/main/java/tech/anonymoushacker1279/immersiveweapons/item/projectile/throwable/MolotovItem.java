@@ -8,7 +8,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import tech.anonymoushacker1279.immersiveweapons.entity.projectile.MolotovEntity;
-import tech.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
+import tech.anonymoushacker1279.immersiveweapons.init.SoundEventRegistry;
 import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
 
 public class MolotovItem extends Item {
@@ -34,7 +34,7 @@ public class MolotovItem extends Item {
 	public InteractionResultHolder<ItemStack> use(Level worldIn, Player playerIn, InteractionHand handIn) {
 		ItemStack itemInHand = playerIn.getItemInHand(handIn);
 		worldIn.playLocalSound(playerIn.getX(), playerIn.getY(), playerIn.getZ(),
-				DeferredRegistryHandler.GENERIC_WHOOSH.get(), SoundSource.NEUTRAL,
+				SoundEventRegistry.GENERIC_WHOOSH.get(), SoundSource.NEUTRAL,
 				0.5F, 0.4F / (GeneralUtilities.getRandomNumber(0.2f, 0.6f) + 0.8F), false);
 
 		if (!worldIn.isClientSide) {
