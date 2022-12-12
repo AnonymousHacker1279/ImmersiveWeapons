@@ -1,10 +1,10 @@
 {
 	"homepage": "https://www.curseforge.com/minecraft/mc-mods/immersive-weapons",
 	"promos": {
-		"1.19-latest": "1.19-1.18.1",
-		"1.19-recommended": "1.19-1.18.1",
-		"1.18.2-latest": "1.18.2-1.17.0",
-		"1.18.2-recommended": "1.18.2-1.17.0",
+		"1.19-latest": "1.19-1.18.4",
+		"1.19-recommended": "1.19-1.18.4",
+		"1.18.2-latest": "1.18.2-1.17.4",
+		"1.18.2-recommended": "1.18.2-1.17.4",
 		"1.18.1-latest": "1.18.1-1.14.0-alpha1",
 		"1.18.1-recommended": "1.18.1-1.13.0-beta10",
 		"1.18-latest": "1.18.1-1.13.0-beta9",
@@ -17,6 +17,9 @@
 		"1.16.4-recommended": "1.16.5-1.1.1"
 	},
 	"1.19": {
+		"1.19-1.18.4": "Bugfixes - https://github.com/AnonymousHacker1279/ImmersiveWeapons/releases/tag/v1.18.4",
+		"1.19-1.18.3": "Bugfixes - https://github.com/AnonymousHacker1279/ImmersiveWeapons/releases/tag/v1.18.3",
+		"1.19-1.18.2": "Translation updates - https://github.com/AnonymousHacker1279/ImmersiveWeapons/releases/tag/v1.18.2",
 		"1.19-1.18.1": "Bugfixes - https://github.com/AnonymousHacker1279/ImmersiveWeapons/releases/tag/v1.18.1",
 		"1.19-1.18.0": "Full 1.19 Release - https://github.com/AnonymousHacker1279/ImmersiveWeapons/releases/tag/v1.18.0",
 		"1.19-1.18.0-beta1": "Support modern Forge versions, again - https://github.com/AnonymousHacker1279/ImmersiveWeapons/releases/tag/v1.18.0-beta1",
@@ -24,6 +27,10 @@
 		"1.19-1.18.0-alpha1": "Initial 1.19 Release - https://github.com/AnonymousHacker1279/ImmersiveWeapons/releases/tag/v1.18.0-alpha1"
 	},
 	"1.18.2": {
+		"1.18.2-1.17.4": "Bugfixes - https://github.com/AnonymousHacker1279/ImmersiveWeapons/releases/tag/v1.17.4",
+		"1.18.2-1.17.3": "Translation updates - https://github.com/AnonymousHacker1279/ImmersiveWeapons/releases/tag/v1.17.3",
+		"1.18.2-1.17.2": "Bugfixes - https://github.com/AnonymousHacker1279/ImmersiveWeapons/releases/tag/v1.17.2",
+		"1.18.2-1.17.1": "Bugfixes - https://github.com/AnonymousHacker1279/ImmersiveWeapons/releases/tag/v1.17.1",
 		"1.18.2-1.17.0": "Create plugin API and move 3rd-party integrations to separate mod - https://github.com/AnonymousHacker1279/ImmersiveWeapons/releases/tag/v1.17.0",
 		"1.18.2-1.16.1": "Improvements and bugfixes - https://github.com/AnonymousHacker1279/ImmersiveWeapons/releases/tag/v1.16.1",
 		"1.18.2-1.16.0": "Features, improvements, and bugfixes - https://github.com/AnonymousHacker1279/ImmersiveWeapons/releases/tag/v1.16.0",
