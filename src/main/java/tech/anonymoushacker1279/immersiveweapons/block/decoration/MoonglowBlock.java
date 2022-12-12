@@ -9,9 +9,11 @@ import net.minecraft.world.level.block.state.BlockState;
 import tech.anonymoushacker1279.immersiveweapons.init.ParticleTypesRegistry;
 import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
 
+import java.util.function.Supplier;
+
 public class MoonglowBlock extends FlowerBlock {
 
-	public MoonglowBlock(MobEffect mobEffect, int effectDuration, Properties properties) {
+	public MoonglowBlock(Supplier<MobEffect> mobEffect, int effectDuration, Properties properties) {
 		super(mobEffect, effectDuration, properties);
 	}
 

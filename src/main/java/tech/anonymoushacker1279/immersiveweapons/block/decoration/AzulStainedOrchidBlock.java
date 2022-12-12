@@ -12,9 +12,11 @@ import org.jetbrains.annotations.Nullable;
 import tech.anonymoushacker1279.immersiveweapons.blockentity.AzulStainedOrchidBlockEntity;
 import tech.anonymoushacker1279.immersiveweapons.config.CommonConfig;
 
+import java.util.function.Supplier;
+
 public class AzulStainedOrchidBlock extends FlowerBlock implements EntityBlock {
 
-	public AzulStainedOrchidBlock(MobEffect mobEffect, int effectDuration, Properties properties) {
+	public AzulStainedOrchidBlock(Supplier<MobEffect> mobEffect, int effectDuration, Properties properties) {
 		super(mobEffect, effectDuration, properties);
 	}
 

@@ -15,12 +15,14 @@ import tech.anonymoushacker1279.immersiveweapons.init.BlockRegistry;
 import tech.anonymoushacker1279.immersiveweapons.init.EffectRegistry;
 import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
 
+import java.util.function.Supplier;
+
 public class DeathweedBlock extends FlowerBlock {
 
 	public static final DamageSource DAMAGE_SOURCE = new DamageSource("immersiveweapons.deathweed")
 			.bypassArmor().setMagic();
 
-	public DeathweedBlock(MobEffect mobEffect, int effectDuration, Properties properties) {
+	public DeathweedBlock(Supplier<MobEffect> mobEffect, int effectDuration, Properties properties) {
 		super(mobEffect, effectDuration, properties);
 	}
 
