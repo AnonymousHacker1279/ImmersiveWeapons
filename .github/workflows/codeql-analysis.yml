@@ -1,27 +1,24 @@
-# For most projects, this workflow file will not need changing; you simply need
-# to commit it to your repository.
-#
-# You may wish to alter this file to override the set of languages analyzed,
-# or to provide custom queries or build logic.
-#
-# ******** NOTE ********
-# We have attempted to detect the languages in your repository. Please check
-# the `language` matrix defined below to confirm you have the correct set of
-# supported CodeQL languages.
-#
 name: "CodeQL"
 
 on:
   pull_request:
     # The branches below must be a subset of the branches above
-    branches: [ master, 1.18.x-dev, 1.17.x-dev, 1.16.x-dev, 1.15.2-dev, alpha1 ]
+    branches: [ master, 1.19.x-dev, 1.18.x-dev, 1.17.x-dev, 1.16.x-dev, 1.15.2-dev, alpha1 ]
   schedule:
-    - cron: '41 3 * * 3'
+    - cron: '0 3 * * 3'
 
 jobs:
   analyze:
     name: Analyze
     runs-on: ubuntu-latest
+    
+    permissions:
+      # required for all workflows
+      security-events: write
+
+      # only required for workflows in private repositories
+      actions: read
+      contents: read
 
     strategy:
       fail-fast: false
@@ -33,7 +30,7 @@ jobs:
 
     steps:
     - name: Checkout repository
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
 
     # Initializes the CodeQL tools for scanning.
     - name: Initialize CodeQL
@@ -46,7 +43,7 @@ jobs:
         # queries: ./path/to/local/query, your-org/your-repo/queries@main
         
     - name: Cache
-      uses: actions/cache@v3.0.4
+      uses: actions/cache@v3
       with:
         # A list of files, directories, and wildcard patterns to cache and restore
         path: |
