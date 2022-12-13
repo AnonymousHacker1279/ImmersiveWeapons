@@ -1,7 +1,7 @@
 package tech.anonymoushacker1279.immersiveweapons.client.renderer.entity.projectile;
 
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.math.Vector3f;
+import com.mojang.math.Axis;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.block.model.ItemTransforms;
@@ -21,8 +21,8 @@ public class FlareRenderer<T extends BulletEntity> extends EntityRenderer<T> {
 	public void render(BulletEntity entity, float entityYaw, float partialTicks, PoseStack poseStack, MultiBufferSource renderTypeBuffer, int light) {
 		poseStack.pushPose();
 
-		poseStack.mulPose(Vector3f.YP.rotationDegrees(entityYaw));
-		poseStack.mulPose(Vector3f.XP.rotationDegrees(entity.getXRot()));
+		poseStack.mulPose(Axis.YP.rotationDegrees(entityYaw));
+		poseStack.mulPose(Axis.XP.rotationDegrees(entity.getXRot()));
 
 		poseStack.scale(0.6f, 0.6f, 0.6f);
 		poseStack.translate(0, 0.1f, 0);

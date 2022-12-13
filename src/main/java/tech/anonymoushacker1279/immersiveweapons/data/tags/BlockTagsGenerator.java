@@ -1,10 +1,11 @@
 package tech.anonymoushacker1279.immersiveweapons.data.tags;
 
-import net.minecraft.data.DataGenerator;
-import net.minecraft.data.tags.BlockTagsProvider;
+import net.minecraft.core.HolderLookup.Provider;
+import net.minecraft.data.PackOutput;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.level.block.Block;
 import net.minecraftforge.common.Tags.Blocks;
+import net.minecraftforge.common.data.BlockTagsProvider;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.registries.RegistryObject;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
@@ -16,24 +17,19 @@ import tech.anonymoushacker1279.immersiveweapons.init.BlockRegistry;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 public class BlockTagsGenerator extends BlockTagsProvider {
 
-	/**
-	 * Constructor for BlockTagsGenerator.
-	 *
-	 * @param gen                the <code>DataGenerator</code> instance
-	 * @param existingFileHelper the <code>ExistingFileHelper</code> instance
-	 */
-	public BlockTagsGenerator(DataGenerator gen, ExistingFileHelper existingFileHelper) {
-		super(gen, ImmersiveWeapons.MOD_ID, existingFileHelper);
+	public BlockTagsGenerator(PackOutput output, CompletableFuture<Provider> lookupProvider, ExistingFileHelper existingFileHelper) {
+		super(output, lookupProvider, ImmersiveWeapons.MOD_ID, existingFileHelper);
 	}
 
 	/**
 	 * Add tags to data generation.
 	 */
 	@Override
-	protected void addTags() {
+	protected void addTags(Provider provider) {
 		addForgeTags();
 		addImmersiveWeaponsTags();
 		addMinecraftTags();

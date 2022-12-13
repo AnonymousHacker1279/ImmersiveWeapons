@@ -1,6 +1,8 @@
 package tech.anonymoushacker1279.immersiveweapons.world.level.levelgen.feature;
 
-import net.minecraft.core.*;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Holder;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.data.worldgen.placement.PlacementUtils;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
@@ -163,20 +165,20 @@ public class BiomeFeatures {
 	}
 
 	public static final ResourceLocation PATCH_WOODEN_SPIKES = new ResourceLocation(ImmersiveWeapons.MOD_ID, "patch_wooden_spikes");
-	public static final ResourceKey<PlacedFeature> PATCH_WOODEN_SPIKES_KEY = ResourceKey.create(Registry.PLACED_FEATURE_REGISTRY, PATCH_WOODEN_SPIKES);
+	public static final ResourceKey<PlacedFeature> PATCH_WOODEN_SPIKES_KEY = ResourceKey.create(Registries.PLACED_FEATURE, PATCH_WOODEN_SPIKES);
 
 	public static final ResourceLocation BURNED_OAK_TREE = new ResourceLocation(ImmersiveWeapons.MOD_ID, "burned_oak_tree");
-	public static final ResourceKey<PlacedFeature> BURNED_OAK_TREE_KEY = ResourceKey.create(Registry.PLACED_FEATURE_REGISTRY, BURNED_OAK_TREE);
+	public static final ResourceKey<PlacedFeature> BURNED_OAK_TREE_KEY = ResourceKey.create(Registries.PLACED_FEATURE, BURNED_OAK_TREE);
 
 	public static final ResourceLocation PATCH_MOONGLOW = new ResourceLocation(ImmersiveWeapons.MOD_ID, "patch_moonglow");
-	public static final ResourceKey<PlacedFeature> PATCH_MOONGLOW_KEY = ResourceKey.create(Registry.PLACED_FEATURE_REGISTRY, PATCH_MOONGLOW);
+	public static final ResourceKey<PlacedFeature> PATCH_MOONGLOW_KEY = ResourceKey.create(Registries.PLACED_FEATURE, PATCH_MOONGLOW);
 
 	public static final ResourceLocation STARDUST_TREE = new ResourceLocation(ImmersiveWeapons.MOD_ID, "stardust_tree");
-	public static final ResourceKey<PlacedFeature> STARDUST_TREE_KEY = ResourceKey.create(Registry.PLACED_FEATURE_REGISTRY, STARDUST_TREE);
+	public static final ResourceKey<PlacedFeature> STARDUST_TREE_KEY = ResourceKey.create(Registries.PLACED_FEATURE, STARDUST_TREE);
 
 	public static final ResourceLocation PATCH_DEATHWEED = new ResourceLocation(ImmersiveWeapons.MOD_ID, "patch_deathweed");
-	public static final ResourceKey<PlacedFeature> PATCH_DEATHWEED_KEY = ResourceKey.create(Registry.PLACED_FEATURE_REGISTRY, PATCH_DEATHWEED);
+	public static final ResourceKey<PlacedFeature> PATCH_DEATHWEED_KEY = ResourceKey.create(Registries.PLACED_FEATURE, PATCH_DEATHWEED);
 
 	public static final ResourceLocation ASTRAL_GEODE = new ResourceLocation(ImmersiveWeapons.MOD_ID, "astral_geode");
-	public static final ResourceKey<PlacedFeature> ASTRAL_GEODE_KEY = ResourceKey.create(Registry.PLACED_FEATURE_REGISTRY, ASTRAL_GEODE);
+	public static final ResourceKey<PlacedFeature> ASTRAL_GEODE_KEY = ResourceKey.create(Registries.PLACED_FEATURE, ASTRAL_GEODE);
 }

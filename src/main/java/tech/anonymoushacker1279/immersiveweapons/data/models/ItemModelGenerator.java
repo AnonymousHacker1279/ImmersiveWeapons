@@ -1,6 +1,6 @@
 package tech.anonymoushacker1279.immersiveweapons.data.models;
 
-import net.minecraft.data.DataGenerator;
+import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.minecraftforge.client.model.generators.ItemModelProvider;
@@ -18,8 +18,8 @@ import java.util.function.Predicate;
 
 public class ItemModelGenerator extends ItemModelProvider {
 
-	public ItemModelGenerator(DataGenerator generator, ExistingFileHelper existingFileHelper) {
-		super(generator, ImmersiveWeapons.MOD_ID, existingFileHelper);
+	public ItemModelGenerator(PackOutput output, ExistingFileHelper existingFileHelper) {
+		super(output, ImmersiveWeapons.MOD_ID, existingFileHelper);
 	}
 
 	/**

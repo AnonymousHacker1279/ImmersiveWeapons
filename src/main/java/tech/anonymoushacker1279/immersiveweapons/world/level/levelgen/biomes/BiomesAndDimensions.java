@@ -1,6 +1,6 @@
 package tech.anonymoushacker1279.immersiveweapons.world.level.levelgen.biomes;
 
-import net.minecraft.core.Registry;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.Level;
@@ -14,10 +14,10 @@ public class BiomesAndDimensions {
 	public static final ResourceKey<Biome> STARLIGHT_PLAINS = create("starlight_plains");
 	public static final ResourceKey<Biome> DEADMANS_DESERT = create("deadmans_desert");
 
-	public static final ResourceKey<Level> TILTROS = ResourceKey.create(Registry.DIMENSION_REGISTRY,
+	public static final ResourceKey<Level> TILTROS = ResourceKey.create(Registries.DIMENSION,
 			new ResourceLocation(ImmersiveWeapons.MOD_ID, "tiltros"));
 
 	private static ResourceKey<Biome> create(String name) {
-		return ResourceKey.create(Registry.BIOME_REGISTRY, new ResourceLocation(ImmersiveWeapons.MOD_ID, name));
+		return ResourceKey.create(Registries.BIOME, new ResourceLocation(ImmersiveWeapons.MOD_ID, name));
 	}
 }

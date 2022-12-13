@@ -49,8 +49,7 @@ public class BarrelTapRecipeBuilder {
 				.addCriterion("has_the_recipe", RecipeUnlockedTrigger.unlocked(pId))
 				.rewards(AdvancementRewards.Builder.recipe(pId)).requirements(RequirementsStrategy.OR);
 		pFinishedRecipeConsumer.accept(new BarrelTapRecipeBuilder.Result(pId, type, material, materialCount, result, advancement,
-				new ResourceLocation(pId.getNamespace(), "recipes/" +
-						Objects.requireNonNull(result.getItemCategory()).getRecipeFolderName() + "/" + pId.getPath())));
+				new ResourceLocation(pId.getNamespace(), "recipes/" + pId.getPath())));
 	}
 
 	private void ensureValid(ResourceLocation pId) {

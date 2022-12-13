@@ -2,15 +2,17 @@ package tech.anonymoushacker1279.immersiveweapons.client.particle.smoke_grenade;
 
 import com.mojang.brigadier.StringReader;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
-import com.mojang.math.Vector3f;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleType;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.util.ExtraCodecs;
 import net.minecraft.util.Mth;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.registries.ForgeRegistries;
+import org.joml.Vector3f;
+import org.joml.Vector3fc;
 import tech.anonymoushacker1279.immersiveweapons.init.ParticleTypesRegistry;
 
 import java.util.Locale;
@@ -19,7 +21,7 @@ public class SmokeGrenadeParticleOptions implements ParticleOptions {
 
 	public static final Codec<SmokeGrenadeParticleOptions> CODEC = RecordCodecBuilder.create((particleOptionsInstance)
 			-> particleOptionsInstance
-			.group(Vector3f.CODEC.fieldOf("color").forGetter((particleOptions) -> particleOptions.color),
+			.group(ExtraCodecs.VECTOR3F.fieldOf("color").forGetter((particleOptions) -> particleOptions.color),
 					Codec.FLOAT.fieldOf("scale").forGetter((particleOptions) -> particleOptions.scale))
 			.apply(particleOptionsInstance, SmokeGrenadeParticleOptions::new));
 
@@ -88,12 +90,12 @@ public class SmokeGrenadeParticleOptions implements ParticleOptions {
 	}
 
 	public static class SmokeGrenadeColors {
-		public static final Vector3f GRAY = new Vector3f(Vec3.fromRGB24(16777215));
-		public static final Vector3f RED = new Vector3f(Vec3.fromRGB24(16711680));
-		public static final Vector3f GREEN = new Vector3f(Vec3.fromRGB24(5294200));
-		public static final Vector3f BLUE = new Vector3f(Vec3.fromRGB24(1644912));
-		public static final Vector3f PURPLE = new Vector3f(Vec3.fromRGB24(5046349));
-		public static final Vector3f YELLOW = new Vector3f(Vec3.fromRGB24(16318253));
+		public static final Vector3f GRAY = new Vector3f((Vector3fc) Vec3.fromRGB24(16777215));
+		public static final Vector3f RED = new Vector3f((Vector3fc) Vec3.fromRGB24(16711680));
+		public static final Vector3f GREEN = new Vector3f((Vector3fc) Vec3.fromRGB24(5294200));
+		public static final Vector3f BLUE = new Vector3f((Vector3fc) Vec3.fromRGB24(1644912));
+		public static final Vector3f PURPLE = new Vector3f((Vector3fc) Vec3.fromRGB24(5046349));
+		public static final Vector3f YELLOW = new Vector3f((Vector3fc) Vec3.fromRGB24(16318253));
 	}
 
 	/**

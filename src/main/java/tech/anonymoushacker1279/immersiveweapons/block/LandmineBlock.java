@@ -13,6 +13,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.*;
+import net.minecraft.world.level.Level.ExplosionInteraction;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.*;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
@@ -53,7 +54,7 @@ public class LandmineBlock extends Block implements SimpleWaterloggedBlock {
 	 */
 	private static void explode(Level worldIn, BlockPos pos, @Nullable LivingEntity entityIn) {
 		if (!worldIn.isClientSide) {
-			worldIn.explode(entityIn, damageSource, null, pos.getX(), pos.getY(), pos.getZ(), 2.0F, false, Explosion.BlockInteraction.BREAK);
+			worldIn.explode(entityIn, damageSource, null, pos.getX(), pos.getY(), pos.getZ(), 2.0F, false, ExplosionInteraction.BLOCK);
 			worldIn.playLocalSound(pos.getX(), pos.getY(), pos.getZ(), SoundEvents.TNT_PRIMED, SoundSource.BLOCKS, 1.0F, 1.0F, false);
 		}
 	}

@@ -2,7 +2,7 @@
 	"credit": "Made with Blockbench",
 	"parent": "minecraft:block/block",
 	"textures": {
-		"1": "immersiveweapons:custom/bamboo_dark",
+		"1": "immersiveweapons:item/custom/bamboo_dark",
 		"particle": "immersiveweapons:block/bear_trap",
 		"base": "immersiveweapons:block/bear_trap"
 	},

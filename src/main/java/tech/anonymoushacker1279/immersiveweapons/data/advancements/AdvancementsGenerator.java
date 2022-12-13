@@ -5,6 +5,9 @@ import net.minecraft.advancements.*;
 import net.minecraft.advancements.Advancement.Builder;
 import net.minecraft.advancements.critereon.*;
 import net.minecraft.advancements.critereon.EntityPredicate.Composite;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.core.HolderLookup.Provider;
+import net.minecraft.data.PackOutput;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.ItemTags;
@@ -12,6 +15,8 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraftforge.common.Tags;
+import net.minecraftforge.common.data.ExistingFileHelper;
+import net.minecraftforge.common.data.ForgeAdvancementProvider;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.advancement.EntityDiscoveredTrigger.TriggerInstance;
 import tech.anonymoushacker1279.immersiveweapons.advancement.WarriorStatueActivatedTrigger;
@@ -19,11 +24,14 @@ import tech.anonymoushacker1279.immersiveweapons.data.tags.groups.immersiveweapo
 import tech.anonymoushacker1279.immersiveweapons.init.*;
 import tech.anonymoushacker1279.immersiveweapons.world.level.levelgen.biomes.BiomesAndDimensions;
 
+import java.util.List;
+import java.util.concurrent.CompletableFuture;
 import java.util.function.Consumer;
 
-public class IWAdvancements implements Consumer<Consumer<Advancement>> {
+public class AdvancementsGenerator extends ForgeAdvancementProvider {
 
-	IWAdvancements() {
+	public AdvancementsGenerator(PackOutput output, CompletableFuture<Provider> provider, ExistingFileHelper exFileHelper) {
+		super(output, provider, exFileHelper, List.of(AdvancementsGenerator::registerAdvancements));
 	}
 
 	/**
@@ -31,8 +39,7 @@ public class IWAdvancements implements Consumer<Consumer<Advancement>> {
 	 *
 	 * @param consumer the <code>Consumer</code> extending Advancement
 	 */
-	@Override
-	public void accept(Consumer<Advancement> consumer) {
+	public static void registerAdvancements(HolderLookup.Provider lookup, Consumer<Advancement> consumer, ExistingFileHelper existingFileHelper) {
 		// Root advancement
 		Advancement root = Builder.advancement()
 				.display(ItemRegistry.TESLA_SWORD.get(),

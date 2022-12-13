@@ -1,7 +1,7 @@
 package tech.anonymoushacker1279.immersiveweapons.data.recipes.families;
 
 import net.minecraft.advancements.critereon.InventoryChangeTrigger;
-import net.minecraft.data.DataGenerator;
+import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.*;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
@@ -19,12 +19,12 @@ import static tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities.it
 
 public class FamilyGenerator extends RecipeProvider {
 
-	public FamilyGenerator(DataGenerator generator) {
-		super(generator);
+	public FamilyGenerator(PackOutput output) {
+		super(output);
 	}
 
 	@Override
-	public void buildCraftingRecipes(Consumer<FinishedRecipe> consumer) {
+	public void buildRecipes(Consumer<FinishedRecipe> consumer) {
 		woodFamilies(consumer);
 		stoneFamilies();
 		toolFamilies(consumer);
@@ -39,14 +39,14 @@ public class FamilyGenerator extends RecipeProvider {
 			InventoryChangeTrigger.TriggerInstance planksTrigger = has(planks);
 
 			// Button
-			ShapelessRecipeBuilder.shapeless(family.button().get())
+			ShapelessRecipeBuilder.shapeless(RecipeCategory.BUILDING_BLOCKS, family.button().get())
 					.requires(planks)
 					.group("wooden_button")
 					.unlockedBy(planksTriggerName, planksTrigger)
 					.save(consumer, blockRegistryPath(family.button().get()));
 
 			// Door
-			ShapedRecipeBuilder.shaped(family.door().get(), 3)
+			ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, family.door().get(), 3)
 					.pattern("aa")
 					.pattern("aa")
 					.pattern("aa")
@@ -56,7 +56,7 @@ public class FamilyGenerator extends RecipeProvider {
 					.save(consumer, blockRegistryPath(family.door().get()));
 
 			// Fence
-			ShapedRecipeBuilder.shaped(family.fence().get(), 3)
+			ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, family.fence().get(), 3)
 					.pattern("aba")
 					.pattern("aba")
 					.define('a', planks)
@@ -66,7 +66,7 @@ public class FamilyGenerator extends RecipeProvider {
 					.save(consumer, blockRegistryPath(family.fence().get()));
 
 			// Fence Gate
-			ShapedRecipeBuilder.shaped(family.fenceGate().get())
+			ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, family.fenceGate().get())
 					.pattern("bab")
 					.pattern("bab")
 					.define('a', planks)
@@ -76,14 +76,14 @@ public class FamilyGenerator extends RecipeProvider {
 					.save(consumer, blockRegistryPath(family.fenceGate().get()));
 
 			// Planks
-			ShapelessRecipeBuilder.shapeless(planks, 4)
+			ShapelessRecipeBuilder.shapeless(RecipeCategory.BUILDING_BLOCKS, planks, 4)
 					.requires(family.logsItemTag())
 					.group("planks")
 					.unlockedBy("has_" + blockRegistryPath(family.log().get()).getPath(), has(family.logsItemTag()))
 					.save(consumer, blockRegistryPath(planks));
 
 			// Wood
-			ShapedRecipeBuilder.shaped(family.wood().get(), 3)
+			ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, family.wood().get(), 3)
 					.pattern("aa")
 					.pattern("aa")
 					.define('a', family.log().get())
@@ -92,7 +92,7 @@ public class FamilyGenerator extends RecipeProvider {
 					.save(consumer, blockRegistryPath(family.wood().get()));
 
 			// Pressure Plate
-			ShapedRecipeBuilder.shaped(family.pressurePlate().get())
+			ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, family.pressurePlate().get())
 					.pattern("aa")
 					.define('a', planks)
 					.group("wooden_pressure_plate")
@@ -100,7 +100,7 @@ public class FamilyGenerator extends RecipeProvider {
 					.save(consumer, blockRegistryPath(family.pressurePlate().get()));
 
 			// Sign
-			ShapedRecipeBuilder.shaped(family.standingSign().get(), 3)
+			ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, family.standingSign().get(), 3)
 					.group("sign")
 					.define('a', planks)
 					.define('b', Tags.Items.RODS_WOODEN)
@@ -117,7 +117,7 @@ public class FamilyGenerator extends RecipeProvider {
 			RecipeGenerator.CraftingTableRecipes.stairs(family.stairs().get(), planks, planksTriggerName, planksTrigger);
 
 			// Trapdoor
-			ShapedRecipeBuilder.shaped(family.trapdoor().get(), 2)
+			ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, family.trapdoor().get(), 2)
 					.pattern("aaa")
 					.pattern("aaa")
 					.define('a', planks)
@@ -126,7 +126,7 @@ public class FamilyGenerator extends RecipeProvider {
 					.save(consumer, blockRegistryPath(family.trapdoor().get()));
 
 			// Boat
-			ShapedRecipeBuilder.shaped(family.boat().get())
+			ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, family.boat().get())
 					.pattern("a a")
 					.pattern("aaa")
 					.define('a', planks)
@@ -135,7 +135,7 @@ public class FamilyGenerator extends RecipeProvider {
 					.save(consumer, itemRegistryPath(family.boat().get()));
 
 			// Chest boat
-			ShapelessRecipeBuilder.shapeless(family.chestBoat().get())
+			ShapelessRecipeBuilder.shapeless(RecipeCategory.BUILDING_BLOCKS, family.chestBoat().get())
 					.requires(Items.CHEST)
 					.requires(family.boat().get())
 					.group("chest_boat")
@@ -213,7 +213,7 @@ public class FamilyGenerator extends RecipeProvider {
 			final String materialTriggerName = "has_material";
 
 			// Sword
-			ShapedRecipeBuilder.shaped(family.sword().get())
+			ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, family.sword().get())
 					.pattern("a")
 					.pattern("a")
 					.pattern("b")
@@ -223,7 +223,7 @@ public class FamilyGenerator extends RecipeProvider {
 					.save(consumer, itemRegistryPath(family.sword().get()));
 
 			// Pickaxe
-			ShapedRecipeBuilder.shaped(family.pickaxe().get())
+			ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, family.pickaxe().get())
 					.pattern("aaa")
 					.pattern(" b ")
 					.pattern(" b ")
@@ -233,7 +233,7 @@ public class FamilyGenerator extends RecipeProvider {
 					.save(consumer, itemRegistryPath(family.pickaxe().get()));
 
 			// Axe
-			ShapedRecipeBuilder.shaped(family.axe().get())
+			ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, family.axe().get())
 					.pattern("aa")
 					.pattern("ab")
 					.pattern(" b")
@@ -243,7 +243,7 @@ public class FamilyGenerator extends RecipeProvider {
 					.save(consumer, itemRegistryPath(family.axe().get()));
 
 			// Shovel
-			ShapedRecipeBuilder.shaped(family.shovel().get())
+			ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, family.shovel().get())
 					.pattern("a")
 					.pattern("b")
 					.pattern("b")
@@ -253,7 +253,7 @@ public class FamilyGenerator extends RecipeProvider {
 					.save(consumer, itemRegistryPath(family.shovel().get()));
 
 			// Hoe
-			ShapedRecipeBuilder.shaped(family.hoe().get())
+			ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, family.hoe().get())
 					.pattern("aa")
 					.pattern(" b")
 					.pattern(" b")
@@ -301,7 +301,7 @@ public class FamilyGenerator extends RecipeProvider {
 			final String materialTriggerName = "has_material";
 
 			// Helmet
-			ShapedRecipeBuilder.shaped(family.helmet().get())
+			ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, family.helmet().get())
 					.pattern("aaa")
 					.pattern("a a")
 					.define('a', material)
@@ -309,7 +309,7 @@ public class FamilyGenerator extends RecipeProvider {
 					.save(consumer, itemRegistryPath(family.helmet().get()));
 
 			// Chestplate
-			ShapedRecipeBuilder.shaped(family.chestplate().get())
+			ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, family.chestplate().get())
 					.pattern("a a")
 					.pattern("aaa")
 					.pattern("aaa")
@@ -318,7 +318,7 @@ public class FamilyGenerator extends RecipeProvider {
 					.save(consumer, itemRegistryPath(family.chestplate().get()));
 
 			// Leggings
-			ShapedRecipeBuilder.shaped(family.leggings().get())
+			ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, family.leggings().get())
 					.pattern("aaa")
 					.pattern("a a")
 					.pattern("a a")
@@ -327,7 +327,7 @@ public class FamilyGenerator extends RecipeProvider {
 					.save(consumer, itemRegistryPath(family.leggings().get()));
 
 			// Boots
-			ShapedRecipeBuilder.shaped(family.boots().get())
+			ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, family.boots().get())
 					.pattern("a a")
 					.pattern("a a")
 					.define('a', material)

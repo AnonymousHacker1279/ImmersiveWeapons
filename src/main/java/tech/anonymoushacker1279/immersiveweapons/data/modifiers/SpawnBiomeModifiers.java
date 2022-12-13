@@ -3,7 +3,8 @@ package tech.anonymoushacker1279.immersiveweapons.data.modifiers;
 import com.google.gson.JsonElement;
 import net.minecraft.core.HolderSet;
 import net.minecraft.core.Registry;
-import net.minecraft.data.DataGenerator;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.data.PackOutput;
 import net.minecraft.resources.*;
 import net.minecraft.tags.BiomeTags;
 import net.minecraft.world.level.biome.Biome;
@@ -24,18 +25,18 @@ public class SpawnBiomeModifiers {
 	private static final ResourceLocation ADD_HANS_SPAWN = new ResourceLocation(ImmersiveWeapons.MOD_ID, "add_hans_spawn");
 	private static BiomeModifier addHansSpawn;
 
-	public static JsonCodecProvider<BiomeModifier> getCodecProvider(DataGenerator generator,
+	public static JsonCodecProvider<BiomeModifier> getCodecProvider(PackOutput output,
 	                                                                ExistingFileHelper existingFileHelper,
 	                                                                RegistryOps<JsonElement> registryOps,
 	                                                                ResourceKey<Registry<BiomeModifier>> biomeModifiersKey) {
 
 		fillFeatures(registryOps);
 		return JsonCodecProvider.forDatapackRegistry(
-				generator, existingFileHelper, ImmersiveWeapons.MOD_ID, registryOps, biomeModifiersKey, getBiomeModifiers());
+				output, existingFileHelper, ImmersiveWeapons.MOD_ID, registryOps, biomeModifiersKey, getBiomeModifiers());
 	}
 
 	private static void fillFeatures(RegistryOps<JsonElement> registryOps) {
-		HolderSet.Named<Biome> overworldTag = new HolderSet.Named<>(registryOps.registry(Registry.BIOME_REGISTRY).get(), BiomeTags.IS_OVERWORLD);
+		HolderSet.Named<Biome> overworldTag = registryOps.getter(Registries.BIOME).get().getOrThrow(BiomeTags.IS_OVERWORLD);
 
 		addWanderingWarriorSpawn = AddSpawnsBiomeModifier.singleSpawn(
 				overworldTag,

@@ -1,6 +1,6 @@
 package tech.anonymoushacker1279.immersiveweapons.world.level.levelgen;
 
-import net.minecraft.core.Registry;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.TagKey;
@@ -22,7 +22,7 @@ public class OreReplacementData {
 		public static final RuleTest NETHER_STONE = createRuleFromTag("forge:ore_bearing_ground/netherrack");
 
 		public static RuleTest createRuleFromTag(String tagLocation) {
-			TagKey<Block> blockTag = TagKey.create(Registry.BLOCK_REGISTRY, new ResourceLocation(tagLocation));
+			TagKey<Block> blockTag = TagKey.create(Registries.BLOCK, new ResourceLocation(tagLocation));
 			return new TagMatchTest(blockTag);
 		}
 	}

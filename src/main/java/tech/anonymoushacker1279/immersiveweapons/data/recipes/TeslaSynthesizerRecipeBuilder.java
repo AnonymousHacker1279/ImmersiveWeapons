@@ -54,8 +54,7 @@ public class TeslaSynthesizerRecipeBuilder {
 				.rewards(AdvancementRewards.Builder.recipe(pId)).requirements(RequirementsStrategy.OR);
 		pFinishedRecipeConsumer.accept(new TeslaSynthesizerRecipeBuilder.Result(pId, type, block,
 				material1, material2, cookTime, result, advancement,
-				new ResourceLocation(pId.getNamespace(), "recipes/" +
-						Objects.requireNonNull(result.getItemCategory()).getRecipeFolderName() + "/" + pId.getPath())));
+				new ResourceLocation(pId.getNamespace(), "recipes/" + pId.getPath())));
 	}
 
 	private void ensureValid(ResourceLocation pId) {

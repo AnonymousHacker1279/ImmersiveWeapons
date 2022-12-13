@@ -1,9 +1,9 @@
 {
 	"credit": "Made with Blockbench",
 	"textures": {
-		"0": "immersiveweapons:custom/greyd",
+		"0": "immersiveweapons:item/custom/greyd",
 		"1": "immersiveweapons:block/camp_chair",
-		"particle": "immersiveweapons:custom/greyd"
+		"particle": "immersiveweapons:item/custom/greyd"
 	},
 	"elements": [
 		{

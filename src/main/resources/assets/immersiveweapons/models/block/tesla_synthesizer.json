@@ -3,11 +3,11 @@
 	"render_type": "minecraft:translucent",
 	"textures": {
 		"0": "minecraft:block/netherite_block",
-		"1": "immersiveweapons:custom/gold_32x",
+		"1": "immersiveweapons:item/custom/gold_32x",
 		"2": "immersiveweapons:block/molten_block",
 		"3": "minecraft:block/glass",
-		"4": "immersiveweapons:custom/copper",
-		"5": "immersiveweapons:custom/iron_32x",
+		"4": "immersiveweapons:item/custom/copper",
+		"5": "immersiveweapons:item/custom/iron_32x",
 		"particle": "minecraft:block/netherite_block"
 	},
 	"elements": [

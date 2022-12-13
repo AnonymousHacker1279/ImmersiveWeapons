@@ -1,6 +1,6 @@
 package tech.anonymoushacker1279.immersiveweapons.data.sounds;
 
-import net.minecraft.data.DataGenerator;
+import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.common.data.SoundDefinition.Sound;
@@ -18,8 +18,8 @@ public class SoundGenerator extends SoundDefinitionsProvider {
 	 * @param modId     The mod ID of the current mod.
 	 * @param helper    The existing file helper provided by the event you are initializing this provider in.
 	 */
-	public SoundGenerator(DataGenerator generator, String modId, ExistingFileHelper helper) {
-		super(generator, modId, helper);
+	public SoundGenerator(PackOutput output, String modId, ExistingFileHelper helper) {
+		super(output, modId, helper);
 	}
 
 	@Override

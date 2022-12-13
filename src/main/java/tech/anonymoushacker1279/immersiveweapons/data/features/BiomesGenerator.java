@@ -1,8 +1,11 @@
 package tech.anonymoushacker1279.immersiveweapons.data.features;
 
 import com.google.gson.JsonElement;
+import net.minecraft.core.HolderLookup.Provider;
+import net.minecraft.core.HolderLookup.RegistryLookup;
 import net.minecraft.core.Registry;
-import net.minecraft.data.DataGenerator;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.data.PackOutput;
 import net.minecraft.data.worldgen.BiomeDefaultFeatures;
 import net.minecraft.resources.*;
 import net.minecraft.world.entity.MobCategory;
@@ -18,13 +21,13 @@ import net.minecraft.world.level.levelgen.placement.PlacedFeature;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.common.data.JsonCodecProvider;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
-import tech.anonymoushacker1279.immersiveweapons.data.CustomDataGenerator;
 import tech.anonymoushacker1279.immersiveweapons.init.*;
 import tech.anonymoushacker1279.immersiveweapons.world.level.levelgen.feature.BiomeFeatures;
 import tech.anonymoushacker1279.immersiveweapons.world.level.levelgen.feature.VanillaFeatures;
 
 import java.util.HashMap;
-import java.util.Optional;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
 
 public class BiomesGenerator {
 
@@ -33,14 +36,16 @@ public class BiomesGenerator {
 	protected static Biome STARLIGHT_PLAINS_BIOME;
 	protected static Biome DEADMANS_DESERT_BIOME;
 
-	private static Optional<? extends Registry<PlacedFeature>> FEATURE_REGISTRY;
-	private static Optional<? extends Registry<ConfiguredWorldCarver<?>>> CARVER_REGISTRY;
+	private static RegistryLookup<PlacedFeature> FEATURE_REGISTRY;
+	private static RegistryLookup<ConfiguredWorldCarver<?>> CARVER_REGISTRY;
 
-	public static void init() {
-		FEATURE_REGISTRY =
-				CustomDataGenerator.REGISTRY_BUILTIN_COPY.registry(Registry.PLACED_FEATURE_REGISTRY);
-		CARVER_REGISTRY =
-				CustomDataGenerator.REGISTRY_BUILTIN_COPY.registry(Registry.CONFIGURED_CARVER_REGISTRY);
+	public static void init(CompletableFuture<Provider> lookup) {
+		try {
+			FEATURE_REGISTRY = lookup.get().lookup(Registries.PLACED_FEATURE).get();
+			CARVER_REGISTRY = lookup.get().lookup(Registries.CONFIGURED_CARVER).get();
+		} catch (InterruptedException | ExecutionException e) {
+			throw new RuntimeException(e);
+		}
 
 		BATTLEFIELD_BIOME = new Biome.BiomeBuilder()
 				.temperature(0.8f)
@@ -55,9 +60,9 @@ public class BiomesGenerator {
 						.grassColorOverride(5576464)
 						.foliageColorOverride(4468277)
 						.grassColorModifier(GrassColorModifier.NONE)
-						.ambientLoopSound(SoundEventRegistry.BATTLEFIELD_AMBIENT.get())
+						.ambientLoopSound(SoundEventRegistry.BATTLEFIELD_AMBIENT.getHolder().get())
 						.ambientAdditionsSound(new AmbientAdditionsSettings(
-								SoundEventRegistry.FLINTLOCK_PISTOL_FIRE.get(), 0.00002d
+								SoundEventRegistry.FLINTLOCK_PISTOL_FIRE.getHolder().get(), 0.00002d
 						))
 						.build())
 				.mobSpawnSettings(getBattlefieldSpawns())
@@ -79,7 +84,7 @@ public class BiomesGenerator {
 						.grassColorOverride(16113331)
 						.foliageColorOverride(14665365)
 						.grassColorModifier(GrassColorModifier.NONE)
-						.ambientLoopSound(SoundEventRegistry.TILTROS_AMBIENT.get())
+						.ambientLoopSound(SoundEventRegistry.TILTROS_AMBIENT.getHolder().get())
 						.build())
 				.mobSpawnSettings(getTiltrosWastesSpawns())
 				.generationSettings(getTiltrosWastesGenerationSettings())
@@ -98,7 +103,7 @@ public class BiomesGenerator {
 						.grassColorOverride(12312020)
 						.foliageColorOverride(13885404)
 						.grassColorModifier(GrassColorModifier.NONE)
-						.ambientLoopSound(SoundEventRegistry.TILTROS_AMBIENT.get())
+						.ambientLoopSound(SoundEventRegistry.TILTROS_AMBIENT.getHolder().get())
 						.build())
 				.mobSpawnSettings(getStarlightPlainsSpawns())
 				.generationSettings(getStarlightPlainsGenerationSettings())
@@ -117,7 +122,7 @@ public class BiomesGenerator {
 						.grassColorOverride(6176026)
 						.foliageColorOverride(6242850)
 						.grassColorModifier(GrassColorModifier.NONE)
-						.ambientLoopSound(SoundEventRegistry.TILTROS_AMBIENT.get())
+						.ambientLoopSound(SoundEventRegistry.TILTROS_AMBIENT.getHolder().get())
 						.ambientParticle(new AmbientParticleSettings(
 								ParticleTypesRegistry.DEADMANS_DESERT_AMBIENT_PARTICLE.get(), 0.002f
 						))
@@ -132,13 +137,13 @@ public class BiomesGenerator {
 	protected static final ResourceLocation STARLIGHT_PLAINS = new ResourceLocation(ImmersiveWeapons.MOD_ID, "starlight_plains");
 	protected static final ResourceLocation DEADMANS_DESERT = new ResourceLocation(ImmersiveWeapons.MOD_ID, "deadmans_desert");
 
-	public static JsonCodecProvider<Biome> getCodecProvider(DataGenerator generator,
+	public static JsonCodecProvider<Biome> getCodecProvider(PackOutput output,
 	                                                        ExistingFileHelper existingFileHelper,
 	                                                        RegistryOps<JsonElement> registryOps,
 	                                                        ResourceKey<Registry<Biome>> placedFeatureKey) {
 
 		return JsonCodecProvider.forDatapackRegistry(
-				generator, existingFileHelper, ImmersiveWeapons.MOD_ID, registryOps, placedFeatureKey, getPlacedFeatures());
+				output, existingFileHelper, ImmersiveWeapons.MOD_ID, registryOps, placedFeatureKey, getPlacedFeatures());
 	}
 
 	private static HashMap<ResourceLocation, Biome> getPlacedFeatures() {
@@ -193,47 +198,47 @@ public class BiomesGenerator {
 	}
 
 	private static BiomeGenerationSettings getBattlefieldGenerationSettings() {
-		BiomeGenerationSettings.Builder generationBuilder = new BiomeGenerationSettings.Builder()
-				.addCarver(Carving.AIR, CARVER_REGISTRY.get().getOrCreateHolderOrThrow(CarversGenerator.TRENCH_KEY))
-				.addFeature(Decoration.VEGETAL_DECORATION, FEATURE_REGISTRY.get().getOrCreateHolderOrThrow(BiomeFeatures.PATCH_WOODEN_SPIKES_KEY))
-				.addFeature(Decoration.VEGETAL_DECORATION, FEATURE_REGISTRY.get().getOrCreateHolderOrThrow(BiomeFeatures.BURNED_OAK_TREE_KEY));
+		BiomeGenerationSettings.Builder generationBuilder = new BiomeGenerationSettings.Builder(FEATURE_REGISTRY, CARVER_REGISTRY)
+				.addCarver(Carving.AIR, CarversGenerator.TRENCH_KEY)
+				.addFeature(Decoration.VEGETAL_DECORATION, BiomeFeatures.PATCH_WOODEN_SPIKES_KEY)
+				.addFeature(Decoration.VEGETAL_DECORATION, BiomeFeatures.BURNED_OAK_TREE_KEY);
 
-		VanillaFeatures.getOverworldBaseGeneration(FEATURE_REGISTRY.get(), CARVER_REGISTRY.get(), generationBuilder);
-		VanillaFeatures.getPlainsLikeGeneration(FEATURE_REGISTRY.get(), generationBuilder);
+		VanillaFeatures.getOverworldBaseGeneration(generationBuilder);
+		VanillaFeatures.getPlainsLikeGeneration(generationBuilder);
 
 		return generationBuilder.build();
 	}
 
 	private static BiomeGenerationSettings getTiltrosWastesGenerationSettings() {
-		BiomeGenerationSettings.Builder generationBuilder = new BiomeGenerationSettings.Builder()
-				.addCarver(Carving.AIR, CARVER_REGISTRY.get().getOrCreateHolderOrThrow(CarversGenerator.TILTROS_WASTES_KEY))
-				.addFeature(Decoration.LOCAL_MODIFICATIONS, FEATURE_REGISTRY.get().getOrCreateHolderOrThrow(BiomeFeatures.ASTRAL_GEODE_KEY));
+		BiomeGenerationSettings.Builder generationBuilder = new BiomeGenerationSettings.Builder(FEATURE_REGISTRY, CARVER_REGISTRY)
+				.addCarver(Carving.AIR, CarversGenerator.TILTROS_WASTES_KEY)
+				.addFeature(Decoration.LOCAL_MODIFICATIONS, BiomeFeatures.ASTRAL_GEODE_KEY);
 
-		VanillaFeatures.getOverworldBaseGeneration(FEATURE_REGISTRY.get(), CARVER_REGISTRY.get(), generationBuilder);
-		VanillaFeatures.addPlainGrass(FEATURE_REGISTRY.get(), generationBuilder);
+		VanillaFeatures.getOverworldBaseGeneration(generationBuilder);
+		VanillaFeatures.addPlainGrass(generationBuilder);
 
 		return generationBuilder.build();
 	}
 
 	private static BiomeGenerationSettings getStarlightPlainsGenerationSettings() {
-		BiomeGenerationSettings.Builder generationBuilder = new BiomeGenerationSettings.Builder()
-				.addFeature(Decoration.VEGETAL_DECORATION, FEATURE_REGISTRY.get().getOrCreateHolderOrThrow(BiomeFeatures.PATCH_MOONGLOW_KEY))
-				.addFeature(Decoration.VEGETAL_DECORATION, FEATURE_REGISTRY.get().getOrCreateHolderOrThrow(BiomeFeatures.STARDUST_TREE_KEY));
+		BiomeGenerationSettings.Builder generationBuilder = new BiomeGenerationSettings.Builder(FEATURE_REGISTRY, CARVER_REGISTRY)
+				.addFeature(Decoration.VEGETAL_DECORATION, BiomeFeatures.PATCH_MOONGLOW_KEY)
+				.addFeature(Decoration.VEGETAL_DECORATION, BiomeFeatures.STARDUST_TREE_KEY);
 
-		VanillaFeatures.getOverworldBaseGeneration(FEATURE_REGISTRY.get(), CARVER_REGISTRY.get(), generationBuilder);
-		VanillaFeatures.addPlainGrass(FEATURE_REGISTRY.get(), generationBuilder);
+		VanillaFeatures.getOverworldBaseGeneration(generationBuilder);
+		VanillaFeatures.addPlainGrass(generationBuilder);
 
 		return generationBuilder.build();
 	}
 
 	private static BiomeGenerationSettings getDeadmansDesertGenerationSettings() {
-		BiomeGenerationSettings.Builder generationBuilder = new BiomeGenerationSettings.Builder()
-				.addFeature(Decoration.VEGETAL_DECORATION, FEATURE_REGISTRY.get().getOrCreateHolderOrThrow(BiomeFeatures.PATCH_DEATHWEED_KEY));
+		BiomeGenerationSettings.Builder generationBuilder = new BiomeGenerationSettings.Builder(FEATURE_REGISTRY, CARVER_REGISTRY)
+				.addFeature(Decoration.VEGETAL_DECORATION, BiomeFeatures.PATCH_DEATHWEED_KEY);
 
-		VanillaFeatures.getOverworldBaseGeneration(FEATURE_REGISTRY.get(), CARVER_REGISTRY.get(), generationBuilder);
-		VanillaFeatures.addDefaultSoftDisks(FEATURE_REGISTRY.get(), generationBuilder);
-		VanillaFeatures.addFossilDecoration(FEATURE_REGISTRY.get(), generationBuilder);
-		VanillaFeatures.addDesertVegetation(FEATURE_REGISTRY.get(), generationBuilder);
+		VanillaFeatures.getOverworldBaseGeneration(generationBuilder);
+		VanillaFeatures.addDefaultSoftDisks(generationBuilder);
+		VanillaFeatures.addFossilDecoration(generationBuilder);
+		VanillaFeatures.addDesertVegetation(generationBuilder);
 
 		return generationBuilder.build();
 	}

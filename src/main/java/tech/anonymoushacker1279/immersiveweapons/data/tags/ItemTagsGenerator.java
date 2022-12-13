@@ -1,13 +1,14 @@
 package tech.anonymoushacker1279.immersiveweapons.data.tags;
 
-import net.minecraft.data.DataGenerator;
+import net.minecraft.core.HolderLookup.Provider;
+import net.minecraft.data.PackOutput;
 import net.minecraft.data.tags.ItemTagsProvider;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.Tags.Blocks;
+import net.minecraftforge.common.data.BlockTagsProvider;
 import net.minecraftforge.common.data.ExistingFileHelper;
-import org.jetbrains.annotations.Nullable;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.data.tags.groups.forge.ForgeBlockTagGroups;
 import tech.anonymoushacker1279.immersiveweapons.data.tags.groups.forge.ForgeItemTagGroups;
@@ -19,21 +20,16 @@ import tech.anonymoushacker1279.immersiveweapons.data.tags.lists.ItemTagLists;
 import tech.anonymoushacker1279.immersiveweapons.init.BlockItemRegistry;
 import tech.anonymoushacker1279.immersiveweapons.init.ItemRegistry;
 
+import java.util.concurrent.CompletableFuture;
+
 public class ItemTagsGenerator extends ItemTagsProvider {
 
-	/**
-	 * Constructor for ItemTagsGenerator.
-	 *
-	 * @param gen                the <code>DataGenerator</code> instance
-	 * @param blockTagsGenerator the <code>BlockTagsGenerator</code> instance
-	 * @param existingFileHelper the <code>ExistingFileHelper</code> instance
-	 */
-	public ItemTagsGenerator(DataGenerator gen, BlockTagsGenerator blockTagsGenerator, @Nullable ExistingFileHelper existingFileHelper) {
-		super(gen, blockTagsGenerator, ImmersiveWeapons.MOD_ID, existingFileHelper);
+	public ItemTagsGenerator(PackOutput output, CompletableFuture<Provider> lookupProvider, BlockTagsProvider blocks, ExistingFileHelper existingFileHelper) {
+		super(output, lookupProvider, blocks, ImmersiveWeapons.MOD_ID, existingFileHelper);
 	}
 
 	@Override
-	protected void addTags() {
+	protected void addTags(Provider provider) {
 		ItemTagLists.init();
 
 		addForgeTags();

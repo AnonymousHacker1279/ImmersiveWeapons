@@ -1,7 +1,7 @@
 package tech.anonymoushacker1279.immersiveweapons.data.models;
 
 import net.minecraft.core.Direction;
-import net.minecraft.data.DataGenerator;
+import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
@@ -24,8 +24,8 @@ import java.util.Objects;
 
 public class BlockStateGenerator extends BlockStateProvider {
 
-	public BlockStateGenerator(DataGenerator generator, ExistingFileHelper existingFileHelper) {
-		super(generator, ImmersiveWeapons.MOD_ID, existingFileHelper);
+	public BlockStateGenerator(PackOutput output, ExistingFileHelper existingFileHelper) {
+		super(output, ImmersiveWeapons.MOD_ID, existingFileHelper);
 	}
 
 	@Override

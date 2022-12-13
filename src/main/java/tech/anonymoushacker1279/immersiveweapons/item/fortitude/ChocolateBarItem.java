@@ -4,8 +4,8 @@ import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.Explosion;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.Level.ExplosionInteraction;
 
 public class ChocolateBarItem extends Item {
 
@@ -35,7 +35,7 @@ public class ChocolateBarItem extends Item {
 	public ItemStack finishUsingItem(ItemStack stack, Level level, LivingEntity entity) {
 		if (isExplosive) {
 			level.explode(null, damageSource, null, entity.position().x, entity.position().y,
-					entity.position().z, 2.0F, false, Explosion.BlockInteraction.NONE);
+					entity.position().z, 2.0F, false, ExplosionInteraction.NONE);
 		}
 
 		return super.finishUsingItem(stack, level, entity);

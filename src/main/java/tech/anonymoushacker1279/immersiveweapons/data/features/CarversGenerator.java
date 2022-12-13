@@ -2,7 +2,8 @@ package tech.anonymoushacker1279.immersiveweapons.data.features;
 
 import com.google.gson.JsonElement;
 import net.minecraft.core.Registry;
-import net.minecraft.data.DataGenerator;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.data.PackOutput;
 import net.minecraft.resources.*;
 import net.minecraft.world.level.levelgen.carver.*;
 import net.minecraftforge.common.data.ExistingFileHelper;
@@ -23,18 +24,18 @@ public class CarversGenerator {
 	}
 
 	protected static final ResourceLocation TRENCH = new ResourceLocation(ImmersiveWeapons.MOD_ID, "trench");
-	public static final ResourceKey<ConfiguredWorldCarver<?>> TRENCH_KEY = ResourceKey.create(Registry.CONFIGURED_CARVER_REGISTRY, TRENCH);
+	public static final ResourceKey<ConfiguredWorldCarver<?>> TRENCH_KEY = ResourceKey.create(Registries.CONFIGURED_CARVER, TRENCH);
 
 	protected static final ResourceLocation TILTROS_WASTES = new ResourceLocation(ImmersiveWeapons.MOD_ID, "tiltros_wastes");
-	public static final ResourceKey<ConfiguredWorldCarver<?>> TILTROS_WASTES_KEY = ResourceKey.create(Registry.CONFIGURED_CARVER_REGISTRY, TILTROS_WASTES);
+	public static final ResourceKey<ConfiguredWorldCarver<?>> TILTROS_WASTES_KEY = ResourceKey.create(Registries.CONFIGURED_CARVER, TILTROS_WASTES);
 
-	public static JsonCodecProvider<ConfiguredWorldCarver<?>> getCodecProvider(DataGenerator generator,
+	public static JsonCodecProvider<ConfiguredWorldCarver<?>> getCodecProvider(PackOutput output,
 	                                                                           ExistingFileHelper existingFileHelper,
 	                                                                           RegistryOps<JsonElement> registryOps,
 	                                                                           ResourceKey<Registry<ConfiguredWorldCarver<?>>> placedFeatureKey) {
 
 		return JsonCodecProvider.forDatapackRegistry(
-				generator, existingFileHelper, ImmersiveWeapons.MOD_ID, registryOps, placedFeatureKey, getConfiguredWorldCarvers());
+				output, existingFileHelper, ImmersiveWeapons.MOD_ID, registryOps, placedFeatureKey, getConfiguredWorldCarvers());
 	}
 
 	private static HashMap<ResourceLocation, ConfiguredWorldCarver<?>> getConfiguredWorldCarvers() {

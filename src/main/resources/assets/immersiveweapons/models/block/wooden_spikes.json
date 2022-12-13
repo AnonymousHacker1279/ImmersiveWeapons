@@ -2,8 +2,8 @@
 	"credit": "Made with Blockbench",
 	"textures": {
 		"0": "block/oak_planks",
-		"1": "immersiveweapons:custom/wood_light_2",
-		"2": "immersiveweapons:custom/brown",
+		"1": "immersiveweapons:item/custom/wood_light_2",
+		"2": "immersiveweapons:item/custom/brown",
 		"particle": "block/oak_planks"
 	},
 	"elements": [

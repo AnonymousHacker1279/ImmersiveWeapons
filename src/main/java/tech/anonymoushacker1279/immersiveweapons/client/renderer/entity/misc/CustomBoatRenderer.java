@@ -2,6 +2,7 @@ package tech.anonymoushacker1279.immersiveweapons.client.renderer.entity.misc;
 
 import com.mojang.datafixers.util.Pair;
 import net.minecraft.client.model.BoatModel;
+import net.minecraft.client.model.ListModel;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.renderer.entity.BoatRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider.Context;
@@ -20,13 +21,13 @@ public class CustomBoatRenderer extends BoatRenderer {
 		ModelLayerLocation modelLayerLocation = hasChest
 				? new ModelLayerLocation(new ResourceLocation("minecraft", "chest_boat/oak"), "main")
 				: new ModelLayerLocation(new ResourceLocation("minecraft", "boat/oak"), "main");
-		model = new BoatModel(context.bakeLayer(modelLayerLocation), hasChest);
+		model = new BoatModel(context.bakeLayer(modelLayerLocation));
 
 		this.textureLocation = textureLocation;
 	}
 
 	@Override
-	public Pair<ResourceLocation, BoatModel> getModelWithLocation(Boat boat) {
+	public Pair<ResourceLocation, ListModel<Boat>> getModelWithLocation(Boat boat) {
 		return Pair.of(textureLocation, model);
 	}
 }

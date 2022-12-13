@@ -1,8 +1,9 @@
 package tech.anonymoushacker1279.immersiveweapons.data.loot;
 
-import com.google.common.collect.*;
+import com.google.common.collect.ImmutableSet;
 import net.minecraft.advancements.critereon.EntityFlagsPredicate;
 import net.minecraft.advancements.critereon.EntityPredicate;
+import net.minecraft.data.loot.LootTableSubProvider;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
@@ -14,24 +15,28 @@ import net.minecraft.world.level.storage.loot.functions.*;
 import net.minecraft.world.level.storage.loot.predicates.*;
 import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
 import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
-import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
+import org.jetbrains.annotations.Nullable;
 import tech.anonymoushacker1279.immersiveweapons.init.EntityRegistry;
 import tech.anonymoushacker1279.immersiveweapons.init.ItemRegistry;
 
 import java.util.*;
 import java.util.function.BiConsumer;
-import java.util.function.Consumer;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
-public class EntityLootTables implements Consumer<BiConsumer<ResourceLocation, Builder>> {
+public class EntityLootTables implements LootTableSubProvider {
+
+	@Nullable
+	private BiConsumer<ResourceLocation, LootTable.Builder> out;
 
 	protected static final EntityPredicate.Builder ENTITY_ON_FIRE = EntityPredicate.Builder.entity().flags(EntityFlagsPredicate.Builder.flags().setOnFire(true).build());
 	private static final Set<EntityType<?>> SPECIAL_LOOT_TABLE_TYPES = ImmutableSet.of(EntityType.PLAYER, EntityType.ARMOR_STAND, EntityType.IRON_GOLEM, EntityType.SNOW_GOLEM, EntityType.VILLAGER);
-	private final Map<ResourceLocation, LootTable.Builder> map = Maps.newHashMap();
 
-	protected void addTables() {
+	@Override
+	public void generate(BiConsumer<ResourceLocation, Builder> out) {
+		this.out = out;
+
 		add(EntityRegistry.ROCK_SPIDER_ENTITY.get(), LootTable.lootTable()
 				.withPool(LootPool.lootPool()
 						.setRolls(ConstantValue.exactly(1.0F))
@@ -149,31 +154,6 @@ public class EntityLootTables implements Consumer<BiConsumer<ResourceLocation, B
 						.when(LootItemKilledByPlayerCondition.killedByPlayer())));
 	}
 
-	@Override
-	public void accept(BiConsumer<ResourceLocation, LootTable.Builder> biConsumer) {
-		addTables();
-		Set<ResourceLocation> set = Sets.newHashSet();
-
-		List<RegistryObject<EntityType<?>>> knownEntities = getKnownEntities();
-
-		for (RegistryObject<EntityType<?>> registryEntityType : knownEntities) {
-			EntityType<?> entityType = registryEntityType.get();
-			ResourceLocation lootTable = entityType.getDefaultLootTable();
-			if (isNonLiving(entityType)) {
-				if (lootTable != BuiltInLootTables.EMPTY && map.remove(lootTable) != null) {
-					throw new IllegalStateException(String.format("Strange loot table '%s' for '%s', a LivingEntity should not have loot", lootTable, ForgeRegistries.ENTITY_TYPES.getKey(entityType)));
-				}
-			} else if (lootTable != BuiltInLootTables.EMPTY && set.add(lootTable)) {
-				LootTable.Builder builder = map.remove(lootTable);
-				if (builder != null) {
-					biConsumer.accept(lootTable, builder);
-				}
-			}
-		}
-
-		map.forEach(biConsumer);
-	}
-
 	protected List<RegistryObject<EntityType<?>>> getKnownEntities() {
 		return StreamSupport.stream(Spliterators.spliteratorUnknownSize(EntityRegistry.ENTITY_TYPES.getEntries().stream().iterator(), 0),
 				false).collect(Collectors.toList());
@@ -188,6 +168,8 @@ public class EntityLootTables implements Consumer<BiConsumer<ResourceLocation, B
 	}
 
 	protected void add(ResourceLocation pLootTableId, LootTable.Builder pLootTableBuilder) {
-		map.put(pLootTableId, pLootTableBuilder);
+		if (out != null) {
+			out.accept(pLootTableId, pLootTableBuilder);
+		}
 	}
 }

@@ -1,38 +1,42 @@
 package tech.anonymoushacker1279.immersiveweapons.data.loot;
 
-import com.google.common.collect.Maps;
-import com.google.common.collect.Sets;
 import net.minecraft.advancements.critereon.*;
-import net.minecraft.data.loot.BlockLoot;
+import net.minecraft.data.loot.LootTableSubProvider;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.StringRepresentable;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.storage.loot.*;
+import net.minecraft.world.level.block.DoorBlock;
+import net.minecraft.world.level.block.state.properties.DoubleBlockHalf;
+import net.minecraft.world.level.block.state.properties.Property;
+import net.minecraft.world.level.storage.loot.LootPool;
+import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.LootTable.Builder;
 import net.minecraft.world.level.storage.loot.entries.LootItem;
 import net.minecraft.world.level.storage.loot.entries.LootPoolEntryContainer;
 import net.minecraft.world.level.storage.loot.functions.*;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
 import net.minecraft.world.level.storage.loot.predicates.*;
 import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
 import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
-import net.minecraftforge.registries.RegistryObject;
+import org.jetbrains.annotations.Nullable;
 import tech.anonymoushacker1279.immersiveweapons.block.LandmineBlock;
 import tech.anonymoushacker1279.immersiveweapons.block.SandbagBlock;
 import tech.anonymoushacker1279.immersiveweapons.block.misc.warrior_statue.WarriorStatueTorso;
 import tech.anonymoushacker1279.immersiveweapons.data.tags.lists.BlockTagLists;
 import tech.anonymoushacker1279.immersiveweapons.init.*;
 
-import java.util.*;
-import java.util.function.*;
-import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 
-public class BlockLootTables implements Consumer<BiConsumer<ResourceLocation, Builder>> {
+public class BlockLootTables implements LootTableSubProvider {
 
-	private final Map<ResourceLocation, Builder> map = Maps.newHashMap();
+	@Nullable
+	private BiConsumer<ResourceLocation, LootTable.Builder> out;
+
 	private static final LootItemCondition.Builder HAS_SILK_TOUCH = MatchTool.toolMatches(ItemPredicate.Builder.item().hasEnchantment(new EnchantmentPredicate(Enchantments.SILK_TOUCH, MinMaxBounds.Ints.atLeast(1))));
 	private static final LootItemCondition.Builder HAS_SHEARS = MatchTool.toolMatches(ItemPredicate.Builder.item().of(Items.SHEARS));
 	private static final LootItemCondition.Builder HAS_SHEARS_OR_SILK_TOUCH = HAS_SHEARS.or(HAS_SILK_TOUCH);
@@ -40,29 +44,9 @@ public class BlockLootTables implements Consumer<BiConsumer<ResourceLocation, Bu
 	private static final float[] NORMAL_LEAVES_SAPLING_CHANCES = new float[]{0.05F, 0.0625F, 0.083333336F, 0.1F};
 
 	@Override
-	public void accept(BiConsumer<ResourceLocation, Builder> resourceLocationBuilderBiConsumer) {
-		addTables();
-		Set<ResourceLocation> set = Sets.newHashSet();
+	public void generate(BiConsumer<ResourceLocation, Builder> out) {
+		this.out = out;
 
-		List<RegistryObject<Block>> knownBlocks = getKnownBlocks();
-
-		for (RegistryObject<Block> blockRegistryObject : knownBlocks) {
-			Block block = blockRegistryObject.get();
-			ResourceLocation lootTable = block.getLootTable();
-			if (lootTable != BuiltInLootTables.EMPTY && set.add(lootTable)) {
-				LootTable.Builder builder = map.remove(lootTable);
-				if (builder != null) {
-					resourceLocationBuilderBiConsumer.accept(lootTable, builder);
-				}
-			}
-		}
-
-		if (!map.isEmpty()) {
-			throw new IllegalStateException("Created block loot tables for non-blocks: " + map.keySet());
-		}
-	}
-
-	private void addTables() {
 		// Simple block drops
 		dropSelf(BlockRegistry.AMERICAN_FLAG.get());
 		dropSelf(BlockRegistry.BARBED_WIRE.get());
@@ -169,8 +153,8 @@ public class BlockLootTables implements Consumer<BiConsumer<ResourceLocation, Bu
 		}
 
 		// Complex block drops
-		add(BlockRegistry.BURNED_OAK_DOOR.get(), BlockLoot::createDoorTable);
-		add(BlockRegistry.STARDUST_DOOR.get(), BlockLoot::createDoorTable);
+		add(BlockRegistry.BURNED_OAK_DOOR.get(), BlockLootTables::createDoor);
+		add(BlockRegistry.STARDUST_DOOR.get(), BlockLootTables::createDoor);
 		add(BlockRegistry.STARDUST_LEAVES.get(), (leafLikeDrop) -> createLeafLikeDrop(leafLikeDrop, BlockItemRegistry.STARDUST_SAPLING_ITEM.get(), NORMAL_LEAVES_SAPLING_CHANCES));
 		add(BlockRegistry.BURNED_OAK_BRANCH.get(), (leafLikeDrop) -> createLeafLikeDrop(leafLikeDrop, Items.STICK, NORMAL_LEAVES_SAPLING_CHANCES));
 		add(BlockRegistry.COBALT_ORE.get(), (block) -> createOreDrop(block, ItemRegistry.RAW_COBALT.get()));
@@ -232,11 +216,6 @@ public class BlockLootTables implements Consumer<BiConsumer<ResourceLocation, Bu
 												.hasProperty(WarriorStatueTorso.POWERED, false)))))));
 	}
 
-	protected List<RegistryObject<Block>> getKnownBlocks() {
-		return StreamSupport.stream(Spliterators.spliteratorUnknownSize(BlockRegistry.BLOCKS.getEntries().stream().iterator(), 0),
-				false).collect(Collectors.toList());
-	}
-
 	protected static LootTable.Builder createLeafLikeDrop(Block block, Item altDrop, float... pChances) {
 		return createSilkTouchOrShearsDispatchTable(block, applyExplosionCondition(LootItem.lootTableItem(altDrop))
 				.when(BonusLevelTableCondition.bonusLevelFlatChance(Enchantments.BLOCK_FORTUNE, pChances)))
@@ -276,8 +255,23 @@ public class BlockLootTables implements Consumer<BiConsumer<ResourceLocation, Bu
 		add(pBlock, createSingleItemTable(pDrop));
 	}
 
+	protected static LootTable.Builder createDoor(Block block) {
+		return createSinglePropConditionTable(block, DoorBlock.HALF, DoubleBlockHalf.LOWER);
+	}
+
+	protected static <T extends Comparable<T> & StringRepresentable> LootTable.Builder createSinglePropConditionTable(Block block, Property<T> property, T t) {
+		return LootTable.lootTable().withPool(applyExplosionCondition(LootPool.lootPool()
+				.setRolls(ConstantValue.exactly(1.0F))
+				.add(LootItem.lootTableItem(block)
+						.when(LootItemBlockStatePropertyCondition.hasBlockStateProperties(block)
+								.setProperties(StatePropertiesPredicate.Builder.properties()
+										.hasProperty(property, t))))));
+	}
+
 	protected void add(Block pBlock, LootTable.Builder pLootTableBuilder) {
-		map.put(pBlock.getLootTable(), pLootTableBuilder);
+		if (out != null) {
+			out.accept(pBlock.getLootTable(), pLootTableBuilder.setParamSet(LootContextParamSets.BLOCK));
+		}
 	}
 
 	protected void add(Block pBlock, Function<Block, Builder> pFactory) {

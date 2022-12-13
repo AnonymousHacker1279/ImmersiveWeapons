@@ -1,7 +1,8 @@
 package tech.anonymoushacker1279.immersiveweapons.world.level.levelgen.feature;
 
-import net.minecraft.core.HolderSet;
-import net.minecraft.core.Registry;
+import com.google.gson.JsonElement;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.RegistryOps;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.util.valueproviders.ConstantFloat;
 import net.minecraft.util.valueproviders.UniformFloat;
@@ -17,7 +18,7 @@ public class WorldCarvers {
 	public static CanyonCarverConfiguration TRENCH_CARVER_CONFIGURATION;
 	public static CanyonCarverConfiguration TILTROS_WASTES_CARVER_CONFIGURATION;
 
-	public static void init() {
+	public static void init(RegistryOps<JsonElement> registryOps) {
 		TRENCH_CARVER_CONFIGURATION = new CanyonCarverConfiguration(
 				0.35f,
 				BiasedToBottomHeight.of(VerticalAnchor.absolute(0),
@@ -26,7 +27,7 @@ public class WorldCarvers {
 				ConstantFloat.of(0.75f),
 				VerticalAnchor.absolute(0),
 				CarverDebugSettings.DEFAULT,
-				new HolderSet.Named<>(Registry.BLOCK, BlockTags.OVERWORLD_CARVER_REPLACEABLES),
+				registryOps.getter(Registries.BLOCK).get().getOrThrow(BlockTags.OVERWORLD_CARVER_REPLACEABLES),
 				UniformFloat.of(0.0f, 16f),
 				new CanyonShapeConfiguration(
 						ConstantFloat.of(15.0f),
@@ -46,7 +47,7 @@ public class WorldCarvers {
 				ConstantFloat.of(3.0f),
 				VerticalAnchor.absolute(-48),
 				CarverDebugSettings.DEFAULT,
-				new HolderSet.Named<>(Registry.BLOCK, BlockTags.OVERWORLD_CARVER_REPLACEABLES),
+				registryOps.getter(Registries.BLOCK).get().getOrThrow(BlockTags.OVERWORLD_CARVER_REPLACEABLES),
 				UniformFloat.of(3.0f, 7.0f),
 				new CanyonShapeConfiguration(
 						ConstantFloat.of(15.0f),

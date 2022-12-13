@@ -1,6 +1,7 @@
 package tech.anonymoushacker1279.immersiveweapons.data.loot;
 
 import net.minecraft.ChatFormatting;
+import net.minecraft.data.loot.LootTableSubProvider;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Items;
@@ -14,12 +15,12 @@ import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
 import tech.anonymoushacker1279.immersiveweapons.init.ItemRegistry;
 
 import java.util.function.BiConsumer;
-import java.util.function.Consumer;
 
-public class ChestLootTables implements Consumer<BiConsumer<ResourceLocation, Builder>> {
+public class ChestLootTables implements LootTableSubProvider {
+
 	@Override
-	public void accept(BiConsumer<ResourceLocation, Builder> resourceLocationBuilderBiConsumer) {
-		resourceLocationBuilderBiConsumer.accept(LootTableLocations.ABANDONED_FACTORY,
+	public void generate(BiConsumer<ResourceLocation, Builder> out) {
+		out.accept(LootTableLocations.ABANDONED_FACTORY,
 				LootTable.lootTable()
 						.withPool(LootPool.lootPool()
 								.setRolls(UniformGenerator.between(3.0F, 6.0F))
@@ -37,7 +38,7 @@ public class ChestLootTables implements Consumer<BiConsumer<ResourceLocation, Bu
 								.add(LootItem.lootTableItem(ItemRegistry.ELECTRIC_INGOT.get()).setWeight(3))
 								.add(LootItem.lootTableItem(ItemRegistry.TESLA_INGOT.get()).setWeight(1))));
 
-		resourceLocationBuilderBiConsumer.accept(LootTableLocations.BATTLEFIELD_CAMP,
+		out.accept(LootTableLocations.BATTLEFIELD_CAMP,
 				LootTable.lootTable()
 						.withPool(LootPool.lootPool()
 								.setRolls(UniformGenerator.between(4.0F, 7.0F))
@@ -56,7 +57,7 @@ public class ChestLootTables implements Consumer<BiConsumer<ResourceLocation, Bu
 								.add(LootItem.lootTableItem(Items.EMERALD).setWeight(3))
 								.add(LootItem.lootTableItem(ItemRegistry.FLINTLOCK_PISTOL.get()).setWeight(1))));
 
-		resourceLocationBuilderBiConsumer.accept(LootTableLocations.CAMPSITE,
+		out.accept(LootTableLocations.CAMPSITE,
 				LootTable.lootTable()
 						.withPool(LootPool.lootPool()
 								.setRolls(UniformGenerator.between(3.0F, 7.0F))
@@ -76,7 +77,7 @@ public class ChestLootTables implements Consumer<BiConsumer<ResourceLocation, Bu
 										.apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0f, 4.0f))))
 								.add(LootItem.lootTableItem(ItemRegistry.FLARE_GUN.get()).setWeight(1))));
 
-		resourceLocationBuilderBiConsumer.accept(LootTableLocations.UNDERGROUND_BUNKER,
+		out.accept(LootTableLocations.UNDERGROUND_BUNKER,
 				LootTable.lootTable()
 						.withPool(LootPool.lootPool()
 								.setRolls(UniformGenerator.between(4.0F, 6.0F))
@@ -95,7 +96,7 @@ public class ChestLootTables implements Consumer<BiConsumer<ResourceLocation, Bu
 								.add(LootItem.lootTableItem(ItemRegistry.FLINTLOCK_PISTOL.get()).setWeight(2))
 								.add(LootItem.lootTableItem(ItemRegistry.BLUNDERBUSS.get()).setWeight(1))));
 
-		resourceLocationBuilderBiConsumer.accept(LootTableLocations.BATTLEFIELD_VILLAGE_MEDIC_STATION,
+		out.accept(LootTableLocations.BATTLEFIELD_VILLAGE_MEDIC_STATION,
 				LootTable.lootTable()
 						.withPool(LootPool.lootPool()
 								.setRolls(UniformGenerator.between(3.0F, 5.0F))
@@ -116,7 +117,7 @@ public class ChestLootTables implements Consumer<BiConsumer<ResourceLocation, Bu
 										.apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0f, 2.0f))))
 								.add(LootItem.lootTableItem(ItemRegistry.MORPHINE.get()).setWeight(1))));
 
-		resourceLocationBuilderBiConsumer.accept(LootTableLocations.HANS_HUT,
+		out.accept(LootTableLocations.HANS_HUT,
 				LootTable.lootTable()
 						.withPool(LootPool.lootPool()
 								.setRolls(UniformGenerator.between(4.0F, 6.0F))
@@ -136,7 +137,7 @@ public class ChestLootTables implements Consumer<BiConsumer<ResourceLocation, Bu
 										.apply(EnchantRandomlyFunction.randomApplicableEnchantment()))));
 
 
-		resourceLocationBuilderBiConsumer.accept(LootTableLocations.HANS_HUT_CASK,
+		out.accept(LootTableLocations.HANS_HUT_CASK,
 				LootTable.lootTable()
 						.withPool(LootPool.lootPool()
 								.setRolls(UniformGenerator.between(6.0F, 9.0F))
@@ -146,7 +147,7 @@ public class ChestLootTables implements Consumer<BiConsumer<ResourceLocation, Bu
 										.apply(SetItemCountFunction.setCount(UniformGenerator.between(8.0f, 16.0f))))));
 
 
-		resourceLocationBuilderBiConsumer.accept(LootTableLocations.BIODOME_CHEST,
+		out.accept(LootTableLocations.BIODOME_CHEST,
 				LootTable.lootTable()
 						.withPool(LootPool.lootPool()
 								.setRolls(UniformGenerator.between(3.0F, 5.0F))
@@ -196,7 +197,7 @@ public class ChestLootTables implements Consumer<BiConsumer<ResourceLocation, Bu
 						));
 
 
-		resourceLocationBuilderBiConsumer.accept(LootTableLocations.BIODOME_MEDICINE_BARREL,
+		out.accept(LootTableLocations.BIODOME_MEDICINE_BARREL,
 				// This should contain food and medicine
 				LootTable.lootTable()
 						.withPool(LootPool.lootPool()

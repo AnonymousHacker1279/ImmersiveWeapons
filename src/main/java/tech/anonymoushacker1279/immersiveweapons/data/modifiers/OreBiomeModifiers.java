@@ -2,7 +2,8 @@ package tech.anonymoushacker1279.immersiveweapons.data.modifiers;
 
 import com.google.gson.JsonElement;
 import net.minecraft.core.*;
-import net.minecraft.data.DataGenerator;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.data.PackOutput;
 import net.minecraft.resources.*;
 import net.minecraft.tags.BiomeTags;
 import net.minecraft.world.level.biome.Biome;
@@ -27,7 +28,7 @@ public class OreBiomeModifiers {
 
 	public static class PlacedFeatures {
 		protected static final ResourceLocation MOLTEN_ORE = new ResourceLocation(ImmersiveWeapons.MOD_ID, "ore_molten");
-		protected static final ResourceKey<PlacedFeature> MOLTEN_ORE_KEY = ResourceKey.create(Registry.PLACED_FEATURE_REGISTRY, MOLTEN_ORE);
+		protected static final ResourceKey<PlacedFeature> MOLTEN_ORE_KEY = ResourceKey.create(Registries.PLACED_FEATURE, MOLTEN_ORE);
 		protected static final PlacedFeature MOLTEN_ORE_FEATURE = new PlacedFeature(
 				Holder.direct(new ConfiguredFeature<>(Feature.SCATTERED_ORE,
 						new OreConfiguration(OreReplacementTargets.MOLTEN_ORE_TARGETS, 2, 1.0f))),
@@ -40,7 +41,7 @@ public class OreBiomeModifiers {
 				));
 
 		protected static final ResourceLocation NETHER_SULFUR_ORE = new ResourceLocation(ImmersiveWeapons.MOD_ID, "ore_nether_sulfur");
-		protected static final ResourceKey<PlacedFeature> NETHER_SULFUR_ORE_KEY = ResourceKey.create(Registry.PLACED_FEATURE_REGISTRY, NETHER_SULFUR_ORE);
+		protected static final ResourceKey<PlacedFeature> NETHER_SULFUR_ORE_KEY = ResourceKey.create(Registries.PLACED_FEATURE, NETHER_SULFUR_ORE);
 		protected static final PlacedFeature NETHER_SULFUR_ORE_FEATURE = new PlacedFeature(
 				Holder.direct(new ConfiguredFeature<>(Feature.SCATTERED_ORE,
 						new OreConfiguration(OreReplacementTargets.SULFUR_ORE_TARGETS, 16, 0.08f))),
@@ -53,7 +54,7 @@ public class OreBiomeModifiers {
 				));
 
 		protected static final ResourceLocation DEEPSLATE_SULFUR_ORE = new ResourceLocation(ImmersiveWeapons.MOD_ID, "ore_deepslate_sulfur");
-		protected static final ResourceKey<PlacedFeature> DEEPSLATE_SULFUR_ORE_KEY = ResourceKey.create(Registry.PLACED_FEATURE_REGISTRY, DEEPSLATE_SULFUR_ORE);
+		protected static final ResourceKey<PlacedFeature> DEEPSLATE_SULFUR_ORE_KEY = ResourceKey.create(Registries.PLACED_FEATURE, DEEPSLATE_SULFUR_ORE);
 		protected static final PlacedFeature DEEPSLATE_SULFUR_ORE_FEATURE = new PlacedFeature(
 				Holder.direct(new ConfiguredFeature<>(Feature.SCATTERED_ORE,
 						new OreConfiguration(OreReplacementTargets.SULFUR_ORE_TARGETS, 16, 0.04f))),
@@ -66,7 +67,7 @@ public class OreBiomeModifiers {
 				));
 
 		protected static final ResourceLocation SULFUR_ORE = new ResourceLocation(ImmersiveWeapons.MOD_ID, "ore_sulfur");
-		protected static final ResourceKey<PlacedFeature> SULFUR_ORE_KEY = ResourceKey.create(Registry.PLACED_FEATURE_REGISTRY, SULFUR_ORE);
+		protected static final ResourceKey<PlacedFeature> SULFUR_ORE_KEY = ResourceKey.create(Registries.PLACED_FEATURE, SULFUR_ORE);
 		protected static final PlacedFeature SULFUR_ORE_FEATURE = new PlacedFeature(
 				Holder.direct(new ConfiguredFeature<>(Feature.SCATTERED_ORE,
 						new OreConfiguration(OreReplacementTargets.SULFUR_ORE_TARGETS, 6, 0.1f))),
@@ -79,7 +80,7 @@ public class OreBiomeModifiers {
 				));
 
 		protected static final ResourceLocation DEEPSLATE_COBALT_ORE = new ResourceLocation(ImmersiveWeapons.MOD_ID, "ore_deepslate_cobalt");
-		protected static final ResourceKey<PlacedFeature> DEEPSLATE_COBALT_ORE_KEY = ResourceKey.create(Registry.PLACED_FEATURE_REGISTRY, DEEPSLATE_COBALT_ORE);
+		protected static final ResourceKey<PlacedFeature> DEEPSLATE_COBALT_ORE_KEY = ResourceKey.create(Registries.PLACED_FEATURE, DEEPSLATE_COBALT_ORE);
 		protected static final PlacedFeature DEEPSLATE_COBALT_ORE_FEATURE = new PlacedFeature(
 				Holder.direct(new ConfiguredFeature<>(Feature.ORE,
 						new OreConfiguration(OreReplacementTargets.COBALT_ORE_TARGETS, 12, 0.1f))),
@@ -92,7 +93,7 @@ public class OreBiomeModifiers {
 				));
 
 		protected static final ResourceLocation COBALT_ORE = new ResourceLocation(ImmersiveWeapons.MOD_ID, "ore_cobalt");
-		protected static final ResourceKey<PlacedFeature> COBALT_ORE_KEY = ResourceKey.create(Registry.PLACED_FEATURE_REGISTRY, COBALT_ORE);
+		protected static final ResourceKey<PlacedFeature> COBALT_ORE_KEY = ResourceKey.create(Registries.PLACED_FEATURE, COBALT_ORE);
 		protected static final PlacedFeature COBALT_ORE_FEATURE = new PlacedFeature(
 				Holder.direct(new ConfiguredFeature<>(Feature.ORE,
 						new OreConfiguration(OreReplacementTargets.COBALT_ORE_TARGETS, 12, 0.15f))),
@@ -104,13 +105,13 @@ public class OreBiomeModifiers {
 						CountPlacement.of(4)
 				));
 
-		public static JsonCodecProvider<PlacedFeature> getCodecProvider(DataGenerator generator,
+		public static JsonCodecProvider<PlacedFeature> getCodecProvider(PackOutput output,
 		                                                                ExistingFileHelper existingFileHelper,
 		                                                                RegistryOps<JsonElement> registryOps,
 		                                                                ResourceKey<Registry<PlacedFeature>> placedFeatureKey) {
 
 			return JsonCodecProvider.forDatapackRegistry(
-					generator, existingFileHelper, ImmersiveWeapons.MOD_ID, registryOps, placedFeatureKey, getPlacedFeatures());
+					output, existingFileHelper, ImmersiveWeapons.MOD_ID, registryOps, placedFeatureKey, getPlacedFeatures());
 		}
 
 		private static HashMap<ResourceLocation, PlacedFeature> getPlacedFeatures() {
@@ -139,51 +140,51 @@ public class OreBiomeModifiers {
 	private static final ResourceLocation ADD_COBALT_ORE = new ResourceLocation(ImmersiveWeapons.MOD_ID, "add_cobalt_ore");
 	private static BiomeModifier addCobaltOreFeature;
 
-	public static JsonCodecProvider<BiomeModifier> getCodecProvider(DataGenerator generator,
+	public static JsonCodecProvider<BiomeModifier> getCodecProvider(PackOutput output,
 	                                                                ExistingFileHelper existingFileHelper,
 	                                                                RegistryOps<JsonElement> registryOps,
 	                                                                ResourceKey<Registry<BiomeModifier>> biomeModifiersKey) {
 
 		fillFeatures(registryOps);
 		return JsonCodecProvider.forDatapackRegistry(
-				generator, existingFileHelper, ImmersiveWeapons.MOD_ID, registryOps, biomeModifiersKey, getBiomeModifiers());
+				output, existingFileHelper, ImmersiveWeapons.MOD_ID, registryOps, biomeModifiersKey, getBiomeModifiers());
 	}
 
 	private static void fillFeatures(RegistryOps<JsonElement> registryOps) {
-		HolderSet.Named<Biome> netherTag = new HolderSet.Named<>(registryOps.registry(Registry.BIOME_REGISTRY).get(), BiomeTags.IS_NETHER);
-		HolderSet.Named<Biome> wetCavesTag = new HolderSet.Named<>(registryOps.registry(Registry.BIOME_REGISTRY).get(), ForgeWorldGenTagGroups.IS_WET_CAVE);
-		HolderSet.Named<Biome> waterTag = new HolderSet.Named<>(registryOps.registry(Registry.BIOME_REGISTRY).get(), BiomeTags.WATER_ON_MAP_OUTLINES);
-		HolderSet.Named<Biome> overworldTag = new HolderSet.Named<>(registryOps.registry(Registry.BIOME_REGISTRY).get(), BiomeTags.IS_OVERWORLD);
+		HolderSet.Named<Biome> netherTag = registryOps.getter(Registries.BIOME).get().getOrThrow(BiomeTags.IS_NETHER);
+		HolderSet.Named<Biome> wetCavesTag = registryOps.getter(Registries.BIOME).get().getOrThrow(ForgeWorldGenTagGroups.IS_WET_CAVE);
+		HolderSet.Named<Biome> waterTag = registryOps.getter(Registries.BIOME).get().getOrThrow(BiomeTags.WATER_ON_MAP_OUTLINES);
+		HolderSet.Named<Biome> overworldTag = registryOps.getter(Registries.BIOME).get().getOrThrow(BiomeTags.IS_OVERWORLD);
 
 		addMoltenOreFeature = new AddFeaturesBiomeModifier(
 				netherTag,
-				HolderSet.direct(registryOps.registry(Registry.PLACED_FEATURE_REGISTRY).get()
-						.getOrCreateHolderOrThrow(ResourceKey.create(Registry.PLACED_FEATURE_REGISTRY, PlacedFeatures.MOLTEN_ORE_KEY.location()))),
+				HolderSet.direct(registryOps.getter(Registries.PLACED_FEATURE).get()
+						.getOrThrow(ResourceKey.create(Registries.PLACED_FEATURE, PlacedFeatures.MOLTEN_ORE_KEY.location()))),
 				Decoration.UNDERGROUND_ORES);
 		addNetherSulfurOreFeature = new AddFeaturesBiomeModifier(
 				netherTag,
-				HolderSet.direct(registryOps.registry(Registry.PLACED_FEATURE_REGISTRY).get()
-						.getOrCreateHolderOrThrow(ResourceKey.create(Registry.PLACED_FEATURE_REGISTRY, PlacedFeatures.NETHER_SULFUR_ORE_KEY.location()))),
+				HolderSet.direct(registryOps.getter(Registries.PLACED_FEATURE).get()
+						.getOrThrow(ResourceKey.create(Registries.PLACED_FEATURE, PlacedFeatures.NETHER_SULFUR_ORE_KEY.location()))),
 				Decoration.UNDERGROUND_ORES);
 		addDeepslateSulfurOreFeature = new AddFeaturesBiomeModifier(
 				wetCavesTag,
-				HolderSet.direct(registryOps.registry(Registry.PLACED_FEATURE_REGISTRY).get()
-						.getOrCreateHolderOrThrow(ResourceKey.create(Registry.PLACED_FEATURE_REGISTRY, PlacedFeatures.DEEPSLATE_SULFUR_ORE_KEY.location()))),
+				HolderSet.direct(registryOps.getter(Registries.PLACED_FEATURE).get()
+						.getOrThrow(ResourceKey.create(Registries.PLACED_FEATURE, PlacedFeatures.DEEPSLATE_SULFUR_ORE_KEY.location()))),
 				Decoration.UNDERGROUND_ORES);
 		addSulfurOreFeature = new AddFeaturesBiomeModifier(
 				waterTag,
-				HolderSet.direct(registryOps.registry(Registry.PLACED_FEATURE_REGISTRY).get()
-						.getOrCreateHolderOrThrow(ResourceKey.create(Registry.PLACED_FEATURE_REGISTRY, PlacedFeatures.SULFUR_ORE_KEY.location()))),
+				HolderSet.direct(registryOps.getter(Registries.PLACED_FEATURE).get()
+						.getOrThrow(ResourceKey.create(Registries.PLACED_FEATURE, PlacedFeatures.SULFUR_ORE_KEY.location()))),
 				Decoration.UNDERGROUND_ORES);
 		addDeepslateCobaltOreFeature = new AddFeaturesBiomeModifier(
 				overworldTag,
-				HolderSet.direct(registryOps.registry(Registry.PLACED_FEATURE_REGISTRY).get()
-						.getOrCreateHolderOrThrow(ResourceKey.create(Registry.PLACED_FEATURE_REGISTRY, PlacedFeatures.DEEPSLATE_COBALT_ORE_KEY.location()))),
+				HolderSet.direct(registryOps.getter(Registries.PLACED_FEATURE).get()
+						.getOrThrow(ResourceKey.create(Registries.PLACED_FEATURE, PlacedFeatures.DEEPSLATE_COBALT_ORE_KEY.location()))),
 				Decoration.UNDERGROUND_ORES);
 		addCobaltOreFeature = new AddFeaturesBiomeModifier(
 				overworldTag,
-				HolderSet.direct(registryOps.registry(Registry.PLACED_FEATURE_REGISTRY).get()
-						.getOrCreateHolderOrThrow(ResourceKey.create(Registry.PLACED_FEATURE_REGISTRY, PlacedFeatures.COBALT_ORE_KEY.location()))),
+				HolderSet.direct(registryOps.getter(Registries.PLACED_FEATURE).get()
+						.getOrThrow(ResourceKey.create(Registries.PLACED_FEATURE, PlacedFeatures.COBALT_ORE_KEY.location()))),
 				Decoration.UNDERGROUND_ORES);
 	}
 

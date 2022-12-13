@@ -1,35 +1,26 @@
 package tech.anonymoushacker1279.immersiveweapons.data.loot;
 
 import com.google.common.collect.ImmutableList;
-import com.mojang.datafixers.util.Pair;
-import net.minecraft.data.DataGenerator;
+import net.minecraft.data.PackOutput;
 import net.minecraft.data.loot.LootTableProvider;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.storage.loot.*;
-import net.minecraft.world.level.storage.loot.LootTable.Builder;
-import net.minecraft.world.level.storage.loot.parameters.LootContextParamSet;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
 
-import java.util.List;
-import java.util.Map;
-import java.util.function.*;
+import java.util.*;
 
 public class LootTableGenerator extends LootTableProvider {
 
-	private final List<Pair<Supplier<Consumer<BiConsumer<ResourceLocation, Builder>>>, LootContextParamSet>> subProviders =
-			ImmutableList.of(
-					Pair.of(BlockLootTables::new, LootContextParamSets.BLOCK),
-					Pair.of(ChestLootTables::new, LootContextParamSets.CHEST),
-					Pair.of(EntityLootTables::new, LootContextParamSets.ENTITY));
-
-
-	public LootTableGenerator(DataGenerator pGenerator) {
-		super(pGenerator);
+	public LootTableGenerator(PackOutput output) {
+		super(output, Set.of(), List.of());
 	}
 
 	@Override
-	protected List<Pair<Supplier<Consumer<BiConsumer<ResourceLocation, Builder>>>, LootContextParamSet>> getTables() {
-		return subProviders;
+	public List<SubProviderEntry> getTables() {
+		return ImmutableList.of(
+				new SubProviderEntry(BlockLootTables::new, LootContextParamSets.BLOCK),
+				new SubProviderEntry(ChestLootTables::new, LootContextParamSets.CHEST),
+				new SubProviderEntry(EntityLootTables::new, LootContextParamSets.ENTITY));
 	}
 
 	@Override

@@ -2,8 +2,7 @@ package tech.anonymoushacker1279.immersiveweapons.client.renderer.dimension;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.*;
-import com.mojang.math.Matrix4f;
-import com.mojang.math.Vector3f;
+import com.mojang.math.Axis;
 import net.minecraft.client.Camera;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.renderer.*;
@@ -11,6 +10,8 @@ import net.minecraft.client.renderer.FogRenderer.FogMode;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Nullable;
+import org.joml.Matrix4f;
+import org.joml.Vector3f;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 
 public class TiltrosDimensionSpecialEffects extends DimensionSpecialEffects {
@@ -56,23 +57,23 @@ public class TiltrosDimensionSpecialEffects extends DimensionSpecialEffects {
 		for (int i = 0; i < 6; ++i) {
 			poseStack.pushPose();
 			if (i == 1) {
-				poseStack.mulPose(Vector3f.XP.rotationDegrees(90.0F)); // North
+				poseStack.mulPose(Axis.XP.rotationDegrees(90.0F)); // North
 			}
 
 			if (i == 2) {
-				poseStack.mulPose(Vector3f.XP.rotationDegrees(-90.0F)); // South
+				poseStack.mulPose(Axis.XP.rotationDegrees(-90.0F)); // South
 			}
 
 			if (i == 3) {
-				poseStack.mulPose(Vector3f.XP.rotationDegrees(180.0F)); // Up
+				poseStack.mulPose(Axis.XP.rotationDegrees(180.0F)); // Up
 			}
 
 			if (i == 4) {
-				poseStack.mulPose(Vector3f.ZP.rotationDegrees(90.0F)); // East
+				poseStack.mulPose(Axis.ZP.rotationDegrees(90.0F)); // East
 			}
 
 			if (i == 5) {
-				poseStack.mulPose(Vector3f.ZP.rotationDegrees(-90.0F)); // West
+				poseStack.mulPose(Axis.ZP.rotationDegrees(-90.0F)); // West
 			}
 
 			Matrix4f matrix4f = poseStack.last().pose();

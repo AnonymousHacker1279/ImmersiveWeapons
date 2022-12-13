@@ -1,6 +1,6 @@
 package tech.anonymoushacker1279.immersiveweapons.client.particle.bullet_impact;
 
-import com.mojang.math.Vector3f;
+import org.joml.Vector3f;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.particle.*;
 import net.minecraft.util.Mth;
