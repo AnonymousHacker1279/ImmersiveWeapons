@@ -1,10 +1,10 @@
 package tech.anonymoushacker1279.immersiveweapons.client.particle.smoke_grenade;
 
-import org.joml.Vector3f;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.particle.*;
 import net.minecraft.util.Mth;
 import org.jetbrains.annotations.Nullable;
+import org.joml.Vector3f;
 import tech.anonymoushacker1279.immersiveweapons.config.ClientConfig;
 
 public class SmokeGrenadeParticle extends TextureSheetParticle {

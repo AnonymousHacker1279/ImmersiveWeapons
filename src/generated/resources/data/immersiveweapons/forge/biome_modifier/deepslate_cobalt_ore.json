@@ -1,6 +1,6 @@
 {
   "type": "forge:add_features",
   "biomes": "#minecraft:is_overworld",
-  "features": "immersiveweapons:ore_deepslate_cobalt",
+  "features": "immersiveweapons:deepslate_cobalt_ore",
   "step": "underground_ores"
 }

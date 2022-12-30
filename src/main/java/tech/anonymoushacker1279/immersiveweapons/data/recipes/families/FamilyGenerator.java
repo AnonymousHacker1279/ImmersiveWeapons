@@ -17,7 +17,7 @@ import java.util.function.Consumer;
 import static tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities.blockRegistryPath;
 import static tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities.itemRegistryPath;
 
-public class FamilyGenerator extends RecipeProvider {
+public class FamilyGenerator extends RecipeGenerator {
 
 	public FamilyGenerator(PackOutput output) {
 		super(output);

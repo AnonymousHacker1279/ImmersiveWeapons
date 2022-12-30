@@ -4,6 +4,7 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.levelgen.SurfaceRules;
 import net.minecraft.world.level.levelgen.SurfaceRules.RuleSource;
 import net.minecraft.world.level.levelgen.VerticalAnchor;
+import tech.anonymoushacker1279.immersiveweapons.data.features.IWBiomes;
 import tech.anonymoushacker1279.immersiveweapons.world.level.levelgen.surface.SurfaceRuleBuilder;
 
 public class SurfaceRuleData {
@@ -11,7 +12,7 @@ public class SurfaceRuleData {
 	public static SurfaceRules.RuleSource makeRules() {
 
 		RuleSource battlefield = SurfaceRuleBuilder.start()
-				.biome(BiomesAndDimensions.BATTLEFIELD)
+				.biome(IWBiomes.BATTLEFIELD)
 				.surface(Blocks.GRASS_BLOCK.defaultBlockState())
 				.subsurface(Blocks.COARSE_DIRT.defaultBlockState(), 3)
 				.filler(Blocks.STONE.defaultBlockState())
@@ -22,7 +23,7 @@ public class SurfaceRuleData {
 				.build();
 
 		return SurfaceRules.sequence(
-				SurfaceRules.ifTrue(SurfaceRules.isBiome(BiomesAndDimensions.BATTLEFIELD), battlefield)
+				SurfaceRules.ifTrue(SurfaceRules.isBiome(IWBiomes.BATTLEFIELD), battlefield)
 		);
 	}
 }

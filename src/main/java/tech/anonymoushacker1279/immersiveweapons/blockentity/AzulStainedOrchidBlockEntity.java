@@ -13,9 +13,10 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.Heightmap;
 import org.jetbrains.annotations.Nullable;
+import tech.anonymoushacker1279.immersiveweapons.data.features.IWBiomes;
 import tech.anonymoushacker1279.immersiveweapons.init.BlockEntityRegistry;
 import tech.anonymoushacker1279.immersiveweapons.world.TiltrosTeleporter;
-import tech.anonymoushacker1279.immersiveweapons.world.level.levelgen.biomes.BiomesAndDimensions;
+import tech.anonymoushacker1279.immersiveweapons.world.level.levelgen.biomes.Dimensions;
 
 public class AzulStainedOrchidBlockEntity extends BlockEntity implements EntityBlock {
 
@@ -38,8 +39,8 @@ public class AzulStainedOrchidBlockEntity extends BlockEntity implements EntityB
 
 			Level entityWorld = entity.level;
 			MinecraftServer server = entityWorld.getServer();
-			ResourceKey<Level> destination = entityWorld.dimension() == BiomesAndDimensions.TILTROS ? Level.OVERWORLD
-					: BiomesAndDimensions.TILTROS;
+			ResourceKey<Level> destination = entityWorld.dimension() == Dimensions.TILTROS ? Level.OVERWORLD
+					: Dimensions.TILTROS;
 
 			if (server != null) {
 				ServerLevel destinationLevel = server.getLevel(destination);
@@ -69,7 +70,7 @@ public class AzulStainedOrchidBlockEntity extends BlockEntity implements EntityB
 		// 3. It must not be in the Deadman's Desert biome
 
 		// Check if the target position is in a valid biome
-		if (destinationLevel.getBiome(targetPos).is(BiomesAndDimensions.DEADMANS_DESERT)) {
+		if (destinationLevel.getBiome(targetPos).is(IWBiomes.DEADMANS_DESERT)) {
 			// If it is, find the nearest valid chunk
 			int x = targetPos.getX();
 			int y = targetPos.getY();
@@ -81,7 +82,7 @@ public class AzulStainedOrchidBlockEntity extends BlockEntity implements EntityB
 					for (int j = -radius; j <= radius; j++) {
 						if (i == -radius || i == radius || j == -radius || j == radius) {
 							BlockPos pos = new BlockPos(x + i, y, z + j);
-							if (!destinationLevel.getBiome(pos).is(BiomesAndDimensions.DEADMANS_DESERT)) {
+							if (!destinationLevel.getBiome(pos).is(IWBiomes.DEADMANS_DESERT)) {
 								// Move the target position at least 10 blocks away from the edge of the chunk
 								targetPos = new BlockPos(pos.getX() + 10, pos.getY(), pos.getZ() + 10);
 								found = true;

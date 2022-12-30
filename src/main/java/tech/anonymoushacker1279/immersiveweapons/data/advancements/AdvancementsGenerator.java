@@ -20,9 +20,10 @@ import net.minecraftforge.common.data.ForgeAdvancementProvider;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.advancement.EntityDiscoveredTrigger.TriggerInstance;
 import tech.anonymoushacker1279.immersiveweapons.advancement.WarriorStatueActivatedTrigger;
+import tech.anonymoushacker1279.immersiveweapons.data.features.IWBiomes;
 import tech.anonymoushacker1279.immersiveweapons.data.tags.groups.immersiveweapons.ImmersiveWeaponsItemTagGroups;
 import tech.anonymoushacker1279.immersiveweapons.init.*;
-import tech.anonymoushacker1279.immersiveweapons.world.level.levelgen.biomes.BiomesAndDimensions;
+import tech.anonymoushacker1279.immersiveweapons.world.level.levelgen.biomes.Dimensions;
 
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
@@ -1310,7 +1311,7 @@ public class AdvancementsGenerator extends ForgeAdvancementProvider {
 						null, FrameType.TASK, true, true, false)
 				.addCriterion("visit",
 						PlayerTrigger.TriggerInstance.located(
-								LocationPredicate.inBiome(BiomesAndDimensions.BATTLEFIELD)))
+								LocationPredicate.inBiome(IWBiomes.BATTLEFIELD)))
 				.rewards(AdvancementRewards.Builder.experience(50))
 				.save(consumer, "immersiveweapons:battlefield");
 
@@ -1370,7 +1371,7 @@ public class AdvancementsGenerator extends ForgeAdvancementProvider {
 						null, FrameType.GOAL, true, true, false)
 				.addCriterion("visit",
 						PlayerTrigger.TriggerInstance.located(
-								LocationPredicate.inDimension(BiomesAndDimensions.TILTROS)))
+								LocationPredicate.inDimension(Dimensions.TILTROS)))
 				.rewards(AdvancementRewards.Builder.experience(50))
 				.save(consumer, "immersiveweapons:tiltros");
 	}

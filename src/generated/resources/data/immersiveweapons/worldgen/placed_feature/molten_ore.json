@@ -1,22 +1,5 @@
 {
-  "feature": {
-    "type": "minecraft:scattered_ore",
-    "config": {
-      "discard_chance_on_air_exposure": 1.0,
-      "size": 2,
-      "targets": [
-        {
-          "state": {
-            "Name": "immersiveweapons:molten_ore"
-          },
-          "target": {
-            "predicate_type": "minecraft:tag_match",
-            "tag": "forge:ore_bearing_ground/netherrack"
-          }
-        }
-      ]
-    }
-  },
+  "feature": "immersiveweapons:molten_ore",
   "placement": [
     {
       "type": "minecraft:height_range",

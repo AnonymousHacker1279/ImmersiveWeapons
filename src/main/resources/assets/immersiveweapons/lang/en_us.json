@@ -824,5 +824,5 @@
 	"config.immersiveweapons.celestial_tower_spawn_max_count": "Set the maximum spawn count of Celestial Towers - Default 1",
 	"config.immersiveweapons.celestial_tower_spawn_check_radius": "Set the spawn checking radius for the Celestial Tower.\nSetting this higher may slightly negatively impact server ticks in Tiltros, but make Celestial Lanterns more effective - Default 128",
 	"config.immersiveweapons.celestial_tower_minions_wave_size_modifier": "Multiplier to change the wave size from Celestial Tower summons.\nSet less than 1 to reduce, greater than 1 to increase.\nIncreasing the wave size will negatively affect the server ticks in Tiltros. - Default 1.0",
-	"itemGroup.immersiveweapons": "Immersive Weapons"
+	"itemGroup.immersiveweapons.creative_tab": "Immersive Weapons"
 }

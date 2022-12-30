@@ -14,9 +14,8 @@ public class SoundGenerator extends SoundDefinitionsProvider {
 	/**
 	 * Creates a new instance of this data provider.
 	 *
-	 * @param generator The data generator instance provided by the event you are initializing this provider in.
-	 * @param modId     The mod ID of the current mod.
-	 * @param helper    The existing file helper provided by the event you are initializing this provider in.
+	 * @param modId  The mod ID of the current mod.
+	 * @param helper The existing file helper provided by the event you are initializing this provider in.
 	 */
 	public SoundGenerator(PackOutput output, String modId, ExistingFileHelper helper) {
 		super(output, modId, helper);

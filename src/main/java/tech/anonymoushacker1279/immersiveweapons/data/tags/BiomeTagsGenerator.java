@@ -8,9 +8,9 @@ import net.minecraft.world.level.biome.Biomes;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import org.jetbrains.annotations.Nullable;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
+import tech.anonymoushacker1279.immersiveweapons.data.features.IWBiomes;
 import tech.anonymoushacker1279.immersiveweapons.data.tags.groups.forge.ForgeWorldGenTagGroups;
 import tech.anonymoushacker1279.immersiveweapons.data.tags.groups.immersiveweapons.ImmersiveWeaponsWorldGenTagGroups;
-import tech.anonymoushacker1279.immersiveweapons.world.level.levelgen.biomes.BiomesAndDimensions;
 
 import java.util.concurrent.CompletableFuture;
 
@@ -23,6 +23,7 @@ public class BiomeTagsGenerator extends BiomeTagsProvider {
 	@Override
 	@SuppressWarnings("unchecked")
 	protected void addTags(Provider provider) {
+
 		// Biome tags
 		tag(ForgeWorldGenTagGroups.IS_PLAINS)
 				.add(Biomes.PLAINS, Biomes.SNOWY_PLAINS, Biomes.SUNFLOWER_PLAINS);
@@ -31,24 +32,24 @@ public class BiomeTagsGenerator extends BiomeTagsProvider {
 				.add(Biomes.DRIPSTONE_CAVES, Biomes.LUSH_CAVES);
 
 		tag(BiomeTags.IS_OVERWORLD)
-				.add(BiomesAndDimensions.BATTLEFIELD);
+				.add(IWBiomes.BATTLEFIELD);
 
 		tag(ImmersiveWeaponsWorldGenTagGroups.IS_BATTLEFIELD)
-				.add(BiomesAndDimensions.BATTLEFIELD);
+				.add(IWBiomes.BATTLEFIELD);
 
 		tag(ImmersiveWeaponsWorldGenTagGroups.IS_TILTROS_WASTES)
-				.add(BiomesAndDimensions.TILTROS_WASTES);
+				.add(IWBiomes.TILTROS_WASTES);
 
 		tag(ImmersiveWeaponsWorldGenTagGroups.IS_STARLIGHT_PLAINS)
-				.add(BiomesAndDimensions.STARLIGHT_PLAINS);
+				.add(IWBiomes.STARLIGHT_PLAINS);
 
 		tag(ImmersiveWeaponsWorldGenTagGroups.IS_DEADMANS_DESERT)
-				.add(BiomesAndDimensions.DEADMANS_DESERT);
+				.add(IWBiomes.DEADMANS_DESERT);
 
 		tag(ImmersiveWeaponsWorldGenTagGroups.IS_TILTROS)
-				.add(BiomesAndDimensions.TILTROS_WASTES)
-				.add(BiomesAndDimensions.STARLIGHT_PLAINS)
-				.add(BiomesAndDimensions.DEADMANS_DESERT);
+				.add(IWBiomes.TILTROS_WASTES)
+				.add(IWBiomes.STARLIGHT_PLAINS)
+				.add(IWBiomes.DEADMANS_DESERT);
 
 		// Structure tags
 		tag(ImmersiveWeaponsWorldGenTagGroups.HAS_ABANDONED_FACTORY)
@@ -81,22 +82,22 @@ public class BiomeTagsGenerator extends BiomeTagsProvider {
 				.add(Biomes.DRIPSTONE_CAVES);
 
 		tag(ImmersiveWeaponsWorldGenTagGroups.HAS_DESTROYED_HOUSE)
-				.add(BiomesAndDimensions.BATTLEFIELD);
+				.add(IWBiomes.BATTLEFIELD);
 
 		tag(ImmersiveWeaponsWorldGenTagGroups.HAS_BATTLEFIELD_CAMP)
-				.add(BiomesAndDimensions.BATTLEFIELD);
+				.add(IWBiomes.BATTLEFIELD);
 
 		tag(ImmersiveWeaponsWorldGenTagGroups.HAS_GRAVEYARD)
-				.add(BiomesAndDimensions.BATTLEFIELD);
+				.add(IWBiomes.BATTLEFIELD);
 
 		tag(ImmersiveWeaponsWorldGenTagGroups.HAS_BATTLEFIELD_TOWN)
-				.add(BiomesAndDimensions.BATTLEFIELD);
+				.add(IWBiomes.BATTLEFIELD);
 
 		tag(ImmersiveWeaponsWorldGenTagGroups.HAS_CELESTIAL_ASTEROID)
-				.add(BiomesAndDimensions.DEADMANS_DESERT);
+				.add(IWBiomes.DEADMANS_DESERT);
 
 		tag(ImmersiveWeaponsWorldGenTagGroups.HAS_BIODOME)
-				.add(BiomesAndDimensions.DEADMANS_DESERT);
+				.add(IWBiomes.DEADMANS_DESERT);
 	}
 
 	@Override

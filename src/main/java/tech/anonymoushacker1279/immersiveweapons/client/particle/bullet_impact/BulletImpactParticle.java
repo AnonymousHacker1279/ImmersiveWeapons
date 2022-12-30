@@ -1,10 +1,10 @@
 package tech.anonymoushacker1279.immersiveweapons.client.particle.bullet_impact;
 
-import org.joml.Vector3f;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.particle.*;
 import net.minecraft.util.Mth;
 import org.jetbrains.annotations.Nullable;
+import org.joml.Vector3f;
 import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
 
 public class BulletImpactParticle extends TextureSheetParticle {

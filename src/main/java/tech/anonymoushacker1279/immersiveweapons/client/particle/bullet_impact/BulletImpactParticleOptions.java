@@ -2,7 +2,6 @@ package tech.anonymoushacker1279.immersiveweapons.client.particle.bullet_impact;
 
 import com.mojang.brigadier.StringReader;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
-import org.joml.Vector3f;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.client.Minecraft;
@@ -17,6 +16,7 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.level.block.Block;
 import net.minecraftforge.client.model.data.ModelData;
 import net.minecraftforge.registries.ForgeRegistries;
+import org.joml.Vector3f;
 import tech.anonymoushacker1279.immersiveweapons.init.ParticleTypesRegistry;
 
 import java.util.Locale;

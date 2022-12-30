@@ -6,10 +6,10 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 import org.jetbrains.annotations.Nullable;
+import tech.anonymoushacker1279.immersiveweapons.data.features.IWBiomes;
 import tech.anonymoushacker1279.immersiveweapons.entity.neutral.FieldMedicEntity;
 import tech.anonymoushacker1279.immersiveweapons.init.BlockEntityRegistry;
 import tech.anonymoushacker1279.immersiveweapons.init.EntityRegistry;
-import tech.anonymoushacker1279.immersiveweapons.world.level.levelgen.biomes.BiomesAndDimensions;
 
 import java.util.List;
 
@@ -26,7 +26,7 @@ public class MedicStatueBlockEntity extends AbstractStatueBlockEntity {
 	 * Runs once each tick. Handle scanning and spawning entities.
 	 */
 	public void tick(Level level, BlockPos blockPos) {
-		if (level.getBiome(blockPos).is(BiomesAndDimensions.BATTLEFIELD) && cooldown == 0) {
+		if (level.getBiome(blockPos).is(IWBiomes.BATTLEFIELD) && cooldown == 0) {
 			List<FieldMedicEntity> listOfMedicsInArea = level.getEntitiesOfClass(FieldMedicEntity.class,
 					new AABB(getBlockPos().getX() - 48,
 							getBlockPos().getY() - 16,

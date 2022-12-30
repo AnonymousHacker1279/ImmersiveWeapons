@@ -69,6 +69,11 @@ public class EntityLootTables implements LootTableSubProvider {
 						.when(LootItemKilledByPlayerCondition.killedByPlayer()))
 				.withPool(LootPool.lootPool()
 						.setRolls(ConstantValue.exactly(1.0F))
+						.add(LootItem.lootTableItem(ItemRegistry.FLINTLOCK_PISTOL.get()))
+						.when(LootItemKilledByPlayerCondition.killedByPlayer())
+						.when(LootItemRandomChanceWithLootingCondition.randomChanceAndLootingBoost(0.020F, 0.05F)))
+				.withPool(LootPool.lootPool()
+						.setRolls(ConstantValue.exactly(1.0F))
 						.add(LootItem.lootTableItem(ItemRegistry.CHOCOLATE_BAR.get())
 								.apply(LootingEnchantFunction.lootingMultiplier(UniformGenerator.between(0.0F, 1.0F))))
 						.add(LootItem.lootTableItem(Items.CARROT)
@@ -137,13 +142,6 @@ public class EntityLootTables implements LootTableSubProvider {
 						.add(LootItem.lootTableItem(ItemRegistry.USED_SYRINGE.get()))
 						.when(LootItemKilledByPlayerCondition.killedByPlayer())
 						.when(LootItemRandomChanceWithLootingCondition.randomChanceAndLootingBoost(0.015F, 0.03F))));
-
-		add(EntityRegistry.DYING_SOLDIER_ENTITY.get(), LootTable.lootTable()
-				.withPool(LootPool.lootPool()
-						.setRolls(ConstantValue.exactly(1.0F))
-						.add(LootItem.lootTableItem(ItemRegistry.FLINTLOCK_PISTOL.get()))
-						.when(LootItemKilledByPlayerCondition.killedByPlayer())
-						.when(LootItemRandomChanceWithLootingCondition.randomChanceAndLootingBoost(0.020F, 0.05F))));
 
 		add(EntityRegistry.CELESTIAL_TOWER_ENTITY.get(), LootTable.lootTable()
 				.withPool(LootPool.lootPool()

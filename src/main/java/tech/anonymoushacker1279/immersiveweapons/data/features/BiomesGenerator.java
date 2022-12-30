@@ -1,13 +1,7 @@
 package tech.anonymoushacker1279.immersiveweapons.data.features;
 
-import com.google.gson.JsonElement;
-import net.minecraft.core.HolderLookup.Provider;
-import net.minecraft.core.HolderLookup.RegistryLookup;
-import net.minecraft.core.Registry;
-import net.minecraft.core.registries.Registries;
-import net.minecraft.data.PackOutput;
+import net.minecraft.core.HolderGetter;
 import net.minecraft.data.worldgen.BiomeDefaultFeatures;
-import net.minecraft.resources.*;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.level.biome.*;
 import net.minecraft.world.level.biome.Biome.Precipitation;
@@ -18,36 +12,15 @@ import net.minecraft.world.level.levelgen.GenerationStep.Carving;
 import net.minecraft.world.level.levelgen.GenerationStep.Decoration;
 import net.minecraft.world.level.levelgen.carver.ConfiguredWorldCarver;
 import net.minecraft.world.level.levelgen.placement.PlacedFeature;
-import net.minecraftforge.common.data.ExistingFileHelper;
-import net.minecraftforge.common.data.JsonCodecProvider;
-import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.init.*;
-import tech.anonymoushacker1279.immersiveweapons.world.level.levelgen.feature.BiomeFeatures;
 import tech.anonymoushacker1279.immersiveweapons.world.level.levelgen.feature.VanillaFeatures;
-
-import java.util.HashMap;
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ExecutionException;
 
 public class BiomesGenerator {
 
-	protected static Biome BATTLEFIELD_BIOME;
-	protected static Biome TILTROS_WASTES_BIOME;
-	protected static Biome STARLIGHT_PLAINS_BIOME;
-	protected static Biome DEADMANS_DESERT_BIOME;
+	// TODO: Custom ambient sounds for these biomes
 
-	private static RegistryLookup<PlacedFeature> FEATURE_REGISTRY;
-	private static RegistryLookup<ConfiguredWorldCarver<?>> CARVER_REGISTRY;
-
-	public static void init(CompletableFuture<Provider> lookup) {
-		try {
-			FEATURE_REGISTRY = lookup.get().lookup(Registries.PLACED_FEATURE).get();
-			CARVER_REGISTRY = lookup.get().lookup(Registries.CONFIGURED_CARVER).get();
-		} catch (InterruptedException | ExecutionException e) {
-			throw new RuntimeException(e);
-		}
-
-		BATTLEFIELD_BIOME = new Biome.BiomeBuilder()
+	public static Biome battlefieldBiome(HolderGetter<PlacedFeature> placedFeatures, HolderGetter<ConfiguredWorldCarver<?>> worldCarvers) {
+		return new Biome.BiomeBuilder()
 				.temperature(0.8f)
 				.downfall(0.3f)
 				.precipitation(Precipitation.RAIN)
@@ -66,12 +39,12 @@ public class BiomesGenerator {
 						))
 						.build())
 				.mobSpawnSettings(getBattlefieldSpawns())
-				.generationSettings(getBattlefieldGenerationSettings())
+				.generationSettings(getBattlefieldGenerationSettings(placedFeatures, worldCarvers))
 				.build();
+	}
 
-		// TODO: Custom ambient sounds for these biomes
-
-		TILTROS_WASTES_BIOME = new Biome.BiomeBuilder()
+	public static Biome tiltrosWastesBiome(HolderGetter<PlacedFeature> placedFeatures, HolderGetter<ConfiguredWorldCarver<?>> worldCarvers) {
+		return new Biome.BiomeBuilder()
 				.temperature(0.6f)
 				.downfall(0.0f)
 				.precipitation(Precipitation.NONE)
@@ -87,10 +60,12 @@ public class BiomesGenerator {
 						.ambientLoopSound(SoundEventRegistry.TILTROS_AMBIENT.getHolder().get())
 						.build())
 				.mobSpawnSettings(getTiltrosWastesSpawns())
-				.generationSettings(getTiltrosWastesGenerationSettings())
+				.generationSettings(getTiltrosWastesGenerationSettings(placedFeatures, worldCarvers))
 				.build();
+	}
 
-		STARLIGHT_PLAINS_BIOME = new Biome.BiomeBuilder()
+	public static Biome starlightPlainsBiome(HolderGetter<PlacedFeature> placedFeatures, HolderGetter<ConfiguredWorldCarver<?>> worldCarvers) {
+		return new Biome.BiomeBuilder()
 				.temperature(0.8f)
 				.downfall(0.0f)
 				.precipitation(Precipitation.NONE)
@@ -106,10 +81,12 @@ public class BiomesGenerator {
 						.ambientLoopSound(SoundEventRegistry.TILTROS_AMBIENT.getHolder().get())
 						.build())
 				.mobSpawnSettings(getStarlightPlainsSpawns())
-				.generationSettings(getStarlightPlainsGenerationSettings())
+				.generationSettings(getStarlightPlainsGenerationSettings(placedFeatures, worldCarvers))
 				.build();
+	}
 
-		DEADMANS_DESERT_BIOME = new Biome.BiomeBuilder()
+	public static Biome deadmansDesertBiome(HolderGetter<PlacedFeature> placedFeatures, HolderGetter<ConfiguredWorldCarver<?>> worldCarvers) {
+		return new Biome.BiomeBuilder()
 				.temperature(1.8f)
 				.downfall(0.0f)
 				.precipitation(Precipitation.NONE)
@@ -128,32 +105,8 @@ public class BiomesGenerator {
 						))
 						.build())
 				.mobSpawnSettings(getDeadmansDesertSpawns())
-				.generationSettings(getDeadmansDesertGenerationSettings())
+				.generationSettings(getDeadmansDesertGenerationSettings(placedFeatures, worldCarvers))
 				.build();
-	}
-
-	protected static final ResourceLocation BATTLEFIELD = new ResourceLocation(ImmersiveWeapons.MOD_ID, "battlefield");
-	protected static final ResourceLocation TILTROS_WASTES = new ResourceLocation(ImmersiveWeapons.MOD_ID, "tiltros_wastes");
-	protected static final ResourceLocation STARLIGHT_PLAINS = new ResourceLocation(ImmersiveWeapons.MOD_ID, "starlight_plains");
-	protected static final ResourceLocation DEADMANS_DESERT = new ResourceLocation(ImmersiveWeapons.MOD_ID, "deadmans_desert");
-
-	public static JsonCodecProvider<Biome> getCodecProvider(PackOutput output,
-	                                                        ExistingFileHelper existingFileHelper,
-	                                                        RegistryOps<JsonElement> registryOps,
-	                                                        ResourceKey<Registry<Biome>> placedFeatureKey) {
-
-		return JsonCodecProvider.forDatapackRegistry(
-				output, existingFileHelper, ImmersiveWeapons.MOD_ID, registryOps, placedFeatureKey, getPlacedFeatures());
-	}
-
-	private static HashMap<ResourceLocation, Biome> getPlacedFeatures() {
-		HashMap<ResourceLocation, Biome> placedFeatures = new HashMap<>(10);
-		placedFeatures.put(BATTLEFIELD, BATTLEFIELD_BIOME);
-		placedFeatures.put(TILTROS_WASTES, TILTROS_WASTES_BIOME);
-		placedFeatures.put(STARLIGHT_PLAINS, STARLIGHT_PLAINS_BIOME);
-		placedFeatures.put(DEADMANS_DESERT, DEADMANS_DESERT_BIOME);
-
-		return placedFeatures;
 	}
 
 	private static MobSpawnSettings getBattlefieldSpawns() {
@@ -197,11 +150,13 @@ public class BiomesGenerator {
 		return spawnBuilder.build();
 	}
 
-	private static BiomeGenerationSettings getBattlefieldGenerationSettings() {
-		BiomeGenerationSettings.Builder generationBuilder = new BiomeGenerationSettings.Builder(FEATURE_REGISTRY, CARVER_REGISTRY)
-				.addCarver(Carving.AIR, CarversGenerator.TRENCH_KEY)
-				.addFeature(Decoration.VEGETAL_DECORATION, BiomeFeatures.PATCH_WOODEN_SPIKES_KEY)
-				.addFeature(Decoration.VEGETAL_DECORATION, BiomeFeatures.BURNED_OAK_TREE_KEY);
+	private static BiomeGenerationSettings getBattlefieldGenerationSettings(HolderGetter<PlacedFeature> placedFeatures,
+	                                                                        HolderGetter<ConfiguredWorldCarver<?>> worldCarvers) {
+
+		BiomeGenerationSettings.Builder generationBuilder = new BiomeGenerationSettings.Builder(placedFeatures, worldCarvers)
+				.addCarver(Carving.AIR, IWConfiguredCarvers.TRENCH)
+				.addFeature(Decoration.VEGETAL_DECORATION, IWPlacedFeatures.PATCH_WOODEN_SPIKES)
+				.addFeature(Decoration.VEGETAL_DECORATION, IWPlacedFeatures.BURNED_OAK_TREE);
 
 		VanillaFeatures.getOverworldBaseGeneration(generationBuilder);
 		VanillaFeatures.getPlainsLikeGeneration(generationBuilder);
@@ -209,10 +164,12 @@ public class BiomesGenerator {
 		return generationBuilder.build();
 	}
 
-	private static BiomeGenerationSettings getTiltrosWastesGenerationSettings() {
-		BiomeGenerationSettings.Builder generationBuilder = new BiomeGenerationSettings.Builder(FEATURE_REGISTRY, CARVER_REGISTRY)
-				.addCarver(Carving.AIR, CarversGenerator.TILTROS_WASTES_KEY)
-				.addFeature(Decoration.LOCAL_MODIFICATIONS, BiomeFeatures.ASTRAL_GEODE_KEY);
+	private static BiomeGenerationSettings getTiltrosWastesGenerationSettings(HolderGetter<PlacedFeature> placedFeatures,
+	                                                                          HolderGetter<ConfiguredWorldCarver<?>> worldCarvers) {
+
+		BiomeGenerationSettings.Builder generationBuilder = new BiomeGenerationSettings.Builder(placedFeatures, worldCarvers)
+				.addCarver(Carving.AIR, IWConfiguredCarvers.TILTROS_WASTES)
+				.addFeature(Decoration.LOCAL_MODIFICATIONS, IWPlacedFeatures.ASTRAL_GEODE);
 
 		VanillaFeatures.getOverworldBaseGeneration(generationBuilder);
 		VanillaFeatures.addPlainGrass(generationBuilder);
@@ -220,10 +177,12 @@ public class BiomesGenerator {
 		return generationBuilder.build();
 	}
 
-	private static BiomeGenerationSettings getStarlightPlainsGenerationSettings() {
-		BiomeGenerationSettings.Builder generationBuilder = new BiomeGenerationSettings.Builder(FEATURE_REGISTRY, CARVER_REGISTRY)
-				.addFeature(Decoration.VEGETAL_DECORATION, BiomeFeatures.PATCH_MOONGLOW_KEY)
-				.addFeature(Decoration.VEGETAL_DECORATION, BiomeFeatures.STARDUST_TREE_KEY);
+	private static BiomeGenerationSettings getStarlightPlainsGenerationSettings(HolderGetter<PlacedFeature> placedFeatures,
+	                                                                            HolderGetter<ConfiguredWorldCarver<?>> worldCarvers) {
+
+		BiomeGenerationSettings.Builder generationBuilder = new BiomeGenerationSettings.Builder(placedFeatures, worldCarvers)
+				.addFeature(Decoration.VEGETAL_DECORATION, IWPlacedFeatures.PATCH_MOONGLOW)
+				.addFeature(Decoration.VEGETAL_DECORATION, IWPlacedFeatures.STARDUST_TREE);
 
 		VanillaFeatures.getOverworldBaseGeneration(generationBuilder);
 		VanillaFeatures.addPlainGrass(generationBuilder);
@@ -231,9 +190,11 @@ public class BiomesGenerator {
 		return generationBuilder.build();
 	}
 
-	private static BiomeGenerationSettings getDeadmansDesertGenerationSettings() {
-		BiomeGenerationSettings.Builder generationBuilder = new BiomeGenerationSettings.Builder(FEATURE_REGISTRY, CARVER_REGISTRY)
-				.addFeature(Decoration.VEGETAL_DECORATION, BiomeFeatures.PATCH_DEATHWEED_KEY);
+	private static BiomeGenerationSettings getDeadmansDesertGenerationSettings(HolderGetter<PlacedFeature> placedFeatures,
+	                                                                           HolderGetter<ConfiguredWorldCarver<?>> worldCarvers) {
+
+		BiomeGenerationSettings.Builder generationBuilder = new BiomeGenerationSettings.Builder(placedFeatures, worldCarvers)
+				.addFeature(Decoration.VEGETAL_DECORATION, IWPlacedFeatures.PATCH_DEATHWEED);
 
 		VanillaFeatures.getOverworldBaseGeneration(generationBuilder);
 		VanillaFeatures.addDefaultSoftDisks(generationBuilder);

@@ -10,6 +10,7 @@ import net.minecraft.client.renderer.blockentity.SkullBlockRenderer;
 import net.minecraft.client.renderer.entity.ThrownItemRenderer;
 import net.minecraft.client.renderer.item.ClampedItemPropertyFunction;
 import net.minecraft.client.renderer.item.ItemProperties;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.*;
 import net.minecraft.world.item.alchemy.PotionUtils;
@@ -97,6 +98,7 @@ public class ClientModEventSubscriber {
 		event.registerCreativeModeTab(
 				new ResourceLocation(ImmersiveWeapons.MOD_ID, "creative_tab"), builder -> builder
 						.icon(() -> new ItemStack(ItemRegistry.TESLA_SWORD.get()))
+						.title(Component.translatable("itemGroup." + ImmersiveWeapons.MOD_ID + ".creative_tab"))
 						.displayItems((featureFlags, output, hasOp) -> {
 							Collection<RegistryObject<Item>> registryObjects = ItemRegistry.ITEMS.getEntries();
 							List<Item> items = new ArrayList<>(registryObjects.size());

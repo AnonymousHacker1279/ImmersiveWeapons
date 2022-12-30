@@ -20,9 +20,9 @@ import net.minecraftforge.registries.MissingMappingsEvent.Mapping;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.block.crafting.small_parts.SmallPartsCraftables;
 import tech.anonymoushacker1279.immersiveweapons.client.gui.IWOverlays;
+import tech.anonymoushacker1279.immersiveweapons.data.features.IWBiomes;
 import tech.anonymoushacker1279.immersiveweapons.event.environment_effects.EnvironmentEffects;
 import tech.anonymoushacker1279.immersiveweapons.init.*;
-import tech.anonymoushacker1279.immersiveweapons.world.level.levelgen.biomes.BiomesAndDimensions;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -297,7 +297,7 @@ public class ForgeEventSubscriber {
 		Player player = event.player;
 		// Only check every 8 ticks, and make sure the player is not in creative mode
 		if (player.tickCount % 8 == 0 && !player.isCreative()) {
-			if (player.level.getBiome(player.blockPosition()).is(BiomesAndDimensions.DEADMANS_DESERT)) {
+			if (player.level.getBiome(player.blockPosition()).is(IWBiomes.DEADMANS_DESERT)) {
 				// If the player is under the effects of Celestial Protection, they are immune to damage
 				if (!player.hasEffect(EffectRegistry.CELESTIAL_PROTECTION_EFFECT.get())) {
 					player.hurt(DEADMANS_DESERT_DAMAGE_SOURCE, 1);
