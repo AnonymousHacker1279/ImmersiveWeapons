@@ -7,7 +7,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.biome.Biomes;
 import net.minecraft.world.level.biome.Climate.ParameterPoint;
-import tech.anonymoushacker1279.immersiveweapons.data.features.IWBiomes;
+import tech.anonymoushacker1279.immersiveweapons.data.biomes.IWBiomes;
 import terrablender.api.Region;
 import terrablender.api.RegionType;
 

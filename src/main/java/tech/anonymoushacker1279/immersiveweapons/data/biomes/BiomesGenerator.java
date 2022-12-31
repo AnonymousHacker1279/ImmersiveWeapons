@@ -1,4 +1,4 @@
-package tech.anonymoushacker1279.immersiveweapons.data.features;
+package tech.anonymoushacker1279.immersiveweapons.data.biomes;
 
 import net.minecraft.core.HolderGetter;
 import net.minecraft.data.worldgen.BiomeDefaultFeatures;
@@ -12,12 +12,12 @@ import net.minecraft.world.level.levelgen.GenerationStep.Carving;
 import net.minecraft.world.level.levelgen.GenerationStep.Decoration;
 import net.minecraft.world.level.levelgen.carver.ConfiguredWorldCarver;
 import net.minecraft.world.level.levelgen.placement.PlacedFeature;
+import tech.anonymoushacker1279.immersiveweapons.data.features.IWConfiguredCarvers;
+import tech.anonymoushacker1279.immersiveweapons.data.features.IWPlacedFeatures;
 import tech.anonymoushacker1279.immersiveweapons.init.*;
 import tech.anonymoushacker1279.immersiveweapons.world.level.levelgen.feature.VanillaFeatures;
 
 public class BiomesGenerator {
-
-	// TODO: Custom ambient sounds for these biomes
 
 	public static Biome battlefieldBiome(HolderGetter<PlacedFeature> placedFeatures, HolderGetter<ConfiguredWorldCarver<?>> worldCarvers) {
 		return new Biome.BiomeBuilder()
@@ -42,6 +42,8 @@ public class BiomesGenerator {
 				.generationSettings(getBattlefieldGenerationSettings(placedFeatures, worldCarvers))
 				.build();
 	}
+
+	// TODO: Custom ambient sounds for these biomes
 
 	public static Biome tiltrosWastesBiome(HolderGetter<PlacedFeature> placedFeatures, HolderGetter<ConfiguredWorldCarver<?>> worldCarvers) {
 		return new Biome.BiomeBuilder()
@@ -78,7 +80,7 @@ public class BiomesGenerator {
 						.grassColorOverride(12312020)
 						.foliageColorOverride(13885404)
 						.grassColorModifier(GrassColorModifier.NONE)
-						.ambientLoopSound(SoundEventRegistry.TILTROS_AMBIENT.getHolder().get())
+						.ambientLoopSound(SoundEventRegistry.STARLIGHT_PLAINS_AMBIENT.getHolder().get())
 						.build())
 				.mobSpawnSettings(getStarlightPlainsSpawns())
 				.generationSettings(getStarlightPlainsGenerationSettings(placedFeatures, worldCarvers))

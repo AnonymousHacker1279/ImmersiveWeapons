@@ -517,16 +517,20 @@ public class SoundGenerator extends SoundDefinitionsProvider {
 						SoundType.EVENT)));
 
 		add(SoundEventRegistry.BATTLEFIELD_AMBIENT.get(), definition()
-				.subtitle("immersiveweapons.subtitle.biome.battlefield.ambient")
 				.with(Sound.sound(new ResourceLocation(ImmersiveWeapons.MOD_ID,
 										"biome/battlefield/ambient/ambient"),
 								SoundType.SOUND)
 						.stream()));
 
 		add(SoundEventRegistry.TILTROS_AMBIENT.get(), definition()
-				.subtitle("immersiveweapons.subtitle.biome.tiltros.ambient")
 				.with(Sound.sound(new ResourceLocation(ImmersiveWeapons.MOD_ID,
 										"biome/tiltros/ambient/ambient"),
+								SoundType.SOUND)
+						.stream()));
+
+		add(SoundEventRegistry.STARLIGHT_PLAINS_AMBIENT.get(), definition()
+				.with(Sound.sound(new ResourceLocation(ImmersiveWeapons.MOD_ID,
+										"biome/starlight_plains/ambient/ambient"),
 								SoundType.SOUND)
 						.stream()));
 	}

@@ -4,7 +4,7 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.levelgen.SurfaceRules;
 import net.minecraft.world.level.levelgen.SurfaceRules.RuleSource;
 import net.minecraft.world.level.levelgen.VerticalAnchor;
-import tech.anonymoushacker1279.immersiveweapons.data.features.IWBiomes;
+import tech.anonymoushacker1279.immersiveweapons.data.biomes.IWBiomes;
 import tech.anonymoushacker1279.immersiveweapons.world.level.levelgen.surface.SurfaceRuleBuilder;
 
 public class SurfaceRuleData {

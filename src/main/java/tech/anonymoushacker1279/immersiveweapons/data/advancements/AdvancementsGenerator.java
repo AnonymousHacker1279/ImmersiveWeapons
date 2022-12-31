@@ -20,7 +20,7 @@ import net.minecraftforge.common.data.ForgeAdvancementProvider;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.advancement.EntityDiscoveredTrigger.TriggerInstance;
 import tech.anonymoushacker1279.immersiveweapons.advancement.WarriorStatueActivatedTrigger;
-import tech.anonymoushacker1279.immersiveweapons.data.features.IWBiomes;
+import tech.anonymoushacker1279.immersiveweapons.data.biomes.IWBiomes;
 import tech.anonymoushacker1279.immersiveweapons.data.tags.groups.immersiveweapons.ImmersiveWeaponsItemTagGroups;
 import tech.anonymoushacker1279.immersiveweapons.init.*;
 import tech.anonymoushacker1279.immersiveweapons.world.level.levelgen.biomes.Dimensions;

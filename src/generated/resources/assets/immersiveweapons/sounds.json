@@ -19,8 +19,7 @@
         "name": "immersiveweapons:biome/battlefield/ambient/ambient",
         "stream": true
       }
-    ],
-    "subtitle": "immersiveweapons.subtitle.biome.battlefield.ambient"
+    ]
   },
   "bear_trap_close": {
     "sounds": [
@@ -296,6 +295,14 @@
     ],
     "subtitle": "immersiveweapons.subtitle.block.spike_trap.retract"
   },
+  "starlight_plains_ambient": {
+    "sounds": [
+      {
+        "name": "immersiveweapons:biome/starlight_plains/ambient/ambient",
+        "stream": true
+      }
+    ]
+  },
   "starmite_ambient": {
     "sounds": [
       {
@@ -375,8 +382,7 @@
         "name": "immersiveweapons:biome/tiltros/ambient/ambient",
         "stream": true
       }
-    ],
-    "subtitle": "immersiveweapons.subtitle.biome.tiltros.ambient"
+    ]
   },
   "ventus_armor_equip": {
     "sounds": [

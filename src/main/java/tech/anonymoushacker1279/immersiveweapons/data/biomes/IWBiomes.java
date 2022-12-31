@@ -1,4 +1,4 @@
-package tech.anonymoushacker1279.immersiveweapons.data.features;
+package tech.anonymoushacker1279.immersiveweapons.data.biomes;
 
 import net.minecraft.core.HolderGetter;
 import net.minecraft.core.registries.Registries;

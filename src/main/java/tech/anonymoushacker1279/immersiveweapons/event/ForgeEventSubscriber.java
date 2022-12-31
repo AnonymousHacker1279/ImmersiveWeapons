@@ -20,7 +20,7 @@ import net.minecraftforge.registries.MissingMappingsEvent.Mapping;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.block.crafting.small_parts.SmallPartsCraftables;
 import tech.anonymoushacker1279.immersiveweapons.client.gui.IWOverlays;
-import tech.anonymoushacker1279.immersiveweapons.data.features.IWBiomes;
+import tech.anonymoushacker1279.immersiveweapons.data.biomes.IWBiomes;
 import tech.anonymoushacker1279.immersiveweapons.event.environment_effects.EnvironmentEffects;
 import tech.anonymoushacker1279.immersiveweapons.init.*;
 
