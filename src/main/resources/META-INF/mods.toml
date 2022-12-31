@@ -10,7 +10,7 @@ displayName = "Immersive Weapons" #mandatory
 displayURL = "https://www.curseforge.com/minecraft/mc-mods/immersive-weapons" #optional
 updateJSONURL = "https://raw.githubusercontent.com/AnonymousHacker1279/ImmersiveWeapons/master/update.json"
 logoFile = "logo.png" #optional
-credits = "Written by AnonymousHacker1279\n - Visually designed with the help of Jonny-fox and gamingwarrior68\n - Sound designed with the help of RandomDev\n" #optional
+credits = "Written by AnonymousHacker1279\n - Visually designed with the help of Jonny-fox and gamingwarrior68\n - Sound designed with the help of RandomDev and Jonny-fox\n" #optional
 authors = "AnonymousHacker1279" #optional
 description = '''
 Immersive Weapons is more than just a weapons mod aiming to spice up your combat skills.
