@@ -12,7 +12,6 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.registries.ForgeRegistries;
 import org.joml.Vector3f;
-import org.joml.Vector3fc;
 import tech.anonymoushacker1279.immersiveweapons.init.ParticleTypesRegistry;
 
 import java.util.Locale;
@@ -90,12 +89,12 @@ public class SmokeGrenadeParticleOptions implements ParticleOptions {
 	}
 
 	public static class SmokeGrenadeColors {
-		public static final Vector3f GRAY = new Vector3f((Vector3fc) Vec3.fromRGB24(16777215));
-		public static final Vector3f RED = new Vector3f((Vector3fc) Vec3.fromRGB24(16711680));
-		public static final Vector3f GREEN = new Vector3f((Vector3fc) Vec3.fromRGB24(5294200));
-		public static final Vector3f BLUE = new Vector3f((Vector3fc) Vec3.fromRGB24(1644912));
-		public static final Vector3f PURPLE = new Vector3f((Vector3fc) Vec3.fromRGB24(5046349));
-		public static final Vector3f YELLOW = new Vector3f((Vector3fc) Vec3.fromRGB24(16318253));
+		public static final Vector3f GRAY = Vec3.fromRGB24(16777215).toVector3f();
+		public static final Vector3f RED = Vec3.fromRGB24(16711680).toVector3f();
+		public static final Vector3f GREEN = Vec3.fromRGB24(5294200).toVector3f();
+		public static final Vector3f BLUE = Vec3.fromRGB24(1644912).toVector3f();
+		public static final Vector3f PURPLE = Vec3.fromRGB24(5046349).toVector3f();
+		public static final Vector3f YELLOW = Vec3.fromRGB24(16318253).toVector3f();
 	}
 
 	/**
