@@ -35,6 +35,12 @@ public class TooltipHandler {
 		if (stack.getItem() == ItemRegistry.VENTUS_SWORD.get()) {
 			event.getToolTip().add(Component.translatable("immersiveweapons.tooltip.ventus_sword").withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC));
 		}
+		if (stack.getItem() == ItemRegistry.ASTRAL_SWORD.get()) {
+			event.getToolTip().add(Component.translatable("immersiveweapons.tooltip.astral_sword").withStyle(ChatFormatting.DARK_PURPLE, ChatFormatting.ITALIC));
+		}
+		if (stack.getItem() == ItemRegistry.STARSTORM_SWORD.get()) {
+			event.getToolTip().add(Component.translatable("immersiveweapons.tooltip.starstorm_sword").withStyle(ChatFormatting.RED, ChatFormatting.ITALIC));
+		}
 
 		// Guns
 		if (stack.getItem() == ItemRegistry.FLINTLOCK_PISTOL.get()) {
@@ -145,6 +151,12 @@ public class TooltipHandler {
 		}
 		if (stack.getItem() == ItemRegistry.VENTUS_HELMET.get() || stack.getItem() == ItemRegistry.VENTUS_CHESTPLATE.get() || stack.getItem() == ItemRegistry.VENTUS_LEGGINGS.get() || stack.getItem() == ItemRegistry.VENTUS_BOOTS.get()) {
 			event.getToolTip().add(Component.translatable("immersiveweapons.tooltip.ventus_armor").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
+		}
+		if (stack.getItem() == ItemRegistry.ASTRAL_HELMET.get() || stack.getItem() == ItemRegistry.ASTRAL_CHESTPLATE.get() || stack.getItem() == ItemRegistry.ASTRAL_LEGGINGS.get() || stack.getItem() == ItemRegistry.ASTRAL_BOOTS.get()) {
+			event.getToolTip().add(Component.translatable("immersiveweapons.tooltip.astral_armor").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
+		}
+		if (stack.getItem() == ItemRegistry.STARSTORM_HELMET.get() || stack.getItem() == ItemRegistry.STARSTORM_CHESTPLATE.get() || stack.getItem() == ItemRegistry.STARSTORM_LEGGINGS.get() || stack.getItem() == ItemRegistry.STARSTORM_BOOTS.get()) {
+			event.getToolTip().add(Component.translatable("immersiveweapons.tooltip.starstorm_armor").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
 		}
 
 		// Throwables

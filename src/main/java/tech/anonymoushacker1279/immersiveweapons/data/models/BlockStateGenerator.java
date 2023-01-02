@@ -105,7 +105,7 @@ public class BlockStateGenerator extends BlockStateProvider {
 
 		// Generate data for tables
 		for (Block block : BlockLists.tableBlocks) {
-			if (block == BlockRegistry.BURNED_OAK_TABLE.get()) {
+			if (block == BlockRegistry.BURNED_OAK_TABLE.get() || block == BlockRegistry.STARDUST_TABLE.get()) {
 				simpleBlock(block, models().withExistingParent(Objects.requireNonNull(ForgeRegistries.BLOCKS.getKey(block)).getPath(),
 								new ResourceLocation(ImmersiveWeapons.MOD_ID, "table"))
 						.texture("all", ImmersiveWeapons.MOD_ID
