@@ -66,7 +66,7 @@ public class BlockStateGenerator extends BlockStateProvider {
 						.allFaces((direction, faceBuilder) -> faceBuilder.uvs(0, 0, 16, 16)
 								.texture("#overlay")
 								.rotation(FaceRotation.CLOCKWISE_90)
-								.emissivity(15)
+								.emissivity(15, 3)
 								.end()).end());
 
 		// Generate data for simple, six-sized blocks that use overlays (ores)
@@ -182,7 +182,7 @@ public class BlockStateGenerator extends BlockStateProvider {
 							switch (direction) {
 								case NORTH, SOUTH, EAST, WEST -> faceBuilder.uvs(0, 0, 16, 16)
 										.texture("#overlay")
-										.emissivity(15)
+										.emissivity(15, 3)
 										.end();
 								case UP, DOWN -> faceBuilder.texture("#end").end();
 							}
@@ -206,7 +206,7 @@ public class BlockStateGenerator extends BlockStateProvider {
 							switch (direction) {
 								case NORTH, SOUTH, EAST, WEST -> faceBuilder.uvs(0, 0, 16, 16)
 										.texture("#overlay")
-										.emissivity(15)
+										.emissivity(15, 3)
 										.end();
 								case UP, DOWN -> faceBuilder.texture("#end").end();
 							}
@@ -225,7 +225,7 @@ public class BlockStateGenerator extends BlockStateProvider {
 						.element()
 						.allFaces((direction, faceBuilder) -> faceBuilder.uvs(0, 0, 16, 16)
 								.texture("#overlay")
-								.emissivity(15)
+								.emissivity(15, 3)
 								.end()).end(),
 				models().withExistingParent(Objects.requireNonNull(ForgeRegistries.BLOCKS.getKey(stardust_wood)).getPath() + "_horizontal", "minecraft:block/cube_column_horizontal")
 						.texture("side", stardust_log_side)
@@ -239,7 +239,7 @@ public class BlockStateGenerator extends BlockStateProvider {
 						.element()
 						.allFaces((direction, faceBuilder) -> faceBuilder.uvs(0, 0, 16, 16)
 								.texture("#overlay")
-								.emissivity(15)
+								.emissivity(15, 3)
 								.end()).end());
 
 		// Generate data for stair blocks

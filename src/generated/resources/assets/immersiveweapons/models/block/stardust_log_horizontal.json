@@ -39,22 +39,34 @@
           "texture": "#end"
         },
         "east": {
-          "emissivity": 15,
+          "forge_data": {
+            "block_light": 15,
+            "sky_light": 3
+          },
           "texture": "#overlay"
         },
         "north": {
-          "emissivity": 15,
+          "forge_data": {
+            "block_light": 15,
+            "sky_light": 3
+          },
           "texture": "#overlay"
         },
         "south": {
-          "emissivity": 15,
+          "forge_data": {
+            "block_light": 15,
+            "sky_light": 3
+          },
           "texture": "#overlay"
         },
         "up": {
           "texture": "#end"
         },
         "west": {
-          "emissivity": 15,
+          "forge_data": {
+            "block_light": 15,
+            "sky_light": 3
+          },
           "texture": "#overlay"
         }
       },
