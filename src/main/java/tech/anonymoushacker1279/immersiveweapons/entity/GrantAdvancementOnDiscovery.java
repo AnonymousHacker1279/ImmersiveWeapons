@@ -1,17 +1,36 @@
 package tech.anonymoushacker1279.immersiveweapons.entity;
 
+import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.targeting.TargetingConditions;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.registries.ForgeRegistries;
 import tech.anonymoushacker1279.immersiveweapons.advancement.IWCriteriaTriggers;
 
+import java.util.Objects;
+
 public interface GrantAdvancementOnDiscovery {
 
-	default void checkForDiscovery(Entity entity, Player player) {
-		if (isLookingAtMe(entity, player)) {
-			IWCriteriaTriggers.ENTITY_DISCOVERED_TRIGGER.trigger((ServerPlayer) player, ForgeRegistries.ENTITY_TYPES.getKey(entity.getType()));
+	default void checkForDiscovery(LivingEntity entity) {
+		Level level = entity.level;
+		BlockPos entityPos = entity.blockPosition();
+
+		if (!level.isClientSide) {
+			AABB scanningBox = new AABB(entityPos.offset(-50, -50, -50),
+					entityPos.offset(50, 50, 50));
+
+			for (Player player : level.getNearbyPlayers(TargetingConditions.forNonCombat(), entity, scanningBox)) {
+				if (isLookingAtMe(entity, player)) {
+					if (IWCriteriaTriggers.ENTITY_DISCOVERED_TRIGGER != null) {
+						IWCriteriaTriggers.ENTITY_DISCOVERED_TRIGGER.trigger((ServerPlayer) player, Objects.requireNonNull(ForgeRegistries.ENTITY_TYPES.getKey(entity.getType())));
+					}
+				}
+			}
 		}
 	}
 

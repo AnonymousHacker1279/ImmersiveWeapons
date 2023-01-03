@@ -1,0 +1,70 @@
+{
+	"credit": "AnonymousHacker1279",
+	"texture_size": [32, 32],
+	"textures": {
+		"0": "immersiveweapons:block/biodome_life_support_unit",
+		"particle": "immersiveweapons:block/biodome_life_support_unit"
+	},
+	"elements": [
+		{
+			"name": "bottom",
+			"from": [0, 0, 0],
+			"to": [16, 6, 16],
+			"faces": {
+				"north": {"uv": [0, 2, 8, 8], "texture": "#0"},
+				"east": {"uv": [0, 2, 8, 8], "texture": "#0"},
+				"south": {"uv": [0, 2, 8, 8], "texture": "#0"},
+				"west": {"uv": [0, 2, 8, 8], "texture": "#0"},
+				"up": {"uv": [0, 0, 8, 8], "texture": "#0"},
+				"down": {"uv": [0, 0, 8, 8], "texture": "#0"}
+			}
+		},
+		{
+			"name": "top",
+			"from": [0, 10, 0],
+			"to": [16, 16, 16],
+			"faces": {
+				"north": {"uv": [0, 0, 8, 6], "texture": "#0"},
+				"east": {"uv": [0, 0, 8, 6], "texture": "#0"},
+				"south": {"uv": [0, 0, 8, 6], "texture": "#0"},
+				"west": {"uv": [0, 0, 8, 6], "texture": "#0"},
+				"up": {"uv": [0, 0, 8, 8], "texture": "#0"},
+				"down": {"uv": [0, 0, 8, 8], "texture": "#0"}
+			}
+		},
+		{
+			"name": "center",
+			"from": [2, 6, 2],
+			"to": [14, 10, 14],
+			"faces": {
+				"north": {"uv": [0, 8, 6, 10], "texture": "#0"},
+				"east": {"uv": [0, 8, 6, 10], "texture": "#0"},
+				"south": {"uv": [0, 8, 6, 10], "texture": "#0"},
+				"west": {"uv": [0, 8, 6, 10], "texture": "#0"},
+				"up": {"uv": [0, 0, 12, 12], "texture": "#0"},
+				"down": {"uv": [0, 0, 12, 12], "texture": "#0"}
+			}
+		}
+	],
+	"display": {
+		"thirdperson_righthand": {
+			"scale": [0.26, 0.26, 0.26]
+		},
+		"thirdperson_lefthand": {
+			"scale": [0.26, 0.26, 0.26]
+		},
+		"firstperson_righthand": {
+			"scale": [0.5, 0.5, 0.5]
+		},
+		"firstperson_lefthand": {
+			"scale": [0.5, 0.5, 0.5]
+		},
+		"ground": {
+			"scale": [0.26, 0.26, 0.26]
+		},
+		"gui": {
+			"rotation": [30, 45, 0],
+			"scale": [0.5, 0.5, 0.5]
+		}
+	}
+}

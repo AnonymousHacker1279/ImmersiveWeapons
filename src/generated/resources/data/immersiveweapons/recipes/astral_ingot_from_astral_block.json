@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "astral",
+  "ingredients": [
+    {
+      "item": "immersiveweapons:astral_block"
+    }
+  ],
+  "result": {
+    "count": 9,
+    "item": "immersiveweapons:astral_ingot"
+  }
+}

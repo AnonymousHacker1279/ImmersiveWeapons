@@ -1,0 +1,34 @@
+{
+  "parent": "immersiveweapons:entity_discovery",
+  "criteria": {
+    "discover": {
+      "conditions": {
+        "entity": "immersiveweapons:starmite"
+      },
+      "trigger": "immersiveweapons:entity_discovered"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.immersiveweapons.discover_starmite.description"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "immersiveweapons:starstorm_crystal"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.immersiveweapons.discover_starmite.title"
+    }
+  },
+  "requirements": [
+    [
+      "discover"
+    ]
+  ],
+  "rewards": {
+    "experience": 20
+  }
+}

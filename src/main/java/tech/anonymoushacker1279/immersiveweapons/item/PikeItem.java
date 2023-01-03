@@ -13,7 +13,6 @@ import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.ForgeMod;
-import org.jetbrains.annotations.NotNull;
 import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
 
 public class PikeItem extends Item {
@@ -62,7 +61,7 @@ public class PikeItem extends Item {
 	 * @return boolean
 	 */
 	@Override
-	public boolean canAttackBlock(@NotNull BlockState state, @NotNull Level worldIn, @NotNull BlockPos pos, Player player) {
+	public boolean canAttackBlock(BlockState state, Level worldIn, BlockPos pos, Player player) {
 		return !player.isCreative();
 	}
 
@@ -73,7 +72,7 @@ public class PikeItem extends Item {
 	 * @return UseAction
 	 */
 	@Override
-	public @NotNull UseAnim getUseAnimation(@NotNull ItemStack stack) {
+	public UseAnim getUseAnimation(ItemStack stack) {
 		return UseAnim.SPEAR;
 	}
 
@@ -86,7 +85,7 @@ public class PikeItem extends Item {
 	 * @return boolean
 	 */
 	@Override
-	public boolean hurtEnemy(ItemStack stack, @NotNull LivingEntity target, @NotNull LivingEntity attacker) {
+	public boolean hurtEnemy(ItemStack stack, LivingEntity target, LivingEntity attacker) {
 		stack.hurtAndBreak(1, attacker, (entity) -> entity.broadcastBreakEvent(EquipmentSlot.MAINHAND));
 		return true;
 	}
@@ -102,7 +101,7 @@ public class PikeItem extends Item {
 	 * @return boolean
 	 */
 	@Override
-	public boolean mineBlock(@NotNull ItemStack stack, @NotNull Level level, BlockState state, @NotNull BlockPos pos, @NotNull LivingEntity livingEntity) {
+	public boolean mineBlock(ItemStack stack, Level level, BlockState state, BlockPos pos, LivingEntity livingEntity) {
 		if (state.getDestroySpeed(level, pos) != 0.0D) {
 			stack.hurtAndBreak(2, livingEntity, (entity) -> entity.broadcastBreakEvent(EquipmentSlot.MAINHAND));
 		}
@@ -117,7 +116,7 @@ public class PikeItem extends Item {
 	 * @return boolean
 	 */
 	@Override
-	public boolean isValidRepairItem(@NotNull ItemStack toRepair, @NotNull ItemStack repair) {
+	public boolean isValidRepairItem(ItemStack toRepair, ItemStack repair) {
 		return repairIngredient.test(repair) || super.isValidRepairItem(toRepair, repair);
 	}
 

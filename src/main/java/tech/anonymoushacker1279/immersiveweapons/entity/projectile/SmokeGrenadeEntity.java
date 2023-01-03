@@ -4,6 +4,8 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.protocol.Packet;
+import net.minecraft.network.protocol.game.ClientGamePacketListener;
+import net.minecraft.network.protocol.game.ClientboundAddEntityPacket;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
@@ -13,14 +15,13 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.HitResult;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.fml.DistExecutor;
-import net.minecraftforge.network.*;
+import net.minecraftforge.network.NetworkEvent;
 import net.minecraftforge.network.NetworkEvent.Context;
-import org.jetbrains.annotations.NotNull;
+import net.minecraftforge.network.PacketDistributor;
 import tech.anonymoushacker1279.immersiveweapons.client.particle.smoke_grenade.SmokeGrenadeParticleOptions;
 import tech.anonymoushacker1279.immersiveweapons.config.ClientConfig;
 import tech.anonymoushacker1279.immersiveweapons.config.CommonConfig;
-import tech.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
-import tech.anonymoushacker1279.immersiveweapons.init.PacketHandler;
+import tech.anonymoushacker1279.immersiveweapons.init.*;
 import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
 
 import java.util.function.Supplier;
@@ -46,7 +47,7 @@ public class SmokeGrenadeEntity extends ThrowableItemProjectile {
 	 * @param livingEntity the <code>LivingEntity</code> throwing the entity
 	 */
 	public SmokeGrenadeEntity(Level level, LivingEntity livingEntity) {
-		super(DeferredRegistryHandler.SMOKE_GRENADE_ENTITY.get(), livingEntity, level);
+		super(EntityRegistry.SMOKE_GRENADE_ENTITY.get(), livingEntity, level);
 	}
 
 	/**
@@ -58,7 +59,7 @@ public class SmokeGrenadeEntity extends ThrowableItemProjectile {
 	 * @param z     the Z position
 	 */
 	public SmokeGrenadeEntity(Level level, double x, double y, double z) {
-		super(DeferredRegistryHandler.SMOKE_GRENADE_ENTITY.get(), x, y, z, level);
+		super(EntityRegistry.SMOKE_GRENADE_ENTITY.get(), x, y, z, level);
 	}
 
 	/**
@@ -87,7 +88,7 @@ public class SmokeGrenadeEntity extends ThrowableItemProjectile {
 					GeneralUtilities.getRandomNumber(-0.1d, 0.1d));
 		}
 
-		level.playLocalSound(x, y, z, DeferredRegistryHandler.SMOKE_GRENADE_HISS.get(),
+		level.playLocalSound(x, y, z, SoundEventRegistry.SMOKE_GRENADE_HISS.get(),
 				SoundSource.NEUTRAL, 0.2f, 0.6f, true);
 	}
 
@@ -97,8 +98,8 @@ public class SmokeGrenadeEntity extends ThrowableItemProjectile {
 	 * @return IPacket
 	 */
 	@Override
-	public @NotNull Packet<?> getAddEntityPacket() {
-		return NetworkHooks.getEntitySpawningPacket(this);
+	public Packet<ClientGamePacketListener> getAddEntityPacket() {
+		return new ClientboundAddEntityPacket(this);
 	}
 
 	/**
@@ -108,8 +109,8 @@ public class SmokeGrenadeEntity extends ThrowableItemProjectile {
 	 * @return Item
 	 */
 	@Override
-	protected @NotNull Item getDefaultItem() {
-		return DeferredRegistryHandler.SMOKE_GRENADE.get();
+	protected Item getDefaultItem() {
+		return ItemRegistry.SMOKE_GRENADE.get();
 	}
 
 	/**
@@ -118,7 +119,7 @@ public class SmokeGrenadeEntity extends ThrowableItemProjectile {
 	 * @param hitResult the <code>HitResult</code> instance
 	 */
 	@Override
-	protected void onHit(@NotNull HitResult hitResult) {
+	protected void onHit(HitResult hitResult) {
 		super.onHit(hitResult);
 		if (!level.isClientSide) {
 			// Inform the client of the smoke grenade color

@@ -2,17 +2,17 @@ package tech.anonymoushacker1279.immersiveweapons.client.particle.smoke_grenade;
 
 import com.mojang.brigadier.StringReader;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
-import com.mojang.math.Vector3f;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleType;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.util.ExtraCodecs;
 import net.minecraft.util.Mth;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.registries.ForgeRegistries;
-import org.jetbrains.annotations.NotNull;
-import tech.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
+import org.joml.Vector3f;
+import tech.anonymoushacker1279.immersiveweapons.init.ParticleTypesRegistry;
 
 import java.util.Locale;
 
@@ -20,7 +20,7 @@ public class SmokeGrenadeParticleOptions implements ParticleOptions {
 
 	public static final Codec<SmokeGrenadeParticleOptions> CODEC = RecordCodecBuilder.create((particleOptionsInstance)
 			-> particleOptionsInstance
-			.group(Vector3f.CODEC.fieldOf("color").forGetter((particleOptions) -> particleOptions.color),
+			.group(ExtraCodecs.VECTOR3F.fieldOf("color").forGetter((particleOptions) -> particleOptions.color),
 					Codec.FLOAT.fieldOf("scale").forGetter((particleOptions) -> particleOptions.scale))
 			.apply(particleOptionsInstance, SmokeGrenadeParticleOptions::new));
 
@@ -29,8 +29,8 @@ public class SmokeGrenadeParticleOptions implements ParticleOptions {
 
 	public static final ParticleOptions.Deserializer<SmokeGrenadeParticleOptions> DESERIALIZER = new ParticleOptions.Deserializer<>() {
 		@Override
-		public @NotNull SmokeGrenadeParticleOptions fromCommand(@NotNull ParticleType<SmokeGrenadeParticleOptions> particleType,
-		                                                        @NotNull StringReader reader) throws CommandSyntaxException {
+		public SmokeGrenadeParticleOptions fromCommand(ParticleType<SmokeGrenadeParticleOptions> particleType,
+		                                               StringReader reader) throws CommandSyntaxException {
 
 			Vector3f vector3f = SmokeGrenadeParticleOptions.readVector3f(reader);
 			reader.expect(' ');
@@ -39,8 +39,8 @@ public class SmokeGrenadeParticleOptions implements ParticleOptions {
 		}
 
 		@Override
-		public @NotNull SmokeGrenadeParticleOptions fromNetwork(@NotNull ParticleType<SmokeGrenadeParticleOptions> particleType,
-		                                                        @NotNull FriendlyByteBuf byteBuf) {
+		public SmokeGrenadeParticleOptions fromNetwork(ParticleType<SmokeGrenadeParticleOptions> particleType,
+		                                               FriendlyByteBuf byteBuf) {
 
 			return new SmokeGrenadeParticleOptions(SmokeGrenadeParticleOptions.readVector3f(byteBuf), byteBuf.readFloat());
 		}
@@ -74,7 +74,7 @@ public class SmokeGrenadeParticleOptions implements ParticleOptions {
 	}
 
 	@Override
-	public @NotNull String writeToString() {
+	public String writeToString() {
 		return String.format(Locale.ROOT, "%s %.2f %.2f %.2f %.2f", ForgeRegistries.PARTICLE_TYPES
 				.getKey(getType()), color.x(), color.y(), color.z(), scale);
 	}
@@ -84,17 +84,17 @@ public class SmokeGrenadeParticleOptions implements ParticleOptions {
 	}
 
 	@Override
-	public @NotNull ParticleType<SmokeGrenadeParticleOptions> getType() {
-		return DeferredRegistryHandler.SMOKE_GRENADE_PARTICLE.get();
+	public ParticleType<SmokeGrenadeParticleOptions> getType() {
+		return ParticleTypesRegistry.SMOKE_GRENADE_PARTICLE.get();
 	}
 
 	public static class SmokeGrenadeColors {
-		public static final Vector3f GRAY = new Vector3f(Vec3.fromRGB24(16777215));
-		public static final Vector3f RED = new Vector3f(Vec3.fromRGB24(16711680));
-		public static final Vector3f GREEN = new Vector3f(Vec3.fromRGB24(5294200));
-		public static final Vector3f BLUE = new Vector3f(Vec3.fromRGB24(1644912));
-		public static final Vector3f PURPLE = new Vector3f(Vec3.fromRGB24(5046349));
-		public static final Vector3f YELLOW = new Vector3f(Vec3.fromRGB24(16318253));
+		public static final Vector3f GRAY = Vec3.fromRGB24(16777215).toVector3f();
+		public static final Vector3f RED = Vec3.fromRGB24(16711680).toVector3f();
+		public static final Vector3f GREEN = Vec3.fromRGB24(5294200).toVector3f();
+		public static final Vector3f BLUE = Vec3.fromRGB24(1644912).toVector3f();
+		public static final Vector3f PURPLE = Vec3.fromRGB24(5046349).toVector3f();
+		public static final Vector3f YELLOW = Vec3.fromRGB24(16318253).toVector3f();
 	}
 
 	/**

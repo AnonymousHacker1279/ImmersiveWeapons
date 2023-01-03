@@ -12,7 +12,10 @@
     "immersiveweapons:deepslate_sulfur_ore",
     "immersiveweapons:nether_sulfur_ore",
     "immersiveweapons:raw_sulfur_block",
+    "immersiveweapons:astral_crystal",
+    "immersiveweapons:biodome_life_support_unit",
     "immersiveweapons:wooden_spikes",
-    "immersiveweapons:punji_sticks"
+    "immersiveweapons:punji_sticks",
+    "immersiveweapons:stardust_leaves"
   ]
 }

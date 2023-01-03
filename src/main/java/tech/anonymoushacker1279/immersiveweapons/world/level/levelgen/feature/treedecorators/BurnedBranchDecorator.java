@@ -7,7 +7,8 @@ import net.minecraft.world.level.levelgen.feature.treedecorators.TreeDecorator;
 import net.minecraft.world.level.levelgen.feature.treedecorators.TreeDecoratorType;
 import org.jetbrains.annotations.NotNull;
 import tech.anonymoushacker1279.immersiveweapons.block.decoration.BranchBlock;
-import tech.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
+import tech.anonymoushacker1279.immersiveweapons.init.BlockRegistry;
+import tech.anonymoushacker1279.immersiveweapons.init.TreeDecoratorRegistry;
 
 public class BurnedBranchDecorator extends TreeDecorator {
 
@@ -21,7 +22,7 @@ public class BurnedBranchDecorator extends TreeDecorator {
 
 	@Override
 	protected @NotNull TreeDecoratorType<?> type() {
-		return TreeDecoratorType.COCOA;
+		return TreeDecoratorRegistry.BURNED_BRANCH_DECORATOR.get();
 	}
 
 	@Override
@@ -34,7 +35,7 @@ public class BurnedBranchDecorator extends TreeDecorator {
 						BlockPos position = blockPos.offset(oppositeDirection.getStepX(), 0, oppositeDirection.getStepZ());
 
 						if (context.isAir(position)) {
-							context.setBlock(position, DeferredRegistryHandler.BURNED_OAK_BRANCH.get().defaultBlockState()
+							context.setBlock(position, BlockRegistry.BURNED_OAK_BRANCH.get().defaultBlockState()
 									.setValue(BranchBlock.FACING, direction));
 						}
 					}

@@ -5,12 +5,12 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
-import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+import tech.anonymoushacker1279.immersiveweapons.data.biomes.IWBiomes;
 import tech.anonymoushacker1279.immersiveweapons.entity.neutral.MinutemanEntity;
-import tech.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
-import tech.anonymoushacker1279.immersiveweapons.world.level.levelgen.biomes.BiomesAndDimensions;
+import tech.anonymoushacker1279.immersiveweapons.init.BlockEntityRegistry;
+import tech.anonymoushacker1279.immersiveweapons.init.EntityRegistry;
 
-import javax.annotation.Nullable;
 import java.util.List;
 
 public class MinutemanStatueBlockEntity extends AbstractStatueBlockEntity {
@@ -19,14 +19,14 @@ public class MinutemanStatueBlockEntity extends AbstractStatueBlockEntity {
 	 * Constructor for MinutemanStatueBlockEntity.
 	 */
 	public MinutemanStatueBlockEntity(BlockPos blockPos, BlockState blockState) {
-		super(DeferredRegistryHandler.MINUTEMAN_STATUE_BLOCK_ENTITY.get(), blockPos, blockState);
+		super(BlockEntityRegistry.MINUTEMAN_STATUE_BLOCK_ENTITY.get(), blockPos, blockState);
 	}
 
 	/**
 	 * Runs once each tick. Handle scanning and spawning entities.
 	 */
 	public void tick(Level level, BlockPos blockPos) {
-		if (level.getBiome(blockPos).is(BiomesAndDimensions.BATTLEFIELD) && cooldown == 0) {
+		if (level.getBiome(blockPos).is(IWBiomes.BATTLEFIELD) && cooldown == 0) {
 			List<MinutemanEntity> listOfMinutemenInArea = level.getEntitiesOfClass(MinutemanEntity.class,
 					new AABB(getBlockPos().getX() - 48,
 							getBlockPos().getY() - 16,
@@ -38,7 +38,7 @@ public class MinutemanStatueBlockEntity extends AbstractStatueBlockEntity {
 			scannedEntities = listOfMinutemenInArea.size();
 
 			if (scannedEntities <= 16) {
-				MinutemanEntity minutemanEntity = DeferredRegistryHandler.MINUTEMAN_ENTITY.get().create(level);
+				MinutemanEntity minutemanEntity = EntityRegistry.MINUTEMAN_ENTITY.get().create(level);
 				if (minutemanEntity != null) {
 					attemptSpawnEntity(minutemanEntity);
 				}
@@ -57,7 +57,7 @@ public class MinutemanStatueBlockEntity extends AbstractStatueBlockEntity {
 	 */
 	@Nullable
 	@Override
-	public BlockEntity newBlockEntity(@NotNull BlockPos blockPos, @NotNull BlockState blockState) {
+	public BlockEntity newBlockEntity(BlockPos blockPos, BlockState blockState) {
 		return new MinutemanStatueBlockEntity(blockPos, blockState);
 	}
 }

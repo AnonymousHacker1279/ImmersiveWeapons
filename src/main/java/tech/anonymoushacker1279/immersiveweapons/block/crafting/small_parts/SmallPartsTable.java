@@ -14,8 +14,7 @@ import net.minecraft.world.level.block.HorizontalDirectionalBlock;
 import net.minecraft.world.level.block.state.*;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraftforge.network.NetworkHooks;
-import org.jetbrains.annotations.NotNull;
-import tech.anonymoushacker1279.immersiveweapons.container.SmallPartsContainer;
+import tech.anonymoushacker1279.immersiveweapons.menu.SmallPartsMenu;
 
 public class SmallPartsTable extends HorizontalDirectionalBlock {
 
@@ -40,8 +39,8 @@ public class SmallPartsTable extends HorizontalDirectionalBlock {
 	 * @return INamedContainerProvider
 	 */
 	@Override
-	public MenuProvider getMenuProvider(@NotNull BlockState state, @NotNull Level worldIn, @NotNull BlockPos pos) {
-		return new SimpleMenuProvider((id, inventory, player) -> new SmallPartsContainer(id, inventory, ContainerLevelAccess.create(worldIn, pos)), CONTAINER_NAME);
+	public MenuProvider getMenuProvider(BlockState state, Level worldIn, BlockPos pos) {
+		return new SimpleMenuProvider((id, inventory, player) -> new SmallPartsMenu(id, inventory, ContainerLevelAccess.create(worldIn, pos)), CONTAINER_NAME);
 	}
 
 	/**
@@ -57,7 +56,7 @@ public class SmallPartsTable extends HorizontalDirectionalBlock {
 	 * @return ActionResultType
 	 */
 	@Override
-	public @NotNull InteractionResult use(@NotNull BlockState state, Level worldIn, @NotNull BlockPos pos, @NotNull Player player, @NotNull InteractionHand handIn, @NotNull BlockHitResult blockRayTraceResult) {
+	public InteractionResult use(BlockState state, Level worldIn, BlockPos pos, Player player, InteractionHand handIn, BlockHitResult blockRayTraceResult) {
 		if (worldIn.isClientSide) {
 			return InteractionResult.SUCCESS;
 		} else {

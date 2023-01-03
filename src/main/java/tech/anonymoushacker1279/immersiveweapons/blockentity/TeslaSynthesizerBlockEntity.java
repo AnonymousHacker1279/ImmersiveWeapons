@@ -22,16 +22,16 @@ import net.minecraft.world.level.block.entity.BaseContainerBlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.wrapper.SidedInvWrapper;
 import org.jetbrains.annotations.NotNull;
-import tech.anonymoushacker1279.immersiveweapons.container.TeslaSynthesizerContainer;
-import tech.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
+import org.jetbrains.annotations.Nullable;
+import tech.anonymoushacker1279.immersiveweapons.init.*;
 import tech.anonymoushacker1279.immersiveweapons.item.crafting.TeslaSynthesizerRecipe;
+import tech.anonymoushacker1279.immersiveweapons.menu.TeslaSynthesizerMenu;
 
-import javax.annotation.Nullable;
 import java.util.Map;
 import java.util.Optional;
 
@@ -81,12 +81,12 @@ public class TeslaSynthesizerBlockEntity extends BaseContainerBlockEntity implem
 	 * Constructor for AbstractTeslaBlockEntity.
 	 */
 	public TeslaSynthesizerBlockEntity(BlockPos blockPos, BlockState blockState) {
-		super(DeferredRegistryHandler.TESLA_SYNTHESIZER_BLOCK_ENTITY.get(), blockPos, blockState);
+		super(BlockEntityRegistry.TESLA_SYNTHESIZER_BLOCK_ENTITY.get(), blockPos, blockState);
 		setupBurnTimes();
 	}
 
 	@Override
-	protected @NotNull Component getDefaultName() {
+	protected Component getDefaultName() {
 		return Component.translatable("container.immersiveweapons.tesla_synthesizer");
 	}
 
@@ -98,8 +98,8 @@ public class TeslaSynthesizerBlockEntity extends BaseContainerBlockEntity implem
 	 * @return Container
 	 */
 	@Override
-	protected @NotNull AbstractContainerMenu createMenu(int id, @NotNull Inventory player) {
-		return new TeslaSynthesizerContainer(id, player, this, teslaSynthesizerData);
+	protected AbstractContainerMenu createMenu(int id, Inventory player) {
+		return new TeslaSynthesizerMenu(id, player, this, teslaSynthesizerData);
 	}
 
 	/**
@@ -161,7 +161,7 @@ public class TeslaSynthesizerBlockEntity extends BaseContainerBlockEntity implem
 
 			RecipeManager recipeManager = level.getRecipeManager();
 			Recipe<?> synthesizerRecipe = recipeManager
-					.getRecipeFor(DeferredRegistryHandler.TESLA_SYNTHESIZER_RECIPE_TYPE.get(), this, level)
+					.getRecipeFor(RecipeTypeRegistry.TESLA_SYNTHESIZER_RECIPE_TYPE.get(), this, level)
 					.orElse(null);
 
 			if (!isBurning() && canSmelt(synthesizerRecipe)) {
@@ -213,7 +213,7 @@ public class TeslaSynthesizerBlockEntity extends BaseContainerBlockEntity implem
 	 */
 	@Nullable
 	@Override
-	public BlockEntity newBlockEntity(@NotNull BlockPos blockPos, @NotNull BlockState blockState) {
+	public BlockEntity newBlockEntity(BlockPos blockPos, BlockState blockState) {
 		return new TeslaSynthesizerBlockEntity(blockPos, blockState);
 	}
 
@@ -221,7 +221,7 @@ public class TeslaSynthesizerBlockEntity extends BaseContainerBlockEntity implem
 	 * Set up the burn time map
 	 */
 	private void setupBurnTimes() {
-		addItemBurnTime(burnTimesMap, DeferredRegistryHandler.MOLTEN_INGOT.get(), 24000); // 20 minutes
+		addItemBurnTime(burnTimesMap, ItemRegistry.MOLTEN_INGOT.get(), 24000); // 20 minutes
 	}
 
 	/**
@@ -239,7 +239,7 @@ public class TeslaSynthesizerBlockEntity extends BaseContainerBlockEntity implem
 	 * @param nbt the <code>CompoundNBT</code> to load
 	 */
 	@Override
-	public void load(@NotNull CompoundTag nbt) {
+	public void load(CompoundTag nbt) {
 		super.load(nbt);
 		items = NonNullList.withSize(getContainerSize(), ItemStack.EMPTY);
 		ContainerHelper.loadAllItems(nbt, items);
@@ -261,7 +261,7 @@ public class TeslaSynthesizerBlockEntity extends BaseContainerBlockEntity implem
 	 * @param pTag the <code>CompoundNBT</code> to save
 	 */
 	@Override
-	protected void saveAdditional(@NotNull CompoundTag pTag) {
+	protected void saveAdditional(CompoundTag pTag) {
 		super.saveAdditional(pTag);
 		pTag.putInt("BurnTime", burnTime);
 		pTag.putInt("CookTime", cookTime);
@@ -337,7 +337,7 @@ public class TeslaSynthesizerBlockEntity extends BaseContainerBlockEntity implem
 	private int getCookTime() {
 		if (level != null) {
 			Optional<TeslaSynthesizerRecipe> recipe = level.getRecipeManager()
-					.getRecipeFor(DeferredRegistryHandler.TESLA_SYNTHESIZER_RECIPE_TYPE.get(), this, level);
+					.getRecipeFor(RecipeTypeRegistry.TESLA_SYNTHESIZER_RECIPE_TYPE.get(), this, level);
 
 			if (recipe.isPresent()) {
 				return recipe.get().getCookTime();
@@ -353,7 +353,7 @@ public class TeslaSynthesizerBlockEntity extends BaseContainerBlockEntity implem
 	 * @return int[]
 	 */
 	@Override
-	public int @NotNull [] getSlotsForFace(@NotNull Direction side) {
+	public int[] getSlotsForFace(Direction side) {
 		if (side == Direction.DOWN) {
 			return SLOTS_DOWN;
 		} else {
@@ -396,7 +396,7 @@ public class TeslaSynthesizerBlockEntity extends BaseContainerBlockEntity implem
 	 * @return boolean
 	 */
 	@Override
-	public boolean canPlaceItemThroughFace(int index, @NotNull ItemStack itemStack, Direction direction) {
+	public boolean canPlaceItemThroughFace(int index, ItemStack itemStack, @Nullable Direction direction) {
 		return false;
 	}
 
@@ -409,7 +409,7 @@ public class TeslaSynthesizerBlockEntity extends BaseContainerBlockEntity implem
 	 * @return boolean
 	 */
 	@Override
-	public boolean canTakeItemThroughFace(int index, @NotNull ItemStack itemStack, @NotNull Direction direction) {
+	public boolean canTakeItemThroughFace(int index, ItemStack itemStack, Direction direction) {
 		return false;
 	}
 
@@ -420,7 +420,7 @@ public class TeslaSynthesizerBlockEntity extends BaseContainerBlockEntity implem
 	 * @return ItemStack
 	 */
 	@Override
-	public @NotNull ItemStack getItem(int index) {
+	public ItemStack getItem(int index) {
 		return items.get(index);
 	}
 
@@ -432,7 +432,7 @@ public class TeslaSynthesizerBlockEntity extends BaseContainerBlockEntity implem
 	 * @return ItemStack
 	 */
 	@Override
-	public @NotNull ItemStack removeItem(int index, int count) {
+	public ItemStack removeItem(int index, int count) {
 		return ContainerHelper.removeItem(items, index, count);
 	}
 
@@ -443,7 +443,7 @@ public class TeslaSynthesizerBlockEntity extends BaseContainerBlockEntity implem
 	 * @return ItemStack
 	 */
 	@Override
-	public @NotNull ItemStack removeItemNoUpdate(int index) {
+	public ItemStack removeItemNoUpdate(int index) {
 		return ContainerHelper.takeItem(items, index);
 	}
 
@@ -478,7 +478,7 @@ public class TeslaSynthesizerBlockEntity extends BaseContainerBlockEntity implem
 	 * @return boolean
 	 */
 	@Override
-	public boolean stillValid(@NotNull Player player) {
+	public boolean stillValid(Player player) {
 		if ((level != null ? level.getBlockEntity(worldPosition) : null) != this) {
 			return false;
 		} else {
@@ -495,7 +495,7 @@ public class TeslaSynthesizerBlockEntity extends BaseContainerBlockEntity implem
 	 * @param stack the <code>ItemStack</code> to insert
 	 */
 	@Override
-	public boolean canPlaceItem(int index, @NotNull ItemStack stack) {
+	public boolean canPlaceItem(int index, ItemStack stack) {
 		return false;
 	}
 
@@ -537,7 +537,7 @@ public class TeslaSynthesizerBlockEntity extends BaseContainerBlockEntity implem
 	 * @param player the <code>PlayerEntity</code> instance
 	 */
 	@Override
-	public void awardUsedRecipes(@NotNull Player player) {
+	public void awardUsedRecipes(Player player) {
 	}
 
 	/**
@@ -546,7 +546,7 @@ public class TeslaSynthesizerBlockEntity extends BaseContainerBlockEntity implem
 	 * @param helper the <code>RecipeItemHelper</code> instance
 	 */
 	@Override
-	public void fillStackedContents(@NotNull StackedContents helper) {
+	public void fillStackedContents(StackedContents helper) {
 		for (ItemStack itemStack : items) {
 			helper.accountStack(itemStack);
 		}
@@ -561,8 +561,8 @@ public class TeslaSynthesizerBlockEntity extends BaseContainerBlockEntity implem
 	 * @return LazyOptional
 	 */
 	@Override
-	public <T> @NotNull LazyOptional<T> getCapability(@NotNull Capability<T> capability, @Nullable Direction facing) {
-		if (!remove && facing != null && capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
+	public <T> @NotNull LazyOptional<T> getCapability(Capability<T> capability, @Nullable Direction facing) {
+		if (!remove && facing != null && capability == ForgeCapabilities.ITEM_HANDLER) {
 			if (facing == Direction.UP)
 				return handlers[0].cast();
 			else if (facing == Direction.DOWN)

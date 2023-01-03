@@ -1,0 +1,51 @@
+{
+  "parent": "immersiveweapons:astral_ingot",
+  "criteria": {
+    "have_advancements": {
+      "conditions": {
+        "player": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "type_specific": {
+                "type": "player",
+                "advancements": {
+                  "immersiveweapons:astral_axe": true,
+                  "immersiveweapons:astral_hoe": true,
+                  "immersiveweapons:astral_pickaxe": true,
+                  "immersiveweapons:astral_shovel": true,
+                  "immersiveweapons:astral_sword": true
+                }
+              }
+            }
+          }
+        ]
+      },
+      "trigger": "minecraft:location"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.immersiveweapons.astral_tools.description"
+    },
+    "frame": "challenge",
+    "hidden": false,
+    "icon": {
+      "item": "immersiveweapons:astral_block"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.immersiveweapons.astral_tools.title"
+    }
+  },
+  "requirements": [
+    [
+      "have_advancements"
+    ]
+  ],
+  "rewards": {
+    "experience": 150
+  }
+}

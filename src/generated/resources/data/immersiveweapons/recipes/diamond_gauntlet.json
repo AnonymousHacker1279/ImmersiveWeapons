@@ -1,6 +1,6 @@
 {
   "type": "minecraft:crafting_shaped",
-  "group": "diamond",
+  "category": "equipment",
   "key": {
     "a": {
       "tag": "forge:gems/diamond"

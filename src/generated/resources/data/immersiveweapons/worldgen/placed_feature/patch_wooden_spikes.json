@@ -1,0 +1,29 @@
+{
+  "feature": "immersiveweapons:patch_wooden_spikes",
+  "placement": [
+    {
+      "type": "minecraft:heightmap",
+      "heightmap": "MOTION_BLOCKING"
+    },
+    {
+      "type": "minecraft:biome"
+    },
+    {
+      "type": "minecraft:in_square"
+    },
+    {
+      "type": "minecraft:count",
+      "count": {
+        "type": "minecraft:uniform",
+        "value": {
+          "max_inclusive": 12,
+          "min_inclusive": 4
+        }
+      }
+    },
+    {
+      "type": "minecraft:rarity_filter",
+      "chance": 16
+    }
+  ]
+}

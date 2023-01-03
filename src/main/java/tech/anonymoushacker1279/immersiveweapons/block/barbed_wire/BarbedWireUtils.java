@@ -9,7 +9,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
-import tech.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
+import tech.anonymoushacker1279.immersiveweapons.init.SoundEventRegistry;
 
 public interface BarbedWireUtils {
 
@@ -26,7 +26,7 @@ public interface BarbedWireUtils {
 				}
 			}
 			if (entity instanceof Player && BarbedWireBlock.soundCooldown <= 0) {
-				level.playSound((Player) entity, pos, DeferredRegistryHandler.BARBED_WIRE_RATTLE.get(), SoundSource.BLOCKS, 1f, 1f);
+				level.playSound((Player) entity, pos, SoundEventRegistry.BARBED_WIRE_RATTLE.get(), SoundSource.BLOCKS, 1f, 1f);
 				BarbedWireBlock.soundCooldown = 40;
 			} else {
 				BarbedWireBlock.soundCooldown--;

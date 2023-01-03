@@ -1,6 +1,0 @@
-{
-  "type": "forge:add_features",
-  "biomes": "#minecraft:is_nether",
-  "features": "immersiveweapons:ore_molten",
-  "step": "underground_ores"
-}

@@ -2,7 +2,7 @@
 	"credit": "Made with Blockbench",
 	"textures": {
 		"0": "immersiveweapons:block/spike_trap_hole",
-		"1": "immersiveweapons:custom/iron",
+		"1": "immersiveweapons:item/custom/iron",
 		"particle": "immersiveweapons:block/spike_trap_hole"
 	},
 	"elements": [

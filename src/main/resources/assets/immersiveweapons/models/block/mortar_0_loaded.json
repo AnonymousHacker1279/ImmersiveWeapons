@@ -1,11 +1,11 @@
 {
 	"credit": "Made with Blockbench",
 	"textures": {
-		"0": "immersiveweapons:custom/black",
-		"1": "immersiveweapons:custom/greyd",
-		"2": "immersiveweapons:custom/greyf",
+		"0": "immersiveweapons:item/custom/black",
+		"1": "immersiveweapons:item/custom/greyd",
+		"2": "immersiveweapons:item/custom/greyf",
 		"3": "immersiveweapons:block/mortar",
-		"particle": "immersiveweapons:custom/black"
+		"particle": "immersiveweapons:item/custom/black"
 	},
 	"elements": [
 		{

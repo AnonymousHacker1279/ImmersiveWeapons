@@ -7,7 +7,6 @@ import net.minecraft.client.model.geom.*;
 import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
-import org.jetbrains.annotations.NotNull;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 
 public class CelestialTowerModel<T extends Entity> extends EntityModel<T> {
@@ -41,13 +40,13 @@ public class CelestialTowerModel<T extends Entity> extends EntityModel<T> {
 	}
 
 	@Override
-	public void setupAnim(@NotNull T entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw,
+	public void setupAnim(T entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw,
 	                      float headPitch) {
 
 	}
 
 	@Override
-	public void renderToBuffer(@NotNull PoseStack poseStack, @NotNull VertexConsumer buffer, int packedLight,
+	public void renderToBuffer(PoseStack poseStack, VertexConsumer buffer, int packedLight,
 	                           int packedOverlay, float red, float green, float blue, float alpha) {
 
 		base.render(poseStack, buffer, packedLight, packedOverlay);

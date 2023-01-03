@@ -2,7 +2,6 @@ package tech.anonymoushacker1279.immersiveweapons.client.particle.bullet_impact;
 
 import com.mojang.brigadier.StringReader;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
-import com.mojang.math.Vector3f;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.client.Minecraft;
@@ -17,8 +16,8 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.level.block.Block;
 import net.minecraftforge.client.model.data.ModelData;
 import net.minecraftforge.registries.ForgeRegistries;
-import org.jetbrains.annotations.NotNull;
-import tech.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
+import org.joml.Vector3f;
+import tech.anonymoushacker1279.immersiveweapons.init.ParticleTypesRegistry;
 
 import java.util.Locale;
 
@@ -36,8 +35,8 @@ public class BulletImpactParticleOptions implements ParticleOptions {
 
 	public static final ParticleOptions.Deserializer<BulletImpactParticleOptions> DESERIALIZER = new ParticleOptions.Deserializer<>() {
 		@Override
-		public @NotNull BulletImpactParticleOptions fromCommand(@NotNull ParticleType<BulletImpactParticleOptions> particleType,
-		                                                        @NotNull StringReader reader) throws CommandSyntaxException {
+		public BulletImpactParticleOptions fromCommand(ParticleType<BulletImpactParticleOptions> particleType,
+		                                               StringReader reader) throws CommandSyntaxException {
 
 			float vibrancy = reader.readFloat();
 			reader.expect(' ');
@@ -47,8 +46,8 @@ public class BulletImpactParticleOptions implements ParticleOptions {
 		}
 
 		@Override
-		public @NotNull BulletImpactParticleOptions fromNetwork(@NotNull ParticleType<BulletImpactParticleOptions> particleType,
-		                                                        @NotNull FriendlyByteBuf byteBuf) {
+		public BulletImpactParticleOptions fromNetwork(ParticleType<BulletImpactParticleOptions> particleType,
+		                                               FriendlyByteBuf byteBuf) {
 
 			return new BulletImpactParticleOptions(byteBuf.readFloat(), byteBuf.readInt());
 		}
@@ -79,7 +78,7 @@ public class BulletImpactParticleOptions implements ParticleOptions {
 	}
 
 	@Override
-	public @NotNull String writeToString() {
+	public String writeToString() {
 		return String.format(Locale.ROOT, "%s %s %.2f %s", ForgeRegistries.PARTICLE_TYPES
 				.getKey(getType()), color, scale, blockID);
 	}
@@ -89,7 +88,7 @@ public class BulletImpactParticleOptions implements ParticleOptions {
 	}
 
 	@Override
-	public @NotNull ParticleType<BulletImpactParticleOptions> getType() {
-		return DeferredRegistryHandler.BULLET_IMPACT_PARTICLE.get();
+	public ParticleType<BulletImpactParticleOptions> getType() {
+		return ParticleTypesRegistry.BULLET_IMPACT_PARTICLE.get();
 	}
 }

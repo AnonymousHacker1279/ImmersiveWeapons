@@ -2,7 +2,6 @@ package tech.anonymoushacker1279.immersiveweapons.potion;
 
 import net.minecraft.world.effect.*;
 import net.minecraft.world.entity.LivingEntity;
-import org.jetbrains.annotations.NotNull;
 
 public class AlcoholEffect extends MobEffect {
 
@@ -11,11 +10,11 @@ public class AlcoholEffect extends MobEffect {
 	/**
 	 * Constructor for AlcoholEffect.
 	 *
-	 * @param typeIn        the <code>EffectType</code> instance
-	 * @param liquidColorIn the liquid color
+	 * @param effectCategory the <code>MobEffectCategory</code> instance
+	 * @param liquidColorIn  the liquid color
 	 */
-	public AlcoholEffect(MobEffectCategory typeIn, int liquidColorIn) {
-		super(typeIn, liquidColorIn);
+	public AlcoholEffect(MobEffectCategory effectCategory, int liquidColorIn) {
+		super(effectCategory, liquidColorIn);
 	}
 
 	/**
@@ -25,7 +24,7 @@ public class AlcoholEffect extends MobEffect {
 	 * @param amplifier    the effect amplifier
 	 */
 	@Override
-	public void applyEffectTick(@NotNull LivingEntity livingEntity, int amplifier) {
+	public void applyEffectTick(LivingEntity livingEntity, int amplifier) {
 		livingEntity.addEffect(new MobEffectInstance(MobEffects.CONFUSION, duration, amplifier, false, false));
 		livingEntity.addEffect(new MobEffectInstance(MobEffects.DAMAGE_BOOST, duration, amplifier, false, false));
 		livingEntity.addEffect(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, duration, amplifier, false, false));

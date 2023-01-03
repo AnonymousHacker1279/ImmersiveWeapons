@@ -4,8 +4,7 @@ import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.Level;
-import org.jetbrains.annotations.NotNull;
-import tech.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
+import tech.anonymoushacker1279.immersiveweapons.init.SoundEventRegistry;
 import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
 
 public class DyingSoldierEntity extends AbstractDyingSoldierEntity {
@@ -27,7 +26,7 @@ public class DyingSoldierEntity extends AbstractDyingSoldierEntity {
 	 */
 	@Override
 	protected SoundEvent getAmbientSound() {
-		return DeferredRegistryHandler.DYING_SOLDIER_AMBIENT.get();
+		return SoundEventRegistry.DYING_SOLDIER_AMBIENT.get();
 	}
 
 	/**
@@ -47,8 +46,8 @@ public class DyingSoldierEntity extends AbstractDyingSoldierEntity {
 	 * @return SoundEvent
 	 */
 	@Override
-	protected SoundEvent getHurtSound(@NotNull DamageSource damageSourceIn) {
-		return DeferredRegistryHandler.DYING_SOLDIER_HURT.get();
+	protected SoundEvent getHurtSound(DamageSource damageSourceIn) {
+		return SoundEventRegistry.DYING_SOLDIER_HURT.get();
 	}
 
 	/**
@@ -58,7 +57,7 @@ public class DyingSoldierEntity extends AbstractDyingSoldierEntity {
 	 */
 	@Override
 	protected SoundEvent getDeathSound() {
-		return DeferredRegistryHandler.DYING_SOLDIER_DEATH.get();
+		return SoundEventRegistry.DYING_SOLDIER_DEATH.get();
 	}
 
 }

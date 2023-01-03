@@ -8,7 +8,8 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.client.event.*;
+import net.minecraftforge.client.event.RenderBlockScreenEffectEvent;
+import net.minecraftforge.client.event.RenderGuiOverlayEvent;
 import net.minecraftforge.client.event.ViewportEvent.ComputeFov;
 import net.minecraftforge.client.event.ViewportEvent.RenderFog;
 import net.minecraftforge.client.gui.overlay.ForgeGui;
@@ -16,28 +17,27 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
-import tech.anonymoushacker1279.immersiveweapons.block.crafting.small_parts.SmallPartsCraftables;
 import tech.anonymoushacker1279.immersiveweapons.client.gui.IWOverlays;
-import tech.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
+import tech.anonymoushacker1279.immersiveweapons.init.ItemRegistry;
 import tech.anonymoushacker1279.immersiveweapons.item.projectile.gun.data.GunData;
 
 @EventBusSubscriber(modid = ImmersiveWeapons.MOD_ID, bus = Bus.FORGE, value = Dist.CLIENT)
 public class ClientForgeEventSubscriber {
 
-	final static Minecraft minecraft = Minecraft.getInstance();
+	private static final Minecraft minecraft = Minecraft.getInstance();
 
 	/**
-	 * Event handler for the RenderBlockOverlayEvent.
+	 * Event handler for the RenderBlockScreenEffectEvent.
 	 *
-	 * @param event the <code>RenderBlockOverlayEvent</code> instance
+	 * @param event the <code>RenderBlockScreenEffectEvent</code> instance
 	 */
 	@SubscribeEvent
-	public static void renderBlockOverlayEvent(RenderBlockScreenEffectEvent event) {
+	public static void renderBlockScreenEffectEvent(RenderBlockScreenEffectEvent event) {
 		// Remove fire overlay from players wearing a full set of molten armor
-		if (event.getPlayer().getItemBySlot(EquipmentSlot.HEAD).getItem() == DeferredRegistryHandler.MOLTEN_HELMET.get() &&
-				event.getPlayer().getItemBySlot(EquipmentSlot.CHEST).getItem() == DeferredRegistryHandler.MOLTEN_CHESTPLATE.get() &&
-				event.getPlayer().getItemBySlot(EquipmentSlot.LEGS).getItem() == DeferredRegistryHandler.MOLTEN_LEGGINGS.get() &&
-				event.getPlayer().getItemBySlot(EquipmentSlot.FEET).getItem() == DeferredRegistryHandler.MOLTEN_BOOTS.get()) {
+		if (event.getPlayer().getItemBySlot(EquipmentSlot.HEAD).getItem() == ItemRegistry.MOLTEN_HELMET.get() &&
+				event.getPlayer().getItemBySlot(EquipmentSlot.CHEST).getItem() == ItemRegistry.MOLTEN_CHESTPLATE.get() &&
+				event.getPlayer().getItemBySlot(EquipmentSlot.LEGS).getItem() == ItemRegistry.MOLTEN_LEGGINGS.get() &&
+				event.getPlayer().getItemBySlot(EquipmentSlot.FEET).getItem() == ItemRegistry.MOLTEN_BOOTS.get()) {
 			if (event.getPlayer().isInLava()) {
 				if (event.getBlockState() == Blocks.FIRE.defaultBlockState()) {
 					event.setCanceled(true);
@@ -52,13 +52,13 @@ public class ClientForgeEventSubscriber {
 	 * @param event the <code>RenderFogEvent</code> instance
 	 */
 	@SubscribeEvent
-	public static void fogDensityEvent(RenderFog event) {
+	public static void renderFogEvent(RenderFog event) {
 		// Reduce lava fog from players wearing a full set of molten armor
 		Player player = minecraft.player;
-		if (player != null && player.getItemBySlot(EquipmentSlot.HEAD).getItem() == DeferredRegistryHandler.MOLTEN_HELMET.get() &&
-				player.getItemBySlot(EquipmentSlot.CHEST).getItem() == DeferredRegistryHandler.MOLTEN_CHESTPLATE.get() &&
-				player.getItemBySlot(EquipmentSlot.LEGS).getItem() == DeferredRegistryHandler.MOLTEN_LEGGINGS.get() &&
-				player.getItemBySlot(EquipmentSlot.FEET).getItem() == DeferredRegistryHandler.MOLTEN_BOOTS.get()) {
+		if (player != null && player.getItemBySlot(EquipmentSlot.HEAD).getItem() == ItemRegistry.MOLTEN_HELMET.get() &&
+				player.getItemBySlot(EquipmentSlot.CHEST).getItem() == ItemRegistry.MOLTEN_CHESTPLATE.get() &&
+				player.getItemBySlot(EquipmentSlot.LEGS).getItem() == ItemRegistry.MOLTEN_LEGGINGS.get() &&
+				player.getItemBySlot(EquipmentSlot.FEET).getItem() == ItemRegistry.MOLTEN_BOOTS.get()) {
 			if (player.isInLava()) {
 				if (minecraft.level != null) {
 					BlockState state = minecraft.level.getBlockState(new BlockPos(player.blockPosition().above(1)));
@@ -72,19 +72,8 @@ public class ClientForgeEventSubscriber {
 		}
 	}
 
-	/**
-	 * Event handler for the RecipesUpdatedEvent event.
-	 *
-	 * @param event the <code>RecipesUpdatedEvent</code> instance
-	 */
 	@SubscribeEvent
-	public static void recipesUpdatedEvent(RecipesUpdatedEvent event) {
-		ImmersiveWeapons.LOGGER.info("Recipes have updated, re-initializing custom crafting systems");
-		SmallPartsCraftables.init(event.getRecipeManager());
-	}
-
-	@SubscribeEvent
-	public static void playerFOVEvent(ComputeFov event) {
+	public static void computeFovEvent(ComputeFov event) {
 		if (event.getFOV() != 70) {
 			GunData.playerFOV = event.getFOV();
 		}
@@ -94,7 +83,7 @@ public class ClientForgeEventSubscriber {
 	}
 
 	@SubscribeEvent
-	public static void renderOverlayEvent(RenderGuiOverlayEvent.Post event) {
+	public static void RenderGuiOverlayPostEvent(RenderGuiOverlayEvent.Post event) {
 		if (GunData.changingPlayerFOV != -1) {
 			if (minecraft.options.getCameraType().isFirstPerson()) {
 				int screenHeight = event.getWindow().getGuiScaledHeight();
@@ -103,11 +92,13 @@ public class ClientForgeEventSubscriber {
 				float deltaFrame = minecraft.getDeltaFrameTime() / 8;
 				GunData.scopeScale = Mth.lerp(0.25F * deltaFrame, GunData.scopeScale, 1.125F);
 
-				IWOverlays.SCOPE_ELEMENT.render((ForgeGui) minecraft.gui,
-						event.getPoseStack(),
-						event.getPartialTick(),
-						screenWidth,
-						screenHeight);
+				if (IWOverlays.SCOPE_ELEMENT != null) {
+					IWOverlays.SCOPE_ELEMENT.render((ForgeGui) minecraft.gui,
+							event.getPoseStack(),
+							event.getPartialTick(),
+							screenWidth,
+							screenHeight);
+				}
 			}
 		}
 	}

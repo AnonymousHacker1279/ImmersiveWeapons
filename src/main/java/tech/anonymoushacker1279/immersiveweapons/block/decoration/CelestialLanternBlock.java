@@ -8,10 +8,9 @@ import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.shapes.*;
-import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import tech.anonymoushacker1279.immersiveweapons.blockentity.CelestialLanternBlockEntity;
 
-import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,15 +27,15 @@ public class CelestialLanternBlock extends LanternBlock implements EntityBlock {
 	}
 
 	@Override
-	public @NotNull VoxelShape getShape(@NotNull BlockState blockState, @NotNull BlockGetter blockGetter,
-	                                    @NotNull BlockPos blockPos, @NotNull CollisionContext collisionContext) {
+	public VoxelShape getShape(BlockState blockState, BlockGetter blockGetter,
+	                           BlockPos blockPos, CollisionContext collisionContext) {
 
 		return AABB;
 	}
 
 	@Override
-	public void setPlacedBy(@NotNull Level pLevel, @NotNull BlockPos pPos, @NotNull BlockState pState,
-	                        @Nullable LivingEntity pPlacer, @NotNull ItemStack pStack) {
+	public void setPlacedBy(Level pLevel, BlockPos pPos, BlockState pState,
+	                        @Nullable LivingEntity pPlacer, ItemStack pStack) {
 
 		super.setPlacedBy(pLevel, pPos, pState, pPlacer, pStack);
 		if (!pLevel.isClientSide) {
@@ -45,7 +44,7 @@ public class CelestialLanternBlock extends LanternBlock implements EntityBlock {
 	}
 
 	@Override
-	public void destroy(@NotNull LevelAccessor pLevel, @NotNull BlockPos pPos, @NotNull BlockState pState) {
+	public void destroy(LevelAccessor pLevel, BlockPos pPos, BlockState pState) {
 		super.destroy(pLevel, pPos, pState);
 
 		if (!pLevel.isClientSide()) {
@@ -61,7 +60,7 @@ public class CelestialLanternBlock extends LanternBlock implements EntityBlock {
 	 * @return BlockEntity
 	 */
 	@Override
-	public BlockEntity newBlockEntity(@NotNull BlockPos blockPos, @NotNull BlockState blockState) {
+	public BlockEntity newBlockEntity(BlockPos blockPos, BlockState blockState) {
 		return new CelestialLanternBlockEntity(blockPos, blockState);
 	}
 }

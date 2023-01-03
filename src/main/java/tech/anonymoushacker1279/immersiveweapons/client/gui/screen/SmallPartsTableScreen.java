@@ -18,16 +18,15 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.block.crafting.small_parts.SmallPartsCraftables;
-import tech.anonymoushacker1279.immersiveweapons.container.SmallPartsContainer;
+import tech.anonymoushacker1279.immersiveweapons.menu.SmallPartsMenu;
 
-import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SmallPartsTableScreen extends AbstractContainerScreen<SmallPartsContainer> {
+public class SmallPartsTableScreen extends AbstractContainerScreen<SmallPartsMenu> {
 
 	private static final ResourceLocation BG_LOCATION = new ResourceLocation(ImmersiveWeapons.MOD_ID + ":textures/gui/container/small_parts_table.png");
 	private static int TOTAL_PATTERN_ROWS = 0;
@@ -45,20 +44,20 @@ public class SmallPartsTableScreen extends AbstractContainerScreen<SmallPartsCon
 	private boolean scrolling;
 	private int startIndex = 1;
 
-	public SmallPartsTableScreen(SmallPartsContainer pMenu, Inventory pPlayerInventory, Component pTitle) {
+	public SmallPartsTableScreen(SmallPartsMenu pMenu, Inventory pPlayerInventory, Component pTitle) {
 		super(pMenu, pPlayerInventory, pTitle);
 		pMenu.registerUpdateListener(this::containerChanged);
 		titleLabelY = 5;
 	}
 
 	@Override
-	public void render(@NotNull PoseStack pPoseStack, int pMouseX, int pMouseY, float pPartialTick) {
+	public void render(PoseStack pPoseStack, int pMouseX, int pMouseY, float pPartialTick) {
 		super.render(pPoseStack, pMouseX, pMouseY, pPartialTick);
 		renderTooltip(pPoseStack, pMouseX, pMouseY);
 	}
 
 	@Override
-	protected void renderBg(@NotNull PoseStack pPoseStack, float pPartialTick, int pX, int pY) {
+	protected void renderBg(PoseStack pPoseStack, float pPartialTick, int pX, int pY) {
 		renderBackground(pPoseStack);
 		RenderSystem.setShader(GameRenderer::getPositionTexShader);
 		RenderSystem.setShaderTexture(0, BG_LOCATION);
@@ -77,6 +76,7 @@ public class SmallPartsTableScreen extends AbstractContainerScreen<SmallPartsCon
 				0, SCROLLER_WIDTH, SCROLLER_HEIGHT);
 
 		Lighting.setupForFlatItems();
+		assert minecraft != null;
 		MultiBufferSource.BufferSource bufferSource = minecraft.renderBuffers().bufferSource();
 
 		if (resultPatterns != null) {
@@ -135,6 +135,7 @@ public class SmallPartsTableScreen extends AbstractContainerScreen<SmallPartsCon
 		poseStack.scale(-6.0F, -6.0F, -1.0F);
 		poseStack.translate(-1.25D, 1.35D, 0.5D);
 		poseStack.scale(2.5f, 2.5f, 2.5f);
+		assert minecraft != null;
 		MultiBufferSource.BufferSource bufferSource = minecraft.renderBuffers().bufferSource();
 		Minecraft.getInstance().getItemRenderer().renderStatic(new ItemStack(material),
 				TransformType.FIXED,
@@ -162,9 +163,14 @@ public class SmallPartsTableScreen extends AbstractContainerScreen<SmallPartsCon
 				int indexOffset = i - startIndex;
 				double x = pMouseX - (double) (leftPosOffset + indexOffset % 3 * PATTERN_IMAGE_SIZE);
 				double y = pMouseY - (double) (rightPosOffset + indexOffset / 3 * PATTERN_IMAGE_SIZE);
-				if (x >= 0.0D && y >= 0.0D && x < 16.0D && y < 16.0D && menu.clickMenuButton(minecraft.player, i)) {
+				if (minecraft != null && minecraft.player != null
+						&& x >= 0.0D && y >= 0.0D && x < 16.0D && y < 16.0D
+						&& menu.clickMenuButton(minecraft.player, i)) {
+
 					Minecraft.getInstance().getSoundManager().play(SimpleSoundInstance.forUI(SoundEvents.UI_LOOM_SELECT_PATTERN, 1.0F));
-					minecraft.gameMode.handleInventoryButtonClick((menu).containerId, i);
+					if (minecraft.gameMode != null) {
+						minecraft.gameMode.handleInventoryButtonClick((menu).containerId, i);
+					}
 					return true;
 				}
 			}

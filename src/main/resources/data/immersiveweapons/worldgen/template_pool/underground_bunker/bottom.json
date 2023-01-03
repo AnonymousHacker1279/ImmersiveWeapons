@@ -1,0 +1,15 @@
+{
+	"name": "immersiveweapons:underground_bunker/underground_bunker_bottom",
+	"fallback": "minecraft:empty",
+	"elements": [
+		{
+			"weight": 1,
+			"element": {
+				"location": "immersiveweapons:underground_bunker/underground_bunker_bottom",
+				"processors": "minecraft:empty",
+				"projection": "rigid",
+				"element_type": "minecraft:single_pool_element"
+			}
+		}
+	]
+}

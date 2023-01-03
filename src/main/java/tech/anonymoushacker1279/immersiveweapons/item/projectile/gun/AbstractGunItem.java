@@ -18,11 +18,9 @@ import net.minecraft.world.phys.Vec2;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.event.ForgeEventFactory;
 import net.minecraftforge.network.PacketDistributor;
-import org.jetbrains.annotations.NotNull;
 import tech.anonymoushacker1279.immersiveweapons.data.tags.groups.immersiveweapons.ImmersiveWeaponsItemTagGroups;
 import tech.anonymoushacker1279.immersiveweapons.entity.projectile.BulletEntity;
-import tech.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
-import tech.anonymoushacker1279.immersiveweapons.init.PacketHandler;
+import tech.anonymoushacker1279.immersiveweapons.init.*;
 import tech.anonymoushacker1279.immersiveweapons.item.projectile.bullet.AbstractBulletItem;
 import tech.anonymoushacker1279.immersiveweapons.item.projectile.gun.data.GunData;
 import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
@@ -52,7 +50,7 @@ public abstract class AbstractGunItem extends Item implements Vanishable {
 	 * @param timeLeft     the time left from charging
 	 */
 	@Override
-	public void releaseUsing(@NotNull ItemStack itemStack, @NotNull Level level, @NotNull LivingEntity livingEntity,
+	public void releaseUsing(ItemStack itemStack, Level level, LivingEntity livingEntity,
 	                         int timeLeft) {
 
 		if (livingEntity instanceof Player player) {
@@ -69,11 +67,11 @@ public abstract class AbstractGunItem extends Item implements Vanishable {
 			int bulletsToFire = isCreative ? getMaxBulletsToFire() : getBulletsToFire(ammo);
 
 			// Roll for misfire
-			if (ammo.getItem() == DeferredRegistryHandler.WOODEN_MUSKET_BALL.get()) {
+			if (ammo.getItem() == ItemRegistry.WOODEN_MUSKET_BALL.get()) {
 				if (GeneralUtilities.getRandomNumber(1, 10) <= 3) {
 					misfire = true;
 				}
-			} else if (ammo.getItem() == DeferredRegistryHandler.STONE_MUSKET_BALL.get()) {
+			} else if (ammo.getItem() == ItemRegistry.STONE_MUSKET_BALL.get()) {
 				if (GeneralUtilities.getRandomNumber(1, 20) <= 3) {
 					misfire = true;
 				}
@@ -146,7 +144,7 @@ public abstract class AbstractGunItem extends Item implements Vanishable {
 				Vec3 particlePosition = new Vec3(eyePosition.x + d0, eyePosition.y + d1, eyePosition.z + d2);
 
 				for (int i = 0; i < bulletsToFire; ++i) {
-					level.addParticle(DeferredRegistryHandler.MUZZLE_FLASH_PARTICLE.get(),
+					level.addParticle(ParticleTypesRegistry.MUZZLE_FLASH_PARTICLE.get(),
 							particlePosition.x, particlePosition.y, particlePosition.z,
 							GeneralUtilities.getRandomNumber(-0.01d, 0.01d),
 							GeneralUtilities.getRandomNumber(-0.01d, 0.01d),
@@ -215,7 +213,7 @@ public abstract class AbstractGunItem extends Item implements Vanishable {
 	 * @return boolean
 	 */
 	@Override
-	public boolean isValidRepairItem(@NotNull ItemStack toRepair, @NotNull ItemStack repair) {
+	public boolean isValidRepairItem(ItemStack toRepair, ItemStack repair) {
 		return getRepairMaterial().test(repair) || super.isValidRepairItem(toRepair, repair);
 	}
 
@@ -244,8 +242,8 @@ public abstract class AbstractGunItem extends Item implements Vanishable {
 	 * @return ActionResult extending ItemStack
 	 */
 	@Override
-	public @NotNull InteractionResultHolder<ItemStack> use(@NotNull Level worldIn, Player playerIn,
-	                                                       @NotNull InteractionHand handIn) {
+	public InteractionResultHolder<ItemStack> use(Level worldIn, Player playerIn,
+	                                              InteractionHand handIn) {
 
 		ItemStack itemInHand = playerIn.getItemInHand(handIn);
 		boolean hasAmmo = !findAmmo(itemInHand, playerIn).isEmpty();
@@ -273,9 +271,9 @@ public abstract class AbstractGunItem extends Item implements Vanishable {
 	}
 
 	@Override
-	public void inventoryTick(@NotNull ItemStack pStack, @NotNull Level pLevel, @NotNull Entity pEntity, int pSlotId, boolean pIsSelected) {
+	public void inventoryTick(ItemStack pStack, Level pLevel, Entity pEntity, int pSlotId, boolean pIsSelected) {
 		if (pEntity instanceof Player player) {
-			if (pLevel.isClientSide && !player.getUseItem().is(DeferredRegistryHandler.MUSKET_SCOPE.get())) {
+			if (pLevel.isClientSide && !player.getUseItem().is(ItemRegistry.MUSKET_SCOPE.get())) {
 				GunData.changingPlayerFOV = -1;
 				GunData.scopeScale = 0.5f;
 			}
@@ -334,7 +332,7 @@ public abstract class AbstractGunItem extends Item implements Vanishable {
 	 * @return Item
 	 */
 	public Item defaultAmmo() {
-		return DeferredRegistryHandler.IRON_MUSKET_BALL.get();
+		return ItemRegistry.IRON_MUSKET_BALL.get();
 	}
 
 
@@ -345,7 +343,7 @@ public abstract class AbstractGunItem extends Item implements Vanishable {
 	 * @return int
 	 */
 	@Override
-	public int getUseDuration(@NotNull ItemStack stack) {
+	public int getUseDuration(ItemStack stack) {
 		return 100;
 	}
 
@@ -355,7 +353,7 @@ public abstract class AbstractGunItem extends Item implements Vanishable {
 	 * @return SoundEvent
 	 */
 	SoundEvent getMisfireSound() {
-		return DeferredRegistryHandler.FLINTLOCK_PISTOL_MISFIRE.get();
+		return SoundEventRegistry.FLINTLOCK_PISTOL_MISFIRE.get();
 	}
 
 	/**
@@ -364,7 +362,7 @@ public abstract class AbstractGunItem extends Item implements Vanishable {
 	 * @return SoundEvent
 	 */
 	public SoundEvent getFireSound() {
-		return DeferredRegistryHandler.FLINTLOCK_PISTOL_FIRE.get();
+		return SoundEventRegistry.FLINTLOCK_PISTOL_FIRE.get();
 	}
 
 	/**

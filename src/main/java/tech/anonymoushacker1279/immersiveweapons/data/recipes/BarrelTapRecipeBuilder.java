@@ -9,10 +9,9 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraftforge.registries.ForgeRegistries;
-import org.jetbrains.annotations.NotNull;
-import tech.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
+import org.jetbrains.annotations.Nullable;
+import tech.anonymoushacker1279.immersiveweapons.init.RecipeSerializerRegistry;
 
-import javax.annotation.Nullable;
 import java.util.Objects;
 import java.util.function.Consumer;
 
@@ -32,7 +31,7 @@ public class BarrelTapRecipeBuilder {
 	}
 
 	public static BarrelTapRecipeBuilder fermenting(Ingredient block, int cookTime, Item pResult) {
-		return new BarrelTapRecipeBuilder(DeferredRegistryHandler.BARREL_TAP_RECIPE_SERIALIZER.get(), block, cookTime, pResult);
+		return new BarrelTapRecipeBuilder(RecipeSerializerRegistry.BARREL_TAP_RECIPE_SERIALIZER.get(), block, cookTime, pResult);
 	}
 
 	public BarrelTapRecipeBuilder unlocks(String pName, CriterionTriggerInstance pCriterion) {
@@ -50,8 +49,7 @@ public class BarrelTapRecipeBuilder {
 				.addCriterion("has_the_recipe", RecipeUnlockedTrigger.unlocked(pId))
 				.rewards(AdvancementRewards.Builder.recipe(pId)).requirements(RequirementsStrategy.OR);
 		pFinishedRecipeConsumer.accept(new BarrelTapRecipeBuilder.Result(pId, type, material, materialCount, result, advancement,
-				new ResourceLocation(pId.getNamespace(), "recipes/" +
-						Objects.requireNonNull(result.getItemCategory()).getRecipeFolderName() + "/" + pId.getPath())));
+				new ResourceLocation(pId.getNamespace(), "recipes/" + pId.getPath())));
 	}
 
 	private void ensureValid(ResourceLocation pId) {
@@ -94,12 +92,12 @@ public class BarrelTapRecipeBuilder {
 		 * Gets the ID for the recipe.
 		 */
 		@Override
-		public @NotNull ResourceLocation getId() {
+		public ResourceLocation getId() {
 			return id;
 		}
 
 		@Override
-		public @NotNull RecipeSerializer<?> getType() {
+		public RecipeSerializer<?> getType() {
 			return type;
 		}
 

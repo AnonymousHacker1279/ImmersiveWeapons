@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/wall_inventory",
+  "textures": {
+    "wall": "immersiveweapons:block/cloud_marble_bricks"
+  }
+}

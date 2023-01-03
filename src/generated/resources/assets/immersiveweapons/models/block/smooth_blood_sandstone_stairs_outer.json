@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/outer_stairs",
+  "textures": {
+    "bottom": "immersiveweapons:block/blood_sandstone_top",
+    "side": "immersiveweapons:block/blood_sandstone_top",
+    "top": "immersiveweapons:block/blood_sandstone_top"
+  }
+}

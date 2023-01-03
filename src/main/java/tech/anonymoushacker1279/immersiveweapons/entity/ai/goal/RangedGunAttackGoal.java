@@ -21,7 +21,7 @@ public class RangedGunAttackGoal<T extends PathfinderMob & RangedAttackMob> exte
 	protected boolean strafingClockwise;
 	protected boolean strafingBackwards;
 	protected int strafingTime = -1;
-	protected Item gunItem;
+	protected final Item gunItem;
 
 	/**
 	 * Constructor for RangedGunAttackGoal.

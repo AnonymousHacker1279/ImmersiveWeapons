@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "group": "wood",
+  "key": {
+    "a": {
+      "item": "immersiveweapons:stardust_log"
+    }
+  },
+  "pattern": [
+    "aa",
+    "aa"
+  ],
+  "result": {
+    "count": 3,
+    "item": "immersiveweapons:stardust_wood"
+  }
+}

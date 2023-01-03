@@ -8,6 +8,7 @@ import net.minecraft.world.entity.ai.targeting.TargetingConditions;
 import net.minecraft.world.entity.npc.Villager;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.phys.AABB;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.EnumSet;
 import java.util.List;
@@ -16,6 +17,7 @@ public class DefendVillageTargetGoal extends TargetGoal {
 
 	private final Mob mobEntity;
 	private final TargetingConditions distancePredicate = (TargetingConditions.forCombat()).range(64.0D);
+	@Nullable
 	private LivingEntity villageAggressorTarget;
 
 	/**

@@ -1,0 +1,15 @@
+{
+	"name": "immersiveweapons:celestial_asteroid",
+	"fallback": "minecraft:empty",
+	"elements": [
+		{
+			"weight": 1,
+			"element": {
+				"location": "immersiveweapons:celestial_asteroid",
+				"processors": "minecraft:empty",
+				"projection": "rigid",
+				"element_type": "minecraft:single_pool_element"
+			}
+		}
+	]
+}

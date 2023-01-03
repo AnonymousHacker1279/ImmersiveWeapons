@@ -1,15 +1,16 @@
 {
   "type": "minecraft:crafting_shaped",
-  "group": "burned_oak",
+  "category": "building",
+  "group": "wooden_door",
   "key": {
     "a": {
       "item": "immersiveweapons:burned_oak_planks"
     }
   },
   "pattern": [
-    "aa ",
-    "aa ",
-    "aa "
+    "aa",
+    "aa",
+    "aa"
   ],
   "result": {
     "count": 3,

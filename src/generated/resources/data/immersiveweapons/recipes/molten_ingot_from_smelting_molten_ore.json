@@ -1,5 +1,6 @@
 {
   "type": "minecraft:smelting",
+  "category": "misc",
   "cookingtime": 1200,
   "experience": 1.2,
   "group": "molten",

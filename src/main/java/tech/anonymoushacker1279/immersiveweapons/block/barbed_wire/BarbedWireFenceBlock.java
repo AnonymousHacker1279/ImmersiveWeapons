@@ -5,7 +5,6 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.FenceBlock;
 import net.minecraft.world.level.block.state.BlockState;
-import org.jetbrains.annotations.NotNull;
 
 public class BarbedWireFenceBlock extends FenceBlock implements BarbedWireUtils {
 
@@ -29,7 +28,7 @@ public class BarbedWireFenceBlock extends FenceBlock implements BarbedWireUtils 
 	 */
 	@SuppressWarnings("deprecation")
 	@Override
-	public void entityInside(@NotNull BlockState state, @NotNull Level level, @NotNull BlockPos pos, @NotNull Entity entity) {
+	public void entityInside(BlockState state, Level level, BlockPos pos, Entity entity) {
 		handleEntityContact(state, level, pos, entity);
 	}
 }

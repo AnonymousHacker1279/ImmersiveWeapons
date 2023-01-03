@@ -10,6 +10,8 @@ public class ImmersiveWeaponsItemTagGroups {
 
 	public static final TagKey<Item> BURNED_OAK_LOGS = ItemTags.create(new ResourceLocation(ImmersiveWeapons.MOD_ID,
 			"burned_oak_logs"));
+	public static final TagKey<Item> STARDUST_LOGS = ItemTags.create(new ResourceLocation(ImmersiveWeapons.MOD_ID,
+			"stardust_logs"));
 	public static final TagKey<Item> FLARES = ItemTags.create(new ResourceLocation(ImmersiveWeapons.MOD_ID,
 			"projectiles/flares"));
 	public static final TagKey<Item> MUSKET_BALLS = ItemTags.create(new ResourceLocation(ImmersiveWeapons.MOD_ID,
@@ -30,4 +32,10 @@ public class ImmersiveWeaponsItemTagGroups {
 			"shards/stone"));
 	public static final TagKey<Item> WOODEN_SHARDS = ItemTags.create(new ResourceLocation(ImmersiveWeapons.MOD_ID,
 			"shards/wood"));
+	public static final TagKey<Item> OBSIDIAN_RODS = ItemTags.create(new ResourceLocation(ImmersiveWeapons.MOD_ID,
+			"rods/obsidian"));
+	public static final TagKey<Item> ASTRAL_INGOTS = ItemTags.create(new ResourceLocation(ImmersiveWeapons.MOD_ID,
+			"ingots/astral"));
+	public static final TagKey<Item> STARSTORM_INGOTS = ItemTags.create(new ResourceLocation(ImmersiveWeapons.MOD_ID,
+			"ingots/starstorm"));
 }

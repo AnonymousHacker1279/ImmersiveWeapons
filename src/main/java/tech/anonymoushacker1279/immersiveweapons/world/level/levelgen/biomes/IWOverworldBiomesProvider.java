@@ -7,6 +7,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.biome.Biomes;
 import net.minecraft.world.level.biome.Climate.ParameterPoint;
+import tech.anonymoushacker1279.immersiveweapons.data.biomes.IWBiomes;
 import terrablender.api.Region;
 import terrablender.api.RegionType;
 
@@ -21,6 +22,6 @@ public class IWOverworldBiomesProvider extends Region {
 	@Override
 	public void addBiomes(Registry<Biome> registry, Consumer<Pair<ParameterPoint, ResourceKey<Biome>>> mapper) {
 
-		addModifiedVanillaOverworldBiomes(mapper, modifier -> modifier.replaceBiome(Biomes.PLAINS, BiomesAndDimensions.BATTLEFIELD));
+		addModifiedVanillaOverworldBiomes(mapper, modifier -> modifier.replaceBiome(Biomes.PLAINS, IWBiomes.BATTLEFIELD));
 	}
 }

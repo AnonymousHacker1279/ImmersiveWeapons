@@ -6,23 +6,26 @@ import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.ArmorMaterial;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
-import org.jetbrains.annotations.NotNull;
-import tech.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
+import tech.anonymoushacker1279.immersiveweapons.init.ItemRegistry;
 
 import java.util.function.Supplier;
 
 public enum CustomArmorMaterials implements ArmorMaterial {
 
-	MOLTEN("molten", 39, new int[]{5, 6, 9, 4}, 15, SoundEvents.ARMOR_EQUIP_NETHERITE,
-			3.25F, () -> Ingredient.of(DeferredRegistryHandler.MOLTEN_INGOT.get()), 0.12F),
-	COPPER("copper", 13, new int[]{1, 4, 5, 1}, 9, SoundEvents.ARMOR_EQUIP_IRON,
+	MOLTEN("molten", 39, new int[]{5, 6, 9, 4}, 15,
+			3.25F, () -> Ingredient.of(ItemRegistry.MOLTEN_INGOT.get()), 0.12F),
+	COPPER("copper", 13, new int[]{1, 4, 5, 1}, 9,
 			0.0F, () -> Ingredient.of(Items.COPPER_INGOT), 0.0F),
-	TESLA("tesla", 42, new int[]{7, 8, 11, 6}, 20, SoundEvents.ARMOR_EQUIP_IRON,
-			3.5F, () -> Ingredient.of(DeferredRegistryHandler.TESLA_INGOT.get()), 0.05F),
-	COBALT("cobalt", 19, new int[]{3, 5, 6, 3}, 10, SoundEvents.ARMOR_EQUIP_IRON,
-			0.0F, () -> Ingredient.of(DeferredRegistryHandler.COBALT_INGOT.get()), 0.0F),
-	VENTUS("ventus", 39, new int[]{5, 6, 9, 5}, 14, SoundEvents.ARMOR_EQUIP_NETHERITE,
-			2.75F, () -> Ingredient.of(DeferredRegistryHandler.VENTUS_SHARD.get()), 0.02F);
+	TESLA("tesla", 42, new int[]{7, 8, 11, 6}, 20,
+			3.5F, () -> Ingredient.of(ItemRegistry.TESLA_INGOT.get()), 0.05F),
+	COBALT("cobalt", 19, new int[]{3, 5, 6, 3}, 10,
+			0.0F, () -> Ingredient.of(ItemRegistry.COBALT_INGOT.get()), 0.0F),
+	VENTUS("ventus", 39, new int[]{5, 6, 9, 5}, 14,
+			2.75F, () -> Ingredient.of(ItemRegistry.VENTUS_SHARD.get()), 0.02F),
+	ASTRAL("astral", 25, new int[]{4, 5, 6, 4}, 22,
+			1.8F, () -> Ingredient.of(ItemRegistry.ASTRAL_INGOT.get()), 0.0F),
+	STARSTORM("starstorm", 32, new int[]{5, 5, 6, 4}, 15,
+			2.2F, () -> Ingredient.of(ItemRegistry.STARSTORM_INGOT.get()), 0.0F);
 
 	static final int[] HEALTH_PER_SLOT = new int[]{13, 15, 16, 11};
 	private final String name;
@@ -43,19 +46,18 @@ public enum CustomArmorMaterials implements ArmorMaterial {
 	 * @param slotArmorValues      an array of defense values for each armor piece. From left to right: helmet,
 	 *                             chestplate, leggings, boots.
 	 * @param enchantability       the enchantability value
-	 * @param equipSound           the <code>SoundEvent</code> providing a sound to play when the armor is equipped
 	 * @param toughness            the armor toughness value
 	 * @param repairMaterial       the repair material
 	 * @param knockbackResist      the knockback resistance value
 	 */
 	CustomArmorMaterials(String name, int durabilityMultiplier, int[] slotArmorValues, int enchantability,
-	                     SoundEvent equipSound, float toughness, Supplier<Ingredient> repairMaterial, float knockbackResist) {
+	                     float toughness, Supplier<Ingredient> repairMaterial, float knockbackResist) {
 
 		this.name = name;
 		this.durabilityMultiplier = durabilityMultiplier;
 		this.slotArmorValues = slotArmorValues;
 		this.enchantability = enchantability;
-		this.equipSound = equipSound;
+		equipSound = SoundEvents.ARMOR_EQUIP_IRON; // This is set to a non-default value in post-init
 		this.toughness = toughness;
 		this.repairMaterial = repairMaterial;
 		this.knockbackResist = knockbackResist;
@@ -99,7 +101,7 @@ public enum CustomArmorMaterials implements ArmorMaterial {
 	 * @return SoundEvent
 	 */
 	@Override
-	public @NotNull SoundEvent getEquipSound() {
+	public SoundEvent getEquipSound() {
 		return equipSound;
 	}
 
@@ -116,7 +118,7 @@ public enum CustomArmorMaterials implements ArmorMaterial {
 	 * @return Ingredient
 	 */
 	@Override
-	public @NotNull Ingredient getRepairIngredient() {
+	public Ingredient getRepairIngredient() {
 		return repairMaterial.get();
 	}
 
@@ -126,7 +128,7 @@ public enum CustomArmorMaterials implements ArmorMaterial {
 	 * @return String
 	 */
 	@Override
-	public @NotNull String getName() {
+	public String getName() {
 		return name;
 	}
 

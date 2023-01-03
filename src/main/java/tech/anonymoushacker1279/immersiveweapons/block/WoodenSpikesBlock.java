@@ -19,8 +19,7 @@ import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import org.jetbrains.annotations.NotNull;
-import tech.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
+import tech.anonymoushacker1279.immersiveweapons.init.EffectRegistry;
 import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
 
 public class WoodenSpikesBlock extends HorizontalDirectionalBlock implements SimpleWaterloggedBlock {
@@ -62,7 +61,7 @@ public class WoodenSpikesBlock extends HorizontalDirectionalBlock implements Sim
 	 */
 	@SuppressWarnings("deprecation")
 	@Override
-	public @NotNull FluidState getFluidState(BlockState state) {
+	public FluidState getFluidState(BlockState state) {
 		return state.getValue(WATERLOGGED) ? Fluids.WATER.getSource(false) : super.getFluidState(state);
 	}
 
@@ -87,8 +86,8 @@ public class WoodenSpikesBlock extends HorizontalDirectionalBlock implements Sim
 	 */
 	@SuppressWarnings("deprecation")
 	@Override
-	public @NotNull VoxelShape getShape(@NotNull BlockState state, @NotNull BlockGetter reader, @NotNull BlockPos pos,
-	                                    @NotNull CollisionContext selectionContext) {
+	public VoxelShape getShape(BlockState state, BlockGetter reader, BlockPos pos,
+	                           CollisionContext selectionContext) {
 
 		return SHAPE;
 	}
@@ -102,7 +101,7 @@ public class WoodenSpikesBlock extends HorizontalDirectionalBlock implements Sim
 	 * @return boolean
 	 */
 	@Override
-	public boolean propagatesSkylightDown(@NotNull BlockState state, @NotNull BlockGetter reader, @NotNull BlockPos pos) {
+	public boolean propagatesSkylightDown(BlockState state, BlockGetter reader, BlockPos pos) {
 		return true;
 	}
 
@@ -117,7 +116,7 @@ public class WoodenSpikesBlock extends HorizontalDirectionalBlock implements Sim
 	 */
 	@SuppressWarnings("deprecation")
 	@Override
-	public void entityInside(@NotNull BlockState state, @NotNull Level level, @NotNull BlockPos pos, @NotNull Entity entity) {
+	public void entityInside(BlockState state, Level level, BlockPos pos, Entity entity) {
 		if (entity instanceof LivingEntity) {
 			entity.makeStuckInBlock(state, new Vec3(0.85F, 0.80D, 0.85F));
 			if (!level.isClientSide && (entity.xOld != entity.getX() || entity.zOld != entity.getZ())) {
@@ -131,7 +130,7 @@ public class WoodenSpikesBlock extends HorizontalDirectionalBlock implements Sim
 					}
 
 					if (GeneralUtilities.getRandomNumber(0.0f, 1.0f) <= 0.15f) {
-						((LivingEntity) entity).addEffect(new MobEffectInstance(DeferredRegistryHandler.BLEEDING_EFFECT.get(),
+						((LivingEntity) entity).addEffect(new MobEffectInstance(EffectRegistry.BLEEDING_EFFECT.get(),
 								200, 0, true, false));
 					}
 				}

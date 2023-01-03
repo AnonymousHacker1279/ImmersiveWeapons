@@ -1,6 +1,6 @@
 {
   "type": "minecraft:crafting_shaped",
-  "group": "copper",
+  "category": "equipment",
   "key": {
     "a": {
       "tag": "forge:ingots/copper"
@@ -13,9 +13,9 @@
     }
   },
   "pattern": [
-    " a ",
-    " b ",
-    " c "
+    "a",
+    "b",
+    "c"
   ],
   "result": {
     "count": 4,

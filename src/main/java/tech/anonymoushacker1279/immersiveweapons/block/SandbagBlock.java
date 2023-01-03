@@ -16,8 +16,7 @@ import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import org.jetbrains.annotations.NotNull;
-import tech.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
+import tech.anonymoushacker1279.immersiveweapons.init.BlockItemRegistry;
 
 public class SandbagBlock extends HorizontalDirectionalBlock {
 
@@ -69,8 +68,8 @@ public class SandbagBlock extends HorizontalDirectionalBlock {
 	 * @return VoxelShape
 	 */
 	@Override
-	public @NotNull VoxelShape getShape(BlockState state, @NotNull BlockGetter blockGetter, @NotNull BlockPos pos,
-	                                    @NotNull CollisionContext collisionContext) {
+	public VoxelShape getShape(BlockState state, BlockGetter blockGetter, BlockPos pos,
+	                           CollisionContext collisionContext) {
 
 		return switch (state.getValue(BAGS)) {
 			case 1 -> SHAPE_1;
@@ -89,7 +88,7 @@ public class SandbagBlock extends HorizontalDirectionalBlock {
 	 * @return float
 	 */
 	@Override
-	public float getShadeBrightness(@NotNull BlockState state, @NotNull BlockGetter blockGetter, @NotNull BlockPos pos) {
+	public float getShadeBrightness(BlockState state, BlockGetter blockGetter, BlockPos pos) {
 		return 1.0F;
 	}
 
@@ -106,11 +105,11 @@ public class SandbagBlock extends HorizontalDirectionalBlock {
 	 * @return ActionResultType
 	 */
 	@Override
-	public @NotNull InteractionResult use(@NotNull BlockState state, @NotNull Level level, @NotNull BlockPos pos,
-	                                      Player player, @NotNull InteractionHand hand,
-	                                      @NotNull BlockHitResult hitResult) {
+	public InteractionResult use(BlockState state, Level level, BlockPos pos,
+	                             Player player, InteractionHand hand,
+	                             BlockHitResult hitResult) {
 
-		if (player.getMainHandItem().getItem() == DeferredRegistryHandler.SANDBAG_ITEM.get()) {
+		if (player.getMainHandItem().getItem() == BlockItemRegistry.SANDBAG_ITEM.get()) {
 			if (state.getValue(BAGS) == 0) {
 				level.setBlock(pos, state.setValue(BAGS, 1).setValue(FACING, state.getValue(FACING)), 3);
 				if (!player.isCreative()) {

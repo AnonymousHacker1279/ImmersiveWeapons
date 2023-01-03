@@ -9,7 +9,7 @@
             "entity": "this",
             "predicate": {
               "location": {
-                "biome": "immersiveweapons:tiltros"
+                "dimension": "immersiveweapons:tiltros"
               }
             }
           }

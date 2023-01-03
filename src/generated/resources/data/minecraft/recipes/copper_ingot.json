@@ -1,6 +1,7 @@
 {
   "type": "minecraft:crafting_shaped",
-  "group": "copper",
+  "category": "misc",
+  "group": "copper_ingot",
   "key": {
     "a": {
       "tag": "forge:nuggets/copper"

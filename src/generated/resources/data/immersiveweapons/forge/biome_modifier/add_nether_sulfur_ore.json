@@ -1,6 +1,0 @@
-{
-  "type": "forge:add_features",
-  "biomes": "#minecraft:is_nether",
-  "features": "immersiveweapons:ore_nether_sulfur",
-  "step": "underground_ores"
-}

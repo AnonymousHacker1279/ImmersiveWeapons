@@ -11,7 +11,6 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.*;
 import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
-import net.minecraft.world.entity.ai.targeting.TargetingConditions;
 import net.minecraft.world.entity.animal.IronGolem;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.monster.RangedAttackMob;
@@ -22,18 +21,17 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ProjectileWeaponItem;
 import net.minecraft.world.level.*;
 import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.phys.AABB;
-import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import tech.anonymoushacker1279.immersiveweapons.entity.GrantAdvancementOnDiscovery;
 import tech.anonymoushacker1279.immersiveweapons.entity.ai.goal.RangedGunAttackGoal;
 import tech.anonymoushacker1279.immersiveweapons.entity.neutral.FieldMedicEntity;
 import tech.anonymoushacker1279.immersiveweapons.entity.neutral.MinutemanEntity;
 import tech.anonymoushacker1279.immersiveweapons.entity.projectile.BulletEntity;
-import tech.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
+import tech.anonymoushacker1279.immersiveweapons.init.ItemRegistry;
+import tech.anonymoushacker1279.immersiveweapons.init.SoundEventRegistry;
 import tech.anonymoushacker1279.immersiveweapons.item.projectile.arrow.AbstractArrowItem;
 import tech.anonymoushacker1279.immersiveweapons.item.projectile.bullet.AbstractBulletItem;
 
-import javax.annotation.Nullable;
 import java.time.LocalDate;
 import java.time.temporal.ChronoField;
 import java.util.function.Predicate;
@@ -41,7 +39,7 @@ import java.util.function.Predicate;
 public abstract class AbstractDyingSoldierEntity extends Monster implements RangedAttackMob, GrantAdvancementOnDiscovery {
 
 	private final RangedGunAttackGoal<AbstractDyingSoldierEntity> aiPistolAttack =
-			new RangedGunAttackGoal<>(this, 1.0D, 20, 15.0F, DeferredRegistryHandler.FLINTLOCK_PISTOL.get());
+			new RangedGunAttackGoal<>(this, 1.0D, 20, 15.0F, ItemRegistry.FLINTLOCK_PISTOL.get());
 	private final MeleeAttackGoal aiAttackOnCollide = new MeleeAttackGoal(this, 1.2D, false) {
 		/**
 		 * Reset the task's internal state. Called when this task is interrupted by another one
@@ -107,14 +105,7 @@ public abstract class AbstractDyingSoldierEntity extends Monster implements Rang
 	@Override
 	public void aiStep() {
 		super.aiStep();
-		if (!level.isClientSide) {
-			AABB scanningBox = new AABB(blockPosition().offset(-50, -50, -50),
-					blockPosition().offset(50, 50, 50));
-
-			for (Player player : level.getNearbyPlayers(TargetingConditions.forNonCombat(), this, scanningBox)) {
-				checkForDiscovery(this, player);
-			}
-		}
+		checkForDiscovery(this);
 	}
 
 	/**
@@ -123,7 +114,7 @@ public abstract class AbstractDyingSoldierEntity extends Monster implements Rang
 	 * @return MobType
 	 */
 	@Override
-	public @NotNull MobType getMobType() {
+	public MobType getMobType() {
 		return MobType.ILLAGER;
 	}
 
@@ -144,9 +135,9 @@ public abstract class AbstractDyingSoldierEntity extends Monster implements Rang
 	 * @param difficulty the <code>DifficultyInstance</code> of the world
 	 */
 	@Override
-	protected void populateDefaultEquipmentSlots(@NotNull RandomSource randomSource, @NotNull DifficultyInstance difficulty) {
+	protected void populateDefaultEquipmentSlots(RandomSource randomSource, DifficultyInstance difficulty) {
 		super.populateDefaultEquipmentSlots(randomSource, difficulty);
-		setItemSlot(EquipmentSlot.MAINHAND, new ItemStack(DeferredRegistryHandler.FLINTLOCK_PISTOL.get()));
+		setItemSlot(EquipmentSlot.MAINHAND, new ItemStack(ItemRegistry.FLINTLOCK_PISTOL.get()));
 	}
 
 	/**
@@ -160,8 +151,8 @@ public abstract class AbstractDyingSoldierEntity extends Monster implements Rang
 	 * @return SpawnGroupData
 	 */
 	@Override
-	public SpawnGroupData finalizeSpawn(@NotNull ServerLevelAccessor level, @NotNull DifficultyInstance difficulty,
-	                                    @NotNull MobSpawnType spawnType, @Nullable SpawnGroupData groupData,
+	public SpawnGroupData finalizeSpawn(ServerLevelAccessor level, DifficultyInstance difficulty,
+	                                    MobSpawnType spawnType, @Nullable SpawnGroupData groupData,
 	                                    @Nullable CompoundTag tag) {
 
 		groupData = super.finalizeSpawn(level, difficulty, spawnType, groupData, tag);
@@ -193,9 +184,9 @@ public abstract class AbstractDyingSoldierEntity extends Monster implements Rang
 			goalSelector.removeGoal(aiAttackOnCollide);
 			goalSelector.removeGoal(aiPistolAttack);
 			ItemStack itemInHand = getItemInHand(ProjectileUtil.getWeaponHoldingHand(this,
-					Predicate.isEqual(DeferredRegistryHandler.FLINTLOCK_PISTOL.get())));
+					Predicate.isEqual(ItemRegistry.FLINTLOCK_PISTOL.get())));
 
-			if (itemInHand.getItem() == DeferredRegistryHandler.FLINTLOCK_PISTOL.get()) {
+			if (itemInHand.getItem() == ItemRegistry.FLINTLOCK_PISTOL.get()) {
 				int cooldown = 20;
 				if (level.getDifficulty() != Difficulty.HARD) {
 					cooldown = 40;
@@ -217,8 +208,8 @@ public abstract class AbstractDyingSoldierEntity extends Monster implements Rang
 	 * @param distanceFactor the distance factor
 	 */
 	@Override
-	public void performRangedAttack(@NotNull LivingEntity target, float distanceFactor) {
-		BulletEntity bulletEntity = fireBullet(new ItemStack(DeferredRegistryHandler.IRON_MUSKET_BALL.get()),
+	public void performRangedAttack(LivingEntity target, float distanceFactor) {
+		BulletEntity bulletEntity = fireBullet(new ItemStack(ItemRegistry.IRON_MUSKET_BALL.get()),
 				distanceFactor);
 
 		double deltaX = target.getX() - getX();
@@ -231,7 +222,7 @@ public abstract class AbstractDyingSoldierEntity extends Monster implements Rang
 
 		bulletEntity.shoot(deltaX, deltaY + sqrtXZ * 0.2D, deltaZ, 1.6F,
 				(float) (14 - level.getDifficulty().getId() * 4));
-		playSound(DeferredRegistryHandler.FLINTLOCK_PISTOL_FIRE.get(), 1.0F,
+		playSound(SoundEventRegistry.FLINTLOCK_PISTOL_FIRE.get(), 1.0F,
 				1.0F / (getRandom().nextFloat() * 0.4F + 0.8F));
 		level.addFreshEntity(bulletEntity);
 	}
@@ -245,7 +236,7 @@ public abstract class AbstractDyingSoldierEntity extends Monster implements Rang
 	 */
 	private BulletEntity fireBullet(ItemStack arrowStack, float distanceFactor) {
 		AbstractBulletItem bulletItem = (AbstractBulletItem) (arrowStack.getItem() instanceof AbstractArrowItem
-				? arrowStack.getItem() : DeferredRegistryHandler.IRON_MUSKET_BALL.get());
+				? arrowStack.getItem() : ItemRegistry.IRON_MUSKET_BALL.get());
 
 		BulletEntity bulletEntity = bulletItem.createBullet(level, this);
 		bulletEntity.setEnchantmentEffectsFromEntity(this, distanceFactor);
@@ -260,8 +251,8 @@ public abstract class AbstractDyingSoldierEntity extends Monster implements Rang
 	 * @return boolean
 	 */
 	@Override
-	public boolean canFireProjectileWeapon(@NotNull ProjectileWeaponItem projectileWeaponItem) {
-		return projectileWeaponItem == DeferredRegistryHandler.FLINTLOCK_PISTOL.get().asItem();
+	public boolean canFireProjectileWeapon(ProjectileWeaponItem projectileWeaponItem) {
+		return projectileWeaponItem == ItemRegistry.FLINTLOCK_PISTOL.get().asItem();
 	}
 
 	/**
@@ -270,7 +261,7 @@ public abstract class AbstractDyingSoldierEntity extends Monster implements Rang
 	 * @param compound the <code>CompoundNBT</code> to read from
 	 */
 	@Override
-	public void readAdditionalSaveData(@NotNull CompoundTag compound) {
+	public void readAdditionalSaveData(CompoundTag compound) {
 		super.readAdditionalSaveData(compound);
 		setCombatTask();
 	}
@@ -282,7 +273,7 @@ public abstract class AbstractDyingSoldierEntity extends Monster implements Rang
 	 * @param stack the <code>ItemStack</code> to set in the slot
 	 */
 	@Override
-	public void setItemSlot(@NotNull EquipmentSlot slot, @NotNull ItemStack stack) {
+	public void setItemSlot(EquipmentSlot slot, ItemStack stack) {
 		super.setItemSlot(slot, stack);
 		if (!level.isClientSide) {
 			setCombatTask();
@@ -298,7 +289,7 @@ public abstract class AbstractDyingSoldierEntity extends Monster implements Rang
 	 * @return float
 	 */
 	@Override
-	protected float getStandingEyeHeight(@NotNull Pose pose, @NotNull EntityDimensions dimensions) {
+	protected float getStandingEyeHeight(Pose pose, EntityDimensions dimensions) {
 		return 1.74F;
 	}
 
@@ -313,7 +304,7 @@ public abstract class AbstractDyingSoldierEntity extends Monster implements Rang
 	}
 
 	@Override
-	public boolean checkSpawnRules(@NotNull LevelAccessor pLevel, @NotNull MobSpawnType pSpawnReason) {
+	public boolean checkSpawnRules(LevelAccessor pLevel, MobSpawnType pSpawnReason) {
 		boolean walkTargetAboveZero = super.checkSpawnRules(pLevel, pSpawnReason);
 		boolean notInWater = pLevel.getBlockState(blockPosition().below()).getFluidState().isEmpty();
 		boolean onGround = !pLevel.getBlockState(blockPosition().below()).isAir();
@@ -327,7 +318,7 @@ public abstract class AbstractDyingSoldierEntity extends Monster implements Rang
 	}
 
 	@Override
-	public boolean checkSpawnObstruction(@NotNull LevelReader pLevel) {
+	public boolean checkSpawnObstruction(LevelReader pLevel) {
 		return super.checkSpawnObstruction(pLevel) && pLevel.canSeeSky(blockPosition());
 	}
 }

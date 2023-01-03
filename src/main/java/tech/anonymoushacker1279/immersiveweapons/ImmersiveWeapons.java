@@ -64,6 +64,7 @@ public class ImmersiveWeapons {
 		IWCriteriaTriggers.init();
 		event.enqueueWork(() -> {
 			WoodType.register(WoodTypes.BURNED_OAK);
+			WoodType.register(WoodTypes.STARDUST);
 			Regions.register(new IWOverworldBiomesProvider(new ResourceLocation(MOD_ID, "overworld_biome_provider"),
 					RegionType.OVERWORLD, 1));
 			SurfaceRuleManager.addSurfaceRules(RuleCategory.OVERWORLD, MOD_ID, SurfaceRuleData.makeRules());

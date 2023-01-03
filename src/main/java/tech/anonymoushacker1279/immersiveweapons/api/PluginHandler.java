@@ -50,7 +50,7 @@ public class PluginHandler {
 		String name = plugin.getPluginName();
 
 		if (!havePluginsInitialized) {
-			if (name == null) {
+			if (name.equals("")) {
 				ImmersiveWeapons.LOGGER.error("A plugin failed to register, no plugin name was provided");
 			}
 			if (!PLUGIN_NAMES.add(name)) {

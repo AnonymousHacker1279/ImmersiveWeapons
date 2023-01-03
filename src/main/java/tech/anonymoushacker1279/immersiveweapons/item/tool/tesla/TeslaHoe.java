@@ -2,7 +2,6 @@ package tech.anonymoushacker1279.immersiveweapons.item.tool.tesla;
 
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.*;
-import org.jetbrains.annotations.NotNull;
 import tech.anonymoushacker1279.immersiveweapons.item.tool.HitEffectUtils;
 
 public class TeslaHoe extends HoeItem implements HitEffectUtils {
@@ -28,7 +27,7 @@ public class TeslaHoe extends HoeItem implements HitEffectUtils {
 	 * @return boolean
 	 */
 	@Override
-	public boolean hurtEnemy(@NotNull ItemStack itemStack, LivingEntity target, @NotNull LivingEntity attacker) {
+	public boolean hurtEnemy(ItemStack itemStack, LivingEntity target, LivingEntity attacker) {
 		addTeslaEffects(target);
 		return super.hurtEnemy(itemStack, target, attacker);
 	}

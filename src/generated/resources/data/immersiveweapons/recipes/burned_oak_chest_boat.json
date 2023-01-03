@@ -1,12 +1,13 @@
 {
   "type": "minecraft:crafting_shapeless",
-  "group": "burned_oak",
+  "category": "building",
+  "group": "chest_boat",
   "ingredients": [
     {
-      "item": "immersiveweapons:burned_oak_planks"
+      "item": "minecraft:chest"
     },
     {
-      "item": "minecraft:chest"
+      "item": "immersiveweapons:burned_oak_boat"
     }
   ],
   "result": {

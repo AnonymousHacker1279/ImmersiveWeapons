@@ -22,5 +22,9 @@ public class MinecraftItemTagGroups {
 	public static final TagKey<Item> WOODEN_TRAPDOORS = ItemTags.create(new ResourceLocation("wooden_trapdoors"));
 	public static final TagKey<Item> BOATS = ItemTags.create(new ResourceLocation("boats"));
 	public static final TagKey<Item> ARROWS = ItemTags.create(new ResourceLocation("arrows"));
-
+	public static final TagKey<Item> SMALL_FLOWERS = ItemTags.create(new ResourceLocation("small_flowers"));
+	public static final TagKey<Item> LEAVES = ItemTags.create(new ResourceLocation("leaves"));
+	public static final TagKey<Item> SAND = ItemTags.create(new ResourceLocation("sand"));
+	public static final TagKey<Item> SAPLINGS = ItemTags.create(new ResourceLocation("saplings"));
+	public static final TagKey<Item> WALLS = ItemTags.create(new ResourceLocation("walls"));
 }

@@ -7,7 +7,6 @@ import net.minecraft.client.renderer.entity.EntityRendererProvider.Context;
 import net.minecraft.client.renderer.entity.HumanoidMobRenderer;
 import net.minecraft.client.renderer.entity.layers.HumanoidArmorLayer;
 import net.minecraft.resources.ResourceLocation;
-import org.jetbrains.annotations.NotNull;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.entity.neutral.FieldMedicEntity;
 
@@ -32,7 +31,7 @@ public class FieldMedicRenderer extends HumanoidMobRenderer<FieldMedicEntity, Pl
 	 * @return ResourceLocation
 	 */
 	@Override
-	public @NotNull ResourceLocation getTextureLocation(@NotNull FieldMedicEntity entity) {
+	public ResourceLocation getTextureLocation(FieldMedicEntity entity) {
 		return FIELD_MEDIC;
 	}
 }

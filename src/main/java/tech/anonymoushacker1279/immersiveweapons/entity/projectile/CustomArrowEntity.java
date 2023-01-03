@@ -3,6 +3,8 @@ package tech.anonymoushacker1279.immersiveweapons.entity.projectile;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.protocol.Packet;
+import net.minecraft.network.protocol.game.ClientGamePacketListener;
+import net.minecraft.network.protocol.game.ClientboundAddEntityPacket;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.player.Player;
@@ -15,11 +17,10 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.*;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraftforge.event.ForgeEventFactory;
-import net.minecraftforge.network.NetworkHooks;
-import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 public class CustomArrowEntity extends AbstractArrow {
-	Item referenceItem;
+	@Nullable Item referenceItem;
 
 	/**
 	 * Constructor for CustomArrowEntity.
@@ -64,7 +65,7 @@ public class CustomArrowEntity extends AbstractArrow {
 	 * @return ItemStack
 	 */
 	@Override
-	public @NotNull ItemStack getPickupItem() {
+	public ItemStack getPickupItem() {
 		return new ItemStack(referenceItem);
 	}
 
@@ -74,8 +75,8 @@ public class CustomArrowEntity extends AbstractArrow {
 	 * @return IPacket
 	 */
 	@Override
-	public @NotNull Packet<?> getAddEntityPacket() {
-		return NetworkHooks.getEntitySpawningPacket(this);
+	public Packet<ClientGamePacketListener> getAddEntityPacket() {
+		return new ClientboundAddEntityPacket(this);
 	}
 
 	/**

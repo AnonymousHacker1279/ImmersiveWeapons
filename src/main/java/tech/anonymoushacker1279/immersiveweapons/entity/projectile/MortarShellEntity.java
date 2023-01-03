@@ -5,21 +5,22 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.Packet;
+import net.minecraft.network.protocol.game.ClientGamePacketListener;
+import net.minecraft.network.protocol.game.ClientboundAddEntityPacket;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.projectile.*;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.ClipContext;
-import net.minecraft.world.level.Explosion.BlockInteraction;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.Level.ExplosionInteraction;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.*;
 import net.minecraftforge.event.ForgeEventFactory;
-import net.minecraftforge.network.NetworkHooks;
-import org.jetbrains.annotations.NotNull;
 import tech.anonymoushacker1279.immersiveweapons.block.MortarBlock;
-import tech.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
+import tech.anonymoushacker1279.immersiveweapons.init.EntityRegistry;
+import tech.anonymoushacker1279.immersiveweapons.init.ItemRegistry;
 
 public class MortarShellEntity extends Projectile implements ItemSupplier {
 
@@ -43,7 +44,7 @@ public class MortarShellEntity extends Projectile implements ItemSupplier {
 	 * @param yOffset the Y offset to spawn at
 	 */
 	private MortarShellEntity(Level world, BlockPos pos, double yOffset) {
-		this(DeferredRegistryHandler.MORTAR_SHELL_ENTITY.get(), world);
+		this(EntityRegistry.MORTAR_SHELL_ENTITY.get(), world);
 		setPos(pos.getX() + 0.5D, pos.getY() + yOffset, pos.getZ() + 0.5D);
 	}
 
@@ -151,7 +152,7 @@ public class MortarShellEntity extends Projectile implements ItemSupplier {
 		Vec3 vector3d1 = vector3d.normalize().scale(0.05F);
 		setPosRaw(getX() - vector3d1.x, getY() - vector3d1.y, getZ() - vector3d1.z);
 		if (!level.isClientSide) {
-			level.explode(this, damageSource, null, blockPosition().getX(), blockPosition().getY(), blockPosition().getZ(), 4.0F, false, BlockInteraction.BREAK);
+			level.explode(this, damageSource, null, blockPosition().getX(), blockPosition().getY(), blockPosition().getZ(), 4.0F, false, ExplosionInteraction.BLOCK);
 		}
 		kill();
 	}
@@ -163,7 +164,7 @@ public class MortarShellEntity extends Projectile implements ItemSupplier {
 	 * @return boolean
 	 */
 	@Override
-	protected boolean canHitEntity(@NotNull Entity entity) {
+	protected boolean canHitEntity(Entity entity) {
 		return true;
 	}
 
@@ -172,11 +173,11 @@ public class MortarShellEntity extends Projectile implements ItemSupplier {
 	}
 
 	@Override
-	protected void readAdditionalSaveData(@NotNull CompoundTag nbt) {
+	protected void readAdditionalSaveData(CompoundTag nbt) {
 	}
 
 	@Override
-	protected void addAdditionalSaveData(@NotNull CompoundTag nbt) {
+	protected void addAdditionalSaveData(CompoundTag nbt) {
 	}
 
 	/**
@@ -185,8 +186,8 @@ public class MortarShellEntity extends Projectile implements ItemSupplier {
 	 * @return IPacket
 	 */
 	@Override
-	public @NotNull Packet<?> getAddEntityPacket() {
-		return NetworkHooks.getEntitySpawningPacket(this);
+	public Packet<ClientGamePacketListener> getAddEntityPacket() {
+		return new ClientboundAddEntityPacket(this);
 	}
 
 	/**
@@ -195,7 +196,7 @@ public class MortarShellEntity extends Projectile implements ItemSupplier {
 	 * @return ItemStack
 	 */
 	@Override
-	public @NotNull ItemStack getItem() {
-		return new ItemStack(DeferredRegistryHandler.MORTAR_SHELL.get());
+	public ItemStack getItem() {
+		return new ItemStack(ItemRegistry.MORTAR_SHELL.get());
 	}
 }

@@ -11,8 +11,6 @@ public class ForgeItemTagGroups {
 			"ores/cobalt"));
 	public static final TagKey<Item> COBALT_INGOTS = ItemTags.create(new ResourceLocation("forge",
 			"ingots/cobalt"));
-	public static final TagKey<Item> COPPER_INGOTS = ItemTags.create(new ResourceLocation("forge",
-			"ingots/copper"));
 	public static final TagKey<Item> METAL_INGOTS = ItemTags.create(new ResourceLocation("forge",
 			"ingots/metal"));
 	public static final TagKey<Item> COBALT_NUGGETS = ItemTags.create(new ResourceLocation("forge",
@@ -23,6 +21,4 @@ public class ForgeItemTagGroups {
 			"nuggets/metal"));
 	public static final TagKey<Item> SULFUR_DUSTS = ItemTags.create(new ResourceLocation("forge",
 			"dusts/sulfur"));
-	public static final TagKey<Item> PICKAXES = ItemTags.create(new ResourceLocation("forge",
-			"pickaxes"));
 }

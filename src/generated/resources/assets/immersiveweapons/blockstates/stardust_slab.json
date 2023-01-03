@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "immersiveweapons:block/stardust_slab"
+    },
+    "type=double": {
+      "model": "immersiveweapons:block/stardust_planks"
+    },
+    "type=top": {
+      "model": "immersiveweapons:block/stardust_slab_top"
+    }
+  }
+}

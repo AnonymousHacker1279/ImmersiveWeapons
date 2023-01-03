@@ -7,9 +7,8 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import org.jetbrains.annotations.NotNull;
 import tech.anonymoushacker1279.immersiveweapons.entity.projectile.SmokeGrenadeEntity;
-import tech.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
+import tech.anonymoushacker1279.immersiveweapons.init.SoundEventRegistry;
 import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
 
 public class SmokeGrenadeItem extends Item {
@@ -35,10 +34,10 @@ public class SmokeGrenadeItem extends Item {
 	 * @return InteractionResultHolder extending ItemStack
 	 */
 	@Override
-	public @NotNull InteractionResultHolder<ItemStack> use(Level level, Player player, @NotNull InteractionHand hand) {
+	public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
 		ItemStack itemInHand = player.getItemInHand(hand);
 		level.playSound(null, player.getX(), player.getY(), player.getZ(),
-				DeferredRegistryHandler.GENERIC_WHOOSH.get(), SoundSource.NEUTRAL,
+				SoundEventRegistry.GENERIC_WHOOSH.get(), SoundSource.NEUTRAL,
 				0.5F, 0.4F / (GeneralUtilities.getRandomNumber(0.2f, 0.6f) + 0.8F));
 
 		if (!level.isClientSide) {

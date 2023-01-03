@@ -1,0 +1,8 @@
+{
+  "type": "minecraft:stonecutting",
+  "count": 1,
+  "ingredient": {
+    "item": "immersiveweapons:smooth_blood_sandstone"
+  },
+  "result": "immersiveweapons:smooth_blood_sandstone_stairs"
+}

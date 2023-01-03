@@ -1,9 +1,9 @@
 {
   "type": "minecraft:crafting_shaped",
-  "group": "wood",
+  "category": "equipment",
   "key": {
     "a": {
-      "tag": "immersiveweapons:shards/wood"
+      "tag": "minecraft:planks"
     },
     "b": {
       "item": "minecraft:stick"
@@ -13,9 +13,9 @@
     }
   },
   "pattern": [
-    " a ",
-    " b ",
-    " c "
+    "a",
+    "b",
+    "c"
   ],
   "result": {
     "count": 4,

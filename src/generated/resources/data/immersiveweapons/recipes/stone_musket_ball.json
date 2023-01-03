@@ -1,9 +1,9 @@
 {
   "type": "minecraft:crafting_shaped",
-  "group": "stone",
+  "category": "equipment",
   "key": {
     "a": {
-      "tag": "immersiveweapons:shards/stone"
+      "tag": "minecraft:stone_tool_materials"
     },
     "b": {
       "item": "minecraft:gunpowder"
@@ -14,7 +14,6 @@
     "aba"
   ],
   "result": {
-    "count": 8,
     "item": "immersiveweapons:stone_musket_ball"
   }
 }

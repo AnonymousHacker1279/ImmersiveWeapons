@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "group": "starstorm",
+  "key": {
+    "a": {
+      "tag": "immersiveweapons:ingots/starstorm"
+    }
+  },
+  "pattern": [
+    "aaa",
+    "aaa",
+    "aaa"
+  ],
+  "result": {
+    "item": "immersiveweapons:starstorm_block"
+  }
+}

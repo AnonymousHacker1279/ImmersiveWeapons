@@ -26,7 +26,7 @@ public interface IWPlugin {
 	 */
 	@AvailableSince("1.17.0")
 	default String getPluginName() {
-		return null;
+		return "";
 	}
 
 	/**

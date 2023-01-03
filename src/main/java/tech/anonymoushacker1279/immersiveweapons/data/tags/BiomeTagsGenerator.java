@@ -1,35 +1,29 @@
 package tech.anonymoushacker1279.immersiveweapons.data.tags;
 
-import net.minecraft.core.Registry;
-import net.minecraft.data.BuiltinRegistries;
-import net.minecraft.data.DataGenerator;
-import net.minecraft.data.tags.TagsProvider;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.server.packs.PackType;
+import net.minecraft.core.HolderLookup.Provider;
+import net.minecraft.data.PackOutput;
+import net.minecraft.data.tags.BiomeTagsProvider;
 import net.minecraft.tags.BiomeTags;
-import net.minecraft.tags.TagManager;
-import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.biome.Biomes;
 import net.minecraftforge.common.data.ExistingFileHelper;
-import net.minecraftforge.common.data.ExistingFileHelper.ResourceType;
-import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
+import tech.anonymoushacker1279.immersiveweapons.data.biomes.IWBiomes;
 import tech.anonymoushacker1279.immersiveweapons.data.tags.groups.forge.ForgeWorldGenTagGroups;
 import tech.anonymoushacker1279.immersiveweapons.data.tags.groups.immersiveweapons.ImmersiveWeaponsWorldGenTagGroups;
-import tech.anonymoushacker1279.immersiveweapons.world.level.levelgen.biomes.BiomesAndDimensions;
 
-public class BiomeTagsGenerator extends TagsProvider<Biome> {
+import java.util.concurrent.CompletableFuture;
 
-	public BiomeTagsGenerator(DataGenerator generator, ExistingFileHelper fileHelper) {
-		super(generator, BuiltinRegistries.BIOME, ImmersiveWeapons.MOD_ID, fileHelper);
+public class BiomeTagsGenerator extends BiomeTagsProvider {
 
-		fileHelper.trackGenerated(new ResourceLocation(ImmersiveWeapons.MOD_ID, "battlefield"),
-				new ResourceType(PackType.SERVER_DATA, ".json", TagManager.getTagDir(Registry.BIOME_REGISTRY)));
+	public BiomeTagsGenerator(PackOutput output, CompletableFuture<Provider> provider, @Nullable ExistingFileHelper existingFileHelper) {
+		super(output, provider, ImmersiveWeapons.MOD_ID, existingFileHelper);
 	}
 
 	@Override
 	@SuppressWarnings("unchecked")
-	protected void addTags() {
+	protected void addTags(Provider provider) {
+
 		// Biome tags
 		tag(ForgeWorldGenTagGroups.IS_PLAINS)
 				.add(Biomes.PLAINS, Biomes.SNOWY_PLAINS, Biomes.SUNFLOWER_PLAINS);
@@ -38,10 +32,24 @@ public class BiomeTagsGenerator extends TagsProvider<Biome> {
 				.add(Biomes.DRIPSTONE_CAVES, Biomes.LUSH_CAVES);
 
 		tag(BiomeTags.IS_OVERWORLD)
-				.add(BiomesAndDimensions.BATTLEFIELD);
+				.add(IWBiomes.BATTLEFIELD);
 
 		tag(ImmersiveWeaponsWorldGenTagGroups.IS_BATTLEFIELD)
-				.add(BiomesAndDimensions.BATTLEFIELD);
+				.add(IWBiomes.BATTLEFIELD);
+
+		tag(ImmersiveWeaponsWorldGenTagGroups.IS_TILTROS_WASTES)
+				.add(IWBiomes.TILTROS_WASTES);
+
+		tag(ImmersiveWeaponsWorldGenTagGroups.IS_STARLIGHT_PLAINS)
+				.add(IWBiomes.STARLIGHT_PLAINS);
+
+		tag(ImmersiveWeaponsWorldGenTagGroups.IS_DEADMANS_DESERT)
+				.add(IWBiomes.DEADMANS_DESERT);
+
+		tag(ImmersiveWeaponsWorldGenTagGroups.IS_TILTROS)
+				.add(IWBiomes.TILTROS_WASTES)
+				.add(IWBiomes.STARLIGHT_PLAINS)
+				.add(IWBiomes.DEADMANS_DESERT);
 
 		// Structure tags
 		tag(ImmersiveWeaponsWorldGenTagGroups.HAS_ABANDONED_FACTORY)
@@ -74,20 +82,26 @@ public class BiomeTagsGenerator extends TagsProvider<Biome> {
 				.add(Biomes.DRIPSTONE_CAVES);
 
 		tag(ImmersiveWeaponsWorldGenTagGroups.HAS_DESTROYED_HOUSE)
-				.add(BiomesAndDimensions.BATTLEFIELD);
+				.add(IWBiomes.BATTLEFIELD);
 
 		tag(ImmersiveWeaponsWorldGenTagGroups.HAS_BATTLEFIELD_CAMP)
-				.add(BiomesAndDimensions.BATTLEFIELD);
+				.add(IWBiomes.BATTLEFIELD);
 
 		tag(ImmersiveWeaponsWorldGenTagGroups.HAS_GRAVEYARD)
-				.add(BiomesAndDimensions.BATTLEFIELD);
+				.add(IWBiomes.BATTLEFIELD);
 
 		tag(ImmersiveWeaponsWorldGenTagGroups.HAS_BATTLEFIELD_TOWN)
-				.add(BiomesAndDimensions.BATTLEFIELD);
+				.add(IWBiomes.BATTLEFIELD);
+
+		tag(ImmersiveWeaponsWorldGenTagGroups.HAS_CELESTIAL_ASTEROID)
+				.add(IWBiomes.DEADMANS_DESERT);
+
+		tag(ImmersiveWeaponsWorldGenTagGroups.HAS_BIODOME)
+				.add(IWBiomes.DEADMANS_DESERT);
 	}
 
 	@Override
-	public @NotNull String getName() {
+	public String getName() {
 		return "Biome Tags";
 	}
 }

@@ -1,7 +1,7 @@
 {
 	"textures": {
 		"particle": "#flag_pole",
-		"flag_pole": "immersiveweapons:custom/iron_light"
+		"flag_pole": "immersiveweapons:item/custom/iron_light"
 	},
 	"elements": [
 		{

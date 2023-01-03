@@ -10,4 +10,6 @@ public class ImmersiveWeaponsBlockTagGroups {
 
 	public static final TagKey<Block> BURNED_OAK_LOGS = BlockTags.create(new ResourceLocation(ImmersiveWeapons.MOD_ID,
 			"burned_oak_logs"));
+	public static final TagKey<Block> STARDUST_LOGS = BlockTags.create(new ResourceLocation(ImmersiveWeapons.MOD_ID,
+			"stardust_logs"));
 }

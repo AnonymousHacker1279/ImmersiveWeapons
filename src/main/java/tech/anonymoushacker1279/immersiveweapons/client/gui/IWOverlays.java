@@ -6,6 +6,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.client.gui.overlay.IGuiOverlay;
+import org.jetbrains.annotations.Nullable;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.item.projectile.gun.data.GunData;
 
@@ -13,6 +14,7 @@ public class IWOverlays {
 
 	public static final ResourceLocation SCOPE_LOCATION = new ResourceLocation(ImmersiveWeapons.MOD_ID + ":textures/gui/overlay/musket_scope.png");
 
+	@Nullable
 	public static IGuiOverlay SCOPE_ELEMENT;
 
 	public static void init() {
@@ -55,6 +57,7 @@ public class IWOverlays {
 		bufferbuilder.vertex(screenWidth, screenHeight, -90.0D).color(0, 0, 0, 255).endVertex();
 		bufferbuilder.vertex(screenWidth, y1, -90.0D).color(0, 0, 0, 255).endVertex();
 		bufferbuilder.vertex(0.0D, y1, -90.0D).color(0, 0, 0, 255).endVertex();
+
 		bufferbuilder.vertex(0.0D, y, -90.0D).color(0, 0, 0, 255).endVertex();
 		bufferbuilder.vertex(screenWidth, y, -90.0D).color(0, 0, 0, 255).endVertex();
 		bufferbuilder.vertex(screenWidth, 0.0D, -90.0D).color(0, 0, 0, 255).endVertex();
@@ -63,6 +66,7 @@ public class IWOverlays {
 		bufferbuilder.vertex(x, y1, -90.0D).color(0, 0, 0, 255).endVertex();
 		bufferbuilder.vertex(x, y, -90.0D).color(0, 0, 0, 255).endVertex();
 		bufferbuilder.vertex(0.0D, y, -90.0D).color(0, 0, 0, 255).endVertex();
+
 		bufferbuilder.vertex(x1, y1, -90.0D).color(0, 0, 0, 255).endVertex();
 		bufferbuilder.vertex(screenWidth, y1, -90.0D).color(0, 0, 0, 255).endVertex();
 		bufferbuilder.vertex(screenWidth, y, -90.0D).color(0, 0, 0, 255).endVertex();

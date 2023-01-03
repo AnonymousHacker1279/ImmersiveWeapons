@@ -1,17 +1,17 @@
 {
   "type": "minecraft:crafting_shaped",
-  "group": "iron",
+  "category": "equipment",
   "key": {
     "a": {
-      "tag": "forge:ingots/iron"
+      "tag": "forge:nuggets/iron"
     },
     "b": {
-      "tag": "forge:nuggets/iron"
+      "tag": "forge:ingots/iron"
     }
   },
   "pattern": [
-    " a ",
-    " b "
+    "a",
+    "b"
   ],
   "result": {
     "item": "immersiveweapons:iron_pike_head"

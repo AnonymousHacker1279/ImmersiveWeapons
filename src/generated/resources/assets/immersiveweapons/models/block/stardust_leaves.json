@@ -1,0 +1,104 @@
+{
+  "parent": "minecraft:block/cube_all",
+  "elements": [
+    {
+      "faces": {
+        "down": {
+          "texture": "#all"
+        },
+        "east": {
+          "texture": "#all"
+        },
+        "north": {
+          "texture": "#all"
+        },
+        "south": {
+          "texture": "#all"
+        },
+        "up": {
+          "texture": "#all"
+        },
+        "west": {
+          "texture": "#all"
+        }
+      },
+      "from": [
+        0,
+        0,
+        0
+      ],
+      "to": [
+        16,
+        16,
+        16
+      ]
+    },
+    {
+      "faces": {
+        "down": {
+          "forge_data": {
+            "block_light": 15,
+            "sky_light": 3
+          },
+          "rotation": 90,
+          "texture": "#overlay"
+        },
+        "east": {
+          "forge_data": {
+            "block_light": 15,
+            "sky_light": 3
+          },
+          "rotation": 90,
+          "texture": "#overlay"
+        },
+        "north": {
+          "forge_data": {
+            "block_light": 15,
+            "sky_light": 3
+          },
+          "rotation": 90,
+          "texture": "#overlay"
+        },
+        "south": {
+          "forge_data": {
+            "block_light": 15,
+            "sky_light": 3
+          },
+          "rotation": 90,
+          "texture": "#overlay"
+        },
+        "up": {
+          "forge_data": {
+            "block_light": 15,
+            "sky_light": 3
+          },
+          "rotation": 90,
+          "texture": "#overlay"
+        },
+        "west": {
+          "forge_data": {
+            "block_light": 15,
+            "sky_light": 3
+          },
+          "rotation": 90,
+          "texture": "#overlay"
+        }
+      },
+      "from": [
+        0,
+        0,
+        0
+      ],
+      "to": [
+        16,
+        16,
+        16
+      ]
+    }
+  ],
+  "render_type": "minecraft:cutout_mipped",
+  "textures": {
+    "all": "immersiveweapons:block/stardust_leaves",
+    "overlay": "immersiveweapons:block/stardust_granule_overlay"
+  }
+}

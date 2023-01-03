@@ -2,8 +2,6 @@ package tech.anonymoushacker1279.immersiveweapons.block;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.server.level.ServerLevel;
-import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.*;
 import net.minecraft.world.level.block.*;
@@ -13,7 +11,6 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
-import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -75,8 +72,8 @@ public class SpotlightBlock extends HorizontalDirectionalBlock implements Simple
 	 * @return BlockState
 	 */
 	@Override
-	public @NotNull BlockState updateShape(BlockState stateIn, @NotNull Direction facing, @NotNull BlockState facingState,
-	                                       @NotNull LevelAccessor levelAccessor, @NotNull BlockPos currentPos, @NotNull BlockPos facingPos) {
+	public BlockState updateShape(BlockState stateIn, Direction facing, BlockState facingState,
+	                              LevelAccessor levelAccessor, BlockPos currentPos, BlockPos facingPos) {
 
 		if (stateIn.getValue(WATERLOGGED)) {
 			levelAccessor.scheduleTick(currentPos, Fluids.WATER, Fluids.WATER.getTickDelay(levelAccessor));
@@ -100,7 +97,7 @@ public class SpotlightBlock extends HorizontalDirectionalBlock implements Simple
 	 * @return FluidState
 	 */
 	@Override
-	public @NotNull FluidState getFluidState(BlockState state) {
+	public FluidState getFluidState(BlockState state) {
 		return state.getValue(WATERLOGGED) ? Fluids.WATER.getSource(false) : super.getFluidState(state);
 	}
 
@@ -115,8 +112,8 @@ public class SpotlightBlock extends HorizontalDirectionalBlock implements Simple
 	 * @param isMoving determines if the block is moving
 	 */
 	@Override
-	public void neighborChanged(@NotNull BlockState state, Level level, @NotNull BlockPos pos, @NotNull Block blockIn,
-	                            @NotNull BlockPos fromPos, boolean isMoving) {
+	public void neighborChanged(BlockState state, Level level, BlockPos pos, Block blockIn,
+	                            BlockPos fromPos, boolean isMoving) {
 
 		if (!level.isClientSide) {
 			boolean isLit = state.getValue(LIT);
@@ -141,28 +138,12 @@ public class SpotlightBlock extends HorizontalDirectionalBlock implements Simple
 	 * @param isMoving determines if the block is moving
 	 */
 	@Override
-	public void onPlace(BlockState state, @NotNull Level level, @NotNull BlockPos pos, BlockState oldState, boolean isMoving) {
+	public void onPlace(BlockState state, Level level, BlockPos pos, BlockState oldState, boolean isMoving) {
 		if (!oldState.is(state.getBlock())) {
 			if (level.hasNeighborSignal(pos)) {
 				stateToggled(pos, level, state, false);
 				level.setBlock(pos, state.setValue(LIT, true), 3);
 			}
-		}
-	}
-
-	/**
-	 * Runs once every tick
-	 *
-	 * @param state       the <code>BlockState</code> of the block
-	 * @param serverLevel the <code>ServerLevel</code> of the block
-	 * @param pos         the <code>BlockPos</code> the block is at
-	 * @param rand        a <code>Random</code> instance
-	 */
-	@Override
-	public void tick(BlockState state, @NotNull ServerLevel serverLevel, @NotNull BlockPos pos, @NotNull RandomSource rand) {
-		if (state.getValue(LIT) && !serverLevel.hasNeighborSignal(pos)) {
-			stateToggled(pos, serverLevel, state, true);
-			serverLevel.setBlock(pos, state.setValue(LIT, false), 3);
 		}
 	}
 
@@ -195,7 +176,7 @@ public class SpotlightBlock extends HorizontalDirectionalBlock implements Simple
 	}
 
 	@Override
-	public void destroy(@NotNull LevelAccessor pLevel, @NotNull BlockPos pPos, @NotNull BlockState pState) {
+	public void destroy(LevelAccessor pLevel, BlockPos pPos, BlockState pState) {
 		super.destroy(pLevel, pPos, pState);
 		stateToggled(pPos, (Level) pLevel, pState, true);
 	}

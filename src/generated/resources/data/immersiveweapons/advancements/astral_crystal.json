@@ -1,0 +1,37 @@
+{
+  "parent": "immersiveweapons:root",
+  "criteria": {
+    "hold": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "immersiveweapons:astral_crystal"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.immersiveweapons.astral_crystal.description"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "immersiveweapons:astral_crystal"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.immersiveweapons.astral_crystal.title"
+    }
+  },
+  "requirements": [
+    [
+      "hold"
+    ]
+  ]
+}

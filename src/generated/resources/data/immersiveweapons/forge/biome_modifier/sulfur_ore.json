@@ -1,0 +1,6 @@
+{
+  "type": "forge:add_features",
+  "biomes": "#minecraft:water_on_map_outlines",
+  "features": "immersiveweapons:sulfur_ore",
+  "step": "underground_ores"
+}

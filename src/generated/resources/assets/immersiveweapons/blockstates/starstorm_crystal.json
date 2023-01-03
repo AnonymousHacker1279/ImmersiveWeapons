@@ -1,0 +1,58 @@
+{
+  "variants": {
+    "facing=down,waterlogged=false": {
+      "model": "immersiveweapons:block/starstorm_crystal",
+      "x": 180
+    },
+    "facing=down,waterlogged=true": {
+      "model": "immersiveweapons:block/starstorm_crystal",
+      "x": 180
+    },
+    "facing=east,waterlogged=false": {
+      "model": "immersiveweapons:block/starstorm_crystal",
+      "x": 270,
+      "y": 270
+    },
+    "facing=east,waterlogged=true": {
+      "model": "immersiveweapons:block/starstorm_crystal",
+      "x": 270,
+      "y": 270
+    },
+    "facing=north,waterlogged=false": {
+      "model": "immersiveweapons:block/starstorm_crystal",
+      "x": 270,
+      "y": 180
+    },
+    "facing=north,waterlogged=true": {
+      "model": "immersiveweapons:block/starstorm_crystal",
+      "x": 270,
+      "y": 180
+    },
+    "facing=south,waterlogged=false": {
+      "model": "immersiveweapons:block/starstorm_crystal",
+      "x": 90,
+      "y": 180
+    },
+    "facing=south,waterlogged=true": {
+      "model": "immersiveweapons:block/starstorm_crystal",
+      "x": 90,
+      "y": 180
+    },
+    "facing=up,waterlogged=false": {
+      "model": "immersiveweapons:block/starstorm_crystal"
+    },
+    "facing=up,waterlogged=true": {
+      "model": "immersiveweapons:block/starstorm_crystal"
+    },
+    "facing=west,waterlogged=false": {
+      "model": "immersiveweapons:block/starstorm_crystal",
+      "x": 90,
+      "y": 270
+    },
+    "facing=west,waterlogged=true": {
+      "model": "immersiveweapons:block/starstorm_crystal",
+      "x": 90,
+      "y": 270
+    }
+  }
+}

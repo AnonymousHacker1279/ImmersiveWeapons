@@ -19,8 +19,7 @@ import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import org.jetbrains.annotations.NotNull;
-import tech.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
+import tech.anonymoushacker1279.immersiveweapons.init.RecipeTypeRegistry;
 import tech.anonymoushacker1279.immersiveweapons.item.crafting.BarrelTapRecipe;
 
 import java.util.List;
@@ -53,7 +52,7 @@ public class BarrelTapBlock extends HorizontalDirectionalBlock implements Simple
 	 */
 	@SuppressWarnings("deprecation")
 	@Override
-	public @NotNull FluidState getFluidState(BlockState state) {
+	public FluidState getFluidState(BlockState state) {
 		return state.getValue(WATERLOGGED) ? Fluids.WATER.getSource(false) : super.getFluidState(state);
 	}
 
@@ -68,7 +67,7 @@ public class BarrelTapBlock extends HorizontalDirectionalBlock implements Simple
 	 */
 	@SuppressWarnings("deprecation")
 	@Override
-	public @NotNull VoxelShape getShape(BlockState state, @NotNull BlockGetter getter, @NotNull BlockPos pos, @NotNull CollisionContext collisionContext) {
+	public VoxelShape getShape(BlockState state, BlockGetter getter, BlockPos pos, CollisionContext collisionContext) {
 		return switch (state.getValue(FACING)) {
 			case SOUTH -> SHAPE_NORTH;
 			case EAST -> SHAPE_EAST;
@@ -113,9 +112,9 @@ public class BarrelTapBlock extends HorizontalDirectionalBlock implements Simple
 	 */
 	@SuppressWarnings("deprecation")
 	@Override
-	public @NotNull InteractionResult use(@NotNull BlockState state, Level level, BlockPos pos,
-	                                      @NotNull Player player, @NotNull InteractionHand hand,
-	                                      @NotNull BlockHitResult hitResult) {
+	public InteractionResult use(BlockState state, Level level, BlockPos pos,
+	                             Player player, InteractionHand hand,
+	                             BlockHitResult hitResult) {
 
 		BlockState blockStateNorth = level.getBlockState(pos.north());
 		BlockState blockStateSouth = level.getBlockState(pos.south());
@@ -148,7 +147,7 @@ public class BarrelTapBlock extends HorizontalDirectionalBlock implements Simple
 					if (player.getMainHandItem().getItem() == Items.GLASS_BOTTLE) {
 						Container container = ((Container) blockEntity);
 						List<BarrelTapRecipe> recipes = level.getRecipeManager()
-								.getAllRecipesFor(DeferredRegistryHandler.BARREL_TAP_RECIPE_TYPE.get());
+								.getAllRecipesFor(RecipeTypeRegistry.BARREL_TAP_RECIPE_TYPE.get());
 
 						for (BarrelTapRecipe recipe : recipes) {
 							for (int i = 0; i < container.getContainerSize(); ++i) {

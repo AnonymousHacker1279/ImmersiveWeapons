@@ -6,11 +6,10 @@ import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
-import org.jetbrains.annotations.NotNull;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
-import tech.anonymoushacker1279.immersiveweapons.container.TeslaSynthesizerContainer;
+import tech.anonymoushacker1279.immersiveweapons.menu.TeslaSynthesizerMenu;
 
-public class TeslaSynthesizerScreen extends AbstractContainerScreen<TeslaSynthesizerContainer> {
+public class TeslaSynthesizerScreen extends AbstractContainerScreen<TeslaSynthesizerMenu> {
 
 	private static final ResourceLocation GUI_TEXTURE = new ResourceLocation(ImmersiveWeapons.MOD_ID, "textures/gui/container/tesla_synthesizer.png");
 
@@ -21,7 +20,7 @@ public class TeslaSynthesizerScreen extends AbstractContainerScreen<TeslaSynthes
 	 * @param playerInventory a <code>PlayerInventory</code> instance
 	 * @param title           the <code>ITextComponent</code> title for the screen
 	 */
-	public TeslaSynthesizerScreen(TeslaSynthesizerContainer container, Inventory playerInventory, Component title) {
+	public TeslaSynthesizerScreen(TeslaSynthesizerMenu container, Inventory playerInventory, Component title) {
 		super(container, playerInventory, title);
 		titleLabelX = 75;
 		titleLabelY = 18;
@@ -36,7 +35,7 @@ public class TeslaSynthesizerScreen extends AbstractContainerScreen<TeslaSynthes
 	 * @param mouseY       the mouse's Y position
 	 */
 	@Override
-	protected void renderBg(@NotNull PoseStack matrixStack, float partialTicks, int mouseX, int mouseY) {
+	protected void renderBg(PoseStack matrixStack, float partialTicks, int mouseX, int mouseY) {
 		RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
 		RenderSystem.setShaderTexture(0, GUI_TEXTURE);
 		int i = leftPos;
@@ -59,7 +58,7 @@ public class TeslaSynthesizerScreen extends AbstractContainerScreen<TeslaSynthes
 	 * @param y           the Y position to render at
 	 */
 	@Override
-	protected void renderLabels(@NotNull PoseStack matrixStack, int x, int y) {
+	protected void renderLabels(PoseStack matrixStack, int x, int y) {
 		RenderSystem.disableBlend();
 		super.renderLabels(matrixStack, x, y);
 	}
@@ -73,7 +72,7 @@ public class TeslaSynthesizerScreen extends AbstractContainerScreen<TeslaSynthes
 	 * @param partialTicks the current partial tick
 	 */
 	@Override
-	public void render(@NotNull PoseStack matrixStack, int mouseX, int mouseY, float partialTicks) {
+	public void render(PoseStack matrixStack, int mouseX, int mouseY, float partialTicks) {
 		renderBackground(matrixStack);
 		super.render(matrixStack, mouseX, mouseY, partialTicks);
 		renderTooltip(matrixStack, mouseX, mouseY);

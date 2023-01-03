@@ -10,8 +10,7 @@ import net.minecraft.world.item.*;
 import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.registries.ForgeRegistries;
-import org.jetbrains.annotations.NotNull;
-import tech.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
+import tech.anonymoushacker1279.immersiveweapons.init.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,7 +37,7 @@ public record SmallPartsRecipe(ResourceLocation recipeId,
 	 * @return boolean
 	 */
 	@Override
-	public boolean matches(@NotNull Container container, @NotNull Level level) {
+	public boolean matches(Container container, Level level) {
 		return false;
 	}
 
@@ -49,7 +48,7 @@ public record SmallPartsRecipe(ResourceLocation recipeId,
 	 * @return ItemStack
 	 */
 	@Override
-	public @NotNull ItemStack assemble(@NotNull Container container) {
+	public ItemStack assemble(Container container) {
 		return new ItemStack(Items.AIR);
 	}
 
@@ -66,7 +65,7 @@ public record SmallPartsRecipe(ResourceLocation recipeId,
 	}
 
 	@Override
-	public @NotNull ItemStack getResultItem() {
+	public ItemStack getResultItem() {
 		return new ItemStack(Items.AIR);
 	}
 
@@ -76,8 +75,8 @@ public record SmallPartsRecipe(ResourceLocation recipeId,
 	 * @return ItemStack
 	 */
 	@Override
-	public @NotNull ItemStack getToastSymbol() {
-		return new ItemStack(DeferredRegistryHandler.SMALL_PARTS_TABLE.get());
+	public ItemStack getToastSymbol() {
+		return new ItemStack(BlockRegistry.SMALL_PARTS_TABLE.get());
 	}
 
 	/**
@@ -86,7 +85,7 @@ public record SmallPartsRecipe(ResourceLocation recipeId,
 	 * @return ResourceLocation
 	 */
 	@Override
-	public @NotNull ResourceLocation getId() {
+	public ResourceLocation getId() {
 		return recipeId;
 	}
 
@@ -96,8 +95,8 @@ public record SmallPartsRecipe(ResourceLocation recipeId,
 	 * @return RecipeSerializer
 	 */
 	@Override
-	public @NotNull RecipeSerializer<?> getSerializer() {
-		return DeferredRegistryHandler.SMALL_PARTS_RECIPE_SERIALIZER.get();
+	public RecipeSerializer<?> getSerializer() {
+		return RecipeSerializerRegistry.SMALL_PARTS_RECIPE_SERIALIZER.get();
 	}
 
 	/**
@@ -106,8 +105,8 @@ public record SmallPartsRecipe(ResourceLocation recipeId,
 	 * @return RecipeType
 	 */
 	@Override
-	public @NotNull RecipeType<?> getType() {
-		return DeferredRegistryHandler.SMALL_PARTS_RECIPE_TYPE.get();
+	public RecipeType<?> getType() {
+		return RecipeTypeRegistry.SMALL_PARTS_RECIPE_TYPE.get();
 	}
 
 	/**
@@ -116,7 +115,7 @@ public record SmallPartsRecipe(ResourceLocation recipeId,
 	 * @return NonNullList extending Ingredient
 	 */
 	@Override
-	public @NotNull NonNullList<Ingredient> getIngredients() {
+	public NonNullList<Ingredient> getIngredients() {
 		NonNullList<Ingredient> defaultedList = NonNullList.create();
 		defaultedList.add(material);
 		return defaultedList;
@@ -131,7 +130,7 @@ public record SmallPartsRecipe(ResourceLocation recipeId,
 		 * @return SmallPartsRecipe
 		 */
 		@Override
-		public @NotNull SmallPartsRecipe fromJson(@NotNull ResourceLocation recipeId, @NotNull JsonObject json) {
+		public SmallPartsRecipe fromJson(ResourceLocation recipeId, JsonObject json) {
 			Ingredient material = Ingredient.fromJson(GsonHelper.getAsJsonObject(json, "material"));
 			JsonArray craftablesArray = GsonHelper.getAsJsonArray(json, "craftables");
 
@@ -151,7 +150,7 @@ public record SmallPartsRecipe(ResourceLocation recipeId,
 		 * @return SmallPartsRecipe
 		 */
 		@Override
-		public SmallPartsRecipe fromNetwork(@NotNull ResourceLocation recipeId, @NotNull FriendlyByteBuf buffer) {
+		public SmallPartsRecipe fromNetwork(ResourceLocation recipeId, FriendlyByteBuf buffer) {
 			Ingredient material = Ingredient.fromNetwork(buffer);
 
 			String craft = buffer.readUtf();
@@ -173,7 +172,7 @@ public record SmallPartsRecipe(ResourceLocation recipeId,
 		 * @param recipe the <code>SmallPartsRecipe</code> instance
 		 */
 		@Override
-		public void toNetwork(@NotNull FriendlyByteBuf buffer, SmallPartsRecipe recipe) {
+		public void toNetwork(FriendlyByteBuf buffer, SmallPartsRecipe recipe) {
 			recipe.material.toNetwork(buffer);
 			List<ResourceLocation> craftables = new ArrayList<>(recipe.craftables.size());
 			for (Item item : recipe.craftables) {

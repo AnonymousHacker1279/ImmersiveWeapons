@@ -2,10 +2,10 @@
 	"credit": "Made with Blockbench",
 	"texture_size": [32, 32],
 	"textures": {
-		"0": "immersiveweapons:custom/brown",
-		"1": "immersiveweapons:custom/netherite",
-		"2": "immersiveweapons:custom/netherite_light",
-		"particle": "immersiveweapons:custom/brown"
+		"0": "immersiveweapons:item/custom/brown",
+		"1": "immersiveweapons:item/custom/netherite",
+		"2": "immersiveweapons:item/custom/netherite_light",
+		"particle": "immersiveweapons:item/custom/brown"
 	},
 	"elements": [
 		{

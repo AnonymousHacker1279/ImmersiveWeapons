@@ -1,10 +1,10 @@
 {
 	"credit": "Made with Blockbench",
 	"textures": {
-		"0": "immersiveweapons:custom/bamboo_dark",
-		"1": "immersiveweapons:custom/iron_32x",
-		"2": "immersiveweapons:custom/paper_yellow",
-		"particle": "immersiveweapons:custom/bamboo_dark"
+		"0": "immersiveweapons:item/custom/bamboo_dark",
+		"1": "immersiveweapons:item/custom/iron_32x",
+		"2": "immersiveweapons:item/custom/paper_yellow",
+		"particle": "immersiveweapons:item/custom/bamboo_dark"
 	},
 	"elements": [
 		{

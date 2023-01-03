@@ -19,7 +19,6 @@ import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import org.jetbrains.annotations.NotNull;
 import tech.anonymoushacker1279.immersiveweapons.blockentity.WallShelfBlockEntity;
 
 public class ShelfBlock extends HorizontalDirectionalBlock implements EntityBlock, SimpleWaterloggedBlock {
@@ -51,7 +50,7 @@ public class ShelfBlock extends HorizontalDirectionalBlock implements EntityBloc
 	 */
 	@SuppressWarnings("deprecation")
 	@Override
-	public @NotNull VoxelShape getShape(BlockState state, @NotNull BlockGetter reader, @NotNull BlockPos pos, @NotNull CollisionContext selectionContext) {
+	public VoxelShape getShape(BlockState state, BlockGetter reader, BlockPos pos, CollisionContext selectionContext) {
 		return switch (state.getValue(FACING)) {
 			case SOUTH -> SHAPE_SOUTH;
 			case EAST -> SHAPE_EAST;
@@ -91,7 +90,7 @@ public class ShelfBlock extends HorizontalDirectionalBlock implements EntityBloc
 	 */
 	@SuppressWarnings("deprecation")
 	@Override
-	public @NotNull FluidState getFluidState(BlockState state) {
+	public FluidState getFluidState(BlockState state) {
 		return state.getValue(WATERLOGGED) ? Fluids.WATER.getSource(false) : super.getFluidState(state);
 	}
 
@@ -103,7 +102,7 @@ public class ShelfBlock extends HorizontalDirectionalBlock implements EntityBloc
 	 * @return BlockEntity
 	 */
 	@Override
-	public BlockEntity newBlockEntity(@NotNull BlockPos blockPos, @NotNull BlockState blockState) {
+	public BlockEntity newBlockEntity(BlockPos blockPos, BlockState blockState) {
 		return new WallShelfBlockEntity(blockPos, blockState);
 	}
 
@@ -121,7 +120,7 @@ public class ShelfBlock extends HorizontalDirectionalBlock implements EntityBloc
 	 */
 	@SuppressWarnings("deprecation")
 	@Override
-	public @NotNull InteractionResult use(@NotNull BlockState state, Level worldIn, @NotNull BlockPos pos, @NotNull Player player, @NotNull InteractionHand handIn, @NotNull BlockHitResult blockRayTraceResult) {
+	public InteractionResult use(BlockState state, Level worldIn, BlockPos pos, Player player, InteractionHand handIn, BlockHitResult blockRayTraceResult) {
 		BlockEntity blockEntity = worldIn.getBlockEntity(pos);
 		if (blockEntity instanceof WallShelfBlockEntity wallShelfTileEntity) {
 			ItemStack itemstack = player.getItemInHand(handIn);
@@ -149,7 +148,7 @@ public class ShelfBlock extends HorizontalDirectionalBlock implements EntityBloc
 	 */
 	@SuppressWarnings("deprecation")
 	@Override
-	public void onRemove(BlockState state, @NotNull Level worldIn, @NotNull BlockPos pos, BlockState newState, boolean isMoving) {
+	public void onRemove(BlockState state, Level worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
 		if (!state.is(newState.getBlock())) {
 			BlockEntity blockEntity = worldIn.getBlockEntity(pos);
 			if (blockEntity instanceof WallShelfBlockEntity) {

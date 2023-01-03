@@ -3,10 +3,9 @@ package tech.anonymoushacker1279.immersiveweapons.item.projectile.bullet;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.projectile.AbstractArrow.Pickup;
 import net.minecraft.world.level.Level;
-import org.jetbrains.annotations.NotNull;
 import tech.anonymoushacker1279.immersiveweapons.entity.projectile.BulletEntities;
 import tech.anonymoushacker1279.immersiveweapons.entity.projectile.BulletEntities.NetheriteMusketBallEntity;
-import tech.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
+import tech.anonymoushacker1279.immersiveweapons.init.SoundEventRegistry;
 
 public class NetheriteMusketBallItem extends AbstractBulletItem {
 
@@ -29,11 +28,11 @@ public class NetheriteMusketBallItem extends AbstractBulletItem {
 	 * @return NetheriteBulletEntity
 	 */
 	@Override
-	public @NotNull BulletEntities.NetheriteMusketBallEntity createBullet(@NotNull Level level, @NotNull LivingEntity shooter) {
+	public BulletEntities.NetheriteMusketBallEntity createBullet(Level level, LivingEntity shooter) {
 		NetheriteMusketBallEntity bulletEntity = new NetheriteMusketBallEntity(shooter, level);
 		bulletEntity.setBaseDamage(damage);
 		bulletEntity.pickup = Pickup.DISALLOWED;
-		bulletEntity.setSoundEvent(DeferredRegistryHandler.BULLET_WHIZZ.get());
+		bulletEntity.setSoundEvent(SoundEventRegistry.BULLET_WHIZZ.get());
 		bulletEntity.setPierceLevel((byte) 2);
 		return bulletEntity;
 	}

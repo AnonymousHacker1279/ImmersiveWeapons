@@ -1,14 +1,15 @@
 {
   "type": "minecraft:crafting_shaped",
-  "group": "burned_oak",
+  "category": "building",
+  "group": "wood",
   "key": {
     "a": {
       "item": "immersiveweapons:burned_oak_log"
     }
   },
   "pattern": [
-    "aa ",
-    "aa "
+    "aa",
+    "aa"
   ],
   "result": {
     "count": 3,

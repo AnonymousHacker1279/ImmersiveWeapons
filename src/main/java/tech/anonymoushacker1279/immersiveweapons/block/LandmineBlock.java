@@ -13,6 +13,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.*;
+import net.minecraft.world.level.Level.ExplosionInteraction;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.*;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
@@ -21,10 +22,8 @@ import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.*;
-import org.jetbrains.annotations.NotNull;
-import tech.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
-
-import javax.annotation.Nullable;
+import org.jetbrains.annotations.Nullable;
+import tech.anonymoushacker1279.immersiveweapons.init.ItemRegistry;
 
 public class LandmineBlock extends Block implements SimpleWaterloggedBlock {
 
@@ -55,7 +54,7 @@ public class LandmineBlock extends Block implements SimpleWaterloggedBlock {
 	 */
 	private static void explode(Level worldIn, BlockPos pos, @Nullable LivingEntity entityIn) {
 		if (!worldIn.isClientSide) {
-			worldIn.explode(entityIn, damageSource, null, pos.getX(), pos.getY(), pos.getZ(), 2.0F, false, Explosion.BlockInteraction.BREAK);
+			worldIn.explode(entityIn, damageSource, null, pos.getX(), pos.getY(), pos.getZ(), 2.0F, false, ExplosionInteraction.BLOCK);
 			worldIn.playLocalSound(pos.getX(), pos.getY(), pos.getZ(), SoundEvents.TNT_PRIMED, SoundSource.BLOCKS, 1.0F, 1.0F, false);
 		}
 	}
@@ -73,14 +72,14 @@ public class LandmineBlock extends Block implements SimpleWaterloggedBlock {
 	 * @return ActionResultType
 	 */
 	@Override
-	public @NotNull InteractionResult use(@NotNull BlockState state, Level worldIn, @NotNull BlockPos pos, @NotNull Player player, @NotNull InteractionHand handIn, @NotNull BlockHitResult blockRayTraceResult) {
+	public InteractionResult use(BlockState state, Level worldIn, BlockPos pos, Player player, InteractionHand handIn, BlockHitResult blockRayTraceResult) {
 		if (!worldIn.isClientSide) {
 			ItemStack currentlyHeldItem = player.getMainHandItem();
-			if (state.getValue(ARMED) && currentlyHeldItem.getItem() == DeferredRegistryHandler.PLIERS.get()) {
+			if (state.getValue(ARMED) && currentlyHeldItem.getItem() == ItemRegistry.PLIERS.get()) {
 				worldIn.setBlock(pos, state.setValue(ARMED, false), 3);
 				return InteractionResult.PASS;
 			}
-			if (!state.getValue(ARMED) && currentlyHeldItem.getItem() != DeferredRegistryHandler.PLIERS.get()) {
+			if (!state.getValue(ARMED) && currentlyHeldItem.getItem() != ItemRegistry.PLIERS.get()) {
 				worldIn.setBlock(pos, state.setValue(ARMED, true), 3);
 			}
 			if (!state.getValue(VINES) && !state.getValue(SAND) && currentlyHeldItem.getItem() == Items.VINE) {
@@ -111,7 +110,7 @@ public class LandmineBlock extends Block implements SimpleWaterloggedBlock {
 	 * @return VoxelShape
 	 */
 	@Override
-	public @NotNull VoxelShape getShape(@NotNull BlockState state, @NotNull BlockGetter reader, @NotNull BlockPos pos, @NotNull CollisionContext selectionContext) {
+	public VoxelShape getShape(BlockState state, BlockGetter reader, BlockPos pos, CollisionContext selectionContext) {
 		return SHAPE;
 	}
 
@@ -125,7 +124,7 @@ public class LandmineBlock extends Block implements SimpleWaterloggedBlock {
 	 * @return VoxelShape
 	 */
 	@Override
-	public @NotNull VoxelShape getCollisionShape(@NotNull BlockState state, @NotNull BlockGetter reader, @NotNull BlockPos pos, @NotNull CollisionContext selectionContext) {
+	public VoxelShape getCollisionShape(BlockState state, BlockGetter reader, BlockPos pos, CollisionContext selectionContext) {
 		return Shapes.empty();
 	}
 
@@ -136,7 +135,7 @@ public class LandmineBlock extends Block implements SimpleWaterloggedBlock {
 	 * @return BlockRenderType
 	 */
 	@Override
-	public @NotNull RenderShape getRenderShape(@NotNull BlockState state) {
+	public RenderShape getRenderShape(BlockState state) {
 		return RenderShape.MODEL;
 	}
 
@@ -150,7 +149,7 @@ public class LandmineBlock extends Block implements SimpleWaterloggedBlock {
 	 * @param entity the <code>Entity</code> passing through the block
 	 */
 	@Override
-	public void entityInside(BlockState state, @NotNull Level level, @NotNull BlockPos pos, @NotNull Entity entity) {
+	public void entityInside(BlockState state, Level level, BlockPos pos, Entity entity) {
 		if (state.getValue(ARMED) && !state.getValue(WATERLOGGED)) {
 			if (entity instanceof Mob) {
 				explode(level, pos, (LivingEntity) entity);
@@ -187,7 +186,7 @@ public class LandmineBlock extends Block implements SimpleWaterloggedBlock {
 	 * @return FluidState
 	 */
 	@Override
-	public @NotNull FluidState getFluidState(BlockState state) {
+	public FluidState getFluidState(BlockState state) {
 		return state.getValue(WATERLOGGED) ? Fluids.WATER.getSource(false) : super.getFluidState(state);
 	}
 
@@ -209,7 +208,7 @@ public class LandmineBlock extends Block implements SimpleWaterloggedBlock {
 	 * @param explosionIn the <code>Explosion</code> destroying the block
 	 */
 	@Override
-	public void wasExploded(Level worldIn, @NotNull BlockPos pos, @NotNull Explosion explosionIn) {
+	public void wasExploded(Level worldIn, BlockPos pos, Explosion explosionIn) {
 		if (!worldIn.isClientSide) {
 			explode(worldIn, pos, null);
 		}
@@ -224,7 +223,7 @@ public class LandmineBlock extends Block implements SimpleWaterloggedBlock {
 	 * @param player  the <code>PlayerEntity</code> destroying the block
 	 */
 	@Override
-	public void playerWillDestroy(Level worldIn, @NotNull BlockPos pos, @NotNull BlockState state, @NotNull Player player) {
+	public void playerWillDestroy(Level worldIn, BlockPos pos, BlockState state, Player player) {
 		if (!worldIn.isClientSide() && !player.isCreative() && state.getValue(ARMED)) {
 			explode(worldIn, pos, player);
 		}

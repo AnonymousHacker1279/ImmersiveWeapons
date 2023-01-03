@@ -1,6 +1,6 @@
 {
 	"type": "minecraft:jigsaw",
-	"start_pool": "immersiveweapons:battlefield_camp/start_pool",
+	"start_pool": "immersiveweapons:battlefield_camp",
 	"size": 1,
 	"max_distance_from_center": 80,
 	"biomes": "#immersiveweapons:has_structure/battlefield_camp",

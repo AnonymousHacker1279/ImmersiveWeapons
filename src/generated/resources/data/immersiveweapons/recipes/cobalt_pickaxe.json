@@ -1,12 +1,12 @@
 {
   "type": "minecraft:crafting_shaped",
-  "group": "cobalt",
+  "category": "building",
   "key": {
     "a": {
       "tag": "forge:ingots/cobalt"
     },
     "b": {
-      "item": "minecraft:stick"
+      "tag": "forge:rods/wooden"
     }
   },
   "pattern": [

@@ -26,17 +26,16 @@ import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
-import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import tech.anonymoushacker1279.immersiveweapons.entity.GrantAdvancementOnDiscovery;
 import tech.anonymoushacker1279.immersiveweapons.entity.ai.goal.DefendVillageTargetGoal;
 import tech.anonymoushacker1279.immersiveweapons.entity.ai.goal.RangedShotgunAttackGoal;
 import tech.anonymoushacker1279.immersiveweapons.entity.monster.AbstractDyingSoldierEntity;
 import tech.anonymoushacker1279.immersiveweapons.entity.projectile.BulletEntity;
-import tech.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
+import tech.anonymoushacker1279.immersiveweapons.init.*;
 import tech.anonymoushacker1279.immersiveweapons.item.projectile.bullet.AbstractBulletItem;
 import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
 
-import javax.annotation.Nullable;
 import java.time.LocalDate;
 import java.time.temporal.ChronoField;
 import java.util.List;
@@ -47,7 +46,7 @@ public abstract class AbstractMinutemanEntity extends PathfinderMob implements R
 
 	private static final UniformInt tickRange = TimeUtil.rangeOfSeconds(20, 39);
 	private final RangedShotgunAttackGoal<AbstractMinutemanEntity> aiShotgunAttack =
-			new RangedShotgunAttackGoal<>(this, 1.0D, 25, 14.0F, DeferredRegistryHandler.BLUNDERBUSS.get());
+			new RangedShotgunAttackGoal<>(this, 1.0D, 25, 14.0F, ItemRegistry.BLUNDERBUSS.get());
 
 	private final MeleeAttackGoal aiAttackOnCollide = new MeleeAttackGoal(this, 1.2D, false) {
 		/**
@@ -70,6 +69,7 @@ public abstract class AbstractMinutemanEntity extends PathfinderMob implements R
 	};
 
 	private int angerTime;
+	@Nullable
 	private UUID targetUUID;
 
 	/**
@@ -126,7 +126,7 @@ public abstract class AbstractMinutemanEntity extends PathfinderMob implements R
 	 * @param blockIn the <code>BlockState</code> of the block being stepped on
 	 */
 	@Override
-	protected void playStepSound(@NotNull BlockPos pos, @NotNull BlockState blockIn) {
+	protected void playStepSound(BlockPos pos, BlockState blockIn) {
 		playSound(getStepSound(), 0.15F, 1.0F);
 	}
 
@@ -145,7 +145,7 @@ public abstract class AbstractMinutemanEntity extends PathfinderMob implements R
 					blockPosition().offset(50, 50, 50));
 
 			for (Player player : level.getNearbyPlayers(TargetingConditions.forNonCombat(), this, scanningBox)) {
-				checkForDiscovery(this, player);
+				checkForDiscovery(this);
 			}
 		}
 	}
@@ -167,9 +167,9 @@ public abstract class AbstractMinutemanEntity extends PathfinderMob implements R
 	 * @param difficulty the <code>DifficultyInstance</code> of the world
 	 */
 	@Override
-	protected void populateDefaultEquipmentSlots(@NotNull RandomSource randomSource, @NotNull DifficultyInstance difficulty) {
+	protected void populateDefaultEquipmentSlots(RandomSource randomSource, DifficultyInstance difficulty) {
 		super.populateDefaultEquipmentSlots(randomSource, difficulty);
-		setItemSlot(EquipmentSlot.MAINHAND, new ItemStack(DeferredRegistryHandler.BLUNDERBUSS.get()));
+		setItemSlot(EquipmentSlot.MAINHAND, new ItemStack(ItemRegistry.BLUNDERBUSS.get()));
 	}
 
 	/**
@@ -183,8 +183,8 @@ public abstract class AbstractMinutemanEntity extends PathfinderMob implements R
 	 * @return ILivingEntityData
 	 */
 	@Override
-	public SpawnGroupData finalizeSpawn(@NotNull ServerLevelAccessor level, @NotNull DifficultyInstance difficultyIn,
-	                                    @NotNull MobSpawnType reason, @Nullable SpawnGroupData spawnDataIn,
+	public SpawnGroupData finalizeSpawn(ServerLevelAccessor level, DifficultyInstance difficultyIn,
+	                                    MobSpawnType reason, @Nullable SpawnGroupData spawnDataIn,
 	                                    @Nullable CompoundTag dataTag) {
 
 		spawnDataIn = super.finalizeSpawn(level, difficultyIn, reason, spawnDataIn, dataTag);
@@ -217,9 +217,9 @@ public abstract class AbstractMinutemanEntity extends PathfinderMob implements R
 			goalSelector.removeGoal(aiAttackOnCollide);
 			goalSelector.removeGoal(aiShotgunAttack);
 			ItemStack itemInHand = getItemInHand(ProjectileUtil.getWeaponHoldingHand(this,
-					Predicate.isEqual(DeferredRegistryHandler.BLUNDERBUSS.get())));
+					Predicate.isEqual(ItemRegistry.BLUNDERBUSS.get())));
 
-			if (itemInHand.getItem() == DeferredRegistryHandler.BLUNDERBUSS.get()) {
+			if (itemInHand.getItem() == ItemRegistry.BLUNDERBUSS.get()) {
 				int cooldown = 25;
 				if (level.getDifficulty() != Difficulty.HARD) {
 					cooldown = 45;
@@ -240,7 +240,7 @@ public abstract class AbstractMinutemanEntity extends PathfinderMob implements R
 	 * @param entityIn the <code>Entity</code> being pushed
 	 */
 	@Override
-	protected void doPush(@NotNull Entity entityIn) {
+	protected void doPush(Entity entityIn) {
 		if (entityIn instanceof Enemy && !(entityIn instanceof MinutemanEntity) && !(entityIn instanceof IronGolem)
 				&& getRandom().nextInt(20) == 0) {
 
@@ -256,8 +256,8 @@ public abstract class AbstractMinutemanEntity extends PathfinderMob implements R
 	 * @return boolean
 	 */
 	@Override
-	public boolean canAttackType(@NotNull EntityType<?> typeIn) {
-		return typeIn != DeferredRegistryHandler.MINUTEMAN_ENTITY.get() && typeIn != EntityType.CREEPER;
+	public boolean canAttackType(EntityType<?> typeIn) {
+		return typeIn != EntityRegistry.MINUTEMAN_ENTITY.get() && typeIn != EntityType.CREEPER;
 	}
 
 	/**
@@ -267,10 +267,10 @@ public abstract class AbstractMinutemanEntity extends PathfinderMob implements R
 	 * @param distanceFactor the distance factor
 	 */
 	@Override
-	public void performRangedAttack(@NotNull LivingEntity target, float distanceFactor) {
+	public void performRangedAttack(LivingEntity target, float distanceFactor) {
 		// Fire four bullets for the blunderbuss
 		for (int i = 0; i <= 4; i++) {
-			BulletEntity bulletEntity = fireBullet(new ItemStack(DeferredRegistryHandler.COPPER_MUSKET_BALL.get()),
+			BulletEntity bulletEntity = fireBullet(new ItemStack(ItemRegistry.COPPER_MUSKET_BALL.get()),
 					distanceFactor);
 
 			double deltaX = target.getX() - getX();
@@ -286,7 +286,7 @@ public abstract class AbstractMinutemanEntity extends PathfinderMob implements R
 					18 - level.getDifficulty().getId() * 4 + GeneralUtilities.getRandomNumber(0.2f, 0.8f));
 			level.addFreshEntity(bulletEntity);
 		}
-		playSound(DeferredRegistryHandler.BLUNDERBUSS_FIRE.get(), 1.0F,
+		playSound(SoundEventRegistry.BLUNDERBUSS_FIRE.get(), 1.0F,
 				1.0F / (getRandom().nextFloat() * 0.4F + 0.8F));
 	}
 
@@ -297,11 +297,11 @@ public abstract class AbstractMinutemanEntity extends PathfinderMob implements R
 	 * @return ItemStack
 	 */
 	@Override
-	public @NotNull ItemStack getProjectile(ItemStack weapon) {
+	public ItemStack getProjectile(ItemStack weapon) {
 		if (weapon.getItem() instanceof ProjectileWeaponItem) {
 			Predicate<ItemStack> predicate = ((ProjectileWeaponItem) weapon.getItem()).getSupportedHeldProjectiles();
 			ItemStack heldProjectile = ProjectileWeaponItem.getHeldProjectile(this, predicate);
-			return heldProjectile.isEmpty() ? new ItemStack(DeferredRegistryHandler.COPPER_MUSKET_BALL.get()) : heldProjectile;
+			return heldProjectile.isEmpty() ? new ItemStack(ItemRegistry.COPPER_MUSKET_BALL.get()) : heldProjectile;
 		} else {
 			return ItemStack.EMPTY;
 		}
@@ -316,7 +316,7 @@ public abstract class AbstractMinutemanEntity extends PathfinderMob implements R
 	 */
 	private BulletEntity fireBullet(ItemStack bulletStack, float distanceFactor) {
 		AbstractBulletItem arrowItem = (AbstractBulletItem) (bulletStack.getItem() instanceof AbstractBulletItem
-				? bulletStack.getItem() : DeferredRegistryHandler.COPPER_MUSKET_BALL.get());
+				? bulletStack.getItem() : ItemRegistry.COPPER_MUSKET_BALL.get());
 
 		BulletEntity bulletEntity = arrowItem.createBullet(level, this);
 		bulletEntity.setEnchantmentEffectsFromEntity(this, distanceFactor);
@@ -332,7 +332,7 @@ public abstract class AbstractMinutemanEntity extends PathfinderMob implements R
 	 * @return boolean
 	 */
 	@Override
-	public boolean hurt(@NotNull DamageSource source, float amount) {
+	public boolean hurt(DamageSource source, float amount) {
 		if (amount > 0 && !(source.getEntity() instanceof MinutemanEntity) && !(source.getEntity() instanceof IronGolem)) {
 
 			super.hurt(source, amount);
@@ -348,7 +348,7 @@ public abstract class AbstractMinutemanEntity extends PathfinderMob implements R
 				setTarget((LivingEntity) source.getEntity());
 				setPersistentAngerTarget(source.getEntity().getUUID());
 
-				if (getTarget() != null && getTarget().getType() == DeferredRegistryHandler.MINUTEMAN_ENTITY.get()) {
+				if (getTarget() != null && getTarget().getType() == EntityRegistry.MINUTEMAN_ENTITY.get()) {
 					setTarget(null);
 					return false;
 				}
@@ -375,8 +375,8 @@ public abstract class AbstractMinutemanEntity extends PathfinderMob implements R
 	 * @return boolean
 	 */
 	@Override
-	public boolean canFireProjectileWeapon(@NotNull ProjectileWeaponItem projectileWeaponItem) {
-		return projectileWeaponItem == DeferredRegistryHandler.BLUNDERBUSS.get().asItem();
+	public boolean canFireProjectileWeapon(ProjectileWeaponItem projectileWeaponItem) {
+		return projectileWeaponItem == ItemRegistry.BLUNDERBUSS.get().asItem();
 	}
 
 	/**
@@ -385,7 +385,7 @@ public abstract class AbstractMinutemanEntity extends PathfinderMob implements R
 	 * @param compound the <code>CompoundNBT</code> to read from
 	 */
 	@Override
-	public void readAdditionalSaveData(@NotNull CompoundTag compound) {
+	public void readAdditionalSaveData(CompoundTag compound) {
 		super.readAdditionalSaveData(compound);
 		readPersistentAngerSaveData(level, compound);
 		setCombatTask();
@@ -397,7 +397,7 @@ public abstract class AbstractMinutemanEntity extends PathfinderMob implements R
 	 * @param compound the <code>CompoundNBT</code> to write to
 	 */
 	@Override
-	public void addAdditionalSaveData(@NotNull CompoundTag compound) {
+	public void addAdditionalSaveData(CompoundTag compound) {
 		super.addAdditionalSaveData(compound);
 		addPersistentAngerSaveData(compound);
 	}
@@ -409,7 +409,7 @@ public abstract class AbstractMinutemanEntity extends PathfinderMob implements R
 	 * @param stack  the <code>ItemStack</code> to set in the slot
 	 */
 	@Override
-	public void setItemSlot(@NotNull EquipmentSlot slotIn, @NotNull ItemStack stack) {
+	public void setItemSlot(EquipmentSlot slotIn, ItemStack stack) {
 		super.setItemSlot(slotIn, stack);
 		if (!level.isClientSide) {
 			setCombatTask();
@@ -424,7 +424,7 @@ public abstract class AbstractMinutemanEntity extends PathfinderMob implements R
 	 * @return float
 	 */
 	@Override
-	protected float getStandingEyeHeight(@NotNull Pose poseIn, @NotNull EntityDimensions sizeIn) {
+	protected float getStandingEyeHeight(Pose poseIn, EntityDimensions sizeIn) {
 		return 1.74F;
 	}
 

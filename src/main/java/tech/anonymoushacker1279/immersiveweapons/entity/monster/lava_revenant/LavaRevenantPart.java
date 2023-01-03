@@ -2,10 +2,10 @@ package tech.anonymoushacker1279.immersiveweapons.entity.monster.lava_revenant;
 
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.Packet;
+import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.*;
 import net.minecraftforge.entity.PartEntity;
-import org.jetbrains.annotations.NotNull;
 
 public class LavaRevenantPart extends PartEntity<LavaRevenantEntity> {
 	public final LavaRevenantEntity parentMob;
@@ -28,11 +28,11 @@ public class LavaRevenantPart extends PartEntity<LavaRevenantEntity> {
 	 * (abstract) Protected helper method to read subclass entity data from NBT.
 	 */
 	@Override
-	protected void readAdditionalSaveData(@NotNull CompoundTag pCompound) {
+	protected void readAdditionalSaveData(CompoundTag pCompound) {
 	}
 
 	@Override
-	protected void addAdditionalSaveData(@NotNull CompoundTag pCompound) {
+	protected void addAdditionalSaveData(CompoundTag pCompound) {
 	}
 
 	/**
@@ -47,7 +47,7 @@ public class LavaRevenantPart extends PartEntity<LavaRevenantEntity> {
 	 * Called when the entity is attacked.
 	 */
 	@Override
-	public boolean hurt(@NotNull DamageSource pSource, float pAmount) {
+	public boolean hurt(DamageSource pSource, float pAmount) {
 		return !isInvulnerableTo(pSource) && parentMob.hurt(this, pSource, pAmount);
 	}
 
@@ -55,17 +55,17 @@ public class LavaRevenantPart extends PartEntity<LavaRevenantEntity> {
 	 * Returns true if Entity argument is equal to this Entity
 	 */
 	@Override
-	public boolean is(@NotNull Entity pEntity) {
+	public boolean is(Entity pEntity) {
 		return this == pEntity || parentMob == pEntity;
 	}
 
 	@Override
-	public Packet<?> getAddEntityPacket() {
+	public Packet<ClientGamePacketListener> getAddEntityPacket() {
 		throw new UnsupportedOperationException();
 	}
 
 	@Override
-	public @NotNull EntityDimensions getDimensions(@NotNull Pose pPose) {
+	public EntityDimensions getDimensions(Pose pPose) {
 		return size;
 	}
 

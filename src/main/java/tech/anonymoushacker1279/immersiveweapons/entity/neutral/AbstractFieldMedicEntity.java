@@ -32,14 +32,12 @@ import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.network.NetworkEvent;
 import net.minecraftforge.network.NetworkEvent.Context;
 import net.minecraftforge.network.PacketDistributor;
-import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import tech.anonymoushacker1279.immersiveweapons.entity.GrantAdvancementOnDiscovery;
-import tech.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
-import tech.anonymoushacker1279.immersiveweapons.init.PacketHandler;
+import tech.anonymoushacker1279.immersiveweapons.init.*;
 import tech.anonymoushacker1279.immersiveweapons.item.UsedSyringeItem;
 import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
 
-import javax.annotation.Nullable;
 import java.time.LocalDate;
 import java.time.temporal.ChronoField;
 import java.util.ArrayList;
@@ -65,7 +63,9 @@ public abstract class AbstractFieldMedicEntity extends PathfinderMob implements 
 
 	private final List<Class<? extends PathfinderMob>> checkedEntities = new ArrayList<>(4);
 	private int checkForHurtEntitiesCooldown;
+	@Nullable
 	private LivingEntity currentlyTargetedEntity = null;
+	@Nullable
 	private LivingEntity lastTargetedEntity = null;
 	private int unlockLastTargetedEntityCooldown = 0;
 	private int healCooldown = 0;
@@ -121,7 +121,7 @@ public abstract class AbstractFieldMedicEntity extends PathfinderMob implements 
 	 * @param blockIn the <code>BlockState</code> of the block being stepped on
 	 */
 	@Override
-	protected void playStepSound(@NotNull BlockPos pos, @NotNull BlockState blockIn) {
+	protected void playStepSound(BlockPos pos, BlockState blockIn) {
 		playSound(getStepSound(), 0.15F, 1.0F);
 	}
 
@@ -156,7 +156,7 @@ public abstract class AbstractFieldMedicEntity extends PathfinderMob implements 
 					blockPosition().offset(50, 50, 50));
 
 			for (Player player : level.getNearbyPlayers(TargetingConditions.forNonCombat(), this, scanningBox)) {
-				checkForDiscovery(this, player);
+				checkForDiscovery(this);
 			}
 		}
 	}
@@ -183,8 +183,8 @@ public abstract class AbstractFieldMedicEntity extends PathfinderMob implements 
 	 * @return ILivingEntityData
 	 */
 	@Override
-	public SpawnGroupData finalizeSpawn(@NotNull ServerLevelAccessor worldIn, @NotNull DifficultyInstance difficultyIn,
-	                                    @NotNull MobSpawnType reason, @Nullable SpawnGroupData spawnDataIn,
+	public SpawnGroupData finalizeSpawn(ServerLevelAccessor worldIn, DifficultyInstance difficultyIn,
+	                                    MobSpawnType reason, @Nullable SpawnGroupData spawnDataIn,
 	                                    @Nullable CompoundTag dataTag) {
 
 		spawnDataIn = super.finalizeSpawn(worldIn, difficultyIn, reason, spawnDataIn, dataTag);
@@ -212,7 +212,7 @@ public abstract class AbstractFieldMedicEntity extends PathfinderMob implements 
 	private void setCombatTask() {
 		if (!level.isClientSide) {
 			goalSelector.removeGoal(aiAttackOnCollide);
-			setItemInHand(InteractionHand.MAIN_HAND, new ItemStack(DeferredRegistryHandler.USED_SYRINGE.get()));
+			setItemInHand(InteractionHand.MAIN_HAND, new ItemStack(ItemRegistry.USED_SYRINGE.get()));
 			goalSelector.addGoal(1, aiAttackOnCollide);
 		}
 	}
@@ -225,7 +225,7 @@ public abstract class AbstractFieldMedicEntity extends PathfinderMob implements 
 	 * @return boolean
 	 */
 	@Override
-	public boolean hurt(@NotNull DamageSource source, float amount) {
+	public boolean hurt(DamageSource source, float amount) {
 		super.hurt(source, amount);
 		if (amount > 0 && !(source.getEntity() instanceof AbstractMinutemanEntity)
 				&& !(source.getEntity() instanceof IronGolem)
@@ -261,11 +261,11 @@ public abstract class AbstractFieldMedicEntity extends PathfinderMob implements 
 	private void heal() {
 		healCooldown = 100;
 		if (getHealth() <= getMaxHealth() / 2) {
-			setItemInHand(InteractionHand.OFF_HAND, new ItemStack(DeferredRegistryHandler.FIRST_AID_KIT.get()));
+			setItemInHand(InteractionHand.OFF_HAND, new ItemStack(ItemRegistry.FIRST_AID_KIT.get()));
 			addEffect(new MobEffectInstance(MobEffects.REGENERATION, 240, 1, false, true));
 			addEffect(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, 1200, 0, false, true));
 		} else {
-			setItemInHand(InteractionHand.OFF_HAND, new ItemStack(DeferredRegistryHandler.BANDAGE.get()));
+			setItemInHand(InteractionHand.OFF_HAND, new ItemStack(ItemRegistry.BANDAGE.get()));
 			addEffect(new MobEffectInstance(MobEffects.REGENERATION, 240, 0, false, true));
 		}
 	}
@@ -277,10 +277,10 @@ public abstract class AbstractFieldMedicEntity extends PathfinderMob implements 
 	 * @return boolean
 	 */
 	@Override
-	public boolean doHurtTarget(@NotNull Entity entityIn) {
+	public boolean doHurtTarget(Entity entityIn) {
 		boolean canHurtTarget = super.doHurtTarget(entityIn);
 		if (canHurtTarget) {
-			if (getMainHandItem().getItem() == DeferredRegistryHandler.USED_SYRINGE.get()) {
+			if (getMainHandItem().getItem() == ItemRegistry.USED_SYRINGE.get()) {
 				float randomNumber = GeneralUtilities.getRandomNumber(0f, 1f);
 				// Poison chance
 				if (randomNumber <= 0.8f) {
@@ -341,11 +341,11 @@ public abstract class AbstractFieldMedicEntity extends PathfinderMob implements 
 			getNavigation().moveTo(currentlyTargetedEntity, 1.0D);
 			if (distanceTo(currentlyTargetedEntity) <= 1.5 && hasLineOfSight(currentlyTargetedEntity)) {
 				if (currentlyTargetedEntity.getHealth() <= currentlyTargetedEntity.getMaxHealth() / 2) {
-					setItemInHand(InteractionHand.MAIN_HAND, new ItemStack(DeferredRegistryHandler.FIRST_AID_KIT.get()));
+					setItemInHand(InteractionHand.MAIN_HAND, new ItemStack(ItemRegistry.FIRST_AID_KIT.get()));
 					currentlyTargetedEntity.addEffect(new MobEffectInstance(MobEffects.REGENERATION, 240, 1, false, true));
 					currentlyTargetedEntity.addEffect(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, 1200, 0, false, true));
 				} else {
-					setItemInHand(InteractionHand.MAIN_HAND, new ItemStack(DeferredRegistryHandler.BANDAGE.get()));
+					setItemInHand(InteractionHand.MAIN_HAND, new ItemStack(ItemRegistry.BANDAGE.get()));
 					currentlyTargetedEntity.addEffect(new MobEffectInstance(MobEffects.REGENERATION, 240, 0, false, true));
 				}
 				lastTargetedEntity = currentlyTargetedEntity;
@@ -361,7 +361,7 @@ public abstract class AbstractFieldMedicEntity extends PathfinderMob implements 
 	 * @param compound the <code>CompoundNBT</code> to read from
 	 */
 	@Override
-	public void readAdditionalSaveData(@NotNull CompoundTag compound) {
+	public void readAdditionalSaveData(CompoundTag compound) {
 		super.readAdditionalSaveData(compound);
 	}
 
@@ -417,7 +417,7 @@ public abstract class AbstractFieldMedicEntity extends PathfinderMob implements 
 			Minecraft minecraft = Minecraft.getInstance();
 			if (minecraft.level != null) {
 				minecraft.level.playLocalSound(msg.blockPos.getX(), msg.blockPos.getY(), msg.blockPos.getZ(),
-						DeferredRegistryHandler.FIELD_MEDIC_ATTACK.get(), SoundSource.HOSTILE,
+						SoundEventRegistry.FIELD_MEDIC_ATTACK.get(), SoundSource.HOSTILE,
 						1.0f, 1.0f, false);
 			}
 		}

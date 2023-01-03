@@ -3,7 +3,6 @@ package tech.anonymoushacker1279.immersiveweapons.client.renderer.entity.project
 import net.minecraft.client.renderer.entity.*;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.projectile.AbstractArrow;
-import org.jetbrains.annotations.NotNull;
 
 public class CustomArrowRenderer<T extends AbstractArrow> extends ArrowRenderer<T> implements EntityRendererProvider<T> {
 
@@ -27,12 +26,12 @@ public class CustomArrowRenderer<T extends AbstractArrow> extends ArrowRenderer<
 	 * @return ResourceLocation
 	 */
 	@Override
-	public @NotNull ResourceLocation getTextureLocation(@NotNull T entity) {
+	public ResourceLocation getTextureLocation(T entity) {
 		return textureLocation;
 	}
 
 	@Override
-	public @NotNull EntityRenderer<T> create(@NotNull Context context) {
+	public EntityRenderer<T> create(Context context) {
 		return new CustomArrowRenderer<>(context, textureLocation);
 	}
 }

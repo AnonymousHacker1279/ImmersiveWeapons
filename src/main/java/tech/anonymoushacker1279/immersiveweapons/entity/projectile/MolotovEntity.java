@@ -2,6 +2,8 @@ package tech.anonymoushacker1279.immersiveweapons.entity.projectile;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.protocol.Packet;
+import net.minecraft.network.protocol.game.ClientGamePacketListener;
+import net.minecraft.network.protocol.game.ClientboundAddEntityPacket;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.EntityType;
@@ -12,9 +14,8 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.HitResult;
-import net.minecraftforge.network.NetworkHooks;
-import org.jetbrains.annotations.NotNull;
-import tech.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
+import tech.anonymoushacker1279.immersiveweapons.init.EntityRegistry;
+import tech.anonymoushacker1279.immersiveweapons.init.ItemRegistry;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,7 +43,7 @@ public class MolotovEntity extends ThrowableItemProjectile {
 	 * @param livingEntity the <code>LivingEntity</code> throwing the entity
 	 */
 	public MolotovEntity(Level world, LivingEntity livingEntity) {
-		super(DeferredRegistryHandler.MOLOTOV_COCKTAIL_ENTITY.get(), livingEntity, world);
+		super(EntityRegistry.MOLOTOV_COCKTAIL_ENTITY.get(), livingEntity, world);
 	}
 
 	/**
@@ -54,7 +55,7 @@ public class MolotovEntity extends ThrowableItemProjectile {
 	 * @param z     the Z position
 	 */
 	public MolotovEntity(Level world, double x, double y, double z) {
-		super(DeferredRegistryHandler.MOLOTOV_COCKTAIL_ENTITY.get(), x, y, z, world);
+		super(EntityRegistry.MOLOTOV_COCKTAIL_ENTITY.get(), x, y, z, world);
 	}
 
 	/**
@@ -63,8 +64,8 @@ public class MolotovEntity extends ThrowableItemProjectile {
 	 * @return IPacket
 	 */
 	@Override
-	public @NotNull Packet<?> getAddEntityPacket() {
-		return NetworkHooks.getEntitySpawningPacket(this);
+	public Packet<ClientGamePacketListener> getAddEntityPacket() {
+		return new ClientboundAddEntityPacket(this);
 	}
 
 	/**
@@ -74,8 +75,8 @@ public class MolotovEntity extends ThrowableItemProjectile {
 	 * @return Item
 	 */
 	@Override
-	protected @NotNull Item getDefaultItem() {
-		return DeferredRegistryHandler.MOLOTOV_COCKTAIL.get();
+	protected Item getDefaultItem() {
+		return ItemRegistry.MOLOTOV_COCKTAIL.get();
 	}
 
 	/**
@@ -84,7 +85,7 @@ public class MolotovEntity extends ThrowableItemProjectile {
 	 * @param rayTraceResult the <code>RayTraceResult</code> instance
 	 */
 	@Override
-	protected void onHit(@NotNull HitResult rayTraceResult) {
+	protected void onHit(HitResult rayTraceResult) {
 		super.onHit(rayTraceResult);
 		if (!level.isClientSide) {
 			level.broadcastEntityEvent(this, VANILLA_IMPACT_STATUS_ID);

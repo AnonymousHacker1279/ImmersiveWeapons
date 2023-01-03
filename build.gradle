@@ -29,6 +29,12 @@ repositories {
 	maven {
 		url 'https://maven.blamejared.com'
 	}
+	maven {
+		url "https://cursemaven.com"
+		content {
+			includeGroup "curse.maven"
+		}
+	}
 }
 
 java.toolchain.languageVersion = JavaLanguageVersion.of(17)
@@ -51,7 +57,7 @@ minecraft {
 			property 'mixin.env.remapRefMap', 'true'
 			property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
 
-			jvmArgs '-Xmx4G', '-XX:+UseShenandoahGC'
+			jvmArgs '-Xmx6G', '-XX:+UseShenandoahGC'
 
 			mods {
 				immersiveweapons {
@@ -71,7 +77,7 @@ minecraft {
 			property 'mixin.env.remapRefMap', 'true'
 			property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
 
-			jvmArgs '-Xmx4G', '-XX:+UseShenandoahGC'
+			jvmArgs '-Xmx6G', '-XX:+UseShenandoahGC'
 
 			mods {
 				immersiveweapons {
@@ -118,12 +124,14 @@ dependencies {
 	// Include Immersive Weapons Compatibility Bridge (IWCB)
 	runtimeOnly fg.deobf("tech.anonymoushacker1279.iwcompatbridge:IWCompatBridge:${iwcb_version}")
 	// Include JEI
-	runtimeOnly fg.deobf("mezz.jei:jei-1.19-forge:${jei_version}")
+	// runtimeOnly fg.deobf("mezz.jei:jei-1.19.2-forge:${jei_version}") //  TODO: Uncomment when ported to 1.19.3
 	// Include WTHIT and badpackets
 	runtimeOnly fg.deobf("mcp.mobius.waila:wthit:forge-${wthit_version}")
 	implementation fg.deobf("lol.bai:badpackets:forge-${badpackets_version}")
 	// Include Patchouli
-	runtimeOnly fg.deobf("vazkii.patchouli:Patchouli:${patchouli_version}")
+	// runtimeOnly fg.deobf("vazkii.patchouli:Patchouli:${patchouli_version}") //   TODO: Uncomment when ported to 1.19.3
+	// Include MmmMmmMmmMmm (Target Dummy)
+	// runtimeOnly fg.deobf("curse.maven:mmmmmmmmmmmm-225738:${target_dummy_version}") //   TODO: Uncomment when ported to 1.19.3
 }
 
 java {

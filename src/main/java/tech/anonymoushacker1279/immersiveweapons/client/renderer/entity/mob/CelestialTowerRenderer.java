@@ -4,7 +4,6 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.resources.ResourceLocation;
-import org.jetbrains.annotations.NotNull;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.client.model.CelestialTowerModel;
 import tech.anonymoushacker1279.immersiveweapons.entity.monster.CelestialTowerEntity;
@@ -18,7 +17,7 @@ public class CelestialTowerRenderer<T extends CelestialTowerEntity> extends MobR
 	}
 
 	@Override
-	protected void scale(@NotNull T pLivingEntity, PoseStack pMatrixStack, float pPartialTickTime) {
+	protected void scale(T pLivingEntity, PoseStack pMatrixStack, float pPartialTickTime) {
 		pMatrixStack.scale(8.0f, 9.0f, 8.0f);
 	}
 
@@ -26,7 +25,7 @@ public class CelestialTowerRenderer<T extends CelestialTowerEntity> extends MobR
 	 * Returns the location of an entity's texture.
 	 */
 	@Override
-	public @NotNull ResourceLocation getTextureLocation(@NotNull T pEntity) {
+	public ResourceLocation getTextureLocation(T pEntity) {
 		return TEXTURE_LOCATION;
 	}
 }

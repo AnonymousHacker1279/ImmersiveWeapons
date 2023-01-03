@@ -1,0 +1,16 @@
+{
+  "variants": {
+    "axis=x": {
+      "model": "immersiveweapons:block/stardust_wood_horizontal",
+      "x": 90,
+      "y": 90
+    },
+    "axis=y": {
+      "model": "immersiveweapons:block/stardust_wood"
+    },
+    "axis=z": {
+      "model": "immersiveweapons:block/stardust_wood_horizontal",
+      "x": 90
+    }
+  }
+}

@@ -11,7 +11,7 @@ import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
 import net.minecraftforge.common.loot.IGlobalLootModifier;
 import net.minecraftforge.common.loot.LootModifier;
 import org.jetbrains.annotations.NotNull;
-import tech.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
+import tech.anonymoushacker1279.immersiveweapons.init.ItemRegistry;
 import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
 
 import java.util.function.Supplier;
@@ -59,7 +59,7 @@ public class AzulKeystoneFragmentInChestsLootModifierHandler extends LootModifie
 		if (rollChance <= GeneralUtilities.getRandomNumber(0.0f, 1.00001f)) {
 			int lootQuantity = GeneralUtilities.getRandomNumber(minQuantity, maxQuantity + 1);
 
-			generatedLoot.add(new ItemStack(DeferredRegistryHandler.AZUL_KEYSTONE_FRAGMENT.get(), lootQuantity));
+			generatedLoot.add(new ItemStack(ItemRegistry.AZUL_KEYSTONE_FRAGMENT.get(), lootQuantity));
 		}
 		return generatedLoot;
 	}

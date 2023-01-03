@@ -17,8 +17,7 @@ import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import org.jetbrains.annotations.NotNull;
-import tech.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
+import tech.anonymoushacker1279.immersiveweapons.init.BlockRegistry;
 import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
 
 public class WarriorStatueHead extends HorizontalDirectionalBlock implements SimpleWaterloggedBlock {
@@ -54,7 +53,7 @@ public class WarriorStatueHead extends HorizontalDirectionalBlock implements Sim
 	 */
 	@SuppressWarnings("deprecation")
 	@Override
-	public @NotNull VoxelShape getShape(@NotNull BlockState state, @NotNull BlockGetter reader, @NotNull BlockPos pos, @NotNull CollisionContext selectionContext) {
+	public VoxelShape getShape(BlockState state, BlockGetter reader, BlockPos pos, CollisionContext selectionContext) {
 		return switch (state.getValue(FACING)) {
 			case SOUTH -> SHAPE_NS.move(0.0D, 0.0D, -0.2D);
 			case EAST -> SHAPE_EW.move(-0.2D, 0.0D, 0.0D);
@@ -92,13 +91,13 @@ public class WarriorStatueHead extends HorizontalDirectionalBlock implements Sim
 	 */
 	@SuppressWarnings("deprecation")
 	@Override
-	public float getShadeBrightness(@NotNull BlockState state, @NotNull BlockGetter reader, @NotNull BlockPos pos) {
+	public float getShadeBrightness(BlockState state, BlockGetter reader, BlockPos pos) {
 		return 1.0F;
 	}
 
 	@SuppressWarnings("deprecation")
 	@Override
-	public @NotNull FluidState getFluidState(BlockState state) {
+	public FluidState getFluidState(BlockState state) {
 		return state.getValue(WATERLOGGED) ? Fluids.WATER.getSource(false) : super.getFluidState(state);
 	}
 
@@ -111,9 +110,9 @@ public class WarriorStatueHead extends HorizontalDirectionalBlock implements Sim
 	 * @param player  the <code>PlayerEntity</code> destroying the block
 	 */
 	@Override
-	public void playerWillDestroy(@NotNull Level worldIn, @NotNull BlockPos pos, @NotNull BlockState state, @NotNull Player player) {
+	public void playerWillDestroy(Level worldIn, BlockPos pos, BlockState state, Player player) {
 		if (state.getValue(POWERED)) {
-			worldIn.setBlock(pos.below(), DeferredRegistryHandler.WARRIOR_STATUE_TORSO.get().defaultBlockState().setValue(FACING, state.getValue(FACING)).setValue(POWERED, false), 3);
+			worldIn.setBlock(pos.below(), BlockRegistry.WARRIOR_STATUE_TORSO.get().defaultBlockState().setValue(FACING, state.getValue(FACING)).setValue(POWERED, false), 3);
 		}
 
 		super.playerWillDestroy(worldIn, pos, state, player);

@@ -1,0 +1,16 @@
+{
+	"name": "immersiveweapons:graveyard",
+	"fallback": "minecraft:empty",
+
+	"elements": [
+		{
+			"weight": 1,
+			"element": {
+				"location": "immersiveweapons:graveyard",
+				"processors": "minecraft:empty",
+				"projection": "rigid",
+				"element_type": "minecraft:single_pool_element"
+			}
+		}
+	]
+}

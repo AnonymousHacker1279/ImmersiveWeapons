@@ -1,12 +1,13 @@
 {
   "type": "minecraft:crafting_shaped",
-  "group": "burned_oak",
+  "category": "building",
+  "group": "wooden_fence_gate",
   "key": {
     "a": {
       "item": "immersiveweapons:burned_oak_planks"
     },
     "b": {
-      "item": "minecraft:stick"
+      "tag": "forge:rods/wooden"
     }
   },
   "pattern": [
