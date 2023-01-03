@@ -891,6 +891,8 @@ public class RecipeGenerator extends RecipeProvider {
 		createTable(BlockItemRegistry.WARPED_TABLE_ITEM.get(), Items.WARPED_SLAB, Items.WARPED_FENCE);
 		createTable(BlockItemRegistry.BURNED_OAK_TABLE_ITEM.get(), BlockItemRegistry.BURNED_OAK_SLAB_ITEM.get(),
 				BlockItemRegistry.BURNED_OAK_FENCE_ITEM.get());
+		createTable(BlockItemRegistry.STARDUST_TABLE_ITEM.get(), BlockItemRegistry.STARDUST_SLAB_ITEM.get(),
+				BlockItemRegistry.STARDUST_FENCE_ITEM.get());
 
 	}
 

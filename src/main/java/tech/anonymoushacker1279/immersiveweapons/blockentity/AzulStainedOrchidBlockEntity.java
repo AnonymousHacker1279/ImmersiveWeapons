@@ -14,9 +14,9 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.Heightmap;
 import org.jetbrains.annotations.Nullable;
 import tech.anonymoushacker1279.immersiveweapons.data.biomes.IWBiomes;
+import tech.anonymoushacker1279.immersiveweapons.data.dimensions.IWDimensions;
 import tech.anonymoushacker1279.immersiveweapons.init.BlockEntityRegistry;
 import tech.anonymoushacker1279.immersiveweapons.world.TiltrosTeleporter;
-import tech.anonymoushacker1279.immersiveweapons.world.level.levelgen.biomes.Dimensions;
 
 public class AzulStainedOrchidBlockEntity extends BlockEntity implements EntityBlock {
 
@@ -39,8 +39,8 @@ public class AzulStainedOrchidBlockEntity extends BlockEntity implements EntityB
 
 			Level entityWorld = entity.level;
 			MinecraftServer server = entityWorld.getServer();
-			ResourceKey<Level> destination = entityWorld.dimension() == Dimensions.TILTROS ? Level.OVERWORLD
-					: Dimensions.TILTROS;
+			ResourceKey<Level> destination = entityWorld.dimension() == IWDimensions.TILTROS ? Level.OVERWORLD
+					: IWDimensions.TILTROS;
 
 			if (server != null) {
 				ServerLevel destinationLevel = server.getLevel(destination);
