@@ -75,6 +75,8 @@ public class CommonConfig {
 				.define("celestial_tower_wave_size_modifier", 1.0F);
 		builder.pop();
 
+		builder.pop();
+
 		builder.push("Weapon Settings");
 
 		builder.push("General");
