@@ -306,15 +306,18 @@ public abstract class AbstractDyingSoldierEntity extends Monster implements Rang
 	@Override
 	public boolean checkSpawnRules(LevelAccessor pLevel, MobSpawnType pSpawnReason) {
 		boolean walkTargetAboveZero = super.checkSpawnRules(pLevel, pSpawnReason);
-		boolean notInWater = pLevel.getBlockState(blockPosition().below()).getFluidState().isEmpty();
-		boolean onGround = !pLevel.getBlockState(blockPosition().below()).isAir();
+		boolean isValidSpawn = pLevel.getBlockState(blockPosition().below()).isValidSpawn(pLevel, blockPosition(), getType());
+		boolean isDarkEnough = isDarkEnoughToSpawn((ServerLevelAccessor) pLevel, blockPosition(), pLevel.getRandom());
 
-		// If the reason is NATURAL, check the light level
-		if (pSpawnReason == MobSpawnType.NATURAL) {
-			return walkTargetAboveZero && notInWater && onGround && isDarkEnoughToSpawn((ServerLevelAccessor) pLevel, blockPosition(), pLevel.getRandom());
+		if (pSpawnReason == MobSpawnType.SPAWN_EGG) {
+			return true;
 		}
 
-		return walkTargetAboveZero && notInWater && onGround;
+		if (pSpawnReason == MobSpawnType.NATURAL) {
+			return walkTargetAboveZero && isValidSpawn && isDarkEnough;
+		} else {
+			return walkTargetAboveZero && isValidSpawn;
+		}
 	}
 
 	@Override
