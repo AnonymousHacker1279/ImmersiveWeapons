@@ -12,7 +12,6 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.data.advancements.AdvancementsGenerator;
-import tech.anonymoushacker1279.immersiveweapons.data.features.WorldGenData;
 import tech.anonymoushacker1279.immersiveweapons.data.loot.LootTableGenerator;
 import tech.anonymoushacker1279.immersiveweapons.data.models.BlockStateGenerator;
 import tech.anonymoushacker1279.immersiveweapons.data.models.ItemModelGenerator;

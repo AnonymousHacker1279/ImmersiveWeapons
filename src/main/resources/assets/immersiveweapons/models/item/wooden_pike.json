@@ -3,8 +3,8 @@
 	"texture_size": [32, 32],
 	"textures": {
 		"0": "immersiveweapons:item/custom/brown",
-		"1": "immersiveweapons:item/custom/wood_2",
-		"2": "immersiveweapons:item/custom/wood_light_2",
+		"1": "immersiveweapons:item/custom/wood",
+		"2": "immersiveweapons:item/custom/wood_light",
 		"particle": "immersiveweapons:item/custom/brown"
 	},
 	"elements": [

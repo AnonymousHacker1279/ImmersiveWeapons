@@ -74,15 +74,15 @@ public class ClientModEventSubscriber {
 
 		event.enqueueWork(() -> {
 			SkullBlockRenderer.SKIN_BY_TYPE.put(CustomSkullTypes.MINUTEMAN, new ResourceLocation(ImmersiveWeapons.MOD_ID,
-					"textures/entity/minuteman.png"));
+					"textures/entity/heads/minuteman.png"));
 			SkullBlockRenderer.SKIN_BY_TYPE.put(CustomSkullTypes.FIELD_MEDIC, new ResourceLocation(ImmersiveWeapons.MOD_ID,
-					"textures/entity/field_medic.png"));
+					"textures/entity/heads/field_medic.png"));
 			SkullBlockRenderer.SKIN_BY_TYPE.put(CustomSkullTypes.DYING_SOLDIER, new ResourceLocation(ImmersiveWeapons.MOD_ID,
-					"textures/entity/dying_soldier.png"));
+					"textures/entity/heads/dying_soldier.png"));
 			SkullBlockRenderer.SKIN_BY_TYPE.put(CustomSkullTypes.WANDERING_WARRIOR, new ResourceLocation(ImmersiveWeapons.MOD_ID,
-					"textures/entity/wandering_warrior.png"));
+					"textures/entity/heads/wandering_warrior.png"));
 			SkullBlockRenderer.SKIN_BY_TYPE.put(CustomSkullTypes.HANS, new ResourceLocation(ImmersiveWeapons.MOD_ID,
-					"textures/entity/hans.png"));
+					"textures/entity/heads/hans.png"));
 
 			Sheets.addWoodType(WoodTypes.BURNED_OAK);
 			Sheets.addWoodType(WoodTypes.STARDUST);

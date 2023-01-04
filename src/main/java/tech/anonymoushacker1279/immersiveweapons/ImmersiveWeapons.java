@@ -18,7 +18,7 @@ import tech.anonymoushacker1279.immersiveweapons.config.ClientConfig;
 import tech.anonymoushacker1279.immersiveweapons.config.CommonConfig;
 import tech.anonymoushacker1279.immersiveweapons.init.*;
 import tech.anonymoushacker1279.immersiveweapons.world.level.levelgen.biomes.IWOverworldBiomesProvider;
-import tech.anonymoushacker1279.immersiveweapons.world.level.levelgen.biomes.SurfaceRuleData;
+import tech.anonymoushacker1279.immersiveweapons.world.level.levelgen.biomes.IWSurfaceRuleData;
 import terrablender.api.*;
 import terrablender.api.SurfaceRuleManager.RuleCategory;
 
@@ -67,7 +67,7 @@ public class ImmersiveWeapons {
 			WoodType.register(WoodTypes.STARDUST);
 			Regions.register(new IWOverworldBiomesProvider(new ResourceLocation(MOD_ID, "overworld_biome_provider"),
 					RegionType.OVERWORLD, 1));
-			SurfaceRuleManager.addSurfaceRules(RuleCategory.OVERWORLD, MOD_ID, SurfaceRuleData.makeRules());
+			SurfaceRuleManager.addSurfaceRules(RuleCategory.OVERWORLD, MOD_ID, IWSurfaceRuleData.makeRules());
 		});
 		PostSetupHandler.init();
 

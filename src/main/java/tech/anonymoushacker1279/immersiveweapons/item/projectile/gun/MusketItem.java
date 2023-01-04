@@ -7,6 +7,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
+import tech.anonymoushacker1279.immersiveweapons.config.CommonConfig;
 import tech.anonymoushacker1279.immersiveweapons.entity.projectile.BulletEntity;
 import tech.anonymoushacker1279.immersiveweapons.init.SoundEventRegistry;
 import tech.anonymoushacker1279.immersiveweapons.item.projectile.bullet.AbstractBulletItem;
@@ -33,10 +34,10 @@ public class MusketItem extends AbstractGunItem {
 		bulletEntity.setFiringItem(firingItem.getItem());
 
 		bulletEntity.shootFromRotation(player, player.xRot, player.yRot,
-				0.0F, 4.0F, 0.15F);
+				0.0F, CommonConfig.MUSKET_FIRE_VELOCITY.get(), CommonConfig.MUSKET_FIRE_INACCURACY.get());
 
 		// Roll for random crits
-		if (GeneralUtilities.getRandomNumber(0f, 1f) <= 0.2f) {
+		if (GeneralUtilities.getRandomNumber(0f, 1f) <= CommonConfig.GUN_CRIT_CHANCE.get()) {
 			bulletEntity.setCritArrow(true);
 		}
 

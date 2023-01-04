@@ -18,6 +18,7 @@ import net.minecraft.world.phys.Vec2;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.event.ForgeEventFactory;
 import net.minecraftforge.network.PacketDistributor;
+import tech.anonymoushacker1279.immersiveweapons.config.CommonConfig;
 import tech.anonymoushacker1279.immersiveweapons.data.tags.groups.immersiveweapons.ImmersiveWeaponsItemTagGroups;
 import tech.anonymoushacker1279.immersiveweapons.entity.projectile.BulletEntity;
 import tech.anonymoushacker1279.immersiveweapons.init.*;
@@ -92,11 +93,7 @@ public abstract class AbstractGunItem extends Item implements Vanishable {
 				}
 			}
 
-			int useDuration = getUseDuration(itemStack);
-			useDuration = ForgeEventFactory.onArrowLoose(itemStack, level, player, useDuration,
-					!ammo.isEmpty() || isCreative);
-
-			if (useDuration < 0) {
+			if (getUseDuration(itemStack) < 0) {
 				return;
 			}
 
@@ -406,10 +403,10 @@ public abstract class AbstractGunItem extends Item implements Vanishable {
 		bulletEntity.setFiringItem(firingItem.getItem());
 
 		bulletEntity.shootFromRotation(player, player.xRot, player.yRot,
-				0.0F, 2.5F, 1.75F);
+				0.0F, CommonConfig.FLINTLOCK_PISTOL_FIRE_VELOCITY.get(), CommonConfig.FLINTLOCK_PISTOL_FIRE_INACCURACY.get());
 
 		// Roll for random crits
-		if (GeneralUtilities.getRandomNumber(0f, 1f) <= 0.1f) {
+		if (GeneralUtilities.getRandomNumber(0f, 1f) <= CommonConfig.GUN_CRIT_CHANCE.get()) {
 			bulletEntity.setCritArrow(true);
 		}
 

@@ -1,8 +1,8 @@
 {
 	"credit": "Made with Blockbench",
 	"textures": {
-		"0": "immersiveweapons:item/custom/gold_32x",
-		"particle": "immersiveweapons:item/custom/gold_32x"
+		"0": "immersiveweapons:item/custom/gold",
+		"particle": "immersiveweapons:item/custom/gold"
 	},
 	"elements": [
 		{
