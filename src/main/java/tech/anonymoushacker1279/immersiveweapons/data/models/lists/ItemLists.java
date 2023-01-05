@@ -11,6 +11,8 @@ public class ItemLists {
 
 	public static final List<Item> modelGeneratorIgnoredItems = new ArrayList<>(75);
 	public static final List<Item> headItems = new ArrayList<>(15);
+	public static final List<Item> smokeGrenadeItems = new ArrayList<>(15);
+	public static final List<Item> smokeGrenadeArrowItems = new ArrayList<>(15);
 
 	static {
 		// Items
@@ -60,5 +62,19 @@ public class ItemLists {
 		headItems.add(BlockItemRegistry.DYING_SOLDIER_HEAD_ITEM.get());
 		headItems.add(BlockItemRegistry.WANDERING_WARRIOR_HEAD_ITEM.get());
 		headItems.add(BlockItemRegistry.HANS_HEAD_ITEM.get());
+
+		smokeGrenadeItems.add(ItemRegistry.SMOKE_GRENADE.get());
+		smokeGrenadeItems.add(ItemRegistry.SMOKE_GRENADE_BLUE.get());
+		smokeGrenadeItems.add(ItemRegistry.SMOKE_GRENADE_RED.get());
+		smokeGrenadeItems.add(ItemRegistry.SMOKE_GRENADE_GREEN.get());
+		smokeGrenadeItems.add(ItemRegistry.SMOKE_GRENADE_PURPLE.get());
+		smokeGrenadeItems.add(ItemRegistry.SMOKE_GRENADE_YELLOW.get());
+
+		smokeGrenadeArrowItems.add(ItemRegistry.SMOKE_GRENADE_ARROW.get());
+		smokeGrenadeArrowItems.add(ItemRegistry.SMOKE_GRENADE_ARROW_BLUE.get());
+		smokeGrenadeArrowItems.add(ItemRegistry.SMOKE_GRENADE_ARROW_RED.get());
+		smokeGrenadeArrowItems.add(ItemRegistry.SMOKE_GRENADE_ARROW_GREEN.get());
+		smokeGrenadeArrowItems.add(ItemRegistry.SMOKE_GRENADE_ARROW_PURPLE.get());
+		smokeGrenadeArrowItems.add(ItemRegistry.SMOKE_GRENADE_ARROW_YELLOW.get());
 	}
 }

@@ -10,12 +10,12 @@ public class IWKeyBinds {
 
 	private static final String CATEGORY = "key.categories." + ImmersiveWeapons.MOD_ID;
 
-	public static final KeyMapping TOGGLE_ARMOR_EFFECT = new KeyMapping(ImmersiveWeapons.MOD_ID + ".key.toggleArmorEffect",
+	public static final KeyMapping TOGGLE_ARMOR_EFFECT = new KeyMapping("key." + ImmersiveWeapons.MOD_ID + ".toggleArmorEffect",
 			KeyConflictContext.IN_GAME,
 			Type.KEYSYM,
 			InputConstants.KEY_N,
 			CATEGORY);
-	public static final KeyMapping ASTRAL_ARMOR_DASH_EFFECT = new KeyMapping(ImmersiveWeapons.MOD_ID + ".key.astralArmorDashEffect",
+	public static final KeyMapping ASTRAL_ARMOR_DASH_EFFECT = new KeyMapping("key." + ImmersiveWeapons.MOD_ID + ".astralArmorDashEffect",
 			KeyConflictContext.IN_GAME,
 			Type.MOUSE,
 			5, // Mouse button 5

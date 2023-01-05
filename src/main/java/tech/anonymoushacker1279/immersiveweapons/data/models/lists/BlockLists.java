@@ -15,6 +15,7 @@ public class BlockLists {
 	public static final List<Block> tableBlocks = new ArrayList<>(25);
 	public static final List<Block> flagBlocks = new ArrayList<>(25);
 	public static final List<Block> headBlocks = new ArrayList<>(25);
+	public static final List<Block> wallHeadBlocks = new ArrayList<>(25);
 	public static final List<Block> stainedGlassBlocks = new ArrayList<>(25);
 
 	static {
@@ -68,11 +69,12 @@ public class BlockLists {
 		headBlocks.add(BlockRegistry.DYING_SOLDIER_HEAD.get());
 		headBlocks.add(BlockRegistry.WANDERING_WARRIOR_HEAD.get());
 		headBlocks.add(BlockRegistry.HANS_HEAD.get());
-		headBlocks.add(BlockRegistry.MINUTEMAN_WALL_HEAD.get());
-		headBlocks.add(BlockRegistry.FIELD_MEDIC_WALL_HEAD.get());
-		headBlocks.add(BlockRegistry.DYING_SOLDIER_WALL_HEAD.get());
-		headBlocks.add(BlockRegistry.WANDERING_WARRIOR_WALL_HEAD.get());
-		headBlocks.add(BlockRegistry.HANS_WALL_HEAD.get());
+		wallHeadBlocks.add(BlockRegistry.MINUTEMAN_WALL_HEAD.get());
+		wallHeadBlocks.add(BlockRegistry.FIELD_MEDIC_WALL_HEAD.get());
+		wallHeadBlocks.add(BlockRegistry.DYING_SOLDIER_WALL_HEAD.get());
+		wallHeadBlocks.add(BlockRegistry.WANDERING_WARRIOR_WALL_HEAD.get());
+		wallHeadBlocks.add(BlockRegistry.HANS_WALL_HEAD.get());
+		headBlocks.addAll(wallHeadBlocks);
 
 		stainedGlassBlocks.add(BlockRegistry.WHITE_STAINED_BULLETPROOF_GLASS.get());
 		stainedGlassBlocks.add(BlockRegistry.LIGHT_GRAY_STAINED_BULLETPROOF_GLASS.get());
