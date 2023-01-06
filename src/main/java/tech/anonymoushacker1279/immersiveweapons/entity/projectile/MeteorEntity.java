@@ -11,7 +11,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.damagesource.EntityDamageSource;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.entity.projectile.ProjectileUtil;
 import net.minecraft.world.level.ClipContext;
@@ -36,7 +36,7 @@ public class MeteorEntity extends Projectile {
 		super(entityType, level);
 	}
 
-	public static void create(Level level, Player owner, BlockPos targetPos) {
+	public static void create(Level level, LivingEntity owner, BlockPos targetPos) {
 		if (!level.isClientSide) {
 			MeteorEntity meteorEntity = new MeteorEntity(EntityRegistry.METEOR_ENTITY.get(), level);
 
@@ -157,7 +157,7 @@ public class MeteorEntity extends Projectile {
 		boolean breakBlocks = CommonConfig.METEOR_STAFF_EXPLOSION_BREAK_BLOCKS.get();
 		ExplosionInteraction explosionInteraction = breakBlocks ? ExplosionInteraction.MOB : ExplosionInteraction.NONE;
 
-		level.explode(this, damageSource, null, position().subtract(0, 1, 0), explosionRadius, false, explosionInteraction);
+		level.explode(this, damageSource, null, position().subtract(0, 1.5, 0), explosionRadius, false, explosionInteraction);
 
 		// Spawn a ring of fire particles
 		if (!level.isClientSide) {

@@ -1,12 +1,10 @@
 package tech.anonymoushacker1279.immersiveweapons.data.loot;
 
-import com.google.common.collect.ImmutableSet;
 import net.minecraft.advancements.critereon.EntityFlagsPredicate;
 import net.minecraft.advancements.critereon.EntityPredicate;
 import net.minecraft.data.loot.LootTableSubProvider;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.storage.loot.*;
 import net.minecraft.world.level.storage.loot.LootTable.Builder;
@@ -15,15 +13,11 @@ import net.minecraft.world.level.storage.loot.functions.*;
 import net.minecraft.world.level.storage.loot.predicates.*;
 import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
 import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
-import net.minecraftforge.registries.RegistryObject;
 import org.jetbrains.annotations.Nullable;
 import tech.anonymoushacker1279.immersiveweapons.init.EntityRegistry;
 import tech.anonymoushacker1279.immersiveweapons.init.ItemRegistry;
 
-import java.util.*;
 import java.util.function.BiConsumer;
-import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
 
 public class EntityLootTables implements LootTableSubProvider {
 
@@ -31,7 +25,6 @@ public class EntityLootTables implements LootTableSubProvider {
 	private BiConsumer<ResourceLocation, LootTable.Builder> out;
 
 	protected static final EntityPredicate.Builder ENTITY_ON_FIRE = EntityPredicate.Builder.entity().flags(EntityFlagsPredicate.Builder.flags().setOnFire(true).build());
-	private static final Set<EntityType<?>> SPECIAL_LOOT_TABLE_TYPES = ImmutableSet.of(EntityType.PLAYER, EntityType.ARMOR_STAND, EntityType.IRON_GOLEM, EntityType.SNOW_GOLEM, EntityType.VILLAGER);
 
 	@Override
 	public void generate(BiConsumer<ResourceLocation, Builder> out) {
@@ -147,18 +140,9 @@ public class EntityLootTables implements LootTableSubProvider {
 				.withPool(LootPool.lootPool()
 						.setRolls(ConstantValue.exactly(1.0F))
 						.add(LootItem.lootTableItem(ItemRegistry.CELESTIAL_FRAGMENT.get())
-								.apply(SetItemCountFunction.setCount(UniformGenerator.between(0.0F, 3.0F)))
+								.apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 3.0F)))
 								.apply(LootingEnchantFunction.lootingMultiplier(UniformGenerator.between(0.0F, 2.0F))))
 						.when(LootItemKilledByPlayerCondition.killedByPlayer())));
-	}
-
-	protected List<RegistryObject<EntityType<?>>> getKnownEntities() {
-		return StreamSupport.stream(Spliterators.spliteratorUnknownSize(EntityRegistry.ENTITY_TYPES.getEntries().stream().iterator(), 0),
-				false).collect(Collectors.toList());
-	}
-
-	protected boolean isNonLiving(EntityType<?> entityType) {
-		return !SPECIAL_LOOT_TABLE_TYPES.contains(entityType) && entityType.getCategory() == MobCategory.MISC;
 	}
 
 	protected void add(EntityType<?> pEntityType, LootTable.Builder pLootTableBuilder) {
