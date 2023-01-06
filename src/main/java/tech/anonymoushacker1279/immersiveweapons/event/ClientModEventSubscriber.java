@@ -31,8 +31,7 @@ import tech.anonymoushacker1279.immersiveweapons.client.IWKeyBinds;
 import tech.anonymoushacker1279.immersiveweapons.client.gui.IWOverlays;
 import tech.anonymoushacker1279.immersiveweapons.client.gui.screen.SmallPartsTableScreen;
 import tech.anonymoushacker1279.immersiveweapons.client.gui.screen.TeslaSynthesizerScreen;
-import tech.anonymoushacker1279.immersiveweapons.client.model.CelestialTowerModel;
-import tech.anonymoushacker1279.immersiveweapons.client.model.FireflyModel;
+import tech.anonymoushacker1279.immersiveweapons.client.model.*;
 import tech.anonymoushacker1279.immersiveweapons.client.particle.*;
 import tech.anonymoushacker1279.immersiveweapons.client.particle.bullet_impact.BulletImpactParticle;
 import tech.anonymoushacker1279.immersiveweapons.client.particle.smoke_grenade.SmokeGrenadeParticle;
@@ -207,6 +206,7 @@ public class ClientModEventSubscriber {
 		event.registerEntityRenderer(EntityRegistry.CELESTIAL_TOWER_ENTITY.get(), CelestialTowerRenderer::new);
 		event.registerEntityRenderer(EntityRegistry.STARMITE_ENTITY.get(), StarmiteRenderer::new);
 		event.registerEntityRenderer(EntityRegistry.FIREFLY_ENTITY.get(), FireflyRenderer::new);
+		event.registerEntityRenderer(EntityRegistry.METEOR_ENTITY.get(), MeteorRenderer::new);
 		event.registerBlockEntityRenderer(BlockEntityRegistry.WALL_SHELF_BLOCK_ENTITY.get(), context -> new ShelfRenderer());
 		event.registerBlockEntityRenderer(BlockEntityRegistry.BURNED_OAK_SIGN_ENTITY.get(), SignRenderer::new);
 		event.registerBlockEntityRenderer(BlockEntityRegistry.CUSTOM_SKULL_BLOCK_ENTITY.get(), SkullBlockRenderer::new);
@@ -225,6 +225,7 @@ public class ClientModEventSubscriber {
 
 		event.registerLayerDefinition(CelestialTowerModel.LAYER_LOCATION, CelestialTowerModel::createBodyLayer);
 		event.registerLayerDefinition(FireflyModel.LAYER_LOCATION, FireflyModel::createBodyLayer);
+		event.registerLayerDefinition(MeteorModel.LAYER_LOCATION, MeteorModel::createBodyLayer);
 		event.registerLayerDefinition(MINUTEMAN_HEAD_LAYER, SkullModel::createMobHeadLayer);
 		event.registerLayerDefinition(FIELD_MEDIC_HEAD_LAYER, SkullModel::createMobHeadLayer);
 		event.registerLayerDefinition(DYING_SOLDIER_HEAD_LAYER, SkullModel::createMobHeadLayer);

@@ -403,7 +403,7 @@ public abstract class AbstractGunItem extends Item implements Vanishable {
 		bulletEntity.setFiringItem(firingItem.getItem());
 
 		bulletEntity.shootFromRotation(player, player.xRot, player.yRot,
-				0.0F, CommonConfig.FLINTLOCK_PISTOL_FIRE_VELOCITY.get(), CommonConfig.FLINTLOCK_PISTOL_FIRE_INACCURACY.get());
+				0.0F, CommonConfig.FLINTLOCK_PISTOL_FIRE_VELOCITY.get().floatValue(), CommonConfig.FLINTLOCK_PISTOL_FIRE_INACCURACY.get().floatValue());
 
 		// Roll for random crits
 		if (GeneralUtilities.getRandomNumber(0f, 1f) <= CommonConfig.GUN_CRIT_CHANCE.get()) {

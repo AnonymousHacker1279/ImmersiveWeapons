@@ -1202,6 +1202,16 @@ public class AdvancementsGenerator extends ForgeAdvancementProvider {
 				.rewards(AdvancementRewards.Builder.experience(50))
 				.save(consumer, "immersiveweapons:celestial_lantern");
 
+		Builder.advancement().parent(celestial_tower_discovery)
+				.display(ItemRegistry.METEOR_STAFF.get(),
+						Component.translatable("advancements.immersiveweapons.meteor_staff.title"),
+						Component.translatable("advancements.immersiveweapons.meteor_staff.description"),
+						null, FrameType.CHALLENGE, true, true, false)
+				.addCriterion("hold",
+						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.METEOR_STAFF.get()))
+				.rewards(AdvancementRewards.Builder.experience(75))
+				.save(consumer, "immersiveweapons:meteor_staff");
+
 		// Other advancements
 		Builder.advancement().parent(root)
 				.display(ItemRegistry.USED_SYRINGE.get(),

@@ -981,6 +981,18 @@ public class RecipeGenerator extends RecipeProvider {
 		// Sulfur stuff
 		createRawSulfurBlock(BlockItemRegistry.RAW_SULFUR_BLOCK_ITEM.get(), ItemRegistry.SULFUR.get());
 		createSulfur(ItemRegistry.SULFUR.get(), BlockItemRegistry.RAW_SULFUR_BLOCK_ITEM.get());
+
+		// Meteor Staff
+		ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, ItemRegistry.METEOR_STAFF.get())
+				.define('a', ItemRegistry.CELESTIAL_FRAGMENT.get())
+				.define('b', ItemRegistry.OBSIDIAN_ROD.get())
+				.define('c', Items.OBSIDIAN)
+				.pattern("aca")
+				.pattern(" b ")
+				.pattern(" b ")
+				.group("meteor_staff")
+				.unlockedBy("celestial_fragment", has(ItemRegistry.CELESTIAL_FRAGMENT.get()))
+				.save(finishedRecipeConsumer);
 	}
 
 	public static void createArrow(ArrowItem arrow, TagKey<Item> material) {

@@ -34,7 +34,7 @@ public abstract class IWLanguageProvider extends LanguageProvider {
 	}
 
 	public void addDeathMessage(String name, String translation) {
-		add("death.immersiveweapons." + name, translation);
+		add("death.attack.immersiveweapons." + name, translation);
 	}
 
 	public void addBiome(String name, String translation) {

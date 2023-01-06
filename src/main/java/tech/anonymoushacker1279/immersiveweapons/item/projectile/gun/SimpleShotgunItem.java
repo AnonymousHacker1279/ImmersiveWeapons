@@ -33,7 +33,7 @@ public class SimpleShotgunItem extends AbstractGunItem {
 		bulletEntity.shootFromRotation(player,
 				player.xRot + GeneralUtilities.getRandomNumber(-5.0f, 5.0f),
 				player.yRot + GeneralUtilities.getRandomNumber(-5.0f, 5.0f),
-				0.0F, CommonConfig.BLUNDERBUSS_FIRE_VELOCITY.get(), CommonConfig.BLUNDERBUSS_FIRE_INACCURACY.get());
+				0.0F, CommonConfig.BLUNDERBUSS_FIRE_VELOCITY.get().floatValue(), CommonConfig.BLUNDERBUSS_FIRE_INACCURACY.get().floatValue());
 
 		// Roll for random crits
 		if (GeneralUtilities.getRandomNumber(0f, 1f) <= CommonConfig.GUN_CRIT_CHANCE.get()) {

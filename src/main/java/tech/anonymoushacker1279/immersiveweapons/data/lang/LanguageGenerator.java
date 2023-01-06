@@ -414,6 +414,8 @@ public class LanguageGenerator extends IWLanguageProvider {
 		addDeathMessage("deadmans_desert", "%s was poisoned by the atmosphere");
 		addDeathMessage("deathweed", "%s was poisoned by deathweed");
 		addDeathMessage("deathweed.player", "%s was poisoned by deathweed at the hands of %s");
+		addDeathMessage("meteor", "%s was hit by a meteor");
+		addDeathMessage("meteor.player", "%s was hit by a meteor summoned by %s");
 	}
 
 	private void addBiomes() {
@@ -583,6 +585,8 @@ public class LanguageGenerator extends IWLanguageProvider {
 		addAdvancement("pike.description", "Craft any pike");
 		addAdvancement("gauntlet.title", "Rule With An Iron Fist");
 		addAdvancement("gauntlet.description", "Craft any gauntlet");
+		addAdvancement("meteor_staff.title", "Meteor Shower");
+		addAdvancement("meteor_staff.description", "Craft a meteor staff");
 
 		// Projectiles
 		addAdvancement("musket_ball.title", "Pow!");
