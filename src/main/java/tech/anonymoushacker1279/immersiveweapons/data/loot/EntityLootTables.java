@@ -4,11 +4,14 @@ import net.minecraft.advancements.critereon.EntityFlagsPredicate;
 import net.minecraft.advancements.critereon.EntityPredicate;
 import net.minecraft.data.loot.LootTableSubProvider;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.EntityTypeTags;
+import net.minecraft.tags.ItemTags;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.storage.loot.*;
 import net.minecraft.world.level.storage.loot.LootTable.Builder;
 import net.minecraft.world.level.storage.loot.entries.LootItem;
+import net.minecraft.world.level.storage.loot.entries.TagEntry;
 import net.minecraft.world.level.storage.loot.functions.*;
 import net.minecraft.world.level.storage.loot.predicates.*;
 import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
@@ -143,6 +146,20 @@ public class EntityLootTables implements LootTableSubProvider {
 								.apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 3.0F)))
 								.apply(LootingEnchantFunction.lootingMultiplier(UniformGenerator.between(0.0F, 2.0F))))
 						.when(LootItemKilledByPlayerCondition.killedByPlayer())));
+
+		add(EntityRegistry.STORM_CREEPER_ENTITY.get(), LootTable.lootTable()
+				.withPool(LootPool.lootPool()
+						.setRolls(ConstantValue.exactly(1.0F))
+						.add(LootItem.lootTableItem(Items.GUNPOWDER)
+								.apply(SetItemCountFunction.setCount(UniformGenerator.between(0.0F, 2.0F)))
+								.apply(LootingEnchantFunction.lootingMultiplier(UniformGenerator.between(0.0F, 1.0F))))
+						.add(LootItem.lootTableItem(ItemRegistry.SULFUR.get())
+								.apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 4.0F)))
+								.apply(LootingEnchantFunction.lootingMultiplier(UniformGenerator.between(0.0F, 2.0F)))))
+				.withPool(LootPool.lootPool()
+						.add(TagEntry.expandTag(ItemTags.CREEPER_DROP_MUSIC_DISCS))
+						.when(LootItemEntityPropertyCondition.hasProperties(LootContext.EntityTarget.KILLER,
+								EntityPredicate.Builder.entity().of(EntityTypeTags.SKELETONS)))));
 	}
 
 	protected void add(EntityType<?> pEntityType, LootTable.Builder pLootTableBuilder) {

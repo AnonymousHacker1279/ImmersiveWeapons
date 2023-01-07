@@ -522,15 +522,15 @@ public class SoundGenerator extends SoundDefinitionsProvider {
 								SoundType.SOUND)
 						.stream()));
 
-		add(SoundEventRegistry.TILTROS_AMBIENT.get(), definition()
+		add(SoundEventRegistry.TILTROS_MUSIC.get(), definition()
 				.with(Sound.sound(new ResourceLocation(ImmersiveWeapons.MOD_ID,
-										"biome/tiltros/ambient/ambient"),
+										"biome/tiltros/music/music"),
 								SoundType.SOUND)
 						.stream()));
 
-		add(SoundEventRegistry.STARLIGHT_PLAINS_AMBIENT.get(), definition()
+		add(SoundEventRegistry.STARLIGHT_PLAINS_MUSIC.get(), definition()
 				.with(Sound.sound(new ResourceLocation(ImmersiveWeapons.MOD_ID,
-										"biome/starlight_plains/ambient/ambient"),
+										"biome/starlight_plains/music/music"),
 								SoundType.SOUND)
 						.stream()));
 	}

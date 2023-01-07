@@ -6,6 +6,7 @@ import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.ClipContext.Block;
 import net.minecraft.world.level.ClipContext.Fluid;
@@ -15,6 +16,7 @@ import net.minecraft.world.phys.HitResult.Type;
 import org.jetbrains.annotations.Nullable;
 import tech.anonymoushacker1279.immersiveweapons.config.CommonConfig;
 import tech.anonymoushacker1279.immersiveweapons.entity.projectile.MeteorEntity;
+import tech.anonymoushacker1279.immersiveweapons.init.ItemRegistry;
 
 public class MeteorStaffItem extends Item {
 
@@ -76,5 +78,10 @@ public class MeteorStaffItem extends Item {
 	@Override
 	public boolean useOnRelease(ItemStack stack) {
 		return true;
+	}
+
+	@Override
+	public boolean isValidRepairItem(ItemStack toRepair, ItemStack repair) {
+		return Ingredient.of(ItemRegistry.CELESTIAL_FRAGMENT.get()).test(repair) || super.isValidRepairItem(toRepair, repair);
 	}
 }

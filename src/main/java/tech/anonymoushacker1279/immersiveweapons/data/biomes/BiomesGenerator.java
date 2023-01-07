@@ -2,6 +2,7 @@ package tech.anonymoushacker1279.immersiveweapons.data.biomes;
 
 import net.minecraft.core.HolderGetter;
 import net.minecraft.data.worldgen.BiomeDefaultFeatures;
+import net.minecraft.sounds.Music;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.level.biome.*;
 import net.minecraft.world.level.biome.Biome.Precipitation;
@@ -59,7 +60,7 @@ public class BiomesGenerator {
 						.grassColorOverride(16113331)
 						.foliageColorOverride(14665365)
 						.grassColorModifier(GrassColorModifier.NONE)
-						.ambientLoopSound(SoundEventRegistry.TILTROS_AMBIENT.getHolder().get())
+						.backgroundMusic(new Music(SoundEventRegistry.TILTROS_MUSIC.getHolder().get(), 6000, 24000, true))
 						.build())
 				.mobSpawnSettings(getTiltrosWastesSpawns())
 				.generationSettings(getTiltrosWastesGenerationSettings(placedFeatures, worldCarvers))
@@ -80,7 +81,7 @@ public class BiomesGenerator {
 						.grassColorOverride(12312020)
 						.foliageColorOverride(13885404)
 						.grassColorModifier(GrassColorModifier.NONE)
-						.ambientLoopSound(SoundEventRegistry.STARLIGHT_PLAINS_AMBIENT.getHolder().get())
+						.backgroundMusic(new Music(SoundEventRegistry.STARLIGHT_PLAINS_MUSIC.getHolder().get(), 6000, 24000, true))
 						.build())
 				.mobSpawnSettings(getStarlightPlainsSpawns())
 				.generationSettings(getStarlightPlainsGenerationSettings(placedFeatures, worldCarvers))
@@ -101,7 +102,7 @@ public class BiomesGenerator {
 						.grassColorOverride(6176026)
 						.foliageColorOverride(6242850)
 						.grassColorModifier(GrassColorModifier.NONE)
-						.ambientLoopSound(SoundEventRegistry.TILTROS_AMBIENT.getHolder().get())
+						.backgroundMusic(new Music(SoundEventRegistry.TILTROS_MUSIC.getHolder().get(), 6000, 24000, true))
 						.ambientParticle(new AmbientParticleSettings(
 								ParticleTypesRegistry.DEADMANS_DESERT_AMBIENT_PARTICLE.get(), 0.002f
 						))
@@ -147,7 +148,9 @@ public class BiomesGenerator {
 		MobSpawnSettings.Builder spawnBuilder = new MobSpawnSettings.Builder()
 				.creatureGenerationProbability(0.85f)
 				.addSpawn(MobCategory.MONSTER, new SpawnerData(
-						EntityRegistry.CELESTIAL_TOWER_ENTITY.get(), 5, 1, 1));
+						EntityRegistry.CELESTIAL_TOWER_ENTITY.get(), 5, 1, 1))
+				.addSpawn(MobCategory.MONSTER, new SpawnerData(
+						EntityRegistry.STORM_CREEPER_ENTITY.get(), 10, 1, 1));
 
 		return spawnBuilder.build();
 	}

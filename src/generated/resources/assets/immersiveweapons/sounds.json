@@ -295,10 +295,10 @@
     ],
     "subtitle": "subtitles.immersiveweapons.block.spike_trap.retract"
   },
-  "starlight_plains_ambient": {
+  "starlight_plains_music": {
     "sounds": [
       {
-        "name": "immersiveweapons:biome/starlight_plains/ambient/ambient",
+        "name": "immersiveweapons:biome/starlight_plains/music/music",
         "stream": true
       }
     ]
@@ -376,10 +376,10 @@
     ],
     "subtitle": "subtitles.immersiveweapons.armor.tesla.power_up"
   },
-  "tiltros_ambient": {
+  "tiltros_music": {
     "sounds": [
       {
-        "name": "immersiveweapons:biome/tiltros/ambient/ambient",
+        "name": "immersiveweapons:biome/tiltros/music/music",
         "stream": true
       }
     ]
