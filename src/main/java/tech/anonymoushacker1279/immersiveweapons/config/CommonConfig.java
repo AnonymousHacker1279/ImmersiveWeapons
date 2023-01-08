@@ -68,9 +68,9 @@ public class CommonConfig {
 		builder.push("Celestial Tower");
 		CELESTIAL_TOWER_SPAWN_CHECK_RADIUS = builder
 				.comment("Set the spawn checking radius for the Celestial Tower.\n" +
-						"Setting this higher may slightly negatively impact server ticks in Tiltros, but make Celestial Lanterns more effective - Default 128")
+						"Higher values increase the effectiveness of Celestial Lanterns - Default 256")
 				.translation("config.immersiveweapons.celestial_tower_spawn_check_radius")
-				.define("celestial_tower_spawn_checking_radius", 128);
+				.define("celestial_tower_spawn_checking_radius", 256);
 		CELESTIAL_TOWER_MINIONS_WAVE_SIZE_MODIFIER = builder
 				.comment("""
 						Multiplier to change the wave size from Celestial Tower summons.

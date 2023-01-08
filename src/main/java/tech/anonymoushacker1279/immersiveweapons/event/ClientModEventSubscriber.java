@@ -57,6 +57,8 @@ public class ClientModEventSubscriber {
 			BlockRegistry.WANDERING_WARRIOR_HEAD.getId(), "main");
 	private static final ModelLayerLocation HANS_HEAD_LAYER = new ModelLayerLocation(
 			BlockRegistry.HANS_HEAD.getId(), "main");
+	private static final ModelLayerLocation STORM_CREEPER_HEAD_LAYER = new ModelLayerLocation(
+			BlockRegistry.STORM_CREEPER_HEAD.getId(), "main");
 
 	/**
 	 * Event handler for the FMLClientSetupEvent.
@@ -82,6 +84,8 @@ public class ClientModEventSubscriber {
 					"textures/entity/heads/wandering_warrior.png"));
 			SkullBlockRenderer.SKIN_BY_TYPE.put(CustomSkullTypes.HANS, new ResourceLocation(ImmersiveWeapons.MOD_ID,
 					"textures/entity/heads/hans.png"));
+			SkullBlockRenderer.SKIN_BY_TYPE.put(CustomSkullTypes.STORM_CREEPER, new ResourceLocation(ImmersiveWeapons.MOD_ID,
+					"textures/entity/heads/storm_creeper.png"));
 
 			Sheets.addWoodType(WoodTypes.BURNED_OAK);
 			Sheets.addWoodType(WoodTypes.STARDUST);
@@ -232,6 +236,7 @@ public class ClientModEventSubscriber {
 		event.registerLayerDefinition(DYING_SOLDIER_HEAD_LAYER, SkullModel::createMobHeadLayer);
 		event.registerLayerDefinition(WANDERING_WARRIOR_HEAD_LAYER, SkullModel::createMobHeadLayer);
 		event.registerLayerDefinition(HANS_HEAD_LAYER, SkullModel::createMobHeadLayer);
+		event.registerLayerDefinition(STORM_CREEPER_HEAD_LAYER, SkullModel::createMobHeadLayer);
 	}
 
 	/**
@@ -264,6 +269,8 @@ public class ClientModEventSubscriber {
 				.bakeLayer(WANDERING_WARRIOR_HEAD_LAYER)));
 		event.registerSkullModel(CustomSkullTypes.HANS, new SkullModel(event.getEntityModelSet()
 				.bakeLayer(HANS_HEAD_LAYER)));
+		event.registerSkullModel(CustomSkullTypes.STORM_CREEPER, new SkullModel(event.getEntityModelSet()
+				.bakeLayer(STORM_CREEPER_HEAD_LAYER)));
 	}
 
 	@SubscribeEvent

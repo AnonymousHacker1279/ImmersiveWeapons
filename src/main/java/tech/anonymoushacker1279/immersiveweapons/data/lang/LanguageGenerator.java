@@ -687,6 +687,8 @@ public class LanguageGenerator extends IWLanguageProvider {
 		addAdvancement("discover_celestial_tower.description", "Discover a Celestial Tower, a strange otherworldly device capable of summoning minions to fight");
 		addAdvancement("discover_starmite.title", "Crystal Bug");
 		addAdvancement("discover_starmite.description", "Discover a Starmite, a pest that lives within Starstorm Crystals");
+		addAdvancement("discover_storm_creeper.title", "They Can Be Worse");
+		addAdvancement("discover_storm_creeper.description", "Discover a Storm Creeper, an even more aggressive creeper which packs a bigger boom");
 	}
 
 	private void addConfigDescriptions() {

@@ -69,12 +69,13 @@ public class BlockLists {
 		headBlocks.add(BlockRegistry.DYING_SOLDIER_HEAD.get());
 		headBlocks.add(BlockRegistry.WANDERING_WARRIOR_HEAD.get());
 		headBlocks.add(BlockRegistry.HANS_HEAD.get());
+		headBlocks.add(BlockRegistry.STORM_CREEPER_HEAD.get());
 		wallHeadBlocks.add(BlockRegistry.MINUTEMAN_WALL_HEAD.get());
 		wallHeadBlocks.add(BlockRegistry.FIELD_MEDIC_WALL_HEAD.get());
 		wallHeadBlocks.add(BlockRegistry.DYING_SOLDIER_WALL_HEAD.get());
 		wallHeadBlocks.add(BlockRegistry.WANDERING_WARRIOR_WALL_HEAD.get());
 		wallHeadBlocks.add(BlockRegistry.HANS_WALL_HEAD.get());
-		headBlocks.addAll(wallHeadBlocks);
+		wallHeadBlocks.add(BlockRegistry.STORM_CREEPER_WALL_HEAD.get());
 
 		stainedGlassBlocks.add(BlockRegistry.WHITE_STAINED_BULLETPROOF_GLASS.get());
 		stainedGlassBlocks.add(BlockRegistry.LIGHT_GRAY_STAINED_BULLETPROOF_GLASS.get());

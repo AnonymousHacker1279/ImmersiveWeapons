@@ -1181,6 +1181,17 @@ public class AdvancementsGenerator extends ForgeAdvancementProvider {
 				.rewards(AdvancementRewards.Builder.experience(20))
 				.save(consumer, "immersiveweapons:discover_starmite");
 
+		Builder.advancement().parent(entity_discovery)
+				.display(BlockItemRegistry.STORM_CREEPER_HEAD_ITEM.get(),
+						Component.translatable("advancements.immersiveweapons.discover_storm_creeper.title"),
+						Component.translatable("advancements.immersiveweapons.discover_storm_creeper.description"),
+						null, FrameType.TASK, true, true, false)
+				.addCriterion("discover", new TriggerInstance(
+						Composite.ANY,
+						EntityRegistry.STORM_CREEPER_ENTITY.getId()))
+				.rewards(AdvancementRewards.Builder.experience(20))
+				.save(consumer, "immersiveweapons:discover_storm_creeper");
+
 		Advancement celestial_tower_discovery = Builder.advancement().parent(entity_discovery)
 				.display(ItemRegistry.CELESTIAL_FRAGMENT.get(),
 						Component.translatable("advancements.immersiveweapons.discover_celestial_tower.title"),

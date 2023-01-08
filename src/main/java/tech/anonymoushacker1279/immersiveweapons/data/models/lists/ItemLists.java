@@ -62,6 +62,7 @@ public class ItemLists {
 		headItems.add(BlockItemRegistry.DYING_SOLDIER_HEAD_ITEM.get());
 		headItems.add(BlockItemRegistry.WANDERING_WARRIOR_HEAD_ITEM.get());
 		headItems.add(BlockItemRegistry.HANS_HEAD_ITEM.get());
+		headItems.add(BlockItemRegistry.STORM_CREEPER_HEAD_ITEM.get());
 
 		smokeGrenadeItems.add(ItemRegistry.SMOKE_GRENADE.get());
 		smokeGrenadeItems.add(ItemRegistry.SMOKE_GRENADE_BLUE.get());

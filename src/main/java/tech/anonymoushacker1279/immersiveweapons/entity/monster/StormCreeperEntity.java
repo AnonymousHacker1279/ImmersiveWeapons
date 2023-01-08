@@ -25,14 +25,15 @@ import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.level.Level;
+import net.minecraft.world.level.*;
 import net.minecraft.world.level.gameevent.GameEvent;
 import org.jetbrains.annotations.Nullable;
+import tech.anonymoushacker1279.immersiveweapons.entity.GrantAdvancementOnDiscovery;
 import tech.anonymoushacker1279.immersiveweapons.entity.ai.goal.StormCreeperSwellGoal;
 
 import java.util.Collection;
 
-public class StormCreeperEntity extends Monster implements PowerableMob {
+public class StormCreeperEntity extends Monster implements PowerableMob, GrantAdvancementOnDiscovery {
 	private static final EntityDataAccessor<Integer> DATA_SWELL_DIR = SynchedEntityData.defineId(StormCreeperEntity.class, EntityDataSerializers.INT);
 	private static final EntityDataAccessor<Boolean> DATA_IS_POWERED = SynchedEntityData.defineId(StormCreeperEntity.class, EntityDataSerializers.BOOLEAN);
 	private static final EntityDataAccessor<Boolean> DATA_IS_IGNITED = SynchedEntityData.defineId(StormCreeperEntity.class, EntityDataSerializers.BOOLEAN);
@@ -162,6 +163,12 @@ public class StormCreeperEntity extends Monster implements PowerableMob {
 				level.addParticle(ParticleTypes.CLOUD, x, getY() + 0.5, z, 0, 0, 0);
 			}
 		}
+	}
+
+	@Override
+	public void aiStep() {
+		super.aiStep();
+		checkForDiscovery(this);
 	}
 
 	/**
@@ -308,5 +315,22 @@ public class StormCreeperEntity extends Monster implements PowerableMob {
 	public int getExperienceReward() {
 		xpReward = 5 + level.random.nextInt(5);
 		return super.getExperienceReward();
+	}
+
+	@Override
+	public boolean checkSpawnRules(LevelAccessor pLevel, MobSpawnType pSpawnReason) {
+		boolean walkTargetAboveZero = super.checkSpawnRules(pLevel, pSpawnReason);
+		boolean isValidSpawn = pLevel.getBlockState(blockPosition().below()).isValidSpawn(pLevel, blockPosition(), getType());
+		boolean isDarkEnough = isDarkEnoughToSpawn((ServerLevelAccessor) pLevel, blockPosition(), pLevel.getRandom());
+
+		if (pSpawnReason == MobSpawnType.SPAWN_EGG) {
+			return true;
+		}
+
+		if (pSpawnReason == MobSpawnType.NATURAL) {
+			return walkTargetAboveZero && isValidSpawn && isDarkEnough;
+		} else {
+			return walkTargetAboveZero && isValidSpawn;
+		}
 	}
 }
