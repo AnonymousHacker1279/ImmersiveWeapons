@@ -143,14 +143,15 @@ public class BiomesGenerator {
 		return spawnBuilder.build();
 	}
 
-	// TODO: Also add more mobs to this biome
 	private static MobSpawnSettings getDeadmansDesertSpawns() {
 		MobSpawnSettings.Builder spawnBuilder = new MobSpawnSettings.Builder()
 				.creatureGenerationProbability(0.85f)
 				.addSpawn(MobCategory.MONSTER, new SpawnerData(
 						EntityRegistry.CELESTIAL_TOWER_ENTITY.get(), 5, 1, 1))
 				.addSpawn(MobCategory.MONSTER, new SpawnerData(
-						EntityRegistry.STORM_CREEPER_ENTITY.get(), 10, 1, 1));
+						EntityRegistry.STORM_CREEPER_ENTITY.get(), 10, 1, 1))
+				.addSpawn(MobCategory.MONSTER, new SpawnerData(
+						EntityRegistry.EVIL_EYE_ENTITY.get(), 7, 1, 2));
 
 		return spawnBuilder.build();
 	}

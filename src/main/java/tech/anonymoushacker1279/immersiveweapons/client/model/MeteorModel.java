@@ -26,9 +26,10 @@ public class MeteorModel<T extends MeteorEntity> extends EntityModel<T> {
 		PartDefinition root = meshDefinition.getRoot();
 
 		PartDefinition main = root.addOrReplaceChild("main", CubeListBuilder.create()
-				.texOffs(0, 0)
-				.addBox(0F, 0F, 0F, 4.0F, 4.0F, 4.0F,
-						new CubeDeformation(0.0F)), PartPose.offset(0.0F, 0.0F, 0.0F));
+						.texOffs(0, 0)
+						.addBox(0F, 0F, 0F, 4.0F, 4.0F, 4.0F,
+								new CubeDeformation(0.0F)),
+				PartPose.offset(0.0F, 0.0F, 0.0F));
 
 		return LayerDefinition.create(meshDefinition, 16, 16);
 	}

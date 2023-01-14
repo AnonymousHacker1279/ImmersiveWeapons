@@ -27,8 +27,8 @@ public class GeneralUtilities {
 	/**
 	 * Get a random number between a minimum and maximum.
 	 *
-	 * @param min minimum number
-	 * @param max maximum number
+	 * @param min minimum number (inclusive)
+	 * @param max maximum number (not inclusive)
 	 * @return float
 	 */
 	public static float getRandomNumber(float min, float max) {
@@ -38,8 +38,8 @@ public class GeneralUtilities {
 	/**
 	 * Get a random number between a minimum and maximum.
 	 *
-	 * @param min minimum number
-	 * @param max maximum number
+	 * @param min minimum number (inclusive)
+	 * @param max maximum number (not inclusive)
 	 * @return double
 	 */
 	public static double getRandomNumber(double min, double max) {
@@ -49,8 +49,8 @@ public class GeneralUtilities {
 	/**
 	 * Get a random number between a minimum and maximum.
 	 *
-	 * @param min minimum number
-	 * @param max maximum number
+	 * @param min minimum number (inclusive)
+	 * @param max maximum number (not inclusive)
 	 * @return int
 	 */
 	public static int getRandomNumber(int min, int max) {
