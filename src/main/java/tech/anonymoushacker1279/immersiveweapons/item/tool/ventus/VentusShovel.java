@@ -15,7 +15,7 @@ public class VentusShovel extends ShovelItem {
 	 * @param attackSpeedIn  attack speed
 	 * @param properties     the <code>Properties</code> for the item
 	 */
-	public VentusShovel(Tier tier, int attackDamageIn, float attackSpeedIn, Properties properties) {
+	public VentusShovel(Tier tier, float attackDamageIn, float attackSpeedIn, Properties properties) {
 		super(tier, attackDamageIn, attackSpeedIn, properties);
 	}
 
