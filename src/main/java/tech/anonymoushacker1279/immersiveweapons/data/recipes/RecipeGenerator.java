@@ -1040,7 +1040,7 @@ public class RecipeGenerator extends RecipeProvider {
 	}
 
 	public static void createMusketBall(Item musketBall, TagKey<Item> material) {
-		ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, musketBall)
+		ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, musketBall, 8)
 				.define('a', material)
 				.define('b', Items.GUNPOWDER)
 				.pattern(" a ")
