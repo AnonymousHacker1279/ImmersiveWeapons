@@ -95,6 +95,7 @@ public class ItemRegistry {
 	public static final RegistryObject<GauntletItem> DIAMOND_GAUNTLET = ITEMS.register("diamond_gauntlet", () -> new GauntletItem(Tiers.DIAMOND, 2, -2.3f, new Properties(), 0.75f, 1, Ingredient.of(Tags.Items.GEMS_DIAMOND)));
 	public static final RegistryObject<GauntletItem> NETHERITE_GAUNTLET = ITEMS.register("netherite_gauntlet", () -> new GauntletItem(Tiers.NETHERITE, 2, -2.3f, new Properties(), 0.85f, 1, Ingredient.of(Tags.Items.INGOTS_NETHERITE)));
 	public static final RegistryObject<MeteorStaffItem> METEOR_STAFF = ITEMS.register("meteor_staff", () -> new MeteorStaffItem(new Properties().durability(199)));
+	public static final RegistryObject<CursedSightStaffItem> CURSED_SIGHT_STAFF = ITEMS.register("cursed_sight_staff", () -> new CursedSightStaffItem(new Properties().durability(249)));
 
 	// Items
 	public static final RegistryObject<Item> WOODEN_SHARD = ITEMS.register("wooden_shard", () -> new Item(new Properties()));
@@ -118,10 +119,12 @@ public class ItemRegistry {
 	public static final RegistryObject<Item> MOLTEN_INGOT = ITEMS.register("molten_ingot", () -> new FuelItem(new Properties().fireResistant(), 24000));
 	public static final RegistryObject<Item> SULFUR = ITEMS.register("sulfur", () -> new Item(new Properties()));
 	public static final RegistryObject<Item> VENTUS_STAFF_CORE = ITEMS.register("ventus_staff_core", () -> new Item(new Properties()));
+	public static final RegistryObject<Item> CURSED_SIGHT_STAFF_CORE = ITEMS.register("cursed_sight_staff_core", () -> new Item(new Properties()));
 	public static final RegistryObject<Item> AZUL_KEYSTONE = ITEMS.register("azul_keystone", () -> new Item(new Properties()));
 	public static final RegistryObject<Item> AZUL_KEYSTONE_FRAGMENT = ITEMS.register("azul_keystone_fragment", () -> new Item(new Properties()));
 	public static final RegistryObject<AzulLocatorItem> AZUL_LOCATOR = ITEMS.register("azul_locator", () -> new AzulLocatorItem(new Properties().durability(1)));
 	public static final RegistryObject<Item> CELESTIAL_FRAGMENT = ITEMS.register("celestial_fragment", () -> new Item(new Properties().fireResistant()));
+	public static final RegistryObject<Item> BROKEN_LENS = ITEMS.register("broken_lens", () -> new Item(new Properties()));
 	public static final RegistryObject<Item> WOODEN_PIKE_HEAD = ITEMS.register("wooden_pike_head", () -> new Item(new Properties()));
 	public static final RegistryObject<Item> STONE_PIKE_HEAD = ITEMS.register("stone_pike_head", () -> new Item(new Properties()));
 	public static final RegistryObject<Item> GOLDEN_PIKE_HEAD = ITEMS.register("golden_pike_head", () -> new Item(new Properties()));

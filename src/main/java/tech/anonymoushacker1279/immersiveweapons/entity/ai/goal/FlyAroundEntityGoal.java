@@ -1,14 +1,14 @@
 package tech.anonymoushacker1279.immersiveweapons.entity.ai.goal;
 
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.goal.Goal;
-import net.minecraft.world.entity.player.Player;
 import tech.anonymoushacker1279.immersiveweapons.entity.monster.EvilEyeEntity;
 
-public class FlyAroundPlayerGoal extends Goal {
+public class FlyAroundEntityGoal extends Goal {
 
 	private final EvilEyeEntity evilEyeEntity;
 
-	public FlyAroundPlayerGoal(EvilEyeEntity pMob) {
+	public FlyAroundEntityGoal(EvilEyeEntity pMob) {
 		evilEyeEntity = pMob;
 	}
 
@@ -19,23 +19,23 @@ public class FlyAroundPlayerGoal extends Goal {
 
 	@Override
 	public void tick() {
-		Player targetedPlayer = evilEyeEntity.getTargetedPlayer();
+		LivingEntity targetedEntity = evilEyeEntity.getTargetedEntity();
 
-		if (targetedPlayer == null) {
+		if (targetedEntity == null) {
 			return;
 		}
 
 		// Fly in a circle around the player, within 3 blocks of them
 
 		// Calculate the angle between the player and the entity
-		double angle = Math.atan2(evilEyeEntity.getX() - targetedPlayer.getX(), evilEyeEntity.getZ() - targetedPlayer.getZ());
+		double angle = Math.atan2(evilEyeEntity.getX() - targetedEntity.getX(), evilEyeEntity.getZ() - targetedEntity.getZ());
 
 		// Calculate the x and z coordinates of the circle
-		double x = targetedPlayer.getX() + Math.sin(angle) * 3;
-		double z = targetedPlayer.getZ() + Math.cos(angle) * 3;
+		double x = targetedEntity.getX() + Math.sin(angle) * 3;
+		double z = targetedEntity.getZ() + Math.cos(angle) * 3;
 
 		// Calculate the y coordinate of the circle
-		double y = targetedPlayer.getY() + 1.5;
+		double y = targetedEntity.getY() + 1.5;
 
 		// Move the position by a small random amount for a more natural look
 		x += evilEyeEntity.getRandom().nextGaussian() * 0.05;

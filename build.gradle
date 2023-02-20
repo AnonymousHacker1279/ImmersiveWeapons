@@ -11,8 +11,8 @@ repositories {
 		url "https://maven.anonymoushacker1279.tech/releases"
 	}
 	maven {
-		name "Progwml6 Maven"
-		url "https://dvs1.progwml6.com/files/maven/"
+		name "Jared's Maven"
+		url 'https://maven.blamejared.com'
 	}
 	maven {
 		name "ModMaven"
@@ -25,9 +25,6 @@ repositories {
 	maven {
 		name "Bai Maven"
 		url "https://maven.bai.lol"
-	}
-	maven {
-		url 'https://maven.blamejared.com'
 	}
 	maven {
 		url "https://cursemaven.com"
@@ -124,12 +121,10 @@ dependencies {
 	// Include Immersive Weapons Compatibility Bridge (IWCB)
 	runtimeOnly fg.deobf("tech.anonymoushacker1279.iwcompatbridge:IWCompatBridge:${iwcb_version}")
 	// Include JEI
-	// runtimeOnly fg.deobf("mezz.jei:jei-1.19.2-forge:${jei_version}") //  TODO: Uncomment when ported to 1.19.3
+	runtimeOnly fg.deobf("mezz.jei:jei-1.19.3-forge:${jei_version}")
 	// Include WTHIT and badpackets
 	runtimeOnly fg.deobf("mcp.mobius.waila:wthit:forge-${wthit_version}")
 	implementation fg.deobf("lol.bai:badpackets:forge-${badpackets_version}")
-	// Include Patchouli
-	// runtimeOnly fg.deobf("vazkii.patchouli:Patchouli:${patchouli_version}") //   TODO: Uncomment when ported to 1.19.3
 	// Include MmmMmmMmmMmm (Target Dummy)
 	// runtimeOnly fg.deobf("curse.maven:mmmmmmmmmmmm-225738:${target_dummy_version}") //   TODO: Uncomment when ported to 1.19.3
 }

@@ -160,6 +160,20 @@ public class EntityLootTables implements LootTableSubProvider {
 						.add(TagEntry.expandTag(ItemTags.CREEPER_DROP_MUSIC_DISCS))
 						.when(LootItemEntityPropertyCondition.hasProperties(LootContext.EntityTarget.KILLER,
 								EntityPredicate.Builder.entity().of(EntityTypeTags.SKELETONS)))));
+
+		add(EntityRegistry.EVIL_EYE_ENTITY.get(), LootTable.lootTable()
+				.withPool(LootPool.lootPool()
+						.setRolls(ConstantValue.exactly(1.0F))
+						.add(LootItem.lootTableItem(ItemRegistry.BROKEN_LENS.get())
+								.apply(SetItemCountFunction.setCount(UniformGenerator.between(0.0F, 1.0F)))
+								.apply(LootingEnchantFunction.lootingMultiplier(UniformGenerator.between(0.0F, 1.0F))))
+						.add(LootItem.lootTableItem(Items.ENDER_EYE)
+								.apply(SetItemCountFunction.setCount(UniformGenerator.between(0.0F, 1.0F)))
+								.apply(LootingEnchantFunction.lootingMultiplier(UniformGenerator.between(0.0F, 1.0F))))
+						.add(LootItem.lootTableItem(Items.ENDER_PEARL)
+								.apply(SetItemCountFunction.setCount(UniformGenerator.between(0.0F, 1.0F)))
+								.apply(LootingEnchantFunction.lootingMultiplier(UniformGenerator.between(0.0F, 1.0F)))))
+		);
 	}
 
 	protected void add(EntityType<?> pEntityType, LootTable.Builder pLootTableBuilder) {

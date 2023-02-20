@@ -629,6 +629,8 @@ public class LanguageGenerator extends IWLanguageProvider {
 		// Player utility
 		addAdvancement("bottle_of_alcohol.title", "mmmmm alacol");
 		addAdvancement("bottle_of_alcohol.description", "obTan A bOTle o AlacOl an dIenk yUor piaN aWae");
+		addAdvancement("bandage.title", "Poor Man's Healing Potion");
+		addAdvancement("bandage.description", "Craft a bandage");
 		addAdvancement("first_aid_kit.title", "Better Band-Aids");
 		addAdvancement("first_aid_kit.description", "Craft a first aid kit");
 		addAdvancement("used_syringe.title", "Died of Hepatitis");
@@ -732,6 +734,14 @@ public class LanguageGenerator extends IWLanguageProvider {
 		// Musket
 		addConfigDescription("musket_fire_velocity", "Set the velocity of bullets fired by the Musket - Default 4.0");
 		addConfigDescription("musket_fire_inaccuracy", "Set the inaccuracy of bullets fired by the Musket - Default 0.15");
+
+		// Meteor Staff
+		addConfigDescription("meteor_staff_max_use_range", "Set the maximum range in blocks of the Meteor Staff - Default 100");
+		addConfigDescription("meteor_staff_explosion_radius", "Set the radius of the explosion created by the Meteor Staff - Default 3.0");
+		addConfigDescription("meteor_staff_explosion_break_blocks", "Set whether the Meteor Staff explosion breaks blocks - Default false");
+
+		// Cursed Sight Staff
+		addConfigDescription("cursed_sight_staff_max_use_range", "Set the maximum range in blocks of the Cursed Sight Staff - Default 50");
 	}
 
 	private void addMisc() {

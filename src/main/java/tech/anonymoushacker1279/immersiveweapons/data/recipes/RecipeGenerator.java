@@ -993,6 +993,29 @@ public class RecipeGenerator extends RecipeProvider {
 				.group("meteor_staff")
 				.unlockedBy("celestial_fragment", has(ItemRegistry.CELESTIAL_FRAGMENT.get()))
 				.save(finishedRecipeConsumer);
+
+		// Cursed Sight Staff Core
+		ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ItemRegistry.CURSED_SIGHT_STAFF_CORE.get())
+				.define('a', ItemRegistry.CELESTIAL_FRAGMENT.get())
+				.define('b', ItemRegistry.BROKEN_LENS.get())
+				.define('c', Items.REDSTONE)
+				.pattern("aba")
+				.pattern("bcb")
+				.pattern("aba")
+				.group("cursed_sight_staff")
+				.unlockedBy("broken_lens", has(ItemRegistry.BROKEN_LENS.get()))
+				.save(finishedRecipeConsumer);
+
+		// Cursed Sight Staff
+		ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, ItemRegistry.CURSED_SIGHT_STAFF.get())
+				.define('a', ItemRegistry.CURSED_SIGHT_STAFF_CORE.get())
+				.define('b', ItemRegistry.OBSIDIAN_ROD.get())
+				.pattern("a")
+				.pattern("b")
+				.pattern("b")
+				.group("cursed_sight_staff")
+				.unlockedBy("cursed_sight_staff_core", has(ItemRegistry.CURSED_SIGHT_STAFF_CORE.get()))
+				.save(finishedRecipeConsumer);
 	}
 
 	public static void createArrow(ArrowItem arrow, TagKey<Item> material) {

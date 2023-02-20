@@ -42,6 +42,9 @@ public class CommonConfig {
 	public static ForgeConfigSpec.ConfigValue<Double> METEOR_STAFF_EXPLOSION_RADIUS;
 	public static ForgeConfigSpec.ConfigValue<Boolean> METEOR_STAFF_EXPLOSION_BREAK_BLOCKS;
 
+	// Cursed Sight Staff
+	public static ForgeConfigSpec.ConfigValue<Integer> CURSED_SIGHT_STAFF_MAX_USE_RANGE;
+
 	CommonConfig(ForgeConfigSpec.Builder builder) {
 		builder.push("Server Configuration");
 
@@ -137,6 +140,13 @@ public class CommonConfig {
 				.comment("Set whether the Meteor Staff explosion breaks blocks - Default false")
 				.translation("config.immersiveweapons.meteor_staff_explosion_break_blocks")
 				.define("meteor_staff_explosion_break_blocks", false);
+		builder.pop();
+
+		builder.push("Cursed Sight Staff");
+		CURSED_SIGHT_STAFF_MAX_USE_RANGE = builder
+				.comment("Set the maximum range in blocks of the Cursed Sight Staff - Default 50")
+				.translation("config.immersiveweapons.cursed_sight_staff_max_use_range")
+				.defineInRange("cursed_sight_staff_max_use_range", 50, 0, Integer.MAX_VALUE);
 
 		builder.pop();
 	}
