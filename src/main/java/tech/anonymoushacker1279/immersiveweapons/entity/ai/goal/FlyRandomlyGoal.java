@@ -9,6 +9,7 @@ import net.minecraft.world.level.levelgen.Heightmap.Types;
 import net.minecraft.world.phys.HitResult;
 import org.jetbrains.annotations.Nullable;
 import tech.anonymoushacker1279.immersiveweapons.data.biomes.IWBiomes;
+import tech.anonymoushacker1279.immersiveweapons.data.dimensions.IWDimensions;
 import tech.anonymoushacker1279.immersiveweapons.entity.monster.EvilEyeEntity;
 import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
 
@@ -35,7 +36,7 @@ public class FlyRandomlyGoal extends Goal {
 
 		if (targetPosition == null) {
 			// Pick random coordinates within 64 blocks of the entity
-			// They must be at least 10 blocks above the ground and no more than 20 blocks above the ground
+			// They must be at least 20 blocks above the ground and no more than 30 blocks above the ground
 
 			// Pick a random x coordinate
 			int x = immutablePosition.getX() + evilEyeEntity.getRandom().nextInt(64) - 32;
@@ -45,7 +46,7 @@ public class FlyRandomlyGoal extends Goal {
 
 			// Pick a random y coordinate
 			// Start by getting the ground level and adding 10 to it
-			int minY = evilEyeEntity.getLevel().getHeightmapPos(Types.MOTION_BLOCKING, new BlockPos(x, 0, z)).getY() + 10;
+			int minY = evilEyeEntity.getLevel().getHeightmapPos(Types.MOTION_BLOCKING, new BlockPos(x, 0, z)).getY() + 20;
 			int maxY = minY + 11;
 			// Pick a random number between the two bounds
 			int y = GeneralUtilities.getRandomNumber(minY, maxY);
@@ -61,10 +62,14 @@ public class FlyRandomlyGoal extends Goal {
 				return;
 			}
 
-			// Ensure the target position is in the Deadman's Desert biome
-			if (!evilEyeEntity.getLevel().getBiome(targetPosition).is(IWBiomes.DEADMANS_DESERT)) {
-				targetPosition = null;
-				return;
+			// Check if the entity is in Tiltros
+			// It should stay confined to the desert but if it's not in Tiltros, it will always remain idle
+			if (evilEyeEntity.getLevel().dimension() == IWDimensions.TILTROS) {
+				// Ensure the target position is in the Deadman's Desert biome
+				if (!evilEyeEntity.getLevel().getBiome(targetPosition).is(IWBiomes.DEADMANS_DESERT)) {
+					targetPosition = null;
+					return;
+				}
 			}
 		}
 
