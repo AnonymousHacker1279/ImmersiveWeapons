@@ -1192,6 +1192,17 @@ public class AdvancementsGenerator extends ForgeAdvancementProvider {
 				.rewards(AdvancementRewards.Builder.experience(20))
 				.save(consumer, "immersiveweapons:discover_storm_creeper");
 
+		Builder.advancement().parent(entity_discovery)
+				.display(ItemRegistry.BROKEN_LENS.get(),
+						Component.translatable("advancements.immersiveweapons.discover_evil_eye.title"),
+						Component.translatable("advancements.immersiveweapons.discover_evil_eye.description"),
+						null, FrameType.TASK, true, true, false)
+				.addCriterion("discover", new TriggerInstance(
+						Composite.ANY,
+						EntityRegistry.EVIL_EYE_ENTITY.getId()))
+				.rewards(AdvancementRewards.Builder.experience(20))
+				.save(consumer, "immersiveweapons:discover_evil_eye");
+
 		Advancement celestial_tower_discovery = Builder.advancement().parent(entity_discovery)
 				.display(ItemRegistry.CELESTIAL_FRAGMENT.get(),
 						Component.translatable("advancements.immersiveweapons.discover_celestial_tower.title"),
@@ -1222,6 +1233,16 @@ public class AdvancementsGenerator extends ForgeAdvancementProvider {
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.METEOR_STAFF.get()))
 				.rewards(AdvancementRewards.Builder.experience(75))
 				.save(consumer, "immersiveweapons:meteor_staff");
+
+		Builder.advancement().parent(celestial_tower_discovery)
+				.display(ItemRegistry.CURSED_SIGHT_STAFF.get(),
+						Component.translatable("advancements.immersiveweapons.cursed_sight_staff.title"),
+						Component.translatable("advancements.immersiveweapons.cursed_sight_staff.description"),
+						null, FrameType.CHALLENGE, true, true, false)
+				.addCriterion("hold",
+						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.CURSED_SIGHT_STAFF.get()))
+				.rewards(AdvancementRewards.Builder.experience(75))
+				.save(consumer, "immersiveweapons:cursed_sight_staff");
 
 		// Other advancements
 		Builder.advancement().parent(root)

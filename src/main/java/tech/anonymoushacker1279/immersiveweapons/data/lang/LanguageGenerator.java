@@ -587,6 +587,8 @@ public class LanguageGenerator extends IWLanguageProvider {
 		addAdvancement("gauntlet.description", "Craft any gauntlet");
 		addAdvancement("meteor_staff.title", "Meteor Shower");
 		addAdvancement("meteor_staff.description", "Craft a meteor staff");
+		addAdvancement("cursed_sight_staff.title", "Cursed Sight");
+		addAdvancement("cursed_sight_staff.description", "Craft a cursed sight staff");
 
 		// Projectiles
 		addAdvancement("musket_ball.title", "Pow!");
@@ -691,6 +693,8 @@ public class LanguageGenerator extends IWLanguageProvider {
 		addAdvancement("discover_starmite.description", "Discover a Starmite, a pest that lives within Starstorm Crystals");
 		addAdvancement("discover_storm_creeper.title", "They Can Be Worse");
 		addAdvancement("discover_storm_creeper.description", "Discover a Storm Creeper, an even more aggressive creeper which packs a bigger boom");
+		addAdvancement("discover_evil_eye.title", "Demonic Presence");
+		addAdvancement("discover_evil_eye.description", "Discover an Evil Eye, a detached eye which wanders the Deadman's Desert");
 	}
 
 	private void addConfigDescriptions() {

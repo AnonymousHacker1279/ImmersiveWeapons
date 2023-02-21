@@ -1,0 +1,34 @@
+{
+  "parent": "immersiveweapons:entity_discovery",
+  "criteria": {
+    "discover": {
+      "conditions": {
+        "entity": "immersiveweapons:evil_eye"
+      },
+      "trigger": "immersiveweapons:entity_discovered"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.immersiveweapons.discover_evil_eye.description"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "immersiveweapons:broken_lens"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.immersiveweapons.discover_evil_eye.title"
+    }
+  },
+  "requirements": [
+    [
+      "discover"
+    ]
+  ],
+  "rewards": {
+    "experience": 20
+  }
+}

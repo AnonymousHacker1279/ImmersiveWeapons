@@ -8,10 +8,12 @@ import net.minecraft.world.entity.ai.targeting.TargetingConditions;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
 import tech.anonymoushacker1279.immersiveweapons.config.CommonConfig;
 import tech.anonymoushacker1279.immersiveweapons.entity.monster.EvilEyeEntity;
+import tech.anonymoushacker1279.immersiveweapons.init.ItemRegistry;
 
 public class CursedSightStaffItem extends Item implements SummoningStaff {
 
@@ -66,5 +68,10 @@ public class CursedSightStaffItem extends Item implements SummoningStaff {
 	@Override
 	public int getStaffCooldown() {
 		return 250;
+	}
+
+	@Override
+	public boolean isValidRepairItem(ItemStack toRepair, ItemStack repair) {
+		return Ingredient.of(ItemRegistry.BROKEN_LENS.get()).test(repair) || super.isValidRepairItem(toRepair, repair);
 	}
 }
