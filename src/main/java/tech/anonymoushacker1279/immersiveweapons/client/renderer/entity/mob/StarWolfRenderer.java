@@ -1,5 +1,6 @@
 package tech.anonymoushacker1279.immersiveweapons.client.renderer.entity.mob;
 
+import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.EntityRendererProvider.Context;
 import net.minecraft.client.renderer.entity.WolfRenderer;
@@ -16,6 +17,14 @@ public class StarWolfRenderer extends WolfRenderer {
 
 	public StarWolfRenderer(Context context) {
 		super(context);
+	}
+
+	@Override
+	protected void scale(Wolf livingEntity, PoseStack matrixStack, float partialTickTime) {
+		super.scale(livingEntity, matrixStack, partialTickTime);
+
+		// Increase the size by 10%
+		matrixStack.scale(1.1F, 1.1F, 1.1F);
 	}
 
 	/**

@@ -1203,6 +1203,17 @@ public class AdvancementsGenerator extends ForgeAdvancementProvider {
 				.rewards(AdvancementRewards.Builder.experience(20))
 				.save(consumer, "immersiveweapons:discover_evil_eye");
 
+		Builder.advancement().parent(entity_discovery)
+				.display(Items.BONE,
+						Component.translatable("advancements.immersiveweapons.discover_star_wolf.title"),
+						Component.translatable("advancements.immersiveweapons.discover_star_wolf.description"),
+						null, FrameType.TASK, true, true, false)
+				.addCriterion("discover", new TriggerInstance(
+						Composite.ANY,
+						EntityRegistry.STAR_WOLF_ENTITY.getId()))
+				.rewards(AdvancementRewards.Builder.experience(20))
+				.save(consumer, "immersiveweapons:discover_star_wolf");
+
 		Advancement celestial_tower_discovery = Builder.advancement().parent(entity_discovery)
 				.display(ItemRegistry.CELESTIAL_FRAGMENT.get(),
 						Component.translatable("advancements.immersiveweapons.discover_celestial_tower.title"),

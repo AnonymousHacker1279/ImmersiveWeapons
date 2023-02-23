@@ -1,14 +1,19 @@
 package tech.anonymoushacker1279.immersiveweapons.entity.animal;
 
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.animal.Wolf;
 import net.minecraft.world.level.Level;
+import tech.anonymoushacker1279.immersiveweapons.entity.GrantAdvancementOnDiscovery;
+import tech.anonymoushacker1279.immersiveweapons.init.EntityRegistry;
 
-public class StarWolfEntity extends Wolf {
+import javax.annotation.Nullable;
+import java.util.UUID;
+
+public class StarWolfEntity extends Wolf implements GrantAdvancementOnDiscovery {
 
 	public StarWolfEntity(EntityType<? extends Wolf> entityType, Level level) {
 		super(entityType, level);
@@ -36,6 +41,12 @@ public class StarWolfEntity extends Wolf {
 	}
 
 	@Override
+	public void aiStep() {
+		super.aiStep();
+		checkForDiscovery(this);
+	}
+
+	@Override
 	public boolean hurt(DamageSource source, float amount) {
 		// Star wolves are immune to fall damage
 		if (source.isFall()) {
@@ -53,5 +64,20 @@ public class StarWolfEntity extends Wolf {
 	@Override
 	public boolean isMaxGroupSizeReached(int size) {
 		return size >= 2;
+	}
+
+	@Nullable
+	@Override
+	public Wolf getBreedOffspring(ServerLevel pLevel, AgeableMob pOtherParent) {
+		Wolf wolf = EntityRegistry.STAR_WOLF_ENTITY.get().create(pLevel);
+		if (wolf != null) {
+			UUID ownerUUID = getOwnerUUID();
+			if (ownerUUID != null) {
+				wolf.setOwnerUUID(ownerUUID);
+				wolf.setTame(true);
+			}
+		}
+
+		return wolf;
 	}
 }

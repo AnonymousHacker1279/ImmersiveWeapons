@@ -695,6 +695,8 @@ public class LanguageGenerator extends IWLanguageProvider {
 		addAdvancement("discover_storm_creeper.description", "Discover a Storm Creeper, an even more aggressive creeper which packs a bigger boom");
 		addAdvancement("discover_evil_eye.title", "Demonic Presence");
 		addAdvancement("discover_evil_eye.description", "Discover an Evil Eye, a detached eye which wanders the Deadman's Desert");
+		addAdvancement("discover_star_wolf.title", "Bigger Dogs");
+		addAdvancement("discover_star_wolf.description", "Discover a Star Wolf, a stronger and larger wolf");
 	}
 
 	private void addConfigDescriptions() {
