@@ -138,7 +138,9 @@ public class BiomesGenerator {
 		MobSpawnSettings.Builder spawnBuilder = new MobSpawnSettings.Builder()
 				.creatureGenerationProbability(0.75f)
 				.addSpawn(MobCategory.AMBIENT, new SpawnerData(
-						EntityRegistry.FIREFLY_ENTITY.get(), 100, 1, 4));
+						EntityRegistry.FIREFLY_ENTITY.get(), 100, 1, 4))
+				.addSpawn(MobCategory.CREATURE, new SpawnerData(
+						EntityRegistry.STAR_WOLF_ENTITY.get(), 60, 1, 2));
 
 		return spawnBuilder.build();
 	}

@@ -240,4 +240,5 @@ public class ItemRegistry {
 	public static final RegistryObject<ForgeSpawnEggItem> FIREFLY_SPAWN_EGG = ITEMS.register("firefly_spawn_egg", () -> new ForgeSpawnEggItem(EntityRegistry.FIREFLY_ENTITY, 0x703a2a, 0x43e88d, (new Item.Properties().stacksTo(16))));
 	public static final RegistryObject<ForgeSpawnEggItem> STORM_CREEPER_SPAWN_EGG = ITEMS.register("storm_creeper_spawn_egg", () -> new ForgeSpawnEggItem(EntityRegistry.STORM_CREEPER_ENTITY, 0xfe162c, 0x00eaf6, (new Item.Properties().stacksTo(16))));
 	public static final RegistryObject<ForgeSpawnEggItem> EVIL_EYE_SPAWN_EGG = ITEMS.register("evil_eye_spawn_egg", () -> new ForgeSpawnEggItem(EntityRegistry.EVIL_EYE_ENTITY, 0xd7d7d7, 0x4e8386, (new Item.Properties().stacksTo(16))));
+	public static final RegistryObject<ForgeSpawnEggItem> STAR_WOLF_SPAWN_EGG = ITEMS.register("star_wolf_spawn_egg", () -> new ForgeSpawnEggItem(EntityRegistry.STAR_WOLF_ENTITY, 0x0b0707, 0x919191, (new Item.Properties().stacksTo(16))));
 }

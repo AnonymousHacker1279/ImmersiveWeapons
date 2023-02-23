@@ -91,7 +91,14 @@
       }
     ],
     "axolotls": [],
-    "creature": [],
+    "creature": [
+      {
+        "type": "immersiveweapons:star_wolf",
+        "maxCount": 2,
+        "minCount": 1,
+        "weight": 60
+      }
+    ],
     "misc": [],
     "monster": [],
     "underground_water_creature": [],

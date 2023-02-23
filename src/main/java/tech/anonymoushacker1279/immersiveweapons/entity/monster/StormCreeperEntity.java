@@ -21,6 +21,7 @@ import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.animal.Cat;
 import net.minecraft.world.entity.animal.Ocelot;
 import net.minecraft.world.entity.animal.goat.Goat;
+import net.minecraft.world.entity.monster.Creeper;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -33,7 +34,7 @@ import tech.anonymoushacker1279.immersiveweapons.entity.ai.goal.StormCreeperSwel
 
 import java.util.Collection;
 
-public class StormCreeperEntity extends Monster implements PowerableMob, GrantAdvancementOnDiscovery {
+public class StormCreeperEntity extends Creeper implements GrantAdvancementOnDiscovery {
 	private static final EntityDataAccessor<Integer> DATA_SWELL_DIR = SynchedEntityData.defineId(StormCreeperEntity.class, EntityDataSerializers.INT);
 	private static final EntityDataAccessor<Boolean> DATA_IS_POWERED = SynchedEntityData.defineId(StormCreeperEntity.class, EntityDataSerializers.BOOLEAN);
 	private static final EntityDataAccessor<Boolean> DATA_IS_IGNITED = SynchedEntityData.defineId(StormCreeperEntity.class, EntityDataSerializers.BOOLEAN);
@@ -214,6 +215,7 @@ public class StormCreeperEntity extends Monster implements PowerableMob, GrantAd
 		return entityData.get(DATA_IS_POWERED);
 	}
 
+	@Override
 	public float getSwelling(float pPartialTicks) {
 		return Mth.lerp(pPartialTicks, (float) oldSwell, (float) swell) / (float) (maxSwell - 2);
 	}
@@ -290,10 +292,12 @@ public class StormCreeperEntity extends Monster implements PowerableMob, GrantAd
 
 	}
 
+	@Override
 	public boolean isIgnited() {
 		return entityData.get(DATA_IS_IGNITED);
 	}
 
+	@Override
 	public void ignite() {
 		entityData.set(DATA_IS_IGNITED, true);
 	}
@@ -303,10 +307,12 @@ public class StormCreeperEntity extends Monster implements PowerableMob, GrantAd
 	 * <p>
 	 * Does not test if this creeper is charged, the caller must do that. However, does test the doMobLoot gamerule.
 	 */
+	@Override
 	public boolean canDropMobsSkull() {
 		return isPowered() && droppedSkulls < 1;
 	}
 
+	@Override
 	public void increaseDroppedSkulls() {
 		++droppedSkulls;
 	}
