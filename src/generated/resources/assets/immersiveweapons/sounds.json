@@ -90,6 +90,14 @@
     ],
     "subtitle": "subtitles.immersiveweapons.armor.copper.equip"
   },
+  "deadmans_desert_music": {
+    "sounds": [
+      {
+        "name": "immersiveweapons:biome/deadmans_desert/music/music",
+        "stream": true
+      }
+    ]
+  },
   "dying_soldier_ambient": {
     "sounds": [
       "immersiveweapons:entity/dying_soldier/ambient/ambient_0",
@@ -376,10 +384,14 @@
     ],
     "subtitle": "subtitles.immersiveweapons.armor.tesla.power_up"
   },
-  "tiltros_music": {
+  "tiltros_wastes_music": {
     "sounds": [
       {
-        "name": "immersiveweapons:biome/tiltros/music/music",
+        "name": "immersiveweapons:biome/tiltros_wastes/music/music_0",
+        "stream": true
+      },
+      {
+        "name": "immersiveweapons:biome/tiltros_wastes/music/music_1",
         "stream": true
       }
     ]

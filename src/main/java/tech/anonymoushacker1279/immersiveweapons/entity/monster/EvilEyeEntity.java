@@ -132,8 +132,9 @@ public class EvilEyeEntity extends FlyingMob implements Enemy, GrantAdvancementO
 
 					if (summonedByStaff) {
 						remove(RemovalReason.DISCARDED);
-						return;
 					}
+
+					return;
 				}
 
 				if (!targetedEntity.isAlive()) {

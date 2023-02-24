@@ -17,7 +17,7 @@
       "max_delay": 24000,
       "min_delay": 6000,
       "replace_current_music": true,
-      "sound": "immersiveweapons:tiltros_music"
+      "sound": "immersiveweapons:tiltros_wastes_music"
     },
     "sky_color": 461620,
     "water_color": 7031172,

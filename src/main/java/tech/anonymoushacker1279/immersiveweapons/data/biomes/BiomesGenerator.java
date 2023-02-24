@@ -60,7 +60,7 @@ public class BiomesGenerator {
 						.grassColorOverride(16113331)
 						.foliageColorOverride(14665365)
 						.grassColorModifier(GrassColorModifier.NONE)
-						.backgroundMusic(new Music(SoundEventRegistry.TILTROS_MUSIC.getHolder().get(), 6000, 24000, true))
+						.backgroundMusic(new Music(SoundEventRegistry.TILTROS_WASTES_MUSIC.getHolder().get(), 6000, 24000, true))
 						.build())
 				.mobSpawnSettings(getTiltrosWastesSpawns())
 				.generationSettings(getTiltrosWastesGenerationSettings(placedFeatures, worldCarvers))
@@ -102,7 +102,7 @@ public class BiomesGenerator {
 						.grassColorOverride(6176026)
 						.foliageColorOverride(6242850)
 						.grassColorModifier(GrassColorModifier.NONE)
-						.backgroundMusic(new Music(SoundEventRegistry.TILTROS_MUSIC.getHolder().get(), 6000, 24000, true))
+						.backgroundMusic(new Music(SoundEventRegistry.DEADMANS_DESERT_MUSIC.getHolder().get(), 6000, 24000, true))
 						.ambientParticle(new AmbientParticleSettings(
 								ParticleTypesRegistry.DEADMANS_DESERT_AMBIENT_PARTICLE.get(), 0.002f
 						))
