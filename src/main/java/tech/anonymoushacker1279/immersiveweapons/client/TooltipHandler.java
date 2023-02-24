@@ -252,6 +252,17 @@ public class TooltipHandler {
 			event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.netherite_gauntlet").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
 		}
 
+		// Staffs
+		if (stack.getItem() == ItemRegistry.VENTUS_STAFF.get()) {
+			event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.ventus_staff").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
+		}
+		if (stack.getItem() == ItemRegistry.METEOR_STAFF.get()) {
+			event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.meteor_staff").withStyle(ChatFormatting.GOLD, ChatFormatting.ITALIC));
+		}
+		if (stack.getItem() == ItemRegistry.CURSED_SIGHT_STAFF.get()) {
+			event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.cursed_sight_staff").withStyle(ChatFormatting.DARK_RED, ChatFormatting.ITALIC));
+		}
+
 		// Player utility
 		if (stack.getItem() == ItemRegistry.BANDAGE.get()) {
 			event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.bandage").withStyle(ChatFormatting.GREEN, ChatFormatting.ITALIC));
@@ -285,9 +296,6 @@ public class TooltipHandler {
 		if (stack.getItem() == ItemRegistry.USED_SYRINGE.get()) {
 			event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.used_syringe").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
 		}
-		if (stack.getItem() == ItemRegistry.VENTUS_STAFF.get()) {
-			event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.ventus_staff").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
-		}
 		if (stack.getItem() == ItemRegistry.HANS_SPAWN_EGG.get()) {
 			event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.hans_spawn_egg").withStyle(ChatFormatting.DARK_PURPLE, ChatFormatting.ITALIC));
 		}
@@ -296,6 +304,9 @@ public class TooltipHandler {
 		}
 		if (stack.getItem() == ItemRegistry.CELESTIAL_FRAGMENT.get()) {
 			event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.celestial_fragment").withStyle(ChatFormatting.YELLOW, ChatFormatting.ITALIC));
+		}
+		if (stack.getItem() == ItemRegistry.AZUL_LOCATOR.get()) {
+			event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.azul_locator").withStyle(ChatFormatting.AQUA, ChatFormatting.ITALIC));
 		}
 
 

@@ -353,6 +353,11 @@ public class LanguageGenerator extends IWLanguageProvider {
 		addTooltip("diamond_gauntlet", "Has a 75% chance to inflict Bleeding.");
 		addTooltip("netherite_gauntlet", "Has an 85% chance to inflict Bleeding.");
 
+		// Staffs
+		addTooltip("ventus_staff", "Teach your enemies the importance of personal space");
+		addTooltip("meteor_staff", "Summon meteors from the sky");
+		addTooltip("cursed_sight_staff", "Summon Evil Eyes to curse your enemies");
+
 		// Player utility
 		addTooltip("bandage", "Cover those nasty cuts and scrapes");
 		addTooltip("painkillers", "Feel no pain with a copious amount of pills");
@@ -366,10 +371,10 @@ public class LanguageGenerator extends IWLanguageProvider {
 		addTooltip("panic_alarm", "DON'T PANIC!!!");
 		addTooltip("morphine", "I wouldn't recommend using this");
 		addTooltip("used_syringe", "If you use this there's a good chance you will die of hepatitis");
-		addTooltip("ventus_staff", "Teach your enemies the importance of personal space");
 		addTooltip("hans_spawn_egg", "Summon Hans the Almighty into this world");
 		addTooltip("mortar", "Capable of sending exploding shells far into the distance");
 		addTooltip("celestial_fragment", "The power of the sun in the palm of your hand");
+		addTooltip("azul_locator", "Teleport to your spawn point at will");
 
 		// Lore
 		addTooltip("minuteman_statue", "Something seems to activate inside when it is placed in a Battlefield. It wishes to protect.");
