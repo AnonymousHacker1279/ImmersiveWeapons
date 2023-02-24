@@ -194,6 +194,7 @@ public class BiomesGenerator {
 
 		VanillaFeatures.getOverworldBaseGeneration(generationBuilder);
 		VanillaFeatures.addPlainGrass(generationBuilder);
+		BiomeDefaultFeatures.addMossyStoneBlock(generationBuilder);
 
 		return generationBuilder.build();
 	}
@@ -205,9 +206,9 @@ public class BiomesGenerator {
 				.addFeature(Decoration.VEGETAL_DECORATION, IWPlacedFeatures.PATCH_DEATHWEED);
 
 		VanillaFeatures.getOverworldBaseGeneration(generationBuilder);
-		VanillaFeatures.addDefaultSoftDisks(generationBuilder);
-		VanillaFeatures.addFossilDecoration(generationBuilder);
-		VanillaFeatures.addDesertVegetation(generationBuilder);
+		BiomeDefaultFeatures.addDefaultSoftDisks(generationBuilder);
+		BiomeDefaultFeatures.addFossilDecoration(generationBuilder);
+		BiomeDefaultFeatures.addDesertVegetation(generationBuilder);
 
 		return generationBuilder.build();
 	}
