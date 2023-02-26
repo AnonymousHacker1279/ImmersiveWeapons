@@ -98,6 +98,9 @@ public class BiomeTagsGenerator extends BiomeTagsProvider {
 
 		tag(ImmersiveWeaponsWorldGenTagGroups.HAS_BIODOME)
 				.add(IWBiomes.DEADMANS_DESERT);
+
+		tag(ImmersiveWeaponsWorldGenTagGroups.HAS_SPACE_OBSERVATORY)
+				.add(IWBiomes.STARLIGHT_PLAINS);
 	}
 
 	@Override

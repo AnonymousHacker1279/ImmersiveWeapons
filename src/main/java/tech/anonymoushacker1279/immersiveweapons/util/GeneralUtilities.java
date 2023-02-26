@@ -49,6 +49,28 @@ public class GeneralUtilities {
 	}
 
 	/**
+	 * Convert an integer to a Roman numeral.
+	 *
+	 * @param number the integer to convert
+	 * @return the Roman numeral
+	 */
+	public static String convertToRoman(int number) {
+		if (number < 1 || number > 3999) {
+			throw new IllegalArgumentException("Number must be between 1 and 3999.");
+		}
+
+		String[] thousands = {"", "M", "MM", "MMM"};
+		String[] hundreds = {"", "C", "CC", "CCC", "CD", "D", "DC", "DCC", "DCCC", "CM"};
+		String[] tens = {"", "X", "XX", "XXX", "XL", "L", "LX", "LXX", "LXXX", "XC"};
+		String[] ones = {"", "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX"};
+
+		return thousands[number / 1000] +
+				hundreds[(number % 1000) / 100] +
+				tens[(number % 100) / 10] +
+				ones[number % 10];
+	}
+
+	/**
 	 * Returns the {@linkplain ResourceLocation#getPath() path} of the registry name for the given block. This
 	 * is a convenience method which checks if the registry name of the entry exists, to avoid linting warnings about
 	 * the nullability of the {@linkplain net.minecraftforge.registries.IForgeRegistry<Block>#getKey entry's registry name}.

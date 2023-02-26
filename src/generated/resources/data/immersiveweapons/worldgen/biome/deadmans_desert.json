@@ -90,7 +90,12 @@
     ]
   ],
   "precipitation": "none",
-  "spawn_costs": {},
+  "spawn_costs": {
+    "immersiveweapons:evil_eye": {
+      "charge": 0.15,
+      "energy_budget": 12.0
+    }
+  },
   "spawners": {
     "ambient": [],
     "axolotls": [],

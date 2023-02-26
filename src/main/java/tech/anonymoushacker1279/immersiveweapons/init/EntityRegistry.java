@@ -12,6 +12,7 @@ import tech.anonymoushacker1279.immersiveweapons.entity.monster.*;
 import tech.anonymoushacker1279.immersiveweapons.entity.monster.lava_revenant.LavaRevenantEntity;
 import tech.anonymoushacker1279.immersiveweapons.entity.neutral.FieldMedicEntity;
 import tech.anonymoushacker1279.immersiveweapons.entity.neutral.MinutemanEntity;
+import tech.anonymoushacker1279.immersiveweapons.entity.npc.SkygazerEntity;
 import tech.anonymoushacker1279.immersiveweapons.entity.projectile.ArrowEntities.*;
 import tech.anonymoushacker1279.immersiveweapons.entity.projectile.BulletEntities.*;
 import tech.anonymoushacker1279.immersiveweapons.entity.projectile.*;
@@ -61,9 +62,10 @@ public class EntityRegistry {
 	public static final RegistryObject<EntityType<CustomBoatEntity>> STARDUST_BOAT_ENTITY = ENTITY_TYPES.register("stardust_boat", () -> EntityType.Builder.<CustomBoatEntity> of((type, level) -> new CustomBoatEntity(type, level, ItemRegistry.STARDUST_BOAT.get()), MobCategory.MISC).sized(1.375f, 0.5625f).build(new ResourceLocation(ImmersiveWeapons.MOD_ID, "stardust_boat").toString()));
 	public static final RegistryObject<EntityType<CustomChestBoatEntity>> STARDUST_CHEST_BOAT_ENTITY = ENTITY_TYPES.register("stardust_chest_boat", () -> EntityType.Builder.<CustomChestBoatEntity> of((type, level) -> new CustomChestBoatEntity(type, level, ItemRegistry.STARDUST_CHEST_BOAT.get()), MobCategory.MISC).sized(1.375f, 0.5625f).build(new ResourceLocation(ImmersiveWeapons.MOD_ID, "stardust_chest_boat").toString()));
 	public static final RegistryObject<EntityType<StarmiteEntity>> STARMITE_ENTITY = ENTITY_TYPES.register("starmite", () -> EntityType.Builder.of(StarmiteEntity::new, MobCategory.MONSTER).sized(0.4f, 0.3f).clientTrackingRange(8).build(new ResourceLocation(ImmersiveWeapons.MOD_ID, "starmite").toString()));
-	public static final RegistryObject<EntityType<FireflyEntity>> FIREFLY_ENTITY = ENTITY_TYPES.register("firefly", () -> EntityType.Builder.of(FireflyEntity::new, MobCategory.AMBIENT).sized(0.15f, 0.15f).clientTrackingRange(8).build(new ResourceLocation(ImmersiveWeapons.MOD_ID, "firefly").toString()));
+	public static final RegistryObject<EntityType<FireflyEntity>> FIREFLY_ENTITY = ENTITY_TYPES.register("firefly", () -> EntityType.Builder.of(FireflyEntity::new, MobCategory.CREATURE).sized(0.15f, 0.15f).clientTrackingRange(8).build(new ResourceLocation(ImmersiveWeapons.MOD_ID, "firefly").toString()));
 	public static final RegistryObject<EntityType<MeteorEntity>> METEOR_ENTITY = ENTITY_TYPES.register("meteor", () -> EntityType.Builder.of(MeteorEntity::new, MobCategory.MISC).sized(0.5f, 0.5f).clientTrackingRange(8).build(new ResourceLocation(ImmersiveWeapons.MOD_ID, "meteor").toString()));
 	public static final RegistryObject<EntityType<StormCreeperEntity>> STORM_CREEPER_ENTITY = ENTITY_TYPES.register("storm_creeper", () -> EntityType.Builder.of(StormCreeperEntity::new, MobCategory.MONSTER).sized(0.6f, 1.7f).clientTrackingRange(8).build(new ResourceLocation(ImmersiveWeapons.MOD_ID, "storm_creeper").toString()));
 	public static final RegistryObject<EntityType<EvilEyeEntity>> EVIL_EYE_ENTITY = ENTITY_TYPES.register("evil_eye", () -> EntityType.Builder.of(EvilEyeEntity::new, MobCategory.MONSTER).sized(0.15f, 0.15f).clientTrackingRange(16).build(new ResourceLocation(ImmersiveWeapons.MOD_ID, "evil_eye").toString()));
 	public static final RegistryObject<EntityType<StarWolfEntity>> STAR_WOLF_ENTITY = ENTITY_TYPES.register("star_wolf", () -> EntityType.Builder.of(StarWolfEntity::new, MobCategory.MONSTER).sized(0.7f, 0.95f).clientTrackingRange(8).build(new ResourceLocation(ImmersiveWeapons.MOD_ID, "star_wolf").toString()));
+	public static final RegistryObject<EntityType<SkygazerEntity>> SKYGAZER_ENTITY = ENTITY_TYPES.register("skygazer", () -> EntityType.Builder.of(SkygazerEntity::new, MobCategory.CREATURE).sized(0.6f, 1.95f).clientTrackingRange(10).build(new ResourceLocation(ImmersiveWeapons.MOD_ID, "skygazer").toString()));
 }

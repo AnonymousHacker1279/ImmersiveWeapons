@@ -664,5 +664,10 @@ public class BlockStateGenerator extends BlockStateProvider {
 				models().cubeAll("tesla_block", new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/tesla_block")));
 		simpleBlock(BlockRegistry.BIODOME_LIFE_SUPPORT_UNIT.get(),
 				models().getExistingFile(new ResourceLocation(ImmersiveWeapons.MOD_ID, "biodome_life_support_unit")));
+		simpleBlock(BlockRegistry.RUSTED_IRON_BLOCK.get(), models().withExistingParent("rusted_iron_block",
+						new ResourceLocation(ImmersiveWeapons.MOD_ID, "simple_overlay"))
+				.texture("all", "minecraft:block/iron_block")
+				.texture("overlay", new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/rusted_iron_block_overlay"))
+				.renderType("minecraft:translucent"));
 	}
 }

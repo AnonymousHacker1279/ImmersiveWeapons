@@ -31,6 +31,7 @@ public class ImmersiveWeaponsWorldGenTagGroups {
 	public static final TagKey<Biome> HAS_BATTLEFIELD_TOWN = createStructureTag("battlefield_town");
 	public static final TagKey<Biome> HAS_CELESTIAL_ASTEROID = createStructureTag("celestial_asteroid");
 	public static final TagKey<Biome> HAS_BIODOME = createStructureTag("biodome");
+	public static final TagKey<Biome> HAS_SPACE_OBSERVATORY = createStructureTag("space_observatory");
 
 	/**
 	 * Helper method for creating a biome tag for containing structures.

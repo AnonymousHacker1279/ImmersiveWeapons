@@ -10,6 +10,7 @@ import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.data.models.lists.BlockLists;
 import tech.anonymoushacker1279.immersiveweapons.data.models.lists.ItemLists;
 import tech.anonymoushacker1279.immersiveweapons.init.*;
+import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -759,6 +760,12 @@ public class LanguageGenerator extends IWLanguageProvider {
 		add("loot.immersiveweapons.chest.village.battlefield.medic_station.iron_axe", "The Amputator");
 		add("immersiveweapons.boss.celestial_tower.waves", "Wave %s of %s");
 		add("itemGroup.immersiveweapons.creative_tab", "Immersive Weapons");
+
+		// Vanilla only has enchantment numbers up to 10, so add up to 25 for QoL if the player has high level enchants
+		for (int i = 11; i <= 25; i++) {
+			// Convert the number to a roman numeral
+			add("enchantment.level." + i, GeneralUtilities.convertToRoman(i));
+		}
 	}
 
 	/**

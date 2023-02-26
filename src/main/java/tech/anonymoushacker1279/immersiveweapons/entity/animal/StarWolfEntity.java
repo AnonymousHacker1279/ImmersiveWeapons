@@ -58,7 +58,7 @@ public class StarWolfEntity extends Wolf implements GrantAdvancementOnDiscovery 
 
 	@Override
 	public int getMaxSpawnClusterSize() {
-		return 4;
+		return 2;
 	}
 
 	@Override

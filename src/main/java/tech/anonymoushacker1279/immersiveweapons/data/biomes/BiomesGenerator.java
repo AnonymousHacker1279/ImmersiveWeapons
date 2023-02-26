@@ -43,9 +43,7 @@ public class BiomesGenerator {
 				.generationSettings(getBattlefieldGenerationSettings(placedFeatures, worldCarvers))
 				.build();
 	}
-
-	// TODO: Custom ambient sounds for these biomes
-
+	
 	public static Biome tiltrosWastesBiome(HolderGetter<PlacedFeature> placedFeatures, HolderGetter<ConfiguredWorldCarver<?>> worldCarvers) {
 		return new Biome.BiomeBuilder()
 				.temperature(0.6f)
@@ -133,14 +131,14 @@ public class BiomesGenerator {
 		return spawnBuilder.build();
 	}
 
-	// TODO: Add more mobs to this biome
 	private static MobSpawnSettings getStarlightPlainsSpawns() {
 		MobSpawnSettings.Builder spawnBuilder = new MobSpawnSettings.Builder()
-				.creatureGenerationProbability(0.75f)
-				.addSpawn(MobCategory.AMBIENT, new SpawnerData(
-						EntityRegistry.FIREFLY_ENTITY.get(), 100, 1, 4))
 				.addSpawn(MobCategory.CREATURE, new SpawnerData(
-						EntityRegistry.STAR_WOLF_ENTITY.get(), 60, 1, 2));
+						EntityRegistry.FIREFLY_ENTITY.get(), 10, 1, 4))
+				.addSpawn(MobCategory.CREATURE, new SpawnerData(
+						EntityRegistry.STAR_WOLF_ENTITY.get(), 2, 1, 2))
+				.addMobCharge(EntityRegistry.FIREFLY_ENTITY.get(), 0.01d, 15d)
+				.addMobCharge(EntityRegistry.STAR_WOLF_ENTITY.get(), 0.1d, 7d);
 
 		return spawnBuilder.build();
 	}
@@ -153,7 +151,8 @@ public class BiomesGenerator {
 				.addSpawn(MobCategory.MONSTER, new SpawnerData(
 						EntityRegistry.STORM_CREEPER_ENTITY.get(), 10, 1, 1))
 				.addSpawn(MobCategory.MONSTER, new SpawnerData(
-						EntityRegistry.EVIL_EYE_ENTITY.get(), 7, 1, 2));
+						EntityRegistry.EVIL_EYE_ENTITY.get(), 7, 1, 2))
+				.addMobCharge(EntityRegistry.EVIL_EYE_ENTITY.get(), 0.15d, 12d);
 
 		return spawnBuilder.build();
 	}

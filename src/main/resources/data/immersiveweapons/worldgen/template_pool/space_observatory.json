@@ -1,12 +1,12 @@
 {
-	"name": "immersiveweapons:water_tower",
+	"name": "immersiveweapons:space_observatory",
 	"fallback": "minecraft:empty",
 	"elements": [
 		{
 			"weight": 1,
 			"element": {
-				"location": "immersiveweapons:water_tower",
-				"processors": "immersiveweapons:rust_70_percent",
+				"location": "immersiveweapons:space_observatory",
+				"processors": "minecraft:empty",
 				"projection": "rigid",
 				"element_type": "minecraft:single_pool_element"
 			}

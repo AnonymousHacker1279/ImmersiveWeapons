@@ -27,6 +27,7 @@ public class BlockItemRegistry {
 	public static final RegistryObject<BlockItem> STARSTORM_BLOCK_ITEM = ItemRegistry.ITEMS.register("starstorm_block", () -> new BlockItem(BlockRegistry.STARSTORM_BLOCK.get(), new Properties()));
 	public static final RegistryObject<BlockItem> COBALT_BLOCK_ITEM = ItemRegistry.ITEMS.register("cobalt_block", () -> new BlockItem(BlockRegistry.COBALT_BLOCK.get(), new Properties()));
 	public static final RegistryObject<BlockItem> RAW_COBALT_BLOCK_ITEM = ItemRegistry.ITEMS.register("raw_cobalt_block", () -> new BlockItem(BlockRegistry.RAW_COBALT_BLOCK.get(), new Properties()));
+	public static final RegistryObject<BlockItem> RUSTED_IRON_BLOCK_ITEM = ItemRegistry.ITEMS.register("rusted_iron_block", () -> new BlockItem(BlockRegistry.RUSTED_IRON_BLOCK.get(), new Properties()));
 	public static final RegistryObject<BlockItem> SMALL_PARTS_TABLE_ITEM = ItemRegistry.ITEMS.register("small_parts_table", () -> new BlockItem(BlockRegistry.SMALL_PARTS_TABLE.get(), new Properties()));
 	public static final RegistryObject<BlockItem> BARREL_TAP_ITEM = ItemRegistry.ITEMS.register("barrel_tap", () -> new BlockItem(BlockRegistry.BARREL_TAP.get(), new Properties()));
 	public static final RegistryObject<BlockItem> BULLETPROOF_GLASS_ITEM = ItemRegistry.ITEMS.register("bulletproof_glass", () -> new BlockItem(BlockRegistry.BULLETPROOF_GLASS.get(), new Properties()));
