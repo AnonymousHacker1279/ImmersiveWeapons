@@ -30,6 +30,9 @@ public class EvilEyeEntity extends FlyingMob implements Enemy, GrantAdvancementO
 
 	private static final EntityDataAccessor<Integer> ID_SIZE = SynchedEntityData.defineId(EvilEyeEntity.class,
 			EntityDataSerializers.INT);
+	private static final EntityDataAccessor<Boolean> SUMMONED_BY_STAFF = SynchedEntityData.defineId(EvilEyeEntity.class,
+			EntityDataSerializers.BOOLEAN);
+
 	private final List<MobEffect> lowTierDebuffs = new ArrayList<>(5);
 	private final List<MobEffect> highTierDebuffs = new ArrayList<>(5);
 
@@ -41,8 +44,6 @@ public class EvilEyeEntity extends FlyingMob implements Enemy, GrantAdvancementO
 	private UUID targetedEntityUUID;
 
 	private int ticksWatched;
-	private static final EntityDataAccessor<Boolean> SUMMONED_BY_STAFF = SynchedEntityData.defineId(EvilEyeEntity.class,
-			EntityDataSerializers.BOOLEAN);
 
 	public EvilEyeEntity(EntityType<? extends FlyingMob> entityType, Level level) {
 		super(entityType, level);

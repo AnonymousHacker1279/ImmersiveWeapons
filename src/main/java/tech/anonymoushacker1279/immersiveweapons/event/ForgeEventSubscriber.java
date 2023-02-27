@@ -19,6 +19,7 @@ import net.minecraftforge.registries.MissingMappingsEvent;
 import net.minecraftforge.registries.MissingMappingsEvent.Mapping;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.block.crafting.small_parts.SmallPartsCraftables;
+import tech.anonymoushacker1279.immersiveweapons.block.decoration.AstralCrystalBlock;
 import tech.anonymoushacker1279.immersiveweapons.client.gui.IWOverlays;
 import tech.anonymoushacker1279.immersiveweapons.data.biomes.IWBiomes;
 import tech.anonymoushacker1279.immersiveweapons.event.environment_effects.EnvironmentEffects;
@@ -289,6 +290,7 @@ public class ForgeEventSubscriber {
 	public static void recipesUpdatedEvent(RecipesUpdatedEvent event) {
 		ImmersiveWeapons.LOGGER.info("Recipes have updated, re-initializing custom crafting systems");
 		SmallPartsCraftables.init(event.getRecipeManager());
+		AstralCrystalBlock.initializeRecipes(event.getRecipeManager());
 	}
 
 	@SubscribeEvent

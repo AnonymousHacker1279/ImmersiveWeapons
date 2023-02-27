@@ -63,6 +63,7 @@ public class RecipeGenerator extends RecipeProvider {
 		createSmithingItems();
 		createSmallPartsItems();
 		createBarrelTapItems();
+		createAstralCrystalSorceryItems();
 		createSmokeGrenades();
 		createCorrugatedIronItems();
 		createShardItems();
@@ -466,6 +467,10 @@ public class RecipeGenerator extends RecipeProvider {
 	private void createBarrelTapItems() {
 		barrelTapFermenting(Items.WHEAT, 12, ItemRegistry.BOTTLE_OF_ALCOHOL.get());
 		barrelTapFermenting(Items.SWEET_BERRIES, 12, ItemRegistry.BOTTLE_OF_WINE.get());
+	}
+
+	private void createAstralCrystalSorceryItems() {
+		astralCrystalSorcery(ItemRegistry.RAW_ASTRAL.get(), Items.AMETHYST_SHARD, ItemRegistry.ASTRAL_INGOT.get(), 1);
 	}
 
 	private void createSmokeGrenades() {
@@ -1409,6 +1414,12 @@ public class RecipeGenerator extends RecipeProvider {
 		BarrelTapRecipeBuilder.fermenting(Ingredient.of(material), materialCount, result.asItem())
 				.unlocks("barrel_tap", has(BlockItemRegistry.BARREL_TAP_ITEM.get()))
 				.save(finishedRecipeConsumer, ImmersiveWeapons.MOD_ID + ":" + getItemName(result) + "_fermenting");
+	}
+
+	private static void astralCrystalSorcery(ItemLike primaryMaterial, ItemLike secondaryMaterial, ItemLike result, int resultCount) {
+		AstralCrystalRecipeBuilder.sorcery(Ingredient.of(primaryMaterial), Ingredient.of(secondaryMaterial), result.asItem(), resultCount)
+				.unlocks("astral_crystal", has(BlockItemRegistry.ASTRAL_CRYSTAL_ITEM.get()))
+				.save(finishedRecipeConsumer, ImmersiveWeapons.MOD_ID + ":" + getItemName(result) + "_astral_crystal_sorcery");
 	}
 
 	protected static String getConversionRecipeName(ItemLike pResult, ItemLike pIngredient) {

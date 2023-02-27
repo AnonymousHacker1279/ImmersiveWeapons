@@ -29,4 +29,10 @@ public class RecipeTypeRegistry {
 			return ImmersiveWeapons.MOD_ID + ":barrel_tap";
 		}
 	});
+	public static final RegistryObject<RecipeType<AstralCrystalRecipe>> ASTRAL_CRYSTAL_RECIPE_TYPE = RECIPE_TYPES.register("astral_crystal", () -> new RecipeType<>() {
+		@Override
+		public String toString() {
+			return ImmersiveWeapons.MOD_ID + ":astral_crystal";
+		}
+	});
 }

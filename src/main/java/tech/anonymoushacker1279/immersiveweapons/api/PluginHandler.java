@@ -62,4 +62,15 @@ public class PluginHandler {
 			ImmersiveWeapons.LOGGER.error("Plugin registration failed for {}, initialization has already completed", name);
 		}
 	}
+
+	/**
+	 * Check if a plugin has been registered.
+	 *
+	 * @param name the name of the plugin
+	 * @return true if the plugin has been registered, false otherwise
+	 */
+	@AvailableSince("1.20.0")
+	public static boolean isPluginRegistered(String name) {
+		return PLUGIN_NAMES.contains(name);
+	}
 }

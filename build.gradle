@@ -1,5 +1,4 @@
 plugins {
-	id 'eclipse'
 	id 'maven-publish'
 	id 'net.minecraftforge.gradle' version '5.+'
 	id 'org.parchmentmc.librarian.forgegradle' version '1.+'
@@ -168,7 +167,10 @@ publishing {
 		repositories {
 			maven {
 				name "AnonymousHacker1279"
-				url "https://maven.anonymoushacker1279.tech/releases"
+
+				def baseMavenUrl = "https://maven.anonymoushacker1279.tech/"
+				url version.contains("SNAPSHOT") ? baseMavenUrl + "snapshots" : baseMavenUrl + "releases"
+
 				credentials(PasswordCredentials)
 				authentication {
 					basic(BasicAuthentication)
@@ -180,4 +182,5 @@ publishing {
 
 tasks.withType(JavaCompile).configureEach {
 	options.encoding = 'UTF-8' // Use the UTF-8 charset for Java compilation
+	options.fork = true // Use a separate JVM process for Java compilation
 }

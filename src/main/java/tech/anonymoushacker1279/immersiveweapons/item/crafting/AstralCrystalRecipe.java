@@ -11,20 +11,22 @@ import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.level.Level;
 import tech.anonymoushacker1279.immersiveweapons.init.*;
 
-public record BarrelTapRecipe(ResourceLocation recipeId,
-                              Ingredient material,
-                              int materialCount,
-                              ItemStack result) implements Recipe<Container> {
+public record AstralCrystalRecipe(ResourceLocation recipeId,
+                                  Ingredient primaryMaterial,
+                                  Ingredient secondaryMaterial,
+                                  ItemStack result,
+                                  int resultCount) implements Recipe<Container> {
 
 	/**
-	 * Constructor for BarrelTapRecipe.
+	 * Constructor for AstralCrystalRecipe.
 	 *
-	 * @param recipeId      the <code>ResourceLocation</code> for the recipe
-	 * @param material      the first <code>Ingredient</code>
-	 * @param materialCount the number of materials needed for the recipe
-	 * @param result        an <code>ItemStack</code> formed from the material
+	 * @param recipeId          the <code>ResourceLocation</code> for the recipe
+	 * @param primaryMaterial   the first <code>Ingredient</code>
+	 * @param secondaryMaterial the number of materials needed for the recipe
+	 * @param result            an <code>ItemStack</code> of the result
+	 * @param resultCount       the number of results
 	 */
-	public BarrelTapRecipe {
+	public AstralCrystalRecipe {
 	}
 
 	/**
@@ -62,17 +64,26 @@ public record BarrelTapRecipe(ResourceLocation recipeId,
 		return false;
 	}
 
-	public Ingredient getMaterial() {
-		return material;
+	public Ingredient getPrimaryMaterial() {
+		return primaryMaterial;
 	}
 
-	public int getMaterialCount() {
-		return materialCount;
+	public Ingredient getSecondaryMaterial() {
+		return secondaryMaterial;
 	}
 
 	@Override
 	public ItemStack getResultItem() {
 		return result.copy();
+	}
+
+	/**
+	 * Get the recipe's result count.
+	 *
+	 * @return int
+	 */
+	public int getResultCount() {
+		return resultCount;
 	}
 
 	/**
@@ -82,7 +93,7 @@ public record BarrelTapRecipe(ResourceLocation recipeId,
 	 */
 	@Override
 	public ItemStack getToastSymbol() {
-		return new ItemStack(BlockRegistry.BARREL_TAP.get());
+		return new ItemStack(BlockRegistry.ASTRAL_CRYSTAL.get());
 	}
 
 	/**
@@ -102,7 +113,7 @@ public record BarrelTapRecipe(ResourceLocation recipeId,
 	 */
 	@Override
 	public RecipeSerializer<?> getSerializer() {
-		return RecipeSerializerRegistry.BARREL_TAP_RECIPE_SERIALIZER.get();
+		return RecipeSerializerRegistry.ASTRAL_CRYSTAL_RECIPE_SERIALIZER.get();
 	}
 
 	/**
@@ -112,7 +123,7 @@ public record BarrelTapRecipe(ResourceLocation recipeId,
 	 */
 	@Override
 	public RecipeType<?> getType() {
-		return RecipeTypeRegistry.BARREL_TAP_RECIPE_TYPE.get();
+		return RecipeTypeRegistry.ASTRAL_CRYSTAL_RECIPE_TYPE.get();
 	}
 
 	/**
@@ -123,25 +134,27 @@ public record BarrelTapRecipe(ResourceLocation recipeId,
 	@Override
 	public NonNullList<Ingredient> getIngredients() {
 		NonNullList<Ingredient> defaultedList = NonNullList.create();
-		defaultedList.add(material);
+		defaultedList.add(primaryMaterial);
+		defaultedList.add(secondaryMaterial);
 		return defaultedList;
 	}
 
-	public static class Serializer implements RecipeSerializer<BarrelTapRecipe> {
+	public static class Serializer implements RecipeSerializer<AstralCrystalRecipe> {
 		/**
 		 * Serialize from JSON.
 		 *
 		 * @param recipeId the <code>ResourceLocation</code> for the recipe
 		 * @param json     the <code>JsonObject</code> instance
-		 * @return BarrelTapRecipe
+		 * @return AstralCrystalRecipe
 		 */
 		@Override
-		public BarrelTapRecipe fromJson(ResourceLocation recipeId, JsonObject json) {
-			Ingredient material = Ingredient.fromJson(GsonHelper.getAsJsonObject(json, "material"));
-			int materialCount = GsonHelper.getAsInt(json, "materialCount");
+		public AstralCrystalRecipe fromJson(ResourceLocation recipeId, JsonObject json) {
+			Ingredient primaryMaterial = Ingredient.fromJson(GsonHelper.getAsJsonObject(json, "primaryMaterial"));
+			Ingredient secondaryMaterial = Ingredient.fromJson(GsonHelper.getAsJsonObject(json, "secondaryMaterial"));
 			ItemStack result = new ItemStack(ShapedRecipe.itemFromJson(GsonHelper.getAsJsonObject(json, "result")));
+			int resultCount = GsonHelper.getAsInt(json, "resultCount");
 
-			return new BarrelTapRecipe(recipeId, material, materialCount, result);
+			return new AstralCrystalRecipe(recipeId, primaryMaterial, secondaryMaterial, result, resultCount);
 		}
 
 		/**
@@ -149,28 +162,30 @@ public record BarrelTapRecipe(ResourceLocation recipeId,
 		 *
 		 * @param recipeId the <code>ResourceLocation</code> for the recipe
 		 * @param buffer   the <code>FriendlyByteBuf</code> instance
-		 * @return BarrelTapRecipe
+		 * @return AstralCrystalRecipe
 		 */
 		@Override
-		public BarrelTapRecipe fromNetwork(ResourceLocation recipeId, FriendlyByteBuf buffer) {
-			Ingredient material = Ingredient.fromNetwork(buffer);
-			int materialCount = buffer.readInt();
+		public AstralCrystalRecipe fromNetwork(ResourceLocation recipeId, FriendlyByteBuf buffer) {
+			Ingredient primaryMaterial = Ingredient.fromNetwork(buffer);
+			Ingredient secondaryMaterial = Ingredient.fromNetwork(buffer);
 			ItemStack result = buffer.readItem();
+			int resultCount = buffer.readInt();
 
-			return new BarrelTapRecipe(recipeId, material, materialCount, result);
+			return new AstralCrystalRecipe(recipeId, primaryMaterial, secondaryMaterial, result, resultCount);
 		}
 
 		/**
 		 * Serialize to JSON on the network.
 		 *
 		 * @param buffer the <code>FriendlyByteBuf</code> instance
-		 * @param recipe the <code>BarrelTapRecipe</code> instance
+		 * @param recipe the <code>AstralCrystalRecipe</code> instance
 		 */
 		@Override
-		public void toNetwork(FriendlyByteBuf buffer, BarrelTapRecipe recipe) {
-			recipe.material.toNetwork(buffer);
-			buffer.writeInt(recipe.materialCount);
+		public void toNetwork(FriendlyByteBuf buffer, AstralCrystalRecipe recipe) {
+			recipe.primaryMaterial.toNetwork(buffer);
+			recipe.secondaryMaterial.toNetwork(buffer);
 			buffer.writeItem(recipe.result);
+			buffer.writeInt(recipe.resultCount);
 		}
 	}
 }

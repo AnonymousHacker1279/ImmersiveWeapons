@@ -15,26 +15,28 @@ import tech.anonymoushacker1279.immersiveweapons.init.RecipeSerializerRegistry;
 import java.util.Objects;
 import java.util.function.Consumer;
 
-public class BarrelTapRecipeBuilder {
+public class AstralCrystalRecipeBuilder {
 
-	private final Ingredient material;
-	private final int materialCount;
+	private final Ingredient primaryMaterial;
+	private final Ingredient secondaryMaterial;
 	private final Item result;
+	private final int resultCount;
 	private final Advancement.Builder advancement = Advancement.Builder.advancement();
 	private final RecipeSerializer<?> type;
 
-	public BarrelTapRecipeBuilder(RecipeSerializer<?> type, Ingredient material, int materialCount, Item result) {
+	public AstralCrystalRecipeBuilder(RecipeSerializer<?> type, Ingredient primaryMaterial, Ingredient secondaryMaterial, Item result, int resultCount) {
 		this.type = type;
-		this.material = material;
-		this.materialCount = materialCount;
+		this.primaryMaterial = primaryMaterial;
+		this.secondaryMaterial = secondaryMaterial;
+		this.resultCount = resultCount;
 		this.result = result;
 	}
 
-	public static BarrelTapRecipeBuilder fermenting(Ingredient block, int materialCount, Item pResult) {
-		return new BarrelTapRecipeBuilder(RecipeSerializerRegistry.BARREL_TAP_RECIPE_SERIALIZER.get(), block, materialCount, pResult);
+	public static AstralCrystalRecipeBuilder sorcery(Ingredient primaryMaterial, Ingredient secondaryMaterial, Item result, int resultCount) {
+		return new AstralCrystalRecipeBuilder(RecipeSerializerRegistry.ASTRAL_CRYSTAL_RECIPE_SERIALIZER.get(), primaryMaterial, secondaryMaterial, result, resultCount);
 	}
 
-	public BarrelTapRecipeBuilder unlocks(String pName, CriterionTriggerInstance pCriterion) {
+	public AstralCrystalRecipeBuilder unlocks(String pName, CriterionTriggerInstance pCriterion) {
 		advancement.addCriterion(pName, pCriterion);
 		return this;
 	}
@@ -48,7 +50,7 @@ public class BarrelTapRecipeBuilder {
 		advancement.parent(new ResourceLocation("recipes/root"))
 				.addCriterion("has_the_recipe", RecipeUnlockedTrigger.unlocked(pId))
 				.rewards(AdvancementRewards.Builder.recipe(pId)).requirements(RequirementsStrategy.OR);
-		pFinishedRecipeConsumer.accept(new BarrelTapRecipeBuilder.Result(pId, type, material, materialCount, result, advancement,
+		pFinishedRecipeConsumer.accept(new AstralCrystalRecipeBuilder.Result(pId, type, primaryMaterial, secondaryMaterial, result, resultCount, advancement,
 				new ResourceLocation(pId.getNamespace(), "recipes/" + pId.getPath())));
 	}
 
@@ -60,20 +62,22 @@ public class BarrelTapRecipeBuilder {
 
 	public static class Result implements FinishedRecipe {
 		private final ResourceLocation id;
-		private final Ingredient material;
-		private final int materialCount;
+		private final Ingredient primaryMaterial;
+		private final Ingredient secondaryMaterial;
 		private final Item result;
+		private final int resultCount;
 		private final Advancement.Builder advancement;
 		private final ResourceLocation advancementId;
 		private final RecipeSerializer<?> type;
 
-		public Result(ResourceLocation pId, RecipeSerializer<?> pType, Ingredient material,
-		              int materialCount, Item result, Advancement.Builder pAdvancement,
+		public Result(ResourceLocation pId, RecipeSerializer<?> pType, Ingredient primaryMaterial,
+		              Ingredient secondaryMaterial, Item result, int resultCount, Advancement.Builder pAdvancement,
 		              ResourceLocation pAdvancementId) {
 			id = pId;
 			type = pType;
-			this.material = material;
-			this.materialCount = materialCount;
+			this.primaryMaterial = primaryMaterial;
+			this.secondaryMaterial = secondaryMaterial;
+			this.resultCount = resultCount;
 			this.result = result;
 			advancement = pAdvancement;
 			advancementId = pAdvancementId;
@@ -81,11 +85,14 @@ public class BarrelTapRecipeBuilder {
 
 		@Override
 		public void serializeRecipeData(JsonObject pJson) {
-			pJson.add("material", material.toJson());
-			pJson.addProperty("materialCount", materialCount);
+			pJson.add("primaryMaterial", primaryMaterial.toJson());
+			pJson.add("secondaryMaterial", secondaryMaterial.toJson());
+
 			JsonObject resultObject = new JsonObject();
 			resultObject.addProperty("item", Objects.requireNonNull(ForgeRegistries.ITEMS.getKey(result)).toString());
 			pJson.add("result", resultObject);
+
+			pJson.addProperty("resultCount", resultCount);
 		}
 
 		/**
