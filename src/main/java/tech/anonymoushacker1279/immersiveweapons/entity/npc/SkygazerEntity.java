@@ -25,6 +25,7 @@ import net.minecraft.world.item.trading.MerchantOffer;
 import net.minecraft.world.item.trading.MerchantOffers;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
+import tech.anonymoushacker1279.immersiveweapons.entity.GrantAdvancementOnDiscovery;
 import tech.anonymoushacker1279.immersiveweapons.entity.monster.StarmiteEntity;
 import tech.anonymoushacker1279.immersiveweapons.init.*;
 import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
@@ -33,7 +34,7 @@ import javax.annotation.Nullable;
 import java.util.Map;
 import java.util.Objects;
 
-public class SkygazerEntity extends AbstractVillager {
+public class SkygazerEntity extends AbstractVillager implements GrantAdvancementOnDiscovery {
 
 	private int timeUntilRefreshTrades = 72000; // Three days
 
@@ -123,6 +124,12 @@ public class SkygazerEntity extends AbstractVillager {
 		} else {
 			return super.mobInteract(player, hand);
 		}
+	}
+
+	@Override
+	public void aiStep() {
+		super.aiStep();
+		checkForDiscovery(this);
 	}
 
 	@Override

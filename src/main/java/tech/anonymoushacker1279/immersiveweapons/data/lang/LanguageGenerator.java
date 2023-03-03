@@ -688,9 +688,9 @@ public class LanguageGenerator extends IWLanguageProvider {
 		addAdvancement("discover_field_medic.title", "Meet the Medic");
 		addAdvancement("discover_field_medic.description", "Discover a Field Medic, a healer that keeps nearby minutemen in good health");
 		addAdvancement("discover_dying_soldier.title", "Barely Alive");
-		addAdvancement("discover_dying_soldier.description", "Discover a Dying Soldier, a decaying war-torn soldier still fighting the war.");
+		addAdvancement("discover_dying_soldier.description", "Discover a Dying Soldier, a decaying war-torn soldier still fighting the war");
 		addAdvancement("discover_wandering_warrior.title", "Rogue Warrior");
-		addAdvancement("discover_wandering_warrior.description", "Discover a Wandering Warrior, a creature of the wilderness.");
+		addAdvancement("discover_wandering_warrior.description", "Discover a Wandering Warrior, a creature of the wilderness");
 		addAdvancement("discover_hans.title", "O GREAT HANS");
 		addAdvancement("discover_hans.description", "WITNESS THE POWER OF THE GREAT HANS, BOW BEFORE HIS GREATNESS");
 		addAdvancement("discover_lava_revenant.title", "Phantom of Tiltros");
@@ -707,6 +707,8 @@ public class LanguageGenerator extends IWLanguageProvider {
 		addAdvancement("discover_evil_eye.description", "Discover an Evil Eye, a detached eye which wanders the Deadman's Desert");
 		addAdvancement("discover_star_wolf.title", "Bigger Dogs");
 		addAdvancement("discover_star_wolf.description", "Discover a Star Wolf, a stronger and larger wolf");
+		addAdvancement("discover_skygazer.title", "Finally, Some Decent Trades");
+		addAdvancement("discover_skygazer.description", "Discover a Skygazer, a trader which resides in the Starlight Plains");
 	}
 
 	private void addConfigDescriptions() {
