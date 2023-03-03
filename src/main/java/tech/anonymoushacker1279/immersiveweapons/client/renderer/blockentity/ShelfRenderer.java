@@ -10,9 +10,9 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.NonNullList;
 import net.minecraft.world.item.ItemStack;
 import tech.anonymoushacker1279.immersiveweapons.block.decoration.ShelfBlock;
-import tech.anonymoushacker1279.immersiveweapons.blockentity.WallShelfBlockEntity;
+import tech.anonymoushacker1279.immersiveweapons.blockentity.ShelfBlockEntity;
 
-public class ShelfRenderer implements BlockEntityRenderer<WallShelfBlockEntity> {
+public class ShelfRenderer implements BlockEntityRenderer<ShelfBlockEntity> {
 
 	/**
 	 * Constructor for ShelfRenderer.
@@ -21,12 +21,14 @@ public class ShelfRenderer implements BlockEntityRenderer<WallShelfBlockEntity> 
 	}
 
 	@Override
-	public void render(WallShelfBlockEntity shelfEntity, float partialTicks, PoseStack poseStack, MultiBufferSource buffer, int packedLight, int packedOverlay) {
+	public void render(ShelfBlockEntity shelfEntity, float partialTicks, PoseStack poseStack,
+	                   MultiBufferSource buffer, int packedLight, int packedOverlay) {
+
 		Direction direction = shelfEntity.getBlockState().getValue(ShelfBlock.FACING);
 		NonNullList<ItemStack> inventory = shelfEntity.getInventory();
 
-		for (ItemStack itemstack : inventory) {
-			if (itemstack != ItemStack.EMPTY) {
+		for (ItemStack stack : inventory) {
+			if (stack != ItemStack.EMPTY) {
 				poseStack.pushPose();
 				// Actual position of the item
 				poseStack.translate(0.5D, 0.0D, 0.5D);
@@ -41,16 +43,16 @@ public class ShelfRenderer implements BlockEntityRenderer<WallShelfBlockEntity> 
 				// Rotation occurs here
 				poseStack.mulPose(Axis.XP.rotationDegrees(50f));
 				poseStack.translate(0.0D, 0.10D, -0.10D);
-				if (inventory.get(0) == itemstack) {
+				if (inventory.get(0) == stack) {
 					// First item goes on bottom left
 					poseStack.translate(-0.3125D, 0.3125D, 0.15D);
-				} else if (inventory.get(1) == itemstack) {
+				} else if (inventory.get(1) == stack) {
 					// Second item goes on bottom right
 					poseStack.translate(0.3125D, 0.3125D, 0.15D);
-				} else if (inventory.get(2) == itemstack) {
+				} else if (inventory.get(2) == stack) {
 					// Third item goes on top left
 					poseStack.translate(-0.3125D, 0.6D, -0.17D);
-				} else if (inventory.get(3) == itemstack) {
+				} else if (inventory.get(3) == stack) {
 					// Fourth item goes on top right
 					poseStack.translate(0.3125D, 0.6D, -0.17D);
 				}
@@ -58,7 +60,9 @@ public class ShelfRenderer implements BlockEntityRenderer<WallShelfBlockEntity> 
 				// Scale render
 				poseStack.scale(0.375F, 0.375F, 0.375F);
 				// Actually render the item
-				Minecraft.getInstance().getItemRenderer().renderStatic(itemstack, ItemTransforms.TransformType.FIXED, packedLight, packedOverlay, poseStack, buffer, 0);
+				Minecraft.getInstance().getItemRenderer().renderStatic(stack, ItemTransforms.TransformType.FIXED,
+						packedLight, packedOverlay, poseStack, buffer, 0);
+
 				poseStack.popPose();
 			}
 		}

@@ -14,7 +14,7 @@ public class BlockEntityRegistry {
 
 	// Block Entities
 	public static final RegistryObject<BlockEntityType<BearTrapBlockEntity>> BEAR_TRAP_BLOCK_ENTITY = BLOCK_ENTITIES.register("bear_trap", () -> new BlockEntityType<>(BearTrapBlockEntity::new, Sets.newHashSet(BlockRegistry.BEAR_TRAP.get()), null));
-	public static final RegistryObject<BlockEntityType<WallShelfBlockEntity>> WALL_SHELF_BLOCK_ENTITY = BLOCK_ENTITIES.register("wall_shelf", () -> new BlockEntityType<>(WallShelfBlockEntity::new, Sets.newHashSet(BlockRegistry.WALL_SHELF.get()), null));
+	public static final RegistryObject<BlockEntityType<ShelfBlockEntity>> SHELF_BLOCK_ENTITY = BLOCK_ENTITIES.register("wall_shelf", () -> new BlockEntityType<>(ShelfBlockEntity::new, Sets.newHashSet(BlockRegistry.WALL_SHELF.get()), null));
 	public static final RegistryObject<BlockEntityType<PanicAlarmBlockEntity>> PANIC_ALARM_BLOCK_ENTITY = BLOCK_ENTITIES.register("panic_alarm", () -> new BlockEntityType<>(PanicAlarmBlockEntity::new, Sets.newHashSet(BlockRegistry.PANIC_ALARM.get()), null));
 	public static final RegistryObject<BlockEntityType<MinutemanStatueBlockEntity>> MINUTEMAN_STATUE_BLOCK_ENTITY = BLOCK_ENTITIES.register("minuteman_statue", () -> new BlockEntityType<>(MinutemanStatueBlockEntity::new, Sets.newHashSet(BlockRegistry.MINUTEMAN_STATUE.get()), null));
 	public static final RegistryObject<BlockEntityType<MedicStatueBlockEntity>> MEDIC_STATUE_BLOCK_ENTITY = BLOCK_ENTITIES.register("medic_statue", () -> new BlockEntityType<>(MedicStatueBlockEntity::new, Sets.newHashSet(BlockRegistry.MEDIC_STATUE.get()), null));

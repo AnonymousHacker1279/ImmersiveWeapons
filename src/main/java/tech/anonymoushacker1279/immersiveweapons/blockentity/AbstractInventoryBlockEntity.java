@@ -66,7 +66,7 @@ public abstract class AbstractInventoryBlockEntity extends BlockEntity implement
 	/**
 	 * Set the change state.
 	 */
-	private void inventoryChanged() {
+	public void inventoryChanged() {
 		setChanged();
 		Objects.requireNonNull(getLevel()).sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), 3);
 	}

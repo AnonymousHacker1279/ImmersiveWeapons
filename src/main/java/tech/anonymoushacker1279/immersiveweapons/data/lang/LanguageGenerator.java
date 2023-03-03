@@ -400,6 +400,8 @@ public class LanguageGenerator extends IWLanguageProvider {
 		addMessage("item.azul_locator.teleporting", "Teleporting to spawn point in %s seconds...");
 		addMessage("item.azul_locator.teleported", "Teleported to spawn point!");
 		addMessage("item.azul_locator.no_spawn", "Unable to teleport: No spawn point set.");
+		addMessage("block.wall_shelf.locked", "This shelf has been locked");
+		addMessage("block.wall_shelf.unlocked", "This shelf has been unlocked");
 	}
 
 	private void addDeathMessages() {

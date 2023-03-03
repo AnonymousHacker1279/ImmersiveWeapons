@@ -495,6 +495,8 @@
   "entity.immersiveweapons.wandering_warrior": "Wandering Warrior",
   "entity.immersiveweapons.wooden_arrow": "Wooden Arrow",
   "entity.immersiveweapons.wooden_musket_ball": "Wooden Musket Ball",
+  "immersiveweapons.block.wall_shelf.locked": "This shelf has been locked",
+  "immersiveweapons.block.wall_shelf.unlocked": "This shelf has been unlocked",
   "immersiveweapons.boss.celestial_tower.waves": "Wave %s of %s",
   "immersiveweapons.item.azul_locator.no_spawn": "Unable to teleport: No spawn point set.",
   "immersiveweapons.item.azul_locator.teleported": "Teleported to spawn point!",
