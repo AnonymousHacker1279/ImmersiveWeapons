@@ -7,7 +7,6 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
-import net.minecraftforge.client.event.RecipesUpdatedEvent;
 import net.minecraftforge.client.event.RegisterGuiOverlaysEvent;
 import net.minecraftforge.event.TickEvent.PlayerTickEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
@@ -18,8 +17,6 @@ import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.MissingMappingsEvent;
 import net.minecraftforge.registries.MissingMappingsEvent.Mapping;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
-import tech.anonymoushacker1279.immersiveweapons.block.crafting.small_parts.SmallPartsCraftables;
-import tech.anonymoushacker1279.immersiveweapons.block.decoration.AstralCrystalBlock;
 import tech.anonymoushacker1279.immersiveweapons.client.gui.IWOverlays;
 import tech.anonymoushacker1279.immersiveweapons.data.biomes.IWBiomes;
 import tech.anonymoushacker1279.immersiveweapons.event.environment_effects.EnvironmentEffects;
@@ -279,18 +276,6 @@ public class ForgeEventSubscriber {
 			ImmersiveWeapons.LOGGER.warn("Sound event remapping complete. Remapped entries: {}", remappedSoundEvents);
 			ImmersiveWeapons.LOGGER.warn("{}/{} sounds remapped.", remappedSoundEvents.size(), mappings.size());
 		}
-	}
-
-	/**
-	 * Event handler for the RecipesUpdatedEvent event.
-	 *
-	 * @param event the <code>RecipesUpdatedEvent</code> instance
-	 */
-	@SubscribeEvent
-	public static void recipesUpdatedEvent(RecipesUpdatedEvent event) {
-		ImmersiveWeapons.LOGGER.info("Recipes have updated, re-initializing custom crafting systems");
-		SmallPartsCraftables.init(event.getRecipeManager());
-		AstralCrystalBlock.initializeRecipes(event.getRecipeManager());
 	}
 
 	@SubscribeEvent

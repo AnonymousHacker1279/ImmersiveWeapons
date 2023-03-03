@@ -97,6 +97,7 @@ public class LanguageGenerator extends IWLanguageProvider {
 		excludedItems.add(ItemRegistry.MRE.get());
 		excludedItems.add(ItemRegistry.HANS_SPAWN_EGG.get());
 		excludedItems.add(ItemRegistry.MUSKET_SCOPE.get());
+		excludedItems.add(ItemRegistry.EXPLOSIVE_CHOCOLATE_BAR.get());
 
 		// Filter the excluded items from the registry
 		Stream<RegistryObject<Item>> items = ItemRegistry.ITEMS.getEntries().stream()
@@ -135,6 +136,7 @@ public class LanguageGenerator extends IWLanguageProvider {
 		addItem(ItemRegistry.MRE, "Meal Ready-to-Eat (MRE)");
 		addItem(ItemRegistry.HANS_SPAWN_EGG, "Hans The Almighty Spawn Egg");
 		addItem(ItemRegistry.MUSKET_SCOPE, "Musket (Scope)");
+		addItem(ItemRegistry.EXPLOSIVE_CHOCOLATE_BAR, "Chocolate Bar");
 	}
 
 	private void addEntityTypes() {

@@ -20,7 +20,6 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.Nullable;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
-import tech.anonymoushacker1279.immersiveweapons.block.crafting.small_parts.SmallPartsCraftables;
 import tech.anonymoushacker1279.immersiveweapons.menu.SmallPartsMenu;
 
 import java.util.ArrayList;
@@ -231,7 +230,7 @@ public class SmallPartsTableScreen extends AbstractContainerScreen<SmallPartsMen
 		if (materialStack.isEmpty()) {
 			resultPatterns = null;
 		} else {
-			resultPatterns = SmallPartsCraftables.getAvailableCraftables(materialStack);
+			resultPatterns = menu.getAvailableCraftables(materialStack);
 			int BASE_PATTERN_INDEX = 1;
 			TOTAL_PATTERN_ROWS = (resultPatterns.size() - BASE_PATTERN_INDEX + 3 - BASE_PATTERN_INDEX) / 3;
 		}

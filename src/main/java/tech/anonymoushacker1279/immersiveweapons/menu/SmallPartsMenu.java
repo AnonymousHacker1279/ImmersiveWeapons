@@ -1,25 +1,27 @@
 package tech.anonymoushacker1279.immersiveweapons.menu;
 
+import com.mojang.datafixers.util.Pair;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.Container;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.*;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.*;
+import net.minecraft.world.item.crafting.RecipeManager;
 import net.minecraftforge.common.MinecraftForge;
 import tech.anonymoushacker1279.immersiveweapons.api.events.SmallPartsTableCraftEvent;
-import tech.anonymoushacker1279.immersiveweapons.block.crafting.small_parts.SmallPartsCraftables;
 import tech.anonymoushacker1279.immersiveweapons.init.*;
+import tech.anonymoushacker1279.immersiveweapons.item.crafting.SmallPartsRecipe;
 
-import java.util.List;
+import java.util.*;
 
 public class SmallPartsMenu extends AbstractContainerMenu {
 
 	private static final int INV_SLOT_START = 4;
 	private static final int INV_SLOT_END_USE_ROW_SLOT_START = 31;
 	private static final int USE_ROW_SLOT_END = 38;
+	public static final List<Pair<Item, Item>> ALL_CRAFTABLES = new ArrayList<>(15);
 	private final ContainerLevelAccess access;
 	final DataSlot selectedPartsPatternIndex = DataSlot.standalone();
 	Runnable slotUpdateListener = () -> {
@@ -27,6 +29,7 @@ public class SmallPartsMenu extends AbstractContainerMenu {
 	final Slot materialSlot;
 	private final Slot resultSlot;
 	long lastSoundTime;
+
 	private final Container inputContainer = new SimpleContainer(1) {
 		@Override
 		public void setChanged() {
@@ -35,6 +38,7 @@ public class SmallPartsMenu extends AbstractContainerMenu {
 			slotUpdateListener.run();
 		}
 	};
+
 	private final Container outputContainer = new SimpleContainer(1) {
 		@Override
 		public void setChanged() {
@@ -51,18 +55,12 @@ public class SmallPartsMenu extends AbstractContainerMenu {
 		super(MenuTypeRegistry.SMALL_PARTS_TABLE_MENU.get(), containerID);
 		access = levelAccess;
 		materialSlot = addSlot(new Slot(inputContainer, 0, 23, 36) {
-			/**
-			 * Check if the stack is allowed to be placed in this slot, used for armor slots as well as furnace fuel.
-			 */
 			@Override
 			public boolean mayPlace(ItemStack stack) {
 				return true;
 			}
 		});
 		resultSlot = addSlot(new Slot(outputContainer, 0, 143, 58) {
-			/**
-			 * Check if the stack is allowed to be placed in this slot, used for armor slots as well as furnace fuel.
-			 */
 			@Override
 			public boolean mayPlace(ItemStack stack) {
 				return false;
@@ -81,7 +79,6 @@ public class SmallPartsMenu extends AbstractContainerMenu {
 						level.playSound(null, pos, SoundEventRegistry.SMALL_PARTS_TABLE_USED.get(), SoundSource.BLOCKS, 1.0F, 1.0F);
 						lastSoundTime = gameTime;
 					}
-
 				});
 
 				MinecraftForge.EVENT_BUS.post(new SmallPartsTableCraftEvent(player, stack));
@@ -101,6 +98,40 @@ public class SmallPartsMenu extends AbstractContainerMenu {
 		}
 
 		addDataSlot(selectedPartsPatternIndex);
+		initializeRecipes(inventory.player.getLevel().getRecipeManager());
+	}
+
+	private void initializeRecipes(RecipeManager manager) {
+		List<SmallPartsRecipe> recipes = manager.getAllRecipesFor(RecipeTypeRegistry.SMALL_PARTS_RECIPE_TYPE.get());
+
+		for (SmallPartsRecipe recipe : recipes) {
+			for (Item craftable : recipe.craftables()) {
+				if (!(craftable == Items.AIR)) {
+					for (ItemStack material : recipe.material().getItems()) {
+						Pair<Item, Item> pair = new Pair<>(material.getItem(), craftable);
+						if (!ALL_CRAFTABLES.contains(pair)) {
+							ALL_CRAFTABLES.add(pair);
+						}
+					}
+				}
+			}
+		}
+
+		// Sort the recipes alphabetically
+		ALL_CRAFTABLES.sort(Comparator.comparing(o -> o.getSecond().getDescriptionId()));
+	}
+
+	public List<Item> getAvailableCraftables(ItemStack stack) {
+		List<Pair<Item, Item>> filteredCraftables = ALL_CRAFTABLES.stream()
+				.filter(itemItemPair -> stack.is(itemItemPair.getFirst()))
+				.toList();
+
+		List<Item> craftables = new ArrayList<>(15);
+		for (Pair<Item, Item> itemItemPair : filteredCraftables) {
+			craftables.add(itemItemPair.getSecond());
+		}
+
+		return craftables;
 	}
 
 	public int getSelectedPartsPatternIndex() {
@@ -116,9 +147,9 @@ public class SmallPartsMenu extends AbstractContainerMenu {
 	}
 
 	@Override
-	public boolean clickMenuButton(Player pPlayer, int pId) {
-		if (pId > 0 && pId <= SmallPartsCraftables.ALL_CRAFTABLES.size()) {
-			selectedPartsPatternIndex.set(pId);
+	public boolean clickMenuButton(Player player, int id) {
+		if (id >= 0 && id <= ALL_CRAFTABLES.size()) {
+			selectedPartsPatternIndex.set(id);
 			setupResultSlot();
 			return true;
 		} else {
@@ -200,7 +231,7 @@ public class SmallPartsMenu extends AbstractContainerMenu {
 
 	private void setupResultSlot() {
 		ItemStack material = materialSlot.getItem();
-		List<Item> resultPatterns = SmallPartsCraftables.getAvailableCraftables(material);
+		List<Item> resultPatterns = getAvailableCraftables(material);
 
 		if (selectedPartsPatternIndex.get() > 0 && resultPatterns.size() >= selectedPartsPatternIndex.get() - 1) {
 			if (!material.isEmpty()) {

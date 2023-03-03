@@ -30,37 +30,19 @@ public class SmallPartsTable extends HorizontalDirectionalBlock {
 		registerDefaultState(stateDefinition.any().setValue(FACING, Direction.NORTH));
 	}
 
-	/**
-	 * Get the INamedContainerProvider for the block.
-	 *
-	 * @param state   the <code>BlockState</code> of the block
-	 * @param worldIn the <code>World</code> the block is in
-	 * @param pos     the <code>BlockPos</code> the block is at
-	 * @return INamedContainerProvider
-	 */
 	@Override
-	public MenuProvider getMenuProvider(BlockState state, Level worldIn, BlockPos pos) {
-		return new SimpleMenuProvider((id, inventory, player) -> new SmallPartsMenu(id, inventory, ContainerLevelAccess.create(worldIn, pos)), CONTAINER_NAME);
+	public MenuProvider getMenuProvider(BlockState state, Level level, BlockPos pos) {
+		return new SimpleMenuProvider((id, inventory, player) ->
+				new SmallPartsMenu(id, inventory, ContainerLevelAccess.create(level, pos)), CONTAINER_NAME);
 	}
 
-	/**
-	 * Runs when the block is activated.
-	 * Allows the block to respond to user interaction.
-	 *
-	 * @param state               the <code>BlockState</code> of the block
-	 * @param worldIn             the <code>World</code> the block is in
-	 * @param pos                 the <code>BlockPos</code> the block is at
-	 * @param player              the <code>PlayerEntity</code> interacting with the block
-	 * @param handIn              the <code>Hand</code> the PlayerEntity used
-	 * @param blockRayTraceResult the <code>BlockRayTraceResult</code> of the interaction
-	 * @return ActionResultType
-	 */
+
 	@Override
-	public InteractionResult use(BlockState state, Level worldIn, BlockPos pos, Player player, InteractionHand handIn, BlockHitResult blockRayTraceResult) {
-		if (worldIn.isClientSide) {
+	public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
+		if (level.isClientSide) {
 			return InteractionResult.SUCCESS;
 		} else {
-			NetworkHooks.openScreen((ServerPlayer) player, state.getMenuProvider(worldIn, pos), pos);
+			NetworkHooks.openScreen((ServerPlayer) player, state.getMenuProvider(level, pos), pos);
 			return InteractionResult.CONSUME;
 		}
 	}

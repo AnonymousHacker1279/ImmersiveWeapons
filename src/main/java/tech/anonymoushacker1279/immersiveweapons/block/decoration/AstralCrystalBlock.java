@@ -14,7 +14,6 @@ import net.minecraft.world.entity.Entity.RemovalReason;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.RecipeManager;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -54,8 +53,11 @@ public class AstralCrystalBlock extends AmethystClusterBlock implements EntityBl
 		return new AstralCrystalBlockEntity(blockPos, blockState);
 	}
 
-	public static void initializeRecipes(RecipeManager manager) {
-		RECIPES = manager.getAllRecipesFor(RecipeTypeRegistry.ASTRAL_CRYSTAL_RECIPE_TYPE.get());
+	@Override
+	public void onPlace(BlockState state, Level level, BlockPos pos, BlockState oldState, boolean isMoving) {
+		super.onPlace(state, level, pos, oldState, isMoving);
+
+		RECIPES = level.getRecipeManager().getAllRecipesFor(RecipeTypeRegistry.ASTRAL_CRYSTAL_RECIPE_TYPE.get());
 	}
 
 	/**
@@ -150,7 +152,7 @@ public class AstralCrystalBlock extends AmethystClusterBlock implements EntityBl
 						if (primaryMaterialInInventory == 4) {
 							ItemStack itemStack = itemEntity.getItem();
 							if (recipe.getSecondaryMaterial().test(itemStack)) {
-								for (int i = 0; i <= recipe.getResultCount(); i++) {
+								for (int i = 0; i < recipe.getResultCount(); i++) {
 									level.addFreshEntity(new ItemEntity(level,
 											itemEntity.getX(), itemEntity.getY() + 0.5f, itemEntity.getZ(),
 											recipe.getResultItem()));
