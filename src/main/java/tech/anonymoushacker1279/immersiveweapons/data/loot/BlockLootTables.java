@@ -143,6 +143,7 @@ public class BlockLootTables implements LootTableSubProvider {
 		dropSelf(BlockRegistry.STARSTORM_CRYSTAL.get());
 		dropSelf(BlockRegistry.STARSTORM_BLOCK.get());
 		dropSelf(BlockRegistry.BIODOME_LIFE_SUPPORT_UNIT.get());
+		dropSelf(BlockRegistry.RUSTED_IRON_BLOCK.get());
 
 		for (Block block : BlockTagLists.TABLES) {
 			dropSelf(block);
