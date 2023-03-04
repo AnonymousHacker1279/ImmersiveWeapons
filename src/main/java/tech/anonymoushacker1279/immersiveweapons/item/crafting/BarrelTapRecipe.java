@@ -133,7 +133,7 @@ public record BarrelTapRecipe(ResourceLocation recipeId,
 		 *
 		 * @param recipeId the <code>ResourceLocation</code> for the recipe
 		 * @param json     the <code>JsonObject</code> instance
-		 * @return SmallPartsRecipe
+		 * @return BarrelTapRecipe
 		 */
 		@Override
 		public BarrelTapRecipe fromJson(ResourceLocation recipeId, JsonObject json) {

@@ -1,9 +1,11 @@
 {
   "values": [
-    "immersiveweapons:copper_leggings",
-    "immersiveweapons:cobalt_leggings",
     "immersiveweapons:molten_leggings",
+    "immersiveweapons:copper_leggings",
     "immersiveweapons:tesla_leggings",
-    "immersiveweapons:ventus_leggings"
+    "immersiveweapons:cobalt_leggings",
+    "immersiveweapons:ventus_leggings",
+    "immersiveweapons:astral_leggings",
+    "immersiveweapons:starstorm_leggings"
   ]
 }

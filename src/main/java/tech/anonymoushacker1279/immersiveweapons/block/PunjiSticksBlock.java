@@ -4,9 +4,11 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.*;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
@@ -20,7 +22,6 @@ import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
 
 public class PunjiSticksBlock extends Block implements SimpleWaterloggedBlock {
 
@@ -103,7 +104,7 @@ public class PunjiSticksBlock extends Block implements SimpleWaterloggedBlock {
 	public void entityInside(BlockState state, Level level, BlockPos pos, Entity entity) {
 		if (entity instanceof LivingEntity livingEntity) {
 			if (livingEntity.fallDistance >= 2.5f) {
-				int featherFallingLevel = GeneralUtilities.getFeatherFallingLevel(livingEntity);
+				int featherFallingLevel = getFeatherFallingLevel(livingEntity);
 				float damage = (livingEntity.fallDistance + 10f) *
 						(1.25f - (featherFallingLevel <= 4 ? featherFallingLevel * 0.25f : 1.0f));
 				livingEntity.hurt(fallDamageSource, damage);
@@ -115,5 +116,15 @@ public class PunjiSticksBlock extends Block implements SimpleWaterloggedBlock {
 
 			livingEntity.makeStuckInBlock(state, new Vec3(0.85F, 0.80D, 0.85F));
 		}
+	}
+
+	protected int getFeatherFallingLevel(LivingEntity entity) {
+		ItemStack boots = entity.getItemBySlot(EquipmentSlot.FEET);
+
+		if (EnchantmentHelper.getEnchantments(boots).containsKey(Enchantments.FALL_PROTECTION)) {
+			return EnchantmentHelper.getEnchantments(boots).getOrDefault(Enchantments.FALL_PROTECTION, 0);
+		}
+
+		return 0;
 	}
 }

@@ -13,7 +13,7 @@ public class MoltenShovel extends ShovelItem {
 	 * @param attackSpeedIn  attack speed
 	 * @param properties     the <code>Properties</code> for the item
 	 */
-	public MoltenShovel(Tier tier, int attackDamageIn, float attackSpeedIn, Properties properties) {
+	public MoltenShovel(Tier tier, float attackDamageIn, float attackSpeedIn, Properties properties) {
 		super(tier, attackDamageIn, attackSpeedIn, properties);
 	}
 

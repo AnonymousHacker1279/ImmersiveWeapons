@@ -1,6 +1,5 @@
 package tech.anonymoushacker1279.immersiveweapons.data.features;
 
-import net.minecraft.core.HolderGetter;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.worldgen.BootstapContext;
 import net.minecraft.data.worldgen.placement.PlacementUtils;
@@ -48,8 +47,6 @@ public class IWConfiguredFeatures {
 	}
 
 	public static void bootstrap(BootstapContext<ConfiguredFeature<?, ?>> context) {
-		HolderGetter<ConfiguredFeature<?, ?>> configuredFeatures = context.lookup(Registries.CONFIGURED_FEATURE);
-
 		register(context, PATCH_WOODEN_SPIKES_CONFIGURATION, Feature.BLOCK_PILE,
 				new BlockPileConfiguration(BlockStateProvider.simple(BlockRegistry.WOODEN_SPIKES.get()))
 		);

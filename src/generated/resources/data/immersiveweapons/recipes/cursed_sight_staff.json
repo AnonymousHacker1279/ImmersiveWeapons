@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "group": "cursed_sight_staff",
+  "key": {
+    "a": {
+      "item": "immersiveweapons:cursed_sight_staff_core"
+    },
+    "b": {
+      "item": "immersiveweapons:obsidian_rod"
+    }
+  },
+  "pattern": [
+    "a",
+    "b",
+    "b"
+  ],
+  "result": {
+    "item": "immersiveweapons:cursed_sight_staff"
+  }
+}

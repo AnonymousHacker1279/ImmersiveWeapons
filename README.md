@@ -2,10 +2,10 @@
 
 # Immersive Weapons for Minecraft
 
-![CodeQL](https://github.com/AnonymousHacker1279/ImmersiveWeapons/workflows/CodeQL/badge.svg)
 [![](http://cf.way2muchnoise.eu/full_494454_Downloads.svg)](https://www.curseforge.com/minecraft/mc-mods/immersive-weapons)
 [![](http://cf.way2muchnoise.eu/versions/494454.svg)](https://www.curseforge.com/minecraft/mc-mods/immersive-weapons)
 [![CodeFactor](https://www.codefactor.io/repository/github/anonymoushacker1279/immersiveweapons/badge/master)](https://www.codefactor.io/repository/github/anonymoushacker1279/immersiveweapons/overview/master)
+[![Discord](https://img.shields.io/discord/871953129355214858?color=2a3445)](https://discord.gg/WNMCTg7TsT)
 
 ## A weapons mod for Minecraft
 
@@ -99,8 +99,9 @@ looking for was merged into a newer release.
 
 ## Translations
 
-Translations other than English are generated automatically using
-my [Mr. Worldwide](https://github.com/AnonymousHacker1279/MrWorldwide) toolkit. Chances are that it's not completely
-accurate and needs refinements. I do not have the time nor will to refine these.
+Some translations other than English were generated automatically using
+my [Mr. Worldwide](https://github.com/AnonymousHacker1279/MrWorldwide) toolkit. They are probably not too accurate,
+and I don't have the time to fix them. I have not generated any other translations in a long time as the toolkit proved
+to be too unreliable.
 
-If you want to clean up the translations then go ahead and make a contribution. I appreciate it.
+If you want to clean up the translations then please go ahead and make a contribution. I appreciate it.

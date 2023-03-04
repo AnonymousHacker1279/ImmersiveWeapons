@@ -26,7 +26,7 @@ import tech.anonymoushacker1279.immersiveweapons.entity.GrantAdvancementOnDiscov
 import tech.anonymoushacker1279.immersiveweapons.entity.ai.goal.RangedGunAttackGoal;
 import tech.anonymoushacker1279.immersiveweapons.entity.neutral.FieldMedicEntity;
 import tech.anonymoushacker1279.immersiveweapons.entity.neutral.MinutemanEntity;
-import tech.anonymoushacker1279.immersiveweapons.entity.projectile.BulletEntity;
+import tech.anonymoushacker1279.immersiveweapons.entity.projectile.bullet.BulletEntity;
 import tech.anonymoushacker1279.immersiveweapons.init.ItemRegistry;
 import tech.anonymoushacker1279.immersiveweapons.init.SoundEventRegistry;
 import tech.anonymoushacker1279.immersiveweapons.item.projectile.arrow.AbstractArrowItem;

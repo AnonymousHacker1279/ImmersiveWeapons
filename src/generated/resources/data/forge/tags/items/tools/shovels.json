@@ -1,10 +1,11 @@
 {
   "values": [
-    "immersiveweapons:copper_shovel",
-    "immersiveweapons:cobalt_shovel",
     "immersiveweapons:molten_shovel",
+    "immersiveweapons:copper_shovel",
     "immersiveweapons:tesla_shovel",
+    "immersiveweapons:cobalt_shovel",
     "immersiveweapons:ventus_shovel",
-    "immersiveweapons:astral_shovel"
+    "immersiveweapons:astral_shovel",
+    "immersiveweapons:starstorm_shovel"
   ]
 }

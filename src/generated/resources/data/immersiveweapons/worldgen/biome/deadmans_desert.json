@@ -9,10 +9,15 @@
   "creature_spawn_probability": 0.85,
   "downfall": 0.0,
   "effects": {
-    "ambient_sound": "immersiveweapons:tiltros_ambient",
     "fog_color": 11422796,
     "foliage_color": 6242850,
     "grass_color": 6176026,
+    "music": {
+      "max_delay": 24000,
+      "min_delay": 6000,
+      "replace_current_music": true,
+      "sound": "immersiveweapons:deadmans_desert_music"
+    },
     "particle": {
       "options": {
         "type": "immersiveweapons:deadmans_desert_ambient"
@@ -85,7 +90,12 @@
     ]
   ],
   "precipitation": "none",
-  "spawn_costs": {},
+  "spawn_costs": {
+    "immersiveweapons:evil_eye": {
+      "charge": 0.15,
+      "energy_budget": 12.0
+    }
+  },
   "spawners": {
     "ambient": [],
     "axolotls": [],
@@ -97,6 +107,18 @@
         "maxCount": 1,
         "minCount": 1,
         "weight": 5
+      },
+      {
+        "type": "immersiveweapons:storm_creeper",
+        "maxCount": 1,
+        "minCount": 1,
+        "weight": 10
+      },
+      {
+        "type": "immersiveweapons:evil_eye",
+        "maxCount": 2,
+        "minCount": 1,
+        "weight": 7
       }
     ],
     "underground_water_creature": [],

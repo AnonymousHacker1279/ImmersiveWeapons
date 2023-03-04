@@ -5,10 +5,12 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.entity.ambient.FireflyEntity;
+import tech.anonymoushacker1279.immersiveweapons.entity.animal.StarWolfEntity;
 import tech.anonymoushacker1279.immersiveweapons.entity.monster.*;
 import tech.anonymoushacker1279.immersiveweapons.entity.monster.lava_revenant.LavaRevenantEntity;
 import tech.anonymoushacker1279.immersiveweapons.entity.neutral.AbstractFieldMedicEntity;
 import tech.anonymoushacker1279.immersiveweapons.entity.neutral.AbstractMinutemanEntity;
+import tech.anonymoushacker1279.immersiveweapons.entity.npc.SkygazerEntity;
 import tech.anonymoushacker1279.immersiveweapons.init.EntityRegistry;
 
 @EventBusSubscriber(modid = ImmersiveWeapons.MOD_ID, bus = EventBusSubscriber.Bus.MOD)
@@ -33,5 +35,9 @@ public class ModEventSubscriber {
 		event.put(EntityRegistry.CELESTIAL_TOWER_ENTITY.get(), CelestialTowerEntity.registerAttributes().build());
 		event.put(EntityRegistry.STARMITE_ENTITY.get(), StarmiteEntity.createAttributes().build());
 		event.put(EntityRegistry.FIREFLY_ENTITY.get(), FireflyEntity.createAttributes().build());
+		event.put(EntityRegistry.STORM_CREEPER_ENTITY.get(), StormCreeperEntity.createAttributes().build());
+		event.put(EntityRegistry.EVIL_EYE_ENTITY.get(), EvilEyeEntity.registerAttributes().build());
+		event.put(EntityRegistry.STAR_WOLF_ENTITY.get(), StarWolfEntity.createAttributes().build());
+		event.put(EntityRegistry.SKYGAZER_ENTITY.get(), SkygazerEntity.createMobAttributes().build());
 	}
 }

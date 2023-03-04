@@ -26,6 +26,7 @@ import org.jetbrains.annotations.Nullable;
 import tech.anonymoushacker1279.immersiveweapons.block.LandmineBlock;
 import tech.anonymoushacker1279.immersiveweapons.block.SandbagBlock;
 import tech.anonymoushacker1279.immersiveweapons.block.misc.warrior_statue.WarriorStatueTorso;
+import tech.anonymoushacker1279.immersiveweapons.data.models.lists.BlockLists;
 import tech.anonymoushacker1279.immersiveweapons.data.tags.lists.BlockTagLists;
 import tech.anonymoushacker1279.immersiveweapons.init.*;
 
@@ -110,11 +111,6 @@ public class BlockLootTables implements LootTableSubProvider {
 		dropSelf(BlockRegistry.WARRIOR_STATUE_BASE.get());
 		dropSelf(BlockRegistry.WARRIOR_STATUE_HEAD.get());
 		dropSelf(BlockRegistry.WOODEN_SPIKES.get());
-		dropSelf(BlockRegistry.MINUTEMAN_HEAD.get());
-		dropSelf(BlockRegistry.FIELD_MEDIC_HEAD.get());
-		dropSelf(BlockRegistry.DYING_SOLDIER_HEAD.get());
-		dropSelf(BlockRegistry.WANDERING_WARRIOR_HEAD.get());
-		dropSelf(BlockRegistry.HANS_HEAD.get());
 		dropSelf(BlockRegistry.MOONGLOW.get());
 		dropSelf(BlockRegistry.STARDUST_LOG.get());
 		dropSelf(BlockRegistry.STARDUST_WOOD.get());
@@ -147,8 +143,13 @@ public class BlockLootTables implements LootTableSubProvider {
 		dropSelf(BlockRegistry.STARSTORM_CRYSTAL.get());
 		dropSelf(BlockRegistry.STARSTORM_BLOCK.get());
 		dropSelf(BlockRegistry.BIODOME_LIFE_SUPPORT_UNIT.get());
+		dropSelf(BlockRegistry.RUSTED_IRON_BLOCK.get());
 
 		for (Block block : BlockTagLists.TABLES) {
+			dropSelf(block);
+		}
+
+		for (Block block : BlockLists.headBlocks) {
 			dropSelf(block);
 		}
 

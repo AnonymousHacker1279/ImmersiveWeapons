@@ -14,28 +14,14 @@ public abstract class AbstractArrowItem extends ArrowItem {
 
 	public double damage;
 
-	/**
-	 * Constructor for AbstractArrowItem.
-	 *
-	 * @param properties the <code>Properties</code> for the item
-	 * @param damageIn   the damage to deal on impact
-	 */
 	protected AbstractArrowItem(Properties properties, double damageIn) {
 		super(properties);
 		damage = damageIn;
 	}
 
-	/**
-	 * Create an arrow item.
-	 *
-	 * @param worldIn the <code>World</code> the shooter is in
-	 * @param stack   the <code>ItemStack</code> being shot
-	 * @param shooter the <code>LivingEntity</code> shooting the arrow
-	 * @return AbstractArrow
-	 */
 	@Override
-	public AbstractArrow createArrow(Level worldIn, ItemStack stack, LivingEntity shooter) {
-		AbstractArrow arrowEntity = new Arrow(worldIn, shooter);
+	public AbstractArrow createArrow(Level level, ItemStack stack, LivingEntity shooter) {
+		AbstractArrow arrowEntity = new Arrow(level, shooter);
 		arrowEntity.setBaseDamage(damage);
 		arrowEntity.setOwner(shooter);
 		return arrowEntity;

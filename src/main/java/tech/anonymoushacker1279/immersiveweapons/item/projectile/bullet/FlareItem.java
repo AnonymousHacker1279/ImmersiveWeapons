@@ -3,8 +3,7 @@ package tech.anonymoushacker1279.immersiveweapons.item.projectile.bullet;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.projectile.AbstractArrow.Pickup;
 import net.minecraft.world.level.Level;
-import tech.anonymoushacker1279.immersiveweapons.entity.projectile.BulletEntities;
-import tech.anonymoushacker1279.immersiveweapons.entity.projectile.BulletEntities.FlareEntity;
+import tech.anonymoushacker1279.immersiveweapons.entity.projectile.FlareEntity;
 import tech.anonymoushacker1279.immersiveweapons.init.SoundEventRegistry;
 
 public class FlareItem extends AbstractBulletItem {
@@ -28,7 +27,7 @@ public class FlareItem extends AbstractBulletItem {
 	 * @return FlareEntity
 	 */
 	@Override
-	public BulletEntities.FlareEntity createBullet(Level level, LivingEntity shooter) {
+	public FlareEntity createBullet(Level level, LivingEntity shooter) {
 		FlareEntity flareEntity = new FlareEntity(shooter, level);
 		flareEntity.setBaseDamage(damage);
 		flareEntity.pickup = Pickup.DISALLOWED;

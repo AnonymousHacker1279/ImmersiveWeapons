@@ -13,6 +13,6 @@ public class CustomPotion extends Potion {
 	public String getName(String prefix) {
 		prefix = prefix.replace("item.minecraft.", "")
 				.replace(".effect", "");
-		return super.getName("potion.immersiveweapons." + prefix);
+		return super.getName("item.immersiveweapons." + prefix);
 	}
 }

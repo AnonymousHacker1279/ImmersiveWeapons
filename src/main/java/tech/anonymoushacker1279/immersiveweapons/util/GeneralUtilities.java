@@ -1,18 +1,9 @@
 package tech.anonymoushacker1279.immersiveweapons.util;
 
-import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.tags.TagKey;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.item.*;
-import net.minecraft.world.item.enchantment.EnchantmentHelper;
-import net.minecraft.world.item.enchantment.Enchantments;
-import net.minecraft.world.level.biome.Biome;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.StainedGlassBlock;
-import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
 import net.minecraftforge.registries.ForgeRegistries;
-import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 
 import java.util.Objects;
 import java.util.UUID;
@@ -27,8 +18,8 @@ public class GeneralUtilities {
 	/**
 	 * Get a random number between a minimum and maximum.
 	 *
-	 * @param min minimum number
-	 * @param max maximum number
+	 * @param min minimum number (inclusive)
+	 * @param max maximum number (not inclusive)
 	 * @return float
 	 */
 	public static float getRandomNumber(float min, float max) {
@@ -38,8 +29,8 @@ public class GeneralUtilities {
 	/**
 	 * Get a random number between a minimum and maximum.
 	 *
-	 * @param min minimum number
-	 * @param max maximum number
+	 * @param min minimum number (inclusive)
+	 * @param max maximum number (not inclusive)
 	 * @return double
 	 */
 	public static double getRandomNumber(double min, double max) {
@@ -49,8 +40,8 @@ public class GeneralUtilities {
 	/**
 	 * Get a random number between a minimum and maximum.
 	 *
-	 * @param min minimum number
-	 * @param max maximum number
+	 * @param min minimum number (inclusive)
+	 * @param max maximum number (not inclusive)
 	 * @return int
 	 */
 	public static int getRandomNumber(int min, int max) {
@@ -58,59 +49,25 @@ public class GeneralUtilities {
 	}
 
 	/**
-	 * Create a stained-glass block from a color.
+	 * Convert an integer to a Roman numeral.
 	 *
-	 * @param color      the <code>DyeColor</code>
-	 * @param properties the <code>Properties</code> for the block
-	 * @return StainedGlassBlock
+	 * @param number the integer to convert
+	 * @return the Roman numeral
 	 */
-	public static StainedGlassBlock createStainedGlassFromColor(DyeColor color, Properties properties) {
-		return new StainedGlassBlock(color, properties);
-	}
-
-	public static boolean hasFeatherFalling(LivingEntity entity) {
-		ItemStack boots = entity.getArmorSlots().iterator().next();
-		return EnchantmentHelper.getEnchantments(boots).containsKey(Enchantments.FALL_PROTECTION);
-	}
-
-	public static int getFeatherFallingLevel(LivingEntity entity) {
-		ItemStack boots = entity.getArmorSlots().iterator().next();
-		if (hasFeatherFalling(entity)) {
-			return EnchantmentHelper.getEnchantments(boots).getOrDefault(Enchantments.FALL_PROTECTION, 0);
+	public static String convertToRoman(int number) {
+		if (number < 1 || number > 3999) {
+			throw new IllegalArgumentException("Number must be between 1 and 3999.");
 		}
-		return 0;
-	}
 
-	/**
-	 * Helper method for creating a biome tag for containing biomes.
-	 *
-	 * @param tag a string to be used for the tag
-	 */
-	public static TagKey<Biome> createBiomeTag(String tag) {
-		return createBiomeTagInternal(ImmersiveWeapons.MOD_ID + ":" + tag);
-	}
+		String[] thousands = {"", "M", "MM", "MMM"};
+		String[] hundreds = {"", "C", "CC", "CCC", "CD", "D", "DC", "DCC", "DCCC", "CM"};
+		String[] tens = {"", "X", "XX", "XXX", "XL", "L", "LX", "LXX", "LXXX", "XC"};
+		String[] ones = {"", "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX"};
 
-	/**
-	 * Helper method for creating a biome tag for containing biomes.
-	 *
-	 * @param modID a mod ID containing the tag
-	 * @param tag   a string to be used for the tag
-	 */
-	public static TagKey<Biome> createBiomeTag(String modID, String tag) {
-		return createBiomeTagInternal(modID + ":" + tag);
-	}
-
-	/**
-	 * Helper method for creating a biome tag for containing structures.
-	 *
-	 * @param tag a string to be used for the tag
-	 */
-	public static TagKey<Biome> createStructureTag(String tag) {
-		return createBiomeTagInternal(ImmersiveWeapons.MOD_ID + ":has_structure/" + tag);
-	}
-
-	private static TagKey<Biome> createBiomeTagInternal(String pName) {
-		return TagKey.create(Registries.BIOME, new ResourceLocation(pName));
+		return thousands[number / 1000] +
+				hundreds[(number % 1000) / 100] +
+				tens[(number % 100) / 10] +
+				ones[number % 10];
 	}
 
 	/**

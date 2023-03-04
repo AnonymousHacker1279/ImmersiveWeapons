@@ -12,8 +12,8 @@ public class HoverGoal extends Goal {
 	private int floatDownTimer = 40;
 
 	public HoverGoal(Mob pMob) {
-		this.mob = pMob;
-		this.setFlags(EnumSet.of(Goal.Flag.JUMP));
+		mob = pMob;
+		setFlags(EnumSet.of(Goal.Flag.JUMP));
 	}
 
 	/**
@@ -31,11 +31,11 @@ public class HoverGoal extends Goal {
 	@Override
 	public void tick() {
 		if (flyUpTimer > 0 && floatDownTimer == 40) {
-			this.mob.setDeltaMovement(0, 0.03f, 0);
+			mob.setDeltaMovement(0, 0.03f, 0);
 			flyUpTimer--;
 		} else {
 			if (floatDownTimer <= 40 && floatDownTimer > 0) {
-				this.mob.setDeltaMovement(0, -0.03f, 0);
+				mob.setDeltaMovement(0, -0.03f, 0);
 				floatDownTimer--;
 			} else {
 				floatDownTimer = 40;

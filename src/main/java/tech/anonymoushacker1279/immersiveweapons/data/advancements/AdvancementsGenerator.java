@@ -5,7 +5,6 @@ import net.minecraft.advancements.*;
 import net.minecraft.advancements.Advancement.Builder;
 import net.minecraft.advancements.critereon.*;
 import net.minecraft.advancements.critereon.EntityPredicate.Composite;
-import net.minecraft.core.HolderLookup;
 import net.minecraft.core.HolderLookup.Provider;
 import net.minecraft.data.PackOutput;
 import net.minecraft.network.chat.Component;
@@ -32,7 +31,7 @@ import java.util.function.Consumer;
 public class AdvancementsGenerator extends ForgeAdvancementProvider {
 
 	public AdvancementsGenerator(PackOutput output, CompletableFuture<Provider> provider, ExistingFileHelper exFileHelper) {
-		super(output, provider, exFileHelper, List.of(AdvancementsGenerator::registerAdvancements));
+		super(output, provider, exFileHelper, List.of((lookup, consumer, existingFileHelper) -> registerAdvancements(consumer)));
 	}
 
 	/**
@@ -40,7 +39,7 @@ public class AdvancementsGenerator extends ForgeAdvancementProvider {
 	 *
 	 * @param consumer the <code>Consumer</code> extending Advancement
 	 */
-	public static void registerAdvancements(HolderLookup.Provider lookup, Consumer<Advancement> consumer, ExistingFileHelper existingFileHelper) {
+	public static void registerAdvancements(Consumer<Advancement> consumer) {
 		// Root advancement
 		Advancement root = Builder.advancement()
 				.display(ItemRegistry.TESLA_SWORD.get(),
@@ -1090,6 +1089,18 @@ public class AdvancementsGenerator extends ForgeAdvancementProvider {
 				.addCriterion("discover_starmite", new TriggerInstance(
 						Composite.ANY,
 						EntityRegistry.STARMITE_ENTITY.getId()))
+				.addCriterion("discover_storm_creeper", new TriggerInstance(
+						Composite.ANY,
+						EntityRegistry.STORM_CREEPER_ENTITY.getId()))
+				.addCriterion("discover_evil_eye", new TriggerInstance(
+						Composite.ANY,
+						EntityRegistry.EVIL_EYE_ENTITY.getId()))
+				.addCriterion("discover_star_wolf", new TriggerInstance(
+						Composite.ANY,
+						EntityRegistry.STAR_WOLF_ENTITY.getId()))
+				.addCriterion("discover_skygazer", new TriggerInstance(
+						Composite.ANY,
+						EntityRegistry.SKYGAZER_ENTITY.getId()))
 				.rewards(AdvancementRewards.Builder.experience(150))
 				.save(consumer, "immersiveweapons:entity_discovery");
 
@@ -1181,6 +1192,50 @@ public class AdvancementsGenerator extends ForgeAdvancementProvider {
 				.rewards(AdvancementRewards.Builder.experience(20))
 				.save(consumer, "immersiveweapons:discover_starmite");
 
+		Builder.advancement().parent(entity_discovery)
+				.display(BlockItemRegistry.STORM_CREEPER_HEAD_ITEM.get(),
+						Component.translatable("advancements.immersiveweapons.discover_storm_creeper.title"),
+						Component.translatable("advancements.immersiveweapons.discover_storm_creeper.description"),
+						null, FrameType.TASK, true, true, false)
+				.addCriterion("discover", new TriggerInstance(
+						Composite.ANY,
+						EntityRegistry.STORM_CREEPER_ENTITY.getId()))
+				.rewards(AdvancementRewards.Builder.experience(20))
+				.save(consumer, "immersiveweapons:discover_storm_creeper");
+
+		Builder.advancement().parent(entity_discovery)
+				.display(ItemRegistry.BROKEN_LENS.get(),
+						Component.translatable("advancements.immersiveweapons.discover_evil_eye.title"),
+						Component.translatable("advancements.immersiveweapons.discover_evil_eye.description"),
+						null, FrameType.TASK, true, true, false)
+				.addCriterion("discover", new TriggerInstance(
+						Composite.ANY,
+						EntityRegistry.EVIL_EYE_ENTITY.getId()))
+				.rewards(AdvancementRewards.Builder.experience(20))
+				.save(consumer, "immersiveweapons:discover_evil_eye");
+
+		Builder.advancement().parent(entity_discovery)
+				.display(Items.BONE,
+						Component.translatable("advancements.immersiveweapons.discover_star_wolf.title"),
+						Component.translatable("advancements.immersiveweapons.discover_star_wolf.description"),
+						null, FrameType.TASK, true, true, false)
+				.addCriterion("discover", new TriggerInstance(
+						Composite.ANY,
+						EntityRegistry.STAR_WOLF_ENTITY.getId()))
+				.rewards(AdvancementRewards.Builder.experience(20))
+				.save(consumer, "immersiveweapons:discover_star_wolf");
+
+		Builder.advancement().parent(entity_discovery)
+				.display(Items.BOOK,
+						Component.translatable("advancements.immersiveweapons.discover_skygazer.title"),
+						Component.translatable("advancements.immersiveweapons.discover_skygazer.description"),
+						null, FrameType.TASK, true, true, false)
+				.addCriterion("discover", new TriggerInstance(
+						Composite.ANY,
+						EntityRegistry.SKYGAZER_ENTITY.getId()))
+				.rewards(AdvancementRewards.Builder.experience(20))
+				.save(consumer, "immersiveweapons:discover_skygazer");
+
 		Advancement celestial_tower_discovery = Builder.advancement().parent(entity_discovery)
 				.display(ItemRegistry.CELESTIAL_FRAGMENT.get(),
 						Component.translatable("advancements.immersiveweapons.discover_celestial_tower.title"),
@@ -1201,6 +1256,26 @@ public class AdvancementsGenerator extends ForgeAdvancementProvider {
 						InventoryChangeTrigger.TriggerInstance.hasItems(BlockItemRegistry.CELESTIAL_LANTERN_ITEM.get()))
 				.rewards(AdvancementRewards.Builder.experience(50))
 				.save(consumer, "immersiveweapons:celestial_lantern");
+
+		Builder.advancement().parent(celestial_tower_discovery)
+				.display(ItemRegistry.METEOR_STAFF.get(),
+						Component.translatable("advancements.immersiveweapons.meteor_staff.title"),
+						Component.translatable("advancements.immersiveweapons.meteor_staff.description"),
+						null, FrameType.CHALLENGE, true, true, false)
+				.addCriterion("hold",
+						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.METEOR_STAFF.get()))
+				.rewards(AdvancementRewards.Builder.experience(75))
+				.save(consumer, "immersiveweapons:meteor_staff");
+
+		Builder.advancement().parent(celestial_tower_discovery)
+				.display(ItemRegistry.CURSED_SIGHT_STAFF.get(),
+						Component.translatable("advancements.immersiveweapons.cursed_sight_staff.title"),
+						Component.translatable("advancements.immersiveweapons.cursed_sight_staff.description"),
+						null, FrameType.CHALLENGE, true, true, false)
+				.addCriterion("hold",
+						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.CURSED_SIGHT_STAFF.get()))
+				.rewards(AdvancementRewards.Builder.experience(75))
+				.save(consumer, "immersiveweapons:cursed_sight_staff");
 
 		// Other advancements
 		Builder.advancement().parent(root)

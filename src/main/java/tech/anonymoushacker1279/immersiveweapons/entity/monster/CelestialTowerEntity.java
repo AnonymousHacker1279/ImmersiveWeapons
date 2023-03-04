@@ -25,8 +25,7 @@ import org.jetbrains.annotations.Nullable;
 import tech.anonymoushacker1279.immersiveweapons.block.decoration.CelestialLanternBlock;
 import tech.anonymoushacker1279.immersiveweapons.config.CommonConfig;
 import tech.anonymoushacker1279.immersiveweapons.entity.GrantAdvancementOnDiscovery;
-import tech.anonymoushacker1279.immersiveweapons.entity.ai.goal.CelestialTowerSummonGoal;
-import tech.anonymoushacker1279.immersiveweapons.entity.ai.goal.HoverGoal;
+import tech.anonymoushacker1279.immersiveweapons.entity.ai.goal.*;
 import tech.anonymoushacker1279.immersiveweapons.init.SoundEventRegistry;
 import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
 
@@ -61,6 +60,7 @@ public class CelestialTowerEntity extends Monster implements GrantAdvancementOnD
 		goalSelector.addGoal(1, new FloatGoal(this));
 		goalSelector.addGoal(1, new HoverGoal(this));
 		goalSelector.addGoal(2, new CelestialTowerSummonGoal(this));
+		goalSelector.addGoal(3, new CelestialTowerSummonMeteorGoal(this));
 		goalSelector.addGoal(6, new RandomLookAroundGoal(this));
 	}
 

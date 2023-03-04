@@ -31,8 +31,7 @@ import tech.anonymoushacker1279.immersiveweapons.client.IWKeyBinds;
 import tech.anonymoushacker1279.immersiveweapons.client.gui.IWOverlays;
 import tech.anonymoushacker1279.immersiveweapons.client.gui.screen.SmallPartsTableScreen;
 import tech.anonymoushacker1279.immersiveweapons.client.gui.screen.TeslaSynthesizerScreen;
-import tech.anonymoushacker1279.immersiveweapons.client.model.CelestialTowerModel;
-import tech.anonymoushacker1279.immersiveweapons.client.model.FireflyModel;
+import tech.anonymoushacker1279.immersiveweapons.client.model.*;
 import tech.anonymoushacker1279.immersiveweapons.client.particle.*;
 import tech.anonymoushacker1279.immersiveweapons.client.particle.bullet_impact.BulletImpactParticle;
 import tech.anonymoushacker1279.immersiveweapons.client.particle.smoke_grenade.SmokeGrenadeParticle;
@@ -58,6 +57,8 @@ public class ClientModEventSubscriber {
 			BlockRegistry.WANDERING_WARRIOR_HEAD.getId(), "main");
 	private static final ModelLayerLocation HANS_HEAD_LAYER = new ModelLayerLocation(
 			BlockRegistry.HANS_HEAD.getId(), "main");
+	private static final ModelLayerLocation STORM_CREEPER_HEAD_LAYER = new ModelLayerLocation(
+			BlockRegistry.STORM_CREEPER_HEAD.getId(), "main");
 
 	/**
 	 * Event handler for the FMLClientSetupEvent.
@@ -83,6 +84,8 @@ public class ClientModEventSubscriber {
 					"textures/entity/heads/wandering_warrior.png"));
 			SkullBlockRenderer.SKIN_BY_TYPE.put(CustomSkullTypes.HANS, new ResourceLocation(ImmersiveWeapons.MOD_ID,
 					"textures/entity/heads/hans.png"));
+			SkullBlockRenderer.SKIN_BY_TYPE.put(CustomSkullTypes.STORM_CREEPER, new ResourceLocation(ImmersiveWeapons.MOD_ID,
+					"textures/entity/heads/storm_creeper.png"));
 
 			Sheets.addWoodType(WoodTypes.BURNED_OAK);
 			Sheets.addWoodType(WoodTypes.STARDUST);
@@ -207,7 +210,12 @@ public class ClientModEventSubscriber {
 		event.registerEntityRenderer(EntityRegistry.CELESTIAL_TOWER_ENTITY.get(), CelestialTowerRenderer::new);
 		event.registerEntityRenderer(EntityRegistry.STARMITE_ENTITY.get(), StarmiteRenderer::new);
 		event.registerEntityRenderer(EntityRegistry.FIREFLY_ENTITY.get(), FireflyRenderer::new);
-		event.registerBlockEntityRenderer(BlockEntityRegistry.WALL_SHELF_BLOCK_ENTITY.get(), context -> new ShelfRenderer());
+		event.registerEntityRenderer(EntityRegistry.METEOR_ENTITY.get(), MeteorRenderer::new);
+		event.registerEntityRenderer(EntityRegistry.STORM_CREEPER_ENTITY.get(), StormCreeperRenderer::new);
+		event.registerEntityRenderer(EntityRegistry.EVIL_EYE_ENTITY.get(), EvilEyeRenderer::new);
+		event.registerEntityRenderer(EntityRegistry.STAR_WOLF_ENTITY.get(), StarWolfRenderer::new);
+		event.registerEntityRenderer(EntityRegistry.SKYGAZER_ENTITY.get(), SkygazerRenderer::new);
+		event.registerBlockEntityRenderer(BlockEntityRegistry.SHELF_BLOCK_ENTITY.get(), context -> new ShelfRenderer());
 		event.registerBlockEntityRenderer(BlockEntityRegistry.BURNED_OAK_SIGN_ENTITY.get(), SignRenderer::new);
 		event.registerBlockEntityRenderer(BlockEntityRegistry.CUSTOM_SKULL_BLOCK_ENTITY.get(), SkullBlockRenderer::new);
 		event.registerBlockEntityRenderer(BlockEntityRegistry.STARDUST_SIGN_ENTITY.get(), SignRenderer::new);
@@ -225,11 +233,14 @@ public class ClientModEventSubscriber {
 
 		event.registerLayerDefinition(CelestialTowerModel.LAYER_LOCATION, CelestialTowerModel::createBodyLayer);
 		event.registerLayerDefinition(FireflyModel.LAYER_LOCATION, FireflyModel::createBodyLayer);
+		event.registerLayerDefinition(MeteorModel.LAYER_LOCATION, MeteorModel::createBodyLayer);
+		event.registerLayerDefinition(EvilEyeModel.LAYER_LOCATION, EvilEyeModel::createBodyLayer);
 		event.registerLayerDefinition(MINUTEMAN_HEAD_LAYER, SkullModel::createMobHeadLayer);
 		event.registerLayerDefinition(FIELD_MEDIC_HEAD_LAYER, SkullModel::createMobHeadLayer);
 		event.registerLayerDefinition(DYING_SOLDIER_HEAD_LAYER, SkullModel::createMobHeadLayer);
 		event.registerLayerDefinition(WANDERING_WARRIOR_HEAD_LAYER, SkullModel::createMobHeadLayer);
 		event.registerLayerDefinition(HANS_HEAD_LAYER, SkullModel::createMobHeadLayer);
+		event.registerLayerDefinition(STORM_CREEPER_HEAD_LAYER, SkullModel::createMobHeadLayer);
 	}
 
 	/**
@@ -262,6 +273,8 @@ public class ClientModEventSubscriber {
 				.bakeLayer(WANDERING_WARRIOR_HEAD_LAYER)));
 		event.registerSkullModel(CustomSkullTypes.HANS, new SkullModel(event.getEntityModelSet()
 				.bakeLayer(HANS_HEAD_LAYER)));
+		event.registerSkullModel(CustomSkullTypes.STORM_CREEPER, new SkullModel(event.getEntityModelSet()
+				.bakeLayer(STORM_CREEPER_HEAD_LAYER)));
 	}
 
 	@SubscribeEvent

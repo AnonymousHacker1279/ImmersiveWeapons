@@ -6,13 +6,17 @@
       "minecraft:canyon"
     ]
   },
-  "creature_spawn_probability": 0.75,
   "downfall": 0.0,
   "effects": {
-    "ambient_sound": "immersiveweapons:starlight_plains_ambient",
     "fog_color": 2830199,
     "foliage_color": 13885404,
     "grass_color": 12312020,
+    "music": {
+      "max_delay": 24000,
+      "min_delay": 6000,
+      "replace_current_music": true,
+      "sound": "immersiveweapons:starlight_plains_music"
+    },
     "sky_color": 461620,
     "water_color": 16316908,
     "water_fog_color": 13356221
@@ -24,7 +28,8 @@
       "minecraft:lake_lava_surface"
     ],
     [
-      "minecraft:amethyst_geode"
+      "minecraft:amethyst_geode",
+      "minecraft:forest_rock"
     ],
     [
       "minecraft:monster_room",
@@ -75,18 +80,33 @@
     ]
   ],
   "precipitation": "none",
-  "spawn_costs": {},
+  "spawn_costs": {
+    "immersiveweapons:firefly": {
+      "charge": 0.01,
+      "energy_budget": 15.0
+    },
+    "immersiveweapons:star_wolf": {
+      "charge": 0.1,
+      "energy_budget": 7.0
+    }
+  },
   "spawners": {
-    "ambient": [
+    "ambient": [],
+    "axolotls": [],
+    "creature": [
       {
         "type": "immersiveweapons:firefly",
         "maxCount": 4,
         "minCount": 1,
-        "weight": 100
+        "weight": 10
+      },
+      {
+        "type": "immersiveweapons:star_wolf",
+        "maxCount": 2,
+        "minCount": 1,
+        "weight": 2
       }
     ],
-    "axolotls": [],
-    "creature": [],
     "misc": [],
     "monster": [],
     "underground_water_creature": [],

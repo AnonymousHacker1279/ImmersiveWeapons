@@ -18,7 +18,7 @@ public class CommonConfig {
 
 	// Celestial Tower
 	public static ForgeConfigSpec.ConfigValue<Integer> CELESTIAL_TOWER_SPAWN_CHECK_RADIUS;
-	public static ForgeConfigSpec.ConfigValue<Float> CELESTIAL_TOWER_MINIONS_WAVE_SIZE_MODIFIER;
+	public static ForgeConfigSpec.ConfigValue<Double> CELESTIAL_TOWER_MINIONS_WAVE_SIZE_MODIFIER;
 
 	// Weapon settings
 
@@ -26,16 +26,24 @@ public class CommonConfig {
 	public static ForgeConfigSpec.ConfigValue<Double> GUN_CRIT_CHANCE;
 
 	// Flintlock Pistol
-	public static ForgeConfigSpec.ConfigValue<Float> FLINTLOCK_PISTOL_FIRE_VELOCITY;
-	public static ForgeConfigSpec.ConfigValue<Float> FLINTLOCK_PISTOL_FIRE_INACCURACY;
+	public static ForgeConfigSpec.ConfigValue<Double> FLINTLOCK_PISTOL_FIRE_VELOCITY;
+	public static ForgeConfigSpec.ConfigValue<Double> FLINTLOCK_PISTOL_FIRE_INACCURACY;
 
 	// Blunderbuss
-	public static ForgeConfigSpec.ConfigValue<Float> BLUNDERBUSS_FIRE_VELOCITY;
-	public static ForgeConfigSpec.ConfigValue<Float> BLUNDERBUSS_FIRE_INACCURACY;
+	public static ForgeConfigSpec.ConfigValue<Double> BLUNDERBUSS_FIRE_VELOCITY;
+	public static ForgeConfigSpec.ConfigValue<Double> BLUNDERBUSS_FIRE_INACCURACY;
 
 	// Musket
-	public static ForgeConfigSpec.ConfigValue<Float> MUSKET_FIRE_VELOCITY;
-	public static ForgeConfigSpec.ConfigValue<Float> MUSKET_FIRE_INACCURACY;
+	public static ForgeConfigSpec.ConfigValue<Double> MUSKET_FIRE_VELOCITY;
+	public static ForgeConfigSpec.ConfigValue<Double> MUSKET_FIRE_INACCURACY;
+
+	// Meteor Staff
+	public static ForgeConfigSpec.ConfigValue<Integer> METEOR_STAFF_MAX_USE_RANGE;
+	public static ForgeConfigSpec.ConfigValue<Double> METEOR_STAFF_EXPLOSION_RADIUS;
+	public static ForgeConfigSpec.ConfigValue<Boolean> METEOR_STAFF_EXPLOSION_BREAK_BLOCKS;
+
+	// Cursed Sight Staff
+	public static ForgeConfigSpec.ConfigValue<Integer> CURSED_SIGHT_STAFF_MAX_USE_RANGE;
 
 	CommonConfig(ForgeConfigSpec.Builder builder) {
 		builder.push("Server Configuration");
@@ -63,16 +71,16 @@ public class CommonConfig {
 		builder.push("Celestial Tower");
 		CELESTIAL_TOWER_SPAWN_CHECK_RADIUS = builder
 				.comment("Set the spawn checking radius for the Celestial Tower.\n" +
-						"Setting this higher may slightly negatively impact server ticks in Tiltros, but make Celestial Lanterns more effective - Default 128")
+						"Higher values increase the effectiveness of Celestial Lanterns - Default 256")
 				.translation("config.immersiveweapons.celestial_tower_spawn_check_radius")
-				.define("celestial_tower_spawn_checking_radius", 128);
+				.define("celestial_tower_spawn_checking_radius", 256);
 		CELESTIAL_TOWER_MINIONS_WAVE_SIZE_MODIFIER = builder
 				.comment("""
 						Multiplier to change the wave size from Celestial Tower summons.
 						Set less than 1 to reduce, greater than 1 to increase.
 						Increasing the wave size will negatively affect the server ticks in Tiltros. - Default 1.0""")
 				.translation("config.immersiveweapons.celestial_tower_minions_wave_size_modifier")
-				.define("celestial_tower_wave_size_modifier", 1.0F);
+				.define("celestial_tower_wave_size_modifier", 1.0D);
 		builder.pop();
 
 		builder.pop();
@@ -90,34 +98,55 @@ public class CommonConfig {
 		FLINTLOCK_PISTOL_FIRE_VELOCITY = builder
 				.comment("Set the velocity of bullets fired by the Flintlock Pistol - Default 2.5")
 				.translation("config.immersiveweapons.flintlock_pistol_fire_velocity")
-				.define("flintlock_pistol_fire_velocity", 2.5f);
+				.define("flintlock_pistol_fire_velocity", 2.5D);
 		FLINTLOCK_PISTOL_FIRE_INACCURACY = builder
 				.comment("Set the inaccuracy of bullets fired by the Flintlock Pistol - Default 1.75")
 				.translation("config.immersiveweapons.flintlock_pistol_fire_inaccuracy")
-				.define("flintlock_pistol_fire_inaccuracy", 1.75f);
+				.define("flintlock_pistol_fire_inaccuracy", 1.75D);
 		builder.pop();
 
 		builder.push("Blunderbuss");
 		BLUNDERBUSS_FIRE_VELOCITY = builder
 				.comment("Set the velocity of bullets fired by the Blunderbuss - Default 1.7")
 				.translation("config.immersiveweapons.blunderbuss_fire_velocity")
-				.define("blunderbuss_fire_velocity", 1.7f);
+				.define("blunderbuss_fire_velocity", 1.7D);
 		BLUNDERBUSS_FIRE_INACCURACY = builder
 				.comment("Set the inaccuracy of bullets fired by the Blunderbuss - Default 2.0")
 				.translation("config.immersiveweapons.blunderbuss_fire_inaccuracy")
-				.define("blunderbuss_fire_inaccuracy", 2.0f);
+				.define("blunderbuss_fire_inaccuracy", 2.0D);
 		builder.pop();
 
 		builder.push("Musket");
 		MUSKET_FIRE_VELOCITY = builder
 				.comment("Set the velocity of bullets fired by the Musket - Default 4.0")
 				.translation("config.immersiveweapons.musket_fire_velocity")
-				.define("musket_fire_velocity", 4.0f);
+				.define("musket_fire_velocity", 4.0D);
 		MUSKET_FIRE_INACCURACY = builder
 				.comment("Set the inaccuracy of bullets fired by the Musket - Default 0.15")
 				.translation("config.immersiveweapons.musket_fire_inaccuracy")
-				.define("musket_fire_inaccuracy", 0.15f);
+				.define("musket_fire_inaccuracy", 0.15D);
 		builder.pop();
+
+		builder.push("Meteor Staff");
+		METEOR_STAFF_MAX_USE_RANGE = builder
+				.comment("Set the maximum range in blocks of the Meteor Staff - Default 100")
+				.translation("config.immersiveweapons.meteor_staff_max_use_range")
+				.defineInRange("meteor_staff_max_use_range", 100, 0, Integer.MAX_VALUE);
+		METEOR_STAFF_EXPLOSION_RADIUS = builder
+				.comment("Set the radius of the explosion created by the Meteor Staff - Default 3.0")
+				.translation("config.immersiveweapons.meteor_staff_explosion_radius")
+				.defineInRange("meteor_staff_explosion_radius", 3.0D, 0.0D, Double.MAX_VALUE);
+		METEOR_STAFF_EXPLOSION_BREAK_BLOCKS = builder
+				.comment("Set whether the Meteor Staff explosion breaks blocks - Default false")
+				.translation("config.immersiveweapons.meteor_staff_explosion_break_blocks")
+				.define("meteor_staff_explosion_break_blocks", false);
+		builder.pop();
+
+		builder.push("Cursed Sight Staff");
+		CURSED_SIGHT_STAFF_MAX_USE_RANGE = builder
+				.comment("Set the maximum range in blocks of the Cursed Sight Staff - Default 50")
+				.translation("config.immersiveweapons.cursed_sight_staff_max_use_range")
+				.defineInRange("cursed_sight_staff_max_use_range", 50, 0, Integer.MAX_VALUE);
 
 		builder.pop();
 	}

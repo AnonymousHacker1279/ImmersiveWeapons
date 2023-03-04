@@ -9,7 +9,7 @@ import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.resources.ResourceLocation;
-import tech.anonymoushacker1279.immersiveweapons.entity.projectile.BulletEntity;
+import tech.anonymoushacker1279.immersiveweapons.entity.projectile.bullet.BulletEntity;
 
 public class FlareRenderer<T extends BulletEntity> extends EntityRenderer<T> {
 

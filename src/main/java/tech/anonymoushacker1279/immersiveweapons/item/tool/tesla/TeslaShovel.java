@@ -14,7 +14,7 @@ public class TeslaShovel extends ShovelItem implements HitEffectUtils {
 	 * @param attackSpeedIn  attack speed
 	 * @param properties     the <code>Properties</code> for the item
 	 */
-	public TeslaShovel(Tier tier, int attackDamageIn, float attackSpeedIn, Properties properties) {
+	public TeslaShovel(Tier tier, float attackDamageIn, float attackSpeedIn, Properties properties) {
 		super(tier, attackDamageIn, attackSpeedIn, properties);
 	}
 

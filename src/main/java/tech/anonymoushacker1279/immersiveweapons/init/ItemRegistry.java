@@ -35,42 +35,42 @@ public class ItemRegistry {
 	public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, ImmersiveWeapons.MOD_ID);
 
 	// Tools
-	public static final RegistryObject<MoltenSword> MOLTEN_SWORD = ITEMS.register("molten_sword", () -> new MoltenSword(CustomItemMaterials.MOLTEN, 4, -2.1f, new Properties().fireResistant()));
-	public static final RegistryObject<MoltenPickaxe> MOLTEN_PICKAXE = ITEMS.register("molten_pickaxe", () -> new MoltenPickaxe(CustomItemMaterials.MOLTEN, 3, -2.3F, new Properties().fireResistant()));
-	public static final RegistryObject<MoltenAxe> MOLTEN_AXE = ITEMS.register("molten_axe", () -> new MoltenAxe(CustomItemMaterials.MOLTEN, 6, -3.0f, new Properties().fireResistant()));
-	public static final RegistryObject<MoltenShovel> MOLTEN_SHOVEL = ITEMS.register("molten_shovel", () -> new MoltenShovel(CustomItemMaterials.MOLTEN, -1, -3.0f, new Properties().fireResistant()));
-	public static final RegistryObject<MoltenHoe> MOLTEN_HOE = ITEMS.register("molten_hoe", () -> new MoltenHoe(CustomItemMaterials.MOLTEN, -3, 1.0f, new Properties().fireResistant()));
-	public static final RegistryObject<SwordItem> COPPER_SWORD = ITEMS.register("copper_sword", () -> new SwordItem(CustomItemMaterials.COPPER, 2, -2.4f, new Properties()));
+	public static final RegistryObject<MoltenSword> MOLTEN_SWORD = ITEMS.register("molten_sword", () -> new MoltenSword(CustomItemMaterials.MOLTEN, 3, -2.4f, new Properties().fireResistant()));
+	public static final RegistryObject<MoltenPickaxe> MOLTEN_PICKAXE = ITEMS.register("molten_pickaxe", () -> new MoltenPickaxe(CustomItemMaterials.MOLTEN, 1, -2.8F, new Properties().fireResistant()));
+	public static final RegistryObject<MoltenAxe> MOLTEN_AXE = ITEMS.register("molten_axe", () -> new MoltenAxe(CustomItemMaterials.MOLTEN, 5, -3.0f, new Properties().fireResistant()));
+	public static final RegistryObject<MoltenShovel> MOLTEN_SHOVEL = ITEMS.register("molten_shovel", () -> new MoltenShovel(CustomItemMaterials.MOLTEN, 1.5f, -3.0f, new Properties().fireResistant()));
+	public static final RegistryObject<MoltenHoe> MOLTEN_HOE = ITEMS.register("molten_hoe", () -> new MoltenHoe(CustomItemMaterials.MOLTEN, -5, 0.0f, new Properties().fireResistant()));
+	public static final RegistryObject<SwordItem> COPPER_SWORD = ITEMS.register("copper_sword", () -> new SwordItem(CustomItemMaterials.COPPER, 3, -2.4f, new Properties()));
 	public static final RegistryObject<PickaxeItem> COPPER_PICKAXE = ITEMS.register("copper_pickaxe", () -> new PickaxeItem(CustomItemMaterials.COPPER, 1, -2.8F, new Properties()));
-	public static final RegistryObject<AxeItem> COPPER_AXE = ITEMS.register("copper_axe", () -> new AxeItem(CustomItemMaterials.COPPER, 3, -3.0f, new Properties()));
-	public static final RegistryObject<ShovelItem> COPPER_SHOVEL = ITEMS.register("copper_shovel", () -> new ShovelItem(CustomItemMaterials.COPPER, -1, -2.7f, new Properties()));
-	public static final RegistryObject<HoeItem> COPPER_HOE = ITEMS.register("copper_hoe", () -> new HoeItem(CustomItemMaterials.COPPER, -2, -3.0f, new Properties()));
-	public static final RegistryObject<TeslaSword> TESLA_SWORD = ITEMS.register("tesla_sword", () -> new TeslaSword(CustomItemMaterials.TESLA, 5, -2.1f, new Properties()));
-	public static final RegistryObject<TeslaPickaxe> TESLA_PICKAXE = ITEMS.register("tesla_pickaxe", () -> new TeslaPickaxe(CustomItemMaterials.TESLA, 4, -2.3f, new Properties()));
-	public static final RegistryObject<TeslaAxe> TESLA_AXE = ITEMS.register("tesla_axe", () -> new TeslaAxe(CustomItemMaterials.TESLA, 7, -3.0f, new Properties()));
-	public static final RegistryObject<TeslaShovel> TESLA_SHOVEL = ITEMS.register("tesla_shovel", () -> new TeslaShovel(CustomItemMaterials.TESLA, 0, -3.0f, new Properties()));
-	public static final RegistryObject<TeslaHoe> TESLA_HOE = ITEMS.register("tesla_hoe", () -> new TeslaHoe(CustomItemMaterials.TESLA, -3, 1.0f, new Properties()));
-	public static final RegistryObject<SwordItem> COBALT_SWORD = ITEMS.register("cobalt_sword", () -> new SwordItem(CustomItemMaterials.COBALT, 2, -2.4f, new Properties()));
-	public static final RegistryObject<PickaxeItem> COBALT_PICKAXE = ITEMS.register("cobalt_pickaxe", () -> new PickaxeItem(CustomItemMaterials.COBALT, 1, -2.7F, new Properties()));
-	public static final RegistryObject<AxeItem> COBALT_AXE = ITEMS.register("cobalt_axe", () -> new AxeItem(CustomItemMaterials.COBALT, 3, -3.0f, new Properties()));
-	public static final RegistryObject<ShovelItem> COBALT_SHOVEL = ITEMS.register("cobalt_shovel", () -> new ShovelItem(CustomItemMaterials.COBALT, -1, -2.7f, new Properties()));
-	public static final RegistryObject<HoeItem> COBALT_HOE = ITEMS.register("cobalt_hoe", () -> new HoeItem(CustomItemMaterials.COBALT, -3, -3.0f, new Properties()));
-	public static final RegistryObject<VentusSword> VENTUS_SWORD = ITEMS.register("ventus_sword", () -> new VentusSword(CustomItemMaterials.VENTUS, 4, -1.5f, new Properties()));
-	public static final RegistryObject<VentusPickaxe> VENTUS_PICKAXE = ITEMS.register("ventus_pickaxe", () -> new VentusPickaxe(CustomItemMaterials.VENTUS, 3, -2.2f, new Properties()));
-	public static final RegistryObject<VentusAxe> VENTUS_AXE = ITEMS.register("ventus_axe", () -> new VentusAxe(CustomItemMaterials.VENTUS, 6, -2.6f, new Properties()));
-	public static final RegistryObject<VentusShovel> VENTUS_SHOVEL = ITEMS.register("ventus_shovel", () -> new VentusShovel(CustomItemMaterials.VENTUS, -1, -2.9f, new Properties()));
-	public static final RegistryObject<VentusHoe> VENTUS_HOE = ITEMS.register("ventus_hoe", () -> new VentusHoe(CustomItemMaterials.VENTUS, -3, 1.0f, new Properties()));
+	public static final RegistryObject<AxeItem> COPPER_AXE = ITEMS.register("copper_axe", () -> new AxeItem(CustomItemMaterials.COPPER, 6, -3.1f, new Properties()));
+	public static final RegistryObject<ShovelItem> COPPER_SHOVEL = ITEMS.register("copper_shovel", () -> new ShovelItem(CustomItemMaterials.COPPER, 1.5f, -3.0f, new Properties()));
+	public static final RegistryObject<HoeItem> COPPER_HOE = ITEMS.register("copper_hoe", () -> new HoeItem(CustomItemMaterials.COPPER, -1, -1.0f, new Properties()));
+	public static final RegistryObject<TeslaSword> TESLA_SWORD = ITEMS.register("tesla_sword", () -> new TeslaSword(CustomItemMaterials.TESLA, 3, -2.4f, new Properties()));
+	public static final RegistryObject<TeslaPickaxe> TESLA_PICKAXE = ITEMS.register("tesla_pickaxe", () -> new TeslaPickaxe(CustomItemMaterials.TESLA, 1, -2.8f, new Properties()));
+	public static final RegistryObject<TeslaAxe> TESLA_AXE = ITEMS.register("tesla_axe", () -> new TeslaAxe(CustomItemMaterials.TESLA, 5, -3.0f, new Properties()));
+	public static final RegistryObject<TeslaShovel> TESLA_SHOVEL = ITEMS.register("tesla_shovel", () -> new TeslaShovel(CustomItemMaterials.TESLA, 1.5f, -3.0f, new Properties()));
+	public static final RegistryObject<TeslaHoe> TESLA_HOE = ITEMS.register("tesla_hoe", () -> new TeslaHoe(CustomItemMaterials.TESLA, -6, 0.0f, new Properties()));
+	public static final RegistryObject<SwordItem> COBALT_SWORD = ITEMS.register("cobalt_sword", () -> new SwordItem(CustomItemMaterials.COBALT, 3, -2.4f, new Properties()));
+	public static final RegistryObject<PickaxeItem> COBALT_PICKAXE = ITEMS.register("cobalt_pickaxe", () -> new PickaxeItem(CustomItemMaterials.COBALT, 1, -2.8F, new Properties()));
+	public static final RegistryObject<AxeItem> COBALT_AXE = ITEMS.register("cobalt_axe", () -> new AxeItem(CustomItemMaterials.COBALT, 6, -3.1f, new Properties()));
+	public static final RegistryObject<ShovelItem> COBALT_SHOVEL = ITEMS.register("cobalt_shovel", () -> new ShovelItem(CustomItemMaterials.COBALT, 1.5f, -3.0f, new Properties()));
+	public static final RegistryObject<HoeItem> COBALT_HOE = ITEMS.register("cobalt_hoe", () -> new HoeItem(CustomItemMaterials.COBALT, -2, -1.0f, new Properties()));
+	public static final RegistryObject<VentusSword> VENTUS_SWORD = ITEMS.register("ventus_sword", () -> new VentusSword(CustomItemMaterials.VENTUS, 3, -2.0f, new Properties()));
+	public static final RegistryObject<VentusPickaxe> VENTUS_PICKAXE = ITEMS.register("ventus_pickaxe", () -> new VentusPickaxe(CustomItemMaterials.VENTUS, 1, -2.4f, new Properties()));
+	public static final RegistryObject<VentusAxe> VENTUS_AXE = ITEMS.register("ventus_axe", () -> new VentusAxe(CustomItemMaterials.VENTUS, 5, -2.6f, new Properties()));
+	public static final RegistryObject<VentusShovel> VENTUS_SHOVEL = ITEMS.register("ventus_shovel", () -> new VentusShovel(CustomItemMaterials.VENTUS, 1.5f, -2.6f, new Properties()));
+	public static final RegistryObject<VentusHoe> VENTUS_HOE = ITEMS.register("ventus_hoe", () -> new VentusHoe(CustomItemMaterials.VENTUS, -5, 0.2f, new Properties()));
 	public static final RegistryObject<VentusStaff> VENTUS_STAFF = ITEMS.register("ventus_staff", () -> new VentusStaff(new Properties().durability(300)));
-	public static final RegistryObject<SwordItem> ASTRAL_SWORD = ITEMS.register("astral_sword", () -> new SwordItem(CustomItemMaterials.ASTRAL, 4, -1.0f, new Properties()));
-	public static final RegistryObject<PickaxeItem> ASTRAL_PICKAXE = ITEMS.register("astral_pickaxe", () -> new PickaxeItem(CustomItemMaterials.ASTRAL, 3, -1.2f, new Properties()));
-	public static final RegistryObject<AxeItem> ASTRAL_AXE = ITEMS.register("astral_axe", () -> new AxeItem(CustomItemMaterials.ASTRAL, 5, -1.4f, new Properties()));
-	public static final RegistryObject<ShovelItem> ASTRAL_SHOVEL = ITEMS.register("astral_shovel", () -> new ShovelItem(CustomItemMaterials.ASTRAL, -1, -1.4f, new Properties()));
-	public static final RegistryObject<HoeItem> ASTRAL_HOE = ITEMS.register("astral_hoe", () -> new HoeItem(CustomItemMaterials.ASTRAL, -3, 1.0f, new Properties()));
-	public static final RegistryObject<SwordItem> STARSTORM_SWORD = ITEMS.register("starstorm_sword", () -> new SwordItem(CustomItemMaterials.STARSTORM, 4, -1.7f, new Properties()));
-	public static final RegistryObject<PickaxeItem> STARSTORM_PICKAXE = ITEMS.register("starstorm_pickaxe", () -> new PickaxeItem(CustomItemMaterials.STARSTORM, 3, -1.2f, new Properties()));
-	public static final RegistryObject<AxeItem> STARSTORM_AXE = ITEMS.register("starstorm_axe", () -> new AxeItem(CustomItemMaterials.STARSTORM, 6, -2.6f, new Properties()));
-	public static final RegistryObject<ShovelItem> STARSTORM_SHOVEL = ITEMS.register("starstorm_shovel", () -> new ShovelItem(CustomItemMaterials.STARSTORM, -2, -1.4f, new Properties()));
-	public static final RegistryObject<HoeItem> STARSTORM_HOE = ITEMS.register("starstorm_hoe", () -> new HoeItem(CustomItemMaterials.STARSTORM, -5, 1.0f, new Properties()));
+	public static final RegistryObject<SwordItem> ASTRAL_SWORD = ITEMS.register("astral_sword", () -> new SwordItem(CustomItemMaterials.ASTRAL, 3, -1.5f, new Properties()));
+	public static final RegistryObject<PickaxeItem> ASTRAL_PICKAXE = ITEMS.register("astral_pickaxe", () -> new PickaxeItem(CustomItemMaterials.ASTRAL, 1, -1.9f, new Properties()));
+	public static final RegistryObject<AxeItem> ASTRAL_AXE = ITEMS.register("astral_axe", () -> new AxeItem(CustomItemMaterials.ASTRAL, 5, -2.1f, new Properties()));
+	public static final RegistryObject<ShovelItem> ASTRAL_SHOVEL = ITEMS.register("astral_shovel", () -> new ShovelItem(CustomItemMaterials.ASTRAL, 1.5f, -2.1f, new Properties()));
+	public static final RegistryObject<HoeItem> ASTRAL_HOE = ITEMS.register("astral_hoe", () -> new HoeItem(CustomItemMaterials.ASTRAL, -4, 0.8f, new Properties()));
+	public static final RegistryObject<SwordItem> STARSTORM_SWORD = ITEMS.register("starstorm_sword", () -> new SwordItem(CustomItemMaterials.STARSTORM, 3, -2.4f, new Properties()));
+	public static final RegistryObject<PickaxeItem> STARSTORM_PICKAXE = ITEMS.register("starstorm_pickaxe", () -> new PickaxeItem(CustomItemMaterials.STARSTORM, 1, -2.8f, new Properties()));
+	public static final RegistryObject<AxeItem> STARSTORM_AXE = ITEMS.register("starstorm_axe", () -> new AxeItem(CustomItemMaterials.STARSTORM, 5, -3.0f, new Properties()));
+	public static final RegistryObject<ShovelItem> STARSTORM_SHOVEL = ITEMS.register("starstorm_shovel", () -> new ShovelItem(CustomItemMaterials.STARSTORM, 1.5f, -3.0f, new Properties()));
+	public static final RegistryObject<HoeItem> STARSTORM_HOE = ITEMS.register("starstorm_hoe", () -> new HoeItem(CustomItemMaterials.STARSTORM, -7, 0.0f, new Properties()));
 
 	// Weapons
 	public static final RegistryObject<PikeItem> WOODEN_PIKE = ITEMS.register("wooden_pike", () -> new PikeItem(new Properties().durability(59), 4.0d, -2.6d, Ingredient.of(ItemTags.PLANKS)));
@@ -94,6 +94,8 @@ public class ItemRegistry {
 	public static final RegistryObject<GauntletItem> COBALT_GAUNTLET = ITEMS.register("cobalt_gauntlet", () -> new GauntletItem(CustomItemMaterials.COBALT, 1, -2.3f, new Properties(), 0.60f, 0, Ingredient.of(ForgeItemTagGroups.COBALT_INGOTS)));
 	public static final RegistryObject<GauntletItem> DIAMOND_GAUNTLET = ITEMS.register("diamond_gauntlet", () -> new GauntletItem(Tiers.DIAMOND, 2, -2.3f, new Properties(), 0.75f, 1, Ingredient.of(Tags.Items.GEMS_DIAMOND)));
 	public static final RegistryObject<GauntletItem> NETHERITE_GAUNTLET = ITEMS.register("netherite_gauntlet", () -> new GauntletItem(Tiers.NETHERITE, 2, -2.3f, new Properties(), 0.85f, 1, Ingredient.of(Tags.Items.INGOTS_NETHERITE)));
+	public static final RegistryObject<MeteorStaffItem> METEOR_STAFF = ITEMS.register("meteor_staff", () -> new MeteorStaffItem(new Properties().durability(199)));
+	public static final RegistryObject<CursedSightStaffItem> CURSED_SIGHT_STAFF = ITEMS.register("cursed_sight_staff", () -> new CursedSightStaffItem(new Properties().durability(149)));
 
 	// Items
 	public static final RegistryObject<Item> WOODEN_SHARD = ITEMS.register("wooden_shard", () -> new Item(new Properties()));
@@ -117,10 +119,12 @@ public class ItemRegistry {
 	public static final RegistryObject<Item> MOLTEN_INGOT = ITEMS.register("molten_ingot", () -> new FuelItem(new Properties().fireResistant(), 24000));
 	public static final RegistryObject<Item> SULFUR = ITEMS.register("sulfur", () -> new Item(new Properties()));
 	public static final RegistryObject<Item> VENTUS_STAFF_CORE = ITEMS.register("ventus_staff_core", () -> new Item(new Properties()));
+	public static final RegistryObject<Item> CURSED_SIGHT_STAFF_CORE = ITEMS.register("cursed_sight_staff_core", () -> new Item(new Properties()));
 	public static final RegistryObject<Item> AZUL_KEYSTONE = ITEMS.register("azul_keystone", () -> new Item(new Properties()));
 	public static final RegistryObject<Item> AZUL_KEYSTONE_FRAGMENT = ITEMS.register("azul_keystone_fragment", () -> new Item(new Properties()));
 	public static final RegistryObject<AzulLocatorItem> AZUL_LOCATOR = ITEMS.register("azul_locator", () -> new AzulLocatorItem(new Properties().durability(1)));
 	public static final RegistryObject<Item> CELESTIAL_FRAGMENT = ITEMS.register("celestial_fragment", () -> new Item(new Properties().fireResistant()));
+	public static final RegistryObject<Item> BROKEN_LENS = ITEMS.register("broken_lens", () -> new Item(new Properties()));
 	public static final RegistryObject<Item> WOODEN_PIKE_HEAD = ITEMS.register("wooden_pike_head", () -> new Item(new Properties()));
 	public static final RegistryObject<Item> STONE_PIKE_HEAD = ITEMS.register("stone_pike_head", () -> new Item(new Properties()));
 	public static final RegistryObject<Item> GOLDEN_PIKE_HEAD = ITEMS.register("golden_pike_head", () -> new Item(new Properties()));
@@ -234,5 +238,8 @@ public class ItemRegistry {
 	public static final RegistryObject<ForgeSpawnEggItem> CELESTIAL_TOWER_SPAWN_EGG = ITEMS.register("celestial_tower_spawn_egg", () -> new ForgeSpawnEggItem(EntityRegistry.CELESTIAL_TOWER_ENTITY, 0x63353d, 0xb3754b, (new Item.Properties().stacksTo(16))));
 	public static final RegistryObject<ForgeSpawnEggItem> STARMITE_SPAWN_EGG = ITEMS.register("starmite_spawn_egg", () -> new ForgeSpawnEggItem(EntityRegistry.STARMITE_ENTITY, 0x8f4f1c, 0xa55c1e, (new Item.Properties().stacksTo(16))));
 	public static final RegistryObject<ForgeSpawnEggItem> FIREFLY_SPAWN_EGG = ITEMS.register("firefly_spawn_egg", () -> new ForgeSpawnEggItem(EntityRegistry.FIREFLY_ENTITY, 0x703a2a, 0x43e88d, (new Item.Properties().stacksTo(16))));
-
+	public static final RegistryObject<ForgeSpawnEggItem> STORM_CREEPER_SPAWN_EGG = ITEMS.register("storm_creeper_spawn_egg", () -> new ForgeSpawnEggItem(EntityRegistry.STORM_CREEPER_ENTITY, 0xfe162c, 0x00eaf6, (new Item.Properties().stacksTo(16))));
+	public static final RegistryObject<ForgeSpawnEggItem> EVIL_EYE_SPAWN_EGG = ITEMS.register("evil_eye_spawn_egg", () -> new ForgeSpawnEggItem(EntityRegistry.EVIL_EYE_ENTITY, 0xd7d7d7, 0x4e8386, (new Item.Properties().stacksTo(16))));
+	public static final RegistryObject<ForgeSpawnEggItem> STAR_WOLF_SPAWN_EGG = ITEMS.register("star_wolf_spawn_egg", () -> new ForgeSpawnEggItem(EntityRegistry.STAR_WOLF_ENTITY, 0x0b0707, 0x919191, (new Item.Properties().stacksTo(16))));
+	public static final RegistryObject<ForgeSpawnEggItem> SKYGAZER_SPAWN_EGG = ITEMS.register("skygazer_spawn_egg", () -> new ForgeSpawnEggItem(EntityRegistry.SKYGAZER_ENTITY, 0x4c1036, 0x4c1036, (new Item.Properties().stacksTo(16))));
 }

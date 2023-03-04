@@ -1,10 +1,11 @@
 {
   "values": [
-    "immersiveweapons:copper_sword",
-    "immersiveweapons:cobalt_sword",
     "immersiveweapons:molten_sword",
+    "immersiveweapons:copper_sword",
     "immersiveweapons:tesla_sword",
+    "immersiveweapons:cobalt_sword",
     "immersiveweapons:ventus_sword",
-    "immersiveweapons:astral_sword"
+    "immersiveweapons:astral_sword",
+    "immersiveweapons:starstorm_sword"
   ]
 }

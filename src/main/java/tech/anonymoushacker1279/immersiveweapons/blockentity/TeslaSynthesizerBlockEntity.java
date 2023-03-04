@@ -40,7 +40,7 @@ public class TeslaSynthesizerBlockEntity extends BaseContainerBlockEntity implem
 	private static final int[] SLOTS_UP = new int[]{0};
 	private static final int[] SLOTS_DOWN = new int[]{2, 1};
 	private static final int[] SLOTS_HORIZONTAL = new int[]{1};
-	private static final Map<Item, Integer> burnTimesMap = Maps.newLinkedHashMap();
+	private static final Map<Item, Integer> BURN_TIMES_MAP = Maps.newLinkedHashMap();
 	private final Object2IntOpenHashMap<ResourceLocation> recipes = new Object2IntOpenHashMap<>();
 	private final LazyOptional<? extends IItemHandler>[] handlers = SidedInvWrapper.create(this, Direction.UP, Direction.DOWN, Direction.NORTH);
 	protected NonNullList<ItemStack> items = NonNullList.withSize(5, ItemStack.EMPTY);
@@ -105,12 +105,11 @@ public class TeslaSynthesizerBlockEntity extends BaseContainerBlockEntity implem
 	/**
 	 * Add an item burn time to the map.
 	 *
-	 * @param map          the burn time <code>Map</code> extending Item, Integer
 	 * @param itemProvider the <code>IItemProvider</code> instance
 	 * @param burnTimeIn   the burn time
 	 */
-	private static void addItemBurnTime(Map<Item, Integer> map, ItemLike itemProvider, int burnTimeIn) {
-		map.put(itemProvider.asItem(), burnTimeIn);
+	private static void addItemBurnTime(ItemLike itemProvider, int burnTimeIn) {
+		BURN_TIMES_MAP.put(itemProvider.asItem(), burnTimeIn);
 	}
 
 	/**
@@ -122,8 +121,8 @@ public class TeslaSynthesizerBlockEntity extends BaseContainerBlockEntity implem
 	private static int getBurnTime(ItemStack fuel) {
 		if (!fuel.isEmpty()) {
 			Item item = fuel.getItem();
-			if (burnTimesMap.containsKey(item)) {
-				return burnTimesMap.get(item);
+			if (BURN_TIMES_MAP.containsKey(item)) {
+				return BURN_TIMES_MAP.get(item);
 			}
 		}
 		return 0;
@@ -136,7 +135,7 @@ public class TeslaSynthesizerBlockEntity extends BaseContainerBlockEntity implem
 	 * @return boolean
 	 */
 	public static boolean isFuel(ItemStack stack) {
-		if (burnTimesMap.containsKey(stack.getItem())) {
+		if (BURN_TIMES_MAP.containsKey(stack.getItem())) {
 			return getBurnTime(stack) > 0;
 		}
 		return false;
@@ -221,7 +220,7 @@ public class TeslaSynthesizerBlockEntity extends BaseContainerBlockEntity implem
 	 * Set up the burn time map
 	 */
 	private void setupBurnTimes() {
-		addItemBurnTime(burnTimesMap, ItemRegistry.MOLTEN_INGOT.get(), 24000); // 20 minutes
+		addItemBurnTime(ItemRegistry.MOLTEN_INGOT.get(), 24000); // 20 minutes
 	}
 
 	/**

@@ -1,9 +1,11 @@
 {
   "values": [
-    "immersiveweapons:copper_chestplate",
-    "immersiveweapons:cobalt_chestplate",
     "immersiveweapons:molten_chestplate",
+    "immersiveweapons:copper_chestplate",
     "immersiveweapons:tesla_chestplate",
-    "immersiveweapons:ventus_chestplate"
+    "immersiveweapons:cobalt_chestplate",
+    "immersiveweapons:ventus_chestplate",
+    "immersiveweapons:astral_chestplate",
+    "immersiveweapons:starstorm_chestplate"
   ]
 }

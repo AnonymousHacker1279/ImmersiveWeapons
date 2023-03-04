@@ -30,8 +30,8 @@ public class BarrelTapRecipeBuilder {
 		this.result = result;
 	}
 
-	public static BarrelTapRecipeBuilder fermenting(Ingredient block, int cookTime, Item pResult) {
-		return new BarrelTapRecipeBuilder(RecipeSerializerRegistry.BARREL_TAP_RECIPE_SERIALIZER.get(), block, cookTime, pResult);
+	public static BarrelTapRecipeBuilder fermenting(Ingredient block, int materialCount, Item pResult) {
+		return new BarrelTapRecipeBuilder(RecipeSerializerRegistry.BARREL_TAP_RECIPE_SERIALIZER.get(), block, materialCount, pResult);
 	}
 
 	public BarrelTapRecipeBuilder unlocks(String pName, CriterionTriggerInstance pCriterion) {

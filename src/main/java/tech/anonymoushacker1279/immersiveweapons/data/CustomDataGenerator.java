@@ -12,6 +12,7 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.data.advancements.AdvancementsGenerator;
+import tech.anonymoushacker1279.immersiveweapons.data.lang.LanguageGenerator;
 import tech.anonymoushacker1279.immersiveweapons.data.loot.LootTableGenerator;
 import tech.anonymoushacker1279.immersiveweapons.data.models.BlockStateGenerator;
 import tech.anonymoushacker1279.immersiveweapons.data.models.ItemModelGenerator;
@@ -44,6 +45,7 @@ public class CustomDataGenerator {
 		generator.addProvider(event.includeClient(), new BlockStateGenerator(output, event.getExistingFileHelper()));
 		generator.addProvider(event.includeClient(), new ItemModelGenerator(output, event.getExistingFileHelper()));
 		generator.addProvider(event.includeClient(), new SoundGenerator(output, ImmersiveWeapons.MOD_ID, event.getExistingFileHelper()));
+		generator.addProvider(event.includeClient(), new LanguageGenerator(output));
 
 		// Server data
 		generator.addProvider(event.includeServer(), new AdvancementsGenerator(output, lookupProvider, existingFileHelper));

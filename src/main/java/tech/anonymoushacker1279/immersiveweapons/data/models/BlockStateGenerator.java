@@ -20,7 +20,7 @@ import tech.anonymoushacker1279.immersiveweapons.block.misc.warrior_statue.Warri
 import tech.anonymoushacker1279.immersiveweapons.data.models.lists.BlockLists;
 import tech.anonymoushacker1279.immersiveweapons.init.BlockRegistry;
 
-import java.util.Objects;
+import java.util.*;
 
 public class BlockStateGenerator extends BlockStateProvider {
 
@@ -347,7 +347,10 @@ public class BlockStateGenerator extends BlockStateProvider {
 				new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/stardust_planks"));
 
 		// Generate data for skulls
-		for (Block block : BlockLists.headBlocks) {
+		List<Block> headBlocks = new ArrayList<>(25);
+		headBlocks.addAll(BlockLists.headBlocks);
+		headBlocks.addAll(BlockLists.wallHeadBlocks);
+		for (Block block : headBlocks) {
 			getVariantBuilder(block).forAllStates(blockState -> ConfiguredModel.allRotations(
 					models().getExistingFile(new ResourceLocation("block/skull")),
 					true
@@ -661,5 +664,10 @@ public class BlockStateGenerator extends BlockStateProvider {
 				models().cubeAll("tesla_block", new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/tesla_block")));
 		simpleBlock(BlockRegistry.BIODOME_LIFE_SUPPORT_UNIT.get(),
 				models().getExistingFile(new ResourceLocation(ImmersiveWeapons.MOD_ID, "biodome_life_support_unit")));
+		simpleBlock(BlockRegistry.RUSTED_IRON_BLOCK.get(), models().withExistingParent("rusted_iron_block",
+						new ResourceLocation(ImmersiveWeapons.MOD_ID, "simple_overlay"))
+				.texture("all", "minecraft:block/iron_block")
+				.texture("overlay", new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/rusted_iron_block_overlay"))
+				.renderType("minecraft:translucent"));
 	}
 }
