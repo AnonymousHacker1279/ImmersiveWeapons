@@ -10,9 +10,9 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.DispenserBlock;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
-import tech.anonymoushacker1279.immersiveweapons.entity.projectile.ArrowEntities.*;
 import tech.anonymoushacker1279.immersiveweapons.entity.projectile.MolotovEntity;
 import tech.anonymoushacker1279.immersiveweapons.entity.projectile.SmokeGrenadeEntity;
+import tech.anonymoushacker1279.immersiveweapons.entity.projectile.arrow.*;
 
 public class DispenserBehaviorRegistry implements DispenseItemBehavior {
 

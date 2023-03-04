@@ -9,7 +9,6 @@ import net.minecraft.client.renderer.*;
 import net.minecraft.client.renderer.FogRenderer.FogMode;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.phys.Vec3;
-import org.jetbrains.annotations.Nullable;
 import org.joml.Matrix4f;
 import org.joml.Vector3f;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
@@ -34,7 +33,6 @@ public class TiltrosDimensionSpecialEffects extends DimensionSpecialEffects {
 	}
 
 	@Override
-	@Nullable
 	public float[] getSunriseColor(float pTimeOfDay, float pPartialTicks) {
 		return null;
 	}

@@ -3,8 +3,7 @@ package tech.anonymoushacker1279.immersiveweapons.item.projectile.bullet;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.projectile.AbstractArrow.Pickup;
 import net.minecraft.world.level.Level;
-import tech.anonymoushacker1279.immersiveweapons.entity.projectile.BulletEntities;
-import tech.anonymoushacker1279.immersiveweapons.entity.projectile.BulletEntities.GoldenMusketBallEntity;
+import tech.anonymoushacker1279.immersiveweapons.entity.projectile.bullet.GoldenMusketBallEntity;
 import tech.anonymoushacker1279.immersiveweapons.init.SoundEventRegistry;
 
 public class GoldenMusketBallItem extends AbstractBulletItem {
@@ -28,7 +27,7 @@ public class GoldenMusketBallItem extends AbstractBulletItem {
 	 * @return GoldBulletEntity
 	 */
 	@Override
-	public BulletEntities.GoldenMusketBallEntity createBullet(Level level, LivingEntity shooter) {
+	public GoldenMusketBallEntity createBullet(Level level, LivingEntity shooter) {
 		GoldenMusketBallEntity bulletEntity = new GoldenMusketBallEntity(shooter, level);
 		bulletEntity.setBaseDamage(damage);
 		bulletEntity.pickup = Pickup.DISALLOWED;

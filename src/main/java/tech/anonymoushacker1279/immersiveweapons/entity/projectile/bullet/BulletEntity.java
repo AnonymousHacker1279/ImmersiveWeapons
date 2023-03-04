@@ -1,4 +1,4 @@
-package tech.anonymoushacker1279.immersiveweapons.entity.projectile;
+package tech.anonymoushacker1279.immersiveweapons.entity.projectile.bullet;
 
 import it.unimi.dsi.fastutil.ints.IntOpenHashSet;
 import net.minecraft.core.BlockPos;
@@ -40,10 +40,10 @@ public class BulletEntity extends AbstractArrow {
 	private static final boolean canBreakGlass = CommonConfig.BULLETS_BREAK_GLASS.get();
 	private final SoundEvent hitSound = getDefaultHitGroundSoundEvent();
 	private static final byte VANILLA_IMPACT_STATUS_ID = 3;
-	Item referenceItem = Items.AIR;
-	int knockbackStrength;
-	boolean shouldStopMoving = false;
-	float inertia = 0.99F;
+	protected Item referenceItem = Items.AIR;
+	protected int knockbackStrength;
+	protected boolean shouldStopMoving = false;
+	protected float inertia = 0.99F;
 	private BlockState inBlockState = Blocks.AIR.defaultBlockState();
 	@Nullable
 	private IntOpenHashSet piercedEntities;
@@ -78,7 +78,12 @@ public class BulletEntity extends AbstractArrow {
 	 */
 	@Override
 	public ItemStack getPickupItem() {
-		return new ItemStack(referenceItem);
+		return new ItemStack(getReferenceItem());
+	}
+
+	@Nullable
+	public Item getReferenceItem() {
+		return referenceItem;
 	}
 
 	/**
@@ -508,7 +513,10 @@ public class BulletEntity extends AbstractArrow {
 	protected Vec3 getShootingVector(double x, double y, double z, float velocity, float inaccuracy) {
 		return new Vec3(x, y, z)
 				.normalize()
-				.add(random.nextGaussian() * 0.0075F, -0.0095F, random.nextGaussian() * 0.0075F).scale(velocity);
+				.add(random.triangle(0d, 0.0025d * inaccuracy * GeneralUtilities.getRandomNumber(0.2d, 1.1d)),
+						random.triangle(0d, 0.0025d * inaccuracy * GeneralUtilities.getRandomNumber(0.2d, 1.1d)),
+						random.triangle(0d, 0.0025d * inaccuracy * GeneralUtilities.getRandomNumber(0.2d, 1.1d)))
+				.scale(velocity);
 	}
 
 	@Override

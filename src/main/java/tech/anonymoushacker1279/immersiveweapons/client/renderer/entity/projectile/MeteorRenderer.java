@@ -13,7 +13,7 @@ import tech.anonymoushacker1279.immersiveweapons.entity.projectile.MeteorEntity;
 
 public class MeteorRenderer<T extends MeteorEntity> extends EntityRenderer<T> {
 
-	protected MeteorModel<MeteorEntity> model;
+	protected final MeteorModel<MeteorEntity> model;
 
 	private static final ResourceLocation TEXTURE_LOCATION = new ResourceLocation(ImmersiveWeapons.MOD_ID, "textures/entity/meteor/meteor.png");
 

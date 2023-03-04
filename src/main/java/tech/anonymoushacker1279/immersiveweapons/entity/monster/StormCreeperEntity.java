@@ -248,9 +248,7 @@ public class StormCreeperEntity extends Creeper implements GrantAdvancementOnDis
 			level.playSound(pPlayer, getX(), getY(), getZ(), soundEvent, getSoundSource(), 1.0F, random.nextFloat() * 0.4F + 0.8F);
 			if (!level.isClientSide) {
 				ignite();
-				itemInHand.hurtAndBreak(1, pPlayer, (player) -> {
-					player.broadcastBreakEvent(pHand);
-				});
+				itemInHand.hurtAndBreak(1, pPlayer, (player) -> player.broadcastBreakEvent(pHand));
 			}
 
 			return InteractionResult.sidedSuccess(level.isClientSide);

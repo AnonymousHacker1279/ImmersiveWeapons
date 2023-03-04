@@ -43,7 +43,7 @@ public class BiomesGenerator {
 				.generationSettings(getBattlefieldGenerationSettings(placedFeatures, worldCarvers))
 				.build();
 	}
-	
+
 	public static Biome tiltrosWastesBiome(HolderGetter<PlacedFeature> placedFeatures, HolderGetter<ConfiguredWorldCarver<?>> worldCarvers) {
 		return new Biome.BiomeBuilder()
 				.temperature(0.6f)

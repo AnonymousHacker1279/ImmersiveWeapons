@@ -13,9 +13,9 @@ import tech.anonymoushacker1279.immersiveweapons.entity.monster.lava_revenant.La
 import tech.anonymoushacker1279.immersiveweapons.entity.neutral.FieldMedicEntity;
 import tech.anonymoushacker1279.immersiveweapons.entity.neutral.MinutemanEntity;
 import tech.anonymoushacker1279.immersiveweapons.entity.npc.SkygazerEntity;
-import tech.anonymoushacker1279.immersiveweapons.entity.projectile.ArrowEntities.*;
-import tech.anonymoushacker1279.immersiveweapons.entity.projectile.BulletEntities.*;
 import tech.anonymoushacker1279.immersiveweapons.entity.projectile.*;
+import tech.anonymoushacker1279.immersiveweapons.entity.projectile.arrow.*;
+import tech.anonymoushacker1279.immersiveweapons.entity.projectile.bullet.*;
 import tech.anonymoushacker1279.immersiveweapons.entity.vehicle.CustomBoatEntity;
 import tech.anonymoushacker1279.immersiveweapons.entity.vehicle.CustomChestBoatEntity;
 

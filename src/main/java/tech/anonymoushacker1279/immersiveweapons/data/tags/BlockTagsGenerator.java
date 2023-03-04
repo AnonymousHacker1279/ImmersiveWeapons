@@ -131,7 +131,7 @@ public class BlockTagsGenerator extends BlockTagsProvider {
 		// Wooden trapdoors tag
 		tag(BlockTags.WOODEN_TRAPDOORS).add(BlockRegistry.BURNED_OAK_TRAPDOOR.get(),
 				BlockRegistry.STARDUST_TRAPDOOR.get());
-		
+
 		// Small flowers tag
 		tag(BlockTags.SMALL_FLOWERS).add(BlockRegistry.AZUL_STAINED_ORCHID.get(),
 				BlockRegistry.MOONGLOW.get());

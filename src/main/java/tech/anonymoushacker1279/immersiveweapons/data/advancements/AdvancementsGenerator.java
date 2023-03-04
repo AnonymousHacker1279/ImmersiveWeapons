@@ -5,7 +5,6 @@ import net.minecraft.advancements.*;
 import net.minecraft.advancements.Advancement.Builder;
 import net.minecraft.advancements.critereon.*;
 import net.minecraft.advancements.critereon.EntityPredicate.Composite;
-import net.minecraft.core.HolderLookup;
 import net.minecraft.core.HolderLookup.Provider;
 import net.minecraft.data.PackOutput;
 import net.minecraft.network.chat.Component;
@@ -32,7 +31,7 @@ import java.util.function.Consumer;
 public class AdvancementsGenerator extends ForgeAdvancementProvider {
 
 	public AdvancementsGenerator(PackOutput output, CompletableFuture<Provider> provider, ExistingFileHelper exFileHelper) {
-		super(output, provider, exFileHelper, List.of(AdvancementsGenerator::registerAdvancements));
+		super(output, provider, exFileHelper, List.of((lookup, consumer, existingFileHelper) -> registerAdvancements(consumer)));
 	}
 
 	/**
@@ -40,7 +39,7 @@ public class AdvancementsGenerator extends ForgeAdvancementProvider {
 	 *
 	 * @param consumer the <code>Consumer</code> extending Advancement
 	 */
-	public static void registerAdvancements(HolderLookup.Provider lookup, Consumer<Advancement> consumer, ExistingFileHelper existingFileHelper) {
+	public static void registerAdvancements(Consumer<Advancement> consumer) {
 		// Root advancement
 		Advancement root = Builder.advancement()
 				.display(ItemRegistry.TESLA_SWORD.get(),

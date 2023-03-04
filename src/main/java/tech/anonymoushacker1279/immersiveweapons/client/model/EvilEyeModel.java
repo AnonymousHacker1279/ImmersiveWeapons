@@ -33,24 +33,24 @@ public class EvilEyeModel<T extends Entity> extends EntityModel<T> {
 		PartDefinition tail = main.addOrReplaceChild("tail", CubeListBuilder.create(),
 				PartPose.offset(2.0F, -2.0F, 3.0F));
 
-		PartDefinition tail_r1 = tail.addOrReplaceChild("tail_r1", CubeListBuilder.create()
+		tail.addOrReplaceChild("tail_r1", CubeListBuilder.create()
 						.texOffs(0, 5)
 						.addBox(-0.4375F, -2.0F, -2.0F, 0.0F, 4.0F, 4.0F,
 								new CubeDeformation(0.0F)),
 				PartPose.offsetAndRotation(-2.0F, -2.0F, 0.0F, 0.0F, -0.2182F, -1.5708F));
 
-		PartDefinition tail_r2 = tail.addOrReplaceChild("tail_r2", CubeListBuilder.create()
+		tail.addOrReplaceChild("tail_r2", CubeListBuilder.create()
 						.texOffs(8, 5)
 						.addBox(-1.5F, -2.0F, -2.375F, 0.0F, 4.0F, 4.0F,
 								new CubeDeformation(0.0F)),
 				PartPose.offsetAndRotation(-2.0F, 0.0F, 0.0F, 0.0F, 0.2182F, -1.5708F));
 
-		PartDefinition tail_r3 = tail.addOrReplaceChild("tail_r3",
+		tail.addOrReplaceChild("tail_r3",
 				CubeListBuilder.create().texOffs(0, 9)
 						.addBox(0.4375F, -2.0F, -2.0F, 0.0F, 4.0F, 4.0F,
 								new CubeDeformation(0.0F)), PartPose.offsetAndRotation(-4.0F, 0.0F, 0.0F, 0.0F, 0.2182F, 0.0F));
 
-		PartDefinition tail_r4 = tail.addOrReplaceChild("tail_r4",
+		tail.addOrReplaceChild("tail_r4",
 				CubeListBuilder.create().texOffs(8, 9)
 						.addBox(-0.4375F, -2.0F, -2.0F, 0.0F, 4.0F, 4.0F,
 								new CubeDeformation(0.0F)),

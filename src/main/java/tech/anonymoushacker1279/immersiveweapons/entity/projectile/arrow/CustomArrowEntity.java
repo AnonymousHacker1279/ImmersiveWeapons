@@ -1,4 +1,4 @@
-package tech.anonymoushacker1279.immersiveweapons.entity.projectile;
+package tech.anonymoushacker1279.immersiveweapons.entity.projectile.arrow;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
@@ -20,68 +20,37 @@ import net.minecraftforge.event.ForgeEventFactory;
 import org.jetbrains.annotations.Nullable;
 
 public class CustomArrowEntity extends AbstractArrow {
-	@Nullable Item referenceItem;
 
-	/**
-	 * Constructor for CustomArrowEntity.
-	 *
-	 * @param type  the <code>EntityType</code> instance; must extend AbstractArrowEntity
-	 * @param world the <code>World</code> the entity is in
-	 */
-	CustomArrowEntity(EntityType<? extends AbstractArrow> type, Level world) {
-		super(type, world);
-		referenceItem = null;
+	@Nullable
+	protected Item referenceItem = null;
+
+	protected CustomArrowEntity(EntityType<? extends AbstractArrow> type, Level level) {
+		super(type, level);
 	}
 
-	/**
-	 * Constructor for CustomArrowEntity.
-	 *
-	 * @param type    the <code>EntityType</code> instance; must extend AbstractArrowEntity
-	 * @param shooter the <code>LivingEntity</code> shooting the entity
-	 * @param world   the <code>World</code> the entity is in
-	 */
-	CustomArrowEntity(EntityType<? extends CustomArrowEntity> type, LivingEntity shooter, Level world) {
-		super(type, shooter, world);
-		referenceItem = null;
+	protected CustomArrowEntity(EntityType<? extends CustomArrowEntity> type, LivingEntity shooter, Level level) {
+		super(type, shooter, level);
 	}
 
-	/**
-	 * Constructor for CustomArrowEntity.
-	 *
-	 * @param type  the <code>EntityType</code> instance; must extend AbstractArrowEntity
-	 * @param world the <code>World</code> the entity is in
-	 * @param x     the X position
-	 * @param y     the Y position
-	 * @param z     the Z position
-	 */
-	CustomArrowEntity(EntityType<? extends CustomArrowEntity> type, Level world, double x, double y, double z) {
-		super(type, x, y, z, world);
-		referenceItem = null;
+	protected CustomArrowEntity(EntityType<? extends CustomArrowEntity> type, Level level, double x, double y, double z) {
+		super(type, x, y, z, level);
 	}
 
-	/**
-	 * Get the pickup item.
-	 *
-	 * @return ItemStack
-	 */
 	@Override
 	public ItemStack getPickupItem() {
-		return new ItemStack(referenceItem);
+		return new ItemStack(getReferenceItem());
 	}
 
-	/**
-	 * Get the entity spawn packet.
-	 *
-	 * @return IPacket
-	 */
+	@Nullable
+	public Item getReferenceItem() {
+		return referenceItem;
+	}
+
 	@Override
 	public Packet<ClientGamePacketListener> getAddEntityPacket() {
 		return new ClientboundAddEntityPacket(this);
 	}
 
-	/**
-	 * Runs once each tick.
-	 */
 	@Override
 	public void tick() {
 		super.tick();

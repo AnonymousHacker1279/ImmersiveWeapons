@@ -3,8 +3,7 @@ package tech.anonymoushacker1279.immersiveweapons.item.projectile.bullet;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.projectile.AbstractArrow.Pickup;
 import net.minecraft.world.level.Level;
-import tech.anonymoushacker1279.immersiveweapons.entity.projectile.BulletEntities;
-import tech.anonymoushacker1279.immersiveweapons.entity.projectile.BulletEntities.NetheriteMusketBallEntity;
+import tech.anonymoushacker1279.immersiveweapons.entity.projectile.bullet.NetheriteMusketBallEntity;
 import tech.anonymoushacker1279.immersiveweapons.init.SoundEventRegistry;
 
 public class NetheriteMusketBallItem extends AbstractBulletItem {
@@ -28,7 +27,7 @@ public class NetheriteMusketBallItem extends AbstractBulletItem {
 	 * @return NetheriteBulletEntity
 	 */
 	@Override
-	public BulletEntities.NetheriteMusketBallEntity createBullet(Level level, LivingEntity shooter) {
+	public NetheriteMusketBallEntity createBullet(Level level, LivingEntity shooter) {
 		NetheriteMusketBallEntity bulletEntity = new NetheriteMusketBallEntity(shooter, level);
 		bulletEntity.setBaseDamage(damage);
 		bulletEntity.pickup = Pickup.DISALLOWED;

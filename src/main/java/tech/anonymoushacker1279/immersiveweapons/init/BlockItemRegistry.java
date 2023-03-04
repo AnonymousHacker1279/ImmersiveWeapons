@@ -8,6 +8,7 @@ import net.minecraftforge.registries.RegistryObject;
 @SuppressWarnings({"unused"})
 public class BlockItemRegistry {
 
+	@SuppressWarnings("EmptyMethod")
 	public static void bootstrap() {
 	}
 
