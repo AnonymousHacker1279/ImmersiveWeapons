@@ -1,9 +1,11 @@
 {
   "values": [
-    "immersiveweapons:copper_boots",
-    "immersiveweapons:cobalt_boots",
     "immersiveweapons:molten_boots",
+    "immersiveweapons:copper_boots",
     "immersiveweapons:tesla_boots",
-    "immersiveweapons:ventus_boots"
+    "immersiveweapons:cobalt_boots",
+    "immersiveweapons:ventus_boots",
+    "immersiveweapons:astral_boots",
+    "immersiveweapons:starstorm_boots"
   ]
 }

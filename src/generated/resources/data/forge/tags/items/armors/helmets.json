@@ -1,9 +1,11 @@
 {
   "values": [
-    "immersiveweapons:copper_helmet",
-    "immersiveweapons:cobalt_helmet",
     "immersiveweapons:molten_helmet",
+    "immersiveweapons:copper_helmet",
     "immersiveweapons:tesla_helmet",
-    "immersiveweapons:ventus_helmet"
+    "immersiveweapons:cobalt_helmet",
+    "immersiveweapons:ventus_helmet",
+    "immersiveweapons:astral_helmet",
+    "immersiveweapons:starstorm_helmet"
   ]
 }
