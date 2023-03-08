@@ -105,9 +105,9 @@ public class EvilEyeEntity extends FlyingMob implements Enemy, GrantAdvancementO
 			targetedEntityUUID = null;
 		}
 
-		// Find players in a 16 block radius every 16 ticks if not summoned by a staff
+		// Find players in a 16 block radius every 40 ticks if not summoned by a staff
 		if (!level.isClientSide) {
-			if (!summonedByStaff && tickCount % 16 == 0) {
+			if (!summonedByStaff && tickCount % 40 == 0) {
 				Player player = level.getNearestPlayer(this, 16);
 				// Check for proper targeting conditions
 				if (player != null) {

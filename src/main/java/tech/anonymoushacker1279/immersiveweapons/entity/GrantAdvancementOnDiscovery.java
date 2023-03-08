@@ -11,6 +11,7 @@ import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.registries.ForgeRegistries;
 import tech.anonymoushacker1279.immersiveweapons.advancement.IWCriteriaTriggers;
+import tech.anonymoushacker1279.immersiveweapons.config.CommonConfig;
 
 import java.util.Objects;
 
@@ -20,9 +21,10 @@ public interface GrantAdvancementOnDiscovery {
 		Level level = entity.level;
 		BlockPos entityPos = entity.blockPosition();
 
-		if (!level.isClientSide) {
-			AABB scanningBox = new AABB(entityPos.offset(-50, -50, -50),
-					entityPos.offset(50, 50, 50));
+		if (!level.isClientSide && entity.tickCount % 20 == 0) {
+			int scanningRange = CommonConfig.DISCOVERY_ADVANCEMENT_RANGE.get();
+			AABB scanningBox = new AABB(entityPos.offset(-scanningRange, -scanningRange, -scanningRange),
+					entityPos.offset(scanningRange, scanningRange, scanningRange));
 
 			for (Player player : level.getNearbyPlayers(TargetingConditions.forNonCombat(), entity, scanningBox)) {
 				if (isLookingAtMe(entity, player)) {

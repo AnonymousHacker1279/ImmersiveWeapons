@@ -16,6 +16,9 @@ public class CommonConfig {
 
 	// Entity settings
 
+	// General
+	public static ForgeConfigSpec.ConfigValue<Integer> DISCOVERY_ADVANCEMENT_RANGE;
+
 	// Celestial Tower
 	public static ForgeConfigSpec.ConfigValue<Integer> CELESTIAL_TOWER_SPAWN_CHECK_RADIUS;
 	public static ForgeConfigSpec.ConfigValue<Double> CELESTIAL_TOWER_MINIONS_WAVE_SIZE_MODIFIER;
@@ -67,6 +70,14 @@ public class CommonConfig {
 		builder.pop();
 
 		builder.push("Entity Settings");
+
+		builder.push("General");
+		DISCOVERY_ADVANCEMENT_RANGE = builder
+				.comment("Set the range for checking criteria of the discovery advancement (value is squared) - Default 50")
+				.comment("Lowering this value may improve server performance.")
+				.translation("config.immersiveweapons.discovery_advancement_range")
+				.define("discovery_advancement_range", 50);
+		builder.pop();
 
 		builder.push("Celestial Tower");
 		CELESTIAL_TOWER_SPAWN_CHECK_RADIUS = builder

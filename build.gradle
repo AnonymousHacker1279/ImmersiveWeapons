@@ -49,7 +49,7 @@ minecraft {
 
 			property 'forge.logging.console.level', 'debug'
 
-			// For Patchouli to work in-dev
+			// For some dependencies to work in-dev
 			property 'mixin.env.remapRefMap', 'true'
 			property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
 
@@ -69,7 +69,7 @@ minecraft {
 
 			property 'forge.logging.console.level', 'debug'
 
-			// For Patchouli to work in-dev
+			// For some dependencies to work in-dev
 			property 'mixin.env.remapRefMap', 'true'
 			property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
 
@@ -89,7 +89,7 @@ minecraft {
 
 			property 'forge.logging.console.level', 'debug'
 
-			// For Patchouli to work in-dev
+			// For some dependencies to work in-dev
 			property 'mixin.env.remapRefMap', 'true'
 			property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
 

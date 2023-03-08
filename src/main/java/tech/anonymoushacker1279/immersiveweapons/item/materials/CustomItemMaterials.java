@@ -43,7 +43,7 @@ public class CustomItemMaterials {
 			List.of(Tiers.NETHERITE), List.of());
 	public static final Tier STARSTORM = TierSortingRegistry.registerTier(
 			new ForgeTier(4, 1800, 14.0F, 7.0F, 20, BlockTags.create(new ResourceLocation("")),
-					() -> Ingredient.of(ItemRegistry.ASTRAL_INGOT.get())),
+					() -> Ingredient.of(ItemRegistry.STARSTORM_INGOT.get())),
 			new ResourceLocation("immersiveweapons:starstorm"),
 			List.of(Tiers.NETHERITE), List.of());
 }
