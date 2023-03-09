@@ -124,7 +124,7 @@ public class IWConfiguredFeatures {
 				));
 
 		register(context, MOLTEN_ORE_CONFIGURATION, Feature.ORE,
-				new OreConfiguration(OreReplacementTargets.MOLTEN_ORE_TARGETS, 2, 1.0f));
+				new OreConfiguration(OreReplacementTargets.MOLTEN_ORE_TARGETS, 4, 1.0f));
 
 		register(context, NETHER_SULFUR_ORE_CONFIGURATION, Feature.ORE,
 				new OreConfiguration(OreReplacementTargets.SULFUR_ORE_TARGETS, 16, 0.08f));
