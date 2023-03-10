@@ -18,6 +18,11 @@ public class IWKeyBinds {
 	public static final KeyMapping ASTRAL_ARMOR_DASH_EFFECT = new KeyMapping("key." + ImmersiveWeapons.MOD_ID + ".astralArmorDashEffect",
 			KeyConflictContext.IN_GAME,
 			Type.MOUSE,
-			5, // Mouse button 5
+			4, // Mouse button 5
+			CATEGORY);
+	public static final KeyMapping DEBUG_TRACING = new KeyMapping("key." + ImmersiveWeapons.MOD_ID + ".debugTracing",
+			KeyConflictContext.IN_GAME,
+			Type.KEYSYM,
+			InputConstants.KEY_F9,
 			CATEGORY);
 }

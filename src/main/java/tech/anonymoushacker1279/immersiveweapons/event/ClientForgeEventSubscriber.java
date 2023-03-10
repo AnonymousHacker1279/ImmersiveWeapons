@@ -17,6 +17,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
+import tech.anonymoushacker1279.immersiveweapons.client.IWKeyBinds;
 import tech.anonymoushacker1279.immersiveweapons.client.gui.IWOverlays;
 import tech.anonymoushacker1279.immersiveweapons.init.ItemRegistry;
 import tech.anonymoushacker1279.immersiveweapons.item.projectile.gun.data.GunData;
@@ -82,13 +83,15 @@ public class ClientForgeEventSubscriber {
 		}
 	}
 
+	static boolean isDebugTracingEnabled = false;
+
 	@SubscribeEvent
 	public static void RenderGuiOverlayPostEvent(RenderGuiOverlayEvent.Post event) {
+		int screenHeight = event.getWindow().getGuiScaledHeight();
+		int screenWidth = event.getWindow().getGuiScaledWidth();
+
 		if (GunData.changingPlayerFOV != -1) {
 			if (minecraft.options.getCameraType().isFirstPerson()) {
-				int screenHeight = event.getWindow().getGuiScaledHeight();
-				int screenWidth = event.getWindow().getGuiScaledWidth();
-
 				float deltaFrame = minecraft.getDeltaFrameTime() / 8;
 				GunData.scopeScale = Mth.lerp(0.25F * deltaFrame, GunData.scopeScale, 1.125F);
 
@@ -99,6 +102,20 @@ public class ClientForgeEventSubscriber {
 							screenWidth,
 							screenHeight);
 				}
+			}
+		}
+
+		if (IWKeyBinds.DEBUG_TRACING.consumeClick()) {
+			isDebugTracingEnabled = !isDebugTracingEnabled;
+		}
+
+		if (isDebugTracingEnabled) {
+			if (IWOverlays.DEBUG_TRACING_ELEMENT != null) {
+				IWOverlays.DEBUG_TRACING_ELEMENT.render((ForgeGui) minecraft.gui,
+						event.getPoseStack(),
+						event.getPartialTick(),
+						screenWidth,
+						screenHeight);
 			}
 		}
 	}

@@ -393,6 +393,7 @@ public class LanguageGenerator extends IWLanguageProvider {
 
 		addKey("toggleArmorEffect", "Toggle Armor Effect");
 		addKey("astralArmorDashEffect", "Astral Armor Dash");
+		addKey("debugTracing", "Debug Tracing");
 	}
 
 	private void addMessages() {
@@ -780,6 +781,12 @@ public class LanguageGenerator extends IWLanguageProvider {
 			// Convert the number to a roman numeral
 			add("enchantment.level." + i, GeneralUtilities.convertToRoman(i));
 		}
+
+		// Debug tracing strings
+		add("immersiveweapons.debugTracing.meleeItemDamage", "Melee Item Damage: %s");
+		add("immersiveweapons.debugTracing.gunBaseVelocity", "Gun Base Velocity: %s");
+		add("immersiveweapons.debugTracing.selectedAmmo", "Selected Ammo: %s (base damage: %s)");
+		add("immersiveweapons.debugTracing.liveBulletDamage", "Live Bullet Damage: %s (is crit: %s)");
 	}
 
 	/**

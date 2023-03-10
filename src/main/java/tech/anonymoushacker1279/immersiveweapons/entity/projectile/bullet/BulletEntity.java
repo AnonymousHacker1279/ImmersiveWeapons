@@ -3,9 +3,11 @@ package tech.anonymoushacker1279.immersiveweapons.entity.projectile.bullet;
 import it.unimi.dsi.fastutil.ints.IntOpenHashSet;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundAddEntityPacket;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.util.Mth;
@@ -25,15 +27,23 @@ import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.phys.*;
 import net.minecraft.world.phys.HitResult.Type;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.Tags;
 import net.minecraftforge.event.ForgeEventFactory;
+import net.minecraftforge.fml.DistExecutor;
+import net.minecraftforge.network.NetworkEvent;
+import net.minecraftforge.network.NetworkEvent.Context;
+import net.minecraftforge.network.PacketDistributor;
 import org.jetbrains.annotations.Nullable;
+import tech.anonymoushacker1279.immersiveweapons.client.gui.overlays.DebugTracingData;
 import tech.anonymoushacker1279.immersiveweapons.client.particle.bullet_impact.BulletImpactParticleOptions;
 import tech.anonymoushacker1279.immersiveweapons.config.CommonConfig;
 import tech.anonymoushacker1279.immersiveweapons.data.tags.groups.forge.ForgeBlockTagGroups;
 import tech.anonymoushacker1279.immersiveweapons.init.*;
 import tech.anonymoushacker1279.immersiveweapons.item.projectile.gun.MusketItem;
 import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
+
+import java.util.function.Supplier;
 
 public class BulletEntity extends AbstractArrow {
 
@@ -108,6 +118,13 @@ public class BulletEntity extends AbstractArrow {
 
 		if (!leftOwner) {
 			leftOwner = checkLeftOwner();
+		}
+
+		if (tickCount % 10 == 0 && !inGround) {
+			if (!level.isClientSide) {
+				PacketHandler.INSTANCE.send(PacketDistributor.PLAYER.with(() -> (ServerPlayer) getOwner()),
+						new BulletEntityPacketHandler(calculateDamage(), isCritArrow()));
+			}
 		}
 
 		baseTick();
@@ -296,6 +313,21 @@ public class BulletEntity extends AbstractArrow {
 		firingItem = stack;
 	}
 
+	public float calculateDamage() {
+		float velocityModifier = (float) getDeltaMovement().length();
+		// Determine the damage to be dealt, which is calculated by multiplying the velocity modifier
+		// and the base damage. It's clamped if the velocity is extremely high.
+		int damage = Mth.ceil(Mth.clamp(velocityModifier * baseDamage, 0.0D, 2.147483647E9D));
+
+		// Add crit modifier if the bullet is critical
+		if (isCritArrow()) {
+			int randomCritModifier = random.nextInt(damage / 2 + 2);
+			damage = (int) Math.min(randomCritModifier + damage, 2.147483647E9D);
+		}
+
+		return damage;
+	}
+
 	/**
 	 * Runs when an entity is hit.
 	 *
@@ -304,10 +336,8 @@ public class BulletEntity extends AbstractArrow {
 	@Override
 	protected void onHitEntity(EntityHitResult entityRayTraceResult) {
 		Entity entity = entityRayTraceResult.getEntity();
-		float velocityModifier = (float) getDeltaMovement().length();
-		// Determine the damage to be dealt, which is calculated by multiplying the velocity modifier
-		// and the base damage. It's clamped if the velocity is extremely high.
-		int damage = Mth.ceil(Mth.clamp(velocityModifier * baseDamage, 0.0D, 2.147483647E9D));
+
+		float damage = calculateDamage();
 
 		int pierceLevel = getPierceLevel();
 
@@ -328,12 +358,6 @@ public class BulletEntity extends AbstractArrow {
 			}
 
 			piercedEntities.add(entity.getId());
-		}
-
-		// Add crit modifier if the bullet is critical
-		if (isCritArrow()) {
-			long randomCritModifier = random.nextInt(damage / 2 + 2);
-			damage = (int) Math.min(randomCritModifier + damage, 2147483647L);
 		}
 
 		Entity owner = getOwner();
@@ -541,5 +565,34 @@ public class BulletEntity extends AbstractArrow {
 	 */
 	protected void doWhenHitEntity(Entity entity) {
 		level.broadcastEntityEvent(this, VANILLA_IMPACT_STATUS_ID);
+	}
+
+	@Override
+	public void kill() {
+		super.kill();
+		DebugTracingData.liveBulletDamage = 0;
+		DebugTracingData.isBulletCritical = false;
+	}
+
+	public record BulletEntityPacketHandler(double liveBulletDamage, boolean isBulletCritical) {
+
+		public static void encode(BulletEntityPacketHandler msg, FriendlyByteBuf packetBuffer) {
+			packetBuffer.writeDouble(msg.liveBulletDamage).writeBoolean(msg.isBulletCritical);
+		}
+
+		public static BulletEntityPacketHandler decode(FriendlyByteBuf packetBuffer) {
+			return new BulletEntityPacketHandler(packetBuffer.readDouble(), packetBuffer.readBoolean());
+		}
+
+		public static void handle(BulletEntityPacketHandler msg, Supplier<Context> contextSupplier) {
+			NetworkEvent.Context context = contextSupplier.get();
+			context.enqueueWork(() -> DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> runOnClient(msg)));
+			context.setPacketHandled(true);
+		}
+
+		private static void runOnClient(BulletEntityPacketHandler msg) {
+			DebugTracingData.liveBulletDamage = msg.liveBulletDamage;
+			DebugTracingData.isBulletCritical = msg.isBulletCritical;
+		}
 	}
 }

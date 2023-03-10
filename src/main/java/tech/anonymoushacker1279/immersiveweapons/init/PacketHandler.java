@@ -11,6 +11,7 @@ import tech.anonymoushacker1279.immersiveweapons.block.misc.warrior_statue.Warri
 import tech.anonymoushacker1279.immersiveweapons.entity.monster.lava_revenant.LavaRevenantEntity.LavaRevenantEntityPacketHandler;
 import tech.anonymoushacker1279.immersiveweapons.entity.neutral.AbstractFieldMedicEntity.AbstractFieldMedicEntityPacketHandler;
 import tech.anonymoushacker1279.immersiveweapons.entity.projectile.SmokeGrenadeEntity.SmokeGrenadeEntityPacketHandler;
+import tech.anonymoushacker1279.immersiveweapons.entity.projectile.bullet.BulletEntity.BulletEntityPacketHandler;
 import tech.anonymoushacker1279.immersiveweapons.item.armor.AstralArmorItem.AstralArmorItemPacketHandler;
 import tech.anonymoushacker1279.immersiveweapons.item.armor.CobaltArmorItem.CobaltArmorItemPacketHandler;
 import tech.anonymoushacker1279.immersiveweapons.item.armor.TeslaArmorItem.TeslaArmorItemPacketHandler;
@@ -100,11 +101,17 @@ public class PacketHandler {
 				AstralArmorItemPacketHandler::decode,
 				AstralArmorItemPacketHandler::handle
 		);
-		PacketHandler.INSTANCE.registerMessage(networkId,
+		PacketHandler.INSTANCE.registerMessage(networkId++,
 				AstralCrystalBlockPacketHandler.class,
 				AstralCrystalBlockPacketHandler::encode,
 				AstralCrystalBlockPacketHandler::decode,
 				AstralCrystalBlockPacketHandler::handle
+		);
+		PacketHandler.INSTANCE.registerMessage(networkId,
+				BulletEntityPacketHandler.class,
+				BulletEntityPacketHandler::encode,
+				BulletEntityPacketHandler::decode,
+				BulletEntityPacketHandler::handle
 		);
 	}
 }

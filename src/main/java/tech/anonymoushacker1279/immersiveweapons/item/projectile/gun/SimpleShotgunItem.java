@@ -33,7 +33,9 @@ public class SimpleShotgunItem extends AbstractGunItem {
 		bulletEntity.shootFromRotation(player,
 				player.xRot + GeneralUtilities.getRandomNumber(-5.0f, 5.0f),
 				player.yRot + GeneralUtilities.getRandomNumber(-5.0f, 5.0f),
-				0.0F, CommonConfig.BLUNDERBUSS_FIRE_VELOCITY.get().floatValue(), CommonConfig.BLUNDERBUSS_FIRE_INACCURACY.get().floatValue());
+				0.0F,
+				getFireVelocity(),
+				CommonConfig.BLUNDERBUSS_FIRE_INACCURACY.get().floatValue());
 
 		// Roll for random crits
 		if (GeneralUtilities.getRandomNumber(0f, 1f) <= CommonConfig.GUN_CRIT_CHANCE.get()) {
@@ -88,5 +90,10 @@ public class SimpleShotgunItem extends AbstractGunItem {
 	@Override
 	public int getMaxBulletsToFire() {
 		return 4;
+	}
+
+	@Override
+	public float getFireVelocity() {
+		return CommonConfig.BLUNDERBUSS_FIRE_VELOCITY.get().floatValue();
 	}
 }

@@ -172,32 +172,25 @@ public abstract class AbstractGunItem extends Item implements Vanishable {
 		}
 	}
 
-	/**
-	 * Find ammunition.
-	 *
-	 * @param itemStack    the <code>ItemStack</code> to look for
-	 * @param livingEntity the <code>LivingEntity</code> to be searched
-	 * @return ItemStack
-	 */
-	ItemStack findAmmo(ItemStack itemStack, LivingEntity livingEntity) {
-		Player playerEntity = (Player) livingEntity;
-		if (!(itemStack.getItem() instanceof AbstractGunItem)) {
+	public ItemStack findAmmo(ItemStack gun, LivingEntity livingEntity) {
+		Player player = (Player) livingEntity;
+		if (!(gun.getItem() instanceof AbstractGunItem)) {
 			return ItemStack.EMPTY;
 		} else {
-			Predicate<ItemStack> ammoPredicate = ((AbstractGunItem) itemStack.getItem()).getAmmoPredicate();
-			ItemStack heldAmmo = AbstractGunItem.getHeldAmmo(playerEntity, ammoPredicate);
+			Predicate<ItemStack> ammoPredicate = ((AbstractGunItem) gun.getItem()).getAmmoPredicate();
+			ItemStack heldAmmo = AbstractGunItem.getHeldAmmo(player, ammoPredicate);
 			if (!heldAmmo.isEmpty()) {
 				return heldAmmo;
 			} else {
-				ammoPredicate = ((AbstractGunItem) itemStack.getItem()).getInventoryAmmoPredicate();
-				for (int i = 0; i < playerEntity.getInventory().getContainerSize(); ++i) {
-					ItemStack ammoItem = playerEntity.getInventory().getItem(i);
+				ammoPredicate = ((AbstractGunItem) gun.getItem()).getInventoryAmmoPredicate();
+				for (int i = 0; i < player.getInventory().getContainerSize(); ++i) {
+					ItemStack ammoItem = player.getInventory().getItem(i);
 					if (ammoPredicate.test(ammoItem)) {
 						return ammoItem;
 					}
 				}
 
-				return playerEntity.isCreative() ? new ItemStack(defaultAmmo()) : ItemStack.EMPTY;
+				return player.isCreative() ? new ItemStack(defaultAmmo()) : ItemStack.EMPTY;
 			}
 		}
 	}
@@ -397,6 +390,10 @@ public abstract class AbstractGunItem extends Item implements Vanishable {
 		return false;
 	}
 
+	public float getFireVelocity() {
+		return CommonConfig.FLINTLOCK_PISTOL_FIRE_VELOCITY.get().floatValue();
+	}
+
 	protected void fireBullets(AbstractBulletItem bulletItem, Level level, Player player, ItemStack firingItem) {
 		BulletEntity bulletEntity = bulletItem.createBullet(level, player);
 
@@ -404,7 +401,7 @@ public abstract class AbstractGunItem extends Item implements Vanishable {
 
 		bulletEntity.shootFromRotation(player, player.xRot, player.yRot,
 				0.0F,
-				CommonConfig.FLINTLOCK_PISTOL_FIRE_VELOCITY.get().floatValue(),
+				getFireVelocity(),
 				CommonConfig.FLINTLOCK_PISTOL_FIRE_INACCURACY.get().floatValue());
 
 		// Roll for random crits
