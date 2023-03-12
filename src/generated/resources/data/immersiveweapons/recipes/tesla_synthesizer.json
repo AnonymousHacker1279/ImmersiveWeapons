@@ -4,7 +4,7 @@
   "group": "tesla",
   "key": {
     "a": {
-      "item": "minecraft:netherite_block"
+      "item": "minecraft:netherite_ingot"
     },
     "b": {
       "item": "immersiveweapons:molten_block"
