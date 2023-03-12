@@ -6,11 +6,12 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.Font;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
+import tech.anonymoushacker1279.immersiveweapons.event.environment_effects.EnvironmentEffects;
 import tech.anonymoushacker1279.immersiveweapons.item.projectile.bullet.AbstractBulletItem;
 
 public class DebugTracingOverlay {
 
-	public static void renderOverlay(PoseStack poseStack, Font fontRenderer, int screenWidth, int screenHeight) {
+	public static void renderOverlay(PoseStack poseStack, Font fontRenderer, int screenHeight) {
 		RenderSystem.depthMask(false);
 		RenderSystem.setShaderColor(0.0f, 0.0f, 0.0f, 0.1f);
 
@@ -46,6 +47,31 @@ public class DebugTracingOverlay {
 					.withStyle(ChatFormatting.BOLD, ChatFormatting.RED);
 			textHeightPosition -= 15;
 			fontRenderer.draw(poseStack, liveBulletDamage, 5, textHeightPosition, 0xFFFFFF);
+		}
+
+		// Iterate all the values in the damageBonusList and add them together
+		float totalDamageBonus = 0;
+		for (double damageBonus : DebugTracingData.damageBonusList) {
+			totalDamageBonus += damageBonus;
+		}
+		// Convert to a percent and round to nearest 0.1
+		totalDamageBonus = Math.round(totalDamageBonus * 1000.0f) / 10.0f;
+		if (totalDamageBonus > 0) {
+			MutableComponent damageBonus = Component.translatable("immersiveweapons.debugTracing.damageBonus",
+							totalDamageBonus + "%")
+					.withStyle(ChatFormatting.BOLD, ChatFormatting.GOLD);
+			textHeightPosition -= 15;
+			fontRenderer.draw(poseStack, damageBonus, 5, textHeightPosition, 0xFFFFFF);
+		}
+
+		if (EnvironmentEffects.celestialProtectionChanceForNoDamage > 0) {
+			// Convert to a percent and round to nearest 0.01
+			float noDamageChance = Math.round(EnvironmentEffects.celestialProtectionChanceForNoDamage * 10000.0f) / 100.0f;
+			MutableComponent celestialProtectionChanceForNoDamage = Component.translatable("immersiveweapons.debugTracing.celestialProtectionChanceForNoDamage",
+							noDamageChance + "%")
+					.withStyle(ChatFormatting.BOLD, ChatFormatting.AQUA);
+			textHeightPosition -= 15;
+			fontRenderer.draw(poseStack, celestialProtectionChanceForNoDamage, 5, textHeightPosition, 0xFFFFFF);
 		}
 
 		RenderSystem.enableTexture();

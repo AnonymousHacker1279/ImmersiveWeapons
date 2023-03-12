@@ -502,6 +502,8 @@
   "immersiveweapons.block.wall_shelf.locked": "This shelf has been locked",
   "immersiveweapons.block.wall_shelf.unlocked": "This shelf has been unlocked",
   "immersiveweapons.boss.celestial_tower.waves": "Wave %s of %s",
+  "immersiveweapons.debugTracing.celestialProtectionChanceForNoDamage": "Celestial Protection Chance: %s",
+  "immersiveweapons.debugTracing.damageBonus": "Damage Bonus: %s",
   "immersiveweapons.debugTracing.gunBaseVelocity": "Gun Base Velocity: %s",
   "immersiveweapons.debugTracing.liveBulletDamage": "Live Bullet Damage: %s (is crit: %s)",
   "immersiveweapons.debugTracing.meleeItemDamage": "Melee Item Damage: %s",

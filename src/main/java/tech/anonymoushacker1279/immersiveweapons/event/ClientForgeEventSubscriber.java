@@ -19,6 +19,7 @@ import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.client.IWKeyBinds;
 import tech.anonymoushacker1279.immersiveweapons.client.gui.IWOverlays;
+import tech.anonymoushacker1279.immersiveweapons.client.gui.overlays.DebugTracingData;
 import tech.anonymoushacker1279.immersiveweapons.init.ItemRegistry;
 import tech.anonymoushacker1279.immersiveweapons.item.projectile.gun.data.GunData;
 
@@ -83,7 +84,6 @@ public class ClientForgeEventSubscriber {
 		}
 	}
 
-	static boolean isDebugTracingEnabled = false;
 
 	@SubscribeEvent
 	public static void RenderGuiOverlayPostEvent(RenderGuiOverlayEvent.Post event) {
@@ -106,10 +106,10 @@ public class ClientForgeEventSubscriber {
 		}
 
 		if (IWKeyBinds.DEBUG_TRACING.consumeClick()) {
-			isDebugTracingEnabled = !isDebugTracingEnabled;
+			DebugTracingData.isDebugTracingEnabled = !DebugTracingData.isDebugTracingEnabled;
 		}
 
-		if (isDebugTracingEnabled) {
+		if (DebugTracingData.isDebugTracingEnabled) {
 			if (IWOverlays.DEBUG_TRACING_ELEMENT != null) {
 				IWOverlays.DEBUG_TRACING_ELEMENT.render((ForgeGui) minecraft.gui,
 						event.getPoseStack(),

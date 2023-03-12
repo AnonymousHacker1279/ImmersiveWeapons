@@ -1,14 +1,13 @@
 package tech.anonymoushacker1279.immersiveweapons.event;
 
-import com.google.common.collect.Multimap;
+import net.minecraft.client.Minecraft;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.entity.*;
-import net.minecraft.world.entity.ai.attributes.*;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.*;
-import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.item.Item;
 import net.minecraftforge.client.event.RegisterGuiOverlaysEvent;
 import net.minecraftforge.event.TickEvent.PlayerTickEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
@@ -24,7 +23,6 @@ import tech.anonymoushacker1279.immersiveweapons.client.gui.overlays.DebugTracin
 import tech.anonymoushacker1279.immersiveweapons.data.biomes.IWBiomes;
 import tech.anonymoushacker1279.immersiveweapons.event.environment_effects.EnvironmentEffects;
 import tech.anonymoushacker1279.immersiveweapons.init.*;
-import tech.anonymoushacker1279.immersiveweapons.item.projectile.gun.AbstractGunItem;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -303,31 +301,9 @@ public class ForgeEventSubscriber {
 		}
 
 		// Debug tracing
-		if (player.tickCount % 20 == 0) {
-			// Get the melee damage attribute of the currently held item
-			ItemStack heldItem = player.getMainHandItem();
-			Multimap<Attribute, AttributeModifier> modifiers = heldItem.getAttributeModifiers(EquipmentSlot.MAINHAND);
-
-			if (modifiers.isEmpty()) {
-				DebugTracingData.meleeItemDamage = 0;
-			} else {
-				modifiers.forEach((attribute, modifier) -> {
-					if (attribute.equals(Attributes.ATTACK_DAMAGE)) {
-						double damage = modifier.getAmount() + 1;
-						damage += EnchantmentHelper.getDamageBonus(heldItem, MobType.UNDEFINED);
-						DebugTracingData.meleeItemDamage = damage;
-					}
-				});
-			}
-
-			if (heldItem.getItem() instanceof AbstractGunItem gunItem) {
-				// Round to nearest 0.1
-				DebugTracingData.gunBaseVelocity = Math.round(gunItem.getFireVelocity() * 10.0) / 10.0;
-
-				DebugTracingData.selectedAmmo = gunItem.findAmmo(heldItem, player).getItem();
-			} else {
-				DebugTracingData.gunBaseVelocity = 0;
-				DebugTracingData.selectedAmmo = Items.AIR;
+		if (DebugTracingData.isDebugTracingEnabled) {
+			if (player == Minecraft.getInstance().player) {
+				DebugTracingData.handleTracing(player);
 			}
 		}
 	}

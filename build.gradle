@@ -124,8 +124,6 @@ dependencies {
 	// Include WTHIT and badpackets
 	runtimeOnly fg.deobf("mcp.mobius.waila:wthit:forge-${wthit_version}")
 	implementation fg.deobf("lol.bai:badpackets:forge-${badpackets_version}")
-	// Include MmmMmmMmmMmm (Target Dummy)
-	// runtimeOnly fg.deobf("curse.maven:mmmmmmmmmmmm-225738:${target_dummy_version}") //   TODO: Uncomment when ported to 1.19.3
 }
 
 java {

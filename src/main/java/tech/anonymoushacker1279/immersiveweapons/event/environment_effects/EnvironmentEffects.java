@@ -1,18 +1,25 @@
 package tech.anonymoushacker1279.immersiveweapons.event.environment_effects;
 
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.Level;
+import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
-import tech.anonymoushacker1279.immersiveweapons.init.EffectRegistry;
-import tech.anonymoushacker1279.immersiveweapons.init.ItemRegistry;
+import net.minecraftforge.fml.DistExecutor;
+import net.minecraftforge.network.NetworkEvent;
+import net.minecraftforge.network.NetworkEvent.Context;
+import net.minecraftforge.network.PacketDistributor;
+import tech.anonymoushacker1279.immersiveweapons.init.*;
 import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
 
 import java.util.Objects;
+import java.util.function.Supplier;
 
 public class EnvironmentEffects {
 
-	private float celestialProtectionChanceForNoDamage = 0.0f;
+	public static float celestialProtectionChanceForNoDamage = 0.0f;
 
 	public EnvironmentEffects() {
 	}
@@ -42,6 +49,11 @@ public class EnvironmentEffects {
 				celestialProtectionChanceForNoDamage += damage * 0.03f; // Astral armor has a 3% charge rate
 			} else {
 				celestialProtectionChanceForNoDamage += damage * 0.01f; // Other armor has a 1% charge rate
+			}
+
+			if (damagedEntity instanceof ServerPlayer player) {
+				PacketHandler.INSTANCE.send(PacketDistributor.PLAYER.with(() -> player),
+						new EnvironmentEffectsPacketHandler(celestialProtectionChanceForNoDamage));
 			}
 
 			// This effect grants a 5% damage reduction to all damage taken, unless they rolled for no damage
@@ -100,6 +112,27 @@ public class EnvironmentEffects {
 					event.setAmount(damage);
 				}
 			}
+		}
+	}
+
+	public record EnvironmentEffectsPacketHandler(float celestialProtectionChanceForNoDamage) {
+
+		public static void encode(EnvironmentEffectsPacketHandler msg, FriendlyByteBuf packetBuffer) {
+			packetBuffer.writeFloat(msg.celestialProtectionChanceForNoDamage);
+		}
+
+		public static EnvironmentEffectsPacketHandler decode(FriendlyByteBuf packetBuffer) {
+			return new EnvironmentEffectsPacketHandler(packetBuffer.readFloat());
+		}
+
+		public static void handle(EnvironmentEffectsPacketHandler msg, Supplier<Context> contextSupplier) {
+			NetworkEvent.Context context = contextSupplier.get();
+			context.enqueueWork(() -> DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> runOnClient(msg)));
+			context.setPacketHandled(true);
+		}
+
+		private static void runOnClient(EnvironmentEffectsPacketHandler msg) {
+			EnvironmentEffects.celestialProtectionChanceForNoDamage = msg.celestialProtectionChanceForNoDamage;
 		}
 	}
 }
