@@ -36,12 +36,8 @@ public class TiltrosTeleporter implements ITeleporter {
 
 		// Build a spawn area with another portal, if one doesn't already exist
 		Stream<BlockState> destinationBlockStates = destWorld.getBlockStates(
-				new AABB(targetPos.getX() - 2,
-						targetPos.getY() - 2,
-						targetPos.getZ() - 2,
-						targetPos.getX() + 2,
-						targetPos.getY() + 2,
-						targetPos.getZ() + 2));
+				new AABB(targetPos.below(3).relative(entity.getDirection().getOpposite(), 2),
+						targetPos.above(3).relative(entity.getDirection(), 2)));
 
 		if (destinationBlockStates.noneMatch(blockState ->
 				blockState == BlockRegistry.AZUL_STAINED_ORCHID.get().defaultBlockState())) {
