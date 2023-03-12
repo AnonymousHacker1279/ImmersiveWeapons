@@ -111,10 +111,10 @@ public class FamilyGenerator extends RecipeGenerator {
 					.save(consumer, blockRegistryPath(family.standingSign().get()));
 
 			// Slab
-			RecipeGenerator.CraftingTableRecipes.slab(family.slab().get(), planks, planksTriggerName, planksTrigger);
+			RecipeGenerator.CraftingTableRecipes.slab(family.slab().get(), planks, "wooden_slab", planksTriggerName, planksTrigger);
 
 			// Stairs
-			RecipeGenerator.CraftingTableRecipes.stairs(family.stairs().get(), planks, planksTriggerName, planksTrigger);
+			RecipeGenerator.CraftingTableRecipes.stairs(family.stairs().get(), planks, "wooden_stairs", planksTriggerName, planksTrigger);
 
 			// Trapdoor
 			ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, family.trapdoor().get(), 2)

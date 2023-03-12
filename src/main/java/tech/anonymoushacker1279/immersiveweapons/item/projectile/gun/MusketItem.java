@@ -34,7 +34,9 @@ public class MusketItem extends AbstractGunItem {
 		bulletEntity.setFiringItem(firingItem.getItem());
 
 		bulletEntity.shootFromRotation(player, player.xRot, player.yRot,
-				0.0F, CommonConfig.MUSKET_FIRE_VELOCITY.get().floatValue(), CommonConfig.MUSKET_FIRE_INACCURACY.get().floatValue());
+				0.0F,
+				getFireVelocity(),
+				CommonConfig.MUSKET_FIRE_INACCURACY.get().floatValue());
 
 		// Roll for random crits
 		if (GeneralUtilities.getRandomNumber(0f, 1f) <= CommonConfig.GUN_CRIT_CHANCE.get()) {
@@ -88,5 +90,10 @@ public class MusketItem extends AbstractGunItem {
 	@Override
 	public boolean canScope() {
 		return hasScope;
+	}
+
+	@Override
+	public float getFireVelocity() {
+		return CommonConfig.MUSKET_FIRE_VELOCITY.get().floatValue();
 	}
 }

@@ -93,8 +93,8 @@ public class IWPlacedFeatures {
 				));
 
 		register(context, MOLTEN_ORE, configuredFeatures.getOrThrow(IWConfiguredFeatures.MOLTEN_ORE_CONFIGURATION),
-				List.of(HeightRangePlacement.triangle(VerticalAnchor.absolute(-64),
-								VerticalAnchor.absolute(72)),
+				List.of(HeightRangePlacement.triangle(VerticalAnchor.absolute(0),
+								VerticalAnchor.absolute(48)),
 						BiomeFilter.biome(),
 						InSquarePlacement.spread(),
 						CountPlacement.of(6)

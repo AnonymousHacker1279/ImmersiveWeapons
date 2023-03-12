@@ -37,15 +37,15 @@ public class AzulStainedOrchidBlockEntity extends BlockEntity implements EntityB
 				entity.portalEntrancePos = pos.immutable();
 			}
 
-			Level entityWorld = entity.level;
-			MinecraftServer server = entityWorld.getServer();
-			ResourceKey<Level> destination = entityWorld.dimension() == IWDimensions.TILTROS ? Level.OVERWORLD
+			Level entityLevel = entity.level;
+			MinecraftServer server = entityLevel.getServer();
+			ResourceKey<Level> destination = entityLevel.dimension() == IWDimensions.TILTROS ? Level.OVERWORLD
 					: IWDimensions.TILTROS;
 
 			if (server != null) {
 				ServerLevel destinationLevel = server.getLevel(destination);
 				if (destinationLevel != null && !entity.isPassenger()) {
-					entityWorld.getProfiler().push("tiltros_portal");
+					entityLevel.getProfiler().push("tiltros_portal");
 					entity.setPortalCooldown();
 
 					// Get a valid target position if it is unset
@@ -55,7 +55,7 @@ public class AzulStainedOrchidBlockEntity extends BlockEntity implements EntityB
 
 					entity.changeDimension(destinationLevel, new TiltrosTeleporter(targetPos, pos));
 
-					entityWorld.getProfiler().pop();
+					entityLevel.getProfiler().pop();
 				}
 			}
 		} else if (teleportDelay > 0) {
@@ -84,7 +84,22 @@ public class AzulStainedOrchidBlockEntity extends BlockEntity implements EntityB
 							BlockPos pos = new BlockPos(x + i, y, z + j);
 							if (!destinationLevel.getBiome(pos).is(IWBiomes.DEADMANS_DESERT)) {
 								// Move the target position at least 10 blocks away from the edge of the chunk
-								targetPos = new BlockPos(pos.getX() + 10, pos.getY(), pos.getZ() + 10);
+								// Determine if 10 should be added or subtracted to either the X or Z coordinate
+								int xDiff = Math.abs(pos.getX() - x);
+								int zDiff = Math.abs(pos.getZ() - z);
+								if (xDiff > zDiff) {
+									if (pos.getX() > x) {
+										targetPos = pos.offset(10, 0, 0);
+									} else {
+										targetPos = pos.offset(-10, 0, 0);
+									}
+								} else {
+									if (pos.getZ() > z) {
+										targetPos = pos.offset(0, 0, 10);
+									} else {
+										targetPos = pos.offset(0, 0, -10);
+									}
+								}
 								found = true;
 								break;
 							}

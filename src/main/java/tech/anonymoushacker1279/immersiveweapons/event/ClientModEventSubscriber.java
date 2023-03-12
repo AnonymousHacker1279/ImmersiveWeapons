@@ -283,6 +283,7 @@ public class ClientModEventSubscriber {
 
 		event.register(IWKeyBinds.TOGGLE_ARMOR_EFFECT);
 		event.register(IWKeyBinds.ASTRAL_ARMOR_DASH_EFFECT);
+		event.register(IWKeyBinds.DEBUG_TRACING);
 	}
 
 	@SubscribeEvent

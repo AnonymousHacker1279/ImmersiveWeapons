@@ -393,6 +393,7 @@ public class LanguageGenerator extends IWLanguageProvider {
 
 		addKey("toggleArmorEffect", "Toggle Armor Effect");
 		addKey("astralArmorDashEffect", "Astral Armor Dash");
+		addKey("debugTracing", "Debug Tracing");
 	}
 
 	private void addMessages() {
@@ -422,6 +423,7 @@ public class LanguageGenerator extends IWLanguageProvider {
 		addDeathMessage("bleeding", "%s bled to death");
 		addDeathMessage("bleeding.player", "%s bled to death at the hands of %s");
 		addDeathMessage("deadmans_desert", "%s was poisoned by the atmosphere");
+		addDeathMessage("deadmans_desert.player", "%s was poisoned by the atmosphere at the hands of %s");
 		addDeathMessage("deathweed", "%s was poisoned by deathweed");
 		addDeathMessage("deathweed.player", "%s was poisoned by deathweed at the hands of %s");
 		addDeathMessage("meteor", "%s was hit by a meteor");
@@ -732,6 +734,13 @@ public class LanguageGenerator extends IWLanguageProvider {
 		addConfigDescription("tiltros_enabled", "Enable the Tiltros dimension portal - Default true");
 
 		// Entity
+
+		// General
+		addConfigDescription("discovery_advancement_range", """
+				Set the range for checking criteria of the discovery advancement (value is squared) - Default 50
+				Lowering this value may improve server performance,
+				""");
+
 		// Celestial Tower
 		addConfigDescription("celestial_tower_spawn_check_radius", "Set the spawn checking radius for the Celestial Tower." +
 				"\nSetting this higher may slightly negatively impact server ticks in Tiltros, but make Celestial Lanterns more effective - Default 128");
@@ -772,6 +781,14 @@ public class LanguageGenerator extends IWLanguageProvider {
 			// Convert the number to a roman numeral
 			add("enchantment.level." + i, GeneralUtilities.convertToRoman(i));
 		}
+
+		// Debug tracing strings
+		add("immersiveweapons.debugTracing.meleeItemDamage", "Melee Item Damage: %s");
+		add("immersiveweapons.debugTracing.gunBaseVelocity", "Gun Base Velocity: %s");
+		add("immersiveweapons.debugTracing.selectedAmmo", "Selected Ammo: %s (base damage: %s)");
+		add("immersiveweapons.debugTracing.liveBulletDamage", "Live Bullet Damage: %s (is crit: %s)");
+		add("immersiveweapons.debugTracing.damageBonus", "Damage Bonus: %s");
+		add("immersiveweapons.debugTracing.celestialProtectionChanceForNoDamage", "Celestial Protection Chance: %s");
 	}
 
 	/**

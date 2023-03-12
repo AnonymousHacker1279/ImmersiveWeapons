@@ -18,6 +18,7 @@ public class FlyRandomlyGoal extends Goal {
 	private final EvilEyeEntity evilEyeEntity;
 	@Nullable
 	private BlockPos targetPosition;
+	private int targetingCooldown;
 
 	public FlyRandomlyGoal(EvilEyeEntity pMob) {
 		evilEyeEntity = pMob;
@@ -31,6 +32,11 @@ public class FlyRandomlyGoal extends Goal {
 	@Override
 	public void tick() {
 		// If the entity has no target position, or the target position is too close, pick a new one
+
+		if (targetingCooldown > 0) {
+			--targetingCooldown;
+			return;
+		}
 
 		Vec3i immutablePosition = new Vec3i(evilEyeEntity.getX(), evilEyeEntity.getY(), evilEyeEntity.getZ());
 
@@ -59,6 +65,7 @@ public class FlyRandomlyGoal extends Goal {
 					ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, evilEyeEntity)).getType() != HitResult.Type.MISS) {
 				// If there is no direct path, set the target position to null
 				targetPosition = null;
+				targetingCooldown = 40;
 				return;
 			}
 
@@ -68,6 +75,7 @@ public class FlyRandomlyGoal extends Goal {
 				// Ensure the target position is in the Deadman's Desert biome
 				if (!evilEyeEntity.getLevel().getBiome(targetPosition).is(IWBiomes.DEADMANS_DESERT)) {
 					targetPosition = null;
+					targetingCooldown = 40;
 					return;
 				}
 			}

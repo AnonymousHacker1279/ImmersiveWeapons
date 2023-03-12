@@ -1,5 +1,6 @@
 package tech.anonymoushacker1279.immersiveweapons.event;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.damagesource.DamageSource;
@@ -18,6 +19,7 @@ import net.minecraftforge.registries.MissingMappingsEvent;
 import net.minecraftforge.registries.MissingMappingsEvent.Mapping;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.client.gui.IWOverlays;
+import tech.anonymoushacker1279.immersiveweapons.client.gui.overlays.DebugTracingData;
 import tech.anonymoushacker1279.immersiveweapons.data.biomes.IWBiomes;
 import tech.anonymoushacker1279.immersiveweapons.event.environment_effects.EnvironmentEffects;
 import tech.anonymoushacker1279.immersiveweapons.init.*;
@@ -33,9 +35,15 @@ public class ForgeEventSubscriber {
 
 	@SubscribeEvent
 	public static void registerGuiOverlaysEvent(RegisterGuiOverlaysEvent event) {
-		if (IWOverlays.SCOPE_ELEMENT != null) {
-			event.registerAbove(new ResourceLocation("vignette"), ImmersiveWeapons.MOD_ID + ":scope", IWOverlays.SCOPE_ELEMENT);
-		}
+		assert IWOverlays.SCOPE_ELEMENT != null;
+		event.registerAbove(new ResourceLocation("vignette"),
+				ImmersiveWeapons.MOD_ID + ":scope",
+				IWOverlays.SCOPE_ELEMENT);
+
+		assert IWOverlays.DEBUG_TRACING_ELEMENT != null;
+		event.registerAbove(new ResourceLocation(ImmersiveWeapons.MOD_ID + ":scope"),
+				ImmersiveWeapons.MOD_ID + ":debug_tracing",
+				IWOverlays.DEBUG_TRACING_ELEMENT);
 	}
 
 	/**
@@ -289,6 +297,13 @@ public class ForgeEventSubscriber {
 				if (!player.hasEffect(EffectRegistry.CELESTIAL_PROTECTION_EFFECT.get())) {
 					player.hurt(DEADMANS_DESERT_DAMAGE_SOURCE, 1);
 				}
+			}
+		}
+
+		// Debug tracing
+		if (DebugTracingData.isDebugTracingEnabled) {
+			if (player == Minecraft.getInstance().player) {
+				DebugTracingData.handleTracing(player);
 			}
 		}
 	}
