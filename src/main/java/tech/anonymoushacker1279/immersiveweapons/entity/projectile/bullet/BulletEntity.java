@@ -120,9 +120,9 @@ public class BulletEntity extends AbstractArrow {
 			leftOwner = checkLeftOwner();
 		}
 
-		if (tickCount % 10 == 0 && !inGround) {
+		if (tickCount % 10 == 0 && !inGround && getOwner() instanceof ServerPlayer player) {
 			if (!level.isClientSide) {
-				PacketHandler.INSTANCE.send(PacketDistributor.PLAYER.with(() -> (ServerPlayer) getOwner()),
+				PacketHandler.INSTANCE.send(PacketDistributor.PLAYER.with(() -> player),
 						new BulletEntityPacketHandler(calculateDamage(), isCritArrow()));
 			}
 		}
