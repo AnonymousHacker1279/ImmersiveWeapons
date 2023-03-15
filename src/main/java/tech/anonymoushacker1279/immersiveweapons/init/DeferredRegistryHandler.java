@@ -50,5 +50,8 @@ public class DeferredRegistryHandler {
 
 		ImmersiveWeapons.LOGGER.info("Initializing deferred registry for potions");
 		PotionRegistry.POTIONS.register(modEventBus);
+
+		ImmersiveWeapons.LOGGER.info("Initializing deferred registry for enchantments");
+		EnchantmentRegistry.ENCHANTMENTS.register(modEventBus);
 	}
 }

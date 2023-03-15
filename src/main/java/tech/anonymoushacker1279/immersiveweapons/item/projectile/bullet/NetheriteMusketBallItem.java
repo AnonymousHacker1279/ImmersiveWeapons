@@ -35,4 +35,9 @@ public class NetheriteMusketBallItem extends AbstractBulletItem {
 		bulletEntity.setPierceLevel((byte) 2);
 		return bulletEntity;
 	}
+
+	@Override
+	public boolean canBeInfinite() {
+		return false;
+	}
 }

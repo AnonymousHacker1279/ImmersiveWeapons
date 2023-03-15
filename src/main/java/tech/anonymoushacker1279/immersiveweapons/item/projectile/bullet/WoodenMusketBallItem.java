@@ -19,6 +19,11 @@ public class WoodenMusketBallItem extends AbstractBulletItem {
 		damage = damageIn;
 	}
 
+	@Override
+	public float misfireChance() {
+		return 0.3f;
+	}
+
 	/**
 	 * Create a bullet item.
 	 *

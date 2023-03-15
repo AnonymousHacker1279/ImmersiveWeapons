@@ -5,9 +5,10 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ArrowItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
-import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.Level;
+import tech.anonymoushacker1279.immersiveweapons.config.CommonConfig;
 import tech.anonymoushacker1279.immersiveweapons.entity.projectile.bullet.BulletEntity;
+import tech.anonymoushacker1279.immersiveweapons.init.EnchantmentRegistry;
 import tech.anonymoushacker1279.immersiveweapons.init.EntityRegistry;
 
 public abstract class AbstractBulletItem extends ArrowItem {
@@ -25,6 +26,14 @@ public abstract class AbstractBulletItem extends ArrowItem {
 		damage = damageIn;
 	}
 
+	public boolean canBeInfinite() {
+		return true;
+	}
+
+	public float misfireChance() {
+		return 0.0f;
+	}
+
 	public BulletEntity createBullet(Level level, LivingEntity shooter) {
 		BulletEntity bulletEntity = new BulletEntity(EntityRegistry.IRON_MUSKET_BALL_ENTITY.get(), shooter, level);
 		bulletEntity.setBaseDamage(damage);
@@ -33,16 +42,18 @@ public abstract class AbstractBulletItem extends ArrowItem {
 	}
 
 	/**
-	 * Check if the arrow is infinite. A more flexible check than Vanilla provides.
+	 * Check if the bullet is infinite. A more flexible check than Vanilla provides.
+	 * Restricts the ability to lower level bullets, for balance.
 	 *
-	 * @param stack  the <code>ItemStack</code> being checked
-	 * @param bow    the <code>ItemStack</code> containing the bow that's firing
-	 * @param player the <code>Player</code> firing the bow
+	 * @param bullet the bullet being checked
+	 * @param gun    the gun firing the bullet
+	 * @param player the player firing the gun
 	 * @return boolean
 	 */
 	@Override
-	public boolean isInfinite(ItemStack stack, ItemStack bow, Player player) {
-		int enchant = EnchantmentHelper.getTagEnchantmentLevel(Enchantments.INFINITY_ARROWS, bow);
-		return enchant > 0;
+	public boolean isInfinite(ItemStack bullet, ItemStack gun, Player player) {
+		int enchant = EnchantmentHelper.getTagEnchantmentLevel(EnchantmentRegistry.ENDLESS_MUSKET_POUCH.get(), gun);
+		boolean canBeInfinite = CommonConfig.ALLOW_INFINITE_AMMO_ON_ALl_TIERS.get() || canBeInfinite();
+		return canBeInfinite && enchant > 0;
 	}
 }

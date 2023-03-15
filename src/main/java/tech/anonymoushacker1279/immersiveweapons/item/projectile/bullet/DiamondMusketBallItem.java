@@ -35,4 +35,9 @@ public class DiamondMusketBallItem extends AbstractBulletItem {
 		bulletEntity.setPierceLevel((byte) 1);
 		return bulletEntity;
 	}
+
+	@Override
+	public boolean canBeInfinite() {
+		return false;
+	}
 }

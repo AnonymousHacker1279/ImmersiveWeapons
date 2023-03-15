@@ -38,6 +38,7 @@ public class LanguageGenerator extends IWLanguageProvider {
 		addBiomes();
 		addAdvancements();
 		addConfigDescriptions();
+		addEnchantments();
 		addMisc();
 	}
 
@@ -769,6 +770,12 @@ public class LanguageGenerator extends IWLanguageProvider {
 
 		// Cursed Sight Staff
 		addConfigDescription("cursed_sight_staff_max_use_range", "Set the maximum range in blocks of the Cursed Sight Staff - Default 50");
+	}
+
+	private void addEnchantments() {
+		addEnchantment(EnchantmentRegistry.FIREPOWER, "Firepower");
+		addEnchantment(EnchantmentRegistry.IMPACT, "Impact");
+		addEnchantment(EnchantmentRegistry.ENDLESS_MUSKET_POUCH, "Endless Musket Pouch");
 	}
 
 	private void addMisc() {

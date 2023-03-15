@@ -42,16 +42,8 @@ public abstract class AbstractGunItem extends Item implements Vanishable {
 		super(properties);
 	}
 
-	/**
-	 * Runs when the item is released.
-	 *
-	 * @param itemStack    the <code>ItemStack</code> being used
-	 * @param level        the <code>Level</code> the entity is in
-	 * @param livingEntity the <code>LivingEntity</code> releasing the item
-	 * @param timeLeft     the time left from charging
-	 */
 	@Override
-	public void releaseUsing(ItemStack itemStack, Level level, LivingEntity livingEntity,
+	public void releaseUsing(ItemStack gun, Level level, LivingEntity livingEntity,
 	                         int timeLeft) {
 
 		if (livingEntity instanceof Player player) {
@@ -62,38 +54,31 @@ public abstract class AbstractGunItem extends Item implements Vanishable {
 
 			boolean isCreative = player.isCreative();
 			boolean misfire = false;
-			ItemStack ammo = findAmmo(itemStack, livingEntity);
+			ItemStack ammo = findAmmo(gun, livingEntity);
 
 			// Determine number of bullets to fire
 			int bulletsToFire = isCreative ? getMaxBulletsToFire() : getBulletsToFire(ammo);
 
 			// Roll for misfire
-			if (ammo.getItem() == ItemRegistry.WOODEN_MUSKET_BALL.get()) {
-				if (GeneralUtilities.getRandomNumber(1, 10) <= 3) {
+			if (ammo.getItem() instanceof AbstractBulletItem bullet) {
+				if (GeneralUtilities.getRandomNumber(0.0f, 1.0001f) <= bullet.misfireChance()) {
 					misfire = true;
 				}
-			} else if (ammo.getItem() == ItemRegistry.STONE_MUSKET_BALL.get()) {
-				if (GeneralUtilities.getRandomNumber(1, 20) <= 3) {
-					misfire = true;
-				}
-			}
 
-			if (misfire) {
-				level.playSound(null, player.getX(), player.getY(), player.getZ(),
-						getMisfireSound(), SoundSource.PLAYERS, 1.0F,
-						1.0F / (GeneralUtilities.getRandomNumber(0.2f, 0.6f) + 1.2F) + 0.5F);
+				if (misfire) {
+					level.playSound(null, player.getX(), player.getY(), player.getZ(),
+							getMisfireSound(), SoundSource.PLAYERS, 1.0F,
+							1.0F / (GeneralUtilities.getRandomNumber(0.2f, 0.6f) + 1.2F) + 0.5F);
 
-				if (!isCreative) {
-					ammo.shrink(bulletsToFire);
-					if (ammo.isEmpty()) {
-						player.getInventory().removeItem(ammo);
+					handleAmmoStack(gun, ammo, bulletsToFire, player);
+					if (!isCreative) {
+						gun.hurtAndBreak(5, player, (entity) ->
+								entity.broadcastBreakEvent(entity.getUsedItemHand()));
 					}
-					itemStack.hurtAndBreak(5, player, (entity) ->
-							entity.broadcastBreakEvent(entity.getUsedItemHand()));
 				}
 			}
 
-			if (getUseDuration(itemStack) < 0) {
+			if (getUseDuration(gun) < 0) {
 				return;
 			}
 
@@ -117,7 +102,35 @@ public abstract class AbstractGunItem extends Item implements Vanishable {
 							? ammo.getItem() : defaultAmmo());
 
 					for (int i = 0; i < bulletsToFire; ++i) {
-						fireBullets(bulletItem, level, player, itemStack);
+						BulletEntity bulletEntity = bulletItem.createBullet(level, player);
+
+						bulletEntity.setFiringItem(bulletItem);
+						setupFire(bulletEntity, player);
+
+						// Roll for random crits
+						if (GeneralUtilities.getRandomNumber(0f, 1f) <= CommonConfig.GUN_CRIT_CHANCE.get()) {
+							bulletEntity.setCritArrow(true);
+						}
+
+						int enchantmentLevel = gun.getEnchantmentLevel(EnchantmentRegistry.FIREPOWER.get());
+						if (enchantmentLevel > 0) {
+							bulletEntity.setBaseDamage(bulletEntity.getBaseDamage() + (double) enchantmentLevel * 0.5D + 0.5D);
+						}
+
+						bulletEntity.setOwner(player);
+						bulletEntity.pickup = Pickup.DISALLOWED;
+
+						enchantmentLevel = gun.getEnchantmentLevel(EnchantmentRegistry.IMPACT.get());
+						int kb = getKnockbackLevel();
+						if (enchantmentLevel > 0) {
+							kb += enchantmentLevel;
+						}
+						bulletEntity.setKnockback(kb);
+
+						gun.hurtAndBreak(1, player, (entity) ->
+								entity.broadcastBreakEvent(player.getUsedItemHand()));
+
+						level.addFreshEntity(bulletEntity);
 					}
 				}
 
@@ -158,12 +171,7 @@ public abstract class AbstractGunItem extends Item implements Vanishable {
 						getFireSound(), SoundSource.PLAYERS, 1.0F,
 						1.0F / (GeneralUtilities.getRandomNumber(0.2f, 0.6f) + 1.2F) + 0.5F);
 
-				if (!isCreative) {
-					ammo.shrink(bulletsToFire);
-					if (ammo.isEmpty()) {
-						player.getInventory().removeItem(ammo);
-					}
-				}
+				handleAmmoStack(gun, ammo, bulletsToFire, player);
 
 				if (!player.isCreative()) {
 					player.getCooldowns().addCooldown(this, getCooldown());
@@ -173,47 +181,33 @@ public abstract class AbstractGunItem extends Item implements Vanishable {
 	}
 
 	public ItemStack findAmmo(ItemStack gun, LivingEntity livingEntity) {
-		Player player = (Player) livingEntity;
-		if (!(gun.getItem() instanceof AbstractGunItem)) {
-			return ItemStack.EMPTY;
-		} else {
-			Predicate<ItemStack> ammoPredicate = ((AbstractGunItem) gun.getItem()).getAmmoPredicate();
-			ItemStack heldAmmo = AbstractGunItem.getHeldAmmo(player, ammoPredicate);
-			if (!heldAmmo.isEmpty()) {
-				return heldAmmo;
-			} else {
-				ammoPredicate = ((AbstractGunItem) gun.getItem()).getInventoryAmmoPredicate();
-				for (int i = 0; i < player.getInventory().getContainerSize(); ++i) {
-					ItemStack ammoItem = player.getInventory().getItem(i);
-					if (ammoPredicate.test(ammoItem)) {
-						return ammoItem;
+		if (gun.getItem() instanceof AbstractGunItem gunItem) {
+			if (livingEntity instanceof Player player) {
+				Predicate<ItemStack> ammoPredicate = (gunItem).getInventoryAmmoPredicate();
+				ItemStack heldAmmo = AbstractGunItem.getHeldAmmo(player, ammoPredicate);
+				if (!heldAmmo.isEmpty()) {
+					return heldAmmo;
+				} else {
+					ammoPredicate = gunItem.getInventoryAmmoPredicate();
+					for (int i = 0; i < player.getInventory().getContainerSize(); ++i) {
+						ItemStack ammoItem = player.getInventory().getItem(i);
+						if (ammoPredicate.test(ammoItem)) {
+							return ammoItem;
+						}
 					}
-				}
 
-				return player.isCreative() ? new ItemStack(defaultAmmo()) : ItemStack.EMPTY;
+					return player.isCreative() ? new ItemStack(defaultAmmo()) : ItemStack.EMPTY;
+				}
 			}
 		}
+		return ItemStack.EMPTY;
 	}
 
-	/**
-	 * Check for a valid repair item.
-	 *
-	 * @param toRepair the <code>ItemStack</code> being repaired
-	 * @param repair   the <code>ItemStack</code> to repair the first one
-	 * @return boolean
-	 */
 	@Override
 	public boolean isValidRepairItem(ItemStack toRepair, ItemStack repair) {
 		return getRepairMaterial().test(repair) || super.isValidRepairItem(toRepair, repair);
 	}
 
-	/**
-	 * Get ammunition from the hand.
-	 *
-	 * @param livingEntity the <code>LivingEntity</code> instance
-	 * @param isAmmo       <code>Predicate</code> extending ItemStack checking for ammo
-	 * @return ItemStack
-	 */
 	protected static ItemStack getHeldAmmo(LivingEntity livingEntity, Predicate<ItemStack> isAmmo) {
 		if (isAmmo.test(livingEntity.getItemInHand(InteractionHand.OFF_HAND))) {
 			return livingEntity.getItemInHand(InteractionHand.OFF_HAND);
@@ -223,31 +217,23 @@ public abstract class AbstractGunItem extends Item implements Vanishable {
 		}
 	}
 
-	/**
-	 * Runs when the player right-clicks.
-	 *
-	 * @param worldIn  the <code>World</code> the player is in
-	 * @param playerIn the <code>PlayerEntity</code> performing the action
-	 * @param handIn   the <code>Hand</code> the player is using
-	 * @return ActionResult extending ItemStack
-	 */
 	@Override
-	public InteractionResultHolder<ItemStack> use(Level worldIn, Player playerIn,
-	                                              InteractionHand handIn) {
+	public InteractionResultHolder<ItemStack> use(Level level, Player player,
+	                                              InteractionHand hand) {
 
-		ItemStack itemInHand = playerIn.getItemInHand(handIn);
-		boolean hasAmmo = !findAmmo(itemInHand, playerIn).isEmpty();
+		ItemStack itemInHand = player.getItemInHand(hand);
+		boolean hasAmmo = !findAmmo(itemInHand, player).isEmpty();
 
-		InteractionResultHolder<ItemStack> resultHolder = ForgeEventFactory.onArrowNock(itemInHand, worldIn, playerIn,
-				handIn, hasAmmo);
+		InteractionResultHolder<ItemStack> resultHolder = ForgeEventFactory.onArrowNock(itemInHand, level, player,
+				hand, hasAmmo);
 		if (resultHolder != null) {
 			return resultHolder;
 		}
 
-		if (!playerIn.isCreative() && !hasAmmo) {
+		if (!player.isCreative() && !hasAmmo) {
 			return InteractionResultHolder.fail(itemInHand);
 		} else {
-			playerIn.startUsingItem(handIn);
+			player.startUsingItem(hand);
 			return InteractionResultHolder.consume(itemInHand);
 		}
 	}
@@ -277,15 +263,6 @@ public abstract class AbstractGunItem extends Item implements Vanishable {
 				new GunScopePacketHandler(GunData.playerFOV, -1, 0.5f));
 
 		return super.onDroppedByPlayer(item, player);
-	}
-
-	/**
-	 * Get ammo predicates.
-	 *
-	 * @return Predicate extending ItemStack
-	 */
-	public Predicate<ItemStack> getAmmoPredicate() {
-		return getInventoryAmmoPredicate();
 	}
 
 	/**
@@ -394,27 +371,25 @@ public abstract class AbstractGunItem extends Item implements Vanishable {
 		return CommonConfig.FLINTLOCK_PISTOL_FIRE_VELOCITY.get().floatValue();
 	}
 
-	protected void fireBullets(AbstractBulletItem bulletItem, Level level, Player player, ItemStack firingItem) {
-		BulletEntity bulletEntity = bulletItem.createBullet(level, player);
+	public int getKnockbackLevel() {
+		return 0;
+	}
 
-		bulletEntity.setFiringItem(firingItem.getItem());
-
+	protected void setupFire(BulletEntity bulletEntity, Player player) {
 		bulletEntity.shootFromRotation(player, player.xRot, player.yRot,
 				0.0F,
 				getFireVelocity(),
 				CommonConfig.FLINTLOCK_PISTOL_FIRE_INACCURACY.get().floatValue());
+	}
 
-		// Roll for random crits
-		if (GeneralUtilities.getRandomNumber(0f, 1f) <= CommonConfig.GUN_CRIT_CHANCE.get()) {
-			bulletEntity.setCritArrow(true);
+	protected void handleAmmoStack(ItemStack gun, ItemStack ammo, int bulletsToFire, Player player) {
+		if (!player.isCreative() && ammo.getItem() instanceof AbstractBulletItem bulletItem) {
+			if (!bulletItem.isInfinite(ammo, gun, player)) {
+				ammo.shrink(bulletsToFire);
+				if (ammo.isEmpty()) {
+					player.getInventory().removeItem(ammo);
+				}
+			}
 		}
-
-		bulletEntity.setOwner(player);
-		bulletEntity.pickup = Pickup.DISALLOWED;
-
-		firingItem.hurtAndBreak(1, player, (entity) ->
-				entity.broadcastBreakEvent(player.getUsedItemHand()));
-
-		level.addFreshEntity(bulletEntity);
 	}
 }

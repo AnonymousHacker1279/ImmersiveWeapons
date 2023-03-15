@@ -18,4 +18,9 @@ public class NetheriteArrowItem extends AbstractArrowItem {
 		arrowEntity.setBaseDamage(damage);
 		return arrowEntity;
 	}
+
+	@Override
+	public boolean canBeInfinite() {
+		return false;
+	}
 }

@@ -2,15 +2,11 @@ package tech.anonymoushacker1279.immersiveweapons.item.projectile.gun;
 
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.projectile.AbstractArrow.Pickup;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
-import net.minecraft.world.level.Level;
 import tech.anonymoushacker1279.immersiveweapons.config.CommonConfig;
 import tech.anonymoushacker1279.immersiveweapons.entity.projectile.bullet.BulletEntity;
 import tech.anonymoushacker1279.immersiveweapons.init.SoundEventRegistry;
-import tech.anonymoushacker1279.immersiveweapons.item.projectile.bullet.AbstractBulletItem;
 import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
 
 public class SimpleShotgunItem extends AbstractGunItem {
@@ -25,31 +21,13 @@ public class SimpleShotgunItem extends AbstractGunItem {
 	}
 
 	@Override
-	protected void fireBullets(AbstractBulletItem bulletItem, Level level, Player player, ItemStack firingItem) {
-		BulletEntity bulletEntity = bulletItem.createBullet(level, player);
-
-		bulletEntity.setFiringItem(firingItem.getItem());
-
+	public void setupFire(BulletEntity bulletEntity, Player player) {
 		bulletEntity.shootFromRotation(player,
 				player.xRot + GeneralUtilities.getRandomNumber(-5.0f, 5.0f),
 				player.yRot + GeneralUtilities.getRandomNumber(-5.0f, 5.0f),
 				0.0F,
 				getFireVelocity(),
 				CommonConfig.BLUNDERBUSS_FIRE_INACCURACY.get().floatValue());
-
-		// Roll for random crits
-		if (GeneralUtilities.getRandomNumber(0f, 1f) <= CommonConfig.GUN_CRIT_CHANCE.get()) {
-			bulletEntity.setCritArrow(true);
-		}
-
-		bulletEntity.setOwner(player);
-		bulletEntity.pickup = Pickup.DISALLOWED;
-		bulletEntity.setKnockback(3);
-
-		firingItem.hurtAndBreak(1, player, (entity) ->
-				entity.broadcastBreakEvent(player.getUsedItemHand()));
-
-		level.addFreshEntity(bulletEntity);
 	}
 
 	/**
@@ -95,5 +73,10 @@ public class SimpleShotgunItem extends AbstractGunItem {
 	@Override
 	public float getFireVelocity() {
 		return CommonConfig.BLUNDERBUSS_FIRE_VELOCITY.get().floatValue();
+	}
+
+	@Override
+	public int getKnockbackLevel() {
+		return 3;
 	}
 }

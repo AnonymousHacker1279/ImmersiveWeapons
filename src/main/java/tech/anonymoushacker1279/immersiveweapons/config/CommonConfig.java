@@ -27,6 +27,7 @@ public class CommonConfig {
 
 	// General
 	public static ForgeConfigSpec.ConfigValue<Double> GUN_CRIT_CHANCE;
+	public static ForgeConfigSpec.ConfigValue<Boolean> ALLOW_INFINITE_AMMO_ON_ALl_TIERS;
 
 	// Flintlock Pistol
 	public static ForgeConfigSpec.ConfigValue<Double> FLINTLOCK_PISTOL_FIRE_VELOCITY;
@@ -81,8 +82,10 @@ public class CommonConfig {
 
 		builder.push("Celestial Tower");
 		CELESTIAL_TOWER_SPAWN_CHECK_RADIUS = builder
-				.comment("Set the spawn checking radius for the Celestial Tower.\n" +
-						"Higher values increase the effectiveness of Celestial Lanterns - Default 256")
+				.comment("""
+						Set the spawn checking radius for the Celestial Tower.
+						Higher values increase the effectiveness of Celestial Lanterns - Default 256
+						""")
 				.translation("config.immersiveweapons.celestial_tower_spawn_check_radius")
 				.define("celestial_tower_spawn_checking_radius", 256);
 		CELESTIAL_TOWER_MINIONS_WAVE_SIZE_MODIFIER = builder
@@ -103,6 +106,13 @@ public class CommonConfig {
 				.comment("Set the chance for a fired bullet to be critical - Default 0.1")
 				.translation("config.immersiveweapons.gun_crit_chance")
 				.defineInRange("gun_crit_chance", 0.1D, 0.0D, 1.0D);
+		ALLOW_INFINITE_AMMO_ON_ALl_TIERS = builder
+				.comment("""
+						Allow infinity-type enchantments to work on all ammo tiers.
+						By default, it is restricted to cobalt and lower tiers. - Default false
+						""")
+				.translation("config.immersiveweapons.allow_infinite_ammo_on_all_tiers")
+				.define("allow_infinite_ammo_on_all_tiers", false);
 		builder.pop();
 
 		builder.push("Flintlock Pistol");
