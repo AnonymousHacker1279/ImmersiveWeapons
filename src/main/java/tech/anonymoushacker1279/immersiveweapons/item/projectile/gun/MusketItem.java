@@ -2,6 +2,7 @@ package tech.anonymoushacker1279.immersiveweapons.item.projectile.gun;
 
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 import tech.anonymoushacker1279.immersiveweapons.config.CommonConfig;
@@ -23,10 +24,10 @@ public class MusketItem extends AbstractGunItem {
 	}
 
 	@Override
-	public void setupFire(BulletEntity bulletEntity, Player player) {
+	public void setupFire(ItemStack gun, BulletEntity bulletEntity, Player player) {
 		bulletEntity.shootFromRotation(player, player.xRot, player.yRot,
 				0.0F,
-				getFireVelocity(),
+				getFireVelocity(gun),
 				CommonConfig.MUSKET_FIRE_INACCURACY.get().floatValue());
 	}
 
@@ -71,7 +72,7 @@ public class MusketItem extends AbstractGunItem {
 	}
 
 	@Override
-	public float getFireVelocity() {
+	public float getBaseFireVelocity() {
 		return CommonConfig.MUSKET_FIRE_VELOCITY.get().floatValue();
 	}
 }

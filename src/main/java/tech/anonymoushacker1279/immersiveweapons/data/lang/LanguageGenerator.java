@@ -776,6 +776,9 @@ public class LanguageGenerator extends IWLanguageProvider {
 		addEnchantment(EnchantmentRegistry.FIREPOWER, "Firepower");
 		addEnchantment(EnchantmentRegistry.IMPACT, "Impact");
 		addEnchantment(EnchantmentRegistry.ENDLESS_MUSKET_POUCH, "Endless Musket Pouch");
+		addEnchantment(EnchantmentRegistry.SCORCH_SHOT, "Scorch Shot");
+		addEnchantment(EnchantmentRegistry.RAPID_FIRE, "Rapid Fire");
+		addEnchantment(EnchantmentRegistry.VELOCITY, "Velocity");
 	}
 
 	private void addMisc() {

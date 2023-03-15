@@ -7,9 +7,11 @@ import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.Item;
+import net.minecraft.world.entity.projectile.AbstractArrow;
+import net.minecraft.world.item.*;
 import net.minecraftforge.client.event.RegisterGuiOverlaysEvent;
 import net.minecraftforge.event.TickEvent.PlayerTickEvent;
+import net.minecraftforge.event.entity.EntityJoinLevelEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
@@ -31,7 +33,6 @@ import java.util.List;
 public class ForgeEventSubscriber {
 
 	public static final DamageSource DEADMANS_DESERT_DAMAGE_SOURCE = new DamageSource("immersiveweapons.deadmans_desert").bypassArmor();
-
 
 	@SubscribeEvent
 	public static void registerGuiOverlaysEvent(RegisterGuiOverlaysEvent event) {
@@ -329,5 +330,21 @@ public class ForgeEventSubscriber {
 
 		// Molten armor set bonus
 		effects.moltenArmorSetBonus(event, source);
+	}
+
+	@SubscribeEvent
+	public static void entityJoinLevelEvent(EntityJoinLevelEvent event) {
+		// Handle the Velocity enchantment on bows (guns are handled in the gun code)
+		if (event.getEntity() instanceof AbstractArrow arrow) {
+			if (arrow.getOwner() instanceof Player player && player.getItemInHand(player.getUsedItemHand()).getItem() instanceof BowItem) {
+				ItemStack bow = player.getItemInHand(player.getUsedItemHand());
+				// If the bow is not empty, and has the enchantment, apply its effect
+				int enchantLevel = bow.getEnchantmentLevel(EnchantmentRegistry.VELOCITY.get());
+				if (!bow.isEmpty() && enchantLevel > 0) {
+					// Each level increases velocity by 10%
+					arrow.setDeltaMovement(arrow.getDeltaMovement().scale(1 + (0.1f * enchantLevel)));
+				}
+			}
+		}
 	}
 }

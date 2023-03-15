@@ -105,20 +105,21 @@ public abstract class AbstractGunItem extends Item implements Vanishable {
 						BulletEntity bulletEntity = bulletItem.createBullet(level, player);
 
 						bulletEntity.setFiringItem(bulletItem);
-						setupFire(bulletEntity, player);
+						setupFire(gun, bulletEntity, player);
 
 						// Roll for random crits
 						if (GeneralUtilities.getRandomNumber(0f, 1f) <= CommonConfig.GUN_CRIT_CHANCE.get()) {
 							bulletEntity.setCritArrow(true);
 						}
 
+						bulletEntity.setOwner(player);
+						bulletEntity.pickup = Pickup.DISALLOWED;
+
+						// Handle enchants
 						int enchantmentLevel = gun.getEnchantmentLevel(EnchantmentRegistry.FIREPOWER.get());
 						if (enchantmentLevel > 0) {
 							bulletEntity.setBaseDamage(bulletEntity.getBaseDamage() + (double) enchantmentLevel * 0.5D + 0.5D);
 						}
-
-						bulletEntity.setOwner(player);
-						bulletEntity.pickup = Pickup.DISALLOWED;
 
 						enchantmentLevel = gun.getEnchantmentLevel(EnchantmentRegistry.IMPACT.get());
 						int kb = getKnockbackLevel();
@@ -126,6 +127,11 @@ public abstract class AbstractGunItem extends Item implements Vanishable {
 							kb += enchantmentLevel;
 						}
 						bulletEntity.setKnockback(kb);
+
+						enchantmentLevel = gun.getEnchantmentLevel(EnchantmentRegistry.SCORCH_SHOT.get());
+						if (enchantmentLevel > 0) {
+							bulletEntity.setSecondsOnFire(enchantmentLevel * 100);
+						}
 
 						gun.hurtAndBreak(1, player, (entity) ->
 								entity.broadcastBreakEvent(player.getUsedItemHand()));
@@ -174,7 +180,10 @@ public abstract class AbstractGunItem extends Item implements Vanishable {
 				handleAmmoStack(gun, ammo, bulletsToFire, player);
 
 				if (!player.isCreative()) {
-					player.getCooldowns().addCooldown(this, getCooldown());
+					int rapidFireLevel = gun.getEnchantmentLevel(EnchantmentRegistry.RAPID_FIRE.get());
+					// Each level reduces the cooldown by 5%
+					int cooldown = getCooldown() - (int) (getCooldown() * (0.05f * rapidFireLevel));
+					player.getCooldowns().addCooldown(this, cooldown);
 				}
 			}
 		}
@@ -367,7 +376,13 @@ public abstract class AbstractGunItem extends Item implements Vanishable {
 		return false;
 	}
 
-	public float getFireVelocity() {
+	public float getFireVelocity(ItemStack gun) {
+		int velocityLevel = gun.getEnchantmentLevel(EnchantmentRegistry.VELOCITY.get());
+		// Each level increases velocity by 10%
+		return getBaseFireVelocity() * (1.0f + (0.1f * velocityLevel));
+	}
+
+	public float getBaseFireVelocity() {
 		return CommonConfig.FLINTLOCK_PISTOL_FIRE_VELOCITY.get().floatValue();
 	}
 
@@ -375,10 +390,10 @@ public abstract class AbstractGunItem extends Item implements Vanishable {
 		return 0;
 	}
 
-	protected void setupFire(BulletEntity bulletEntity, Player player) {
+	protected void setupFire(ItemStack gun, BulletEntity bulletEntity, Player player) {
 		bulletEntity.shootFromRotation(player, player.xRot, player.yRot,
 				0.0F,
-				getFireVelocity(),
+				getFireVelocity(gun),
 				CommonConfig.FLINTLOCK_PISTOL_FIRE_INACCURACY.get().floatValue());
 	}
 

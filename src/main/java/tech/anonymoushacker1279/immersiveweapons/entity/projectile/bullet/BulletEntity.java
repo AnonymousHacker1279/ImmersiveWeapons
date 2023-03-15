@@ -295,7 +295,7 @@ public class BulletEntity extends AbstractArrow {
 				}
 			}
 
-			setPos(newPositionX, newPositionY, newPositionZ);
+			moveTo(newPositionX, newPositionY, newPositionZ);
 			checkInsideBlocks();
 		}
 	}
