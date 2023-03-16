@@ -1,76 +1,33 @@
 package tech.anonymoushacker1279.immersiveweapons.item;
 
-import com.google.common.collect.ImmutableMultimap;
-import com.google.common.collect.ImmutableMultimap.Builder;
-import com.google.common.collect.Multimap;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.ai.attributes.*;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.*;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.common.ForgeMod;
-import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
 
-public class PikeItem extends Item {
+public class PikeItem extends TieredItem implements Vanishable {
 
-	public Multimap<Attribute, AttributeModifier> pikeAttributes;
 	public final Ingredient repairIngredient;
+	public final double damage;
+	public final double attackSpeed;
 
-	/**
-	 * Constructor for PikeItem.
-	 *
-	 * @param properties    the <code>Properties</code> for the item
-	 * @param damageIn      the damage
-	 * @param attackSpeedIn the attack speed
-	 */
-	public PikeItem(Properties properties, double damageIn, double attackSpeedIn, Ingredient repairIngredient) {
-		super(properties);
+	public PikeItem(Tier tier, Properties properties, double damageBonus, double attackSpeed, Ingredient repairIngredient) {
+		super(tier, properties);
 
 		this.repairIngredient = repairIngredient;
-
-		// Add damage and attack speed to the pike attributes
-		Builder<Attribute, AttributeModifier> builder = ImmutableMultimap.builder();
-		builder.put(Attributes.ATTACK_DAMAGE, new AttributeModifier(BASE_ATTACK_DAMAGE_UUID, "Tool modifier", damageIn, AttributeModifier.Operation.ADDITION));
-		builder.put(Attributes.ATTACK_SPEED, new AttributeModifier(BASE_ATTACK_SPEED_UUID, "Tool modifier", attackSpeedIn, AttributeModifier.Operation.ADDITION));
-		pikeAttributes = builder.build();
+		damage = damageBonus + tier.getAttackDamageBonus();
+		this.attackSpeed = attackSpeed;
 	}
 
-	public void addReachDistanceAttributes() {
-		Builder<Attribute, AttributeModifier> builder = ImmutableMultimap.builder();
-
-		pikeAttributes = builder.put(ForgeMod.REACH_DISTANCE.get(),
-						new AttributeModifier(GeneralUtilities.ATTACK_REACH_MODIFIER,
-								"Weapon modifier",
-								0.5D,
-								AttributeModifier.Operation.ADDITION))
-				.putAll(pikeAttributes)
-				.build();
-	}
-
-	/**
-	 * Check if the block can be damaged.
-	 *
-	 * @param state   the <code>BlockState</code> of the block
-	 * @param worldIn the <code>World</code> the block is in
-	 * @param pos     the <code>BlockPos</code> the block is at
-	 * @param player  the <code>PlayerEntity</code> damaging the block
-	 * @return boolean
-	 */
 	@Override
 	public boolean canAttackBlock(BlockState state, Level worldIn, BlockPos pos, Player player) {
 		return !player.isCreative();
 	}
 
-	/**
-	 * Get the use animation.
-	 *
-	 * @param stack the <code>ItemStack</code> instance
-	 * @return UseAction
-	 */
 	@Override
 	public UseAnim getUseAnimation(ItemStack stack) {
 		return UseAnim.SPEAR;
@@ -118,10 +75,5 @@ public class PikeItem extends Item {
 	@Override
 	public boolean isValidRepairItem(ItemStack toRepair, ItemStack repair) {
 		return repairIngredient.test(repair) || super.isValidRepairItem(toRepair, repair);
-	}
-
-	@Override
-	public Multimap<Attribute, AttributeModifier> getAttributeModifiers(EquipmentSlot equipmentSlot, ItemStack stack) {
-		return equipmentSlot == EquipmentSlot.MAINHAND ? pikeAttributes : super.getAttributeModifiers(equipmentSlot, stack);
 	}
 }

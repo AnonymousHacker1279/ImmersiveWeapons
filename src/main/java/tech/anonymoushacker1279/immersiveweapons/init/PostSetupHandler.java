@@ -19,26 +19,6 @@ public class PostSetupHandler {
 	public static void init() {
 		ImmersiveWeapons.LOGGER.info("Initializing post-setup handler");
 
-		// Set special attributes for pikes
-		ItemRegistry.WOODEN_PIKE.get().addReachDistanceAttributes();
-		ItemRegistry.STONE_PIKE.get().addReachDistanceAttributes();
-		ItemRegistry.GOLDEN_PIKE.get().addReachDistanceAttributes();
-		ItemRegistry.COPPER_PIKE.get().addReachDistanceAttributes();
-		ItemRegistry.IRON_PIKE.get().addReachDistanceAttributes();
-		ItemRegistry.COBALT_PIKE.get().addReachDistanceAttributes();
-		ItemRegistry.DIAMOND_PIKE.get().addReachDistanceAttributes();
-		ItemRegistry.NETHERITE_PIKE.get().addReachDistanceAttributes();
-
-		// Set special attributes for gauntlets
-		ItemRegistry.WOODEN_GAUNTLET.get().addReachDistanceAttributes();
-		ItemRegistry.STONE_GAUNTLET.get().addReachDistanceAttributes();
-		ItemRegistry.GOLDEN_GAUNTLET.get().addReachDistanceAttributes();
-		ItemRegistry.COPPER_GAUNTLET.get().addReachDistanceAttributes();
-		ItemRegistry.IRON_GAUNTLET.get().addReachDistanceAttributes();
-		ItemRegistry.COBALT_GAUNTLET.get().addReachDistanceAttributes();
-		ItemRegistry.DIAMOND_GAUNTLET.get().addReachDistanceAttributes();
-		ItemRegistry.NETHERITE_GAUNTLET.get().addReachDistanceAttributes();
-
 		// Set custom armor equip sounds, as these don't exist during the initialization of materials
 		CustomArmorMaterials.TESLA.setEquipSound(SoundEventRegistry.TESLA_ARMOR_EQUIP.get());
 		CustomArmorMaterials.MOLTEN.setEquipSound(SoundEventRegistry.MOLTEN_ARMOR_EQUIP.get());

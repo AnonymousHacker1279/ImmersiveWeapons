@@ -73,14 +73,14 @@ public class ItemRegistry {
 	public static final RegistryObject<HoeItem> STARSTORM_HOE = ITEMS.register("starstorm_hoe", () -> new HoeItem(CustomItemMaterials.STARSTORM, -7, 0.0f, new Properties()));
 
 	// Weapons
-	public static final RegistryObject<PikeItem> WOODEN_PIKE = ITEMS.register("wooden_pike", () -> new PikeItem(new Properties().durability(59), 4.0d, -2.6d, Ingredient.of(ItemTags.PLANKS)));
-	public static final RegistryObject<PikeItem> STONE_PIKE = ITEMS.register("stone_pike", () -> new PikeItem(new Properties().durability(131), 5.0d, -2.6d, Ingredient.of(ItemTags.STONE_TOOL_MATERIALS)));
-	public static final RegistryObject<PikeItem> GOLDEN_PIKE = ITEMS.register("golden_pike", () -> new PikeItem(new Properties().durability(32), 4.0d, -2.6d, Ingredient.of(Tags.Items.INGOTS_GOLD)));
-	public static final RegistryObject<PikeItem> COPPER_PIKE = ITEMS.register("copper_pike", () -> new PikeItem(new Properties().durability(180), 5.0d, -2.6d, Ingredient.of(Tags.Items.INGOTS_COPPER)));
-	public static final RegistryObject<PikeItem> IRON_PIKE = ITEMS.register("iron_pike", () -> new PikeItem(new Properties().durability(250), 6.0d, -2.6d, Ingredient.of(Tags.Items.INGOTS_IRON)));
-	public static final RegistryObject<PikeItem> COBALT_PIKE = ITEMS.register("cobalt_pike", () -> new PikeItem(new Properties().durability(300), 6.0d, -2.6d, Ingredient.of(ForgeItemTagGroups.COBALT_INGOTS)));
-	public static final RegistryObject<PikeItem> DIAMOND_PIKE = ITEMS.register("diamond_pike", () -> new PikeItem(new Properties().durability(1561), 7.0d, -2.6d, Ingredient.of(Tags.Items.GEMS_DIAMOND)));
-	public static final RegistryObject<PikeItem> NETHERITE_PIKE = ITEMS.register("netherite_pike", () -> new PikeItem(new Properties().durability(2031).fireResistant(), 8.0d, -2.6d, Ingredient.of(Tags.Items.INGOTS_NETHERITE)));
+	public static final RegistryObject<PikeItem> WOODEN_PIKE = ITEMS.register("wooden_pike", () -> new PikeItem(Tiers.WOOD, new Properties().durability(59), 4, -2.6d, Ingredient.of(ItemTags.PLANKS)));
+	public static final RegistryObject<PikeItem> STONE_PIKE = ITEMS.register("stone_pike", () -> new PikeItem(Tiers.STONE, new Properties().durability(131), 4, -2.6d, Ingredient.of(ItemTags.STONE_TOOL_MATERIALS)));
+	public static final RegistryObject<PikeItem> GOLDEN_PIKE = ITEMS.register("golden_pike", () -> new PikeItem(Tiers.GOLD, new Properties().durability(32), 4, -2.6d, Ingredient.of(Tags.Items.INGOTS_GOLD)));
+	public static final RegistryObject<PikeItem> COPPER_PIKE = ITEMS.register("copper_pike", () -> new PikeItem(CustomItemMaterials.COPPER, new Properties().durability(180), 4, -2.6d, Ingredient.of(Tags.Items.INGOTS_COPPER)));
+	public static final RegistryObject<PikeItem> IRON_PIKE = ITEMS.register("iron_pike", () -> new PikeItem(Tiers.IRON, new Properties().durability(250), 4, -2.6d, Ingredient.of(Tags.Items.INGOTS_IRON)));
+	public static final RegistryObject<PikeItem> COBALT_PIKE = ITEMS.register("cobalt_pike", () -> new PikeItem(CustomItemMaterials.COBALT, new Properties().durability(300), 4, -2.6d, Ingredient.of(ForgeItemTagGroups.COBALT_INGOTS)));
+	public static final RegistryObject<PikeItem> DIAMOND_PIKE = ITEMS.register("diamond_pike", () -> new PikeItem(Tiers.DIAMOND, new Properties().durability(1561), 4, -2.6d, Ingredient.of(Tags.Items.GEMS_DIAMOND)));
+	public static final RegistryObject<PikeItem> NETHERITE_PIKE = ITEMS.register("netherite_pike", () -> new PikeItem(Tiers.NETHERITE, new Properties().durability(2031).fireResistant(), 4, -2.6d, Ingredient.of(Tags.Items.INGOTS_NETHERITE)));
 	public static final RegistryObject<SimplePistolItem> FLINTLOCK_PISTOL = ITEMS.register("flintlock_pistol", () -> new SimplePistolItem(new Properties().durability(499)));
 	public static final RegistryObject<SimpleShotgunItem> BLUNDERBUSS = ITEMS.register("blunderbuss", () -> new SimpleShotgunItem(new Properties().durability(449)));
 	public static final RegistryObject<MusketItem> MUSKET = ITEMS.register("musket", () -> new MusketItem(new Properties().durability(499), false));

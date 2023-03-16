@@ -1,56 +1,37 @@
 package tech.anonymoushacker1279.immersiveweapons.item;
 
-import com.google.common.collect.ImmutableMultimap;
-import com.google.common.collect.ImmutableMultimap.Builder;
-import com.google.common.collect.Multimap;
 import net.minecraft.core.BlockPos;
-import net.minecraft.tags.BlockTags;
 import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.ai.attributes.*;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.*;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.material.Material;
-import net.minecraftforge.common.ForgeMod;
+import net.minecraftforge.common.ToolAction;
 import net.minecraftforge.common.ToolActions;
 import tech.anonymoushacker1279.immersiveweapons.init.EffectRegistry;
+import tech.anonymoushacker1279.immersiveweapons.init.EnchantmentRegistry;
 import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
 
 public class GauntletItem extends TieredItem implements Vanishable {
 
-	public Multimap<Attribute, AttributeModifier> gauntletAttributes;
 	public final Ingredient repairIngredient;
+	public final double damage;
+	public final double attackSpeed;
 	private final float bleedChance;
 	private final int bleedLevel;
 
-	public GauntletItem(Tier tier, int attackDamageModifier, float attackSpeedModifier, Properties properties, float bleedChance, int bleedLevel, Ingredient repairIngredient) {
+	public GauntletItem(Tier tier, int damageBonus, float attackSpeed, Properties properties, float bleedChance, int bleedLevel, Ingredient repairIngredient) {
 		super(tier, properties);
 
 		this.repairIngredient = repairIngredient;
+		damage = damageBonus + tier.getAttackDamageBonus();
+		this.attackSpeed = attackSpeed;
 		this.bleedChance = bleedChance;
 		this.bleedLevel = bleedLevel;
-
-		// Add damage and attack speed to the pike attributes
-		Builder<Attribute, AttributeModifier> builder = ImmutableMultimap.builder();
-		builder.put(Attributes.ATTACK_DAMAGE, new AttributeModifier(BASE_ATTACK_DAMAGE_UUID, "Weapon modifier", (float) attackDamageModifier + tier.getAttackDamageBonus(), AttributeModifier.Operation.ADDITION));
-		builder.put(Attributes.ATTACK_SPEED, new AttributeModifier(BASE_ATTACK_SPEED_UUID, "Weapon modifier", attackSpeedModifier, AttributeModifier.Operation.ADDITION));
-		gauntletAttributes = builder.build();
-	}
-
-	public void addReachDistanceAttributes() {
-		Builder<Attribute, AttributeModifier> builder = ImmutableMultimap.builder();
-
-		gauntletAttributes = builder.put(ForgeMod.REACH_DISTANCE.get(),
-						new AttributeModifier(GeneralUtilities.ATTACK_REACH_MODIFIER,
-								"Weapon modifier",
-								-2.0D,
-								AttributeModifier.Operation.ADDITION))
-				.putAll(gauntletAttributes)
-				.build();
 	}
 
 	@Override
@@ -59,14 +40,25 @@ public class GauntletItem extends TieredItem implements Vanishable {
 	}
 
 	@Override
-	public float getDestroySpeed(ItemStack stack, BlockState state) {
-		Material material = state.getMaterial();
-		return material != Material.PLANT && material != Material.REPLACEABLE_PLANT && !state.is(BlockTags.LEAVES) && material != Material.VEGETABLE ? 1.0F : 1.5F;
-	}
-
-	@Override
 	public boolean hurtEnemy(ItemStack stack, LivingEntity target, LivingEntity attacker) {
-		bleedBehavior(target);
+		if (GeneralUtilities.getRandomNumber(0.0f, 1.0f) <= bleedChance) {
+			int enchantmentLevel = stack.getEnchantmentLevel(EnchantmentRegistry.CRIMSON_CLAW.get());
+			int duration = 200 + (enchantmentLevel * 100);
+
+			target.addEffect(new MobEffectInstance(EffectRegistry.BLEEDING_EFFECT.get(), duration,
+					bleedLevel + enchantmentLevel, true, false));
+
+			enchantmentLevel = stack.getEnchantmentLevel(EnchantmentRegistry.EXCESSIVE_FORCE.get());
+			if (enchantmentLevel > 0) {
+				duration = 2 + (enchantmentLevel * 20);
+				target.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, duration, 0, true, false));
+				target.addEffect(new MobEffectInstance(MobEffects.DIG_SLOWDOWN, duration, 0, true, false));
+
+				// Knock back the target
+				target.knockback(0.5f, attacker.getX() - target.getX(), attacker.getZ() - target.getZ());
+			}
+		}
+
 		stack.hurtAndBreak(1, attacker, (breakEvent) -> breakEvent.broadcastBreakEvent(EquipmentSlot.MAINHAND));
 		return true;
 	}
@@ -81,12 +73,7 @@ public class GauntletItem extends TieredItem implements Vanishable {
 	}
 
 	@Override
-	public Multimap<Attribute, AttributeModifier> getAttributeModifiers(EquipmentSlot equipmentSlot, ItemStack stack) {
-		return equipmentSlot == EquipmentSlot.MAINHAND ? gauntletAttributes : super.getAttributeModifiers(equipmentSlot, stack);
-	}
-
-	@Override
-	public boolean canPerformAction(ItemStack stack, net.minecraftforge.common.ToolAction toolAction) {
+	public boolean canPerformAction(ItemStack stack, ToolAction toolAction) {
 		return ToolActions.DEFAULT_SWORD_ACTIONS.contains(toolAction);
 	}
 
@@ -100,17 +87,5 @@ public class GauntletItem extends TieredItem implements Vanishable {
 	@Override
 	public boolean isValidRepairItem(ItemStack toRepair, ItemStack repair) {
 		return repairIngredient.test(repair) || super.isValidRepairItem(toRepair, repair);
-	}
-
-	/**
-	 * Set the bleeding behavior.
-	 *
-	 * @param target the <code>LivingEntity</code> being targeted
-	 */
-	public void bleedBehavior(LivingEntity target) {
-		if (GeneralUtilities.getRandomNumber(0.0f, 1.0f) <= bleedChance) {
-			target.addEffect(new MobEffectInstance(EffectRegistry.BLEEDING_EFFECT.get(), 200,
-					bleedLevel, true, false));
-		}
 	}
 }
