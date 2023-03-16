@@ -31,6 +31,16 @@
     "immersiveweapons:stardust_button",
     "immersiveweapons:stardust_sign",
     "immersiveweapons:stardust_wall_sign",
+    "immersiveweapons:oak_table",
+    "immersiveweapons:spruce_table",
+    "immersiveweapons:birch_table",
+    "immersiveweapons:jungle_table",
+    "immersiveweapons:acacia_table",
+    "immersiveweapons:dark_oak_table",
+    "immersiveweapons:crimson_table",
+    "immersiveweapons:warped_table",
+    "immersiveweapons:burned_oak_table",
+    "immersiveweapons:stardust_table",
     "immersiveweapons:wooden_spikes"
   ]
 }

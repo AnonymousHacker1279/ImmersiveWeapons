@@ -39,7 +39,6 @@ public class ItemLists {
 		modelGeneratorIgnoredItems.add(ItemRegistry.SMOKE_GRENADE_PURPLE.get());
 		modelGeneratorIgnoredItems.add(ItemRegistry.SMOKE_GRENADE_YELLOW.get());
 		modelGeneratorIgnoredItems.add(ItemRegistry.EXPLOSIVE_CHOCOLATE_BAR.get());
-		modelGeneratorIgnoredItems.add(ItemRegistry.MRE.get());
 		modelGeneratorIgnoredItems.add(ItemRegistry.WOODEN_GAUNTLET.get());
 		modelGeneratorIgnoredItems.add(ItemRegistry.STONE_GAUNTLET.get());
 		modelGeneratorIgnoredItems.add(ItemRegistry.GOLDEN_GAUNTLET.get());

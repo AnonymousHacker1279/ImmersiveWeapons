@@ -238,7 +238,7 @@ public class LanguageGenerator extends IWLanguageProvider {
 
 		// Misc items
 		addSubtitle("item.smoke_grenade_hiss", "Smoke grenade hisses");
-		addSubtitle("item.generic_whoosh", "Item flies");
+		addSubtitle("item.generic_item_throw", "Item flies");
 
 		// Misc blocks
 		addSubtitle("block.small_parts_table.used", "Small parts table used");

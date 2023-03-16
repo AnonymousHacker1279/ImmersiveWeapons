@@ -181,11 +181,10 @@ public class SoundGenerator extends SoundDefinitionsProvider {
 								SoundType.SOUND)
 						.stream()));
 
-		add(SoundEventRegistry.GENERIC_WHOOSH.get(), definition()
-				.subtitle("subtitles.immersiveweapons.item.generic_whoosh")
-				.with(Sound.sound(new ResourceLocation(ImmersiveWeapons.MOD_ID,
-								"generic_whoosh"),
-						SoundType.SOUND)));
+		add(SoundEventRegistry.GENERIC_ITEM_THROW.get(), definition()
+				.subtitle("subtitles.immersiveweapons.item.generic_item_throw")
+				.with(Sound.sound(new ResourceLocation("entity.snowball.throw"),
+						SoundType.EVENT)));
 
 		add(SoundEventRegistry.SMALL_PARTS_TABLE_USED.get(), definition()
 				.subtitle("subtitles.immersiveweapons.block.small_parts_table.used")

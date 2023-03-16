@@ -37,7 +37,7 @@ public class SmokeGrenadeItem extends Item {
 	public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
 		ItemStack itemInHand = player.getItemInHand(hand);
 		level.playSound(null, player.getX(), player.getY(), player.getZ(),
-				SoundEventRegistry.GENERIC_WHOOSH.get(), SoundSource.NEUTRAL,
+				SoundEventRegistry.GENERIC_ITEM_THROW.get(), SoundSource.NEUTRAL,
 				0.5F, 0.4F / (GeneralUtilities.getRandomNumber(0.2f, 0.6f) + 0.8F));
 
 		if (!level.isClientSide) {

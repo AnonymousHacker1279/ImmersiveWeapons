@@ -1,8 +1,8 @@
 {
-	"credit": "Made with Blockbench",
+	"credit": "AnonymousHacker1279",
 	"textures": {
-		"0": "immersiveweapons:item/custom/cobalt",
-		"particle": "immersiveweapons:item/custom/cobalt"
+		"0": "immersiveweapons:block/cobalt_block",
+		"particle": "immersiveweapons:block/cobalt_block"
 	},
 	"elements": [
 		{

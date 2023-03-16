@@ -794,7 +794,7 @@
   "subtitles.immersiveweapons.entity.wandering_warrior.death": "Warrior dies",
   "subtitles.immersiveweapons.entity.wandering_warrior.hurt": "Warrior hurts",
   "subtitles.immersiveweapons.entity.wandering_warrior.step": "Warrior walks",
-  "subtitles.immersiveweapons.item.generic_whoosh": "Item flies",
+  "subtitles.immersiveweapons.item.generic_item_throw": "Item flies",
   "subtitles.immersiveweapons.item.gun.blunderbuss.fire": "Blunderbuss fires",
   "subtitles.immersiveweapons.item.gun.bullet_whizz": "Bullet whizzes",
   "subtitles.immersiveweapons.item.gun.flare_gun.fire": "Flare gun fires",

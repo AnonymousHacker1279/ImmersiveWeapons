@@ -1,8 +1,8 @@
 {
-	"credit": "Made with Blockbench",
+	"credit": "AnonymousHacker1279",
 	"textures": {
-		"0": "immersiveweapons:item/custom/brown",
-		"particle": "immersiveweapons:item/custom/brown"
+		"0": "minecraft:block/stripped_oak_log",
+		"particle": "minecraft:block/stripped_oak_log"
 	},
 	"elements": [
 		{

@@ -1,8 +1,9 @@
 {
-	"credit": "Made with Blockbench",
+	"credit": "AnonymousHacker1279",
+	"render_type": "minecraft:translucent",
 	"textures": {
 		"0": "minecraft:block/iron_block",
-		"1": "immersiveweapons:item/custom/iron",
+		"1": "minecraft:block/raw_iron_block",
 		"particle": "minecraft:block/iron_block"
 	},
 	"elements": [

@@ -1,8 +1,8 @@
 {
-	"credit": "Made with Blockbench",
+	"credit": "AnonymousHacker1279",
 	"textures": {
-		"0": "immersiveweapons:item/custom/iron",
-		"particle": "immersiveweapons:item/custom/iron"
+		"0": "minecraft:block/iron_block",
+		"particle": "minecraft:block/iron_block"
 	},
 	"elements": [
 		{
@@ -191,6 +191,9 @@
 			}
 		}
 	],
+	"overrides": [
+		{"predicate": {"immersiveweapons:gunslinger": 1}, "model": "immersiveweapons:item/iron_gauntlet_alt"}
+	],
 	"display": {
 		"thirdperson_righthand": {
 			"rotation": [90, 0, 0],
@@ -234,14 +237,6 @@
 			"origin": [0, 0, 0],
 			"color": 0,
 			"children": [5, 6, 7, 8, 9, 10, 11, 12, 13, 14]
-		}
-	],
-	"overrides": [
-		{
-			"predicate": {
-				"immersiveweapons:gunslinger": 1
-			},
-			"model": "immersiveweapons:item/iron_gauntlet_alt"
 		}
 	]
 }

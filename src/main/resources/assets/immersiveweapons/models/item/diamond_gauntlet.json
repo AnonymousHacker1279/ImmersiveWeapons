@@ -1,8 +1,8 @@
 {
-	"credit": "Made with Blockbench",
+	"credit": "AnonymousHacker1279",
 	"textures": {
-		"0": "immersiveweapons:item/custom/diamond_light",
-		"particle": "immersiveweapons:item/custom/diamond_light"
+		"0": "minecraft:block/diamond_block",
+		"particle": "minecraft:block/diamond_block"
 	},
 	"elements": [
 		{

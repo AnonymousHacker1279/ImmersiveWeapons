@@ -195,9 +195,12 @@
   },
   "generic_whoosh": {
     "sounds": [
-      "immersiveweapons:generic_whoosh"
+      {
+        "type": "event",
+        "name": "entity.snowball.throw"
+      }
     ],
-    "subtitle": "subtitles.immersiveweapons.item.generic_whoosh"
+    "subtitle": "subtitles.immersiveweapons.item.generic_item_throw"
   },
   "lava_revenant_ambient": {
     "sounds": [
