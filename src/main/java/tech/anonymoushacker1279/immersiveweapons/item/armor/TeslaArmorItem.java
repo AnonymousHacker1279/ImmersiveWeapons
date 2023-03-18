@@ -1,7 +1,7 @@
 package tech.anonymoushacker1279.immersiveweapons.item.armor;
 
-import net.minecraft.client.Minecraft;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
@@ -23,7 +23,6 @@ import java.util.function.Supplier;
 
 public class TeslaArmorItem extends ArmorItem {
 
-	private static boolean effectEnabled = false;
 	private final boolean isLeggings;
 	private int countdown = 0;
 
@@ -36,13 +35,6 @@ public class TeslaArmorItem extends ArmorItem {
 	public TeslaArmorItem(ArmorMaterial material, EquipmentSlot slot, Properties properties, boolean isLeggings) {
 		super(material, slot, properties);
 		this.isLeggings = isLeggings;
-	}
-
-	/**
-	 * Set the armor effect.
-	 */
-	private static void setEffectState(boolean state) {
-		effectEnabled = state;
 	}
 
 	/**
@@ -75,9 +67,16 @@ public class TeslaArmorItem extends ArmorItem {
 				player.getItemBySlot(EquipmentSlot.LEGS).getItem() == ItemRegistry.TESLA_LEGGINGS.get() &&
 				player.getItemBySlot(EquipmentSlot.FEET).getItem() == ItemRegistry.TESLA_BOOTS.get()) {
 
+			boolean effectEnabled = player.getPersistentData().getBoolean("TeslaArmorEffectEnabled");
+
 			if (level.isClientSide) {
 				if (IWKeyBinds.TOGGLE_ARMOR_EFFECT.consumeClick()) {
+					// Store the toggle variable in the player's NBT
+					player.getPersistentData().putBoolean("TeslaArmorEffectEnabled", !effectEnabled);
+
+					// Send packet to server
 					PacketHandler.INSTANCE.sendToServer(new TeslaArmorItemPacketHandler(!effectEnabled));
+
 					if (effectEnabled) {
 						level.playSound(player,
 								player.blockPosition(),
@@ -95,9 +94,6 @@ public class TeslaArmorItem extends ArmorItem {
 								1.0f);
 
 						countdown = 0;
-					}
-					if (!Minecraft.getInstance().isLocalServer()) {
-						setEffectState(!effectEnabled);
 					}
 				}
 			}
@@ -150,51 +146,28 @@ public class TeslaArmorItem extends ArmorItem {
 
 	public record TeslaArmorItemPacketHandler(boolean state) {
 
-		/**
-		 * Constructor for TeslaArmorItemPacketHandler.
-		 *
-		 * @param state the state of the armor effect
-		 */
-		public TeslaArmorItemPacketHandler {
-		}
-
-		/**
-		 * Encodes a packet
-		 *
-		 * @param msg          the <code>TeslaArmorItemPacketHandler</code> message being sent
-		 * @param packetBuffer the <code>PacketBuffer</code> containing packet data
-		 */
 		public static void encode(TeslaArmorItemPacketHandler msg, FriendlyByteBuf packetBuffer) {
 			packetBuffer.writeBoolean(msg.state);
 		}
 
-		/**
-		 * Decodes a packet
-		 *
-		 * @param packetBuffer the <code>PacketBuffer</code> containing packet data
-		 * @return TeslaArmorItemPacketHandler
-		 */
 		public static TeslaArmorItemPacketHandler decode(FriendlyByteBuf packetBuffer) {
 			return new TeslaArmorItemPacketHandler(packetBuffer.readBoolean());
 		}
 
-		/**
-		 * Handles an incoming packet, by sending it to the client/server
-		 *
-		 * @param contextSupplier the <code>Supplier</code> providing context
-		 */
 		public static void handle(TeslaArmorItemPacketHandler msg, Supplier<Context> contextSupplier) {
 			NetworkEvent.Context context = contextSupplier.get();
-			context.enqueueWork(() -> DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> run(msg)));
-			context.enqueueWork(() -> DistExecutor.unsafeRunWhenOn(Dist.DEDICATED_SERVER, () -> () -> run(msg)));
+			if (context.getSender() != null) {
+				context.enqueueWork(() -> DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> run(msg, context.getSender())));
+				context.enqueueWork(() -> DistExecutor.unsafeRunWhenOn(Dist.DEDICATED_SERVER, () -> () -> run(msg, context.getSender())));
+			}
 			context.setPacketHandled(true);
 		}
 
 		/**
 		 * Runs specifically on the server, when a packet is received
 		 */
-		private static void run(TeslaArmorItemPacketHandler msg) {
-			TeslaArmorItem.setEffectState(msg.state);
+		private static void run(TeslaArmorItemPacketHandler msg, ServerPlayer player) {
+			player.getPersistentData().putBoolean("TeslaArmorEffectEnabled", msg.state);
 		}
 	}
 }

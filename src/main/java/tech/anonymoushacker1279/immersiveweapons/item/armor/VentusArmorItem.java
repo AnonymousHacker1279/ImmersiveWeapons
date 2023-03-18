@@ -3,6 +3,7 @@ package tech.anonymoushacker1279.immersiveweapons.item.armor;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
@@ -24,7 +25,6 @@ import java.util.function.Supplier;
 
 public class VentusArmorItem extends ArmorItem {
 
-	private static boolean effectEnabled = false;
 	private final boolean isLeggings;
 
 	/**
@@ -36,13 +36,6 @@ public class VentusArmorItem extends ArmorItem {
 	public VentusArmorItem(ArmorMaterial material, EquipmentSlot slot, Properties properties, boolean isLeggings) {
 		super(material, slot, properties);
 		this.isLeggings = isLeggings;
-	}
-
-	/**
-	 * Toggle the armor effect.
-	 */
-	static void setEffectState(boolean state) {
-		effectEnabled = state;
 	}
 
 	/**
@@ -75,13 +68,15 @@ public class VentusArmorItem extends ArmorItem {
 				player.getItemBySlot(EquipmentSlot.LEGS).getItem() == ItemRegistry.VENTUS_LEGGINGS.get() &&
 				player.getItemBySlot(EquipmentSlot.FEET).getItem() == ItemRegistry.VENTUS_BOOTS.get()) {
 
+			boolean effectEnabled = player.getPersistentData().getBoolean("VentusArmorEffectEnabled");
+
 			if (level.isClientSide) {
 				if (IWKeyBinds.TOGGLE_ARMOR_EFFECT.consumeClick()) {
-					PacketHandler.INSTANCE.sendToServer(new VentusArmorItemPacketHandler(!effectEnabled));
+					// Store the toggle variable in the player's NBT
+					player.getPersistentData().putBoolean("VentusArmorEffectEnabled", !effectEnabled);
 
-					if (!Minecraft.getInstance().isLocalServer()) {
-						setEffectState(!effectEnabled);
-					}
+					// Send packet to server
+					PacketHandler.INSTANCE.sendToServer(new VentusArmorItemPacketHandler(!effectEnabled));
 				}
 				if (effectEnabled) {
 					if (Minecraft.getInstance().options.keyJump.consumeClick()) {
@@ -107,51 +102,25 @@ public class VentusArmorItem extends ArmorItem {
 
 	public record VentusArmorItemPacketHandler(boolean state) {
 
-		/**
-		 * Constructor for VentusArmorItemPacketHandler.
-		 *
-		 * @param state the armor effect state
-		 */
-		public VentusArmorItemPacketHandler {
-		}
-
-		/**
-		 * Encodes a packet
-		 *
-		 * @param msg          the <code>VentusArmorItemPacketHandler</code> message being sent
-		 * @param packetBuffer the <code>PacketBuffer</code> containing packet data
-		 */
 		public static void encode(VentusArmorItemPacketHandler msg, FriendlyByteBuf packetBuffer) {
 			packetBuffer.writeBoolean(msg.state);
 		}
 
-		/**
-		 * Decodes a packet
-		 *
-		 * @param packetBuffer the <code>PacketBuffer</code> containing packet data
-		 * @return VentusArmorItemPacketHandler
-		 */
 		public static VentusArmorItemPacketHandler decode(FriendlyByteBuf packetBuffer) {
 			return new VentusArmorItemPacketHandler(packetBuffer.readBoolean());
 		}
 
-		/**
-		 * Handles an incoming packet, by sending it to the client/server
-		 *
-		 * @param contextSupplier the <code>Supplier</code> providing context
-		 */
 		public static void handle(VentusArmorItemPacketHandler msg, Supplier<Context> contextSupplier) {
 			NetworkEvent.Context context = contextSupplier.get();
-			context.enqueueWork(() -> DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> run(msg)));
-			context.enqueueWork(() -> DistExecutor.unsafeRunWhenOn(Dist.DEDICATED_SERVER, () -> () -> run(msg)));
+			if (context.getSender() != null) {
+				context.enqueueWork(() -> DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> run(msg, context.getSender())));
+				context.enqueueWork(() -> DistExecutor.unsafeRunWhenOn(Dist.DEDICATED_SERVER, () -> () -> run(msg, context.getSender())));
+			}
 			context.setPacketHandled(true);
 		}
 
-		/**
-		 * Runs when a packet is received
-		 */
-		private static void run(VentusArmorItemPacketHandler msg) {
-			VentusArmorItem.setEffectState(msg.state);
+		private static void run(VentusArmorItemPacketHandler msg, ServerPlayer player) {
+			player.getPersistentData().putBoolean("VentusArmorEffectEnabled", msg.state);
 		}
 	}
 }

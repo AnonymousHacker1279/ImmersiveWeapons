@@ -1,8 +1,8 @@
 package tech.anonymoushacker1279.immersiveweapons.item.armor;
 
-import net.minecraft.client.Minecraft;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
@@ -24,7 +24,6 @@ import java.util.function.Supplier;
 
 public class CobaltArmorItem extends ArmorItem {
 
-	private static boolean effectEnabled = false;
 	private final boolean isLeggings;
 
 	/**
@@ -36,13 +35,6 @@ public class CobaltArmorItem extends ArmorItem {
 	public CobaltArmorItem(ArmorMaterial material, EquipmentSlot slot, Properties properties, boolean isLeggings) {
 		super(material, slot, properties);
 		this.isLeggings = isLeggings;
-	}
-
-	/**
-	 * Set the armor effect.
-	 */
-	private static void setEffectState(boolean state) {
-		effectEnabled = state;
 	}
 
 	/**
@@ -78,12 +70,15 @@ public class CobaltArmorItem extends ArmorItem {
 			if (player.getUUID().toString().equals("380df991-f603-344c-a090-369bad2a924a")
 					|| player.getUUID().toString().equals("94f11dac-d1bc-46da-877b-c69f533f2da2")) {
 
+				boolean effectEnabled = player.getPersistentData().getBoolean("CobaltArmorEffectEnabled");
+
 				if (level.isClientSide) {
 					if (IWKeyBinds.TOGGLE_ARMOR_EFFECT.consumeClick()) {
+						// Store the toggle variable in the player's NBT
+						player.getPersistentData().putBoolean("CobaltArmorEffectEnabled", !effectEnabled);
+
+						// Send packet to server
 						PacketHandler.INSTANCE.sendToServer(new CobaltArmorItemPacketHandler(!effectEnabled));
-						if (!Minecraft.getInstance().isLocalServer()) {
-							setEffectState(!effectEnabled);
-						}
 					}
 				}
 
@@ -118,54 +113,30 @@ public class CobaltArmorItem extends ArmorItem {
 		}
 	}
 
-	public record CobaltArmorItemPacketHandler(boolean effectState) {
+	public record CobaltArmorItemPacketHandler(boolean state) {
 
-		/**
-		 * Constructor for CobaltArmorItemPacketHandler.
-		 *
-		 * @param effectState the state of the armor effect
-		 */
-		public CobaltArmorItemPacketHandler {
-		}
-
-		/**
-		 * Encodes a packet
-		 *
-		 * @param msg          the <code>CobaltArmorItemPacketHandler</code> message being sent
-		 * @param packetBuffer the <code>PacketBuffer</code> containing packet data
-		 */
 		public static void encode(CobaltArmorItemPacketHandler msg, FriendlyByteBuf packetBuffer) {
-			packetBuffer.writeBoolean(msg.effectState);
+			packetBuffer.writeBoolean(msg.state);
 		}
 
-		/**
-		 * Decodes a packet
-		 *
-		 * @param packetBuffer the <code>PacketBuffer</code> containing packet data
-		 * @return CobaltArmorItemPacketHandler
-		 */
 		public static CobaltArmorItemPacketHandler decode(FriendlyByteBuf packetBuffer) {
 			return new CobaltArmorItemPacketHandler(packetBuffer.readBoolean());
 		}
 
-		/**
-		 * Handles an incoming packet, by sending it to the client/server
-		 *
-		 * @param msg             the <code>CobaltArmorItemPacketHandler</code> message being sent
-		 * @param contextSupplier the <code>Supplier</code> providing context
-		 */
 		public static void handle(CobaltArmorItemPacketHandler msg, Supplier<Context> contextSupplier) {
 			NetworkEvent.Context context = contextSupplier.get();
-			context.enqueueWork(() -> DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> run(msg)));
-			context.enqueueWork(() -> DistExecutor.unsafeRunWhenOn(Dist.DEDICATED_SERVER, () -> () -> run(msg)));
+			if (context.getSender() != null) {
+				context.enqueueWork(() -> DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> run(msg, context.getSender())));
+				context.enqueueWork(() -> DistExecutor.unsafeRunWhenOn(Dist.DEDICATED_SERVER, () -> () -> run(msg, context.getSender())));
+			}
 			context.setPacketHandled(true);
 		}
 
 		/**
 		 * Runs when a packet is received
 		 */
-		private static void run(CobaltArmorItemPacketHandler msg) {
-			CobaltArmorItem.setEffectState(msg.effectState);
+		private static void run(CobaltArmorItemPacketHandler msg, ServerPlayer player) {
+			player.getPersistentData().putBoolean("CobaltArmorEffectEnabled", msg.state);
 		}
 	}
 }

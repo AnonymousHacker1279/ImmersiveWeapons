@@ -3,6 +3,7 @@ package tech.anonymoushacker1279.immersiveweapons.item.armor;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
@@ -25,7 +26,6 @@ import java.util.function.Supplier;
 
 public class AstralArmorItem extends ArmorItem {
 
-	private static boolean effectEnabled = false;
 	private final boolean isLeggings;
 	private int dashCooldown = 0;
 
@@ -38,13 +38,6 @@ public class AstralArmorItem extends ArmorItem {
 	public AstralArmorItem(ArmorMaterial material, EquipmentSlot slot, Properties properties, boolean isLeggings) {
 		super(material, slot, properties);
 		this.isLeggings = isLeggings;
-	}
-
-	/**
-	 * Toggle the armor effect.
-	 */
-	static void setEffectState(boolean state) {
-		effectEnabled = state;
 	}
 
 	/**
@@ -77,12 +70,15 @@ public class AstralArmorItem extends ArmorItem {
 				player.getItemBySlot(EquipmentSlot.LEGS).getItem() == ItemRegistry.ASTRAL_LEGGINGS.get() &&
 				player.getItemBySlot(EquipmentSlot.FEET).getItem() == ItemRegistry.ASTRAL_BOOTS.get()) {
 
+			boolean effectEnabled = player.getPersistentData().getBoolean("AstralArmorEffectEnabled");
+
 			if (level.isClientSide) {
 				if (IWKeyBinds.TOGGLE_ARMOR_EFFECT.consumeClick()) {
+					// Store the toggle variable in the player's NBT
+					player.getPersistentData().putBoolean("AstralArmorEffectEnabled", !effectEnabled);
+
+					// Send packet to server
 					PacketHandler.INSTANCE.sendToServer(new AstralArmorItemPacketHandler(!effectEnabled));
-					if (!Minecraft.getInstance().isLocalServer()) {
-						setEffectState(!effectEnabled);
-					}
 				}
 				if (effectEnabled) {
 					if (Minecraft.getInstance().options.keyJump.consumeClick()) {
@@ -133,49 +129,25 @@ public class AstralArmorItem extends ArmorItem {
 
 	public record AstralArmorItemPacketHandler(boolean state) {
 
-		/**
-		 * Constructor for AstralArmorItemPacketHandler.
-		 */
-		public AstralArmorItemPacketHandler {
-		}
-
-		/**
-		 * Encodes a packet
-		 *
-		 * @param msg          the <code>AstralArmorItemPacketHandler</code> message being sent
-		 * @param packetBuffer the <code>PacketBuffer</code> containing packet data
-		 */
 		public static void encode(AstralArmorItemPacketHandler msg, FriendlyByteBuf packetBuffer) {
 			packetBuffer.writeBoolean(msg.state);
 		}
 
-		/**
-		 * Decodes a packet
-		 *
-		 * @param packetBuffer the <code>PacketBuffer</code> containing packet data
-		 * @return AstralArmorItemPacketHandler
-		 */
 		public static AstralArmorItemPacketHandler decode(FriendlyByteBuf packetBuffer) {
 			return new AstralArmorItemPacketHandler(packetBuffer.readBoolean());
 		}
 
-		/**
-		 * Handles an incoming packet, by sending it to the client/server
-		 *
-		 * @param contextSupplier the <code>Supplier</code> providing context
-		 */
 		public static void handle(AstralArmorItemPacketHandler msg, Supplier<Context> contextSupplier) {
 			NetworkEvent.Context context = contextSupplier.get();
-			context.enqueueWork(() -> DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> run(msg)));
-			context.enqueueWork(() -> DistExecutor.unsafeRunWhenOn(Dist.DEDICATED_SERVER, () -> () -> run(msg)));
+			if (context.getSender() != null) {
+				context.enqueueWork(() -> DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> run(msg, context.getSender())));
+				context.enqueueWork(() -> DistExecutor.unsafeRunWhenOn(Dist.DEDICATED_SERVER, () -> () -> run(msg, context.getSender())));
+			}
 			context.setPacketHandled(true);
 		}
 
-		/**
-		 * Runs when a packet is received
-		 */
-		private static void run(AstralArmorItemPacketHandler msg) {
-			AstralArmorItem.setEffectState(msg.state);
+		private static void run(AstralArmorItemPacketHandler msg, ServerPlayer player) {
+			player.getPersistentData().putBoolean("AstralArmorEffectEnabled", msg.state);
 		}
 	}
 }
