@@ -2,8 +2,9 @@ package tech.anonymoushacker1279.immersiveweapons.item.tool.molten;
 
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.*;
+import tech.anonymoushacker1279.immersiveweapons.item.tool.HitEffectUtils;
 
-public class MoltenSword extends SwordItem {
+public class MoltenSword extends SwordItem implements HitEffectUtils {
 
 	/**
 	 * Constructor for MoltenSword.
@@ -27,7 +28,7 @@ public class MoltenSword extends SwordItem {
 	 */
 	@Override
 	public boolean hurtEnemy(ItemStack itemStack, LivingEntity target, LivingEntity attacker) {
-		target.setSecondsOnFire(10);
+		addMoltenEffects(target);
 		return super.hurtEnemy(itemStack, target, attacker);
 	}
 }

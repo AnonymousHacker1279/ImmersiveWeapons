@@ -7,9 +7,9 @@ import tech.anonymoushacker1279.immersiveweapons.entity.projectile.arrow.Diamond
 
 public class DiamondArrowItem extends AbstractArrowItem {
 
-	public DiamondArrowItem(Properties properties, double damageIn) {
-		super(properties, damageIn);
-		damage = damageIn;
+	public DiamondArrowItem(Properties properties, double damage) {
+		super(properties, damage);
+		this.damage = damage;
 	}
 
 	@Override

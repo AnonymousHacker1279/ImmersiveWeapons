@@ -7,9 +7,9 @@ import tech.anonymoushacker1279.immersiveweapons.entity.projectile.arrow.IronArr
 
 public class IronArrowItem extends AbstractArrowItem {
 
-	public IronArrowItem(Properties properties, double damageIn) {
-		super(properties, damageIn);
-		damage = damageIn;
+	public IronArrowItem(Properties properties, double damage) {
+		super(properties, damage);
+		this.damage = damage;
 	}
 
 	@Override

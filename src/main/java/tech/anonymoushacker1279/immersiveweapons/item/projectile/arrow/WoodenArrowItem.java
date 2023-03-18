@@ -7,9 +7,9 @@ import tech.anonymoushacker1279.immersiveweapons.entity.projectile.arrow.WoodenA
 
 public class WoodenArrowItem extends AbstractArrowItem {
 
-	public WoodenArrowItem(Properties properties, double damageIn) {
-		super(properties, damageIn);
-		damage = damageIn;
+	public WoodenArrowItem(Properties properties, double damage) {
+		super(properties, damage);
+		this.damage = damage;
 	}
 
 	@Override

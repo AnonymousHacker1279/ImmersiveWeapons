@@ -13,11 +13,11 @@ import net.minecraftforge.common.data.BlockTagsProvider;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.registries.RegistryObject;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
+import tech.anonymoushacker1279.immersiveweapons.data.lists.ItemLists;
 import tech.anonymoushacker1279.immersiveweapons.data.tags.groups.forge.ForgeBlockTagGroups;
 import tech.anonymoushacker1279.immersiveweapons.data.tags.groups.forge.ForgeItemTagGroups;
 import tech.anonymoushacker1279.immersiveweapons.data.tags.groups.immersiveweapons.ImmersiveWeaponsBlockTagGroups;
 import tech.anonymoushacker1279.immersiveweapons.data.tags.groups.immersiveweapons.ImmersiveWeaponsItemTagGroups;
-import tech.anonymoushacker1279.immersiveweapons.data.tags.lists.ItemTagLists;
 import tech.anonymoushacker1279.immersiveweapons.init.BlockItemRegistry;
 import tech.anonymoushacker1279.immersiveweapons.init.ItemRegistry;
 
@@ -33,8 +33,6 @@ public class ItemTagsGenerator extends ItemTagsProvider {
 
 	@Override
 	protected void addTags(Provider provider) {
-		ItemTagLists.init();
-
 		addForgeTags();
 		addImmersiveWeaponsTags();
 		addMinecraftTags();
@@ -113,7 +111,7 @@ public class ItemTagsGenerator extends ItemTagsProvider {
 
 		// Projectile tags
 		tag(ImmersiveWeaponsItemTagGroups.FLARES).add(ItemRegistry.FLARE.get());
-		for (Item item : ItemTagLists.MUSKET_BALLS) {
+		for (Item item : ItemLists.MUSKET_BALL_ITEMS) {
 			tag(ImmersiveWeaponsItemTagGroups.MUSKET_BALLS).add(item);
 		}
 
@@ -162,7 +160,7 @@ public class ItemTagsGenerator extends ItemTagsProvider {
 		tag(ItemTags.SIGNS).add(BlockItemRegistry.BURNED_OAK_SIGN_ITEM.get());
 
 		// Arrow tags
-		for (Item item : ItemTagLists.ARROWS) {
+		for (Item item : ItemLists.ARROW_ITEMS) {
 			tag(ItemTags.ARROWS).add(item);
 		}
 

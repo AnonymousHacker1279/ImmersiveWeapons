@@ -7,9 +7,9 @@ import tech.anonymoushacker1279.immersiveweapons.entity.projectile.arrow.Netheri
 
 public class NetheriteArrowItem extends AbstractArrowItem {
 
-	public NetheriteArrowItem(Properties properties, double damageIn) {
-		super(properties, damageIn);
-		damage = damageIn;
+	public NetheriteArrowItem(Properties properties, double damage) {
+		super(properties, damage);
+		this.damage = damage;
 	}
 
 	@Override

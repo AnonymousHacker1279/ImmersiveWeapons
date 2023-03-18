@@ -137,6 +137,7 @@ public class FlareEntity extends BulletEntity implements ItemSupplier {
 	 */
 	@Override
 	protected void doWhenHitEntity(Entity entity) {
+		super.doWhenHitEntity(entity);
 		hasHitEntity = true;
 		entity.setSecondsOnFire(6);
 	}

@@ -26,7 +26,7 @@ import org.jetbrains.annotations.Nullable;
 import tech.anonymoushacker1279.immersiveweapons.block.LandmineBlock;
 import tech.anonymoushacker1279.immersiveweapons.block.SandbagBlock;
 import tech.anonymoushacker1279.immersiveweapons.block.misc.warrior_statue.WarriorStatueTorso;
-import tech.anonymoushacker1279.immersiveweapons.data.models.lists.BlockLists;
+import tech.anonymoushacker1279.immersiveweapons.data.lists.BlockLists;
 import tech.anonymoushacker1279.immersiveweapons.data.tags.lists.BlockTagLists;
 import tech.anonymoushacker1279.immersiveweapons.init.*;
 

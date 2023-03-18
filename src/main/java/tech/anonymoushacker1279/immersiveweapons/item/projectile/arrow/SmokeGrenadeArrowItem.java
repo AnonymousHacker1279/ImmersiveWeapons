@@ -10,9 +10,9 @@ public class SmokeGrenadeArrowItem extends AbstractArrowItem {
 
 	private final int color;
 
-	public SmokeGrenadeArrowItem(Properties properties, double damageIn, int color) {
-		super(properties, damageIn);
-		damage = damageIn;
+	public SmokeGrenadeArrowItem(Properties properties, double damage, int color) {
+		super(properties, damage);
+		this.damage = damage;
 		this.color = color;
 	}
 

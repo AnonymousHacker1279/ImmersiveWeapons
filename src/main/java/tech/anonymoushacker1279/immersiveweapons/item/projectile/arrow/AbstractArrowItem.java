@@ -14,9 +14,9 @@ public abstract class AbstractArrowItem extends ArrowItem {
 
 	public double damage;
 
-	protected AbstractArrowItem(Properties properties, double damageIn) {
+	protected AbstractArrowItem(Properties properties, double damage) {
 		super(properties);
-		damage = damageIn;
+		this.damage = damage;
 	}
 
 	public boolean canBeInfinite() {

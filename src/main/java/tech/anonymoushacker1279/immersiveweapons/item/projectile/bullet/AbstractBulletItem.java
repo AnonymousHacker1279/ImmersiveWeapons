@@ -21,9 +21,9 @@ public abstract class AbstractBulletItem extends ArrowItem {
 	 * @param properties the <code>Properties</code> for the item
 	 * @param damageIn   the damage to deal on impact
 	 */
-	protected AbstractBulletItem(Properties properties, double damageIn) {
+	protected AbstractBulletItem(Properties properties, double damage) {
 		super(properties);
-		damage = damageIn;
+		this.damage = damage;
 	}
 
 	public boolean canBeInfinite() {

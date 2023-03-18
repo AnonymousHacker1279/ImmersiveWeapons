@@ -7,8 +7,8 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.minecraftforge.registries.RegistryObject;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
-import tech.anonymoushacker1279.immersiveweapons.data.models.lists.BlockLists;
-import tech.anonymoushacker1279.immersiveweapons.data.models.lists.ItemLists;
+import tech.anonymoushacker1279.immersiveweapons.data.lists.BlockLists;
+import tech.anonymoushacker1279.immersiveweapons.data.lists.ItemLists;
 import tech.anonymoushacker1279.immersiveweapons.init.*;
 import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
 
@@ -92,8 +92,8 @@ public class LanguageGenerator extends IWLanguageProvider {
 		// Not all items are automatically added below; make a list of exceptions here
 		List<Item> excludedItems = new ArrayList<>(25);
 
-		excludedItems.addAll(ItemLists.smokeGrenadeItems);
-		excludedItems.addAll(ItemLists.smokeGrenadeArrowItems);
+		excludedItems.addAll(ItemLists.SMOKE_GRENADE_ITEMS);
+		excludedItems.addAll(ItemLists.SMOKE_GRENADE_ARROW_ITEMS);
 
 		excludedItems.add(ItemRegistry.MRE.get());
 		excludedItems.add(ItemRegistry.HANS_SPAWN_EGG.get());
@@ -313,6 +313,11 @@ public class LanguageGenerator extends IWLanguageProvider {
 		addTooltip("cobalt_musket_ball", "A strong and dense musket ball, made from cobalt.");
 		addTooltip("diamond_musket_ball", "A very sharp and powerful musket ball. You're practically throwing away diamonds. Pierces through a single target.");
 		addTooltip("netherite_musket_ball", "An extremely powerful and skillfully crafted musket ball. For when you need to kill a chicken from the other side of a mountain. Pierces through two targets.");
+		addTooltip("molten_musket_ball", "A musket ball made from molten metal. Hard hitting and expensive, catches targets on fire. Pierces through three targets.");
+		addTooltip("tesla_musket_ball", "Made from a special alloy. Weakens and pierces through three targets.");
+		addTooltip("ventus_musket_ball", "A musket ball made from Ventus shards. Causes targets to levitate. Pierces through three targets.");
+		addTooltip("astral_musket_ball", "Built from Astral ingots. Not quite as strong as other options but extremely accurate and has little falloff. Pierces through three targets.");
+		addTooltip("starstorm_musket_ball", "A musket ball made from Starstorm ingots. Strongest caliber in terms of raw damage. Pierces through three targets.");
 
 		// Pikes
 		addTooltip("pike", "Stab them from way over there");

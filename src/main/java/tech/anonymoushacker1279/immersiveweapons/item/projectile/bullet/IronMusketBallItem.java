@@ -14,9 +14,9 @@ public class IronMusketBallItem extends AbstractBulletItem {
 	 * @param properties the <code>Properties</code> for the item
 	 * @param damageIn   the damage to deal on impact
 	 */
-	public IronMusketBallItem(Properties properties, double damageIn) {
-		super(properties, damageIn);
-		damage = damageIn;
+	public IronMusketBallItem(Properties properties, double damage) {
+		super(properties, damage);
+		this.damage = damage;
 	}
 
 	/**

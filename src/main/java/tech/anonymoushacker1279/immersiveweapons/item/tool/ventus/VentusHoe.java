@@ -1,11 +1,10 @@
 package tech.anonymoushacker1279.immersiveweapons.item.tool.ventus;
 
-import net.minecraft.world.effect.MobEffectInstance;
-import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.*;
+import tech.anonymoushacker1279.immersiveweapons.item.tool.HitEffectUtils;
 
-public class VentusHoe extends HoeItem {
+public class VentusHoe extends HoeItem implements HitEffectUtils {
 
 	/**
 	 * Constructor for VentusHoe.
@@ -29,7 +28,7 @@ public class VentusHoe extends HoeItem {
 	 */
 	@Override
 	public boolean hurtEnemy(ItemStack itemStack, LivingEntity target, LivingEntity attacker) {
-		target.addEffect(new MobEffectInstance(MobEffects.LEVITATION, 60, 2, false, false));
+		addVentusEffects(target);
 		return super.hurtEnemy(itemStack, target, attacker);
 	}
 }

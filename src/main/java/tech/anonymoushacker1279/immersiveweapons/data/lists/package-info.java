@@ -1,7 +1,7 @@
 @ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault
 @FieldsAreNonnullByDefault
-package tech.anonymoushacker1279.immersiveweapons.data.models.lists;
+package tech.anonymoushacker1279.immersiveweapons.data.lists;
 
 import net.minecraft.FieldsAreNonnullByDefault;
 import net.minecraft.MethodsReturnNonnullByDefault;

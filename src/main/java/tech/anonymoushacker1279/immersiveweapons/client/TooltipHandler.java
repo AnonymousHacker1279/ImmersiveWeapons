@@ -112,29 +112,8 @@ public class TooltipHandler {
 		}
 
 		// Bullets
-		if (stack.getItem() == ItemRegistry.WOODEN_MUSKET_BALL.get()) {
-			event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.wooden_musket_ball").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
-		}
-		if (stack.getItem() == ItemRegistry.STONE_MUSKET_BALL.get()) {
-			event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.stone_musket_ball").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
-		}
-		if (stack.getItem() == ItemRegistry.GOLDEN_MUSKET_BALL.get()) {
-			event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.golden_musket_ball").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
-		}
-		if (stack.getItem() == ItemRegistry.COPPER_MUSKET_BALL.get()) {
-			event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.copper_musket_ball").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
-		}
-		if (stack.getItem() == ItemRegistry.IRON_MUSKET_BALL.get()) {
-			event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.iron_musket_ball").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
-		}
-		if (stack.getItem() == ItemRegistry.COBALT_MUSKET_BALL.get()) {
-			event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.cobalt_musket_ball").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
-		}
-		if (stack.getItem() == ItemRegistry.DIAMOND_MUSKET_BALL.get()) {
-			event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.diamond_musket_ball").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
-		}
-		if (stack.getItem() == ItemRegistry.NETHERITE_MUSKET_BALL.get()) {
-			event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.netherite_musket_ball").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
+		if (stack.getItem().toString().contains("musket_ball")) {
+			event.getToolTip().add(Component.translatable("tooltip.immersiveweapons." + stack.getItem()).withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
 		}
 
 		// Pikes

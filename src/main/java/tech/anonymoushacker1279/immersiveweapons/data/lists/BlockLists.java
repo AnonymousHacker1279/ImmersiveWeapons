@@ -1,4 +1,4 @@
-package tech.anonymoushacker1279.immersiveweapons.data.models.lists;
+package tech.anonymoushacker1279.immersiveweapons.data.lists;
 
 import net.minecraft.world.level.block.Block;
 import tech.anonymoushacker1279.immersiveweapons.init.BlockRegistry;

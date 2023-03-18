@@ -174,6 +174,7 @@ public class ClientModEventSubscriber {
 		event.registerEntityRenderer(EntityRegistry.SMOKE_GRENADE_ARROW_ENTITY.get(), context ->
 				new CustomArrowRenderer<>(context, new ResourceLocation(ImmersiveWeapons.MOD_ID,
 						"textures/entity/projectiles/smoke_bomb_arrow.png")));
+
 		event.registerEntityRenderer(EntityRegistry.WOODEN_MUSKET_BALL_ENTITY.get(), MusketBallRenderer::new);
 		event.registerEntityRenderer(EntityRegistry.STONE_MUSKET_BALL_ENTITY.get(), MusketBallRenderer::new);
 		event.registerEntityRenderer(EntityRegistry.GOLDEN_MUSKET_BALL_ENTITY.get(), MusketBallRenderer::new);
@@ -182,6 +183,12 @@ public class ClientModEventSubscriber {
 		event.registerEntityRenderer(EntityRegistry.COBALT_MUSKET_BALL_ENTITY.get(), MusketBallRenderer::new);
 		event.registerEntityRenderer(EntityRegistry.DIAMOND_MUSKET_BALL_ENTITY.get(), MusketBallRenderer::new);
 		event.registerEntityRenderer(EntityRegistry.NETHERITE_MUSKET_BALL_ENTITY.get(), MusketBallRenderer::new);
+		event.registerEntityRenderer(EntityRegistry.MOLTEN_MUSKET_BALL_ENTITY.get(), MusketBallRenderer::new);
+		event.registerEntityRenderer(EntityRegistry.TESLA_MUSKET_BALL_ENTITY.get(), MusketBallRenderer::new);
+		event.registerEntityRenderer(EntityRegistry.VENTUS_MUSKET_BALL_ENTITY.get(), MusketBallRenderer::new);
+		event.registerEntityRenderer(EntityRegistry.ASTRAL_MUSKET_BALL_ENTITY.get(), MusketBallRenderer::new);
+		event.registerEntityRenderer(EntityRegistry.STARSTORM_MUSKET_BALL_ENTITY.get(), MusketBallRenderer::new);
+
 		event.registerEntityRenderer(EntityRegistry.FLARE_ENTITY.get(), FlareRenderer::new);
 		event.registerEntityRenderer(EntityRegistry.MORTAR_SHELL_ENTITY.get(), ThrownItemRenderer::new);
 		event.registerEntityRenderer(EntityRegistry.SMOKE_GRENADE_ENTITY.get(), ThrownItemRenderer::new);
@@ -192,6 +199,7 @@ public class ClientModEventSubscriber {
 		event.registerEntityRenderer(EntityRegistry.WANDERING_WARRIOR_ENTITY.get(), WanderingWarriorRenderer::new);
 		event.registerEntityRenderer(EntityRegistry.HANS_ENTITY.get(), HansRenderer::new);
 		event.registerEntityRenderer(EntityRegistry.CHAIR_ENTITY.get(), ChairRenderer::new);
+
 		event.registerEntityRenderer(EntityRegistry.BURNED_OAK_BOAT_ENTITY.get(),
 				context -> new CustomBoatRenderer(context, false,
 						new ResourceLocation(ImmersiveWeapons.MOD_ID, "textures/entity/boat/burned_oak.png")));
@@ -204,6 +212,7 @@ public class ClientModEventSubscriber {
 		event.registerEntityRenderer(EntityRegistry.STARDUST_CHEST_BOAT_ENTITY.get(),
 				context -> new CustomBoatRenderer(context, true,
 						new ResourceLocation(ImmersiveWeapons.MOD_ID, "textures/entity/chest_boat/stardust.png")));
+
 		event.registerEntityRenderer(EntityRegistry.MUD_BALL_ENTITY.get(), ThrownItemRenderer::new);
 		event.registerEntityRenderer(EntityRegistry.LAVA_REVENANT_ENTITY.get(), LavaRevenantRenderer::new);
 		event.registerEntityRenderer(EntityRegistry.ROCK_SPIDER_ENTITY.get(), RockSpiderRenderer::new);
@@ -215,6 +224,7 @@ public class ClientModEventSubscriber {
 		event.registerEntityRenderer(EntityRegistry.EVIL_EYE_ENTITY.get(), EvilEyeRenderer::new);
 		event.registerEntityRenderer(EntityRegistry.STAR_WOLF_ENTITY.get(), StarWolfRenderer::new);
 		event.registerEntityRenderer(EntityRegistry.SKYGAZER_ENTITY.get(), SkygazerRenderer::new);
+
 		event.registerBlockEntityRenderer(BlockEntityRegistry.SHELF_BLOCK_ENTITY.get(), context -> new ShelfRenderer());
 		event.registerBlockEntityRenderer(BlockEntityRegistry.BURNED_OAK_SIGN_ENTITY.get(), SignRenderer::new);
 		event.registerBlockEntityRenderer(BlockEntityRegistry.CUSTOM_SKULL_BLOCK_ENTITY.get(), SkullBlockRenderer::new);

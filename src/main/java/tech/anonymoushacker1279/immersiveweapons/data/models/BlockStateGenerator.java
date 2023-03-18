@@ -17,7 +17,7 @@ import tech.anonymoushacker1279.immersiveweapons.block.decoration.CelestialLante
 import tech.anonymoushacker1279.immersiveweapons.block.decoration.FlagPoleBlock;
 import tech.anonymoushacker1279.immersiveweapons.block.misc.warrior_statue.WarriorStatueHead;
 import tech.anonymoushacker1279.immersiveweapons.block.misc.warrior_statue.WarriorStatueTorso;
-import tech.anonymoushacker1279.immersiveweapons.data.models.lists.BlockLists;
+import tech.anonymoushacker1279.immersiveweapons.data.lists.BlockLists;
 import tech.anonymoushacker1279.immersiveweapons.init.BlockRegistry;
 
 import java.util.*;

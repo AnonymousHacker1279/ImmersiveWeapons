@@ -2,8 +2,9 @@ package tech.anonymoushacker1279.immersiveweapons.item.tool.molten;
 
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.*;
+import tech.anonymoushacker1279.immersiveweapons.item.tool.HitEffectUtils;
 
-public class MoltenPickaxe extends PickaxeItem {
+public class MoltenPickaxe extends PickaxeItem implements HitEffectUtils {
 
 	/**
 	 * Constructor for MoltenPickaxe.
@@ -27,7 +28,7 @@ public class MoltenPickaxe extends PickaxeItem {
 	 */
 	@Override
 	public boolean hurtEnemy(ItemStack itemStack, LivingEntity target, LivingEntity attacker) {
-		target.setSecondsOnFire(10);
+		addMoltenEffects(target);
 		return super.hurtEnemy(itemStack, target, attacker);
 	}
 }

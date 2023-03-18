@@ -8,9 +8,9 @@ import tech.anonymoushacker1279.immersiveweapons.entity.projectile.arrow.CopperA
 
 public class CopperArrowItem extends AbstractArrowItem {
 
-	public CopperArrowItem(Properties properties, double damageIn) {
-		super(properties, damageIn);
-		damage = damageIn;
+	public CopperArrowItem(Properties properties, double damage) {
+		super(properties, damage);
+		this.damage = damage;
 	}
 
 	@Override

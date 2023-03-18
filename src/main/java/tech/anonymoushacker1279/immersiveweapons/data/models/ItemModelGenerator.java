@@ -8,7 +8,7 @@ import net.minecraftforge.client.model.generators.ModelFile;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.registries.RegistryObject;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
-import tech.anonymoushacker1279.immersiveweapons.data.models.lists.ItemLists;
+import tech.anonymoushacker1279.immersiveweapons.data.lists.ItemLists;
 import tech.anonymoushacker1279.immersiveweapons.init.BlockItemRegistry;
 import tech.anonymoushacker1279.immersiveweapons.init.ItemRegistry;
 
@@ -69,7 +69,7 @@ public class ItemModelGenerator extends ItemModelProvider {
 		List<Item> items = new ArrayList<>(250);
 
 		ItemRegistry.ITEMS.getEntries().stream().map(RegistryObject::get)
-				.filter(Predicate.not(ItemLists.modelGeneratorIgnoredItems::contains)).forEach(items::add);
+				.filter(Predicate.not(ItemLists.MODEL_GENERATOR_IGNORED_ITEMS::contains)).forEach(items::add);
 
 		boolean isAtBlockItems = false;
 		boolean isPastToolItems = false;
@@ -89,7 +89,7 @@ public class ItemModelGenerator extends ItemModelProvider {
 					handheldItem(item);
 				} else {
 					if (!isAtSpawnEggItems) {
-						if (ItemLists.musketBallItems.contains(item)) {
+						if (ItemLists.MUSKET_BALL_ITEMS.contains(item)) {
 							getBuilder(item.toString())
 									.parent(new ModelFile.UncheckedModelFile(new ResourceLocation(ImmersiveWeapons.MOD_ID,
 											"item/musket_ball")))
@@ -189,7 +189,7 @@ public class ItemModelGenerator extends ItemModelProvider {
 							.parent(new ModelFile.UncheckedModelFile("item/generated"))
 							.texture("layer0", new ResourceLocation(ImmersiveWeapons.MOD_ID,
 									"block/starstorm_crystal"));
-				} else if (ItemLists.headItems.contains(item)) {
+				} else if (ItemLists.HEAD_ITEMS.contains(item)) {
 					entitySkull(item);
 				} else {
 					blockItem(item);
