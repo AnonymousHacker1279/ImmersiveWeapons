@@ -89,7 +89,14 @@ public class ItemModelGenerator extends ItemModelProvider {
 					handheldItem(item);
 				} else {
 					if (!isAtSpawnEggItems) {
-						basicItem(item);
+						if (ItemLists.musketBallItems.contains(item)) {
+							getBuilder(item.toString())
+									.parent(new ModelFile.UncheckedModelFile(new ResourceLocation(ImmersiveWeapons.MOD_ID,
+											"item/musket_ball")))
+									.texture("all", new ResourceLocation(ImmersiveWeapons.MOD_ID, "item/" + item));
+						} else {
+							basicItem(item);
+						}
 					} else {
 						spawnEggItem(item);
 					}

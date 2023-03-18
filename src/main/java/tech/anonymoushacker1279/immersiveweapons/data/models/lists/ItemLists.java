@@ -13,6 +13,7 @@ public class ItemLists {
 	public static final List<Item> headItems = new ArrayList<>(15);
 	public static final List<Item> smokeGrenadeItems = new ArrayList<>(15);
 	public static final List<Item> smokeGrenadeArrowItems = new ArrayList<>(15);
+	public static final List<Item> musketBallItems = new ArrayList<>(15);
 
 	static {
 		// Items
@@ -47,14 +48,6 @@ public class ItemLists {
 		modelGeneratorIgnoredItems.add(ItemRegistry.COBALT_GAUNTLET.get());
 		modelGeneratorIgnoredItems.add(ItemRegistry.DIAMOND_GAUNTLET.get());
 		modelGeneratorIgnoredItems.add(ItemRegistry.NETHERITE_GAUNTLET.get());
-		modelGeneratorIgnoredItems.add(ItemRegistry.WOODEN_MUSKET_BALL.get());
-		modelGeneratorIgnoredItems.add(ItemRegistry.STONE_MUSKET_BALL.get());
-		modelGeneratorIgnoredItems.add(ItemRegistry.GOLDEN_MUSKET_BALL.get());
-		modelGeneratorIgnoredItems.add(ItemRegistry.COPPER_MUSKET_BALL.get());
-		modelGeneratorIgnoredItems.add(ItemRegistry.IRON_MUSKET_BALL.get());
-		modelGeneratorIgnoredItems.add(ItemRegistry.COBALT_MUSKET_BALL.get());
-		modelGeneratorIgnoredItems.add(ItemRegistry.DIAMOND_MUSKET_BALL.get());
-		modelGeneratorIgnoredItems.add(ItemRegistry.NETHERITE_MUSKET_BALL.get());
 
 		headItems.add(BlockItemRegistry.MINUTEMAN_HEAD_ITEM.get());
 		headItems.add(BlockItemRegistry.FIELD_MEDIC_HEAD_ITEM.get());
@@ -76,5 +69,14 @@ public class ItemLists {
 		smokeGrenadeArrowItems.add(ItemRegistry.SMOKE_GRENADE_ARROW_GREEN.get());
 		smokeGrenadeArrowItems.add(ItemRegistry.SMOKE_GRENADE_ARROW_PURPLE.get());
 		smokeGrenadeArrowItems.add(ItemRegistry.SMOKE_GRENADE_ARROW_YELLOW.get());
+
+		musketBallItems.add(ItemRegistry.WOODEN_MUSKET_BALL.get());
+		musketBallItems.add(ItemRegistry.STONE_MUSKET_BALL.get());
+		musketBallItems.add(ItemRegistry.GOLDEN_MUSKET_BALL.get());
+		musketBallItems.add(ItemRegistry.COPPER_MUSKET_BALL.get());
+		musketBallItems.add(ItemRegistry.IRON_MUSKET_BALL.get());
+		musketBallItems.add(ItemRegistry.COBALT_MUSKET_BALL.get());
+		musketBallItems.add(ItemRegistry.DIAMOND_MUSKET_BALL.get());
+		musketBallItems.add(ItemRegistry.NETHERITE_MUSKET_BALL.get());
 	}
 }
