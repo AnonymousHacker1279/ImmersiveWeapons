@@ -35,8 +35,9 @@ public class ChestLootTables implements LootTableSubProvider {
 								.add(LootItem.lootTableItem(ItemRegistry.COPPER_PICKAXE.get()).setWeight(5)
 										.apply(EnchantRandomlyFunction.randomApplicableEnchantment()))
 								.add(LootItem.lootTableItem(ItemRegistry.OBSIDIAN_SHARD.get()).setWeight(4))
-								.add(LootItem.lootTableItem(ItemRegistry.ELECTRIC_INGOT.get()).setWeight(3))
-								.add(LootItem.lootTableItem(ItemRegistry.TESLA_INGOT.get()).setWeight(1))));
+								.add(LootItem.lootTableItem(Items.GOLDEN_CARROT).setWeight(3)
+										.apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 5.0F))))
+								.add(LootItem.lootTableItem(ItemRegistry.ELECTRIC_INGOT.get()).setWeight(1))));
 
 		out.accept(LootTableLocations.BATTLEFIELD_CAMP,
 				LootTable.lootTable()

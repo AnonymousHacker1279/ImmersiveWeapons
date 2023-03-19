@@ -79,6 +79,11 @@ public class ItemLists {
 		ARROW_ITEMS.add(ItemRegistry.GOLDEN_ARROW.get());
 		ARROW_ITEMS.add(ItemRegistry.DIAMOND_ARROW.get());
 		ARROW_ITEMS.add(ItemRegistry.NETHERITE_ARROW.get());
+		ARROW_ITEMS.add(ItemRegistry.MOLTEN_ARROW.get());
+		ARROW_ITEMS.add(ItemRegistry.TESLA_ARROW.get());
+		ARROW_ITEMS.add(ItemRegistry.VENTUS_ARROW.get());
+		ARROW_ITEMS.add(ItemRegistry.ASTRAL_ARROW.get());
+		ARROW_ITEMS.add(ItemRegistry.STARSTORM_ARROW.get());
 		ARROW_ITEMS.addAll(SMOKE_GRENADE_ARROW_ITEMS);
 
 		MUSKET_BALL_ITEMS.add(ItemRegistry.WOODEN_MUSKET_BALL.get());

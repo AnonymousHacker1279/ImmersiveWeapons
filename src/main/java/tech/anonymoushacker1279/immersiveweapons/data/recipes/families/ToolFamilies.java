@@ -25,7 +25,7 @@ public record ToolFamilies(TagKey<Item> material,
                            @Nullable Supplier<? extends GauntletItem> gauntlet,
                            @Nullable Supplier<? extends PikeItem> pike,
                            @Nullable Supplier<? extends Item> pikeHead,
-                           @Nullable Supplier<? extends ArrowItem> arrow,
+                           Supplier<? extends ArrowItem> arrow,
                            Supplier<? extends Item> musketBall) {
 
 	public static final ToolFamilies COPPER = new ToolFamilies(
@@ -69,7 +69,8 @@ public record ToolFamilies(TagKey<Item> material,
 			ItemRegistry.MOLTEN_AXE,
 			ItemRegistry.MOLTEN_SHOVEL,
 			ItemRegistry.MOLTEN_HOE,
-			null, null, null, null,
+			null, null, null,
+			ItemRegistry.MOLTEN_ARROW,
 			ItemRegistry.MOLTEN_MUSKET_BALL
 	);
 
@@ -82,7 +83,8 @@ public record ToolFamilies(TagKey<Item> material,
 			ItemRegistry.TESLA_AXE,
 			ItemRegistry.TESLA_SHOVEL,
 			ItemRegistry.TESLA_HOE,
-			null, null, null, null,
+			null, null, null,
+			ItemRegistry.TESLA_ARROW,
 			ItemRegistry.TESLA_MUSKET_BALL
 	);
 
@@ -95,7 +97,8 @@ public record ToolFamilies(TagKey<Item> material,
 			ItemRegistry.VENTUS_AXE,
 			ItemRegistry.VENTUS_SHOVEL,
 			ItemRegistry.VENTUS_HOE,
-			null, null, null, null,
+			null, null, null,
+			ItemRegistry.VENTUS_ARROW,
 			ItemRegistry.VENTUS_MUSKET_BALL
 	);
 
@@ -108,7 +111,8 @@ public record ToolFamilies(TagKey<Item> material,
 			ItemRegistry.ASTRAL_AXE,
 			ItemRegistry.ASTRAL_SHOVEL,
 			ItemRegistry.ASTRAL_HOE,
-			null, null, null, null,
+			null, null, null,
+			ItemRegistry.ASTRAL_ARROW,
 			ItemRegistry.ASTRAL_MUSKET_BALL
 	);
 
@@ -121,7 +125,8 @@ public record ToolFamilies(TagKey<Item> material,
 			ItemRegistry.STARSTORM_AXE,
 			ItemRegistry.STARSTORM_SHOVEL,
 			ItemRegistry.STARSTORM_HOE,
-			null, null, null, null,
+			null, null, null,
+			ItemRegistry.STARSTORM_ARROW,
 			ItemRegistry.STARSTORM_MUSKET_BALL
 	);
 

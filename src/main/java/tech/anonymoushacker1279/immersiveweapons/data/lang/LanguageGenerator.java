@@ -304,6 +304,11 @@ public class LanguageGenerator extends IWLanguageProvider {
 		addTooltip("cobalt_arrow", "55% more powerful than normal arrows");
 		addTooltip("diamond_arrow", "100% more powerful than normal arrows");
 		addTooltip("netherite_arrow", "375% more powerful than normal arrows. Extremely sharp, powerful, and accurate. How can you even afford to shoot these?");
+		addTooltip("molten_arrow", "450% more powerful than normal arrows. Burns enemies on impact.");
+		addTooltip("tesla_arrow", "500% more powerful than normal arrows. Weakens enemies on impact.");
+		addTooltip("ventus_arrow", "450% more powerful than normal arrows. Causes enemies to levitate on impact.");
+		addTooltip("astral_arrow", "350% more powerful than normal arrows. Extremely accurate and has minimal falloff.");
+		addTooltip("starstorm_arrow", "565% more powerful than normal arrows");
 		addTooltip("smoke_grenade_arrow", "Obscure the vision of your enemies from afar");
 		addTooltip("wooden_musket_ball", "Very inaccurate, and likely to cause a misfire. Why would anyone make wooden musket balls anyway?");
 		addTooltip("stone_musket_ball", "A very heavy musket ball, and not too accurate. Less likely to cause a misfire than wooden ones.");

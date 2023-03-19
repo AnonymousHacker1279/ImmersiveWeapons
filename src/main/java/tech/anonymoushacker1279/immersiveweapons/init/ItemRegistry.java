@@ -140,6 +140,11 @@ public class ItemRegistry {
 	public static final RegistryObject<CobaltArrowItem> COBALT_ARROW = ITEMS.register("cobalt_arrow", () -> new CobaltArrowItem(new Properties(), 2.55d));
 	public static final RegistryObject<DiamondArrowItem> DIAMOND_ARROW = ITEMS.register("diamond_arrow", () -> new DiamondArrowItem(new Properties(), 3.0d));
 	public static final RegistryObject<NetheriteArrowItem> NETHERITE_ARROW = ITEMS.register("netherite_arrow", () -> new NetheriteArrowItem(new Properties().fireResistant(), 5.75d));
+	public static final RegistryObject<MoltenArrowItem> MOLTEN_ARROW = ITEMS.register("molten_arrow", () -> new MoltenArrowItem(new Properties().fireResistant(), 6.50d));
+	public static final RegistryObject<TeslaArrowItem> TESLA_ARROW = ITEMS.register("tesla_arrow", () -> new TeslaArrowItem(new Properties(), 7.0d));
+	public static final RegistryObject<VentusArrowItem> VENTUS_ARROW = ITEMS.register("ventus_arrow", () -> new VentusArrowItem(new Properties(), 6.5d));
+	public static final RegistryObject<AstralArrowItem> ASTRAL_ARROW = ITEMS.register("astral_arrow", () -> new AstralArrowItem(new Properties(), 5.50d));
+	public static final RegistryObject<StarstormArrowItem> STARSTORM_ARROW = ITEMS.register("starstorm_arrow", () -> new StarstormArrowItem(new Properties(), 7.65d));
 	public static final RegistryObject<SmokeGrenadeArrowItem> SMOKE_GRENADE_ARROW = ITEMS.register("smoke_grenade_arrow", () -> new SmokeGrenadeArrowItem(new Properties(), 2.0d, 0));
 	public static final RegistryObject<SmokeGrenadeArrowItem> SMOKE_GRENADE_ARROW_RED = ITEMS.register("smoke_grenade_arrow_red", () -> new SmokeGrenadeArrowItem(new Properties(), 2.0d, 1));
 	public static final RegistryObject<SmokeGrenadeArrowItem> SMOKE_GRENADE_ARROW_GREEN = ITEMS.register("smoke_grenade_arrow_green", () -> new SmokeGrenadeArrowItem(new Properties(), 2.0d, 2));

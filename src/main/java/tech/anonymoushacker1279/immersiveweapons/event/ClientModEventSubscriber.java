@@ -171,6 +171,21 @@ public class ClientModEventSubscriber {
 		event.registerEntityRenderer(EntityRegistry.NETHERITE_ARROW_ENTITY.get(), context ->
 				new CustomArrowRenderer<>(context, new ResourceLocation(ImmersiveWeapons.MOD_ID,
 						"textures/entity/projectiles/netherite_arrow.png")));
+		event.registerEntityRenderer(EntityRegistry.MOLTEN_ARROW_ENTITY.get(), context ->
+				new CustomArrowRenderer<>(context, new ResourceLocation(ImmersiveWeapons.MOD_ID,
+						"textures/entity/projectiles/molten_arrow.png")));
+		event.registerEntityRenderer(EntityRegistry.TESLA_ARROW_ENTITY.get(), context ->
+				new CustomArrowRenderer<>(context, new ResourceLocation(ImmersiveWeapons.MOD_ID,
+						"textures/entity/projectiles/tesla_arrow.png")));
+		event.registerEntityRenderer(EntityRegistry.VENTUS_ARROW_ENTITY.get(), context ->
+				new CustomArrowRenderer<>(context, new ResourceLocation(ImmersiveWeapons.MOD_ID,
+						"textures/entity/projectiles/ventus_arrow.png")));
+		event.registerEntityRenderer(EntityRegistry.ASTRAL_ARROW_ENTITY.get(), context ->
+				new CustomArrowRenderer<>(context, new ResourceLocation(ImmersiveWeapons.MOD_ID,
+						"textures/entity/projectiles/astral_arrow.png")));
+		event.registerEntityRenderer(EntityRegistry.STARSTORM_ARROW_ENTITY.get(), context ->
+				new CustomArrowRenderer<>(context, new ResourceLocation(ImmersiveWeapons.MOD_ID,
+						"textures/entity/projectiles/starstorm_arrow.png")));
 		event.registerEntityRenderer(EntityRegistry.SMOKE_GRENADE_ARROW_ENTITY.get(), context ->
 				new CustomArrowRenderer<>(context, new ResourceLocation(ImmersiveWeapons.MOD_ID,
 						"textures/entity/projectiles/smoke_bomb_arrow.png")));

@@ -81,6 +81,21 @@ public class TooltipHandler {
 		if (stack.getItem() == ItemRegistry.NETHERITE_ARROW.get()) {
 			event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.netherite_arrow").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
 		}
+		if (stack.getItem() == ItemRegistry.MOLTEN_ARROW.get()) {
+			event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.molten_arrow").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
+		}
+		if (stack.getItem() == ItemRegistry.TESLA_ARROW.get()) {
+			event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.tesla_arrow").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
+		}
+		if (stack.getItem() == ItemRegistry.VENTUS_ARROW.get()) {
+			event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.ventus_arrow").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
+		}
+		if (stack.getItem() == ItemRegistry.ASTRAL_ARROW.get()) {
+			event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.astral_arrow").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
+		}
+		if (stack.getItem() == ItemRegistry.STARSTORM_ARROW.get()) {
+			event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.starstorm_arrow").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
+		}
 		if (stack.getItem() == ItemRegistry.SMOKE_GRENADE_ARROW.get()) {
 			event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.smoke_grenade_arrow").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
 			event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.smoke_grenade").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
