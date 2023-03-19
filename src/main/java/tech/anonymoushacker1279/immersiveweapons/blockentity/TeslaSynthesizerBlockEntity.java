@@ -184,8 +184,30 @@ public class TeslaSynthesizerBlockEntity extends BaseContainerBlockEntity implem
 				if (cookTime == cookTimeTotal) {
 					cookTime = 0;
 					cookTimeTotal = getCookTime();
-					smelt(synthesizerRecipe);
-					hasChanged = true;
+
+					// Smelt the recipe
+					if (synthesizerRecipe != null && canSmelt(synthesizerRecipe)) {
+						ItemStack ingredient1 = items.get(0);
+						ItemStack ingredient2 = items.get(1);
+						ItemStack ingredient3 = items.get(2);
+						ItemStack recipeOutputStack = items.get(4);
+						ItemStack recipeOutput = synthesizerRecipe.getResultItem();
+						if (recipeOutputStack.isEmpty()) {
+							items.set(4, recipeOutput.copy());
+						} else if (recipeOutputStack.getItem() == recipeOutput.getItem()) {
+							recipeOutputStack.grow(recipeOutput.getCount());
+						}
+
+						if (!level.isClientSide) {
+							setRecipeUsed(synthesizerRecipe);
+						}
+
+						ingredient1.shrink(1);
+						ingredient2.shrink(1);
+						ingredient3.shrink(1);
+
+						hasChanged = true;
+					}
 				}
 			} else {
 				cookTime = 0;
@@ -301,34 +323,6 @@ public class TeslaSynthesizerBlockEntity extends BaseContainerBlockEntity implem
 	}
 
 	/**
-	 * Smelt a recipe.
-	 *
-	 * @param recipe the <code>IRecipe</code> instance
-	 */
-	private void smelt(@Nullable Recipe<?> recipe) {
-		if (recipe != null && canSmelt(recipe)) {
-			ItemStack ingredient1 = items.get(0);
-			ItemStack ingredient2 = items.get(1);
-			ItemStack ingredient3 = items.get(2);
-			ItemStack recipeOutputStack = items.get(4);
-			ItemStack recipeOutput = recipe.getResultItem();
-			if (recipeOutputStack.isEmpty()) {
-				items.set(4, recipeOutput.copy());
-			} else if (recipeOutputStack.getItem() == recipeOutput.getItem()) {
-				recipeOutputStack.grow(recipeOutput.getCount());
-			}
-
-			if (level != null && !level.isClientSide) {
-				setRecipeUsed(recipe);
-			}
-
-			ingredient1.shrink(1);
-			ingredient2.shrink(1);
-			ingredient3.shrink(1);
-		}
-	}
-
-	/**
 	 * Get the cook time for a recipe.
 	 *
 	 * @return int
@@ -342,6 +336,7 @@ public class TeslaSynthesizerBlockEntity extends BaseContainerBlockEntity implem
 				return recipe.get().getCookTime();
 			}
 		}
+
 		return 0;
 	}
 
@@ -578,7 +573,8 @@ public class TeslaSynthesizerBlockEntity extends BaseContainerBlockEntity implem
 	@Override
 	public void invalidateCaps() {
 		super.invalidateCaps();
-		for (LazyOptional<? extends IItemHandler> handler : handlers)
+		for (LazyOptional<? extends IItemHandler> handler : handlers) {
 			handler.invalidate();
+		}
 	}
 }

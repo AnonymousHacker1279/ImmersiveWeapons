@@ -349,7 +349,7 @@ public class RecipeGenerator extends RecipeProvider {
 
 	private void createTeslaItems() {
 		createTeslaIngot(ItemRegistry.TESLA_INGOT.get(), BlockItemRegistry.TESLA_BLOCK_ITEM.get());
-		teslaSynthesizing(Items.STONE, Items.LAPIS_LAZULI, ItemRegistry.CONDUCTIVE_ALLOY.get(), 24000,
+		teslaSynthesizing(Items.STONE, Items.LAPIS_LAZULI, ItemRegistry.CONDUCTIVE_ALLOY.get(), 12000,
 				ItemRegistry.ELECTRIC_INGOT.get());
 
 		// Tesla Synthesizer
