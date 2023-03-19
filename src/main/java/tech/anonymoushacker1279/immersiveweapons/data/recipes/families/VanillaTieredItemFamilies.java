@@ -72,4 +72,5 @@ public record VanillaTieredItemFamilies(TagKey<Item> material,
 	);
 
 	public static final ImmutableList<VanillaTieredItemFamilies> FAMILIES = ImmutableList.of(WOODEN, STONE, IRON, GOLDEN, DIAMOND);
+	public static final ImmutableList<VanillaTieredItemFamilies> FAMILIES_USE_NUGGETS_FOR_PROJECTILES = ImmutableList.of(WOODEN, STONE, DIAMOND);
 }

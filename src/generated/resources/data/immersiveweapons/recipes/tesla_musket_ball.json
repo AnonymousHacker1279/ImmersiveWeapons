@@ -3,7 +3,7 @@
   "category": "equipment",
   "key": {
     "a": {
-      "tag": "immersiveweapons:shards/wood"
+      "tag": "immersiveweapons:ingots/tesla"
     },
     "b": {
       "item": "minecraft:gunpowder"
@@ -15,6 +15,6 @@
   ],
   "result": {
     "count": 8,
-    "item": "immersiveweapons:wooden_musket_ball"
+    "item": "immersiveweapons:tesla_musket_ball"
   }
 }

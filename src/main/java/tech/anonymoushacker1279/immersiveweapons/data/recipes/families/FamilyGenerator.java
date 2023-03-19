@@ -283,13 +283,23 @@ public class FamilyGenerator extends RecipeGenerator {
 				}
 			}
 
-			// Arrow
-			if (family.arrow() != null) {
-				RecipeGenerator.createArrow(family.arrow().get(), family.material());
-			}
+			if (ToolFamilies.FAMILIES_USE_NUGGETS_FOR_PROJECTILES.contains(family)) {
+				assert family.nugget() != null; // If it uses a nugget in the recipe, it will not be null
 
-			// Musket ball
-			if (family.musketBall() != null) {
+				// Arrow
+				if (family.arrow() != null) {
+					RecipeGenerator.createArrow(family.arrow().get(), family.nugget());
+				}
+
+				// Musket ball
+				RecipeGenerator.createMusketBall(family.musketBall().get(), family.nugget());
+			} else {
+				// Arrow
+				if (family.arrow() != null) {
+					RecipeGenerator.createArrow(family.arrow().get(), family.material());
+				}
+
+				// Musket ball
 				RecipeGenerator.createMusketBall(family.musketBall().get(), family.material());
 			}
 		}
@@ -349,11 +359,19 @@ public class FamilyGenerator extends RecipeGenerator {
 			// Pike head
 			RecipeGenerator.createPikeHead(family.pikeHead().get(), material, family.nugget());
 
-			// Arrow
-			RecipeGenerator.createArrow(family.arrow().get(), family.material());
+			if (VanillaTieredItemFamilies.FAMILIES_USE_NUGGETS_FOR_PROJECTILES.contains(family)) {
+				// Arrow
+				RecipeGenerator.createArrow(family.arrow().get(), family.nugget());
 
-			// Musket ball
-			RecipeGenerator.createMusketBall(family.musketBall().get(), family.material());
+				// Musket ball
+				RecipeGenerator.createMusketBall(family.musketBall().get(), family.nugget());
+			} else {
+				// Arrow
+				RecipeGenerator.createArrow(family.arrow().get(), family.material());
+
+				// Musket ball
+				RecipeGenerator.createMusketBall(family.musketBall().get(), family.material());
+			}
 		}
 	}
 }

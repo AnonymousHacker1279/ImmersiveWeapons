@@ -26,7 +26,7 @@ public record ToolFamilies(TagKey<Item> material,
                            @Nullable Supplier<? extends PikeItem> pike,
                            @Nullable Supplier<? extends Item> pikeHead,
                            @Nullable Supplier<? extends ArrowItem> arrow,
-                           @Nullable Supplier<? extends Item> musketBall) {
+                           Supplier<? extends Item> musketBall) {
 
 	public static final ToolFamilies COPPER = new ToolFamilies(
 			Tags.Items.INGOTS_COPPER,
@@ -62,26 +62,15 @@ public record ToolFamilies(TagKey<Item> material,
 
 	public static final ToolFamilies MOLTEN = new ToolFamilies(
 			ImmersiveWeaponsItemTagGroups.MOLTEN_INGOTS,
-			null,
+			ImmersiveWeaponsItemTagGroups.MOLTEN_SHARDS,
 			ImmersiveWeaponsItemTagGroups.OBSIDIAN_RODS,
 			ItemRegistry.MOLTEN_SWORD,
 			ItemRegistry.MOLTEN_PICKAXE,
 			ItemRegistry.MOLTEN_AXE,
 			ItemRegistry.MOLTEN_SHOVEL,
 			ItemRegistry.MOLTEN_HOE,
-			null, null, null, null, null
-	);
-
-	public static final ToolFamilies VENTUS = new ToolFamilies(
-			ImmersiveWeaponsItemTagGroups.VENTUS_SHARDS,
-			null,
-			ImmersiveWeaponsItemTagGroups.OBSIDIAN_RODS,
-			ItemRegistry.VENTUS_SWORD,
-			ItemRegistry.VENTUS_PICKAXE,
-			ItemRegistry.VENTUS_AXE,
-			ItemRegistry.VENTUS_SHOVEL,
-			ItemRegistry.VENTUS_HOE,
-			null, null, null, null, null
+			null, null, null, null,
+			ItemRegistry.MOLTEN_MUSKET_BALL
 	);
 
 	public static final ToolFamilies TESLA = new ToolFamilies(
@@ -93,7 +82,21 @@ public record ToolFamilies(TagKey<Item> material,
 			ItemRegistry.TESLA_AXE,
 			ItemRegistry.TESLA_SHOVEL,
 			ItemRegistry.TESLA_HOE,
-			null, null, null, null, null
+			null, null, null, null,
+			ItemRegistry.TESLA_MUSKET_BALL
+	);
+
+	public static final ToolFamilies VENTUS = new ToolFamilies(
+			ImmersiveWeaponsItemTagGroups.VENTUS_SHARDS,
+			ImmersiveWeaponsItemTagGroups.VENTUS_SHARDS,
+			ImmersiveWeaponsItemTagGroups.OBSIDIAN_RODS,
+			ItemRegistry.VENTUS_SWORD,
+			ItemRegistry.VENTUS_PICKAXE,
+			ItemRegistry.VENTUS_AXE,
+			ItemRegistry.VENTUS_SHOVEL,
+			ItemRegistry.VENTUS_HOE,
+			null, null, null, null,
+			ItemRegistry.VENTUS_MUSKET_BALL
 	);
 
 	public static final ToolFamilies ASTRAL = new ToolFamilies(
@@ -105,7 +108,8 @@ public record ToolFamilies(TagKey<Item> material,
 			ItemRegistry.ASTRAL_AXE,
 			ItemRegistry.ASTRAL_SHOVEL,
 			ItemRegistry.ASTRAL_HOE,
-			null, null, null, null, null
+			null, null, null, null,
+			ItemRegistry.ASTRAL_MUSKET_BALL
 	);
 
 	public static final ToolFamilies STARSTORM = new ToolFamilies(
@@ -117,8 +121,10 @@ public record ToolFamilies(TagKey<Item> material,
 			ItemRegistry.STARSTORM_AXE,
 			ItemRegistry.STARSTORM_SHOVEL,
 			ItemRegistry.STARSTORM_HOE,
-			null, null, null, null, null
+			null, null, null, null,
+			ItemRegistry.STARSTORM_MUSKET_BALL
 	);
 
 	public static final Collection<ToolFamilies> FAMILIES = ImmutableList.of(COPPER, COBALT, MOLTEN, VENTUS, TESLA, ASTRAL, STARSTORM);
+	public static final ImmutableList<ToolFamilies> FAMILIES_USE_NUGGETS_FOR_PROJECTILES = ImmutableList.of(MOLTEN, VENTUS);
 }
