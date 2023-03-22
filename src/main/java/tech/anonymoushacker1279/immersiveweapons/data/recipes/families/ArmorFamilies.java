@@ -6,7 +6,7 @@ import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.Item;
 import net.minecraftforge.common.Tags.Items;
 import tech.anonymoushacker1279.immersiveweapons.data.tags.groups.forge.ForgeItemTagGroups;
-import tech.anonymoushacker1279.immersiveweapons.data.tags.groups.immersiveweapons.ImmersiveWeaponsItemTagGroups;
+import tech.anonymoushacker1279.immersiveweapons.data.tags.groups.immersiveweapons.IWItemTagGroups;
 import tech.anonymoushacker1279.immersiveweapons.init.ItemRegistry;
 
 import java.util.function.Supplier;
@@ -34,7 +34,7 @@ public record ArmorFamilies(TagKey<Item> material,
 	);
 
 	public static final ArmorFamilies MOLTEN = new ArmorFamilies(
-			ImmersiveWeaponsItemTagGroups.MOLTEN_INGOTS,
+			IWItemTagGroups.MOLTEN_INGOTS,
 			ItemRegistry.MOLTEN_HELMET,
 			ItemRegistry.MOLTEN_CHESTPLATE,
 			ItemRegistry.MOLTEN_LEGGINGS,
@@ -42,7 +42,7 @@ public record ArmorFamilies(TagKey<Item> material,
 	);
 
 	public static final ArmorFamilies VENTUS = new ArmorFamilies(
-			ImmersiveWeaponsItemTagGroups.VENTUS_SHARDS,
+			IWItemTagGroups.VENTUS_SHARDS,
 			ItemRegistry.VENTUS_HELMET,
 			ItemRegistry.VENTUS_CHESTPLATE,
 			ItemRegistry.VENTUS_LEGGINGS,
@@ -50,7 +50,7 @@ public record ArmorFamilies(TagKey<Item> material,
 	);
 
 	public static final ArmorFamilies TESLA = new ArmorFamilies(
-			ImmersiveWeaponsItemTagGroups.TESLA_INGOTS,
+			IWItemTagGroups.TESLA_INGOTS,
 			ItemRegistry.TESLA_HELMET,
 			ItemRegistry.TESLA_CHESTPLATE,
 			ItemRegistry.TESLA_LEGGINGS,
@@ -58,7 +58,7 @@ public record ArmorFamilies(TagKey<Item> material,
 	);
 
 	public static final ArmorFamilies ASTRAL = new ArmorFamilies(
-			ImmersiveWeaponsItemTagGroups.ASTRAL_INGOTS,
+			IWItemTagGroups.ASTRAL_INGOTS,
 			ItemRegistry.ASTRAL_HELMET,
 			ItemRegistry.ASTRAL_CHESTPLATE,
 			ItemRegistry.ASTRAL_LEGGINGS,
@@ -66,7 +66,7 @@ public record ArmorFamilies(TagKey<Item> material,
 	);
 
 	public static final ArmorFamilies STARSTORM = new ArmorFamilies(
-			ImmersiveWeaponsItemTagGroups.STARSTORM_INGOTS,
+			IWItemTagGroups.STARSTORM_INGOTS,
 			ItemRegistry.STARSTORM_HELMET,
 			ItemRegistry.STARSTORM_CHESTPLATE,
 			ItemRegistry.STARSTORM_LEGGINGS,

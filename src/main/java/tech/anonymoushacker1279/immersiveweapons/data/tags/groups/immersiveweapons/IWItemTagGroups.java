@@ -6,7 +6,7 @@ import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 
-public class ImmersiveWeaponsItemTagGroups {
+public class IWItemTagGroups {
 
 	public static final TagKey<Item> BURNED_OAK_LOGS = ItemTags.create(new ResourceLocation(ImmersiveWeapons.MOD_ID,
 			"burned_oak_logs"));
@@ -22,6 +22,8 @@ public class ImmersiveWeaponsItemTagGroups {
 			"ingots/electric"));
 	public static final TagKey<Item> TESLA_INGOTS = ItemTags.create(new ResourceLocation(ImmersiveWeapons.MOD_ID,
 			"ingots/tesla"));
+	public static final TagKey<Item> TESLA_NUGGETS = ItemTags.create(new ResourceLocation(ImmersiveWeapons.MOD_ID,
+			"nuggets/tesla"));
 	public static final TagKey<Item> MOLTEN_SHARDS = ItemTags.create(new ResourceLocation(ImmersiveWeapons.MOD_ID,
 			"shards/molten"));
 	public static final TagKey<Item> VENTUS_SHARDS = ItemTags.create(new ResourceLocation(ImmersiveWeapons.MOD_ID,
@@ -36,6 +38,10 @@ public class ImmersiveWeaponsItemTagGroups {
 			"rods/obsidian"));
 	public static final TagKey<Item> ASTRAL_INGOTS = ItemTags.create(new ResourceLocation(ImmersiveWeapons.MOD_ID,
 			"ingots/astral"));
+	public static final TagKey<Item> ASTRAL_NUGGETS = ItemTags.create(new ResourceLocation(ImmersiveWeapons.MOD_ID,
+			"nuggets/astral"));
 	public static final TagKey<Item> STARSTORM_INGOTS = ItemTags.create(new ResourceLocation(ImmersiveWeapons.MOD_ID,
 			"ingots/starstorm"));
+	public static final TagKey<Item> STARSTORM_SHARDS = ItemTags.create(new ResourceLocation(ImmersiveWeapons.MOD_ID,
+			"shards/starstorm"));
 }

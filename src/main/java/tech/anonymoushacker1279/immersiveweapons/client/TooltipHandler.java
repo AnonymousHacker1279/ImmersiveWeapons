@@ -12,6 +12,13 @@ import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.init.BlockItemRegistry;
 import tech.anonymoushacker1279.immersiveweapons.init.ItemRegistry;
+import tech.anonymoushacker1279.immersiveweapons.item.GauntletItem;
+import tech.anonymoushacker1279.immersiveweapons.item.armor.*;
+import tech.anonymoushacker1279.immersiveweapons.item.pike.PikeItem;
+import tech.anonymoushacker1279.immersiveweapons.item.projectile.arrow.AbstractArrowItem;
+import tech.anonymoushacker1279.immersiveweapons.item.projectile.arrow.SmokeGrenadeArrowItem;
+import tech.anonymoushacker1279.immersiveweapons.item.projectile.bullet.AbstractBulletItem;
+import tech.anonymoushacker1279.immersiveweapons.item.projectile.throwable.SmokeGrenadeItem;
 
 @Mod.EventBusSubscriber(modid = ImmersiveWeapons.MOD_ID, bus = Bus.FORGE, value = Dist.CLIENT)
 public class TooltipHandler {
@@ -57,125 +64,54 @@ public class TooltipHandler {
 		}
 
 		// Arrows
-		if (stack.getItem() == ItemRegistry.COPPER_ARROW.get()) {
-			event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.copper_arrow").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
-		}
-		if (stack.getItem() == ItemRegistry.IRON_ARROW.get()) {
-			event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.iron_arrow").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
-		}
-		if (stack.getItem() == ItemRegistry.COBALT_ARROW.get()) {
-			event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.cobalt_arrow").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
-		}
-		if (stack.getItem() == ItemRegistry.DIAMOND_ARROW.get()) {
-			event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.diamond_arrow").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
-		}
-		if (stack.getItem() == ItemRegistry.GOLDEN_ARROW.get()) {
-			event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.golden_arrow").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
-		}
-		if (stack.getItem() == ItemRegistry.STONE_ARROW.get()) {
-			event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.stone_arrow").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
-		}
-		if (stack.getItem() == ItemRegistry.WOODEN_ARROW.get()) {
-			event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.wooden_arrow").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
-		}
-		if (stack.getItem() == ItemRegistry.NETHERITE_ARROW.get()) {
-			event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.netherite_arrow").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
-		}
-		if (stack.getItem() == ItemRegistry.MOLTEN_ARROW.get()) {
-			event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.molten_arrow").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
-		}
-		if (stack.getItem() == ItemRegistry.TESLA_ARROW.get()) {
-			event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.tesla_arrow").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
-		}
-		if (stack.getItem() == ItemRegistry.VENTUS_ARROW.get()) {
-			event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.ventus_arrow").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
-		}
-		if (stack.getItem() == ItemRegistry.ASTRAL_ARROW.get()) {
-			event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.astral_arrow").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
-		}
-		if (stack.getItem() == ItemRegistry.STARSTORM_ARROW.get()) {
-			event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.starstorm_arrow").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
-		}
-		if (stack.getItem() == ItemRegistry.SMOKE_GRENADE_ARROW.get()) {
+		if (stack.getItem() instanceof SmokeGrenadeArrowItem smokeArrow) {
 			event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.smoke_grenade_arrow").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
-			event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.smoke_grenade").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
-		}
-		if (stack.getItem() == ItemRegistry.SMOKE_GRENADE_ARROW_RED.get()) {
-			event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.smoke_grenade_arrow").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
-			event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.smoke_grenade").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
-			event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.smoke_grenade_red").withStyle(ChatFormatting.RED, ChatFormatting.ITALIC));
-		}
-		if (stack.getItem() == ItemRegistry.SMOKE_GRENADE_ARROW_GREEN.get()) {
-			event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.smoke_grenade_arrow").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
-			event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.smoke_grenade").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
-			event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.smoke_grenade_green").withStyle(ChatFormatting.GREEN, ChatFormatting.ITALIC));
-		}
-		if (stack.getItem() == ItemRegistry.SMOKE_GRENADE_ARROW_BLUE.get()) {
-			event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.smoke_grenade_arrow").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
-			event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.smoke_grenade").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
-			event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.smoke_grenade_blue").withStyle(ChatFormatting.BLUE, ChatFormatting.ITALIC));
-		}
-		if (stack.getItem() == ItemRegistry.SMOKE_GRENADE_ARROW_PURPLE.get()) {
-			event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.smoke_grenade_arrow").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
-			event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.smoke_grenade").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
-			event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.smoke_grenade_purple").withStyle(ChatFormatting.LIGHT_PURPLE, ChatFormatting.ITALIC));
-		}
-		if (stack.getItem() == ItemRegistry.SMOKE_GRENADE_ARROW_YELLOW.get()) {
-			event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.smoke_grenade_arrow").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
-			event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.smoke_grenade").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
-			event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.smoke_grenade_yellow").withStyle(ChatFormatting.YELLOW, ChatFormatting.ITALIC));
+
+			if (smokeArrow.color > 0) {
+				// The last word in the name is the color
+				String color = smokeArrow.toString().substring(smokeArrow.toString().lastIndexOf("_") + 1).toLowerCase();
+				event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.smoke_grenade_" + color).withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
+			}
+		} else if (stack.getItem() instanceof AbstractArrowItem arrow) {
+			event.getToolTip().add(Component.translatable("tooltip.immersiveweapons." + arrow).withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
 		}
 
 		// Bullets
-		if (stack.getItem().toString().contains("musket_ball")) {
-			event.getToolTip().add(Component.translatable("tooltip.immersiveweapons." + stack.getItem()).withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
+		if (stack.getItem() instanceof AbstractBulletItem bullet) {
+			event.getToolTip().add(Component.translatable("tooltip.immersiveweapons." + bullet).withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
 		}
 
 		// Pikes
-		if (stack.getItem() == ItemRegistry.WOODEN_PIKE.get() || stack.getItem() == ItemRegistry.STONE_PIKE.get() || stack.getItem() == ItemRegistry.GOLDEN_PIKE.get() || stack.getItem() == ItemRegistry.COPPER_PIKE.get() || stack.getItem() == ItemRegistry.IRON_PIKE.get() || stack.getItem() == ItemRegistry.COBALT_PIKE.get() || stack.getItem() == ItemRegistry.DIAMOND_PIKE.get() || stack.getItem() == ItemRegistry.NETHERITE_PIKE.get()) {
+		if (stack.getItem() instanceof PikeItem) {
 			event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.pike").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
 		}
 
 		// Armor
-		if (stack.getItem() == ItemRegistry.MOLTEN_HELMET.get() || stack.getItem() == ItemRegistry.MOLTEN_CHESTPLATE.get() || stack.getItem() == ItemRegistry.MOLTEN_LEGGINGS.get() || stack.getItem() == ItemRegistry.MOLTEN_BOOTS.get()) {
+		if (stack.getItem() instanceof MoltenArmorItem) {
 			event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.molten_armor").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
 		}
-		if (stack.getItem() == ItemRegistry.TESLA_HELMET.get() || stack.getItem() == ItemRegistry.TESLA_CHESTPLATE.get() || stack.getItem() == ItemRegistry.TESLA_LEGGINGS.get() || stack.getItem() == ItemRegistry.TESLA_BOOTS.get()) {
+		if (stack.getItem() instanceof TeslaArmorItem) {
 			event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.tesla_armor").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
 		}
-		if (stack.getItem() == ItemRegistry.VENTUS_HELMET.get() || stack.getItem() == ItemRegistry.VENTUS_CHESTPLATE.get() || stack.getItem() == ItemRegistry.VENTUS_LEGGINGS.get() || stack.getItem() == ItemRegistry.VENTUS_BOOTS.get()) {
+		if (stack.getItem() instanceof VentusArmorItem) {
 			event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.ventus_armor").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
 		}
-		if (stack.getItem() == ItemRegistry.ASTRAL_HELMET.get() || stack.getItem() == ItemRegistry.ASTRAL_CHESTPLATE.get() || stack.getItem() == ItemRegistry.ASTRAL_LEGGINGS.get() || stack.getItem() == ItemRegistry.ASTRAL_BOOTS.get()) {
+		if (stack.getItem() instanceof AstralArmorItem) {
 			event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.astral_armor").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
 		}
-		if (stack.getItem() == ItemRegistry.STARSTORM_HELMET.get() || stack.getItem() == ItemRegistry.STARSTORM_CHESTPLATE.get() || stack.getItem() == ItemRegistry.STARSTORM_LEGGINGS.get() || stack.getItem() == ItemRegistry.STARSTORM_BOOTS.get()) {
+		if (stack.getItem() instanceof StarstormArmorItem) {
 			event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.starstorm_armor").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
 		}
 
 		// Throwables
-		if (stack.getItem() == ItemRegistry.SMOKE_GRENADE.get()) {
+		if (stack.getItem() instanceof SmokeGrenadeItem grenade) {
 			event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.smoke_grenade").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
-		}
-		if (stack.getItem() == ItemRegistry.SMOKE_GRENADE_RED.get()) {
-			event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.smoke_grenade").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
-			event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.smoke_grenade_red").withStyle(ChatFormatting.RED, ChatFormatting.ITALIC));
-		}
-		if (stack.getItem() == ItemRegistry.SMOKE_GRENADE_GREEN.get()) {
-			event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.smoke_grenade").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
-			event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.smoke_grenade_green").withStyle(ChatFormatting.GREEN, ChatFormatting.ITALIC));
-		}
-		if (stack.getItem() == ItemRegistry.SMOKE_GRENADE_BLUE.get()) {
-			event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.smoke_grenade").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
-			event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.smoke_grenade_blue").withStyle(ChatFormatting.BLUE, ChatFormatting.ITALIC));
-		}
-		if (stack.getItem() == ItemRegistry.SMOKE_GRENADE_PURPLE.get()) {
-			event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.smoke_grenade").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
-			event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.smoke_grenade_purple").withStyle(ChatFormatting.LIGHT_PURPLE, ChatFormatting.ITALIC));
-		}
-		if (stack.getItem() == ItemRegistry.SMOKE_GRENADE_YELLOW.get()) {
-			event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.smoke_grenade").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
-			event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.smoke_grenade_yellow").withStyle(ChatFormatting.YELLOW, ChatFormatting.ITALIC));
+
+			if (grenade.color > 0) {
+				// The last word in the name is the color
+				String color = grenade.toString().substring(grenade.toString().lastIndexOf("_") + 1).toLowerCase();
+				event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.smoke_grenade_" + color).withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
+			}
 		}
 		if (stack.getItem() == ItemRegistry.MOLOTOV_COCKTAIL.get()) {
 			event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.molotov_cocktail").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
@@ -213,37 +149,9 @@ public class TooltipHandler {
 		}
 
 		// Gauntlets
-		if (stack.getItem() == ItemRegistry.WOODEN_GAUNTLET.get()) {
+		if (stack.getItem() instanceof GauntletItem gauntlet) {
 			event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.gauntlet").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
-			event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.wooden_gauntlet").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
-		}
-		if (stack.getItem() == ItemRegistry.STONE_GAUNTLET.get()) {
-			event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.gauntlet").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
-			event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.stone_gauntlet").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
-		}
-		if (stack.getItem() == ItemRegistry.GOLDEN_GAUNTLET.get()) {
-			event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.gauntlet").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
-			event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.golden_gauntlet").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
-		}
-		if (stack.getItem() == ItemRegistry.COPPER_GAUNTLET.get()) {
-			event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.gauntlet").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
-			event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.copper_gauntlet").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
-		}
-		if (stack.getItem() == ItemRegistry.IRON_GAUNTLET.get()) {
-			event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.gauntlet").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
-			event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.iron_gauntlet").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
-		}
-		if (stack.getItem() == ItemRegistry.COBALT_GAUNTLET.get()) {
-			event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.gauntlet").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
-			event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.cobalt_gauntlet").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
-		}
-		if (stack.getItem() == ItemRegistry.DIAMOND_GAUNTLET.get()) {
-			event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.gauntlet").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
-			event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.diamond_gauntlet").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
-		}
-		if (stack.getItem() == ItemRegistry.NETHERITE_GAUNTLET.get()) {
-			event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.gauntlet").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
-			event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.netherite_gauntlet").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
+			event.getToolTip().add(Component.translatable("tooltip.immersiveweapons." + gauntlet).withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
 		}
 
 		// Staffs

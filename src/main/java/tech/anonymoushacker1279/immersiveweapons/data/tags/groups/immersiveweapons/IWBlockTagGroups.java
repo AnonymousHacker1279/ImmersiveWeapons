@@ -6,7 +6,7 @@ import net.minecraft.tags.TagKey;
 import net.minecraft.world.level.block.Block;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 
-public class ImmersiveWeaponsBlockTagGroups {
+public class IWBlockTagGroups {
 
 	public static final TagKey<Block> BURNED_OAK_LOGS = BlockTags.create(new ResourceLocation(ImmersiveWeapons.MOD_ID,
 			"burned_oak_logs"));

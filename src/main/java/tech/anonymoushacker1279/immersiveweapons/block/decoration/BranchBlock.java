@@ -9,7 +9,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import tech.anonymoushacker1279.immersiveweapons.block.core.BasicOrientableBlock;
-import tech.anonymoushacker1279.immersiveweapons.data.tags.groups.immersiveweapons.ImmersiveWeaponsBlockTagGroups;
+import tech.anonymoushacker1279.immersiveweapons.data.tags.groups.immersiveweapons.IWBlockTagGroups;
 
 public class BranchBlock extends BasicOrientableBlock {
 
@@ -61,7 +61,7 @@ public class BranchBlock extends BasicOrientableBlock {
 	@Override
 	public boolean canSurvive(BlockState state, LevelReader reader, BlockPos pos) {
 		BlockState blockstate = reader.getBlockState(pos.relative(state.getValue(FACING)));
-		return blockstate.is(ImmersiveWeaponsBlockTagGroups.BURNED_OAK_LOGS);
+		return blockstate.is(IWBlockTagGroups.BURNED_OAK_LOGS);
 	}
 
 	/**

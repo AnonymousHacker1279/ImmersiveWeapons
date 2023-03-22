@@ -13,7 +13,7 @@ import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
 
 public class SmokeGrenadeItem extends Item {
 
-	private final int color;
+	public final int color;
 
 	/**
 	 * Constructor for SmokeGrenadeItem.

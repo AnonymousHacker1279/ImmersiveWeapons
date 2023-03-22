@@ -5,8 +5,8 @@ import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.*;
 import org.jetbrains.annotations.Nullable;
-import tech.anonymoushacker1279.immersiveweapons.data.tags.groups.immersiveweapons.ImmersiveWeaponsBlockTagGroups;
-import tech.anonymoushacker1279.immersiveweapons.data.tags.groups.immersiveweapons.ImmersiveWeaponsItemTagGroups;
+import tech.anonymoushacker1279.immersiveweapons.data.tags.groups.immersiveweapons.IWBlockTagGroups;
+import tech.anonymoushacker1279.immersiveweapons.data.tags.groups.immersiveweapons.IWItemTagGroups;
 import tech.anonymoushacker1279.immersiveweapons.init.BlockRegistry;
 import tech.anonymoushacker1279.immersiveweapons.init.ItemRegistry;
 import tech.anonymoushacker1279.immersiveweapons.item.utility.CustomBoatItem;
@@ -56,8 +56,8 @@ public record WoodFamilies(Supplier<? extends Block> planks,
 			null,
 			ItemRegistry.BURNED_OAK_BOAT,
 			ItemRegistry.BURNED_OAK_CHEST_BOAT,
-			ImmersiveWeaponsBlockTagGroups.BURNED_OAK_LOGS,
-			ImmersiveWeaponsItemTagGroups.BURNED_OAK_LOGS
+			IWBlockTagGroups.BURNED_OAK_LOGS,
+			IWItemTagGroups.BURNED_OAK_LOGS
 	);
 
 	public static final WoodFamilies STARDUST = new WoodFamilies(
@@ -80,8 +80,8 @@ public record WoodFamilies(Supplier<? extends Block> planks,
 			BlockRegistry.STARDUST_SAPLING,
 			ItemRegistry.STARDUST_BOAT,
 			ItemRegistry.STARDUST_CHEST_BOAT,
-			ImmersiveWeaponsBlockTagGroups.STARDUST_LOGS,
-			ImmersiveWeaponsItemTagGroups.STARDUST_LOGS
+			IWBlockTagGroups.STARDUST_LOGS,
+			IWItemTagGroups.STARDUST_LOGS
 	);
 
 	public static final Collection<WoodFamilies> FAMILIES = ImmutableList.of(BURNED_OAK, STARDUST);

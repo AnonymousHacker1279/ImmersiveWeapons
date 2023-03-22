@@ -270,34 +270,20 @@ public class FamilyGenerator extends RecipeGenerator {
 			}
 
 			// Pike
-			if (family.pike() != null) {
-				if (family.pikeHead() != null) {
-					RecipeGenerator.createPike(family.pike().get(), material, family.pikeHead().get());
-				}
-			}
+			RecipeGenerator.createPike(family.pike().get(), material, family.pikeHead().get());
 
 			// Pike head
-			if (family.pikeHead() != null) {
-				if (family.nugget() != null) {
-					RecipeGenerator.createPikeHead(family.pikeHead().get(), material, family.nugget());
-				}
-			}
+			RecipeGenerator.createPikeHead(family.pikeHead().get(), material, family.nugget());
 
 			if (ToolFamilies.FAMILIES_USE_NUGGETS_FOR_PROJECTILES.contains(family)) {
-				assert family.nugget() != null; // If it uses a nugget in the recipe, it will not be null
-
 				// Arrow
-				if (family.arrow() != null) {
-					RecipeGenerator.createArrow(family.arrow().get(), family.nugget());
-				}
+				RecipeGenerator.createArrow(family.arrow().get(), family.nugget());
 
 				// Musket ball
 				RecipeGenerator.createMusketBall(family.musketBall().get(), family.nugget());
 			} else {
 				// Arrow
-				if (family.arrow() != null) {
-					RecipeGenerator.createArrow(family.arrow().get(), family.material());
-				}
+				RecipeGenerator.createArrow(family.arrow().get(), family.material());
 
 				// Musket ball
 				RecipeGenerator.createMusketBall(family.musketBall().get(), family.material());

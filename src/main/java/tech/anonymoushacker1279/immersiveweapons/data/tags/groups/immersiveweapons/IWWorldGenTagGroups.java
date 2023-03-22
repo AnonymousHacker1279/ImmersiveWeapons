@@ -6,7 +6,7 @@ import net.minecraft.tags.TagKey;
 import net.minecraft.world.level.biome.Biome;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 
-public class ImmersiveWeaponsWorldGenTagGroups {
+public class IWWorldGenTagGroups {
 
 	// Biome tags
 	public static final TagKey<Biome> IS_BATTLEFIELD = createBiomeTag("is_battlefield");

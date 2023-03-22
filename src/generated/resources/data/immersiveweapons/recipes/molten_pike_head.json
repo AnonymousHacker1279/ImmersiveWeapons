@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "a": {
+      "tag": "immersiveweapons:shards/molten"
+    },
+    "b": {
+      "tag": "immersiveweapons:ingots/molten"
+    }
+  },
+  "pattern": [
+    "a",
+    "b"
+  ],
+  "result": {
+    "item": "immersiveweapons:molten_pike_head"
+  }
+}

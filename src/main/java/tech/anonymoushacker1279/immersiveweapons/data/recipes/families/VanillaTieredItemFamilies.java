@@ -6,10 +6,10 @@ import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.ArrowItem;
 import net.minecraft.world.item.Item;
 import net.minecraftforge.common.Tags.Items;
-import tech.anonymoushacker1279.immersiveweapons.data.tags.groups.immersiveweapons.ImmersiveWeaponsItemTagGroups;
+import tech.anonymoushacker1279.immersiveweapons.data.tags.groups.immersiveweapons.IWItemTagGroups;
 import tech.anonymoushacker1279.immersiveweapons.init.ItemRegistry;
 import tech.anonymoushacker1279.immersiveweapons.item.GauntletItem;
-import tech.anonymoushacker1279.immersiveweapons.item.PikeItem;
+import tech.anonymoushacker1279.immersiveweapons.item.pike.PikeItem;
 
 import java.util.function.Supplier;
 
@@ -23,7 +23,7 @@ public record VanillaTieredItemFamilies(TagKey<Item> material,
 
 	public static final VanillaTieredItemFamilies WOODEN = new VanillaTieredItemFamilies(
 			ItemTags.PLANKS,
-			ImmersiveWeaponsItemTagGroups.WOODEN_SHARDS,
+			IWItemTagGroups.WOODEN_SHARDS,
 			ItemRegistry.WOODEN_GAUNTLET,
 			ItemRegistry.WOODEN_PIKE,
 			ItemRegistry.WOODEN_PIKE_HEAD,
@@ -33,7 +33,7 @@ public record VanillaTieredItemFamilies(TagKey<Item> material,
 
 	public static final VanillaTieredItemFamilies STONE = new VanillaTieredItemFamilies(
 			ItemTags.STONE_TOOL_MATERIALS,
-			ImmersiveWeaponsItemTagGroups.STONE_SHARDS,
+			IWItemTagGroups.STONE_SHARDS,
 			ItemRegistry.STONE_GAUNTLET,
 			ItemRegistry.STONE_PIKE,
 			ItemRegistry.STONE_PIKE_HEAD,
@@ -63,7 +63,7 @@ public record VanillaTieredItemFamilies(TagKey<Item> material,
 
 	public static final VanillaTieredItemFamilies DIAMOND = new VanillaTieredItemFamilies(
 			Items.GEMS_DIAMOND,
-			ImmersiveWeaponsItemTagGroups.DIAMOND_SHARDS,
+			IWItemTagGroups.DIAMOND_SHARDS,
 			ItemRegistry.DIAMOND_GAUNTLET,
 			ItemRegistry.DIAMOND_PIKE,
 			ItemRegistry.DIAMOND_PIKE_HEAD,

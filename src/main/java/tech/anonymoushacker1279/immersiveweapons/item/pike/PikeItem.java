@@ -1,4 +1,4 @@
-package tech.anonymoushacker1279.immersiveweapons.item;
+package tech.anonymoushacker1279.immersiveweapons.item.pike;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -24,7 +24,7 @@ public class PikeItem extends TieredItem implements Vanishable {
 	}
 
 	@Override
-	public boolean canAttackBlock(BlockState state, Level worldIn, BlockPos pos, Player player) {
+	public boolean canAttackBlock(BlockState state, Level level, BlockPos pos, Player player) {
 		return !player.isCreative();
 	}
 

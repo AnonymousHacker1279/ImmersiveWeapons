@@ -1,0 +1,7 @@
+{
+  "parent": "immersiveweapons:item/pike",
+  "textures": {
+    "handle": "minecraft:block/spruce_planks",
+    "material": "immersiveweapons:block/cloud"
+  }
+}

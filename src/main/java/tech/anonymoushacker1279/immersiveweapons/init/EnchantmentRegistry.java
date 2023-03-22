@@ -9,7 +9,7 @@ import net.minecraftforge.registries.*;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.enchantment.*;
 import tech.anonymoushacker1279.immersiveweapons.item.GauntletItem;
-import tech.anonymoushacker1279.immersiveweapons.item.PikeItem;
+import tech.anonymoushacker1279.immersiveweapons.item.pike.PikeItem;
 import tech.anonymoushacker1279.immersiveweapons.item.projectile.gun.AbstractGunItem;
 
 @SuppressWarnings({"unused"})
