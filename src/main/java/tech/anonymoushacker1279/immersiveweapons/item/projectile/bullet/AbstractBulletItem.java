@@ -19,7 +19,6 @@ public abstract class AbstractBulletItem extends ArrowItem {
 	 * Constructor for AbstractBulletItem.
 	 *
 	 * @param properties the <code>Properties</code> for the item
-	 * @param damageIn   the damage to deal on impact
 	 */
 	protected AbstractBulletItem(Properties properties, double damage) {
 		super(properties);

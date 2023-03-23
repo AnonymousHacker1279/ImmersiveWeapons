@@ -12,7 +12,6 @@ public class WoodenMusketBallItem extends AbstractBulletItem {
 	 * Constructor for WoodBulletItem.
 	 *
 	 * @param properties the <code>Properties</code> for the item
-	 * @param damageIn   the damage to deal on impact
 	 */
 	public WoodenMusketBallItem(Properties properties, double damage) {
 		super(properties, damage);

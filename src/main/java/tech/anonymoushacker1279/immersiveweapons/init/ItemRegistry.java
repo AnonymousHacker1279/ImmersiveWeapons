@@ -15,6 +15,7 @@ import tech.anonymoushacker1279.immersiveweapons.entity.vehicle.CustomBoatType;
 import tech.anonymoushacker1279.immersiveweapons.item.*;
 import tech.anonymoushacker1279.immersiveweapons.item.armor.*;
 import tech.anonymoushacker1279.immersiveweapons.item.fortitude.*;
+import tech.anonymoushacker1279.immersiveweapons.item.gauntlet.*;
 import tech.anonymoushacker1279.immersiveweapons.item.materials.CustomArmorMaterials;
 import tech.anonymoushacker1279.immersiveweapons.item.materials.CustomItemMaterials;
 import tech.anonymoushacker1279.immersiveweapons.item.pike.*;
@@ -101,6 +102,11 @@ public class ItemRegistry {
 	public static final RegistryObject<GauntletItem> COBALT_GAUNTLET = ITEMS.register("cobalt_gauntlet", () -> new GauntletItem(CustomItemMaterials.COBALT, 2, -2.3f, new Properties(), 0.60f, 0, Ingredient.of(ForgeItemTagGroups.COBALT_INGOTS)));
 	public static final RegistryObject<GauntletItem> DIAMOND_GAUNTLET = ITEMS.register("diamond_gauntlet", () -> new GauntletItem(Tiers.DIAMOND, 2, -2.3f, new Properties(), 0.75f, 1, Ingredient.of(Tags.Items.GEMS_DIAMOND)));
 	public static final RegistryObject<GauntletItem> NETHERITE_GAUNTLET = ITEMS.register("netherite_gauntlet", () -> new GauntletItem(Tiers.NETHERITE, 2, -2.3f, new Properties(), 0.85f, 1, Ingredient.of(Tags.Items.INGOTS_NETHERITE)));
+	public static final RegistryObject<MoltenGauntletItem> MOLTEN_GAUNTLET = ITEMS.register("molten_gauntlet", () -> new MoltenGauntletItem(CustomItemMaterials.MOLTEN, 2, -2.3f, new Properties(), 0.95f, 2, Ingredient.of(IWItemTagGroups.MOLTEN_INGOTS)));
+	public static final RegistryObject<TeslaGauntletItem> TESLA_GAUNTLET = ITEMS.register("tesla_gauntlet", () -> new TeslaGauntletItem(CustomItemMaterials.TESLA, 2, -2.3f, new Properties(), 0.95f, 2, Ingredient.of(IWItemTagGroups.TESLA_INGOTS)));
+	public static final RegistryObject<VentusGauntletItem> VENTUS_GAUNTLET = ITEMS.register("ventus_gauntlet", () -> new VentusGauntletItem(CustomItemMaterials.VENTUS, 2, -1.9f, new Properties(), 0.95f, 2, Ingredient.of(IWItemTagGroups.VENTUS_SHARDS)));
+	public static final RegistryObject<GauntletItem> ASTRAL_GAUNTLET = ITEMS.register("astral_gauntlet", () -> new GauntletItem(CustomItemMaterials.ASTRAL, 2, -1.4f, new Properties(), 0.95f, 2, Ingredient.of(IWItemTagGroups.ASTRAL_INGOTS)));
+	public static final RegistryObject<GauntletItem> STARSTORM_GAUNTLET = ITEMS.register("starstorm_gauntlet", () -> new GauntletItem(CustomItemMaterials.STARSTORM, 2, -2.3f, new Properties(), 0.95f, 2, Ingredient.of(IWItemTagGroups.STARSTORM_INGOTS)));
 	public static final RegistryObject<MeteorStaffItem> METEOR_STAFF = ITEMS.register("meteor_staff", () -> new MeteorStaffItem(new Properties().durability(199)));
 	public static final RegistryObject<CursedSightStaffItem> CURSED_SIGHT_STAFF = ITEMS.register("cursed_sight_staff", () -> new CursedSightStaffItem(new Properties().durability(149)));
 

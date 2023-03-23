@@ -8,7 +8,7 @@ import net.minecraft.world.item.Item;
 import net.minecraftforge.common.Tags.Items;
 import tech.anonymoushacker1279.immersiveweapons.data.tags.groups.immersiveweapons.IWItemTagGroups;
 import tech.anonymoushacker1279.immersiveweapons.init.ItemRegistry;
-import tech.anonymoushacker1279.immersiveweapons.item.GauntletItem;
+import tech.anonymoushacker1279.immersiveweapons.item.gauntlet.GauntletItem;
 import tech.anonymoushacker1279.immersiveweapons.item.pike.PikeItem;
 
 import java.util.function.Supplier;

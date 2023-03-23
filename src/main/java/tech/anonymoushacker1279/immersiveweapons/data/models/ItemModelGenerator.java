@@ -11,6 +11,7 @@ import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.data.lists.ItemLists;
 import tech.anonymoushacker1279.immersiveweapons.init.BlockItemRegistry;
 import tech.anonymoushacker1279.immersiveweapons.init.ItemRegistry;
+import tech.anonymoushacker1279.immersiveweapons.item.gauntlet.GauntletItem;
 import tech.anonymoushacker1279.immersiveweapons.item.pike.PikeItem;
 import tech.anonymoushacker1279.immersiveweapons.item.projectile.bullet.AbstractBulletItem;
 
@@ -19,8 +20,70 @@ import java.util.function.Predicate;
 
 public class ItemModelGenerator extends ItemModelProvider {
 
+	Map<PikeItem, ResourceLocation> pikeMaterialMap = new HashMap<>(15);
+	Map<GauntletItem, ResourceLocation> gauntletMaterialMap = new HashMap<>(15);
+
 	public ItemModelGenerator(PackOutput output, ExistingFileHelper existingFileHelper) {
 		super(output, ImmersiveWeapons.MOD_ID, existingFileHelper);
+		fillMaterialMaps();
+	}
+
+	private void fillMaterialMaps() {
+		// Make a map of pikes to material textures
+		pikeMaterialMap.put(ItemRegistry.WOODEN_PIKE.get(),
+				new ResourceLocation("block/stripped_oak_log"));
+		pikeMaterialMap.put(ItemRegistry.STONE_PIKE.get(),
+				new ResourceLocation("block/stone"));
+		pikeMaterialMap.put(ItemRegistry.GOLDEN_PIKE.get(),
+				new ResourceLocation("block/gold_block"));
+		pikeMaterialMap.put(ItemRegistry.COPPER_PIKE.get(),
+				new ResourceLocation("block/copper_block"));
+		pikeMaterialMap.put(ItemRegistry.IRON_PIKE.get(),
+				new ResourceLocation("block/iron_block"));
+		pikeMaterialMap.put(ItemRegistry.COBALT_PIKE.get(),
+				new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/cobalt_block"));
+		pikeMaterialMap.put(ItemRegistry.DIAMOND_PIKE.get(),
+				new ResourceLocation("block/diamond_block"));
+		pikeMaterialMap.put(ItemRegistry.NETHERITE_PIKE.get(),
+				new ResourceLocation("block/netherite_block"));
+		pikeMaterialMap.put(ItemRegistry.MOLTEN_PIKE.get(),
+				new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/molten_block"));
+		pikeMaterialMap.put(ItemRegistry.TESLA_PIKE.get(),
+				new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/tesla_block"));
+		pikeMaterialMap.put(ItemRegistry.VENTUS_PIKE.get(),
+				new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/cloud"));
+		pikeMaterialMap.put(ItemRegistry.ASTRAL_PIKE.get(),
+				new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/astral_block"));
+		pikeMaterialMap.put(ItemRegistry.STARSTORM_PIKE.get(),
+				new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/starstorm_block"));
+
+		// Make a map of gauntlets to material textures
+		gauntletMaterialMap.put(ItemRegistry.WOODEN_GAUNTLET.get(),
+				new ResourceLocation("block/stripped_oak_log"));
+		gauntletMaterialMap.put(ItemRegistry.STONE_GAUNTLET.get(),
+				new ResourceLocation("block/stone"));
+		gauntletMaterialMap.put(ItemRegistry.GOLDEN_GAUNTLET.get(),
+				new ResourceLocation("block/gold_block"));
+		gauntletMaterialMap.put(ItemRegistry.COPPER_GAUNTLET.get(),
+				new ResourceLocation("block/copper_block"));
+		gauntletMaterialMap.put(ItemRegistry.IRON_GAUNTLET.get(),
+				new ResourceLocation("block/iron_block"));
+		gauntletMaterialMap.put(ItemRegistry.COBALT_GAUNTLET.get(),
+				new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/cobalt_block"));
+		gauntletMaterialMap.put(ItemRegistry.DIAMOND_GAUNTLET.get(),
+				new ResourceLocation("block/diamond_block"));
+		gauntletMaterialMap.put(ItemRegistry.NETHERITE_GAUNTLET.get(),
+				new ResourceLocation("block/netherite_block"));
+		gauntletMaterialMap.put(ItemRegistry.MOLTEN_GAUNTLET.get(),
+				new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/molten_block"));
+		gauntletMaterialMap.put(ItemRegistry.TESLA_GAUNTLET.get(),
+				new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/tesla_block"));
+		gauntletMaterialMap.put(ItemRegistry.VENTUS_GAUNTLET.get(),
+				new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/cloud"));
+		gauntletMaterialMap.put(ItemRegistry.ASTRAL_GAUNTLET.get(),
+				new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/astral_block"));
+		gauntletMaterialMap.put(ItemRegistry.STARSTORM_GAUNTLET.get(),
+				new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/starstorm_block"));
 	}
 
 	/**
@@ -88,40 +151,16 @@ public class ItemModelGenerator extends ItemModelProvider {
 			if (!isAtBlockItems) {
 				if (!isPastToolItems) {
 					if (item instanceof PikeItem) {
-						// Make a map of pikes to material textures
-						Map<PikeItem, ResourceLocation> pikeMaterialMap = new HashMap<>(15);
-						pikeMaterialMap.put(ItemRegistry.WOODEN_PIKE.get(),
-								new ResourceLocation("block/stripped_oak_log"));
-						pikeMaterialMap.put(ItemRegistry.STONE_PIKE.get(),
-								new ResourceLocation("block/stone"));
-						pikeMaterialMap.put(ItemRegistry.GOLDEN_PIKE.get(),
-								new ResourceLocation("block/gold_block"));
-						pikeMaterialMap.put(ItemRegistry.COPPER_PIKE.get(),
-								new ResourceLocation("block/copper_block"));
-						pikeMaterialMap.put(ItemRegistry.IRON_PIKE.get(),
-								new ResourceLocation("block/iron_block"));
-						pikeMaterialMap.put(ItemRegistry.COBALT_PIKE.get(),
-								new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/cobalt_block"));
-						pikeMaterialMap.put(ItemRegistry.DIAMOND_PIKE.get(),
-								new ResourceLocation("block/diamond_block"));
-						pikeMaterialMap.put(ItemRegistry.NETHERITE_PIKE.get(),
-								new ResourceLocation("block/netherite_block"));
-						pikeMaterialMap.put(ItemRegistry.MOLTEN_PIKE.get(),
-								new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/molten_block"));
-						pikeMaterialMap.put(ItemRegistry.TESLA_PIKE.get(),
-								new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/tesla_block"));
-						pikeMaterialMap.put(ItemRegistry.VENTUS_PIKE.get(),
-								new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/cloud"));
-						pikeMaterialMap.put(ItemRegistry.ASTRAL_PIKE.get(),
-								new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/astral_block"));
-						pikeMaterialMap.put(ItemRegistry.STARSTORM_PIKE.get(),
-								new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/starstorm_block"));
-
 						getBuilder(item.toString())
 								.parent(new ModelFile.UncheckedModelFile(new ResourceLocation(ImmersiveWeapons.MOD_ID,
 										"item/pike")))
 								.texture("handle", new ResourceLocation("block/spruce_planks"))
 								.texture("material", pikeMaterialMap.get(item));
+					} else if (item instanceof GauntletItem) {
+						getBuilder(item.toString())
+								.parent(new ModelFile.UncheckedModelFile(new ResourceLocation(ImmersiveWeapons.MOD_ID,
+										"item/gauntlet")))
+								.texture("material", gauntletMaterialMap.get(item));
 					} else {
 						handheldItem(item);
 					}

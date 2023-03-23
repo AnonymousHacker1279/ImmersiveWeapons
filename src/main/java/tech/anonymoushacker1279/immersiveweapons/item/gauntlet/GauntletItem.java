@@ -1,4 +1,4 @@
-package tech.anonymoushacker1279.immersiveweapons.item;
+package tech.anonymoushacker1279.immersiveweapons.item.gauntlet;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.effect.MobEffectInstance;

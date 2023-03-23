@@ -38,7 +38,7 @@ import tech.anonymoushacker1279.immersiveweapons.client.gui.overlays.DebugTracin
 import tech.anonymoushacker1279.immersiveweapons.data.biomes.IWBiomes;
 import tech.anonymoushacker1279.immersiveweapons.event.environment_effects.EnvironmentEffects;
 import tech.anonymoushacker1279.immersiveweapons.init.*;
-import tech.anonymoushacker1279.immersiveweapons.item.GauntletItem;
+import tech.anonymoushacker1279.immersiveweapons.item.gauntlet.GauntletItem;
 import tech.anonymoushacker1279.immersiveweapons.item.pike.PikeItem;
 import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
 

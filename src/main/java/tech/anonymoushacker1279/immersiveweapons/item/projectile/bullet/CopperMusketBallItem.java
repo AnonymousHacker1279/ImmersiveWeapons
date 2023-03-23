@@ -12,7 +12,6 @@ public class CopperMusketBallItem extends AbstractBulletItem {
 	 * Constructor for CopperBulletItem.
 	 *
 	 * @param properties the <code>Properties</code> for the item
-	 * @param damageIn   the damage to deal on impact
 	 */
 	public CopperMusketBallItem(Properties properties, double damage) {
 		super(properties, damage);

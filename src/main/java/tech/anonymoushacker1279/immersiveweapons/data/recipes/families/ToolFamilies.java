@@ -4,11 +4,10 @@ import com.google.common.collect.ImmutableList;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.*;
 import net.minecraftforge.common.Tags;
-import org.jetbrains.annotations.Nullable;
 import tech.anonymoushacker1279.immersiveweapons.data.tags.groups.forge.ForgeItemTagGroups;
 import tech.anonymoushacker1279.immersiveweapons.data.tags.groups.immersiveweapons.IWItemTagGroups;
 import tech.anonymoushacker1279.immersiveweapons.init.ItemRegistry;
-import tech.anonymoushacker1279.immersiveweapons.item.GauntletItem;
+import tech.anonymoushacker1279.immersiveweapons.item.gauntlet.GauntletItem;
 import tech.anonymoushacker1279.immersiveweapons.item.pike.PikeItem;
 
 import java.util.Collection;
@@ -22,7 +21,7 @@ public record ToolFamilies(TagKey<Item> material,
                            Supplier<? extends AxeItem> axe,
                            Supplier<? extends ShovelItem> shovel,
                            Supplier<? extends HoeItem> hoe,
-                           @Nullable Supplier<? extends GauntletItem> gauntlet,
+                           Supplier<? extends GauntletItem> gauntlet,
                            Supplier<? extends PikeItem> pike,
                            Supplier<? extends Item> pikeHead,
                            Supplier<? extends ArrowItem> arrow,
@@ -69,7 +68,7 @@ public record ToolFamilies(TagKey<Item> material,
 			ItemRegistry.MOLTEN_AXE,
 			ItemRegistry.MOLTEN_SHOVEL,
 			ItemRegistry.MOLTEN_HOE,
-			null,
+			ItemRegistry.MOLTEN_GAUNTLET,
 			ItemRegistry.MOLTEN_PIKE,
 			ItemRegistry.MOLTEN_PIKE_HEAD,
 			ItemRegistry.MOLTEN_ARROW,
@@ -85,7 +84,7 @@ public record ToolFamilies(TagKey<Item> material,
 			ItemRegistry.TESLA_AXE,
 			ItemRegistry.TESLA_SHOVEL,
 			ItemRegistry.TESLA_HOE,
-			null,
+			ItemRegistry.TESLA_GAUNTLET,
 			ItemRegistry.TESLA_PIKE,
 			ItemRegistry.TESLA_PIKE_HEAD,
 			ItemRegistry.TESLA_ARROW,
@@ -101,7 +100,7 @@ public record ToolFamilies(TagKey<Item> material,
 			ItemRegistry.VENTUS_AXE,
 			ItemRegistry.VENTUS_SHOVEL,
 			ItemRegistry.VENTUS_HOE,
-			null,
+			ItemRegistry.VENTUS_GAUNTLET,
 			ItemRegistry.VENTUS_PIKE,
 			ItemRegistry.VENTUS_PIKE_HEAD,
 			ItemRegistry.VENTUS_ARROW,
@@ -117,7 +116,7 @@ public record ToolFamilies(TagKey<Item> material,
 			ItemRegistry.ASTRAL_AXE,
 			ItemRegistry.ASTRAL_SHOVEL,
 			ItemRegistry.ASTRAL_HOE,
-			null,
+			ItemRegistry.ASTRAL_GAUNTLET,
 			ItemRegistry.ASTRAL_PIKE,
 			ItemRegistry.ASTRAL_PIKE_HEAD,
 			ItemRegistry.ASTRAL_ARROW,
@@ -133,7 +132,7 @@ public record ToolFamilies(TagKey<Item> material,
 			ItemRegistry.STARSTORM_AXE,
 			ItemRegistry.STARSTORM_SHOVEL,
 			ItemRegistry.STARSTORM_HOE,
-			null,
+			ItemRegistry.STARSTORM_GAUNTLET,
 			ItemRegistry.STARSTORM_PIKE,
 			ItemRegistry.STARSTORM_PIKE_HEAD,
 			ItemRegistry.STARSTORM_ARROW,

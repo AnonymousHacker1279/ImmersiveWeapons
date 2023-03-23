@@ -12,7 +12,6 @@ public class NetheriteMusketBallItem extends AbstractBulletItem {
 	 * Constructor for NetheriteBulletItem.
 	 *
 	 * @param properties the <code>Properties</code> for the item
-	 * @param damageIn   the damage to deal on impact
 	 */
 	public NetheriteMusketBallItem(Properties properties, double damage) {
 		super(properties, damage);
