@@ -2,6 +2,7 @@ package tech.anonymoushacker1279.immersiveweapons.client;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
+import net.minecraft.world.item.DiggerItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
@@ -47,6 +48,11 @@ public class TooltipHandler {
 		}
 		if (stack.getItem() == ItemRegistry.STARSTORM_SWORD.get()) {
 			event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.starstorm_sword").withStyle(ChatFormatting.RED, ChatFormatting.ITALIC));
+		}
+
+		// Molten-specific
+		if (stack.getItem().toString().contains("molten") && stack.getItem() instanceof DiggerItem) {
+			event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.molten_tool").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
 		}
 
 		// Guns

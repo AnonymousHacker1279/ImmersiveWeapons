@@ -289,6 +289,9 @@ public class LanguageGenerator extends IWLanguageProvider {
 		addTooltip("astral_sword", "Fast Hands");
 		addTooltip("starstorm_sword", "Inflict the wrath of the stars");
 
+		// Tier specific
+		addTooltip("molten_tool", "Crouching while mining blocks will automatically smelt them");
+
 		// Guns
 		addTooltip("flintlock_pistol", "A basic flintlock firearm that excels in medium-range combat.");
 		addTooltip("blunderbuss", "Good for hordes a short distance away. A primitive type of shotgun.");
