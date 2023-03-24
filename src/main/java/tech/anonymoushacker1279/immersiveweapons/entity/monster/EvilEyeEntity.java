@@ -51,7 +51,7 @@ public class EvilEyeEntity extends FlyingMob implements Enemy, GrantAdvancementO
 	public EvilEyeEntity(EntityType<? extends FlyingMob> entityType, Level level) {
 		super(entityType, level);
 
-		lowTierDebuffs.add(MobEffects.LEVITATION);
+		lowTierDebuffs.add(MobEffects.MOVEMENT_SLOWDOWN);
 		lowTierDebuffs.add(MobEffects.CONFUSION);
 		lowTierDebuffs.add(MobEffects.HUNGER);
 		lowTierDebuffs.add(MobEffects.DIG_SLOWDOWN);
@@ -61,7 +61,7 @@ public class EvilEyeEntity extends FlyingMob implements Enemy, GrantAdvancementO
 		highTierDebuffs.add(MobEffects.BLINDNESS);
 		highTierDebuffs.add(MobEffects.POISON);
 		highTierDebuffs.add(MobEffects.WEAKNESS);
-		highTierDebuffs.add(MobEffects.MOVEMENT_SLOWDOWN);
+		highTierDebuffs.add(MobEffects.LEVITATION);
 	}
 
 	private EvilEyeEntity(Level level, Vec3 position, boolean staff) {
@@ -142,7 +142,10 @@ public class EvilEyeEntity extends FlyingMob implements Enemy, GrantAdvancementO
 				goalSelector.addGoal(2, flyRandomlyGoal);
 			} else {
 				// Ensure the target is still valid
-				boolean validTarget = TargetingConditions.forCombat().test(this, targetedEntity);
+				boolean validTarget = !summonedByStaff
+						? TargetingConditions.forCombat().test(this, targetedEntity)
+						: TargetingConditions.forCombat().ignoreLineOfSight().test(this, targetedEntity);
+
 				if (!validTarget) {
 					targetedEntity = null;
 
