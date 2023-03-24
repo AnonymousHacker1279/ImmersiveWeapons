@@ -37,12 +37,16 @@ public interface SummoningStaff {
 	}
 
 	default void handleCooldown(Item item, @Nullable BlockPos lookingAt, Player player, InteractionHand hand) {
+		handleCooldown(item, lookingAt, player, hand, getStaffCooldown());
+	}
+
+	default void handleCooldown(Item item, @Nullable BlockPos lookingAt, Player player, InteractionHand hand, int cooldown) {
 		if (lookingAt != null) {
 			if (!player.isCreative()) {
 				player.getItemInHand(hand).hurtAndBreak(1, player, (entity) -> entity.broadcastBreakEvent(player.getUsedItemHand()));
 
 				// Add a cooldown to the item
-				player.getCooldowns().addCooldown(item, getStaffCooldown());
+				player.getCooldowns().addCooldown(item, cooldown);
 			}
 		}
 	}

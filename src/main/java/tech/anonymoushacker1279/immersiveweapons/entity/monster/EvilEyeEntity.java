@@ -44,6 +44,9 @@ public class EvilEyeEntity extends FlyingMob implements Enemy, GrantAdvancementO
 	private UUID targetedEntityUUID;
 
 	private int ticksWatched;
+	private float effectChance = 0.05f;
+	private int effectDuration = 100;
+	private int effectLevel = 0;
 
 	public EvilEyeEntity(EntityType<? extends FlyingMob> entityType, Level level) {
 		super(entityType, level);
@@ -78,6 +81,18 @@ public class EvilEyeEntity extends FlyingMob implements Enemy, GrantAdvancementO
 		level.addFreshEntity(entity);
 
 		return entity;
+	}
+
+	public void setEffectChance(float chance) {
+		effectChance = chance;
+	}
+
+	public void setEffectDuration(int duration) {
+		effectDuration = duration;
+	}
+
+	public void setEffectLevel(int level) {
+		effectLevel = level;
 	}
 
 	public static AttributeSupplier.Builder registerAttributes() {
@@ -164,14 +179,14 @@ public class EvilEyeEntity extends FlyingMob implements Enemy, GrantAdvancementO
 				if (ticksWatched >= 100) {
 					// If the entity has been watched for 100 ticks or more, there is a 5% chance every
 					// 20 ticks to inflict a random debuff on the player
-					if (tickCount % 20 == 0 && random.nextFloat() < 0.05F) {
+					if (tickCount % 20 == 0 && random.nextFloat() < effectChance) {
 						// If there are at least 3 entities within an 8 block radius, inflict a high tier debuff
 						if (level.getEntitiesOfClass(EvilEyeEntity.class, getBoundingBox().inflate(8), (entity) -> true).size() >= 3) {
-							MobEffect effect = highTierDebuffs.get(GeneralUtilities.getRandomNumber(0, highTierDebuffs.size() - 1));
-							targetedEntity.addEffect(new MobEffectInstance(effect, 100, 0));
+							MobEffect effect = highTierDebuffs.get(GeneralUtilities.getRandomNumber(0, highTierDebuffs.size()));
+							targetedEntity.addEffect(new MobEffectInstance(effect, effectDuration, effectLevel));
 						} else {
-							MobEffect effect = lowTierDebuffs.get(GeneralUtilities.getRandomNumber(0, lowTierDebuffs.size() - 1));
-							targetedEntity.addEffect(new MobEffectInstance(effect, 100, 0));
+							MobEffect effect = lowTierDebuffs.get(GeneralUtilities.getRandomNumber(0, lowTierDebuffs.size()));
+							targetedEntity.addEffect(new MobEffectInstance(effect, effectDuration, effectLevel));
 						}
 					}
 				}

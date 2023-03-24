@@ -420,6 +420,7 @@ public class LanguageGenerator extends IWLanguageProvider {
 		addMessage("item.azul_locator.teleporting", "Teleporting to spawn point in %s seconds...");
 		addMessage("item.azul_locator.teleported", "Teleported to spawn point!");
 		addMessage("item.azul_locator.no_spawn", "Unable to teleport: No spawn point set.");
+		addMessage("item.meteor_staff.not_enough_clearance", "There isn't enough clearance to summon a meteor");
 		addMessage("block.wall_shelf.locked", "This shelf has been locked");
 		addMessage("block.wall_shelf.unlocked", "This shelf has been unlocked");
 	}
@@ -802,6 +803,11 @@ public class LanguageGenerator extends IWLanguageProvider {
 		addEnchantment(EnchantmentRegistry.CRIMSON_CLAW, "Crimson Claw");
 		addEnchantment(EnchantmentRegistry.EXCESSIVE_FORCE, "Excessive Force");
 		addEnchantment(EnchantmentRegistry.REGENERATIVE_ASSAULT, "Regenerative Assault");
+		addEnchantment(EnchantmentRegistry.HEAVY_COMET, "Heavy Comet");
+		addEnchantment(EnchantmentRegistry.BURNING_HEAT, "Burning Heat");
+		addEnchantment(EnchantmentRegistry.CELESTIAL_FURY, "Celestial Fury");
+		addEnchantment(EnchantmentRegistry.NIGHTMARISH_STARE, "Nightmarish Stare");
+		addEnchantment(EnchantmentRegistry.MALEVOLENT_GAZE, "Malevolent Gaze");
 	}
 
 	private void addMisc() {

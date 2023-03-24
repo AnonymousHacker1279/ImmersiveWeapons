@@ -8,6 +8,8 @@ import net.minecraft.world.item.enchantment.EnchantmentCategory;
 import net.minecraftforge.registries.*;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.enchantment.*;
+import tech.anonymoushacker1279.immersiveweapons.item.CursedSightStaffItem;
+import tech.anonymoushacker1279.immersiveweapons.item.MeteorStaffItem;
 import tech.anonymoushacker1279.immersiveweapons.item.gauntlet.GauntletItem;
 import tech.anonymoushacker1279.immersiveweapons.item.pike.PikeItem;
 import tech.anonymoushacker1279.immersiveweapons.item.projectile.gun.AbstractGunItem;
@@ -31,6 +33,8 @@ public class EnchantmentRegistry {
 					EnchantmentCategory.DIGGER.canEnchant(item) || EnchantmentCategory.WEAPON.canEnchant(item) ||
 					EnchantmentCategory.BOW.canEnchant(item) || EnchantmentCategory.CROSSBOW.canEnchant(item) ||
 					EnchantmentCategory.TRIDENT.canEnchant(item));
+	public static final EnchantmentCategory METEOR_STAFF = EnchantmentCategory.create("meteor_staff", MeteorStaffItem.class::isInstance);
+	public static final EnchantmentCategory CURSED_SIGHT_STAFF = EnchantmentCategory.create("cursed_sight_staff", CursedSightStaffItem.class::isInstance);
 
 	// Enchantments
 	public static final RegistryObject<FirepowerEnchantment> FIREPOWER = ENCHANTMENTS.register("firepower", () -> new FirepowerEnchantment(Rarity.COMMON, GUN, HANDS));
@@ -44,4 +48,9 @@ public class EnchantmentRegistry {
 	public static final RegistryObject<CrimsonClawEnchantment> CRIMSON_CLAW = ENCHANTMENTS.register("crimson_claw", () -> new CrimsonClawEnchantment(Rarity.RARE, GAUNTLET, HANDS));
 	public static final RegistryObject<ExcessiveForceEnchantment> EXCESSIVE_FORCE = ENCHANTMENTS.register("excessive_force", () -> new ExcessiveForceEnchantment(Rarity.RARE, GAUNTLET, HANDS));
 	public static final RegistryObject<RegenerativeAssaultEnchantment> REGENERATIVE_ASSAULT = ENCHANTMENTS.register("regenerative_assault", () -> new RegenerativeAssaultEnchantment(Rarity.VERY_RARE, WEAPONS_OR_TOOLS, HANDS));
+	public static final RegistryObject<HeavyCometEnchantment> HEAVY_COMET = ENCHANTMENTS.register("heavy_comet", () -> new HeavyCometEnchantment(Rarity.RARE, METEOR_STAFF, HANDS));
+	public static final RegistryObject<BurningHeatEnchantment> BURNING_HEAT = ENCHANTMENTS.register("burning_heat", () -> new BurningHeatEnchantment(Rarity.RARE, METEOR_STAFF, HANDS));
+	public static final RegistryObject<CelestialFuryEnchantment> CELESTIAL_FURY = ENCHANTMENTS.register("celestial_fury", () -> new CelestialFuryEnchantment(Rarity.VERY_RARE, METEOR_STAFF, HANDS));
+	public static final RegistryObject<NightmarishStareEnchantment> NIGHTMARISH_STARE = ENCHANTMENTS.register("nightmarish_stare", () -> new NightmarishStareEnchantment(Rarity.UNCOMMON, CURSED_SIGHT_STAFF, HANDS));
+	public static final RegistryObject<MalevolentGazeEnchantment> MALEVOLENT_GAZE = ENCHANTMENTS.register("malevolent_gaze", () -> new MalevolentGazeEnchantment(Rarity.RARE, CURSED_SIGHT_STAFF, HANDS));
 }
