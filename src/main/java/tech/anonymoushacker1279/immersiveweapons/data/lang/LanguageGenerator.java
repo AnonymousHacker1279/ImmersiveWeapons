@@ -411,7 +411,7 @@ public class LanguageGenerator extends IWLanguageProvider {
 		add("key.categories.immersiveweapons", "Immersive Weapons");
 
 		addKey("toggleArmorEffect", "Toggle Armor Effect");
-		addKey("astralArmorDashEffect", "Astral Armor Dash");
+		addKey("armorAction", "Armor Action");
 		addKey("debugTracing", "Debug Tracing");
 	}
 

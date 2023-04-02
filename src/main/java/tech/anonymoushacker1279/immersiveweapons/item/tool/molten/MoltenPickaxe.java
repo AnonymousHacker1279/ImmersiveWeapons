@@ -5,7 +5,7 @@ import net.minecraft.world.item.*;
 import tech.anonymoushacker1279.immersiveweapons.item.tool.HitEffectUtils;
 
 public class MoltenPickaxe extends PickaxeItem implements HitEffectUtils {
-	
+
 	public MoltenPickaxe(Tier tier, int attackDamage, float attackSpeed, Properties properties) {
 		super(tier, attackDamage, attackSpeed, properties);
 	}

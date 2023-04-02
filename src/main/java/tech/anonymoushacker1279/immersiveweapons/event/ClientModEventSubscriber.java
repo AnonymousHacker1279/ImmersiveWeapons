@@ -307,7 +307,7 @@ public class ClientModEventSubscriber {
 		ImmersiveWeapons.LOGGER.info("Registering key bindings");
 
 		event.register(IWKeyBinds.TOGGLE_ARMOR_EFFECT);
-		event.register(IWKeyBinds.ASTRAL_ARMOR_DASH_EFFECT);
+		event.register(IWKeyBinds.ARMOR_ACTION);
 		event.register(IWKeyBinds.DEBUG_TRACING);
 	}
 

@@ -90,7 +90,7 @@ public class AstralArmorItem extends ArmorItem {
 								GeneralUtilities.getRandomNumber(0.0d, 0.03d),
 								GeneralUtilities.getRandomNumber(-0.03d, 0.03d));
 					}
-					if (IWKeyBinds.ASTRAL_ARMOR_DASH_EFFECT.consumeClick()) {
+					if (IWKeyBinds.ARMOR_ACTION.consumeClick()) {
 						if (dashCooldown == 0) {
 							Vec3 viewVector = player.getViewVector(1);
 							Vec3 dashVector = new Vec3(viewVector.x(), player.getDeltaMovement().y(), viewVector.z());
