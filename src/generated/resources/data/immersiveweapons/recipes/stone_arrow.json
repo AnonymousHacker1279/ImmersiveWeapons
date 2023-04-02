@@ -3,7 +3,7 @@
   "category": "equipment",
   "key": {
     "a": {
-      "tag": "minecraft:stone_tool_materials"
+      "tag": "immersiveweapons:shards/stone"
     },
     "b": {
       "item": "minecraft:stick"

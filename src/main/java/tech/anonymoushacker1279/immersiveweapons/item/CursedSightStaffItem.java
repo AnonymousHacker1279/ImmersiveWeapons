@@ -14,6 +14,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
 import tech.anonymoushacker1279.immersiveweapons.config.CommonConfig;
 import tech.anonymoushacker1279.immersiveweapons.entity.monster.EvilEyeEntity;
+import tech.anonymoushacker1279.immersiveweapons.init.EnchantmentRegistry;
 import tech.anonymoushacker1279.immersiveweapons.init.ItemRegistry;
 
 public class CursedSightStaffItem extends Item implements SummoningStaff {
@@ -50,6 +51,19 @@ public class CursedSightStaffItem extends Item implements SummoningStaff {
 			if (nearestEntity != null) {
 				EvilEyeEntity evilEyeEntity = EvilEyeEntity.create(level, player.position(), true);
 
+				// Handle enchantments
+				int enchantmentLevel = getEnchantmentLevel(player.getItemInHand(hand), EnchantmentRegistry.NIGHTMARISH_STARE.get());
+				if (enchantmentLevel > 0) {
+					evilEyeEntity.setEffectChance(0.05f + (0.05f * enchantmentLevel));
+				}
+				enchantmentLevel = getEnchantmentLevel(player.getItemInHand(hand), EnchantmentRegistry.MALEVOLENT_GAZE.get());
+				if (enchantmentLevel > 0) {
+					int duration = Math.min(100 + (40 * enchantmentLevel), 300);
+					int effectLevel = Math.min(1 + enchantmentLevel, 5);
+					evilEyeEntity.setEffectDuration(duration);
+					evilEyeEntity.setEffectLevel(effectLevel);
+				}
+
 				evilEyeEntity.setTargetedEntity(nearestEntity);
 			} else {
 				return InteractionResultHolder.pass(player.getItemInHand(hand));
@@ -77,5 +91,10 @@ public class CursedSightStaffItem extends Item implements SummoningStaff {
 	@Override
 	public boolean isValidRepairItem(ItemStack toRepair, ItemStack repair) {
 		return Ingredient.of(ItemRegistry.BROKEN_LENS.get()).test(repair) || super.isValidRepairItem(toRepair, repair);
+	}
+
+	@Override
+	public int getEnchantmentValue(ItemStack stack) {
+		return 1;
 	}
 }

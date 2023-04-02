@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "a": {
+      "tag": "immersiveweapons:ingots/starstorm"
+    },
+    "b": {
+      "item": "immersiveweapons:gauntlet_scaffolding"
+    }
+  },
+  "pattern": [
+    "aaa",
+    "aba"
+  ],
+  "result": {
+    "item": "immersiveweapons:starstorm_gauntlet"
+  }
+}

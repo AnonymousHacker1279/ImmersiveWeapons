@@ -7,8 +7,8 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.minecraftforge.registries.RegistryObject;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
-import tech.anonymoushacker1279.immersiveweapons.data.models.lists.BlockLists;
-import tech.anonymoushacker1279.immersiveweapons.data.models.lists.ItemLists;
+import tech.anonymoushacker1279.immersiveweapons.data.lists.BlockLists;
+import tech.anonymoushacker1279.immersiveweapons.data.lists.ItemLists;
 import tech.anonymoushacker1279.immersiveweapons.init.*;
 import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
 
@@ -38,6 +38,7 @@ public class LanguageGenerator extends IWLanguageProvider {
 		addBiomes();
 		addAdvancements();
 		addConfigDescriptions();
+		addEnchantments();
 		addMisc();
 	}
 
@@ -91,8 +92,8 @@ public class LanguageGenerator extends IWLanguageProvider {
 		// Not all items are automatically added below; make a list of exceptions here
 		List<Item> excludedItems = new ArrayList<>(25);
 
-		excludedItems.addAll(ItemLists.smokeGrenadeItems);
-		excludedItems.addAll(ItemLists.smokeGrenadeArrowItems);
+		excludedItems.addAll(ItemLists.SMOKE_GRENADE_ITEMS);
+		excludedItems.addAll(ItemLists.SMOKE_GRENADE_ARROW_ITEMS);
 
 		excludedItems.add(ItemRegistry.MRE.get());
 		excludedItems.add(ItemRegistry.HANS_SPAWN_EGG.get());
@@ -237,7 +238,7 @@ public class LanguageGenerator extends IWLanguageProvider {
 
 		// Misc items
 		addSubtitle("item.smoke_grenade_hiss", "Smoke grenade hisses");
-		addSubtitle("item.generic_whoosh", "Item flies");
+		addSubtitle("item.generic_item_throw", "Item flies");
 
 		// Misc blocks
 		addSubtitle("block.small_parts_table.used", "Small parts table used");
@@ -288,6 +289,9 @@ public class LanguageGenerator extends IWLanguageProvider {
 		addTooltip("astral_sword", "Fast Hands");
 		addTooltip("starstorm_sword", "Inflict the wrath of the stars");
 
+		// Tier specific
+		addTooltip("molten_tool", "Crouching while mining blocks will automatically smelt them");
+
 		// Guns
 		addTooltip("flintlock_pistol", "A basic flintlock firearm that excels in medium-range combat.");
 		addTooltip("blunderbuss", "Good for hordes a short distance away. A primitive type of shotgun.");
@@ -303,6 +307,11 @@ public class LanguageGenerator extends IWLanguageProvider {
 		addTooltip("cobalt_arrow", "55% more powerful than normal arrows");
 		addTooltip("diamond_arrow", "100% more powerful than normal arrows");
 		addTooltip("netherite_arrow", "375% more powerful than normal arrows. Extremely sharp, powerful, and accurate. How can you even afford to shoot these?");
+		addTooltip("molten_arrow", "450% more powerful than normal arrows. Burns enemies on impact.");
+		addTooltip("tesla_arrow", "500% more powerful than normal arrows. Weakens enemies on impact.");
+		addTooltip("ventus_arrow", "450% more powerful than normal arrows. Causes enemies to levitate on impact.");
+		addTooltip("astral_arrow", "350% more powerful than normal arrows. Extremely accurate and has minimal falloff.");
+		addTooltip("starstorm_arrow", "565% more powerful than normal arrows");
 		addTooltip("smoke_grenade_arrow", "Obscure the vision of your enemies from afar");
 		addTooltip("wooden_musket_ball", "Very inaccurate, and likely to cause a misfire. Why would anyone make wooden musket balls anyway?");
 		addTooltip("stone_musket_ball", "A very heavy musket ball, and not too accurate. Less likely to cause a misfire than wooden ones.");
@@ -312,6 +321,11 @@ public class LanguageGenerator extends IWLanguageProvider {
 		addTooltip("cobalt_musket_ball", "A strong and dense musket ball, made from cobalt.");
 		addTooltip("diamond_musket_ball", "A very sharp and powerful musket ball. You're practically throwing away diamonds. Pierces through a single target.");
 		addTooltip("netherite_musket_ball", "An extremely powerful and skillfully crafted musket ball. For when you need to kill a chicken from the other side of a mountain. Pierces through two targets.");
+		addTooltip("molten_musket_ball", "A musket ball made from molten metal. Hard hitting and expensive, catches targets on fire. Pierces through three targets.");
+		addTooltip("tesla_musket_ball", "Made from a special alloy. Weakens and pierces through three targets.");
+		addTooltip("ventus_musket_ball", "A musket ball made from Ventus shards. Causes targets to levitate. Pierces through three targets.");
+		addTooltip("astral_musket_ball", "Built from Astral ingots. Not quite as strong as other options but extremely accurate and has little falloff. Pierces through three targets.");
+		addTooltip("starstorm_musket_ball", "A musket ball made from Starstorm ingots. Strongest caliber in terms of raw damage. Pierces through three targets.");
 
 		// Pikes
 		addTooltip("pike", "Stab them from way over there");
@@ -355,6 +369,11 @@ public class LanguageGenerator extends IWLanguageProvider {
 		addTooltip("cobalt_gauntlet", "Has a 60% chance to inflict Bleeding.");
 		addTooltip("diamond_gauntlet", "Has a 75% chance to inflict Bleeding.");
 		addTooltip("netherite_gauntlet", "Has an 85% chance to inflict Bleeding.");
+		addTooltip("molten_gauntlet", "Has a 95% chance to inflict Bleeding.");
+		addTooltip("tesla_gauntlet", "Has a 95% chance to inflict Bleeding.");
+		addTooltip("ventus_gauntlet", "Has a 95% chance to inflict Bleeding.");
+		addTooltip("astral_gauntlet", "Has a 95% chance to inflict Bleeding.");
+		addTooltip("starstorm_gauntlet", "Has a 95% chance to inflict Bleeding.");
 
 		// Staffs
 		addTooltip("ventus_staff", "Teach your enemies the importance of personal space");
@@ -392,7 +411,7 @@ public class LanguageGenerator extends IWLanguageProvider {
 		add("key.categories.immersiveweapons", "Immersive Weapons");
 
 		addKey("toggleArmorEffect", "Toggle Armor Effect");
-		addKey("astralArmorDashEffect", "Astral Armor Dash");
+		addKey("armorAction", "Armor Action");
 		addKey("debugTracing", "Debug Tracing");
 	}
 
@@ -401,6 +420,7 @@ public class LanguageGenerator extends IWLanguageProvider {
 		addMessage("item.azul_locator.teleporting", "Teleporting to spawn point in %s seconds...");
 		addMessage("item.azul_locator.teleported", "Teleported to spawn point!");
 		addMessage("item.azul_locator.no_spawn", "Unable to teleport: No spawn point set.");
+		addMessage("item.meteor_staff.not_enough_clearance", "There isn't enough clearance to summon a meteor");
 		addMessage("block.wall_shelf.locked", "This shelf has been locked");
 		addMessage("block.wall_shelf.unlocked", "This shelf has been unlocked");
 	}
@@ -769,6 +789,25 @@ public class LanguageGenerator extends IWLanguageProvider {
 
 		// Cursed Sight Staff
 		addConfigDescription("cursed_sight_staff_max_use_range", "Set the maximum range in blocks of the Cursed Sight Staff - Default 50");
+	}
+
+	private void addEnchantments() {
+		addEnchantment(EnchantmentRegistry.FIREPOWER, "Firepower");
+		addEnchantment(EnchantmentRegistry.IMPACT, "Impact");
+		addEnchantment(EnchantmentRegistry.ENDLESS_MUSKET_POUCH, "Endless Musket Pouch");
+		addEnchantment(EnchantmentRegistry.SCORCH_SHOT, "Scorch Shot");
+		addEnchantment(EnchantmentRegistry.RAPID_FIRE, "Rapid Fire");
+		addEnchantment(EnchantmentRegistry.VELOCITY, "Velocity");
+		addEnchantment(EnchantmentRegistry.EXTENDED_REACH, "Extended Reach");
+		addEnchantment(EnchantmentRegistry.SHARPENED_HEAD, "Sharpened Head");
+		addEnchantment(EnchantmentRegistry.CRIMSON_CLAW, "Crimson Claw");
+		addEnchantment(EnchantmentRegistry.EXCESSIVE_FORCE, "Excessive Force");
+		addEnchantment(EnchantmentRegistry.REGENERATIVE_ASSAULT, "Regenerative Assault");
+		addEnchantment(EnchantmentRegistry.HEAVY_COMET, "Heavy Comet");
+		addEnchantment(EnchantmentRegistry.BURNING_HEAT, "Burning Heat");
+		addEnchantment(EnchantmentRegistry.CELESTIAL_FURY, "Celestial Fury");
+		addEnchantment(EnchantmentRegistry.NIGHTMARISH_STARE, "Nightmarish Stare");
+		addEnchantment(EnchantmentRegistry.MALEVOLENT_GAZE, "Malevolent Gaze");
 	}
 
 	private void addMisc() {

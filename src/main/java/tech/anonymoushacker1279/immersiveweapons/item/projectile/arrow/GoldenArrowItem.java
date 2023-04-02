@@ -7,9 +7,9 @@ import tech.anonymoushacker1279.immersiveweapons.entity.projectile.arrow.GoldenA
 
 public class GoldenArrowItem extends AbstractArrowItem {
 
-	public GoldenArrowItem(Properties properties, double damageIn) {
-		super(properties, damageIn);
-		damage = damageIn;
+	public GoldenArrowItem(Properties properties, double damage) {
+		super(properties, damage);
+		this.damage = damage;
 	}
 
 	@Override

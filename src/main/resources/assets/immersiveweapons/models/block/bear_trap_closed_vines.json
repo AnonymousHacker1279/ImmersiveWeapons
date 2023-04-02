@@ -1,8 +1,8 @@
 {
-	"credit": "Made with Blockbench",
+	"credit": "AnonymousHacker1279",
 	"parent": "minecraft:block/block",
 	"textures": {
-		"1": "immersiveweapons:item/custom/bamboo_dark",
+		"1": "immersiveweapons:item/custom/camo_green",
 		"particle": "immersiveweapons:block/bear_trap",
 		"base": "immersiveweapons:block/bear_trap"
 	},

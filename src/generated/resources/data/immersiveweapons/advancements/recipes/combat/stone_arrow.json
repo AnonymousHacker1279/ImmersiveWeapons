@@ -5,7 +5,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "minecraft:stone_tool_materials"
+            "tag": "immersiveweapons:shards/stone"
           }
         ]
       },

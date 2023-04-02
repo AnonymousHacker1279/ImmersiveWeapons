@@ -1,6 +1,8 @@
 package tech.anonymoushacker1279.immersiveweapons.item;
 
+import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.player.Player;
@@ -10,6 +12,7 @@ import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
 import tech.anonymoushacker1279.immersiveweapons.config.CommonConfig;
 import tech.anonymoushacker1279.immersiveweapons.entity.projectile.MeteorEntity;
+import tech.anonymoushacker1279.immersiveweapons.init.EnchantmentRegistry;
 import tech.anonymoushacker1279.immersiveweapons.init.ItemRegistry;
 
 public class MeteorStaffItem extends Item implements SummoningStaff {
@@ -27,13 +30,33 @@ public class MeteorStaffItem extends Item implements SummoningStaff {
 
 		if (!level.isClientSide) {
 			if (lookingAt != null) {
-				MeteorEntity.create(level, player, lookingAt);
+				int enchantmentLevel = getEnchantmentLevel(player.getItemInHand(hand), EnchantmentRegistry.CELESTIAL_FURY.get());
+
+				if (enchantmentLevel > 0 && player.isCrouching()) {
+					for (int i = 0; i < 3; i++) {
+						if (!MeteorEntity.create(level, player, player.getItemInHand(hand), lookingAt)) {
+							// If the meteor entity could not be created (because the starting position was inside a solid block)
+							// send a message to the player
+							player.displayClientMessage(Component.translatable("immersiveweapons.item.meteor_staff.not_enough_clearance")
+									.withStyle(ChatFormatting.RED), true);
+							return InteractionResultHolder.fail(player.getItemInHand(hand));
+						}
+					}
+					handleCooldown(this, lookingAt, player, hand, getStaffCooldown() * 3);
+				} else {
+					if (!MeteorEntity.create(level, player, player.getItemInHand(hand), lookingAt)) {
+						// If the meteor entity could not be created (because the starting position was inside a solid block)
+						// send a message to the player
+						player.displayClientMessage(Component.translatable("immersiveweapons.item.meteor_staff.not_enough_clearance")
+								.withStyle(ChatFormatting.RED), true);
+						return InteractionResultHolder.fail(player.getItemInHand(hand));
+					}
+					handleCooldown(this, lookingAt, player, hand);
+				}
 			} else {
 				return InteractionResultHolder.pass(player.getItemInHand(hand));
 			}
 		}
-
-		handleCooldown(this, lookingAt, player, hand);
 
 		return InteractionResultHolder.sidedSuccess(player.getItemInHand(hand), level.isClientSide());
 	}
@@ -51,5 +74,10 @@ public class MeteorStaffItem extends Item implements SummoningStaff {
 	@Override
 	public int getMaxRange() {
 		return CommonConfig.METEOR_STAFF_MAX_USE_RANGE.get();
+	}
+
+	@Override
+	public int getEnchantmentValue(ItemStack stack) {
+		return 1;
 	}
 }

@@ -1,5 +1,5 @@
 {
-	"credit": "Made with Blockbench",
+	"credit": "AnonymousHacker1279",
 	"parent": "minecraft:block/block",
 	"textures": {
 		"particle": "immersiveweapons:block/bear_trap",

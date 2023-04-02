@@ -3,7 +3,7 @@
   "category": "equipment",
   "key": {
     "a": {
-      "tag": "forge:gems/diamond"
+      "tag": "immersiveweapons:shards/diamond"
     },
     "b": {
       "item": "minecraft:stick"

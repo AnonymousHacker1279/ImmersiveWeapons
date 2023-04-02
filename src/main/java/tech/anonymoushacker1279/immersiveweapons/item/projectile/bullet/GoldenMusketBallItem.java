@@ -12,11 +12,10 @@ public class GoldenMusketBallItem extends AbstractBulletItem {
 	 * Constructor for GoldBulletItem.
 	 *
 	 * @param properties the <code>Properties</code> for the item
-	 * @param damageIn   the damage to deal on impact
 	 */
-	public GoldenMusketBallItem(Properties properties, double damageIn) {
-		super(properties, damageIn);
-		damage = damageIn;
+	public GoldenMusketBallItem(Properties properties, double damage) {
+		super(properties, damage);
+		this.damage = damage;
 	}
 
 	/**

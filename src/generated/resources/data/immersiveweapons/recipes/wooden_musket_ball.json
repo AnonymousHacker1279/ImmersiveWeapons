@@ -3,7 +3,7 @@
   "category": "equipment",
   "key": {
     "a": {
-      "tag": "minecraft:planks"
+      "tag": "immersiveweapons:shards/wood"
     },
     "b": {
       "item": "minecraft:gunpowder"

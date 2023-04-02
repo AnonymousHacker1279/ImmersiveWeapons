@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "a": {
+      "tag": "immersiveweapons:shards/ventus"
+    },
+    "b": {
+      "item": "minecraft:gunpowder"
+    }
+  },
+  "pattern": [
+    " a ",
+    "aba"
+  ],
+  "result": {
+    "count": 8,
+    "item": "immersiveweapons:ventus_musket_ball"
+  }
+}

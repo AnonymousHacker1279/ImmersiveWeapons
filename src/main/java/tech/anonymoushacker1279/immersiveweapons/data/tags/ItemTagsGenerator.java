@@ -13,11 +13,11 @@ import net.minecraftforge.common.data.BlockTagsProvider;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.registries.RegistryObject;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
+import tech.anonymoushacker1279.immersiveweapons.data.lists.ItemLists;
 import tech.anonymoushacker1279.immersiveweapons.data.tags.groups.forge.ForgeBlockTagGroups;
 import tech.anonymoushacker1279.immersiveweapons.data.tags.groups.forge.ForgeItemTagGroups;
-import tech.anonymoushacker1279.immersiveweapons.data.tags.groups.immersiveweapons.ImmersiveWeaponsBlockTagGroups;
-import tech.anonymoushacker1279.immersiveweapons.data.tags.groups.immersiveweapons.ImmersiveWeaponsItemTagGroups;
-import tech.anonymoushacker1279.immersiveweapons.data.tags.lists.ItemTagLists;
+import tech.anonymoushacker1279.immersiveweapons.data.tags.groups.immersiveweapons.IWBlockTagGroups;
+import tech.anonymoushacker1279.immersiveweapons.data.tags.groups.immersiveweapons.IWItemTagGroups;
 import tech.anonymoushacker1279.immersiveweapons.init.BlockItemRegistry;
 import tech.anonymoushacker1279.immersiveweapons.init.ItemRegistry;
 
@@ -33,8 +33,6 @@ public class ItemTagsGenerator extends ItemTagsProvider {
 
 	@Override
 	protected void addTags(Provider provider) {
-		ItemTagLists.init();
-
 		addForgeTags();
 		addImmersiveWeaponsTags();
 		addMinecraftTags();
@@ -108,31 +106,36 @@ public class ItemTagsGenerator extends ItemTagsProvider {
 	 */
 	private void addImmersiveWeaponsTags() {
 		// Copy item tags from block tags
-		copy(ImmersiveWeaponsBlockTagGroups.BURNED_OAK_LOGS, ImmersiveWeaponsItemTagGroups.BURNED_OAK_LOGS);
-		copy(ImmersiveWeaponsBlockTagGroups.STARDUST_LOGS, ImmersiveWeaponsItemTagGroups.STARDUST_LOGS);
+		copy(IWBlockTagGroups.BURNED_OAK_LOGS, IWItemTagGroups.BURNED_OAK_LOGS);
+		copy(IWBlockTagGroups.STARDUST_LOGS, IWItemTagGroups.STARDUST_LOGS);
 
 		// Projectile tags
-		tag(ImmersiveWeaponsItemTagGroups.FLARES).add(ItemRegistry.FLARE.get());
-		for (Item item : ItemTagLists.MUSKET_BALLS) {
-			tag(ImmersiveWeaponsItemTagGroups.MUSKET_BALLS).add(item);
+		tag(IWItemTagGroups.FLARES).add(ItemRegistry.FLARE.get());
+		for (Item item : ItemLists.MUSKET_BALL_ITEMS) {
+			tag(IWItemTagGroups.MUSKET_BALLS).add(item);
 		}
 
 		// Ingot tags
-		tag(ImmersiveWeaponsItemTagGroups.MOLTEN_INGOTS).add(ItemRegistry.MOLTEN_INGOT.get());
-		tag(ImmersiveWeaponsItemTagGroups.ELECTRIC_INGOTS).add(ItemRegistry.ELECTRIC_INGOT.get());
-		tag(ImmersiveWeaponsItemTagGroups.TESLA_INGOTS).add(ItemRegistry.TESLA_INGOT.get());
-		tag(ImmersiveWeaponsItemTagGroups.ASTRAL_INGOTS).add(ItemRegistry.ASTRAL_INGOT.get());
-		tag(ImmersiveWeaponsItemTagGroups.STARSTORM_INGOTS).add(ItemRegistry.STARSTORM_INGOT.get());
+		tag(IWItemTagGroups.MOLTEN_INGOTS).add(ItemRegistry.MOLTEN_INGOT.get());
+		tag(IWItemTagGroups.ELECTRIC_INGOTS).add(ItemRegistry.ELECTRIC_INGOT.get());
+		tag(IWItemTagGroups.TESLA_INGOTS).add(ItemRegistry.TESLA_INGOT.get());
+		tag(IWItemTagGroups.ASTRAL_INGOTS).add(ItemRegistry.ASTRAL_INGOT.get());
+		tag(IWItemTagGroups.STARSTORM_INGOTS).add(ItemRegistry.STARSTORM_INGOT.get());
 
 		// Shard tags
-		tag(ImmersiveWeaponsItemTagGroups.MOLTEN_SHARDS).add(ItemRegistry.MOLTEN_SHARD.get());
-		tag(ImmersiveWeaponsItemTagGroups.VENTUS_SHARDS).add(ItemRegistry.VENTUS_SHARD.get());
-		tag(ImmersiveWeaponsItemTagGroups.DIAMOND_SHARDS).add(ItemRegistry.DIAMOND_SHARD.get());
-		tag(ImmersiveWeaponsItemTagGroups.STONE_SHARDS).add(ItemRegistry.STONE_SHARD.get());
-		tag(ImmersiveWeaponsItemTagGroups.WOODEN_SHARDS).add(ItemRegistry.WOODEN_SHARD.get());
+		tag(IWItemTagGroups.MOLTEN_SHARDS).add(ItemRegistry.MOLTEN_SHARD.get());
+		tag(IWItemTagGroups.VENTUS_SHARDS).add(ItemRegistry.VENTUS_SHARD.get());
+		tag(IWItemTagGroups.DIAMOND_SHARDS).add(ItemRegistry.DIAMOND_SHARD.get());
+		tag(IWItemTagGroups.STONE_SHARDS).add(ItemRegistry.STONE_SHARD.get());
+		tag(IWItemTagGroups.WOODEN_SHARDS).add(ItemRegistry.WOODEN_SHARD.get());
+		tag(IWItemTagGroups.STARSTORM_SHARDS).add(ItemRegistry.STARSTORM_SHARD.get());
+
+		// Nugget tags
+		tag(IWItemTagGroups.TESLA_NUGGETS).add(ItemRegistry.TESLA_NUGGET.get());
+		tag(IWItemTagGroups.ASTRAL_NUGGETS).add(ItemRegistry.ASTRAL_NUGGET.get());
 
 		// Rod tags
-		tag(ImmersiveWeaponsItemTagGroups.OBSIDIAN_RODS).add(ItemRegistry.OBSIDIAN_ROD.get());
+		tag(IWItemTagGroups.OBSIDIAN_RODS).add(ItemRegistry.OBSIDIAN_ROD.get());
 	}
 
 	/**
@@ -162,7 +165,7 @@ public class ItemTagsGenerator extends ItemTagsProvider {
 		tag(ItemTags.SIGNS).add(BlockItemRegistry.BURNED_OAK_SIGN_ITEM.get());
 
 		// Arrow tags
-		for (Item item : ItemTagLists.ARROWS) {
+		for (Item item : ItemLists.ARROW_ITEMS) {
 			tag(ItemTags.ARROWS).add(item);
 		}
 

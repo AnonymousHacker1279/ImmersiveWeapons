@@ -7,9 +7,9 @@ import tech.anonymoushacker1279.immersiveweapons.entity.projectile.arrow.Netheri
 
 public class NetheriteArrowItem extends AbstractArrowItem {
 
-	public NetheriteArrowItem(Properties properties, double damageIn) {
-		super(properties, damageIn);
-		damage = damageIn;
+	public NetheriteArrowItem(Properties properties, double damage) {
+		super(properties, damage);
+		this.damage = damage;
 	}
 
 	@Override
@@ -17,5 +17,10 @@ public class NetheriteArrowItem extends AbstractArrowItem {
 		NetheriteArrowEntity arrowEntity = new NetheriteArrowEntity(shooter, level);
 		arrowEntity.setBaseDamage(damage);
 		return arrowEntity;
+	}
+
+	@Override
+	public boolean canBeInfinite() {
+		return false;
 	}
 }

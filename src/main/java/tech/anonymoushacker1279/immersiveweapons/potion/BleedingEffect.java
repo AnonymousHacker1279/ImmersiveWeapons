@@ -1,5 +1,6 @@
 package tech.anonymoushacker1279.immersiveweapons.potion;
 
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectCategory;
@@ -37,11 +38,12 @@ public class BleedingEffect extends MobEffect {
 			} else {
 				cooldownTicks--;
 			}
-		} else {
-			livingEntity.level.addParticle(ParticleTypesRegistry.BLOOD_PARTICLE.get(),
+			((ServerLevel) livingEntity.level).sendParticles(
+					ParticleTypesRegistry.BLOOD_PARTICLE.get(),
 					livingEntity.position().x, livingEntity.position().y + GeneralUtilities.getRandomNumber(0.3d, livingEntity.getEyeHeight()),
-					livingEntity.position().z, GeneralUtilities.getRandomNumber(-0.03d, 0.03d),
-					GeneralUtilities.getRandomNumber(-0.1d, -0.08d), GeneralUtilities.getRandomNumber(-0.03d, 0.03d));
+					livingEntity.position().z, 1, GeneralUtilities.getRandomNumber(-0.03d, 0.03d),
+					GeneralUtilities.getRandomNumber(-0.1d, -0.08d), GeneralUtilities.getRandomNumber(-0.03d, 0.03d), 0.0d
+			);
 		}
 	}
 

@@ -14,9 +14,13 @@ public abstract class AbstractArrowItem extends ArrowItem {
 
 	public double damage;
 
-	protected AbstractArrowItem(Properties properties, double damageIn) {
+	protected AbstractArrowItem(Properties properties, double damage) {
 		super(properties);
-		damage = damageIn;
+		this.damage = damage;
+	}
+
+	public boolean canBeInfinite() {
+		return true;
 	}
 
 	@Override
@@ -29,15 +33,16 @@ public abstract class AbstractArrowItem extends ArrowItem {
 
 	/**
 	 * Check if the arrow is infinite. A more flexible check than Vanilla provides.
+	 * Restricts the ability to lower level arrows, for balance.
 	 *
-	 * @param stack  the <code>ItemStack</code> being checked
-	 * @param bow    the <code>ItemStack</code> containing the bow that's firing
-	 * @param player the <code>Player</code> firing the bow
+	 * @param arrow  the arrow being checked
+	 * @param bow    the bow firing the arrow
+	 * @param player the player firing the bow
 	 * @return boolean
 	 */
 	@Override
-	public boolean isInfinite(ItemStack stack, ItemStack bow, Player player) {
+	public boolean isInfinite(ItemStack arrow, ItemStack bow, Player player) {
 		int enchant = EnchantmentHelper.getTagEnchantmentLevel(Enchantments.INFINITY_ARROWS, bow);
-		return enchant > 0;
+		return canBeInfinite() && enchant > 0;
 	}
 }

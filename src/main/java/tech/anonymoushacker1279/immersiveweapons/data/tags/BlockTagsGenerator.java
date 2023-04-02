@@ -10,7 +10,7 @@ import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.registries.RegistryObject;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.data.tags.groups.forge.ForgeBlockTagGroups;
-import tech.anonymoushacker1279.immersiveweapons.data.tags.groups.immersiveweapons.ImmersiveWeaponsBlockTagGroups;
+import tech.anonymoushacker1279.immersiveweapons.data.tags.groups.immersiveweapons.IWBlockTagGroups;
 import tech.anonymoushacker1279.immersiveweapons.data.tags.lists.BlockTagLists;
 import tech.anonymoushacker1279.immersiveweapons.init.BlockRegistry;
 
@@ -64,12 +64,12 @@ public class BlockTagsGenerator extends BlockTagsProvider {
 	private void addImmersiveWeaponsTags() {
 		// Burned oak logs tag
 		for (Block block : BlockTagLists.BURNED_OAK_LOGS) {
-			tag(ImmersiveWeaponsBlockTagGroups.BURNED_OAK_LOGS).add(block);
+			tag(IWBlockTagGroups.BURNED_OAK_LOGS).add(block);
 		}
 
 		// Stardust logs tag
 		for (Block block : BlockTagLists.STARDUST_LOGS) {
-			tag(ImmersiveWeaponsBlockTagGroups.STARDUST_LOGS).add(block);
+			tag(IWBlockTagGroups.STARDUST_LOGS).add(block);
 		}
 	}
 
@@ -81,8 +81,8 @@ public class BlockTagsGenerator extends BlockTagsProvider {
 		tag(BlockTags.FENCES).add(BlockRegistry.BARBED_WIRE_FENCE.get());
 
 		// Burnable logs tag
-		tag(BlockTags.LOGS_THAT_BURN).addTags(ImmersiveWeaponsBlockTagGroups.BURNED_OAK_LOGS,
-				ImmersiveWeaponsBlockTagGroups.STARDUST_LOGS);
+		tag(BlockTags.LOGS_THAT_BURN).addTags(IWBlockTagGroups.BURNED_OAK_LOGS,
+				IWBlockTagGroups.STARDUST_LOGS);
 
 		// Planks tag
 		tag(BlockTags.PLANKS).add(BlockRegistry.BURNED_OAK_PLANKS.get(),

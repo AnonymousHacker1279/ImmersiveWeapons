@@ -33,17 +33,6 @@ public class TeslaSynthesizerResultSlot extends Slot {
 	}
 
 	/**
-	 * Decrease the size of the stack in slot by the specified amount. Returns the new stack.
-	 *
-	 * @param amount the amount to reduce the stack by
-	 * @return ItemStack
-	 */
-	@Override
-	public ItemStack remove(int amount) {
-		return super.remove(amount);
-	}
-
-	/**
 	 * Runs when the stack is taken from the object.
 	 *
 	 * @param player the <code>Player</code> instance

@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "immersiveweapons:starstorm_ingot"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    },
+    "starstorm_shard": {
+      "conditions": {
+        "items": [
+          {
+            "tag": "immersiveweapons:shards/starstorm"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "requirements": [
+    [
+      "starstorm_shard",
+      "has_the_recipe"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "immersiveweapons:starstorm_ingot"
+    ]
+  }
+}

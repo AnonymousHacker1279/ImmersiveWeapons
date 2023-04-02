@@ -12,11 +12,15 @@ public class StoneMusketBallItem extends AbstractBulletItem {
 	 * Constructor for StoneBulletItem.
 	 *
 	 * @param properties the <code>Properties</code> for the item
-	 * @param damageIn   the damage to deal on impact
 	 */
-	public StoneMusketBallItem(Properties properties, double damageIn) {
-		super(properties, damageIn);
-		damage = damageIn;
+	public StoneMusketBallItem(Properties properties, double damage) {
+		super(properties, damage);
+		this.damage = damage;
+	}
+
+	@Override
+	public float misfireChance() {
+		return 0.15f;
 	}
 
 	/**

@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "group": "molten",
+  "key": {
+    "a": {
+      "tag": "immersiveweapons:shards/starstorm"
+    },
+    "b": {
+      "item": "immersiveweapons:obsidian_shard"
+    }
+  },
+  "pattern": [
+    "aaa",
+    "aba",
+    "aaa"
+  ],
+  "result": {
+    "item": "immersiveweapons:starstorm_ingot"
+  }
+}

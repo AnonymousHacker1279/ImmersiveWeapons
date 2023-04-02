@@ -12,11 +12,10 @@ public class FlareItem extends AbstractBulletItem {
 	 * Constructor for FlareItem.
 	 *
 	 * @param properties the <code>Properties</code> for the item
-	 * @param damageIn   the damage to deal on impact
 	 */
-	public FlareItem(Properties properties, double damageIn) {
-		super(properties, damageIn);
-		damage = damageIn;
+	public FlareItem(Properties properties, double damage) {
+		super(properties, damage);
+		this.damage = damage;
 	}
 
 	/**

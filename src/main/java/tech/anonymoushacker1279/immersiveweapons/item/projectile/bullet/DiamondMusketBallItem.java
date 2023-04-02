@@ -12,11 +12,10 @@ public class DiamondMusketBallItem extends AbstractBulletItem {
 	 * Constructor for DiamondBulletItem.
 	 *
 	 * @param properties the <code>Properties</code> for the item
-	 * @param damageIn   the damage to deal on impact
 	 */
-	public DiamondMusketBallItem(Properties properties, double damageIn) {
-		super(properties, damageIn);
-		damage = damageIn;
+	public DiamondMusketBallItem(Properties properties, double damage) {
+		super(properties, damage);
+		this.damage = damage;
 	}
 
 	/**
@@ -34,5 +33,10 @@ public class DiamondMusketBallItem extends AbstractBulletItem {
 		bulletEntity.setSoundEvent(SoundEventRegistry.BULLET_WHIZZ.get());
 		bulletEntity.setPierceLevel((byte) 1);
 		return bulletEntity;
+	}
+
+	@Override
+	public boolean canBeInfinite() {
+		return false;
 	}
 }

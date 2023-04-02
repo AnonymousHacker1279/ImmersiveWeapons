@@ -20,19 +20,6 @@ public record TeslaSynthesizerRecipe(ResourceLocation recipeId,
                                      int cookTime) implements Recipe<Container> {
 
 	/**
-	 * Constructor for SmallPartsRecipe.
-	 *
-	 * @param recipeId        the <code>ResourceLocation</code> for the recipe
-	 * @param blockIngredient the first <code>Ingredient</code>
-	 * @param material1       the second <code>Ingredient</code>
-	 * @param material2       the third <code>Ingredient</code>
-	 * @param result          the result <code>ItemStack</code>
-	 * @param cookTime        the cooking time
-	 */
-	public TeslaSynthesizerRecipe {
-	}
-
-	/**
 	 * Get the cook time.
 	 *
 	 * @return int
@@ -41,33 +28,22 @@ public record TeslaSynthesizerRecipe(ResourceLocation recipeId,
 		return cookTime;
 	}
 
-	/**
-	 * Used to check if a recipe matches current crafting inventory.
-	 *
-	 * @param inv     the <code>IInventory</code> instance
-	 * @param worldIn the current <code>World</code>
-	 * @return boolean
-	 */
 	@Override
-	public boolean matches(Container inv, Level worldIn) {
-		return blockIngredient.test(inv.getItem(0)) && material1.test(inv.getItem(1)) && material2.test(inv.getItem(2));
+	public boolean matches(Container container, Level level) {
+		return blockIngredient.test(container.getItem(0))
+				&& material1.test(container.getItem(1))
+				&& material2.test(container.getItem(2));
 	}
 
-	/**
-	 * Returns an Item that is the result of this recipe.
-	 *
-	 * @param inv the <code>IInventory</code> instance
-	 * @return ItemStack
-	 */
 	@Override
-	public ItemStack assemble(Container inv) {
-		ItemStack itemstack = result.copy();
-		CompoundTag compoundTag = inv.getItem(4).getTag();
+	public ItemStack assemble(Container container) {
+		ItemStack resultStack = result.copy();
+		CompoundTag compoundTag = container.getItem(4).getTag();
 		if (compoundTag != null) {
-			itemstack.setTag(compoundTag.copy());
+			resultStack.setTag(compoundTag.copy());
 		}
 
-		return itemstack;
+		return resultStack;
 	}
 
 	/**
@@ -79,7 +55,7 @@ public record TeslaSynthesizerRecipe(ResourceLocation recipeId,
 	 */
 	@Override
 	public boolean canCraftInDimensions(int width, int height) {
-		return width * height >= 2;
+		return false;
 	}
 
 	/**

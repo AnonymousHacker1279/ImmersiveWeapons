@@ -21,7 +21,7 @@ import tech.anonymoushacker1279.immersiveweapons.advancement.EntityDiscoveredTri
 import tech.anonymoushacker1279.immersiveweapons.advancement.WarriorStatueActivatedTrigger;
 import tech.anonymoushacker1279.immersiveweapons.data.biomes.IWBiomes;
 import tech.anonymoushacker1279.immersiveweapons.data.dimensions.IWDimensions;
-import tech.anonymoushacker1279.immersiveweapons.data.tags.groups.immersiveweapons.ImmersiveWeaponsItemTagGroups;
+import tech.anonymoushacker1279.immersiveweapons.data.tags.groups.immersiveweapons.IWItemTagGroups;
 import tech.anonymoushacker1279.immersiveweapons.init.*;
 
 import java.util.List;
@@ -733,7 +733,7 @@ public class AdvancementsGenerator extends ForgeAdvancementProvider {
 						Component.translatable("advancements.immersiveweapons.musket_ball.description"),
 						null, FrameType.TASK, true, true, false)
 				.addCriterion("hold",
-						InventoryChangeTrigger.TriggerInstance.hasItems(ItemPredicate.Builder.item().of(ImmersiveWeaponsItemTagGroups.MUSKET_BALLS).build()))
+						InventoryChangeTrigger.TriggerInstance.hasItems(ItemPredicate.Builder.item().of(IWItemTagGroups.MUSKET_BALLS).build()))
 				.save(consumer, "immersiveweapons:musket_ball");
 
 		Advancement smallPartsTable = Builder.advancement().parent(root)

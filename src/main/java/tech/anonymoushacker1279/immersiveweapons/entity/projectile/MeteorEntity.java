@@ -14,6 +14,7 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.entity.projectile.ProjectileUtil;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.Level.ExplosionInteraction;
@@ -21,6 +22,7 @@ import net.minecraft.world.phys.*;
 import net.minecraftforge.event.ForgeEventFactory;
 import org.jetbrains.annotations.Nullable;
 import tech.anonymoushacker1279.immersiveweapons.config.CommonConfig;
+import tech.anonymoushacker1279.immersiveweapons.init.EnchantmentRegistry;
 import tech.anonymoushacker1279.immersiveweapons.init.EntityRegistry;
 import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
 
@@ -31,19 +33,16 @@ public class MeteorEntity extends Projectile {
 	private BlockPos startPos = BlockPos.ZERO;
 	private BlockPos targetPos = BlockPos.ZERO;
 	private double distToTarget = 0;
+	private float explosionRadiusModifier = 0.0f;
+	private boolean catchFire = false;
 
 	public MeteorEntity(EntityType<? extends Projectile> entityType, Level level) {
 		super(entityType, level);
 	}
 
-	public static void create(Level level, LivingEntity owner, BlockPos targetPos) {
+	public static boolean create(Level level, LivingEntity owner, @Nullable ItemStack staff, BlockPos targetPos) {
 		if (!level.isClientSide) {
 			MeteorEntity meteorEntity = new MeteorEntity(EntityRegistry.METEOR_ENTITY.get(), level);
-
-			meteorEntity.setOwner(owner);
-			damageSource = new EntityDamageSource("immersiveweapons.meteor", owner).setExplosion();
-
-			meteorEntity.targetPos = targetPos;
 
 			// Determine a starting position 40 blocks above the target position, and within a 15 block radius
 			meteorEntity.startPos = new BlockPos(
@@ -51,7 +50,33 @@ public class MeteorEntity extends Projectile {
 					targetPos.getY() + 40,
 					targetPos.getZ() + GeneralUtilities.getRandomNumber(-15, 15)
 			);
+
+			// Check if the position is inside a solid block
+			if (level.getBlockState(meteorEntity.startPos).getMaterial().isSolid()) {
+				return false;
+			}
+
+			// Set the meteor's position to the starting position and set the target position
 			meteorEntity.setPos(meteorEntity.startPos.getCenter());
+			meteorEntity.targetPos = targetPos;
+
+			// Set the owner and damage source
+			meteorEntity.setOwner(owner);
+			damageSource = new EntityDamageSource("immersiveweapons.meteor", owner).setExplosion();
+
+			// Handle any enchantments
+			if (staff != null) {
+				int enchantLevel = staff.getEnchantmentLevel(EnchantmentRegistry.HEAVY_COMET.get());
+				if (enchantLevel > 0) {
+					// Increase the explosion radius, capping at +2 blocks
+					meteorEntity.explosionRadiusModifier = (float) Math.min(enchantLevel * 0.5, 2);
+				}
+
+				enchantLevel = staff.getEnchantmentLevel(EnchantmentRegistry.BURNING_HEAT.get());
+				if (enchantLevel > 0) {
+					meteorEntity.catchFire = true;
+				}
+			}
 
 			// Move towards the target position
 			Vec3 blockCenter = targetPos.getCenter();
@@ -66,6 +91,7 @@ public class MeteorEntity extends Projectile {
 			// Spawn the entity
 			level.addFreshEntity(meteorEntity);
 		}
+		return true;
 	}
 
 	@Override
@@ -157,7 +183,13 @@ public class MeteorEntity extends Projectile {
 		boolean breakBlocks = CommonConfig.METEOR_STAFF_EXPLOSION_BREAK_BLOCKS.get();
 		ExplosionInteraction explosionInteraction = breakBlocks ? ExplosionInteraction.MOB : ExplosionInteraction.NONE;
 
-		level.explode(this, damageSource, null, position().subtract(0, 1.5, 0), explosionRadius, false, explosionInteraction);
+		level.explode(this,
+				damageSource,
+				null,
+				position().subtract(0, 1.5, 0),
+				explosionRadius + explosionRadiusModifier,
+				catchFire,
+				explosionInteraction);
 
 		// Spawn a ring of fire particles
 		if (!level.isClientSide) {

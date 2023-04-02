@@ -108,7 +108,10 @@ public class CelestialTowerSummonGoal extends Goal {
 						.setBaseValue(20 + (GeneralUtilities.getRandomNumber(0, 6) * tower.getWaveSizeModifier()));
 
 				skeletonEntity.setItemInHand(InteractionHand.MAIN_HAND, bow);
-				skeletonEntity.addEffect(new MobEffectInstance(MobEffects.FIRE_RESISTANCE, 9999, 0, true, true));
+				// 50% chance to have fire resistance
+				if (GeneralUtilities.getRandomNumber(0, 2) == 1) {
+					skeletonEntity.addEffect(new MobEffectInstance(MobEffects.FIRE_RESISTANCE, 9999, 0, true, true));
+				}
 				spawnEntity(serverLevel, skeletonEntity, summonPos);
 				spawnEntityParticles(serverLevel);
 			}

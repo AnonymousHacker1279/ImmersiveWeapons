@@ -19,8 +19,6 @@ import java.util.List;
 
 public class VentusStaff extends Item {
 
-	private boolean pushedEntity = false;
-
 	/**
 	 * Constructor for VentusStaff.
 	 *
@@ -56,16 +54,11 @@ public class VentusStaff extends Item {
 							GeneralUtilities.getRandomNumber(-0.03d, 0.03d));
 
 					entity.push(player.getLookAngle().get(Axis.X), 1f, player.getLookAngle().get(Axis.Z));
-					pushedEntity = true;
 				}
 			}
-		}
 
-		if (pushedEntity) {
 			level.playLocalSound(player.getX(), player.getY(), player.getZ(),
 					SoundEvents.LIGHTNING_BOLT_THUNDER, SoundSource.PLAYERS, 0.4f, 1.0f, true);
-
-			pushedEntity = false;
 
 			if (!player.isCreative()) {
 				player.getCooldowns().addCooldown(this, 100);

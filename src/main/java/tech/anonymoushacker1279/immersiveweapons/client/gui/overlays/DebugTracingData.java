@@ -50,7 +50,7 @@ public class DebugTracingData {
 
 			if (heldItem.getItem() instanceof AbstractGunItem gunItem) {
 				// Round to nearest 0.1
-				gunBaseVelocity = Math.round(gunItem.getFireVelocity() * 10.0f) / 10.0f;
+				gunBaseVelocity = Math.round(gunItem.getBaseFireVelocity() * 10.0f) / 10.0f;
 				selectedAmmo = gunItem.findAmmo(heldItem, player).getItem();
 			} else {
 				gunBaseVelocity = 0;

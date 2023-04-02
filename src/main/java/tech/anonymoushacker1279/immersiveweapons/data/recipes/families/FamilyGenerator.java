@@ -270,26 +270,22 @@ public class FamilyGenerator extends RecipeGenerator {
 			}
 
 			// Pike
-			if (family.pike() != null) {
-				if (family.pikeHead() != null) {
-					RecipeGenerator.createPike(family.pike().get(), material, family.pikeHead().get());
-				}
-			}
+			RecipeGenerator.createPike(family.pike().get(), material, family.pikeHead().get());
 
 			// Pike head
-			if (family.pikeHead() != null) {
-				if (family.nugget() != null) {
-					RecipeGenerator.createPikeHead(family.pikeHead().get(), material, family.nugget());
-				}
-			}
+			RecipeGenerator.createPikeHead(family.pikeHead().get(), material, family.nugget());
 
-			// Arrow
-			if (family.arrow() != null) {
+			if (ToolFamilies.FAMILIES_USE_NUGGETS_FOR_PROJECTILES.contains(family)) {
+				// Arrow
+				RecipeGenerator.createArrow(family.arrow().get(), family.nugget());
+
+				// Musket ball
+				RecipeGenerator.createMusketBall(family.musketBall().get(), family.nugget());
+			} else {
+				// Arrow
 				RecipeGenerator.createArrow(family.arrow().get(), family.material());
-			}
 
-			// Musket ball
-			if (family.musketBall() != null) {
+				// Musket ball
 				RecipeGenerator.createMusketBall(family.musketBall().get(), family.material());
 			}
 		}
@@ -349,11 +345,19 @@ public class FamilyGenerator extends RecipeGenerator {
 			// Pike head
 			RecipeGenerator.createPikeHead(family.pikeHead().get(), material, family.nugget());
 
-			// Arrow
-			RecipeGenerator.createArrow(family.arrow().get(), family.material());
+			if (VanillaTieredItemFamilies.FAMILIES_USE_NUGGETS_FOR_PROJECTILES.contains(family)) {
+				// Arrow
+				RecipeGenerator.createArrow(family.arrow().get(), family.nugget());
 
-			// Musket ball
-			RecipeGenerator.createMusketBall(family.musketBall().get(), family.material());
+				// Musket ball
+				RecipeGenerator.createMusketBall(family.musketBall().get(), family.nugget());
+			} else {
+				// Arrow
+				RecipeGenerator.createArrow(family.arrow().get(), family.material());
+
+				// Musket ball
+				RecipeGenerator.createMusketBall(family.musketBall().get(), family.material());
+			}
 		}
 	}
 }

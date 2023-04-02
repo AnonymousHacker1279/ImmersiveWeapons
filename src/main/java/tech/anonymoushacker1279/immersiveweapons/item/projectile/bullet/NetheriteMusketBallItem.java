@@ -12,11 +12,10 @@ public class NetheriteMusketBallItem extends AbstractBulletItem {
 	 * Constructor for NetheriteBulletItem.
 	 *
 	 * @param properties the <code>Properties</code> for the item
-	 * @param damageIn   the damage to deal on impact
 	 */
-	public NetheriteMusketBallItem(Properties properties, double damageIn) {
-		super(properties, damageIn);
-		damage = damageIn;
+	public NetheriteMusketBallItem(Properties properties, double damage) {
+		super(properties, damage);
+		this.damage = damage;
 	}
 
 	/**
@@ -34,5 +33,10 @@ public class NetheriteMusketBallItem extends AbstractBulletItem {
 		bulletEntity.setSoundEvent(SoundEventRegistry.BULLET_WHIZZ.get());
 		bulletEntity.setPierceLevel((byte) 2);
 		return bulletEntity;
+	}
+
+	@Override
+	public boolean canBeInfinite() {
+		return false;
 	}
 }

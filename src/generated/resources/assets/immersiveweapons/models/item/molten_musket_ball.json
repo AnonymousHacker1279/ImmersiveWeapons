@@ -1,0 +1,6 @@
+{
+  "parent": "immersiveweapons:item/musket_ball",
+  "textures": {
+    "all": "immersiveweapons:item/molten_musket_ball"
+  }
+}

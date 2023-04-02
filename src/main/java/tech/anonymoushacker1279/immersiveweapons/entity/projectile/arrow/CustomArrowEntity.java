@@ -171,6 +171,14 @@ public class CustomArrowEntity extends AbstractArrow {
 		}
 	}
 
+	@Override
+	protected void onHitEntity(EntityHitResult result) {
+		super.onHitEntity(result);
+
+		// Extra code to run when an entity is hit
+		doWhenHitEntity(result.getEntity());
+	}
+
 	/**
 	 * Get the movement modifier.
 	 *
@@ -196,5 +204,13 @@ public class CustomArrowEntity extends AbstractArrow {
 		return new Vec3(x, y, z)
 				.normalize()
 				.add(random.nextGaussian() * 0.0075F, -0.0095F, random.nextGaussian() * 0.0075F).scale(velocity);
+	}
+
+	/**
+	 * Additional stuff to do when an entity is hit.
+	 *
+	 * @param entity the <code>Entity</code> being hit
+	 */
+	protected void doWhenHitEntity(Entity entity) {
 	}
 }

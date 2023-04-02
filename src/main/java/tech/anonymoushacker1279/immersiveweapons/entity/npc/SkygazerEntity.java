@@ -21,6 +21,7 @@ import net.minecraft.world.entity.npc.VillagerTrades.ItemListing;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.*;
 import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.trading.MerchantOffer;
 import net.minecraft.world.item.trading.MerchantOffers;
 import net.minecraft.world.level.Level;
@@ -31,12 +32,12 @@ import tech.anonymoushacker1279.immersiveweapons.init.*;
 import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
 
 import javax.annotation.Nullable;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
+import java.util.Map.Entry;
 
 public class SkygazerEntity extends AbstractVillager implements GrantAdvancementOnDiscovery {
 
-	private int timeUntilRefreshTrades = 72000; // Three days
+	private int timeUntilRefreshTrades = 24000; // One day
 
 	public static final Int2ObjectMap<ItemListing[]> TRADES = new Int2ObjectOpenHashMap<>(ImmutableMap.of(
 			1, new VillagerTrades.ItemListing[]{
@@ -95,26 +96,11 @@ public class SkygazerEntity extends AbstractVillager implements GrantAdvancement
 
 			if (!getOffers().isEmpty()) {
 				if (!level.isClientSide) {
+					// An offer is always added to add enchanting levels from a book to an item in the player's inventory
+					setupAddItemEnchantsTrade(player);
+
 					// An offer is always added to increase the enchantment levels on an item in the player's inventory
-
-					// First, remove any other EnchantItemsForItems offers (check the result item)
-					getOffers().removeIf(offer -> offer.getCostB().is(ItemRegistry.CELESTIAL_FRAGMENT.get()));
-
-					// Get the first enchanted item from the player's inventory
-					ItemStack enchantableItem = ItemStack.EMPTY;
-					for (int i = 0; i < player.getInventory().getContainerSize(); i++) {
-						ItemStack stack = player.getInventory().getItem(i);
-						if (stack.isEnchanted()) {
-							enchantableItem = stack;
-							break;
-						}
-					}
-
-					// If the player has an enchanted item, add an offer to increase the enchantment level
-					if (!enchantableItem.isEmpty()) {
-						getOffers().add(new EnchantItemForItems(enchantableItem, ItemRegistry.CELESTIAL_FRAGMENT.get(), 2, 1)
-								.getOffer(this, player.getRandom()));
-					}
+					setupRaiseItemEnchantsTrade(player);
 
 					setTradingPlayer(player);
 					openTradingScreen(player, getDisplayName(), 1);
@@ -123,6 +109,70 @@ public class SkygazerEntity extends AbstractVillager implements GrantAdvancement
 			return InteractionResult.sidedSuccess(level.isClientSide);
 		} else {
 			return super.mobInteract(player, hand);
+		}
+	}
+
+	private void setupRaiseItemEnchantsTrade(Player player) {
+		// First, remove any other EnchantItemsForItems offers (check the result item)
+		getOffers().removeIf(offer -> offer.getCostB().is(ItemRegistry.CELESTIAL_FRAGMENT.get()));
+
+		// Get the first enchanted item from the player's inventory
+		ItemStack enchantableItem = ItemStack.EMPTY;
+		for (int i = 0; i < player.getInventory().getContainerSize(); i++) {
+			ItemStack stack = player.getInventory().getItem(i);
+			if (stack.isEnchanted()) {
+				enchantableItem = stack;
+				break;
+			}
+		}
+
+		// If the player has an enchanted item, add an offer to increase the enchantment level
+		if (!enchantableItem.isEmpty()) {
+			getOffers().add(new EnchantItemForItems(enchantableItem, ItemRegistry.CELESTIAL_FRAGMENT.get(), 1)
+					.getOffer(this, player.getRandom()));
+		}
+	}
+
+	private void setupAddItemEnchantsTrade(Player player) {
+		// First, remove any other EnchantItemWithEnchantingBooks offers (check the result item)
+		getOffers().removeIf(offer -> offer.getCostB().is(Items.ENCHANTED_BOOK));
+
+		// Get the first enchanted item from the player's inventory
+		ItemStack enchantableItem = ItemStack.EMPTY;
+		for (int i = 0; i < player.getInventory().getContainerSize(); i++) {
+			ItemStack stack = player.getInventory().getItem(i);
+			if (stack.isEnchanted()) {
+				enchantableItem = stack;
+				break;
+			}
+		}
+
+		// Get the first enchanted book from the player's inventory
+		ItemStack enchantableBook = ItemStack.EMPTY;
+		for (int i = 0; i < player.getInventory().getContainerSize(); i++) {
+			ItemStack stack = player.getInventory().getItem(i);
+			if (stack.is(Items.ENCHANTED_BOOK)) {
+				enchantableBook = stack;
+				break;
+			}
+		}
+
+		// Check the enchants on the two items. If the book has the same level or higher, remove the offer
+		if (!enchantableItem.isEmpty() && !enchantableBook.isEmpty()) {
+			Map<Enchantment, Integer> existingEnchantments = enchantableItem.getAllEnchantments();
+			Map<Enchantment, Integer> enchantmentsFromBook = new HashMap<>(EnchantmentHelper.getEnchantments(enchantableBook));
+			for (Entry<Enchantment, Integer> entry : enchantmentsFromBook.entrySet()) {
+				Enchantment enchantment = entry.getKey();
+				if (existingEnchantments.containsKey(enchantment) && existingEnchantments.get(enchantment) >= entry.getValue()) {
+					return;
+				}
+			}
+		}
+
+		// If the player has an enchanted book, add an offer to add the enchantments to an item
+		if (!enchantableBook.isEmpty()) {
+			getOffers().add(new EnchantItemWithEnchantingBooks(enchantableItem, enchantableBook, 1)
+					.getOffer(this, player.getRandom()));
 		}
 	}
 
@@ -263,14 +313,13 @@ public class SkygazerEntity extends AbstractVillager implements GrantAdvancement
 		private final int villagerXP;
 		private final float priceMultiplier;
 
-		public EnchantItemForItems(ItemStack enchantableItem, Item tradingItem, int itemCost, int maxUses) {
-			this(enchantableItem, tradingItem, itemCost, maxUses, 1, 0.05F);
+		public EnchantItemForItems(ItemStack enchantableItem, Item tradingItem, int maxUses) {
+			this(enchantableItem, tradingItem, maxUses, 1, 0.05F);
 		}
 
-		public EnchantItemForItems(ItemStack enchantableItem, Item tradingItem, int itemCost, int maxUses, int villagerXP, float priceMultiplier) {
+		public EnchantItemForItems(ItemStack enchantableItem, Item tradingItem, int maxUses, int villagerXP, float priceMultiplier) {
 			this.enchantableItem = enchantableItem.copy();
 			this.tradingItem = tradingItem;
-			this.itemCost = itemCost;
 			this.maxUses = maxUses;
 			this.villagerXP = villagerXP;
 			this.priceMultiplier = priceMultiplier;
@@ -297,6 +346,45 @@ public class SkygazerEntity extends AbstractVillager implements GrantAdvancement
 			}
 
 			return new MerchantOffer(enchantableItem, new ItemStack(tradingItem, itemCost), newEnchantableItem, maxUses, villagerXP, priceMultiplier);
+		}
+	}
+
+	// This takes in an enchanting book and applies its levels to the enchantable item
+	static class EnchantItemWithEnchantingBooks implements VillagerTrades.ItemListing {
+		private final ItemStack enchantableItem;
+		private final ItemStack tradingItem;
+		private final int maxUses;
+		private final int villagerXP;
+		private final float priceMultiplier;
+
+		public EnchantItemWithEnchantingBooks(ItemStack enchantableItem, ItemStack tradingItem, int maxUses) {
+			this(enchantableItem, tradingItem, maxUses, 1, 0.05F);
+		}
+
+		public EnchantItemWithEnchantingBooks(ItemStack enchantableItem, ItemStack tradingItem, int maxUses, int villagerXP, float priceMultiplier) {
+			this.enchantableItem = enchantableItem.copy();
+			this.tradingItem = tradingItem.copy();
+			this.maxUses = maxUses;
+			this.villagerXP = villagerXP;
+			this.priceMultiplier = priceMultiplier;
+		}
+
+		@Override
+		public MerchantOffer getOffer(Entity trader, RandomSource randomSource) {
+			// If there are any enchantments on the item, increase the enchantment level by 1
+			ItemStack newEnchantableItem = enchantableItem.copy();
+			if (newEnchantableItem.isEnchanted()) {
+				Map<Enchantment, Integer> existingEnchantments = newEnchantableItem.getAllEnchantments();
+				Map<Enchantment, Integer> enchantmentsFromBook = new HashMap<>(EnchantmentHelper.getEnchantments(tradingItem));
+
+				// Remove the old enchantments
+				newEnchantableItem.removeTagKey("Enchantments");
+
+				// Add all the existing enchantments with the new ones. If there is a shared enchantment, use the higher level from the book
+				existingEnchantments.forEach((enchantment, level) -> newEnchantableItem.enchant(enchantment, Math.max(level, enchantmentsFromBook.getOrDefault(enchantment, 0))));
+			}
+
+			return new MerchantOffer(enchantableItem, tradingItem, newEnchantableItem, maxUses, villagerXP, priceMultiplier);
 		}
 	}
 }
