@@ -14,5 +14,6 @@
   "result": {
     "count": 16,
     "item": "immersiveweapons:obsidian_rod"
-  }
+  },
+  "show_notification": true
 }

@@ -55,10 +55,6 @@ public class SmallPartsMenu extends AbstractContainerMenu {
 		super(MenuTypeRegistry.SMALL_PARTS_TABLE_MENU.get(), containerID);
 		access = levelAccess;
 		materialSlot = addSlot(new Slot(inputContainer, 0, 23, 36) {
-			@Override
-			public boolean mayPlace(ItemStack stack) {
-				return true;
-			}
 		});
 		resultSlot = addSlot(new Slot(outputContainer, 0, 143, 58) {
 			@Override

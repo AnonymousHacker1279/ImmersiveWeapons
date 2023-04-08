@@ -2,7 +2,6 @@ package tech.anonymoushacker1279.immersiveweapons.item;
 
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
-import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.player.Player;
@@ -10,10 +9,9 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
+import tech.anonymoushacker1279.immersiveweapons.world.level.IWDamageSources;
 
 public class UsedSyringeItem extends Item {
-
-	public static final DamageSource damageSource = new DamageSource("immersiveweapons.used_syringe");
 
 	/**
 	 * Constructor for UsedSyringeItem.
@@ -42,7 +40,7 @@ public class UsedSyringeItem extends Item {
 		if (randomNumber <= 80) {
 			playerIn.addEffect(new MobEffectInstance(MobEffects.POISON, 500, 0, false, true));
 			if (randomNumber <= 30) {
-				playerIn.hurt(damageSource, 8.0F);
+				playerIn.hurt(IWDamageSources.USED_SYRINGE, 8.0F);
 			}
 		}
 		if (!playerIn.isCreative()) {

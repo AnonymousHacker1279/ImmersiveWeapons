@@ -34,8 +34,8 @@ import net.minecraftforge.network.PacketDistributor;
 import org.jetbrains.annotations.Nullable;
 import tech.anonymoushacker1279.immersiveweapons.entity.GrantAdvancementOnDiscovery;
 import tech.anonymoushacker1279.immersiveweapons.init.*;
-import tech.anonymoushacker1279.immersiveweapons.item.UsedSyringeItem;
 import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
+import tech.anonymoushacker1279.immersiveweapons.world.level.IWDamageSources;
 
 import java.time.LocalDate;
 import java.time.temporal.ChronoField;
@@ -282,7 +282,7 @@ public abstract class AbstractFieldMedicEntity extends PathfinderMob implements 
 
 					// Hepatitis chance
 					if (randomNumber <= 0.3f) {
-						entityIn.hurt(UsedSyringeItem.damageSource, 8.0F);
+						entityIn.hurt(IWDamageSources.USED_SYRINGE, 8.0F);
 						// :)
 						if (randomNumber <= 0.005f) {
 							PacketHandler.INSTANCE.send(PacketDistributor.TRACKING_CHUNK.with(() ->

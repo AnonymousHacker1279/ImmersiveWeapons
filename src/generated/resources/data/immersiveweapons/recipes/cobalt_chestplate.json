@@ -13,5 +13,6 @@
   ],
   "result": {
     "item": "immersiveweapons:cobalt_chestplate"
-  }
+  },
+  "show_notification": true
 }

@@ -2,6 +2,7 @@ package tech.anonymoushacker1279.immersiveweapons.item.crafting;
 
 import com.google.gson.*;
 import net.minecraft.core.NonNullList;
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.GsonHelper;
@@ -41,14 +42,13 @@ public record SmallPartsRecipe(ResourceLocation recipeId,
 		return false;
 	}
 
-	/**
-	 * Returns an Item that is the result of this recipe.
-	 *
-	 * @param container the <code>Container</code> instance
-	 * @return ItemStack
-	 */
 	@Override
-	public ItemStack assemble(Container container) {
+	public ItemStack assemble(Container container, RegistryAccess registryAccess) {
+		return new ItemStack(Items.AIR);
+	}
+
+	@Override
+	public ItemStack getResultItem(RegistryAccess registryAccess) {
 		return new ItemStack(Items.AIR);
 	}
 
@@ -62,11 +62,6 @@ public record SmallPartsRecipe(ResourceLocation recipeId,
 	@Override
 	public boolean canCraftInDimensions(int width, int height) {
 		return false;
-	}
-
-	@Override
-	public ItemStack getResultItem() {
-		return new ItemStack(Items.AIR);
 	}
 
 	/**

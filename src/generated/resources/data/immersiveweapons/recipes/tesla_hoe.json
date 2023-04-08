@@ -16,5 +16,6 @@
   ],
   "result": {
     "item": "immersiveweapons:tesla_hoe"
-  }
+  },
+  "show_notification": true
 }

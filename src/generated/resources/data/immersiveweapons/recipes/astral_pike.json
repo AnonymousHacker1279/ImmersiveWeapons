@@ -19,5 +19,6 @@
   ],
   "result": {
     "item": "immersiveweapons:astral_pike"
-  }
+  },
+  "show_notification": true
 }

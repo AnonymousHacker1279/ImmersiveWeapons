@@ -16,5 +16,6 @@
   ],
   "result": {
     "item": "immersiveweapons:molten_axe"
-  }
+  },
+  "show_notification": true
 }

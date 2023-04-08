@@ -14,5 +14,6 @@
   "result": {
     "count": 2,
     "item": "immersiveweapons:burned_oak_trapdoor"
-  }
+  },
+  "show_notification": true
 }

@@ -1375,7 +1375,8 @@ public class RecipeGenerator extends RecipeProvider {
 	}
 
 	private static void netheriteSmithing(Item baseItem, Item pResultItem) {
-		UpgradeRecipeBuilder.smithing(Ingredient.of(baseItem),
+		SmithingTransformRecipeBuilder.smithing(Ingredient.of(Items.NETHERITE_UPGRADE_SMITHING_TEMPLATE),
+						Ingredient.of(baseItem),
 						Ingredient.of(Items.NETHERITE_INGOT), RecipeCategory.MISC, pResultItem)
 				.unlocks("has_netherite_ingot", has(Items.NETHERITE_INGOT))
 				.save(finishedRecipeConsumer, ImmersiveWeapons.MOD_ID + ":" + getItemName(pResultItem) + "_smithing");

@@ -85,7 +85,6 @@ public class TiltrosDimensionSpecialEffects extends DimensionSpecialEffects {
 		}
 
 		RenderSystem.depthMask(true);
-		RenderSystem.enableTexture();
 		RenderSystem.disableBlend();
 
 		return true;

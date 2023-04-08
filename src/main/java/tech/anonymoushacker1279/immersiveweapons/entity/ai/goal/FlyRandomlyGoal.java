@@ -38,7 +38,7 @@ public class FlyRandomlyGoal extends Goal {
 			return;
 		}
 
-		Vec3i immutablePosition = new Vec3i(evilEyeEntity.getX(), evilEyeEntity.getY(), evilEyeEntity.getZ());
+		Vec3i immutablePosition = new Vec3i(evilEyeEntity.getBlockX(), evilEyeEntity.getBlockY(), evilEyeEntity.getBlockZ());
 
 		if (targetPosition == null) {
 			// Pick random coordinates within 64 blocks of the entity

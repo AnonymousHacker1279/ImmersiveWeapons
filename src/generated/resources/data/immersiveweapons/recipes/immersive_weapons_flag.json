@@ -23,5 +23,6 @@
   ],
   "result": {
     "item": "immersiveweapons:immersive_weapons_flag"
-  }
+  },
+  "show_notification": true
 }

@@ -12,5 +12,6 @@
   ],
   "result": {
     "item": "immersiveweapons:extended_iron_barrel"
-  }
+  },
+  "show_notification": true
 }

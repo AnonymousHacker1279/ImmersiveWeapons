@@ -15,5 +15,6 @@
   ],
   "result": {
     "item": "immersiveweapons:golden_pike_head"
-  }
+  },
+  "show_notification": true
 }

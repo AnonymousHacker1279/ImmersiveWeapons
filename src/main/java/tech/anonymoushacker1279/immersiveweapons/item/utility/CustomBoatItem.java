@@ -1,6 +1,5 @@
 package tech.anonymoushacker1279.immersiveweapons.item.utility;
 
-import net.minecraft.core.BlockPos;
 import net.minecraft.stats.Stats;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
@@ -77,7 +76,7 @@ public class CustomBoatItem extends Item {
 				} else {
 					if (!level.isClientSide) {
 						level.addFreshEntity(boat);
-						level.gameEvent(player, GameEvent.ENTITY_PLACE, new BlockPos(hitResult.getLocation()));
+						level.gameEvent(player, GameEvent.ENTITY_PLACE, hitResult.getLocation());
 						if (!player.getAbilities().instabuild) {
 							itemStack.shrink(1);
 						}

@@ -15,5 +15,6 @@
   "result": {
     "count": 3,
     "item": "immersiveweapons:flag_pole"
-  }
+  },
+  "show_notification": true
 }

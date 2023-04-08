@@ -1,6 +1,7 @@
 package tech.anonymoushacker1279.immersiveweapons.entity.monster;
 
 import net.minecraft.sounds.SoundEvent;
+import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.InteractionHand;
@@ -108,7 +109,7 @@ public class HansEntity extends AbstractWanderingWarriorEntity {
 				super.hurt(source, amount);
 				return false;
 			}
-			if (source.isProjectile() || source.getDirectEntity() instanceof AbstractArrow) {
+			if (source.is(DamageTypeTags.IS_PROJECTILE) || source.getDirectEntity() instanceof AbstractArrow) {
 				setTarget((LivingEntity) source.getEntity());
 				setCombatTask();
 				heal(amount);
@@ -118,7 +119,7 @@ public class HansEntity extends AbstractWanderingWarriorEntity {
 			setCombatTask();
 			super.hurt(source, amount);
 		}
-		if (source == DamageSource.OUT_OF_WORLD) {
+		if (source == damageSources().outOfWorld()) {
 			super.hurt(source, amount);
 			return true;
 		}

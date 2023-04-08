@@ -20,8 +20,8 @@ import java.util.function.Predicate;
 
 public class ItemModelGenerator extends ItemModelProvider {
 
-	Map<PikeItem, ResourceLocation> pikeMaterialMap = new HashMap<>(15);
-	Map<GauntletItem, ResourceLocation> gauntletMaterialMap = new HashMap<>(15);
+	final Map<PikeItem, ResourceLocation> pikeMaterialMap = new HashMap<>(15);
+	final Map<GauntletItem, ResourceLocation> gauntletMaterialMap = new HashMap<>(15);
 
 	public ItemModelGenerator(PackOutput output, ExistingFileHelper existingFileHelper) {
 		super(output, ImmersiveWeapons.MOD_ID, existingFileHelper);

@@ -4,7 +4,6 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.goal.Goal;
@@ -17,13 +16,13 @@ import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Nullable;
 import tech.anonymoushacker1279.immersiveweapons.init.BlockEntityRegistry;
+import tech.anonymoushacker1279.immersiveweapons.world.level.IWDamageSources;
 
 import java.util.EnumSet;
 import java.util.UUID;
 
 public class BearTrapBlockEntity extends BlockEntity implements EntityBlock {
 
-	public static final DamageSource damageSource = new DamageSource("immersiveweapons.bear_trap");
 	@Nullable
 	private Mob trappedMobEntity;
 	@Nullable
@@ -131,7 +130,7 @@ public class BearTrapBlockEntity extends BlockEntity implements EntityBlock {
 			id = null;
 			doNothingGoal = null;
 		} else {
-			mobEntity.hurt(damageSource, 2);
+			mobEntity.hurt(IWDamageSources.BEAR_TRAP, 2);
 			mobEntity.goalSelector.getRunningGoals().filter(WrappedGoal::isRunning).forEach(WrappedGoal::stop);
 			mobEntity.goalSelector.addGoal(0, doNothingGoal = new DoNothingGoal(mobEntity, this));
 		}

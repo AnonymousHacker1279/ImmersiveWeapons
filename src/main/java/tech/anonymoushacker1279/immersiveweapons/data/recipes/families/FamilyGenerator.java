@@ -265,9 +265,7 @@ public class FamilyGenerator extends RecipeGenerator {
 			// Start doing null checks because not all tool families have these items.
 
 			// Gauntlet
-			if (family.gauntlet() != null) {
-				RecipeGenerator.createGauntlet(family.gauntlet().get(), material);
-			}
+			RecipeGenerator.createGauntlet(family.gauntlet().get(), material);
 
 			// Pike
 			RecipeGenerator.createPike(family.pike().get(), material, family.pikeHead().get());

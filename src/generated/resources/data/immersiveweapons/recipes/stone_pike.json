@@ -19,5 +19,6 @@
   ],
   "result": {
     "item": "immersiveweapons:stone_pike"
-  }
+  },
+  "show_notification": true
 }

@@ -30,14 +30,8 @@ public class VentusArmorItem extends ArmorItem {
 	private int windShieldCooldown = 0;
 	private int windShieldDuration = 0;
 
-	/**
-	 * Constructor for VentusArmorItem.
-	 *
-	 * @param material the <code>ArmorMaterial</code> for the item
-	 * @param slot     the <code>EquipmentSlot</code>
-	 */
-	public VentusArmorItem(ArmorMaterial material, EquipmentSlot slot, Properties properties, boolean isLeggings) {
-		super(material, slot, properties);
+	public VentusArmorItem(ArmorMaterial material, ArmorItem.Type armorType, Properties properties, boolean isLeggings) {
+		super(material, armorType, properties);
 		this.isLeggings = isLeggings;
 	}
 

@@ -16,5 +16,6 @@
   ],
   "result": {
     "item": "immersiveweapons:cobalt_hoe"
-  }
+  },
+  "show_notification": true
 }

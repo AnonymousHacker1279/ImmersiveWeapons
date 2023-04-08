@@ -14,5 +14,6 @@
   ],
   "result": {
     "item": "immersiveweapons:astral_ingot"
-  }
+  },
+  "show_notification": true
 }

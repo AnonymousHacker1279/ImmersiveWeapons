@@ -166,9 +166,9 @@ public class FireflyEntity extends AmbientCreature {
 
 			if (targetBlockPosition == null || random.nextInt(15) == 0 || targetBlockPosition.closerToCenterThan(position(), 2.0D)) {
 				targetBlockPosition = new BlockPos(
-						getX() + (double) random.nextInt(7) - (double) random.nextInt(7),
-						getY() + (double) random.nextInt(6) - 2.0D,
-						getZ() + (double) random.nextInt(7) - (double) random.nextInt(7)
+						getBlockX() + random.nextInt(7) - random.nextInt(7),
+						getBlockY() + random.nextInt(6) - 2,
+						getBlockZ() + random.nextInt(7) - random.nextInt(7)
 				);
 			}
 

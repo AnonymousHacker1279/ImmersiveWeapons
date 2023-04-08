@@ -20,5 +20,6 @@
   ],
   "result": {
     "item": "immersiveweapons:canadian_flag"
-  }
+  },
+  "show_notification": true
 }

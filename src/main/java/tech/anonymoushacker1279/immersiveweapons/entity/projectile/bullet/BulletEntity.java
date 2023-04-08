@@ -365,9 +365,9 @@ public class BulletEntity extends AbstractArrow {
 
 		// If the arrow owner doesn't exist (null), set the indirect entity to itself
 		if (owner == null) {
-			damageSource = DamageSource.arrow(this, this);
+			damageSource = damageSources().arrow(this, this);
 		} else {
-			damageSource = DamageSource.arrow(this, owner);
+			damageSource = damageSources().arrow(this, owner);
 
 			// Disable invulnerability for bullets; specifically with the blunderbuss, otherwise
 			// multiple shots on the same target will simply bounce back

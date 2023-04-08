@@ -14,5 +14,6 @@
   "result": {
     "count": 2,
     "item": "immersiveweapons:stardust_trapdoor"
-  }
+  },
+  "show_notification": true
 }

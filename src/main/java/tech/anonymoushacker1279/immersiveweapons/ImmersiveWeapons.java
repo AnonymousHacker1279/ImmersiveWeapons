@@ -2,7 +2,6 @@ package tech.anonymoushacker1279.immersiveweapons;
 
 import com.mojang.logging.LogUtils;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.level.block.state.properties.WoodType;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.ModLoadingContext;
@@ -17,6 +16,7 @@ import tech.anonymoushacker1279.immersiveweapons.block.properties.WoodTypes;
 import tech.anonymoushacker1279.immersiveweapons.config.ClientConfig;
 import tech.anonymoushacker1279.immersiveweapons.config.CommonConfig;
 import tech.anonymoushacker1279.immersiveweapons.init.*;
+import tech.anonymoushacker1279.immersiveweapons.world.level.CustomBlockSetTypes;
 import tech.anonymoushacker1279.immersiveweapons.world.level.levelgen.biomes.IWOverworldBiomesProvider;
 import tech.anonymoushacker1279.immersiveweapons.world.level.levelgen.biomes.IWSurfaceRuleData;
 import terrablender.api.*;
@@ -63,8 +63,8 @@ public class ImmersiveWeapons {
 		DispenserBehaviorRegistry.init();
 		IWCriteriaTriggers.init();
 		event.enqueueWork(() -> {
-			WoodType.register(WoodTypes.BURNED_OAK);
-			WoodType.register(WoodTypes.STARDUST);
+			CustomBlockSetTypes.init();
+			WoodTypes.init();
 			Regions.register(new IWOverworldBiomesProvider(new ResourceLocation(MOD_ID, "overworld_biome_provider"),
 					RegionType.OVERWORLD, 1));
 			SurfaceRuleManager.addSurfaceRules(RuleCategory.OVERWORLD, MOD_ID, IWSurfaceRuleData.makeRules());

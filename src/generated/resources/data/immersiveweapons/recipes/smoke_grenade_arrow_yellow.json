@@ -20,5 +20,6 @@
   "result": {
     "count": 4,
     "item": "immersiveweapons:smoke_grenade_arrow_yellow"
-  }
+  },
+  "show_notification": true
 }

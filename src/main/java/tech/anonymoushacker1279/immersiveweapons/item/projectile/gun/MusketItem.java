@@ -3,8 +3,6 @@ package tech.anonymoushacker1279.immersiveweapons.item.projectile.gun;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
-import net.minecraft.world.item.crafting.Ingredient;
 import tech.anonymoushacker1279.immersiveweapons.config.CommonConfig;
 import tech.anonymoushacker1279.immersiveweapons.entity.projectile.bullet.BulletEntity;
 import tech.anonymoushacker1279.immersiveweapons.init.SoundEventRegistry;
@@ -39,16 +37,6 @@ public class MusketItem extends AbstractGunItem {
 	@Override
 	public SoundEvent getFireSound() {
 		return SoundEventRegistry.MUSKET_FIRE.get();
-	}
-
-	/**
-	 * Get the repair material.
-	 *
-	 * @return Ingredient
-	 */
-	@Override
-	protected Ingredient getRepairMaterial() {
-		return Ingredient.of(Items.IRON_INGOT);
 	}
 
 	@Override

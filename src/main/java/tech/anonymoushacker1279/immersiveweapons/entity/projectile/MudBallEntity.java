@@ -1,7 +1,6 @@
 package tech.anonymoushacker1279.immersiveweapons.entity.projectile;
 
 import net.minecraft.core.particles.*;
-import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.monster.Blaze;
 import net.minecraft.world.entity.projectile.ThrowableItemProjectile;
@@ -47,7 +46,7 @@ public class MudBallEntity extends ThrowableItemProjectile {
 		super.onHitEntity(pResult);
 		Entity entity = pResult.getEntity();
 		int i = entity instanceof Blaze ? 3 : 0;
-		entity.hurt(DamageSource.thrown(this, getOwner()), (float) i);
+		entity.hurt(damageSources().thrown(this, getOwner()), (float) i);
 	}
 
 	@Override

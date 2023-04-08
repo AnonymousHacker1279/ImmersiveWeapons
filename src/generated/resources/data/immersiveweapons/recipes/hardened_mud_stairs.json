@@ -15,5 +15,6 @@
   "result": {
     "count": 4,
     "item": "immersiveweapons:hardened_mud_stairs"
-  }
+  },
+  "show_notification": true
 }

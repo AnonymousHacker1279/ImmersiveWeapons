@@ -17,5 +17,6 @@
   ],
   "result": {
     "item": "immersiveweapons:mortar_shell"
-  }
+  },
+  "show_notification": true
 }

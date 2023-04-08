@@ -1,8 +1,6 @@
 package tech.anonymoushacker1279.immersiveweapons.entity.monster.lava_revenant;
 
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.protocol.Packet;
-import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.*;
 import net.minecraftforge.entity.PartEntity;
@@ -57,11 +55,6 @@ public class LavaRevenantPart extends PartEntity<LavaRevenantEntity> {
 	@Override
 	public boolean is(Entity pEntity) {
 		return this == pEntity || parentMob == pEntity;
-	}
-
-	@Override
-	public Packet<ClientGamePacketListener> getAddEntityPacket() {
-		throw new UnsupportedOperationException();
 	}
 
 	@Override

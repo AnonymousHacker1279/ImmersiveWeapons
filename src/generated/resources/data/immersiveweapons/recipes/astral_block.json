@@ -14,5 +14,6 @@
   ],
   "result": {
     "item": "immersiveweapons:astral_block"
-  }
+  },
+  "show_notification": true
 }

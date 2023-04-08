@@ -1,15 +1,14 @@
 package tech.anonymoushacker1279.immersiveweapons.item.fortitude;
 
-import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.Level.ExplosionInteraction;
+import tech.anonymoushacker1279.immersiveweapons.world.level.IWDamageSources;
 
 public class ChocolateBarItem extends Item {
 
-	private static final DamageSource damageSource = new DamageSource("immersiveweapons.explosive_chocolate_bar");
 	private final boolean isExplosive;
 
 	/**
@@ -34,7 +33,7 @@ public class ChocolateBarItem extends Item {
 	@Override
 	public ItemStack finishUsingItem(ItemStack stack, Level level, LivingEntity entity) {
 		if (isExplosive) {
-			level.explode(null, damageSource, null, entity.position().x, entity.position().y,
+			level.explode(null, IWDamageSources.EXPLOSIVE_CHOCOLATE_BAR, null, entity.position().x, entity.position().y,
 					entity.position().z, 2.0F, false, ExplosionInteraction.NONE);
 		}
 

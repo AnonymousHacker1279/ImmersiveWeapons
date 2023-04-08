@@ -7,7 +7,6 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundAddEntityPacket;
-import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.projectile.*;
@@ -21,10 +20,9 @@ import net.minecraftforge.event.ForgeEventFactory;
 import tech.anonymoushacker1279.immersiveweapons.block.MortarBlock;
 import tech.anonymoushacker1279.immersiveweapons.init.EntityRegistry;
 import tech.anonymoushacker1279.immersiveweapons.init.ItemRegistry;
+import tech.anonymoushacker1279.immersiveweapons.world.level.IWDamageSources;
 
 public class MortarShellEntity extends Projectile implements ItemSupplier {
-
-	private static final DamageSource damageSource = new DamageSource("immersiveweapons.mortar");
 
 	/**
 	 * Constructor for MortarShellEntity.
@@ -152,7 +150,7 @@ public class MortarShellEntity extends Projectile implements ItemSupplier {
 		Vec3 vector3d1 = vector3d.normalize().scale(0.05F);
 		setPosRaw(getX() - vector3d1.x, getY() - vector3d1.y, getZ() - vector3d1.z);
 		if (!level.isClientSide) {
-			level.explode(this, damageSource, null, blockPosition().getX(), blockPosition().getY(), blockPosition().getZ(), 4.0F, false, ExplosionInteraction.BLOCK);
+			level.explode(this, IWDamageSources.MORTAR, null, blockPosition().getX(), blockPosition().getY(), blockPosition().getZ(), 4.0F, false, ExplosionInteraction.BLOCK);
 		}
 		kill();
 	}

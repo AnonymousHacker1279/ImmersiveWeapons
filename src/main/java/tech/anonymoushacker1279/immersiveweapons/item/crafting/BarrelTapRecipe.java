@@ -2,6 +2,7 @@ package tech.anonymoushacker1279.immersiveweapons.item.crafting;
 
 import com.google.gson.JsonObject;
 import net.minecraft.core.NonNullList;
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.GsonHelper;
@@ -46,7 +47,7 @@ public record BarrelTapRecipe(ResourceLocation recipeId,
 	 * @return ItemStack
 	 */
 	@Override
-	public ItemStack assemble(Container container) {
+	public ItemStack assemble(Container container, RegistryAccess registryAccess) {
 		return result;
 	}
 
@@ -71,7 +72,7 @@ public record BarrelTapRecipe(ResourceLocation recipeId,
 	}
 
 	@Override
-	public ItemStack getResultItem() {
+	public ItemStack getResultItem(RegistryAccess registryAccess) {
 		return result.copy();
 	}
 

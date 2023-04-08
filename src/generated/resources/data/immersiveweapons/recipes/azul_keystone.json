@@ -17,5 +17,6 @@
   ],
   "result": {
     "item": "immersiveweapons:azul_keystone"
-  }
+  },
+  "show_notification": true
 }

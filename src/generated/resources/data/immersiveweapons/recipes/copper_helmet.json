@@ -12,5 +12,6 @@
   ],
   "result": {
     "item": "immersiveweapons:copper_helmet"
-  }
+  },
+  "show_notification": true
 }

@@ -16,5 +16,6 @@
   ],
   "result": {
     "item": "immersiveweapons:molten_pickaxe"
-  }
+  },
+  "show_notification": true
 }

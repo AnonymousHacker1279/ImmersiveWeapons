@@ -26,14 +26,8 @@ public class CobaltArmorItem extends ArmorItem {
 
 	private final boolean isLeggings;
 
-	/**
-	 * Constructor for CobaltArmorItem.
-	 *
-	 * @param material the <code>ArmorMaterial</code> for the item
-	 * @param slot     the <code>EquipmentSlot</code>
-	 */
-	public CobaltArmorItem(ArmorMaterial material, EquipmentSlot slot, Properties properties, boolean isLeggings) {
-		super(material, slot, properties);
+	public CobaltArmorItem(ArmorMaterial material, ArmorItem.Type armorType, Properties properties, boolean isLeggings) {
+		super(material, armorType, properties);
 		this.isLeggings = isLeggings;
 	}
 

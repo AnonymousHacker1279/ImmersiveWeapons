@@ -15,5 +15,6 @@
   ],
   "result": {
     "item": "immersiveweapons:stone_gauntlet"
-  }
+  },
+  "show_notification": true
 }

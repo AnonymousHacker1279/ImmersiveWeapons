@@ -12,5 +12,6 @@
   ],
   "result": {
     "item": "immersiveweapons:ventus_boots"
-  }
+  },
+  "show_notification": true
 }

@@ -16,5 +16,6 @@
   ],
   "result": {
     "item": "immersiveweapons:copper_sword"
-  }
+  },
+  "show_notification": true
 }

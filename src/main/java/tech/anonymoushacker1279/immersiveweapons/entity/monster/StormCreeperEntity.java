@@ -183,16 +183,6 @@ public class StormCreeperEntity extends Creeper implements GrantAdvancementOnDis
 	}
 
 	@Override
-	protected SoundEvent getHurtSound(DamageSource pDamageSource) {
-		return SoundEvents.CREEPER_HURT;
-	}
-
-	@Override
-	protected SoundEvent getDeathSound() {
-		return SoundEvents.CREEPER_DEATH;
-	}
-
-	@Override
 	protected void dropCustomDeathLoot(DamageSource pSource, int pLooting, boolean pRecentlyHit) {
 		super.dropCustomDeathLoot(pSource, pLooting, pRecentlyHit);
 		Entity entity = pSource.getEntity();
@@ -203,11 +193,6 @@ public class StormCreeperEntity extends Creeper implements GrantAdvancementOnDis
 			}
 		}
 
-	}
-
-	@Override
-	public boolean doHurtTarget(Entity pEntity) {
-		return true;
 	}
 
 	@Override

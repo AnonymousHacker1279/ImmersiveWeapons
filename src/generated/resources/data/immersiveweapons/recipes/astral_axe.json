@@ -16,5 +16,6 @@
   ],
   "result": {
     "item": "immersiveweapons:astral_axe"
-  }
+  },
+  "show_notification": true
 }

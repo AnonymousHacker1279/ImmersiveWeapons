@@ -60,12 +60,12 @@ public class MoltenToolSmeltingModifierHandler extends LootModifier {
 					if (manager.getRecipeFor(RecipeType.SMELTING, new SimpleContainer(blockItemStack), player.level).isPresent()) {
 						// Get the smelted item
 						ItemStack smeltedItem = manager.getRecipeFor(RecipeType.SMELTING, new SimpleContainer(blockItemStack), player.level)
-								.get().assemble(new SimpleContainer(blockItemStack));
+								.get().assemble(new SimpleContainer(blockItemStack), player.level.registryAccess());
 
 						// Drop the smelted item
 						Vec3 origin = context.getParamOrNull(LootContextParams.ORIGIN);
 						if (origin != null) {
-							BlockPos dropPos = new BlockPos(origin);
+							BlockPos dropPos = BlockPos.containing(origin.x, origin.y, origin.z);
 							Block.popResource(player.level, dropPos, smeltedItem);
 
 							// The smelted drop is removed from the loot table

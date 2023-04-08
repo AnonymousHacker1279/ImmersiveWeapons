@@ -20,8 +20,4 @@ public class ScorchShotEnchantment extends Enchantment {
 		return 50;
 	}
 
-	@Override
-	public int getMaxLevel() {
-		return 1;
-	}
 }

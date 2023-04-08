@@ -12,5 +12,6 @@
   ],
   "result": {
     "item": "immersiveweapons:molten_helmet"
-  }
+  },
+  "show_notification": true
 }

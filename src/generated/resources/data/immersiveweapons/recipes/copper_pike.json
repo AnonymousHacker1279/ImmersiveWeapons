@@ -19,5 +19,6 @@
   ],
   "result": {
     "item": "immersiveweapons:copper_pike"
-  }
+  },
+  "show_notification": true
 }

@@ -16,5 +16,6 @@
   ],
   "result": {
     "item": "immersiveweapons:ventus_sword"
-  }
+  },
+  "show_notification": true
 }

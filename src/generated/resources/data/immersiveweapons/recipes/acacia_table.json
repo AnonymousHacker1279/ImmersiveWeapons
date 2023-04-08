@@ -16,5 +16,6 @@
   ],
   "result": {
     "item": "immersiveweapons:acacia_table"
-  }
+  },
+  "show_notification": true
 }

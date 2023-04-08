@@ -7,7 +7,6 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.block.model.ItemTransforms.TransformType;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.network.chat.Component;
@@ -16,8 +15,7 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.Slot;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.*;
 import org.jetbrains.annotations.Nullable;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.menu.SmallPartsMenu;
@@ -88,11 +86,12 @@ public class SmallPartsTableScreen extends AbstractContainerScreen<SmallPartsMen
 			if (menu.getSelectedPartsPatternIndex() > 0) {
 				ItemStack material = new ItemStack(resultPatterns.get(menu.getSelectedPartsPatternIndex() - 1));
 				Minecraft.getInstance().getItemRenderer().renderStatic(material,
-						TransformType.FIXED,
+						ItemDisplayContext.FIXED,
 						15728880,
 						OverlayTexture.NO_OVERLAY,
 						pPoseStack,
 						bufferSource,
+						minecraft.level,
 						0);
 			}
 
@@ -137,11 +136,12 @@ public class SmallPartsTableScreen extends AbstractContainerScreen<SmallPartsMen
 		assert minecraft != null;
 		MultiBufferSource.BufferSource bufferSource = minecraft.renderBuffers().bufferSource();
 		Minecraft.getInstance().getItemRenderer().renderStatic(new ItemStack(material),
-				TransformType.FIXED,
+				ItemDisplayContext.FIXED,
 				15728880,
 				OverlayTexture.NO_OVERLAY,
 				poseStack,
 				bufferSource,
+				minecraft.level,
 				0);
 		poseStack.popPose();
 		bufferSource.endBatch();

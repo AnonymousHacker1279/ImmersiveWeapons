@@ -19,5 +19,6 @@
   ],
   "result": {
     "item": "immersiveweapons:molten_pike"
-  }
+  },
+  "show_notification": true
 }

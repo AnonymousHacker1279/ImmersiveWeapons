@@ -16,5 +16,6 @@
   ],
   "result": {
     "item": "immersiveweapons:copper_pickaxe"
-  }
+  },
+  "show_notification": true
 }

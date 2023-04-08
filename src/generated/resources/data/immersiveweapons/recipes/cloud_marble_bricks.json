@@ -13,5 +13,6 @@
   "result": {
     "count": 4,
     "item": "immersiveweapons:cloud_marble_bricks"
-  }
+  },
+  "show_notification": true
 }

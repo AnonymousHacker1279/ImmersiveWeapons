@@ -64,18 +64,18 @@ public class CelestialTowerSummonGoal extends Goal {
 			ServerLevel serverLevel = (ServerLevel) tower.level;
 
 			for (int i = fodderMobsToSpawn; i > 0; i--) {
-				BlockPos summonPos = new BlockPos(tower.getX() + GeneralUtilities.getRandomNumber(-8, 9),
-						tower.getY(),
-						tower.getZ() + GeneralUtilities.getRandomNumber(-8, 9));
+				BlockPos summonPos = new BlockPos(tower.getBlockX() + GeneralUtilities.getRandomNumber(-8, 9),
+						tower.getBlockY(),
+						tower.getBlockZ() + GeneralUtilities.getRandomNumber(-8, 9));
 
 				RockSpiderEntity rockSpiderEntity = new RockSpiderEntity(EntityRegistry.ROCK_SPIDER_ENTITY.get(), tower.level);
 				spawnEntity(serverLevel, rockSpiderEntity, summonPos);
 				spawnEntityParticles(serverLevel);
 			}
 			for (int i = powerMobsToSpawn; i > 0; i--) {
-				BlockPos summonPos = new BlockPos(tower.getX() + GeneralUtilities.getRandomNumber(-8, 9),
-						tower.getY(),
-						tower.getZ() + GeneralUtilities.getRandomNumber(-8, 9));
+				BlockPos summonPos = new BlockPos(tower.getBlockX() + GeneralUtilities.getRandomNumber(-8, 9),
+						tower.getBlockY(),
+						tower.getBlockZ() + GeneralUtilities.getRandomNumber(-8, 9));
 
 				Zombie zombieEntity = new Zombie(EntityType.ZOMBIE, tower.level);
 				ItemStack sword = new ItemStack(Items.IRON_SWORD);
@@ -95,9 +95,9 @@ public class CelestialTowerSummonGoal extends Goal {
 				spawnEntityParticles(serverLevel);
 			}
 			for (int i = mobsToSpawn; i > 0; i--) {
-				BlockPos summonPos = new BlockPos(tower.getX() + GeneralUtilities.getRandomNumber(-8, 9),
-						tower.getY(),
-						tower.getZ() + GeneralUtilities.getRandomNumber(-8, 9));
+				BlockPos summonPos = new BlockPos(tower.getBlockX() + GeneralUtilities.getRandomNumber(-8, 9),
+						tower.getBlockY(),
+						tower.getBlockZ() + GeneralUtilities.getRandomNumber(-8, 9));
 
 				Skeleton skeletonEntity = new Skeleton(EntityType.SKELETON, tower.level);
 				ItemStack bow = new ItemStack(Items.BOW);

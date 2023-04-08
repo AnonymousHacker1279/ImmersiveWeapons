@@ -16,5 +16,6 @@
   "result": {
     "count": 8,
     "item": "immersiveweapons:starstorm_musket_ball"
-  }
+  },
+  "show_notification": true
 }

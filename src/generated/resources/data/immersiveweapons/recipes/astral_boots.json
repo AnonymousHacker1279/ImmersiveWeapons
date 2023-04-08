@@ -12,5 +12,6 @@
   ],
   "result": {
     "item": "immersiveweapons:astral_boots"
-  }
+  },
+  "show_notification": true
 }

@@ -15,5 +15,6 @@
   "result": {
     "count": 8,
     "item": "immersiveweapons:hardened_mud_window"
-  }
+  },
+  "show_notification": true
 }

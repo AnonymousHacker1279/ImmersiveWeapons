@@ -16,5 +16,6 @@
   ],
   "result": {
     "item": "immersiveweapons:astral_sword"
-  }
+  },
+  "show_notification": true
 }

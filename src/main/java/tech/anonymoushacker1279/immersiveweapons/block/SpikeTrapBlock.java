@@ -5,7 +5,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.sounds.SoundSource;
-import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.player.Player;
@@ -28,6 +27,7 @@ import net.minecraftforge.network.PacketDistributor;
 import net.minecraftforge.network.PacketDistributor.TargetPoint;
 import tech.anonymoushacker1279.immersiveweapons.init.PacketHandler;
 import tech.anonymoushacker1279.immersiveweapons.init.SoundEventRegistry;
+import tech.anonymoushacker1279.immersiveweapons.world.level.IWDamageSources;
 
 import java.util.function.Supplier;
 
@@ -36,7 +36,6 @@ public class SpikeTrapBlock extends Block implements SimpleWaterloggedBlock {
 	public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
 	public static final BooleanProperty POWERED = BooleanProperty.create("powered");
 	protected static final VoxelShape SHAPE = Block.box(0.0D, 0.0D, 0.0D, 16.0D, 1.0D, 16.0D);
-	private final DamageSource damageSource = new DamageSource("immersiveweapons.spike_trap");
 
 	/**
 	 * Constructor for SpikeTrapBlock.
@@ -154,7 +153,7 @@ public class SpikeTrapBlock extends Block implements SimpleWaterloggedBlock {
 	public void entityInside(BlockState state, Level level, BlockPos pos, Entity entity) {
 		if (entity instanceof Player || entity instanceof Mob) {
 			if (state.getValue(POWERED)) {
-				entity.hurt(damageSource, 2f);
+				entity.hurt(IWDamageSources.SPIKE_TRAP, 2f);
 			}
 		}
 	}

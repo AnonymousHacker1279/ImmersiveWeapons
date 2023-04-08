@@ -13,5 +13,6 @@
   ],
   "result": {
     "item": "immersiveweapons:starstorm_leggings"
-  }
+  },
+  "show_notification": true
 }

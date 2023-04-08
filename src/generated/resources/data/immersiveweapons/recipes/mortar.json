@@ -16,5 +16,6 @@
   ],
   "result": {
     "item": "immersiveweapons:mortar"
-  }
+  },
+  "show_notification": true
 }

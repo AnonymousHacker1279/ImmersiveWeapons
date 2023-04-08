@@ -15,5 +15,6 @@
   ],
   "result": {
     "item": "immersiveweapons:astral_pike_head"
-  }
+  },
+  "show_notification": true
 }

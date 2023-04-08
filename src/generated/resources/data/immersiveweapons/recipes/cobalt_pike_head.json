@@ -15,5 +15,6 @@
   ],
   "result": {
     "item": "immersiveweapons:cobalt_pike_head"
-  }
+  },
+  "show_notification": true
 }

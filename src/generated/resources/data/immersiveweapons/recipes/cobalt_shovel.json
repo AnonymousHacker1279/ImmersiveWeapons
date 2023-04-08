@@ -16,5 +16,6 @@
   ],
   "result": {
     "item": "immersiveweapons:cobalt_shovel"
-  }
+  },
+  "show_notification": true
 }

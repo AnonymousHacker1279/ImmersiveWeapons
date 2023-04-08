@@ -23,5 +23,6 @@
   ],
   "result": {
     "item": "immersiveweapons:american_flag"
-  }
+  },
+  "show_notification": true
 }

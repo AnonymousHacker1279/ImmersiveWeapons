@@ -15,5 +15,6 @@
   ],
   "result": {
     "item": "immersiveweapons:wooden_pike_head"
-  }
+  },
+  "show_notification": true
 }

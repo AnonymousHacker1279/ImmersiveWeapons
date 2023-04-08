@@ -19,5 +19,6 @@
   ],
   "result": {
     "item": "immersiveweapons:iron_pike"
-  }
+  },
+  "show_notification": true
 }
