@@ -155,7 +155,7 @@ public class AstralCrystalBlock extends AmethystClusterBlock implements EntityBl
 								for (int i = 0; i < recipe.getResultCount(); i++) {
 									level.addFreshEntity(new ItemEntity(level,
 											itemEntity.getX(), itemEntity.getY() + 0.5f, itemEntity.getZ(),
-											recipe.getResultItem()));
+											recipe.getResultItem(level.registryAccess())));
 								}
 
 								crystalBlockEntity.getInventory().clear();

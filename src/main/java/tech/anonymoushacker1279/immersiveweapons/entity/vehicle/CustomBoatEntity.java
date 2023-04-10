@@ -2,10 +2,6 @@ package tech.anonymoushacker1279.immersiveweapons.entity.vehicle;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.protocol.Packet;
-import net.minecraft.network.protocol.game.ClientGamePacketListener;
-import net.minecraft.network.protocol.game.ClientboundAddEntityPacket;
-import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.vehicle.Boat;
 import net.minecraft.world.item.Item;
@@ -52,7 +48,7 @@ public class CustomBoatEntity extends Boat {
 						return;
 					}
 
-					causeFallDamage(fallDistance, 1.0F, DamageSource.FALL);
+					causeFallDamage(fallDistance, 1.0F, damageSources().fall());
 					if (!level.isClientSide && !isRemoved()) {
 						kill();
 						if (level.getGameRules().getBoolean(GameRules.RULE_DOENTITYDROPS)) {
@@ -83,8 +79,4 @@ public class CustomBoatEntity extends Boat {
 		return CustomBoatType.byId(entityData.get(DATA_ID_TYPE));
 	}
 
-	@Override
-	public Packet<ClientGamePacketListener> getAddEntityPacket() {
-		return new ClientboundAddEntityPacket(this);
-	}
 }

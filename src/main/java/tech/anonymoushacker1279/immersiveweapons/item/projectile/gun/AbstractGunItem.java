@@ -248,8 +248,10 @@ public abstract class AbstractGunItem extends Item implements Vanishable {
 	}
 
 	@Override
-	public void onUsingTick(ItemStack stack, LivingEntity player, int count) {
-		if (!player.level.isClientSide && canScope()) {
+	public void onUseTick(Level level, LivingEntity livingEntity, ItemStack stack, int remainingUseDuration) {
+		super.onUseTick(level, livingEntity, stack, remainingUseDuration);
+
+		if (!level.isClientSide && canScope() && livingEntity instanceof Player player) {
 			PacketHandler.INSTANCE.send(PacketDistributor.PLAYER.with(() -> (ServerPlayer) player),
 					new GunScopePacketHandler(GunData.playerFOV, 15.0d, GunData.scopeScale));
 		}

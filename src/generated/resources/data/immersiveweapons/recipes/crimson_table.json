@@ -16,5 +16,6 @@
   ],
   "result": {
     "item": "immersiveweapons:crimson_table"
-  }
+  },
+  "show_notification": true
 }

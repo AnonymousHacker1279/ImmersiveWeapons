@@ -2,6 +2,7 @@ package tech.anonymoushacker1279.immersiveweapons.item.crafting;
 
 import com.google.gson.JsonObject;
 import net.minecraft.core.NonNullList;
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.GsonHelper;
@@ -41,15 +42,14 @@ public record AstralCrystalRecipe(ResourceLocation recipeId,
 		return false;
 	}
 
-	/**
-	 * Returns an Item that is the result of this recipe.
-	 *
-	 * @param container the <code>Container</code> instance
-	 * @return ItemStack
-	 */
 	@Override
-	public ItemStack assemble(Container container) {
+	public ItemStack assemble(Container container, RegistryAccess registryAccess) {
 		return result;
+	}
+
+	@Override
+	public ItemStack getResultItem(RegistryAccess registryAccess) {
+		return result.copy();
 	}
 
 	/**
@@ -70,11 +70,6 @@ public record AstralCrystalRecipe(ResourceLocation recipeId,
 
 	public Ingredient getSecondaryMaterial() {
 		return secondaryMaterial;
-	}
-
-	@Override
-	public ItemStack getResultItem() {
-		return result.copy();
 	}
 
 	/**

@@ -1,16 +1,15 @@
 package tech.anonymoushacker1279.immersiveweapons.potion;
 
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.entity.LivingEntity;
 import tech.anonymoushacker1279.immersiveweapons.init.ParticleTypesRegistry;
 import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
+import tech.anonymoushacker1279.immersiveweapons.world.level.IWDamageSources;
 
 public class BleedingEffect extends MobEffect {
 
-	public static final DamageSource damageSource = new DamageSource("immersiveweapons.bleeding").bypassArmor();
 	private int cooldownTicks = 0;
 
 	/**
@@ -34,7 +33,7 @@ public class BleedingEffect extends MobEffect {
 		if (!livingEntity.level.isClientSide) {
 			if (cooldownTicks <= 0) {
 				cooldownTicks = 59 - (amplifier >= 1 ? amplifier * 10 : 0);
-				livingEntity.hurt(damageSource, 1.0f);
+				livingEntity.hurt(IWDamageSources.BLEEDING, 1.0f);
 			} else {
 				cooldownTicks--;
 			}

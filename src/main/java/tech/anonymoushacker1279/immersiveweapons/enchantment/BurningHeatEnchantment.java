@@ -19,9 +19,4 @@ public class BurningHeatEnchantment extends Enchantment {
 	public int getMaxCost(int level) {
 		return 50;
 	}
-
-	@Override
-	public int getMaxLevel() {
-		return 1;
-	}
 }

@@ -5,7 +5,6 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.Projectile;
@@ -24,6 +23,7 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.*;
 import org.jetbrains.annotations.Nullable;
 import tech.anonymoushacker1279.immersiveweapons.init.ItemRegistry;
+import tech.anonymoushacker1279.immersiveweapons.world.level.IWDamageSources;
 
 public class LandmineBlock extends Block implements SimpleWaterloggedBlock {
 
@@ -32,7 +32,6 @@ public class LandmineBlock extends Block implements SimpleWaterloggedBlock {
 	public static final BooleanProperty ARMED = BooleanProperty.create("armed");
 	public static final BooleanProperty SAND = BooleanProperty.create("sand");
 	public static final BooleanProperty VINES = BooleanProperty.create("vines");
-	public static final DamageSource damageSource = new DamageSource("immersiveweapons.landmine");
 
 	/**
 	 * Constructor for LandmineBlock.
@@ -54,7 +53,7 @@ public class LandmineBlock extends Block implements SimpleWaterloggedBlock {
 	 */
 	private static void explode(Level worldIn, BlockPos pos, @Nullable LivingEntity entityIn) {
 		if (!worldIn.isClientSide) {
-			worldIn.explode(entityIn, damageSource, null, pos.getX(), pos.getY(), pos.getZ(), 2.0F, false, ExplosionInteraction.BLOCK);
+			worldIn.explode(entityIn, IWDamageSources.LANDMINE, null, pos.getX(), pos.getY(), pos.getZ(), 2.0F, false, ExplosionInteraction.BLOCK);
 			worldIn.playLocalSound(pos.getX(), pos.getY(), pos.getZ(), SoundEvents.TNT_PRIMED, SoundSource.BLOCKS, 1.0F, 1.0F, false);
 		}
 	}

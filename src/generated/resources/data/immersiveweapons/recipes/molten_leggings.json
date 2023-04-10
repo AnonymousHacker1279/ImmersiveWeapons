@@ -13,5 +13,6 @@
   ],
   "result": {
     "item": "immersiveweapons:molten_leggings"
-  }
+  },
+  "show_notification": true
 }

@@ -28,7 +28,6 @@ public class ScopeOverlay {
 		bufferbuilder.vertex(x, y, -90.0D).uv(0.0F, 0.0F).endVertex();
 		tesselator.end();
 		RenderSystem.setShader(GameRenderer::getPositionColorShader);
-		RenderSystem.disableTexture();
 		bufferbuilder.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_COLOR);
 		bufferbuilder.vertex(0.0D, screenHeight, -90.0D).color(0, 0, 0, 255).endVertex();
 		bufferbuilder.vertex(screenWidth, screenHeight, -90.0D).color(0, 0, 0, 255).endVertex();
@@ -49,7 +48,6 @@ public class ScopeOverlay {
 		bufferbuilder.vertex(screenWidth, y, -90.0D).color(0, 0, 0, 255).endVertex();
 		bufferbuilder.vertex(x1, y, -90.0D).color(0, 0, 0, 255).endVertex();
 		tesselator.end();
-		RenderSystem.enableTexture();
 		RenderSystem.depthMask(true);
 		RenderSystem.enableDepthTest();
 		RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);

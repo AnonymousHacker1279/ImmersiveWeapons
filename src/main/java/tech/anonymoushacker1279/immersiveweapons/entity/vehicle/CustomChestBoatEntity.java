@@ -69,7 +69,17 @@ public class CustomChestBoatEntity extends CustomBoatEntity implements HasCustom
 
 	@Override
 	public InteractionResult interact(Player player, InteractionHand hand) {
-		return canAddPassenger(player) && !player.isSecondaryUseActive() ? super.interact(player, hand) : interactWithChestVehicle(this::gameEvent, player);
+		if (this.canAddPassenger(player) && !player.isSecondaryUseActive()) {
+			return super.interact(player, hand);
+		} else {
+			InteractionResult interactionresult = this.interactWithContainerVehicle(player);
+			if (interactionresult.consumesAction()) {
+				this.gameEvent(GameEvent.CONTAINER_OPEN, player);
+				PiglinAi.angerNearbyPiglins(player, true);
+			}
+
+			return interactionresult;
+		}
 	}
 
 	@Override

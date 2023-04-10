@@ -17,5 +17,6 @@
   ],
   "result": {
     "item": "immersiveweapons:ventus_staff_core"
-  }
+  },
+  "show_notification": true
 }

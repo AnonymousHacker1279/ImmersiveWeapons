@@ -16,5 +16,6 @@
   ],
   "result": {
     "item": "immersiveweapons:molten_shovel"
-  }
+  },
+  "show_notification": true
 }

@@ -1,7 +1,6 @@
 package tech.anonymoushacker1279.immersiveweapons.block;
 
 import net.minecraft.core.BlockPos;
-import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.*;
@@ -22,13 +21,12 @@ import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import tech.anonymoushacker1279.immersiveweapons.world.level.IWDamageSources;
 
 public class PunjiSticksBlock extends Block implements SimpleWaterloggedBlock {
 
 	public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
 	protected static final VoxelShape SHAPE = Block.box(0.0D, 0.0D, 0.0D, 16.0D, 1.0D, 16.0D);
-	private final DamageSource fallDamageSource = new DamageSource("immersiveweapons.punji_sticks").bypassArmor();
-	private final DamageSource normalDamageSource = new DamageSource("immersiveweapons.punji_sticks");
 
 	/**
 	 * Constructor for PunjiSticksBlock.
@@ -40,15 +38,6 @@ public class PunjiSticksBlock extends Block implements SimpleWaterloggedBlock {
 		registerDefaultState(stateDefinition.any().setValue(WATERLOGGED, Boolean.FALSE));
 	}
 
-	/**
-	 * Set the shape of the block.
-	 *
-	 * @param state            the <code>BlockState</code> of the block
-	 * @param reader           the <code>IBlockReader</code> for the block
-	 * @param pos              the <code>BlockPos</code> the block is at
-	 * @param selectionContext the <code>ISelectionContext</code> of the block
-	 * @return VoxelShape
-	 */
 	@SuppressWarnings("deprecation")
 	@Override
 	public VoxelShape getShape(BlockState state, BlockGetter reader, BlockPos pos, CollisionContext selectionContext) {
@@ -107,10 +96,10 @@ public class PunjiSticksBlock extends Block implements SimpleWaterloggedBlock {
 				int featherFallingLevel = getFeatherFallingLevel(livingEntity);
 				float damage = (livingEntity.fallDistance + 10f) *
 						(1.25f - (featherFallingLevel <= 4 ? featherFallingLevel * 0.25f : 1.0f));
-				livingEntity.hurt(fallDamageSource, damage);
+				livingEntity.hurt(IWDamageSources.PUNJI_STICKS_FALL, damage);
 			} else {
 				float damage = (float) (livingEntity.getDeltaMovement().dot(new Vec3(1, 1, 1)) / 1.5f) + 2.0f;
-				livingEntity.hurt(normalDamageSource, damage);
+				livingEntity.hurt(IWDamageSources.PUNJI_STICKS, damage);
 			}
 			(livingEntity).addEffect(new MobEffectInstance(MobEffects.POISON, 60, 0, false, true));
 

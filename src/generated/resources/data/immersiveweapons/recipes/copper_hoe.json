@@ -16,5 +16,6 @@
   ],
   "result": {
     "item": "immersiveweapons:copper_hoe"
-  }
+  },
+  "show_notification": true
 }

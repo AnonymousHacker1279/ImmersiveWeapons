@@ -21,5 +21,6 @@
   "result": {
     "count": 2,
     "item": "immersiveweapons:smoke_grenade"
-  }
+  },
+  "show_notification": true
 }

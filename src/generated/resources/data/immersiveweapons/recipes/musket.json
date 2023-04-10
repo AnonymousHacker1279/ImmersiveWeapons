@@ -22,5 +22,6 @@
   ],
   "result": {
     "item": "immersiveweapons:musket"
-  }
+  },
+  "show_notification": true
 }

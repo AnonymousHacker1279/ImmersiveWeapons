@@ -15,5 +15,6 @@
   ],
   "result": {
     "item": "immersiveweapons:starstorm_gauntlet"
-  }
+  },
+  "show_notification": true
 }

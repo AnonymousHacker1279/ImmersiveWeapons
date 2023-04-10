@@ -12,5 +12,6 @@
   ],
   "result": {
     "item": "immersiveweapons:molten_boots"
-  }
+  },
+  "show_notification": true
 }

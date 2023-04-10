@@ -16,5 +16,6 @@
   ],
   "result": {
     "item": "immersiveweapons:molten_hoe"
-  }
+  },
+  "show_notification": true
 }

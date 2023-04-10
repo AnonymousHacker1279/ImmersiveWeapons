@@ -19,5 +19,6 @@
   ],
   "result": {
     "item": "immersiveweapons:pitfall"
-  }
+  },
+  "show_notification": true
 }

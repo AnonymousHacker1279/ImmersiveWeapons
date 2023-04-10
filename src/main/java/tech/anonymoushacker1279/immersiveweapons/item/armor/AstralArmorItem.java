@@ -29,14 +29,8 @@ public class AstralArmorItem extends ArmorItem {
 	private final boolean isLeggings;
 	private int dashCooldown = 0;
 
-	/**
-	 * Constructor for AstralArmorItem.
-	 *
-	 * @param material the <code>ArmorMaterial</code> for the item
-	 * @param slot     the <code>EquipmentSlot</code>
-	 */
-	public AstralArmorItem(ArmorMaterial material, EquipmentSlot slot, Properties properties, boolean isLeggings) {
-		super(material, slot, properties);
+	public AstralArmorItem(ArmorMaterial material, ArmorItem.Type armorType, Properties properties, boolean isLeggings) {
+		super(material, armorType, properties);
 		this.isLeggings = isLeggings;
 	}
 

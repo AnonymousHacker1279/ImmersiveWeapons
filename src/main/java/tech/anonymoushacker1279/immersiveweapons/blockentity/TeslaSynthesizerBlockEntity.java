@@ -191,7 +191,7 @@ public class TeslaSynthesizerBlockEntity extends BaseContainerBlockEntity implem
 						ItemStack ingredient2 = items.get(1);
 						ItemStack ingredient3 = items.get(2);
 						ItemStack recipeOutputStack = items.get(4);
-						ItemStack recipeOutput = synthesizerRecipe.getResultItem();
+						ItemStack recipeOutput = synthesizerRecipe.getResultItem(level.registryAccess());
 						if (recipeOutputStack.isEmpty()) {
 							items.set(4, recipeOutput.copy());
 						} else if (recipeOutputStack.getItem() == recipeOutput.getItem()) {
@@ -296,12 +296,12 @@ public class TeslaSynthesizerBlockEntity extends BaseContainerBlockEntity implem
 	/**
 	 * Determines if the recipe can be smelt.
 	 *
-	 * @param recipeIn the <code>Recipe</code> instance
+	 * @param recipe the <code>Recipe</code> instance
 	 * @return boolean
 	 */
-	private boolean canSmelt(@Nullable Recipe<?> recipeIn) {
-		if (!items.get(0).isEmpty() && !items.get(1).isEmpty() && !items.get(2).isEmpty() && recipeIn != null) {
-			ItemStack resultItem = recipeIn.getResultItem();
+	private boolean canSmelt(@Nullable Recipe<?> recipe) {
+		if (!items.get(0).isEmpty() && !items.get(1).isEmpty() && !items.get(2).isEmpty() && recipe != null) {
+			ItemStack resultItem = recipe.getResultItem(level.registryAccess());
 			if (resultItem.isEmpty()) {
 				return false;
 			} else {

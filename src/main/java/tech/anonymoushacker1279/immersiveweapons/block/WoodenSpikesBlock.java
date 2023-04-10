@@ -1,7 +1,6 @@
 package tech.anonymoushacker1279.immersiveweapons.block;
 
 import net.minecraft.core.BlockPos;
-import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
@@ -21,12 +20,12 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import tech.anonymoushacker1279.immersiveweapons.init.EffectRegistry;
 import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
+import tech.anonymoushacker1279.immersiveweapons.world.level.IWDamageSources;
 
 public class WoodenSpikesBlock extends HorizontalDirectionalBlock implements SimpleWaterloggedBlock {
 
 	public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
 	protected static final VoxelShape SHAPE = Block.box(1.0D, 0.0D, 1.0D, 15D, 14D, 15D);
-	private final DamageSource damageSource = new DamageSource("immersiveweapons.spike_trap");
 
 	/**
 	 * Constructor for WoodenSpikesBlock.
@@ -123,7 +122,7 @@ public class WoodenSpikesBlock extends HorizontalDirectionalBlock implements Sim
 				double deltaX = Math.abs(entity.getX() - entity.xOld);
 				double deltaZ = Math.abs(entity.getZ() - entity.zOld);
 				if (deltaX >= (double) 0.003F || deltaZ >= (double) 0.003F) {
-					entity.hurt(damageSource, 1.5F);
+					entity.hurt(IWDamageSources.WOODEN_SPIKES, 1.5F);
 
 					if (entity instanceof Player player && player.isCreative()) {
 						return;

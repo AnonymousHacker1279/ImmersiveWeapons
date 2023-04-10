@@ -16,5 +16,6 @@
   ],
   "result": {
     "item": "immersiveweapons:molotov_cocktail"
-  }
+  },
+  "show_notification": true
 }

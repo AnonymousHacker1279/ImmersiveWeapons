@@ -16,5 +16,6 @@
   ],
   "result": {
     "item": "immersiveweapons:dark_oak_table"
-  }
+  },
+  "show_notification": true
 }

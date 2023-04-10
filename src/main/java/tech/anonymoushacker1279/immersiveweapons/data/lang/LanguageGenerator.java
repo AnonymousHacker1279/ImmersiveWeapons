@@ -438,12 +438,15 @@ public class LanguageGenerator extends IWLanguageProvider {
 		addDeathMessage("explosive_chocolate_bar.player", "%s learned to not accept candy from strangers while %s watched");
 		addDeathMessage("spike_trap", "%s was impaled");
 		addDeathMessage("spike_trap.player", "%s was impaled by %s");
+		addDeathMessage("wooden_spikes", "%s was impaled");
+		addDeathMessage("wooden_spikes.player", "%s was impaled by %s");
 		addDeathMessage("used_syringe", "%s died of hepatitis");
+		addDeathMessage("used_syringe.player", "%s died of hepatitis at the hands of %s");
 		addDeathMessage("mortar", "%s was the target of an artillery attack");
 		addDeathMessage("bleeding", "%s bled to death");
 		addDeathMessage("bleeding.player", "%s bled to death at the hands of %s");
-		addDeathMessage("deadmans_desert", "%s was poisoned by the atmosphere");
-		addDeathMessage("deadmans_desert.player", "%s was poisoned by the atmosphere at the hands of %s");
+		addDeathMessage("deadmans_desert_atmosphere", "%s was poisoned by the atmosphere");
+		addDeathMessage("deadmans_desert_atmosphere.player", "%s was poisoned by the atmosphere at the hands of %s");
 		addDeathMessage("deathweed", "%s was poisoned by deathweed");
 		addDeathMessage("deathweed.player", "%s was poisoned by deathweed at the hands of %s");
 		addDeathMessage("meteor", "%s was hit by a meteor");

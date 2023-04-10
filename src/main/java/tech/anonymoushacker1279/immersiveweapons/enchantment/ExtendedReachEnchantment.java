@@ -20,8 +20,4 @@ public class ExtendedReachEnchantment extends Enchantment {
 		return 30;
 	}
 
-	@Override
-	public int getMaxLevel() {
-		return 1;
-	}
 }

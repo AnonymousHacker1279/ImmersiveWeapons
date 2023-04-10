@@ -16,5 +16,6 @@
   ],
   "result": {
     "item": "immersiveweapons:tesla_axe"
-  }
+  },
+  "show_notification": true
 }

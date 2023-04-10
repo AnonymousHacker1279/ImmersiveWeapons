@@ -26,6 +26,7 @@ import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.*;
 import tech.anonymoushacker1279.immersiveweapons.blockentity.BearTrapBlockEntity;
 import tech.anonymoushacker1279.immersiveweapons.init.SoundEventRegistry;
+import tech.anonymoushacker1279.immersiveweapons.world.level.IWDamageSources;
 
 public class BearTrapBlock extends Block implements SimpleWaterloggedBlock, EntityBlock {
 
@@ -164,7 +165,7 @@ public class BearTrapBlock extends Block implements SimpleWaterloggedBlock, Enti
 					double d0 = Math.abs(entity.getX() - entity.xOld);
 					double d1 = Math.abs(entity.getZ() - entity.zOld);
 					if (d0 >= (double) 0.003F || d1 >= (double) 0.003F) {
-						entity.hurt(BearTrapBlockEntity.damageSource, 1.0F);
+						entity.hurt(IWDamageSources.BEAR_TRAP, 1.0F);
 					}
 				}
 			}
@@ -179,7 +180,7 @@ public class BearTrapBlock extends Block implements SimpleWaterloggedBlock, Enti
 				} else {
 					level.setBlock(pos, state.setValue(TRIGGERED, true).setValue(VINES, false), 3);
 				}
-				livingEntity.hurt(BearTrapBlockEntity.damageSource, 2.0F);
+				livingEntity.hurt(IWDamageSources.BEAR_TRAP, 2.0F);
 				level.playSound((Player) entity, pos, SoundEventRegistry.BEAR_TRAP_CLOSE.get(), SoundSource.BLOCKS,
 						1f, 1f);
 
@@ -194,7 +195,7 @@ public class BearTrapBlock extends Block implements SimpleWaterloggedBlock, Enti
 				level.setBlock(pos, state.setValue(TRIGGERED, true).setValue(VINES, false), 3);
 			}
 			level.setBlock(pos, state.setValue(TRIGGERED, true), 3);
-			livingEntity.hurt(BearTrapBlockEntity.damageSource, 2.0F);
+			livingEntity.hurt(IWDamageSources.BEAR_TRAP, 2.0F);
 			level.playLocalSound(pos.getX(), pos.getY(), pos.getZ(), SoundEventRegistry.BEAR_TRAP_CLOSE.get(),
 					SoundSource.BLOCKS, 1f, 1f, false);
 

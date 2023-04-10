@@ -2,6 +2,7 @@ package tech.anonymoushacker1279.immersiveweapons.item.crafting;
 
 import com.google.gson.JsonObject;
 import net.minecraft.core.NonNullList;
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
@@ -36,7 +37,7 @@ public record TeslaSynthesizerRecipe(ResourceLocation recipeId,
 	}
 
 	@Override
-	public ItemStack assemble(Container container) {
+	public ItemStack assemble(Container container, RegistryAccess registryAccess) {
 		ItemStack resultStack = result.copy();
 		CompoundTag compoundTag = container.getItem(4).getTag();
 		if (compoundTag != null) {
@@ -44,6 +45,11 @@ public record TeslaSynthesizerRecipe(ResourceLocation recipeId,
 		}
 
 		return resultStack;
+	}
+
+	@Override
+	public ItemStack getResultItem(RegistryAccess registryAccess) {
+		return result.copy();
 	}
 
 	/**
@@ -56,17 +62,6 @@ public record TeslaSynthesizerRecipe(ResourceLocation recipeId,
 	@Override
 	public boolean canCraftInDimensions(int width, int height) {
 		return false;
-	}
-
-	/**
-	 * Get the result of this recipe, usually for display purposes (e.g. recipe book). If your recipe has more than one
-	 * possible result (e.g. it's dynamic and depends on its inputs), then return an empty stack.
-	 *
-	 * @return ItemStack
-	 */
-	@Override
-	public ItemStack getResultItem() {
-		return result;
 	}
 
 	/**

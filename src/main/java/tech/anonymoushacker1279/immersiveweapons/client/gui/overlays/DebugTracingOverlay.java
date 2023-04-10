@@ -74,7 +74,6 @@ public class DebugTracingOverlay {
 			fontRenderer.draw(poseStack, celestialProtectionChanceForNoDamage, 5, textHeightPosition, 0xFFFFFF);
 		}
 
-		RenderSystem.enableTexture();
 		RenderSystem.depthMask(true);
 		RenderSystem.enableDepthTest();
 		RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);

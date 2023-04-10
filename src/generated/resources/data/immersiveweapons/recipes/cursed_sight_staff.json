@@ -17,5 +17,6 @@
   ],
   "result": {
     "item": "immersiveweapons:cursed_sight_staff"
-  }
+  },
+  "show_notification": true
 }

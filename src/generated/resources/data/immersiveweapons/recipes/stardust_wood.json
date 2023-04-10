@@ -14,5 +14,6 @@
   "result": {
     "count": 3,
     "item": "immersiveweapons:stardust_wood"
-  }
+  },
+  "show_notification": true
 }

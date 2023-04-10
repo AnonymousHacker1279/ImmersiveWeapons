@@ -81,11 +81,6 @@ public class CelestialTowerEntity extends Monster implements GrantAdvancementOnD
 	}
 
 	@Override
-	public MobType getMobType() {
-		return MobType.UNDEFINED;
-	}
-
-	@Override
 	protected float getStandingEyeHeight(Pose pPose, EntityDimensions pSize) {
 		return 9F;
 	}
@@ -142,7 +137,7 @@ public class CelestialTowerEntity extends Monster implements GrantAdvancementOnD
 
 	@Override
 	public boolean hurt(DamageSource pSource, float pAmount) {
-		if (pSource == DamageSource.OUT_OF_WORLD) {
+		if (pSource == damageSources().outOfWorld()) {
 			return super.hurt(pSource, pAmount); // For /kill, as the entity should never fall to death
 		}
 		if (doneSpawningWaves) {
@@ -241,7 +236,7 @@ public class CelestialTowerEntity extends Monster implements GrantAdvancementOnD
 
 		for (BlockPos lanternPos : CelestialLanternBlock.ALL_TILTROS_LANTERNS) {
 			if (nearbyLanterns < 3) {
-				if (lanternPos.distManhattan(new Vec3i(position.x, position.y, position.z)) <
+				if (lanternPos.distManhattan(new Vec3i(blockPosition().getX(), blockPosition().getY(), blockPosition().getZ())) <
 						CommonConfig.CELESTIAL_TOWER_SPAWN_CHECK_RADIUS.get()) {
 
 					nearbyLanterns++;

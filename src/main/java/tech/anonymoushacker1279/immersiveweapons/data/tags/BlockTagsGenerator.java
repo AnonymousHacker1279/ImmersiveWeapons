@@ -76,6 +76,7 @@ public class BlockTagsGenerator extends BlockTagsProvider {
 	/**
 	 * Add tags under the Minecraft namespace
 	 */
+	@SuppressWarnings("unchecked")
 	private void addMinecraftTags() {
 		// Fence tag
 		tag(BlockTags.FENCES).add(BlockRegistry.BARBED_WIRE_FENCE.get());

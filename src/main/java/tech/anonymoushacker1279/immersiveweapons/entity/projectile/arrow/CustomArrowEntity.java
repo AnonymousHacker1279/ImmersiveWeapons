@@ -22,7 +22,7 @@ import org.jetbrains.annotations.Nullable;
 public class CustomArrowEntity extends AbstractArrow {
 
 	@Nullable
-	protected Item referenceItem = null;
+	protected Item referenceItem;
 
 	protected CustomArrowEntity(EntityType<? extends AbstractArrow> type, Level level) {
 		super(type, level);

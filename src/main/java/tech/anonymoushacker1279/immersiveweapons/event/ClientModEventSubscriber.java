@@ -102,7 +102,7 @@ public class ClientModEventSubscriber {
 				new ResourceLocation(ImmersiveWeapons.MOD_ID, "creative_tab"), builder -> builder
 						.icon(() -> new ItemStack(ItemRegistry.TESLA_SWORD.get()))
 						.title(Component.translatable("itemGroup." + ImmersiveWeapons.MOD_ID + ".creative_tab"))
-						.displayItems((featureFlags, output, hasOp) -> {
+						.displayItems((parameters, output) -> {
 							Collection<RegistryObject<Item>> registryObjects = ItemRegistry.ITEMS.getEntries();
 							List<Item> items = new ArrayList<>(registryObjects.size());
 							registryObjects.stream().map(RegistryObject::get).forEach(items::add);
@@ -277,13 +277,13 @@ public class ClientModEventSubscriber {
 	public static void registerParticleFactories(RegisterParticleProvidersEvent event) {
 		ImmersiveWeapons.LOGGER.info("Registering particle factories");
 
-		event.register(ParticleTypesRegistry.SMOKE_GRENADE_PARTICLE.get(), SmokeGrenadeParticle.Provider::new);
-		event.register(ParticleTypesRegistry.BLOOD_PARTICLE.get(), BloodParticle.Provider::new);
-		event.register(ParticleTypesRegistry.BULLET_IMPACT_PARTICLE.get(), BulletImpactParticle.Provider::new);
-		event.register(ParticleTypesRegistry.MUZZLE_FLASH_PARTICLE.get(), MuzzleFlashParticle.Provider::new);
-		event.register(ParticleTypesRegistry.MOONGLOW_PARTICLE.get(), MoonglowParticle.Provider::new);
-		event.register(ParticleTypesRegistry.STARDUST_LEAVES_PARTICLE.get(), StardustLeavesParticle.Provider::new);
-		event.register(ParticleTypesRegistry.DEADMANS_DESERT_AMBIENT_PARTICLE.get(), DeadmansDesertAmbientParticle.Provider::new);
+		event.registerSpriteSet(ParticleTypesRegistry.SMOKE_GRENADE_PARTICLE.get(), SmokeGrenadeParticle.Provider::new);
+		event.registerSpriteSet(ParticleTypesRegistry.BLOOD_PARTICLE.get(), BloodParticle.Provider::new);
+		event.registerSpriteSet(ParticleTypesRegistry.BULLET_IMPACT_PARTICLE.get(), BulletImpactParticle.Provider::new);
+		event.registerSpriteSet(ParticleTypesRegistry.MUZZLE_FLASH_PARTICLE.get(), MuzzleFlashParticle.Provider::new);
+		event.registerSpriteSet(ParticleTypesRegistry.MOONGLOW_PARTICLE.get(), MoonglowParticle.Provider::new);
+		event.registerSpriteSet(ParticleTypesRegistry.STARDUST_LEAVES_PARTICLE.get(), StardustLeavesParticle.Provider::new);
+		event.registerSpriteSet(ParticleTypesRegistry.DEADMANS_DESERT_AMBIENT_PARTICLE.get(), DeadmansDesertAmbientParticle.Provider::new);
 	}
 
 	@SubscribeEvent

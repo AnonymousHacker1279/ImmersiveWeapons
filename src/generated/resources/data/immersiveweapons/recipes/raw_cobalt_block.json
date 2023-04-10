@@ -14,5 +14,6 @@
   ],
   "result": {
     "item": "immersiveweapons:raw_cobalt_block"
-  }
+  },
+  "show_notification": true
 }

@@ -16,5 +16,6 @@
   ],
   "result": {
     "item": "immersiveweapons:scope"
-  }
+  },
+  "show_notification": true
 }

@@ -19,5 +19,6 @@
   ],
   "result": {
     "item": "immersiveweapons:wooden_pike"
-  }
+  },
+  "show_notification": true
 }

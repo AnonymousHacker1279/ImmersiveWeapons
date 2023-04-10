@@ -20,5 +20,6 @@
   ],
   "result": {
     "item": "immersiveweapons:celestial_lantern"
-  }
+  },
+  "show_notification": true
 }

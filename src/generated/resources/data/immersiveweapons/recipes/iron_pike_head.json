@@ -15,5 +15,6 @@
   ],
   "result": {
     "item": "immersiveweapons:iron_pike_head"
-  }
+  },
+  "show_notification": true
 }

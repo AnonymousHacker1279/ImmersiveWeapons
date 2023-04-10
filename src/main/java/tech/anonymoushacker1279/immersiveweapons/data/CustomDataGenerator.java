@@ -37,7 +37,7 @@ public class CustomDataGenerator {
 
 		CompletableFuture<Provider> lookupProvider = event.getLookupProvider();
 		CompletableFuture<Provider> lookupProviderWithOwn = lookupProvider.thenApply(provider ->
-				WorldGenData.BUILDER.buildPatch(RegistryAccess.fromRegistryOfRegistries(BuiltInRegistries.REGISTRY), provider));
+				DatapackRegistriesGenerator.BUILDER.buildPatch(RegistryAccess.fromRegistryOfRegistries(BuiltInRegistries.REGISTRY), provider));
 
 		ExistingFileHelper existingFileHelper = event.getExistingFileHelper();
 
@@ -54,7 +54,8 @@ public class CustomDataGenerator {
 		BlockTagsGenerator blockTagsGenerator = new BlockTagsGenerator(output, lookupProvider, existingFileHelper);
 		generator.addProvider(event.includeServer(), blockTagsGenerator);
 		generator.addProvider(event.includeServer(), new ItemTagsGenerator(output, lookupProvider, blockTagsGenerator, existingFileHelper));
-		generator.addProvider(event.includeServer(), new WorldGenData(output, lookupProvider));
+		generator.addProvider(event.includeServer(), new DatapackRegistriesGenerator(output, lookupProvider));
 		generator.addProvider(event.includeServer(), new BiomeTagsGenerator(output, lookupProviderWithOwn, existingFileHelper));
+		generator.addProvider(event.includeServer(), new DamageTypeTagsGenerator(output, lookupProviderWithOwn, existingFileHelper));
 	}
 }

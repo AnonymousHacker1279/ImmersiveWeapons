@@ -18,5 +18,6 @@
   "result": {
     "count": 8,
     "item": "immersiveweapons:pink_stained_bulletproof_glass"
-  }
+  },
+  "show_notification": true
 }

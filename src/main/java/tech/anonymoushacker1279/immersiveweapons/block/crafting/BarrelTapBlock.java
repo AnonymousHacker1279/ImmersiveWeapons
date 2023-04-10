@@ -153,7 +153,7 @@ public class BarrelTapBlock extends HorizontalDirectionalBlock implements Simple
 							for (int i = 0; i < container.getContainerSize(); ++i) {
 								if (recipe.material().test(container.getItem(i))) {
 									if (container.getItem(i).getCount() >= recipe.getMaterialCount()) {
-										player.getInventory().add(recipe.getResultItem());
+										player.getInventory().add(recipe.getResultItem(level.registryAccess()));
 										player.getMainHandItem().shrink(1);
 										container.removeItem(i, recipe.getMaterialCount());
 										return InteractionResult.CONSUME;

@@ -5,7 +5,6 @@ import net.minecraft.data.worldgen.BiomeDefaultFeatures;
 import net.minecraft.sounds.Music;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.level.biome.*;
-import net.minecraft.world.level.biome.Biome.Precipitation;
 import net.minecraft.world.level.biome.Biome.TemperatureModifier;
 import net.minecraft.world.level.biome.BiomeSpecialEffects.GrassColorModifier;
 import net.minecraft.world.level.biome.MobSpawnSettings.SpawnerData;
@@ -24,7 +23,7 @@ public class BiomesGenerator {
 		return new Biome.BiomeBuilder()
 				.temperature(0.8f)
 				.downfall(0.3f)
-				.precipitation(Precipitation.RAIN)
+				.hasPrecipitation(true)
 				.temperatureAdjustment(TemperatureModifier.NONE)
 				.specialEffects(new BiomeSpecialEffects.Builder()
 						.skyColor(7628662)
@@ -48,7 +47,7 @@ public class BiomesGenerator {
 		return new Biome.BiomeBuilder()
 				.temperature(0.6f)
 				.downfall(0.0f)
-				.precipitation(Precipitation.NONE)
+				.hasPrecipitation(false)
 				.temperatureAdjustment(TemperatureModifier.NONE)
 				.specialEffects(new BiomeSpecialEffects.Builder()
 						.skyColor(461620)
@@ -69,7 +68,7 @@ public class BiomesGenerator {
 		return new Biome.BiomeBuilder()
 				.temperature(0.8f)
 				.downfall(0.0f)
-				.precipitation(Precipitation.NONE)
+				.hasPrecipitation(false)
 				.temperatureAdjustment(TemperatureModifier.NONE)
 				.specialEffects(new BiomeSpecialEffects.Builder()
 						.skyColor(461620)
@@ -90,7 +89,7 @@ public class BiomesGenerator {
 		return new Biome.BiomeBuilder()
 				.temperature(1.8f)
 				.downfall(0.0f)
-				.precipitation(Precipitation.NONE)
+				.hasPrecipitation(false)
 				.temperatureAdjustment(TemperatureModifier.NONE)
 				.specialEffects(new BiomeSpecialEffects.Builder()
 						.skyColor(10885401)

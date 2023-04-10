@@ -13,5 +13,6 @@
   ],
   "result": {
     "item": "immersiveweapons:molten_chestplate"
-  }
+  },
+  "show_notification": true
 }

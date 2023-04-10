@@ -9,14 +9,8 @@ public class CopperArmorItem extends ArmorItem {
 
 	private final boolean isLeggings;
 
-	/**
-	 * Constructor for CopperArmorItem.
-	 *
-	 * @param material the <code>ArmorMaterial</code> for the item
-	 * @param slot     the <code>EquipmentSlot</code>
-	 */
-	public CopperArmorItem(ArmorMaterial material, EquipmentSlot slot, Properties properties, boolean isLeggings) {
-		super(material, slot, properties);
+	public CopperArmorItem(ArmorMaterial material, ArmorItem.Type armorType, Properties properties, boolean isLeggings) {
+		super(material, armorType, properties);
 		this.isLeggings = isLeggings;
 	}
 

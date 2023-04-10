@@ -9,14 +9,8 @@ public class StarstormArmorItem extends ArmorItem {
 
 	private final boolean isLeggings;
 
-	/**
-	 * Constructor for StarstormArmorItem.
-	 *
-	 * @param material the <code>ArmorMaterial</code> for the item
-	 * @param slot     the <code>EquipmentSlot</code>
-	 */
-	public StarstormArmorItem(ArmorMaterial material, EquipmentSlot slot, Properties properties, boolean isLeggings) {
-		super(material, slot, properties);
+	public StarstormArmorItem(ArmorMaterial material, ArmorItem.Type armorType, Properties properties, boolean isLeggings) {
+		super(material, armorType, properties);
 		this.isLeggings = isLeggings;
 	}
 

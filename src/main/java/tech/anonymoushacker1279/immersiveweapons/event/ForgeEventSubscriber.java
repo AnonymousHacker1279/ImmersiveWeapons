@@ -6,7 +6,6 @@ import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
-import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation;
@@ -23,6 +22,7 @@ import net.minecraftforge.event.ItemAttributeModifierEvent;
 import net.minecraftforge.event.TickEvent.PlayerTickEvent;
 import net.minecraftforge.event.entity.EntityJoinLevelEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
+import net.minecraftforge.event.level.LevelEvent;
 import net.minecraftforge.event.level.PistonEvent;
 import net.minecraftforge.event.level.PistonEvent.PistonMoveType;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -41,14 +41,13 @@ import tech.anonymoushacker1279.immersiveweapons.init.*;
 import tech.anonymoushacker1279.immersiveweapons.item.gauntlet.GauntletItem;
 import tech.anonymoushacker1279.immersiveweapons.item.pike.PikeItem;
 import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
+import tech.anonymoushacker1279.immersiveweapons.world.level.IWDamageSources;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @EventBusSubscriber(modid = ImmersiveWeapons.MOD_ID, bus = Bus.FORGE)
 public class ForgeEventSubscriber {
-
-	public static final DamageSource DEADMANS_DESERT_DAMAGE_SOURCE = new DamageSource("immersiveweapons.deadmans_desert").bypassArmor();
 
 	@SubscribeEvent
 	public static void registerGuiOverlaysEvent(RegisterGuiOverlaysEvent event) {
@@ -312,7 +311,7 @@ public class ForgeEventSubscriber {
 			if (player.level.getBiome(player.blockPosition()).is(IWBiomes.DEADMANS_DESERT)) {
 				// If the player is under the effects of Celestial Protection, they are immune to damage
 				if (!player.hasEffect(EffectRegistry.CELESTIAL_PROTECTION_EFFECT.get())) {
-					player.hurt(DEADMANS_DESERT_DAMAGE_SOURCE, 1);
+					player.hurt(IWDamageSources.DEADMANS_DESERT_ATMOSPHERE, 1);
 				}
 			}
 		}
@@ -411,7 +410,7 @@ public class ForgeEventSubscriber {
 				distance += 0.5d * enchantmentLevel;
 			}
 
-			event.addModifier(ForgeMod.REACH_DISTANCE.get(),
+			event.addModifier(ForgeMod.ENTITY_REACH.get(),
 					new AttributeModifier(GeneralUtilities.ATTACK_REACH_MODIFIER,
 							"Reach distance",
 							distance,
@@ -432,7 +431,7 @@ public class ForgeEventSubscriber {
 							gauntlet.attackSpeed,
 							Operation.ADDITION));
 
-			event.addModifier(ForgeMod.REACH_DISTANCE.get(),
+			event.addModifier(ForgeMod.ENTITY_REACH.get(),
 					new AttributeModifier(GeneralUtilities.ATTACK_REACH_MODIFIER,
 							"Weapon modifier",
 							-2.0d,
@@ -451,5 +450,11 @@ public class ForgeEventSubscriber {
 				StarstormCrystalBlock.handlePistonCrushing((Level) event.getLevel(), belowPos);
 			}
 		}
+	}
+
+	@SubscribeEvent
+	public static void levelLoadEvent(LevelEvent.Load event) {
+		// Initialize custom damage sources
+		IWDamageSources.init(event.getLevel().registryAccess());
 	}
 }

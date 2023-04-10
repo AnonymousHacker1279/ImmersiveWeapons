@@ -15,5 +15,6 @@
   ],
   "result": {
     "item": "immersiveweapons:copper_gauntlet"
-  }
+  },
+  "show_notification": true
 }

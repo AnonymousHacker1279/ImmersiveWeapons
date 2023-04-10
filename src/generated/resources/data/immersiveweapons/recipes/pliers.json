@@ -20,5 +20,6 @@
   ],
   "result": {
     "item": "immersiveweapons:pliers"
-  }
+  },
+  "show_notification": true
 }

@@ -1,6 +1,7 @@
 package tech.anonymoushacker1279.immersiveweapons.entity.animal;
 
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
@@ -49,7 +50,7 @@ public class StarWolfEntity extends Wolf implements GrantAdvancementOnDiscovery 
 	@Override
 	public boolean hurt(DamageSource source, float amount) {
 		// Star wolves are immune to fall damage
-		if (source.isFall()) {
+		if (source.is(DamageTypeTags.IS_FALL)) {
 			return false;
 		} else {
 			return super.hurt(source, amount);

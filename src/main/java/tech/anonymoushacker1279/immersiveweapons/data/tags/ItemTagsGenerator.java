@@ -28,7 +28,7 @@ import java.util.concurrent.CompletableFuture;
 public class ItemTagsGenerator extends ItemTagsProvider {
 
 	public ItemTagsGenerator(PackOutput output, CompletableFuture<Provider> lookupProvider, BlockTagsProvider blocks, ExistingFileHelper existingFileHelper) {
-		super(output, lookupProvider, blocks, ImmersiveWeapons.MOD_ID, existingFileHelper);
+		super(output, lookupProvider, blocks.contentsGetter(), ImmersiveWeapons.MOD_ID, existingFileHelper);
 	}
 
 	@Override
@@ -72,15 +72,15 @@ public class ItemTagsGenerator extends ItemTagsProvider {
 		// Loop through the registry and add groups of items to a tag
 		for (Item item : items) {
 			if (item.getDescriptionId().contains("sword")) {
-				tag(Tags.Items.TOOLS_SWORDS).add(item);
+				tag(ItemTags.SWORDS).add(item);
 			} else if (item.getDescriptionId().contains("pickaxe")) {
-				tag(Tags.Items.TOOLS_PICKAXES).add(item);
+				tag(ItemTags.PICKAXES).add(item);
 			} else if (item.getDescriptionId().contains("axe")) {
-				tag(Tags.Items.TOOLS_AXES).add(item);
+				tag(ItemTags.AXES).add(item);
 			} else if (item.getDescriptionId().contains("shovel")) {
-				tag(Tags.Items.TOOLS_SHOVELS).add(item);
+				tag(ItemTags.SHOVELS).add(item);
 			} else if (item.getDescriptionId().contains("hoe")) {
-				tag(Tags.Items.TOOLS_HOES).add(item);
+				tag(ItemTags.HOES).add(item);
 			} else if (item.getDescriptionId().contains("helmet")) {
 				tag(Tags.Items.ARMORS_HELMETS).add(item);
 			} else if (item.getDescriptionId().contains("chestplate")) {

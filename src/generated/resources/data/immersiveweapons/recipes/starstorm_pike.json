@@ -19,5 +19,6 @@
   ],
   "result": {
     "item": "immersiveweapons:starstorm_pike"
-  }
+  },
+  "show_notification": true
 }

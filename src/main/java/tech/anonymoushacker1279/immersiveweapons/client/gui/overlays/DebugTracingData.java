@@ -28,7 +28,7 @@ public class DebugTracingData {
 	public static double liveBulletDamage = 0;
 	public static boolean isBulletCritical = false;
 
-	public static List<Double> damageBonusList = new ArrayList<>(5);
+	public static final List<Double> damageBonusList = new ArrayList<>(5);
 
 	public static void handleTracing(Player player) {
 		if (player.tickCount % 20 == 0) {

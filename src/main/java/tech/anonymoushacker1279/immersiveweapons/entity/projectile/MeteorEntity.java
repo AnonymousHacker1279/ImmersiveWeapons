@@ -8,8 +8,6 @@ import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundAddEntityPacket;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.damagesource.EntityDamageSource;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.projectile.Projectile;
@@ -25,11 +23,12 @@ import tech.anonymoushacker1279.immersiveweapons.config.CommonConfig;
 import tech.anonymoushacker1279.immersiveweapons.init.EnchantmentRegistry;
 import tech.anonymoushacker1279.immersiveweapons.init.EntityRegistry;
 import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
+import tech.anonymoushacker1279.immersiveweapons.world.level.IWDamageSources;
+
+import java.util.Objects;
 
 public class MeteorEntity extends Projectile {
 
-	@Nullable
-	private static DamageSource damageSource = null;
 	private BlockPos startPos = BlockPos.ZERO;
 	private BlockPos targetPos = BlockPos.ZERO;
 	private double distToTarget = 0;
@@ -62,7 +61,6 @@ public class MeteorEntity extends Projectile {
 
 			// Set the owner and damage source
 			meteorEntity.setOwner(owner);
-			damageSource = new EntityDamageSource("immersiveweapons.meteor", owner).setExplosion();
 
 			// Handle any enchantments
 			if (staff != null) {
@@ -183,16 +181,16 @@ public class MeteorEntity extends Projectile {
 		boolean breakBlocks = CommonConfig.METEOR_STAFF_EXPLOSION_BREAK_BLOCKS.get();
 		ExplosionInteraction explosionInteraction = breakBlocks ? ExplosionInteraction.MOB : ExplosionInteraction.NONE;
 
-		level.explode(this,
-				damageSource,
-				null,
-				position().subtract(0, 1.5, 0),
-				explosionRadius + explosionRadiusModifier,
-				catchFire,
-				explosionInteraction);
-
-		// Spawn a ring of fire particles
 		if (!level.isClientSide) {
+			level.explode(this,
+					IWDamageSources.meteor(this, Objects.requireNonNull(getOwner())),
+					null,
+					position().subtract(0, 1.5, 0),
+					explosionRadius + explosionRadiusModifier,
+					catchFire,
+					explosionInteraction);
+
+			// Spawn a ring of fire particles
 			for (int i = 0; i < 360; i += 10) {
 				double x = Math.cos(i) * 6;
 				double z = Math.sin(i) * 6;

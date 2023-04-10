@@ -15,5 +15,6 @@
   ],
   "result": {
     "item": "immersiveweapons:golden_gauntlet"
-  }
+  },
+  "show_notification": true
 }

@@ -12,5 +12,6 @@
   ],
   "result": {
     "item": "immersiveweapons:copper_boots"
-  }
+  },
+  "show_notification": true
 }

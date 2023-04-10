@@ -4,11 +4,12 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.block.model.ItemTransforms;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.core.Direction;
 import net.minecraft.core.NonNullList;
+import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
 import tech.anonymoushacker1279.immersiveweapons.block.decoration.ShelfBlock;
 import tech.anonymoushacker1279.immersiveweapons.blockentity.ShelfBlockEntity;
 
@@ -59,9 +60,12 @@ public class ShelfRenderer implements BlockEntityRenderer<ShelfBlockEntity> {
 
 				// Scale render
 				poseStack.scale(0.375F, 0.375F, 0.375F);
-				// Actually render the item
-				Minecraft.getInstance().getItemRenderer().renderStatic(stack, ItemTransforms.TransformType.FIXED,
-						packedLight, packedOverlay, poseStack, buffer, 0);
+
+				Level level = Minecraft.getInstance().level;
+
+				if (level != null) {
+					Minecraft.getInstance().getItemRenderer().renderStatic(stack, ItemDisplayContext.FIXED, packedLight, packedOverlay, poseStack, buffer, level, 0);
+				}
 
 				poseStack.popPose();
 			}
