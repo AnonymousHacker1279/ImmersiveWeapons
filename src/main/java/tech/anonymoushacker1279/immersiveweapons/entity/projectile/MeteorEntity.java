@@ -181,16 +181,16 @@ public class MeteorEntity extends Projectile {
 		boolean breakBlocks = CommonConfig.METEOR_STAFF_EXPLOSION_BREAK_BLOCKS.get();
 		ExplosionInteraction explosionInteraction = breakBlocks ? ExplosionInteraction.MOB : ExplosionInteraction.NONE;
 
-		level.explode(this,
-				IWDamageSources.meteor(this, Objects.requireNonNull(getOwner())),
-				null,
-				position().subtract(0, 1.5, 0),
-				explosionRadius + explosionRadiusModifier,
-				catchFire,
-				explosionInteraction);
-
-		// Spawn a ring of fire particles
 		if (!level.isClientSide) {
+			level.explode(this,
+					IWDamageSources.meteor(this, Objects.requireNonNull(getOwner())),
+					null,
+					position().subtract(0, 1.5, 0),
+					explosionRadius + explosionRadiusModifier,
+					catchFire,
+					explosionInteraction);
+
+			// Spawn a ring of fire particles
 			for (int i = 0; i < 360; i += 10) {
 				double x = Math.cos(i) * 6;
 				double z = Math.sin(i) * 6;
