@@ -406,7 +406,7 @@ public abstract class AbstractGunItem extends Item implements Vanishable {
 	 */
 	@Override
 	public int getUseDuration(ItemStack stack) {
-		return 100;
+		return Integer.MAX_VALUE;
 	}
 
 	/**
