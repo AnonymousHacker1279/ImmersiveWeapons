@@ -23,8 +23,8 @@ import net.minecraft.world.level.storage.loot.predicates.*;
 import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
 import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
 import org.jetbrains.annotations.Nullable;
-import tech.anonymoushacker1279.immersiveweapons.block.LandmineBlock;
-import tech.anonymoushacker1279.immersiveweapons.block.SandbagBlock;
+import tech.anonymoushacker1279.immersiveweapons.block.*;
+import tech.anonymoushacker1279.immersiveweapons.block.barbed_wire.BarbedWireBlock;
 import tech.anonymoushacker1279.immersiveweapons.block.misc.warrior_statue.WarriorStatueTorso;
 import tech.anonymoushacker1279.immersiveweapons.data.lists.BlockLists;
 import tech.anonymoushacker1279.immersiveweapons.data.tags.lists.BlockTagLists;
@@ -50,7 +50,6 @@ public class BlockLootTables implements LootTableSubProvider {
 
 		// Simple block drops
 		dropSelf(BlockRegistry.AMERICAN_FLAG.get());
-		dropSelf(BlockRegistry.BARBED_WIRE.get());
 		dropSelf(BlockRegistry.BARBED_WIRE_FENCE.get());
 		dropSelf(BlockRegistry.BARREL_TAP.get());
 		dropSelf(BlockRegistry.BEAR_TRAP.get());
@@ -110,7 +109,6 @@ public class BlockLootTables implements LootTableSubProvider {
 		dropSelf(BlockRegistry.WALL_SHELF.get());
 		dropSelf(BlockRegistry.WARRIOR_STATUE_BASE.get());
 		dropSelf(BlockRegistry.WARRIOR_STATUE_HEAD.get());
-		dropSelf(BlockRegistry.WOODEN_SPIKES.get());
 		dropSelf(BlockRegistry.MOONGLOW.get());
 		dropSelf(BlockRegistry.STARDUST_LOG.get());
 		dropSelf(BlockRegistry.STARDUST_WOOD.get());
@@ -176,6 +174,24 @@ public class BlockLootTables implements LootTableSubProvider {
 										.when(LootItemBlockStatePropertyCondition.hasBlockStateProperties(block)
 												.setProperties(StatePropertiesPredicate.Builder.properties()
 														.hasProperty(LandmineBlock.ARMED, false))))))));
+		add(BlockRegistry.WOODEN_SPIKES.get(), (block) -> LootTable.lootTable()
+				.withPool(LootPool.lootPool()
+						.setRolls(ConstantValue.exactly(1.0F))
+						.add(applyExplosionDecay(LootItem.lootTableItem(BlockItemRegistry.WOODEN_SPIKES_ITEM.get())
+								.when(ExplosionCondition.survivesExplosion())
+								.when(LootItemBlockStatePropertyCondition.hasBlockStateProperties(block)
+										.setProperties(StatePropertiesPredicate.Builder.properties()
+												.hasProperty(WoodenSpikesBlock.DAMAGE_STAGE, 0)))
+								.apply(SetItemCountFunction.setCount(ConstantValue.exactly(1.0F)))))));
+		add(BlockRegistry.BARBED_WIRE.get(), (block) -> LootTable.lootTable()
+				.withPool(LootPool.lootPool()
+						.setRolls(ConstantValue.exactly(1.0F))
+						.add(applyExplosionDecay(LootItem.lootTableItem(BlockItemRegistry.BARBED_WIRE_ITEM.get())
+								.when(ExplosionCondition.survivesExplosion())
+								.when(LootItemBlockStatePropertyCondition.hasBlockStateProperties(block)
+										.setProperties(StatePropertiesPredicate.Builder.properties()
+												.hasProperty(BarbedWireBlock.DAMAGE_STAGE, 0)))
+								.apply(SetItemCountFunction.setCount(ConstantValue.exactly(1.0F)))))));
 		add(BlockRegistry.SANDBAG.get(), (block) -> LootTable.lootTable()
 				.withPool(LootPool.lootPool()
 						.setRolls(ConstantValue.exactly(1.0F))

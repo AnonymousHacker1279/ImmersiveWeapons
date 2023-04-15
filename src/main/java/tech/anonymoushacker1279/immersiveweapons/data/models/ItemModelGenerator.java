@@ -233,6 +233,14 @@ public class ItemModelGenerator extends ItemModelProvider {
 					getBuilder(item.toString())
 							.parent(new ModelFile.UncheckedModelFile(new ResourceLocation(ImmersiveWeapons.MOD_ID,
 									"block/spotlight_wall_unlit")));
+				} else if (item == BlockItemRegistry.WOODEN_SPIKES_ITEM.get()) {
+					getBuilder(item.toString())
+							.parent(new ModelFile.UncheckedModelFile(new ResourceLocation(ImmersiveWeapons.MOD_ID,
+									"block/wooden_spikes_0")));
+				} else if (item == BlockItemRegistry.BARBED_WIRE_ITEM.get()) {
+					getBuilder(item.toString())
+							.parent(new ModelFile.UncheckedModelFile(new ResourceLocation(ImmersiveWeapons.MOD_ID,
+									"block/barbed_wire_0")));
 				} else if (item == BlockItemRegistry.MORTAR_ITEM.get()) {
 					getBuilder(item.toString())
 							.parent(new ModelFile.UncheckedModelFile(new ResourceLocation(ImmersiveWeapons.MOD_ID,

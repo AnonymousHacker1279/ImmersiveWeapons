@@ -26,4 +26,5 @@ public class BlockEntityRegistry {
 	public static final RegistryObject<BlockEntityType<AstralCrystalBlockEntity>> ASTRAL_CRYSTAL_BLOCK_ENTITY = BLOCK_ENTITIES.register("astral_crystal", () -> new BlockEntityType<>(AstralCrystalBlockEntity::new, Sets.newHashSet(BlockRegistry.ASTRAL_CRYSTAL.get()), null));
 	public static final RegistryObject<BlockEntityType<AzulStainedOrchidBlockEntity>> AZUL_STAINED_ORCHID_BLOCK_ENTITY = BLOCK_ENTITIES.register("azul_stained_orchid", () -> new BlockEntityType<>(AzulStainedOrchidBlockEntity::new, Sets.newHashSet(BlockRegistry.AZUL_STAINED_ORCHID.get()), null));
 	public static final RegistryObject<BlockEntityType<BiodomeLifeSupportUnitBlockEntity>> BIODOME_LIFE_SUPPORT_UNIT_BLOCK_ENTITY = BLOCK_ENTITIES.register("biodome_life_support_unit", () -> new BlockEntityType<>(BiodomeLifeSupportUnitBlockEntity::new, Sets.newHashSet(BlockRegistry.BIODOME_LIFE_SUPPORT_UNIT.get()), null));
+	public static final RegistryObject<BlockEntityType<DataBlockEntity>> DATA_BLOCK_ENTITY = BLOCK_ENTITIES.register("data_block", () -> new BlockEntityType<>(DataBlockEntity::new, Sets.newHashSet(BlockRegistry.WOODEN_SPIKES.get()), null));
 }

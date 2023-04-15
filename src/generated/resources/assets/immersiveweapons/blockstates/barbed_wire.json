@@ -1,34 +1,100 @@
 {
   "variants": {
-    "facing=east,waterlogged=false": {
-      "model": "immersiveweapons:block/barbed_wire",
+    "damage_stage=0,facing=east,waterlogged=false": {
+      "model": "immersiveweapons:block/barbed_wire_0",
       "y": 90
     },
-    "facing=east,waterlogged=true": {
-      "model": "immersiveweapons:block/barbed_wire",
+    "damage_stage=0,facing=east,waterlogged=true": {
+      "model": "immersiveweapons:block/barbed_wire_0",
       "y": 90
     },
-    "facing=north,waterlogged=false": {
-      "model": "immersiveweapons:block/barbed_wire"
-    },
-    "facing=north,waterlogged=true": {
-      "model": "immersiveweapons:block/barbed_wire"
-    },
-    "facing=south,waterlogged=false": {
-      "model": "immersiveweapons:block/barbed_wire",
+    "damage_stage=0,facing=north,waterlogged=false": {
+      "model": "immersiveweapons:block/barbed_wire_0",
       "y": 180
     },
-    "facing=south,waterlogged=true": {
-      "model": "immersiveweapons:block/barbed_wire",
+    "damage_stage=0,facing=north,waterlogged=true": {
+      "model": "immersiveweapons:block/barbed_wire_0",
       "y": 180
     },
-    "facing=west,waterlogged=false": {
-      "model": "immersiveweapons:block/barbed_wire",
-      "y": 270
+    "damage_stage=0,facing=south,waterlogged=false": {
+      "model": "immersiveweapons:block/barbed_wire_0",
+      "y": 180
     },
-    "facing=west,waterlogged=true": {
-      "model": "immersiveweapons:block/barbed_wire",
-      "y": 270
+    "damage_stage=0,facing=south,waterlogged=true": {
+      "model": "immersiveweapons:block/barbed_wire_0",
+      "y": 180
+    },
+    "damage_stage=0,facing=west,waterlogged=false": {
+      "model": "immersiveweapons:block/barbed_wire_0",
+      "y": 90
+    },
+    "damage_stage=0,facing=west,waterlogged=true": {
+      "model": "immersiveweapons:block/barbed_wire_0",
+      "y": 90
+    },
+    "damage_stage=1,facing=east,waterlogged=false": {
+      "model": "immersiveweapons:block/barbed_wire_1",
+      "y": 90
+    },
+    "damage_stage=1,facing=east,waterlogged=true": {
+      "model": "immersiveweapons:block/barbed_wire_1",
+      "y": 90
+    },
+    "damage_stage=1,facing=north,waterlogged=false": {
+      "model": "immersiveweapons:block/barbed_wire_1",
+      "y": 180
+    },
+    "damage_stage=1,facing=north,waterlogged=true": {
+      "model": "immersiveweapons:block/barbed_wire_1",
+      "y": 180
+    },
+    "damage_stage=1,facing=south,waterlogged=false": {
+      "model": "immersiveweapons:block/barbed_wire_1",
+      "y": 180
+    },
+    "damage_stage=1,facing=south,waterlogged=true": {
+      "model": "immersiveweapons:block/barbed_wire_1",
+      "y": 180
+    },
+    "damage_stage=1,facing=west,waterlogged=false": {
+      "model": "immersiveweapons:block/barbed_wire_1",
+      "y": 90
+    },
+    "damage_stage=1,facing=west,waterlogged=true": {
+      "model": "immersiveweapons:block/barbed_wire_1",
+      "y": 90
+    },
+    "damage_stage=2,facing=east,waterlogged=false": {
+      "model": "immersiveweapons:block/barbed_wire_2",
+      "y": 90
+    },
+    "damage_stage=2,facing=east,waterlogged=true": {
+      "model": "immersiveweapons:block/barbed_wire_2",
+      "y": 90
+    },
+    "damage_stage=2,facing=north,waterlogged=false": {
+      "model": "immersiveweapons:block/barbed_wire_2",
+      "y": 180
+    },
+    "damage_stage=2,facing=north,waterlogged=true": {
+      "model": "immersiveweapons:block/barbed_wire_2",
+      "y": 180
+    },
+    "damage_stage=2,facing=south,waterlogged=false": {
+      "model": "immersiveweapons:block/barbed_wire_2",
+      "y": 180
+    },
+    "damage_stage=2,facing=south,waterlogged=true": {
+      "model": "immersiveweapons:block/barbed_wire_2",
+      "y": 180
+    },
+    "damage_stage=2,facing=west,waterlogged=false": {
+      "model": "immersiveweapons:block/barbed_wire_2",
+      "y": 90
+    },
+    "damage_stage=2,facing=west,waterlogged=true": {
+      "model": "immersiveweapons:block/barbed_wire_2",
+      "y": 90
     }
   }
 }

@@ -1,31 +1,34 @@
 package tech.anonymoushacker1279.immersiveweapons.block;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.*;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
-import net.minecraft.world.level.block.state.properties.BlockStateProperties;
-import net.minecraft.world.level.block.state.properties.BooleanProperty;
-import net.minecraft.world.level.material.FluidState;
+import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.level.material.Fluids;
+import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import tech.anonymoushacker1279.immersiveweapons.block.core.DamageableBlock;
 import tech.anonymoushacker1279.immersiveweapons.init.EffectRegistry;
 import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
 import tech.anonymoushacker1279.immersiveweapons.world.level.IWDamageSources;
 
-public class WoodenSpikesBlock extends HorizontalDirectionalBlock implements SimpleWaterloggedBlock {
+public class WoodenSpikesBlock extends DamageableBlock {
 
-	public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
 	protected static final VoxelShape SHAPE = Block.box(1.0D, 0.0D, 1.0D, 15D, 14D, 15D);
+	public static final IntegerProperty DAMAGE_STAGE = IntegerProperty.create("damage_stage", 0, 3);
 
 	/**
 	 * Constructor for WoodenSpikesBlock.
@@ -33,45 +36,21 @@ public class WoodenSpikesBlock extends HorizontalDirectionalBlock implements Sim
 	 * @param properties the <code>Properties</code> of the block
 	 */
 	public WoodenSpikesBlock(Properties properties) {
-		super(properties);
-		registerDefaultState(stateDefinition.any().setValue(WATERLOGGED, Boolean.FALSE));
+		super(properties, 128, 3, Items.STICK);
+		registerDefaultState(stateDefinition.any().setValue(WATERLOGGED, Boolean.FALSE).setValue(DAMAGE_STAGE, 0));
 	}
 
-	/**
-	 * Set placement properties.
-	 * Sets the facing direction of the block for placement.
-	 *
-	 * @param context the <code>BlockItemUseContext</code> during placement
-	 * @return BlockState
-	 */
 	@Override
 	public BlockState getStateForPlacement(BlockPlaceContext context) {
 		return defaultBlockState()
-				.setValue(FACING, context.getHorizontalDirection().getOpposite())
+				.setValue(FACING, context.getHorizontalDirection())
+				.setValue(DAMAGE_STAGE, 0)
 				.setValue(WATERLOGGED, context.getLevel().getFluidState(context.getClickedPos()).getType() == Fluids.WATER);
 	}
 
-	/**
-	 * Set FluidState properties.
-	 * Allows the block to exhibit waterlogged behavior.
-	 *
-	 * @param state the <code>BlockState</code> of the block
-	 * @return FluidState
-	 */
-	@SuppressWarnings("deprecation")
-	@Override
-	public FluidState getFluidState(BlockState state) {
-		return state.getValue(WATERLOGGED) ? Fluids.WATER.getSource(false) : super.getFluidState(state);
-	}
-
-	/**
-	 * Create the BlockState definition.
-	 *
-	 * @param builder the <code>StateContainer.Builder</code> of the block
-	 */
 	@Override
 	protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-		builder.add(WATERLOGGED, FACING);
+		builder.add(WATERLOGGED, FACING, DAMAGE_STAGE);
 	}
 
 	/**
@@ -121,12 +100,14 @@ public class WoodenSpikesBlock extends HorizontalDirectionalBlock implements Sim
 			if (!level.isClientSide && (entity.xOld != entity.getX() || entity.zOld != entity.getZ())) {
 				double deltaX = Math.abs(entity.getX() - entity.xOld);
 				double deltaZ = Math.abs(entity.getZ() - entity.zOld);
-				if (deltaX >= (double) 0.003F || deltaZ >= (double) 0.003F) {
-					entity.hurt(IWDamageSources.WOODEN_SPIKES, 1.5F);
-
+				if (deltaX >= 0.003F || deltaZ >= 0.003F) {
 					if (entity instanceof Player player && player.isCreative()) {
 						return;
 					}
+
+					entity.hurt(IWDamageSources.WOODEN_SPIKES, 1.5F);
+
+					takeDamage(state, level, pos, DAMAGE_STAGE);
 
 					if (GeneralUtilities.getRandomNumber(0.0f, 1.0f) <= 0.15f) {
 						((LivingEntity) entity).addEffect(new MobEffectInstance(EffectRegistry.BLEEDING_EFFECT.get(),
@@ -135,5 +116,12 @@ public class WoodenSpikesBlock extends HorizontalDirectionalBlock implements Sim
 				}
 			}
 		}
+	}
+
+	@Override
+	public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
+		// Handle repairs
+		boolean didRepair = repair(player.getItemInHand(hand), state, level, pos, player, DAMAGE_STAGE);
+		return didRepair ? InteractionResult.sidedSuccess(level.isClientSide) : InteractionResult.PASS;
 	}
 }

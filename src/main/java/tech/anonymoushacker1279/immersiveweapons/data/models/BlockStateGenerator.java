@@ -13,6 +13,7 @@ import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.registries.ForgeRegistries;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.block.*;
+import tech.anonymoushacker1279.immersiveweapons.block.barbed_wire.BarbedWireBlock;
 import tech.anonymoushacker1279.immersiveweapons.block.decoration.CelestialLanternBlock;
 import tech.anonymoushacker1279.immersiveweapons.block.decoration.FlagPoleBlock;
 import tech.anonymoushacker1279.immersiveweapons.block.misc.warrior_statue.WarriorStatueHead;
@@ -579,7 +580,6 @@ public class BlockStateGenerator extends BlockStateProvider {
 							.rotationX(xRot)
 							.build();
 				});
-
 		getVariantBuilder(BlockRegistry.STARSTORM_CRYSTAL.get())
 				.forAllStates(state -> {
 					Direction facing = state.getValue(AmethystClusterBlock.FACING);
@@ -623,11 +623,45 @@ public class BlockStateGenerator extends BlockStateProvider {
 							.rotationX(xRot)
 							.build();
 				});
+		getVariantBuilder(BlockRegistry.WOODEN_SPIKES.get())
+				.forAllStates(state -> {
+					Direction facing = state.getValue(WoodenSpikesBlock.FACING);
+					int stage = state.getValue(WoodenSpikesBlock.DAMAGE_STAGE);
 
-		horizontalBlock(BlockRegistry.BARBED_WIRE.get(),
-				models().getExistingFile(new ResourceLocation(ImmersiveWeapons.MOD_ID, "barbed_wire")));
-		horizontalBlock(BlockRegistry.WOODEN_SPIKES.get(),
-				models().getExistingFile(new ResourceLocation(ImmersiveWeapons.MOD_ID, "wooden_spikes")));
+					int yRot;
+
+					switch (facing) {
+						case NORTH, SOUTH -> yRot = 180;
+						case EAST, WEST -> yRot = 90;
+						default -> yRot = 0;
+					}
+
+					return ConfiguredModel.builder()
+							.modelFile(models().getExistingFile(new ResourceLocation(ImmersiveWeapons.MOD_ID,
+									"wooden_spikes_" + stage)))
+							.rotationY(yRot)
+							.build();
+				});
+		getVariantBuilder(BlockRegistry.BARBED_WIRE.get())
+				.forAllStates(state -> {
+					Direction facing = state.getValue(BarbedWireBlock.FACING);
+					int stage = state.getValue(BarbedWireBlock.DAMAGE_STAGE);
+
+					int yRot;
+
+					switch (facing) {
+						case NORTH, SOUTH -> yRot = 180;
+						case EAST, WEST -> yRot = 90;
+						default -> yRot = 0;
+					}
+
+					return ConfiguredModel.builder()
+							.modelFile(models().getExistingFile(new ResourceLocation(ImmersiveWeapons.MOD_ID,
+									"barbed_wire_" + stage)))
+							.rotationY(yRot)
+							.build();
+				});
+
 		horizontalBlock(BlockRegistry.WALL_SHELF.get(),
 				models().getExistingFile(new ResourceLocation(ImmersiveWeapons.MOD_ID, "wall_shelf")), 0);
 		horizontalBlock(BlockRegistry.PANIC_ALARM.get(),
