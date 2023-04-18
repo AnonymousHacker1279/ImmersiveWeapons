@@ -1,10 +1,12 @@
 package tech.anonymoushacker1279.immersiveweapons.block.core;
 
 import net.minecraft.core.BlockPos;
-import net.minecraft.util.Mth;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -12,15 +14,16 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.*;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
-import tech.anonymoushacker1279.immersiveweapons.blockentity.DataBlockEntity;
+import net.minecraft.world.phys.BlockHitResult;
+import tech.anonymoushacker1279.immersiveweapons.blockentity.DamageableBlockEntity;
 
 public abstract class DamageableBlock extends HorizontalDirectionalBlock implements SimpleWaterloggedBlock, EntityBlock {
 
 	public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
-	private final int maxHealth;
-	private int health;
-	private final int stages;
-	private final Item repairItem;
+	protected final int maxHealth;
+	protected final int stages;
+	protected final Item repairItem;
+	private final IntegerProperty damageStage;
 
 	/**
 	 * Constructor for DamageableBlock. These blocks have a limited health pool and are destroyed over time.
@@ -31,13 +34,21 @@ public abstract class DamageableBlock extends HorizontalDirectionalBlock impleme
 	 * @param stages     the number of visual stages the block will have before it breaks
 	 * @param repairItem the <code>Item</code> that can repair the block
 	 */
-	public DamageableBlock(Properties properties, int maxHealth, int stages, Item repairItem) {
+	public DamageableBlock(Properties properties, int maxHealth, int stages, Item repairItem, IntegerProperty damageStage) {
 		super(properties);
 
 		this.maxHealth = maxHealth;
 		this.stages = stages;
-		this.health = maxHealth;
 		this.repairItem = repairItem;
+		this.damageStage = damageStage;
+	}
+
+	@Override
+	public BlockState getStateForPlacement(BlockPlaceContext context) {
+		return defaultBlockState()
+				.setValue(FACING, context.getHorizontalDirection())
+				.setValue(damageStage, 0)
+				.setValue(WATERLOGGED, context.getLevel().getFluidState(context.getClickedPos()).getType() == Fluids.WATER);
 	}
 
 	@Override
@@ -45,86 +56,25 @@ public abstract class DamageableBlock extends HorizontalDirectionalBlock impleme
 		return state.getValue(WATERLOGGED) ? Fluids.WATER.getSource(false) : super.getFluidState(state);
 	}
 
-
 	@Override
 	public BlockEntity newBlockEntity(BlockPos blockPos, BlockState blockState) {
-		return new DataBlockEntity(blockPos, blockState);
+		return new DamageableBlockEntity(blockPos, blockState, maxHealth, stages);
 	}
 
-	/**
-	 * Damage the block, which takes care of stage changes and destruction.
-	 *
-	 * @param state the <code>BlockState</code> of the block
-	 * @param level the <code>Level</code> the block is in
-	 * @param pos   the <code>BlockPos</code> the block is at
-	 */
-	protected void takeDamage(BlockState state, Level level, BlockPos pos, IntegerProperty damageStage) {
-		if (health > 0) {
-			health--;
-			int stage = stages - Mth.ceil(((double) health / ((double) maxHealth / stages)));
-			level.setBlockAndUpdate(pos, state.setValue(damageStage, stage));
-
-			if (level.getBlockEntity(pos) instanceof DataBlockEntity entity) {
-				entity.editValue("health", health);
-				entity.editValue("stage", stage);
-			}
-		} else {
-			level.destroyBlock(pos, true);
-			health = maxHealth;
-
-			if (level.getBlockEntity(pos) instanceof DataBlockEntity entity) {
-				entity.clearContent();
+	@Override
+	public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
+		// Handle repairs
+		if (hand == InteractionHand.MAIN_HAND) {
+			if (level.getBlockEntity(pos) instanceof DamageableBlockEntity damageable) {
+				boolean didRepair = damageable.repair(player.getItemInHand(hand), repairItem, state, level, pos, player, damageStage);
+				return didRepair ? InteractionResult.sidedSuccess(level.isClientSide) : InteractionResult.PASS;
 			}
 		}
+		return InteractionResult.PASS;
 	}
 
-	/**
-	 * Repair the block if the given stack matches this block's repair item. Each use
-	 * of the repair item will repair the block by one stage.
-	 *
-	 * @param repairStack the <code>ItemStack</code> to repair the block with
-	 * @param state       the <code>BlockState</code> of the block
-	 * @param level       the <code>Level</code> the block is in
-	 * @param pos         the <code>BlockPos</code> the block is at
-	 * @param damageStage the <code>IntegerProperty</code> of the block's damage stage
-	 * @return true if the block was repaired, false otherwise
-	 */
-	protected boolean repair(ItemStack repairStack, BlockState state, Level level, BlockPos pos, Player player, IntegerProperty damageStage) {
-		if (level.isClientSide) {
-			return false;
-		}
-
-		int currentStage = state.getValue(damageStage);
-		if (repairStack.getItem() == repairItem && currentStage > 0 && currentStage <= stages) {
-			if (health < maxHealth) {
-				health += (maxHealth / stages);
-				level.setBlockAndUpdate(pos, state.setValue(damageStage, currentStage - 1));
-
-				if (level.getBlockEntity(pos) instanceof DataBlockEntity entity) {
-					entity.editValue("health", health);
-					entity.editValue("stage", currentStage - 1);
-				}
-
-				if (!player.isCreative()) {
-					repairStack.shrink(1);
-				}
-
-				return true;
-			}
-		} else if (health != maxHealth) {
-			health = maxHealth;
-
-			if (level.getBlockEntity(pos) instanceof DataBlockEntity entity) {
-				entity.editValue("health", health);
-				entity.editValue("stage", stages);
-			}
-
-			if (!player.isCreative()) {
-				repairStack.shrink(1);
-			}
-
-			return true;
-		}
-		return false;
+	@Override
+	public boolean propagatesSkylightDown(BlockState state, BlockGetter reader, BlockPos pos) {
+		return true;
 	}
 }

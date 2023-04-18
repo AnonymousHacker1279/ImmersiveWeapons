@@ -157,6 +157,16 @@ public class ItemModelGenerator extends ItemModelProvider {
 								.texture("handle", new ResourceLocation("block/spruce_planks"))
 								.texture("material", pikeMaterialMap.get(item));
 					} else if (item instanceof GauntletItem) {
+						if (item == ItemRegistry.IRON_GAUNTLET.get()) {
+							getBuilder(item.toString())
+									.parent(new ModelFile.UncheckedModelFile(new ResourceLocation(ImmersiveWeapons.MOD_ID,
+											"item/gauntlet")))
+									.texture("material", gauntletMaterialMap.get(item))
+									.override()
+									.predicate(new ResourceLocation(ImmersiveWeapons.MOD_ID, "gunslinger"), 1)
+									.model(new ModelFile.UncheckedModelFile(new ResourceLocation(ImmersiveWeapons.MOD_ID,
+											"item/iron_gauntlet_alt")));
+						}
 						getBuilder(item.toString())
 								.parent(new ModelFile.UncheckedModelFile(new ResourceLocation(ImmersiveWeapons.MOD_ID,
 										"item/gauntlet")))
