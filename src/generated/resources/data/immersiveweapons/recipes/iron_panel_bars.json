@@ -1,18 +1,21 @@
 {
   "type": "minecraft:crafting_shaped",
   "category": "building",
-  "group": "corrugated_iron",
+  "group": "iron_panel",
   "key": {
     "a": {
       "tag": "forge:storage_blocks/iron"
+    },
+    "b": {
+      "item": "minecraft:iron_bars"
     }
   },
   "pattern": [
-    "aaa"
+    "aba"
   ],
   "result": {
     "count": 8,
-    "item": "immersiveweapons:corrugated_iron_panel"
+    "item": "immersiveweapons:iron_panel_bars"
   },
   "show_notification": true
 }

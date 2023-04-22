@@ -76,10 +76,8 @@ public class BlockLootTables implements LootTableSubProvider {
 		dropSelf(BlockRegistry.CLOUD_MARBLE_PILLAR.get());
 		dropSelf(BlockRegistry.CLOUD_MARBLE_BRICK_WALL.get());
 		dropSelf(BlockRegistry.COBALT_BLOCK.get());
-		dropSelf(BlockRegistry.CORRUGATED_IRON_PANEL.get());
-		dropSelf(BlockRegistry.CORRUGATED_IRON_PANEL_BARS.get());
-		dropSelf(BlockRegistry.CORRUGATED_IRON_PANEL_FLAT.get());
-		dropSelf(BlockRegistry.CORRUGATED_IRON_PANEL_FLAT_BARS.get());
+		dropSelf(BlockRegistry.IRON_PANEL.get());
+		dropSelf(BlockRegistry.IRON_PANEL_BARS.get());
 		dropSelf(BlockRegistry.DRIED_MUD.get());
 		dropSelf(BlockRegistry.ELECTRIC_ORE.get());
 		dropSelf(BlockRegistry.FLAG_POLE.get());

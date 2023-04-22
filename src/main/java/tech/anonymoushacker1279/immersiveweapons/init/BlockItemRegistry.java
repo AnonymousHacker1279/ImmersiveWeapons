@@ -55,10 +55,8 @@ public class BlockItemRegistry {
 	public static final RegistryObject<BlockItem> LANDMINE_ITEM = ItemRegistry.ITEMS.register("landmine", () -> new BlockItem(BlockRegistry.LANDMINE.get(), new Properties()));
 	public static final RegistryObject<BlockItem> SPIKE_TRAP_ITEM = ItemRegistry.ITEMS.register("spike_trap", () -> new BlockItem(BlockRegistry.SPIKE_TRAP.get(), new Properties()));
 	public static final RegistryObject<BlockItem> SANDBAG_ITEM = ItemRegistry.ITEMS.register("sandbag", () -> new BlockItem(BlockRegistry.SANDBAG.get(), new Properties()));
-	public static final RegistryObject<BlockItem> CORRUGATED_IRON_PANEL_ITEM = ItemRegistry.ITEMS.register("corrugated_iron_panel", () -> new BlockItem(BlockRegistry.CORRUGATED_IRON_PANEL.get(), new Properties()));
-	public static final RegistryObject<BlockItem> CORRUGATED_IRON_PANEL_BARS_ITEM = ItemRegistry.ITEMS.register("corrugated_iron_panel_bars", () -> new BlockItem(BlockRegistry.CORRUGATED_IRON_PANEL_BARS.get(), new Properties()));
-	public static final RegistryObject<BlockItem> CORRUGATED_IRON_PANEL_FLAT_ITEM = ItemRegistry.ITEMS.register("corrugated_iron_panel_flat", () -> new BlockItem(BlockRegistry.CORRUGATED_IRON_PANEL_FLAT.get(), new Properties()));
-	public static final RegistryObject<BlockItem> CORRUGATED_IRON_PANEL_FLAT_BARS_ITEM = ItemRegistry.ITEMS.register("corrugated_iron_panel_flat_bars", () -> new BlockItem(BlockRegistry.CORRUGATED_IRON_PANEL_FLAT_BARS.get(), new Properties()));
+	public static final RegistryObject<BlockItem> IRON_PANEL_ITEM = ItemRegistry.ITEMS.register("iron_panel", () -> new BlockItem(BlockRegistry.IRON_PANEL.get(), new Properties()));
+	public static final RegistryObject<BlockItem> IRON_PANEL_BARS_ITEM = ItemRegistry.ITEMS.register("iron_panel_bars", () -> new BlockItem(BlockRegistry.IRON_PANEL_BARS.get(), new Properties()));
 	public static final RegistryObject<BlockItem> SPOTLIGHT_ITEM = ItemRegistry.ITEMS.register("spotlight", () -> new BlockItem(BlockRegistry.SPOTLIGHT.get(), new Properties()));
 	public static final RegistryObject<BlockItem> MORTAR_ITEM = ItemRegistry.ITEMS.register("mortar", () -> new BlockItem(BlockRegistry.MORTAR.get(), new Properties()));
 	public static final RegistryObject<BlockItem> WALL_SHELF_ITEM = ItemRegistry.ITEMS.register("wall_shelf", () -> new BlockItem(BlockRegistry.WALL_SHELF.get(), new Properties()));

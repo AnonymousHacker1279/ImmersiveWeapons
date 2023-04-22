@@ -11,7 +11,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "immersiveweapons:corrugated_iron_panel"
+          "name": "immersiveweapons:iron_panel"
         }
       ],
       "rolls": 1.0

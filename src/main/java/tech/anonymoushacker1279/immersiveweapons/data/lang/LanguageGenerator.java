@@ -50,9 +50,7 @@ public class LanguageGenerator extends IWLanguageProvider {
 		excludedBlocks.add(BlockRegistry.STARDUST_WALL_SIGN.get());
 		excludedBlocks.addAll(BlockLists.wallHeadBlocks);
 
-		excludedBlocks.add(BlockRegistry.CORRUGATED_IRON_PANEL_BARS.get());
-		excludedBlocks.add(BlockRegistry.CORRUGATED_IRON_PANEL_FLAT.get());
-		excludedBlocks.add(BlockRegistry.CORRUGATED_IRON_PANEL_FLAT_BARS.get());
+		excludedBlocks.add(BlockRegistry.IRON_PANEL_BARS.get());
 		excludedBlocks.add(BlockRegistry.COBALT_BLOCK.get());
 		excludedBlocks.add(BlockRegistry.RAW_COBALT_BLOCK.get());
 		excludedBlocks.add(BlockRegistry.RAW_SULFUR_BLOCK.get());
@@ -80,9 +78,7 @@ public class LanguageGenerator extends IWLanguageProvider {
 		});
 
 		// Manually add the blocks that were excluded above
-		addBlock(BlockRegistry.CORRUGATED_IRON_PANEL_BARS, "Corrugated Iron Panel (Bars)");
-		addBlock(BlockRegistry.CORRUGATED_IRON_PANEL_FLAT, "Corrugated Iron Panel (Flat)");
-		addBlock(BlockRegistry.CORRUGATED_IRON_PANEL_FLAT_BARS, "Corrugated Iron Panel (Flat, Bars)");
+		addBlock(BlockRegistry.IRON_PANEL_BARS, "Iron Panel (Bars)");
 		addBlock(BlockRegistry.COBALT_BLOCK, "Block of Cobalt");
 		addBlock(BlockRegistry.RAW_COBALT_BLOCK, "Block of Raw Cobalt");
 		addBlock(BlockRegistry.RAW_SULFUR_BLOCK, "Block of Raw Sulfur");

@@ -3,7 +3,7 @@
   "criteria": {
     "has_the_recipe": {
       "conditions": {
-        "recipe": "immersiveweapons:corrugated_iron_panel_flat_bars"
+        "recipe": "immersiveweapons:iron_panel"
       },
       "trigger": "minecraft:recipe_unlocked"
     },
@@ -26,7 +26,7 @@
   ],
   "rewards": {
     "recipes": [
-      "immersiveweapons:corrugated_iron_panel_flat_bars"
+      "immersiveweapons:iron_panel"
     ]
   }
 }
