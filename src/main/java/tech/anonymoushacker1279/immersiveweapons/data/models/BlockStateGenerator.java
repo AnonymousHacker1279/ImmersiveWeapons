@@ -12,6 +12,7 @@ import net.minecraftforge.client.model.generators.ModelBuilder.FaceRotation;
 import net.minecraftforge.client.model.generators.ModelFile.ExistingModelFile;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraftforge.registries.RegistryObject;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.block.*;
 import tech.anonymoushacker1279.immersiveweapons.block.barbed_wire.BarbedWireBlock;
@@ -539,9 +540,9 @@ public class BlockStateGenerator extends BlockStateProvider {
 							.build();
 				});
 		getVariantBuilder(BlockRegistry.ASTRAL_CRYSTAL.get())
-				.forAllStates(state -> crystalBlock("astral_crystal", state));
+				.forAllStates(state -> crystalBlock(BlockRegistry.ASTRAL_CRYSTAL, "astral_crystal", state));
 		getVariantBuilder(BlockRegistry.STARSTORM_CRYSTAL.get())
-				.forAllStates(state -> crystalBlock("starstorm_crystal", state));
+				.forAllStates(state -> crystalBlock(BlockRegistry.STARSTORM_CRYSTAL, "starstorm_crystal", state));
 		getVariantBuilder(BlockRegistry.WOODEN_SPIKES.get())
 				.forAllStates(state -> {
 					Direction facing = state.getValue(WoodenSpikesBlock.FACING);
@@ -583,7 +584,7 @@ public class BlockStateGenerator extends BlockStateProvider {
 
 		// Iron panels
 		getVariantBuilder(BlockRegistry.IRON_PANEL.get())
-				.forAllStates(state -> panelBlock("iron_bars", state));
+				.forAllStates(state -> panelBlock("iron_panel", state));
 		getVariantBuilder(BlockRegistry.IRON_PANEL_BARS.get())
 				.forAllStates(state -> panelBlock("iron_panel_bars", state));
 
@@ -622,7 +623,7 @@ public class BlockStateGenerator extends BlockStateProvider {
 				.renderType("minecraft:translucent"));
 	}
 
-	private ConfiguredModel[] crystalBlock(String name, BlockState state) {
+	private ConfiguredModel[] crystalBlock(RegistryObject<? extends AmethystClusterBlock> crystal, String name, BlockState state) {
 		Direction facing = state.getValue(AmethystClusterBlock.FACING);
 
 		int xRot;
@@ -657,7 +658,7 @@ public class BlockStateGenerator extends BlockStateProvider {
 
 		return ConfiguredModel.builder()
 				.modelFile(models()
-						.cross(BlockRegistry.STARSTORM_CRYSTAL.getId().toString(),
+						.cross(crystal.getId().toString(),
 								new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/" + name))
 						.renderType("minecraft:cutout_mipped"))
 				.rotationY(yRot)
