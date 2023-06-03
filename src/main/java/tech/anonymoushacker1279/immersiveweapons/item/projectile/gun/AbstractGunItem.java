@@ -349,6 +349,11 @@ public abstract class AbstractGunItem extends Item implements Vanishable {
 			public boolean applyForgeHandTransform(PoseStack poseStack, LocalPlayer player, HumanoidArm arm,
 			                                       ItemStack itemInHand, float partialTick, float equipProcess, float swingProcess) {
 
+				// Don't use custom transform until it is fully equipped
+				if (equipProcess < 1.0f) {
+					return false;
+				}
+
 				applyItemArmTransform(poseStack, arm);
 				return true;
 			}

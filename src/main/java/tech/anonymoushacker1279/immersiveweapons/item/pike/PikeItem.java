@@ -143,6 +143,11 @@ public class PikeItem extends TieredItem implements Vanishable {
 			public boolean applyForgeHandTransform(PoseStack poseStack, LocalPlayer player, HumanoidArm arm,
 			                                       ItemStack itemInHand, float partialTick, float equipProcess, float swingProcess) {
 
+				// Don't use custom transform until it is fully equipped
+				if (equipProcess < 1.0f) {
+					return false;
+				}
+
 				applyItemArmTransform(poseStack, player, arm, partialTick, swingProcess);
 				return true;
 			}
