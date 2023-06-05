@@ -95,6 +95,8 @@ public class LanguageGenerator extends IWLanguageProvider {
 		excludedItems.add(ItemRegistry.HANS_SPAWN_EGG.get());
 		excludedItems.add(ItemRegistry.MUSKET_SCOPE.get());
 		excludedItems.add(ItemRegistry.EXPLOSIVE_CHOCOLATE_BAR.get());
+		excludedItems.add(ItemRegistry.BERSERKERS_AMULET.get());
+		excludedItems.add(ItemRegistry.HANS_BLESSING.get());
 
 		// Filter the excluded items from the registry
 		Stream<RegistryObject<Item>> items = ItemRegistry.ITEMS.getEntries().stream()
@@ -134,6 +136,8 @@ public class LanguageGenerator extends IWLanguageProvider {
 		addItem(ItemRegistry.HANS_SPAWN_EGG, "Hans The Almighty Spawn Egg");
 		addItem(ItemRegistry.MUSKET_SCOPE, "Musket (Scope)");
 		addItem(ItemRegistry.EXPLOSIVE_CHOCOLATE_BAR, "Chocolate Bar");
+		addItem(ItemRegistry.BERSERKERS_AMULET, "Berserker's Amulet");
+		addItem(ItemRegistry.HANS_BLESSING, "Hans' Blessing");
 	}
 
 	private void addEntityTypes() {
@@ -383,6 +387,10 @@ public class LanguageGenerator extends IWLanguageProvider {
 		addTooltip("first_aid_kit", "An effective method of healing, combining the effects of bandages and painkillers");
 
 		// Misc
+		addTooltip("shift_for_info", "Hold SHIFT for more information");
+		addTooltip("accessory_note", "This accessory works while sitting in your inventory");
+		addTooltip("accessory_inactive", "This accessory is inactive - something else is using its accessory slot");
+		addTooltip("accessory_slot", "Accessory Slot: %s");
 		addTooltip("barrel_tap", "Use this to convert some plants into a fluid form. Connect this to a barrel to collect it.");
 		addTooltip("tesla_hoe", "Good thing you aren't in charge of the US Treasury. Because if you were we'd be broke.");
 		addTooltip("spotlight", "I see you there");
@@ -393,6 +401,14 @@ public class LanguageGenerator extends IWLanguageProvider {
 		addTooltip("mortar", "Capable of sending exploding shells far into the distance");
 		addTooltip("celestial_fragment", "The power of the sun in the palm of your hand");
 		addTooltip("azul_locator", "Teleport to your spawn point at will");
+
+		// Accessories
+		addTooltip("satchel", "Provides a 10% chance not to consume ammo");
+		addTooltip("powder_horn", "Decreases reload time on firearms by 15%");
+		addTooltip("berserkers_amulet_1", "Increases melee damage by 20%, and projectile damage by 10%");
+		addTooltip("berserkers_amulet_2", "However, you will take 20% more damage from all sources");
+		addTooltip("hans_blessing_1", "Take 15% less damage from all sources");
+		addTooltip("hans_blessing_2", "Tis but a scratch");
 
 		// Lore
 		addTooltip("minuteman_statue", "Something seems to activate inside when it is placed in a Battlefield. It wishes to protect.");

@@ -37,7 +37,8 @@ import tech.anonymoushacker1279.immersiveweapons.block.decoration.StarstormCryst
 import tech.anonymoushacker1279.immersiveweapons.client.gui.IWOverlays;
 import tech.anonymoushacker1279.immersiveweapons.client.gui.overlays.DebugTracingData;
 import tech.anonymoushacker1279.immersiveweapons.data.biomes.IWBiomes;
-import tech.anonymoushacker1279.immersiveweapons.event.environment_effects.EnvironmentEffects;
+import tech.anonymoushacker1279.immersiveweapons.event.game_effects.AccessoryEffects;
+import tech.anonymoushacker1279.immersiveweapons.event.game_effects.EnvironmentEffects;
 import tech.anonymoushacker1279.immersiveweapons.init.*;
 import tech.anonymoushacker1279.immersiveweapons.item.gauntlet.GauntletItem;
 import tech.anonymoushacker1279.immersiveweapons.item.pike.PikeItem;
@@ -147,7 +148,7 @@ public class ForgeEventSubscriber {
 
 	@SubscribeEvent
 	public static void livingHurtEvent(LivingHurtEvent event) {
-		LivingEntity entity = event.getEntity();
+		LivingEntity damagedEntity = event.getEntity();
 		LivingEntity source = null;
 		if (event.getSource().getEntity() instanceof LivingEntity sourceEntity) {
 			source = sourceEntity;
@@ -171,19 +172,15 @@ public class ForgeEventSubscriber {
 			}
 		}
 
-		EnvironmentEffects effects = new EnvironmentEffects();
+		// Handle environmental effects
+		EnvironmentEffects.celestialProtectionEffect(event, damagedEntity);
+		EnvironmentEffects.damageVulnerabilityEffect(event, damagedEntity);
+		EnvironmentEffects.starstormArmorSetBonus(event, source);
+		EnvironmentEffects.moltenArmorSetBonus(event, source);
 
-		// Celestial Protection effect
-		effects.celestialProtectionEffect(event, entity);
-
-		// Damage Vulnerability effect
-		effects.damageVulnerabilityEffect(event, entity);
-
-		// Starstorm armor set bonus
-		effects.starstormArmorSetBonus(event, source);
-
-		// Molten armor set bonus
-		effects.moltenArmorSetBonus(event, source);
+		// Handle accessory effects
+		AccessoryEffects.berserkersAmuletEffect(event, damagedEntity);
+		AccessoryEffects.hansBlessingEffect(event, damagedEntity);
 	}
 
 	@SubscribeEvent

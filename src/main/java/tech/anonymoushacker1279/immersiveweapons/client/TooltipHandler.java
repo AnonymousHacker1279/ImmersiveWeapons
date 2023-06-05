@@ -1,7 +1,10 @@
 package tech.anonymoushacker1279.immersiveweapons.client;
 
 import net.minecraft.ChatFormatting;
+import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.DiggerItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.api.distmarker.Dist;
@@ -13,6 +16,7 @@ import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.init.BlockItemRegistry;
 import tech.anonymoushacker1279.immersiveweapons.init.ItemRegistry;
+import tech.anonymoushacker1279.immersiveweapons.item.AccessoryItem;
 import tech.anonymoushacker1279.immersiveweapons.item.armor.*;
 import tech.anonymoushacker1279.immersiveweapons.item.gauntlet.GauntletItem;
 import tech.anonymoushacker1279.immersiveweapons.item.pike.PikeItem;
@@ -20,6 +24,9 @@ import tech.anonymoushacker1279.immersiveweapons.item.projectile.arrow.AbstractA
 import tech.anonymoushacker1279.immersiveweapons.item.projectile.arrow.SmokeGrenadeArrowItem;
 import tech.anonymoushacker1279.immersiveweapons.item.projectile.bullet.AbstractBulletItem;
 import tech.anonymoushacker1279.immersiveweapons.item.projectile.throwable.SmokeGrenadeItem;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Mod.EventBusSubscriber(modid = ImmersiveWeapons.MOD_ID, bus = Bus.FORGE, value = Dist.CLIENT)
 public class TooltipHandler {
@@ -217,6 +224,27 @@ public class TooltipHandler {
 			event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.azul_locator").withStyle(ChatFormatting.AQUA, ChatFormatting.ITALIC));
 		}
 
+		// Accessories
+		if (event.getEntity() != null && stack.getItem() instanceof AccessoryItem item) {
+			if (stack.getItem() == ItemRegistry.SATCHEL.get()) {
+				event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.satchel").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
+				addShiftTooltip(event.getToolTip(), addAccessoryTooltips(item, event.getEntity()));
+			}
+			if (stack.getItem() == ItemRegistry.POWDER_HORN.get()) {
+				event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.powder_horn").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
+				addShiftTooltip(event.getToolTip(), addAccessoryTooltips(item, event.getEntity()));
+			}
+			if (stack.getItem() == ItemRegistry.BERSERKERS_AMULET.get()) {
+				event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.berserkers_amulet_1").withStyle(ChatFormatting.GREEN, ChatFormatting.ITALIC));
+				event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.berserkers_amulet_2").withStyle(ChatFormatting.DARK_RED, ChatFormatting.ITALIC));
+				addShiftTooltip(event.getToolTip(), addAccessoryTooltips(item, event.getEntity()));
+			}
+			if (stack.getItem() == ItemRegistry.HANS_BLESSING.get()) {
+				event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.hans_blessing_1").withStyle(ChatFormatting.GREEN, ChatFormatting.ITALIC));
+				event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.hans_blessing_2").withStyle(ChatFormatting.LIGHT_PURPLE, ChatFormatting.ITALIC));
+				addShiftTooltip(event.getToolTip(), addAccessoryTooltips(item, event.getEntity()));
+			}
+		}
 
 		// Lore
 
@@ -240,5 +268,54 @@ public class TooltipHandler {
 		if (stack.getItem() == BlockItemRegistry.WARRIOR_STATUE_HEAD_ITEM.get() || stack.getItem() == BlockItemRegistry.WARRIOR_STATUE_TORSO_ITEM.get() || stack.getItem() == BlockItemRegistry.WARRIOR_STATUE_BASE_ITEM.get()) {
 			event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.warrior_statue").withStyle(ChatFormatting.DARK_PURPLE, ChatFormatting.ITALIC));
 		}
+	}
+
+	/**
+	 * Adds a tooltip which appears while the player holds SHIFT.
+	 *
+	 * @param existingTooltips The list of tooltips already on the item.
+	 * @param shiftTooltip     The tooltip to add if the player is holding SHIFT.
+	 */
+	private static void addShiftTooltip(List<Component> existingTooltips, MutableComponent shiftTooltip) {
+		if (!Screen.hasShiftDown()) {
+			existingTooltips.add(Component.translatable("tooltip.immersiveweapons.shift_for_info").withStyle(ChatFormatting.GOLD, ChatFormatting.ITALIC));
+		} else {
+			existingTooltips.add(shiftTooltip);
+		}
+	}
+
+	/**
+	 * Adds tooltips which appear while the player holds SHIFT.
+	 *
+	 * @param existingTooltips The list of tooltips already on the item.
+	 * @param shiftTooltips    The list of tooltips to add if the player is holding SHIFT.
+	 */
+	private static void addShiftTooltip(List<Component> existingTooltips, List<Component> shiftTooltips) {
+		if (!Screen.hasShiftDown()) {
+			existingTooltips.add(Component.translatable("tooltip.immersiveweapons.shift_for_info").withStyle(ChatFormatting.GOLD, ChatFormatting.ITALIC));
+		} else {
+			existingTooltips.addAll(shiftTooltips);
+		}
+	}
+
+	/**
+	 * Add accessory-specific tooltips (typically for use inside addShiftTooltip)
+	 *
+	 * @param item   the accessory item
+	 * @param player the player holding the item
+	 * @return a list of tooltips
+	 */
+	private static List<Component> addAccessoryTooltips(AccessoryItem item, Player player) {
+		List<Component> tooltips = new ArrayList<>(5);
+
+		tooltips.add(Component.translatable("tooltip.immersiveweapons.accessory_slot", item.getSlot()).withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC));
+
+		if (item.isActive(player)) {
+			tooltips.add(Component.translatable("tooltip.immersiveweapons.accessory_note").withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC));
+		} else {
+			tooltips.add(Component.translatable("tooltip.immersiveweapons.accessory_inactive").withStyle(ChatFormatting.RED, ChatFormatting.ITALIC));
+		}
+
+		return tooltips;
 	}
 }

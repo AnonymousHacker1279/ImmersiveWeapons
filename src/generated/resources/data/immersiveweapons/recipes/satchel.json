@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "group": "satchel",
+  "key": {
+    "a": {
+      "tag": "forge:leather"
+    },
+    "b": {
+      "tag": "forge:string"
+    },
+    "c": {
+      "tag": "forge:chests/wooden"
+    }
+  },
+  "pattern": [
+    " b ",
+    "aca",
+    " a "
+  ],
+  "result": {
+    "item": "immersiveweapons:satchel"
+  },
+  "show_notification": true
+}

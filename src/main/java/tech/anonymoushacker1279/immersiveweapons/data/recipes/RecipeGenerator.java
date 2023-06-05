@@ -74,6 +74,7 @@ public class RecipeGenerator extends RecipeProvider {
 		createWeapons();
 		createMudItems();
 		createDecorations();
+		createAccessories();
 		createMiscellaneousItems();
 
 		FamilyGenerator familyGenerator = new FamilyGenerator(packOutput);
@@ -980,6 +981,32 @@ public class RecipeGenerator extends RecipeProvider {
 		createTable(BlockItemRegistry.STARDUST_TABLE_ITEM.get(), BlockItemRegistry.STARDUST_SLAB_ITEM.get(),
 				BlockItemRegistry.STARDUST_FENCE_ITEM.get());
 
+	}
+
+	private void createAccessories() {
+		// Satchel
+		ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ItemRegistry.SATCHEL.get())
+				.define('a', Tags.Items.LEATHER)
+				.define('b', Tags.Items.STRING)
+				.define('c', Tags.Items.CHESTS_WOODEN)
+				.pattern(" b ")
+				.pattern("aca")
+				.pattern(" a ")
+				.group("satchel")
+				.unlockedBy("leather", has(Tags.Items.LEATHER))
+				.save(finishedRecipeConsumer);
+
+		// Powder horn
+		ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ItemRegistry.POWDER_HORN.get())
+				.define('a', Tags.Items.GUNPOWDER)
+				.define('b', Tags.Items.STRING)
+				.define('c', Items.GOAT_HORN)
+				.pattern(" b ")
+				.pattern("aca")
+				.pattern(" a ")
+				.group("powder_horn")
+				.unlockedBy("goat_horn", has(Items.GOAT_HORN))
+				.save(finishedRecipeConsumer);
 	}
 
 	private void createMiscellaneousItems() {

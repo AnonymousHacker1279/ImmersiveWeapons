@@ -1,4 +1,4 @@
-package tech.anonymoushacker1279.immersiveweapons.event.environment_effects;
+package tech.anonymoushacker1279.immersiveweapons.event.game_effects;
 
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerPlayer;
@@ -11,6 +11,7 @@ import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.network.NetworkEvent;
 import net.minecraftforge.network.NetworkEvent.Context;
 import net.minecraftforge.network.PacketDistributor;
+import org.jetbrains.annotations.Nullable;
 import tech.anonymoushacker1279.immersiveweapons.init.*;
 import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
 
@@ -21,11 +22,8 @@ public class EnvironmentEffects {
 
 	public static float celestialProtectionChanceForNoDamage = 0.0f;
 
-	public EnvironmentEffects() {
-	}
-
 	// Handle stuff for the celestial protection effect
-	public void celestialProtectionEffect(LivingHurtEvent event, LivingEntity damagedEntity) {
+	public static void celestialProtectionEffect(LivingHurtEvent event, LivingEntity damagedEntity) {
 		if (damagedEntity.hasEffect(EffectRegistry.CELESTIAL_PROTECTION_EFFECT.get())) {
 			float damage = event.getAmount();
 
@@ -63,7 +61,7 @@ public class EnvironmentEffects {
 	}
 
 	// Handle stuff for the damage vulnerability effect
-	public void damageVulnerabilityEffect(LivingHurtEvent event, LivingEntity damagedEntity) {
+	public static void damageVulnerabilityEffect(LivingHurtEvent event, LivingEntity damagedEntity) {
 		if (damagedEntity.hasEffect(EffectRegistry.DAMAGE_VULNERABILITY_EFFECT.get())) {
 			int level = Objects.requireNonNull(damagedEntity.getEffect(EffectRegistry.DAMAGE_VULNERABILITY_EFFECT.get()))
 					.getAmplifier();
@@ -76,7 +74,7 @@ public class EnvironmentEffects {
 	}
 
 	// Handle stuff for the Starstorm Armor set bonus
-	public void starstormArmorSetBonus(LivingHurtEvent event, LivingEntity sourceEntity) {
+	public static void starstormArmorSetBonus(LivingHurtEvent event, @Nullable LivingEntity sourceEntity) {
 		if (sourceEntity != null) {
 			if (sourceEntity.getItemBySlot(EquipmentSlot.HEAD).getItem() == ItemRegistry.STARSTORM_HELMET.get() &&
 					sourceEntity.getItemBySlot(EquipmentSlot.CHEST).getItem() == ItemRegistry.STARSTORM_CHESTPLATE.get() &&
@@ -91,7 +89,7 @@ public class EnvironmentEffects {
 	}
 
 	// Handle stuff for the Molten armor set bonus
-	public void moltenArmorSetBonus(LivingHurtEvent event, LivingEntity sourceEntity) {
+	public static void moltenArmorSetBonus(LivingHurtEvent event, @Nullable LivingEntity sourceEntity) {
 		if (sourceEntity != null) {
 			if (sourceEntity.getItemBySlot(EquipmentSlot.HEAD).getItem() == ItemRegistry.MOLTEN_HELMET.get() &&
 					sourceEntity.getItemBySlot(EquipmentSlot.CHEST).getItem() == ItemRegistry.MOLTEN_CHESTPLATE.get() &&

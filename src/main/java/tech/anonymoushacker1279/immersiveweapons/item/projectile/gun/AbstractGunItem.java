@@ -23,6 +23,8 @@ import tech.anonymoushacker1279.immersiveweapons.config.CommonConfig;
 import tech.anonymoushacker1279.immersiveweapons.data.tags.groups.immersiveweapons.IWItemTagGroups;
 import tech.anonymoushacker1279.immersiveweapons.entity.projectile.bullet.BulletEntity;
 import tech.anonymoushacker1279.immersiveweapons.init.*;
+import tech.anonymoushacker1279.immersiveweapons.item.AccessoryItem;
+import tech.anonymoushacker1279.immersiveweapons.item.AccessoryItem.AccessorySlot;
 import tech.anonymoushacker1279.immersiveweapons.item.projectile.bullet.AbstractBulletItem;
 import tech.anonymoushacker1279.immersiveweapons.item.projectile.gun.data.GunData;
 import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
@@ -177,9 +179,17 @@ public abstract class AbstractGunItem extends Item implements Vanishable {
 				handleAmmoStack(gun, ammo, bulletsToFire, player);
 
 				if (!player.isCreative()) {
+					// Reduce cooldown in certain conditions
+					AccessoryItem accessory = AccessoryItem.getAccessory(player, AccessorySlot.BODY);
+					boolean hasPowderHorn = accessory == ItemRegistry.POWDER_HORN.get();
+					float reductionFactor = hasPowderHorn ? 0.15f : 0f;
+
 					int rapidFireLevel = gun.getEnchantmentLevel(EnchantmentRegistry.RAPID_FIRE.get());
-					// Each level reduces the cooldown by 5%
-					int cooldown = getCooldown() - (int) (getCooldown() * (0.05f * rapidFireLevel));
+					reductionFactor += (0.05f * rapidFireLevel);
+
+					// Calculate the cooldown
+					int cooldown = (int) (getCooldown() * (1f - reductionFactor));
+
 					player.getCooldowns().addCooldown(this, cooldown);
 				}
 			}
@@ -491,6 +501,15 @@ public abstract class AbstractGunItem extends Item implements Vanishable {
 	protected void handleAmmoStack(ItemStack gun, ItemStack ammo, int bulletsToFire, Player player) {
 		if (!player.isCreative() && ammo.getItem() instanceof AbstractBulletItem bulletItem) {
 			if (!bulletItem.isInfinite(ammo, gun, player)) {
+				// If the player has the Satchel item in their inventory, there is a 10% chance of not consuming ammo
+				AccessoryItem accessory = AccessoryItem.getAccessory(player, AccessorySlot.BODY);
+				if (!player.level.isClientSide && accessory == ItemRegistry.SATCHEL.get()) {
+					if (player.getRandom().nextInt(10) == 0) {
+						player.getInventory().setChanged(); // Resync the inventory because the client may not roll the same number
+						return;
+					}
+				}
+
 				ammo.shrink(bulletsToFire);
 				if (ammo.isEmpty()) {
 					player.getInventory().removeItem(ammo);
