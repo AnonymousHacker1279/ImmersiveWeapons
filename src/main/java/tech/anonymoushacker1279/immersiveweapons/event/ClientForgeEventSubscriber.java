@@ -1,5 +1,6 @@
 package tech.anonymoushacker1279.immersiveweapons.event;
 
+import com.mojang.blaze3d.shaders.FogShape;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.Mth;
@@ -21,12 +22,15 @@ import tech.anonymoushacker1279.immersiveweapons.client.IWKeyBinds;
 import tech.anonymoushacker1279.immersiveweapons.client.gui.IWOverlays;
 import tech.anonymoushacker1279.immersiveweapons.client.gui.overlays.DebugTracingData;
 import tech.anonymoushacker1279.immersiveweapons.init.ItemRegistry;
+import tech.anonymoushacker1279.immersiveweapons.item.CursedItem;
 import tech.anonymoushacker1279.immersiveweapons.item.projectile.gun.data.GunData;
 
 @EventBusSubscriber(modid = ImmersiveWeapons.MOD_ID, bus = Bus.FORGE, value = Dist.CLIENT)
 public class ClientForgeEventSubscriber {
 
 	private static final Minecraft minecraft = Minecraft.getInstance();
+
+	public static float CURSE_EFFECT_FADE = 1.0f;
 
 	/**
 	 * Event handler for the RenderBlockScreenEffectEvent.
@@ -57,7 +61,12 @@ public class ClientForgeEventSubscriber {
 	public static void renderFogEvent(RenderFog event) {
 		// Reduce lava fog from players wearing a full set of molten armor
 		Player player = minecraft.player;
-		if (player != null && player.getItemBySlot(EquipmentSlot.HEAD).getItem() == ItemRegistry.MOLTEN_HELMET.get() &&
+
+		if (player == null) {
+			return;
+		}
+
+		if (player.getItemBySlot(EquipmentSlot.HEAD).getItem() == ItemRegistry.MOLTEN_HELMET.get() &&
 				player.getItemBySlot(EquipmentSlot.CHEST).getItem() == ItemRegistry.MOLTEN_CHESTPLATE.get() &&
 				player.getItemBySlot(EquipmentSlot.LEGS).getItem() == ItemRegistry.MOLTEN_LEGGINGS.get() &&
 				player.getItemBySlot(EquipmentSlot.FEET).getItem() == ItemRegistry.MOLTEN_BOOTS.get()) {
@@ -71,6 +80,15 @@ public class ClientForgeEventSubscriber {
 					}
 				}
 			}
+		}
+
+		if (player.getItemInHand(player.getUsedItemHand()).getItem() instanceof CursedItem && player.isUsingItem()) {
+			event.setNearPlaneDistance(0.0f);
+			event.setFarPlaneDistance(Math.max(CURSE_EFFECT_FADE * 512, 16.0f));
+			event.scaleFarPlaneDistance(0.5f);
+
+			event.setFogShape(FogShape.SPHERE);
+			event.setCanceled(true);
 		}
 	}
 

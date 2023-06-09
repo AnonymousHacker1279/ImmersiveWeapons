@@ -3,32 +3,46 @@ package tech.anonymoushacker1279.immersiveweapons.event;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.MinecraftServer;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation;
 import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.entity.projectile.ThrownTrident;
 import net.minecraft.world.item.*;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.storage.loot.LootContext;
+import net.minecraft.world.level.storage.loot.LootTable;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraftforge.client.event.RegisterGuiOverlaysEvent;
 import net.minecraftforge.common.ForgeMod;
 import net.minecraftforge.event.ItemAttributeModifierEvent;
 import net.minecraftforge.event.TickEvent.PlayerTickEvent;
 import net.minecraftforge.event.entity.EntityJoinLevelEvent;
-import net.minecraftforge.event.entity.living.LivingHurtEvent;
+import net.minecraftforge.event.entity.living.*;
+import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.level.LevelEvent;
 import net.minecraftforge.event.level.PistonEvent;
 import net.minecraftforge.event.level.PistonEvent.PistonMoveType;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
+import net.minecraftforge.network.PacketDistributor;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.MissingMappingsEvent;
 import net.minecraftforge.registries.MissingMappingsEvent.Mapping;
@@ -40,6 +54,7 @@ import tech.anonymoushacker1279.immersiveweapons.data.biomes.IWBiomes;
 import tech.anonymoushacker1279.immersiveweapons.event.game_effects.AccessoryEffects;
 import tech.anonymoushacker1279.immersiveweapons.event.game_effects.EnvironmentEffects;
 import tech.anonymoushacker1279.immersiveweapons.init.*;
+import tech.anonymoushacker1279.immersiveweapons.item.CursedItem;
 import tech.anonymoushacker1279.immersiveweapons.item.gauntlet.GauntletItem;
 import tech.anonymoushacker1279.immersiveweapons.item.pike.PikeItem;
 import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
@@ -138,6 +153,15 @@ public class ForgeEventSubscriber {
 			}
 		}
 
+		// Handle permanent hunger effect of Bloody Sacrifice
+		if (player.tickCount % 20 == 0) {
+			if (player.getPersistentData().getBoolean("used_curse_accessory_bloody_sacrifice")) {
+				if (!player.hasEffect(MobEffects.HUNGER)) {
+					player.addEffect(new MobEffectInstance(MobEffects.HUNGER, -1, 0, true, true));
+				}
+			}
+		}
+
 		// Debug tracing
 		if (DebugTracingData.isDebugTracingEnabled) {
 			if (player == Minecraft.getInstance().player) {
@@ -181,10 +205,43 @@ public class ForgeEventSubscriber {
 		// Handle accessory effects
 		AccessoryEffects.berserkersAmuletEffect(event, damagedEntity);
 		AccessoryEffects.hansBlessingEffect(event, damagedEntity);
+		AccessoryEffects.blademasterEmblemEffect(event, damagedEntity);
+		AccessoryEffects.bloodySacrificeEffect(event, damagedEntity);
+	}
+
+	@SubscribeEvent
+	public static void livingDeathEvent(LivingDeathEvent event) {
+		// Handle charging of cursed accessories on kill
+
+		if (event.getSource().getEntity() instanceof Player player) {
+			List<ItemStack> curses = CursedItem.getCurses(player);
+			for (ItemStack curse : curses) {
+				if (!curse.getOrCreateTag().getBoolean("max_charge")) {
+					if (!curse.isDamaged()) {
+						curse.setDamageValue(100);
+					}
+
+					if (curse.getDamageValue() <= 100 && curse.getDamageValue() >= 0) {
+						curse.setDamageValue(curse.getDamageValue() - 1);
+
+						// If at max charge, set a tag, so it will no longer charge
+						if (curse.getDamageValue() == 0) {
+							curse.getOrCreateTag().putBoolean("max_charge", true);
+						}
+					}
+				}
+			}
+		}
 	}
 
 	@SubscribeEvent
 	public static void entityJoinLevelEvent(EntityJoinLevelEvent event) {
+		// Sync player data from server to client
+		if (event.getEntity() instanceof ServerPlayer player) {
+			// Send update packet
+			PacketHandler.INSTANCE.send(PacketDistributor.PLAYER.with(() -> player), new SyncPlayerDataPacketHandler(player.getPersistentData(), player.getUUID()));
+		}
+
 		// Handle the Velocity enchantment on bows (guns are handled in the gun code)
 		if (event.getEntity() instanceof AbstractArrow arrow) {
 			if (arrow.getOwner() instanceof Player player && player.getItemInHand(player.getUsedItemHand()).getItem() instanceof BowItem) {
@@ -197,6 +254,12 @@ public class ForgeEventSubscriber {
 				}
 			}
 		}
+	}
+
+	@SubscribeEvent
+	public static void playerCloneEvent(PlayerEvent.Clone event) {
+		// Copy old persistent data to the new player
+		event.getEntity().getPersistentData().merge(event.getOriginal().getPersistentData());
 	}
 
 	@SubscribeEvent
@@ -274,5 +337,67 @@ public class ForgeEventSubscriber {
 	public static void levelLoadEvent(LevelEvent.Load event) {
 		// Initialize custom damage sources
 		IWDamageSources.init(event.getLevel().registryAccess());
+	}
+
+	@SubscribeEvent
+	public static void lootingLevelEvent(LootingLevelEvent event) {
+		// Increase the looting level by 3 with the Bloody Sacrifice curse
+		if (event.getDamageSource().getEntity() instanceof Player player) {
+			if (player.getPersistentData().getBoolean("used_curse_accessory_bloody_sacrifice")) {
+				event.setLootingLevel(event.getLootingLevel() + 3);
+			}
+		}
+	}
+
+	@SubscribeEvent
+	public static void livingDropsEvent(LivingDropsEvent event) {
+		// 25% chance to drop items a second time with the Bloody Sacrifice curse
+		if (event.getSource().getEntity() instanceof Player player) {
+			if (player.getPersistentData().getBoolean("used_curse_accessory_bloody_sacrifice")) {
+
+
+				if (player.getRandom().nextFloat() <= 0.25f) {
+					ResourceLocation lootTable = event.getEntity().getLootTable();
+					MinecraftServer server = event.getEntity().level.getServer();
+
+					if (server != null) {
+						LootTable table = server.getLootTables().get(lootTable);
+
+						table.getRandomItems(new LootContext.Builder((ServerLevel) event.getEntity().level)
+										.withParameter(LootContextParams.THIS_ENTITY, event.getEntity())
+										.withParameter(LootContextParams.ORIGIN, event.getEntity().position())
+										.withParameter(LootContextParams.DAMAGE_SOURCE, event.getSource())
+										.withParameter(LootContextParams.KILLER_ENTITY, player)
+										.withParameter(LootContextParams.LAST_DAMAGE_PLAYER, player)
+										.withParameter(LootContextParams.DIRECT_KILLER_ENTITY, player)
+										.withParameter(LootContextParams.BLOCK_STATE, Blocks.AIR.defaultBlockState())
+										.withParameter(LootContextParams.TOOL, ItemStack.EMPTY)
+										.withParameter(LootContextParams.EXPLOSION_RADIUS, 0.0f)
+										.create(LootContextParamSets.ENTITY))
+								.forEach(stack -> {
+									ItemEntity itemEntity = new ItemEntity(event.getEntity().level, event.getEntity().getX(), event.getEntity().getY(), event.getEntity().getZ(), stack);
+									itemEntity.setPickUpDelay(10);
+									event.getDrops().add(itemEntity);
+								});
+
+						// Summon a cloud of particles around the entity
+						ServerLevel level = server.getLevel(event.getEntity().level.dimension());
+						if (level != null) {
+							level.sendParticles(
+									ParticleTypes.SOUL,
+									event.getEntity().getX(),
+									event.getEntity().getY() + event.getEntity().getBbHeight() / 2.0d,
+									event.getEntity().getZ(),
+									10,
+									0.5d,
+									0.5d,
+									0.5d,
+									0.0d
+							);
+						}
+					}
+				}
+			}
+		}
 	}
 }

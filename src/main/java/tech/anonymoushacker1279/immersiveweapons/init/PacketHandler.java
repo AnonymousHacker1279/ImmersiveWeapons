@@ -12,6 +12,7 @@ import tech.anonymoushacker1279.immersiveweapons.entity.monster.lava_revenant.La
 import tech.anonymoushacker1279.immersiveweapons.entity.neutral.AbstractFieldMedicEntity.AbstractFieldMedicEntityPacketHandler;
 import tech.anonymoushacker1279.immersiveweapons.entity.projectile.SmokeGrenadeEntity.SmokeGrenadeEntityPacketHandler;
 import tech.anonymoushacker1279.immersiveweapons.entity.projectile.bullet.BulletEntity.BulletEntityPacketHandler;
+import tech.anonymoushacker1279.immersiveweapons.event.SyncPlayerDataPacketHandler;
 import tech.anonymoushacker1279.immersiveweapons.event.game_effects.EnvironmentEffects.EnvironmentEffectsPacketHandler;
 import tech.anonymoushacker1279.immersiveweapons.item.armor.AstralArmorItem.AstralArmorItemPacketHandler;
 import tech.anonymoushacker1279.immersiveweapons.item.armor.CobaltArmorItem.CobaltArmorItemPacketHandler;
@@ -114,11 +115,17 @@ public class PacketHandler {
 				BulletEntityPacketHandler::decode,
 				BulletEntityPacketHandler::handle
 		);
-		PacketHandler.INSTANCE.registerMessage(networkId,
+		PacketHandler.INSTANCE.registerMessage(networkId++,
 				EnvironmentEffectsPacketHandler.class,
 				EnvironmentEffectsPacketHandler::encode,
 				EnvironmentEffectsPacketHandler::decode,
 				EnvironmentEffectsPacketHandler::handle
+		);
+		PacketHandler.INSTANCE.registerMessage(networkId,
+				SyncPlayerDataPacketHandler.class,
+				SyncPlayerDataPacketHandler::encode,
+				SyncPlayerDataPacketHandler::decode,
+				SyncPlayerDataPacketHandler::handle
 		);
 	}
 }

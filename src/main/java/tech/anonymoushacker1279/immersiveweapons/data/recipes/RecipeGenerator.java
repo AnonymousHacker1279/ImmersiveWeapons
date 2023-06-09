@@ -1007,6 +1007,31 @@ public class RecipeGenerator extends RecipeProvider {
 				.group("powder_horn")
 				.unlockedBy("goat_horn", has(Items.GOAT_HORN))
 				.save(finishedRecipeConsumer);
+
+		// Blademaster Emblem
+		ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ItemRegistry.BLADEMASTER_EMBLEM.get())
+				.define('a', IWItemTagGroups.STARSTORM_SHARDS)
+				.define('b', new StrictNBTIngredient(PotionUtils.setPotion(new ItemStack(Items.POTION), PotionRegistry.DEATH_POTION.get())) {
+				})
+				.define('c', ItemRegistry.STARSTORM_SWORD.get())
+				.pattern("aaa")
+				.pattern("aca")
+				.pattern("aba")
+				.group("blademaster_emblem")
+				.unlockedBy("starstorm_sword", has(ItemRegistry.STARSTORM_SWORD.get()))
+				.save(finishedRecipeConsumer);
+
+		// Bloody Sacrifice
+		ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ItemRegistry.BLOODY_SACRIFICE.get())
+				.define('a', Items.SPIDER_EYE)
+				.define('b', Items.PORKCHOP)
+				.define('c', Items.MUTTON)
+				.pattern("bbb")
+				.pattern("bac")
+				.pattern("ccc")
+				.group("bloody_sacrifice")
+				.unlockedBy("spider_eye", has(Items.SPIDER_EYE))
+				.save(finishedRecipeConsumer);
 	}
 
 	private void createMiscellaneousItems() {

@@ -40,6 +40,8 @@ import tech.anonymoushacker1279.immersiveweapons.client.particle.bullet_impact.B
 import tech.anonymoushacker1279.immersiveweapons.config.CommonConfig;
 import tech.anonymoushacker1279.immersiveweapons.data.tags.groups.forge.ForgeBlockTagGroups;
 import tech.anonymoushacker1279.immersiveweapons.init.*;
+import tech.anonymoushacker1279.immersiveweapons.item.AccessoryItem;
+import tech.anonymoushacker1279.immersiveweapons.item.AccessoryItem.AccessorySlot;
 import tech.anonymoushacker1279.immersiveweapons.item.projectile.gun.MusketItem;
 import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
 
@@ -325,6 +327,17 @@ public class BulletEntity extends AbstractArrow {
 			damage = (int) Math.min(randomCritModifier + damage, 2.147483647E9D);
 		}
 
+		// If the entity is a player and has an active Deadeye Pendant, add a damage modifier which increases with distance to the target
+		// This modifier increases damage up to a maximum of +20% at 100 meters range
+		if (getOwner() instanceof Player player) {
+			AccessoryItem deadeyePendant = AccessoryItem.getAccessory(player, AccessorySlot.NECKLACE);
+			if (deadeyePendant == ItemRegistry.DEADEYE_PENDANT.get()) {
+				double distance = player.distanceToSqr(getX(), getY(), getZ());
+				double modifier = Math.min(distance / 100d, 1);
+				damage = (int) Math.round(damage * (1 + modifier * 0.2f));
+			}
+		}
+
 		return damage;
 	}
 
@@ -365,6 +378,7 @@ public class BulletEntity extends AbstractArrow {
 
 		// If the arrow owner doesn't exist (null), set the indirect entity to itself
 		if (owner == null) {
+			// TODO: Make custom bullet damage source
 			damageSource = damageSources().arrow(this, this);
 		} else {
 			damageSource = damageSources().arrow(this, owner);

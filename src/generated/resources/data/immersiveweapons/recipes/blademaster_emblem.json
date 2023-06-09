@@ -1,0 +1,28 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "group": "blademaster_emblem",
+  "key": {
+    "a": {
+      "tag": "immersiveweapons:shards/starstorm"
+    },
+    "b": {
+      "type": "forge:nbt",
+      "count": 1,
+      "item": "minecraft:potion",
+      "nbt": "{Potion:\"immersiveweapons:death\"}"
+    },
+    "c": {
+      "item": "immersiveweapons:starstorm_sword"
+    }
+  },
+  "pattern": [
+    "aaa",
+    "aca",
+    "aba"
+  ],
+  "result": {
+    "item": "immersiveweapons:blademaster_emblem"
+  },
+  "show_notification": true
+}

@@ -391,6 +391,7 @@ public class LanguageGenerator extends IWLanguageProvider {
 		addTooltip("accessory_note", "This accessory works while sitting in your inventory");
 		addTooltip("accessory_inactive", "This accessory is inactive - something else is using its accessory slot");
 		addTooltip("accessory_slot", "Accessory Slot: %s");
+		addTooltip("creative_only", "Creative Only");
 		addTooltip("barrel_tap", "Use this to convert some plants into a fluid form. Connect this to a barrel to collect it.");
 		addTooltip("tesla_hoe", "Good thing you aren't in charge of the US Treasury. Because if you were we'd be broke.");
 		addTooltip("spotlight", "I see you there");
@@ -401,6 +402,7 @@ public class LanguageGenerator extends IWLanguageProvider {
 		addTooltip("mortar", "Capable of sending exploding shells far into the distance");
 		addTooltip("celestial_fragment", "The power of the sun in the palm of your hand");
 		addTooltip("azul_locator", "Teleport to your spawn point at will");
+		addTooltip("curse_cleaning_soap", "Cleanses your soul of all curses");
 
 		// Accessories
 		addTooltip("satchel", "Provides a 10% chance not to consume ammo");
@@ -409,6 +411,19 @@ public class LanguageGenerator extends IWLanguageProvider {
 		addTooltip("berserkers_amulet_2", "However, you will take 20% more damage from all sources");
 		addTooltip("hans_blessing_1", "Take 15% less damage from all sources");
 		addTooltip("hans_blessing_2", "Tis but a scratch");
+		addTooltip("blademaster_emblem", "Increases melee damage by 10%, and adds a 30% chance to inflict Bleeding");
+		addTooltip("deadeye_pendant_1", "Increases damage over distance with firearms");
+		addTooltip("deadeye_pendant_2", "Maximum damage increase is 20% at 100 meters");
+
+		addTooltip("bloody_sacrifice", "You feel a dark presence emanating from this item");
+		addTooltip("bloody_sacrifice_charge_note", "The destruction of life charges something inside");
+		addTooltip("bloody_sacrifice_charge", "Charge: %s / 100");
+		addTooltip("bloody_sacrifice_fully_charged", "Using this would be a grave and permanent mistake");
+		addTooltip("bloody_sacrifice_effect_1", "- +50% damage taken");
+		addTooltip("bloody_sacrifice_effect_2", "- -10% damage dealt");
+		addTooltip("bloody_sacrifice_effect_3", "- Permanent hunger effect");
+		addTooltip("bloody_sacrifice_effect_4", "- Permanent looting bonus");
+		addTooltip("bloody_sacrifice_effect_5", "- 25% chance to roll a second loot drop entirely");
 
 		// Lore
 		addTooltip("minuteman_statue", "Something seems to activate inside when it is placed in a Battlefield. It wishes to protect.");
@@ -433,6 +448,12 @@ public class LanguageGenerator extends IWLanguageProvider {
 		addMessage("item.azul_locator.teleported", "Teleported to spawn point!");
 		addMessage("item.azul_locator.no_spawn", "Unable to teleport: No spawn point set.");
 		addMessage("item.meteor_staff.not_enough_clearance", "There isn't enough clearance to summon a meteor");
+		addMessage("item.curse_cleaning_soap.cleaned", "All curses have been lifted!");
+		addMessage("item.curse_cleaning_soap.not_cursed", "There is nothing to cleanse...");
+		addMessage("item.bloody_sacrifice.not_enough_charge", "Not enough blood has been spilled yet...");
+		addMessage("item.bloody_sacrifice.using", "This will have permanent consequences...");
+		addMessage("item.bloody_sacrifice.canceled", "The curse remains sealed...");
+		addMessage("item.bloody_sacrifice.used", "There is no going back now...");
 		addMessage("block.wall_shelf.locked", "This shelf has been locked");
 		addMessage("block.wall_shelf.unlocked", "This shelf has been unlocked");
 	}
