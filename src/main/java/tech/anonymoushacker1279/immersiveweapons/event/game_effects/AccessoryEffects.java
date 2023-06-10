@@ -75,6 +75,28 @@ public class AccessoryEffects {
 		}
 	}
 
+	public static void netheriteShieldEffect(LivingHurtEvent event, LivingEntity damagedEntity) {
+		// Take 3% less damage if the player has the shield
+		if (damagedEntity instanceof Player player) {
+			AccessoryItem shield = getAccessory(player, AccessorySlot.BODY);
+
+			if (shield == ItemRegistry.NETHERITE_SHIELD.get()) {
+				event.setAmount(event.getAmount() * 0.97f);
+			}
+		}
+	}
+
+	public static void meleeMastersMoltenGloveEffect(LivingHurtEvent event, LivingEntity damagedEntity) {
+		// Deal 10% more damage if the player has the glove
+		if (event.getSource().getEntity() instanceof Player player && event.getSource().is(DamageTypes.PLAYER_ATTACK)) {
+			AccessoryItem glove = getAccessory(player, AccessorySlot.HAND);
+
+			if (glove == ItemRegistry.MELEE_MASTERS_MOLTEN_GLOVE.get()) {
+				event.setAmount(event.getAmount() * 1.1f);
+			}
+		}
+	}
+
 	public static void bloodySacrificeEffect(LivingHurtEvent event, LivingEntity damagedEntity) {
 		if (damagedEntity instanceof Player player) {
 			// Player takes 50% more damage if they used the item

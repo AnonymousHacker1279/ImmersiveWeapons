@@ -48,6 +48,13 @@ public class DebugTracingOverlay {
 			textHeightPosition -= 15;
 			fontRenderer.draw(poseStack, liveBulletDamage, 5, textHeightPosition, 0xFFFFFF);
 		}
+		if (DebugTracingData.lastDamageDealt > 0) {
+			MutableComponent lastDamageDealt = Component.translatable("immersiveweapons.debugTracing.lastDamageDealt",
+							DebugTracingData.lastDamageDealt)
+					.withStyle(ChatFormatting.BOLD, ChatFormatting.GOLD);
+			textHeightPosition -= 15;
+			fontRenderer.draw(poseStack, lastDamageDealt, 5, textHeightPosition, 0xFFFFFF);
+		}
 
 		// Iterate all the values in the damageBonusList and add them together
 		float totalDamageBonus = 0;

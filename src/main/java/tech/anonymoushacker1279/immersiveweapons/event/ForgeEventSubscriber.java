@@ -10,12 +10,12 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.*;
-import net.minecraft.world.entity.ai.attributes.AttributeModifier;
+import net.minecraft.world.entity.ai.attributes.*;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation;
-import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.AbstractArrow;
@@ -50,10 +50,13 @@ import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.block.decoration.StarstormCrystalBlock;
 import tech.anonymoushacker1279.immersiveweapons.client.gui.IWOverlays;
 import tech.anonymoushacker1279.immersiveweapons.client.gui.overlays.DebugTracingData;
+import tech.anonymoushacker1279.immersiveweapons.client.gui.overlays.DebugTracingData.LastDamageDealtPacketHandler;
 import tech.anonymoushacker1279.immersiveweapons.data.biomes.IWBiomes;
 import tech.anonymoushacker1279.immersiveweapons.event.game_effects.AccessoryEffects;
 import tech.anonymoushacker1279.immersiveweapons.event.game_effects.EnvironmentEffects;
 import tech.anonymoushacker1279.immersiveweapons.init.*;
+import tech.anonymoushacker1279.immersiveweapons.item.AccessoryItem;
+import tech.anonymoushacker1279.immersiveweapons.item.AccessoryItem.AccessorySlot;
 import tech.anonymoushacker1279.immersiveweapons.item.CursedItem;
 import tech.anonymoushacker1279.immersiveweapons.item.gauntlet.GauntletItem;
 import tech.anonymoushacker1279.immersiveweapons.item.pike.PikeItem;
@@ -62,9 +65,14 @@ import tech.anonymoushacker1279.immersiveweapons.util.LegacyMappingsHandler;
 import tech.anonymoushacker1279.immersiveweapons.world.level.IWDamageSources;
 
 import java.util.List;
+import java.util.UUID;
 
 @EventBusSubscriber(modid = ImmersiveWeapons.MOD_ID, bus = Bus.FORGE)
 public class ForgeEventSubscriber {
+
+	public static final UUID BLOATED_HEART_HEALTH_MODIFIER_UUID = UUID.fromString("e5485685-cfbe-422b-b7dd-eda29049a508");
+	private static final AttributeModifier BLOATED_HEART_HEALTH_MODIFIER = new AttributeModifier(BLOATED_HEART_HEALTH_MODIFIER_UUID,
+			"Bloated Heart boost", 4.0d, AttributeModifier.Operation.ADDITION);
 
 	@SubscribeEvent
 	public static void registerGuiOverlaysEvent(RegisterGuiOverlaysEvent event) {
@@ -153,11 +161,25 @@ public class ForgeEventSubscriber {
 			}
 		}
 
-		// Handle permanent hunger effect of Bloody Sacrifice
 		if (player.tickCount % 20 == 0) {
+			// Handle permanent hunger effect of Bloody Sacrifice
 			if (player.getPersistentData().getBoolean("used_curse_accessory_bloody_sacrifice")) {
 				if (!player.hasEffect(MobEffects.HUNGER)) {
 					player.addEffect(new MobEffectInstance(MobEffects.HUNGER, -1, 0, true, true));
+				}
+			}
+
+			// Handle increased health effect of the Bloated Heart
+			AccessoryItem bloatedHeart = AccessoryItem.getAccessory(player, AccessorySlot.BODY);
+			AttributeInstance attributeInstance = player.getAttributes().getInstance(Attributes.MAX_HEALTH);
+
+			if (attributeInstance != null) {
+				if (bloatedHeart == ItemRegistry.BLOATED_HEART.get()) {
+					if (!attributeInstance.hasModifier(BLOATED_HEART_HEALTH_MODIFIER)) {
+						attributeInstance.addTransientModifier(BLOATED_HEART_HEALTH_MODIFIER);
+					}
+				} else if (attributeInstance.hasModifier(BLOATED_HEART_HEALTH_MODIFIER)) {
+					attributeInstance.removeModifier(BLOATED_HEART_HEALTH_MODIFIER);
 				}
 			}
 		}
@@ -178,8 +200,24 @@ public class ForgeEventSubscriber {
 			source = sourceEntity;
 		}
 
-		// Handle Regenerative Assault enchantment
+
+		// Handle environmental effects
+		EnvironmentEffects.celestialProtectionEffect(event, damagedEntity);
+		EnvironmentEffects.damageVulnerabilityEffect(event, damagedEntity);
+		EnvironmentEffects.starstormArmorSetBonus(event, source);
+		EnvironmentEffects.moltenArmorSetBonus(event, source);
+
+		// Handle accessory effects
+		AccessoryEffects.berserkersAmuletEffect(event, damagedEntity);
+		AccessoryEffects.hansBlessingEffect(event, damagedEntity);
+		AccessoryEffects.blademasterEmblemEffect(event, damagedEntity);
+		AccessoryEffects.netheriteShieldEffect(event, damagedEntity);
+		AccessoryEffects.meleeMastersMoltenGloveEffect(event, damagedEntity);
+		AccessoryEffects.bloodySacrificeEffect(event, damagedEntity);
+
+
 		if (source instanceof Player player) {
+			// Handle Regenerative Assault enchantment
 			ItemStack weapon = player.getItemInHand(player.getUsedItemHand());
 
 			// Check if it was a thrown trident
@@ -194,19 +232,12 @@ public class ForgeEventSubscriber {
 				player.heal(event.getAmount() * 0.1f * enchantmentLevel);
 				player.playSound(SoundEvents.EXPERIENCE_ORB_PICKUP, 1.0f, 1.0f);
 			}
+
+			// Handle debug tracing
+			if (player instanceof ServerPlayer serverPlayer) {
+				PacketHandler.INSTANCE.send(PacketDistributor.PLAYER.with(() -> serverPlayer), new LastDamageDealtPacketHandler(player.getUUID(), event.getAmount()));
+			}
 		}
-
-		// Handle environmental effects
-		EnvironmentEffects.celestialProtectionEffect(event, damagedEntity);
-		EnvironmentEffects.damageVulnerabilityEffect(event, damagedEntity);
-		EnvironmentEffects.starstormArmorSetBonus(event, source);
-		EnvironmentEffects.moltenArmorSetBonus(event, source);
-
-		// Handle accessory effects
-		AccessoryEffects.berserkersAmuletEffect(event, damagedEntity);
-		AccessoryEffects.hansBlessingEffect(event, damagedEntity);
-		AccessoryEffects.blademasterEmblemEffect(event, damagedEntity);
-		AccessoryEffects.bloodySacrificeEffect(event, damagedEntity);
 	}
 
 	@SubscribeEvent
@@ -397,6 +428,27 @@ public class ForgeEventSubscriber {
 						}
 					}
 				}
+			}
+		}
+	}
+
+	@SubscribeEvent
+	public static void livingKnockBackEvent(LivingKnockBackEvent event) {
+		LivingEntity entity = event.getEntity();
+
+		// Prevent all knockback if the player has an active Netherite Shield accessory
+		if (entity instanceof Player player) {
+			AccessoryItem netheriteShield = AccessoryItem.getAccessory(player, AccessorySlot.BODY);
+			if (netheriteShield == ItemRegistry.NETHERITE_SHIELD.get()) {
+				event.setCanceled(true);
+			}
+		}
+
+		// Increase knockback to entity if the source player has an active Melee Master's Molten Glove accessory
+		if (entity.getLastAttacker() instanceof Player player && entity.getLastDamageSource() != null && entity.getLastDamageSource().is(DamageTypes.PLAYER_ATTACK)) {
+			AccessoryItem moltenGlove = AccessoryItem.getAccessory(player, AccessorySlot.HAND);
+			if (moltenGlove == ItemRegistry.MELEE_MASTERS_MOLTEN_GLOVE.get()) {
+				event.setStrength(event.getStrength() * 1.75f);
 			}
 		}
 	}

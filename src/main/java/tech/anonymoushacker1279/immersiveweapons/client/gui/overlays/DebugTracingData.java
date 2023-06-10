@@ -1,6 +1,7 @@
 package tech.anonymoushacker1279.immersiveweapons.client.gui.overlays;
 
 import com.google.common.collect.Multimap;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.MobType;
 import net.minecraft.world.entity.ai.attributes.*;
@@ -8,11 +9,16 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.*;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Level;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.fml.DistExecutor;
+import net.minecraftforge.network.NetworkEvent;
+import net.minecraftforge.network.NetworkEvent.Context;
+import tech.anonymoushacker1279.immersiveweapons.event.SyncHandler;
 import tech.anonymoushacker1279.immersiveweapons.init.ItemRegistry;
 import tech.anonymoushacker1279.immersiveweapons.item.projectile.gun.AbstractGunItem;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
+import java.util.function.Supplier;
 
 /**
  * This class contains data for debug tracing.
@@ -22,6 +28,8 @@ public class DebugTracingData {
 	public static boolean isDebugTracingEnabled = false;
 
 	public static float meleeItemDamage = 0;
+
+	public static float lastDamageDealt = 0;
 
 	public static float gunBaseVelocity = 0;
 	public static Item selectedAmmo = Items.AIR;
@@ -81,6 +89,27 @@ public class DebugTracingData {
 
 				damageBonusList.add(damageBonus);
 			}
+		}
+	}
+
+	public record LastDamageDealtPacketHandler(UUID playerUUID, float lastDamageDealt) {
+
+		public static void encode(LastDamageDealtPacketHandler msg, FriendlyByteBuf packetBuffer) {
+			packetBuffer.writeUUID(msg.playerUUID()).writeFloat(msg.lastDamageDealt);
+		}
+
+		public static LastDamageDealtPacketHandler decode(FriendlyByteBuf packetBuffer) {
+			return new LastDamageDealtPacketHandler(packetBuffer.readUUID(), packetBuffer.readFloat());
+		}
+
+		public static void handle(LastDamageDealtPacketHandler msg, Supplier<Context> contextSupplier) {
+			NetworkEvent.Context context = contextSupplier.get();
+			context.enqueueWork(() -> DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> runOnClient(msg)));
+			context.setPacketHandled(true);
+		}
+
+		private static void runOnClient(LastDamageDealtPacketHandler msg) {
+			SyncHandler.lastDamageDealtDamageOverlay(msg.lastDamageDealt, msg.playerUUID);
 		}
 	}
 }

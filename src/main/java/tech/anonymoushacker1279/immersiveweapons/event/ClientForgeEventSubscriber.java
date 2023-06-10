@@ -30,8 +30,6 @@ public class ClientForgeEventSubscriber {
 
 	private static final Minecraft minecraft = Minecraft.getInstance();
 
-	public static float CURSE_EFFECT_FADE = 1.0f;
-
 	/**
 	 * Event handler for the RenderBlockScreenEffectEvent.
 	 *
@@ -84,7 +82,7 @@ public class ClientForgeEventSubscriber {
 
 		if (player.getItemInHand(player.getUsedItemHand()).getItem() instanceof CursedItem && player.isUsingItem()) {
 			event.setNearPlaneDistance(0.0f);
-			event.setFarPlaneDistance(Math.max(CURSE_EFFECT_FADE * 512, 16.0f));
+			event.setFarPlaneDistance(Math.max(CursedItem.CURSE_EFFECT_FADE * 512, 16.0f));
 			event.scaleFarPlaneDistance(0.5f);
 
 			event.setFogShape(FogShape.SPHERE);

@@ -1021,6 +1021,9 @@ public class RecipeGenerator extends RecipeProvider {
 				.unlockedBy("starstorm_sword", has(ItemRegistry.STARSTORM_SWORD.get()))
 				.save(finishedRecipeConsumer);
 
+		// Netherite Shield
+		netheriteSmithing(Items.SHIELD, ItemRegistry.NETHERITE_SHIELD.get());
+
 		// Bloody Sacrifice
 		ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ItemRegistry.BLOODY_SACRIFICE.get())
 				.define('a', Items.SPIDER_EYE)

@@ -258,6 +258,18 @@ public class TooltipHandler {
 				event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.deadeye_pendant_2").withStyle(ChatFormatting.GREEN, ChatFormatting.ITALIC));
 				addShiftTooltip(event.getToolTip(), addAccessoryTooltips(item, event.getEntity()));
 			}
+			if (stack.getItem() == ItemRegistry.BLOATED_HEART.get()) {
+				event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.bloated_heart").withStyle(ChatFormatting.GREEN, ChatFormatting.ITALIC));
+				addShiftTooltip(event.getToolTip(), addAccessoryTooltips(item, event.getEntity()));
+			}
+			if (stack.getItem() == ItemRegistry.NETHERITE_SHIELD.get()) {
+				event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.netherite_shield").withStyle(ChatFormatting.GREEN, ChatFormatting.ITALIC));
+				addShiftTooltip(event.getToolTip(), addAccessoryTooltips(item, event.getEntity()));
+			}
+			if (stack.getItem() == ItemRegistry.MELEE_MASTERS_MOLTEN_GLOVE.get()) {
+				event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.melee_masters_molten_glove").withStyle(ChatFormatting.GREEN, ChatFormatting.ITALIC));
+				addShiftTooltip(event.getToolTip(), addAccessoryTooltips(item, event.getEntity()));
+			}
 		} else if (stack.getItem() instanceof CursedItem) {
 			if (stack.getItem() == ItemRegistry.BLOODY_SACRIFICE.get()) {
 				event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.bloody_sacrifice").withStyle(ChatFormatting.DARK_PURPLE, ChatFormatting.ITALIC));

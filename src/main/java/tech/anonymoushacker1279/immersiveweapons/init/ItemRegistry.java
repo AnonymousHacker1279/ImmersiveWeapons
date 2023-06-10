@@ -234,6 +234,9 @@ public class ItemRegistry {
 	public static final RegistryObject<AccessoryItem> HANS_BLESSING = ITEMS.register("hans_blessing", () -> new AccessoryItem(new Properties().stacksTo(1), AccessorySlot.SPIRIT));
 	public static final RegistryObject<AccessoryItem> BLADEMASTER_EMBLEM = ITEMS.register("blademaster_emblem", () -> new AccessoryItem(new Properties().stacksTo(1), AccessorySlot.CHARM));
 	public static final RegistryObject<AccessoryItem> DEADEYE_PENDANT = ITEMS.register("deadeye_pendant", () -> new AccessoryItem(new Properties().stacksTo(1), AccessorySlot.NECKLACE));
+	public static final RegistryObject<AccessoryItem> BLOATED_HEART = ITEMS.register("bloated_heart", () -> new AccessoryItem(new Properties().stacksTo(1), AccessorySlot.BODY));
+	public static final RegistryObject<AccessoryItem> NETHERITE_SHIELD = ITEMS.register("netherite_shield", () -> new AccessoryItem(new Properties().stacksTo(1), AccessorySlot.BODY));
+	public static final RegistryObject<AccessoryItem> MELEE_MASTERS_MOLTEN_GLOVE = ITEMS.register("melee_masters_molten_glove", () -> new AccessoryItem(new Properties().stacksTo(1), AccessorySlot.HAND));
 	public static final RegistryObject<CursedItem> BLOODY_SACRIFICE = ITEMS.register("bloody_sacrifice", () -> new CursedItem(new Properties().stacksTo(1).setNoRepair().durability(100), "bloody_sacrifice"));
 
 	// Armor

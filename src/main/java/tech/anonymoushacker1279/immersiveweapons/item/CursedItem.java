@@ -11,7 +11,6 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import tech.anonymoushacker1279.immersiveweapons.event.ClientForgeEventSubscriber;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,6 +18,7 @@ import java.util.List;
 public class CursedItem extends Item {
 
 	private final String name;
+	public static float CURSE_EFFECT_FADE = 1.0f;
 
 	/**
 	 * Cursed items cannot be removed once used. Their effects are permanent in survival mode, even persisting through death.
@@ -78,8 +78,8 @@ public class CursedItem extends Item {
 				}
 
 				// Handle the fade effect
-				if (ClientForgeEventSubscriber.CURSE_EFFECT_FADE > 0.0f) {
-					ClientForgeEventSubscriber.CURSE_EFFECT_FADE -= 0.05f;
+				if (CURSE_EFFECT_FADE > 0.0f) {
+					CURSE_EFFECT_FADE -= 0.05f;
 				}
 			}
 		}
@@ -98,7 +98,7 @@ public class CursedItem extends Item {
 
 		if (entity instanceof Player player) {
 			if (!player.isUsingItem()) {
-				ClientForgeEventSubscriber.CURSE_EFFECT_FADE = 1.0f;
+				CURSE_EFFECT_FADE = 1.0f;
 			}
 		}
 	}
@@ -116,7 +116,7 @@ public class CursedItem extends Item {
 							.withStyle(ChatFormatting.RED), true);
 				}
 
-				ClientForgeEventSubscriber.CURSE_EFFECT_FADE = 1.0f;
+				CURSE_EFFECT_FADE = 1.0f;
 
 				return InteractionResultHolder.fail(stack);
 			} else {
@@ -158,7 +158,7 @@ public class CursedItem extends Item {
 						0.75f
 				);
 
-				ClientForgeEventSubscriber.CURSE_EFFECT_FADE = 1.0f;
+				CURSE_EFFECT_FADE = 1.0f;
 			}
 
 			if (!player.isCreative()) {

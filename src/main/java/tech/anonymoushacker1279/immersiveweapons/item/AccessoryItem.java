@@ -60,6 +60,7 @@ public class AccessoryItem extends Item {
 	public enum AccessorySlot {
 		BODY,
 		NECKLACE,
+		HAND,
 		BELT,
 		CHARM,
 		SPIRIT

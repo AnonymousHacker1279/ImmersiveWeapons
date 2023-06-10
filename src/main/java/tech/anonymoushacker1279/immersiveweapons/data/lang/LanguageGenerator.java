@@ -97,6 +97,7 @@ public class LanguageGenerator extends IWLanguageProvider {
 		excludedItems.add(ItemRegistry.EXPLOSIVE_CHOCOLATE_BAR.get());
 		excludedItems.add(ItemRegistry.BERSERKERS_AMULET.get());
 		excludedItems.add(ItemRegistry.HANS_BLESSING.get());
+		excludedItems.add(ItemRegistry.MELEE_MASTERS_MOLTEN_GLOVE.get());
 
 		// Filter the excluded items from the registry
 		Stream<RegistryObject<Item>> items = ItemRegistry.ITEMS.getEntries().stream()
@@ -138,6 +139,7 @@ public class LanguageGenerator extends IWLanguageProvider {
 		addItem(ItemRegistry.EXPLOSIVE_CHOCOLATE_BAR, "Chocolate Bar");
 		addItem(ItemRegistry.BERSERKERS_AMULET, "Berserker's Amulet");
 		addItem(ItemRegistry.HANS_BLESSING, "Hans' Blessing");
+		addItem(ItemRegistry.MELEE_MASTERS_MOLTEN_GLOVE, "Melee Master's Molten Glove");
 	}
 
 	private void addEntityTypes() {
@@ -414,6 +416,9 @@ public class LanguageGenerator extends IWLanguageProvider {
 		addTooltip("blademaster_emblem", "Increases melee damage by 10%, and adds a 30% chance to inflict Bleeding");
 		addTooltip("deadeye_pendant_1", "Increases damage over distance with firearms");
 		addTooltip("deadeye_pendant_2", "Maximum damage increase is 20% at 100 meters");
+		addTooltip("bloated_heart", "Increases maximum health by two hearts");
+		addTooltip("netherite_shield", "Provides total immunity to knockback and 3% damage reduction");
+		addTooltip("melee_masters_molten_glove", "Increases melee knockback by 75% and melee damage by 10%");
 
 		addTooltip("bloody_sacrifice", "You feel a dark presence emanating from this item");
 		addTooltip("bloody_sacrifice_charge_note", "The destruction of life charges something inside");
@@ -864,6 +869,7 @@ public class LanguageGenerator extends IWLanguageProvider {
 		add("immersiveweapons.debugTracing.liveBulletDamage", "Live Bullet Damage: %s (is crit: %s)");
 		add("immersiveweapons.debugTracing.damageBonus", "Damage Bonus: %s");
 		add("immersiveweapons.debugTracing.celestialProtectionChanceForNoDamage", "Celestial Protection Chance: %s");
+		add("immersiveweapons.debugTracing.lastDamageDealt", "Last Damage Dealt: %s");
 	}
 
 	/**

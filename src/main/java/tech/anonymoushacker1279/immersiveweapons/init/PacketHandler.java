@@ -8,6 +8,7 @@ import tech.anonymoushacker1279.immersiveweapons.block.MortarBlock.MortarBlockPa
 import tech.anonymoushacker1279.immersiveweapons.block.SpikeTrapBlock.SpikeTrapBlockPacketHandler;
 import tech.anonymoushacker1279.immersiveweapons.block.decoration.AstralCrystalBlock.AstralCrystalBlockPacketHandler;
 import tech.anonymoushacker1279.immersiveweapons.block.misc.warrior_statue.WarriorStatueTorso.WarriorStatueTorsoPacketHandler;
+import tech.anonymoushacker1279.immersiveweapons.client.gui.overlays.DebugTracingData.LastDamageDealtPacketHandler;
 import tech.anonymoushacker1279.immersiveweapons.entity.monster.lava_revenant.LavaRevenantEntity.LavaRevenantEntityPacketHandler;
 import tech.anonymoushacker1279.immersiveweapons.entity.neutral.AbstractFieldMedicEntity.AbstractFieldMedicEntityPacketHandler;
 import tech.anonymoushacker1279.immersiveweapons.entity.projectile.SmokeGrenadeEntity.SmokeGrenadeEntityPacketHandler;
@@ -121,11 +122,17 @@ public class PacketHandler {
 				EnvironmentEffectsPacketHandler::decode,
 				EnvironmentEffectsPacketHandler::handle
 		);
-		PacketHandler.INSTANCE.registerMessage(networkId,
+		PacketHandler.INSTANCE.registerMessage(networkId++,
 				SyncPlayerDataPacketHandler.class,
 				SyncPlayerDataPacketHandler::encode,
 				SyncPlayerDataPacketHandler::decode,
 				SyncPlayerDataPacketHandler::handle
+		);
+		PacketHandler.INSTANCE.registerMessage(networkId,
+				LastDamageDealtPacketHandler.class,
+				LastDamageDealtPacketHandler::encode,
+				LastDamageDealtPacketHandler::decode,
+				LastDamageDealtPacketHandler::handle
 		);
 	}
 }
