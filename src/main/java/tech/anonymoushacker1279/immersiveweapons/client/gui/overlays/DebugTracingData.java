@@ -14,10 +14,12 @@ import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.network.NetworkEvent;
 import net.minecraftforge.network.NetworkEvent.Context;
 import tech.anonymoushacker1279.immersiveweapons.event.SyncHandler;
+import tech.anonymoushacker1279.immersiveweapons.event.game_effects.AccessoryEffects;
 import tech.anonymoushacker1279.immersiveweapons.init.ItemRegistry;
+import tech.anonymoushacker1279.immersiveweapons.item.AccessoryItem.EffectType;
 import tech.anonymoushacker1279.immersiveweapons.item.projectile.gun.AbstractGunItem;
 
-import java.util.*;
+import java.util.UUID;
 import java.util.function.Supplier;
 
 /**
@@ -36,7 +38,9 @@ public class DebugTracingData {
 	public static double liveBulletDamage = 0;
 	public static boolean isBulletCritical = false;
 
-	public static final List<Double> damageBonusList = new ArrayList<>(5);
+	public static double GENERAL_DAMAGE_BONUS = 0;
+	public static double MELEE_DAMAGE_BONUS = 0;
+	public static double PROJECTILE_DAMAGE_BONUS = 0;
 
 	public static void handleTracing(Player player) {
 		if (player.tickCount % 20 == 0) {
@@ -65,30 +69,36 @@ public class DebugTracingData {
 				selectedAmmo = Items.AIR;
 			}
 
-			damageBonusList.clear();
+			GENERAL_DAMAGE_BONUS = 0;
+			MELEE_DAMAGE_BONUS = 0;
+			PROJECTILE_DAMAGE_BONUS = 0;
+			
 			if (player.getItemBySlot(EquipmentSlot.HEAD).getItem() == ItemRegistry.STARSTORM_HELMET.get() &&
 					player.getItemBySlot(EquipmentSlot.CHEST).getItem() == ItemRegistry.STARSTORM_CHESTPLATE.get() &&
 					player.getItemBySlot(EquipmentSlot.LEGS).getItem() == ItemRegistry.STARSTORM_LEGGINGS.get() &&
 					player.getItemBySlot(EquipmentSlot.FEET).getItem() == ItemRegistry.STARSTORM_BOOTS.get()) {
 
-				damageBonusList.add(0.2);
+				GENERAL_DAMAGE_BONUS += 0.2d;
 			}
 			if (player.getItemBySlot(EquipmentSlot.HEAD).getItem() == ItemRegistry.MOLTEN_HELMET.get() &&
 					player.getItemBySlot(EquipmentSlot.CHEST).getItem() == ItemRegistry.MOLTEN_CHESTPLATE.get() &&
 					player.getItemBySlot(EquipmentSlot.LEGS).getItem() == ItemRegistry.MOLTEN_LEGGINGS.get() &&
 					player.getItemBySlot(EquipmentSlot.FEET).getItem() == ItemRegistry.MOLTEN_BOOTS.get()) {
 
-				double damageBonus = 0;
+				double bonus = 0;
 				if (player.level.dimension() == Level.NETHER) {
-					damageBonus += 0.2;
+					bonus += 0.2d;
 				}
 
 				if (player.isInLava()) {
-					damageBonus += 0.1;
+					bonus += 0.1d;
 				}
 
-				damageBonusList.add(damageBonus);
+				GENERAL_DAMAGE_BONUS += bonus;
 			}
+
+			MELEE_DAMAGE_BONUS += AccessoryEffects.collectEffects(EffectType.MELEE_DAMAGE, player);
+			PROJECTILE_DAMAGE_BONUS += AccessoryEffects.collectEffects(EffectType.PROJECTILE_DAMAGE, player);
 		}
 	}
 

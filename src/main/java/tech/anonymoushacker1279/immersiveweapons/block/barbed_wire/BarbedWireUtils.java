@@ -17,7 +17,7 @@ public interface BarbedWireUtils {
 	default void handleEntityContact(BlockState state, Level level, BlockPos pos, Entity entity) {
 		if (entity instanceof LivingEntity) {
 			entity.makeStuckInBlock(state, new Vec3(0.45F, 0.40D, 0.45F));
-			if (!level.isClientSide && (entity.xOld != entity.getX() || entity.zOld != entity.getZ())) {
+			if ((entity.xOld != entity.getX() || entity.zOld != entity.getZ())) {
 				double xDelta = Math.abs(entity.getX() - entity.xOld);
 				double zDelta = Math.abs(entity.getZ() - entity.zOld);
 				if (xDelta >= 0.003F || zDelta >= 0.003F) {
@@ -25,9 +25,10 @@ public interface BarbedWireUtils {
 						return;
 					}
 
-					if (level.getBlockEntity(pos) instanceof DamageableBlockEntity damageable) {
-						entity.hurt(IWDamageSources.BARBED_WIRE, damageable.calculateDamage(2.0f, 0.25f));
-						// TODO: Damage stage needs to be supplied as it may change between the regular and fence variants
+					if (level.getBlockEntity(pos) instanceof DamageableBlockEntity damageable && level.getGameTime() % 10 == 0) {
+						if (!level.isClientSide) {
+							entity.hurt(IWDamageSources.BARBED_WIRE, damageable.calculateDamage(2.0f, 0.25f));
+						}
 						damageable.takeDamage(state, level, pos, BarbedWireBlock.DAMAGE_STAGE);
 					}
 				}

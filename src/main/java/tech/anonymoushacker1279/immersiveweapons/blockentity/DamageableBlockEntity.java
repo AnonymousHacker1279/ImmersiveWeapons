@@ -91,6 +91,10 @@ public class DamageableBlockEntity extends BlockEntity {
 	 * @param pos   the <code>BlockPos</code> the block is at
 	 */
 	public void takeDamage(BlockState state, Level level, BlockPos pos, IntegerProperty damageStage) {
+		if (level.isClientSide) {
+			return;
+		}
+
 		if (health > 0) {
 			health--;
 
@@ -125,6 +129,7 @@ public class DamageableBlockEntity extends BlockEntity {
 		if (repairStack.getItem() == repairItem && currentStage > 0 && currentStage <= stages) {
 			if (health < maxHealth) {
 				health += maxHealth / (double) (stages + 1);
+
 				level.setBlockAndUpdate(pos, state.setValue(damageStage, currentStage - 1));
 
 				if (!player.isCreative()) {

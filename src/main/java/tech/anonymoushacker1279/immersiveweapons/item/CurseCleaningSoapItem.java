@@ -9,9 +9,9 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 
-public class CurseCleaningSoap extends Item {
+public class CurseCleaningSoapItem extends Item {
 
-	public CurseCleaningSoap(Properties properties) {
+	public CurseCleaningSoapItem(Properties properties) {
 		super(properties);
 	}
 

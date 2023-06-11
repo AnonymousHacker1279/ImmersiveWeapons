@@ -22,7 +22,7 @@ public class BarbedWireBlock extends DamageableBlock implements BarbedWireUtils 
 	 * @param properties the <code>Properties</code> of the block
 	 */
 	public BarbedWireBlock(Properties properties) {
-		super(properties, 256, 2, Items.IRON_INGOT, DAMAGE_STAGE);
+		super(properties, 212, 2, Items.IRON_INGOT, DAMAGE_STAGE);
 		registerDefaultState(stateDefinition.any().setValue(WATERLOGGED, false));
 	}
 

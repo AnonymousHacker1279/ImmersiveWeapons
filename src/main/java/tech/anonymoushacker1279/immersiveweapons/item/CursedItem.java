@@ -24,7 +24,7 @@ public class CursedItem extends Item {
 	 * Cursed items cannot be removed once used. Their effects are permanent in survival mode, even persisting through death.
 	 * They are "charged" and require 100 entity kills while the item is in the inventory to be used.
 	 * <p>
-	 * The only way to clear the effects of a cursed item is to use a {@link CurseCleaningSoap} item, which is not
+	 * The only way to clear the effects of a cursed item is to use a {@link CurseCleaningSoapItem} item, which is not
 	 * obtainable in survival mode.
 	 *
 	 * @param properties the <code>Properties</code> for the item

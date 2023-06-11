@@ -32,7 +32,7 @@ public class WoodenSpikesBlock extends DamageableBlock {
 	 * @param properties the <code>Properties</code> of the block
 	 */
 	public WoodenSpikesBlock(Properties properties) {
-		super(properties, 128, 3, Items.STICK, DAMAGE_STAGE);
+		super(properties, 96, 3, Items.STICK, DAMAGE_STAGE);
 		registerDefaultState(stateDefinition.any().setValue(WATERLOGGED, Boolean.FALSE).setValue(DAMAGE_STAGE, 0));
 	}
 
@@ -71,14 +71,15 @@ public class WoodenSpikesBlock extends DamageableBlock {
 						return;
 					}
 
-					if (level.getBlockEntity(pos) instanceof DamageableBlockEntity damageable) {
+					if (level.getBlockEntity(pos) instanceof DamageableBlockEntity damageable && level.getGameTime() % 10 == 0) {
 						entity.hurt(IWDamageSources.WOODEN_SPIKES, damageable.calculateDamage(1.5f, 0.33f));
-						damageable.takeDamage(state, level, pos, DAMAGE_STAGE);
-					}
 
-					if (GeneralUtilities.getRandomNumber(0.0f, 1.0f) <= 0.15f) {
-						livingEntity.addEffect(new MobEffectInstance(EffectRegistry.BLEEDING_EFFECT.get(),
-								200, 0, true, false));
+						if (GeneralUtilities.getRandomNumber(0.0f, 1.0f) <= 0.15f) {
+							livingEntity.addEffect(new MobEffectInstance(EffectRegistry.BLEEDING_EFFECT.get(),
+									200, 0, true, false));
+						}
+
+						damageable.takeDamage(state, level, pos, DAMAGE_STAGE);
 					}
 				}
 			}

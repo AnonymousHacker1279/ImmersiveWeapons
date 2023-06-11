@@ -10,7 +10,6 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
-import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.*;
@@ -208,15 +207,15 @@ public class ForgeEventSubscriber {
 		EnvironmentEffects.moltenArmorSetBonus(event, source);
 
 		// Handle accessory effects
-		AccessoryEffects.berserkersAmuletEffect(event, damagedEntity);
-		AccessoryEffects.hansBlessingEffect(event, damagedEntity);
-		AccessoryEffects.blademasterEmblemEffect(event, damagedEntity);
-		AccessoryEffects.netheriteShieldEffect(event, damagedEntity);
-		AccessoryEffects.meleeMastersMoltenGloveEffect(event, damagedEntity);
-		AccessoryEffects.bloodySacrificeEffect(event, damagedEntity);
-
+		if (damagedEntity instanceof Player player) {
+			AccessoryEffects.damageResistanceEffects(event, player);
+		}
 
 		if (source instanceof Player player) {
+			AccessoryEffects.meleeDamageEffects(event, player);
+			AccessoryEffects.projectileDamageEffects(event, player);
+			AccessoryEffects.meleeBleedChanceEffects(event, player, damagedEntity);
+
 			// Handle Regenerative Assault enchantment
 			ItemStack weapon = player.getItemInHand(player.getUsedItemHand());
 
@@ -238,6 +237,8 @@ public class ForgeEventSubscriber {
 				PacketHandler.INSTANCE.send(PacketDistributor.PLAYER.with(() -> serverPlayer), new LastDamageDealtPacketHandler(player.getUUID(), event.getAmount()));
 			}
 		}
+
+		AccessoryEffects.bloodySacrificeEffect(event, damagedEntity);
 	}
 
 	@SubscribeEvent
@@ -436,20 +437,12 @@ public class ForgeEventSubscriber {
 	public static void livingKnockBackEvent(LivingKnockBackEvent event) {
 		LivingEntity entity = event.getEntity();
 
-		// Prevent all knockback if the player has an active Netherite Shield accessory
 		if (entity instanceof Player player) {
-			AccessoryItem netheriteShield = AccessoryItem.getAccessory(player, AccessorySlot.BODY);
-			if (netheriteShield == ItemRegistry.NETHERITE_SHIELD.get()) {
-				event.setCanceled(true);
-			}
+			AccessoryEffects.knockbackResistanceEffects(event, player);
 		}
 
-		// Increase knockback to entity if the source player has an active Melee Master's Molten Glove accessory
-		if (entity.getLastAttacker() instanceof Player player && entity.getLastDamageSource() != null && entity.getLastDamageSource().is(DamageTypes.PLAYER_ATTACK)) {
-			AccessoryItem moltenGlove = AccessoryItem.getAccessory(player, AccessorySlot.HAND);
-			if (moltenGlove == ItemRegistry.MELEE_MASTERS_MOLTEN_GLOVE.get()) {
-				event.setStrength(event.getStrength() * 1.75f);
-			}
+		if (entity.getLastAttacker() instanceof Player player) {
+			AccessoryEffects.meleeKnockbackEffects(event, player);
 		}
 	}
 }

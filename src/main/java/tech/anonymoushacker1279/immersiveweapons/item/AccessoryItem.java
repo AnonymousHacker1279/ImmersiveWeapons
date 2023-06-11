@@ -4,24 +4,35 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class AccessoryItem extends Item {
 
 	private final AccessorySlot slot;
+	private final Map<EffectType, Double> effects;
 
 	/**
 	 * AccessoryItems provide various effects when equipped. There are specific categories they may be placed in, and only
 	 * one item from each category may be active at a time.
 	 *
 	 * @param properties the <code>Properties</code> for the item
+	 * @param slot       the <code>AccessorySlot</code> the item belongs to
+	 * @param effects    a <code>Map</code> of <code>EffectType</code> to <code>Double</code> values
 	 */
-	public AccessoryItem(Properties properties, AccessorySlot slot) {
+	public AccessoryItem(Properties properties, AccessorySlot slot, Map<EffectType, Double> effects) {
 		super(properties);
 
 		this.slot = slot;
+		this.effects = effects;
 	}
 
 	public AccessorySlot getSlot() {
 		return slot;
+	}
+
+	public Map<EffectType, Double> getEffects() {
+		return effects;
 	}
 
 	public boolean isActive(Player player) {
@@ -57,6 +68,23 @@ public class AccessoryItem extends Item {
 		return null;
 	}
 
+	/**
+	 * Builder for creating effect maps.
+	 */
+	public static class EffectMapBuilder {
+
+		private final Map<EffectType, Double> effects = new HashMap<>(5);
+
+		public EffectMapBuilder addEffect(EffectType type, double value) {
+			effects.put(type, value);
+			return this;
+		}
+
+		public Map<EffectType, Double> build() {
+			return effects;
+		}
+	}
+
 	public enum AccessorySlot {
 		BODY,
 		NECKLACE,
@@ -64,5 +92,17 @@ public class AccessoryItem extends Item {
 		BELT,
 		CHARM,
 		SPIRIT
+	}
+
+	public enum EffectType {
+		FIREARM_AMMO_CONSERVATION_CHANCE,
+		FIREARM_RELOAD_SPEED,
+		MELEE_DAMAGE,
+		PROJECTILE_DAMAGE,
+		DAMAGE_RESISTANCE,
+		KNOCKBACK_RESISTANCE,
+		MELEE_KNOCKBACK,
+		MELEE_BLEED_CHANCE,
+		OTHER
 	}
 }

@@ -22,9 +22,9 @@ import net.minecraftforge.network.PacketDistributor;
 import tech.anonymoushacker1279.immersiveweapons.config.CommonConfig;
 import tech.anonymoushacker1279.immersiveweapons.data.tags.groups.immersiveweapons.IWItemTagGroups;
 import tech.anonymoushacker1279.immersiveweapons.entity.projectile.bullet.BulletEntity;
+import tech.anonymoushacker1279.immersiveweapons.event.game_effects.AccessoryEffects;
 import tech.anonymoushacker1279.immersiveweapons.init.*;
-import tech.anonymoushacker1279.immersiveweapons.item.AccessoryItem;
-import tech.anonymoushacker1279.immersiveweapons.item.AccessoryItem.AccessorySlot;
+import tech.anonymoushacker1279.immersiveweapons.item.AccessoryItem.EffectType;
 import tech.anonymoushacker1279.immersiveweapons.item.projectile.bullet.AbstractBulletItem;
 import tech.anonymoushacker1279.immersiveweapons.item.projectile.gun.data.GunData;
 import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
@@ -180,9 +180,7 @@ public abstract class AbstractGunItem extends Item implements Vanishable {
 
 				if (!player.isCreative()) {
 					// Reduce cooldown in certain conditions
-					AccessoryItem accessory = AccessoryItem.getAccessory(player, AccessorySlot.BODY);
-					boolean hasPowderHorn = accessory == ItemRegistry.POWDER_HORN.get();
-					float reductionFactor = hasPowderHorn ? 0.15f : 0f;
+					float reductionFactor = (float) AccessoryEffects.collectEffects(EffectType.FIREARM_RELOAD_SPEED, player);
 
 					int rapidFireLevel = gun.getEnchantmentLevel(EnchantmentRegistry.RAPID_FIRE.get());
 					reductionFactor += (0.05f * rapidFireLevel);
@@ -501,10 +499,9 @@ public abstract class AbstractGunItem extends Item implements Vanishable {
 	protected void handleAmmoStack(ItemStack gun, ItemStack ammo, int bulletsToFire, Player player) {
 		if (!player.isCreative() && ammo.getItem() instanceof AbstractBulletItem bulletItem) {
 			if (!bulletItem.isInfinite(ammo, gun, player)) {
-				// If the player has the Satchel item in their inventory, there is a 10% chance of not consuming ammo
-				AccessoryItem accessory = AccessoryItem.getAccessory(player, AccessorySlot.BODY);
-				if (!player.level.isClientSide && accessory == ItemRegistry.SATCHEL.get()) {
-					if (player.getRandom().nextInt(10) == 0) {
+				float ammoConservationChance = (float) AccessoryEffects.collectEffects(EffectType.FIREARM_AMMO_CONSERVATION_CHANCE, player);
+				if (!player.level.isClientSide) {
+					if (player.getRandom().nextFloat() <= ammoConservationChance) {
 						player.getInventory().setChanged(); // Resync the inventory because the client may not roll the same number
 						return;
 					}

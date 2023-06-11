@@ -867,7 +867,7 @@ public class LanguageGenerator extends IWLanguageProvider {
 		add("immersiveweapons.debugTracing.gunBaseVelocity", "Gun Base Velocity: %s");
 		add("immersiveweapons.debugTracing.selectedAmmo", "Selected Ammo: %s (base damage: %s)");
 		add("immersiveweapons.debugTracing.liveBulletDamage", "Live Bullet Damage: %s (is crit: %s)");
-		add("immersiveweapons.debugTracing.damageBonus", "Damage Bonus: %s");
+		add("immersiveweapons.debugTracing.damageBonus", "Damage Bonus: %s general, %s melee, %s projectile");
 		add("immersiveweapons.debugTracing.celestialProtectionChanceForNoDamage", "Celestial Protection Chance: %s");
 		add("immersiveweapons.debugTracing.lastDamageDealt", "Last Damage Dealt: %s");
 	}
