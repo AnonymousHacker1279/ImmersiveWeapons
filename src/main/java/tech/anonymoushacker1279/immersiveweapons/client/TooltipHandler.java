@@ -4,6 +4,7 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.DiggerItem;
 import net.minecraft.world.item.ItemStack;
@@ -13,6 +14,7 @@ import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
+import net.minecraftforge.registries.ForgeRegistries;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.init.BlockItemRegistry;
 import tech.anonymoushacker1279.immersiveweapons.init.ItemRegistry;
@@ -268,6 +270,14 @@ public class TooltipHandler {
 			}
 			if (stack.getItem() == ItemRegistry.MELEE_MASTERS_MOLTEN_GLOVE.get()) {
 				event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.melee_masters_molten_glove").withStyle(ChatFormatting.GREEN, ChatFormatting.ITALIC));
+				addShiftTooltip(event.getToolTip(), addAccessoryTooltips(item, event.getEntity()));
+			}
+			// Regex check for "immersiveweapons:X_ring" where X is any string
+			ResourceLocation path = ForgeRegistries.ITEMS.getKey(item.asItem());
+			if (path != null && path.toString().matches("immersiveweapons:.+_ring")) {
+				// Get the name of the ring
+				String ringName = path.toString().substring(17);
+				event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.%s".formatted(ringName)).withStyle(ChatFormatting.GREEN, ChatFormatting.ITALIC));
 				addShiftTooltip(event.getToolTip(), addAccessoryTooltips(item, event.getEntity()));
 			}
 		} else if (stack.getItem() instanceof CursedItem) {

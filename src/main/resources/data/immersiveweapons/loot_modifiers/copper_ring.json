@@ -1,0 +1,9 @@
+{
+	"conditions": [
+		{
+			"condition": "minecraft:killed_by_player"
+		}
+	],
+	"drop_chance": 0.05,
+	"type": "immersiveweapons:copper_ring"
+}

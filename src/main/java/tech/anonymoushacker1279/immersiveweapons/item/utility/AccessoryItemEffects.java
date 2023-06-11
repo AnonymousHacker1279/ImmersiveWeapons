@@ -39,4 +39,34 @@ public class AccessoryItemEffects {
 			.addEffect(EffectType.MELEE_DAMAGE, 0.1d)
 			.addEffect(EffectType.MELEE_KNOCKBACK, 0.75d)
 			.build();
+	public static final Map<EffectType, Double> COPPER_RING = new EffectMapBuilder()
+			.addEffect(EffectType.GENERAL_DAMAGE, 0.01d)
+			.addEffect(EffectType.DAMAGE_RESISTANCE, 0.01d)
+			.build();
+	public static final Map<EffectType, Double> IRON_RING = new EffectMapBuilder()
+			.addEffect(EffectType.GENERAL_DAMAGE, 0.02d)
+			.addEffect(EffectType.DAMAGE_RESISTANCE, 0.02d)
+			.build();
+	public static final Map<EffectType, Double> COBALT_RING = new EffectMapBuilder()
+			.addEffect(EffectType.GENERAL_DAMAGE, 0.025d)
+			.addEffect(EffectType.DAMAGE_RESISTANCE, 0.025d)
+			.build();
+	public static final Map<EffectType, Double> GOLDEN_RING = new EffectMapBuilder()
+			.addEffect(EffectType.GENERAL_DAMAGE, 0.03d)
+			.addEffect(EffectType.DAMAGE_RESISTANCE, 0.03d)
+			.build();
+	public static final Map<EffectType, Double> EMERALD_RING = new EffectMapBuilder()
+			.addEffect(EffectType.OTHER, 0.0d)
+			.build();
+	public static final Map<EffectType, Double> AMETHYST_RING = new EffectMapBuilder()
+			.addEffect(EffectType.OTHER, 0.0d)
+			.build();
+	public static final Map<EffectType, Double> DIAMOND_RING = new EffectMapBuilder()
+			.addEffect(EffectType.GENERAL_DAMAGE, 0.04d)
+			.addEffect(EffectType.DAMAGE_RESISTANCE, 0.04d)
+			.build();
+	public static final Map<EffectType, Double> NETHERITE_RING = new EffectMapBuilder()
+			.addEffect(EffectType.GENERAL_DAMAGE, 0.05d)
+			.addEffect(EffectType.DAMAGE_RESISTANCE, 0.05d)
+			.build();
 }

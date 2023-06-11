@@ -237,6 +237,14 @@ public class ItemRegistry {
 	public static final RegistryObject<AccessoryItem> BLOATED_HEART = ITEMS.register("bloated_heart", () -> new AccessoryItem(new Properties().stacksTo(1), AccessorySlot.BODY, AccessoryItemEffects.BLOATED_HEART));
 	public static final RegistryObject<AccessoryItem> NETHERITE_SHIELD = ITEMS.register("netherite_shield", () -> new AccessoryItem(new Properties().stacksTo(1), AccessorySlot.BODY, AccessoryItemEffects.NETHERITE_SHIELD));
 	public static final RegistryObject<AccessoryItem> MELEE_MASTERS_MOLTEN_GLOVE = ITEMS.register("melee_masters_molten_glove", () -> new AccessoryItem(new Properties().stacksTo(1), AccessorySlot.HAND, AccessoryItemEffects.MELEE_MASTERS_MOLTEN_GLOVE));
+	public static final RegistryObject<AccessoryItem> COPPER_RING = ITEMS.register("copper_ring", () -> new AccessoryItem(new Properties().stacksTo(1), AccessorySlot.RING, AccessoryItemEffects.COPPER_RING));
+	public static final RegistryObject<AccessoryItem> IRON_RING = ITEMS.register("iron_ring", () -> new AccessoryItem(new Properties().stacksTo(1), AccessorySlot.RING, AccessoryItemEffects.IRON_RING));
+	public static final RegistryObject<AccessoryItem> COBALT_RING = ITEMS.register("cobalt_ring", () -> new AccessoryItem(new Properties().stacksTo(1), AccessorySlot.RING, AccessoryItemEffects.COBALT_RING));
+	public static final RegistryObject<AccessoryItem> GOLDEN_RING = ITEMS.register("golden_ring", () -> new AccessoryItem(new Properties().stacksTo(1), AccessorySlot.RING, AccessoryItemEffects.GOLDEN_RING));
+	public static final RegistryObject<AccessoryItem> AMETHYST_RING = ITEMS.register("amethyst_ring", () -> new AccessoryItem(new Properties().stacksTo(1), AccessorySlot.RING, AccessoryItemEffects.AMETHYST_RING));
+	public static final RegistryObject<AccessoryItem> EMERALD_RING = ITEMS.register("emerald_ring", () -> new AccessoryItem(new Properties().stacksTo(1), AccessorySlot.RING, AccessoryItemEffects.EMERALD_RING));
+	public static final RegistryObject<AccessoryItem> DIAMOND_RING = ITEMS.register("diamond_ring", () -> new AccessoryItem(new Properties().stacksTo(1), AccessorySlot.RING, AccessoryItemEffects.DIAMOND_RING));
+	public static final RegistryObject<AccessoryItem> NETHERITE_RING = ITEMS.register("netherite_ring", () -> new AccessoryItem(new Properties().stacksTo(1), AccessorySlot.RING, AccessoryItemEffects.NETHERITE_RING));
 	public static final RegistryObject<CursedItem> BLOODY_SACRIFICE = ITEMS.register("bloody_sacrifice", () -> new CursedItem(new Properties().stacksTo(1).setNoRepair().durability(100), "bloody_sacrifice"));
 
 	// Armor

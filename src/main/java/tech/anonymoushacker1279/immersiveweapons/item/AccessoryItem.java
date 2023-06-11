@@ -89,6 +89,7 @@ public class AccessoryItem extends Item {
 		BODY,
 		NECKLACE,
 		HAND,
+		RING,
 		BELT,
 		CHARM,
 		SPIRIT
@@ -99,6 +100,7 @@ public class AccessoryItem extends Item {
 		FIREARM_RELOAD_SPEED,
 		MELEE_DAMAGE,
 		PROJECTILE_DAMAGE,
+		GENERAL_DAMAGE,
 		DAMAGE_RESISTANCE,
 		KNOCKBACK_RESISTANCE,
 		MELEE_KNOCKBACK,

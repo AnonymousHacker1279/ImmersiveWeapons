@@ -61,7 +61,7 @@ public class DebugTracingOverlay {
 		float meleeDamageBonus = Math.round(DebugTracingData.MELEE_DAMAGE_BONUS * 1000.0f) / 10.0f;
 		float projectileDamageBonus = Math.round(DebugTracingData.PROJECTILE_DAMAGE_BONUS * 1000.0f) / 10.0f;
 
-		if (generalDamageBonus > 0) {
+		if ((generalDamageBonus + meleeDamageBonus + projectileDamageBonus) > 0) {
 			MutableComponent damageBonus = Component.translatable("immersiveweapons.debugTracing.damageBonus",
 							generalDamageBonus + "%",
 							meleeDamageBonus + "%",

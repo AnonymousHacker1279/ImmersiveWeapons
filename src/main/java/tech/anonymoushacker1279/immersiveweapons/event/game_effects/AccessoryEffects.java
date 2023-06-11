@@ -62,6 +62,14 @@ public class AccessoryEffects {
 		}
 	}
 
+	public static void generalDamageEffects(LivingHurtEvent event, Player player) {
+		// Get the total general damage from all items
+		double generalDamage = collectEffects(EffectType.GENERAL_DAMAGE, player);
+
+		// Apply the general damage
+		event.setAmount((float) (event.getAmount() * (1 + generalDamage)));
+	}
+
 	public static void meleeBleedChanceEffects(LivingHurtEvent event, Player player, LivingEntity damagedEntity) {
 		// Get the total bleed chance from all items
 		double bleedChance = collectEffects(EffectType.MELEE_BLEED_CHANCE, player);

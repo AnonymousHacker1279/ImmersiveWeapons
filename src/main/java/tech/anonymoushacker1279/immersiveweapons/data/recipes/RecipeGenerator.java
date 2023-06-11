@@ -568,17 +568,14 @@ public class RecipeGenerator extends RecipeProvider {
 	}
 
 	private void createPanelItems() {
-		Item PANEL_ITEM = BlockItemRegistry.IRON_PANEL_ITEM.get();
-		Item PANEL_ITEM_BARS = BlockItemRegistry.IRON_PANEL_BARS_ITEM.get();
-
-		ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, PANEL_ITEM, 8)
+		ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, BlockItemRegistry.IRON_PANEL_ITEM.get(), 8)
 				.define('a', Tags.Items.STORAGE_BLOCKS_IRON)
 				.pattern("aaa")
 				.group("iron_panel")
 				.unlockedBy("iron_block", has(Tags.Items.STORAGE_BLOCKS_IRON))
 				.save(finishedRecipeConsumer);
 
-		ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, PANEL_ITEM_BARS, 8)
+		ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, BlockItemRegistry.IRON_PANEL_BARS_ITEM.get(), 8)
 				.define('a', Tags.Items.STORAGE_BLOCKS_IRON)
 				.define('b', Items.IRON_BARS)
 				.pattern("aba")
@@ -1023,6 +1020,66 @@ public class RecipeGenerator extends RecipeProvider {
 
 		// Netherite Shield
 		netheriteSmithing(Items.SHIELD, ItemRegistry.NETHERITE_SHIELD.get());
+
+		// Iron Ring
+		ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ItemRegistry.IRON_RING.get())
+				.define('a', Tags.Items.INGOTS_IRON)
+				.define('b', ItemRegistry.COPPER_RING.get())
+				.pattern(" a ")
+				.pattern("aba")
+				.pattern(" a ")
+				.group("ring")
+				.unlockedBy("copper_ring", has(ItemRegistry.COPPER_RING.get()))
+				.save(finishedRecipeConsumer);
+		// Cobalt Ring
+		ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ItemRegistry.COBALT_RING.get())
+				.define('a', ForgeItemTagGroups.COBALT_INGOTS)
+				.define('b', ItemRegistry.IRON_RING.get())
+				.pattern(" a ")
+				.pattern("aba")
+				.pattern(" a ")
+				.group("ring")
+				.unlockedBy("iron_ring", has(ItemRegistry.IRON_RING.get()))
+				.save(finishedRecipeConsumer);
+		// Golden Ring
+		ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ItemRegistry.GOLDEN_RING.get())
+				.define('a', Tags.Items.INGOTS_GOLD)
+				.define('b', ItemRegistry.COBALT_RING.get())
+				.pattern(" a ")
+				.pattern("aba")
+				.pattern(" a ")
+				.group("ring")
+				.unlockedBy("cobalt_ring", has(ItemRegistry.COBALT_RING.get()))
+				.save(finishedRecipeConsumer);
+		// Diamond Ring
+		ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ItemRegistry.DIAMOND_RING.get())
+				.define('a', Tags.Items.GEMS_DIAMOND)
+				.define('b', ItemRegistry.GOLDEN_RING.get())
+				.pattern(" a ")
+				.pattern(" b ")
+				.group("ring")
+				.unlockedBy("golden_ring", has(ItemRegistry.GOLDEN_RING.get()))
+				.save(finishedRecipeConsumer);
+		// Amethyst Ring
+		ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ItemRegistry.AMETHYST_RING.get())
+				.define('a', Tags.Items.GEMS_AMETHYST)
+				.define('b', ItemRegistry.GOLDEN_RING.get())
+				.pattern(" a ")
+				.pattern(" b ")
+				.group("ring")
+				.unlockedBy("amethyst_ring", has(ItemRegistry.GOLDEN_RING.get()))
+				.save(finishedRecipeConsumer);
+		// Emerald Ring
+		ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ItemRegistry.EMERALD_RING.get())
+				.define('a', Tags.Items.GEMS_EMERALD)
+				.define('b', ItemRegistry.GOLDEN_RING.get())
+				.pattern(" a ")
+				.pattern(" b ")
+				.group("ring")
+				.unlockedBy("emerald_ring", has(ItemRegistry.GOLDEN_RING.get()))
+				.save(finishedRecipeConsumer);
+		// Netherite Ring
+		netheriteSmithing(ItemRegistry.DIAMOND_RING.get(), ItemRegistry.NETHERITE_RING.get());
 
 		// Bloody Sacrifice
 		ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ItemRegistry.BLOODY_SACRIFICE.get())

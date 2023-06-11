@@ -72,7 +72,7 @@ public class DebugTracingData {
 			GENERAL_DAMAGE_BONUS = 0;
 			MELEE_DAMAGE_BONUS = 0;
 			PROJECTILE_DAMAGE_BONUS = 0;
-			
+
 			if (player.getItemBySlot(EquipmentSlot.HEAD).getItem() == ItemRegistry.STARSTORM_HELMET.get() &&
 					player.getItemBySlot(EquipmentSlot.CHEST).getItem() == ItemRegistry.STARSTORM_CHESTPLATE.get() &&
 					player.getItemBySlot(EquipmentSlot.LEGS).getItem() == ItemRegistry.STARSTORM_LEGGINGS.get() &&
@@ -97,6 +97,7 @@ public class DebugTracingData {
 				GENERAL_DAMAGE_BONUS += bonus;
 			}
 
+			GENERAL_DAMAGE_BONUS += AccessoryEffects.collectEffects(EffectType.GENERAL_DAMAGE, player);
 			MELEE_DAMAGE_BONUS += AccessoryEffects.collectEffects(EffectType.MELEE_DAMAGE, player);
 			PROJECTILE_DAMAGE_BONUS += AccessoryEffects.collectEffects(EffectType.PROJECTILE_DAMAGE, player);
 		}

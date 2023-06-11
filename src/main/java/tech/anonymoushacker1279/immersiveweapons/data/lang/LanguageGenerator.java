@@ -419,6 +419,14 @@ public class LanguageGenerator extends IWLanguageProvider {
 		addTooltip("bloated_heart", "Increases maximum health by two hearts");
 		addTooltip("netherite_shield", "Provides total immunity to knockback and 3% damage reduction");
 		addTooltip("melee_masters_molten_glove", "Increases melee knockback by 75% and melee damage by 10%");
+		addTooltip("copper_ring", "Increase general damage by 1% and provides 1% damage reduction");
+		addTooltip("iron_ring", "Increase general damage by 2% and provides 2% damage reduction");
+		addTooltip("cobalt_ring", "Increase general damage by 2.5% and provides 2.5% damage reduction");
+		addTooltip("golden_ring", "Increase general damage by 3% and provides 3% damage reduction");
+		addTooltip("amethyst_ring", "Provides a looting bonus");
+		addTooltip("emerald_ring", "Provides the Hero of the Village effect");
+		addTooltip("diamond_ring", "Increase general damage by 4% and provides 4% damage reduction");
+		addTooltip("netherite_ring", "Increase general damage by 5% and provides 5% damage reduction");
 
 		addTooltip("bloody_sacrifice", "You feel a dark presence emanating from this item");
 		addTooltip("bloody_sacrifice_charge_note", "The destruction of life charges something inside");

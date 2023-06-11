@@ -169,16 +169,21 @@ public class ForgeEventSubscriber {
 			}
 
 			// Handle increased health effect of the Bloated Heart
-			AccessoryItem bloatedHeart = AccessoryItem.getAccessory(player, AccessorySlot.BODY);
 			AttributeInstance attributeInstance = player.getAttributes().getInstance(Attributes.MAX_HEALTH);
-
 			if (attributeInstance != null) {
-				if (bloatedHeart == ItemRegistry.BLOATED_HEART.get()) {
+				if (AccessoryItem.getAccessory(player, AccessorySlot.BODY) == ItemRegistry.BLOATED_HEART.get()) {
 					if (!attributeInstance.hasModifier(BLOATED_HEART_HEALTH_MODIFIER)) {
 						attributeInstance.addTransientModifier(BLOATED_HEART_HEALTH_MODIFIER);
 					}
 				} else if (attributeInstance.hasModifier(BLOATED_HEART_HEALTH_MODIFIER)) {
 					attributeInstance.removeModifier(BLOATED_HEART_HEALTH_MODIFIER);
+				}
+			}
+
+			// Handle constant Hero of the Village effect of the Emerald Ring
+			if (AccessoryItem.getAccessory(player, AccessorySlot.RING) == ItemRegistry.EMERALD_RING.get()) {
+				if (!player.hasEffect(MobEffects.HERO_OF_THE_VILLAGE)) {
+					player.addEffect(new MobEffectInstance(MobEffects.HERO_OF_THE_VILLAGE, 60, 0, true, true));
 				}
 			}
 		}
@@ -214,6 +219,7 @@ public class ForgeEventSubscriber {
 		if (source instanceof Player player) {
 			AccessoryEffects.meleeDamageEffects(event, player);
 			AccessoryEffects.projectileDamageEffects(event, player);
+			AccessoryEffects.generalDamageEffects(event, player);
 			AccessoryEffects.meleeBleedChanceEffects(event, player, damagedEntity);
 
 			// Handle Regenerative Assault enchantment
@@ -373,10 +379,15 @@ public class ForgeEventSubscriber {
 
 	@SubscribeEvent
 	public static void lootingLevelEvent(LootingLevelEvent event) {
-		// Increase the looting level by 3 with the Bloody Sacrifice curse
 		if (event.getDamageSource().getEntity() instanceof Player player) {
+			// Increase the looting level by 3 with the Bloody Sacrifice curse
 			if (player.getPersistentData().getBoolean("used_curse_accessory_bloody_sacrifice")) {
 				event.setLootingLevel(event.getLootingLevel() + 3);
+			}
+
+			// Increase the looting level by 2 with the Amethyst Ring
+			if (AccessoryItem.getAccessory(player, AccessorySlot.RING) == ItemRegistry.AMETHYST_RING.get()) {
+				event.setLootingLevel(event.getLootingLevel() + 2);
 			}
 		}
 	}
