@@ -780,6 +780,8 @@ public class LanguageGenerator extends IWLanguageProvider {
 		addAdvancement("discover_star_wolf.description", "Discover a Star Wolf, a stronger and larger wolf");
 		addAdvancement("discover_skygazer.title", "Finally, Some Decent Trades");
 		addAdvancement("discover_skygazer.description", "Discover a Skygazer, a trader which resides in the Starlight Plains");
+		addAdvancement("discover_skeleton_merchant.title", "Cavern Trader");
+		addAdvancement("discover_skeleton_merchant.description", "Discover a Skeleton Merchant, a trader which resides in lush caves");
 	}
 
 	private void addConfigDescriptions() {
@@ -878,6 +880,9 @@ public class LanguageGenerator extends IWLanguageProvider {
 		add("immersiveweapons.debugTracing.damageBonus", "Damage Bonus: %s general, %s melee, %s projectile");
 		add("immersiveweapons.debugTracing.celestialProtectionChanceForNoDamage", "Celestial Protection Chance: %s");
 		add("immersiveweapons.debugTracing.lastDamageDealt", "Last Damage Dealt: %s");
+
+		// IWCB strings
+		add("tooltip.iwcompatbridge.accessory_note", "Equip this in a Curios slot to gain the effect.");
 	}
 
 	/**

@@ -59,6 +59,8 @@ public class ClientModEventSubscriber {
 			BlockRegistry.HANS_HEAD.getId(), "main");
 	private static final ModelLayerLocation STORM_CREEPER_HEAD_LAYER = new ModelLayerLocation(
 			BlockRegistry.STORM_CREEPER_HEAD.getId(), "main");
+	private static final ModelLayerLocation SKELETON_MERCHANT_HEAD_LAYER = new ModelLayerLocation(
+			BlockRegistry.SKELETON_MERCHANT_HEAD.getId(), "main");
 
 	/**
 	 * Event handler for the FMLClientSetupEvent.
@@ -86,6 +88,8 @@ public class ClientModEventSubscriber {
 					"textures/entity/heads/hans.png"));
 			SkullBlockRenderer.SKIN_BY_TYPE.put(CustomSkullTypes.STORM_CREEPER, new ResourceLocation(ImmersiveWeapons.MOD_ID,
 					"textures/entity/heads/storm_creeper.png"));
+			SkullBlockRenderer.SKIN_BY_TYPE.put(CustomSkullTypes.SKELETON_MERCHANT, new ResourceLocation(ImmersiveWeapons.MOD_ID,
+					"textures/entity/heads/skeleton_merchant.png"));
 
 			Sheets.addWoodType(WoodTypes.BURNED_OAK);
 			Sheets.addWoodType(WoodTypes.STARDUST);
@@ -239,6 +243,7 @@ public class ClientModEventSubscriber {
 		event.registerEntityRenderer(EntityRegistry.EVIL_EYE_ENTITY.get(), EvilEyeRenderer::new);
 		event.registerEntityRenderer(EntityRegistry.STAR_WOLF_ENTITY.get(), StarWolfRenderer::new);
 		event.registerEntityRenderer(EntityRegistry.SKYGAZER_ENTITY.get(), SkygazerRenderer::new);
+		event.registerEntityRenderer(EntityRegistry.SKELETON_MERCHANT_ENTITY.get(), SkeletonMerchantRenderer::new);
 
 		event.registerBlockEntityRenderer(BlockEntityRegistry.SHELF_BLOCK_ENTITY.get(), context -> new ShelfRenderer());
 		event.registerBlockEntityRenderer(BlockEntityRegistry.BURNED_OAK_SIGN_ENTITY.get(), SignRenderer::new);
@@ -260,12 +265,14 @@ public class ClientModEventSubscriber {
 		event.registerLayerDefinition(FireflyModel.LAYER_LOCATION, FireflyModel::createBodyLayer);
 		event.registerLayerDefinition(MeteorModel.LAYER_LOCATION, MeteorModel::createBodyLayer);
 		event.registerLayerDefinition(EvilEyeModel.LAYER_LOCATION, EvilEyeModel::createBodyLayer);
+		event.registerLayerDefinition(SkeletonMerchantModel.LAYER_LOCATION, SkeletonMerchantModel::createBodyLayer);
 		event.registerLayerDefinition(MINUTEMAN_HEAD_LAYER, SkullModel::createMobHeadLayer);
 		event.registerLayerDefinition(FIELD_MEDIC_HEAD_LAYER, SkullModel::createMobHeadLayer);
 		event.registerLayerDefinition(DYING_SOLDIER_HEAD_LAYER, SkullModel::createMobHeadLayer);
 		event.registerLayerDefinition(WANDERING_WARRIOR_HEAD_LAYER, SkullModel::createMobHeadLayer);
 		event.registerLayerDefinition(HANS_HEAD_LAYER, SkullModel::createMobHeadLayer);
 		event.registerLayerDefinition(STORM_CREEPER_HEAD_LAYER, SkullModel::createMobHeadLayer);
+		event.registerLayerDefinition(SKELETON_MERCHANT_HEAD_LAYER, SkullModel::createMobHeadLayer);
 	}
 
 	/**
@@ -300,6 +307,8 @@ public class ClientModEventSubscriber {
 				.bakeLayer(HANS_HEAD_LAYER)));
 		event.registerSkullModel(CustomSkullTypes.STORM_CREEPER, new SkullModel(event.getEntityModelSet()
 				.bakeLayer(STORM_CREEPER_HEAD_LAYER)));
+		event.registerSkullModel(CustomSkullTypes.SKELETON_MERCHANT, new SkullModel(event.getEntityModelSet()
+				.bakeLayer(SKELETON_MERCHANT_HEAD_LAYER)));
 	}
 
 	@SubscribeEvent

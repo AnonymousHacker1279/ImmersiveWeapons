@@ -3,6 +3,9 @@ package tech.anonymoushacker1279.immersiveweapons.item;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import org.jetbrains.annotations.Nullable;
+import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
+import tech.anonymoushacker1279.immersiveweapons.api.PluginHandler;
+import tech.anonymoushacker1279.immersiveweapons.util.IWCBBridge;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -66,6 +69,22 @@ public class AccessoryItem extends Item {
 		}
 
 		return null;
+	}
+
+	/**
+	 * Check if the specified accessory is active for the player. By default, this refers back to {@link #isActive(Player)}.
+	 * If IWCB is installed and the Curios plugin is registered, it will defer to IWCB.
+	 *
+	 * @param player the <code>Player</code> to check
+	 * @param item   the <code>AccessoryItem</code> to check
+	 * @return true if the accessory is active, false otherwise
+	 */
+	public static boolean isAccessoryActive(Player player, AccessoryItem item) {
+		if (ImmersiveWeapons.IWCB_LOADED && PluginHandler.isPluginActive("iwcompatbridge:curios_plugin")) {
+			return IWCBBridge.isAccessoryActive(player, item);
+		} else {
+			return item.isActive(player);
+		}
 	}
 
 	/**

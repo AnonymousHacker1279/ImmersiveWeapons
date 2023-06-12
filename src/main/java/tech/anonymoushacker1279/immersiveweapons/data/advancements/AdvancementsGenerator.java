@@ -1101,6 +1101,9 @@ public class AdvancementsGenerator extends ForgeAdvancementProvider {
 				.addCriterion("discover_skygazer", new TriggerInstance(
 						Composite.ANY,
 						EntityRegistry.SKYGAZER_ENTITY.getId()))
+				.addCriterion("discover_skeleton_merchant", new TriggerInstance(
+						Composite.ANY,
+						EntityRegistry.SKELETON_MERCHANT_ENTITY.getId()))
 				.rewards(AdvancementRewards.Builder.experience(150))
 				.save(consumer, "immersiveweapons:entity_discovery");
 
@@ -1235,6 +1238,18 @@ public class AdvancementsGenerator extends ForgeAdvancementProvider {
 						EntityRegistry.SKYGAZER_ENTITY.getId()))
 				.rewards(AdvancementRewards.Builder.experience(20))
 				.save(consumer, "immersiveweapons:discover_skygazer");
+
+		Builder.advancement().parent(entity_discovery)
+				.display(BlockItemRegistry.SKELETON_MERCHANT_HEAD_ITEM.get(),
+						Component.translatable("advancements.immersiveweapons.discover_skeleton_merchant.title"),
+						Component.translatable("advancements.immersiveweapons.discover_skeleton_merchant.description"),
+						null, FrameType.TASK, true, true, false)
+				.addCriterion("discover", new TriggerInstance(
+						Composite.ANY,
+						EntityRegistry.SKELETON_MERCHANT_ENTITY.getId()))
+				.rewards(AdvancementRewards.Builder.experience(20))
+				.save(consumer, "immersiveweapons:discover_skeleton_merchant");
+
 
 		Advancement celestial_tower_discovery = Builder.advancement().parent(entity_discovery)
 				.display(ItemRegistry.CELESTIAL_FRAGMENT.get(),

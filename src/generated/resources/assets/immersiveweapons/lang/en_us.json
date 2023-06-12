@@ -83,6 +83,8 @@
   "advancements.immersiveweapons.discover_minuteman.title": "Ranged Defender",
   "advancements.immersiveweapons.discover_rock_spider.description": "Discover a Rock Spider, a stone-born spider that's small but just as potent",
   "advancements.immersiveweapons.discover_rock_spider.title": "Spiders... But Smaller",
+  "advancements.immersiveweapons.discover_skeleton_merchant.description": "Discover a Skeleton Merchant, a trader which resides in lush caves",
+  "advancements.immersiveweapons.discover_skeleton_merchant.title": "Cavern Trader",
   "advancements.immersiveweapons.discover_skygazer.description": "Discover a Skygazer, a trader which resides in the Starlight Plains",
   "advancements.immersiveweapons.discover_skygazer.title": "Finally, Some Decent Trades",
   "advancements.immersiveweapons.discover_star_wolf.description": "Discover a Star Wolf, a stronger and larger wolf",
@@ -347,6 +349,7 @@
   "block.immersiveweapons.red_stained_bulletproof_glass": "Red Stained Bulletproof Glass",
   "block.immersiveweapons.rusted_iron_block": "Rusted Iron Block",
   "block.immersiveweapons.sandbag": "Sandbag",
+  "block.immersiveweapons.skeleton_merchant_head": "Skeleton Merchant Head",
   "block.immersiveweapons.small_parts_table": "Small Parts Table",
   "block.immersiveweapons.smooth_blood_sandstone": "Smooth Blood Sandstone",
   "block.immersiveweapons.smooth_blood_sandstone_slab": "Smooth Blood Sandstone Slab",
@@ -507,6 +510,7 @@
   "entity.immersiveweapons.netherite_arrow": "Netherite Arrow",
   "entity.immersiveweapons.netherite_musket_ball": "Netherite Musket Ball",
   "entity.immersiveweapons.rock_spider": "Rock Spider",
+  "entity.immersiveweapons.skeleton_merchant": "Skeleton Merchant",
   "entity.immersiveweapons.skygazer": "Skygazer",
   "entity.immersiveweapons.smoke_grenade": "Smoke Grenade",
   "entity.immersiveweapons.smoke_grenade_arrow": "Smoke Grenade Arrow",
@@ -714,6 +718,7 @@
   "item.immersiveweapons.scope": "Scope",
   "item.immersiveweapons.scope_mount": "Scope Mount",
   "item.immersiveweapons.short_iron_barrel": "Short Iron Barrel",
+  "item.immersiveweapons.skeleton_merchant_spawn_egg": "Skeleton Merchant Spawn Egg",
   "item.immersiveweapons.skygazer_spawn_egg": "Skygazer Spawn Egg",
   "item.immersiveweapons.smoke_grenade": "Smoke Grenade",
   "item.immersiveweapons.smoke_grenade_arrow": "Smoke Grenade Arrow",
@@ -1003,5 +1008,6 @@
   "tooltip.immersiveweapons.wooden_arrow": "35% less powerful than normal arrows. Highly inaccurate. At this point it's just blunt-force trauma.",
   "tooltip.immersiveweapons.wooden_gauntlet": "Has a 15% chance to inflict Bleeding.",
   "tooltip.immersiveweapons.wooden_musket_ball": "Very inaccurate, and likely to cause a misfire. Why would anyone make wooden musket balls anyway?",
-  "tooltip.immersiveweapons.wooden_spikes": "Poor man's barbed wire"
+  "tooltip.immersiveweapons.wooden_spikes": "Poor man's barbed wire",
+  "tooltip.iwcompatbridge.accessory_note": "Equip this in a Curios slot to gain the effect."
 }

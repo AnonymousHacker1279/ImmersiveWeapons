@@ -5,7 +5,6 @@ import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.stats.Stats;
-import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
@@ -19,15 +18,16 @@ import net.minecraft.world.entity.npc.AbstractVillager;
 import net.minecraft.world.entity.npc.VillagerTrades;
 import net.minecraft.world.entity.npc.VillagerTrades.ItemListing;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.*;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.trading.MerchantOffer;
 import net.minecraft.world.item.trading.MerchantOffers;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Block;
 import tech.anonymoushacker1279.immersiveweapons.entity.GrantAdvancementOnDiscovery;
 import tech.anonymoushacker1279.immersiveweapons.entity.monster.StarmiteEntity;
+import tech.anonymoushacker1279.immersiveweapons.entity.npc.trades.*;
 import tech.anonymoushacker1279.immersiveweapons.init.*;
 import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
 
@@ -191,7 +191,7 @@ public class SkygazerEntity extends AbstractVillager implements GrantAdvancement
 			timeUntilRefreshTrades--;
 		} else {
 			updateTrades();
-			timeUntilRefreshTrades = 72000;
+			timeUntilRefreshTrades = 24000;
 		}
 	}
 
@@ -267,124 +267,4 @@ public class SkygazerEntity extends AbstractVillager implements GrantAdvancement
 		return null;
 	}
 
-	static class ItemsForEmeralds implements VillagerTrades.ItemListing {
-		private final ItemStack itemStack;
-		private final int emeraldCost;
-		private final int itemCount;
-		private final int maxUses;
-		private final int villagerXP;
-		private final float priceMultiplier;
-
-		public ItemsForEmeralds(Block block, int emeraldCost, int itemCount, int maxUses) {
-			this(new ItemStack(block), emeraldCost, itemCount, maxUses);
-		}
-
-		public ItemsForEmeralds(Item item, int emeraldCost, int itemCount, int maxUses) {
-			this(new ItemStack(item), emeraldCost, itemCount, maxUses);
-		}
-
-		public ItemsForEmeralds(ItemStack itemStack, int emeraldCost, int itemCount, int maxUses) {
-			this(itemStack, emeraldCost, itemCount, maxUses, 1, 0.05F);
-		}
-
-		public ItemsForEmeralds(ItemStack itemStack, int emeraldCost, int itemCount, int maxUses, int villagerXP, float priceMultiplier) {
-			this.itemStack = itemStack;
-			this.emeraldCost = emeraldCost;
-			this.itemCount = itemCount;
-			this.maxUses = maxUses;
-			this.villagerXP = villagerXP;
-			this.priceMultiplier = priceMultiplier;
-		}
-
-		@Override
-		public MerchantOffer getOffer(Entity trader, RandomSource randomSource) {
-			return new MerchantOffer(new ItemStack(Items.EMERALD, emeraldCost),
-					new ItemStack(itemStack.getItem(), itemCount),
-					maxUses, villagerXP, priceMultiplier
-			);
-		}
-	}
-
-	static class EnchantItemForItems implements VillagerTrades.ItemListing {
-		private final ItemStack enchantableItem;
-		private final Item tradingItem;
-		private int itemCost;
-		private final int maxUses;
-		private final int villagerXP;
-		private final float priceMultiplier;
-
-		public EnchantItemForItems(ItemStack enchantableItem, Item tradingItem, int maxUses) {
-			this(enchantableItem, tradingItem, maxUses, 1, 0.05F);
-		}
-
-		public EnchantItemForItems(ItemStack enchantableItem, Item tradingItem, int maxUses, int villagerXP, float priceMultiplier) {
-			this.enchantableItem = enchantableItem.copy();
-			this.tradingItem = tradingItem;
-			this.maxUses = maxUses;
-			this.villagerXP = villagerXP;
-			this.priceMultiplier = priceMultiplier;
-		}
-
-		@Override
-		public MerchantOffer getOffer(Entity trader, RandomSource randomSource) {
-			// If there are any enchantments on the item, increase the enchantment level by 1
-			ItemStack newEnchantableItem = enchantableItem.copy();
-			if (newEnchantableItem.isEnchanted()) {
-				Map<Enchantment, Integer> enchantments = newEnchantableItem.getAllEnchantments();
-
-				// Remove the old enchantments
-				newEnchantableItem.removeTagKey("Enchantments");
-
-				enchantments.forEach((enchantment, level) -> newEnchantableItem.enchant(enchantment, level + 1));
-
-				// Add up the total levels of all enchantments
-				int totalEnchantmentLevels = enchantments.values().stream().mapToInt(Integer::intValue).sum();
-
-				// The item cost rises exponentially with higher enchantment levels
-				// It caps at 32
-				itemCost = Math.min(32, (int) Math.pow(1.3, ((float) totalEnchantmentLevels / 2)));
-			}
-
-			return new MerchantOffer(enchantableItem, new ItemStack(tradingItem, itemCost), newEnchantableItem, maxUses, villagerXP, priceMultiplier);
-		}
-	}
-
-	// This takes in an enchanting book and applies its levels to the enchantable item
-	static class EnchantItemWithEnchantingBooks implements VillagerTrades.ItemListing {
-		private final ItemStack enchantableItem;
-		private final ItemStack tradingItem;
-		private final int maxUses;
-		private final int villagerXP;
-		private final float priceMultiplier;
-
-		public EnchantItemWithEnchantingBooks(ItemStack enchantableItem, ItemStack tradingItem, int maxUses) {
-			this(enchantableItem, tradingItem, maxUses, 1, 0.05F);
-		}
-
-		public EnchantItemWithEnchantingBooks(ItemStack enchantableItem, ItemStack tradingItem, int maxUses, int villagerXP, float priceMultiplier) {
-			this.enchantableItem = enchantableItem.copy();
-			this.tradingItem = tradingItem.copy();
-			this.maxUses = maxUses;
-			this.villagerXP = villagerXP;
-			this.priceMultiplier = priceMultiplier;
-		}
-
-		@Override
-		public MerchantOffer getOffer(Entity trader, RandomSource randomSource) {
-			// If there are any enchantments on the item, increase the enchantment level by 1
-			ItemStack newEnchantableItem = enchantableItem.copy();
-			if (newEnchantableItem.isEnchanted()) {
-				Map<Enchantment, Integer> existingEnchantments = newEnchantableItem.getAllEnchantments();
-				Map<Enchantment, Integer> enchantmentsFromBook = new HashMap<>(EnchantmentHelper.getEnchantments(tradingItem));
-
-				// Remove the old enchantments
-				newEnchantableItem.removeTagKey("Enchantments");
-
-				// Add all the existing enchantments with the new ones. If there is a shared enchantment, use the higher level from the book
-				existingEnchantments.forEach((enchantment, level) -> newEnchantableItem.enchant(enchantment, Math.max(level, enchantmentsFromBook.getOrDefault(enchantment, 0))));
-			}
-
-			return new MerchantOffer(enchantableItem, tradingItem, newEnchantableItem, maxUses, villagerXP, priceMultiplier);
-		}
-	}
 }

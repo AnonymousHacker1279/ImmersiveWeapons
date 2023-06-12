@@ -49,6 +49,12 @@
       },
       "trigger": "immersiveweapons:entity_discovered"
     },
+    "discover_skeleton_merchant": {
+      "conditions": {
+        "entity": "immersiveweapons:skeleton_merchant"
+      },
+      "trigger": "immersiveweapons:entity_discovered"
+    },
     "discover_skygazer": {
       "conditions": {
         "entity": "immersiveweapons:skygazer"
@@ -134,6 +140,9 @@
     ],
     [
       "discover_skygazer"
+    ],
+    [
+      "discover_skeleton_merchant"
     ]
   ],
   "rewards": {

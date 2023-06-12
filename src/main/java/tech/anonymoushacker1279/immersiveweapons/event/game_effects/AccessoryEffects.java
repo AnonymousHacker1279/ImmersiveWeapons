@@ -7,31 +7,40 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.living.LivingKnockBackEvent;
+import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
+import tech.anonymoushacker1279.immersiveweapons.api.PluginHandler;
 import tech.anonymoushacker1279.immersiveweapons.init.EffectRegistry;
 import tech.anonymoushacker1279.immersiveweapons.item.AccessoryItem;
 import tech.anonymoushacker1279.immersiveweapons.item.AccessoryItem.EffectType;
+import tech.anonymoushacker1279.immersiveweapons.util.IWCBBridge;
 
 public class AccessoryEffects {
 
 	/**
 	 * Collect the value of the given effect from all {@link AccessoryItem}s in the player's inventory.
+	 * <p>
+	 * This will check to see if IWCB is loaded, and if so, defer to it for collecting effects as it will utilize Curios.
 	 *
 	 * @param type   the <code>EffectType</code> to collect
 	 * @param player the <code>Player</code> to collect from
 	 * @return the value of the effect
 	 */
 	public static double collectEffects(EffectType type, Player player) {
-		double value = 0;
+		if (ImmersiveWeapons.IWCB_LOADED && PluginHandler.isPluginActive("iwcompatbridge:curios_plugin")) {
+			return IWCBBridge.collectEffects(type, player);
+		} else {
+			double value = 0;
 
-		for (int i = 0; i < player.getInventory().getContainerSize(); i++) {
-			if (player.getInventory().getItem(i).getItem() instanceof AccessoryItem accessoryItem) {
-				if (accessoryItem.isActive(player)) {
-					value += accessoryItem.getEffects().getOrDefault(type, 0d);
+			for (int i = 0; i < player.getInventory().getContainerSize(); i++) {
+				if (player.getInventory().getItem(i).getItem() instanceof AccessoryItem accessoryItem) {
+					if (accessoryItem.isActive(player)) {
+						value += accessoryItem.getEffects().getOrDefault(type, 0d);
+					}
 				}
 			}
-		}
 
-		return value;
+			return value;
+		}
 	}
 
 	public static void damageResistanceEffects(LivingHurtEvent event, Player player) {

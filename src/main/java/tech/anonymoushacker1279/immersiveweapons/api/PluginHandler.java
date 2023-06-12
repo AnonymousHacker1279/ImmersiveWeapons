@@ -64,7 +64,8 @@ public class PluginHandler {
 	}
 
 	/**
-	 * Check if a plugin has been registered.
+	 * Check if a plugin has been registered. Note, a plugin may be registered but not active. If you are checking
+	 * if a plugin is active, use {@link #isPluginActive(String)} instead.
 	 *
 	 * @param name the name of the plugin
 	 * @return true if the plugin has been registered, false otherwise
@@ -72,5 +73,21 @@ public class PluginHandler {
 	@AvailableSince("1.20.0")
 	public static boolean isPluginRegistered(String name) {
 		return PLUGIN_NAMES.contains(name);
+	}
+
+	/**
+	 * Check if a plugin is active.
+	 *
+	 * @param name the name of the plugin
+	 * @return true if the plugin is active, false otherwise
+	 */
+	@AvailableSince("1.23.0")
+	public static boolean isPluginActive(String name) {
+		for (IWPlugin plugin : PLUGINS) {
+			if (plugin.getPluginName().equals(name) && plugin.areLoadingRequirementsMet()) {
+				return true;
+			}
+		}
+		return false;
 	}
 }

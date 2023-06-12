@@ -55,7 +55,6 @@ import tech.anonymoushacker1279.immersiveweapons.event.game_effects.AccessoryEff
 import tech.anonymoushacker1279.immersiveweapons.event.game_effects.EnvironmentEffects;
 import tech.anonymoushacker1279.immersiveweapons.init.*;
 import tech.anonymoushacker1279.immersiveweapons.item.AccessoryItem;
-import tech.anonymoushacker1279.immersiveweapons.item.AccessoryItem.AccessorySlot;
 import tech.anonymoushacker1279.immersiveweapons.item.CursedItem;
 import tech.anonymoushacker1279.immersiveweapons.item.gauntlet.GauntletItem;
 import tech.anonymoushacker1279.immersiveweapons.item.pike.PikeItem;
@@ -171,7 +170,7 @@ public class ForgeEventSubscriber {
 			// Handle increased health effect of the Bloated Heart
 			AttributeInstance attributeInstance = player.getAttributes().getInstance(Attributes.MAX_HEALTH);
 			if (attributeInstance != null) {
-				if (AccessoryItem.getAccessory(player, AccessorySlot.BODY) == ItemRegistry.BLOATED_HEART.get()) {
+				if (AccessoryItem.isAccessoryActive(player, ItemRegistry.BLOATED_HEART.get())) {
 					if (!attributeInstance.hasModifier(BLOATED_HEART_HEALTH_MODIFIER)) {
 						attributeInstance.addTransientModifier(BLOATED_HEART_HEALTH_MODIFIER);
 					}
@@ -181,7 +180,7 @@ public class ForgeEventSubscriber {
 			}
 
 			// Handle constant Hero of the Village effect of the Emerald Ring
-			if (AccessoryItem.getAccessory(player, AccessorySlot.RING) == ItemRegistry.EMERALD_RING.get()) {
+			if (AccessoryItem.isAccessoryActive(player, ItemRegistry.EMERALD_RING.get())) {
 				if (!player.hasEffect(MobEffects.HERO_OF_THE_VILLAGE)) {
 					player.addEffect(new MobEffectInstance(MobEffects.HERO_OF_THE_VILLAGE, 60, 0, true, true));
 				}
@@ -386,7 +385,7 @@ public class ForgeEventSubscriber {
 			}
 
 			// Increase the looting level by 2 with the Amethyst Ring
-			if (AccessoryItem.getAccessory(player, AccessorySlot.RING) == ItemRegistry.AMETHYST_RING.get()) {
+			if (AccessoryItem.isAccessoryActive(player, ItemRegistry.AMETHYST_RING.get())) {
 				event.setLootingLevel(event.getLootingLevel() + 2);
 			}
 		}

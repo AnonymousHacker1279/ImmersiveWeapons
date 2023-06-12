@@ -20,7 +20,6 @@ import net.minecraft.world.entity.ai.goal.FloatGoal;
 import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.level.*;
-import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Nullable;
 import tech.anonymoushacker1279.immersiveweapons.block.decoration.CelestialLanternBlock;
 import tech.anonymoushacker1279.immersiveweapons.config.CommonConfig;
@@ -231,7 +230,6 @@ public class CelestialTowerEntity extends Monster implements GrantAdvancementOnD
 			return false;
 		}
 
-		Vec3 position = position();
 		int nearbyLanterns = 0;
 
 		for (BlockPos lanternPos : CelestialLanternBlock.ALL_TILTROS_LANTERNS) {

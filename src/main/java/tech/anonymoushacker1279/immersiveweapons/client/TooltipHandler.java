@@ -16,6 +16,7 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
 import net.minecraftforge.registries.ForgeRegistries;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
+import tech.anonymoushacker1279.immersiveweapons.api.PluginHandler;
 import tech.anonymoushacker1279.immersiveweapons.init.BlockItemRegistry;
 import tech.anonymoushacker1279.immersiveweapons.init.ItemRegistry;
 import tech.anonymoushacker1279.immersiveweapons.item.AccessoryItem;
@@ -364,12 +365,16 @@ public class TooltipHandler {
 	private static List<Component> addAccessoryTooltips(AccessoryItem item, Player player) {
 		List<Component> tooltips = new ArrayList<>(5);
 
-		tooltips.add(Component.translatable("tooltip.immersiveweapons.accessory_slot", item.getSlot()).withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC));
-
-		if (item.isActive(player)) {
-			tooltips.add(Component.translatable("tooltip.immersiveweapons.accessory_note").withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC));
+		if (ImmersiveWeapons.IWCB_LOADED && PluginHandler.isPluginActive("iwcompatbridge:curios_plugin")) {
+			tooltips.add(Component.translatable("tooltip.iwcompatbridge.accessory_note", item.getSlot()).withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC));
 		} else {
-			tooltips.add(Component.translatable("tooltip.immersiveweapons.accessory_inactive").withStyle(ChatFormatting.RED, ChatFormatting.ITALIC));
+			tooltips.add(Component.translatable("tooltip.immersiveweapons.accessory_slot", item.getSlot()).withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC));
+
+			if (item.isActive(player)) {
+				tooltips.add(Component.translatable("tooltip.immersiveweapons.accessory_note").withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC));
+			} else {
+				tooltips.add(Component.translatable("tooltip.immersiveweapons.accessory_inactive").withStyle(ChatFormatting.RED, ChatFormatting.ITALIC));
+			}
 		}
 
 		return tooltips;

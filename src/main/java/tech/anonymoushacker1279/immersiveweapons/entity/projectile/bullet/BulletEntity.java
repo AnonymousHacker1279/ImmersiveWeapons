@@ -41,7 +41,6 @@ import tech.anonymoushacker1279.immersiveweapons.config.CommonConfig;
 import tech.anonymoushacker1279.immersiveweapons.data.tags.groups.forge.ForgeBlockTagGroups;
 import tech.anonymoushacker1279.immersiveweapons.init.*;
 import tech.anonymoushacker1279.immersiveweapons.item.AccessoryItem;
-import tech.anonymoushacker1279.immersiveweapons.item.AccessoryItem.AccessorySlot;
 import tech.anonymoushacker1279.immersiveweapons.item.projectile.gun.MusketItem;
 import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
 
@@ -330,8 +329,7 @@ public class BulletEntity extends AbstractArrow {
 		// If the entity is a player and has an active Deadeye Pendant, add a damage modifier which increases with distance to the target
 		// This modifier increases damage up to a maximum of +20% at 100 meters range
 		if (getOwner() instanceof Player player) {
-			AccessoryItem deadeyePendant = AccessoryItem.getAccessory(player, AccessorySlot.NECKLACE);
-			if (deadeyePendant == ItemRegistry.DEADEYE_PENDANT.get()) {
+			if (AccessoryItem.isAccessoryActive(player, ItemRegistry.DEADEYE_PENDANT.get())) {
 				double distance = player.distanceToSqr(getX(), getY(), getZ());
 				double modifier = Math.min(distance / 100d, 1);
 				damage = (int) Math.round(damage * (1 + modifier * 0.2f));

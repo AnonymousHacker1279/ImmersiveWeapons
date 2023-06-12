@@ -8,5 +8,6 @@ public enum CustomSkullTypes implements SkullBlock.Type {
 	DYING_SOLDIER,
 	WANDERING_WARRIOR,
 	HANS,
-	STORM_CREEPER
+	STORM_CREEPER,
+	SKELETON_MERCHANT
 }
