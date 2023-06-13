@@ -21,6 +21,9 @@ public class AccessoryItemEffects {
 	public static final Map<EffectType, Double> HANS_BLESSING = new EffectMapBuilder()
 			.addEffect(EffectType.DAMAGE_RESISTANCE, 0.15d)
 			.build();
+	public static final Map<EffectType, Double> CELESTIAL_SPIRIT = new EffectMapBuilder()
+			.addEffect(EffectType.OTHER, 0.0d)
+			.build();
 	public static final Map<EffectType, Double> BLADEMASTER_EMBLEM = new EffectMapBuilder()
 			.addEffect(EffectType.MELEE_DAMAGE, 0.1d)
 			.addEffect(EffectType.MELEE_BLEED_CHANCE, 0.3d)
@@ -68,5 +71,8 @@ public class AccessoryItemEffects {
 	public static final Map<EffectType, Double> NETHERITE_RING = new EffectMapBuilder()
 			.addEffect(EffectType.GENERAL_DAMAGE, 0.05d)
 			.addEffect(EffectType.DAMAGE_RESISTANCE, 0.05d)
+			.build();
+	public static final Map<EffectType, Double> MEDAL_OF_ADEQUACY = new EffectMapBuilder()
+			.addEffect(EffectType.DAMAGE_RESISTANCE, 0.01d)
 			.build();
 }

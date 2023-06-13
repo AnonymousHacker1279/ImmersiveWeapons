@@ -31,5 +31,8 @@ public class DamageTypeTagsGenerator extends TagsProvider<DamageType> {
 				.add(IWDamageTypes.MORTAR_KEY)
 				.add(IWDamageTypes.LANDMINE_KEY)
 				.add(IWDamageTypes.METEOR_KEY);
+
+		tag(DamageTypeTags.IS_PROJECTILE)
+				.add(IWDamageTypes.BULLET_KEY);
 	}
 }

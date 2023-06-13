@@ -1,5 +1,6 @@
 package tech.anonymoushacker1279.immersiveweapons.event;
 
+import net.minecraft.advancements.Advancement;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -51,6 +52,8 @@ import tech.anonymoushacker1279.immersiveweapons.client.gui.IWOverlays;
 import tech.anonymoushacker1279.immersiveweapons.client.gui.overlays.DebugTracingData;
 import tech.anonymoushacker1279.immersiveweapons.client.gui.overlays.DebugTracingData.LastDamageDealtPacketHandler;
 import tech.anonymoushacker1279.immersiveweapons.data.biomes.IWBiomes;
+import tech.anonymoushacker1279.immersiveweapons.data.damage_types.IWDamageTypes;
+import tech.anonymoushacker1279.immersiveweapons.entity.projectile.MeteorEntity;
 import tech.anonymoushacker1279.immersiveweapons.event.game_effects.AccessoryEffects;
 import tech.anonymoushacker1279.immersiveweapons.event.game_effects.EnvironmentEffects;
 import tech.anonymoushacker1279.immersiveweapons.init.*;
@@ -69,8 +72,11 @@ import java.util.UUID;
 public class ForgeEventSubscriber {
 
 	public static final UUID BLOATED_HEART_HEALTH_MODIFIER_UUID = UUID.fromString("e5485685-cfbe-422b-b7dd-eda29049a508");
-	private static final AttributeModifier BLOATED_HEART_HEALTH_MODIFIER = new AttributeModifier(BLOATED_HEART_HEALTH_MODIFIER_UUID,
-			"Bloated Heart boost", 4.0d, AttributeModifier.Operation.ADDITION);
+	public static final AttributeModifier BLOATED_HEART_HEALTH_MODIFIER = new AttributeModifier(BLOATED_HEART_HEALTH_MODIFIER_UUID,
+			"Bloated Heart boost", 4.0d, Operation.ADDITION);
+	public static final UUID JONNYS_CURSE_SPEED_MODIFIER_UUID = UUID.fromString("c74619c0-b953-4ee7-a3d7-adf974c22d7d");
+	public static final AttributeModifier JONNYS_CURSE_SPEED_MODIFIER = new AttributeModifier(JONNYS_CURSE_SPEED_MODIFIER_UUID,
+			"Jonny's Curse reduction", -0.25d, Operation.MULTIPLY_BASE);
 
 	@SubscribeEvent
 	public static void registerGuiOverlaysEvent(RegisterGuiOverlaysEvent event) {
@@ -160,10 +166,25 @@ public class ForgeEventSubscriber {
 		}
 
 		if (player.tickCount % 20 == 0) {
-			// Handle permanent hunger effect of Bloody Sacrifice
+			// Handle permanent hunger effect of Bloody Sacrifice and Jonny's Curse
 			if (player.getPersistentData().getBoolean("used_curse_accessory_bloody_sacrifice")) {
 				if (!player.hasEffect(MobEffects.HUNGER)) {
 					player.addEffect(new MobEffectInstance(MobEffects.HUNGER, -1, 0, true, true));
+				}
+			}
+			if (player.getPersistentData().getBoolean("used_curse_accessory_jonnys_curse")) {
+				if (!player.hasEffect(MobEffects.HUNGER)) {
+					player.addEffect(new MobEffectInstance(MobEffects.HUNGER, -1, 2, true, true));
+				}
+			}
+
+			// Handle reduced movement speed of Jonny's Curse
+			if (player.getPersistentData().getBoolean("used_curse_accessory_jonnys_curse")) {
+				AttributeInstance attributeInstance = player.getAttributes().getInstance(Attributes.MOVEMENT_SPEED);
+				if (attributeInstance != null) {
+					if (!attributeInstance.hasModifier(JONNYS_CURSE_SPEED_MODIFIER)) {
+						attributeInstance.addTransientModifier(JONNYS_CURSE_SPEED_MODIFIER);
+					}
 				}
 			}
 
@@ -199,10 +220,17 @@ public class ForgeEventSubscriber {
 	public static void livingHurtEvent(LivingHurtEvent event) {
 		LivingEntity damagedEntity = event.getEntity();
 		LivingEntity source = null;
+
 		if (event.getSource().getEntity() instanceof LivingEntity sourceEntity) {
 			source = sourceEntity;
 		}
 
+		if (event.getSource().is(IWDamageTypes.METEOR_KEY) && event.getSource().getDirectEntity() instanceof MeteorEntity meteor) {
+			// Check for a "target" tag, and check if it matches the damaged entity's UUID
+			if (!meteor.getPersistentData().getUUID("target").equals(damagedEntity.getUUID())) {
+				event.setCanceled(true);
+			}
+		}
 
 		// Handle environmental effects
 		EnvironmentEffects.celestialProtectionEffect(event, damagedEntity);
@@ -213,6 +241,10 @@ public class ForgeEventSubscriber {
 		// Handle accessory effects
 		if (damagedEntity instanceof Player player) {
 			AccessoryEffects.damageResistanceEffects(event, player);
+
+			if (source != null) {
+				AccessoryEffects.celestialSpiritEffect(player, source);
+			}
 		}
 
 		if (source instanceof Player player) {
@@ -237,13 +269,25 @@ public class ForgeEventSubscriber {
 				player.playSound(SoundEvents.EXPERIENCE_ORB_PICKUP, 1.0f, 1.0f);
 			}
 
-			// Handle debug tracing
+
 			if (player instanceof ServerPlayer serverPlayer) {
+				// If over 175 damage was dealt, add an advancement
+				if (event.getAmount() >= 175.0f && serverPlayer.getServer() != null) {
+					Advancement advancement = serverPlayer.getServer().getAdvancements()
+							.getAdvancement(new ResourceLocation(ImmersiveWeapons.MOD_ID, "overkill"));
+					
+					if (advancement != null) {
+						serverPlayer.getAdvancements().award(advancement, "");
+					}
+				}
+
+				// Handle debug tracing
 				PacketHandler.INSTANCE.send(PacketDistributor.PLAYER.with(() -> serverPlayer), new LastDamageDealtPacketHandler(player.getUUID(), event.getAmount()));
 			}
 		}
 
 		AccessoryEffects.bloodySacrificeEffect(event, damagedEntity);
+		AccessoryEffects.jonnysCurseEffect(event, damagedEntity);
 	}
 
 	@SubscribeEvent
@@ -393,11 +437,9 @@ public class ForgeEventSubscriber {
 
 	@SubscribeEvent
 	public static void livingDropsEvent(LivingDropsEvent event) {
-		// 25% chance to drop items a second time with the Bloody Sacrifice curse
 		if (event.getSource().getEntity() instanceof Player player) {
+			// 25% chance to drop items a second time with the Bloody Sacrifice curse
 			if (player.getPersistentData().getBoolean("used_curse_accessory_bloody_sacrifice")) {
-
-
 				if (player.getRandom().nextFloat() <= 0.25f) {
 					ResourceLocation lootTable = event.getEntity().getLootTable();
 					MinecraftServer server = event.getEntity().level.getServer();
@@ -438,6 +480,13 @@ public class ForgeEventSubscriber {
 							);
 						}
 					}
+				}
+			}
+
+			// 50% chance to not get any drops with Jonny's Curse
+			if (player.getPersistentData().getBoolean("used_curse_accessory_jonnys_curse")) {
+				if (player.getRandom().nextFloat() <= 0.5f) {
+					event.setCanceled(true);
 				}
 			}
 		}

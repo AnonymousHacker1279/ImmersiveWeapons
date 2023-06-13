@@ -98,6 +98,7 @@ public class LanguageGenerator extends IWLanguageProvider {
 		excludedItems.add(ItemRegistry.BERSERKERS_AMULET.get());
 		excludedItems.add(ItemRegistry.HANS_BLESSING.get());
 		excludedItems.add(ItemRegistry.MELEE_MASTERS_MOLTEN_GLOVE.get());
+		excludedItems.add(ItemRegistry.JONNYS_CURSE.get());
 
 		// Filter the excluded items from the registry
 		Stream<RegistryObject<Item>> items = ItemRegistry.ITEMS.getEntries().stream()
@@ -140,6 +141,7 @@ public class LanguageGenerator extends IWLanguageProvider {
 		addItem(ItemRegistry.BERSERKERS_AMULET, "Berserker's Amulet");
 		addItem(ItemRegistry.HANS_BLESSING, "Hans' Blessing");
 		addItem(ItemRegistry.MELEE_MASTERS_MOLTEN_GLOVE, "Melee Master's Molten Glove");
+		addItem(ItemRegistry.JONNYS_CURSE, "Jonny's Curse");
 	}
 
 	private void addEntityTypes() {
@@ -413,6 +415,8 @@ public class LanguageGenerator extends IWLanguageProvider {
 		addTooltip("berserkers_amulet_2", "However, you will take 20% more damage from all sources");
 		addTooltip("hans_blessing_1", "Take 15% less damage from all sources");
 		addTooltip("hans_blessing_2", "Tis but a scratch");
+		addTooltip("celestial_spirit_1", "When taking damage, there is a 15% chance to summon a meteor");
+		addTooltip("celestial_spirit_2", "The meteor will only damage the creature that attacked you");
 		addTooltip("blademaster_emblem", "Increases melee damage by 10%, and adds a 30% chance to inflict Bleeding");
 		addTooltip("deadeye_pendant_1", "Increases damage over distance with firearms");
 		addTooltip("deadeye_pendant_2", "Maximum damage increase is 20% at 100 meters");
@@ -427,6 +431,7 @@ public class LanguageGenerator extends IWLanguageProvider {
 		addTooltip("emerald_ring", "Provides the Hero of the Village effect");
 		addTooltip("diamond_ring", "Increase general damage by 4% and provides 4% damage reduction");
 		addTooltip("netherite_ring", "Increase general damage by 5% and provides 5% damage reduction");
+		addTooltip("medal_of_adequacy", "This medal was once awarded to gamingwarrior0 for his wholly undistinguished assistance");
 
 		addTooltip("bloody_sacrifice", "You feel a dark presence emanating from this item");
 		addTooltip("bloody_sacrifice_charge_note", "The destruction of life charges something inside");
@@ -437,6 +442,26 @@ public class LanguageGenerator extends IWLanguageProvider {
 		addTooltip("bloody_sacrifice_effect_3", "- Permanent hunger effect");
 		addTooltip("bloody_sacrifice_effect_4", "- Permanent looting bonus");
 		addTooltip("bloody_sacrifice_effect_5", "- 25% chance to roll a second loot drop entirely");
+
+		addTooltip("jonnys_curse_1", "It's like the wrath of gods, Egyptian pharaohs, Chinese monks, and Hans himself.");
+		addTooltip("jonnys_curse_2", "Ping me if you want more textures, because I probably wont respond.");
+		addTooltip("jonnys_curse_3", "Hrnnnnnggggg soup.");
+		addTooltip("jonnys_curse_4", "I don't even think Hans would be able to withstand such pain.");
+		addTooltip("jonnys_curse_5", "Imagine stubbing your toe into a lego brick that has a tack stuck through the middle.");
+		addTooltip("jonnys_curse_6", "Exist in the life of a furry on 4chan!");
+		addTooltip("jonnys_curse_7", "This is what happens when you nuke yourself in Garry’s mod.");
+		addTooltip("jonnys_curse_8", "The true for the worthy play through.");
+		addTooltip("jonnys_curse_9", "If you ever wanted to be put into a mental hospital, this is how you do it.");
+		addTooltip("jonnys_curse_10", "D O N T");
+		addTooltip("jonnys_curse_11", "Random crits not included.");
+		addTooltip("jonnys_curse_charge_note", "Killing things makes me feel funny");
+		addTooltip("jonnys_curse_charge", "Charge: %s / 100");
+		addTooltip("jonnys_curse_fully_charged", "This is a really bad idea for obvious reasons");
+		addTooltip("jonnys_curse_effect_1", "- +200% damage taken");
+		addTooltip("jonnys_curse_effect_2", "- 50% chance not to roll loot drops");
+		addTooltip("jonnys_curse_effect_3", "- -25% movement speed");
+		addTooltip("jonnys_curse_effect_4", "- Permanent hunger effect");
+		addTooltip("jonnys_curse_effect_5", "- Projectiles deal zero damage");
 
 		// Lore
 		addTooltip("minuteman_statue", "Something seems to activate inside when it is placed in a Battlefield. It wishes to protect.");
@@ -467,6 +492,10 @@ public class LanguageGenerator extends IWLanguageProvider {
 		addMessage("item.bloody_sacrifice.using", "This will have permanent consequences...");
 		addMessage("item.bloody_sacrifice.canceled", "The curse remains sealed...");
 		addMessage("item.bloody_sacrifice.used", "There is no going back now...");
+		addMessage("item.jonnys_curse.not_enough_charge", "Nah, go kill more things...");
+		addMessage("item.jonnys_curse.using", "Are you sure you wanna become a furry?");
+		addMessage("item.jonnys_curse.canceled", "You remain normal for now...");
+		addMessage("item.jonnys_curse.used", "Its so over...");
 		addMessage("block.wall_shelf.locked", "This shelf has been locked");
 		addMessage("block.wall_shelf.unlocked", "This shelf has been unlocked");
 	}
@@ -752,6 +781,8 @@ public class LanguageGenerator extends IWLanguageProvider {
 		addAdvancement("biohazard_box.description", "Obtain a (harmless) biohazard box from a medic station");
 		addAdvancement("cloud.title", "High in the Sky");
 		addAdvancement("cloud.description", "Walk across cloud blocks high in the air");
+		addAdvancement("overkill.title", "Overkill");
+		addAdvancement("overkill.description", "Deal 175 damage in a single hit");
 
 		// Accessories
 		addAdvancement("accessories.title", "Accessories!");

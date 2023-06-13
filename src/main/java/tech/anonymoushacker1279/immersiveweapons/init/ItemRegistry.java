@@ -232,6 +232,7 @@ public class ItemRegistry {
 	public static final RegistryObject<AccessoryItem> POWDER_HORN = ITEMS.register("powder_horn", () -> new AccessoryItem(new Properties().stacksTo(1), AccessorySlot.BODY, AccessoryItemEffects.POWDER_HORN));
 	public static final RegistryObject<AccessoryItem> BERSERKERS_AMULET = ITEMS.register("berserkers_amulet", () -> new AccessoryItem(new Properties().stacksTo(1), AccessorySlot.CHARM, AccessoryItemEffects.BERSERKERS_AMULET));
 	public static final RegistryObject<AccessoryItem> HANS_BLESSING = ITEMS.register("hans_blessing", () -> new AccessoryItem(new Properties().stacksTo(1), AccessorySlot.SPIRIT, AccessoryItemEffects.HANS_BLESSING));
+	public static final RegistryObject<AccessoryItem> CELESTIAL_SPIRIT = ITEMS.register("celestial_spirit", () -> new AccessoryItem(new Properties().stacksTo(1), AccessorySlot.SPIRIT, AccessoryItemEffects.CELESTIAL_SPIRIT));
 	public static final RegistryObject<AccessoryItem> BLADEMASTER_EMBLEM = ITEMS.register("blademaster_emblem", () -> new AccessoryItem(new Properties().stacksTo(1), AccessorySlot.CHARM, AccessoryItemEffects.BLADEMASTER_EMBLEM));
 	public static final RegistryObject<AccessoryItem> DEADEYE_PENDANT = ITEMS.register("deadeye_pendant", () -> new AccessoryItem(new Properties().stacksTo(1), AccessorySlot.NECKLACE, AccessoryItemEffects.DEADEYE_PENDANT));
 	public static final RegistryObject<AccessoryItem> BLOATED_HEART = ITEMS.register("bloated_heart", () -> new AccessoryItem(new Properties().stacksTo(1), AccessorySlot.BODY, AccessoryItemEffects.BLOATED_HEART));
@@ -245,7 +246,9 @@ public class ItemRegistry {
 	public static final RegistryObject<AccessoryItem> EMERALD_RING = ITEMS.register("emerald_ring", () -> new AccessoryItem(new Properties().stacksTo(1), AccessorySlot.RING, AccessoryItemEffects.EMERALD_RING));
 	public static final RegistryObject<AccessoryItem> DIAMOND_RING = ITEMS.register("diamond_ring", () -> new AccessoryItem(new Properties().stacksTo(1), AccessorySlot.RING, AccessoryItemEffects.DIAMOND_RING));
 	public static final RegistryObject<AccessoryItem> NETHERITE_RING = ITEMS.register("netherite_ring", () -> new AccessoryItem(new Properties().stacksTo(1), AccessorySlot.RING, AccessoryItemEffects.NETHERITE_RING));
+	public static final RegistryObject<AccessoryItem> MEDAL_OF_ADEQUACY = ITEMS.register("medal_of_adequacy", () -> new AccessoryItem(new Properties().stacksTo(1), AccessorySlot.NECKLACE, AccessoryItemEffects.MEDAL_OF_ADEQUACY));
 	public static final RegistryObject<CursedItem> BLOODY_SACRIFICE = ITEMS.register("bloody_sacrifice", () -> new CursedItem(new Properties().stacksTo(1).setNoRepair().durability(100), "bloody_sacrifice"));
+	public static final RegistryObject<CursedItem> JONNYS_CURSE = ITEMS.register("jonnys_curse", () -> new CursedItem(new Properties().stacksTo(1).setNoRepair().durability(100), "jonnys_curse"));
 
 	// Armor
 	public static final RegistryObject<MoltenArmorItem> MOLTEN_HELMET = ITEMS.register("molten_helmet", () -> new MoltenArmorItem(CustomArmorMaterials.MOLTEN, ArmorItem.Type.HELMET, new Item.Properties().fireResistant(), false));

@@ -9,7 +9,9 @@ import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.living.LivingKnockBackEvent;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.api.PluginHandler;
+import tech.anonymoushacker1279.immersiveweapons.entity.projectile.MeteorEntity;
 import tech.anonymoushacker1279.immersiveweapons.init.EffectRegistry;
+import tech.anonymoushacker1279.immersiveweapons.init.ItemRegistry;
 import tech.anonymoushacker1279.immersiveweapons.item.AccessoryItem;
 import tech.anonymoushacker1279.immersiveweapons.item.AccessoryItem.EffectType;
 import tech.anonymoushacker1279.immersiveweapons.util.IWCBBridge;
@@ -132,6 +134,31 @@ public class AccessoryEffects {
 			// Player deals 10% less damage if they used the item
 			if (player.getPersistentData().getBoolean("used_curse_accessory_bloody_sacrifice")) {
 				event.setAmount(event.getAmount() * 0.9f);
+			}
+		}
+	}
+
+	public static void jonnysCurseEffect(LivingHurtEvent event, LivingEntity damagedEntity) {
+		if (damagedEntity instanceof Player player) {
+			// Player takes 200% more damage if they used the item
+			if (player.getPersistentData().getBoolean("used_curse_accessory_jonnys_curse")) {
+				event.setAmount(event.getAmount() * 3f);
+			}
+		}
+
+		if (event.getSource().getEntity() instanceof Player player) {
+			// Projectiles deal zero damage
+			if (player.getPersistentData().getBoolean("used_curse_accessory_jonnys_curse") && event.getSource().is(DamageTypeTags.IS_PROJECTILE)) {
+				event.setAmount(0);
+			}
+		}
+	}
+
+	public static void celestialSpiritEffect(Player player, LivingEntity sourceEntity) {
+		// 15% chance to summon meteor
+		if (AccessoryItem.isAccessoryActive(player, ItemRegistry.CELESTIAL_SPIRIT.get()) && player.getRandom().nextFloat() <= 0.15f) {
+			if (player != sourceEntity) {
+				MeteorEntity.create(player.level, player, null, player.blockPosition(), sourceEntity);
 			}
 		}
 	}
