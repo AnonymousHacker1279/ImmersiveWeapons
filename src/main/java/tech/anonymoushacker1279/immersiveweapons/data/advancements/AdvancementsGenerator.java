@@ -1292,6 +1292,27 @@ public class AdvancementsGenerator extends ForgeAdvancementProvider {
 				.rewards(AdvancementRewards.Builder.experience(75))
 				.save(consumer, "immersiveweapons:cursed_sight_staff");
 
+		// Accessory advancements
+		Builder.advancement().parent(root)
+				.display(ItemRegistry.SATCHEL.get(),
+						Component.translatable("advancements.immersiveweapons.accessories.title"),
+						Component.translatable("advancements.immersiveweapons.accessories.description"),
+						null, FrameType.TASK, true, true, false)
+				.addCriterion("hold",
+						InventoryChangeTrigger.TriggerInstance.hasItems(
+								ItemPredicate.Builder.item().of(IWItemTagGroups.ACCESSORIES).build()))
+				.rewards(AdvancementRewards.Builder.experience(15))
+				.save(consumer, "immersiveweapons:accessories");
+		Builder.advancement().parent(root)
+				.display(ItemRegistry.BLOODY_SACRIFICE.get(),
+						Component.translatable("advancements.immersiveweapons.bloody_sacrifice.title"),
+						Component.translatable("advancements.immersiveweapons.bloody_sacrifice.description"),
+						null, FrameType.CHALLENGE, true, true, false)
+				.addCriterion("hold",
+						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.BLOODY_SACRIFICE.get()))
+				.rewards(AdvancementRewards.Builder.experience(15))
+				.save(consumer, "immersiveweapons:bloody_sacrifice");
+
 		// Other advancements
 		Builder.advancement().parent(root)
 				.display(ItemRegistry.USED_SYRINGE.get(),

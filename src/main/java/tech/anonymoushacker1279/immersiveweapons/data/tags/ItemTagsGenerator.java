@@ -20,6 +20,7 @@ import tech.anonymoushacker1279.immersiveweapons.data.tags.groups.immersiveweapo
 import tech.anonymoushacker1279.immersiveweapons.data.tags.groups.immersiveweapons.IWItemTagGroups;
 import tech.anonymoushacker1279.immersiveweapons.init.BlockItemRegistry;
 import tech.anonymoushacker1279.immersiveweapons.init.ItemRegistry;
+import tech.anonymoushacker1279.immersiveweapons.item.AccessoryItem;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -136,6 +137,14 @@ public class ItemTagsGenerator extends ItemTagsProvider {
 
 		// Rod tags
 		tag(IWItemTagGroups.OBSIDIAN_RODS).add(ItemRegistry.OBSIDIAN_ROD.get());
+
+		// Accessory tags
+		// loop through item registry and get all instances of AccessoryItem
+		for (RegistryObject<Item> item : ItemRegistry.ITEMS.getEntries()) {
+			if (item.get() instanceof AccessoryItem accessory) {
+				tag(IWItemTagGroups.ACCESSORIES).add(accessory);
+			}
+		}
 	}
 
 	/**

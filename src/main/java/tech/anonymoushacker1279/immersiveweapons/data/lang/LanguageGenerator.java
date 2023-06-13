@@ -497,6 +497,8 @@ public class LanguageGenerator extends IWLanguageProvider {
 		addDeathMessage("deathweed.player", "%s was poisoned by deathweed at the hands of %s");
 		addDeathMessage("meteor", "%s was hit by a meteor");
 		addDeathMessage("meteor.player", "%s was hit by a meteor summoned by %s");
+		addDeathMessage("bullet", "%s was shot");
+		addDeathMessage("bullet.player", "%s was shot by %s");
 	}
 
 	private void addBiomes() {
@@ -750,6 +752,12 @@ public class LanguageGenerator extends IWLanguageProvider {
 		addAdvancement("biohazard_box.description", "Obtain a (harmless) biohazard box from a medic station");
 		addAdvancement("cloud.title", "High in the Sky");
 		addAdvancement("cloud.description", "Walk across cloud blocks high in the air");
+
+		// Accessories
+		addAdvancement("accessories.title", "Accessories!");
+		addAdvancement("accessories.description", "Obtain any accessory");
+		addAdvancement("bloody_sacrifice.title", "For the Worthy");
+		addAdvancement("bloody_sacrifice.description", "Only the bravest souls may take this path");
 
 		// Entity discovery
 		addAdvancement("entity_discovery.title", "Entity Discovery");

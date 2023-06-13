@@ -21,6 +21,7 @@ public class DamageTypesGenerator {
 		damageType(context, IWDamageTypes.METEOR_KEY, IWDamageTypes.METEOR);
 		damageType(context, IWDamageTypes.PUNJI_STICKS_KEY, IWDamageTypes.PUNJI_STICKS);
 		damageType(context, IWDamageTypes.PUNJI_STICKS_FALL_KEY, IWDamageTypes.PUNJI_STICKS);
+		damageType(context, IWDamageTypes.BULLET_KEY, IWDamageTypes.BULLET);
 	}
 
 	protected static void damageType(BootstapContext<DamageType> context, ResourceKey<DamageType> key, DamageType damageType) {
