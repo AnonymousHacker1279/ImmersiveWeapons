@@ -20,12 +20,12 @@ import net.minecraft.world.entity.ai.goal.FloatGoal;
 import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.level.*;
-import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Nullable;
 import tech.anonymoushacker1279.immersiveweapons.block.decoration.CelestialLanternBlock;
 import tech.anonymoushacker1279.immersiveweapons.config.CommonConfig;
 import tech.anonymoushacker1279.immersiveweapons.entity.GrantAdvancementOnDiscovery;
 import tech.anonymoushacker1279.immersiveweapons.entity.ai.goal.*;
+import tech.anonymoushacker1279.immersiveweapons.init.ItemRegistry;
 import tech.anonymoushacker1279.immersiveweapons.init.SoundEventRegistry;
 import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
 
@@ -231,7 +231,6 @@ public class CelestialTowerEntity extends Monster implements GrantAdvancementOnD
 			return false;
 		}
 
-		Vec3 position = position();
 		int nearbyLanterns = 0;
 
 		for (BlockPos lanternPos : CelestialLanternBlock.ALL_TILTROS_LANTERNS) {
@@ -249,6 +248,25 @@ public class CelestialTowerEntity extends Monster implements GrantAdvancementOnD
 		} else if (nearbyLanterns == 0) {
 			return true;
 		} else return GeneralUtilities.getRandomNumber(0.0f, 1.0f) <= (nearbyLanterns == 2 ? 0.125f : 0.25f);
+	}
+
+	@Override
+	protected void dropCustomDeathLoot(DamageSource source, int looting, boolean recentlyHit) {
+		super.dropCustomDeathLoot(source, looting, recentlyHit);
+
+		if (!recentlyHit) {
+			return;
+		}
+
+		// 5% chance to drop Celestial Spirit
+		// Looting adds 5% chance per level
+
+		float dropChance = 0.05f;
+		dropChance += looting * 0.05f;
+
+		if (random.nextFloat() <= dropChance) {
+			spawnAtLocation(ItemRegistry.CELESTIAL_SPIRIT.get());
+		}
 	}
 
 	@Override

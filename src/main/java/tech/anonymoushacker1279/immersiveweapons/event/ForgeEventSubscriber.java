@@ -1,33 +1,48 @@
 package tech.anonymoushacker1279.immersiveweapons.event;
 
+import net.minecraft.advancements.Advancement;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.MinecraftServer;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.*;
-import net.minecraft.world.entity.ai.attributes.AttributeModifier;
+import net.minecraft.world.entity.ai.attributes.*;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation;
-import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.entity.projectile.ThrownTrident;
 import net.minecraft.world.item.*;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.storage.loot.LootContext;
+import net.minecraft.world.level.storage.loot.LootTable;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraftforge.client.event.RegisterGuiOverlaysEvent;
 import net.minecraftforge.common.ForgeMod;
 import net.minecraftforge.event.ItemAttributeModifierEvent;
 import net.minecraftforge.event.TickEvent.PlayerTickEvent;
 import net.minecraftforge.event.entity.EntityJoinLevelEvent;
-import net.minecraftforge.event.entity.living.LivingHurtEvent;
+import net.minecraftforge.event.entity.living.*;
+import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.level.LevelEvent;
 import net.minecraftforge.event.level.PistonEvent;
 import net.minecraftforge.event.level.PistonEvent.PistonMoveType;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
+import net.minecraftforge.network.PacketDistributor;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.MissingMappingsEvent;
 import net.minecraftforge.registries.MissingMappingsEvent.Mapping;
@@ -35,19 +50,33 @@ import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.block.decoration.StarstormCrystalBlock;
 import tech.anonymoushacker1279.immersiveweapons.client.gui.IWOverlays;
 import tech.anonymoushacker1279.immersiveweapons.client.gui.overlays.DebugTracingData;
+import tech.anonymoushacker1279.immersiveweapons.client.gui.overlays.DebugTracingData.LastDamageDealtPacketHandler;
 import tech.anonymoushacker1279.immersiveweapons.data.biomes.IWBiomes;
-import tech.anonymoushacker1279.immersiveweapons.event.environment_effects.EnvironmentEffects;
+import tech.anonymoushacker1279.immersiveweapons.data.damage_types.IWDamageTypes;
+import tech.anonymoushacker1279.immersiveweapons.entity.projectile.MeteorEntity;
+import tech.anonymoushacker1279.immersiveweapons.event.game_effects.AccessoryEffects;
+import tech.anonymoushacker1279.immersiveweapons.event.game_effects.EnvironmentEffects;
 import tech.anonymoushacker1279.immersiveweapons.init.*;
+import tech.anonymoushacker1279.immersiveweapons.item.AccessoryItem;
+import tech.anonymoushacker1279.immersiveweapons.item.CursedItem;
 import tech.anonymoushacker1279.immersiveweapons.item.gauntlet.GauntletItem;
 import tech.anonymoushacker1279.immersiveweapons.item.pike.PikeItem;
 import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
+import tech.anonymoushacker1279.immersiveweapons.util.LegacyMappingsHandler;
 import tech.anonymoushacker1279.immersiveweapons.world.level.IWDamageSources;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @EventBusSubscriber(modid = ImmersiveWeapons.MOD_ID, bus = Bus.FORGE)
 public class ForgeEventSubscriber {
+
+	public static final UUID BLOATED_HEART_HEALTH_MODIFIER_UUID = UUID.fromString("e5485685-cfbe-422b-b7dd-eda29049a508");
+	public static final AttributeModifier BLOATED_HEART_HEALTH_MODIFIER = new AttributeModifier(BLOATED_HEART_HEALTH_MODIFIER_UUID,
+			"Bloated Heart boost", 4.0d, Operation.ADDITION);
+	public static final UUID JONNYS_CURSE_SPEED_MODIFIER_UUID = UUID.fromString("c74619c0-b953-4ee7-a3d7-adf974c22d7d");
+	public static final AttributeModifier JONNYS_CURSE_SPEED_MODIFIER = new AttributeModifier(JONNYS_CURSE_SPEED_MODIFIER_UUID,
+			"Jonny's Curse reduction", -0.25d, Operation.MULTIPLY_BASE);
 
 	@SubscribeEvent
 	public static void registerGuiOverlaysEvent(RegisterGuiOverlaysEvent event) {
@@ -73,147 +102,22 @@ public class ForgeEventSubscriber {
 		List<Mapping<Item>> mappings = event.getMappings(ForgeRegistries.ITEMS.getRegistryKey(), ImmersiveWeapons.MOD_ID);
 
 		if (!mappings.isEmpty()) {
+			LegacyMappingsHandler.remapItems(mappings);
+		}
+	}
 
-			ImmersiveWeapons.LOGGER.warn("Missing item mappings were found. This probably means an item was renamed or deleted. Attempting to remap...");
+	/**
+	 * Event handler for the MissingMappingsEvent.
+	 * Migrates old block registry names to newer ones.
+	 *
+	 * @param event the <code>MissingMappingsEvent</code> instance
+	 */
+	@SubscribeEvent
+	public static void missingBlockMappings(MissingMappingsEvent event) {
+		List<Mapping<Block>> mappings = event.getMappings(ForgeRegistries.BLOCKS.getRegistryKey(), ImmersiveWeapons.MOD_ID);
 
-			List<String> remappedItems = new ArrayList<>(0);
-
-			ResourceLocation SMALL_PARTS_METAL_THROWABLE_BOMB = new ResourceLocation(ImmersiveWeapons.MOD_ID, "small_parts_metal_throwable_bomb");
-			ResourceLocation SMALL_PARTS_METAL_TOOL = new ResourceLocation(ImmersiveWeapons.MOD_ID, "small_parts_metal_tool");
-			ResourceLocation SMOKE_BOMB = new ResourceLocation(ImmersiveWeapons.MOD_ID, "smoke_bomb");
-			ResourceLocation SMOKE_BOMB_RED = new ResourceLocation(ImmersiveWeapons.MOD_ID, "smoke_bomb_red");
-			ResourceLocation SMOKE_BOMB_GREEN = new ResourceLocation(ImmersiveWeapons.MOD_ID, "smoke_bomb_green");
-			ResourceLocation SMOKE_BOMB_BLUE = new ResourceLocation(ImmersiveWeapons.MOD_ID, "smoke_bomb_blue");
-			ResourceLocation SMOKE_BOMB_PURPLE = new ResourceLocation(ImmersiveWeapons.MOD_ID, "smoke_bomb_purple");
-			ResourceLocation SMOKE_BOMB_YELLOW = new ResourceLocation(ImmersiveWeapons.MOD_ID, "smoke_bomb_yellow");
-			ResourceLocation SMOKE_BOMB_ARROW = new ResourceLocation(ImmersiveWeapons.MOD_ID, "smoke_bomb_arrow");
-			ResourceLocation SMOKE_BOMB_ARROW_RED = new ResourceLocation(ImmersiveWeapons.MOD_ID, "smoke_bomb_arrow_red");
-			ResourceLocation SMOKE_BOMB_ARROW_GREEN = new ResourceLocation(ImmersiveWeapons.MOD_ID, "smoke_bomb_arrow_green");
-			ResourceLocation SMOKE_BOMB_ARROW_BLUE = new ResourceLocation(ImmersiveWeapons.MOD_ID, "smoke_bomb_arrow_blue");
-			ResourceLocation SMOKE_BOMB_ARROW_PURPLE = new ResourceLocation(ImmersiveWeapons.MOD_ID, "smoke_bomb_arrow_purple");
-			ResourceLocation SMOKE_BOMB_ARROW_YELLOW = new ResourceLocation(ImmersiveWeapons.MOD_ID, "smoke_bomb_arrow_yellow");
-			ResourceLocation GOLD_PIKE = new ResourceLocation(ImmersiveWeapons.MOD_ID, "gold_pike");
-			ResourceLocation GOLD_GAUNTLET = new ResourceLocation(ImmersiveWeapons.MOD_ID, "gold_gauntlet");
-			ResourceLocation GOLD_PIKE_HEAD = new ResourceLocation(ImmersiveWeapons.MOD_ID, "gold_pike_head");
-			ResourceLocation GOLD_ARROW = new ResourceLocation(ImmersiveWeapons.MOD_ID, "gold_arrow");
-			ResourceLocation GOLD_MUSKET_BALL = new ResourceLocation(ImmersiveWeapons.MOD_ID, "gold_musket_ball");
-			ResourceLocation WOOD_PIKE = new ResourceLocation(ImmersiveWeapons.MOD_ID, "wood_pike");
-			ResourceLocation WOOD_GAUNTLET = new ResourceLocation(ImmersiveWeapons.MOD_ID, "wood_gauntlet");
-			ResourceLocation WOOD_SHARD = new ResourceLocation(ImmersiveWeapons.MOD_ID, "wood_shard");
-			ResourceLocation WOOD_TOOL_ROD = new ResourceLocation(ImmersiveWeapons.MOD_ID, "wood_tool_rod");
-			ResourceLocation WOOD_PIKE_HEAD = new ResourceLocation(ImmersiveWeapons.MOD_ID, "wood_pike_head");
-			ResourceLocation WOOD_ARROW = new ResourceLocation(ImmersiveWeapons.MOD_ID, "wood_arrow");
-			ResourceLocation WOOD_MUSKET_BALL = new ResourceLocation(ImmersiveWeapons.MOD_ID, "wood_musket_ball");
-
-			for (Mapping<Item> itemMapping : mappings) {
-				if (itemMapping.getKey().equals(SMALL_PARTS_METAL_THROWABLE_BOMB)) {
-					itemMapping.remap(ItemRegistry.GRENADE_ASSEMBLY.get());
-					remappedItems.add(itemMapping.getKey().getPath());
-				}
-				if (itemMapping.getKey().equals(SMALL_PARTS_METAL_TOOL)) {
-					itemMapping.remap(ItemRegistry.TOOL_JOINT.get());
-					remappedItems.add(itemMapping.getKey().getPath());
-				}
-				if (itemMapping.getKey().equals(SMOKE_BOMB)) {
-					itemMapping.remap(ItemRegistry.SMOKE_GRENADE.get());
-					remappedItems.add(itemMapping.getKey().getPath());
-				}
-				if (itemMapping.getKey().equals(SMOKE_BOMB_RED)) {
-					itemMapping.remap(ItemRegistry.SMOKE_GRENADE_RED.get());
-					remappedItems.add(itemMapping.getKey().getPath());
-				}
-				if (itemMapping.getKey().equals(SMOKE_BOMB_GREEN)) {
-					itemMapping.remap(ItemRegistry.SMOKE_GRENADE_GREEN.get());
-					remappedItems.add(itemMapping.getKey().getPath());
-				}
-				if (itemMapping.getKey().equals(SMOKE_BOMB_BLUE)) {
-					itemMapping.remap(ItemRegistry.SMOKE_GRENADE_BLUE.get());
-					remappedItems.add(itemMapping.getKey().getPath());
-				}
-				if (itemMapping.getKey().equals(SMOKE_BOMB_PURPLE)) {
-					itemMapping.remap(ItemRegistry.SMOKE_GRENADE_PURPLE.get());
-					remappedItems.add(itemMapping.getKey().getPath());
-				}
-				if (itemMapping.getKey().equals(SMOKE_BOMB_YELLOW)) {
-					itemMapping.remap(ItemRegistry.SMOKE_GRENADE_YELLOW.get());
-					remappedItems.add(itemMapping.getKey().getPath());
-				}
-				if (itemMapping.getKey().equals(SMOKE_BOMB_ARROW)) {
-					itemMapping.remap(ItemRegistry.SMOKE_GRENADE_ARROW.get());
-					remappedItems.add(itemMapping.getKey().getPath());
-				}
-				if (itemMapping.getKey().equals(SMOKE_BOMB_ARROW_RED)) {
-					itemMapping.remap(ItemRegistry.SMOKE_GRENADE_ARROW_RED.get());
-					remappedItems.add(itemMapping.getKey().getPath());
-				}
-				if (itemMapping.getKey().equals(SMOKE_BOMB_ARROW_GREEN)) {
-					itemMapping.remap(ItemRegistry.SMOKE_GRENADE_ARROW_GREEN.get());
-					remappedItems.add(itemMapping.getKey().getPath());
-				}
-				if (itemMapping.getKey().equals(SMOKE_BOMB_ARROW_BLUE)) {
-					itemMapping.remap(ItemRegistry.SMOKE_GRENADE_ARROW_BLUE.get());
-					remappedItems.add(itemMapping.getKey().getPath());
-				}
-				if (itemMapping.getKey().equals(SMOKE_BOMB_ARROW_PURPLE)) {
-					itemMapping.remap(ItemRegistry.SMOKE_GRENADE_ARROW_PURPLE.get());
-					remappedItems.add(itemMapping.getKey().getPath());
-				}
-				if (itemMapping.getKey().equals(SMOKE_BOMB_ARROW_YELLOW)) {
-					itemMapping.remap(ItemRegistry.SMOKE_GRENADE_ARROW_YELLOW.get());
-					remappedItems.add(itemMapping.getKey().getPath());
-				}
-				if (itemMapping.getKey().equals(GOLD_PIKE)) {
-					itemMapping.remap(ItemRegistry.GOLDEN_PIKE.get());
-					remappedItems.add(itemMapping.getKey().getPath());
-				}
-				if (itemMapping.getKey().equals(GOLD_GAUNTLET)) {
-					itemMapping.remap(ItemRegistry.GOLDEN_GAUNTLET.get());
-					remappedItems.add(itemMapping.getKey().getPath());
-				}
-				if (itemMapping.getKey().equals(GOLD_PIKE_HEAD)) {
-					itemMapping.remap(ItemRegistry.GOLDEN_PIKE_HEAD.get());
-					remappedItems.add(itemMapping.getKey().getPath());
-				}
-				if (itemMapping.getKey().equals(GOLD_ARROW)) {
-					itemMapping.remap(ItemRegistry.GOLDEN_ARROW.get());
-					remappedItems.add(itemMapping.getKey().getPath());
-				}
-				if (itemMapping.getKey().equals(GOLD_MUSKET_BALL)) {
-					itemMapping.remap(ItemRegistry.GOLDEN_MUSKET_BALL.get());
-					remappedItems.add(itemMapping.getKey().getPath());
-				}
-				if (itemMapping.getKey().equals(WOOD_PIKE)) {
-					itemMapping.remap(ItemRegistry.WOODEN_PIKE.get());
-					remappedItems.add(itemMapping.getKey().getPath());
-				}
-				if (itemMapping.getKey().equals(WOOD_GAUNTLET)) {
-					itemMapping.remap(ItemRegistry.WOODEN_GAUNTLET.get());
-					remappedItems.add(itemMapping.getKey().getPath());
-				}
-				if (itemMapping.getKey().equals(WOOD_SHARD)) {
-					itemMapping.remap(ItemRegistry.WOODEN_SHARD.get());
-					remappedItems.add(itemMapping.getKey().getPath());
-				}
-				if (itemMapping.getKey().equals(WOOD_TOOL_ROD)) {
-					itemMapping.remap(ItemRegistry.WOODEN_TOOL_ROD.get());
-					remappedItems.add(itemMapping.getKey().getPath());
-				}
-				if (itemMapping.getKey().equals(WOOD_PIKE_HEAD)) {
-					itemMapping.remap(ItemRegistry.WOODEN_PIKE_HEAD.get());
-					remappedItems.add(itemMapping.getKey().getPath());
-				}
-				if (itemMapping.getKey().equals(WOOD_ARROW)) {
-					itemMapping.remap(ItemRegistry.WOODEN_ARROW.get());
-					remappedItems.add(itemMapping.getKey().getPath());
-				}
-				if (itemMapping.getKey().equals(WOOD_MUSKET_BALL)) {
-					itemMapping.remap(ItemRegistry.WOODEN_MUSKET_BALL.get());
-					remappedItems.add(itemMapping.getKey().getPath());
-				}
-			}
-
-			ImmersiveWeapons.LOGGER.warn("Item remapping complete. Remapped entries: {}", remappedItems);
-			ImmersiveWeapons.LOGGER.warn("{}/{} items remapped.", remappedItems.size(), mappings.size());
+		if (!mappings.isEmpty()) {
+			LegacyMappingsHandler.remapBlocks(mappings);
 		}
 	}
 
@@ -228,47 +132,7 @@ public class ForgeEventSubscriber {
 		List<Mapping<EntityType<?>>> mappings = event.getMappings(ForgeRegistries.ENTITY_TYPES.getRegistryKey(), ImmersiveWeapons.MOD_ID);
 
 		if (!mappings.isEmpty()) {
-
-			ImmersiveWeapons.LOGGER.warn("Missing entity mappings were found. This probably means an entity was renamed or deleted. Attempting to remap...");
-
-			List<String> remappedEntities = new ArrayList<>(0);
-
-			ResourceLocation SMOKE_BOMB = new ResourceLocation(ImmersiveWeapons.MOD_ID, "smoke_bomb");
-			ResourceLocation SMOKE_BOMB_ARROW = new ResourceLocation(ImmersiveWeapons.MOD_ID, "smoke_bomb_arrow");
-			ResourceLocation GOLD_ARROW = new ResourceLocation(ImmersiveWeapons.MOD_ID, "gold_arrow");
-			ResourceLocation GOLD_MUSKET_BALL = new ResourceLocation(ImmersiveWeapons.MOD_ID, "gold_musket_ball");
-			ResourceLocation WOOD_ARROW = new ResourceLocation(ImmersiveWeapons.MOD_ID, "wood_arrow");
-			ResourceLocation WOOD_MUSKET_BALL = new ResourceLocation(ImmersiveWeapons.MOD_ID, "wood_musket_ball");
-
-			for (Mapping<EntityType<?>> entityTypeMapping : mappings) {
-				if (entityTypeMapping.getKey().equals(SMOKE_BOMB)) {
-					entityTypeMapping.remap(EntityRegistry.SMOKE_GRENADE_ENTITY.get());
-					remappedEntities.add(entityTypeMapping.getKey().getPath());
-				}
-				if (entityTypeMapping.getKey().equals(SMOKE_BOMB_ARROW)) {
-					entityTypeMapping.remap(EntityRegistry.SMOKE_GRENADE_ARROW_ENTITY.get());
-					remappedEntities.add(entityTypeMapping.getKey().getPath());
-				}
-				if (entityTypeMapping.getKey().equals(GOLD_ARROW)) {
-					entityTypeMapping.remap(EntityRegistry.GOLDEN_ARROW_ENTITY.get());
-					remappedEntities.add(entityTypeMapping.getKey().getPath());
-				}
-				if (entityTypeMapping.getKey().equals(GOLD_MUSKET_BALL)) {
-					entityTypeMapping.remap(EntityRegistry.GOLDEN_MUSKET_BALL_ENTITY.get());
-					remappedEntities.add(entityTypeMapping.getKey().getPath());
-				}
-				if (entityTypeMapping.getKey().equals(WOOD_ARROW)) {
-					entityTypeMapping.remap(EntityRegistry.WOODEN_ARROW_ENTITY.get());
-					remappedEntities.add(entityTypeMapping.getKey().getPath());
-				}
-				if (entityTypeMapping.getKey().equals(WOOD_MUSKET_BALL)) {
-					entityTypeMapping.remap(EntityRegistry.WOODEN_MUSKET_BALL_ENTITY.get());
-					remappedEntities.add(entityTypeMapping.getKey().getPath());
-				}
-			}
-
-			ImmersiveWeapons.LOGGER.warn("Entity remapping complete. Remapped entries: {}", remappedEntities);
-			ImmersiveWeapons.LOGGER.warn("{}/{} entities remapped.", remappedEntities.size(), mappings.size());
+			LegacyMappingsHandler.remapEntities(mappings);
 		}
 	}
 
@@ -283,22 +147,7 @@ public class ForgeEventSubscriber {
 		List<Mapping<SoundEvent>> mappings = event.getMappings(ForgeRegistries.SOUND_EVENTS.getRegistryKey(), ImmersiveWeapons.MOD_ID);
 
 		if (!mappings.isEmpty()) {
-
-			ImmersiveWeapons.LOGGER.warn("Missing sound event mappings were found. This probably means a sound was renamed or deleted. Attempting to remap...");
-
-			List<String> remappedSoundEvents = new ArrayList<>(0);
-
-			ResourceLocation SMOKE_BOMB_HISS = new ResourceLocation(ImmersiveWeapons.MOD_ID, "smoke_bomb_hiss");
-
-			for (Mapping<SoundEvent> soundEventMapping : mappings) {
-				if (soundEventMapping.getKey().equals(SMOKE_BOMB_HISS)) {
-					soundEventMapping.remap(SoundEventRegistry.SMOKE_GRENADE_HISS.get());
-					remappedSoundEvents.add(soundEventMapping.getKey().getPath());
-				}
-			}
-
-			ImmersiveWeapons.LOGGER.warn("Sound event remapping complete. Remapped entries: {}", remappedSoundEvents);
-			ImmersiveWeapons.LOGGER.warn("{}/{} sounds remapped.", remappedSoundEvents.size(), mappings.size());
+			LegacyMappingsHandler.remapSoundEvents(mappings);
 		}
 	}
 
@@ -316,6 +165,49 @@ public class ForgeEventSubscriber {
 			}
 		}
 
+		if (player.tickCount % 20 == 0) {
+			// Handle permanent hunger effect of Bloody Sacrifice and Jonny's Curse
+			if (player.getPersistentData().getBoolean("used_curse_accessory_bloody_sacrifice")) {
+				if (!player.hasEffect(MobEffects.HUNGER)) {
+					player.addEffect(new MobEffectInstance(MobEffects.HUNGER, -1, 0, true, true));
+				}
+			}
+			if (player.getPersistentData().getBoolean("used_curse_accessory_jonnys_curse")) {
+				if (!player.hasEffect(MobEffects.HUNGER)) {
+					player.addEffect(new MobEffectInstance(MobEffects.HUNGER, -1, 2, true, true));
+				}
+			}
+
+			// Handle reduced movement speed of Jonny's Curse
+			if (player.getPersistentData().getBoolean("used_curse_accessory_jonnys_curse")) {
+				AttributeInstance attributeInstance = player.getAttributes().getInstance(Attributes.MOVEMENT_SPEED);
+				if (attributeInstance != null) {
+					if (!attributeInstance.hasModifier(JONNYS_CURSE_SPEED_MODIFIER)) {
+						attributeInstance.addTransientModifier(JONNYS_CURSE_SPEED_MODIFIER);
+					}
+				}
+			}
+
+			// Handle increased health effect of the Bloated Heart
+			AttributeInstance attributeInstance = player.getAttributes().getInstance(Attributes.MAX_HEALTH);
+			if (attributeInstance != null) {
+				if (AccessoryItem.isAccessoryActive(player, ItemRegistry.BLOATED_HEART.get())) {
+					if (!attributeInstance.hasModifier(BLOATED_HEART_HEALTH_MODIFIER)) {
+						attributeInstance.addTransientModifier(BLOATED_HEART_HEALTH_MODIFIER);
+					}
+				} else if (attributeInstance.hasModifier(BLOATED_HEART_HEALTH_MODIFIER)) {
+					attributeInstance.removeModifier(BLOATED_HEART_HEALTH_MODIFIER);
+				}
+			}
+
+			// Handle constant Hero of the Village effect of the Emerald Ring
+			if (AccessoryItem.isAccessoryActive(player, ItemRegistry.EMERALD_RING.get())) {
+				if (!player.hasEffect(MobEffects.HERO_OF_THE_VILLAGE)) {
+					player.addEffect(new MobEffectInstance(MobEffects.HERO_OF_THE_VILLAGE, 60, 0, true, true));
+				}
+			}
+		}
+
 		// Debug tracing
 		if (DebugTracingData.isDebugTracingEnabled) {
 			if (player == Minecraft.getInstance().player) {
@@ -326,14 +218,42 @@ public class ForgeEventSubscriber {
 
 	@SubscribeEvent
 	public static void livingHurtEvent(LivingHurtEvent event) {
-		LivingEntity entity = event.getEntity();
+		LivingEntity damagedEntity = event.getEntity();
 		LivingEntity source = null;
+
 		if (event.getSource().getEntity() instanceof LivingEntity sourceEntity) {
 			source = sourceEntity;
 		}
 
-		// Handle Regenerative Assault enchantment
+		if (event.getSource().is(IWDamageTypes.METEOR_KEY) && event.getSource().getDirectEntity() instanceof MeteorEntity meteor) {
+			// Check for a "target" tag, and check if it matches the damaged entity's UUID
+			if (!meteor.getPersistentData().getUUID("target").equals(damagedEntity.getUUID())) {
+				event.setCanceled(true);
+			}
+		}
+
+		// Handle environmental effects
+		EnvironmentEffects.celestialProtectionEffect(event, damagedEntity);
+		EnvironmentEffects.damageVulnerabilityEffect(event, damagedEntity);
+		EnvironmentEffects.starstormArmorSetBonus(event, source);
+		EnvironmentEffects.moltenArmorSetBonus(event, source);
+
+		// Handle accessory effects
+		if (damagedEntity instanceof Player player) {
+			AccessoryEffects.damageResistanceEffects(event, player);
+
+			if (source != null) {
+				AccessoryEffects.celestialSpiritEffect(player, source);
+			}
+		}
+
 		if (source instanceof Player player) {
+			AccessoryEffects.meleeDamageEffects(event, player);
+			AccessoryEffects.projectileDamageEffects(event, player);
+			AccessoryEffects.generalDamageEffects(event, player);
+			AccessoryEffects.meleeBleedChanceEffects(event, player, damagedEntity);
+
+			// Handle Regenerative Assault enchantment
 			ItemStack weapon = player.getItemInHand(player.getUsedItemHand());
 
 			// Check if it was a thrown trident
@@ -348,25 +268,61 @@ public class ForgeEventSubscriber {
 				player.heal(event.getAmount() * 0.1f * enchantmentLevel);
 				player.playSound(SoundEvents.EXPERIENCE_ORB_PICKUP, 1.0f, 1.0f);
 			}
+
+
+			if (player instanceof ServerPlayer serverPlayer) {
+				// If over 175 damage was dealt, add an advancement
+				if (event.getAmount() >= 175.0f && serverPlayer.getServer() != null) {
+					Advancement advancement = serverPlayer.getServer().getAdvancements()
+							.getAdvancement(new ResourceLocation(ImmersiveWeapons.MOD_ID, "overkill"));
+					
+					if (advancement != null) {
+						serverPlayer.getAdvancements().award(advancement, "");
+					}
+				}
+
+				// Handle debug tracing
+				PacketHandler.INSTANCE.send(PacketDistributor.PLAYER.with(() -> serverPlayer), new LastDamageDealtPacketHandler(player.getUUID(), event.getAmount()));
+			}
 		}
 
-		EnvironmentEffects effects = new EnvironmentEffects();
+		AccessoryEffects.bloodySacrificeEffect(event, damagedEntity);
+		AccessoryEffects.jonnysCurseEffect(event, damagedEntity);
+	}
 
-		// Celestial Protection effect
-		effects.celestialProtectionEffect(event, entity);
+	@SubscribeEvent
+	public static void livingDeathEvent(LivingDeathEvent event) {
+		// Handle charging of cursed accessories on kill
 
-		// Damage Vulnerability effect
-		effects.damageVulnerabilityEffect(event, entity);
+		if (event.getSource().getEntity() instanceof Player player) {
+			List<ItemStack> curses = CursedItem.getCurses(player);
+			for (ItemStack curse : curses) {
+				if (!curse.getOrCreateTag().getBoolean("max_charge")) {
+					if (!curse.isDamaged()) {
+						curse.setDamageValue(100);
+					}
 
-		// Starstorm armor set bonus
-		effects.starstormArmorSetBonus(event, source);
+					if (curse.getDamageValue() <= 100 && curse.getDamageValue() >= 0) {
+						curse.setDamageValue(curse.getDamageValue() - 1);
 
-		// Molten armor set bonus
-		effects.moltenArmorSetBonus(event, source);
+						// If at max charge, set a tag, so it will no longer charge
+						if (curse.getDamageValue() == 0) {
+							curse.getOrCreateTag().putBoolean("max_charge", true);
+						}
+					}
+				}
+			}
+		}
 	}
 
 	@SubscribeEvent
 	public static void entityJoinLevelEvent(EntityJoinLevelEvent event) {
+		// Sync player data from server to client
+		if (event.getEntity() instanceof ServerPlayer player) {
+			// Send update packet
+			PacketHandler.INSTANCE.send(PacketDistributor.PLAYER.with(() -> player), new SyncPlayerDataPacketHandler(player.getPersistentData(), player.getUUID()));
+		}
+
 		// Handle the Velocity enchantment on bows (guns are handled in the gun code)
 		if (event.getEntity() instanceof AbstractArrow arrow) {
 			if (arrow.getOwner() instanceof Player player && player.getItemInHand(player.getUsedItemHand()).getItem() instanceof BowItem) {
@@ -379,6 +335,12 @@ public class ForgeEventSubscriber {
 				}
 			}
 		}
+	}
+
+	@SubscribeEvent
+	public static void playerCloneEvent(PlayerEvent.Clone event) {
+		// Copy old persistent data to the new player
+		event.getEntity().getPersistentData().merge(event.getOriginal().getPersistentData());
 	}
 
 	@SubscribeEvent
@@ -456,5 +418,90 @@ public class ForgeEventSubscriber {
 	public static void levelLoadEvent(LevelEvent.Load event) {
 		// Initialize custom damage sources
 		IWDamageSources.init(event.getLevel().registryAccess());
+	}
+
+	@SubscribeEvent
+	public static void lootingLevelEvent(LootingLevelEvent event) {
+		if (event.getDamageSource().getEntity() instanceof Player player) {
+			// Increase the looting level by 3 with the Bloody Sacrifice curse
+			if (player.getPersistentData().getBoolean("used_curse_accessory_bloody_sacrifice")) {
+				event.setLootingLevel(event.getLootingLevel() + 3);
+			}
+
+			// Increase the looting level by 2 with the Amethyst Ring
+			if (AccessoryItem.isAccessoryActive(player, ItemRegistry.AMETHYST_RING.get())) {
+				event.setLootingLevel(event.getLootingLevel() + 2);
+			}
+		}
+	}
+
+	@SubscribeEvent
+	public static void livingDropsEvent(LivingDropsEvent event) {
+		if (event.getSource().getEntity() instanceof Player player) {
+			// 25% chance to drop items a second time with the Bloody Sacrifice curse
+			if (player.getPersistentData().getBoolean("used_curse_accessory_bloody_sacrifice")) {
+				if (player.getRandom().nextFloat() <= 0.25f) {
+					ResourceLocation lootTable = event.getEntity().getLootTable();
+					MinecraftServer server = event.getEntity().level.getServer();
+
+					if (server != null) {
+						LootTable table = server.getLootTables().get(lootTable);
+
+						table.getRandomItems(new LootContext.Builder((ServerLevel) event.getEntity().level)
+										.withParameter(LootContextParams.THIS_ENTITY, event.getEntity())
+										.withParameter(LootContextParams.ORIGIN, event.getEntity().position())
+										.withParameter(LootContextParams.DAMAGE_SOURCE, event.getSource())
+										.withParameter(LootContextParams.KILLER_ENTITY, player)
+										.withParameter(LootContextParams.LAST_DAMAGE_PLAYER, player)
+										.withParameter(LootContextParams.DIRECT_KILLER_ENTITY, player)
+										.withParameter(LootContextParams.BLOCK_STATE, Blocks.AIR.defaultBlockState())
+										.withParameter(LootContextParams.TOOL, ItemStack.EMPTY)
+										.withParameter(LootContextParams.EXPLOSION_RADIUS, 0.0f)
+										.create(LootContextParamSets.ENTITY))
+								.forEach(stack -> {
+									ItemEntity itemEntity = new ItemEntity(event.getEntity().level, event.getEntity().getX(), event.getEntity().getY(), event.getEntity().getZ(), stack);
+									itemEntity.setPickUpDelay(10);
+									event.getDrops().add(itemEntity);
+								});
+
+						// Summon a cloud of particles around the entity
+						ServerLevel level = server.getLevel(event.getEntity().level.dimension());
+						if (level != null) {
+							level.sendParticles(
+									ParticleTypes.SOUL,
+									event.getEntity().getX(),
+									event.getEntity().getY() + event.getEntity().getBbHeight() / 2.0d,
+									event.getEntity().getZ(),
+									10,
+									0.5d,
+									0.5d,
+									0.5d,
+									0.0d
+							);
+						}
+					}
+				}
+			}
+
+			// 50% chance to not get any drops with Jonny's Curse
+			if (player.getPersistentData().getBoolean("used_curse_accessory_jonnys_curse")) {
+				if (player.getRandom().nextFloat() <= 0.5f) {
+					event.setCanceled(true);
+				}
+			}
+		}
+	}
+
+	@SubscribeEvent
+	public static void livingKnockBackEvent(LivingKnockBackEvent event) {
+		LivingEntity entity = event.getEntity();
+
+		if (entity instanceof Player player) {
+			AccessoryEffects.knockbackResistanceEffects(event, player);
+		}
+
+		if (entity.getLastAttacker() instanceof Player player) {
+			AccessoryEffects.meleeKnockbackEffects(event, player);
+		}
 	}
 }

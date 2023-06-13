@@ -100,4 +100,11 @@ public class IWDamageTypes {
 			DamageScaling.ALWAYS,
 			0.1f
 	);
+
+	public static final ResourceKey<DamageType> BULLET_KEY = ResourceKey.create(Registries.DAMAGE_TYPE, new ResourceLocation(ImmersiveWeapons.MOD_ID, "bullet"));
+	public static final DamageType BULLET = new DamageType(
+			"immersiveweapons.bullet",
+			DamageScaling.ALWAYS,
+			0.1f
+	);
 }

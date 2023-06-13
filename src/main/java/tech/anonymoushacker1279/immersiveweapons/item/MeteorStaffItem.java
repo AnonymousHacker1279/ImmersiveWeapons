@@ -34,7 +34,7 @@ public class MeteorStaffItem extends Item implements SummoningStaff {
 
 				if (enchantmentLevel > 0 && player.isCrouching()) {
 					for (int i = 0; i < 3; i++) {
-						if (!MeteorEntity.create(level, player, player.getItemInHand(hand), lookingAt)) {
+						if (!MeteorEntity.create(level, player, player.getItemInHand(hand), lookingAt, null)) {
 							// If the meteor entity could not be created (because the starting position was inside a solid block)
 							// send a message to the player
 							player.displayClientMessage(Component.translatable("immersiveweapons.item.meteor_staff.not_enough_clearance")
@@ -44,7 +44,7 @@ public class MeteorStaffItem extends Item implements SummoningStaff {
 					}
 					handleCooldown(this, lookingAt, player, hand, getStaffCooldown() * 3);
 				} else {
-					if (!MeteorEntity.create(level, player, player.getItemInHand(hand), lookingAt)) {
+					if (!MeteorEntity.create(level, player, player.getItemInHand(hand), lookingAt, null)) {
 						// If the meteor entity could not be created (because the starting position was inside a solid block)
 						// send a message to the player
 						player.displayClientMessage(Component.translatable("immersiveweapons.item.meteor_staff.not_enough_clearance")

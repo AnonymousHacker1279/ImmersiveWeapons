@@ -31,6 +31,9 @@ public class BiomeTagsGenerator extends BiomeTagsProvider {
 		tag(ForgeWorldGenTagGroups.IS_WET_CAVE)
 				.add(Biomes.DRIPSTONE_CAVES, Biomes.LUSH_CAVES);
 
+		tag(ForgeWorldGenTagGroups.IS_LUSH_CAVE)
+				.add(Biomes.LUSH_CAVES);
+
 		tag(BiomeTags.IS_OVERWORLD)
 				.add(IWBiomes.BATTLEFIELD);
 

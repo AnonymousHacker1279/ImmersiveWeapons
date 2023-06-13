@@ -18,13 +18,14 @@ import java.util.function.Supplier;
 
 public class AzulKeystoneFragmentInChestsLootModifierHandler extends LootModifier {
 
-	public static final Supplier<Codec<AzulKeystoneFragmentInChestsLootModifierHandler>> CODEC = Suppliers.memoize(() -> RecordCodecBuilder.create(inst -> codecStart(inst).and(
-			inst.group(
-					Codec.INT.fieldOf("min_quantity").forGetter(m -> m.minQuantity),
-					Codec.INT.fieldOf("max_quantity").forGetter(m -> m.maxQuantity),
-					Codec.FLOAT.fieldOf("roll_chance").forGetter(m -> m.rollChance)
-			)).apply(inst, AzulKeystoneFragmentInChestsLootModifierHandler::new)
-	));
+	public static final Supplier<Codec<AzulKeystoneFragmentInChestsLootModifierHandler>> CODEC = Suppliers.memoize(() ->
+			RecordCodecBuilder.create(inst -> codecStart(inst).and(
+							inst.group(
+									Codec.INT.fieldOf("min_quantity").forGetter(m -> m.minQuantity),
+									Codec.INT.fieldOf("max_quantity").forGetter(m -> m.maxQuantity),
+									Codec.FLOAT.fieldOf("roll_chance").forGetter(m -> m.rollChance)))
+					.apply(inst, AzulKeystoneFragmentInChestsLootModifierHandler::new)
+			));
 
 	private final int minQuantity;
 	private final int maxQuantity;
@@ -47,16 +48,14 @@ public class AzulKeystoneFragmentInChestsLootModifierHandler extends LootModifie
 			throw new JsonParseException("max_quantity must be >= min_quantity");
 		}
 
-		if (rollChance < 0.0f) {
-			throw new JsonParseException("roll_chance must be >= 0.0");
-		} else if (rollChance > 1.0f) {
-			throw new JsonParseException("roll_chance must be <= 1.0");
+		if (rollChance < 0.0f || rollChance > 1.0f) {
+			throw new JsonParseException("roll_chance must be between 0.0 and 1.0");
 		}
 	}
 
 	@Override
 	protected @NotNull ObjectArrayList<ItemStack> doApply(ObjectArrayList<ItemStack> generatedLoot, LootContext context) {
-		if (rollChance <= GeneralUtilities.getRandomNumber(0.0f, 1.00001f)) {
+		if (context.getRandom().nextFloat() <= rollChance) {
 			int lootQuantity = GeneralUtilities.getRandomNumber(minQuantity, maxQuantity + 1);
 
 			generatedLoot.add(new ItemStack(ItemRegistry.AZUL_KEYSTONE_FRAGMENT.get(), lootQuantity));

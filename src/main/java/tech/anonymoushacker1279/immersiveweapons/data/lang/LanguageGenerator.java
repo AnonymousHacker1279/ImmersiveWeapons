@@ -50,9 +50,7 @@ public class LanguageGenerator extends IWLanguageProvider {
 		excludedBlocks.add(BlockRegistry.STARDUST_WALL_SIGN.get());
 		excludedBlocks.addAll(BlockLists.wallHeadBlocks);
 
-		excludedBlocks.add(BlockRegistry.CORRUGATED_IRON_PANEL_BARS.get());
-		excludedBlocks.add(BlockRegistry.CORRUGATED_IRON_PANEL_FLAT.get());
-		excludedBlocks.add(BlockRegistry.CORRUGATED_IRON_PANEL_FLAT_BARS.get());
+		excludedBlocks.add(BlockRegistry.IRON_PANEL_BARS.get());
 		excludedBlocks.add(BlockRegistry.COBALT_BLOCK.get());
 		excludedBlocks.add(BlockRegistry.RAW_COBALT_BLOCK.get());
 		excludedBlocks.add(BlockRegistry.RAW_SULFUR_BLOCK.get());
@@ -80,9 +78,7 @@ public class LanguageGenerator extends IWLanguageProvider {
 		});
 
 		// Manually add the blocks that were excluded above
-		addBlock(BlockRegistry.CORRUGATED_IRON_PANEL_BARS, "Corrugated Iron Panel (Bars)");
-		addBlock(BlockRegistry.CORRUGATED_IRON_PANEL_FLAT, "Corrugated Iron Panel (Flat)");
-		addBlock(BlockRegistry.CORRUGATED_IRON_PANEL_FLAT_BARS, "Corrugated Iron Panel (Flat, Bars)");
+		addBlock(BlockRegistry.IRON_PANEL_BARS, "Iron Panel (Bars)");
 		addBlock(BlockRegistry.COBALT_BLOCK, "Block of Cobalt");
 		addBlock(BlockRegistry.RAW_COBALT_BLOCK, "Block of Raw Cobalt");
 		addBlock(BlockRegistry.RAW_SULFUR_BLOCK, "Block of Raw Sulfur");
@@ -99,6 +95,10 @@ public class LanguageGenerator extends IWLanguageProvider {
 		excludedItems.add(ItemRegistry.HANS_SPAWN_EGG.get());
 		excludedItems.add(ItemRegistry.MUSKET_SCOPE.get());
 		excludedItems.add(ItemRegistry.EXPLOSIVE_CHOCOLATE_BAR.get());
+		excludedItems.add(ItemRegistry.BERSERKERS_AMULET.get());
+		excludedItems.add(ItemRegistry.HANS_BLESSING.get());
+		excludedItems.add(ItemRegistry.MELEE_MASTERS_MOLTEN_GLOVE.get());
+		excludedItems.add(ItemRegistry.JONNYS_CURSE.get());
 
 		// Filter the excluded items from the registry
 		Stream<RegistryObject<Item>> items = ItemRegistry.ITEMS.getEntries().stream()
@@ -138,6 +138,10 @@ public class LanguageGenerator extends IWLanguageProvider {
 		addItem(ItemRegistry.HANS_SPAWN_EGG, "Hans The Almighty Spawn Egg");
 		addItem(ItemRegistry.MUSKET_SCOPE, "Musket (Scope)");
 		addItem(ItemRegistry.EXPLOSIVE_CHOCOLATE_BAR, "Chocolate Bar");
+		addItem(ItemRegistry.BERSERKERS_AMULET, "Berserker's Amulet");
+		addItem(ItemRegistry.HANS_BLESSING, "Hans' Blessing");
+		addItem(ItemRegistry.MELEE_MASTERS_MOLTEN_GLOVE, "Melee Master's Molten Glove");
+		addItem(ItemRegistry.JONNYS_CURSE, "Jonny's Curse");
 	}
 
 	private void addEntityTypes() {
@@ -387,6 +391,11 @@ public class LanguageGenerator extends IWLanguageProvider {
 		addTooltip("first_aid_kit", "An effective method of healing, combining the effects of bandages and painkillers");
 
 		// Misc
+		addTooltip("shift_for_info", "Hold SHIFT for more information");
+		addTooltip("accessory_note", "This accessory works while sitting in your inventory");
+		addTooltip("accessory_inactive", "This accessory is inactive - something else is using its accessory slot");
+		addTooltip("accessory_slot", "Accessory Slot: %s");
+		addTooltip("creative_only", "Creative Only");
 		addTooltip("barrel_tap", "Use this to convert some plants into a fluid form. Connect this to a barrel to collect it.");
 		addTooltip("tesla_hoe", "Good thing you aren't in charge of the US Treasury. Because if you were we'd be broke.");
 		addTooltip("spotlight", "I see you there");
@@ -397,6 +406,62 @@ public class LanguageGenerator extends IWLanguageProvider {
 		addTooltip("mortar", "Capable of sending exploding shells far into the distance");
 		addTooltip("celestial_fragment", "The power of the sun in the palm of your hand");
 		addTooltip("azul_locator", "Teleport to your spawn point at will");
+		addTooltip("curse_cleaning_soap", "Cleanses your soul of all curses");
+
+		// Accessories
+		addTooltip("satchel", "Provides a 10% chance not to consume ammo");
+		addTooltip("powder_horn", "Decreases reload time on firearms by 15%");
+		addTooltip("berserkers_amulet_1", "Increases melee damage by 20%, and projectile damage by 10%");
+		addTooltip("berserkers_amulet_2", "However, you will take 20% more damage from all sources");
+		addTooltip("hans_blessing_1", "Take 15% less damage from all sources");
+		addTooltip("hans_blessing_2", "Tis but a scratch");
+		addTooltip("celestial_spirit_1", "When taking damage, there is a 15% chance to summon a meteor");
+		addTooltip("celestial_spirit_2", "The meteor will only damage the creature that attacked you");
+		addTooltip("blademaster_emblem", "Increases melee damage by 10%, and adds a 30% chance to inflict Bleeding");
+		addTooltip("deadeye_pendant_1", "Increases damage over distance with firearms");
+		addTooltip("deadeye_pendant_2", "Maximum damage increase is 20% at 100 meters");
+		addTooltip("bloated_heart", "Increases maximum health by two hearts");
+		addTooltip("netherite_shield", "Provides total immunity to knockback and 3% damage reduction");
+		addTooltip("melee_masters_molten_glove", "Increases melee knockback by 75% and melee damage by 10%");
+		addTooltip("copper_ring", "Increase general damage by 1% and provides 1% damage reduction");
+		addTooltip("iron_ring", "Increase general damage by 2% and provides 2% damage reduction");
+		addTooltip("cobalt_ring", "Increase general damage by 2.5% and provides 2.5% damage reduction");
+		addTooltip("golden_ring", "Increase general damage by 3% and provides 3% damage reduction");
+		addTooltip("amethyst_ring", "Provides a looting bonus");
+		addTooltip("emerald_ring", "Provides the Hero of the Village effect");
+		addTooltip("diamond_ring", "Increase general damage by 4% and provides 4% damage reduction");
+		addTooltip("netherite_ring", "Increase general damage by 5% and provides 5% damage reduction");
+		addTooltip("medal_of_adequacy", "This medal was once awarded to gamingwarrior0 for his wholly undistinguished assistance");
+
+		addTooltip("bloody_sacrifice", "You feel a dark presence emanating from this item");
+		addTooltip("bloody_sacrifice_charge_note", "The destruction of life charges something inside");
+		addTooltip("bloody_sacrifice_charge", "Charge: %s / 100");
+		addTooltip("bloody_sacrifice_fully_charged", "Using this would be a grave and permanent mistake");
+		addTooltip("bloody_sacrifice_effect_1", "- +50% damage taken");
+		addTooltip("bloody_sacrifice_effect_2", "- -10% damage dealt");
+		addTooltip("bloody_sacrifice_effect_3", "- Permanent hunger effect");
+		addTooltip("bloody_sacrifice_effect_4", "- Permanent looting bonus");
+		addTooltip("bloody_sacrifice_effect_5", "- 25% chance to roll a second loot drop entirely");
+
+		addTooltip("jonnys_curse_1", "It's like the wrath of gods, Egyptian pharaohs, Chinese monks, and Hans himself.");
+		addTooltip("jonnys_curse_2", "Ping me if you want more textures, because I probably wont respond.");
+		addTooltip("jonnys_curse_3", "Hrnnnnnggggg soup.");
+		addTooltip("jonnys_curse_4", "I don't even think Hans would be able to withstand such pain.");
+		addTooltip("jonnys_curse_5", "Imagine stubbing your toe into a lego brick that has a tack stuck through the middle.");
+		addTooltip("jonnys_curse_6", "Exist in the life of a furry on 4chan!");
+		addTooltip("jonnys_curse_7", "This is what happens when you nuke yourself in Garry’s mod.");
+		addTooltip("jonnys_curse_8", "The true for the worthy play through.");
+		addTooltip("jonnys_curse_9", "If you ever wanted to be put into a mental hospital, this is how you do it.");
+		addTooltip("jonnys_curse_10", "D O N T");
+		addTooltip("jonnys_curse_11", "Random crits not included.");
+		addTooltip("jonnys_curse_charge_note", "Killing things makes me feel funny");
+		addTooltip("jonnys_curse_charge", "Charge: %s / 100");
+		addTooltip("jonnys_curse_fully_charged", "This is a really bad idea for obvious reasons");
+		addTooltip("jonnys_curse_effect_1", "- +200% damage taken");
+		addTooltip("jonnys_curse_effect_2", "- 50% chance not to roll loot drops");
+		addTooltip("jonnys_curse_effect_3", "- -25% movement speed");
+		addTooltip("jonnys_curse_effect_4", "- Permanent hunger effect");
+		addTooltip("jonnys_curse_effect_5", "- Projectiles deal zero damage");
 
 		// Lore
 		addTooltip("minuteman_statue", "Something seems to activate inside when it is placed in a Battlefield. It wishes to protect.");
@@ -421,6 +486,16 @@ public class LanguageGenerator extends IWLanguageProvider {
 		addMessage("item.azul_locator.teleported", "Teleported to spawn point!");
 		addMessage("item.azul_locator.no_spawn", "Unable to teleport: No spawn point set.");
 		addMessage("item.meteor_staff.not_enough_clearance", "There isn't enough clearance to summon a meteor");
+		addMessage("item.curse_cleaning_soap.cleaned", "All curses have been lifted!");
+		addMessage("item.curse_cleaning_soap.not_cursed", "There is nothing to cleanse...");
+		addMessage("item.bloody_sacrifice.not_enough_charge", "Not enough blood has been spilled yet...");
+		addMessage("item.bloody_sacrifice.using", "This will have permanent consequences...");
+		addMessage("item.bloody_sacrifice.canceled", "The curse remains sealed...");
+		addMessage("item.bloody_sacrifice.used", "There is no going back now...");
+		addMessage("item.jonnys_curse.not_enough_charge", "Nah, go kill more things...");
+		addMessage("item.jonnys_curse.using", "Are you sure you wanna become a furry?");
+		addMessage("item.jonnys_curse.canceled", "You remain normal for now...");
+		addMessage("item.jonnys_curse.used", "Its so over...");
 		addMessage("block.wall_shelf.locked", "This shelf has been locked");
 		addMessage("block.wall_shelf.unlocked", "This shelf has been unlocked");
 	}
@@ -451,6 +526,8 @@ public class LanguageGenerator extends IWLanguageProvider {
 		addDeathMessage("deathweed.player", "%s was poisoned by deathweed at the hands of %s");
 		addDeathMessage("meteor", "%s was hit by a meteor");
 		addDeathMessage("meteor.player", "%s was hit by a meteor summoned by %s");
+		addDeathMessage("bullet", "%s was shot");
+		addDeathMessage("bullet.player", "%s was shot by %s");
 	}
 
 	private void addBiomes() {
@@ -704,6 +781,14 @@ public class LanguageGenerator extends IWLanguageProvider {
 		addAdvancement("biohazard_box.description", "Obtain a (harmless) biohazard box from a medic station");
 		addAdvancement("cloud.title", "High in the Sky");
 		addAdvancement("cloud.description", "Walk across cloud blocks high in the air");
+		addAdvancement("overkill.title", "Overkill");
+		addAdvancement("overkill.description", "Deal 175 damage in a single hit");
+
+		// Accessories
+		addAdvancement("accessories.title", "Accessories!");
+		addAdvancement("accessories.description", "Obtain any accessory");
+		addAdvancement("bloody_sacrifice.title", "For the Worthy");
+		addAdvancement("bloody_sacrifice.description", "Only the bravest souls may take this path");
 
 		// Entity discovery
 		addAdvancement("entity_discovery.title", "Entity Discovery");
@@ -734,6 +819,8 @@ public class LanguageGenerator extends IWLanguageProvider {
 		addAdvancement("discover_star_wolf.description", "Discover a Star Wolf, a stronger and larger wolf");
 		addAdvancement("discover_skygazer.title", "Finally, Some Decent Trades");
 		addAdvancement("discover_skygazer.description", "Discover a Skygazer, a trader which resides in the Starlight Plains");
+		addAdvancement("discover_skeleton_merchant.title", "Cavern Trader");
+		addAdvancement("discover_skeleton_merchant.description", "Discover a Skeleton Merchant, a trader which resides in lush caves");
 	}
 
 	private void addConfigDescriptions() {
@@ -829,8 +916,12 @@ public class LanguageGenerator extends IWLanguageProvider {
 		add("immersiveweapons.debugTracing.gunBaseVelocity", "Gun Base Velocity: %s");
 		add("immersiveweapons.debugTracing.selectedAmmo", "Selected Ammo: %s (base damage: %s)");
 		add("immersiveweapons.debugTracing.liveBulletDamage", "Live Bullet Damage: %s (is crit: %s)");
-		add("immersiveweapons.debugTracing.damageBonus", "Damage Bonus: %s");
+		add("immersiveweapons.debugTracing.damageBonus", "Damage Bonus: %s general, %s melee, %s projectile");
 		add("immersiveweapons.debugTracing.celestialProtectionChanceForNoDamage", "Celestial Protection Chance: %s");
+		add("immersiveweapons.debugTracing.lastDamageDealt", "Last Damage Dealt: %s");
+
+		// IWCB strings
+		add("tooltip.iwcompatbridge.accessory_note", "Equip this in a Curios slot to gain the effect.");
 	}
 
 	/**

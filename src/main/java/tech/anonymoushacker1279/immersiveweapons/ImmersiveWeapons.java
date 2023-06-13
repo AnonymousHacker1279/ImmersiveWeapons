@@ -4,6 +4,7 @@ import com.mojang.logging.LogUtils;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
+import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig.Type;
@@ -26,6 +27,7 @@ import terrablender.api.SurfaceRuleManager.RuleCategory;
 public class ImmersiveWeapons {
 
 	public static final String MOD_ID = "immersiveweapons";
+	public static boolean IWCB_LOADED = false;
 
 	// Setup logger
 	public static final Logger LOGGER = LogUtils.getLogger();
@@ -72,5 +74,9 @@ public class ImmersiveWeapons {
 		PostSetupHandler.init();
 
 		PluginHandler.initializePlugins(event);
+
+		if (ModList.get().isLoaded("iwcompatbridge")) {
+			IWCB_LOADED = true;
+		}
 	}
 }

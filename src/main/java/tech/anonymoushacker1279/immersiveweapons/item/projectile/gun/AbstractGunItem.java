@@ -1,31 +1,35 @@
 package tech.anonymoushacker1279.immersiveweapons.item.projectile.gun;
 
+import com.mojang.blaze3d.vertex.PoseStack;
+import net.minecraft.client.model.HumanoidModel.ArmPose;
+import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundSource;
-import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.AbstractArrow.Pickup;
 import net.minecraft.world.item.*;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.phys.Vec2;
 import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.client.extensions.common.IClientItemExtensions;
 import net.minecraftforge.event.ForgeEventFactory;
 import net.minecraftforge.network.PacketDistributor;
 import tech.anonymoushacker1279.immersiveweapons.config.CommonConfig;
 import tech.anonymoushacker1279.immersiveweapons.data.tags.groups.immersiveweapons.IWItemTagGroups;
 import tech.anonymoushacker1279.immersiveweapons.entity.projectile.bullet.BulletEntity;
+import tech.anonymoushacker1279.immersiveweapons.event.game_effects.AccessoryEffects;
 import tech.anonymoushacker1279.immersiveweapons.init.*;
+import tech.anonymoushacker1279.immersiveweapons.item.AccessoryItem.EffectType;
 import tech.anonymoushacker1279.immersiveweapons.item.projectile.bullet.AbstractBulletItem;
 import tech.anonymoushacker1279.immersiveweapons.item.projectile.gun.data.GunData;
 import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
 
+import java.util.function.Consumer;
 import java.util.function.Predicate;
 
 public abstract class AbstractGunItem extends Item implements Vanishable {
@@ -91,12 +95,6 @@ public abstract class AbstractGunItem extends Item implements Vanishable {
 					ammo = new ItemStack(defaultAmmo());
 				}
 
-				player.lerpTo(player.getX(), player.getY(), player.getZ(),
-						player.getYRot() + GeneralUtilities.getRandomNumber(getMaxYRecoil(), 0.5f),
-						player.getXRot() + GeneralUtilities.getRandomNumber(getMaxXRecoil(), -3.0f),
-						1,
-						false);
-
 				if (!level.isClientSide) {
 					AbstractBulletItem bulletItem = (AbstractBulletItem) (ammo.getItem() instanceof AbstractBulletItem
 							? ammo.getItem() : defaultAmmo());
@@ -138,26 +136,27 @@ public abstract class AbstractGunItem extends Item implements Vanishable {
 
 						level.addFreshEntity(bulletEntity);
 					}
+				} else {
+					// Handle recoil
+					player.yHeadRot = player.yHeadRot + GeneralUtilities.getRandomNumber(getMaxYRecoil(), 0.5f);
+					player.xRot = player.xRot + GeneralUtilities.getRandomNumber(getMaxXRecoil(), -3.0f);
 				}
 
-				double forwards = 0.67 - (GunData.playerFOV * 0.001);
-				float left = -0.35f;
+				// Handle muzzle flash
+				// Calculate a particle position based on the player's position and rotation
+				Vec3 particlePosition = player.getEyePosition(1.0f);
+				particlePosition = particlePosition.add(player.getLookAngle().scale(0.5d));
 
-				Vec2 rotationVector = player.getRotationVector();
-				Vec3 eyePosition = player.getEyePosition().subtract(0, 0.1f, 0);
-				float f = Mth.cos((rotationVector.y + 90.0F) * ((float) Math.PI / 180F));
-				float f1 = Mth.sin((rotationVector.y + 90.0F) * ((float) Math.PI / 180F));
-				float f2 = Mth.cos(-rotationVector.x * ((float) Math.PI / 180F));
-				float f3 = Mth.sin(-rotationVector.x * ((float) Math.PI / 180F));
-				float f4 = Mth.cos((-rotationVector.x + 90.0F) * ((float) Math.PI / 180F));
-				float f5 = Mth.sin((-rotationVector.x + 90.0F) * ((float) Math.PI / 180F));
-				Vec3 vec31 = new Vec3(f * f2, f3, f1 * f2);
-				Vec3 vec32 = new Vec3(f * f4, f5, f1 * f4);
-				Vec3 vec33 = vec31.cross(vec32).scale(-1.0D);
-				double d0 = vec31.x * forwards + vec33.x * left;
-				double d1 = vec31.y * forwards + vec33.y * left;
-				double d2 = vec31.z * forwards + vec33.z * left;
-				Vec3 particlePosition = new Vec3(eyePosition.x + d0, eyePosition.y + d1, eyePosition.z + d2);
+				// Shift to the side (taking into consideration which hand the gun is in)
+				Vec3 sideVector = player.getLookAngle().cross(new Vec3(0, 1, 0.2));
+				double sideOffset = player.getUsedItemHand() == InteractionHand.MAIN_HAND ? 0.5d : -0.5d;
+				particlePosition = particlePosition.add(sideVector.scale(sideOffset));
+
+				// Adjust forward position based on player FOV
+				double fov = GunData.playerFOV;
+				double fovOffset = 1.75d - (fov / 150.0d);
+				Vec3 lookVector = player.getLookAngle();
+				particlePosition = particlePosition.add(lookVector.x * fovOffset * 0.5d, lookVector.y * fovOffset * 0.5d, lookVector.z * fovOffset * 0.5d);
 
 				for (int i = 0; i < bulletsToFire; ++i) {
 					level.addParticle(ParticleTypesRegistry.MUZZLE_FLASH_PARTICLE.get(),
@@ -180,9 +179,15 @@ public abstract class AbstractGunItem extends Item implements Vanishable {
 				handleAmmoStack(gun, ammo, bulletsToFire, player);
 
 				if (!player.isCreative()) {
+					// Reduce cooldown in certain conditions
+					float reductionFactor = (float) AccessoryEffects.collectEffects(EffectType.FIREARM_RELOAD_SPEED, player);
+
 					int rapidFireLevel = gun.getEnchantmentLevel(EnchantmentRegistry.RAPID_FIRE.get());
-					// Each level reduces the cooldown by 5%
-					int cooldown = getCooldown() - (int) (getCooldown() * (0.05f * rapidFireLevel));
+					reductionFactor += (0.05f * rapidFireLevel);
+
+					// Calculate the cooldown
+					int cooldown = (int) (getCooldown() * (1f - reductionFactor));
+
 					player.getCooldowns().addCooldown(this, cooldown);
 				}
 			}
@@ -276,6 +281,98 @@ public abstract class AbstractGunItem extends Item implements Vanishable {
 		return super.onDroppedByPlayer(item, player);
 	}
 
+	@Override
+	public UseAnim getUseAnimation(ItemStack pStack) {
+		return UseAnim.CUSTOM;
+	}
+
+	@Override
+	public void initializeClient(Consumer<IClientItemExtensions> consumer) {
+		// Handle arm posing for holding the weapons
+		consumer.accept(new IClientItemExtensions() {
+
+			private static final ArmPose AIM_PISTOL_POSE = ArmPose.create("AIM_PISTOL", false, (model, entity, arm) -> {
+				// Hold the gun up as if it's being aimed
+				if (arm == HumanoidArm.RIGHT) {
+					model.rightArm.xRot = -1.5f;
+					model.rightArm.yRot = -0.25f;
+
+					// Adjust to move with the head (looking up/down moves the gun)
+					model.rightArm.xRot += model.head.xRot * 0.5f;
+					model.rightArm.yRot += model.head.yRot * 0.5f;
+				} else {
+					model.leftArm.xRot = -1.5f;
+					model.leftArm.yRot = 0.25f;
+
+					// Adjust to move with the head
+					model.leftArm.xRot += model.head.xRot * 0.5f;
+					model.leftArm.yRot += model.head.yRot * 0.5f;
+				}
+			});
+
+			private static final ArmPose AIM_MUSKET_POSE = ArmPose.create("AIM_MUSKET", true, (model, entity, arm) -> {
+				// Hold the gun up as if it's being aimed. This one uses two hands, one needs to be supporting the gun at the end and the other midway
+				if (arm == HumanoidArm.RIGHT) {
+					model.rightArm.xRot = -1.5f;
+					model.rightArm.yRot = -0.25f;
+					// The left arm needs to be moved over more to support the gun
+					model.leftArm.xRot = -1.5f;
+					model.leftArm.yRot = 1.0f;
+
+					// Adjust to move with the head
+					model.rightArm.xRot += model.head.xRot * 0.5f;
+					model.rightArm.yRot += model.head.yRot * 0.5f;
+					model.leftArm.xRot += model.head.xRot * 0.25f;
+					model.leftArm.yRot += model.head.yRot * 0.25f;
+				} else {
+					model.leftArm.xRot = -1.5f;
+					model.leftArm.yRot = 0.25f;
+					// The right arm needs to be moved over more to support the gun
+					model.rightArm.xRot = -1.5f;
+					model.rightArm.yRot = -1.0f;
+
+					// Adjust to move with the head
+					model.leftArm.xRot += model.head.xRot * 0.5f;
+					model.leftArm.yRot += model.head.yRot * 0.5f;
+					model.rightArm.xRot += model.head.xRot * 0.25f;
+					model.rightArm.yRot += model.head.yRot * 0.25f;
+				}
+			});
+
+			@Override
+			public ArmPose getArmPose(LivingEntity entity, InteractionHand hand, ItemStack itemStack) {
+				if (!itemStack.isEmpty()) {
+					if (entity.getUsedItemHand() == hand && entity.getUseItemRemainingTicks() > 0) {
+						if (itemStack.getItem() instanceof MusketItem || itemStack.getItem() instanceof SimpleShotgunItem) {
+							return AIM_MUSKET_POSE;
+						} else {
+							return AIM_PISTOL_POSE;
+						}
+					}
+				}
+				return ArmPose.EMPTY;
+			}
+
+			@Override
+			public boolean applyForgeHandTransform(PoseStack poseStack, LocalPlayer player, HumanoidArm arm,
+			                                       ItemStack itemInHand, float partialTick, float equipProcess, float swingProcess) {
+
+				// Don't use custom transform until it is fully equipped
+				if (equipProcess < 1.0f) {
+					return false;
+				}
+
+				applyItemArmTransform(poseStack, arm);
+				return true;
+			}
+
+			private void applyItemArmTransform(PoseStack poseStack, HumanoidArm arm) {
+				int i = arm == HumanoidArm.RIGHT ? 1 : -1;
+				poseStack.translate(i * 0.56F, -0.52F, -0.72F);
+			}
+		});
+	}
+
 	/**
 	 * Get the predicate to match ammunition when searching the player's inventory, not their main/offhand
 	 *
@@ -322,7 +419,7 @@ public abstract class AbstractGunItem extends Item implements Vanishable {
 	 */
 	@Override
 	public int getUseDuration(ItemStack stack) {
-		return 100;
+		return Integer.MAX_VALUE;
 	}
 
 	/**
@@ -402,6 +499,14 @@ public abstract class AbstractGunItem extends Item implements Vanishable {
 	protected void handleAmmoStack(ItemStack gun, ItemStack ammo, int bulletsToFire, Player player) {
 		if (!player.isCreative() && ammo.getItem() instanceof AbstractBulletItem bulletItem) {
 			if (!bulletItem.isInfinite(ammo, gun, player)) {
+				float ammoConservationChance = (float) AccessoryEffects.collectEffects(EffectType.FIREARM_AMMO_CONSERVATION_CHANCE, player);
+				if (!player.level.isClientSide) {
+					if (player.getRandom().nextFloat() <= ammoConservationChance) {
+						player.getInventory().setChanged(); // Resync the inventory because the client may not roll the same number
+						return;
+					}
+				}
+
 				ammo.shrink(bulletsToFire);
 				if (ammo.isEmpty()) {
 					player.getInventory().removeItem(ammo);

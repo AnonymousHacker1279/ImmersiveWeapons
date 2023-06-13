@@ -53,6 +53,7 @@ public class AdvancementsGenerator extends ForgeAdvancementProvider {
 				.rewards(AdvancementRewards.Builder.loot(new ResourceLocation(ImmersiveWeapons.MOD_ID, "grant_encyclopedia_book_on_first_join")))
 				.save(consumer, "immersiveweapons:root");
 
+
 		// Molten advancements
 		Advancement obtainMoltenShard = Builder.advancement().parent(root)
 				.display(ItemRegistry.MOLTEN_SHARD.get(),
@@ -1101,6 +1102,9 @@ public class AdvancementsGenerator extends ForgeAdvancementProvider {
 				.addCriterion("discover_skygazer", new TriggerInstance(
 						Composite.ANY,
 						EntityRegistry.SKYGAZER_ENTITY.getId()))
+				.addCriterion("discover_skeleton_merchant", new TriggerInstance(
+						Composite.ANY,
+						EntityRegistry.SKELETON_MERCHANT_ENTITY.getId()))
 				.rewards(AdvancementRewards.Builder.experience(150))
 				.save(consumer, "immersiveweapons:entity_discovery");
 
@@ -1236,6 +1240,18 @@ public class AdvancementsGenerator extends ForgeAdvancementProvider {
 				.rewards(AdvancementRewards.Builder.experience(20))
 				.save(consumer, "immersiveweapons:discover_skygazer");
 
+		Builder.advancement().parent(entity_discovery)
+				.display(BlockItemRegistry.SKELETON_MERCHANT_HEAD_ITEM.get(),
+						Component.translatable("advancements.immersiveweapons.discover_skeleton_merchant.title"),
+						Component.translatable("advancements.immersiveweapons.discover_skeleton_merchant.description"),
+						null, FrameType.TASK, true, true, false)
+				.addCriterion("discover", new TriggerInstance(
+						Composite.ANY,
+						EntityRegistry.SKELETON_MERCHANT_ENTITY.getId()))
+				.rewards(AdvancementRewards.Builder.experience(20))
+				.save(consumer, "immersiveweapons:discover_skeleton_merchant");
+
+
 		Advancement celestial_tower_discovery = Builder.advancement().parent(entity_discovery)
 				.display(ItemRegistry.CELESTIAL_FRAGMENT.get(),
 						Component.translatable("advancements.immersiveweapons.discover_celestial_tower.title"),
@@ -1277,6 +1293,27 @@ public class AdvancementsGenerator extends ForgeAdvancementProvider {
 				.rewards(AdvancementRewards.Builder.experience(75))
 				.save(consumer, "immersiveweapons:cursed_sight_staff");
 
+		// Accessory advancements
+		Builder.advancement().parent(root)
+				.display(ItemRegistry.SATCHEL.get(),
+						Component.translatable("advancements.immersiveweapons.accessories.title"),
+						Component.translatable("advancements.immersiveweapons.accessories.description"),
+						null, FrameType.TASK, true, true, false)
+				.addCriterion("hold",
+						InventoryChangeTrigger.TriggerInstance.hasItems(
+								ItemPredicate.Builder.item().of(IWItemTagGroups.ACCESSORIES).build()))
+				.rewards(AdvancementRewards.Builder.experience(15))
+				.save(consumer, "immersiveweapons:accessories");
+		Builder.advancement().parent(root)
+				.display(ItemRegistry.BLOODY_SACRIFICE.get(),
+						Component.translatable("advancements.immersiveweapons.bloody_sacrifice.title"),
+						Component.translatable("advancements.immersiveweapons.bloody_sacrifice.description"),
+						null, FrameType.CHALLENGE, true, true, false)
+				.addCriterion("hold",
+						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.BLOODY_SACRIFICE.get()))
+				.rewards(AdvancementRewards.Builder.experience(15))
+				.save(consumer, "immersiveweapons:bloody_sacrifice");
+
 		// Other advancements
 		Builder.advancement().parent(root)
 				.display(ItemRegistry.USED_SYRINGE.get(),
@@ -1293,6 +1330,15 @@ public class AdvancementsGenerator extends ForgeAdvancementProvider {
 																.build())
 														.build()))))
 				.save(consumer, "immersiveweapons:used_syringe");
+
+		Builder.advancement().parent(root)
+				.display(ItemRegistry.STARSTORM_ARROW.get(),
+						Component.translatable("advancements.immersiveweapons.overkill.title"),
+						Component.translatable("advancements.immersiveweapons.overkill.description"),
+						null, FrameType.CHALLENGE, true, true, true)
+				.addCriterion("", new ImpossibleTrigger.TriggerInstance())
+				.rewards(AdvancementRewards.Builder.experience(100))
+				.save(consumer, "immersiveweapons:overkill");
 
 		Builder.advancement().parent(root)
 				.display(BlockRegistry.BEAR_TRAP.get(),

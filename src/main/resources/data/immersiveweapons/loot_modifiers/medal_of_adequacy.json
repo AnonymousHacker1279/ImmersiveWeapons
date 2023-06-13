@@ -1,0 +1,16 @@
+{
+	"conditions": [
+		{
+			"condition": "minecraft:killed_by_player"
+		},
+		{
+			"condition": "minecraft:entity_properties",
+			"entity": "this",
+			"predicate": {
+				"type": "minecraft:ender_dragon"
+			}
+		}
+	],
+	"drop_chance": 1.0,
+	"type": "immersiveweapons:medal_of_adequacy"
+}

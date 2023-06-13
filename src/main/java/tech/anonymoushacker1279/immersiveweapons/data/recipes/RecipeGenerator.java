@@ -65,7 +65,7 @@ public class RecipeGenerator extends RecipeProvider {
 		createBarrelTapItems();
 		createAstralCrystalSorceryItems();
 		createSmokeGrenades();
-		createCorrugatedIronItems();
+		createPanelItems();
 		createShardItems();
 		createWarriorStatueItems();
 		createUtilityItems();
@@ -74,6 +74,7 @@ public class RecipeGenerator extends RecipeProvider {
 		createWeapons();
 		createMudItems();
 		createDecorations();
+		createAccessories();
 		createMiscellaneousItems();
 
 		FamilyGenerator familyGenerator = new FamilyGenerator(packOutput);
@@ -566,44 +567,19 @@ public class RecipeGenerator extends RecipeProvider {
 				.save(finishedRecipeConsumer);
 	}
 
-	private void createCorrugatedIronItems() {
-		Item PANEL_ITEM = BlockItemRegistry.CORRUGATED_IRON_PANEL_ITEM.get();
-		Item PANEL_ITEM_BARS = BlockItemRegistry.CORRUGATED_IRON_PANEL_BARS_ITEM.get();
-		Item FLAT_PANEL_ITEM = BlockItemRegistry.CORRUGATED_IRON_PANEL_FLAT_ITEM.get();
-		Item FLAT_PANEL_ITEM_BARS = BlockItemRegistry.CORRUGATED_IRON_PANEL_FLAT_BARS_ITEM.get();
-
-		ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, PANEL_ITEM, 8)
+	private void createPanelItems() {
+		ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, BlockItemRegistry.IRON_PANEL_ITEM.get(), 8)
 				.define('a', Tags.Items.STORAGE_BLOCKS_IRON)
 				.pattern("aaa")
-				.group("corrugated_iron")
-				.unlockedBy("iron_block", has(Tags.Items.STORAGE_BLOCKS_IRON))
-				.save(finishedRecipeConsumer);
-		ShapelessRecipeBuilder.shapeless(RecipeCategory.BUILDING_BLOCKS, PANEL_ITEM)
-				.requires(FLAT_PANEL_ITEM)
-				.group("corrugated_iron")
-				.unlockedBy("iron_block", has(Tags.Items.STORAGE_BLOCKS_IRON))
-				.save(finishedRecipeConsumer, ImmersiveWeapons.MOD_ID + ":" + getItemName(PANEL_ITEM) + "_alt");
-		ShapelessRecipeBuilder.shapeless(RecipeCategory.BUILDING_BLOCKS, FLAT_PANEL_ITEM)
-				.requires(PANEL_ITEM)
-				.group("corrugated_iron")
+				.group("iron_panel")
 				.unlockedBy("iron_block", has(Tags.Items.STORAGE_BLOCKS_IRON))
 				.save(finishedRecipeConsumer);
 
-		ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, PANEL_ITEM_BARS, 8)
+		ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, BlockItemRegistry.IRON_PANEL_BARS_ITEM.get(), 8)
 				.define('a', Tags.Items.STORAGE_BLOCKS_IRON)
 				.define('b', Items.IRON_BARS)
 				.pattern("aba")
-				.group("corrugated_iron")
-				.unlockedBy("iron_block", has(Tags.Items.STORAGE_BLOCKS_IRON))
-				.save(finishedRecipeConsumer);
-		ShapelessRecipeBuilder.shapeless(RecipeCategory.BUILDING_BLOCKS, PANEL_ITEM_BARS)
-				.requires(FLAT_PANEL_ITEM_BARS)
-				.group("corrugated_iron")
-				.unlockedBy("iron_block", has(Tags.Items.STORAGE_BLOCKS_IRON))
-				.save(finishedRecipeConsumer, ImmersiveWeapons.MOD_ID + ":" + getItemName(PANEL_ITEM_BARS) + "_alt");
-		ShapelessRecipeBuilder.shapeless(RecipeCategory.BUILDING_BLOCKS, FLAT_PANEL_ITEM_BARS)
-				.requires(PANEL_ITEM_BARS)
-				.group("corrugated_iron")
+				.group("iron_panel")
 				.unlockedBy("iron_block", has(Tags.Items.STORAGE_BLOCKS_IRON))
 				.save(finishedRecipeConsumer);
 	}
@@ -1002,6 +978,120 @@ public class RecipeGenerator extends RecipeProvider {
 		createTable(BlockItemRegistry.STARDUST_TABLE_ITEM.get(), BlockItemRegistry.STARDUST_SLAB_ITEM.get(),
 				BlockItemRegistry.STARDUST_FENCE_ITEM.get());
 
+	}
+
+	private void createAccessories() {
+		// Satchel
+		ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ItemRegistry.SATCHEL.get())
+				.define('a', Tags.Items.LEATHER)
+				.define('b', Tags.Items.STRING)
+				.define('c', Tags.Items.CHESTS_WOODEN)
+				.pattern(" b ")
+				.pattern("aca")
+				.pattern(" a ")
+				.group("satchel")
+				.unlockedBy("leather", has(Tags.Items.LEATHER))
+				.save(finishedRecipeConsumer);
+
+		// Powder horn
+		ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ItemRegistry.POWDER_HORN.get())
+				.define('a', Tags.Items.GUNPOWDER)
+				.define('b', Tags.Items.STRING)
+				.define('c', Items.GOAT_HORN)
+				.pattern(" b ")
+				.pattern("aca")
+				.pattern(" a ")
+				.group("powder_horn")
+				.unlockedBy("goat_horn", has(Items.GOAT_HORN))
+				.save(finishedRecipeConsumer);
+
+		// Blademaster Emblem
+		ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ItemRegistry.BLADEMASTER_EMBLEM.get())
+				.define('a', IWItemTagGroups.STARSTORM_SHARDS)
+				.define('b', new StrictNBTIngredient(PotionUtils.setPotion(new ItemStack(Items.POTION), PotionRegistry.DEATH_POTION.get())) {
+				})
+				.define('c', ItemRegistry.STARSTORM_SWORD.get())
+				.pattern("aaa")
+				.pattern("aca")
+				.pattern("aba")
+				.group("blademaster_emblem")
+				.unlockedBy("starstorm_sword", has(ItemRegistry.STARSTORM_SWORD.get()))
+				.save(finishedRecipeConsumer);
+
+		// Netherite Shield
+		netheriteSmithing(Items.SHIELD, ItemRegistry.NETHERITE_SHIELD.get());
+
+		// Iron Ring
+		ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ItemRegistry.IRON_RING.get())
+				.define('a', Tags.Items.INGOTS_IRON)
+				.define('b', ItemRegistry.COPPER_RING.get())
+				.pattern(" a ")
+				.pattern("aba")
+				.pattern(" a ")
+				.group("ring")
+				.unlockedBy("copper_ring", has(ItemRegistry.COPPER_RING.get()))
+				.save(finishedRecipeConsumer);
+		// Cobalt Ring
+		ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ItemRegistry.COBALT_RING.get())
+				.define('a', ForgeItemTagGroups.COBALT_INGOTS)
+				.define('b', ItemRegistry.IRON_RING.get())
+				.pattern(" a ")
+				.pattern("aba")
+				.pattern(" a ")
+				.group("ring")
+				.unlockedBy("iron_ring", has(ItemRegistry.IRON_RING.get()))
+				.save(finishedRecipeConsumer);
+		// Golden Ring
+		ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ItemRegistry.GOLDEN_RING.get())
+				.define('a', Tags.Items.INGOTS_GOLD)
+				.define('b', ItemRegistry.COBALT_RING.get())
+				.pattern(" a ")
+				.pattern("aba")
+				.pattern(" a ")
+				.group("ring")
+				.unlockedBy("cobalt_ring", has(ItemRegistry.COBALT_RING.get()))
+				.save(finishedRecipeConsumer);
+		// Diamond Ring
+		ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ItemRegistry.DIAMOND_RING.get())
+				.define('a', Tags.Items.GEMS_DIAMOND)
+				.define('b', ItemRegistry.GOLDEN_RING.get())
+				.pattern(" a ")
+				.pattern(" b ")
+				.group("ring")
+				.unlockedBy("golden_ring", has(ItemRegistry.GOLDEN_RING.get()))
+				.save(finishedRecipeConsumer);
+		// Amethyst Ring
+		ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ItemRegistry.AMETHYST_RING.get())
+				.define('a', Tags.Items.GEMS_AMETHYST)
+				.define('b', ItemRegistry.GOLDEN_RING.get())
+				.pattern(" a ")
+				.pattern(" b ")
+				.group("ring")
+				.unlockedBy("amethyst_ring", has(ItemRegistry.GOLDEN_RING.get()))
+				.save(finishedRecipeConsumer);
+		// Emerald Ring
+		ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ItemRegistry.EMERALD_RING.get())
+				.define('a', Tags.Items.GEMS_EMERALD)
+				.define('b', ItemRegistry.GOLDEN_RING.get())
+				.pattern(" a ")
+				.pattern(" b ")
+				.group("ring")
+				.unlockedBy("emerald_ring", has(ItemRegistry.GOLDEN_RING.get()))
+				.save(finishedRecipeConsumer);
+		// Netherite Ring
+		netheriteSmithing(ItemRegistry.DIAMOND_RING.get(), ItemRegistry.NETHERITE_RING.get());
+
+		// Bloody Sacrifice
+		ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ItemRegistry.BLOODY_SACRIFICE.get())
+				.define('a', Items.SPIDER_EYE)
+				.define('b', Items.PORKCHOP)
+				.define('c', Items.MUTTON)
+				.pattern("bbb")
+				.pattern("bac")
+				.pattern("ccc")
+				.group("bloody_sacrifice")
+				.unlockedBy("spider_eye", has(Items.SPIDER_EYE))
+				.save(finishedRecipeConsumer);
 	}
 
 	private void createMiscellaneousItems() {

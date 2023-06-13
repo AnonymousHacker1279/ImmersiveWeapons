@@ -1,7 +1,11 @@
 package tech.anonymoushacker1279.immersiveweapons.client;
 
 import net.minecraft.ChatFormatting;
+import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.DiggerItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.api.distmarker.Dist;
@@ -10,9 +14,13 @@ import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
+import net.minecraftforge.registries.ForgeRegistries;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
+import tech.anonymoushacker1279.immersiveweapons.api.PluginHandler;
 import tech.anonymoushacker1279.immersiveweapons.init.BlockItemRegistry;
 import tech.anonymoushacker1279.immersiveweapons.init.ItemRegistry;
+import tech.anonymoushacker1279.immersiveweapons.item.AccessoryItem;
+import tech.anonymoushacker1279.immersiveweapons.item.CursedItem;
 import tech.anonymoushacker1279.immersiveweapons.item.armor.*;
 import tech.anonymoushacker1279.immersiveweapons.item.gauntlet.GauntletItem;
 import tech.anonymoushacker1279.immersiveweapons.item.pike.PikeItem;
@@ -21,8 +29,13 @@ import tech.anonymoushacker1279.immersiveweapons.item.projectile.arrow.SmokeGren
 import tech.anonymoushacker1279.immersiveweapons.item.projectile.bullet.AbstractBulletItem;
 import tech.anonymoushacker1279.immersiveweapons.item.projectile.throwable.SmokeGrenadeItem;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Mod.EventBusSubscriber(modid = ImmersiveWeapons.MOD_ID, bus = Bus.FORGE, value = Dist.CLIENT)
 public class TooltipHandler {
+
+	static int jonnyCurseRandomizer = (int) (Math.random() * 11 + 1);
 
 	/**
 	 * Handles adding tooltips to items.
@@ -32,6 +45,10 @@ public class TooltipHandler {
 	@SubscribeEvent(priority = EventPriority.NORMAL, receiveCanceled = true)
 	public static void addItemTooltip(ItemTooltipEvent event) {
 		ItemStack stack = event.getItemStack();
+
+		if (stack.getItem() != ItemRegistry.JONNYS_CURSE.get()) {
+			jonnyCurseRandomizer = (int) (Math.random() * 11 + 1);
+		}
 
 		// Swords
 		if (stack.getItem() == ItemRegistry.MOLTEN_SWORD.get()) {
@@ -216,7 +233,112 @@ public class TooltipHandler {
 		if (stack.getItem() == ItemRegistry.AZUL_LOCATOR.get()) {
 			event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.azul_locator").withStyle(ChatFormatting.AQUA, ChatFormatting.ITALIC));
 		}
+		if (stack.getItem() == ItemRegistry.CURSE_CLEANING_SOAP.get()) {
+			event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.curse_cleaning_soap").withStyle(ChatFormatting.DARK_AQUA, ChatFormatting.ITALIC));
+			event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.creative_only").withStyle(ChatFormatting.BLUE, ChatFormatting.ITALIC));
+		}
 
+		// Accessories
+		if (event.getEntity() != null && stack.getItem() instanceof AccessoryItem item) {
+			if (stack.getItem() == ItemRegistry.SATCHEL.get()) {
+				event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.satchel").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
+				addShiftTooltip(event.getToolTip(), addAccessoryTooltips(item, event.getEntity()));
+			}
+			if (stack.getItem() == ItemRegistry.POWDER_HORN.get()) {
+				event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.powder_horn").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
+				addShiftTooltip(event.getToolTip(), addAccessoryTooltips(item, event.getEntity()));
+			}
+			if (stack.getItem() == ItemRegistry.BERSERKERS_AMULET.get()) {
+				event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.berserkers_amulet_1").withStyle(ChatFormatting.GREEN, ChatFormatting.ITALIC));
+				event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.berserkers_amulet_2").withStyle(ChatFormatting.DARK_RED, ChatFormatting.ITALIC));
+				addShiftTooltip(event.getToolTip(), addAccessoryTooltips(item, event.getEntity()));
+			}
+			if (stack.getItem() == ItemRegistry.HANS_BLESSING.get()) {
+				event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.hans_blessing_1").withStyle(ChatFormatting.GREEN, ChatFormatting.ITALIC));
+				event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.hans_blessing_2").withStyle(ChatFormatting.LIGHT_PURPLE, ChatFormatting.ITALIC));
+				addShiftTooltip(event.getToolTip(), addAccessoryTooltips(item, event.getEntity()));
+			}
+			if (stack.getItem() == ItemRegistry.CELESTIAL_SPIRIT.get()) {
+				event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.celestial_spirit_1").withStyle(ChatFormatting.GREEN, ChatFormatting.ITALIC));
+				event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.celestial_spirit_2").withStyle(ChatFormatting.DARK_GREEN, ChatFormatting.ITALIC));
+				addShiftTooltip(event.getToolTip(), addAccessoryTooltips(item, event.getEntity()));
+			}
+			if (stack.getItem() == ItemRegistry.BLADEMASTER_EMBLEM.get()) {
+				event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.blademaster_emblem").withStyle(ChatFormatting.GREEN, ChatFormatting.ITALIC));
+				addShiftTooltip(event.getToolTip(), addAccessoryTooltips(item, event.getEntity()));
+			}
+			if (stack.getItem() == ItemRegistry.DEADEYE_PENDANT.get()) {
+				event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.deadeye_pendant_1").withStyle(ChatFormatting.GREEN, ChatFormatting.ITALIC));
+				event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.deadeye_pendant_2").withStyle(ChatFormatting.GREEN, ChatFormatting.ITALIC));
+				addShiftTooltip(event.getToolTip(), addAccessoryTooltips(item, event.getEntity()));
+			}
+			if (stack.getItem() == ItemRegistry.BLOATED_HEART.get()) {
+				event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.bloated_heart").withStyle(ChatFormatting.GREEN, ChatFormatting.ITALIC));
+				addShiftTooltip(event.getToolTip(), addAccessoryTooltips(item, event.getEntity()));
+			}
+			if (stack.getItem() == ItemRegistry.NETHERITE_SHIELD.get()) {
+				event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.netherite_shield").withStyle(ChatFormatting.GREEN, ChatFormatting.ITALIC));
+				addShiftTooltip(event.getToolTip(), addAccessoryTooltips(item, event.getEntity()));
+			}
+			if (stack.getItem() == ItemRegistry.MELEE_MASTERS_MOLTEN_GLOVE.get()) {
+				event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.melee_masters_molten_glove").withStyle(ChatFormatting.GREEN, ChatFormatting.ITALIC));
+				addShiftTooltip(event.getToolTip(), addAccessoryTooltips(item, event.getEntity()));
+			}
+			// Regex check for "immersiveweapons:X_ring" where X is any string
+			ResourceLocation path = ForgeRegistries.ITEMS.getKey(item.asItem());
+			if (path != null && path.toString().matches("immersiveweapons:.+_ring")) {
+				// Get the name of the ring
+				String ringName = path.toString().substring(17);
+				event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.%s".formatted(ringName)).withStyle(ChatFormatting.GREEN, ChatFormatting.ITALIC));
+				addShiftTooltip(event.getToolTip(), addAccessoryTooltips(item, event.getEntity()));
+			}
+			if (stack.getItem() == ItemRegistry.MEDAL_OF_ADEQUACY.get()) {
+				event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.medal_of_adequacy").withStyle(ChatFormatting.WHITE, ChatFormatting.ITALIC));
+				addShiftTooltip(event.getToolTip(), addAccessoryTooltips(item, event.getEntity()));
+			}
+		} else if (stack.getItem() instanceof CursedItem) {
+			if (stack.getItem() == ItemRegistry.BLOODY_SACRIFICE.get()) {
+				event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.bloody_sacrifice").withStyle(ChatFormatting.DARK_PURPLE, ChatFormatting.ITALIC));
+				event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.bloody_sacrifice_charge_note").withStyle(ChatFormatting.DARK_RED, ChatFormatting.ITALIC));
+				if (stack.isDamaged()) {
+					int charge = 100 - stack.getDamageValue();
+					event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.bloody_sacrifice_charge", charge).withStyle(ChatFormatting.DARK_RED, ChatFormatting.ITALIC));
+				} else if (stack.getDamageValue() == 0) {
+					event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.bloody_sacrifice_fully_charged").withStyle(ChatFormatting.DARK_RED, ChatFormatting.ITALIC));
+				}
+
+				List<Component> effects = new ArrayList<>(5);
+				effects.add(Component.translatable("tooltip.immersiveweapons.bloody_sacrifice_effect_1").withStyle(ChatFormatting.DARK_RED, ChatFormatting.ITALIC));
+				effects.add(Component.translatable("tooltip.immersiveweapons.bloody_sacrifice_effect_2").withStyle(ChatFormatting.DARK_RED, ChatFormatting.ITALIC));
+				effects.add(Component.translatable("tooltip.immersiveweapons.bloody_sacrifice_effect_3").withStyle(ChatFormatting.DARK_RED, ChatFormatting.ITALIC));
+				effects.add(Component.translatable("tooltip.immersiveweapons.bloody_sacrifice_effect_4").withStyle(ChatFormatting.GREEN, ChatFormatting.ITALIC));
+				effects.add(Component.translatable("tooltip.immersiveweapons.bloody_sacrifice_effect_5").withStyle(ChatFormatting.GREEN, ChatFormatting.ITALIC));
+
+				addShiftTooltip(event.getToolTip(), effects);
+			}
+			if (stack.getItem() == ItemRegistry.JONNYS_CURSE.get()) {
+				// There are 10 randomized tooltips, (1-11), as "jonnys_curse_x"
+				// Pick a random one each time
+				event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.jonnys_curse_%s".formatted(jonnyCurseRandomizer)).withStyle(ChatFormatting.DARK_PURPLE, ChatFormatting.ITALIC));
+
+				event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.jonnys_curse_charge_note").withStyle(ChatFormatting.DARK_RED, ChatFormatting.ITALIC));
+				if (stack.isDamaged()) {
+					int charge = 100 - stack.getDamageValue();
+					event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.jonnys_curse_charge", charge).withStyle(ChatFormatting.DARK_RED, ChatFormatting.ITALIC));
+				} else if (stack.getDamageValue() == 0) {
+					event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.jonnys_curse_fully_charged").withStyle(ChatFormatting.DARK_RED, ChatFormatting.ITALIC));
+				}
+
+				List<Component> effects = new ArrayList<>(5);
+				effects.add(Component.translatable("tooltip.immersiveweapons.jonnys_curse_effect_1").withStyle(ChatFormatting.DARK_RED, ChatFormatting.ITALIC));
+				effects.add(Component.translatable("tooltip.immersiveweapons.jonnys_curse_effect_2").withStyle(ChatFormatting.DARK_RED, ChatFormatting.ITALIC));
+				effects.add(Component.translatable("tooltip.immersiveweapons.jonnys_curse_effect_3").withStyle(ChatFormatting.DARK_RED, ChatFormatting.ITALIC));
+				effects.add(Component.translatable("tooltip.immersiveweapons.jonnys_curse_effect_4").withStyle(ChatFormatting.DARK_RED, ChatFormatting.ITALIC));
+				effects.add(Component.translatable("tooltip.immersiveweapons.jonnys_curse_effect_5").withStyle(ChatFormatting.DARK_RED, ChatFormatting.ITALIC));
+
+				addShiftTooltip(event.getToolTip(), effects);
+			}
+		}
 
 		// Lore
 
@@ -240,5 +362,58 @@ public class TooltipHandler {
 		if (stack.getItem() == BlockItemRegistry.WARRIOR_STATUE_HEAD_ITEM.get() || stack.getItem() == BlockItemRegistry.WARRIOR_STATUE_TORSO_ITEM.get() || stack.getItem() == BlockItemRegistry.WARRIOR_STATUE_BASE_ITEM.get()) {
 			event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.warrior_statue").withStyle(ChatFormatting.DARK_PURPLE, ChatFormatting.ITALIC));
 		}
+	}
+
+	/**
+	 * Adds a tooltip which appears while the player holds SHIFT.
+	 *
+	 * @param existingTooltips The list of tooltips already on the item.
+	 * @param shiftTooltip     The tooltip to add if the player is holding SHIFT.
+	 */
+	private static void addShiftTooltip(List<Component> existingTooltips, MutableComponent shiftTooltip) {
+		if (!Screen.hasShiftDown()) {
+			existingTooltips.add(Component.translatable("tooltip.immersiveweapons.shift_for_info").withStyle(ChatFormatting.GOLD, ChatFormatting.ITALIC));
+		} else {
+			existingTooltips.add(shiftTooltip);
+		}
+	}
+
+	/**
+	 * Adds tooltips which appear while the player holds SHIFT.
+	 *
+	 * @param existingTooltips The list of tooltips already on the item.
+	 * @param shiftTooltips    The list of tooltips to add if the player is holding SHIFT.
+	 */
+	private static void addShiftTooltip(List<Component> existingTooltips, List<Component> shiftTooltips) {
+		if (!Screen.hasShiftDown()) {
+			existingTooltips.add(Component.translatable("tooltip.immersiveweapons.shift_for_info").withStyle(ChatFormatting.GOLD, ChatFormatting.ITALIC));
+		} else {
+			existingTooltips.addAll(shiftTooltips);
+		}
+	}
+
+	/**
+	 * Add accessory-specific tooltips (typically for use inside addShiftTooltip)
+	 *
+	 * @param item   the accessory item
+	 * @param player the player holding the item
+	 * @return a list of tooltips
+	 */
+	private static List<Component> addAccessoryTooltips(AccessoryItem item, Player player) {
+		List<Component> tooltips = new ArrayList<>(5);
+
+		if (ImmersiveWeapons.IWCB_LOADED && PluginHandler.isPluginActive("iwcompatbridge:curios_plugin")) {
+			tooltips.add(Component.translatable("tooltip.iwcompatbridge.accessory_note", item.getSlot()).withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC));
+		} else {
+			tooltips.add(Component.translatable("tooltip.immersiveweapons.accessory_slot", item.getSlot()).withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC));
+
+			if (item.isActive(player)) {
+				tooltips.add(Component.translatable("tooltip.immersiveweapons.accessory_note").withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC));
+			} else {
+				tooltips.add(Component.translatable("tooltip.immersiveweapons.accessory_inactive").withStyle(ChatFormatting.RED, ChatFormatting.ITALIC));
+			}
+		}
+
+		return tooltips;
 	}
 }

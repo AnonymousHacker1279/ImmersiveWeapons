@@ -2,20 +2,18 @@ package tech.anonymoushacker1279.immersiveweapons.block.barbed_wire;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.item.context.BlockPlaceContext;
-import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.*;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
-import net.minecraft.world.level.block.state.properties.BlockStateProperties;
-import net.minecraft.world.level.block.state.properties.BooleanProperty;
-import net.minecraft.world.level.material.FluidState;
-import net.minecraft.world.level.material.Fluids;
+import net.minecraft.world.level.block.state.properties.*;
+import tech.anonymoushacker1279.immersiveweapons.block.core.DamageableBlock;
 
-public class BarbedWireBlock extends HorizontalDirectionalBlock implements SimpleWaterloggedBlock, BarbedWireUtils {
+public class BarbedWireBlock extends DamageableBlock implements BarbedWireUtils {
 
 	public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
+	public static final IntegerProperty DAMAGE_STAGE = IntegerProperty.create("damage_stage", 0, 2);
 	protected static int soundCooldown = 0;
 
 	/**
@@ -24,56 +22,13 @@ public class BarbedWireBlock extends HorizontalDirectionalBlock implements Simpl
 	 * @param properties the <code>Properties</code> of the block
 	 */
 	public BarbedWireBlock(Properties properties) {
-		super(properties);
+		super(properties, 212, 2, Items.IRON_INGOT, DAMAGE_STAGE);
 		registerDefaultState(stateDefinition.any().setValue(WATERLOGGED, false));
 	}
 
-	/**
-	 * Set placement properties.
-	 * Sets the facing direction of the block for placement.
-	 *
-	 * @param context the <code>BlockItemUseContext</code> during placement
-	 * @return BlockState
-	 */
-	@Override
-	public BlockState getStateForPlacement(BlockPlaceContext context) {
-		return defaultBlockState().setValue(FACING, context.getHorizontalDirection().getOpposite());
-	}
-
-	/**
-	 * Set FluidState properties.
-	 * Allows the block to exhibit waterlogged behavior.
-	 *
-	 * @param state the <code>BlockState</code> of the block
-	 * @return FluidState
-	 */
-	@SuppressWarnings("deprecation")
-	@Override
-	public FluidState getFluidState(BlockState state) {
-		return state.getValue(WATERLOGGED) ? Fluids.WATER.getSource(false) : super.getFluidState(state);
-	}
-
-	/**
-	 * Create the BlockState definition.
-	 *
-	 * @param builder the <code>StateContainer.Builder</code> of the block
-	 */
 	@Override
 	protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-		builder.add(WATERLOGGED, FACING);
-	}
-
-	/**
-	 * Determines if skylight should pass through the block.
-	 *
-	 * @param state  the <code>BlockState</code> of the block
-	 * @param reader the <code>IBlockReader</code> for the block
-	 * @param pos    the <code>BlockPos</code> the block is at
-	 * @return boolean
-	 */
-	@Override
-	public boolean propagatesSkylightDown(BlockState state, BlockGetter reader, BlockPos pos) {
-		return true;
+		builder.add(WATERLOGGED, FACING, DAMAGE_STAGE);
 	}
 
 	/**

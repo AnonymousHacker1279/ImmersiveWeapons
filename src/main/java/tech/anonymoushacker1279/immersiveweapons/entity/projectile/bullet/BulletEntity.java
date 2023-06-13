@@ -40,8 +40,10 @@ import tech.anonymoushacker1279.immersiveweapons.client.particle.bullet_impact.B
 import tech.anonymoushacker1279.immersiveweapons.config.CommonConfig;
 import tech.anonymoushacker1279.immersiveweapons.data.tags.groups.forge.ForgeBlockTagGroups;
 import tech.anonymoushacker1279.immersiveweapons.init.*;
+import tech.anonymoushacker1279.immersiveweapons.item.AccessoryItem;
 import tech.anonymoushacker1279.immersiveweapons.item.projectile.gun.MusketItem;
 import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
+import tech.anonymoushacker1279.immersiveweapons.world.level.IWDamageSources;
 
 import java.util.function.Supplier;
 
@@ -325,6 +327,16 @@ public class BulletEntity extends AbstractArrow {
 			damage = (int) Math.min(randomCritModifier + damage, 2.147483647E9D);
 		}
 
+		// If the entity is a player and has an active Deadeye Pendant, add a damage modifier which increases with distance to the target
+		// This modifier increases damage up to a maximum of +20% at 100 meters range
+		if (getOwner() instanceof Player player) {
+			if (AccessoryItem.isAccessoryActive(player, ItemRegistry.DEADEYE_PENDANT.get())) {
+				double distance = player.distanceToSqr(getX(), getY(), getZ());
+				double modifier = Math.min(distance / 100d, 1);
+				damage = (int) Math.round(damage * (1 + modifier * 0.2f));
+			}
+		}
+
 		return damage;
 	}
 
@@ -365,17 +377,17 @@ public class BulletEntity extends AbstractArrow {
 
 		// If the arrow owner doesn't exist (null), set the indirect entity to itself
 		if (owner == null) {
-			damageSource = damageSources().arrow(this, this);
+			damageSource = IWDamageSources.bullet(this, this);
 		} else {
-			damageSource = damageSources().arrow(this, owner);
+			damageSource = IWDamageSources.bullet(this, owner);
 
 			// Disable invulnerability for bullets; specifically with the blunderbuss, otherwise
 			// multiple shots on the same target will simply bounce back
 			entity.invulnerableTime = 0;
 			entity.setInvulnerable(false);
 
-			if (owner instanceof LivingEntity) {
-				((LivingEntity) owner).setLastHurtMob(entity);
+			if (owner instanceof LivingEntity ownerEntity) {
+				ownerEntity.setLastHurtMob(entity);
 			}
 		}
 
@@ -407,9 +419,9 @@ public class BulletEntity extends AbstractArrow {
 					}
 				}
 
-				if (!level.isClientSide && owner instanceof LivingEntity) {
-					EnchantmentHelper.doPostHurtEffects(livingEntity, owner);
-					EnchantmentHelper.doPostDamageEffects((LivingEntity) owner, livingEntity);
+				if (!level.isClientSide && owner instanceof LivingEntity ownerEntity) {
+					EnchantmentHelper.doPostHurtEffects(livingEntity, ownerEntity);
+					EnchantmentHelper.doPostDamageEffects(ownerEntity, livingEntity);
 				}
 
 				// Code to run after the entity is hurt

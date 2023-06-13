@@ -25,6 +25,7 @@ public class IWDamageSources {
 	public static DamageSource DEADMANS_DESERT_ATMOSPHERE;
 	public static DamageSource PUNJI_STICKS;
 	public static DamageSource PUNJI_STICKS_FALL;
+	public static DamageSource BULLET;
 
 	public static void init(RegistryAccess registryAccess) {
 		access = registryAccess;
@@ -42,6 +43,7 @@ public class IWDamageSources {
 		DEADMANS_DESERT_ATMOSPHERE = getDamageSource(registryAccess, IWDamageTypes.DEADMANS_DESERT_ATMOSPHERE_KEY);
 		PUNJI_STICKS = getDamageSource(registryAccess, IWDamageTypes.PUNJI_STICKS_KEY);
 		PUNJI_STICKS_FALL = getDamageSource(registryAccess, IWDamageTypes.PUNJI_STICKS_FALL_KEY);
+		BULLET = getDamageSource(registryAccess, IWDamageTypes.BULLET_KEY);
 	}
 
 	private static DamageSource getDamageSource(RegistryAccess registryAccess, ResourceKey<DamageType> key) {
@@ -54,5 +56,9 @@ public class IWDamageSources {
 
 	public static DamageSource meteor(Entity entity, Entity owner) {
 		return getEntityDamageSource(access, IWDamageTypes.METEOR_KEY, entity, owner);
+	}
+
+	public static DamageSource bullet(Entity entity, Entity owner) {
+		return getEntityDamageSource(access, IWDamageTypes.BULLET_KEY, entity, owner);
 	}
 }

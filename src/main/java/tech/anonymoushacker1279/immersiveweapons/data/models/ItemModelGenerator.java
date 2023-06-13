@@ -157,6 +157,16 @@ public class ItemModelGenerator extends ItemModelProvider {
 								.texture("handle", new ResourceLocation("block/spruce_planks"))
 								.texture("material", pikeMaterialMap.get(item));
 					} else if (item instanceof GauntletItem) {
+						if (item == ItemRegistry.IRON_GAUNTLET.get()) {
+							getBuilder(item.toString())
+									.parent(new ModelFile.UncheckedModelFile(new ResourceLocation(ImmersiveWeapons.MOD_ID,
+											"item/gauntlet")))
+									.texture("material", gauntletMaterialMap.get(item))
+									.override()
+									.predicate(new ResourceLocation(ImmersiveWeapons.MOD_ID, "gunslinger"), 1)
+									.model(new ModelFile.UncheckedModelFile(new ResourceLocation(ImmersiveWeapons.MOD_ID,
+											"item/iron_gauntlet_alt")));
+						}
 						getBuilder(item.toString())
 								.parent(new ModelFile.UncheckedModelFile(new ResourceLocation(ImmersiveWeapons.MOD_ID,
 										"item/gauntlet")))
@@ -233,6 +243,14 @@ public class ItemModelGenerator extends ItemModelProvider {
 					getBuilder(item.toString())
 							.parent(new ModelFile.UncheckedModelFile(new ResourceLocation(ImmersiveWeapons.MOD_ID,
 									"block/spotlight_wall_unlit")));
+				} else if (item == BlockItemRegistry.WOODEN_SPIKES_ITEM.get()) {
+					getBuilder(item.toString())
+							.parent(new ModelFile.UncheckedModelFile(new ResourceLocation(ImmersiveWeapons.MOD_ID,
+									"block/wooden_spikes_0")));
+				} else if (item == BlockItemRegistry.BARBED_WIRE_ITEM.get()) {
+					getBuilder(item.toString())
+							.parent(new ModelFile.UncheckedModelFile(new ResourceLocation(ImmersiveWeapons.MOD_ID,
+									"block/barbed_wire_0")));
 				} else if (item == BlockItemRegistry.MORTAR_ITEM.get()) {
 					getBuilder(item.toString())
 							.parent(new ModelFile.UncheckedModelFile(new ResourceLocation(ImmersiveWeapons.MOD_ID,

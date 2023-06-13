@@ -1,10 +1,8 @@
 {
   "values": [
     "immersiveweapons:spotlight",
-    "immersiveweapons:corrugated_iron_panel",
-    "immersiveweapons:corrugated_iron_panel_bars",
-    "immersiveweapons:corrugated_iron_panel_flat",
-    "immersiveweapons:corrugated_iron_panel_flat_bars",
+    "immersiveweapons:iron_panel",
+    "immersiveweapons:iron_panel_bars",
     "immersiveweapons:warrior_statue_base",
     "immersiveweapons:warrior_statue_torso",
     "immersiveweapons:warrior_statue_head",

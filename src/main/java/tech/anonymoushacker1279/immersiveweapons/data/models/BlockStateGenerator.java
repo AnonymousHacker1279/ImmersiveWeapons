@@ -4,6 +4,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.*;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraftforge.client.model.generators.BlockStateProvider;
 import net.minecraftforge.client.model.generators.ConfiguredModel;
@@ -11,8 +12,10 @@ import net.minecraftforge.client.model.generators.ModelBuilder.FaceRotation;
 import net.minecraftforge.client.model.generators.ModelFile.ExistingModelFile;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraftforge.registries.RegistryObject;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.block.*;
+import tech.anonymoushacker1279.immersiveweapons.block.barbed_wire.BarbedWireBlock;
 import tech.anonymoushacker1279.immersiveweapons.block.decoration.CelestialLanternBlock;
 import tech.anonymoushacker1279.immersiveweapons.block.decoration.FlagPoleBlock;
 import tech.anonymoushacker1279.immersiveweapons.block.misc.warrior_statue.WarriorStatueHead;
@@ -537,97 +540,54 @@ public class BlockStateGenerator extends BlockStateProvider {
 							.build();
 				});
 		getVariantBuilder(BlockRegistry.ASTRAL_CRYSTAL.get())
-				.forAllStates(state -> {
-					Direction facing = state.getValue(AmethystClusterBlock.FACING);
-
-					int xRot;
-					int yRot;
-
-					switch (facing) {
-						case NORTH -> {
-							xRot = 270;
-							yRot = 180;
-						}
-						case SOUTH -> {
-							xRot = 90;
-							yRot = 180;
-						}
-						case EAST -> {
-							xRot = 270;
-							yRot = 270;
-						}
-						case WEST -> {
-							xRot = 90;
-							yRot = 270;
-						}
-						case DOWN -> {
-							xRot = 180;
-							yRot = 0;
-						}
-						default -> {
-							xRot = 0;
-							yRot = 0;
-						}
-					}
-
-					return ConfiguredModel.builder()
-							.modelFile(models()
-									.cross(BlockRegistry.ASTRAL_CRYSTAL.getId().toString(),
-											new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/astral_crystal"))
-									.renderType("minecraft:cutout_mipped"))
-							.rotationY(yRot)
-							.rotationX(xRot)
-							.build();
-				});
-
+				.forAllStates(state -> crystalBlock(BlockRegistry.ASTRAL_CRYSTAL, "astral_crystal", state));
 		getVariantBuilder(BlockRegistry.STARSTORM_CRYSTAL.get())
+				.forAllStates(state -> crystalBlock(BlockRegistry.STARSTORM_CRYSTAL, "starstorm_crystal", state));
+		getVariantBuilder(BlockRegistry.WOODEN_SPIKES.get())
 				.forAllStates(state -> {
-					Direction facing = state.getValue(AmethystClusterBlock.FACING);
+					Direction facing = state.getValue(WoodenSpikesBlock.FACING);
+					int stage = state.getValue(WoodenSpikesBlock.DAMAGE_STAGE);
 
-					int xRot;
 					int yRot;
 
 					switch (facing) {
-						case NORTH -> {
-							xRot = 270;
-							yRot = 180;
-						}
-						case SOUTH -> {
-							xRot = 90;
-							yRot = 180;
-						}
-						case EAST -> {
-							xRot = 270;
-							yRot = 270;
-						}
-						case WEST -> {
-							xRot = 90;
-							yRot = 270;
-						}
-						case DOWN -> {
-							xRot = 180;
-							yRot = 0;
-						}
-						default -> {
-							xRot = 0;
-							yRot = 0;
-						}
+						case NORTH, SOUTH -> yRot = 180;
+						case EAST, WEST -> yRot = 90;
+						default -> yRot = 0;
 					}
 
 					return ConfiguredModel.builder()
-							.modelFile(models()
-									.cross(BlockRegistry.STARSTORM_CRYSTAL.getId().toString(),
-											new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/starstorm_crystal"))
-									.renderType("minecraft:cutout_mipped"))
+							.modelFile(models().getExistingFile(new ResourceLocation(ImmersiveWeapons.MOD_ID,
+									"wooden_spikes_" + stage)))
 							.rotationY(yRot)
-							.rotationX(xRot)
+							.build();
+				});
+		getVariantBuilder(BlockRegistry.BARBED_WIRE.get())
+				.forAllStates(state -> {
+					Direction facing = state.getValue(BarbedWireBlock.FACING);
+					int stage = state.getValue(BarbedWireBlock.DAMAGE_STAGE);
+
+					int yRot;
+
+					switch (facing) {
+						case NORTH, SOUTH -> yRot = 180;
+						case EAST, WEST -> yRot = 90;
+						default -> yRot = 0;
+					}
+
+					return ConfiguredModel.builder()
+							.modelFile(models().getExistingFile(new ResourceLocation(ImmersiveWeapons.MOD_ID,
+									"barbed_wire_" + stage)))
+							.rotationY(yRot)
 							.build();
 				});
 
-		horizontalBlock(BlockRegistry.BARBED_WIRE.get(),
-				models().getExistingFile(new ResourceLocation(ImmersiveWeapons.MOD_ID, "barbed_wire")));
-		horizontalBlock(BlockRegistry.WOODEN_SPIKES.get(),
-				models().getExistingFile(new ResourceLocation(ImmersiveWeapons.MOD_ID, "wooden_spikes")));
+		// Iron panels
+		getVariantBuilder(BlockRegistry.IRON_PANEL.get())
+				.forAllStates(state -> panelBlock("iron_panel", state));
+		getVariantBuilder(BlockRegistry.IRON_PANEL_BARS.get())
+				.forAllStates(state -> panelBlock("iron_panel_bars", state));
+
 		horizontalBlock(BlockRegistry.WALL_SHELF.get(),
 				models().getExistingFile(new ResourceLocation(ImmersiveWeapons.MOD_ID, "wall_shelf")), 0);
 		horizontalBlock(BlockRegistry.PANIC_ALARM.get(),
@@ -638,14 +598,6 @@ public class BlockStateGenerator extends BlockStateProvider {
 				models().getExistingFile(new ResourceLocation(ImmersiveWeapons.MOD_ID, "medic_statue")));
 		horizontalBlock(BlockRegistry.HARDENED_MUD_WINDOW.get(),
 				models().getExistingFile(new ResourceLocation(ImmersiveWeapons.MOD_ID, "hardened_mud_window")));
-		horizontalBlock(BlockRegistry.CORRUGATED_IRON_PANEL.get(),
-				models().getExistingFile(new ResourceLocation(ImmersiveWeapons.MOD_ID, "corrugated_iron_panel")), 0);
-		horizontalBlock(BlockRegistry.CORRUGATED_IRON_PANEL_BARS.get(),
-				models().getExistingFile(new ResourceLocation(ImmersiveWeapons.MOD_ID, "corrugated_iron_panel_bars")), 0);
-		horizontalBlock(BlockRegistry.CORRUGATED_IRON_PANEL_FLAT.get(),
-				models().getExistingFile(new ResourceLocation(ImmersiveWeapons.MOD_ID, "corrugated_iron_panel_flat")));
-		horizontalBlock(BlockRegistry.CORRUGATED_IRON_PANEL_FLAT_BARS.get(),
-				models().getExistingFile(new ResourceLocation(ImmersiveWeapons.MOD_ID, "corrugated_iron_panel_flat_bars")));
 		horizontalBlock(BlockRegistry.CAMP_CHAIR.get(),
 				models().getExistingFile(new ResourceLocation(ImmersiveWeapons.MOD_ID, "camp_chair")), 0);
 		horizontalBlock(BlockRegistry.BURNED_OAK_BRANCH.get(),
@@ -669,5 +621,77 @@ public class BlockStateGenerator extends BlockStateProvider {
 				.texture("all", "minecraft:block/iron_block")
 				.texture("overlay", new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/rusted_iron_block_overlay"))
 				.renderType("minecraft:translucent"));
+	}
+
+	private ConfiguredModel[] crystalBlock(RegistryObject<? extends AmethystClusterBlock> crystal, String name, BlockState state) {
+		Direction facing = state.getValue(AmethystClusterBlock.FACING);
+
+		int xRot;
+		int yRot;
+
+		switch (facing) {
+			case NORTH -> {
+				xRot = 270;
+				yRot = 180;
+			}
+			case SOUTH -> {
+				xRot = 90;
+				yRot = 180;
+			}
+			case EAST -> {
+				xRot = 270;
+				yRot = 270;
+			}
+			case WEST -> {
+				xRot = 90;
+				yRot = 270;
+			}
+			case DOWN -> {
+				xRot = 180;
+				yRot = 0;
+			}
+			default -> {
+				xRot = 0;
+				yRot = 0;
+			}
+		}
+
+		return ConfiguredModel.builder()
+				.modelFile(models()
+						.cross(crystal.getId().toString(),
+								new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/" + name))
+						.renderType("minecraft:cutout_mipped"))
+				.rotationY(yRot)
+				.rotationX(xRot)
+				.build();
+	}
+
+	private ConfiguredModel[] panelBlock(String name, BlockState state) {
+		Direction facing = state.getValue(PanelBlock.FACING);
+
+		int yRot;
+		int xRot = 0;
+
+		switch (facing) {
+			case NORTH -> yRot = 180;
+			case EAST -> yRot = 270;
+			case WEST -> yRot = 90;
+			case DOWN -> {
+				xRot = 270;
+				yRot = 0;
+			}
+			case UP -> {
+				xRot = 90;
+				yRot = 180;
+			}
+			default -> yRot = 0;
+		}
+
+		return ConfiguredModel.builder()
+				.modelFile(models().getExistingFile(new ResourceLocation(ImmersiveWeapons.MOD_ID,
+						name)))
+				.rotationY(yRot)
+				.rotationX(xRot)
+				.build();
 	}
 }

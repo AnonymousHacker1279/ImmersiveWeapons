@@ -49,7 +49,7 @@ public class CelestialTowerSummonMeteorGoal extends Goal {
 				Player target = nearbyPlayers.get(GeneralUtilities.getRandomNumber(0, nearbyPlayers.size() - 1));
 
 				// Summon a meteor at the player's position
-				MeteorEntity.create(tower.getLevel(), tower, null, target.blockPosition());
+				MeteorEntity.create(tower.getLevel(), tower, null, target.blockPosition(), null);
 			}
 		} else {
 			summonCooldown--;

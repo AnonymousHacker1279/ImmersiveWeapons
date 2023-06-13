@@ -25,8 +25,6 @@ import tech.anonymoushacker1279.immersiveweapons.init.EntityRegistry;
 import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
 import tech.anonymoushacker1279.immersiveweapons.world.level.IWDamageSources;
 
-import java.util.Objects;
-
 public class MeteorEntity extends Projectile {
 
 	private BlockPos startPos = BlockPos.ZERO;
@@ -39,7 +37,17 @@ public class MeteorEntity extends Projectile {
 		super(entityType, level);
 	}
 
-	public static boolean create(Level level, LivingEntity owner, @Nullable ItemStack staff, BlockPos targetPos) {
+	/**
+	 * Create a new meteor at the specified position.
+	 *
+	 * @param level        the <code>Level</code> the meteor is in
+	 * @param owner        the <code>LivingEntity</code> owner
+	 * @param staff        the <code>ItemStack</code> staff. May be null if not summoned by a staff.
+	 * @param targetPos    the <code>BlockPos</code> target position
+	 * @param targetEntity the <code>LivingEntity</code> target entity. May be null. If not, the meteor will only damage the specified target.
+	 * @return true if the meteor was successfully created, false otherwise
+	 */
+	public static boolean create(Level level, LivingEntity owner, @Nullable ItemStack staff, BlockPos targetPos, @Nullable LivingEntity targetEntity) {
 		if (!level.isClientSide) {
 			MeteorEntity meteorEntity = new MeteorEntity(EntityRegistry.METEOR_ENTITY.get(), level);
 
@@ -85,6 +93,10 @@ public class MeteorEntity extends Projectile {
 			meteorEntity.distToTarget = blockCenter.distanceTo(entityPos);
 
 			meteorEntity.setDeltaMovement(direction);
+
+			if (targetEntity != null) {
+				meteorEntity.getPersistentData().putUUID("target", targetEntity.getUUID());
+			}
 
 			// Spawn the entity
 			level.addFreshEntity(meteorEntity);
@@ -182,13 +194,15 @@ public class MeteorEntity extends Projectile {
 		ExplosionInteraction explosionInteraction = breakBlocks ? ExplosionInteraction.MOB : ExplosionInteraction.NONE;
 
 		if (!level.isClientSide) {
-			level.explode(this,
-					IWDamageSources.meteor(this, Objects.requireNonNull(getOwner())),
-					null,
-					position().subtract(0, 1.5, 0),
-					explosionRadius + explosionRadiusModifier,
-					catchFire,
-					explosionInteraction);
+			if (getOwner() != null) {
+				level.explode(this,
+						IWDamageSources.meteor(this, getOwner()),
+						null,
+						position().subtract(0, 1.5, 0),
+						explosionRadius + explosionRadiusModifier,
+						catchFire,
+						explosionInteraction);
+			}
 
 			// Spawn a ring of fire particles
 			for (int i = 0; i < 360; i += 10) {
