@@ -6,9 +6,11 @@ import net.minecraft.data.recipes.*;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraftforge.common.Tags;
+import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.data.recipes.RecipeGenerator;
 
 import java.util.List;
@@ -223,66 +225,94 @@ public class FamilyGenerator extends RecipeGenerator {
 			TagKey<Item> material = family.material();
 			final String materialTriggerName = "has_material";
 
-			// Sword
-			ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, family.sword().get())
-					.pattern("a")
-					.pattern("a")
-					.pattern("b")
-					.define('a', material)
-					.define('b', family.handle())
-					.unlockedBy(materialTriggerName, has(material))
-					.save(consumer, itemRegistryPath(family.sword().get()));
+			boolean smithTools = family.smithingTemplateItem() != null && family.smithingBaseUpgrades() != null;
+			if (smithTools) {
+				Item[] upgradeMap = new Item[7];
+				upgradeMap[0] = family.sword().get();
+				upgradeMap[1] = family.pickaxe().get();
+				upgradeMap[2] = family.axe().get();
+				upgradeMap[3] = family.shovel().get();
+				upgradeMap[4] = family.hoe().get();
+				upgradeMap[5] = family.gauntlet().get();
+				upgradeMap[6] = family.pike().get();
 
-			// Pickaxe
-			ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, family.pickaxe().get())
-					.pattern("aaa")
-					.pattern(" b ")
-					.pattern(" b ")
-					.define('a', material)
-					.define('b', family.handle())
-					.unlockedBy(materialTriggerName, has(material))
-					.save(consumer, itemRegistryPath(family.pickaxe().get()));
+				int i = 0;
+				for (Item baseItem : family.smithingBaseUpgrades()) {
+					SmithingTransformRecipeBuilder.smithing(
+									Ingredient.of(family.smithingTemplateItem().get()),
+									Ingredient.of(baseItem),
+									Ingredient.of(material),
+									RecipeCategory.MISC,
+									upgradeMap[i])
+							.unlocks(materialTriggerName, has(material))
+							.save(consumer, ImmersiveWeapons.MOD_ID + ":" + getItemName(upgradeMap[i]) + "_smithing");
 
-			// Axe
-			ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, family.axe().get())
-					.pattern("aa")
-					.pattern("ab")
-					.pattern(" b")
-					.define('a', material)
-					.define('b', family.handle())
-					.unlockedBy(materialTriggerName, has(material))
-					.save(consumer, itemRegistryPath(family.axe().get()));
+					i++;
+				}
+			}
 
-			// Shovel
-			ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, family.shovel().get())
-					.pattern("a")
-					.pattern("b")
-					.pattern("b")
-					.define('a', material)
-					.define('b', family.handle())
-					.unlockedBy(materialTriggerName, has(material))
-					.save(consumer, itemRegistryPath(family.shovel().get()));
+			if (!smithTools) {
+				// Sword
+				ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, family.sword().get())
+						.pattern("a")
+						.pattern("a")
+						.pattern("b")
+						.define('a', material)
+						.define('b', family.handle())
+						.unlockedBy(materialTriggerName, has(material))
+						.save(consumer, itemRegistryPath(family.sword().get()));
 
-			// Hoe
-			ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, family.hoe().get())
-					.pattern("aa")
-					.pattern(" b")
-					.pattern(" b")
-					.define('a', material)
-					.define('b', family.handle())
-					.unlockedBy(materialTriggerName, has(material))
-					.save(consumer, itemRegistryPath(family.hoe().get()));
+				// Pickaxe
+				ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, family.pickaxe().get())
+						.pattern("aaa")
+						.pattern(" b ")
+						.pattern(" b ")
+						.define('a', material)
+						.define('b', family.handle())
+						.unlockedBy(materialTriggerName, has(material))
+						.save(consumer, itemRegistryPath(family.pickaxe().get()));
 
-			// Start doing null checks because not all tool families have these items.
+				// Axe
+				ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, family.axe().get())
+						.pattern("aa")
+						.pattern("ab")
+						.pattern(" b")
+						.define('a', material)
+						.define('b', family.handle())
+						.unlockedBy(materialTriggerName, has(material))
+						.save(consumer, itemRegistryPath(family.axe().get()));
 
-			// Gauntlet
-			RecipeGenerator.createGauntlet(family.gauntlet().get(), material);
+				// Shovel
+				ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, family.shovel().get())
+						.pattern("a")
+						.pattern("b")
+						.pattern("b")
+						.define('a', material)
+						.define('b', family.handle())
+						.unlockedBy(materialTriggerName, has(material))
+						.save(consumer, itemRegistryPath(family.shovel().get()));
 
-			// Pike
-			RecipeGenerator.createPike(family.pike().get(), material, family.pikeHead().get());
+				// Hoe
+				ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, family.hoe().get())
+						.pattern("aa")
+						.pattern(" b")
+						.pattern(" b")
+						.define('a', material)
+						.define('b', family.handle())
+						.unlockedBy(materialTriggerName, has(material))
+						.save(consumer, itemRegistryPath(family.hoe().get()));
 
-			// Pike head
-			RecipeGenerator.createPikeHead(family.pikeHead().get(), material, family.nugget());
+				// Gauntlet
+				RecipeGenerator.createGauntlet(family.gauntlet().get(), material);
+
+				if (family.pikeHead() != null) {
+					// Pike
+					RecipeGenerator.createPike(family.pike().get(), material, family.pikeHead().get());
+
+					// Pike head
+					RecipeGenerator.createPikeHead(family.pikeHead().get(), material, family.nugget());
+				}
+			}
 
 			if (ToolFamilies.FAMILIES_USE_NUGGETS_FOR_PROJECTILES.contains(family)) {
 				// Arrow
@@ -304,6 +334,30 @@ public class FamilyGenerator extends RecipeGenerator {
 		for (ArmorFamilies family : ArmorFamilies.FAMILIES) {
 			TagKey<Item> material = family.material();
 			final String materialTriggerName = "has_material";
+
+			if (family.smithingTemplateItem() != null && family.smithingBaseUpgrades() != null) {
+				Item[] upgradeMap = new Item[4];
+				upgradeMap[0] = family.helmet().get();
+				upgradeMap[1] = family.chestplate().get();
+				upgradeMap[2] = family.leggings().get();
+				upgradeMap[3] = family.boots().get();
+
+				int i = 0;
+				for (Item baseItem : family.smithingBaseUpgrades()) {
+					SmithingTransformRecipeBuilder.smithing(
+									Ingredient.of(family.smithingTemplateItem().get()),
+									Ingredient.of(baseItem),
+									Ingredient.of(material),
+									RecipeCategory.MISC,
+									upgradeMap[i])
+							.unlocks(materialTriggerName, has(material))
+							.save(consumer, ImmersiveWeapons.MOD_ID + ":" + getItemName(upgradeMap[i]) + "_smithing");
+
+					i++;
+				}
+
+				continue;
+			}
 
 			// Helmet
 			ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, family.helmet().get())

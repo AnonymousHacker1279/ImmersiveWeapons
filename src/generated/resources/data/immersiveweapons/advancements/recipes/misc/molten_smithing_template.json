@@ -1,7 +1,13 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_material": {
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "immersiveweapons:molten_smithing_template"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    },
+    "molten_ingot": {
       "conditions": {
         "items": [
           {
@@ -10,23 +16,17 @@
         ]
       },
       "trigger": "minecraft:inventory_changed"
-    },
-    "has_the_recipe": {
-      "conditions": {
-        "recipe": "immersiveweapons:molten_axe"
-      },
-      "trigger": "minecraft:recipe_unlocked"
     }
   },
   "requirements": [
     [
-      "has_material",
+      "molten_ingot",
       "has_the_recipe"
     ]
   ],
   "rewards": {
     "recipes": [
-      "immersiveweapons:molten_axe"
+      "immersiveweapons:molten_smithing_template"
     ]
   },
   "sends_telemetry_event": false

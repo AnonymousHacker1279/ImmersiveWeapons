@@ -1,21 +1,22 @@
 {
   "type": "minecraft:crafting_shaped",
-  "category": "building",
+  "category": "misc",
+  "group": "molten",
   "key": {
     "a": {
       "tag": "immersiveweapons:ingots/molten"
     },
     "b": {
-      "tag": "immersiveweapons:rods/obsidian"
+      "tag": "forge:obsidian"
     }
   },
   "pattern": [
-    "aa",
-    " b",
-    " b"
+    " a ",
+    "aba",
+    " a "
   ],
   "result": {
-    "item": "immersiveweapons:molten_hoe"
+    "item": "immersiveweapons:molten_smithing_template"
   },
   "show_notification": true
 }

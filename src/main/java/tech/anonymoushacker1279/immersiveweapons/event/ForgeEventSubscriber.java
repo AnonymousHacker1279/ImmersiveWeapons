@@ -422,6 +422,10 @@ public class ForgeEventSubscriber {
 
 	@SubscribeEvent
 	public static void lootingLevelEvent(LootingLevelEvent event) {
+		if (event.getDamageSource() == null) {
+			return;
+		}
+
 		if (event.getDamageSource().getEntity() instanceof Player player) {
 			// Increase the looting level by 3 with the Bloody Sacrifice curse
 			if (player.getPersistentData().getBoolean("used_curse_accessory_bloody_sacrifice")) {

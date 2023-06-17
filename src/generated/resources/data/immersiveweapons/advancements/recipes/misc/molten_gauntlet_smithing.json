@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "immersiveweapons:molten_chestplate"
+        "recipe": "immersiveweapons:molten_gauntlet_smithing"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -26,7 +26,7 @@
   ],
   "rewards": {
     "recipes": [
-      "immersiveweapons:molten_chestplate"
+      "immersiveweapons:molten_gauntlet_smithing"
     ]
   },
   "sends_telemetry_event": false

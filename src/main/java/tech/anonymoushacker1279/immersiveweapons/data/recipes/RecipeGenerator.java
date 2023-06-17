@@ -318,6 +318,17 @@ public class RecipeGenerator extends RecipeProvider {
 				.group("molten")
 				.unlockedBy("molten_ingot", has(IWItemTagGroups.MOLTEN_INGOTS));
 		create3x3Object(builder, IWItemTagGroups.MOLTEN_INGOTS);
+
+		// Molten smithing template
+		ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ItemRegistry.MOLTEN_SMITHING_TEMPLATE.get())
+				.define('a', IWItemTagGroups.MOLTEN_INGOTS)
+				.define('b', Tags.Items.OBSIDIAN)
+				.pattern(" a ")
+				.pattern("aba")
+				.pattern(" a ")
+				.group("molten")
+				.unlockedBy("molten_ingot", has(IWItemTagGroups.MOLTEN_INGOTS))
+				.save(finishedRecipeConsumer);
 	}
 
 	private void createVentusItems() {

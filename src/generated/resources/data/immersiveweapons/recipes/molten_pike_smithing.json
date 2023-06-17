@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:smithing_transform",
+  "addition": {
+    "tag": "immersiveweapons:ingots/molten"
+  },
+  "base": {
+    "item": "immersiveweapons:netherite_pike"
+  },
+  "result": {
+    "item": "immersiveweapons:molten_pike"
+  },
+  "template": {
+    "item": "immersiveweapons:molten_smithing_template"
+  }
+}

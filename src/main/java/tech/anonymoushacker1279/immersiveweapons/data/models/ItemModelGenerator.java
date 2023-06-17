@@ -53,17 +53,19 @@ public class ItemModelGenerator extends ItemModelProvider {
 		pikeMaterialMap.put(ItemRegistry.NETHERITE_PIKE.get(),
 				new ResourceLocation("block/netherite_block"));
 		pikeMaterialMap.put(ItemRegistry.MOLTEN_PIKE.get(),
-				new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/molten_block"));
+				new ResourceLocation(ImmersiveWeapons.MOD_ID, "item/custom/molten"));
 		pikeMaterialMap.put(ItemRegistry.TESLA_PIKE.get(),
-				new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/tesla_block"));
+				new ResourceLocation(ImmersiveWeapons.MOD_ID, "item/custom/tesla"));
 		pikeMaterialMap.put(ItemRegistry.VENTUS_PIKE.get(),
-				new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/cloud"));
+				new ResourceLocation(ImmersiveWeapons.MOD_ID, "item/custom/ventus"));
 		pikeMaterialMap.put(ItemRegistry.ASTRAL_PIKE.get(),
-				new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/astral_block"));
+				new ResourceLocation(ImmersiveWeapons.MOD_ID, "item/custom/astral"));
 		pikeMaterialMap.put(ItemRegistry.STARSTORM_PIKE.get(),
-				new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/starstorm_block"));
+				new ResourceLocation(ImmersiveWeapons.MOD_ID, "item/custom/starstorm"));
 
 		// Make a map of gauntlets to material textures
+
+		// TODO: remove once custom textures are made for each one
 		gauntletMaterialMap.put(ItemRegistry.WOODEN_GAUNTLET.get(),
 				new ResourceLocation("block/stripped_oak_log"));
 		gauntletMaterialMap.put(ItemRegistry.STONE_GAUNTLET.get(),
@@ -81,15 +83,15 @@ public class ItemModelGenerator extends ItemModelProvider {
 		gauntletMaterialMap.put(ItemRegistry.NETHERITE_GAUNTLET.get(),
 				new ResourceLocation("block/netherite_block"));
 		gauntletMaterialMap.put(ItemRegistry.MOLTEN_GAUNTLET.get(),
-				new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/molten_block"));
+				new ResourceLocation(ImmersiveWeapons.MOD_ID, "item/custom/molten"));
 		gauntletMaterialMap.put(ItemRegistry.TESLA_GAUNTLET.get(),
-				new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/tesla_block"));
+				new ResourceLocation(ImmersiveWeapons.MOD_ID, "item/custom/tesla"));
 		gauntletMaterialMap.put(ItemRegistry.VENTUS_GAUNTLET.get(),
-				new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/cloud"));
+				new ResourceLocation(ImmersiveWeapons.MOD_ID, "item/custom/ventus"));
 		gauntletMaterialMap.put(ItemRegistry.ASTRAL_GAUNTLET.get(),
-				new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/astral_block"));
+				new ResourceLocation(ImmersiveWeapons.MOD_ID, "item/custom/astral"));
 		gauntletMaterialMap.put(ItemRegistry.STARSTORM_GAUNTLET.get(),
-				new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/starstorm_block"));
+				new ResourceLocation(ImmersiveWeapons.MOD_ID, "item/custom/starstorm"));
 
 		// Make a list of trim materials
 		trimMaterials.add(TrimMaterials.QUARTZ);

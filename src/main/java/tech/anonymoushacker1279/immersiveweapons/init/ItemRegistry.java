@@ -133,6 +133,7 @@ public class ItemRegistry {
 	public static final RegistryObject<Item> ELECTRIC_INGOT = ITEMS.register("electric_ingot", () -> new Item(new Properties()));
 	public static final RegistryObject<Item> CONDUCTIVE_ALLOY = ITEMS.register("conductive_alloy", () -> new Item(new Properties()));
 	public static final RegistryObject<Item> MOLTEN_INGOT = ITEMS.register("molten_ingot", () -> new FuelItem(new Properties().fireResistant(), 24000));
+	public static final RegistryObject<Item> MOLTEN_SMITHING_TEMPLATE = ITEMS.register("molten_smithing_template", () -> new Item(new Properties().fireResistant()));
 	public static final RegistryObject<Item> SULFUR = ITEMS.register("sulfur", () -> new Item(new Properties()));
 	public static final RegistryObject<Item> VENTUS_STAFF_CORE = ITEMS.register("ventus_staff_core", () -> new Item(new Properties()));
 	public static final RegistryObject<Item> CURSED_SIGHT_STAFF_CORE = ITEMS.register("cursed_sight_staff_core", () -> new Item(new Properties()));
@@ -148,7 +149,6 @@ public class ItemRegistry {
 	public static final RegistryObject<Item> IRON_PIKE_HEAD = ITEMS.register("iron_pike_head", () -> new Item(new Properties()));
 	public static final RegistryObject<Item> COBALT_PIKE_HEAD = ITEMS.register("cobalt_pike_head", () -> new Item(new Properties()));
 	public static final RegistryObject<Item> DIAMOND_PIKE_HEAD = ITEMS.register("diamond_pike_head", () -> new Item(new Properties()));
-	public static final RegistryObject<Item> MOLTEN_PIKE_HEAD = ITEMS.register("molten_pike_head", () -> new Item(new Properties()));
 	public static final RegistryObject<Item> TESLA_PIKE_HEAD = ITEMS.register("tesla_pike_head", () -> new Item(new Properties()));
 	public static final RegistryObject<Item> VENTUS_PIKE_HEAD = ITEMS.register("ventus_pike_head", () -> new Item(new Properties()));
 	public static final RegistryObject<Item> ASTRAL_PIKE_HEAD = ITEMS.register("astral_pike_head", () -> new Item(new Properties()));
