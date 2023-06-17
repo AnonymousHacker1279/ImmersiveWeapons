@@ -24,5 +24,6 @@
     "recipes": [
       "immersiveweapons:stardust_chest_boat"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

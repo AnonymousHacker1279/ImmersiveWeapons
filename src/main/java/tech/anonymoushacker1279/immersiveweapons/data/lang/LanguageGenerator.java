@@ -47,7 +47,9 @@ public class LanguageGenerator extends IWLanguageProvider {
 		List<Block> excludedBlocks = new ArrayList<>(25);
 		// These are not added because they're variants of another block which already exists
 		excludedBlocks.add(BlockRegistry.BURNED_OAK_WALL_SIGN.get());
+		excludedBlocks.add(BlockRegistry.BURNED_OAK_WALL_HANGING_SIGN.get());
 		excludedBlocks.add(BlockRegistry.STARDUST_WALL_SIGN.get());
+		excludedBlocks.add(BlockRegistry.STARDUST_WALL_HANGING_SIGN.get());
 		excludedBlocks.addAll(BlockLists.wallHeadBlocks);
 
 		excludedBlocks.add(BlockRegistry.IRON_PANEL_BARS.get());

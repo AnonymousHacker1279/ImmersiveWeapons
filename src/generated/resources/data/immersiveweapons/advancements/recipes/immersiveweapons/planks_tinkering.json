@@ -28,5 +28,6 @@
     "recipes": [
       "immersiveweapons:planks_tinkering"
     ]
-  }
+  },
+  "sends_telemetry_event": true
 }

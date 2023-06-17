@@ -86,7 +86,7 @@ public class DebugTracingData {
 					player.getItemBySlot(EquipmentSlot.FEET).getItem() == ItemRegistry.MOLTEN_BOOTS.get()) {
 
 				double bonus = 0;
-				if (player.level.dimension() == Level.NETHER) {
+				if (player.level().dimension() == Level.NETHER) {
 					bonus += 0.2d;
 				}
 

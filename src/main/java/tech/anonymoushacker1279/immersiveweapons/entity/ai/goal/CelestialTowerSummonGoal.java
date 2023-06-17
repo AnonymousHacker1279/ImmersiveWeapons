@@ -61,14 +61,14 @@ public class CelestialTowerSummonGoal extends Goal {
 			int powerMobsToSpawn = isWavesPastHalf() ? (int) (mobsToSpawn * 0.2f) : 0; // Get the number of "power" mobs to spawn, if over halfway through the waves
 			mobsToSpawn = mobsToSpawn - powerMobsToSpawn; // Reduce the total number left to spawn
 
-			ServerLevel serverLevel = (ServerLevel) tower.level;
+			ServerLevel serverLevel = (ServerLevel) tower.level();
 
 			for (int i = fodderMobsToSpawn; i > 0; i--) {
 				BlockPos summonPos = new BlockPos(tower.getBlockX() + GeneralUtilities.getRandomNumber(-8, 9),
 						tower.getBlockY(),
 						tower.getBlockZ() + GeneralUtilities.getRandomNumber(-8, 9));
 
-				RockSpiderEntity rockSpiderEntity = new RockSpiderEntity(EntityRegistry.ROCK_SPIDER_ENTITY.get(), tower.level);
+				RockSpiderEntity rockSpiderEntity = new RockSpiderEntity(EntityRegistry.ROCK_SPIDER_ENTITY.get(), tower.level());
 				spawnEntity(serverLevel, rockSpiderEntity, summonPos);
 				spawnEntityParticles(serverLevel);
 			}
@@ -77,7 +77,7 @@ public class CelestialTowerSummonGoal extends Goal {
 						tower.getBlockY(),
 						tower.getBlockZ() + GeneralUtilities.getRandomNumber(-8, 9));
 
-				Zombie zombieEntity = new Zombie(EntityType.ZOMBIE, tower.level);
+				Zombie zombieEntity = new Zombie(EntityType.ZOMBIE, tower.level());
 				ItemStack sword = new ItemStack(Items.IRON_SWORD);
 				sword.enchant(Enchantments.SHARPNESS, GeneralUtilities.getRandomNumber(2, 4 + tower.getWavesSpawned()));
 				sword.enchant(Enchantments.KNOCKBACK, GeneralUtilities.getRandomNumber(1, 3 + tower.getWavesSpawned()));
@@ -99,7 +99,7 @@ public class CelestialTowerSummonGoal extends Goal {
 						tower.getBlockY(),
 						tower.getBlockZ() + GeneralUtilities.getRandomNumber(-8, 9));
 
-				Skeleton skeletonEntity = new Skeleton(EntityType.SKELETON, tower.level);
+				Skeleton skeletonEntity = new Skeleton(EntityType.SKELETON, tower.level());
 				ItemStack bow = new ItemStack(Items.BOW);
 				bow.enchant(Enchantments.POWER_ARROWS, GeneralUtilities.getRandomNumber(1, 3 + tower.getWavesSpawned()));
 				bow.enchant(Enchantments.PUNCH_ARROWS, GeneralUtilities.getRandomNumber(1, 2 + tower.getWavesSpawned()));
@@ -118,7 +118,7 @@ public class CelestialTowerSummonGoal extends Goal {
 
 			// Spawn some particles
 			for (int i = 96; i > 0; i--) {
-				((ServerLevel) tower.level).sendParticles(ParticleTypes.FLAME,
+				((ServerLevel) tower.level()).sendParticles(ParticleTypes.FLAME,
 						tower.position().x,
 						tower.position().y,
 						tower.position().z,
@@ -167,8 +167,8 @@ public class CelestialTowerSummonGoal extends Goal {
 
 		}
 
-		int mobs = tower.level.getNearbyEntities(Skeleton.class, TargetingConditions.forNonCombat(), tower, searchBox).size();
-		mobs = mobs + tower.level.getNearbyEntities(Zombie.class, TargetingConditions.forNonCombat(), tower, searchBox).size();
+		int mobs = tower.level().getNearbyEntities(Skeleton.class, TargetingConditions.forNonCombat(), tower, searchBox).size();
+		mobs = mobs + tower.level().getNearbyEntities(Zombie.class, TargetingConditions.forNonCombat(), tower, searchBox).size();
 		return mobs;
 	}
 

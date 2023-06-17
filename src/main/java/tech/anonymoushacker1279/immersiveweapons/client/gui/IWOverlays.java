@@ -33,9 +33,9 @@ public class IWOverlays {
 			}
 		};
 
-		DEBUG_TRACING_ELEMENT = (gui, poseStack, partialTick, screenWidth, screenHeight) -> {
+		DEBUG_TRACING_ELEMENT = (gui, guiGraphics, partialTick, screenWidth, screenHeight) -> {
 			gui.setupOverlayRenderState(true, false);
-			DebugTracingOverlay.renderOverlay(poseStack, fontRenderer, screenHeight);
+			DebugTracingOverlay.renderOverlay(guiGraphics.pose(), fontRenderer, screenHeight);
 		};
 	}
 }

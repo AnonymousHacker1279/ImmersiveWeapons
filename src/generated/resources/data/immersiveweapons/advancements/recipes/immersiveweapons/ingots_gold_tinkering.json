@@ -28,5 +28,6 @@
     "recipes": [
       "immersiveweapons:ingots_gold_tinkering"
     ]
-  }
+  },
+  "sends_telemetry_event": true
 }

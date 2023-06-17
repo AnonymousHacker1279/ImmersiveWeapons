@@ -30,5 +30,6 @@
     "recipes": [
       "immersiveweapons:bottle_of_alcohol_fermenting"
     ]
-  }
+  },
+  "sends_telemetry_event": true
 }

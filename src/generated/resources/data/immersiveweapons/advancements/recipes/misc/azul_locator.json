@@ -30,5 +30,6 @@
     "recipes": [
       "immersiveweapons:azul_locator"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

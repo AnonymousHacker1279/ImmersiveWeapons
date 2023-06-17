@@ -121,9 +121,9 @@ public class SmokeGrenadeEntity extends ThrowableItemProjectile {
 	@Override
 	protected void onHit(HitResult hitResult) {
 		super.onHit(hitResult);
-		if (!level.isClientSide) {
+		if (!level().isClientSide) {
 			// Inform the client of the smoke grenade color
-			PacketHandler.INSTANCE.send(PacketDistributor.TRACKING_CHUNK.with(() -> level.getChunkAt(blockPosition())),
+			PacketHandler.INSTANCE.send(PacketDistributor.TRACKING_CHUNK.with(() -> level().getChunkAt(blockPosition())),
 					new SmokeGrenadeEntityPacketHandler(getX(), getY(), getZ(), color));
 
 		}

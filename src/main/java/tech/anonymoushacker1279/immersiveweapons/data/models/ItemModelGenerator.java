@@ -1,8 +1,13 @@
 package tech.anonymoushacker1279.immersiveweapons.data.models;
 
 import net.minecraft.data.PackOutput;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.packs.PackType;
+import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.armortrim.TrimMaterial;
+import net.minecraft.world.item.armortrim.TrimMaterials;
 import net.minecraftforge.client.model.generators.ItemModelProvider;
 import net.minecraftforge.client.model.generators.ModelFile;
 import net.minecraftforge.common.data.ExistingFileHelper;
@@ -22,6 +27,7 @@ public class ItemModelGenerator extends ItemModelProvider {
 
 	final Map<PikeItem, ResourceLocation> pikeMaterialMap = new HashMap<>(15);
 	final Map<GauntletItem, ResourceLocation> gauntletMaterialMap = new HashMap<>(15);
+	final ArrayList<ResourceKey<TrimMaterial>> trimMaterials = new ArrayList<>(15);
 
 	public ItemModelGenerator(PackOutput output, ExistingFileHelper existingFileHelper) {
 		super(output, ImmersiveWeapons.MOD_ID, existingFileHelper);
@@ -84,6 +90,18 @@ public class ItemModelGenerator extends ItemModelProvider {
 				new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/astral_block"));
 		gauntletMaterialMap.put(ItemRegistry.STARSTORM_GAUNTLET.get(),
 				new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/starstorm_block"));
+
+		// Make a list of trim materials
+		trimMaterials.add(TrimMaterials.QUARTZ);
+		trimMaterials.add(TrimMaterials.IRON);
+		trimMaterials.add(TrimMaterials.NETHERITE);
+		trimMaterials.add(TrimMaterials.REDSTONE);
+		trimMaterials.add(TrimMaterials.COPPER);
+		trimMaterials.add(TrimMaterials.GOLD);
+		trimMaterials.add(TrimMaterials.EMERALD);
+		trimMaterials.add(TrimMaterials.DIAMOND);
+		trimMaterials.add(TrimMaterials.LAPIS);
+		trimMaterials.add(TrimMaterials.AMETHYST);
 	}
 
 	/**
@@ -128,6 +146,66 @@ public class ItemModelGenerator extends ItemModelProvider {
 				.parent(new ModelFile.UncheckedModelFile(ImmersiveWeapons.MOD_ID + ":block/" + item));
 	}
 
+	/**
+	 * Generate an armor item. Automatically adds the proper trim_type predicates.
+	 *
+	 * @param item the <code>Item</code> to generate a model for
+	 */
+	private void armorItem(ArmorItem item) {
+		getBuilder(item.toString())
+				.parent(new ModelFile.UncheckedModelFile("item/generated"))
+				.texture("layer0", new ResourceLocation(ImmersiveWeapons.MOD_ID, "item/" + item))
+				.override().predicate(new ResourceLocation("trim_type"), 0.1f)
+				.model(new ModelFile.UncheckedModelFile(ImmersiveWeapons.MOD_ID + ":item/" + item + "_" + TrimMaterials.QUARTZ.location().getPath() + "_trim"))
+				.end()
+				.override().predicate(new ResourceLocation("trim_type"), 0.2f)
+				.model(new ModelFile.UncheckedModelFile(ImmersiveWeapons.MOD_ID + ":item/" + item + "_" + TrimMaterials.IRON.location().getPath() + "_trim"))
+				.end()
+				.override().predicate(new ResourceLocation("trim_type"), 0.3f)
+				.model(new ModelFile.UncheckedModelFile(ImmersiveWeapons.MOD_ID + ":item/" + item + "_" + TrimMaterials.NETHERITE.location().getPath() + "_trim"))
+				.end()
+				.override().predicate(new ResourceLocation("trim_type"), 0.4f)
+				.model(new ModelFile.UncheckedModelFile(ImmersiveWeapons.MOD_ID + ":item/" + item + "_" + TrimMaterials.REDSTONE.location().getPath() + "_trim"))
+				.end()
+				.override().predicate(new ResourceLocation("trim_type"), 0.5f)
+				.model(new ModelFile.UncheckedModelFile(ImmersiveWeapons.MOD_ID + ":item/" + item + "_" + TrimMaterials.COPPER.location().getPath() + "_trim"))
+				.end()
+				.override().predicate(new ResourceLocation("trim_type"), 0.6f)
+				.model(new ModelFile.UncheckedModelFile(ImmersiveWeapons.MOD_ID + ":item/" + item + "_" + TrimMaterials.GOLD.location().getPath() + "_trim"))
+				.end()
+				.override().predicate(new ResourceLocation("trim_type"), 0.7f)
+				.model(new ModelFile.UncheckedModelFile(ImmersiveWeapons.MOD_ID + ":item/" + item + "_" + TrimMaterials.EMERALD.location().getPath() + "_trim"))
+				.end()
+				.override().predicate(new ResourceLocation("trim_type"), 0.8f)
+				.model(new ModelFile.UncheckedModelFile(ImmersiveWeapons.MOD_ID + ":item/" + item + "_" + TrimMaterials.DIAMOND.location().getPath() + "_trim"))
+				.end()
+				.override().predicate(new ResourceLocation("trim_type"), 0.9f)
+				.model(new ModelFile.UncheckedModelFile(ImmersiveWeapons.MOD_ID + ":item/" + item + "_" + TrimMaterials.LAPIS.location().getPath() + "_trim"))
+				.end()
+				.override().predicate(new ResourceLocation("trim_type"), 1.0f)
+				.model(new ModelFile.UncheckedModelFile(ImmersiveWeapons.MOD_ID + ":item/" + item + "_" + TrimMaterials.AMETHYST.location().getPath() + "_trim"))
+				.end();
+
+		for (ResourceKey<TrimMaterial> trimMaterial : trimMaterials) {
+			String armorType = switch (item.getEquipmentSlot()) {
+				case HEAD -> "helmet";
+				case CHEST -> "chestplate";
+				case LEGS -> "leggings";
+				case FEET -> "boots";
+				default -> "";
+			};
+
+			ResourceLocation trimPath = new ResourceLocation("trims/items/" + armorType + "_trim_" + trimMaterial.location().getPath());
+
+			existingFileHelper.trackGenerated(trimPath, PackType.CLIENT_RESOURCES, ".png", "textures");
+
+			getBuilder(item + "_" + trimMaterial.location().getPath() + "_trim")
+					.parent(new ModelFile.UncheckedModelFile("item/generated"))
+					.texture("layer0", new ResourceLocation(ImmersiveWeapons.MOD_ID, "item/" + item))
+					.texture("layer1", trimPath);
+		}
+	}
+
 	@Override
 	protected void registerModels() {
 		List<Item> items = new ArrayList<>(250);
@@ -137,6 +215,7 @@ public class ItemModelGenerator extends ItemModelProvider {
 
 		boolean isAtBlockItems = false;
 		boolean isPastToolItems = false;
+		boolean isAtArmorItems = false;
 		boolean isAtSpawnEggItems = false;
 
 		for (Item item : items) {
@@ -144,6 +223,8 @@ public class ItemModelGenerator extends ItemModelProvider {
 				isAtBlockItems = true;
 			} else if (item == ItemRegistry.WOODEN_SHARD.get()) {
 				isPastToolItems = true;
+			} else if (item == ItemRegistry.MOLTEN_HELMET.get()) {
+				isAtArmorItems = true;
 			} else if (item == ItemRegistry.DYING_SOLDIER_SPAWN_EGG.get()) {
 				isAtSpawnEggItems = true;
 			}
@@ -175,7 +256,7 @@ public class ItemModelGenerator extends ItemModelProvider {
 						handheldItem(item);
 					}
 				} else {
-					if (!isAtSpawnEggItems) {
+					if (!isAtArmorItems) {
 						if (item instanceof AbstractBulletItem) {
 							getBuilder(item.toString())
 									.parent(new ModelFile.UncheckedModelFile(new ResourceLocation(ImmersiveWeapons.MOD_ID,
@@ -184,6 +265,8 @@ public class ItemModelGenerator extends ItemModelProvider {
 						} else {
 							basicItem(item);
 						}
+					} else if (!isAtSpawnEggItems && item instanceof ArmorItem armorItem) {
+						armorItem(armorItem);
 					} else {
 						spawnEggItem(item);
 					}
@@ -200,6 +283,8 @@ public class ItemModelGenerator extends ItemModelProvider {
 					basicItem(new ResourceLocation(ImmersiveWeapons.MOD_ID, "burned_oak_door"));
 				} else if (item == BlockItemRegistry.BURNED_OAK_SIGN_ITEM.get()) {
 					basicItem(new ResourceLocation(ImmersiveWeapons.MOD_ID, "burned_oak_sign"));
+				} else if (item == BlockItemRegistry.BURNED_OAK_HANGING_SIGN_ITEM.get()) {
+					basicItem(new ResourceLocation(ImmersiveWeapons.MOD_ID, "burned_oak_hanging_sign"));
 				} else if (item == BlockItemRegistry.BURNED_OAK_BUTTON_ITEM.get()) {
 					buttonInventory(item.toString(),
 							new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/burned_oak_planks"));
@@ -265,6 +350,8 @@ public class ItemModelGenerator extends ItemModelProvider {
 					basicItem(new ResourceLocation(ImmersiveWeapons.MOD_ID, "stardust_door"));
 				} else if (item == BlockItemRegistry.STARDUST_SIGN_ITEM.get()) {
 					basicItem(new ResourceLocation(ImmersiveWeapons.MOD_ID, "stardust_sign"));
+				} else if (item == BlockItemRegistry.STARDUST_HANGING_SIGN_ITEM.get()) {
+					basicItem(new ResourceLocation(ImmersiveWeapons.MOD_ID, "stardust_hanging_sign"));
 				} else if (item == BlockItemRegistry.STARDUST_BUTTON_ITEM.get()) {
 					buttonInventory(item.toString(),
 							new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/stardust_planks"));

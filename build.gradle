@@ -119,9 +119,10 @@ dependencies {
 	implementation fg.deobf("com.github.glitchfiend:TerraBlender-forge:${terrablender_version}")
 
 	// Include Immersive Weapons Compatibility Bridge (IWCB)
-	implementation fg.deobf("tech.anonymoushacker1279.iwcompatbridge:IWCompatBridge:${iwcb_version}")
+	// TODO: re-implement this once updated to 1.20.1
+	// implementation fg.deobf("tech.anonymoushacker1279.iwcompatbridge:IWCompatBridge:${iwcb_version}")
 	// Include JEI
-	runtimeOnly fg.deobf("mezz.jei:jei-1.19.4-forge:${jei_version}")
+	runtimeOnly fg.deobf("mezz.jei:jei-1.20.1-forge:${jei_version}")
 	// Include WTHIT and badpackets
 	runtimeOnly fg.deobf("mcp.mobius.waila:wthit:forge-${wthit_version}")
 	implementation fg.deobf("lol.bai:badpackets:forge-${badpackets_version}")

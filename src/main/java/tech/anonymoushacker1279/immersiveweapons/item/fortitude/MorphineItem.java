@@ -59,7 +59,7 @@ public class MorphineItem extends Item {
 	public InteractionResult interactLivingEntity(ItemStack stack, Player playerIn,
 	                                              LivingEntity entity, InteractionHand hand) {
 
-		if (entity.level.isClientSide) {
+		if (entity.level().isClientSide) {
 			return InteractionResult.PASS;
 		}
 

@@ -171,5 +171,6 @@
         "min": 3.0
       }
     }
-  ]
+  ],
+  "random_sequence": "immersiveweapons:chests/biodome/medicine_barrel"
 }

@@ -30,5 +30,6 @@
     "recipes": [
       "immersiveweapons:landmine"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

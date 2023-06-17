@@ -28,5 +28,6 @@
     "recipes": [
       "immersiveweapons:starstorm_gauntlet"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

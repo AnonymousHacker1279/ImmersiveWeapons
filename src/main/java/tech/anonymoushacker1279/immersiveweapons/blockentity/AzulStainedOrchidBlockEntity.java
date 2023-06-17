@@ -33,11 +33,11 @@ public class AzulStainedOrchidBlockEntity extends BlockEntity implements EntityB
 		if (!entity.isPassenger() && !entity.isVehicle() && entity.canChangeDimensions() && !entity.isOnPortalCooldown() && teleportDelay <= 0) {
 			teleportDelay = 100;
 
-			if (!entity.level.isClientSide && !pos.equals(entity.portalEntrancePos)) {
+			if (!entity.level().isClientSide && !pos.equals(entity.portalEntrancePos)) {
 				entity.portalEntrancePos = pos.immutable();
 			}
 
-			Level entityLevel = entity.level;
+			Level entityLevel = entity.level();
 			MinecraftServer server = entityLevel.getServer();
 			ResourceKey<Level> destination = entityLevel.dimension() == IWDimensions.TILTROS ? Level.OVERWORLD
 					: IWDimensions.TILTROS;

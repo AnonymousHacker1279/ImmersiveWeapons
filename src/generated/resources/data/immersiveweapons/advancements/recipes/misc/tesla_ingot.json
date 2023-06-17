@@ -28,5 +28,6 @@
     "recipes": [
       "immersiveweapons:tesla_ingot"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

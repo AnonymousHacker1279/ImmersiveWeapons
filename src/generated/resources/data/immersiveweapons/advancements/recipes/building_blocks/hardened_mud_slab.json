@@ -30,5 +30,6 @@
     "recipes": [
       "immersiveweapons:hardened_mud_slab"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

@@ -30,5 +30,6 @@
     "recipes": [
       "immersiveweapons:pitfall"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

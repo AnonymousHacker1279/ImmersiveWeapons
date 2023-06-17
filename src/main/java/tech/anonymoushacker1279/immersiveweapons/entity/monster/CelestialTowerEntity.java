@@ -122,7 +122,7 @@ public class CelestialTowerEntity extends Monster implements GrantAdvancementOnD
 	@Override
 	public void tick() {
 		super.tick();
-		level.addParticle(ParticleTypes.LAVA, getX() + GeneralUtilities.getRandomNumber(-1d, 1.01d), getY(),
+		level().addParticle(ParticleTypes.LAVA, getX() + GeneralUtilities.getRandomNumber(-1d, 1.01d), getY(),
 				getZ() + GeneralUtilities.getRandomNumber(-1d, 1.01d),
 				GeneralUtilities.getRandomNumber(-0.03d, 0.03d),
 				GeneralUtilities.getRandomNumber(-0.1d, -0.08d),
@@ -137,8 +137,8 @@ public class CelestialTowerEntity extends Monster implements GrantAdvancementOnD
 
 	@Override
 	public boolean hurt(DamageSource pSource, float pAmount) {
-		if (pSource == damageSources().outOfWorld()) {
-			return super.hurt(pSource, pAmount); // For /kill, as the entity should never fall to death
+		if (pSource == damageSources().genericKill()) {
+			return super.hurt(pSource, pAmount);
 		}
 		if (doneSpawningWaves) {
 			bossEvent.setProgress(getHealth() / 240f);
@@ -159,7 +159,7 @@ public class CelestialTowerEntity extends Monster implements GrantAdvancementOnD
 	public void die(DamageSource damageSource) {
 		super.die(damageSource);
 
-		if (!level.isClientSide) {
+		if (!level().isClientSide) {
 			ALL_TOWERS.remove(this);
 		}
 	}

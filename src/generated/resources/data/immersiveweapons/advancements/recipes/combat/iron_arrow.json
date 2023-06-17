@@ -28,5 +28,6 @@
     "recipes": [
       "immersiveweapons:iron_arrow"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

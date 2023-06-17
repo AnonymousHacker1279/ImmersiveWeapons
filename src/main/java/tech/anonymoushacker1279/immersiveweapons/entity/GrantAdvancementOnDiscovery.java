@@ -18,7 +18,7 @@ import java.util.Objects;
 public interface GrantAdvancementOnDiscovery {
 
 	default void checkForDiscovery(LivingEntity entity) {
-		Level level = entity.level;
+		Level level = entity.level();
 		BlockPos entityPos = entity.blockPosition();
 
 		if (!level.isClientSide && entity.tickCount % 20 == 0) {

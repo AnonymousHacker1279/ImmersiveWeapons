@@ -30,5 +30,6 @@
     "recipes": [
       "immersiveweapons:astral_ingot_astral_crystal_sorcery"
     ]
-  }
+  },
+  "sends_telemetry_event": true
 }

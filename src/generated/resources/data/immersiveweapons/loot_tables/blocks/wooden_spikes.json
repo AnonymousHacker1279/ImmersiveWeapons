@@ -33,5 +33,6 @@
       ],
       "rolls": 1.0
     }
-  ]
+  ],
+  "random_sequence": "immersiveweapons:blocks/wooden_spikes"
 }

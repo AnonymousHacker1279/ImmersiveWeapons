@@ -28,5 +28,6 @@
     "recipes": [
       "immersiveweapons:iron_panel_bars"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

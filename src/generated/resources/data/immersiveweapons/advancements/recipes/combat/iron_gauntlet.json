@@ -28,5 +28,6 @@
     "recipes": [
       "immersiveweapons:iron_gauntlet"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

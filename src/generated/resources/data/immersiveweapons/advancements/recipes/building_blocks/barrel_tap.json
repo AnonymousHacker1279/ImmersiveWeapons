@@ -28,5 +28,6 @@
     "recipes": [
       "immersiveweapons:barrel_tap"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

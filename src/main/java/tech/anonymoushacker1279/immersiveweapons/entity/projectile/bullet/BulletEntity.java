@@ -123,7 +123,7 @@ public class BulletEntity extends AbstractArrow {
 		}
 
 		if (tickCount % 10 == 0 && !inGround && getOwner() instanceof ServerPlayer player) {
-			if (!level.isClientSide) {
+			if (!level().isClientSide) {
 				PacketHandler.INSTANCE.send(PacketDistributor.PLAYER.with(() -> player),
 						new BulletEntityPacketHandler(calculateDamage(), isCritArrow()));
 			}
@@ -150,10 +150,10 @@ public class BulletEntity extends AbstractArrow {
 		}
 
 		BlockPos currentBlockPosition = blockPosition();
-		BlockState blockStateAtCurrentPosition = level.getBlockState(currentBlockPosition);
+		BlockState blockStateAtCurrentPosition = level().getBlockState(currentBlockPosition);
 		// Check if the block at the current position is air, and that it has physics enabled
 		if (!blockStateAtCurrentPosition.isAir() && !isNoPhysics) {
-			VoxelShape currentPositionBlockSupportShape = blockStateAtCurrentPosition.getBlockSupportShape(level,
+			VoxelShape currentPositionBlockSupportShape = blockStateAtCurrentPosition.getBlockSupportShape(level(),
 					currentBlockPosition);
 
 			// Check the hitboxes first, if this isn't an air block
@@ -187,7 +187,7 @@ public class BulletEntity extends AbstractArrow {
 			 tick for despawn. */
 			if (inBlockState != blockStateAtCurrentPosition && shouldFall()) {
 				startFalling();
-			} else if (!level.isClientSide) {
+			} else if (!level().isClientSide) {
 				tickDespawn();
 			}
 
@@ -197,7 +197,7 @@ public class BulletEntity extends AbstractArrow {
 			inGroundTime = 0;
 			Vec3 currentPosition = position();
 			Vec3 newPosition = currentPosition.add(deltaMovement);
-			HitResult hitResult = level.clip(new ClipContext(currentPosition, newPosition, ClipContext.Block.COLLIDER, Fluid.NONE,
+			HitResult hitResult = level().clip(new ClipContext(currentPosition, newPosition, ClipContext.Block.COLLIDER, Fluid.NONE,
 					this));
 
 			// If there's a block between the current position and the new one, set the
@@ -245,7 +245,7 @@ public class BulletEntity extends AbstractArrow {
 			// Add particles behind the bullet if it is a "critical" one
 			if (isCritArrow()) {
 				for (int i = 0; i < 4; ++i) {
-					level.addParticle(ParticleTypes.CRIT,
+					level().addParticle(ParticleTypes.CRIT,
 							getX() + deltaMovementX * i / 4.0D,
 							getY() + deltaMovementY * i / 4.0D,
 							getZ() + deltaMovementZ * i / 4.0D,
@@ -274,7 +274,7 @@ public class BulletEntity extends AbstractArrow {
 			inertia = getDefaultInertia();
 			if (isInWater()) {
 				for (int j = 0; j < 4; ++j) {
-					level.addParticle(ParticleTypes.BUBBLE,
+					level().addParticle(ParticleTypes.BUBBLE,
 							newPositionX - deltaMovementX * 0.25D,
 							newPositionY - deltaMovementY * 0.25D,
 							newPositionZ - deltaMovementZ * 0.25D,
@@ -419,7 +419,7 @@ public class BulletEntity extends AbstractArrow {
 					}
 				}
 
-				if (!level.isClientSide && owner instanceof LivingEntity ownerEntity) {
+				if (!level().isClientSide && owner instanceof LivingEntity ownerEntity) {
 					EnchantmentHelper.doPostHurtEffects(livingEntity, ownerEntity);
 					EnchantmentHelper.doPostDamageEffects(ownerEntity, livingEntity);
 				}
@@ -434,7 +434,7 @@ public class BulletEntity extends AbstractArrow {
 		} else {
 			entity.setRemainingFireTicks(remainingFireTicks);
 
-			if (!level.isClientSide && getDeltaMovement().lengthSqr() < 1.0E-7D) {
+			if (!level().isClientSide && getDeltaMovement().lengthSqr() < 1.0E-7D) {
 				kill();
 			}
 		}
@@ -447,7 +447,7 @@ public class BulletEntity extends AbstractArrow {
 	 */
 	@Override
 	protected void onHitBlock(BlockHitResult blockHitResult) {
-		inBlockState = level.getBlockState(blockHitResult.getBlockPos());
+		inBlockState = level().getBlockState(blockHitResult.getBlockPos());
 		boolean didPassThroughBlock = false;
 
 		// Check if the bullet hit a permeable block like leaves, if so
@@ -476,14 +476,14 @@ public class BulletEntity extends AbstractArrow {
 				&& inBlockState.is(Tags.Blocks.GLASS)
 				|| inBlockState.is(Tags.Blocks.GLASS_PANES)) {
 
-			level.destroyBlock(blockHitResult.getBlockPos(), false);
+			level().destroyBlock(blockHitResult.getBlockPos(), false);
 			hasAlreadyBrokeGlass = true;
 		}
 
-		inBlockState.onProjectileHit(level, inBlockState, blockHitResult, this);
+		inBlockState.onProjectileHit(level(), inBlockState, blockHitResult, this);
 
-		if (!didPassThroughBlock && level.isClientSide) {
-			level.addParticle(new BulletImpactParticleOptions(1.0F, Block.getId(inBlockState)),
+		if (!didPassThroughBlock && level().isClientSide) {
+			level().addParticle(new BulletImpactParticleOptions(1.0F, Block.getId(inBlockState)),
 					blockHitResult.getLocation().x, blockHitResult.getLocation().y, blockHitResult.getLocation().z,
 					GeneralUtilities.getRandomNumber(-0.01d, 0.01d),
 					GeneralUtilities.getRandomNumber(-0.01d, 0.01d),
@@ -494,7 +494,7 @@ public class BulletEntity extends AbstractArrow {
 	private boolean checkLeftOwner() {
 		Entity owner = getOwner();
 		if (owner != null) {
-			for (Entity entityInWorld : level.getEntities(this, getBoundingBox()
+			for (Entity entityInWorld : level().getEntities(this, getBoundingBox()
 							.expandTowards(getDeltaMovement()).inflate(1.0D),
 					(entity) -> !entity.isSpectator() && entity.isPickable())) {
 
@@ -516,7 +516,7 @@ public class BulletEntity extends AbstractArrow {
 	public void handleEntityEvent(byte statusID) {
 		if (statusID == VANILLA_IMPACT_STATUS_ID) {
 			for (int i = 0; i <= 16; i++) {
-				level.addParticle(ParticleTypesRegistry.BLOOD_PARTICLE.get(),
+				level().addParticle(ParticleTypesRegistry.BLOOD_PARTICLE.get(),
 						position().x, position().y, position().z,
 						GeneralUtilities.getRandomNumber(-0.03d, 0.03d),
 						GeneralUtilities.getRandomNumber(-0.03d, 0.03d),
@@ -576,7 +576,7 @@ public class BulletEntity extends AbstractArrow {
 	 * @param entity the <code>Entity</code> being hit
 	 */
 	protected void doWhenHitEntity(Entity entity) {
-		level.broadcastEntityEvent(this, VANILLA_IMPACT_STATUS_ID);
+		level().broadcastEntityEvent(this, VANILLA_IMPACT_STATUS_ID);
 	}
 
 	@Override

@@ -238,5 +238,6 @@
         "min": 3.0
       }
     }
-  ]
+  ],
+  "random_sequence": "immersiveweapons:chests/biodome/chest"
 }

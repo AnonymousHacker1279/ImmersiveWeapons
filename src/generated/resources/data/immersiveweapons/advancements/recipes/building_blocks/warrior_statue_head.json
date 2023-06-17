@@ -30,5 +30,6 @@
     "recipes": [
       "immersiveweapons:warrior_statue_head"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

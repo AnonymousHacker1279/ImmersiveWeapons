@@ -158,7 +158,7 @@ public class AccessoryEffects {
 		// 15% chance to summon meteor
 		if (AccessoryItem.isAccessoryActive(player, ItemRegistry.CELESTIAL_SPIRIT.get()) && player.getRandom().nextFloat() <= 0.15f) {
 			if (player != sourceEntity) {
-				MeteorEntity.create(player.level, player, null, player.blockPosition(), sourceEntity);
+				MeteorEntity.create(player.level(), player, null, player.blockPosition(), sourceEntity);
 			}
 		}
 	}

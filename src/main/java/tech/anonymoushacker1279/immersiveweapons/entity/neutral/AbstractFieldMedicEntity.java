@@ -139,7 +139,7 @@ public abstract class AbstractFieldMedicEntity extends PathfinderMob implements 
 		if (healCooldown > 0) {
 			healCooldown--;
 		}
-		if (!level.isClientSide) {
+		if (!level().isClientSide) {
 			if (getHealth() <= getMaxHealth()) {
 				if (randomHealTicks >= 20) {
 					heal();
@@ -203,7 +203,7 @@ public abstract class AbstractFieldMedicEntity extends PathfinderMob implements 
 	 * Set the entity's combat AI.
 	 */
 	private void setCombatTask() {
-		if (!level.isClientSide) {
+		if (!level().isClientSide) {
 			goalSelector.removeGoal(aiAttackOnCollide);
 			setItemInHand(InteractionHand.MAIN_HAND, new ItemStack(ItemRegistry.USED_SYRINGE.get()));
 			goalSelector.addGoal(1, aiAttackOnCollide);
@@ -236,7 +236,7 @@ public abstract class AbstractFieldMedicEntity extends PathfinderMob implements 
 			setTarget((LivingEntity) source.getEntity());
 			setCombatTask();
 			// Aggro all other minutemen in the area
-			List<MinutemanEntity> nearbyMinutemen = level.getEntitiesOfClass(MinutemanEntity.class,
+			List<MinutemanEntity> nearbyMinutemen = level().getEntitiesOfClass(MinutemanEntity.class,
 					(new AABB(blockPosition())).inflate(48.0D, 8.0D, 48.0D));
 
 			for (MinutemanEntity minutemanEntity : nearbyMinutemen) {
@@ -286,7 +286,7 @@ public abstract class AbstractFieldMedicEntity extends PathfinderMob implements 
 						// :)
 						if (randomNumber <= 0.005f) {
 							PacketHandler.INSTANCE.send(PacketDistributor.TRACKING_CHUNK.with(() ->
-											level.getChunkAt(blockPosition())),
+											level().getChunkAt(blockPosition())),
 									new AbstractFieldMedicEntityPacketHandler(blockPosition()));
 						}
 					}
@@ -304,7 +304,7 @@ public abstract class AbstractFieldMedicEntity extends PathfinderMob implements 
 	 */
 	private void checkForHurtEntities(List<Class<? extends PathfinderMob>> checkedEntities) {
 		if (checkForHurtEntitiesCooldown == 0 && currentlyTargetedEntity == null) {
-			List<Entity> entity = level.getEntities(this, getBoundingBox().move(-24, -5, -24).expandTowards(24, 5, 24));
+			List<Entity> entity = level().getEntities(this, getBoundingBox().move(-24, -5, -24).expandTowards(24, 5, 24));
 			if (!entity.isEmpty()) {
 				for (Entity element : entity) {
 					if (!checkedEntities.contains(element.getClass())) {

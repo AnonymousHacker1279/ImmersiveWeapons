@@ -12,8 +12,6 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 
-import java.util.Objects;
-
 public abstract class AbstractInventoryBlockEntity extends BlockEntity implements EntityBlock, Clearable {
 
 	private final NonNullList<ItemStack> inventory = NonNullList.withSize(getInventorySize(), ItemStack.EMPTY);
@@ -68,7 +66,7 @@ public abstract class AbstractInventoryBlockEntity extends BlockEntity implement
 	 */
 	public void inventoryChanged() {
 		setChanged();
-		Objects.requireNonNull(getLevel()).sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), 3);
+		getLevel().sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), 3);
 	}
 
 	/**

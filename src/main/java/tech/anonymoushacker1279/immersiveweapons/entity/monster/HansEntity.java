@@ -120,7 +120,7 @@ public class HansEntity extends AbstractWanderingWarriorEntity {
 			setCombatTask();
 			super.hurt(source, amount);
 		}
-		if (source == damageSources().outOfWorld()) {
+		if (source == damageSources().genericKill()) {
 			super.hurt(source, amount);
 			return true;
 		}

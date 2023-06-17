@@ -28,5 +28,6 @@
     "recipes": [
       "immersiveweapons:tesla_nugget"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

@@ -58,7 +58,7 @@ public class BandageItem extends Item {
 	public InteractionResult interactLivingEntity(ItemStack stack, Player player,
 	                                              LivingEntity entity, InteractionHand hand) {
 
-		if (entity.level.isClientSide) {
+		if (entity.level().isClientSide) {
 			return InteractionResult.PASS;
 		}
 

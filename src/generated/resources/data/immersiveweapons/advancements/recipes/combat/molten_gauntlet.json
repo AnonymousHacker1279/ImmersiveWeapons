@@ -28,5 +28,6 @@
     "recipes": [
       "immersiveweapons:molten_gauntlet"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

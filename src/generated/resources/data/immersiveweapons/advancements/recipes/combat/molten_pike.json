@@ -28,5 +28,6 @@
     "recipes": [
       "immersiveweapons:molten_pike"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

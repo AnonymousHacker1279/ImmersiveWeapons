@@ -28,5 +28,6 @@
     "recipes": [
       "immersiveweapons:ventus_shovel"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

@@ -52,7 +52,7 @@ public class FlyRandomlyGoal extends Goal {
 
 			// Pick a random y coordinate
 			// Start by getting the ground level and adding 10 to it
-			int minY = evilEyeEntity.getLevel().getHeightmapPos(Types.MOTION_BLOCKING, new BlockPos(x, 0, z)).getY() + 20;
+			int minY = evilEyeEntity.level().getHeightmapPos(Types.MOTION_BLOCKING, new BlockPos(x, 0, z)).getY() + 20;
 			int maxY = minY + 11;
 			// Pick a random number between the two bounds
 			int y = GeneralUtilities.getRandomNumber(minY, maxY);
@@ -61,7 +61,7 @@ public class FlyRandomlyGoal extends Goal {
 			targetPosition = new BlockPos(x, y, z);
 
 			// Check if there is a direct path to the coordinates without hitting any blocks
-			if (evilEyeEntity.getLevel().clip(new ClipContext(evilEyeEntity.position(), targetPosition.getCenter(),
+			if (evilEyeEntity.level().clip(new ClipContext(evilEyeEntity.position(), targetPosition.getCenter(),
 					ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, evilEyeEntity)).getType() != HitResult.Type.MISS) {
 				// If there is no direct path, set the target position to null
 				targetPosition = null;
@@ -71,9 +71,9 @@ public class FlyRandomlyGoal extends Goal {
 
 			// Check if the entity is in Tiltros
 			// It should stay confined to the desert but if it's not in Tiltros, it will always remain idle
-			if (evilEyeEntity.getLevel().dimension() == IWDimensions.TILTROS) {
+			if (evilEyeEntity.level().dimension() == IWDimensions.TILTROS) {
 				// Ensure the target position is in the Deadman's Desert biome
-				if (!evilEyeEntity.getLevel().getBiome(targetPosition).is(IWBiomes.DEADMANS_DESERT)) {
+				if (!evilEyeEntity.level().getBiome(targetPosition).is(IWBiomes.DEADMANS_DESERT)) {
 					targetPosition = null;
 					targetingCooldown = 40;
 					return;

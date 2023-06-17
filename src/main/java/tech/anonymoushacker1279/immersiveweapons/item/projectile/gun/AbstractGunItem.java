@@ -500,7 +500,7 @@ public abstract class AbstractGunItem extends Item implements Vanishable {
 		if (!player.isCreative() && ammo.getItem() instanceof AbstractBulletItem bulletItem) {
 			if (!bulletItem.isInfinite(ammo, gun, player)) {
 				float ammoConservationChance = (float) AccessoryEffects.collectEffects(EffectType.FIREARM_AMMO_CONSERVATION_CHANCE, player);
-				if (!player.level.isClientSide) {
+				if (!player.level().isClientSide) {
 					if (player.getRandom().nextFloat() <= ammoConservationChance) {
 						player.getInventory().setChanged(); // Resync the inventory because the client may not roll the same number
 						return;

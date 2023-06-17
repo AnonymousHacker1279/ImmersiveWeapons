@@ -113,7 +113,7 @@ public class ClientForgeEventSubscriber {
 
 				if (IWOverlays.SCOPE_ELEMENT != null) {
 					IWOverlays.SCOPE_ELEMENT.render((ForgeGui) minecraft.gui,
-							event.getPoseStack(),
+							event.getGuiGraphics(),
 							event.getPartialTick(),
 							screenWidth,
 							screenHeight);
@@ -128,7 +128,7 @@ public class ClientForgeEventSubscriber {
 		if (DebugTracingData.isDebugTracingEnabled) {
 			if (IWOverlays.DEBUG_TRACING_ELEMENT != null) {
 				IWOverlays.DEBUG_TRACING_ELEMENT.render((ForgeGui) minecraft.gui,
-						event.getPoseStack(),
+						event.getGuiGraphics(),
 						event.getPartialTick(),
 						screenWidth,
 						screenHeight);

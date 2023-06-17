@@ -17,10 +17,10 @@ public class WarriorStatueActivatedTrigger extends SimpleCriterionTrigger<Warrio
 
 	@Override
 	protected WarriorStatueActivatedTrigger.TriggerInstance createInstance(JsonObject pJson,
-	                                                                       EntityPredicate.Composite pPlayer,
+	                                                                       ContextAwarePredicate predicate,
 	                                                                       DeserializationContext pContext) {
 
-		return new WarriorStatueActivatedTrigger.TriggerInstance(pPlayer);
+		return new WarriorStatueActivatedTrigger.TriggerInstance(predicate);
 	}
 
 	/**
@@ -34,8 +34,8 @@ public class WarriorStatueActivatedTrigger extends SimpleCriterionTrigger<Warrio
 
 	public static class TriggerInstance extends AbstractCriterionTriggerInstance {
 
-		public TriggerInstance(EntityPredicate.Composite pPlayer) {
-			super(WarriorStatueActivatedTrigger.ID, pPlayer);
+		public TriggerInstance(ContextAwarePredicate predicate) {
+			super(WarriorStatueActivatedTrigger.ID, predicate);
 		}
 	}
 }

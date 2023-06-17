@@ -28,5 +28,6 @@
     "recipes": [
       "immersiveweapons:camp_chair"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

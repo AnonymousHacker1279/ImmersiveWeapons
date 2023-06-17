@@ -39,7 +39,7 @@ public class CelestialTowerSummonMeteorGoal extends Goal {
 					tower.getZ() + 32);
 
 			// Find a random nearby player (within 32 blocks)
-			List<Player> nearbyPlayers = tower.getLevel().getNearbyPlayers(
+			List<Player> nearbyPlayers = tower.level().getNearbyPlayers(
 					TargetingConditions.forCombat().range(32),
 					tower,
 					searchBox
@@ -49,7 +49,7 @@ public class CelestialTowerSummonMeteorGoal extends Goal {
 				Player target = nearbyPlayers.get(GeneralUtilities.getRandomNumber(0, nearbyPlayers.size() - 1));
 
 				// Summon a meteor at the player's position
-				MeteorEntity.create(tower.getLevel(), tower, null, target.blockPosition(), null);
+				MeteorEntity.create(tower.level(), tower, null, target.blockPosition(), null);
 			}
 		} else {
 			summonCooldown--;

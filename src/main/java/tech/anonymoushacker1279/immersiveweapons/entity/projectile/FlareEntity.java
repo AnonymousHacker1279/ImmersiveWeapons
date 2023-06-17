@@ -76,8 +76,8 @@ public class FlareEntity extends BulletEntity implements ItemSupplier {
 		double z = getZ();
 		Vec3 deltaMovement = getDeltaMovement();
 
-		if (level.isClientSide && explodeDelay != 0 && (tickCount % 4) >= 2) {
-			level.addParticle(ParticleTypes.FIREWORK, x, y - 0.3D, z, random.nextGaussian() * 0.05D, -deltaMovement.y * 0.5D, random.nextGaussian() * 0.05D);
+		if (level().isClientSide && explodeDelay != 0 && (tickCount % 4) >= 2) {
+			level().addParticle(ParticleTypes.FIREWORK, x, y - 0.3D, z, random.nextGaussian() * 0.05D, -deltaMovement.y * 0.5D, random.nextGaussian() * 0.05D);
 		}
 
 		shouldStopMoving = false;
@@ -86,9 +86,9 @@ public class FlareEntity extends BulletEntity implements ItemSupplier {
 		} else {
 			if (deathDelay >= 0) {
 				shouldStopMoving = true;
-				if (level.isClientSide && (tickCount % 4) == 0) {
+				if (level().isClientSide && (tickCount % 4) == 0) {
 					for (int i = 8; --i >= 0; ) {
-						level.addAlwaysVisibleParticle(ParticleTypes.FLAME, true, x, y, z, random.nextGaussian() * 0.1D, -deltaMovement.y * 0.25D, random.nextGaussian() * 0.1D);
+						level().addAlwaysVisibleParticle(ParticleTypes.FLAME, true, x, y, z, random.nextGaussian() * 0.1D, -deltaMovement.y * 0.25D, random.nextGaussian() * 0.1D);
 					}
 				}
 				deathDelay--;
@@ -96,8 +96,8 @@ public class FlareEntity extends BulletEntity implements ItemSupplier {
 				// Remove all lights before dying
 				if (!lightPositions.isEmpty()) {
 					for (BlockPos pos : lightPositions) {
-						if (level.getBlockState(pos) == lightState) {
-							level.removeBlock(pos, false);
+						if (level().getBlockState(pos) == lightState) {
+							level().removeBlock(pos, false);
 						}
 					}
 					lightPositions.clear();
@@ -111,17 +111,17 @@ public class FlareEntity extends BulletEntity implements ItemSupplier {
 		if (entityData.get(USE_LEGACY_LIGHTING)) {
 			if (tickCount % 4 >= 1) {
 				BlockPos currentPosition = blockPosition();
-				if (!level.isClientSide && currentPosition != previousLightPosition) {
+				if (!level().isClientSide && currentPosition != previousLightPosition) {
 					if (!lightPositions.isEmpty()) {
 						for (BlockPos pos : lightPositions) {
-							if (level.getBlockState(pos) == lightState) {
-								level.removeBlock(pos, false);
+							if (level().getBlockState(pos) == lightState) {
+								level().removeBlock(pos, false);
 							}
 						}
 						lightPositions.clear();
 					}
-					if (!hasHitEntity && level.getBlockState(currentPosition) == airState) {
-						level.setBlock(currentPosition, lightState, 3);
+					if (!hasHitEntity && level().getBlockState(currentPosition) == airState) {
+						level().setBlock(currentPosition, lightState, 3);
 						lightPositions.add(currentPosition);
 					}
 					previousLightPosition = currentPosition;
@@ -229,8 +229,8 @@ public class FlareEntity extends BulletEntity implements ItemSupplier {
 
 		if (!lightPositions.isEmpty()) {
 			for (BlockPos pos : lightPositions) {
-				if (level.getBlockState(pos) == lightState) {
-					level.removeBlock(pos, false);
+				if (level().getBlockState(pos) == lightState) {
+					level().removeBlock(pos, false);
 				}
 			}
 			lightPositions.clear();

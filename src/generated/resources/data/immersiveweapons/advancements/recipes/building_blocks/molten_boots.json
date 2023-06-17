@@ -28,5 +28,6 @@
     "recipes": [
       "immersiveweapons:molten_boots"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

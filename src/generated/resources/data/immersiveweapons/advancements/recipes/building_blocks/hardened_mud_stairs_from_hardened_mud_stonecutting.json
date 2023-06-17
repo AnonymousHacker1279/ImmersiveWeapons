@@ -30,5 +30,6 @@
     "recipes": [
       "immersiveweapons:hardened_mud_stairs_from_hardened_mud_stonecutting"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

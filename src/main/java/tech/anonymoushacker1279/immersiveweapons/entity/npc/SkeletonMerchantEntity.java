@@ -91,12 +91,12 @@ public class SkeletonMerchantEntity extends AbstractVillager implements GrantAdv
 			}
 
 			if (!getOffers().isEmpty()) {
-				if (!level.isClientSide) {
+				if (!level().isClientSide) {
 					setTradingPlayer(player);
 					openTradingScreen(player, getDisplayName(), 1);
 				}
 			}
-			return InteractionResult.sidedSuccess(level.isClientSide);
+			return InteractionResult.sidedSuccess(level().isClientSide);
 		} else {
 			return super.mobInteract(player, hand);
 		}
@@ -125,7 +125,7 @@ public class SkeletonMerchantEntity extends AbstractVillager implements GrantAdv
 	protected void rewardTradeXp(MerchantOffer offer) {
 		if (offer.shouldRewardExp()) {
 			int xp = 8 + random.nextInt(6);
-			level.addFreshEntity(new ExperienceOrb(level, getX(), getY() + 0.5D, getZ(), xp));
+			level().addFreshEntity(new ExperienceOrb(level(), getX(), getY() + 0.5D, getZ(), xp));
 		}
 	}
 

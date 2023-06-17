@@ -86,7 +86,7 @@ public class RockSpiderEntity extends Monster implements GrantAdvancementOnDisco
 	@Override
 	public void tick() {
 		super.tick();
-		if (!level.isClientSide) {
+		if (!level().isClientSide) {
 			setClimbing(horizontalCollision);
 		}
 	}

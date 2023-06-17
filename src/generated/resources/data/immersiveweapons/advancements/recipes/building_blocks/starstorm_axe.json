@@ -28,5 +28,6 @@
     "recipes": [
       "immersiveweapons:starstorm_axe"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

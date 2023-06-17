@@ -28,5 +28,6 @@
     "recipes": [
       "immersiveweapons:electric_ingot_tesla_synthesizing"
     ]
-  }
+  },
+  "sends_telemetry_event": true
 }

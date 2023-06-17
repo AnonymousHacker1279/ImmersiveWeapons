@@ -30,5 +30,6 @@
     "recipes": [
       "immersiveweapons:painkillers"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

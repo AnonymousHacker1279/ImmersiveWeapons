@@ -156,7 +156,7 @@ public class BlockLootTables implements LootTableSubProvider {
 		add(BlockRegistry.BURNED_OAK_BRANCH.get(), (leafLikeDrop) -> createLeafLikeDrop(leafLikeDrop, Items.STICK, NORMAL_LEAVES_SAPLING_CHANCES));
 		add(BlockRegistry.COBALT_ORE.get(), (block) -> createOreDrop(block, ItemRegistry.RAW_COBALT.get()));
 		add(BlockRegistry.DEEPSLATE_COBALT_ORE.get(), (block) -> createOreDrop(block, ItemRegistry.RAW_COBALT.get()));
-		add(BlockRegistry.MOLTEN_ORE.get(), (block) -> createOreDrop(block, ItemRegistry.MOLTEN_SHARD.get()));
+		add(BlockRegistry.MOLTEN_ORE.get(), (block) -> createOreDrop(block, ItemRegistry.MOLTEN_SHARD.get(), 3, 6));
 		add(BlockRegistry.SULFUR_ORE.get(), (block) -> createOreDrop(block, ItemRegistry.SULFUR.get(), 2, 4));
 		add(BlockRegistry.DEEPSLATE_SULFUR_ORE.get(), (block) -> createOreDrop(block, ItemRegistry.SULFUR.get(), 2, 4));
 		add(BlockRegistry.NETHER_SULFUR_ORE.get(), (block) -> createOreDrop(block, ItemRegistry.SULFUR.get(), 2, 4));

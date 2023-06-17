@@ -28,5 +28,6 @@
     "recipes": [
       "immersiveweapons:tesla_pike"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

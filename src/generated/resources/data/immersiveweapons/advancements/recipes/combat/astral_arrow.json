@@ -28,5 +28,6 @@
     "recipes": [
       "immersiveweapons:astral_arrow"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

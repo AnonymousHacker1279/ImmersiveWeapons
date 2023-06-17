@@ -28,5 +28,6 @@
     "recipes": [
       "immersiveweapons:barbed_wire"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

@@ -42,5 +42,6 @@
         "min": 6.0
       }
     }
-  ]
+  ],
+  "random_sequence": "immersiveweapons:chests/hans_hut_cask"
 }

@@ -41,11 +41,11 @@ public class TeslaSynthesizerMenu extends AbstractContainerMenu implements Stack
 		this.container = container;
 		this.containerData = containerData;
 		// First ingredient slot
-		addSlot(new TeslaSynthesizerMaterialSlot(this, inventory.player.level.getRecipeManager(), container, 0, 6, 17));
+		addSlot(new TeslaSynthesizerMaterialSlot(this, inventory.player.level().getRecipeManager(), container, 0, 6, 17));
 		// Second ingredient slot
-		addSlot(new TeslaSynthesizerMaterialSlot(this, inventory.player.level.getRecipeManager(), container, 1, 31, 17));
+		addSlot(new TeslaSynthesizerMaterialSlot(this, inventory.player.level().getRecipeManager(), container, 1, 31, 17));
 		// Third ingredient slot
-		addSlot(new TeslaSynthesizerMaterialSlot(this, inventory.player.level.getRecipeManager(), container, 2, 56, 17));
+		addSlot(new TeslaSynthesizerMaterialSlot(this, inventory.player.level().getRecipeManager(), container, 2, 56, 17));
 		// Fuel slot
 		addSlot(new TeslaSynthesizerFuelSlot(this, container, 3, 56, 53));
 		// Result slot
@@ -96,7 +96,7 @@ public class TeslaSynthesizerMenu extends AbstractContainerMenu implements Stack
 					}
 				}
 				// If the item is a valid ingredient
-				else if (isIngredient(player.level.getRecipeManager(), oldStack)) {
+				else if (isIngredient(player.level().getRecipeManager(), oldStack)) {
 					if (!moveItemStackTo(oldStack, 0, 3, false)) {
 						return ItemStack.EMPTY;
 					}

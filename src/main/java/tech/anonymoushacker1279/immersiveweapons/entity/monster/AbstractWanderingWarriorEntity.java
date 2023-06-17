@@ -129,7 +129,7 @@ public abstract class AbstractWanderingWarriorEntity extends Monster implements 
 		if (this.random.nextFloat() < 0.2F) {
 			armorTier++;
 		}
-		float difficultyModifier = level.getDifficulty() == Difficulty.HARD ? 0.3F : 0.75F;
+		float difficultyModifier = level().getDifficulty() == Difficulty.HARD ? 0.3F : 0.75F;
 		for (EquipmentSlot equipmentSlot : EquipmentSlot.values()) {
 			if (equipmentSlot.getType() == EquipmentSlot.Type.ARMOR) {
 				ItemStack itemBySlot = getItemBySlot(equipmentSlot);
@@ -187,10 +187,10 @@ public abstract class AbstractWanderingWarriorEntity extends Monster implements 
 	 * Set the entity's combat AI.
 	 */
 	void setCombatTask() {
-		if (!level.isClientSide) {
+		if (!level().isClientSide) {
 			goalSelector.removeGoal(aiAttackOnCollide);
 			if (getItemInHand(InteractionHand.MAIN_HAND).getItem() == Items.AIR) {
-				populateDefaultEquipmentSlots(random, level.getCurrentDifficultyAt(blockPosition()));
+				populateDefaultEquipmentSlots(random, level().getCurrentDifficultyAt(blockPosition()));
 			}
 			goalSelector.addGoal(1, aiAttackOnCollide);
 		}

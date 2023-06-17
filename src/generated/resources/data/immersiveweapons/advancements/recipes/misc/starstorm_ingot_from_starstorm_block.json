@@ -30,5 +30,6 @@
     "recipes": [
       "immersiveweapons:starstorm_ingot_from_starstorm_block"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

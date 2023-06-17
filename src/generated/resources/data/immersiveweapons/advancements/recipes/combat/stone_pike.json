@@ -28,5 +28,6 @@
     "recipes": [
       "immersiveweapons:stone_pike"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

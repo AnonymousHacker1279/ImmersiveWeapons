@@ -39,7 +39,7 @@ public class VentusStaff extends Item {
 	@Override
 	public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
 		ItemStack itemInHand = player.getItemInHand(hand);
-		List<Entity> entities = player.level.getEntities(player,
+		List<Entity> entities = player.level().getEntities(player,
 				player.getBoundingBox().move(-2, 0, -2).expandTowards(4, 2, 4));
 
 		if (!entities.isEmpty()) {

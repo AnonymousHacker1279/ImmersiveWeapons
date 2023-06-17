@@ -22,29 +22,33 @@ public class LogShardsLootModifierHandler extends LootModifier {
 
 	public static final Supplier<Codec<LogShardsLootModifierHandler>> CODEC = Suppliers.memoize(() -> RecordCodecBuilder.create(inst -> codecStart(inst).and(
 			inst.group(
-					Codec.STRING.fieldOf("blockTag").forGetter(m -> m.blockTag),
-					Codec.INT.fieldOf("numShards").forGetter(m -> m.numShardsToConvert),
-					ForgeRegistries.ITEMS.getCodec().fieldOf("replacement").forGetter(m -> m.itemReward)
+					Codec.STRING.fieldOf("blockTag").forGetter(m -> m.tag),
+					Codec.INT.fieldOf("minShards").forGetter(m -> m.minShards),
+					Codec.INT.fieldOf("maxShards").forGetter(m -> m.maxShards),
+					ForgeRegistries.ITEMS.getCodec().fieldOf("replacement").forGetter(m -> m.reward)
 			)).apply(inst, LogShardsLootModifierHandler::new)
 	));
 
-	private final int numShardsToConvert;
-	private final String blockTag;
-	private final Item itemReward;
+	private final int minShards;
+	private final int maxShards;
+	private final String tag;
+	private final Item reward;
 
 	/**
 	 * Constructor for LogShardsLootModifierHandler.
 	 *
 	 * @param conditionsIn the <code>LootItemCondition</code>s
 	 * @param tag          the block tag string
-	 * @param numShards    the number of shards
+	 * @param minShards    the minimum number of shards to drop
+	 * @param maxShards    the maximum number of shards to drop
 	 * @param reward       the returned item
 	 */
-	LogShardsLootModifierHandler(LootItemCondition[] conditionsIn, String tag, int numShards, Item reward) {
+	LogShardsLootModifierHandler(LootItemCondition[] conditionsIn, String tag, int minShards, int maxShards, Item reward) {
 		super(conditionsIn);
-		blockTag = tag;
-		numShardsToConvert = numShards;
-		itemReward = reward;
+		this.tag = tag;
+		this.minShards = minShards;
+		this.maxShards = maxShards;
+		this.reward = reward;
 	}
 
 	/**
@@ -58,17 +62,17 @@ public class LogShardsLootModifierHandler extends LootModifier {
 	public @NotNull ObjectArrayList<ItemStack> doApply(ObjectArrayList<ItemStack> generatedLoot, LootContext context) {
 		int numShards = 0;
 		for (ItemStack stack : generatedLoot) {
-			if (stack.is(ItemTags.create(new ResourceLocation(blockTag)))) {
-				numShards += stack.getCount() + GeneralUtilities.getRandomNumber(2, 5);
+			// Each wooden log stack can generate shards
+			if (stack.is(ItemTags.create(new ResourceLocation(tag)))) {
+				numShards += stack.getCount() * GeneralUtilities.getRandomNumber(minShards, maxShards + 1);
 			}
 		}
-		if (numShards >= numShardsToConvert) {
-			generatedLoot.add(new ItemStack(itemReward, (numShards / numShardsToConvert)));
-			numShards = numShards % numShardsToConvert;
-			if (numShards > 0)
-				generatedLoot.add(new ItemStack(itemReward, numShards));
+
+		if (numShards >= 1) {
+			generatedLoot.add(new ItemStack(reward, numShards));
 			generatedLoot.remove(0); // The original item shouldn't drop, so remove it from the loot list
 		}
+
 		return generatedLoot;
 	}
 

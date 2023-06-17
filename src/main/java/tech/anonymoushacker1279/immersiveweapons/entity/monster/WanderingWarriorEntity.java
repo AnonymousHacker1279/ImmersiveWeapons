@@ -94,7 +94,7 @@ public class WanderingWarriorEntity extends AbstractWanderingWarriorEntity {
 	public void tick() {
 		super.tick();
 
-		if (isBerserk && level instanceof ServerLevel serverLevel) {
+		if (isBerserk && level() instanceof ServerLevel serverLevel) {
 			serverLevel.sendParticles(
 					ParticleTypes.DRAGON_BREATH,
 					getX() + (random.nextDouble() - 0.5) * getBbWidth(),

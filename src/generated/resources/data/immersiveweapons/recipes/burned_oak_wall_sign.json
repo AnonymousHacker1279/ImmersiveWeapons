@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "group": "sign",
+  "key": {
+    "a": {
+      "item": "immersiveweapons:stripped_burned_oak_log"
+    },
+    "b": {
+      "item": "minecraft:chain"
+    }
+  },
+  "pattern": [
+    "b b",
+    "aaa",
+    "aaa"
+  ],
+  "result": {
+    "count": 6,
+    "item": "immersiveweapons:burned_oak_hanging_sign"
+  },
+  "show_notification": true
+}

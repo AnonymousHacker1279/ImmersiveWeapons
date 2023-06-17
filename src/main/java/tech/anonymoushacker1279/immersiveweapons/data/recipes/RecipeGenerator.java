@@ -2,9 +2,7 @@ package tech.anonymoushacker1279.immersiveweapons.data.recipes;
 
 import com.google.common.collect.ImmutableList;
 import net.minecraft.advancements.CriterionTriggerInstance;
-import net.minecraft.advancements.critereon.EntityPredicate.Composite;
-import net.minecraft.advancements.critereon.InventoryChangeTrigger;
-import net.minecraft.advancements.critereon.ItemPredicate;
+import net.minecraft.advancements.critereon.*;
 import net.minecraft.advancements.critereon.ItemPredicate.Builder;
 import net.minecraft.advancements.critereon.MinMaxBounds.Ints;
 import net.minecraft.data.PackOutput;
@@ -844,7 +842,7 @@ public class RecipeGenerator extends RecipeProvider {
 				.requires(Items.COOKED_CHICKEN)
 				.group("food")
 				.unlockedBy("mre_items",
-						new InventoryChangeTrigger.TriggerInstance(Composite.ANY, Ints.ANY,
+						new InventoryChangeTrigger.TriggerInstance(ContextAwarePredicate.ANY, Ints.ANY,
 								Ints.ANY, Ints.ANY,
 								new ItemPredicate[]{Builder.item().of(Items.CARROT).of(Items.POTATO)
 										.of(Items.BEETROOT).of(Items.COOKED_CHICKEN).build()}))

@@ -25,7 +25,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.storage.loot.LootContext;
+import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
@@ -157,7 +157,7 @@ public class ForgeEventSubscriber {
 		Player player = event.player;
 		// Only check every 8 ticks, and make sure the player is not in creative mode
 		if (player.tickCount % 8 == 0 && !player.isCreative()) {
-			if (player.level.getBiome(player.blockPosition()).is(IWBiomes.DEADMANS_DESERT)) {
+			if (player.level().getBiome(player.blockPosition()).is(IWBiomes.DEADMANS_DESERT)) {
 				// If the player is under the effects of Celestial Protection, they are immune to damage
 				if (!player.hasEffect(EffectRegistry.CELESTIAL_PROTECTION_EFFECT.get())) {
 					player.hurt(IWDamageSources.DEADMANS_DESERT_ATMOSPHERE, 1);
@@ -275,7 +275,7 @@ public class ForgeEventSubscriber {
 				if (event.getAmount() >= 175.0f && serverPlayer.getServer() != null) {
 					Advancement advancement = serverPlayer.getServer().getAdvancements()
 							.getAdvancement(new ResourceLocation(ImmersiveWeapons.MOD_ID, "overkill"));
-					
+
 					if (advancement != null) {
 						serverPlayer.getAdvancements().award(advancement, "");
 					}
@@ -442,12 +442,12 @@ public class ForgeEventSubscriber {
 			if (player.getPersistentData().getBoolean("used_curse_accessory_bloody_sacrifice")) {
 				if (player.getRandom().nextFloat() <= 0.25f) {
 					ResourceLocation lootTable = event.getEntity().getLootTable();
-					MinecraftServer server = event.getEntity().level.getServer();
+					MinecraftServer server = event.getEntity().level().getServer();
 
 					if (server != null) {
-						LootTable table = server.getLootTables().get(lootTable);
+						LootTable table = server.getLootData().getLootTable(lootTable);
 
-						table.getRandomItems(new LootContext.Builder((ServerLevel) event.getEntity().level)
+						table.getRandomItems(new LootParams.Builder((ServerLevel) event.getEntity().level())
 										.withParameter(LootContextParams.THIS_ENTITY, event.getEntity())
 										.withParameter(LootContextParams.ORIGIN, event.getEntity().position())
 										.withParameter(LootContextParams.DAMAGE_SOURCE, event.getSource())
@@ -459,13 +459,13 @@ public class ForgeEventSubscriber {
 										.withParameter(LootContextParams.EXPLOSION_RADIUS, 0.0f)
 										.create(LootContextParamSets.ENTITY))
 								.forEach(stack -> {
-									ItemEntity itemEntity = new ItemEntity(event.getEntity().level, event.getEntity().getX(), event.getEntity().getY(), event.getEntity().getZ(), stack);
+									ItemEntity itemEntity = new ItemEntity(event.getEntity().level(), event.getEntity().getX(), event.getEntity().getY(), event.getEntity().getZ(), stack);
 									itemEntity.setPickUpDelay(10);
 									event.getDrops().add(itemEntity);
 								});
 
 						// Summon a cloud of particles around the entity
-						ServerLevel level = server.getLevel(event.getEntity().level.dimension());
+						ServerLevel level = server.getLevel(event.getEntity().level().dimension());
 						if (level != null) {
 							level.sendParticles(
 									ParticleTypes.SOUL,

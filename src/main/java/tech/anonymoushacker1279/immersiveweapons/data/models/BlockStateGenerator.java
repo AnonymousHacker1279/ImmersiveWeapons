@@ -6,8 +6,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
-import net.minecraftforge.client.model.generators.BlockStateProvider;
-import net.minecraftforge.client.model.generators.ConfiguredModel;
+import net.minecraftforge.client.model.generators.*;
 import net.minecraftforge.client.model.generators.ModelBuilder.FaceRotation;
 import net.minecraftforge.client.model.generators.ModelFile.ExistingModelFile;
 import net.minecraftforge.common.data.ExistingFileHelper;
@@ -346,8 +345,12 @@ public class BlockStateGenerator extends BlockStateProvider {
 		// Generate data for sign blocks
 		signBlock(BlockRegistry.BURNED_OAK_SIGN.get(), BlockRegistry.BURNED_OAK_WALL_SIGN.get(),
 				new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/burned_oak_planks"));
+		hangingSignBlock(BlockRegistry.BURNED_OAK_HANGING_SIGN.get(), BlockRegistry.BURNED_OAK_WALL_HANGING_SIGN.get(),
+				new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/stripped_burned_oak_log"));
 		signBlock(BlockRegistry.STARDUST_SIGN.get(), BlockRegistry.STARDUST_WALL_SIGN.get(),
 				new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/stardust_planks"));
+		hangingSignBlock(BlockRegistry.STARDUST_HANGING_SIGN.get(), BlockRegistry.STARDUST_WALL_HANGING_SIGN.get(),
+				new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/stripped_stardust_log"));
 
 		// Generate data for skulls
 		List<Block> headBlocks = new ArrayList<>(25);
@@ -693,5 +696,15 @@ public class BlockStateGenerator extends BlockStateProvider {
 				.rotationY(yRot)
 				.rotationX(xRot)
 				.build();
+	}
+
+	public void hangingSignBlock(CeilingHangingSignBlock signBlock, WallHangingSignBlock wallSignBlock, ResourceLocation texture) {
+		ModelFile sign = models().sign(ForgeRegistries.BLOCKS.getKey(signBlock).getPath(), texture);
+		hangingSignBlock(signBlock, wallSignBlock, sign);
+	}
+
+	public void hangingSignBlock(CeilingHangingSignBlock signBlock, WallHangingSignBlock wallSignBlock, ModelFile sign) {
+		simpleBlock(signBlock, sign);
+		simpleBlock(wallSignBlock, sign);
 	}
 }

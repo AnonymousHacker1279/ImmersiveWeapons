@@ -51,22 +51,22 @@ public class MoltenToolSmeltingModifierHandler extends LootModifier {
 		if (context.getParamOrNull(LootContextParams.THIS_ENTITY) instanceof Player player) {
 			if (player.isCrouching() && MOLTEN_TOOLS.contains(player.getItemInHand(InteractionHand.MAIN_HAND).getItem())) {
 				// Query smelting recipes to see if the block can be smelted
-				RecipeManager manager = player.level.getRecipeManager();
+				RecipeManager manager = player.level().getRecipeManager();
 
 				// If the block can be smelted, smelt it
 				BlockState state = context.getParamOrNull(LootContextParams.BLOCK_STATE);
 				if (state != null) {
 					ItemStack blockItemStack = state.getBlock().asItem().getDefaultInstance();
-					if (manager.getRecipeFor(RecipeType.SMELTING, new SimpleContainer(blockItemStack), player.level).isPresent()) {
+					if (manager.getRecipeFor(RecipeType.SMELTING, new SimpleContainer(blockItemStack), player.level()).isPresent()) {
 						// Get the smelted item
-						ItemStack smeltedItem = manager.getRecipeFor(RecipeType.SMELTING, new SimpleContainer(blockItemStack), player.level)
-								.get().assemble(new SimpleContainer(blockItemStack), player.level.registryAccess());
+						ItemStack smeltedItem = manager.getRecipeFor(RecipeType.SMELTING, new SimpleContainer(blockItemStack), player.level())
+								.get().assemble(new SimpleContainer(blockItemStack), player.level().registryAccess());
 
 						// Drop the smelted item
 						Vec3 origin = context.getParamOrNull(LootContextParams.ORIGIN);
 						if (origin != null) {
 							BlockPos dropPos = BlockPos.containing(origin.x, origin.y, origin.z);
-							Block.popResource(player.level, dropPos, smeltedItem);
+							Block.popResource(player.level(), dropPos, smeltedItem);
 
 							// The smelted drop is removed from the loot table
 							generatedLoot.clear();

@@ -116,14 +116,14 @@ public class EvilEyeEntity extends FlyingMob implements Enemy, GrantAdvancementO
 		boolean summonedByStaff = entityData.get(SUMMONED_BY_STAFF);
 
 		if (targetedEntityUUID != null) {
-			targetedEntity = (LivingEntity) ((ServerLevel) level).getEntity(targetedEntityUUID);
+			targetedEntity = (LivingEntity) ((ServerLevel) level()).getEntity(targetedEntityUUID);
 			targetedEntityUUID = null;
 		}
 
 		// Find players in a 16 block radius every 40 ticks if not summoned by a staff
-		if (!level.isClientSide) {
+		if (!level().isClientSide) {
 			if (!summonedByStaff && tickCount % 40 == 0) {
-				Player player = level.getNearestPlayer(this, 16);
+				Player player = level().getNearestPlayer(this, 16);
 				// Check for proper targeting conditions
 				if (player != null) {
 					boolean validTarget = TargetingConditions.forCombat().test(this, player);
@@ -184,7 +184,7 @@ public class EvilEyeEntity extends FlyingMob implements Enemy, GrantAdvancementO
 					// 20 ticks to inflict a random debuff on the player
 					if (tickCount % 20 == 0 && random.nextFloat() < effectChance) {
 						// If there are at least 3 entities within an 8 block radius, inflict a high tier debuff
-						if (level.getEntitiesOfClass(EvilEyeEntity.class, getBoundingBox().inflate(8), (entity) -> true).size() >= 3) {
+						if (level().getEntitiesOfClass(EvilEyeEntity.class, getBoundingBox().inflate(8), (entity) -> true).size() >= 3) {
 							MobEffect effect = highTierDebuffs.get(GeneralUtilities.getRandomNumber(0, highTierDebuffs.size()));
 							targetedEntity.addEffect(new MobEffectInstance(effect, effectDuration, effectLevel));
 						} else {

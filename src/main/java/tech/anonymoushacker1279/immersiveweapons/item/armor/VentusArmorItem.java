@@ -181,7 +181,7 @@ public class VentusArmorItem extends ArmorItem {
 			}
 
 			if (msg.packetType == PacketTypes.HANDLE_PROJECTILE_REFLECTION) {
-				VentusArmorItem.handleProjectileReflection(player.level, player);
+				VentusArmorItem.handleProjectileReflection(player.level(), player);
 			}
 		}
 	}

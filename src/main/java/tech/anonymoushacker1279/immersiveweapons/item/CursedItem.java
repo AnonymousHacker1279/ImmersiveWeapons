@@ -111,7 +111,7 @@ public class CursedItem extends Item {
 
 		if (getDamage(stack) == 0) {
 			if (player.getPersistentData().getBoolean("used_curse_accessory_" + name)) {
-				if (player.level.isClientSide) {
+				if (player.level().isClientSide) {
 					player.displayClientMessage(Component.translatable("immersiveweapons.item.%s.used".formatted(name))
 							.withStyle(ChatFormatting.RED), true);
 				}
@@ -124,7 +124,7 @@ public class CursedItem extends Item {
 				return InteractionResultHolder.success(stack);
 			}
 		} else {
-			if (player.level.isClientSide) {
+			if (player.level().isClientSide) {
 				player.displayClientMessage(Component.translatable("immersiveweapons.item.%s.not_enough_charge".formatted(name))
 						.withStyle(ChatFormatting.RED), true);
 			}

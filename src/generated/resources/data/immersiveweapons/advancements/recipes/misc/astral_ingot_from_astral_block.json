@@ -30,5 +30,6 @@
     "recipes": [
       "immersiveweapons:astral_ingot_from_astral_block"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

@@ -28,5 +28,6 @@
     "recipes": [
       "immersiveweapons:burned_oak_wood"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

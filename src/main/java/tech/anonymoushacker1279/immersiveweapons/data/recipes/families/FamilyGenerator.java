@@ -110,6 +110,17 @@ public class FamilyGenerator extends RecipeGenerator {
 					.unlockedBy(planksTriggerName, planksTrigger)
 					.save(consumer, blockRegistryPath(family.standingSign().get()));
 
+			// Hanging Sign
+			ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, family.ceilingHangingSign().get(), 6)
+					.group("sign")
+					.define('a', family.strippedLog().get())
+					.define('b', Items.CHAIN)
+					.pattern("b b")
+					.pattern("aaa")
+					.pattern("aaa")
+					.unlockedBy(planksTriggerName, planksTrigger)
+					.save(consumer, blockRegistryPath(family.wallSign().get()));
+
 			// Slab
 			RecipeGenerator.CraftingTableRecipes.slab(family.slab().get(), planks, "wooden_slab", planksTriggerName, planksTrigger);
 
