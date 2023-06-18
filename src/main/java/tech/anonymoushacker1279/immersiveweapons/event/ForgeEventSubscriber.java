@@ -275,7 +275,7 @@ public class ForgeEventSubscriber {
 				if (event.getAmount() >= 175.0f && serverPlayer.getServer() != null) {
 					Advancement advancement = serverPlayer.getServer().getAdvancements()
 							.getAdvancement(new ResourceLocation(ImmersiveWeapons.MOD_ID, "overkill"));
-					
+
 					if (advancement != null) {
 						serverPlayer.getAdvancements().award(advancement, "");
 					}
@@ -422,6 +422,10 @@ public class ForgeEventSubscriber {
 
 	@SubscribeEvent
 	public static void lootingLevelEvent(LootingLevelEvent event) {
+		if (event.getDamageSource() == null) {
+			return;
+		}
+
 		if (event.getDamageSource().getEntity() instanceof Player player) {
 			// Increase the looting level by 3 with the Bloody Sacrifice curse
 			if (player.getPersistentData().getBoolean("used_curse_accessory_bloody_sacrifice")) {
