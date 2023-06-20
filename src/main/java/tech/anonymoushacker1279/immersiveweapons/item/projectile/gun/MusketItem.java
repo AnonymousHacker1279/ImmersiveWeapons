@@ -23,7 +23,7 @@ public class MusketItem extends AbstractGunItem {
 
 	@Override
 	public void setupFire(ItemStack gun, BulletEntity bulletEntity, Player player) {
-		bulletEntity.shootFromRotation(player, player.xRot, player.yRot,
+		bulletEntity.shootFromRotation(player, player.getXRot(), player.getYRot(),
 				0.0F,
 				getFireVelocity(gun),
 				CommonConfig.MUSKET_FIRE_INACCURACY.get().floatValue());

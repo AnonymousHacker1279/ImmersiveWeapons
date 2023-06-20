@@ -13,42 +13,30 @@ import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
 
 public class MolotovItem extends Item {
 
-	/**
-	 * Constructor for MolotovItem.
-	 *
-	 * @param properties the <code>Properties</code> for the item
-	 */
 	public MolotovItem(Properties properties) {
 		super(properties);
 	}
 
-	/**
-	 * Runs when the player right-clicks.
-	 *
-	 * @param worldIn  the <code>World</code> the player is in
-	 * @param playerIn the <code>PlayerEntity</code> performing the action
-	 * @param handIn   the <code>Hand</code> the player is using
-	 * @return ActionResult extending ItemStack
-	 */
+
 	@Override
-	public InteractionResultHolder<ItemStack> use(Level worldIn, Player playerIn, InteractionHand handIn) {
-		ItemStack itemInHand = playerIn.getItemInHand(handIn);
-		worldIn.playLocalSound(playerIn.getX(), playerIn.getY(), playerIn.getZ(),
+	public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
+		ItemStack itemInHand = player.getItemInHand(hand);
+		level.playLocalSound(player.getX(), player.getY(), player.getZ(),
 				SoundEventRegistry.GENERIC_ITEM_THROW.get(), SoundSource.NEUTRAL,
 				0.5F, 0.4F / (GeneralUtilities.getRandomNumber(0.2f, 0.6f) + 0.8F), false);
 
-		if (!worldIn.isClientSide) {
-			MolotovEntity molotovEntity = new MolotovEntity(worldIn, playerIn);
+		if (!level.isClientSide) {
+			MolotovEntity molotovEntity = new MolotovEntity(level, player);
 			molotovEntity.setItem(itemInHand);
-			molotovEntity.shootFromRotation(playerIn, playerIn.xRot, playerIn.yRot, -20.0F, 0.5F, 1.0F);
-			worldIn.addFreshEntity(molotovEntity);
+			molotovEntity.shootFromRotation(player, player.getXRot(), player.getYRot(), -20.0F, 0.5F, 1.0F);
+			level.addFreshEntity(molotovEntity);
 		}
 
-		if (!playerIn.isCreative()) {
+		if (!player.isCreative()) {
 			itemInHand.shrink(1);
-			playerIn.getCooldowns().addCooldown(this, 100);
+			player.getCooldowns().addCooldown(this, 100);
 		}
 
-		return InteractionResultHolder.sidedSuccess(itemInHand, worldIn.isClientSide());
+		return InteractionResultHolder.sidedSuccess(itemInHand, level.isClientSide());
 	}
 }

@@ -248,7 +248,7 @@ public class SkygazerEntity extends AbstractVillager implements GrantAdvancement
 
 				for (int i = 0; i < GeneralUtilities.getRandomNumber(2, 4); i++) {
 					StarmiteEntity starmite = new StarmiteEntity(EntityRegistry.STARMITE_ENTITY.get(), level());
-					starmite.moveTo(attacker.getX(), attacker.getY(), attacker.getZ(), attacker.yRot, attacker.xRot);
+					starmite.moveTo(attacker.getX(), attacker.getY(), attacker.getZ(), attacker.getXRot(), attacker.getYRot());
 
 					// Increase the attack damage
 					Objects.requireNonNull(starmite.getAttribute(Attributes.ATTACK_DAMAGE)).setBaseValue(4.0D);

@@ -130,16 +130,16 @@ public class VentusArmorItem extends ArmorItem {
 				float velocity = (float) Math.sqrt(x * x + y * y + z * z) * 1.5f;
 
 				// Teleport the projectile just outside the radius, so it doesn't get reflected again
-				projectile.setPos(player.getX() + 1.51d * Math.cos(Math.toRadians(player.yRot + 90)),
+				projectile.setPos(player.getX() + 1.51d * Math.cos(Math.toRadians(player.getYRot() + 90)),
 						player.getY() + 1.25d,
-						player.getZ() + 1.51d * Math.sin(Math.toRadians(player.yRot + 90)));
+						player.getZ() + 1.51d * Math.sin(Math.toRadians(player.getYRot() + 90)));
 
 				projectile.setOnGround(false);
 
 				// Set the projectile rotation to the player's rotation
 				projectile.shootFromRotation(entity,
-						player.xRot,
-						player.yRot,
+						player.getXRot(),
+						player.getYRot(),
 						0.0f, velocity, 0.0f);
 			}
 		}

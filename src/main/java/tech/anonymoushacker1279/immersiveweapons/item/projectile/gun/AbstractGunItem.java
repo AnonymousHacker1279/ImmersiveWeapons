@@ -139,7 +139,7 @@ public abstract class AbstractGunItem extends Item implements Vanishable {
 				} else {
 					// Handle recoil
 					player.yHeadRot = player.yHeadRot + GeneralUtilities.getRandomNumber(getMaxYRecoil(), 0.5f);
-					player.xRot = player.xRot + GeneralUtilities.getRandomNumber(getMaxXRecoil(), -3.0f);
+					player.setXRot(player.getXRot() + GeneralUtilities.getRandomNumber(getMaxXRecoil(), -3.0f));
 				}
 
 				// Handle muzzle flash
@@ -490,7 +490,7 @@ public abstract class AbstractGunItem extends Item implements Vanishable {
 	}
 
 	protected void setupFire(ItemStack gun, BulletEntity bulletEntity, Player player) {
-		bulletEntity.shootFromRotation(player, player.xRot, player.yRot,
+		bulletEntity.shootFromRotation(player, player.getXRot(), player.getYRot(),
 				0.0F,
 				getFireVelocity(gun),
 				CommonConfig.FLINTLOCK_PISTOL_FIRE_INACCURACY.get().floatValue());
