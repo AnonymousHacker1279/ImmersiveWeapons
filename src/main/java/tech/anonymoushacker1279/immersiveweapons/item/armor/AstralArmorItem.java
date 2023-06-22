@@ -1,8 +1,10 @@
 package tech.anonymoushacker1279.immersiveweapons.item.armor;
 
+import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
@@ -73,6 +75,14 @@ public class AstralArmorItem extends ArmorItem {
 
 					// Send packet to server
 					PacketHandler.INSTANCE.sendToServer(new AstralArmorItemPacketHandler(!effectEnabled));
+
+					if (effectEnabled) {
+						player.displayClientMessage(Component.translatable("immersiveweapons.armor_effects.disabled")
+								.withStyle(ChatFormatting.RED), true);
+					} else {
+						player.displayClientMessage(Component.translatable("immersiveweapons.armor_effects.enabled")
+								.withStyle(ChatFormatting.GREEN), true);
+					}
 				}
 				if (effectEnabled) {
 					if (Minecraft.getInstance().options.keyJump.consumeClick()) {

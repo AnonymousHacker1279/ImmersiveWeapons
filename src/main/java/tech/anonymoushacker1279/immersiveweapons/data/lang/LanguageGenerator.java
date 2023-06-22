@@ -500,6 +500,10 @@ public class LanguageGenerator extends IWLanguageProvider {
 		addMessage("item.jonnys_curse.used", "Its so over...");
 		addMessage("block.wall_shelf.locked", "This shelf has been locked");
 		addMessage("block.wall_shelf.unlocked", "This shelf has been unlocked");
+		addMessage("armor_effects.disabled", "Armor effects have been disabled");
+		addMessage("armor_effects.enabled", "Armor effects have been enabled");
+		addMessage("armor_effects.tesla_armor.effect_everything", "Currently effecting ALL creatures (including players)");
+		addMessage("armor_effects.tesla_armor.effect_mobs", "Currently effecting only mobs");
 	}
 
 	private void addDeathMessages() {
