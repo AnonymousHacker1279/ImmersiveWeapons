@@ -1,11 +1,9 @@
 package tech.anonymoushacker1279.immersiveweapons.client.gui.overlays;
 
-import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.Font.DisplayMode;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.MutableComponent;
 import tech.anonymoushacker1279.immersiveweapons.event.game_effects.EnvironmentEffects;
 import tech.anonymoushacker1279.immersiveweapons.item.projectile.bullet.AbstractBulletItem;
 
@@ -14,82 +12,91 @@ import java.util.List;
 
 public class DebugTracingOverlay {
 
-	static final MutableComponent MELEE_ITEM_DAMAGE = Component.translatable("immersiveweapons.debugTracing.meleeItemDamage");
-	static final MutableComponent GUN_BASE_VELOCITY = Component.translatable("immersiveweapons.debugTracing.gunBaseVelocity");
-	static final MutableComponent SELECTED_AMMO = Component.translatable("immersiveweapons.debugTracing.selectedAmmo");
-	static final MutableComponent LIVE_BULLET_DAMAGE = Component.translatable("immersiveweapons.debugTracing.liveBulletDamage");
-	static final MutableComponent LAST_DAMAGE_DEALT = Component.translatable("immersiveweapons.debugTracing.lastDamageDealt");
-	static final MutableComponent DAMAGE_BONUS = Component.translatable("immersiveweapons.debugTracing.damageBonus");
-	static final MutableComponent CELESTIAL_PROTECTION_CHANCE_FOR_NO_DAMAGE = Component.translatable("immersiveweapons.debugTracing.celestialProtectionChanceForNoDamage");
+	private static final String ARMOR_VALUES = Component.translatable("immersiveweapons.debugTracing.armorValues").getString();
+	private static final String MELEE_ITEM_DAMAGE = Component.translatable("immersiveweapons.debugTracing.meleeItemDamage").getString();
+	private static final String GUN_BASE_VELOCITY = Component.translatable("immersiveweapons.debugTracing.gunBaseVelocity").getString();
+	private static final String SELECTED_AMMO = Component.translatable("immersiveweapons.debugTracing.selectedAmmo").getString();
+	private static final String LIVE_BULLET_DAMAGE = Component.translatable("immersiveweapons.debugTracing.liveBulletDamage").getString();
+	private static final String LAST_DAMAGE_DEALT = Component.translatable("immersiveweapons.debugTracing.lastDamageDealt").getString();
+	private static final String DAMAGE_BONUS = Component.translatable("immersiveweapons.debugTracing.damageBonus").getString();
+	private static final String DR_AND_KBR = Component.translatable("immersiveweapons.debugTracing.drAndKbr").getString();
+	private static final String CELESTIAL_PROTECTION_CHANCE_FOR_NO_DAMAGE = Component.translatable("immersiveweapons.debugTracing.celestialProtectionChanceForNoDamage").getString();
 
 	public static void renderOverlay(GuiGraphics guiGraphics, Font fontRenderer, int screenHeight) {
-		float textHeightPosition = screenHeight;
-		List<Component> overlayItems = new ArrayList<>(10);
+		int textHeightPosition = screenHeight;
+		List<String> overlayItems = new ArrayList<>(10);
 
+		if (DebugTracingData.ARMOR_VALUE > 0 || DebugTracingData.ARMOR_TOUGHNESS_VALUE > 0) {
+			String armorValues = appendData(ARMOR_VALUES,
+					DebugTracingData.ARMOR_VALUE,
+					DebugTracingData.ARMOR_TOUGHNESS_VALUE);
+
+			overlayItems.add(armorValues);
+		}
+		if (DebugTracingData.GENERAL_DAMAGE_RESISTANCE + DebugTracingData.KNOCKBACK_RESISTANCE != 0) {
+			String drAndKbr = appendData(DR_AND_KBR,
+					Math.round(DebugTracingData.GENERAL_DAMAGE_RESISTANCE * 100) + "%",
+					Math.round(DebugTracingData.KNOCKBACK_RESISTANCE * 100) + "%");
+
+			overlayItems.add(drAndKbr);
+		}
 		if (DebugTracingData.meleeItemDamage > 0) {
-			MutableComponent meleeItemDamage = appendComponentData(MELEE_ITEM_DAMAGE, DebugTracingData.meleeItemDamage)
-					.withStyle(ChatFormatting.BOLD, ChatFormatting.RED);
+			String meleeItemDamage = appendData(MELEE_ITEM_DAMAGE, DebugTracingData.meleeItemDamage);
 
 			overlayItems.add(meleeItemDamage);
 		}
 		if (DebugTracingData.gunBaseVelocity > 0) {
-			MutableComponent gunBaseVelocity = appendComponentData(GUN_BASE_VELOCITY, DebugTracingData.gunBaseVelocity)
-					.withStyle(ChatFormatting.BOLD, ChatFormatting.BLUE);
+			String gunBaseVelocity = appendData(GUN_BASE_VELOCITY, DebugTracingData.gunBaseVelocity);
 
 			overlayItems.add(gunBaseVelocity);
 		}
 		if (DebugTracingData.selectedAmmo instanceof AbstractBulletItem bullet) {
-			MutableComponent selectedAmmo = appendComponentData(SELECTED_AMMO,
+			String selectedAmmo = appendData(SELECTED_AMMO,
 					bullet.toString(),
-					bullet.damage)
-					.withStyle(ChatFormatting.BOLD, ChatFormatting.GREEN);
+					bullet.damage);
 
 			overlayItems.add(selectedAmmo);
 		}
 		if (DebugTracingData.liveBulletDamage > 0) {
-			MutableComponent liveBulletDamage = appendComponentData(LIVE_BULLET_DAMAGE,
+			String liveBulletDamage = appendData(LIVE_BULLET_DAMAGE,
 					DebugTracingData.liveBulletDamage,
-					DebugTracingData.isBulletCritical)
-					.withStyle(ChatFormatting.BOLD, ChatFormatting.RED);
+					DebugTracingData.isBulletCritical);
 
 			overlayItems.add(liveBulletDamage);
 		}
 		if (DebugTracingData.lastDamageDealt > 0) {
-			MutableComponent lastDamageDealt = appendComponentData(LAST_DAMAGE_DEALT,
-					DebugTracingData.lastDamageDealt)
-					.withStyle(ChatFormatting.BOLD, ChatFormatting.GOLD);
+			String lastDamageDealt = appendData(LAST_DAMAGE_DEALT,
+					Math.round(DebugTracingData.lastDamageDealt));
 
 			overlayItems.add(lastDamageDealt);
 		}
 
 		// Convert to a percent and round to nearest 0.1
-		float generalDamageBonus = Math.round(DebugTracingData.GENERAL_DAMAGE_BONUS * 100.0f);
-		float meleeDamageBonus = Math.round(DebugTracingData.MELEE_DAMAGE_BONUS * 100.0f);
-		float projectileDamageBonus = Math.round(DebugTracingData.PROJECTILE_DAMAGE_BONUS * 100.0f);
+		float generalDamageBonus = Math.round(DebugTracingData.GENERAL_DAMAGE_BONUS * 100);
+		float meleeDamageBonus = Math.round(DebugTracingData.MELEE_DAMAGE_BONUS * 100);
+		float projectileDamageBonus = Math.round(DebugTracingData.PROJECTILE_DAMAGE_BONUS * 100);
 
 		if ((generalDamageBonus + meleeDamageBonus + projectileDamageBonus) > 0) {
-			MutableComponent damageBonus = appendComponentData(DAMAGE_BONUS,
+			String damageBonus = appendData(DAMAGE_BONUS,
 					generalDamageBonus + "%",
 					meleeDamageBonus + "%",
-					projectileDamageBonus + "%")
-					.withStyle(ChatFormatting.BOLD, ChatFormatting.GOLD);
+					projectileDamageBonus + "%");
 
 			overlayItems.add(damageBonus);
 		}
 
 		if (EnvironmentEffects.celestialProtectionChanceForNoDamage > 0) {
 			// Convert to a percent and round to nearest 0.01
-			float noDamageChance = Math.round(EnvironmentEffects.celestialProtectionChanceForNoDamage * 100.0f);
-			MutableComponent celestialProtectionChanceForNoDamage = appendComponentData(CELESTIAL_PROTECTION_CHANCE_FOR_NO_DAMAGE,
-					noDamageChance + "%")
-					.withStyle(ChatFormatting.BOLD, ChatFormatting.AQUA);
+			float noDamageChance = Math.round(EnvironmentEffects.celestialProtectionChanceForNoDamage * 100);
+			String celestialProtectionChanceForNoDamage = appendData(CELESTIAL_PROTECTION_CHANCE_FOR_NO_DAMAGE,
+					noDamageChance + "%");
 
 			overlayItems.add(celestialProtectionChanceForNoDamage);
 		}
 
-		for (Component component : overlayItems) {
+		for (String str : overlayItems) {
 			textHeightPosition -= 15;
-			fontRenderer.drawInBatch(component, 5f, textHeightPosition, 0xFFFFFF, false,
+			fontRenderer.drawInBatch(str, 5f, textHeightPosition, 0xFFFFFF, false,
 					guiGraphics.pose().last().pose(),
 					guiGraphics.bufferSource(),
 					DisplayMode.NORMAL,
@@ -97,7 +104,7 @@ public class DebugTracingOverlay {
 		}
 	}
 
-	private static MutableComponent appendComponentData(MutableComponent component, Object... data) {
-		return Component.literal(component.getString().formatted(data));
+	private static String appendData(String component, Object... data) {
+		return component.formatted(data);
 	}
 }

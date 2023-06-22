@@ -42,6 +42,11 @@ public class DebugTracingData {
 	public static double MELEE_DAMAGE_BONUS = 0;
 	public static double PROJECTILE_DAMAGE_BONUS = 0;
 
+	public static double ARMOR_VALUE = 0;
+	public static double ARMOR_TOUGHNESS_VALUE = 0;
+	public static double GENERAL_DAMAGE_RESISTANCE = 0;
+	public static double KNOCKBACK_RESISTANCE = 0;
+
 	public static void handleTracing(Player player) {
 		if (player.tickCount % 20 == 0) {
 			// Get the melee damage attribute of the currently held item
@@ -100,6 +105,11 @@ public class DebugTracingData {
 			GENERAL_DAMAGE_BONUS += AccessoryEffects.collectEffects(EffectType.GENERAL_DAMAGE, player);
 			MELEE_DAMAGE_BONUS += AccessoryEffects.collectEffects(EffectType.MELEE_DAMAGE, player);
 			PROJECTILE_DAMAGE_BONUS += AccessoryEffects.collectEffects(EffectType.PROJECTILE_DAMAGE, player);
+
+			ARMOR_VALUE = player.getArmorValue();
+			ARMOR_TOUGHNESS_VALUE = player.getAttributeValue(Attributes.ARMOR_TOUGHNESS);
+			GENERAL_DAMAGE_RESISTANCE = AccessoryEffects.collectEffects(EffectType.DAMAGE_RESISTANCE, player);
+			KNOCKBACK_RESISTANCE = player.getAttributeValue(Attributes.KNOCKBACK_RESISTANCE) + AccessoryEffects.collectEffects(EffectType.KNOCKBACK_RESISTANCE, player);
 		}
 	}
 

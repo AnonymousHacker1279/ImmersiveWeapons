@@ -86,7 +86,7 @@ public class ForgeEventSubscriber {
 				IWOverlays.SCOPE_ELEMENT);
 
 		assert IWOverlays.DEBUG_TRACING_ELEMENT != null;
-		event.registerAbove(new ResourceLocation(ImmersiveWeapons.MOD_ID + ":scope"),
+		event.registerAbove(new ResourceLocation("debug_text"),
 				ImmersiveWeapons.MOD_ID + ":debug_tracing",
 				IWOverlays.DEBUG_TRACING_ELEMENT);
 	}

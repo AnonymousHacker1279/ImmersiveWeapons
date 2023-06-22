@@ -2,13 +2,12 @@ package tech.anonymoushacker1279.immersiveweapons.item;
 
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
-import org.jetbrains.annotations.Nullable;
+import net.minecraft.world.item.ItemStack;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.api.PluginHandler;
 import tech.anonymoushacker1279.immersiveweapons.util.IWCBBridge;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class AccessoryItem extends Item {
 
@@ -38,12 +37,46 @@ public class AccessoryItem extends Item {
 		return effects;
 	}
 
-	public boolean isActive(Player player) {
-		// Check for other items in the inventory which have the same slot
-		// The first item will be active, all others inactive
+	/**
+	 * Check if this accessory is active. This should be used for effects that can stack, because it will ensure only one
+	 * accessory of its type is active at a time. For non-stacking effects, {@link #isActive(Player)} can be used.
+	 *
+	 * @param player the <code>Player</code> to check
+	 * @param stack  the <code>ItemStack</code> of the accessory
+	 * @return true if the accessory is active, false otherwise
+	 */
+	public boolean isActive(Player player, ItemStack stack) {
+		List<ItemStack> accessories = new ArrayList<>(10);
 
+		// Check the player's inventory for accessories of the same type. Only one may be active at a time.
 		for (int i = 0; i < player.getInventory().getContainerSize(); i++) {
-			if (player.getInventory().getItem(i).getItem() instanceof AccessoryItem accessoryItem) {
+			ItemStack stack1 = player.getInventory().getItem(i);
+			if (stack1.getItem() instanceof AccessoryItem accessoryItem) {
+				if (accessoryItem.getSlot() == slot) {
+					accessories.add(stack1);
+				}
+			}
+		}
+
+		if (accessories.isEmpty()) {
+			return false;
+		}
+
+		// If there are multiple accessories of the same type, only the first one is active.
+		return accessories.get(0) == stack;
+	}
+
+	/**
+	 * Check if this accessory is active. Note, this is not the same as {@link #isActive(Player, ItemStack)}. It is not
+	 * sensitive with multiple of the same accessory in the player's inventory.
+	 *
+	 * @param player the <code>Player</code> to check
+	 * @return true if the accessory is active, false otherwise
+	 */
+	public boolean isActive(Player player) {
+		for (int i = 0; i < player.getInventory().getContainerSize(); i++) {
+			ItemStack stack1 = player.getInventory().getItem(i);
+			if (stack1.getItem() instanceof AccessoryItem accessoryItem) {
 				if (accessoryItem.getSlot() == slot) {
 					return accessoryItem == this;
 				}
@@ -51,24 +84,6 @@ public class AccessoryItem extends Item {
 		}
 
 		return false;
-	}
-
-	/**
-	 * Get the accessory in the specified slot from the player's inventory.
-	 * <p>
-	 * Because this checks for the first item, it will always be an active one.
-	 */
-	@Nullable
-	public static AccessoryItem getAccessory(Player player, AccessorySlot slot) {
-		for (int i = 0; i < player.getInventory().getContainerSize(); i++) {
-			if (player.getInventory().getItem(i).getItem() instanceof AccessoryItem accessoryItem) {
-				if (accessoryItem.getSlot() == slot) {
-					return accessoryItem;
-				}
-			}
-		}
-
-		return null;
 	}
 
 	/**

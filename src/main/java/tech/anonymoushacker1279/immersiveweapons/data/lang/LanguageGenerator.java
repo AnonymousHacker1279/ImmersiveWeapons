@@ -921,6 +921,8 @@ public class LanguageGenerator extends IWLanguageProvider {
 		add("immersiveweapons.debugTracing.damageBonus", "Damage Bonus: %s general, %s melee, %s projectile");
 		add("immersiveweapons.debugTracing.celestialProtectionChanceForNoDamage", "Celestial Protection Chance: %s");
 		add("immersiveweapons.debugTracing.lastDamageDealt", "Last Damage Dealt: %s");
+		add("immersiveweapons.debugTracing.armorValues", "Total Armor Value: %s, Armor Toughness: %s");
+		add("immersiveweapons.debugTracing.drAndKbr", "General Damage Resistance: %s, Knockback Resistance: %s");
 
 		// IWCB strings
 		add("tooltip.iwcompatbridge.accessory_note", "Equip this in a Curios slot to gain the effect.");

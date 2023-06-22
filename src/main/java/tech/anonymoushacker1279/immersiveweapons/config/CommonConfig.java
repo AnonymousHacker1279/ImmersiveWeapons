@@ -14,6 +14,9 @@ public class CommonConfig {
 	public static ForgeConfigSpec.ConfigValue<Boolean> TILTROS_ENABLED;
 	public static ForgeConfigSpec.ConfigValue<Integer> FORCE_SMOKE_GRENADE_PARTICLES;
 
+	// Mixin settings
+	public static ForgeConfigSpec.ConfigValue<Double> MAX_ARMOR_PROTECTION;
+
 	// Entity settings
 
 	// General
@@ -52,7 +55,7 @@ public class CommonConfig {
 	CommonConfig(ForgeConfigSpec.Builder builder) {
 		builder.push("Server Configuration");
 
-		builder.push("Miscellaneous");
+		builder.push("General");
 		BULLETS_BREAK_GLASS = builder
 				.comment("Enable bullets breaking glass - Default true")
 				.translation("config.immersiveweapons.bullets_break_glass")
@@ -68,6 +71,18 @@ public class CommonConfig {
 						Setting this to a high value may cause clients to lag. - Default -1""")
 				.translation("config.immersiveweapons.force_smoke_grenade_particles")
 				.define("force_smoke_grenade_particles", -1);
+		builder.pop();
+
+		builder.push("Mixin");
+
+		builder.push("Combat Rules");
+		MAX_ARMOR_PROTECTION = builder
+				.comment("""
+						Set the maximum armor protection value. The vanilla default is 20. Setting this value higher
+						 allows higher tiers of armor to work properly. - Default 50.0
+						""")
+				.translation("config.immersiveweapons.max_armor_protection")
+				.define("max_armor_protection", 50.0D);
 		builder.pop();
 
 		builder.push("Entity Settings");
