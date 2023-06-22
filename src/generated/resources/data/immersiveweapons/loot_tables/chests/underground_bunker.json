@@ -104,6 +104,7 @@
           "name": "immersiveweapons:blunderbuss"
         }
       ],
+      "name": "main",
       "rolls": {
         "type": "minecraft:uniform",
         "max": 6.0,

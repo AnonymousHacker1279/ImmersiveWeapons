@@ -28,6 +28,7 @@
           "name": "minecraft:string"
         }
       ],
+      "name": "string",
       "rolls": 1.0
     },
     {
@@ -57,6 +58,7 @@
           "name": "minecraft:stone"
         }
       ],
+      "name": "stone",
       "rolls": 1.0
     },
     {
@@ -91,6 +93,7 @@
           "name": "minecraft:spider_eye"
         }
       ],
+      "name": "spider_eye",
       "rolls": 1.0
     }
   ],

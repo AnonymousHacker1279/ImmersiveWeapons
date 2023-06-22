@@ -165,6 +165,7 @@ public class BlockLootTables implements LootTableSubProvider {
 		add(BlockRegistry.VENTUS_ORE.get(), (block) -> createOreDrop(block, ItemRegistry.VENTUS_SHARD.get(), 2, 5));
 		add(BlockRegistry.LANDMINE.get(), (block) -> LootTable.lootTable()
 				.withPool(LootPool.lootPool()
+						.name("main")
 						.setRolls(ConstantValue.exactly(1.0F))
 						.add(applyExplosionDecay(LootItem.lootTableItem(BlockItemRegistry.LANDMINE_ITEM.get())
 								.when(ExplosionCondition.survivesExplosion().invert())
@@ -174,6 +175,7 @@ public class BlockLootTables implements LootTableSubProvider {
 														.hasProperty(LandmineBlock.ARMED, false))))))));
 		add(BlockRegistry.WOODEN_SPIKES.get(), (block) -> LootTable.lootTable()
 				.withPool(LootPool.lootPool()
+						.name("main")
 						.setRolls(ConstantValue.exactly(1.0F))
 						.add(applyExplosionDecay(LootItem.lootTableItem(BlockItemRegistry.WOODEN_SPIKES_ITEM.get())
 								.when(ExplosionCondition.survivesExplosion())
@@ -183,6 +185,7 @@ public class BlockLootTables implements LootTableSubProvider {
 								.apply(SetItemCountFunction.setCount(ConstantValue.exactly(1.0F)))))));
 		add(BlockRegistry.BARBED_WIRE.get(), (block) -> LootTable.lootTable()
 				.withPool(LootPool.lootPool()
+						.name("main")
 						.setRolls(ConstantValue.exactly(1.0F))
 						.add(applyExplosionDecay(LootItem.lootTableItem(BlockItemRegistry.BARBED_WIRE_ITEM.get())
 								.when(ExplosionCondition.survivesExplosion())
@@ -192,6 +195,7 @@ public class BlockLootTables implements LootTableSubProvider {
 								.apply(SetItemCountFunction.setCount(ConstantValue.exactly(1.0F)))))));
 		add(BlockRegistry.SANDBAG.get(), (block) -> LootTable.lootTable()
 				.withPool(LootPool.lootPool()
+						.name("main")
 						.setRolls(ConstantValue.exactly(1.0F))
 						.add(applyExplosionDecay(LootItem.lootTableItem(BlockItemRegistry.SANDBAG_ITEM.get())
 								.apply(SetItemCountFunction.setCount(ConstantValue.exactly(1.0F))
@@ -212,18 +216,21 @@ public class BlockLootTables implements LootTableSubProvider {
 														.hasProperty(SandbagBlock.BAGS, 3))))))));
 		add(BlockRegistry.WARRIOR_STATUE_TORSO.get(), (block) -> LootTable.lootTable()
 				.withPool(LootPool.lootPool()
+						.name("keystone")
 						.setRolls(ConstantValue.exactly(1.0F))
 						.add(applyExplosionDecay(LootItem.lootTableItem(ItemRegistry.AZUL_KEYSTONE.get())
 								.when(LootItemBlockStatePropertyCondition.hasBlockStateProperties(block)
 										.setProperties(StatePropertiesPredicate.Builder.properties()
 												.hasProperty(WarriorStatueTorso.POWERED, true))))))
 				.withPool(LootPool.lootPool()
+						.name("powered")
 						.setRolls(ConstantValue.exactly(1.0F))
 						.add(applyExplosionDecay(LootItem.lootTableItem(BlockRegistry.WARRIOR_STATUE_TORSO.get())
 								.when(LootItemBlockStatePropertyCondition.hasBlockStateProperties(block)
 										.setProperties(StatePropertiesPredicate.Builder.properties()
 												.hasProperty(WarriorStatueTorso.POWERED, true))))))
 				.withPool(LootPool.lootPool()
+						.name("unpowered")
 						.setRolls(ConstantValue.exactly(1.0F))
 						.add(applyExplosionDecay(LootItem.lootTableItem(BlockRegistry.WARRIOR_STATUE_TORSO.get())
 								.when(LootItemBlockStatePropertyCondition.hasBlockStateProperties(block)
@@ -234,7 +241,9 @@ public class BlockLootTables implements LootTableSubProvider {
 	protected static LootTable.Builder createLeafLikeDrop(Block block, Item altDrop, float... pChances) {
 		return createSilkTouchOrShearsDispatchTable(block, applyExplosionCondition(LootItem.lootTableItem(altDrop))
 				.when(BonusLevelTableCondition.bonusLevelFlatChance(Enchantments.BLOCK_FORTUNE, pChances)))
-				.withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1.0F))
+				.withPool(LootPool.lootPool()
+						.name("main")
+						.setRolls(ConstantValue.exactly(1.0F))
 						.when(HAS_NO_SHEARS_OR_SILK_TOUCH)
 						.add(applyExplosionDecay(LootItem.lootTableItem(Items.STICK)
 								.apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 2.0F))))
@@ -247,15 +256,24 @@ public class BlockLootTables implements LootTableSubProvider {
 	}
 
 	protected static LootTable.Builder createSelfDropDispatchTable(Block pBlock, LootItemCondition.Builder pConditionBuilder, LootPoolEntryContainer.Builder<?> pAlternativeEntryBuilder) {
-		return LootTable.lootTable().withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1.0F)).add(LootItem.lootTableItem(pBlock).when(pConditionBuilder).otherwise(pAlternativeEntryBuilder)));
+		return LootTable.lootTable()
+				.withPool(LootPool.lootPool()
+						.name("main")
+						.setRolls(ConstantValue.exactly(1.0F))
+						.add(LootItem.lootTableItem(pBlock)
+								.when(pConditionBuilder)
+								.otherwise(pAlternativeEntryBuilder)));
 	}
 
 	protected static LootTable.Builder createOreDrop(Block pBlock, Item pItem) {
-		return createSilkTouchDispatchTable(pBlock, applyExplosionDecay(LootItem.lootTableItem(pItem).apply(ApplyBonusCount.addOreBonusCount(Enchantments.BLOCK_FORTUNE))));
+		return createSilkTouchDispatchTable(pBlock, applyExplosionDecay(LootItem.lootTableItem(pItem)
+				.apply(ApplyBonusCount.addOreBonusCount(Enchantments.BLOCK_FORTUNE))));
 	}
 
 	protected static LootTable.Builder createOreDrop(Block pBlock, Item pItem, int baseCount, int maxCount) {
-		return createSilkTouchDispatchTable(pBlock, applyExplosionDecay(LootItem.lootTableItem(pItem).apply(SetItemCountFunction.setCount(UniformGenerator.between(baseCount, maxCount))).apply(ApplyBonusCount.addOreBonusCount(Enchantments.BLOCK_FORTUNE))));
+		return createSilkTouchDispatchTable(pBlock, applyExplosionDecay(LootItem.lootTableItem(pItem)
+				.apply(SetItemCountFunction.setCount(UniformGenerator.between(baseCount, maxCount)))
+				.apply(ApplyBonusCount.addOreBonusCount(Enchantments.BLOCK_FORTUNE))));
 	}
 
 	protected static LootTable.Builder createSilkTouchDispatchTable(Block pBlock, LootPoolEntryContainer.Builder<?> pAlternativeEntryBuilder) {
@@ -276,6 +294,7 @@ public class BlockLootTables implements LootTableSubProvider {
 
 	protected static <T extends Comparable<T> & StringRepresentable> LootTable.Builder createSinglePropConditionTable(Block block, Property<T> property, T t) {
 		return LootTable.lootTable().withPool(applyExplosionCondition(LootPool.lootPool()
+				.name("main")
 				.setRolls(ConstantValue.exactly(1.0F))
 				.add(LootItem.lootTableItem(block)
 						.when(LootItemBlockStatePropertyCondition.hasBlockStateProperties(block)
@@ -294,7 +313,11 @@ public class BlockLootTables implements LootTableSubProvider {
 	}
 
 	protected static LootTable.Builder createSingleItemTable(ItemLike itemLike) {
-		return LootTable.lootTable().withPool(applyExplosionCondition(LootPool.lootPool().setRolls(ConstantValue.exactly(1.0F)).add(LootItem.lootTableItem(itemLike))));
+		return LootTable.lootTable()
+				.withPool(applyExplosionCondition(LootPool.lootPool()
+						.name("main")
+						.setRolls(ConstantValue.exactly(1.0F))
+						.add(LootItem.lootTableItem(itemLike))));
 	}
 
 	protected static <T extends ConditionUserBuilder<T>> T applyExplosionCondition(ConditionUserBuilder<T> pCondition) {

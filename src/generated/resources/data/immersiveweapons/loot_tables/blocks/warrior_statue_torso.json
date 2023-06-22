@@ -23,6 +23,7 @@
           "name": "immersiveweapons:azul_keystone"
         }
       ],
+      "name": "keystone",
       "rolls": 1.0
     },
     {
@@ -47,6 +48,7 @@
           "name": "immersiveweapons:warrior_statue_torso"
         }
       ],
+      "name": "powered",
       "rolls": 1.0
     },
     {
@@ -71,6 +73,7 @@
           "name": "immersiveweapons:warrior_statue_torso"
         }
       ],
+      "name": "unpowered",
       "rolls": 1.0
     }
   ],

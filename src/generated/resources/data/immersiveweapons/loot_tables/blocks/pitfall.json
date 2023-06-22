@@ -61,6 +61,7 @@
           ]
         }
       ],
+      "name": "main",
       "rolls": 1.0
     },
     {
@@ -129,6 +130,7 @@
           "name": "minecraft:stick"
         }
       ],
+      "name": "main",
       "rolls": 1.0
     }
   ],

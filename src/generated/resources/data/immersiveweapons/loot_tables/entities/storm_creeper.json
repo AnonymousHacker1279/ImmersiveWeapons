@@ -51,6 +51,7 @@
           "name": "immersiveweapons:sulfur"
         }
       ],
+      "name": "main",
       "rolls": 1.0
     },
     {
@@ -71,6 +72,7 @@
           "name": "minecraft:creeper_drop_music_discs"
         }
       ],
+      "name": "music_discs",
       "rolls": 1.0
     }
   ],

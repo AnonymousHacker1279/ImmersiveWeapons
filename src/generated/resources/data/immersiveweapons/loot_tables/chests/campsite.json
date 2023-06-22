@@ -115,6 +115,7 @@
           "name": "immersiveweapons:flare_gun"
         }
       ],
+      "name": "main",
       "rolls": {
         "type": "minecraft:uniform",
         "max": 7.0,

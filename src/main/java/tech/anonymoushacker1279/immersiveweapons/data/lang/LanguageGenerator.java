@@ -908,6 +908,7 @@ public class LanguageGenerator extends IWLanguageProvider {
 
 	private void addMisc() {
 		add("loot.immersiveweapons.chest.village.battlefield.medic_station.iron_axe", "The Amputator");
+		add("loot.immersiveweapons.entity.hans.iron_sword", "The Grand Blade of Hans");
 		add("immersiveweapons.boss.celestial_tower.waves", "Wave %s of %s");
 		add("itemGroup.immersiveweapons.creative_tab", "Immersive Weapons");
 
@@ -924,7 +925,7 @@ public class LanguageGenerator extends IWLanguageProvider {
 		add("immersiveweapons.debugTracing.liveBulletDamage", "Live Bullet Damage: %s (is crit: %s)");
 		add("immersiveweapons.debugTracing.damageBonus", "Damage Bonus: %s general, %s melee, %s projectile");
 		add("immersiveweapons.debugTracing.celestialProtectionChanceForNoDamage", "Celestial Protection Chance: %s");
-		add("immersiveweapons.debugTracing.lastDamageDealt", "Last Damage Dealt: %s");
+		add("immersiveweapons.debugTracing.lastDamageValues", "Last Damage Dealt: %s, Last Damage Taken: %s");
 		add("immersiveweapons.debugTracing.armorValues", "Total Armor Value: %s, Armor Toughness: %s");
 		add("immersiveweapons.debugTracing.drAndKbr", "General Damage Resistance: %s, Knockback Resistance: %s");
 

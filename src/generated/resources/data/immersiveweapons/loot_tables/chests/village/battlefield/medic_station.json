@@ -106,6 +106,7 @@
           "name": "immersiveweapons:morphine"
         }
       ],
+      "name": "main",
       "rolls": {
         "type": "minecraft:uniform",
         "max": 5.0,

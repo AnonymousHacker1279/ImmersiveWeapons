@@ -331,10 +331,8 @@ public abstract class AbstractMinutemanEntity extends PathfinderMob implements R
 			super.hurt(source, amount);
 
 			if (source.getEntity() instanceof Player || source.getEntity() instanceof Mob) {
-				if (source.getEntity() instanceof Player) {
-					if (((Player) source.getEntity()).isCreative()) {
-						return false;
-					}
+				if (source.getEntity() instanceof Player player && player.isCreative()) {
+					return false;
 				}
 
 				setCombatTask();
@@ -395,29 +393,16 @@ public abstract class AbstractMinutemanEntity extends PathfinderMob implements R
 		addPersistentAngerSaveData(compound);
 	}
 
-	/**
-	 * Set item slots.
-	 *
-	 * @param slotIn the <code>EquipmentSlotType</code> to set
-	 * @param stack  the <code>ItemStack</code> to set in the slot
-	 */
 	@Override
-	public void setItemSlot(EquipmentSlot slotIn, ItemStack stack) {
-		super.setItemSlot(slotIn, stack);
+	public void setItemSlot(EquipmentSlot slot, ItemStack stack) {
+		super.setItemSlot(slot, stack);
 		if (!level().isClientSide) {
 			setCombatTask();
 		}
 	}
 
-	/**
-	 * Get the standing eye height of the entity.
-	 *
-	 * @param poseIn the <code>Pose</code> instance
-	 * @param sizeIn the <code>EntitySize</code> of the entity
-	 * @return float
-	 */
 	@Override
-	protected float getStandingEyeHeight(Pose poseIn, EntityDimensions sizeIn) {
+	protected float getStandingEyeHeight(Pose pose, EntityDimensions dimensions) {
 		return 1.74F;
 	}
 

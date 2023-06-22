@@ -33,6 +33,28 @@
           "name": "immersiveweapons:celestial_fragment"
         }
       ],
+      "name": "celestial_fragment",
+      "rolls": 1.0
+    },
+    {
+      "bonus_rolls": 0.0,
+      "conditions": [
+        {
+          "condition": "minecraft:killed_by_player"
+        },
+        {
+          "chance": 0.05,
+          "condition": "minecraft:random_chance_with_looting",
+          "looting_multiplier": 0.02
+        }
+      ],
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "immersiveweapons:celestial_spirit"
+        }
+      ],
+      "name": "celestial_spirit",
       "rolls": 1.0
     }
   ],

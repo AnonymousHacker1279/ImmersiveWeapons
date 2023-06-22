@@ -28,6 +28,7 @@
           "name": "minecraft:rotten_flesh"
         }
       ],
+      "name": "rotten_flesh",
       "rolls": 1.0
     },
     {
@@ -62,6 +63,7 @@
           "name": "immersiveweapons:iron_musket_ball"
         }
       ],
+      "name": "iron_musket_ball",
       "rolls": 1.0
     },
     {
@@ -82,6 +84,7 @@
           "name": "immersiveweapons:flintlock_pistol"
         }
       ],
+      "name": "flintlock_pistol",
       "rolls": 1.0
     },
     {
@@ -156,6 +159,7 @@
           "function": "minecraft:furnace_smelt"
         }
       ],
+      "name": "foods",
       "rolls": 1.0
     }
   ],

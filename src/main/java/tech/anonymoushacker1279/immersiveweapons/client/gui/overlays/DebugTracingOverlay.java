@@ -17,7 +17,7 @@ public class DebugTracingOverlay {
 	private static final String GUN_BASE_VELOCITY = Component.translatable("immersiveweapons.debugTracing.gunBaseVelocity").getString();
 	private static final String SELECTED_AMMO = Component.translatable("immersiveweapons.debugTracing.selectedAmmo").getString();
 	private static final String LIVE_BULLET_DAMAGE = Component.translatable("immersiveweapons.debugTracing.liveBulletDamage").getString();
-	private static final String LAST_DAMAGE_DEALT = Component.translatable("immersiveweapons.debugTracing.lastDamageDealt").getString();
+	private static final String LAST_DAMAGE_VALUES = Component.translatable("immersiveweapons.debugTracing.lastDamageValues").getString();
 	private static final String DAMAGE_BONUS = Component.translatable("immersiveweapons.debugTracing.damageBonus").getString();
 	private static final String DR_AND_KBR = Component.translatable("immersiveweapons.debugTracing.drAndKbr").getString();
 	private static final String CELESTIAL_PROTECTION_CHANCE_FOR_NO_DAMAGE = Component.translatable("immersiveweapons.debugTracing.celestialProtectionChanceForNoDamage").getString();
@@ -64,9 +64,10 @@ public class DebugTracingOverlay {
 
 			overlayItems.add(liveBulletDamage);
 		}
-		if (DebugTracingData.lastDamageDealt > 0) {
-			String lastDamageDealt = appendData(LAST_DAMAGE_DEALT,
-					Math.round(DebugTracingData.lastDamageDealt));
+		if (DebugTracingData.lastDamageDealt + DebugTracingData.lastDamageTaken > 0) {
+			String lastDamageDealt = appendData(LAST_DAMAGE_VALUES,
+					Math.round(DebugTracingData.lastDamageDealt),
+					Math.round(DebugTracingData.lastDamageTaken));
 
 			overlayItems.add(lastDamageDealt);
 		}

@@ -1,7 +1,6 @@
 package tech.anonymoushacker1279.immersiveweapons.event;
 
 import net.minecraft.advancements.Advancement;
-import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
@@ -30,6 +29,7 @@ import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraftforge.client.event.RegisterGuiOverlaysEvent;
+import net.minecraftforge.client.gui.overlay.VanillaGuiOverlay;
 import net.minecraftforge.common.ForgeMod;
 import net.minecraftforge.event.ItemAttributeModifierEvent;
 import net.minecraftforge.event.TickEvent.PlayerTickEvent;
@@ -50,7 +50,7 @@ import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.block.decoration.StarstormCrystalBlock;
 import tech.anonymoushacker1279.immersiveweapons.client.gui.IWOverlays;
 import tech.anonymoushacker1279.immersiveweapons.client.gui.overlays.DebugTracingData;
-import tech.anonymoushacker1279.immersiveweapons.client.gui.overlays.DebugTracingData.LastDamageDealtPacketHandler;
+import tech.anonymoushacker1279.immersiveweapons.client.gui.overlays.DebugTracingData.DebugDataPacketHandler;
 import tech.anonymoushacker1279.immersiveweapons.data.biomes.IWBiomes;
 import tech.anonymoushacker1279.immersiveweapons.data.damage_types.IWDamageTypes;
 import tech.anonymoushacker1279.immersiveweapons.entity.projectile.MeteorEntity;
@@ -74,6 +74,9 @@ public class ForgeEventSubscriber {
 	public static final UUID BLOATED_HEART_HEALTH_MODIFIER_UUID = UUID.fromString("e5485685-cfbe-422b-b7dd-eda29049a508");
 	public static final AttributeModifier BLOATED_HEART_HEALTH_MODIFIER = new AttributeModifier(BLOATED_HEART_HEALTH_MODIFIER_UUID,
 			"Bloated Heart boost", 4.0d, Operation.ADDITION);
+
+	public static final UUID NETHERITE_SHIELD_KB_MODIFIER_UUID = UUID.fromString("18e993c3-cf20-4a18-bdb4-11751c4dfb0f");
+
 	public static final UUID JONNYS_CURSE_SPEED_MODIFIER_UUID = UUID.fromString("c74619c0-b953-4ee7-a3d7-adf974c22d7d");
 	public static final AttributeModifier JONNYS_CURSE_SPEED_MODIFIER = new AttributeModifier(JONNYS_CURSE_SPEED_MODIFIER_UUID,
 			"Jonny's Curse reduction", -0.25d, Operation.MULTIPLY_BASE);
@@ -81,12 +84,12 @@ public class ForgeEventSubscriber {
 	@SubscribeEvent
 	public static void registerGuiOverlaysEvent(RegisterGuiOverlaysEvent event) {
 		assert IWOverlays.SCOPE_ELEMENT != null;
-		event.registerAbove(new ResourceLocation("vignette"),
+		event.registerAbove(VanillaGuiOverlay.VIGNETTE.id(),
 				ImmersiveWeapons.MOD_ID + ":scope",
 				IWOverlays.SCOPE_ELEMENT);
 
 		assert IWOverlays.DEBUG_TRACING_ELEMENT != null;
-		event.registerAbove(new ResourceLocation("debug_text"),
+		event.registerAbove(VanillaGuiOverlay.DEBUG_TEXT.id(),
 				ImmersiveWeapons.MOD_ID + ":debug_tracing",
 				IWOverlays.DEBUG_TRACING_ELEMENT);
 	}
@@ -200,6 +203,27 @@ public class ForgeEventSubscriber {
 				}
 			}
 
+			// Handle increased KB resist of the Netherite Shield
+			attributeInstance = player.getAttributes().getInstance(Attributes.KNOCKBACK_RESISTANCE);
+			if (attributeInstance != null) {
+				if (!attributeInstance.getAttribute().isClientSyncable()) {
+					attributeInstance.getAttribute().setSyncable(true); // Used for debug tracing
+				}
+
+				double modifier = Math.max(0.0d, 1.0d - attributeInstance.getValue());
+
+				AttributeModifier NETHERITE_SHIELD_KB_MODIFIER = new AttributeModifier(NETHERITE_SHIELD_KB_MODIFIER_UUID,
+						"Netherite Shield knockback resistance", modifier, Operation.ADDITION);
+
+				if (AccessoryItem.isAccessoryActive(player, ItemRegistry.NETHERITE_SHIELD.get())) {
+					if (!attributeInstance.hasModifier(NETHERITE_SHIELD_KB_MODIFIER)) {
+						attributeInstance.addTransientModifier(NETHERITE_SHIELD_KB_MODIFIER);
+					}
+				} else if (attributeInstance.hasModifier(NETHERITE_SHIELD_KB_MODIFIER)) {
+					attributeInstance.removeModifier(NETHERITE_SHIELD_KB_MODIFIER);
+				}
+			}
+
 			// Handle constant Hero of the Village effect of the Emerald Ring
 			if (AccessoryItem.isAccessoryActive(player, ItemRegistry.EMERALD_RING.get())) {
 				if (!player.hasEffect(MobEffects.HERO_OF_THE_VILLAGE)) {
@@ -210,7 +234,7 @@ public class ForgeEventSubscriber {
 
 		// Debug tracing
 		if (DebugTracingData.isDebugTracingEnabled) {
-			if (player == Minecraft.getInstance().player) {
+			if (player.isLocalPlayer()) {
 				DebugTracingData.handleTracing(player);
 			}
 		}
@@ -225,7 +249,7 @@ public class ForgeEventSubscriber {
 			source = sourceEntity;
 		}
 
-		if (event.getSource().is(IWDamageTypes.METEOR_KEY) && event.getSource().getDirectEntity() instanceof MeteorEntity meteor) {
+		if (event.getSource().is(IWDamageTypes.METEOR_KEY) && event.getSource().getDirectEntity() instanceof MeteorEntity meteor && !meteor.getPersistentData().isEmpty()) {
 			// Check for a "target" tag, and check if it matches the damaged entity's UUID
 			if (!meteor.getPersistentData().getUUID("target").equals(damagedEntity.getUUID())) {
 				event.setCanceled(true);
@@ -252,7 +276,22 @@ public class ForgeEventSubscriber {
 			AccessoryEffects.projectileDamageEffects(event, player);
 			AccessoryEffects.generalDamageEffects(event, player);
 			AccessoryEffects.meleeBleedChanceEffects(event, player, damagedEntity);
+		}
 
+		AccessoryEffects.bloodySacrificeEffect(event, damagedEntity);
+		AccessoryEffects.jonnysCurseEffect(event, damagedEntity);
+	}
+
+	@SubscribeEvent
+	public static void livingDamageEvent(LivingDamageEvent event) {
+		LivingEntity damagedEntity = event.getEntity();
+		LivingEntity source = null;
+
+		if (event.getSource().getEntity() instanceof LivingEntity sourceEntity) {
+			source = sourceEntity;
+		}
+
+		if (source instanceof Player player) {
 			// Handle Regenerative Assault enchantment
 			ItemStack weapon = player.getItemInHand(player.getUsedItemHand());
 
@@ -282,12 +321,14 @@ public class ForgeEventSubscriber {
 				}
 
 				// Handle debug tracing
-				PacketHandler.INSTANCE.send(PacketDistributor.PLAYER.with(() -> serverPlayer), new LastDamageDealtPacketHandler(player.getUUID(), event.getAmount()));
+				PacketHandler.INSTANCE.send(PacketDistributor.PLAYER.with(() -> serverPlayer), new DebugDataPacketHandler(player.getUUID(), event.getAmount(), -1f));
 			}
 		}
 
-		AccessoryEffects.bloodySacrificeEffect(event, damagedEntity);
-		AccessoryEffects.jonnysCurseEffect(event, damagedEntity);
+		if (damagedEntity instanceof ServerPlayer serverPlayer) {
+			// Handle debug tracing
+			PacketHandler.INSTANCE.send(PacketDistributor.PLAYER.with(() -> serverPlayer), new DebugDataPacketHandler(serverPlayer.getUUID(), -1f, event.getAmount()));
+		}
 	}
 
 	@SubscribeEvent
@@ -499,10 +540,6 @@ public class ForgeEventSubscriber {
 	@SubscribeEvent
 	public static void livingKnockBackEvent(LivingKnockBackEvent event) {
 		LivingEntity entity = event.getEntity();
-
-		if (entity instanceof Player player) {
-			AccessoryEffects.knockbackResistanceEffects(event, player);
-		}
 
 		if (entity.getLastAttacker() instanceof Player player) {
 			AccessoryEffects.meleeKnockbackEffects(event, player);

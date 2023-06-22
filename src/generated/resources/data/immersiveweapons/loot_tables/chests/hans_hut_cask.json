@@ -36,6 +36,7 @@
           "name": "minecraft:sweet_berries"
         }
       ],
+      "name": "main",
       "rolls": {
         "type": "minecraft:uniform",
         "max": 9.0,

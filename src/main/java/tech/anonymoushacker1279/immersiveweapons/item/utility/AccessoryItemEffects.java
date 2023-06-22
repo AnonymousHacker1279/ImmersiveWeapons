@@ -35,7 +35,6 @@ public class AccessoryItemEffects {
 			.addEffect(EffectType.OTHER, 0.0d)
 			.build();
 	public static final Map<EffectType, Double> NETHERITE_SHIELD = new EffectMapBuilder()
-			.addEffect(EffectType.KNOCKBACK_RESISTANCE, 1.0d)
 			.addEffect(EffectType.DAMAGE_RESISTANCE, 0.03d)
 			.build();
 	public static final Map<EffectType, Double> MELEE_MASTERS_MOLTEN_GLOVE = new EffectMapBuilder()

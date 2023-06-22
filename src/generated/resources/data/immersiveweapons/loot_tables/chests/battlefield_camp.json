@@ -104,6 +104,7 @@
           "name": "immersiveweapons:flintlock_pistol"
         }
       ],
+      "name": "main",
       "rolls": {
         "type": "minecraft:uniform",
         "max": 7.0,
