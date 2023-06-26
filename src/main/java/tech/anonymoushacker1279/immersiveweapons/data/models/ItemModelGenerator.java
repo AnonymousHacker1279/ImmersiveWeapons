@@ -65,7 +65,6 @@ public class ItemModelGenerator extends ItemModelProvider {
 
 		// Make a map of gauntlets to material textures
 
-		// TODO: remove once custom textures are made for each one
 		gauntletMaterialMap.put(ItemRegistry.WOODEN_GAUNTLET.get(),
 				new ResourceLocation("block/stripped_oak_log"));
 		gauntletMaterialMap.put(ItemRegistry.STONE_GAUNTLET.get(),

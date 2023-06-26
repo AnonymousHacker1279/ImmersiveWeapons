@@ -849,6 +849,12 @@ public class LanguageGenerator extends IWLanguageProvider {
 		addConfigDescription("bullets_break_glass", "Enable bullets breaking glass - Default true");
 		addConfigDescription("tiltros_enabled", "Enable the Tiltros dimension portal - Default true");
 
+		// Mixins
+		addConfigDescription("max_armor_protection", """
+				Set the maximum armor protection cap. The vanilla default is 20. Setting this value higher
+				allows higher tiers of armor to work properly. - Default 50.0
+				""");
+
 		// Entity
 
 		// General

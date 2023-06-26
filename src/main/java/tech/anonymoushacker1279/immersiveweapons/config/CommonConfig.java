@@ -53,7 +53,7 @@ public class CommonConfig {
 	public static ForgeConfigSpec.ConfigValue<Integer> CURSED_SIGHT_STAFF_MAX_USE_RANGE;
 
 	CommonConfig(ForgeConfigSpec.Builder builder) {
-		builder.push("Server Configuration");
+		builder.push("Common Configuration");
 
 		builder.push("General");
 		BULLETS_BREAK_GLASS = builder
@@ -78,7 +78,7 @@ public class CommonConfig {
 		builder.push("Combat Rules");
 		MAX_ARMOR_PROTECTION = builder
 				.comment("""
-						Set the maximum armor protection value. The vanilla default is 20. Setting this value higher
+						Set the maximum armor protection cap. The vanilla default is 20. Setting this value higher
 						 allows higher tiers of armor to work properly. - Default 50.0
 						""")
 				.translation("config.immersiveweapons.max_armor_protection")

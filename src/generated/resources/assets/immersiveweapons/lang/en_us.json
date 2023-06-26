@@ -413,6 +413,7 @@
   "config.immersiveweapons.flintlock_pistol_fire_velocity": "Set the velocity of bullets fired by the Flintlock Pistol - Default 2.5",
   "config.immersiveweapons.force_smoke_grenade_particles": "Force the number of particles produced by the smoke grenade to be the same on all clients.\nA value of -1 will not force any value, and will allow clients to use their own values.\nSetting this to a high value may cause clients to lag. - Default -1",
   "config.immersiveweapons.gun_crit_chance": "Set the chance for a fired bullet to be critical - Default 0.1",
+  "config.immersiveweapons.max_armor_protection": "Set the maximum armor protection cap. The vanilla default is 20. Setting this value higher\nallows higher tiers of armor to work properly. - Default 50.0\n",
   "config.immersiveweapons.meteor_staff_explosion_break_blocks": "Set whether the Meteor Staff explosion breaks blocks - Default false",
   "config.immersiveweapons.meteor_staff_explosion_radius": "Set the radius of the explosion created by the Meteor Staff - Default 3.0",
   "config.immersiveweapons.meteor_staff_max_use_range": "Set the maximum range in blocks of the Meteor Staff - Default 100",

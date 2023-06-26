@@ -6,6 +6,7 @@ import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
@@ -112,6 +113,10 @@ public class VentusArmorItem extends ArmorItem {
 					}
 
 					windShieldCooldown--;
+
+					if (windShieldCooldown == 0) {
+						player.playSound(SoundEvents.EXPERIENCE_ORB_PICKUP);
+					}
 				}
 			}
 

@@ -73,7 +73,8 @@ public class TeslaArmorItem extends ArmorItem {
 					player.getPersistentData().putString("TeslaArmorEffectState", state.getNext().getSerializedName());
 
 					// Send packet to server
-					PacketHandler.INSTANCE.sendToServer(new TeslaArmorItemPacketHandler(state.getNext()));
+					state = state.getNext();
+					PacketHandler.INSTANCE.sendToServer(new TeslaArmorItemPacketHandler(state));
 
 					if (state == EffectState.DISABLED) {
 						level.playSound(player,
@@ -108,10 +109,7 @@ public class TeslaArmorItem extends ArmorItem {
 			}
 
 			if (state != EffectState.DISABLED && player.tickCount % 20 == 0) {
-				List<Entity> nearbyEntities = level.getEntities(player,
-						player.getBoundingBox()
-								.move(-3, -3, -3)
-								.expandTowards(6, 6, 6));
+				List<Entity> nearbyEntities = level.getEntities(player, player.getBoundingBox().inflate(3));
 
 				// Remove any players in the list that are on the same team
 				nearbyEntities.removeIf(entity -> entity instanceof Player && entity.isAlliedTo(player));
