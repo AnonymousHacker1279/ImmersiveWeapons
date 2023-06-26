@@ -74,10 +74,7 @@ public class SpotlightBlock extends HorizontalDirectionalBlock implements Simple
 	@Override
 	public BlockState updateShape(BlockState stateIn, Direction facing, BlockState facingState,
 	                              LevelAccessor levelAccessor, BlockPos currentPos, BlockPos facingPos) {
-
-		if (stateIn.getValue(WATERLOGGED)) {
-			levelAccessor.scheduleTick(currentPos, Fluids.WATER, Fluids.WATER.getTickDelay(levelAccessor));
-		}
+		
 		return facing.getOpposite() == stateIn.getValue(FACING) && !stateIn.canSurvive(levelAccessor, currentPos)
 				? Blocks.AIR.defaultBlockState() : stateIn;
 	}

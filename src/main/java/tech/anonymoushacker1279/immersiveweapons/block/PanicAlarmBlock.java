@@ -37,17 +37,8 @@ public class PanicAlarmBlock extends HorizontalDirectionalBlock implements Simpl
 		registerDefaultState(stateDefinition.any().setValue(WATERLOGGED, false).setValue(FACING, Direction.NORTH));
 	}
 
-	/**
-	 * Set the shape of the block.
-	 *
-	 * @param state            the <code>BlockState</code> of the block
-	 * @param reader           the <code>BlockGetter</code> for the block
-	 * @param pos              the <code>BlockPos</code> the block is at
-	 * @param collisionContext the <code>CollisionContext</code> of the block
-	 * @return VoxelShape
-	 */
 	@Override
-	public VoxelShape getShape(BlockState state, BlockGetter reader, BlockPos pos,
+	public VoxelShape getShape(BlockState state, BlockGetter getter, BlockPos pos,
 	                           CollisionContext collisionContext) {
 
 		return switch (state.getValue(FACING)) {
@@ -58,37 +49,16 @@ public class PanicAlarmBlock extends HorizontalDirectionalBlock implements Simpl
 		};
 	}
 
-	/**
-	 * Create the BlockState definition.
-	 *
-	 * @param builder the <code>StateDefinition.Builder</code> of the block
-	 */
 	@Override
 	public void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
 		builder.add(WATERLOGGED, FACING);
 	}
 
-	/**
-	 * Create a block entity for the block.
-	 *
-	 * @param blockPos   the <code>BlockPos</code> the block is at
-	 * @param blockState the <code>BlockState</code> of the block
-	 * @return BlockEntity
-	 */
 	@Override
 	public BlockEntity newBlockEntity(BlockPos blockPos, BlockState blockState) {
 		return new PanicAlarmBlockEntity(blockPos, blockState);
 	}
 
-	/**
-	 * Get the ticker for the block.
-	 *
-	 * @param level           the <code>Level</code> the block is in
-	 * @param blockState      the <code>BlockState</code> of the block
-	 * @param blockEntityType the <code>BlockEntityType</code> to get the ticker of
-	 * @param <T>             the type extending BlockEntity
-	 * @return BlockEntityTicker
-	 */
 	@Override
 	public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState blockState,
 	                                                              BlockEntityType<T> blockEntityType) {
@@ -96,13 +66,6 @@ public class PanicAlarmBlock extends HorizontalDirectionalBlock implements Simpl
 		return level.isClientSide ? null : (world, pos, state, entity) -> ((PanicAlarmBlockEntity) entity).tick(world, pos);
 	}
 
-	/**
-	 * Set placement properties.
-	 * Sets the facing direction of the block for placement.
-	 *
-	 * @param context the <code>BlockPlaceContext</code> during placement
-	 * @return BlockState
-	 */
 	@Override
 	public BlockState getStateForPlacement(BlockPlaceContext context) {
 		return defaultBlockState()
@@ -110,28 +73,11 @@ public class PanicAlarmBlock extends HorizontalDirectionalBlock implements Simpl
 				.setValue(WATERLOGGED, context.getLevel().getFluidState(context.getClickedPos()).getType() == Fluids.WATER);
 	}
 
-	/**
-	 * Set FluidState properties.
-	 * Allows the block to exhibit waterlogged behavior.
-	 *
-	 * @param state the <code>BlockState</code> of the block
-	 * @return FluidState
-	 */
 	@Override
 	public FluidState getFluidState(BlockState state) {
 		return state.getValue(WATERLOGGED) ? Fluids.WATER.getSource(false) : super.getFluidState(state);
 	}
 
-	/**
-	 * Runs when neighboring blocks change state.
-	 *
-	 * @param state    the <code>BlockState</code> of the block
-	 * @param level    the <code>Level</code> the block is in
-	 * @param pos      the <code>BlockPos</code> the block is at
-	 * @param blockIn  the <code>Block</code> that is changing
-	 * @param fromPos  the <code>BlockPos</code> of the changing block
-	 * @param isMoving determines if the block is moving
-	 */
 	@Override
 	public void neighborChanged(BlockState state, Level level, BlockPos pos, Block blockIn,
 	                            BlockPos fromPos, boolean isMoving) {
@@ -142,15 +88,6 @@ public class PanicAlarmBlock extends HorizontalDirectionalBlock implements Simpl
 		}
 	}
 
-	/**
-	 * Runs when neighboring blocks change state.
-	 *
-	 * @param state    the <code>BlockState</code> of the block
-	 * @param level    the <code>Level</code> the block is in
-	 * @param pos      the <code>BlockPos</code> the block is at
-	 * @param oldState the <code>BlockState</code> the block previously had
-	 * @param isMoving determines if the block is moving
-	 */
 	@Override
 	public void onPlace(BlockState state, Level level, BlockPos pos, BlockState oldState, boolean isMoving) {
 		if (!oldState.is(state.getBlock())) {
@@ -162,14 +99,6 @@ public class PanicAlarmBlock extends HorizontalDirectionalBlock implements Simpl
 		}
 	}
 
-	/**
-	 * Runs once every tick
-	 *
-	 * @param state       the <code>BlockState</code> of the block
-	 * @param serverLevel the <code>ServerLevel</code> of the block
-	 * @param pos         the <code>BlockPos</code> the block is at
-	 * @param random      a <code>RandomSource</code> instance
-	 */
 	@Override
 	public void tick(BlockState state, ServerLevel serverLevel, BlockPos pos, RandomSource random) {
 		if (!serverLevel.isClientSide) {
@@ -187,14 +116,14 @@ public class PanicAlarmBlock extends HorizontalDirectionalBlock implements Simpl
 	private void checkPowered(Level level, BlockPos pos) {
 		BlockEntity blockEntity = level.getBlockEntity(pos);
 
-		if (blockEntity instanceof PanicAlarmBlockEntity panicAlarmTileEntity) {
+		if (blockEntity instanceof PanicAlarmBlockEntity panicAlarmBlockEntity) {
 			if (level.getBestNeighborSignal(pos) > 0) {
-				if (!panicAlarmTileEntity.isPowered()) {
-					panicAlarmTileEntity.setPowered(true);
+				if (!panicAlarmBlockEntity.isPowered()) {
+					panicAlarmBlockEntity.setPowered(true);
 				}
 			} else {
-				if (panicAlarmTileEntity.isPowered()) {
-					panicAlarmTileEntity.setPowered(false);
+				if (panicAlarmBlockEntity.isPowered()) {
+					panicAlarmBlockEntity.setPowered(false);
 				}
 			}
 		}

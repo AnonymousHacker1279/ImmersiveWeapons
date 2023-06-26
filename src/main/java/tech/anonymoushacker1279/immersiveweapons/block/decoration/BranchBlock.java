@@ -27,18 +27,9 @@ public class BranchBlock extends BasicOrientableBlock {
 		super(properties);
 	}
 
-	/**
-	 * Set the shape of the block.
-	 *
-	 * @param state            the <code>BlockState</code> of the block
-	 * @param reader           the <code>BlockGetter</code> for the block
-	 * @param pos              the <code>BlockPos</code> the block is at
-	 * @param collisionContext the <code>CollisionContext</code> of the block
-	 * @return VoxelShape
-	 */
 	@SuppressWarnings("deprecation")
 	@Override
-	public VoxelShape getShape(BlockState state, BlockGetter reader, BlockPos pos,
+	public VoxelShape getShape(BlockState state, BlockGetter getter, BlockPos pos,
 	                           CollisionContext collisionContext) {
 
 		return switch (state.getValue(FACING)) {
@@ -49,14 +40,6 @@ public class BranchBlock extends BasicOrientableBlock {
 		};
 	}
 
-	/**
-	 * Determine if the block can survive an update.
-	 *
-	 * @param state  the <code>BlockState</code> of the block
-	 * @param reader the <code>LevelReader</code> for the block
-	 * @param pos    the <code>BlockPos</code> the block is at
-	 * @return boolean
-	 */
 	@SuppressWarnings("deprecation")
 	@Override
 	public boolean canSurvive(BlockState state, LevelReader reader, BlockPos pos) {
@@ -64,17 +47,6 @@ public class BranchBlock extends BasicOrientableBlock {
 		return blockstate.is(IWBlockTagGroups.BURNED_OAK_LOGS);
 	}
 
-	/**
-	 * Update the block's shape.
-	 *
-	 * @param state         the new <code>BlockState</code> of the block
-	 * @param direction     the <code>Direction</code> the block is facing
-	 * @param neighborState the neighbor <code>BlockState</code> of the block
-	 * @param level         the <code>LevelAccessor</code> for the block
-	 * @param pos           the new <code>BlockPos</code> the block is at
-	 * @param neighborPos   the old <code>BlockPos</code> the block was at
-	 * @return BlockState
-	 */
 	@SuppressWarnings("deprecation")
 	@Override
 	public BlockState updateShape(BlockState state, Direction direction, BlockState neighborState,
