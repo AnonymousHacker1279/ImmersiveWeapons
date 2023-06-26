@@ -483,7 +483,8 @@ public class LanguageGenerator extends IWLanguageProvider {
 	}
 
 	private void addMessages() {
-		addMessage("item.first_aid_kit", "You must be at or below half health to use this");
+		addMessage("item.first_aid_kit.player", "You must be at or below half health to use this");
+		addMessage("item.first_aid_kit.entity", "The target must be at or below half health to use this");
 		addMessage("item.azul_locator.teleporting", "Teleporting to spawn point in %s seconds...");
 		addMessage("item.azul_locator.teleported", "Teleported to spawn point!");
 		addMessage("item.azul_locator.no_spawn", "Unable to teleport: No spawn point set.");
