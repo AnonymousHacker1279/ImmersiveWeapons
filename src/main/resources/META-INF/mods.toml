@@ -1,16 +1,16 @@
 modLoader = "javafml" #mandatory
-loaderVersion = "[47,)" #mandatory
+loaderVersion = "${loader_version_range}" #mandatory
 license = "MIT"
 issueTrackerURL = "https://github.com/AnonymousHacker1279/ImmersiveWeapons/issues" #optional
 
 [[mods]] #mandatory
 modId = "immersiveweapons" #mandatory
-version = "${file.jarVersion}" #mandatory
+version = "${mod_version}" #mandatory
 displayName = "Immersive Weapons" #mandatory
 displayURL = "https://www.curseforge.com/minecraft/mc-mods/immersive-weapons" #optional
 updateJSONURL = "https://raw.githubusercontent.com/AnonymousHacker1279/ImmersiveWeapons/master/update.json"
 logoFile = "logo.png" #optional
-credits = "Written by AnonymousHacker1279\n - Visually designed with the help of Jonny-fox and gamingwarrior68\n - Sound designed with the help of RandomDev and Jonny-fox\n" #optional
+credits = "Written by AnonymousHacker1279 - Visually designed with the help of Jonny-fox and gamingwarrior68 - Sound designed with the help of RandomDev and Jonny-fox" #optional
 authors = "AnonymousHacker1279" #optional
 description = '''
 Immersive Weapons is more than just a weapons mod aiming to spice up your combat skills.
@@ -19,14 +19,14 @@ Immersive Weapons is more than just a weapons mod aiming to spice up your combat
 [[dependencies.immersiveweapons]] #optional
 modId = "forge" #mandatory
 mandatory = true #mandatory
-versionRange = "[47.0.1,)" #mandatory
+versionRange = "${forge_version_range}" #mandatory
 ordering = "NONE"
 side = "BOTH"
 
 [[dependencies.immersiveweapons]]
 modId = "minecraft"
 mandatory = true
-versionRange = "[1.20.1,1.21)"
+versionRange = "${minecraft_version_range}"
 ordering = "NONE"
 side = "BOTH"
 

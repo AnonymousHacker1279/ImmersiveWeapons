@@ -6,7 +6,7 @@ import net.minecraft.world.effect.MobEffects;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FirstAidKitItem extends AbstractHealingItem {
+public class FirstAidKitItem extends AbstractFortitudeItem {
 
 	/**
 	 * Constructor for FirstAidKitItem.

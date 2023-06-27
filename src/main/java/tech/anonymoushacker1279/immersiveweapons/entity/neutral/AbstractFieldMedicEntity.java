@@ -34,7 +34,6 @@ import net.minecraftforge.network.PacketDistributor;
 import org.jetbrains.annotations.Nullable;
 import tech.anonymoushacker1279.immersiveweapons.entity.GrantAdvancementOnDiscovery;
 import tech.anonymoushacker1279.immersiveweapons.init.*;
-import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
 import tech.anonymoushacker1279.immersiveweapons.world.level.IWDamageSources;
 
 import java.time.LocalDate;
@@ -263,26 +262,20 @@ public abstract class AbstractFieldMedicEntity extends PathfinderMob implements 
 		}
 	}
 
-	/**
-	 * Runs when the entity hurts a target.
-	 *
-	 * @param entityIn the <code>Entity</code> being hurt
-	 * @return boolean
-	 */
 	@Override
-	public boolean doHurtTarget(Entity entityIn) {
-		boolean canHurtTarget = super.doHurtTarget(entityIn);
-		if (canHurtTarget) {
+	public boolean doHurtTarget(Entity entity) {
+		boolean canHurtTarget = super.doHurtTarget(entity);
+		if (canHurtTarget && entity instanceof LivingEntity livingEntity) {
 			if (getMainHandItem().getItem() == ItemRegistry.USED_SYRINGE.get()) {
-				float randomNumber = GeneralUtilities.getRandomNumber(0f, 1f);
+				float randomNumber = livingEntity.getRandom().nextFloat();
 				// Poison chance
 				if (randomNumber <= 0.8f) {
-					((LivingEntity) entityIn).addEffect(new MobEffectInstance(MobEffects.POISON, 500,
+					livingEntity.addEffect(new MobEffectInstance(MobEffects.POISON, 500,
 							0, false, true));
 
 					// Hepatitis chance
 					if (randomNumber <= 0.3f) {
-						entityIn.hurt(IWDamageSources.USED_SYRINGE, 8.0F);
+						entity.hurt(IWDamageSources.USED_SYRINGE, 8.0F);
 						// :)
 						if (randomNumber <= 0.005f) {
 							PacketHandler.INSTANCE.send(PacketDistributor.TRACKING_CHUNK.with(() ->
@@ -304,30 +297,34 @@ public abstract class AbstractFieldMedicEntity extends PathfinderMob implements 
 	 */
 	private void checkForHurtEntities(List<Class<? extends PathfinderMob>> checkedEntities) {
 		if (checkForHurtEntitiesCooldown == 0 && currentlyTargetedEntity == null) {
-			List<Entity> entity = level().getEntities(this, getBoundingBox().move(-24, -5, -24).expandTowards(24, 5, 24));
-			if (!entity.isEmpty()) {
-				for (Entity element : entity) {
-					if (!checkedEntities.contains(element.getClass())) {
+			List<Entity> entities = level().getEntities(this, getBoundingBox().inflate(24, 5, 24));
+			if (!entities.isEmpty()) {
+				for (Entity entity : entities) {
+					if (!checkedEntities.contains(entity.getClass())) {
 						continue;
 					}
-					if (element.getRootVehicle() == lastTargetedEntity) {
-						if (unlockLastTargetedEntityCooldown > 0) {
-							unlockLastTargetedEntityCooldown--;
+
+					if (entity instanceof LivingEntity livingEntity) {
+						if (livingEntity == lastTargetedEntity) {
+							if (unlockLastTargetedEntityCooldown > 0) {
+								unlockLastTargetedEntityCooldown--;
+								continue;
+							}
+
+							lastTargetedEntity = null;
 							continue;
 						}
-						lastTargetedEntity = null;
-						continue;
-					}
-					if (element.showVehicleHealth()) {
-						if (((LivingEntity) element).getHealth() < ((LivingEntity) element).getMaxHealth()) {
-							currentlyTargetedEntity = (LivingEntity) element.getRootVehicle();
+						if (livingEntity.getHealth() < livingEntity.getMaxHealth()) {
+							currentlyTargetedEntity = livingEntity;
 							checkForHurtEntitiesCooldown = 100;
+
 							return;
 						} else {
 							heal();
 						}
 					}
 				}
+
 				checkForHurtEntitiesCooldown = 100;
 			}
 		} else if (currentlyTargetedEntity != null) {
@@ -341,6 +338,7 @@ public abstract class AbstractFieldMedicEntity extends PathfinderMob implements 
 					setItemInHand(InteractionHand.MAIN_HAND, new ItemStack(ItemRegistry.BANDAGE.get()));
 					currentlyTargetedEntity.addEffect(new MobEffectInstance(MobEffects.REGENERATION, 240, 0, false, true));
 				}
+
 				lastTargetedEntity = currentlyTargetedEntity;
 				unlockLastTargetedEntityCooldown = 200;
 				currentlyTargetedEntity = null;

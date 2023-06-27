@@ -22,7 +22,6 @@ import org.jetbrains.annotations.Nullable;
 import tech.anonymoushacker1279.immersiveweapons.config.CommonConfig;
 import tech.anonymoushacker1279.immersiveweapons.init.EnchantmentRegistry;
 import tech.anonymoushacker1279.immersiveweapons.init.EntityRegistry;
-import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
 import tech.anonymoushacker1279.immersiveweapons.world.level.IWDamageSources;
 
 public class MeteorEntity extends Projectile {
@@ -53,9 +52,9 @@ public class MeteorEntity extends Projectile {
 
 			// Determine a starting position 40 blocks above the target position, and within a 15 block radius
 			meteorEntity.startPos = new BlockPos(
-					targetPos.getX() + GeneralUtilities.getRandomNumber(-15, 15),
+					targetPos.getX() + level.getRandom().nextIntBetweenInclusive(-15, 15),
 					targetPos.getY() + 40,
-					targetPos.getZ() + GeneralUtilities.getRandomNumber(-15, 15)
+					targetPos.getZ() + level.getRandom().nextIntBetweenInclusive(-15, 15)
 			);
 
 			// Check if the position is inside a solid block

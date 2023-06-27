@@ -63,7 +63,7 @@ public class SmokeGrenadeEntity extends ThrowableItemProjectile {
 	}
 
 	/**
-	 * Set the particle color.
+	 * Set the particle color. Color IDs can be found in {@link SmokeGrenadeParticleOptions.SmokeGrenadeColors}.
 	 *
 	 * @param color a color ID
 	 */
@@ -92,32 +92,16 @@ public class SmokeGrenadeEntity extends ThrowableItemProjectile {
 				SoundSource.NEUTRAL, 0.2f, 0.6f, true);
 	}
 
-	/**
-	 * Get the entity spawn packet.
-	 *
-	 * @return IPacket
-	 */
 	@Override
 	public Packet<ClientGamePacketListener> getAddEntityPacket() {
 		return new ClientboundAddEntityPacket(this);
 	}
 
-	/**
-	 * ProjectileItemEntity::setItem uses this to save storage space.
-	 * It only stores the itemStack if the itemStack is not the default item.
-	 *
-	 * @return Item
-	 */
 	@Override
 	protected Item getDefaultItem() {
 		return ItemRegistry.SMOKE_GRENADE.get();
 	}
 
-	/**
-	 * Runs when an entity/block is hit.
-	 *
-	 * @param hitResult the <code>HitResult</code> instance
-	 */
 	@Override
 	protected void onHit(HitResult hitResult) {
 		super.onHit(hitResult);

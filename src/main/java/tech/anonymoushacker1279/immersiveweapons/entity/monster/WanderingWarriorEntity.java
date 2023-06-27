@@ -13,7 +13,6 @@ import net.minecraft.world.level.ServerLevelAccessor;
 import org.jetbrains.annotations.Nullable;
 import tech.anonymoushacker1279.immersiveweapons.init.ItemRegistry;
 import tech.anonymoushacker1279.immersiveweapons.init.SoundEventRegistry;
-import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
 
 public class WanderingWarriorEntity extends AbstractWanderingWarriorEntity {
 
@@ -46,7 +45,7 @@ public class WanderingWarriorEntity extends AbstractWanderingWarriorEntity {
 	 */
 	@Override
 	public int getAmbientSoundInterval() {
-		return GeneralUtilities.getRandomNumber(240, 1600);
+		return getRandom().nextIntBetweenInclusive(240, 1600);
 	}
 
 	/**

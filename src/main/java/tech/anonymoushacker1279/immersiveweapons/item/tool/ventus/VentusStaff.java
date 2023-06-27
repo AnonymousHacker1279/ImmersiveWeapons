@@ -1,13 +1,11 @@
 package tech.anonymoushacker1279.immersiveweapons.item.tool.ventus;
 
-import net.minecraft.core.Direction.Axis;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -39,12 +37,11 @@ public class VentusStaff extends Item {
 	@Override
 	public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
 		ItemStack itemInHand = player.getItemInHand(hand);
-		List<Entity> entities = player.level().getEntities(player,
-				player.getBoundingBox().move(-2, 0, -2).expandTowards(4, 2, 4));
+		List<Entity> entities = player.level().getEntities(player, player.getBoundingBox().inflate(3, 2, 3));
 
 		if (!entities.isEmpty()) {
 			for (Entity entity : entities) {
-				if (entity.isAlive()) {
+				if (entity instanceof LivingEntity livingEntity) {
 					level.addParticle(ParticleTypes.CLOUD,
 							entity.getX(),
 							entity.getY() + 0.3d,
@@ -53,7 +50,8 @@ public class VentusStaff extends Item {
 							GeneralUtilities.getRandomNumber(0.0d, 0.03d),
 							GeneralUtilities.getRandomNumber(-0.03d, 0.03d));
 
-					entity.push(player.getLookAngle().get(Axis.X), 1f, player.getLookAngle().get(Axis.Z));
+					livingEntity.knockback(1.5f, player.getLookAngle().reverse().x(), player.getLookAngle().reverse().z());
+					livingEntity.hurtMarked = true;
 				}
 			}
 

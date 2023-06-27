@@ -14,7 +14,6 @@ import net.minecraftforge.common.ToolAction;
 import net.minecraftforge.common.ToolActions;
 import tech.anonymoushacker1279.immersiveweapons.init.EffectRegistry;
 import tech.anonymoushacker1279.immersiveweapons.init.EnchantmentRegistry;
-import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
 
 public class GauntletItem extends TieredItem implements Vanishable {
 
@@ -41,7 +40,7 @@ public class GauntletItem extends TieredItem implements Vanishable {
 
 	@Override
 	public boolean hurtEnemy(ItemStack stack, LivingEntity target, LivingEntity attacker) {
-		if (GeneralUtilities.getRandomNumber(0.0f, 1.0f) <= bleedChance) {
+		if (target.getRandom().nextFloat() <= bleedChance) {
 			int enchantmentLevel = stack.getEnchantmentLevel(EnchantmentRegistry.CRIMSON_CLAW.get());
 			int duration = 200 + (enchantmentLevel * 100);
 

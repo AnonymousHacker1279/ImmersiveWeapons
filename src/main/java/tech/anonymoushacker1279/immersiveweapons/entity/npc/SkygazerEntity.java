@@ -29,7 +29,6 @@ import tech.anonymoushacker1279.immersiveweapons.entity.GrantAdvancementOnDiscov
 import tech.anonymoushacker1279.immersiveweapons.entity.monster.StarmiteEntity;
 import tech.anonymoushacker1279.immersiveweapons.entity.npc.trades.*;
 import tech.anonymoushacker1279.immersiveweapons.init.*;
-import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
 
 import javax.annotation.Nullable;
 import java.util.*;
@@ -246,7 +245,7 @@ public class SkygazerEntity extends AbstractVillager implements GrantAdvancement
 			if (TargetingConditions.forCombat().test(this, attacker)) {
 				attacker.addEffect(new MobEffectInstance(MobEffects.BLINDNESS, 250, 0));
 
-				for (int i = 0; i < GeneralUtilities.getRandomNumber(2, 4); i++) {
+				for (int i = 0; i < getRandom().nextIntBetweenInclusive(2, 3); i++) {
 					StarmiteEntity starmite = new StarmiteEntity(EntityRegistry.STARMITE_ENTITY.get(), level());
 					starmite.moveTo(attacker.getX(), attacker.getY(), attacker.getZ(), attacker.getXRot(), attacker.getYRot());
 

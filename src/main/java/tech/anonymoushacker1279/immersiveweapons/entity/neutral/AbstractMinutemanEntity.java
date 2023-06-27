@@ -275,7 +275,9 @@ public abstract class AbstractMinutemanEntity extends PathfinderMob implements R
 			bulletEntity.setOwner(this);
 
 			bulletEntity.shoot(deltaX + GeneralUtilities.getRandomNumber(-1.0f, 1.0f),
-					deltaY + sqrtXZ * 0.2D + GeneralUtilities.getRandomNumber(-0.375f, 0.375f), deltaZ, 1.6F,
+					deltaY + sqrtXZ * 0.2D + GeneralUtilities.getRandomNumber(-0.375f, 0.375f),
+					deltaZ,
+					1.6F,
 					18 - level().getDifficulty().getId() * 4 + GeneralUtilities.getRandomNumber(0.2f, 0.8f));
 			level().addFreshEntity(bulletEntity);
 		}

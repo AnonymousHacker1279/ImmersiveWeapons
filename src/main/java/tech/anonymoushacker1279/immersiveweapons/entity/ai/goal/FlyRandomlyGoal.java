@@ -11,7 +11,6 @@ import org.jetbrains.annotations.Nullable;
 import tech.anonymoushacker1279.immersiveweapons.data.biomes.IWBiomes;
 import tech.anonymoushacker1279.immersiveweapons.data.dimensions.IWDimensions;
 import tech.anonymoushacker1279.immersiveweapons.entity.monster.EvilEyeEntity;
-import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
 
 public class FlyRandomlyGoal extends Goal {
 
@@ -55,7 +54,7 @@ public class FlyRandomlyGoal extends Goal {
 			int minY = evilEyeEntity.level().getHeightmapPos(Types.MOTION_BLOCKING, new BlockPos(x, 0, z)).getY() + 20;
 			int maxY = minY + 11;
 			// Pick a random number between the two bounds
-			int y = GeneralUtilities.getRandomNumber(minY, maxY);
+			int y = evilEyeEntity.getRandom().nextIntBetweenInclusive(minY, maxY);
 
 			// Set the target position
 			targetPosition = new BlockPos(x, y, z);

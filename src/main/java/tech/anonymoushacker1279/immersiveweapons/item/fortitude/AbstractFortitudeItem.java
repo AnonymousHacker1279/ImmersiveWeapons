@@ -9,17 +9,18 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import org.jetbrains.annotations.Nullable;
 import tech.anonymoushacker1279.immersiveweapons.init.EffectRegistry;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class AbstractHealingItem extends Item {
+public abstract class AbstractFortitudeItem extends Item {
 
 	protected boolean usedOnEntity = false;
 	protected final boolean requireHalfHealth;
 
-	public AbstractHealingItem(Properties properties, boolean requireHalfHealth) {
+	public AbstractFortitudeItem(Properties properties, boolean requireHalfHealth) {
 		super(properties);
 
 		this.requireHalfHealth = requireHalfHealth;
@@ -27,6 +28,11 @@ public abstract class AbstractHealingItem extends Item {
 
 	public int getCooldown() {
 		return 300;
+	}
+
+	@Nullable
+	public ItemStack getContainerItem() {
+		return null;
 	}
 
 	public List<MobEffectInstance> effects() {
@@ -58,6 +64,9 @@ public abstract class AbstractHealingItem extends Item {
 
 		if (!player.isCreative()) {
 			itemInHand.shrink(1);
+			if (getContainerItem() != null) {
+				player.getInventory().add(getContainerItem());
+			}
 			player.getCooldowns().addCooldown(this, getCooldown());
 		}
 
@@ -67,7 +76,6 @@ public abstract class AbstractHealingItem extends Item {
 	@Override
 	public InteractionResult interactLivingEntity(ItemStack stack, Player player,
 	                                              LivingEntity entity, InteractionHand hand) {
-
 
 		usedOnEntity = true;
 
@@ -88,9 +96,12 @@ public abstract class AbstractHealingItem extends Item {
 		setEffects(entity);
 
 		if (!player.isCreative()) {
+			if (getContainerItem() != null) {
+				player.getInventory().add(getContainerItem());
+			}
 			stack.shrink(1);
 		}
-		
+
 		return InteractionResult.PASS;
 	}
 

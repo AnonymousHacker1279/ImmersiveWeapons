@@ -36,7 +36,6 @@ import org.jetbrains.annotations.Nullable;
 import tech.anonymoushacker1279.immersiveweapons.entity.GrantAdvancementOnDiscovery;
 import tech.anonymoushacker1279.immersiveweapons.init.PacketHandler;
 import tech.anonymoushacker1279.immersiveweapons.init.SoundEventRegistry;
-import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
 
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -369,7 +368,7 @@ public class LavaRevenantEntity extends FlyingMob implements Enemy, GrantAdvance
 	                                    @Nullable CompoundTag pDataTag) {
 
 		anchorPoint = blockPosition().above(15);
-		setSize(GeneralUtilities.getRandomNumber(1, 3));
+		setSize(getRandom().nextIntBetweenInclusive(1, 3));
 		setHealth(getMaxHealth());
 		return super.finalizeSpawn(pLevel, pDifficulty, pReason, pSpawnData, pDataTag);
 	}
@@ -551,7 +550,7 @@ public class LavaRevenantEntity extends FlyingMob implements Enemy, GrantAdvance
 			if (minecraft.level != null) {
 				minecraft.level.playLocalSound(msg.blockPos.getX(), msg.blockPos.getY(), msg.blockPos.getZ(),
 						SoundEventRegistry.LAVA_REVENANT_BITE.get(), SoundSource.HOSTILE, 0.3F,
-						GeneralUtilities.getRandomNumber(0.0f, 1.0f) * 0.1F + 0.9F, false);
+						minecraft.level.getRandom().nextFloat() * 0.1F + 0.9F, false);
 			}
 		}
 	}

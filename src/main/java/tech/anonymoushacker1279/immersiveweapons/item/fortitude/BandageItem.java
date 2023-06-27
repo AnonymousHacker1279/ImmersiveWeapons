@@ -6,7 +6,7 @@ import net.minecraft.world.effect.MobEffects;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BandageItem extends AbstractHealingItem {
+public class BandageItem extends AbstractFortitudeItem {
 
 	/**
 	 * Constructor for BandageItem.

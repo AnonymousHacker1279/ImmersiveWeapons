@@ -16,7 +16,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import tech.anonymoushacker1279.immersiveweapons.init.SoundEventRegistry;
-import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
 
 public class HansEntity extends AbstractWanderingWarriorEntity {
 
@@ -58,7 +57,7 @@ public class HansEntity extends AbstractWanderingWarriorEntity {
 	 */
 	@Override
 	public int getAmbientSoundInterval() {
-		return GeneralUtilities.getRandomNumber(240, 1600);
+		return getRandom().nextIntBetweenInclusive(240, 1600);
 	}
 
 	/**

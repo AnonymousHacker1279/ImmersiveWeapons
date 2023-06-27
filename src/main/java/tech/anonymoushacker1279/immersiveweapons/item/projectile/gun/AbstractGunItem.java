@@ -65,7 +65,7 @@ public abstract class AbstractGunItem extends Item implements Vanishable {
 
 			// Roll for misfire
 			if (ammo.getItem() instanceof AbstractBulletItem bullet) {
-				if (GeneralUtilities.getRandomNumber(0.0f, 1.0001f) <= bullet.misfireChance()) {
+				if (livingEntity.getRandom().nextFloat() <= bullet.misfireChance()) {
 					misfire = true;
 				}
 
@@ -106,7 +106,7 @@ public abstract class AbstractGunItem extends Item implements Vanishable {
 						setupFire(gun, bulletEntity, player);
 
 						// Roll for random crits
-						if (GeneralUtilities.getRandomNumber(0f, 1f) <= CommonConfig.GUN_CRIT_CHANCE.get()) {
+						if (livingEntity.getRandom().nextFloat() <= CommonConfig.GUN_CRIT_CHANCE.get()) {
 							bulletEntity.setCritArrow(true);
 						}
 

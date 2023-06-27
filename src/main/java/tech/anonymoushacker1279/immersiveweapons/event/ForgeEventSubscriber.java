@@ -61,7 +61,6 @@ import tech.anonymoushacker1279.immersiveweapons.item.AccessoryItem;
 import tech.anonymoushacker1279.immersiveweapons.item.CursedItem;
 import tech.anonymoushacker1279.immersiveweapons.item.gauntlet.GauntletItem;
 import tech.anonymoushacker1279.immersiveweapons.item.pike.PikeItem;
-import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
 import tech.anonymoushacker1279.immersiveweapons.util.LegacyMappingsHandler;
 import tech.anonymoushacker1279.immersiveweapons.world.level.IWDamageSources;
 
@@ -70,6 +69,8 @@ import java.util.UUID;
 
 @EventBusSubscriber(modid = ImmersiveWeapons.MOD_ID, bus = Bus.FORGE)
 public class ForgeEventSubscriber {
+
+	public static final UUID ATTACK_REACH_MODIFIER = UUID.fromString("9f470b49-0445-4341-ae85-55b9e5ec2a1c");
 
 	public static final UUID BLOATED_HEART_HEALTH_MODIFIER_UUID = UUID.fromString("e5485685-cfbe-422b-b7dd-eda29049a508");
 	public static final AttributeModifier BLOATED_HEART_HEALTH_MODIFIER = new AttributeModifier(BLOATED_HEART_HEALTH_MODIFIER_UUID,
@@ -414,7 +415,7 @@ public class ForgeEventSubscriber {
 			}
 
 			event.addModifier(ForgeMod.ENTITY_REACH.get(),
-					new AttributeModifier(GeneralUtilities.ATTACK_REACH_MODIFIER,
+					new AttributeModifier(ATTACK_REACH_MODIFIER,
 							"Reach distance",
 							distance,
 							Operation.ADDITION));
@@ -435,7 +436,7 @@ public class ForgeEventSubscriber {
 							Operation.ADDITION));
 
 			event.addModifier(ForgeMod.ENTITY_REACH.get(),
-					new AttributeModifier(GeneralUtilities.ATTACK_REACH_MODIFIER,
+					new AttributeModifier(ATTACK_REACH_MODIFIER,
 							"Weapon modifier",
 							-2.0d,
 							Operation.ADDITION));

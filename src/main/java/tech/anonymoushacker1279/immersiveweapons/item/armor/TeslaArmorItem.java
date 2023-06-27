@@ -140,7 +140,9 @@ public class TeslaArmorItem extends ArmorItem {
 		livingEntity.addEffect(new MobEffectInstance(MobEffects.CONFUSION,
 				100, 0, false, false));
 
-		effectNoise(level, player);
+		if (level.isClientSide) {
+			effectNoise(level, player);
+		}
 	}
 
 	/**

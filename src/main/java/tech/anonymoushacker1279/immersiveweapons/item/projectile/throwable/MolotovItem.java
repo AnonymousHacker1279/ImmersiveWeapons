@@ -17,7 +17,6 @@ public class MolotovItem extends Item {
 		super(properties);
 	}
 
-
 	@Override
 	public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
 		ItemStack itemInHand = player.getItemInHand(hand);

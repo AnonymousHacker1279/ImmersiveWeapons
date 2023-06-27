@@ -100,14 +100,14 @@ public class CelestialTowerEntity extends Monster implements GrantAdvancementOnD
 		// Add more waves based on difficulty + random modifier
 		// Also increase the XP dropped
 		if (pDifficulty.getDifficulty() == Difficulty.EASY) {
-			totalWavesToSpawn = totalWavesToSpawn + GeneralUtilities.getRandomNumber(0, 2);
+			totalWavesToSpawn = totalWavesToSpawn + getRandom().nextIntBetweenInclusive(0, 1);
 			xpReward = 25;
 		} else if (pDifficulty.getDifficulty() == Difficulty.NORMAL) {
-			totalWavesToSpawn = totalWavesToSpawn + GeneralUtilities.getRandomNumber(1, 4);
+			totalWavesToSpawn = totalWavesToSpawn + getRandom().nextIntBetweenInclusive(1, 3);
 			waveSizeModifier = 2;
 			xpReward = 50;
 		} else if (pDifficulty.getDifficulty() == Difficulty.HARD) {
-			totalWavesToSpawn = totalWavesToSpawn + GeneralUtilities.getRandomNumber(2, 5);
+			totalWavesToSpawn = totalWavesToSpawn + getRandom().nextIntBetweenInclusive(2, 4);
 			waveSizeModifier = 3;
 			xpReward = 75;
 		}
@@ -246,7 +246,7 @@ public class CelestialTowerEntity extends Monster implements GrantAdvancementOnD
 			return false;
 		} else if (nearbyLanterns == 0) {
 			return true;
-		} else return GeneralUtilities.getRandomNumber(0.0f, 1.0f) <= (nearbyLanterns == 2 ? 0.125f : 0.25f);
+		} else return getRandom().nextFloat() <= (nearbyLanterns == 2 ? 0.125f : 0.25f);
 	}
 
 	@Override

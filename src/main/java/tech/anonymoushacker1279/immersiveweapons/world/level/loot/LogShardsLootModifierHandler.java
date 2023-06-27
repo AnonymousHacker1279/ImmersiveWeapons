@@ -14,7 +14,6 @@ import net.minecraftforge.common.loot.IGlobalLootModifier;
 import net.minecraftforge.common.loot.LootModifier;
 import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.NotNull;
-import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
 
 import java.util.function.Supplier;
 
@@ -64,7 +63,7 @@ public class LogShardsLootModifierHandler extends LootModifier {
 		for (ItemStack stack : generatedLoot) {
 			// Each wooden log stack can generate shards
 			if (stack.is(ItemTags.create(new ResourceLocation(tag)))) {
-				numShards += stack.getCount() * GeneralUtilities.getRandomNumber(minShards, maxShards + 1);
+				numShards += stack.getCount() * context.getRandom().nextIntBetweenInclusive(minShards, maxShards);
 			}
 		}
 
