@@ -15,6 +15,7 @@ import net.minecraft.world.item.alchemy.Potions;
 import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.crafting.StrictNBTIngredient;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -74,6 +75,7 @@ public class RecipeGenerator extends RecipeProvider {
 		createDecorations();
 		createAccessories();
 		createMiscellaneousItems();
+		createMinecraftItems();
 
 		FamilyGenerator familyGenerator = new FamilyGenerator(packOutput);
 		familyGenerator.buildRecipes(recipeConsumer);
@@ -297,12 +299,6 @@ public class RecipeGenerator extends RecipeProvider {
 	}
 
 	private void createCopperItems() {
-		// Copper ingot
-		ShapedRecipeBuilder shapedRecipeBuilder = ShapedRecipeBuilder.shaped(RecipeCategory.MISC, Items.COPPER_INGOT)
-				.group("copper_ingot")
-				.unlockedBy("copper_nugget", has(ForgeItemTagGroups.COPPER_NUGGETS));
-		create3x3Object(shapedRecipeBuilder, ForgeItemTagGroups.COPPER_NUGGETS);
-
 		// Copper nugget
 		ShapelessRecipeBuilder shapelessRecipeBuilder = ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, ItemRegistry.COPPER_NUGGET.get(), 9)
 				.group("copper_nugget")
@@ -982,11 +978,13 @@ public class RecipeGenerator extends RecipeProvider {
 		createTable(BlockItemRegistry.DARK_OAK_TABLE_ITEM.get(), Items.DARK_OAK_SLAB, Items.DARK_OAK_FENCE);
 		createTable(BlockItemRegistry.CRIMSON_TABLE_ITEM.get(), Items.CRIMSON_SLAB, Items.CRIMSON_FENCE);
 		createTable(BlockItemRegistry.WARPED_TABLE_ITEM.get(), Items.WARPED_SLAB, Items.WARPED_FENCE);
+		createTable(BlockItemRegistry.MANGROVE_TABLE_ITEM.get(), Items.MANGROVE_SLAB, Items.MANGROVE_FENCE);
+		createTable(BlockItemRegistry.CHERRY_TABLE_ITEM.get(), Items.CHERRY_SLAB, Items.CHERRY_FENCE);
+		createTable(BlockItemRegistry.BAMBOO_TABLE_ITEM.get(), Items.BAMBOO_SLAB, Items.BAMBOO_FENCE);
 		createTable(BlockItemRegistry.BURNED_OAK_TABLE_ITEM.get(), BlockItemRegistry.BURNED_OAK_SLAB_ITEM.get(),
 				BlockItemRegistry.BURNED_OAK_FENCE_ITEM.get());
 		createTable(BlockItemRegistry.STARDUST_TABLE_ITEM.get(), BlockItemRegistry.STARDUST_SLAB_ITEM.get(),
 				BlockItemRegistry.STARDUST_FENCE_ITEM.get());
-
 	}
 
 	private void createAccessories() {
@@ -1169,13 +1167,6 @@ public class RecipeGenerator extends RecipeProvider {
 				.group("pliers")
 				.unlockedBy("small_parts_metal_tool", has(ItemRegistry.TOOL_JOINT.get()))
 				.save(finishedRecipeConsumer);
-		// Gunpowder (from sulfur)
-		ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, Items.GUNPOWDER)
-				.requires(ItemTags.COALS)
-				.requires(ForgeItemTagGroups.SULFUR_DUSTS)
-				.group("gunpowder")
-				.unlockedBy("sulfur", has(ItemRegistry.SULFUR.get()))
-				.save(finishedRecipeConsumer);
 		// Wooden tool rod
 		ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ItemRegistry.WOODEN_TOOL_ROD.get())
 				.define('a', ItemTags.PLANKS)
@@ -1230,6 +1221,131 @@ public class RecipeGenerator extends RecipeProvider {
 				.pattern("b")
 				.group("cursed_sight_staff")
 				.unlockedBy("cursed_sight_staff_core", has(ItemRegistry.CURSED_SIGHT_STAFF_CORE.get()))
+				.save(finishedRecipeConsumer);
+	}
+
+	private void createMinecraftItems() {
+		// Gunpowder (from sulfur)
+		ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, Items.GUNPOWDER)
+				.requires(ItemTags.COALS)
+				.requires(ForgeItemTagGroups.SULFUR_DUSTS)
+				.group("gunpowder")
+				.unlockedBy("sulfur", has(ItemRegistry.SULFUR.get()))
+				.save(finishedRecipeConsumer);
+		// Copper ingot
+		ShapedRecipeBuilder shapedRecipeBuilder = ShapedRecipeBuilder.shaped(RecipeCategory.MISC, Items.COPPER_INGOT)
+				.group("copper_ingot")
+				.unlockedBy("copper_nugget", has(ForgeItemTagGroups.COPPER_NUGGETS));
+		create3x3Object(shapedRecipeBuilder, ForgeItemTagGroups.COPPER_NUGGETS);
+
+		// Replace some recipes that are hardcoded to use certain ingots to use a tag for any "metal" ingot
+
+		// Blast furnace
+		ShapedRecipeBuilder.shaped(RecipeCategory.MISC, Blocks.BLAST_FURNACE)
+				.define('a', ForgeItemTagGroups.METAL_INGOTS)
+				.define('b', Blocks.FURNACE)
+				.define('c', Items.SMOOTH_STONE)
+				.pattern("aaa")
+				.pattern("aba")
+				.pattern("ccc")
+				.unlockedBy("furnace", has(Blocks.FURNACE))
+				.save(finishedRecipeConsumer);
+
+		// Bucket
+		ShapedRecipeBuilder.shaped(RecipeCategory.MISC, Items.BUCKET)
+				.define('a', ForgeItemTagGroups.METAL_INGOTS)
+				.pattern("a a")
+				.pattern(" a ")
+				.unlockedBy("metal_ingot", has(ForgeItemTagGroups.METAL_INGOTS))
+				.save(finishedRecipeConsumer);
+
+		// Cauldron
+		ShapedRecipeBuilder.shaped(RecipeCategory.MISC, Blocks.CAULDRON)
+				.define('a', ForgeItemTagGroups.METAL_INGOTS)
+				.pattern("a a")
+				.pattern("a a")
+				.pattern("aaa")
+				.unlockedBy("metal_ingot", has(ForgeItemTagGroups.METAL_INGOTS))
+				.save(finishedRecipeConsumer);
+
+		// Chain
+		ShapedRecipeBuilder.shaped(RecipeCategory.MISC, Items.CHAIN)
+				.define('a', ForgeItemTagGroups.METAL_INGOTS)
+				.define('b', ForgeItemTagGroups.METAL_NUGGETS)
+				.pattern(" b ")
+				.pattern(" a ")
+				.pattern(" b ")
+				.unlockedBy("metal_ingot", has(ForgeItemTagGroups.METAL_INGOTS))
+				.save(finishedRecipeConsumer);
+
+		// Hopper
+		ShapedRecipeBuilder.shaped(RecipeCategory.REDSTONE, Blocks.HOPPER)
+				.define('a', ForgeItemTagGroups.METAL_INGOTS)
+				.define('b', Items.CHEST)
+				.pattern("a a")
+				.pattern("aba")
+				.pattern(" a ")
+				.unlockedBy("chest", has(Items.CHEST))
+				.save(finishedRecipeConsumer);
+
+		// Lantern
+		ShapedRecipeBuilder.shaped(RecipeCategory.MISC, Blocks.LANTERN)
+				.define('a', ForgeItemTagGroups.METAL_NUGGETS)
+				.define('b', Items.TORCH)
+				.pattern("aaa")
+				.pattern("aba")
+				.pattern("aaa")
+				.unlockedBy("torch", has(Items.TORCH))
+				.save(finishedRecipeConsumer);
+
+		// Minecart
+		ShapedRecipeBuilder.shaped(RecipeCategory.MISC, Items.MINECART)
+				.define('a', ForgeItemTagGroups.METAL_INGOTS)
+				.pattern("a a")
+				.pattern("aaa")
+				.unlockedBy("metal_ingot", has(ForgeItemTagGroups.METAL_INGOTS))
+				.save(finishedRecipeConsumer);
+
+		// Piston
+		ShapedRecipeBuilder.shaped(RecipeCategory.REDSTONE, Blocks.PISTON)
+				.define('a', ForgeItemTagGroups.METAL_INGOTS)
+				.define('b', ItemTags.PLANKS)
+				.define('c', Items.REDSTONE)
+				.define('d', Items.COBBLESTONE)
+				.pattern("bbb")
+				.pattern("dad")
+				.pattern("dcd")
+				.unlockedBy("redstone", has(Items.REDSTONE))
+				.save(finishedRecipeConsumer);
+
+		// Soul Lantern
+		ShapedRecipeBuilder.shaped(RecipeCategory.MISC, Blocks.SOUL_LANTERN)
+				.define('a', ForgeItemTagGroups.METAL_NUGGETS)
+				.define('b', Items.SOUL_TORCH)
+				.pattern("aaa")
+				.pattern("aba")
+				.pattern("aaa")
+				.unlockedBy("soul_torch", has(Items.SOUL_TORCH))
+				.save(finishedRecipeConsumer);
+
+		// Stonecutter
+		ShapedRecipeBuilder.shaped(RecipeCategory.MISC, Blocks.STONECUTTER)
+				.define('a', ForgeItemTagGroups.METAL_INGOTS)
+				.define('b', Blocks.STONE)
+				.pattern(" a ")
+				.pattern("bbb")
+				.unlockedBy("stone", has(Blocks.STONE))
+				.save(finishedRecipeConsumer);
+
+		// Tripwire Hook
+		ShapedRecipeBuilder.shaped(RecipeCategory.REDSTONE, Items.TRIPWIRE_HOOK)
+				.define('a', ForgeItemTagGroups.METAL_INGOTS)
+				.define('b', Items.STICK)
+				.define('c', ItemTags.PLANKS)
+				.pattern(" a ")
+				.pattern(" b ")
+				.pattern(" c ")
+				.unlockedBy("string", has(Items.STRING))
 				.save(finishedRecipeConsumer);
 	}
 

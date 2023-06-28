@@ -15,8 +15,7 @@ import net.minecraftforge.registries.RegistryObject;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.block.*;
 import tech.anonymoushacker1279.immersiveweapons.block.barbed_wire.BarbedWireBlock;
-import tech.anonymoushacker1279.immersiveweapons.block.decoration.CelestialLanternBlock;
-import tech.anonymoushacker1279.immersiveweapons.block.decoration.FlagPoleBlock;
+import tech.anonymoushacker1279.immersiveweapons.block.decoration.*;
 import tech.anonymoushacker1279.immersiveweapons.block.misc.warrior_statue.WarriorStatueHead;
 import tech.anonymoushacker1279.immersiveweapons.block.misc.warrior_statue.WarriorStatueTorso;
 import tech.anonymoushacker1279.immersiveweapons.data.lists.BlockLists;
@@ -32,6 +31,9 @@ public class BlockStateGenerator extends BlockStateProvider {
 
 	@Override
 	protected void registerStatesAndModels() {
+		List<Block> blocks = new ArrayList<>(250);
+		BlockRegistry.BLOCKS.getEntries().stream().map(RegistryObject::get).forEach(blocks::add);
+
 		ResourceLocation stardust_granule_overlay = new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/stardust_granule_overlay");
 
 		// Generate simple, six-sided blocks
@@ -106,22 +108,19 @@ public class BlockStateGenerator extends BlockStateProvider {
 				.renderType("minecraft:cutout_mipped"));
 
 		// Generate data for tables
-		for (Block block : BlockLists.tableBlocks) {
+		blocks.stream().filter(WoodenTableBlock.class::isInstance).forEach(block -> {
+			String namespace = "minecraft:block/";
+
 			if (block == BlockRegistry.BURNED_OAK_TABLE.get() || block == BlockRegistry.STARDUST_TABLE.get()) {
-				simpleBlock(block, models().withExistingParent(Objects.requireNonNull(ForgeRegistries.BLOCKS.getKey(block)).getPath(),
-								new ResourceLocation(ImmersiveWeapons.MOD_ID, "table"))
-						.texture("all", ImmersiveWeapons.MOD_ID
-								+ ":block/" + Objects.requireNonNull(ForgeRegistries.BLOCKS.getKey(block)).getPath()
-								.replace("table", "planks"))
-						.renderType("minecraft:cutout_mipped"));
-			} else {
-				simpleBlock(block, models().withExistingParent(Objects.requireNonNull(ForgeRegistries.BLOCKS.getKey(block)).getPath(),
-								new ResourceLocation(ImmersiveWeapons.MOD_ID, "table"))
-						.texture("all", "minecraft:block/" + Objects.requireNonNull(ForgeRegistries.BLOCKS.getKey(block)).getPath()
-								.replace("table", "planks"))
-						.renderType("minecraft:cutout_mipped"));
+				namespace = ImmersiveWeapons.MOD_ID + ":block/";
 			}
-		}
+
+			simpleBlock(block, models().withExistingParent(Objects.requireNonNull(ForgeRegistries.BLOCKS.getKey(block)).getPath(),
+							new ResourceLocation(ImmersiveWeapons.MOD_ID, "table"))
+					.texture("all", namespace + Objects.requireNonNull(ForgeRegistries.BLOCKS.getKey(block)).getPath()
+							.replace("table", "planks"))
+					.renderType("minecraft:cutout_mipped"));
+		});
 
 		// Generate data for flags
 		getVariantBuilder(BlockRegistry.FLAG_POLE.get())
@@ -132,12 +131,11 @@ public class BlockStateGenerator extends BlockStateProvider {
 				.addModels(new ConfiguredModel(models()
 						.getExistingFile(new ResourceLocation(ImmersiveWeapons.MOD_ID, "flag_pole"))));
 
-		for (Block block : BlockLists.flagBlocks) {
-			horizontalBlock(block, models().withExistingParent(Objects.requireNonNull(ForgeRegistries.BLOCKS.getKey(block)).getPath(),
-							new ResourceLocation(ImmersiveWeapons.MOD_ID, "flag"))
-					.texture("flag", ImmersiveWeapons.MOD_ID +
-							":block/" + Objects.requireNonNull(ForgeRegistries.BLOCKS.getKey(block)).getPath()));
-		}
+		blocks.stream().filter(FlagBlock.class::isInstance).forEach(block -> horizontalBlock(block, models()
+				.withExistingParent(Objects.requireNonNull(ForgeRegistries.BLOCKS.getKey(block)).getPath(),
+						new ResourceLocation(ImmersiveWeapons.MOD_ID, "flag"))
+				.texture("flag", ImmersiveWeapons.MOD_ID +
+						":block/" + Objects.requireNonNull(ForgeRegistries.BLOCKS.getKey(block)).getPath())));
 
 		// Generate data for cube-bottom-top blocks
 		simpleBlock(BlockRegistry.BLOOD_SANDSTONE.get(), models()

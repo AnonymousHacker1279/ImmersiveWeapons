@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "a": {
+      "tag": "forge:ingots/metal"
+    }
+  },
+  "pattern": [
+    "a a",
+    " a "
+  ],
+  "result": {
+    "item": "minecraft:bucket"
+  },
+  "show_notification": true
+}

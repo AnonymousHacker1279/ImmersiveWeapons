@@ -1,0 +1,35 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "minecraft:lantern"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    },
+    "torch": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "minecraft:torch"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "requirements": [
+    [
+      "torch",
+      "has_the_recipe"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "minecraft:lantern"
+    ]
+  },
+  "sends_telemetry_event": false
+}

@@ -22,14 +22,17 @@ import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
 import net.minecraft.world.level.storage.loot.predicates.*;
 import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
 import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
+import net.minecraftforge.registries.RegistryObject;
 import org.jetbrains.annotations.Nullable;
 import tech.anonymoushacker1279.immersiveweapons.block.*;
 import tech.anonymoushacker1279.immersiveweapons.block.barbed_wire.BarbedWireBlock;
+import tech.anonymoushacker1279.immersiveweapons.block.decoration.WoodenTableBlock;
+import tech.anonymoushacker1279.immersiveweapons.block.decoration.skull.CustomSkullBlock;
 import tech.anonymoushacker1279.immersiveweapons.block.misc.warrior_statue.WarriorStatueTorso;
-import tech.anonymoushacker1279.immersiveweapons.data.lists.BlockLists;
-import tech.anonymoushacker1279.immersiveweapons.data.tags.lists.BlockTagLists;
 import tech.anonymoushacker1279.immersiveweapons.init.*;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
 
@@ -47,6 +50,9 @@ public class BlockLootTables implements LootTableSubProvider {
 	@Override
 	public void generate(BiConsumer<ResourceLocation, Builder> out) {
 		this.out = out;
+
+		List<Block> blocks = new ArrayList<>(250);
+		BlockRegistry.BLOCKS.getEntries().stream().map(RegistryObject::get).forEach(blocks::add);
 
 		// Simple block drops
 		dropSelf(BlockRegistry.AMERICAN_FLAG.get());
@@ -141,13 +147,8 @@ public class BlockLootTables implements LootTableSubProvider {
 		dropSelf(BlockRegistry.BIODOME_LIFE_SUPPORT_UNIT.get());
 		dropSelf(BlockRegistry.RUSTED_IRON_BLOCK.get());
 
-		for (Block block : BlockTagLists.TABLES) {
-			dropSelf(block);
-		}
-
-		for (Block block : BlockLists.headBlocks) {
-			dropSelf(block);
-		}
+		blocks.stream().filter(WoodenTableBlock.class::isInstance).forEach(this::dropSelf);
+		blocks.stream().filter(CustomSkullBlock.class::isInstance).forEach(this::dropSelf);
 
 		// Complex block drops
 		add(BlockRegistry.BURNED_OAK_DOOR.get(), BlockLootTables::createDoor);
