@@ -39,7 +39,7 @@ public class TiltrosDimensionSpecialEffects extends DimensionSpecialEffects {
 
 	@Override
 	public boolean renderSky(ClientLevel level, int ticks, float partialTick, PoseStack poseStack,
-	                         Camera camera, Matrix4f projectionMatrix, boolean isFoggy,
+	                         Camera camera, Matrix4f matrix4f, boolean isFoggy,
 	                         Runnable setupFog) {
 
 		FogRenderer.setupFog(camera, FogMode.FOG_SKY, 32.0f, false, partialTick);
@@ -74,7 +74,6 @@ public class TiltrosDimensionSpecialEffects extends DimensionSpecialEffects {
 				poseStack.mulPose(Axis.ZP.rotationDegrees(-90.0F)); // West
 			}
 
-			Matrix4f matrix4f = poseStack.last().pose();
 			bufferBuilder.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX_COLOR);
 			bufferBuilder.vertex(matrix4f, -100.0F, -100.0F, -100.0F).uv(0.0F, 0.0F).color(255, 255, 255, 75).endVertex();
 			bufferBuilder.vertex(matrix4f, -100.0F, -100.0F, 100.0F).uv(0.0F, 1.0F).color(255, 255, 255, 75).endVertex();

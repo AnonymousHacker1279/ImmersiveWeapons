@@ -23,9 +23,8 @@ public class AzulStainedOrchidBlock extends FlowerBlock implements EntityBlock {
 	@Override
 	public void entityInside(BlockState state, Level level, BlockPos pos, Entity entity) {
 		if (CommonConfig.TILTROS_ENABLED.get()) {
-			BlockEntity blockEntity = level.getBlockEntity(pos);
-			if (blockEntity instanceof AzulStainedOrchidBlockEntity) {
-				((AzulStainedOrchidBlockEntity) blockEntity).entityInside(pos, entity);
+			if (level.getBlockEntity(pos) instanceof AzulStainedOrchidBlockEntity blockEntity) {
+				blockEntity.entityInside(pos, entity);
 			}
 		}
 	}

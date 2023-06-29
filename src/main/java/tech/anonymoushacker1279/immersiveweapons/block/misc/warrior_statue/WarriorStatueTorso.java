@@ -14,18 +14,15 @@ import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
-import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.*;
+import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
-import net.minecraft.world.level.material.FluidState;
-import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.BlockHitResult;
-import net.minecraft.world.phys.shapes.CollisionContext;
-import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.network.NetworkEvent;
@@ -38,11 +35,9 @@ import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
 
 import java.util.function.Supplier;
 
-public class WarriorStatueTorso extends HorizontalDirectionalBlock implements SimpleWaterloggedBlock {
+public class WarriorStatueTorso extends WarriorStatueBase {
 
-	public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
 	public static final BooleanProperty POWERED = BlockStateProperties.POWERED;
-	private static final VoxelShape SHAPE = Block.box(2.0D, 0.0D, 2.0D, 14.0D, 16.0D, 14.0D);
 
 	public WarriorStatueTorso(Properties properties) {
 		super(properties);
@@ -50,48 +45,15 @@ public class WarriorStatueTorso extends HorizontalDirectionalBlock implements Si
 				.setValue(WATERLOGGED, false));
 	}
 
-	/**
-	 * Create the BlockState definition.
-	 *
-	 * @param builder the <code>StateContainer.Builder</code> of the block
-	 */
 	@Override
 	protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
 		builder.add(FACING, POWERED, WATERLOGGED);
 	}
 
-	/**
-	 * Set the shape of the block.
-	 *
-	 * @param state            the <code>BlockState</code> of the block
-	 * @param reader           the <code>IBlockReader</code> for the block
-	 * @param pos              the <code>BlockPos</code> the block is at
-	 * @param selectionContext the <code>ISelectionContext</code> of the block
-	 * @return VoxelShape
-	 */
-	@Override
-	public VoxelShape getShape(BlockState state, BlockGetter reader, BlockPos pos,
-	                           CollisionContext selectionContext) {
-
-		return switch (state.getValue(FACING)) {
-			case SOUTH -> SHAPE.move(0.0D, 0.0D, -0.1D);
-			case EAST -> SHAPE.move(-0.1D, 0.0D, 0.0D);
-			case WEST -> SHAPE.move(0.1D, 0.0D, 0.0D);
-			default -> SHAPE.move(0.0D, 0.0D, 0.1D);
-		};
-	}
-
-	/**
-	 * Set placement properties.
-	 * Sets the facing direction of the block for placement.
-	 *
-	 * @param context the <code>BlockItemUseContext</code> during placement
-	 * @return BlockState
-	 */
 	@Override
 	public BlockState getStateForPlacement(BlockPlaceContext context) {
 		BlockState blockStateBelow = context.getLevel().getBlockState(context.getClickedPos().below());
-		if (blockStateBelow.getBlock() instanceof WarriorStatueBase &&
+		if (blockStateBelow.getBlock() == BlockRegistry.WARRIOR_STATUE_BASE.get() &&
 				blockStateBelow.getValue(FACING) == context.getHorizontalDirection().getOpposite()) {
 
 			context.getLevel().playLocalSound(context.getClickedPos().getX(),
@@ -109,85 +71,54 @@ public class WarriorStatueTorso extends HorizontalDirectionalBlock implements Si
 		}
 	}
 
-	/**
-	 * Set the shading brightness on the client.
-	 *
-	 * @param state  the <code>BlockState</code> of the block
-	 * @param reader the <code>IBlockReader</code> of the block
-	 * @param pos    the <code>BlockPos</code> the block is at
-	 * @return float
-	 */
 	@Override
-	public float getShadeBrightness(BlockState state, BlockGetter reader, BlockPos pos) {
-		return 1.0F;
+	public boolean canSurvive(BlockState state, LevelReader level, BlockPos pos) {
+		if (level.getBlockState(pos.below()).getBlock() != BlockRegistry.WARRIOR_STATUE_BASE.get()) {
+			return false;
+		}
+
+		return super.canSurvive(state, level, pos);
 	}
 
 	@Override
-	public FluidState getFluidState(BlockState state) {
-		return state.getValue(WATERLOGGED) ? Fluids.WATER.getSource(false) : super.getFluidState(state);
-	}
-
-	/**
-	 * Runs when neighboring blocks change state.
-	 *
-	 * @param state    the <code>BlockState</code> of the block
-	 * @param worldIn  the <code>World</code> the block is in
-	 * @param pos      the <code>BlockPos</code> the block is at
-	 * @param blockIn  the <code>Block</code> that is changing
-	 * @param fromPos  the <code>BlockPos</code> of the changing block
-	 * @param isMoving determines if the block is moving
-	 */
-	@Override
-	public void neighborChanged(BlockState state, Level worldIn, BlockPos pos, Block blockIn, BlockPos fromPos, boolean isMoving) {
-		if (!worldIn.isClientSide) {
-			if (worldIn.getBlockState(pos.below()).getBlock() != BlockRegistry.WARRIOR_STATUE_BASE.get()) {
-				worldIn.destroyBlock(pos, true);
-				worldIn.destroyBlock(pos.above(), true);
+	public void neighborChanged(BlockState state, Level level, BlockPos pos, Block block, BlockPos fromPos, boolean isMoving) {
+		if (!level.isClientSide) {
+			if (level.getBlockState(pos.below()).getBlock() != BlockRegistry.WARRIOR_STATUE_BASE.get()) {
+				level.destroyBlock(pos, true);
 			}
 		}
 	}
 
-	/**
-	 * Runs when the block is activated.
-	 * Allows the block to respond to user interaction.
-	 *
-	 * @param state               the <code>BlockState</code> of the block
-	 * @param worldIn             the <code>World</code> the block is in
-	 * @param pos                 the <code>BlockPos</code> the block is at
-	 * @param player              the <code>PlayerEntity</code> interacting with the block
-	 * @param handIn              the <code>Hand</code> the PlayerEntity used
-	 * @param blockRayTraceResult the <code>BlockRayTraceResult</code> of the interaction
-	 * @return ActionResultType
-	 */
 	@Override
-	public InteractionResult use(BlockState state, Level worldIn, BlockPos pos,
-	                             Player player, InteractionHand handIn,
-	                             BlockHitResult blockRayTraceResult) {
+	public InteractionResult use(BlockState state, Level level, BlockPos pos,
+	                             Player player, InteractionHand hand,
+	                             BlockHitResult hitResult) {
 
-		if (!worldIn.isClientSide && handIn.equals(InteractionHand.MAIN_HAND)) {
-			if (worldIn.getBlockState(pos.above()).getBlock() == BlockRegistry.WARRIOR_STATUE_HEAD.get()) {
+		if (level instanceof ServerLevel serverLevel && hand.equals(InteractionHand.MAIN_HAND)) {
+			if (level.getBlockState(pos.above()).getBlock() == BlockRegistry.WARRIOR_STATUE_HEAD.get()) {
 				ItemStack itemStack = player.getMainHandItem();
 				if (!state.getValue(POWERED) && itemStack.getItem() == ItemRegistry.AZUL_KEYSTONE.get()) {
 					if (!player.isCreative()) {
 						itemStack.shrink(1);
 					}
-					worldIn.setBlock(pos, state.setValue(POWERED, true), 3);
-					worldIn.setBlock(pos.above(), BlockRegistry.WARRIOR_STATUE_HEAD.get().defaultBlockState()
+
+					serverLevel.setBlock(pos, state.setValue(POWERED, true), 3);
+					serverLevel.setBlock(pos.above(), BlockRegistry.WARRIOR_STATUE_HEAD.get().defaultBlockState()
 							.setValue(FACING, state.getValue(FACING)).setValue(POWERED, true), 3);
 
-					worldIn.destroyBlock(pos.below(2).relative(state.getValue(FACING)), true);
-					worldIn.setBlock(pos.below(2).relative(state.getValue(FACING)),
+					serverLevel.destroyBlock(pos.below(2).relative(state.getValue(FACING)), true);
+					serverLevel.setBlock(pos.below(2).relative(state.getValue(FACING)),
 							Blocks.GRASS_BLOCK.defaultBlockState(), 3);
-					worldIn.destroyBlock(pos.below().relative(state.getValue(FACING)), true);
-					worldIn.setBlock(pos.below().relative(state.getValue(FACING)),
+					serverLevel.destroyBlock(pos.below().relative(state.getValue(FACING)), true);
+					serverLevel.setBlock(pos.below().relative(state.getValue(FACING)),
 							BlockRegistry.AZUL_STAINED_ORCHID.get().defaultBlockState(), 3);
 
 					PacketHandler.INSTANCE.send(PacketDistributor.NEAR.with(() -> new TargetPoint(pos.getX(),
-									pos.getY(), pos.getZ(), 12, worldIn.dimension())),
+									pos.getY(), pos.getZ(), 12, serverLevel.dimension())),
 							new WarriorStatueTorsoPacketHandler(pos, 1));
 
 					for (int i = 0; i < 25; i++) {
-						((ServerLevel) worldIn).sendParticles(ParticleTypes.DRIPPING_WATER,
+						serverLevel.sendParticles(ParticleTypes.DRIPPING_WATER,
 								pos.getX() + 0.5d + GeneralUtilities.getRandomNumber(-1.0d, 1.0d),
 								pos.getY() + GeneralUtilities.getRandomNumber(-2.0d, 1.5d),
 								pos.getZ() + 0.5d + GeneralUtilities.getRandomNumber(-1.0d, 1.0d),
@@ -202,7 +133,7 @@ public class WarriorStatueTorso extends HorizontalDirectionalBlock implements Si
 					return InteractionResult.CONSUME;
 				} else {
 					PacketHandler.INSTANCE.send(PacketDistributor.NEAR.with(() -> new TargetPoint(pos.getX(),
-									pos.getY(), pos.getZ(), 12, worldIn.dimension())),
+									pos.getY(), pos.getZ(), 12, level.dimension())),
 							new WarriorStatueTorsoPacketHandler(pos, 2));
 				}
 			}
@@ -211,23 +142,6 @@ public class WarriorStatueTorso extends HorizontalDirectionalBlock implements Si
 		}
 
 		return InteractionResult.PASS;
-	}
-
-	/**
-	 * Runs when the player destroys the block.
-	 *
-	 * @param worldIn the <code>World</code> the block is in
-	 * @param pos     the <code>BlockPos</code> the block is at
-	 * @param state   the <code>BlockState</code> of the block
-	 * @param player  the <code>PlayerEntity</code> destroying the block
-	 */
-	@Override
-	public void playerWillDestroy(Level worldIn, BlockPos pos, BlockState state, Player player) {
-		if (worldIn.getBlockState(pos.above()).getBlock() == BlockRegistry.WARRIOR_STATUE_HEAD.get()) {
-			worldIn.destroyBlock(pos.above(), true, null);
-		}
-
-		super.playerWillDestroy(worldIn, pos, state, player);
 	}
 
 	public record WarriorStatueTorsoPacketHandler(BlockPos blockPos, int soundType) {

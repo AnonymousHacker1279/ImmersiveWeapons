@@ -51,9 +51,12 @@ public class AzulStainedOrchidBlockEntity extends BlockEntity implements EntityB
 					// Get a valid target position if it is unset
 					if (targetPos == null) {
 						targetPos = findValidTeleportPosition(destinationLevel, pos);
+
+						// Offset slightly to account for the size of the NBT structure
+						targetPos = targetPos.offset(3, 0, 3);
 					}
 
-					entity.changeDimension(destinationLevel, new TiltrosTeleporter(targetPos, pos));
+					entity.changeDimension(destinationLevel, new TiltrosTeleporter(targetPos, pos.below()));
 
 					entityLevel.getProfiler().pop();
 				}

@@ -4,25 +4,21 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.context.BlockPlaceContext;
-import net.minecraft.world.level.BlockGetter;
-import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.*;
+import net.minecraft.world.level.*;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
-import net.minecraft.world.level.material.FluidState;
-import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import tech.anonymoushacker1279.immersiveweapons.init.BlockRegistry;
 import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
 
-public class WarriorStatueHead extends HorizontalDirectionalBlock implements SimpleWaterloggedBlock {
+public class WarriorStatueHead extends WarriorStatueBase {
 
-	public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
 	public static final BooleanProperty POWERED = BlockStateProperties.POWERED;
 	private static final VoxelShape SHAPE_NS = Block.box(3.0D, 0.0D, 3.0D, 13.0D, 11.0D, 10.0D);
 	private static final VoxelShape SHAPE_EW = Block.box(3.0D, 0.0D, 3.0D, 10.0D, 11.0D, 13.0D);
@@ -32,26 +28,11 @@ public class WarriorStatueHead extends HorizontalDirectionalBlock implements Sim
 		registerDefaultState(stateDefinition.any().setValue(FACING, Direction.NORTH).setValue(POWERED, false).setValue(WATERLOGGED, false));
 	}
 
-	/**
-	 * Create the BlockState definition.
-	 *
-	 * @param builder the <code>StateContainer.Builder</code> of the block
-	 */
 	@Override
 	protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
 		builder.add(FACING, POWERED, WATERLOGGED);
 	}
 
-	/**
-	 * Set the shape of the block.
-	 *
-	 * @param state            the <code>BlockState</code> of the block
-	 * @param reader           the <code>IBlockReader</code> for the block
-	 * @param pos              the <code>BlockPos</code> the block is at
-	 * @param selectionContext the <code>ISelectionContext</code> of the block
-	 * @return VoxelShape
-	 */
-	@SuppressWarnings("deprecation")
 	@Override
 	public VoxelShape getShape(BlockState state, BlockGetter reader, BlockPos pos, CollisionContext selectionContext) {
 		return switch (state.getValue(FACING)) {
@@ -72,49 +53,38 @@ public class WarriorStatueHead extends HorizontalDirectionalBlock implements Sim
 	@Override
 	public BlockState getStateForPlacement(BlockPlaceContext context) {
 		BlockState blockStateBelow = context.getLevel().getBlockState(context.getClickedPos().below());
-		if (blockStateBelow.getBlock() instanceof WarriorStatueTorso &&
+		if (blockStateBelow.getBlock() == BlockRegistry.WARRIOR_STATUE_TORSO.get() &&
 				blockStateBelow.getValue(FACING) == context.getHorizontalDirection().getOpposite()) {
-			context.getLevel().playLocalSound(context.getClickedPos().getX(), context.getClickedPos().getY(), context.getClickedPos().getZ(), SoundEvents.END_PORTAL_FRAME_FILL, SoundSource.BLOCKS, 0.5f, GeneralUtilities.getRandomNumber(0.7f, 0.8f), false);
+
+			context.getLevel().playLocalSound(context.getClickedPos().getX(),
+					context.getClickedPos().getY(),
+					context.getClickedPos().getZ(),
+					SoundEvents.END_PORTAL_FRAME_FILL,
+					SoundSource.BLOCKS, 0.5f,
+					GeneralUtilities.getRandomNumber(0.7f, 0.8f),
+					false);
+
 			return defaultBlockState().setValue(FACING, context.getHorizontalDirection().getOpposite());
 		} else {
 			return Blocks.AIR.defaultBlockState();
 		}
 	}
 
-	/**
-	 * Set the shading brightness on the client.
-	 *
-	 * @param state  the <code>BlockState</code> of the block
-	 * @param reader the <code>IBlockReader</code> of the block
-	 * @param pos    the <code>BlockPos</code> the block is at
-	 * @return float
-	 */
-	@SuppressWarnings("deprecation")
 	@Override
-	public float getShadeBrightness(BlockState state, BlockGetter reader, BlockPos pos) {
-		return 1.0F;
-	}
-
-	@SuppressWarnings("deprecation")
-	@Override
-	public FluidState getFluidState(BlockState state) {
-		return state.getValue(WATERLOGGED) ? Fluids.WATER.getSource(false) : super.getFluidState(state);
-	}
-
-	/**
-	 * Runs when the player destroys the block.
-	 *
-	 * @param worldIn the <code>World</code> the block is in
-	 * @param pos     the <code>BlockPos</code> the block is at
-	 * @param state   the <code>BlockState</code> of the block
-	 * @param player  the <code>PlayerEntity</code> destroying the block
-	 */
-	@Override
-	public void playerWillDestroy(Level worldIn, BlockPos pos, BlockState state, Player player) {
-		if (state.getValue(POWERED)) {
-			worldIn.setBlock(pos.below(), BlockRegistry.WARRIOR_STATUE_TORSO.get().defaultBlockState().setValue(FACING, state.getValue(FACING)).setValue(POWERED, false), 3);
+	public boolean canSurvive(BlockState state, LevelReader level, BlockPos pos) {
+		if (level.getBlockState(pos.below()).getBlock() != BlockRegistry.WARRIOR_STATUE_TORSO.get()) {
+			return false;
 		}
 
-		super.playerWillDestroy(worldIn, pos, state, player);
+		return super.canSurvive(state, level, pos);
+	}
+
+	@Override
+	public void neighborChanged(BlockState state, Level level, BlockPos pos, Block block, BlockPos fromPos, boolean isMoving) {
+		if (!level.isClientSide) {
+			if (level.getBlockState(pos.below()).getBlock() != BlockRegistry.WARRIOR_STATUE_TORSO.get()) {
+				level.destroyBlock(pos, true);
+			}
+		}
 	}
 }
