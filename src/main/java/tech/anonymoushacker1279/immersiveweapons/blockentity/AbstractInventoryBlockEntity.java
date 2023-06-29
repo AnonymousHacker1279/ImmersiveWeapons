@@ -3,7 +3,6 @@ package tech.anonymoushacker1279.immersiveweapons.blockentity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.Connection;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.world.*;
 import net.minecraft.world.item.ItemStack;
@@ -66,7 +65,9 @@ public abstract class AbstractInventoryBlockEntity extends BlockEntity implement
 	 */
 	public void inventoryChanged() {
 		setChanged();
-		getLevel().sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), 3);
+		if (level != null) {
+			level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), 3);
+		}
 	}
 
 	/**
@@ -130,18 +131,6 @@ public abstract class AbstractInventoryBlockEntity extends BlockEntity implement
 	@Override
 	public CompoundTag getUpdateTag() {
 		return writeItems(new CompoundTag());
-	}
-
-	/**
-	 * Handle data packets.
-	 *
-	 * @param connection the <code>Connection</code> instance
-	 * @param pkt        the <code>ClientboundBlockEntityDataPacket</code> instance
-	 */
-	@Override
-	public void onDataPacket(Connection connection, ClientboundBlockEntityDataPacket pkt) {
-		super.onDataPacket(connection, pkt);
-		handleUpdateTag(pkt.getTag());
 	}
 
 	/**

@@ -77,6 +77,7 @@ public class ForgeEventSubscriber {
 			"Bloated Heart boost", 4.0d, Operation.ADDITION);
 
 	public static final UUID NETHERITE_SHIELD_KB_MODIFIER_UUID = UUID.fromString("18e993c3-cf20-4a18-bdb4-11751c4dfb0f");
+	private static double lastKBResistance = 0.0d;
 
 	public static final UUID JONNYS_CURSE_SPEED_MODIFIER_UUID = UUID.fromString("c74619c0-b953-4ee7-a3d7-adf974c22d7d");
 	public static final AttributeModifier JONNYS_CURSE_SPEED_MODIFIER = new AttributeModifier(JONNYS_CURSE_SPEED_MODIFIER_UUID,
@@ -219,6 +220,9 @@ public class ForgeEventSubscriber {
 				if (AccessoryItem.isAccessoryActive(player, ItemRegistry.NETHERITE_SHIELD.get())) {
 					if (!attributeInstance.hasModifier(NETHERITE_SHIELD_KB_MODIFIER)) {
 						attributeInstance.addTransientModifier(NETHERITE_SHIELD_KB_MODIFIER);
+						lastKBResistance = attributeInstance.getValue();
+					} else if (lastKBResistance != attributeInstance.getValue()) { // If the KB resistance has changed, remove the modifier, so it can be re-added on the next tick
+						attributeInstance.removeModifier(NETHERITE_SHIELD_KB_MODIFIER);
 					}
 				} else if (attributeInstance.hasModifier(NETHERITE_SHIELD_KB_MODIFIER)) {
 					attributeInstance.removeModifier(NETHERITE_SHIELD_KB_MODIFIER);
