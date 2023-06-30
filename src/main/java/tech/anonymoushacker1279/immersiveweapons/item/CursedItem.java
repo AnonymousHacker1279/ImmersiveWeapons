@@ -43,7 +43,6 @@ public class CursedItem extends Item {
 
 	/**
 	 * Get a list of cursed accessories in the player's inventory.
-	 * <p>
 	 */
 	public static List<ItemStack> getCurses(Player player) {
 		List<ItemStack> curses = new ArrayList<>(5);
@@ -64,6 +63,11 @@ public class CursedItem extends Item {
 	@Override
 	public boolean useOnRelease(ItemStack stack) {
 		return true;
+	}
+
+	@Override
+	public boolean isEnchantable(ItemStack stack) {
+		return false;
 	}
 
 	@Override
