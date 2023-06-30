@@ -143,6 +143,7 @@ public class BlockRegistry {
 	public static final RegistryObject<WoodenTableBlock> DARK_OAK_TABLE = BLOCKS.register("dark_oak_table", () -> new WoodenTableBlock(BlockBehaviour.Properties.of(Material.WOOD).strength(3.0f).sound(SoundType.WOOD).noOcclusion()));
 	public static final RegistryObject<WoodenTableBlock> CRIMSON_TABLE = BLOCKS.register("crimson_table", () -> new WoodenTableBlock(BlockBehaviour.Properties.of(Material.WOOD).strength(3.0f).sound(SoundType.WOOD).noOcclusion()));
 	public static final RegistryObject<WoodenTableBlock> WARPED_TABLE = BLOCKS.register("warped_table", () -> new WoodenTableBlock(BlockBehaviour.Properties.of(Material.WOOD).strength(3.0f).sound(SoundType.WOOD).noOcclusion()));
+	public static final RegistryObject<WoodenTableBlock> MANGROVE_TABLE = BLOCKS.register("mangrove_table", () -> new WoodenTableBlock(BlockBehaviour.Properties.of(Material.WOOD).strength(3.0f).sound(SoundType.WOOD).noOcclusion()));
 	public static final RegistryObject<WoodenTableBlock> BURNED_OAK_TABLE = BLOCKS.register("burned_oak_table", () -> new WoodenTableBlock(BlockBehaviour.Properties.of(Material.WOOD).strength(3.0f).sound(SoundType.WOOD).noOcclusion()));
 	public static final RegistryObject<WoodenTableBlock> STARDUST_TABLE = BLOCKS.register("stardust_table", () -> new WoodenTableBlock(BlockBehaviour.Properties.of(Material.WOOD).strength(3.0f).sound(SoundType.WOOD).noOcclusion()));
 	// Stone tier

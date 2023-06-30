@@ -225,7 +225,7 @@ public class ForgeEventSubscriber {
 			source = sourceEntity;
 		}
 
-		if (event.getSource().is(IWDamageTypes.METEOR_KEY) && event.getSource().getDirectEntity() instanceof MeteorEntity meteor) {
+		if (event.getSource().is(IWDamageTypes.METEOR_KEY) && event.getSource().getDirectEntity() instanceof MeteorEntity meteor && !meteor.getPersistentData().isEmpty()) {
 			// Check for a "target" tag, and check if it matches the damaged entity's UUID
 			if (!meteor.getPersistentData().getUUID("target").equals(damagedEntity.getUUID())) {
 				event.setCanceled(true);

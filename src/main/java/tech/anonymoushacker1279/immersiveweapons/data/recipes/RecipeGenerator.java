@@ -973,6 +973,7 @@ public class RecipeGenerator extends RecipeProvider {
 		createTable(BlockItemRegistry.DARK_OAK_TABLE_ITEM.get(), Items.DARK_OAK_SLAB, Items.DARK_OAK_FENCE);
 		createTable(BlockItemRegistry.CRIMSON_TABLE_ITEM.get(), Items.CRIMSON_SLAB, Items.CRIMSON_FENCE);
 		createTable(BlockItemRegistry.WARPED_TABLE_ITEM.get(), Items.WARPED_SLAB, Items.WARPED_FENCE);
+		createTable(BlockItemRegistry.MANGROVE_TABLE_ITEM.get(), Items.MANGROVE_SLAB, Items.MANGROVE_FENCE);
 		createTable(BlockItemRegistry.BURNED_OAK_TABLE_ITEM.get(), BlockItemRegistry.BURNED_OAK_SLAB_ITEM.get(),
 				BlockItemRegistry.BURNED_OAK_FENCE_ITEM.get());
 		createTable(BlockItemRegistry.STARDUST_TABLE_ITEM.get(), BlockItemRegistry.STARDUST_SLAB_ITEM.get(),

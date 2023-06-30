@@ -9,7 +9,6 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.NonNullList;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.Level;
 import tech.anonymoushacker1279.immersiveweapons.block.decoration.ShelfBlock;
 import tech.anonymoushacker1279.immersiveweapons.blockentity.ShelfBlockEntity;
 
@@ -25,9 +24,13 @@ public class ShelfRenderer implements BlockEntityRenderer<ShelfBlockEntity> {
 	public void render(ShelfBlockEntity shelfEntity, float partialTicks, PoseStack poseStack,
 	                   MultiBufferSource buffer, int packedLight, int packedOverlay) {
 
-		Direction direction = shelfEntity.getBlockState().getValue(ShelfBlock.FACING);
 		NonNullList<ItemStack> inventory = shelfEntity.getInventory();
 
+		if (inventory.isEmpty()) {
+			return;
+		}
+
+		Direction direction = shelfEntity.getBlockState().getValue(ShelfBlock.FACING);
 		for (ItemStack stack : inventory) {
 			if (stack != ItemStack.EMPTY) {
 				poseStack.pushPose();
@@ -60,11 +63,10 @@ public class ShelfRenderer implements BlockEntityRenderer<ShelfBlockEntity> {
 
 				// Scale render
 				poseStack.scale(0.375F, 0.375F, 0.375F);
-
-				Level level = Minecraft.getInstance().level;
-
-				if (level != null) {
-					Minecraft.getInstance().getItemRenderer().renderStatic(stack, ItemDisplayContext.FIXED, packedLight, packedOverlay, poseStack, buffer, level, 0);
+				
+				if (shelfEntity.getLevel() != null) {
+					Minecraft.getInstance().getItemRenderer().renderStatic(stack, ItemDisplayContext.FIXED, packedLight,
+							packedOverlay, poseStack, buffer, shelfEntity.getLevel(), 0);
 				}
 
 				poseStack.popPose();
