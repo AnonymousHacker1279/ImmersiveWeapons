@@ -69,6 +69,7 @@ public class BlockItemRegistry {
 	public static final RegistryObject<BlockItem> DARK_OAK_TABLE_ITEM = ItemRegistry.ITEMS.register("dark_oak_table", () -> new BlockItem(BlockRegistry.DARK_OAK_TABLE.get(), new Properties()));
 	public static final RegistryObject<BlockItem> CRIMSON_TABLE_ITEM = ItemRegistry.ITEMS.register("crimson_table", () -> new BlockItem(BlockRegistry.CRIMSON_TABLE.get(), new Properties()));
 	public static final RegistryObject<BlockItem> WARPED_TABLE_ITEM = ItemRegistry.ITEMS.register("warped_table", () -> new BlockItem(BlockRegistry.WARPED_TABLE.get(), new Properties()));
+	public static final RegistryObject<BlockItem> MANGROVE_TABLE_ITEM = ItemRegistry.ITEMS.register("mangrove_table", () -> new BlockItem(BlockRegistry.MANGROVE_TABLE.get(), new Properties()));
 	public static final RegistryObject<BlockItem> BURNED_OAK_TABLE_ITEM = ItemRegistry.ITEMS.register("burned_oak_table", () -> new BlockItem(BlockRegistry.BURNED_OAK_TABLE.get(), new Properties()));
 	public static final RegistryObject<BlockItem> STARDUST_TABLE_ITEM = ItemRegistry.ITEMS.register("stardust_table", () -> new BlockItem(BlockRegistry.STARDUST_TABLE.get(), new Properties()));
 	public static final RegistryObject<BlockItem> CAMP_CHAIR_ITEM = ItemRegistry.ITEMS.register("camp_chair", () -> new BlockItem(BlockRegistry.CAMP_CHAIR.get(), new Properties()));

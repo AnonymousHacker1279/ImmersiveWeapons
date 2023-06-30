@@ -77,6 +77,7 @@ public class BlockTagLists {
 		TABLES.add(BlockRegistry.DARK_OAK_TABLE.get());
 		TABLES.add(BlockRegistry.CRIMSON_TABLE.get());
 		TABLES.add(BlockRegistry.WARPED_TABLE.get());
+		TABLES.add(BlockRegistry.MANGROVE_TABLE.get());
 		TABLES.add(BlockRegistry.BURNED_OAK_TABLE.get());
 		TABLES.add(BlockRegistry.STARDUST_TABLE.get());
 	}

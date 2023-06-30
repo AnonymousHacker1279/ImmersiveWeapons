@@ -53,6 +53,7 @@ public class BlockLists {
 		tableBlocks.add(BlockRegistry.DARK_OAK_TABLE.get());
 		tableBlocks.add(BlockRegistry.CRIMSON_TABLE.get());
 		tableBlocks.add(BlockRegistry.WARPED_TABLE.get());
+		tableBlocks.add(BlockRegistry.MANGROVE_TABLE.get());
 		tableBlocks.add(BlockRegistry.BURNED_OAK_TABLE.get());
 		tableBlocks.add(BlockRegistry.STARDUST_TABLE.get());
 

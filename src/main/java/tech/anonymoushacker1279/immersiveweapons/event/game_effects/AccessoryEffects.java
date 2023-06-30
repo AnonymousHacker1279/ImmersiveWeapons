@@ -5,6 +5,7 @@ import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.living.LivingKnockBackEvent;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
@@ -34,8 +35,9 @@ public class AccessoryEffects {
 			double value = 0;
 
 			for (int i = 0; i < player.getInventory().getContainerSize(); i++) {
-				if (player.getInventory().getItem(i).getItem() instanceof AccessoryItem accessoryItem) {
-					if (accessoryItem.isActive(player)) {
+				ItemStack stack = player.getInventory().getItem(i);
+				if (stack.getItem() instanceof AccessoryItem accessoryItem) {
+					if (accessoryItem.isActive(player, stack)) {
 						value += accessoryItem.getEffects().getOrDefault(type, 0d);
 					}
 				}
