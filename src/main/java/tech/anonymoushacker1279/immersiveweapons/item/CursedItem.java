@@ -56,11 +56,6 @@ public class CursedItem extends Item {
 	}
 
 	@Override
-	public boolean isEnchantable(ItemStack stack) {
-		return false;
-	}
-
-	@Override
 	public int getUseDuration(ItemStack stack) {
 		return 20;
 	}

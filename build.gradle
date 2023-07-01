@@ -74,7 +74,6 @@ minecraft {
 
 
 		client {
-			args '--uuid', '94f11dac-d1bc-46da-877b-c69f533f2da2'
 		}
 
 		server {

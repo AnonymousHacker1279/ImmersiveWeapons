@@ -12,7 +12,6 @@ public class BlockLists {
 	public static final List<Block> stoneBasedOres = new ArrayList<>(25);
 	public static final List<Block> deepslateBasedOres = new ArrayList<>(25);
 	public static final List<Block> netherrackBasedOres = new ArrayList<>(25);
-	public static final List<Block> tableBlocks = new ArrayList<>(25);
 	public static final List<Block> flagBlocks = new ArrayList<>(25);
 	public static final List<Block> headBlocks = new ArrayList<>(25);
 	public static final List<Block> wallHeadBlocks = new ArrayList<>(25);
@@ -44,18 +43,6 @@ public class BlockLists {
 
 		netherrackBasedOres.add(BlockRegistry.MOLTEN_ORE.get());
 		netherrackBasedOres.add(BlockRegistry.NETHER_SULFUR_ORE.get());
-
-		tableBlocks.add(BlockRegistry.OAK_TABLE.get());
-		tableBlocks.add(BlockRegistry.SPRUCE_TABLE.get());
-		tableBlocks.add(BlockRegistry.BIRCH_TABLE.get());
-		tableBlocks.add(BlockRegistry.JUNGLE_TABLE.get());
-		tableBlocks.add(BlockRegistry.ACACIA_TABLE.get());
-		tableBlocks.add(BlockRegistry.DARK_OAK_TABLE.get());
-		tableBlocks.add(BlockRegistry.CRIMSON_TABLE.get());
-		tableBlocks.add(BlockRegistry.WARPED_TABLE.get());
-		tableBlocks.add(BlockRegistry.MANGROVE_TABLE.get());
-		tableBlocks.add(BlockRegistry.BURNED_OAK_TABLE.get());
-		tableBlocks.add(BlockRegistry.STARDUST_TABLE.get());
 
 		flagBlocks.add(BlockRegistry.AMERICAN_FLAG.get());
 		flagBlocks.add(BlockRegistry.GADSDEN_FLAG.get());
