@@ -214,6 +214,9 @@ public class SkygazerEntity extends AbstractVillager implements GrantAdvancement
 
 	@Override
 	protected void updateTrades() {
+		// Clear existing trades
+		getOffers().clear();
+
 		VillagerTrades.ItemListing[] commonItemListings = TRADES.get(1);
 		VillagerTrades.ItemListing[] rareItemListings = TRADES.get(2);
 		VillagerTrades.ItemListing[] epicItemListings = TRADES.get(3);

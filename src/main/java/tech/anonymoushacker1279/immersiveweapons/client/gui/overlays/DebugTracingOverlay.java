@@ -29,7 +29,7 @@ public class DebugTracingOverlay {
 		if (DebugTracingData.ARMOR_VALUE > 0 || DebugTracingData.ARMOR_TOUGHNESS_VALUE > 0) {
 			String armorValues = appendData(ARMOR_VALUES,
 					DebugTracingData.ARMOR_VALUE,
-					DebugTracingData.ARMOR_TOUGHNESS_VALUE);
+					Math.round(DebugTracingData.ARMOR_TOUGHNESS_VALUE * 10f) / 10f);
 
 			overlayItems.add(armorValues);
 		}

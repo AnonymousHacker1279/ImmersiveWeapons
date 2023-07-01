@@ -145,7 +145,6 @@ tasks.named('jar', Jar).configure {
 		])
 	}
 
-	// This is the preferred method to reobfuscate your jar file
 	finalizedBy 'reobfJar'
 }
 
@@ -153,8 +152,6 @@ artifacts {
 	archives javadocJar
 	archives sourcesJar
 }
-
-jar.finalizedBy('reobfJar')
 
 publishing {
 	publications {
