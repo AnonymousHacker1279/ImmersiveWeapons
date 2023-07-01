@@ -28,5 +28,6 @@
     "recipes": [
       "immersiveweapons:diamond_shard"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

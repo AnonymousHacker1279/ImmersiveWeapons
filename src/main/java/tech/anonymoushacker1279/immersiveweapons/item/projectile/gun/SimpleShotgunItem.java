@@ -24,8 +24,8 @@ public class SimpleShotgunItem extends AbstractGunItem {
 	@Override
 	public void setupFire(ItemStack gun, BulletEntity bulletEntity, Player player) {
 		bulletEntity.shootFromRotation(player,
-				player.xRot + GeneralUtilities.getRandomNumber(-5.0f, 5.0f),
-				player.yRot + GeneralUtilities.getRandomNumber(-5.0f, 5.0f),
+				player.getXRot() + GeneralUtilities.getRandomNumber(-5.0f, 5.0f),
+				player.getYRot() + GeneralUtilities.getRandomNumber(-5.0f, 5.0f),
 				0.0F,
 				getFireVelocity(gun),
 				CommonConfig.BLUNDERBUSS_FIRE_INACCURACY.get().floatValue());

@@ -22,7 +22,6 @@ import tech.anonymoushacker1279.immersiveweapons.entity.GrantAdvancementOnDiscov
 import tech.anonymoushacker1279.immersiveweapons.entity.ai.goal.FlyAroundEntityGoal;
 import tech.anonymoushacker1279.immersiveweapons.entity.ai.goal.FlyRandomlyGoal;
 import tech.anonymoushacker1279.immersiveweapons.init.EntityRegistry;
-import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
 
 import java.util.*;
 
@@ -116,14 +115,14 @@ public class EvilEyeEntity extends FlyingMob implements Enemy, GrantAdvancementO
 		boolean summonedByStaff = entityData.get(SUMMONED_BY_STAFF);
 
 		if (targetedEntityUUID != null) {
-			targetedEntity = (LivingEntity) ((ServerLevel) level).getEntity(targetedEntityUUID);
+			targetedEntity = (LivingEntity) ((ServerLevel) level()).getEntity(targetedEntityUUID);
 			targetedEntityUUID = null;
 		}
 
 		// Find players in a 16 block radius every 40 ticks if not summoned by a staff
-		if (!level.isClientSide) {
+		if (!level().isClientSide) {
 			if (!summonedByStaff && tickCount % 40 == 0) {
-				Player player = level.getNearestPlayer(this, 16);
+				Player player = level().getNearestPlayer(this, 16);
 				// Check for proper targeting conditions
 				if (player != null) {
 					boolean validTarget = TargetingConditions.forCombat().test(this, player);
@@ -184,11 +183,11 @@ public class EvilEyeEntity extends FlyingMob implements Enemy, GrantAdvancementO
 					// 20 ticks to inflict a random debuff on the player
 					if (tickCount % 20 == 0 && random.nextFloat() < effectChance) {
 						// If there are at least 3 entities within an 8 block radius, inflict a high tier debuff
-						if (level.getEntitiesOfClass(EvilEyeEntity.class, getBoundingBox().inflate(8), (entity) -> true).size() >= 3) {
-							MobEffect effect = highTierDebuffs.get(GeneralUtilities.getRandomNumber(0, highTierDebuffs.size()));
+						if (level().getEntitiesOfClass(EvilEyeEntity.class, getBoundingBox().inflate(8), (entity) -> true).size() >= 3) {
+							MobEffect effect = highTierDebuffs.get(getRandom().nextIntBetweenInclusive(0, highTierDebuffs.size() - 1));
 							targetedEntity.addEffect(new MobEffectInstance(effect, effectDuration, effectLevel));
 						} else {
-							MobEffect effect = lowTierDebuffs.get(GeneralUtilities.getRandomNumber(0, lowTierDebuffs.size()));
+							MobEffect effect = lowTierDebuffs.get(getRandom().nextIntBetweenInclusive(0, lowTierDebuffs.size() - 1));
 							targetedEntity.addEffect(new MobEffectInstance(effect, effectDuration, effectLevel));
 						}
 					}
@@ -209,7 +208,7 @@ public class EvilEyeEntity extends FlyingMob implements Enemy, GrantAdvancementO
 	                                    MobSpawnType pReason, @Nullable SpawnGroupData pSpawnData,
 	                                    @Nullable CompoundTag pDataTag) {
 		xpReward = 3 * getSize();
-		setSize(GeneralUtilities.getRandomNumber(1, 4));
+		setSize(getRandom().nextIntBetweenInclusive(1, 3));
 		setHealth(getMaxHealth());
 		return super.finalizeSpawn(pLevel, pDifficulty, pReason, pSpawnData, pDataTag);
 	}

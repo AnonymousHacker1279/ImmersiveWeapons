@@ -6,7 +6,6 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.phys.AABB;
 import tech.anonymoushacker1279.immersiveweapons.entity.monster.CelestialTowerEntity;
 import tech.anonymoushacker1279.immersiveweapons.entity.projectile.MeteorEntity;
-import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
 
 import java.util.List;
 
@@ -39,17 +38,17 @@ public class CelestialTowerSummonMeteorGoal extends Goal {
 					tower.getZ() + 32);
 
 			// Find a random nearby player (within 32 blocks)
-			List<Player> nearbyPlayers = tower.getLevel().getNearbyPlayers(
+			List<Player> nearbyPlayers = tower.level().getNearbyPlayers(
 					TargetingConditions.forCombat().range(32),
 					tower,
 					searchBox
 			);
 			// Select a random player
 			if (!nearbyPlayers.isEmpty()) {
-				Player target = nearbyPlayers.get(GeneralUtilities.getRandomNumber(0, nearbyPlayers.size() - 1));
+				Player target = nearbyPlayers.get(tower.getRandom().nextIntBetweenInclusive(0, nearbyPlayers.size() - 1));
 
 				// Summon a meteor at the player's position
-				MeteorEntity.create(tower.getLevel(), tower, null, target.blockPosition(), null);
+				MeteorEntity.create(tower.level(), tower, null, target.blockPosition(), null);
 			}
 		} else {
 			summonCooldown--;

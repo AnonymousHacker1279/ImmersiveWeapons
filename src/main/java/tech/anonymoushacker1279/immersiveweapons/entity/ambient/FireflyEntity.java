@@ -115,11 +115,11 @@ public class FireflyEntity extends AmbientCreature {
 		BlockPos targetPos = pos.relative(getDirection());
 		if (isResting()) {
 			boolean isSilent = isSilent();
-			if (level.getBlockState(targetPos).isRedstoneConductor(level, pos)) {
+			if (level().getBlockState(targetPos).isRedstoneConductor(level(), pos)) {
 				// If the distance between the entity and the target block is greater than 0.05, move towards it
 				// Use an BlockHitResult to check if the entity is colliding with a block
 
-				BlockHitResult result = level.clip(new ClipContext(getEyePosition(1.0F), Vec3.atBottomCenterOf(targetPos), Block.COLLIDER, Fluid.NONE, this));
+				BlockHitResult result = level().clip(new ClipContext(getEyePosition(1.0F), Vec3.atBottomCenterOf(targetPos), Block.COLLIDER, Fluid.NONE, this));
 				// Move towards the hit position
 				if (result.getType() == Type.BLOCK) {
 
@@ -145,7 +145,7 @@ public class FireflyEntity extends AmbientCreature {
 				setYRot(getDirection().toYRot());
 
 				// If players get too close, stop resting
-				if (level.getNearestPlayer(RESTING_TARGETING, this) != null) {
+				if (level().getNearestPlayer(RESTING_TARGETING, this) != null) {
 					setResting(false);
 					targetPosition = null;
 					if (!isSilent) {
@@ -160,7 +160,7 @@ public class FireflyEntity extends AmbientCreature {
 				}
 			}
 		} else {
-			if (targetBlockPosition != null && (!level.isEmptyBlock(targetBlockPosition) || targetBlockPosition.getY() <= level.getMinBuildHeight())) {
+			if (targetBlockPosition != null && (!level().isEmptyBlock(targetBlockPosition) || targetBlockPosition.getY() <= level().getMinBuildHeight())) {
 				targetBlockPosition = null;
 			}
 
@@ -190,7 +190,7 @@ public class FireflyEntity extends AmbientCreature {
 			float yRotChange = Mth.wrapDegrees(f - getYRot());
 			zza = 0.5F;
 			setYRot(getYRot() + yRotChange);
-			if (random.nextInt(50) == 0 && level.getBlockState(targetPos).isRedstoneConductor(level, targetPos)) {
+			if (random.nextInt(50) == 0 && level().getBlockState(targetPos).isRedstoneConductor(level(), targetPos)) {
 				setResting(true);
 			}
 		}
@@ -227,7 +227,7 @@ public class FireflyEntity extends AmbientCreature {
 		if (isInvulnerableTo(pSource)) {
 			return false;
 		} else {
-			if (!level.isClientSide && isResting()) {
+			if (!level().isClientSide && isResting()) {
 				setResting(false);
 				targetPosition = null;
 			}

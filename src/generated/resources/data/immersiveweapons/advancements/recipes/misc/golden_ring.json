@@ -30,5 +30,6 @@
     "recipes": [
       "immersiveweapons:golden_ring"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

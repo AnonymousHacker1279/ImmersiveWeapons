@@ -54,40 +54,40 @@ public class CelestialTowerSummonGoal extends Goal {
 	@Override
 	public void tick() {
 		if (tower.getWavesSpawned() < tower.getTotalWavesToSpawn() && waveSpawnCooldown <= 0) {
-			int mobsToSpawn = (GeneralUtilities.getRandomNumber(8, 12 + tower.getWavesSpawned())) * tower.getWaveSizeModifier(); // Get the total mobs to spawn
+			int mobsToSpawn = (tower.getRandom().nextIntBetweenInclusive(8, 12 + tower.getWavesSpawned())) * tower.getWaveSizeModifier(); // Get the total mobs to spawn
 			mobsToSpawn = (int) (mobsToSpawn * CommonConfig.CELESTIAL_TOWER_MINIONS_WAVE_SIZE_MODIFIER.get()); // Modify by the configuration option of setting wave sizes
 			int fodderMobsToSpawn = (int) (mobsToSpawn * 0.3f); // Get the number of "fodder" mobs to spawn
 			mobsToSpawn = mobsToSpawn - fodderMobsToSpawn; // Reduce the total number left to spawn
 			int powerMobsToSpawn = isWavesPastHalf() ? (int) (mobsToSpawn * 0.2f) : 0; // Get the number of "power" mobs to spawn, if over halfway through the waves
 			mobsToSpawn = mobsToSpawn - powerMobsToSpawn; // Reduce the total number left to spawn
 
-			ServerLevel serverLevel = (ServerLevel) tower.level;
+			ServerLevel serverLevel = (ServerLevel) tower.level();
 
 			for (int i = fodderMobsToSpawn; i > 0; i--) {
-				BlockPos summonPos = new BlockPos(tower.getBlockX() + GeneralUtilities.getRandomNumber(-8, 9),
+				BlockPos summonPos = new BlockPos(tower.getBlockX() + tower.getRandom().nextIntBetweenInclusive(-8, 8),
 						tower.getBlockY(),
-						tower.getBlockZ() + GeneralUtilities.getRandomNumber(-8, 9));
+						tower.getBlockZ() + tower.getRandom().nextIntBetweenInclusive(-8, 8));
 
-				RockSpiderEntity rockSpiderEntity = new RockSpiderEntity(EntityRegistry.ROCK_SPIDER_ENTITY.get(), tower.level);
+				RockSpiderEntity rockSpiderEntity = new RockSpiderEntity(EntityRegistry.ROCK_SPIDER_ENTITY.get(), tower.level());
 				spawnEntity(serverLevel, rockSpiderEntity, summonPos);
 				spawnEntityParticles(serverLevel);
 			}
 			for (int i = powerMobsToSpawn; i > 0; i--) {
-				BlockPos summonPos = new BlockPos(tower.getBlockX() + GeneralUtilities.getRandomNumber(-8, 9),
+				BlockPos summonPos = new BlockPos(tower.getBlockX() + tower.getRandom().nextIntBetweenInclusive(-8, 8),
 						tower.getBlockY(),
-						tower.getBlockZ() + GeneralUtilities.getRandomNumber(-8, 9));
+						tower.getBlockZ() + tower.getRandom().nextIntBetweenInclusive(-8, 8));
 
-				Zombie zombieEntity = new Zombie(EntityType.ZOMBIE, tower.level);
+				Zombie zombieEntity = new Zombie(EntityType.ZOMBIE, tower.level());
 				ItemStack sword = new ItemStack(Items.IRON_SWORD);
-				sword.enchant(Enchantments.SHARPNESS, GeneralUtilities.getRandomNumber(2, 4 + tower.getWavesSpawned()));
-				sword.enchant(Enchantments.KNOCKBACK, GeneralUtilities.getRandomNumber(1, 3 + tower.getWavesSpawned()));
-				sword.enchant(Enchantments.FIRE_ASPECT, GeneralUtilities.getRandomNumber(1, 2 + tower.getWavesSpawned()));
+				sword.enchant(Enchantments.SHARPNESS, tower.getRandom().nextIntBetweenInclusive(2, 3 + tower.getWavesSpawned()));
+				sword.enchant(Enchantments.KNOCKBACK, tower.getRandom().nextIntBetweenInclusive(1, 2 + tower.getWavesSpawned()));
+				sword.enchant(Enchantments.FIRE_ASPECT, tower.getRandom().nextIntBetweenInclusive(1, 2 + tower.getWavesSpawned()));
 				zombieEntity.setItemSlot(EquipmentSlot.HEAD, new ItemStack(Items.IRON_HELMET));
 				zombieEntity.setItemSlot(EquipmentSlot.CHEST, new ItemStack(Items.IRON_CHESTPLATE));
 				zombieEntity.setItemSlot(EquipmentSlot.LEGS, new ItemStack(Items.IRON_LEGGINGS));
 				zombieEntity.setItemSlot(EquipmentSlot.FEET, new ItemStack(Items.IRON_BOOTS));
 				Objects.requireNonNull(zombieEntity.getAttribute(Attributes.MAX_HEALTH))
-						.setBaseValue(20 + (GeneralUtilities.getRandomNumber(5, 11) * tower.getWaveSizeModifier()));
+						.setBaseValue(20 + (tower.getRandom().nextIntBetweenInclusive(5, 10) * tower.getWaveSizeModifier()));
 
 				zombieEntity.setItemInHand(InteractionHand.MAIN_HAND, sword);
 				zombieEntity.addEffect(new MobEffectInstance(MobEffects.FIRE_RESISTANCE, 9999, 0, true, true));
@@ -95,17 +95,17 @@ public class CelestialTowerSummonGoal extends Goal {
 				spawnEntityParticles(serverLevel);
 			}
 			for (int i = mobsToSpawn; i > 0; i--) {
-				BlockPos summonPos = new BlockPos(tower.getBlockX() + GeneralUtilities.getRandomNumber(-8, 9),
+				BlockPos summonPos = new BlockPos(tower.getBlockX() + tower.getRandom().nextIntBetweenInclusive(-8, 8),
 						tower.getBlockY(),
-						tower.getBlockZ() + GeneralUtilities.getRandomNumber(-8, 9));
+						tower.getBlockZ() + tower.getRandom().nextIntBetweenInclusive(-8, 8));
 
-				Skeleton skeletonEntity = new Skeleton(EntityType.SKELETON, tower.level);
+				Skeleton skeletonEntity = new Skeleton(EntityType.SKELETON, tower.level());
 				ItemStack bow = new ItemStack(Items.BOW);
-				bow.enchant(Enchantments.POWER_ARROWS, GeneralUtilities.getRandomNumber(1, 3 + tower.getWavesSpawned()));
-				bow.enchant(Enchantments.PUNCH_ARROWS, GeneralUtilities.getRandomNumber(1, 2 + tower.getWavesSpawned()));
+				bow.enchant(Enchantments.POWER_ARROWS, tower.getRandom().nextIntBetweenInclusive(1, 3 + tower.getWavesSpawned()));
+				bow.enchant(Enchantments.PUNCH_ARROWS, tower.getRandom().nextIntBetweenInclusive(1, 2 + tower.getWavesSpawned()));
 				skeletonEntity.setItemSlot(EquipmentSlot.HEAD, new ItemStack(Items.IRON_HELMET));
 				Objects.requireNonNull(skeletonEntity.getAttribute(Attributes.MAX_HEALTH))
-						.setBaseValue(20 + (GeneralUtilities.getRandomNumber(0, 6) * tower.getWaveSizeModifier()));
+						.setBaseValue(20 + (tower.getRandom().nextIntBetweenInclusive(0, 5) * tower.getWaveSizeModifier()));
 
 				skeletonEntity.setItemInHand(InteractionHand.MAIN_HAND, bow);
 				// 50% chance to have fire resistance
@@ -118,7 +118,7 @@ public class CelestialTowerSummonGoal extends Goal {
 
 			// Spawn some particles
 			for (int i = 96; i > 0; i--) {
-				((ServerLevel) tower.level).sendParticles(ParticleTypes.FLAME,
+				((ServerLevel) tower.level()).sendParticles(ParticleTypes.FLAME,
 						tower.position().x,
 						tower.position().y,
 						tower.position().z,
@@ -167,8 +167,8 @@ public class CelestialTowerSummonGoal extends Goal {
 
 		}
 
-		int mobs = tower.level.getNearbyEntities(Skeleton.class, TargetingConditions.forNonCombat(), tower, searchBox).size();
-		mobs = mobs + tower.level.getNearbyEntities(Zombie.class, TargetingConditions.forNonCombat(), tower, searchBox).size();
+		int mobs = tower.level().getNearbyEntities(Skeleton.class, TargetingConditions.forNonCombat(), tower, searchBox).size();
+		mobs = mobs + tower.level().getNearbyEntities(Zombie.class, TargetingConditions.forNonCombat(), tower, searchBox).size();
 		return mobs;
 	}
 

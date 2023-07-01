@@ -28,5 +28,6 @@
     "recipes": [
       "immersiveweapons:molten_musket_ball"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

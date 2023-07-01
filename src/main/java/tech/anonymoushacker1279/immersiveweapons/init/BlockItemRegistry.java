@@ -70,6 +70,8 @@ public class BlockItemRegistry {
 	public static final RegistryObject<BlockItem> CRIMSON_TABLE_ITEM = ItemRegistry.ITEMS.register("crimson_table", () -> new BlockItem(BlockRegistry.CRIMSON_TABLE.get(), new Properties()));
 	public static final RegistryObject<BlockItem> WARPED_TABLE_ITEM = ItemRegistry.ITEMS.register("warped_table", () -> new BlockItem(BlockRegistry.WARPED_TABLE.get(), new Properties()));
 	public static final RegistryObject<BlockItem> MANGROVE_TABLE_ITEM = ItemRegistry.ITEMS.register("mangrove_table", () -> new BlockItem(BlockRegistry.MANGROVE_TABLE.get(), new Properties()));
+	public static final RegistryObject<BlockItem> CHERRY_TABLE_ITEM = ItemRegistry.ITEMS.register("cherry_table", () -> new BlockItem(BlockRegistry.CHERRY_TABLE.get(), new Properties()));
+	public static final RegistryObject<BlockItem> BAMBOO_TABLE_ITEM = ItemRegistry.ITEMS.register("bamboo_table", () -> new BlockItem(BlockRegistry.BAMBOO_TABLE.get(), new Properties()));
 	public static final RegistryObject<BlockItem> BURNED_OAK_TABLE_ITEM = ItemRegistry.ITEMS.register("burned_oak_table", () -> new BlockItem(BlockRegistry.BURNED_OAK_TABLE.get(), new Properties()));
 	public static final RegistryObject<BlockItem> STARDUST_TABLE_ITEM = ItemRegistry.ITEMS.register("stardust_table", () -> new BlockItem(BlockRegistry.STARDUST_TABLE.get(), new Properties()));
 	public static final RegistryObject<BlockItem> CAMP_CHAIR_ITEM = ItemRegistry.ITEMS.register("camp_chair", () -> new BlockItem(BlockRegistry.CAMP_CHAIR.get(), new Properties()));
@@ -99,7 +101,8 @@ public class BlockItemRegistry {
 	public static final RegistryObject<BlockItem> BURNED_OAK_DOOR_ITEM = ItemRegistry.ITEMS.register("burned_oak_door", () -> new BlockItem(BlockRegistry.BURNED_OAK_DOOR.get(), new Properties()));
 	public static final RegistryObject<BlockItem> BURNED_OAK_TRAPDOOR_ITEM = ItemRegistry.ITEMS.register("burned_oak_trapdoor", () -> new BlockItem(BlockRegistry.BURNED_OAK_TRAPDOOR.get(), new Properties()));
 	public static final RegistryObject<BlockItem> BURNED_OAK_PRESSURE_PLATE_ITEM = ItemRegistry.ITEMS.register("burned_oak_pressure_plate", () -> new BlockItem(BlockRegistry.BURNED_OAK_PRESSURE_PLATE.get(), new Properties()));
-	public static final RegistryObject<SignItem> BURNED_OAK_SIGN_ITEM = ItemRegistry.ITEMS.register("burned_oak_sign", () -> new SignItem(new Properties(), BlockRegistry.BURNED_OAK_SIGN.get(), BlockRegistry.BURNED_OAK_WALL_SIGN.get()));
+	public static final RegistryObject<SignItem> BURNED_OAK_SIGN_ITEM = ItemRegistry.ITEMS.register("burned_oak_sign", () -> new SignItem(new Properties().stacksTo(16), BlockRegistry.BURNED_OAK_SIGN.get(), BlockRegistry.BURNED_OAK_WALL_SIGN.get()));
+	public static final RegistryObject<HangingSignItem> BURNED_OAK_HANGING_SIGN_ITEM = ItemRegistry.ITEMS.register("burned_oak_hanging_sign", () -> new HangingSignItem(BlockRegistry.BURNED_OAK_HANGING_SIGN.get(), BlockRegistry.BURNED_OAK_WALL_HANGING_SIGN.get(), new Properties().stacksTo(16)));
 	public static final RegistryObject<BlockItem> BURNED_OAK_BUTTON_ITEM = ItemRegistry.ITEMS.register("burned_oak_button", () -> new BlockItem(BlockRegistry.BURNED_OAK_BUTTON.get(), new Properties()));
 	public static final RegistryObject<BlockItem> FLAG_POLE_ITEM = ItemRegistry.ITEMS.register("flag_pole", () -> new BlockItem(BlockRegistry.FLAG_POLE.get(), new Properties()));
 	public static final RegistryObject<BlockItem> AMERICAN_FLAG_ITEM = ItemRegistry.ITEMS.register("american_flag", () -> new BlockItem(BlockRegistry.AMERICAN_FLAG.get(), new Properties()));
@@ -142,7 +145,8 @@ public class BlockItemRegistry {
 	public static final RegistryObject<BlockItem> STARDUST_TRAPDOOR_ITEM = ItemRegistry.ITEMS.register("stardust_trapdoor", () -> new BlockItem(BlockRegistry.STARDUST_TRAPDOOR.get(), new Properties()));
 	public static final RegistryObject<BlockItem> STARDUST_BUTTON_ITEM = ItemRegistry.ITEMS.register("stardust_button", () -> new BlockItem(BlockRegistry.STARDUST_BUTTON.get(), new Properties()));
 	public static final RegistryObject<BlockItem> STARDUST_PRESSURE_PLATE_ITEM = ItemRegistry.ITEMS.register("stardust_pressure_plate", () -> new BlockItem(BlockRegistry.STARDUST_PRESSURE_PLATE.get(), new Properties()));
-	public static final RegistryObject<SignItem> STARDUST_SIGN_ITEM = ItemRegistry.ITEMS.register("stardust_sign", () -> new SignItem(new Properties(), BlockRegistry.STARDUST_SIGN.get(), BlockRegistry.STARDUST_WALL_SIGN.get()));
+	public static final RegistryObject<SignItem> STARDUST_SIGN_ITEM = ItemRegistry.ITEMS.register("stardust_sign", () -> new SignItem(new Properties().stacksTo(16), BlockRegistry.STARDUST_SIGN.get(), BlockRegistry.STARDUST_WALL_SIGN.get()));
+	public static final RegistryObject<HangingSignItem> STARDUST_HANGING_SIGN_ITEM = ItemRegistry.ITEMS.register("stardust_hanging_sign", () -> new HangingSignItem(BlockRegistry.STARDUST_HANGING_SIGN.get(), BlockRegistry.STARDUST_WALL_HANGING_SIGN.get(), new Properties().stacksTo(16)));
 	public static final RegistryObject<BlockItem> STARDUST_SAPLING_ITEM = ItemRegistry.ITEMS.register("stardust_sapling", () -> new BlockItem(BlockRegistry.STARDUST_SAPLING.get(), new Properties()));
 	public static final RegistryObject<BlockItem> BLOOD_SAND_ITEM = ItemRegistry.ITEMS.register("blood_sand", () -> new BlockItem(BlockRegistry.BLOOD_SAND.get(), new Properties()));
 	public static final RegistryObject<BlockItem> BLOOD_SANDSTONE_ITEM = ItemRegistry.ITEMS.register("blood_sandstone", () -> new BlockItem(BlockRegistry.BLOOD_SANDSTONE.get(), new Properties()));

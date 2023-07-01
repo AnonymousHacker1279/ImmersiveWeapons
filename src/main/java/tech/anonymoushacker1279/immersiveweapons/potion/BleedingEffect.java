@@ -30,14 +30,14 @@ public class BleedingEffect extends MobEffect {
 	 */
 	@Override
 	public void applyEffectTick(LivingEntity livingEntity, int amplifier) {
-		if (!livingEntity.level.isClientSide) {
+		if (!livingEntity.level().isClientSide) {
 			if (cooldownTicks <= 0) {
 				cooldownTicks = 59 - (amplifier >= 1 ? amplifier * 10 : 0);
 				livingEntity.hurt(IWDamageSources.BLEEDING, 1.0f);
 			} else {
 				cooldownTicks--;
 			}
-			((ServerLevel) livingEntity.level).sendParticles(
+			((ServerLevel) livingEntity.level()).sendParticles(
 					ParticleTypesRegistry.BLOOD_PARTICLE.get(),
 					livingEntity.position().x, livingEntity.position().y + GeneralUtilities.getRandomNumber(0.3d, livingEntity.getEyeHeight()),
 					livingEntity.position().z, 1, GeneralUtilities.getRandomNumber(-0.03d, 0.03d),

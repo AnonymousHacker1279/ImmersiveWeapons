@@ -13,7 +13,6 @@ import net.minecraftforge.network.NetworkEvent.Context;
 import net.minecraftforge.network.PacketDistributor;
 import org.jetbrains.annotations.Nullable;
 import tech.anonymoushacker1279.immersiveweapons.init.*;
-import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
 
 import java.util.Objects;
 import java.util.function.Supplier;
@@ -33,7 +32,7 @@ public class EnvironmentEffects {
 				celestialProtectionChanceForNoDamage = 0.0f;
 				return;
 			} else if (celestialProtectionChanceForNoDamage > 0.0f) {
-				if (GeneralUtilities.getRandomNumber(0, 1.0f) <= celestialProtectionChanceForNoDamage) {
+				if (damagedEntity.getRandom().nextFloat() <= celestialProtectionChanceForNoDamage) {
 					event.setCanceled(true);
 					celestialProtectionChanceForNoDamage = 0.0f;
 				}
@@ -97,7 +96,7 @@ public class EnvironmentEffects {
 					sourceEntity.getItemBySlot(EquipmentSlot.FEET).getItem() == ItemRegistry.MOLTEN_BOOTS.get()) {
 
 				// If in the Nether, increase all outgoing damage by 20%
-				if (sourceEntity.level.dimension() == Level.NETHER) {
+				if (sourceEntity.level().dimension() == Level.NETHER) {
 					float damage = event.getAmount();
 					damage *= 1.2f;
 					event.setAmount(damage);

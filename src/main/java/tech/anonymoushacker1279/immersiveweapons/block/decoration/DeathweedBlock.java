@@ -12,7 +12,6 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.PlantType;
 import tech.anonymoushacker1279.immersiveweapons.init.BlockRegistry;
 import tech.anonymoushacker1279.immersiveweapons.init.EffectRegistry;
-import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
 import tech.anonymoushacker1279.immersiveweapons.world.level.IWDamageSources;
 
 import java.util.function.Supplier;
@@ -37,7 +36,7 @@ public class DeathweedBlock extends FlowerBlock {
 	public void entityInside(BlockState state, Level level, BlockPos pos, Entity entity) {
 		if (entity instanceof LivingEntity livingEntity) {
 			if (!level.isClientSide) {
-				float chance = GeneralUtilities.getRandomNumber(0.0f, 1.0f);
+				float chance = livingEntity.getRandom().nextFloat();
 				if (livingEntity.tickCount % 8 == 0 && chance <= 0.65f) {
 					livingEntity.hurt(IWDamageSources.DEATHWEED, 1.0f);
 

@@ -161,7 +161,7 @@ public class StormCreeperEntity extends Creeper implements GrantAdvancementOnDis
 			for (int i = 0; i < 360; i += 30) {
 				double x = getX() + 0.5 * Math.cos(i);
 				double z = getZ() + 0.5 * Math.sin(i);
-				level.addParticle(ParticleTypes.CLOUD, x, getY() + 0.5, z, 0, 0, 0);
+				level().addParticle(ParticleTypes.CLOUD, x, getY() + 0.5, z, 0, 0, 0);
 			}
 		}
 	}
@@ -230,13 +230,13 @@ public class StormCreeperEntity extends Creeper implements GrantAdvancementOnDis
 		ItemStack itemInHand = pPlayer.getItemInHand(pHand);
 		if (itemInHand.is(ItemTags.CREEPER_IGNITERS)) {
 			SoundEvent soundEvent = itemInHand.is(Items.FIRE_CHARGE) ? SoundEvents.FIRECHARGE_USE : SoundEvents.FLINTANDSTEEL_USE;
-			level.playSound(pPlayer, getX(), getY(), getZ(), soundEvent, getSoundSource(), 1.0F, random.nextFloat() * 0.4F + 0.8F);
-			if (!level.isClientSide) {
+			level().playSound(pPlayer, getX(), getY(), getZ(), soundEvent, getSoundSource(), 1.0F, random.nextFloat() * 0.4F + 0.8F);
+			if (!level().isClientSide) {
 				ignite();
 				itemInHand.hurtAndBreak(1, pPlayer, (player) -> player.broadcastBreakEvent(pHand));
 			}
 
-			return InteractionResult.sidedSuccess(level.isClientSide);
+			return InteractionResult.sidedSuccess(level().isClientSide);
 		} else {
 			return super.mobInteract(pPlayer, pHand);
 		}
@@ -246,10 +246,10 @@ public class StormCreeperEntity extends Creeper implements GrantAdvancementOnDis
 	 * Creates an explosion as determined by this creeper's power and explosion radius.
 	 */
 	private void explodeCreeper() {
-		if (!level.isClientSide) {
+		if (!level().isClientSide) {
 			float powerModifier = isPowered() ? 2.0F : 1.0F;
 			dead = true;
-			level.explode(this, getX(), getY(), getZ(), (float) explosionRadius * powerModifier, Level.ExplosionInteraction.MOB);
+			level().explode(this, getX(), getY(), getZ(), (float) explosionRadius * powerModifier, Level.ExplosionInteraction.MOB);
 			discard();
 			spawnLingeringCloud();
 		}
@@ -259,7 +259,7 @@ public class StormCreeperEntity extends Creeper implements GrantAdvancementOnDis
 	private void spawnLingeringCloud() {
 		Collection<MobEffectInstance> collection = getActiveEffects();
 		if (!collection.isEmpty()) {
-			AreaEffectCloud effectCloud = new AreaEffectCloud(level, getX(), getY(), getZ());
+			AreaEffectCloud effectCloud = new AreaEffectCloud(level(), getX(), getY(), getZ());
 			effectCloud.setRadius(2.5F);
 			effectCloud.setRadiusOnUse(-0.5F);
 			effectCloud.setWaitTime(10);
@@ -270,7 +270,7 @@ public class StormCreeperEntity extends Creeper implements GrantAdvancementOnDis
 				effectCloud.addEffect(new MobEffectInstance(instance));
 			}
 
-			level.addFreshEntity(effectCloud);
+			level().addFreshEntity(effectCloud);
 		}
 
 	}
@@ -302,7 +302,7 @@ public class StormCreeperEntity extends Creeper implements GrantAdvancementOnDis
 
 	@Override
 	public int getExperienceReward() {
-		xpReward = 5 + level.random.nextInt(5);
+		xpReward = 5 + level().random.nextInt(5);
 		return super.getExperienceReward();
 	}
 

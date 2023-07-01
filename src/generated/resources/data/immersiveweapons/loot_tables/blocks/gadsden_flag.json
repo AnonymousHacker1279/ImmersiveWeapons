@@ -14,7 +14,9 @@
           "name": "immersiveweapons:gadsden_flag"
         }
       ],
+      "name": "main",
       "rolls": 1.0
     }
-  ]
+  ],
+  "random_sequence": "immersiveweapons:blocks/gadsden_flag"
 }

@@ -14,7 +14,9 @@
           "name": "immersiveweapons:storm_creeper_head"
         }
       ],
+      "name": "main",
       "rolls": 1.0
     }
-  ]
+  ],
+  "random_sequence": "immersiveweapons:blocks/storm_creeper_head"
 }

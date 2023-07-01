@@ -87,8 +87,8 @@ public class MolotovEntity extends ThrowableItemProjectile {
 	@Override
 	protected void onHit(HitResult rayTraceResult) {
 		super.onHit(rayTraceResult);
-		if (!level.isClientSide) {
-			level.broadcastEntityEvent(this, VANILLA_IMPACT_STATUS_ID);
+		if (!level().isClientSide) {
+			level().broadcastEntityEvent(this, VANILLA_IMPACT_STATUS_ID);
 
 			BlockPos currentPosition = blockPosition();
 
@@ -109,8 +109,8 @@ public class MolotovEntity extends ThrowableItemProjectile {
 			firePositionList.add(adjustFirePosition(currentPosition.south(2), 3));
 
 			for (BlockPos pos : firePositionList) {
-				if (!level.getBlockState(pos.below()).isAir() && level.getBlockState(pos).isAir()) {
-					level.setBlockAndUpdate(pos, fireState);
+				if (!level().getBlockState(pos.below()).isAir() && level().getBlockState(pos).isAir()) {
+					level().setBlockAndUpdate(pos, fireState);
 				}
 			}
 
@@ -128,7 +128,7 @@ public class MolotovEntity extends ThrowableItemProjectile {
 	private BlockPos adjustFirePosition(BlockPos pos, int distanceDown) {
 		BlockPos movedPosition = pos;
 		for (int i = 0; i <= distanceDown; i++) {
-			if (level.getBlockState(movedPosition) != airState) {
+			if (level().getBlockState(movedPosition) != airState) {
 				return movedPosition.above();
 			}
 			movedPosition = movedPosition.below();
@@ -144,7 +144,7 @@ public class MolotovEntity extends ThrowableItemProjectile {
 	@Override
 	public void handleEntityEvent(byte statusID) {
 		if (statusID == VANILLA_IMPACT_STATUS_ID) {
-			level.playLocalSound(getX(), getY(), getZ(), SoundEvents.GLASS_BREAK, SoundSource.NEUTRAL, 1f, 1f, false);
+			level().playLocalSound(getX(), getY(), getZ(), SoundEvents.GLASS_BREAK, SoundSource.NEUTRAL, 1f, 1f, false);
 			kill();
 		}
 	}

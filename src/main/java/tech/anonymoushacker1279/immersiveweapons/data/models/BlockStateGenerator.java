@@ -6,8 +6,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
-import net.minecraftforge.client.model.generators.BlockStateProvider;
-import net.minecraftforge.client.model.generators.ConfiguredModel;
+import net.minecraftforge.client.model.generators.*;
 import net.minecraftforge.client.model.generators.ModelBuilder.FaceRotation;
 import net.minecraftforge.client.model.generators.ModelFile.ExistingModelFile;
 import net.minecraftforge.common.data.ExistingFileHelper;
@@ -16,8 +15,7 @@ import net.minecraftforge.registries.RegistryObject;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.block.*;
 import tech.anonymoushacker1279.immersiveweapons.block.barbed_wire.BarbedWireBlock;
-import tech.anonymoushacker1279.immersiveweapons.block.decoration.CelestialLanternBlock;
-import tech.anonymoushacker1279.immersiveweapons.block.decoration.FlagPoleBlock;
+import tech.anonymoushacker1279.immersiveweapons.block.decoration.*;
 import tech.anonymoushacker1279.immersiveweapons.block.misc.warrior_statue.WarriorStatueHead;
 import tech.anonymoushacker1279.immersiveweapons.block.misc.warrior_statue.WarriorStatueTorso;
 import tech.anonymoushacker1279.immersiveweapons.data.lists.BlockLists;
@@ -33,6 +31,9 @@ public class BlockStateGenerator extends BlockStateProvider {
 
 	@Override
 	protected void registerStatesAndModels() {
+		List<Block> blocks = new ArrayList<>(250);
+		BlockRegistry.BLOCKS.getEntries().stream().map(RegistryObject::get).forEach(blocks::add);
+
 		ResourceLocation stardust_granule_overlay = new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/stardust_granule_overlay");
 
 		// Generate simple, six-sided blocks
@@ -107,22 +108,19 @@ public class BlockStateGenerator extends BlockStateProvider {
 				.renderType("minecraft:cutout_mipped"));
 
 		// Generate data for tables
-		for (Block block : BlockLists.tableBlocks) {
+		blocks.stream().filter(WoodenTableBlock.class::isInstance).forEach(block -> {
+			String namespace = "minecraft:block/";
+
 			if (block == BlockRegistry.BURNED_OAK_TABLE.get() || block == BlockRegistry.STARDUST_TABLE.get()) {
-				simpleBlock(block, models().withExistingParent(Objects.requireNonNull(ForgeRegistries.BLOCKS.getKey(block)).getPath(),
-								new ResourceLocation(ImmersiveWeapons.MOD_ID, "table"))
-						.texture("all", ImmersiveWeapons.MOD_ID
-								+ ":block/" + Objects.requireNonNull(ForgeRegistries.BLOCKS.getKey(block)).getPath()
-								.replace("table", "planks"))
-						.renderType("minecraft:cutout_mipped"));
-			} else {
-				simpleBlock(block, models().withExistingParent(Objects.requireNonNull(ForgeRegistries.BLOCKS.getKey(block)).getPath(),
-								new ResourceLocation(ImmersiveWeapons.MOD_ID, "table"))
-						.texture("all", "minecraft:block/" + Objects.requireNonNull(ForgeRegistries.BLOCKS.getKey(block)).getPath()
-								.replace("table", "planks"))
-						.renderType("minecraft:cutout_mipped"));
+				namespace = ImmersiveWeapons.MOD_ID + ":block/";
 			}
-		}
+
+			simpleBlock(block, models().withExistingParent(Objects.requireNonNull(ForgeRegistries.BLOCKS.getKey(block)).getPath(),
+							new ResourceLocation(ImmersiveWeapons.MOD_ID, "table"))
+					.texture("all", namespace + Objects.requireNonNull(ForgeRegistries.BLOCKS.getKey(block)).getPath()
+							.replace("table", "planks"))
+					.renderType("minecraft:cutout_mipped"));
+		});
 
 		// Generate data for flags
 		getVariantBuilder(BlockRegistry.FLAG_POLE.get())
@@ -133,12 +131,11 @@ public class BlockStateGenerator extends BlockStateProvider {
 				.addModels(new ConfiguredModel(models()
 						.getExistingFile(new ResourceLocation(ImmersiveWeapons.MOD_ID, "flag_pole"))));
 
-		for (Block block : BlockLists.flagBlocks) {
-			horizontalBlock(block, models().withExistingParent(Objects.requireNonNull(ForgeRegistries.BLOCKS.getKey(block)).getPath(),
-							new ResourceLocation(ImmersiveWeapons.MOD_ID, "flag"))
-					.texture("flag", ImmersiveWeapons.MOD_ID +
-							":block/" + Objects.requireNonNull(ForgeRegistries.BLOCKS.getKey(block)).getPath()));
-		}
+		blocks.stream().filter(FlagBlock.class::isInstance).forEach(block -> horizontalBlock(block, models()
+				.withExistingParent(Objects.requireNonNull(ForgeRegistries.BLOCKS.getKey(block)).getPath(),
+						new ResourceLocation(ImmersiveWeapons.MOD_ID, "flag"))
+				.texture("flag", ImmersiveWeapons.MOD_ID +
+						":block/" + Objects.requireNonNull(ForgeRegistries.BLOCKS.getKey(block)).getPath())));
 
 		// Generate data for cube-bottom-top blocks
 		simpleBlock(BlockRegistry.BLOOD_SANDSTONE.get(), models()
@@ -346,8 +343,12 @@ public class BlockStateGenerator extends BlockStateProvider {
 		// Generate data for sign blocks
 		signBlock(BlockRegistry.BURNED_OAK_SIGN.get(), BlockRegistry.BURNED_OAK_WALL_SIGN.get(),
 				new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/burned_oak_planks"));
+		hangingSignBlock(BlockRegistry.BURNED_OAK_HANGING_SIGN.get(), BlockRegistry.BURNED_OAK_WALL_HANGING_SIGN.get(),
+				new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/stripped_burned_oak_log"));
 		signBlock(BlockRegistry.STARDUST_SIGN.get(), BlockRegistry.STARDUST_WALL_SIGN.get(),
 				new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/stardust_planks"));
+		hangingSignBlock(BlockRegistry.STARDUST_HANGING_SIGN.get(), BlockRegistry.STARDUST_WALL_HANGING_SIGN.get(),
+				new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/stripped_stardust_log"));
 
 		// Generate data for skulls
 		List<Block> headBlocks = new ArrayList<>(25);
@@ -693,5 +694,15 @@ public class BlockStateGenerator extends BlockStateProvider {
 				.rotationY(yRot)
 				.rotationX(xRot)
 				.build();
+	}
+
+	public void hangingSignBlock(CeilingHangingSignBlock signBlock, WallHangingSignBlock wallSignBlock, ResourceLocation texture) {
+		ModelFile sign = models().sign(ForgeRegistries.BLOCKS.getKey(signBlock).getPath(), texture);
+		hangingSignBlock(signBlock, wallSignBlock, sign);
+	}
+
+	public void hangingSignBlock(CeilingHangingSignBlock signBlock, WallHangingSignBlock wallSignBlock, ModelFile sign) {
+		simpleBlock(signBlock, sign);
+		simpleBlock(wallSignBlock, sign);
 	}
 }

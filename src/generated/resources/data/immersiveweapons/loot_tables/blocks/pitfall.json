@@ -11,7 +11,7 @@
               "type": "minecraft:item",
               "conditions": [
                 {
-                  "condition": "minecraft:alternative",
+                  "condition": "minecraft:any_of",
                   "terms": [
                     {
                       "condition": "minecraft:match_tool",
@@ -61,6 +61,7 @@
           ]
         }
       ],
+      "name": "main",
       "rolls": 1.0
     },
     {
@@ -69,7 +70,7 @@
         {
           "condition": "minecraft:inverted",
           "term": {
-            "condition": "minecraft:alternative",
+            "condition": "minecraft:any_of",
             "terms": [
               {
                 "condition": "minecraft:match_tool",
@@ -129,7 +130,9 @@
           "name": "minecraft:stick"
         }
       ],
+      "name": "main",
       "rolls": 1.0
     }
-  ]
+  ],
+  "random_sequence": "immersiveweapons:blocks/pitfall"
 }

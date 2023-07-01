@@ -18,7 +18,6 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import tech.anonymoushacker1279.immersiveweapons.block.core.DamageableBlock;
 import tech.anonymoushacker1279.immersiveweapons.blockentity.DamageableBlockEntity;
 import tech.anonymoushacker1279.immersiveweapons.init.EffectRegistry;
-import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
 import tech.anonymoushacker1279.immersiveweapons.world.level.IWDamageSources;
 
 public class WoodenSpikesBlock extends DamageableBlock {
@@ -74,7 +73,7 @@ public class WoodenSpikesBlock extends DamageableBlock {
 					if (level.getBlockEntity(pos) instanceof DamageableBlockEntity damageable && level.getGameTime() % 10 == 0) {
 						entity.hurt(IWDamageSources.WOODEN_SPIKES, damageable.calculateDamage(1.5f, 0.33f));
 
-						if (GeneralUtilities.getRandomNumber(0.0f, 1.0f) <= 0.15f) {
+						if (livingEntity.getRandom().nextFloat() <= 0.15f) {
 							livingEntity.addEffect(new MobEffectInstance(EffectRegistry.BLEEDING_EFFECT.get(),
 									200, 0, true, false));
 						}

@@ -14,7 +14,9 @@
           "name": "immersiveweapons:small_parts_table"
         }
       ],
+      "name": "main",
       "rolls": 1.0
     }
-  ]
+  ],
+  "random_sequence": "immersiveweapons:blocks/small_parts_table"
 }

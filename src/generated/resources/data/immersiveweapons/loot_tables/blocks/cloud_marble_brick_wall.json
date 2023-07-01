@@ -14,7 +14,9 @@
           "name": "immersiveweapons:cloud_marble_brick_wall"
         }
       ],
+      "name": "main",
       "rolls": 1.0
     }
-  ]
+  ],
+  "random_sequence": "immersiveweapons:blocks/cloud_marble_brick_wall"
 }

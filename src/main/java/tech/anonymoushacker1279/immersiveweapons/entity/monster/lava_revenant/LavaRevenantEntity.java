@@ -23,7 +23,6 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.*;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.Heightmap;
-import net.minecraft.world.level.material.Material;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.api.distmarker.Dist;
@@ -37,7 +36,6 @@ import org.jetbrains.annotations.Nullable;
 import tech.anonymoushacker1279.immersiveweapons.entity.GrantAdvancementOnDiscovery;
 import tech.anonymoushacker1279.immersiveweapons.init.PacketHandler;
 import tech.anonymoushacker1279.immersiveweapons.init.SoundEventRegistry;
-import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
 
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -168,7 +166,7 @@ public class LavaRevenantEntity extends FlyingMob implements Enemy, GrantAdvance
 	public void tick() {
 		super.tick();
 
-		if (level.isClientSide) {
+		if (level().isClientSide) {
 			float flapTick = Mth.cos((float) (getUniqueFlapTickOffset() + tickCount) * 7.448451F
 					* ((float) Math.PI / 180F) + (float) Math.PI);
 			float nextFlapTick = Mth.cos((float) (getUniqueFlapTickOffset() + tickCount + 1) * 7.448451F
@@ -179,7 +177,7 @@ public class LavaRevenantEntity extends FlyingMob implements Enemy, GrantAdvance
 			}
 
 			if (flapTick > 0.0F && nextFlapTick <= 0.0F) {
-				level.playLocalSound(getX(), getY(), getZ(), SoundEventRegistry.LAVA_REVENANT_FLAP.get(),
+				level().playLocalSound(getX(), getY(), getZ(), SoundEventRegistry.LAVA_REVENANT_FLAP.get(),
 						getSoundSource(), 0.95F + random.nextFloat() * 0.05F,
 						0.95F + random.nextFloat() * 0.05F, false);
 			}
@@ -189,9 +187,9 @@ public class LavaRevenantEntity extends FlyingMob implements Enemy, GrantAdvance
 			float zSizeModifier = Mth.sin(getYRot() * ((float) Math.PI / 180F)) * (7.0f * (float) size);
 			float ySizeModifier = (0.3F + flapTick * 0.45F) * ((float) size * 0.2F + 1.5F);
 
-			level.addParticle(ParticleTypes.LAVA, getX() + (double) xSizeModifier, getY() + (double) ySizeModifier,
+			level().addParticle(ParticleTypes.LAVA, getX() + (double) xSizeModifier, getY() + (double) ySizeModifier,
 					getZ() + (double) zSizeModifier, 0.0D, 0.0D, 0.0D);
-			level.addParticle(ParticleTypes.LAVA, getX() - (double) xSizeModifier, getY() + (double) ySizeModifier,
+			level().addParticle(ParticleTypes.LAVA, getX() - (double) xSizeModifier, getY() + (double) ySizeModifier,
 					getZ() - (double) zSizeModifier, 0.0D, 0.0D, 0.0D);
 
 		}
@@ -251,7 +249,7 @@ public class LavaRevenantEntity extends FlyingMob implements Enemy, GrantAdvance
 				(yHeadOffset + sinLatencyPosModifier * 6.5f),
 				(-cosRotModifier * (4.5f * getScale() * 0.8f) * cosLatencyPosModifier));
 
-		if (!level.isClientSide) {
+		if (!level().isClientSide) {
 			inWall = checkWalls(head.getBoundingBox()) | checkWalls(body.getBoundingBox());
 		}
 
@@ -330,12 +328,12 @@ public class LavaRevenantEntity extends FlyingMob implements Enemy, GrantAdvance
 			for (int lMinY = minY; lMinY <= maxY; ++lMinY) {
 				for (int lMinZ = minZ; lMinZ <= maxZ; ++lMinZ) {
 					BlockPos pos = new BlockPos(i, lMinY, lMinZ);
-					BlockState state = level.getBlockState(pos);
-					if (!state.isAir() && state.getMaterial() != Material.FIRE) {
-						if (ForgeHooks.canEntityDestroy(level, pos, this)
-								&& state.getDestroySpeed(level, pos) <= 1.5f) {
+					BlockState state = level().getBlockState(pos);
+					if (!state.isAir()) {
+						if (ForgeHooks.canEntityDestroy(level(), pos, this)
+								&& state.getDestroySpeed(level(), pos) <= 1.5f) {
 
-							blockRemoved = level.removeBlock(pos, false) || blockRemoved;
+							blockRemoved = level().removeBlock(pos, false) || blockRemoved;
 						} else {
 							stuck = true;
 						}
@@ -348,7 +346,7 @@ public class LavaRevenantEntity extends FlyingMob implements Enemy, GrantAdvance
 			BlockPos randomPos = new BlockPos(minX + random.nextInt(maxX - minX + 1),
 					minY + random.nextInt(maxY - minY + 1),
 					minZ + random.nextInt(maxZ - minZ + 1));
-			level.levelEvent(2008, randomPos, 0);
+			level().levelEvent(2008, randomPos, 0);
 		}
 
 		return stuck;
@@ -370,7 +368,7 @@ public class LavaRevenantEntity extends FlyingMob implements Enemy, GrantAdvance
 	                                    @Nullable CompoundTag pDataTag) {
 
 		anchorPoint = blockPosition().above(15);
-		setSize(GeneralUtilities.getRandomNumber(1, 3));
+		setSize(getRandom().nextIntBetweenInclusive(1, 3));
 		setHealth(getMaxHealth());
 		return super.finalizeSpawn(pLevel, pDifficulty, pReason, pSpawnData, pDataTag);
 	}
@@ -470,7 +468,7 @@ public class LavaRevenantEntity extends FlyingMob implements Enemy, GrantAdvance
 
 				// At least 60% of the blocks must be air
 				AtomicInteger airBlocks = new AtomicInteger();
-				level.getBlockStates(box).forEach(state -> {
+				level().getBlockStates(box).forEach(state -> {
 					if (!state.isAir()) {
 						airBlocks.getAndIncrement();
 					}
@@ -552,7 +550,7 @@ public class LavaRevenantEntity extends FlyingMob implements Enemy, GrantAdvance
 			if (minecraft.level != null) {
 				minecraft.level.playLocalSound(msg.blockPos.getX(), msg.blockPos.getY(), msg.blockPos.getZ(),
 						SoundEventRegistry.LAVA_REVENANT_BITE.get(), SoundSource.HOSTILE, 0.3F,
-						GeneralUtilities.getRandomNumber(0.0f, 1.0f) * 0.1F + 0.9F, false);
+						minecraft.level.getRandom().nextFloat() * 0.1F + 0.9F, false);
 			}
 		}
 	}
@@ -571,7 +569,7 @@ public class LavaRevenantEntity extends FlyingMob implements Enemy, GrantAdvance
 				--nextScanTick;
 			} else {
 				nextScanTick = 60;
-				List<Player> nearbyPlayers = level.getNearbyPlayers(attackTargeting, LavaRevenantEntity.this,
+				List<Player> nearbyPlayers = level().getNearbyPlayers(attackTargeting, LavaRevenantEntity.this,
 						getBoundingBox().inflate(128.0D, 96.0D, 128.0D));
 				if (!nearbyPlayers.isEmpty()) {
 					nearbyPlayers.sort(Comparator.<Entity, Double> comparing(Entity::getY).reversed());
@@ -626,7 +624,7 @@ public class LavaRevenantEntity extends FlyingMob implements Enemy, GrantAdvance
 		 */
 		@Override
 		public void stop() {
-			anchorPoint = level.getHeightmapPos(Heightmap.Types.MOTION_BLOCKING, anchorPoint)
+			anchorPoint = level().getHeightmapPos(Heightmap.Types.MOTION_BLOCKING, anchorPoint)
 					.above(30 + random.nextInt(20));
 		}
 
@@ -650,8 +648,8 @@ public class LavaRevenantEntity extends FlyingMob implements Enemy, GrantAdvance
 
 		private void setAnchorAboveTarget() {
 			anchorPoint = Objects.requireNonNull(getTarget()).blockPosition().above(30 + random.nextInt(20));
-			if (anchorPoint.getY() < level.getSeaLevel()) {
-				anchorPoint = new BlockPos(anchorPoint.getX(), level.getSeaLevel() + 1, anchorPoint.getZ());
+			if (anchorPoint.getY() < level().getSeaLevel()) {
+				anchorPoint = new BlockPos(anchorPoint.getX(), level().getSeaLevel() + 1, anchorPoint.getZ());
 			}
 
 		}
@@ -724,12 +722,12 @@ public class LavaRevenantEntity extends FlyingMob implements Enemy, GrantAdvance
 				selectNext();
 			}
 
-			if (moveTargetPoint.y < getY() && !level.isEmptyBlock(blockPosition().below(1))) {
+			if (moveTargetPoint.y < getY() && !level().isEmptyBlock(blockPosition().below(1))) {
 				height = Math.max(1.0F, height);
 				selectNext();
 			}
 
-			if (moveTargetPoint.y > getY() && !level.isEmptyBlock(blockPosition().above(1))) {
+			if (moveTargetPoint.y > getY() && !level().isEmptyBlock(blockPosition().above(1))) {
 				height = Math.min(-1.0F, height);
 				selectNext();
 			}
@@ -879,7 +877,7 @@ public class LavaRevenantEntity extends FlyingMob implements Enemy, GrantAdvance
 					attackPhase = LavaRevenantEntity.AttackPhase.CIRCLE;
 					if (!isSilent()) {
 						PacketHandler.INSTANCE.send(PacketDistributor.TRACKING_CHUNK.with(() ->
-								level.getChunkAt(blockPosition())), new LavaRevenantEntityPacketHandler(blockPosition()));
+								level().getChunkAt(blockPosition())), new LavaRevenantEntityPacketHandler(blockPosition()));
 					}
 				} else if (horizontalCollision || hurtTime > 0) {
 					attackPhase = LavaRevenantEntity.AttackPhase.CIRCLE;

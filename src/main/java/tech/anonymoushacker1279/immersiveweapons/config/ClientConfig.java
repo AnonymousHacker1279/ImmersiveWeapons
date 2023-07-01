@@ -9,10 +9,10 @@ public class ClientConfig {
 	public static final ForgeConfigSpec CLIENT_SPEC;
 	public static final ClientConfig CLIENT;
 
-	public static ForgeConfigSpec.ConfigValue<Boolean> TESLA_ARMOR_EFFECT_SOUND;
-	public static ForgeConfigSpec.ConfigValue<Integer> PANIC_ALARM_RANGE;
-	public static ForgeConfigSpec.ConfigValue<Integer> SMOKE_GRENADE_PARTICLES;
-	public static ForgeConfigSpec.ConfigValue<Boolean> FANCY_SMOKE_GRENADE_PARTICLES;
+	public static ForgeConfigSpec.BooleanValue TESLA_ARMOR_EFFECT_SOUND;
+	public static ForgeConfigSpec.IntValue PANIC_ALARM_RANGE;
+	public static ForgeConfigSpec.IntValue SMOKE_GRENADE_PARTICLES;
+	public static ForgeConfigSpec.BooleanValue FANCY_SMOKE_GRENADE_PARTICLES;
 
 	ClientConfig(ForgeConfigSpec.Builder builder) {
 		builder.push("Client Configuration");
@@ -22,7 +22,7 @@ public class ClientConfig {
 				.comment("Set the number of particles produced by the smoke grenade\n" +
 						"The server may choose to override this value to encourage fairness. - Default 96")
 				.translation("config.immersiveweapons.smoke_grenade_particles")
-				.define("smoke_grenade_particles", 96);
+				.defineInRange("smoke_grenade_particles", 96, 0, Integer.MAX_VALUE);
 		FANCY_SMOKE_GRENADE_PARTICLES = builder
 				.comment("Render smoke grenade particles at 66% of the regular size, spawn 3x more, and add translucency.\n" +
 						"This will negatively impact performance, but make smoke grenades appear more realistic. - Default false")
@@ -38,7 +38,7 @@ public class ClientConfig {
 		PANIC_ALARM_RANGE = builder
 				.comment("Set the range of the Panic Alarm's sound - Default 48")
 				.translation("config.immersiveweapons.panic_alarm_range")
-				.define("panic_alarm_range", 48);
+				.defineInRange("panic_alarm_range", 48, 0, Integer.MAX_VALUE);
 		builder.pop();
 
 		builder.pop();

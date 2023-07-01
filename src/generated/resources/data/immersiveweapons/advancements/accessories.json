@@ -34,5 +34,6 @@
   ],
   "rewards": {
     "experience": 15
-  }
+  },
+  "sends_telemetry_event": true
 }

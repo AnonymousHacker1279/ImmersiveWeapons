@@ -100,18 +100,6 @@ public class AccessoryEffects {
 		}
 	}
 
-	public static void knockbackResistanceEffects(LivingKnockBackEvent event, Player player) {
-		// Get the total knockback resistance from all items
-		double knockbackResistance = collectEffects(EffectType.KNOCKBACK_RESISTANCE, player);
-
-		// Apply the knockback resistance
-		event.setStrength((float) (event.getStrength() * (1 - knockbackResistance)));
-
-		if (event.getStrength() <= 0.0f) {
-			event.setCanceled(true);
-		}
-	}
-
 	public static void meleeKnockbackEffects(LivingKnockBackEvent event, Player player) {
 		// Get the total melee knockback from all items
 		double meleeKnockback = collectEffects(EffectType.MELEE_KNOCKBACK, player);
@@ -160,7 +148,7 @@ public class AccessoryEffects {
 		// 15% chance to summon meteor
 		if (AccessoryItem.isAccessoryActive(player, ItemRegistry.CELESTIAL_SPIRIT.get()) && player.getRandom().nextFloat() <= 0.15f) {
 			if (player != sourceEntity) {
-				MeteorEntity.create(player.level, player, null, player.blockPosition(), sourceEntity);
+				MeteorEntity.create(player.level(), player, null, player.blockPosition(), sourceEntity);
 			}
 		}
 	}

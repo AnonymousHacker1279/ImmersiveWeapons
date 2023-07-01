@@ -115,11 +115,13 @@
           "name": "immersiveweapons:flare_gun"
         }
       ],
+      "name": "main",
       "rolls": {
         "type": "minecraft:uniform",
         "max": 7.0,
         "min": 3.0
       }
     }
-  ]
+  ],
+  "random_sequence": "immersiveweapons:chests/campsite"
 }

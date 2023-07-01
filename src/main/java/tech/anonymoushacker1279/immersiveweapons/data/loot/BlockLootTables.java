@@ -22,14 +22,17 @@ import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
 import net.minecraft.world.level.storage.loot.predicates.*;
 import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
 import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
+import net.minecraftforge.registries.RegistryObject;
 import org.jetbrains.annotations.Nullable;
 import tech.anonymoushacker1279.immersiveweapons.block.*;
 import tech.anonymoushacker1279.immersiveweapons.block.barbed_wire.BarbedWireBlock;
+import tech.anonymoushacker1279.immersiveweapons.block.decoration.WoodenTableBlock;
+import tech.anonymoushacker1279.immersiveweapons.block.decoration.skull.CustomSkullBlock;
 import tech.anonymoushacker1279.immersiveweapons.block.misc.warrior_statue.WarriorStatueTorso;
-import tech.anonymoushacker1279.immersiveweapons.data.lists.BlockLists;
-import tech.anonymoushacker1279.immersiveweapons.data.tags.lists.BlockTagLists;
 import tech.anonymoushacker1279.immersiveweapons.init.*;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
 
@@ -47,6 +50,9 @@ public class BlockLootTables implements LootTableSubProvider {
 	@Override
 	public void generate(BiConsumer<ResourceLocation, Builder> out) {
 		this.out = out;
+
+		List<Block> blocks = new ArrayList<>(250);
+		BlockRegistry.BLOCKS.getEntries().stream().map(RegistryObject::get).forEach(blocks::add);
 
 		// Simple block drops
 		dropSelf(BlockRegistry.AMERICAN_FLAG.get());
@@ -141,13 +147,8 @@ public class BlockLootTables implements LootTableSubProvider {
 		dropSelf(BlockRegistry.BIODOME_LIFE_SUPPORT_UNIT.get());
 		dropSelf(BlockRegistry.RUSTED_IRON_BLOCK.get());
 
-		for (Block block : BlockTagLists.TABLES) {
-			dropSelf(block);
-		}
-
-		for (Block block : BlockLists.headBlocks) {
-			dropSelf(block);
-		}
+		blocks.stream().filter(WoodenTableBlock.class::isInstance).forEach(this::dropSelf);
+		blocks.stream().filter(CustomSkullBlock.class::isInstance).forEach(this::dropSelf);
 
 		// Complex block drops
 		add(BlockRegistry.BURNED_OAK_DOOR.get(), BlockLootTables::createDoor);
@@ -156,7 +157,7 @@ public class BlockLootTables implements LootTableSubProvider {
 		add(BlockRegistry.BURNED_OAK_BRANCH.get(), (leafLikeDrop) -> createLeafLikeDrop(leafLikeDrop, Items.STICK, NORMAL_LEAVES_SAPLING_CHANCES));
 		add(BlockRegistry.COBALT_ORE.get(), (block) -> createOreDrop(block, ItemRegistry.RAW_COBALT.get()));
 		add(BlockRegistry.DEEPSLATE_COBALT_ORE.get(), (block) -> createOreDrop(block, ItemRegistry.RAW_COBALT.get()));
-		add(BlockRegistry.MOLTEN_ORE.get(), (block) -> createOreDrop(block, ItemRegistry.MOLTEN_SHARD.get()));
+		add(BlockRegistry.MOLTEN_ORE.get(), (block) -> createOreDrop(block, ItemRegistry.MOLTEN_SHARD.get(), 3, 6));
 		add(BlockRegistry.SULFUR_ORE.get(), (block) -> createOreDrop(block, ItemRegistry.SULFUR.get(), 2, 4));
 		add(BlockRegistry.DEEPSLATE_SULFUR_ORE.get(), (block) -> createOreDrop(block, ItemRegistry.SULFUR.get(), 2, 4));
 		add(BlockRegistry.NETHER_SULFUR_ORE.get(), (block) -> createOreDrop(block, ItemRegistry.SULFUR.get(), 2, 4));
@@ -165,6 +166,7 @@ public class BlockLootTables implements LootTableSubProvider {
 		add(BlockRegistry.VENTUS_ORE.get(), (block) -> createOreDrop(block, ItemRegistry.VENTUS_SHARD.get(), 2, 5));
 		add(BlockRegistry.LANDMINE.get(), (block) -> LootTable.lootTable()
 				.withPool(LootPool.lootPool()
+						.name("main")
 						.setRolls(ConstantValue.exactly(1.0F))
 						.add(applyExplosionDecay(LootItem.lootTableItem(BlockItemRegistry.LANDMINE_ITEM.get())
 								.when(ExplosionCondition.survivesExplosion().invert())
@@ -174,6 +176,7 @@ public class BlockLootTables implements LootTableSubProvider {
 														.hasProperty(LandmineBlock.ARMED, false))))))));
 		add(BlockRegistry.WOODEN_SPIKES.get(), (block) -> LootTable.lootTable()
 				.withPool(LootPool.lootPool()
+						.name("main")
 						.setRolls(ConstantValue.exactly(1.0F))
 						.add(applyExplosionDecay(LootItem.lootTableItem(BlockItemRegistry.WOODEN_SPIKES_ITEM.get())
 								.when(ExplosionCondition.survivesExplosion())
@@ -183,6 +186,7 @@ public class BlockLootTables implements LootTableSubProvider {
 								.apply(SetItemCountFunction.setCount(ConstantValue.exactly(1.0F)))))));
 		add(BlockRegistry.BARBED_WIRE.get(), (block) -> LootTable.lootTable()
 				.withPool(LootPool.lootPool()
+						.name("main")
 						.setRolls(ConstantValue.exactly(1.0F))
 						.add(applyExplosionDecay(LootItem.lootTableItem(BlockItemRegistry.BARBED_WIRE_ITEM.get())
 								.when(ExplosionCondition.survivesExplosion())
@@ -192,6 +196,7 @@ public class BlockLootTables implements LootTableSubProvider {
 								.apply(SetItemCountFunction.setCount(ConstantValue.exactly(1.0F)))))));
 		add(BlockRegistry.SANDBAG.get(), (block) -> LootTable.lootTable()
 				.withPool(LootPool.lootPool()
+						.name("main")
 						.setRolls(ConstantValue.exactly(1.0F))
 						.add(applyExplosionDecay(LootItem.lootTableItem(BlockItemRegistry.SANDBAG_ITEM.get())
 								.apply(SetItemCountFunction.setCount(ConstantValue.exactly(1.0F))
@@ -212,18 +217,21 @@ public class BlockLootTables implements LootTableSubProvider {
 														.hasProperty(SandbagBlock.BAGS, 3))))))));
 		add(BlockRegistry.WARRIOR_STATUE_TORSO.get(), (block) -> LootTable.lootTable()
 				.withPool(LootPool.lootPool()
+						.name("keystone")
 						.setRolls(ConstantValue.exactly(1.0F))
 						.add(applyExplosionDecay(LootItem.lootTableItem(ItemRegistry.AZUL_KEYSTONE.get())
 								.when(LootItemBlockStatePropertyCondition.hasBlockStateProperties(block)
 										.setProperties(StatePropertiesPredicate.Builder.properties()
 												.hasProperty(WarriorStatueTorso.POWERED, true))))))
 				.withPool(LootPool.lootPool()
+						.name("powered")
 						.setRolls(ConstantValue.exactly(1.0F))
 						.add(applyExplosionDecay(LootItem.lootTableItem(BlockRegistry.WARRIOR_STATUE_TORSO.get())
 								.when(LootItemBlockStatePropertyCondition.hasBlockStateProperties(block)
 										.setProperties(StatePropertiesPredicate.Builder.properties()
 												.hasProperty(WarriorStatueTorso.POWERED, true))))))
 				.withPool(LootPool.lootPool()
+						.name("unpowered")
 						.setRolls(ConstantValue.exactly(1.0F))
 						.add(applyExplosionDecay(LootItem.lootTableItem(BlockRegistry.WARRIOR_STATUE_TORSO.get())
 								.when(LootItemBlockStatePropertyCondition.hasBlockStateProperties(block)
@@ -234,7 +242,9 @@ public class BlockLootTables implements LootTableSubProvider {
 	protected static LootTable.Builder createLeafLikeDrop(Block block, Item altDrop, float... pChances) {
 		return createSilkTouchOrShearsDispatchTable(block, applyExplosionCondition(LootItem.lootTableItem(altDrop))
 				.when(BonusLevelTableCondition.bonusLevelFlatChance(Enchantments.BLOCK_FORTUNE, pChances)))
-				.withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1.0F))
+				.withPool(LootPool.lootPool()
+						.name("main")
+						.setRolls(ConstantValue.exactly(1.0F))
 						.when(HAS_NO_SHEARS_OR_SILK_TOUCH)
 						.add(applyExplosionDecay(LootItem.lootTableItem(Items.STICK)
 								.apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 2.0F))))
@@ -247,15 +257,24 @@ public class BlockLootTables implements LootTableSubProvider {
 	}
 
 	protected static LootTable.Builder createSelfDropDispatchTable(Block pBlock, LootItemCondition.Builder pConditionBuilder, LootPoolEntryContainer.Builder<?> pAlternativeEntryBuilder) {
-		return LootTable.lootTable().withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1.0F)).add(LootItem.lootTableItem(pBlock).when(pConditionBuilder).otherwise(pAlternativeEntryBuilder)));
+		return LootTable.lootTable()
+				.withPool(LootPool.lootPool()
+						.name("main")
+						.setRolls(ConstantValue.exactly(1.0F))
+						.add(LootItem.lootTableItem(pBlock)
+								.when(pConditionBuilder)
+								.otherwise(pAlternativeEntryBuilder)));
 	}
 
 	protected static LootTable.Builder createOreDrop(Block pBlock, Item pItem) {
-		return createSilkTouchDispatchTable(pBlock, applyExplosionDecay(LootItem.lootTableItem(pItem).apply(ApplyBonusCount.addOreBonusCount(Enchantments.BLOCK_FORTUNE))));
+		return createSilkTouchDispatchTable(pBlock, applyExplosionDecay(LootItem.lootTableItem(pItem)
+				.apply(ApplyBonusCount.addOreBonusCount(Enchantments.BLOCK_FORTUNE))));
 	}
 
 	protected static LootTable.Builder createOreDrop(Block pBlock, Item pItem, int baseCount, int maxCount) {
-		return createSilkTouchDispatchTable(pBlock, applyExplosionDecay(LootItem.lootTableItem(pItem).apply(SetItemCountFunction.setCount(UniformGenerator.between(baseCount, maxCount))).apply(ApplyBonusCount.addOreBonusCount(Enchantments.BLOCK_FORTUNE))));
+		return createSilkTouchDispatchTable(pBlock, applyExplosionDecay(LootItem.lootTableItem(pItem)
+				.apply(SetItemCountFunction.setCount(UniformGenerator.between(baseCount, maxCount)))
+				.apply(ApplyBonusCount.addOreBonusCount(Enchantments.BLOCK_FORTUNE))));
 	}
 
 	protected static LootTable.Builder createSilkTouchDispatchTable(Block pBlock, LootPoolEntryContainer.Builder<?> pAlternativeEntryBuilder) {
@@ -276,6 +295,7 @@ public class BlockLootTables implements LootTableSubProvider {
 
 	protected static <T extends Comparable<T> & StringRepresentable> LootTable.Builder createSinglePropConditionTable(Block block, Property<T> property, T t) {
 		return LootTable.lootTable().withPool(applyExplosionCondition(LootPool.lootPool()
+				.name("main")
 				.setRolls(ConstantValue.exactly(1.0F))
 				.add(LootItem.lootTableItem(block)
 						.when(LootItemBlockStatePropertyCondition.hasBlockStateProperties(block)
@@ -294,7 +314,11 @@ public class BlockLootTables implements LootTableSubProvider {
 	}
 
 	protected static LootTable.Builder createSingleItemTable(ItemLike itemLike) {
-		return LootTable.lootTable().withPool(applyExplosionCondition(LootPool.lootPool().setRolls(ConstantValue.exactly(1.0F)).add(LootItem.lootTableItem(itemLike))));
+		return LootTable.lootTable()
+				.withPool(applyExplosionCondition(LootPool.lootPool()
+						.name("main")
+						.setRolls(ConstantValue.exactly(1.0F))
+						.add(LootItem.lootTableItem(itemLike))));
 	}
 
 	protected static <T extends ConditionUserBuilder<T>> T applyExplosionCondition(ConditionUserBuilder<T> pCondition) {

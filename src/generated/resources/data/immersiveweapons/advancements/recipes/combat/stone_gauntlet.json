@@ -28,5 +28,6 @@
     "recipes": [
       "immersiveweapons:stone_gauntlet"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

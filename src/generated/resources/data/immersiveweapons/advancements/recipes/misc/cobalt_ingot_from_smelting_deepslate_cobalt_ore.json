@@ -30,5 +30,6 @@
     "recipes": [
       "immersiveweapons:cobalt_ingot_from_smelting_deepslate_cobalt_ore"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

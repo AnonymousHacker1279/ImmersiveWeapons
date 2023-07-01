@@ -28,5 +28,6 @@
     "recipes": [
       "immersiveweapons:wooden_pike"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

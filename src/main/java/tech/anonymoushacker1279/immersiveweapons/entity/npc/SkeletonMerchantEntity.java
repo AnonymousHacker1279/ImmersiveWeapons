@@ -14,6 +14,7 @@ import net.minecraft.world.entity.npc.VillagerTrades;
 import net.minecraft.world.entity.npc.VillagerTrades.ItemListing;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.trading.MerchantOffer;
 import net.minecraft.world.item.trading.MerchantOffers;
 import net.minecraft.world.level.Level;
@@ -30,12 +31,14 @@ public class SkeletonMerchantEntity extends AbstractVillager implements GrantAdv
 	public static final Int2ObjectMap<ItemListing[]> TRADES = new Int2ObjectOpenHashMap<>(ImmutableMap.of(
 			1, new VillagerTrades.ItemListing[]{
 					new ItemsForEmeralds(ItemRegistry.BANDAGE.get(), 1, 1, 8),
+					new ItemsForEmeralds(ItemRegistry.PAINKILLERS.get(), 2, 1, 8),
 					new ItemsForEmeralds(ItemRegistry.IRON_RING.get(), 3, 1, 6),
 					new ItemsForEmeralds(ItemRegistry.IRON_MUSKET_BALL.get(), 2, 8, 12),
 					new ItemsForEmeralds(ItemRegistry.IRON_ARROW.get(), 1, 8, 12),
 					new ItemsForEmeralds(ItemRegistry.SATCHEL.get(), 16, 1, 3),
 					new ItemsForEmeralds(ItemRegistry.POWDER_HORN.get(), 16, 1, 3),
-					new ItemsForEmeralds(ItemRegistry.BLOODY_SACRIFICE.get(), 5, 1, 1)},
+					new ItemsForEmeralds(ItemRegistry.BLOODY_SACRIFICE.get(), 5, 1, 1),
+					new ItemsForEmeralds(ItemRegistry.MORTAR_SHELL.get(), 2, 3, 6)},
 			2, new VillagerTrades.ItemListing[]{
 					new ItemsForEmeralds(ItemRegistry.BLOATED_HEART.get(), 6, 1, 3),
 					new ItemsForEmeralds(ItemRegistry.COBALT_RING.get(), 5, 1, 3),
@@ -52,7 +55,8 @@ public class SkeletonMerchantEntity extends AbstractVillager implements GrantAdv
 					new ItemsForEmeralds(ItemRegistry.SMOKE_GRENADE_ARROW_RED.get(), 3, 2, 6),
 					new ItemsForEmeralds(ItemRegistry.SMOKE_GRENADE_ARROW_BLUE.get(), 3, 2, 6),
 					new ItemsForEmeralds(ItemRegistry.SMOKE_GRENADE_ARROW_PURPLE.get(), 3, 2, 6),
-					new ItemsForEmeralds(ItemRegistry.SMOKE_GRENADE_ARROW_YELLOW.get(), 3, 2, 6),},
+					new ItemsForEmeralds(ItemRegistry.SMOKE_GRENADE_ARROW_YELLOW.get(), 3, 2, 6),
+					new ItemsForEmeralds(Items.RECOVERY_COMPASS, 16, 1, 2)},
 			3, new VillagerTrades.ItemListing[]{
 					new ItemsForEmeralds(ItemRegistry.DEADEYE_PENDANT.get(), 32, 1, 1),
 					new ItemsForEmeralds(ItemRegistry.MELEE_MASTERS_MOLTEN_GLOVE.get(), 32, 1, 1),
@@ -60,6 +64,7 @@ public class SkeletonMerchantEntity extends AbstractVillager implements GrantAdv
 					new ItemsForEmeralds(ItemRegistry.BERSERKERS_AMULET.get(), 28, 1, 1),
 					new ItemsForEmeralds(ItemRegistry.AMETHYST_RING.get(), 28, 1, 1),
 					new ItemsForEmeralds(ItemRegistry.EMERALD_RING.get(), 28, 1, 1),
+					new ItemsForEmeralds(Items.TOTEM_OF_UNDYING, 30, 1, 1),
 			}));
 
 	public SkeletonMerchantEntity(EntityType<? extends AbstractVillager> entityType, Level level) {
@@ -91,12 +96,12 @@ public class SkeletonMerchantEntity extends AbstractVillager implements GrantAdv
 			}
 
 			if (!getOffers().isEmpty()) {
-				if (!level.isClientSide) {
+				if (!level().isClientSide) {
 					setTradingPlayer(player);
 					openTradingScreen(player, getDisplayName(), 1);
 				}
 			}
-			return InteractionResult.sidedSuccess(level.isClientSide);
+			return InteractionResult.sidedSuccess(level().isClientSide);
 		} else {
 			return super.mobInteract(player, hand);
 		}
@@ -125,7 +130,7 @@ public class SkeletonMerchantEntity extends AbstractVillager implements GrantAdv
 	protected void rewardTradeXp(MerchantOffer offer) {
 		if (offer.shouldRewardExp()) {
 			int xp = 8 + random.nextInt(6);
-			level.addFreshEntity(new ExperienceOrb(level, getX(), getY() + 0.5D, getZ(), xp));
+			level().addFreshEntity(new ExperienceOrb(level(), getX(), getY() + 0.5D, getZ(), xp));
 		}
 	}
 
@@ -141,6 +146,9 @@ public class SkeletonMerchantEntity extends AbstractVillager implements GrantAdv
 
 	@Override
 	protected void updateTrades() {
+		// Clear existing trades
+		getOffers().clear();
+
 		VillagerTrades.ItemListing[] commonItemListings = TRADES.get(1);
 		VillagerTrades.ItemListing[] rareItemListings = TRADES.get(2);
 		VillagerTrades.ItemListing[] epicItemListings = TRADES.get(3);

@@ -30,5 +30,6 @@
     "recipes": [
       "immersiveweapons:bloody_sacrifice"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

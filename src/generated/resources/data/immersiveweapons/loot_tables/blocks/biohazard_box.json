@@ -14,7 +14,9 @@
           "name": "immersiveweapons:biohazard_box"
         }
       ],
+      "name": "main",
       "rolls": 1.0
     }
-  ]
+  ],
+  "random_sequence": "immersiveweapons:blocks/biohazard_box"
 }

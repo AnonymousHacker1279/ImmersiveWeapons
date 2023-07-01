@@ -17,14 +17,13 @@ public abstract class AbstractStatueBlockEntity extends BlockEntity implements E
 	protected int cooldown;
 	protected int scannedEntities;
 
-	public AbstractStatueBlockEntity(BlockEntityType<?> type, BlockPos worldPosition, BlockState blockState) {
-		super(type, worldPosition, blockState);
+	public AbstractStatueBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState blockState) {
+		super(type, pos, blockState);
 	}
 
 	protected void attemptSpawnEntity(LivingEntity entity) {
-		int i = 5;
-
-		while (i != 0) {
+		int i;
+		for (i = 0; i < 5; i++) {
 			BlockPos randomPositionInArea = getRandomPositionInArea();
 			if (level != null && level.getBlockState(randomPositionInArea) == Blocks.AIR.defaultBlockState()) {
 				entity.moveTo(randomPositionInArea, 0.0F, 0.0F);
@@ -32,7 +31,6 @@ public abstract class AbstractStatueBlockEntity extends BlockEntity implements E
 				spawnParticles();
 				break;
 			}
-			i--;
 		}
 
 		cooldown = 400;
@@ -42,9 +40,8 @@ public abstract class AbstractStatueBlockEntity extends BlockEntity implements E
 	 * Spawn particles.
 	 */
 	protected void spawnParticles() {
-		ServerLevel serverWorld = (ServerLevel) getLevel();
-		if (serverWorld != null) {
-			serverWorld.sendParticles(ParticleTypes.HAPPY_VILLAGER,
+		if (getLevel() instanceof ServerLevel serverLevel) {
+			serverLevel.sendParticles(ParticleTypes.HAPPY_VILLAGER,
 					getBlockPos().getX() + 0.5d,
 					getBlockPos().getY(),
 					getBlockPos().getZ() + 0.75d,

@@ -1,9 +1,12 @@
 package tech.anonymoushacker1279.immersiveweapons.item.armor;
 
+import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
@@ -65,10 +68,6 @@ public class VentusArmorItem extends ArmorItem {
 				player.getItemBySlot(EquipmentSlot.LEGS).getItem() == ItemRegistry.VENTUS_LEGGINGS.get() &&
 				player.getItemBySlot(EquipmentSlot.FEET).getItem() == ItemRegistry.VENTUS_BOOTS.get()) {
 
-			if (!stack.is(ItemRegistry.VENTUS_HELMET.get())) {
-				return;
-			}
-
 			boolean effectEnabled = player.getPersistentData().getBoolean("VentusArmorEffectEnabled");
 
 			if (level.isClientSide) {
@@ -78,6 +77,14 @@ public class VentusArmorItem extends ArmorItem {
 
 					// Send packet to server
 					PacketHandler.INSTANCE.sendToServer(new VentusArmorItemPacketHandler(PacketTypes.CHANGE_STATE, !effectEnabled));
+
+					if (effectEnabled) {
+						player.displayClientMessage(Component.translatable("immersiveweapons.armor_effects.disabled")
+								.withStyle(ChatFormatting.RED), true);
+					} else {
+						player.displayClientMessage(Component.translatable("immersiveweapons.armor_effects.enabled")
+								.withStyle(ChatFormatting.GREEN), true);
+					}
 				}
 				if (effectEnabled) {
 					if (Minecraft.getInstance().options.keyJump.consumeClick()) {
@@ -106,6 +113,10 @@ public class VentusArmorItem extends ArmorItem {
 					}
 
 					windShieldCooldown--;
+
+					if (windShieldCooldown == 0) {
+						player.playSound(SoundEvents.EXPERIENCE_ORB_PICKUP);
+					}
 				}
 			}
 
@@ -130,16 +141,16 @@ public class VentusArmorItem extends ArmorItem {
 				float velocity = (float) Math.sqrt(x * x + y * y + z * z) * 1.5f;
 
 				// Teleport the projectile just outside the radius, so it doesn't get reflected again
-				projectile.setPos(player.getX() + 1.51d * Math.cos(Math.toRadians(player.yRot + 90)),
+				projectile.setPos(player.getX() + 1.51d * Math.cos(Math.toRadians(player.getYRot() + 90)),
 						player.getY() + 1.25d,
-						player.getZ() + 1.51d * Math.sin(Math.toRadians(player.yRot + 90)));
+						player.getZ() + 1.51d * Math.sin(Math.toRadians(player.getYRot() + 90)));
 
 				projectile.setOnGround(false);
 
 				// Set the projectile rotation to the player's rotation
 				projectile.shootFromRotation(entity,
-						player.xRot,
-						player.yRot,
+						player.getXRot(),
+						player.getYRot(),
 						0.0f, velocity, 0.0f);
 			}
 		}
@@ -181,7 +192,7 @@ public class VentusArmorItem extends ArmorItem {
 			}
 
 			if (msg.packetType == PacketTypes.HANDLE_PROJECTILE_REFLECTION) {
-				VentusArmorItem.handleProjectileReflection(player.level, player);
+				VentusArmorItem.handleProjectileReflection(player.level(), player);
 			}
 		}
 	}

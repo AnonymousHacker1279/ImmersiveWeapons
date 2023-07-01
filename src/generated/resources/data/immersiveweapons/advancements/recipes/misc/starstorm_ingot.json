@@ -28,5 +28,6 @@
     "recipes": [
       "immersiveweapons:starstorm_ingot"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

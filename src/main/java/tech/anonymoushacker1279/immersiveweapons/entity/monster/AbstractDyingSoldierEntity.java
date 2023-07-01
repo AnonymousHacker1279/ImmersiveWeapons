@@ -180,7 +180,7 @@ public abstract class AbstractDyingSoldierEntity extends Monster implements Rang
 	 * Set the entity's combat AI.
 	 */
 	private void setCombatTask() {
-		if (!level.isClientSide) {
+		if (!level().isClientSide) {
 			goalSelector.removeGoal(aiAttackOnCollide);
 			goalSelector.removeGoal(aiPistolAttack);
 			ItemStack itemInHand = getItemInHand(ProjectileUtil.getWeaponHoldingHand(this,
@@ -188,7 +188,7 @@ public abstract class AbstractDyingSoldierEntity extends Monster implements Rang
 
 			if (itemInHand.getItem() == ItemRegistry.FLINTLOCK_PISTOL.get()) {
 				int cooldown = 20;
-				if (level.getDifficulty() != Difficulty.HARD) {
+				if (level().getDifficulty() != Difficulty.HARD) {
 					cooldown = 40;
 				}
 
@@ -221,10 +221,10 @@ public abstract class AbstractDyingSoldierEntity extends Monster implements Rang
 		bulletEntity.setOwner(this);
 
 		bulletEntity.shoot(deltaX, deltaY + sqrtXZ * 0.2D, deltaZ, 1.6F,
-				(float) (14 - level.getDifficulty().getId() * 4));
+				(float) (14 - level().getDifficulty().getId() * 4));
 		playSound(SoundEventRegistry.FLINTLOCK_PISTOL_FIRE.get(), 1.0F,
 				1.0F / (getRandom().nextFloat() * 0.4F + 0.8F));
-		level.addFreshEntity(bulletEntity);
+		level().addFreshEntity(bulletEntity);
 	}
 
 	/**
@@ -238,7 +238,7 @@ public abstract class AbstractDyingSoldierEntity extends Monster implements Rang
 		AbstractBulletItem bulletItem = (AbstractBulletItem) (arrowStack.getItem() instanceof AbstractArrowItem
 				? arrowStack.getItem() : ItemRegistry.IRON_MUSKET_BALL.get());
 
-		BulletEntity bulletEntity = bulletItem.createBullet(level, this);
+		BulletEntity bulletEntity = bulletItem.createBullet(level(), this);
 		bulletEntity.setEnchantmentEffectsFromEntity(this, distanceFactor);
 
 		return bulletEntity;
@@ -275,7 +275,7 @@ public abstract class AbstractDyingSoldierEntity extends Monster implements Rang
 	@Override
 	public void setItemSlot(EquipmentSlot slot, ItemStack stack) {
 		super.setItemSlot(slot, stack);
-		if (!level.isClientSide) {
+		if (!level().isClientSide) {
 			setCombatTask();
 		}
 

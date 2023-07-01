@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:smithing_transform",
+  "addition": {
+    "tag": "immersiveweapons:ingots/molten"
+  },
+  "base": {
+    "item": "minecraft:netherite_helmet"
+  },
+  "result": {
+    "item": "immersiveweapons:molten_helmet"
+  },
+  "template": {
+    "item": "immersiveweapons:molten_smithing_template"
+  }
+}

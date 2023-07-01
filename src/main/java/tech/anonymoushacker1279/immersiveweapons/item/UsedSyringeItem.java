@@ -8,7 +8,6 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
 import tech.anonymoushacker1279.immersiveweapons.world.level.IWDamageSources;
 
 public class UsedSyringeItem extends Item {
@@ -22,31 +21,23 @@ public class UsedSyringeItem extends Item {
 		super(properties);
 	}
 
-	/**
-	 * Runs when the player right-clicks.
-	 *
-	 * @param level    the <code>Level</code> the player is in
-	 * @param playerIn the <code>PlayerEntity</code> performing the action
-	 * @param handIn   the <code>InteractionHand</code> the player is using
-	 * @return InteractionResultHolder extending ItemStack
-	 */
 	@Override
-	public InteractionResultHolder<ItemStack> use(Level level, Player playerIn,
-	                                              InteractionHand handIn) {
+	public InteractionResultHolder<ItemStack> use(Level level, Player player,
+	                                              InteractionHand hand) {
 
-		ItemStack itemInHand = playerIn.getItemInHand(handIn);
+		ItemStack itemInHand = player.getItemInHand(hand);
 
-		int randomNumber = GeneralUtilities.getRandomNumber(0, 100);
-		if (randomNumber <= 80) {
-			playerIn.addEffect(new MobEffectInstance(MobEffects.POISON, 500, 0, false, true));
-			if (randomNumber <= 30) {
-				playerIn.hurt(IWDamageSources.USED_SYRINGE, 8.0F);
+		float randomNumber = level.getRandom().nextFloat();
+		if (randomNumber <= 0.8f) {
+			player.addEffect(new MobEffectInstance(MobEffects.POISON, 500, 0, false, true));
+			if (randomNumber <= 0.3f) {
+				player.hurt(IWDamageSources.USED_SYRINGE, 8.0F);
 			}
 		}
-		if (!playerIn.isCreative()) {
+
+		if (!player.isCreative()) {
 			itemInHand.shrink(1);
 		}
-
 
 		return InteractionResultHolder.sidedSuccess(itemInHand, level.isClientSide());
 	}

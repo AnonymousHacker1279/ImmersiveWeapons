@@ -44,7 +44,7 @@ public class SmokeGrenadeItem extends Item {
 			SmokeGrenadeEntity smokeGrenadeEntity = new SmokeGrenadeEntity(level, player);
 			smokeGrenadeEntity.setColor(color);
 			smokeGrenadeEntity.setItem(itemInHand);
-			smokeGrenadeEntity.shootFromRotation(player, player.xRot, player.yRot, -20.0F, 0.5F, 1.0F);
+			smokeGrenadeEntity.shootFromRotation(player, player.getXRot(), player.getYRot(), -20.0F, 0.5F, 1.0F);
 			level.addFreshEntity(smokeGrenadeEntity);
 		}
 

@@ -5,7 +5,6 @@ import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.Level;
 import tech.anonymoushacker1279.immersiveweapons.init.SoundEventRegistry;
-import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
 
 public class DyingSoldierEntity extends AbstractDyingSoldierEntity {
 
@@ -36,7 +35,7 @@ public class DyingSoldierEntity extends AbstractDyingSoldierEntity {
 	 */
 	@Override
 	public int getAmbientSoundInterval() {
-		return GeneralUtilities.getRandomNumber(240, 1600);
+		return getRandom().nextIntBetweenInclusive(240, 1600);
 	}
 
 	/**

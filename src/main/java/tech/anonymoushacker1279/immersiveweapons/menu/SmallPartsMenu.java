@@ -94,7 +94,7 @@ public class SmallPartsMenu extends AbstractContainerMenu {
 		}
 
 		addDataSlot(selectedPartsPatternIndex);
-		initializeRecipes(inventory.player.getLevel().getRecipeManager());
+		initializeRecipes(inventory.player.level().getRecipeManager());
 	}
 
 	private void initializeRecipes(RecipeManager manager) {

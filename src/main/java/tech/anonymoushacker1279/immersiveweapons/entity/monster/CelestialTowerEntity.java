@@ -25,7 +25,6 @@ import tech.anonymoushacker1279.immersiveweapons.block.decoration.CelestialLante
 import tech.anonymoushacker1279.immersiveweapons.config.CommonConfig;
 import tech.anonymoushacker1279.immersiveweapons.entity.GrantAdvancementOnDiscovery;
 import tech.anonymoushacker1279.immersiveweapons.entity.ai.goal.*;
-import tech.anonymoushacker1279.immersiveweapons.init.ItemRegistry;
 import tech.anonymoushacker1279.immersiveweapons.init.SoundEventRegistry;
 import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
 
@@ -101,14 +100,14 @@ public class CelestialTowerEntity extends Monster implements GrantAdvancementOnD
 		// Add more waves based on difficulty + random modifier
 		// Also increase the XP dropped
 		if (pDifficulty.getDifficulty() == Difficulty.EASY) {
-			totalWavesToSpawn = totalWavesToSpawn + GeneralUtilities.getRandomNumber(0, 2);
+			totalWavesToSpawn = totalWavesToSpawn + getRandom().nextIntBetweenInclusive(0, 1);
 			xpReward = 25;
 		} else if (pDifficulty.getDifficulty() == Difficulty.NORMAL) {
-			totalWavesToSpawn = totalWavesToSpawn + GeneralUtilities.getRandomNumber(1, 4);
+			totalWavesToSpawn = totalWavesToSpawn + getRandom().nextIntBetweenInclusive(1, 3);
 			waveSizeModifier = 2;
 			xpReward = 50;
 		} else if (pDifficulty.getDifficulty() == Difficulty.HARD) {
-			totalWavesToSpawn = totalWavesToSpawn + GeneralUtilities.getRandomNumber(2, 5);
+			totalWavesToSpawn = totalWavesToSpawn + getRandom().nextIntBetweenInclusive(2, 4);
 			waveSizeModifier = 3;
 			xpReward = 75;
 		}
@@ -122,7 +121,7 @@ public class CelestialTowerEntity extends Monster implements GrantAdvancementOnD
 	@Override
 	public void tick() {
 		super.tick();
-		level.addParticle(ParticleTypes.LAVA, getX() + GeneralUtilities.getRandomNumber(-1d, 1.01d), getY(),
+		level().addParticle(ParticleTypes.LAVA, getX() + GeneralUtilities.getRandomNumber(-1d, 1.01d), getY(),
 				getZ() + GeneralUtilities.getRandomNumber(-1d, 1.01d),
 				GeneralUtilities.getRandomNumber(-0.03d, 0.03d),
 				GeneralUtilities.getRandomNumber(-0.1d, -0.08d),
@@ -137,8 +136,8 @@ public class CelestialTowerEntity extends Monster implements GrantAdvancementOnD
 
 	@Override
 	public boolean hurt(DamageSource pSource, float pAmount) {
-		if (pSource == damageSources().outOfWorld()) {
-			return super.hurt(pSource, pAmount); // For /kill, as the entity should never fall to death
+		if (pSource == damageSources().genericKill()) {
+			return super.hurt(pSource, pAmount);
 		}
 		if (doneSpawningWaves) {
 			bossEvent.setProgress(getHealth() / 240f);
@@ -159,7 +158,7 @@ public class CelestialTowerEntity extends Monster implements GrantAdvancementOnD
 	public void die(DamageSource damageSource) {
 		super.die(damageSource);
 
-		if (!level.isClientSide) {
+		if (!level().isClientSide) {
 			ALL_TOWERS.remove(this);
 		}
 	}
@@ -247,26 +246,7 @@ public class CelestialTowerEntity extends Monster implements GrantAdvancementOnD
 			return false;
 		} else if (nearbyLanterns == 0) {
 			return true;
-		} else return GeneralUtilities.getRandomNumber(0.0f, 1.0f) <= (nearbyLanterns == 2 ? 0.125f : 0.25f);
-	}
-
-	@Override
-	protected void dropCustomDeathLoot(DamageSource source, int looting, boolean recentlyHit) {
-		super.dropCustomDeathLoot(source, looting, recentlyHit);
-
-		if (!recentlyHit) {
-			return;
-		}
-
-		// 5% chance to drop Celestial Spirit
-		// Looting adds 5% chance per level
-
-		float dropChance = 0.05f;
-		dropChance += looting * 0.05f;
-
-		if (random.nextFloat() <= dropChance) {
-			spawnAtLocation(ItemRegistry.CELESTIAL_SPIRIT.get());
-		}
+		} else return getRandom().nextFloat() <= (nearbyLanterns == 2 ? 0.125f : 0.25f);
 	}
 
 	@Override

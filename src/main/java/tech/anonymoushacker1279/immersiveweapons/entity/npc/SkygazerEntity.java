@@ -29,7 +29,6 @@ import tech.anonymoushacker1279.immersiveweapons.entity.GrantAdvancementOnDiscov
 import tech.anonymoushacker1279.immersiveweapons.entity.monster.StarmiteEntity;
 import tech.anonymoushacker1279.immersiveweapons.entity.npc.trades.*;
 import tech.anonymoushacker1279.immersiveweapons.init.*;
-import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
 
 import javax.annotation.Nullable;
 import java.util.*;
@@ -95,7 +94,7 @@ public class SkygazerEntity extends AbstractVillager implements GrantAdvancement
 			}
 
 			if (!getOffers().isEmpty()) {
-				if (!level.isClientSide) {
+				if (!level().isClientSide) {
 					// An offer is always added to add enchanting levels from a book to an item in the player's inventory
 					setupAddItemEnchantsTrade(player);
 
@@ -106,7 +105,7 @@ public class SkygazerEntity extends AbstractVillager implements GrantAdvancement
 					openTradingScreen(player, getDisplayName(), 1);
 				}
 			}
-			return InteractionResult.sidedSuccess(level.isClientSide);
+			return InteractionResult.sidedSuccess(level().isClientSide);
 		} else {
 			return super.mobInteract(player, hand);
 		}
@@ -199,7 +198,7 @@ public class SkygazerEntity extends AbstractVillager implements GrantAdvancement
 	protected void rewardTradeXp(MerchantOffer offer) {
 		if (offer.shouldRewardExp()) {
 			int xp = 6 + random.nextInt(8);
-			level.addFreshEntity(new ExperienceOrb(level, getX(), getY() + 0.5D, getZ(), xp));
+			level().addFreshEntity(new ExperienceOrb(level(), getX(), getY() + 0.5D, getZ(), xp));
 		}
 	}
 
@@ -215,6 +214,9 @@ public class SkygazerEntity extends AbstractVillager implements GrantAdvancement
 
 	@Override
 	protected void updateTrades() {
+		// Clear existing trades
+		getOffers().clear();
+
 		VillagerTrades.ItemListing[] commonItemListings = TRADES.get(1);
 		VillagerTrades.ItemListing[] rareItemListings = TRADES.get(2);
 		VillagerTrades.ItemListing[] epicItemListings = TRADES.get(3);
@@ -246,14 +248,14 @@ public class SkygazerEntity extends AbstractVillager implements GrantAdvancement
 			if (TargetingConditions.forCombat().test(this, attacker)) {
 				attacker.addEffect(new MobEffectInstance(MobEffects.BLINDNESS, 250, 0));
 
-				for (int i = 0; i < GeneralUtilities.getRandomNumber(2, 4); i++) {
-					StarmiteEntity starmite = new StarmiteEntity(EntityRegistry.STARMITE_ENTITY.get(), level);
-					starmite.moveTo(attacker.getX(), attacker.getY(), attacker.getZ(), attacker.yRot, attacker.xRot);
+				for (int i = 0; i < getRandom().nextIntBetweenInclusive(2, 3); i++) {
+					StarmiteEntity starmite = new StarmiteEntity(EntityRegistry.STARMITE_ENTITY.get(), level());
+					starmite.moveTo(attacker.getX(), attacker.getY(), attacker.getZ(), attacker.getXRot(), attacker.getYRot());
 
 					// Increase the attack damage
 					Objects.requireNonNull(starmite.getAttribute(Attributes.ATTACK_DAMAGE)).setBaseValue(4.0D);
 
-					level.addFreshEntity(starmite);
+					level().addFreshEntity(starmite);
 				}
 			}
 		}

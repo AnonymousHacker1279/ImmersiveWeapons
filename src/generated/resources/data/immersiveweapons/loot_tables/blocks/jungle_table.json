@@ -14,7 +14,9 @@
           "name": "immersiveweapons:jungle_table"
         }
       ],
+      "name": "main",
       "rolls": 1.0
     }
-  ]
+  ],
+  "random_sequence": "immersiveweapons:blocks/jungle_table"
 }

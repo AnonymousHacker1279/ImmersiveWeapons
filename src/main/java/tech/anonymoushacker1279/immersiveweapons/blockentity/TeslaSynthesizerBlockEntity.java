@@ -308,7 +308,7 @@ public class TeslaSynthesizerBlockEntity extends BaseContainerBlockEntity implem
 				ItemStack output = items.get(4);
 				if (output.isEmpty()) {
 					return true;
-				} else if (!output.sameItem(resultItem)) {
+				} else if (!output.is(resultItem.getItem())) {
 					return false;
 				} else if (output.getCount() + resultItem.getCount() <= getMaxStackSize() && output.getCount()
 						+ resultItem.getCount() <= output.getMaxStackSize()) {
@@ -450,7 +450,7 @@ public class TeslaSynthesizerBlockEntity extends BaseContainerBlockEntity implem
 	@Override
 	public void setItem(int index, ItemStack stack) {
 		ItemStack itemStack = items.get(index);
-		boolean flag = !stack.isEmpty() && stack.sameItem(itemStack) && ItemStack.tagMatches(stack, itemStack);
+		boolean flag = !stack.isEmpty() && stack.is(itemStack.getItem());
 		items.set(index, stack);
 		if (stack.getCount() > getMaxStackSize()) {
 			stack.setCount(getMaxStackSize());
@@ -523,15 +523,6 @@ public class TeslaSynthesizerBlockEntity extends BaseContainerBlockEntity implem
 			recipes.addTo(recipeId, 1);
 		}
 
-	}
-
-	/**
-	 * Award used recipes to the player.
-	 *
-	 * @param player the <code>PlayerEntity</code> instance
-	 */
-	@Override
-	public void awardUsedRecipes(Player player) {
 	}
 
 	/**

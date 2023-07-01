@@ -14,7 +14,9 @@
           "name": "immersiveweapons:canadian_flag"
         }
       ],
+      "name": "main",
       "rolls": 1.0
     }
-  ]
+  ],
+  "random_sequence": "immersiveweapons:blocks/canadian_flag"
 }

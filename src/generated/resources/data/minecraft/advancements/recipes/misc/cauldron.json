@@ -1,0 +1,33 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "minecraft:cauldron"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    },
+    "metal_ingot": {
+      "conditions": {
+        "items": [
+          {
+            "tag": "forge:ingots/metal"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "requirements": [
+    [
+      "metal_ingot",
+      "has_the_recipe"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "minecraft:cauldron"
+    ]
+  },
+  "sends_telemetry_event": false
+}

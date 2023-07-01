@@ -90,13 +90,13 @@ public class MortarShellEntity extends Projectile implements ItemSupplier {
 		// Check for collisions
 		Vec3 currentPosition = position();
 		Vec3 currentPositionPlusMovement = currentPosition.add(deltaMovement);
-		HitResult rayTraceResult = level.clip(new ClipContext(currentPosition, currentPositionPlusMovement, ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, this));
+		HitResult rayTraceResult = level().clip(new ClipContext(currentPosition, currentPositionPlusMovement, ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, this));
 		if (rayTraceResult.getType() != HitResult.Type.MISS) {
 			currentPositionPlusMovement = rayTraceResult.getLocation();
 		}
 
 		while (isAlive()) {
-			EntityHitResult entityRayTraceResult = ProjectileUtil.getEntityHitResult(level, this, currentPosition, currentPositionPlusMovement, getBoundingBox().expandTowards(getDeltaMovement()).inflate(1.0D), this::canHitEntity);
+			EntityHitResult entityRayTraceResult = ProjectileUtil.getEntityHitResult(level(), this, currentPosition, currentPositionPlusMovement, getBoundingBox().expandTowards(getDeltaMovement()).inflate(1.0D), this::canHitEntity);
 			if (entityRayTraceResult != null) {
 				rayTraceResult = entityRayTraceResult;
 			}
@@ -124,7 +124,7 @@ public class MortarShellEntity extends Projectile implements ItemSupplier {
 		float inertia = 0.99F;
 		if (isInWater()) {
 			for (int j = 0; j < 4; ++j) {
-				level.addParticle(ParticleTypes.BUBBLE, deltaMovementXPlusPosition - deltaMovementX * 0.25D, deltaMovementYPlusPosition - deltaMovementY * 0.25D, deltaMovementZPlusPosition - deltaMovementZ * 0.25D, deltaMovementX, deltaMovementY, deltaMovementZ);
+				level().addParticle(ParticleTypes.BUBBLE, deltaMovementXPlusPosition - deltaMovementX * 0.25D, deltaMovementYPlusPosition - deltaMovementY * 0.25D, deltaMovementZPlusPosition - deltaMovementZ * 0.25D, deltaMovementX, deltaMovementY, deltaMovementZ);
 			}
 			inertia = 0.6f;
 		}
@@ -149,8 +149,8 @@ public class MortarShellEntity extends Projectile implements ItemSupplier {
 		setDeltaMovement(vector3d);
 		Vec3 vector3d1 = vector3d.normalize().scale(0.05F);
 		setPosRaw(getX() - vector3d1.x, getY() - vector3d1.y, getZ() - vector3d1.z);
-		if (!level.isClientSide) {
-			level.explode(this, IWDamageSources.MORTAR, null, blockPosition().getX(), blockPosition().getY(), blockPosition().getZ(), 4.0F, false, ExplosionInteraction.BLOCK);
+		if (!level().isClientSide) {
+			level().explode(this, IWDamageSources.MORTAR, null, blockPosition().getX(), blockPosition().getY(), blockPosition().getZ(), 4.0F, false, ExplosionInteraction.BLOCK);
 		}
 		kill();
 	}

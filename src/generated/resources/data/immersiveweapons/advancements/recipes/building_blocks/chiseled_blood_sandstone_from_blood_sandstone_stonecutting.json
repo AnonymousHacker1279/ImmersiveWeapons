@@ -30,5 +30,6 @@
     "recipes": [
       "immersiveweapons:chiseled_blood_sandstone_from_blood_sandstone_stonecutting"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

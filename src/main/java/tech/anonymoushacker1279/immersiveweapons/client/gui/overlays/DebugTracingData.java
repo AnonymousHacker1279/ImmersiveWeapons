@@ -15,6 +15,7 @@ import net.minecraftforge.network.NetworkEvent;
 import net.minecraftforge.network.NetworkEvent.Context;
 import tech.anonymoushacker1279.immersiveweapons.event.SyncHandler;
 import tech.anonymoushacker1279.immersiveweapons.event.game_effects.AccessoryEffects;
+import tech.anonymoushacker1279.immersiveweapons.init.EffectRegistry;
 import tech.anonymoushacker1279.immersiveweapons.init.ItemRegistry;
 import tech.anonymoushacker1279.immersiveweapons.item.AccessoryItem.EffectType;
 import tech.anonymoushacker1279.immersiveweapons.item.projectile.gun.AbstractGunItem;
@@ -32,6 +33,7 @@ public class DebugTracingData {
 	public static float meleeItemDamage = 0;
 
 	public static float lastDamageDealt = 0;
+	public static float lastDamageTaken = 0;
 
 	public static float gunBaseVelocity = 0;
 	public static Item selectedAmmo = Items.AIR;
@@ -41,6 +43,11 @@ public class DebugTracingData {
 	public static double GENERAL_DAMAGE_BONUS = 0;
 	public static double MELEE_DAMAGE_BONUS = 0;
 	public static double PROJECTILE_DAMAGE_BONUS = 0;
+
+	public static double ARMOR_VALUE = 0;
+	public static double ARMOR_TOUGHNESS_VALUE = 0;
+	public static double GENERAL_DAMAGE_RESISTANCE = 0;
+	public static double KNOCKBACK_RESISTANCE = 0;
 
 	public static void handleTracing(Player player) {
 		if (player.tickCount % 20 == 0) {
@@ -86,7 +93,7 @@ public class DebugTracingData {
 					player.getItemBySlot(EquipmentSlot.FEET).getItem() == ItemRegistry.MOLTEN_BOOTS.get()) {
 
 				double bonus = 0;
-				if (player.level.dimension() == Level.NETHER) {
+				if (player.level().dimension() == Level.NETHER) {
 					bonus += 0.2d;
 				}
 
@@ -100,27 +107,36 @@ public class DebugTracingData {
 			GENERAL_DAMAGE_BONUS += AccessoryEffects.collectEffects(EffectType.GENERAL_DAMAGE, player);
 			MELEE_DAMAGE_BONUS += AccessoryEffects.collectEffects(EffectType.MELEE_DAMAGE, player);
 			PROJECTILE_DAMAGE_BONUS += AccessoryEffects.collectEffects(EffectType.PROJECTILE_DAMAGE, player);
+
+			ARMOR_VALUE = player.getArmorValue();
+			ARMOR_TOUGHNESS_VALUE = player.getAttributeValue(Attributes.ARMOR_TOUGHNESS);
+			GENERAL_DAMAGE_RESISTANCE = AccessoryEffects.collectEffects(EffectType.DAMAGE_RESISTANCE, player);
+			KNOCKBACK_RESISTANCE = player.getAttributeValue(Attributes.KNOCKBACK_RESISTANCE);
+
+			if (player.hasEffect(EffectRegistry.CELESTIAL_PROTECTION_EFFECT.get())) {
+				GENERAL_DAMAGE_RESISTANCE += 0.05d;
+			}
 		}
 	}
 
-	public record LastDamageDealtPacketHandler(UUID playerUUID, float lastDamageDealt) {
+	public record DebugDataPacketHandler(UUID playerUUID, float lastDamageDealt, float lastDamageTaken) {
 
-		public static void encode(LastDamageDealtPacketHandler msg, FriendlyByteBuf packetBuffer) {
-			packetBuffer.writeUUID(msg.playerUUID()).writeFloat(msg.lastDamageDealt);
+		public static void encode(DebugDataPacketHandler msg, FriendlyByteBuf packetBuffer) {
+			packetBuffer.writeUUID(msg.playerUUID()).writeFloat(msg.lastDamageDealt).writeFloat(msg.lastDamageTaken);
 		}
 
-		public static LastDamageDealtPacketHandler decode(FriendlyByteBuf packetBuffer) {
-			return new LastDamageDealtPacketHandler(packetBuffer.readUUID(), packetBuffer.readFloat());
+		public static DebugDataPacketHandler decode(FriendlyByteBuf packetBuffer) {
+			return new DebugDataPacketHandler(packetBuffer.readUUID(), packetBuffer.readFloat(), packetBuffer.readFloat());
 		}
 
-		public static void handle(LastDamageDealtPacketHandler msg, Supplier<Context> contextSupplier) {
+		public static void handle(DebugDataPacketHandler msg, Supplier<Context> contextSupplier) {
 			NetworkEvent.Context context = contextSupplier.get();
 			context.enqueueWork(() -> DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> runOnClient(msg)));
 			context.setPacketHandled(true);
 		}
 
-		private static void runOnClient(LastDamageDealtPacketHandler msg) {
-			SyncHandler.lastDamageDealtDamageOverlay(msg.lastDamageDealt, msg.playerUUID);
+		private static void runOnClient(DebugDataPacketHandler msg) {
+			SyncHandler.debugDataHandler(msg.lastDamageDealt, msg.lastDamageTaken, msg.playerUUID);
 		}
 	}
 }

@@ -1,0 +1,33 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "immersiveweapons:molten_smithing_template"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    },
+    "molten_ingot": {
+      "conditions": {
+        "items": [
+          {
+            "tag": "immersiveweapons:ingots/molten"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "requirements": [
+    [
+      "molten_ingot",
+      "has_the_recipe"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "immersiveweapons:molten_smithing_template"
+    ]
+  },
+  "sends_telemetry_event": false
+}

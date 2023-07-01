@@ -1,7 +1,9 @@
 package tech.anonymoushacker1279.immersiveweapons.item.armor;
 
+import net.minecraft.ChatFormatting;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
@@ -61,8 +63,7 @@ public class CobaltArmorItem extends ArmorItem {
 				player.getItemBySlot(EquipmentSlot.LEGS).getItem() == ItemRegistry.COBALT_LEGGINGS.get() &&
 				player.getItemBySlot(EquipmentSlot.FEET).getItem() == ItemRegistry.COBALT_BOOTS.get()) {
 
-			if (player.getUUID().toString().equals("380df991-f603-344c-a090-369bad2a924a")
-					|| player.getUUID().toString().equals("94f11dac-d1bc-46da-877b-c69f533f2da2")) {
+			if (player.getUUID().toString().equals("94f11dac-d1bc-46da-877b-c69f533f2da2")) {
 
 				boolean effectEnabled = player.getPersistentData().getBoolean("CobaltArmorEffectEnabled");
 
@@ -73,6 +74,14 @@ public class CobaltArmorItem extends ArmorItem {
 
 						// Send packet to server
 						PacketHandler.INSTANCE.sendToServer(new CobaltArmorItemPacketHandler(!effectEnabled));
+					}
+
+					if (effectEnabled) {
+						player.displayClientMessage(Component.translatable("immersiveweapons.armor_effects.disabled")
+								.withStyle(ChatFormatting.RED), true);
+					} else {
+						player.displayClientMessage(Component.translatable("immersiveweapons.armor_effects.enabled")
+								.withStyle(ChatFormatting.GREEN), true);
 					}
 				}
 

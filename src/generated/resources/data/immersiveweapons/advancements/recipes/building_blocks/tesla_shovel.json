@@ -28,5 +28,6 @@
     "recipes": [
       "immersiveweapons:tesla_shovel"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

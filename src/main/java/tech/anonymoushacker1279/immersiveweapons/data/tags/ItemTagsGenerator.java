@@ -5,8 +5,7 @@ import net.minecraft.data.PackOutput;
 import net.minecraft.data.tags.ItemTagsProvider;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.ItemTags;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.Items;
+import net.minecraft.world.item.*;
 import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.Tags.Blocks;
 import net.minecraftforge.common.data.BlockTagsProvider;
@@ -139,7 +138,6 @@ public class ItemTagsGenerator extends ItemTagsProvider {
 		tag(IWItemTagGroups.OBSIDIAN_RODS).add(ItemRegistry.OBSIDIAN_ROD.get());
 
 		// Accessory tags
-		// loop through item registry and get all instances of AccessoryItem
 		for (RegistryObject<Item> item : ItemRegistry.ITEMS.getEntries()) {
 			if (item.get() instanceof AccessoryItem accessory) {
 				tag(IWItemTagGroups.ACCESSORIES).add(accessory);
@@ -187,5 +185,12 @@ public class ItemTagsGenerator extends ItemTagsProvider {
 		// Non-flammable wood tag
 		tag(ItemTags.NON_FLAMMABLE_WOOD).add(BlockItemRegistry.WARPED_TABLE_ITEM.get(),
 				BlockItemRegistry.CRIMSON_TABLE_ITEM.get());
+
+		// Trimmable armor tag
+		for (RegistryObject<Item> item : ItemRegistry.ITEMS.getEntries()) {
+			if (item.get() instanceof ArmorItem armor) {
+				tag(ItemTags.TRIMMABLE_ARMOR).add(armor);
+			}
+		}
 	}
 }

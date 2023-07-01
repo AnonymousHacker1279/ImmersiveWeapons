@@ -40,8 +40,8 @@ public class DefendVillageTargetGoal extends TargetGoal {
 	@Override
 	public boolean canUse() {
 		AABB aabb = mobEntity.getBoundingBox().inflate(10.0D, 8.0D, 10.0D);
-		List<Villager> list = mobEntity.level.getNearbyEntities(Villager.class, distancePredicate, mobEntity, aabb);
-		List<Player> list1 = mobEntity.level.getNearbyPlayers(distancePredicate, mobEntity, aabb);
+		List<Villager> list = mobEntity.level().getNearbyEntities(Villager.class, distancePredicate, mobEntity, aabb);
+		List<Player> list1 = mobEntity.level().getNearbyPlayers(distancePredicate, mobEntity, aabb);
 
 		for (Villager villagerEntity : list) {
 

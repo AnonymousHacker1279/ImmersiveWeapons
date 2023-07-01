@@ -14,7 +14,9 @@
           "name": "immersiveweapons:panic_alarm"
         }
       ],
+      "name": "main",
       "rolls": 1.0
     }
-  ]
+  ],
+  "random_sequence": "immersiveweapons:blocks/panic_alarm"
 }

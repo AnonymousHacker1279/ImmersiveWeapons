@@ -125,5 +125,6 @@
       "hold6",
       "hold7"
     ]
-  ]
+  ],
+  "sends_telemetry_event": true
 }

@@ -30,5 +30,6 @@
     "recipes": [
       "immersiveweapons:cursed_sight_staff"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

@@ -104,11 +104,13 @@
           "name": "immersiveweapons:electric_ingot"
         }
       ],
+      "name": "main",
       "rolls": {
         "type": "minecraft:uniform",
         "max": 6.0,
         "min": 3.0
       }
     }
-  ]
+  ],
+  "random_sequence": "immersiveweapons:chests/abandoned_factory"
 }

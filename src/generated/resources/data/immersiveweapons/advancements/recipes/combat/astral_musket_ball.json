@@ -28,5 +28,6 @@
     "recipes": [
       "immersiveweapons:astral_musket_ball"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

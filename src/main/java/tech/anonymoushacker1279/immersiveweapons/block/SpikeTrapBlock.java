@@ -47,15 +47,6 @@ public class SpikeTrapBlock extends Block implements SimpleWaterloggedBlock {
 		registerDefaultState(stateDefinition.any().setValue(WATERLOGGED, Boolean.FALSE).setValue(POWERED, Boolean.FALSE));
 	}
 
-	/**
-	 * Set the shape of the block.
-	 *
-	 * @param state            the <code>BlockState</code> of the block
-	 * @param blockGetter      the <code>BlockGetter</code> for the block
-	 * @param pos              the <code>BlockPos</code> the block is at
-	 * @param collisionContext the <code>CollisionContext</code> of the block
-	 * @return VoxelShape
-	 */
 	@SuppressWarnings("deprecation")
 	@Override
 	public VoxelShape getShape(BlockState state, BlockGetter blockGetter, BlockPos pos,
@@ -63,30 +54,15 @@ public class SpikeTrapBlock extends Block implements SimpleWaterloggedBlock {
 		return SHAPE;
 	}
 
-	/**
-	 * Updates the block when required.
-	 *
-	 * @param state         the <code>BlockState</code> of the block
-	 * @param facing        the <code>Direction</code> the block is facing
-	 * @param neighborState the <code>BlockState</code> of the neighbor block
-	 * @param levelAccessor the <code>LevelAccessor</code> the block is in
-	 * @param currentPos    the <code>BlockPos</code> the block is at
-	 * @param facingPos     the <code>BlocKPos</code> the facing block is at
-	 * @return BlockState
-	 */
 	@SuppressWarnings("deprecation")
 	@Override
 	public BlockState updateShape(BlockState state, Direction facing, BlockState neighborState,
 	                              LevelAccessor levelAccessor, BlockPos currentPos,
-	                              BlockPos facingPos) {
-
-		if (state.getValue(WATERLOGGED)) {
-			levelAccessor.scheduleTick(currentPos, Fluids.WATER, Fluids.WATER.getTickDelay(levelAccessor));
-		}
+	                              BlockPos neighborPos) {
 
 		return facing == Direction.DOWN && !state.canSurvive(levelAccessor, currentPos)
 				? Blocks.AIR.defaultBlockState()
-				: super.updateShape(state, facing, neighborState, levelAccessor, currentPos, facingPos);
+				: super.updateShape(state, facing, neighborState, levelAccessor, currentPos, neighborPos);
 	}
 
 	/**

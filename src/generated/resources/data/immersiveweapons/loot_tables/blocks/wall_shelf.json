@@ -14,7 +14,9 @@
           "name": "immersiveweapons:wall_shelf"
         }
       ],
+      "name": "main",
       "rolls": 1.0
     }
-  ]
+  ],
+  "random_sequence": "immersiveweapons:blocks/wall_shelf"
 }

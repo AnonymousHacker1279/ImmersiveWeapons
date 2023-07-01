@@ -14,7 +14,9 @@
           "name": "immersiveweapons:camp_chair"
         }
       ],
+      "name": "main",
       "rolls": 1.0
     }
-  ]
+  ],
+  "random_sequence": "immersiveweapons:blocks/camp_chair"
 }

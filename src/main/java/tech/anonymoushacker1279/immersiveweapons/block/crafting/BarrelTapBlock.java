@@ -2,12 +2,13 @@ package tech.anonymoushacker1279.immersiveweapons.block.crafting;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.*;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.context.BlockPlaceContext;
-import net.minecraft.world.level.BlockGetter;
-import net.minecraft.world.level.Level;
+import net.minecraft.world.level.*;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
@@ -31,7 +32,6 @@ public class BarrelTapBlock extends HorizontalDirectionalBlock implements Simple
 	private static final VoxelShape SHAPE_SOUTH = Block.box(7.0D, 4.0D, 13.0D, 9.0D, 7.0D, 16.0D);
 	private static final VoxelShape SHAPE_EAST = Block.box(0.0D, 4.0D, 7.0D, 3.0D, 7.0D, 9.0D);
 	private static final VoxelShape SHAPE_WEST = Block.box(13.0D, 4.0D, 7.0D, 16.0D, 7.0D, 9.0D);
-	private String directionToUse = "north"; // Default: check North for a barrel
 
 	/**
 	 * Constructor for BarrelTapBlock.
@@ -41,6 +41,16 @@ public class BarrelTapBlock extends HorizontalDirectionalBlock implements Simple
 	public BarrelTapBlock(Properties properties) {
 		super(properties);
 		registerDefaultState(stateDefinition.any().setValue(FACING, Direction.NORTH).setValue(WATERLOGGED, false));
+	}
+
+	@Override
+	@SuppressWarnings("deprecation")
+	public boolean canSurvive(BlockState state, LevelReader reader, BlockPos pos) {
+		// Ensure it is placed with the opposite facing direction contacting a Barrel block
+		Direction facingDirection = state.getValue(FACING);
+		BlockPos blockPos = pos.relative(facingDirection.getOpposite());
+		BlockState blockState = reader.getBlockState(blockPos);
+		return blockState.getBlock() instanceof BarrelBlock && blockState.getValue(BarrelBlock.FACING) == facingDirection;
 	}
 
 	/**
@@ -98,74 +108,52 @@ public class BarrelTapBlock extends HorizontalDirectionalBlock implements Simple
 		return defaultBlockState().setValue(FACING, context.getHorizontalDirection().getOpposite());
 	}
 
-	/**
-	 * Runs when the block is activated.
-	 * Allows the block to respond to user interaction.
-	 *
-	 * @param state     the <code>BlockState</code> of the block
-	 * @param level     the <code>Level</code> the block is in
-	 * @param pos       the <code>BlockPos</code> the block is at
-	 * @param player    the <code>Player</code> interacting with the block
-	 * @param hand      the <code>InteractionHand</code> the PlayerEntity used
-	 * @param hitResult the <code>BlockHitResult</code> of the interaction
-	 * @return ActionResultType
-	 */
 	@SuppressWarnings("deprecation")
 	@Override
 	public InteractionResult use(BlockState state, Level level, BlockPos pos,
 	                             Player player, InteractionHand hand,
 	                             BlockHitResult hitResult) {
 
-		BlockState blockStateNorth = level.getBlockState(pos.north());
-		BlockState blockStateSouth = level.getBlockState(pos.south());
-		BlockState blockStateEast = level.getBlockState(pos.east());
-		BlockState blockStateWest = level.getBlockState(pos.west());
-
-		if (blockStateNorth.is(Blocks.BARREL)) {
-			directionToUse = "north";
-		} else if (blockStateSouth.is(Blocks.BARREL)) {
-			directionToUse = "south";
-		} else if (blockStateEast.is(Blocks.BARREL)) {
-			directionToUse = "east";
-		} else if (blockStateWest.is(Blocks.BARREL)) {
-			directionToUse = "west";
-		}
+		Direction facingDirection = state.getValue(FACING);
 
 		if (level.isClientSide) {
 			return InteractionResult.SUCCESS;
 		} else {
-			if (blockStateNorth.is(Blocks.BARREL) || blockStateSouth.is(Blocks.BARREL) || blockStateEast.is(Blocks.BARREL) || blockStateWest.is(Blocks.BARREL)) {
+			BlockEntity blockEntity = level.getBlockEntity(pos.relative(facingDirection.getOpposite()));
 
-				BlockEntity blockEntity = switch (directionToUse) {
-					case "south" -> level.getBlockEntity(pos.south());
-					case "east" -> level.getBlockEntity(pos.east());
-					case "west" -> level.getBlockEntity(pos.west());
-					default -> level.getBlockEntity(pos.north());
-				};
+			if (blockEntity != null) {
+				if (player.getMainHandItem().getItem() == Items.GLASS_BOTTLE) {
+					Container container = ((Container) blockEntity);
+					List<BarrelTapRecipe> recipes = level.getRecipeManager()
+							.getAllRecipesFor(RecipeTypeRegistry.BARREL_TAP_RECIPE_TYPE.get());
 
-				if (blockEntity != null) {
-					if (player.getMainHandItem().getItem() == Items.GLASS_BOTTLE) {
-						Container container = ((Container) blockEntity);
-						List<BarrelTapRecipe> recipes = level.getRecipeManager()
-								.getAllRecipesFor(RecipeTypeRegistry.BARREL_TAP_RECIPE_TYPE.get());
+					for (BarrelTapRecipe recipe : recipes) {
+						for (int i = 0; i < container.getContainerSize(); ++i) {
+							if (recipe.material().test(container.getItem(i))) {
+								if (container.getItem(i).getCount() >= recipe.getMaterialCount()) {
+									player.getInventory().add(recipe.getResultItem(level.registryAccess()));
+									player.getMainHandItem().shrink(1);
+									container.removeItem(i, recipe.getMaterialCount());
 
-						for (BarrelTapRecipe recipe : recipes) {
-							for (int i = 0; i < container.getContainerSize(); ++i) {
-								if (recipe.material().test(container.getItem(i))) {
-									if (container.getItem(i).getCount() >= recipe.getMaterialCount()) {
-										player.getInventory().add(recipe.getResultItem(level.registryAccess()));
-										player.getMainHandItem().shrink(1);
-										container.removeItem(i, recipe.getMaterialCount());
-										return InteractionResult.CONSUME;
-									}
+									level.playSound(
+											null,
+											pos.getX(),
+											pos.getY(),
+											pos.getZ(),
+											SoundEvents.BOTTLE_FILL,
+											SoundSource.BLOCKS,
+											1.0F,
+											1.0F
+									);
+
+									return InteractionResult.CONSUME;
 								}
 							}
 						}
 					}
 				}
-				return InteractionResult.PASS;
 			}
-			return InteractionResult.FAIL;
+			return InteractionResult.PASS;
 		}
 	}
 }

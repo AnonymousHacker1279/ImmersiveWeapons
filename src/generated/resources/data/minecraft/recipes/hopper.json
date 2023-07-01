@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "redstone",
+  "key": {
+    "a": {
+      "tag": "forge:ingots/metal"
+    },
+    "b": {
+      "item": "minecraft:chest"
+    }
+  },
+  "pattern": [
+    "a a",
+    "aba",
+    " a "
+  ],
+  "result": {
+    "item": "minecraft:hopper"
+  },
+  "show_notification": true
+}

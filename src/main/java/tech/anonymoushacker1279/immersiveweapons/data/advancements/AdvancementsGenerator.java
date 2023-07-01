@@ -4,7 +4,6 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.advancements.*;
 import net.minecraft.advancements.Advancement.Builder;
 import net.minecraft.advancements.critereon.*;
-import net.minecraft.advancements.critereon.EntityPredicate.Composite;
 import net.minecraft.core.HolderLookup.Provider;
 import net.minecraft.data.PackOutput;
 import net.minecraft.network.chat.Component;
@@ -1064,46 +1063,46 @@ public class AdvancementsGenerator extends ForgeAdvancementProvider {
 						Component.translatable("advancements.immersiveweapons.entity_discovery.description"),
 						null, FrameType.GOAL, true, true, false)
 				.addCriterion("discover_minuteman", new TriggerInstance(
-						Composite.ANY,
+						ContextAwarePredicate.ANY,
 						EntityRegistry.MINUTEMAN_ENTITY.getId()))
 				.addCriterion("discover_field_medic", new TriggerInstance(
-						Composite.ANY,
+						ContextAwarePredicate.ANY,
 						EntityRegistry.FIELD_MEDIC_ENTITY.getId()))
 				.addCriterion("discover_dying_soldier", new TriggerInstance(
-						Composite.ANY,
+						ContextAwarePredicate.ANY,
 						EntityRegistry.DYING_SOLDIER_ENTITY.getId()))
 				.addCriterion("discover_wandering_warrior", new TriggerInstance(
-						Composite.ANY,
+						ContextAwarePredicate.ANY,
 						EntityRegistry.WANDERING_WARRIOR_ENTITY.getId()))
 				.addCriterion("discover_hans", new TriggerInstance(
-						Composite.ANY,
+						ContextAwarePredicate.ANY,
 						EntityRegistry.HANS_ENTITY.getId()))
 				.addCriterion("discover_lava_revenant", new TriggerInstance(
-						Composite.ANY,
+						ContextAwarePredicate.ANY,
 						EntityRegistry.LAVA_REVENANT_ENTITY.getId()))
 				.addCriterion("discover_rock_spider", new TriggerInstance(
-						Composite.ANY,
+						ContextAwarePredicate.ANY,
 						EntityRegistry.ROCK_SPIDER_ENTITY.getId()))
 				.addCriterion("discover_celestial_tower", new TriggerInstance(
-						Composite.ANY,
+						ContextAwarePredicate.ANY,
 						EntityRegistry.CELESTIAL_TOWER_ENTITY.getId()))
 				.addCriterion("discover_starmite", new TriggerInstance(
-						Composite.ANY,
+						ContextAwarePredicate.ANY,
 						EntityRegistry.STARMITE_ENTITY.getId()))
 				.addCriterion("discover_storm_creeper", new TriggerInstance(
-						Composite.ANY,
+						ContextAwarePredicate.ANY,
 						EntityRegistry.STORM_CREEPER_ENTITY.getId()))
 				.addCriterion("discover_evil_eye", new TriggerInstance(
-						Composite.ANY,
+						ContextAwarePredicate.ANY,
 						EntityRegistry.EVIL_EYE_ENTITY.getId()))
 				.addCriterion("discover_star_wolf", new TriggerInstance(
-						Composite.ANY,
+						ContextAwarePredicate.ANY,
 						EntityRegistry.STAR_WOLF_ENTITY.getId()))
 				.addCriterion("discover_skygazer", new TriggerInstance(
-						Composite.ANY,
+						ContextAwarePredicate.ANY,
 						EntityRegistry.SKYGAZER_ENTITY.getId()))
 				.addCriterion("discover_skeleton_merchant", new TriggerInstance(
-						Composite.ANY,
+						ContextAwarePredicate.ANY,
 						EntityRegistry.SKELETON_MERCHANT_ENTITY.getId()))
 				.rewards(AdvancementRewards.Builder.experience(150))
 				.save(consumer, "immersiveweapons:entity_discovery");
@@ -1114,7 +1113,7 @@ public class AdvancementsGenerator extends ForgeAdvancementProvider {
 						Component.translatable("advancements.immersiveweapons.discover_minuteman.description"),
 						null, FrameType.TASK, true, true, false)
 				.addCriterion("discover", new TriggerInstance(
-						Composite.ANY,
+						ContextAwarePredicate.ANY,
 						EntityRegistry.MINUTEMAN_ENTITY.getId()))
 				.rewards(AdvancementRewards.Builder.experience(20))
 				.save(consumer, "immersiveweapons:discover_minuteman");
@@ -1125,7 +1124,7 @@ public class AdvancementsGenerator extends ForgeAdvancementProvider {
 						Component.translatable("advancements.immersiveweapons.discover_field_medic.description"),
 						null, FrameType.TASK, true, true, false)
 				.addCriterion("discover", new TriggerInstance(
-						Composite.ANY,
+						ContextAwarePredicate.ANY,
 						EntityRegistry.FIELD_MEDIC_ENTITY.getId()))
 				.rewards(AdvancementRewards.Builder.experience(20))
 				.save(consumer, "immersiveweapons:discover_field_medic");
@@ -1136,7 +1135,7 @@ public class AdvancementsGenerator extends ForgeAdvancementProvider {
 						Component.translatable("advancements.immersiveweapons.discover_dying_soldier.description"),
 						null, FrameType.TASK, true, true, false)
 				.addCriterion("discover", new TriggerInstance(
-						Composite.ANY,
+						ContextAwarePredicate.ANY,
 						EntityRegistry.DYING_SOLDIER_ENTITY.getId()))
 				.rewards(AdvancementRewards.Builder.experience(20))
 				.save(consumer, "immersiveweapons:discover_dying_soldier");
@@ -1147,7 +1146,7 @@ public class AdvancementsGenerator extends ForgeAdvancementProvider {
 						Component.translatable("advancements.immersiveweapons.discover_wandering_warrior.description"),
 						null, FrameType.TASK, true, true, false)
 				.addCriterion("discover", new TriggerInstance(
-						Composite.ANY,
+						ContextAwarePredicate.ANY,
 						EntityRegistry.WANDERING_WARRIOR_ENTITY.getId()))
 				.rewards(AdvancementRewards.Builder.experience(20))
 				.save(consumer, "immersiveweapons:discover_wandering_warrior");
@@ -1158,7 +1157,7 @@ public class AdvancementsGenerator extends ForgeAdvancementProvider {
 						Component.translatable("advancements.immersiveweapons.discover_hans.description"),
 						null, FrameType.TASK, true, true, false)
 				.addCriterion("discover", new TriggerInstance(
-						Composite.ANY,
+						ContextAwarePredicate.ANY,
 						EntityRegistry.HANS_ENTITY.getId()))
 				.rewards(AdvancementRewards.Builder.experience(20))
 				.save(consumer, "immersiveweapons:discover_hans");
@@ -1169,7 +1168,7 @@ public class AdvancementsGenerator extends ForgeAdvancementProvider {
 						Component.translatable("advancements.immersiveweapons.discover_lava_revenant.description"),
 						null, FrameType.TASK, true, true, false)
 				.addCriterion("discover", new TriggerInstance(
-						Composite.ANY,
+						ContextAwarePredicate.ANY,
 						EntityRegistry.LAVA_REVENANT_ENTITY.getId()))
 				.rewards(AdvancementRewards.Builder.experience(20))
 				.save(consumer, "immersiveweapons:discover_lava_revenant");
@@ -1180,7 +1179,7 @@ public class AdvancementsGenerator extends ForgeAdvancementProvider {
 						Component.translatable("advancements.immersiveweapons.discover_rock_spider.description"),
 						null, FrameType.TASK, true, true, false)
 				.addCriterion("discover", new TriggerInstance(
-						Composite.ANY,
+						ContextAwarePredicate.ANY,
 						EntityRegistry.ROCK_SPIDER_ENTITY.getId()))
 				.rewards(AdvancementRewards.Builder.experience(20))
 				.save(consumer, "immersiveweapons:discover_rock_spider");
@@ -1191,7 +1190,7 @@ public class AdvancementsGenerator extends ForgeAdvancementProvider {
 						Component.translatable("advancements.immersiveweapons.discover_starmite.description"),
 						null, FrameType.TASK, true, true, false)
 				.addCriterion("discover", new TriggerInstance(
-						Composite.ANY,
+						ContextAwarePredicate.ANY,
 						EntityRegistry.STARMITE_ENTITY.getId()))
 				.rewards(AdvancementRewards.Builder.experience(20))
 				.save(consumer, "immersiveweapons:discover_starmite");
@@ -1202,7 +1201,7 @@ public class AdvancementsGenerator extends ForgeAdvancementProvider {
 						Component.translatable("advancements.immersiveweapons.discover_storm_creeper.description"),
 						null, FrameType.TASK, true, true, false)
 				.addCriterion("discover", new TriggerInstance(
-						Composite.ANY,
+						ContextAwarePredicate.ANY,
 						EntityRegistry.STORM_CREEPER_ENTITY.getId()))
 				.rewards(AdvancementRewards.Builder.experience(20))
 				.save(consumer, "immersiveweapons:discover_storm_creeper");
@@ -1213,7 +1212,7 @@ public class AdvancementsGenerator extends ForgeAdvancementProvider {
 						Component.translatable("advancements.immersiveweapons.discover_evil_eye.description"),
 						null, FrameType.TASK, true, true, false)
 				.addCriterion("discover", new TriggerInstance(
-						Composite.ANY,
+						ContextAwarePredicate.ANY,
 						EntityRegistry.EVIL_EYE_ENTITY.getId()))
 				.rewards(AdvancementRewards.Builder.experience(20))
 				.save(consumer, "immersiveweapons:discover_evil_eye");
@@ -1224,7 +1223,7 @@ public class AdvancementsGenerator extends ForgeAdvancementProvider {
 						Component.translatable("advancements.immersiveweapons.discover_star_wolf.description"),
 						null, FrameType.TASK, true, true, false)
 				.addCriterion("discover", new TriggerInstance(
-						Composite.ANY,
+						ContextAwarePredicate.ANY,
 						EntityRegistry.STAR_WOLF_ENTITY.getId()))
 				.rewards(AdvancementRewards.Builder.experience(20))
 				.save(consumer, "immersiveweapons:discover_star_wolf");
@@ -1235,7 +1234,7 @@ public class AdvancementsGenerator extends ForgeAdvancementProvider {
 						Component.translatable("advancements.immersiveweapons.discover_skygazer.description"),
 						null, FrameType.TASK, true, true, false)
 				.addCriterion("discover", new TriggerInstance(
-						Composite.ANY,
+						ContextAwarePredicate.ANY,
 						EntityRegistry.SKYGAZER_ENTITY.getId()))
 				.rewards(AdvancementRewards.Builder.experience(20))
 				.save(consumer, "immersiveweapons:discover_skygazer");
@@ -1246,7 +1245,7 @@ public class AdvancementsGenerator extends ForgeAdvancementProvider {
 						Component.translatable("advancements.immersiveweapons.discover_skeleton_merchant.description"),
 						null, FrameType.TASK, true, true, false)
 				.addCriterion("discover", new TriggerInstance(
-						Composite.ANY,
+						ContextAwarePredicate.ANY,
 						EntityRegistry.SKELETON_MERCHANT_ENTITY.getId()))
 				.rewards(AdvancementRewards.Builder.experience(20))
 				.save(consumer, "immersiveweapons:discover_skeleton_merchant");
@@ -1258,7 +1257,7 @@ public class AdvancementsGenerator extends ForgeAdvancementProvider {
 						Component.translatable("advancements.immersiveweapons.discover_celestial_tower.description"),
 						null, FrameType.TASK, true, true, false)
 				.addCriterion("discover", new TriggerInstance(
-						Composite.ANY,
+						ContextAwarePredicate.ANY,
 						EntityRegistry.CELESTIAL_TOWER_ENTITY.getId()))
 				.rewards(AdvancementRewards.Builder.experience(20))
 				.save(consumer, "immersiveweapons:discover_celestial_tower");
@@ -1482,7 +1481,7 @@ public class AdvancementsGenerator extends ForgeAdvancementProvider {
 						Component.translatable("advancements.immersiveweapons.tiltros.activated_warrior_statue.description"),
 						null, FrameType.TASK, true, true, true)
 				.addCriterion("activate",
-						new WarriorStatueActivatedTrigger.TriggerInstance(Composite.ANY))
+						new WarriorStatueActivatedTrigger.TriggerInstance(ContextAwarePredicate.ANY))
 				.save(consumer, "immersiveweapons:activated_warrior_statue");
 
 		Builder.advancement().parent(activated_warrior_statue)

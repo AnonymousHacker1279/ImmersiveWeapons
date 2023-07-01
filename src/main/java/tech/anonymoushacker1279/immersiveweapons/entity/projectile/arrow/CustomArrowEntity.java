@@ -67,9 +67,9 @@ public class CustomArrowEntity extends AbstractArrow {
 		}
 
 		BlockPos blockPos = blockPosition();
-		BlockState blockState = level.getBlockState(blockPos);
+		BlockState blockState = level().getBlockState(blockPos);
 		if (!blockState.isAir() && !flag) {
-			VoxelShape voxelShape = blockState.getCollisionShape(level, blockPos);
+			VoxelShape voxelShape = blockState.getCollisionShape(level(), blockPos);
 			if (!voxelShape.isEmpty()) {
 				Vec3 vector3d1 = position();
 
@@ -93,7 +93,7 @@ public class CustomArrowEntity extends AbstractArrow {
 		if (inGround && !flag) {
 			if (shouldFall()) {
 				startFalling();
-			} else if (!level.isClientSide) {
+			} else if (!level().isClientSide) {
 				tickDespawn();
 			}
 
@@ -102,7 +102,7 @@ public class CustomArrowEntity extends AbstractArrow {
 			inGroundTime = 0;
 			Vec3 vector3d2 = position();
 			Vec3 vector3d3 = vector3d2.add(vector3d);
-			HitResult rayTraceResult = level.clip(new ClipContext(vector3d2, vector3d3, ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, this));
+			HitResult rayTraceResult = level().clip(new ClipContext(vector3d2, vector3d3, ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, this));
 			if (rayTraceResult.getType() != HitResult.Type.MISS) {
 				vector3d3 = rayTraceResult.getLocation();
 			}
@@ -143,7 +143,7 @@ public class CustomArrowEntity extends AbstractArrow {
 			double d0 = vector3d.z;
 			if (isCritArrow()) {
 				for (int i = 0; i < 4; ++i) {
-					level.addParticle(ParticleTypes.CRIT, getX() + d3 * i / 4.0D, getY() + d4 * i / 4.0D, getZ() + d0 * i / 4.0D, -d3, -d4 + 0.2D, -d0);
+					level().addParticle(ParticleTypes.CRIT, getX() + d3 * i / 4.0D, getY() + d4 * i / 4.0D, getZ() + d0 * i / 4.0D, -d3, -d4 + 0.2D, -d0);
 				}
 			}
 
@@ -154,7 +154,7 @@ public class CustomArrowEntity extends AbstractArrow {
 			float f2 = 0.99F;
 			if (isInWater()) {
 				for (int j = 0; j < 4; ++j) {
-					level.addParticle(ParticleTypes.BUBBLE, d5 - d3 * 0.25D, d1 - d4 * 0.25D, d2 - d0 * 0.25D, d3, d4, d0);
+					level().addParticle(ParticleTypes.BUBBLE, d5 - d3 * 0.25D, d1 - d4 * 0.25D, d2 - d0 * 0.25D, d3, d4, d0);
 				}
 
 				f2 = getWaterInertia();

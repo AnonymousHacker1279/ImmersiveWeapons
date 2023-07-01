@@ -19,7 +19,9 @@
           "name": "immersiveweapons:used_syringe"
         }
       ],
+      "name": "used_syringe",
       "rolls": 1.0
     }
-  ]
+  ],
+  "random_sequence": "immersiveweapons:entities/field_medic"
 }

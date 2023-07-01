@@ -106,11 +106,13 @@
           "name": "immersiveweapons:morphine"
         }
       ],
+      "name": "main",
       "rolls": {
         "type": "minecraft:uniform",
         "max": 5.0,
         "min": 3.0
       }
     }
-  ]
+  ],
+  "random_sequence": "immersiveweapons:chests/village/battlefield/medic_station"
 }

@@ -25,7 +25,7 @@ public class IWOverlays {
 		Minecraft minecraft = Minecraft.getInstance();
 		Font fontRenderer = minecraft.font;
 
-		SCOPE_ELEMENT = (gui, poseStack, partialTick, screenWidth, screenHeight) -> {
+		SCOPE_ELEMENT = (gui, guiGraphics, partialTick, screenWidth, screenHeight) -> {
 			gui.setupOverlayRenderState(true, false);
 
 			if (GunData.changingPlayerFOV != -1 && minecraft.options.getCameraType().isFirstPerson()) {
@@ -33,9 +33,9 @@ public class IWOverlays {
 			}
 		};
 
-		DEBUG_TRACING_ELEMENT = (gui, poseStack, partialTick, screenWidth, screenHeight) -> {
+		DEBUG_TRACING_ELEMENT = (gui, guiGraphics, partialTick, screenWidth, screenHeight) -> {
 			gui.setupOverlayRenderState(true, false);
-			DebugTracingOverlay.renderOverlay(poseStack, fontRenderer, screenHeight);
+			DebugTracingOverlay.renderOverlay(guiGraphics, fontRenderer, screenHeight);
 		};
 	}
 }

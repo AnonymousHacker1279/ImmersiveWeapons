@@ -18,14 +18,14 @@ public class EntityDiscoveredTrigger extends SimpleCriterionTrigger<EntityDiscov
 
 	@Override
 	protected EntityDiscoveredTrigger.TriggerInstance createInstance(JsonObject pJson,
-	                                                                 EntityPredicate.Composite pPlayer,
+	                                                                 ContextAwarePredicate predicate,
 	                                                                 DeserializationContext pContext) {
 
 		ResourceLocation entityLocation = pJson.has("entity")
 				? new ResourceLocation(GsonHelper.getAsString(pJson, "entity")) : null;
 
 		assert entityLocation != null;
-		return new EntityDiscoveredTrigger.TriggerInstance(pPlayer, entityLocation);
+		return new EntityDiscoveredTrigger.TriggerInstance(predicate, entityLocation);
 	}
 
 	/**
@@ -42,8 +42,8 @@ public class EntityDiscoveredTrigger extends SimpleCriterionTrigger<EntityDiscov
 
 		private final ResourceLocation entityLocation;
 
-		public TriggerInstance(EntityPredicate.Composite pPlayer, ResourceLocation entityLocation) {
-			super(EntityDiscoveredTrigger.ID, pPlayer);
+		public TriggerInstance(ContextAwarePredicate predicate, ResourceLocation entityLocation) {
+			super(EntityDiscoveredTrigger.ID, predicate);
 			this.entityLocation = entityLocation;
 		}
 

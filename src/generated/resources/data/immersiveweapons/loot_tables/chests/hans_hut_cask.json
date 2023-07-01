@@ -36,11 +36,13 @@
           "name": "minecraft:sweet_berries"
         }
       ],
+      "name": "main",
       "rolls": {
         "type": "minecraft:uniform",
         "max": 9.0,
         "min": 6.0
       }
     }
-  ]
+  ],
+  "random_sequence": "immersiveweapons:chests/hans_hut_cask"
 }

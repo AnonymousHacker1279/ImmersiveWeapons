@@ -23,6 +23,7 @@ public class ChestLootTables implements LootTableSubProvider {
 		out.accept(LootTableLocations.ABANDONED_FACTORY,
 				LootTable.lootTable()
 						.withPool(LootPool.lootPool()
+								.name("main")
 								.setRolls(UniformGenerator.between(3.0F, 6.0F))
 								.add(LootItem.lootTableItem(Items.COPPER_INGOT).setWeight(12)
 										.apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 3.0F))))
@@ -42,6 +43,7 @@ public class ChestLootTables implements LootTableSubProvider {
 		out.accept(LootTableLocations.BATTLEFIELD_CAMP,
 				LootTable.lootTable()
 						.withPool(LootPool.lootPool()
+								.name("main")
 								.setRolls(UniformGenerator.between(4.0F, 7.0F))
 								.add(LootItem.lootTableItem(ItemRegistry.IRON_MUSKET_BALL.get()).setWeight(8)
 										.apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 8.0F))))
@@ -61,6 +63,7 @@ public class ChestLootTables implements LootTableSubProvider {
 		out.accept(LootTableLocations.CAMPSITE,
 				LootTable.lootTable()
 						.withPool(LootPool.lootPool()
+								.name("main")
 								.setRolls(UniformGenerator.between(3.0F, 7.0F))
 								.add(LootItem.lootTableItem(ItemRegistry.COPPER_MUSKET_BALL.get()).setWeight(8)
 										.apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 8.0F))))
@@ -81,6 +84,7 @@ public class ChestLootTables implements LootTableSubProvider {
 		out.accept(LootTableLocations.UNDERGROUND_BUNKER,
 				LootTable.lootTable()
 						.withPool(LootPool.lootPool()
+								.name("main")
 								.setRolls(UniformGenerator.between(4.0F, 6.0F))
 								.add(LootItem.lootTableItem(Items.COPPER_INGOT).setWeight(8)
 										.apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 3.0F))))
@@ -100,6 +104,7 @@ public class ChestLootTables implements LootTableSubProvider {
 		out.accept(LootTableLocations.BATTLEFIELD_VILLAGE_MEDIC_STATION,
 				LootTable.lootTable()
 						.withPool(LootPool.lootPool()
+								.name("main")
 								.setRolls(UniformGenerator.between(3.0F, 5.0F))
 								.add(LootItem.lootTableItem(ItemRegistry.BANDAGE.get()).setWeight(8)
 										.apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 4.0F))))
@@ -121,6 +126,7 @@ public class ChestLootTables implements LootTableSubProvider {
 		out.accept(LootTableLocations.HANS_HUT,
 				LootTable.lootTable()
 						.withPool(LootPool.lootPool()
+								.name("main")
 								.setRolls(UniformGenerator.between(4.0F, 6.0F))
 								.add(LootItem.lootTableItem(Items.SALMON).setWeight(5)
 										.apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 6.0F))))
@@ -141,6 +147,7 @@ public class ChestLootTables implements LootTableSubProvider {
 		out.accept(LootTableLocations.HANS_HUT_CASK,
 				LootTable.lootTable()
 						.withPool(LootPool.lootPool()
+								.name("main")
 								.setRolls(UniformGenerator.between(6.0F, 9.0F))
 								.add(LootItem.lootTableItem(Items.WHEAT).setWeight(2)
 										.apply(SetItemCountFunction.setCount(UniformGenerator.between(8.0F, 32.0F))))
@@ -151,6 +158,7 @@ public class ChestLootTables implements LootTableSubProvider {
 		out.accept(LootTableLocations.BIODOME_CHEST,
 				LootTable.lootTable()
 						.withPool(LootPool.lootPool()
+								.name("main")
 								.setRolls(UniformGenerator.between(3.0F, 5.0F))
 								.add(LootItem.lootTableItem(ItemRegistry.COBALT_SWORD.get()).setWeight(4)
 										.apply(SetItemCountFunction.setCount(ConstantValue.exactly(1)))
@@ -199,9 +207,9 @@ public class ChestLootTables implements LootTableSubProvider {
 
 
 		out.accept(LootTableLocations.BIODOME_MEDICINE_BARREL,
-				// This should contain food and medicine
 				LootTable.lootTable()
 						.withPool(LootPool.lootPool()
+								.name("main")
 								.setRolls(UniformGenerator.between(3.0f, 6.0f))
 								.add(LootItem.lootTableItem(Items.BREAD).setWeight(3)
 										.apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0f, 3.0f))))

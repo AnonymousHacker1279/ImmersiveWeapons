@@ -14,7 +14,9 @@
           "name": "immersiveweapons:iron_panel"
         }
       ],
+      "name": "main",
       "rolls": 1.0
     }
-  ]
+  ],
+  "random_sequence": "immersiveweapons:blocks/iron_panel"
 }

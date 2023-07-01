@@ -34,8 +34,8 @@ public class SmokeGrenadeArrowEntity extends CustomArrowEntity {
 	@Override
 	public void onHit(HitResult hitResult) {
 		super.onHit(hitResult);
-		if (!level.isClientSide) {
-			PacketHandler.INSTANCE.send(PacketDistributor.TRACKING_CHUNK.with(() -> level.getChunkAt(blockPosition())),
+		if (!level().isClientSide) {
+			PacketHandler.INSTANCE.send(PacketDistributor.TRACKING_CHUNK.with(() -> level().getChunkAt(blockPosition())),
 					new SmokeGrenadeEntityPacketHandler(getX(), getY(), getZ(), color));
 		}
 	}

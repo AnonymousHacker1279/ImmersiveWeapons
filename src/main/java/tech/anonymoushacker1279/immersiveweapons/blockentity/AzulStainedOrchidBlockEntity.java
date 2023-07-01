@@ -33,11 +33,11 @@ public class AzulStainedOrchidBlockEntity extends BlockEntity implements EntityB
 		if (!entity.isPassenger() && !entity.isVehicle() && entity.canChangeDimensions() && !entity.isOnPortalCooldown() && teleportDelay <= 0) {
 			teleportDelay = 100;
 
-			if (!entity.level.isClientSide && !pos.equals(entity.portalEntrancePos)) {
+			if (!entity.level().isClientSide && !pos.equals(entity.portalEntrancePos)) {
 				entity.portalEntrancePos = pos.immutable();
 			}
 
-			Level entityLevel = entity.level;
+			Level entityLevel = entity.level();
 			MinecraftServer server = entityLevel.getServer();
 			ResourceKey<Level> destination = entityLevel.dimension() == IWDimensions.TILTROS ? Level.OVERWORLD
 					: IWDimensions.TILTROS;
@@ -51,9 +51,12 @@ public class AzulStainedOrchidBlockEntity extends BlockEntity implements EntityB
 					// Get a valid target position if it is unset
 					if (targetPos == null) {
 						targetPos = findValidTeleportPosition(destinationLevel, pos);
+
+						// Offset slightly to account for the size of the NBT structure
+						targetPos = targetPos.offset(3, 0, 3);
 					}
 
-					entity.changeDimension(destinationLevel, new TiltrosTeleporter(targetPos, pos));
+					entity.changeDimension(destinationLevel, new TiltrosTeleporter(targetPos, pos.below()));
 
 					entityLevel.getProfiler().pop();
 				}

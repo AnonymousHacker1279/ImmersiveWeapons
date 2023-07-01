@@ -11,14 +11,12 @@ public class BlockTagLists {
 	public static final List<Block> BULLETPROOF_GLASS = new ArrayList<>(15);
 	public static final List<Block> STAINED_GLASS = new ArrayList<>(15);
 	public static final List<Block> BURNED_OAK_LOGS = new ArrayList<>(5);
-	public static final List<Block> TABLES = new ArrayList<>(9);
 	public static final List<Block> STARDUST_LOGS = new ArrayList<>(5);
 
 	static {
 		addBulletproofGlass();
 		addStainedGlass();
 		addBurnedOakLogs();
-		addTables();
 		addStardustLogs();
 	}
 
@@ -66,20 +64,6 @@ public class BlockTagLists {
 		BURNED_OAK_LOGS.add(BlockRegistry.BURNED_OAK_WOOD.get());
 		BURNED_OAK_LOGS.add(BlockRegistry.STRIPPED_BURNED_OAK_LOG.get());
 		BURNED_OAK_LOGS.add(BlockRegistry.STRIPPED_BURNED_OAK_WOOD.get());
-	}
-
-	private static void addTables() {
-		TABLES.add(BlockRegistry.OAK_TABLE.get());
-		TABLES.add(BlockRegistry.SPRUCE_TABLE.get());
-		TABLES.add(BlockRegistry.BIRCH_TABLE.get());
-		TABLES.add(BlockRegistry.JUNGLE_TABLE.get());
-		TABLES.add(BlockRegistry.ACACIA_TABLE.get());
-		TABLES.add(BlockRegistry.DARK_OAK_TABLE.get());
-		TABLES.add(BlockRegistry.CRIMSON_TABLE.get());
-		TABLES.add(BlockRegistry.WARPED_TABLE.get());
-		TABLES.add(BlockRegistry.MANGROVE_TABLE.get());
-		TABLES.add(BlockRegistry.BURNED_OAK_TABLE.get());
-		TABLES.add(BlockRegistry.STARDUST_TABLE.get());
 	}
 
 	private static void addStardustLogs() {

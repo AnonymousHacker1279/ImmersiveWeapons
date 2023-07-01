@@ -30,5 +30,6 @@
     "recipes": [
       "immersiveweapons:powder_horn"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

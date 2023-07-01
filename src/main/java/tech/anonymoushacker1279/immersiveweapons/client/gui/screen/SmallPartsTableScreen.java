@@ -2,12 +2,10 @@ package tech.anonymoushacker1279.immersiveweapons.client.gui.screen;
 
 import com.mojang.blaze3d.platform.Lighting;
 import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.renderer.GameRenderer;
-import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -15,7 +13,8 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.Slot;
-import net.minecraft.world.item.*;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.Nullable;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.menu.SmallPartsMenu;
@@ -48,55 +47,35 @@ public class SmallPartsTableScreen extends AbstractContainerScreen<SmallPartsMen
 	}
 
 	@Override
-	public void render(PoseStack pPoseStack, int pMouseX, int pMouseY, float pPartialTick) {
-		super.render(pPoseStack, pMouseX, pMouseY, pPartialTick);
-		renderTooltip(pPoseStack, pMouseX, pMouseY);
+	public void render(GuiGraphics guiGraphics, int pMouseX, int pMouseY, float pPartialTick) {
+		super.render(guiGraphics, pMouseX, pMouseY, pPartialTick);
+		renderTooltip(guiGraphics, pMouseX, pMouseY);
 	}
 
 	@Override
-	protected void renderBg(PoseStack pPoseStack, float pPartialTick, int pX, int pY) {
-		renderBackground(pPoseStack);
+	protected void renderBg(GuiGraphics guiGraphics, float pPartialTick, int pX, int pY) {
+		renderBackground(guiGraphics);
 		RenderSystem.setShader(GameRenderer::getPositionTexShader);
 		RenderSystem.setShaderTexture(0, BG_LOCATION);
 		int leftPos = this.leftPos;
 		int topPos = this.topPos;
-		blit(pPoseStack, leftPos, topPos, 0, 0, imageWidth, imageHeight);
+		guiGraphics.blit(BG_LOCATION, leftPos, topPos, 0, 0, imageWidth, imageHeight);
 		Slot materialSlot = menu.getMaterialSlot();
 
 		if (!materialSlot.hasItem()) {
-			blit(pPoseStack, leftPos + materialSlot.x, topPos + materialSlot.y, imageWidth, 0, 16, 16);
+			guiGraphics.blit(BG_LOCATION, leftPos + materialSlot.x, topPos + materialSlot.y, imageWidth, 0, 16, 16);
 		}
 
 		int scrollOffset = (int) (41.0F * scrollOffs);
-		blit(pPoseStack, leftPos + 119, topPos + PATTERNS_Y - 4 + scrollOffset,
+		guiGraphics.blit(BG_LOCATION, leftPos + 119, topPos + PATTERNS_Y - 4 + scrollOffset,
 				232 + (displayPatterns ? 0 : SCROLLER_WIDTH),
 				0, SCROLLER_WIDTH, SCROLLER_HEIGHT);
-
-		Lighting.setupForFlatItems();
-		assert minecraft != null;
-		MultiBufferSource.BufferSource bufferSource = minecraft.renderBuffers().bufferSource();
-
+		
 		if (resultPatterns != null) {
-			pPoseStack.pushPose();
-			pPoseStack.translate(leftPos + 139, topPos + 52, 0.0D);
-			pPoseStack.scale(24.0F, -24.0F, 1.0F);
-			pPoseStack.translate(0.5D, 1.05D, 0.5D);
-			pPoseStack.scale(-0.6666667F, 0.6666667F, -0.6666667F);
-
 			if (menu.getSelectedPartsPatternIndex() > 0) {
 				ItemStack material = new ItemStack(resultPatterns.get(menu.getSelectedPartsPatternIndex() - 1));
-				Minecraft.getInstance().getItemRenderer().renderStatic(material,
-						ItemDisplayContext.FIXED,
-						15728880,
-						OverlayTexture.NO_OVERLAY,
-						pPoseStack,
-						bufferSource,
-						minecraft.level,
-						0);
+				guiGraphics.renderItem(material, leftPos + 143, topPos + 19);
 			}
-
-			pPoseStack.popPose();
-			bufferSource.endBatch();
 		}
 
 		if (displayPatterns && resultPatterns.size() > 0) {
@@ -116,35 +95,14 @@ public class SmallPartsTableScreen extends AbstractContainerScreen<SmallPartsMen
 					vOffset += 32;
 				}
 
-				blit(pPoseStack, x, y, 0, vOffset, PATTERN_IMAGE_SIZE, PATTERN_IMAGE_SIZE);
+				guiGraphics.blit(BG_LOCATION, x, y, 0, vOffset, PATTERN_IMAGE_SIZE, PATTERN_IMAGE_SIZE);
 				if (startIndex + indexOffset - 1 <= resultPatterns.size() - 1) {
-					renderCraftables(resultPatterns.get(startIndex + indexOffset - 1), x, y);
+					guiGraphics.renderItem(new ItemStack(resultPatterns.get(startIndex + indexOffset - 1)), x, y);
 				}
 			}
 		}
 
 		Lighting.setupFor3DItems();
-	}
-
-	private void renderCraftables(Item material, int pX, int pY) {
-		PoseStack poseStack = new PoseStack();
-		poseStack.pushPose();
-		poseStack.translate((float) pX + 0.5F, pY + 16, 0.0D);
-		poseStack.scale(-6.0F, -6.0F, -1.0F);
-		poseStack.translate(-1.25D, 1.35D, 0.5D);
-		poseStack.scale(2.5f, 2.5f, 2.5f);
-		assert minecraft != null;
-		MultiBufferSource.BufferSource bufferSource = minecraft.renderBuffers().bufferSource();
-		Minecraft.getInstance().getItemRenderer().renderStatic(new ItemStack(material),
-				ItemDisplayContext.FIXED,
-				15728880,
-				OverlayTexture.NO_OVERLAY,
-				poseStack,
-				bufferSource,
-				minecraft.level,
-				0);
-		poseStack.popPose();
-		bufferSource.endBatch();
 	}
 
 	@Override

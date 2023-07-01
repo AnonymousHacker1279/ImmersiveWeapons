@@ -14,7 +14,9 @@
           "name": "immersiveweapons:stardust_trapdoor"
         }
       ],
+      "name": "main",
       "rolls": 1.0
     }
-  ]
+  ],
+  "random_sequence": "immersiveweapons:blocks/stardust_trapdoor"
 }

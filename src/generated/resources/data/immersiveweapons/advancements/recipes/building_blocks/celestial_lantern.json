@@ -30,5 +30,6 @@
     "recipes": [
       "immersiveweapons:celestial_lantern"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

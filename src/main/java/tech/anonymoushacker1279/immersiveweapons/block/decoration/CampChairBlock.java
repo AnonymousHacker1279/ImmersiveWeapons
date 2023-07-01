@@ -35,75 +35,35 @@ public class CampChairBlock extends HorizontalDirectionalBlock implements Simple
 		registerDefaultState(stateDefinition.any().setValue(FACING, Direction.NORTH).setValue(WATERLOGGED, Boolean.FALSE));
 	}
 
-	/**
-	 * Set the shape of the block.
-	 *
-	 * @param state            the <code>BlockState</code> of the block
-	 * @param reader           the <code>IBlockReader</code> for the block
-	 * @param pos              the <code>BlockPos</code> the block is at
-	 * @param selectionContext the <code>ISelectionContext</code> of the block
-	 * @return VoxelShape
-	 */
 	@SuppressWarnings("deprecation")
 	@Override
-	public VoxelShape getShape(BlockState state, BlockGetter reader, BlockPos pos, CollisionContext selectionContext) {
+	public VoxelShape getShape(BlockState state, BlockGetter getter, BlockPos pos, CollisionContext selectionContext) {
 		return SHAPE;
 	}
 
-	/**
-	 * Create the BlockState definition.
-	 *
-	 * @param builder the <code>StateContainer.Builder</code> of the block
-	 */
 	@Override
 	public void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
 		builder.add(FACING).add(WATERLOGGED);
 	}
 
-	/**
-	 * Set placement properties.
-	 * Sets the facing direction of the block for placement.
-	 *
-	 * @param context the <code>BlockItemUseContext</code> during placement
-	 * @return BlockState
-	 */
 	@Override
 	public BlockState getStateForPlacement(BlockPlaceContext context) {
 		return defaultBlockState().setValue(FACING, context.getHorizontalDirection().getOpposite()).setValue(WATERLOGGED, Boolean.FALSE);
 	}
 
-	/**
-	 * Set FluidState properties.
-	 * Allows the block to exhibit waterlogged behavior.
-	 *
-	 * @param state the <code>BlockState</code> of the block
-	 * @return FluidState
-	 */
 	@SuppressWarnings("deprecation")
 	@Override
 	public FluidState getFluidState(BlockState state) {
 		return state.getValue(WATERLOGGED) ? Fluids.WATER.getSource(false) : super.getFluidState(state);
 	}
 
-	/**
-	 * Runs when the block is activated.
-	 * Allows the block to respond to user interaction.
-	 *
-	 * @param state               the <code>BlockState</code> of the block
-	 * @param worldIn             the <code>World</code> the block is in
-	 * @param pos                 the <code>BlockPos</code> the block is at
-	 * @param player              the <code>PlayerEntity</code> interacting with the block
-	 * @param handIn              the <code>Hand</code> the PlayerEntity used
-	 * @param blockRayTraceResult the <code>BlockRayTraceResult</code> of the interaction
-	 * @return ActionResultType
-	 */
 	@SuppressWarnings("deprecation")
 	@Override
-	public InteractionResult use(BlockState state, Level worldIn, BlockPos pos, Player player, InteractionHand handIn, BlockHitResult blockRayTraceResult) {
-		if (worldIn.isClientSide) {
+	public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
+		if (level.isClientSide) {
 			return InteractionResult.SUCCESS;
 		} else {
-			return ChairEntity.create(worldIn, pos, 0.2D, player);
+			return ChairEntity.create(level, pos, 0.2D, player);
 		}
 	}
 }

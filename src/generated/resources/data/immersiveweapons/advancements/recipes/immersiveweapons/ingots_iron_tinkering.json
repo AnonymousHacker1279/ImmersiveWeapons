@@ -28,5 +28,6 @@
     "recipes": [
       "immersiveweapons:ingots_iron_tinkering"
     ]
-  }
+  },
+  "sends_telemetry_event": true
 }

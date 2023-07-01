@@ -14,7 +14,9 @@
           "name": "immersiveweapons:hans_head"
         }
       ],
+      "name": "main",
       "rolls": 1.0
     }
-  ]
+  ],
+  "random_sequence": "immersiveweapons:blocks/hans_head"
 }

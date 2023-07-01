@@ -1,18 +1,37 @@
 package tech.anonymoushacker1279.immersiveweapons.init;
 
+import net.minecraft.core.registries.Registries;
+import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.CreativeModeTab;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.minecraftforge.registries.DeferredRegister;
+import net.minecraftforge.registries.RegistryObject;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 
 public class DeferredRegistryHandler {
+
+	public static final DeferredRegister<CreativeModeTab> CREATIVE_MODE_TABS = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, ImmersiveWeapons.MOD_ID);
+
+	public static final RegistryObject<CreativeModeTab> IMMERSIVE_WEAPONS_TAB = CREATIVE_MODE_TABS.register("immersive_weapons_tab", () -> CreativeModeTab.builder()
+			.icon(() -> ItemRegistry.TESLA_SWORD.get().getDefaultInstance())
+			.title(Component.translatable("itemGroup.immersiveweapons.creative_tab"))
+			.withSearchBar(65)
+			.withBackgroundLocation(new ResourceLocation(ImmersiveWeapons.MOD_ID, "textures/gui/container/creative_inventory_tab.png"))
+			.build());
 
 	/**
 	 * Initialize deferred registers.
 	 */
 	public static void init() {
 		IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
+
 		ImmersiveWeapons.LOGGER.info("Initializing deferred registry for items");
 		ItemRegistry.ITEMS.register(modEventBus);
+
+		ImmersiveWeapons.LOGGER.info("Initializing deferred registry for creative tabs");
+		CREATIVE_MODE_TABS.register(modEventBus);
 
 		ImmersiveWeapons.LOGGER.info("Initializing deferred registry for blocks");
 		BlockRegistry.BLOCKS.register(modEventBus);

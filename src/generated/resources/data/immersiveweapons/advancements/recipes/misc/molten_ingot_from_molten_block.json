@@ -28,5 +28,6 @@
     "recipes": [
       "immersiveweapons:molten_ingot_from_molten_block"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

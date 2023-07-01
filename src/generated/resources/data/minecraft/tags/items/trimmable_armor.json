@@ -1,0 +1,32 @@
+{
+  "values": [
+    "immersiveweapons:molten_helmet",
+    "immersiveweapons:molten_chestplate",
+    "immersiveweapons:molten_leggings",
+    "immersiveweapons:molten_boots",
+    "immersiveweapons:copper_helmet",
+    "immersiveweapons:copper_chestplate",
+    "immersiveweapons:copper_leggings",
+    "immersiveweapons:copper_boots",
+    "immersiveweapons:tesla_helmet",
+    "immersiveweapons:tesla_chestplate",
+    "immersiveweapons:tesla_leggings",
+    "immersiveweapons:tesla_boots",
+    "immersiveweapons:cobalt_helmet",
+    "immersiveweapons:cobalt_chestplate",
+    "immersiveweapons:cobalt_leggings",
+    "immersiveweapons:cobalt_boots",
+    "immersiveweapons:ventus_helmet",
+    "immersiveweapons:ventus_chestplate",
+    "immersiveweapons:ventus_leggings",
+    "immersiveweapons:ventus_boots",
+    "immersiveweapons:astral_helmet",
+    "immersiveweapons:astral_chestplate",
+    "immersiveweapons:astral_leggings",
+    "immersiveweapons:astral_boots",
+    "immersiveweapons:starstorm_helmet",
+    "immersiveweapons:starstorm_chestplate",
+    "immersiveweapons:starstorm_leggings",
+    "immersiveweapons:starstorm_boots"
+  ]
+}

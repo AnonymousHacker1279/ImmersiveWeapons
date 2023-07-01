@@ -47,7 +47,9 @@ public class LanguageGenerator extends IWLanguageProvider {
 		List<Block> excludedBlocks = new ArrayList<>(25);
 		// These are not added because they're variants of another block which already exists
 		excludedBlocks.add(BlockRegistry.BURNED_OAK_WALL_SIGN.get());
+		excludedBlocks.add(BlockRegistry.BURNED_OAK_WALL_HANGING_SIGN.get());
 		excludedBlocks.add(BlockRegistry.STARDUST_WALL_SIGN.get());
+		excludedBlocks.add(BlockRegistry.STARDUST_WALL_HANGING_SIGN.get());
 		excludedBlocks.addAll(BlockLists.wallHeadBlocks);
 
 		excludedBlocks.add(BlockRegistry.IRON_PANEL_BARS.get());
@@ -481,7 +483,8 @@ public class LanguageGenerator extends IWLanguageProvider {
 	}
 
 	private void addMessages() {
-		addMessage("item.first_aid_kit", "You must be at or below half health to use this");
+		addMessage("item.first_aid_kit.player", "You must be at or below half health to use this");
+		addMessage("item.first_aid_kit.entity", "The target must be at or below half health to use this");
 		addMessage("item.azul_locator.teleporting", "Teleporting to spawn point in %s seconds...");
 		addMessage("item.azul_locator.teleported", "Teleported to spawn point!");
 		addMessage("item.azul_locator.no_spawn", "Unable to teleport: No spawn point set.");
@@ -498,6 +501,10 @@ public class LanguageGenerator extends IWLanguageProvider {
 		addMessage("item.jonnys_curse.used", "Its so over...");
 		addMessage("block.wall_shelf.locked", "This shelf has been locked");
 		addMessage("block.wall_shelf.unlocked", "This shelf has been unlocked");
+		addMessage("armor_effects.disabled", "Armor effects have been disabled");
+		addMessage("armor_effects.enabled", "Armor effects have been enabled");
+		addMessage("armor_effects.tesla_armor.effect_everything", "Currently effecting ALL creatures (including players)");
+		addMessage("armor_effects.tesla_armor.effect_mobs", "Currently effecting only mobs");
 	}
 
 	private void addDeathMessages() {
@@ -843,6 +850,12 @@ public class LanguageGenerator extends IWLanguageProvider {
 		addConfigDescription("bullets_break_glass", "Enable bullets breaking glass - Default true");
 		addConfigDescription("tiltros_enabled", "Enable the Tiltros dimension portal - Default true");
 
+		// Mixins
+		addConfigDescription("max_armor_protection", """
+				Set the maximum armor protection cap. The vanilla default is 20. Setting this value higher
+				allows higher tiers of armor to work properly. - Default 50.0
+				""");
+
 		// Entity
 
 		// General
@@ -902,6 +915,7 @@ public class LanguageGenerator extends IWLanguageProvider {
 
 	private void addMisc() {
 		add("loot.immersiveweapons.chest.village.battlefield.medic_station.iron_axe", "The Amputator");
+		add("loot.immersiveweapons.entity.hans.iron_sword", "The Grand Blade of Hans");
 		add("immersiveweapons.boss.celestial_tower.waves", "Wave %s of %s");
 		add("itemGroup.immersiveweapons.creative_tab", "Immersive Weapons");
 
@@ -918,7 +932,9 @@ public class LanguageGenerator extends IWLanguageProvider {
 		add("immersiveweapons.debugTracing.liveBulletDamage", "Live Bullet Damage: %s (is crit: %s)");
 		add("immersiveweapons.debugTracing.damageBonus", "Damage Bonus: %s general, %s melee, %s projectile");
 		add("immersiveweapons.debugTracing.celestialProtectionChanceForNoDamage", "Celestial Protection Chance: %s");
-		add("immersiveweapons.debugTracing.lastDamageDealt", "Last Damage Dealt: %s");
+		add("immersiveweapons.debugTracing.lastDamageValues", "Last Damage Dealt: %s, Last Damage Taken: %s");
+		add("immersiveweapons.debugTracing.armorValues", "Total Armor Value: %s, Armor Toughness: %s");
+		add("immersiveweapons.debugTracing.drAndKbr", "General Damage Resistance: %s, Knockback Resistance: %s");
 
 		// IWCB strings
 		add("tooltip.iwcompatbridge.accessory_note", "Equip this in a Curios slot to gain the effect.");

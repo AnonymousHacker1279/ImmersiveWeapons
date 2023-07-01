@@ -138,8 +138,8 @@ public abstract class AbstractMinutemanEntity extends PathfinderMob implements R
 	public void aiStep() {
 		super.aiStep();
 		checkForDiscovery(this);
-		if (!level.isClientSide) {
-			updatePersistentAnger((ServerLevel) level, true);
+		if (!level().isClientSide) {
+			updatePersistentAnger((ServerLevel) level(), true);
 		}
 	}
 
@@ -206,7 +206,7 @@ public abstract class AbstractMinutemanEntity extends PathfinderMob implements R
 	 * Set the entity's combat AI.
 	 */
 	private void setCombatTask() {
-		if (!level.isClientSide) {
+		if (!level().isClientSide) {
 			goalSelector.removeGoal(aiAttackOnCollide);
 			goalSelector.removeGoal(aiShotgunAttack);
 			ItemStack itemInHand = getItemInHand(ProjectileUtil.getWeaponHoldingHand(this,
@@ -214,14 +214,14 @@ public abstract class AbstractMinutemanEntity extends PathfinderMob implements R
 
 			if (itemInHand.getItem() == ItemRegistry.BLUNDERBUSS.get()) {
 				int cooldown = 25;
-				if (level.getDifficulty() != Difficulty.HARD) {
+				if (level().getDifficulty() != Difficulty.HARD) {
 					cooldown = 45;
 				}
 
 				aiShotgunAttack.setAttackCooldown(cooldown);
 				goalSelector.addGoal(16, aiShotgunAttack);
 			} else {
-				populateDefaultEquipmentSlots(random, level.getCurrentDifficultyAt(blockPosition()));
+				populateDefaultEquipmentSlots(random, level().getCurrentDifficultyAt(blockPosition()));
 				goalSelector.addGoal(12, aiAttackOnCollide);
 			}
 		}
@@ -275,9 +275,11 @@ public abstract class AbstractMinutemanEntity extends PathfinderMob implements R
 			bulletEntity.setOwner(this);
 
 			bulletEntity.shoot(deltaX + GeneralUtilities.getRandomNumber(-1.0f, 1.0f),
-					deltaY + sqrtXZ * 0.2D + GeneralUtilities.getRandomNumber(-0.375f, 0.375f), deltaZ, 1.6F,
-					18 - level.getDifficulty().getId() * 4 + GeneralUtilities.getRandomNumber(0.2f, 0.8f));
-			level.addFreshEntity(bulletEntity);
+					deltaY + sqrtXZ * 0.2D + GeneralUtilities.getRandomNumber(-0.375f, 0.375f),
+					deltaZ,
+					1.6F,
+					18 - level().getDifficulty().getId() * 4 + GeneralUtilities.getRandomNumber(0.2f, 0.8f));
+			level().addFreshEntity(bulletEntity);
 		}
 		playSound(SoundEventRegistry.BLUNDERBUSS_FIRE.get(), 1.0F,
 				1.0F / (getRandom().nextFloat() * 0.4F + 0.8F));
@@ -311,7 +313,7 @@ public abstract class AbstractMinutemanEntity extends PathfinderMob implements R
 		AbstractBulletItem arrowItem = (AbstractBulletItem) (bulletStack.getItem() instanceof AbstractBulletItem
 				? bulletStack.getItem() : ItemRegistry.COPPER_MUSKET_BALL.get());
 
-		BulletEntity bulletEntity = arrowItem.createBullet(level, this);
+		BulletEntity bulletEntity = arrowItem.createBullet(level(), this);
 		bulletEntity.setEnchantmentEffectsFromEntity(this, distanceFactor);
 
 		return bulletEntity;
@@ -331,10 +333,8 @@ public abstract class AbstractMinutemanEntity extends PathfinderMob implements R
 			super.hurt(source, amount);
 
 			if (source.getEntity() instanceof Player || source.getEntity() instanceof Mob) {
-				if (source.getEntity() instanceof Player) {
-					if (((Player) source.getEntity()).isCreative()) {
-						return false;
-					}
+				if (source.getEntity() instanceof Player player && player.isCreative()) {
+					return false;
 				}
 
 				setCombatTask();
@@ -347,7 +347,7 @@ public abstract class AbstractMinutemanEntity extends PathfinderMob implements R
 				}
 
 				// Aggro all other minutemen in the area
-				List<MinutemanEntity> list = level.getEntitiesOfClass(MinutemanEntity.class,
+				List<MinutemanEntity> list = level().getEntitiesOfClass(MinutemanEntity.class,
 						(new AABB(blockPosition())).inflate(24.0D, 8.0D, 24.0D));
 
 				for (MinutemanEntity minutemanEntity : list) {
@@ -380,7 +380,7 @@ public abstract class AbstractMinutemanEntity extends PathfinderMob implements R
 	@Override
 	public void readAdditionalSaveData(CompoundTag compound) {
 		super.readAdditionalSaveData(compound);
-		readPersistentAngerSaveData(level, compound);
+		readPersistentAngerSaveData(level(), compound);
 		setCombatTask();
 	}
 
@@ -395,29 +395,16 @@ public abstract class AbstractMinutemanEntity extends PathfinderMob implements R
 		addPersistentAngerSaveData(compound);
 	}
 
-	/**
-	 * Set item slots.
-	 *
-	 * @param slotIn the <code>EquipmentSlotType</code> to set
-	 * @param stack  the <code>ItemStack</code> to set in the slot
-	 */
 	@Override
-	public void setItemSlot(EquipmentSlot slotIn, ItemStack stack) {
-		super.setItemSlot(slotIn, stack);
-		if (!level.isClientSide) {
+	public void setItemSlot(EquipmentSlot slot, ItemStack stack) {
+		super.setItemSlot(slot, stack);
+		if (!level().isClientSide) {
 			setCombatTask();
 		}
 	}
 
-	/**
-	 * Get the standing eye height of the entity.
-	 *
-	 * @param poseIn the <code>Pose</code> instance
-	 * @param sizeIn the <code>EntitySize</code> of the entity
-	 * @return float
-	 */
 	@Override
-	protected float getStandingEyeHeight(Pose poseIn, EntityDimensions sizeIn) {
+	protected float getStandingEyeHeight(Pose pose, EntityDimensions dimensions) {
 		return 1.74F;
 	}
 

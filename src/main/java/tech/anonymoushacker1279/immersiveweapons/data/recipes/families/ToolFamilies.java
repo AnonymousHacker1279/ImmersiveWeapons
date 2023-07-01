@@ -4,6 +4,7 @@ import com.google.common.collect.ImmutableList;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.*;
 import net.minecraftforge.common.Tags;
+import org.jetbrains.annotations.Nullable;
 import tech.anonymoushacker1279.immersiveweapons.data.tags.groups.forge.ForgeItemTagGroups;
 import tech.anonymoushacker1279.immersiveweapons.data.tags.groups.immersiveweapons.IWItemTagGroups;
 import tech.anonymoushacker1279.immersiveweapons.init.ItemRegistry;
@@ -23,9 +24,15 @@ public record ToolFamilies(TagKey<Item> material,
                            Supplier<? extends HoeItem> hoe,
                            Supplier<? extends GauntletItem> gauntlet,
                            Supplier<? extends PikeItem> pike,
-                           Supplier<? extends Item> pikeHead,
+                           @Nullable Supplier<? extends Item> pikeHead,
                            Supplier<? extends ArrowItem> arrow,
-                           Supplier<? extends Item> musketBall) {
+                           Supplier<? extends Item> musketBall,
+                           @Nullable Supplier<? extends Item> smithingTemplateItem,
+                           @Nullable ImmutableList<Item> smithingBaseUpgrades) {
+
+	private static final ImmutableList<Item> NETHERITE_TOOLS = ImmutableList.of(Items.NETHERITE_SWORD,
+			Items.NETHERITE_PICKAXE, Items.NETHERITE_AXE, Items.NETHERITE_SHOVEL, Items.NETHERITE_HOE,
+			ItemRegistry.NETHERITE_GAUNTLET.get(), ItemRegistry.NETHERITE_PIKE.get());
 
 	public static final ToolFamilies COPPER = new ToolFamilies(
 			Tags.Items.INGOTS_COPPER,
@@ -40,7 +47,9 @@ public record ToolFamilies(TagKey<Item> material,
 			ItemRegistry.COPPER_PIKE,
 			ItemRegistry.COPPER_PIKE_HEAD,
 			ItemRegistry.COPPER_ARROW,
-			ItemRegistry.COPPER_MUSKET_BALL
+			ItemRegistry.COPPER_MUSKET_BALL,
+			null,
+			null
 	);
 
 	public static final ToolFamilies COBALT = new ToolFamilies(
@@ -56,7 +65,9 @@ public record ToolFamilies(TagKey<Item> material,
 			ItemRegistry.COBALT_PIKE,
 			ItemRegistry.COBALT_PIKE_HEAD,
 			ItemRegistry.COBALT_ARROW,
-			ItemRegistry.COBALT_MUSKET_BALL
+			ItemRegistry.COBALT_MUSKET_BALL,
+			null,
+			null
 	);
 
 	public static final ToolFamilies MOLTEN = new ToolFamilies(
@@ -70,9 +81,11 @@ public record ToolFamilies(TagKey<Item> material,
 			ItemRegistry.MOLTEN_HOE,
 			ItemRegistry.MOLTEN_GAUNTLET,
 			ItemRegistry.MOLTEN_PIKE,
-			ItemRegistry.MOLTEN_PIKE_HEAD,
+			null,
 			ItemRegistry.MOLTEN_ARROW,
-			ItemRegistry.MOLTEN_MUSKET_BALL
+			ItemRegistry.MOLTEN_MUSKET_BALL,
+			ItemRegistry.MOLTEN_SMITHING_TEMPLATE,
+			NETHERITE_TOOLS
 	);
 
 	public static final ToolFamilies TESLA = new ToolFamilies(
@@ -88,7 +101,9 @@ public record ToolFamilies(TagKey<Item> material,
 			ItemRegistry.TESLA_PIKE,
 			ItemRegistry.TESLA_PIKE_HEAD,
 			ItemRegistry.TESLA_ARROW,
-			ItemRegistry.TESLA_MUSKET_BALL
+			ItemRegistry.TESLA_MUSKET_BALL,
+			null,
+			null
 	);
 
 	public static final ToolFamilies VENTUS = new ToolFamilies(
@@ -104,7 +119,9 @@ public record ToolFamilies(TagKey<Item> material,
 			ItemRegistry.VENTUS_PIKE,
 			ItemRegistry.VENTUS_PIKE_HEAD,
 			ItemRegistry.VENTUS_ARROW,
-			ItemRegistry.VENTUS_MUSKET_BALL
+			ItemRegistry.VENTUS_MUSKET_BALL,
+			null,
+			null
 	);
 
 	public static final ToolFamilies ASTRAL = new ToolFamilies(
@@ -120,7 +137,9 @@ public record ToolFamilies(TagKey<Item> material,
 			ItemRegistry.ASTRAL_PIKE,
 			ItemRegistry.ASTRAL_PIKE_HEAD,
 			ItemRegistry.ASTRAL_ARROW,
-			ItemRegistry.ASTRAL_MUSKET_BALL
+			ItemRegistry.ASTRAL_MUSKET_BALL,
+			null,
+			null
 	);
 
 	public static final ToolFamilies STARSTORM = new ToolFamilies(
@@ -136,7 +155,9 @@ public record ToolFamilies(TagKey<Item> material,
 			ItemRegistry.STARSTORM_PIKE,
 			ItemRegistry.STARSTORM_PIKE_HEAD,
 			ItemRegistry.STARSTORM_ARROW,
-			ItemRegistry.STARSTORM_MUSKET_BALL
+			ItemRegistry.STARSTORM_MUSKET_BALL,
+			null,
+			null
 	);
 
 	public static final Collection<ToolFamilies> FAMILIES = ImmutableList.of(COPPER, COBALT, MOLTEN, VENTUS, TESLA, ASTRAL, STARSTORM);

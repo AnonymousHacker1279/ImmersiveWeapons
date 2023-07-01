@@ -36,37 +36,16 @@ public class SandbagBlock extends HorizontalDirectionalBlock {
 		registerDefaultState(stateDefinition.any().setValue(FACING, Direction.NORTH).setValue(BAGS, 0));
 	}
 
-	/**
-	 * Create the BlockState definition.
-	 *
-	 * @param builder the <code>StateDefinition.Builder</code> of the block
-	 */
 	@Override
 	protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
 		builder.add(BAGS, FACING);
 	}
 
-	/**
-	 * Set placement properties.
-	 * Sets the facing direction of the block for placement.
-	 *
-	 * @param context the <code>BlockPlaceContext</code> during placement
-	 * @return BlockState
-	 */
 	@Override
 	public BlockState getStateForPlacement(BlockPlaceContext context) {
 		return defaultBlockState().setValue(FACING, context.getHorizontalDirection().getOpposite()).setValue(BAGS, 0);
 	}
 
-	/**
-	 * Set the shape of the block.
-	 *
-	 * @param state            the <code>BlockState</code> of the block
-	 * @param blockGetter      the <code>BlockGetter</code> for the block
-	 * @param pos              the <code>BlockPos</code> the block is at
-	 * @param collisionContext the <code>CollisionContext</code> of the block
-	 * @return VoxelShape
-	 */
 	@Override
 	public VoxelShape getShape(BlockState state, BlockGetter blockGetter, BlockPos pos,
 	                           CollisionContext collisionContext) {
@@ -79,53 +58,20 @@ public class SandbagBlock extends HorizontalDirectionalBlock {
 		};
 	}
 
-	/**
-	 * Set the shading brightness on the client.
-	 *
-	 * @param state       the <code>BlockState</code> of the block
-	 * @param blockGetter the <code>BlockGetter</code> of the block
-	 * @param pos         the <code>BlockPos</code> the block is at
-	 * @return float
-	 */
 	@Override
 	public float getShadeBrightness(BlockState state, BlockGetter blockGetter, BlockPos pos) {
 		return 1.0F;
 	}
 
-	/**
-	 * Runs when the block is activated.
-	 * Allows the block to respond to user interaction.
-	 *
-	 * @param state     the <code>BlockState</code> of the block
-	 * @param level     the <code>Level</code> the block is in
-	 * @param pos       the <code>BlockPos</code> the block is at
-	 * @param player    the <code>PlayerEntity</code> interacting with the block
-	 * @param hand      the <code>InteractionHand</code> the PlayerEntity used
-	 * @param hitResult the <code>BlockHitResult</code> of the interaction
-	 * @return ActionResultType
-	 */
 	@Override
 	public InteractionResult use(BlockState state, Level level, BlockPos pos,
 	                             Player player, InteractionHand hand,
 	                             BlockHitResult hitResult) {
 
 		if (player.getMainHandItem().getItem() == BlockItemRegistry.SANDBAG_ITEM.get()) {
-			if (state.getValue(BAGS) == 0) {
-				level.setBlock(pos, state.setValue(BAGS, 1).setValue(FACING, state.getValue(FACING)), 3);
-				if (!player.isCreative()) {
-					player.getMainHandItem().shrink(1);
-				}
-				return InteractionResult.CONSUME;
-			}
-			if (state.getValue(BAGS) == 1) {
-				level.setBlock(pos, state.setValue(BAGS, 2).setValue(FACING, state.getValue(FACING)), 3);
-				if (!player.isCreative()) {
-					player.getMainHandItem().shrink(1);
-				}
-				return InteractionResult.CONSUME;
-			}
-			if (state.getValue(BAGS) == 2) {
-				level.setBlock(pos, state.setValue(BAGS, 3).setValue(FACING, state.getValue(FACING)), 3);
+			int bags = state.getValue(BAGS);
+			if (bags < 3) {
+				level.setBlock(pos, state.setValue(BAGS, bags + 1).setValue(FACING, state.getValue(FACING)), 3);
 				if (!player.isCreative()) {
 					player.getMainHandItem().shrink(1);
 				}

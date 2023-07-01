@@ -20,23 +20,17 @@ public class PainkillerItem extends Item {
 		super(properties);
 	}
 
-	/**
-	 * Runs when the player right-clicks.
-	 *
-	 * @param worldIn  the <code>World</code> the player is in
-	 * @param playerIn the <code>PlayerEntity</code> performing the action
-	 * @param handIn   the <code>InteractionHand</code> the player is using
-	 * @return InteractionResultHolder extending ItemStack
-	 */
+
 	@Override
-	public InteractionResultHolder<ItemStack> use(Level worldIn, Player playerIn, InteractionHand handIn) {
-		ItemStack itemstack = playerIn.getItemInHand(handIn);
-		playerIn.addEffect(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, 1200, 0, false, true));
-		if (!playerIn.isCreative()) {
-			itemstack.shrink(1);
-			playerIn.getCooldowns().addCooldown(this, 2400);
+	public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
+		ItemStack itemInHand = player.getItemInHand(hand);
+		player.addEffect(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, 1200, 0, false, true));
+		
+		if (!player.isCreative()) {
+			itemInHand.shrink(1);
+			player.getCooldowns().addCooldown(this, 2400);
 		}
 
-		return InteractionResultHolder.sidedSuccess(itemstack, worldIn.isClientSide());
+		return InteractionResultHolder.sidedSuccess(itemInHand, level.isClientSide());
 	}
 }

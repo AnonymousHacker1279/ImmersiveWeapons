@@ -49,9 +49,9 @@ public class CustomBoatEntity extends Boat {
 					}
 
 					causeFallDamage(fallDistance, 1.0F, damageSources().fall());
-					if (!level.isClientSide && !isRemoved()) {
+					if (!level().isClientSide && !isRemoved()) {
 						kill();
-						if (level.getGameRules().getBoolean(GameRules.RULE_DOENTITYDROPS)) {
+						if (level().getGameRules().getBoolean(GameRules.RULE_DOENTITYDROPS)) {
 							for (int i = 0; i < 3; ++i) {
 								spawnAtLocation(getCustomBoatType().getBlock());
 							}
@@ -64,7 +64,7 @@ public class CustomBoatEntity extends Boat {
 				}
 
 				resetFallDistance();
-			} else if (!canBoatInFluid(level.getFluidState(blockPosition().below())) && pY < 0.0D) {
+			} else if (!canBoatInFluid(level().getFluidState(blockPosition().below())) && pY < 0.0D) {
 				fallDistance -= pY;
 			}
 

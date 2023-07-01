@@ -15,9 +15,7 @@ import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
-import tech.anonymoushacker1279.immersiveweapons.init.ItemRegistry;
 import tech.anonymoushacker1279.immersiveweapons.init.SoundEventRegistry;
-import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
 
 public class HansEntity extends AbstractWanderingWarriorEntity {
 
@@ -59,7 +57,7 @@ public class HansEntity extends AbstractWanderingWarriorEntity {
 	 */
 	@Override
 	public int getAmbientSoundInterval() {
-		return GeneralUtilities.getRandomNumber(240, 1600);
+		return getRandom().nextIntBetweenInclusive(240, 1600);
 	}
 
 	/**
@@ -120,29 +118,10 @@ public class HansEntity extends AbstractWanderingWarriorEntity {
 			setCombatTask();
 			super.hurt(source, amount);
 		}
-		if (source == damageSources().outOfWorld()) {
+		if (source == damageSources().genericKill()) {
 			super.hurt(source, amount);
 			return true;
 		}
 		return false;
-	}
-
-	@Override
-	protected void dropCustomDeathLoot(DamageSource source, int looting, boolean recentlyHit) {
-		super.dropCustomDeathLoot(source, looting, recentlyHit);
-
-		if (!recentlyHit) {
-			return;
-		}
-
-		// 5% chance to drop Hans' Blessing
-		// Looting adds 5% chance per level
-
-		float dropChance = 0.05f;
-		dropChance += looting * 0.05f;
-
-		if (random.nextFloat() <= dropChance) {
-			spawnAtLocation(ItemRegistry.HANS_BLESSING.get());
-		}
 	}
 }

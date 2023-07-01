@@ -22,7 +22,6 @@ import org.jetbrains.annotations.Nullable;
 import tech.anonymoushacker1279.immersiveweapons.config.CommonConfig;
 import tech.anonymoushacker1279.immersiveweapons.init.EnchantmentRegistry;
 import tech.anonymoushacker1279.immersiveweapons.init.EntityRegistry;
-import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
 import tech.anonymoushacker1279.immersiveweapons.world.level.IWDamageSources;
 
 public class MeteorEntity extends Projectile {
@@ -53,13 +52,13 @@ public class MeteorEntity extends Projectile {
 
 			// Determine a starting position 40 blocks above the target position, and within a 15 block radius
 			meteorEntity.startPos = new BlockPos(
-					targetPos.getX() + GeneralUtilities.getRandomNumber(-15, 15),
+					targetPos.getX() + level.getRandom().nextIntBetweenInclusive(-15, 15),
 					targetPos.getY() + 40,
-					targetPos.getZ() + GeneralUtilities.getRandomNumber(-15, 15)
+					targetPos.getZ() + level.getRandom().nextIntBetweenInclusive(-15, 15)
 			);
 
 			// Check if the position is inside a solid block
-			if (level.getBlockState(meteorEntity.startPos).getMaterial().isSolid()) {
+			if (level.getBlockState(meteorEntity.startPos).isSolid()) {
 				return false;
 			}
 
@@ -113,13 +112,13 @@ public class MeteorEntity extends Projectile {
 		// Check for collisions
 		Vec3 currentPosition = position();
 		Vec3 currentPositionPlusMovement = currentPosition.add(deltaMovement);
-		HitResult rayTraceResult = level.clip(new ClipContext(currentPosition, currentPositionPlusMovement, ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, this));
+		HitResult rayTraceResult = level().clip(new ClipContext(currentPosition, currentPositionPlusMovement, ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, this));
 		if (rayTraceResult.getType() != HitResult.Type.MISS) {
 			currentPositionPlusMovement = rayTraceResult.getLocation();
 		}
 
 		while (isAlive()) {
-			EntityHitResult entityRayTraceResult = ProjectileUtil.getEntityHitResult(level, this, currentPosition, currentPositionPlusMovement, getBoundingBox().expandTowards(getDeltaMovement()).inflate(1.0D), this::canHitEntity);
+			EntityHitResult entityRayTraceResult = ProjectileUtil.getEntityHitResult(level(), this, currentPosition, currentPositionPlusMovement, getBoundingBox().expandTowards(getDeltaMovement()).inflate(1.0D), this::canHitEntity);
 			if (entityRayTraceResult != null) {
 				rayTraceResult = entityRayTraceResult;
 			}
@@ -137,7 +136,7 @@ public class MeteorEntity extends Projectile {
 		}
 
 		// Handle movement
-		if (!level.isClientSide) {
+		if (!level().isClientSide) {
 			lookAt(Anchor.EYES, targetPos.getCenter());
 
 			// Calculate the speed of the meteor
@@ -150,7 +149,7 @@ public class MeteorEntity extends Projectile {
 
 			// If the Y speed is greater than 3, spawn flame particles
 			if (speed > 0.1f) {
-				((ServerLevel) level).sendParticles(
+				((ServerLevel) level()).sendParticles(
 						ParticleTypes.FLAME,
 						getX(),
 						getY(),
@@ -163,7 +162,7 @@ public class MeteorEntity extends Projectile {
 			}
 
 			// Spawn smoke particles
-			((ServerLevel) level).sendParticles(
+			((ServerLevel) level()).sendParticles(
 					ParticleTypes.SMOKE,
 					getX(),
 					getY(),
@@ -193,9 +192,9 @@ public class MeteorEntity extends Projectile {
 		boolean breakBlocks = CommonConfig.METEOR_STAFF_EXPLOSION_BREAK_BLOCKS.get();
 		ExplosionInteraction explosionInteraction = breakBlocks ? ExplosionInteraction.MOB : ExplosionInteraction.NONE;
 
-		if (!level.isClientSide) {
+		if (!level().isClientSide) {
 			if (getOwner() != null) {
-				level.explode(this,
+				level().explode(this,
 						IWDamageSources.meteor(this, getOwner()),
 						null,
 						position().subtract(0, 1.5, 0),
@@ -209,7 +208,7 @@ public class MeteorEntity extends Projectile {
 				double x = Math.cos(i) * 6;
 				double z = Math.sin(i) * 6;
 
-				((ServerLevel) level).sendParticles(
+				((ServerLevel) level()).sendParticles(
 						ParticleTypes.FLAME,
 						getX() + x,
 						getY(),

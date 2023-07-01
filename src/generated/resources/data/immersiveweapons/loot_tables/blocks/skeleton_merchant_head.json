@@ -14,7 +14,9 @@
           "name": "immersiveweapons:skeleton_merchant_head"
         }
       ],
+      "name": "main",
       "rolls": 1.0
     }
-  ]
+  ],
+  "random_sequence": "immersiveweapons:blocks/skeleton_merchant_head"
 }

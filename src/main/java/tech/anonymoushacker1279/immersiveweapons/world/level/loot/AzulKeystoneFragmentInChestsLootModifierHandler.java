@@ -12,7 +12,6 @@ import net.minecraftforge.common.loot.IGlobalLootModifier;
 import net.minecraftforge.common.loot.LootModifier;
 import org.jetbrains.annotations.NotNull;
 import tech.anonymoushacker1279.immersiveweapons.init.ItemRegistry;
-import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
 
 import java.util.function.Supplier;
 
@@ -56,7 +55,7 @@ public class AzulKeystoneFragmentInChestsLootModifierHandler extends LootModifie
 	@Override
 	protected @NotNull ObjectArrayList<ItemStack> doApply(ObjectArrayList<ItemStack> generatedLoot, LootContext context) {
 		if (context.getRandom().nextFloat() <= rollChance) {
-			int lootQuantity = GeneralUtilities.getRandomNumber(minQuantity, maxQuantity + 1);
+			int lootQuantity = context.getRandom().nextIntBetweenInclusive(minQuantity, maxQuantity);
 
 			generatedLoot.add(new ItemStack(ItemRegistry.AZUL_KEYSTONE_FRAGMENT.get(), lootQuantity));
 		}

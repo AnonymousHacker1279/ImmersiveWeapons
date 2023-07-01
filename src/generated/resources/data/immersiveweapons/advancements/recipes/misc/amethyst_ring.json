@@ -30,5 +30,6 @@
     "recipes": [
       "immersiveweapons:amethyst_ring"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

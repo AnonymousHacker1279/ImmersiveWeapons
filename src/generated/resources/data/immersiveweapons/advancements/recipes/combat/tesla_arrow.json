@@ -28,5 +28,6 @@
     "recipes": [
       "immersiveweapons:tesla_arrow"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

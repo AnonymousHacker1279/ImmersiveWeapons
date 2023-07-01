@@ -30,5 +30,6 @@
     "recipes": [
       "immersiveweapons:explosive_chocolate_bar"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

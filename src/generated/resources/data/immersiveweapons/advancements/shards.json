@@ -98,5 +98,6 @@
       "hold4",
       "hold5"
     ]
-  ]
+  ],
+  "sends_telemetry_event": true
 }

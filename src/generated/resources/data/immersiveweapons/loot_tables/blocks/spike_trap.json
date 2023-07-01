@@ -14,7 +14,9 @@
           "name": "immersiveweapons:spike_trap"
         }
       ],
+      "name": "main",
       "rolls": 1.0
     }
-  ]
+  ],
+  "random_sequence": "immersiveweapons:blocks/spike_trap"
 }

@@ -28,5 +28,6 @@
     "recipes": [
       "immersiveweapons:netherite_arrow"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

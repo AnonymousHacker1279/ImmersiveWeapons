@@ -28,5 +28,6 @@
     "recipes": [
       "immersiveweapons:wooden_gauntlet"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

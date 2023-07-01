@@ -28,5 +28,6 @@
     "recipes": [
       "immersiveweapons:wall_shelf"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

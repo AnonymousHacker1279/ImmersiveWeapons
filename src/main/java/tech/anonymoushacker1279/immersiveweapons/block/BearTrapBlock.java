@@ -6,7 +6,7 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -66,19 +66,18 @@ public class BearTrapBlock extends Block implements SimpleWaterloggedBlock, Enti
 	                             Player player, InteractionHand hand,
 	                             BlockHitResult hitResult) {
 
-		if (!level.isClientSide && hand.equals(InteractionHand.MAIN_HAND)) {
-			BearTrapBlockEntity blockEntity = (BearTrapBlockEntity) level.getBlockEntity(pos);
-			ItemStack currentlyHeldItem = player.getMainHandItem();
-			if (blockEntity != null) {
-				if (state.getValue(TRIGGERED) && !blockEntity.hasTrappedEntity() && blockEntity.hasTrappedPlayerEntity()) {
-					level.setBlock(pos, state.setValue(TRIGGERED, false).setValue(VINES, false), 3);
-					return InteractionResult.SUCCESS;
-				}
+		if (!level.isClientSide && hand.equals(InteractionHand.MAIN_HAND) && level.getBlockEntity(pos) instanceof BearTrapBlockEntity blockEntity) {
+			ItemStack mainHandItem = player.getMainHandItem();
+
+			if (state.getValue(TRIGGERED) && !blockEntity.hasTrappedEntity()) {
+				level.setBlock(pos, state.setValue(TRIGGERED, false).setValue(VINES, false), 3);
+				return InteractionResult.SUCCESS;
 			}
-			if (!state.getValue(VINES) && currentlyHeldItem.getItem() == Items.VINE) {
+
+			if (!state.getValue(VINES) && mainHandItem.getItem() == Items.VINE) {
 				level.setBlock(pos, state.setValue(VINES, true), 3);
 				if (!player.isCreative()) {
-					currentlyHeldItem.shrink(1);
+					mainHandItem.shrink(1);
 				}
 			}
 		}
@@ -156,51 +155,34 @@ public class BearTrapBlock extends Block implements SimpleWaterloggedBlock, Enti
 	@SuppressWarnings("deprecation")
 	@Override
 	public void entityInside(BlockState state, Level level, BlockPos pos, Entity entity) {
-		BearTrapBlockEntity blockEntity = (BearTrapBlockEntity) level.getBlockEntity(pos);
-
-		if (state.getValue(TRIGGERED)) {
-			if (blockEntity != null && (blockEntity.getTrappedMobEntity() == entity || blockEntity.getTrappedPlayerEntity() == entity)) {
-				entity.makeStuckInBlock(state, new Vec3(0.0F, 0.0D, 0.0F));
-				if ((entity.xOld != entity.getX() || entity.zOld != entity.getZ())) {
-					double d0 = Math.abs(entity.getX() - entity.xOld);
-					double d1 = Math.abs(entity.getZ() - entity.zOld);
-					if (d0 >= (double) 0.003F || d1 >= (double) 0.003F) {
-						entity.hurt(IWDamageSources.BEAR_TRAP, 1.0F);
-					}
-				}
-			}
+		if (entity instanceof Player player && player.isCreative()) {
 			return;
 		}
 
-
-		if (entity instanceof Player livingEntity) {
-			if (!livingEntity.isCreative()) {
-				if (state.getValue(VINES)) {
-					level.setBlock(pos, state.setValue(TRIGGERED, true).setValue(VINES, true), 3);
-				} else {
-					level.setBlock(pos, state.setValue(TRIGGERED, true).setValue(VINES, false), 3);
+		if (level.getBlockEntity(pos) instanceof BearTrapBlockEntity bearTrapBlockEntity) {
+			if (state.getValue(TRIGGERED)) {
+				if (bearTrapBlockEntity.getTrappedEntity() == entity) {
+					entity.makeStuckInBlock(state, new Vec3(0.0F, 0.0D, 0.0F));
+					if ((entity.xOld != entity.getX() || entity.zOld != entity.getZ())) {
+						double d0 = Math.abs(entity.getX() - entity.xOld);
+						double d1 = Math.abs(entity.getZ() - entity.zOld);
+						if (d0 >= (double) 0.003F || d1 >= (double) 0.003F) {
+							entity.hurt(IWDamageSources.BEAR_TRAP, 1.0F);
+						}
+					}
 				}
+				return;
+			}
+
+			if (entity instanceof LivingEntity livingEntity) {
+				level.setBlock(pos, state.setValue(TRIGGERED, true).setValue(VINES, !state.getValue(VINES)), 3);
+
+				level.setBlock(pos, state.setValue(TRIGGERED, true), 3);
 				livingEntity.hurt(IWDamageSources.BEAR_TRAP, 2.0F);
-				level.playSound((Player) entity, pos, SoundEventRegistry.BEAR_TRAP_CLOSE.get(), SoundSource.BLOCKS,
-						1f, 1f);
+				level.playLocalSound(pos.getX(), pos.getY(), pos.getZ(), SoundEventRegistry.BEAR_TRAP_CLOSE.get(),
+						SoundSource.BLOCKS, 1f, 1f, false);
 
-				if (blockEntity != null) {
-					blockEntity.setTrappedPlayerEntity(livingEntity);
-				}
-			}
-		} else if (entity instanceof Mob livingEntity) {
-			if (state.getValue(VINES)) {
-				level.setBlock(pos, state.setValue(TRIGGERED, true).setValue(VINES, true), 3);
-			} else {
-				level.setBlock(pos, state.setValue(TRIGGERED, true).setValue(VINES, false), 3);
-			}
-			level.setBlock(pos, state.setValue(TRIGGERED, true), 3);
-			livingEntity.hurt(IWDamageSources.BEAR_TRAP, 2.0F);
-			level.playLocalSound(pos.getX(), pos.getY(), pos.getZ(), SoundEventRegistry.BEAR_TRAP_CLOSE.get(),
-					SoundSource.BLOCKS, 1f, 1f, false);
-
-			if (blockEntity != null) {
-				blockEntity.setTrappedMobEntity(livingEntity);
+				bearTrapBlockEntity.setTrappedEntity(livingEntity);
 			}
 		}
 	}

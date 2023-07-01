@@ -14,7 +14,9 @@
           "name": "immersiveweapons:flag_pole"
         }
       ],
+      "name": "main",
       "rolls": 1.0
     }
-  ]
+  ],
+  "random_sequence": "immersiveweapons:blocks/flag_pole"
 }

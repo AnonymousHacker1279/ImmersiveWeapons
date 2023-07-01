@@ -65,7 +65,7 @@ public abstract class AbstractGunItem extends Item implements Vanishable {
 
 			// Roll for misfire
 			if (ammo.getItem() instanceof AbstractBulletItem bullet) {
-				if (GeneralUtilities.getRandomNumber(0.0f, 1.0001f) <= bullet.misfireChance()) {
+				if (livingEntity.getRandom().nextFloat() <= bullet.misfireChance()) {
 					misfire = true;
 				}
 
@@ -106,7 +106,7 @@ public abstract class AbstractGunItem extends Item implements Vanishable {
 						setupFire(gun, bulletEntity, player);
 
 						// Roll for random crits
-						if (GeneralUtilities.getRandomNumber(0f, 1f) <= CommonConfig.GUN_CRIT_CHANCE.get()) {
+						if (livingEntity.getRandom().nextFloat() <= CommonConfig.GUN_CRIT_CHANCE.get()) {
 							bulletEntity.setCritArrow(true);
 						}
 
@@ -139,7 +139,7 @@ public abstract class AbstractGunItem extends Item implements Vanishable {
 				} else {
 					// Handle recoil
 					player.yHeadRot = player.yHeadRot + GeneralUtilities.getRandomNumber(getMaxYRecoil(), 0.5f);
-					player.xRot = player.xRot + GeneralUtilities.getRandomNumber(getMaxXRecoil(), -3.0f);
+					player.setXRot(player.getXRot() + GeneralUtilities.getRandomNumber(getMaxXRecoil(), -3.0f));
 				}
 
 				// Handle muzzle flash
@@ -490,7 +490,7 @@ public abstract class AbstractGunItem extends Item implements Vanishable {
 	}
 
 	protected void setupFire(ItemStack gun, BulletEntity bulletEntity, Player player) {
-		bulletEntity.shootFromRotation(player, player.xRot, player.yRot,
+		bulletEntity.shootFromRotation(player, player.getXRot(), player.getYRot(),
 				0.0F,
 				getFireVelocity(gun),
 				CommonConfig.FLINTLOCK_PISTOL_FIRE_INACCURACY.get().floatValue());
@@ -500,7 +500,7 @@ public abstract class AbstractGunItem extends Item implements Vanishable {
 		if (!player.isCreative() && ammo.getItem() instanceof AbstractBulletItem bulletItem) {
 			if (!bulletItem.isInfinite(ammo, gun, player)) {
 				float ammoConservationChance = (float) AccessoryEffects.collectEffects(EffectType.FIREARM_AMMO_CONSERVATION_CHANCE, player);
-				if (!player.level.isClientSide) {
+				if (!player.level().isClientSide) {
 					if (player.getRandom().nextFloat() <= ammoConservationChance) {
 						player.getInventory().setChanged(); // Resync the inventory because the client may not roll the same number
 						return;

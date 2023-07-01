@@ -28,5 +28,6 @@
     "recipes": [
       "immersiveweapons:astral_pickaxe"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

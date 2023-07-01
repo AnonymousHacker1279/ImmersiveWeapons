@@ -241,11 +241,11 @@ public class TooltipHandler {
 		// Accessories
 		if (event.getEntity() != null && stack.getItem() instanceof AccessoryItem item) {
 			if (stack.getItem() == ItemRegistry.SATCHEL.get()) {
-				event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.satchel").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
+				event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.satchel").withStyle(ChatFormatting.GREEN, ChatFormatting.ITALIC));
 				addShiftTooltip(event.getToolTip(), addAccessoryTooltips(item, event.getEntity(), stack));
 			}
 			if (stack.getItem() == ItemRegistry.POWDER_HORN.get()) {
-				event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.powder_horn").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
+				event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.powder_horn").withStyle(ChatFormatting.GREEN, ChatFormatting.ITALIC));
 				addShiftTooltip(event.getToolTip(), addAccessoryTooltips(item, event.getEntity(), stack));
 			}
 			if (stack.getItem() == ItemRegistry.BERSERKERS_AMULET.get()) {

@@ -48,10 +48,10 @@ public class ChairEntity extends Entity {
 	@Override
 	public void tick() {
 		super.tick();
-		if (!level.isClientSide) {
-			if (getPassengers().isEmpty() || level.isEmptyBlock(source)) {
+		if (!level().isClientSide) {
+			if (getPassengers().isEmpty() || level().isEmptyBlock(source)) {
 				kill();
-				level.updateNeighbourForOutputSignal(blockPosition(), level.getBlockState(blockPosition()).getBlock());
+				level().updateNeighbourForOutputSignal(blockPosition(), level().getBlockState(blockPosition()).getBlock());
 			}
 		}
 	}

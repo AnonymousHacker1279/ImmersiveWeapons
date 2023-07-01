@@ -30,5 +30,6 @@
     "recipes": [
       "immersiveweapons:american_flag"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

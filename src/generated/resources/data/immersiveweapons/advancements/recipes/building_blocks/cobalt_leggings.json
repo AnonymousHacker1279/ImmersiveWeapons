@@ -28,5 +28,6 @@
     "recipes": [
       "immersiveweapons:cobalt_leggings"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

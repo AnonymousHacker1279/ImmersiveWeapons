@@ -30,5 +30,6 @@
     "recipes": [
       "immersiveweapons:smoke_powder"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

@@ -14,7 +14,9 @@
           "name": "immersiveweapons:bear_trap"
         }
       ],
+      "name": "main",
       "rolls": 1.0
     }
-  ]
+  ],
+  "random_sequence": "immersiveweapons:blocks/bear_trap"
 }

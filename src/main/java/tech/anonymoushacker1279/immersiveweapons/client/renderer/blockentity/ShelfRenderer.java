@@ -44,6 +44,7 @@ public class ShelfRenderer implements BlockEntityRenderer<ShelfBlockEntity> {
 					case WEST -> poseStack.mulPose(Axis.YP.rotationDegrees(90f));
 					default -> poseStack.mulPose(Axis.YP.rotationDegrees(0f));
 				}
+
 				// Rotation occurs here
 				poseStack.mulPose(Axis.XP.rotationDegrees(50f));
 				poseStack.translate(0.0D, 0.10D, -0.10D);
@@ -63,7 +64,7 @@ public class ShelfRenderer implements BlockEntityRenderer<ShelfBlockEntity> {
 
 				// Scale render
 				poseStack.scale(0.375F, 0.375F, 0.375F);
-				
+
 				if (shelfEntity.getLevel() != null) {
 					Minecraft.getInstance().getItemRenderer().renderStatic(stack, ItemDisplayContext.FIXED, packedLight,
 							packedOverlay, poseStack, buffer, shelfEntity.getLevel(), 0);
