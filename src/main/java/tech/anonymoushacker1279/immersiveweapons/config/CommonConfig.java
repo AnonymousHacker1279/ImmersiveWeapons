@@ -70,7 +70,7 @@ public class CommonConfig {
 						A value of -1 will not force any value, and will allow clients to use their own values.
 						Setting this to a high value may cause clients to lag. - Default -1""")
 				.translation("config.immersiveweapons.force_smoke_grenade_particles")
-				.defineInRange("force_smoke_grenade_particles", -1, 0, Integer.MAX_VALUE);
+				.defineInRange("force_smoke_grenade_particles", -1, -1, Integer.MAX_VALUE);
 		builder.pop();
 
 		builder.push("Mixin");
@@ -79,8 +79,7 @@ public class CommonConfig {
 		MAX_ARMOR_PROTECTION = builder
 				.comment("""
 						Set the maximum armor protection cap. The vanilla default is 20. Setting this value higher
-						allows higher tiers of armor to work as intended. A value of 25 is fully unlocked. - Default 25.0
-						""")
+						allows higher tiers of armor to work as intended. A value of 25 is fully unlocked. - Default 25.0""")
 				.translation("config.immersiveweapons.max_armor_protection")
 				.defineInRange("max_armor_protection", 25.0D, 0, 25.0D);
 		builder.pop();
@@ -101,8 +100,7 @@ public class CommonConfig {
 		CELESTIAL_TOWER_SPAWN_CHECK_RADIUS = builder
 				.comment("""
 						Set the spawn checking radius for the Celestial Tower.
-						Higher values increase the effectiveness of Celestial Lanterns - Default 256
-						""")
+						Higher values increase the effectiveness of Celestial Lanterns - Default 256""")
 				.translation("config.immersiveweapons.celestial_tower_spawn_check_radius")
 				.defineInRange("celestial_tower_spawn_checking_radius", 256, 0, Integer.MAX_VALUE);
 		CELESTIAL_TOWER_MINIONS_WAVE_SIZE_MODIFIER = builder
@@ -126,8 +124,7 @@ public class CommonConfig {
 		ALLOW_INFINITE_AMMO_ON_ALl_TIERS = builder
 				.comment("""
 						Allow infinity-type enchantments to work on all ammo tiers.
-						By default, it is restricted to cobalt and lower tiers. - Default false
-						""")
+						By default, it is restricted to cobalt and lower tiers. - Default false""")
 				.translation("config.immersiveweapons.allow_infinite_ammo_on_all_tiers")
 				.define("allow_infinite_ammo_on_all_tiers", false);
 		builder.pop();
