@@ -49,6 +49,8 @@ public class DebugTracingData {
 	public static double GENERAL_DAMAGE_RESISTANCE = 0;
 	public static double KNOCKBACK_RESISTANCE = 0;
 
+	public static float CELESTIAL_PROTECTION_NO_DAMAGE_CHANCE = 0;
+
 	public static void handleTracing(Player player) {
 		if (player.tickCount % 20 == 0) {
 			// Get the melee damage attribute of the currently held item
@@ -115,6 +117,10 @@ public class DebugTracingData {
 
 			if (player.hasEffect(EffectRegistry.CELESTIAL_PROTECTION_EFFECT.get())) {
 				GENERAL_DAMAGE_RESISTANCE += 0.05d;
+
+				if (!player.getPersistentData().isEmpty()) {
+					CELESTIAL_PROTECTION_NO_DAMAGE_CHANCE = player.getPersistentData().getFloat("celestialProtectionChanceForNoDamage");
+				}
 			}
 		}
 	}

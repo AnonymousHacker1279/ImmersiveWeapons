@@ -1,42 +1,37 @@
 package tech.anonymoushacker1279.immersiveweapons.event.game_effects;
 
-import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
-import net.minecraftforge.fml.DistExecutor;
-import net.minecraftforge.network.NetworkEvent;
-import net.minecraftforge.network.NetworkEvent.Context;
 import net.minecraftforge.network.PacketDistributor;
 import org.jetbrains.annotations.Nullable;
+import tech.anonymoushacker1279.immersiveweapons.event.SyncPlayerDataPacketHandler;
 import tech.anonymoushacker1279.immersiveweapons.init.*;
 
 import java.util.Objects;
-import java.util.function.Supplier;
 
 public class EnvironmentEffects {
-
-	public static float celestialProtectionChanceForNoDamage = 0.0f;
 
 	// Handle stuff for the celestial protection effect
 	public static void celestialProtectionEffect(LivingHurtEvent event, LivingEntity damagedEntity) {
 		if (damagedEntity.hasEffect(EffectRegistry.CELESTIAL_PROTECTION_EFFECT.get())) {
 			float damage = event.getAmount();
+			float celestialProtectionChanceForNoDamage = 0.0f;
+
+			if (!damagedEntity.getPersistentData().isEmpty()) {
+				celestialProtectionChanceForNoDamage = damagedEntity.getPersistentData().getFloat("celestialProtectionChanceForNoDamage");
+			}
 
 			// Check if the damage should be neutralized
-			if (celestialProtectionChanceForNoDamage >= 1.0f) {
-				event.setCanceled(true);
-				celestialProtectionChanceForNoDamage = 0.0f;
-				return;
-			} else if (celestialProtectionChanceForNoDamage > 0.0f) {
+			if (celestialProtectionChanceForNoDamage > 0.0f) {
 				if (damagedEntity.getRandom().nextFloat() <= celestialProtectionChanceForNoDamage) {
 					event.setCanceled(true);
 					celestialProtectionChanceForNoDamage = 0.0f;
 				}
 			}
+
 			// Increase the chance that the next damage taken will be neutralized
 			if (damagedEntity.getItemBySlot(EquipmentSlot.HEAD).getItem() == ItemRegistry.ASTRAL_HELMET.get() &&
 					damagedEntity.getItemBySlot(EquipmentSlot.CHEST).getItem() == ItemRegistry.ASTRAL_CHESTPLATE.get() &&
@@ -48,13 +43,17 @@ public class EnvironmentEffects {
 				celestialProtectionChanceForNoDamage += damage * 0.01f; // Other armor has a 1% charge rate
 			}
 
-			if (damagedEntity instanceof ServerPlayer player) {
-				PacketHandler.INSTANCE.send(PacketDistributor.PLAYER.with(() -> player),
-						new EnvironmentEffectsPacketHandler(celestialProtectionChanceForNoDamage));
-			}
-
 			// This effect grants a 5% damage reduction to all damage taken, unless they rolled for no damage
 			damage = damage * 0.95f;
+
+			// Update the entity persistent data
+			damagedEntity.getPersistentData().putFloat("celestialProtectionChanceForNoDamage", celestialProtectionChanceForNoDamage);
+
+			// Re-sync persistent data to client for debug tracing
+			if (damagedEntity instanceof ServerPlayer serverPlayer) {
+				PacketHandler.INSTANCE.send(PacketDistributor.PLAYER.with(() -> serverPlayer), new SyncPlayerDataPacketHandler(serverPlayer.getPersistentData(), serverPlayer.getUUID()));
+			}
+
 			event.setAmount(damage);
 		}
 	}
@@ -109,27 +108,6 @@ public class EnvironmentEffects {
 					event.setAmount(damage);
 				}
 			}
-		}
-	}
-
-	public record EnvironmentEffectsPacketHandler(float celestialProtectionChanceForNoDamage) {
-
-		public static void encode(EnvironmentEffectsPacketHandler msg, FriendlyByteBuf packetBuffer) {
-			packetBuffer.writeFloat(msg.celestialProtectionChanceForNoDamage);
-		}
-
-		public static EnvironmentEffectsPacketHandler decode(FriendlyByteBuf packetBuffer) {
-			return new EnvironmentEffectsPacketHandler(packetBuffer.readFloat());
-		}
-
-		public static void handle(EnvironmentEffectsPacketHandler msg, Supplier<Context> contextSupplier) {
-			NetworkEvent.Context context = contextSupplier.get();
-			context.enqueueWork(() -> DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> runOnClient(msg)));
-			context.setPacketHandled(true);
-		}
-
-		private static void runOnClient(EnvironmentEffectsPacketHandler msg) {
-			EnvironmentEffects.celestialProtectionChanceForNoDamage = msg.celestialProtectionChanceForNoDamage;
 		}
 	}
 }
