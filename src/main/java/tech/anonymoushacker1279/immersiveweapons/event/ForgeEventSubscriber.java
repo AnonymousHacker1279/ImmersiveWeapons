@@ -454,8 +454,8 @@ public class ForgeEventSubscriber {
 			BlockPos belowPos = event.getPos().below();
 			BlockState belowState = event.getLevel().getBlockState(belowPos);
 
-			if (belowState.getBlock() == BlockRegistry.STARSTORM_CRYSTAL.get()) {
-				StarstormCrystalBlock.handlePistonCrushing((Level) event.getLevel(), belowPos);
+			if (belowState.getBlock() instanceof StarstormCrystalBlock crystalBlock) {
+				crystalBlock.handlePistonCrushing((Level) event.getLevel(), belowPos);
 			}
 		}
 	}

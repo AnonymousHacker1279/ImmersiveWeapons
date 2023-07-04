@@ -6,7 +6,9 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.AmethystClusterBlock;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.material.PushReaction;
 import net.minecraft.world.level.storage.loot.LootParams;
+import org.jetbrains.annotations.Nullable;
 import tech.anonymoushacker1279.immersiveweapons.entity.monster.StarmiteEntity;
 import tech.anonymoushacker1279.immersiveweapons.init.EntityRegistry;
 import tech.anonymoushacker1279.immersiveweapons.init.ItemRegistry;
@@ -15,13 +17,13 @@ import java.util.List;
 
 public class StarstormCrystalBlock extends AmethystClusterBlock {
 
-	private static boolean brokenByPiston = false;
+	private boolean brokenByPiston = false;
 
 	public StarstormCrystalBlock(int size, int offset, Properties properties) {
 		super(size, offset, properties);
 	}
 
-	public static void handlePistonCrushing(Level level, BlockPos pos) {
+	public void handlePistonCrushing(Level level, BlockPos pos) {
 		// If the block is being destroyed by a piston that is above it, drop a Starstorm Ingot
 		ItemStack drop = new ItemStack(ItemRegistry.STARSTORM_SHARD.get());
 		drop.setCount(level.getRandom().nextIntBetweenInclusive(2, 4));
@@ -42,5 +44,10 @@ public class StarstormCrystalBlock extends AmethystClusterBlock {
 	@Override
 	public List<ItemStack> getDrops(BlockState state, LootParams.Builder builder) {
 		return brokenByPiston ? List.of() : super.getDrops(state, builder);
+	}
+
+	@Override
+	public @Nullable PushReaction getPistonPushReaction(BlockState state) {
+		return PushReaction.DESTROY;
 	}
 }

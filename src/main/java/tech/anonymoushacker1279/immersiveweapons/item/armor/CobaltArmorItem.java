@@ -74,14 +74,14 @@ public class CobaltArmorItem extends ArmorItem {
 
 						// Send packet to server
 						PacketHandler.INSTANCE.sendToServer(new CobaltArmorItemPacketHandler(!effectEnabled));
-					}
 
-					if (effectEnabled) {
-						player.displayClientMessage(Component.translatable("immersiveweapons.armor_effects.disabled")
-								.withStyle(ChatFormatting.RED), true);
-					} else {
-						player.displayClientMessage(Component.translatable("immersiveweapons.armor_effects.enabled")
-								.withStyle(ChatFormatting.GREEN), true);
+						if (effectEnabled) {
+							player.displayClientMessage(Component.translatable("immersiveweapons.armor_effects.disabled")
+									.withStyle(ChatFormatting.RED), true);
+						} else {
+							player.displayClientMessage(Component.translatable("immersiveweapons.armor_effects.enabled")
+									.withStyle(ChatFormatting.GREEN), true);
+						}
 					}
 				}
 

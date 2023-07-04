@@ -358,7 +358,7 @@ public abstract class AbstractGunItem extends Item implements Vanishable {
 			                                       ItemStack itemInHand, float partialTick, float equipProcess, float swingProcess) {
 
 				// Don't use custom transform until it is fully equipped
-				if (equipProcess < 1.0f) {
+				if (equipProcess < 1.0f && !player.isUsingItem()) {
 					return false;
 				}
 
