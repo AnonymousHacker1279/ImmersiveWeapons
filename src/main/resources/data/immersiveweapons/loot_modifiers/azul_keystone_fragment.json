@@ -46,12 +46,20 @@
 				{
 					"condition": "forge:loot_table_id",
 					"loot_table_id": "minecraft:chests/woodland_mansion"
+				},
+				{
+					"condition": "forge:loot_table_id",
+					"loot_table_id": "minecraft:chests/ancient_city"
 				}
 			]
 		}
 	],
-	"min_quantity": 0,
+	"min_quantity": 1,
 	"max_quantity": 2,
-	"roll_chance": 0.3,
-	"type": "immersiveweapons:azul_keystone_fragment_in_chests"
+	"roll_chance": 0.25,
+	"item": {
+		"id": "immersiveweapons:azul_keystone_fragment",
+		"Count": 1
+	},
+	"type": "immersiveweapons:simple_chest"
 }

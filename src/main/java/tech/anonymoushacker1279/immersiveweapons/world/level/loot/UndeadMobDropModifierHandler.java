@@ -13,34 +13,27 @@ import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
 import net.minecraftforge.common.loot.IGlobalLootModifier;
 import net.minecraftforge.common.loot.LootModifier;
+import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.NotNull;
-import tech.anonymoushacker1279.immersiveweapons.init.ItemRegistry;
 
 import java.util.function.Supplier;
 
-public class CopperRingDropLootModifierHandler extends LootModifier {
+public class UndeadMobDropModifierHandler extends LootModifier {
 
-	public static final Supplier<Codec<CopperRingDropLootModifierHandler>> CODEC = Suppliers.memoize(() ->
+	public static final Supplier<Codec<UndeadMobDropModifierHandler>> CODEC = Suppliers.memoize(() ->
 			RecordCodecBuilder.create(inst -> codecStart(inst).and(
-							inst.group(
-									Codec.FLOAT.fieldOf("drop_chance").forGetter(m -> m.dropChance),
-									Codec.FLOAT.fieldOf("looting_multiplier").forGetter(m -> m.lootingMultiplier)))
-					.apply(inst, CopperRingDropLootModifierHandler::new)
+							ItemStack.CODEC.fieldOf("item").forGetter(m -> m.itemStack))
+					.apply(inst, UndeadMobDropModifierHandler::new)
 			));
 
-	private final float dropChance;
-	private final float lootingMultiplier;
+	private final ItemStack itemStack;
 
-	public CopperRingDropLootModifierHandler(LootItemCondition[] conditionsIn, float dropChance, float lootingMultiplier) {
+	public UndeadMobDropModifierHandler(LootItemCondition[] conditionsIn, ItemStack itemStack) {
 		super(conditionsIn);
-		this.dropChance = dropChance;
-		this.lootingMultiplier = lootingMultiplier;
+		this.itemStack = itemStack;
 
-		if (dropChance < 0.0f || dropChance > 1.0f) {
-			throw new JsonParseException("drop_chance must be between 0.0 and 1.0");
-		}
-		if (lootingMultiplier < 0.0f) {
-			throw new JsonParseException("looting_multiplier must be greater than or equal to 0.0");
+		if (!ForgeRegistries.ITEMS.containsValue(itemStack.getItem())) {
+			throw new JsonParseException("item must exist in the registry");
 		}
 	}
 
@@ -48,12 +41,7 @@ public class CopperRingDropLootModifierHandler extends LootModifier {
 	protected @NotNull ObjectArrayList<ItemStack> doApply(ObjectArrayList<ItemStack> generatedLoot, LootContext context) {
 		// Check if the entity is undead
 		if (context.getParamOrNull(LootContextParams.THIS_ENTITY) instanceof Mob mob && mob.getMobType() == MobType.UNDEAD) {
-			// Add looting multiplier
-			float dropChance = this.dropChance + (context.getLootingModifier() * this.lootingMultiplier);
-			if (context.getRandom().nextFloat() <= dropChance) {
-				// Add the copper ring to the loot drop
-				generatedLoot.add(new ItemStack(ItemRegistry.COPPER_RING.get()));
-			}
+			generatedLoot.add(itemStack);
 		}
 
 		return generatedLoot;

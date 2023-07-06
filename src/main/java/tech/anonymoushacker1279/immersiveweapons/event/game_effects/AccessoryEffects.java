@@ -1,6 +1,9 @@
 package tech.anonymoushacker1279.immersiveweapons.event.game_effects;
 
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.stats.Stats;
 import net.minecraft.tags.DamageTypeTags;
+import net.minecraft.util.Mth;
 import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.LivingEntity;
@@ -10,10 +13,12 @@ import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.living.LivingKnockBackEvent;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.api.PluginHandler;
+import tech.anonymoushacker1279.immersiveweapons.client.gui.overlays.DebugTracingData;
 import tech.anonymoushacker1279.immersiveweapons.entity.projectile.MeteorEntity;
 import tech.anonymoushacker1279.immersiveweapons.init.EffectRegistry;
 import tech.anonymoushacker1279.immersiveweapons.init.ItemRegistry;
 import tech.anonymoushacker1279.immersiveweapons.item.AccessoryItem;
+import tech.anonymoushacker1279.immersiveweapons.item.AccessoryItem.EffectBuilder.EffectScalingType;
 import tech.anonymoushacker1279.immersiveweapons.item.AccessoryItem.EffectType;
 import tech.anonymoushacker1279.immersiveweapons.util.IWCBBridge;
 
@@ -29,22 +34,62 @@ public class AccessoryEffects {
 	 * @return the value of the effect
 	 */
 	public static double collectEffects(EffectType type, Player player) {
+		double effectValue = 0;
 		if (ImmersiveWeapons.IWCB_LOADED && PluginHandler.isPluginActive("iwcompatbridge:curios_plugin")) {
-			return IWCBBridge.collectEffects(type, player);
+			// TODO: update IWCB to respect scaling types
+			effectValue = IWCBBridge.collectEffects(type, player);
 		} else {
-			double value = 0;
-
 			for (int i = 0; i < player.getInventory().getContainerSize(); i++) {
 				ItemStack stack = player.getInventory().getItem(i);
 				if (stack.getItem() instanceof AccessoryItem accessoryItem) {
 					if (accessoryItem.isActive(player, stack)) {
-						value += accessoryItem.getEffects().getOrDefault(type, 0d);
+						effectValue += handleEffectScaling(accessoryItem, type, player);
 					}
 				}
 			}
-
-			return value;
 		}
+
+		// Clamp the value at a maximum of 100%
+		return Mth.clamp(effectValue, 0, 1);
+	}
+
+	private static double handleEffectScaling(AccessoryItem accessoryItem, EffectType type, Player player) {
+		if (accessoryItem.getEffectScalingType() == EffectScalingType.DEPTH_SCALING) {
+			// Depth scaling increases the value inverse proportionally to the player's depth (y-level), starting at y<64
+			// Note, this should continue to the bottom of the world, which may be lower than y=0
+
+			double depth = player.getY();
+			if (depth < 64) {
+				double rawValue = accessoryItem.getEffects().getOrDefault(type, 0d);
+				int worldFloor = player.level().getMinBuildHeight();
+
+				// The scaling is inverse proportionally to the player's depth
+				double depthScaling = Mth.clamp(Math.min(1.0, ((64 - depth) / (64 - worldFloor))) * 100, 0, 100);
+				return rawValue * depthScaling;
+			}
+		} else if (accessoryItem.getEffectScalingType() == EffectScalingType.INSOMNIA_SCALING) {
+			// Insomnia scaling increases the value proportionally to the player's insomnia level, starting after
+			// one full day/night cycle without sleep (24000 ticks)
+
+			int timeSinceRest;
+			if (player instanceof ServerPlayer serverPlayer) {
+				timeSinceRest = serverPlayer.getStats().getValue(Stats.CUSTOM.get(Stats.TIME_SINCE_REST));
+			} else {
+				// If this is on the client, use the debug tracing data. The result here does not need to be accurate
+				// since it will only ever be used in the debug overlay
+				timeSinceRest = DebugTracingData.TICKS_SINCE_REST;
+			}
+
+			if (timeSinceRest > 24000) {
+				double rawValue = accessoryItem.getEffects().getOrDefault(type, 0d);
+				// Scaling should max out after 7 in-game days and nights (168000 ticks)
+				double insomniaScaling = Mth.clamp(Math.min(1.0, ((timeSinceRest - 24000) / 144000.0)) * 100, 0, 100);
+				return rawValue * insomniaScaling;
+			}
+		}
+
+		// If no scaling is needed, just return the effect value
+		return accessoryItem.getEffects().getOrDefault(type, 0d);
 	}
 
 	public static void damageResistanceEffects(LivingHurtEvent event, Player player) {

@@ -51,6 +51,8 @@ public class DebugTracingData {
 
 	public static float CELESTIAL_PROTECTION_NO_DAMAGE_CHANCE = 0;
 
+	public static int TICKS_SINCE_REST = 0;
+
 	public static void handleTracing(Player player) {
 		if (player.tickCount % 20 == 0) {
 			// Get the melee damage attribute of the currently held item
@@ -125,14 +127,15 @@ public class DebugTracingData {
 		}
 	}
 
-	public record DebugDataPacketHandler(UUID playerUUID, float lastDamageDealt, float lastDamageTaken) {
+	public record DebugDataPacketHandler(UUID playerUUID, float lastDamageDealt, float lastDamageTaken,
+	                                     int ticksSinceRest) {
 
 		public static void encode(DebugDataPacketHandler msg, FriendlyByteBuf packetBuffer) {
-			packetBuffer.writeUUID(msg.playerUUID()).writeFloat(msg.lastDamageDealt).writeFloat(msg.lastDamageTaken);
+			packetBuffer.writeUUID(msg.playerUUID()).writeFloat(msg.lastDamageDealt).writeFloat(msg.lastDamageTaken).writeInt(msg.ticksSinceRest);
 		}
 
 		public static DebugDataPacketHandler decode(FriendlyByteBuf packetBuffer) {
-			return new DebugDataPacketHandler(packetBuffer.readUUID(), packetBuffer.readFloat(), packetBuffer.readFloat());
+			return new DebugDataPacketHandler(packetBuffer.readUUID(), packetBuffer.readFloat(), packetBuffer.readFloat(), packetBuffer.readInt());
 		}
 
 		public static void handle(DebugDataPacketHandler msg, Supplier<Context> contextSupplier) {
@@ -142,7 +145,7 @@ public class DebugTracingData {
 		}
 
 		private static void runOnClient(DebugDataPacketHandler msg) {
-			SyncHandler.debugDataHandler(msg.lastDamageDealt, msg.lastDamageTaken, msg.playerUUID);
+			SyncHandler.debugDataHandler(msg.lastDamageDealt, msg.lastDamageTaken, msg.ticksSinceRest, msg.playerUUID);
 		}
 	}
 }

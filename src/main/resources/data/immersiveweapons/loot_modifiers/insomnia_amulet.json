@@ -7,12 +7,17 @@
 			"condition": "minecraft:entity_properties",
 			"entity": "this",
 			"predicate": {
-				"type": "minecraft:ender_dragon"
+				"type": "minecraft:phantom"
 			}
+		},
+		{
+			"condition": "minecraft:random_chance_with_looting",
+			"chance": 0.05,
+			"looting_multiplier": 0.02
 		}
 	],
 	"item": {
-		"id": "immersiveweapons:medal_of_adequacy",
+		"id": "immersiveweapons:insomnia_amulet",
 		"Count": 1
 	},
 	"type": "immersiveweapons:simple_drop"

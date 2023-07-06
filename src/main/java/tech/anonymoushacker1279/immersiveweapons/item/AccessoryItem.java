@@ -5,6 +5,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.api.PluginHandler;
+import tech.anonymoushacker1279.immersiveweapons.item.AccessoryItem.EffectBuilder.EffectScalingType;
 import tech.anonymoushacker1279.immersiveweapons.util.IWCBBridge;
 
 import java.util.*;
@@ -13,20 +14,22 @@ public class AccessoryItem extends Item {
 
 	private final AccessorySlot slot;
 	private final Map<EffectType, Double> effects;
+	private final EffectScalingType effectScalingType;
 
 	/**
 	 * AccessoryItems provide various effects when equipped. There are specific categories they may be placed in, and only
 	 * one item from each category may be active at a time.
 	 *
-	 * @param properties the <code>Properties</code> for the item
-	 * @param slot       the <code>AccessorySlot</code> the item belongs to
-	 * @param effects    a <code>Map</code> of <code>EffectType</code> to <code>Double</code> values
+	 * @param properties    the <code>Properties</code> for the item
+	 * @param slot          the <code>AccessorySlot</code> the item belongs to
+	 * @param effectBuilder the <code>EffectBuilder</code> for the item
 	 */
-	public AccessoryItem(Properties properties, AccessorySlot slot, Map<EffectType, Double> effects) {
+	public AccessoryItem(Properties properties, AccessorySlot slot, EffectBuilder effectBuilder) {
 		super(properties);
 
 		this.slot = slot;
-		this.effects = effects;
+		this.effects = effectBuilder.getEffects();
+		this.effectScalingType = effectBuilder.getScalingType();
 	}
 
 	public AccessorySlot getSlot() {
@@ -35,6 +38,10 @@ public class AccessoryItem extends Item {
 
 	public Map<EffectType, Double> getEffects() {
 		return effects;
+	}
+
+	public EffectScalingType getEffectScalingType() {
+		return effectScalingType;
 	}
 
 	/**
@@ -103,19 +110,36 @@ public class AccessoryItem extends Item {
 	}
 
 	/**
-	 * Builder for creating effect maps.
+	 * Builder for creating effects.
 	 */
-	public static class EffectMapBuilder {
+	public static class EffectBuilder {
 
 		private final Map<EffectType, Double> effects = new HashMap<>(5);
+		private EffectScalingType scalingType = EffectScalingType.NO_SCALING;
 
-		public EffectMapBuilder addEffect(EffectType type, double value) {
+		public EffectBuilder addEffect(EffectType type, double value) {
 			effects.put(type, value);
 			return this;
 		}
 
-		public Map<EffectType, Double> build() {
+		public EffectBuilder addEffect(EffectType type, double value, EffectScalingType scalingType) {
+			effects.put(type, value);
+			this.scalingType = scalingType;
+			return this;
+		}
+
+		public Map<EffectType, Double> getEffects() {
 			return effects;
+		}
+
+		public EffectScalingType getScalingType() {
+			return scalingType;
+		}
+
+		public enum EffectScalingType {
+			NO_SCALING,
+			DEPTH_SCALING,
+			INSOMNIA_SCALING
 		}
 	}
 

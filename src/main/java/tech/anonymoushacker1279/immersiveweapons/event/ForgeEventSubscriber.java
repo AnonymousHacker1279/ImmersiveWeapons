@@ -10,6 +10,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.stats.Stats;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.*;
@@ -237,11 +238,34 @@ public class ForgeEventSubscriber {
 			}
 		}
 
+		// Handle random debuffs with the Insomnia Amulet after 7 days of no sleep
+		if (player.tickCount % 600 == 0 && player instanceof ServerPlayer serverPlayer) {
+			if (AccessoryItem.isAccessoryActive(player, ItemRegistry.INSOMNIA_AMULET.get())) {
+				int timeSinceRest = serverPlayer.getStats().getValue(Stats.CUSTOM.get(Stats.TIME_SINCE_REST));
+				if (timeSinceRest > 168000) {
+					float chance = player.getRandom().nextFloat();
+					if (chance <= 0.1f) {
+						player.addEffect(new MobEffectInstance(MobEffects.BLINDNESS, 200, 0, true, true));
+					}
+					if (chance <= 0.2f) {
+						player.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, 200, 0, true, true));
+					}
+					if (chance <= 0.3f) {
+						player.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 200, 0, true, true));
+					}
+				}
+			}
+		}
+
 		// Debug tracing
 		if (DebugTracingData.isDebugTracingEnabled) {
 			if (player.isLocalPlayer()) {
 				DebugTracingData.handleTracing(player);
 			}
+		}
+		if (player.tickCount % 100 == 0 && player instanceof ServerPlayer serverPlayer) {
+			int ticksSinceRest = serverPlayer.getStats().getValue(Stats.CUSTOM.get(Stats.TIME_SINCE_REST));
+			PacketHandler.INSTANCE.send(PacketDistributor.PLAYER.with(() -> serverPlayer), new DebugDataPacketHandler(player.getUUID(), -1f, -1f, ticksSinceRest));
 		}
 	}
 
@@ -326,13 +350,13 @@ public class ForgeEventSubscriber {
 				}
 
 				// Handle debug tracing
-				PacketHandler.INSTANCE.send(PacketDistributor.PLAYER.with(() -> serverPlayer), new DebugDataPacketHandler(player.getUUID(), event.getAmount(), -1f));
+				PacketHandler.INSTANCE.send(PacketDistributor.PLAYER.with(() -> serverPlayer), new DebugDataPacketHandler(player.getUUID(), event.getAmount(), -1f, -1));
 			}
 		}
 
 		if (damagedEntity instanceof ServerPlayer serverPlayer) {
 			// Handle debug tracing
-			PacketHandler.INSTANCE.send(PacketDistributor.PLAYER.with(() -> serverPlayer), new DebugDataPacketHandler(serverPlayer.getUUID(), -1f, event.getAmount()));
+			PacketHandler.INSTANCE.send(PacketDistributor.PLAYER.with(() -> serverPlayer), new DebugDataPacketHandler(serverPlayer.getUUID(), -1f, event.getAmount(), -1));
 		}
 	}
 

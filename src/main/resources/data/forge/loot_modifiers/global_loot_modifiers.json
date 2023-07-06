@@ -2,9 +2,11 @@
 	"replace": false,
 	"entries": [
 		"immersiveweapons:log_shards",
-		"immersiveweapons:azul_keystone_fragment_in_chests",
+		"immersiveweapons:azul_keystone_fragment",
 		"immersiveweapons:molten_tool_smelting",
 		"immersiveweapons:copper_ring",
-		"immersiveweapons:medal_of_adequacy"
+		"immersiveweapons:medal_of_adequacy",
+		"immersiveweapons:depth_charm",
+		"immersiveweapons:insomnia_amulet"
 	]
 }

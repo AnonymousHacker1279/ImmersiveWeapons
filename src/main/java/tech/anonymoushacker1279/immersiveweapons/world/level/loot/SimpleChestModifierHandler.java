@@ -10,31 +10,34 @@ import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
 import net.minecraftforge.common.loot.IGlobalLootModifier;
 import net.minecraftforge.common.loot.LootModifier;
+import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.NotNull;
-import tech.anonymoushacker1279.immersiveweapons.init.ItemRegistry;
 
 import java.util.function.Supplier;
 
-public class AzulKeystoneFragmentInChestsLootModifierHandler extends LootModifier {
+public class SimpleChestModifierHandler extends LootModifier {
 
-	public static final Supplier<Codec<AzulKeystoneFragmentInChestsLootModifierHandler>> CODEC = Suppliers.memoize(() ->
+	public static final Supplier<Codec<SimpleChestModifierHandler>> CODEC = Suppliers.memoize(() ->
 			RecordCodecBuilder.create(inst -> codecStart(inst).and(
 							inst.group(
 									Codec.INT.fieldOf("min_quantity").forGetter(m -> m.minQuantity),
 									Codec.INT.fieldOf("max_quantity").forGetter(m -> m.maxQuantity),
-									Codec.FLOAT.fieldOf("roll_chance").forGetter(m -> m.rollChance)))
-					.apply(inst, AzulKeystoneFragmentInChestsLootModifierHandler::new)
+									Codec.FLOAT.fieldOf("roll_chance").forGetter(m -> m.rollChance),
+									ItemStack.CODEC.fieldOf("item").forGetter(m -> m.itemStack)))
+					.apply(inst, SimpleChestModifierHandler::new)
 			));
 
 	private final int minQuantity;
 	private final int maxQuantity;
 	private final float rollChance;
+	private final ItemStack itemStack;
 
-	public AzulKeystoneFragmentInChestsLootModifierHandler(LootItemCondition[] conditionsIn, int minQuantity, int maxQuantity, float rollChance) {
+	public SimpleChestModifierHandler(LootItemCondition[] conditionsIn, int minQuantity, int maxQuantity, float rollChance, ItemStack itemStack) {
 		super(conditionsIn);
 		this.minQuantity = minQuantity;
 		this.maxQuantity = maxQuantity;
 		this.rollChance = rollChance;
+		this.itemStack = itemStack;
 
 		// Validate input values
 		if (minQuantity < 0) {
@@ -50,6 +53,10 @@ public class AzulKeystoneFragmentInChestsLootModifierHandler extends LootModifie
 		if (rollChance < 0.0f || rollChance > 1.0f) {
 			throw new JsonParseException("roll_chance must be between 0.0 and 1.0");
 		}
+
+		if (!ForgeRegistries.ITEMS.containsValue(itemStack.getItem())) {
+			throw new JsonParseException("item must exist in the registry");
+		}
 	}
 
 	@Override
@@ -57,7 +64,7 @@ public class AzulKeystoneFragmentInChestsLootModifierHandler extends LootModifie
 		if (context.getRandom().nextFloat() <= rollChance) {
 			int lootQuantity = context.getRandom().nextIntBetweenInclusive(minQuantity, maxQuantity);
 
-			generatedLoot.add(new ItemStack(ItemRegistry.AZUL_KEYSTONE_FRAGMENT.get(), lootQuantity));
+			generatedLoot.add(itemStack.copyWithCount(lootQuantity));
 		}
 		return generatedLoot;
 	}

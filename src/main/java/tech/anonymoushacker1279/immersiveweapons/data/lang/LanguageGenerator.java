@@ -434,6 +434,10 @@ public class LanguageGenerator extends IWLanguageProvider {
 		addTooltip("diamond_ring", "Increase general damage by 4% and provides 4% damage reduction");
 		addTooltip("netherite_ring", "Increase general damage by 5% and provides 5% damage reduction");
 		addTooltip("medal_of_adequacy", "This medal was once awarded to gamingwarrior0 for his wholly undistinguished assistance");
+		addTooltip("depth_charm_1", "Provides damage resistance, a general damage bonus, and increased melee knockback");
+		addTooltip("depth_charm_2", "This effect scales with depth");
+		addTooltip("insomnia_amulet_1", "Slowly increases damage as you stay awake, up to a maximum of 30%");
+		addTooltip("insomnia_amulet_2", "After seven days, you may begin to feel adverse effects");
 
 		addTooltip("bloody_sacrifice", "You feel a dark presence emanating from this item");
 		addTooltip("bloody_sacrifice_charge_note", "The destruction of life charges something inside");

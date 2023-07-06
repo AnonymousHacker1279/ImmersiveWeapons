@@ -32,29 +32,16 @@ public class FlareEntity extends BulletEntity implements ItemSupplier {
 	private static final EntityDataAccessor<Boolean> USE_LEGACY_LIGHTING = SynchedEntityData.defineId(FlareEntity.class,
 			EntityDataSerializers.BOOLEAN);
 
-	/**
-	 * Constructor for FlareEntity.
-	 *
-	 * @param entityType        the <code>EntityType</code> instance
-	 * @param world             the <code>World</code> the entity is in
-	 * @param knockbackStrength the bullet knockback strength
-	 */
-	public FlareEntity(EntityType<FlareEntity> entityType, Level world, int knockbackStrength) {
-		super(entityType, world);
+	public FlareEntity(EntityType<FlareEntity> entityType, Level level, int knockbackStrength) {
+		super(entityType, level);
 		this.knockbackStrength = knockbackStrength;
 		referenceItem = ItemRegistry.FLARE.get();
 	}
 
-	/**
-	 * Constructor for FlareEntity.
-	 *
-	 * @param shooter the <code>LivingEntity</code> shooting the entity
-	 * @param world   the <code>World</code> the entity is in
-	 */
-	public FlareEntity(LivingEntity shooter, Level world) {
-		super(EntityRegistry.FLARE_ENTITY.get(), shooter, world);
+	public FlareEntity(LivingEntity shooter, Level level) {
+		super(EntityRegistry.FLARE_ENTITY.get(), shooter, level);
 		referenceItem = ItemRegistry.FLARE.get();
-		entityData.set(USE_LEGACY_LIGHTING, !PluginHandler.isPluginRegistered("iwcompatbridge:lucent_plugin"));
+		entityData.set(USE_LEGACY_LIGHTING, !PluginHandler.isPluginActive("iwcompatbridge:lucent_plugin"));
 	}
 
 	@Override
