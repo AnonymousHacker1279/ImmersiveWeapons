@@ -292,6 +292,18 @@ public class TooltipHandler {
 				event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.insomnia_amulet_1").withStyle(ChatFormatting.GREEN, ChatFormatting.ITALIC));
 				event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.insomnia_amulet_2").withStyle(ChatFormatting.DARK_RED, ChatFormatting.ITALIC));
 			}
+			if (stack.getItem() == ItemRegistry.GOGGLES.get()) {
+				event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.goggles").withStyle(ChatFormatting.GREEN, ChatFormatting.ITALIC));
+			}
+			if (stack.getItem() == ItemRegistry.LAVA_GOGGLES.get()) {
+				event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.lava_goggles").withStyle(ChatFormatting.GREEN, ChatFormatting.ITALIC));
+			}
+			if (stack.getItem() == ItemRegistry.NIGHT_VISION_GOGGLES.get()) {
+				event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.night_vision_goggles").withStyle(ChatFormatting.GREEN, ChatFormatting.ITALIC));
+			}
+			if (stack.getItem() == ItemRegistry.AGILITY_BRACELET.get()) {
+				event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.agility_bracelet").withStyle(ChatFormatting.GREEN, ChatFormatting.ITALIC));
+			}
 
 			addShiftTooltip(event.getToolTip(), addAccessoryTooltips(item, event.getEntity(), stack));
 		} else if (stack.getItem() instanceof CursedItem) {

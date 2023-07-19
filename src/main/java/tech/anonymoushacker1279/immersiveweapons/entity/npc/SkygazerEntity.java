@@ -49,7 +49,8 @@ public class SkygazerEntity extends AbstractMerchantEntity {
 					new ItemsForEmeralds(ItemRegistry.BLUNDERBUSS.get(), 7, 1, 3),
 					new ItemsForEmeralds(ItemRegistry.MUSKET.get(), 8, 1, 3),
 					new ItemsForEmeralds(ItemRegistry.METEOR_STAFF.get(), 28, 1, 1),
-					new ItemsForEmeralds(ItemRegistry.CURSED_SIGHT_STAFF.get(), 28, 1, 1)},
+					new ItemsForEmeralds(ItemRegistry.CURSED_SIGHT_STAFF.get(), 28, 1, 1),
+					new ItemsForEmeralds(ItemRegistry.NIGHT_VISION_GOGGLES.get(), 32, 1, 1)},
 			3, new VillagerTrades.ItemListing[]{
 					new ItemsForEmeralds(ItemRegistry.TESLA_SWORD.get(), 30, 1, 1),
 					new ItemsForEmeralds(ItemRegistry.MOLTEN_SWORD.get(), 30, 1, 1),

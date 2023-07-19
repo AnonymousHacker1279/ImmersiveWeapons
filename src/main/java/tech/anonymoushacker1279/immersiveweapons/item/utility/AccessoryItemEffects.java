@@ -60,4 +60,12 @@ public class AccessoryItemEffects {
 			.addEffect(EffectType.MELEE_KNOCKBACK, 0.001d, EffectScalingType.DEPTH_SCALING);
 	public static final EffectBuilder INSOMNIA_AMULET = new EffectBuilder()
 			.addEffect(EffectType.GENERAL_DAMAGE, 0.003d, EffectScalingType.INSOMNIA_SCALING);
+	public static final EffectBuilder GOGGLES = new EffectBuilder()
+			.addEffect(EffectType.PROJECTILE_DAMAGE, 0.03d);
+	public static final EffectBuilder LAVA_GOGGLES = new EffectBuilder()
+			.addEffect(EffectType.OTHER, 0.0d);
+	public static final EffectBuilder NIGHT_VISION_GOGGLES = new EffectBuilder()
+			.addEffect(EffectType.OTHER, 0.0d);
+	public static final EffectBuilder AGILITY_BRACELET = new EffectBuilder()
+			.addEffect(EffectType.OTHER, 0.0d);
 }

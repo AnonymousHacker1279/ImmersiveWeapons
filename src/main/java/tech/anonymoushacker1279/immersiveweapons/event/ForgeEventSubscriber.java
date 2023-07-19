@@ -84,6 +84,13 @@ public class ForgeEventSubscriber {
 	public static final AttributeModifier JONNYS_CURSE_SPEED_MODIFIER = new AttributeModifier(JONNYS_CURSE_SPEED_MODIFIER_UUID,
 			"Jonny's Curse reduction", -0.25d, Operation.MULTIPLY_BASE);
 
+	public static final UUID AGILITY_BRACELET_SPEED_MODIFIER_UUID = UUID.fromString("0360d69c-bf02-4dc3-a64f-86d9a9b345cd");
+	public static final AttributeModifier AGILITY_BRACELET_SPEED_MODIFIER = new AttributeModifier(AGILITY_BRACELET_SPEED_MODIFIER_UUID,
+			"Agility Bracelet boost", 0.05d, Operation.MULTIPLY_BASE);
+	public static final UUID AGILITY_BRACELET_STEP_HEIGHT_MODIFIER_UUID = UUID.fromString("57108471-149e-4d4a-829b-e38632429f57");
+	public static final AttributeModifier AGILITY_BRACELET_STEP_HEIGHT_MODIFIER = new AttributeModifier(AGILITY_BRACELET_STEP_HEIGHT_MODIFIER_UUID,
+			"Agility Bracelet boost", 0.5d, Operation.ADDITION);
+
 	@SubscribeEvent
 	public static void registerGuiOverlaysEvent(RegisterGuiOverlaysEvent event) {
 		assert IWOverlays.SCOPE_ELEMENT != null;
@@ -230,10 +237,32 @@ public class ForgeEventSubscriber {
 				}
 			}
 
+			// Handle increased speed / step height bonus effects of the Agility Bracelet
+			AttributeInstance movementSpeed = player.getAttributes().getInstance(Attributes.MOVEMENT_SPEED);
+			AttributeInstance stepHeight = player.getAttributes().getInstance(ForgeMod.STEP_HEIGHT_ADDITION.get());
+			if (movementSpeed != null && stepHeight != null) {
+				if (AccessoryItem.isAccessoryActive(player, ItemRegistry.AGILITY_BRACELET.get())) {
+					if (!movementSpeed.hasModifier(AGILITY_BRACELET_SPEED_MODIFIER) && !stepHeight.hasModifier(AGILITY_BRACELET_STEP_HEIGHT_MODIFIER)) {
+						movementSpeed.addTransientModifier(AGILITY_BRACELET_SPEED_MODIFIER);
+						stepHeight.addTransientModifier(AGILITY_BRACELET_STEP_HEIGHT_MODIFIER);
+					}
+				} else if (movementSpeed.hasModifier(AGILITY_BRACELET_SPEED_MODIFIER) && stepHeight.hasModifier(AGILITY_BRACELET_STEP_HEIGHT_MODIFIER)) {
+					movementSpeed.removeModifier(AGILITY_BRACELET_SPEED_MODIFIER);
+					stepHeight.removeModifier(AGILITY_BRACELET_STEP_HEIGHT_MODIFIER);
+				}
+			}
+
 			// Handle constant Hero of the Village effect of the Emerald Ring
 			if (AccessoryItem.isAccessoryActive(player, ItemRegistry.EMERALD_RING.get())) {
 				if (!player.hasEffect(MobEffects.HERO_OF_THE_VILLAGE)) {
 					player.addEffect(new MobEffectInstance(MobEffects.HERO_OF_THE_VILLAGE, 60, 0, true, true));
+				}
+			}
+
+			// Handle constant night vision effect of the Night Vision Goggles
+			if (AccessoryItem.isAccessoryActive(player, ItemRegistry.NIGHT_VISION_GOGGLES.get())) {
+				if (player.tickCount % 10 == 0) {
+					player.addEffect(new MobEffectInstance(MobEffects.NIGHT_VISION, 220, 0, true, true));
 				}
 			}
 		}

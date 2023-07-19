@@ -438,6 +438,10 @@ public class LanguageGenerator extends IWLanguageProvider {
 		addTooltip("depth_charm_2", "This effect scales with depth");
 		addTooltip("insomnia_amulet_1", "Slowly increases damage as you stay awake, up to a maximum of 30%");
 		addTooltip("insomnia_amulet_2", "After seven days, you may begin to feel adverse effects");
+		addTooltip("goggles", "Increases ranged damage by 3%");
+		addTooltip("lava_goggles", "Improves vision while under lava");
+		addTooltip("night_vision_goggles", "Provides a night vision effect");
+		addTooltip("agility_bracelet", "Increases movement speed by 5%");
 
 		addTooltip("bloody_sacrifice", "You feel a dark presence emanating from this item");
 		addTooltip("bloody_sacrifice_charge_note", "The destruction of life charges something inside");

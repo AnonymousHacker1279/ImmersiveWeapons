@@ -144,9 +144,11 @@ public class AccessoryItem extends Item {
 	}
 
 	public enum AccessorySlot {
+		HEAD,
 		BODY,
 		NECKLACE,
 		HAND,
+		BRACELET,
 		RING,
 		BELT,
 		CHARM,

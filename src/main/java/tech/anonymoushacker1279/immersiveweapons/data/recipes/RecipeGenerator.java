@@ -1088,6 +1088,29 @@ public class RecipeGenerator extends RecipeProvider {
 		// Netherite Ring
 		netheriteSmithing(ItemRegistry.DIAMOND_RING.get(), ItemRegistry.NETHERITE_RING.get());
 
+		// Goggles
+		ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ItemRegistry.GOGGLES.get())
+				.define('a', Tags.Items.GLASS_PANES)
+				.define('b', Tags.Items.INGOTS_IRON)
+				.define('c', Tags.Items.STRING)
+				.pattern(" c ")
+				.pattern("aba")
+				.group("goggles")
+				.unlockedBy("iron_ingot", has(Tags.Items.INGOTS_IRON))
+				.save(finishedRecipeConsumer);
+
+		// Lava Goggles
+		ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ItemRegistry.LAVA_GOGGLES.get())
+				.define('a', ItemRegistry.GOGGLES.get())
+				.define('b', IWItemTagGroups.MOLTEN_INGOTS)
+				.define('c', Tags.Items.OBSIDIAN)
+				.pattern(" c ")
+				.pattern("bab")
+				.pattern(" c ")
+				.group("goggles")
+				.unlockedBy("molten_ingot", has(IWItemTagGroups.MOLTEN_INGOTS))
+				.save(finishedRecipeConsumer);
+
 		// Bloody Sacrifice
 		ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ItemRegistry.BLOODY_SACRIFICE.get())
 				.define('a', Items.SPIDER_EYE)

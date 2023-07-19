@@ -36,7 +36,6 @@ public class AccessoryEffects {
 	public static double collectEffects(EffectType type, Player player) {
 		double effectValue = 0;
 		if (ImmersiveWeapons.IWCB_LOADED && PluginHandler.isPluginActive("iwcompatbridge:curios_plugin")) {
-			// TODO: update IWCB to respect scaling types
 			effectValue = IWCBBridge.collectEffects(type, player);
 		} else {
 			for (int i = 0; i < player.getInventory().getContainerSize(); i++) {
@@ -53,7 +52,7 @@ public class AccessoryEffects {
 		return Mth.clamp(effectValue, 0, 1);
 	}
 
-	private static double handleEffectScaling(AccessoryItem accessoryItem, EffectType type, Player player) {
+	public static double handleEffectScaling(AccessoryItem accessoryItem, EffectType type, Player player) {
 		if (accessoryItem.getEffectScalingType() == EffectScalingType.DEPTH_SCALING) {
 			// Depth scaling increases the value inverse proportionally to the player's depth (y-level), starting at y<64
 			// Note, this should continue to the bottom of the world, which may be lower than y=0

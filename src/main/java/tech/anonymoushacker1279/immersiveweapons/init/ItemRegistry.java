@@ -249,6 +249,10 @@ public class ItemRegistry {
 	public static final RegistryObject<AccessoryItem> MEDAL_OF_ADEQUACY = ITEMS.register("medal_of_adequacy", () -> new AccessoryItem(new Properties().stacksTo(1), AccessorySlot.NECKLACE, AccessoryItemEffects.MEDAL_OF_ADEQUACY));
 	public static final RegistryObject<AccessoryItem> DEPTH_CHARM = ITEMS.register("depth_charm", () -> new AccessoryItem(new Properties().stacksTo(1), AccessorySlot.CHARM, AccessoryItemEffects.DEPTH_CHARM));
 	public static final RegistryObject<AccessoryItem> INSOMNIA_AMULET = ITEMS.register("insomnia_amulet", () -> new AccessoryItem(new Properties().stacksTo(1), AccessorySlot.NECKLACE, AccessoryItemEffects.INSOMNIA_AMULET));
+	public static final RegistryObject<AccessoryItem> GOGGLES = ITEMS.register("goggles", () -> new AccessoryItem(new Properties().stacksTo(1), AccessorySlot.HEAD, AccessoryItemEffects.GOGGLES));
+	public static final RegistryObject<AccessoryItem> LAVA_GOGGLES = ITEMS.register("lava_goggles", () -> new AccessoryItem(new Properties().stacksTo(1), AccessorySlot.HEAD, AccessoryItemEffects.LAVA_GOGGLES));
+	public static final RegistryObject<AccessoryItem> NIGHT_VISION_GOGGLES = ITEMS.register("night_vision_goggles", () -> new AccessoryItem(new Properties().stacksTo(1), AccessorySlot.HEAD, AccessoryItemEffects.NIGHT_VISION_GOGGLES));
+	public static final RegistryObject<AccessoryItem> AGILITY_BRACELET = ITEMS.register("agility_bracelet", () -> new AccessoryItem(new Properties().stacksTo(1), AccessorySlot.BRACELET, AccessoryItemEffects.AGILITY_BRACELET));
 	public static final RegistryObject<CursedItem> BLOODY_SACRIFICE = ITEMS.register("bloody_sacrifice", () -> new CursedItem(new Properties().stacksTo(1).setNoRepair().durability(100), "bloody_sacrifice"));
 	public static final RegistryObject<CursedItem> JONNYS_CURSE = ITEMS.register("jonnys_curse", () -> new CursedItem(new Properties().stacksTo(1).setNoRepair().durability(100), "jonnys_curse"));
 
