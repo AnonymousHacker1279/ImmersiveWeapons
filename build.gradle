@@ -1,6 +1,6 @@
 plugins {
 	id 'maven-publish'
-	id 'net.minecraftforge.gradle' version '[6.0,6.2)'
+	id 'net.neoforged.gradle' version '[6.0.13, 6.2)'
 	id 'org.parchmentmc.librarian.forgegradle' version '1.+'
 	id 'org.spongepowered.mixin' version '0.7.+'
 	id 'idea'
@@ -94,7 +94,7 @@ sourceSets.main.resources { srcDir 'src/generated/resources' }
 dependencies {
 	implementation 'org.jetbrains:annotations:24.0.1'
 
-	minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
+	minecraft "net.neoforged:forge:${minecraft_version}-${neoforge_version}"
 
 	// Apply Mixin AP
 	annotationProcessor "org.spongepowered:mixin:0.8.5:processor"
@@ -116,7 +116,7 @@ dependencies {
 tasks.named('processResources', ProcessResources).configure {
 	def replaceProperties = [
 			minecraft_version   : minecraft_version, minecraft_version_range: minecraft_version_range,
-			forge_version       : forge_version, forge_version_range: forge_version_range,
+			neoforge_version    : neoforge_version, neoforge_version_range: neoforge_version_range,
 			loader_version_range: loader_version_range, mod_version: mod_version
 	]
 	inputs.properties replaceProperties
