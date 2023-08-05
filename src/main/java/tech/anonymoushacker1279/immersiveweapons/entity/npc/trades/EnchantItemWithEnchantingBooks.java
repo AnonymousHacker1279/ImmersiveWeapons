@@ -32,7 +32,7 @@ public class EnchantItemWithEnchantingBooks implements VillagerTrades.ItemListin
 
 	@Override
 	public MerchantOffer getOffer(Entity trader, RandomSource randomSource) {
-		// If there are any enchantments on the item, increase the enchantment level by 1
+		// If there are any enchantments on the item, add the enchantments from the book
 		ItemStack newEnchantableItem = enchantableItem.copy();
 		if (newEnchantableItem.isEnchanted()) {
 			Map<Enchantment, Integer> existingEnchantments = newEnchantableItem.getAllEnchantments();

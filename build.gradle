@@ -3,6 +3,7 @@ plugins {
 	id 'net.neoforged.gradle' version '[6.0.13, 6.2)'
 	id 'org.parchmentmc.librarian.forgegradle' version '1.+'
 	id 'org.spongepowered.mixin' version '0.7.+'
+	id "me.hypherionmc.modutils.modpublisher" version "1.0.19"
 	id 'idea'
 }
 
@@ -174,6 +175,49 @@ publishing {
 			}
 		}
 	}
+}
+
+if (file("RELEASE_NOTES.md").exists()) {
+	publisher {
+		apiKeys {
+			// Load API keys from tokens.properties file
+			def tokens = new Properties()
+			file("tokens.properties").withInputStream {
+				stream -> tokens.load(stream)
+			}
+
+			curseforge = tokens.getProperty("curseforge")
+			modrinth = tokens.getProperty("modrinth")
+		}
+
+		debug = false
+		curseID = 494454
+		modrinthID = "QZFdnUQ5"
+		githubRepo = "AnonymousHacker1279/ImmersiveWeapons"
+		versionType = "release"
+		// Read the contents of the RELEASE_NOTES.md file
+		changelog = file("RELEASE_NOTES.md").text
+		// Get the IW version from the mod_version variable, it's the last part of the version string
+		version = "v" + mod_version.split("-")[1]
+		displayName = "Immersive Weapons - " + version
+		gameVersions = [minecraft_version]
+		loaders = ["forge", "neoforge"]
+		curseEnvironment = "both"
+		artifact = jar
+		additionalFiles = [javadocJar, sourcesJar]
+
+		curseDepends {
+			required = ["terrablender"]
+			optional = ["immersive-weapons-compatability-bridge", "attributefix"]
+		}
+
+		modrinthDepends {
+			required = ["kkmrDlKT"]
+			optional = ["lOOpEntO"]
+		}
+	}
+} else {
+	println("No RELEASE_NOTES.md found, publishing outside of Maven is disabled.")
 }
 
 mixin {
