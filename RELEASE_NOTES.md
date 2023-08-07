@@ -15,6 +15,7 @@ work. If you encounter issues on Forge, please try using NeoForge first.
 - Remove debug log lines from copper ring loot drop modifier
 - Rework recipe handler for potions to be more reliable
 - Fix Tiltros sky rendering without the texture, appearing full black
+- Fix Starstorm Crystals not dropping themselves in some cases
 
 ### Other Improvements
 

@@ -22,6 +22,7 @@ import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.entity.projectile.ThrownTrident;
 import net.minecraft.world.item.*;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
@@ -54,6 +55,7 @@ import tech.anonymoushacker1279.immersiveweapons.client.gui.overlays.DebugTracin
 import tech.anonymoushacker1279.immersiveweapons.client.gui.overlays.DebugTracingData.DebugDataPacketHandler;
 import tech.anonymoushacker1279.immersiveweapons.data.biomes.IWBiomes;
 import tech.anonymoushacker1279.immersiveweapons.data.damage_types.IWDamageTypes;
+import tech.anonymoushacker1279.immersiveweapons.entity.monster.StarmiteEntity;
 import tech.anonymoushacker1279.immersiveweapons.entity.projectile.MeteorEntity;
 import tech.anonymoushacker1279.immersiveweapons.event.game_effects.AccessoryEffects;
 import tech.anonymoushacker1279.immersiveweapons.event.game_effects.EnvironmentEffects;
@@ -502,13 +504,30 @@ public class ForgeEventSubscriber {
 
 	@SubscribeEvent
 	public static void prePistonEvent(PistonEvent.Pre event) {
+		LevelAccessor level = event.getLevel();
+
 		// Handle dropping of Starstorm Shards by crushing Starstorm Crystals from above
 		if (event.getDirection() == Direction.DOWN && event.getPistonMoveType() == PistonMoveType.EXTEND) {
 			BlockPos belowPos = event.getPos().below();
 			BlockState belowState = event.getLevel().getBlockState(belowPos);
 
-			if (belowState.getBlock() instanceof StarstormCrystalBlock crystalBlock) {
-				crystalBlock.handlePistonCrushing((Level) event.getLevel(), belowPos);
+			if (belowState.getBlock() instanceof StarstormCrystalBlock) {
+				// If the block is being destroyed by a piston that is above it, drop a Starstorm Ingot
+				ItemStack drop = new ItemStack(ItemRegistry.STARSTORM_SHARD.get());
+				drop.setCount(level.getRandom().nextIntBetweenInclusive(2, 4));
+				Block.popResource((Level) level, belowPos, drop);
+
+				// There is a 15% chance to spawn a Starmite
+				if (level.getRandom().nextFloat() <= 0.15) {
+					StarmiteEntity entity = EntityRegistry.STARMITE_ENTITY.get().create((Level) level);
+					if (entity != null) {
+						entity.moveTo(belowPos.getX(), belowPos.getY(), belowPos.getZ(), 0, 0);
+						level.addFreshEntity(entity);
+					}
+				}
+
+				// Destroy the block, and do not drop loot
+				level.destroyBlock(belowPos, false);
 			}
 		}
 	}
