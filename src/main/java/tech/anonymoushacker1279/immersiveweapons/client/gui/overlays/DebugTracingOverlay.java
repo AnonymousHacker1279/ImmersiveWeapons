@@ -4,7 +4,6 @@ import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.Font.DisplayMode;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
-import tech.anonymoushacker1279.immersiveweapons.event.game_effects.EnvironmentEffects;
 import tech.anonymoushacker1279.immersiveweapons.item.projectile.bullet.AbstractBulletItem;
 
 import java.util.ArrayList;
@@ -86,9 +85,9 @@ public class DebugTracingOverlay {
 			overlayItems.add(damageBonus);
 		}
 
-		if (EnvironmentEffects.celestialProtectionChanceForNoDamage > 0) {
+		if (DebugTracingData.CELESTIAL_PROTECTION_NO_DAMAGE_CHANCE > 0) {
 			// Convert to a percent and round to nearest 0.01
-			float noDamageChance = Math.round(EnvironmentEffects.celestialProtectionChanceForNoDamage * 100);
+			float noDamageChance = Math.round(DebugTracingData.CELESTIAL_PROTECTION_NO_DAMAGE_CHANCE * 100);
 			String celestialProtectionChanceForNoDamage = appendData(CELESTIAL_PROTECTION_CHANCE_FOR_NO_DAMAGE,
 					noDamageChance + "%");
 

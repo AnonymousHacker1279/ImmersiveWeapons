@@ -14,8 +14,8 @@ public class LootModifierRegistry {
 
 	// Loot Table Modifiers
 	public static final RegistryObject<Codec<LogShardsLootModifierHandler>> WOOD_LOGS_MODIFIER = GLOBAL_LOOT_MODIFIER_SERIALIZER.register("log_shards", LogShardsLootModifierHandler.CODEC);
-	public static final RegistryObject<Codec<AzulKeystoneFragmentInChestsLootModifierHandler>> AZUL_KEYSTONE_FRAGMENT_IN_CHESTS_MODIFIER = GLOBAL_LOOT_MODIFIER_SERIALIZER.register("azul_keystone_fragment_in_chests", AzulKeystoneFragmentInChestsLootModifierHandler.CODEC);
+	public static final RegistryObject<Codec<SimpleChestModifierHandler>> SIMPLE_CHEST_MODIFIER = GLOBAL_LOOT_MODIFIER_SERIALIZER.register("simple_chest", SimpleChestModifierHandler.CODEC);
 	public static final RegistryObject<Codec<MoltenToolSmeltingModifierHandler>> MOLTEN_TOOL_SMELTING_MODIFIER = GLOBAL_LOOT_MODIFIER_SERIALIZER.register("molten_tool_smelting", MoltenToolSmeltingModifierHandler.CODEC);
-	public static final RegistryObject<Codec<CopperRingDropLootModifierHandler>> COPPER_RING_DROP_MODIFIER = GLOBAL_LOOT_MODIFIER_SERIALIZER.register("copper_ring", CopperRingDropLootModifierHandler.CODEC);
-	public static final RegistryObject<Codec<MOADropModifierHandler>> MOA_DROP_MODIFIER = GLOBAL_LOOT_MODIFIER_SERIALIZER.register("medal_of_adequacy", MOADropModifierHandler.CODEC);
+	public static final RegistryObject<Codec<UndeadMobDropModifierHandler>> UNDEAD_MOB_DROP_MODIFIER = GLOBAL_LOOT_MODIFIER_SERIALIZER.register("undead_drop", UndeadMobDropModifierHandler.CODEC);
+	public static final RegistryObject<Codec<SimpleDropModifierHandler>> SIMPLE_DROP_MODIFIER = GLOBAL_LOOT_MODIFIER_SERIALIZER.register("simple_drop", SimpleDropModifierHandler.CODEC);
 }

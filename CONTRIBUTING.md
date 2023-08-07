@@ -43,10 +43,8 @@ Additionally, adding comments in places where the function of code is vague woul
 
 ### Feature Configurations
 
-The more a user can configure, the better. I've added the ability to configure things like structure spacing, ore
-generation settings, and entity spawns, along with a few miscellaneous client features. If you see something that would
-definitely benefit from being configurable, make it configurable! It's pretty easy to do, look at how I do it if you
-need help.
+The more a user can configure, the better. If you see something that would definitely benefit from being configurable,
+make it configurable! It's pretty easy to do, look at how I do it if you need help.
 
 ## What NOT to Contribute
 
@@ -54,9 +52,9 @@ There are a few things that don't need to be contributed.
 
 ### Bumping Dependency Versions
 
-Don't make a PR that bumps the Forge build version up from like `39.0.43` to `39.0.44`. There's just no point. Same with
-dependencies. I don't need a PR every time one of the dependencies updates! The only exception is if it fixes a reported
-bug. If that's the case, *definitely* make a PR.
+Don't make a PR that bumps a dependency version up from like `39.0.43` to `39.0.44`. There's just no point. I don't need
+a PR every time one of the dependencies updates! The only exception is if it fixes a reported bug. If that's the case,
+*definitely* make a PR.
 
 ### Minor Code Cleanups
 
@@ -121,9 +119,9 @@ As with any project you'll need some resources to prepare the development enviro
 
 ### Integrated Development Environment (IDE)
 
-The IDE you use really shouldn't matter that much. The two IDEs with support from Forge are Eclipse and IntelliJ IDEA.
-While Eclipse works for the most part I find that IDEA is much more professional and offers many more helpful tools.
-While I highly recommend IDEA, if you are more comfortable with Eclipse, use that instead.
+The IDE you use really shouldn't matter that much. The two IDEs with support from NeoForge are Eclipse and IntelliJ
+IDEA. While Eclipse works for the most part I find that IDEA is much more professional and offers many more helpful
+tools. Though I highly recommend IDEA, if you are more comfortable with Eclipse, use that instead.
 
 ### Git
 
@@ -147,7 +145,7 @@ Specific language features you need:
 
 - The Basics: Classes, Primitives, Methods, Variables
 - Functional Java: Lambda Expressions, Method References, Streams (Java 8+)
-- Forge Specifics: Registration, Events, Annotations
+- NeoForge Specifics: Registration, Events, Annotations
 
 While most of these are Java 8 language features, if you are working in a version of Minecraft that uses a newer Java
 version (i.e., 1.18 uses Java 17), you can (and probably should) make use of those features. A lot of times your IDE

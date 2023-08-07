@@ -5,40 +5,43 @@ import com.google.gson.JsonParseException;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
+import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.MobType;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.storage.loot.LootContext;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
 import net.minecraftforge.common.loot.IGlobalLootModifier;
 import net.minecraftforge.common.loot.LootModifier;
+import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.NotNull;
-import tech.anonymoushacker1279.immersiveweapons.init.ItemRegistry;
 
 import java.util.function.Supplier;
 
-public class MOADropModifierHandler extends LootModifier {
+public class UndeadMobDropModifierHandler extends LootModifier {
 
-	public static final Supplier<Codec<MOADropModifierHandler>> CODEC = Suppliers.memoize(() ->
+	public static final Supplier<Codec<UndeadMobDropModifierHandler>> CODEC = Suppliers.memoize(() ->
 			RecordCodecBuilder.create(inst -> codecStart(inst).and(
-							Codec.FLOAT.fieldOf("drop_chance").forGetter(m -> m.dropChance))
-					.apply(inst, MOADropModifierHandler::new)
+							ItemStack.CODEC.fieldOf("item").forGetter(m -> m.itemStack))
+					.apply(inst, UndeadMobDropModifierHandler::new)
 			));
 
-	private final float dropChance;
+	private final ItemStack itemStack;
 
-	public MOADropModifierHandler(LootItemCondition[] conditionsIn, float dropChance) {
+	public UndeadMobDropModifierHandler(LootItemCondition[] conditionsIn, ItemStack itemStack) {
 		super(conditionsIn);
-		this.dropChance = dropChance;
+		this.itemStack = itemStack;
 
-		if (dropChance < 0.0f || dropChance > 1.0f) {
-			throw new JsonParseException("drop_chance must be between 0.0 and 1.0");
+		if (!ForgeRegistries.ITEMS.containsValue(itemStack.getItem())) {
+			throw new JsonParseException("item must exist in the registry");
 		}
 	}
 
 	@Override
 	protected @NotNull ObjectArrayList<ItemStack> doApply(ObjectArrayList<ItemStack> generatedLoot, LootContext context) {
-		if (context.getRandom().nextFloat() <= dropChance) {
-			// Add the Medal of Adequacy to the loot
-			generatedLoot.add(new ItemStack(ItemRegistry.MEDAL_OF_ADEQUACY.get()));
+		// Check if the entity is undead
+		if (context.getParamOrNull(LootContextParams.THIS_ENTITY) instanceof Mob mob && mob.getMobType() == MobType.UNDEAD) {
+			generatedLoot.add(itemStack);
 		}
 
 		return generatedLoot;

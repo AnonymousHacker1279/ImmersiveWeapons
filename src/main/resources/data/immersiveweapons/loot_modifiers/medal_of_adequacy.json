@@ -11,6 +11,9 @@
 			}
 		}
 	],
-	"drop_chance": 1.0,
-	"type": "immersiveweapons:medal_of_adequacy"
+	"item": {
+		"id": "immersiveweapons:medal_of_adequacy",
+		"Count": 1
+	},
+	"type": "immersiveweapons:simple_drop"
 }

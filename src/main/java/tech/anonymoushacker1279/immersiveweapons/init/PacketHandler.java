@@ -14,7 +14,6 @@ import tech.anonymoushacker1279.immersiveweapons.entity.neutral.AbstractFieldMed
 import tech.anonymoushacker1279.immersiveweapons.entity.projectile.SmokeGrenadeEntity.SmokeGrenadeEntityPacketHandler;
 import tech.anonymoushacker1279.immersiveweapons.entity.projectile.bullet.BulletEntity.BulletEntityPacketHandler;
 import tech.anonymoushacker1279.immersiveweapons.event.SyncPlayerDataPacketHandler;
-import tech.anonymoushacker1279.immersiveweapons.event.game_effects.EnvironmentEffects.EnvironmentEffectsPacketHandler;
 import tech.anonymoushacker1279.immersiveweapons.item.armor.AstralArmorItem.AstralArmorItemPacketHandler;
 import tech.anonymoushacker1279.immersiveweapons.item.armor.CobaltArmorItem.CobaltArmorItemPacketHandler;
 import tech.anonymoushacker1279.immersiveweapons.item.armor.TeslaArmorItem.TeslaArmorItemPacketHandler;
@@ -115,12 +114,6 @@ public class PacketHandler {
 				BulletEntityPacketHandler::encode,
 				BulletEntityPacketHandler::decode,
 				BulletEntityPacketHandler::handle
-		);
-		PacketHandler.INSTANCE.registerMessage(networkId++,
-				EnvironmentEffectsPacketHandler.class,
-				EnvironmentEffectsPacketHandler::encode,
-				EnvironmentEffectsPacketHandler::decode,
-				EnvironmentEffectsPacketHandler::handle
 		);
 		PacketHandler.INSTANCE.registerMessage(networkId++,
 				SyncPlayerDataPacketHandler.class,

@@ -4,6 +4,7 @@
 
 [![](http://cf.way2muchnoise.eu/full_494454_Downloads.svg)](https://www.curseforge.com/minecraft/mc-mods/immersive-weapons)
 [![](http://cf.way2muchnoise.eu/versions/494454.svg)](https://www.curseforge.com/minecraft/mc-mods/immersive-weapons)
+[![](https://img.shields.io/modrinth/dt/QZFdnUQ5?logo=modrinth)](https://modrinth.com/mod/immersive-weapons)
 [![CodeFactor](https://www.codefactor.io/repository/github/anonymoushacker1279/immersiveweapons/badge/master)](https://www.codefactor.io/repository/github/anonymoushacker1279/immersiveweapons/overview/master)
 [![Discord](https://img.shields.io/discord/871953129355214858?color=2a3445)](https://discord.gg/WNMCTg7TsT)
 
@@ -23,15 +24,18 @@ A few things that will be the highlight of your experience:
 - Tiered Gauntlets, so you can punch someone that isn't way over there, but not over there enough to use a sword
 - Medical Equipment, so you can survive getting stabbed, shot, and sliced
 - Environmental Traps, so you can stop people from coming over to stab, shoot, and slice you
+- Accessories, to improve your ability to stab, shoot, and slice people (or to improve your ability to not get stabbed,
+  shot, and sliced)
 
 A few other notes:
 
-- I only intend to work on the latest versions of Minecraft. Don't ask about porting to old versions.
-- This is for the Forge modloading platform. No, I don't plan to port to Fabric, don't ask about it.
+- I only intend to work on the latest versions of Minecraft. Please don't ask about porting to old versions.
+- This is for the NeoForge modloading platform. I have no plans to port to other modloaders.
 - Yes, you can include it in modpacks, provided it is open source and doesn't have an installer.
-- This is open source. If you want to port to old versions or to Fabric, do it yourself.
+- This is open source. If you want to port to old versions or to another loader, that's fine, but I cannot help with
+  that.
 - This is NOT to be reposted to any mod reposting websites. The only places you should download this mod are the
-  CurseForge page, and this GitHub repository. #StopModReposts
+  CurseForge page, the Modrinth page, or this GitHub repository. #StopModReposts
 
 [Interested in the development of this project, or just want to hang out? Join the Official Discord server](https://discord.gg/WNMCTg7TsT)
 
@@ -74,6 +78,18 @@ community describe an interest in it (This excludes versions listed as **N/A - B
 | 1.16.4     | [1.1.1](https://github.com/AnonymousHacker1279/ImmersiveWeapons/releases/tag/v1.1.1)                         |
 | 1.15.2     | [N/A - Build From Source](https://github.com/AnonymousHacker1279/ImmersiveWeapons/tree/1.15.2-dev)           |
 
+### NeoForge vs Forge
+
+Immersive Weapons versions including and prior to v1.24.x were designed for the classic Forge modloader. However, as of
+v1.25.0, Immersive Weapons is now designed for the NeoForge modloader. The reason for this can be found on the Neoforged
+[project blog](https://neoforged.net/news/theproject/). It is expected that a majority of the existing Forge community
+will migrate to NeoForge.
+
+At the current moment, both versions seem to be mostly compatible with each other, however this is not guaranteed. If
+you experience issues on Forge, please try using NeoForge first before reporting anything. This compatibility will
+likely break in the next version of MC (currently 1.20.1). I will not maintain two separate versions of Immersive
+Weapons for Forge and NeoForge.
+
 ## Contributing
 
 See [CONTRIBUTING.md](https://github.com/AnonymousHacker1279/ImmersiveWeapons/blob/master/CONTRIBUTING.md).
@@ -90,21 +106,27 @@ Bug reports and feature suggestions are welcomed. However, there are a few thing
 Specifically for bug reports:
 
 - **Version Information**. You need to list the Minecraft version you are using, the Immersive Weapons version, and the
-  Forge version.
+  NeoForge version.
 - **Debug logs**. You MUST upload your debug log. Otherwise, I won't be able to determine what isn't working. The bug
   report template lists where to find them at.
 
 **Providing the requested information at the beginning can make the difference between a three-hour update and a
 three-day update.**
 
-Before making a report, update to the latest version of Immersive Weapons and Forge. It's possible that what you're
+Before making a report, update to the latest version of Immersive Weapons and NeoForge. It's possible that what you're
 looking for was merged into a newer release.
+
+## License
+
+Immersive Weapons is [MIT licensed](https://github.com/AnonymousHacker1279/ImmersiveWeapons/blob/master/LICENSE),
+excluding its assets, which
+are [CC-BY-NC-SA licensed](https://github.com/AnonymousHacker1279/ImmersiveWeapons/blob/master/src/main/resources/assets/immersiveweapons/LICENSE).
 
 ## Translations
 
-Some translations other than English were generated automatically using
-my [Mr. Worldwide](https://github.com/AnonymousHacker1279/MrWorldwide) toolkit. They are probably not too accurate,
-and I don't have the time to fix them. I have not generated any other translations in a long time as the toolkit proved
-to be too unreliable.
+Some translations (`es_es` and `ru_ru`) were generated automatically using
+my (now decrepit) [Mr. Worldwide](https://github.com/AnonymousHacker1279/MrWorldwide) toolkit. They are probably not too
+accurate, and I don't have the time to fix them. I have not generated any other translations in a long time as the
+toolkit proved to be too unreliable.
 
 If you want to clean up the translations then please go ahead and make a contribution. I appreciate it.

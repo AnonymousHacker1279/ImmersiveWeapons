@@ -1,13 +1,10 @@
 package tech.anonymoushacker1279.immersiveweapons.init;
 
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.item.alchemy.PotionUtils;
+import net.minecraft.world.item.alchemy.PotionBrewing;
 import net.minecraft.world.item.alchemy.Potions;
-import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.FlowerPotBlock;
-import net.minecraftforge.common.brewing.BrewingRecipeRegistry;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.item.materials.CustomArmorMaterials;
 
@@ -45,30 +42,39 @@ public class PostSetupHandler {
 
 		// Set brewing recipes, as these are not done via JSON like other recipes
 		// Celestial potions
-		BrewingRecipeRegistry.addRecipe(Ingredient.of(PotionUtils.setPotion(new ItemStack(Items.POTION), Potions.AWKWARD)),
-				Ingredient.of(BlockItemRegistry.MOONGLOW_ITEM.get()),
-				PotionUtils.setPotion(new ItemStack(Items.POTION), PotionRegistry.CELESTIAL_BREW_POTION.get()));
-		BrewingRecipeRegistry.addRecipe(Ingredient.of(PotionUtils.setPotion(new ItemStack(Items.POTION), PotionRegistry.CELESTIAL_BREW_POTION.get())),
-				Ingredient.of(Items.REDSTONE),
-				PotionUtils.setPotion(new ItemStack(Items.POTION), PotionRegistry.LONG_CELESTIAL_BREW_POTION.get()));
+		PotionBrewing.addMix(
+				Potions.AWKWARD,
+				BlockItemRegistry.MOONGLOW_ITEM.get(),
+				PotionRegistry.CELESTIAL_BREW_POTION.get());
+		PotionBrewing.addMix(
+				PotionRegistry.CELESTIAL_BREW_POTION.get(),
+				Items.REDSTONE,
+				PotionRegistry.LONG_CELESTIAL_BREW_POTION.get());
+
 		// Death potions
-		BrewingRecipeRegistry.addRecipe(Ingredient.of(PotionUtils.setPotion(new ItemStack(Items.POTION), Potions.AWKWARD)),
-				Ingredient.of(BlockItemRegistry.DEATHWEED_ITEM.get()),
-				PotionUtils.setPotion(new ItemStack(Items.POTION), PotionRegistry.DEATH_POTION.get()));
-		BrewingRecipeRegistry.addRecipe(Ingredient.of(PotionUtils.setPotion(new ItemStack(Items.POTION), PotionRegistry.DEATH_POTION.get())),
-				Ingredient.of(Items.GLOWSTONE_DUST),
-				PotionUtils.setPotion(new ItemStack(Items.POTION), PotionRegistry.STRONG_DEATH_POTION.get()));
-		BrewingRecipeRegistry.addRecipe(Ingredient.of(PotionUtils.setPotion(new ItemStack(Items.POTION), PotionRegistry.DEATH_POTION.get())),
-				Ingredient.of(Items.REDSTONE),
-				PotionUtils.setPotion(new ItemStack(Items.POTION), PotionRegistry.LONG_DEATH_POTION.get()));
-		BrewingRecipeRegistry.addRecipe(Ingredient.of(PotionUtils.setPotion(new ItemStack(Items.POTION), Potions.STRENGTH)),
-				Ingredient.of(Items.FERMENTED_SPIDER_EYE),
-				PotionUtils.setPotion(new ItemStack(Items.POTION), PotionRegistry.DEATH_POTION.get()));
-		BrewingRecipeRegistry.addRecipe(Ingredient.of(PotionUtils.setPotion(new ItemStack(Items.POTION), Potions.STRONG_STRENGTH)),
-				Ingredient.of(Items.FERMENTED_SPIDER_EYE),
-				PotionUtils.setPotion(new ItemStack(Items.POTION), PotionRegistry.STRONG_DEATH_POTION.get()));
-		BrewingRecipeRegistry.addRecipe(Ingredient.of(PotionUtils.setPotion(new ItemStack(Items.POTION), Potions.LONG_STRENGTH)),
-				Ingredient.of(Items.FERMENTED_SPIDER_EYE),
-				PotionUtils.setPotion(new ItemStack(Items.POTION), PotionRegistry.LONG_DEATH_POTION.get()));
+		PotionBrewing.addMix(
+				Potions.AWKWARD,
+				BlockItemRegistry.DEATHWEED_ITEM.get(),
+				PotionRegistry.DEATH_POTION.get());
+		PotionBrewing.addMix(
+				PotionRegistry.DEATH_POTION.get(),
+				Items.GLOWSTONE_DUST,
+				PotionRegistry.STRONG_DEATH_POTION.get());
+		PotionBrewing.addMix(
+				PotionRegistry.DEATH_POTION.get(),
+				Items.REDSTONE,
+				PotionRegistry.LONG_DEATH_POTION.get());
+		PotionBrewing.addMix(
+				Potions.STRENGTH,
+				Items.FERMENTED_SPIDER_EYE,
+				PotionRegistry.DEATH_POTION.get());
+		PotionBrewing.addMix(
+				Potions.STRONG_STRENGTH,
+				Items.FERMENTED_SPIDER_EYE,
+				PotionRegistry.STRONG_DEATH_POTION.get());
+		PotionBrewing.addMix(
+				Potions.LONG_STRENGTH,
+				Items.FERMENTED_SPIDER_EYE,
+				PotionRegistry.LONG_DEATH_POTION.get());
 	}
 }

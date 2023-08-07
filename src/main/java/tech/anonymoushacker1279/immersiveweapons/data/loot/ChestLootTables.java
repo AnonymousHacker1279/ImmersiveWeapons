@@ -34,7 +34,9 @@ public class ChestLootTables implements LootTableSubProvider {
 								.add(LootItem.lootTableItem(Items.GOLD_NUGGET).setWeight(8)
 										.apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 3.0F))))
 								.add(LootItem.lootTableItem(ItemRegistry.COPPER_PICKAXE.get()).setWeight(5)
-										.apply(EnchantRandomlyFunction.randomApplicableEnchantment()))
+										.apply(EnchantWithLevelsFunction.enchantWithLevels(
+												UniformGenerator.between(5.0F, 15.0F)
+										)))
 								.add(LootItem.lootTableItem(ItemRegistry.OBSIDIAN_SHARD.get()).setWeight(4))
 								.add(LootItem.lootTableItem(Items.GOLDEN_CARROT).setWeight(3)
 										.apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 5.0F))))
@@ -54,7 +56,9 @@ public class ChestLootTables implements LootTableSubProvider {
 								.add(LootItem.lootTableItem(Items.ROTTEN_FLESH).setWeight(10)
 										.apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 6.0F))))
 								.add(LootItem.lootTableItem(ItemRegistry.COPPER_SHOVEL.get()).setWeight(6)
-										.apply(EnchantRandomlyFunction.randomApplicableEnchantment()))
+										.apply(EnchantWithLevelsFunction.enchantWithLevels(
+												UniformGenerator.between(3.0F, 10.0F)
+										)))
 								.add(LootItem.lootTableItem(Items.IRON_INGOT).setWeight(4)
 										.apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0f, 3.0f))))
 								.add(LootItem.lootTableItem(Items.EMERALD).setWeight(3))
@@ -74,12 +78,15 @@ public class ChestLootTables implements LootTableSubProvider {
 								.add(LootItem.lootTableItem(ItemRegistry.CLOTH_SCRAP.get()).setWeight(10)
 										.apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 6.0F))))
 								.add(LootItem.lootTableItem(ItemRegistry.COPPER_AXE.get()).setWeight(6)
-										.apply(EnchantRandomlyFunction.randomApplicableEnchantment()))
+										.apply(EnchantWithLevelsFunction.enchantWithLevels(
+												UniformGenerator.between(3.0F, 10.0F)
+										)))
 								.add(LootItem.lootTableItem(Items.IRON_INGOT).setWeight(4)
 										.apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0f, 3.0f))))
 								.add(LootItem.lootTableItem(ItemRegistry.FLARE.get()).setWeight(3)
 										.apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0f, 4.0f))))
-								.add(LootItem.lootTableItem(ItemRegistry.FLARE_GUN.get()).setWeight(1))));
+								.add(LootItem.lootTableItem(ItemRegistry.FLARE_GUN.get()).setWeight(1))
+								.add(LootItem.lootTableItem(ItemRegistry.AGILITY_BRACELET.get()).setWeight(1))));
 
 		out.accept(LootTableLocations.UNDERGROUND_BUNKER,
 				LootTable.lootTable()
@@ -95,7 +102,9 @@ public class ChestLootTables implements LootTableSubProvider {
 								.add(LootItem.lootTableItem(Items.ROTTEN_FLESH).setWeight(10)
 										.apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 6.0F))))
 								.add(LootItem.lootTableItem(Items.IRON_PICKAXE).setWeight(6)
-										.apply(EnchantRandomlyFunction.randomApplicableEnchantment()))
+										.apply(EnchantWithLevelsFunction.enchantWithLevels(
+												UniformGenerator.between(5.0F, 15.0F)
+										)))
 								.add(LootItem.lootTableItem(Items.IRON_INGOT).setWeight(4)
 										.apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0f, 3.0f))))
 								.add(LootItem.lootTableItem(ItemRegistry.FLINTLOCK_PISTOL.get()).setWeight(2))
@@ -113,8 +122,9 @@ public class ChestLootTables implements LootTableSubProvider {
 								.add(LootItem.lootTableItem(Items.APPLE).setWeight(7)
 										.apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 3.0F))))
 								.add(LootItem.lootTableItem(Items.IRON_AXE).setWeight(4)
-										.apply(EnchantRandomlyFunction.randomApplicableEnchantment())
-										.apply(SetNameFunction
+										.apply(EnchantWithLevelsFunction.enchantWithLevels(
+												UniformGenerator.between(10.0F, 20.0F)
+										)).apply(SetNameFunction
 												.setName(Component.translatable("loot.immersiveweapons.chest.village.battlefield.medic_station.iron_axe")
 														.withStyle(ChatFormatting.RED))))
 								.add(LootItem.lootTableItem(ItemRegistry.USED_SYRINGE.get()).setWeight(4)
@@ -138,11 +148,12 @@ public class ChestLootTables implements LootTableSubProvider {
 										.apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0f, 3.0f))))
 								.add(LootItem.lootTableItem(Items.IRON_SWORD).setWeight(3)
 										.apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0f, 1.0f)))
-										.apply(EnchantRandomlyFunction.randomApplicableEnchantment()))
+										.apply(EnchantWithLevelsFunction.enchantWithLevels(
+												UniformGenerator.between(15.0F, 25.0F)
+										)))
 								.add(LootItem.lootTableItem(Items.IRON_HELMET).setWeight(2)
 										.apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0f, 1.0f)))
 										.apply(EnchantRandomlyFunction.randomApplicableEnchantment()))));
-
 
 		out.accept(LootTableLocations.HANS_HUT_CASK,
 				LootTable.lootTable()
@@ -154,7 +165,6 @@ public class ChestLootTables implements LootTableSubProvider {
 								.add(LootItem.lootTableItem(Items.SWEET_BERRIES).setWeight(1)
 										.apply(SetItemCountFunction.setCount(UniformGenerator.between(8.0f, 16.0f))))));
 
-
 		out.accept(LootTableLocations.BIODOME_CHEST,
 				LootTable.lootTable()
 						.withPool(LootPool.lootPool()
@@ -162,49 +172,74 @@ public class ChestLootTables implements LootTableSubProvider {
 								.setRolls(UniformGenerator.between(3.0F, 5.0F))
 								.add(LootItem.lootTableItem(ItemRegistry.COBALT_SWORD.get()).setWeight(4)
 										.apply(SetItemCountFunction.setCount(ConstantValue.exactly(1)))
-										.apply(EnchantRandomlyFunction.randomApplicableEnchantment()))
+										.apply(EnchantWithLevelsFunction.enchantWithLevels(
+												UniformGenerator.between(15.0F, 20.0F)
+										)))
 								.add(LootItem.lootTableItem(ItemRegistry.COBALT_PICKAXE.get()).setWeight(4)
 										.apply(SetItemCountFunction.setCount(ConstantValue.exactly(1)))
-										.apply(EnchantRandomlyFunction.randomApplicableEnchantment()))
+										.apply(EnchantWithLevelsFunction.enchantWithLevels(
+												UniformGenerator.between(15.0F, 20.0F)
+										)))
 								.add(LootItem.lootTableItem(ItemRegistry.COBALT_SHOVEL.get()).setWeight(4)
 										.apply(SetItemCountFunction.setCount(ConstantValue.exactly(1)))
-										.apply(EnchantRandomlyFunction.randomApplicableEnchantment()))
+										.apply(EnchantWithLevelsFunction.enchantWithLevels(
+												UniformGenerator.between(15.0F, 20.0F)
+										)))
 								.add(LootItem.lootTableItem(ItemRegistry.COBALT_AXE.get()).setWeight(4)
 										.apply(SetItemCountFunction.setCount(ConstantValue.exactly(1)))
-										.apply(EnchantRandomlyFunction.randomApplicableEnchantment()))
+										.apply(EnchantWithLevelsFunction.enchantWithLevels(
+												UniformGenerator.between(15.0F, 20.0F)
+										)))
 								.add(LootItem.lootTableItem(ItemRegistry.COBALT_HOE.get()).setWeight(4)
 										.apply(SetItemCountFunction.setCount(ConstantValue.exactly(1)))
-										.apply(EnchantRandomlyFunction.randomApplicableEnchantment()))
+										.apply(EnchantWithLevelsFunction.enchantWithLevels(
+												UniformGenerator.between(15.0F, 20.0F)
+										)))
 								.add(LootItem.lootTableItem(ItemRegistry.COBALT_HELMET.get()).setWeight(4)
 										.apply(SetItemCountFunction.setCount(ConstantValue.exactly(1)))
-										.apply(EnchantRandomlyFunction.randomApplicableEnchantment()))
+										.apply(EnchantWithLevelsFunction.enchantWithLevels(
+												UniformGenerator.between(15.0F, 20.0F)
+										)))
 								.add(LootItem.lootTableItem(ItemRegistry.COBALT_CHESTPLATE.get()).setWeight(4)
 										.apply(SetItemCountFunction.setCount(ConstantValue.exactly(1)))
-										.apply(EnchantRandomlyFunction.randomApplicableEnchantment()))
+										.apply(EnchantWithLevelsFunction.enchantWithLevels(
+												UniformGenerator.between(15.0F, 20.0F)
+										)))
 								.add(LootItem.lootTableItem(ItemRegistry.COBALT_LEGGINGS.get()).setWeight(4)
 										.apply(SetItemCountFunction.setCount(ConstantValue.exactly(1)))
-										.apply(EnchantRandomlyFunction.randomApplicableEnchantment()))
+										.apply(EnchantWithLevelsFunction.enchantWithLevels(
+												UniformGenerator.between(15.0F, 20.0F)
+										)))
 								.add(LootItem.lootTableItem(ItemRegistry.COBALT_BOOTS.get()).setWeight(4)
 										.apply(SetItemCountFunction.setCount(ConstantValue.exactly(1)))
-										.apply(EnchantRandomlyFunction.randomApplicableEnchantment()))
+										.apply(EnchantWithLevelsFunction.enchantWithLevels(
+												UniformGenerator.between(15.0F, 20.0F)
+										)))
 								.add(LootItem.lootTableItem(Items.BOW).setWeight(3)
 										.apply(SetItemCountFunction.setCount(ConstantValue.exactly(1)))
-										.apply(EnchantRandomlyFunction.randomApplicableEnchantment()))
+										.apply(EnchantWithLevelsFunction.enchantWithLevels(
+												UniformGenerator.between(15.0F, 20.0F)
+										)))
 								.add(LootItem.lootTableItem(ItemRegistry.COBALT_ARROW.get()).setWeight(3)
 										.apply(SetItemCountFunction.setCount(UniformGenerator.between(8.0f, 32.0f))))
 								.add(LootItem.lootTableItem(Items.CROSSBOW).setWeight(3)
 										.apply(SetItemCountFunction.setCount(ConstantValue.exactly(1)))
-										.apply(EnchantRandomlyFunction.randomApplicableEnchantment()))
+										.apply(EnchantWithLevelsFunction.enchantWithLevels(
+												UniformGenerator.between(15.0F, 20.0F)
+										)))
 								.add(LootItem.lootTableItem(ItemRegistry.FLINTLOCK_PISTOL.get()).setWeight(2)
 										.apply(SetItemCountFunction.setCount(ConstantValue.exactly(1)))
-										.apply(EnchantRandomlyFunction.randomApplicableEnchantment()))
+										.apply(EnchantWithLevelsFunction.enchantWithLevels(
+												UniformGenerator.between(15.0F, 20.0F)
+										)))
 								.add(LootItem.lootTableItem(ItemRegistry.MUSKET.get()).setWeight(2)
 										.apply(SetItemCountFunction.setCount(ConstantValue.exactly(1)))
-										.apply(EnchantRandomlyFunction.randomApplicableEnchantment()))
+										.apply(EnchantWithLevelsFunction.enchantWithLevels(
+												UniformGenerator.between(15.0F, 20.0F)
+										)))
 								.add(LootItem.lootTableItem(ItemRegistry.COBALT_INGOT.get()).setWeight(6)
 										.apply(SetItemCountFunction.setCount(UniformGenerator.between(4.0f, 12.0f))))
 						));
-
 
 		out.accept(LootTableLocations.BIODOME_MEDICINE_BARREL,
 				LootTable.lootTable()

@@ -72,7 +72,13 @@
           "type": "minecraft:item",
           "functions": [
             {
-              "function": "minecraft:enchant_randomly"
+              "function": "minecraft:enchant_with_levels",
+              "levels": {
+                "type": "minecraft:uniform",
+                "max": 15.0,
+                "min": 5.0
+              },
+              "treasure": false
             }
           ],
           "name": "immersiveweapons:copper_pickaxe",

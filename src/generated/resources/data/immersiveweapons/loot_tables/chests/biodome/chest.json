@@ -13,7 +13,13 @@
               "function": "minecraft:set_count"
             },
             {
-              "function": "minecraft:enchant_randomly"
+              "function": "minecraft:enchant_with_levels",
+              "levels": {
+                "type": "minecraft:uniform",
+                "max": 20.0,
+                "min": 15.0
+              },
+              "treasure": false
             }
           ],
           "name": "immersiveweapons:cobalt_sword",
@@ -28,7 +34,13 @@
               "function": "minecraft:set_count"
             },
             {
-              "function": "minecraft:enchant_randomly"
+              "function": "minecraft:enchant_with_levels",
+              "levels": {
+                "type": "minecraft:uniform",
+                "max": 20.0,
+                "min": 15.0
+              },
+              "treasure": false
             }
           ],
           "name": "immersiveweapons:cobalt_pickaxe",
@@ -43,7 +55,13 @@
               "function": "minecraft:set_count"
             },
             {
-              "function": "minecraft:enchant_randomly"
+              "function": "minecraft:enchant_with_levels",
+              "levels": {
+                "type": "minecraft:uniform",
+                "max": 20.0,
+                "min": 15.0
+              },
+              "treasure": false
             }
           ],
           "name": "immersiveweapons:cobalt_shovel",
@@ -58,7 +76,13 @@
               "function": "minecraft:set_count"
             },
             {
-              "function": "minecraft:enchant_randomly"
+              "function": "minecraft:enchant_with_levels",
+              "levels": {
+                "type": "minecraft:uniform",
+                "max": 20.0,
+                "min": 15.0
+              },
+              "treasure": false
             }
           ],
           "name": "immersiveweapons:cobalt_axe",
@@ -73,7 +97,13 @@
               "function": "minecraft:set_count"
             },
             {
-              "function": "minecraft:enchant_randomly"
+              "function": "minecraft:enchant_with_levels",
+              "levels": {
+                "type": "minecraft:uniform",
+                "max": 20.0,
+                "min": 15.0
+              },
+              "treasure": false
             }
           ],
           "name": "immersiveweapons:cobalt_hoe",
@@ -88,7 +118,13 @@
               "function": "minecraft:set_count"
             },
             {
-              "function": "minecraft:enchant_randomly"
+              "function": "minecraft:enchant_with_levels",
+              "levels": {
+                "type": "minecraft:uniform",
+                "max": 20.0,
+                "min": 15.0
+              },
+              "treasure": false
             }
           ],
           "name": "immersiveweapons:cobalt_helmet",
@@ -103,7 +139,13 @@
               "function": "minecraft:set_count"
             },
             {
-              "function": "minecraft:enchant_randomly"
+              "function": "minecraft:enchant_with_levels",
+              "levels": {
+                "type": "minecraft:uniform",
+                "max": 20.0,
+                "min": 15.0
+              },
+              "treasure": false
             }
           ],
           "name": "immersiveweapons:cobalt_chestplate",
@@ -118,7 +160,13 @@
               "function": "minecraft:set_count"
             },
             {
-              "function": "minecraft:enchant_randomly"
+              "function": "minecraft:enchant_with_levels",
+              "levels": {
+                "type": "minecraft:uniform",
+                "max": 20.0,
+                "min": 15.0
+              },
+              "treasure": false
             }
           ],
           "name": "immersiveweapons:cobalt_leggings",
@@ -133,7 +181,13 @@
               "function": "minecraft:set_count"
             },
             {
-              "function": "minecraft:enchant_randomly"
+              "function": "minecraft:enchant_with_levels",
+              "levels": {
+                "type": "minecraft:uniform",
+                "max": 20.0,
+                "min": 15.0
+              },
+              "treasure": false
             }
           ],
           "name": "immersiveweapons:cobalt_boots",
@@ -148,7 +202,13 @@
               "function": "minecraft:set_count"
             },
             {
-              "function": "minecraft:enchant_randomly"
+              "function": "minecraft:enchant_with_levels",
+              "levels": {
+                "type": "minecraft:uniform",
+                "max": 20.0,
+                "min": 15.0
+              },
+              "treasure": false
             }
           ],
           "name": "minecraft:bow",
@@ -179,7 +239,13 @@
               "function": "minecraft:set_count"
             },
             {
-              "function": "minecraft:enchant_randomly"
+              "function": "minecraft:enchant_with_levels",
+              "levels": {
+                "type": "minecraft:uniform",
+                "max": 20.0,
+                "min": 15.0
+              },
+              "treasure": false
             }
           ],
           "name": "minecraft:crossbow",
@@ -194,7 +260,13 @@
               "function": "minecraft:set_count"
             },
             {
-              "function": "minecraft:enchant_randomly"
+              "function": "minecraft:enchant_with_levels",
+              "levels": {
+                "type": "minecraft:uniform",
+                "max": 20.0,
+                "min": 15.0
+              },
+              "treasure": false
             }
           ],
           "name": "immersiveweapons:flintlock_pistol",
@@ -209,7 +281,13 @@
               "function": "minecraft:set_count"
             },
             {
-              "function": "minecraft:enchant_randomly"
+              "function": "minecraft:enchant_with_levels",
+              "levels": {
+                "type": "minecraft:uniform",
+                "max": 20.0,
+                "min": 15.0
+              },
+              "treasure": false
             }
           ],
           "name": "immersiveweapons:musket",

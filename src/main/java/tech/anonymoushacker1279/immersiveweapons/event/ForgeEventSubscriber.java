@@ -10,6 +10,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.stats.Stats;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.*;
@@ -21,6 +22,7 @@ import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.entity.projectile.ThrownTrident;
 import net.minecraft.world.item.*;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
@@ -53,6 +55,7 @@ import tech.anonymoushacker1279.immersiveweapons.client.gui.overlays.DebugTracin
 import tech.anonymoushacker1279.immersiveweapons.client.gui.overlays.DebugTracingData.DebugDataPacketHandler;
 import tech.anonymoushacker1279.immersiveweapons.data.biomes.IWBiomes;
 import tech.anonymoushacker1279.immersiveweapons.data.damage_types.IWDamageTypes;
+import tech.anonymoushacker1279.immersiveweapons.entity.monster.StarmiteEntity;
 import tech.anonymoushacker1279.immersiveweapons.entity.projectile.MeteorEntity;
 import tech.anonymoushacker1279.immersiveweapons.event.game_effects.AccessoryEffects;
 import tech.anonymoushacker1279.immersiveweapons.event.game_effects.EnvironmentEffects;
@@ -82,6 +85,13 @@ public class ForgeEventSubscriber {
 	public static final UUID JONNYS_CURSE_SPEED_MODIFIER_UUID = UUID.fromString("c74619c0-b953-4ee7-a3d7-adf974c22d7d");
 	public static final AttributeModifier JONNYS_CURSE_SPEED_MODIFIER = new AttributeModifier(JONNYS_CURSE_SPEED_MODIFIER_UUID,
 			"Jonny's Curse reduction", -0.25d, Operation.MULTIPLY_BASE);
+
+	public static final UUID AGILITY_BRACELET_SPEED_MODIFIER_UUID = UUID.fromString("0360d69c-bf02-4dc3-a64f-86d9a9b345cd");
+	public static final AttributeModifier AGILITY_BRACELET_SPEED_MODIFIER = new AttributeModifier(AGILITY_BRACELET_SPEED_MODIFIER_UUID,
+			"Agility Bracelet boost", 0.05d, Operation.MULTIPLY_BASE);
+	public static final UUID AGILITY_BRACELET_STEP_HEIGHT_MODIFIER_UUID = UUID.fromString("57108471-149e-4d4a-829b-e38632429f57");
+	public static final AttributeModifier AGILITY_BRACELET_STEP_HEIGHT_MODIFIER = new AttributeModifier(AGILITY_BRACELET_STEP_HEIGHT_MODIFIER_UUID,
+			"Agility Bracelet boost", 0.5d, Operation.ADDITION);
 
 	@SubscribeEvent
 	public static void registerGuiOverlaysEvent(RegisterGuiOverlaysEvent event) {
@@ -229,10 +239,51 @@ public class ForgeEventSubscriber {
 				}
 			}
 
+			// Handle increased speed / step height bonus effects of the Agility Bracelet
+			AttributeInstance movementSpeed = player.getAttributes().getInstance(Attributes.MOVEMENT_SPEED);
+			AttributeInstance stepHeight = player.getAttributes().getInstance(ForgeMod.STEP_HEIGHT_ADDITION.get());
+			if (movementSpeed != null && stepHeight != null) {
+				if (AccessoryItem.isAccessoryActive(player, ItemRegistry.AGILITY_BRACELET.get())) {
+					if (!movementSpeed.hasModifier(AGILITY_BRACELET_SPEED_MODIFIER) && !stepHeight.hasModifier(AGILITY_BRACELET_STEP_HEIGHT_MODIFIER)) {
+						movementSpeed.addTransientModifier(AGILITY_BRACELET_SPEED_MODIFIER);
+						stepHeight.addTransientModifier(AGILITY_BRACELET_STEP_HEIGHT_MODIFIER);
+					}
+				} else if (movementSpeed.hasModifier(AGILITY_BRACELET_SPEED_MODIFIER) && stepHeight.hasModifier(AGILITY_BRACELET_STEP_HEIGHT_MODIFIER)) {
+					movementSpeed.removeModifier(AGILITY_BRACELET_SPEED_MODIFIER);
+					stepHeight.removeModifier(AGILITY_BRACELET_STEP_HEIGHT_MODIFIER);
+				}
+			}
+
 			// Handle constant Hero of the Village effect of the Emerald Ring
 			if (AccessoryItem.isAccessoryActive(player, ItemRegistry.EMERALD_RING.get())) {
 				if (!player.hasEffect(MobEffects.HERO_OF_THE_VILLAGE)) {
 					player.addEffect(new MobEffectInstance(MobEffects.HERO_OF_THE_VILLAGE, 60, 0, true, true));
+				}
+			}
+
+			// Handle constant night vision effect of the Night Vision Goggles
+			if (AccessoryItem.isAccessoryActive(player, ItemRegistry.NIGHT_VISION_GOGGLES.get())) {
+				if (player.tickCount % 10 == 0) {
+					player.addEffect(new MobEffectInstance(MobEffects.NIGHT_VISION, 220, 0, true, true));
+				}
+			}
+		}
+
+		// Handle random debuffs with the Insomnia Amulet after 7 days of no sleep
+		if (player.tickCount % 600 == 0 && player instanceof ServerPlayer serverPlayer) {
+			if (AccessoryItem.isAccessoryActive(player, ItemRegistry.INSOMNIA_AMULET.get())) {
+				int timeSinceRest = serverPlayer.getStats().getValue(Stats.CUSTOM.get(Stats.TIME_SINCE_REST));
+				if (timeSinceRest > 168000) {
+					float chance = player.getRandom().nextFloat();
+					if (chance <= 0.1f) {
+						player.addEffect(new MobEffectInstance(MobEffects.BLINDNESS, 200, 0, true, true));
+					}
+					if (chance <= 0.2f) {
+						player.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, 200, 0, true, true));
+					}
+					if (chance <= 0.3f) {
+						player.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 200, 0, true, true));
+					}
 				}
 			}
 		}
@@ -242,6 +293,10 @@ public class ForgeEventSubscriber {
 			if (player.isLocalPlayer()) {
 				DebugTracingData.handleTracing(player);
 			}
+		}
+		if (player.tickCount % 100 == 0 && player instanceof ServerPlayer serverPlayer) {
+			int ticksSinceRest = serverPlayer.getStats().getValue(Stats.CUSTOM.get(Stats.TIME_SINCE_REST));
+			PacketHandler.INSTANCE.send(PacketDistributor.PLAYER.with(() -> serverPlayer), new DebugDataPacketHandler(player.getUUID(), -1f, -1f, ticksSinceRest));
 		}
 	}
 
@@ -326,13 +381,13 @@ public class ForgeEventSubscriber {
 				}
 
 				// Handle debug tracing
-				PacketHandler.INSTANCE.send(PacketDistributor.PLAYER.with(() -> serverPlayer), new DebugDataPacketHandler(player.getUUID(), event.getAmount(), -1f));
+				PacketHandler.INSTANCE.send(PacketDistributor.PLAYER.with(() -> serverPlayer), new DebugDataPacketHandler(player.getUUID(), event.getAmount(), -1f, -1));
 			}
 		}
 
 		if (damagedEntity instanceof ServerPlayer serverPlayer) {
 			// Handle debug tracing
-			PacketHandler.INSTANCE.send(PacketDistributor.PLAYER.with(() -> serverPlayer), new DebugDataPacketHandler(serverPlayer.getUUID(), -1f, event.getAmount()));
+			PacketHandler.INSTANCE.send(PacketDistributor.PLAYER.with(() -> serverPlayer), new DebugDataPacketHandler(serverPlayer.getUUID(), -1f, event.getAmount(), -1));
 		}
 	}
 
@@ -449,13 +504,30 @@ public class ForgeEventSubscriber {
 
 	@SubscribeEvent
 	public static void prePistonEvent(PistonEvent.Pre event) {
+		LevelAccessor level = event.getLevel();
+
 		// Handle dropping of Starstorm Shards by crushing Starstorm Crystals from above
 		if (event.getDirection() == Direction.DOWN && event.getPistonMoveType() == PistonMoveType.EXTEND) {
 			BlockPos belowPos = event.getPos().below();
 			BlockState belowState = event.getLevel().getBlockState(belowPos);
 
-			if (belowState.getBlock() instanceof StarstormCrystalBlock crystalBlock) {
-				crystalBlock.handlePistonCrushing((Level) event.getLevel(), belowPos);
+			if (belowState.getBlock() instanceof StarstormCrystalBlock) {
+				// If the block is being destroyed by a piston that is above it, drop a Starstorm Ingot
+				ItemStack drop = new ItemStack(ItemRegistry.STARSTORM_SHARD.get());
+				drop.setCount(level.getRandom().nextIntBetweenInclusive(2, 4));
+				Block.popResource((Level) level, belowPos, drop);
+
+				// There is a 15% chance to spawn a Starmite
+				if (level.getRandom().nextFloat() <= 0.15) {
+					StarmiteEntity entity = EntityRegistry.STARMITE_ENTITY.get().create((Level) level);
+					if (entity != null) {
+						entity.moveTo(belowPos.getX(), belowPos.getY(), belowPos.getZ(), 0, 0);
+						level.addFreshEntity(entity);
+					}
+				}
+
+				// Destroy the block, and do not drop loot
+				level.destroyBlock(belowPos, false);
 			}
 		}
 	}

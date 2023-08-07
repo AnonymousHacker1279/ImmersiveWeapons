@@ -74,11 +74,12 @@ public class TiltrosDimensionSpecialEffects extends DimensionSpecialEffects {
 				poseStack.mulPose(Axis.ZP.rotationDegrees(-90.0F)); // West
 			}
 
+			Matrix4f poseMatrix = poseStack.last().pose();
 			bufferBuilder.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX_COLOR);
-			bufferBuilder.vertex(matrix4f, -100.0F, -100.0F, -100.0F).uv(0.0F, 0.0F).color(255, 255, 255, 75).endVertex();
-			bufferBuilder.vertex(matrix4f, -100.0F, -100.0F, 100.0F).uv(0.0F, 1.0F).color(255, 255, 255, 75).endVertex();
-			bufferBuilder.vertex(matrix4f, 100.0F, -100.0F, 100.0F).uv(1.0F, 1.0F).color(255, 255, 255, 75).endVertex();
-			bufferBuilder.vertex(matrix4f, 100.0F, -100.0F, -100.0F).uv(1.0F, 0.0F).color(255, 255, 255, 75).endVertex();
+			bufferBuilder.vertex(poseMatrix, -100.0F, -100.0F, -100.0F).uv(0.0F, 0.0F).color(255, 255, 255, 75).endVertex();
+			bufferBuilder.vertex(poseMatrix, -100.0F, -100.0F, 100.0F).uv(0.0F, 1.0F).color(255, 255, 255, 75).endVertex();
+			bufferBuilder.vertex(poseMatrix, 100.0F, -100.0F, 100.0F).uv(1.0F, 1.0F).color(255, 255, 255, 75).endVertex();
+			bufferBuilder.vertex(poseMatrix, 100.0F, -100.0F, -100.0F).uv(1.0F, 0.0F).color(255, 255, 255, 75).endVertex();
 			tesselator.end();
 			poseStack.popPose();
 		}

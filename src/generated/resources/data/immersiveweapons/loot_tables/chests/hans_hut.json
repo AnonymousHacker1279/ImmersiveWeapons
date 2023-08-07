@@ -81,7 +81,13 @@
               "function": "minecraft:set_count"
             },
             {
-              "function": "minecraft:enchant_randomly"
+              "function": "minecraft:enchant_with_levels",
+              "levels": {
+                "type": "minecraft:uniform",
+                "max": 25.0,
+                "min": 15.0
+              },
+              "treasure": false
             }
           ],
           "name": "minecraft:iron_sword",

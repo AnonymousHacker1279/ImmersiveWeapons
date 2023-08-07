@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "group": "goggles",
+  "key": {
+    "a": {
+      "tag": "forge:glass_panes"
+    },
+    "b": {
+      "tag": "forge:ingots/iron"
+    },
+    "c": {
+      "tag": "forge:string"
+    }
+  },
+  "pattern": [
+    " c ",
+    "aba"
+  ],
+  "result": {
+    "item": "immersiveweapons:goggles"
+  },
+  "show_notification": true
+}

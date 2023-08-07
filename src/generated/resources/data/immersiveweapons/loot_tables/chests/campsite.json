@@ -72,7 +72,13 @@
           "type": "minecraft:item",
           "functions": [
             {
-              "function": "minecraft:enchant_randomly"
+              "function": "minecraft:enchant_with_levels",
+              "levels": {
+                "type": "minecraft:uniform",
+                "max": 10.0,
+                "min": 3.0
+              },
+              "treasure": false
             }
           ],
           "name": "immersiveweapons:copper_axe",
@@ -113,6 +119,10 @@
         {
           "type": "minecraft:item",
           "name": "immersiveweapons:flare_gun"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "immersiveweapons:agility_bracelet"
         }
       ],
       "name": "main",
