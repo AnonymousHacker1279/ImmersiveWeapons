@@ -35,4 +35,10 @@ public class RecipeTypeRegistry {
 			return ImmersiveWeapons.MOD_ID + ":astral_crystal";
 		}
 	});
+	public static final RegistryObject<RecipeType<PistonCrushingRecipe>> PISTON_CRUSHING_RECIPE_TYPE = RECIPE_TYPES.register("piston_crushing", () -> new RecipeType<>() {
+		@Override
+		public String toString() {
+			return ImmersiveWeapons.MOD_ID + ":piston_crushing";
+		}
+	});
 }

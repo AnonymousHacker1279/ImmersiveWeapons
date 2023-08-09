@@ -23,7 +23,7 @@ public record AstralCrystalRecipe(ResourceLocation recipeId,
 	 *
 	 * @param recipeId          the <code>ResourceLocation</code> for the recipe
 	 * @param primaryMaterial   the first <code>Ingredient</code>
-	 * @param secondaryMaterial the number of materials needed for the recipe
+	 * @param secondaryMaterial the second <code>Ingredient</code>
 	 * @param result            an <code>ItemStack</code> of the result
 	 * @param resultCount       the number of results
 	 */

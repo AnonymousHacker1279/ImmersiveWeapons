@@ -433,6 +433,9 @@ public class RecipeGenerator extends RecipeProvider {
 				.unlockedBy("starstorm_shard", has(IWItemTagGroups.STARSTORM_SHARDS))
 				.save(finishedRecipeConsumer);
 
+		// Shards from crushing crystals
+		pistonCrushing(BlockRegistry.STARSTORM_CRYSTAL.get(), ItemRegistry.STARSTORM_SHARD.get(), 2, 4);
+
 		// Starstorm block
 		ShapedRecipeBuilder shapedRecipeBuilder = ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, BlockItemRegistry.STARSTORM_BLOCK_ITEM.get())
 				.group("starstorm")
@@ -1644,6 +1647,12 @@ public class RecipeGenerator extends RecipeProvider {
 		AstralCrystalRecipeBuilder.sorcery(Ingredient.of(primaryMaterial), Ingredient.of(secondaryMaterial), result.asItem(), resultCount)
 				.unlocks("astral_crystal", has(BlockItemRegistry.ASTRAL_CRYSTAL_ITEM.get()))
 				.save(finishedRecipeConsumer, ImmersiveWeapons.MOD_ID + ":" + getItemName(result) + "_astral_crystal_sorcery");
+	}
+
+	private static void pistonCrushing(Block block, ItemLike result, int minCount, int maxCount) {
+		PistonCrushingRecipeBuilder.crushing(block, result.asItem(), minCount, maxCount)
+				.unlocks("piston", has(Blocks.PISTON))
+				.save(finishedRecipeConsumer, ImmersiveWeapons.MOD_ID + ":" + getItemName(result) + "_piston_crushing");
 	}
 
 	protected static String getConversionRecipeName(ItemLike pResult, ItemLike pIngredient) {

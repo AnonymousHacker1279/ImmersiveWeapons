@@ -62,13 +62,13 @@ import tech.anonymoushacker1279.immersiveweapons.event.game_effects.EnvironmentE
 import tech.anonymoushacker1279.immersiveweapons.init.*;
 import tech.anonymoushacker1279.immersiveweapons.item.AccessoryItem;
 import tech.anonymoushacker1279.immersiveweapons.item.CursedItem;
+import tech.anonymoushacker1279.immersiveweapons.item.crafting.PistonCrushingRecipe;
 import tech.anonymoushacker1279.immersiveweapons.item.gauntlet.GauntletItem;
 import tech.anonymoushacker1279.immersiveweapons.item.pike.PikeItem;
 import tech.anonymoushacker1279.immersiveweapons.util.LegacyMappingsHandler;
 import tech.anonymoushacker1279.immersiveweapons.world.level.IWDamageSources;
 
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 @EventBusSubscriber(modid = ImmersiveWeapons.MOD_ID, bus = Bus.FORGE)
 public class ForgeEventSubscriber {
@@ -504,30 +504,40 @@ public class ForgeEventSubscriber {
 
 	@SubscribeEvent
 	public static void prePistonEvent(PistonEvent.Pre event) {
-		LevelAccessor level = event.getLevel();
+		LevelAccessor levelAccessor = event.getLevel();
 
-		// Handle dropping of Starstorm Shards by crushing Starstorm Crystals from above
-		if (event.getDirection() == Direction.DOWN && event.getPistonMoveType() == PistonMoveType.EXTEND) {
+		// Handle piston crushing recipes
+		if (event.getDirection() == Direction.DOWN && event.getPistonMoveType() == PistonMoveType.EXTEND && levelAccessor instanceof Level level) {
 			BlockPos belowPos = event.getPos().below();
 			BlockState belowState = event.getLevel().getBlockState(belowPos);
 
-			if (belowState.getBlock() instanceof StarstormCrystalBlock) {
-				// If the block is being destroyed by a piston that is above it, drop a Starstorm Ingot
-				ItemStack drop = new ItemStack(ItemRegistry.STARSTORM_SHARD.get());
-				drop.setCount(level.getRandom().nextIntBetweenInclusive(2, 4));
-				Block.popResource((Level) level, belowPos, drop);
+			List<PistonCrushingRecipe> recipes = level.getRecipeManager()
+					.getAllRecipesFor(RecipeTypeRegistry.PISTON_CRUSHING_RECIPE_TYPE.get());
 
-				// There is a 15% chance to spawn a Starmite
+			// Select a recipe that matches the blockstate of the block below the piston
+			Optional<PistonCrushingRecipe> recipe = recipes.stream()
+					.filter(r -> r.matches(belowState.getBlock()))
+					.findFirst();
+
+			// If a recipe was found, drop the output of the recipe
+			if (recipe.isPresent()) {
+				ItemStack drop = recipe.get().getResultItem(level.registryAccess()).copy();
+				drop.setCount(recipe.get().getRandomDropAmount());
+				Block.popResource(level, belowPos, drop);
+
+				// Destroy the block, and do not drop loot
+				level.destroyBlock(belowPos, false);
+			}
+
+			if (belowState.getBlock() instanceof StarstormCrystalBlock) {
+				// There is a 15% chance to spawn a Starmite when a Starstorm Crystal is crushed
 				if (level.getRandom().nextFloat() <= 0.15) {
-					StarmiteEntity entity = EntityRegistry.STARMITE_ENTITY.get().create((Level) level);
+					StarmiteEntity entity = EntityRegistry.STARMITE_ENTITY.get().create(level);
 					if (entity != null) {
 						entity.moveTo(belowPos.getX(), belowPos.getY(), belowPos.getZ(), 0, 0);
 						level.addFreshEntity(entity);
 					}
 				}
-
-				// Destroy the block, and do not drop loot
-				level.destroyBlock(belowPos, false);
 			}
 		}
 	}
