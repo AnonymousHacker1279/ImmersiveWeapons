@@ -21,8 +21,8 @@ import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.level.*;
 import org.jetbrains.annotations.Nullable;
+import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.block.decoration.CelestialLanternBlock;
-import tech.anonymoushacker1279.immersiveweapons.config.CommonConfig;
 import tech.anonymoushacker1279.immersiveweapons.entity.GrantAdvancementOnDiscovery;
 import tech.anonymoushacker1279.immersiveweapons.entity.ai.goal.*;
 import tech.anonymoushacker1279.immersiveweapons.init.SoundEventRegistry;
@@ -235,7 +235,7 @@ public class CelestialTowerEntity extends Monster implements GrantAdvancementOnD
 		for (BlockPos lanternPos : CelestialLanternBlock.ALL_TILTROS_LANTERNS) {
 			if (nearbyLanterns < 3) {
 				if (lanternPos.distManhattan(new Vec3i(blockPosition().getX(), blockPosition().getY(), blockPosition().getZ())) <
-						CommonConfig.CELESTIAL_TOWER_SPAWN_CHECK_RADIUS.get()) {
+						ImmersiveWeapons.COMMON_CONFIG.celestialTowerSpawnCheckingRadius().get()) {
 
 					nearbyLanterns++;
 				}
@@ -246,7 +246,9 @@ public class CelestialTowerEntity extends Monster implements GrantAdvancementOnD
 			return false;
 		} else if (nearbyLanterns == 0) {
 			return true;
-		} else return getRandom().nextFloat() <= (nearbyLanterns == 2 ? 0.125f : 0.25f);
+		} else {
+			return getRandom().nextFloat() <= (nearbyLanterns == 2 ? 0.125f : 0.25f);
+		}
 	}
 
 	@Override

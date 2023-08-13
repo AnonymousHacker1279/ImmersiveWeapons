@@ -6,7 +6,7 @@ import net.minecraft.world.item.ArrowItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Level;
-import tech.anonymoushacker1279.immersiveweapons.config.CommonConfig;
+import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.entity.projectile.bullet.BulletEntity;
 import tech.anonymoushacker1279.immersiveweapons.init.EnchantmentRegistry;
 import tech.anonymoushacker1279.immersiveweapons.init.EntityRegistry;
@@ -52,7 +52,7 @@ public abstract class AbstractBulletItem extends ArrowItem {
 	@Override
 	public boolean isInfinite(ItemStack bullet, ItemStack gun, Player player) {
 		int enchant = EnchantmentHelper.getTagEnchantmentLevel(EnchantmentRegistry.ENDLESS_MUSKET_POUCH.get(), gun);
-		boolean canBeInfinite = CommonConfig.ALLOW_INFINITE_AMMO_ON_ALl_TIERS.get() || canBeInfinite();
+		boolean canBeInfinite = ImmersiveWeapons.COMMON_CONFIG.allowInfiniteAmmoOnAllTiers().get() || canBeInfinite();
 		return canBeInfinite && enchant > 0;
 	}
 }

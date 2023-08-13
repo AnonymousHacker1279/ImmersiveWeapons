@@ -19,7 +19,7 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.phys.AABB;
 import org.jetbrains.annotations.Nullable;
-import tech.anonymoushacker1279.immersiveweapons.config.CommonConfig;
+import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.entity.monster.CelestialTowerEntity;
 import tech.anonymoushacker1279.immersiveweapons.entity.monster.RockSpiderEntity;
 import tech.anonymoushacker1279.immersiveweapons.init.EntityRegistry;
@@ -55,7 +55,7 @@ public class CelestialTowerSummonGoal extends Goal {
 	public void tick() {
 		if (tower.getWavesSpawned() < tower.getTotalWavesToSpawn() && waveSpawnCooldown <= 0) {
 			int mobsToSpawn = (tower.getRandom().nextIntBetweenInclusive(8, 12 + tower.getWavesSpawned())) * tower.getWaveSizeModifier(); // Get the total mobs to spawn
-			mobsToSpawn = (int) (mobsToSpawn * CommonConfig.CELESTIAL_TOWER_MINIONS_WAVE_SIZE_MODIFIER.get()); // Modify by the configuration option of setting wave sizes
+			mobsToSpawn = (int) (mobsToSpawn * ImmersiveWeapons.COMMON_CONFIG.celestialTowerWaveSizeModifier().get()); // Modify by the configuration option of setting wave sizes
 			int fodderMobsToSpawn = (int) (mobsToSpawn * 0.3f); // Get the number of "fodder" mobs to spawn
 			mobsToSpawn = mobsToSpawn - fodderMobsToSpawn; // Reduce the total number left to spawn
 			int powerMobsToSpawn = isWavesPastHalf() ? (int) (mobsToSpawn * 0.2f) : 0; // Get the number of "power" mobs to spawn, if over halfway through the waves

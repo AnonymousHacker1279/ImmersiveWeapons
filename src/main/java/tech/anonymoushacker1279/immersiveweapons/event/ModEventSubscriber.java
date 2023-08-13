@@ -3,7 +3,9 @@ package tech.anonymoushacker1279.immersiveweapons.event;
 import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
+import net.minecraftforge.fml.event.config.ModConfigEvent;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
+import tech.anonymoushacker1279.immersiveweapons.config.ConfigHelper.TomlConfigOps;
 import tech.anonymoushacker1279.immersiveweapons.entity.ambient.FireflyEntity;
 import tech.anonymoushacker1279.immersiveweapons.entity.animal.StarWolfEntity;
 import tech.anonymoushacker1279.immersiveweapons.entity.monster.*;
@@ -41,5 +43,15 @@ public class ModEventSubscriber {
 		event.put(EntityRegistry.STAR_WOLF_ENTITY.get(), StarWolfEntity.createAttributes().build());
 		event.put(EntityRegistry.SKYGAZER_ENTITY.get(), SkygazerEntity.createMobAttributes().build());
 		event.put(EntityRegistry.SKELETON_MERCHANT_ENTITY.get(), SkeletonMerchantEntity.createMobAttributes().build());
+	}
+
+	@SubscribeEvent
+	public static void modConfigReloadEvent(ModConfigEvent.Reloading event) {
+		ImmersiveWeapons.LOGGER.info("Reloading configs");
+
+		// Populate enchant cap map
+		TomlConfigOps.INSTANCE.getMapValues(ImmersiveWeapons.COMMON_CONFIG.skygazerEnchantCaps().get())
+				.result()
+				.ifPresent(map -> map.forEach((pair) -> SkygazerEntity.ENCHANT_CAPS.put((String) pair.getFirst(), (Integer) pair.getSecond())));
 	}
 }

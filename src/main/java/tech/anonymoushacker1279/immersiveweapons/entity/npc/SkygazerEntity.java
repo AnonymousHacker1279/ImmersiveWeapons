@@ -22,6 +22,8 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Level;
+import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
+import tech.anonymoushacker1279.immersiveweapons.config.ConfigHelper.TomlConfigOps;
 import tech.anonymoushacker1279.immersiveweapons.entity.monster.StarmiteEntity;
 import tech.anonymoushacker1279.immersiveweapons.entity.npc.trades.*;
 import tech.anonymoushacker1279.immersiveweapons.init.*;
@@ -30,6 +32,8 @@ import java.util.*;
 import java.util.Map.Entry;
 
 public class SkygazerEntity extends AbstractMerchantEntity {
+
+	public static Map<String, Integer> ENCHANT_CAPS = new HashMap<>(0);
 
 	public static final Int2ObjectMap<ItemListing[]> TRADES = new Int2ObjectOpenHashMap<>(ImmutableMap.of(
 			1, new VillagerTrades.ItemListing[]{
@@ -61,6 +65,11 @@ public class SkygazerEntity extends AbstractMerchantEntity {
 
 	public SkygazerEntity(EntityType<? extends AbstractVillager> entityType, Level level) {
 		super(entityType, level);
+
+		// Populate enchant cap map
+		TomlConfigOps.INSTANCE.getMapValues(ImmersiveWeapons.COMMON_CONFIG.skygazerEnchantCaps().get())
+				.result()
+				.ifPresent(map -> map.forEach((pair) -> ENCHANT_CAPS.put((String) pair.getFirst(), (Integer) pair.getSecond())));
 	}
 
 	@Override

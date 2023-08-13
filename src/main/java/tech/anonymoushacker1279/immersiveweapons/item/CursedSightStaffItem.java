@@ -12,7 +12,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
-import tech.anonymoushacker1279.immersiveweapons.config.CommonConfig;
+import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.entity.monster.EvilEyeEntity;
 import tech.anonymoushacker1279.immersiveweapons.init.EnchantmentRegistry;
 import tech.anonymoushacker1279.immersiveweapons.init.ItemRegistry;
@@ -80,7 +80,7 @@ public class CursedSightStaffItem extends Item implements SummoningStaff {
 
 	@Override
 	public int getMaxRange() {
-		return CommonConfig.CURSED_SIGHT_STAFF_MAX_USE_RANGE.get();
+		return ImmersiveWeapons.COMMON_CONFIG.cursedSightStaffMaxUseRange().get();
 	}
 
 	@Override

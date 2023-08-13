@@ -9,8 +9,8 @@ import net.minecraft.world.level.block.FlowerBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.Nullable;
+import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.blockentity.AzulStainedOrchidBlockEntity;
-import tech.anonymoushacker1279.immersiveweapons.config.CommonConfig;
 
 import java.util.function.Supplier;
 
@@ -22,7 +22,7 @@ public class AzulStainedOrchidBlock extends FlowerBlock implements EntityBlock {
 
 	@Override
 	public void entityInside(BlockState state, Level level, BlockPos pos, Entity entity) {
-		if (CommonConfig.TILTROS_ENABLED.get()) {
+		if (ImmersiveWeapons.COMMON_CONFIG.tiltrosEnabled().get()) {
 			if (level.getBlockEntity(pos) instanceof AzulStainedOrchidBlockEntity blockEntity) {
 				blockEntity.entityInside(pos, entity);
 			}

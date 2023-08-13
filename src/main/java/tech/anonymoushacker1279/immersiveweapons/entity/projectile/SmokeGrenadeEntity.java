@@ -18,9 +18,9 @@ import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.network.NetworkEvent;
 import net.minecraftforge.network.NetworkEvent.Context;
 import net.minecraftforge.network.PacketDistributor;
+import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.client.particle.smoke_grenade.SmokeGrenadeParticleOptions;
 import tech.anonymoushacker1279.immersiveweapons.config.ClientConfig;
-import tech.anonymoushacker1279.immersiveweapons.config.CommonConfig;
 import tech.anonymoushacker1279.immersiveweapons.init.*;
 import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
 
@@ -72,9 +72,10 @@ public class SmokeGrenadeEntity extends ThrowableItemProjectile {
 	}
 
 	public static void runOnClientImpact(double x, double y, double z, int color, ClientLevel level) {
-		int particles = CommonConfig.FORCE_SMOKE_GRENADE_PARTICLES.get() == -1
+		int configValue = ImmersiveWeapons.COMMON_CONFIG.forceSmokeGrenadeParticles().get();
+		int particles = configValue == -1
 				? ClientConfig.SMOKE_GRENADE_PARTICLES.get()
-				: CommonConfig.FORCE_SMOKE_GRENADE_PARTICLES.get();
+				: configValue;
 
 		if (ClientConfig.FANCY_SMOKE_GRENADE_PARTICLES.get()) {
 			particles *= 3;

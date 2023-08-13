@@ -19,7 +19,7 @@ import net.minecraft.world.level.Level.ExplosionInteraction;
 import net.minecraft.world.phys.*;
 import net.minecraftforge.event.ForgeEventFactory;
 import org.jetbrains.annotations.Nullable;
-import tech.anonymoushacker1279.immersiveweapons.config.CommonConfig;
+import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.init.EnchantmentRegistry;
 import tech.anonymoushacker1279.immersiveweapons.init.EntityRegistry;
 import tech.anonymoushacker1279.immersiveweapons.world.level.IWDamageSources;
@@ -188,8 +188,8 @@ public class MeteorEntity extends Projectile {
 
 		// Explode on impact
 
-		float explosionRadius = CommonConfig.METEOR_STAFF_EXPLOSION_RADIUS.get().floatValue();
-		boolean breakBlocks = CommonConfig.METEOR_STAFF_EXPLOSION_BREAK_BLOCKS.get();
+		float explosionRadius = ImmersiveWeapons.COMMON_CONFIG.meteorStaffExplosionRadius().get().floatValue();
+		boolean breakBlocks = ImmersiveWeapons.COMMON_CONFIG.meteorStaffExplosionBreakBlocks().get();
 		ExplosionInteraction explosionInteraction = breakBlocks ? ExplosionInteraction.MOB : ExplosionInteraction.NONE;
 
 		if (!level().isClientSide) {
