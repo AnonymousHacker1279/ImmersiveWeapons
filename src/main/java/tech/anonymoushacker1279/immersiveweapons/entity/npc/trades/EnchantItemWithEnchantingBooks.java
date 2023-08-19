@@ -41,8 +41,15 @@ public class EnchantItemWithEnchantingBooks implements VillagerTrades.ItemListin
 			// Remove the old enchantments
 			newEnchantableItem.removeTagKey("Enchantments");
 
-			// Add all the existing enchantments with the new ones. If there is a shared enchantment, use the higher level from the book
+			// Add the existing enchantments, increasing the level if the book has a higher level
 			existingEnchantments.forEach((enchantment, level) -> newEnchantableItem.enchant(enchantment, Math.max(level, enchantmentsFromBook.getOrDefault(enchantment, 0))));
+
+			// If the book has anything else on it, add it to the item (if compatible)
+			enchantmentsFromBook.forEach((enchantment, level) -> {
+				if (!existingEnchantments.containsKey(enchantment) && enchantment.canEnchant(newEnchantableItem)) {
+					newEnchantableItem.enchant(enchantment, level);
+				}
+			});
 		}
 
 		return new MerchantOffer(enchantableItem, tradingItem, newEnchantableItem, maxUses, villagerXP, priceMultiplier);

@@ -148,7 +148,7 @@ public class SkygazerEntity extends AbstractMerchantEntity {
 			}
 		}
 
-		// Check the enchants on the two items. If the book has the same level or higher, remove the offer
+		// Check the enchants on the two items. If the book has the same level or lower, remove the offer
 		if (!enchantableItem.isEmpty() && !enchantableBook.isEmpty()) {
 			Map<Enchantment, Integer> existingEnchantments = enchantableItem.getAllEnchantments();
 			Map<Enchantment, Integer> enchantmentsFromBook = new HashMap<>(EnchantmentHelper.getEnchantments(enchantableBook));
