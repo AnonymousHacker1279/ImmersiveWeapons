@@ -934,15 +934,26 @@ public class LanguageGenerator extends IWLanguageProvider {
 		}
 
 		// Debug tracing strings
-		add("immersiveweapons.debugTracing.meleeItemDamage", "Melee Item Damage: %s");
-		add("immersiveweapons.debugTracing.gunBaseVelocity", "Gun Base Velocity: %s");
-		add("immersiveweapons.debugTracing.selectedAmmo", "Selected Ammo: %s (base damage: %s)");
-		add("immersiveweapons.debugTracing.liveBulletDamage", "Live Bullet Damage: %s (is crit: %s)");
-		add("immersiveweapons.debugTracing.damageBonus", "Damage Bonus: %s general, %s melee, %s projectile");
-		add("immersiveweapons.debugTracing.celestialProtectionChanceForNoDamage", "Celestial Protection Chance: %s");
-		add("immersiveweapons.debugTracing.lastDamageValues", "Last Damage Dealt: %s, Last Damage Taken: %s");
-		add("immersiveweapons.debugTracing.armorValues", "Total Armor Value: %s, Armor Toughness: %s");
-		add("immersiveweapons.debugTracing.drAndKbr", "General Damage Resistance: %s, Knockback Resistance: %s");
+		add("immersiveweapons.debug_tracing.melee_item_damage", "Melee Item Damage: %s");
+		add("immersiveweapons.debug_tracing.gun_base_velocity", "Gun Base Velocity: %s");
+		add("immersiveweapons.debug_tracing.selected_ammo", "Selected Ammo: %s (base damage: %s)");
+		add("immersiveweapons.debug_tracing.live_bullet_damage", "Live Bullet Damage: %s (is crit: %s)");
+		add("immersiveweapons.debug_tracing.damage_bonus", "Damage Bonus: %s general, %s melee, %s projectile");
+		add("immersiveweapons.debug_tracing.celestial_protection_chance_for_no_damage", "Celestial Protection Chance: %s");
+		add("immersiveweapons.debug_tracing.last_damage_values", "Last Damage Dealt: %s, Last Damage Taken: %s");
+		add("immersiveweapons.debug_tracing.armor_values", "Total Armor Value: %s, Armor Toughness: %s");
+		add("immersiveweapons.debug_tracing.dr_and_kbr", "General Damage Resistance: %s, Knockback Resistance: %s");
+
+		// Kill count weapon strings
+		add("immersiveweapons.kill_count_weapon.total_kills", "Total Kills: %s");
+		add("immersiveweapons.kill_count_weapon.tier.special", "Special");
+		add("immersiveweapons.kill_count_weapon.tier.novice", "Novice");
+		add("immersiveweapons.kill_count_weapon.tier.apprentice", "Apprentice");
+		add("immersiveweapons.kill_count_weapon.tier.journeyman", "Journeyman");
+		add("immersiveweapons.kill_count_weapon.tier.expert", "Expert");
+		add("immersiveweapons.kill_count_weapon.tier.master", "Master");
+		add("immersiveweapons.kill_count_weapon.tier.legendary", "Legendary");
+		add("immersiveweapons.kill_count_weapon.tier.hans_worthy", "Hans-Worthy");
 
 		// IWCB strings
 		add("tooltip.iwcompatbridge.accessory_note", "Equip this in a Curios slot to gain the effect.");

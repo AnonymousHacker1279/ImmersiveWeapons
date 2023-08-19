@@ -60,8 +60,7 @@ import tech.anonymoushacker1279.immersiveweapons.entity.projectile.MeteorEntity;
 import tech.anonymoushacker1279.immersiveweapons.event.game_effects.AccessoryEffects;
 import tech.anonymoushacker1279.immersiveweapons.event.game_effects.EnvironmentEffects;
 import tech.anonymoushacker1279.immersiveweapons.init.*;
-import tech.anonymoushacker1279.immersiveweapons.item.AccessoryItem;
-import tech.anonymoushacker1279.immersiveweapons.item.CursedItem;
+import tech.anonymoushacker1279.immersiveweapons.item.*;
 import tech.anonymoushacker1279.immersiveweapons.item.crafting.PistonCrushingRecipe;
 import tech.anonymoushacker1279.immersiveweapons.item.gauntlet.GauntletItem;
 import tech.anonymoushacker1279.immersiveweapons.item.pike.PikeItem;
@@ -393,9 +392,9 @@ public class ForgeEventSubscriber {
 
 	@SubscribeEvent
 	public static void livingDeathEvent(LivingDeathEvent event) {
-		// Handle charging of cursed accessories on kill
 
 		if (event.getSource().getEntity() instanceof Player player) {
+			// Handle charging of cursed accessories on kill
 			List<ItemStack> curses = CursedItem.getCurses(player);
 			for (ItemStack curse : curses) {
 				if (!curse.getOrCreateTag().getBoolean("max_charge")) {
@@ -412,6 +411,12 @@ public class ForgeEventSubscriber {
 						}
 					}
 				}
+			}
+
+			// Handle kill count weapons
+			ItemStack weapon = player.getItemInHand(player.getUsedItemHand());
+			if (KillCountWeapon.hasKillCount(weapon)) {
+				KillCountWeapon.incrementKillCount(weapon);
 			}
 		}
 	}

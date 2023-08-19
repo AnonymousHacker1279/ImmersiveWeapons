@@ -19,8 +19,7 @@ import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.api.PluginHandler;
 import tech.anonymoushacker1279.immersiveweapons.init.BlockItemRegistry;
 import tech.anonymoushacker1279.immersiveweapons.init.ItemRegistry;
-import tech.anonymoushacker1279.immersiveweapons.item.AccessoryItem;
-import tech.anonymoushacker1279.immersiveweapons.item.CursedItem;
+import tech.anonymoushacker1279.immersiveweapons.item.*;
 import tech.anonymoushacker1279.immersiveweapons.item.armor.*;
 import tech.anonymoushacker1279.immersiveweapons.item.gauntlet.GauntletItem;
 import tech.anonymoushacker1279.immersiveweapons.item.pike.PikeItem;
@@ -48,6 +47,12 @@ public class TooltipHandler {
 
 		if (stack.getItem() != ItemRegistry.JONNYS_CURSE.get()) {
 			jonnyCurseRandomizer = (int) (Math.random() * 11 + 1);
+		}
+
+		if (KillCountWeapon.hasKillCount(stack)) {
+			event.getToolTip().add(1, KillCountWeapon.getTierText(stack));
+			event.getToolTip().add(2, Component.literal(""));
+			event.getToolTip().add(KillCountWeapon.getTooltipText(stack).withStyle(ChatFormatting.GOLD, ChatFormatting.ITALIC));
 		}
 
 		// Swords

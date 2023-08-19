@@ -11,15 +11,15 @@ import java.util.List;
 
 public class DebugTracingOverlay {
 
-	private static final String ARMOR_VALUES = Component.translatable("immersiveweapons.debugTracing.armorValues").getString();
-	private static final String MELEE_ITEM_DAMAGE = Component.translatable("immersiveweapons.debugTracing.meleeItemDamage").getString();
-	private static final String GUN_BASE_VELOCITY = Component.translatable("immersiveweapons.debugTracing.gunBaseVelocity").getString();
-	private static final String SELECTED_AMMO = Component.translatable("immersiveweapons.debugTracing.selectedAmmo").getString();
-	private static final String LIVE_BULLET_DAMAGE = Component.translatable("immersiveweapons.debugTracing.liveBulletDamage").getString();
-	private static final String LAST_DAMAGE_VALUES = Component.translatable("immersiveweapons.debugTracing.lastDamageValues").getString();
-	private static final String DAMAGE_BONUS = Component.translatable("immersiveweapons.debugTracing.damageBonus").getString();
-	private static final String DR_AND_KBR = Component.translatable("immersiveweapons.debugTracing.drAndKbr").getString();
-	private static final String CELESTIAL_PROTECTION_CHANCE_FOR_NO_DAMAGE = Component.translatable("immersiveweapons.debugTracing.celestialProtectionChanceForNoDamage").getString();
+	private static final String ARMOR_VALUES = Component.translatable("immersiveweapons.debug_tracing.armor_values").getString();
+	private static final String MELEE_ITEM_DAMAGE = Component.translatable("immersiveweapons.debug_tracing.melee_item_damage").getString();
+	private static final String GUN_BASE_VELOCITY = Component.translatable("immersiveweapons.debug_tracing.gun_base_velocity").getString();
+	private static final String SELECTED_AMMO = Component.translatable("immersiveweapons.debug_tracing.selected_ammo").getString();
+	private static final String LIVE_BULLET_DAMAGE = Component.translatable("immersiveweapons.debug_tracing.live_bullet_damage").getString();
+	private static final String LAST_DAMAGE_VALUES = Component.translatable("immersiveweapons.debug_tracing.last_damage_values").getString();
+	private static final String DAMAGE_BONUS = Component.translatable("immersiveweapons.debug_tracing.damage_bonus").getString();
+	private static final String DR_AND_KBR = Component.translatable("immersiveweapons.debug_tracing.dr_and_kbr").getString();
+	private static final String CELESTIAL_PROTECTION_CHANCE_FOR_NO_DAMAGE = Component.translatable("immersiveweapons.debug_tracing.celestial_protection_chance_for_no_damage").getString();
 
 	public static void renderOverlay(GuiGraphics guiGraphics, Font fontRenderer, int screenHeight) {
 		int textHeightPosition = screenHeight;
