@@ -1248,6 +1248,47 @@ public class RecipeGenerator extends RecipeProvider {
 				.group("cursed_sight_staff")
 				.unlockedBy("cursed_sight_staff_core", has(ItemRegistry.CURSED_SIGHT_STAFF_CORE.get()))
 				.save(finishedRecipeConsumer);
+
+		// Padded Leather Armor
+		ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ItemRegistry.PADDED_LEATHER_HELMET.get())
+				.define('a', Items.LEATHER_HELMET)
+				.define('b', ItemTags.WOOL)
+				.pattern("bbb")
+				.pattern("bab")
+				.pattern("bbb")
+				.group("padded_leather_armor")
+				.unlockedBy("leather_helmet", has(Items.LEATHER_HELMET))
+				.save(finishedRecipeConsumer);
+
+		ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ItemRegistry.PADDED_LEATHER_CHESTPLATE.get())
+				.define('a', Items.LEATHER_CHESTPLATE)
+				.define('b', ItemTags.WOOL)
+				.pattern("bbb")
+				.pattern("bab")
+				.pattern("bbb")
+				.group("padded_leather_armor")
+				.unlockedBy("leather_chestplate", has(Items.LEATHER_CHESTPLATE))
+				.save(finishedRecipeConsumer);
+
+		ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ItemRegistry.PADDED_LEATHER_LEGGINGS.get())
+				.define('a', Items.LEATHER_LEGGINGS)
+				.define('b', ItemTags.WOOL)
+				.pattern("bbb")
+				.pattern("bab")
+				.pattern("bbb")
+				.group("padded_leather_armor")
+				.unlockedBy("leather_leggings", has(Items.LEATHER_LEGGINGS))
+				.save(finishedRecipeConsumer);
+
+		ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ItemRegistry.PADDED_LEATHER_BOOTS.get())
+				.define('a', Items.LEATHER_BOOTS)
+				.define('b', ItemTags.WOOL)
+				.pattern("bbb")
+				.pattern("bab")
+				.pattern("bbb")
+				.group("padded_leather_armor")
+				.unlockedBy("leather_boots", has(Items.LEATHER_BOOTS))
+				.save(finishedRecipeConsumer);
 	}
 
 	private void createMinecraftItems() {

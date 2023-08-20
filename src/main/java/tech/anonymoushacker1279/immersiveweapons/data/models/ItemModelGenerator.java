@@ -4,14 +4,14 @@ import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.PackType;
-import net.minecraft.world.item.ArmorItem;
-import net.minecraft.world.item.Item;
+import net.minecraft.world.item.*;
 import net.minecraft.world.item.armortrim.TrimMaterial;
 import net.minecraft.world.item.armortrim.TrimMaterials;
 import net.minecraftforge.client.model.generators.ItemModelProvider;
 import net.minecraftforge.client.model.generators.ModelFile;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.registries.RegistryObject;
+import org.jetbrains.annotations.Nullable;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.data.lists.ItemLists;
 import tech.anonymoushacker1279.immersiveweapons.init.BlockItemRegistry;
@@ -150,43 +150,103 @@ public class ItemModelGenerator extends ItemModelProvider {
 	/**
 	 * Generate an armor item. Automatically adds the proper trim_type predicates.
 	 *
-	 * @param item the <code>Item</code> to generate a model for
+	 * @param item    the <code>Item</code> to generate a model for
+	 * @param overlay an overlay texture location, or null for no overlay
 	 */
-	private void armorItem(ArmorItem item) {
-		getBuilder(item.toString())
-				.parent(new ModelFile.UncheckedModelFile("item/generated"))
-				.texture("layer0", new ResourceLocation(ImmersiveWeapons.MOD_ID, "item/" + item))
-				.override().predicate(new ResourceLocation("trim_type"), 0.1f)
-				.model(new ModelFile.UncheckedModelFile(ImmersiveWeapons.MOD_ID + ":item/" + item + "_" + TrimMaterials.QUARTZ.location().getPath() + "_trim"))
-				.end()
-				.override().predicate(new ResourceLocation("trim_type"), 0.2f)
-				.model(new ModelFile.UncheckedModelFile(ImmersiveWeapons.MOD_ID + ":item/" + item + "_" + TrimMaterials.IRON.location().getPath() + "_trim"))
-				.end()
-				.override().predicate(new ResourceLocation("trim_type"), 0.3f)
-				.model(new ModelFile.UncheckedModelFile(ImmersiveWeapons.MOD_ID + ":item/" + item + "_" + TrimMaterials.NETHERITE.location().getPath() + "_trim"))
-				.end()
-				.override().predicate(new ResourceLocation("trim_type"), 0.4f)
-				.model(new ModelFile.UncheckedModelFile(ImmersiveWeapons.MOD_ID + ":item/" + item + "_" + TrimMaterials.REDSTONE.location().getPath() + "_trim"))
-				.end()
-				.override().predicate(new ResourceLocation("trim_type"), 0.5f)
-				.model(new ModelFile.UncheckedModelFile(ImmersiveWeapons.MOD_ID + ":item/" + item + "_" + TrimMaterials.COPPER.location().getPath() + "_trim"))
-				.end()
-				.override().predicate(new ResourceLocation("trim_type"), 0.6f)
-				.model(new ModelFile.UncheckedModelFile(ImmersiveWeapons.MOD_ID + ":item/" + item + "_" + TrimMaterials.GOLD.location().getPath() + "_trim"))
-				.end()
-				.override().predicate(new ResourceLocation("trim_type"), 0.7f)
-				.model(new ModelFile.UncheckedModelFile(ImmersiveWeapons.MOD_ID + ":item/" + item + "_" + TrimMaterials.EMERALD.location().getPath() + "_trim"))
-				.end()
-				.override().predicate(new ResourceLocation("trim_type"), 0.8f)
-				.model(new ModelFile.UncheckedModelFile(ImmersiveWeapons.MOD_ID + ":item/" + item + "_" + TrimMaterials.DIAMOND.location().getPath() + "_trim"))
-				.end()
-				.override().predicate(new ResourceLocation("trim_type"), 0.9f)
-				.model(new ModelFile.UncheckedModelFile(ImmersiveWeapons.MOD_ID + ":item/" + item + "_" + TrimMaterials.LAPIS.location().getPath() + "_trim"))
-				.end()
-				.override().predicate(new ResourceLocation("trim_type"), 1.0f)
-				.model(new ModelFile.UncheckedModelFile(ImmersiveWeapons.MOD_ID + ":item/" + item + "_" + TrimMaterials.AMETHYST.location().getPath() + "_trim"))
-				.end();
+	private void armorItem(ArmorItem item, @Nullable ResourceLocation overlay) {
+		// Create base item, with references to trim variants
+		if (overlay == null) {
+			getBuilder(item.toString())
+					.parent(new ModelFile.UncheckedModelFile("item/generated"))
+					.texture("layer0", new ResourceLocation(ImmersiveWeapons.MOD_ID, "item/" + item))
+					.override().predicate(new ResourceLocation("trim_type"), 0.1f)
+					.model(new ModelFile.UncheckedModelFile(ImmersiveWeapons.MOD_ID + ":item/" + item + "_"
+							+ TrimMaterials.QUARTZ.location().getPath() + "_trim"))
+					.end()
+					.override().predicate(new ResourceLocation("trim_type"), 0.2f)
+					.model(new ModelFile.UncheckedModelFile(ImmersiveWeapons.MOD_ID + ":item/" + item + "_"
+							+ TrimMaterials.IRON.location().getPath() + "_trim"))
+					.end()
+					.override().predicate(new ResourceLocation("trim_type"), 0.3f)
+					.model(new ModelFile.UncheckedModelFile(ImmersiveWeapons.MOD_ID + ":item/" + item + "_"
+							+ TrimMaterials.NETHERITE.location().getPath() + "_trim"))
+					.end()
+					.override().predicate(new ResourceLocation("trim_type"), 0.4f)
+					.model(new ModelFile.UncheckedModelFile(ImmersiveWeapons.MOD_ID + ":item/" + item + "_"
+							+ TrimMaterials.REDSTONE.location().getPath() + "_trim"))
+					.end()
+					.override().predicate(new ResourceLocation("trim_type"), 0.5f)
+					.model(new ModelFile.UncheckedModelFile(ImmersiveWeapons.MOD_ID + ":item/" + item + "_"
+							+ TrimMaterials.COPPER.location().getPath() + "_trim"))
+					.end()
+					.override().predicate(new ResourceLocation("trim_type"), 0.6f)
+					.model(new ModelFile.UncheckedModelFile(ImmersiveWeapons.MOD_ID + ":item/" + item + "_"
+							+ TrimMaterials.GOLD.location().getPath() + "_trim"))
+					.end()
+					.override().predicate(new ResourceLocation("trim_type"), 0.7f)
+					.model(new ModelFile.UncheckedModelFile(ImmersiveWeapons.MOD_ID + ":item/" + item + "_"
+							+ TrimMaterials.EMERALD.location().getPath() + "_trim"))
+					.end()
+					.override().predicate(new ResourceLocation("trim_type"), 0.8f)
+					.model(new ModelFile.UncheckedModelFile(ImmersiveWeapons.MOD_ID + ":item/" + item + "_"
+							+ TrimMaterials.DIAMOND.location().getPath() + "_trim"))
+					.end()
+					.override().predicate(new ResourceLocation("trim_type"), 0.9f)
+					.model(new ModelFile.UncheckedModelFile(ImmersiveWeapons.MOD_ID + ":item/" + item + "_"
+							+ TrimMaterials.LAPIS.location().getPath() + "_trim"))
+					.end()
+					.override().predicate(new ResourceLocation("trim_type"), 1.0f)
+					.model(new ModelFile.UncheckedModelFile(ImmersiveWeapons.MOD_ID + ":item/" + item + "_"
+							+ TrimMaterials.AMETHYST.location().getPath() + "_trim"))
+					.end();
+		} else {
+			getBuilder(item.toString())
+					.parent(new ModelFile.UncheckedModelFile("item/generated"))
+					.texture("layer0", new ResourceLocation(ImmersiveWeapons.MOD_ID, "item/" + item))
+					.texture("layer1", overlay)
+					.override().predicate(new ResourceLocation("trim_type"), 0.1f)
+					.model(new ModelFile.UncheckedModelFile(ImmersiveWeapons.MOD_ID + ":item/" + item + "_"
+							+ TrimMaterials.QUARTZ.location().getPath() + "_trim"))
+					.end()
+					.override().predicate(new ResourceLocation("trim_type"), 0.2f)
+					.model(new ModelFile.UncheckedModelFile(ImmersiveWeapons.MOD_ID + ":item/" + item + "_"
+							+ TrimMaterials.IRON.location().getPath() + "_trim"))
+					.end()
+					.override().predicate(new ResourceLocation("trim_type"), 0.3f)
+					.model(new ModelFile.UncheckedModelFile(ImmersiveWeapons.MOD_ID + ":item/" + item + "_"
+							+ TrimMaterials.NETHERITE.location().getPath() + "_trim"))
+					.end()
+					.override().predicate(new ResourceLocation("trim_type"), 0.4f)
+					.model(new ModelFile.UncheckedModelFile(ImmersiveWeapons.MOD_ID + ":item/" + item + "_"
+							+ TrimMaterials.REDSTONE.location().getPath() + "_trim"))
+					.end()
+					.override().predicate(new ResourceLocation("trim_type"), 0.5f)
+					.model(new ModelFile.UncheckedModelFile(ImmersiveWeapons.MOD_ID + ":item/" + item + "_"
+							+ TrimMaterials.COPPER.location().getPath() + "_trim"))
+					.end()
+					.override().predicate(new ResourceLocation("trim_type"), 0.6f)
+					.model(new ModelFile.UncheckedModelFile(ImmersiveWeapons.MOD_ID + ":item/" + item + "_"
+							+ TrimMaterials.GOLD.location().getPath() + "_trim"))
+					.end()
+					.override().predicate(new ResourceLocation("trim_type"), 0.7f)
+					.model(new ModelFile.UncheckedModelFile(ImmersiveWeapons.MOD_ID + ":item/" + item + "_"
+							+ TrimMaterials.EMERALD.location().getPath() + "_trim"))
+					.end()
+					.override().predicate(new ResourceLocation("trim_type"), 0.8f)
+					.model(new ModelFile.UncheckedModelFile(ImmersiveWeapons.MOD_ID + ":item/" + item + "_"
+							+ TrimMaterials.DIAMOND.location().getPath() + "_trim"))
+					.end()
+					.override().predicate(new ResourceLocation("trim_type"), 0.9f)
+					.model(new ModelFile.UncheckedModelFile(ImmersiveWeapons.MOD_ID + ":item/" + item + "_"
+							+ TrimMaterials.LAPIS.location().getPath() + "_trim"))
+					.end()
+					.override().predicate(new ResourceLocation("trim_type"), 1.0f)
+					.model(new ModelFile.UncheckedModelFile(ImmersiveWeapons.MOD_ID + ":item/" + item + "_"
+							+ TrimMaterials.AMETHYST.location().getPath() + "_trim"))
+					.end();
+		}
 
+		// Create trimmed variants
 		for (ResourceKey<TrimMaterial> trimMaterial : trimMaterials) {
 			String armorType = switch (item.getEquipmentSlot()) {
 				case HEAD -> "helmet";
@@ -267,7 +327,11 @@ public class ItemModelGenerator extends ItemModelProvider {
 							basicItem(item);
 						}
 					} else if (!isAtSpawnEggItems && item instanceof ArmorItem armorItem) {
-						armorItem(armorItem);
+						if (armorItem instanceof DyeableArmorItem) {
+							armorItem(armorItem, new ResourceLocation(ImmersiveWeapons.MOD_ID, "item/" + item + "_overlay"));
+						} else {
+							armorItem(armorItem, null);
+						}
 					} else {
 						spawnEggItem(item);
 					}

@@ -130,6 +130,9 @@ public class TooltipHandler {
 		if (stack.getItem() instanceof StarstormArmorItem) {
 			event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.starstorm_armor").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
 		}
+		if (stack.getItem() instanceof PaddedLeatherArmorItem) {
+			event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.padded_leather_armor").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
+		}
 
 		// Throwables
 		if (stack.getItem() instanceof SmokeGrenadeItem grenade) {

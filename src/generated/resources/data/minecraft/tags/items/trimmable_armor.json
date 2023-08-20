@@ -27,6 +27,10 @@
     "immersiveweapons:starstorm_helmet",
     "immersiveweapons:starstorm_chestplate",
     "immersiveweapons:starstorm_leggings",
-    "immersiveweapons:starstorm_boots"
+    "immersiveweapons:starstorm_boots",
+    "immersiveweapons:padded_leather_helmet",
+    "immersiveweapons:padded_leather_chestplate",
+    "immersiveweapons:padded_leather_leggings",
+    "immersiveweapons:padded_leather_boots"
   ]
 }

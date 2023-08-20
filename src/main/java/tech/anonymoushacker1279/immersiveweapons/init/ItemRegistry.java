@@ -285,6 +285,10 @@ public class ItemRegistry {
 	public static final RegistryObject<StarstormArmorItem> STARSTORM_CHESTPLATE = ITEMS.register("starstorm_chestplate", () -> new StarstormArmorItem(CustomArmorMaterials.STARSTORM, ArmorItem.Type.CHESTPLATE, new Item.Properties(), false));
 	public static final RegistryObject<StarstormArmorItem> STARSTORM_LEGGINGS = ITEMS.register("starstorm_leggings", () -> new StarstormArmorItem(CustomArmorMaterials.STARSTORM, ArmorItem.Type.LEGGINGS, new Item.Properties(), true));
 	public static final RegistryObject<StarstormArmorItem> STARSTORM_BOOTS = ITEMS.register("starstorm_boots", () -> new StarstormArmorItem(CustomArmorMaterials.STARSTORM, ArmorItem.Type.BOOTS, new Item.Properties(), false));
+	public static final RegistryObject<PaddedLeatherArmorItem> PADDED_LEATHER_HELMET = ITEMS.register("padded_leather_helmet", () -> new PaddedLeatherArmorItem(CustomArmorMaterials.PADDED_LEATHER, ArmorItem.Type.HELMET, new Item.Properties(), false));
+	public static final RegistryObject<PaddedLeatherArmorItem> PADDED_LEATHER_CHESTPLATE = ITEMS.register("padded_leather_chestplate", () -> new PaddedLeatherArmorItem(CustomArmorMaterials.PADDED_LEATHER, ArmorItem.Type.CHESTPLATE, new Item.Properties(), false));
+	public static final RegistryObject<PaddedLeatherArmorItem> PADDED_LEATHER_LEGGINGS = ITEMS.register("padded_leather_leggings", () -> new PaddedLeatherArmorItem(CustomArmorMaterials.PADDED_LEATHER, ArmorItem.Type.LEGGINGS, new Item.Properties(), true));
+	public static final RegistryObject<PaddedLeatherArmorItem> PADDED_LEATHER_BOOTS = ITEMS.register("padded_leather_boots", () -> new PaddedLeatherArmorItem(CustomArmorMaterials.PADDED_LEATHER, ArmorItem.Type.BOOTS, new Item.Properties(), false));
 
 	// Spawn eggs
 	public static final RegistryObject<ForgeSpawnEggItem> DYING_SOLDIER_SPAWN_EGG = ITEMS.register("dying_soldier_spawn_egg", () -> new ForgeSpawnEggItem(EntityRegistry.DYING_SOLDIER_ENTITY, 0x7a6851, 0x783d22, (new Item.Properties()).stacksTo(16)));

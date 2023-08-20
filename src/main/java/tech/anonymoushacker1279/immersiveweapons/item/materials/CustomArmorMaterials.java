@@ -67,7 +67,15 @@ public enum CustomArmorMaterials implements ArmorMaterial {
 				map.put(ArmorItem.Type.LEGGINGS, 5);
 				map.put(ArmorItem.Type.CHESTPLATE, 6);
 				map.put(ArmorItem.Type.HELMET, 4);
-			}), 15, 2.2F, () -> Ingredient.of(ItemRegistry.STARSTORM_INGOT.get()), 0.0F);
+			}), 15, 2.2F, () -> Ingredient.of(ItemRegistry.STARSTORM_INGOT.get()), 0.0F),
+
+	PADDED_LEATHER("padded_leather", 6,
+			Util.make(new EnumMap<>(ArmorItem.Type.class), (map) -> {
+				map.put(ArmorItem.Type.BOOTS, 2);
+				map.put(ArmorItem.Type.LEGGINGS, 2);
+				map.put(ArmorItem.Type.CHESTPLATE, 3);
+				map.put(ArmorItem.Type.HELMET, 2);
+			}), 15, 0.0F, () -> Ingredient.of(Items.LEATHER), 0.0F);
 
 	private final String name;
 	private final int durabilityMultiplier;

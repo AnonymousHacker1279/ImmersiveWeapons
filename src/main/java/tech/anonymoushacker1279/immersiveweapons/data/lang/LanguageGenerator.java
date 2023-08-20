@@ -102,6 +102,9 @@ public class LanguageGenerator extends IWLanguageProvider {
 		excludedItems.add(ItemRegistry.HANS_BLESSING.get());
 		excludedItems.add(ItemRegistry.MELEE_MASTERS_MOLTEN_GLOVE.get());
 		excludedItems.add(ItemRegistry.JONNYS_CURSE.get());
+		excludedItems.add(ItemRegistry.PADDED_LEATHER_HELMET.get());
+		excludedItems.add(ItemRegistry.PADDED_LEATHER_CHESTPLATE.get());
+		excludedItems.add(ItemRegistry.PADDED_LEATHER_LEGGINGS.get());
 
 		// Filter the excluded items from the registry
 		Stream<RegistryObject<Item>> items = ItemRegistry.ITEMS.getEntries().stream()
@@ -146,6 +149,9 @@ public class LanguageGenerator extends IWLanguageProvider {
 		addItem(ItemRegistry.HANS_BLESSING, "Hans' Blessing");
 		addItem(ItemRegistry.MELEE_MASTERS_MOLTEN_GLOVE, "Melee Master's Molten Glove");
 		addItem(ItemRegistry.JONNYS_CURSE, "Jonny's Curse");
+		addItem(ItemRegistry.PADDED_LEATHER_HELMET, "Padded Leather Cap");
+		addItem(ItemRegistry.PADDED_LEATHER_CHESTPLATE, "Padded Leather Tunic");
+		addItem(ItemRegistry.PADDED_LEATHER_LEGGINGS, "Padded Leather Pants");
 	}
 
 	private void addEntityTypes() {
@@ -344,6 +350,7 @@ public class LanguageGenerator extends IWLanguageProvider {
 		addTooltip("ventus_armor", "Unlocks a 13.1ft vertical and makes you as light as a feather (Toggleable with your Armor Effect Toggle key)");
 		addTooltip("astral_armor", "Improves mobility and allows you to dash forward (Toggleable with your Armor Effect Toggle key)");
 		addTooltip("starstorm_armor", "Increases raw damage output by 20%");
+		addTooltip("padded_leather_armor", "Fully dampens vibrations caused by walking or running");
 
 		// Throwables
 		addTooltip("smoke_grenade", "Creates a thick cloud of smoke upon impact. Good for quickly escaping a situation.");

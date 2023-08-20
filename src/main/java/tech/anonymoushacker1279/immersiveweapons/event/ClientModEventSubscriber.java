@@ -326,16 +326,28 @@ public class ClientModEventSubscriber {
 	public static void registerItemColorHandlers(RegisterColorHandlersEvent.Item event) {
 		ImmersiveWeapons.LOGGER.info("Registering item color handlers");
 
-		event.register((color1, color2) -> GrassColor.get(0.5d, 1.0d),
+		event.register((stack, color) -> GrassColor.get(0.5d, 1.0d),
 				BlockItemRegistry.PITFALL_ITEM.get());
+
+		// Handle dyeable armor
+		ArrayList<DyeableArmorItem> dyeableArmorItems = new ArrayList<>(4);
+
+		for (RegistryObject<Item> registryObject : ItemRegistry.ITEMS.getEntries()) {
+			if (registryObject.get() instanceof DyeableArmorItem item) {
+				dyeableArmorItems.add(item);
+			}
+		}
+
+		event.register((stack, color) -> color > 0 ? -1 : ((DyeableLeatherItem) stack.getItem())
+				.getColor(stack), dyeableArmorItems.toArray(DyeableArmorItem[]::new));
 	}
 
 	@SubscribeEvent
 	public static void registerBlockColorHandlers(RegisterColorHandlersEvent.Block event) {
 		ImmersiveWeapons.LOGGER.info("Registering block color handlers");
 
-		event.register((color1, color2, color3, color4) -> BiomeColors
-						.getAverageGrassColor(Objects.requireNonNull(color2), Objects.requireNonNull(color3)),
+		event.register((state, tintGetter, pos, color) -> BiomeColors
+						.getAverageGrassColor(Objects.requireNonNull(tintGetter), Objects.requireNonNull(pos)),
 				BlockRegistry.PITFALL.get());
 	}
 

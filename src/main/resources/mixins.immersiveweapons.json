@@ -5,6 +5,7 @@
 	"refmap": "mixins.immersiveweapons.refmap.json",
 	"mixins": [
 		"CombatRulesMixin",
+		"EntityMixin",
 		"ItemStackMixin"
 	],
 	"client": [
