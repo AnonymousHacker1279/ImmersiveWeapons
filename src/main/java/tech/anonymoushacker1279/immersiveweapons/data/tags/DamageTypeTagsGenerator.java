@@ -34,5 +34,8 @@ public class DamageTypeTagsGenerator extends TagsProvider<DamageType> {
 
 		tag(DamageTypeTags.IS_PROJECTILE)
 				.add(IWDamageTypes.BULLET_KEY);
+
+		tag(DamageTypeTags.BYPASSES_ENCHANTMENTS)
+				.add(IWDamageTypes.BLEEDING_KEY);
 	}
 }

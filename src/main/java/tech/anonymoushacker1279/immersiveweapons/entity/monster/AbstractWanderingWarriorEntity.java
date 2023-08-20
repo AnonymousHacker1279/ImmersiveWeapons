@@ -23,11 +23,10 @@ import tech.anonymoushacker1279.immersiveweapons.init.ItemRegistry;
 import tech.anonymoushacker1279.immersiveweapons.init.SoundEventRegistry;
 
 import java.time.LocalDate;
-import java.time.temporal.ChronoField;
 
 public abstract class AbstractWanderingWarriorEntity extends Monster implements GrantAdvancementOnDiscovery {
 
-	private final MeleeAttackGoal aiAttackOnCollide = new MeleeAttackGoal(this, 1.2D, false) {
+	private final MeleeAttackGoal meleeAttackGoal = new MeleeAttackGoal(this, 1.2D, false) {
 		@Override
 		public void stop() {
 			super.stop();
@@ -170,8 +169,8 @@ public abstract class AbstractWanderingWarriorEntity extends Monster implements 
 
 		if (getItemBySlot(EquipmentSlot.HEAD).isEmpty()) {
 			LocalDate date = LocalDate.now();
-			int day = date.get(ChronoField.DAY_OF_MONTH);
-			int month = date.get(ChronoField.MONTH_OF_YEAR);
+			int day = date.getDayOfMonth();
+			int month = date.getMonth().getValue();
 			if (month == 10 && day == 31 && random.nextFloat() < 0.25F) {
 				setItemSlot(EquipmentSlot.HEAD,
 						new ItemStack(random.nextFloat() < 0.1F ? Blocks.JACK_O_LANTERN : Blocks.CARVED_PUMPKIN));
@@ -188,11 +187,11 @@ public abstract class AbstractWanderingWarriorEntity extends Monster implements 
 	 */
 	void setCombatTask() {
 		if (!level().isClientSide) {
-			goalSelector.removeGoal(aiAttackOnCollide);
+			goalSelector.removeGoal(meleeAttackGoal);
 			if (getItemInHand(InteractionHand.MAIN_HAND).getItem() == Items.AIR) {
 				populateDefaultEquipmentSlots(random, level().getCurrentDifficultyAt(blockPosition()));
 			}
-			goalSelector.addGoal(1, aiAttackOnCollide);
+			goalSelector.addGoal(1, meleeAttackGoal);
 		}
 	}
 

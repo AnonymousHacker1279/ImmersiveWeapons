@@ -33,6 +33,7 @@ public class ModEventSubscriber {
 		event.put(EntityRegistry.FIELD_MEDIC_ENTITY.get(), AbstractFieldMedicEntity.registerAttributes().build());
 		event.put(EntityRegistry.WANDERING_WARRIOR_ENTITY.get(), AbstractWanderingWarriorEntity.registerAttributes().build());
 		event.put(EntityRegistry.HANS_ENTITY.get(), HansEntity.registerAttributes().build());
+		event.put(EntityRegistry.SUPER_HANS_ENTITY.get(), SuperHansEntity.registerAttributes().build());
 		event.put(EntityRegistry.LAVA_REVENANT_ENTITY.get(), LavaRevenantEntity.registerAttributes().build());
 		event.put(EntityRegistry.ROCK_SPIDER_ENTITY.get(), RockSpiderEntity.registerAttributes().build());
 		event.put(EntityRegistry.CELESTIAL_TOWER_ENTITY.get(), CelestialTowerEntity.registerAttributes().build());

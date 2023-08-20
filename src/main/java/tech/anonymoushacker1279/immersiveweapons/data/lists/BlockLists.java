@@ -33,6 +33,8 @@ public class BlockLists {
 		simpleBlocks.add(BlockRegistry.BLOOD_SAND.get());
 		simpleBlocks.add(BlockRegistry.ASTRAL_BLOCK.get());
 		simpleBlocks.add(BlockRegistry.STARSTORM_BLOCK.get());
+		simpleBlocks.add(BlockRegistry.CHAMPION_BRICKS.get());
+		simpleBlocks.add(BlockRegistry.CHAMPION_BASE.get());
 
 		stoneBasedOres.add(BlockRegistry.SULFUR_ORE.get());
 		stoneBasedOres.add(BlockRegistry.ELECTRIC_ORE.get());

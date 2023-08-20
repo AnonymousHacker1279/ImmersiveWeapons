@@ -229,6 +229,9 @@ public class TooltipHandler {
 		if (stack.getItem() == ItemRegistry.HANS_SPAWN_EGG.get()) {
 			event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.hans_spawn_egg").withStyle(ChatFormatting.DARK_PURPLE, ChatFormatting.ITALIC));
 		}
+		if (stack.getItem() == ItemRegistry.SUPER_HANS_SPAWN_EGG.get()) {
+			event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.super_hans_spawn_egg").withStyle(ChatFormatting.DARK_PURPLE, ChatFormatting.ITALIC));
+		}
 		if (stack.getItem() == BlockItemRegistry.MORTAR_ITEM.get()) {
 			event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.mortar").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
 		}

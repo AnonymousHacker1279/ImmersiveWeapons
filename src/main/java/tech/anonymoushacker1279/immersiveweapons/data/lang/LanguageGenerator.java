@@ -95,6 +95,7 @@ public class LanguageGenerator extends IWLanguageProvider {
 
 		excludedItems.add(ItemRegistry.MRE.get());
 		excludedItems.add(ItemRegistry.HANS_SPAWN_EGG.get());
+		excludedItems.add(ItemRegistry.SUPER_HANS_SPAWN_EGG.get());
 		excludedItems.add(ItemRegistry.MUSKET_SCOPE.get());
 		excludedItems.add(ItemRegistry.EXPLOSIVE_CHOCOLATE_BAR.get());
 		excludedItems.add(ItemRegistry.BERSERKERS_AMULET.get());
@@ -137,7 +138,8 @@ public class LanguageGenerator extends IWLanguageProvider {
 		addItem(ItemRegistry.SMOKE_GRENADE_ARROW_PURPLE, "Purple Smoke Grenade Arrow");
 		addItem(ItemRegistry.SMOKE_GRENADE_ARROW_YELLOW, "Yellow Smoke Grenade Arrow");
 		addItem(ItemRegistry.MRE, "Meal Ready-to-Eat (MRE)");
-		addItem(ItemRegistry.HANS_SPAWN_EGG, "Hans The Almighty Spawn Egg");
+		addItem(ItemRegistry.HANS_SPAWN_EGG, "Hans the Almighty Spawn Egg");
+		addItem(ItemRegistry.SUPER_HANS_SPAWN_EGG, "Super Hans the Almighty Spawn Egg");
 		addItem(ItemRegistry.MUSKET_SCOPE, "Musket (Scope)");
 		addItem(ItemRegistry.EXPLOSIVE_CHOCOLATE_BAR, "Chocolate Bar");
 		addItem(ItemRegistry.BERSERKERS_AMULET, "Berserker's Amulet");
@@ -405,6 +407,7 @@ public class LanguageGenerator extends IWLanguageProvider {
 		addTooltip("morphine", "I wouldn't recommend using this");
 		addTooltip("used_syringe", "If you use this there's a good chance you will die of hepatitis");
 		addTooltip("hans_spawn_egg", "Summon Hans the Almighty into this world");
+		addTooltip("super_hans_spawn_egg", "What if Hans was even more powerful?");
 		addTooltip("mortar", "Capable of sending exploding shells far into the distance");
 		addTooltip("celestial_fragment", "The power of the sun in the palm of your hand");
 		addTooltip("azul_locator", "Teleport to your spawn point at will");

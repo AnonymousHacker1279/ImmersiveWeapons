@@ -210,6 +210,7 @@ public class ClientModEventSubscriber {
 		event.registerEntityRenderer(EntityRegistry.FIELD_MEDIC_ENTITY.get(), FieldMedicRenderer::new);
 		event.registerEntityRenderer(EntityRegistry.WANDERING_WARRIOR_ENTITY.get(), WanderingWarriorRenderer::new);
 		event.registerEntityRenderer(EntityRegistry.HANS_ENTITY.get(), HansRenderer::new);
+		event.registerEntityRenderer(EntityRegistry.SUPER_HANS_ENTITY.get(), SuperHansRenderer::new);
 		event.registerEntityRenderer(EntityRegistry.CHAIR_ENTITY.get(), ChairRenderer::new);
 
 		event.registerEntityRenderer(EntityRegistry.BURNED_OAK_BOAT_ENTITY.get(),

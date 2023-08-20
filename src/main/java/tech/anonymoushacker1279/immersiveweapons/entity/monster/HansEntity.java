@@ -19,21 +19,12 @@ import tech.anonymoushacker1279.immersiveweapons.init.SoundEventRegistry;
 
 public class HansEntity extends AbstractWanderingWarriorEntity {
 
-	/**
-	 * Constructor for HansEntity.
-	 *
-	 * @param entityType the <code>EntityType</code> instance
-	 * @param world      the <code>World</code> the entity is in
-	 */
-	public HansEntity(EntityType<? extends HansEntity> entityType, Level world) {
-		super(entityType, world);
+	protected boolean isImmuneToProjectiles = true;
+
+	public HansEntity(EntityType<? extends HansEntity> entityType, Level level) {
+		super(entityType, level);
 	}
 
-	/**
-	 * Register this entity's attributes.
-	 *
-	 * @return AttributeModifierMap.MutableAttribute
-	 */
 	public static AttributeSupplier.Builder registerAttributes() {
 		return Monster.createMonsterAttributes()
 				.add(Attributes.MOVEMENT_SPEED, 0.35D)
@@ -63,11 +54,11 @@ public class HansEntity extends AbstractWanderingWarriorEntity {
 	/**
 	 * Get the hurt sound.
 	 *
-	 * @param damageSourceIn the <code>DamageSource</code> instance
+	 * @param damageSource the <code>DamageSource</code> instance
 	 * @return SoundEvent
 	 */
 	@Override
-	protected SoundEvent getHurtSound(DamageSource damageSourceIn) {
+	protected SoundEvent getHurtSound(DamageSource damageSource) {
 		return SoundEventRegistry.WANDERING_WARRIOR_HURT.get();
 	}
 
@@ -101,27 +92,34 @@ public class HansEntity extends AbstractWanderingWarriorEntity {
 	 */
 	@Override
 	public boolean hurt(DamageSource source, float amount) {
-		if (amount > 0 && source.getEntity() instanceof Player || source.getEntity() instanceof Mob
+		if (amount > 0 && source.getEntity() instanceof Player
+				|| source.getEntity() instanceof Mob
 				|| source.getEntity() instanceof PathfinderMob) {
 
 			if (source.isCreativePlayer()) {
 				super.hurt(source, amount);
-				return false;
+				return true;
 			}
-			if (source.is(DamageTypeTags.IS_PROJECTILE) || source.getDirectEntity() instanceof AbstractArrow) {
-				setTarget((LivingEntity) source.getEntity());
-				setCombatTask();
-				heal(amount);
-				return false;
+
+			if (isImmuneToProjectiles) {
+				if (source.is(DamageTypeTags.IS_PROJECTILE) || source.getDirectEntity() instanceof AbstractArrow) {
+					setTarget((LivingEntity) source.getEntity());
+					setCombatTask();
+					heal(amount);
+					return false;
+				}
 			}
+
 			setTarget((LivingEntity) source.getEntity());
 			setCombatTask();
 			super.hurt(source, amount);
 		}
+
 		if (source == damageSources().genericKill()) {
 			super.hurt(source, amount);
 			return true;
 		}
+
 		return false;
 	}
 }
