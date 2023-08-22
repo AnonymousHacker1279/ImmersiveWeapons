@@ -324,6 +324,8 @@ public class ForgeEventSubscriber {
 		// Handle accessory effects
 		if (damagedEntity instanceof Player player) {
 			AccessoryEffects.damageResistanceEffects(event, player);
+			AccessoryEffects.bleedResistanceEffects(event, player);
+			AccessoryEffects.bleedCancelEffects(event, player);
 
 			if (source != null) {
 				AccessoryEffects.celestialSpiritEffect(player, source);

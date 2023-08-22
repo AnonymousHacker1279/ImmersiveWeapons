@@ -68,4 +68,7 @@ public class AccessoryItemEffects {
 			.addEffect(EffectType.OTHER, 0.0d);
 	public static final EffectBuilder AGILITY_BRACELET = new EffectBuilder()
 			.addEffect(EffectType.OTHER, 0.0d);
+	public static final EffectBuilder BLOODY_CLOTH = new EffectBuilder()
+			.addEffect(EffectType.BLEED_CANCEL_CHANCE, 0.15d)
+			.addEffect(EffectType.BLEED_RESISTANCE, 0.30d);
 }

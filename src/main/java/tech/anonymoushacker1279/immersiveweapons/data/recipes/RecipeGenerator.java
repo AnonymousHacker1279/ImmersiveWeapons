@@ -1114,6 +1114,17 @@ public class RecipeGenerator extends RecipeProvider {
 				.unlockedBy("molten_ingot", has(IWItemTagGroups.MOLTEN_INGOTS))
 				.save(finishedRecipeConsumer);
 
+		// Bloody Cloth
+		ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ItemRegistry.BLOODY_CLOTH.get())
+				.define('a', ItemRegistry.CLOTH_SCRAP.get())
+				.define('b', Items.REDSTONE)
+				.pattern("aaa")
+				.pattern("aba")
+				.pattern("aaa")
+				.group("bloody_cloth")
+				.unlockedBy("cloth_scrap", has(ItemRegistry.CLOTH_SCRAP.get()))
+				.save(finishedRecipeConsumer);
+
 		// Bloody Sacrifice
 		ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ItemRegistry.BLOODY_SACRIFICE.get())
 				.define('a', Items.SPIDER_EYE)

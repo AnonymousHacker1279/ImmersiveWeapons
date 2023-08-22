@@ -6,6 +6,7 @@ import net.minecraft.world.item.ItemStack;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.api.PluginHandler;
 import tech.anonymoushacker1279.immersiveweapons.item.AccessoryItem.EffectBuilder.EffectScalingType;
+import tech.anonymoushacker1279.immersiveweapons.potion.BleedingEffect;
 import tech.anonymoushacker1279.immersiveweapons.util.IWCBBridge;
 
 import java.util.*;
@@ -156,14 +157,59 @@ public class AccessoryItem extends Item {
 	}
 
 	public enum EffectType {
+		/**
+		 * Chance for firearms to not consume ammo.
+		 */
 		FIREARM_AMMO_CONSERVATION_CHANCE,
+
+		/**
+		 * Modifier for reload time for firearms.
+		 */
 		FIREARM_RELOAD_SPEED,
+
+		/**
+		 * Modifier for melee damage.
+		 */
 		MELEE_DAMAGE,
+
+		/**
+		 * Modifier for projectile damage.
+		 */
 		PROJECTILE_DAMAGE,
+
+		/**
+		 * Modifier to all outgoing damage sources.
+		 */
 		GENERAL_DAMAGE,
+
+		/**
+		 * Modifier to all incoming damage sources.
+		 */
 		DAMAGE_RESISTANCE,
+
+		/**
+		 * Modifier to melee knockback.
+		 */
 		MELEE_KNOCKBACK,
+
+		/**
+		 * Chance for melee attacks to inflict {@link BleedingEffect}.
+		 */
 		MELEE_BLEED_CHANCE,
+
+		/**
+		 * Chance for {@link BleedingEffect} to be cancelled each damage tick.
+		 */
+		BLEED_CANCEL_CHANCE,
+
+		/**
+		 * Modifier to {@link BleedingEffect} damage.
+		 */
+		BLEED_RESISTANCE,
+
+		/**
+		 * Miscellaneous effect category. Used for effects which are handled manually.
+		 */
 		OTHER
 	}
 }

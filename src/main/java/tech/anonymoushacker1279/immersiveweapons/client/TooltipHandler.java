@@ -315,6 +315,9 @@ public class TooltipHandler {
 			if (stack.getItem() == ItemRegistry.AGILITY_BRACELET.get()) {
 				event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.agility_bracelet").withStyle(ChatFormatting.GREEN, ChatFormatting.ITALIC));
 			}
+			if (stack.getItem() == ItemRegistry.BLOODY_CLOTH.get()) {
+				event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.bloody_cloth").withStyle(ChatFormatting.GREEN, ChatFormatting.ITALIC));
+			}
 
 			addShiftTooltip(event.getToolTip(), addAccessoryTooltips(item, event.getEntity(), stack));
 		} else if (stack.getItem() instanceof CursedItem) {

@@ -16,10 +16,10 @@ public class BleedingEffect extends MobEffect {
 	 * Constructor for BleedingEffect.
 	 *
 	 * @param effectCategory the <code>MobEffectCategory</code> instance
-	 * @param liquidColorIn  the liquid color
+	 * @param color          the effect color
 	 */
-	public BleedingEffect(MobEffectCategory effectCategory, int liquidColorIn) {
-		super(effectCategory, liquidColorIn);
+	public BleedingEffect(MobEffectCategory effectCategory, int color) {
+		super(effectCategory, color);
 	}
 
 	/**
@@ -32,11 +32,15 @@ public class BleedingEffect extends MobEffect {
 	public void applyEffectTick(LivingEntity livingEntity, int amplifier) {
 		if (!livingEntity.level().isClientSide) {
 			if (cooldownTicks <= 0) {
-				cooldownTicks = 59 - (amplifier >= 1 ? amplifier * 10 : 0);
-				livingEntity.hurt(IWDamageSources.BLEEDING, 1.0f);
+				cooldownTicks = 59 - (amplifier * 10);
+
+				float amount = 1.0f + (amplifier * 0.25f);
+
+				livingEntity.hurt(IWDamageSources.BLEEDING, amount);
 			} else {
 				cooldownTicks--;
 			}
+
 			((ServerLevel) livingEntity.level()).sendParticles(
 					ParticleTypesRegistry.BLOOD_PARTICLE.get(),
 					livingEntity.position().x, livingEntity.position().y + GeneralUtilities.getRandomNumber(0.3d, livingEntity.getEyeHeight()),

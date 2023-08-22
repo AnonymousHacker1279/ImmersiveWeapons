@@ -75,31 +75,37 @@ public class SuperHansEntity extends HansEntity {
 
 	@Override
 	public boolean doHurtTarget(Entity entity) {
-		if (entity instanceof LivingEntity livingEntity) {
-			if (getHealth() <= getMaxHealth() * 0.75f) {
-				// Make the entity bleed
-				int duration = (int) Math.min((20 * Math.pow((getHealth() / getMaxHealth()), -1)) * 4, 900);
-				int amplifier = (int) Math.min((Math.pow((getHealth() / getMaxHealth()), -1)), 5);
-				livingEntity.addEffect(
-						new MobEffectInstance(EffectRegistry.BLEEDING_EFFECT.get(), duration, amplifier, false, true)
-				);
+		boolean hurtTarget = super.doHurtTarget(entity);
+
+		if (hurtTarget) {
+			if (entity instanceof LivingEntity livingEntity) {
+				if (getHealth() <= getMaxHealth() * 0.75f) {
+					// Make the entity bleed
+					int duration = (int) Math.min((20 * Math.pow((getHealth() / getMaxHealth()), -1)) * 4, 900);
+					int amplifier = (int) Math.min((Math.pow((getHealth() / getMaxHealth()), -1)), 5);
+					livingEntity.addEffect(
+							new MobEffectInstance(EffectRegistry.BLEEDING_EFFECT.get(), duration, amplifier, false, true)
+					);
+				}
 			}
 		}
 
-		return super.doHurtTarget(entity);
+		return hurtTarget;
 	}
 
 	@Override
 	public void tick() {
 		super.tick();
 
-		if (level() instanceof ServerLevel serverLevel) {
-			if (getHealth() <= getMaxHealth() * 0.5f) {
-				spawnParticles(serverLevel, ParticleTypes.GLOW);
-				return;
-			}
-			if (getHealth() <= getMaxHealth() * 0.75f) {
-				spawnParticles(serverLevel, ParticleTypes.SMOKE);
+		if (tickCount % 8 == 0) {
+			if (level() instanceof ServerLevel serverLevel) {
+				if (getHealth() <= getMaxHealth() * 0.5f) {
+					spawnParticles(serverLevel, ParticleTypes.GLOW);
+					return;
+				}
+				if (getHealth() <= getMaxHealth() * 0.75f) {
+					spawnParticles(serverLevel, ParticleTypes.SMOKE);
+				}
 			}
 		}
 	}
@@ -143,5 +149,7 @@ public class SuperHansEntity extends HansEntity {
 		if (hasCustomName()) {
 			bossEvent.setName(getDisplayName());
 		}
+
+		bossEvent.setProgress(getHealth() / getMaxHealth());
 	}
 }

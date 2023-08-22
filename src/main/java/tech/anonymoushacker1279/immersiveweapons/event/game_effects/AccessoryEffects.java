@@ -14,6 +14,7 @@ import net.minecraftforge.event.entity.living.LivingKnockBackEvent;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.api.PluginHandler;
 import tech.anonymoushacker1279.immersiveweapons.client.gui.overlays.DebugTracingData;
+import tech.anonymoushacker1279.immersiveweapons.data.damage_types.IWDamageTypes;
 import tech.anonymoushacker1279.immersiveweapons.entity.projectile.MeteorEntity;
 import tech.anonymoushacker1279.immersiveweapons.init.EffectRegistry;
 import tech.anonymoushacker1279.immersiveweapons.init.ItemRegistry;
@@ -97,6 +98,28 @@ public class AccessoryEffects {
 
 		// Apply the damage resistance
 		event.setAmount((float) (event.getAmount() * (1 - damageReduction)));
+	}
+
+	public static void bleedResistanceEffects(LivingHurtEvent event, Player player) {
+		if (event.getSource().is(IWDamageTypes.BLEEDING_KEY)) {
+			// Get the total bleed resistance from all items
+			double bleedResistance = collectEffects(EffectType.BLEED_RESISTANCE, player);
+
+			// Apply the bleed resistance
+			event.setAmount((float) (event.getAmount() * (1 - bleedResistance)));
+		}
+	}
+
+	public static void bleedCancelEffects(LivingHurtEvent event, Player player) {
+		if (event.getSource().is(IWDamageTypes.BLEEDING_KEY)) {
+			// Get the total bleed cancel chance from all items
+			double bleedCancelChance = collectEffects(EffectType.BLEED_CANCEL_CHANCE, player);
+
+			// Roll for bleed cancel
+			if (player.getRandom().nextFloat() <= bleedCancelChance) {
+				player.removeEffect(EffectRegistry.BLEEDING_EFFECT.get());
+			}
+		}
 	}
 
 	public static void meleeDamageEffects(LivingHurtEvent event, Player player) {
