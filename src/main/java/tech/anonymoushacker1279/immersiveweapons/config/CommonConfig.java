@@ -1,70 +1,50 @@
 package tech.anonymoushacker1279.immersiveweapons.config;
 
 import net.minecraftforge.common.ForgeConfigSpec;
-import net.minecraftforge.common.ForgeConfigSpec.Builder;
-import org.apache.commons.lang3.tuple.Pair;
+import net.minecraftforge.common.ForgeConfigSpec.ConfigValue;
+import org.jetbrains.annotations.NotNull;
+import tech.anonymoushacker1279.immersiveweapons.config.ConfigHelper.TomlConfigOps;
 
-public class CommonConfig {
+import java.util.HashMap;
+import java.util.Map;
 
-	public static final ForgeConfigSpec COMMON_SPEC;
-	public static final CommonConfig COMMON;
+public record CommonConfig(
+		ConfigValue<Boolean> bulletsBreakGlass,
+		ConfigValue<Boolean> tiltrosEnabled,
+		ConfigValue<Integer> forceSmokeGrenadeParticles,
+		ConfigValue<Double> maxArmorProtection,
+		ConfigValue<Integer> discoveryAdvancementRange,
+		ConfigValue<Integer> celestialTowerSpawnCheckingRadius,
+		ConfigValue<Double> celestialTowerWaveSizeModifier,
+		ConfigValue<Object> skygazerEnchantCaps,
+		ConfigValue<Double> gunCritChance,
+		ConfigValue<Boolean> allowInfiniteAmmoOnAllTiers,
+		ConfigValue<Double> flintlockPistolFireVelocity,
+		ConfigValue<Double> flintlockPistolFireInaccuracy,
+		ConfigValue<Double> blunderbussFireVelocity,
+		ConfigValue<Double> blunderbussFireInaccuracy,
+		ConfigValue<Double> musketFireVelocity,
+		ConfigValue<Double> musketFireInaccuracy,
+		ConfigValue<Integer> meteorStaffMaxUseRange,
+		ConfigValue<Double> meteorStaffExplosionRadius,
+		ConfigValue<Boolean> meteorStaffExplosionBreakBlocks,
+		ConfigValue<Integer> cursedSightStaffMaxUseRange) {
 
-	// General settings
-	public static ForgeConfigSpec.BooleanValue BULLETS_BREAK_GLASS;
-	public static ForgeConfigSpec.BooleanValue TILTROS_ENABLED;
-	public static ForgeConfigSpec.IntValue FORCE_SMOKE_GRENADE_PARTICLES;
-
-	// Mixin settings
-	public static ForgeConfigSpec.DoubleValue MAX_ARMOR_PROTECTION;
-
-	// Entity settings
-
-	// General
-	public static ForgeConfigSpec.IntValue DISCOVERY_ADVANCEMENT_RANGE;
-
-	// Celestial Tower
-	public static ForgeConfigSpec.IntValue CELESTIAL_TOWER_SPAWN_CHECK_RADIUS;
-	public static ForgeConfigSpec.DoubleValue CELESTIAL_TOWER_MINIONS_WAVE_SIZE_MODIFIER;
-
-	// Weapon settings
-
-	// General
-	public static ForgeConfigSpec.DoubleValue GUN_CRIT_CHANCE;
-	public static ForgeConfigSpec.BooleanValue ALLOW_INFINITE_AMMO_ON_ALl_TIERS;
-
-	// Flintlock Pistol
-	public static ForgeConfigSpec.DoubleValue FLINTLOCK_PISTOL_FIRE_VELOCITY;
-	public static ForgeConfigSpec.DoubleValue FLINTLOCK_PISTOL_FIRE_INACCURACY;
-
-	// Blunderbuss
-	public static ForgeConfigSpec.DoubleValue BLUNDERBUSS_FIRE_VELOCITY;
-	public static ForgeConfigSpec.DoubleValue BLUNDERBUSS_FIRE_INACCURACY;
-
-	// Musket
-	public static ForgeConfigSpec.DoubleValue MUSKET_FIRE_VELOCITY;
-	public static ForgeConfigSpec.DoubleValue MUSKET_FIRE_INACCURACY;
-
-	// Meteor Staff
-	public static ForgeConfigSpec.IntValue METEOR_STAFF_MAX_USE_RANGE;
-	public static ForgeConfigSpec.DoubleValue METEOR_STAFF_EXPLOSION_RADIUS;
-	public static ForgeConfigSpec.BooleanValue METEOR_STAFF_EXPLOSION_BREAK_BLOCKS;
-
-	// Cursed Sight Staff
-	public static ForgeConfigSpec.IntValue CURSED_SIGHT_STAFF_MAX_USE_RANGE;
-
-	CommonConfig(ForgeConfigSpec.Builder builder) {
+	public static CommonConfig create(ForgeConfigSpec.Builder builder) {
 		builder.push("Common Configuration");
 
 		builder.push("General");
-		BULLETS_BREAK_GLASS = builder
+		ConfigValue<Boolean> bulletsBreakGlass = builder
 				.comment("Enable bullets breaking glass - Default true")
 				.translation("config.immersiveweapons.bullets_break_glass")
 				.define("bullets_break_glass", true);
-		TILTROS_ENABLED = builder
+
+		ConfigValue<Boolean> tiltrosEnabled = builder
 				.comment("Enable the Tiltros dimension portal - Default true")
 				.translation("config.immersiveweapons.tiltros_enabled")
 				.define("tiltros_dimension_accessible_via_portal", true);
-		FORCE_SMOKE_GRENADE_PARTICLES = builder
+
+		ConfigValue<Integer> forceSmokeGrenadeParticles = builder
 				.comment("""
 						Force the number of particles produced by the smoke grenade to be the same on all clients.
 						A value of -1 will not force any value, and will allow clients to use their own values.
@@ -76,7 +56,7 @@ public class CommonConfig {
 		builder.push("Mixin");
 
 		builder.push("Combat Rules");
-		MAX_ARMOR_PROTECTION = builder
+		ConfigValue<Double> maxArmorProtection = builder
 				.comment("""
 						Set the maximum armor protection cap. The vanilla default is 20. Setting this value higher
 						allows higher tiers of armor to work as intended. A value of 25 is fully unlocked. - Default 25.0""")
@@ -89,7 +69,7 @@ public class CommonConfig {
 		builder.push("Entity Settings");
 
 		builder.push("General");
-		DISCOVERY_ADVANCEMENT_RANGE = builder
+		ConfigValue<Integer> discoveryAdvancementRange = builder
 				.comment("Set the range for checking criteria of the discovery advancement (value is squared) - Default 50")
 				.comment("Lowering this value may improve server performance.")
 				.translation("config.immersiveweapons.discovery_advancement_range")
@@ -97,13 +77,13 @@ public class CommonConfig {
 		builder.pop();
 
 		builder.push("Celestial Tower");
-		CELESTIAL_TOWER_SPAWN_CHECK_RADIUS = builder
+		ConfigValue<Integer> celestialTowerSpawnCheckingRadius = builder
 				.comment("""
 						Set the spawn checking radius for the Celestial Tower.
 						Higher values increase the effectiveness of Celestial Lanterns - Default 256""")
 				.translation("config.immersiveweapons.celestial_tower_spawn_check_radius")
 				.defineInRange("celestial_tower_spawn_checking_radius", 256, 0, Integer.MAX_VALUE);
-		CELESTIAL_TOWER_MINIONS_WAVE_SIZE_MODIFIER = builder
+		ConfigValue<Double> celestialTowerWaveSizeModifier = builder
 				.comment("""
 						Multiplier to change the wave size from Celestial Tower summons.
 						Set less than 1 to reduce, greater than 1 to increase.
@@ -112,16 +92,24 @@ public class CommonConfig {
 				.defineInRange("celestial_tower_wave_size_modifier", 1.0D, 0, Double.MAX_VALUE);
 		builder.pop();
 
+		builder.push("Skygazer");
+		ConfigValue<Object> skygazerEnchantCaps = builder
+				.comment("""
+						Specify maximum caps on enchantments to prevent the Skygazer from being able to upgrade them
+						past a certain level. Enchantments at their max level will appear with a gold tooltip.""")
+				.translation("config.immersiveweapons.skygazer_enchant_caps")
+				.define("skygazer_enchant_caps", TomlConfigOps.INSTANCE.createMap(getEnchantCapsMap()));
+
 		builder.pop();
 
 		builder.push("Weapon Settings");
 
 		builder.push("General");
-		GUN_CRIT_CHANCE = builder
+		ConfigValue<Double> gunCritChance = builder
 				.comment("Set the chance for a fired bullet to be critical - Default 0.1")
 				.translation("config.immersiveweapons.gun_crit_chance")
 				.defineInRange("gun_crit_chance", 0.1D, 0.0D, 1.0D);
-		ALLOW_INFINITE_AMMO_ON_ALl_TIERS = builder
+		ConfigValue<Boolean> allowInfiniteAmmoOnAllTiers = builder
 				.comment("""
 						Allow infinity-type enchantments to work on all ammo tiers.
 						By default, it is restricted to cobalt and lower tiers. - Default false""")
@@ -130,67 +118,92 @@ public class CommonConfig {
 		builder.pop();
 
 		builder.push("Flintlock Pistol");
-		FLINTLOCK_PISTOL_FIRE_VELOCITY = builder
+		ConfigValue<Double> flintlockPistolFireVelocity = builder
 				.comment("Set the velocity of bullets fired by the Flintlock Pistol - Default 2.5")
 				.translation("config.immersiveweapons.flintlock_pistol_fire_velocity")
 				.defineInRange("flintlock_pistol_fire_velocity", 2.5D, 0, Double.MAX_VALUE);
-		FLINTLOCK_PISTOL_FIRE_INACCURACY = builder
+		ConfigValue<Double> flintlockPistolFireInaccuracy = builder
 				.comment("Set the inaccuracy of bullets fired by the Flintlock Pistol - Default 1.75")
 				.translation("config.immersiveweapons.flintlock_pistol_fire_inaccuracy")
 				.defineInRange("flintlock_pistol_fire_inaccuracy", 1.75D, 0, Double.MAX_VALUE);
 		builder.pop();
 
 		builder.push("Blunderbuss");
-		BLUNDERBUSS_FIRE_VELOCITY = builder
+		ConfigValue<Double> blunderbussFireVelocity = builder
 				.comment("Set the velocity of bullets fired by the Blunderbuss - Default 1.7")
 				.translation("config.immersiveweapons.blunderbuss_fire_velocity")
 				.defineInRange("blunderbuss_fire_velocity", 1.7D, 0, Double.MAX_VALUE);
-		BLUNDERBUSS_FIRE_INACCURACY = builder
+		ConfigValue<Double> blunderbussFireInaccuracy = builder
 				.comment("Set the inaccuracy of bullets fired by the Blunderbuss - Default 2.0")
 				.translation("config.immersiveweapons.blunderbuss_fire_inaccuracy")
 				.defineInRange("blunderbuss_fire_inaccuracy", 2.0D, 0, Double.MAX_VALUE);
 		builder.pop();
 
 		builder.push("Musket");
-		MUSKET_FIRE_VELOCITY = builder
+		ConfigValue<Double> musketFireVelocity = builder
 				.comment("Set the velocity of bullets fired by the Musket - Default 4.0")
 				.translation("config.immersiveweapons.musket_fire_velocity")
 				.defineInRange("musket_fire_velocity", 4.0D, 0, Double.MAX_VALUE);
-		MUSKET_FIRE_INACCURACY = builder
+		ConfigValue<Double> musketFireInaccuracy = builder
 				.comment("Set the inaccuracy of bullets fired by the Musket - Default 0.15")
 				.translation("config.immersiveweapons.musket_fire_inaccuracy")
 				.defineInRange("musket_fire_inaccuracy", 0.15D, 0, Double.MAX_VALUE);
 		builder.pop();
 
 		builder.push("Meteor Staff");
-		METEOR_STAFF_MAX_USE_RANGE = builder
+		ConfigValue<Integer> meteorStaffMaxUseRange = builder
 				.comment("Set the maximum range in blocks of the Meteor Staff - Default 100")
 				.translation("config.immersiveweapons.meteor_staff_max_use_range")
 				.defineInRange("meteor_staff_max_use_range", 100, 0, Integer.MAX_VALUE);
-		METEOR_STAFF_EXPLOSION_RADIUS = builder
+		ConfigValue<Double> meteorStaffExplosionRadius = builder
 				.comment("Set the radius of the explosion created by the Meteor Staff - Default 3.0")
 				.translation("config.immersiveweapons.meteor_staff_explosion_radius")
 				.defineInRange("meteor_staff_explosion_radius", 3.0D, 0.0D, Double.MAX_VALUE);
-		METEOR_STAFF_EXPLOSION_BREAK_BLOCKS = builder
+		ConfigValue<Boolean> meteorStaffExplosionBreakBlocks = builder
 				.comment("Set whether the Meteor Staff explosion breaks blocks - Default false")
 				.translation("config.immersiveweapons.meteor_staff_explosion_break_blocks")
 				.define("meteor_staff_explosion_break_blocks", false);
 		builder.pop();
 
 		builder.push("Cursed Sight Staff");
-		CURSED_SIGHT_STAFF_MAX_USE_RANGE = builder
+		ConfigValue<Integer> cursedSightStaffMaxUseRange = builder
 				.comment("Set the maximum range in blocks of the Cursed Sight Staff - Default 50")
 				.translation("config.immersiveweapons.cursed_sight_staff_max_use_range")
 				.defineInRange("cursed_sight_staff_max_use_range", 50, 0, Integer.MAX_VALUE);
 		builder.pop();
 
 		builder.pop();
+
+		return new CommonConfig(
+				bulletsBreakGlass, tiltrosEnabled, forceSmokeGrenadeParticles, maxArmorProtection, discoveryAdvancementRange,
+				celestialTowerSpawnCheckingRadius, celestialTowerWaveSizeModifier, skygazerEnchantCaps, gunCritChance,
+				allowInfiniteAmmoOnAllTiers, flintlockPistolFireVelocity, flintlockPistolFireInaccuracy,
+				blunderbussFireVelocity, blunderbussFireInaccuracy, musketFireVelocity, musketFireInaccuracy,
+				meteorStaffMaxUseRange, meteorStaffExplosionRadius, meteorStaffExplosionBreakBlocks, cursedSightStaffMaxUseRange
+		);
 	}
 
-	static {
-		Pair<CommonConfig, ForgeConfigSpec> commonConfigForgeConfigSpecPair = new Builder().configure(CommonConfig::new);
-
-		COMMON_SPEC = commonConfigForgeConfigSpecPair.getRight();
-		COMMON = commonConfigForgeConfigSpecPair.getLeft();
+	@NotNull
+	private static Map<Object, Object> getEnchantCapsMap() {
+		Map<Object, Object> enchantCaps = new HashMap<>(20);
+		enchantCaps.put("minecraft:mending", 1);
+		enchantCaps.put("minecraft:silk_touch", 1);
+		enchantCaps.put("minecraft:knockback", 5);
+		enchantCaps.put("minecraft:punch", 5);
+		enchantCaps.put("minecraft:flame", 1);
+		enchantCaps.put("minecraft:infinity", 1);
+		enchantCaps.put("minecraft:channeling", 1);
+		enchantCaps.put("minecraft:multishot", 1);
+		enchantCaps.put("immersiveweapons:extended_reach", 1);
+		enchantCaps.put("immersiveweapons:endless_musket_pouch", 1);
+		enchantCaps.put("immersiveweapons:scorch_shot", 3);
+		enchantCaps.put("immersiveweapons:velocity", 5);
+		enchantCaps.put("immersiveweapons:impact", 5);
+		enchantCaps.put("immersiveweapons:burning_heat", 1);
+		enchantCaps.put("immersiveweapons:celestial_fury", 1);
+		enchantCaps.put("immersiveweapons:heavy_comet", 4);
+		enchantCaps.put("immersiveweapons:regenerative_assault", 5);
+		enchantCaps.put("immersiveweapons:malevolent_gaze", 5);
+		return enchantCaps;
 	}
 }

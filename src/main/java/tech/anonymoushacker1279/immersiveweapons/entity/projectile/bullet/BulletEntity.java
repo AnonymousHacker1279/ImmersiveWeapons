@@ -35,9 +35,9 @@ import net.minecraftforge.network.NetworkEvent;
 import net.minecraftforge.network.NetworkEvent.Context;
 import net.minecraftforge.network.PacketDistributor;
 import org.jetbrains.annotations.Nullable;
+import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.client.gui.overlays.DebugTracingData;
 import tech.anonymoushacker1279.immersiveweapons.client.particle.bullet_impact.BulletImpactParticleOptions;
-import tech.anonymoushacker1279.immersiveweapons.config.CommonConfig;
 import tech.anonymoushacker1279.immersiveweapons.data.tags.groups.forge.ForgeBlockTagGroups;
 import tech.anonymoushacker1279.immersiveweapons.init.*;
 import tech.anonymoushacker1279.immersiveweapons.item.AccessoryItem;
@@ -49,7 +49,7 @@ import java.util.function.Supplier;
 
 public class BulletEntity extends AbstractArrow {
 
-	private static final boolean canBreakGlass = CommonConfig.BULLETS_BREAK_GLASS.get();
+	private static final boolean canBreakGlass = ImmersiveWeapons.COMMON_CONFIG.bulletsBreakGlass().get();
 	private final SoundEvent hitSound = getDefaultHitGroundSoundEvent();
 	private static final byte VANILLA_IMPACT_STATUS_ID = 3;
 	protected Item referenceItem = Items.AIR;

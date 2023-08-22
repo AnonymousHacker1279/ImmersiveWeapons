@@ -14,8 +14,7 @@ import org.slf4j.Logger;
 import tech.anonymoushacker1279.immersiveweapons.advancement.IWCriteriaTriggers;
 import tech.anonymoushacker1279.immersiveweapons.api.PluginHandler;
 import tech.anonymoushacker1279.immersiveweapons.block.properties.WoodTypes;
-import tech.anonymoushacker1279.immersiveweapons.config.ClientConfig;
-import tech.anonymoushacker1279.immersiveweapons.config.CommonConfig;
+import tech.anonymoushacker1279.immersiveweapons.config.*;
 import tech.anonymoushacker1279.immersiveweapons.init.*;
 import tech.anonymoushacker1279.immersiveweapons.world.level.CustomBlockSetTypes;
 import tech.anonymoushacker1279.immersiveweapons.world.level.levelgen.biomes.IWOverworldBiomesProvider;
@@ -32,13 +31,14 @@ public class ImmersiveWeapons {
 	// Setup logger
 	public static final Logger LOGGER = LogUtils.getLogger();
 
+	public final static CommonConfig COMMON_CONFIG = ConfigHelper.register(Type.COMMON, CommonConfig::create);
+
 	// Mod setup begins here
 	public ImmersiveWeapons() {
 		LOGGER.info("Immersive Weapons is starting");
 
 		// Load configuration
 		LOGGER.info("Registering configuration files");
-		ModLoadingContext.get().registerConfig(Type.COMMON, CommonConfig.COMMON_SPEC);
 		ModLoadingContext.get().registerConfig(Type.CLIENT, ClientConfig.CLIENT_SPEC);
 
 		// Initialize deferred registry

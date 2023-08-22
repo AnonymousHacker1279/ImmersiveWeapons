@@ -4,9 +4,11 @@
 	"compatibilityLevel": "JAVA_17",
 	"refmap": "mixins.immersiveweapons.refmap.json",
 	"mixins": [
-		"CombatRulesMixin"
+		"CombatRulesMixin",
+		"ItemStackMixin"
 	],
 	"client": [
+		"ItemStackMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1

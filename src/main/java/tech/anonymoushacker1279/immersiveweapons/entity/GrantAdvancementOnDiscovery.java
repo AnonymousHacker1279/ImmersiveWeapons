@@ -10,8 +10,8 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.registries.ForgeRegistries;
+import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.advancement.IWCriteriaTriggers;
-import tech.anonymoushacker1279.immersiveweapons.config.CommonConfig;
 
 import java.util.Objects;
 
@@ -22,7 +22,7 @@ public interface GrantAdvancementOnDiscovery {
 		BlockPos entityPos = entity.blockPosition();
 
 		if (!level.isClientSide && entity.tickCount % 20 == 0) {
-			int scanningRange = CommonConfig.DISCOVERY_ADVANCEMENT_RANGE.get();
+			int scanningRange = ImmersiveWeapons.COMMON_CONFIG.discoveryAdvancementRange().get();
 			AABB scanningBox = new AABB(entityPos.offset(-scanningRange, -scanningRange, -scanningRange),
 					entityPos.offset(scanningRange, scanningRange, scanningRange));
 

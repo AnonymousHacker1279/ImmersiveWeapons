@@ -1,4 +1,4 @@
-package tech.anonymoushacker1279.immersiveweapons.block.crafting.small_parts;
+package tech.anonymoushacker1279.immersiveweapons.block.crafting;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;

@@ -19,7 +19,7 @@ import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.client.extensions.common.IClientItemExtensions;
 import net.minecraftforge.event.ForgeEventFactory;
 import net.minecraftforge.network.PacketDistributor;
-import tech.anonymoushacker1279.immersiveweapons.config.CommonConfig;
+import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.data.tags.groups.immersiveweapons.IWItemTagGroups;
 import tech.anonymoushacker1279.immersiveweapons.entity.projectile.bullet.BulletEntity;
 import tech.anonymoushacker1279.immersiveweapons.event.game_effects.AccessoryEffects;
@@ -106,7 +106,7 @@ public abstract class AbstractGunItem extends Item implements Vanishable {
 						setupFire(gun, bulletEntity, player);
 
 						// Roll for random crits
-						if (livingEntity.getRandom().nextFloat() <= CommonConfig.GUN_CRIT_CHANCE.get()) {
+						if (livingEntity.getRandom().nextFloat() <= ImmersiveWeapons.COMMON_CONFIG.gunCritChance().get()) {
 							bulletEntity.setCritArrow(true);
 						}
 
@@ -482,7 +482,7 @@ public abstract class AbstractGunItem extends Item implements Vanishable {
 	}
 
 	public float getBaseFireVelocity() {
-		return CommonConfig.FLINTLOCK_PISTOL_FIRE_VELOCITY.get().floatValue();
+		return ImmersiveWeapons.COMMON_CONFIG.flintlockPistolFireVelocity().get().floatValue();
 	}
 
 	public int getKnockbackLevel() {
@@ -493,7 +493,7 @@ public abstract class AbstractGunItem extends Item implements Vanishable {
 		bulletEntity.shootFromRotation(player, player.getXRot(), player.getYRot(),
 				0.0F,
 				getFireVelocity(gun),
-				CommonConfig.FLINTLOCK_PISTOL_FIRE_INACCURACY.get().floatValue());
+				ImmersiveWeapons.COMMON_CONFIG.flintlockPistolFireInaccuracy().get().floatValue());
 	}
 
 	protected void handleAmmoStack(ItemStack gun, ItemStack ammo, int bulletsToFire, Player player) {

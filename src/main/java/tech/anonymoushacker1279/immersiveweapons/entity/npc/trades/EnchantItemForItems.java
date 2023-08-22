@@ -1,5 +1,6 @@
 package tech.anonymoushacker1279.immersiveweapons.entity.npc.trades;
 
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.npc.VillagerTrades;
@@ -7,6 +8,9 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.trading.MerchantOffer;
+import net.minecraftforge.registries.ForgeRegistries;
+import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
+import tech.anonymoushacker1279.immersiveweapons.entity.npc.SkygazerEntity;
 
 import java.util.Map;
 
@@ -40,7 +44,26 @@ public class EnchantItemForItems implements VillagerTrades.ItemListing {
 			// Remove the old enchantments
 			newEnchantableItem.removeTagKey("Enchantments");
 
-			enchantments.forEach((enchantment, level) -> newEnchantableItem.enchant(enchantment, level + 1));
+			enchantments.forEach((enchantment, level) -> {
+				// Get the max level for this enchantment
+				ResourceLocation enchantmentLocation = ForgeRegistries.ENCHANTMENTS.getKey(enchantment);
+
+				if (enchantmentLocation == null) {
+					ImmersiveWeapons.LOGGER.error("Failed to locate enchantment {} in registry", enchantment);
+					return;
+				}
+
+				int maxLevel = SkygazerEntity.ENCHANT_CAPS.getOrDefault(enchantmentLocation.toString(), -1);
+
+				// If the level is -1, it's uncapped
+				if (maxLevel == -1) {
+					newEnchantableItem.enchant(enchantment, level + 1);
+				}
+				// Otherwise, cap it at the max level
+				else {
+					newEnchantableItem.enchant(enchantment, Math.min(level + 1, maxLevel));
+				}
+			});
 
 			// Add up the total levels of all enchantments
 			int totalEnchantmentLevels = enchantments.values().stream().mapToInt(Integer::intValue).sum();
