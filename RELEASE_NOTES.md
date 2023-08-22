@@ -1,31 +1,14 @@
-This release includes a few new items, along with bugfixes and other improvements. Additionally, it moves the mod to
-NeoForge. No new releases will be designed for the classic Forge modloader.
-
-At the present moment, the mod may be compatible with both NeoForge and classic Forge, but this is not guaranteed to
-work. If you encounter issues on Forge, please try using NeoForge first.
-
-### Feature Changes / Additions
-
-- Six new accessory items
-- Rebalanced loot tables in structures, enchanted items are now done between certain levels to prevent high level
-  enchants like mending from appearing early in the game
+This release includes a handful of bugfixes and improvements, while the next content release is being developed.
 
 ### Bugfixes
 
-- Remove debug log lines from copper ring loot drop modifier
-- Rework recipe handler for potions to be more reliable
-- Fix Tiltros sky rendering without the texture, appearing full black
-- Fix Starstorm Crystals not dropping themselves in some cases
+- Fix Skygazer book enchant trade not working when a target enchantment does not exist on the selected item
+- Add additional check to the Skygazer book enchant trade to ensure the target enchantment is compatible with the
+  selected item
 
-### Other Improvements
+### Improvements
 
-- Store the Celestial Protection chance for no damage on the player, so it persists between saves
-- Restructure GLMs for simplicity and to reduce redundancy
-
-#### Other non-code changes include:
-
-- License assets under CC-BY-NC-SA 4.0 (code is still under MIT)
-- Branding changes, including new logos and cover art on description pages (credit to `@shinyflareon` on Discord for the
-  new cover art!)
-- An [official Modrinth page](https://modrinth.com/mod/immersive-weapons) for the project. CurseForge and GitHub will
-  continue to be distribution platforms.
+- Redesign common config handler
+- Add Skygazer max enchant caps configuration, specified with a list of enchantment names and their max level
+- Max-level enchants from the Skygazer now appear gold in the tooltip
+- Made piston crushing (for Starstorm Crystals) a recipe type
