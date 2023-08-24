@@ -211,7 +211,7 @@ if (file("RELEASE_NOTES.md").exists()) {
 
 		modrinthDepends {
 			required = ["kkmrDlKT"]
-			optional = ["lOOpEntO"]
+			optional = ["SAUGybfH", "lOOpEntO"]
 		}
 	}
 } else {
