@@ -419,6 +419,7 @@ public class LanguageGenerator extends IWLanguageProvider {
 		addTooltip("celestial_fragment", "The power of the sun in the palm of your hand");
 		addTooltip("azul_locator", "Teleport to your spawn point at will");
 		addTooltip("curse_cleaning_soap", "Cleanses your soul of all curses");
+		addTooltip("champion_keycard", "Unlocks levels within Champion Towers");
 
 		// Accessories
 		addTooltip("satchel", "Provides a 10% chance not to consume ammo");

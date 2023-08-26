@@ -20,8 +20,7 @@ import tech.anonymoushacker1279.immersiveweapons.block.crafting.*;
 import tech.anonymoushacker1279.immersiveweapons.block.decoration.*;
 import tech.anonymoushacker1279.immersiveweapons.block.decoration.skull.*;
 import tech.anonymoushacker1279.immersiveweapons.block.grower.StardustTreeGrower;
-import tech.anonymoushacker1279.immersiveweapons.block.misc.MedicStatueBlock;
-import tech.anonymoushacker1279.immersiveweapons.block.misc.MinutemanStatueBlock;
+import tech.anonymoushacker1279.immersiveweapons.block.misc.*;
 import tech.anonymoushacker1279.immersiveweapons.block.misc.warrior_statue.*;
 import tech.anonymoushacker1279.immersiveweapons.block.mud.*;
 import tech.anonymoushacker1279.immersiveweapons.block.properties.WoodTypes;
@@ -78,8 +77,9 @@ public class BlockRegistry {
 	public static final RegistryObject<AstralCrystalBlock> ASTRAL_CRYSTAL = BLOCKS.register("astral_crystal", () -> new AstralCrystalBlock(7, 3, BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_PURPLE).randomTicks().strength(0.4f).sound(SoundType.AMETHYST_CLUSTER).requiresCorrectToolForDrops().lightLevel((blockState) -> 6)));
 	public static final RegistryObject<BiodomeLifeSupportUnitBlock> BIODOME_LIFE_SUPPORT_UNIT = BLOCKS.register("biodome_life_support_unit", () -> new BiodomeLifeSupportUnitBlock(BlockBehaviour.Properties.of().mapColor(MapColor.METAL).strength(4.0f).sound(SoundType.METAL).requiresCorrectToolForDrops()));
 	public static final RegistryObject<Block> RUSTED_IRON_BLOCK = BLOCKS.register("rusted_iron_block", () -> new Block(BlockBehaviour.Properties.of().mapColor(MapColor.METAL).sound(SoundType.METAL).strength(4.0f, 5.0f).requiresCorrectToolForDrops()));
-	public static final RegistryObject<Block> CHAMPION_BRICKS = BLOCKS.register("champion_bricks", () -> new Block(BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_GREEN).strength(6.0f, 12.0f).sound(SoundType.NETHER_BRICKS).requiresCorrectToolForDrops()));
-	public static final RegistryObject<Block> CHAMPION_BASE = BLOCKS.register("champion_base", () -> new Block(BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_GRAY).strength(4.0f, 10.0f).sound(SoundType.NETHER_BRICKS).requiresCorrectToolForDrops()));
+	public static final RegistryObject<Block> CHAMPION_BRICKS = BLOCKS.register("champion_bricks", () -> new Block(BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_GREEN).strength(6.0f, 99.0f).sound(SoundType.NETHER_BRICKS).requiresCorrectToolForDrops()));
+	public static final RegistryObject<Block> CHAMPION_BASE = BLOCKS.register("champion_base", () -> new Block(BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_GRAY).strength(4.0f, 99.0f).sound(SoundType.NETHER_BRICKS).requiresCorrectToolForDrops()));
+	public static final RegistryObject<ChampionKeycardBlock> CHAMPION_KEYCARD_BRICKS = BLOCKS.register("champion_keycard_bricks", () -> new ChampionKeycardBlock(BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_GRAY).strength(6.0f, 99.0f).sound(SoundType.NETHER_BRICKS).requiresCorrectToolForDrops()));
 	// Iron tier
 	public static final RegistryObject<BarbedWireFenceBlock> BARBED_WIRE_FENCE = BLOCKS.register("barbed_wire_fence", () -> new BarbedWireFenceBlock(BlockBehaviour.Properties.of().mapColor(MapColor.METAL).strength(7.0f, 8.0f).sound(SoundType.METAL).noOcclusion()));
 	public static final RegistryObject<DropExperienceBlock> COBALT_ORE = BLOCKS.register("cobalt_ore", () -> new DropExperienceBlock(BlockBehaviour.Properties.of().mapColor(MapColor.STONE).instrument(NoteBlockInstrument.BASEDRUM).strength(4.0f).sound(SoundType.STONE).requiresCorrectToolForDrops()));

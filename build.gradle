@@ -218,6 +218,14 @@ if (file("RELEASE_NOTES.md").exists()) {
 	println("No RELEASE_NOTES.md found, publishing outside of Maven is disabled.")
 }
 
+tasks.named('javadoc', Javadoc).configure {
+	options {
+		tags = [
+				'reason:a:Mixin Reason'
+		]
+	}
+}
+
 mixin {
 	add sourceSets.main, "mixins.immersiveweapons.refmap.json"
 	config "mixins.immersiveweapons.json"

@@ -248,6 +248,9 @@ public class TooltipHandler {
 			event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.curse_cleaning_soap").withStyle(ChatFormatting.DARK_AQUA, ChatFormatting.ITALIC));
 			event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.creative_only").withStyle(ChatFormatting.BLUE, ChatFormatting.ITALIC));
 		}
+		if (stack.getItem() == ItemRegistry.CHAMPION_KEYCARD.get()) {
+			event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.champion_keycard").withStyle(ChatFormatting.DARK_PURPLE, ChatFormatting.ITALIC));
+		}
 
 		// Accessories
 		if (event.getEntity() != null && stack.getItem() instanceof AccessoryItem item) {

@@ -166,4 +166,5 @@ public class BlockItemRegistry {
 	public static final RegistryObject<BlockItem> BIODOME_LIFE_SUPPORT_UNIT_ITEM = ItemRegistry.ITEMS.register("biodome_life_support_unit", () -> new BlockItem(BlockRegistry.BIODOME_LIFE_SUPPORT_UNIT.get(), new Properties()));
 	public static final RegistryObject<BlockItem> CHAMPION_BRICKS_ITEM = ItemRegistry.ITEMS.register("champion_bricks", () -> new BlockItem(BlockRegistry.CHAMPION_BRICKS.get(), new Properties()));
 	public static final RegistryObject<BlockItem> CHAMPION_BASE_ITEM = ItemRegistry.ITEMS.register("champion_base", () -> new BlockItem(BlockRegistry.CHAMPION_BASE.get(), new Properties()));
+	public static final RegistryObject<BlockItem> CHAMPION_KEYCARD_BRICKS_ITEM = ItemRegistry.ITEMS.register("champion_keycard_bricks", () -> new BlockItem(BlockRegistry.CHAMPION_KEYCARD_BRICKS.get(), new Properties()));
 }
