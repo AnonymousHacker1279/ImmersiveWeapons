@@ -107,4 +107,18 @@ public class IWDamageTypes {
 			DamageScaling.ALWAYS,
 			0.1f
 	);
+
+	public static final ResourceKey<DamageType> CANNONBALL_KEY = ResourceKey.create(Registries.DAMAGE_TYPE, new ResourceLocation(ImmersiveWeapons.MOD_ID, "cannonball"));
+	public static final DamageType CANNONBALL = new DamageType(
+			"immersiveweapons.cannonball",
+			DamageScaling.ALWAYS,
+			0.1f
+	);
+
+	public static final ResourceKey<DamageType> EXPLOSIVE_CANNONBALL_KEY = ResourceKey.create(Registries.DAMAGE_TYPE, new ResourceLocation(ImmersiveWeapons.MOD_ID, "explosive_cannonball"));
+	public static final DamageType EXPLOSIVE_CANNONBALL = new DamageType(
+			"immersiveweapons.explosive_cannonball",
+			DamageScaling.ALWAYS,
+			0.1f
+	);
 }

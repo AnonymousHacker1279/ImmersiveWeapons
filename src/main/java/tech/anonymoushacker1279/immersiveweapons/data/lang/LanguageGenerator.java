@@ -248,6 +248,7 @@ public class LanguageGenerator extends IWLanguageProvider {
 		addSubtitle("item.gun.blunderbuss.fire", "Blunderbuss fires");
 		addSubtitle("item.gun.musket.fire", "Musket fires");
 		addSubtitle("item.gun.flare_gun.fire", "Flare gun fires");
+		addSubtitle("item.gun.hand_cannon.fire", "Hand cannon fires");
 		addSubtitle("item.gun.bullet_whizz", "Bullet whizzes");
 
 		// Misc items
@@ -309,8 +310,9 @@ public class LanguageGenerator extends IWLanguageProvider {
 		// Guns
 		addTooltip("flintlock_pistol", "A basic flintlock firearm that excels in medium-range combat.");
 		addTooltip("blunderbuss", "Good for hordes a short distance away. A primitive type of shotgun.");
-		addTooltip("musket", "A simple firearm designed for long-range combat.");
+		addTooltip("musket", "A simple firearm designed for long-range combat");
 		addTooltip("flare_gun", "Launch bright flares into the sky");
+		addTooltip("hand_cannon", "A powerful, but inaccurate, handheld cannon");
 
 		// Projectiles
 		addTooltip("wooden_arrow", "35% less powerful than normal arrows. Highly inaccurate. At this point it's just blunt-force trauma.");
@@ -340,6 +342,8 @@ public class LanguageGenerator extends IWLanguageProvider {
 		addTooltip("ventus_musket_ball", "A musket ball made from Ventus shards. Causes targets to levitate. Pierces through three targets.");
 		addTooltip("astral_musket_ball", "Built from Astral ingots. Not quite as strong as other options but extremely accurate and has little falloff. Pierces through three targets.");
 		addTooltip("starstorm_musket_ball", "A musket ball made from Starstorm ingots. Strongest caliber in terms of raw damage. Pierces through three targets.");
+		addTooltip("cannonball", "A heavy metal ball that can be fired from a hand cannon. Pierces through one target.");
+		addTooltip("explosive_cannonball", "Similar to the cannonball but explodes on impact.");
 
 		// Pikes
 		addTooltip("pike", "Stab them from way over there");
@@ -555,6 +559,10 @@ public class LanguageGenerator extends IWLanguageProvider {
 		addDeathMessage("meteor.player", "%s was hit by a meteor summoned by %s");
 		addDeathMessage("bullet", "%s was shot");
 		addDeathMessage("bullet.player", "%s was shot by %s");
+		addDeathMessage("cannonball", "%s was hit by a cannonball");
+		addDeathMessage("cannonball.player", "%s was hit by a cannonball fired by %s");
+		addDeathMessage("explosive_cannonball", "%s was hit by an explosive cannonball");
+		addDeathMessage("explosive_cannonball.player", "%s was hit by an explosive cannonball fired by %s");
 	}
 
 	private void addBiomes() {

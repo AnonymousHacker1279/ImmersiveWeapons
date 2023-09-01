@@ -28,7 +28,7 @@ public class SuperHansEntity extends HansEntity {
 
 	public SuperHansEntity(EntityType<? extends HansEntity> entityType, Level level) {
 		super(entityType, level);
-		isImmuneToProjectiles = true;
+		isImmuneToProjectiles = false;
 	}
 
 	public static AttributeSupplier.Builder registerAttributes() {

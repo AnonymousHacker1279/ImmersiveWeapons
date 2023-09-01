@@ -90,6 +90,9 @@ public class TooltipHandler {
 		if (stack.getItem() == ItemRegistry.MUSKET.get() || stack.getItem() == ItemRegistry.MUSKET_SCOPE.get()) {
 			event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.musket").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
 		}
+		if (stack.getItem() == ItemRegistry.HAND_CANNON.get()) {
+			event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.hand_cannon").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
+		}
 
 		// Arrows
 		if (stack.getItem() instanceof SmokeGrenadeArrowItem smokeArrow) {

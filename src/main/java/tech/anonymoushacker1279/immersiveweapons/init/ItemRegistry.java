@@ -94,6 +94,8 @@ public class ItemRegistry {
 	public static final RegistryObject<MusketItem> MUSKET = ITEMS.register("musket", () -> new MusketItem(new Properties().durability(499), false));
 	public static final RegistryObject<MusketItem> MUSKET_SCOPE = ITEMS.register("musket_scope", () -> new MusketItem(new Properties().durability(499), true));
 	public static final RegistryObject<FlareGunItem> FLARE_GUN = ITEMS.register("flare_gun", () -> new FlareGunItem(new Properties().durability(399)));
+	public static final RegistryObject<HandCannonItem> HAND_CANNON = ITEMS.register("hand_cannon", () -> new HandCannonItem(new Properties().durability(199)));
+
 	public static final RegistryObject<GauntletItem> WOODEN_GAUNTLET = ITEMS.register("wooden_gauntlet", () -> new GauntletItem(Tiers.WOOD, 2, -2.3f, new Properties(), 0.15f, 0, Ingredient.of(ItemTags.PLANKS)));
 	public static final RegistryObject<GauntletItem> STONE_GAUNTLET = ITEMS.register("stone_gauntlet", () -> new GauntletItem(Tiers.STONE, 2, -2.3f, new Properties(), 0.25f, 0, Ingredient.of(ItemTags.STONE_TOOL_MATERIALS)));
 	public static final RegistryObject<GauntletItem> GOLDEN_GAUNTLET = ITEMS.register("golden_gauntlet", () -> new GauntletItem(Tiers.GOLD, 2, -2.3f, new Properties(), 0.35f, 0, Ingredient.of(Tags.Items.INGOTS_GOLD)));
@@ -186,6 +188,8 @@ public class ItemRegistry {
 	public static final RegistryObject<AstralMusketBallItem> ASTRAL_MUSKET_BALL = ITEMS.register("astral_musket_ball", () -> new AstralMusketBallItem(new Properties(), 6.25d));
 	public static final RegistryObject<StarstormMusketBallItem> STARSTORM_MUSKET_BALL = ITEMS.register("starstorm_musket_ball", () -> new StarstormMusketBallItem(new Properties(), 8.65d));
 	public static final RegistryObject<FlareItem> FLARE = ITEMS.register("flare", () -> new FlareItem(new Properties(), 0.1d));
+	public static final RegistryObject<CannonballItem> CANNONBALL = ITEMS.register("cannonball", () -> new CannonballItem(new Properties(), 6.0d, false));
+	public static final RegistryObject<CannonballItem> EXPLOSIVE_CANNONBALL = ITEMS.register("explosive_cannonball", () -> new CannonballItem(new Properties(), 6.0d, true));
 	public static final RegistryObject<Item> MORTAR_SHELL = ITEMS.register("mortar_shell", () -> new Item(new Properties()));
 	public static final RegistryObject<Item> GRENADE_ASSEMBLY = ITEMS.register("grenade_assembly", () -> new Item(new Properties()));
 	public static final RegistryObject<Item> TOOL_JOINT = ITEMS.register("tool_joint", () -> new Item(new Properties()));

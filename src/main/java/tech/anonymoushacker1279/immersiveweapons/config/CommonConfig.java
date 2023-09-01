@@ -25,6 +25,8 @@ public record CommonConfig(
 		ConfigValue<Double> blunderbussFireInaccuracy,
 		ConfigValue<Double> musketFireVelocity,
 		ConfigValue<Double> musketFireInaccuracy,
+		ConfigValue<Double> handCannonFireVelocity,
+		ConfigValue<Double> handCannonFireInaccuracy,
 		ConfigValue<Integer> meteorStaffMaxUseRange,
 		ConfigValue<Double> meteorStaffExplosionRadius,
 		ConfigValue<Boolean> meteorStaffExplosionBreakBlocks,
@@ -150,6 +152,17 @@ public record CommonConfig(
 				.defineInRange("musket_fire_inaccuracy", 0.15D, 0, Double.MAX_VALUE);
 		builder.pop();
 
+		builder.push("Hand Cannon");
+		ConfigValue<Double> handCannonFireVelocity = builder
+				.comment("Set the velocity of cannonballs fired by the Hand Cannon - Default 2.75")
+				.translation("config.immersiveweapons.hand_cannon_fire_velocity")
+				.defineInRange("hand_cannon_fire_velocity", 2.55D, 0, Double.MAX_VALUE);
+		ConfigValue<Double> handCannonFireInaccuracy = builder
+				.comment("Set the inaccuracy of cannonballs fired by the Hand Cannon - Default 1.85")
+				.translation("config.immersiveweapons.hand_cannon_fire_inaccuracy")
+				.defineInRange("hand_cannon_fire_inaccuracy", 1.85D, 0, Double.MAX_VALUE);
+		builder.pop();
+
 		builder.push("Meteor Staff");
 		ConfigValue<Integer> meteorStaffMaxUseRange = builder
 				.comment("Set the maximum range in blocks of the Meteor Staff - Default 100")
@@ -175,11 +188,21 @@ public record CommonConfig(
 		builder.pop();
 
 		return new CommonConfig(
-				bulletsBreakGlass, tiltrosEnabled, forceSmokeGrenadeParticles, maxArmorProtection, discoveryAdvancementRange,
-				celestialTowerSpawnCheckingRadius, celestialTowerWaveSizeModifier, skygazerEnchantCaps, gunCritChance,
-				allowInfiniteAmmoOnAllTiers, flintlockPistolFireVelocity, flintlockPistolFireInaccuracy,
-				blunderbussFireVelocity, blunderbussFireInaccuracy, musketFireVelocity, musketFireInaccuracy,
-				meteorStaffMaxUseRange, meteorStaffExplosionRadius, meteorStaffExplosionBreakBlocks, cursedSightStaffMaxUseRange
+				bulletsBreakGlass,
+				tiltrosEnabled,
+				forceSmokeGrenadeParticles,
+				maxArmorProtection,
+				discoveryAdvancementRange,
+				celestialTowerSpawnCheckingRadius, celestialTowerWaveSizeModifier,
+				skygazerEnchantCaps,
+				gunCritChance,
+				allowInfiniteAmmoOnAllTiers,
+				flintlockPistolFireVelocity, flintlockPistolFireInaccuracy,
+				blunderbussFireVelocity, blunderbussFireInaccuracy,
+				musketFireVelocity, musketFireInaccuracy,
+				handCannonFireVelocity, handCannonFireInaccuracy,
+				meteorStaffMaxUseRange, meteorStaffExplosionRadius, meteorStaffExplosionBreakBlocks,
+				cursedSightStaffMaxUseRange
 		);
 	}
 

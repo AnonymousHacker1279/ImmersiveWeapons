@@ -36,6 +36,7 @@ public abstract class AbstractGunItem extends Item implements Vanishable {
 
 	protected static final Predicate<ItemStack> MUSKET_BALLS = (stack) -> stack.is(IWItemTagGroups.MUSKET_BALLS);
 	protected static final Predicate<ItemStack> FLARES = (stack) -> stack.is(IWItemTagGroups.FLARES);
+	protected static final Predicate<ItemStack> CANNONBALLS = (stack) -> stack.is(IWItemTagGroups.CANNONBALLS);
 
 	/**
 	 * Constructor for AbstractGunItem.

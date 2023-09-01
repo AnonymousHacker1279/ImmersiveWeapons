@@ -1,9 +1,9 @@
 package tech.anonymoushacker1279.immersiveweapons.data.loot;
 
 import net.minecraft.ChatFormatting;
-import net.minecraft.advancements.critereon.EntityFlagsPredicate;
-import net.minecraft.advancements.critereon.EntityPredicate;
+import net.minecraft.advancements.critereon.*;
 import net.minecraft.data.loot.LootTableSubProvider;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.EntityTypeTags;
@@ -90,6 +90,8 @@ public class EntityLootTables implements LootTableSubProvider {
 						.when(LootItemKilledByPlayerCondition.killedByPlayer())
 						.when(LootItemRandomChanceWithLootingCondition.randomChanceAndLootingBoost(0.035F, 0.02F))));
 
+		CompoundTag tag = new CompoundTag();
+		tag.putBoolean("isBerserk", true);
 		add(EntityRegistry.WANDERING_WARRIOR_ENTITY.get(), LootTable.lootTable()
 				.withPool(LootPool.lootPool()
 						.name("leather")
@@ -97,7 +99,18 @@ public class EntityLootTables implements LootTableSubProvider {
 						.add(LootItem.lootTableItem(Items.LEATHER)
 								.apply(SetItemCountFunction.setCount(UniformGenerator.between(0.0F, 3.0F)))
 								.apply(LootingEnchantFunction.lootingMultiplier(UniformGenerator.between(0.0F, 2.0F))))
-						.when(LootItemKilledByPlayerCondition.killedByPlayer())));
+						.when(LootItemKilledByPlayerCondition.killedByPlayer()))
+				.withPool(LootPool.lootPool()
+						.name("berserkers_amulet")
+						.setRolls(ConstantValue.exactly(1.0F))
+						.add(LootItem.lootTableItem(ItemRegistry.BERSERKERS_AMULET.get()))
+						.when(LootItemKilledByPlayerCondition.killedByPlayer())
+						.when(LootItemRandomChanceWithLootingCondition.randomChanceAndLootingBoost(0.1F, 0.05F))
+						.when(LootItemEntityPropertyCondition.hasProperties(LootContext.EntityTarget.THIS,
+								// Check for isBerserk being true in the NBT
+								EntityPredicate.Builder.entity().nbt(
+										new NbtPredicate(tag)
+								).build()))));
 
 		add(EntityRegistry.HANS_ENTITY.get(), LootTable.lootTable()
 				.withPool(LootPool.lootPool()

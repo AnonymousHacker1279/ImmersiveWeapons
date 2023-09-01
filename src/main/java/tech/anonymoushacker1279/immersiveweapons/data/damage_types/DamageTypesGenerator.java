@@ -22,6 +22,8 @@ public class DamageTypesGenerator {
 		damageType(context, IWDamageTypes.PUNJI_STICKS_KEY, IWDamageTypes.PUNJI_STICKS);
 		damageType(context, IWDamageTypes.PUNJI_STICKS_FALL_KEY, IWDamageTypes.PUNJI_STICKS);
 		damageType(context, IWDamageTypes.BULLET_KEY, IWDamageTypes.BULLET);
+		damageType(context, IWDamageTypes.CANNONBALL_KEY, IWDamageTypes.CANNONBALL);
+		damageType(context, IWDamageTypes.EXPLOSIVE_CANNONBALL_KEY, IWDamageTypes.EXPLOSIVE_CANNONBALL);
 	}
 
 	protected static void damageType(BootstapContext<DamageType> context, ResourceKey<DamageType> key, DamageType damageType) {

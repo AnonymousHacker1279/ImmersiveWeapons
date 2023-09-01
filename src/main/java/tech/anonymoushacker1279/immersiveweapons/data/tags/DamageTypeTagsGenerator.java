@@ -28,12 +28,16 @@ public class DamageTypeTagsGenerator extends TagsProvider<DamageType> {
 
 		tag(DamageTypeTags.IS_EXPLOSION)
 				.add(IWDamageTypes.EXPLOSIVE_CHOCOLATE_BAR_KEY)
+				.add(IWDamageTypes.EXPLOSIVE_CANNONBALL_KEY)
 				.add(IWDamageTypes.MORTAR_KEY)
 				.add(IWDamageTypes.LANDMINE_KEY)
 				.add(IWDamageTypes.METEOR_KEY);
 
 		tag(DamageTypeTags.IS_PROJECTILE)
-				.add(IWDamageTypes.BULLET_KEY);
+				.add(IWDamageTypes.BULLET_KEY)
+				.add(IWDamageTypes.CANNONBALL_KEY)
+				.add(IWDamageTypes.EXPLOSIVE_CANNONBALL_KEY)
+				.add(IWDamageTypes.MORTAR_KEY);
 
 		tag(DamageTypeTags.BYPASSES_ENCHANTMENTS)
 				.add(IWDamageTypes.BLEEDING_KEY);

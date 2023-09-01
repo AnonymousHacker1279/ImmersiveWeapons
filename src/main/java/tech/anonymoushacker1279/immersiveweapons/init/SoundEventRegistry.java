@@ -65,6 +65,7 @@ public class SoundEventRegistry {
 	public static final RegistryObject<SoundEvent> CELESTIAL_TOWER_VULNERABLE = SOUND_EVENTS.register("celestial_tower_vulnerable", () -> SoundEvent.createVariableRangeEvent(new ResourceLocation(ImmersiveWeapons.MOD_ID, "celestial_tower_vulnerable")));
 	public static final RegistryObject<SoundEvent> MORTAR_FIRE = SOUND_EVENTS.register("mortar_fire", () -> SoundEvent.createVariableRangeEvent(new ResourceLocation(ImmersiveWeapons.MOD_ID, "mortar_fire")));
 	public static final RegistryObject<SoundEvent> MUSKET_FIRE = SOUND_EVENTS.register("musket_fire", () -> SoundEvent.createVariableRangeEvent(new ResourceLocation(ImmersiveWeapons.MOD_ID, "musket_fire")));
+	public static final RegistryObject<SoundEvent> HAND_CANNON_FIRE = SOUND_EVENTS.register("hand_cannon_fire", () -> SoundEvent.createVariableRangeEvent(new ResourceLocation(ImmersiveWeapons.MOD_ID, "hand_cannon_fire")));
 	public static final RegistryObject<SoundEvent> FIREFLY_FLYING = SOUND_EVENTS.register("firefly_flying", () -> SoundEvent.createVariableRangeEvent(new ResourceLocation(ImmersiveWeapons.MOD_ID, "firefly_flying")));
 	public static final RegistryObject<SoundEvent> STARMITE_AMBIENT = SOUND_EVENTS.register("starmite_ambient", () -> SoundEvent.createVariableRangeEvent(new ResourceLocation(ImmersiveWeapons.MOD_ID, "starmite_ambient")));
 	public static final RegistryObject<SoundEvent> STARMITE_HURT = SOUND_EVENTS.register("starmite_hurt", () -> SoundEvent.createVariableRangeEvent(new ResourceLocation(ImmersiveWeapons.MOD_ID, "starmite_hurt")));

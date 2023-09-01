@@ -11,7 +11,6 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import org.jetbrains.annotations.Nullable;
-import tech.anonymoushacker1279.immersiveweapons.init.ItemRegistry;
 import tech.anonymoushacker1279.immersiveweapons.init.SoundEventRegistry;
 
 public class WanderingWarriorEntity extends AbstractWanderingWarriorEntity {
@@ -90,6 +89,20 @@ public class WanderingWarriorEntity extends AbstractWanderingWarriorEntity {
 	}
 
 	@Override
+	public void addAdditionalSaveData(CompoundTag compound) {
+		super.addAdditionalSaveData(compound);
+
+		compound.putBoolean("isBerserk", isBerserk);
+	}
+
+	@Override
+	public void load(CompoundTag compound) {
+		super.load(compound);
+
+		isBerserk = compound.getBoolean("isBerserk");
+	}
+
+	@Override
 	public void tick() {
 		super.tick();
 
@@ -105,25 +118,6 @@ public class WanderingWarriorEntity extends AbstractWanderingWarriorEntity {
 					0.0,
 					0.0
 			);
-		}
-	}
-
-	@Override
-	protected void dropCustomDeathLoot(DamageSource source, int looting, boolean recentlyHit) {
-		super.dropCustomDeathLoot(source, looting, recentlyHit);
-
-		if (!recentlyHit || !isBerserk) {
-			return;
-		}
-
-		// 10% chance to drop the Berserker's Amulet
-		// Looting adds 5% chance per level
-
-		float dropChance = 0.1f;
-		dropChance += looting * 0.05f;
-
-		if (random.nextFloat() <= dropChance) {
-			spawnAtLocation(ItemRegistry.BERSERKERS_AMULET.get());
 		}
 	}
 }

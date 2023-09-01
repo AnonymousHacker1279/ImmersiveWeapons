@@ -16,6 +16,8 @@ public class IWItemTagGroups {
 			"projectiles/flares"));
 	public static final TagKey<Item> MUSKET_BALLS = ItemTags.create(new ResourceLocation(ImmersiveWeapons.MOD_ID,
 			"projectiles/musket_balls"));
+	public static final TagKey<Item> CANNONBALLS = ItemTags.create(new ResourceLocation(ImmersiveWeapons.MOD_ID,
+			"projectiles/cannonballs"));
 	public static final TagKey<Item> MOLTEN_INGOTS = ItemTags.create(new ResourceLocation(ImmersiveWeapons.MOD_ID,
 			"ingots/molten"));
 	public static final TagKey<Item> ELECTRIC_INGOTS = ItemTags.create(new ResourceLocation(ImmersiveWeapons.MOD_ID,

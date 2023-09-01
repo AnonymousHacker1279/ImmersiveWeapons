@@ -162,6 +162,12 @@ public class SoundGenerator extends SoundDefinitionsProvider {
 								"item/musket/fire/fire"),
 						SoundType.SOUND)));
 
+		add(SoundEventRegistry.HAND_CANNON_FIRE.get(), definition()
+				.subtitle("subtitles.immersiveweapons.item.gun.hand_cannon.fire")
+				.with(Sound.sound(new ResourceLocation(ImmersiveWeapons.MOD_ID,
+								"item/hand_cannon/fire/fire"),
+						SoundType.SOUND)));
+
 		add(SoundEventRegistry.BULLET_WHIZZ.get(), definition()
 				.subtitle("subtitles.immersiveweapons.item.gun.bullet_whizz")
 				.with(Sound.sound(new ResourceLocation(ImmersiveWeapons.MOD_ID,

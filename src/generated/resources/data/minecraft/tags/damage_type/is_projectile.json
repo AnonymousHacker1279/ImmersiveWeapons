@@ -1,5 +1,8 @@
 {
   "values": [
-    "immersiveweapons:bullet"
+    "immersiveweapons:bullet",
+    "immersiveweapons:cannonball",
+    "immersiveweapons:explosive_cannonball",
+    "immersiveweapons:mortar"
   ]
 }
