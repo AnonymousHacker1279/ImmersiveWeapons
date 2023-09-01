@@ -71,7 +71,7 @@ public class WanderingWarriorEntity extends AbstractWanderingWarriorEntity {
 	@Override
 	public SpawnGroupData finalizeSpawn(ServerLevelAccessor level, DifficultyInstance difficulty, MobSpawnType reason, @Nullable SpawnGroupData spawnData, @Nullable CompoundTag dataTag) {
 		// 10% chance to spawn as berserk, increasing with difficulty
-		float berserkChance = 0.1F * (3.0f + difficulty.getSpecialMultiplier());
+		float berserkChance = 0.1f + (0.66f * difficulty.getSpecialMultiplier());
 
 		if (random.nextFloat() <= berserkChance) {
 			isBerserk = true;

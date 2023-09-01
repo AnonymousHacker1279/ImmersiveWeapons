@@ -3,7 +3,8 @@ package tech.anonymoushacker1279.immersiveweapons.entity.monster;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.RandomSource;
-import net.minecraft.world.*;
+import net.minecraft.world.DifficultyInstance;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -13,7 +14,8 @@ import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.monster.Creeper;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.*;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.*;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
@@ -114,35 +116,15 @@ public abstract class AbstractWanderingWarriorEntity extends Monster implements 
 	@Override
 	protected void populateDefaultEquipmentSlots(RandomSource randomSource, DifficultyInstance difficulty) {
 		super.populateDefaultEquipmentSlots(randomSource, difficulty);
+
 		// Populate weapons
-		float random = this.random.nextFloat();
-		if (random <= 0.5) {
-			setItemInHand(InteractionHand.MAIN_HAND, new ItemStack(Items.IRON_SWORD));
-		} else if (random <= 0.3) {
+		float random = randomSource.nextFloat();
+		if (random <= 0.3f) {
 			setItemInHand(InteractionHand.MAIN_HAND, new ItemStack(ItemRegistry.COBALT_SWORD.get()));
+		} else if (random <= 0.5f) {
+			setItemInHand(InteractionHand.MAIN_HAND, new ItemStack(Items.IRON_SWORD));
 		} else {
 			setItemInHand(InteractionHand.MAIN_HAND, new ItemStack(ItemRegistry.COPPER_SWORD.get()));
-		}
-		// Populate armor
-		int armorTier = 0;
-		if (this.random.nextFloat() < 0.2F) {
-			armorTier++;
-		}
-		float difficultyModifier = level().getDifficulty() == Difficulty.HARD ? 0.3F : 0.75F;
-		for (EquipmentSlot equipmentSlot : EquipmentSlot.values()) {
-			if (equipmentSlot.getType() == EquipmentSlot.Type.ARMOR) {
-				ItemStack itemBySlot = getItemBySlot(equipmentSlot);
-				if (this.random.nextFloat() < difficultyModifier) {
-					break;
-				}
-
-				if (itemBySlot.isEmpty()) {
-					Item item = getEquipmentForSlot(equipmentSlot, armorTier);
-					if (item != null) {
-						setItemSlot(equipmentSlot, new ItemStack(item));
-					}
-				}
-			}
 		}
 	}
 

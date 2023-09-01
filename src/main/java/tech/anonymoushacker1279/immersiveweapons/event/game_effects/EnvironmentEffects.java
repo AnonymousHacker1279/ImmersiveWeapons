@@ -4,6 +4,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.Level;
+import net.minecraftforge.common.Tags.EntityTypes;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.network.PacketDistributor;
 import org.jetbrains.annotations.Nullable;
@@ -65,8 +66,13 @@ public class EnvironmentEffects {
 					.getAmplifier();
 			float damage = event.getAmount();
 
-			// Each level of the effect results in a 10% increase in damage taken
-			damage *= (level + 1) * 1.1f;
+			// Each level of the effect results in a 10% increase in damage taken (excluding bosses, which take 5%)
+			if (damagedEntity.getType().is(EntityTypes.BOSSES)) {
+				damage *= ((level + 1) * 0.05f) + 1.0f;
+			} else {
+				damage *= ((level + 1) * 0.1f) + 1.0f;
+			}
+
 			event.setAmount(damage);
 		}
 	}
