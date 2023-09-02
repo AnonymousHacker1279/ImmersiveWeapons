@@ -13,6 +13,9 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 import static org.spongepowered.asm.mixin.injection.callback.LocalCapture.CAPTURE_FAILSOFT;
 
+/**
+ * Allow an entity to dampen vibrations if wearing padded leather armor.
+ */
 @Mixin(Entity.class)
 public abstract class EntityMixin {
 

@@ -10,6 +10,9 @@ import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 
 import static org.spongepowered.asm.mixin.injection.callback.LocalCapture.CAPTURE_FAILSOFT;
 
+/**
+ * Replace the vanilla armor cap of 20 points with a configurable value.
+ */
 @Mixin(CombatRules.class)
 public abstract class CombatRulesMixin {
 
