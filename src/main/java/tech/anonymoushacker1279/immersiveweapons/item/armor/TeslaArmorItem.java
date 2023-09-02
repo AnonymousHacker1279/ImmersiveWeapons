@@ -65,7 +65,7 @@ public class TeslaArmorItem extends ArmorItem {
 				player.getItemBySlot(EquipmentSlot.FEET).getItem() == ItemRegistry.TESLA_BOOTS.get()) {
 
 			String data = player.getPersistentData().getString("TeslaArmorEffectState");
-			EffectState state = data.equals("") ? EffectState.DISABLED : EffectState.getFromString(data);
+			EffectState state = data.isEmpty() ? EffectState.DISABLED : EffectState.getFromString(data);
 
 			if (level.isClientSide) {
 				if (IWKeyBinds.TOGGLE_ARMOR_EFFECT.consumeClick()) {

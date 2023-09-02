@@ -44,11 +44,6 @@ public class CannonballEntity extends BulletEntity implements ItemSupplier {
 	}
 
 	@Override
-	protected float getDefaultInertia() {
-		return 0.99f;
-	}
-
-	@Override
 	public ItemStack getItem() {
 		return new ItemStack(getReferenceItem());
 	}

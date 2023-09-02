@@ -70,7 +70,7 @@ public class SmallPartsTableScreen extends AbstractContainerScreen<SmallPartsMen
 		guiGraphics.blit(BG_LOCATION, leftPos + 119, topPos + PATTERNS_Y - 4 + scrollOffset,
 				232 + (displayPatterns ? 0 : SCROLLER_WIDTH),
 				0, SCROLLER_WIDTH, SCROLLER_HEIGHT);
-		
+
 		if (resultPatterns != null) {
 			if (menu.getSelectedPartsPatternIndex() > 0) {
 				ItemStack material = new ItemStack(resultPatterns.get(menu.getSelectedPartsPatternIndex() - 1));
@@ -78,7 +78,7 @@ public class SmallPartsTableScreen extends AbstractContainerScreen<SmallPartsMen
 			}
 		}
 
-		if (displayPatterns && resultPatterns.size() > 0) {
+		if (displayPatterns && !resultPatterns.isEmpty()) {
 			int leftPosOffset = leftPos + PATTERNS_X;
 			int topPosOffset = topPos + PATTERNS_Y;
 			int startIndexOffset = startIndex + 9;

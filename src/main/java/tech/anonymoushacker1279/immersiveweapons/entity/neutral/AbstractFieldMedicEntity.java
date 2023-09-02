@@ -37,14 +37,13 @@ import tech.anonymoushacker1279.immersiveweapons.init.*;
 import tech.anonymoushacker1279.immersiveweapons.world.level.IWDamageSources;
 
 import java.time.LocalDate;
-import java.time.temporal.ChronoField;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Supplier;
 
 public abstract class AbstractFieldMedicEntity extends PathfinderMob implements GrantAdvancementOnDiscovery {
 
-	private final MeleeAttackGoal aiAttackOnCollide = new MeleeAttackGoal(this, 1.2D,
+	private final MeleeAttackGoal meleeAttackGoal = new MeleeAttackGoal(this, 1.2D,
 			false) {
 		@Override
 		public void stop() {
@@ -69,14 +68,9 @@ public abstract class AbstractFieldMedicEntity extends PathfinderMob implements 
 	private int healCooldown = 0;
 	private int randomHealTicks = 0;
 
-	/**
-	 * Constructor for AbstractFieldMedicEntity.
-	 *
-	 * @param type    the <code>EntityType</code> instance
-	 * @param worldIn the <code>World</code> the entity is in
-	 */
-	AbstractFieldMedicEntity(EntityType<? extends PathfinderMob> type, Level worldIn) {
-		super(type, worldIn);
+
+	AbstractFieldMedicEntity(EntityType<? extends PathfinderMob> type, Level level) {
+		super(type, level);
 		setCombatTask();
 
 		checkedEntities.add(MinutemanEntity.class);
@@ -86,20 +80,12 @@ public abstract class AbstractFieldMedicEntity extends PathfinderMob implements 
 		checkForHurtEntitiesCooldown = 0;
 	}
 
-	/**
-	 * Register this entity's attributes.
-	 *
-	 * @return AttributeModifierMap.MutableAttribute
-	 */
 	public static AttributeSupplier.Builder registerAttributes() {
 		return Monster.createMonsterAttributes()
 				.add(Attributes.MOVEMENT_SPEED, 0.3D)
 				.add(Attributes.ARMOR, 2.75D);
 	}
 
-	/**
-	 * Register entity goals and targets.
-	 */
 	@Override
 	protected void registerGoals() {
 		goalSelector.addGoal(1, new FloatGoal(this));
@@ -112,12 +98,6 @@ public abstract class AbstractFieldMedicEntity extends PathfinderMob implements 
 		targetSelector.addGoal(1, new HurtByTargetGoal(this, AbstractMinutemanEntity.class, IronGolem.class));
 	}
 
-	/**
-	 * Play the step sound.
-	 *
-	 * @param pos     the <code>BlockPos</code> the entity is at
-	 * @param blockIn the <code>BlockState</code> of the block being stepped on
-	 */
 	@Override
 	protected void playStepSound(BlockPos pos, BlockState blockIn) {
 		playSound(getStepSound(), 0.15F, 1.0F);
@@ -125,19 +105,20 @@ public abstract class AbstractFieldMedicEntity extends PathfinderMob implements 
 
 	protected abstract SoundEvent getStepSound();
 
-	/**
-	 * Called frequently so the entity can update its state every tick as required.
-	 */
 	@Override
 	public void aiStep() {
 		super.aiStep();
+
 		checkForHurtEntities(checkedEntities);
+
 		if (checkForHurtEntitiesCooldown > 0) {
 			checkForHurtEntitiesCooldown--;
 		}
+
 		if (healCooldown > 0) {
 			healCooldown--;
 		}
+
 		if (!level().isClientSide) {
 			if (getHealth() <= getMaxHealth()) {
 				if (randomHealTicks >= 20) {
@@ -150,72 +131,44 @@ public abstract class AbstractFieldMedicEntity extends PathfinderMob implements 
 				}
 			}
 		}
+
 		checkForDiscovery(this);
 	}
 
-	/**
-	 * Handles updating while riding another entity
-	 */
 	@Override
-	public void rideTick() {
-		super.rideTick();
-		if (getVehicle() instanceof PathfinderMob creatureEntity) {
-			yBodyRot = creatureEntity.yBodyRot;
-		}
-	}
+	public SpawnGroupData finalizeSpawn(ServerLevelAccessor level, DifficultyInstance difficultyInstance,
+	                                    MobSpawnType mobSpawnType, @Nullable SpawnGroupData groupData,
+	                                    @Nullable CompoundTag compoundTag) {
 
-	/**
-	 * Finalize spawn information.
-	 *
-	 * @param worldIn      the <code>IServerWorld</code> the entity is in
-	 * @param difficultyIn the <code>DifficultyInstance</code> of the world
-	 * @param reason       the <code>SpawnReason</code> for the entity
-	 * @param spawnDataIn  the <code>ILivingEntitySpawnData</code> for the entity
-	 * @param dataTag      the <code>CompoundNBT</code> data tag for the entity
-	 * @return ILivingEntityData
-	 */
-	@Override
-	public SpawnGroupData finalizeSpawn(ServerLevelAccessor worldIn, DifficultyInstance difficultyIn,
-	                                    MobSpawnType reason, @Nullable SpawnGroupData spawnDataIn,
-	                                    @Nullable CompoundTag dataTag) {
-
-		spawnDataIn = super.finalizeSpawn(worldIn, difficultyIn, reason, spawnDataIn, dataTag);
-		populateDefaultEquipmentSlots(random, difficultyIn);
-		populateDefaultEquipmentEnchantments(random, difficultyIn);
+		groupData = super.finalizeSpawn(level, difficultyInstance, mobSpawnType, groupData, compoundTag);
+		populateDefaultEquipmentSlots(random, difficultyInstance);
+		populateDefaultEquipmentEnchantments(random, difficultyInstance);
 		setCombatTask();
-		setCanPickUpLoot(random.nextFloat() < 0.55F * difficultyIn.getSpecialMultiplier());
+		setCanPickUpLoot(random.nextFloat() < 0.55F * difficultyInstance.getSpecialMultiplier());
 
 		if (getItemBySlot(EquipmentSlot.HEAD).isEmpty()) {
-			LocalDate localdate = LocalDate.now();
-			int day = localdate.get(ChronoField.DAY_OF_MONTH);
-			int month = localdate.get(ChronoField.MONTH_OF_YEAR);
+			LocalDate date = LocalDate.now();
+			int day = date.getDayOfMonth();
+			int month = date.getMonth().getValue();
 			if (month == 10 && day == 31 && random.nextFloat() < 0.25F) {
-				setItemSlot(EquipmentSlot.HEAD, new ItemStack(random.nextFloat() < 0.1F ? Blocks.JACK_O_LANTERN : Blocks.CARVED_PUMPKIN));
+				setItemSlot(EquipmentSlot.HEAD,
+						new ItemStack(random.nextFloat() < 0.1F ? Blocks.JACK_O_LANTERN : Blocks.CARVED_PUMPKIN));
+
 				armorDropChances[EquipmentSlot.HEAD.getIndex()] = 0.0F;
 			}
 		}
 
-		return spawnDataIn;
+		return groupData;
 	}
 
-	/**
-	 * Set the entity's combat AI.
-	 */
 	private void setCombatTask() {
 		if (!level().isClientSide) {
-			goalSelector.removeGoal(aiAttackOnCollide);
+			goalSelector.removeGoal(meleeAttackGoal);
 			setItemInHand(InteractionHand.MAIN_HAND, new ItemStack(ItemRegistry.USED_SYRINGE.get()));
-			goalSelector.addGoal(1, aiAttackOnCollide);
+			goalSelector.addGoal(1, meleeAttackGoal);
 		}
 	}
 
-	/**
-	 * Runs when the entity is hurt.
-	 *
-	 * @param source the <code>DamageSource</code> instance
-	 * @param amount the damage amount
-	 * @return boolean
-	 */
 	@Override
 	public boolean hurt(DamageSource source, float amount) {
 		super.hurt(source, amount);
@@ -223,17 +176,20 @@ public abstract class AbstractFieldMedicEntity extends PathfinderMob implements 
 				&& !(source.getEntity() instanceof IronGolem)
 				&& source.getEntity() instanceof Player || source.getEntity() instanceof Mob) {
 
-			if (source.getEntity() instanceof Player) {
-				if (((Player) source.getEntity()).isCreative()) {
+			if (source.getEntity() instanceof Player player) {
+				if (player.isCreative()) {
 					return true;
 				}
 			}
+
 			// Heal itself
 			if (healCooldown == 0) {
 				heal();
 			}
+
 			setTarget((LivingEntity) source.getEntity());
 			setCombatTask();
+
 			// Aggro all other minutemen in the area
 			List<MinutemanEntity> nearbyMinutemen = level().getEntitiesOfClass(MinutemanEntity.class,
 					(new AABB(blockPosition())).inflate(48.0D, 8.0D, 48.0D));
@@ -242,8 +198,10 @@ public abstract class AbstractFieldMedicEntity extends PathfinderMob implements 
 				minutemanEntity.setTarget((LivingEntity) source.getEntity());
 				minutemanEntity.setPersistentAngerTarget(source.getEntity().getUUID());
 			}
+
 			return true;
 		}
+
 		return false;
 	}
 
@@ -286,6 +244,7 @@ public abstract class AbstractFieldMedicEntity extends PathfinderMob implements 
 				}
 			}
 		}
+		
 		return canHurtTarget;
 	}
 

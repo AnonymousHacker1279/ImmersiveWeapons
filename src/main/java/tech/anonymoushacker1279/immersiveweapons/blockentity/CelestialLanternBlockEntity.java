@@ -60,7 +60,7 @@ public class CelestialLanternBlockEntity extends BlockEntity implements EntityBl
 		super.load(tag);
 		ListTag SAVED_LANTERNS = (ListTag) tag.get("tiltros_lanterns");
 		if (SAVED_LANTERNS != null) {
-			if (CelestialLanternBlock.ALL_TILTROS_LANTERNS.size() == 0 && SAVED_LANTERNS.size() > 0) {
+			if (CelestialLanternBlock.ALL_TILTROS_LANTERNS.isEmpty() && !SAVED_LANTERNS.isEmpty()) {
 				List<BlockPos> blockPosList = new ArrayList<>(SAVED_LANTERNS.size());
 				SAVED_LANTERNS.forEach(tag1 -> blockPosList.add(NbtUtils.readBlockPos((CompoundTag) tag1)));
 

@@ -19,6 +19,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult.Type;
 import net.minecraft.world.phys.Vec3;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import tech.anonymoushacker1279.immersiveweapons.init.SoundEventRegistry;
 
@@ -172,18 +173,7 @@ public class FireflyEntity extends AmbientCreature {
 				);
 			}
 
-			double xDiff = (double) targetBlockPosition.getX() - getX();
-			assert targetBlockPosition != null;
-			double yDiff = (double) targetBlockPosition.getY() - getY();
-			assert targetBlockPosition != null;
-			double zDiff = (double) targetBlockPosition.getZ() - getZ();
-
-			Vec3 deltaMovement = getDeltaMovement();
-			Vec3 newMovement = deltaMovement.add(
-					(Math.signum(xDiff) * 0.5D - deltaMovement.x) * (double) 0.1F,
-					(Math.signum(yDiff) * (double) 0.7F - deltaMovement.y) * (double) 0.1F,
-					(Math.signum(zDiff) * 0.5D - deltaMovement.z) * (double) 0.1F
-			);
+			Vec3 newMovement = getMovement();
 
 			setDeltaMovement(newMovement);
 			float f = (float) (Mth.atan2(newMovement.z, newMovement.x) * (double) (180F / (float) Math.PI)) - 90.0F;
@@ -195,6 +185,22 @@ public class FireflyEntity extends AmbientCreature {
 			}
 		}
 
+	}
+
+	@NotNull
+	private Vec3 getMovement() {
+		double xDiff = (double) targetBlockPosition.getX() - getX();
+		assert targetBlockPosition != null;
+		double yDiff = (double) targetBlockPosition.getY() - getY();
+		assert targetBlockPosition != null;
+		double zDiff = (double) targetBlockPosition.getZ() - getZ();
+
+		Vec3 deltaMovement = getDeltaMovement();
+		return deltaMovement.add(
+				(Math.signum(xDiff) * 0.5D - deltaMovement.x) * (double) 0.1F,
+				(Math.signum(yDiff) * (double) 0.7F - deltaMovement.y) * (double) 0.1F,
+				(Math.signum(zDiff) * 0.5D - deltaMovement.z) * (double) 0.1F
+		);
 	}
 
 	@Override
