@@ -221,8 +221,8 @@ public class EntityLootTables implements LootTableSubProvider {
 								.apply(LootingEnchantFunction.lootingMultiplier(UniformGenerator.between(0.0F, 1.0F))))
 						.add(LootItem.lootTableItem(Items.ENDER_PEARL)
 								.apply(SetItemCountFunction.setCount(UniformGenerator.between(0.0F, 1.0F)))
-								.apply(LootingEnchantFunction.lootingMultiplier(UniformGenerator.between(0.0F, 1.0F)))))
-		);
+								.apply(LootingEnchantFunction.lootingMultiplier(UniformGenerator.between(0.0F, 1.0F))))
+						.when(LootItemKilledByPlayerCondition.killedByPlayer())));
 	}
 
 	protected void add(EntityType<?> pEntityType, LootTable.Builder pLootTableBuilder) {

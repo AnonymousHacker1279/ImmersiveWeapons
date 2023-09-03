@@ -6,6 +6,7 @@ import net.minecraft.network.syncher.*;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.Mth;
 import net.minecraft.world.DifficultyInstance;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.*;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
@@ -119,10 +120,17 @@ public class EvilEyeEntity extends FlyingMob implements Enemy, GrantAdvancementO
 			targetedEntityUUID = null;
 		}
 
-		// Find players in a 16 block radius every 40 ticks if not summoned by a staff
+		// Find players every 40 ticks if not summoned by a staff
 		if (!level().isClientSide) {
 			if (!summonedByStaff && tickCount % 40 == 0) {
-				Player player = level().getNearestPlayer(this, 16);
+				// Increase distance based on difficulty and size
+				int scanDistance = 16;
+				int sizeModifier = getSize() * 2;
+				int difficultyModifier = level().getDifficulty().getId() * 2;
+
+				scanDistance += sizeModifier + difficultyModifier;
+
+				Player player = level().getNearestPlayer(this, scanDistance);
 				// Check for proper targeting conditions
 				if (player != null) {
 					boolean validTarget = TargetingConditions.forCombat().test(this, player);
@@ -269,6 +277,22 @@ public class EvilEyeEntity extends FlyingMob implements Enemy, GrantAdvancementO
 		EntityDimensions dimensions = super.getDimensions(pPose);
 		float scaleFactor = (dimensions.width + 0.3F * (float) size) / dimensions.width;
 		return dimensions.scale(scaleFactor);
+	}
+
+	@Override
+	public boolean hurt(DamageSource source, float amount) {
+		if (source.getEntity() instanceof LivingEntity entity && !summonedByStaff()) {
+			if (entity instanceof Player player && player.isCreative()) {
+				return super.hurt(source, amount);
+			}
+
+			targetedEntity = entity;
+
+			// Remove the random flying goal if it exists
+			goalSelector.removeGoal(flyRandomlyGoal);
+		}
+
+		return super.hurt(source, amount);
 	}
 
 	@Nullable
