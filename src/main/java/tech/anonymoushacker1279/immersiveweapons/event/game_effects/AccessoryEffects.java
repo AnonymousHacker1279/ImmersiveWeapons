@@ -9,8 +9,8 @@ import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.event.entity.living.LivingHurtEvent;
-import net.minecraftforge.event.entity.living.LivingKnockBackEvent;
+import net.minecraftforge.event.entity.living.*;
+import net.minecraftforge.event.entity.player.CriticalHitEvent;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.api.PluginHandler;
 import tech.anonymoushacker1279.immersiveweapons.client.gui.overlays.DebugTracingData;
@@ -177,6 +177,32 @@ public class AccessoryEffects {
 			// Apply the melee knockback
 			event.setStrength((float) (event.getStrength() * (1 + meleeKnockback)));
 		}
+	}
+
+	public static void meleeCritDamageBonusEffects(CriticalHitEvent event, Player player) {
+		// Get the total melee critical damage from all items
+		double meleeCritDamageBonus = collectEffects(EffectType.MELEE_CRIT_DAMAGE_BONUS, player);
+
+		// Apply the melee critical damage
+		event.setDamageModifier((float) (event.getDamageModifier() + meleeCritDamageBonus));
+	}
+
+	public static void meleeCritChanceEffects(CriticalHitEvent event, Player player) {
+		// Get the total melee critical chance from all items
+		double meleeCritChance = collectEffects(EffectType.MELEE_CRIT_CHANCE, player);
+
+		// Roll for critical hit
+		if (player.getRandom().nextFloat() <= meleeCritChance) {
+			event.setResult(CriticalHitEvent.Result.ALLOW);
+		}
+	}
+
+	public static void experienceEffects(LivingExperienceDropEvent event, Player player) {
+		// Get the total experience boost from all items
+		double experienceBoost = collectEffects(EffectType.EXPERIENCE_MODIFIER, player);
+
+		// Apply the experience boost
+		event.setDroppedExperience((int) (event.getDroppedExperience() * (1 + experienceBoost)));
 	}
 
 	public static void bloodySacrificeEffect(LivingHurtEvent event, LivingEntity damagedEntity) {

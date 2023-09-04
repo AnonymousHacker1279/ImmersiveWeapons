@@ -71,4 +71,9 @@ public class AccessoryItemEffects {
 	public static final EffectBuilder BLOODY_CLOTH = new EffectBuilder()
 			.addEffect(EffectType.BLEED_CANCEL_CHANCE, 0.15d)
 			.addEffect(EffectType.BLEED_RESISTANCE, 0.30d);
+	public static final EffectBuilder IRON_FIST = new EffectBuilder()
+			.addEffect(EffectType.MELEE_CRIT_DAMAGE_BONUS, 0.25d)
+			.addEffect(EffectType.MELEE_CRIT_CHANCE, 0.15d);
+	public static final EffectBuilder ANCIENT_SCROLL = new EffectBuilder()
+			.addEffect(EffectType.EXPERIENCE_MODIFIER, 0.35d);
 }

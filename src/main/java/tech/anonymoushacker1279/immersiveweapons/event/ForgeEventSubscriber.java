@@ -37,10 +37,12 @@ import net.minecraftforge.event.ItemAttributeModifierEvent;
 import net.minecraftforge.event.TickEvent.PlayerTickEvent;
 import net.minecraftforge.event.entity.EntityJoinLevelEvent;
 import net.minecraftforge.event.entity.living.*;
+import net.minecraftforge.event.entity.player.CriticalHitEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.level.LevelEvent;
 import net.minecraftforge.event.level.PistonEvent;
 import net.minecraftforge.event.level.PistonEvent.PistonMoveType;
+import net.minecraftforge.eventbus.api.Event.Result;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
@@ -637,6 +639,28 @@ public class ForgeEventSubscriber {
 
 		if (entity.getLastAttacker() instanceof Player player) {
 			AccessoryEffects.meleeKnockbackEffects(event, player);
+		}
+	}
+
+	@SubscribeEvent
+	public static void criticalHitEvent(CriticalHitEvent event) {
+		LivingEntity entity = event.getEntity();
+
+		if (entity instanceof Player player) {
+			AccessoryEffects.meleeCritChanceEffects(event, player);
+
+			if (event.getResult() == Result.DEFAULT || event.getResult() == Result.ALLOW) {
+				AccessoryEffects.meleeCritDamageBonusEffects(event, player);
+			}
+		}
+	}
+
+	@SubscribeEvent
+	public static void livingExperienceDropEvent(LivingExperienceDropEvent event) {
+		Player player = event.getAttackingPlayer();
+
+		if (player != null) {
+			AccessoryEffects.experienceEffects(event, player);
 		}
 	}
 }

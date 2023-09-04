@@ -198,6 +198,17 @@ public class AccessoryItem extends Item {
 		MELEE_BLEED_CHANCE,
 
 		/**
+		 * Modifier to melee critical damage. Additive with vanilla critical damage, which is 50% by default.
+		 * For example, a value of 0.5d will result in 100% critical damage.
+		 */
+		MELEE_CRIT_DAMAGE_BONUS,
+
+		/**
+		 * Chance for any melee attack to become critical, regardless of vanilla critical hit conditions.
+		 */
+		MELEE_CRIT_CHANCE,
+
+		/**
 		 * Chance for {@link BleedingEffect} to be cancelled each damage tick.
 		 */
 		BLEED_CANCEL_CHANCE,
@@ -206,6 +217,11 @@ public class AccessoryItem extends Item {
 		 * Modifier to {@link BleedingEffect} damage.
 		 */
 		BLEED_RESISTANCE,
+
+		/**
+		 * Modifier for experience drops.
+		 */
+		EXPERIENCE_MODIFIER,
 
 		/**
 		 * Miscellaneous effect category. Used for effects which are handled manually.

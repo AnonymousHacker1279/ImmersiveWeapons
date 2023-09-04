@@ -458,6 +458,9 @@ public class LanguageGenerator extends IWLanguageProvider {
 		addTooltip("night_vision_goggles", "Provides a night vision effect");
 		addTooltip("agility_bracelet", "Increases movement speed by 5%");
 		addTooltip("bloody_cloth", "Reduces bleed damage by 30% and provides a 15% chance to stop bleeding");
+		addTooltip("iron_fist_1", "Increases melee crit damage by 25% and provides a 15% chance for ALL melee attacks to crit");
+		addTooltip("iron_fist_2", "Devil's grip, the Iron Fist");
+		addTooltip("ancient_scroll", "Increase experience gained on kill by 35%");
 
 		addTooltip("bloody_sacrifice", "You feel a dark presence emanating from this item");
 		addTooltip("bloody_sacrifice_charge_note", "The destruction of life charges something inside");

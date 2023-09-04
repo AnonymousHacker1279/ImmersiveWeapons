@@ -28,19 +28,7 @@ import java.time.LocalDate;
 
 public abstract class AbstractWanderingWarriorEntity extends Monster implements GrantAdvancementOnDiscovery {
 
-	private final MeleeAttackGoal meleeAttackGoal = new MeleeAttackGoal(this, 1.2D, false) {
-		@Override
-		public void stop() {
-			super.stop();
-			setAggressive(false);
-		}
-
-		@Override
-		public void start() {
-			super.start();
-			setAggressive(true);
-		}
-	};
+	protected MeleeAttackGoal meleeAttackGoal = new MeleeAttackGoal(this, 1.2D, false);
 
 	/**
 	 * Constructor for AbstractWanderingWarriorEntity.

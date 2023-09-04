@@ -37,27 +37,8 @@ import java.util.function.Predicate;
 
 public abstract class AbstractDyingSoldierEntity extends Monster implements RangedAttackMob, GrantAdvancementOnDiscovery {
 
-	private final RangedGunAttackGoal<AbstractDyingSoldierEntity> aiPistolAttack =
+	private final RangedGunAttackGoal<AbstractDyingSoldierEntity> pistolAttackGoal =
 			new RangedGunAttackGoal<>(this, 1.0D, 20, 15.0F, ItemRegistry.FLINTLOCK_PISTOL.get());
-	private final MeleeAttackGoal aiAttackOnCollide = new MeleeAttackGoal(this, 1.2D, false) {
-		/**
-		 * Reset the task's internal state. Called when this task is interrupted by another one
-		 */
-		@Override
-		public void stop() {
-			super.stop();
-			setAggressive(false);
-		}
-
-		/**
-		 * Execute a one shot task or start executing a continuous task
-		 */
-		@Override
-		public void start() {
-			super.start();
-			setAggressive(true);
-		}
-	};
 
 	/**
 	 * Constructor for AbstractDyingSoldierEntity.
@@ -180,8 +161,7 @@ public abstract class AbstractDyingSoldierEntity extends Monster implements Rang
 	 */
 	private void setCombatTask() {
 		if (!level().isClientSide) {
-			goalSelector.removeGoal(aiAttackOnCollide);
-			goalSelector.removeGoal(aiPistolAttack);
+			goalSelector.removeGoal(pistolAttackGoal);
 			ItemStack itemInHand = getItemInHand(ProjectileUtil.getWeaponHoldingHand(this,
 					Predicate.isEqual(ItemRegistry.FLINTLOCK_PISTOL.get())));
 
@@ -191,12 +171,9 @@ public abstract class AbstractDyingSoldierEntity extends Monster implements Rang
 					cooldown = 40;
 				}
 
-				aiPistolAttack.setAttackCooldown(cooldown);
-				goalSelector.addGoal(1, aiPistolAttack);
-			} else {
-				goalSelector.addGoal(4, aiAttackOnCollide);
+				pistolAttackGoal.setAttackCooldown(cooldown);
+				goalSelector.addGoal(1, pistolAttackGoal);
 			}
-
 		}
 	}
 

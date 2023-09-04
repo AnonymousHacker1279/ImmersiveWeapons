@@ -258,6 +258,8 @@ public class ItemRegistry {
 	public static final RegistryObject<AccessoryItem> NIGHT_VISION_GOGGLES = ITEMS.register("night_vision_goggles", () -> new AccessoryItem(new Properties().stacksTo(1), AccessorySlot.HEAD, AccessoryItemEffects.NIGHT_VISION_GOGGLES));
 	public static final RegistryObject<AccessoryItem> AGILITY_BRACELET = ITEMS.register("agility_bracelet", () -> new AccessoryItem(new Properties().stacksTo(1), AccessorySlot.BRACELET, AccessoryItemEffects.AGILITY_BRACELET));
 	public static final RegistryObject<AccessoryItem> BLOODY_CLOTH = ITEMS.register("bloody_cloth", () -> new AccessoryItem(new Properties().stacksTo(1), AccessorySlot.HEAD, AccessoryItemEffects.BLOODY_CLOTH));
+	public static final RegistryObject<AccessoryItem> IRON_FIST = ITEMS.register("iron_fist", () -> new AccessoryItem(new Properties().stacksTo(1), AccessorySlot.HAND, AccessoryItemEffects.IRON_FIST));
+	public static final RegistryObject<AccessoryItem> ANCIENT_SCROLL = ITEMS.register("ancient_scroll", () -> new AccessoryItem(new Properties().stacksTo(1), AccessorySlot.CHARM, AccessoryItemEffects.ANCIENT_SCROLL));
 	public static final RegistryObject<CursedItem> BLOODY_SACRIFICE = ITEMS.register("bloody_sacrifice", () -> new CursedItem(new Properties().stacksTo(1).setNoRepair().durability(100), "bloody_sacrifice"));
 	public static final RegistryObject<CursedItem> JONNYS_CURSE = ITEMS.register("jonnys_curse", () -> new CursedItem(new Properties().stacksTo(1).setNoRepair().durability(100), "jonnys_curse"));
 	public static final RegistryObject<Item> CHAMPION_KEYCARD = ITEMS.register("champion_keycard", () -> new Item(new Properties().stacksTo(1)));

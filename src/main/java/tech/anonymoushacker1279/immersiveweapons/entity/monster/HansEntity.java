@@ -15,6 +15,7 @@ import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
+import org.jetbrains.annotations.NotNull;
 import tech.anonymoushacker1279.immersiveweapons.init.SoundEventRegistry;
 
 public class HansEntity extends AbstractWanderingWarriorEntity {
@@ -37,6 +38,7 @@ public class HansEntity extends AbstractWanderingWarriorEntity {
 	 * @return SoundEvent
 	 */
 	@Override
+	@NotNull
 	protected SoundEvent getAmbientSound() {
 		return SoundEventRegistry.WANDERING_WARRIOR_AMBIENT.get();
 	}

@@ -30,10 +30,36 @@ public class ChampionKeycardBlock extends Block {
 
 				level.destroyBlock(pos, false);
 
+				propagateToNearbyBlocks(state, level, pos, player, hand, hitResult);
+
 				return InteractionResult.SUCCESS;
 			}
 		}
 
 		return InteractionResult.PASS;
+	}
+
+	/**
+	 * Break neighboring keycard blocks that share a side with the block that was broken
+	 */
+	private void propagateToNearbyBlocks(BlockState state, Level level, BlockPos pos,
+	                                     Player player, InteractionHand hand,
+	                                     BlockHitResult hitResult) {
+
+		BlockPos[] nearbyBlocks = new BlockPos[]{
+				pos.north(),
+				pos.south(),
+				pos.east(),
+				pos.west(),
+				pos.above(),
+				pos.below()
+		};
+
+		for (BlockPos nearbyBlock : nearbyBlocks) {
+			if (level.getBlockState(nearbyBlock).getBlock() == this) {
+				// Call the use method on the neighboring block, which will call this method again
+				level.getBlockState(nearbyBlock).getBlock().use(state, level, nearbyBlock, player, hand, hitResult);
+			}
+		}
 	}
 }
