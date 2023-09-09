@@ -1155,6 +1155,19 @@ public class RecipeGenerator extends RecipeProvider {
 				.unlockedBy("cloth_scrap", has(ItemRegistry.CLOTH_SCRAP.get()))
 				.save(finishedRecipeConsumer);
 
+		// Hand of Doom
+		ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, ItemRegistry.HAND_OF_DOOM.get())
+				.requires(ItemRegistry.MELEE_MASTERS_MOLTEN_GLOVE.get())
+				.requires(ItemRegistry.IRON_FIST.get())
+				.requires(ItemRegistry.GLOVE_OF_RAPID_SWINGING.get())
+				.group("hand_of_doom")
+				.unlockedBy("melee_glove_accessories", inventoryTrigger(ItemPredicate.Builder.item()
+						.of(ItemRegistry.MELEE_MASTERS_MOLTEN_GLOVE.get())
+						.of(ItemRegistry.IRON_FIST.get())
+						.of(ItemRegistry.GLOVE_OF_RAPID_SWINGING.get())
+						.build()))
+				.save(finishedRecipeConsumer);
+
 		// Bloody Sacrifice
 		ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ItemRegistry.BLOODY_SACRIFICE.get())
 				.define('a', Items.SPIDER_EYE)

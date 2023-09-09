@@ -10,6 +10,9 @@
     "immersiveweapons:bloated_heart",
     "immersiveweapons:netherite_shield",
     "immersiveweapons:melee_masters_molten_glove",
+    "immersiveweapons:iron_fist",
+    "immersiveweapons:glove_of_rapid_swinging",
+    "immersiveweapons:hand_of_doom",
     "immersiveweapons:copper_ring",
     "immersiveweapons:iron_ring",
     "immersiveweapons:cobalt_ring",
@@ -26,7 +29,6 @@
     "immersiveweapons:night_vision_goggles",
     "immersiveweapons:agility_bracelet",
     "immersiveweapons:bloody_cloth",
-    "immersiveweapons:iron_fist",
     "immersiveweapons:ancient_scroll"
   ]
 }

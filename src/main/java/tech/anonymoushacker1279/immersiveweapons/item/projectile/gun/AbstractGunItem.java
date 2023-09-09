@@ -22,7 +22,7 @@ import net.minecraftforge.network.PacketDistributor;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.data.tags.groups.immersiveweapons.IWItemTagGroups;
 import tech.anonymoushacker1279.immersiveweapons.entity.projectile.bullet.BulletEntity;
-import tech.anonymoushacker1279.immersiveweapons.event.game_effects.AccessoryEffects;
+import tech.anonymoushacker1279.immersiveweapons.event.game_effects.AccessoryManager;
 import tech.anonymoushacker1279.immersiveweapons.init.*;
 import tech.anonymoushacker1279.immersiveweapons.item.AccessoryItem.EffectType;
 import tech.anonymoushacker1279.immersiveweapons.item.projectile.bullet.AbstractBulletItem;
@@ -181,7 +181,7 @@ public abstract class AbstractGunItem extends Item implements Vanishable {
 
 				if (!player.isCreative()) {
 					// Reduce cooldown in certain conditions
-					float reductionFactor = (float) AccessoryEffects.collectEffects(EffectType.FIREARM_RELOAD_SPEED, player);
+					float reductionFactor = (float) AccessoryManager.collectEffects(EffectType.FIREARM_RELOAD_SPEED, player);
 
 					int rapidFireLevel = gun.getEnchantmentLevel(EnchantmentRegistry.RAPID_FIRE.get());
 					reductionFactor += (0.05f * rapidFireLevel);
@@ -500,7 +500,7 @@ public abstract class AbstractGunItem extends Item implements Vanishable {
 	protected void handleAmmoStack(ItemStack gun, ItemStack ammo, int bulletsToFire, Player player) {
 		if (!player.isCreative() && ammo.getItem() instanceof AbstractBulletItem bulletItem) {
 			if (!bulletItem.isInfinite(ammo, gun, player)) {
-				float ammoConservationChance = (float) AccessoryEffects.collectEffects(EffectType.FIREARM_AMMO_CONSERVATION_CHANCE, player);
+				float ammoConservationChance = (float) AccessoryManager.collectEffects(EffectType.FIREARM_AMMO_CONSERVATION_CHANCE, player);
 				if (!player.level().isClientSide) {
 					if (player.getRandom().nextFloat() <= ammoConservationChance) {
 						player.getInventory().setChanged(); // Resync the inventory because the client may not roll the same number

@@ -331,6 +331,13 @@ public class TooltipHandler {
 			if (stack.getItem() == ItemRegistry.ANCIENT_SCROLL.get()) {
 				event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.ancient_scroll").withStyle(ChatFormatting.GREEN, ChatFormatting.ITALIC));
 			}
+			if (stack.getItem() == ItemRegistry.GLOVE_OF_RAPID_SWINGING.get()) {
+				event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.glove_of_rapid_swinging").withStyle(ChatFormatting.GREEN, ChatFormatting.ITALIC));
+			}
+			if (stack.getItem() == ItemRegistry.HAND_OF_DOOM.get()) {
+				event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.hand_of_doom_1").withStyle(ChatFormatting.DARK_PURPLE, ChatFormatting.ITALIC));
+				event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.hand_of_doom_2").withStyle(ChatFormatting.DARK_PURPLE, ChatFormatting.ITALIC));
+			}
 
 			addShiftTooltip(event.getToolTip(), addAccessoryTooltips(item, event.getEntity(), stack));
 		} else if (stack.getItem() instanceof CursedItem) {

@@ -1,0 +1,35 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "immersiveweapons:hand_of_doom"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    },
+    "melee_glove_accessories": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "immersiveweapons:glove_of_rapid_swinging"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "requirements": [
+    [
+      "melee_glove_accessories",
+      "has_the_recipe"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "immersiveweapons:hand_of_doom"
+    ]
+  },
+  "sends_telemetry_event": false
+}
