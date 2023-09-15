@@ -29,9 +29,11 @@ public abstract class KillCountWeapon {
 	 * @param stack  the <code>ItemStack</code> to initialize
 	 * @param amount the amount of kills to begin with
 	 */
-	public static void initialize(ItemStack stack, int amount) {
+	public static ItemStack initialize(ItemStack stack, int amount) {
 		stack.getOrCreateTag().putInt(KILL_COUNT_TAG, amount);
 		stack.getOrCreateTag().putString(TIER_TAG, WeaponTier.SPECIAL.name);
+
+		return stack;
 	}
 
 	/**

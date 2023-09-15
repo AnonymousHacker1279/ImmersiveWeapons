@@ -233,6 +233,11 @@ public class EntityLootTables implements LootTableSubProvider {
 						.add(LootItem.lootTableItem(ItemRegistry.HANS_BLESSING.get()))
 						.when(LootItemKilledByPlayerCondition.killedByPlayer()))
 				.withPool(LootPool.lootPool()
+						.name("kill_counter")
+						.setRolls(EntityKillersValue.create())
+						.add(LootItem.lootTableItem(ItemRegistry.KILL_COUNTER.get()))
+						.when(LootItemKilledByPlayerCondition.killedByPlayer()))
+				.withPool(LootPool.lootPool()
 						.name("melee_gloves")
 						.setRolls(EntityKillersValue.create())
 						.add(LootItem.lootTableItem(ItemRegistry.MELEE_MASTERS_MOLTEN_GLOVE.get())
@@ -321,6 +326,7 @@ public class EntityLootTables implements LootTableSubProvider {
 									putString("Potion", "minecraft:empty");
 									putInt("CustomPotionColor", 12719124);
 								}})))
+						.when(LootItemKilledByPlayerCondition.killedByPlayer())
 				));
 	}
 

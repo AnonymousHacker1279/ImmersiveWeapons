@@ -424,6 +424,7 @@ public class LanguageGenerator extends IWLanguageProvider {
 		addTooltip("azul_locator", "Teleport to your spawn point at will");
 		addTooltip("curse_cleaning_soap", "Cleanses your soul of all curses");
 		addTooltip("champion_keycard", "Unlocks levels within Champion Towers");
+		addTooltip("kill_counter", "Apply to an item to track the number of kills achieved with it");
 
 		// Accessories
 		addTooltip("satchel", "Provides a 10% chance not to consume ammo");

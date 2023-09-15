@@ -254,6 +254,9 @@ public class TooltipHandler {
 		if (stack.getItem() == ItemRegistry.CHAMPION_KEYCARD.get()) {
 			event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.champion_keycard").withStyle(ChatFormatting.DARK_PURPLE, ChatFormatting.ITALIC));
 		}
+		if (stack.getItem() == ItemRegistry.KILL_COUNTER.get()) {
+			event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.kill_counter").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
+		}
 
 		// Accessories
 		if (event.getEntity() != null && stack.getItem() instanceof AccessoryItem item) {

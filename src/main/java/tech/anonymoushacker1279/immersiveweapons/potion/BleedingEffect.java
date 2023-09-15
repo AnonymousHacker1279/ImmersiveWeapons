@@ -32,9 +32,13 @@ public class BleedingEffect extends MobEffect {
 	public void applyEffectTick(LivingEntity livingEntity, int amplifier) {
 		if (!livingEntity.level().isClientSide) {
 			if (cooldownTicks <= 0) {
-				cooldownTicks = 59 - (amplifier * 10);
+				cooldownTicks = 60 - (amplifier * 10);
 
 				float amount = 1.0f + (amplifier * 0.25f);
+				
+				if (livingEntity.invulnerableTime > cooldownTicks) {
+					livingEntity.invulnerableTime = cooldownTicks;
+				}
 
 				livingEntity.hurt(IWDamageSources.BLEEDING, amount);
 			} else {

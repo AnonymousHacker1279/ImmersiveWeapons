@@ -29,6 +29,24 @@
       "entries": [
         {
           "type": "minecraft:item",
+          "name": "immersiveweapons:kill_counter"
+        }
+      ],
+      "name": "kill_counter",
+      "rolls": {
+        "type": "immersiveweapons:entity_killers"
+      }
+    },
+    {
+      "bonus_rolls": 0.0,
+      "conditions": [
+        {
+          "condition": "minecraft:killed_by_player"
+        }
+      ],
+      "entries": [
+        {
+          "type": "minecraft:item",
           "name": "immersiveweapons:melee_masters_molten_glove"
         },
         {
@@ -47,6 +65,11 @@
     },
     {
       "bonus_rolls": 0.0,
+      "conditions": [
+        {
+          "condition": "minecraft:killed_by_player"
+        }
+      ],
       "entries": [
         {
           "type": "minecraft:item",

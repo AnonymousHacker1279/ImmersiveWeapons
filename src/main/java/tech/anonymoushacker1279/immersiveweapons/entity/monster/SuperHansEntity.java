@@ -79,9 +79,17 @@ public class SuperHansEntity extends HansEntity implements AttackerTracker {
 		bossEvent.setProgress(1.0f);
 
 		switch (difficulty.getDifficulty()) {
-			case NORMAL -> xpReward = 150;
-			case HARD -> xpReward = 225;
-			default -> xpReward = 75;
+			case NORMAL -> {
+				xpReward = 225;
+				getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(0.32D);
+			}
+			case HARD -> {
+				xpReward = 500;
+				getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(0.35D);
+				getAttribute(Attributes.ARMOR).setBaseValue(30.0D);
+				getAttribute(Attributes.ATTACK_DAMAGE).setBaseValue(15.0D);
+			}
+			default -> xpReward = 150;
 		}
 
 		return super.finalizeSpawn(level, difficulty, reason, spawnData, dataTag);
@@ -111,6 +119,18 @@ public class SuperHansEntity extends HansEntity implements AttackerTracker {
 				amount *= 0.75f;
 			}
 		}
+
+		// Reduce damage as the number of players attacking increase
+		float playerCountReductionFactor;
+		switch (getAttackingEntities()) {
+			case 0, 1 -> playerCountReductionFactor = 1.0f;
+			case 2 -> playerCountReductionFactor = 0.90f;
+			case 3 -> playerCountReductionFactor = 0.80f;
+			case 4 -> playerCountReductionFactor = 0.75f;
+			default -> playerCountReductionFactor = 0.70f;
+		}
+
+		amount *= playerCountReductionFactor;
 
 		// Add strength effect if health is low
 		if (getHealth() / getMaxHealth() <= 0.25f) {

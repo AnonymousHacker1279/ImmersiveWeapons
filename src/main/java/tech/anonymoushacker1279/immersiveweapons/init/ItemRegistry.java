@@ -265,6 +265,7 @@ public class ItemRegistry {
 	public static final RegistryObject<CursedItem> BLOODY_SACRIFICE = ITEMS.register("bloody_sacrifice", () -> new CursedItem(new Properties().stacksTo(1).setNoRepair().durability(100), "bloody_sacrifice"));
 	public static final RegistryObject<CursedItem> JONNYS_CURSE = ITEMS.register("jonnys_curse", () -> new CursedItem(new Properties().stacksTo(1).setNoRepair().durability(100), "jonnys_curse"));
 	public static final RegistryObject<Item> CHAMPION_KEYCARD = ITEMS.register("champion_keycard", () -> new Item(new Properties().stacksTo(1).fireResistant()));
+	public static final RegistryObject<Item> KILL_COUNTER = ITEMS.register("kill_counter", () -> new Item(new Properties().stacksTo(1)));
 
 	// Armor
 	public static final RegistryObject<MoltenArmorItem> MOLTEN_HELMET = ITEMS.register("molten_helmet", () -> new MoltenArmorItem(CustomArmorMaterials.MOLTEN, ArmorItem.Type.HELMET, new Item.Properties().fireResistant(), false));

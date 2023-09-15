@@ -33,6 +33,7 @@ import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraftforge.client.event.RegisterGuiOverlaysEvent;
 import net.minecraftforge.client.gui.overlay.VanillaGuiOverlay;
 import net.minecraftforge.common.ForgeMod;
+import net.minecraftforge.event.AnvilUpdateEvent;
 import net.minecraftforge.event.ItemAttributeModifierEvent;
 import net.minecraftforge.event.TickEvent.PlayerTickEvent;
 import net.minecraftforge.event.entity.EntityJoinLevelEvent;
@@ -606,6 +607,15 @@ public class ForgeEventSubscriber {
 
 		if (player != null) {
 			AccessoryEffects.experienceEffects(event, player);
+		}
+	}
+
+	@SubscribeEvent
+	public static void anvilUpdateEvent(AnvilUpdateEvent event) {
+		// Kill Counter recipe
+		if (event.getRight().is(ItemRegistry.KILL_COUNTER.get())) {
+			event.setOutput(KillCountWeapon.initialize(event.getLeft().copy(), 0));
+			event.setCost(5);
 		}
 	}
 }
