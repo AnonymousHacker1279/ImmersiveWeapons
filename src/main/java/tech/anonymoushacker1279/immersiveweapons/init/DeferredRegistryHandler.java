@@ -72,5 +72,8 @@ public class DeferredRegistryHandler {
 
 		ImmersiveWeapons.LOGGER.info("Initializing deferred registry for enchantments");
 		EnchantmentRegistry.ENCHANTMENTS.register(modEventBus);
+
+		ImmersiveWeapons.LOGGER.info("Initializing deferred registry for number providers");
+		NumberProviderRegistry.NUMBER_PROVIDERS.register(modEventBus);
 	}
 }

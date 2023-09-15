@@ -30,6 +30,10 @@ repositories {
 		url "https://maven2.bai.lol"
 	}
 	maven {
+		name "FabricMC Maven"
+		url "https://maven.fabricmc.net/"
+	}
+	maven {
 		url "https://cursemaven.com"
 		content {
 			includeGroup "curse.maven"
@@ -95,8 +99,13 @@ dependencies {
 
 	minecraft "net.neoforged:forge:${minecraft_version}-${neoforge_version}"
 
-	// Apply Mixin AP
-	annotationProcessor "org.spongepowered:mixin:0.8.5:processor"
+	// Apply Mixin and MixinExtras AP
+	implementation(annotationProcessor("io.github.llamalad7:mixinextras-common:0.2.0-rc.2"))
+	implementation(jarJar("io.github.llamalad7:mixinextras-forge:0.2.0-rc.2")) {
+		jarJar.ranged(it, "[0.2.0-rc.2,)")
+	}
+
+	annotationProcessor "net.fabricmc:sponge-mixin:0.12.5+mixin.0.8.5"
 
 	// Include TerraBlender
 	implementation fg.deobf("com.github.glitchfiend:TerraBlender-forge:${terrablender_version}")
@@ -110,6 +119,8 @@ dependencies {
 	implementation fg.deobf("lol.bai:badpackets:forge-${badpackets_version}")
 	// Include AttributeFix
 	implementation fg.deobf("curse.maven:attributefix-280510:${attributefix_version}")
+	// Include Debug Utils
+	runtimeOnly fg.deobf("curse.maven:debug-utils-forge-783008:4644077")
 }
 
 tasks.named('processResources', ProcessResources).configure {

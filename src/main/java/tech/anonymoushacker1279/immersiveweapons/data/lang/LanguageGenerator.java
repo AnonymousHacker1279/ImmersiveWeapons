@@ -535,6 +535,7 @@ public class LanguageGenerator extends IWLanguageProvider {
 		addMessage("armor_effects.enabled", "Armor effects have been enabled");
 		addMessage("armor_effects.tesla_armor.effect_everything", "Currently effecting ALL creatures (including players)");
 		addMessage("armor_effects.tesla_armor.effect_mobs", "Currently effecting only mobs");
+		addMessage("entity.super_hans.tower_minibosses_alive", "Super Hans is invulnerable, you must clear the tower bosses first!");
 	}
 
 	private void addDeathMessages() {
@@ -950,6 +951,8 @@ public class LanguageGenerator extends IWLanguageProvider {
 	private void addMisc() {
 		add("loot.immersiveweapons.chest.village.battlefield.medic_station.iron_axe", "The Amputator");
 		add("loot.immersiveweapons.entity.hans.iron_sword", "The Grand Blade of Hans");
+		add("loot.immersiveweapons.entity.super_hans.super_healing_potion", "Super Potion of Healing");
+		add("loot.immersiveweapons.entity.super_hans.super_regeneration_potion", "Super Potion of Regeneration");
 		add("immersiveweapons.boss.celestial_tower.waves", "Wave %s of %s");
 		add("itemGroup.immersiveweapons.creative_tab", "Immersive Weapons");
 

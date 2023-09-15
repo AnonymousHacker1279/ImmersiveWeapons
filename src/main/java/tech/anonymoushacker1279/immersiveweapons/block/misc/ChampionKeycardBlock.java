@@ -24,13 +24,13 @@ public class ChampionKeycardBlock extends Block {
 		if (hand.equals(InteractionHand.MAIN_HAND)) {
 			// If the player is holding a Champion Keycard item, break
 			if (player.getItemInHand(hand).getItem() == ItemRegistry.CHAMPION_KEYCARD.get()) {
-				if (!player.isCreative()) {
-					player.getItemInHand(hand).shrink(1);
-				}
-
 				level.destroyBlock(pos, false);
 
 				propagateToNearbyBlocks(state, level, pos, player, hand, hitResult);
+
+				if (!player.isCreative()) {
+					player.getItemInHand(hand).shrink(1);
+				}
 
 				return InteractionResult.SUCCESS;
 			}

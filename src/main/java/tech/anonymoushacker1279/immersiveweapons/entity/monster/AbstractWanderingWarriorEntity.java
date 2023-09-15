@@ -105,14 +105,16 @@ public abstract class AbstractWanderingWarriorEntity extends Monster implements 
 	protected void populateDefaultEquipmentSlots(RandomSource randomSource, DifficultyInstance difficulty) {
 		super.populateDefaultEquipmentSlots(randomSource, difficulty);
 
-		// Populate weapons
-		float random = randomSource.nextFloat();
-		if (random <= 0.3f) {
-			setItemInHand(InteractionHand.MAIN_HAND, new ItemStack(ItemRegistry.COBALT_SWORD.get()));
-		} else if (random <= 0.5f) {
-			setItemInHand(InteractionHand.MAIN_HAND, new ItemStack(Items.IRON_SWORD));
-		} else {
-			setItemInHand(InteractionHand.MAIN_HAND, new ItemStack(ItemRegistry.COPPER_SWORD.get()));
+		// Populate weapons if empty
+		if (getItemBySlot(EquipmentSlot.MAINHAND).getItem() == Items.AIR) {
+			float random = randomSource.nextFloat();
+			if (random <= 0.3f) {
+				setItemInHand(InteractionHand.MAIN_HAND, new ItemStack(ItemRegistry.COBALT_SWORD.get()));
+			} else if (random <= 0.5f) {
+				setItemInHand(InteractionHand.MAIN_HAND, new ItemStack(Items.IRON_SWORD));
+			} else {
+				setItemInHand(InteractionHand.MAIN_HAND, new ItemStack(ItemRegistry.COPPER_SWORD.get()));
+			}
 		}
 	}
 
@@ -163,16 +165,6 @@ public abstract class AbstractWanderingWarriorEntity extends Monster implements 
 			}
 			goalSelector.addGoal(1, meleeAttackGoal);
 		}
-	}
-
-	/**
-	 * Read entity NBT data.
-	 *
-	 * @param compound the <code>CompoundTag</code> to read from
-	 */
-	@Override
-	public void readAdditionalSaveData(CompoundTag compound) {
-		super.readAdditionalSaveData(compound);
 	}
 
 	@Override
