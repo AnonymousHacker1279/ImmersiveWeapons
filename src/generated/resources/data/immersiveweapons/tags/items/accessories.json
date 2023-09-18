@@ -10,6 +10,9 @@
     "immersiveweapons:bloated_heart",
     "immersiveweapons:netherite_shield",
     "immersiveweapons:melee_masters_molten_glove",
+    "immersiveweapons:iron_fist",
+    "immersiveweapons:glove_of_rapid_swinging",
+    "immersiveweapons:hand_of_doom",
     "immersiveweapons:copper_ring",
     "immersiveweapons:iron_ring",
     "immersiveweapons:cobalt_ring",
@@ -18,12 +21,18 @@
     "immersiveweapons:emerald_ring",
     "immersiveweapons:diamond_ring",
     "immersiveweapons:netherite_ring",
+    "immersiveweapons:death_gem_ring",
     "immersiveweapons:medal_of_adequacy",
     "immersiveweapons:depth_charm",
     "immersiveweapons:insomnia_amulet",
     "immersiveweapons:goggles",
     "immersiveweapons:lava_goggles",
     "immersiveweapons:night_vision_goggles",
-    "immersiveweapons:agility_bracelet"
+    "immersiveweapons:agility_bracelet",
+    "immersiveweapons:bloody_cloth",
+    "immersiveweapons:ancient_scroll",
+    "immersiveweapons:holy_mantle",
+    "immersiveweapons:venstral_jar",
+    "immersiveweapons:super_blanket_cape"
   ]
 }

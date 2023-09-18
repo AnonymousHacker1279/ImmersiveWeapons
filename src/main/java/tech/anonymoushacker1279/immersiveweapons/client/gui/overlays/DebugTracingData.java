@@ -14,7 +14,7 @@ import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.network.NetworkEvent;
 import net.minecraftforge.network.NetworkEvent.Context;
 import tech.anonymoushacker1279.immersiveweapons.event.SyncHandler;
-import tech.anonymoushacker1279.immersiveweapons.event.game_effects.AccessoryEffects;
+import tech.anonymoushacker1279.immersiveweapons.event.game_effects.AccessoryManager;
 import tech.anonymoushacker1279.immersiveweapons.init.EffectRegistry;
 import tech.anonymoushacker1279.immersiveweapons.init.ItemRegistry;
 import tech.anonymoushacker1279.immersiveweapons.item.AccessoryItem.EffectType;
@@ -108,13 +108,13 @@ public class DebugTracingData {
 				GENERAL_DAMAGE_BONUS += bonus;
 			}
 
-			GENERAL_DAMAGE_BONUS += AccessoryEffects.collectEffects(EffectType.GENERAL_DAMAGE, player);
-			MELEE_DAMAGE_BONUS += AccessoryEffects.collectEffects(EffectType.MELEE_DAMAGE, player);
-			PROJECTILE_DAMAGE_BONUS += AccessoryEffects.collectEffects(EffectType.PROJECTILE_DAMAGE, player);
+			GENERAL_DAMAGE_BONUS += AccessoryManager.collectEffects(EffectType.GENERAL_DAMAGE, player);
+			MELEE_DAMAGE_BONUS += AccessoryManager.collectEffects(EffectType.MELEE_DAMAGE, player);
+			PROJECTILE_DAMAGE_BONUS += AccessoryManager.collectEffects(EffectType.PROJECTILE_DAMAGE, player);
 
 			ARMOR_VALUE = player.getArmorValue();
 			ARMOR_TOUGHNESS_VALUE = player.getAttributeValue(Attributes.ARMOR_TOUGHNESS);
-			GENERAL_DAMAGE_RESISTANCE = AccessoryEffects.collectEffects(EffectType.DAMAGE_RESISTANCE, player);
+			GENERAL_DAMAGE_RESISTANCE = AccessoryManager.collectEffects(EffectType.DAMAGE_RESISTANCE, player);
 			KNOCKBACK_RESISTANCE = player.getAttributeValue(Attributes.KNOCKBACK_RESISTANCE);
 
 			if (player.hasEffect(EffectRegistry.CELESTIAL_PROTECTION_EFFECT.get())) {

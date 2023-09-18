@@ -104,6 +104,9 @@ public class BiomeTagsGenerator extends BiomeTagsProvider {
 
 		tag(IWWorldGenTagGroups.HAS_SPACE_OBSERVATORY)
 				.add(IWBiomes.STARLIGHT_PLAINS);
+
+		tag(IWWorldGenTagGroups.HAS_CHAMPION_TOWER)
+				.addTag(ForgeWorldGenTagGroups.IS_PLAINS);
 	}
 
 	@Override

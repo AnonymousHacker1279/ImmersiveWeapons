@@ -32,6 +32,7 @@ public class IWWorldGenTagGroups {
 	public static final TagKey<Biome> HAS_CELESTIAL_ASTEROID = createStructureTag("celestial_asteroid");
 	public static final TagKey<Biome> HAS_BIODOME = createStructureTag("biodome");
 	public static final TagKey<Biome> HAS_SPACE_OBSERVATORY = createStructureTag("space_observatory");
+	public static final TagKey<Biome> HAS_CHAMPION_TOWER = createStructureTag("champion_tower");
 
 	/**
 	 * Helper method for creating a biome tag for containing structures.

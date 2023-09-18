@@ -33,14 +33,17 @@ import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraftforge.client.event.RegisterGuiOverlaysEvent;
 import net.minecraftforge.client.gui.overlay.VanillaGuiOverlay;
 import net.minecraftforge.common.ForgeMod;
+import net.minecraftforge.event.AnvilUpdateEvent;
 import net.minecraftforge.event.ItemAttributeModifierEvent;
 import net.minecraftforge.event.TickEvent.PlayerTickEvent;
 import net.minecraftforge.event.entity.EntityJoinLevelEvent;
 import net.minecraftforge.event.entity.living.*;
+import net.minecraftforge.event.entity.player.CriticalHitEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.level.LevelEvent;
 import net.minecraftforge.event.level.PistonEvent;
 import net.minecraftforge.event.level.PistonEvent.PistonMoveType;
+import net.minecraftforge.eventbus.api.Event.Result;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
@@ -57,14 +60,13 @@ import tech.anonymoushacker1279.immersiveweapons.data.biomes.IWBiomes;
 import tech.anonymoushacker1279.immersiveweapons.data.damage_types.IWDamageTypes;
 import tech.anonymoushacker1279.immersiveweapons.entity.monster.StarmiteEntity;
 import tech.anonymoushacker1279.immersiveweapons.entity.projectile.MeteorEntity;
-import tech.anonymoushacker1279.immersiveweapons.event.game_effects.AccessoryEffects;
-import tech.anonymoushacker1279.immersiveweapons.event.game_effects.EnvironmentEffects;
+import tech.anonymoushacker1279.immersiveweapons.event.game_effects.*;
 import tech.anonymoushacker1279.immersiveweapons.init.*;
-import tech.anonymoushacker1279.immersiveweapons.item.AccessoryItem;
-import tech.anonymoushacker1279.immersiveweapons.item.CursedItem;
+import tech.anonymoushacker1279.immersiveweapons.item.*;
 import tech.anonymoushacker1279.immersiveweapons.item.crafting.PistonCrushingRecipe;
 import tech.anonymoushacker1279.immersiveweapons.item.gauntlet.GauntletItem;
 import tech.anonymoushacker1279.immersiveweapons.item.pike.PikeItem;
+import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
 import tech.anonymoushacker1279.immersiveweapons.util.LegacyMappingsHandler;
 import tech.anonymoushacker1279.immersiveweapons.world.level.IWDamageSources;
 
@@ -75,23 +77,10 @@ public class ForgeEventSubscriber {
 
 	public static final UUID ATTACK_REACH_MODIFIER = UUID.fromString("9f470b49-0445-4341-ae85-55b9e5ec2a1c");
 
-	public static final UUID BLOATED_HEART_HEALTH_MODIFIER_UUID = UUID.fromString("e5485685-cfbe-422b-b7dd-eda29049a508");
-	public static final AttributeModifier BLOATED_HEART_HEALTH_MODIFIER = new AttributeModifier(BLOATED_HEART_HEALTH_MODIFIER_UUID,
-			"Bloated Heart boost", 4.0d, Operation.ADDITION);
+	public static final AttributeModifier JONNYS_CURSE_SPEED_MODIFIER = new AttributeModifier(
+			UUID.fromString("c74619c0-b953-4ee7-a3d7-adf974c22d7d"),
+			"Jonny's Curse speed modifier", -0.25d, Operation.MULTIPLY_BASE);
 
-	public static final UUID NETHERITE_SHIELD_KB_MODIFIER_UUID = UUID.fromString("18e993c3-cf20-4a18-bdb4-11751c4dfb0f");
-	private static double lastKBResistance = 0.0d;
-
-	public static final UUID JONNYS_CURSE_SPEED_MODIFIER_UUID = UUID.fromString("c74619c0-b953-4ee7-a3d7-adf974c22d7d");
-	public static final AttributeModifier JONNYS_CURSE_SPEED_MODIFIER = new AttributeModifier(JONNYS_CURSE_SPEED_MODIFIER_UUID,
-			"Jonny's Curse reduction", -0.25d, Operation.MULTIPLY_BASE);
-
-	public static final UUID AGILITY_BRACELET_SPEED_MODIFIER_UUID = UUID.fromString("0360d69c-bf02-4dc3-a64f-86d9a9b345cd");
-	public static final AttributeModifier AGILITY_BRACELET_SPEED_MODIFIER = new AttributeModifier(AGILITY_BRACELET_SPEED_MODIFIER_UUID,
-			"Agility Bracelet boost", 0.05d, Operation.MULTIPLY_BASE);
-	public static final UUID AGILITY_BRACELET_STEP_HEIGHT_MODIFIER_UUID = UUID.fromString("57108471-149e-4d4a-829b-e38632429f57");
-	public static final AttributeModifier AGILITY_BRACELET_STEP_HEIGHT_MODIFIER = new AttributeModifier(AGILITY_BRACELET_STEP_HEIGHT_MODIFIER_UUID,
-			"Agility Bracelet boost", 0.5d, Operation.ADDITION);
 
 	@SubscribeEvent
 	public static void registerGuiOverlaysEvent(RegisterGuiOverlaysEvent event) {
@@ -181,6 +170,14 @@ public class ForgeEventSubscriber {
 		}
 
 		if (player.tickCount % 20 == 0) {
+			// Make KB resist a syncable attribute for debug tracing
+			AttributeInstance kbResistAttribute = player.getAttributes().getInstance(Attributes.KNOCKBACK_RESISTANCE);
+			if (kbResistAttribute != null) {
+				if (!kbResistAttribute.getAttribute().isClientSyncable()) {
+					kbResistAttribute.getAttribute().setSyncable(true);
+				}
+			}
+
 			// Handle permanent hunger effect of Bloody Sacrifice and Jonny's Curse
 			if (player.getPersistentData().getBoolean("used_curse_accessory_bloody_sacrifice")) {
 				if (!player.hasEffect(MobEffects.HUNGER)) {
@@ -188,85 +185,35 @@ public class ForgeEventSubscriber {
 				}
 			}
 			if (player.getPersistentData().getBoolean("used_curse_accessory_jonnys_curse")) {
-				if (!player.hasEffect(MobEffects.HUNGER)) {
-					player.addEffect(new MobEffectInstance(MobEffects.HUNGER, -1, 2, true, true));
+				if (GeneralUtilities.notJonny(player.getUUID())) {
+					if (!player.hasEffect(MobEffects.HUNGER)) {
+						player.addEffect(new MobEffectInstance(MobEffects.HUNGER, -1, 2, true, true));
+					}
+				} else {
+					if (!player.hasEffect(MobEffects.SATURATION)) {
+						player.addEffect(new MobEffectInstance(MobEffects.SATURATION, -1, 0, true, true));
+					}
 				}
-			}
 
-			// Handle reduced movement speed of Jonny's Curse
-			if (player.getPersistentData().getBoolean("used_curse_accessory_jonnys_curse")) {
 				AttributeInstance attributeInstance = player.getAttributes().getInstance(Attributes.MOVEMENT_SPEED);
 				if (attributeInstance != null) {
 					if (!attributeInstance.hasModifier(JONNYS_CURSE_SPEED_MODIFIER)) {
-						attributeInstance.addTransientModifier(JONNYS_CURSE_SPEED_MODIFIER);
+						if (GeneralUtilities.notJonny(player.getUUID())) {
+							attributeInstance.addTransientModifier(JONNYS_CURSE_SPEED_MODIFIER);
+						} else {
+							AttributeModifier newModifier = new AttributeModifier(JONNYS_CURSE_SPEED_MODIFIER.getId(),
+									JONNYS_CURSE_SPEED_MODIFIER.getName(),
+									0.25d,
+									JONNYS_CURSE_SPEED_MODIFIER.getOperation());
+
+							attributeInstance.addTransientModifier(newModifier);
+						}
 					}
 				}
 			}
 
-			// Handle increased health effect of the Bloated Heart
-			AttributeInstance attributeInstance = player.getAttributes().getInstance(Attributes.MAX_HEALTH);
-			if (attributeInstance != null) {
-				if (AccessoryItem.isAccessoryActive(player, ItemRegistry.BLOATED_HEART.get())) {
-					if (!attributeInstance.hasModifier(BLOATED_HEART_HEALTH_MODIFIER)) {
-						attributeInstance.addTransientModifier(BLOATED_HEART_HEALTH_MODIFIER);
-					}
-				} else if (attributeInstance.hasModifier(BLOATED_HEART_HEALTH_MODIFIER)) {
-					attributeInstance.removeModifier(BLOATED_HEART_HEALTH_MODIFIER);
-				}
-			}
-
-			// Handle increased KB resist of the Netherite Shield
-			attributeInstance = player.getAttributes().getInstance(Attributes.KNOCKBACK_RESISTANCE);
-			if (attributeInstance != null) {
-				if (!attributeInstance.getAttribute().isClientSyncable()) {
-					attributeInstance.getAttribute().setSyncable(true); // Used for debug tracing
-				}
-
-				double modifier = Math.max(0.0d, 1.0d - attributeInstance.getValue());
-
-				AttributeModifier NETHERITE_SHIELD_KB_MODIFIER = new AttributeModifier(NETHERITE_SHIELD_KB_MODIFIER_UUID,
-						"Netherite Shield knockback resistance", modifier, Operation.ADDITION);
-
-				if (AccessoryItem.isAccessoryActive(player, ItemRegistry.NETHERITE_SHIELD.get())) {
-					if (!attributeInstance.hasModifier(NETHERITE_SHIELD_KB_MODIFIER)) {
-						attributeInstance.addTransientModifier(NETHERITE_SHIELD_KB_MODIFIER);
-						lastKBResistance = attributeInstance.getValue();
-					} else if (lastKBResistance != attributeInstance.getValue()) { // If the KB resistance has changed, remove the modifier, so it can be re-added on the next tick
-						attributeInstance.removeModifier(NETHERITE_SHIELD_KB_MODIFIER);
-					}
-				} else if (attributeInstance.hasModifier(NETHERITE_SHIELD_KB_MODIFIER)) {
-					attributeInstance.removeModifier(NETHERITE_SHIELD_KB_MODIFIER);
-				}
-			}
-
-			// Handle increased speed / step height bonus effects of the Agility Bracelet
-			AttributeInstance movementSpeed = player.getAttributes().getInstance(Attributes.MOVEMENT_SPEED);
-			AttributeInstance stepHeight = player.getAttributes().getInstance(ForgeMod.STEP_HEIGHT_ADDITION.get());
-			if (movementSpeed != null && stepHeight != null) {
-				if (AccessoryItem.isAccessoryActive(player, ItemRegistry.AGILITY_BRACELET.get())) {
-					if (!movementSpeed.hasModifier(AGILITY_BRACELET_SPEED_MODIFIER) && !stepHeight.hasModifier(AGILITY_BRACELET_STEP_HEIGHT_MODIFIER)) {
-						movementSpeed.addTransientModifier(AGILITY_BRACELET_SPEED_MODIFIER);
-						stepHeight.addTransientModifier(AGILITY_BRACELET_STEP_HEIGHT_MODIFIER);
-					}
-				} else if (movementSpeed.hasModifier(AGILITY_BRACELET_SPEED_MODIFIER) && stepHeight.hasModifier(AGILITY_BRACELET_STEP_HEIGHT_MODIFIER)) {
-					movementSpeed.removeModifier(AGILITY_BRACELET_SPEED_MODIFIER);
-					stepHeight.removeModifier(AGILITY_BRACELET_STEP_HEIGHT_MODIFIER);
-				}
-			}
-
-			// Handle constant Hero of the Village effect of the Emerald Ring
-			if (AccessoryItem.isAccessoryActive(player, ItemRegistry.EMERALD_RING.get())) {
-				if (!player.hasEffect(MobEffects.HERO_OF_THE_VILLAGE)) {
-					player.addEffect(new MobEffectInstance(MobEffects.HERO_OF_THE_VILLAGE, 60, 0, true, true));
-				}
-			}
-
-			// Handle constant night vision effect of the Night Vision Goggles
-			if (AccessoryItem.isAccessoryActive(player, ItemRegistry.NIGHT_VISION_GOGGLES.get())) {
-				if (player.tickCount % 10 == 0) {
-					player.addEffect(new MobEffectInstance(MobEffects.NIGHT_VISION, 220, 0, true, true));
-				}
-			}
+			AccessoryManager.handleAccessoryMobEffects(player);
+			AccessoryManager.handleAccessoryAttributes(player);
 		}
 
 		// Handle random debuffs with the Insomnia Amulet after 7 days of no sleep
@@ -284,6 +231,20 @@ public class ForgeEventSubscriber {
 					if (chance <= 0.3f) {
 						player.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 200, 0, true, true));
 					}
+				}
+			}
+		}
+
+		// Handle the cooldown on the Venstral Jar accessory
+		if (player.getCooldowns().isOnCooldown(ItemRegistry.VENSTRAL_JAR.get()) && player.onGround()) {
+			player.getCooldowns().removeCooldown(ItemRegistry.VENSTRAL_JAR.get());
+		}
+
+		// Handle the temporary fire resistance effect on the Super Blanket Cape accessory
+		if (AccessoryItem.isAccessoryActive(player, ItemRegistry.SUPER_BLANKET_CAPE.get())) {
+			if (!player.isInLava() && !player.isOnFire()) {
+				if (!player.hasEffect(MobEffects.FIRE_RESISTANCE)) {
+					player.addEffect(new MobEffectInstance(MobEffects.FIRE_RESISTANCE, 140, 0, true, true));
 				}
 			}
 		}
@@ -324,7 +285,10 @@ public class ForgeEventSubscriber {
 
 		// Handle accessory effects
 		if (damagedEntity instanceof Player player) {
+			AccessoryEffects.holyMantleEffect(event, player);
 			AccessoryEffects.damageResistanceEffects(event, player);
+			AccessoryEffects.bleedResistanceEffects(event, player);
+			AccessoryEffects.bleedCancelEffects(event, player);
 
 			if (source != null) {
 				AccessoryEffects.celestialSpiritEffect(player, source);
@@ -336,6 +300,7 @@ public class ForgeEventSubscriber {
 			AccessoryEffects.projectileDamageEffects(event, player);
 			AccessoryEffects.generalDamageEffects(event, player);
 			AccessoryEffects.meleeBleedChanceEffects(event, player, damagedEntity);
+			AccessoryEffects.generalWitherChanceEffects(player, damagedEntity);
 		}
 
 		AccessoryEffects.bloodySacrificeEffect(event, damagedEntity);
@@ -393,9 +358,9 @@ public class ForgeEventSubscriber {
 
 	@SubscribeEvent
 	public static void livingDeathEvent(LivingDeathEvent event) {
-		// Handle charging of cursed accessories on kill
 
 		if (event.getSource().getEntity() instanceof Player player) {
+			// Handle charging of cursed accessories on kill
 			List<ItemStack> curses = CursedItem.getCurses(player);
 			for (ItemStack curse : curses) {
 				if (!curse.getOrCreateTag().getBoolean("max_charge")) {
@@ -412,6 +377,12 @@ public class ForgeEventSubscriber {
 						}
 					}
 				}
+			}
+
+			// Handle kill count weapons
+			ItemStack weapon = player.getItemInHand(player.getUsedItemHand());
+			if (KillCountWeapon.hasKillCount(weapon)) {
+				KillCountWeapon.incrementKillCount(weapon);
 			}
 		}
 	}
@@ -617,7 +588,7 @@ public class ForgeEventSubscriber {
 
 			// 50% chance to not get any drops with Jonny's Curse
 			if (player.getPersistentData().getBoolean("used_curse_accessory_jonnys_curse")) {
-				if (player.getRandom().nextFloat() <= 0.5f) {
+				if (GeneralUtilities.notJonny(player.getUUID()) && player.getRandom().nextFloat() <= 0.5f) {
 					event.setCanceled(true);
 				}
 			}
@@ -630,6 +601,37 @@ public class ForgeEventSubscriber {
 
 		if (entity.getLastAttacker() instanceof Player player) {
 			AccessoryEffects.meleeKnockbackEffects(event, player);
+		}
+	}
+
+	@SubscribeEvent
+	public static void criticalHitEvent(CriticalHitEvent event) {
+		LivingEntity entity = event.getEntity();
+
+		if (entity instanceof Player player) {
+			AccessoryEffects.meleeCritChanceEffects(event, player);
+
+			if (event.getResult() == Result.DEFAULT || event.getResult() == Result.ALLOW) {
+				AccessoryEffects.meleeCritDamageBonusEffects(event, player);
+			}
+		}
+	}
+
+	@SubscribeEvent
+	public static void livingExperienceDropEvent(LivingExperienceDropEvent event) {
+		Player player = event.getAttackingPlayer();
+
+		if (player != null) {
+			AccessoryEffects.experienceEffects(event, player);
+		}
+	}
+
+	@SubscribeEvent
+	public static void anvilUpdateEvent(AnvilUpdateEvent event) {
+		// Kill Counter recipe
+		if (event.getRight().is(ItemRegistry.KILL_COUNTER.get()) && !KillCountWeapon.hasKillCount(event.getLeft())) {
+			event.setOutput(KillCountWeapon.initialize(event.getLeft().copy(), 0));
+			event.setCost(5);
 		}
 	}
 }

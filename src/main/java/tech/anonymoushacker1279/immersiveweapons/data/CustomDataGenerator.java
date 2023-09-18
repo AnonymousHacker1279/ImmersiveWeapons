@@ -54,6 +54,7 @@ public class CustomDataGenerator {
 		BlockTagsGenerator blockTagsGenerator = new BlockTagsGenerator(output, lookupProvider, existingFileHelper);
 		generator.addProvider(event.includeServer(), blockTagsGenerator);
 		generator.addProvider(event.includeServer(), new ItemTagsGenerator(output, lookupProvider, blockTagsGenerator, existingFileHelper));
+		generator.addProvider(event.includeServer(), new EntityTypeTagsGenerator(output, lookupProvider, existingFileHelper));
 		generator.addProvider(event.includeServer(), new DatapackRegistriesGenerator(output, lookupProvider));
 		generator.addProvider(event.includeServer(), new BiomeTagsGenerator(output, lookupProviderWithOwn, existingFileHelper));
 		generator.addProvider(event.includeServer(), new DamageTypeTagsGenerator(output, lookupProviderWithOwn, existingFileHelper));

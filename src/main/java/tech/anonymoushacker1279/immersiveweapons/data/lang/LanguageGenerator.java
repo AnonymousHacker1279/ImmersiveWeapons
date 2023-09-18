@@ -95,12 +95,16 @@ public class LanguageGenerator extends IWLanguageProvider {
 
 		excludedItems.add(ItemRegistry.MRE.get());
 		excludedItems.add(ItemRegistry.HANS_SPAWN_EGG.get());
+		excludedItems.add(ItemRegistry.SUPER_HANS_SPAWN_EGG.get());
 		excludedItems.add(ItemRegistry.MUSKET_SCOPE.get());
 		excludedItems.add(ItemRegistry.EXPLOSIVE_CHOCOLATE_BAR.get());
 		excludedItems.add(ItemRegistry.BERSERKERS_AMULET.get());
 		excludedItems.add(ItemRegistry.HANS_BLESSING.get());
 		excludedItems.add(ItemRegistry.MELEE_MASTERS_MOLTEN_GLOVE.get());
 		excludedItems.add(ItemRegistry.JONNYS_CURSE.get());
+		excludedItems.add(ItemRegistry.PADDED_LEATHER_HELMET.get());
+		excludedItems.add(ItemRegistry.PADDED_LEATHER_CHESTPLATE.get());
+		excludedItems.add(ItemRegistry.PADDED_LEATHER_LEGGINGS.get());
 
 		// Filter the excluded items from the registry
 		Stream<RegistryObject<Item>> items = ItemRegistry.ITEMS.getEntries().stream()
@@ -137,13 +141,17 @@ public class LanguageGenerator extends IWLanguageProvider {
 		addItem(ItemRegistry.SMOKE_GRENADE_ARROW_PURPLE, "Purple Smoke Grenade Arrow");
 		addItem(ItemRegistry.SMOKE_GRENADE_ARROW_YELLOW, "Yellow Smoke Grenade Arrow");
 		addItem(ItemRegistry.MRE, "Meal Ready-to-Eat (MRE)");
-		addItem(ItemRegistry.HANS_SPAWN_EGG, "Hans The Almighty Spawn Egg");
+		addItem(ItemRegistry.HANS_SPAWN_EGG, "Hans the Almighty Spawn Egg");
+		addItem(ItemRegistry.SUPER_HANS_SPAWN_EGG, "Super Hans the Almighty Spawn Egg");
 		addItem(ItemRegistry.MUSKET_SCOPE, "Musket (Scope)");
 		addItem(ItemRegistry.EXPLOSIVE_CHOCOLATE_BAR, "Chocolate Bar");
 		addItem(ItemRegistry.BERSERKERS_AMULET, "Berserker's Amulet");
 		addItem(ItemRegistry.HANS_BLESSING, "Hans' Blessing");
 		addItem(ItemRegistry.MELEE_MASTERS_MOLTEN_GLOVE, "Melee Master's Molten Glove");
 		addItem(ItemRegistry.JONNYS_CURSE, "Jonny's Curse");
+		addItem(ItemRegistry.PADDED_LEATHER_HELMET, "Padded Leather Cap");
+		addItem(ItemRegistry.PADDED_LEATHER_CHESTPLATE, "Padded Leather Tunic");
+		addItem(ItemRegistry.PADDED_LEATHER_LEGGINGS, "Padded Leather Pants");
 	}
 
 	private void addEntityTypes() {
@@ -240,6 +248,7 @@ public class LanguageGenerator extends IWLanguageProvider {
 		addSubtitle("item.gun.blunderbuss.fire", "Blunderbuss fires");
 		addSubtitle("item.gun.musket.fire", "Musket fires");
 		addSubtitle("item.gun.flare_gun.fire", "Flare gun fires");
+		addSubtitle("item.gun.hand_cannon.fire", "Hand cannon fires");
 		addSubtitle("item.gun.bullet_whizz", "Bullet whizzes");
 
 		// Misc items
@@ -301,8 +310,9 @@ public class LanguageGenerator extends IWLanguageProvider {
 		// Guns
 		addTooltip("flintlock_pistol", "A basic flintlock firearm that excels in medium-range combat.");
 		addTooltip("blunderbuss", "Good for hordes a short distance away. A primitive type of shotgun.");
-		addTooltip("musket", "A simple firearm designed for long-range combat.");
+		addTooltip("musket", "A simple firearm designed for long-range combat");
 		addTooltip("flare_gun", "Launch bright flares into the sky");
+		addTooltip("hand_cannon", "A powerful, but inaccurate, handheld cannon");
 
 		// Projectiles
 		addTooltip("wooden_arrow", "35% less powerful than normal arrows. Highly inaccurate. At this point it's just blunt-force trauma.");
@@ -332,6 +342,8 @@ public class LanguageGenerator extends IWLanguageProvider {
 		addTooltip("ventus_musket_ball", "A musket ball made from Ventus shards. Causes targets to levitate. Pierces through three targets.");
 		addTooltip("astral_musket_ball", "Built from Astral ingots. Not quite as strong as other options but extremely accurate and has little falloff. Pierces through three targets.");
 		addTooltip("starstorm_musket_ball", "A musket ball made from Starstorm ingots. Strongest caliber in terms of raw damage. Pierces through three targets.");
+		addTooltip("cannonball", "A heavy metal ball that can be fired from a hand cannon. Pierces through one target.");
+		addTooltip("explosive_cannonball", "Similar to the cannonball but explodes on impact.");
 
 		// Pikes
 		addTooltip("pike", "Stab them from way over there");
@@ -342,6 +354,7 @@ public class LanguageGenerator extends IWLanguageProvider {
 		addTooltip("ventus_armor", "Unlocks a 13.1ft vertical and makes you as light as a feather (Toggleable with your Armor Effect Toggle key)");
 		addTooltip("astral_armor", "Improves mobility and allows you to dash forward (Toggleable with your Armor Effect Toggle key)");
 		addTooltip("starstorm_armor", "Increases raw damage output by 20%");
+		addTooltip("padded_leather_armor", "Fully dampens vibrations caused by walking or running");
 
 		// Throwables
 		addTooltip("smoke_grenade", "Creates a thick cloud of smoke upon impact. Good for quickly escaping a situation.");
@@ -405,10 +418,13 @@ public class LanguageGenerator extends IWLanguageProvider {
 		addTooltip("morphine", "I wouldn't recommend using this");
 		addTooltip("used_syringe", "If you use this there's a good chance you will die of hepatitis");
 		addTooltip("hans_spawn_egg", "Summon Hans the Almighty into this world");
+		addTooltip("super_hans_spawn_egg", "What if Hans was even more powerful?");
 		addTooltip("mortar", "Capable of sending exploding shells far into the distance");
 		addTooltip("celestial_fragment", "The power of the sun in the palm of your hand");
 		addTooltip("azul_locator", "Teleport to your spawn point at will");
 		addTooltip("curse_cleaning_soap", "Cleanses your soul of all curses");
+		addTooltip("champion_keycard", "Unlocks levels within Champion Towers");
+		addTooltip("kill_counter", "Apply to an item to track the number of kills achieved with it");
 
 		// Accessories
 		addTooltip("satchel", "Provides a 10% chance not to consume ammo");
@@ -433,6 +449,7 @@ public class LanguageGenerator extends IWLanguageProvider {
 		addTooltip("emerald_ring", "Provides the Hero of the Village effect");
 		addTooltip("diamond_ring", "Increase general damage by 4% and provides 4% damage reduction");
 		addTooltip("netherite_ring", "Increase general damage by 5% and provides 5% damage reduction");
+		addTooltip("death_gem_ring", "Inflicts Wither on hit");
 		addTooltip("medal_of_adequacy", "This medal was once awarded to gamingwarrior0 for his wholly undistinguished assistance");
 		addTooltip("depth_charm_1", "Provides damage resistance, a general damage bonus, and increased melee knockback");
 		addTooltip("depth_charm_2", "This effect scales with depth");
@@ -442,6 +459,19 @@ public class LanguageGenerator extends IWLanguageProvider {
 		addTooltip("lava_goggles", "Improves vision while under lava");
 		addTooltip("night_vision_goggles", "Provides a night vision effect");
 		addTooltip("agility_bracelet", "Increases movement speed by 5%");
+		addTooltip("bloody_cloth", "Reduces bleed damage by 30% and provides a 15% chance to stop bleeding");
+		addTooltip("iron_fist_1", "Increases melee crit damage by 25% and provides a 15% chance for ALL melee attacks to crit");
+		addTooltip("iron_fist_2", "Devil's grip, the Iron Fist");
+		addTooltip("ancient_scroll", "Increase experience gained on kill by 35%");
+		addTooltip("glove_of_rapid_swinging", "Increases attack speed by 25%");
+		addTooltip("hand_of_doom_1", "Woe, crusade be upon ye, enemies of me");
+		addTooltip("hand_of_doom_2", "Combines the effects of the Melee Master's Molten Glove, Iron Fist, and Glove of Rapid Swinging");
+		addTooltip("holy_mantle_1", "Fully negates damage for a single hit");
+		addTooltip("holy_mantle_2", "Put on the whole armor of God, that ye may be able to stand against the wiles of the devil");
+		addTooltip("holy_mantle_3", "This effect has a 30 second cooldown");
+		addTooltip("venstral_jar", "Grants a double jump ability");
+		addTooltip("super_blanket_cape_1", "Increases movement speed, jump height, slow falling, and temporary immunity to fire and lava");
+		addTooltip("super_blanket_cape_2", "Imagination is a very powerful thing");
 
 		addTooltip("bloody_sacrifice", "You feel a dark presence emanating from this item");
 		addTooltip("bloody_sacrifice_charge_note", "The destruction of life charges something inside");
@@ -513,6 +543,7 @@ public class LanguageGenerator extends IWLanguageProvider {
 		addMessage("armor_effects.enabled", "Armor effects have been enabled");
 		addMessage("armor_effects.tesla_armor.effect_everything", "Currently effecting ALL creatures (including players)");
 		addMessage("armor_effects.tesla_armor.effect_mobs", "Currently effecting only mobs");
+		addMessage("entity.super_hans.tower_minibosses_alive", "Super Hans is invulnerable, you must clear the tower bosses first!");
 	}
 
 	private void addDeathMessages() {
@@ -543,6 +574,10 @@ public class LanguageGenerator extends IWLanguageProvider {
 		addDeathMessage("meteor.player", "%s was hit by a meteor summoned by %s");
 		addDeathMessage("bullet", "%s was shot");
 		addDeathMessage("bullet.player", "%s was shot by %s");
+		addDeathMessage("cannonball", "%s was hit by a cannonball");
+		addDeathMessage("cannonball.player", "%s was hit by a cannonball fired by %s");
+		addDeathMessage("explosive_cannonball", "%s was hit by an explosive cannonball");
+		addDeathMessage("explosive_cannonball.player", "%s was hit by an explosive cannonball fired by %s");
 	}
 
 	private void addBiomes() {
@@ -924,6 +959,8 @@ public class LanguageGenerator extends IWLanguageProvider {
 	private void addMisc() {
 		add("loot.immersiveweapons.chest.village.battlefield.medic_station.iron_axe", "The Amputator");
 		add("loot.immersiveweapons.entity.hans.iron_sword", "The Grand Blade of Hans");
+		add("loot.immersiveweapons.entity.super_hans.super_healing_potion", "Super Potion of Healing");
+		add("loot.immersiveweapons.entity.super_hans.super_regeneration_potion", "Super Potion of Regeneration");
 		add("immersiveweapons.boss.celestial_tower.waves", "Wave %s of %s");
 		add("itemGroup.immersiveweapons.creative_tab", "Immersive Weapons");
 
@@ -934,15 +971,26 @@ public class LanguageGenerator extends IWLanguageProvider {
 		}
 
 		// Debug tracing strings
-		add("immersiveweapons.debugTracing.meleeItemDamage", "Melee Item Damage: %s");
-		add("immersiveweapons.debugTracing.gunBaseVelocity", "Gun Base Velocity: %s");
-		add("immersiveweapons.debugTracing.selectedAmmo", "Selected Ammo: %s (base damage: %s)");
-		add("immersiveweapons.debugTracing.liveBulletDamage", "Live Bullet Damage: %s (is crit: %s)");
-		add("immersiveweapons.debugTracing.damageBonus", "Damage Bonus: %s general, %s melee, %s projectile");
-		add("immersiveweapons.debugTracing.celestialProtectionChanceForNoDamage", "Celestial Protection Chance: %s");
-		add("immersiveweapons.debugTracing.lastDamageValues", "Last Damage Dealt: %s, Last Damage Taken: %s");
-		add("immersiveweapons.debugTracing.armorValues", "Total Armor Value: %s, Armor Toughness: %s");
-		add("immersiveweapons.debugTracing.drAndKbr", "General Damage Resistance: %s, Knockback Resistance: %s");
+		add("immersiveweapons.debug_tracing.melee_item_damage", "Melee Item Damage: %s");
+		add("immersiveweapons.debug_tracing.gun_base_velocity", "Gun Base Velocity: %s");
+		add("immersiveweapons.debug_tracing.selected_ammo", "Selected Ammo: %s (base damage: %s)");
+		add("immersiveweapons.debug_tracing.live_bullet_damage", "Live Bullet Damage: %s (is crit: %s)");
+		add("immersiveweapons.debug_tracing.damage_bonus", "Damage Bonus: %s general, %s melee, %s projectile");
+		add("immersiveweapons.debug_tracing.celestial_protection_chance_for_no_damage", "Celestial Protection Chance: %s");
+		add("immersiveweapons.debug_tracing.last_damage_values", "Last Damage Dealt: %s, Last Damage Taken: %s");
+		add("immersiveweapons.debug_tracing.armor_values", "Total Armor Value: %s, Armor Toughness: %s");
+		add("immersiveweapons.debug_tracing.dr_and_kbr", "General Damage Resistance: %s, Knockback Resistance: %s");
+
+		// Kill count weapon strings
+		add("immersiveweapons.kill_count_weapon.total_kills", "Total Kills: %s");
+		add("immersiveweapons.kill_count_weapon.tier.special", "Special");
+		add("immersiveweapons.kill_count_weapon.tier.novice", "Novice");
+		add("immersiveweapons.kill_count_weapon.tier.apprentice", "Apprentice");
+		add("immersiveweapons.kill_count_weapon.tier.journeyman", "Journeyman");
+		add("immersiveweapons.kill_count_weapon.tier.expert", "Expert");
+		add("immersiveweapons.kill_count_weapon.tier.master", "Master");
+		add("immersiveweapons.kill_count_weapon.tier.legendary", "Legendary");
+		add("immersiveweapons.kill_count_weapon.tier.hans_worthy", "Hans-Worthy");
 
 		// IWCB strings
 		add("tooltip.iwcompatbridge.accessory_note", "Equip this in a Curios slot to gain the effect.");

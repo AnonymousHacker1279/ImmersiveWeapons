@@ -16,6 +16,9 @@ import tech.anonymoushacker1279.immersiveweapons.entity.npc.SkygazerEntity;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Re-color enchantment names at the max Skygazer cap.
+ */
 @Mixin(ItemStack.class)
 public abstract class ItemStackMixin {
 

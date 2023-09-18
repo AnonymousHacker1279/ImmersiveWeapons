@@ -202,6 +202,12 @@
     ],
     "subtitle": "subtitles.immersiveweapons.item.generic_item_throw"
   },
+  "hand_cannon_fire": {
+    "sounds": [
+      "immersiveweapons:item/hand_cannon/fire/fire"
+    ],
+    "subtitle": "subtitles.immersiveweapons.item.gun.hand_cannon.fire"
+  },
   "lava_revenant_ambient": {
     "sounds": [
       "immersiveweapons:entity/lava_revenant/ambient/ambient_0",

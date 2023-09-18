@@ -930,6 +930,36 @@ public class RecipeGenerator extends RecipeProvider {
 				.group("firearm")
 				.unlockedBy("smoke_powder", has(ItemRegistry.SMOKE_POWDER.get()))
 				.save(finishedRecipeConsumer);
+		ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, ItemRegistry.HAND_CANNON.get())
+				.define('a', ItemRegistry.WOODEN_PISTOL_HANDLE.get())
+				.define('b', ItemRegistry.FLINTLOCK_ASSEMBLY.get())
+				.define('c', ItemRegistry.TRIGGER_ASSEMBLY.get())
+				.define('d', ItemRegistry.SHORT_IRON_BARREL.get())
+				.define('e', Items.STRING)
+				.pattern(" e ")
+				.pattern("abd")
+				.pattern(" c ")
+				.group("firearm")
+				.unlockedBy("flintlock_assembly", has(ItemRegistry.FLINTLOCK_ASSEMBLY.get()))
+				.save(finishedRecipeConsumer);
+		ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, ItemRegistry.CANNONBALL.get(), 2)
+				.define('a', Tags.Items.INGOTS_IRON)
+				.define('b', Tags.Items.GUNPOWDER)
+				.pattern(" a ")
+				.pattern("aba")
+				.pattern(" a ")
+				.group("firearm")
+				.unlockedBy("gunpowder", has(Tags.Items.GUNPOWDER))
+				.save(finishedRecipeConsumer);
+		ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, ItemRegistry.EXPLOSIVE_CANNONBALL.get(), 4)
+				.define('a', Items.TNT)
+				.define('b', ItemRegistry.CANNONBALL.get())
+				.pattern(" b ")
+				.pattern("bab")
+				.pattern(" b ")
+				.group("firearm")
+				.unlockedBy("tnt", has(Items.TNT))
+				.save(finishedRecipeConsumer);
 		ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, ItemRegistry.MOLOTOV_COCKTAIL.get())
 				.define('a', Tags.Items.STRING)
 				.define('b', ItemRegistry.BOTTLE_OF_ALCOHOL.get())
@@ -1114,6 +1144,30 @@ public class RecipeGenerator extends RecipeProvider {
 				.unlockedBy("molten_ingot", has(IWItemTagGroups.MOLTEN_INGOTS))
 				.save(finishedRecipeConsumer);
 
+		// Bloody Cloth
+		ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ItemRegistry.BLOODY_CLOTH.get())
+				.define('a', ItemRegistry.CLOTH_SCRAP.get())
+				.define('b', Items.REDSTONE)
+				.pattern("aaa")
+				.pattern("aba")
+				.pattern("aaa")
+				.group("bloody_cloth")
+				.unlockedBy("cloth_scrap", has(ItemRegistry.CLOTH_SCRAP.get()))
+				.save(finishedRecipeConsumer);
+
+		// Hand of Doom
+		ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, ItemRegistry.HAND_OF_DOOM.get())
+				.requires(ItemRegistry.MELEE_MASTERS_MOLTEN_GLOVE.get())
+				.requires(ItemRegistry.IRON_FIST.get())
+				.requires(ItemRegistry.GLOVE_OF_RAPID_SWINGING.get())
+				.group("hand_of_doom")
+				.unlockedBy("melee_glove_accessories", inventoryTrigger(ItemPredicate.Builder.item()
+						.of(ItemRegistry.MELEE_MASTERS_MOLTEN_GLOVE.get())
+						.of(ItemRegistry.IRON_FIST.get())
+						.of(ItemRegistry.GLOVE_OF_RAPID_SWINGING.get())
+						.build()))
+				.save(finishedRecipeConsumer);
+
 		// Bloody Sacrifice
 		ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ItemRegistry.BLOODY_SACRIFICE.get())
 				.define('a', Items.SPIDER_EYE)
@@ -1247,6 +1301,47 @@ public class RecipeGenerator extends RecipeProvider {
 				.pattern("b")
 				.group("cursed_sight_staff")
 				.unlockedBy("cursed_sight_staff_core", has(ItemRegistry.CURSED_SIGHT_STAFF_CORE.get()))
+				.save(finishedRecipeConsumer);
+
+		// Padded Leather Armor
+		ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ItemRegistry.PADDED_LEATHER_HELMET.get())
+				.define('a', Items.LEATHER_HELMET)
+				.define('b', ItemTags.WOOL)
+				.pattern("bbb")
+				.pattern("bab")
+				.pattern("bbb")
+				.group("padded_leather_armor")
+				.unlockedBy("leather_helmet", has(Items.LEATHER_HELMET))
+				.save(finishedRecipeConsumer);
+
+		ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ItemRegistry.PADDED_LEATHER_CHESTPLATE.get())
+				.define('a', Items.LEATHER_CHESTPLATE)
+				.define('b', ItemTags.WOOL)
+				.pattern("bbb")
+				.pattern("bab")
+				.pattern("bbb")
+				.group("padded_leather_armor")
+				.unlockedBy("leather_chestplate", has(Items.LEATHER_CHESTPLATE))
+				.save(finishedRecipeConsumer);
+
+		ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ItemRegistry.PADDED_LEATHER_LEGGINGS.get())
+				.define('a', Items.LEATHER_LEGGINGS)
+				.define('b', ItemTags.WOOL)
+				.pattern("bbb")
+				.pattern("bab")
+				.pattern("bbb")
+				.group("padded_leather_armor")
+				.unlockedBy("leather_leggings", has(Items.LEATHER_LEGGINGS))
+				.save(finishedRecipeConsumer);
+
+		ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ItemRegistry.PADDED_LEATHER_BOOTS.get())
+				.define('a', Items.LEATHER_BOOTS)
+				.define('b', ItemTags.WOOL)
+				.pattern("bbb")
+				.pattern("bab")
+				.pattern("bbb")
+				.group("padded_leather_armor")
+				.unlockedBy("leather_boots", has(Items.LEATHER_BOOTS))
 				.save(finishedRecipeConsumer);
 	}
 

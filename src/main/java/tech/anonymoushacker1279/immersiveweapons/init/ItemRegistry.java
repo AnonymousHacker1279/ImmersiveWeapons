@@ -94,6 +94,8 @@ public class ItemRegistry {
 	public static final RegistryObject<MusketItem> MUSKET = ITEMS.register("musket", () -> new MusketItem(new Properties().durability(499), false));
 	public static final RegistryObject<MusketItem> MUSKET_SCOPE = ITEMS.register("musket_scope", () -> new MusketItem(new Properties().durability(499), true));
 	public static final RegistryObject<FlareGunItem> FLARE_GUN = ITEMS.register("flare_gun", () -> new FlareGunItem(new Properties().durability(399)));
+	public static final RegistryObject<HandCannonItem> HAND_CANNON = ITEMS.register("hand_cannon", () -> new HandCannonItem(new Properties().durability(199)));
+
 	public static final RegistryObject<GauntletItem> WOODEN_GAUNTLET = ITEMS.register("wooden_gauntlet", () -> new GauntletItem(Tiers.WOOD, 2, -2.3f, new Properties(), 0.15f, 0, Ingredient.of(ItemTags.PLANKS)));
 	public static final RegistryObject<GauntletItem> STONE_GAUNTLET = ITEMS.register("stone_gauntlet", () -> new GauntletItem(Tiers.STONE, 2, -2.3f, new Properties(), 0.25f, 0, Ingredient.of(ItemTags.STONE_TOOL_MATERIALS)));
 	public static final RegistryObject<GauntletItem> GOLDEN_GAUNTLET = ITEMS.register("golden_gauntlet", () -> new GauntletItem(Tiers.GOLD, 2, -2.3f, new Properties(), 0.35f, 0, Ingredient.of(Tags.Items.INGOTS_GOLD)));
@@ -186,6 +188,8 @@ public class ItemRegistry {
 	public static final RegistryObject<AstralMusketBallItem> ASTRAL_MUSKET_BALL = ITEMS.register("astral_musket_ball", () -> new AstralMusketBallItem(new Properties(), 6.25d));
 	public static final RegistryObject<StarstormMusketBallItem> STARSTORM_MUSKET_BALL = ITEMS.register("starstorm_musket_ball", () -> new StarstormMusketBallItem(new Properties(), 8.65d));
 	public static final RegistryObject<FlareItem> FLARE = ITEMS.register("flare", () -> new FlareItem(new Properties(), 0.1d));
+	public static final RegistryObject<CannonballItem> CANNONBALL = ITEMS.register("cannonball", () -> new CannonballItem(new Properties(), 6.0d, false));
+	public static final RegistryObject<CannonballItem> EXPLOSIVE_CANNONBALL = ITEMS.register("explosive_cannonball", () -> new CannonballItem(new Properties(), 6.0d, true));
 	public static final RegistryObject<Item> MORTAR_SHELL = ITEMS.register("mortar_shell", () -> new Item(new Properties()));
 	public static final RegistryObject<Item> GRENADE_ASSEMBLY = ITEMS.register("grenade_assembly", () -> new Item(new Properties()));
 	public static final RegistryObject<Item> TOOL_JOINT = ITEMS.register("tool_joint", () -> new Item(new Properties()));
@@ -238,6 +242,9 @@ public class ItemRegistry {
 	public static final RegistryObject<AccessoryItem> BLOATED_HEART = ITEMS.register("bloated_heart", () -> new AccessoryItem(new Properties().stacksTo(1), AccessorySlot.BODY, AccessoryItemEffects.BLOATED_HEART));
 	public static final RegistryObject<AccessoryItem> NETHERITE_SHIELD = ITEMS.register("netherite_shield", () -> new AccessoryItem(new Properties().stacksTo(1), AccessorySlot.BODY, AccessoryItemEffects.NETHERITE_SHIELD));
 	public static final RegistryObject<AccessoryItem> MELEE_MASTERS_MOLTEN_GLOVE = ITEMS.register("melee_masters_molten_glove", () -> new AccessoryItem(new Properties().stacksTo(1), AccessorySlot.HAND, AccessoryItemEffects.MELEE_MASTERS_MOLTEN_GLOVE));
+	public static final RegistryObject<AccessoryItem> IRON_FIST = ITEMS.register("iron_fist", () -> new AccessoryItem(new Properties().stacksTo(1), AccessorySlot.HAND, AccessoryItemEffects.IRON_FIST));
+	public static final RegistryObject<AccessoryItem> GLOVE_OF_RAPID_SWINGING = ITEMS.register("glove_of_rapid_swinging", () -> new AccessoryItem(new Properties().stacksTo(1), AccessorySlot.HAND, AccessoryItemEffects.GLOVE_OF_RAPID_SWINGING));
+	public static final RegistryObject<AccessoryItem> HAND_OF_DOOM = ITEMS.register("hand_of_doom", () -> new AccessoryItem(new Properties().stacksTo(1), AccessorySlot.HAND, AccessoryItemEffects.HAND_OF_DOOM));
 	public static final RegistryObject<AccessoryItem> COPPER_RING = ITEMS.register("copper_ring", () -> new AccessoryItem(new Properties().stacksTo(1), AccessorySlot.RING, AccessoryItemEffects.COPPER_RING));
 	public static final RegistryObject<AccessoryItem> IRON_RING = ITEMS.register("iron_ring", () -> new AccessoryItem(new Properties().stacksTo(1), AccessorySlot.RING, AccessoryItemEffects.IRON_RING));
 	public static final RegistryObject<AccessoryItem> COBALT_RING = ITEMS.register("cobalt_ring", () -> new AccessoryItem(new Properties().stacksTo(1), AccessorySlot.RING, AccessoryItemEffects.COBALT_RING));
@@ -246,6 +253,7 @@ public class ItemRegistry {
 	public static final RegistryObject<AccessoryItem> EMERALD_RING = ITEMS.register("emerald_ring", () -> new AccessoryItem(new Properties().stacksTo(1), AccessorySlot.RING, AccessoryItemEffects.EMERALD_RING));
 	public static final RegistryObject<AccessoryItem> DIAMOND_RING = ITEMS.register("diamond_ring", () -> new AccessoryItem(new Properties().stacksTo(1), AccessorySlot.RING, AccessoryItemEffects.DIAMOND_RING));
 	public static final RegistryObject<AccessoryItem> NETHERITE_RING = ITEMS.register("netherite_ring", () -> new AccessoryItem(new Properties().stacksTo(1), AccessorySlot.RING, AccessoryItemEffects.NETHERITE_RING));
+	public static final RegistryObject<AccessoryItem> DEATH_GEM_RING = ITEMS.register("death_gem_ring", () -> new AccessoryItem(new Properties().stacksTo(1), AccessorySlot.RING, AccessoryItemEffects.DEATH_GEM_RING));
 	public static final RegistryObject<AccessoryItem> MEDAL_OF_ADEQUACY = ITEMS.register("medal_of_adequacy", () -> new AccessoryItem(new Properties().stacksTo(1), AccessorySlot.NECKLACE, AccessoryItemEffects.MEDAL_OF_ADEQUACY));
 	public static final RegistryObject<AccessoryItem> DEPTH_CHARM = ITEMS.register("depth_charm", () -> new AccessoryItem(new Properties().stacksTo(1), AccessorySlot.CHARM, AccessoryItemEffects.DEPTH_CHARM));
 	public static final RegistryObject<AccessoryItem> INSOMNIA_AMULET = ITEMS.register("insomnia_amulet", () -> new AccessoryItem(new Properties().stacksTo(1), AccessorySlot.NECKLACE, AccessoryItemEffects.INSOMNIA_AMULET));
@@ -253,8 +261,15 @@ public class ItemRegistry {
 	public static final RegistryObject<AccessoryItem> LAVA_GOGGLES = ITEMS.register("lava_goggles", () -> new AccessoryItem(new Properties().stacksTo(1), AccessorySlot.HEAD, AccessoryItemEffects.LAVA_GOGGLES));
 	public static final RegistryObject<AccessoryItem> NIGHT_VISION_GOGGLES = ITEMS.register("night_vision_goggles", () -> new AccessoryItem(new Properties().stacksTo(1), AccessorySlot.HEAD, AccessoryItemEffects.NIGHT_VISION_GOGGLES));
 	public static final RegistryObject<AccessoryItem> AGILITY_BRACELET = ITEMS.register("agility_bracelet", () -> new AccessoryItem(new Properties().stacksTo(1), AccessorySlot.BRACELET, AccessoryItemEffects.AGILITY_BRACELET));
+	public static final RegistryObject<AccessoryItem> BLOODY_CLOTH = ITEMS.register("bloody_cloth", () -> new AccessoryItem(new Properties().stacksTo(1), AccessorySlot.HEAD, AccessoryItemEffects.BLOODY_CLOTH));
+	public static final RegistryObject<AccessoryItem> ANCIENT_SCROLL = ITEMS.register("ancient_scroll", () -> new AccessoryItem(new Properties().stacksTo(1), AccessorySlot.CHARM, AccessoryItemEffects.ANCIENT_SCROLL));
+	public static final RegistryObject<AccessoryItem> HOLY_MANTLE = ITEMS.register("holy_mantle", () -> new AccessoryItem(new Properties().stacksTo(1), AccessorySlot.BELT, AccessoryItemEffects.HOLY_MANTLE));
+	public static final RegistryObject<AccessoryItem> VENSTRAL_JAR = ITEMS.register("venstral_jar", () -> new AccessoryItem(new Properties().stacksTo(1), AccessorySlot.BELT, AccessoryItemEffects.VENSTRAL_JAR));
+	public static final RegistryObject<AccessoryItem> SUPER_BLANKET_CAPE = ITEMS.register("super_blanket_cape", () -> new AccessoryItem(new Properties().stacksTo(1), AccessorySlot.BODY, AccessoryItemEffects.SUPER_BLANKET_CAPE));
 	public static final RegistryObject<CursedItem> BLOODY_SACRIFICE = ITEMS.register("bloody_sacrifice", () -> new CursedItem(new Properties().stacksTo(1).setNoRepair().durability(100), "bloody_sacrifice"));
 	public static final RegistryObject<CursedItem> JONNYS_CURSE = ITEMS.register("jonnys_curse", () -> new CursedItem(new Properties().stacksTo(1).setNoRepair().durability(100), "jonnys_curse"));
+	public static final RegistryObject<Item> CHAMPION_KEYCARD = ITEMS.register("champion_keycard", () -> new Item(new Properties().stacksTo(1).fireResistant()));
+	public static final RegistryObject<Item> KILL_COUNTER = ITEMS.register("kill_counter", () -> new Item(new Properties().stacksTo(1)));
 
 	// Armor
 	public static final RegistryObject<MoltenArmorItem> MOLTEN_HELMET = ITEMS.register("molten_helmet", () -> new MoltenArmorItem(CustomArmorMaterials.MOLTEN, ArmorItem.Type.HELMET, new Item.Properties().fireResistant(), false));
@@ -285,6 +300,10 @@ public class ItemRegistry {
 	public static final RegistryObject<StarstormArmorItem> STARSTORM_CHESTPLATE = ITEMS.register("starstorm_chestplate", () -> new StarstormArmorItem(CustomArmorMaterials.STARSTORM, ArmorItem.Type.CHESTPLATE, new Item.Properties(), false));
 	public static final RegistryObject<StarstormArmorItem> STARSTORM_LEGGINGS = ITEMS.register("starstorm_leggings", () -> new StarstormArmorItem(CustomArmorMaterials.STARSTORM, ArmorItem.Type.LEGGINGS, new Item.Properties(), true));
 	public static final RegistryObject<StarstormArmorItem> STARSTORM_BOOTS = ITEMS.register("starstorm_boots", () -> new StarstormArmorItem(CustomArmorMaterials.STARSTORM, ArmorItem.Type.BOOTS, new Item.Properties(), false));
+	public static final RegistryObject<PaddedLeatherArmorItem> PADDED_LEATHER_HELMET = ITEMS.register("padded_leather_helmet", () -> new PaddedLeatherArmorItem(CustomArmorMaterials.PADDED_LEATHER, ArmorItem.Type.HELMET, new Item.Properties(), false));
+	public static final RegistryObject<PaddedLeatherArmorItem> PADDED_LEATHER_CHESTPLATE = ITEMS.register("padded_leather_chestplate", () -> new PaddedLeatherArmorItem(CustomArmorMaterials.PADDED_LEATHER, ArmorItem.Type.CHESTPLATE, new Item.Properties(), false));
+	public static final RegistryObject<PaddedLeatherArmorItem> PADDED_LEATHER_LEGGINGS = ITEMS.register("padded_leather_leggings", () -> new PaddedLeatherArmorItem(CustomArmorMaterials.PADDED_LEATHER, ArmorItem.Type.LEGGINGS, new Item.Properties(), true));
+	public static final RegistryObject<PaddedLeatherArmorItem> PADDED_LEATHER_BOOTS = ITEMS.register("padded_leather_boots", () -> new PaddedLeatherArmorItem(CustomArmorMaterials.PADDED_LEATHER, ArmorItem.Type.BOOTS, new Item.Properties(), false));
 
 	// Spawn eggs
 	public static final RegistryObject<ForgeSpawnEggItem> DYING_SOLDIER_SPAWN_EGG = ITEMS.register("dying_soldier_spawn_egg", () -> new ForgeSpawnEggItem(EntityRegistry.DYING_SOLDIER_ENTITY, 0x7a6851, 0x783d22, (new Item.Properties()).stacksTo(16)));
@@ -292,6 +311,7 @@ public class ItemRegistry {
 	public static final RegistryObject<ForgeSpawnEggItem> FIELD_MEDIC_SPAWN_EGG = ITEMS.register("field_medic_spawn_egg", () -> new ForgeSpawnEggItem(EntityRegistry.FIELD_MEDIC_ENTITY, 0xde5451, 0xebe4d2, (new Item.Properties()).stacksTo(16)));
 	public static final RegistryObject<ForgeSpawnEggItem> WANDERING_WARRIOR_SPAWN_EGG = ITEMS.register("wandering_warrior_spawn_egg", () -> new ForgeSpawnEggItem(EntityRegistry.WANDERING_WARRIOR_ENTITY, 0x614226, 0x2e6278, (new Item.Properties()).stacksTo(16)));
 	public static final RegistryObject<ForgeSpawnEggItem> HANS_SPAWN_EGG = ITEMS.register("hans_spawn_egg", () -> new ForgeSpawnEggItem(EntityRegistry.HANS_ENTITY, 0xd0a873, 0xafafaf, (new Item.Properties().stacksTo(16))));
+	public static final RegistryObject<ForgeSpawnEggItem> SUPER_HANS_SPAWN_EGG = ITEMS.register("super_hans_spawn_egg", () -> new ForgeSpawnEggItem(EntityRegistry.SUPER_HANS_ENTITY, 0xd0a873, 0xafafaf, (new Item.Properties().stacksTo(16))));
 	public static final RegistryObject<ForgeSpawnEggItem> LAVA_REVENANT_SPAWN_EGG = ITEMS.register("lava_revenant_spawn_egg", () -> new ForgeSpawnEggItem(EntityRegistry.LAVA_REVENANT_ENTITY, 0x640000, 0x990000, (new Item.Properties().stacksTo(16))));
 	public static final RegistryObject<ForgeSpawnEggItem> ROCK_SPIDER_SPAWN_EGG = ITEMS.register("rock_spider_spawn_egg", () -> new ForgeSpawnEggItem(EntityRegistry.ROCK_SPIDER_ENTITY, 0x7f7f7f, 0xa80e0e, (new Item.Properties().stacksTo(16))));
 	public static final RegistryObject<ForgeSpawnEggItem> CELESTIAL_TOWER_SPAWN_EGG = ITEMS.register("celestial_tower_spawn_egg", () -> new ForgeSpawnEggItem(EntityRegistry.CELESTIAL_TOWER_ENTITY, 0x63353d, 0xb3754b, (new Item.Properties().stacksTo(16))));

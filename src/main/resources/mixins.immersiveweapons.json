@@ -4,8 +4,11 @@
 	"compatibilityLevel": "JAVA_17",
 	"refmap": "mixins.immersiveweapons.refmap.json",
 	"mixins": [
+		"ClientboundSetEntityMotionPacketMixin",
 		"CombatRulesMixin",
-		"ItemStackMixin"
+		"EntityMixin",
+		"ItemStackMixin",
+		"SlimeMixin"
 	],
 	"client": [
 		"ItemStackMixin"

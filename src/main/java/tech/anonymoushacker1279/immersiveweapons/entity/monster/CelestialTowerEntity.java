@@ -112,8 +112,8 @@ public class CelestialTowerEntity extends Monster implements GrantAdvancementOnD
 			xpReward = 75;
 		}
 
-		Objects.requireNonNull(getAttribute(Attributes.ARMOR)).setBaseValue(getAttributeBaseValue(Attributes.ARMOR)
-				+ (totalWavesToSpawn * 5));
+		Objects.requireNonNull(getAttribute(Attributes.ARMOR))
+				.setBaseValue(getAttributeBaseValue(Attributes.ARMOR) + ((double) (totalWavesToSpawn * 5) / 3));
 
 		return pSpawnData;
 	}

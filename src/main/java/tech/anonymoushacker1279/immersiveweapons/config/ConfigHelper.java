@@ -254,11 +254,6 @@ public class ConfigHelper {
 		}
 
 		@Override
-		public boolean compressMaps() {
-			return false;
-		}
-
-		@Override
 		public Object createNumeric(Number i) {
 			return i;
 		}
@@ -280,7 +275,7 @@ public class ConfigHelper {
 		@Override
 		public DataResult<Object> mergeToList(Object list, List<Object> values) {
 			// default mergeToList returns the null object if list is empty;
-			// toml doesn't support null values so we need to convert to an empty list
+			// toml doesn't support null values, so we need to convert to an empty list
 			return DynamicOps.super.mergeToList(list, values)
 					.map(obj -> obj == this.empty()
 							? new ArrayList<>()

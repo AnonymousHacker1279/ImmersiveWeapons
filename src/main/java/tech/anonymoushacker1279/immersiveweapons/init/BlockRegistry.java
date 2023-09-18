@@ -2,6 +2,7 @@ package tech.anonymoushacker1279.immersiveweapons.init;
 
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.PressurePlateBlock.Sensitivity;
@@ -20,13 +21,11 @@ import tech.anonymoushacker1279.immersiveweapons.block.crafting.*;
 import tech.anonymoushacker1279.immersiveweapons.block.decoration.*;
 import tech.anonymoushacker1279.immersiveweapons.block.decoration.skull.*;
 import tech.anonymoushacker1279.immersiveweapons.block.grower.StardustTreeGrower;
-import tech.anonymoushacker1279.immersiveweapons.block.misc.MedicStatueBlock;
-import tech.anonymoushacker1279.immersiveweapons.block.misc.MinutemanStatueBlock;
+import tech.anonymoushacker1279.immersiveweapons.block.misc.*;
 import tech.anonymoushacker1279.immersiveweapons.block.misc.warrior_statue.*;
 import tech.anonymoushacker1279.immersiveweapons.block.mud.*;
 import tech.anonymoushacker1279.immersiveweapons.block.properties.WoodTypes;
 import tech.anonymoushacker1279.immersiveweapons.block.sign.*;
-import tech.anonymoushacker1279.immersiveweapons.util.BlockPredicates;
 import tech.anonymoushacker1279.immersiveweapons.world.level.CustomBlockSetTypes;
 
 @SuppressWarnings({"unused"})
@@ -78,6 +77,9 @@ public class BlockRegistry {
 	public static final RegistryObject<AstralCrystalBlock> ASTRAL_CRYSTAL = BLOCKS.register("astral_crystal", () -> new AstralCrystalBlock(7, 3, BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_PURPLE).randomTicks().strength(0.4f).sound(SoundType.AMETHYST_CLUSTER).requiresCorrectToolForDrops().lightLevel((blockState) -> 6)));
 	public static final RegistryObject<BiodomeLifeSupportUnitBlock> BIODOME_LIFE_SUPPORT_UNIT = BLOCKS.register("biodome_life_support_unit", () -> new BiodomeLifeSupportUnitBlock(BlockBehaviour.Properties.of().mapColor(MapColor.METAL).strength(4.0f).sound(SoundType.METAL).requiresCorrectToolForDrops()));
 	public static final RegistryObject<Block> RUSTED_IRON_BLOCK = BLOCKS.register("rusted_iron_block", () -> new Block(BlockBehaviour.Properties.of().mapColor(MapColor.METAL).sound(SoundType.METAL).strength(4.0f, 5.0f).requiresCorrectToolForDrops()));
+	public static final RegistryObject<Block> CHAMPION_BRICKS = BLOCKS.register("champion_bricks", () -> new Block(BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_GREEN).strength(6.0f, 99.0f).sound(SoundType.NETHER_BRICKS).requiresCorrectToolForDrops()));
+	public static final RegistryObject<Block> CHAMPION_BASE = BLOCKS.register("champion_base", () -> new Block(BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_GRAY).strength(4.0f, 99.0f).sound(SoundType.NETHER_BRICKS).requiresCorrectToolForDrops()));
+	public static final RegistryObject<ChampionKeycardBlock> CHAMPION_KEYCARD_BRICKS = BLOCKS.register("champion_keycard_bricks", () -> new ChampionKeycardBlock(BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_GRAY).strength(6.0f, 99.0f).sound(SoundType.NETHER_BRICKS).requiresCorrectToolForDrops()));
 	// Iron tier
 	public static final RegistryObject<BarbedWireFenceBlock> BARBED_WIRE_FENCE = BLOCKS.register("barbed_wire_fence", () -> new BarbedWireFenceBlock(BlockBehaviour.Properties.of().mapColor(MapColor.METAL).strength(7.0f, 8.0f).sound(SoundType.METAL).noOcclusion()));
 	public static final RegistryObject<DropExperienceBlock> COBALT_ORE = BLOCKS.register("cobalt_ore", () -> new DropExperienceBlock(BlockBehaviour.Properties.of().mapColor(MapColor.STONE).instrument(NoteBlockInstrument.BASEDRUM).strength(4.0f).sound(SoundType.STONE).requiresCorrectToolForDrops()));
@@ -169,7 +171,7 @@ public class BlockRegistry {
 
 	// Breakable via hoe
 	// Wood tier
-	public static final RegistryObject<StardustLeavesBlock> STARDUST_LEAVES = BLOCKS.register("stardust_leaves", () -> new StardustLeavesBlock(BlockBehaviour.Properties.of().mapColor(MapColor.PLANT).ignitedByLava().pushReaction(PushReaction.DESTROY).strength(0.3f).randomTicks().sound(SoundType.GRASS).noOcclusion().isValidSpawn((state, getter, pos, type) -> BlockPredicates.ocelotOrParrot(type)).isSuffocating((state, getter, pos) -> BlockPredicates.never()).isViewBlocking((state, getter, pos) -> BlockPredicates.never())));
+	public static final RegistryObject<StardustLeavesBlock> STARDUST_LEAVES = BLOCKS.register("stardust_leaves", () -> new StardustLeavesBlock(BlockBehaviour.Properties.of().mapColor(MapColor.PLANT).ignitedByLava().pushReaction(PushReaction.DESTROY).strength(0.3f).randomTicks().sound(SoundType.GRASS).noOcclusion().isValidSpawn((state, getter, pos, type) -> (type == EntityType.OCELOT || type == EntityType.PARROT)).isSuffocating((state, getter, pos) -> false).isViewBlocking((state, getter, pos) -> false)));
 
 	// Breakable without tool
 	public static final RegistryObject<GlassBlock> BULLETPROOF_GLASS = BLOCKS.register("bulletproof_glass", () -> new GlassBlock(BlockBehaviour.Properties.of().instrument(NoteBlockInstrument.HAT).sound(SoundType.GLASS).noOcclusion().strength(0.5f)));

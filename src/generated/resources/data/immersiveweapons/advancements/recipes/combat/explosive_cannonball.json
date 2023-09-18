@@ -1,0 +1,35 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "immersiveweapons:explosive_cannonball"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    },
+    "tnt": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "minecraft:tnt"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "requirements": [
+    [
+      "tnt",
+      "has_the_recipe"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "immersiveweapons:explosive_cannonball"
+    ]
+  },
+  "sends_telemetry_event": false
+}

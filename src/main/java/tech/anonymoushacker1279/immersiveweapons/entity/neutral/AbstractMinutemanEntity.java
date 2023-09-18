@@ -36,7 +36,6 @@ import tech.anonymoushacker1279.immersiveweapons.item.projectile.bullet.Abstract
 import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
 
 import java.time.LocalDate;
-import java.time.temporal.ChronoField;
 import java.util.List;
 import java.util.UUID;
 import java.util.function.Predicate;
@@ -44,10 +43,10 @@ import java.util.function.Predicate;
 public abstract class AbstractMinutemanEntity extends PathfinderMob implements RangedAttackMob, NeutralMob, GrantAdvancementOnDiscovery {
 
 	private static final UniformInt tickRange = TimeUtil.rangeOfSeconds(20, 39);
-	private final RangedShotgunAttackGoal<AbstractMinutemanEntity> aiShotgunAttack =
+	private final RangedShotgunAttackGoal<AbstractMinutemanEntity> rangedAttackGoal =
 			new RangedShotgunAttackGoal<>(this, 1.0D, 25, 14.0F, ItemRegistry.BLUNDERBUSS.get());
 
-	private final MeleeAttackGoal aiAttackOnCollide = new MeleeAttackGoal(this, 1.2D, false) {
+	private final MeleeAttackGoal meleeAttackGoal = new MeleeAttackGoal(this, 1.2D, false) {
 		/**
 		 * Reset the task's internal state. Called when this task is interrupted by another one
 		 */
@@ -71,31 +70,18 @@ public abstract class AbstractMinutemanEntity extends PathfinderMob implements R
 	@Nullable
 	private UUID targetUUID;
 
-	/**
-	 * Constructor for AbstractMinutemanEntity.
-	 *
-	 * @param type  the <code>EntityType</code> instance
-	 * @param level the <code>Level</code> the entity is in
-	 */
 	AbstractMinutemanEntity(EntityType<? extends AbstractMinutemanEntity> type, Level level) {
 		super(type, level);
 		setCombatTask();
 	}
 
-	/**
-	 * Register this entity's attributes.
-	 *
-	 * @return AttributeModifierMap.MutableAttribute
-	 */
+
 	public static AttributeSupplier.Builder registerAttributes() {
 		return Monster.createMonsterAttributes()
 				.add(Attributes.MOVEMENT_SPEED, 0.3D)
 				.add(Attributes.ARMOR, 4.5D);
 	}
 
-	/**
-	 * Register entity goals and targets.
-	 */
 	@Override
 	protected void registerGoals() {
 		goalSelector.addGoal(1, new FloatGoal(this));
@@ -118,88 +104,54 @@ public abstract class AbstractMinutemanEntity extends PathfinderMob implements R
 		targetSelector.addGoal(6, new ResetUniversalAngerTargetGoal<>(this, false));
 	}
 
-	/**
-	 * Play the step sound.
-	 *
-	 * @param pos     the <code>BlockPos</code> the entity is at
-	 * @param blockIn the <code>BlockState</code> of the block being stepped on
-	 */
 	@Override
-	protected void playStepSound(BlockPos pos, BlockState blockIn) {
+	protected void playStepSound(BlockPos pos, BlockState state) {
 		playSound(getStepSound(), 0.15F, 1.0F);
 	}
 
 	protected abstract SoundEvent getStepSound();
 
-	/**
-	 * Called frequently so the entity can update its state every tick as required.
-	 */
 	@Override
 	public void aiStep() {
 		super.aiStep();
+
 		checkForDiscovery(this);
 		if (!level().isClientSide) {
 			updatePersistentAnger((ServerLevel) level(), true);
 		}
 	}
 
-	/**
-	 * Handles updating while riding another entity
-	 */
-	@Override
-	public void rideTick() {
-		super.rideTick();
-		if (getVehicle() instanceof PathfinderMob creatureEntity) {
-			yBodyRot = creatureEntity.yBodyRot;
-		}
-	}
-
-	/**
-	 * Gives armor or weapon for entity based on given DifficultyInstance
-	 *
-	 * @param difficulty the <code>DifficultyInstance</code> of the world
-	 */
 	@Override
 	protected void populateDefaultEquipmentSlots(RandomSource randomSource, DifficultyInstance difficulty) {
 		super.populateDefaultEquipmentSlots(randomSource, difficulty);
 		setItemSlot(EquipmentSlot.MAINHAND, new ItemStack(ItemRegistry.BLUNDERBUSS.get()));
 	}
 
-	/**
-	 * Finalize spawn information.
-	 *
-	 * @param level        the <code>ServerLevelAccessor</code> the entity is in
-	 * @param difficultyIn the <code>DifficultyInstance</code> of the world
-	 * @param reason       the <code>SpawnReason</code> for the entity
-	 * @param spawnDataIn  the <code>ILivingEntitySpawnData</code> for the entity
-	 * @param dataTag      the <code>CompoundNBT</code> data tag for the entity
-	 * @return ILivingEntityData
-	 */
 	@Override
-	public SpawnGroupData finalizeSpawn(ServerLevelAccessor level, DifficultyInstance difficultyIn,
-	                                    MobSpawnType reason, @Nullable SpawnGroupData spawnDataIn,
-	                                    @Nullable CompoundTag dataTag) {
+	public SpawnGroupData finalizeSpawn(ServerLevelAccessor levelAccessor, DifficultyInstance difficultyInstance,
+	                                    MobSpawnType mobSpawnType, @Nullable SpawnGroupData groupData,
+	                                    @Nullable CompoundTag compoundTag) {
 
-		spawnDataIn = super.finalizeSpawn(level, difficultyIn, reason, spawnDataIn, dataTag);
+		groupData = super.finalizeSpawn(levelAccessor, difficultyInstance, mobSpawnType, groupData, compoundTag);
 
-		populateDefaultEquipmentSlots(random, difficultyIn);
-		populateDefaultEquipmentEnchantments(random, difficultyIn);
+		populateDefaultEquipmentSlots(random, difficultyInstance);
+		populateDefaultEquipmentEnchantments(random, difficultyInstance);
 		setCombatTask();
-		setCanPickUpLoot(random.nextFloat() < 0.55F * difficultyIn.getSpecialMultiplier());
+		setCanPickUpLoot(random.nextFloat() < 0.55F * difficultyInstance.getSpecialMultiplier());
 
-		// Put pumpkins in the head slot on Halloween
 		if (getItemBySlot(EquipmentSlot.HEAD).isEmpty()) {
-			LocalDate localdate = LocalDate.now();
-			int day = localdate.get(ChronoField.DAY_OF_MONTH);
-			int month = localdate.get(ChronoField.MONTH_OF_YEAR);
+			LocalDate date = LocalDate.now();
+			int day = date.getDayOfMonth();
+			int month = date.getMonth().getValue();
 			if (month == 10 && day == 31 && random.nextFloat() < 0.25F) {
 				setItemSlot(EquipmentSlot.HEAD,
 						new ItemStack(random.nextFloat() < 0.1F ? Blocks.JACK_O_LANTERN : Blocks.CARVED_PUMPKIN));
+
 				armorDropChances[EquipmentSlot.HEAD.getIndex()] = 0.0F;
 			}
 		}
 
-		return spawnDataIn;
+		return groupData;
 	}
 
 	/**
@@ -207,8 +159,8 @@ public abstract class AbstractMinutemanEntity extends PathfinderMob implements R
 	 */
 	private void setCombatTask() {
 		if (!level().isClientSide) {
-			goalSelector.removeGoal(aiAttackOnCollide);
-			goalSelector.removeGoal(aiShotgunAttack);
+			goalSelector.removeGoal(meleeAttackGoal);
+			goalSelector.removeGoal(rangedAttackGoal);
 			ItemStack itemInHand = getItemInHand(ProjectileUtil.getWeaponHoldingHand(this,
 					Predicate.isEqual(ItemRegistry.BLUNDERBUSS.get())));
 
@@ -218,47 +170,36 @@ public abstract class AbstractMinutemanEntity extends PathfinderMob implements R
 					cooldown = 45;
 				}
 
-				aiShotgunAttack.setAttackCooldown(cooldown);
-				goalSelector.addGoal(16, aiShotgunAttack);
+				rangedAttackGoal.setAttackCooldown(cooldown);
+				goalSelector.addGoal(16, rangedAttackGoal);
 			} else {
 				populateDefaultEquipmentSlots(random, level().getCurrentDifficultyAt(blockPosition()));
-				goalSelector.addGoal(12, aiAttackOnCollide);
+				goalSelector.addGoal(12, meleeAttackGoal);
 			}
 		}
 	}
 
-	/**
-	 * Handle push behavior.
-	 *
-	 * @param entityIn the <code>Entity</code> being pushed
-	 */
 	@Override
-	protected void doPush(Entity entityIn) {
-		if (entityIn instanceof Enemy && !(entityIn instanceof MinutemanEntity) && !(entityIn instanceof IronGolem)
+	protected void doPush(Entity entity) {
+		if (entity instanceof Enemy && !(entity instanceof MinutemanEntity) && !(entity instanceof IronGolem)
 				&& getRandom().nextInt(20) == 0) {
 
-			setTarget((LivingEntity) entityIn);
+			setTarget((LivingEntity) entity);
 		}
-		super.doPush(entityIn);
+		super.doPush(entity);
 	}
 
 	/**
 	 * Determine if the given entity can be attacked.
 	 *
-	 * @param typeIn the <code>EntityType</code> being checked
+	 * @param type the <code>EntityType</code> being checked
 	 * @return boolean
 	 */
 	@Override
-	public boolean canAttackType(EntityType<?> typeIn) {
-		return typeIn != EntityRegistry.MINUTEMAN_ENTITY.get() && typeIn != EntityType.CREEPER;
+	public boolean canAttackType(EntityType<?> type) {
+		return type != EntityRegistry.MINUTEMAN_ENTITY.get() && type != EntityType.CREEPER;
 	}
 
-	/**
-	 * Attack the specified entity using a ranged attack.
-	 *
-	 * @param target         the <code>LivingEntity</code> being targeted
-	 * @param distanceFactor the distance factor
-	 */
 	@Override
 	public void performRangedAttack(LivingEntity target, float distanceFactor) {
 		// Fire four bullets for the blunderbuss
@@ -281,6 +222,7 @@ public abstract class AbstractMinutemanEntity extends PathfinderMob implements R
 					18 - level().getDifficulty().getId() * 4 + GeneralUtilities.getRandomNumber(0.2f, 0.8f));
 			level().addFreshEntity(bulletEntity);
 		}
+
 		playSound(SoundEventRegistry.BLUNDERBUSS_FIRE.get(), 1.0F,
 				1.0F / (getRandom().nextFloat() * 0.4F + 0.8F));
 	}
@@ -293,9 +235,10 @@ public abstract class AbstractMinutemanEntity extends PathfinderMob implements R
 	 */
 	@Override
 	public ItemStack getProjectile(ItemStack weapon) {
-		if (weapon.getItem() instanceof ProjectileWeaponItem) {
-			Predicate<ItemStack> predicate = ((ProjectileWeaponItem) weapon.getItem()).getSupportedHeldProjectiles();
+		if (weapon.getItem() instanceof ProjectileWeaponItem projectileWeapon) {
+			Predicate<ItemStack> predicate = projectileWeapon.getSupportedHeldProjectiles();
 			ItemStack heldProjectile = ProjectileWeaponItem.getHeldProjectile(this, predicate);
+
 			return heldProjectile.isEmpty() ? new ItemStack(ItemRegistry.COPPER_MUSKET_BALL.get()) : heldProjectile;
 		} else {
 			return ItemStack.EMPTY;
@@ -398,6 +341,7 @@ public abstract class AbstractMinutemanEntity extends PathfinderMob implements R
 	@Override
 	public void setItemSlot(EquipmentSlot slot, ItemStack stack) {
 		super.setItemSlot(slot, stack);
+		
 		if (!level().isClientSide) {
 			setCombatTask();
 		}

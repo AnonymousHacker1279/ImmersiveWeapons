@@ -3,7 +3,8 @@ package tech.anonymoushacker1279.immersiveweapons.entity.monster;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.RandomSource;
-import net.minecraft.world.*;
+import net.minecraft.world.DifficultyInstance;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -13,7 +14,8 @@ import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.monster.Creeper;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.*;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.*;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
@@ -23,23 +25,10 @@ import tech.anonymoushacker1279.immersiveweapons.init.ItemRegistry;
 import tech.anonymoushacker1279.immersiveweapons.init.SoundEventRegistry;
 
 import java.time.LocalDate;
-import java.time.temporal.ChronoField;
 
 public abstract class AbstractWanderingWarriorEntity extends Monster implements GrantAdvancementOnDiscovery {
 
-	private final MeleeAttackGoal aiAttackOnCollide = new MeleeAttackGoal(this, 1.2D, false) {
-		@Override
-		public void stop() {
-			super.stop();
-			setAggressive(false);
-		}
-
-		@Override
-		public void start() {
-			super.start();
-			setAggressive(true);
-		}
-	};
+	protected MeleeAttackGoal meleeAttackGoal = new MeleeAttackGoal(this, 1.2D, false);
 
 	/**
 	 * Constructor for AbstractWanderingWarriorEntity.
@@ -115,34 +104,16 @@ public abstract class AbstractWanderingWarriorEntity extends Monster implements 
 	@Override
 	protected void populateDefaultEquipmentSlots(RandomSource randomSource, DifficultyInstance difficulty) {
 		super.populateDefaultEquipmentSlots(randomSource, difficulty);
-		// Populate weapons
-		float random = this.random.nextFloat();
-		if (random <= 0.5) {
-			setItemInHand(InteractionHand.MAIN_HAND, new ItemStack(Items.IRON_SWORD));
-		} else if (random <= 0.3) {
-			setItemInHand(InteractionHand.MAIN_HAND, new ItemStack(ItemRegistry.COBALT_SWORD.get()));
-		} else {
-			setItemInHand(InteractionHand.MAIN_HAND, new ItemStack(ItemRegistry.COPPER_SWORD.get()));
-		}
-		// Populate armor
-		int armorTier = 0;
-		if (this.random.nextFloat() < 0.2F) {
-			armorTier++;
-		}
-		float difficultyModifier = level().getDifficulty() == Difficulty.HARD ? 0.3F : 0.75F;
-		for (EquipmentSlot equipmentSlot : EquipmentSlot.values()) {
-			if (equipmentSlot.getType() == EquipmentSlot.Type.ARMOR) {
-				ItemStack itemBySlot = getItemBySlot(equipmentSlot);
-				if (this.random.nextFloat() < difficultyModifier) {
-					break;
-				}
 
-				if (itemBySlot.isEmpty()) {
-					Item item = getEquipmentForSlot(equipmentSlot, armorTier);
-					if (item != null) {
-						setItemSlot(equipmentSlot, new ItemStack(item));
-					}
-				}
+		// Populate weapons if empty
+		if (getItemBySlot(EquipmentSlot.MAINHAND).getItem() == Items.AIR) {
+			float random = randomSource.nextFloat();
+			if (random <= 0.3f) {
+				setItemInHand(InteractionHand.MAIN_HAND, new ItemStack(ItemRegistry.COBALT_SWORD.get()));
+			} else if (random <= 0.5f) {
+				setItemInHand(InteractionHand.MAIN_HAND, new ItemStack(Items.IRON_SWORD));
+			} else {
+				setItemInHand(InteractionHand.MAIN_HAND, new ItemStack(ItemRegistry.COPPER_SWORD.get()));
 			}
 		}
 	}
@@ -170,8 +141,8 @@ public abstract class AbstractWanderingWarriorEntity extends Monster implements 
 
 		if (getItemBySlot(EquipmentSlot.HEAD).isEmpty()) {
 			LocalDate date = LocalDate.now();
-			int day = date.get(ChronoField.DAY_OF_MONTH);
-			int month = date.get(ChronoField.MONTH_OF_YEAR);
+			int day = date.getDayOfMonth();
+			int month = date.getMonth().getValue();
 			if (month == 10 && day == 31 && random.nextFloat() < 0.25F) {
 				setItemSlot(EquipmentSlot.HEAD,
 						new ItemStack(random.nextFloat() < 0.1F ? Blocks.JACK_O_LANTERN : Blocks.CARVED_PUMPKIN));
@@ -188,22 +159,12 @@ public abstract class AbstractWanderingWarriorEntity extends Monster implements 
 	 */
 	void setCombatTask() {
 		if (!level().isClientSide) {
-			goalSelector.removeGoal(aiAttackOnCollide);
+			goalSelector.removeGoal(meleeAttackGoal);
 			if (getItemInHand(InteractionHand.MAIN_HAND).getItem() == Items.AIR) {
 				populateDefaultEquipmentSlots(random, level().getCurrentDifficultyAt(blockPosition()));
 			}
-			goalSelector.addGoal(1, aiAttackOnCollide);
+			goalSelector.addGoal(1, meleeAttackGoal);
 		}
-	}
-
-	/**
-	 * Read entity NBT data.
-	 *
-	 * @param compound the <code>CompoundTag</code> to read from
-	 */
-	@Override
-	public void readAdditionalSaveData(CompoundTag compound) {
-		super.readAdditionalSaveData(compound);
 	}
 
 	@Override

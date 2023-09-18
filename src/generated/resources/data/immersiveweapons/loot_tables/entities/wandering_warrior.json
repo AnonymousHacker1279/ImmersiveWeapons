@@ -35,6 +35,34 @@
       ],
       "name": "leather",
       "rolls": 1.0
+    },
+    {
+      "bonus_rolls": 0.0,
+      "conditions": [
+        {
+          "condition": "minecraft:killed_by_player"
+        },
+        {
+          "chance": 0.1,
+          "condition": "minecraft:random_chance_with_looting",
+          "looting_multiplier": 0.05
+        },
+        {
+          "condition": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {
+            "nbt": "{isBerserk:1b}"
+          }
+        }
+      ],
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "immersiveweapons:berserkers_amulet"
+        }
+      ],
+      "name": "berserkers_amulet",
+      "rolls": 1.0
     }
   ],
   "random_sequence": "immersiveweapons:entities/wandering_warrior"

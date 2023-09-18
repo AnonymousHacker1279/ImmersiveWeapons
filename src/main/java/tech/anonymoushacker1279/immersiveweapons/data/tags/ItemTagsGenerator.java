@@ -114,6 +114,9 @@ public class ItemTagsGenerator extends ItemTagsProvider {
 		for (Item item : ItemLists.MUSKET_BALL_ITEMS) {
 			tag(IWItemTagGroups.MUSKET_BALLS).add(item);
 		}
+		tag(IWItemTagGroups.CANNONBALLS).add(
+				ItemRegistry.CANNONBALL.get(),
+				ItemRegistry.EXPLOSIVE_CANNONBALL.get());
 
 		// Ingot tags
 		tag(IWItemTagGroups.MOLTEN_INGOTS).add(ItemRegistry.MOLTEN_INGOT.get());

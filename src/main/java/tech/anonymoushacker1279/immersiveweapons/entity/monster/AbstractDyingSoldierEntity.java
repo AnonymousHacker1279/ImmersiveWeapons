@@ -33,32 +33,12 @@ import tech.anonymoushacker1279.immersiveweapons.item.projectile.arrow.AbstractA
 import tech.anonymoushacker1279.immersiveweapons.item.projectile.bullet.AbstractBulletItem;
 
 import java.time.LocalDate;
-import java.time.temporal.ChronoField;
 import java.util.function.Predicate;
 
 public abstract class AbstractDyingSoldierEntity extends Monster implements RangedAttackMob, GrantAdvancementOnDiscovery {
 
-	private final RangedGunAttackGoal<AbstractDyingSoldierEntity> aiPistolAttack =
+	private final RangedGunAttackGoal<AbstractDyingSoldierEntity> pistolAttackGoal =
 			new RangedGunAttackGoal<>(this, 1.0D, 20, 15.0F, ItemRegistry.FLINTLOCK_PISTOL.get());
-	private final MeleeAttackGoal aiAttackOnCollide = new MeleeAttackGoal(this, 1.2D, false) {
-		/**
-		 * Reset the task's internal state. Called when this task is interrupted by another one
-		 */
-		@Override
-		public void stop() {
-			super.stop();
-			setAggressive(false);
-		}
-
-		/**
-		 * Execute a one shot task or start executing a continuous task
-		 */
-		@Override
-		public void start() {
-			super.start();
-			setAggressive(true);
-		}
-	};
 
 	/**
 	 * Constructor for AbstractDyingSoldierEntity.
@@ -163,8 +143,8 @@ public abstract class AbstractDyingSoldierEntity extends Monster implements Rang
 
 		if (getItemBySlot(EquipmentSlot.HEAD).isEmpty()) {
 			LocalDate date = LocalDate.now();
-			int day = date.get(ChronoField.DAY_OF_MONTH);
-			int month = date.get(ChronoField.MONTH_OF_YEAR);
+			int day = date.getDayOfMonth();
+			int month = date.getMonth().getValue();
 			if (month == 10 && day == 31 && random.nextFloat() < 0.25F) {
 				setItemSlot(EquipmentSlot.HEAD,
 						new ItemStack(random.nextFloat() < 0.1F ? Blocks.JACK_O_LANTERN : Blocks.CARVED_PUMPKIN));
@@ -181,8 +161,7 @@ public abstract class AbstractDyingSoldierEntity extends Monster implements Rang
 	 */
 	private void setCombatTask() {
 		if (!level().isClientSide) {
-			goalSelector.removeGoal(aiAttackOnCollide);
-			goalSelector.removeGoal(aiPistolAttack);
+			goalSelector.removeGoal(pistolAttackGoal);
 			ItemStack itemInHand = getItemInHand(ProjectileUtil.getWeaponHoldingHand(this,
 					Predicate.isEqual(ItemRegistry.FLINTLOCK_PISTOL.get())));
 
@@ -192,12 +171,9 @@ public abstract class AbstractDyingSoldierEntity extends Monster implements Rang
 					cooldown = 40;
 				}
 
-				aiPistolAttack.setAttackCooldown(cooldown);
-				goalSelector.addGoal(1, aiPistolAttack);
-			} else {
-				goalSelector.addGoal(4, aiAttackOnCollide);
+				pistolAttackGoal.setAttackCooldown(cooldown);
+				goalSelector.addGoal(1, pistolAttackGoal);
 			}
-
 		}
 	}
 

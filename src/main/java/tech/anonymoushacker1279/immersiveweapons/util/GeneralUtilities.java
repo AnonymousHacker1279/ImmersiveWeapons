@@ -6,6 +6,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.Objects;
+import java.util.UUID;
 
 /**
  * A collection of random utility methods for general use.
@@ -92,5 +93,16 @@ public class GeneralUtilities {
 	 */
 	public static ResourceLocation itemRegistryPath(Item item) {
 		return Objects.requireNonNull(ForgeRegistries.ITEMS.getKey(item), "Registry name");
+	}
+
+	/**
+	 * Check if the specified UUID is not Jonny's. Used as a dev bonus for the Jonny's Curse item, where all effects
+	 * are inverted for Jonny himself.
+	 *
+	 * @param uuid the UUID to check
+	 * @return true if the UUID is not Jonny's, false otherwise
+	 */
+	public static boolean notJonny(UUID uuid) {
+		return !uuid.toString().equals("009c8c55-8a9e-4664-9bd5-f4c15ccaf726");
 	}
 }

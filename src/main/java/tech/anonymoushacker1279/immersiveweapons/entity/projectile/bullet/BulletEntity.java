@@ -376,11 +376,9 @@ public class BulletEntity extends AbstractArrow {
 		DamageSource damageSource;
 
 		// If the arrow owner doesn't exist (null), set the indirect entity to itself
-		if (owner == null) {
-			damageSource = IWDamageSources.bullet(this, this);
-		} else {
-			damageSource = IWDamageSources.bullet(this, owner);
+		damageSource = getDamageSource(owner);
 
+		if (owner != null) {
 			// Disable invulnerability for bullets; specifically with the blunderbuss, otherwise
 			// multiple shots on the same target will simply bounce back
 			entity.invulnerableTime = 0;
@@ -482,12 +480,15 @@ public class BulletEntity extends AbstractArrow {
 
 		inBlockState.onProjectileHit(level(), inBlockState, blockHitResult, this);
 
-		if (!didPassThroughBlock && level().isClientSide) {
+		if (!didPassThroughBlock) {
 			level().addParticle(new BulletImpactParticleOptions(1.0F, Block.getId(inBlockState)),
 					blockHitResult.getLocation().x, blockHitResult.getLocation().y, blockHitResult.getLocation().z,
 					GeneralUtilities.getRandomNumber(-0.01d, 0.01d),
 					GeneralUtilities.getRandomNumber(-0.01d, 0.01d),
 					GeneralUtilities.getRandomNumber(-0.01d, 0.01d));
+
+			// Extra code to run when a block is hit
+			doWhenHitBlock();
 		}
 	}
 
@@ -577,6 +578,20 @@ public class BulletEntity extends AbstractArrow {
 	 */
 	protected void doWhenHitEntity(Entity entity) {
 		level().broadcastEntityEvent(this, VANILLA_IMPACT_STATUS_ID);
+	}
+
+	/**
+	 * Additional stuff to do when a block is hit.
+	 */
+	protected void doWhenHitBlock() {
+	}
+
+	protected DamageSource getDamageSource(@Nullable Entity owner) {
+		if (owner == null) {
+			owner = this;
+		}
+
+		return IWDamageSources.bullet(this, owner);
 	}
 
 	@Override

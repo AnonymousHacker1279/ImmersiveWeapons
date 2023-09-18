@@ -65,7 +65,7 @@ public class CustomBoatEntity extends Boat {
 
 				resetFallDistance();
 			} else if (!canBoatInFluid(level().getFluidState(blockPosition().below())) && pY < 0.0D) {
-				fallDistance -= pY;
+				fallDistance -= (float) pY;
 			}
 
 		}

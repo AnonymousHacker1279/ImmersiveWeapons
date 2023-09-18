@@ -24,6 +24,9 @@ public class LootTableLocations {
 	public static final ResourceLocation BIODOME_MEDICINE_BARREL = register("chests/biodome/medicine_barrel");
 	public static final ResourceLocation BIODOME_CHEST = register("chests/biodome/chest");
 
+	public static final ResourceLocation CHAMPION_TOWER_TIER_1 = register("chests/champion_tower/tier_1");
+	public static final ResourceLocation CHAMPION_TOWER_TIER_2 = register("chests/champion_tower/tier_2");
+
 	private static ResourceLocation register(String pId) {
 		return register(new ResourceLocation(ImmersiveWeapons.MOD_ID, pId));
 	}

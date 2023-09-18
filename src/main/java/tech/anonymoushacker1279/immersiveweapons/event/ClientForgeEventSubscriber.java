@@ -1,16 +1,18 @@
 package tech.anonymoushacker1279.immersiveweapons.event;
 
+import com.mojang.blaze3d.platform.InputConstants;
 import com.mojang.blaze3d.shaders.FogShape;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.client.event.RenderBlockScreenEffectEvent;
-import net.minecraftforge.client.event.RenderGuiOverlayEvent;
+import net.minecraftforge.client.event.*;
 import net.minecraftforge.client.event.ViewportEvent.ComputeFov;
 import net.minecraftforge.client.event.ViewportEvent.RenderFog;
 import net.minecraftforge.client.gui.overlay.ForgeGui;
@@ -156,6 +158,36 @@ public class ClientForgeEventSubscriber {
 						event.getPartialTick(),
 						screenWidth,
 						screenHeight);
+			}
+		}
+	}
+
+	@SubscribeEvent
+	public static void keyInputEvent(InputEvent.Key event) {
+		// Double jump ability with the Venstral Jar accessory
+		Player player = minecraft.player;
+		if (player != null && AccessoryItem.isAccessoryActive(player, ItemRegistry.VENSTRAL_JAR.get())) {
+			// Check if the jump key is pressed
+			if (event.getKey() == minecraft.options.keyJump.getKey().getValue() && event.getAction() == InputConstants.PRESS) {
+				if (!player.onGround()) {
+					Vec3 deltaMovement = player.getDeltaMovement();
+					float jumpVelocity = 0.42f * (1 + player.getJumpBoostPower());
+					player.setDeltaMovement(deltaMovement.add(deltaMovement.x, (Math.abs(deltaMovement.y) + jumpVelocity), deltaMovement.z));
+
+					// Spawn cloud particles
+					for (int i = 0; i < 8; ++i) {
+						float x = player.getRandom().nextFloat() - player.getRandom().nextFloat();
+						float z = player.getRandom().nextFloat() - player.getRandom().nextFloat();
+						float y = player.getRandom().nextFloat() - player.getRandom().nextFloat();
+						player.level().addParticle(ParticleTypes.CLOUD,
+								player.getX() + x,
+								player.getY() + y,
+								player.getZ() + z,
+								0.0D, 0.0D, 0.0D);
+					}
+
+					player.getCooldowns().addCooldown(ItemRegistry.VENSTRAL_JAR.get(), 1200);
+				}
 			}
 		}
 	}
