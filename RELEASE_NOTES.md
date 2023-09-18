@@ -1,31 +1,31 @@
-This release includes a few new items, along with bugfixes and other improvements. Additionally, it moves the mod to
-NeoForge. No new releases will be designed for the classic Forge modloader.
-
-At the present moment, the mod may be compatible with both NeoForge and classic Forge, but this is not guaranteed to
-work. If you encounter issues on Forge, please try using NeoForge first.
+This major update adds a new endgame challenge, Champion Towers. Of course, there are a bunch of other new features and
+bugfixes as well.
 
 ### Feature Changes / Additions
 
-- Six new accessory items
-- Rebalanced loot tables in structures, enchanted items are now done between certain levels to prevent high level
-  enchants like mending from appearing early in the game
+- Champion Tower structures - a rarely generating tower with high-level mobs inside on each floor. At the top is
+  Super Hans, a much more deadly variant of Hans.
+- Padded Leather Armor - while it may not be the most protective, it neutralizes movement vibrations entirely
+- Kill Count weapon system - track weapon kills and unlock special name tiers as you go
+- Hand Cannon - a powerful but slow firing weapon that launches cannonballs (or their exploding variants)
+- Nine new accessory items
 
 ### Bugfixes
 
-- Remove debug log lines from copper ring loot drop modifier
-- Rework recipe handler for potions to be more reliable
-- Fix Tiltros sky rendering without the texture, appearing full black
-- Fix Starstorm Crystals not dropping themselves in some cases
+- Fix bleed effect not bypassing armor and enchantment defense
+- Fix damage vulnerability effect calculation being too high past level one
+- Fix wandering warrior equipment bugs when spawning
+- Fix berserk spawn chances for wandering warriors not being very dynamic between difficulties
+- Fix projectiles seemingly zigzagging at high velocity
+- Fix Celestial Tower armor values being too high on Hard difficulty, making it nearly invulnerable
 
 ### Other Improvements
 
-- Store the Celestial Protection chance for no damage on the player, so it persists between saves
-- Restructure GLMs for simplicity and to reduce redundancy
-
-#### Other non-code changes include:
-
-- License assets under CC-BY-NC-SA 4.0 (code is still under MIT)
-- Branding changes, including new logos and cover art on description pages (credit to `@shinyflareon` on Discord for the
-  new cover art!)
-- An [official Modrinth page](https://modrinth.com/mod/immersive-weapons) for the project. CurseForge and GitHub will
-  continue to be distribution platforms.
+- Tweak bleed effect to deal more damage based on level, with each level increasing damage by 25%
+- Include the mortar damage type in the `is_projectile` tag
+- Tweak damage vulnerability effect to only be half as effective against entities in the `bosses` tag
+- Various Evil Eye improvements:
+	- Slightly increase player scanning range based on difficulty and size
+	- Now target players when damaged by them
+	- Now only drop loot when killed by a player
+- Various internal cleanups
