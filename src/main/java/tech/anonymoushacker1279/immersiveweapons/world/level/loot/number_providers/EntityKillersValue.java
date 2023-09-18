@@ -37,12 +37,18 @@ public class EntityKillersValue implements NumberProvider {
 		return new EntityKillersValue();
 	}
 
+	@Override
 	public boolean equals(Object pOther) {
 		if (this == pOther) {
 			return true;
 		} else {
 			return pOther != null && this.getClass() == pOther.getClass();
 		}
+	}
+
+	@Override
+	public int hashCode() {
+		return 0;
 	}
 
 	public static class Serializer implements net.minecraft.world.level.storage.loot.Serializer<EntityKillersValue> {
