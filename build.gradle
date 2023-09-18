@@ -3,7 +3,7 @@ plugins {
 	id 'net.neoforged.gradle' version '[6.0.18, 6.2)'
 	id 'org.parchmentmc.librarian.forgegradle' version '1.+'
 	id 'org.spongepowered.mixin' version '0.7.+'
-	id "me.hypherionmc.modutils.modpublisher" version "1.0.19"
+	id "me.hypherionmc.modutils.modpublisher" version "1.0.20"
 	id 'idea'
 }
 
@@ -49,6 +49,8 @@ base {
 }
 
 apply plugin: 'org.spongepowered.mixin'
+
+jarJar.enable()
 
 java.toolchain.languageVersion = JavaLanguageVersion.of(17)
 
@@ -100,8 +102,8 @@ dependencies {
 	minecraft "net.neoforged:forge:${minecraft_version}-${neoforge_version}"
 
 	// Apply Mixin and MixinExtras AP
-	implementation(annotationProcessor("io.github.llamalad7:mixinextras-common:0.2.0-rc.2"))
-	implementation(jarJar("io.github.llamalad7:mixinextras-forge:0.2.0-rc.2")) {
+	implementation(annotationProcessor("io.github.llamalad7:mixinextras-common:0.2.0-rc.3"))
+	implementation(jarJar("io.github.llamalad7:mixinextras-forge:0.2.0-rc.3")) {
 		jarJar.ranged(it, "[0.2.0-rc.2,)")
 	}
 
@@ -141,7 +143,10 @@ java {
 	withJavadocJar()
 }
 
+reobf.create('jarJar')
+
 tasks.named('jar', Jar).configure {
+	archiveClassifier = "slim"
 	manifest {
 		attributes([
 				'Specification-Title'     : "immersiveweapons",
@@ -158,6 +163,13 @@ tasks.named('jar', Jar).configure {
 	finalizedBy 'reobfJar'
 }
 
+tasks.jarJar.configure {
+	archiveClassifier = ""
+	finalizedBy('reobfJarJar')
+}
+
+build.dependsOn tasks.jarJar
+
 artifacts {
 	archives javadocJar
 	archives sourcesJar
@@ -167,6 +179,7 @@ publishing {
 	publications {
 		register('mavenJava', MavenPublication) {
 			artifact jar
+			artifact tasks.jarJar
 			artifact sourcesJar
 			artifact javadocJar
 		}
@@ -212,7 +225,7 @@ if (file("RELEASE_NOTES.md").exists()) {
 		gameVersions = [minecraft_version]
 		loaders = ["forge", "neoforge"]
 		curseEnvironment = "both"
-		artifact = jar
+		artifact = tasks.jarJar
 		additionalFiles = [javadocJar, sourcesJar]
 
 		curseDepends {

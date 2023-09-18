@@ -1,6 +1,7 @@
 package tech.anonymoushacker1279.immersiveweapons.item;
 
 import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.player.Player;
@@ -98,7 +99,9 @@ public class AccessoryItem extends Item {
 			ItemStack stack1 = player.getInventory().getItem(i);
 			if (stack1.getItem() instanceof AccessoryItem accessoryItem) {
 				if (accessoryItem.getSlot() == slot) {
-					accessories.add(stack1);
+					if (!player.getCooldowns().isOnCooldown(this)) {
+						accessories.add(stack1);
+					}
 				}
 			}
 		}
@@ -123,7 +126,9 @@ public class AccessoryItem extends Item {
 			ItemStack stack1 = player.getInventory().getItem(i);
 			if (stack1.getItem() instanceof AccessoryItem accessoryItem) {
 				if (accessoryItem.getSlot() == slot) {
-					return accessoryItem == this;
+					if (!player.getCooldowns().isOnCooldown(this)) {
+						return accessoryItem == this;
+					}
 				}
 			}
 		}
@@ -267,7 +272,7 @@ public class AccessoryItem extends Item {
 			NO_SCALING,
 
 			/**
-			 * Scales the effect value based on the player's depth, beginning at y<64.
+			 * Scales the effect value based on the player's depth, beginning at y{@literal <}64.
 			 */
 			DEPTH_SCALING,
 
@@ -357,6 +362,11 @@ public class AccessoryItem extends Item {
 		 * Modifier to {@link BleedingEffect} damage.
 		 */
 		BLEED_RESISTANCE,
+
+		/**
+		 * Chance for attacks to inflict {@link MobEffects#WITHER}.
+		 */
+		GENERAL_WITHER_CHANCE,
 
 		/**
 		 * Modifier for experience drops.

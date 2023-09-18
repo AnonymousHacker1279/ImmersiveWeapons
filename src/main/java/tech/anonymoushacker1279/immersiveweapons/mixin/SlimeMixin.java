@@ -12,7 +12,8 @@ import net.minecraft.world.level.ServerLevelAccessor;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
-import org.spongepowered.asm.mixin.injection.*;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.ModifyVariable;
 
 /**
  * Fix Slimes not spawning in the correct size, as finalizeSpawn does not respect sizes in NBT data. See
@@ -45,10 +46,10 @@ public class SlimeMixin {
 	 * @param pDataTag    the <code>CompoundTag</code> instance
 	 * @return int
 	 */
-	@ModifyConstant(method = "finalizeSpawn", constant = @Constant(intValue = 1, ordinal = 0))
+	@ModifyVariable(method = "finalizeSpawn", at = @At("STORE"), ordinal = 1)
 	private int modifySize(int original, ServerLevelAccessor pLevel, DifficultyInstance pDifficulty, MobSpawnType pReason, @Nullable SpawnGroupData pSpawnData, @Nullable CompoundTag pDataTag) {
 		if (pDataTag != null && pDataTag.contains("Size")) {
-			return pDataTag.getInt("Size");
+			return pDataTag.getInt("Size") + 1;
 		}
 
 		immersiveWeapons$earlySpawnType = pReason;

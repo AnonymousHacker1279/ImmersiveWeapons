@@ -50,7 +50,7 @@
             }
           ],
           "name": "minecraft:diamond_sword",
-          "weight": 5
+          "weight": 6
         },
         {
           "type": "minecraft:item",
@@ -66,7 +66,7 @@
             }
           ],
           "name": "minecraft:diamond_pickaxe",
-          "weight": 5
+          "weight": 6
         },
         {
           "type": "minecraft:item",
@@ -82,7 +82,7 @@
             }
           ],
           "name": "minecraft:diamond_axe",
-          "weight": 5
+          "weight": 6
         },
         {
           "type": "minecraft:item",
@@ -98,7 +98,7 @@
             }
           ],
           "name": "immersiveweapons:tesla_nugget",
-          "weight": 11
+          "weight": 10
         },
         {
           "type": "minecraft:item",
@@ -114,7 +114,7 @@
             }
           ],
           "name": "immersiveweapons:molten_shard",
-          "weight": 11
+          "weight": 10
         },
         {
           "type": "minecraft:item",
@@ -130,7 +130,7 @@
             }
           ],
           "name": "immersiveweapons:ventus_shard",
-          "weight": 11
+          "weight": 10
         },
         {
           "type": "minecraft:item",
@@ -146,7 +146,7 @@
             }
           ],
           "name": "immersiveweapons:starstorm_shard",
-          "weight": 11
+          "weight": 10
         },
         {
           "type": "minecraft:item",
@@ -162,7 +162,12 @@
             }
           ],
           "name": "immersiveweapons:astral_nugget",
-          "weight": 11
+          "weight": 10
+        },
+        {
+          "type": "minecraft:item",
+          "name": "immersiveweapons:kill_counter",
+          "weight": 2
         }
       ],
       "name": "main",

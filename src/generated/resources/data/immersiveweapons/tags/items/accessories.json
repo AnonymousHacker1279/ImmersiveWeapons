@@ -21,6 +21,7 @@
     "immersiveweapons:emerald_ring",
     "immersiveweapons:diamond_ring",
     "immersiveweapons:netherite_ring",
+    "immersiveweapons:death_gem_ring",
     "immersiveweapons:medal_of_adequacy",
     "immersiveweapons:depth_charm",
     "immersiveweapons:insomnia_amulet",
@@ -29,6 +30,9 @@
     "immersiveweapons:night_vision_goggles",
     "immersiveweapons:agility_bracelet",
     "immersiveweapons:bloody_cloth",
-    "immersiveweapons:ancient_scroll"
+    "immersiveweapons:ancient_scroll",
+    "immersiveweapons:holy_mantle",
+    "immersiveweapons:venstral_jar",
+    "immersiveweapons:super_blanket_cape"
   ]
 }

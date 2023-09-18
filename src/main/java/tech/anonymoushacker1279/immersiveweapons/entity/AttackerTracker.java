@@ -3,7 +3,6 @@ package tech.anonymoushacker1279.immersiveweapons.entity;
 import net.minecraft.world.entity.Entity;
 import tech.anonymoushacker1279.immersiveweapons.world.level.loot.number_providers.EntityKillersValue;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -12,15 +11,11 @@ import java.util.List;
  */
 public interface AttackerTracker {
 
-	List<Entity> attackingEntities = new ArrayList<>(5);
-
-	default void attackedByEntity(Entity entity) {
+	default void attackedByEntity(Entity entity, List<Entity> attackingEntities) {
 		if (!attackingEntities.contains(entity)) {
 			attackingEntities.add(entity);
 		}
 	}
 
-	default int getAttackingEntities() {
-		return attackingEntities.size();
-	}
+	int getAttackingEntities();
 }

@@ -36,8 +36,7 @@ import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.entity.AttackerTracker;
 import tech.anonymoushacker1279.immersiveweapons.init.EffectRegistry;
 
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 public class SuperHansEntity extends HansEntity implements AttackerTracker {
 
@@ -50,6 +49,8 @@ public class SuperHansEntity extends HansEntity implements AttackerTracker {
 	@Nullable
 	private BoundingBox championTowerBounds;
 	private boolean towerMinibossesAlive = false;
+
+	List<Entity> attackingEntities = new ArrayList<>(5);
 
 	public SuperHansEntity(EntityType<? extends HansEntity> entityType, Level level) {
 		super(entityType, level);
@@ -143,7 +144,7 @@ public class SuperHansEntity extends HansEntity implements AttackerTracker {
 			bossEvent.setProgress(getHealth() / getMaxHealth());
 
 			if (source.getEntity() != null) {
-				attackedByEntity(source.getEntity());
+				attackedByEntity(source.getEntity(), attackingEntities);
 			}
 		}
 
@@ -275,6 +276,10 @@ public class SuperHansEntity extends HansEntity implements AttackerTracker {
 		}
 
 		bossEvent.setProgress(getHealth() / getMaxHealth());
+	}
+
+	public int getAttackingEntities() {
+		return attackingEntities.size();
 	}
 
 	static class SuperHansMeleeAttackGoal extends MeleeAttackGoal {

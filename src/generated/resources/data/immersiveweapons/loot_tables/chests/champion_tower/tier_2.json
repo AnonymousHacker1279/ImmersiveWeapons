@@ -182,19 +182,15 @@
         },
         {
           "type": "minecraft:item",
-          "functions": [
-            {
-              "add": false,
-              "count": {
-                "type": "minecraft:uniform",
-                "max": 3.0,
-                "min": 2.0
-              },
-              "function": "minecraft:set_count"
-            }
-          ],
-          "name": "minecraft:golden_apple",
-          "weight": 3
+          "name": "immersiveweapons:holy_mantle"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "immersiveweapons:death_gem_ring"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "immersiveweapons:venstral_jar"
         }
       ],
       "name": "main",

@@ -29,10 +29,10 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "immersiveweapons:kill_counter"
+          "name": "immersiveweapons:super_blanket_cape"
         }
       ],
-      "name": "kill_counter",
+      "name": "super_blanket_cape",
       "rolls": {
         "type": "immersiveweapons:entity_killers"
       }

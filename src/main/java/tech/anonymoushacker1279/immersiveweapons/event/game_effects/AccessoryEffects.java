@@ -3,6 +3,7 @@ package tech.anonymoushacker1279.immersiveweapons.event.game_effects;
 import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.event.entity.living.*;
@@ -122,6 +123,17 @@ public class AccessoryEffects {
 		}
 	}
 
+	public static void generalWitherChanceEffects(Player player, LivingEntity damagedEntity) {
+		// Get the total general withering chance from all items
+		double witherChance = AccessoryManager.collectEffects(EffectType.GENERAL_WITHER_CHANCE, player);
+
+		// Roll for wither
+		if (player.getRandom().nextFloat() <= witherChance) {
+			// If wither already exists, increase the duration
+			damagedEntity.addEffect(new MobEffectInstance(MobEffects.WITHER, 140, 0));
+		}
+	}
+
 	public static void experienceEffects(LivingExperienceDropEvent event, Player player) {
 		// Get the total experience boost from all items
 		double experienceBoost = AccessoryManager.collectEffects(EffectType.EXPERIENCE_MODIFIER, player);
@@ -175,6 +187,18 @@ public class AccessoryEffects {
 		if (AccessoryItem.isAccessoryActive(player, ItemRegistry.CELESTIAL_SPIRIT.get()) && player.getRandom().nextFloat() <= 0.15f) {
 			if (player != sourceEntity) {
 				MeteorEntity.create(player.level(), player, null, player.blockPosition(), sourceEntity);
+			}
+		}
+	}
+
+	public static void holyMantleEffect(LivingHurtEvent event, LivingEntity damagedEntity) {
+		// Completely negates damage, incurs 30s cooldown
+		if (damagedEntity instanceof Player player) {
+			if (AccessoryItem.isAccessoryActive(player, ItemRegistry.HOLY_MANTLE.get())) {
+				if (!player.getCooldowns().isOnCooldown(ItemRegistry.HOLY_MANTLE.get())) {
+					player.getCooldowns().addCooldown(ItemRegistry.HOLY_MANTLE.get(), 600);
+					event.setCanceled(true);
+				}
 			}
 		}
 	}

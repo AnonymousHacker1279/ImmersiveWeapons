@@ -449,6 +449,7 @@ public class LanguageGenerator extends IWLanguageProvider {
 		addTooltip("emerald_ring", "Provides the Hero of the Village effect");
 		addTooltip("diamond_ring", "Increase general damage by 4% and provides 4% damage reduction");
 		addTooltip("netherite_ring", "Increase general damage by 5% and provides 5% damage reduction");
+		addTooltip("death_gem_ring", "Inflicts Wither on hit");
 		addTooltip("medal_of_adequacy", "This medal was once awarded to gamingwarrior0 for his wholly undistinguished assistance");
 		addTooltip("depth_charm_1", "Provides damage resistance, a general damage bonus, and increased melee knockback");
 		addTooltip("depth_charm_2", "This effect scales with depth");
@@ -465,6 +466,12 @@ public class LanguageGenerator extends IWLanguageProvider {
 		addTooltip("glove_of_rapid_swinging", "Increases attack speed by 25%");
 		addTooltip("hand_of_doom_1", "Woe, crusade be upon ye, enemies of me");
 		addTooltip("hand_of_doom_2", "Combines the effects of the Melee Master's Molten Glove, Iron Fist, and Glove of Rapid Swinging");
+		addTooltip("holy_mantle_1", "Fully negates damage for a single hit");
+		addTooltip("holy_mantle_2", "Put on the whole armor of God, that ye may be able to stand against the wiles of the devil");
+		addTooltip("holy_mantle_3", "This effect has a 30 second cooldown");
+		addTooltip("venstral_jar", "Grants a double jump ability");
+		addTooltip("super_blanket_cape_1", "Increases movement speed, jump height, slow falling, and temporary immunity to fire and lava");
+		addTooltip("super_blanket_cape_2", "Imagination is a very powerful thing");
 
 		addTooltip("bloody_sacrifice", "You feel a dark presence emanating from this item");
 		addTooltip("bloody_sacrifice_charge_note", "The destruction of life charges something inside");

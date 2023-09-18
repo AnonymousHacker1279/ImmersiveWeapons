@@ -235,6 +235,20 @@ public class ForgeEventSubscriber {
 			}
 		}
 
+		// Handle the cooldown on the Venstral Jar accessory
+		if (player.getCooldowns().isOnCooldown(ItemRegistry.VENSTRAL_JAR.get()) && player.onGround()) {
+			player.getCooldowns().removeCooldown(ItemRegistry.VENSTRAL_JAR.get());
+		}
+
+		// Handle the temporary fire resistance effect on the Super Blanket Cape accessory
+		if (AccessoryItem.isAccessoryActive(player, ItemRegistry.SUPER_BLANKET_CAPE.get())) {
+			if (!player.isInLava() && !player.isOnFire()) {
+				if (!player.hasEffect(MobEffects.FIRE_RESISTANCE)) {
+					player.addEffect(new MobEffectInstance(MobEffects.FIRE_RESISTANCE, 140, 0, true, true));
+				}
+			}
+		}
+
 		// Debug tracing
 		if (DebugTracingData.isDebugTracingEnabled) {
 			if (player.isLocalPlayer()) {
@@ -271,6 +285,7 @@ public class ForgeEventSubscriber {
 
 		// Handle accessory effects
 		if (damagedEntity instanceof Player player) {
+			AccessoryEffects.holyMantleEffect(event, player);
 			AccessoryEffects.damageResistanceEffects(event, player);
 			AccessoryEffects.bleedResistanceEffects(event, player);
 			AccessoryEffects.bleedCancelEffects(event, player);
@@ -285,6 +300,7 @@ public class ForgeEventSubscriber {
 			AccessoryEffects.projectileDamageEffects(event, player);
 			AccessoryEffects.generalDamageEffects(event, player);
 			AccessoryEffects.meleeBleedChanceEffects(event, player, damagedEntity);
+			AccessoryEffects.generalWitherChanceEffects(player, damagedEntity);
 		}
 
 		AccessoryEffects.bloodySacrificeEffect(event, damagedEntity);
@@ -613,7 +629,7 @@ public class ForgeEventSubscriber {
 	@SubscribeEvent
 	public static void anvilUpdateEvent(AnvilUpdateEvent event) {
 		// Kill Counter recipe
-		if (event.getRight().is(ItemRegistry.KILL_COUNTER.get())) {
+		if (event.getRight().is(ItemRegistry.KILL_COUNTER.get()) && !KillCountWeapon.hasKillCount(event.getLeft())) {
 			event.setOutput(KillCountWeapon.initialize(event.getLeft().copy(), 0));
 			event.setCost(5);
 		}
