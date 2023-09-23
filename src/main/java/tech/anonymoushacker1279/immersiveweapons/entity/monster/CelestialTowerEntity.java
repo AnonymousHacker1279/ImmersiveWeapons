@@ -23,6 +23,7 @@ import net.minecraft.world.level.*;
 import org.jetbrains.annotations.Nullable;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.block.decoration.CelestialLanternBlock;
+import tech.anonymoushacker1279.immersiveweapons.entity.AttackerTracker;
 import tech.anonymoushacker1279.immersiveweapons.entity.GrantAdvancementOnDiscovery;
 import tech.anonymoushacker1279.immersiveweapons.entity.ai.goal.*;
 import tech.anonymoushacker1279.immersiveweapons.init.SoundEventRegistry;
@@ -30,7 +31,7 @@ import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
 
 import java.util.*;
 
-public class CelestialTowerEntity extends Monster implements GrantAdvancementOnDiscovery {
+public class CelestialTowerEntity extends Monster implements AttackerTracker, GrantAdvancementOnDiscovery {
 
 	public final ServerBossEvent bossEvent = (ServerBossEvent) (new ServerBossEvent(getDisplayName(), BossBarColor.RED,
 			BossBarOverlay.PROGRESS)).setDarkenScreen(true);
@@ -39,6 +40,8 @@ public class CelestialTowerEntity extends Monster implements GrantAdvancementOnD
 	private int wavesSpawned = 0;
 	private boolean doneSpawningWaves = false;
 	public final static List<CelestialTowerEntity> ALL_TOWERS = new ArrayList<>(3);
+
+	List<Entity> attackingEntities = new ArrayList<>(5);
 
 	public CelestialTowerEntity(EntityType<? extends Monster> type, Level level) {
 		super(type, level);
@@ -101,15 +104,15 @@ public class CelestialTowerEntity extends Monster implements GrantAdvancementOnD
 		// Also increase the XP dropped
 		if (pDifficulty.getDifficulty() == Difficulty.EASY) {
 			totalWavesToSpawn = totalWavesToSpawn + getRandom().nextIntBetweenInclusive(0, 1);
-			xpReward = 25;
+			xpReward = 75;
 		} else if (pDifficulty.getDifficulty() == Difficulty.NORMAL) {
 			totalWavesToSpawn = totalWavesToSpawn + getRandom().nextIntBetweenInclusive(1, 3);
 			waveSizeModifier = 2;
-			xpReward = 50;
+			xpReward = 100;
 		} else if (pDifficulty.getDifficulty() == Difficulty.HARD) {
 			totalWavesToSpawn = totalWavesToSpawn + getRandom().nextIntBetweenInclusive(2, 4);
 			waveSizeModifier = 3;
-			xpReward = 75;
+			xpReward = 125;
 		}
 
 		Objects.requireNonNull(getAttribute(Attributes.ARMOR))
@@ -140,8 +143,14 @@ public class CelestialTowerEntity extends Monster implements GrantAdvancementOnD
 			return super.hurt(pSource, pAmount);
 		}
 		if (doneSpawningWaves) {
-			bossEvent.setProgress(getHealth() / 240f);
-			return super.hurt(pSource, pAmount);
+			boolean doesHurt = super.hurt(pSource, pAmount);
+
+			if (doesHurt && pSource.getEntity() != null) {
+				bossEvent.setProgress(getHealth() / 240f);
+				attackedByEntity(pSource.getEntity(), attackingEntities);
+			}
+
+			return doesHurt;
 		} else {
 			return false;
 		}
@@ -283,5 +292,9 @@ public class CelestialTowerEntity extends Monster implements GrantAdvancementOnD
 
 	public int getWaveSizeModifier() {
 		return waveSizeModifier;
+	}
+
+	public int getAttackingEntities() {
+		return attackingEntities.size();
 	}
 }

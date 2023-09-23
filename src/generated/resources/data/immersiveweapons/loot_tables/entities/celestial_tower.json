@@ -34,7 +34,9 @@
         }
       ],
       "name": "celestial_fragment",
-      "rolls": 1.0
+      "rolls": {
+        "type": "immersiveweapons:entity_killers"
+      }
     },
     {
       "bonus_rolls": 0.0,
@@ -55,7 +57,9 @@
         }
       ],
       "name": "celestial_spirit",
-      "rolls": 1.0
+      "rolls": {
+        "type": "immersiveweapons:entity_killers"
+      }
     }
   ],
   "random_sequence": "immersiveweapons:entities/celestial_tower"

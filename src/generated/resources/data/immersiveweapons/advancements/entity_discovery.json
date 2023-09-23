@@ -79,6 +79,12 @@
       },
       "trigger": "immersiveweapons:entity_discovered"
     },
+    "discover_super_hans": {
+      "conditions": {
+        "entity": "immersiveweapons:super_hans"
+      },
+      "trigger": "immersiveweapons:entity_discovered"
+    },
     "discover_wandering_warrior": {
       "conditions": {
         "entity": "immersiveweapons:wandering_warrior"
@@ -116,6 +122,9 @@
     ],
     [
       "discover_hans"
+    ],
+    [
+      "discover_super_hans"
     ],
     [
       "discover_lava_revenant"

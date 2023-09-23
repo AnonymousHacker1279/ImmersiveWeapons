@@ -73,6 +73,32 @@
       "entries": [
         {
           "type": "minecraft:item",
+          "name": "immersiveweapons:holy_mantle"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "immersiveweapons:venstral_jar"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "immersiveweapons:death_gem_ring"
+        }
+      ],
+      "name": "other_accessories",
+      "rolls": {
+        "type": "immersiveweapons:entity_killers"
+      }
+    },
+    {
+      "bonus_rolls": 0.0,
+      "conditions": [
+        {
+          "condition": "minecraft:killed_by_player"
+        }
+      ],
+      "entries": [
+        {
+          "type": "minecraft:item",
           "functions": [
             {
               "add": false,

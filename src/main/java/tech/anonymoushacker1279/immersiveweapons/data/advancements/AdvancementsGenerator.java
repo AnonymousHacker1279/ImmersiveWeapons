@@ -625,6 +625,19 @@ public class AdvancementsGenerator extends ForgeAdvancementProvider {
 				.rewards(AdvancementRewards.Builder.experience(100))
 				.save(consumer, "immersiveweapons:starstorm_armor");
 
+		// Padded Leather advancements
+		Builder.advancement().parent(root)
+				.display(ItemRegistry.PADDED_LEATHER_HELMET.get(),
+						Component.translatable("advancements.immersiveweapons.padded_leather_armor.title"),
+						Component.translatable("advancements.immersiveweapons.padded_leather_armor.description"),
+						null, FrameType.GOAL, true, true, false)
+				.addCriterion("hold",
+						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.MOLTEN_HELMET.get(),
+								ItemRegistry.MOLTEN_CHESTPLATE.get(), ItemRegistry.MOLTEN_LEGGINGS.get(),
+								ItemRegistry.MOLTEN_BOOTS.get()))
+				.rewards(AdvancementRewards.Builder.experience(100))
+				.save(consumer, "immersiveweapons:padded_leather_armor");
+
 		// Tool advancements
 		Advancement craftToolRod = Builder.advancement().parent(root)
 				.display(ItemRegistry.WOODEN_TOOL_ROD.get(),
@@ -645,17 +658,27 @@ public class AdvancementsGenerator extends ForgeAdvancementProvider {
 				.addCriterion("hold1",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.STONE_PIKE.get()))
 				.addCriterion("hold2",
-						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.IRON_PIKE.get()))
+						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.GOLDEN_PIKE.get()))
 				.addCriterion("hold3",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.COPPER_PIKE.get()))
 				.addCriterion("hold4",
-						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.GOLDEN_PIKE.get()))
+						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.IRON_PIKE.get()))
 				.addCriterion("hold5",
-						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.DIAMOND_PIKE.get()))
-				.addCriterion("hold6",
-						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.NETHERITE_PIKE.get()))
-				.addCriterion("hold7",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.COBALT_PIKE.get()))
+				.addCriterion("hold6",
+						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.DIAMOND_PIKE.get()))
+				.addCriterion("hold7",
+						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.NETHERITE_PIKE.get()))
+				.addCriterion("hold8",
+						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.MOLTEN_PIKE.get()))
+				.addCriterion("hold9",
+						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.TESLA_PIKE.get()))
+				.addCriterion("hold10",
+						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.VENTUS_PIKE.get()))
+				.addCriterion("hold11",
+						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.ASTRAL_PIKE.get()))
+				.addCriterion("hold12",
+						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.STARSTORM_PIKE.get()))
 				.requirements(RequirementsStrategy.OR)
 				.save(consumer, "immersiveweapons:pike");
 
@@ -676,6 +699,8 @@ public class AdvancementsGenerator extends ForgeAdvancementProvider {
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.DIAMOND_SHARD.get()))
 				.addCriterion("hold5",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.VENTUS_SHARD.get()))
+				.addCriterion("hold6",
+						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.STARSTORM_SHARD.get()))
 				.requirements(RequirementsStrategy.OR)
 				.save(consumer, "immersiveweapons:shards");
 
@@ -785,6 +810,15 @@ public class AdvancementsGenerator extends ForgeAdvancementProvider {
 				.save(consumer, "immersiveweapons:musket");
 
 		Builder.advancement().parent(smallPartsTable)
+				.display(ItemRegistry.HAND_CANNON.get(),
+						Component.translatable("advancements.immersiveweapons.hand_cannon.title"),
+						Component.translatable("advancements.immersiveweapons.hand_cannon.description"),
+						null, FrameType.GOAL, true, true, false)
+				.addCriterion("hold",
+						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.HAND_CANNON.get()))
+				.save(consumer, "immersiveweapons:hand_cannon");
+
+		Builder.advancement().parent(smallPartsTable)
 				.display(ItemRegistry.SMOKE_GRENADE.get(),
 						Component.translatable("advancements.immersiveweapons.smoke_grenade.title"),
 						Component.translatable("advancements.immersiveweapons.smoke_grenade.description"),
@@ -792,7 +826,6 @@ public class AdvancementsGenerator extends ForgeAdvancementProvider {
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.SMOKE_GRENADE_GREEN.get()))
 				.save(consumer, "immersiveweapons:smoke_grenade");
-
 
 		Advancement craftAlcohol = Builder.advancement().parent(root)
 				.display(ItemRegistry.BOTTLE_OF_ALCOHOL.get(),
@@ -846,11 +879,21 @@ public class AdvancementsGenerator extends ForgeAdvancementProvider {
 				.addCriterion("hold4",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.IRON_GAUNTLET.get()))
 				.addCriterion("hold5",
-						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.DIAMOND_GAUNTLET.get()))
-				.addCriterion("hold6",
-						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.NETHERITE_GAUNTLET.get()))
-				.addCriterion("hold7",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.COBALT_GAUNTLET.get()))
+				.addCriterion("hold6",
+						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.DIAMOND_GAUNTLET.get()))
+				.addCriterion("hold7",
+						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.NETHERITE_GAUNTLET.get()))
+				.addCriterion("hold8",
+						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.MOLTEN_GAUNTLET.get()))
+				.addCriterion("hold9",
+						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.TESLA_GAUNTLET.get()))
+				.addCriterion("hold10",
+						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.VENTUS_GAUNTLET.get()))
+				.addCriterion("hold11",
+						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.STARSTORM_GAUNTLET.get()))
+				.addCriterion("hold12",
+						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.ASTRAL_GAUNTLET.get()))
 				.requirements(RequirementsStrategy.OR)
 				.save(consumer, "immersiveweapons:gauntlet");
 
@@ -1077,6 +1120,9 @@ public class AdvancementsGenerator extends ForgeAdvancementProvider {
 				.addCriterion("discover_hans", new TriggerInstance(
 						ContextAwarePredicate.ANY,
 						EntityRegistry.HANS_ENTITY.getId()))
+				.addCriterion("discover_super_hans", new TriggerInstance(
+						ContextAwarePredicate.ANY,
+						EntityRegistry.SUPER_HANS_ENTITY.getId()))
 				.addCriterion("discover_lava_revenant", new TriggerInstance(
 						ContextAwarePredicate.ANY,
 						EntityRegistry.LAVA_REVENANT_ENTITY.getId()))
@@ -1161,6 +1207,17 @@ public class AdvancementsGenerator extends ForgeAdvancementProvider {
 						EntityRegistry.HANS_ENTITY.getId()))
 				.rewards(AdvancementRewards.Builder.experience(20))
 				.save(consumer, "immersiveweapons:discover_hans");
+
+		Builder.advancement().parent(entity_discovery)
+				.display(BlockItemRegistry.HANS_HEAD_ITEM.get(),
+						Component.translatable("advancements.immersiveweapons.discover_super_hans.title"),
+						Component.translatable("advancements.immersiveweapons.discover_super_hans.description"),
+						null, FrameType.TASK, true, true, false)
+				.addCriterion("discover", new TriggerInstance(
+						ContextAwarePredicate.ANY,
+						EntityRegistry.SUPER_HANS_ENTITY.getId()))
+				.rewards(AdvancementRewards.Builder.experience(20))
+				.save(consumer, "immersiveweapons:discover_super_hans");
 
 		Builder.advancement().parent(entity_discovery)
 				.display(ItemRegistry.SULFUR.get(),
@@ -1329,6 +1386,14 @@ public class AdvancementsGenerator extends ForgeAdvancementProvider {
 																.build())
 														.build()))))
 				.save(consumer, "immersiveweapons:used_syringe");
+
+		Builder.advancement().parent(root)
+				.display(ItemRegistry.KILL_COUNTER.get(),
+						Component.translatable("advancements.immersiveweapons.kill_counter.title"),
+						Component.translatable("advancements.immersiveweapons.kill_counter.description"),
+						null, FrameType.CHALLENGE, true, true, true)
+				.addCriterion("", new ImpossibleTrigger.TriggerInstance())
+				.save(consumer, "immersiveweapons:kill_counter");
 
 		Builder.advancement().parent(root)
 				.display(ItemRegistry.STARSTORM_ARROW.get(),

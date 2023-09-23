@@ -1,0 +1,57 @@
+{
+  "parent": "immersiveweapons:root",
+  "criteria": {
+    "hold": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "immersiveweapons:molten_helmet"
+            ]
+          },
+          {
+            "items": [
+              "immersiveweapons:molten_chestplate"
+            ]
+          },
+          {
+            "items": [
+              "immersiveweapons:molten_leggings"
+            ]
+          },
+          {
+            "items": [
+              "immersiveweapons:molten_boots"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.immersiveweapons.padded_leather_armor.description"
+    },
+    "frame": "goal",
+    "hidden": false,
+    "icon": {
+      "item": "immersiveweapons:padded_leather_helmet",
+      "nbt": "{Damage:0}"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.immersiveweapons.padded_leather_armor.title"
+    }
+  },
+  "requirements": [
+    [
+      "hold"
+    ]
+  ],
+  "rewards": {
+    "experience": 100
+  },
+  "sends_telemetry_event": true
+}

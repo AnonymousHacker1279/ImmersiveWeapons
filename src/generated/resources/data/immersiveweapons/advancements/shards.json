@@ -72,6 +72,18 @@
         ]
       },
       "trigger": "minecraft:inventory_changed"
+    },
+    "hold6": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "immersiveweapons:starstorm_shard"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
     }
   },
   "display": {
@@ -96,7 +108,8 @@
       "hold2",
       "hold3",
       "hold4",
-      "hold5"
+      "hold5",
+      "hold6"
     ]
   ],
   "sends_telemetry_event": true

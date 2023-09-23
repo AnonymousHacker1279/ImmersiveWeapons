@@ -732,6 +732,10 @@ public class LanguageGenerator extends IWLanguageProvider {
 		addAdvancement("cobalt_tools.title", "Who Needs Iron Tools");
 		addAdvancement("cobalt_tools.description", "Obtain a full set of cobalt tools");
 
+		// Padded Leather advancements
+		addAdvancement("padded_leather_armor.title", "Total Silence");
+		addAdvancement("padded_leather_armor.description", "Wear a full set of padded leather armor");
+
 		// Guns
 		addAdvancement("flintlock_pistol.title", "Firepower");
 		addAdvancement("flintlock_pistol.description", "Craft a flintlock pistol");
@@ -741,6 +745,8 @@ public class LanguageGenerator extends IWLanguageProvider {
 		addAdvancement("flare_gun.description", "Craft a flare gun");
 		addAdvancement("musket.title", "Snipin's a good job!");
 		addAdvancement("musket.description", "Craft a musket");
+		addAdvancement("hand_cannon.title", "Big Boom");
+		addAdvancement("hand_cannon.description", "Craft a hand cannon");
 
 		// Other weapons
 		addAdvancement("pike.title", "Long Distance Stabbing");
@@ -833,6 +839,8 @@ public class LanguageGenerator extends IWLanguageProvider {
 		addAdvancement("cloud.description", "Walk across cloud blocks high in the air");
 		addAdvancement("overkill.title", "Overkill");
 		addAdvancement("overkill.description", "Deal 175 damage in a single hit");
+		addAdvancement("kill_counter.title", "Kill Counter");
+		addAdvancement("kill_counter.description", "Obtain a Kill Counter");
 
 		// Accessories
 		addAdvancement("accessories.title", "Accessories!");
@@ -853,6 +861,8 @@ public class LanguageGenerator extends IWLanguageProvider {
 		addAdvancement("discover_wandering_warrior.description", "Discover a Wandering Warrior, a creature of the wilderness");
 		addAdvancement("discover_hans.title", "O GREAT HANS");
 		addAdvancement("discover_hans.description", "WITNESS THE POWER OF THE GREAT HANS, BOW BEFORE HIS GREATNESS");
+		addAdvancement("discover_super_hans.title", "O GREATER HANS");
+		addAdvancement("discover_super_hans.description", "The mighty being at the top of a great Champion Tower");
 		addAdvancement("discover_lava_revenant.title", "Phantom of Tiltros");
 		addAdvancement("discover_lava_revenant.description", "Discover a Lava Revenant, a phantom reborn out of the lava pits of Tiltros");
 		addAdvancement("discover_rock_spider.title", "Spiders... But Smaller");
