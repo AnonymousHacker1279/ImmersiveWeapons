@@ -94,6 +94,29 @@
       "conditions": [
         {
           "condition": "minecraft:killed_by_player"
+        },
+        {
+          "chance": 0.1,
+          "condition": "minecraft:random_chance_with_looting",
+          "looting_multiplier": 0.02
+        }
+      ],
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "immersiveweapons:kill_counter"
+        }
+      ],
+      "name": "kill_counter",
+      "rolls": {
+        "type": "immersiveweapons:entity_killers"
+      }
+    },
+    {
+      "bonus_rolls": 0.0,
+      "conditions": [
+        {
+          "condition": "minecraft:killed_by_player"
         }
       ],
       "entries": [

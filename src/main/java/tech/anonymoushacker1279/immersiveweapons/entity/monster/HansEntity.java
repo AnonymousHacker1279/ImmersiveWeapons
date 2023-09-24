@@ -85,6 +85,11 @@ public class HansEntity extends AbstractWanderingWarriorEntity {
 		setItemInHand(InteractionHand.MAIN_HAND, new ItemStack(Items.IRON_SWORD));
 	}
 
+	@Override
+	protected float getEquipmentDropChance(EquipmentSlot slot) {
+		return 0.0f;
+	}
+
 	/**
 	 * Runs when the entity is hurt.
 	 *
