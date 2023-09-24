@@ -25,6 +25,42 @@
       },
       "trigger": "minecraft:inventory_changed"
     },
+    "hold10": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "immersiveweapons:ventus_gauntlet"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "hold11": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "immersiveweapons:starstorm_gauntlet"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "hold12": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "immersiveweapons:astral_gauntlet"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
     "hold2": {
       "conditions": {
         "items": [
@@ -66,7 +102,7 @@
         "items": [
           {
             "items": [
-              "immersiveweapons:diamond_gauntlet"
+              "immersiveweapons:cobalt_gauntlet"
             ]
           }
         ]
@@ -78,7 +114,7 @@
         "items": [
           {
             "items": [
-              "immersiveweapons:netherite_gauntlet"
+              "immersiveweapons:diamond_gauntlet"
             ]
           }
         ]
@@ -90,7 +126,31 @@
         "items": [
           {
             "items": [
-              "immersiveweapons:cobalt_gauntlet"
+              "immersiveweapons:netherite_gauntlet"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "hold8": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "immersiveweapons:molten_gauntlet"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "hold9": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "immersiveweapons:tesla_gauntlet"
             ]
           }
         ]
@@ -123,7 +183,12 @@
       "hold4",
       "hold5",
       "hold6",
-      "hold7"
+      "hold7",
+      "hold8",
+      "hold9",
+      "hold10",
+      "hold11",
+      "hold12"
     ]
   ],
   "sends_telemetry_event": true

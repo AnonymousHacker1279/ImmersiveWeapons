@@ -1,31 +1,20 @@
-This major update adds a new endgame challenge, Champion Towers. Of course, there are a bunch of other new features and
-bugfixes as well.
+This minor update includes a handful of bugfixes and tweaks.
 
 ### Feature Changes / Additions
 
-- Champion Tower structures - a rarely generating tower with high-level mobs inside on each floor. At the top is
-  Super Hans, a much more deadly variant of Hans.
-- Padded Leather Armor - while it may not be the most protective, it neutralizes movement vibrations entirely
-- Kill Count weapon system - track weapon kills and unlock special name tiers as you go
-- Hand Cannon - a powerful but slow firing weapon that launches cannonballs (or their exploding variants)
-- Nine new accessory items
+- Tossing a Hans' Blessing into a fire block will now summon a Super Hans while inside a tower structure, allowing him
+  to be easily respawned instead of having to find multiple towers
+- Loot table changes:
+	- Champion Tower chests have been rebalanced slightly to make the rare items less rare
+	- Super Hans now has a pool to include the three accessory items which were previously only accessible through
+	  champion tower chests, and has a pool to occasionally drop Kill Counters
+	- Hans now has a pool to rarely drop Kill Counters, and no longer has a pool to drop leather
+	- Celestial Towers now roll each pool based on the number of players that dealt damage, similar to
+	  Super Hans
 
 ### Bugfixes
 
-- Fix bleed effect not bypassing armor and enchantment defense
-- Fix damage vulnerability effect calculation being too high past level one
-- Fix wandering warrior equipment bugs when spawning
-- Fix berserk spawn chances for wandering warriors not being very dynamic between difficulties
-- Fix projectiles seemingly zigzagging at high velocity
-- Fix Celestial Tower armor values being too high on Hard difficulty, making it nearly invulnerable
-
-### Other Improvements
-
-- Tweak bleed effect to deal more damage based on level, with each level increasing damage by 25%
-- Include the mortar damage type in the `is_projectile` tag
-- Tweak damage vulnerability effect to only be half as effective against entities in the `bosses` tag
-- Various Evil Eye improvements:
-	- Slightly increase player scanning range based on difficulty and size
-	- Now target players when damaged by them
-	- Now only drop loot when killed by a player
-- Various internal cleanups
+- Fix enchantment tooltips at the max Skygazer level not being colored correctly when a Skygazer has not been loaded
+  into the world
+- Adjust texture for Champion Base blocks to improve compatibility with mods like Rubidium
+- Added missing advancements for some content in the last update, as well as updating some other old advancements

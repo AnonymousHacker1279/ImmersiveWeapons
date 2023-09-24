@@ -25,12 +25,48 @@
       },
       "trigger": "minecraft:inventory_changed"
     },
+    "hold10": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "immersiveweapons:ventus_pike"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "hold11": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "immersiveweapons:astral_pike"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "hold12": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "immersiveweapons:starstorm_pike"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
     "hold2": {
       "conditions": {
         "items": [
           {
             "items": [
-              "immersiveweapons:iron_pike"
+              "immersiveweapons:golden_pike"
             ]
           }
         ]
@@ -54,7 +90,7 @@
         "items": [
           {
             "items": [
-              "immersiveweapons:golden_pike"
+              "immersiveweapons:iron_pike"
             ]
           }
         ]
@@ -66,7 +102,7 @@
         "items": [
           {
             "items": [
-              "immersiveweapons:diamond_pike"
+              "immersiveweapons:cobalt_pike"
             ]
           }
         ]
@@ -78,7 +114,7 @@
         "items": [
           {
             "items": [
-              "immersiveweapons:netherite_pike"
+              "immersiveweapons:diamond_pike"
             ]
           }
         ]
@@ -90,7 +126,31 @@
         "items": [
           {
             "items": [
-              "immersiveweapons:cobalt_pike"
+              "immersiveweapons:netherite_pike"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "hold8": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "immersiveweapons:molten_pike"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "hold9": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "immersiveweapons:tesla_pike"
             ]
           }
         ]
@@ -123,7 +183,12 @@
       "hold4",
       "hold5",
       "hold6",
-      "hold7"
+      "hold7",
+      "hold8",
+      "hold9",
+      "hold10",
+      "hold11",
+      "hold12"
     ]
   ],
   "sends_telemetry_event": true

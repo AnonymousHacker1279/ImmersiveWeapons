@@ -6,6 +6,8 @@ import net.minecraft.world.item.alchemy.Potions;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.FlowerPotBlock;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
+import tech.anonymoushacker1279.immersiveweapons.config.ConfigHelper.TomlConfigOps;
+import tech.anonymoushacker1279.immersiveweapons.entity.npc.SkygazerEntity;
 import tech.anonymoushacker1279.immersiveweapons.item.materials.CustomArmorMaterials;
 
 public class PostSetupHandler {
@@ -76,5 +78,10 @@ public class PostSetupHandler {
 				Potions.LONG_STRENGTH,
 				Items.FERMENTED_SPIDER_EYE,
 				PotionRegistry.LONG_DEATH_POTION.get());
+
+		// Populate enchant cap map
+		TomlConfigOps.INSTANCE.getMapValues(ImmersiveWeapons.COMMON_CONFIG.skygazerEnchantCaps().get())
+				.result()
+				.ifPresent(map -> map.forEach((pair) -> SkygazerEntity.ENCHANT_CAPS.put((String) pair.getFirst(), (Integer) pair.getSecond())));
 	}
 }

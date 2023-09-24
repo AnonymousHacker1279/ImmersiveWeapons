@@ -18,7 +18,7 @@
             }
           ],
           "name": "immersiveweapons:diamond_musket_ball",
-          "weight": 18
+          "weight": 19
         },
         {
           "type": "minecraft:item",
@@ -34,7 +34,7 @@
             }
           ],
           "name": "immersiveweapons:diamond_arrow",
-          "weight": 18
+          "weight": 19
         },
         {
           "type": "minecraft:item",
@@ -50,7 +50,7 @@
             }
           ],
           "name": "minecraft:netherite_sword",
-          "weight": 7
+          "weight": 5
         },
         {
           "type": "minecraft:item",
@@ -66,7 +66,7 @@
             }
           ],
           "name": "minecraft:netherite_pickaxe",
-          "weight": 7
+          "weight": 5
         },
         {
           "type": "minecraft:item",
@@ -82,7 +82,7 @@
             }
           ],
           "name": "minecraft:netherite_axe",
-          "weight": 7
+          "weight": 5
         },
         {
           "type": "minecraft:item",
@@ -98,7 +98,7 @@
             }
           ],
           "name": "minecraft:netherite_shovel",
-          "weight": 7
+          "weight": 5
         },
         {
           "type": "minecraft:item",
@@ -114,7 +114,7 @@
             }
           ],
           "name": "minecraft:netherite_hoe",
-          "weight": 7
+          "weight": 5
         },
         {
           "type": "minecraft:item",
@@ -130,7 +130,7 @@
             }
           ],
           "name": "minecraft:diamond_helmet",
-          "weight": 7
+          "weight": 5
         },
         {
           "type": "minecraft:item",
@@ -146,7 +146,7 @@
             }
           ],
           "name": "minecraft:diamond_chestplate",
-          "weight": 7
+          "weight": 5
         },
         {
           "type": "minecraft:item",
@@ -162,7 +162,7 @@
             }
           ],
           "name": "minecraft:diamond_leggings",
-          "weight": 7
+          "weight": 5
         },
         {
           "type": "minecraft:item",
@@ -178,19 +178,27 @@
             }
           ],
           "name": "minecraft:diamond_boots",
+          "weight": 5
+        },
+        {
+          "type": "minecraft:item",
+          "name": "immersiveweapons:kill_counter",
           "weight": 7
         },
         {
           "type": "minecraft:item",
-          "name": "immersiveweapons:holy_mantle"
+          "name": "immersiveweapons:holy_mantle",
+          "weight": 4
         },
         {
           "type": "minecraft:item",
-          "name": "immersiveweapons:death_gem_ring"
+          "name": "immersiveweapons:death_gem_ring",
+          "weight": 4
         },
         {
           "type": "minecraft:item",
-          "name": "immersiveweapons:venstral_jar"
+          "name": "immersiveweapons:venstral_jar",
+          "weight": 4
         }
       ],
       "name": "main",

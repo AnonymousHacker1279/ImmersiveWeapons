@@ -1,20 +1,16 @@
 package tech.anonymoushacker1279.immersiveweapons.mixin;
 
+import com.llamalad7.mixinextras.sugar.Local;
 import net.minecraft.ChatFormatting;
-import net.minecraft.nbt.ListTag;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
-import net.minecraftforge.registries.ForgeRegistries;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Overwrite;
-import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.ModifyArg;
 import tech.anonymoushacker1279.immersiveweapons.entity.npc.SkygazerEntity;
-
-import java.util.List;
-import java.util.Map;
 
 /**
  * Re-color enchantment names at the max Skygazer cap.
@@ -22,30 +18,28 @@ import java.util.Map;
 @Mixin(ItemStack.class)
 public abstract class ItemStackMixin {
 
-	/**
-	 * @author AnonymousHacker1279
-	 * @reason Re-colors enchantment names in tooltips to be gold if at the maximum Skygazer cap.
-	 */
-	@Overwrite
-	public static void appendEnchantmentNames(List<Component> pTooltipComponents, ListTag pStoredEnchantments) {
-		// Check the tooltip components, anything at the Skygazer max level should appear gold
-		Map<Enchantment, Integer> enchants = EnchantmentHelper.deserializeEnchantments(pStoredEnchantments);
+	@ModifyArg(
+			method = "lambda$appendEnchantmentNames$5",
+			at = @At(
+					value = "INVOKE",
+					target = "Ljava/util/List;add(Ljava/lang/Object;)Z"
+			),
+			remap = false
+	)
+	private static Object recolorEnchantmentNames(Object object, @Local CompoundTag compoundTag) {
+		if (object instanceof Component component) {
+			ResourceLocation enchantmentLocation = EnchantmentHelper.getEnchantmentId(compoundTag);
+			int enchantmentLevel = EnchantmentHelper.getEnchantmentLevel(compoundTag);
 
-		enchants.forEach((enchantment, level) -> {
-			ResourceLocation enchantmentLocation = ForgeRegistries.ENCHANTMENTS.getKey(enchantment);
+			if (enchantmentLocation != null) {
+				int maxLevel = SkygazerEntity.ENCHANT_CAPS.getOrDefault(enchantmentLocation.toString(), -1);
 
-			if (enchantmentLocation == null) {
-				ImmersiveWeapons.LOGGER.error("Failed to locate enchantment {} in registry", enchantment);
-				return;
+				if (enchantmentLevel >= maxLevel && maxLevel != -1) {
+					return component.copy().withStyle(ChatFormatting.GOLD);
+				}
 			}
+		}
 
-			int maxLevel = SkygazerEntity.ENCHANT_CAPS.getOrDefault(enchantmentLocation.toString(), -1);
-
-			if (level >= maxLevel && maxLevel != -1) {
-				pTooltipComponents.add(enchantment.getFullname(level).copy().withStyle(ChatFormatting.GOLD));
-			} else {
-				pTooltipComponents.add(enchantment.getFullname(level));
-			}
-		});
+		return object;
 	}
 }

@@ -18,7 +18,7 @@
             }
           ],
           "name": "immersiveweapons:diamond_musket_ball",
-          "weight": 15
+          "weight": 14
         },
         {
           "type": "minecraft:item",
@@ -34,7 +34,7 @@
             }
           ],
           "name": "immersiveweapons:diamond_arrow",
-          "weight": 15
+          "weight": 14
         },
         {
           "type": "minecraft:item",
@@ -167,7 +167,7 @@
         {
           "type": "minecraft:item",
           "name": "immersiveweapons:kill_counter",
-          "weight": 2
+          "weight": 4
         }
       ],
       "name": "main",

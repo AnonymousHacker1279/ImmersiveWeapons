@@ -43,7 +43,7 @@ public class SuperHansEntity extends HansEntity implements AttackerTracker {
 	public final ServerBossEvent bossEvent = new ServerBossEvent(getDisplayName(), BossBarColor.PURPLE,
 			BossBarOverlay.PROGRESS);
 
-	private static final ResourceKey<Structure> championTowerKey = ResourceKey.create(Registries.STRUCTURE,
+	public static final ResourceKey<Structure> championTowerKey = ResourceKey.create(Registries.STRUCTURE,
 			new ResourceLocation(ImmersiveWeapons.MOD_ID, "champion_tower"));
 	private boolean spawnedInChampionTower = false;
 	@Nullable

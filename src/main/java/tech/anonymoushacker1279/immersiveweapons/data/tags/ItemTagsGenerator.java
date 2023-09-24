@@ -65,6 +65,8 @@ public class ItemTagsGenerator extends ItemTagsProvider {
 		tag(ForgeItemTagGroups.METAL_NUGGETS).addTags(ForgeItemTagGroups.COBALT_NUGGETS, ForgeItemTagGroups.COPPER_NUGGETS,
 				Tags.Items.NUGGETS_IRON, Tags.Items.NUGGETS_GOLD);
 		tag(Tags.Items.NUGGETS).addTag(ForgeItemTagGroups.METAL_NUGGETS);
+		tag(Tags.Items.NUGGETS).addTag(IWItemTagGroups.TESLA_NUGGETS);
+		tag(Tags.Items.NUGGETS).addTag(IWItemTagGroups.ASTRAL_NUGGETS);
 
 		// Dust tags
 		tag(ForgeItemTagGroups.SULFUR_DUSTS).add(ItemRegistry.SULFUR.get());
