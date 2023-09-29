@@ -18,14 +18,12 @@ import net.minecraft.world.entity.ai.goal.*;
 import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
 import net.minecraft.world.entity.animal.IronGolem;
 import net.minecraft.world.entity.monster.Monster;
-import net.minecraft.world.entity.npc.Villager;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.phys.AABB;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.network.NetworkEvent;
@@ -33,11 +31,11 @@ import net.minecraftforge.network.NetworkEvent.Context;
 import net.minecraftforge.network.PacketDistributor;
 import org.jetbrains.annotations.Nullable;
 import tech.anonymoushacker1279.immersiveweapons.entity.GrantAdvancementOnDiscovery;
+import tech.anonymoushacker1279.immersiveweapons.entity.ai.goal.FieldMedicHealEntitiesGoal;
 import tech.anonymoushacker1279.immersiveweapons.init.*;
 import tech.anonymoushacker1279.immersiveweapons.world.level.IWDamageSources;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Supplier;
 
@@ -45,43 +43,30 @@ public abstract class AbstractFieldMedicEntity extends PathfinderMob implements 
 
 	private final MeleeAttackGoal meleeAttackGoal = new MeleeAttackGoal(this, 1.2D, false);
 
-	private final List<Class<? extends PathfinderMob>> checkedEntities = new ArrayList<>(4);
-	private int checkForHurtEntitiesCooldown;
-	@Nullable
-	private LivingEntity currentlyTargetedEntity = null;
-	@Nullable
-	private LivingEntity lastTargetedEntity = null;
-	private int unlockLastTargetedEntityCooldown = 0;
-	private int healCooldown = 0;
-	private int randomHealTicks = 0;
-
+	private int selfHealCooldown = 0;
 
 	AbstractFieldMedicEntity(EntityType<? extends PathfinderMob> type, Level level) {
 		super(type, level);
-		setCombatTask();
-
-		checkedEntities.add(MinutemanEntity.class);
-		checkedEntities.add(IronGolem.class);
-		checkedEntities.add(Villager.class);
-		checkedEntities.add(AbstractFieldMedicEntity.class);
-		checkForHurtEntitiesCooldown = 0;
+		prepareForCombat();
 	}
 
 	public static AttributeSupplier.Builder registerAttributes() {
 		return Monster.createMonsterAttributes()
 				.add(Attributes.MOVEMENT_SPEED, 0.3D)
-				.add(Attributes.ARMOR, 2.75D);
+				.add(Attributes.ARMOR, 2.5D);
 	}
 
 	@Override
 	protected void registerGoals() {
 		goalSelector.addGoal(1, new FloatGoal(this));
+		goalSelector.addGoal(2, new FieldMedicHealEntitiesGoal(this));
 		goalSelector.addGoal(4, new WaterAvoidingRandomStrollGoal(this, 1.0D));
-		goalSelector.addGoal(5, new MoveBackToVillageGoal(this, 0.6D, false));
-		goalSelector.addGoal(4, new GolemRandomStrollInVillageGoal(this, 0.6D));
+		goalSelector.addGoal(4, new MoveBackToVillageGoal(this, 0.6D, false));
+		goalSelector.addGoal(4, new MoveThroughVillageGoal(this, 1.0D, false, 6, () -> true));
 		goalSelector.addGoal(7, new LookAtPlayerGoal(this, Player.class, 8.0F));
-		goalSelector.addGoal(100, new RandomLookAroundGoal(this));
-		goalSelector.addGoal(3, new OpenDoorGoal(this, true));
+		goalSelector.addGoal(7, new RandomLookAroundGoal(this));
+		goalSelector.addGoal(4, new OpenDoorGoal(this, true));
+
 		targetSelector.addGoal(1, new HurtByTargetGoal(this, AbstractMinutemanEntity.class, IronGolem.class));
 	}
 
@@ -96,26 +81,13 @@ public abstract class AbstractFieldMedicEntity extends PathfinderMob implements 
 	public void aiStep() {
 		super.aiStep();
 
-		checkForHurtEntities(checkedEntities);
-
-		if (checkForHurtEntitiesCooldown > 0) {
-			checkForHurtEntitiesCooldown--;
-		}
-
-		if (healCooldown > 0) {
-			healCooldown--;
+		if (selfHealCooldown > 0) {
+			selfHealCooldown--;
 		}
 
 		if (!level().isClientSide) {
-			if (getHealth() <= getMaxHealth()) {
-				if (randomHealTicks >= 20) {
-					heal();
-					randomHealTicks = 0;
-				} else {
-					if (random.nextFloat() <= 0.01f) {
-						randomHealTicks++;
-					}
-				}
+			if (getHealth() < getMaxHealth() && selfHealCooldown == 0) {
+				healSelf();
 			}
 		}
 
@@ -127,10 +99,9 @@ public abstract class AbstractFieldMedicEntity extends PathfinderMob implements 
 	                                    MobSpawnType mobSpawnType, @Nullable SpawnGroupData groupData,
 	                                    @Nullable CompoundTag compoundTag) {
 
-		groupData = super.finalizeSpawn(level, difficultyInstance, mobSpawnType, groupData, compoundTag);
 		populateDefaultEquipmentSlots(random, difficultyInstance);
 		populateDefaultEquipmentEnchantments(random, difficultyInstance);
-		setCombatTask();
+		prepareForCombat();
 		setCanPickUpLoot(random.nextFloat() < 0.55F * difficultyInstance.getSpecialMultiplier());
 
 		if (getItemBySlot(EquipmentSlot.HEAD).isEmpty()) {
@@ -145,23 +116,22 @@ public abstract class AbstractFieldMedicEntity extends PathfinderMob implements 
 			}
 		}
 
-		return groupData;
+		return super.finalizeSpawn(level, difficultyInstance, mobSpawnType, groupData, compoundTag);
 	}
 
-	private void setCombatTask() {
+	private void prepareForCombat() {
 		if (!level().isClientSide) {
 			goalSelector.removeGoal(meleeAttackGoal);
 			setItemInHand(InteractionHand.MAIN_HAND, new ItemStack(ItemRegistry.USED_SYRINGE.get()));
-			goalSelector.addGoal(1, meleeAttackGoal);
+			goalSelector.addGoal(3, meleeAttackGoal);
 		}
 	}
 
 	@Override
 	public boolean hurt(DamageSource source, float amount) {
-		super.hurt(source, amount);
-		if (amount > 0 && !(source.getEntity() instanceof AbstractMinutemanEntity)
-				&& !(source.getEntity() instanceof IronGolem)
-				&& source.getEntity() instanceof Player || source.getEntity() instanceof Mob) {
+		if (amount > 0 && !(source.getEntity() instanceof MinutemanEntity) && !(source.getEntity() instanceof IronGolem)) {
+
+			super.hurt(source, amount);
 
 			if (source.getEntity() instanceof Player player) {
 				if (player.isCreative()) {
@@ -169,24 +139,21 @@ public abstract class AbstractFieldMedicEntity extends PathfinderMob implements 
 				}
 			}
 
-			// Heal itself
-			if (healCooldown == 0) {
-				heal();
+			if (source.getEntity() instanceof LivingEntity livingEntity) {
+				setTarget(livingEntity);
+				prepareForCombat();
+
+				// Aggro all other minutemen in the area
+				List<MinutemanEntity> nearbyMinutemen = level().getEntitiesOfClass(MinutemanEntity.class, getBoundingBox()
+						.inflate(48.0D, 8.0D, 48.0D));
+
+				for (MinutemanEntity minutemanEntity : nearbyMinutemen) {
+					minutemanEntity.setTarget(livingEntity);
+					minutemanEntity.setPersistentAngerTarget(livingEntity.getUUID());
+				}
+
+				return true;
 			}
-
-			setTarget((LivingEntity) source.getEntity());
-			setCombatTask();
-
-			// Aggro all other minutemen in the area
-			List<MinutemanEntity> nearbyMinutemen = level().getEntitiesOfClass(MinutemanEntity.class,
-					(new AABB(blockPosition())).inflate(48.0D, 8.0D, 48.0D));
-
-			for (MinutemanEntity minutemanEntity : nearbyMinutemen) {
-				minutemanEntity.setTarget((LivingEntity) source.getEntity());
-				minutemanEntity.setPersistentAngerTarget(source.getEntity().getUUID());
-			}
-
-			return true;
 		}
 
 		return false;
@@ -195,15 +162,14 @@ public abstract class AbstractFieldMedicEntity extends PathfinderMob implements 
 	/**
 	 * Perform the healing process on the entity.
 	 */
-	private void heal() {
-		healCooldown = 100;
+	private void healSelf() {
+		selfHealCooldown = 300;
 		if (getHealth() <= getMaxHealth() / 2) {
-			setItemInHand(InteractionHand.OFF_HAND, new ItemStack(ItemRegistry.FIRST_AID_KIT.get()));
-			addEffect(new MobEffectInstance(MobEffects.REGENERATION, 240, 1, false, true));
-			addEffect(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, 1200, 0, false, true));
+			setItemInHand(InteractionHand.MAIN_HAND, new ItemStack(ItemRegistry.FIRST_AID_KIT.get()));
+			ItemRegistry.FIRST_AID_KIT.get().setEffects(this);
 		} else {
-			setItemInHand(InteractionHand.OFF_HAND, new ItemStack(ItemRegistry.BANDAGE.get()));
-			addEffect(new MobEffectInstance(MobEffects.REGENERATION, 240, 0, false, true));
+			setItemInHand(InteractionHand.MAIN_HAND, new ItemStack(ItemRegistry.BANDAGE.get()));
+			ItemRegistry.BANDAGE.get().setEffects(this);
 		}
 	}
 
@@ -211,22 +177,24 @@ public abstract class AbstractFieldMedicEntity extends PathfinderMob implements 
 	public boolean doHurtTarget(Entity entity) {
 		boolean canHurtTarget = super.doHurtTarget(entity);
 		if (canHurtTarget && entity instanceof LivingEntity livingEntity) {
-			if (getMainHandItem().getItem() == ItemRegistry.USED_SYRINGE.get()) {
-				float randomNumber = livingEntity.getRandom().nextFloat();
-				// Poison chance
-				if (randomNumber <= 0.8f) {
-					livingEntity.addEffect(new MobEffectInstance(MobEffects.POISON, 500,
-							0, false, true));
+			if (!getMainHandItem().is(ItemRegistry.USED_SYRINGE.get())) {
+				prepareForCombat();
+			}
 
-					// Hepatitis chance
-					if (randomNumber <= 0.3f) {
-						entity.hurt(IWDamageSources.USED_SYRINGE, 8.0F);
-						// :)
-						if (randomNumber <= 0.005f) {
-							PacketHandler.INSTANCE.send(PacketDistributor.TRACKING_CHUNK.with(() ->
-											level().getChunkAt(blockPosition())),
-									new AbstractFieldMedicEntityPacketHandler(blockPosition()));
-						}
+			float randomNumber = livingEntity.getRandom().nextFloat();
+			// Poison chance
+			if (randomNumber <= 0.8f) {
+				livingEntity.addEffect(new MobEffectInstance(MobEffects.POISON, 500,
+						0, false, true));
+
+				// Hepatitis chance
+				if (randomNumber <= 0.3f) {
+					entity.hurt(IWDamageSources.USED_SYRINGE, 8.0F);
+					// :)
+					if (randomNumber <= 0.005f) {
+						PacketHandler.INSTANCE.send(PacketDistributor.TRACKING_CHUNK.with(() ->
+										level().getChunkAt(blockPosition())),
+								new AbstractFieldMedicEntityPacketHandler(blockPosition()));
 					}
 				}
 			}
@@ -234,74 +202,6 @@ public abstract class AbstractFieldMedicEntity extends PathfinderMob implements 
 
 		return canHurtTarget;
 	}
-
-	/**
-	 * Check for hurt entities in the nearby area, and heal them.
-	 *
-	 * @param checkedEntities a <code>List</code> containing entity classes to check for,
-	 *                        entries must extend CreatureEntity
-	 */
-	private void checkForHurtEntities(List<Class<? extends PathfinderMob>> checkedEntities) {
-		if (checkForHurtEntitiesCooldown == 0 && currentlyTargetedEntity == null) {
-			List<Entity> entities = level().getEntities(this, getBoundingBox().inflate(24, 5, 24));
-			if (!entities.isEmpty()) {
-				for (Entity entity : entities) {
-					if (!checkedEntities.contains(entity.getClass())) {
-						continue;
-					}
-
-					if (entity instanceof LivingEntity livingEntity) {
-						if (livingEntity == lastTargetedEntity) {
-							if (unlockLastTargetedEntityCooldown > 0) {
-								unlockLastTargetedEntityCooldown--;
-								continue;
-							}
-
-							lastTargetedEntity = null;
-							continue;
-						}
-						if (livingEntity.getHealth() < livingEntity.getMaxHealth()) {
-							currentlyTargetedEntity = livingEntity;
-							checkForHurtEntitiesCooldown = 100;
-
-							return;
-						} else {
-							heal();
-						}
-					}
-				}
-
-				checkForHurtEntitiesCooldown = 100;
-			}
-		} else if (currentlyTargetedEntity != null) {
-			getNavigation().moveTo(currentlyTargetedEntity, 1.0D);
-			if (distanceTo(currentlyTargetedEntity) <= 1.5 && hasLineOfSight(currentlyTargetedEntity)) {
-				if (currentlyTargetedEntity.getHealth() <= currentlyTargetedEntity.getMaxHealth() / 2) {
-					setItemInHand(InteractionHand.MAIN_HAND, new ItemStack(ItemRegistry.FIRST_AID_KIT.get()));
-					currentlyTargetedEntity.addEffect(new MobEffectInstance(MobEffects.REGENERATION, 240, 1, false, true));
-					currentlyTargetedEntity.addEffect(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, 1200, 0, false, true));
-				} else {
-					setItemInHand(InteractionHand.MAIN_HAND, new ItemStack(ItemRegistry.BANDAGE.get()));
-					currentlyTargetedEntity.addEffect(new MobEffectInstance(MobEffects.REGENERATION, 240, 0, false, true));
-				}
-
-				lastTargetedEntity = currentlyTargetedEntity;
-				unlockLastTargetedEntityCooldown = 200;
-				currentlyTargetedEntity = null;
-			}
-		}
-	}
-
-	/**
-	 * Read entity NBT data.
-	 *
-	 * @param compound the <code>CompoundNBT</code> to read from
-	 */
-	@Override
-	public void readAdditionalSaveData(CompoundTag compound) {
-		super.readAdditionalSaveData(compound);
-	}
-
 
 	public record AbstractFieldMedicEntityPacketHandler(BlockPos blockPos) {
 
