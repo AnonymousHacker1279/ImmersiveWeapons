@@ -49,11 +49,9 @@ public class CelestialTowerEntity extends Monster implements AttackerTracker, Gr
 	}
 
 	public static AttributeSupplier.Builder registerAttributes() {
-		return Monster.createMonsterAttributes().add(Attributes.MAX_HEALTH, 240.0D)
-				.add(Attributes.MOVEMENT_SPEED, 0.01F)
+		return Monster.createMonsterAttributes()
+				.add(Attributes.MAX_HEALTH, 240.0D)
 				.add(Attributes.KNOCKBACK_RESISTANCE, 999.0f)
-				.add(Attributes.ATTACK_DAMAGE, 6.0D)
-				.add(Attributes.ATTACK_KNOCKBACK, 2.0D)
 				.add(Attributes.ARMOR, 5.0D);
 	}
 
@@ -124,11 +122,14 @@ public class CelestialTowerEntity extends Monster implements AttackerTracker, Gr
 	@Override
 	public void tick() {
 		super.tick();
-		level().addParticle(ParticleTypes.LAVA, getX() + GeneralUtilities.getRandomNumber(-1d, 1.01d), getY(),
-				getZ() + GeneralUtilities.getRandomNumber(-1d, 1.01d),
-				GeneralUtilities.getRandomNumber(-0.03d, 0.03d),
-				GeneralUtilities.getRandomNumber(-0.1d, -0.08d),
-				GeneralUtilities.getRandomNumber(-0.03d, 0.03d));
+
+		if (tickCount % 8 == 0) {
+			level().addParticle(ParticleTypes.LAVA, getX() + GeneralUtilities.getRandomNumber(-1d, 1.01d), getY(),
+					getZ() + GeneralUtilities.getRandomNumber(-1d, 1.01d),
+					GeneralUtilities.getRandomNumber(-0.03d, 0.03d),
+					GeneralUtilities.getRandomNumber(-0.1d, -0.08d),
+					GeneralUtilities.getRandomNumber(-0.03d, 0.03d));
+		}
 	}
 
 	@Override
@@ -142,6 +143,7 @@ public class CelestialTowerEntity extends Monster implements AttackerTracker, Gr
 		if (pSource == damageSources().genericKill()) {
 			return super.hurt(pSource, pAmount);
 		}
+
 		if (doneSpawningWaves) {
 			boolean doesHurt = super.hurt(pSource, pAmount);
 
@@ -175,6 +177,7 @@ public class CelestialTowerEntity extends Monster implements AttackerTracker, Gr
 	@Override
 	public void readAdditionalSaveData(CompoundTag pCompound) {
 		super.readAdditionalSaveData(pCompound);
+
 		if (hasCustomName()) {
 			bossEvent.setName(getDisplayName());
 		}
@@ -198,16 +201,11 @@ public class CelestialTowerEntity extends Monster implements AttackerTracker, Gr
 	@Override
 	public void addAdditionalSaveData(CompoundTag pCompound) {
 		super.addAdditionalSaveData(pCompound);
+
 		pCompound.putInt("totalWavesToSpawn", totalWavesToSpawn);
 		pCompound.putInt("waveSizeModifier", waveSizeModifier);
 		pCompound.putInt("wavesSpawned", wavesSpawned);
 		pCompound.putBoolean("doneSpawningWaves", doneSpawningWaves);
-	}
-
-	@Override
-	public void setCustomName(@Nullable Component pName) {
-		super.setCustomName(pName);
-		bossEvent.setName(getDisplayName());
 	}
 
 	@Override
@@ -270,6 +268,11 @@ public class CelestialTowerEntity extends Monster implements AttackerTracker, Gr
 		return 1;
 	}
 
+	@Override
+	public boolean isPushable() {
+		return false;
+	}
+
 	public boolean isDoneSpawningWaves() {
 		return doneSpawningWaves;
 	}
@@ -290,7 +293,7 @@ public class CelestialTowerEntity extends Monster implements AttackerTracker, Gr
 		wavesSpawned = waves;
 	}
 
-	public int getWaveSizeModifier() {
+	public int getDifficultyWaveSizeModifier() {
 		return waveSizeModifier;
 	}
 
