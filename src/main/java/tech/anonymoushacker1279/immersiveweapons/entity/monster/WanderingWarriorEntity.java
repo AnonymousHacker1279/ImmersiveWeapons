@@ -17,52 +17,25 @@ public class WanderingWarriorEntity extends AbstractWanderingWarriorEntity {
 
 	private boolean isBerserk = false;
 
-	/**
-	 * Constructor for WanderingWarriorEntity.
-	 *
-	 * @param entityType the <code>EntityType</code> instance
-	 * @param world      the <code>World</code> the entity is in
-	 */
-	public WanderingWarriorEntity(EntityType<? extends WanderingWarriorEntity> entityType, Level world) {
-		super(entityType, world);
+	public WanderingWarriorEntity(EntityType<? extends WanderingWarriorEntity> entityType, Level level) {
+		super(entityType, level);
 	}
 
-	/**
-	 * Get the ambient sound.
-	 *
-	 * @return SoundEvent
-	 */
 	@Override
 	protected SoundEvent getAmbientSound() {
 		return SoundEventRegistry.WANDERING_WARRIOR_AMBIENT.get();
 	}
 
-	/**
-	 * Get the ambient sound interval.
-	 *
-	 * @return int
-	 */
 	@Override
 	public int getAmbientSoundInterval() {
 		return getRandom().nextIntBetweenInclusive(240, 1600);
 	}
 
-	/**
-	 * Get the hurt sound.
-	 *
-	 * @param damageSourceIn the <code>DamageSource</code> instance
-	 * @return SoundEvent
-	 */
 	@Override
 	protected SoundEvent getHurtSound(DamageSource damageSourceIn) {
 		return SoundEventRegistry.WANDERING_WARRIOR_HURT.get();
 	}
-
-	/**
-	 * Get the death sound.
-	 *
-	 * @return SoundEvent
-	 */
+	
 	@Override
 	protected SoundEvent getDeathSound() {
 		return SoundEventRegistry.WANDERING_WARRIOR_DEATH.get();

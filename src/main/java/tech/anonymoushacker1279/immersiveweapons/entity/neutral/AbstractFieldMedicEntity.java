@@ -71,7 +71,7 @@ public abstract class AbstractFieldMedicEntity extends PathfinderMob implements 
 	}
 
 	@Override
-	protected void playStepSound(BlockPos pos, BlockState blockIn) {
+	protected void playStepSound(BlockPos pos, BlockState state) {
 		playSound(getStepSound(), 0.15F, 1.0F);
 	}
 
