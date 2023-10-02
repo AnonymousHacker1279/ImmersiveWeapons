@@ -632,9 +632,9 @@ public class AdvancementsGenerator extends ForgeAdvancementProvider {
 						Component.translatable("advancements.immersiveweapons.padded_leather_armor.description"),
 						null, FrameType.GOAL, true, true, false)
 				.addCriterion("hold",
-						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.MOLTEN_HELMET.get(),
-								ItemRegistry.MOLTEN_CHESTPLATE.get(), ItemRegistry.MOLTEN_LEGGINGS.get(),
-								ItemRegistry.MOLTEN_BOOTS.get()))
+						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.PADDED_LEATHER_HELMET.get(),
+								ItemRegistry.PADDED_LEATHER_CHESTPLATE.get(), ItemRegistry.PADDED_LEATHER_LEGGINGS.get(),
+								ItemRegistry.PADDED_LEATHER_BOOTS.get()))
 				.rewards(AdvancementRewards.Builder.experience(100))
 				.save(consumer, "immersiveweapons:padded_leather_armor");
 

@@ -3,6 +3,7 @@ package tech.anonymoushacker1279.immersiveweapons.mixin;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.BaseFireBlock;
@@ -35,6 +36,7 @@ public class BaseFireBlockMixin {
 				if (structureStart.isValid()) {
 					SuperHansEntity superHans = new SuperHansEntity(EntityRegistry.SUPER_HANS_ENTITY.get(), pLevel);
 					superHans.setPos(pEntity.position());
+					superHans.finalizeSpawn(serverLevel, pLevel.getCurrentDifficultyAt(pPos), MobSpawnType.TRIGGERED, null, null);
 					pLevel.addFreshEntity(superHans);
 
 					// Destroy the item

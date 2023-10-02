@@ -6,7 +6,6 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.util.*;
 import net.minecraft.util.valueproviders.UniformInt;
-import net.minecraft.world.Difficulty;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.*;
@@ -28,11 +27,9 @@ import net.minecraft.world.phys.AABB;
 import org.jetbrains.annotations.Nullable;
 import tech.anonymoushacker1279.immersiveweapons.entity.GrantAdvancementOnDiscovery;
 import tech.anonymoushacker1279.immersiveweapons.entity.ai.goal.DefendVillageTargetGoal;
-import tech.anonymoushacker1279.immersiveweapons.entity.ai.goal.RangedShotgunAttackGoal;
-import tech.anonymoushacker1279.immersiveweapons.entity.monster.AbstractDyingSoldierEntity;
+import tech.anonymoushacker1279.immersiveweapons.entity.ai.goal.RangedGunAttackGoal;
 import tech.anonymoushacker1279.immersiveweapons.entity.projectile.bullet.BulletEntity;
 import tech.anonymoushacker1279.immersiveweapons.init.*;
-import tech.anonymoushacker1279.immersiveweapons.item.projectile.bullet.AbstractBulletItem;
 import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
 
 import java.time.LocalDate;
@@ -43,28 +40,8 @@ import java.util.function.Predicate;
 public abstract class AbstractMinutemanEntity extends PathfinderMob implements RangedAttackMob, NeutralMob, GrantAdvancementOnDiscovery {
 
 	private static final UniformInt tickRange = TimeUtil.rangeOfSeconds(20, 39);
-	private final RangedShotgunAttackGoal<AbstractMinutemanEntity> rangedAttackGoal =
-			new RangedShotgunAttackGoal<>(this, 1.0D, 25, 14.0F, ItemRegistry.BLUNDERBUSS.get());
-
-	private final MeleeAttackGoal meleeAttackGoal = new MeleeAttackGoal(this, 1.2D, false) {
-		/**
-		 * Reset the task's internal state. Called when this task is interrupted by another one
-		 */
-		@Override
-		public void stop() {
-			super.stop();
-			setAggressive(false);
-		}
-
-		/**
-		 * Execute a one shot task or start executing a continuous task
-		 */
-		@Override
-		public void start() {
-			super.start();
-			setAggressive(true);
-		}
-	};
+	private final RangedGunAttackGoal<AbstractMinutemanEntity> rangedGunAttackGoal =
+			new RangedGunAttackGoal<>(this, 1.0D, 30, 12.0F);
 
 	private int angerTime;
 	@Nullable
@@ -72,35 +49,30 @@ public abstract class AbstractMinutemanEntity extends PathfinderMob implements R
 
 	AbstractMinutemanEntity(EntityType<? extends AbstractMinutemanEntity> type, Level level) {
 		super(type, level);
-		setCombatTask();
+		prepareForCombat();
 	}
 
 
 	public static AttributeSupplier.Builder registerAttributes() {
 		return Monster.createMonsterAttributes()
-				.add(Attributes.MOVEMENT_SPEED, 0.3D)
-				.add(Attributes.ARMOR, 4.5D);
+				.add(Attributes.MOVEMENT_SPEED, 0.27D)
+				.add(Attributes.ARMOR, 4.0D);
 	}
 
 	@Override
 	protected void registerGoals() {
 		goalSelector.addGoal(1, new FloatGoal(this));
-		goalSelector.addGoal(4, new WaterAvoidingRandomStrollGoal(this, 0.8D, 0.35f));
-		goalSelector.addGoal(3, new MoveBackToVillageGoal(this, 0.65D, false));
-		goalSelector.addGoal(3, new MoveThroughVillageGoal(this, 1.0D, false,
-				6, () -> true));
+		goalSelector.addGoal(5, new WaterAvoidingRandomStrollGoal(this, 0.8D, 0.35f));
+		goalSelector.addGoal(4, new MoveBackToVillageGoal(this, 0.65D, false));
+		goalSelector.addGoal(4, new MoveThroughVillageGoal(this, 1.0D, false, 6, () -> true));
 		goalSelector.addGoal(5, new LookAtPlayerGoal(this, Player.class, 8.0F));
 		goalSelector.addGoal(5, new RandomLookAroundGoal(this));
-		goalSelector.addGoal(3, new OpenDoorGoal(this, true));
+		goalSelector.addGoal(4, new OpenDoorGoal(this, true));
 
 		targetSelector.addGoal(1, new HurtByTargetGoal(this, MinutemanEntity.class, IronGolem.class));
+		targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, Player.class, true, this::isAngryAt));
+		targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, Monster.class, true, (targetPredicate) -> !(targetPredicate instanceof Creeper)));
 		targetSelector.addGoal(4, new DefendVillageTargetGoal(this));
-		targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, AbstractDyingSoldierEntity.class,
-				true));
-		targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, Player.class, 8,
-				true, false, this::isAngryAt));
-		targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, Monster.class, 10,
-				true, false, (targetPredicate) -> !(targetPredicate instanceof Creeper)));
 		targetSelector.addGoal(6, new ResetUniversalAngerTargetGoal<>(this, false));
 	}
 
@@ -132,11 +104,9 @@ public abstract class AbstractMinutemanEntity extends PathfinderMob implements R
 	                                    MobSpawnType mobSpawnType, @Nullable SpawnGroupData groupData,
 	                                    @Nullable CompoundTag compoundTag) {
 
-		groupData = super.finalizeSpawn(levelAccessor, difficultyInstance, mobSpawnType, groupData, compoundTag);
-
 		populateDefaultEquipmentSlots(random, difficultyInstance);
 		populateDefaultEquipmentEnchantments(random, difficultyInstance);
-		setCombatTask();
+		prepareForCombat();
 		setCanPickUpLoot(random.nextFloat() < 0.55F * difficultyInstance.getSpecialMultiplier());
 
 		if (getItemBySlot(EquipmentSlot.HEAD).isEmpty()) {
@@ -151,61 +121,43 @@ public abstract class AbstractMinutemanEntity extends PathfinderMob implements R
 			}
 		}
 
-		return groupData;
+		return super.finalizeSpawn(levelAccessor, difficultyInstance, mobSpawnType, groupData, compoundTag);
 	}
 
 	/**
 	 * Set the entity's combat AI.
 	 */
-	private void setCombatTask() {
+	private void prepareForCombat() {
 		if (!level().isClientSide) {
-			goalSelector.removeGoal(meleeAttackGoal);
-			goalSelector.removeGoal(rangedAttackGoal);
+			goalSelector.removeGoal(rangedGunAttackGoal);
+
 			ItemStack itemInHand = getItemInHand(ProjectileUtil.getWeaponHoldingHand(this,
 					Predicate.isEqual(ItemRegistry.BLUNDERBUSS.get())));
 
-			if (itemInHand.getItem() == ItemRegistry.BLUNDERBUSS.get()) {
-				int cooldown = 25;
-				if (level().getDifficulty() != Difficulty.HARD) {
-					cooldown = 45;
-				}
+			if (itemInHand.is(ItemRegistry.BLUNDERBUSS.get())) {
+				int attackInterval = switch (level().getDifficulty()) {
+					case NORMAL -> 45;
+					case HARD -> 30;
+					default -> 60;
+				};
 
-				rangedAttackGoal.setAttackCooldown(cooldown);
-				goalSelector.addGoal(16, rangedAttackGoal);
-			} else {
-				populateDefaultEquipmentSlots(random, level().getCurrentDifficultyAt(blockPosition()));
-				goalSelector.addGoal(12, meleeAttackGoal);
+				rangedGunAttackGoal.setMinAttackInterval(attackInterval);
+				goalSelector.addGoal(3, rangedGunAttackGoal);
 			}
 		}
 	}
 
-	@Override
-	protected void doPush(Entity entity) {
-		if (entity instanceof Enemy && !(entity instanceof MinutemanEntity) && !(entity instanceof IronGolem)
-				&& getRandom().nextInt(20) == 0) {
-
-			setTarget((LivingEntity) entity);
-		}
-		super.doPush(entity);
-	}
-
-	/**
-	 * Determine if the given entity can be attacked.
-	 *
-	 * @param type the <code>EntityType</code> being checked
-	 * @return boolean
-	 */
 	@Override
 	public boolean canAttackType(EntityType<?> type) {
 		return type != EntityRegistry.MINUTEMAN_ENTITY.get() && type != EntityType.CREEPER;
 	}
 
 	@Override
-	public void performRangedAttack(LivingEntity target, float distanceFactor) {
+	public void performRangedAttack(LivingEntity target, float velocity) {
 		// Fire four bullets for the blunderbuss
 		for (int i = 0; i <= 4; i++) {
-			BulletEntity bulletEntity = fireBullet(new ItemStack(ItemRegistry.COPPER_MUSKET_BALL.get()),
-					distanceFactor);
+			BulletEntity bulletEntity = ItemRegistry.COPPER_MUSKET_BALL.get().createBullet(level(), this);
+			bulletEntity.setEnchantmentEffectsFromEntity(this, velocity);
 
 			double deltaX = target.getX() - getX();
 			double deltaY = target.getY(0.1D) - bulletEntity.getY();
@@ -215,7 +167,8 @@ public abstract class AbstractMinutemanEntity extends PathfinderMob implements R
 			bulletEntity.setKnockback(3);
 			bulletEntity.setOwner(this);
 
-			bulletEntity.shoot(deltaX + GeneralUtilities.getRandomNumber(-1.0f, 1.0f),
+			bulletEntity.shoot(
+					deltaX + GeneralUtilities.getRandomNumber(-1.0f, 1.0f),
 					deltaY + sqrtXZ * 0.2D + GeneralUtilities.getRandomNumber(-0.375f, 0.375f),
 					deltaZ,
 					1.6F,
@@ -225,41 +178,6 @@ public abstract class AbstractMinutemanEntity extends PathfinderMob implements R
 
 		playSound(SoundEventRegistry.BLUNDERBUSS_FIRE.get(), 1.0F,
 				1.0F / (getRandom().nextFloat() * 0.4F + 0.8F));
-	}
-
-	/**
-	 * Get the projectile for the entity's weapon.
-	 *
-	 * @param weapon the <code>ItemStack</code> instance
-	 * @return ItemStack
-	 */
-	@Override
-	public ItemStack getProjectile(ItemStack weapon) {
-		if (weapon.getItem() instanceof ProjectileWeaponItem projectileWeapon) {
-			Predicate<ItemStack> predicate = projectileWeapon.getSupportedHeldProjectiles();
-			ItemStack heldProjectile = ProjectileWeaponItem.getHeldProjectile(this, predicate);
-
-			return heldProjectile.isEmpty() ? new ItemStack(ItemRegistry.COPPER_MUSKET_BALL.get()) : heldProjectile;
-		} else {
-			return ItemStack.EMPTY;
-		}
-	}
-
-	/**
-	 * Fires a bullet.
-	 *
-	 * @param bulletStack    the <code>ItemStack</code> of the bullet
-	 * @param distanceFactor the distance factor for firing
-	 * @return BulletEntity
-	 */
-	private BulletEntity fireBullet(ItemStack bulletStack, float distanceFactor) {
-		AbstractBulletItem arrowItem = (AbstractBulletItem) (bulletStack.getItem() instanceof AbstractBulletItem
-				? bulletStack.getItem() : ItemRegistry.COPPER_MUSKET_BALL.get());
-
-		BulletEntity bulletEntity = arrowItem.createBullet(level(), this);
-		bulletEntity.setEnchantmentEffectsFromEntity(this, distanceFactor);
-
-		return bulletEntity;
 	}
 
 	/**
@@ -275,41 +193,31 @@ public abstract class AbstractMinutemanEntity extends PathfinderMob implements R
 
 			super.hurt(source, amount);
 
-			if (source.getEntity() instanceof Player || source.getEntity() instanceof Mob) {
+			if (source.getEntity() instanceof LivingEntity livingEntity) {
 				if (source.getEntity() instanceof Player player && player.isCreative()) {
 					return false;
 				}
 
-				setCombatTask();
-				setTarget((LivingEntity) source.getEntity());
+				prepareForCombat();
+				setTarget(livingEntity);
 				setPersistentAngerTarget(source.getEntity().getUUID());
-
-				if (getTarget() != null && getTarget().getType() == EntityRegistry.MINUTEMAN_ENTITY.get()) {
-					setTarget(null);
-					return false;
-				}
 
 				// Aggro all other minutemen in the area
 				List<MinutemanEntity> list = level().getEntitiesOfClass(MinutemanEntity.class,
 						(new AABB(blockPosition())).inflate(24.0D, 8.0D, 24.0D));
 
 				for (MinutemanEntity minutemanEntity : list) {
-					minutemanEntity.setTarget((LivingEntity) source.getEntity());
-					minutemanEntity.setPersistentAngerTarget(source.getEntity().getUUID());
+					minutemanEntity.setTarget(livingEntity);
+					minutemanEntity.setPersistentAngerTarget(livingEntity.getUUID());
 				}
+
 				return true;
 			}
-			return false;
 		}
+
 		return false;
 	}
 
-	/**
-	 * Check if the entity can fire a projectile.
-	 *
-	 * @param projectileWeaponItem the <code>ProjectileItemWeapon</code> instance
-	 * @return boolean
-	 */
 	@Override
 	public boolean canFireProjectileWeapon(ProjectileWeaponItem projectileWeaponItem) {
 		return projectileWeaponItem == ItemRegistry.BLUNDERBUSS.get().asItem();
@@ -323,8 +231,9 @@ public abstract class AbstractMinutemanEntity extends PathfinderMob implements R
 	@Override
 	public void readAdditionalSaveData(CompoundTag compound) {
 		super.readAdditionalSaveData(compound);
+
 		readPersistentAngerSaveData(level(), compound);
-		setCombatTask();
+		prepareForCombat();
 	}
 
 	/**
@@ -335,15 +244,16 @@ public abstract class AbstractMinutemanEntity extends PathfinderMob implements R
 	@Override
 	public void addAdditionalSaveData(CompoundTag compound) {
 		super.addAdditionalSaveData(compound);
+
 		addPersistentAngerSaveData(compound);
 	}
 
 	@Override
 	public void setItemSlot(EquipmentSlot slot, ItemStack stack) {
 		super.setItemSlot(slot, stack);
-		
+
 		if (!level().isClientSide) {
-			setCombatTask();
+			prepareForCombat();
 		}
 	}
 

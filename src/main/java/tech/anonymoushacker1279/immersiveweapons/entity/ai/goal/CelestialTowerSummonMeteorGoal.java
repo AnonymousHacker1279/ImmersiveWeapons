@@ -1,5 +1,6 @@
 package tech.anonymoushacker1279.immersiveweapons.entity.ai.goal;
 
+import net.minecraft.world.Difficulty;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.ai.targeting.TargetingConditions;
 import net.minecraft.world.entity.player.Player;
@@ -20,15 +21,15 @@ public class CelestialTowerSummonMeteorGoal extends Goal {
 
 	@Override
 	public boolean canUse() {
-		return tower.getWaveSizeModifier() > 1;
+		return tower.level().getDifficulty() != Difficulty.EASY;
 	}
 
 	@Override
 	public void tick() {
 		// The tower will summon a meteor at a random player's position in the near vicinity
-		// If it is done, they spawn twice as often
+		// If it is done spawning waves, they spawn twice as often
 		if (summonCooldown <= 0) {
-			summonCooldown = tower.isDoneSpawningWaves() ? 200 / tower.getWaveSizeModifier() : 400 / tower.getWaveSizeModifier();
+			summonCooldown = tower.isDoneSpawningWaves() ? 200 / tower.getDifficultyWaveSizeModifier() : 400 / tower.getDifficultyWaveSizeModifier();
 
 			AABB searchBox = new AABB(tower.getX() - 32,
 					tower.getY() - 16,
@@ -43,6 +44,7 @@ public class CelestialTowerSummonMeteorGoal extends Goal {
 					tower,
 					searchBox
 			);
+
 			// Select a random player
 			if (!nearbyPlayers.isEmpty()) {
 				Player target = nearbyPlayers.get(tower.getRandom().nextIntBetweenInclusive(0, nearbyPlayers.size() - 1));

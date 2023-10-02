@@ -102,8 +102,8 @@ dependencies {
 	minecraft "net.neoforged:forge:${minecraft_version}-${neoforge_version}"
 
 	// Apply Mixin and MixinExtras AP
-	implementation(annotationProcessor("io.github.llamalad7:mixinextras-common:0.2.0-rc.3"))
-	implementation(jarJar("io.github.llamalad7:mixinextras-forge:0.2.0-rc.3")) {
+	implementation(annotationProcessor("io.github.llamalad7:mixinextras-common:0.2.0-rc.5"))
+	implementation(jarJar("io.github.llamalad7:mixinextras-forge:0.2.0-rc.5")) {
 		jarJar.ranged(it, "[0.2.0-rc.2,)")
 	}
 
