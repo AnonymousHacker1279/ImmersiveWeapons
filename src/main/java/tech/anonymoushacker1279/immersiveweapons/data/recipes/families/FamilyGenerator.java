@@ -317,15 +317,9 @@ public class FamilyGenerator extends RecipeGenerator {
 			if (ToolFamilies.FAMILIES_USE_NUGGETS_FOR_PROJECTILES.contains(family)) {
 				// Arrow
 				RecipeGenerator.createArrow(family.arrow().get(), family.nugget());
-
-				// Musket ball
-				RecipeGenerator.createMusketBall(family.musketBall().get(), family.nugget());
 			} else {
 				// Arrow
 				RecipeGenerator.createArrow(family.arrow().get(), family.material());
-
-				// Musket ball
-				RecipeGenerator.createMusketBall(family.musketBall().get(), family.material());
 			}
 		}
 	}
@@ -411,15 +405,9 @@ public class FamilyGenerator extends RecipeGenerator {
 			if (VanillaTieredItemFamilies.FAMILIES_USE_NUGGETS_FOR_PROJECTILES.contains(family)) {
 				// Arrow
 				RecipeGenerator.createArrow(family.arrow().get(), family.nugget());
-
-				// Musket ball
-				RecipeGenerator.createMusketBall(family.musketBall().get(), family.nugget());
 			} else {
 				// Arrow
 				RecipeGenerator.createArrow(family.arrow().get(), family.material());
-
-				// Musket ball
-				RecipeGenerator.createMusketBall(family.musketBall().get(), family.material());
 			}
 		}
 	}

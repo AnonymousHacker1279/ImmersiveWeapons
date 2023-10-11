@@ -11,7 +11,6 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.projectile.AbstractArrow.Pickup;
 import net.minecraft.world.item.*;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
@@ -21,11 +20,11 @@ import net.minecraftforge.event.ForgeEventFactory;
 import net.minecraftforge.network.PacketDistributor;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.data.tags.groups.immersiveweapons.IWItemTagGroups;
-import tech.anonymoushacker1279.immersiveweapons.entity.projectile.bullet.BulletEntity;
+import tech.anonymoushacker1279.immersiveweapons.entity.projectile.BulletEntity;
 import tech.anonymoushacker1279.immersiveweapons.event.game_effects.AccessoryManager;
 import tech.anonymoushacker1279.immersiveweapons.init.*;
 import tech.anonymoushacker1279.immersiveweapons.item.AccessoryItem.EffectType;
-import tech.anonymoushacker1279.immersiveweapons.item.projectile.bullet.AbstractBulletItem;
+import tech.anonymoushacker1279.immersiveweapons.item.projectile.BulletItem;
 import tech.anonymoushacker1279.immersiveweapons.item.projectile.gun.data.GunData;
 import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
 
@@ -65,7 +64,7 @@ public abstract class AbstractGunItem extends Item implements Vanishable {
 			int bulletsToFire = isCreative ? getMaxBulletsToFire() : getBulletsToFire(ammo);
 
 			// Roll for misfire
-			if (ammo.getItem() instanceof AbstractBulletItem bullet) {
+			if (ammo.getItem() instanceof BulletItem<?> bullet) {
 				if (livingEntity.getRandom().nextFloat() <= bullet.misfireChance()) {
 					misfire = true;
 				}
@@ -97,22 +96,27 @@ public abstract class AbstractGunItem extends Item implements Vanishable {
 				}
 
 				if (!level.isClientSide) {
-					AbstractBulletItem bulletItem = (AbstractBulletItem) (ammo.getItem() instanceof AbstractBulletItem
+					BulletItem<?> bulletItem = (BulletItem<?>) (ammo.getItem() instanceof BulletItem<?>
 							? ammo.getItem() : defaultAmmo());
 
 					for (int i = 0; i < bulletsToFire; ++i) {
-						BulletEntity bulletEntity = bulletItem.createBullet(level, player);
+						BulletEntity bulletEntity;
 
-						bulletEntity.setFiringItem(bulletItem);
+						if (MUSKET_BALLS.test(ammo)) {
+							bulletEntity = bulletItem.createBullet(level, player);
+						} else if (FLARES.test(ammo)) {
+							bulletEntity = bulletItem.createFlare(level, player);
+						} else {
+							bulletEntity = bulletItem.createCannonball(level, player);
+						}
+
+						bulletEntity.setFiringItem(this);
 						setupFire(gun, bulletEntity, player);
 
 						// Roll for random crits
 						if (livingEntity.getRandom().nextFloat() <= ImmersiveWeapons.COMMON_CONFIG.gunCritChance().get()) {
 							bulletEntity.setCritArrow(true);
 						}
-
-						bulletEntity.setOwner(player);
-						bulletEntity.pickup = Pickup.DISALLOWED;
 
 						// Handle enchants
 						int enchantmentLevel = gun.getEnchantmentLevel(EnchantmentRegistry.FIREPOWER.get());
@@ -130,6 +134,17 @@ public abstract class AbstractGunItem extends Item implements Vanishable {
 						enchantmentLevel = gun.getEnchantmentLevel(EnchantmentRegistry.SCORCH_SHOT.get());
 						if (enchantmentLevel > 0) {
 							bulletEntity.setSecondsOnFire(enchantmentLevel * 100);
+						}
+
+						// Handle bullet density modifiers
+						if (ammo.getTag() != null && ammo.getTag().contains("densityModifier")) {
+							float densityModifier = ammo.getTag().getFloat("densityModifier");
+
+							// A full 100% value is +20% damage
+							bulletEntity.setBaseDamage(bulletEntity.getBaseDamage() + (bulletEntity.getBaseDamage() * (densityModifier * 0.2f)));
+
+							// Higher density slightly increases the gravity modifier
+							bulletEntity.gravityModifier += (densityModifier * 0.015f);
 						}
 
 						gun.hurtAndBreak(1, player, (entity) ->
@@ -498,7 +513,7 @@ public abstract class AbstractGunItem extends Item implements Vanishable {
 	}
 
 	protected void handleAmmoStack(ItemStack gun, ItemStack ammo, int bulletsToFire, Player player) {
-		if (!player.isCreative() && ammo.getItem() instanceof AbstractBulletItem bulletItem) {
+		if (!player.isCreative() && ammo.getItem() instanceof BulletItem<?> bulletItem) {
 			if (!bulletItem.isInfinite(ammo, gun, player)) {
 				float ammoConservationChance = (float) AccessoryManager.collectEffects(EffectType.FIREARM_AMMO_CONSERVATION_CHANCE, player);
 				if (!player.level().isClientSide) {

@@ -26,7 +26,6 @@ public record ToolFamilies(TagKey<Item> material,
                            Supplier<? extends PikeItem> pike,
                            @Nullable Supplier<? extends Item> pikeHead,
                            Supplier<? extends ArrowItem> arrow,
-                           Supplier<? extends Item> musketBall,
                            @Nullable Supplier<? extends Item> smithingTemplateItem,
                            @Nullable ImmutableList<Item> smithingBaseUpgrades) {
 
@@ -47,7 +46,6 @@ public record ToolFamilies(TagKey<Item> material,
 			ItemRegistry.COPPER_PIKE,
 			ItemRegistry.COPPER_PIKE_HEAD,
 			ItemRegistry.COPPER_ARROW,
-			ItemRegistry.COPPER_MUSKET_BALL,
 			null,
 			null
 	);
@@ -65,7 +63,6 @@ public record ToolFamilies(TagKey<Item> material,
 			ItemRegistry.COBALT_PIKE,
 			ItemRegistry.COBALT_PIKE_HEAD,
 			ItemRegistry.COBALT_ARROW,
-			ItemRegistry.COBALT_MUSKET_BALL,
 			null,
 			null
 	);
@@ -84,7 +81,6 @@ public record ToolFamilies(TagKey<Item> material,
 			null,
 			ItemRegistry.MOLTEN_ARROW,
 			ItemRegistry.MOLTEN_MUSKET_BALL,
-			ItemRegistry.MOLTEN_SMITHING_TEMPLATE,
 			NETHERITE_TOOLS
 	);
 
@@ -101,7 +97,6 @@ public record ToolFamilies(TagKey<Item> material,
 			ItemRegistry.TESLA_PIKE,
 			ItemRegistry.TESLA_PIKE_HEAD,
 			ItemRegistry.TESLA_ARROW,
-			ItemRegistry.TESLA_MUSKET_BALL,
 			null,
 			null
 	);
@@ -119,7 +114,6 @@ public record ToolFamilies(TagKey<Item> material,
 			ItemRegistry.VENTUS_PIKE,
 			ItemRegistry.VENTUS_PIKE_HEAD,
 			ItemRegistry.VENTUS_ARROW,
-			ItemRegistry.VENTUS_MUSKET_BALL,
 			null,
 			null
 	);
@@ -137,7 +131,6 @@ public record ToolFamilies(TagKey<Item> material,
 			ItemRegistry.ASTRAL_PIKE,
 			ItemRegistry.ASTRAL_PIKE_HEAD,
 			ItemRegistry.ASTRAL_ARROW,
-			ItemRegistry.ASTRAL_MUSKET_BALL,
 			null,
 			null
 	);
@@ -155,7 +148,6 @@ public record ToolFamilies(TagKey<Item> material,
 			ItemRegistry.STARSTORM_PIKE,
 			ItemRegistry.STARSTORM_PIKE_HEAD,
 			ItemRegistry.STARSTORM_ARROW,
-			ItemRegistry.STARSTORM_MUSKET_BALL,
 			null,
 			null
 	);

@@ -103,6 +103,7 @@ public class BlockLootTables implements LootTableSubProvider {
 		dropSelf(BlockRegistry.PUNJI_STICKS.get());
 		dropSelf(BlockRegistry.RAW_COBALT_BLOCK.get());
 		dropSelf(BlockRegistry.SMALL_PARTS_TABLE.get());
+		dropSelf(BlockRegistry.AMMUNITION_TABLE.get());
 		dropSelf(BlockRegistry.SPIKE_TRAP.get());
 		dropSelf(BlockRegistry.SPOTLIGHT.get());
 		dropSelf(BlockRegistry.STRIPPED_BURNED_OAK_LOG.get());

@@ -23,9 +23,9 @@ import tech.anonymoushacker1279.immersiveweapons.item.*;
 import tech.anonymoushacker1279.immersiveweapons.item.armor.*;
 import tech.anonymoushacker1279.immersiveweapons.item.gauntlet.GauntletItem;
 import tech.anonymoushacker1279.immersiveweapons.item.pike.PikeItem;
+import tech.anonymoushacker1279.immersiveweapons.item.projectile.BulletItem;
 import tech.anonymoushacker1279.immersiveweapons.item.projectile.arrow.AbstractArrowItem;
 import tech.anonymoushacker1279.immersiveweapons.item.projectile.arrow.SmokeGrenadeArrowItem;
-import tech.anonymoushacker1279.immersiveweapons.item.projectile.bullet.AbstractBulletItem;
 import tech.anonymoushacker1279.immersiveweapons.item.projectile.throwable.SmokeGrenadeItem;
 
 import java.util.ArrayList;
@@ -108,8 +108,14 @@ public class TooltipHandler {
 		}
 
 		// Bullets
-		if (stack.getItem() instanceof AbstractBulletItem bullet) {
+		if (stack.getItem() instanceof BulletItem<?> bullet) {
 			event.getToolTip().add(Component.translatable("tooltip.immersiveweapons." + bullet).withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
+
+			if (stack.getTag() != null && stack.getTag().contains("densityModifier")) {
+				float densityModifier = stack.getTag().getFloat("densityModifier");
+				densityModifier = (float) Math.round(densityModifier * 100f) / 100f;
+				event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.density_modifier", densityModifier).withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
+			}
 		}
 
 		// Pikes

@@ -28,7 +28,7 @@ import org.jetbrains.annotations.Nullable;
 import tech.anonymoushacker1279.immersiveweapons.entity.GrantAdvancementOnDiscovery;
 import tech.anonymoushacker1279.immersiveweapons.entity.ai.goal.DefendVillageTargetGoal;
 import tech.anonymoushacker1279.immersiveweapons.entity.ai.goal.RangedGunAttackGoal;
-import tech.anonymoushacker1279.immersiveweapons.entity.projectile.bullet.BulletEntity;
+import tech.anonymoushacker1279.immersiveweapons.entity.projectile.BulletEntity;
 import tech.anonymoushacker1279.immersiveweapons.init.*;
 import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
 
@@ -51,7 +51,6 @@ public abstract class AbstractMinutemanEntity extends PathfinderMob implements R
 		super(type, level);
 		prepareForCombat();
 	}
-
 
 	public static AttributeSupplier.Builder registerAttributes() {
 		return Monster.createMonsterAttributes()
@@ -130,6 +129,10 @@ public abstract class AbstractMinutemanEntity extends PathfinderMob implements R
 	private void prepareForCombat() {
 		if (!level().isClientSide) {
 			goalSelector.removeGoal(rangedGunAttackGoal);
+
+			if (getItemBySlot(EquipmentSlot.MAINHAND).isEmpty()) {
+				populateDefaultEquipmentSlots(random, level().getCurrentDifficultyAt(blockPosition()));
+			}
 
 			ItemStack itemInHand = getItemInHand(ProjectileUtil.getWeaponHoldingHand(this,
 					Predicate.isEqual(ItemRegistry.BLUNDERBUSS.get())));

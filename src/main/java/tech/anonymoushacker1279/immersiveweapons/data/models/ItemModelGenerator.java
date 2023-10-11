@@ -18,7 +18,7 @@ import tech.anonymoushacker1279.immersiveweapons.init.BlockItemRegistry;
 import tech.anonymoushacker1279.immersiveweapons.init.ItemRegistry;
 import tech.anonymoushacker1279.immersiveweapons.item.gauntlet.GauntletItem;
 import tech.anonymoushacker1279.immersiveweapons.item.pike.PikeItem;
-import tech.anonymoushacker1279.immersiveweapons.item.projectile.bullet.AbstractBulletItem;
+import tech.anonymoushacker1279.immersiveweapons.item.projectile.BulletItem;
 
 import java.util.*;
 import java.util.function.Predicate;
@@ -318,7 +318,7 @@ public class ItemModelGenerator extends ItemModelProvider {
 					}
 				} else {
 					if (!isAtArmorItems) {
-						if (item instanceof AbstractBulletItem) {
+						if (item instanceof BulletItem<?>) {
 							getBuilder(item.toString())
 									.parent(new ModelFile.UncheckedModelFile(new ResourceLocation(ImmersiveWeapons.MOD_ID,
 											"item/musket_ball")))

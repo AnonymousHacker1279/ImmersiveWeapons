@@ -135,19 +135,17 @@ public class TeslaSynthesizerBlock extends Block implements SimpleWaterloggedBlo
 	 * @return InteractionResult
 	 */
 	@Override
-	public InteractionResult use(BlockState state, Level level, BlockPos pos,
-	                             Player player, InteractionHand hand,
-	                             BlockHitResult hitResult) {
+	public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
 
-		if (level.isClientSide) {
-			return InteractionResult.SUCCESS;
-		} else {
-			BlockEntity blockEntity = level.getBlockEntity(pos);
-			if (blockEntity instanceof TeslaSynthesizerBlockEntity) {
-				NetworkHooks.openScreen((ServerPlayer) player, (MenuProvider) blockEntity, pos);
+		if (player instanceof ServerPlayer serverPlayer) {
+			if (level.getBlockEntity(pos) instanceof TeslaSynthesizerBlockEntity teslaSynthesizerBlockEntity) {
+				NetworkHooks.openScreen(serverPlayer, teslaSynthesizerBlockEntity, pos);
 			}
+
 			return InteractionResult.CONSUME;
 		}
+
+		return InteractionResult.SUCCESS;
 	}
 
 	/**
@@ -162,9 +160,8 @@ public class TeslaSynthesizerBlock extends Block implements SimpleWaterloggedBlo
 	@Override
 	public void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean isMoving) {
 		if (!state.is(newState.getBlock())) {
-			BlockEntity blockEntity = level.getBlockEntity(pos);
-			if (blockEntity instanceof TeslaSynthesizerBlockEntity) {
-				Containers.dropContents(level, pos, (TeslaSynthesizerBlockEntity) blockEntity);
+			if (level.getBlockEntity(pos) instanceof TeslaSynthesizerBlockEntity teslaSynthesizerBlockEntity) {
+				Containers.dropContents(level, pos, teslaSynthesizerBlockEntity);
 				level.updateNeighbourForOutputSignal(pos, this);
 			}
 

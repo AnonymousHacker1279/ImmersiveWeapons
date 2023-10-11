@@ -25,7 +25,7 @@ import tech.anonymoushacker1279.immersiveweapons.entity.GrantAdvancementOnDiscov
 import tech.anonymoushacker1279.immersiveweapons.entity.ai.goal.RangedGunAttackGoal;
 import tech.anonymoushacker1279.immersiveweapons.entity.neutral.FieldMedicEntity;
 import tech.anonymoushacker1279.immersiveweapons.entity.neutral.MinutemanEntity;
-import tech.anonymoushacker1279.immersiveweapons.entity.projectile.bullet.BulletEntity;
+import tech.anonymoushacker1279.immersiveweapons.entity.projectile.BulletEntity;
 import tech.anonymoushacker1279.immersiveweapons.init.ItemRegistry;
 import tech.anonymoushacker1279.immersiveweapons.init.SoundEventRegistry;
 
@@ -120,6 +120,10 @@ public abstract class AbstractDyingSoldierEntity extends Monster implements Rang
 	private void prepareForCombat() {
 		if (!level().isClientSide) {
 			goalSelector.removeGoal(rangedGunAttackGoal);
+
+			if (getItemBySlot(EquipmentSlot.MAINHAND).isEmpty()) {
+				populateDefaultEquipmentSlots(random, level().getCurrentDifficultyAt(blockPosition()));
+			}
 
 			ItemStack itemInHand = getItemInHand(ProjectileUtil.getWeaponHoldingHand(this,
 					Predicate.isEqual(ItemRegistry.FLINTLOCK_PISTOL.get())));

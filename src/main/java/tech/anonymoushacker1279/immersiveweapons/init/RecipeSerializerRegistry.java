@@ -17,4 +17,5 @@ public class RecipeSerializerRegistry {
 	public static final RegistryObject<RecipeSerializer<BarrelTapRecipe>> BARREL_TAP_RECIPE_SERIALIZER = RECIPE_SERIALIZER.register("barrel_tap", BarrelTapRecipe.Serializer::new);
 	public static final RegistryObject<RecipeSerializer<AstralCrystalRecipe>> ASTRAL_CRYSTAL_RECIPE_SERIALIZER = RECIPE_SERIALIZER.register("astral_crystal", AstralCrystalRecipe.Serializer::new);
 	public static final RegistryObject<RecipeSerializer<PistonCrushingRecipe>> PISTON_CRUSHING_RECIPE_SERIALIZER = RECIPE_SERIALIZER.register("piston_crushing", PistonCrushingRecipe.Serializer::new);
+	public static final RegistryObject<RecipeSerializer<AmmunitionTableRecipe>> AMMUNITION_TABLE_RECIPE_SERIALIZER = RECIPE_SERIALIZER.register("ammunition_table", AmmunitionTableRecipe.Serializer::new);
 }

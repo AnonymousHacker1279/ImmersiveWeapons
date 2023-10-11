@@ -66,8 +66,8 @@ public class TeslaSynthesizerMenu extends AbstractContainerMenu implements Stack
 	}
 
 	@Override
-	public boolean stillValid(Player playerIn) {
-		return container.stillValid(playerIn);
+	public boolean stillValid(Player player) {
+		return container.stillValid(player);
 	}
 
 	@Override

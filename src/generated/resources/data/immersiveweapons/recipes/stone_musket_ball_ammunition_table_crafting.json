@@ -1,0 +1,15 @@
+{
+  "type": "immersiveweapons:ammunition_table",
+  "materials": [
+    {
+      "base_multiplier": 0.28,
+      "density": 0.25,
+      "ingredient": {
+        "tag": "immersiveweapons:shards/stone"
+      }
+    }
+  ],
+  "result": {
+    "item": "immersiveweapons:stone_musket_ball"
+  }
+}

@@ -227,6 +227,7 @@ public class LanguageGenerator extends IWLanguageProvider {
 	private void addContainers() {
 		addContainer("small_parts_table", "Small Parts Crafting");
 		addContainer("tesla_synthesizer", "Tesla Synthesizing");
+		addContainer("ammunition_table", "Ammunition Crafting");
 	}
 
 	private void addSubtitles() {
@@ -344,6 +345,8 @@ public class LanguageGenerator extends IWLanguageProvider {
 		addTooltip("starstorm_musket_ball", "A musket ball made from Starstorm ingots. Strongest caliber in terms of raw damage. Pierces through three targets.");
 		addTooltip("cannonball", "A heavy metal ball that can be fired from a hand cannon. Pierces through one target.");
 		addTooltip("explosive_cannonball", "Similar to the cannonball but explodes on impact.");
+		// Projectile metadata
+		addTooltip("density_modifier", "Density Modifier: +%sx");
 
 		// Pikes
 		addTooltip("pike", "Stab them from way over there");

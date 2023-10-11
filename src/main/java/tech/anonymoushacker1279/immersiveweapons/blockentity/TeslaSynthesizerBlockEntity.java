@@ -90,16 +90,9 @@ public class TeslaSynthesizerBlockEntity extends BaseContainerBlockEntity implem
 		return Component.translatable("container.immersiveweapons.tesla_synthesizer");
 	}
 
-	/**
-	 * Create a new menu.
-	 *
-	 * @param id     the menu ID
-	 * @param player the <code>PlayerEntity</code> instance
-	 * @return Container
-	 */
 	@Override
-	protected AbstractContainerMenu createMenu(int id, Inventory player) {
-		return new TeslaSynthesizerMenu(id, player, this, teslaSynthesizerData);
+	protected AbstractContainerMenu createMenu(int id, Inventory inventory) {
+		return new TeslaSynthesizerMenu(id, inventory, this, teslaSynthesizerData);
 	}
 
 	/**
@@ -168,9 +161,9 @@ public class TeslaSynthesizerBlockEntity extends BaseContainerBlockEntity implem
 				burnTimeTotal = burnTime;
 				if (isBurning()) {
 					hasChanged = true;
-					if (fuel.hasCraftingRemainingItem())
+					if (fuel.hasCraftingRemainingItem()) {
 						items.set(3, fuel.getCraftingRemainingItem());
-					else if (!fuel.isEmpty()) {
+					} else if (!fuel.isEmpty()) {
 						fuel.shrink(1);
 						if (fuel.isEmpty()) {
 							items.set(3, fuel.getCraftingRemainingItem());
@@ -548,12 +541,13 @@ public class TeslaSynthesizerBlockEntity extends BaseContainerBlockEntity implem
 	@Override
 	public <T> @NotNull LazyOptional<T> getCapability(Capability<T> capability, @Nullable Direction facing) {
 		if (!remove && facing != null && capability == ForgeCapabilities.ITEM_HANDLER) {
-			if (facing == Direction.UP)
+			if (facing == Direction.UP) {
 				return handlers[0].cast();
-			else if (facing == Direction.DOWN)
+			} else if (facing == Direction.DOWN) {
 				return handlers[1].cast();
-			else
+			} else {
 				return handlers[2].cast();
+			}
 		}
 		return super.getCapability(capability, facing);
 	}

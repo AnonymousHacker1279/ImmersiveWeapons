@@ -4,7 +4,7 @@ import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.Font.DisplayMode;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
-import tech.anonymoushacker1279.immersiveweapons.item.projectile.bullet.AbstractBulletItem;
+import tech.anonymoushacker1279.immersiveweapons.item.projectile.BulletItem;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,7 +49,7 @@ public class DebugTracingOverlay {
 
 			overlayItems.add(gunBaseVelocity);
 		}
-		if (DebugTracingData.selectedAmmo instanceof AbstractBulletItem bullet) {
+		if (DebugTracingData.selectedAmmo instanceof BulletItem<?> bullet) {
 			String selectedAmmo = appendData(SELECTED_AMMO,
 					bullet.toString(),
 					bullet.damage);

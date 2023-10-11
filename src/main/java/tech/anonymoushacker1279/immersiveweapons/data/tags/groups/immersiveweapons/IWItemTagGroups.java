@@ -26,6 +26,8 @@ public class IWItemTagGroups {
 			"ingots/tesla"));
 	public static final TagKey<Item> TESLA_NUGGETS = ItemTags.create(new ResourceLocation(ImmersiveWeapons.MOD_ID,
 			"nuggets/tesla"));
+	public static final TagKey<Item> SHARDS = ItemTags.create(new ResourceLocation(ImmersiveWeapons.MOD_ID,
+			"shards/shards"));
 	public static final TagKey<Item> MOLTEN_SHARDS = ItemTags.create(new ResourceLocation(ImmersiveWeapons.MOD_ID,
 			"shards/molten"));
 	public static final TagKey<Item> VENTUS_SHARDS = ItemTags.create(new ResourceLocation(ImmersiveWeapons.MOD_ID,
