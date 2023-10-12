@@ -24,8 +24,7 @@ import tech.anonymoushacker1279.immersiveweapons.item.armor.*;
 import tech.anonymoushacker1279.immersiveweapons.item.gauntlet.GauntletItem;
 import tech.anonymoushacker1279.immersiveweapons.item.pike.PikeItem;
 import tech.anonymoushacker1279.immersiveweapons.item.projectile.BulletItem;
-import tech.anonymoushacker1279.immersiveweapons.item.projectile.arrow.AbstractArrowItem;
-import tech.anonymoushacker1279.immersiveweapons.item.projectile.arrow.SmokeGrenadeArrowItem;
+import tech.anonymoushacker1279.immersiveweapons.item.projectile.CustomArrowItem;
 import tech.anonymoushacker1279.immersiveweapons.item.projectile.throwable.SmokeGrenadeItem;
 
 import java.util.ArrayList;
@@ -95,16 +94,18 @@ public class TooltipHandler {
 		}
 
 		// Arrows
-		if (stack.getItem() instanceof SmokeGrenadeArrowItem smokeArrow) {
-			event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.smoke_grenade_arrow").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
+		if (stack.getItem() instanceof CustomArrowItem<?> arrow) {
+			if (arrow.color == -1) {
+				event.getToolTip().add(Component.translatable("tooltip.immersiveweapons." + arrow).withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
+			} else {
+				event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.smoke_grenade_arrow").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
 
-			if (smokeArrow.color > 0) {
-				// The last word in the name is the color
-				String color = smokeArrow.toString().substring(smokeArrow.toString().lastIndexOf("_") + 1).toLowerCase();
-				event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.smoke_grenade_" + color).withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
+				if (arrow.color > 0) {
+					// The last word in the name is the color
+					String color = arrow.toString().substring(arrow.toString().lastIndexOf("_") + 1).toLowerCase();
+					event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.smoke_grenade_" + color).withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
+				}
 			}
-		} else if (stack.getItem() instanceof AbstractArrowItem arrow) {
-			event.getToolTip().add(Component.translatable("tooltip.immersiveweapons." + arrow).withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
 		}
 
 		// Bullets

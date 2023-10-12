@@ -12,8 +12,7 @@ import net.minecraft.world.level.block.DispenserBlock;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.entity.projectile.MolotovEntity;
 import tech.anonymoushacker1279.immersiveweapons.entity.projectile.SmokeGrenadeEntity;
-import tech.anonymoushacker1279.immersiveweapons.entity.projectile.arrow.*;
-import tech.anonymoushacker1279.immersiveweapons.item.projectile.arrow.AbstractArrowItem;
+import tech.anonymoushacker1279.immersiveweapons.item.projectile.CustomArrowItem;
 
 public class DispenserBehaviorRegistry implements DispenseItemBehavior {
 
@@ -23,123 +22,20 @@ public class DispenserBehaviorRegistry implements DispenseItemBehavior {
 	public static void init() {
 		ImmersiveWeapons.LOGGER.info("Initializing dispenser behavior registry");
 
-		DispenserBlock.registerBehavior(ItemRegistry.WOODEN_ARROW.get(), new AbstractProjectileDispenseBehavior() {
-			@Override
-			protected Projectile getProjectile(Level level, Position position, ItemStack stack) {
-				WoodenArrowEntity arrowEntity = new WoodenArrowEntity(level, position.x(), position.y(), position.z());
-				arrowEntity.pickup = AbstractArrow.Pickup.ALLOWED;
-				arrowEntity.setBaseDamage(((AbstractArrowItem) stack.getItem()).damage);
-				return arrowEntity;
-			}
-		});
-		DispenserBlock.registerBehavior(ItemRegistry.STONE_ARROW.get(), new AbstractProjectileDispenseBehavior() {
-			@Override
-			protected Projectile getProjectile(Level level, Position position, ItemStack stack) {
-				StoneArrowEntity arrowEntity = new StoneArrowEntity(level, position.x(), position.y(), position.z());
-				arrowEntity.pickup = AbstractArrow.Pickup.ALLOWED;
-				arrowEntity.setBaseDamage(((AbstractArrowItem) stack.getItem()).damage);
-				return arrowEntity;
-			}
-		});
-		DispenserBlock.registerBehavior(ItemRegistry.GOLDEN_ARROW.get(), new AbstractProjectileDispenseBehavior() {
-			@Override
-			protected Projectile getProjectile(Level level, Position position, ItemStack stack) {
-				GoldenArrowEntity arrowEntity = new GoldenArrowEntity(level, position.x(), position.y(), position.z());
-				arrowEntity.pickup = AbstractArrow.Pickup.ALLOWED;
-				arrowEntity.setBaseDamage(((AbstractArrowItem) stack.getItem()).damage);
-				return arrowEntity;
-			}
-		});
-		DispenserBlock.registerBehavior(ItemRegistry.COPPER_ARROW.get(), new AbstractProjectileDispenseBehavior() {
-			@Override
-			protected Projectile getProjectile(Level level, Position position, ItemStack stack) {
-				CopperArrowEntity arrowEntity = new CopperArrowEntity(level, position.x(), position.y(), position.z());
-				arrowEntity.pickup = AbstractArrow.Pickup.ALLOWED;
-				arrowEntity.setBaseDamage(((AbstractArrowItem) stack.getItem()).damage);
-				return arrowEntity;
-			}
-		});
-		DispenserBlock.registerBehavior(ItemRegistry.IRON_ARROW.get(), new AbstractProjectileDispenseBehavior() {
-			@Override
-			protected Projectile getProjectile(Level level, Position position, ItemStack stack) {
-				IronArrowEntity arrowEntity = new IronArrowEntity(level, position.x(), position.y(), position.z());
-				arrowEntity.pickup = AbstractArrow.Pickup.ALLOWED;
-				arrowEntity.setBaseDamage(((AbstractArrowItem) stack.getItem()).damage);
-				return arrowEntity;
-			}
-		});
-		DispenserBlock.registerBehavior(ItemRegistry.COBALT_ARROW.get(), new AbstractProjectileDispenseBehavior() {
-			@Override
-			protected Projectile getProjectile(Level level, Position position, ItemStack stack) {
-				CobaltArrowEntity arrowEntity = new CobaltArrowEntity(level, position.x(), position.y(), position.z());
-				arrowEntity.pickup = AbstractArrow.Pickup.ALLOWED;
-				arrowEntity.setBaseDamage(((AbstractArrowItem) stack.getItem()).damage);
-				return arrowEntity;
-			}
-		});
-		DispenserBlock.registerBehavior(ItemRegistry.DIAMOND_ARROW.get(), new AbstractProjectileDispenseBehavior() {
-			@Override
-			protected Projectile getProjectile(Level level, Position position, ItemStack stack) {
-				DiamondArrowEntity arrowEntity = new DiamondArrowEntity(level, position.x(), position.y(), position.z());
-				arrowEntity.pickup = AbstractArrow.Pickup.ALLOWED;
-				arrowEntity.setBaseDamage(((AbstractArrowItem) stack.getItem()).damage);
-				return arrowEntity;
-			}
-		});
-		DispenserBlock.registerBehavior(ItemRegistry.NETHERITE_ARROW.get(), new AbstractProjectileDispenseBehavior() {
-			@Override
-			protected Projectile getProjectile(Level level, Position position, ItemStack stack) {
-				NetheriteArrowEntity arrowEntity = new NetheriteArrowEntity(level, position.x(), position.y(), position.z());
-				arrowEntity.pickup = AbstractArrow.Pickup.ALLOWED;
-				arrowEntity.setBaseDamage(((AbstractArrowItem) stack.getItem()).damage);
-				return arrowEntity;
-			}
-		});
-		DispenserBlock.registerBehavior(ItemRegistry.MOLTEN_ARROW.get(), new AbstractProjectileDispenseBehavior() {
-			@Override
-			protected Projectile getProjectile(Level level, Position position, ItemStack stack) {
-				MoltenArrowEntity arrowEntity = new MoltenArrowEntity(level, position.x(), position.y(), position.z());
-				arrowEntity.pickup = AbstractArrow.Pickup.ALLOWED;
-				arrowEntity.setBaseDamage(((AbstractArrowItem) stack.getItem()).damage);
-				return arrowEntity;
-			}
-		});
-		DispenserBlock.registerBehavior(ItemRegistry.TESLA_ARROW.get(), new AbstractProjectileDispenseBehavior() {
-			@Override
-			protected Projectile getProjectile(Level level, Position position, ItemStack stack) {
-				TeslaArrowEntity arrowEntity = new TeslaArrowEntity(level, position.x(), position.y(), position.z());
-				arrowEntity.pickup = AbstractArrow.Pickup.ALLOWED;
-				arrowEntity.setBaseDamage(((AbstractArrowItem) stack.getItem()).damage);
-				return arrowEntity;
-			}
-		});
-		DispenserBlock.registerBehavior(ItemRegistry.VENTUS_ARROW.get(), new AbstractProjectileDispenseBehavior() {
-			@Override
-			protected Projectile getProjectile(Level level, Position position, ItemStack stack) {
-				VentusArrowEntity arrowEntity = new VentusArrowEntity(level, position.x(), position.y(), position.z());
-				arrowEntity.pickup = AbstractArrow.Pickup.ALLOWED;
-				arrowEntity.setBaseDamage(((AbstractArrowItem) stack.getItem()).damage);
-				return arrowEntity;
-			}
-		});
-		DispenserBlock.registerBehavior(ItemRegistry.ASTRAL_ARROW.get(), new AbstractProjectileDispenseBehavior() {
-			@Override
-			protected Projectile getProjectile(Level level, Position position, ItemStack stack) {
-				AstralArrowEntity arrowEntity = new AstralArrowEntity(level, position.x(), position.y(), position.z());
-				arrowEntity.pickup = AbstractArrow.Pickup.ALLOWED;
-				arrowEntity.setBaseDamage(((AbstractArrowItem) stack.getItem()).damage);
-				return arrowEntity;
-			}
-		});
-		DispenserBlock.registerBehavior(ItemRegistry.STARSTORM_ARROW.get(), new AbstractProjectileDispenseBehavior() {
-			@Override
-			protected Projectile getProjectile(Level level, Position position, ItemStack stack) {
-				StarstormArrowEntity arrowEntity = new StarstormArrowEntity(level, position.x(), position.y(), position.z());
-				arrowEntity.pickup = AbstractArrow.Pickup.ALLOWED;
-				arrowEntity.setBaseDamage(((AbstractArrowItem) stack.getItem()).damage);
-				return arrowEntity;
-			}
-		});
+		// Iterate through all registry items of the CustomArrowItem type and register a dispenser behavior for each
+		ItemRegistry.ITEMS.getEntries().stream()
+				.filter(item -> item.get() instanceof CustomArrowItem<?>)
+				.forEach(arrow -> DispenserBlock.registerBehavior(arrow.get(), new AbstractProjectileDispenseBehavior() {
+					@Override
+					protected Projectile getProjectile(Level level, Position position, ItemStack stack) {
+						CustomArrowItem<?> customArrowItem = (CustomArrowItem<?>) stack.getItem();
+						AbstractArrow arrowEntity = customArrowItem.createArrow(level);
+						arrowEntity.setPos(position.x(), position.y(), position.z());
+
+						return arrowEntity;
+					}
+				}));
+
 		DispenserBlock.registerBehavior(ItemRegistry.SMOKE_GRENADE.get(), new AbstractProjectileDispenseBehavior() {
 			@Override
 			protected Projectile getProjectile(Level level, Position position, ItemStack stack) {
@@ -192,66 +88,6 @@ public class DispenserBehaviorRegistry implements DispenseItemBehavior {
 				smokeGrenadeEntity.push(5, 5, 5);
 				smokeGrenadeEntity.setColor(5);
 				return smokeGrenadeEntity;
-			}
-		});
-		DispenserBlock.registerBehavior(ItemRegistry.SMOKE_GRENADE_ARROW.get(), new AbstractProjectileDispenseBehavior() {
-			@Override
-			protected Projectile getProjectile(Level level, Position position, ItemStack stack) {
-				SmokeGrenadeArrowEntity smokeGrenadeArrowEntity = new SmokeGrenadeArrowEntity(level, position.x(), position.y(), position.z());
-				smokeGrenadeArrowEntity.pickup = AbstractArrow.Pickup.DISALLOWED;
-				smokeGrenadeArrowEntity.push(5, 5, 5);
-				smokeGrenadeArrowEntity.setColor(0);
-				return smokeGrenadeArrowEntity;
-			}
-		});
-		DispenserBlock.registerBehavior(ItemRegistry.SMOKE_GRENADE_ARROW_RED.get(), new AbstractProjectileDispenseBehavior() {
-			@Override
-			protected Projectile getProjectile(Level level, Position position, ItemStack stack) {
-				SmokeGrenadeArrowEntity smokeGrenadeArrowEntity = new SmokeGrenadeArrowEntity(level, position.x(), position.y(), position.z());
-				smokeGrenadeArrowEntity.pickup = AbstractArrow.Pickup.DISALLOWED;
-				smokeGrenadeArrowEntity.push(5, 5, 5);
-				smokeGrenadeArrowEntity.setColor(1);
-				return smokeGrenadeArrowEntity;
-			}
-		});
-		DispenserBlock.registerBehavior(ItemRegistry.SMOKE_GRENADE_ARROW_GREEN.get(), new AbstractProjectileDispenseBehavior() {
-			@Override
-			protected Projectile getProjectile(Level level, Position position, ItemStack stack) {
-				SmokeGrenadeArrowEntity smokeGrenadeArrowEntity = new SmokeGrenadeArrowEntity(level, position.x(), position.y(), position.z());
-				smokeGrenadeArrowEntity.pickup = AbstractArrow.Pickup.DISALLOWED;
-				smokeGrenadeArrowEntity.push(5, 5, 5);
-				smokeGrenadeArrowEntity.setColor(2);
-				return smokeGrenadeArrowEntity;
-			}
-		});
-		DispenserBlock.registerBehavior(ItemRegistry.SMOKE_GRENADE_ARROW_BLUE.get(), new AbstractProjectileDispenseBehavior() {
-			@Override
-			protected Projectile getProjectile(Level level, Position position, ItemStack stack) {
-				SmokeGrenadeArrowEntity smokeGrenadeArrowEntity = new SmokeGrenadeArrowEntity(level, position.x(), position.y(), position.z());
-				smokeGrenadeArrowEntity.pickup = AbstractArrow.Pickup.DISALLOWED;
-				smokeGrenadeArrowEntity.push(5, 5, 5);
-				smokeGrenadeArrowEntity.setColor(3);
-				return smokeGrenadeArrowEntity;
-			}
-		});
-		DispenserBlock.registerBehavior(ItemRegistry.SMOKE_GRENADE_ARROW_PURPLE.get(), new AbstractProjectileDispenseBehavior() {
-			@Override
-			protected Projectile getProjectile(Level level, Position position, ItemStack stack) {
-				SmokeGrenadeArrowEntity smokeGrenadeArrowEntity = new SmokeGrenadeArrowEntity(level, position.x(), position.y(), position.z());
-				smokeGrenadeArrowEntity.pickup = AbstractArrow.Pickup.DISALLOWED;
-				smokeGrenadeArrowEntity.push(5, 5, 5);
-				smokeGrenadeArrowEntity.setColor(4);
-				return smokeGrenadeArrowEntity;
-			}
-		});
-		DispenserBlock.registerBehavior(ItemRegistry.SMOKE_GRENADE_ARROW_YELLOW.get(), new AbstractProjectileDispenseBehavior() {
-			@Override
-			protected Projectile getProjectile(Level level, Position position, ItemStack stack) {
-				SmokeGrenadeArrowEntity smokeGrenadeArrowEntity = new SmokeGrenadeArrowEntity(level, position.x(), position.y(), position.z());
-				smokeGrenadeArrowEntity.pickup = AbstractArrow.Pickup.DISALLOWED;
-				smokeGrenadeArrowEntity.push(5, 5, 5);
-				smokeGrenadeArrowEntity.setColor(5);
-				return smokeGrenadeArrowEntity;
 			}
 		});
 		DispenserBlock.registerBehavior(ItemRegistry.MOLOTOV_COCKTAIL.get(), new AbstractProjectileDispenseBehavior() {

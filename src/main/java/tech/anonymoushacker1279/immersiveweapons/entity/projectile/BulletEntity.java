@@ -42,7 +42,6 @@ import tech.anonymoushacker1279.immersiveweapons.client.particle.bullet_impact.B
 import tech.anonymoushacker1279.immersiveweapons.data.tags.groups.forge.ForgeBlockTagGroups;
 import tech.anonymoushacker1279.immersiveweapons.init.*;
 import tech.anonymoushacker1279.immersiveweapons.item.AccessoryItem;
-import tech.anonymoushacker1279.immersiveweapons.item.projectile.BulletItem;
 import tech.anonymoushacker1279.immersiveweapons.item.projectile.gun.MusketItem;
 import tech.anonymoushacker1279.immersiveweapons.item.tool.HitEffectUtils;
 import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
@@ -56,8 +55,7 @@ public class BulletEntity extends AbstractArrow implements HitEffectUtils {
 	private static final boolean canBreakGlass = ImmersiveWeapons.COMMON_CONFIG.bulletsBreakGlass().get();
 	private final SoundEvent hitSound = getDefaultHitGroundSoundEvent();
 	private static final byte VANILLA_IMPACT_STATUS_ID = 3;
-	protected Item referenceItem = Items.AIR;
-	public int knockbackStrength;
+	public Item referenceItem = Items.AIR;
 	protected boolean shouldStopMoving = false;
 	protected float inertia = 0.99F;
 	public double gravityModifier = 1.0d;
@@ -95,7 +93,7 @@ public class BulletEntity extends AbstractArrow implements HitEffectUtils {
 		setPos(shooter.getX(), shooter.getEyeY() - 0.1f, shooter.getZ());
 	}
 
-	public static class BulletEntityBuilder<T extends BulletItem<?>> implements HitEffectUtils {
+	public static class BulletEntityBuilder implements HitEffectUtils {
 
 		private final EntityType<? extends AbstractArrow> entityType;
 		private final Item referenceItem;
@@ -432,11 +430,11 @@ public class BulletEntity extends AbstractArrow implements HitEffectUtils {
 			if (entity instanceof LivingEntity livingEntity) {
 
 				// Apply knockback if the strength is above zero
-				if (knockbackStrength > 0) {
+				if (getKnockback() > 0) {
 					Vec3 scaledDeltaMovement = getDeltaMovement()
 							.multiply(1.0D, 0.0D, 1.0D)
 							.normalize()
-							.scale(knockbackStrength * 0.6D);
+							.scale(getKnockback() * 0.6D);
 
 					if (scaledDeltaMovement.lengthSqr() > 0.0D) {
 						livingEntity.push(scaledDeltaMovement.x, 0.1D, scaledDeltaMovement.z);
