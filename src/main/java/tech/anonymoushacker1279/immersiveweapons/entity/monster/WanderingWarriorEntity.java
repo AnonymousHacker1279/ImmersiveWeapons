@@ -35,7 +35,7 @@ public class WanderingWarriorEntity extends AbstractWanderingWarriorEntity {
 	protected SoundEvent getHurtSound(DamageSource damageSourceIn) {
 		return SoundEventRegistry.WANDERING_WARRIOR_HURT.get();
 	}
-	
+
 	@Override
 	protected SoundEvent getDeathSound() {
 		return SoundEventRegistry.WANDERING_WARRIOR_DEATH.get();

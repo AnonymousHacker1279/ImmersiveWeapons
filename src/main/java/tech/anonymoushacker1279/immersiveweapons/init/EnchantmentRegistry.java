@@ -11,8 +11,8 @@ import tech.anonymoushacker1279.immersiveweapons.enchantment.*;
 import tech.anonymoushacker1279.immersiveweapons.item.CursedSightStaffItem;
 import tech.anonymoushacker1279.immersiveweapons.item.MeteorStaffItem;
 import tech.anonymoushacker1279.immersiveweapons.item.gauntlet.GauntletItem;
+import tech.anonymoushacker1279.immersiveweapons.item.gun.AbstractGunItem;
 import tech.anonymoushacker1279.immersiveweapons.item.pike.PikeItem;
-import tech.anonymoushacker1279.immersiveweapons.item.projectile.gun.AbstractGunItem;
 
 @SuppressWarnings({"unused"})
 public class EnchantmentRegistry {

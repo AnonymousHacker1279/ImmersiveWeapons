@@ -42,7 +42,7 @@ import tech.anonymoushacker1279.immersiveweapons.client.particle.bullet_impact.B
 import tech.anonymoushacker1279.immersiveweapons.data.tags.groups.forge.ForgeBlockTagGroups;
 import tech.anonymoushacker1279.immersiveweapons.init.*;
 import tech.anonymoushacker1279.immersiveweapons.item.AccessoryItem;
-import tech.anonymoushacker1279.immersiveweapons.item.projectile.gun.MusketItem;
+import tech.anonymoushacker1279.immersiveweapons.item.gun.MusketItem;
 import tech.anonymoushacker1279.immersiveweapons.item.tool.HitEffectUtils;
 import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
 import tech.anonymoushacker1279.immersiveweapons.world.level.IWDamageSources;

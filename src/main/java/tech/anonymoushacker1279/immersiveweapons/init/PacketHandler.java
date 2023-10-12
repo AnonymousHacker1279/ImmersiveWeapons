@@ -11,14 +11,14 @@ import tech.anonymoushacker1279.immersiveweapons.block.misc.warrior_statue.Warri
 import tech.anonymoushacker1279.immersiveweapons.client.gui.overlays.DebugTracingData.DebugDataPacketHandler;
 import tech.anonymoushacker1279.immersiveweapons.entity.monster.lava_revenant.LavaRevenantEntity.LavaRevenantEntityPacketHandler;
 import tech.anonymoushacker1279.immersiveweapons.entity.neutral.AbstractFieldMedicEntity.AbstractFieldMedicEntityPacketHandler;
-import tech.anonymoushacker1279.immersiveweapons.entity.projectile.SmokeGrenadeEntity.SmokeGrenadeEntityPacketHandler;
 import tech.anonymoushacker1279.immersiveweapons.entity.projectile.BulletEntity.BulletEntityPacketHandler;
+import tech.anonymoushacker1279.immersiveweapons.entity.projectile.SmokeGrenadeEntity.SmokeGrenadeEntityPacketHandler;
 import tech.anonymoushacker1279.immersiveweapons.event.SyncPlayerDataPacketHandler;
 import tech.anonymoushacker1279.immersiveweapons.item.armor.AstralArmorItem.AstralArmorItemPacketHandler;
 import tech.anonymoushacker1279.immersiveweapons.item.armor.CobaltArmorItem.CobaltArmorItemPacketHandler;
 import tech.anonymoushacker1279.immersiveweapons.item.armor.TeslaArmorItem.TeslaArmorItemPacketHandler;
 import tech.anonymoushacker1279.immersiveweapons.item.armor.VentusArmorItem.VentusArmorItemPacketHandler;
-import tech.anonymoushacker1279.immersiveweapons.item.projectile.gun.GunScopePacketHandler;
+import tech.anonymoushacker1279.immersiveweapons.item.gun.GunScopePacketHandler;
 import tech.anonymoushacker1279.immersiveweapons.menu.AmmunitionTableMenu.AmmunitionTableMenuPacketHandler;
 
 public class PacketHandler {

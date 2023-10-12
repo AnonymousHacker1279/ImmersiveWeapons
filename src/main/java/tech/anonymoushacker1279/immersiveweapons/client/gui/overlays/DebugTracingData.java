@@ -18,7 +18,7 @@ import tech.anonymoushacker1279.immersiveweapons.event.game_effects.AccessoryMan
 import tech.anonymoushacker1279.immersiveweapons.init.EffectRegistry;
 import tech.anonymoushacker1279.immersiveweapons.init.ItemRegistry;
 import tech.anonymoushacker1279.immersiveweapons.item.AccessoryItem.EffectType;
-import tech.anonymoushacker1279.immersiveweapons.item.projectile.gun.AbstractGunItem;
+import tech.anonymoushacker1279.immersiveweapons.item.gun.AbstractGunItem;
 
 import java.util.UUID;
 import java.util.function.Supplier;

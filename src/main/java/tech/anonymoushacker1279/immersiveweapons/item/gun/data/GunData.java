@@ -1,4 +1,4 @@
-package tech.anonymoushacker1279.immersiveweapons.item.projectile.gun.data;
+package tech.anonymoushacker1279.immersiveweapons.item.gun.data;
 
 /**
  * Client-only data used when rendering scope overlays.

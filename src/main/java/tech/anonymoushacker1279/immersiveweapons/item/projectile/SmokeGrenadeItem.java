@@ -1,4 +1,4 @@
-package tech.anonymoushacker1279.immersiveweapons.item.projectile.throwable;
+package tech.anonymoushacker1279.immersiveweapons.item.projectile;
 
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;

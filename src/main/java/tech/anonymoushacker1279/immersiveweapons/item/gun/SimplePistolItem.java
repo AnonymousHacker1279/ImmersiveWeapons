@@ -1,4 +1,4 @@
-package tech.anonymoushacker1279.immersiveweapons.item.projectile.gun;
+package tech.anonymoushacker1279.immersiveweapons.item.gun;
 
 public class SimplePistolItem extends AbstractGunItem {
 

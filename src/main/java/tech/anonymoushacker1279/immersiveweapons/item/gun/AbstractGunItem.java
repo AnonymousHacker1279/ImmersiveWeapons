@@ -1,4 +1,4 @@
-package tech.anonymoushacker1279.immersiveweapons.item.projectile.gun;
+package tech.anonymoushacker1279.immersiveweapons.item.gun;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.model.HumanoidModel.ArmPose;
@@ -24,8 +24,8 @@ import tech.anonymoushacker1279.immersiveweapons.entity.projectile.BulletEntity;
 import tech.anonymoushacker1279.immersiveweapons.event.game_effects.AccessoryManager;
 import tech.anonymoushacker1279.immersiveweapons.init.*;
 import tech.anonymoushacker1279.immersiveweapons.item.AccessoryItem.EffectType;
+import tech.anonymoushacker1279.immersiveweapons.item.gun.data.GunData;
 import tech.anonymoushacker1279.immersiveweapons.item.projectile.BulletItem;
-import tech.anonymoushacker1279.immersiveweapons.item.projectile.gun.data.GunData;
 import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
 
 import java.util.function.Consumer;

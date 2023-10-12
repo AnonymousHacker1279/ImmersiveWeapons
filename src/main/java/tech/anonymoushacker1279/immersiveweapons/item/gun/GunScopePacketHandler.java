@@ -1,11 +1,11 @@
-package tech.anonymoushacker1279.immersiveweapons.item.projectile.gun;
+package tech.anonymoushacker1279.immersiveweapons.item.gun;
 
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.network.NetworkEvent;
 import net.minecraftforge.network.NetworkEvent.Context;
-import tech.anonymoushacker1279.immersiveweapons.item.projectile.gun.data.GunData;
+import tech.anonymoushacker1279.immersiveweapons.item.gun.data.GunData;
 
 import java.util.function.Supplier;
 

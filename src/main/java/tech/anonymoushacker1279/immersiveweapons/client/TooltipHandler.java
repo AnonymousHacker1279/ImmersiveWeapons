@@ -23,9 +23,7 @@ import tech.anonymoushacker1279.immersiveweapons.item.*;
 import tech.anonymoushacker1279.immersiveweapons.item.armor.*;
 import tech.anonymoushacker1279.immersiveweapons.item.gauntlet.GauntletItem;
 import tech.anonymoushacker1279.immersiveweapons.item.pike.PikeItem;
-import tech.anonymoushacker1279.immersiveweapons.item.projectile.BulletItem;
-import tech.anonymoushacker1279.immersiveweapons.item.projectile.CustomArrowItem;
-import tech.anonymoushacker1279.immersiveweapons.item.projectile.throwable.SmokeGrenadeItem;
+import tech.anonymoushacker1279.immersiveweapons.item.projectile.*;
 
 import java.util.ArrayList;
 import java.util.List;

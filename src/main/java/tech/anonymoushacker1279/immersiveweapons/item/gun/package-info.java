@@ -1,7 +1,7 @@
 @ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault
 @FieldsAreNonnullByDefault
-package tech.anonymoushacker1279.immersiveweapons.item.projectile.gun;
+package tech.anonymoushacker1279.immersiveweapons.item.gun;
 
 import net.minecraft.FieldsAreNonnullByDefault;
 import net.minecraft.MethodsReturnNonnullByDefault;
