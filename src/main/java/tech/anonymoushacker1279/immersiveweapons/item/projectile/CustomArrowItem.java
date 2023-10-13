@@ -103,7 +103,7 @@ public class CustomArrowItem<T extends CustomArrowEntity> extends ArrowItem {
 		private final RegistryObject<EntityType<T>> arrowEntity;
 		private int pierceLevel = 0;
 		private boolean canBeInfinite = true;
-		private double gravityModifier = 0.0d;
+		private double gravityModifier = 0.05d;
 		private List<Double> shootingVectorInputs = List.of(0.0075d, -0.0095d, 0.0075d);
 		private int knockbackStrength = 0;
 		private HitEffect hitEffect = HitEffect.NONE;

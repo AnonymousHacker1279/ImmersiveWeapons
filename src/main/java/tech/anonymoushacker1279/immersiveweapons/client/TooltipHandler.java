@@ -24,6 +24,7 @@ import tech.anonymoushacker1279.immersiveweapons.item.armor.*;
 import tech.anonymoushacker1279.immersiveweapons.item.gauntlet.GauntletItem;
 import tech.anonymoushacker1279.immersiveweapons.item.pike.PikeItem;
 import tech.anonymoushacker1279.immersiveweapons.item.projectile.*;
+import tech.anonymoushacker1279.immersiveweapons.item.projectile.ThrowableItem.ThrowableType;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -143,7 +144,7 @@ public class TooltipHandler {
 		}
 
 		// Throwables
-		if (stack.getItem() instanceof SmokeGrenadeItem grenade) {
+		if (stack.getItem() instanceof ThrowableItem grenade && grenade.type == ThrowableType.SMOKE_GRENADE) {
 			event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.smoke_grenade").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
 
 			if (grenade.color > 0) {

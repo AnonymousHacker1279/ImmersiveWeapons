@@ -187,19 +187,18 @@ public class FlareEntity extends BulletEntity implements ItemSupplier {
 		entityData.define(USE_LEGACY_LIGHTING, false);
 	}
 
-	/**
-	 * Remove all lights when the entity is killed via commands.
-	 */
 	@Override
-	public void kill() {
-		super.kill();
+	public void remove(RemovalReason removalReason) {
+		super.remove(removalReason);
 
+		// Remove all lights before dying
 		if (!lightPositions.isEmpty()) {
 			for (BlockPos pos : lightPositions) {
 				if (level().getBlockState(pos) == lightState) {
 					level().removeBlock(pos, false);
 				}
 			}
+
 			lightPositions.clear();
 		}
 	}

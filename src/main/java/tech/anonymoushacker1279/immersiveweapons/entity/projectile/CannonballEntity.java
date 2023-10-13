@@ -68,7 +68,7 @@ public class CannonballEntity extends BulletEntity implements ItemSupplier {
 	}
 
 	@Override
-	protected DamageSource getDamageSource(@Nullable Entity owner) {
+	public DamageSource getDamageSource(@Nullable Entity owner) {
 		if (owner == null) {
 			owner = this;
 		}

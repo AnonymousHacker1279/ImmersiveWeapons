@@ -27,8 +27,11 @@ import java.util.List;
 
 public class CustomArrowEntity extends AbstractArrow implements HitEffectUtils {
 
+	protected static final byte VANILLA_IMPACT_STATUS_ID = 3;
 	public Item referenceItem = Items.AIR;
+	protected float inertia;
 	public double gravityModifier = 1.0d;
+	protected boolean shouldStopMoving = false;
 	public List<Double> shootingVectorInputs = List.of(0.0075d, -0.0095d, 0.0075d);
 	public HitEffect hitEffect = HitEffect.NONE;
 	public int color = -1;
@@ -80,36 +83,40 @@ public class CustomArrowEntity extends AbstractArrow implements HitEffectUtils {
 
 	@Override
 	public void tick() {
-		// TODO: investigate super here and optimize
 		super.tick();
 
-		if (gravityModifier == 1.0d) {  // TODO: would be better to use !hasBeenShot but it will always be true here, investigate alternatives
+		// Update the gravity modifier on the client via a data accessor
+		if (gravityModifier == 1.0d) {
 			if (level().isClientSide) {
 				gravityModifier = entityData.get(GRAVITY_MODIFIER_ACCESSOR);
 			}
 		}
 
-		boolean flag = isNoPhysics();
-		Vec3 vector3d = getDeltaMovement();
-		float yRot;
-		float xRot;
+		// Extra stuff to do while ticking, for child classes
+		doWhileTicking();
+
+		boolean noPhysics = isNoPhysics();
+		Vec3 deltaMovement = getDeltaMovement();
+
+		// Rotate the projectile based on movement
 		if (xRotO == 0.0F && yRotO == 0.0F) {
-			double horizontalDistanceSqr = vector3d.horizontalDistanceSqr();
-			yRot = (float) (Mth.atan2(vector3d.x, vector3d.z) * (180F / (float) Math.PI));
-			xRot = (float) (Mth.atan2(vector3d.y, horizontalDistanceSqr) * (180F / (float) Math.PI));
-			yRotO = yRot;
-			xRotO = xRot;
+			double horizontalDistance = deltaMovement.horizontalDistance();
+			setYRot((float) (Mth.atan2(deltaMovement.x, deltaMovement.z) * (180F / (float) Math.PI)));
+			setXRot((float) (Mth.atan2(deltaMovement.y, horizontalDistance) * (180F / (float) Math.PI)));
+			yRotO = getYRot();
+			xRotO = getXRot();
 		}
 
-		BlockPos blockPos = blockPosition();
-		BlockState blockState = level().getBlockState(blockPos);
-		if (!blockState.isAir() && !flag) {
-			VoxelShape voxelShape = blockState.getCollisionShape(level(), blockPos);
+		BlockPos currentBlockPosition = blockPosition();
+		BlockState blockState = level().getBlockState(currentBlockPosition);
+		// Check if the block at the current position is air, and that it has physics enabled
+		if (!blockState.isAir() && !noPhysics) {
+			VoxelShape voxelShape = blockState.getCollisionShape(level(), currentBlockPosition);
 			if (!voxelShape.isEmpty()) {
 				Vec3 vector3d1 = position();
 
 				for (AABB aabb : voxelShape.toAabbs()) {
-					if (aabb.move(blockPos).contains(vector3d1)) {
+					if (aabb.move(currentBlockPosition).contains(vector3d1)) {
 						inGround = true;
 						break;
 					}
@@ -125,83 +132,117 @@ public class CustomArrowEntity extends AbstractArrow implements HitEffectUtils {
 			clearFire();
 		}
 
-		if (inGround && !flag) {
-			if (shouldFall()) {
+		if (inGround && !noPhysics) {
+			// The projectile is in the ground, check if it should start to fall (if a block is broken underneath it) or despawn
+			if (lastState != blockState && shouldFall()) {
 				startFalling();
 			} else if (!level().isClientSide) {
 				tickDespawn();
 			}
 
-			++inGroundTime;
+			inGroundTime++;
 		} else {
 			inGroundTime = 0;
-			Vec3 vector3d2 = position();
-			Vec3 vector3d3 = vector3d2.add(vector3d);
-			HitResult rayTraceResult = level().clip(new ClipContext(vector3d2, vector3d3, ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, this));
-			if (rayTraceResult.getType() != HitResult.Type.MISS) {
-				vector3d3 = rayTraceResult.getLocation();
+			Vec3 currentPosition = position();
+			Vec3 adjustedPosition = currentPosition.add(deltaMovement);
+			HitResult hitResult = level().clip(new ClipContext(currentPosition, adjustedPosition, ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, this));
+
+			// Check if the projectile hit a block
+			if (hitResult.getType() != HitResult.Type.MISS) {
+				adjustedPosition = hitResult.getLocation();
 			}
 
-			while (isAlive()) {
-				EntityHitResult entityRayTraceResult = findHitEntity(vector3d2, vector3d3);
-				if (entityRayTraceResult != null) {
-					rayTraceResult = entityRayTraceResult;
+			// Check for hit entities
+			while (!isRemoved()) {
+				EntityHitResult entityHitResult = findHitEntity(currentPosition, adjustedPosition);
+				if (entityHitResult != null) {
+					hitResult = entityHitResult;
 				}
 
-				if (rayTraceResult != null && rayTraceResult.getType() == HitResult.Type.ENTITY) {
-					Entity entity = null;
-					if (rayTraceResult instanceof EntityHitResult) {
-						entity = ((EntityHitResult) rayTraceResult).getEntity();
+				if (hitResult != null && hitResult.getType() == HitResult.Type.ENTITY) {
+					Entity hitEntity = null;
+					if (hitResult instanceof EntityHitResult entityHitResult1) {
+						hitEntity = entityHitResult1.getEntity();
 					}
-					Entity entity1 = getOwner();
-					if (entity instanceof Player && entity1 instanceof Player && !((Player) entity1).canHarmPlayer((Player) entity)) {
-						rayTraceResult = null;
-						entityRayTraceResult = null;
+
+					// Check if the projectile hit a player, and was fired by a player
+					Entity owner = getOwner();
+					if (hitEntity instanceof Player && owner instanceof Player player && !player.canHarmPlayer(player)) {
+						hitResult = null;
+						entityHitResult = null;
 					}
 				}
 
-				if (rayTraceResult != null && rayTraceResult.getType() != HitResult.Type.MISS && !flag && !ForgeEventFactory.onProjectileImpact(this, rayTraceResult)) {
-					onHit(rayTraceResult);
+				if (hitResult != null && hitResult.getType() != HitResult.Type.MISS && !noPhysics) {
+					if (ForgeEventFactory.onProjectileImpact(this, hitResult)) {
+						break;
+					}
+
+					onHit(hitResult);
 					hasImpulse = true;
 				}
 
-				if (entityRayTraceResult == null || getPierceLevel() <= 0) {
+				if (entityHitResult == null || getPierceLevel() <= 0) {
 					break;
 				}
 
-				rayTraceResult = null;
+				hitResult = null;
 			}
 
-			vector3d = getDeltaMovement();
-			double d3 = vector3d.x;
-			double d4 = vector3d.y;
-			double d0 = vector3d.z;
+			// Get the current movement vector
+			deltaMovement = getDeltaMovement();
+			double deltaX = deltaMovement.x;
+			double deltaY = deltaMovement.y;
+			double deltaZ = deltaMovement.z;
+
+			// Add crit particles
 			if (isCritArrow()) {
 				for (int i = 0; i < 4; ++i) {
-					level().addParticle(ParticleTypes.CRIT, getX() + d3 * i / 4.0D, getY() + d4 * i / 4.0D, getZ() + d0 * i / 4.0D, -d3, -d4 + 0.2D, -d0);
+					level().addParticle(ParticleTypes.CRIT, getX() + deltaX * i / 4.0D, getY() + deltaY * i / 4.0D, getZ() + deltaZ * i / 4.0D, -deltaX, -deltaY + 0.2D, -deltaZ);
 				}
 			}
 
-			double d5 = getX() + d3;
-			double d1 = getY() + d4;
-			double d2 = getZ() + d0;
+			double newX = getX() + deltaX;
+			double newY = getY() + deltaY;
+			double newZ = getZ() + deltaZ;
+			double horizontalDistance = deltaMovement.horizontalDistance();
 
-			float f2 = 0.99F;
+			if (noPhysics) {
+				setYRot((float) (Mth.atan2(-deltaX, -deltaZ) * (double) (180F / (float) Math.PI)));
+			} else {
+				setYRot((float) (Mth.atan2(deltaX, deltaZ) * (double) (180F / (float) Math.PI)));
+			}
+
+			setXRot((float) (Mth.atan2(-deltaY, horizontalDistance) * (double) (180F / (float) Math.PI)));
+			setXRot(lerpRotation(xRotO, getXRot()));
+			setYRot(lerpRotation(yRotO, getYRot()));
+
+			// Check if the projectile is in water
+			inertia = getDefaultInertia();
 			if (isInWater()) {
-				for (int j = 0; j < 4; ++j) {
-					level().addParticle(ParticleTypes.BUBBLE, d5 - d3 * 0.25D, d1 - d4 * 0.25D, d2 - d0 * 0.25D, d3, d4, d0);
+				for (int i = 0; i < 4; ++i) {
+					level().addParticle(ParticleTypes.BUBBLE,
+							newX - deltaX * 0.25D,
+							newY - deltaY * 0.25D,
+							newZ - deltaZ * 0.25D,
+							deltaX, deltaY, deltaZ);
 				}
 
-				f2 = getWaterInertia();
+				inertia = getWaterInertia();
 			}
 
-			setDeltaMovement(vector3d.scale(f2));
-			if (!isNoGravity() && !flag) {
-				Vec3 vector3d4 = getDeltaMovement();
-				setDeltaMovement(vector3d4.x, vector3d4.y - 0.05d + gravityModifier, vector3d4.z);
+			// Set movement and position
+			setDeltaMovement(deltaMovement.scale(inertia));
+			if (!isNoGravity() && !noPhysics) {
+				if (shouldStopMoving) {
+					setDeltaMovement(0, 0, 0);
+				} else {
+					Vec3 newDeltaMovement = getDeltaMovement();
+					setDeltaMovement(newDeltaMovement.x, newDeltaMovement.y - getGravityModifier(), newDeltaMovement.z);
+				}
 			}
 
-			setPos(d5, d1, d2);
+			setPos(newX, newY, newZ);
 			checkInsideBlocks();
 		}
 	}
@@ -250,10 +291,24 @@ public class CustomArrowEntity extends AbstractArrow implements HitEffectUtils {
 
 		setDeltaMovement(shootingVector);
 		double horizontalDistanceSqr = shootingVector.horizontalDistanceSqr();
-		float yRot = (float) (Mth.atan2(shootingVector.x, shootingVector.z) * (180F / (float) Math.PI));
-		float xRot = (float) (Mth.atan2(shootingVector.y, horizontalDistanceSqr) * (180F / (float) Math.PI));
-		yRotO = yRot;
-		xRotO = xRot;
+		setYRot((float) (Mth.atan2(shootingVector.x, shootingVector.z) * (180F / (float) Math.PI)));
+		setXRot((float) (Mth.atan2(shootingVector.y, horizontalDistanceSqr) * (180F / (float) Math.PI)));
+		yRotO = getYRot();
+		xRotO = getXRot();
+	}
+
+	protected float getDefaultInertia() {
+		return 0.99f;
+	}
+
+	protected double getGravityModifier() {
+		return gravityModifier;
+	}
+
+	/**
+	 * Additional stuff to do while ticking. Runs early in the tick method.
+	 */
+	protected void doWhileTicking() {
 	}
 
 	/**
@@ -262,5 +317,12 @@ public class CustomArrowEntity extends AbstractArrow implements HitEffectUtils {
 	 * @param entity the <code>Entity</code> being hit
 	 */
 	protected void doWhenHitEntity(Entity entity) {
+		level().broadcastEntityEvent(this, VANILLA_IMPACT_STATUS_ID);
+	}
+
+	/**
+	 * Additional stuff to do when a block is hit.
+	 */
+	protected void doWhenHitBlock() {
 	}
 }
