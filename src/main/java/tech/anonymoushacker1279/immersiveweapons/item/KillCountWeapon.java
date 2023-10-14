@@ -20,7 +20,7 @@ public abstract class KillCountWeapon {
 	 * @return boolean
 	 */
 	public static boolean hasKillCount(ItemStack stack) {
-		return stack.getOrCreateTag().contains(KILL_COUNT_TAG);
+		return stack.getTag() != null && stack.getTag().contains(KILL_COUNT_TAG);
 	}
 
 	/**
