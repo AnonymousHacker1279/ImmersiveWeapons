@@ -25,7 +25,7 @@ public class FlareGunItem extends SimplePistolItem {
 	 * @return Item
 	 */
 	@Override
-	public Item defaultAmmo() {
+	public Item defaultPowder() {
 		return ItemRegistry.FLARE.get();
 	}
 

@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "immersiveweapons:sulfur"
+    },
+    {
+      "item": "immersiveweapons:mortar_and_pestle"
+    }
+  ],
+  "result": {
+    "count": 4,
+    "item": "immersiveweapons:sulfur_dust"
+  }
+}

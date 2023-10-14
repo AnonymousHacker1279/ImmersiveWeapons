@@ -18,7 +18,7 @@ public class HandCannonItem extends SimplePistolItem {
 	}
 
 	@Override
-	public Item defaultAmmo() {
+	public Item defaultPowder() {
 		return ItemRegistry.CANNONBALL.get();
 	}
 
@@ -43,10 +43,10 @@ public class HandCannonItem extends SimplePistolItem {
 	}
 
 	@Override
-	protected void setupFire(ItemStack gun, BulletEntity bulletEntity, Player player) {
+	protected void setupFire(ItemStack gun, BulletEntity bulletEntity, Player player, float powderModifier) {
 		bulletEntity.shootFromRotation(player, player.getXRot(), player.getYRot(),
 				0.0F,
-				getFireVelocity(gun),
+				getFireVelocity(gun, powderModifier),
 				ImmersiveWeapons.COMMON_CONFIG.handCannonFireInaccuracy().get().floatValue());
 	}
 

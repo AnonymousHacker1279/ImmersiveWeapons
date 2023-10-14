@@ -74,7 +74,7 @@ public class ItemTagsGenerator extends ItemTagsProvider {
 		tag(Tags.Items.NUGGETS).addTag(IWItemTagGroups.ASTRAL_NUGGETS);
 
 		// Dust tags
-		tag(ForgeItemTagGroups.SULFUR_DUSTS).add(ItemRegistry.SULFUR.get());
+		tag(ForgeItemTagGroups.SULFUR_DUSTS).add(ItemRegistry.SULFUR_DUST.get());
 
 		// Loop through the registry and add groups of items to a tag
 		for (Item item : items) {

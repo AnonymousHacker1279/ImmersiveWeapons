@@ -270,7 +270,8 @@ public class TooltipHandler {
 				event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.satchel").withStyle(ChatFormatting.GREEN, ChatFormatting.ITALIC));
 			}
 			if (stack.getItem() == ItemRegistry.POWDER_HORN.get()) {
-				event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.powder_horn").withStyle(ChatFormatting.GREEN, ChatFormatting.ITALIC));
+				event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.powder_horn_1").withStyle(ChatFormatting.GREEN, ChatFormatting.ITALIC));
+				event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.powder_horn_2").withStyle(ChatFormatting.GREEN, ChatFormatting.ITALIC));
 			}
 			if (stack.getItem() == ItemRegistry.BERSERKERS_AMULET.get()) {
 				event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.berserkers_amulet_1").withStyle(ChatFormatting.GREEN, ChatFormatting.ITALIC));

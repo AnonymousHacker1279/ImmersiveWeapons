@@ -1357,6 +1357,21 @@ public class RecipeGenerator extends RecipeProvider {
 				.unlockedBy("raw_sulfur_block", has(BlockItemRegistry.RAW_SULFUR_BLOCK_ITEM.get()))
 				.save(finishedRecipeConsumer);
 
+		ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, ItemRegistry.SULFUR_DUST.get(), 4)
+				.requires(ItemRegistry.SULFUR.get())
+				.requires(ItemRegistry.MORTAR_AND_PESTLE.get())
+				.unlockedBy("sulfur", has(ItemRegistry.SULFUR.get()))
+				.save(finishedRecipeConsumer);
+
+		// Black Powder
+		ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, ItemRegistry.BLACKPOWDER.get(), 8)
+				.requires(ForgeItemTagGroups.SULFUR_DUSTS)
+				.requires(ItemTags.COALS)
+				.requires(Ingredient.of(ItemRegistry.POTASSIUM_NITRATE.get()), 6)
+				.requires(ItemRegistry.MORTAR_AND_PESTLE.get())
+				.unlockedBy("potassium_nitrate", has(ItemRegistry.POTASSIUM_NITRATE.get()))
+				.save(finishedRecipeConsumer);
+
 		// Meteor Staff
 		ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, ItemRegistry.METEOR_STAFF.get())
 				.define('a', ItemRegistry.CELESTIAL_FRAGMENT.get())
@@ -1435,12 +1450,14 @@ public class RecipeGenerator extends RecipeProvider {
 	}
 
 	private void createMinecraftItems() {
-		// Gunpowder (from sulfur)
-		ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, Items.GUNPOWDER)
-				.requires(ItemTags.COALS)
-				.requires(ForgeItemTagGroups.SULFUR_DUSTS)
+		// Gunpowder
+		ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, Items.GUNPOWDER, 4)
+				.requires(Ingredient.of(ItemTags.COALS), 2)
+				.requires(Ingredient.of(ForgeItemTagGroups.SULFUR_DUSTS), 2)
+				.requires(ItemRegistry.POTASSIUM_NITRATE.get(), 4)
+				.requires(ItemRegistry.MORTAR_AND_PESTLE.get())
 				.group("gunpowder")
-				.unlockedBy("sulfur", has(ItemRegistry.SULFUR.get()))
+				.unlockedBy("potassium_nitrate", has(ItemRegistry.POTASSIUM_NITRATE.get()))
 				.save(finishedRecipeConsumer);
 		// Copper ingot
 		ShapedRecipeBuilder shapedRecipeBuilder = ShapedRecipeBuilder.shaped(RecipeCategory.MISC, Items.COPPER_INGOT)

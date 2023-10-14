@@ -431,7 +431,8 @@ public class LanguageGenerator extends IWLanguageProvider {
 
 		// Accessories
 		addTooltip("satchel", "Provides a 10% chance not to consume ammo");
-		addTooltip("powder_horn", "Decreases reload time on firearms by 15%");
+		addTooltip("powder_horn_1", "Decreases reload time on firearms by 15%");
+		addTooltip("powder_horn_2", "Helps to protect powder in wet environments");
 		addTooltip("berserkers_amulet_1", "Increases melee damage by 20%, and projectile damage by 10%");
 		addTooltip("berserkers_amulet_2", "However, you will take 20% more damage from all sources");
 		addTooltip("hans_blessing_1", "Take 15% less damage from all sources");
@@ -998,6 +999,7 @@ public class LanguageGenerator extends IWLanguageProvider {
 		add("immersiveweapons.debug_tracing.melee_item_damage", "Melee Item Damage: %s");
 		add("immersiveweapons.debug_tracing.gun_base_velocity", "Gun Base Velocity: %s");
 		add("immersiveweapons.debug_tracing.selected_ammo", "Selected Ammo: %s (base damage: %s)");
+		add("immersiveweapons.debug_tracing.selected_powder", "Selected Powder: %s (velocity modifier: %s)");
 		add("immersiveweapons.debug_tracing.live_bullet_damage", "Live Bullet Damage: %s (is crit: %s)");
 		add("immersiveweapons.debug_tracing.damage_bonus", "Damage Bonus: %s general, %s melee, %s projectile");
 		add("immersiveweapons.debug_tracing.celestial_protection_chance_for_no_damage", "Celestial Protection Chance: %s");

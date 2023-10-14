@@ -36,9 +36,11 @@ public class BlockLists {
 		simpleBlocks.add(BlockRegistry.CHAMPION_BRICKS.get());
 		simpleBlocks.add(BlockRegistry.CHAMPION_BASE.get());
 		simpleBlocks.add(BlockRegistry.CHAMPION_KEYCARD_BRICKS.get());
+
 		stoneBasedOres.add(BlockRegistry.SULFUR_ORE.get());
 		stoneBasedOres.add(BlockRegistry.ELECTRIC_ORE.get());
 		stoneBasedOres.add(BlockRegistry.COBALT_ORE.get());
+		stoneBasedOres.add(BlockRegistry.POTASSIUM_NITRATE_ORE.get());
 
 		deepslateBasedOres.add(BlockRegistry.DEEPSLATE_SULFUR_ORE.get());
 		deepslateBasedOres.add(BlockRegistry.DEEPSLATE_COBALT_ORE.get());

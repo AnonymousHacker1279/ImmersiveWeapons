@@ -138,7 +138,10 @@ public class ItemRegistry {
 	public static final RegistryObject<Item> CONDUCTIVE_ALLOY = ITEMS.register("conductive_alloy", () -> new Item(new Properties()));
 	public static final RegistryObject<Item> MOLTEN_INGOT = ITEMS.register("molten_ingot", () -> new FuelItem(new Properties().fireResistant(), 24000));
 	public static final RegistryObject<Item> MOLTEN_SMITHING_TEMPLATE = ITEMS.register("molten_smithing_template", () -> new Item(new Properties().fireResistant()));
+	public static final RegistryObject<Item> BLACKPOWDER = ITEMS.register("blackpowder", () -> new Item(new Properties()));
 	public static final RegistryObject<Item> SULFUR = ITEMS.register("sulfur", () -> new Item(new Properties()));
+	public static final RegistryObject<Item> SULFUR_DUST = ITEMS.register("sulfur_dust", () -> new Item(new Properties()));
+	public static final RegistryObject<Item> POTASSIUM_NITRATE = ITEMS.register("potassium_nitrate", () -> new Item(new Properties()));
 	public static final RegistryObject<Item> VENTUS_STAFF_CORE = ITEMS.register("ventus_staff_core", () -> new Item(new Properties()));
 	public static final RegistryObject<Item> CURSED_SIGHT_STAFF_CORE = ITEMS.register("cursed_sight_staff_core", () -> new Item(new Properties()));
 	public static final RegistryObject<Item> AZUL_KEYSTONE = ITEMS.register("azul_keystone", () -> new Item(new Properties()));

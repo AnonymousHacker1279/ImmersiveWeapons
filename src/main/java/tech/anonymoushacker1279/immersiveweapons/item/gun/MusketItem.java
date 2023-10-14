@@ -22,10 +22,10 @@ public class MusketItem extends AbstractGunItem {
 	}
 
 	@Override
-	public void setupFire(ItemStack gun, BulletEntity bulletEntity, Player player) {
+	public void setupFire(ItemStack gun, BulletEntity bulletEntity, Player player, float powderModifier) {
 		bulletEntity.shootFromRotation(player, player.getXRot(), player.getYRot(),
 				0.0F,
-				getFireVelocity(gun),
+				getFireVelocity(gun, powderModifier),
 				ImmersiveWeapons.COMMON_CONFIG.musketFireInaccuracy().get().floatValue());
 	}
 

@@ -1,15 +1,15 @@
 {
-  "feature": "immersiveweapons:sulfur_ore",
+  "feature": "immersiveweapons:potassium_nitrate_ore",
   "placement": [
     {
       "type": "minecraft:height_range",
       "height": {
-        "type": "minecraft:uniform",
+        "type": "minecraft:trapezoid",
         "max_inclusive": {
-          "absolute": 72
+          "absolute": 50
         },
         "min_inclusive": {
-          "absolute": 32
+          "absolute": 10
         }
       }
     },
@@ -21,7 +21,7 @@
     },
     {
       "type": "minecraft:count",
-      "count": 6
+      "count": 8
     }
   ]
 }

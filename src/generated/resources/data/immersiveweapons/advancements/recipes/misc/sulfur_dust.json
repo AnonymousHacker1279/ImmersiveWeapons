@@ -3,16 +3,16 @@
   "criteria": {
     "has_the_recipe": {
       "conditions": {
-        "recipe": "minecraft:gunpowder"
+        "recipe": "immersiveweapons:sulfur_dust"
       },
       "trigger": "minecraft:recipe_unlocked"
     },
-    "potassium_nitrate": {
+    "sulfur": {
       "conditions": {
         "items": [
           {
             "items": [
-              "immersiveweapons:potassium_nitrate"
+              "immersiveweapons:sulfur"
             ]
           }
         ]
@@ -22,13 +22,13 @@
   },
   "requirements": [
     [
-      "potassium_nitrate",
+      "sulfur",
       "has_the_recipe"
     ]
   ],
   "rewards": {
     "recipes": [
-      "minecraft:gunpowder"
+      "immersiveweapons:sulfur_dust"
     ]
   },
   "sends_telemetry_event": false

@@ -22,12 +22,12 @@ public class SimpleShotgunItem extends AbstractGunItem {
 	}
 
 	@Override
-	public void setupFire(ItemStack gun, BulletEntity bulletEntity, Player player) {
+	public void setupFire(ItemStack gun, BulletEntity bulletEntity, Player player, float powderModifier) {
 		bulletEntity.shootFromRotation(player,
 				player.getXRot() + GeneralUtilities.getRandomNumber(-5.0f, 5.0f),
 				player.getYRot() + GeneralUtilities.getRandomNumber(-5.0f, 5.0f),
 				0.0F,
-				getFireVelocity(gun),
+				getFireVelocity(gun, powderModifier),
 				ImmersiveWeapons.COMMON_CONFIG.blunderbussFireInaccuracy().get().floatValue());
 	}
 

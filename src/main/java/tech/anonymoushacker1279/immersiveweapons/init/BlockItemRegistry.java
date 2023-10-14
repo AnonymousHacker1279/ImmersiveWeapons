@@ -22,6 +22,7 @@ public class BlockItemRegistry {
 	public static final RegistryObject<BlockItem> DEEPSLATE_SULFUR_ORE_ITEM = ItemRegistry.ITEMS.register("deepslate_sulfur_ore", () -> new BlockItem(BlockRegistry.DEEPSLATE_SULFUR_ORE.get(), new Properties()));
 	public static final RegistryObject<BlockItem> NETHER_SULFUR_ORE_ITEM = ItemRegistry.ITEMS.register("nether_sulfur_ore", () -> new BlockItem(BlockRegistry.NETHER_SULFUR_ORE.get(), new Properties()));
 	public static final RegistryObject<BlockItem> RAW_SULFUR_BLOCK_ITEM = ItemRegistry.ITEMS.register("raw_sulfur_block", () -> new BlockItem(BlockRegistry.RAW_SULFUR_BLOCK.get(), new Properties()));
+	public static final RegistryObject<BlockItem> POTASSIUM_NITRATE_ORE_ITEM = ItemRegistry.ITEMS.register("potassium_nitrate_ore", () -> new BlockItem(BlockRegistry.POTASSIUM_NITRATE_ORE.get(), new Properties()));
 	public static final RegistryObject<BlockItem> MOLTEN_BLOCK_ITEM = ItemRegistry.ITEMS.register("molten_block", () -> new BlockItem(BlockRegistry.MOLTEN_BLOCK.get(), new Properties().fireResistant()));
 	public static final RegistryObject<BlockItem> TESLA_BLOCK_ITEM = ItemRegistry.ITEMS.register("tesla_block", () -> new BlockItem(BlockRegistry.TESLA_BLOCK.get(), new Properties()));
 	public static final RegistryObject<BlockItem> ASTRAL_BLOCK_ITEM = ItemRegistry.ITEMS.register("astral_block", () -> new BlockItem(BlockRegistry.ASTRAL_BLOCK.get(), new Properties()));

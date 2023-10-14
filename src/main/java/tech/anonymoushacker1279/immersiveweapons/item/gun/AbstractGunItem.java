@@ -23,6 +23,7 @@ import tech.anonymoushacker1279.immersiveweapons.data.tags.groups.immersiveweapo
 import tech.anonymoushacker1279.immersiveweapons.entity.projectile.BulletEntity;
 import tech.anonymoushacker1279.immersiveweapons.event.game_effects.AccessoryManager;
 import tech.anonymoushacker1279.immersiveweapons.init.*;
+import tech.anonymoushacker1279.immersiveweapons.item.AccessoryItem;
 import tech.anonymoushacker1279.immersiveweapons.item.AccessoryItem.EffectType;
 import tech.anonymoushacker1279.immersiveweapons.item.gun.data.GunData;
 import tech.anonymoushacker1279.immersiveweapons.item.projectile.BulletItem;
@@ -36,6 +37,7 @@ public abstract class AbstractGunItem extends Item implements Vanishable {
 	protected static final Predicate<ItemStack> MUSKET_BALLS = (stack) -> stack.is(IWItemTagGroups.MUSKET_BALLS);
 	protected static final Predicate<ItemStack> FLARES = (stack) -> stack.is(IWItemTagGroups.FLARES);
 	protected static final Predicate<ItemStack> CANNONBALLS = (stack) -> stack.is(IWItemTagGroups.CANNONBALLS);
+	protected static final Predicate<ItemStack> FLAMMABLE_POWDERS = (stack) -> isPowder(stack.getItem());
 
 	/**
 	 * Constructor for AbstractGunItem.
@@ -47,8 +49,7 @@ public abstract class AbstractGunItem extends Item implements Vanishable {
 	}
 
 	@Override
-	public void releaseUsing(ItemStack gun, Level level, LivingEntity livingEntity,
-	                         int timeLeft) {
+	public void releaseUsing(ItemStack gun, Level level, LivingEntity livingEntity, int timeLeft) {
 
 		if (livingEntity instanceof Player player) {
 			if (level.isClientSide) {
@@ -59,6 +60,7 @@ public abstract class AbstractGunItem extends Item implements Vanishable {
 			boolean isCreative = player.isCreative();
 			boolean misfire = false;
 			ItemStack ammo = findAmmo(gun, livingEntity);
+			ItemStack powder = findPowder(gun, livingEntity);
 
 			// Determine number of bullets to fire
 			int bulletsToFire = isCreative ? getMaxBulletsToFire() : getBulletsToFire(ammo);
@@ -69,12 +71,20 @@ public abstract class AbstractGunItem extends Item implements Vanishable {
 					misfire = true;
 				}
 
+				// High misfire chance when underwater
+				if (livingEntity.isUnderWater()) {
+					if (livingEntity.getRandom().nextFloat() <= 0.9f) {
+						misfire = true;
+					}
+				}
+
 				if (misfire) {
 					level.playSound(null, player.getX(), player.getY(), player.getZ(),
 							getMisfireSound(), SoundSource.PLAYERS, 1.0F,
 							1.0F / (GeneralUtilities.getRandomNumber(0.2f, 0.6f) + 1.2F) + 0.5F);
 
 					handleAmmoStack(gun, ammo, bulletsToFire, player);
+					handlePowderStack(powder, player);
 					if (!isCreative) {
 						gun.hurtAndBreak(5, player, (entity) ->
 								entity.broadcastBreakEvent(entity.getUsedItemHand()));
@@ -86,18 +96,38 @@ public abstract class AbstractGunItem extends Item implements Vanishable {
 				return;
 			}
 
-			// Check if the ammunition stack is not empty, if the player is in creative mode,
-			// or that a misfire hasn't occurred
-			if (!misfire && (!ammo.isEmpty() || isCreative)) {
+			// Check if the gun can be fired
+			if (!misfire && ((!ammo.isEmpty() && !powder.isEmpty()) || isCreative)) {
 				// If the ammunition stack is empty, set it to the default.
 				// This happens when the player is in creative mode but has no ammunition.
 				if (ammo.isEmpty()) {
 					ammo = new ItemStack(defaultAmmo());
 				}
 
+				if (powder.isEmpty()) {
+					powder = new ItemStack(defaultPowder());
+				}
+
+				PowderType powderType = getPowderFromItem(powder.getItem());
+
 				if (!level.isClientSide) {
 					BulletItem<?> bulletItem = (BulletItem<?>) (ammo.getItem() instanceof BulletItem<?>
 							? ammo.getItem() : defaultAmmo());
+
+					float powderVelocityModifier = powderType.getVelocityModifier();
+
+					// Check for any scenarios where the powder would become wet
+					// Having the Powder Horn accessory reduces the effects slightly
+					boolean hasPowderHorn = AccessoryItem.isAccessoryActive(player, ItemRegistry.POWDER_HORN.get());
+					if (level.isRainingAt(player.blockPosition())) {
+						powderVelocityModifier -= hasPowderHorn ? 0.15f : 0.3f;
+					}
+					if (player.isUnderWater()) {
+						powderVelocityModifier -= hasPowderHorn ? 0.25f : 0.5f;
+					}
+					if (player.isInPowderSnow) {
+						powderVelocityModifier -= hasPowderHorn ? 0.1f : 0.2f;
+					}
 
 					for (int i = 0; i < bulletsToFire; ++i) {
 						BulletEntity bulletEntity;
@@ -111,7 +141,7 @@ public abstract class AbstractGunItem extends Item implements Vanishable {
 						}
 
 						bulletEntity.setFiringItem(this);
-						setupFire(gun, bulletEntity, player);
+						setupFire(gun, bulletEntity, player, powderVelocityModifier);
 
 						// Roll for random crits
 						if (livingEntity.getRandom().nextFloat() <= ImmersiveWeapons.COMMON_CONFIG.gunCritChance().get()) {
@@ -147,7 +177,9 @@ public abstract class AbstractGunItem extends Item implements Vanishable {
 							bulletEntity.gravityModifier += (densityModifier * 0.015f);
 						}
 
-						gun.hurtAndBreak(1, player, (entity) ->
+						int weaponDamage = powderType.getWeaponDamageAmount();
+
+						gun.hurtAndBreak(weaponDamage, player, (entity) ->
 								entity.broadcastBreakEvent(player.getUsedItemHand()));
 
 						level.addFreshEntity(bulletEntity);
@@ -181,11 +213,14 @@ public abstract class AbstractGunItem extends Item implements Vanishable {
 							GeneralUtilities.getRandomNumber(-0.01d, 0.01d),
 							GeneralUtilities.getRandomNumber(-0.01d, 0.01d));
 
-					level.addParticle(ParticleTypes.SMOKE,
-							particlePosition.x, particlePosition.y, particlePosition.z,
-							GeneralUtilities.getRandomNumber(-0.01d, 0.01d),
-							GeneralUtilities.getRandomNumber(-0.01d, 0.01d),
-							GeneralUtilities.getRandomNumber(-0.01d, 0.01d));
+					int smokeParticles = 3 * powderType.getDirtiness();
+					for (int j = 0; j < smokeParticles; ++j) {
+						level.addParticle(ParticleTypes.SMOKE,
+								particlePosition.x, particlePosition.y, particlePosition.z,
+								GeneralUtilities.getRandomNumber(-0.01d, 0.01d),
+								GeneralUtilities.getRandomNumber(-0.01d, 0.01d),
+								GeneralUtilities.getRandomNumber(-0.01d, 0.01d));
+					}
 				}
 
 				level.playSound(null, player.getX(), player.getY(), player.getZ(),
@@ -193,6 +228,7 @@ public abstract class AbstractGunItem extends Item implements Vanishable {
 						1.0F / (GeneralUtilities.getRandomNumber(0.2f, 0.6f) + 1.2F) + 0.5F);
 
 				handleAmmoStack(gun, ammo, bulletsToFire, player);
+				handlePowderStack(powder, player);
 
 				if (!player.isCreative()) {
 					// Reduce cooldown in certain conditions
@@ -214,7 +250,7 @@ public abstract class AbstractGunItem extends Item implements Vanishable {
 		if (gun.getItem() instanceof AbstractGunItem gunItem) {
 			if (livingEntity instanceof Player player) {
 				Predicate<ItemStack> ammoPredicate = (gunItem).getInventoryAmmoPredicate();
-				ItemStack heldAmmo = AbstractGunItem.getHeldAmmo(player, ammoPredicate);
+				ItemStack heldAmmo = AbstractGunItem.getHeldPredicate(player, ammoPredicate);
 				if (!heldAmmo.isEmpty()) {
 					return heldAmmo;
 				} else {
@@ -233,16 +269,37 @@ public abstract class AbstractGunItem extends Item implements Vanishable {
 		return ItemStack.EMPTY;
 	}
 
+	public ItemStack findPowder(ItemStack gun, LivingEntity livingEntity) {
+		if (gun.getItem() instanceof AbstractGunItem) {
+			if (livingEntity instanceof Player player) {
+				ItemStack heldAmmo = AbstractGunItem.getHeldPredicate(player, FLAMMABLE_POWDERS);
+				if (!heldAmmo.isEmpty()) {
+					return heldAmmo;
+				} else {
+					for (int i = 0; i < player.getInventory().getContainerSize(); ++i) {
+						ItemStack powderItem = player.getInventory().getItem(i);
+						if (isPowder(powderItem.getItem())) {
+							return powderItem;
+						}
+					}
+
+					return player.isCreative() ? new ItemStack(defaultPowder()) : ItemStack.EMPTY;
+				}
+			}
+		}
+		return ItemStack.EMPTY;
+	}
+
 	@Override
 	public boolean isValidRepairItem(ItemStack toRepair, ItemStack repair) {
 		return getRepairMaterial().test(repair) || super.isValidRepairItem(toRepair, repair);
 	}
 
-	protected static ItemStack getHeldAmmo(LivingEntity livingEntity, Predicate<ItemStack> isAmmo) {
-		if (isAmmo.test(livingEntity.getItemInHand(InteractionHand.OFF_HAND))) {
+	protected static ItemStack getHeldPredicate(LivingEntity livingEntity, Predicate<ItemStack> predicate) {
+		if (predicate.test(livingEntity.getItemInHand(InteractionHand.OFF_HAND))) {
 			return livingEntity.getItemInHand(InteractionHand.OFF_HAND);
 		} else {
-			return isAmmo.test(livingEntity.getItemInHand(InteractionHand.MAIN_HAND)) ?
+			return predicate.test(livingEntity.getItemInHand(InteractionHand.MAIN_HAND)) ?
 					livingEntity.getItemInHand(InteractionHand.MAIN_HAND) : ItemStack.EMPTY;
 		}
 	}
@@ -426,6 +483,15 @@ public abstract class AbstractGunItem extends Item implements Vanishable {
 		return ItemRegistry.IRON_MUSKET_BALL.get();
 	}
 
+	/**
+	 * Get the default powder.
+	 *
+	 * @return Item
+	 */
+	public Item defaultPowder() {
+		return Items.GUNPOWDER;
+	}
+
 
 	/**
 	 * Get the use duration.
@@ -491,10 +557,10 @@ public abstract class AbstractGunItem extends Item implements Vanishable {
 		return false;
 	}
 
-	public float getFireVelocity(ItemStack gun) {
+	public float getFireVelocity(ItemStack gun, float powderModifier) {
 		int velocityLevel = gun.getEnchantmentLevel(EnchantmentRegistry.VELOCITY.get());
 		// Each level increases velocity by 10%
-		return getBaseFireVelocity() * (1.0f + (0.1f * velocityLevel));
+		return getBaseFireVelocity() * (1.0f + (0.1f * velocityLevel)) * (1.0f + powderModifier);
 	}
 
 	public float getBaseFireVelocity() {
@@ -505,10 +571,10 @@ public abstract class AbstractGunItem extends Item implements Vanishable {
 		return 0;
 	}
 
-	protected void setupFire(ItemStack gun, BulletEntity bulletEntity, Player player) {
+	protected void setupFire(ItemStack gun, BulletEntity bulletEntity, Player player, float powderModifier) {
 		bulletEntity.shootFromRotation(player, player.getXRot(), player.getYRot(),
 				0.0F,
-				getFireVelocity(gun),
+				getFireVelocity(gun, powderModifier),
 				ImmersiveWeapons.COMMON_CONFIG.flintlockPistolFireInaccuracy().get().floatValue());
 	}
 
@@ -528,6 +594,81 @@ public abstract class AbstractGunItem extends Item implements Vanishable {
 					player.getInventory().removeItem(ammo);
 				}
 			}
+		}
+	}
+
+	protected void handlePowderStack(ItemStack powder, Player player) {
+		if (!player.isCreative()) {
+			PowderType type = getPowderFromItem(powder.getItem());
+
+			float consumeChance = type.getConsumeChance();
+			if (player.getRandom().nextFloat() <= consumeChance) {
+				powder.shrink(1);
+
+				if (powder.isEmpty()) {
+					player.getInventory().removeItem(powder);
+				}
+			}
+		}
+	}
+
+	public static boolean isPowder(Item item) {
+		for (PowderType type : PowderType.values()) {
+			if (type.getItem() == item) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	public static PowderType getPowderFromItem(Item item) {
+		for (PowderType type : PowderType.values()) {
+			if (type.getItem() == item) {
+				return type;
+			}
+		}
+
+		return PowderType.GUNPOWDER;
+	}
+
+	public enum PowderType {
+		GUNPOWDER(Items.GUNPOWDER, 0.33f, 0.05f, 1, 1),
+		BLACKPOWDER(ItemRegistry.BLACKPOWDER.get(), 0.75f, 0.025f, 2, 2),
+		SULFUR_DUST(ItemRegistry.SULFUR_DUST.get(), 0.90f, -0.05f, 2, 3);
+
+		private final Item item;
+		private final float consumeChance;
+		private final float velocityModifier;
+		private final int weaponDamageAmount;
+		private final int dirtiness;
+
+		PowderType(Item item, float consumeChance, float velocityModifier, int weaponDamageAmount, int dirtiness) {
+			this.item = item;
+			this.consumeChance = consumeChance;
+			this.velocityModifier = velocityModifier;
+			this.weaponDamageAmount = weaponDamageAmount;
+			this.dirtiness = dirtiness;
+		}
+
+		public Item getItem() {
+			return item;
+		}
+
+		public float getConsumeChance() {
+			return consumeChance;
+		}
+
+		public float getVelocityModifier() {
+			return velocityModifier;
+		}
+
+		public int getWeaponDamageAmount() {
+			return weaponDamageAmount;
+		}
+
+		public int getDirtiness() {
+			return dirtiness;
 		}
 	}
 }
