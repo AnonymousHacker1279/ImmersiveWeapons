@@ -111,6 +111,10 @@ public class TeslaSynthesizerMenu extends AbstractContainerMenu implements Stack
 				else if (index >= 32 && index < 41 && !moveItemStackTo(oldStack, 5, 32, false)) {
 					return ItemStack.EMPTY;
 				}
+			} else {
+				if (!moveItemStackTo(oldStack, 5, 41, false)) {
+					return ItemStack.EMPTY;
+				}
 			}
 
 			if (oldStack.isEmpty()) {

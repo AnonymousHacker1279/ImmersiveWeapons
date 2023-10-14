@@ -34,19 +34,7 @@ public class AmmunitionTableMenu extends AbstractContainerMenu {
 		super(MenuTypeRegistry.AMMUNITION_TABLE_MENU.get(), containerID);
 		this.container = container;
 		this.containerData = containerData;
-
-		// Player inventory slots
-		for (int i = 0; i < 3; ++i) {
-			for (int j = 0; j < 9; ++j) {
-				addSlot(new Slot(inventory, j + i * 9 + 9, 8 + j * 18, 84 + i * 18));
-			}
-		}
-
-		// Player hotbar slots
-		for (int k = 0; k < 9; ++k) {
-			addSlot(new Slot(inventory, k, 8 + k * 18, 142));
-		}
-
+		
 		// Ammunition table inventory slots (first begins at (8, 19), it is a 3x2 grid)
 		for (int i = 0; i < 2; ++i) {
 			for (int j = 0; j < 3; ++j) {
@@ -71,26 +59,39 @@ public class AmmunitionTableMenu extends AbstractContainerMenu {
 			}
 		});
 
+		// Player inventory slots
+		for (int i = 0; i < 3; ++i) {
+			for (int j = 0; j < 9; ++j) {
+				addSlot(new Slot(inventory, j + i * 9 + 9, 8 + j * 18, 84 + i * 18));
+			}
+		}
+
+		// Player hotbar slots
+		for (int k = 0; k < 9; ++k) {
+			addSlot(new Slot(inventory, k, 8 + k * 18, 142));
+		}
+
 		addDataSlots(containerData);
 	}
 
-	// TODO: implement this properly
 	@Override
 	public ItemStack quickMoveStack(Player player, int index) {
 		ItemStack itemStack = ItemStack.EMPTY;
 		Slot slot = slots.get(index);
+
 		if (slot.hasItem()) {
-			ItemStack itemStack1 = slot.getItem();
-			itemStack = itemStack1.copy();
+			ItemStack oldStack = slot.getItem();
+			itemStack = oldStack.copy();
+
 			if (index < container.getContainerSize()) {
-				if (!moveItemStackTo(itemStack1, container.getContainerSize(), slots.size(), true)) {
+				if (!moveItemStackTo(oldStack, container.getContainerSize(), slots.size(), true)) {
 					return ItemStack.EMPTY;
 				}
-			} else if (!moveItemStackTo(itemStack1, 0, container.getContainerSize(), false)) {
+			} else if (!moveItemStackTo(oldStack, 0, container.getContainerSize(), false)) {
 				return ItemStack.EMPTY;
 			}
 
-			if (itemStack1.isEmpty()) {
+			if (oldStack.isEmpty()) {
 				slot.set(ItemStack.EMPTY);
 			} else {
 				slot.setChanged();
