@@ -1041,8 +1041,8 @@ public class RecipeGenerator extends RecipeProvider {
 
 		// Astral
 		musketBallMaterials.clear();
-		musketBallMaterials.add(new MaterialGroup(IWItemTagGroups.MOLTEN_INGOTS, 0.6f, 2.6f));
-		musketBallMaterials.add(new MaterialGroup(IWItemTagGroups.MOLTEN_INGOTS, 0.06f, 0.28f));
+		musketBallMaterials.add(new MaterialGroup(IWItemTagGroups.ASTRAL_INGOTS, 0.6f, 2.6f));
+		musketBallMaterials.add(new MaterialGroup(IWItemTagGroups.ASTRAL_NUGGETS, 0.06f, 0.28f));
 		ammunitionTableCrafting(musketBallMaterials, ItemRegistry.ASTRAL_MUSKET_BALL.get());
 
 		// Ammunition Table

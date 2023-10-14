@@ -7,25 +7,29 @@ import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundAddEntityPacket;
 import net.minecraft.network.syncher.*;
 import net.minecraft.util.Mth;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.projectile.AbstractArrow;
+import net.minecraft.world.entity.projectile.Arrow;
 import net.minecraft.world.item.*;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.Level.ExplosionInteraction;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.*;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraftforge.event.ForgeEventFactory;
 import net.minecraftforge.network.PacketDistributor;
+import org.jetbrains.annotations.Nullable;
 import tech.anonymoushacker1279.immersiveweapons.entity.projectile.SmokeGrenadeEntity.SmokeGrenadeEntityPacketHandler;
 import tech.anonymoushacker1279.immersiveweapons.init.PacketHandler;
 import tech.anonymoushacker1279.immersiveweapons.item.tool.HitEffectUtils;
 import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
+import tech.anonymoushacker1279.immersiveweapons.world.level.IWDamageSources;
 
 import java.util.List;
 
-public class CustomArrowEntity extends AbstractArrow implements HitEffectUtils {
+public class CustomArrowEntity extends Arrow implements HitEffectUtils {
 
 	protected static final byte VANILLA_IMPACT_STATUS_ID = 3;
 	public Item referenceItem = Items.AIR;
@@ -35,24 +39,31 @@ public class CustomArrowEntity extends AbstractArrow implements HitEffectUtils {
 	public List<Double> shootingVectorInputs = List.of(0.0075d, -0.0095d, 0.0075d);
 	public HitEffect hitEffect = HitEffect.NONE;
 	public int color = -1;
+	public boolean isExplosive = false;
+	private boolean hasExploded = false;
 
 	public static final EntityDataAccessor<Float> GRAVITY_MODIFIER_ACCESSOR = SynchedEntityData.defineId(CustomArrowEntity.class,
 			EntityDataSerializers.FLOAT);
 
-	public CustomArrowEntity(EntityType<? extends AbstractArrow> type, Level level) {
+	public CustomArrowEntity(EntityType<? extends Arrow> type, Level level) {
 		super(type, level);
 	}
 
-	public CustomArrowEntity(EntityType<? extends CustomArrowEntity> type, LivingEntity shooter, Level level) {
-		super(type, shooter, level);
+	public CustomArrowEntity(EntityType<? extends Arrow> type, LivingEntity shooter, Level level) {
+		this(type, level);
+		setPos(shooter.getX(), shooter.getY() + shooter.getEyeHeight() - 0.1, shooter.getZ());
+		setOwner(shooter);
+		if (shooter instanceof Player) {
+			pickup = Pickup.ALLOWED;
+		}
 	}
 
 	public static class ArrowEntityBuilder implements HitEffectUtils {
 
-		private final EntityType<? extends AbstractArrow> entityType;
+		private final EntityType<? extends Arrow> entityType;
 		private final Item referenceItem;
 
-		public ArrowEntityBuilder(EntityType<? extends AbstractArrow> entityType, Item referenceItem) {
+		public ArrowEntityBuilder(EntityType<? extends Arrow> entityType, Item referenceItem) {
 			this.entityType = entityType;
 			this.referenceItem = referenceItem;
 		}
@@ -255,6 +266,10 @@ public class CustomArrowEntity extends AbstractArrow implements HitEffectUtils {
 			PacketHandler.INSTANCE.send(PacketDistributor.TRACKING_CHUNK.with(() -> level().getChunkAt(blockPosition())),
 					new SmokeGrenadeEntityPacketHandler(getX(), getY(), getZ(), color));
 		}
+
+		if (isExplosive && !hasExploded) {
+			explode();
+		}
 	}
 
 	@Override
@@ -324,5 +339,27 @@ public class CustomArrowEntity extends AbstractArrow implements HitEffectUtils {
 	 * Additional stuff to do when a block is hit.
 	 */
 	protected void doWhenHitBlock() {
+	}
+
+	private void explode() {
+		if (!level().isClientSide && getOwner() != null) {
+			level().explode(this,
+					getDamageSource(getOwner()),
+					null,
+					position(),
+					1.5f,
+					false,
+					ExplosionInteraction.NONE);
+
+			hasExploded = true;
+		}
+	}
+
+	public DamageSource getDamageSource(@Nullable Entity owner) {
+		if (owner == null) {
+			owner = this;
+		}
+
+		return isExplosive ? IWDamageSources.explosiveArrow(this, owner) : damageSources().arrow(this, owner);
 	}
 }

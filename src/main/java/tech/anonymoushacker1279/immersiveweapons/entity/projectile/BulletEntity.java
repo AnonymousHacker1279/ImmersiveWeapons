@@ -8,7 +8,7 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.projectile.AbstractArrow;
+import net.minecraft.world.entity.projectile.Arrow;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
@@ -43,7 +43,7 @@ public class BulletEntity extends CustomArrowEntity implements HitEffectUtils {
 	public List<Double> shootingVectorInputs = List.of(0.0025d, 0.2d, 1.1d);
 	public HitEffect hitEffect = HitEffect.NONE;
 
-	public BulletEntity(EntityType<? extends AbstractArrow> entityType, Level level) {
+	public BulletEntity(EntityType<? extends Arrow> entityType, Level level) {
 		super(entityType, level);
 	}
 
@@ -55,10 +55,10 @@ public class BulletEntity extends CustomArrowEntity implements HitEffectUtils {
 
 	public static class BulletEntityBuilder implements HitEffectUtils {
 
-		private final EntityType<? extends AbstractArrow> entityType;
+		private final EntityType<? extends Arrow> entityType;
 		private final Item referenceItem;
 
-		public BulletEntityBuilder(EntityType<? extends AbstractArrow> entityType, Item referenceItem) {
+		public BulletEntityBuilder(EntityType<? extends Arrow> entityType, Item referenceItem) {
 			this.entityType = entityType;
 			this.referenceItem = referenceItem;
 		}
@@ -175,6 +175,7 @@ public class BulletEntity extends CustomArrowEntity implements HitEffectUtils {
 		return SoundEventRegistry.BULLET_WHIZZ.get();
 	}
 
+	@Override
 	public DamageSource getDamageSource(@Nullable Entity owner) {
 		if (owner == null) {
 			owner = this;

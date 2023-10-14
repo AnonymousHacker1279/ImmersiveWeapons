@@ -99,6 +99,11 @@ public class ItemTagsGenerator extends ItemTagsProvider {
 			}
 		}
 
+		tag(Tags.Items.TOOLS_BOWS)
+				.add(ItemRegistry.ICE_BOW.get())
+				.add(ItemRegistry.DRAGONS_BREATH_BOW.get())
+				.add(ItemRegistry.AURORA_BOW.get());
+
 		// Head tags
 		tag(Tags.Items.HEADS).add(BlockItemRegistry.MINUTEMAN_HEAD_ITEM.get(),
 				BlockItemRegistry.FIELD_MEDIC_HEAD_ITEM.get(),

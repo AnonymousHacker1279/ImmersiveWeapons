@@ -105,6 +105,7 @@ public class LanguageGenerator extends IWLanguageProvider {
 		excludedItems.add(ItemRegistry.PADDED_LEATHER_HELMET.get());
 		excludedItems.add(ItemRegistry.PADDED_LEATHER_CHESTPLATE.get());
 		excludedItems.add(ItemRegistry.PADDED_LEATHER_LEGGINGS.get());
+		excludedItems.add(ItemRegistry.DRAGONS_BREATH_BOW.get());
 
 		// Filter the excluded items from the registry
 		Stream<RegistryObject<Item>> items = ItemRegistry.ITEMS.getEntries().stream()
@@ -152,6 +153,7 @@ public class LanguageGenerator extends IWLanguageProvider {
 		addItem(ItemRegistry.PADDED_LEATHER_HELMET, "Padded Leather Cap");
 		addItem(ItemRegistry.PADDED_LEATHER_CHESTPLATE, "Padded Leather Tunic");
 		addItem(ItemRegistry.PADDED_LEATHER_LEGGINGS, "Padded Leather Pants");
+		addItem(ItemRegistry.DRAGONS_BREATH_BOW, "Dragon's Breath Bow");
 	}
 
 	private void addEntityTypes() {
@@ -314,6 +316,11 @@ public class LanguageGenerator extends IWLanguageProvider {
 		addTooltip("musket", "A simple firearm designed for long-range combat");
 		addTooltip("flare_gun", "Launch bright flares into the sky");
 		addTooltip("hand_cannon", "A powerful, but inaccurate, handheld cannon");
+
+		// Bows
+		addTooltip("ice_bow", "Arrows will inflict slowness on enemies");
+		addTooltip("dragons_breath_bow", "Arrows will explode on impact");
+		addTooltip("aurora_bow", "Arrows will experience 4x less gravity");
 
 		// Projectiles
 		addTooltip("wooden_arrow", "35% less powerful than normal arrows. Highly inaccurate. At this point it's just blunt-force trauma.");
@@ -599,6 +606,8 @@ public class LanguageGenerator extends IWLanguageProvider {
 		addDeathMessage("cannonball.item", "%1$s was hit by a cannonball fired by %2$s using %3$s");
 		addDeathMessage("explosive_cannonball", "%1$s was hit by an explosive cannonball fired by %2$s");
 		addDeathMessage("explosive_cannonball.item", "%1$s was hit by an explosive cannonball fired by %2$s using %3$s");
+		addDeathMessage("explosive_arrow", "%1$s was blown up by explosive arrow fired by %2$s");
+		addDeathMessage("explosive_arrow.item", "%1$s was blown up by an explosive arrow fired by %2$s using %3$s");
 	}
 
 	private void addBiomes() {

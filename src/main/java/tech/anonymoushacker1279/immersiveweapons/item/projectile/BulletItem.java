@@ -65,7 +65,7 @@ public class BulletItem<T extends BulletEntity> extends ArrowItem {
 	public CannonballEntity createCannonball(Level level, LivingEntity shooter) {
 		CannonballEntity cannonballEntity = new CannonballEntity(shooter, level);
 		setCommonBulletCharacteristics(cannonballEntity);
-		cannonballEntity.setExplosive(isExplosive);
+		cannonballEntity.isExplosive = isExplosive;
 
 		return cannonballEntity;
 	}

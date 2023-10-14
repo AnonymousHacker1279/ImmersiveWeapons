@@ -267,6 +267,62 @@ public class ItemModelGenerator extends ItemModelProvider {
 		}
 	}
 
+	/**
+	 * Generate a bow item, including all the predicates for pulling the bow back.
+	 *
+	 * @param item the <code>Item</code> to generate a model for
+	 */
+	private void bowItem(Item item) {
+		// Main model
+		getBuilder(item.toString())
+				.parent(new ModelFile.UncheckedModelFile("item/generated"))
+				.transforms()
+				.transform(ItemDisplayContext.THIRD_PERSON_RIGHT_HAND)
+				.rotation(-80, 260, -40)
+				.translation(-1, -2, 2.5f)
+				.scale(0.9f)
+				.end()
+				.transform(ItemDisplayContext.THIRD_PERSON_LEFT_HAND)
+				.rotation(-80, -280, 40)
+				.translation(-1, -2, 2.5f)
+				.scale(0.9f)
+				.end()
+				.transform(ItemDisplayContext.FIRST_PERSON_RIGHT_HAND)
+				.rotation(0, -90, 25)
+				.translation(1.13f, 3.2f, 1.13f)
+				.scale(0.68f)
+				.end()
+				.transform(ItemDisplayContext.FIRST_PERSON_LEFT_HAND)
+				.rotation(0, 90, -25)
+				.translation(1.13f, 3.2f, 1.13f)
+				.scale(0.68f)
+				.end()
+				.end()
+				.texture("layer0", new ResourceLocation(ImmersiveWeapons.MOD_ID, "item/" + item))
+				.override().predicate(new ResourceLocation(ImmersiveWeapons.MOD_ID, "pulling"), 1)
+				.model(new ModelFile.UncheckedModelFile(ImmersiveWeapons.MOD_ID + ":item/" + item + "_pulling_0"))
+				.end()
+				.override().predicate(new ResourceLocation(ImmersiveWeapons.MOD_ID, "pulling"), 1)
+				.predicate(new ResourceLocation(ImmersiveWeapons.MOD_ID, "pull"), 0.65f)
+				.model(new ModelFile.UncheckedModelFile(ImmersiveWeapons.MOD_ID + ":item/" + item + "_pulling_1"))
+				.end()
+				.override().predicate(new ResourceLocation(ImmersiveWeapons.MOD_ID, "pulling"), 1)
+				.predicate(new ResourceLocation(ImmersiveWeapons.MOD_ID, "pull"), 0.9f)
+				.model(new ModelFile.UncheckedModelFile(ImmersiveWeapons.MOD_ID + ":item/" + item + "_pulling_2"))
+				.end();
+
+		// Pulling models
+		getBuilder(item + "_pulling_0")
+				.parent(new ModelFile.UncheckedModelFile("item/generated"))
+				.texture("layer0", new ResourceLocation(ImmersiveWeapons.MOD_ID, "item/" + item + "_pulling_0"));
+		getBuilder(item + "_pulling_1")
+				.parent(new ModelFile.UncheckedModelFile("item/generated"))
+				.texture("layer0", new ResourceLocation(ImmersiveWeapons.MOD_ID, "item/" + item + "_pulling_1"));
+		getBuilder(item + "_pulling_2")
+				.parent(new ModelFile.UncheckedModelFile("item/generated"))
+				.texture("layer0", new ResourceLocation(ImmersiveWeapons.MOD_ID, "item/" + item + "_pulling_2"));
+	}
+
 	@Override
 	protected void registerModels() {
 		List<Item> items = new ArrayList<>(250);
@@ -313,6 +369,8 @@ public class ItemModelGenerator extends ItemModelProvider {
 								.parent(new ModelFile.UncheckedModelFile(new ResourceLocation(ImmersiveWeapons.MOD_ID,
 										"item/gauntlet")))
 								.texture("material", gauntletMaterialMap.get(item));
+					} else if (item == ItemRegistry.ICE_BOW.get() || item == ItemRegistry.DRAGONS_BREATH_BOW.get() || item == ItemRegistry.AURORA_BOW.get()) {
+						bowItem(item);
 					} else {
 						handheldItem(item);
 					}

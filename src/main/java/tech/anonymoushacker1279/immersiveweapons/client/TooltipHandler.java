@@ -91,6 +91,17 @@ public class TooltipHandler {
 			event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.hand_cannon").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
 		}
 
+		// Bows
+		if (stack.getItem() == ItemRegistry.ICE_BOW.get()) {
+			event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.ice_bow").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
+		}
+		if (stack.getItem() == ItemRegistry.DRAGONS_BREATH_BOW.get()) {
+			event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.dragons_breath_bow").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
+		}
+		if (stack.getItem() == ItemRegistry.AURORA_BOW.get()) {
+			event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.aurora_bow").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
+		}
+
 		// Arrows
 		if (stack.getItem() instanceof CustomArrowItem<?> arrow) {
 			if (arrow.color == -1) {

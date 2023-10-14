@@ -14,6 +14,7 @@ import tech.anonymoushacker1279.immersiveweapons.entity.vehicle.CustomBoatType;
 import tech.anonymoushacker1279.immersiveweapons.item.*;
 import tech.anonymoushacker1279.immersiveweapons.item.AccessoryItem.AccessorySlot;
 import tech.anonymoushacker1279.immersiveweapons.item.armor.*;
+import tech.anonymoushacker1279.immersiveweapons.item.bow.*;
 import tech.anonymoushacker1279.immersiveweapons.item.fortitude.*;
 import tech.anonymoushacker1279.immersiveweapons.item.gauntlet.*;
 import tech.anonymoushacker1279.immersiveweapons.item.gun.*;
@@ -97,7 +98,6 @@ public class ItemRegistry {
 	public static final RegistryObject<MusketItem> MUSKET_SCOPE = ITEMS.register("musket_scope", () -> new MusketItem(new Properties().durability(499), true));
 	public static final RegistryObject<FlareGunItem> FLARE_GUN = ITEMS.register("flare_gun", () -> new FlareGunItem(new Properties().durability(399)));
 	public static final RegistryObject<HandCannonItem> HAND_CANNON = ITEMS.register("hand_cannon", () -> new HandCannonItem(new Properties().durability(199)));
-
 	public static final RegistryObject<GauntletItem> WOODEN_GAUNTLET = ITEMS.register("wooden_gauntlet", () -> new GauntletItem(Tiers.WOOD, 2, -2.3f, new Properties(), 0.15f, 0, Ingredient.of(ItemTags.PLANKS)));
 	public static final RegistryObject<GauntletItem> STONE_GAUNTLET = ITEMS.register("stone_gauntlet", () -> new GauntletItem(Tiers.STONE, 2, -2.3f, new Properties(), 0.25f, 0, Ingredient.of(ItemTags.STONE_TOOL_MATERIALS)));
 	public static final RegistryObject<GauntletItem> GOLDEN_GAUNTLET = ITEMS.register("golden_gauntlet", () -> new GauntletItem(Tiers.GOLD, 2, -2.3f, new Properties(), 0.35f, 0, Ingredient.of(Tags.Items.INGOTS_GOLD)));
@@ -113,6 +113,9 @@ public class ItemRegistry {
 	public static final RegistryObject<GauntletItem> STARSTORM_GAUNTLET = ITEMS.register("starstorm_gauntlet", () -> new GauntletItem(CustomItemMaterials.STARSTORM, 2, -2.3f, new Properties(), 0.95f, 2, Ingredient.of(IWItemTagGroups.STARSTORM_INGOTS)));
 	public static final RegistryObject<MeteorStaffItem> METEOR_STAFF = ITEMS.register("meteor_staff", () -> new MeteorStaffItem(new Properties().durability(199)));
 	public static final RegistryObject<CursedSightStaffItem> CURSED_SIGHT_STAFF = ITEMS.register("cursed_sight_staff", () -> new CursedSightStaffItem(new Properties().durability(149)));
+	public static final RegistryObject<IceBowItem> ICE_BOW = ITEMS.register("ice_bow", () -> new IceBowItem(new Properties().durability(149)));
+	public static final RegistryObject<DragonBreathBow> DRAGONS_BREATH_BOW = ITEMS.register("dragons_breath_bow", () -> new DragonBreathBow(new Properties().durability(99)));
+	public static final RegistryObject<AuroraBow> AURORA_BOW = ITEMS.register("aurora_bow", () -> new AuroraBow(new Properties().durability(299)));
 
 	// Items
 	public static final RegistryObject<Item> WOODEN_SHARD = ITEMS.register("wooden_shard", () -> new Item(new Properties()));
@@ -171,7 +174,7 @@ public class ItemRegistry {
 	public static final RegistryObject<CustomArrowItem<?>> MOLTEN_ARROW = ITEMS.register("molten_arrow", () -> new ArrowBuilder<>(new Properties().fireResistant(), 6.50d, EntityRegistry.MOLTEN_ARROW_ENTITY).canBeInfinite(false).pierceLevel(3).gravityModifier(0.0455d).shootingVector(0.0025d, 0.2d, 1.0d).knockbackStrength(1).hitEffect(HitEffect.MOLTEN).build());
 	public static final RegistryObject<CustomArrowItem<?>> TESLA_ARROW = ITEMS.register("tesla_arrow", () -> new ArrowBuilder<>(new Properties(), 7.0d, EntityRegistry.TESLA_ARROW_ENTITY).canBeInfinite(false).pierceLevel(3).gravityModifier(0.0355d).shootingVector(0.0025d, 0.2d, 0.9d).hitEffect(HitEffect.TESLA).build());
 	public static final RegistryObject<CustomArrowItem<?>> VENTUS_ARROW = ITEMS.register("ventus_arrow", () -> new ArrowBuilder<>(new Properties(), 6.5d, EntityRegistry.VENTUS_ARROW_ENTITY).canBeInfinite(false).pierceLevel(3).gravityModifier(0.0355d).shootingVector(0.0025d, 0.2d, 0.9d).hitEffect(HitEffect.VENTUS).build());
-	public static final RegistryObject<CustomArrowItem<?>> ASTRAL_ARROW = ITEMS.register("astral_arrow", () -> new ArrowBuilder<>(new Properties(), 5.50d, EntityRegistry.ASTRAL_ARROW_ENTITY).canBeInfinite(false).pierceLevel(3).gravityModifier(0.2d).shootingVector(0.002d, 0.1d, 0.6d).build());
+	public static final RegistryObject<CustomArrowItem<?>> ASTRAL_ARROW = ITEMS.register("astral_arrow", () -> new ArrowBuilder<>(new Properties(), 5.50d, EntityRegistry.ASTRAL_ARROW_ENTITY).canBeInfinite(false).pierceLevel(3).gravityModifier(0.01d).shootingVector(0.002d, 0.1d, 0.6d).build());
 	public static final RegistryObject<CustomArrowItem<?>> STARSTORM_ARROW = ITEMS.register("starstorm_arrow", () -> new ArrowBuilder<>(new Properties(), 7.65d, EntityRegistry.STARSTORM_ARROW_ENTITY).canBeInfinite(false).pierceLevel(3).gravityModifier(0.0355d).shootingVector(0.0025d, 0.2d, 0.9d).build());
 	public static final RegistryObject<CustomArrowItem<?>> SMOKE_GRENADE_ARROW = ITEMS.register("smoke_grenade_arrow", () -> new ArrowBuilder<>(new Properties(), 2.0d, EntityRegistry.SMOKE_GRENADE_ARROW_ENTITY).color(0).build());
 	public static final RegistryObject<CustomArrowItem<?>> SMOKE_GRENADE_ARROW_RED = ITEMS.register("smoke_grenade_arrow_red", () -> new ArrowBuilder<>(new Properties(), 2.0d, EntityRegistry.SMOKE_GRENADE_ARROW_ENTITY).color(1).build());
