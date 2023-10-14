@@ -67,7 +67,7 @@ public abstract class AbstractGunItem extends Item implements Vanishable {
 
 			// Roll for misfire
 			if (ammo.getItem() instanceof BulletItem<?> bullet) {
-				if (livingEntity.getRandom().nextFloat() <= bullet.misfireChance()) {
+				if (livingEntity.getRandom().nextFloat() <= bullet.misfireChance) {
 					misfire = true;
 				}
 

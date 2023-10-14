@@ -330,23 +330,29 @@ public class LanguageGenerator extends IWLanguageProvider {
 		addTooltip("astral_arrow", "350% more powerful than normal arrows. Extremely accurate and has minimal falloff.");
 		addTooltip("starstorm_arrow", "565% more powerful than normal arrows");
 		addTooltip("smoke_grenade_arrow", "Obscure the vision of your enemies from afar");
+
 		addTooltip("wooden_musket_ball", "Very inaccurate, and likely to cause a misfire. Why would anyone make wooden musket balls anyway?");
-		addTooltip("stone_musket_ball", "A very heavy musket ball, and not too accurate. Less likely to cause a misfire than wooden ones.");
+		addTooltip("stone_musket_ball", "A very heavy musket ball, and not too accurate.");
 		addTooltip("golden_musket_ball", "Fancier than stone musket balls, but not much better. At least it won't misfire. Look at me! I have money to throw away!");
 		addTooltip("copper_musket_ball", "A well constructed musket ball, made from copper.");
 		addTooltip("iron_musket_ball", "A hard hitting musket ball, made from iron.");
 		addTooltip("cobalt_musket_ball", "A strong and dense musket ball, made from cobalt.");
-		addTooltip("diamond_musket_ball", "A very sharp and powerful musket ball. You're practically throwing away diamonds. Pierces through a single target.");
-		addTooltip("netherite_musket_ball", "An extremely powerful and skillfully crafted musket ball. For when you need to kill a chicken from the other side of a mountain. Pierces through two targets.");
-		addTooltip("molten_musket_ball", "A musket ball made from molten metal. Hard hitting and expensive, catches targets on fire. Pierces through three targets.");
-		addTooltip("tesla_musket_ball", "Made from a special alloy. Weakens and pierces through three targets.");
-		addTooltip("ventus_musket_ball", "A musket ball made from Ventus shards. Causes targets to levitate. Pierces through three targets.");
-		addTooltip("astral_musket_ball", "Built from Astral ingots. Not quite as strong as other options but extremely accurate and has little falloff. Pierces through three targets.");
-		addTooltip("starstorm_musket_ball", "A musket ball made from Starstorm ingots. Strongest caliber in terms of raw damage. Pierces through three targets.");
-		addTooltip("cannonball", "A heavy metal ball that can be fired from a hand cannon. Pierces through one target.");
+		addTooltip("diamond_musket_ball", "A very sharp and powerful musket ball. You're practically throwing away diamonds.");
+		addTooltip("netherite_musket_ball", "An extremely powerful and skillfully crafted musket ball. For when you need to kill a chicken from the other side of a mountain.");
+		addTooltip("molten_musket_ball", "A musket ball made from molten metal. Hard hitting and expensive, catches targets on fire.");
+		addTooltip("tesla_musket_ball", "Made from a powerful Tesla alloy. Weakens targets.");
+		addTooltip("ventus_musket_ball", "A musket ball made from Ventus shards. Causes targets to levitate.");
+		addTooltip("astral_musket_ball", "Built using an Astral material. Extremely accurate and has little falloff.");
+		addTooltip("starstorm_musket_ball", "A musket ball made from Starstorm. Strongest caliber in terms of raw damage.");
+		addTooltip("cannonball", "A heavy metal ball that can be fired from a hand cannon.");
 		addTooltip("explosive_cannonball", "Similar to the cannonball but explodes on impact.");
 		// Projectile metadata
-		addTooltip("density_modifier", "Density Modifier: +%sx");
+		addTooltip("bullet.meta.base_damage", "Base Damage: %s");
+		addTooltip("bullet.meta.gravity_modifier", "Gravity Modifier: %s");
+		addTooltip("bullet.meta.base_knockback_level", "Base Knockback Level: %sx");
+		addTooltip("bullet.meta.piercing_level", "Piercing Level: %s target(s)");
+		addTooltip("bullet.meta.density_modifier", "Density Modifier: +%sx");
+		addTooltip("bullet.meta.misfire_chance", "Misfire Chance: %s%%");
 
 		// Pikes
 		addTooltip("pike", "Stab them from way over there");

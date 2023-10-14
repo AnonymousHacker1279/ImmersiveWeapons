@@ -20,16 +20,16 @@ import java.util.List;
 
 public class BulletItem<T extends BulletEntity> extends ArrowItem {
 
-	private final RegistryObject<EntityType<T>> entityRegistryObject;
-	private final int pierceLevel;
-	private final boolean canBeInfinite;
-	private final float misfireChance;
-	final double gravityModifier;
-	private final List<Double> shootingVectorInputs;
-	private final int knockbackStrength;
+	public final RegistryObject<EntityType<T>> entityRegistryObject;
+	public final int pierceLevel;
+	public final boolean canBeInfinite;
+	public final float misfireChance;
+	public final double gravityModifier;
+	public final List<Double> shootingVectorInputs;
+	public final int knockbackStrength;
 	public final double damage;
-	private final HitEffect hitEffect;
-	private final boolean isExplosive;
+	public final HitEffect hitEffect;
+	public final boolean isExplosive;
 
 	public BulletItem(Properties properties, double damage, RegistryObject<EntityType<T>> bulletEntity, int pierceLevel,
 	                  boolean canBeInfinite, float misfireChance, double gravityModifier, List<Double> shootingVectorInputs,
@@ -84,14 +84,6 @@ public class BulletItem<T extends BulletEntity> extends ArrowItem {
 		bulletEntity.getEntityData().set(BulletEntity.GRAVITY_MODIFIER_ACCESSOR, (float) gravityModifier);
 	}
 
-	public boolean canBeInfinite() {
-		return canBeInfinite;
-	}
-
-	public float misfireChance() {
-		return misfireChance;
-	}
-
 	/**
 	 * Check if the bullet is infinite. A more flexible check than Vanilla provides.
 	 * Restricts the ability to lower level bullets, for balance.
@@ -104,8 +96,7 @@ public class BulletItem<T extends BulletEntity> extends ArrowItem {
 	@Override
 	public boolean isInfinite(ItemStack bullet, ItemStack gun, Player player) {
 		int enchant = EnchantmentHelper.getTagEnchantmentLevel(EnchantmentRegistry.ENDLESS_MUSKET_POUCH.get(), gun);
-		boolean canBeInfinite = ImmersiveWeapons.COMMON_CONFIG.allowInfiniteAmmoOnAllTiers().get() || canBeInfinite();
-		return canBeInfinite && enchant > 0;
+		return (ImmersiveWeapons.COMMON_CONFIG.allowInfiniteAmmoOnAllTiers().get() || canBeInfinite) && enchant > 0;
 	}
 
 	public static class BulletBuilder<T extends BulletEntity> {
