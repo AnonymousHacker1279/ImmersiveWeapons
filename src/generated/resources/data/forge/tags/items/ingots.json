@@ -1,5 +1,10 @@
 {
   "values": [
-    "#forge:ingots/metal"
+    "#forge:ingots/metal",
+    "#immersiveweapons:ingots/molten",
+    "#immersiveweapons:ingots/electric",
+    "#immersiveweapons:ingots/tesla",
+    "#immersiveweapons:ingots/starstorm",
+    "#immersiveweapons:ingots/astral"
   ]
 }

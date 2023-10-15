@@ -56,6 +56,13 @@ public class IWBiomeModifiers {
 						Decoration.UNDERGROUND_ORES
 				));
 
+		biomeModifier(context, new ResourceLocation(ImmersiveWeapons.MOD_ID, "potassium_nitrate_ore"),
+				new ForgeBiomeModifiers.AddFeaturesBiomeModifier(
+						context.lookup(Registries.BIOME).getOrThrow(BiomeTags.IS_OVERWORLD),
+						HolderSet.direct(context.lookup(Registries.PLACED_FEATURE).getOrThrow(IWPlacedFeatures.POTASSIUM_NITRATE_ORE)),
+						Decoration.UNDERGROUND_ORES
+				));
+
 		biomeModifier(context, new ResourceLocation(ImmersiveWeapons.MOD_ID, "cobalt_ore"),
 				new ForgeBiomeModifiers.AddFeaturesBiomeModifier(
 						context.lookup(Registries.BIOME).getOrThrow(BiomeTags.IS_OVERWORLD),

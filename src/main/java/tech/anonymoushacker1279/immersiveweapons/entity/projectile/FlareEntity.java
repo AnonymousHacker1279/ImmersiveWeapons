@@ -12,10 +12,7 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 import tech.anonymoushacker1279.immersiveweapons.api.PluginHandler;
-import tech.anonymoushacker1279.immersiveweapons.entity.projectile.bullet.BulletEntity;
-import tech.anonymoushacker1279.immersiveweapons.init.EntityRegistry;
 import tech.anonymoushacker1279.immersiveweapons.init.ItemRegistry;
-import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,39 +22,30 @@ public class FlareEntity extends BulletEntity implements ItemSupplier {
 	private int explodeDelay = 60;
 	private int deathDelay = 600;
 	private BlockPos previousLightPosition = BlockPos.ZERO;
-	private final List<BlockPos> lightPositions = new ArrayList<>(3);
+	private final List<BlockPos> lightPositions = new ArrayList<>(10);
 	private boolean hasHitEntity = false;
 	static final BlockState lightState = Blocks.LIGHT.defaultBlockState();
 	static final BlockState airState = Blocks.AIR.defaultBlockState();
 	private static final EntityDataAccessor<Boolean> USE_LEGACY_LIGHTING = SynchedEntityData.defineId(FlareEntity.class,
 			EntityDataSerializers.BOOLEAN);
 
-	public FlareEntity(EntityType<FlareEntity> entityType, Level level, int knockbackStrength) {
+	public FlareEntity(EntityType<FlareEntity> entityType, Level level) {
 		super(entityType, level);
-		this.knockbackStrength = knockbackStrength;
-		referenceItem = ItemRegistry.FLARE.get();
+		gravityModifier = 0.005d;
 	}
 
-	public FlareEntity(LivingEntity shooter, Level level) {
-		super(EntityRegistry.FLARE_ENTITY.get(), shooter, level);
-		referenceItem = ItemRegistry.FLARE.get();
-		entityData.set(USE_LEGACY_LIGHTING, !PluginHandler.isPluginActive("iwcompatbridge:lucent_plugin"));
-	}
-
-	@Override
-	protected Vec3 getShootingVector(double x, double y, double z, float velocity, float inaccuracy) {
-		// Set the flare on fire before firing
-		setSecondsOnFire(30);
-
-		return new Vec3(x, y, z)
-				.normalize()
-				.add(random.nextGaussian() * 0.0025F * (GeneralUtilities.getRandomNumber(0.2f, 1.1f)),
-						0.0025F * (GeneralUtilities.getRandomNumber(0.2f, 1.1f)),
-						random.nextGaussian() * 0.0025F).scale(velocity);
+	public FlareEntity(EntityType<? extends BulletEntity> entityType, LivingEntity shooter, Level level) {
+		super(entityType, shooter, level);
 	}
 
 	@Override
 	protected void doWhileTicking() {
+		if (!isOnFire()) {
+			setSecondsOnFire(300);
+
+			entityData.set(USE_LEGACY_LIGHTING, !PluginHandler.isPluginActive("iwcompatbridge:lucent_plugin"));
+		}
+
 		double x = getX();
 		double y = getY();
 		double z = getZ();
@@ -107,10 +95,12 @@ public class FlareEntity extends BulletEntity implements ItemSupplier {
 						}
 						lightPositions.clear();
 					}
+
 					if (!hasHitEntity && level().getBlockState(currentPosition) == airState) {
 						level().setBlock(currentPosition, lightState, 3);
 						lightPositions.add(currentPosition);
 					}
+
 					previousLightPosition = currentPosition;
 				}
 			}
@@ -127,16 +117,6 @@ public class FlareEntity extends BulletEntity implements ItemSupplier {
 		super.doWhenHitEntity(entity);
 		hasHitEntity = true;
 		entity.setSecondsOnFire(6);
-	}
-
-	/**
-	 * Get the movement modifier.
-	 *
-	 * @return double
-	 */
-	@Override
-	public double getGravityModifier() {
-		return 0.005d;
 	}
 
 	@Override
@@ -207,19 +187,18 @@ public class FlareEntity extends BulletEntity implements ItemSupplier {
 		entityData.define(USE_LEGACY_LIGHTING, false);
 	}
 
-	/**
-	 * Remove all lights when the entity is killed via commands.
-	 */
 	@Override
-	public void kill() {
-		super.kill();
+	public void remove(RemovalReason removalReason) {
+		super.remove(removalReason);
 
+		// Remove all lights before dying
 		if (!lightPositions.isEmpty()) {
 			for (BlockPos pos : lightPositions) {
 				if (level().getBlockState(pos) == lightState) {
 					level().removeBlock(pos, false);
 				}
 			}
+
 			lightPositions.clear();
 		}
 	}

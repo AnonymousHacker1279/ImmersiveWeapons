@@ -66,8 +66,8 @@ public class TeslaSynthesizerMenu extends AbstractContainerMenu implements Stack
 	}
 
 	@Override
-	public boolean stillValid(Player playerIn) {
-		return container.stillValid(playerIn);
+	public boolean stillValid(Player player) {
+		return container.stillValid(player);
 	}
 
 	@Override
@@ -109,6 +109,10 @@ public class TeslaSynthesizerMenu extends AbstractContainerMenu implements Stack
 				}
 				// If the item is in the player hotbar
 				else if (index >= 32 && index < 41 && !moveItemStackTo(oldStack, 5, 32, false)) {
+					return ItemStack.EMPTY;
+				}
+			} else {
+				if (!moveItemStackTo(oldStack, 5, 41, false)) {
 					return ItemStack.EMPTY;
 				}
 			}

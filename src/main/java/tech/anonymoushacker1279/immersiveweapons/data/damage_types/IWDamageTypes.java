@@ -121,4 +121,11 @@ public class IWDamageTypes {
 			DamageScaling.ALWAYS,
 			0.1f
 	);
+
+	public static final ResourceKey<DamageType> EXPLOSIVE_ARROW_KEY = ResourceKey.create(Registries.DAMAGE_TYPE, new ResourceLocation(ImmersiveWeapons.MOD_ID, "explosive_arrow"));
+	public static final DamageType EXPLOSIVE_ARROW = new DamageType(
+			"immersiveweapons.explosive_arrow",
+			DamageScaling.ALWAYS,
+			0.1f
+	);
 }

@@ -28,6 +28,7 @@ public class IWDamageSources {
 	public static DamageSource BULLET;
 	public static DamageSource CANNONBALL;
 	public static DamageSource EXPLOSIVE_CANNONBALL;
+	public static DamageSource EXPLOSIVE_ARROW;
 
 	public static void init(RegistryAccess registryAccess) {
 		access = registryAccess;
@@ -48,6 +49,7 @@ public class IWDamageSources {
 		BULLET = getDamageSource(registryAccess, IWDamageTypes.BULLET_KEY);
 		CANNONBALL = getDamageSource(registryAccess, IWDamageTypes.CANNONBALL_KEY);
 		EXPLOSIVE_CANNONBALL = getDamageSource(registryAccess, IWDamageTypes.EXPLOSIVE_CANNONBALL_KEY);
+		EXPLOSIVE_ARROW = getDamageSource(registryAccess, IWDamageTypes.EXPLOSIVE_ARROW_KEY);
 	}
 
 	private static DamageSource getDamageSource(RegistryAccess registryAccess, ResourceKey<DamageType> key) {
@@ -72,5 +74,9 @@ public class IWDamageSources {
 
 	public static DamageSource explosiveCannonball(Entity entity, Entity owner) {
 		return getEntityDamageSource(access, IWDamageTypes.EXPLOSIVE_CANNONBALL_KEY, entity, owner);
+	}
+
+	public static DamageSource explosiveArrow(Entity entity, Entity owner) {
+		return getEntityDamageSource(access, IWDamageTypes.EXPLOSIVE_ARROW_KEY, entity, owner);
 	}
 }

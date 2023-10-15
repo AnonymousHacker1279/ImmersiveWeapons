@@ -1,0 +1,15 @@
+{
+  "type": "immersiveweapons:ammunition_table",
+  "materials": [
+    {
+      "base_multiplier": 2.6,
+      "density": 2.5,
+      "ingredient": {
+        "tag": "forge:ingots/netherite"
+      }
+    }
+  ],
+  "result": {
+    "item": "immersiveweapons:netherite_musket_ball"
+  }
+}

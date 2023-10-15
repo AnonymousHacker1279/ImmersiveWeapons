@@ -1,0 +1,22 @@
+{
+  "type": "immersiveweapons:ammunition_table",
+  "materials": [
+    {
+      "base_multiplier": 2.6,
+      "density": 2.0,
+      "ingredient": {
+        "tag": "immersiveweapons:ingots/tesla"
+      }
+    },
+    {
+      "base_multiplier": 0.28,
+      "density": 0.22,
+      "ingredient": {
+        "tag": "immersiveweapons:nuggets/tesla"
+      }
+    }
+  ],
+  "result": {
+    "item": "immersiveweapons:tesla_musket_ball"
+  }
+}

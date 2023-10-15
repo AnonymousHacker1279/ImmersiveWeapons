@@ -1,0 +1,21 @@
+{
+	"conditions": [
+		{
+			"condition": "minecraft:any_of",
+			"terms": [
+				{
+					"condition": "forge:loot_table_id",
+					"loot_table_id": "minecraft:chests/nether_bridge"
+				}
+			]
+		}
+	],
+	"min_quantity": 1,
+	"max_quantity": 1,
+	"roll_chance": 0.2,
+	"item": {
+		"id": "immersiveweapons:dragons_breath_bow",
+		"Count": 1
+	},
+	"type": "immersiveweapons:simple_chest"
+}

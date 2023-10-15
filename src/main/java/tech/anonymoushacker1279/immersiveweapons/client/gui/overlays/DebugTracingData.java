@@ -18,7 +18,7 @@ import tech.anonymoushacker1279.immersiveweapons.event.game_effects.AccessoryMan
 import tech.anonymoushacker1279.immersiveweapons.init.EffectRegistry;
 import tech.anonymoushacker1279.immersiveweapons.init.ItemRegistry;
 import tech.anonymoushacker1279.immersiveweapons.item.AccessoryItem.EffectType;
-import tech.anonymoushacker1279.immersiveweapons.item.projectile.gun.AbstractGunItem;
+import tech.anonymoushacker1279.immersiveweapons.item.gun.AbstractGunItem;
 
 import java.util.UUID;
 import java.util.function.Supplier;
@@ -37,6 +37,7 @@ public class DebugTracingData {
 
 	public static float gunBaseVelocity = 0;
 	public static Item selectedAmmo = Items.AIR;
+	public static Item selectedPowder = Items.AIR;
 	public static double liveBulletDamage = 0;
 	public static boolean isBulletCritical = false;
 
@@ -75,9 +76,11 @@ public class DebugTracingData {
 				// Round to nearest 0.1
 				gunBaseVelocity = Math.round(gunItem.getBaseFireVelocity() * 10.0f) / 10.0f;
 				selectedAmmo = gunItem.findAmmo(heldItem, player).getItem();
+				selectedPowder = gunItem.findPowder(heldItem, player).getItem();
 			} else {
 				gunBaseVelocity = 0;
 				selectedAmmo = Items.AIR;
+				selectedPowder = Items.AIR;
 			}
 
 			GENERAL_DAMAGE_BONUS = 0;

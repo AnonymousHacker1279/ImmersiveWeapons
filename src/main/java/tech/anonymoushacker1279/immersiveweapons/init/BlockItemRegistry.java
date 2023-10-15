@@ -22,6 +22,7 @@ public class BlockItemRegistry {
 	public static final RegistryObject<BlockItem> DEEPSLATE_SULFUR_ORE_ITEM = ItemRegistry.ITEMS.register("deepslate_sulfur_ore", () -> new BlockItem(BlockRegistry.DEEPSLATE_SULFUR_ORE.get(), new Properties()));
 	public static final RegistryObject<BlockItem> NETHER_SULFUR_ORE_ITEM = ItemRegistry.ITEMS.register("nether_sulfur_ore", () -> new BlockItem(BlockRegistry.NETHER_SULFUR_ORE.get(), new Properties()));
 	public static final RegistryObject<BlockItem> RAW_SULFUR_BLOCK_ITEM = ItemRegistry.ITEMS.register("raw_sulfur_block", () -> new BlockItem(BlockRegistry.RAW_SULFUR_BLOCK.get(), new Properties()));
+	public static final RegistryObject<BlockItem> POTASSIUM_NITRATE_ORE_ITEM = ItemRegistry.ITEMS.register("potassium_nitrate_ore", () -> new BlockItem(BlockRegistry.POTASSIUM_NITRATE_ORE.get(), new Properties()));
 	public static final RegistryObject<BlockItem> MOLTEN_BLOCK_ITEM = ItemRegistry.ITEMS.register("molten_block", () -> new BlockItem(BlockRegistry.MOLTEN_BLOCK.get(), new Properties().fireResistant()));
 	public static final RegistryObject<BlockItem> TESLA_BLOCK_ITEM = ItemRegistry.ITEMS.register("tesla_block", () -> new BlockItem(BlockRegistry.TESLA_BLOCK.get(), new Properties()));
 	public static final RegistryObject<BlockItem> ASTRAL_BLOCK_ITEM = ItemRegistry.ITEMS.register("astral_block", () -> new BlockItem(BlockRegistry.ASTRAL_BLOCK.get(), new Properties()));
@@ -30,6 +31,7 @@ public class BlockItemRegistry {
 	public static final RegistryObject<BlockItem> RAW_COBALT_BLOCK_ITEM = ItemRegistry.ITEMS.register("raw_cobalt_block", () -> new BlockItem(BlockRegistry.RAW_COBALT_BLOCK.get(), new Properties()));
 	public static final RegistryObject<BlockItem> RUSTED_IRON_BLOCK_ITEM = ItemRegistry.ITEMS.register("rusted_iron_block", () -> new BlockItem(BlockRegistry.RUSTED_IRON_BLOCK.get(), new Properties()));
 	public static final RegistryObject<BlockItem> SMALL_PARTS_TABLE_ITEM = ItemRegistry.ITEMS.register("small_parts_table", () -> new BlockItem(BlockRegistry.SMALL_PARTS_TABLE.get(), new Properties()));
+	public static final RegistryObject<BlockItem> AMMUNITION_TABLE_ITEM = ItemRegistry.ITEMS.register("ammunition_table", () -> new BlockItem(BlockRegistry.AMMUNITION_TABLE.get(), new Properties()));
 	public static final RegistryObject<BlockItem> BARREL_TAP_ITEM = ItemRegistry.ITEMS.register("barrel_tap", () -> new BlockItem(BlockRegistry.BARREL_TAP.get(), new Properties()));
 	public static final RegistryObject<BlockItem> BULLETPROOF_GLASS_ITEM = ItemRegistry.ITEMS.register("bulletproof_glass", () -> new BlockItem(BlockRegistry.BULLETPROOF_GLASS.get(), new Properties()));
 	public static final RegistryObject<BlockItem> WHITE_STAINED_BULLETPROOF_GLASS_ITEM = ItemRegistry.ITEMS.register("white_stained_bulletproof_glass", () -> new BlockItem(BlockRegistry.WHITE_STAINED_BULLETPROOF_GLASS.get(), new Properties()));

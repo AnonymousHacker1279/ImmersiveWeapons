@@ -1,0 +1,35 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "immersiveweapons:blackpowder"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    },
+    "potassium_nitrate": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "immersiveweapons:potassium_nitrate"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "requirements": [
+    [
+      "potassium_nitrate",
+      "has_the_recipe"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "immersiveweapons:blackpowder"
+    ]
+  },
+  "sends_telemetry_event": false
+}

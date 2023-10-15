@@ -19,4 +19,11 @@ public interface HitEffectUtils {
 	default void addVentusEffects(LivingEntity livingEntity) {
 		livingEntity.addEffect(new MobEffectInstance(MobEffects.LEVITATION, 60, 2, false, false));
 	}
+
+	enum HitEffect {
+		NONE,
+		MOLTEN,
+		TESLA,
+		VENTUS
+	}
 }

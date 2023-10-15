@@ -103,6 +103,7 @@ public class BlockLootTables implements LootTableSubProvider {
 		dropSelf(BlockRegistry.PUNJI_STICKS.get());
 		dropSelf(BlockRegistry.RAW_COBALT_BLOCK.get());
 		dropSelf(BlockRegistry.SMALL_PARTS_TABLE.get());
+		dropSelf(BlockRegistry.AMMUNITION_TABLE.get());
 		dropSelf(BlockRegistry.SPIKE_TRAP.get());
 		dropSelf(BlockRegistry.SPOTLIGHT.get());
 		dropSelf(BlockRegistry.STRIPPED_BURNED_OAK_LOG.get());
@@ -164,6 +165,7 @@ public class BlockLootTables implements LootTableSubProvider {
 		add(BlockRegistry.SULFUR_ORE.get(), (block) -> createOreDrop(block, ItemRegistry.SULFUR.get(), 2, 4));
 		add(BlockRegistry.DEEPSLATE_SULFUR_ORE.get(), (block) -> createOreDrop(block, ItemRegistry.SULFUR.get(), 2, 4));
 		add(BlockRegistry.NETHER_SULFUR_ORE.get(), (block) -> createOreDrop(block, ItemRegistry.SULFUR.get(), 2, 4));
+		add(BlockRegistry.POTASSIUM_NITRATE_ORE.get(), (block) -> createOreDrop(block, ItemRegistry.POTASSIUM_NITRATE.get(), 4, 6));
 		add(BlockRegistry.ASTRAL_ORE.get(), (block) -> createOreDrop(block, ItemRegistry.RAW_ASTRAL.get(), 1, 3));
 		add(BlockRegistry.PITFALL.get(), (leafLikeDrop) -> createLeafLikeDrop(leafLikeDrop, Items.STICK, NORMAL_LEAVES_SAPLING_CHANCES));
 		add(BlockRegistry.VENTUS_ORE.get(), (block) -> createOreDrop(block, ItemRegistry.VENTUS_SHARD.get(), 2, 5));

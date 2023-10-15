@@ -58,6 +58,11 @@ public class ItemTagsGenerator extends ItemTagsProvider {
 		tag(ForgeItemTagGroups.METAL_INGOTS).addTags(ForgeItemTagGroups.COBALT_INGOTS, Tags.Items.INGOTS_COPPER,
 				Tags.Items.INGOTS_IRON, Tags.Items.INGOTS_GOLD);
 		tag(Tags.Items.INGOTS).addTag(ForgeItemTagGroups.METAL_INGOTS);
+		tag(Tags.Items.INGOTS).addTag(IWItemTagGroups.MOLTEN_INGOTS);
+		tag(Tags.Items.INGOTS).addTag(IWItemTagGroups.ELECTRIC_INGOTS);
+		tag(Tags.Items.INGOTS).addTag(IWItemTagGroups.TESLA_INGOTS);
+		tag(Tags.Items.INGOTS).addTag(IWItemTagGroups.STARSTORM_INGOTS);
+		tag(Tags.Items.INGOTS).addTag(IWItemTagGroups.ASTRAL_INGOTS);
 
 		// Nugget tags
 		tag(ForgeItemTagGroups.COBALT_NUGGETS).add(ItemRegistry.COBALT_NUGGET.get());
@@ -69,7 +74,7 @@ public class ItemTagsGenerator extends ItemTagsProvider {
 		tag(Tags.Items.NUGGETS).addTag(IWItemTagGroups.ASTRAL_NUGGETS);
 
 		// Dust tags
-		tag(ForgeItemTagGroups.SULFUR_DUSTS).add(ItemRegistry.SULFUR.get());
+		tag(ForgeItemTagGroups.SULFUR_DUSTS).add(ItemRegistry.SULFUR_DUST.get());
 
 		// Loop through the registry and add groups of items to a tag
 		for (Item item : items) {
@@ -94,6 +99,11 @@ public class ItemTagsGenerator extends ItemTagsProvider {
 			}
 		}
 
+		tag(Tags.Items.TOOLS_BOWS)
+				.add(ItemRegistry.ICE_BOW.get())
+				.add(ItemRegistry.DRAGONS_BREATH_BOW.get())
+				.add(ItemRegistry.AURORA_BOW.get());
+
 		// Head tags
 		tag(Tags.Items.HEADS).add(BlockItemRegistry.MINUTEMAN_HEAD_ITEM.get(),
 				BlockItemRegistry.FIELD_MEDIC_HEAD_ITEM.get(),
@@ -106,6 +116,7 @@ public class ItemTagsGenerator extends ItemTagsProvider {
 	/**
 	 * Add tags under the Immersive Weapons namespace
 	 */
+	@SuppressWarnings("unchecked")
 	private void addImmersiveWeaponsTags() {
 		// Copy item tags from block tags
 		copy(IWBlockTagGroups.BURNED_OAK_LOGS, IWItemTagGroups.BURNED_OAK_LOGS);
@@ -134,6 +145,13 @@ public class ItemTagsGenerator extends ItemTagsProvider {
 		tag(IWItemTagGroups.STONE_SHARDS).add(ItemRegistry.STONE_SHARD.get());
 		tag(IWItemTagGroups.WOODEN_SHARDS).add(ItemRegistry.WOODEN_SHARD.get());
 		tag(IWItemTagGroups.STARSTORM_SHARDS).add(ItemRegistry.STARSTORM_SHARD.get());
+		tag(IWItemTagGroups.SHARDS).addTags(
+				IWItemTagGroups.MOLTEN_SHARDS,
+				IWItemTagGroups.VENTUS_SHARDS,
+				IWItemTagGroups.DIAMOND_SHARDS,
+				IWItemTagGroups.STONE_SHARDS,
+				IWItemTagGroups.WOODEN_SHARDS,
+				IWItemTagGroups.STARSTORM_SHARDS);
 
 		// Nugget tags
 		tag(IWItemTagGroups.TESLA_NUGGETS).add(ItemRegistry.TESLA_NUGGET.get());

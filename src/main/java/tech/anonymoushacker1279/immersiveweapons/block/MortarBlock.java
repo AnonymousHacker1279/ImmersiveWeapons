@@ -28,6 +28,7 @@ import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.network.NetworkEvent;
 import net.minecraftforge.network.NetworkEvent.Context;
 import net.minecraftforge.network.PacketDistributor;
+import org.jetbrains.annotations.Nullable;
 import tech.anonymoushacker1279.immersiveweapons.entity.projectile.MortarShellEntity;
 import tech.anonymoushacker1279.immersiveweapons.init.*;
 import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
@@ -106,9 +107,7 @@ public class MortarBlock extends HorizontalDirectionalBlock {
 	 */
 	@SuppressWarnings("deprecation")
 	@Override
-	public InteractionResult use(BlockState state, Level level, BlockPos pos,
-	                             Player player, InteractionHand hand,
-	                             BlockHitResult hitResult) {
+	public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
 
 		if (!level.isClientSide && hand.equals(InteractionHand.MAIN_HAND)) {
 			ItemStack itemStack = player.getMainHandItem();
@@ -117,7 +116,7 @@ public class MortarBlock extends HorizontalDirectionalBlock {
 				if (!player.isCreative()) {
 					itemStack.setDamageValue(itemStack.getDamageValue() - 1);
 				}
-				fire(level, pos, state);
+				fire(level, pos, state, player);
 				return InteractionResult.CONSUME;
 
 				// If the mortar is not loaded and the player is holding a mortar shell	, load the mortar
@@ -164,12 +163,11 @@ public class MortarBlock extends HorizontalDirectionalBlock {
 	 */
 	@SuppressWarnings("deprecation")
 	@Override
-	public void neighborChanged(BlockState state, Level level, BlockPos pos, Block block,
-	                            BlockPos fromPos, boolean isMoving) {
+	public void neighborChanged(BlockState state, Level level, BlockPos pos, Block block, BlockPos fromPos, boolean isMoving) {
 
 		if (!level.isClientSide) {
 			if (state.getValue(LOADED) && level.hasNeighborSignal(pos)) {
-				fire(level, pos, state);
+				fire(level, pos, state, null);
 			}
 		}
 	}
@@ -181,12 +179,12 @@ public class MortarBlock extends HorizontalDirectionalBlock {
 	 * @param pos   the <code>BlockPos</code> the block is at
 	 * @param state the <code>BlockState</code> of the block
 	 */
-	private void fire(Level level, BlockPos pos, BlockState state) {
+	private void fire(Level level, BlockPos pos, BlockState state, @Nullable Player player) {
 		PacketHandler.INSTANCE.send(PacketDistributor.TRACKING_CHUNK.with(() -> level.getChunkAt(pos)),
 				new MortarBlockPacketHandler(pos));
 
 		level.setBlock(pos, state.setValue(LOADED, false), 3);
-		MortarShellEntity.create(level, pos, 1f, state);
+		MortarShellEntity.create(level, pos, 1f, state, player);
 	}
 
 	public record MortarBlockPacketHandler(BlockPos blockPos) {

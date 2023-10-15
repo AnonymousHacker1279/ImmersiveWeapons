@@ -41,4 +41,10 @@ public class RecipeTypeRegistry {
 			return ImmersiveWeapons.MOD_ID + ":piston_crushing";
 		}
 	});
+	public static final RegistryObject<RecipeType<AmmunitionTableRecipe>> AMMUNITION_TABLE_RECIPE_TYPE = RECIPE_TYPES.register("ammunition_table", () -> new RecipeType<>() {
+		@Override
+		public String toString() {
+			return ImmersiveWeapons.MOD_ID + ":ammunition_table";
+		}
+	});
 }

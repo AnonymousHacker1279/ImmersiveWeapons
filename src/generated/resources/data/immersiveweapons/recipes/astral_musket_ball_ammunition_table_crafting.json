@@ -1,0 +1,22 @@
+{
+  "type": "immersiveweapons:ammunition_table",
+  "materials": [
+    {
+      "base_multiplier": 2.6,
+      "density": 0.6,
+      "ingredient": {
+        "tag": "immersiveweapons:ingots/astral"
+      }
+    },
+    {
+      "base_multiplier": 0.28,
+      "density": 0.06,
+      "ingredient": {
+        "tag": "immersiveweapons:nuggets/astral"
+      }
+    }
+  ],
+  "result": {
+    "item": "immersiveweapons:astral_musket_ball"
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "immersiveweapons:sulfur_dust"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    },
+    "sulfur": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "immersiveweapons:sulfur"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "requirements": [
+    [
+      "sulfur",
+      "has_the_recipe"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "immersiveweapons:sulfur_dust"
+    ]
+  },
+  "sends_telemetry_event": false
+}

@@ -40,5 +40,9 @@ public class OreReplacementData {
 				OreConfiguration.target(ReplacementRules.DEEPSLATE_STONE,
 						BlockRegistry.DEEPSLATE_COBALT_ORE.get().defaultBlockState())
 		);
+		public static final List<TargetBlockState> POTASSIUM_NITRATE_ORE_TARGETS = List.of(
+				OreConfiguration.target(ReplacementRules.REGULAR_STONE,
+						BlockRegistry.POTASSIUM_NITRATE_ORE.get().defaultBlockState())
+		);
 	}
 }

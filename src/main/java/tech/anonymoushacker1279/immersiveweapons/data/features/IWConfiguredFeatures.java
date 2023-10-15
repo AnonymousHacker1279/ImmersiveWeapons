@@ -41,6 +41,7 @@ public class IWConfiguredFeatures {
 	public static final ResourceKey<ConfiguredFeature<?, ?>> SULFUR_ORE_CONFIGURATION = createKey("sulfur_ore");
 	public static final ResourceKey<ConfiguredFeature<?, ?>> DEEPSLATE_COBALT_ORE_CONFIGURATION = createKey("deepslate_cobalt_ore");
 	public static final ResourceKey<ConfiguredFeature<?, ?>> COBALT_ORE_CONFIGURATION = createKey("cobalt_ore");
+	public static final ResourceKey<ConfiguredFeature<?, ?>> POTASSIUM_NITRATE_ORE_CONFIGURATION = createKey("potassium_nitrate_ore");
 
 	private static ResourceKey<ConfiguredFeature<?, ?>> createKey(String name) {
 		return ResourceKey.create(Registries.CONFIGURED_FEATURE, new ResourceLocation(ImmersiveWeapons.MOD_ID, name));
@@ -140,6 +141,9 @@ public class IWConfiguredFeatures {
 
 		register(context, COBALT_ORE_CONFIGURATION, Feature.ORE,
 				new OreConfiguration(OreReplacementTargets.COBALT_ORE_TARGETS, 12, 0.15f));
+
+		register(context, POTASSIUM_NITRATE_ORE_CONFIGURATION, Feature.ORE,
+				new OreConfiguration(OreReplacementTargets.POTASSIUM_NITRATE_ORE_TARGETS, 6, 0.05f));
 	}
 
 	private static <FC extends FeatureConfiguration, F extends Feature<FC>> void register(BootstapContext<ConfiguredFeature<?, ?>> context,

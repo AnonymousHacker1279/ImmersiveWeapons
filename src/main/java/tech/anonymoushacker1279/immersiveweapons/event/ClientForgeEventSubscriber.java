@@ -26,7 +26,7 @@ import tech.anonymoushacker1279.immersiveweapons.client.gui.overlays.DebugTracin
 import tech.anonymoushacker1279.immersiveweapons.init.ItemRegistry;
 import tech.anonymoushacker1279.immersiveweapons.item.AccessoryItem;
 import tech.anonymoushacker1279.immersiveweapons.item.CursedItem;
-import tech.anonymoushacker1279.immersiveweapons.item.projectile.gun.data.GunData;
+import tech.anonymoushacker1279.immersiveweapons.item.gun.data.GunData;
 
 @EventBusSubscriber(modid = ImmersiveWeapons.MOD_ID, bus = Bus.FORGE, value = Dist.CLIENT)
 public class ClientForgeEventSubscriber {

@@ -1,0 +1,22 @@
+{
+  "type": "immersiveweapons:ammunition_table",
+  "materials": [
+    {
+      "base_multiplier": 2.6,
+      "density": 0.4,
+      "ingredient": {
+        "tag": "immersiveweapons:ingots/starstorm"
+      }
+    },
+    {
+      "base_multiplier": 0.28,
+      "density": 0.04,
+      "ingredient": {
+        "tag": "immersiveweapons:shards/starstorm"
+      }
+    }
+  ],
+  "result": {
+    "item": "immersiveweapons:starstorm_musket_ball"
+  }
+}

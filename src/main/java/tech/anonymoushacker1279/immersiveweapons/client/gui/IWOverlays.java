@@ -8,7 +8,7 @@ import org.jetbrains.annotations.Nullable;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.client.gui.overlays.DebugTracingOverlay;
 import tech.anonymoushacker1279.immersiveweapons.client.gui.overlays.ScopeOverlay;
-import tech.anonymoushacker1279.immersiveweapons.item.projectile.gun.data.GunData;
+import tech.anonymoushacker1279.immersiveweapons.item.gun.data.GunData;
 
 public class IWOverlays {
 

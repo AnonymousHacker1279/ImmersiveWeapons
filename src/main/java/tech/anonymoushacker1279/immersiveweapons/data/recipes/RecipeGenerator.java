@@ -25,6 +25,7 @@ import tech.anonymoushacker1279.immersiveweapons.data.recipes.families.FamilyGen
 import tech.anonymoushacker1279.immersiveweapons.data.tags.groups.forge.ForgeItemTagGroups;
 import tech.anonymoushacker1279.immersiveweapons.data.tags.groups.immersiveweapons.IWItemTagGroups;
 import tech.anonymoushacker1279.immersiveweapons.init.*;
+import tech.anonymoushacker1279.immersiveweapons.item.crafting.AmmunitionTableRecipe.MaterialGroup;
 
 import java.util.*;
 import java.util.function.Consumer;
@@ -944,12 +945,12 @@ public class RecipeGenerator extends RecipeProvider {
 				.save(finishedRecipeConsumer);
 		ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, ItemRegistry.CANNONBALL.get(), 2)
 				.define('a', Tags.Items.INGOTS_IRON)
-				.define('b', Tags.Items.GUNPOWDER)
+				.define('b', Tags.Items.INGOTS_COPPER)
 				.pattern(" a ")
 				.pattern("aba")
 				.pattern(" a ")
 				.group("firearm")
-				.unlockedBy("gunpowder", has(Tags.Items.GUNPOWDER))
+				.unlockedBy("iron_ingot", has(Tags.Items.INGOTS_IRON))
 				.save(finishedRecipeConsumer);
 		ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, ItemRegistry.EXPLOSIVE_CANNONBALL.get(), 4)
 				.define('a', Items.TNT)
@@ -967,6 +968,94 @@ public class RecipeGenerator extends RecipeProvider {
 				.pattern(" b ")
 				.group("molotov_cocktail")
 				.unlockedBy("bottle_of_alcohol", has(ItemRegistry.BOTTLE_OF_ALCOHOL.get()))
+				.save(finishedRecipeConsumer);
+
+		// Musket balls
+		List<MaterialGroup> musketBallMaterials = new ArrayList<>(20);
+
+		// Wood
+		musketBallMaterials.add(new MaterialGroup(IWItemTagGroups.WOODEN_SHARDS, 0.08f, 0.28f));
+		ammunitionTableCrafting(musketBallMaterials, ItemRegistry.WOODEN_MUSKET_BALL.get());
+
+		// Stone
+		musketBallMaterials.clear();
+		musketBallMaterials.add(new MaterialGroup(IWItemTagGroups.STONE_SHARDS, 0.25f, 0.28f));
+		ammunitionTableCrafting(musketBallMaterials, ItemRegistry.STONE_MUSKET_BALL.get());
+
+		// Gold
+		musketBallMaterials.clear();
+		musketBallMaterials.add(new MaterialGroup(Tags.Items.INGOTS_GOLD, 1.93f, 2.6f));
+		musketBallMaterials.add(new MaterialGroup(Tags.Items.NUGGETS_GOLD, 0.21f, 0.28f));
+		ammunitionTableCrafting(musketBallMaterials, ItemRegistry.GOLDEN_MUSKET_BALL.get());
+
+		// Copper
+		musketBallMaterials.clear();
+		musketBallMaterials.add(new MaterialGroup(Tags.Items.INGOTS_COPPER, 0.89f, 2.6f));
+		musketBallMaterials.add(new MaterialGroup(ForgeItemTagGroups.COPPER_NUGGETS, 0.1f, 0.28f));
+		ammunitionTableCrafting(musketBallMaterials, ItemRegistry.COPPER_MUSKET_BALL.get());
+
+		// Iron
+		musketBallMaterials.clear();
+		musketBallMaterials.add(new MaterialGroup(Tags.Items.INGOTS_IRON, 0.79f, 2.6f));
+		musketBallMaterials.add(new MaterialGroup(Tags.Items.NUGGETS_IRON, 0.09f, 0.28f));
+		ammunitionTableCrafting(musketBallMaterials, ItemRegistry.IRON_MUSKET_BALL.get());
+
+		// Cobalt
+		musketBallMaterials.clear();
+		musketBallMaterials.add(new MaterialGroup(ForgeItemTagGroups.COBALT_INGOTS, 0.89f, 2.6f));
+		musketBallMaterials.add(new MaterialGroup(ForgeItemTagGroups.COBALT_NUGGETS, 0.1f, 0.28f));
+		ammunitionTableCrafting(musketBallMaterials, ItemRegistry.COBALT_MUSKET_BALL.get());
+
+		// Diamond
+		musketBallMaterials.clear();
+		musketBallMaterials.add(new MaterialGroup(IWItemTagGroups.DIAMOND_SHARDS, 0.09f, 0.28f));
+		ammunitionTableCrafting(musketBallMaterials, ItemRegistry.DIAMOND_MUSKET_BALL.get());
+
+		// Netherite
+		musketBallMaterials.clear();
+		musketBallMaterials.add(new MaterialGroup(Tags.Items.INGOTS_NETHERITE, 2.5f, 2.6f));
+		ammunitionTableCrafting(musketBallMaterials, ItemRegistry.NETHERITE_MUSKET_BALL.get());
+
+		// Molten
+		musketBallMaterials.clear();
+		musketBallMaterials.add(new MaterialGroup(IWItemTagGroups.MOLTEN_INGOTS, 0.35f, 2.6f));
+		musketBallMaterials.add(new MaterialGroup(IWItemTagGroups.MOLTEN_SHARDS, 0.04f, 0.28f));
+		ammunitionTableCrafting(musketBallMaterials, ItemRegistry.MOLTEN_MUSKET_BALL.get());
+
+		// Tesla
+		musketBallMaterials.clear();
+		musketBallMaterials.add(new MaterialGroup(IWItemTagGroups.TESLA_INGOTS, 2.0f, 2.6f));
+		musketBallMaterials.add(new MaterialGroup(IWItemTagGroups.TESLA_NUGGETS, 0.22f, 0.28f));
+		ammunitionTableCrafting(musketBallMaterials, ItemRegistry.TESLA_MUSKET_BALL.get());
+
+		// Ventus
+		musketBallMaterials.clear();
+		musketBallMaterials.add(new MaterialGroup(IWItemTagGroups.VENTUS_SHARDS, 0.05f, 2.6f));
+		ammunitionTableCrafting(musketBallMaterials, ItemRegistry.VENTUS_MUSKET_BALL.get());
+
+		// Starstorm
+		musketBallMaterials.clear();
+		musketBallMaterials.add(new MaterialGroup(IWItemTagGroups.STARSTORM_INGOTS, 0.4f, 2.6f));
+		musketBallMaterials.add(new MaterialGroup(IWItemTagGroups.STARSTORM_SHARDS, 0.04f, 0.28f));
+		ammunitionTableCrafting(musketBallMaterials, ItemRegistry.STARSTORM_MUSKET_BALL.get());
+
+		// Astral
+		musketBallMaterials.clear();
+		musketBallMaterials.add(new MaterialGroup(IWItemTagGroups.ASTRAL_INGOTS, 0.6f, 2.6f));
+		musketBallMaterials.add(new MaterialGroup(IWItemTagGroups.ASTRAL_NUGGETS, 0.06f, 0.28f));
+		ammunitionTableCrafting(musketBallMaterials, ItemRegistry.ASTRAL_MUSKET_BALL.get());
+
+		// Ammunition Table
+		ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, BlockItemRegistry.AMMUNITION_TABLE_ITEM.get())
+				.define('a', Tags.Items.INGOTS_IRON)
+				.define('b', ItemTags.PLANKS)
+				.define('c', ItemTags.STONE_CRAFTING_MATERIALS)
+				.define('d', Tags.Items.GUNPOWDER)
+				.pattern("aaa")
+				.pattern("bdb")
+				.pattern("cbc")
+				.group("ammunition_table")
+				.unlockedBy("gunpowder", has(Tags.Items.GUNPOWDER))
 				.save(finishedRecipeConsumer);
 	}
 
@@ -1268,6 +1357,21 @@ public class RecipeGenerator extends RecipeProvider {
 				.unlockedBy("raw_sulfur_block", has(BlockItemRegistry.RAW_SULFUR_BLOCK_ITEM.get()))
 				.save(finishedRecipeConsumer);
 
+		ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, ItemRegistry.SULFUR_DUST.get(), 4)
+				.requires(ItemRegistry.SULFUR.get())
+				.requires(ItemRegistry.MORTAR_AND_PESTLE.get())
+				.unlockedBy("sulfur", has(ItemRegistry.SULFUR.get()))
+				.save(finishedRecipeConsumer);
+
+		// Black Powder
+		ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, ItemRegistry.BLACKPOWDER.get(), 8)
+				.requires(ForgeItemTagGroups.SULFUR_DUSTS)
+				.requires(ItemTags.COALS)
+				.requires(Ingredient.of(ItemRegistry.POTASSIUM_NITRATE.get()), 6)
+				.requires(ItemRegistry.MORTAR_AND_PESTLE.get())
+				.unlockedBy("potassium_nitrate", has(ItemRegistry.POTASSIUM_NITRATE.get()))
+				.save(finishedRecipeConsumer);
+
 		// Meteor Staff
 		ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, ItemRegistry.METEOR_STAFF.get())
 				.define('a', ItemRegistry.CELESTIAL_FRAGMENT.get())
@@ -1346,12 +1450,14 @@ public class RecipeGenerator extends RecipeProvider {
 	}
 
 	private void createMinecraftItems() {
-		// Gunpowder (from sulfur)
-		ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, Items.GUNPOWDER)
-				.requires(ItemTags.COALS)
-				.requires(ForgeItemTagGroups.SULFUR_DUSTS)
+		// Gunpowder
+		ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, Items.GUNPOWDER, 4)
+				.requires(Ingredient.of(ItemTags.COALS), 2)
+				.requires(Ingredient.of(ForgeItemTagGroups.SULFUR_DUSTS), 2)
+				.requires(ItemRegistry.POTASSIUM_NITRATE.get(), 4)
+				.requires(ItemRegistry.MORTAR_AND_PESTLE.get())
 				.group("gunpowder")
-				.unlockedBy("sulfur", has(ItemRegistry.SULFUR.get()))
+				.unlockedBy("potassium_nitrate", has(ItemRegistry.POTASSIUM_NITRATE.get()))
 				.save(finishedRecipeConsumer);
 		// Copper ingot
 		ShapedRecipeBuilder shapedRecipeBuilder = ShapedRecipeBuilder.shaped(RecipeCategory.MISC, Items.COPPER_INGOT)
@@ -1748,6 +1854,12 @@ public class RecipeGenerator extends RecipeProvider {
 		PistonCrushingRecipeBuilder.crushing(block, result.asItem(), minCount, maxCount)
 				.unlocks("piston", has(Blocks.PISTON))
 				.save(finishedRecipeConsumer, ImmersiveWeapons.MOD_ID + ":" + getItemName(result) + "_piston_crushing");
+	}
+
+	private static void ammunitionTableCrafting(List<MaterialGroup> materials, ItemLike result) {
+		AmmunitionTableRecipeBuilder.crafting(materials, result.asItem())
+				.unlocks("ammunition_table", has(BlockRegistry.AMMUNITION_TABLE.get()))
+				.save(finishedRecipeConsumer, ImmersiveWeapons.MOD_ID + ":" + getItemName(result) + "_ammunition_table_crafting");
 	}
 
 	protected static String getConversionRecipeName(ItemLike pResult, ItemLike pIngredient) {

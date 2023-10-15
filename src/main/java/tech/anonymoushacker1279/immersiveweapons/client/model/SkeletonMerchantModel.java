@@ -62,7 +62,7 @@ public class SkeletonMerchantModel<T extends SkeletonMerchantEntity> extends Hum
 	public void setupAnim(T pEntity, float pLimbSwing, float pLimbSwingAmount, float pAgeInTicks, float pNetHeadYaw, float pHeadPitch) {
 		super.setupAnim(pEntity, pLimbSwing, pLimbSwingAmount, pAgeInTicks, pNetHeadYaw, pHeadPitch);
 		ItemStack handItem = pEntity.getMainHandItem();
-		
+
 		if (pEntity.isAggressive() && handItem.isEmpty()) {
 			float f = Mth.sin(this.attackTime * (float) Math.PI);
 			float f1 = Mth.sin((1.0F - (1.0F - this.attackTime) * (1.0F - this.attackTime)) * (float) Math.PI);

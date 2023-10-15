@@ -25,7 +25,7 @@ public class PainkillerItem extends Item {
 	public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
 		ItemStack itemInHand = player.getItemInHand(hand);
 		player.addEffect(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, 1200, 0, false, true));
-		
+
 		if (!player.isCreative()) {
 			itemInHand.shrink(1);
 			player.getCooldowns().addCooldown(this, 2400);

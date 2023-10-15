@@ -7,12 +7,12 @@
       },
       "trigger": "minecraft:recipe_unlocked"
     },
-    "sulfur": {
+    "potassium_nitrate": {
       "conditions": {
         "items": [
           {
             "items": [
-              "immersiveweapons:sulfur"
+              "immersiveweapons:potassium_nitrate"
             ]
           }
         ]
@@ -22,7 +22,7 @@
   },
   "requirements": [
     [
-      "sulfur",
+      "potassium_nitrate",
       "has_the_recipe"
     ]
   ],

@@ -24,6 +24,7 @@ public class DamageTypesGenerator {
 		damageType(context, IWDamageTypes.BULLET_KEY, IWDamageTypes.BULLET);
 		damageType(context, IWDamageTypes.CANNONBALL_KEY, IWDamageTypes.CANNONBALL);
 		damageType(context, IWDamageTypes.EXPLOSIVE_CANNONBALL_KEY, IWDamageTypes.EXPLOSIVE_CANNONBALL);
+		damageType(context, IWDamageTypes.EXPLOSIVE_ARROW_KEY, IWDamageTypes.EXPLOSIVE_ARROW);
 	}
 
 	protected static void damageType(BootstapContext<DamageType> context, ResourceKey<DamageType> key, DamageType damageType) {

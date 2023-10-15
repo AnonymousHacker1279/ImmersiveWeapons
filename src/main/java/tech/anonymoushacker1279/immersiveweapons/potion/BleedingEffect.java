@@ -35,7 +35,7 @@ public class BleedingEffect extends MobEffect {
 				cooldownTicks = 60 - (amplifier * 10);
 
 				float amount = 1.0f + (amplifier * 0.25f);
-				
+
 				if (livingEntity.invulnerableTime > cooldownTicks) {
 					livingEntity.invulnerableTime = cooldownTicks;
 				}

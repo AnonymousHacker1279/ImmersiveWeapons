@@ -105,6 +105,7 @@ public class LanguageGenerator extends IWLanguageProvider {
 		excludedItems.add(ItemRegistry.PADDED_LEATHER_HELMET.get());
 		excludedItems.add(ItemRegistry.PADDED_LEATHER_CHESTPLATE.get());
 		excludedItems.add(ItemRegistry.PADDED_LEATHER_LEGGINGS.get());
+		excludedItems.add(ItemRegistry.DRAGONS_BREATH_BOW.get());
 
 		// Filter the excluded items from the registry
 		Stream<RegistryObject<Item>> items = ItemRegistry.ITEMS.getEntries().stream()
@@ -152,6 +153,7 @@ public class LanguageGenerator extends IWLanguageProvider {
 		addItem(ItemRegistry.PADDED_LEATHER_HELMET, "Padded Leather Cap");
 		addItem(ItemRegistry.PADDED_LEATHER_CHESTPLATE, "Padded Leather Tunic");
 		addItem(ItemRegistry.PADDED_LEATHER_LEGGINGS, "Padded Leather Pants");
+		addItem(ItemRegistry.DRAGONS_BREATH_BOW, "Dragon's Breath Bow");
 	}
 
 	private void addEntityTypes() {
@@ -227,6 +229,7 @@ public class LanguageGenerator extends IWLanguageProvider {
 	private void addContainers() {
 		addContainer("small_parts_table", "Small Parts Crafting");
 		addContainer("tesla_synthesizer", "Tesla Synthesizing");
+		addContainer("ammunition_table", "Ammunition Crafting");
 	}
 
 	private void addSubtitles() {
@@ -314,6 +317,11 @@ public class LanguageGenerator extends IWLanguageProvider {
 		addTooltip("flare_gun", "Launch bright flares into the sky");
 		addTooltip("hand_cannon", "A powerful, but inaccurate, handheld cannon");
 
+		// Bows
+		addTooltip("ice_bow", "Arrows will inflict slowness on enemies");
+		addTooltip("dragons_breath_bow", "Arrows will explode on impact");
+		addTooltip("aurora_bow", "Arrows will experience 4x less gravity");
+
 		// Projectiles
 		addTooltip("wooden_arrow", "35% less powerful than normal arrows. Highly inaccurate. At this point it's just blunt-force trauma.");
 		addTooltip("stone_arrow", "15% less powerful than normal arrows. Kind of dull and weighs at least a pound.");
@@ -329,21 +337,29 @@ public class LanguageGenerator extends IWLanguageProvider {
 		addTooltip("astral_arrow", "350% more powerful than normal arrows. Extremely accurate and has minimal falloff.");
 		addTooltip("starstorm_arrow", "565% more powerful than normal arrows");
 		addTooltip("smoke_grenade_arrow", "Obscure the vision of your enemies from afar");
+
 		addTooltip("wooden_musket_ball", "Very inaccurate, and likely to cause a misfire. Why would anyone make wooden musket balls anyway?");
-		addTooltip("stone_musket_ball", "A very heavy musket ball, and not too accurate. Less likely to cause a misfire than wooden ones.");
+		addTooltip("stone_musket_ball", "A very heavy musket ball, and not too accurate.");
 		addTooltip("golden_musket_ball", "Fancier than stone musket balls, but not much better. At least it won't misfire. Look at me! I have money to throw away!");
 		addTooltip("copper_musket_ball", "A well constructed musket ball, made from copper.");
 		addTooltip("iron_musket_ball", "A hard hitting musket ball, made from iron.");
 		addTooltip("cobalt_musket_ball", "A strong and dense musket ball, made from cobalt.");
-		addTooltip("diamond_musket_ball", "A very sharp and powerful musket ball. You're practically throwing away diamonds. Pierces through a single target.");
-		addTooltip("netherite_musket_ball", "An extremely powerful and skillfully crafted musket ball. For when you need to kill a chicken from the other side of a mountain. Pierces through two targets.");
-		addTooltip("molten_musket_ball", "A musket ball made from molten metal. Hard hitting and expensive, catches targets on fire. Pierces through three targets.");
-		addTooltip("tesla_musket_ball", "Made from a special alloy. Weakens and pierces through three targets.");
-		addTooltip("ventus_musket_ball", "A musket ball made from Ventus shards. Causes targets to levitate. Pierces through three targets.");
-		addTooltip("astral_musket_ball", "Built from Astral ingots. Not quite as strong as other options but extremely accurate and has little falloff. Pierces through three targets.");
-		addTooltip("starstorm_musket_ball", "A musket ball made from Starstorm ingots. Strongest caliber in terms of raw damage. Pierces through three targets.");
-		addTooltip("cannonball", "A heavy metal ball that can be fired from a hand cannon. Pierces through one target.");
+		addTooltip("diamond_musket_ball", "A very sharp and powerful musket ball. You're practically throwing away diamonds.");
+		addTooltip("netherite_musket_ball", "An extremely powerful and skillfully crafted musket ball. For when you need to kill a chicken from the other side of a mountain.");
+		addTooltip("molten_musket_ball", "A musket ball made from molten metal. Hard hitting and expensive, catches targets on fire.");
+		addTooltip("tesla_musket_ball", "Made from a powerful Tesla alloy. Weakens targets.");
+		addTooltip("ventus_musket_ball", "A musket ball made from Ventus shards. Causes targets to levitate.");
+		addTooltip("astral_musket_ball", "Built using an Astral material. Extremely accurate and has little falloff.");
+		addTooltip("starstorm_musket_ball", "A musket ball made from Starstorm. Strongest caliber in terms of raw damage.");
+		addTooltip("cannonball", "A heavy metal ball that can be fired from a hand cannon.");
 		addTooltip("explosive_cannonball", "Similar to the cannonball but explodes on impact.");
+		// Projectile metadata
+		addTooltip("bullet.meta.base_damage", "Base Damage: %s");
+		addTooltip("bullet.meta.gravity_modifier", "Gravity Modifier: %s");
+		addTooltip("bullet.meta.base_knockback_level", "Base Knockback Level: %sx");
+		addTooltip("bullet.meta.piercing_level", "Piercing Level: %s target(s)");
+		addTooltip("bullet.meta.density_modifier", "Density Modifier: +%sx");
+		addTooltip("bullet.meta.misfire_chance", "Misfire Chance: %s%%");
 
 		// Pikes
 		addTooltip("pike", "Stab them from way over there");
@@ -428,7 +444,8 @@ public class LanguageGenerator extends IWLanguageProvider {
 
 		// Accessories
 		addTooltip("satchel", "Provides a 10% chance not to consume ammo");
-		addTooltip("powder_horn", "Decreases reload time on firearms by 15%");
+		addTooltip("powder_horn_1", "Decreases reload time on firearms by 15%");
+		addTooltip("powder_horn_2", "Helps to protect powder in wet environments");
 		addTooltip("berserkers_amulet_1", "Increases melee damage by 20%, and projectile damage by 10%");
 		addTooltip("berserkers_amulet_2", "However, you will take 20% more damage from all sources");
 		addTooltip("hans_blessing_1", "Take 15% less damage from all sources");
@@ -547,37 +564,50 @@ public class LanguageGenerator extends IWLanguageProvider {
 	}
 
 	private void addDeathMessages() {
-		addDeathMessage("punji_sticks", "%s was victim to Vietnam-era war tactics");
-		addDeathMessage("punji_sticks.player", "%s was victim to Vietnam-era war tactics by %s");
-		addDeathMessage("bear_trap", "%s bled out in a bear trap");
-		addDeathMessage("bear_trap.player", "%s bled out in a bear trap while %s watched");
-		addDeathMessage("barbed_wire", "%s thought it was a bright idea to walk into barbed wire");
-		addDeathMessage("barbed_wire.player", "%s was forced into barbed wire by %s");
-		addDeathMessage("landmine", "%s stepped on a landmine");
-		addDeathMessage("landmine.player", "%s stepped on a landmine because %s pushed them");
-		addDeathMessage("explosive_chocolate_bar", "%s learned to not accept candy from strangers");
-		addDeathMessage("explosive_chocolate_bar.player", "%s learned to not accept candy from strangers while %s watched");
-		addDeathMessage("spike_trap", "%s was impaled");
-		addDeathMessage("spike_trap.player", "%s was impaled by %s");
-		addDeathMessage("wooden_spikes", "%s was impaled");
-		addDeathMessage("wooden_spikes.player", "%s was impaled by %s");
-		addDeathMessage("used_syringe", "%s died of hepatitis");
-		addDeathMessage("used_syringe.player", "%s died of hepatitis at the hands of %s");
-		addDeathMessage("mortar", "%s was the target of an artillery attack");
-		addDeathMessage("bleeding", "%s bled to death");
-		addDeathMessage("bleeding.player", "%s bled to death at the hands of %s");
-		addDeathMessage("deadmans_desert_atmosphere", "%s was poisoned by the atmosphere");
-		addDeathMessage("deadmans_desert_atmosphere.player", "%s was poisoned by the atmosphere at the hands of %s");
-		addDeathMessage("deathweed", "%s was poisoned by deathweed");
-		addDeathMessage("deathweed.player", "%s was poisoned by deathweed at the hands of %s");
-		addDeathMessage("meteor", "%s was hit by a meteor");
-		addDeathMessage("meteor.player", "%s was hit by a meteor summoned by %s");
-		addDeathMessage("bullet", "%s was shot");
-		addDeathMessage("bullet.player", "%s was shot by %s");
-		addDeathMessage("cannonball", "%s was hit by a cannonball");
-		addDeathMessage("cannonball.player", "%s was hit by a cannonball fired by %s");
-		addDeathMessage("explosive_cannonball", "%s was hit by an explosive cannonball");
-		addDeathMessage("explosive_cannonball.player", "%s was hit by an explosive cannonball fired by %s");
+		addDeathMessage("punji_sticks", "%1$s was victim to Vietnam-era war tactics");
+		addDeathMessage("punji_sticks.player", "%1$s was victim to Vietnam-era war tactics by %2$s");
+		addDeathMessage("punji_sticks.item", "%1$s was victim to Vietnam-era war tactics by %2$s using %3$s");
+		addDeathMessage("bear_trap", "%1$s bled out in a bear trap");
+		addDeathMessage("bear_trap.player", "%1$s bled out in a bear trap while %2$s watched");
+		addDeathMessage("bear_trap.item", "%1$s bled out in a bear trap while %2$s watched");
+		addDeathMessage("barbed_wire", "%1$s thought it was a bright idea to walk into barbed wire");
+		addDeathMessage("barbed_wire.player", "%1$s was forced into barbed wire by %2$s");
+		addDeathMessage("barbed_wire.item", "%1$s was forced into barbed wire by %2$s using %3$s");
+		addDeathMessage("landmine", "%1$s stepped on a landmine");
+		addDeathMessage("landmine.player", "%1$s stepped on a landmine because %2$s pushed them");
+		addDeathMessage("landmine.item", "%1$s stepped on a landmine because %2$s pushed them using %3$s");
+		addDeathMessage("explosive_chocolate_bar", "%1$s learned to not accept candy from strangers");
+		addDeathMessage("explosive_chocolate_bar.player", "%1$s learned to not accept candy from strangers while %2$s watched");
+		addDeathMessage("explosive_chocolate_bar.item", "%1$s learned to not accept candy from strangers while %2$s watched");
+		addDeathMessage("spike_trap", "%1$s was impaled");
+		addDeathMessage("spike_trap.player", "%1$s was impaled by %2$s");
+		addDeathMessage("spike_trap.item", "%1$s was impaled by %2$s using %3$s");
+		addDeathMessage("wooden_spikes", "%1$s was impaled");
+		addDeathMessage("wooden_spikes.player", "%1$s was impaled by %2$s");
+		addDeathMessage("wooden_spikes.item", "%1$s was impaled by %2$s using %3$s");
+		addDeathMessage("used_syringe", "%1$s died of hepatitis");
+		addDeathMessage("used_syringe.player", "%1$s died of hepatitis at the hands of %2$s");
+		addDeathMessage("used_syringe.item", "%1$s died of hepatitis at the hands of %2$s using %3$s");
+		addDeathMessage("mortar", "%1$s was the target of an artillery attack");
+		addDeathMessage("mortar.item", "%1$s was the target of an artillery attack");
+		addDeathMessage("bleeding", "%1$s bled to death");
+		addDeathMessage("bleeding.player", "%1$s bled to death at the hands of %2$s");
+		addDeathMessage("deadmans_desert_atmosphere", "%1$s was poisoned by the atmosphere");
+		addDeathMessage("deadmans_desert_atmosphere.player", "%1$s was poisoned by the atmosphere at the hands of %2$s");
+		addDeathMessage("deadmans_desert_atmosphere.item", "%1$s was poisoned by the atmosphere at the hands of %2$s using %3$s");
+		addDeathMessage("deathweed", "%1$s was poisoned by deathweed");
+		addDeathMessage("deathweed.player", "%1$s was poisoned by deathweed at the hands of %2$s");
+		addDeathMessage("deathweed.item", "%1$s was poisoned by deathweed at the hands of %2$s using %3$s");
+		addDeathMessage("meteor", "%1$s was hit by a meteor summoned by %2$s");
+		addDeathMessage("meteor.item", "%1$s was hit by a meteor summoned by %2$s using %3$s");
+		addDeathMessage("bullet", "%1$s was shot by %2$s");
+		addDeathMessage("bullet.item", "%1$s was shot by %2$s using %3$s");
+		addDeathMessage("cannonball", "%1$s was hit by a cannonball fired by %2$s");
+		addDeathMessage("cannonball.item", "%1$s was hit by a cannonball fired by %2$s using %3$s");
+		addDeathMessage("explosive_cannonball", "%1$s was hit by an explosive cannonball fired by %2$s");
+		addDeathMessage("explosive_cannonball.item", "%1$s was hit by an explosive cannonball fired by %2$s using %3$s");
+		addDeathMessage("explosive_arrow", "%1$s was blown up by explosive arrow fired by %2$s");
+		addDeathMessage("explosive_arrow.item", "%1$s was blown up by an explosive arrow fired by %2$s using %3$s");
 	}
 
 	private void addBiomes() {
@@ -984,6 +1014,7 @@ public class LanguageGenerator extends IWLanguageProvider {
 		add("immersiveweapons.debug_tracing.melee_item_damage", "Melee Item Damage: %s");
 		add("immersiveweapons.debug_tracing.gun_base_velocity", "Gun Base Velocity: %s");
 		add("immersiveweapons.debug_tracing.selected_ammo", "Selected Ammo: %s (base damage: %s)");
+		add("immersiveweapons.debug_tracing.selected_powder", "Selected Powder: %s (velocity modifier: %s)");
 		add("immersiveweapons.debug_tracing.live_bullet_damage", "Live Bullet Damage: %s (is crit: %s)");
 		add("immersiveweapons.debug_tracing.damage_bonus", "Damage Bonus: %s general, %s melee, %s projectile");
 		add("immersiveweapons.debug_tracing.celestial_protection_chance_for_no_damage", "Celestial Protection Chance: %s");

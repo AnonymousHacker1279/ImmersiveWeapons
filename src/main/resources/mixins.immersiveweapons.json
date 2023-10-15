@@ -1,9 +1,10 @@
 {
-	"required": false,
+	"required": true,
 	"package": "tech.anonymoushacker1279.immersiveweapons.mixin",
 	"compatibilityLevel": "JAVA_17",
 	"refmap": "mixins.immersiveweapons.refmap.json",
 	"mixins": [
+		"AbstractArrowMixin",
 		"BaseFireBlockMixin",
 		"ClientboundSetEntityMotionPacketMixin",
 		"CombatRulesMixin",

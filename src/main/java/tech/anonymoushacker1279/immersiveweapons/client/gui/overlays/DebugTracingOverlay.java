@@ -4,7 +4,8 @@ import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.Font.DisplayMode;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
-import tech.anonymoushacker1279.immersiveweapons.item.projectile.bullet.AbstractBulletItem;
+import tech.anonymoushacker1279.immersiveweapons.item.gun.AbstractGunItem;
+import tech.anonymoushacker1279.immersiveweapons.item.projectile.BulletItem;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,6 +16,7 @@ public class DebugTracingOverlay {
 	private static final String MELEE_ITEM_DAMAGE = Component.translatable("immersiveweapons.debug_tracing.melee_item_damage").getString();
 	private static final String GUN_BASE_VELOCITY = Component.translatable("immersiveweapons.debug_tracing.gun_base_velocity").getString();
 	private static final String SELECTED_AMMO = Component.translatable("immersiveweapons.debug_tracing.selected_ammo").getString();
+	private static final String SELECTED_POWDER = Component.translatable("immersiveweapons.debug_tracing.selected_powder").getString();
 	private static final String LIVE_BULLET_DAMAGE = Component.translatable("immersiveweapons.debug_tracing.live_bullet_damage").getString();
 	private static final String LAST_DAMAGE_VALUES = Component.translatable("immersiveweapons.debug_tracing.last_damage_values").getString();
 	private static final String DAMAGE_BONUS = Component.translatable("immersiveweapons.debug_tracing.damage_bonus").getString();
@@ -49,12 +51,19 @@ public class DebugTracingOverlay {
 
 			overlayItems.add(gunBaseVelocity);
 		}
-		if (DebugTracingData.selectedAmmo instanceof AbstractBulletItem bullet) {
+		if (DebugTracingData.selectedAmmo instanceof BulletItem<?> bullet) {
 			String selectedAmmo = appendData(SELECTED_AMMO,
 					bullet.toString(),
 					bullet.damage);
 
 			overlayItems.add(selectedAmmo);
+		}
+		if (AbstractGunItem.isPowder(DebugTracingData.selectedPowder)) {
+			String selectedPowder = appendData(SELECTED_POWDER,
+					DebugTracingData.selectedPowder.toString(),
+					Math.round(AbstractGunItem.getPowderFromItem(DebugTracingData.selectedPowder).getVelocityModifier() * 1000) / 10f + "%");
+
+			overlayItems.add(selectedPowder);
 		}
 		if (DebugTracingData.liveBulletDamage > 0) {
 			String liveBulletDamage = appendData(LIVE_BULLET_DAMAGE,
