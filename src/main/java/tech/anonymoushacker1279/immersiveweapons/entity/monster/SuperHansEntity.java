@@ -18,8 +18,7 @@ import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.*;
-import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
-import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.ai.attributes.*;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.ai.goal.MeleeAttackGoal;
 import net.minecraft.world.entity.monster.Monster;
@@ -65,7 +64,8 @@ public class SuperHansEntity extends HansEntity implements AttackerTracker {
 				.add(Attributes.MOVEMENT_SPEED, 0.3D)
 				.add(Attributes.ARMOR, 25.0D)
 				.add(Attributes.MAX_HEALTH, 150.0D)
-				.add(Attributes.ATTACK_DAMAGE, 10.0D);
+				.add(Attributes.ATTACK_DAMAGE, 10.0D)
+				.add(Attributes.KNOCKBACK_RESISTANCE, 1.0D);
 	}
 
 	@Override
@@ -191,6 +191,11 @@ public class SuperHansEntity extends HansEntity implements AttackerTracker {
 				if (towerMinibossesAlive) {
 					spawnParticles(serverLevel, ParticleTypes.REVERSE_PORTAL);
 					return;
+				} else {
+					AttributeInstance kbr = getAttribute(Attributes.KNOCKBACK_RESISTANCE);
+					if (kbr != null && kbr.getValue() == 1.0D) {
+						kbr.setBaseValue(0.5D);
+					}
 				}
 
 				if (getHealth() <= getMaxHealth() * 0.5f) {

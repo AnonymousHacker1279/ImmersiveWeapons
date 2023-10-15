@@ -1,26 +1,26 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "gunpowder": {
-      "conditions": {
-        "items": [
-          {
-            "tag": "forge:gunpowder"
-          }
-        ]
-      },
-      "trigger": "minecraft:inventory_changed"
-    },
     "has_the_recipe": {
       "conditions": {
         "recipe": "immersiveweapons:cannonball"
       },
       "trigger": "minecraft:recipe_unlocked"
+    },
+    "iron_ingot": {
+      "conditions": {
+        "items": [
+          {
+            "tag": "forge:ingots/iron"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
     }
   },
   "requirements": [
     [
-      "gunpowder",
+      "iron_ingot",
       "has_the_recipe"
     ]
   ],

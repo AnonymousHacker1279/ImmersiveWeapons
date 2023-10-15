@@ -397,7 +397,10 @@ public class ForgeEventSubscriber {
 
 		// Handle the Velocity enchantment on bows (guns are handled in the gun code)
 		if (event.getEntity() instanceof AbstractArrow arrow) {
-			if (arrow.getOwner() instanceof Player player && player.getItemInHand(player.getUsedItemHand()).getItem() instanceof BowItem) {
+			if (arrow.getOwner() instanceof Player player
+					&& (player.getItemInHand(player.getUsedItemHand()).getItem() instanceof BowItem
+					|| player.getItemInHand(player.getUsedItemHand()).getItem() instanceof CrossbowItem)) {
+
 				ItemStack bow = player.getItemInHand(player.getUsedItemHand());
 				// If the bow is not empty, and has the enchantment, apply its effect
 				int enchantLevel = bow.getEnchantmentLevel(EnchantmentRegistry.VELOCITY.get());

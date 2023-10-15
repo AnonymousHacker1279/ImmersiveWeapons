@@ -945,12 +945,12 @@ public class RecipeGenerator extends RecipeProvider {
 				.save(finishedRecipeConsumer);
 		ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, ItemRegistry.CANNONBALL.get(), 2)
 				.define('a', Tags.Items.INGOTS_IRON)
-				.define('b', Tags.Items.GUNPOWDER)
+				.define('b', Tags.Items.INGOTS_COPPER)
 				.pattern(" a ")
 				.pattern("aba")
 				.pattern(" a ")
 				.group("firearm")
-				.unlockedBy("gunpowder", has(Tags.Items.GUNPOWDER))
+				.unlockedBy("iron_ingot", has(Tags.Items.INGOTS_IRON))
 				.save(finishedRecipeConsumer);
 		ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, ItemRegistry.EXPLOSIVE_CANNONBALL.get(), 4)
 				.define('a', Items.TNT)

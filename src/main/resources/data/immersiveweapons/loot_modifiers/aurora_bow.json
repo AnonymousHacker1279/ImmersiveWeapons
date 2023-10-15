@@ -12,7 +12,7 @@
 	],
 	"min_quantity": 1,
 	"max_quantity": 1,
-	"roll_chance": 0.2,
+	"roll_chance": 0.3,
 	"item": {
 		"id": "immersiveweapons:aurora_bow",
 		"Count": 1
