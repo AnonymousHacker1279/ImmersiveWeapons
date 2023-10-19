@@ -50,13 +50,17 @@ public class ItemTagsGenerator extends ItemTagsProvider {
 		// Copy item tags from block tags
 		copy(Blocks.STAINED_GLASS, Tags.Items.STAINED_GLASS);
 		copy(ForgeBlockTagGroups.COBALT_ORES, ForgeItemTagGroups.COBALT_ORES);
+		copy(ForgeBlockTagGroups.SULFUR_ORES, ForgeItemTagGroups.SULFUR_ORES);
 		copy(Blocks.ORES, Tags.Items.ORES);
 
 		// Ingot tags
 		tag(ForgeItemTagGroups.COBALT_INGOTS).add(ItemRegistry.COBALT_INGOT.get());
 		tag(Tags.Items.INGOTS_COPPER).add(Items.COPPER_INGOT);
-		tag(ForgeItemTagGroups.METAL_INGOTS).addTags(ForgeItemTagGroups.COBALT_INGOTS, Tags.Items.INGOTS_COPPER,
-				Tags.Items.INGOTS_IRON, Tags.Items.INGOTS_GOLD);
+		tag(ForgeItemTagGroups.METAL_INGOTS).addTags(
+				ForgeItemTagGroups.COBALT_INGOTS,
+				Tags.Items.INGOTS_COPPER,
+				Tags.Items.INGOTS_IRON,
+				Tags.Items.INGOTS_GOLD);
 		tag(Tags.Items.INGOTS).addTag(ForgeItemTagGroups.METAL_INGOTS);
 		tag(Tags.Items.INGOTS).addTag(IWItemTagGroups.MOLTEN_INGOTS);
 		tag(Tags.Items.INGOTS).addTag(IWItemTagGroups.ELECTRIC_INGOTS);
@@ -67,8 +71,11 @@ public class ItemTagsGenerator extends ItemTagsProvider {
 		// Nugget tags
 		tag(ForgeItemTagGroups.COBALT_NUGGETS).add(ItemRegistry.COBALT_NUGGET.get());
 		tag(ForgeItemTagGroups.COPPER_NUGGETS).add(ItemRegistry.COPPER_NUGGET.get());
-		tag(ForgeItemTagGroups.METAL_NUGGETS).addTags(ForgeItemTagGroups.COBALT_NUGGETS, ForgeItemTagGroups.COPPER_NUGGETS,
-				Tags.Items.NUGGETS_IRON, Tags.Items.NUGGETS_GOLD);
+		tag(ForgeItemTagGroups.METAL_NUGGETS).addTags(
+				ForgeItemTagGroups.COBALT_NUGGETS,
+				ForgeItemTagGroups.COPPER_NUGGETS,
+				Tags.Items.NUGGETS_IRON,
+				Tags.Items.NUGGETS_GOLD);
 		tag(Tags.Items.NUGGETS).addTag(ForgeItemTagGroups.METAL_NUGGETS);
 		tag(Tags.Items.NUGGETS).addTag(IWItemTagGroups.TESLA_NUGGETS);
 		tag(Tags.Items.NUGGETS).addTag(IWItemTagGroups.ASTRAL_NUGGETS);
@@ -99,13 +106,14 @@ public class ItemTagsGenerator extends ItemTagsProvider {
 			}
 		}
 
-		tag(Tags.Items.TOOLS_BOWS)
-				.add(ItemRegistry.ICE_BOW.get())
-				.add(ItemRegistry.DRAGONS_BREATH_BOW.get())
-				.add(ItemRegistry.AURORA_BOW.get());
+		tag(Tags.Items.TOOLS_BOWS).add(
+				ItemRegistry.ICE_BOW.get(),
+				ItemRegistry.DRAGONS_BREATH_BOW.get(),
+				ItemRegistry.AURORA_BOW.get());
 
 		// Head tags
-		tag(Tags.Items.HEADS).add(BlockItemRegistry.MINUTEMAN_HEAD_ITEM.get(),
+		tag(Tags.Items.HEADS).add(
+				BlockItemRegistry.MINUTEMAN_HEAD_ITEM.get(),
 				BlockItemRegistry.FIELD_MEDIC_HEAD_ITEM.get(),
 				BlockItemRegistry.DYING_SOLDIER_HEAD_ITEM.get(),
 				BlockItemRegistry.WANDERING_WARRIOR_HEAD_ITEM.get(),
@@ -206,7 +214,8 @@ public class ItemTagsGenerator extends ItemTagsProvider {
 		tag(ItemTags.CHEST_BOATS).add(ItemRegistry.STARDUST_CHEST_BOAT.get());
 
 		// Non-flammable wood tag
-		tag(ItemTags.NON_FLAMMABLE_WOOD).add(BlockItemRegistry.WARPED_TABLE_ITEM.get(),
+		tag(ItemTags.NON_FLAMMABLE_WOOD).add(
+				BlockItemRegistry.WARPED_TABLE_ITEM.get(),
 				BlockItemRegistry.CRIMSON_TABLE_ITEM.get());
 
 		// Trimmable armor tag
@@ -215,5 +224,14 @@ public class ItemTagsGenerator extends ItemTagsProvider {
 				tag(ItemTags.TRIMMABLE_ARMOR).add(armor);
 			}
 		}
+
+		// Beacon payment tag
+		tag(ItemTags.BEACON_PAYMENT_ITEMS).add(
+				ItemRegistry.COBALT_INGOT.get(),
+				ItemRegistry.MOLTEN_INGOT.get(),
+				ItemRegistry.TESLA_INGOT.get(),
+				ItemRegistry.VENTUS_SHARD.get(),
+				ItemRegistry.ASTRAL_INGOT.get(),
+				ItemRegistry.STARSTORM_INGOT.get());
 	}
 }

@@ -1,5 +1,5 @@
 {
-  "parent": "minecraft:item/generated",
+  "parent": "immersiveweapons:item/aurora_bow",
   "textures": {
     "layer0": "immersiveweapons:item/aurora_bow_pulling_1"
   }

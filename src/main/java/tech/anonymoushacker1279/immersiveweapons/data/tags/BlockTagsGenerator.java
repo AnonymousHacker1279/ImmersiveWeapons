@@ -38,6 +38,7 @@ public class BlockTagsGenerator extends BlockTagsProvider {
 	/**
 	 * Add tags under the Forge namespace
 	 */
+	@SuppressWarnings("unchecked")
 	private void addForgeTags() {
 		// Bulletproof glass tag
 		for (Block block : BlockTagLists.BULLETPROOF_GLASS) {
@@ -53,9 +54,16 @@ public class BlockTagsGenerator extends BlockTagsProvider {
 		}
 
 		// Ore tags
-		tag(ForgeBlockTagGroups.COBALT_ORES).add(BlockRegistry.COBALT_ORE.get())
-				.add(BlockRegistry.DEEPSLATE_COBALT_ORE.get());
-		tag(Blocks.ORES).addTag(ForgeBlockTagGroups.COBALT_ORES);
+		tag(ForgeBlockTagGroups.COBALT_ORES).add(
+				BlockRegistry.COBALT_ORE.get(),
+				BlockRegistry.DEEPSLATE_COBALT_ORE.get());
+		tag(ForgeBlockTagGroups.SULFUR_ORES).add(
+				BlockRegistry.SULFUR_ORE.get(),
+				BlockRegistry.DEEPSLATE_SULFUR_ORE.get(),
+				BlockRegistry.NETHER_SULFUR_ORE.get());
+		tag(Blocks.ORES).addTags(
+				ForgeBlockTagGroups.COBALT_ORES,
+				ForgeBlockTagGroups.SULFUR_ORES);
 	}
 
 	/**
@@ -82,20 +90,24 @@ public class BlockTagsGenerator extends BlockTagsProvider {
 		tag(BlockTags.FENCES).add(BlockRegistry.BARBED_WIRE_FENCE.get());
 
 		// Burnable logs tag
-		tag(BlockTags.LOGS_THAT_BURN).addTags(IWBlockTagGroups.BURNED_OAK_LOGS,
+		tag(BlockTags.LOGS_THAT_BURN).addTags(
+				IWBlockTagGroups.BURNED_OAK_LOGS,
 				IWBlockTagGroups.STARDUST_LOGS);
 
 		// Planks tag
-		tag(BlockTags.PLANKS).add(BlockRegistry.BURNED_OAK_PLANKS.get(),
+		tag(BlockTags.PLANKS).add(
+				BlockRegistry.BURNED_OAK_PLANKS.get(),
 				BlockRegistry.STARDUST_PLANKS.get());
 
 		// Slabs tag
-		tag(BlockTags.SLABS).add(BlockRegistry.CLOUD_MARBLE_BRICK_SLAB.get(),
+		tag(BlockTags.SLABS).add(
+				BlockRegistry.CLOUD_MARBLE_BRICK_SLAB.get(),
 				BlockRegistry.BLOOD_SANDSTONE_SLAB.get(),
 				BlockRegistry.SMOOTH_BLOOD_SANDSTONE_SLAB.get());
 
 		// Stairs tag
-		tag(BlockTags.STAIRS).add(BlockRegistry.CLOUD_MARBLE_BRICK_STAIRS.get(),
+		tag(BlockTags.STAIRS).add(
+				BlockRegistry.CLOUD_MARBLE_BRICK_STAIRS.get(),
 				BlockRegistry.BLOOD_SANDSTONE_STAIRS.get(),
 				BlockRegistry.SMOOTH_BLOOD_SANDSTONE_STAIRS.get());
 
@@ -106,35 +118,43 @@ public class BlockTagsGenerator extends BlockTagsProvider {
 		tag(BlockTags.WALL_SIGNS).add(BlockRegistry.BURNED_OAK_SIGN.get());
 
 		// Wooden buttons tag
-		tag(BlockTags.WOODEN_BUTTONS).add(BlockRegistry.BURNED_OAK_BUTTON.get(),
+		tag(BlockTags.WOODEN_BUTTONS).add(
+				BlockRegistry.BURNED_OAK_BUTTON.get(),
 				BlockRegistry.STARDUST_BUTTON.get());
 
 		// Wooden doors tag
-		tag(BlockTags.WOODEN_DOORS).add(BlockRegistry.BURNED_OAK_DOOR.get(),
+		tag(BlockTags.WOODEN_DOORS).add(
+				BlockRegistry.BURNED_OAK_DOOR.get(),
 				BlockRegistry.STARDUST_DOOR.get());
 
 		// Wooden fences tag
-		tag(BlockTags.WOODEN_FENCES).add(BlockRegistry.BURNED_OAK_FENCE.get(),
+		tag(BlockTags.WOODEN_FENCES).add(
+				BlockRegistry.BURNED_OAK_FENCE.get(),
 				BlockRegistry.STARDUST_FENCE.get());
 
 		// Wooden pressure plates tag
-		tag(BlockTags.WOODEN_PRESSURE_PLATES).add(BlockRegistry.BURNED_OAK_PRESSURE_PLATE.get(),
+		tag(BlockTags.WOODEN_PRESSURE_PLATES).add(
+				BlockRegistry.BURNED_OAK_PRESSURE_PLATE.get(),
 				BlockRegistry.STARDUST_PRESSURE_PLATE.get());
 
 		// Wooden slabs tag
-		tag(BlockTags.WOODEN_SLABS).add(BlockRegistry.BURNED_OAK_SLAB.get(),
+		tag(BlockTags.WOODEN_SLABS).add(
+				BlockRegistry.BURNED_OAK_SLAB.get(),
 				BlockRegistry.STARDUST_SLAB.get());
 
 		// Wooden stairs tag
-		tag(BlockTags.WOODEN_STAIRS).add(BlockRegistry.BURNED_OAK_STAIRS.get(),
+		tag(BlockTags.WOODEN_STAIRS).add(
+				BlockRegistry.BURNED_OAK_STAIRS.get(),
 				BlockRegistry.STARDUST_STAIRS.get());
 
 		// Wooden trapdoors tag
-		tag(BlockTags.WOODEN_TRAPDOORS).add(BlockRegistry.BURNED_OAK_TRAPDOOR.get(),
+		tag(BlockTags.WOODEN_TRAPDOORS).add(
+				BlockRegistry.BURNED_OAK_TRAPDOOR.get(),
 				BlockRegistry.STARDUST_TRAPDOOR.get());
 
 		// Small flowers tag
-		tag(BlockTags.SMALL_FLOWERS).add(BlockRegistry.AZUL_STAINED_ORCHID.get(),
+		tag(BlockTags.SMALL_FLOWERS).add(
+				BlockRegistry.AZUL_STAINED_ORCHID.get(),
 				BlockRegistry.MOONGLOW.get());
 
 		// Leaves tag
@@ -147,8 +167,17 @@ public class BlockTagsGenerator extends BlockTagsProvider {
 		tag(BlockTags.SAPLINGS).add(BlockRegistry.STARDUST_SAPLING.get());
 
 		// Walls tag
-		tag(BlockTags.WALLS).add(BlockRegistry.CLOUD_MARBLE_BRICK_WALL.get(),
+		tag(BlockTags.WALLS).add(
+				BlockRegistry.CLOUD_MARBLE_BRICK_WALL.get(),
 				BlockRegistry.BLOOD_SANDSTONE_WALL.get());
+
+		// Beacon base tag
+		tag(BlockTags.BEACON_BASE_BLOCKS)
+				.add(BlockRegistry.COBALT_BLOCK.get())
+				.add(BlockRegistry.MOLTEN_BLOCK.get())
+				.add(BlockRegistry.TESLA_BLOCK.get())
+				.add(BlockRegistry.ASTRAL_BLOCK.get())
+				.add(BlockRegistry.STARSTORM_BLOCK.get());
 	}
 
 	/**

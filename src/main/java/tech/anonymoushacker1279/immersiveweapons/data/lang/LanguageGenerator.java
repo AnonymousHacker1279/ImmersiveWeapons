@@ -1004,8 +1004,8 @@ public class LanguageGenerator extends IWLanguageProvider {
 		add("immersiveweapons.boss.celestial_tower.waves", "Wave %s of %s");
 		add("itemGroup.immersiveweapons.creative_tab", "Immersive Weapons");
 
-		// Vanilla only has enchantment numbers up to 10, so add up to 25 for QoL if the player has high level enchants
-		for (int i = 11; i <= 25; i++) {
+		// Vanilla only has enchantment numbers up to 10, so add up to 100 for QoL if the player has high level enchants
+		for (int i = 11; i <= 100; i++) {
 			// Convert the number to a roman numeral
 			add("enchantment.level." + i, GeneralUtilities.convertToRoman(i));
 		}

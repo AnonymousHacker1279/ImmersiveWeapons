@@ -273,6 +273,9 @@ public class ItemModelGenerator extends ItemModelProvider {
 	 * @param item the <code>Item</code> to generate a model for
 	 */
 	private void bowItem(Item item) {
+
+		ResourceLocation baseLayer = new ResourceLocation(ImmersiveWeapons.MOD_ID, "item/" + item);
+
 		// Main model
 		getBuilder(item.toString())
 				.parent(new ModelFile.UncheckedModelFile("item/generated"))
@@ -298,7 +301,7 @@ public class ItemModelGenerator extends ItemModelProvider {
 				.scale(0.68f)
 				.end()
 				.end()
-				.texture("layer0", new ResourceLocation(ImmersiveWeapons.MOD_ID, "item/" + item))
+				.texture("layer0", baseLayer)
 				.override().predicate(new ResourceLocation(ImmersiveWeapons.MOD_ID, "pulling"), 1)
 				.model(new ModelFile.UncheckedModelFile(ImmersiveWeapons.MOD_ID + ":item/" + item + "_pulling_0"))
 				.end()
@@ -313,13 +316,13 @@ public class ItemModelGenerator extends ItemModelProvider {
 
 		// Pulling models
 		getBuilder(item + "_pulling_0")
-				.parent(new ModelFile.UncheckedModelFile("item/generated"))
+				.parent(new ModelFile.UncheckedModelFile(baseLayer))
 				.texture("layer0", new ResourceLocation(ImmersiveWeapons.MOD_ID, "item/" + item + "_pulling_0"));
 		getBuilder(item + "_pulling_1")
-				.parent(new ModelFile.UncheckedModelFile("item/generated"))
+				.parent(new ModelFile.UncheckedModelFile(baseLayer))
 				.texture("layer0", new ResourceLocation(ImmersiveWeapons.MOD_ID, "item/" + item + "_pulling_1"));
 		getBuilder(item + "_pulling_2")
-				.parent(new ModelFile.UncheckedModelFile("item/generated"))
+				.parent(new ModelFile.UncheckedModelFile(baseLayer))
 				.texture("layer0", new ResourceLocation(ImmersiveWeapons.MOD_ID, "item/" + item + "_pulling_2"));
 	}
 

@@ -217,6 +217,11 @@ public record CommonConfig(
 		enchantCaps.put("minecraft:infinity", 1);
 		enchantCaps.put("minecraft:channeling", 1);
 		enchantCaps.put("minecraft:multishot", 1);
+		enchantCaps.put("minecraft:protection", 5);
+		enchantCaps.put("minecraft:blast_protection", 5);
+		enchantCaps.put("minecraft:fire_protection", 5);
+		enchantCaps.put("minecraft:projectile_protection", 5);
+		enchantCaps.put("minecraft:feather_falling", 5);
 		enchantCaps.put("immersiveweapons:extended_reach", 1);
 		enchantCaps.put("immersiveweapons:endless_musket_pouch", 1);
 		enchantCaps.put("immersiveweapons:scorch_shot", 3);

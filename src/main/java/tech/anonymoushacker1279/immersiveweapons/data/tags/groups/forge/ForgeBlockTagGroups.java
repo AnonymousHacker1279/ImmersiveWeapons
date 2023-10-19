@@ -13,4 +13,6 @@ public class ForgeBlockTagGroups {
 			"stained_glass"));
 	public static final TagKey<Block> COBALT_ORES = BlockTags.create(new ResourceLocation("forge",
 			"ores/cobalt"));
+	public static final TagKey<Block> SULFUR_ORES = BlockTags.create(new ResourceLocation("forge",
+			"ores/sulfur"));
 }

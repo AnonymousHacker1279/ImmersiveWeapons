@@ -84,7 +84,7 @@ public class LavaRevenantEntity extends FlyingMob implements Enemy, GrantAdvance
 	public static AttributeSupplier.Builder registerAttributes() {
 		return Monster.createMonsterAttributes()
 				.add(Attributes.FLYING_SPEED, 0.70D)
-				.add(Attributes.ARMOR, 35.0D);
+				.add(Attributes.ARMOR, 20.0D);
 	}
 
 	@Override
@@ -330,11 +330,10 @@ public class LavaRevenantEntity extends FlyingMob implements Enemy, GrantAdvance
 					BlockPos pos = new BlockPos(i, lMinY, lMinZ);
 					BlockState state = level().getBlockState(pos);
 					if (!state.isAir()) {
-						if (ForgeHooks.canEntityDestroy(level(), pos, this)
-								&& state.getDestroySpeed(level(), pos) <= 1.5f) {
+						if (ForgeHooks.canEntityDestroy(level(), pos, this) && state.getDestroySpeed(level(), pos) <= 1.5f) {
 
 							blockRemoved = level().removeBlock(pos, false) || blockRemoved;
-						} else {
+						} else if (!state.liquid()) {
 							stuck = true;
 						}
 					}

@@ -1,5 +1,6 @@
 {
   "values": [
-    "#forge:ores/cobalt"
+    "#forge:ores/cobalt",
+    "#forge:ores/sulfur"
   ]
 }
