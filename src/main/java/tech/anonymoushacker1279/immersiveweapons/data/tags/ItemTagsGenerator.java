@@ -198,6 +198,7 @@ public class ItemTagsGenerator extends ItemTagsProvider {
 		copy(BlockTags.SAND, ItemTags.SAND);
 		copy(BlockTags.SAPLINGS, ItemTags.SAPLINGS);
 		copy(BlockTags.WALLS, ItemTags.WALLS);
+		copy(BlockTags.SMELTS_TO_GLASS, ItemTags.SMELTS_TO_GLASS);
 
 		// Sign tags
 		tag(ItemTags.SIGNS).add(BlockItemRegistry.BURNED_OAK_SIGN_ITEM.get());

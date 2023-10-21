@@ -25,11 +25,23 @@ public interface BarbedWireUtils {
 						return;
 					}
 
-					if (level.getBlockEntity(pos) instanceof DamageableBlockEntity damageable && level.getGameTime() % 10 == 0) {
-						if (!level.isClientSide) {
-							entity.hurt(IWDamageSources.BARBED_WIRE, damageable.calculateDamage(2.0f, 0.25f));
+					boolean shouldHurt = false;
+					float damage = 2.0f;
+
+					if (level.getBlockEntity(pos) instanceof DamageableBlockEntity damageable) {
+						if (level.getGameTime() % 10 == 0) {
+							shouldHurt = true;
+							damageable.takeDamage(state, level, pos, BarbedWireBlock.DAMAGE_STAGE);
+							damage = damageable.calculateDamage(2.0f, 0.25f);
 						}
-						damageable.takeDamage(state, level, pos, BarbedWireBlock.DAMAGE_STAGE);
+					} else {
+						if (level.getGameTime() % 10 == 0) {
+							shouldHurt = true;
+						}
+					}
+
+					if (shouldHurt && !level.isClientSide) {
+						entity.hurt(IWDamageSources.BARBED_WIRE, damage);
 					}
 				}
 			}

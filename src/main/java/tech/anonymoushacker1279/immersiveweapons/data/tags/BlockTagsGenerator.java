@@ -178,6 +178,9 @@ public class BlockTagsGenerator extends BlockTagsProvider {
 				.add(BlockRegistry.TESLA_BLOCK.get())
 				.add(BlockRegistry.ASTRAL_BLOCK.get())
 				.add(BlockRegistry.STARSTORM_BLOCK.get());
+
+		// Smelts-to-glass tag
+		tag(BlockTags.SMELTS_TO_GLASS).add(BlockRegistry.BLOOD_SAND.get());
 	}
 
 	/**

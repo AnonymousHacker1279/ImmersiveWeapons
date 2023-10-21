@@ -353,6 +353,7 @@ public class LanguageGenerator extends IWLanguageProvider {
 		addTooltip("starstorm_musket_ball", "A musket ball made from Starstorm. Strongest caliber in terms of raw damage.");
 		addTooltip("cannonball", "A heavy metal ball that can be fired from a hand cannon.");
 		addTooltip("explosive_cannonball", "Similar to the cannonball but explodes on impact.");
+		addTooltip("flare", "Brightly illuminates the area around it.");
 		// Projectile metadata
 		addTooltip("bullet.meta.base_damage", "Base Damage: %s");
 		addTooltip("bullet.meta.gravity_modifier", "Gravity Modifier: %s");

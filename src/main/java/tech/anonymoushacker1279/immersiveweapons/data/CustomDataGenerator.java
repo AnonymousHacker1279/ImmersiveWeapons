@@ -42,9 +42,9 @@ public class CustomDataGenerator {
 		ExistingFileHelper existingFileHelper = event.getExistingFileHelper();
 
 		// Client data
-		generator.addProvider(event.includeClient(), new BlockStateGenerator(output, event.getExistingFileHelper()));
-		generator.addProvider(event.includeClient(), new ItemModelGenerator(output, event.getExistingFileHelper()));
-		generator.addProvider(event.includeClient(), new SoundGenerator(output, ImmersiveWeapons.MOD_ID, event.getExistingFileHelper()));
+		generator.addProvider(event.includeClient(), new BlockStateGenerator(output, existingFileHelper));
+		generator.addProvider(event.includeClient(), new ItemModelGenerator(output, existingFileHelper));
+		generator.addProvider(event.includeClient(), new SoundGenerator(output, ImmersiveWeapons.MOD_ID, existingFileHelper));
 		generator.addProvider(event.includeClient(), new LanguageGenerator(output));
 
 		// Server data
