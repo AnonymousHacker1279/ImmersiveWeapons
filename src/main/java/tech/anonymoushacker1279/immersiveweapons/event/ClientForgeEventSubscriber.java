@@ -8,6 +8,7 @@ import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
@@ -123,6 +124,29 @@ public class ClientForgeEventSubscriber {
 		}
 		if (GunData.changingPlayerFOV != -1 && minecraft.options.getCameraType().isFirstPerson()) {
 			event.setFOV(GunData.changingPlayerFOV);
+		}
+
+		// Handle FOV change of custom bows
+		if (minecraft.player != null) {
+			Item itemInHand = minecraft.player.getItemInHand(minecraft.player.getUsedItemHand()).getItem();
+			if ((itemInHand == ItemRegistry.ICE_BOW.get()
+					|| itemInHand == ItemRegistry.DRAGONS_BREATH_BOW.get()
+					|| itemInHand == ItemRegistry.AURORA_BOW.get())
+					&& minecraft.player.isUsingItem()) {
+
+				double fov = event.getFOV();
+				int useTicks = minecraft.player.getTicksUsingItem();
+				float fovModifier = (float) useTicks / 20.0F;
+
+				if (fovModifier > 1.0F) {
+					fovModifier = 1.0F;
+				} else {
+					fovModifier *= fovModifier;
+				}
+
+				fov *= 1.0F - fovModifier * 0.15F;
+				event.setFOV(fov);
+			}
 		}
 	}
 

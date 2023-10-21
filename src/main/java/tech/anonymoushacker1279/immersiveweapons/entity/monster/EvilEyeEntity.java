@@ -215,9 +215,9 @@ public class EvilEyeEntity extends FlyingMob implements Enemy, GrantAdvancementO
 	public SpawnGroupData finalizeSpawn(ServerLevelAccessor pLevel, DifficultyInstance pDifficulty,
 	                                    MobSpawnType pReason, @Nullable SpawnGroupData pSpawnData,
 	                                    @Nullable CompoundTag pDataTag) {
-		xpReward = 3 * getSize();
 		setSize(getRandom().nextIntBetweenInclusive(1, 3));
 		setHealth(getMaxHealth());
+		xpReward = summonedByStaff() ? 0 : 3 * getSize();
 		return super.finalizeSpawn(pLevel, pDifficulty, pReason, pSpawnData, pDataTag);
 	}
 

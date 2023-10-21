@@ -23,35 +23,17 @@ public class SpotlightBlock extends HorizontalDirectionalBlock implements Simple
 	private static final BlockState airState = Blocks.AIR.defaultBlockState();
 	private static final BlockState lightState = Blocks.LIGHT.defaultBlockState();
 
-	/**
-	 * Constructor for SpotlightBlock.
-	 *
-	 * @param properties the <code>Properties</code> of the block
-	 */
 	public SpotlightBlock(Properties properties) {
 		super(properties);
 		registerDefaultState(stateDefinition.any().setValue(WATERLOGGED, false).setValue(FACING, Direction.NORTH)
 				.setValue(LIT, false));
 	}
 
-	/**
-	 * Create the BlockState definition.
-	 *
-	 * @param builder the <code>StateContainer.Builder</code> of the block
-	 */
 	@Override
 	public void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
 		builder.add(WATERLOGGED, FACING, LIT);
 	}
 
-	/**
-	 * Determines if the block can exist in a given state.
-	 *
-	 * @param state  the <code>BlockState</code> of the block
-	 * @param reader the <code>LevelReader</code> for the block
-	 * @param pos    the <code>BlocKPos</code> the block is at
-	 * @return boolean
-	 */
 	@Override
 	public boolean canSurvive(BlockState state, LevelReader reader, BlockPos pos) {
 		Direction direction = state.getValue(FACING);
@@ -60,17 +42,6 @@ public class SpotlightBlock extends HorizontalDirectionalBlock implements Simple
 		return stateOpposite.isFaceSturdy(reader, positionOpposite, direction);
 	}
 
-	/**
-	 * Updates the block when required.
-	 *
-	 * @param stateIn       the <code>BlockState</code> of the block
-	 * @param facing        the <code>Direction</code> the block is facing
-	 * @param facingState   the <code>BlockState</code> of the facing block
-	 * @param levelAccessor the <code>LevelAccessor</code> the block is in
-	 * @param currentPos    the <code>BlockPos</code> the block is at
-	 * @param facingPos     the <code>BlocKPos</code> the facing block is at
-	 * @return BlockState
-	 */
 	@Override
 	public BlockState updateShape(BlockState stateIn, Direction facing, BlockState facingState,
 	                              LevelAccessor levelAccessor, BlockPos currentPos, BlockPos facingPos) {
@@ -86,28 +57,11 @@ public class SpotlightBlock extends HorizontalDirectionalBlock implements Simple
 				.setValue(WATERLOGGED, context.getLevel().getFluidState(context.getClickedPos()).getType() == Fluids.WATER);
 	}
 
-	/**
-	 * Set FluidState properties.
-	 * Allows the block to exhibit waterlogged behavior.
-	 *
-	 * @param state the <code>BlockState</code> of the block
-	 * @return FluidState
-	 */
 	@Override
 	public FluidState getFluidState(BlockState state) {
 		return state.getValue(WATERLOGGED) ? Fluids.WATER.getSource(false) : super.getFluidState(state);
 	}
 
-	/**
-	 * Runs when neighboring blocks change state.
-	 *
-	 * @param state    the <code>BlockState</code> of the block
-	 * @param level    the <code>Level</code> the block is in
-	 * @param pos      the <code>BlockPos</code> the block is at
-	 * @param blockIn  the <code>Block</code> that is changing
-	 * @param fromPos  the <code>BlockPos</code> of the changing block
-	 * @param isMoving determines if the block is moving
-	 */
 	@Override
 	public void neighborChanged(BlockState state, Level level, BlockPos pos, Block blockIn,
 	                            BlockPos fromPos, boolean isMoving) {
@@ -125,15 +79,6 @@ public class SpotlightBlock extends HorizontalDirectionalBlock implements Simple
 		}
 	}
 
-	/**
-	 * Runs when neighboring blocks change state.
-	 *
-	 * @param state    the <code>BlockState</code> of the block
-	 * @param level    the <code>Level</code> the block is in
-	 * @param pos      the <code>BlockPos</code> the block is at
-	 * @param oldState the <code>BlockState</code> the block previously had
-	 * @param isMoving determines if the block is moving
-	 */
 	@Override
 	public void onPlace(BlockState state, Level level, BlockPos pos, BlockState oldState, boolean isMoving) {
 		if (!oldState.is(state.getBlock())) {
@@ -173,9 +118,12 @@ public class SpotlightBlock extends HorizontalDirectionalBlock implements Simple
 	}
 
 	@Override
-	public void destroy(LevelAccessor pLevel, BlockPos pPos, BlockState pState) {
-		super.destroy(pLevel, pPos, pState);
-		stateToggled(pPos, (Level) pLevel, pState, true);
+	public void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean isMoving) {
+		super.onRemove(state, level, pos, newState, isMoving);
+
+		if (newState == airState) {
+			stateToggled(pos, level, state, true);
+		}
 	}
 
 	/**

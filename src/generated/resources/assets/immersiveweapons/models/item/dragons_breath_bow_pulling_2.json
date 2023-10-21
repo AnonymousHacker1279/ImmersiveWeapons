@@ -1,5 +1,5 @@
 {
-  "parent": "minecraft:item/generated",
+  "parent": "immersiveweapons:item/dragons_breath_bow",
   "textures": {
     "layer0": "immersiveweapons:item/dragons_breath_bow_pulling_2"
   }

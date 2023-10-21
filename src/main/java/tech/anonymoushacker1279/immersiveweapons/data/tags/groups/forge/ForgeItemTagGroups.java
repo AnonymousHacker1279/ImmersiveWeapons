@@ -9,6 +9,8 @@ public class ForgeItemTagGroups {
 
 	public static final TagKey<Item> COBALT_ORES = ItemTags.create(new ResourceLocation("forge",
 			"ores/cobalt"));
+	public static final TagKey<Item> SULFUR_ORES = ItemTags.create(new ResourceLocation("forge",
+			"ores/sulfur"));
 	public static final TagKey<Item> COBALT_INGOTS = ItemTags.create(new ResourceLocation("forge",
 			"ingots/cobalt"));
 	public static final TagKey<Item> METAL_INGOTS = ItemTags.create(new ResourceLocation("forge",
