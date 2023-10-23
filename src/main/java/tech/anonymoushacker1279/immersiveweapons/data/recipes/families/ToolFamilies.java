@@ -80,7 +80,7 @@ public record ToolFamilies(TagKey<Item> material,
 			ItemRegistry.MOLTEN_PIKE,
 			null,
 			ItemRegistry.MOLTEN_ARROW,
-			ItemRegistry.MOLTEN_MUSKET_BALL,
+			ItemRegistry.MOLTEN_SMITHING_TEMPLATE,
 			NETHERITE_TOOLS
 	);
 
