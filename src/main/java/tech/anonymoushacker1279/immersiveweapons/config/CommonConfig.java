@@ -208,7 +208,7 @@ public record CommonConfig(
 
 	@NotNull
 	private static Map<Object, Object> getEnchantCapsMap() {
-		Map<Object, Object> enchantCaps = new HashMap<>(20);
+		Map<Object, Object> enchantCaps = new HashMap<>(40);
 		enchantCaps.put("minecraft:mending", 1);
 		enchantCaps.put("minecraft:silk_touch", 1);
 		enchantCaps.put("minecraft:knockback", 5);
@@ -222,6 +222,7 @@ public record CommonConfig(
 		enchantCaps.put("minecraft:fire_protection", 5);
 		enchantCaps.put("minecraft:projectile_protection", 5);
 		enchantCaps.put("minecraft:feather_falling", 5);
+		enchantCaps.put("minecraft:swift_sneak", 5);
 		enchantCaps.put("immersiveweapons:extended_reach", 1);
 		enchantCaps.put("immersiveweapons:endless_musket_pouch", 1);
 		enchantCaps.put("immersiveweapons:scorch_shot", 3);
