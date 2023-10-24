@@ -34,7 +34,7 @@ public class AmmunitionTableMenu extends AbstractContainerMenu {
 		super(MenuTypeRegistry.AMMUNITION_TABLE_MENU.get(), containerID);
 		this.container = container;
 		this.containerData = containerData;
-		
+
 		// Ammunition table inventory slots (first begins at (8, 19), it is a 3x2 grid)
 		for (int i = 0; i < 2; ++i) {
 			for (int j = 0; j < 3; ++j) {
@@ -96,6 +96,8 @@ public class AmmunitionTableMenu extends AbstractContainerMenu {
 			} else {
 				slot.setChanged();
 			}
+
+			slot.onTake(player, oldStack);
 		}
 
 		return itemStack;

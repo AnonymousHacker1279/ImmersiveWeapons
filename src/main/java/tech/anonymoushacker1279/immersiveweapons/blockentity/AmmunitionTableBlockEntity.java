@@ -216,7 +216,7 @@ public class AmmunitionTableBlockEntity extends BaseContainerBlockEntity impleme
 	 * A higher density modifier increases the amount of resources required. Each input item has its own density.
 	 */
 	private void calculateOutput() {
-		if (level == null) {
+		if (level == null || remove) {
 			return;
 		}
 

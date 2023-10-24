@@ -92,8 +92,8 @@ public class AmmunitionTableBlock extends HorizontalDirectionalBlock implements 
 	public void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean isMoving) {
 		if (!state.is(newState.getBlock())) {
 			if (level.getBlockEntity(pos) instanceof AmmunitionTableBlockEntity blockEntity) {
+				blockEntity.removeItemNoUpdate(6);  // Remove the output item
 				Containers.dropContents(level, pos, blockEntity);
-				level.updateNeighbourForOutputSignal(pos, this);
 			}
 
 			super.onRemove(state, level, pos, newState, isMoving);

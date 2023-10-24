@@ -87,8 +87,6 @@ minecraft {
 
 		data {
 			args '--mod', 'immersiveweapons', '--all', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources/')
-
-			jvmArgs '-Xmx4G', '-XX:+AllowEnhancedClassRedefinition'
 		}
 	}
 }
