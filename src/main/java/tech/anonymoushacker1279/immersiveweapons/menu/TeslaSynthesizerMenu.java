@@ -159,7 +159,7 @@ public class TeslaSynthesizerMenu extends AbstractContainerMenu implements Stack
 	 */
 	public boolean isIngredient(RecipeManager recipeManager, ItemStack stack) {
 		return recipeManager.getAllRecipesFor(RecipeTypeRegistry.TESLA_SYNTHESIZER_RECIPE_TYPE.get())
-				.stream().anyMatch(recipe -> recipe.getIngredients()
+				.stream().anyMatch(recipe -> recipe.value().getIngredients()
 						.stream().anyMatch(ingredient -> ingredient.test(stack)));
 	}
 
@@ -172,7 +172,7 @@ public class TeslaSynthesizerMenu extends AbstractContainerMenu implements Stack
 	 */
 	public boolean isIngredient(RecipeManager recipeManager, ItemStack stack, int slot) {
 		return recipeManager.getAllRecipesFor(RecipeTypeRegistry.TESLA_SYNTHESIZER_RECIPE_TYPE.get())
-				.stream().anyMatch(recipe -> recipe.getIngredients().get(slot).test(stack));
+				.stream().anyMatch(recipe -> recipe.value().getIngredients().get(slot).test(stack));
 	}
 
 	/**

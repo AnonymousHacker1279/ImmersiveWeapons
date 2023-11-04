@@ -1,7 +1,7 @@
 package tech.anonymoushacker1279.immersiveweapons.config;
 
-import net.minecraftforge.common.ForgeConfigSpec;
-import net.minecraftforge.common.ForgeConfigSpec.ConfigValue;
+import net.neoforged.neoforge.common.ModConfigSpec;
+import net.neoforged.neoforge.common.ModConfigSpec.ConfigValue;
 import org.jetbrains.annotations.NotNull;
 import tech.anonymoushacker1279.immersiveweapons.config.ConfigHelper.TomlConfigOps;
 
@@ -32,7 +32,7 @@ public record CommonConfig(
 		ConfigValue<Boolean> meteorStaffExplosionBreakBlocks,
 		ConfigValue<Integer> cursedSightStaffMaxUseRange) {
 
-	public static CommonConfig create(ForgeConfigSpec.Builder builder) {
+	public static CommonConfig create(ModConfigSpec.Builder builder) {
 		builder.push("Common Configuration");
 
 		builder.push("General");

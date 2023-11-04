@@ -3,7 +3,7 @@ package tech.anonymoushacker1279.immersiveweapons.client;
 import com.mojang.blaze3d.platform.InputConstants;
 import com.mojang.blaze3d.platform.InputConstants.Type;
 import net.minecraft.client.KeyMapping;
-import net.minecraftforge.client.settings.KeyConflictContext;
+import net.neoforged.neoforge.client.settings.KeyConflictContext;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 
 public class IWKeyBinds {

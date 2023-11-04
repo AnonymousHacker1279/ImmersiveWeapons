@@ -5,7 +5,7 @@ import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
-import net.minecraftforge.registries.MissingMappingsEvent.Mapping;
+import net.neoforged.neoforge.registries.MissingMappingsEvent.Mapping;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.init.*;
 
@@ -173,7 +173,7 @@ public class LegacyMappingsHandler {
 	}
 
 	public static void remapBlocks(List<Mapping<Block>> mappings) {
-		ImmersiveWeapons.LOGGER.warn("Missing block mappings were found. This probably means a block was renamed or deleted. Attempting to remap...");
+		ImmersiveWeapons.LOGGER.warn("Missing blockLocation mappings were found. This probably means a blockLocation was renamed or deleted. Attempting to remap...");
 
 		List<String> remappedBlocks = new ArrayList<>(0);
 

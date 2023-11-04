@@ -8,10 +8,10 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BiomeTags;
 import net.minecraft.world.level.biome.MobSpawnSettings.SpawnerData;
 import net.minecraft.world.level.levelgen.GenerationStep.Decoration;
-import net.minecraftforge.common.world.BiomeModifier;
-import net.minecraftforge.common.world.ForgeBiomeModifiers;
-import net.minecraftforge.common.world.ForgeBiomeModifiers.AddSpawnsBiomeModifier;
-import net.minecraftforge.registries.ForgeRegistries.Keys;
+import net.neoforged.neoforge.common.world.BiomeModifier;
+import net.neoforged.neoforge.common.world.BiomeModifiers;
+import net.neoforged.neoforge.common.world.BiomeModifiers.AddSpawnsBiomeModifier;
+import net.neoforged.neoforge.registries.ForgeRegistries.Keys;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.data.features.IWPlacedFeatures;
 import tech.anonymoushacker1279.immersiveweapons.data.tags.groups.forge.ForgeWorldGenTagGroups;
@@ -22,49 +22,49 @@ public class IWBiomeModifiers {
 	public static void bootstrap(BootstapContext<BiomeModifier> context) {
 		// Ores
 		biomeModifier(context, new ResourceLocation(ImmersiveWeapons.MOD_ID, "molten_ore"),
-				new ForgeBiomeModifiers.AddFeaturesBiomeModifier(
+				new BiomeModifiers.AddFeaturesBiomeModifier(
 						context.lookup(Registries.BIOME).getOrThrow(BiomeTags.IS_NETHER),
 						HolderSet.direct(context.lookup(Registries.PLACED_FEATURE).getOrThrow(IWPlacedFeatures.MOLTEN_ORE)),
 						Decoration.UNDERGROUND_ORES
 				));
 
 		biomeModifier(context, new ResourceLocation(ImmersiveWeapons.MOD_ID, "nether_sulfur_ore"),
-				new ForgeBiomeModifiers.AddFeaturesBiomeModifier(
+				new BiomeModifiers.AddFeaturesBiomeModifier(
 						context.lookup(Registries.BIOME).getOrThrow(BiomeTags.IS_NETHER),
 						HolderSet.direct(context.lookup(Registries.PLACED_FEATURE).getOrThrow(IWPlacedFeatures.NETHER_SULFUR_ORE)),
 						Decoration.UNDERGROUND_ORES
 				));
 
 		biomeModifier(context, new ResourceLocation(ImmersiveWeapons.MOD_ID, "deepslate_sulfur_ore"),
-				new ForgeBiomeModifiers.AddFeaturesBiomeModifier(
+				new BiomeModifiers.AddFeaturesBiomeModifier(
 						context.lookup(Registries.BIOME).getOrThrow(ForgeWorldGenTagGroups.IS_WET_CAVE),
 						HolderSet.direct(context.lookup(Registries.PLACED_FEATURE).getOrThrow(IWPlacedFeatures.DEEPSLATE_SULFUR_ORE)),
 						Decoration.UNDERGROUND_ORES
 				));
 
 		biomeModifier(context, new ResourceLocation(ImmersiveWeapons.MOD_ID, "sulfur_ore"),
-				new ForgeBiomeModifiers.AddFeaturesBiomeModifier(
+				new BiomeModifiers.AddFeaturesBiomeModifier(
 						context.lookup(Registries.BIOME).getOrThrow(BiomeTags.WATER_ON_MAP_OUTLINES),
 						HolderSet.direct(context.lookup(Registries.PLACED_FEATURE).getOrThrow(IWPlacedFeatures.SULFUR_ORE)),
 						Decoration.UNDERGROUND_ORES
 				));
 
 		biomeModifier(context, new ResourceLocation(ImmersiveWeapons.MOD_ID, "deepslate_cobalt_ore"),
-				new ForgeBiomeModifiers.AddFeaturesBiomeModifier(
+				new BiomeModifiers.AddFeaturesBiomeModifier(
 						context.lookup(Registries.BIOME).getOrThrow(BiomeTags.IS_OVERWORLD),
 						HolderSet.direct(context.lookup(Registries.PLACED_FEATURE).getOrThrow(IWPlacedFeatures.DEEPSLATE_COBALT_ORE)),
 						Decoration.UNDERGROUND_ORES
 				));
 
 		biomeModifier(context, new ResourceLocation(ImmersiveWeapons.MOD_ID, "potassium_nitrate_ore"),
-				new ForgeBiomeModifiers.AddFeaturesBiomeModifier(
+				new BiomeModifiers.AddFeaturesBiomeModifier(
 						context.lookup(Registries.BIOME).getOrThrow(BiomeTags.IS_OVERWORLD),
 						HolderSet.direct(context.lookup(Registries.PLACED_FEATURE).getOrThrow(IWPlacedFeatures.POTASSIUM_NITRATE_ORE)),
 						Decoration.UNDERGROUND_ORES
 				));
 
 		biomeModifier(context, new ResourceLocation(ImmersiveWeapons.MOD_ID, "cobalt_ore"),
-				new ForgeBiomeModifiers.AddFeaturesBiomeModifier(
+				new BiomeModifiers.AddFeaturesBiomeModifier(
 						context.lookup(Registries.BIOME).getOrThrow(BiomeTags.IS_OVERWORLD),
 						HolderSet.direct(context.lookup(Registries.PLACED_FEATURE).getOrThrow(IWPlacedFeatures.COBALT_ORE)),
 						Decoration.UNDERGROUND_ORES

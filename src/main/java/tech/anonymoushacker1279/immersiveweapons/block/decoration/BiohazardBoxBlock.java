@@ -25,7 +25,7 @@ public class BiohazardBoxBlock extends HorizontalDirectionalBlock implements Sim
 	/**
 	 * Constructor for BiohazardBoxBlock.
 	 *
-	 * @param properties the <code>Properties</code> of the block
+	 * @param properties the <code>Properties</code> of the blockLocation
 	 */
 	public BiohazardBoxBlock(Properties properties) {
 		super(properties);

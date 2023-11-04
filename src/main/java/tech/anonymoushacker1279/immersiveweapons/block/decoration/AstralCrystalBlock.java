@@ -14,16 +14,16 @@ import net.minecraft.world.entity.Entity.RemovalReason;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.fml.DistExecutor;
-import net.minecraftforge.network.NetworkEvent;
-import net.minecraftforge.network.NetworkEvent.Context;
-import net.minecraftforge.network.PacketDistributor;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.fml.DistExecutor;
+import net.neoforged.neoforge.network.NetworkEvent.Context;
+import net.neoforged.neoforge.network.PacketDistributor;
 import tech.anonymoushacker1279.immersiveweapons.blockentity.AstralCrystalBlockEntity;
 import tech.anonymoushacker1279.immersiveweapons.init.PacketHandler;
 import tech.anonymoushacker1279.immersiveweapons.init.RecipeTypeRegistry;
@@ -31,21 +31,20 @@ import tech.anonymoushacker1279.immersiveweapons.item.crafting.AstralCrystalReci
 import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
 
 import java.util.*;
-import java.util.function.Supplier;
 
 public class AstralCrystalBlock extends AmethystClusterBlock implements EntityBlock {
 
-	public static List<AstralCrystalRecipe> RECIPES = new ArrayList<>(5);
+	public static List<RecipeHolder<AstralCrystalRecipe>> RECIPES = new ArrayList<>(5);
 
 	public AstralCrystalBlock(int size, int offset, Properties properties) {
 		super(size, offset, properties);
 	}
 
 	/**
-	 * Create a block entity for the block.
+	 * Create a blockLocation entity for the blockLocation.
 	 *
-	 * @param blockPos   the <code>BlockPos</code> the block is at
-	 * @param blockState the <code>BlockState</code> of the block
+	 * @param blockPos   the <code>BlockPos</code> the blockLocation is at
+	 * @param blockState the <code>BlockState</code> of the blockLocation
 	 * @return BlockEntity
 	 */
 	@Override
@@ -61,13 +60,13 @@ public class AstralCrystalBlock extends AmethystClusterBlock implements EntityBl
 	}
 
 	/**
-	 * Runs when the block is activated.
-	 * Allows the block to respond to user interaction.
+	 * Runs when the blockLocation is activated.
+	 * Allows the blockLocation to respond to user interaction.
 	 *
-	 * @param state     the <code>BlockState</code> of the block
-	 * @param level     the <code>Level</code> the block is in
-	 * @param pos       the <code>BlockPos</code> the block is at
-	 * @param player    the <code>Player</code> interacting with the block
+	 * @param state     the <code>BlockState</code> of the blockLocation
+	 * @param level     the <code>Level</code> the blockLocation is in
+	 * @param pos       the <code>BlockPos</code> the blockLocation is at
+	 * @param player    the <code>Player</code> interacting with the blockLocation
 	 * @param hand      the <code>InteractionHand</code> the Player used
 	 * @param hitResult the <code>BlockHitResult</code> of the interaction
 	 * @return InteractionResult
@@ -96,13 +95,13 @@ public class AstralCrystalBlock extends AmethystClusterBlock implements EntityBl
 	}
 
 	/**
-	 * Runs when the block is removed.
+	 * Runs when the blockLocation is removed.
 	 *
-	 * @param state    the <code>BlockState</code> of the block
-	 * @param level    the <code>Level</code> the block is in
-	 * @param pos      the <code>BlockPos</code> the block is at
-	 * @param newState the <code>BlockState</code> the block now has
-	 * @param isMoving determines if the block is moving
+	 * @param state    the <code>BlockState</code> of the blockLocation
+	 * @param level    the <code>Level</code> the blockLocation is in
+	 * @param pos      the <code>BlockPos</code> the blockLocation is at
+	 * @param newState the <code>BlockState</code> the blockLocation now has
+	 * @param isMoving determines if the blockLocation is moving
 	 */
 	@SuppressWarnings("deprecation")
 	@Override
@@ -119,10 +118,10 @@ public class AstralCrystalBlock extends AmethystClusterBlock implements EntityBl
 	@Override
 	public void animateTick(BlockState state, Level level, BlockPos pos, RandomSource random) {
 		if (level.getBlockEntity(pos) instanceof AstralCrystalBlockEntity entity && isBuiltOnPlatform(level, pos)) {
-			for (AstralCrystalRecipe recipe : RECIPES) {
+			for (RecipeHolder<AstralCrystalRecipe> recipe : RECIPES) {
 				int primaryMaterialInInventory = entity.getInventory().stream()
 						.map(ItemStack::getItem)
-						.filter(item -> recipe.getPrimaryMaterial().test(item.getDefaultInstance())).toArray().length;
+						.filter(item -> recipe.value().getPrimaryMaterial().test(item.getDefaultInstance())).toArray().length;
 
 				float particleChance = primaryMaterialInInventory * 0.25f;
 
@@ -144,18 +143,18 @@ public class AstralCrystalBlock extends AmethystClusterBlock implements EntityBl
 		if (entity instanceof ItemEntity itemEntity && isBuiltOnPlatform(level, pos)) {
 			if (level.getBlockEntity(pos) instanceof AstralCrystalBlockEntity crystalBlockEntity) {
 				if (!level.isClientSide) {
-					for (AstralCrystalRecipe recipe : RECIPES) {
+					for (RecipeHolder<AstralCrystalRecipe> recipe : RECIPES) {
 						int primaryMaterialInInventory = crystalBlockEntity.getInventory().stream()
 								.map(ItemStack::getItem)
-								.filter(item -> recipe.getPrimaryMaterial().test(item.getDefaultInstance())).toArray().length;
+								.filter(item -> recipe.value().getPrimaryMaterial().test(item.getDefaultInstance())).toArray().length;
 
 						if (primaryMaterialInInventory == 4) {
 							ItemStack itemStack = itemEntity.getItem();
-							if (recipe.getSecondaryMaterial().test(itemStack)) {
-								for (int i = 0; i < recipe.getResultCount(); i++) {
+							if (recipe.value().getSecondaryMaterial().test(itemStack)) {
+								for (int i = 0; i < recipe.value().getResultCount(); i++) {
 									level.addFreshEntity(new ItemEntity(level,
 											itemEntity.getX(), itemEntity.getY() + 0.5f, itemEntity.getZ(),
-											recipe.getResultItem(level.registryAccess())));
+											recipe.value().getResultItem(level.registryAccess())));
 								}
 
 								crystalBlockEntity.getInventory().clear();
@@ -204,46 +203,19 @@ public class AstralCrystalBlock extends AmethystClusterBlock implements EntityBl
 
 	public record AstralCrystalBlockPacketHandler(BlockPos pos) {
 
-		/**
-		 * Constructor for AstralCrystalBlockPacketHandler.
-		 */
-		public AstralCrystalBlockPacketHandler {
-		}
-
-		/**
-		 * Encodes a packet
-		 *
-		 * @param msg          the <code>AstralCrystalBlockPacketHandler</code> message being sent
-		 * @param packetBuffer the <code>PacketBuffer</code> containing packet data
-		 */
 		public static void encode(AstralCrystalBlockPacketHandler msg, FriendlyByteBuf packetBuffer) {
 			packetBuffer.writeBlockPos(msg.pos);
 		}
 
-		/**
-		 * Decodes a packet
-		 *
-		 * @param packetBuffer the <code>PacketBuffer</code> containing packet data
-		 * @return AstralCrystalBlockPacketHandler
-		 */
 		public static AstralCrystalBlockPacketHandler decode(FriendlyByteBuf packetBuffer) {
 			return new AstralCrystalBlockPacketHandler(packetBuffer.readBlockPos());
 		}
 
-		/**
-		 * Handles an incoming packet, by sending it to the client/server
-		 *
-		 * @param contextSupplier the <code>Supplier</code> providing context
-		 */
-		public static void handle(AstralCrystalBlockPacketHandler msg, Supplier<Context> contextSupplier) {
-			NetworkEvent.Context context = contextSupplier.get();
+		public static void handle(AstralCrystalBlockPacketHandler msg, Context context) {
 			context.enqueueWork(() -> DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> runOnClient(msg)));
 			context.setPacketHandled(true);
 		}
 
-		/**
-		 * Runs when a packet is received
-		 */
 		private static void runOnClient(AstralCrystalBlockPacketHandler msg) {
 			ClientLevel level = Minecraft.getInstance().level;
 

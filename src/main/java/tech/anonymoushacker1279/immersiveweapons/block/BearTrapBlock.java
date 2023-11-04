@@ -38,7 +38,7 @@ public class BearTrapBlock extends Block implements SimpleWaterloggedBlock, Enti
 	/**
 	 * Constructor for BearTrapBlock.
 	 *
-	 * @param properties the <code>Properties</code> of the block
+	 * @param properties the <code>Properties</code> of the blockLocation
 	 */
 	public BearTrapBlock(Properties properties) {
 		super(properties);
@@ -49,13 +49,13 @@ public class BearTrapBlock extends Block implements SimpleWaterloggedBlock, Enti
 	}
 
 	/**
-	 * Runs when the block is activated.
-	 * Allows the block to respond to user interaction.
+	 * Runs when the blockLocation is activated.
+	 * Allows the blockLocation to respond to user interaction.
 	 *
-	 * @param state     the <code>BlockState</code> of the block
-	 * @param level     the <code>Level</code> the block is in
-	 * @param pos       the <code>BlockPos</code> the block is at
-	 * @param player    the <code>PlayerEntity</code> interacting with the block
+	 * @param state     the <code>BlockState</code> of the blockLocation
+	 * @param level     the <code>Level</code> the blockLocation is in
+	 * @param pos       the <code>BlockPos</code> the blockLocation is at
+	 * @param player    the <code>PlayerEntity</code> interacting with the blockLocation
 	 * @param hand      the <code>Hand</code> the PlayerEntity used
 	 * @param hitResult the <code>BlockHitResult</code> of the interaction
 	 * @return InteractionResult
@@ -86,12 +86,12 @@ public class BearTrapBlock extends Block implements SimpleWaterloggedBlock, Enti
 	}
 
 	/**
-	 * Set the shape of the block.
+	 * Set the shape of the blockLocation.
 	 *
-	 * @param state            the <code>BlockState</code> of the block
-	 * @param getter           the <code>BlockGetter</code> for the block
-	 * @param pos              the <code>BlockPos</code> the block is at
-	 * @param collisionContext the <code>CollisionContext</code> of the block
+	 * @param state            the <code>BlockState</code> of the blockLocation
+	 * @param getter           the <code>BlockGetter</code> for the blockLocation
+	 * @param pos              the <code>BlockPos</code> the blockLocation is at
+	 * @param collisionContext the <code>CollisionContext</code> of the blockLocation
 	 * @return VoxelShape
 	 */
 	@SuppressWarnings("deprecation")
@@ -101,12 +101,12 @@ public class BearTrapBlock extends Block implements SimpleWaterloggedBlock, Enti
 	}
 
 	/**
-	 * Get the collision shape of the block.
+	 * Get the collision shape of the blockLocation.
 	 *
-	 * @param state            the <code>BlockState</code> of the block
-	 * @param getter           the <code>BlockGetter</code> for the block
-	 * @param pos              the <code>BlockPos</code> the block is at
-	 * @param collisionContext the <code>CollisionContext</code> of the block
+	 * @param state            the <code>BlockState</code> of the blockLocation
+	 * @param getter           the <code>BlockGetter</code> for the blockLocation
+	 * @param pos              the <code>BlockPos</code> the blockLocation is at
+	 * @param collisionContext the <code>CollisionContext</code> of the blockLocation
 	 * @return VoxelShape
 	 */
 	@SuppressWarnings("deprecation")
@@ -116,10 +116,10 @@ public class BearTrapBlock extends Block implements SimpleWaterloggedBlock, Enti
 	}
 
 	/**
-	 * Create a block entity for the block.
+	 * Create a blockLocation entity for the blockLocation.
 	 *
-	 * @param blockPos   the <code>BlockPos</code> the block is at
-	 * @param blockState the <code>BlockState</code> of the block
+	 * @param blockPos   the <code>BlockPos</code> the blockLocation is at
+	 * @param blockState the <code>BlockState</code> of the blockLocation
 	 * @return BlockEntity
 	 */
 	@Override
@@ -128,10 +128,10 @@ public class BearTrapBlock extends Block implements SimpleWaterloggedBlock, Enti
 	}
 
 	/**
-	 * Get the ticker for the block.
+	 * Get the ticker for the blockLocation.
 	 *
-	 * @param level           the <code>Level</code> the block is in
-	 * @param blockState      the <code>BlockState</code> of the block
+	 * @param level           the <code>Level</code> the blockLocation is in
+	 * @param blockState      the <code>BlockState</code> of the blockLocation
 	 * @param blockEntityType the <code>BlockEntityType</code> to get the ticker of
 	 * @param <T>             the type extending BlockEntity
 	 * @return BlockEntityTicker
@@ -144,13 +144,13 @@ public class BearTrapBlock extends Block implements SimpleWaterloggedBlock, Enti
 	}
 
 	/**
-	 * Runs when an entity is inside the block's collision area.
-	 * Allows the block to deal damage on contact.
+	 * Runs when an entity is inside the blockLocation's collision area.
+	 * Allows the blockLocation to deal damage on contact.
 	 *
-	 * @param state  the <code>BlockState</code> of the block
-	 * @param level  the <code>Level</code> the block is in
-	 * @param pos    the <code>BlockPos</code> the block is at
-	 * @param entity the <code>Entity</code> passing through the block
+	 * @param state  the <code>BlockState</code> of the blockLocation
+	 * @param level  the <code>Level</code> the blockLocation is in
+	 * @param pos    the <code>BlockPos</code> the blockLocation is at
+	 * @param entity the <code>Entity</code> passing through the blockLocation
 	 */
 	@SuppressWarnings("deprecation")
 	@Override
@@ -189,7 +189,7 @@ public class BearTrapBlock extends Block implements SimpleWaterloggedBlock, Enti
 
 	/**
 	 * Set placement properties.
-	 * Sets the facing direction of the block for placement.
+	 * Sets the facing direction of the blockLocation for placement.
 	 *
 	 * @param context the <code>BlockPlaceContext</code> during placement
 	 * @return BlockState
@@ -202,9 +202,9 @@ public class BearTrapBlock extends Block implements SimpleWaterloggedBlock, Enti
 
 	/**
 	 * Set FluidState properties.
-	 * Allows the block to exhibit waterlogged behavior.
+	 * Allows the blockLocation to exhibit waterlogged behavior.
 	 *
-	 * @param state the <code>BlockState</code> of the block
+	 * @param state the <code>BlockState</code> of the blockLocation
 	 * @return FluidState
 	 */
 	@SuppressWarnings("deprecation")
@@ -214,9 +214,9 @@ public class BearTrapBlock extends Block implements SimpleWaterloggedBlock, Enti
 	}
 
 	/**
-	 * Set the block's analog output signal.
+	 * Set the blockLocation's analog output signal.
 	 *
-	 * @param state the <code>BlockState</code> of the block
+	 * @param state the <code>BlockState</code> of the blockLocation
 	 * @return boolean
 	 */
 	@SuppressWarnings("deprecation")
@@ -226,11 +226,11 @@ public class BearTrapBlock extends Block implements SimpleWaterloggedBlock, Enti
 	}
 
 	/**
-	 * Set the block's analog output signal strength.
+	 * Set the blockLocation's analog output signal strength.
 	 *
-	 * @param state the <code>BlockState</code> of the block
-	 * @param level the <code>Level</code> the block is in
-	 * @param pos   the <code>BlockPos</code> the block is at
+	 * @param state the <code>BlockState</code> of the blockLocation
+	 * @param level the <code>Level</code> the blockLocation is in
+	 * @param pos   the <code>BlockPos</code> the blockLocation is at
 	 * @return int
 	 */
 	@SuppressWarnings("deprecation")
@@ -242,7 +242,7 @@ public class BearTrapBlock extends Block implements SimpleWaterloggedBlock, Enti
 	/**
 	 * Create the BlockState definition.
 	 *
-	 * @param builder the <code>StateDefinition.Builder</code> of the block
+	 * @param builder the <code>StateDefinition.Builder</code> of the blockLocation
 	 */
 	@Override
 	protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
@@ -250,9 +250,9 @@ public class BearTrapBlock extends Block implements SimpleWaterloggedBlock, Enti
 	}
 
 	/**
-	 * Set the block's signal source.
+	 * Set the blockLocation's signal source.
 	 *
-	 * @param state the <code>BlockState</code> of the block
+	 * @param state the <code>BlockState</code> of the blockLocation
 	 * @return boolean
 	 */
 	@SuppressWarnings("deprecation")
@@ -262,12 +262,12 @@ public class BearTrapBlock extends Block implements SimpleWaterloggedBlock, Enti
 	}
 
 	/**
-	 * Get the signal of the block.
+	 * Get the signal of the blockLocation.
 	 *
-	 * @param blockState the <code>BlockState</code> of the block
-	 * @param getter     the <code>BlockGetter</code> for the block
-	 * @param pos        the <code>BlockPos</code> the block is at
-	 * @param side       the <code>Direction</code> the block is facing
+	 * @param blockState the <code>BlockState</code> of the blockLocation
+	 * @param getter     the <code>BlockGetter</code> for the blockLocation
+	 * @param pos        the <code>BlockPos</code> the blockLocation is at
+	 * @param side       the <code>Direction</code> the blockLocation is facing
 	 * @return int
 	 */
 	@SuppressWarnings("deprecation")

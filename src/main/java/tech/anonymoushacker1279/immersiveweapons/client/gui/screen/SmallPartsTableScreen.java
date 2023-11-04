@@ -53,8 +53,8 @@ public class SmallPartsTableScreen extends AbstractContainerScreen<SmallPartsMen
 	}
 
 	@Override
-	protected void renderBg(GuiGraphics guiGraphics, float pPartialTick, int pX, int pY) {
-		renderBackground(guiGraphics);
+	protected void renderBg(GuiGraphics guiGraphics, float partialTick, int pX, int pY) {
+		renderBackground(guiGraphics, pX, pY, partialTick);
 		RenderSystem.setShader(GameRenderer::getPositionTexShader);
 		RenderSystem.setShaderTexture(0, BG_LOCATION);
 		int leftPos = this.leftPos;
@@ -165,9 +165,9 @@ public class SmallPartsTableScreen extends AbstractContainerScreen<SmallPartsMen
 	}
 
 	@Override
-	public boolean mouseScrolled(double pMouseX, double pMouseY, double pDelta) {
+	public boolean mouseScrolled(double mouseX, double mouseY, double deltaX, double deltaY) {
 		if (displayPatterns) {
-			float scroll = (float) pDelta / (float) TOTAL_PATTERN_ROWS;
+			float scroll = (float) deltaY / (float) TOTAL_PATTERN_ROWS;
 			scrollOffs = Mth.clamp(scrollOffs - scroll, 0.0F, 1.0F);
 			startIndex = 1 + (int) (scrollOffs * (float) TOTAL_PATTERN_ROWS + 0.5F) * 3;
 		}

@@ -7,7 +7,7 @@ import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.monster.Spider;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
-import net.minecraftforge.common.ForgeMod;
+import net.neoforged.neoforge.common.NeoForgeMod;
 import tech.anonymoushacker1279.immersiveweapons.entity.GrantAdvancementOnDiscovery;
 
 
@@ -23,7 +23,7 @@ public class RockSpiderEntity extends Spider implements GrantAdvancementOnDiscov
 				.add(Attributes.MOVEMENT_SPEED, 0.35F)
 				.add(Attributes.ATTACK_DAMAGE, 2.0D)
 				.add(Attributes.ARMOR, 2.0D)
-				.add(ForgeMod.STEP_HEIGHT_ADDITION.get(), -0.3d);   // TODO: Replace with STEP_HEIGHT in 1.20.2
+				.add(NeoForgeMod.STEP_HEIGHT.get(), -0.3d);
 	}
 
 	@Override

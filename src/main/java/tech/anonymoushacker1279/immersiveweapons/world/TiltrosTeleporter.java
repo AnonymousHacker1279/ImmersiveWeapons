@@ -7,7 +7,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
-import net.minecraftforge.common.util.ITeleporter;
+import net.neoforged.neoforge.common.util.ITeleporter;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.block.decoration.AzulStainedOrchidBlock;
 import tech.anonymoushacker1279.immersiveweapons.blockentity.AzulStainedOrchidBlockEntity;

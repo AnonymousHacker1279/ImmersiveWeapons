@@ -2,10 +2,10 @@ package tech.anonymoushacker1279.immersiveweapons.data.sounds;
 
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraftforge.common.data.ExistingFileHelper;
-import net.minecraftforge.common.data.SoundDefinition.Sound;
-import net.minecraftforge.common.data.SoundDefinition.SoundType;
-import net.minecraftforge.common.data.SoundDefinitionsProvider;
+import net.neoforged.neoforge.common.data.ExistingFileHelper;
+import net.neoforged.neoforge.common.data.SoundDefinition.Sound;
+import net.neoforged.neoforge.common.data.SoundDefinition.SoundType;
+import net.neoforged.neoforge.common.data.SoundDefinitionsProvider;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.init.SoundEventRegistry;
 
@@ -127,9 +127,9 @@ public class SoundGenerator extends SoundDefinitionsProvider {
 						SoundType.SOUND)));
 
 		add(SoundEventRegistry.MORTAR_FIRE.get(), definition()
-				.subtitle("subtitles.immersiveweapons.block.mortar.fire")
+				.subtitle("subtitles.immersiveweapons.blockLocation.mortar.fire")
 				.with(Sound.sound(new ResourceLocation(ImmersiveWeapons.MOD_ID,
-								"block/mortar/fire/fire"),
+								"blockLocation/mortar/fire/fire"),
 						SoundType.SOUND)));
 
 		add(SoundEventRegistry.FLINTLOCK_PISTOL_FIRE.get(), definition()
@@ -193,39 +193,39 @@ public class SoundGenerator extends SoundDefinitionsProvider {
 						SoundType.EVENT)));
 
 		add(SoundEventRegistry.SMALL_PARTS_TABLE_USED.get(), definition()
-				.subtitle("subtitles.immersiveweapons.block.small_parts_table.used")
+				.subtitle("subtitles.immersiveweapons.blockLocation.small_parts_table.used")
 				.with(Sound.sound(new ResourceLocation(ImmersiveWeapons.MOD_ID,
-								"block/small_parts_table/used/used"),
+								"blockLocation/small_parts_table/used/used"),
 						SoundType.SOUND)));
 
 		add(SoundEventRegistry.BARBED_WIRE_RATTLE.get(), definition()
-				.subtitle("subtitles.immersiveweapons.block.barbed_wire.rattle")
+				.subtitle("subtitles.immersiveweapons.blockLocation.barbed_wire.rattle")
 				.with(Sound.sound(new ResourceLocation(ImmersiveWeapons.MOD_ID,
-								"block/barbed_wire/rattle/rattle"),
+								"blockLocation/barbed_wire/rattle/rattle"),
 						SoundType.SOUND)));
 
 		add(SoundEventRegistry.BEAR_TRAP_CLOSE.get(), definition()
-				.subtitle("subtitles.immersiveweapons.block.bear_trap.close")
+				.subtitle("subtitles.immersiveweapons.blockLocation.bear_trap.close")
 				.with(Sound.sound(new ResourceLocation(ImmersiveWeapons.MOD_ID,
-								"block/bear_trap/close/close"),
+								"blockLocation/bear_trap/close/close"),
 						SoundType.SOUND)));
 
 		add(SoundEventRegistry.SPIKE_TRAP_EXTEND.get(), definition()
-				.subtitle("subtitles.immersiveweapons.block.spike_trap.extend")
+				.subtitle("subtitles.immersiveweapons.blockLocation.spike_trap.extend")
 				.with(Sound.sound(new ResourceLocation(ImmersiveWeapons.MOD_ID,
-								"block/spike_trap/extend/extend"),
+								"blockLocation/spike_trap/extend/extend"),
 						SoundType.SOUND)));
 
 		add(SoundEventRegistry.SPIKE_TRAP_RETRACT.get(), definition()
-				.subtitle("subtitles.immersiveweapons.block.spike_trap.retract")
+				.subtitle("subtitles.immersiveweapons.blockLocation.spike_trap.retract")
 				.with(Sound.sound(new ResourceLocation(ImmersiveWeapons.MOD_ID,
-								"block/spike_trap/retract/retract"),
+								"blockLocation/spike_trap/retract/retract"),
 						SoundType.SOUND)));
 
 		add(SoundEventRegistry.PANIC_ALARM_SOUND.get(), definition()
-				.subtitle("subtitles.immersiveweapons.block.panic_alarm.alarm")
+				.subtitle("subtitles.immersiveweapons.blockLocation.panic_alarm.alarm")
 				.with(Sound.sound(new ResourceLocation(ImmersiveWeapons.MOD_ID,
-								"block/panic_alarm/alarm/alarm"),
+								"blockLocation/panic_alarm/alarm/alarm"),
 						SoundType.SOUND)));
 
 		add(SoundEventRegistry.DYING_SOLDIER_AMBIENT.get(), definition()

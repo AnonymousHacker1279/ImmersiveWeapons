@@ -3,7 +3,7 @@ package tech.anonymoushacker1279.immersiveweapons.init;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
-import net.minecraftforge.registries.*;
+import net.neoforged.neoforge.registries.*;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.entity.ambient.FireflyEntity;
 import tech.anonymoushacker1279.immersiveweapons.entity.animal.StarWolfEntity;

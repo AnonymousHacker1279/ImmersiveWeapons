@@ -1,6 +1,6 @@
 package tech.anonymoushacker1279.immersiveweapons.world.level.loot.number_providers;
 
-import com.google.gson.*;
+import com.mojang.serialization.Codec;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
@@ -15,6 +15,8 @@ import tech.anonymoushacker1279.immersiveweapons.init.NumberProviderRegistry;
  * Entities using this loot table must implement {@link AttackerTracker}, otherwise this will do nothing.
  */
 public class EntityKillersValue implements NumberProvider {
+
+	public static final Codec<EntityKillersValue> CODEC = Codec.unit(EntityKillersValue::create);
 
 	EntityKillersValue() {
 	}
@@ -49,15 +51,5 @@ public class EntityKillersValue implements NumberProvider {
 	@Override
 	public int hashCode() {
 		return 0;
-	}
-
-	public static class Serializer implements net.minecraft.world.level.storage.loot.Serializer<EntityKillersValue> {
-
-		public void serialize(JsonObject jsonObject, EntityKillersValue value, JsonSerializationContext context) {
-		}
-
-		public EntityKillersValue deserialize(JsonObject jsonObject, JsonDeserializationContext context) {
-			return new EntityKillersValue();
-		}
 	}
 }

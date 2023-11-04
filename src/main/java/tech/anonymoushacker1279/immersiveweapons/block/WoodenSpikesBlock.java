@@ -28,7 +28,7 @@ public class WoodenSpikesBlock extends DamageableBlock {
 	/**
 	 * Constructor for WoodenSpikesBlock.
 	 *
-	 * @param properties the <code>Properties</code> of the block
+	 * @param properties the <code>Properties</code> of the blockLocation
 	 */
 	public WoodenSpikesBlock(Properties properties) {
 		super(properties, 96, 3, Items.STICK, DAMAGE_STAGE);
@@ -49,13 +49,13 @@ public class WoodenSpikesBlock extends DamageableBlock {
 	}
 
 	/**
-	 * Runs when an entity is inside the block's collision area.
-	 * Allows the block to deal damage on contact.
+	 * Runs when an entity is inside the blockLocation's collision area.
+	 * Allows the blockLocation to deal damage on contact.
 	 *
-	 * @param state  the <code>BlockState</code> of the block
-	 * @param level  the <code>Level</code> the block is in
-	 * @param pos    the <code>BlockPos</code> the block is at
-	 * @param entity the <code>Entity</code> passing through the block
+	 * @param state  the <code>BlockState</code> of the blockLocation
+	 * @param level  the <code>Level</code> the blockLocation is in
+	 * @param pos    the <code>BlockPos</code> the blockLocation is at
+	 * @param entity the <code>Entity</code> passing through the blockLocation
 	 */
 	@SuppressWarnings("deprecation")
 	@Override

@@ -29,10 +29,10 @@ public abstract class DamageableBlock extends HorizontalDirectionalBlock impleme
 	 * Constructor for DamageableBlock. These blocks have a limited health pool and are destroyed over time.
 	 * This is used for blocks like wooden spikes, which slowly degrade as they deal damage.
 	 *
-	 * @param properties the <code>Properties</code> of the block
-	 * @param maxHealth  the health of the block, or number of uses before it breaks
-	 * @param stages     the number of visual stages the block will have before it breaks
-	 * @param repairItem the <code>Item</code> that can repair the block
+	 * @param properties the <code>Properties</code> of the blockLocation
+	 * @param maxHealth  the health of the blockLocation, or number of uses before it breaks
+	 * @param stages     the number of visual stages the blockLocation will have before it breaks
+	 * @param repairItem the <code>Item</code> that can repair the blockLocation
 	 */
 	public DamageableBlock(Properties properties, int maxHealth, int stages, Item repairItem, IntegerProperty damageStage) {
 		super(properties);

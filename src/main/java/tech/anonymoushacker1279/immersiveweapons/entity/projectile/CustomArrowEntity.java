@@ -18,8 +18,8 @@ import net.minecraft.world.level.Level.ExplosionInteraction;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.*;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.minecraftforge.event.ForgeEventFactory;
-import net.minecraftforge.network.PacketDistributor;
+import net.neoforged.neoforge.event.EventHooks;
+import net.neoforged.neoforge.network.PacketDistributor;
 import org.jetbrains.annotations.Nullable;
 import tech.anonymoushacker1279.immersiveweapons.entity.projectile.SmokeGrenadeEntity.SmokeGrenadeEntityPacketHandler;
 import tech.anonymoushacker1279.immersiveweapons.init.PacketHandler;
@@ -120,7 +120,7 @@ public class CustomArrowEntity extends Arrow implements HitEffectUtils {
 
 		BlockPos currentBlockPosition = blockPosition();
 		BlockState blockState = level().getBlockState(currentBlockPosition);
-		// Check if the block at the current position is air, and that it has physics enabled
+		// Check if the blockLocation at the current position is air, and that it has physics enabled
 		if (!blockState.isAir() && !noPhysics) {
 			VoxelShape voxelShape = blockState.getCollisionShape(level(), currentBlockPosition);
 			if (!voxelShape.isEmpty()) {
@@ -144,7 +144,7 @@ public class CustomArrowEntity extends Arrow implements HitEffectUtils {
 		}
 
 		if (inGround && !noPhysics) {
-			// The projectile is in the ground, check if it should start to fall (if a block is broken underneath it) or despawn
+			// The projectile is in the ground, check if it should start to fall (if a blockLocation is broken underneath it) or despawn
 			if (lastState != blockState && shouldFall()) {
 				startFalling();
 			} else if (!level().isClientSide) {
@@ -158,7 +158,7 @@ public class CustomArrowEntity extends Arrow implements HitEffectUtils {
 			Vec3 adjustedPosition = currentPosition.add(deltaMovement);
 			HitResult hitResult = level().clip(new ClipContext(currentPosition, adjustedPosition, ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, this));
 
-			// Check if the projectile hit a block
+			// Check if the projectile hit a blockLocation
 			if (hitResult.getType() != HitResult.Type.MISS) {
 				adjustedPosition = hitResult.getLocation();
 			}
@@ -185,7 +185,7 @@ public class CustomArrowEntity extends Arrow implements HitEffectUtils {
 				}
 
 				if (hitResult != null && hitResult.getType() != HitResult.Type.MISS && !noPhysics) {
-					if (ForgeEventFactory.onProjectileImpact(this, hitResult)) {
+					if (EventHooks.onProjectileImpact(this, hitResult)) {
 						break;
 					}
 
@@ -336,7 +336,7 @@ public class CustomArrowEntity extends Arrow implements HitEffectUtils {
 	}
 
 	/**
-	 * Additional stuff to do when a block is hit.
+	 * Additional stuff to do when a blockLocation is hit.
 	 */
 	protected void doWhenHitBlock() {
 	}

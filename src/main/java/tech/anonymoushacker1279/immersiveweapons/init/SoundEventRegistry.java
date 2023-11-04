@@ -2,7 +2,7 @@ package tech.anonymoushacker1279.immersiveweapons.init;
 
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
-import net.minecraftforge.registries.*;
+import net.neoforged.neoforge.registries.*;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 
 @SuppressWarnings({"unused"})

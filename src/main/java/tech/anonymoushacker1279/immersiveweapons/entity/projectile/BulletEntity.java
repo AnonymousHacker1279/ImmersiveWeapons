@@ -14,11 +14,10 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.common.Tags;
-import net.minecraftforge.fml.DistExecutor;
-import net.minecraftforge.network.NetworkEvent;
-import net.minecraftforge.network.NetworkEvent.Context;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.fml.DistExecutor;
+import net.neoforged.neoforge.common.Tags;
+import net.neoforged.neoforge.network.NetworkEvent.Context;
 import org.jetbrains.annotations.Nullable;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.client.gui.overlays.DebugTracingData;
@@ -32,7 +31,6 @@ import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
 import tech.anonymoushacker1279.immersiveweapons.world.level.IWDamageSources;
 
 import java.util.List;
-import java.util.function.Supplier;
 
 public class BulletEntity extends CustomArrowEntity implements HitEffectUtils {
 
@@ -110,7 +108,7 @@ public class BulletEntity extends CustomArrowEntity implements HitEffectUtils {
 		lastState = this.level().getBlockState(hitResult.getBlockPos());
 		boolean didPassThroughBlock = false;
 
-		// Check if the bullet hit a permeable block like leaves, if so keep moving and decrease velocity
+		// Check if the bullet hit a permeable blockLocation like leaves, if so keep moving and decrease velocity
 		if (lastState.is(BlockTags.LEAVES)) {
 			push(0, -0.1, 0);
 			shakeTime = 4;
@@ -141,7 +139,7 @@ public class BulletEntity extends CustomArrowEntity implements HitEffectUtils {
 
 		lastState.onProjectileHit(level(), lastState, hitResult, this);
 
-		// Check if a solid block was hit
+		// Check if a solid blockLocation was hit
 		if (!didPassThroughBlock) {
 			level().addParticle(new BulletImpactParticleOptions(1.0F, Block.getId(lastState)),
 					hitResult.getLocation().x, hitResult.getLocation().y, hitResult.getLocation().z,
@@ -149,7 +147,7 @@ public class BulletEntity extends CustomArrowEntity implements HitEffectUtils {
 					GeneralUtilities.getRandomNumber(-0.01d, 0.01d),
 					GeneralUtilities.getRandomNumber(-0.01d, 0.01d));
 
-			// Extra code to run when a block is hit
+			// Extra code to run when a blockLocation is hit
 			doWhenHitBlock();
 		}
 	}
@@ -201,8 +199,7 @@ public class BulletEntity extends CustomArrowEntity implements HitEffectUtils {
 			return new BulletEntityPacketHandler(packetBuffer.readDouble(), packetBuffer.readBoolean());
 		}
 
-		public static void handle(BulletEntityPacketHandler msg, Supplier<Context> contextSupplier) {
-			NetworkEvent.Context context = contextSupplier.get();
+		public static void handle(BulletEntityPacketHandler msg, Context context) {
 			context.enqueueWork(() -> DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> runOnClient(msg)));
 			context.setPacketHandled(true);
 		}

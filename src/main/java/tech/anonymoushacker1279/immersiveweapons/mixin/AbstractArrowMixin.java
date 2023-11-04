@@ -11,7 +11,7 @@ import tech.anonymoushacker1279.immersiveweapons.entity.projectile.BulletEntity;
  * Allows bullet entities to have custom damage sources and calculations.
  */
 @Mixin(AbstractArrow.class)
-public class AbstractArrowMixin {
+public abstract class AbstractArrowMixin {
 
 	@Redirect(method = "onHitEntity", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/Entity;hurt(Lnet/minecraft/world/damagesource/DamageSource;F)Z"))
 	private boolean hurtEntity(Entity instance, DamageSource pSource, float pAmount) {

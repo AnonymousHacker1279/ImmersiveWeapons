@@ -6,11 +6,11 @@ import net.minecraft.data.tags.ItemTagsProvider;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.*;
-import net.minecraftforge.common.Tags;
-import net.minecraftforge.common.Tags.Blocks;
-import net.minecraftforge.common.data.BlockTagsProvider;
-import net.minecraftforge.common.data.ExistingFileHelper;
-import net.minecraftforge.registries.RegistryObject;
+import net.neoforged.neoforge.common.Tags;
+import net.neoforged.neoforge.common.Tags.Blocks;
+import net.neoforged.neoforge.common.data.BlockTagsProvider;
+import net.neoforged.neoforge.common.data.ExistingFileHelper;
+import net.neoforged.neoforge.registries.RegistryObject;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.data.lists.ItemLists;
 import tech.anonymoushacker1279.immersiveweapons.data.tags.groups.forge.ForgeBlockTagGroups;
@@ -47,7 +47,7 @@ public class ItemTagsGenerator extends ItemTagsProvider {
 
 		ItemRegistry.ITEMS.getEntries().stream().map(RegistryObject::get).forEach(items::add);
 
-		// Copy item tags from block tags
+		// Copy item tags from blockLocation tags
 		copy(Blocks.STAINED_GLASS, Tags.Items.STAINED_GLASS);
 		copy(ForgeBlockTagGroups.COBALT_ORES, ForgeItemTagGroups.COBALT_ORES);
 		copy(ForgeBlockTagGroups.SULFUR_ORES, ForgeItemTagGroups.SULFUR_ORES);
@@ -126,7 +126,7 @@ public class ItemTagsGenerator extends ItemTagsProvider {
 	 */
 	@SuppressWarnings("unchecked")
 	private void addImmersiveWeaponsTags() {
-		// Copy item tags from block tags
+		// Copy item tags from blockLocation tags
 		copy(IWBlockTagGroups.BURNED_OAK_LOGS, IWItemTagGroups.BURNED_OAK_LOGS);
 		copy(IWBlockTagGroups.STARDUST_LOGS, IWItemTagGroups.STARDUST_LOGS);
 
@@ -180,7 +180,7 @@ public class ItemTagsGenerator extends ItemTagsProvider {
 	 * Add tags under the Minecraft namespace
 	 */
 	private void addMinecraftTags() {
-		// Copy item tags from block tags
+		// Copy item tags from blockLocation tags
 		copy(BlockTags.FENCES, ItemTags.FENCES);
 		copy(BlockTags.LOGS_THAT_BURN, ItemTags.LOGS_THAT_BURN);
 		copy(BlockTags.PLANKS, ItemTags.PLANKS);

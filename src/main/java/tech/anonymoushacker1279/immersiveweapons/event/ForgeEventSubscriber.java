@@ -1,6 +1,6 @@
 package tech.anonymoushacker1279.immersiveweapons.event;
 
-import net.minecraft.advancements.Advancement;
+import net.minecraft.advancements.AdvancementHolder;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
@@ -21,6 +21,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.entity.projectile.ThrownTrident;
 import net.minecraft.world.item.*;
+import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Block;
@@ -30,27 +31,27 @@ import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
-import net.minecraftforge.client.event.RegisterGuiOverlaysEvent;
-import net.minecraftforge.client.gui.overlay.VanillaGuiOverlay;
-import net.minecraftforge.common.ForgeMod;
-import net.minecraftforge.event.AnvilUpdateEvent;
-import net.minecraftforge.event.ItemAttributeModifierEvent;
-import net.minecraftforge.event.TickEvent.PlayerTickEvent;
-import net.minecraftforge.event.entity.EntityJoinLevelEvent;
-import net.minecraftforge.event.entity.living.*;
-import net.minecraftforge.event.entity.player.CriticalHitEvent;
-import net.minecraftforge.event.entity.player.PlayerEvent;
-import net.minecraftforge.event.level.LevelEvent;
-import net.minecraftforge.event.level.PistonEvent;
-import net.minecraftforge.event.level.PistonEvent.PistonMoveType;
-import net.minecraftforge.eventbus.api.Event.Result;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
-import net.minecraftforge.network.PacketDistributor;
-import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.registries.MissingMappingsEvent;
-import net.minecraftforge.registries.MissingMappingsEvent.Mapping;
+import net.neoforged.bus.api.Event.Result;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.Mod.EventBusSubscriber;
+import net.neoforged.fml.common.Mod.EventBusSubscriber.Bus;
+import net.neoforged.neoforge.client.event.RegisterGuiOverlaysEvent;
+import net.neoforged.neoforge.client.gui.overlay.VanillaGuiOverlay;
+import net.neoforged.neoforge.common.NeoForgeMod;
+import net.neoforged.neoforge.event.AnvilUpdateEvent;
+import net.neoforged.neoforge.event.ItemAttributeModifierEvent;
+import net.neoforged.neoforge.event.TickEvent.PlayerTickEvent;
+import net.neoforged.neoforge.event.entity.EntityJoinLevelEvent;
+import net.neoforged.neoforge.event.entity.living.*;
+import net.neoforged.neoforge.event.entity.player.CriticalHitEvent;
+import net.neoforged.neoforge.event.entity.player.PlayerEvent;
+import net.neoforged.neoforge.event.level.LevelEvent;
+import net.neoforged.neoforge.event.level.PistonEvent;
+import net.neoforged.neoforge.event.level.PistonEvent.PistonMoveType;
+import net.neoforged.neoforge.network.PacketDistributor;
+import net.neoforged.neoforge.registries.ForgeRegistries;
+import net.neoforged.neoforge.registries.MissingMappingsEvent;
+import net.neoforged.neoforge.registries.MissingMappingsEvent.Mapping;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.block.decoration.StarstormCrystalBlock;
 import tech.anonymoushacker1279.immersiveweapons.client.gui.IWOverlays;
@@ -90,7 +91,7 @@ public class ForgeEventSubscriber {
 				IWOverlays.SCOPE_ELEMENT);
 
 		assert IWOverlays.DEBUG_TRACING_ELEMENT != null;
-		event.registerAbove(VanillaGuiOverlay.DEBUG_TEXT.id(),
+		event.registerAbove(VanillaGuiOverlay.DEBUG_SCREEN.id(),
 				ImmersiveWeapons.MOD_ID + ":debug_tracing",
 				IWOverlays.DEBUG_TRACING_ELEMENT);
 	}
@@ -112,7 +113,7 @@ public class ForgeEventSubscriber {
 
 	/**
 	 * Event handler for the MissingMappingsEvent.
-	 * Migrates old block registry names to newer ones.
+	 * Migrates old blockLocation registry names to newer ones.
 	 *
 	 * @param event the <code>MissingMappingsEvent</code> instance
 	 */
@@ -337,8 +338,7 @@ public class ForgeEventSubscriber {
 			if (player instanceof ServerPlayer serverPlayer) {
 				// If over 175 damage was dealt, add an advancement
 				if (event.getAmount() >= 175.0f && serverPlayer.getServer() != null) {
-					Advancement advancement = serverPlayer.getServer().getAdvancements()
-							.getAdvancement(new ResourceLocation(ImmersiveWeapons.MOD_ID, "overkill"));
+					AdvancementHolder advancement = serverPlayer.getServer().getAdvancements().get(new ResourceLocation(ImmersiveWeapons.MOD_ID, "overkill"));
 
 					if (advancement != null) {
 						serverPlayer.getAdvancements().award(advancement, "");
@@ -447,7 +447,7 @@ public class ForgeEventSubscriber {
 				distance += 0.5d * enchantmentLevel;
 			}
 
-			event.addModifier(ForgeMod.ENTITY_REACH.get(),
+			event.addModifier(NeoForgeMod.ENTITY_REACH.get(),
 					new AttributeModifier(ATTACK_REACH_MODIFIER,
 							"Reach distance",
 							distance,
@@ -468,7 +468,7 @@ public class ForgeEventSubscriber {
 							gauntlet.attackSpeed,
 							Operation.ADDITION));
 
-			event.addModifier(ForgeMod.ENTITY_REACH.get(),
+			event.addModifier(NeoForgeMod.ENTITY_REACH.get(),
 					new AttributeModifier(ATTACK_REACH_MODIFIER,
 							"Weapon modifier",
 							-2.0d,
@@ -485,21 +485,21 @@ public class ForgeEventSubscriber {
 			BlockPos belowPos = event.getPos().below();
 			BlockState belowState = event.getLevel().getBlockState(belowPos);
 
-			List<PistonCrushingRecipe> recipes = level.getRecipeManager()
+			List<RecipeHolder<PistonCrushingRecipe>> recipes = level.getRecipeManager()
 					.getAllRecipesFor(RecipeTypeRegistry.PISTON_CRUSHING_RECIPE_TYPE.get());
 
-			// Select a recipe that matches the blockstate of the block below the piston
-			Optional<PistonCrushingRecipe> recipe = recipes.stream()
-					.filter(r -> r.matches(belowState.getBlock()))
+			// Select a recipe that matches the blockstate of the blockLocation below the piston
+			Optional<RecipeHolder<PistonCrushingRecipe>> recipe = recipes.stream()
+					.filter(r -> r.value().matches(belowState.getBlock()))
 					.findFirst();
 
 			// If a recipe was found, drop the output of the recipe
 			if (recipe.isPresent()) {
-				ItemStack drop = recipe.get().getResultItem(level.registryAccess()).copy();
-				drop.setCount(recipe.get().getRandomDropAmount());
+				ItemStack drop = recipe.get().value().getResultItem(level.registryAccess()).copy();
+				drop.setCount(recipe.get().value().getRandomDropAmount());
 				Block.popResource(level, belowPos, drop);
 
-				// Destroy the block, and do not drop loot
+				// Destroy the blockLocation, and do not drop loot
 				level.destroyBlock(belowPos, false);
 			}
 

@@ -22,7 +22,7 @@ import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
 import net.minecraft.world.level.storage.loot.predicates.*;
 import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
 import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
-import net.minecraftforge.registries.RegistryObject;
+import net.neoforged.neoforge.registries.RegistryObject;
 import org.jetbrains.annotations.Nullable;
 import tech.anonymoushacker1279.immersiveweapons.block.*;
 import tech.anonymoushacker1279.immersiveweapons.block.barbed_wire.BarbedWireBlock;
@@ -54,7 +54,7 @@ public class BlockLootTables implements LootTableSubProvider {
 		List<Block> blocks = new ArrayList<>(250);
 		BlockRegistry.BLOCKS.getEntries().stream().map(RegistryObject::get).forEach(blocks::add);
 
-		// Simple block drops
+		// Simple blockLocation drops
 		dropSelf(BlockRegistry.AMERICAN_FLAG.get());
 		dropSelf(BlockRegistry.BARBED_WIRE_FENCE.get());
 		dropSelf(BlockRegistry.BARREL_TAP.get());
@@ -154,7 +154,7 @@ public class BlockLootTables implements LootTableSubProvider {
 		blocks.stream().filter(WoodenTableBlock.class::isInstance).forEach(this::dropSelf);
 		blocks.stream().filter(CustomSkullBlock.class::isInstance).forEach(this::dropSelf);
 
-		// Complex block drops
+		// Complex blockLocation drops
 		add(BlockRegistry.BURNED_OAK_DOOR.get(), BlockLootTables::createDoor);
 		add(BlockRegistry.STARDUST_DOOR.get(), BlockLootTables::createDoor);
 		add(BlockRegistry.STARDUST_LEAVES.get(), (leafLikeDrop) -> createLeafLikeDrop(leafLikeDrop, BlockItemRegistry.STARDUST_SAPLING_ITEM.get(), NORMAL_LEAVES_SAPLING_CHANCES));

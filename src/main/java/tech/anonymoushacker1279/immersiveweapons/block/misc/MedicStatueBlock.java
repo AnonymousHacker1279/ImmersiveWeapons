@@ -25,7 +25,7 @@ public class MedicStatueBlock extends HorizontalDirectionalBlock implements Enti
 	/**
 	 * Constructor for MedicStatueBlock.
 	 *
-	 * @param properties the <code>Properties</code> of the block
+	 * @param properties the <code>Properties</code> of the blockLocation
 	 */
 	public MedicStatueBlock(Properties properties) {
 		super(properties);
@@ -33,10 +33,10 @@ public class MedicStatueBlock extends HorizontalDirectionalBlock implements Enti
 	}
 
 	/**
-	 * Create a block entity for the block.
+	 * Create a blockLocation entity for the blockLocation.
 	 *
-	 * @param blockPos   the <code>BlockPos</code> the block is at
-	 * @param blockState the <code>BlockState</code> of the block
+	 * @param blockPos   the <code>BlockPos</code> the blockLocation is at
+	 * @param blockState the <code>BlockState</code> of the blockLocation
 	 * @return BlockEntity
 	 */
 	@Override
@@ -45,10 +45,10 @@ public class MedicStatueBlock extends HorizontalDirectionalBlock implements Enti
 	}
 
 	/**
-	 * Get the ticker for the block.
+	 * Get the ticker for the blockLocation.
 	 *
-	 * @param level           the <code>Level</code> the block is in
-	 * @param blockState      the <code>BlockState</code> of the block
+	 * @param level           the <code>Level</code> the blockLocation is in
+	 * @param blockState      the <code>BlockState</code> of the blockLocation
 	 * @param blockEntityType the <code>BlockEntityType</code> to get the ticker of
 	 * @param <T>             the type extending BlockEntity
 	 * @return BlockEntityTicker
@@ -61,12 +61,12 @@ public class MedicStatueBlock extends HorizontalDirectionalBlock implements Enti
 	}
 
 	/**
-	 * Set the shape of the block.
+	 * Set the shape of the blockLocation.
 	 *
-	 * @param state            the <code>BlockState</code> of the block
-	 * @param reader           the <code>IBlockReader</code> for the block
-	 * @param pos              the <code>BlockPos</code> the block is at
-	 * @param selectionContext the <code>ISelectionContext</code> of the block
+	 * @param state            the <code>BlockState</code> of the blockLocation
+	 * @param reader           the <code>IBlockReader</code> for the blockLocation
+	 * @param pos              the <code>BlockPos</code> the blockLocation is at
+	 * @param selectionContext the <code>ISelectionContext</code> of the blockLocation
 	 * @return VoxelShape
 	 */
 	@SuppressWarnings("deprecation")
@@ -78,7 +78,7 @@ public class MedicStatueBlock extends HorizontalDirectionalBlock implements Enti
 	/**
 	 * Create the BlockState definition.
 	 *
-	 * @param builder the <code>StateContainer.Builder</code> of the block
+	 * @param builder the <code>StateContainer.Builder</code> of the blockLocation
 	 */
 	@Override
 	public void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
@@ -87,7 +87,7 @@ public class MedicStatueBlock extends HorizontalDirectionalBlock implements Enti
 
 	/**
 	 * Set placement properties.
-	 * Sets the facing direction of the block for placement.
+	 * Sets the facing direction of the blockLocation for placement.
 	 *
 	 * @param context the <code>BlockItemUseContext</code> during placement
 	 * @return BlockState
@@ -99,9 +99,9 @@ public class MedicStatueBlock extends HorizontalDirectionalBlock implements Enti
 
 	/**
 	 * Set FluidState properties.
-	 * Allows the block to exhibit waterlogged behavior.
+	 * Allows the blockLocation to exhibit waterlogged behavior.
 	 *
-	 * @param state the <code>BlockState</code> of the block
+	 * @param state the <code>BlockState</code> of the blockLocation
 	 * @return FluidState
 	 */
 	@SuppressWarnings("deprecation")

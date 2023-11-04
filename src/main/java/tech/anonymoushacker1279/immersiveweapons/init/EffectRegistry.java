@@ -2,7 +2,7 @@ package tech.anonymoushacker1279.immersiveweapons.init;
 
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectCategory;
-import net.minecraftforge.registries.*;
+import net.neoforged.neoforge.registries.*;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.potion.*;
 

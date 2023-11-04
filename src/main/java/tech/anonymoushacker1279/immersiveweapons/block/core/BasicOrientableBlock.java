@@ -11,9 +11,9 @@ public class BasicOrientableBlock extends HorizontalDirectionalBlock {
 
 	/**
 	 * Constructor for BasicOrientableBlock.
-	 * This class creates a block with a DirectionProperty.
+	 * This class creates a blockLocation with a DirectionProperty.
 	 *
-	 * @param properties the <code>Properties</code> of the block
+	 * @param properties the <code>Properties</code> of the blockLocation
 	 */
 	public BasicOrientableBlock(Properties properties) {
 		super(properties);
@@ -23,7 +23,7 @@ public class BasicOrientableBlock extends HorizontalDirectionalBlock {
 	/**
 	 * Create the BlockState definition.
 	 *
-	 * @param builder the <code>StateContainer.Builder</code> of the block
+	 * @param builder the <code>StateContainer.Builder</code> of the blockLocation
 	 */
 	@Override
 	public void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
@@ -32,7 +32,7 @@ public class BasicOrientableBlock extends HorizontalDirectionalBlock {
 
 	/**
 	 * Set placement properties.
-	 * Sets the facing direction of the block for placement.
+	 * Sets the facing direction of the blockLocation for placement.
 	 *
 	 * @param context the <code>BlockItemUseContext</code> during placement
 	 * @return BlockState

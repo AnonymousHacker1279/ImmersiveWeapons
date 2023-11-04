@@ -1,7 +1,7 @@
 package tech.anonymoushacker1279.immersiveweapons.init;
 
 import net.minecraft.world.level.levelgen.feature.treedecorators.TreeDecoratorType;
-import net.minecraftforge.registries.*;
+import net.neoforged.neoforge.registries.*;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.world.level.levelgen.feature.treedecorators.BurnedBranchDecorator;
 

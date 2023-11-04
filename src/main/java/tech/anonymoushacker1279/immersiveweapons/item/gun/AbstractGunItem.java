@@ -15,9 +15,9 @@ import net.minecraft.world.item.*;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.client.extensions.common.IClientItemExtensions;
-import net.minecraftforge.event.ForgeEventFactory;
-import net.minecraftforge.network.PacketDistributor;
+import net.neoforged.neoforge.client.extensions.common.IClientItemExtensions;
+import net.neoforged.neoforge.event.EventHooks;
+import net.neoforged.neoforge.network.PacketDistributor;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.data.tags.groups.immersiveweapons.IWItemTagGroups;
 import tech.anonymoushacker1279.immersiveweapons.entity.projectile.BulletEntity;
@@ -311,7 +311,7 @@ public abstract class AbstractGunItem extends Item implements Vanishable {
 		ItemStack itemInHand = player.getItemInHand(hand);
 		boolean hasAmmo = !findAmmo(itemInHand, player).isEmpty();
 
-		InteractionResultHolder<ItemStack> resultHolder = ForgeEventFactory.onArrowNock(itemInHand, level, player,
+		InteractionResultHolder<ItemStack> resultHolder = EventHooks.onArrowNock(itemInHand, level, player,
 				hand, hasAmmo);
 		if (resultHolder != null) {
 			return resultHolder;

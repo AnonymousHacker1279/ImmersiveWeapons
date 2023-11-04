@@ -12,7 +12,7 @@ import net.minecraft.world.item.*;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.client.extensions.common.IClientItemExtensions;
+import net.neoforged.neoforge.client.extensions.common.IClientItemExtensions;
 
 import java.util.function.Consumer;
 
@@ -50,13 +50,13 @@ public class PikeItem extends TieredItem implements Vanishable {
 	}
 
 	/**
-	 * Runs when a block is mined.
+	 * Runs when a blockLocation is mined.
 	 *
 	 * @param stack        the <code>ItemStack</code> instance
-	 * @param level        the <code>Level</code> the block is in
-	 * @param state        the <code>BlockState</code> of the block
-	 * @param pos          the <code>BlockPos</code> the block is at
-	 * @param livingEntity the <code>LivingEntity</code> destroying the block
+	 * @param level        the <code>Level</code> the blockLocation is in
+	 * @param state        the <code>BlockState</code> of the blockLocation
+	 * @param pos          the <code>BlockPos</code> the blockLocation is at
+	 * @param livingEntity the <code>LivingEntity</code> destroying the blockLocation
 	 * @return boolean
 	 */
 	@Override

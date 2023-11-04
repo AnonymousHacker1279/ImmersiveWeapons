@@ -5,7 +5,7 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
-import net.minecraftforge.registries.RegistryObject;
+import net.neoforged.neoforge.registries.RegistryObject;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.data.lists.BlockLists;
 import tech.anonymoushacker1279.immersiveweapons.data.lists.ItemLists;
@@ -45,7 +45,7 @@ public class LanguageGenerator extends IWLanguageProvider {
 	private void addBlocks() {
 		// Not all blocks are automatically added below; make a list of exceptions here
 		List<Block> excludedBlocks = new ArrayList<>(25);
-		// These are not added because they're variants of another block which already exists
+		// These are not added because they're variants of another blockLocation which already exists
 		excludedBlocks.add(BlockRegistry.BURNED_OAK_WALL_SIGN.get());
 		excludedBlocks.add(BlockRegistry.BURNED_OAK_WALL_HANGING_SIGN.get());
 		excludedBlocks.add(BlockRegistry.STARDUST_WALL_SIGN.get());
@@ -65,9 +65,9 @@ public class LanguageGenerator extends IWLanguageProvider {
 		// Turn underscores into spaces, and capitalize the first letter of each word
 
 		blocks.forEach(block -> {
-			// Get the block name for the block
+			// Get the blockLocation name for the blockLocation
 			String blockName = block.get().toString();
-			// Remove the namespace from the block name
+			// Remove the namespace from the blockLocation name
 			blockName = blockName.substring(blockName.indexOf(":") + 1, blockName.length() - 1);
 
 			// Convert underscores to spaces
@@ -75,7 +75,7 @@ public class LanguageGenerator extends IWLanguageProvider {
 			// Capitalize the first letter of all words
 			blockName = capitalizeWords(blockName);
 
-			// Add the block to the language file
+			// Add the blockLocation to the language file
 			addBlock(block, blockName);
 		});
 
@@ -259,13 +259,13 @@ public class LanguageGenerator extends IWLanguageProvider {
 		addSubtitle("item.generic_item_throw", "Item flies");
 
 		// Misc blocks
-		addSubtitle("block.small_parts_table.used", "Small parts table used");
-		addSubtitle("block.barbed_wire.rattle", "Barbed wire rattles");
-		addSubtitle("block.bear_trap.close", "Bear trap closes");
-		addSubtitle("block.spike_trap.extend", "Spike trap extends");
-		addSubtitle("block.spike_trap.retract", "Spike trap retracts");
-		addSubtitle("block.panic_alarm.alarm", "Alarm sounds");
-		addSubtitle("block.mortar.fire", "Mortar fires");
+		addSubtitle("blockLocation.small_parts_table.used", "Small parts table used");
+		addSubtitle("blockLocation.barbed_wire.rattle", "Barbed wire rattles");
+		addSubtitle("blockLocation.bear_trap.close", "Bear trap closes");
+		addSubtitle("blockLocation.spike_trap.extend", "Spike trap extends");
+		addSubtitle("blockLocation.spike_trap.retract", "Spike trap retracts");
+		addSubtitle("blockLocation.panic_alarm.alarm", "Alarm sounds");
+		addSubtitle("blockLocation.mortar.fire", "Mortar fires");
 
 		// Entity
 		addSubtitle("entity.dying_soldier.ambient", "Soldier speaking");
@@ -555,8 +555,8 @@ public class LanguageGenerator extends IWLanguageProvider {
 		addMessage("item.jonnys_curse.using", "Are you sure you wanna become a furry?");
 		addMessage("item.jonnys_curse.canceled", "You remain normal for now...");
 		addMessage("item.jonnys_curse.used", "Its so over...");
-		addMessage("block.wall_shelf.locked", "This shelf has been locked");
-		addMessage("block.wall_shelf.unlocked", "This shelf has been unlocked");
+		addMessage("blockLocation.wall_shelf.locked", "This shelf has been locked");
+		addMessage("blockLocation.wall_shelf.unlocked", "This shelf has been unlocked");
 		addMessage("armor_effects.disabled", "Armor effects have been disabled");
 		addMessage("armor_effects.enabled", "Armor effects have been enabled");
 		addMessage("armor_effects.tesla_armor.effect_everything", "Currently effecting ALL creatures (including players)");
@@ -861,9 +861,9 @@ public class LanguageGenerator extends IWLanguageProvider {
 		addAdvancement("traps.title", "Advanced Warfare");
 		addAdvancement("traps.description", "Obtain any trap");
 		addAdvancement("mud.title", "Mud!");
-		addAdvancement("mud.description", "Obtain a mud block");
+		addAdvancement("mud.description", "Obtain a mud blockLocation");
 		addAdvancement("cloud_marble.title", "Looks Better than Diorite");
-		addAdvancement("cloud_marble.description", "Obtain a block of cloud marble");
+		addAdvancement("cloud_marble.description", "Obtain a blockLocation of cloud marble");
 		addAdvancement("biohazard_box.title", "Hazardous?");
 		addAdvancement("biohazard_box.description", "Obtain a (harmless) biohazard box from a medic station");
 		addAdvancement("cloud.title", "High in the Sky");

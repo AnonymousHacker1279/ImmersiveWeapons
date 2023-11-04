@@ -27,7 +27,7 @@ public class PostSetupHandler {
 		CustomArmorMaterials.ASTRAL.setEquipSound(SoundEventRegistry.ASTRAL_ARMOR_EQUIP.get());
 		CustomArmorMaterials.STARSTORM.setEquipSound(SoundEventRegistry.STARSTORM_ARMOR_EQUIP.get());
 
-		// Add custom plants to the flower pot block
+		// Add custom plants to the flower pot blockLocation
 		FlowerPotBlock emptyPot = ((FlowerPotBlock) Blocks.FLOWER_POT);
 		emptyPot.addPlant(BlockRegistry.MOONGLOW.getId(), BlockRegistry.POTTED_MOONGLOW);
 		emptyPot.addPlant(BlockRegistry.DEATHWEED.getId(), BlockRegistry.POTTED_DEATHWEED);

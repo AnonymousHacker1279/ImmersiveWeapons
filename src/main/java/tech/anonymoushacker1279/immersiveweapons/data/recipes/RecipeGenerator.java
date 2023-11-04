@@ -1,10 +1,10 @@
 package tech.anonymoushacker1279.immersiveweapons.data.recipes;
 
 import com.google.common.collect.ImmutableList;
-import net.minecraft.advancements.CriterionTriggerInstance;
-import net.minecraft.advancements.critereon.*;
-import net.minecraft.advancements.critereon.ItemPredicate.Builder;
-import net.minecraft.advancements.critereon.MinMaxBounds.Ints;
+import net.minecraft.advancements.Criterion;
+import net.minecraft.advancements.critereon.InventoryChangeTrigger;
+import net.minecraft.advancements.critereon.ItemPredicate;
+import net.minecraft.core.HolderLookup.Provider;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.*;
 import net.minecraft.tags.ItemTags;
@@ -16,40 +16,39 @@ import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
-import net.minecraftforge.common.Tags;
-import net.minecraftforge.common.crafting.StrictNBTIngredient;
-import net.minecraftforge.registries.ForgeRegistries;
+import net.neoforged.neoforge.common.Tags;
+import net.neoforged.neoforge.common.crafting.StrictNBTIngredient;
+import net.neoforged.neoforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.Nullable;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
-import tech.anonymoushacker1279.immersiveweapons.data.recipes.families.FamilyGenerator;
 import tech.anonymoushacker1279.immersiveweapons.data.tags.groups.forge.ForgeItemTagGroups;
 import tech.anonymoushacker1279.immersiveweapons.data.tags.groups.immersiveweapons.IWItemTagGroups;
 import tech.anonymoushacker1279.immersiveweapons.init.*;
 import tech.anonymoushacker1279.immersiveweapons.item.crafting.AmmunitionTableRecipe.MaterialGroup;
 
 import java.util.*;
-import java.util.function.Consumer;
+import java.util.concurrent.CompletableFuture;
 
 import static tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities.blockRegistryPath;
 import static tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities.itemRegistryPath;
 
 public class RecipeGenerator extends RecipeProvider {
 
-	static Consumer<FinishedRecipe> finishedRecipeConsumer;
+	static RecipeOutput output;
 	final PackOutput packOutput;
 
 	private static final ImmutableList<ItemLike> COBALT_SMELTABLES = ImmutableList.of(
 			BlockItemRegistry.COBALT_ORE_ITEM.get(), BlockItemRegistry.DEEPSLATE_COBALT_ORE_ITEM.get(),
 			ItemRegistry.RAW_COBALT.get());
 
-	public RecipeGenerator(PackOutput output) {
-		super(output);
+	public RecipeGenerator(PackOutput output, CompletableFuture<Provider> lookupProvider) {
+		super(output, lookupProvider);
 		packOutput = output;
 	}
 
 	@Override
-	protected void buildRecipes(Consumer<FinishedRecipe> recipeConsumer) {
-		finishedRecipeConsumer = recipeConsumer;
+	protected void buildRecipes(RecipeOutput output) {
+		RecipeGenerator.output = output;
 
 		createFlagItems();
 		createGlassItems();
@@ -77,9 +76,6 @@ public class RecipeGenerator extends RecipeProvider {
 		createAccessories();
 		createMiscellaneousItems();
 		createMinecraftItems();
-
-		FamilyGenerator familyGenerator = new FamilyGenerator(packOutput);
-		familyGenerator.buildRecipes(recipeConsumer);
 	}
 
 	private void createFlagItems() {
@@ -95,7 +91,7 @@ public class RecipeGenerator extends RecipeProvider {
 				.pattern("a  ")
 				.group("flag")
 				.unlockedBy("flag_pole", has(FLAG_POLE))
-				.save(finishedRecipeConsumer);
+				.save(output);
 
 		ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, BlockItemRegistry.BRITISH_FLAG_ITEM.get())
 				.define('a', FLAG_POLE)
@@ -107,7 +103,7 @@ public class RecipeGenerator extends RecipeProvider {
 				.pattern("a  ")
 				.group("flag")
 				.unlockedBy("flag_pole", has(FLAG_POLE))
-				.save(finishedRecipeConsumer);
+				.save(output);
 
 		ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, BlockItemRegistry.CANADIAN_FLAG_ITEM.get())
 				.define('a', FLAG_POLE)
@@ -118,7 +114,7 @@ public class RecipeGenerator extends RecipeProvider {
 				.pattern("a  ")
 				.group("flag")
 				.unlockedBy("flag_pole", has(FLAG_POLE))
-				.save(finishedRecipeConsumer);
+				.save(output);
 
 		ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, BlockItemRegistry.GADSDEN_FLAG_ITEM.get())
 				.define('a', FLAG_POLE)
@@ -130,7 +126,7 @@ public class RecipeGenerator extends RecipeProvider {
 				.pattern("a  ")
 				.group("flag")
 				.unlockedBy("flag_pole", has(FLAG_POLE))
-				.save(finishedRecipeConsumer);
+				.save(output);
 
 		ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, BlockItemRegistry.MEXICAN_FLAG_ITEM.get())
 				.define('a', FLAG_POLE)
@@ -143,7 +139,7 @@ public class RecipeGenerator extends RecipeProvider {
 				.pattern("a  ")
 				.group("flag")
 				.unlockedBy("flag_pole", has(FLAG_POLE))
-				.save(finishedRecipeConsumer);
+				.save(output);
 
 
 		ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, BlockItemRegistry.TROLL_FLAG_ITEM.get())
@@ -155,7 +151,7 @@ public class RecipeGenerator extends RecipeProvider {
 				.pattern("a  ")
 				.group("flag")
 				.unlockedBy("flag_pole", has(FLAG_POLE))
-				.save(finishedRecipeConsumer);
+				.save(output);
 
 
 		ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, BlockItemRegistry.IMMERSIVE_WEAPONS_FLAG_ITEM.get())
@@ -168,7 +164,7 @@ public class RecipeGenerator extends RecipeProvider {
 				.pattern("a  ")
 				.group("flag")
 				.unlockedBy("flag_pole", has(FLAG_POLE))
-				.save(finishedRecipeConsumer);
+				.save(output);
 
 
 		ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, FLAG_POLE, 3)
@@ -178,7 +174,7 @@ public class RecipeGenerator extends RecipeProvider {
 				.pattern(" a ")
 				.group("flag")
 				.unlockedBy("iron", has(Tags.Items.INGOTS_IRON))
-				.save(finishedRecipeConsumer);
+				.save(output);
 	}
 
 	private void createGlassItems() {
@@ -223,7 +219,7 @@ public class RecipeGenerator extends RecipeProvider {
 				.pattern("aaa")
 				.group("bulletproof_glass")
 				.unlockedBy("glass", has(Items.GLASS))
-				.save(finishedRecipeConsumer);
+				.save(output);
 	}
 
 	private void createMudItems() {
@@ -258,20 +254,20 @@ public class RecipeGenerator extends RecipeProvider {
 				.pattern("aaa")
 				.group("mud")
 				.unlockedBy("hardened_mud", has(HARDENED_MUD))
-				.save(finishedRecipeConsumer);
+				.save(output);
 		// Mud
 		ShapelessRecipeBuilder.shapeless(RecipeCategory.BUILDING_BLOCKS, MUD, 8)
 				.requires(Items.WATER_BUCKET)
 				.requires(Items.DIRT, 8)
 				.group("mud")
 				.unlockedBy("water_bucket", has(Items.WATER_BUCKET))
-				.save(finishedRecipeConsumer);
+				.save(output);
 		// Mud ball
 		ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, ItemRegistry.MUD_BALL.get(), 4)
 				.requires(BlockRegistry.MUD.get())
 				.group("mud")
 				.unlockedBy("water_bucket", has(Items.WATER_BUCKET))
-				.save(finishedRecipeConsumer);
+				.save(output);
 	}
 
 	private void createCobaltItems() {
@@ -291,7 +287,7 @@ public class RecipeGenerator extends RecipeProvider {
 				.requires(BlockItemRegistry.RAW_COBALT_BLOCK_ITEM.get())
 				.group("cobalt")
 				.unlockedBy("raw_cobalt_block", has(BlockItemRegistry.RAW_COBALT_BLOCK_ITEM.get()))
-				.save(finishedRecipeConsumer);
+				.save(output);
 
 		shapedBuilder = ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, BlockItemRegistry.RAW_COBALT_BLOCK_ITEM.get())
 				.group("cobalt")
@@ -310,7 +306,7 @@ public class RecipeGenerator extends RecipeProvider {
 	private void createMoltenItems() {
 		createMoltenIngot(ItemRegistry.MOLTEN_INGOT.get(), BlockItemRegistry.MOLTEN_BLOCK_ITEM.get());
 
-		// Molten block
+		// Molten blockLocation
 		ShapedRecipeBuilder builder = ShapedRecipeBuilder.shaped(RecipeCategory.MISC, BlockItemRegistry.MOLTEN_BLOCK_ITEM.get())
 				.group("molten")
 				.unlockedBy("molten_ingot", has(IWItemTagGroups.MOLTEN_INGOTS));
@@ -325,7 +321,7 @@ public class RecipeGenerator extends RecipeProvider {
 				.pattern(" a ")
 				.group("molten")
 				.unlockedBy("molten_ingot", has(IWItemTagGroups.MOLTEN_INGOTS))
-				.save(finishedRecipeConsumer);
+				.save(output);
 	}
 
 	private void createVentusItems() {
@@ -340,7 +336,7 @@ public class RecipeGenerator extends RecipeProvider {
 				.pattern("aaa")
 				.group("ventus")
 				.unlockedBy("ventus_shard", has(IWItemTagGroups.VENTUS_SHARDS))
-				.save(finishedRecipeConsumer);
+				.save(output);
 
 		// Ventus staff
 		ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ItemRegistry.VENTUS_STAFF.get())
@@ -351,7 +347,7 @@ public class RecipeGenerator extends RecipeProvider {
 				.pattern(" b ")
 				.group("ventus")
 				.unlockedBy("ventus_staff_core", has(VENTUS_STAFF_CORE))
-				.save(finishedRecipeConsumer);
+				.save(output);
 	}
 
 	private void createTeslaItems() {
@@ -378,9 +374,9 @@ public class RecipeGenerator extends RecipeProvider {
 				.pattern("aba")
 				.group("tesla")
 				.unlockedBy("tesla_ingot", has(IWItemTagGroups.TESLA_INGOTS))
-				.save(finishedRecipeConsumer);
+				.save(output);
 
-		// Tesla block
+		// Tesla blockLocation
 		ShapedRecipeBuilder builder = ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, BlockItemRegistry.TESLA_BLOCK_ITEM.get())
 				.group("tesla")
 				.unlockedBy("tesla_ingot", has(IWItemTagGroups.TESLA_INGOTS));
@@ -388,7 +384,7 @@ public class RecipeGenerator extends RecipeProvider {
 	}
 
 	private void createAstralItems() {
-		// Ingot from block
+		// Ingot from blockLocation
 		ShapelessRecipeBuilder shapelessRecipeBuilder = ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, ItemRegistry.ASTRAL_INGOT.get(), 9)
 				.group("astral")
 				.unlockedBy("astral_block", has(BlockItemRegistry.ASTRAL_BLOCK_ITEM.get()));
@@ -401,7 +397,7 @@ public class RecipeGenerator extends RecipeProvider {
 				.pattern("aaa")
 				.group("astral")
 				.unlockedBy("astral_ingot", has(IWItemTagGroups.ASTRAL_INGOTS))
-				.save(finishedRecipeConsumer, ImmersiveWeapons.MOD_ID + ":" + ItemRegistry.ASTRAL_INGOT.get() + "_from_nuggets");
+				.save(output, ImmersiveWeapons.MOD_ID + ":" + ItemRegistry.ASTRAL_INGOT.get() + "_from_nuggets");
 
 		// Nugget from ingot
 		ShapelessRecipeBuilder shapelessRecipeBuilder1 = ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, ItemRegistry.ASTRAL_NUGGET.get(), 9)
@@ -409,7 +405,7 @@ public class RecipeGenerator extends RecipeProvider {
 				.unlockedBy("astral_nugget", has(IWItemTagGroups.ASTRAL_INGOTS));
 		createNuggetFromIngot(shapelessRecipeBuilder1, IWItemTagGroups.ASTRAL_INGOTS);
 
-		// Astral block
+		// Astral blockLocation
 		ShapedRecipeBuilder shapedRecipeBuilder = ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, BlockItemRegistry.ASTRAL_BLOCK_ITEM.get())
 				.group("astral")
 				.unlockedBy("astral_ingot", has(IWItemTagGroups.ASTRAL_INGOTS));
@@ -417,7 +413,7 @@ public class RecipeGenerator extends RecipeProvider {
 	}
 
 	private void createStarstormItems() {
-		// Ingot from block
+		// Ingot from blockLocation
 		ShapelessRecipeBuilder shapelessRecipeBuilder = ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, ItemRegistry.STARSTORM_INGOT.get(), 9)
 				.group("starstorm")
 				.unlockedBy("starstorm_block", has(BlockItemRegistry.STARSTORM_BLOCK_ITEM.get()));
@@ -432,12 +428,12 @@ public class RecipeGenerator extends RecipeProvider {
 				.pattern("aaa")
 				.group("molten")
 				.unlockedBy("starstorm_shard", has(IWItemTagGroups.STARSTORM_SHARDS))
-				.save(finishedRecipeConsumer);
+				.save(output);
 
 		// Shards from crushing crystals
 		pistonCrushing(BlockRegistry.STARSTORM_CRYSTAL.get(), ItemRegistry.STARSTORM_SHARD.get(), 2, 4);
 
-		// Starstorm block
+		// Starstorm blockLocation
 		ShapedRecipeBuilder shapedRecipeBuilder = ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, BlockItemRegistry.STARSTORM_BLOCK_ITEM.get())
 				.group("starstorm")
 				.unlockedBy("starstorm_ingot", has(IWItemTagGroups.STARSTORM_INGOTS));
@@ -454,7 +450,7 @@ public class RecipeGenerator extends RecipeProvider {
 				.pattern("aaa")
 				.group("netherite")
 				.unlockedBy("netherite_ingot", has(Tags.Items.INGOTS_NETHERITE))
-				.save(finishedRecipeConsumer);
+				.save(output);
 
 		// Netherite musket ball
 		ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, ItemRegistry.NETHERITE_MUSKET_BALL.get(), 8)
@@ -465,7 +461,7 @@ public class RecipeGenerator extends RecipeProvider {
 				.pattern("aaa")
 				.group("netherite")
 				.unlockedBy("netherite_ingot", has(Tags.Items.INGOTS_NETHERITE))
-				.save(finishedRecipeConsumer);
+				.save(output);
 
 		netheriteSmithing(ItemRegistry.DIAMOND_GAUNTLET.get(), ItemRegistry.NETHERITE_GAUNTLET.get());
 		netheriteSmithing(ItemRegistry.DIAMOND_PIKE.get(), ItemRegistry.NETHERITE_PIKE.get());
@@ -505,14 +501,14 @@ public class RecipeGenerator extends RecipeProvider {
 				.pattern("aca")
 				.pattern("aba")
 				.unlockedBy("copper_ingot", has(Tags.Items.INGOTS_COPPER))
-				.save(finishedRecipeConsumer);
+				.save(output);
 
 		ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ItemRegistry.EXTENDED_IRON_BARREL.get())
 				.define('a', ItemRegistry.IRON_BARREL.get())
 				.pattern("aa")
 				.group("small_parts")
 				.unlockedBy("iron_barrel", has(ItemRegistry.IRON_BARREL.get()))
-				.save(finishedRecipeConsumer);
+				.save(output);
 		ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ItemRegistry.SCOPE.get())
 				.define('a', Items.SPYGLASS)
 				.define('b', ItemRegistry.SCOPE_MOUNT.get())
@@ -520,7 +516,7 @@ public class RecipeGenerator extends RecipeProvider {
 				.pattern("b")
 				.group("small_parts")
 				.unlockedBy("spyglass", has(Items.SPYGLASS))
-				.save(finishedRecipeConsumer);
+				.save(output);
 	}
 
 	private void createBarrelTapItems() {
@@ -542,7 +538,7 @@ public class RecipeGenerator extends RecipeProvider {
 				.pattern(" a ")
 				.group("smoke_grenade")
 				.unlockedBy("smoke_powder", has(ItemRegistry.SMOKE_POWDER.get()))
-				.save(finishedRecipeConsumer);
+				.save(output);
 
 		createColoredSmokeGrenade(ItemRegistry.SMOKE_GRENADE_BLUE.get(), Tags.Items.DYES_BLUE);
 		createColoredSmokeGrenade(ItemRegistry.SMOKE_GRENADE_GREEN.get(), Tags.Items.DYES_GREEN);
@@ -557,7 +553,7 @@ public class RecipeGenerator extends RecipeProvider {
 				.pattern("aa ")
 				.group("smoke_grenade")
 				.unlockedBy("smoke_powder", has(ItemRegistry.SMOKE_POWDER.get()))
-				.save(finishedRecipeConsumer);
+				.save(output);
 
 		createColoredSmokeGrenadeArrow(ItemRegistry.SMOKE_GRENADE_ARROW_BLUE.get(), Tags.Items.DYES_BLUE);
 		createColoredSmokeGrenadeArrow(ItemRegistry.SMOKE_GRENADE_ARROW_GREEN.get(), Tags.Items.DYES_GREEN);
@@ -573,7 +569,7 @@ public class RecipeGenerator extends RecipeProvider {
 				.requires(ItemTags.LEAVES)
 				.group("smoke_grenade")
 				.unlockedBy("mortar_and_pestle", has(ItemRegistry.MORTAR_AND_PESTLE.get()))
-				.save(finishedRecipeConsumer);
+				.save(output);
 	}
 
 	private void createPanelItems() {
@@ -582,7 +578,7 @@ public class RecipeGenerator extends RecipeProvider {
 				.pattern("aaa")
 				.group("iron_panel")
 				.unlockedBy("iron_block", has(Tags.Items.STORAGE_BLOCKS_IRON))
-				.save(finishedRecipeConsumer);
+				.save(output);
 
 		ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, BlockItemRegistry.IRON_PANEL_BARS_ITEM.get(), 8)
 				.define('a', Tags.Items.STORAGE_BLOCKS_IRON)
@@ -590,7 +586,7 @@ public class RecipeGenerator extends RecipeProvider {
 				.pattern("aba")
 				.group("iron_panel")
 				.unlockedBy("iron_block", has(Tags.Items.STORAGE_BLOCKS_IRON))
-				.save(finishedRecipeConsumer);
+				.save(output);
 	}
 
 	private void createShardItems() {
@@ -621,7 +617,7 @@ public class RecipeGenerator extends RecipeProvider {
 				.pattern("aca")
 				.group("warrior_statue")
 				.unlockedBy("ender_eye", has(Items.ENDER_EYE))
-				.save(finishedRecipeConsumer);
+				.save(output);
 		// Create warrior statute torso
 		ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, BlockItemRegistry.WARRIOR_STATUE_TORSO_ITEM.get())
 				.define('a', Items.STONE)
@@ -632,7 +628,7 @@ public class RecipeGenerator extends RecipeProvider {
 				.pattern("aca")
 				.group("warrior_statue")
 				.unlockedBy("ender_eye", has(Items.ENDER_EYE))
-				.save(finishedRecipeConsumer);
+				.save(output);
 		// Create warrior statute base
 		ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, BlockItemRegistry.WARRIOR_STATUE_BASE_ITEM.get())
 				.define('a', Items.STONE)
@@ -642,7 +638,7 @@ public class RecipeGenerator extends RecipeProvider {
 				.pattern("a a")
 				.group("warrior_statue")
 				.unlockedBy("ender_eye", has(Items.ENDER_EYE))
-				.save(finishedRecipeConsumer);
+				.save(output);
 	}
 
 	private void createUtilityItems() {
@@ -655,7 +651,7 @@ public class RecipeGenerator extends RecipeProvider {
 				.pattern("bab")
 				.group("barbed_wire")
 				.unlockedBy("iron_ingot", has(Tags.Items.INGOTS_IRON))
-				.save(finishedRecipeConsumer);
+				.save(output);
 		// Barbed wire fence
 		ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, BlockItemRegistry.BARBED_WIRE_FENCE_ITEM.get(), 6)
 				.define('a', Tags.Items.INGOTS_IRON)
@@ -664,7 +660,7 @@ public class RecipeGenerator extends RecipeProvider {
 				.pattern("aba")
 				.group("barbed_wire")
 				.unlockedBy("iron_ingot", has(Tags.Items.INGOTS_IRON))
-				.save(finishedRecipeConsumer);
+				.save(output);
 		// Bear trap
 		ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, BlockItemRegistry.BEAR_TRAP_ITEM.get())
 				.define('a', Tags.Items.INGOTS_IRON)
@@ -674,7 +670,7 @@ public class RecipeGenerator extends RecipeProvider {
 				.pattern(" c ")
 				.group("traps")
 				.unlockedBy("redstone", has(Tags.Items.DUSTS_REDSTONE))
-				.save(finishedRecipeConsumer);
+				.save(output);
 		// Landmine
 		ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, BlockItemRegistry.LANDMINE_ITEM.get())
 				.define('a', ForgeItemTagGroups.METAL_INGOTS)
@@ -684,7 +680,7 @@ public class RecipeGenerator extends RecipeProvider {
 				.pattern("aca")
 				.group("traps")
 				.unlockedBy("gunpowder", has(Items.TNT))
-				.save(finishedRecipeConsumer);
+				.save(output);
 		// Mortar and shell
 		ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, BlockItemRegistry.MORTAR_ITEM.get())
 				.define('a', ForgeItemTagGroups.METAL_INGOTS)
@@ -693,7 +689,7 @@ public class RecipeGenerator extends RecipeProvider {
 				.pattern("aba")
 				.group("artillery")
 				.unlockedBy("metal_ingots", has(ForgeItemTagGroups.METAL_INGOTS))
-				.save(finishedRecipeConsumer);
+				.save(output);
 		ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, ItemRegistry.MORTAR_SHELL.get())
 				.define('a', Items.TNT)
 				.define('b', Tags.Items.STONE)
@@ -702,7 +698,7 @@ public class RecipeGenerator extends RecipeProvider {
 				.pattern(" b ")
 				.group("artillery")
 				.unlockedBy("tnt", has(Items.TNT))
-				.save(finishedRecipeConsumer);
+				.save(output);
 		// Panic alarm
 		ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, BlockItemRegistry.PANIC_ALARM_ITEM.get())
 				.define('a', ForgeItemTagGroups.METAL_INGOTS)
@@ -710,7 +706,7 @@ public class RecipeGenerator extends RecipeProvider {
 				.pattern("aba")
 				.group("alarms")
 				.unlockedBy("note_block", has(Items.NOTE_BLOCK))
-				.save(finishedRecipeConsumer);
+				.save(output);
 		// Sandbag
 		ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, BlockItemRegistry.SANDBAG_ITEM.get(), 6)
 				.define('a', Tags.Items.SAND)
@@ -720,7 +716,7 @@ public class RecipeGenerator extends RecipeProvider {
 				.pattern("bbb")
 				.group("sandbags")
 				.unlockedBy("cloth_scrap", has(ItemRegistry.CLOTH_SCRAP.get()))
-				.save(finishedRecipeConsumer);
+				.save(output);
 		// Spike trap
 		ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, BlockItemRegistry.SPIKE_TRAP_ITEM.get())
 				.define('a', Tags.Items.DUSTS_REDSTONE)
@@ -731,7 +727,7 @@ public class RecipeGenerator extends RecipeProvider {
 				.pattern(" a ")
 				.group("traps")
 				.unlockedBy("redstone", has(Tags.Items.DUSTS_REDSTONE))
-				.save(finishedRecipeConsumer);
+				.save(output);
 		// Pitfall
 		ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, BlockItemRegistry.PITFALL_ITEM.get())
 				.define('a', Items.STICK)
@@ -741,7 +737,7 @@ public class RecipeGenerator extends RecipeProvider {
 				.pattern("aaa")
 				.group("traps")
 				.unlockedBy("grass", has(Items.GRASS))
-				.save(finishedRecipeConsumer);
+				.save(output);
 		// Punji sticks
 		ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, BlockItemRegistry.PUNJI_STICKS_ITEM.get(), 3)
 				.define('a', Items.DIRT)
@@ -753,7 +749,7 @@ public class RecipeGenerator extends RecipeProvider {
 				.pattern("aaa")
 				.group("traps")
 				.unlockedBy("bamboo", has(Items.BAMBOO))
-				.save(finishedRecipeConsumer);
+				.save(output);
 		// Spotlight
 		ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, BlockItemRegistry.SPOTLIGHT_ITEM.get())
 				.define('a', Items.REDSTONE_LAMP)
@@ -763,7 +759,7 @@ public class RecipeGenerator extends RecipeProvider {
 				.pattern("c c")
 				.group("lights")
 				.unlockedBy("redstone_lamp", has(Items.REDSTONE_LAMP))
-				.save(finishedRecipeConsumer);
+				.save(output);
 		// Wooden spikes
 		ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, BlockItemRegistry.WOODEN_SPIKES_ITEM.get())
 				.define('a', ItemTags.PLANKS)
@@ -773,7 +769,7 @@ public class RecipeGenerator extends RecipeProvider {
 				.pattern("b b")
 				.group("traps")
 				.unlockedBy("planks", has(ItemTags.PLANKS))
-				.save(finishedRecipeConsumer);
+				.save(output);
 		// Barrel tap
 		ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, BlockItemRegistry.BARREL_TAP_ITEM.get())
 				.define('a', Tags.Items.INGOTS_IRON)
@@ -783,7 +779,7 @@ public class RecipeGenerator extends RecipeProvider {
 				.pattern("  a")
 				.group("barrel_tap")
 				.unlockedBy("iron_ingot", has(Tags.Items.INGOTS_IRON))
-				.save(finishedRecipeConsumer);
+				.save(output);
 	}
 
 	private void createFirstAidItems() {
@@ -794,14 +790,14 @@ public class RecipeGenerator extends RecipeProvider {
 				.pattern("aba")
 				.group("first_aid")
 				.unlockedBy("wool", has(ItemTags.WOOL))
-				.save(finishedRecipeConsumer);
+				.save(output);
 		// First aid kit
 		ShapelessRecipeBuilder.shapeless(RecipeCategory.BREWING, ItemRegistry.FIRST_AID_KIT.get())
 				.requires(ItemRegistry.BANDAGE.get(), 2)
 				.requires(ItemRegistry.PAINKILLERS.get())
 				.group("first_aid")
 				.unlockedBy("painkillers", has(ItemRegistry.PAINKILLERS.get()))
-				.save(finishedRecipeConsumer);
+				.save(output);
 		// Morphine
 		ShapelessRecipeBuilder.shapeless(RecipeCategory.BREWING, ItemRegistry.MORPHINE.get())
 				.requires(ItemRegistry.SYRINGE.get())
@@ -809,7 +805,7 @@ public class RecipeGenerator extends RecipeProvider {
 				.requires(Items.SUGAR, 3)
 				.group("first_aid")
 				.unlockedBy("syringe", has(ItemRegistry.SYRINGE.get()))
-				.save(finishedRecipeConsumer);
+				.save(output);
 		// Painkillers
 		ShapelessRecipeBuilder.shapeless(RecipeCategory.BREWING, ItemRegistry.PAINKILLERS.get())
 				.requires(Items.SUGAR)
@@ -817,7 +813,7 @@ public class RecipeGenerator extends RecipeProvider {
 				.requires(Items.BEETROOT)
 				.group("first_aid")
 				.unlockedBy("glistering_melon_slice", has(Items.GLISTERING_MELON_SLICE))
-				.save(finishedRecipeConsumer);
+				.save(output);
 		// Syringe
 		ShapedRecipeBuilder.shaped(RecipeCategory.BREWING, ItemRegistry.SYRINGE.get(), 2)
 				.define('a', Tags.Items.INGOTS_IRON)
@@ -827,7 +823,7 @@ public class RecipeGenerator extends RecipeProvider {
 				.pattern(" b ")
 				.group("first_aid")
 				.unlockedBy("iron_nugget", has(Tags.Items.NUGGETS_IRON))
-				.save(finishedRecipeConsumer);
+				.save(output);
 	}
 
 	private void createFoodItems() {
@@ -837,14 +833,14 @@ public class RecipeGenerator extends RecipeProvider {
 				.requires(Items.MILK_BUCKET)
 				.group("food")
 				.unlockedBy("cocoa_beans", has(Items.COCOA_BEANS))
-				.save(finishedRecipeConsumer);
+				.save(output);
 		// Explosive chocolate bar
 		ShapelessRecipeBuilder.shapeless(RecipeCategory.FOOD, ItemRegistry.EXPLOSIVE_CHOCOLATE_BAR.get(), 8)
 				.requires(ItemRegistry.CHOCOLATE_BAR.get(), 8)
 				.requires(Items.TNT)
 				.group("food")
 				.unlockedBy("chocolate_bar", has(ItemRegistry.CHOCOLATE_BAR.get()))
-				.save(finishedRecipeConsumer);
+				.save(output);
 		// MRE
 		ShapelessRecipeBuilder.shapeless(RecipeCategory.FOOD, ItemRegistry.MRE.get())
 				.requires(Items.CARROT)
@@ -853,11 +849,8 @@ public class RecipeGenerator extends RecipeProvider {
 				.requires(Items.COOKED_CHICKEN)
 				.group("food")
 				.unlockedBy("mre_items",
-						new InventoryChangeTrigger.TriggerInstance(ContextAwarePredicate.ANY, Ints.ANY,
-								Ints.ANY, Ints.ANY,
-								new ItemPredicate[]{Builder.item().of(Items.CARROT).of(Items.POTATO)
-										.of(Items.BEETROOT).of(Items.COOKED_CHICKEN).build()}))
-				.save(finishedRecipeConsumer);
+						InventoryChangeTrigger.TriggerInstance.hasItems(Items.CARROT, Items.POTATO, Items.BEETROOT, Items.COOKED_CHICKEN))
+				.save(output);
 	}
 
 	private void createWeapons() {
@@ -870,7 +863,7 @@ public class RecipeGenerator extends RecipeProvider {
 				.pattern(" c ")
 				.group("firearm")
 				.unlockedBy("flintlock_assembly", has(ItemRegistry.FLINTLOCK_ASSEMBLY.get()))
-				.save(finishedRecipeConsumer);
+				.save(output);
 		ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, ItemRegistry.BLUNDERBUSS.get())
 				.define('a', ItemRegistry.HEAVY_WOODEN_STOCK.get())
 				.define('b', ItemRegistry.FLINTLOCK_ASSEMBLY.get())
@@ -880,7 +873,7 @@ public class RecipeGenerator extends RecipeProvider {
 				.pattern(" c ")
 				.group("firearm")
 				.unlockedBy("flintlock_assembly", has(ItemRegistry.FLINTLOCK_ASSEMBLY.get()))
-				.save(finishedRecipeConsumer);
+				.save(output);
 		ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, ItemRegistry.MUSKET.get())
 				.define('a', ItemRegistry.HEAVY_WOODEN_STOCK.get())
 				.define('b', ItemRegistry.FLINTLOCK_ASSEMBLY.get())
@@ -890,7 +883,7 @@ public class RecipeGenerator extends RecipeProvider {
 				.pattern(" c ")
 				.group("firearm")
 				.unlockedBy("flintlock_assembly", has(ItemRegistry.FLINTLOCK_ASSEMBLY.get()))
-				.save(finishedRecipeConsumer);
+				.save(output);
 		ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, ItemRegistry.MUSKET_SCOPE.get())
 				.define('a', ItemRegistry.HEAVY_WOODEN_STOCK.get())
 				.define('b', ItemRegistry.FLINTLOCK_ASSEMBLY.get())
@@ -902,7 +895,7 @@ public class RecipeGenerator extends RecipeProvider {
 				.pattern(" c ")
 				.group("firearm")
 				.unlockedBy("flintlock_assembly", has(ItemRegistry.FLINTLOCK_ASSEMBLY.get()))
-				.save(finishedRecipeConsumer);
+				.save(output);
 		ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, ItemRegistry.MUSKET_SCOPE.get())
 				.define('a', ItemRegistry.SCOPE.get())
 				.define('b', ItemRegistry.MUSKET.get())
@@ -910,7 +903,7 @@ public class RecipeGenerator extends RecipeProvider {
 				.pattern("b")
 				.group("firearm")
 				.unlockedBy("musket", has(ItemRegistry.MUSKET.get()))
-				.save(finishedRecipeConsumer, ImmersiveWeapons.MOD_ID + ":" + getItemName(ItemRegistry.MUSKET_SCOPE.get()) + "_alt");
+				.save(output, ImmersiveWeapons.MOD_ID + ":" + getItemName(ItemRegistry.MUSKET_SCOPE.get()) + "_alt");
 		ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, ItemRegistry.FLARE_GUN.get())
 				.define('a', ItemRegistry.WOODEN_PISTOL_HANDLE.get())
 				.define('b', ItemRegistry.FLINTLOCK_ASSEMBLY.get())
@@ -920,7 +913,7 @@ public class RecipeGenerator extends RecipeProvider {
 				.pattern(" c ")
 				.group("firearm")
 				.unlockedBy("flintlock_assembly", has(ItemRegistry.FLINTLOCK_ASSEMBLY.get()))
-				.save(finishedRecipeConsumer);
+				.save(output);
 		ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, ItemRegistry.FLARE.get(), 3)
 				.define('a', ForgeItemTagGroups.COPPER_NUGGETS)
 				.define('b', Items.PAPER)
@@ -930,7 +923,7 @@ public class RecipeGenerator extends RecipeProvider {
 				.pattern(" c ")
 				.group("firearm")
 				.unlockedBy("smoke_powder", has(ItemRegistry.SMOKE_POWDER.get()))
-				.save(finishedRecipeConsumer);
+				.save(output);
 		ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, ItemRegistry.HAND_CANNON.get())
 				.define('a', ItemRegistry.WOODEN_PISTOL_HANDLE.get())
 				.define('b', ItemRegistry.FLINTLOCK_ASSEMBLY.get())
@@ -942,7 +935,7 @@ public class RecipeGenerator extends RecipeProvider {
 				.pattern(" c ")
 				.group("firearm")
 				.unlockedBy("flintlock_assembly", has(ItemRegistry.FLINTLOCK_ASSEMBLY.get()))
-				.save(finishedRecipeConsumer);
+				.save(output);
 		ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, ItemRegistry.CANNONBALL.get(), 2)
 				.define('a', Tags.Items.INGOTS_IRON)
 				.define('b', Tags.Items.INGOTS_COPPER)
@@ -951,7 +944,7 @@ public class RecipeGenerator extends RecipeProvider {
 				.pattern(" a ")
 				.group("firearm")
 				.unlockedBy("iron_ingot", has(Tags.Items.INGOTS_IRON))
-				.save(finishedRecipeConsumer);
+				.save(output);
 		ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, ItemRegistry.EXPLOSIVE_CANNONBALL.get(), 4)
 				.define('a', Items.TNT)
 				.define('b', ItemRegistry.CANNONBALL.get())
@@ -960,7 +953,7 @@ public class RecipeGenerator extends RecipeProvider {
 				.pattern(" b ")
 				.group("firearm")
 				.unlockedBy("tnt", has(Items.TNT))
-				.save(finishedRecipeConsumer);
+				.save(output);
 		ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, ItemRegistry.MOLOTOV_COCKTAIL.get())
 				.define('a', Tags.Items.STRING)
 				.define('b', ItemRegistry.BOTTLE_OF_ALCOHOL.get())
@@ -968,7 +961,7 @@ public class RecipeGenerator extends RecipeProvider {
 				.pattern(" b ")
 				.group("molotov_cocktail")
 				.unlockedBy("bottle_of_alcohol", has(ItemRegistry.BOTTLE_OF_ALCOHOL.get()))
-				.save(finishedRecipeConsumer);
+				.save(output);
 
 		// Musket balls
 		List<MaterialGroup> musketBallMaterials = new ArrayList<>(20);
@@ -1056,7 +1049,7 @@ public class RecipeGenerator extends RecipeProvider {
 				.pattern("cbc")
 				.group("ammunition_table")
 				.unlockedBy("gunpowder", has(Tags.Items.GUNPOWDER))
-				.save(finishedRecipeConsumer);
+				.save(output);
 	}
 
 	private void createDecorations() {
@@ -1069,7 +1062,7 @@ public class RecipeGenerator extends RecipeProvider {
 				.pattern("a a")
 				.group("chairs")
 				.unlockedBy("wool", has(ItemTags.WOOL))
-				.save(finishedRecipeConsumer);
+				.save(output);
 		// Celestial lantern
 		ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, BlockItemRegistry.CELESTIAL_LANTERN_ITEM.get())
 				.define('a', Tags.Items.NUGGETS_IRON)
@@ -1080,7 +1073,7 @@ public class RecipeGenerator extends RecipeProvider {
 				.pattern("aba")
 				.group("lights")
 				.unlockedBy("celestial_fragment", has(ItemRegistry.CELESTIAL_FRAGMENT.get()))
-				.save(finishedRecipeConsumer);
+				.save(output);
 		// Wall shelf
 		ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, BlockItemRegistry.WALL_SHELF_ITEM.get())
 				.define('a', ItemTags.WOODEN_SLABS)
@@ -1089,7 +1082,7 @@ public class RecipeGenerator extends RecipeProvider {
 				.pattern("bab")
 				.group("shelves")
 				.unlockedBy("wooden_slabs", has(ItemTags.WOODEN_SLABS))
-				.save(finishedRecipeConsumer);
+				.save(output);
 
 		// Tables
 		createTable(BlockItemRegistry.OAK_TABLE_ITEM.get(), Items.OAK_SLAB, Items.OAK_FENCE);
@@ -1120,7 +1113,7 @@ public class RecipeGenerator extends RecipeProvider {
 				.pattern(" a ")
 				.group("satchel")
 				.unlockedBy("leather", has(Tags.Items.LEATHER))
-				.save(finishedRecipeConsumer);
+				.save(output);
 
 		// Powder horn
 		ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ItemRegistry.POWDER_HORN.get())
@@ -1132,7 +1125,7 @@ public class RecipeGenerator extends RecipeProvider {
 				.pattern(" a ")
 				.group("powder_horn")
 				.unlockedBy("goat_horn", has(Items.GOAT_HORN))
-				.save(finishedRecipeConsumer);
+				.save(output);
 
 		// Blademaster Emblem
 		ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ItemRegistry.BLADEMASTER_EMBLEM.get())
@@ -1145,7 +1138,7 @@ public class RecipeGenerator extends RecipeProvider {
 				.pattern("aba")
 				.group("blademaster_emblem")
 				.unlockedBy("starstorm_sword", has(ItemRegistry.STARSTORM_SWORD.get()))
-				.save(finishedRecipeConsumer);
+				.save(output);
 
 		// Netherite Shield
 		netheriteSmithing(Items.SHIELD, ItemRegistry.NETHERITE_SHIELD.get());
@@ -1159,7 +1152,7 @@ public class RecipeGenerator extends RecipeProvider {
 				.pattern(" a ")
 				.group("ring")
 				.unlockedBy("copper_ring", has(ItemRegistry.COPPER_RING.get()))
-				.save(finishedRecipeConsumer);
+				.save(output);
 		// Cobalt Ring
 		ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ItemRegistry.COBALT_RING.get())
 				.define('a', ForgeItemTagGroups.COBALT_INGOTS)
@@ -1169,7 +1162,7 @@ public class RecipeGenerator extends RecipeProvider {
 				.pattern(" a ")
 				.group("ring")
 				.unlockedBy("iron_ring", has(ItemRegistry.IRON_RING.get()))
-				.save(finishedRecipeConsumer);
+				.save(output);
 		// Golden Ring
 		ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ItemRegistry.GOLDEN_RING.get())
 				.define('a', Tags.Items.INGOTS_GOLD)
@@ -1179,7 +1172,7 @@ public class RecipeGenerator extends RecipeProvider {
 				.pattern(" a ")
 				.group("ring")
 				.unlockedBy("cobalt_ring", has(ItemRegistry.COBALT_RING.get()))
-				.save(finishedRecipeConsumer);
+				.save(output);
 		// Diamond Ring
 		ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ItemRegistry.DIAMOND_RING.get())
 				.define('a', Tags.Items.GEMS_DIAMOND)
@@ -1188,7 +1181,7 @@ public class RecipeGenerator extends RecipeProvider {
 				.pattern(" b ")
 				.group("ring")
 				.unlockedBy("golden_ring", has(ItemRegistry.GOLDEN_RING.get()))
-				.save(finishedRecipeConsumer);
+				.save(output);
 		// Amethyst Ring
 		ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ItemRegistry.AMETHYST_RING.get())
 				.define('a', Tags.Items.GEMS_AMETHYST)
@@ -1197,7 +1190,7 @@ public class RecipeGenerator extends RecipeProvider {
 				.pattern(" b ")
 				.group("ring")
 				.unlockedBy("amethyst_ring", has(ItemRegistry.GOLDEN_RING.get()))
-				.save(finishedRecipeConsumer);
+				.save(output);
 		// Emerald Ring
 		ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ItemRegistry.EMERALD_RING.get())
 				.define('a', Tags.Items.GEMS_EMERALD)
@@ -1206,7 +1199,7 @@ public class RecipeGenerator extends RecipeProvider {
 				.pattern(" b ")
 				.group("ring")
 				.unlockedBy("emerald_ring", has(ItemRegistry.GOLDEN_RING.get()))
-				.save(finishedRecipeConsumer);
+				.save(output);
 		// Netherite Ring
 		netheriteSmithing(ItemRegistry.DIAMOND_RING.get(), ItemRegistry.NETHERITE_RING.get());
 
@@ -1219,7 +1212,7 @@ public class RecipeGenerator extends RecipeProvider {
 				.pattern("aba")
 				.group("goggles")
 				.unlockedBy("iron_ingot", has(Tags.Items.INGOTS_IRON))
-				.save(finishedRecipeConsumer);
+				.save(output);
 
 		// Lava Goggles
 		ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ItemRegistry.LAVA_GOGGLES.get())
@@ -1231,7 +1224,7 @@ public class RecipeGenerator extends RecipeProvider {
 				.pattern(" c ")
 				.group("goggles")
 				.unlockedBy("molten_ingot", has(IWItemTagGroups.MOLTEN_INGOTS))
-				.save(finishedRecipeConsumer);
+				.save(output);
 
 		// Bloody Cloth
 		ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ItemRegistry.BLOODY_CLOTH.get())
@@ -1242,7 +1235,7 @@ public class RecipeGenerator extends RecipeProvider {
 				.pattern("aaa")
 				.group("bloody_cloth")
 				.unlockedBy("cloth_scrap", has(ItemRegistry.CLOTH_SCRAP.get()))
-				.save(finishedRecipeConsumer);
+				.save(output);
 
 		// Hand of Doom
 		ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, ItemRegistry.HAND_OF_DOOM.get())
@@ -1255,7 +1248,7 @@ public class RecipeGenerator extends RecipeProvider {
 						.of(ItemRegistry.IRON_FIST.get())
 						.of(ItemRegistry.GLOVE_OF_RAPID_SWINGING.get())
 						.build()))
-				.save(finishedRecipeConsumer);
+				.save(output);
 
 		// Bloody Sacrifice
 		ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ItemRegistry.BLOODY_SACRIFICE.get())
@@ -1267,7 +1260,7 @@ public class RecipeGenerator extends RecipeProvider {
 				.pattern("ccc")
 				.group("bloody_sacrifice")
 				.unlockedBy("spider_eye", has(Items.SPIDER_EYE))
-				.save(finishedRecipeConsumer);
+				.save(output);
 	}
 
 	private void createMiscellaneousItems() {
@@ -1280,7 +1273,7 @@ public class RecipeGenerator extends RecipeProvider {
 				.pattern("bbb")
 				.group("azul_keystone")
 				.unlockedBy("azul_keystone_fragment", has(ItemRegistry.AZUL_KEYSTONE_FRAGMENT.get()))
-				.save(finishedRecipeConsumer);
+				.save(output);
 		// Azul Locator
 		ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ItemRegistry.AZUL_LOCATOR.get())
 				.define('a', Tags.Items.INGOTS_GOLD)
@@ -1289,7 +1282,7 @@ public class RecipeGenerator extends RecipeProvider {
 				.pattern(" a ")
 				.group("azul_keystone")
 				.unlockedBy("azul_keystone_fragment", has(ItemRegistry.AZUL_KEYSTONE_FRAGMENT.get()))
-				.save(finishedRecipeConsumer);
+				.save(output);
 		// Cloth scrap
 		ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ItemRegistry.CLOTH_SCRAP.get(), 4)
 				.define('a', Tags.Items.STRING)
@@ -1299,7 +1292,7 @@ public class RecipeGenerator extends RecipeProvider {
 				.pattern("bbb")
 				.group("cloth_scrap")
 				.unlockedBy("grass", has(Items.GRASS))
-				.save(finishedRecipeConsumer);
+				.save(output);
 		// Conductive alloy
 		ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ItemRegistry.CONDUCTIVE_ALLOY.get())
 				.define('a', Tags.Items.INGOTS_COPPER)
@@ -1307,7 +1300,7 @@ public class RecipeGenerator extends RecipeProvider {
 				.pattern("ab")
 				.group("conductive_alloy")
 				.unlockedBy("gold", has(Tags.Items.INGOTS_GOLD))
-				.save(finishedRecipeConsumer);
+				.save(output);
 		// Mortar and pestle
 		ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ItemRegistry.MORTAR_AND_PESTLE.get())
 				.define('a', Items.BOWL)
@@ -1316,7 +1309,7 @@ public class RecipeGenerator extends RecipeProvider {
 				.pattern("a  ")
 				.group("mortar_and_pestle")
 				.unlockedBy("bowl", has(Items.BOWL))
-				.save(finishedRecipeConsumer);
+				.save(output);
 		// Obsidian rod
 		ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ItemRegistry.OBSIDIAN_ROD.get(), 16)
 				.define('a', Items.OBSIDIAN)
@@ -1324,7 +1317,7 @@ public class RecipeGenerator extends RecipeProvider {
 				.pattern(" a ")
 				.group("rods")
 				.unlockedBy("obsidian", has(Items.OBSIDIAN))
-				.save(finishedRecipeConsumer);
+				.save(output);
 		// Pliers
 		ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, ItemRegistry.PLIERS.get())
 				.define('a', Items.LEATHER)
@@ -1335,7 +1328,7 @@ public class RecipeGenerator extends RecipeProvider {
 				.pattern("a a")
 				.group("pliers")
 				.unlockedBy("small_parts_metal_tool", has(ItemRegistry.TOOL_JOINT.get()))
-				.save(finishedRecipeConsumer);
+				.save(output);
 		// Wooden tool rod
 		ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ItemRegistry.WOODEN_TOOL_ROD.get())
 				.define('a', ItemTags.PLANKS)
@@ -1343,7 +1336,7 @@ public class RecipeGenerator extends RecipeProvider {
 				.pattern("a  ")
 				.group("rods")
 				.unlockedBy("planks", has(ItemTags.PLANKS))
-				.save(finishedRecipeConsumer);
+				.save(output);
 
 		// Sulfur stuff
 		ShapedRecipeBuilder builder = ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, BlockItemRegistry.RAW_SULFUR_BLOCK_ITEM.get())
@@ -1355,13 +1348,13 @@ public class RecipeGenerator extends RecipeProvider {
 				.requires(BlockItemRegistry.RAW_SULFUR_BLOCK_ITEM.get())
 				.group("sulfur")
 				.unlockedBy("raw_sulfur_block", has(BlockItemRegistry.RAW_SULFUR_BLOCK_ITEM.get()))
-				.save(finishedRecipeConsumer);
+				.save(output);
 
 		ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, ItemRegistry.SULFUR_DUST.get(), 4)
 				.requires(ItemRegistry.SULFUR.get())
 				.requires(ItemRegistry.MORTAR_AND_PESTLE.get())
 				.unlockedBy("sulfur", has(ItemRegistry.SULFUR.get()))
-				.save(finishedRecipeConsumer);
+				.save(output);
 
 		// Black Powder
 		ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, ItemRegistry.BLACKPOWDER.get(), 8)
@@ -1370,7 +1363,7 @@ public class RecipeGenerator extends RecipeProvider {
 				.requires(Ingredient.of(ItemRegistry.POTASSIUM_NITRATE.get()), 6)
 				.requires(ItemRegistry.MORTAR_AND_PESTLE.get())
 				.unlockedBy("potassium_nitrate", has(ItemRegistry.POTASSIUM_NITRATE.get()))
-				.save(finishedRecipeConsumer);
+				.save(output);
 
 		// Meteor Staff
 		ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, ItemRegistry.METEOR_STAFF.get())
@@ -1382,7 +1375,7 @@ public class RecipeGenerator extends RecipeProvider {
 				.pattern(" b ")
 				.group("meteor_staff")
 				.unlockedBy("celestial_fragment", has(ItemRegistry.CELESTIAL_FRAGMENT.get()))
-				.save(finishedRecipeConsumer);
+				.save(output);
 
 		// Cursed Sight Staff Core
 		ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ItemRegistry.CURSED_SIGHT_STAFF_CORE.get())
@@ -1394,7 +1387,7 @@ public class RecipeGenerator extends RecipeProvider {
 				.pattern("aba")
 				.group("cursed_sight_staff")
 				.unlockedBy("broken_lens", has(ItemRegistry.BROKEN_LENS.get()))
-				.save(finishedRecipeConsumer);
+				.save(output);
 
 		// Cursed Sight Staff
 		ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, ItemRegistry.CURSED_SIGHT_STAFF.get())
@@ -1405,7 +1398,7 @@ public class RecipeGenerator extends RecipeProvider {
 				.pattern("b")
 				.group("cursed_sight_staff")
 				.unlockedBy("cursed_sight_staff_core", has(ItemRegistry.CURSED_SIGHT_STAFF_CORE.get()))
-				.save(finishedRecipeConsumer);
+				.save(output);
 
 		// Padded Leather Armor
 		ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ItemRegistry.PADDED_LEATHER_HELMET.get())
@@ -1416,7 +1409,7 @@ public class RecipeGenerator extends RecipeProvider {
 				.pattern("bbb")
 				.group("padded_leather_armor")
 				.unlockedBy("leather_helmet", has(Items.LEATHER_HELMET))
-				.save(finishedRecipeConsumer);
+				.save(output);
 
 		ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ItemRegistry.PADDED_LEATHER_CHESTPLATE.get())
 				.define('a', Items.LEATHER_CHESTPLATE)
@@ -1426,7 +1419,7 @@ public class RecipeGenerator extends RecipeProvider {
 				.pattern("bbb")
 				.group("padded_leather_armor")
 				.unlockedBy("leather_chestplate", has(Items.LEATHER_CHESTPLATE))
-				.save(finishedRecipeConsumer);
+				.save(output);
 
 		ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ItemRegistry.PADDED_LEATHER_LEGGINGS.get())
 				.define('a', Items.LEATHER_LEGGINGS)
@@ -1436,7 +1429,7 @@ public class RecipeGenerator extends RecipeProvider {
 				.pattern("bbb")
 				.group("padded_leather_armor")
 				.unlockedBy("leather_leggings", has(Items.LEATHER_LEGGINGS))
-				.save(finishedRecipeConsumer);
+				.save(output);
 
 		ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ItemRegistry.PADDED_LEATHER_BOOTS.get())
 				.define('a', Items.LEATHER_BOOTS)
@@ -1446,7 +1439,7 @@ public class RecipeGenerator extends RecipeProvider {
 				.pattern("bbb")
 				.group("padded_leather_armor")
 				.unlockedBy("leather_boots", has(Items.LEATHER_BOOTS))
-				.save(finishedRecipeConsumer);
+				.save(output);
 	}
 
 	private void createMinecraftItems() {
@@ -1458,7 +1451,7 @@ public class RecipeGenerator extends RecipeProvider {
 				.requires(ItemRegistry.MORTAR_AND_PESTLE.get())
 				.group("gunpowder")
 				.unlockedBy("potassium_nitrate", has(ItemRegistry.POTASSIUM_NITRATE.get()))
-				.save(finishedRecipeConsumer);
+				.save(output);
 		// Copper ingot
 		ShapedRecipeBuilder shapedRecipeBuilder = ShapedRecipeBuilder.shaped(RecipeCategory.MISC, Items.COPPER_INGOT)
 				.group("copper_ingot")
@@ -1476,7 +1469,7 @@ public class RecipeGenerator extends RecipeProvider {
 				.pattern("aba")
 				.pattern("ccc")
 				.unlockedBy("furnace", has(Blocks.FURNACE))
-				.save(finishedRecipeConsumer);
+				.save(output);
 
 		// Bucket
 		ShapedRecipeBuilder.shaped(RecipeCategory.MISC, Items.BUCKET)
@@ -1484,7 +1477,7 @@ public class RecipeGenerator extends RecipeProvider {
 				.pattern("a a")
 				.pattern(" a ")
 				.unlockedBy("metal_ingot", has(ForgeItemTagGroups.METAL_INGOTS))
-				.save(finishedRecipeConsumer);
+				.save(output);
 
 		// Cauldron
 		ShapedRecipeBuilder.shaped(RecipeCategory.MISC, Blocks.CAULDRON)
@@ -1493,7 +1486,7 @@ public class RecipeGenerator extends RecipeProvider {
 				.pattern("a a")
 				.pattern("aaa")
 				.unlockedBy("metal_ingot", has(ForgeItemTagGroups.METAL_INGOTS))
-				.save(finishedRecipeConsumer);
+				.save(output);
 
 		// Chain
 		ShapedRecipeBuilder.shaped(RecipeCategory.MISC, Items.CHAIN)
@@ -1503,7 +1496,7 @@ public class RecipeGenerator extends RecipeProvider {
 				.pattern(" a ")
 				.pattern(" b ")
 				.unlockedBy("metal_ingot", has(ForgeItemTagGroups.METAL_INGOTS))
-				.save(finishedRecipeConsumer);
+				.save(output);
 
 		// Hopper
 		ShapedRecipeBuilder.shaped(RecipeCategory.REDSTONE, Blocks.HOPPER)
@@ -1513,7 +1506,7 @@ public class RecipeGenerator extends RecipeProvider {
 				.pattern("aba")
 				.pattern(" a ")
 				.unlockedBy("chest", has(Items.CHEST))
-				.save(finishedRecipeConsumer);
+				.save(output);
 
 		// Lantern
 		ShapedRecipeBuilder.shaped(RecipeCategory.MISC, Blocks.LANTERN)
@@ -1523,7 +1516,7 @@ public class RecipeGenerator extends RecipeProvider {
 				.pattern("aba")
 				.pattern("aaa")
 				.unlockedBy("torch", has(Items.TORCH))
-				.save(finishedRecipeConsumer);
+				.save(output);
 
 		// Minecart
 		ShapedRecipeBuilder.shaped(RecipeCategory.MISC, Items.MINECART)
@@ -1531,7 +1524,7 @@ public class RecipeGenerator extends RecipeProvider {
 				.pattern("a a")
 				.pattern("aaa")
 				.unlockedBy("metal_ingot", has(ForgeItemTagGroups.METAL_INGOTS))
-				.save(finishedRecipeConsumer);
+				.save(output);
 
 		// Piston
 		ShapedRecipeBuilder.shaped(RecipeCategory.REDSTONE, Blocks.PISTON)
@@ -1543,7 +1536,7 @@ public class RecipeGenerator extends RecipeProvider {
 				.pattern("dad")
 				.pattern("dcd")
 				.unlockedBy("redstone", has(Items.REDSTONE))
-				.save(finishedRecipeConsumer);
+				.save(output);
 
 		// Soul Lantern
 		ShapedRecipeBuilder.shaped(RecipeCategory.MISC, Blocks.SOUL_LANTERN)
@@ -1553,7 +1546,7 @@ public class RecipeGenerator extends RecipeProvider {
 				.pattern("aba")
 				.pattern("aaa")
 				.unlockedBy("soul_torch", has(Items.SOUL_TORCH))
-				.save(finishedRecipeConsumer);
+				.save(output);
 
 		// Stonecutter
 		ShapedRecipeBuilder.shaped(RecipeCategory.MISC, Blocks.STONECUTTER)
@@ -1562,7 +1555,7 @@ public class RecipeGenerator extends RecipeProvider {
 				.pattern(" a ")
 				.pattern("bbb")
 				.unlockedBy("stone", has(Blocks.STONE))
-				.save(finishedRecipeConsumer);
+				.save(output);
 
 		// Tripwire Hook
 		ShapedRecipeBuilder.shaped(RecipeCategory.REDSTONE, Items.TRIPWIRE_HOOK)
@@ -1573,7 +1566,7 @@ public class RecipeGenerator extends RecipeProvider {
 				.pattern(" b ")
 				.pattern(" c ")
 				.unlockedBy("string", has(Items.STRING))
-				.save(finishedRecipeConsumer);
+				.save(output);
 	}
 
 	public static void createArrow(ArrowItem arrow, TagKey<Item> material) {
@@ -1585,7 +1578,7 @@ public class RecipeGenerator extends RecipeProvider {
 				.define('b', Items.STICK)
 				.define('c', Items.FEATHER)
 				.unlockedBy("has_material", has(material))
-				.save(finishedRecipeConsumer, itemRegistryPath(arrow));
+				.save(output, itemRegistryPath(arrow));
 	}
 
 	public static void createPikeHead(Item pikeHead, TagKey<Item> material, TagKey<Item> nugget) {
@@ -1595,7 +1588,7 @@ public class RecipeGenerator extends RecipeProvider {
 				.define('a', nugget)
 				.define('b', material)
 				.unlockedBy("has_material", has(material))
-				.save(finishedRecipeConsumer, itemRegistryPath(pikeHead));
+				.save(output, itemRegistryPath(pikeHead));
 	}
 
 	public static void createPike(Item pike, TagKey<Item> material, Item pikeHead) {
@@ -1607,7 +1600,7 @@ public class RecipeGenerator extends RecipeProvider {
 				.define('b', material)
 				.define('c', ItemRegistry.WOODEN_TOOL_ROD.get())
 				.unlockedBy("has_material", has(material))
-				.save(finishedRecipeConsumer, itemRegistryPath(pike));
+				.save(output, itemRegistryPath(pike));
 	}
 
 	public static void createGauntlet(Item gauntlet, TagKey<Item> material) {
@@ -1617,7 +1610,7 @@ public class RecipeGenerator extends RecipeProvider {
 				.define('a', material)
 				.define('b', ItemRegistry.GAUNTLET_SCAFFOLDING.get())
 				.unlockedBy("has_material", has(material))
-				.save(finishedRecipeConsumer, itemRegistryPath(gauntlet));
+				.save(output, itemRegistryPath(gauntlet));
 	}
 
 	public static void createMusketBall(Item musketBall, TagKey<Item> material) {
@@ -1627,7 +1620,7 @@ public class RecipeGenerator extends RecipeProvider {
 				.pattern(" a ")
 				.pattern("aba")
 				.unlockedBy("has_material", has(material))
-				.save(finishedRecipeConsumer);
+				.save(output);
 	}
 
 	private static void createCobaltIngot(ItemLike ingotItem, ItemLike ingotBlock) {
@@ -1654,7 +1647,7 @@ public class RecipeGenerator extends RecipeProvider {
 				.pattern("aaa")
 				.group("molten")
 				.unlockedBy("molten_shard", has(IWItemTagGroups.MOLTEN_SHARDS))
-				.save(finishedRecipeConsumer);
+				.save(output);
 		ShapelessRecipeBuilder builder1 = ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, ingotItem, 9)
 				.group("molten")
 				.unlockedBy("molten_shard", has(IWItemTagGroups.MOLTEN_SHARDS));
@@ -1672,7 +1665,7 @@ public class RecipeGenerator extends RecipeProvider {
 				.pattern("ab ")
 				.group("tesla")
 				.unlockedBy("electric_ingot", has(IWItemTagGroups.ELECTRIC_INGOTS))
-				.save(finishedRecipeConsumer);
+				.save(output);
 
 		ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ingotItem)
 				.define('a', IWItemTagGroups.TESLA_NUGGETS)
@@ -1681,7 +1674,7 @@ public class RecipeGenerator extends RecipeProvider {
 				.pattern("aaa")
 				.group("tesla")
 				.unlockedBy("tesla_ingot", has(IWItemTagGroups.TESLA_INGOTS))
-				.save(finishedRecipeConsumer, ImmersiveWeapons.MOD_ID + ":" + ingotItem + "_from_nuggets");
+				.save(output, ImmersiveWeapons.MOD_ID + ":" + ingotItem + "_from_nuggets");
 
 		ShapelessRecipeBuilder shapelessRecipeBuilder = ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, ingotItem, 9)
 				.group("tesla")
@@ -1703,7 +1696,7 @@ public class RecipeGenerator extends RecipeProvider {
 				.pattern("aaa")
 				.group("stained_bulletproof_glass")
 				.unlockedBy("bulletproof_glass", has(BlockRegistry.BULLETPROOF_GLASS.get()))
-				.save(finishedRecipeConsumer);
+				.save(output);
 	}
 
 	private static void create3x3Object(ShapedRecipeBuilder builder, TagKey<Item> material) {
@@ -1711,7 +1704,7 @@ public class RecipeGenerator extends RecipeProvider {
 				.pattern("aaa")
 				.pattern("aaa")
 				.pattern("aaa")
-				.save(finishedRecipeConsumer);
+				.save(output);
 	}
 
 	private static void create3x3Object(ShapedRecipeBuilder builder, ItemLike material) {
@@ -1719,17 +1712,17 @@ public class RecipeGenerator extends RecipeProvider {
 				.pattern("aaa")
 				.pattern("aaa")
 				.pattern("aaa")
-				.save(finishedRecipeConsumer);
+				.save(output);
 	}
 
 	private static void createIngotFromBlock(ShapelessRecipeBuilder builder, ItemLike ingotBlock) {
 		builder.requires(ingotBlock)
-				.save(finishedRecipeConsumer, ImmersiveWeapons.MOD_ID + ":" + getItemName(builder.getResult()) + "_from_" + getItemName(ingotBlock));
+				.save(output, ImmersiveWeapons.MOD_ID + ":" + getItemName(builder.getResult()) + "_from_" + getItemName(ingotBlock));
 	}
 
 	private static void createNuggetFromIngot(ShapelessRecipeBuilder builder, TagKey<Item> tagKey) {
 		builder.requires(tagKey)
-				.save(finishedRecipeConsumer);
+				.save(output);
 	}
 
 	private static void createColoredSmokeGrenade(ItemLike smokeGrenadeItem, TagKey<Item> colorTag) {
@@ -1743,7 +1736,7 @@ public class RecipeGenerator extends RecipeProvider {
 				.pattern(" a ")
 				.group("smoke_grenade")
 				.unlockedBy("smoke_powder", has(ItemRegistry.SMOKE_POWDER.get()))
-				.save(finishedRecipeConsumer);
+				.save(output);
 	}
 
 	private static void createColoredSmokeGrenadeArrow(ItemLike arrowItem, TagKey<Item> colorTag) {
@@ -1755,7 +1748,7 @@ public class RecipeGenerator extends RecipeProvider {
 				.pattern("aac")
 				.group("smoke_grenade")
 				.unlockedBy("smoke_powder", has(ItemRegistry.SMOKE_POWDER.get()))
-				.save(finishedRecipeConsumer);
+				.save(output);
 	}
 
 	private static void createTable(ItemLike tableItem, ItemLike slabItem, ItemLike fenceItem) {
@@ -1766,13 +1759,13 @@ public class RecipeGenerator extends RecipeProvider {
 				.pattern("b")
 				.group("tables")
 				.unlockedBy("planks", has(ItemTags.PLANKS))
-				.save(finishedRecipeConsumer);
+				.save(output);
 	}
 
 	private static void createShard(ShapelessRecipeBuilder builder, ItemLike material) {
 		builder.requires(material)
 				.group("shard")
-				.save(finishedRecipeConsumer);
+				.save(output);
 	}
 
 	public static void createSmeltingRecipe(List<ItemLike> pIngredients,
@@ -1804,7 +1797,7 @@ public class RecipeGenerator extends RecipeProvider {
 		for (ItemLike itemlike : pIngredients) {
 			SimpleCookingRecipeBuilder.generic(Ingredient.of(itemlike), RecipeCategory.MISC, pResult, pExperience, pCookingTime, pCookingSerializer)
 					.group(pGroup).unlockedBy(getHasName(itemlike), has(itemlike))
-					.save(finishedRecipeConsumer, ImmersiveWeapons.MOD_ID + ":" + getItemName(pResult) + pRecipeName + "_" + getItemName(itemlike));
+					.save(output, ImmersiveWeapons.MOD_ID + ":" + getItemName(pResult) + pRecipeName + "_" + getItemName(itemlike));
 		}
 
 	}
@@ -1813,7 +1806,7 @@ public class RecipeGenerator extends RecipeProvider {
 	                               ItemLike pResult, float pExperience, int pCookingTime, String pGroup, String pRecipeName) {
 		SimpleCookingRecipeBuilder.generic(Ingredient.of(ingredient), RecipeCategory.MISC, pResult, pExperience, pCookingTime, pCookingSerializer)
 				.group(pGroup).unlockedBy(getHasName(ingredient), has(ingredient))
-				.save(finishedRecipeConsumer, ImmersiveWeapons.MOD_ID + ":" + getItemName(pResult) + pRecipeName + "_" + getItemName(ingredient));
+				.save(output, ImmersiveWeapons.MOD_ID + ":" + getItemName(pResult) + pRecipeName + "_" + getItemName(ingredient));
 	}
 
 	private static void netheriteSmithing(Item baseItem, Item pResultItem) {
@@ -1821,7 +1814,7 @@ public class RecipeGenerator extends RecipeProvider {
 						Ingredient.of(baseItem),
 						Ingredient.of(Items.NETHERITE_INGOT), RecipeCategory.MISC, pResultItem)
 				.unlocks("has_netherite_ingot", has(Items.NETHERITE_INGOT))
-				.save(finishedRecipeConsumer, ImmersiveWeapons.MOD_ID + ":" + getItemName(pResultItem) + "_smithing");
+				.save(output, ImmersiveWeapons.MOD_ID + ":" + getItemName(pResultItem) + "_smithing");
 	}
 
 	private static void teslaSynthesizing(ItemLike block, ItemLike material1, ItemLike material2, int cookTime,
@@ -1829,37 +1822,37 @@ public class RecipeGenerator extends RecipeProvider {
 		TeslaSynthesizerRecipeBuilder.synthesizing(Ingredient.of(block), Ingredient.of(material1), Ingredient.of(material2),
 						cookTime, result.asItem())
 				.unlocks("tesla_ingot", has(IWItemTagGroups.TESLA_INGOTS))
-				.save(finishedRecipeConsumer, ImmersiveWeapons.MOD_ID + ":" + getItemName(result) + "_tesla_synthesizing");
+				.save(output, ImmersiveWeapons.MOD_ID + ":" + getItemName(result) + "_tesla_synthesizing");
 	}
 
 	private static void smallPartsTinkering(TagKey<Item> material, List<Item> craftables) {
 		SmallPartsRecipeBuilder.tinker(Ingredient.of(material), craftables)
 				.unlocks("copper_ingot", has(Tags.Items.INGOTS_COPPER))
-				.save(finishedRecipeConsumer, ImmersiveWeapons.MOD_ID + ":" + getTagName(material) + "_tinkering");
+				.save(output, ImmersiveWeapons.MOD_ID + ":" + getTagName(material) + "_tinkering");
 	}
 
 	private static void barrelTapFermenting(ItemLike material, int materialCount, ItemLike result) {
 		BarrelTapRecipeBuilder.fermenting(Ingredient.of(material), materialCount, result.asItem())
 				.unlocks("barrel_tap", has(BlockItemRegistry.BARREL_TAP_ITEM.get()))
-				.save(finishedRecipeConsumer, ImmersiveWeapons.MOD_ID + ":" + getItemName(result) + "_fermenting");
+				.save(output, ImmersiveWeapons.MOD_ID + ":" + getItemName(result) + "_fermenting");
 	}
 
 	private static void astralCrystalSorcery(ItemLike primaryMaterial, ItemLike secondaryMaterial, ItemLike result, int resultCount) {
 		AstralCrystalRecipeBuilder.sorcery(Ingredient.of(primaryMaterial), Ingredient.of(secondaryMaterial), result.asItem(), resultCount)
 				.unlocks("astral_crystal", has(BlockItemRegistry.ASTRAL_CRYSTAL_ITEM.get()))
-				.save(finishedRecipeConsumer, ImmersiveWeapons.MOD_ID + ":" + getItemName(result) + "_astral_crystal_sorcery");
+				.save(output, ImmersiveWeapons.MOD_ID + ":" + getItemName(result) + "_astral_crystal_sorcery");
 	}
 
 	private static void pistonCrushing(Block block, ItemLike result, int minCount, int maxCount) {
 		PistonCrushingRecipeBuilder.crushing(block, result.asItem(), minCount, maxCount)
 				.unlocks("piston", has(Blocks.PISTON))
-				.save(finishedRecipeConsumer, ImmersiveWeapons.MOD_ID + ":" + getItemName(result) + "_piston_crushing");
+				.save(output, ImmersiveWeapons.MOD_ID + ":" + getItemName(result) + "_piston_crushing");
 	}
 
 	private static void ammunitionTableCrafting(List<MaterialGroup> materials, ItemLike result) {
 		AmmunitionTableRecipeBuilder.crafting(materials, result.asItem())
 				.unlocks("ammunition_table", has(BlockRegistry.AMMUNITION_TABLE.get()))
-				.save(finishedRecipeConsumer, ImmersiveWeapons.MOD_ID + ":" + getItemName(result) + "_ammunition_table_crafting");
+				.save(output, ImmersiveWeapons.MOD_ID + ":" + getItemName(result) + "_ammunition_table_crafting");
 	}
 
 	protected static String getConversionRecipeName(ItemLike pResult, ItemLike pIngredient) {
@@ -1886,27 +1879,27 @@ public class RecipeGenerator extends RecipeProvider {
 					.pattern("aa ")
 					.pattern("aa ")
 					.unlockedBy("has_" + blockRegistryPath(bricks).getPath(), has(material))
-					.save(finishedRecipeConsumer, blockRegistryPath(bricks));
+					.save(output, blockRegistryPath(bricks));
 		}
 
-		public static void slab(Block slab, ItemLike material, String group, String triggerName, CriterionTriggerInstance trigger) {
+		public static void slab(Block slab, ItemLike material, String group, String triggerName, Criterion<InventoryChangeTrigger.TriggerInstance> trigger) {
 			ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, slab, 6)
 					.pattern("aaa")
 					.define('a', material)
 					.group(group)
 					.unlockedBy(triggerName, trigger)
-					.save(finishedRecipeConsumer, blockRegistryPath(slab));
+					.save(output, blockRegistryPath(slab));
 		}
 
-		public static void slab(Block slab, ItemLike material, String triggerName, CriterionTriggerInstance trigger) {
+		public static void slab(Block slab, ItemLike material, String triggerName, Criterion<InventoryChangeTrigger.TriggerInstance> trigger) {
 			ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, slab, 6)
 					.pattern("aaa")
 					.define('a', material)
 					.unlockedBy(triggerName, trigger)
-					.save(finishedRecipeConsumer, blockRegistryPath(slab));
+					.save(output, blockRegistryPath(slab));
 		}
 
-		public static void stairs(Block stairs, ItemLike material, String group, String triggerName, CriterionTriggerInstance trigger) {
+		public static void stairs(Block stairs, ItemLike material, String group, String triggerName, Criterion<InventoryChangeTrigger.TriggerInstance> trigger) {
 			ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, stairs, 4)
 					.pattern("a  ")
 					.pattern("aa ")
@@ -1914,53 +1907,53 @@ public class RecipeGenerator extends RecipeProvider {
 					.define('a', material)
 					.group(group)
 					.unlockedBy(triggerName, trigger)
-					.save(finishedRecipeConsumer, blockRegistryPath(stairs));
+					.save(output, blockRegistryPath(stairs));
 		}
 
-		public static void stairs(Block stairs, ItemLike material, String triggerName, CriterionTriggerInstance trigger) {
+		public static void stairs(Block stairs, ItemLike material, String triggerName, Criterion<InventoryChangeTrigger.TriggerInstance> trigger) {
 			ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, stairs, 4)
 					.pattern("a  ")
 					.pattern("aa ")
 					.pattern("aaa")
 					.define('a', material)
 					.unlockedBy(triggerName, trigger)
-					.save(finishedRecipeConsumer, blockRegistryPath(stairs));
+					.save(output, blockRegistryPath(stairs));
 		}
 
-		public static void wall(Block wall, ItemLike material, String triggerName, CriterionTriggerInstance trigger) {
+		public static void wall(Block wall, ItemLike material, String triggerName, Criterion<InventoryChangeTrigger.TriggerInstance> trigger) {
 			ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, wall, 6)
 					.pattern("aaa")
 					.pattern("aaa")
 					.define('a', material)
 					.unlockedBy(triggerName, trigger)
-					.save(finishedRecipeConsumer, blockRegistryPath(wall));
+					.save(output, blockRegistryPath(wall));
 		}
 
-		public static void pillar(Block pillar, ItemLike material, String triggerName, CriterionTriggerInstance trigger) {
+		public static void pillar(Block pillar, ItemLike material, String triggerName, Criterion<InventoryChangeTrigger.TriggerInstance> trigger) {
 			ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, pillar, 4)
 					.pattern("a")
 					.pattern("a")
 					.define('a', material)
 					.unlockedBy(triggerName, trigger)
-					.save(finishedRecipeConsumer, blockRegistryPath(pillar));
+					.save(output, blockRegistryPath(pillar));
 		}
 
-		public static void chiseled(Block chiseled, ItemLike material, String triggerName, CriterionTriggerInstance trigger) {
+		public static void chiseled(Block chiseled, ItemLike material, String triggerName, Criterion<InventoryChangeTrigger.TriggerInstance> trigger) {
 			ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, chiseled)
 					.pattern("a")
 					.pattern("a")
 					.define('a', material)
 					.unlockedBy(triggerName, trigger)
-					.save(finishedRecipeConsumer, blockRegistryPath(chiseled));
+					.save(output, blockRegistryPath(chiseled));
 		}
 
-		public static void cut(Block cut, ItemLike material, String triggerName, CriterionTriggerInstance trigger) {
+		public static void cut(Block cut, ItemLike material, String triggerName, Criterion<InventoryChangeTrigger.TriggerInstance> trigger) {
 			ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, cut, 4)
 					.pattern("aa")
 					.pattern("aa")
 					.define('a', material)
 					.unlockedBy(triggerName, trigger)
-					.save(finishedRecipeConsumer, blockRegistryPath(cut));
+					.save(output, blockRegistryPath(cut));
 		}
 	}
 
@@ -1969,49 +1962,49 @@ public class RecipeGenerator extends RecipeProvider {
 		public static void bricks(Block bricks, ItemLike material) {
 			SingleItemRecipeBuilder.stonecutting(Ingredient.of(material), RecipeCategory.BUILDING_BLOCKS, bricks)
 					.unlockedBy("has_" + blockRegistryPath(bricks).getPath(), has(material))
-					.save(finishedRecipeConsumer, ImmersiveWeapons.MOD_ID + ":"
+					.save(output, ImmersiveWeapons.MOD_ID + ":"
 							+ getConversionRecipeName(bricks, material) + "_stonecutting");
 		}
 
-		public static void slab(Block slab, ItemLike material, String triggerName, CriterionTriggerInstance trigger) {
+		public static void slab(Block slab, ItemLike material, String triggerName, Criterion<InventoryChangeTrigger.TriggerInstance> trigger) {
 			SingleItemRecipeBuilder.stonecutting(Ingredient.of(material), RecipeCategory.BUILDING_BLOCKS, slab, 2)
 					.unlockedBy(triggerName, trigger)
-					.save(finishedRecipeConsumer, ImmersiveWeapons.MOD_ID + ":"
+					.save(output, ImmersiveWeapons.MOD_ID + ":"
 							+ getConversionRecipeName(slab, material) + "_stonecutting");
 		}
 
-		public static void stairs(Block stairs, ItemLike material, String triggerName, CriterionTriggerInstance trigger) {
+		public static void stairs(Block stairs, ItemLike material, String triggerName, Criterion<InventoryChangeTrigger.TriggerInstance> trigger) {
 			SingleItemRecipeBuilder.stonecutting(Ingredient.of(material), RecipeCategory.BUILDING_BLOCKS, stairs)
 					.unlockedBy(triggerName, trigger)
-					.save(finishedRecipeConsumer, ImmersiveWeapons.MOD_ID + ":"
+					.save(output, ImmersiveWeapons.MOD_ID + ":"
 							+ getConversionRecipeName(stairs, material) + "_stonecutting");
 		}
 
-		public static void wall(Block wall, ItemLike material, String triggerName, CriterionTriggerInstance trigger) {
+		public static void wall(Block wall, ItemLike material, String triggerName, Criterion<InventoryChangeTrigger.TriggerInstance> trigger) {
 			SingleItemRecipeBuilder.stonecutting(Ingredient.of(material), RecipeCategory.BUILDING_BLOCKS, wall)
 					.unlockedBy(triggerName, trigger)
-					.save(finishedRecipeConsumer, ImmersiveWeapons.MOD_ID + ":"
+					.save(output, ImmersiveWeapons.MOD_ID + ":"
 							+ getConversionRecipeName(wall, material) + "_stonecutting");
 		}
 
-		public static void pillar(Block pillar, ItemLike material, String triggerName, CriterionTriggerInstance trigger) {
+		public static void pillar(Block pillar, ItemLike material, String triggerName, Criterion<InventoryChangeTrigger.TriggerInstance> trigger) {
 			SingleItemRecipeBuilder.stonecutting(Ingredient.of(material), RecipeCategory.BUILDING_BLOCKS, pillar)
 					.unlockedBy(triggerName, trigger)
-					.save(finishedRecipeConsumer, ImmersiveWeapons.MOD_ID + ":"
+					.save(output, ImmersiveWeapons.MOD_ID + ":"
 							+ getConversionRecipeName(pillar, material) + "_stonecutting");
 		}
 
-		public static void chiseled(Block chiseled, ItemLike material, String triggerName, CriterionTriggerInstance trigger) {
+		public static void chiseled(Block chiseled, ItemLike material, String triggerName, Criterion<InventoryChangeTrigger.TriggerInstance> trigger) {
 			SingleItemRecipeBuilder.stonecutting(Ingredient.of(material), RecipeCategory.BUILDING_BLOCKS, chiseled)
 					.unlockedBy(triggerName, trigger)
-					.save(finishedRecipeConsumer, ImmersiveWeapons.MOD_ID + ":"
+					.save(output, ImmersiveWeapons.MOD_ID + ":"
 							+ getConversionRecipeName(chiseled, material) + "_stonecutting");
 		}
 
-		public static void cut(Block cut, ItemLike material, String triggerName, CriterionTriggerInstance trigger) {
+		public static void cut(Block cut, ItemLike material, String triggerName, Criterion<InventoryChangeTrigger.TriggerInstance> trigger) {
 			SingleItemRecipeBuilder.stonecutting(Ingredient.of(material), RecipeCategory.BUILDING_BLOCKS, cut)
 					.unlockedBy(triggerName, trigger)
-					.save(finishedRecipeConsumer, ImmersiveWeapons.MOD_ID + ":"
+					.save(output, ImmersiveWeapons.MOD_ID + ":"
 							+ getConversionRecipeName(cut, material) + "_stonecutting");
 		}
 	}

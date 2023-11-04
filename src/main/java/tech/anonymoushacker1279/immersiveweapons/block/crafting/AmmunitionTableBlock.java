@@ -15,7 +15,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.*;
-import net.minecraftforge.network.NetworkHooks;
+import net.neoforged.neoforge.network.NetworkHooks;
 import tech.anonymoushacker1279.immersiveweapons.blockentity.AmmunitionTableBlockEntity;
 import tech.anonymoushacker1279.immersiveweapons.menu.AmmunitionTableMenu;
 

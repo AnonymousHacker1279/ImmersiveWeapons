@@ -78,7 +78,7 @@ public abstract class AbstractWanderingWarriorEntity extends Monster implements 
 	 * Play the step sound.
 	 *
 	 * @param pos   the <code>BlockPos</code> the entity is at
-	 * @param state the <code>BlockState</code> of the block being stepped on
+	 * @param state the <code>BlockState</code> of the blockLocation being stepped on
 	 */
 	@Override
 	protected void playStepSound(BlockPos pos, BlockState state) {

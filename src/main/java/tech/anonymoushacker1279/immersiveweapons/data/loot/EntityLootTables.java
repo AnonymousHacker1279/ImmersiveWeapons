@@ -31,7 +31,7 @@ public class EntityLootTables implements LootTableSubProvider {
 	@Nullable
 	private BiConsumer<ResourceLocation, LootTable.Builder> out;
 
-	protected static final EntityPredicate.Builder ENTITY_ON_FIRE = EntityPredicate.Builder.entity().flags(EntityFlagsPredicate.Builder.flags().setOnFire(true).build());
+	protected static final EntityPredicate.Builder ENTITY_ON_FIRE = EntityPredicate.Builder.entity().flags(EntityFlagsPredicate.Builder.flags().setOnFire(true));
 
 	@Override
 	public void generate(BiConsumer<ResourceLocation, Builder> out) {

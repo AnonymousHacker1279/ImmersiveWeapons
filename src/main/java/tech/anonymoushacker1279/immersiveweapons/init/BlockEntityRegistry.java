@@ -4,7 +4,7 @@ import com.google.common.collect.Sets;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SkullBlock;
 import net.minecraft.world.level.block.entity.BlockEntityType;
-import net.minecraftforge.registries.*;
+import net.neoforged.neoforge.registries.*;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.block.decoration.skull.CustomWallSkullBlock;
 import tech.anonymoushacker1279.immersiveweapons.blockentity.*;

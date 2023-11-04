@@ -1,8 +1,8 @@
 plugins {
+	id 'java-library'
 	id 'maven-publish'
-	id 'net.neoforged.gradle' version '[6.0.18, 6.2)'
-	id 'org.parchmentmc.librarian.forgegradle' version '1.+'
-	id 'org.spongepowered.mixin' version '0.7.+'
+	id 'net.neoforged.gradle.userdev' version '[7.0.33, 7.1.0)'
+	// id 'org.parchmentmc.librarian.forgegradle' version '1.+' TODO: Uncomment when Librarian is updated
 	id "me.hypherionmc.modutils.modpublisher" version "1.0.20"
 	id 'idea'
 }
@@ -45,49 +45,36 @@ version = mod_version
 group = mod_group_id
 
 base {
-	archivesName = "immersiveweapons"
+	archivesName = project.mod_id
 }
-
-apply plugin: 'org.spongepowered.mixin'
 
 jarJar.enable()
 
 java.toolchain.languageVersion = JavaLanguageVersion.of(17)
 
 println('Java: ' + System.getProperty('java.version') + ' JVM: ' + System.getProperty('java.vm.version') + '(' + System.getProperty('java.vendor') + ') Arch: ' + System.getProperty('os.arch'))
-minecraft {
-	mappings channel: mappings_channel, version: mappings_version
 
-	accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
-	copyIdeResources = true
+minecraft.accessTransformers.file rootProject.file('src/main/resources/META-INF/accesstransformer.cfg')
 
-	runs {
-		configureEach {
-			workingDirectory project.file('run')
+runs {
+	configureEach {
+		systemProperty 'forge.logging.markers', 'REGISTRIES'
+		systemProperty 'forge.logging.console.level', 'debug'
 
-			property 'forge.logging.markers', 'REGISTRIES'
-			property 'forge.logging.console.level', 'debug'
+		programArguments.addAll '-Xmx6G', '-XX:+AllowEnhancedClassRedefinition'
 
-			jvmArgs '-Xmx6G', '-XX:+AllowEnhancedClassRedefinition'
+		modSource project.sourceSets.main
+	}
 
-			mods {
-				"immersiveweapons" {
-					source sourceSets.main
-				}
-			}
-		}
+	client {
+	}
 
+	server {
+		programArgument '--nogui'
+	}
 
-		client {
-		}
-
-		server {
-			args '--nogui'
-		}
-
-		data {
-			args '--mod', 'immersiveweapons', '--all', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources/')
-		}
+	data {
+		programArguments.addAll '--mod', project.mod_id, '--all', '--output', file('src/generated/resources/').getAbsolutePath(), '--existing', file('src/main/resources/').getAbsolutePath()
 	}
 }
 
@@ -97,30 +84,28 @@ sourceSets.main.resources { srcDir 'src/generated/resources' }
 dependencies {
 	implementation 'org.jetbrains:annotations:24.0.1'
 
-	minecraft "net.neoforged:forge:${minecraft_version}-${neoforge_version}"
+	implementation "net.neoforged:neoforge:${neoforge_version}"
 
-	// Apply Mixin and MixinExtras AP
-	implementation(annotationProcessor("io.github.llamalad7:mixinextras-common:0.2.0-rc.5"))
-	implementation(jarJar("io.github.llamalad7:mixinextras-forge:0.2.0-rc.5")) {
-		jarJar.ranged(it, "[0.2.0-rc.2,)")
+	implementation(jarJar("io.github.llamalad7:mixinextras-neoforge:0.2.0")) {
+		jarJar.ranged(it, "[0.2.0,)")
 	}
 
-	annotationProcessor "net.fabricmc:sponge-mixin:0.12.5+mixin.0.8.5"
+	// TODO: Uncomment once dependencies update
 
 	// Include TerraBlender
-	implementation fg.deobf("com.github.glitchfiend:TerraBlender-forge:${terrablender_version}")
+	// implementation fg.deobf("com.github.glitchfiend:TerraBlender-forge:${terrablender_version}")
 	// Include Immersive Weapons Compatibility Bridge (IWCB)
-	implementation fg.deobf("tech.anonymoushacker1279.iwcompatbridge:IWCompatBridge:${iwcb_version}")
+	// implementation fg.deobf("tech.anonymoushacker1279.iwcompatbridge:IWCompatBridge:${iwcb_version}")
 
 	// Include JEI
-	runtimeOnly fg.deobf("mezz.jei:jei-${minecraft_version}-forge:${jei_version}")
+	// runtimeOnly fg.deobf("mezz.jei:jei-${minecraft_version}-forge:${jei_version}")
 	// Include WTHIT and badpackets
-	runtimeOnly fg.deobf("mcp.mobius.waila:wthit:forge-${wthit_version}")
-	implementation fg.deobf("lol.bai:badpackets:forge-${badpackets_version}")
+	// runtimeOnly fg.deobf("mcp.mobius.waila:wthit:forge-${wthit_version}")
+	// implementation fg.deobf("lol.bai:badpackets:forge-${badpackets_version}")
 	// Include AttributeFix
-	implementation fg.deobf("curse.maven:attributefix-280510:${attributefix_version}")
+	// implementation fg.deobf("curse.maven:attributefix-280510:${attributefix_version}")
 	// Include Debug Utils
-	runtimeOnly fg.deobf("curse.maven:debug-utils-forge-783008:4644077")
+	// runtimeOnly fg.deobf("curse.maven:debug-utils-forge-783008:4644077")
 }
 
 tasks.named('processResources', ProcessResources).configure {
@@ -141,8 +126,6 @@ java {
 	withJavadocJar()
 }
 
-reobf.create('jarJar')
-
 tasks.named('jar', Jar).configure {
 	archiveClassifier = "slim"
 	manifest {
@@ -157,13 +140,10 @@ tasks.named('jar', Jar).configure {
 				"MixinConfigs"            : "mixins.immersiveweapons.json"
 		])
 	}
-
-	finalizedBy 'reobfJar'
 }
 
 tasks.jarJar.configure {
 	archiveClassifier = ""
-	finalizedBy('reobfJarJar')
 }
 
 build.dependsOn tasks.jarJar
@@ -246,14 +226,6 @@ tasks.named('javadoc', Javadoc).configure {
 				'reason:a:Mixin Reason'
 		]
 	}
-}
-
-mixin {
-	add sourceSets.main, "mixins.immersiveweapons.refmap.json"
-	config "mixins.immersiveweapons.json"
-
-	debug.verbose = true
-	debug.export = true
 }
 
 tasks.withType(JavaCompile).configureEach {

@@ -90,7 +90,7 @@ public class SpotlightBlock extends HorizontalDirectionalBlock implements Simple
 	}
 
 	private void stateToggled(BlockPos pos, Level level, BlockState state, boolean lit) {
-		// Start building a list of light positions in front of the block
+		// Start building a list of light positions in front of the blockLocation
 		if (!level.isClientSide) {
 			Direction facing = state.getValue(FACING);
 			BlockPos orientedPos = pos.relative(facing);
@@ -127,11 +127,11 @@ public class SpotlightBlock extends HorizontalDirectionalBlock implements Simple
 	}
 
 	/**
-	 * Get the light value of the block.
+	 * Get the light value of the blockLocation.
 	 *
-	 * @param state  the <code>BlockState</code> of the block
-	 * @param reader the <code>BlockGetter</code> of the block
-	 * @param pos    the <code>BlockPos</code> the block is at
+	 * @param state  the <code>BlockState</code> of the blockLocation
+	 * @param reader the <code>BlockGetter</code> of the blockLocation
+	 * @param pos    the <code>BlockPos</code> the blockLocation is at
 	 * @return int
 	 */
 	@Override

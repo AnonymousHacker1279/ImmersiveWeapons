@@ -9,10 +9,9 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.*;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.fml.DistExecutor;
-import net.minecraftforge.network.NetworkEvent;
-import net.minecraftforge.network.NetworkEvent.Context;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.fml.DistExecutor;
+import net.neoforged.neoforge.network.NetworkEvent.Context;
 import tech.anonymoushacker1279.immersiveweapons.event.SyncHandler;
 import tech.anonymoushacker1279.immersiveweapons.event.game_effects.AccessoryManager;
 import tech.anonymoushacker1279.immersiveweapons.init.EffectRegistry;
@@ -21,7 +20,6 @@ import tech.anonymoushacker1279.immersiveweapons.item.AccessoryItem.EffectType;
 import tech.anonymoushacker1279.immersiveweapons.item.gun.AbstractGunItem;
 
 import java.util.UUID;
-import java.util.function.Supplier;
 
 /**
  * This class contains data for debug tracing.
@@ -141,8 +139,7 @@ public class DebugTracingData {
 			return new DebugDataPacketHandler(packetBuffer.readUUID(), packetBuffer.readFloat(), packetBuffer.readFloat(), packetBuffer.readInt());
 		}
 
-		public static void handle(DebugDataPacketHandler msg, Supplier<Context> contextSupplier) {
-			NetworkEvent.Context context = contextSupplier.get();
+		public static void handle(DebugDataPacketHandler msg, Context context) {
 			context.enqueueWork(() -> DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> runOnClient(msg)));
 			context.setPacketHandled(true);
 		}

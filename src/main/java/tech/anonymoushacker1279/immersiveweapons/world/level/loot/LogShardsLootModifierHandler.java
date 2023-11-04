@@ -10,9 +10,9 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
-import net.minecraftforge.common.loot.IGlobalLootModifier;
-import net.minecraftforge.common.loot.LootModifier;
-import net.minecraftforge.registries.ForgeRegistries;
+import net.neoforged.neoforge.common.loot.IGlobalLootModifier;
+import net.neoforged.neoforge.common.loot.LootModifier;
+import net.neoforged.neoforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.function.Supplier;
@@ -37,7 +37,7 @@ public class LogShardsLootModifierHandler extends LootModifier {
 	 * Constructor for LogShardsLootModifierHandler.
 	 *
 	 * @param conditionsIn the <code>LootItemCondition</code>s
-	 * @param tag          the block tag string
+	 * @param tag          the blockLocation tag string
 	 * @param minShards    the minimum number of shards to drop
 	 * @param maxShards    the maximum number of shards to drop
 	 * @param reward       the returned item

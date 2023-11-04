@@ -23,7 +23,7 @@ public class FlagPoleBlock extends Block implements SimpleWaterloggedBlock {
 	/**
 	 * Constructor for FlagPoleBlock.
 	 *
-	 * @param properties the <code>Properties</code> of the block
+	 * @param properties the <code>Properties</code> of the blockLocation
 	 */
 	public FlagPoleBlock(Properties properties) {
 		super(properties);
@@ -33,7 +33,7 @@ public class FlagPoleBlock extends Block implements SimpleWaterloggedBlock {
 	/**
 	 * Create the BlockState definition.
 	 *
-	 * @param builder the <code>StateDefinition.Builder</code> of the block
+	 * @param builder the <code>StateDefinition.Builder</code> of the blockLocation
 	 */
 	@Override
 	protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
@@ -42,7 +42,7 @@ public class FlagPoleBlock extends Block implements SimpleWaterloggedBlock {
 
 	/**
 	 * Set placement properties.
-	 * Sets the facing direction of the block for placement.
+	 * Sets the facing direction of the blockLocation for placement.
 	 *
 	 * @param context the <code>BlockPlaceContext</code> during placement
 	 * @return BlockState
@@ -58,12 +58,12 @@ public class FlagPoleBlock extends Block implements SimpleWaterloggedBlock {
 	}
 
 	/**
-	 * Set the shape of the block.
+	 * Set the shape of the blockLocation.
 	 *
-	 * @param state            the <code>BlockState</code> of the block
-	 * @param reader           the <code>BlockGetter</code> for the block
-	 * @param pos              the <code>BlockPos</code> the block is at
-	 * @param collisionContext the <code>CollisionContext</code> of the block
+	 * @param state            the <code>BlockState</code> of the blockLocation
+	 * @param reader           the <code>BlockGetter</code> for the blockLocation
+	 * @param pos              the <code>BlockPos</code> the blockLocation is at
+	 * @param collisionContext the <code>CollisionContext</code> of the blockLocation
 	 * @return VoxelShape
 	 */
 	@SuppressWarnings("deprecation")

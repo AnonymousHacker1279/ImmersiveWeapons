@@ -5,7 +5,7 @@ import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation;
 import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraftforge.common.ForgeMod;
+import net.neoforged.neoforge.common.NeoForgeMod;
 import tech.anonymoushacker1279.immersiveweapons.item.AccessoryItem.EffectBuilder;
 import tech.anonymoushacker1279.immersiveweapons.item.AccessoryItem.EffectBuilder.EffectScalingType;
 import tech.anonymoushacker1279.immersiveweapons.item.AccessoryItem.EffectType;
@@ -97,7 +97,7 @@ public class AccessoryItemEffects {
 			.addMobEffect(new MobEffectInstance(MobEffects.NIGHT_VISION, 220, 0, true, true));
 	public static final EffectBuilder AGILITY_BRACELET = new EffectBuilder()
 			.addAttributeModifier(AGILITY_BRACELET_SPEED_MODIFIER, Attributes.MOVEMENT_SPEED)
-			.addAttributeModifier(AGILITY_BRACELET_STEP_HEIGHT_MODIFIER, ForgeMod.STEP_HEIGHT_ADDITION.get());  // TODO: Replace with STEP_HEIGHT in 1.20.2
+			.addAttributeModifier(AGILITY_BRACELET_STEP_HEIGHT_MODIFIER, NeoForgeMod.STEP_HEIGHT.get());
 	public static final EffectBuilder BLOODY_CLOTH = new EffectBuilder()
 			.addEffect(EffectType.BLEED_CANCEL_CHANCE, 0.15d)
 			.addEffect(EffectType.BLEED_RESISTANCE, 0.30d);

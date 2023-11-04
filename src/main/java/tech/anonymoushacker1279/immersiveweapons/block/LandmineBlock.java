@@ -38,7 +38,7 @@ public class LandmineBlock extends Block implements SimpleWaterloggedBlock {
 	/**
 	 * Constructor for LandmineBlock.
 	 *
-	 * @param properties the <code>Properties</code> of the block
+	 * @param properties the <code>Properties</code> of the blockLocation
 	 */
 	public LandmineBlock(BlockBehaviour.Properties properties) {
 		super(properties);
@@ -107,7 +107,7 @@ public class LandmineBlock extends Block implements SimpleWaterloggedBlock {
 
 	@Override
 	public boolean canSurvive(BlockState state, LevelReader level, BlockPos pos) {
-		// Ensure the block is on solid ground
+		// Ensure the blockLocation is on solid ground
 		BlockPos blockpos = pos.below();
 		BlockState blockstate = level.getBlockState(blockpos);
 		return blockstate.isFaceSturdy(level, blockpos, Direction.UP);

@@ -53,10 +53,10 @@ public class CelestialLanternBlock extends LanternBlock implements EntityBlock {
 	}
 
 	/**
-	 * Create a block entity for the block.
+	 * Create a blockLocation entity for the blockLocation.
 	 *
-	 * @param blockPos   the <code>BlockPos</code> the block is at
-	 * @param blockState the <code>BlockState</code> of the block
+	 * @param blockPos   the <code>BlockPos</code> the blockLocation is at
+	 * @param blockState the <code>BlockState</code> of the blockLocation
 	 * @return BlockEntity
 	 */
 	@Override

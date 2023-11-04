@@ -1,9 +1,7 @@
 package tech.anonymoushacker1279.immersiveweapons.init;
 
-import net.minecraft.core.BlockSource;
 import net.minecraft.core.Position;
-import net.minecraft.core.dispenser.AbstractProjectileDispenseBehavior;
-import net.minecraft.core.dispenser.DispenseItemBehavior;
+import net.minecraft.core.dispenser.*;
 import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.item.ItemStack;

@@ -3,18 +3,19 @@ package tech.anonymoushacker1279.immersiveweapons.data.recipes;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import net.minecraft.advancements.*;
+import net.minecraft.advancements.AdvancementRequirements.Strategy;
 import net.minecraft.advancements.critereon.RecipeUnlockedTrigger;
 import net.minecraft.data.recipes.FinishedRecipe;
+import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.crafting.RecipeSerializer;
-import net.minecraftforge.registries.ForgeRegistries;
-import org.jetbrains.annotations.Nullable;
+import net.neoforged.neoforge.registries.ForgeRegistries;
 import tech.anonymoushacker1279.immersiveweapons.init.RecipeSerializerRegistry;
 import tech.anonymoushacker1279.immersiveweapons.item.crafting.AmmunitionTableRecipe.MaterialGroup;
 
+import javax.annotation.Nullable;
 import java.util.*;
-import java.util.function.Consumer;
 
 public class AmmunitionTableRecipeBuilder {
 
@@ -33,28 +34,21 @@ public class AmmunitionTableRecipeBuilder {
 		return new AmmunitionTableRecipeBuilder(RecipeSerializerRegistry.AMMUNITION_TABLE_RECIPE_SERIALIZER.get(), materials, result);
 	}
 
-	public AmmunitionTableRecipeBuilder unlocks(String pName, CriterionTriggerInstance pCriterion) {
+	public AmmunitionTableRecipeBuilder unlocks(String pName, Criterion<?> pCriterion) {
 		advancement.addCriterion(pName, pCriterion);
 		return this;
 	}
 
-	public void save(Consumer<FinishedRecipe> pFinishedRecipeConsumer, String pId) {
-		save(pFinishedRecipeConsumer, new ResourceLocation(pId));
+	public void save(RecipeOutput output, String pId) {
+		save(output, new ResourceLocation(pId));
 	}
 
-	public void save(Consumer<FinishedRecipe> pFinishedRecipeConsumer, ResourceLocation pId) {
-		ensureValid(pId);
+	public void save(RecipeOutput output, ResourceLocation pId) {
 		advancement.parent(new ResourceLocation("recipes/root"))
 				.addCriterion("has_the_recipe", RecipeUnlockedTrigger.unlocked(pId))
-				.rewards(AdvancementRewards.Builder.recipe(pId)).requirements(RequirementsStrategy.OR);
-		pFinishedRecipeConsumer.accept(new AmmunitionTableRecipeBuilder.Result(pId, type, materials, result, advancement,
+				.rewards(AdvancementRewards.Builder.recipe(pId)).requirements(Strategy.OR);
+		output.accept(new AmmunitionTableRecipeBuilder.Result(pId, type, materials, result, advancement,
 				new ResourceLocation(pId.getNamespace(), "recipes/" + pId.getPath())));
-	}
-
-	private void ensureValid(ResourceLocation pId) {
-		if (advancement.getCriteria().isEmpty()) {
-			throw new IllegalStateException("No way of obtaining recipe " + pId);
-		}
 	}
 
 	public static class Result implements FinishedRecipe {
@@ -80,7 +74,7 @@ public class AmmunitionTableRecipeBuilder {
 			JsonArray jsonMaterialsArray = new JsonArray();
 			for (MaterialGroup group : materials) {
 				JsonObject jsonObject = new JsonObject();
-				jsonObject.add("ingredient", group.getIngredient().toJson());
+				jsonObject.add("ingredient", group.getIngredient().toJson(true));
 				jsonObject.addProperty("density", group.getDensity());
 				jsonObject.addProperty("base_multiplier", group.getBaseMultiplier());
 				jsonMaterialsArray.add(jsonObject);
@@ -94,25 +88,19 @@ public class AmmunitionTableRecipeBuilder {
 		}
 
 		@Override
-		public ResourceLocation getId() {
+		public ResourceLocation id() {
 			return id;
 		}
 
 		@Override
-		public RecipeSerializer<?> getType() {
+		public RecipeSerializer<?> type() {
 			return type;
 		}
 
-		@Override
 		@Nullable
-		public JsonObject serializeAdvancement() {
-			return advancement.serializeToJson();
-		}
-
 		@Override
-		@Nullable
-		public ResourceLocation getAdvancementId() {
-			return advancementId;
+		public AdvancementHolder advancement() {
+			return advancement.build(advancementId);
 		}
 	}
 }

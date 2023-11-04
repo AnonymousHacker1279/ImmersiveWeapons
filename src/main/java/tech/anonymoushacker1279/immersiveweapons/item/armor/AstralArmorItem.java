@@ -15,17 +15,14 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.*;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.fml.DistExecutor;
-import net.minecraftforge.network.NetworkEvent;
-import net.minecraftforge.network.NetworkEvent.Context;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.fml.DistExecutor;
+import net.neoforged.neoforge.network.NetworkEvent.Context;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.client.IWKeyBinds;
 import tech.anonymoushacker1279.immersiveweapons.init.ItemRegistry;
 import tech.anonymoushacker1279.immersiveweapons.init.PacketHandler;
 import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
-
-import java.util.function.Supplier;
 
 public class AstralArmorItem extends ArmorItem {
 
@@ -146,8 +143,7 @@ public class AstralArmorItem extends ArmorItem {
 			return new AstralArmorItemPacketHandler(packetBuffer.readBoolean());
 		}
 
-		public static void handle(AstralArmorItemPacketHandler msg, Supplier<Context> contextSupplier) {
-			NetworkEvent.Context context = contextSupplier.get();
+		public static void handle(AstralArmorItemPacketHandler msg, Context context) {
 			if (context.getSender() != null) {
 				context.enqueueWork(() -> DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> run(msg, context.getSender())));
 				context.enqueueWork(() -> DistExecutor.unsafeRunWhenOn(Dist.DEDICATED_SERVER, () -> () -> run(msg, context.getSender())));

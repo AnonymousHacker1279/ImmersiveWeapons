@@ -45,7 +45,7 @@ public class WarriorStatueHead extends WarriorStatueBase {
 
 	/**
 	 * Set placement properties.
-	 * Sets the facing direction of the block for placement.
+	 * Sets the facing direction of the blockLocation for placement.
 	 *
 	 * @param context the <code>BlockItemUseContext</code> during placement
 	 * @return BlockState

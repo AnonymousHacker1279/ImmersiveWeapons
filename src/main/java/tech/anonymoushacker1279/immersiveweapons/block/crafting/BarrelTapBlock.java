@@ -8,6 +8,7 @@ import net.minecraft.world.*;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.level.*;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -36,7 +37,7 @@ public class BarrelTapBlock extends HorizontalDirectionalBlock implements Simple
 	/**
 	 * Constructor for BarrelTapBlock.
 	 *
-	 * @param properties the <code>Properties</code> of the block
+	 * @param properties the <code>Properties</code> of the blockLocation
 	 */
 	public BarrelTapBlock(Properties properties) {
 		super(properties);
@@ -46,7 +47,7 @@ public class BarrelTapBlock extends HorizontalDirectionalBlock implements Simple
 	@Override
 	@SuppressWarnings("deprecation")
 	public boolean canSurvive(BlockState state, LevelReader reader, BlockPos pos) {
-		// Ensure it is placed with the opposite facing direction contacting a Barrel block
+		// Ensure it is placed with the opposite facing direction contacting a Barrel blockLocation
 		Direction facingDirection = state.getValue(FACING);
 		BlockPos blockPos = pos.relative(facingDirection.getOpposite());
 		BlockState blockState = reader.getBlockState(blockPos);
@@ -55,9 +56,9 @@ public class BarrelTapBlock extends HorizontalDirectionalBlock implements Simple
 
 	/**
 	 * Set FluidState properties.
-	 * Allows the block to exhibit waterlogged behavior.
+	 * Allows the blockLocation to exhibit waterlogged behavior.
 	 *
-	 * @param state the <code>BlockState</code> of the block
+	 * @param state the <code>BlockState</code> of the blockLocation
 	 * @return FluidState
 	 */
 	@SuppressWarnings("deprecation")
@@ -67,12 +68,12 @@ public class BarrelTapBlock extends HorizontalDirectionalBlock implements Simple
 	}
 
 	/**
-	 * Set the shape of the block.
+	 * Set the shape of the blockLocation.
 	 *
-	 * @param state            the <code>BlockState</code> of the block
-	 * @param getter           the <code>BlockGetter</code> for the block
-	 * @param pos              the <code>BlockPos</code> the block is at
-	 * @param collisionContext the <code>CollisionContext</code> of the block
+	 * @param state            the <code>BlockState</code> of the blockLocation
+	 * @param getter           the <code>BlockGetter</code> for the blockLocation
+	 * @param pos              the <code>BlockPos</code> the blockLocation is at
+	 * @param collisionContext the <code>CollisionContext</code> of the blockLocation
 	 * @return VoxelShape
 	 */
 	@SuppressWarnings("deprecation")
@@ -89,7 +90,7 @@ public class BarrelTapBlock extends HorizontalDirectionalBlock implements Simple
 	/**
 	 * Create the BlockState definition.
 	 *
-	 * @param builder the <code>StateDefinition.Builder</code> of the block
+	 * @param builder the <code>StateDefinition.Builder</code> of the blockLocation
 	 */
 	@Override
 	public void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
@@ -98,7 +99,7 @@ public class BarrelTapBlock extends HorizontalDirectionalBlock implements Simple
 
 	/**
 	 * Set placement properties.
-	 * Sets the facing direction of the block for placement.
+	 * Sets the facing direction of the blockLocation for placement.
 	 *
 	 * @param context the <code>BlockPlaceContext</code> during placement
 	 * @return BlockState
@@ -124,16 +125,16 @@ public class BarrelTapBlock extends HorizontalDirectionalBlock implements Simple
 			if (blockEntity != null) {
 				if (player.getMainHandItem().getItem() == Items.GLASS_BOTTLE) {
 					Container container = ((Container) blockEntity);
-					List<BarrelTapRecipe> recipes = level.getRecipeManager()
+					List<RecipeHolder<BarrelTapRecipe>> recipes = level.getRecipeManager()
 							.getAllRecipesFor(RecipeTypeRegistry.BARREL_TAP_RECIPE_TYPE.get());
 
-					for (BarrelTapRecipe recipe : recipes) {
+					for (RecipeHolder<BarrelTapRecipe> recipe : recipes) {
 						for (int i = 0; i < container.getContainerSize(); ++i) {
-							if (recipe.material().test(container.getItem(i))) {
-								if (container.getItem(i).getCount() >= recipe.getMaterialCount()) {
-									player.getInventory().add(recipe.getResultItem(level.registryAccess()));
+							if (recipe.value().material().test(container.getItem(i))) {
+								if (container.getItem(i).getCount() >= recipe.value().getMaterialCount()) {
+									player.getInventory().add(recipe.value().getResultItem(level.registryAccess()));
 									player.getMainHandItem().shrink(1);
-									container.removeItem(i, recipe.getMaterialCount());
+									container.removeItem(i, recipe.value().getMaterialCount());
 
 									level.playSound(
 											null,

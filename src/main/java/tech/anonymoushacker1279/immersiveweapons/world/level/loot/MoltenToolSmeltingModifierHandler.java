@@ -18,8 +18,8 @@ import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.common.loot.IGlobalLootModifier;
-import net.minecraftforge.common.loot.LootModifier;
+import net.neoforged.neoforge.common.loot.IGlobalLootModifier;
+import net.neoforged.neoforge.common.loot.LootModifier;
 import org.jetbrains.annotations.NotNull;
 import tech.anonymoushacker1279.immersiveweapons.init.ItemRegistry;
 
@@ -47,20 +47,20 @@ public class MoltenToolSmeltingModifierHandler extends LootModifier {
 
 	@Override
 	public @NotNull ObjectArrayList<ItemStack> doApply(ObjectArrayList<ItemStack> generatedLoot, LootContext context) {
-		// If a molten tool is used and the player is crouching, the block is smelted
+		// If a molten tool is used and the player is crouching, the blockLocation is smelted
 		if (context.getParamOrNull(LootContextParams.THIS_ENTITY) instanceof Player player) {
 			if (player.isCrouching() && MOLTEN_TOOLS.contains(player.getItemInHand(InteractionHand.MAIN_HAND).getItem())) {
-				// Query smelting recipes to see if the block can be smelted
+				// Query smelting recipes to see if the blockLocation can be smelted
 				RecipeManager manager = player.level().getRecipeManager();
 
-				// If the block can be smelted, smelt it
+				// If the blockLocation can be smelted, smelt it
 				BlockState state = context.getParamOrNull(LootContextParams.BLOCK_STATE);
 				if (state != null) {
 					ItemStack blockItemStack = state.getBlock().asItem().getDefaultInstance();
 					if (manager.getRecipeFor(RecipeType.SMELTING, new SimpleContainer(blockItemStack), player.level()).isPresent()) {
 						// Get the smelted item
 						ItemStack smeltedItem = manager.getRecipeFor(RecipeType.SMELTING, new SimpleContainer(blockItemStack), player.level())
-								.get().assemble(new SimpleContainer(blockItemStack), player.level().registryAccess());
+								.get().value().assemble(new SimpleContainer(blockItemStack), player.level().registryAccess());
 
 						// Drop the smelted item
 						Vec3 origin = context.getParamOrNull(LootContextParams.ORIGIN);

@@ -1,8 +1,8 @@
 package tech.anonymoushacker1279.immersiveweapons.init;
 
 import net.minecraft.resources.ResourceLocation;
-import net.minecraftforge.network.NetworkRegistry;
-import net.minecraftforge.network.simple.SimpleChannel;
+import net.neoforged.neoforge.network.NetworkRegistry;
+import net.neoforged.neoforge.network.simple.SimpleChannel;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.block.MortarBlock.MortarBlockPacketHandler;
 import tech.anonymoushacker1279.immersiveweapons.block.SpikeTrapBlock.SpikeTrapBlockPacketHandler;

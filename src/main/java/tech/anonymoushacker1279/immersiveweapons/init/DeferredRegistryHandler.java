@@ -4,10 +4,10 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.CreativeModeTab;
-import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
-import net.minecraftforge.registries.DeferredRegister;
-import net.minecraftforge.registries.RegistryObject;
+import net.neoforged.bus.api.IEventBus;
+import net.neoforged.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.neoforged.neoforge.registries.DeferredRegister;
+import net.neoforged.neoforge.registries.RegistryObject;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 
 public class DeferredRegistryHandler {
@@ -58,7 +58,7 @@ public class DeferredRegistryHandler {
 		ImmersiveWeapons.LOGGER.info("Initializing deferred registry for loot modifiers");
 		LootModifierRegistry.GLOBAL_LOOT_MODIFIER_SERIALIZER.register(modEventBus);
 
-		ImmersiveWeapons.LOGGER.info("Initializing deferred registry for block entities");
+		ImmersiveWeapons.LOGGER.info("Initializing deferred registry for blockLocation entities");
 		BlockEntityRegistry.BLOCK_ENTITIES.register(modEventBus);
 
 		ImmersiveWeapons.LOGGER.info("Initializing deferred registry for effects");

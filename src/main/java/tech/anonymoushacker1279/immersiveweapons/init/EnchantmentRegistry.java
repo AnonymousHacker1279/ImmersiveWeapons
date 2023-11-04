@@ -4,7 +4,7 @@ import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.Enchantment.Rarity;
 import net.minecraft.world.item.enchantment.EnchantmentCategory;
-import net.minecraftforge.registries.*;
+import net.neoforged.neoforge.registries.*;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.enchantment.*;
 import tech.anonymoushacker1279.immersiveweapons.item.CursedSightStaffItem;

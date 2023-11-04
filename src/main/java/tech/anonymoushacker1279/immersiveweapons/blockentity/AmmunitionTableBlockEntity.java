@@ -12,6 +12,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.entity.BaseContainerBlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -220,15 +221,15 @@ public class AmmunitionTableBlockEntity extends BaseContainerBlockEntity impleme
 			return;
 		}
 
-		List<AmmunitionTableRecipe> recipes = level.getRecipeManager()
+		List<RecipeHolder<AmmunitionTableRecipe>> recipes = level.getRecipeManager()
 				.getAllRecipesFor(RecipeTypeRegistry.AMMUNITION_TABLE_RECIPE_TYPE.get());
 
 		// Select a recipe that matches based on the first input item
 		// Determine the first non-air item in the table's inventory
 		ItemStack firstStack = inventory.stream().filter(stack -> stack != ItemStack.EMPTY).findFirst().orElse(ItemStack.EMPTY);
 
-		AmmunitionTableRecipe recipe = recipes.stream()
-				.filter(r -> r.getIngredients().stream().anyMatch(ingredient -> ingredient.test(firstStack)))
+		RecipeHolder<AmmunitionTableRecipe> recipe = recipes.stream()
+				.filter(r -> r.value().getIngredients().stream().anyMatch(ingredient -> ingredient.test(firstStack)))
 				.findFirst().orElse(null);
 
 		if (recipe == null) {
@@ -236,7 +237,7 @@ public class AmmunitionTableBlockEntity extends BaseContainerBlockEntity impleme
 			return;
 		}
 
-		List<MaterialGroup> recipeMaterials = recipe.getMaterials();
+		List<MaterialGroup> recipeMaterials = recipe.value().getMaterials();
 
 		List<ItemStack> materialList = recipeMaterials.stream().collect(
 				ArrayList::new,
@@ -254,7 +255,7 @@ public class AmmunitionTableBlockEntity extends BaseContainerBlockEntity impleme
 				ArrayList::addAll
 		);
 
-		ItemStack result = recipe.getResultItem(level.registryAccess());
+		ItemStack result = recipe.value().getResultItem(level.registryAccess());
 
 		// The size of the output stack is calculated here
 		float outputSize = 0.0f;

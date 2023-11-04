@@ -1,9 +1,9 @@
 package tech.anonymoushacker1279.immersiveweapons.event;
 
-import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
-import net.minecraftforge.fml.event.config.ModConfigEvent;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.Mod.EventBusSubscriber;
+import net.neoforged.fml.event.config.ModConfigEvent;
+import net.neoforged.neoforge.event.entity.EntityAttributeCreationEvent;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.config.ConfigHelper.TomlConfigOps;
 import tech.anonymoushacker1279.immersiveweapons.entity.ambient.FireflyEntity;

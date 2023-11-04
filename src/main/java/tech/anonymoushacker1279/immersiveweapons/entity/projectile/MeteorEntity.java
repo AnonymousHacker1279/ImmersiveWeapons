@@ -17,7 +17,7 @@ import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.Level.ExplosionInteraction;
 import net.minecraft.world.phys.*;
-import net.minecraftforge.event.ForgeEventFactory;
+import net.neoforged.neoforge.event.EventHooks;
 import org.jetbrains.annotations.Nullable;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.init.EnchantmentRegistry;
@@ -50,14 +50,14 @@ public class MeteorEntity extends Projectile {
 		if (!level.isClientSide) {
 			MeteorEntity meteorEntity = new MeteorEntity(EntityRegistry.METEOR_ENTITY.get(), level);
 
-			// Determine a starting position 40 blocks above the target position, and within a 15 block radius
+			// Determine a starting position 40 blocks above the target position, and within a 15 blockLocation radius
 			meteorEntity.startPos = new BlockPos(
 					targetPos.getX() + level.getRandom().nextIntBetweenInclusive(-15, 15),
 					targetPos.getY() + 40,
 					targetPos.getZ() + level.getRandom().nextIntBetweenInclusive(-15, 15)
 			);
 
-			// Check if the position is inside a solid block
+			// Check if the position is inside a solid blockLocation
 			if (level.getBlockState(meteorEntity.startPos).isSolid()) {
 				return false;
 			}
@@ -123,7 +123,7 @@ public class MeteorEntity extends Projectile {
 				rayTraceResult = entityRayTraceResult;
 			}
 
-			if (rayTraceResult != null && rayTraceResult.getType() != HitResult.Type.MISS && !ForgeEventFactory.onProjectileImpact(this, rayTraceResult)) {
+			if (rayTraceResult != null && rayTraceResult.getType() != HitResult.Type.MISS && !EventHooks.onProjectileImpact(this, rayTraceResult)) {
 				onHit(rayTraceResult);
 				hasImpulse = true;
 			}

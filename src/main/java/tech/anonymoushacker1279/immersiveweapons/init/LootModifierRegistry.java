@@ -1,8 +1,8 @@
 package tech.anonymoushacker1279.immersiveweapons.init;
 
 import com.mojang.serialization.Codec;
-import net.minecraftforge.common.loot.IGlobalLootModifier;
-import net.minecraftforge.registries.*;
+import net.neoforged.neoforge.common.loot.IGlobalLootModifier;
+import net.neoforged.neoforge.registries.*;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.world.level.loot.*;
 

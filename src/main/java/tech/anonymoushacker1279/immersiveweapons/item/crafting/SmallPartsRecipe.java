@@ -1,34 +1,23 @@
 package tech.anonymoushacker1279.immersiveweapons.item.crafting;
 
-import com.google.gson.*;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.util.GsonHelper;
 import net.minecraft.world.Container;
 import net.minecraft.world.item.*;
 import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.registries.ForgeRegistries;
+import net.neoforged.neoforge.registries.ForgeRegistries;
 import tech.anonymoushacker1279.immersiveweapons.init.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public record SmallPartsRecipe(ResourceLocation recipeId,
-                               Ingredient material,
+public record SmallPartsRecipe(Ingredient material,
                                List<Item> craftables) implements Recipe<Container> {
-
-	/**
-	 * Constructor for SmallPartsRecipe.
-	 *
-	 * @param recipeId   the <code>ResourceLocation</code> for the recipe
-	 * @param material   the first <code>Ingredient</code>
-	 * @param craftables a <code>List</code> containing <code>Item</code>s that are formed from the material
-	 */
-	public SmallPartsRecipe {
-	}
 
 	/**
 	 * Used to check if a recipe matches current crafting inventory.
@@ -75,16 +64,6 @@ public record SmallPartsRecipe(ResourceLocation recipeId,
 	}
 
 	/**
-	 * Get the recipe ID.
-	 *
-	 * @return ResourceLocation
-	 */
-	@Override
-	public ResourceLocation getId() {
-		return recipeId;
-	}
-
-	/**
 	 * Get the recipe serializer.
 	 *
 	 * @return RecipeSerializer
@@ -117,35 +96,35 @@ public record SmallPartsRecipe(ResourceLocation recipeId,
 	}
 
 	public static class Serializer implements RecipeSerializer<SmallPartsRecipe> {
-		/**
-		 * Serialize from JSON.
-		 *
-		 * @param recipeId the <code>ResourceLocation</code> for the recipe
-		 * @param json     the <code>JsonObject</code> instance
-		 * @return SmallPartsRecipe
-		 */
+
+		private static final Codec<SmallPartsRecipe> CODEC = RecordCodecBuilder.create(
+				instance -> instance.group(
+								Ingredient.CODEC.fieldOf("material").forGetter(recipe -> recipe.material),
+								Codec.list(Codec.STRING).fieldOf("craftables").forGetter(recipe -> {
+									List<String> craftables = new ArrayList<>(recipe.craftables.size());
+									for (Item item : recipe.craftables) {
+										craftables.add(ForgeRegistries.ITEMS.getKey(item).toString());
+									}
+									return craftables;
+								})
+						)
+						.apply(instance, (material, craftables) -> {
+									List<Item> craftables1 = new ArrayList<>(craftables.size());
+									for (String s : craftables) {
+										craftables1.add(ForgeRegistries.ITEMS.getValue(ResourceLocation.tryParse(s)));
+									}
+
+									return new SmallPartsRecipe(material, craftables1);
+								}
+						));
+
 		@Override
-		public SmallPartsRecipe fromJson(ResourceLocation recipeId, JsonObject json) {
-			Ingredient material = Ingredient.fromJson(GsonHelper.getAsJsonObject(json, "material"));
-			JsonArray craftablesArray = GsonHelper.getAsJsonArray(json, "craftables");
-
-			List<Item> craftables = new ArrayList<>(craftablesArray.size());
-			for (JsonElement element : craftablesArray) {
-				craftables.add(ForgeRegistries.ITEMS.getValue(ResourceLocation.tryParse(element.getAsString())));
-			}
-
-			return new SmallPartsRecipe(recipeId, material, craftables);
+		public Codec<SmallPartsRecipe> codec() {
+			return CODEC;
 		}
 
-		/**
-		 * Serialize from JSON on the network.
-		 *
-		 * @param recipeId the <code>ResourceLocation</code> for the recipe
-		 * @param buffer   the <code>FriendlyByteBuf</code> instance
-		 * @return SmallPartsRecipe
-		 */
 		@Override
-		public SmallPartsRecipe fromNetwork(ResourceLocation recipeId, FriendlyByteBuf buffer) {
+		public SmallPartsRecipe fromNetwork(FriendlyByteBuf buffer) {
 			Ingredient material = Ingredient.fromNetwork(buffer);
 
 			String craft = buffer.readUtf();
@@ -157,15 +136,9 @@ public record SmallPartsRecipe(ResourceLocation recipeId,
 				craftables.add(ForgeRegistries.ITEMS.getValue(ResourceLocation.tryParse(s2)));
 			}
 
-			return new SmallPartsRecipe(recipeId, material, craftables);
+			return new SmallPartsRecipe(material, craftables);
 		}
 
-		/**
-		 * Serialize to JSON on the network.
-		 *
-		 * @param buffer the <code>FriendlyByteBuf</code> instance
-		 * @param recipe the <code>SmallPartsRecipe</code> instance
-		 */
 		@Override
 		public void toNetwork(FriendlyByteBuf buffer, SmallPartsRecipe recipe) {
 			recipe.material.toNetwork(buffer);

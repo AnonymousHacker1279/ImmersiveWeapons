@@ -80,7 +80,7 @@ public class MolotovEntity extends ThrowableItemProjectile {
 	}
 
 	/**
-	 * Runs when an entity/block is hit.
+	 * Runs when an entity/blockLocation is hit.
 	 *
 	 * @param rayTraceResult the <code>RayTraceResult</code> instance
 	 */
@@ -119,7 +119,7 @@ public class MolotovEntity extends ThrowableItemProjectile {
 	}
 
 	/**
-	 * Move the position down until a solid block is under it.
+	 * Move the position down until a solid blockLocation is under it.
 	 *
 	 * @param pos          the <code>BlockPos</code> being moved
 	 * @param distanceDown the number of blocks to try moving down

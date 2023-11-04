@@ -209,16 +209,6 @@ public abstract class AbstractDyingSoldierEntity extends Monster implements Rang
 		return 1.74F;
 	}
 
-	/**
-	 * Get the Y offset of the entity.
-	 *
-	 * @return double
-	 */
-	@Override
-	public double getMyRidingOffset() {
-		return -0.6D;
-	}
-
 	@Override
 	public boolean checkSpawnRules(LevelAccessor pLevel, MobSpawnType pSpawnReason) {
 		boolean walkTargetAboveZero = super.checkSpawnRules(pLevel, pSpawnReason);

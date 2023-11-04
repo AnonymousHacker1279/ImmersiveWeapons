@@ -1,18 +1,7 @@
 package tech.anonymoushacker1279.immersiveweapons.world.level.levelgen.biomes;
 
-import com.mojang.datafixers.util.Pair;
-import net.minecraft.core.Registry;
-import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.level.biome.Biome;
-import net.minecraft.world.level.biome.Biomes;
-import net.minecraft.world.level.biome.Climate.ParameterPoint;
-import tech.anonymoushacker1279.immersiveweapons.data.biomes.IWBiomes;
-import terrablender.api.Region;
-import terrablender.api.RegionType;
-
-import java.util.function.Consumer;
-
+// TODO: reimplement when/if TerraBlender updates to NeoForge
+/*
 public class IWOverworldBiomesProvider extends Region {
 
 	public IWOverworldBiomesProvider(ResourceLocation name, RegionType type, int weight) {
@@ -24,4 +13,4 @@ public class IWOverworldBiomesProvider extends Region {
 
 		addModifiedVanillaOverworldBiomes(mapper, modifier -> modifier.replaceBiome(Biomes.PLAINS, IWBiomes.BATTLEFIELD));
 	}
-}
+}*/

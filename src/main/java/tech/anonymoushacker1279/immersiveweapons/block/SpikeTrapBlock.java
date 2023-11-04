@@ -19,17 +19,14 @@ import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.fml.DistExecutor;
-import net.minecraftforge.network.NetworkEvent;
-import net.minecraftforge.network.NetworkEvent.Context;
-import net.minecraftforge.network.PacketDistributor;
-import net.minecraftforge.network.PacketDistributor.TargetPoint;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.fml.DistExecutor;
+import net.neoforged.neoforge.network.NetworkEvent.Context;
+import net.neoforged.neoforge.network.PacketDistributor;
+import net.neoforged.neoforge.network.PacketDistributor.TargetPoint;
 import tech.anonymoushacker1279.immersiveweapons.init.PacketHandler;
 import tech.anonymoushacker1279.immersiveweapons.init.SoundEventRegistry;
 import tech.anonymoushacker1279.immersiveweapons.world.level.IWDamageSources;
-
-import java.util.function.Supplier;
 
 public class SpikeTrapBlock extends Block implements SimpleWaterloggedBlock {
 
@@ -40,7 +37,7 @@ public class SpikeTrapBlock extends Block implements SimpleWaterloggedBlock {
 	/**
 	 * Constructor for SpikeTrapBlock.
 	 *
-	 * @param properties the <code>Properties</code> of the block
+	 * @param properties the <code>Properties</code> of the blockLocation
 	 */
 	public SpikeTrapBlock(Properties properties) {
 		super(properties);
@@ -67,7 +64,7 @@ public class SpikeTrapBlock extends Block implements SimpleWaterloggedBlock {
 
 	/**
 	 * Set placement properties.
-	 * Sets the facing direction of the block for placement.
+	 * Sets the facing direction of the blockLocation for placement.
 	 *
 	 * @param context the <code>BlockPlaceContext</code> during placement
 	 * @return BlockState
@@ -80,9 +77,9 @@ public class SpikeTrapBlock extends Block implements SimpleWaterloggedBlock {
 
 	/**
 	 * Set FluidState properties.
-	 * Allows the block to exhibit waterlogged behavior.
+	 * Allows the blockLocation to exhibit waterlogged behavior.
 	 *
-	 * @param state the <code>BlockState</code> of the block
+	 * @param state the <code>BlockState</code> of the blockLocation
 	 * @return FluidState
 	 */
 	@SuppressWarnings("deprecation")
@@ -94,7 +91,7 @@ public class SpikeTrapBlock extends Block implements SimpleWaterloggedBlock {
 	/**
 	 * Create the BlockState definition.
 	 *
-	 * @param builder the <code>StateContainer.Builder</code> of the block
+	 * @param builder the <code>StateContainer.Builder</code> of the blockLocation
 	 */
 	@Override
 	protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
@@ -102,11 +99,11 @@ public class SpikeTrapBlock extends Block implements SimpleWaterloggedBlock {
 	}
 
 	/**
-	 * Determines if the block can exist in a given state.
+	 * Determines if the blockLocation can exist in a given state.
 	 *
-	 * @param state  the <code>BlockState</code> of the block
-	 * @param reader the <code>LevelReader</code> for the block
-	 * @param pos    the <code>BlocKPos</code> the block is at
+	 * @param state  the <code>BlockState</code> of the blockLocation
+	 * @param reader the <code>LevelReader</code> for the blockLocation
+	 * @param pos    the <code>BlocKPos</code> the blockLocation is at
 	 * @return boolean
 	 */
 	@SuppressWarnings("deprecation")
@@ -116,13 +113,13 @@ public class SpikeTrapBlock extends Block implements SimpleWaterloggedBlock {
 	}
 
 	/**
-	 * Runs when an entity is inside the block's collision area.
-	 * Allows the block to deal damage on contact.
+	 * Runs when an entity is inside the blockLocation's collision area.
+	 * Allows the blockLocation to deal damage on contact.
 	 *
-	 * @param state  the <code>BlockState</code> of the block
-	 * @param level  the <code>Level</code> the block is in
-	 * @param pos    the <code>BlockPos</code> the block is at
-	 * @param entity the <code>Entity</code> passing through the block
+	 * @param state  the <code>BlockState</code> of the blockLocation
+	 * @param level  the <code>Level</code> the blockLocation is in
+	 * @param pos    the <code>BlockPos</code> the blockLocation is at
+	 * @param entity the <code>Entity</code> passing through the blockLocation
 	 */
 	@SuppressWarnings("deprecation")
 	@Override
@@ -137,11 +134,11 @@ public class SpikeTrapBlock extends Block implements SimpleWaterloggedBlock {
 	/**
 	 * Runs when neighboring blocks change state.
 	 *
-	 * @param state    the <code>BlockState</code> of the block
-	 * @param level    the <code>Level</code> the block is in
-	 * @param pos      the <code>BlockPos</code> the block is at
-	 * @param oldState the <code>BlockState</code> the block previously had
-	 * @param isMoving determines if the block is moving
+	 * @param state    the <code>BlockState</code> of the blockLocation
+	 * @param level    the <code>Level</code> the blockLocation is in
+	 * @param pos      the <code>BlockPos</code> the blockLocation is at
+	 * @param oldState the <code>BlockState</code> the blockLocation previously had
+	 * @param isMoving determines if the blockLocation is moving
 	 */
 	@SuppressWarnings("deprecation")
 	@Override
@@ -156,12 +153,12 @@ public class SpikeTrapBlock extends Block implements SimpleWaterloggedBlock {
 	/**
 	 * Runs when neighboring blocks change state.
 	 *
-	 * @param state    the <code>BlockState</code> of the block
-	 * @param level    the <code>Level</code> the block is in
-	 * @param pos      the <code>BlockPos</code> the block is at
+	 * @param state    the <code>BlockState</code> of the blockLocation
+	 * @param level    the <code>Level</code> the blockLocation is in
+	 * @param pos      the <code>BlockPos</code> the blockLocation is at
 	 * @param blockIn  the <code>Block</code> that is changing
-	 * @param fromPos  the <code>BlockPos</code> of the changing block
-	 * @param isMoving determines if the block is moving
+	 * @param fromPos  the <code>BlockPos</code> of the changing blockLocation
+	 * @param isMoving determines if the blockLocation is moving
 	 */
 	@SuppressWarnings("deprecation")
 	@Override
@@ -185,49 +182,19 @@ public class SpikeTrapBlock extends Block implements SimpleWaterloggedBlock {
 
 	public record SpikeTrapBlockPacketHandler(BlockPos blockPos, boolean extend) {
 
-		/**
-		 * Constructor for SpikeTrapBlockPacketHandler.
-		 */
-		public SpikeTrapBlockPacketHandler {
-		}
-
-		/**
-		 * Encodes a packet
-		 *
-		 * @param msg          the <code>SpikeTrapBlockPacketHandler</code> message being sent
-		 * @param packetBuffer the <code>PacketBuffer</code> containing packet data
-		 */
 		public static void encode(SpikeTrapBlockPacketHandler msg, FriendlyByteBuf packetBuffer) {
 			packetBuffer.writeBlockPos(msg.blockPos).writeBoolean(msg.extend);
 		}
 
-		/**
-		 * Decodes a packet
-		 *
-		 * @param packetBuffer the <code>PacketBuffer</code> containing packet data
-		 * @return SpikeTrapBlockPacketHandler
-		 */
 		public static SpikeTrapBlockPacketHandler decode(FriendlyByteBuf packetBuffer) {
 			return new SpikeTrapBlockPacketHandler(packetBuffer.readBlockPos(), packetBuffer.readBoolean());
 		}
 
-		/**
-		 * Handles an incoming packet, by sending it to the client/server
-		 *
-		 * @param msg             the <code>SpikeTrapBlockPacketHandler</code> message being sent
-		 * @param contextSupplier the <code>Supplier</code> providing context
-		 */
-		public static void handle(SpikeTrapBlockPacketHandler msg, Supplier<Context> contextSupplier) {
-			NetworkEvent.Context context = contextSupplier.get();
+		public static void handle(SpikeTrapBlockPacketHandler msg, Context context) {
 			context.enqueueWork(() -> DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> handleOnClient(msg)));
 			context.setPacketHandled(true);
 		}
 
-		/**
-		 * Runs specifically on the client, when a packet is received
-		 *
-		 * @param msg the <code>SpikeTrapBlockPacketHandler</code> message being sent
-		 */
 		private static void handleOnClient(SpikeTrapBlockPacketHandler msg) {
 			Minecraft minecraft = Minecraft.getInstance();
 			if (minecraft.level != null) {

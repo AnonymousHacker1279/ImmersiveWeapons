@@ -3,7 +3,7 @@ package tech.anonymoushacker1279.immersiveweapons.util;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
-import net.minecraftforge.registries.ForgeRegistries;
+import net.neoforged.neoforge.registries.ForgeRegistries;
 
 import java.util.Objects;
 import java.util.UUID;
@@ -70,9 +70,9 @@ public class GeneralUtilities {
 	}
 
 	/**
-	 * Returns the {@linkplain ResourceLocation#getPath() path} of the registry name for the given block. This
+	 * Returns the {@linkplain ResourceLocation#getPath() path} of the registry name for the given blockLocation. This
 	 * is a convenience method which checks if the registry name of the entry exists, to avoid linting warnings about
-	 * the nullability of the {@linkplain net.minecraftforge.registries.IForgeRegistry<Block>#getKey entry's registry name}.
+	 * the nullability of the {@linkplain net.neoforged.neoforge.registries.IForgeRegistry<Block>#getKey entry's registry name}.
 	 *
 	 * @param block the registry entry
 	 * @return the path of the registry name of the given entry
@@ -85,7 +85,7 @@ public class GeneralUtilities {
 	/**
 	 * Returns the {@linkplain ResourceLocation#getPath() path} of the registry name for the given item. This
 	 * is a convenience method which checks if the registry name of the entry exists, to avoid linting warnings about
-	 * the nullability of the {@linkplain net.minecraftforge.registries.IForgeRegistry<Item>#getKey entry's registry name}.
+	 * the nullability of the {@linkplain net.neoforged.neoforge.registries.IForgeRegistry<Item>#getKey entry's registry name}.
 	 *
 	 * @param item the registry entry
 	 * @return the path of the registry name of the given entry

@@ -3,7 +3,7 @@ package tech.anonymoushacker1279.immersiveweapons.init;
 import net.minecraft.core.Direction;
 import net.minecraft.world.item.*;
 import net.minecraft.world.item.Item.Properties;
-import net.minecraftforge.registries.RegistryObject;
+import net.neoforged.neoforge.registries.RegistryObject;
 
 @SuppressWarnings({"unused"})
 public class BlockItemRegistry {

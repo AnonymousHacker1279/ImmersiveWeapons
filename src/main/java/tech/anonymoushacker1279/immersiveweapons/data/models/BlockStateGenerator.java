@@ -6,12 +6,12 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
-import net.minecraftforge.client.model.generators.*;
-import net.minecraftforge.client.model.generators.ModelBuilder.FaceRotation;
-import net.minecraftforge.client.model.generators.ModelFile.ExistingModelFile;
-import net.minecraftforge.common.data.ExistingFileHelper;
-import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.registries.RegistryObject;
+import net.neoforged.neoforge.client.model.generators.*;
+import net.neoforged.neoforge.client.model.generators.ModelBuilder.FaceRotation;
+import net.neoforged.neoforge.client.model.generators.ModelFile.ExistingModelFile;
+import net.neoforged.neoforge.common.data.ExistingFileHelper;
+import net.neoforged.neoforge.registries.ForgeRegistries;
+import net.neoforged.neoforge.registries.RegistryObject;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.block.*;
 import tech.anonymoushacker1279.immersiveweapons.block.barbed_wire.BarbedWireBlock;
@@ -34,7 +34,7 @@ public class BlockStateGenerator extends BlockStateProvider {
 		List<Block> blocks = new ArrayList<>(250);
 		BlockRegistry.BLOCKS.getEntries().stream().map(RegistryObject::get).forEach(blocks::add);
 
-		ResourceLocation stardust_granule_overlay = new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/stardust_granule_overlay");
+		ResourceLocation stardust_granule_overlay = new ResourceLocation(ImmersiveWeapons.MOD_ID, "blockLocation/stardust_granule_overlay");
 
 		// Generate simple, six-sided blocks
 		for (Block block : BlockLists.simpleBlocks) {
@@ -43,22 +43,22 @@ public class BlockStateGenerator extends BlockStateProvider {
 
 		// Generate data for simple, six-sided blocks with custom render types
 		simpleBlock(BlockRegistry.BULLETPROOF_GLASS.get(), models().cubeAll("bulletproof_glass",
-						new ResourceLocation(ImmersiveWeapons.MOD_ID + ":block/bulletproof_glass"))
+						new ResourceLocation(ImmersiveWeapons.MOD_ID + ":blockLocation/bulletproof_glass"))
 				.renderType("minecraft:cutout_mipped"));
 		simpleBlock(BlockRegistry.CLOUD.get(), models().cubeAll("cloud",
-						new ResourceLocation(ImmersiveWeapons.MOD_ID + ":block/cloud"))
+						new ResourceLocation(ImmersiveWeapons.MOD_ID + ":blockLocation/cloud"))
 				.renderType("minecraft:translucent"));
 		for (Block block : BlockLists.stainedGlassBlocks) {
 			String color = Objects.requireNonNull(ForgeRegistries.BLOCKS.getKey(block)).getPath().split("stained_bulletproof_glass")[0];
 			simpleBlock(block, models().cubeAll(color + "stained_bulletproof_glass",
-							new ResourceLocation(ImmersiveWeapons.MOD_ID + ":block/" + color + "stained_bulletproof_glass"))
+							new ResourceLocation(ImmersiveWeapons.MOD_ID + ":blockLocation/" + color + "stained_bulletproof_glass"))
 					.renderType("minecraft:translucent"));
 		}
 		// Stardust leaves have emissive layers, requiring a separate model
-		ResourceLocation stardust_leaves_all = new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/stardust_leaves");
+		ResourceLocation stardust_leaves_all = new ResourceLocation(ImmersiveWeapons.MOD_ID, "blockLocation/stardust_leaves");
 		Block stardust_leaves = BlockRegistry.STARDUST_LEAVES.get();
 		simpleBlock(BlockRegistry.STARDUST_LEAVES.get(),
-				models().withExistingParent(Objects.requireNonNull(ForgeRegistries.BLOCKS.getKey(stardust_leaves)).getPath(), "minecraft:block/cube_all")
+				models().withExistingParent(Objects.requireNonNull(ForgeRegistries.BLOCKS.getKey(stardust_leaves)).getPath(), "minecraft:blockLocation/cube_all")
 						.texture("all", stardust_leaves_all)
 						.texture("overlay", stardust_granule_overlay)
 						.renderType("minecraft:cutout_mipped")
@@ -77,16 +77,16 @@ public class BlockStateGenerator extends BlockStateProvider {
 		for (Block block : BlockLists.stoneBasedOres) {
 			simpleBlock(block, models().withExistingParent(Objects.requireNonNull(ForgeRegistries.BLOCKS.getKey(block)).getPath(),
 							new ResourceLocation(ImmersiveWeapons.MOD_ID, "simple_overlay"))
-					.texture("all", "minecraft:block/stone")
-					.texture("overlay", new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/"
+					.texture("all", "minecraft:blockLocation/stone")
+					.texture("overlay", new ResourceLocation(ImmersiveWeapons.MOD_ID, "blockLocation/"
 							+ Objects.requireNonNull(ForgeRegistries.BLOCKS.getKey(block)).getPath()))
 					.renderType("minecraft:cutout_mipped"));
 		}
 		for (Block block : BlockLists.deepslateBasedOres) {
 			simpleBlock(block, models().withExistingParent(Objects.requireNonNull(ForgeRegistries.BLOCKS.getKey(block)).getPath(),
 							new ResourceLocation(ImmersiveWeapons.MOD_ID, "simple_overlay"))
-					.texture("all", "minecraft:block/deepslate")
-					.texture("overlay", new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/"
+					.texture("all", "minecraft:blockLocation/deepslate")
+					.texture("overlay", new ResourceLocation(ImmersiveWeapons.MOD_ID, "blockLocation/"
 							+ Objects.requireNonNull(ForgeRegistries.BLOCKS.getKey(block)).getPath()
 							.replace("deepslate_", "")))
 					.renderType("minecraft:cutout_mipped"));
@@ -94,8 +94,8 @@ public class BlockStateGenerator extends BlockStateProvider {
 		for (Block block : BlockLists.netherrackBasedOres) {
 			simpleBlock(block, models().withExistingParent(Objects.requireNonNull(ForgeRegistries.BLOCKS.getKey(block)).getPath(),
 							new ResourceLocation(ImmersiveWeapons.MOD_ID, "simple_overlay"))
-					.texture("all", "minecraft:block/netherrack")
-					.texture("overlay", new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/"
+					.texture("all", "minecraft:blockLocation/netherrack")
+					.texture("overlay", new ResourceLocation(ImmersiveWeapons.MOD_ID, "blockLocation/"
 							+ Objects.requireNonNull(ForgeRegistries.BLOCKS.getKey(block)).getPath()
 							.replace("nether_", "")))
 					.renderType("minecraft:cutout_mipped"));
@@ -103,16 +103,16 @@ public class BlockStateGenerator extends BlockStateProvider {
 		// Astral ore uses smooth quartz for a base
 		simpleBlock(BlockRegistry.ASTRAL_ORE.get(), models().withExistingParent(Objects.requireNonNull(ForgeRegistries.BLOCKS.getKey(BlockRegistry.ASTRAL_ORE.get())).getPath(),
 						new ResourceLocation(ImmersiveWeapons.MOD_ID, "simple_overlay"))
-				.texture("all", "minecraft:block/quartz_block_bottom")
-				.texture("overlay", new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/astral_ore"))
+				.texture("all", "minecraft:blockLocation/quartz_block_bottom")
+				.texture("overlay", new ResourceLocation(ImmersiveWeapons.MOD_ID, "blockLocation/astral_ore"))
 				.renderType("minecraft:cutout_mipped"));
 
 		// Generate data for tables
 		blocks.stream().filter(WoodenTableBlock.class::isInstance).forEach(block -> {
-			String namespace = "minecraft:block/";
+			String namespace = "minecraft:blockLocation/";
 
 			if (block == BlockRegistry.BURNED_OAK_TABLE.get() || block == BlockRegistry.STARDUST_TABLE.get()) {
-				namespace = ImmersiveWeapons.MOD_ID + ":block/";
+				namespace = ImmersiveWeapons.MOD_ID + ":blockLocation/";
 			}
 
 			simpleBlock(block, models().withExistingParent(Objects.requireNonNull(ForgeRegistries.BLOCKS.getKey(block)).getPath(),
@@ -135,35 +135,35 @@ public class BlockStateGenerator extends BlockStateProvider {
 				.withExistingParent(Objects.requireNonNull(ForgeRegistries.BLOCKS.getKey(block)).getPath(),
 						new ResourceLocation(ImmersiveWeapons.MOD_ID, "flag"))
 				.texture("flag", ImmersiveWeapons.MOD_ID +
-						":block/" + Objects.requireNonNull(ForgeRegistries.BLOCKS.getKey(block)).getPath())));
+						":blockLocation/" + Objects.requireNonNull(ForgeRegistries.BLOCKS.getKey(block)).getPath())));
 
 		// Generate data for cube-bottom-top blocks
 		simpleBlock(BlockRegistry.BLOOD_SANDSTONE.get(), models()
 				.cubeBottomTop("blood_sandstone",
-						new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/blood_sandstone"),
-						new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/blood_sandstone_bottom"),
-						new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/blood_sandstone_top")));
+						new ResourceLocation(ImmersiveWeapons.MOD_ID, "blockLocation/blood_sandstone"),
+						new ResourceLocation(ImmersiveWeapons.MOD_ID, "blockLocation/blood_sandstone_bottom"),
+						new ResourceLocation(ImmersiveWeapons.MOD_ID, "blockLocation/blood_sandstone_top")));
 
 		// Generate data for rotatable pillar blocks
 		axisBlock(BlockRegistry.CLOUD_MARBLE_PILLAR.get());
 		logBlock(BlockRegistry.BURNED_OAK_LOG.get());
 		axisBlock(BlockRegistry.BURNED_OAK_WOOD.get(),
-				new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/burned_oak_log"),
-				new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/burned_oak_log"));
+				new ResourceLocation(ImmersiveWeapons.MOD_ID, "blockLocation/burned_oak_log"),
+				new ResourceLocation(ImmersiveWeapons.MOD_ID, "blockLocation/burned_oak_log"));
 		logBlock(BlockRegistry.STRIPPED_BURNED_OAK_LOG.get());
 		axisBlock(BlockRegistry.STRIPPED_BURNED_OAK_WOOD.get(),
-				new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/stripped_burned_oak_log"),
-				new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/stripped_burned_oak_log"));
+				new ResourceLocation(ImmersiveWeapons.MOD_ID, "blockLocation/stripped_burned_oak_log"),
+				new ResourceLocation(ImmersiveWeapons.MOD_ID, "blockLocation/stripped_burned_oak_log"));
 		logBlock(BlockRegistry.STRIPPED_STARDUST_LOG.get());
 		axisBlock(BlockRegistry.STRIPPED_STARDUST_WOOD.get(),
-				new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/stripped_stardust_log"),
-				new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/stripped_stardust_log"));
+				new ResourceLocation(ImmersiveWeapons.MOD_ID, "blockLocation/stripped_stardust_log"),
+				new ResourceLocation(ImmersiveWeapons.MOD_ID, "blockLocation/stripped_stardust_log"));
 		// The stardust log is a bit different as it has emissive texture layers. We need to generate the models for that.
-		ResourceLocation stardust_log_side = new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/stardust_log");
-		ResourceLocation stardust_log_top = new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/stardust_log_top");
+		ResourceLocation stardust_log_side = new ResourceLocation(ImmersiveWeapons.MOD_ID, "blockLocation/stardust_log");
+		ResourceLocation stardust_log_top = new ResourceLocation(ImmersiveWeapons.MOD_ID, "blockLocation/stardust_log_top");
 		RotatedPillarBlock stardust_log = BlockRegistry.STARDUST_LOG.get();
 		axisBlock(BlockRegistry.STARDUST_LOG.get(),
-				models().withExistingParent(Objects.requireNonNull(ForgeRegistries.BLOCKS.getKey(stardust_log)).getPath(), "minecraft:block/cube_column")
+				models().withExistingParent(Objects.requireNonNull(ForgeRegistries.BLOCKS.getKey(stardust_log)).getPath(), "minecraft:blockLocation/cube_column")
 						.texture("side", stardust_log_side)
 						.texture("end", stardust_log_top)
 						.texture("overlay", stardust_granule_overlay)
@@ -187,7 +187,7 @@ public class BlockStateGenerator extends BlockStateProvider {
 								case UP, DOWN -> faceBuilder.texture("#end").end();
 							}
 						}).end(),
-				models().withExistingParent(Objects.requireNonNull(ForgeRegistries.BLOCKS.getKey(stardust_log)).getPath() + "_horizontal", "minecraft:block/cube_column_horizontal")
+				models().withExistingParent(Objects.requireNonNull(ForgeRegistries.BLOCKS.getKey(stardust_log)).getPath() + "_horizontal", "minecraft:blockLocation/cube_column_horizontal")
 						.texture("side", stardust_log_side)
 						.texture("end", stardust_log_top)
 						.texture("overlay", stardust_granule_overlay)
@@ -213,7 +213,7 @@ public class BlockStateGenerator extends BlockStateProvider {
 						}).end());
 		RotatedPillarBlock stardust_wood = BlockRegistry.STARDUST_WOOD.get();
 		axisBlock(stardust_wood,
-				models().withExistingParent(Objects.requireNonNull(ForgeRegistries.BLOCKS.getKey(stardust_wood)).getPath(), "minecraft:block/cube_column")
+				models().withExistingParent(Objects.requireNonNull(ForgeRegistries.BLOCKS.getKey(stardust_wood)).getPath(), "minecraft:blockLocation/cube_column")
 						.texture("side", stardust_log_side)
 						.texture("end", stardust_log_side)
 						.texture("overlay", stardust_granule_overlay)
@@ -227,7 +227,7 @@ public class BlockStateGenerator extends BlockStateProvider {
 								.texture("#overlay")
 								.emissivity(15, 3)
 								.end()).end(),
-				models().withExistingParent(Objects.requireNonNull(ForgeRegistries.BLOCKS.getKey(stardust_wood)).getPath() + "_horizontal", "minecraft:block/cube_column_horizontal")
+				models().withExistingParent(Objects.requireNonNull(ForgeRegistries.BLOCKS.getKey(stardust_wood)).getPath() + "_horizontal", "minecraft:blockLocation/cube_column_horizontal")
 						.texture("side", stardust_log_side)
 						.texture("end", stardust_log_side)
 						.texture("overlay", stardust_granule_overlay)
@@ -244,111 +244,111 @@ public class BlockStateGenerator extends BlockStateProvider {
 
 		// Generate data for stair blocks
 		stairsBlock(BlockRegistry.CLOUD_MARBLE_BRICK_STAIRS.get(),
-				new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/cloud_marble_bricks"));
+				new ResourceLocation(ImmersiveWeapons.MOD_ID, "blockLocation/cloud_marble_bricks"));
 		stairsBlock(BlockRegistry.HARDENED_MUD_STAIRS.get(),
-				new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/hardened_mud"));
+				new ResourceLocation(ImmersiveWeapons.MOD_ID, "blockLocation/hardened_mud"));
 		stairsBlock(BlockRegistry.BURNED_OAK_STAIRS.get(),
-				new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/burned_oak_planks"));
+				new ResourceLocation(ImmersiveWeapons.MOD_ID, "blockLocation/burned_oak_planks"));
 		stairsBlock(BlockRegistry.STARDUST_STAIRS.get(),
-				new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/stardust_planks"));
+				new ResourceLocation(ImmersiveWeapons.MOD_ID, "blockLocation/stardust_planks"));
 		stairsBlock(BlockRegistry.BLOOD_SANDSTONE_STAIRS.get(),
-				new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/blood_sandstone"));
+				new ResourceLocation(ImmersiveWeapons.MOD_ID, "blockLocation/blood_sandstone"));
 		stairsBlock(BlockRegistry.SMOOTH_BLOOD_SANDSTONE_STAIRS.get(),
-				new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/blood_sandstone_top"));
+				new ResourceLocation(ImmersiveWeapons.MOD_ID, "blockLocation/blood_sandstone_top"));
 
 		// Do these here because it's required for variants.
 		simpleBlock(BlockRegistry.SMOOTH_BLOOD_SANDSTONE.get(), models()
-				.cubeAll("smooth_blood_sandstone", new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/blood_sandstone_top")));
+				.cubeAll("smooth_blood_sandstone", new ResourceLocation(ImmersiveWeapons.MOD_ID, "blockLocation/blood_sandstone_top")));
 		horizontalBlock(BlockRegistry.CHISELED_BLOOD_SANDSTONE.get(),
-				new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/chiseled_blood_sandstone"),
-				new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/chiseled_blood_sandstone"),
-				new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/blood_sandstone_top"));
+				new ResourceLocation(ImmersiveWeapons.MOD_ID, "blockLocation/chiseled_blood_sandstone"),
+				new ResourceLocation(ImmersiveWeapons.MOD_ID, "blockLocation/chiseled_blood_sandstone"),
+				new ResourceLocation(ImmersiveWeapons.MOD_ID, "blockLocation/blood_sandstone_top"));
 		horizontalBlock(BlockRegistry.CUT_BLOOD_SANDSTONE.get(),
-				new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/cut_blood_sandstone"),
-				new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/cut_blood_sandstone"),
-				new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/blood_sandstone_top"));
+				new ResourceLocation(ImmersiveWeapons.MOD_ID, "blockLocation/cut_blood_sandstone"),
+				new ResourceLocation(ImmersiveWeapons.MOD_ID, "blockLocation/cut_blood_sandstone"),
+				new ResourceLocation(ImmersiveWeapons.MOD_ID, "blockLocation/blood_sandstone_top"));
 
 		// Generate data for slab blocks
 		slabBlock(BlockRegistry.CLOUD_MARBLE_BRICK_SLAB.get(),
-				new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/cloud_marble_bricks"),
-				new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/cloud_marble_bricks"));
+				new ResourceLocation(ImmersiveWeapons.MOD_ID, "blockLocation/cloud_marble_bricks"),
+				new ResourceLocation(ImmersiveWeapons.MOD_ID, "blockLocation/cloud_marble_bricks"));
 		slabBlock(BlockRegistry.HARDENED_MUD_SLAB.get(),
-				new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/hardened_mud"),
-				new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/hardened_mud"));
+				new ResourceLocation(ImmersiveWeapons.MOD_ID, "blockLocation/hardened_mud"),
+				new ResourceLocation(ImmersiveWeapons.MOD_ID, "blockLocation/hardened_mud"));
 		slabBlock(BlockRegistry.BURNED_OAK_SLAB.get(),
-				new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/burned_oak_planks"),
-				new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/burned_oak_planks"));
+				new ResourceLocation(ImmersiveWeapons.MOD_ID, "blockLocation/burned_oak_planks"),
+				new ResourceLocation(ImmersiveWeapons.MOD_ID, "blockLocation/burned_oak_planks"));
 		slabBlock(BlockRegistry.STARDUST_SLAB.get(),
-				new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/stardust_planks"),
-				new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/stardust_planks"));
+				new ResourceLocation(ImmersiveWeapons.MOD_ID, "blockLocation/stardust_planks"),
+				new ResourceLocation(ImmersiveWeapons.MOD_ID, "blockLocation/stardust_planks"));
 		slabBlock(BlockRegistry.BLOOD_SANDSTONE_SLAB.get(),
-				new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/blood_sandstone"),
-				new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/blood_sandstone"));
+				new ResourceLocation(ImmersiveWeapons.MOD_ID, "blockLocation/blood_sandstone"),
+				new ResourceLocation(ImmersiveWeapons.MOD_ID, "blockLocation/blood_sandstone"));
 		slabBlock(BlockRegistry.CUT_BLOOD_SANDSTONE_SLAB.get(),
-				new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/cut_blood_sandstone"),
-				new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/cut_blood_sandstone"),
-				new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/blood_sandstone_top"),
-				new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/blood_sandstone_top"));
+				new ResourceLocation(ImmersiveWeapons.MOD_ID, "blockLocation/cut_blood_sandstone"),
+				new ResourceLocation(ImmersiveWeapons.MOD_ID, "blockLocation/cut_blood_sandstone"),
+				new ResourceLocation(ImmersiveWeapons.MOD_ID, "blockLocation/blood_sandstone_top"),
+				new ResourceLocation(ImmersiveWeapons.MOD_ID, "blockLocation/blood_sandstone_top"));
 		slabBlock(BlockRegistry.SMOOTH_BLOOD_SANDSTONE_SLAB.get(),
-				new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/smooth_blood_sandstone"),
-				new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/blood_sandstone_top"));
+				new ResourceLocation(ImmersiveWeapons.MOD_ID, "blockLocation/smooth_blood_sandstone"),
+				new ResourceLocation(ImmersiveWeapons.MOD_ID, "blockLocation/blood_sandstone_top"));
 
 		// Generate data for fence and fence gate blocks
 		fenceBlock(BlockRegistry.BURNED_OAK_FENCE.get(),
-				new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/burned_oak_planks"));
+				new ResourceLocation(ImmersiveWeapons.MOD_ID, "blockLocation/burned_oak_planks"));
 		fenceGateBlock(BlockRegistry.BURNED_OAK_FENCE_GATE.get(),
-				new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/burned_oak_planks"));
+				new ResourceLocation(ImmersiveWeapons.MOD_ID, "blockLocation/burned_oak_planks"));
 		fourWayBlock(BlockRegistry.BARBED_WIRE_FENCE.get(),
-				models().getExistingFile(new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/barbed_wire_fence_post")),
-				models().getExistingFile(new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/barbed_wire_fence_side")));
+				models().getExistingFile(new ResourceLocation(ImmersiveWeapons.MOD_ID, "blockLocation/barbed_wire_fence_post")),
+				models().getExistingFile(new ResourceLocation(ImmersiveWeapons.MOD_ID, "blockLocation/barbed_wire_fence_side")));
 		fenceBlock(BlockRegistry.STARDUST_FENCE.get(),
-				new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/stardust_planks"));
+				new ResourceLocation(ImmersiveWeapons.MOD_ID, "blockLocation/stardust_planks"));
 		fenceGateBlock(BlockRegistry.STARDUST_FENCE_GATE.get(),
-				new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/stardust_planks"));
+				new ResourceLocation(ImmersiveWeapons.MOD_ID, "blockLocation/stardust_planks"));
 
 		// Generate data for wall blocks
 		wallBlock(BlockRegistry.CLOUD_MARBLE_BRICK_WALL.get(),
-				new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/cloud_marble_bricks"));
+				new ResourceLocation(ImmersiveWeapons.MOD_ID, "blockLocation/cloud_marble_bricks"));
 		wallBlock(BlockRegistry.BLOOD_SANDSTONE_WALL.get(),
-				new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/blood_sandstone"));
+				new ResourceLocation(ImmersiveWeapons.MOD_ID, "blockLocation/blood_sandstone"));
 
 		// Generate data for door and trapdoor blocks
 		doorBlockWithRenderType(BlockRegistry.BURNED_OAK_DOOR.get(),
-				new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/burned_oak_door_bottom"),
-				new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/burned_oak_door_top"),
+				new ResourceLocation(ImmersiveWeapons.MOD_ID, "blockLocation/burned_oak_door_bottom"),
+				new ResourceLocation(ImmersiveWeapons.MOD_ID, "blockLocation/burned_oak_door_top"),
 				"minecraft:cutout_mipped");
 		doorBlockWithRenderType(BlockRegistry.STARDUST_DOOR.get(),
-				new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/stardust_door_bottom"),
-				new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/stardust_door_top"),
+				new ResourceLocation(ImmersiveWeapons.MOD_ID, "blockLocation/stardust_door_bottom"),
+				new ResourceLocation(ImmersiveWeapons.MOD_ID, "blockLocation/stardust_door_top"),
 				"minecraft:cutout_mipped");
 		trapdoorBlockWithRenderType(BlockRegistry.BURNED_OAK_TRAPDOOR.get(),
-				new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/burned_oak_trapdoor"), true,
+				new ResourceLocation(ImmersiveWeapons.MOD_ID, "blockLocation/burned_oak_trapdoor"), true,
 				"minecraft:cutout_mipped");
 		trapdoorBlockWithRenderType(BlockRegistry.STARDUST_TRAPDOOR.get(),
-				new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/stardust_trapdoor"), true,
+				new ResourceLocation(ImmersiveWeapons.MOD_ID, "blockLocation/stardust_trapdoor"), true,
 				"minecraft:cutout_mipped");
 
 		// Generate data for button blocks
 		buttonBlock(BlockRegistry.BURNED_OAK_BUTTON.get(),
-				new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/burned_oak_planks"));
+				new ResourceLocation(ImmersiveWeapons.MOD_ID, "blockLocation/burned_oak_planks"));
 		buttonBlock(BlockRegistry.STARDUST_BUTTON.get(),
-				new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/stardust_planks"));
+				new ResourceLocation(ImmersiveWeapons.MOD_ID, "blockLocation/stardust_planks"));
 
 		// Generate data for pressure plate blocks
 		pressurePlateBlock(BlockRegistry.BURNED_OAK_PRESSURE_PLATE.get(),
-				new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/burned_oak_planks"));
+				new ResourceLocation(ImmersiveWeapons.MOD_ID, "blockLocation/burned_oak_planks"));
 		pressurePlateBlock(BlockRegistry.STARDUST_PRESSURE_PLATE.get(),
-				new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/stardust_planks"));
+				new ResourceLocation(ImmersiveWeapons.MOD_ID, "blockLocation/stardust_planks"));
 
 		// Generate data for sign blocks
 		signBlock(BlockRegistry.BURNED_OAK_SIGN.get(), BlockRegistry.BURNED_OAK_WALL_SIGN.get(),
-				new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/burned_oak_planks"));
+				new ResourceLocation(ImmersiveWeapons.MOD_ID, "blockLocation/burned_oak_planks"));
 		hangingSignBlock(BlockRegistry.BURNED_OAK_HANGING_SIGN.get(), BlockRegistry.BURNED_OAK_WALL_HANGING_SIGN.get(),
-				new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/stripped_burned_oak_log"));
+				new ResourceLocation(ImmersiveWeapons.MOD_ID, "blockLocation/stripped_burned_oak_log"));
 		signBlock(BlockRegistry.STARDUST_SIGN.get(), BlockRegistry.STARDUST_WALL_SIGN.get(),
-				new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/stardust_planks"));
+				new ResourceLocation(ImmersiveWeapons.MOD_ID, "blockLocation/stardust_planks"));
 		hangingSignBlock(BlockRegistry.STARDUST_HANGING_SIGN.get(), BlockRegistry.STARDUST_WALL_HANGING_SIGN.get(),
-				new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/stripped_stardust_log"));
+				new ResourceLocation(ImmersiveWeapons.MOD_ID, "blockLocation/stripped_stardust_log"));
 
 		// Generate data for skulls
 		List<Block> headBlocks = new ArrayList<>(25);
@@ -356,7 +356,7 @@ public class BlockStateGenerator extends BlockStateProvider {
 		headBlocks.addAll(BlockLists.wallHeadBlocks);
 		for (Block block : headBlocks) {
 			getVariantBuilder(block).forAllStates(blockState -> ConfiguredModel.allRotations(
-					models().getExistingFile(new ResourceLocation("block/skull")),
+					models().getExistingFile(new ResourceLocation("blockLocation/skull")),
 					true
 			));
 		}
@@ -364,40 +364,40 @@ public class BlockStateGenerator extends BlockStateProvider {
 		// Generate data for cross blocks
 		simpleBlock(BlockRegistry.AZUL_STAINED_ORCHID.get(), models()
 				.cross(BlockRegistry.AZUL_STAINED_ORCHID.getId().toString(),
-						new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/azul_stained_orchid"))
+						new ResourceLocation(ImmersiveWeapons.MOD_ID, "blockLocation/azul_stained_orchid"))
 				.renderType("minecraft:cutout_mipped"));
 		simpleBlock(BlockRegistry.MOONGLOW.get(), models()
 				.cross(BlockRegistry.MOONGLOW.getId().toString(),
-						new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/moonglow"))
+						new ResourceLocation(ImmersiveWeapons.MOD_ID, "blockLocation/moonglow"))
 				.renderType("minecraft:cutout_mipped"));
 		simpleBlock(BlockRegistry.STARDUST_SAPLING.get(), models()
 				.cross(BlockRegistry.STARDUST_SAPLING.getId().toString(),
-						new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/stardust_sapling"))
+						new ResourceLocation(ImmersiveWeapons.MOD_ID, "blockLocation/stardust_sapling"))
 				.renderType("minecraft:cutout_mipped"));
 		simpleBlock(BlockRegistry.DEATHWEED.get(), models()
 				.cross(BlockRegistry.DEATHWEED.getId().toString(),
-						new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/deathweed"))
+						new ResourceLocation(ImmersiveWeapons.MOD_ID, "blockLocation/deathweed"))
 				.renderType("minecraft:cutout_mipped"));
 
 		// Generate data for miscellaneous blocks not covered above
 		horizontalBlock(BlockRegistry.SMALL_PARTS_TABLE.get(), models()
 				.cube(BlockRegistry.SMALL_PARTS_TABLE.getId().toString(),
-						new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/small_parts_table_bottom"),
-						new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/small_parts_table_top"),
-						new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/small_parts_table_front"),
-						new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/small_parts_table_front"),
-						new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/small_parts_table_side"),
-						new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/small_parts_table_side"))
-				.texture("particle", "minecraft:block/copper_block"));
+						new ResourceLocation(ImmersiveWeapons.MOD_ID, "blockLocation/small_parts_table_bottom"),
+						new ResourceLocation(ImmersiveWeapons.MOD_ID, "blockLocation/small_parts_table_top"),
+						new ResourceLocation(ImmersiveWeapons.MOD_ID, "blockLocation/small_parts_table_front"),
+						new ResourceLocation(ImmersiveWeapons.MOD_ID, "blockLocation/small_parts_table_front"),
+						new ResourceLocation(ImmersiveWeapons.MOD_ID, "blockLocation/small_parts_table_side"),
+						new ResourceLocation(ImmersiveWeapons.MOD_ID, "blockLocation/small_parts_table_side"))
+				.texture("particle", "minecraft:blockLocation/copper_block"));
 		simpleBlock(BlockRegistry.POTTED_MOONGLOW.get(), models()
 				.withExistingParent(BlockRegistry.POTTED_MOONGLOW.getId().toString(),
-						"minecraft:block/flower_pot_cross")
-				.texture("plant", new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/moonglow"))
+						"minecraft:blockLocation/flower_pot_cross")
+				.texture("plant", new ResourceLocation(ImmersiveWeapons.MOD_ID, "blockLocation/moonglow"))
 				.renderType("minecraft:cutout_mipped"));
 		simpleBlock(BlockRegistry.POTTED_DEATHWEED.get(), models()
 				.withExistingParent(BlockRegistry.POTTED_DEATHWEED.getId().toString(),
-						"minecraft:block/flower_pot_cross")
-				.texture("plant", new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/deathweed"))
+						"minecraft:blockLocation/flower_pot_cross")
+				.texture("plant", new ResourceLocation(ImmersiveWeapons.MOD_ID, "blockLocation/deathweed"))
 				.renderType("minecraft:cutout_mipped"));
 
 		getVariantBuilder(BlockRegistry.BEAR_TRAP.get())
@@ -616,13 +616,13 @@ public class BlockStateGenerator extends BlockStateProvider {
 		simpleBlock(BlockRegistry.PITFALL.get(),
 				models().getExistingFile(new ResourceLocation(ImmersiveWeapons.MOD_ID, "pitfall")));
 		horizontalBlock(BlockRegistry.TESLA_BLOCK.get(),
-				models().cubeAll("tesla_block", new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/tesla_block")));
+				models().cubeAll("tesla_block", new ResourceLocation(ImmersiveWeapons.MOD_ID, "blockLocation/tesla_block")));
 		simpleBlock(BlockRegistry.BIODOME_LIFE_SUPPORT_UNIT.get(),
 				models().getExistingFile(new ResourceLocation(ImmersiveWeapons.MOD_ID, "biodome_life_support_unit")));
 		simpleBlock(BlockRegistry.RUSTED_IRON_BLOCK.get(), models().withExistingParent("rusted_iron_block",
 						new ResourceLocation(ImmersiveWeapons.MOD_ID, "simple_overlay"))
-				.texture("all", "minecraft:block/iron_block")
-				.texture("overlay", new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/rusted_iron_block_overlay"))
+				.texture("all", "minecraft:blockLocation/iron_block")
+				.texture("overlay", new ResourceLocation(ImmersiveWeapons.MOD_ID, "blockLocation/rusted_iron_block_overlay"))
 				.renderType("minecraft:translucent"));
 	}
 
@@ -662,7 +662,7 @@ public class BlockStateGenerator extends BlockStateProvider {
 		return ConfiguredModel.builder()
 				.modelFile(models()
 						.cross(crystal.getId().toString(),
-								new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/" + name))
+								new ResourceLocation(ImmersiveWeapons.MOD_ID, "blockLocation/" + name))
 						.renderType("minecraft:cutout_mipped"))
 				.rotationY(yRot)
 				.rotationX(xRot)

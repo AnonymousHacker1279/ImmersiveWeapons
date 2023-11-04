@@ -30,7 +30,7 @@ public class AmmunitionTableRenderer implements BlockEntityRenderer<AmmunitionTa
 		for (ItemStack stack : inventory) {
 			if (stack != ItemStack.EMPTY) {
 				poseStack.pushPose();
-				// Translate to the center of the block
+				// Translate to the center of the blockLocation
 				poseStack.translate(0.5D, 0.0D, 0.5D);
 
 				// Rotate by direction
