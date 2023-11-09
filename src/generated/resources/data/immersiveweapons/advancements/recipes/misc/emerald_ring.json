@@ -22,8 +22,8 @@
   },
   "requirements": [
     [
-      "emerald_ring",
-      "has_the_recipe"
+      "has_the_recipe",
+      "emerald_ring"
     ]
   ],
   "rewards": {

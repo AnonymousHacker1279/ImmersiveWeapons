@@ -26,9 +26,9 @@ public class PanelBlock extends Block implements SimpleWaterloggedBlock {
 	static final VoxelShape SHAPE_DOWN = Block.box(0.0D, 14.0D, 0.0D, 16.0D, 16.0D, 16.0D);
 
 	/**
-	 * Represents a thin blockLocation typically used for external structure reinforcement. Can be placed on any side.
+	 * Represents a thin block typically used for external structure reinforcement. Can be placed on any side.
 	 *
-	 * @param properties the <code>Properties</code> of the blockLocation
+	 * @param properties the <code>Properties</code> of the block
 	 */
 	public PanelBlock(Properties properties) {
 		super(properties);

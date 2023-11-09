@@ -30,7 +30,7 @@ public class PanicAlarmBlock extends HorizontalDirectionalBlock implements Simpl
 	/**
 	 * Constructor for PanicAlarmBlock.
 	 *
-	 * @param properties the <code>Properties</code> of the blockLocation
+	 * @param properties the <code>Properties</code> of the block
 	 */
 	public PanicAlarmBlock(Properties properties) {
 		super(properties);
@@ -110,8 +110,8 @@ public class PanicAlarmBlock extends HorizontalDirectionalBlock implements Simpl
 	/**
 	 * Plays a sound when powered.
 	 *
-	 * @param level the <code>Level</code> the blockLocation is at
-	 * @param pos   the <code>BlockPos</code> the blockLocation is at
+	 * @param level the <code>Level</code> the block is at
+	 * @param pos   the <code>BlockPos</code> the block is at
 	 */
 	private void checkPowered(Level level, BlockPos pos) {
 		BlockEntity blockEntity = level.getBlockEntity(pos);

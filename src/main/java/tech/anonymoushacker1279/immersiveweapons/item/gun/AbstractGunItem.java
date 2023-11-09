@@ -492,7 +492,6 @@ public abstract class AbstractGunItem extends Item implements Vanishable {
 		return Items.GUNPOWDER;
 	}
 
-
 	/**
 	 * Get the use duration.
 	 *
@@ -602,12 +601,16 @@ public abstract class AbstractGunItem extends Item implements Vanishable {
 			PowderType type = getPowderFromItem(powder.getItem());
 
 			float consumeChance = type.getConsumeChance();
-			if (player.getRandom().nextFloat() <= consumeChance) {
-				powder.shrink(1);
-
-				if (powder.isEmpty()) {
-					player.getInventory().removeItem(powder);
+			if (!player.level().isClientSide) {
+				if (player.getRandom().nextFloat() <= consumeChance) {
+					player.getInventory().setChanged(); // Resync the inventory because the client may not roll the same number
+					return;
 				}
+			}
+
+			powder.shrink(1);
+			if (powder.isEmpty()) {
+				player.getInventory().removeItem(powder);
 			}
 		}
 	}

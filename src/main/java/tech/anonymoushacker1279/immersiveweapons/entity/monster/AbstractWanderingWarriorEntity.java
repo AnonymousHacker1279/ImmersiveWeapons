@@ -21,6 +21,8 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.Nullable;
 import tech.anonymoushacker1279.immersiveweapons.entity.GrantAdvancementOnDiscovery;
+import tech.anonymoushacker1279.immersiveweapons.entity.neutral.AbstractFieldMedicEntity;
+import tech.anonymoushacker1279.immersiveweapons.entity.neutral.AbstractMinutemanEntity;
 import tech.anonymoushacker1279.immersiveweapons.init.ItemRegistry;
 import tech.anonymoushacker1279.immersiveweapons.init.SoundEventRegistry;
 
@@ -64,6 +66,8 @@ public abstract class AbstractWanderingWarriorEntity extends Monster implements 
 		goalSelector.addGoal(1, new FloatGoal(this));
 		targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Monster.class, 1,
 				true, true, (targetPredicate) -> !(targetPredicate instanceof Creeper)));
+		targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, AbstractMinutemanEntity.class, true));
+		targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, AbstractFieldMedicEntity.class, true));
 		targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, Player.class, true));
 		targetSelector.addGoal(2, new HurtByTargetGoal(this));
 	}
@@ -78,7 +82,7 @@ public abstract class AbstractWanderingWarriorEntity extends Monster implements 
 	 * Play the step sound.
 	 *
 	 * @param pos   the <code>BlockPos</code> the entity is at
-	 * @param state the <code>BlockState</code> of the blockLocation being stepped on
+	 * @param state the <code>BlockState</code> of the block being stepped on
 	 */
 	@Override
 	protected void playStepSound(BlockPos pos, BlockState state) {

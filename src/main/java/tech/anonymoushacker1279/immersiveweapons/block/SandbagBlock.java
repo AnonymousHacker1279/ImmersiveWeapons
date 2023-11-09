@@ -29,7 +29,7 @@ public class SandbagBlock extends HorizontalDirectionalBlock {
 	/**
 	 * Constructor for SandbagBlock.
 	 *
-	 * @param properties the <code>Properties</code> of the blockLocation
+	 * @param properties the <code>Properties</code> of the block
 	 */
 	public SandbagBlock(Properties properties) {
 		super(properties);

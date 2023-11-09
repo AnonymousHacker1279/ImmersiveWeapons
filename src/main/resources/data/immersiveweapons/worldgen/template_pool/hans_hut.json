@@ -1,7 +1,6 @@
 {
 	"name": "immersiveweapons:hans_hut",
 	"fallback": "minecraft:empty",
-
 	"elements": [
 		{
 			"weight": 1,

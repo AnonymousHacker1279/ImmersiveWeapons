@@ -22,8 +22,8 @@
   },
   "requirements": [
     [
-      "spider_eye",
-      "has_the_recipe"
+      "has_the_recipe",
+      "spider_eye"
     ]
   ],
   "rewards": {

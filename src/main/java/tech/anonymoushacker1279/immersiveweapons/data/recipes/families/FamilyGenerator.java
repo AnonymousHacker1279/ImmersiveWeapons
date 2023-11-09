@@ -29,6 +29,8 @@ public class FamilyGenerator extends RecipeGenerator {
 
 	@Override
 	protected void buildRecipes(RecipeOutput output) {
+		super.buildRecipes(output);
+
 		woodFamilies(output);
 		stoneFamilies();
 		toolFamilies(output);

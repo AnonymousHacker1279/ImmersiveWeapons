@@ -50,13 +50,13 @@ public class PikeItem extends TieredItem implements Vanishable {
 	}
 
 	/**
-	 * Runs when a blockLocation is mined.
+	 * Runs when a block is mined.
 	 *
 	 * @param stack        the <code>ItemStack</code> instance
-	 * @param level        the <code>Level</code> the blockLocation is in
-	 * @param state        the <code>BlockState</code> of the blockLocation
-	 * @param pos          the <code>BlockPos</code> the blockLocation is at
-	 * @param livingEntity the <code>LivingEntity</code> destroying the blockLocation
+	 * @param level        the <code>Level</code> the block is in
+	 * @param state        the <code>BlockState</code> of the block
+	 * @param pos          the <code>BlockPos</code> the block is at
+	 * @param livingEntity the <code>LivingEntity</code> destroying the block
 	 * @return boolean
 	 */
 	@Override

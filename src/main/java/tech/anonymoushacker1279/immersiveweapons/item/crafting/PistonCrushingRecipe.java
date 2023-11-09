@@ -16,7 +16,7 @@ import org.jetbrains.annotations.Nullable;
 import tech.anonymoushacker1279.immersiveweapons.init.RecipeSerializerRegistry;
 import tech.anonymoushacker1279.immersiveweapons.init.RecipeTypeRegistry;
 
-public record PistonCrushingRecipe(ResourceLocation blockLocation,
+public record PistonCrushingRecipe(ResourceLocation block,
                                    ItemStack result,
                                    int minCount,
                                    int maxCount) implements Recipe<Container> {
@@ -35,7 +35,7 @@ public record PistonCrushingRecipe(ResourceLocation blockLocation,
 	}
 
 	public boolean matches(Block block) {
-		return this.blockLocation.equals(ForgeRegistries.BLOCKS.getKey(block));
+		return this.block.equals(ForgeRegistries.BLOCKS.getKey(block));
 	}
 
 	@Override
@@ -61,13 +61,13 @@ public record PistonCrushingRecipe(ResourceLocation blockLocation,
 	}
 
 	/**
-	 * Get the recipe's blockLocation.
+	 * Get the recipe's block.
 	 *
 	 * @return Block
 	 */
 	@Nullable
 	public Block getBlock() {
-		return ForgeRegistries.BLOCKS.getValue(blockLocation);
+		return ForgeRegistries.BLOCKS.getValue(block);
 	}
 
 	/**
@@ -111,7 +111,7 @@ public record PistonCrushingRecipe(ResourceLocation blockLocation,
 
 		private static final Codec<PistonCrushingRecipe> CODEC = RecordCodecBuilder.create(
 				instance -> instance.group(
-								ResourceLocation.CODEC.fieldOf("blockLocation").forGetter(recipe -> recipe.blockLocation),
+								ResourceLocation.CODEC.fieldOf("block").forGetter(recipe -> recipe.block),
 								CraftingRecipeCodecs.ITEMSTACK_OBJECT_CODEC.fieldOf("result").forGetter(recipe -> recipe.result),
 								Codec.INT.fieldOf("minCount").forGetter(recipe -> recipe.minCount),
 								Codec.INT.fieldOf("maxCount").forGetter(recipe -> recipe.maxCount)
@@ -136,7 +136,7 @@ public record PistonCrushingRecipe(ResourceLocation blockLocation,
 
 		@Override
 		public void toNetwork(FriendlyByteBuf buffer, PistonCrushingRecipe recipe) {
-			buffer.writeResourceLocation(recipe.blockLocation);
+			buffer.writeResourceLocation(recipe.block);
 			buffer.writeItem(recipe.result);
 			buffer.writeInt(recipe.minCount);
 			buffer.writeInt(recipe.maxCount);

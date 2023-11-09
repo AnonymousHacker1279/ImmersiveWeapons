@@ -83,7 +83,7 @@ public class TeslaSynthesizerRecipeBuilder {
 
 		@Override
 		public void serializeRecipeData(JsonObject pJson) {
-			pJson.add("blockLocation", block.toJson(true));
+			pJson.add("block", block.toJson(true));
 			pJson.add("material1", material1.toJson(true));
 			pJson.add("material2", material2.toJson(true));
 			JsonObject resultObject = new JsonObject();

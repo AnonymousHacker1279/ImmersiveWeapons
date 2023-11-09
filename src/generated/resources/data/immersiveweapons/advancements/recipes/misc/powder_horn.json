@@ -22,8 +22,8 @@
   },
   "requirements": [
     [
-      "goat_horn",
-      "has_the_recipe"
+      "has_the_recipe",
+      "goat_horn"
     ]
   ],
   "rewards": {

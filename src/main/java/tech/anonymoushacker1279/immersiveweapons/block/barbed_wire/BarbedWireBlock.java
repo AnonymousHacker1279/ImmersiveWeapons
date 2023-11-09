@@ -19,7 +19,7 @@ public class BarbedWireBlock extends DamageableBlock implements BarbedWireUtils 
 	/**
 	 * Constructor for BarbedWireBlock.
 	 *
-	 * @param properties the <code>Properties</code> of the blockLocation
+	 * @param properties the <code>Properties</code> of the block
 	 */
 	public BarbedWireBlock(Properties properties) {
 		super(properties, 212, 2, Items.IRON_INGOT, DAMAGE_STAGE);
@@ -32,13 +32,13 @@ public class BarbedWireBlock extends DamageableBlock implements BarbedWireUtils 
 	}
 
 	/**
-	 * Runs when an entity is inside the blockLocation's collision area.
-	 * Allows the blockLocation to deal damage on contact.
+	 * Runs when an entity is inside the block's collision area.
+	 * Allows the block to deal damage on contact.
 	 *
-	 * @param state  the <code>BlockState</code> of the blockLocation
-	 * @param level  the <code>Level</code> the blockLocation is in
-	 * @param pos    the <code>BlockPos</code> the blockLocation is at
-	 * @param entity the <code>Entity</code> passing through the blockLocation
+	 * @param state  the <code>BlockState</code> of the block
+	 * @param level  the <code>Level</code> the block is in
+	 * @param pos    the <code>BlockPos</code> the block is at
+	 * @param entity the <code>Entity</code> passing through the block
 	 */
 	@SuppressWarnings("deprecation")
 	@Override

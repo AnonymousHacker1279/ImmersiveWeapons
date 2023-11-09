@@ -16,7 +16,6 @@ import tech.anonymoushacker1279.immersiveweapons.data.lang.LanguageGenerator;
 import tech.anonymoushacker1279.immersiveweapons.data.loot.LootTableGenerator;
 import tech.anonymoushacker1279.immersiveweapons.data.models.BlockStateGenerator;
 import tech.anonymoushacker1279.immersiveweapons.data.models.ItemModelGenerator;
-import tech.anonymoushacker1279.immersiveweapons.data.recipes.RecipeGenerator;
 import tech.anonymoushacker1279.immersiveweapons.data.recipes.families.FamilyGenerator;
 import tech.anonymoushacker1279.immersiveweapons.data.sounds.SoundGenerator;
 import tech.anonymoushacker1279.immersiveweapons.data.tags.*;
@@ -51,7 +50,6 @@ public class CustomDataGenerator {
 		// Server data
 		generator.addProvider(event.includeServer(), new AdvancementsGenerator(output, lookupProvider, existingFileHelper));
 		generator.addProvider(event.includeServer(), new LootTableGenerator(output));
-		generator.addProvider(event.includeServer(), new RecipeGenerator(output, lookupProvider));
 		generator.addProvider(event.includeServer(), new FamilyGenerator(output, lookupProvider));
 		BlockTagsGenerator blockTagsGenerator = new BlockTagsGenerator(output, lookupProvider, existingFileHelper);
 		generator.addProvider(event.includeServer(), blockTagsGenerator);

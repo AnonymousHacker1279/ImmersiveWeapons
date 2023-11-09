@@ -2,8 +2,7 @@
   "parent": "immersiveweapons:azul_keystone",
   "criteria": {
     "activate": {
-      "conditions": {},
-      "trigger": "immersiveweapons:warrior_statue_activated"
+      "trigger": "minecraft:warrior_statue_activated"
     }
   },
   "display": {

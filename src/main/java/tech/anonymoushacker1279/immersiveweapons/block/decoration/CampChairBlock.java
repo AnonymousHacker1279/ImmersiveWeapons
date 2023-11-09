@@ -28,7 +28,7 @@ public class CampChairBlock extends HorizontalDirectionalBlock implements Simple
 	/**
 	 * Constructor for CampChairBlock.
 	 *
-	 * @param properties the <code>Properties</code> of the blockLocation
+	 * @param properties the <code>Properties</code> of the block
 	 */
 	public CampChairBlock(Properties properties) {
 		super(properties);

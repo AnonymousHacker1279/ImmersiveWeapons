@@ -22,8 +22,8 @@
   },
   "requirements": [
     [
-      "melee_glove_accessories",
-      "has_the_recipe"
+      "has_the_recipe",
+      "melee_glove_accessories"
     ]
   ],
   "rewards": {

@@ -2,94 +2,49 @@
   "parent": "immersiveweapons:root",
   "criteria": {
     "discover_celestial_tower": {
-      "conditions": {
-        "entity": "immersiveweapons:celestial_tower"
-      },
-      "trigger": "immersiveweapons:entity_discovered"
+      "trigger": "minecraft:entity_discovered"
     },
     "discover_dying_soldier": {
-      "conditions": {
-        "entity": "immersiveweapons:dying_soldier"
-      },
-      "trigger": "immersiveweapons:entity_discovered"
+      "trigger": "minecraft:entity_discovered"
     },
     "discover_evil_eye": {
-      "conditions": {
-        "entity": "immersiveweapons:evil_eye"
-      },
-      "trigger": "immersiveweapons:entity_discovered"
+      "trigger": "minecraft:entity_discovered"
     },
     "discover_field_medic": {
-      "conditions": {
-        "entity": "immersiveweapons:field_medic"
-      },
-      "trigger": "immersiveweapons:entity_discovered"
+      "trigger": "minecraft:entity_discovered"
     },
     "discover_hans": {
-      "conditions": {
-        "entity": "immersiveweapons:hans"
-      },
-      "trigger": "immersiveweapons:entity_discovered"
+      "trigger": "minecraft:entity_discovered"
     },
     "discover_lava_revenant": {
-      "conditions": {
-        "entity": "immersiveweapons:lava_revenant"
-      },
-      "trigger": "immersiveweapons:entity_discovered"
+      "trigger": "minecraft:entity_discovered"
     },
     "discover_minuteman": {
-      "conditions": {
-        "entity": "immersiveweapons:minuteman"
-      },
-      "trigger": "immersiveweapons:entity_discovered"
+      "trigger": "minecraft:entity_discovered"
     },
     "discover_rock_spider": {
-      "conditions": {
-        "entity": "immersiveweapons:rock_spider"
-      },
-      "trigger": "immersiveweapons:entity_discovered"
+      "trigger": "minecraft:entity_discovered"
     },
     "discover_skeleton_merchant": {
-      "conditions": {
-        "entity": "immersiveweapons:skeleton_merchant"
-      },
-      "trigger": "immersiveweapons:entity_discovered"
+      "trigger": "minecraft:entity_discovered"
     },
     "discover_skygazer": {
-      "conditions": {
-        "entity": "immersiveweapons:skygazer"
-      },
-      "trigger": "immersiveweapons:entity_discovered"
+      "trigger": "minecraft:entity_discovered"
     },
     "discover_star_wolf": {
-      "conditions": {
-        "entity": "immersiveweapons:star_wolf"
-      },
-      "trigger": "immersiveweapons:entity_discovered"
+      "trigger": "minecraft:entity_discovered"
     },
     "discover_starmite": {
-      "conditions": {
-        "entity": "immersiveweapons:starmite"
-      },
-      "trigger": "immersiveweapons:entity_discovered"
+      "trigger": "minecraft:entity_discovered"
     },
     "discover_storm_creeper": {
-      "conditions": {
-        "entity": "immersiveweapons:storm_creeper"
-      },
-      "trigger": "immersiveweapons:entity_discovered"
+      "trigger": "minecraft:entity_discovered"
     },
     "discover_super_hans": {
-      "conditions": {
-        "entity": "immersiveweapons:super_hans"
-      },
-      "trigger": "immersiveweapons:entity_discovered"
+      "trigger": "minecraft:entity_discovered"
     },
     "discover_wandering_warrior": {
-      "conditions": {
-        "entity": "immersiveweapons:wandering_warrior"
-      },
-      "trigger": "immersiveweapons:entity_discovered"
+      "trigger": "minecraft:entity_discovered"
     }
   },
   "display": {

@@ -112,13 +112,13 @@ public class FireflyEntity extends AmbientCreature {
 	protected void customServerAiStep() {
 		super.customServerAiStep();
 		BlockPos pos = blockPosition();
-		// Get the blockLocation pos of the blockLocation the entity is facing
+		// Get the block pos of the block the entity is facing
 		BlockPos targetPos = pos.relative(getDirection());
 		if (isResting()) {
 			boolean isSilent = isSilent();
 			if (level().getBlockState(targetPos).isRedstoneConductor(level(), pos)) {
-				// If the distance between the entity and the target blockLocation is greater than 0.05, move towards it
-				// Use an BlockHitResult to check if the entity is colliding with a blockLocation
+				// If the distance between the entity and the target block is greater than 0.05, move towards it
+				// Use an BlockHitResult to check if the entity is colliding with a block
 
 				BlockHitResult result = level().clip(new ClipContext(getEyePosition(1.0F), Vec3.atBottomCenterOf(targetPos), Block.COLLIDER, Fluid.NONE, this));
 				// Move towards the hit position
@@ -142,7 +142,7 @@ public class FireflyEntity extends AmbientCreature {
 					setDeltaMovement(Vec3.ZERO);
 				}
 
-				// Set the rotation to face the blockLocation
+				// Set the rotation to face the block
 				setYRot(getDirection().toYRot());
 
 				// If players get too close, stop resting

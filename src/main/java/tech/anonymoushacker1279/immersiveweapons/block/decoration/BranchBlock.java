@@ -21,7 +21,7 @@ public class BranchBlock extends BasicOrientableBlock {
 	/**
 	 * Constructor for BranchBlock.
 	 *
-	 * @param properties The <code>Properties</code> of the blockLocation
+	 * @param properties The <code>Properties</code> of the block
 	 */
 	public BranchBlock(Properties properties) {
 		super(properties);

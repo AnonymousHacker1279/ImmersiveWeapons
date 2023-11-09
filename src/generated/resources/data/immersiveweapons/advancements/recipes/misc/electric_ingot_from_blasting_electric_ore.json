@@ -22,8 +22,8 @@
   },
   "requirements": [
     [
-      "has_electric_ore",
-      "has_the_recipe"
+      "has_the_recipe",
+      "has_electric_ore"
     ]
   ],
   "rewards": {

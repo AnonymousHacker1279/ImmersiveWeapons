@@ -3,6 +3,13 @@
   "criteria": {
     "hold": {
       "conditions": {
+        "entity": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {}
+          }
+        ],
         "killing_blow": {
           "source_entity": {
             "equipment": {

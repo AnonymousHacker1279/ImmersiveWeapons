@@ -53,7 +53,7 @@ public class AstralCrystalRenderer implements BlockEntityRenderer<AstralCrystalB
 
 				Level level = Minecraft.getInstance().level;
 
-				// All the items should smoothly rotate around the center of the blockLocation
+				// All the items should smoothly rotate around the center of the block
 				if (level != null) {
 					poseStack.mulPose(Axis.ZP.rotationDegrees((Minecraft.getInstance().level.getGameTime() + partialTick) * 2f));
 

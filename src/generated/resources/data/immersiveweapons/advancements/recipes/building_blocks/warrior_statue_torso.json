@@ -22,8 +22,8 @@
   },
   "requirements": [
     [
-      "ender_eye",
-      "has_the_recipe"
+      "has_the_recipe",
+      "ender_eye"
     ]
   ],
   "rewards": {

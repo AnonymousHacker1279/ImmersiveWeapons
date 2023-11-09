@@ -34,7 +34,7 @@ public class TeslaSynthesizerBlock extends Block implements SimpleWaterloggedBlo
 	/**
 	 * Constructor for TeslaSynthesizerBlock.
 	 *
-	 * @param properties the <code>Properties</code> of the blockLocation
+	 * @param properties the <code>Properties</code> of the block
 	 */
 	public TeslaSynthesizerBlock(Properties properties) {
 		super(properties);
@@ -42,10 +42,10 @@ public class TeslaSynthesizerBlock extends Block implements SimpleWaterloggedBlo
 	}
 
 	/**
-	 * Create a blockLocation entity for the blockLocation.
+	 * Create a block entity for the block.
 	 *
-	 * @param blockPos   the <code>BlockPos</code> the blockLocation is at
-	 * @param blockState the <code>BlockState</code> of the blockLocation
+	 * @param blockPos   the <code>BlockPos</code> the block is at
+	 * @param blockState the <code>BlockState</code> of the block
 	 * @return BlockEntity
 	 */
 	@Nullable
@@ -55,12 +55,12 @@ public class TeslaSynthesizerBlock extends Block implements SimpleWaterloggedBlo
 	}
 
 	/**
-	 * Set the shape of the blockLocation.
+	 * Set the shape of the block.
 	 *
-	 * @param state            the <code>BlockState</code> of the blockLocation
-	 * @param getter           the <code>BlockGetter</code> for the blockLocation
-	 * @param pos              the <code>BlockPos</code> the blockLocation is at
-	 * @param collisionContext the <code>CollisionContext</code> of the blockLocation
+	 * @param state            the <code>BlockState</code> of the block
+	 * @param getter           the <code>BlockGetter</code> for the block
+	 * @param pos              the <code>BlockPos</code> the block is at
+	 * @param collisionContext the <code>CollisionContext</code> of the block
 	 * @return VoxelShape
 	 */
 	@SuppressWarnings("deprecation")
@@ -72,10 +72,10 @@ public class TeslaSynthesizerBlock extends Block implements SimpleWaterloggedBlo
 	}
 
 	/**
-	 * Get the ticker for the blockLocation.
+	 * Get the ticker for the block.
 	 *
-	 * @param level           the <code>Level</code> the blockLocation is in
-	 * @param blockState      the <code>BlockState</code> of the blockLocation
+	 * @param level           the <code>Level</code> the block is in
+	 * @param blockState      the <code>BlockState</code> of the block
 	 * @param blockEntityType the <code>BlockEntityType</code> to get the ticker of
 	 * @param <T>             the type extending BlockEntity
 	 * @return BlockEntityTicker
@@ -90,7 +90,7 @@ public class TeslaSynthesizerBlock extends Block implements SimpleWaterloggedBlo
 	/**
 	 * Create the BlockState definition.
 	 *
-	 * @param builder the <code>StateDefinition.Builder</code> of the blockLocation
+	 * @param builder the <code>StateDefinition.Builder</code> of the block
 	 */
 	@Override
 	public void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
@@ -99,9 +99,9 @@ public class TeslaSynthesizerBlock extends Block implements SimpleWaterloggedBlo
 
 	/**
 	 * Set FluidState properties.
-	 * Allows the blockLocation to exhibit waterlogged behavior.
+	 * Allows the block to exhibit waterlogged behavior.
 	 *
-	 * @param state the <code>BlockState</code> of the blockLocation
+	 * @param state the <code>BlockState</code> of the block
 	 * @return FluidState
 	 */
 	@Override
@@ -110,11 +110,11 @@ public class TeslaSynthesizerBlock extends Block implements SimpleWaterloggedBlo
 	}
 
 	/**
-	 * Get the INamedContainerProvider for the blockLocation.
+	 * Get the INamedContainerProvider for the block.
 	 *
-	 * @param state the <code>BlockState</code> of the blockLocation
-	 * @param level the <code>Level</code> the blockLocation is in
-	 * @param pos   the <code>BlockPos</code> the blockLocation is at
+	 * @param state the <code>BlockState</code> of the block
+	 * @param level the <code>Level</code> the block is in
+	 * @param pos   the <code>BlockPos</code> the block is at
 	 * @return MenuProvider
 	 */
 	@Override
@@ -123,13 +123,13 @@ public class TeslaSynthesizerBlock extends Block implements SimpleWaterloggedBlo
 	}
 
 	/**
-	 * Runs when the blockLocation is activated.
-	 * Allows the blockLocation to respond to user interaction.
+	 * Runs when the block is activated.
+	 * Allows the block to respond to user interaction.
 	 *
-	 * @param state     the <code>BlockState</code> of the blockLocation
-	 * @param level     the <code>Level</code> the blockLocation is in
-	 * @param pos       the <code>BlockPos</code> the blockLocation is at
-	 * @param player    the <code>Player</code> interacting with the blockLocation
+	 * @param state     the <code>BlockState</code> of the block
+	 * @param level     the <code>Level</code> the block is in
+	 * @param pos       the <code>BlockPos</code> the block is at
+	 * @param player    the <code>Player</code> interacting with the block
 	 * @param hand      the <code>InteractionHand</code> the PlayerEntity used
 	 * @param hitResult the <code>BlockHitResult</code> of the interaction
 	 * @return InteractionResult
@@ -149,13 +149,13 @@ public class TeslaSynthesizerBlock extends Block implements SimpleWaterloggedBlo
 	}
 
 	/**
-	 * Runs when the blockLocation is removed.
+	 * Runs when the block is removed.
 	 *
-	 * @param state    the <code>BlockState</code> of the blockLocation
-	 * @param level    the <code>Level</code> the blockLocation is in
-	 * @param pos      the <code>BlockPos</code> the blockLocation is at
-	 * @param newState the <code>BlockState</code> the blockLocation now has
-	 * @param isMoving determines if the blockLocation is moving
+	 * @param state    the <code>BlockState</code> of the block
+	 * @param level    the <code>Level</code> the block is in
+	 * @param pos      the <code>BlockPos</code> the block is at
+	 * @param newState the <code>BlockState</code> the block now has
+	 * @param isMoving determines if the block is moving
 	 */
 	@Override
 	public void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean isMoving) {
@@ -172,9 +172,9 @@ public class TeslaSynthesizerBlock extends Block implements SimpleWaterloggedBlo
 	/**
 	 * Runs occasionally to create animations.
 	 *
-	 * @param state  the <code>BlockState</code> of the blockLocation
-	 * @param level  the <code>Level</code> the blockLocation is in
-	 * @param pos    the <code>BlockPos</code> the blockLocation is at
+	 * @param state  the <code>BlockState</code> of the block
+	 * @param level  the <code>Level</code> the block is in
+	 * @param pos    the <code>BlockPos</code> the block is at
 	 * @param random a <code>RandomSource</code> instance
 	 */
 	@Override

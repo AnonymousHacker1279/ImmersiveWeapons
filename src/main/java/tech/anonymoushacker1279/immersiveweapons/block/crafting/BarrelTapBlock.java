@@ -37,7 +37,7 @@ public class BarrelTapBlock extends HorizontalDirectionalBlock implements Simple
 	/**
 	 * Constructor for BarrelTapBlock.
 	 *
-	 * @param properties the <code>Properties</code> of the blockLocation
+	 * @param properties the <code>Properties</code> of the block
 	 */
 	public BarrelTapBlock(Properties properties) {
 		super(properties);
@@ -47,7 +47,7 @@ public class BarrelTapBlock extends HorizontalDirectionalBlock implements Simple
 	@Override
 	@SuppressWarnings("deprecation")
 	public boolean canSurvive(BlockState state, LevelReader reader, BlockPos pos) {
-		// Ensure it is placed with the opposite facing direction contacting a Barrel blockLocation
+		// Ensure it is placed with the opposite facing direction contacting a Barrel block
 		Direction facingDirection = state.getValue(FACING);
 		BlockPos blockPos = pos.relative(facingDirection.getOpposite());
 		BlockState blockState = reader.getBlockState(blockPos);
@@ -56,9 +56,9 @@ public class BarrelTapBlock extends HorizontalDirectionalBlock implements Simple
 
 	/**
 	 * Set FluidState properties.
-	 * Allows the blockLocation to exhibit waterlogged behavior.
+	 * Allows the block to exhibit waterlogged behavior.
 	 *
-	 * @param state the <code>BlockState</code> of the blockLocation
+	 * @param state the <code>BlockState</code> of the block
 	 * @return FluidState
 	 */
 	@SuppressWarnings("deprecation")
@@ -68,12 +68,12 @@ public class BarrelTapBlock extends HorizontalDirectionalBlock implements Simple
 	}
 
 	/**
-	 * Set the shape of the blockLocation.
+	 * Set the shape of the block.
 	 *
-	 * @param state            the <code>BlockState</code> of the blockLocation
-	 * @param getter           the <code>BlockGetter</code> for the blockLocation
-	 * @param pos              the <code>BlockPos</code> the blockLocation is at
-	 * @param collisionContext the <code>CollisionContext</code> of the blockLocation
+	 * @param state            the <code>BlockState</code> of the block
+	 * @param getter           the <code>BlockGetter</code> for the block
+	 * @param pos              the <code>BlockPos</code> the block is at
+	 * @param collisionContext the <code>CollisionContext</code> of the block
 	 * @return VoxelShape
 	 */
 	@SuppressWarnings("deprecation")
@@ -90,7 +90,7 @@ public class BarrelTapBlock extends HorizontalDirectionalBlock implements Simple
 	/**
 	 * Create the BlockState definition.
 	 *
-	 * @param builder the <code>StateDefinition.Builder</code> of the blockLocation
+	 * @param builder the <code>StateDefinition.Builder</code> of the block
 	 */
 	@Override
 	public void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
@@ -99,7 +99,7 @@ public class BarrelTapBlock extends HorizontalDirectionalBlock implements Simple
 
 	/**
 	 * Set placement properties.
-	 * Sets the facing direction of the blockLocation for placement.
+	 * Sets the facing direction of the block for placement.
 	 *
 	 * @param context the <code>BlockPlaceContext</code> during placement
 	 * @return BlockState

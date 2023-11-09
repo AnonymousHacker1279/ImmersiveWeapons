@@ -43,7 +43,7 @@ public class BiodomeLifeSupportUnitBlockEntity extends BlockEntity implements En
 				player.addEffect(new MobEffectInstance(EffectRegistry.CELESTIAL_PROTECTION_EFFECT.get(), 360, 0, true, true));
 			});
 
-			// Spawn particles in a circle around the blockLocation
+			// Spawn particles in a circle around the block
 			for (int i = 0; i < 360; i += 10) {
 				double x = pos.getX() + 0.5d + Math.cos(i);
 				double z = pos.getZ() + 0.5d + Math.sin(i);

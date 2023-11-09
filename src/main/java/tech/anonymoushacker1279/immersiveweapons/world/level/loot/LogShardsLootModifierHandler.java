@@ -37,7 +37,7 @@ public class LogShardsLootModifierHandler extends LootModifier {
 	 * Constructor for LogShardsLootModifierHandler.
 	 *
 	 * @param conditionsIn the <code>LootItemCondition</code>s
-	 * @param tag          the blockLocation tag string
+	 * @param tag          the block tag string
 	 * @param minShards    the minimum number of shards to drop
 	 * @param maxShards    the maximum number of shards to drop
 	 * @param reward       the returned item

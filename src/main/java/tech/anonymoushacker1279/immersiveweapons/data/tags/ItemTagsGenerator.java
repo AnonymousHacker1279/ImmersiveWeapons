@@ -47,7 +47,7 @@ public class ItemTagsGenerator extends ItemTagsProvider {
 
 		ItemRegistry.ITEMS.getEntries().stream().map(RegistryObject::get).forEach(items::add);
 
-		// Copy item tags from blockLocation tags
+		// Copy item tags from block tags
 		copy(Blocks.STAINED_GLASS, Tags.Items.STAINED_GLASS);
 		copy(ForgeBlockTagGroups.COBALT_ORES, ForgeItemTagGroups.COBALT_ORES);
 		copy(ForgeBlockTagGroups.SULFUR_ORES, ForgeItemTagGroups.SULFUR_ORES);
@@ -126,7 +126,7 @@ public class ItemTagsGenerator extends ItemTagsProvider {
 	 */
 	@SuppressWarnings("unchecked")
 	private void addImmersiveWeaponsTags() {
-		// Copy item tags from blockLocation tags
+		// Copy item tags from block tags
 		copy(IWBlockTagGroups.BURNED_OAK_LOGS, IWItemTagGroups.BURNED_OAK_LOGS);
 		copy(IWBlockTagGroups.STARDUST_LOGS, IWItemTagGroups.STARDUST_LOGS);
 
@@ -180,7 +180,7 @@ public class ItemTagsGenerator extends ItemTagsProvider {
 	 * Add tags under the Minecraft namespace
 	 */
 	private void addMinecraftTags() {
-		// Copy item tags from blockLocation tags
+		// Copy item tags from block tags
 		copy(BlockTags.FENCES, ItemTags.FENCES);
 		copy(BlockTags.LOGS_THAT_BURN, ItemTags.LOGS_THAT_BURN);
 		copy(BlockTags.PLANKS, ItemTags.PLANKS);

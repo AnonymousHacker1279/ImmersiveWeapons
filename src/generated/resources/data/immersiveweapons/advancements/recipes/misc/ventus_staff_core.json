@@ -20,8 +20,8 @@
   },
   "requirements": [
     [
-      "ventus_shard",
-      "has_the_recipe"
+      "has_the_recipe",
+      "ventus_shard"
     ]
   ],
   "rewards": {

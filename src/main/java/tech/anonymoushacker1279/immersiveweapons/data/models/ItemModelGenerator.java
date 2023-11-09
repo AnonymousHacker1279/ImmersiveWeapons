@@ -13,6 +13,7 @@ import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import net.neoforged.neoforge.registries.RegistryObject;
 import org.jetbrains.annotations.Nullable;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
+import tech.anonymoushacker1279.immersiveweapons.data.DataGenUtils;
 import tech.anonymoushacker1279.immersiveweapons.data.lists.ItemLists;
 import tech.anonymoushacker1279.immersiveweapons.init.BlockItemRegistry;
 import tech.anonymoushacker1279.immersiveweapons.init.ItemRegistry;
@@ -23,7 +24,7 @@ import tech.anonymoushacker1279.immersiveweapons.item.projectile.BulletItem;
 import java.util.*;
 import java.util.function.Predicate;
 
-public class ItemModelGenerator extends ItemModelProvider {
+public class ItemModelGenerator extends ItemModelProvider implements DataGenUtils {
 
 	final Map<PikeItem, ResourceLocation> pikeMaterialMap = new HashMap<>(15);
 	final Map<GauntletItem, ResourceLocation> gauntletMaterialMap = new HashMap<>(15);
@@ -37,21 +38,21 @@ public class ItemModelGenerator extends ItemModelProvider {
 	private void fillMaterialMaps() {
 		// Make a map of pikes to material textures
 		pikeMaterialMap.put(ItemRegistry.WOODEN_PIKE.get(),
-				new ResourceLocation("blockLocation/stripped_oak_log"));
+				new ResourceLocation("block/stripped_oak_log"));
 		pikeMaterialMap.put(ItemRegistry.STONE_PIKE.get(),
-				new ResourceLocation("blockLocation/stone"));
+				new ResourceLocation("block/stone"));
 		pikeMaterialMap.put(ItemRegistry.GOLDEN_PIKE.get(),
-				new ResourceLocation("blockLocation/gold_block"));
+				new ResourceLocation("block/gold_block"));
 		pikeMaterialMap.put(ItemRegistry.COPPER_PIKE.get(),
-				new ResourceLocation("blockLocation/copper_block"));
+				new ResourceLocation("block/copper_block"));
 		pikeMaterialMap.put(ItemRegistry.IRON_PIKE.get(),
-				new ResourceLocation("blockLocation/iron_block"));
+				new ResourceLocation("block/iron_block"));
 		pikeMaterialMap.put(ItemRegistry.COBALT_PIKE.get(),
-				new ResourceLocation(ImmersiveWeapons.MOD_ID, "blockLocation/cobalt_block"));
+				new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/cobalt_block"));
 		pikeMaterialMap.put(ItemRegistry.DIAMOND_PIKE.get(),
-				new ResourceLocation("blockLocation/diamond_block"));
+				new ResourceLocation("block/diamond_block"));
 		pikeMaterialMap.put(ItemRegistry.NETHERITE_PIKE.get(),
-				new ResourceLocation("blockLocation/netherite_block"));
+				new ResourceLocation("block/netherite_block"));
 		pikeMaterialMap.put(ItemRegistry.MOLTEN_PIKE.get(),
 				new ResourceLocation(ImmersiveWeapons.MOD_ID, "item/custom/molten"));
 		pikeMaterialMap.put(ItemRegistry.TESLA_PIKE.get(),
@@ -66,21 +67,21 @@ public class ItemModelGenerator extends ItemModelProvider {
 		// Make a map of gauntlets to material textures
 
 		gauntletMaterialMap.put(ItemRegistry.WOODEN_GAUNTLET.get(),
-				new ResourceLocation("blockLocation/stripped_oak_log"));
+				new ResourceLocation("block/stripped_oak_log"));
 		gauntletMaterialMap.put(ItemRegistry.STONE_GAUNTLET.get(),
-				new ResourceLocation("blockLocation/stone"));
+				new ResourceLocation("block/stone"));
 		gauntletMaterialMap.put(ItemRegistry.GOLDEN_GAUNTLET.get(),
-				new ResourceLocation("blockLocation/gold_block"));
+				new ResourceLocation("block/gold_block"));
 		gauntletMaterialMap.put(ItemRegistry.COPPER_GAUNTLET.get(),
-				new ResourceLocation("blockLocation/copper_block"));
+				new ResourceLocation("block/copper_block"));
 		gauntletMaterialMap.put(ItemRegistry.IRON_GAUNTLET.get(),
-				new ResourceLocation("blockLocation/iron_block"));
+				new ResourceLocation("block/iron_block"));
 		gauntletMaterialMap.put(ItemRegistry.COBALT_GAUNTLET.get(),
-				new ResourceLocation(ImmersiveWeapons.MOD_ID, "blockLocation/cobalt_block"));
+				new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/cobalt_block"));
 		gauntletMaterialMap.put(ItemRegistry.DIAMOND_GAUNTLET.get(),
-				new ResourceLocation("blockLocation/diamond_block"));
+				new ResourceLocation("block/diamond_block"));
 		gauntletMaterialMap.put(ItemRegistry.NETHERITE_GAUNTLET.get(),
-				new ResourceLocation("blockLocation/netherite_block"));
+				new ResourceLocation("block/netherite_block"));
 		gauntletMaterialMap.put(ItemRegistry.MOLTEN_GAUNTLET.get(),
 				new ResourceLocation(ImmersiveWeapons.MOD_ID, "item/custom/molten"));
 		gauntletMaterialMap.put(ItemRegistry.TESLA_GAUNTLET.get(),
@@ -113,8 +114,7 @@ public class ItemModelGenerator extends ItemModelProvider {
 	private void handheldItem(Item item) {
 		getBuilder(item.toString())
 				.parent(new ModelFile.UncheckedModelFile("item/handheld"))
-				.texture("layer0", new ResourceLocation(ImmersiveWeapons.MOD_ID,
-						"item/" + item));
+				.texture("layer0", getItemLocation(item));
 	}
 
 	/**
@@ -138,13 +138,13 @@ public class ItemModelGenerator extends ItemModelProvider {
 	}
 
 	/**
-	 * Generate a blockLocation item.
+	 * Generate a block item.
 	 *
 	 * @param item the <code>Item</code> to generate a model for
 	 */
 	private void blockItem(Item item) {
 		getBuilder(item.toString())
-				.parent(new ModelFile.UncheckedModelFile(ImmersiveWeapons.MOD_ID + ":blockLocation/" + item));
+				.parent(new ModelFile.UncheckedModelFile(getBlockItemLocation(item)));
 	}
 
 	/**
@@ -156,93 +156,73 @@ public class ItemModelGenerator extends ItemModelProvider {
 	private void armorItem(ArmorItem item, @Nullable ResourceLocation overlay) {
 		// Create base item, with references to trim variants
 		if (overlay == null) {
-			getBuilder(item.toString())
+			getBuilder(getItemLocation(item).getPath())
 					.parent(new ModelFile.UncheckedModelFile("item/generated"))
-					.texture("layer0", new ResourceLocation(ImmersiveWeapons.MOD_ID, "item/" + item))
+					.texture("layer0", getItemLocation(item))
 					.override().predicate(new ResourceLocation("trim_type"), 0.1f)
-					.model(new ModelFile.UncheckedModelFile(ImmersiveWeapons.MOD_ID + ":item/" + item + "_"
-							+ TrimMaterials.QUARTZ.location().getPath() + "_trim"))
+					.model(new ModelFile.UncheckedModelFile(getArmorTrimLocation(item, TrimMaterials.QUARTZ)))
 					.end()
 					.override().predicate(new ResourceLocation("trim_type"), 0.2f)
-					.model(new ModelFile.UncheckedModelFile(ImmersiveWeapons.MOD_ID + ":item/" + item + "_"
-							+ TrimMaterials.IRON.location().getPath() + "_trim"))
+					.model(new ModelFile.UncheckedModelFile(getArmorTrimLocation(item, TrimMaterials.IRON)))
 					.end()
 					.override().predicate(new ResourceLocation("trim_type"), 0.3f)
-					.model(new ModelFile.UncheckedModelFile(ImmersiveWeapons.MOD_ID + ":item/" + item + "_"
-							+ TrimMaterials.NETHERITE.location().getPath() + "_trim"))
+					.model(new ModelFile.UncheckedModelFile(getArmorTrimLocation(item, TrimMaterials.NETHERITE)))
 					.end()
 					.override().predicate(new ResourceLocation("trim_type"), 0.4f)
-					.model(new ModelFile.UncheckedModelFile(ImmersiveWeapons.MOD_ID + ":item/" + item + "_"
-							+ TrimMaterials.REDSTONE.location().getPath() + "_trim"))
+					.model(new ModelFile.UncheckedModelFile(getArmorTrimLocation(item, TrimMaterials.REDSTONE)))
 					.end()
 					.override().predicate(new ResourceLocation("trim_type"), 0.5f)
-					.model(new ModelFile.UncheckedModelFile(ImmersiveWeapons.MOD_ID + ":item/" + item + "_"
-							+ TrimMaterials.COPPER.location().getPath() + "_trim"))
+					.model(new ModelFile.UncheckedModelFile(getArmorTrimLocation(item, TrimMaterials.COPPER)))
 					.end()
 					.override().predicate(new ResourceLocation("trim_type"), 0.6f)
-					.model(new ModelFile.UncheckedModelFile(ImmersiveWeapons.MOD_ID + ":item/" + item + "_"
-							+ TrimMaterials.GOLD.location().getPath() + "_trim"))
+					.model(new ModelFile.UncheckedModelFile(getArmorTrimLocation(item, TrimMaterials.GOLD)))
 					.end()
 					.override().predicate(new ResourceLocation("trim_type"), 0.7f)
-					.model(new ModelFile.UncheckedModelFile(ImmersiveWeapons.MOD_ID + ":item/" + item + "_"
-							+ TrimMaterials.EMERALD.location().getPath() + "_trim"))
+					.model(new ModelFile.UncheckedModelFile(getArmorTrimLocation(item, TrimMaterials.EMERALD)))
 					.end()
 					.override().predicate(new ResourceLocation("trim_type"), 0.8f)
-					.model(new ModelFile.UncheckedModelFile(ImmersiveWeapons.MOD_ID + ":item/" + item + "_"
-							+ TrimMaterials.DIAMOND.location().getPath() + "_trim"))
+					.model(new ModelFile.UncheckedModelFile(getArmorTrimLocation(item, TrimMaterials.DIAMOND)))
 					.end()
 					.override().predicate(new ResourceLocation("trim_type"), 0.9f)
-					.model(new ModelFile.UncheckedModelFile(ImmersiveWeapons.MOD_ID + ":item/" + item + "_"
-							+ TrimMaterials.LAPIS.location().getPath() + "_trim"))
+					.model(new ModelFile.UncheckedModelFile(getArmorTrimLocation(item, TrimMaterials.LAPIS)))
 					.end()
 					.override().predicate(new ResourceLocation("trim_type"), 1.0f)
-					.model(new ModelFile.UncheckedModelFile(ImmersiveWeapons.MOD_ID + ":item/" + item + "_"
-							+ TrimMaterials.AMETHYST.location().getPath() + "_trim"))
+					.model(new ModelFile.UncheckedModelFile(getArmorTrimLocation(item, TrimMaterials.AMETHYST)))
 					.end();
 		} else {
-			getBuilder(item.toString())
+			getBuilder(getItemLocation(item).getPath())
 					.parent(new ModelFile.UncheckedModelFile("item/generated"))
-					.texture("layer0", new ResourceLocation(ImmersiveWeapons.MOD_ID, "item/" + item))
+					.texture("layer0", getItemLocation(item))
 					.texture("layer1", overlay)
 					.override().predicate(new ResourceLocation("trim_type"), 0.1f)
-					.model(new ModelFile.UncheckedModelFile(ImmersiveWeapons.MOD_ID + ":item/" + item + "_"
-							+ TrimMaterials.QUARTZ.location().getPath() + "_trim"))
+					.model(new ModelFile.UncheckedModelFile(getArmorTrimLocation(item, TrimMaterials.QUARTZ)))
 					.end()
 					.override().predicate(new ResourceLocation("trim_type"), 0.2f)
-					.model(new ModelFile.UncheckedModelFile(ImmersiveWeapons.MOD_ID + ":item/" + item + "_"
-							+ TrimMaterials.IRON.location().getPath() + "_trim"))
+					.model(new ModelFile.UncheckedModelFile(getArmorTrimLocation(item, TrimMaterials.IRON)))
 					.end()
 					.override().predicate(new ResourceLocation("trim_type"), 0.3f)
-					.model(new ModelFile.UncheckedModelFile(ImmersiveWeapons.MOD_ID + ":item/" + item + "_"
-							+ TrimMaterials.NETHERITE.location().getPath() + "_trim"))
+					.model(new ModelFile.UncheckedModelFile(getArmorTrimLocation(item, TrimMaterials.NETHERITE)))
 					.end()
 					.override().predicate(new ResourceLocation("trim_type"), 0.4f)
-					.model(new ModelFile.UncheckedModelFile(ImmersiveWeapons.MOD_ID + ":item/" + item + "_"
-							+ TrimMaterials.REDSTONE.location().getPath() + "_trim"))
+					.model(new ModelFile.UncheckedModelFile(getArmorTrimLocation(item, TrimMaterials.REDSTONE)))
 					.end()
 					.override().predicate(new ResourceLocation("trim_type"), 0.5f)
-					.model(new ModelFile.UncheckedModelFile(ImmersiveWeapons.MOD_ID + ":item/" + item + "_"
-							+ TrimMaterials.COPPER.location().getPath() + "_trim"))
+					.model(new ModelFile.UncheckedModelFile(getArmorTrimLocation(item, TrimMaterials.COPPER)))
 					.end()
 					.override().predicate(new ResourceLocation("trim_type"), 0.6f)
-					.model(new ModelFile.UncheckedModelFile(ImmersiveWeapons.MOD_ID + ":item/" + item + "_"
-							+ TrimMaterials.GOLD.location().getPath() + "_trim"))
+					.model(new ModelFile.UncheckedModelFile(getArmorTrimLocation(item, TrimMaterials.GOLD)))
 					.end()
 					.override().predicate(new ResourceLocation("trim_type"), 0.7f)
-					.model(new ModelFile.UncheckedModelFile(ImmersiveWeapons.MOD_ID + ":item/" + item + "_"
-							+ TrimMaterials.EMERALD.location().getPath() + "_trim"))
+					.model(new ModelFile.UncheckedModelFile(getArmorTrimLocation(item, TrimMaterials.EMERALD)))
 					.end()
 					.override().predicate(new ResourceLocation("trim_type"), 0.8f)
-					.model(new ModelFile.UncheckedModelFile(ImmersiveWeapons.MOD_ID + ":item/" + item + "_"
-							+ TrimMaterials.DIAMOND.location().getPath() + "_trim"))
+					.model(new ModelFile.UncheckedModelFile(getArmorTrimLocation(item, TrimMaterials.DIAMOND)))
 					.end()
 					.override().predicate(new ResourceLocation("trim_type"), 0.9f)
-					.model(new ModelFile.UncheckedModelFile(ImmersiveWeapons.MOD_ID + ":item/" + item + "_"
-							+ TrimMaterials.LAPIS.location().getPath() + "_trim"))
+					.model(new ModelFile.UncheckedModelFile(getArmorTrimLocation(item, TrimMaterials.LAPIS)))
 					.end()
 					.override().predicate(new ResourceLocation("trim_type"), 1.0f)
-					.model(new ModelFile.UncheckedModelFile(ImmersiveWeapons.MOD_ID + ":item/" + item + "_"
-							+ TrimMaterials.AMETHYST.location().getPath() + "_trim"))
+					.model(new ModelFile.UncheckedModelFile(getArmorTrimLocation(item, TrimMaterials.AMETHYST)))
 					.end();
 		}
 
@@ -262,7 +242,7 @@ public class ItemModelGenerator extends ItemModelProvider {
 
 			getBuilder(item + "_" + trimMaterial.location().getPath() + "_trim")
 					.parent(new ModelFile.UncheckedModelFile("item/generated"))
-					.texture("layer0", new ResourceLocation(ImmersiveWeapons.MOD_ID, "item/" + item))
+					.texture("layer0", getItemLocation(item))
 					.texture("layer1", trimPath);
 		}
 	}
@@ -274,10 +254,10 @@ public class ItemModelGenerator extends ItemModelProvider {
 	 */
 	private void bowItem(Item item) {
 
-		ResourceLocation baseLayer = new ResourceLocation(ImmersiveWeapons.MOD_ID, "item/" + item);
+		ResourceLocation baseLayer = getItemLocation(item);
 
 		// Main model
-		getBuilder(item.toString())
+		getBuilder(baseLayer.getPath())
 				.parent(new ModelFile.UncheckedModelFile("item/generated"))
 				.transforms()
 				.transform(ItemDisplayContext.THIRD_PERSON_RIGHT_HAND)
@@ -302,28 +282,28 @@ public class ItemModelGenerator extends ItemModelProvider {
 				.end()
 				.end()
 				.texture("layer0", baseLayer)
-				.override().predicate(new ResourceLocation(ImmersiveWeapons.MOD_ID, "pulling"), 1)
-				.model(new ModelFile.UncheckedModelFile(ImmersiveWeapons.MOD_ID + ":item/" + item + "_pulling_0"))
+				.override().predicate(getBowPullingPredicateLocation(), 1)
+				.model(new ModelFile.UncheckedModelFile(getBowPullingLocation(item, 0)))
 				.end()
-				.override().predicate(new ResourceLocation(ImmersiveWeapons.MOD_ID, "pulling"), 1)
+				.override().predicate(getBowPullingPredicateLocation(), 1)
 				.predicate(new ResourceLocation(ImmersiveWeapons.MOD_ID, "pull"), 0.65f)
-				.model(new ModelFile.UncheckedModelFile(ImmersiveWeapons.MOD_ID + ":item/" + item + "_pulling_1"))
+				.model(new ModelFile.UncheckedModelFile(getBowPullingLocation(item, 1)))
 				.end()
-				.override().predicate(new ResourceLocation(ImmersiveWeapons.MOD_ID, "pulling"), 1)
+				.override().predicate(getBowPullingPredicateLocation(), 1)
 				.predicate(new ResourceLocation(ImmersiveWeapons.MOD_ID, "pull"), 0.9f)
-				.model(new ModelFile.UncheckedModelFile(ImmersiveWeapons.MOD_ID + ":item/" + item + "_pulling_2"))
+				.model(new ModelFile.UncheckedModelFile(getBowPullingLocation(item, 2)))
 				.end();
 
 		// Pulling models
-		getBuilder(item + "_pulling_0")
+		getBuilder(getBowPullingLocation(item, 0).getPath())
 				.parent(new ModelFile.UncheckedModelFile(baseLayer))
-				.texture("layer0", new ResourceLocation(ImmersiveWeapons.MOD_ID, "item/" + item + "_pulling_0"));
-		getBuilder(item + "_pulling_1")
+				.texture("layer0", getBowPullingLocation(item, 0));
+		getBuilder(getBowPullingLocation(item, 1).getPath())
 				.parent(new ModelFile.UncheckedModelFile(baseLayer))
-				.texture("layer0", new ResourceLocation(ImmersiveWeapons.MOD_ID, "item/" + item + "_pulling_1"));
-		getBuilder(item + "_pulling_2")
+				.texture("layer0", getBowPullingLocation(item, 1));
+		getBuilder(getBowPullingLocation(item, 2).getPath())
 				.parent(new ModelFile.UncheckedModelFile(baseLayer))
-				.texture("layer0", new ResourceLocation(ImmersiveWeapons.MOD_ID, "item/" + item + "_pulling_2"));
+				.texture("layer0", getBowPullingLocation(item, 2));
 	}
 
 	@Override
@@ -355,7 +335,7 @@ public class ItemModelGenerator extends ItemModelProvider {
 						getBuilder(item.toString())
 								.parent(new ModelFile.UncheckedModelFile(new ResourceLocation(ImmersiveWeapons.MOD_ID,
 										"item/pike")))
-								.texture("handle", new ResourceLocation("blockLocation/spruce_planks"))
+								.texture("handle", new ResourceLocation("block/spruce_planks"))
 								.texture("material", pikeMaterialMap.get(item));
 					} else if (item instanceof GauntletItem) {
 						if (item == ItemRegistry.IRON_GAUNTLET.get()) {
@@ -380,16 +360,16 @@ public class ItemModelGenerator extends ItemModelProvider {
 				} else {
 					if (!isAtArmorItems) {
 						if (item instanceof BulletItem<?>) {
-							getBuilder(item.toString())
+							getBuilder(getItemLocation(item).getPath())
 									.parent(new ModelFile.UncheckedModelFile(new ResourceLocation(ImmersiveWeapons.MOD_ID,
 											"item/musket_ball")))
-									.texture("all", new ResourceLocation(ImmersiveWeapons.MOD_ID, "item/" + item));
+									.texture("all", getItemLocation(item));
 						} else {
 							basicItem(item);
 						}
 					} else if (!isAtSpawnEggItems && item instanceof ArmorItem armorItem) {
 						if (armorItem instanceof DyeableArmorItem) {
-							armorItem(armorItem, new ResourceLocation(ImmersiveWeapons.MOD_ID, "item/" + item + "_overlay"));
+							armorItem(armorItem, getItemLocation(item).withSuffix("_overlay"));
 						} else {
 							armorItem(armorItem, null);
 						}
@@ -398,13 +378,13 @@ public class ItemModelGenerator extends ItemModelProvider {
 					}
 				}
 			} else {
-				// Some blockLocation items are special
+				// Some block items are special
 				if (item == BlockItemRegistry.BURNED_OAK_FENCE_ITEM.get()) {
 					fenceInventory(item.toString(),
-							new ResourceLocation(ImmersiveWeapons.MOD_ID, "blockLocation/burned_oak_planks"));
+							new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/burned_oak_planks"));
 				} else if (item == BlockItemRegistry.BURNED_OAK_TRAPDOOR_ITEM.get()) {
 					trapdoorBottom(item.toString(),
-							new ResourceLocation(ImmersiveWeapons.MOD_ID, "blockLocation/burned_oak_trapdoor"));
+							new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/burned_oak_trapdoor"));
 				} else if (item == BlockItemRegistry.BURNED_OAK_DOOR_ITEM.get()) {
 					basicItem(new ResourceLocation(ImmersiveWeapons.MOD_ID, "burned_oak_door"));
 				} else if (item == BlockItemRegistry.BURNED_OAK_SIGN_ITEM.get()) {
@@ -413,65 +393,65 @@ public class ItemModelGenerator extends ItemModelProvider {
 					basicItem(new ResourceLocation(ImmersiveWeapons.MOD_ID, "burned_oak_hanging_sign"));
 				} else if (item == BlockItemRegistry.BURNED_OAK_BUTTON_ITEM.get()) {
 					buttonInventory(item.toString(),
-							new ResourceLocation(ImmersiveWeapons.MOD_ID, "blockLocation/burned_oak_planks"));
+							new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/burned_oak_planks"));
 				} else if (item == BlockItemRegistry.AZUL_STAINED_ORCHID_ITEM.get()) {
 					getBuilder(item.toString())
 							.parent(new ModelFile.UncheckedModelFile("item/generated"))
 							.texture("layer0", new ResourceLocation(ImmersiveWeapons.MOD_ID,
-									"blockLocation/azul_stained_orchid"));
+									"block/azul_stained_orchid"));
 				} else if (item == BlockItemRegistry.MOONGLOW_ITEM.get()) {
 					getBuilder(item.toString())
 							.parent(new ModelFile.UncheckedModelFile("item/generated"))
 							.texture("layer0", new ResourceLocation(ImmersiveWeapons.MOD_ID,
-									"blockLocation/moonglow"));
+									"block/moonglow"));
 				} else if (item == BlockItemRegistry.STARDUST_SAPLING_ITEM.get()) {
 					getBuilder(item.toString())
 							.parent(new ModelFile.UncheckedModelFile("item/generated"))
 							.texture("layer0", new ResourceLocation(ImmersiveWeapons.MOD_ID,
-									"blockLocation/stardust_sapling"));
+									"block/stardust_sapling"));
 				} else if (item == BlockItemRegistry.DEATHWEED_ITEM.get()) {
 					getBuilder(item.toString())
 							.parent(new ModelFile.UncheckedModelFile("item/generated"))
 							.texture("layer0", new ResourceLocation(ImmersiveWeapons.MOD_ID,
-									"blockLocation/deathweed"));
+									"block/deathweed"));
 				} else if (item == BlockItemRegistry.BEAR_TRAP_ITEM.get()) {
 					getBuilder(item.toString())
 							.parent(new ModelFile.UncheckedModelFile(new ResourceLocation(ImmersiveWeapons.MOD_ID,
-									"blockLocation/bear_trap_closed")));
+									"block/bear_trap_closed")));
 				} else if (item == BlockItemRegistry.LANDMINE_ITEM.get()) {
 					getBuilder(item.toString())
 							.parent(new ModelFile.UncheckedModelFile(new ResourceLocation(ImmersiveWeapons.MOD_ID,
-									"blockLocation/landmine_disarmed")));
+									"block/landmine_disarmed")));
 				} else if (item == BlockItemRegistry.SPIKE_TRAP_ITEM.get()) {
 					getBuilder(item.toString())
 							.parent(new ModelFile.UncheckedModelFile(new ResourceLocation(ImmersiveWeapons.MOD_ID,
-									"blockLocation/spike_trap_activated")));
+									"block/spike_trap_activated")));
 				} else if (item == BlockItemRegistry.SANDBAG_ITEM.get()) {
 					getBuilder(item.toString())
 							.parent(new ModelFile.UncheckedModelFile(new ResourceLocation(ImmersiveWeapons.MOD_ID,
-									"blockLocation/sandbag_0")));
+									"block/sandbag_0")));
 				} else if (item == BlockItemRegistry.SPOTLIGHT_ITEM.get()) {
 					getBuilder(item.toString())
 							.parent(new ModelFile.UncheckedModelFile(new ResourceLocation(ImmersiveWeapons.MOD_ID,
-									"blockLocation/spotlight_wall_unlit")));
+									"block/spotlight_wall_unlit")));
 				} else if (item == BlockItemRegistry.WOODEN_SPIKES_ITEM.get()) {
 					getBuilder(item.toString())
 							.parent(new ModelFile.UncheckedModelFile(new ResourceLocation(ImmersiveWeapons.MOD_ID,
-									"blockLocation/wooden_spikes_0")));
+									"block/wooden_spikes_0")));
 				} else if (item == BlockItemRegistry.BARBED_WIRE_ITEM.get()) {
 					getBuilder(item.toString())
 							.parent(new ModelFile.UncheckedModelFile(new ResourceLocation(ImmersiveWeapons.MOD_ID,
-									"blockLocation/barbed_wire_0")));
+									"block/barbed_wire_0")));
 				} else if (item == BlockItemRegistry.MORTAR_ITEM.get()) {
 					getBuilder(item.toString())
 							.parent(new ModelFile.UncheckedModelFile(new ResourceLocation(ImmersiveWeapons.MOD_ID,
-									"blockLocation/mortar_0_unloaded")));
+									"block/mortar_0_unloaded")));
 				} else if (item == BlockItemRegistry.STARDUST_FENCE_ITEM.get()) {
 					fenceInventory(item.toString(),
-							new ResourceLocation(ImmersiveWeapons.MOD_ID, "blockLocation/stardust_planks"));
+							new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/stardust_planks"));
 				} else if (item == BlockItemRegistry.STARDUST_TRAPDOOR_ITEM.get()) {
 					trapdoorBottom(item.toString(),
-							new ResourceLocation(ImmersiveWeapons.MOD_ID, "blockLocation/stardust_trapdoor"));
+							new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/stardust_trapdoor"));
 				} else if (item == BlockItemRegistry.STARDUST_DOOR_ITEM.get()) {
 					basicItem(new ResourceLocation(ImmersiveWeapons.MOD_ID, "stardust_door"));
 				} else if (item == BlockItemRegistry.STARDUST_SIGN_ITEM.get()) {
@@ -480,23 +460,23 @@ public class ItemModelGenerator extends ItemModelProvider {
 					basicItem(new ResourceLocation(ImmersiveWeapons.MOD_ID, "stardust_hanging_sign"));
 				} else if (item == BlockItemRegistry.STARDUST_BUTTON_ITEM.get()) {
 					buttonInventory(item.toString(),
-							new ResourceLocation(ImmersiveWeapons.MOD_ID, "blockLocation/stardust_planks"));
+							new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/stardust_planks"));
 				} else if (item == BlockItemRegistry.CLOUD_MARBLE_BRICK_WALL_ITEM.get()) {
 					wallInventory(item.toString(),
-							new ResourceLocation(ImmersiveWeapons.MOD_ID, "blockLocation/cloud_marble_bricks"));
+							new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/cloud_marble_bricks"));
 				} else if (item == BlockItemRegistry.BLOOD_SANDSTONE_WALL_ITEM.get()) {
 					wallInventory(item.toString(),
-							new ResourceLocation(ImmersiveWeapons.MOD_ID, "blockLocation/blood_sandstone"));
+							new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/blood_sandstone"));
 				} else if (item == BlockItemRegistry.ASTRAL_CRYSTAL_ITEM.get()) {
 					getBuilder(item.toString())
 							.parent(new ModelFile.UncheckedModelFile("item/generated"))
 							.texture("layer0", new ResourceLocation(ImmersiveWeapons.MOD_ID,
-									"blockLocation/astral_crystal"));
+									"block/astral_crystal"));
 				} else if (item == BlockItemRegistry.STARSTORM_CRYSTAL_ITEM.get()) {
 					getBuilder(item.toString())
 							.parent(new ModelFile.UncheckedModelFile("item/generated"))
 							.texture("layer0", new ResourceLocation(ImmersiveWeapons.MOD_ID,
-									"blockLocation/starstorm_crystal"));
+									"block/starstorm_crystal"));
 				} else if (ItemLists.HEAD_ITEMS.contains(item)) {
 					entitySkull(item);
 				} else {

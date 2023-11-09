@@ -22,8 +22,8 @@
   },
   "requirements": [
     [
-      "cobalt_ring",
-      "has_the_recipe"
+      "has_the_recipe",
+      "cobalt_ring"
     ]
   ],
   "rewards": {

@@ -7,7 +7,6 @@ import net.neoforged.fml.ModLoadingContext;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.config.ModConfig.Type;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
-import net.neoforged.fml.javafmlmod.FMLJavaModLoadingContext;
 import org.slf4j.Logger;
 import tech.anonymoushacker1279.immersiveweapons.advancement.IWCriteriaTriggers;
 import tech.anonymoushacker1279.immersiveweapons.api.PluginHandler;
@@ -28,7 +27,7 @@ public class ImmersiveWeapons {
 	public final static CommonConfig COMMON_CONFIG = ConfigHelper.register(Type.COMMON, CommonConfig::create);
 
 	// Mod setup begins here
-	public ImmersiveWeapons() {
+	public ImmersiveWeapons(IEventBus modEventBus) {
 		LOGGER.info("Immersive Weapons is starting");
 
 		// Load configuration
@@ -39,7 +38,6 @@ public class ImmersiveWeapons {
 		DeferredRegistryHandler.init();
 
 		// Add event listeners
-		IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
 		modEventBus.addListener(this::setup);
 
 		// Register packet handlers

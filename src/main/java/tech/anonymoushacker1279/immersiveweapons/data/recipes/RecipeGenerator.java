@@ -21,6 +21,7 @@ import net.neoforged.neoforge.common.crafting.StrictNBTIngredient;
 import net.neoforged.neoforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.Nullable;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
+import tech.anonymoushacker1279.immersiveweapons.data.DataGenUtils;
 import tech.anonymoushacker1279.immersiveweapons.data.tags.groups.forge.ForgeItemTagGroups;
 import tech.anonymoushacker1279.immersiveweapons.data.tags.groups.immersiveweapons.IWItemTagGroups;
 import tech.anonymoushacker1279.immersiveweapons.init.*;
@@ -32,7 +33,7 @@ import java.util.concurrent.CompletableFuture;
 import static tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities.blockRegistryPath;
 import static tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities.itemRegistryPath;
 
-public class RecipeGenerator extends RecipeProvider {
+public class RecipeGenerator extends RecipeProvider implements DataGenUtils {
 
 	static RecipeOutput output;
 	final PackOutput packOutput;
@@ -306,7 +307,7 @@ public class RecipeGenerator extends RecipeProvider {
 	private void createMoltenItems() {
 		createMoltenIngot(ItemRegistry.MOLTEN_INGOT.get(), BlockItemRegistry.MOLTEN_BLOCK_ITEM.get());
 
-		// Molten blockLocation
+		// Molten block
 		ShapedRecipeBuilder builder = ShapedRecipeBuilder.shaped(RecipeCategory.MISC, BlockItemRegistry.MOLTEN_BLOCK_ITEM.get())
 				.group("molten")
 				.unlockedBy("molten_ingot", has(IWItemTagGroups.MOLTEN_INGOTS));
@@ -376,7 +377,7 @@ public class RecipeGenerator extends RecipeProvider {
 				.unlockedBy("tesla_ingot", has(IWItemTagGroups.TESLA_INGOTS))
 				.save(output);
 
-		// Tesla blockLocation
+		// Tesla block
 		ShapedRecipeBuilder builder = ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, BlockItemRegistry.TESLA_BLOCK_ITEM.get())
 				.group("tesla")
 				.unlockedBy("tesla_ingot", has(IWItemTagGroups.TESLA_INGOTS));
@@ -384,7 +385,7 @@ public class RecipeGenerator extends RecipeProvider {
 	}
 
 	private void createAstralItems() {
-		// Ingot from blockLocation
+		// Ingot from block
 		ShapelessRecipeBuilder shapelessRecipeBuilder = ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, ItemRegistry.ASTRAL_INGOT.get(), 9)
 				.group("astral")
 				.unlockedBy("astral_block", has(BlockItemRegistry.ASTRAL_BLOCK_ITEM.get()));
@@ -397,7 +398,7 @@ public class RecipeGenerator extends RecipeProvider {
 				.pattern("aaa")
 				.group("astral")
 				.unlockedBy("astral_ingot", has(IWItemTagGroups.ASTRAL_INGOTS))
-				.save(output, ImmersiveWeapons.MOD_ID + ":" + ItemRegistry.ASTRAL_INGOT.get() + "_from_nuggets");
+				.save(output, DataGenUtils.getItemFromNuggetsLocation(ItemRegistry.ASTRAL_INGOT.get()));
 
 		// Nugget from ingot
 		ShapelessRecipeBuilder shapelessRecipeBuilder1 = ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, ItemRegistry.ASTRAL_NUGGET.get(), 9)
@@ -405,7 +406,7 @@ public class RecipeGenerator extends RecipeProvider {
 				.unlockedBy("astral_nugget", has(IWItemTagGroups.ASTRAL_INGOTS));
 		createNuggetFromIngot(shapelessRecipeBuilder1, IWItemTagGroups.ASTRAL_INGOTS);
 
-		// Astral blockLocation
+		// Astral block
 		ShapedRecipeBuilder shapedRecipeBuilder = ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, BlockItemRegistry.ASTRAL_BLOCK_ITEM.get())
 				.group("astral")
 				.unlockedBy("astral_ingot", has(IWItemTagGroups.ASTRAL_INGOTS));
@@ -413,7 +414,7 @@ public class RecipeGenerator extends RecipeProvider {
 	}
 
 	private void createStarstormItems() {
-		// Ingot from blockLocation
+		// Ingot from block
 		ShapelessRecipeBuilder shapelessRecipeBuilder = ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, ItemRegistry.STARSTORM_INGOT.get(), 9)
 				.group("starstorm")
 				.unlockedBy("starstorm_block", has(BlockItemRegistry.STARSTORM_BLOCK_ITEM.get()));
@@ -433,7 +434,7 @@ public class RecipeGenerator extends RecipeProvider {
 		// Shards from crushing crystals
 		pistonCrushing(BlockRegistry.STARSTORM_CRYSTAL.get(), ItemRegistry.STARSTORM_SHARD.get(), 2, 4);
 
-		// Starstorm blockLocation
+		// Starstorm block
 		ShapedRecipeBuilder shapedRecipeBuilder = ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, BlockItemRegistry.STARSTORM_BLOCK_ITEM.get())
 				.group("starstorm")
 				.unlockedBy("starstorm_ingot", has(IWItemTagGroups.STARSTORM_INGOTS));
@@ -1674,7 +1675,7 @@ public class RecipeGenerator extends RecipeProvider {
 				.pattern("aaa")
 				.group("tesla")
 				.unlockedBy("tesla_ingot", has(IWItemTagGroups.TESLA_INGOTS))
-				.save(output, ImmersiveWeapons.MOD_ID + ":" + ingotItem + "_from_nuggets");
+				.save(output, DataGenUtils.getItemFromNuggetsLocation(ingotItem.asItem()));
 
 		ShapelessRecipeBuilder shapelessRecipeBuilder = ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, ingotItem, 9)
 				.group("tesla")

@@ -58,7 +58,7 @@ public class DeferredRegistryHandler {
 		ImmersiveWeapons.LOGGER.info("Initializing deferred registry for loot modifiers");
 		LootModifierRegistry.GLOBAL_LOOT_MODIFIER_SERIALIZER.register(modEventBus);
 
-		ImmersiveWeapons.LOGGER.info("Initializing deferred registry for blockLocation entities");
+		ImmersiveWeapons.LOGGER.info("Initializing deferred registry for block entities");
 		BlockEntityRegistry.BLOCK_ENTITIES.register(modEventBus);
 
 		ImmersiveWeapons.LOGGER.info("Initializing deferred registry for effects");

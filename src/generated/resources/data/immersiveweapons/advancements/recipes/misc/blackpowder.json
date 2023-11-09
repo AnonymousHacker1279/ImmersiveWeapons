@@ -22,8 +22,8 @@
   },
   "requirements": [
     [
-      "potassium_nitrate",
-      "has_the_recipe"
+      "has_the_recipe",
+      "potassium_nitrate"
     ]
   ],
   "rewards": {

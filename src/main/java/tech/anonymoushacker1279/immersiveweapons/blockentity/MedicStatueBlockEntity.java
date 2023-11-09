@@ -49,10 +49,10 @@ public class MedicStatueBlockEntity extends AbstractStatueBlockEntity {
 	}
 
 	/**
-	 * Create a blockLocation entity for the blockLocation.
+	 * Create a block entity for the block.
 	 *
-	 * @param blockPos   the <code>BlockPos</code> the blockLocation is at
-	 * @param blockState the <code>BlockState</code> of the blockLocation
+	 * @param blockPos   the <code>BlockPos</code> the block is at
+	 * @param blockState the <code>BlockState</code> of the block
 	 * @return BlockEntity
 	 */
 	@Nullable

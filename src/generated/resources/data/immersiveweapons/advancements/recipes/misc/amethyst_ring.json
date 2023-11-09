@@ -22,8 +22,8 @@
   },
   "requirements": [
     [
-      "amethyst_ring",
-      "has_the_recipe"
+      "has_the_recipe",
+      "amethyst_ring"
     ]
   ],
   "rewards": {

@@ -20,7 +20,7 @@ import tech.anonymoushacker1279.immersiveweapons.init.ItemRegistry;
 import static org.spongepowered.asm.mixin.injection.callback.LocalCapture.CAPTURE_FAILSOFT;
 
 /**
- * Handles the respawning of Super Hans when tossing a Hans' Blessing into a fire blockLocation. Simply injects a check
+ * Handles the respawning of Super Hans when tossing a Hans' Blessing into a fire block. Simply injects a check
  * into the end of {@link BaseFireBlock#entityInside(BlockState, Level, BlockPos, Entity)}.
  */
 @Mixin(BaseFireBlock.class)

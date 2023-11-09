@@ -16,8 +16,8 @@
   },
   "requirements": [
     [
-      "water",
-      "has_the_recipe"
+      "has_the_recipe",
+      "water"
     ]
   ],
   "rewards": {

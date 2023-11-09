@@ -3,7 +3,7 @@
   "criteria": {
     "has_the_recipe": {
       "conditions": {
-        "recipe": "immersiveweapons:tesla_ingot_from_nuggets"
+        "recipe": "immersiveweapons:item/tesla_ingot_from_nuggets"
       },
       "trigger": "minecraft:recipe_unlocked"
     },
@@ -20,13 +20,13 @@
   },
   "requirements": [
     [
-      "tesla_ingot",
-      "has_the_recipe"
+      "has_the_recipe",
+      "tesla_ingot"
     ]
   ],
   "rewards": {
     "recipes": [
-      "immersiveweapons:tesla_ingot_from_nuggets"
+      "immersiveweapons:item/tesla_ingot_from_nuggets"
     ]
   },
   "sends_telemetry_event": false

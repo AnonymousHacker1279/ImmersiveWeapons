@@ -18,7 +18,7 @@ public class HandCannonItem extends SimplePistolItem {
 	}
 
 	@Override
-	public Item defaultPowder() {
+	public Item defaultAmmo() {
 		return ItemRegistry.CANNONBALL.get();
 	}
 

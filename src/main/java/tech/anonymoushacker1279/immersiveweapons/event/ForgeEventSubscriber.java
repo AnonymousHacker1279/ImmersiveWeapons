@@ -113,7 +113,7 @@ public class ForgeEventSubscriber {
 
 	/**
 	 * Event handler for the MissingMappingsEvent.
-	 * Migrates old blockLocation registry names to newer ones.
+	 * Migrates old block registry names to newer ones.
 	 *
 	 * @param event the <code>MissingMappingsEvent</code> instance
 	 */
@@ -488,7 +488,7 @@ public class ForgeEventSubscriber {
 			List<RecipeHolder<PistonCrushingRecipe>> recipes = level.getRecipeManager()
 					.getAllRecipesFor(RecipeTypeRegistry.PISTON_CRUSHING_RECIPE_TYPE.get());
 
-			// Select a recipe that matches the blockstate of the blockLocation below the piston
+			// Select a recipe that matches the blockstate of the block below the piston
 			Optional<RecipeHolder<PistonCrushingRecipe>> recipe = recipes.stream()
 					.filter(r -> r.value().matches(belowState.getBlock()))
 					.findFirst();
@@ -499,7 +499,7 @@ public class ForgeEventSubscriber {
 				drop.setCount(recipe.get().value().getRandomDropAmount());
 				Block.popResource(level, belowPos, drop);
 
-				// Destroy the blockLocation, and do not drop loot
+				// Destroy the block, and do not drop loot
 				level.destroyBlock(belowPos, false);
 			}
 

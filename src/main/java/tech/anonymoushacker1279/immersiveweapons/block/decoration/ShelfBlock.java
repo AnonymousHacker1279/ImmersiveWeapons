@@ -73,13 +73,13 @@ public class ShelfBlock extends HorizontalDirectionalBlock implements EntityBloc
 	}
 
 	/**
-	 * Runs when the blockLocation is activated.
-	 * Allows the blockLocation to respond to user interaction.
+	 * Runs when the block is activated.
+	 * Allows the block to respond to user interaction.
 	 *
-	 * @param state     the <code>BlockState</code> of the blockLocation
-	 * @param level     the <code>Level</code> the blockLocation is in
-	 * @param pos       the <code>BlockPos</code> the blockLocation is at
-	 * @param player    the <code>Player</code> interacting with the blockLocation
+	 * @param state     the <code>BlockState</code> of the block
+	 * @param level     the <code>Level</code> the block is in
+	 * @param pos       the <code>BlockPos</code> the block is at
+	 * @param player    the <code>Player</code> interacting with the block
 	 * @param hand      the <code>InteractionHand</code> the Player used
 	 * @param hitResult the <code>BlockHitResult</code> of the interaction
 	 * @return InteractionResult
@@ -98,7 +98,7 @@ public class ShelfBlock extends HorizontalDirectionalBlock implements EntityBloc
 			if (itemInHand.getItem() == Items.DEBUG_STICK) {
 				shelfBlockEntity.setLocked(!shelfBlockEntity.isLocked());
 
-				player.displayClientMessage(Component.translatable("immersiveweapons.blockLocation.wall_shelf."
+				player.displayClientMessage(Component.translatable("immersiveweapons.block.wall_shelf."
 								+ (shelfBlockEntity.isLocked() ? "locked" : "unlocked"))
 						.withStyle(ChatFormatting.YELLOW), true);
 

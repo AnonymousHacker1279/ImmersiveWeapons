@@ -50,14 +50,14 @@ public class MeteorEntity extends Projectile {
 		if (!level.isClientSide) {
 			MeteorEntity meteorEntity = new MeteorEntity(EntityRegistry.METEOR_ENTITY.get(), level);
 
-			// Determine a starting position 40 blocks above the target position, and within a 15 blockLocation radius
+			// Determine a starting position 40 blocks above the target position, and within a 15 block radius
 			meteorEntity.startPos = new BlockPos(
 					targetPos.getX() + level.getRandom().nextIntBetweenInclusive(-15, 15),
 					targetPos.getY() + 40,
 					targetPos.getZ() + level.getRandom().nextIntBetweenInclusive(-15, 15)
 			);
 
-			// Check if the position is inside a solid blockLocation
+			// Check if the position is inside a solid block
 			if (level.getBlockState(meteorEntity.startPos).isSolid()) {
 				return false;
 			}

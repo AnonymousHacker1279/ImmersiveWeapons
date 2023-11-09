@@ -105,7 +105,7 @@ public class TooltipHandler {
 		// Arrows
 		if (stack.getItem() instanceof CustomArrowItem<?> arrow) {
 			if (arrow.color == -1) {
-				event.getToolTip().add(Component.translatable("tooltip.immersiveweapons." + arrow).withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
+				event.getToolTip().add(Component.translatable("tooltip.immersiveweapons." + ForgeRegistries.ITEMS.getKey(arrow).getPath()).withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
 			} else {
 				event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.smoke_grenade_arrow").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
 
@@ -119,7 +119,7 @@ public class TooltipHandler {
 
 		// Bullets
 		if (stack.getItem() instanceof BulletItem<?> bullet) {
-			event.getToolTip().add(Component.translatable("tooltip.immersiveweapons." + bullet).withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
+			event.getToolTip().add(Component.translatable("tooltip.immersiveweapons." + ForgeRegistries.ITEMS.getKey(bullet).getPath()).withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
 
 			List<Component> shiftTooltipInfo = new ArrayList<>(10);
 			shiftTooltipInfo.add(CommonComponents.EMPTY);
@@ -220,7 +220,7 @@ public class TooltipHandler {
 		// Gauntlets
 		if (stack.getItem() instanceof GauntletItem gauntlet) {
 			event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.gauntlet").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
-			event.getToolTip().add(Component.translatable("tooltip.immersiveweapons." + gauntlet).withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
+			event.getToolTip().add(Component.translatable("tooltip.immersiveweapons." + ForgeRegistries.ITEMS.getKey(gauntlet).getPath()).withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
 		}
 
 		// Staffs

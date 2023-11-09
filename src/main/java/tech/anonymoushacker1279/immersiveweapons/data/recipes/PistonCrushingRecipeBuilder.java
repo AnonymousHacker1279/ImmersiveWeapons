@@ -79,7 +79,7 @@ public class PistonCrushingRecipeBuilder {
 
 		@Override
 		public void serializeRecipeData(JsonObject pJson) {
-			pJson.addProperty("blockLocation", Objects.requireNonNull(ForgeRegistries.BLOCKS.getKey(block)).toString());
+			pJson.addProperty("block", Objects.requireNonNull(ForgeRegistries.BLOCKS.getKey(block)).toString());
 
 			JsonObject resultObject = new JsonObject();
 			resultObject.addProperty("item", Objects.requireNonNull(ForgeRegistries.ITEMS.getKey(result)).toString());

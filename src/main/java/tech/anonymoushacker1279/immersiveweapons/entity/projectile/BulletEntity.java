@@ -108,7 +108,7 @@ public class BulletEntity extends CustomArrowEntity implements HitEffectUtils {
 		lastState = this.level().getBlockState(hitResult.getBlockPos());
 		boolean didPassThroughBlock = false;
 
-		// Check if the bullet hit a permeable blockLocation like leaves, if so keep moving and decrease velocity
+		// Check if the bullet hit a permeable block like leaves, if so keep moving and decrease velocity
 		if (lastState.is(BlockTags.LEAVES)) {
 			push(0, -0.1, 0);
 			shakeTime = 4;
@@ -139,7 +139,7 @@ public class BulletEntity extends CustomArrowEntity implements HitEffectUtils {
 
 		lastState.onProjectileHit(level(), lastState, hitResult, this);
 
-		// Check if a solid blockLocation was hit
+		// Check if a solid block was hit
 		if (!didPassThroughBlock) {
 			level().addParticle(new BulletImpactParticleOptions(1.0F, Block.getId(lastState)),
 					hitResult.getLocation().x, hitResult.getLocation().y, hitResult.getLocation().z,
@@ -147,7 +147,7 @@ public class BulletEntity extends CustomArrowEntity implements HitEffectUtils {
 					GeneralUtilities.getRandomNumber(-0.01d, 0.01d),
 					GeneralUtilities.getRandomNumber(-0.01d, 0.01d));
 
-			// Extra code to run when a blockLocation is hit
+			// Extra code to run when a block is hit
 			doWhenHitBlock();
 		}
 	}

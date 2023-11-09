@@ -10,10 +10,12 @@
       "item": "minecraft:bamboo"
     },
     "c": {
-      "type": "forge:nbt",
-      "count": 1,
-      "item": "minecraft:potion",
-      "nbt": "{Potion:\"minecraft:poison\"}"
+      "type": "neoforge:nbt",
+      "Count": 1,
+      "id": "minecraft:potion",
+      "tag": {
+        "Potion": "minecraft:poison"
+      }
     }
   },
   "pattern": [

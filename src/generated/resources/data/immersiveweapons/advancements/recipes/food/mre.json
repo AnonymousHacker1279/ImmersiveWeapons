@@ -12,6 +12,21 @@
         "items": [
           {
             "items": [
+              "minecraft:carrot"
+            ]
+          },
+          {
+            "items": [
+              "minecraft:potato"
+            ]
+          },
+          {
+            "items": [
+              "minecraft:beetroot"
+            ]
+          },
+          {
+            "items": [
               "minecraft:cooked_chicken"
             ]
           }
@@ -22,8 +37,8 @@
   },
   "requirements": [
     [
-      "mre_items",
-      "has_the_recipe"
+      "has_the_recipe",
+      "mre_items"
     ]
   ],
   "rewards": {

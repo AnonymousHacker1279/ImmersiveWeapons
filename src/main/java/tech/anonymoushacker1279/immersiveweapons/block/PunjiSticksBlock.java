@@ -31,7 +31,7 @@ public class PunjiSticksBlock extends Block implements SimpleWaterloggedBlock {
 	/**
 	 * Constructor for PunjiSticksBlock.
 	 *
-	 * @param properties the <code>Properties</code> of the blockLocation
+	 * @param properties the <code>Properties</code> of the block
 	 */
 	public PunjiSticksBlock(Properties properties) {
 		super(properties);

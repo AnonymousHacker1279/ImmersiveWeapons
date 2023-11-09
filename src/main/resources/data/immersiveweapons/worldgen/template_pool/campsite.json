@@ -1,7 +1,6 @@
 {
 	"name": "immersiveweapons:campsite",
 	"fallback": "minecraft:empty",
-
 	"elements": [
 		{
 			"weight": 1,

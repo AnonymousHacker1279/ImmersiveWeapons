@@ -184,7 +184,7 @@ public class BlockTagsGenerator extends BlockTagsProvider {
 	}
 
 	/**
-	 * Add blockLocation tags for mining with tools
+	 * Add block tags for mining with tools
 	 */
 	private void addMiningBlockTags() {
 		List<Block> blocks = new ArrayList<>(250);

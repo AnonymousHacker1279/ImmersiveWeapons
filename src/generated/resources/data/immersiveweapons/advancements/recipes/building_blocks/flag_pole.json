@@ -20,8 +20,8 @@
   },
   "requirements": [
     [
-      "iron",
-      "has_the_recipe"
+      "has_the_recipe",
+      "iron"
     ]
   ],
   "rewards": {

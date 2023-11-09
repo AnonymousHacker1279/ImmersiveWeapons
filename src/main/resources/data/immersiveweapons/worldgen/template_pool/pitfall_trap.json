@@ -1,7 +1,6 @@
 {
 	"name": "immersiveweapons:pitfall_trap",
 	"fallback": "minecraft:empty",
-
 	"elements": [
 		{
 			"weight": 1,

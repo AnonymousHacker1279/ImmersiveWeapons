@@ -215,10 +215,10 @@ public class TeslaSynthesizerBlockEntity extends BaseContainerBlockEntity implem
 	}
 
 	/**
-	 * Create a blockLocation entity for the blockLocation.
+	 * Create a block entity for the block.
 	 *
-	 * @param blockPos   the <code>BlockPos</code> the blockLocation is at
-	 * @param blockState the <code>BlockState</code> of the blockLocation
+	 * @param blockPos   the <code>BlockPos</code> the block is at
+	 * @param blockState the <code>BlockState</code> of the block
 	 * @return BlockEntity
 	 */
 	@Nullable
@@ -375,7 +375,7 @@ public class TeslaSynthesizerBlockEntity extends BaseContainerBlockEntity implem
 	 *
 	 * @param index     the slot index
 	 * @param itemStack the <code>ItemStack</code> to insert
-	 * @param direction the <code>Direction</code> the blockLocation is facing
+	 * @param direction the <code>Direction</code> the block is facing
 	 * @return boolean
 	 */
 	@Override
@@ -388,7 +388,7 @@ public class TeslaSynthesizerBlockEntity extends BaseContainerBlockEntity implem
 	 *
 	 * @param index     the slot index
 	 * @param itemStack the <code>ItemStack</code> to remove
-	 * @param direction the <code>Direction</code> the blockLocation is facing
+	 * @param direction the <code>Direction</code> the block is facing
 	 * @return boolean
 	 */
 	@Override
@@ -507,7 +507,7 @@ public class TeslaSynthesizerBlockEntity extends BaseContainerBlockEntity implem
 	 * Get capabilities.
 	 *
 	 * @param capability the <code>Capability</code> instance
-	 * @param facing     the <code>Direction</code> the blockLocation is facing
+	 * @param facing     the <code>Direction</code> the block is facing
 	 * @return LazyOptional
 	 */
 	@Override

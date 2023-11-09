@@ -68,13 +68,12 @@ public class SpotlightBlock extends HorizontalDirectionalBlock implements Simple
 
 		if (!level.isClientSide) {
 			boolean isLit = state.getValue(LIT);
-			if (isLit != level.hasNeighborSignal(pos)) {
-				if (isLit) {
-					level.scheduleTick(pos, this, 1);
-				} else {
-					stateToggled(pos, level, state, state.getValue(LIT));
-					level.setBlock(pos, state.cycle(LIT), 3);
-				}
+			if (!isLit && level.hasNeighborSignal(pos)) {
+				stateToggled(pos, level, state, state.getValue(LIT));
+				level.setBlock(pos, state.cycle(LIT), 3);
+			} else if (isLit && !level.hasNeighborSignal(pos)) {
+				stateToggled(pos, level, state, state.getValue(LIT));
+				level.setBlock(pos, state.cycle(LIT), 3);
 			}
 		}
 	}
@@ -90,7 +89,7 @@ public class SpotlightBlock extends HorizontalDirectionalBlock implements Simple
 	}
 
 	private void stateToggled(BlockPos pos, Level level, BlockState state, boolean lit) {
-		// Start building a list of light positions in front of the blockLocation
+		// Start building a list of light positions in front of the block
 		if (!level.isClientSide) {
 			Direction facing = state.getValue(FACING);
 			BlockPos orientedPos = pos.relative(facing);
@@ -127,11 +126,11 @@ public class SpotlightBlock extends HorizontalDirectionalBlock implements Simple
 	}
 
 	/**
-	 * Get the light value of the blockLocation.
+	 * Get the light value of the block.
 	 *
-	 * @param state  the <code>BlockState</code> of the blockLocation
-	 * @param reader the <code>BlockGetter</code> of the blockLocation
-	 * @param pos    the <code>BlockPos</code> the blockLocation is at
+	 * @param state  the <code>BlockState</code> of the block
+	 * @param reader the <code>BlockGetter</code> of the block
+	 * @param pos    the <code>BlockPos</code> the block is at
 	 * @return int
 	 */
 	@Override

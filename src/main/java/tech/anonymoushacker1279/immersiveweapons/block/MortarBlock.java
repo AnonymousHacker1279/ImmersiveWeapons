@@ -41,7 +41,7 @@ public class MortarBlock extends HorizontalDirectionalBlock {
 	/**
 	 * Constructor for MortarBlock.
 	 *
-	 * @param properties the <code>Properties</code> of the blockLocation
+	 * @param properties the <code>Properties</code> of the block
 	 */
 	public MortarBlock(Properties properties) {
 		super(properties);
@@ -54,7 +54,7 @@ public class MortarBlock extends HorizontalDirectionalBlock {
 	/**
 	 * Create the BlockState definition.
 	 *
-	 * @param builder the <code>StateDefinition.Builder</code> of the blockLocation
+	 * @param builder the <code>StateDefinition.Builder</code> of the block
 	 */
 	@Override
 	protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
@@ -63,7 +63,7 @@ public class MortarBlock extends HorizontalDirectionalBlock {
 
 	/**
 	 * Set placement properties.
-	 * Sets the facing direction of the blockLocation for placement.
+	 * Sets the facing direction of the block for placement.
 	 *
 	 * @param context the <code>BlockPlaceContext</code> during placement
 	 * @return BlockState
@@ -74,12 +74,12 @@ public class MortarBlock extends HorizontalDirectionalBlock {
 	}
 
 	/**
-	 * Set the shape of the blockLocation.
+	 * Set the shape of the block.
 	 *
-	 * @param state            the <code>BlockState</code> of the blockLocation
-	 * @param getter           the <code>BlockGetter</code> for the blockLocation
-	 * @param pos              the <code>BlockPos</code> the blockLocation is at
-	 * @param collisionContext the <code>CollisionContext</code> of the blockLocation
+	 * @param state            the <code>BlockState</code> of the block
+	 * @param getter           the <code>BlockGetter</code> for the block
+	 * @param pos              the <code>BlockPos</code> the block is at
+	 * @param collisionContext the <code>CollisionContext</code> of the block
 	 * @return VoxelShape
 	 */
 	@SuppressWarnings("deprecation")
@@ -91,13 +91,13 @@ public class MortarBlock extends HorizontalDirectionalBlock {
 	}
 
 	/**
-	 * Runs when the blockLocation is activated.
-	 * Allows the blockLocation to respond to user interaction.
+	 * Runs when the block is activated.
+	 * Allows the block to respond to user interaction.
 	 *
-	 * @param state     the <code>BlockState</code> of the blockLocation
-	 * @param level     the <code>Level</code> the blockLocation is in
-	 * @param pos       the <code>BlockPos</code> the blockLocation is at
-	 * @param player    the <code>PlayerEntity</code> interacting with the blockLocation
+	 * @param state     the <code>BlockState</code> of the block
+	 * @param level     the <code>Level</code> the block is in
+	 * @param pos       the <code>BlockPos</code> the block is at
+	 * @param player    the <code>PlayerEntity</code> interacting with the block
 	 * @param hand      the <code>InteractionHand</code> the PlayerEntity used
 	 * @param hitResult the <code>BlockHitResult</code> of the interaction
 	 * @return ActionResultType
@@ -151,12 +151,12 @@ public class MortarBlock extends HorizontalDirectionalBlock {
 	/**
 	 * Runs when neighboring blocks change state.
 	 *
-	 * @param state    the <code>BlockState</code> of the blockLocation
-	 * @param level    the <code>Level</code> the blockLocation is in
-	 * @param pos      the <code>BlockPos</code> the blockLocation is at
+	 * @param state    the <code>BlockState</code> of the block
+	 * @param level    the <code>Level</code> the block is in
+	 * @param pos      the <code>BlockPos</code> the block is at
 	 * @param block    the <code>Block</code> that is changing
-	 * @param fromPos  the <code>BlockPos</code> of the changing blockLocation
-	 * @param isMoving determines if the blockLocation is moving
+	 * @param fromPos  the <code>BlockPos</code> of the changing block
+	 * @param isMoving determines if the block is moving
 	 */
 	@SuppressWarnings("deprecation")
 	@Override
@@ -172,9 +172,9 @@ public class MortarBlock extends HorizontalDirectionalBlock {
 	/**
 	 * Fires a mortar shell and sends packets to tracking players.
 	 *
-	 * @param level the <code>Level</code> the blockLocation is in
-	 * @param pos   the <code>BlockPos</code> the blockLocation is at
-	 * @param state the <code>BlockState</code> of the blockLocation
+	 * @param level the <code>Level</code> the block is in
+	 * @param pos   the <code>BlockPos</code> the block is at
+	 * @param state the <code>BlockState</code> of the block
 	 */
 	private void fire(Level level, BlockPos pos, BlockState state, @Nullable Player player) {
 		PacketHandler.INSTANCE.send(PacketDistributor.TRACKING_CHUNK.with(() -> level.getChunkAt(pos)),

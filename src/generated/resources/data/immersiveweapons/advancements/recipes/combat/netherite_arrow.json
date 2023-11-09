@@ -20,8 +20,8 @@
   },
   "requirements": [
     [
-      "netherite_ingot",
-      "has_the_recipe"
+      "has_the_recipe",
+      "netherite_ingot"
     ]
   ],
   "rewards": {

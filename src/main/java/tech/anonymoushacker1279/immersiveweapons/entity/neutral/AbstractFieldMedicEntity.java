@@ -150,6 +150,16 @@ public abstract class AbstractFieldMedicEntity extends PathfinderMob implements 
 					minutemanEntity.setPersistentAngerTarget(livingEntity.getUUID());
 				}
 
+				// If there are no minutemen, aggro any nearby medics
+				if (nearbyMinutemen.isEmpty()) {
+					List<AbstractFieldMedicEntity> nearbyMedics = level().getEntitiesOfClass(AbstractFieldMedicEntity.class, getBoundingBox()
+							.inflate(48.0D, 8.0D, 48.0D));
+
+					for (AbstractFieldMedicEntity medicEntity : nearbyMedics) {
+						medicEntity.setTarget(livingEntity);
+					}
+				}
+
 				return true;
 			}
 		}

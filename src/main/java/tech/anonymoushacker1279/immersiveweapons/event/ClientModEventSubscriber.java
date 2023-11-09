@@ -1,7 +1,7 @@
 package tech.anonymoushacker1279.immersiveweapons.event;
 
 import net.minecraft.client.gui.screens.MenuScreens;
-import net.minecraft.client.model.SkullModel;
+import net.minecraft.client.model.*;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.renderer.BiomeColors;
 import net.minecraft.client.renderer.Sheets;
@@ -37,6 +37,7 @@ import tech.anonymoushacker1279.immersiveweapons.client.renderer.dimension.Tiltr
 import tech.anonymoushacker1279.immersiveweapons.client.renderer.entity.misc.CustomBoatRenderer;
 import tech.anonymoushacker1279.immersiveweapons.client.renderer.entity.mob.*;
 import tech.anonymoushacker1279.immersiveweapons.client.renderer.entity.projectile.*;
+import tech.anonymoushacker1279.immersiveweapons.entity.vehicle.CustomBoatType;
 import tech.anonymoushacker1279.immersiveweapons.init.*;
 
 import java.util.*;
@@ -215,17 +216,13 @@ public class ClientModEventSubscriber {
 		event.registerEntityRenderer(EntityRegistry.CHAIR_ENTITY.get(), ChairRenderer::new);
 
 		event.registerEntityRenderer(EntityRegistry.BURNED_OAK_BOAT_ENTITY.get(),
-				context -> new CustomBoatRenderer(context, false,
-						new ResourceLocation(ImmersiveWeapons.MOD_ID, "textures/entity/boat/burned_oak.png")));
+				context -> new CustomBoatRenderer(context, false));
 		event.registerEntityRenderer(EntityRegistry.BURNED_OAK_CHEST_BOAT_ENTITY.get(),
-				context -> new CustomBoatRenderer(context, true,
-						new ResourceLocation(ImmersiveWeapons.MOD_ID, "textures/entity/chest_boat/burned_oak.png")));
+				context -> new CustomBoatRenderer(context, true));
 		event.registerEntityRenderer(EntityRegistry.STARDUST_BOAT_ENTITY.get(),
-				context -> new CustomBoatRenderer(context, false,
-						new ResourceLocation(ImmersiveWeapons.MOD_ID, "textures/entity/boat/stardust.png")));
+				context -> new CustomBoatRenderer(context, false));
 		event.registerEntityRenderer(EntityRegistry.STARDUST_CHEST_BOAT_ENTITY.get(),
-				context -> new CustomBoatRenderer(context, true,
-						new ResourceLocation(ImmersiveWeapons.MOD_ID, "textures/entity/chest_boat/stardust.png")));
+				context -> new CustomBoatRenderer(context, true));
 
 		event.registerEntityRenderer(EntityRegistry.MUD_BALL_ENTITY.get(), ThrownItemRenderer::new);
 		event.registerEntityRenderer(EntityRegistry.LAVA_REVENANT_ENTITY.get(), LavaRevenantRenderer::new);
@@ -269,6 +266,11 @@ public class ClientModEventSubscriber {
 		event.registerLayerDefinition(HANS_HEAD_LAYER, SkullModel::createMobHeadLayer);
 		event.registerLayerDefinition(STORM_CREEPER_HEAD_LAYER, SkullModel::createMobHeadLayer);
 		event.registerLayerDefinition(SKELETON_MERCHANT_HEAD_LAYER, SkullModel::createMobHeadLayer);
+
+		for (CustomBoatType type : CustomBoatType.values()) {
+			event.registerLayerDefinition(CustomBoatRenderer.createBoatModelName(type), BoatModel::createBodyModel);
+			event.registerLayerDefinition(CustomBoatRenderer.createChestBoatModelName(type), ChestBoatModel::createBodyModel);
+		}
 	}
 
 	/**
@@ -346,7 +348,7 @@ public class ClientModEventSubscriber {
 
 	@SubscribeEvent
 	public static void registerBlockColorHandlers(RegisterColorHandlersEvent.Block event) {
-		ImmersiveWeapons.LOGGER.info("Registering blockLocation color handlers");
+		ImmersiveWeapons.LOGGER.info("Registering block color handlers");
 
 		event.register((state, tintGetter, pos, color) -> BiomeColors
 						.getAverageGrassColor(Objects.requireNonNull(tintGetter), Objects.requireNonNull(pos)),

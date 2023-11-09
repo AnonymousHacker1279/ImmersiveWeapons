@@ -54,7 +54,6 @@ public class SmallPartsTableScreen extends AbstractContainerScreen<SmallPartsMen
 
 	@Override
 	protected void renderBg(GuiGraphics guiGraphics, float partialTick, int pX, int pY) {
-		renderBackground(guiGraphics, pX, pY, partialTick);
 		RenderSystem.setShader(GameRenderer::getPositionTexShader);
 		RenderSystem.setShaderTexture(0, BG_LOCATION);
 		int leftPos = this.leftPos;

@@ -22,8 +22,8 @@
   },
   "requirements": [
     [
-      "azul_keystone_fragment",
-      "has_the_recipe"
+      "has_the_recipe",
+      "azul_keystone_fragment"
     ]
   ],
   "rewards": {

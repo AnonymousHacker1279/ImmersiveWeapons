@@ -24,7 +24,8 @@ import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
 import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
 import net.neoforged.neoforge.registries.RegistryObject;
 import org.jetbrains.annotations.Nullable;
-import tech.anonymoushacker1279.immersiveweapons.block.*;
+import tech.anonymoushacker1279.immersiveweapons.block.SandbagBlock;
+import tech.anonymoushacker1279.immersiveweapons.block.WoodenSpikesBlock;
 import tech.anonymoushacker1279.immersiveweapons.block.barbed_wire.BarbedWireBlock;
 import tech.anonymoushacker1279.immersiveweapons.block.decoration.WoodenTableBlock;
 import tech.anonymoushacker1279.immersiveweapons.block.decoration.skull.CustomSkullBlock;
@@ -54,7 +55,7 @@ public class BlockLootTables implements LootTableSubProvider {
 		List<Block> blocks = new ArrayList<>(250);
 		BlockRegistry.BLOCKS.getEntries().stream().map(RegistryObject::get).forEach(blocks::add);
 
-		// Simple blockLocation drops
+		// Simple block drops
 		dropSelf(BlockRegistry.AMERICAN_FLAG.get());
 		dropSelf(BlockRegistry.BARBED_WIRE_FENCE.get());
 		dropSelf(BlockRegistry.BARREL_TAP.get());
@@ -150,11 +151,12 @@ public class BlockLootTables implements LootTableSubProvider {
 		dropSelf(BlockRegistry.CHAMPION_BRICKS.get());
 		dropSelf(BlockRegistry.CHAMPION_BASE.get());
 		dropSelf(BlockRegistry.CHAMPION_KEYCARD_BRICKS.get());
+		dropSelf(BlockRegistry.LANDMINE.get());
 
 		blocks.stream().filter(WoodenTableBlock.class::isInstance).forEach(this::dropSelf);
 		blocks.stream().filter(CustomSkullBlock.class::isInstance).forEach(this::dropSelf);
 
-		// Complex blockLocation drops
+		// Complex block drops
 		add(BlockRegistry.BURNED_OAK_DOOR.get(), BlockLootTables::createDoor);
 		add(BlockRegistry.STARDUST_DOOR.get(), BlockLootTables::createDoor);
 		add(BlockRegistry.STARDUST_LEAVES.get(), (leafLikeDrop) -> createLeafLikeDrop(leafLikeDrop, BlockItemRegistry.STARDUST_SAPLING_ITEM.get(), NORMAL_LEAVES_SAPLING_CHANCES));
@@ -169,16 +171,6 @@ public class BlockLootTables implements LootTableSubProvider {
 		add(BlockRegistry.ASTRAL_ORE.get(), (block) -> createOreDrop(block, ItemRegistry.RAW_ASTRAL.get(), 1, 3));
 		add(BlockRegistry.PITFALL.get(), (leafLikeDrop) -> createLeafLikeDrop(leafLikeDrop, Items.STICK, NORMAL_LEAVES_SAPLING_CHANCES));
 		add(BlockRegistry.VENTUS_ORE.get(), (block) -> createOreDrop(block, ItemRegistry.VENTUS_SHARD.get(), 2, 5));
-		add(BlockRegistry.LANDMINE.get(), (block) -> LootTable.lootTable()
-				.withPool(LootPool.lootPool()
-						.name("main")
-						.setRolls(ConstantValue.exactly(1.0F))
-						.add(applyExplosionDecay(LootItem.lootTableItem(BlockItemRegistry.LANDMINE_ITEM.get())
-								.when(ExplosionCondition.survivesExplosion().invert())
-								.apply(SetItemCountFunction.setCount(ConstantValue.exactly(1.0F))
-										.when(LootItemBlockStatePropertyCondition.hasBlockStateProperties(block)
-												.setProperties(StatePropertiesPredicate.Builder.properties()
-														.hasProperty(LandmineBlock.ARMED, false))))))));
 		add(BlockRegistry.WOODEN_SPIKES.get(), (block) -> LootTable.lootTable()
 				.withPool(LootPool.lootPool()
 						.name("main")

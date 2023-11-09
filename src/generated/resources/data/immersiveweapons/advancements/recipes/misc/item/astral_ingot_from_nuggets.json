@@ -13,20 +13,20 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "immersiveweapons:astral_ingot_from_nuggets"
+        "recipe": "immersiveweapons:item/astral_ingot_from_nuggets"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
   },
   "requirements": [
     [
-      "astral_ingot",
-      "has_the_recipe"
+      "has_the_recipe",
+      "astral_ingot"
     ]
   ],
   "rewards": {
     "recipes": [
-      "immersiveweapons:astral_ingot_from_nuggets"
+      "immersiveweapons:item/astral_ingot_from_nuggets"
     ]
   },
   "sends_telemetry_event": false

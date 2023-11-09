@@ -22,8 +22,8 @@
   },
   "requirements": [
     [
-      "small_parts_metal_tool",
-      "has_the_recipe"
+      "has_the_recipe",
+      "small_parts_metal_tool"
     ]
   ],
   "rewards": {

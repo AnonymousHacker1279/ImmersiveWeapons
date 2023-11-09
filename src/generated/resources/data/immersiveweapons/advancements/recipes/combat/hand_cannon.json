@@ -22,8 +22,8 @@
   },
   "requirements": [
     [
-      "flintlock_assembly",
-      "has_the_recipe"
+      "has_the_recipe",
+      "flintlock_assembly"
     ]
   ],
   "rewards": {

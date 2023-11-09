@@ -190,7 +190,7 @@ public class EvilEyeEntity extends FlyingMob implements Enemy, GrantAdvancementO
 					// If the entity has been watched for 100 ticks or more, there is a 5% chance every
 					// 20 ticks to inflict a random debuff on the player
 					if (tickCount % 20 == 0 && random.nextFloat() < effectChance) {
-						// If there are at least 3 entities within an 8 blockLocation radius, inflict a high tier debuff
+						// If there are at least 3 entities within an 8 block radius, inflict a high tier debuff
 						if (level().getEntitiesOfClass(EvilEyeEntity.class, getBoundingBox().inflate(8), (entity) -> true).size() >= 3) {
 							MobEffect effect = highTierDebuffs.get(getRandom().nextIntBetweenInclusive(0, highTierDebuffs.size() - 1));
 							targetedEntity.addEffect(new MobEffectInstance(effect, effectDuration, effectLevel));

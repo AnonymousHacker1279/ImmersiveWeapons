@@ -1,7 +1,6 @@
 {
 	"name": "immersiveweapons:destroyed_house",
 	"fallback": "minecraft:empty",
-
 	"elements": [
 		{
 			"weight": 1,

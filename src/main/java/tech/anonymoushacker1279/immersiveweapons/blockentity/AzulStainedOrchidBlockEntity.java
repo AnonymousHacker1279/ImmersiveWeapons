@@ -68,7 +68,7 @@ public class AzulStainedOrchidBlockEntity extends BlockEntity implements EntityB
 
 	private BlockPos findValidTeleportPosition(ServerLevel destinationLevel, BlockPos targetPos) {
 		// A valid teleport location must meet the following criteria:
-		// 1. The blockLocation at and above the current position is air
+		// 1. The block at and above the current position is air
 		// 2. It must be on the surface of the world
 		// 3. It must not be in the Deadman's Desert biome
 
@@ -120,7 +120,7 @@ public class AzulStainedOrchidBlockEntity extends BlockEntity implements EntityB
 		int topOfWorld = destinationLevel.getHeight(Heightmap.Types.WORLD_SURFACE, targetPos.getX(), targetPos.getZ());
 		targetPos.atY(topOfWorld);
 
-		// Ensure the target position is not in a blockLocation (i.e. air, as sometimes it can be water and considered the surface)
+		// Ensure the target position is not in a block (i.e. air, as sometimes it can be water and considered the surface)
 		while (!destinationLevel.getBlockState(targetPos).isAir()) {
 			targetPos = targetPos.above();
 		}

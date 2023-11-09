@@ -173,7 +173,7 @@ public class LegacyMappingsHandler {
 	}
 
 	public static void remapBlocks(List<Mapping<Block>> mappings) {
-		ImmersiveWeapons.LOGGER.warn("Missing blockLocation mappings were found. This probably means a blockLocation was renamed or deleted. Attempting to remap...");
+		ImmersiveWeapons.LOGGER.warn("Missing block mappings were found. This probably means a block was renamed or deleted. Attempting to remap...");
 
 		List<String> remappedBlocks = new ArrayList<>(0);
 

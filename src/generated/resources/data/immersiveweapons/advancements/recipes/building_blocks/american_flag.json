@@ -22,8 +22,8 @@
   },
   "requirements": [
     [
-      "flag_pole",
-      "has_the_recipe"
+      "has_the_recipe",
+      "flag_pole"
     ]
   ],
   "rewards": {

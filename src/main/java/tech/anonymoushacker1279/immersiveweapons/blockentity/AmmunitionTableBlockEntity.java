@@ -270,11 +270,11 @@ public class AmmunitionTableBlockEntity extends BaseContainerBlockEntity impleme
 				int materialListIndex = 0;
 				for (ItemStack material : materialList) {
 					if (material.getItem() == stack.getItem()) {
-						float modifier = Mth.clamp((baseMultiplierList.get(materialListIndex) * stack.getCount()), 0, 64);
+						float modifier = baseMultiplierList.get(materialListIndex) * stack.getCount();
 
 						outputSize += modifier;
 
-						int slotCost = (int) (modifier / baseMultiplierList.get(materialListIndex));
+						int slotCost = Mth.ceil(modifier / baseMultiplierList.get(materialListIndex));
 						slotCosts.set(inventoryIndex, slotCost);
 					}
 
@@ -294,12 +294,12 @@ public class AmmunitionTableBlockEntity extends BaseContainerBlockEntity impleme
 					int materialListIndex = 0;
 					for (ItemStack material : materialList) {
 						if (material.getItem() == inventoryStack.getItem()) {
-							float modifier = Mth.clamp((densityList.get(materialListIndex) * inventoryStack.getCount() * densityModifier), 0, 64);
+							float modifier = densityList.get(materialListIndex) * inventoryStack.getCount() * densityModifier;
 
 							outputSize -= modifier;
 
-							int slotCost = (int) (modifier / densityList.get(materialListIndex));
-							slotCosts.set(inventoryIndex, slotCost);
+							int slotCost = Mth.ceil((modifier / densityList.get(materialListIndex)));
+							slotCosts.set(inventoryIndex, slotCosts.get(inventoryIndex) + slotCost);
 						}
 
 						materialListIndex++;

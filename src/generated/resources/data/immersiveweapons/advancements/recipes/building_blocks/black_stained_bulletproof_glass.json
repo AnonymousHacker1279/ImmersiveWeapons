@@ -22,8 +22,8 @@
   },
   "requirements": [
     [
-      "bulletproof_glass",
-      "has_the_recipe"
+      "has_the_recipe",
+      "bulletproof_glass"
     ]
   ],
   "rewards": {

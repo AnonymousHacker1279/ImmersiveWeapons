@@ -46,7 +46,7 @@ public class AdvancementsGenerator extends AdvancementProvider {
 						Component.translatable("advancements.immersiveweapons.root.title")
 								.withStyle(ChatFormatting.RED),
 						Component.translatable("advancements.immersiveweapons.root.description"),
-						new ResourceLocation(ImmersiveWeapons.MOD_ID, "textures/blockLocation/red_stained_bulletproof_glass.png"),
+						new ResourceLocation(ImmersiveWeapons.MOD_ID, "textures/block/red_stained_bulletproof_glass.png"),
 						FrameType.TASK, false, false, false)
 				.addCriterion("exist",
 						PlayerTrigger.TriggerInstance.located(LocationPredicate.Builder.inDimension(Level.OVERWORLD)))
@@ -1331,7 +1331,7 @@ public class AdvancementsGenerator extends AdvancementProvider {
 						Component.translatable("advancements.immersiveweapons.kill_counter.title"),
 						Component.translatable("advancements.immersiveweapons.kill_counter.description"),
 						null, FrameType.CHALLENGE, true, true, true)
-				.addCriterion("", new ImpossibleTrigger().createCriterion(new ImpossibleTrigger.TriggerInstance()))
+				.addCriterion("", CriteriaTriggers.IMPOSSIBLE.createCriterion(new ImpossibleTrigger.TriggerInstance()))
 				.save(consumer, "immersiveweapons:kill_counter");
 
 		Builder.advancement().parent(root)
@@ -1339,7 +1339,7 @@ public class AdvancementsGenerator extends AdvancementProvider {
 						Component.translatable("advancements.immersiveweapons.overkill.title"),
 						Component.translatable("advancements.immersiveweapons.overkill.description"),
 						null, FrameType.CHALLENGE, true, true, true)
-				.addCriterion("", new ImpossibleTrigger().createCriterion(new ImpossibleTrigger.TriggerInstance()))
+				.addCriterion("", CriteriaTriggers.IMPOSSIBLE.createCriterion(new ImpossibleTrigger.TriggerInstance()))
 				.rewards(AdvancementRewards.Builder.experience(100))
 				.save(consumer, "immersiveweapons:overkill");
 

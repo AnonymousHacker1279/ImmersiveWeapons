@@ -22,8 +22,8 @@
   },
   "requirements": [
     [
-      "bottle_of_alcohol",
-      "has_the_recipe"
+      "has_the_recipe",
+      "bottle_of_alcohol"
     ]
   ],
   "rewards": {

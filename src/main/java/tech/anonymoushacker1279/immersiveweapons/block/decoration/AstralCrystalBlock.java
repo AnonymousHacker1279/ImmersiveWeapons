@@ -41,10 +41,10 @@ public class AstralCrystalBlock extends AmethystClusterBlock implements EntityBl
 	}
 
 	/**
-	 * Create a blockLocation entity for the blockLocation.
+	 * Create a block entity for the block.
 	 *
-	 * @param blockPos   the <code>BlockPos</code> the blockLocation is at
-	 * @param blockState the <code>BlockState</code> of the blockLocation
+	 * @param blockPos   the <code>BlockPos</code> the block is at
+	 * @param blockState the <code>BlockState</code> of the block
 	 * @return BlockEntity
 	 */
 	@Override
@@ -60,13 +60,13 @@ public class AstralCrystalBlock extends AmethystClusterBlock implements EntityBl
 	}
 
 	/**
-	 * Runs when the blockLocation is activated.
-	 * Allows the blockLocation to respond to user interaction.
+	 * Runs when the block is activated.
+	 * Allows the block to respond to user interaction.
 	 *
-	 * @param state     the <code>BlockState</code> of the blockLocation
-	 * @param level     the <code>Level</code> the blockLocation is in
-	 * @param pos       the <code>BlockPos</code> the blockLocation is at
-	 * @param player    the <code>Player</code> interacting with the blockLocation
+	 * @param state     the <code>BlockState</code> of the block
+	 * @param level     the <code>Level</code> the block is in
+	 * @param pos       the <code>BlockPos</code> the block is at
+	 * @param player    the <code>Player</code> interacting with the block
 	 * @param hand      the <code>InteractionHand</code> the Player used
 	 * @param hitResult the <code>BlockHitResult</code> of the interaction
 	 * @return InteractionResult
@@ -95,13 +95,13 @@ public class AstralCrystalBlock extends AmethystClusterBlock implements EntityBl
 	}
 
 	/**
-	 * Runs when the blockLocation is removed.
+	 * Runs when the block is removed.
 	 *
-	 * @param state    the <code>BlockState</code> of the blockLocation
-	 * @param level    the <code>Level</code> the blockLocation is in
-	 * @param pos      the <code>BlockPos</code> the blockLocation is at
-	 * @param newState the <code>BlockState</code> the blockLocation now has
-	 * @param isMoving determines if the blockLocation is moving
+	 * @param state    the <code>BlockState</code> of the block
+	 * @param level    the <code>Level</code> the block is in
+	 * @param pos      the <code>BlockPos</code> the block is at
+	 * @param newState the <code>BlockState</code> the block now has
+	 * @param isMoving determines if the block is moving
 	 */
 	@SuppressWarnings("deprecation")
 	@Override

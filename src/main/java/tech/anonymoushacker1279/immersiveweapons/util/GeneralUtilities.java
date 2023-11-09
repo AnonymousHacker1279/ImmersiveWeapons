@@ -70,7 +70,7 @@ public class GeneralUtilities {
 	}
 
 	/**
-	 * Returns the {@linkplain ResourceLocation#getPath() path} of the registry name for the given blockLocation. This
+	 * Returns the {@linkplain ResourceLocation#getPath() path} of the registry name for the given block. This
 	 * is a convenience method which checks if the registry name of the entry exists, to avoid linting warnings about
 	 * the nullability of the {@linkplain net.neoforged.neoforge.registries.IForgeRegistry<Block>#getKey entry's registry name}.
 	 *

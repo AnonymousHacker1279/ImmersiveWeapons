@@ -47,13 +47,13 @@ public class MoltenToolSmeltingModifierHandler extends LootModifier {
 
 	@Override
 	public @NotNull ObjectArrayList<ItemStack> doApply(ObjectArrayList<ItemStack> generatedLoot, LootContext context) {
-		// If a molten tool is used and the player is crouching, the blockLocation is smelted
+		// If a molten tool is used and the player is crouching, the block is smelted
 		if (context.getParamOrNull(LootContextParams.THIS_ENTITY) instanceof Player player) {
 			if (player.isCrouching() && MOLTEN_TOOLS.contains(player.getItemInHand(InteractionHand.MAIN_HAND).getItem())) {
-				// Query smelting recipes to see if the blockLocation can be smelted
+				// Query smelting recipes to see if the block can be smelted
 				RecipeManager manager = player.level().getRecipeManager();
 
-				// If the blockLocation can be smelted, smelt it
+				// If the block can be smelted, smelt it
 				BlockState state = context.getParamOrNull(LootContextParams.BLOCK_STATE);
 				if (state != null) {
 					ItemStack blockItemStack = state.getBlock().asItem().getDefaultInstance();

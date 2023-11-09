@@ -27,7 +27,6 @@ public class AmmunitionTableScreen extends AbstractContainerScreen<AmmunitionTab
 
 	@Override
 	protected void renderBg(GuiGraphics guiGraphics, float pPartialTick, int pX, int pY) {
-		renderBackground(guiGraphics, pX, pY, pPartialTick);
 		guiGraphics.blit(GUI_TEXTURE, leftPos, topPos, 0, 0, imageWidth, imageHeight);
 
 		/*Render the density scroller

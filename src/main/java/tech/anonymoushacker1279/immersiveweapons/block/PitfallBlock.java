@@ -17,7 +17,7 @@ public class PitfallBlock extends Block {
 	/**
 	 * Constructor for PitfallBlock.
 	 *
-	 * @param properties the <code>Properties</code> of the blockLocation
+	 * @param properties the <code>Properties</code> of the block
 	 */
 	public PitfallBlock(Properties properties) {
 		super(properties);

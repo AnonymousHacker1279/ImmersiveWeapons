@@ -45,7 +45,7 @@ public class SurfaceRuleBuilder {
 	}
 
 	/**
-	 * Set biome surface with specified {@link BlockState}. Example - blockLocation of grass in the Overworld biomes
+	 * Set biome surface with specified {@link BlockState}. Example - block of grass in the Overworld biomes
 	 *
 	 * @param state {@link BlockState} for the ground cover.
 	 * @return same {@link SurfaceRuleBuilder} instance.
@@ -66,7 +66,7 @@ public class SurfaceRuleBuilder {
 	 * Set biome subsurface with specified {@link BlockState}. Example - dirt in the Overworld biomes.
 	 *
 	 * @param state {@link BlockState} for the subterranean layer.
-	 * @param depth blockLocation layer depth.
+	 * @param depth block layer depth.
 	 * @return same {@link SurfaceRuleBuilder} instance.
 	 */
 	public SurfaceRuleBuilder subsurface(BlockState state, int depth) {

@@ -61,7 +61,7 @@ runs {
 		systemProperty 'forge.logging.markers', 'REGISTRIES'
 		systemProperty 'forge.logging.console.level', 'debug'
 
-		programArguments.addAll '-Xmx6G', '-XX:+AllowEnhancedClassRedefinition'
+		jvmArguments.addAll '-Xmx6G', '-XX:+AllowEnhancedClassRedefinition'
 
 		modSource project.sourceSets.main
 	}
@@ -146,11 +146,14 @@ tasks.jarJar.configure {
 	archiveClassifier = ""
 }
 
-build.dependsOn tasks.jarJar
+tasks.named('build').configure {
+	dependsOn('jarJar')
+}
 
 artifacts {
 	archives javadocJar
 	archives sourcesJar
+	archives tasks.jarJar
 }
 
 publishing {
