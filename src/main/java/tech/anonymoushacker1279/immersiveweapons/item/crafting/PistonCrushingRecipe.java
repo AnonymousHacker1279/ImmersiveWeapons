@@ -107,6 +107,11 @@ public record PistonCrushingRecipe(ResourceLocation block,
 		return RecipeTypeRegistry.PISTON_CRUSHING_RECIPE_TYPE.get();
 	}
 
+	@Override
+	public boolean isSpecial() {
+		return true;
+	}
+
 	public static class Serializer implements RecipeSerializer<PistonCrushingRecipe> {
 
 		private static final Codec<PistonCrushingRecipe> CODEC = RecordCodecBuilder.create(

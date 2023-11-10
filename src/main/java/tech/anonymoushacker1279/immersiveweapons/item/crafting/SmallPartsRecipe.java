@@ -95,6 +95,11 @@ public record SmallPartsRecipe(Ingredient material,
 		return defaultedList;
 	}
 
+	@Override
+	public boolean isSpecial() {
+		return true;
+	}
+
 	public static class Serializer implements RecipeSerializer<SmallPartsRecipe> {
 
 		private static final Codec<SmallPartsRecipe> CODEC = RecordCodecBuilder.create(

@@ -67,6 +67,11 @@ public record AmmunitionTableRecipe(List<MaterialGroup> materials,
 		return ingredients;
 	}
 
+	@Override
+	public boolean isSpecial() {
+		return true;
+	}
+
 	public static class Serializer implements RecipeSerializer<AmmunitionTableRecipe> {
 
 		private static final Codec<AmmunitionTableRecipe> CODEC = RecordCodecBuilder.create(

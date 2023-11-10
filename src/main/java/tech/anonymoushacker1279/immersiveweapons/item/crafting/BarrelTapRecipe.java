@@ -65,6 +65,11 @@ public record BarrelTapRecipe(Ingredient material,
 		return defaultedList;
 	}
 
+	@Override
+	public boolean isSpecial() {
+		return true;
+	}
+
 	public static class Serializer implements RecipeSerializer<BarrelTapRecipe> {
 
 		private static final Codec<BarrelTapRecipe> CODEC = RecordCodecBuilder.create(

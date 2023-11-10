@@ -107,6 +107,11 @@ public record TeslaSynthesizerRecipe(Ingredient blockIngredient,
 		return defaultedList;
 	}
 
+	@Override
+	public boolean isSpecial() {
+		return true;
+	}
+
 	public static class Serializer implements RecipeSerializer<TeslaSynthesizerRecipe> {
 
 		private static final Codec<TeslaSynthesizerRecipe> CODEC = RecordCodecBuilder.create(

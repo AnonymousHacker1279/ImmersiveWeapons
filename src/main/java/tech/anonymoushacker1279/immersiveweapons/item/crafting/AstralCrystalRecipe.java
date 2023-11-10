@@ -81,6 +81,11 @@ public record AstralCrystalRecipe(Ingredient primaryMaterial,
 		return defaultedList;
 	}
 
+	@Override
+	public boolean isSpecial() {
+		return true;
+	}
+
 	public static class Serializer implements RecipeSerializer<AstralCrystalRecipe> {
 
 		private static final Codec<AstralCrystalRecipe> CODEC = RecordCodecBuilder.create(
