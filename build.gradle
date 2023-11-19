@@ -90,9 +90,10 @@ dependencies {
 		jarJar.ranged(it, "[0.2.0,)")
 	}
 
-	implementation(jarJar("dev.lukebemish.biomesquisher:biomesquisher-neoforge-${minecraft_version}:${biomesquisher_version}")) {
+	// TODO: reimplement once updated to support the registry rework
+	/*implementation(jarJar("dev.lukebemish.biomesquisher:biomesquisher-neoforge-${minecraft_version}:${biomesquisher_version}")) {
 		jarJar.ranged(it, "[0.1.4-alpha,)")
-	}
+	}*/
 
 	// TODO: Uncomment once dependencies update
 

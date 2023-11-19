@@ -6,9 +6,9 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleType;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.util.Mth;
-import net.neoforged.neoforge.registries.ForgeRegistries;
 import tech.anonymoushacker1279.immersiveweapons.init.ParticleTypesRegistry;
 
 import java.util.Locale;
@@ -57,8 +57,7 @@ public class BulletImpactParticleOptions implements ParticleOptions {
 
 	@Override
 	public String writeToString() {
-		return String.format(Locale.ROOT, "%s %.2f %s", ForgeRegistries.PARTICLE_TYPES
-				.getKey(getType()), scale, blockID);
+		return String.format(Locale.ROOT, "%s %.2f %s", BuiltInRegistries.PARTICLE_TYPE.getKey(getType()), scale, blockID);
 	}
 
 	public int getBlockID() {

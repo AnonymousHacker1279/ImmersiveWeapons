@@ -2,6 +2,7 @@ package tech.anonymoushacker1279.immersiveweapons.client;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.*;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
@@ -13,7 +14,6 @@ import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.common.Mod.EventBusSubscriber.Bus;
 import net.neoforged.neoforge.event.entity.player.ItemTooltipEvent;
-import net.neoforged.neoforge.registries.ForgeRegistries;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.api.PluginHandler;
 import tech.anonymoushacker1279.immersiveweapons.init.BlockItemRegistry;
@@ -105,7 +105,7 @@ public class TooltipHandler {
 		// Arrows
 		if (stack.getItem() instanceof CustomArrowItem<?> arrow) {
 			if (arrow.color == -1) {
-				event.getToolTip().add(Component.translatable("tooltip.immersiveweapons." + ForgeRegistries.ITEMS.getKey(arrow).getPath()).withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
+				event.getToolTip().add(Component.translatable("tooltip.immersiveweapons." + BuiltInRegistries.ITEM.getKey(arrow).getPath()).withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
 			} else {
 				event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.smoke_grenade_arrow").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
 
@@ -119,7 +119,7 @@ public class TooltipHandler {
 
 		// Bullets
 		if (stack.getItem() instanceof BulletItem<?> bullet) {
-			event.getToolTip().add(Component.translatable("tooltip.immersiveweapons." + ForgeRegistries.ITEMS.getKey(bullet).getPath()).withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
+			event.getToolTip().add(Component.translatable("tooltip.immersiveweapons." + BuiltInRegistries.ITEM.getKey(bullet).getPath()).withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
 
 			List<Component> shiftTooltipInfo = new ArrayList<>(10);
 			shiftTooltipInfo.add(CommonComponents.EMPTY);
@@ -220,7 +220,7 @@ public class TooltipHandler {
 		// Gauntlets
 		if (stack.getItem() instanceof GauntletItem gauntlet) {
 			event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.gauntlet").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
-			event.getToolTip().add(Component.translatable("tooltip.immersiveweapons." + ForgeRegistries.ITEMS.getKey(gauntlet).getPath()).withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
+			event.getToolTip().add(Component.translatable("tooltip.immersiveweapons." + BuiltInRegistries.ITEM.getKey(gauntlet).getPath()).withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
 		}
 
 		// Staffs
@@ -331,8 +331,8 @@ public class TooltipHandler {
 				event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.melee_masters_molten_glove").withStyle(ChatFormatting.GREEN, ChatFormatting.ITALIC));
 			}
 			// Regex check for "immersiveweapons:X_ring" where X is any string
-			ResourceLocation path = ForgeRegistries.ITEMS.getKey(item.asItem());
-			if (path != null && path.toString().matches("immersiveweapons:.+_ring")) {
+			ResourceLocation path = BuiltInRegistries.ITEM.getKey(item.asItem());
+			if (path.toString().matches("immersiveweapons:.+_ring")) {
 				// Get the name of the ring
 				String ringName = path.toString().substring(17);
 				event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.%s".formatted(ringName)).withStyle(ChatFormatting.GREEN, ChatFormatting.ITALIC));

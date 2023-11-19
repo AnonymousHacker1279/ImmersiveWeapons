@@ -10,7 +10,6 @@ import net.minecraft.world.item.armortrim.TrimMaterials;
 import net.neoforged.neoforge.client.model.generators.ItemModelProvider;
 import net.neoforged.neoforge.client.model.generators.ModelFile;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
-import net.neoforged.neoforge.registries.RegistryObject;
 import org.jetbrains.annotations.Nullable;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.data.DataGenUtils;
@@ -23,6 +22,7 @@ import tech.anonymoushacker1279.immersiveweapons.item.projectile.BulletItem;
 
 import java.util.*;
 import java.util.function.Predicate;
+import java.util.function.Supplier;
 
 public class ItemModelGenerator extends ItemModelProvider implements DataGenUtils {
 
@@ -310,7 +310,7 @@ public class ItemModelGenerator extends ItemModelProvider implements DataGenUtil
 	protected void registerModels() {
 		List<Item> items = new ArrayList<>(250);
 
-		ItemRegistry.ITEMS.getEntries().stream().map(RegistryObject::get)
+		ItemRegistry.ITEMS.getEntries().stream().map(Supplier::get)
 				.filter(Predicate.not(ItemLists.MODEL_GENERATOR_IGNORED_ITEMS::contains)).forEach(items::add);
 
 		boolean isAtBlockItems = false;

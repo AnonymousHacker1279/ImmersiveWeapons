@@ -5,7 +5,7 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
-import net.neoforged.neoforge.registries.RegistryObject;
+import net.neoforged.neoforge.registries.DeferredHolder;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.data.lists.BlockLists;
 import tech.anonymoushacker1279.immersiveweapons.data.lists.ItemLists;
@@ -58,7 +58,7 @@ public class LanguageGenerator extends IWLanguageProvider {
 		excludedBlocks.add(BlockRegistry.RAW_SULFUR_BLOCK.get());
 
 		// Filter the excluded blocks from the registry
-		Stream<RegistryObject<Block>> blocks = BlockRegistry.BLOCKS.getEntries().stream()
+		Stream<DeferredHolder<Block, ? extends Block>> blocks = BlockRegistry.BLOCKS.getEntries().stream()
 				.filter(block -> !excludedBlocks.contains(block.get()));
 
 		// Get a list of all blocks, and convert their registry names to proper names
@@ -108,7 +108,7 @@ public class LanguageGenerator extends IWLanguageProvider {
 		excludedItems.add(ItemRegistry.DRAGONS_BREATH_BOW.get());
 
 		// Filter the excluded items from the registry
-		Stream<RegistryObject<Item>> items = ItemRegistry.ITEMS.getEntries().stream()
+		Stream<DeferredHolder<Item, ? extends Item>> items = ItemRegistry.ITEMS.getEntries().stream()
 				.filter(item -> !excludedItems.contains(item.get()));
 		// This will contain all BlockItems too, so filter those out
 		items = items.filter(item -> !(item.get() instanceof BlockItem));
@@ -167,14 +167,13 @@ public class LanguageGenerator extends IWLanguageProvider {
 		excludedEntities.add(EntityRegistry.STARDUST_CHEST_BOAT_ENTITY.get());
 
 		// Filter the excluded entities from the registry
-		Stream<RegistryObject<EntityType<?>>> entities = EntityRegistry.ENTITY_TYPES.getEntries().stream()
+		Stream<DeferredHolder<EntityType<?>, ? extends EntityType<?>>> entities = EntityRegistry.ENTITY_TYPES.getEntries().stream()
 				.filter(entity -> !excludedEntities.contains(entity.get()));
 
 		// Get a list of all entities, and convert their registry names to proper names
 		// Turn underscores into spaces, and capitalize the first letter of each word
 		entities.forEach(entity -> {
 			// Get the entity name for the entity
-			assert entity.getKey() != null;
 			String entityName = entity.getKey().location().toString();
 			// Remove the namespace from the entity name
 			entityName = entityName.substring(entityName.indexOf(":") + 1);

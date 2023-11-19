@@ -23,7 +23,7 @@ public class RockSpiderEntity extends Spider implements GrantAdvancementOnDiscov
 				.add(Attributes.MOVEMENT_SPEED, 0.35F)
 				.add(Attributes.ATTACK_DAMAGE, 2.0D)
 				.add(Attributes.ARMOR, 2.0D)
-				.add(NeoForgeMod.STEP_HEIGHT.get(), -0.3d);
+				.add(NeoForgeMod.STEP_HEIGHT.value(), -0.3d);
 	}
 
 	@Override

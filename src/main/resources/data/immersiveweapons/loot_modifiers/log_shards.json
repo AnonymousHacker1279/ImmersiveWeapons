@@ -10,6 +10,9 @@
 	"blockTag": "minecraft:logs",
 	"minShards": 2,
 	"maxShards": 5,
-	"replacement": "immersiveweapons:wooden_shard",
+	"replacement": {
+		"id": "immersiveweapons:wooden_shard",
+		"Count": 1
+	},
 	"type": "immersiveweapons:log_shards"
 }

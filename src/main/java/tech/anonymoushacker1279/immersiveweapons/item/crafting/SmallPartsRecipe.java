@@ -4,13 +4,13 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.RegistryAccess;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.Container;
 import net.minecraft.world.item.*;
 import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.level.Level;
-import net.neoforged.neoforge.registries.ForgeRegistries;
 import tech.anonymoushacker1279.immersiveweapons.init.*;
 
 import java.util.ArrayList;
@@ -108,7 +108,7 @@ public record SmallPartsRecipe(Ingredient material,
 								Codec.list(Codec.STRING).fieldOf("craftables").forGetter(recipe -> {
 									List<String> craftables = new ArrayList<>(recipe.craftables.size());
 									for (Item item : recipe.craftables) {
-										craftables.add(ForgeRegistries.ITEMS.getKey(item).toString());
+										craftables.add(BuiltInRegistries.ITEM.getKey(item).toString());
 									}
 									return craftables;
 								})
@@ -116,7 +116,7 @@ public record SmallPartsRecipe(Ingredient material,
 						.apply(instance, (material, craftables) -> {
 									List<Item> craftables1 = new ArrayList<>(craftables.size());
 									for (String s : craftables) {
-										craftables1.add(ForgeRegistries.ITEMS.getValue(ResourceLocation.tryParse(s)));
+										craftables1.add(BuiltInRegistries.ITEM.get(ResourceLocation.tryParse(s)));
 									}
 
 									return new SmallPartsRecipe(material, craftables1);
@@ -138,7 +138,7 @@ public record SmallPartsRecipe(Ingredient material,
 
 			List<Item> craftables = new ArrayList<>(s1.length);
 			for (String s2 : s1) {
-				craftables.add(ForgeRegistries.ITEMS.getValue(ResourceLocation.tryParse(s2)));
+				craftables.add(BuiltInRegistries.ITEM.get(ResourceLocation.tryParse(s2)));
 			}
 
 			return new SmallPartsRecipe(material, craftables);
@@ -149,7 +149,7 @@ public record SmallPartsRecipe(Ingredient material,
 			recipe.material.toNetwork(buffer);
 			List<ResourceLocation> craftables = new ArrayList<>(recipe.craftables.size());
 			for (Item item : recipe.craftables) {
-				craftables.add(ForgeRegistries.ITEMS.getKey(item));
+				craftables.add(BuiltInRegistries.ITEM.getKey(item));
 			}
 			buffer.writeUtf(craftables.toString());
 		}

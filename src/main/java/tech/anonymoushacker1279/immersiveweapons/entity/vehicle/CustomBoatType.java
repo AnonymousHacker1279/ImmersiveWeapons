@@ -3,9 +3,10 @@ package tech.anonymoushacker1279.immersiveweapons.entity.vehicle;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
-import net.neoforged.neoforge.registries.RegistryObject;
 import tech.anonymoushacker1279.immersiveweapons.init.*;
 import tech.anonymoushacker1279.immersiveweapons.item.utility.CustomBoatItem;
+
+import java.util.function.Supplier;
 
 public enum CustomBoatType {
 	BURNED_OAK(BlockRegistry.BURNED_OAK_PLANKS.get(), ItemRegistry.BURNED_OAK_BOAT, EntityRegistry.BURNED_OAK_BOAT_ENTITY.get(), "burned_oak"),
@@ -14,11 +15,11 @@ public enum CustomBoatType {
 	STARDUST_CHEST(BlockRegistry.STARDUST_PLANKS.get(), ItemRegistry.STARDUST_CHEST_BOAT, EntityRegistry.STARDUST_CHEST_BOAT_ENTITY.get(), "stardust");
 
 	private final Block block;
-	private final RegistryObject<CustomBoatItem> dropItem;
+	private final Supplier<CustomBoatItem> dropItem;
 	private final EntityType<? extends CustomBoatEntity> entityType;
 	private final String name;
 
-	CustomBoatType(Block block, RegistryObject<CustomBoatItem> dropItem, EntityType<? extends CustomBoatEntity> entityType, String name) {
+	CustomBoatType(Block block, Supplier<CustomBoatItem> dropItem, EntityType<? extends CustomBoatEntity> entityType, String name) {
 		this.block = block;
 		this.dropItem = dropItem;
 		this.entityType = entityType;

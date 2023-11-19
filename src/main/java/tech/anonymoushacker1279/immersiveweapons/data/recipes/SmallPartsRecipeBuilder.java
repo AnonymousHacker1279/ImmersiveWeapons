@@ -5,13 +5,13 @@ import com.google.gson.JsonObject;
 import net.minecraft.advancements.*;
 import net.minecraft.advancements.AdvancementRequirements.Strategy;
 import net.minecraft.advancements.critereon.RecipeUnlockedTrigger;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
-import net.neoforged.neoforge.registries.ForgeRegistries;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.init.RecipeSerializerRegistry;
 
@@ -78,7 +78,7 @@ public class SmallPartsRecipeBuilder {
 			JsonArray resultArray = new JsonArray();
 
 			for (Item item : craftables) {
-				resultArray.add(String.valueOf(ForgeRegistries.ITEMS.getKey(item)));
+				resultArray.add(String.valueOf(BuiltInRegistries.ITEM.getKey(item)));
 			}
 
 			json.add("craftables", resultArray);

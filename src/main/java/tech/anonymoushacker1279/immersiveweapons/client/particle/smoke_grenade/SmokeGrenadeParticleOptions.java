@@ -6,11 +6,11 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleType;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.util.ExtraCodecs;
 import net.minecraft.util.Mth;
 import net.minecraft.world.phys.Vec3;
-import net.neoforged.neoforge.registries.ForgeRegistries;
 import org.joml.Vector3f;
 import tech.anonymoushacker1279.immersiveweapons.init.ParticleTypesRegistry;
 
@@ -75,7 +75,7 @@ public class SmokeGrenadeParticleOptions implements ParticleOptions {
 
 	@Override
 	public String writeToString() {
-		return String.format(Locale.ROOT, "%s %.2f %.2f %.2f %.2f", ForgeRegistries.PARTICLE_TYPES
+		return String.format(Locale.ROOT, "%s %.2f %.2f %.2f %.2f", BuiltInRegistries.PARTICLE_TYPE
 				.getKey(getType()), color.x(), color.y(), color.z(), scale);
 	}
 

@@ -8,12 +8,12 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.stats.Stats;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
-import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.*;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation;
 import net.minecraft.world.entity.item.ItemEntity;
@@ -49,9 +49,6 @@ import net.neoforged.neoforge.event.level.LevelEvent;
 import net.neoforged.neoforge.event.level.PistonEvent;
 import net.neoforged.neoforge.event.level.PistonEvent.PistonMoveType;
 import net.neoforged.neoforge.network.PacketDistributor;
-import net.neoforged.neoforge.registries.ForgeRegistries;
-import net.neoforged.neoforge.registries.MissingMappingsEvent;
-import net.neoforged.neoforge.registries.MissingMappingsEvent.Mapping;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.block.decoration.StarstormCrystalBlock;
 import tech.anonymoushacker1279.immersiveweapons.client.gui.IWOverlays;
@@ -68,7 +65,6 @@ import tech.anonymoushacker1279.immersiveweapons.item.crafting.PistonCrushingRec
 import tech.anonymoushacker1279.immersiveweapons.item.gauntlet.GauntletItem;
 import tech.anonymoushacker1279.immersiveweapons.item.pike.PikeItem;
 import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
-import tech.anonymoushacker1279.immersiveweapons.util.LegacyMappingsHandler;
 import tech.anonymoushacker1279.immersiveweapons.world.level.IWDamageSources;
 
 import java.util.*;
@@ -94,66 +90,6 @@ public class ForgeEventSubscriber {
 		event.registerAbove(VanillaGuiOverlay.DEBUG_SCREEN.id(),
 				ImmersiveWeapons.MOD_ID + ":debug_tracing",
 				IWOverlays.DEBUG_TRACING_ELEMENT);
-	}
-
-	/**
-	 * Event handler for the MissingMappingsEvent.
-	 * Migrates old item registry names to newer ones.
-	 *
-	 * @param event the <code>MissingMappingsEvent</code> instance
-	 */
-	@SubscribeEvent
-	public static void missingItemMappings(MissingMappingsEvent event) {
-		List<Mapping<Item>> mappings = event.getMappings(ForgeRegistries.ITEMS.getRegistryKey(), ImmersiveWeapons.MOD_ID);
-
-		if (!mappings.isEmpty()) {
-			LegacyMappingsHandler.remapItems(mappings);
-		}
-	}
-
-	/**
-	 * Event handler for the MissingMappingsEvent.
-	 * Migrates old block registry names to newer ones.
-	 *
-	 * @param event the <code>MissingMappingsEvent</code> instance
-	 */
-	@SubscribeEvent
-	public static void missingBlockMappings(MissingMappingsEvent event) {
-		List<Mapping<Block>> mappings = event.getMappings(ForgeRegistries.BLOCKS.getRegistryKey(), ImmersiveWeapons.MOD_ID);
-
-		if (!mappings.isEmpty()) {
-			LegacyMappingsHandler.remapBlocks(mappings);
-		}
-	}
-
-	/**
-	 * Event handler for the MissingMappingsEvent.
-	 * Migrates old entity registry names to newer ones.
-	 *
-	 * @param event the <code>MissingMappingsEvent</code> instance
-	 */
-	@SubscribeEvent
-	public static void missingEntityMappings(MissingMappingsEvent event) {
-		List<Mapping<EntityType<?>>> mappings = event.getMappings(ForgeRegistries.ENTITY_TYPES.getRegistryKey(), ImmersiveWeapons.MOD_ID);
-
-		if (!mappings.isEmpty()) {
-			LegacyMappingsHandler.remapEntities(mappings);
-		}
-	}
-
-	/**
-	 * Event handler for the MissingMappings (Sound) event.
-	 * Migrates old registry names to newer ones.
-	 *
-	 * @param event the <code>MissingMappings</code> instance
-	 */
-	@SubscribeEvent
-	public static void missingSoundEventMappings(MissingMappingsEvent event) {
-		List<Mapping<SoundEvent>> mappings = event.getMappings(ForgeRegistries.SOUND_EVENTS.getRegistryKey(), ImmersiveWeapons.MOD_ID);
-
-		if (!mappings.isEmpty()) {
-			LegacyMappingsHandler.remapSoundEvents(mappings);
-		}
 	}
 
 	@SubscribeEvent
@@ -447,7 +383,7 @@ public class ForgeEventSubscriber {
 				distance += 0.5d * enchantmentLevel;
 			}
 
-			event.addModifier(NeoForgeMod.ENTITY_REACH.get(),
+			event.addModifier(NeoForgeMod.ENTITY_REACH.value(),
 					new AttributeModifier(ATTACK_REACH_MODIFIER,
 							"Reach distance",
 							distance,
@@ -468,7 +404,7 @@ public class ForgeEventSubscriber {
 							gauntlet.attackSpeed,
 							Operation.ADDITION));
 
-			event.addModifier(NeoForgeMod.ENTITY_REACH.get(),
+			event.addModifier(NeoForgeMod.ENTITY_REACH.value(),
 					new AttributeModifier(ATTACK_REACH_MODIFIER,
 							"Weapon modifier",
 							-2.0d,

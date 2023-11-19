@@ -4,17 +4,16 @@ import com.google.gson.JsonObject;
 import net.minecraft.advancements.*;
 import net.minecraft.advancements.AdvancementRequirements.Strategy;
 import net.minecraft.advancements.critereon.RecipeUnlockedTrigger;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.block.Block;
-import net.neoforged.neoforge.registries.ForgeRegistries;
 import tech.anonymoushacker1279.immersiveweapons.init.RecipeSerializerRegistry;
 
 import javax.annotation.Nullable;
-import java.util.Objects;
 
 public class PistonCrushingRecipeBuilder {
 
@@ -79,10 +78,10 @@ public class PistonCrushingRecipeBuilder {
 
 		@Override
 		public void serializeRecipeData(JsonObject pJson) {
-			pJson.addProperty("block", Objects.requireNonNull(ForgeRegistries.BLOCKS.getKey(block)).toString());
+			pJson.addProperty("block", BuiltInRegistries.BLOCK.getKey(block).toString());
 
 			JsonObject resultObject = new JsonObject();
-			resultObject.addProperty("item", Objects.requireNonNull(ForgeRegistries.ITEMS.getKey(result)).toString());
+			resultObject.addProperty("item", BuiltInRegistries.ITEM.getKey(result).toString());
 			pJson.add("result", resultObject);
 
 			pJson.addProperty("minCount", minCount);

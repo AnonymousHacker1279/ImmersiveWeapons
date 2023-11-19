@@ -22,7 +22,6 @@ import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
 import net.minecraft.world.level.storage.loot.predicates.*;
 import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
 import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
-import net.neoforged.neoforge.registries.RegistryObject;
 import org.jetbrains.annotations.Nullable;
 import tech.anonymoushacker1279.immersiveweapons.block.SandbagBlock;
 import tech.anonymoushacker1279.immersiveweapons.block.WoodenSpikesBlock;
@@ -34,8 +33,7 @@ import tech.anonymoushacker1279.immersiveweapons.init.*;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.BiConsumer;
-import java.util.function.Function;
+import java.util.function.*;
 
 public class BlockLootTables implements LootTableSubProvider {
 
@@ -53,7 +51,7 @@ public class BlockLootTables implements LootTableSubProvider {
 		this.out = out;
 
 		List<Block> blocks = new ArrayList<>(250);
-		BlockRegistry.BLOCKS.getEntries().stream().map(RegistryObject::get).forEach(blocks::add);
+		BlockRegistry.BLOCKS.getEntries().stream().map(Supplier::get).forEach(blocks::add);
 
 		// Simple block drops
 		dropSelf(BlockRegistry.AMERICAN_FLAG.get());

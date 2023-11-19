@@ -8,7 +8,6 @@ import net.minecraft.world.item.ArrowItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Level;
-import net.neoforged.neoforge.registries.RegistryObject;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.entity.projectile.*;
 import tech.anonymoushacker1279.immersiveweapons.init.EnchantmentRegistry;
@@ -17,10 +16,11 @@ import tech.anonymoushacker1279.immersiveweapons.item.tool.HitEffectUtils.HitEff
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Supplier;
 
 public class BulletItem<T extends BulletEntity> extends ArrowItem {
 
-	public final RegistryObject<EntityType<T>> entityRegistryObject;
+	public final Supplier<EntityType<T>> entitySupplier;
 	public final int pierceLevel;
 	public final boolean canBeInfinite;
 	public final float misfireChance;
@@ -31,13 +31,13 @@ public class BulletItem<T extends BulletEntity> extends ArrowItem {
 	public final HitEffect hitEffect;
 	public final boolean isExplosive;
 
-	public BulletItem(Properties properties, double damage, RegistryObject<EntityType<T>> bulletEntity, int pierceLevel,
+	public BulletItem(Properties properties, double damage, Supplier<EntityType<T>> bulletEntity, int pierceLevel,
 	                  boolean canBeInfinite, float misfireChance, double gravityModifier, List<Double> shootingVectorInputs,
 	                  int knockbackStrength, HitEffect hitEffect, boolean isExplosive) {
 
 		super(properties);
 		this.damage = damage;
-		this.entityRegistryObject = bulletEntity;
+		this.entitySupplier = bulletEntity;
 		this.pierceLevel = pierceLevel;
 		this.canBeInfinite = canBeInfinite;
 		this.misfireChance = misfireChance;
@@ -49,14 +49,14 @@ public class BulletItem<T extends BulletEntity> extends ArrowItem {
 	}
 
 	public BulletEntity createBullet(Level level, LivingEntity shooter) {
-		BulletEntity bulletEntity = new BulletEntity(entityRegistryObject.get(), shooter, level);
+		BulletEntity bulletEntity = new BulletEntity(entitySupplier.get(), shooter, level);
 		setCommonBulletCharacteristics(bulletEntity);
 
 		return bulletEntity;
 	}
 
 	public FlareEntity createFlare(Level level, LivingEntity shooter) {
-		FlareEntity flareEntity = new FlareEntity(entityRegistryObject.get(), shooter, level);
+		FlareEntity flareEntity = new FlareEntity(entitySupplier.get(), shooter, level);
 		setCommonBulletCharacteristics(flareEntity);
 
 		return flareEntity;
@@ -103,7 +103,7 @@ public class BulletItem<T extends BulletEntity> extends ArrowItem {
 
 		private final Properties properties;
 		private final double damage;
-		private final RegistryObject<EntityType<T>> bulletEntity;
+		private final Supplier<EntityType<T>> bulletEntity;
 		private int pierceLevel = 0;
 		private boolean canBeInfinite = true;
 		private float misfireChance = 0.0f;
@@ -113,7 +113,7 @@ public class BulletItem<T extends BulletEntity> extends ArrowItem {
 		private HitEffect hitEffect = HitEffect.NONE;
 		private boolean isExplosive = false;
 
-		public BulletBuilder(Properties properties, double damage, RegistryObject<EntityType<T>> bulletEntity) {
+		public BulletBuilder(Properties properties, double damage, Supplier<EntityType<T>> bulletEntity) {
 			this.properties = properties;
 			this.damage = damage;
 			this.bulletEntity = bulletEntity;

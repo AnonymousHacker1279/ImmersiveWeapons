@@ -1,5 +1,6 @@
 package tech.anonymoushacker1279.immersiveweapons.entity.npc.trades;
 
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.Entity;
@@ -8,7 +9,6 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.trading.MerchantOffer;
-import net.neoforged.neoforge.registries.ForgeRegistries;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.entity.npc.SkygazerEntity;
 
@@ -46,7 +46,7 @@ public class EnchantItemForItems implements VillagerTrades.ItemListing {
 
 			enchantments.forEach((enchantment, level) -> {
 				// Get the max level for this enchantment
-				ResourceLocation enchantmentLocation = ForgeRegistries.ENCHANTMENTS.getKey(enchantment);
+				ResourceLocation enchantmentLocation = BuiltInRegistries.ENCHANTMENT.getKey(enchantment);
 
 				if (enchantmentLocation == null) {
 					ImmersiveWeapons.LOGGER.error("Failed to locate enchantment {} in registry", enchantment);

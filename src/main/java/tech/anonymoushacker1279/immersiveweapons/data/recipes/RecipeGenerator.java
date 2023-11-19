@@ -5,6 +5,7 @@ import net.minecraft.advancements.Criterion;
 import net.minecraft.advancements.critereon.InventoryChangeTrigger;
 import net.minecraft.advancements.critereon.ItemPredicate;
 import net.minecraft.core.HolderLookup.Provider;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.*;
 import net.minecraft.tags.ItemTags;
@@ -18,7 +19,6 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.neoforged.neoforge.common.Tags;
 import net.neoforged.neoforge.common.crafting.StrictNBTIngredient;
-import net.neoforged.neoforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.Nullable;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.data.DataGenUtils;
@@ -29,9 +29,6 @@ import tech.anonymoushacker1279.immersiveweapons.item.crafting.AmmunitionTableRe
 
 import java.util.*;
 import java.util.concurrent.CompletableFuture;
-
-import static tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities.blockRegistryPath;
-import static tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities.itemRegistryPath;
 
 public class RecipeGenerator extends RecipeProvider implements DataGenUtils {
 
@@ -1579,7 +1576,7 @@ public class RecipeGenerator extends RecipeProvider implements DataGenUtils {
 				.define('b', Items.STICK)
 				.define('c', Items.FEATHER)
 				.unlockedBy("has_material", has(material))
-				.save(output, itemRegistryPath(arrow));
+				.save(output, BuiltInRegistries.ITEM.getKey(arrow));
 	}
 
 	public static void createPikeHead(Item pikeHead, TagKey<Item> material, TagKey<Item> nugget) {
@@ -1589,7 +1586,7 @@ public class RecipeGenerator extends RecipeProvider implements DataGenUtils {
 				.define('a', nugget)
 				.define('b', material)
 				.unlockedBy("has_material", has(material))
-				.save(output, itemRegistryPath(pikeHead));
+				.save(output, BuiltInRegistries.ITEM.getKey(pikeHead));
 	}
 
 	public static void createPike(Item pike, TagKey<Item> material, Item pikeHead) {
@@ -1601,7 +1598,7 @@ public class RecipeGenerator extends RecipeProvider implements DataGenUtils {
 				.define('b', material)
 				.define('c', ItemRegistry.WOODEN_TOOL_ROD.get())
 				.unlockedBy("has_material", has(material))
-				.save(output, itemRegistryPath(pike));
+				.save(output, BuiltInRegistries.ITEM.getKey(pike));
 	}
 
 	public static void createGauntlet(Item gauntlet, TagKey<Item> material) {
@@ -1611,7 +1608,7 @@ public class RecipeGenerator extends RecipeProvider implements DataGenUtils {
 				.define('a', material)
 				.define('b', ItemRegistry.GAUNTLET_SCAFFOLDING.get())
 				.unlockedBy("has_material", has(material))
-				.save(output, itemRegistryPath(gauntlet));
+				.save(output, BuiltInRegistries.ITEM.getKey(gauntlet));
 	}
 
 	public static void createMusketBall(Item musketBall, TagKey<Item> material) {
@@ -1861,7 +1858,7 @@ public class RecipeGenerator extends RecipeProvider implements DataGenUtils {
 	}
 
 	protected static String getItemName(ItemLike pItemLike) {
-		return Objects.requireNonNull(ForgeRegistries.ITEMS.getKey(pItemLike.asItem())).getPath();
+		return Objects.requireNonNull(BuiltInRegistries.ITEM.getKey(pItemLike.asItem())).getPath();
 	}
 
 	protected static String getTagName(TagKey<Item> tagKey) {
@@ -1879,8 +1876,8 @@ public class RecipeGenerator extends RecipeProvider implements DataGenUtils {
 					.define('a', material)
 					.pattern("aa ")
 					.pattern("aa ")
-					.unlockedBy("has_" + blockRegistryPath(bricks).getPath(), has(material))
-					.save(output, blockRegistryPath(bricks));
+					.unlockedBy("has_" + BuiltInRegistries.BLOCK.getKey(bricks).getPath(), has(material))
+					.save(output, BuiltInRegistries.BLOCK.getKey(bricks));
 		}
 
 		public static void slab(Block slab, ItemLike material, String group, String triggerName, Criterion<InventoryChangeTrigger.TriggerInstance> trigger) {
@@ -1889,7 +1886,7 @@ public class RecipeGenerator extends RecipeProvider implements DataGenUtils {
 					.define('a', material)
 					.group(group)
 					.unlockedBy(triggerName, trigger)
-					.save(output, blockRegistryPath(slab));
+					.save(output, BuiltInRegistries.BLOCK.getKey(slab));
 		}
 
 		public static void slab(Block slab, ItemLike material, String triggerName, Criterion<InventoryChangeTrigger.TriggerInstance> trigger) {
@@ -1897,7 +1894,7 @@ public class RecipeGenerator extends RecipeProvider implements DataGenUtils {
 					.pattern("aaa")
 					.define('a', material)
 					.unlockedBy(triggerName, trigger)
-					.save(output, blockRegistryPath(slab));
+					.save(output, BuiltInRegistries.BLOCK.getKey(slab));
 		}
 
 		public static void stairs(Block stairs, ItemLike material, String group, String triggerName, Criterion<InventoryChangeTrigger.TriggerInstance> trigger) {
@@ -1908,7 +1905,7 @@ public class RecipeGenerator extends RecipeProvider implements DataGenUtils {
 					.define('a', material)
 					.group(group)
 					.unlockedBy(triggerName, trigger)
-					.save(output, blockRegistryPath(stairs));
+					.save(output, BuiltInRegistries.BLOCK.getKey(stairs));
 		}
 
 		public static void stairs(Block stairs, ItemLike material, String triggerName, Criterion<InventoryChangeTrigger.TriggerInstance> trigger) {
@@ -1918,7 +1915,7 @@ public class RecipeGenerator extends RecipeProvider implements DataGenUtils {
 					.pattern("aaa")
 					.define('a', material)
 					.unlockedBy(triggerName, trigger)
-					.save(output, blockRegistryPath(stairs));
+					.save(output, BuiltInRegistries.BLOCK.getKey(stairs));
 		}
 
 		public static void wall(Block wall, ItemLike material, String triggerName, Criterion<InventoryChangeTrigger.TriggerInstance> trigger) {
@@ -1927,7 +1924,7 @@ public class RecipeGenerator extends RecipeProvider implements DataGenUtils {
 					.pattern("aaa")
 					.define('a', material)
 					.unlockedBy(triggerName, trigger)
-					.save(output, blockRegistryPath(wall));
+					.save(output, BuiltInRegistries.BLOCK.getKey(wall));
 		}
 
 		public static void pillar(Block pillar, ItemLike material, String triggerName, Criterion<InventoryChangeTrigger.TriggerInstance> trigger) {
@@ -1936,7 +1933,7 @@ public class RecipeGenerator extends RecipeProvider implements DataGenUtils {
 					.pattern("a")
 					.define('a', material)
 					.unlockedBy(triggerName, trigger)
-					.save(output, blockRegistryPath(pillar));
+					.save(output, BuiltInRegistries.BLOCK.getKey(pillar));
 		}
 
 		public static void chiseled(Block chiseled, ItemLike material, String triggerName, Criterion<InventoryChangeTrigger.TriggerInstance> trigger) {
@@ -1945,7 +1942,7 @@ public class RecipeGenerator extends RecipeProvider implements DataGenUtils {
 					.pattern("a")
 					.define('a', material)
 					.unlockedBy(triggerName, trigger)
-					.save(output, blockRegistryPath(chiseled));
+					.save(output, BuiltInRegistries.BLOCK.getKey(chiseled));
 		}
 
 		public static void cut(Block cut, ItemLike material, String triggerName, Criterion<InventoryChangeTrigger.TriggerInstance> trigger) {
@@ -1954,7 +1951,7 @@ public class RecipeGenerator extends RecipeProvider implements DataGenUtils {
 					.pattern("aa")
 					.define('a', material)
 					.unlockedBy(triggerName, trigger)
-					.save(output, blockRegistryPath(cut));
+					.save(output, BuiltInRegistries.BLOCK.getKey(cut));
 		}
 	}
 
@@ -1962,7 +1959,7 @@ public class RecipeGenerator extends RecipeProvider implements DataGenUtils {
 
 		public static void bricks(Block bricks, ItemLike material) {
 			SingleItemRecipeBuilder.stonecutting(Ingredient.of(material), RecipeCategory.BUILDING_BLOCKS, bricks)
-					.unlockedBy("has_" + blockRegistryPath(bricks).getPath(), has(material))
+					.unlockedBy("has_" + BuiltInRegistries.BLOCK.getKey(bricks).getPath(), has(material))
 					.save(output, ImmersiveWeapons.MOD_ID + ":"
 							+ getConversionRecipeName(bricks, material) + "_stonecutting");
 		}

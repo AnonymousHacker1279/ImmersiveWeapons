@@ -9,10 +9,6 @@
   },
   "downfall": 0.3,
   "effects": {
-    "additions_sound": {
-      "sound": "immersiveweapons:flintlock_pistol_fire",
-      "tick_chance": 2.0E-5
-    },
     "ambient_sound": "immersiveweapons:battlefield_ambient",
     "fog_color": 9464960,
     "foliage_color": 4468277,

@@ -1,5 +1,6 @@
 package tech.anonymoushacker1279.immersiveweapons.init;
 
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.alchemy.PotionBrewing;
 import net.minecraft.world.item.alchemy.Potions;
@@ -30,8 +31,8 @@ public class PostSetupHandler {
 
 		// Add custom plants to the flower pot block
 		FlowerPotBlock emptyPot = ((FlowerPotBlock) Blocks.FLOWER_POT);
-		emptyPot.addPlant(BlockRegistry.MOONGLOW.getId(), BlockRegistry.POTTED_MOONGLOW);
-		emptyPot.addPlant(BlockRegistry.DEATHWEED.getId(), BlockRegistry.POTTED_DEATHWEED);
+		emptyPot.addPlant(BuiltInRegistries.BLOCK.getKey(BlockRegistry.MOONGLOW.get()), BlockRegistry.POTTED_MOONGLOW);
+		emptyPot.addPlant(BuiltInRegistries.BLOCK.getKey(BlockRegistry.DEATHWEED.get()), BlockRegistry.POTTED_DEATHWEED);
 
 		// Setup custom boats
 		ItemRegistry.BURNED_OAK_BOAT.get()

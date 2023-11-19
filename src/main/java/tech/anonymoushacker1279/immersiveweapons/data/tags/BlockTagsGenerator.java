@@ -7,7 +7,6 @@ import net.minecraft.world.level.block.Block;
 import net.neoforged.neoforge.common.Tags.Blocks;
 import net.neoforged.neoforge.common.data.BlockTagsProvider;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
-import net.neoforged.neoforge.registries.RegistryObject;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.data.tags.groups.forge.ForgeBlockTagGroups;
 import tech.anonymoushacker1279.immersiveweapons.data.tags.groups.immersiveweapons.IWBlockTagGroups;
@@ -17,6 +16,7 @@ import tech.anonymoushacker1279.immersiveweapons.init.BlockRegistry;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
+import java.util.function.Supplier;
 
 public class BlockTagsGenerator extends BlockTagsProvider {
 
@@ -188,7 +188,7 @@ public class BlockTagsGenerator extends BlockTagsProvider {
 	 */
 	private void addMiningBlockTags() {
 		List<Block> blocks = new ArrayList<>(250);
-		BlockRegistry.BLOCKS.getEntries().stream().map(RegistryObject::get).forEach(blocks::add);
+		BlockRegistry.BLOCKS.getEntries().stream().map(Supplier::get).forEach(blocks::add);
 
 		int tagStage = 0;
 		int tier = 0;

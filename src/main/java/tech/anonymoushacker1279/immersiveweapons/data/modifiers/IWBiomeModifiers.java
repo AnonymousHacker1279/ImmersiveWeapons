@@ -11,7 +11,7 @@ import net.minecraft.world.level.levelgen.GenerationStep.Decoration;
 import net.neoforged.neoforge.common.world.BiomeModifier;
 import net.neoforged.neoforge.common.world.BiomeModifiers;
 import net.neoforged.neoforge.common.world.BiomeModifiers.AddSpawnsBiomeModifier;
-import net.neoforged.neoforge.registries.ForgeRegistries.Keys;
+import net.neoforged.neoforge.registries.NeoForgeRegistries.Keys;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.data.features.IWPlacedFeatures;
 import tech.anonymoushacker1279.immersiveweapons.data.tags.groups.forge.ForgeWorldGenTagGroups;

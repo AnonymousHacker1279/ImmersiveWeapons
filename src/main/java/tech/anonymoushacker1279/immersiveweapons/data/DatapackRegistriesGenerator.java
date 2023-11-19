@@ -5,7 +5,7 @@ import net.minecraft.core.RegistrySetBuilder;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.PackOutput;
 import net.neoforged.neoforge.common.data.DatapackBuiltinEntriesProvider;
-import net.neoforged.neoforge.registries.ForgeRegistries.Keys;
+import net.neoforged.neoforge.registries.NeoForgeRegistries.Keys;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.data.biomes.IWBiomes;
 import tech.anonymoushacker1279.immersiveweapons.data.damage_types.DamageTypesGenerator;

@@ -3,6 +3,7 @@ package tech.anonymoushacker1279.immersiveweapons.item.crafting;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.RegistryAccess;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.Container;
@@ -11,8 +12,6 @@ import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
-import net.neoforged.neoforge.registries.ForgeRegistries;
-import org.jetbrains.annotations.Nullable;
 import tech.anonymoushacker1279.immersiveweapons.init.RecipeSerializerRegistry;
 import tech.anonymoushacker1279.immersiveweapons.init.RecipeTypeRegistry;
 
@@ -35,7 +34,7 @@ public record PistonCrushingRecipe(ResourceLocation block,
 	}
 
 	public boolean matches(Block block) {
-		return this.block.equals(ForgeRegistries.BLOCKS.getKey(block));
+		return this.block.equals(BuiltInRegistries.BLOCK.getKey(block));
 	}
 
 	@Override
@@ -65,9 +64,8 @@ public record PistonCrushingRecipe(ResourceLocation block,
 	 *
 	 * @return Block
 	 */
-	@Nullable
 	public Block getBlock() {
-		return ForgeRegistries.BLOCKS.getValue(block);
+		return BuiltInRegistries.BLOCK.get(block);
 	}
 
 	/**

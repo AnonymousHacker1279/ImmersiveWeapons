@@ -10,7 +10,7 @@ import net.neoforged.neoforge.common.Tags;
 import net.neoforged.neoforge.common.Tags.Blocks;
 import net.neoforged.neoforge.common.data.BlockTagsProvider;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
-import net.neoforged.neoforge.registries.RegistryObject;
+import net.neoforged.neoforge.registries.DeferredHolder;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.data.lists.ItemLists;
 import tech.anonymoushacker1279.immersiveweapons.data.tags.groups.forge.ForgeBlockTagGroups;
@@ -24,6 +24,7 @@ import tech.anonymoushacker1279.immersiveweapons.item.AccessoryItem;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
+import java.util.function.Supplier;
 
 public class ItemTagsGenerator extends ItemTagsProvider {
 
@@ -45,7 +46,7 @@ public class ItemTagsGenerator extends ItemTagsProvider {
 	private void addForgeTags() {
 		List<Item> items = new ArrayList<>(250);
 
-		ItemRegistry.ITEMS.getEntries().stream().map(RegistryObject::get).forEach(items::add);
+		ItemRegistry.ITEMS.getEntries().stream().map(Supplier::get).forEach(items::add);
 
 		// Copy item tags from block tags
 		copy(Blocks.STAINED_GLASS, Tags.Items.STAINED_GLASS);
@@ -169,7 +170,7 @@ public class ItemTagsGenerator extends ItemTagsProvider {
 		tag(IWItemTagGroups.OBSIDIAN_RODS).add(ItemRegistry.OBSIDIAN_ROD.get());
 
 		// Accessory tags
-		for (RegistryObject<Item> item : ItemRegistry.ITEMS.getEntries()) {
+		for (DeferredHolder<Item, ? extends Item> item : ItemRegistry.ITEMS.getEntries()) {
 			if (item.get() instanceof AccessoryItem accessory) {
 				tag(IWItemTagGroups.ACCESSORIES).add(accessory);
 			}
@@ -220,7 +221,7 @@ public class ItemTagsGenerator extends ItemTagsProvider {
 				BlockItemRegistry.CRIMSON_TABLE_ITEM.get());
 
 		// Trimmable armor tag
-		for (RegistryObject<Item> item : ItemRegistry.ITEMS.getEntries()) {
+		for (DeferredHolder<Item, ? extends Item> item : ItemRegistry.ITEMS.getEntries()) {
 			if (item.get() instanceof ArmorItem armor) {
 				tag(ItemTags.TRIMMABLE_ARMOR).add(armor);
 			}
