@@ -30,13 +30,12 @@ versionRange = "${minecraft_version_range}"
 ordering = "NONE"
 side = "BOTH"
 
-# TODO: reimplement when/if TerraBlender is updated to NeoForge 1.20.2
-# [[dependencies.immersiveweapons]]
-# modId = "terrablender"
-# mandatory = true
-# versionRange = "[1.20-3.0.0.163,)"
-# ordering = "NONE"
-# side = "BOTH"
+ [[dependencies.immersiveweapons]]
+ modId = "biomesquisher"
+ mandatory = true
+ versionRange = "[0.1.4-alpha,)"
+ ordering = "NONE"
+ side = "BOTH"
 
 [[mixins]]
 config = "mixins.immersiveweapons.json"

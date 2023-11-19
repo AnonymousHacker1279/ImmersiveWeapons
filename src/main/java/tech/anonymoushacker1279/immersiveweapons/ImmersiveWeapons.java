@@ -56,10 +56,6 @@ public class ImmersiveWeapons {
 		event.enqueueWork(() -> {
 			CustomBlockSetTypes.init();
 			WoodTypes.init();
-			// TODO: reimplement when/if TerraBlender updates to NeoForge
-			/*Regions.register(new IWOverworldBiomesProvider(new ResourceLocation(MOD_ID, "overworld_biome_provider"),
-					RegionType.OVERWORLD, 1));
-			SurfaceRuleManager.addSurfaceRules(RuleCategory.OVERWORLD, MOD_ID, IWSurfaceRuleData.makeRules());*/
 		});
 		PostSetupHandler.init();
 

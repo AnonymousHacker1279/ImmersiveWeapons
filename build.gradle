@@ -86,14 +86,16 @@ dependencies {
 
 	implementation "net.neoforged:neoforge:${neoforge_version}"
 
-	implementation(jarJar("io.github.llamalad7:mixinextras-neoforge:0.2.0")) {
+	implementation(jarJar("io.github.llamalad7:mixinextras-neoforge:${mixinextras_version}")) {
 		jarJar.ranged(it, "[0.2.0,)")
+	}
+
+	implementation(jarJar("dev.lukebemish.biomesquisher:biomesquisher-neoforge-${minecraft_version}:${biomesquisher_version}")) {
+		jarJar.ranged(it, "[0.1.4-alpha,)")
 	}
 
 	// TODO: Uncomment once dependencies update
 
-	// Include TerraBlender
-	// implementation fg.deobf("com.github.glitchfiend:TerraBlender-forge:${terrablender_version}")
 	// Include Immersive Weapons Compatibility Bridge (IWCB)
 	// implementation fg.deobf("tech.anonymoushacker1279.iwcompatbridge:IWCompatBridge:${iwcb_version}")
 
@@ -104,8 +106,6 @@ dependencies {
 	// implementation fg.deobf("lol.bai:badpackets:forge-${badpackets_version}")
 	// Include AttributeFix
 	// implementation fg.deobf("curse.maven:attributefix-280510:${attributefix_version}")
-	// Include Debug Utils
-	// runtimeOnly fg.deobf("curse.maven:debug-utils-forge-783008:4644077")
 }
 
 tasks.named('processResources', ProcessResources).configure {
@@ -130,7 +130,7 @@ tasks.named('jar', Jar).configure {
 	archiveClassifier = "slim"
 	manifest {
 		attributes([
-				'Specification-Title'     : "immersiveweapons",
+				'Specification-Title'     : mod_id,
 				'Specification-Vendor'    : "AnonymousHacker1279",
 				'Specification-Version'   : '1',
 				'Implementation-Title'    : project.name,
@@ -210,12 +210,10 @@ if (file("RELEASE_NOTES.md").exists()) {
 		additionalFiles = [javadocJar, sourcesJar]
 
 		curseDepends {
-			required = ["terrablender"]
 			optional = ["immersive-weapons-compatibility-bridge", "attributefix"]
 		}
 
 		modrinthDepends {
-			required = ["kkmrDlKT"]
 			optional = ["SAUGybfH", "lOOpEntO"]
 		}
 	}
