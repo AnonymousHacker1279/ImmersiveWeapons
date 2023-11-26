@@ -17,6 +17,7 @@ import tech.anonymoushacker1279.immersiveweapons.block.barbed_wire.BarbedWireBlo
 import tech.anonymoushacker1279.immersiveweapons.block.decoration.*;
 import tech.anonymoushacker1279.immersiveweapons.block.misc.warrior_statue.WarriorStatueHead;
 import tech.anonymoushacker1279.immersiveweapons.block.misc.warrior_statue.WarriorStatueTorso;
+import tech.anonymoushacker1279.immersiveweapons.block.star_forge.StarForgeControllerBlock;
 import tech.anonymoushacker1279.immersiveweapons.data.lists.BlockLists;
 import tech.anonymoushacker1279.immersiveweapons.init.BlockRegistry;
 
@@ -583,6 +584,23 @@ public class BlockStateGenerator extends BlockStateProvider {
 							.build();
 				});
 
+		// Star Forge Controller (a furnace-like block with a lit state and horizontal rotation)
+		getVariantBuilder(BlockRegistry.STAR_FORGE_CONTROLLER.get())
+				.forAllStates(state -> {
+					boolean lit = state.getValue(StarForgeControllerBlock.LIT);
+
+					String path = "star_forge_controller" + (lit ? "_lit" : "");
+
+					return ConfiguredModel.builder()
+							.modelFile(models().withExistingParent(path, "minecraft:block/orientable")
+									.texture("top", new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/star_forge_bricks"))
+									.texture("front", new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/star_forge_controller" + (lit ? "_lit" : "")))
+									.texture("side", new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/star_forge_bricks"))
+							)
+							.rotationY(((int) state.getValue(BlockStateProperties.HORIZONTAL_FACING).toYRot()))
+							.build();
+				});
+
 		// Iron panels
 		getVariantBuilder(BlockRegistry.IRON_PANEL.get())
 				.forAllStates(state -> panelBlock("iron_panel", state));
@@ -624,6 +642,8 @@ public class BlockStateGenerator extends BlockStateProvider {
 				.texture("all", "minecraft:block/iron_block")
 				.texture("overlay", new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/rusted_iron_block_overlay"))
 				.renderType("minecraft:translucent"));
+		simpleBlock(BlockRegistry.SOLAR_LENS.get(),
+				models().getExistingFile(new ResourceLocation(ImmersiveWeapons.MOD_ID, "solar_lens")));
 	}
 
 	private ConfiguredModel[] crystalBlock(Supplier<? extends AmethystClusterBlock> crystal, String name, BlockState state) {

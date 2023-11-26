@@ -36,6 +36,7 @@ public class BlockLists {
 		simpleBlocks.add(BlockRegistry.CHAMPION_BRICKS.get());
 		simpleBlocks.add(BlockRegistry.CHAMPION_BASE.get());
 		simpleBlocks.add(BlockRegistry.CHAMPION_KEYCARD_BRICKS.get());
+		simpleBlocks.add(BlockRegistry.STAR_FORGE_BRICKS.get());
 
 		stoneBasedOres.add(BlockRegistry.SULFUR_ORE.get());
 		stoneBasedOres.add(BlockRegistry.ELECTRIC_ORE.get());

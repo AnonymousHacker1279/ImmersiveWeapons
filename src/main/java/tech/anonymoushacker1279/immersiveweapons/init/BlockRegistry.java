@@ -29,6 +29,8 @@ import tech.anonymoushacker1279.immersiveweapons.block.misc.warrior_statue.*;
 import tech.anonymoushacker1279.immersiveweapons.block.mud.*;
 import tech.anonymoushacker1279.immersiveweapons.block.properties.WoodTypes;
 import tech.anonymoushacker1279.immersiveweapons.block.sign.*;
+import tech.anonymoushacker1279.immersiveweapons.block.star_forge.SolarLensBlock;
+import tech.anonymoushacker1279.immersiveweapons.block.star_forge.StarForgeControllerBlock;
 import tech.anonymoushacker1279.immersiveweapons.data.features.IWConfiguredFeatures;
 import tech.anonymoushacker1279.immersiveweapons.world.level.CustomBlockSetTypes;
 
@@ -98,6 +100,8 @@ public class BlockRegistry {
 	public static final Supplier<BarbedWireBlock> BARBED_WIRE = BLOCKS.register("barbed_wire", () -> new BarbedWireBlock(BlockBehaviour.Properties.of().mapColor(MapColor.METAL).strength(2.0f).sound(SoundType.CHAIN).noOcclusion().noCollission()));
 	public static final Supplier<SpikeTrapBlock> SPIKE_TRAP = BLOCKS.register("spike_trap", () -> new SpikeTrapBlock(BlockBehaviour.Properties.of().mapColor(MapColor.METAL).strength(2.0f).sound(SoundType.METAL).noOcclusion().noCollission()));
 	public static final Supplier<CelestialLanternBlock> CELESTIAL_LANTERN = BLOCKS.register("celestial_lantern", () -> new CelestialLanternBlock(BlockBehaviour.Properties.of().mapColor(MapColor.METAL).strength(3.5f).sound(SoundType.LANTERN).requiresCorrectToolForDrops().lightLevel((blockState) -> 15).noOcclusion()));
+	public static final Supplier<StarForgeControllerBlock> STAR_FORGE_CONTROLLER = BLOCKS.register("star_forge_controller", () -> new StarForgeControllerBlock(BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_CYAN).strength(5.0f, 10.0f).sound(SoundType.NETHER_BRICKS).requiresCorrectToolForDrops().noOcclusion()));
+	public static final Supplier<Block> STAR_FORGE_BRICKS = BLOCKS.register("star_forge_bricks", () -> new Block(BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_CYAN).strength(5.0f, 10.0f).sound(SoundType.NETHER_BRICKS).requiresCorrectToolForDrops()));
 	// Diamond tier
 	public static final Supplier<DropExperienceBlock> MOLTEN_ORE = BLOCKS.register("molten_ore", () -> new DropExperienceBlock(UniformInt.of(5, 10), BlockBehaviour.Properties.of().mapColor(MapColor.STONE).instrument(NoteBlockInstrument.BASEDRUM).strength(6.0f, 8.0f).sound(SoundType.STONE).requiresCorrectToolForDrops()));
 	public static final Supplier<DropExperienceBlock> ELECTRIC_ORE = BLOCKS.register("electric_ore", () -> new DropExperienceBlock(ConstantInt.of(0), BlockBehaviour.Properties.of().mapColor(MapColor.STONE).instrument(NoteBlockInstrument.BASEDRUM).strength(6.0f, 8.0f).sound(SoundType.STONE).requiresCorrectToolForDrops()));
@@ -230,4 +234,5 @@ public class BlockRegistry {
 	public static final Supplier<DeathweedBlock> DEATHWEED = BLOCKS.register("deathweed", () -> new DeathweedBlock(() -> MobEffects.HARM, 0, BlockBehaviour.Properties.of().mapColor(MapColor.PLANT).pushReaction(PushReaction.DESTROY).sound(SoundType.GRASS).lightLevel((state) -> 4).noCollission().instabreak().offsetType(OffsetType.XZ)));
 	public static final Supplier<FlowerPotBlock> POTTED_DEATHWEED = BLOCKS.register("potted_deathweed", () -> new FlowerPotBlock(() -> (FlowerPotBlock) Blocks.FLOWER_POT, DEATHWEED, BlockBehaviour.Properties.of().pushReaction(PushReaction.DESTROY).lightLevel((state) -> 12).instabreak().noOcclusion()));
 	public static final Supplier<SaplingBlock> STARDUST_SAPLING = BLOCKS.register("stardust_sapling", () -> new SaplingBlock(new TreeGrower("stardust_sapling", Optional.of(IWConfiguredFeatures.STARDUST_TREE_CONFIGURATION), Optional.empty(), Optional.empty()), BlockBehaviour.Properties.of().mapColor(MapColor.PLANT).pushReaction(PushReaction.DESTROY).strength(0.0f).sound(SoundType.GRASS).noCollission().instabreak().offsetType(OffsetType.NONE)));
+	public static final Supplier<SolarLensBlock> SOLAR_LENS = BLOCKS.register("solar_lens", () -> new SolarLensBlock(BlockBehaviour.Properties.of().mapColor(MapColor.METAL).pushReaction(PushReaction.DESTROY).strength(0.5f).sound(SoundType.GLASS).noOcclusion()));
 }

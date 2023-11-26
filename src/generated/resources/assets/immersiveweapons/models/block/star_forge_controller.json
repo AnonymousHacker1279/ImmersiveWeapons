@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/orientable",
+  "textures": {
+    "front": "immersiveweapons:block/star_forge_controller",
+    "side": "immersiveweapons:block/star_forge_bricks",
+    "top": "immersiveweapons:block/star_forge_bricks"
+  }
+}
