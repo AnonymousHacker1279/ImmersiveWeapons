@@ -34,6 +34,9 @@ public class BlockItemRegistry {
 	public static final Supplier<BlockItem> SMALL_PARTS_TABLE_ITEM = ItemRegistry.ITEMS.register("small_parts_table", () -> new BlockItem(BlockRegistry.SMALL_PARTS_TABLE.get(), new Properties()));
 	public static final Supplier<BlockItem> AMMUNITION_TABLE_ITEM = ItemRegistry.ITEMS.register("ammunition_table", () -> new BlockItem(BlockRegistry.AMMUNITION_TABLE.get(), new Properties()));
 	public static final Supplier<BlockItem> BARREL_TAP_ITEM = ItemRegistry.ITEMS.register("barrel_tap", () -> new BlockItem(BlockRegistry.BARREL_TAP.get(), new Properties()));
+	public static final Supplier<BlockItem> STAR_FORGE_CONTROLLER_ITEM = ItemRegistry.ITEMS.register("star_forge_controller", () -> new BlockItem(BlockRegistry.STAR_FORGE_CONTROLLER.get(), new Properties()));
+	public static final Supplier<BlockItem> STAR_FORGE_BRICKS_ITEM = ItemRegistry.ITEMS.register("star_forge_bricks", () -> new BlockItem(BlockRegistry.STAR_FORGE_BRICKS.get(), new Properties()));
+	public static final Supplier<BlockItem> SOLAR_LENS = ItemRegistry.ITEMS.register("solar_lens", () -> new BlockItem(BlockRegistry.SOLAR_LENS.get(), new Properties()));
 	public static final Supplier<BlockItem> BULLETPROOF_GLASS_ITEM = ItemRegistry.ITEMS.register("bulletproof_glass", () -> new BlockItem(BlockRegistry.BULLETPROOF_GLASS.get(), new Properties()));
 	public static final Supplier<BlockItem> WHITE_STAINED_BULLETPROOF_GLASS_ITEM = ItemRegistry.ITEMS.register("white_stained_bulletproof_glass", () -> new BlockItem(BlockRegistry.WHITE_STAINED_BULLETPROOF_GLASS.get(), new Properties()));
 	public static final Supplier<BlockItem> LIGHT_GRAY_STAINED_BULLETPROOF_GLASS_ITEM = ItemRegistry.ITEMS.register("light_gray_stained_bulletproof_glass", () -> new BlockItem(BlockRegistry.LIGHT_GRAY_STAINED_BULLETPROOF_GLASS.get(), new Properties()));

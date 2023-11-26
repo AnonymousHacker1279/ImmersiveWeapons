@@ -150,6 +150,9 @@ public class BlockLootTables implements LootTableSubProvider {
 		dropSelf(BlockRegistry.CHAMPION_BASE.get());
 		dropSelf(BlockRegistry.CHAMPION_KEYCARD_BRICKS.get());
 		dropSelf(BlockRegistry.LANDMINE.get());
+		dropSelf(BlockRegistry.STAR_FORGE_BRICKS.get());
+		dropSelf(BlockRegistry.STAR_FORGE_CONTROLLER.get());
+		dropSelf(BlockRegistry.SOLAR_LENS.get());
 
 		blocks.stream().filter(WoodenTableBlock.class::isInstance).forEach(this::dropSelf);
 		blocks.stream().filter(CustomSkullBlock.class::isInstance).forEach(this::dropSelf);

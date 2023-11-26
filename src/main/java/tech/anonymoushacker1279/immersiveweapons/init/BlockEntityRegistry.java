@@ -34,6 +34,7 @@ public class BlockEntityRegistry {
 	public static final Supplier<BlockEntityType<BiodomeLifeSupportUnitBlockEntity>> BIODOME_LIFE_SUPPORT_UNIT_BLOCK_ENTITY = BLOCK_ENTITIES.register("biodome_life_support_unit", () -> new BlockEntityType<>(BiodomeLifeSupportUnitBlockEntity::new, Sets.newHashSet(BlockRegistry.BIODOME_LIFE_SUPPORT_UNIT.get()), null));
 	public static final Supplier<BlockEntityType<DamageableBlockEntity>> DAMAGEABLE_BLOCK_ENTITY = BLOCK_ENTITIES.register("damageable_block", () -> new BlockEntityType<>(DamageableBlockEntity::new, Sets.newHashSet(BlockRegistry.WOODEN_SPIKES.get(), BlockRegistry.BARBED_WIRE.get()), null));
 	public static final Supplier<BlockEntityType<AmmunitionTableBlockEntity>> AMMUNITION_TABLE_BLOCK_ENTITY = BLOCK_ENTITIES.register("ammunition_table", () -> new BlockEntityType<>(AmmunitionTableBlockEntity::new, Sets.newHashSet(BlockRegistry.AMMUNITION_TABLE.get()), null));
+	public static final Supplier<BlockEntityType<StarForgeBlockEntity>> STAR_FORGE_BLOCK_ENTITY = BLOCK_ENTITIES.register("star_forge", () -> new BlockEntityType<>(StarForgeBlockEntity::new, Sets.newHashSet(BlockRegistry.STAR_FORGE_CONTROLLER.get(), BlockRegistry.STAR_FORGE_BRICKS.get()), null));
 
 	private static Block[] getSkullBlocks() {
 		return BlockRegistry.BLOCKS.getEntries().stream()
