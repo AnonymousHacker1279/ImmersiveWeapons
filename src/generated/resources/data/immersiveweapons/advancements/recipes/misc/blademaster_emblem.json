@@ -22,8 +22,8 @@
   },
   "requirements": [
     [
-      "starstorm_sword",
-      "has_the_recipe"
+      "has_the_recipe",
+      "starstorm_sword"
     ]
   ],
   "rewards": {

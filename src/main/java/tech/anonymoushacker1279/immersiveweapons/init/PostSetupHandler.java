@@ -1,5 +1,6 @@
 package tech.anonymoushacker1279.immersiveweapons.init;
 
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.alchemy.PotionBrewing;
 import net.minecraft.world.item.alchemy.Potions;
@@ -8,6 +9,7 @@ import net.minecraft.world.level.block.FlowerPotBlock;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.config.ConfigHelper.TomlConfigOps;
 import tech.anonymoushacker1279.immersiveweapons.entity.npc.SkygazerEntity;
+import tech.anonymoushacker1279.immersiveweapons.entity.vehicle.CustomBoatType;
 import tech.anonymoushacker1279.immersiveweapons.item.materials.CustomArmorMaterials;
 
 public class PostSetupHandler {
@@ -29,18 +31,18 @@ public class PostSetupHandler {
 
 		// Add custom plants to the flower pot block
 		FlowerPotBlock emptyPot = ((FlowerPotBlock) Blocks.FLOWER_POT);
-		emptyPot.addPlant(BlockRegistry.MOONGLOW.getId(), BlockRegistry.POTTED_MOONGLOW);
-		emptyPot.addPlant(BlockRegistry.DEATHWEED.getId(), BlockRegistry.POTTED_DEATHWEED);
+		emptyPot.addPlant(BuiltInRegistries.BLOCK.getKey(BlockRegistry.MOONGLOW.get()), BlockRegistry.POTTED_MOONGLOW);
+		emptyPot.addPlant(BuiltInRegistries.BLOCK.getKey(BlockRegistry.DEATHWEED.get()), BlockRegistry.POTTED_DEATHWEED);
 
 		// Setup custom boats
 		ItemRegistry.BURNED_OAK_BOAT.get()
-				.setBoatEntityType(EntityRegistry.BURNED_OAK_BOAT_ENTITY.get());
+				.postSetup(EntityRegistry.BURNED_OAK_BOAT_ENTITY.get(), CustomBoatType.BURNED_OAK);
 		ItemRegistry.BURNED_OAK_CHEST_BOAT.get()
-				.setBoatEntityType(EntityRegistry.BURNED_OAK_CHEST_BOAT_ENTITY.get());
+				.postSetup(EntityRegistry.BURNED_OAK_CHEST_BOAT_ENTITY.get(), CustomBoatType.BURNED_OAK_CHEST);
 		ItemRegistry.STARDUST_BOAT.get()
-				.setBoatEntityType(EntityRegistry.STARDUST_BOAT_ENTITY.get());
+				.postSetup(EntityRegistry.STARDUST_BOAT_ENTITY.get(), CustomBoatType.STARDUST);
 		ItemRegistry.STARDUST_CHEST_BOAT.get()
-				.setBoatEntityType(EntityRegistry.STARDUST_CHEST_BOAT_ENTITY.get());
+				.postSetup(EntityRegistry.STARDUST_CHEST_BOAT_ENTITY.get(), CustomBoatType.STARDUST_CHEST);
 
 		// Set brewing recipes, as these are not done via JSON like other recipes
 		// Celestial potions

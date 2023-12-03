@@ -1,20 +1,20 @@
 package tech.anonymoushacker1279.immersiveweapons.config;
 
-import net.minecraftforge.common.ForgeConfigSpec;
-import net.minecraftforge.common.ForgeConfigSpec.Builder;
+import net.neoforged.neoforge.common.ModConfigSpec;
+import net.neoforged.neoforge.common.ModConfigSpec.Builder;
 import org.apache.commons.lang3.tuple.Pair;
 
 public class ClientConfig {
 
-	public static final ForgeConfigSpec CLIENT_SPEC;
+	public static final ModConfigSpec CLIENT_SPEC;
 	public static final ClientConfig CLIENT;
 
-	public static ForgeConfigSpec.BooleanValue TESLA_ARMOR_EFFECT_SOUND;
-	public static ForgeConfigSpec.IntValue PANIC_ALARM_RANGE;
-	public static ForgeConfigSpec.IntValue SMOKE_GRENADE_PARTICLES;
-	public static ForgeConfigSpec.BooleanValue FANCY_SMOKE_GRENADE_PARTICLES;
+	public static ModConfigSpec.BooleanValue TESLA_ARMOR_EFFECT_SOUND;
+	public static ModConfigSpec.IntValue PANIC_ALARM_RANGE;
+	public static ModConfigSpec.IntValue SMOKE_GRENADE_PARTICLES;
+	public static ModConfigSpec.BooleanValue FANCY_SMOKE_GRENADE_PARTICLES;
 
-	ClientConfig(ForgeConfigSpec.Builder builder) {
+	ClientConfig(ModConfigSpec.Builder builder) {
 		builder.push("Client Configuration");
 
 		builder.push("Graphics");
@@ -45,7 +45,7 @@ public class ClientConfig {
 	}
 
 	static {
-		Pair<ClientConfig, ForgeConfigSpec> clientForgeConfigSpecPair = new Builder().configure(ClientConfig::new);
+		Pair<ClientConfig, ModConfigSpec> clientForgeConfigSpecPair = new Builder().configure(ClientConfig::new);
 
 		CLIENT_SPEC = clientForgeConfigSpecPair.getRight();
 		CLIENT = clientForgeConfigSpecPair.getLeft();

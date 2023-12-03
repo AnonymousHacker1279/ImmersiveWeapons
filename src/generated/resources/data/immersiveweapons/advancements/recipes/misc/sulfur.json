@@ -22,8 +22,8 @@
   },
   "requirements": [
     [
-      "raw_sulfur_block",
-      "has_the_recipe"
+      "has_the_recipe",
+      "raw_sulfur_block"
     ]
   ],
   "rewards": {

@@ -68,13 +68,12 @@ public class SpotlightBlock extends HorizontalDirectionalBlock implements Simple
 
 		if (!level.isClientSide) {
 			boolean isLit = state.getValue(LIT);
-			if (isLit != level.hasNeighborSignal(pos)) {
-				if (isLit) {
-					level.scheduleTick(pos, this, 1);
-				} else {
-					stateToggled(pos, level, state, state.getValue(LIT));
-					level.setBlock(pos, state.cycle(LIT), 3);
-				}
+			if (!isLit && level.hasNeighborSignal(pos)) {
+				stateToggled(pos, level, state, state.getValue(LIT));
+				level.setBlock(pos, state.cycle(LIT), 3);
+			} else if (isLit && !level.hasNeighborSignal(pos)) {
+				stateToggled(pos, level, state, state.getValue(LIT));
+				level.setBlock(pos, state.cycle(LIT), 3);
 			}
 		}
 	}

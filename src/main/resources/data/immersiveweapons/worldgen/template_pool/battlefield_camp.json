@@ -1,7 +1,6 @@
 {
 	"name": "immersiveweapons:battlefield_camp",
 	"fallback": "minecraft:empty",
-
 	"elements": [
 		{
 			"weight": 1,

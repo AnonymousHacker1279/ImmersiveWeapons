@@ -1,7 +1,7 @@
 @ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault
 @FieldsAreNonnullByDefault
-package tech.anonymoushacker1279.immersiveweapons.world.level.levelgen.biomes;
+package tech.anonymoushacker1279.immersiveweapons.data.particles;
 
 import net.minecraft.FieldsAreNonnullByDefault;
 import net.minecraft.MethodsReturnNonnullByDefault;

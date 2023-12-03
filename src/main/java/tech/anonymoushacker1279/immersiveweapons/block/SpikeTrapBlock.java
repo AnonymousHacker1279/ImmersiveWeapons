@@ -19,17 +19,14 @@ import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.fml.DistExecutor;
-import net.minecraftforge.network.NetworkEvent;
-import net.minecraftforge.network.NetworkEvent.Context;
-import net.minecraftforge.network.PacketDistributor;
-import net.minecraftforge.network.PacketDistributor.TargetPoint;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.fml.DistExecutor;
+import net.neoforged.neoforge.network.NetworkEvent.Context;
+import net.neoforged.neoforge.network.PacketDistributor;
+import net.neoforged.neoforge.network.PacketDistributor.TargetPoint;
 import tech.anonymoushacker1279.immersiveweapons.init.PacketHandler;
 import tech.anonymoushacker1279.immersiveweapons.init.SoundEventRegistry;
 import tech.anonymoushacker1279.immersiveweapons.world.level.IWDamageSources;
-
-import java.util.function.Supplier;
 
 public class SpikeTrapBlock extends Block implements SimpleWaterloggedBlock {
 
@@ -185,49 +182,19 @@ public class SpikeTrapBlock extends Block implements SimpleWaterloggedBlock {
 
 	public record SpikeTrapBlockPacketHandler(BlockPos blockPos, boolean extend) {
 
-		/**
-		 * Constructor for SpikeTrapBlockPacketHandler.
-		 */
-		public SpikeTrapBlockPacketHandler {
-		}
-
-		/**
-		 * Encodes a packet
-		 *
-		 * @param msg          the <code>SpikeTrapBlockPacketHandler</code> message being sent
-		 * @param packetBuffer the <code>PacketBuffer</code> containing packet data
-		 */
 		public static void encode(SpikeTrapBlockPacketHandler msg, FriendlyByteBuf packetBuffer) {
 			packetBuffer.writeBlockPos(msg.blockPos).writeBoolean(msg.extend);
 		}
 
-		/**
-		 * Decodes a packet
-		 *
-		 * @param packetBuffer the <code>PacketBuffer</code> containing packet data
-		 * @return SpikeTrapBlockPacketHandler
-		 */
 		public static SpikeTrapBlockPacketHandler decode(FriendlyByteBuf packetBuffer) {
 			return new SpikeTrapBlockPacketHandler(packetBuffer.readBlockPos(), packetBuffer.readBoolean());
 		}
 
-		/**
-		 * Handles an incoming packet, by sending it to the client/server
-		 *
-		 * @param msg             the <code>SpikeTrapBlockPacketHandler</code> message being sent
-		 * @param contextSupplier the <code>Supplier</code> providing context
-		 */
-		public static void handle(SpikeTrapBlockPacketHandler msg, Supplier<Context> contextSupplier) {
-			NetworkEvent.Context context = contextSupplier.get();
+		public static void handle(SpikeTrapBlockPacketHandler msg, Context context) {
 			context.enqueueWork(() -> DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> handleOnClient(msg)));
 			context.setPacketHandled(true);
 		}
 
-		/**
-		 * Runs specifically on the client, when a packet is received
-		 *
-		 * @param msg the <code>SpikeTrapBlockPacketHandler</code> message being sent
-		 */
 		private static void handleOnClient(SpikeTrapBlockPacketHandler msg) {
 			Minecraft minecraft = Minecraft.getInstance();
 			if (minecraft.level != null) {

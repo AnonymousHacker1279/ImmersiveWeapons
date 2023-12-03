@@ -2,10 +2,7 @@
   "parent": "immersiveweapons:entity_discovery",
   "criteria": {
     "discover": {
-      "conditions": {
-        "entity": "immersiveweapons:celestial_tower"
-      },
-      "trigger": "immersiveweapons:entity_discovered"
+      "trigger": "minecraft:entity_discovered"
     }
   },
   "display": {

@@ -20,8 +20,8 @@
   },
   "requirements": [
     [
-      "gold",
-      "has_the_recipe"
+      "has_the_recipe",
+      "gold"
     ]
   ],
   "rewards": {

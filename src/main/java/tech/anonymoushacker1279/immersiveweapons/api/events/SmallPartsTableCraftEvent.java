@@ -2,7 +2,7 @@ package tech.anonymoushacker1279.immersiveweapons.api.events;
 
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.eventbus.api.Event;
+import net.neoforged.bus.api.Event;
 
 /**
  * This event is fired when a player crafts an item using the small parts table.

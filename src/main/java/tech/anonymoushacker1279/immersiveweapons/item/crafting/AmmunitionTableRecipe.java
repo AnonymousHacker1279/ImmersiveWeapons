@@ -1,12 +1,11 @@
 package tech.anonymoushacker1279.immersiveweapons.item.crafting;
 
-import com.google.gson.JsonObject;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
-import net.minecraft.util.GsonHelper;
 import net.minecraft.world.Container;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -17,8 +16,7 @@ import tech.anonymoushacker1279.immersiveweapons.init.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public record AmmunitionTableRecipe(ResourceLocation recipeId,
-                                    List<MaterialGroup> materials,
+public record AmmunitionTableRecipe(List<MaterialGroup> materials,
                                     ItemStack result) implements Recipe<Container> {
 
 	@Override
@@ -51,11 +49,6 @@ public record AmmunitionTableRecipe(ResourceLocation recipeId,
 	}
 
 	@Override
-	public ResourceLocation getId() {
-		return recipeId;
-	}
-
-	@Override
 	public RecipeSerializer<?> getSerializer() {
 		return RecipeSerializerRegistry.AMMUNITION_TABLE_RECIPE_SERIALIZER.get();
 	}
@@ -74,27 +67,28 @@ public record AmmunitionTableRecipe(ResourceLocation recipeId,
 		return ingredients;
 	}
 
+	@Override
+	public boolean isSpecial() {
+		return true;
+	}
+
 	public static class Serializer implements RecipeSerializer<AmmunitionTableRecipe> {
 
+		private static final Codec<AmmunitionTableRecipe> CODEC = RecordCodecBuilder.create(
+				instance -> instance.group(
+								Codec.list(MaterialGroup.getCodec()).fieldOf("materials").forGetter(recipe -> recipe.materials),
+								CraftingRecipeCodecs.ITEMSTACK_OBJECT_CODEC.fieldOf("result").forGetter(recipe -> recipe.result)
+						)
+						.apply(instance, AmmunitionTableRecipe::new)
+		);
+
 		@Override
-		public AmmunitionTableRecipe fromJson(ResourceLocation recipeId, JsonObject json) {
-			List<MaterialGroup> materials = new ArrayList<>(5);
-			GsonHelper.getAsJsonArray(json, "materials").forEach(jsonElement -> {
-				JsonObject jsonObject = jsonElement.getAsJsonObject();
-				Ingredient ingredient = Ingredient.fromJson(jsonObject.get("ingredient"));
-				float density = jsonObject.get("density").getAsFloat();
-				float baseMultiplier = jsonObject.get("base_multiplier").getAsFloat();
-
-				materials.add(new MaterialGroup(ingredient, density, baseMultiplier));
-			});
-
-			ItemStack result = ShapedRecipe.itemStackFromJson(json.getAsJsonObject("result"));
-
-			return new AmmunitionTableRecipe(recipeId, materials, result);
+		public Codec<AmmunitionTableRecipe> codec() {
+			return CODEC;
 		}
 
 		@Override
-		public AmmunitionTableRecipe fromNetwork(ResourceLocation recipeId, FriendlyByteBuf buffer) {
+		public AmmunitionTableRecipe fromNetwork(FriendlyByteBuf buffer) {
 			List<MaterialGroup> materials = new ArrayList<>(5);
 			int materialCount = buffer.readInt();
 			for (int i = 0; i < materialCount; i++) {
@@ -107,7 +101,7 @@ public record AmmunitionTableRecipe(ResourceLocation recipeId,
 
 			ItemStack result = buffer.readItem();
 
-			return new AmmunitionTableRecipe(recipeId, materials, result);
+			return new AmmunitionTableRecipe(materials, result);
 		}
 
 		@Override
@@ -123,26 +117,28 @@ public record AmmunitionTableRecipe(ResourceLocation recipeId,
 		}
 	}
 
-	public static class MaterialGroup {
-
-		final Ingredient stack;
-		final float density;
-		final float baseMultiplier;
+	public record MaterialGroup(Ingredient stack, float density, float baseMultiplier) {
 
 		/**
 		 * Represents a group of materials within a recipe for the Ammunition Table.
 		 *
-		 * @param ingredient     an <code>Ingredient</code>
+		 * @param stack          an <code>Ingredient</code>
 		 * @param density        the density of the material
 		 * @param baseMultiplier the base multiplier for the material (how much this item is worth)
 		 *                       <p>
 		 *                       For example, an ingot may be 1x, while its nugget is 1/9th of that, or 0.11x.
 		 */
-		public MaterialGroup(Ingredient ingredient, float density, float baseMultiplier) {
-			this.stack = ingredient;
-			this.density = density;
-			this.baseMultiplier = baseMultiplier;
+		public MaterialGroup {
 		}
+
+		private static final Codec<MaterialGroup> CODEC = RecordCodecBuilder.create(
+				instance -> instance.group(
+								Ingredient.CODEC.fieldOf("ingredient").forGetter(materialGroup -> materialGroup.stack),
+								Codec.FLOAT.fieldOf("density").forGetter(materialGroup -> materialGroup.density),
+								Codec.FLOAT.fieldOf("base_multiplier").forGetter(materialGroup -> materialGroup.baseMultiplier)
+						)
+						.apply(instance, MaterialGroup::new)
+		);
 
 		public MaterialGroup(TagKey<Item> tagKey, float density, float baseMultiplier) {
 			this(Ingredient.of(tagKey), density, baseMultiplier);
@@ -158,6 +154,10 @@ public record AmmunitionTableRecipe(ResourceLocation recipeId,
 
 		public float getBaseMultiplier() {
 			return baseMultiplier;
+		}
+
+		public static Codec<MaterialGroup> getCodec() {
+			return CODEC;
 		}
 	}
 }

@@ -29,5 +29,8 @@ gradlew.bat
 # Datagen cache
 /src/generated/resources/.cache/
 
+# Run configurations
+/runs/
+
 # Token property file, used for publishing
 tokens.properties

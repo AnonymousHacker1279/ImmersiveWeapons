@@ -14,11 +14,10 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.common.Tags;
-import net.minecraftforge.fml.DistExecutor;
-import net.minecraftforge.network.NetworkEvent;
-import net.minecraftforge.network.NetworkEvent.Context;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.fml.DistExecutor;
+import net.neoforged.neoforge.common.Tags;
+import net.neoforged.neoforge.network.NetworkEvent.Context;
 import org.jetbrains.annotations.Nullable;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.client.gui.overlays.DebugTracingData;
@@ -32,7 +31,6 @@ import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
 import tech.anonymoushacker1279.immersiveweapons.world.level.IWDamageSources;
 
 import java.util.List;
-import java.util.function.Supplier;
 
 public class BulletEntity extends CustomArrowEntity implements HitEffectUtils {
 
@@ -201,8 +199,7 @@ public class BulletEntity extends CustomArrowEntity implements HitEffectUtils {
 			return new BulletEntityPacketHandler(packetBuffer.readDouble(), packetBuffer.readBoolean());
 		}
 
-		public static void handle(BulletEntityPacketHandler msg, Supplier<Context> contextSupplier) {
-			NetworkEvent.Context context = contextSupplier.get();
+		public static void handle(BulletEntityPacketHandler msg, Context context) {
 			context.enqueueWork(() -> DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> runOnClient(msg)));
 			context.setPacketHandled(true);
 		}

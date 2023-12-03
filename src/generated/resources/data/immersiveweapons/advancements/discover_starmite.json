@@ -2,10 +2,7 @@
   "parent": "immersiveweapons:entity_discovery",
   "criteria": {
     "discover": {
-      "conditions": {
-        "entity": "immersiveweapons:starmite"
-      },
-      "trigger": "immersiveweapons:entity_discovered"
+      "trigger": "minecraft:entity_discovered"
     }
   },
   "display": {

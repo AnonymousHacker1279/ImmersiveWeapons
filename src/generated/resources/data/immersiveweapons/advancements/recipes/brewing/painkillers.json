@@ -22,8 +22,8 @@
   },
   "requirements": [
     [
-      "glistering_melon_slice",
-      "has_the_recipe"
+      "has_the_recipe",
+      "glistering_melon_slice"
     ]
   ],
   "rewards": {

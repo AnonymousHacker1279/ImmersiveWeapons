@@ -38,7 +38,7 @@ public class AlcoholEffect extends MobEffect {
 	 * @return boolean
 	 */
 	@Override
-	public boolean isDurationEffectTick(int duration, int amplifier) {
+	public boolean shouldApplyEffectTickThisTick(int duration, int amplifier) {
 		this.duration = duration;
 		return true;
 	}

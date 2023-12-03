@@ -20,8 +20,8 @@
   },
   "requirements": [
     [
-      "copper_nugget",
-      "has_the_recipe"
+      "has_the_recipe",
+      "copper_nugget"
     ]
   ],
   "rewards": {

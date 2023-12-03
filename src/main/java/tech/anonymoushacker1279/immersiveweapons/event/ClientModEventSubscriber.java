@@ -1,8 +1,7 @@
 package tech.anonymoushacker1279.immersiveweapons.event;
 
 import net.minecraft.client.gui.screens.MenuScreens;
-import net.minecraft.client.model.SkullModel;
-import net.minecraft.client.model.geom.ModelLayerLocation;
+import net.minecraft.client.model.*;
 import net.minecraft.client.renderer.BiomeColors;
 import net.minecraft.client.renderer.Sheets;
 import net.minecraft.client.renderer.blockentity.*;
@@ -14,18 +13,19 @@ import net.minecraft.world.item.*;
 import net.minecraft.world.item.alchemy.PotionUtils;
 import net.minecraft.world.level.GrassColor;
 import net.minecraft.world.level.ItemLike;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.client.event.*;
-import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
-import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
-import net.minecraftforge.registries.RegistryObject;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.Mod.EventBusSubscriber;
+import net.neoforged.fml.common.Mod.EventBusSubscriber.Bus;
+import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
+import net.neoforged.neoforge.client.event.*;
+import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
+import net.neoforged.neoforge.registries.DeferredHolder;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.block.decoration.skull.CustomSkullTypes;
 import tech.anonymoushacker1279.immersiveweapons.block.properties.WoodTypes;
 import tech.anonymoushacker1279.immersiveweapons.client.IWKeyBinds;
+import tech.anonymoushacker1279.immersiveweapons.client.ModelLayerLocations;
 import tech.anonymoushacker1279.immersiveweapons.client.gui.IWOverlays;
 import tech.anonymoushacker1279.immersiveweapons.client.gui.screen.*;
 import tech.anonymoushacker1279.immersiveweapons.client.model.*;
@@ -37,27 +37,14 @@ import tech.anonymoushacker1279.immersiveweapons.client.renderer.dimension.Tiltr
 import tech.anonymoushacker1279.immersiveweapons.client.renderer.entity.misc.CustomBoatRenderer;
 import tech.anonymoushacker1279.immersiveweapons.client.renderer.entity.mob.*;
 import tech.anonymoushacker1279.immersiveweapons.client.renderer.entity.projectile.*;
+import tech.anonymoushacker1279.immersiveweapons.entity.vehicle.CustomBoatType;
 import tech.anonymoushacker1279.immersiveweapons.init.*;
 
 import java.util.*;
+import java.util.function.Supplier;
 
 @EventBusSubscriber(modid = ImmersiveWeapons.MOD_ID, bus = Bus.MOD, value = Dist.CLIENT)
 public class ClientModEventSubscriber {
-
-	private static final ModelLayerLocation MINUTEMAN_HEAD_LAYER = new ModelLayerLocation(
-			BlockRegistry.MINUTEMAN_HEAD.getId(), "main");
-	private static final ModelLayerLocation FIELD_MEDIC_HEAD_LAYER = new ModelLayerLocation(
-			BlockRegistry.FIELD_MEDIC_HEAD.getId(), "main");
-	private static final ModelLayerLocation DYING_SOLDIER_HEAD_LAYER = new ModelLayerLocation(
-			BlockRegistry.DYING_SOLDIER_HEAD.getId(), "main");
-	private static final ModelLayerLocation WANDERING_WARRIOR_HEAD_LAYER = new ModelLayerLocation(
-			BlockRegistry.WANDERING_WARRIOR_HEAD.getId(), "main");
-	private static final ModelLayerLocation HANS_HEAD_LAYER = new ModelLayerLocation(
-			BlockRegistry.HANS_HEAD.getId(), "main");
-	private static final ModelLayerLocation STORM_CREEPER_HEAD_LAYER = new ModelLayerLocation(
-			BlockRegistry.STORM_CREEPER_HEAD.getId(), "main");
-	private static final ModelLayerLocation SKELETON_MERCHANT_HEAD_LAYER = new ModelLayerLocation(
-			BlockRegistry.SKELETON_MERCHANT_HEAD.getId(), "main");
 
 	/**
 	 * Event handler for the FMLClientSetupEvent.
@@ -101,9 +88,9 @@ public class ClientModEventSubscriber {
 	@SubscribeEvent
 	public static void setupCreativeTabs(BuildCreativeModeTabContentsEvent event) {
 		if (event.getTab() == DeferredRegistryHandler.IMMERSIVE_WEAPONS_TAB.get()) {
-			Collection<RegistryObject<Item>> registryObjects = ItemRegistry.ITEMS.getEntries();
+			Collection<DeferredHolder<Item, ? extends Item>> registryObjects = ItemRegistry.ITEMS.getEntries();
 			List<Item> items = new ArrayList<>(registryObjects.size());
-			registryObjects.stream().map(RegistryObject::get).forEach(items::add);
+			registryObjects.stream().map(Supplier::get).forEach(items::add);
 
 			for (Item item : items) {
 				event.accept(item);
@@ -215,17 +202,13 @@ public class ClientModEventSubscriber {
 		event.registerEntityRenderer(EntityRegistry.CHAIR_ENTITY.get(), ChairRenderer::new);
 
 		event.registerEntityRenderer(EntityRegistry.BURNED_OAK_BOAT_ENTITY.get(),
-				context -> new CustomBoatRenderer(context, false,
-						new ResourceLocation(ImmersiveWeapons.MOD_ID, "textures/entity/boat/burned_oak.png")));
+				context -> new CustomBoatRenderer(context, false));
 		event.registerEntityRenderer(EntityRegistry.BURNED_OAK_CHEST_BOAT_ENTITY.get(),
-				context -> new CustomBoatRenderer(context, true,
-						new ResourceLocation(ImmersiveWeapons.MOD_ID, "textures/entity/chest_boat/burned_oak.png")));
+				context -> new CustomBoatRenderer(context, true));
 		event.registerEntityRenderer(EntityRegistry.STARDUST_BOAT_ENTITY.get(),
-				context -> new CustomBoatRenderer(context, false,
-						new ResourceLocation(ImmersiveWeapons.MOD_ID, "textures/entity/boat/stardust.png")));
+				context -> new CustomBoatRenderer(context, false));
 		event.registerEntityRenderer(EntityRegistry.STARDUST_CHEST_BOAT_ENTITY.get(),
-				context -> new CustomBoatRenderer(context, true,
-						new ResourceLocation(ImmersiveWeapons.MOD_ID, "textures/entity/chest_boat/stardust.png")));
+				context -> new CustomBoatRenderer(context, true));
 
 		event.registerEntityRenderer(EntityRegistry.MUD_BALL_ENTITY.get(), ThrownItemRenderer::new);
 		event.registerEntityRenderer(EntityRegistry.LAVA_REVENANT_ENTITY.get(), LavaRevenantRenderer::new);
@@ -262,13 +245,18 @@ public class ClientModEventSubscriber {
 		event.registerLayerDefinition(MeteorModel.LAYER_LOCATION, MeteorModel::createBodyLayer);
 		event.registerLayerDefinition(EvilEyeModel.LAYER_LOCATION, EvilEyeModel::createBodyLayer);
 		event.registerLayerDefinition(SkeletonMerchantModel.LAYER_LOCATION, SkeletonMerchantModel::createBodyLayer);
-		event.registerLayerDefinition(MINUTEMAN_HEAD_LAYER, SkullModel::createMobHeadLayer);
-		event.registerLayerDefinition(FIELD_MEDIC_HEAD_LAYER, SkullModel::createMobHeadLayer);
-		event.registerLayerDefinition(DYING_SOLDIER_HEAD_LAYER, SkullModel::createMobHeadLayer);
-		event.registerLayerDefinition(WANDERING_WARRIOR_HEAD_LAYER, SkullModel::createMobHeadLayer);
-		event.registerLayerDefinition(HANS_HEAD_LAYER, SkullModel::createMobHeadLayer);
-		event.registerLayerDefinition(STORM_CREEPER_HEAD_LAYER, SkullModel::createMobHeadLayer);
-		event.registerLayerDefinition(SKELETON_MERCHANT_HEAD_LAYER, SkullModel::createMobHeadLayer);
+		event.registerLayerDefinition(ModelLayerLocations.MINUTEMAN_HEAD_LAYER, SkullModel::createMobHeadLayer);
+		event.registerLayerDefinition(ModelLayerLocations.FIELD_MEDIC_HEAD_LAYER, SkullModel::createMobHeadLayer);
+		event.registerLayerDefinition(ModelLayerLocations.DYING_SOLDIER_HEAD_LAYER, SkullModel::createMobHeadLayer);
+		event.registerLayerDefinition(ModelLayerLocations.WANDERING_WARRIOR_HEAD_LAYER, SkullModel::createMobHeadLayer);
+		event.registerLayerDefinition(ModelLayerLocations.HANS_HEAD_LAYER, SkullModel::createMobHeadLayer);
+		event.registerLayerDefinition(ModelLayerLocations.STORM_CREEPER_HEAD_LAYER, SkullModel::createMobHeadLayer);
+		event.registerLayerDefinition(ModelLayerLocations.SKELETON_MERCHANT_HEAD_LAYER, SkullModel::createMobHeadLayer);
+
+		for (CustomBoatType type : CustomBoatType.values()) {
+			event.registerLayerDefinition(CustomBoatRenderer.createBoatModelName(type), BoatModel::createBodyModel);
+			event.registerLayerDefinition(CustomBoatRenderer.createChestBoatModelName(type), ChestBoatModel::createBodyModel);
+		}
 	}
 
 	/**
@@ -292,19 +280,19 @@ public class ClientModEventSubscriber {
 	@SubscribeEvent
 	public static void registerSkullModel(EntityRenderersEvent.CreateSkullModels event) {
 		event.registerSkullModel(CustomSkullTypes.MINUTEMAN, new SkullModel(event.getEntityModelSet()
-				.bakeLayer(MINUTEMAN_HEAD_LAYER)));
+				.bakeLayer(ModelLayerLocations.MINUTEMAN_HEAD_LAYER)));
 		event.registerSkullModel(CustomSkullTypes.FIELD_MEDIC, new SkullModel(event.getEntityModelSet()
-				.bakeLayer(FIELD_MEDIC_HEAD_LAYER)));
+				.bakeLayer(ModelLayerLocations.FIELD_MEDIC_HEAD_LAYER)));
 		event.registerSkullModel(CustomSkullTypes.DYING_SOLDIER, new SkullModel(event.getEntityModelSet()
-				.bakeLayer(DYING_SOLDIER_HEAD_LAYER)));
+				.bakeLayer(ModelLayerLocations.DYING_SOLDIER_HEAD_LAYER)));
 		event.registerSkullModel(CustomSkullTypes.WANDERING_WARRIOR, new SkullModel(event.getEntityModelSet()
-				.bakeLayer(WANDERING_WARRIOR_HEAD_LAYER)));
+				.bakeLayer(ModelLayerLocations.WANDERING_WARRIOR_HEAD_LAYER)));
 		event.registerSkullModel(CustomSkullTypes.HANS, new SkullModel(event.getEntityModelSet()
-				.bakeLayer(HANS_HEAD_LAYER)));
+				.bakeLayer(ModelLayerLocations.HANS_HEAD_LAYER)));
 		event.registerSkullModel(CustomSkullTypes.STORM_CREEPER, new SkullModel(event.getEntityModelSet()
-				.bakeLayer(STORM_CREEPER_HEAD_LAYER)));
+				.bakeLayer(ModelLayerLocations.STORM_CREEPER_HEAD_LAYER)));
 		event.registerSkullModel(CustomSkullTypes.SKELETON_MERCHANT, new SkullModel(event.getEntityModelSet()
-				.bakeLayer(SKELETON_MERCHANT_HEAD_LAYER)));
+				.bakeLayer(ModelLayerLocations.SKELETON_MERCHANT_HEAD_LAYER)));
 	}
 
 	@SubscribeEvent
@@ -334,7 +322,7 @@ public class ClientModEventSubscriber {
 		// Handle dyeable armor
 		ArrayList<DyeableArmorItem> dyeableArmorItems = new ArrayList<>(4);
 
-		for (RegistryObject<Item> registryObject : ItemRegistry.ITEMS.getEntries()) {
+		for (DeferredHolder<Item, ? extends Item> registryObject : ItemRegistry.ITEMS.getEntries()) {
 			if (registryObject.get() instanceof DyeableArmorItem item) {
 				dyeableArmorItems.add(item);
 			}

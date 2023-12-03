@@ -1,7 +1,7 @@
 package tech.anonymoushacker1279.immersiveweapons.data.lang;
 
 import net.minecraft.data.PackOutput;
-import net.minecraftforge.common.data.LanguageProvider;
+import net.neoforged.neoforge.common.data.LanguageProvider;
 
 public abstract class IWLanguageProvider extends LanguageProvider {
 

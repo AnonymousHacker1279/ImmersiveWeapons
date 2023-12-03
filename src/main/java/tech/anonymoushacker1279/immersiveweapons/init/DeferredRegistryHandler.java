@@ -4,17 +4,18 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.CreativeModeTab;
-import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
-import net.minecraftforge.registries.DeferredRegister;
-import net.minecraftforge.registries.RegistryObject;
+import net.neoforged.bus.api.IEventBus;
+import net.neoforged.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.neoforged.neoforge.registries.DeferredRegister;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
+
+import java.util.function.Supplier;
 
 public class DeferredRegistryHandler {
 
 	public static final DeferredRegister<CreativeModeTab> CREATIVE_MODE_TABS = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, ImmersiveWeapons.MOD_ID);
 
-	public static final RegistryObject<CreativeModeTab> IMMERSIVE_WEAPONS_TAB = CREATIVE_MODE_TABS.register("immersive_weapons_tab", () -> CreativeModeTab.builder()
+	public static final Supplier<CreativeModeTab> IMMERSIVE_WEAPONS_TAB = CREATIVE_MODE_TABS.register("immersive_weapons_tab", () -> CreativeModeTab.builder()
 			.icon(() -> ItemRegistry.TESLA_SWORD.get().getDefaultInstance())
 			.title(Component.translatable("itemGroup.immersiveweapons.creative_tab"))
 			.withSearchBar(65)

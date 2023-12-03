@@ -18,8 +18,8 @@ import net.minecraft.world.level.Level.ExplosionInteraction;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.*;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.minecraftforge.event.ForgeEventFactory;
-import net.minecraftforge.network.PacketDistributor;
+import net.neoforged.neoforge.event.EventHooks;
+import net.neoforged.neoforge.network.PacketDistributor;
 import org.jetbrains.annotations.Nullable;
 import tech.anonymoushacker1279.immersiveweapons.entity.projectile.SmokeGrenadeEntity.SmokeGrenadeEntityPacketHandler;
 import tech.anonymoushacker1279.immersiveweapons.init.PacketHandler;
@@ -185,7 +185,7 @@ public class CustomArrowEntity extends Arrow implements HitEffectUtils {
 				}
 
 				if (hitResult != null && hitResult.getType() != HitResult.Type.MISS && !noPhysics) {
-					if (ForgeEventFactory.onProjectileImpact(this, hitResult)) {
+					if (EventHooks.onProjectileImpact(this, hitResult)) {
 						break;
 					}
 

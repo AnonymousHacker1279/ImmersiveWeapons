@@ -22,8 +22,8 @@
   },
   "requirements": [
     [
-      "water_bucket",
-      "has_the_recipe"
+      "has_the_recipe",
+      "water_bucket"
     ]
   ],
   "rewards": {

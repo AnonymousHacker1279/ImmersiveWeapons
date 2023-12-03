@@ -6,13 +6,11 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.ItemTags;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
-import net.minecraftforge.common.loot.IGlobalLootModifier;
-import net.minecraftforge.common.loot.LootModifier;
-import net.minecraftforge.registries.ForgeRegistries;
+import net.neoforged.neoforge.common.loot.IGlobalLootModifier;
+import net.neoforged.neoforge.common.loot.LootModifier;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.function.Supplier;
@@ -24,14 +22,14 @@ public class LogShardsLootModifierHandler extends LootModifier {
 					Codec.STRING.fieldOf("blockTag").forGetter(m -> m.tag),
 					Codec.INT.fieldOf("minShards").forGetter(m -> m.minShards),
 					Codec.INT.fieldOf("maxShards").forGetter(m -> m.maxShards),
-					ForgeRegistries.ITEMS.getCodec().fieldOf("replacement").forGetter(m -> m.reward)
+					ItemStack.CODEC.fieldOf("replacement").forGetter(m -> m.reward)
 			)).apply(inst, LogShardsLootModifierHandler::new)
 	));
 
 	private final int minShards;
 	private final int maxShards;
 	private final String tag;
-	private final Item reward;
+	private final ItemStack reward;
 
 	/**
 	 * Constructor for LogShardsLootModifierHandler.
@@ -42,7 +40,7 @@ public class LogShardsLootModifierHandler extends LootModifier {
 	 * @param maxShards    the maximum number of shards to drop
 	 * @param reward       the returned item
 	 */
-	LogShardsLootModifierHandler(LootItemCondition[] conditionsIn, String tag, int minShards, int maxShards, Item reward) {
+	LogShardsLootModifierHandler(LootItemCondition[] conditionsIn, String tag, int minShards, int maxShards, ItemStack reward) {
 		super(conditionsIn);
 		this.tag = tag;
 		this.minShards = minShards;
@@ -59,16 +57,17 @@ public class LogShardsLootModifierHandler extends LootModifier {
 	 */
 	@Override
 	public @NotNull ObjectArrayList<ItemStack> doApply(ObjectArrayList<ItemStack> generatedLoot, LootContext context) {
-		int numShards = 0;
+		int shardCount = 0;
 		for (ItemStack stack : generatedLoot) {
 			// Each wooden log stack can generate shards
 			if (stack.is(ItemTags.create(new ResourceLocation(tag)))) {
-				numShards += stack.getCount() * context.getRandom().nextIntBetweenInclusive(minShards, maxShards);
+				shardCount += stack.getCount() * context.getRandom().nextIntBetweenInclusive(minShards, maxShards);
 			}
 		}
 
-		if (numShards >= 1) {
-			generatedLoot.add(new ItemStack(reward, numShards));
+		if (shardCount >= 1) {
+			reward.setCount(shardCount);
+			generatedLoot.add(reward);
 			generatedLoot.remove(0); // The original item shouldn't drop, so remove it from the loot list
 		}
 

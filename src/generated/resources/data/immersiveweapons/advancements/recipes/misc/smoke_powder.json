@@ -22,8 +22,8 @@
   },
   "requirements": [
     [
-      "mortar_and_pestle",
-      "has_the_recipe"
+      "has_the_recipe",
+      "mortar_and_pestle"
     ]
   ],
   "rewards": {

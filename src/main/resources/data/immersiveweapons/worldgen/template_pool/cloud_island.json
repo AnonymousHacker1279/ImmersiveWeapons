@@ -1,7 +1,6 @@
 {
 	"name": "immersiveweapons:cloud_island",
 	"fallback": "minecraft:empty",
-
 	"elements": [
 		{
 			"weight": 1,

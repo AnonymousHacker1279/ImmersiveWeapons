@@ -10,17 +10,17 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.registries.RegistryObject;
 import tech.anonymoushacker1279.immersiveweapons.entity.projectile.BulletEntity;
 import tech.anonymoushacker1279.immersiveweapons.entity.projectile.CustomArrowEntity;
 import tech.anonymoushacker1279.immersiveweapons.item.tool.HitEffectUtils.HitEffect;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Supplier;
 
 public class CustomArrowItem<T extends CustomArrowEntity> extends ArrowItem {
 
-	public final RegistryObject<EntityType<T>> entityRegistryObject;
+	public final Supplier<EntityType<T>> entitySupplier;
 	private final int pierceLevel;
 	private final boolean canBeInfinite;
 	final double gravityModifier;
@@ -30,12 +30,12 @@ public class CustomArrowItem<T extends CustomArrowEntity> extends ArrowItem {
 	private final HitEffect hitEffect;
 	public final int color;
 
-	protected CustomArrowItem(Properties properties, double damage, RegistryObject<EntityType<T>> arrowEntity,
+	protected CustomArrowItem(Properties properties, double damage, Supplier<EntityType<T>> arrowEntity,
 	                          int pierceLevel, boolean canBeInfinite, double gravityModifier,
 	                          List<Double> shootingVectorInputs, int knockbackStrength, HitEffect hitEffect, int color) {
 		super(properties);
 		this.damage = damage;
-		this.entityRegistryObject = arrowEntity;
+		this.entitySupplier = arrowEntity;
 		this.pierceLevel = pierceLevel;
 		this.canBeInfinite = canBeInfinite;
 		this.gravityModifier = gravityModifier;
@@ -51,14 +51,14 @@ public class CustomArrowItem<T extends CustomArrowEntity> extends ArrowItem {
 
 	@Override
 	public AbstractArrow createArrow(Level level, ItemStack stack, LivingEntity shooter) {
-		CustomArrowEntity arrowEntity = new CustomArrowEntity(entityRegistryObject.get(), shooter, level);
+		CustomArrowEntity arrowEntity = new CustomArrowEntity(entitySupplier.get(), shooter, level);
 		setCommonArrowCharacteristics(arrowEntity);
 
 		return arrowEntity;
 	}
 
 	public AbstractArrow createArrow(Level level) {
-		CustomArrowEntity arrowEntity = new CustomArrowEntity(entityRegistryObject.get(), level);
+		CustomArrowEntity arrowEntity = new CustomArrowEntity(entitySupplier.get(), level);
 		setCommonArrowCharacteristics(arrowEntity);
 
 		return arrowEntity;
@@ -100,7 +100,7 @@ public class CustomArrowItem<T extends CustomArrowEntity> extends ArrowItem {
 
 		private final Properties properties;
 		private final double damage;
-		private final RegistryObject<EntityType<T>> arrowEntity;
+		private final Supplier<EntityType<T>> arrowEntity;
 		private int pierceLevel = 0;
 		private boolean canBeInfinite = true;
 		private double gravityModifier = 0.05d;
@@ -109,7 +109,7 @@ public class CustomArrowItem<T extends CustomArrowEntity> extends ArrowItem {
 		private HitEffect hitEffect = HitEffect.NONE;
 		private int color = -1;
 
-		public ArrowBuilder(Properties properties, double damage, RegistryObject<EntityType<T>> arrowEntity) {
+		public ArrowBuilder(Properties properties, double damage, Supplier<EntityType<T>> arrowEntity) {
 			this.properties = properties;
 			this.damage = damage;
 			this.arrowEntity = arrowEntity;

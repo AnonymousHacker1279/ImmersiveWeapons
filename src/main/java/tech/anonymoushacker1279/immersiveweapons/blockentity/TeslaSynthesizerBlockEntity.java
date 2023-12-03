@@ -14,18 +14,18 @@ import net.minecraft.world.inventory.*;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Recipe;
-import net.minecraft.world.item.crafting.RecipeManager;
+import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.entity.BaseContainerBlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
-import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.items.IItemHandler;
-import net.minecraftforge.items.wrapper.SidedInvWrapper;
+import net.neoforged.neoforge.common.capabilities.Capabilities;
+import net.neoforged.neoforge.common.capabilities.Capability;
+import net.neoforged.neoforge.common.util.LazyOptional;
+import net.neoforged.neoforge.items.IItemHandler;
+import net.neoforged.neoforge.items.wrapper.SidedInvWrapper;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import tech.anonymoushacker1279.immersiveweapons.init.*;
@@ -35,7 +35,7 @@ import tech.anonymoushacker1279.immersiveweapons.menu.TeslaSynthesizerMenu;
 import java.util.Map;
 import java.util.Optional;
 
-public class TeslaSynthesizerBlockEntity extends BaseContainerBlockEntity implements WorldlyContainer, RecipeHolder, StackedContentsCompatible, EntityBlock {
+public class TeslaSynthesizerBlockEntity extends BaseContainerBlockEntity implements WorldlyContainer, StackedContentsCompatible, EntityBlock {
 
 	private static final int[] SLOTS_UP = new int[]{0};
 	private static final int[] SLOTS_DOWN = new int[]{2, 1};
@@ -151,10 +151,10 @@ public class TeslaSynthesizerBlockEntity extends BaseContainerBlockEntity implem
 		if (isBurning() || !material1.isEmpty()
 				&& !material2.isEmpty() && !material3.isEmpty() && !fuel.isEmpty()) {
 
-			RecipeManager recipeManager = level.getRecipeManager();
-			Recipe<?> synthesizerRecipe = recipeManager
-					.getRecipeFor(RecipeTypeRegistry.TESLA_SYNTHESIZER_RECIPE_TYPE.get(), this, level)
-					.orElse(null);
+			Optional<RecipeHolder<TeslaSynthesizerRecipe>> recipeHolder = level.getRecipeManager()
+					.getRecipeFor(RecipeTypeRegistry.TESLA_SYNTHESIZER_RECIPE_TYPE.get(), this, level);
+
+			TeslaSynthesizerRecipe synthesizerRecipe = recipeHolder.map(RecipeHolder::value).orElse(null);
 
 			if (!isBurning() && canSmelt(synthesizerRecipe)) {
 				burnTime = getBurnTime(fuel);
@@ -189,10 +189,6 @@ public class TeslaSynthesizerBlockEntity extends BaseContainerBlockEntity implem
 							items.set(4, recipeOutput.copy());
 						} else if (recipeOutputStack.getItem() == recipeOutput.getItem()) {
 							recipeOutputStack.grow(recipeOutput.getCount());
-						}
-
-						if (!level.isClientSide) {
-							setRecipeUsed(synthesizerRecipe);
 						}
 
 						ingredient1.shrink(1);
@@ -322,11 +318,11 @@ public class TeslaSynthesizerBlockEntity extends BaseContainerBlockEntity implem
 	 */
 	private int getCookTime() {
 		if (level != null) {
-			Optional<TeslaSynthesizerRecipe> recipe = level.getRecipeManager()
+			Optional<RecipeHolder<TeslaSynthesizerRecipe>> recipe = level.getRecipeManager()
 					.getRecipeFor(RecipeTypeRegistry.TESLA_SYNTHESIZER_RECIPE_TYPE.get(), this, level);
 
 			if (recipe.isPresent()) {
-				return recipe.get().getCookTime();
+				return recipe.get().value().getCookTime();
 			}
 		}
 
@@ -495,30 +491,6 @@ public class TeslaSynthesizerBlockEntity extends BaseContainerBlockEntity implem
 	}
 
 	/**
-	 * Get the used recipe.
-	 *
-	 * @return IRecipe
-	 */
-	@Override
-	public Recipe<?> getRecipeUsed() {
-		return null;
-	}
-
-	/**
-	 * Set the used recipe.
-	 *
-	 * @param recipe the <code>IRecipe</code> to set
-	 */
-	@Override
-	public void setRecipeUsed(@Nullable Recipe<?> recipe) {
-		if (recipe != null) {
-			ResourceLocation recipeId = recipe.getId();
-			recipes.addTo(recipeId, 1);
-		}
-
-	}
-
-	/**
 	 * Fill stacked contents.
 	 *
 	 * @param helper the <code>RecipeItemHelper</code> instance
@@ -540,7 +512,7 @@ public class TeslaSynthesizerBlockEntity extends BaseContainerBlockEntity implem
 	 */
 	@Override
 	public <T> @NotNull LazyOptional<T> getCapability(Capability<T> capability, @Nullable Direction facing) {
-		if (!remove && facing != null && capability == ForgeCapabilities.ITEM_HANDLER) {
+		if (!remove && facing != null && capability == Capabilities.ITEM_HANDLER) {
 			if (facing == Direction.UP) {
 				return handlers[0].cast();
 			} else if (facing == Direction.DOWN) {

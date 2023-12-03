@@ -23,17 +23,14 @@ import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.fml.DistExecutor;
-import net.minecraftforge.network.NetworkEvent;
-import net.minecraftforge.network.NetworkEvent.Context;
-import net.minecraftforge.network.PacketDistributor;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.fml.DistExecutor;
+import net.neoforged.neoforge.network.NetworkEvent.Context;
+import net.neoforged.neoforge.network.PacketDistributor;
 import org.jetbrains.annotations.Nullable;
 import tech.anonymoushacker1279.immersiveweapons.entity.projectile.MortarShellEntity;
 import tech.anonymoushacker1279.immersiveweapons.init.*;
 import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
-
-import java.util.function.Supplier;
 
 public class MortarBlock extends HorizontalDirectionalBlock {
 
@@ -189,51 +186,19 @@ public class MortarBlock extends HorizontalDirectionalBlock {
 
 	public record MortarBlockPacketHandler(BlockPos blockPos) {
 
-		/**
-		 * Constructor for MortarBlockPacketHandler.
-		 *
-		 * @param blockPos the <code>BlockPos</code> of the block where the packet was sent
-		 */
-		public MortarBlockPacketHandler {
-		}
-
-		/**
-		 * Encodes a packet
-		 *
-		 * @param msg          the <code>MortarBlockPacketHandler</code> message being sent
-		 * @param packetBuffer the <code>PacketBuffer</code> containing packet data
-		 */
 		public static void encode(MortarBlockPacketHandler msg, FriendlyByteBuf packetBuffer) {
 			packetBuffer.writeBlockPos(msg.blockPos);
 		}
 
-		/**
-		 * Decodes a packet
-		 *
-		 * @param packetBuffer the <code>PacketBuffer</code> containing packet data
-		 * @return MortarBlockPacketHandler
-		 */
 		public static MortarBlockPacketHandler decode(FriendlyByteBuf packetBuffer) {
 			return new MortarBlockPacketHandler(packetBuffer.readBlockPos());
 		}
 
-		/**
-		 * Handles an incoming packet, by sending it to the client/server
-		 *
-		 * @param msg             the <code>MortarBlockPacketHandler</code> message being sent
-		 * @param contextSupplier the <code>Supplier</code> providing context
-		 */
-		public static void handle(MortarBlockPacketHandler msg, Supplier<Context> contextSupplier) {
-			NetworkEvent.Context context = contextSupplier.get();
+		public static void handle(MortarBlockPacketHandler msg, Context context) {
 			context.enqueueWork(() -> DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> handleOnClient(msg)));
 			context.setPacketHandled(true);
 		}
 
-		/**
-		 * Runs specifically on the client, when a packet is received
-		 *
-		 * @param msg the <code>MortarBlockPacketHandler</code> message being sent
-		 */
 		private static void handleOnClient(MortarBlockPacketHandler msg) {
 			Minecraft minecraft = Minecraft.getInstance();
 			if (minecraft.level != null) {

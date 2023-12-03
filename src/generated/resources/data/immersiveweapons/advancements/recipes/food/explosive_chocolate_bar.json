@@ -22,8 +22,8 @@
   },
   "requirements": [
     [
-      "chocolate_bar",
-      "has_the_recipe"
+      "has_the_recipe",
+      "chocolate_bar"
     ]
   ],
   "rewards": {

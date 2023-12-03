@@ -22,8 +22,8 @@
   },
   "requirements": [
     [
-      "redstone",
-      "has_the_recipe"
+      "has_the_recipe",
+      "redstone"
     ]
   ],
   "rewards": {

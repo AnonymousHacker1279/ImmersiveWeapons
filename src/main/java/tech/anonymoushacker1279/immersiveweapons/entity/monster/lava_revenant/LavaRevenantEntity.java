@@ -25,13 +25,12 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.common.ForgeHooks;
-import net.minecraftforge.entity.PartEntity;
-import net.minecraftforge.fml.DistExecutor;
-import net.minecraftforge.network.NetworkEvent;
-import net.minecraftforge.network.NetworkEvent.Context;
-import net.minecraftforge.network.PacketDistributor;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.fml.DistExecutor;
+import net.neoforged.neoforge.common.CommonHooks;
+import net.neoforged.neoforge.entity.PartEntity;
+import net.neoforged.neoforge.network.NetworkEvent.Context;
+import net.neoforged.neoforge.network.PacketDistributor;
 import org.jetbrains.annotations.Nullable;
 import tech.anonymoushacker1279.immersiveweapons.entity.GrantAdvancementOnDiscovery;
 import tech.anonymoushacker1279.immersiveweapons.init.PacketHandler;
@@ -39,7 +38,6 @@ import tech.anonymoushacker1279.immersiveweapons.init.SoundEventRegistry;
 
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
-import java.util.function.Supplier;
 
 public class LavaRevenantEntity extends FlyingMob implements Enemy, GrantAdvancementOnDiscovery {
 
@@ -330,7 +328,7 @@ public class LavaRevenantEntity extends FlyingMob implements Enemy, GrantAdvance
 					BlockPos pos = new BlockPos(i, lMinY, lMinZ);
 					BlockState state = level().getBlockState(pos);
 					if (!state.isAir()) {
-						if (ForgeHooks.canEntityDestroy(level(), pos, this) && state.getDestroySpeed(level(), pos) <= 1.5f) {
+						if (CommonHooks.canEntityDestroy(level(), pos, this) && state.getDestroySpeed(level(), pos) <= 1.5f) {
 
 							blockRemoved = level().removeBlock(pos, false) || blockRemoved;
 						} else if (!state.liquid()) {
@@ -499,51 +497,19 @@ public class LavaRevenantEntity extends FlyingMob implements Enemy, GrantAdvance
 
 	public record LavaRevenantEntityPacketHandler(BlockPos blockPos) {
 
-		/**
-		 * Constructor for LavaRevenantEntityPacketHandler.
-		 *
-		 * @param blockPos the <code>BlockPos</code> the packet came from
-		 */
-		public LavaRevenantEntityPacketHandler {
-		}
-
-		/**
-		 * Encodes a packet
-		 *
-		 * @param msg          the <code>LavaRevenantEntityPacketHandler</code> message being sent
-		 * @param packetBuffer the <code>PacketBuffer</code> containing packet data
-		 */
 		public static void encode(LavaRevenantEntityPacketHandler msg, FriendlyByteBuf packetBuffer) {
 			packetBuffer.writeBlockPos(msg.blockPos);
 		}
 
-		/**
-		 * Decodes a packet
-		 *
-		 * @param packetBuffer the <code>PacketBuffer</code> containing packet data
-		 * @return LavaRevenantEntityPacketHandler
-		 */
 		public static LavaRevenantEntityPacketHandler decode(FriendlyByteBuf packetBuffer) {
 			return new LavaRevenantEntityPacketHandler(packetBuffer.readBlockPos());
 		}
 
-		/**
-		 * Handles an incoming packet, by sending it to the client/server
-		 *
-		 * @param msg             the <code>LavaRevenantEntityPacketHandler</code> message being sent
-		 * @param contextSupplier the <code>Supplier</code> providing context
-		 */
-		public static void handle(LavaRevenantEntityPacketHandler msg, Supplier<Context> contextSupplier) {
-			NetworkEvent.Context context = contextSupplier.get();
+		public static void handle(LavaRevenantEntityPacketHandler msg, Context context) {
 			context.enqueueWork(() -> DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> handleOnClient(msg)));
 			context.setPacketHandled(true);
 		}
 
-		/**
-		 * Runs specifically on the client, when a packet is received
-		 *
-		 * @param msg the <code>LavaRevenantEntityPacketHandler</code> message being sent
-		 */
 		private static void handleOnClient(LavaRevenantEntityPacketHandler msg) {
 			Minecraft minecraft = Minecraft.getInstance();
 			if (minecraft.level != null) {

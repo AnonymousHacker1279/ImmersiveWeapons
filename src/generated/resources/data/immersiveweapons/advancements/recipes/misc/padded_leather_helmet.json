@@ -22,8 +22,8 @@
   },
   "requirements": [
     [
-      "leather_helmet",
-      "has_the_recipe"
+      "has_the_recipe",
+      "leather_helmet"
     ]
   ],
   "rewards": {

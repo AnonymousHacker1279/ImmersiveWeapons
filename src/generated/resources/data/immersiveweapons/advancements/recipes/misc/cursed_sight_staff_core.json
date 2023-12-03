@@ -22,8 +22,8 @@
   },
   "requirements": [
     [
-      "broken_lens",
-      "has_the_recipe"
+      "has_the_recipe",
+      "broken_lens"
     ]
   ],
   "rewards": {

@@ -22,22 +22,22 @@ import java.util.function.Predicate;
 public class CustomBoatItem extends Item {
 
 	private static final Predicate<Entity> ENTITY_PREDICATE = EntitySelector.NO_SPECTATORS.and(Entity::isPickable);
-	private final CustomBoatType type;
+	private CustomBoatType type;
 	@Nullable
 	private EntityType<? extends CustomBoatEntity> boatEntityType;
 
-	public CustomBoatItem(CustomBoatType type, Item.Properties properties) {
+	public CustomBoatItem(Item.Properties properties) {
 		super(properties);
-		this.type = type;
 	}
 
 	/**
-	 * Set the boat entity this item is associated with.
+	 * Set the boat entity and boat type after setup.
 	 *
 	 * @param boatEntityType the boat entity type
 	 */
-	public void setBoatEntityType(EntityType<? extends CustomBoatEntity> boatEntityType) {
+	public void postSetup(EntityType<? extends CustomBoatEntity> boatEntityType, CustomBoatType type) {
 		this.boatEntityType = boatEntityType;
+		this.type = type;
 	}
 
 	@Override

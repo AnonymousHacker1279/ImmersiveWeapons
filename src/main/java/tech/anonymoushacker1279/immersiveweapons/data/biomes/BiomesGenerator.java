@@ -33,10 +33,7 @@ public class BiomesGenerator {
 						.grassColorOverride(5576464)
 						.foliageColorOverride(4468277)
 						.grassColorModifier(GrassColorModifier.NONE)
-						.ambientLoopSound(SoundEventRegistry.BATTLEFIELD_AMBIENT.getHolder().get())
-						.ambientAdditionsSound(new AmbientAdditionsSettings(
-								SoundEventRegistry.FLINTLOCK_PISTOL_FIRE.getHolder().get(), 0.00002d
-						))
+						.ambientLoopSound(SoundEventRegistry.BATTLEFIELD_AMBIENT)
 						.build())
 				.mobSpawnSettings(getBattlefieldSpawns())
 				.generationSettings(getBattlefieldGenerationSettings(placedFeatures, worldCarvers))
@@ -57,7 +54,7 @@ public class BiomesGenerator {
 						.grassColorOverride(16113331)
 						.foliageColorOverride(14665365)
 						.grassColorModifier(GrassColorModifier.NONE)
-						.backgroundMusic(new Music(SoundEventRegistry.TILTROS_WASTES_MUSIC.getHolder().get(), 6000, 24000, true))
+						.backgroundMusic(new Music(SoundEventRegistry.TILTROS_WASTES_MUSIC, 6000, 24000, true))
 						.build())
 				.mobSpawnSettings(getTiltrosWastesSpawns())
 				.generationSettings(getTiltrosWastesGenerationSettings(placedFeatures, worldCarvers))
@@ -78,7 +75,7 @@ public class BiomesGenerator {
 						.grassColorOverride(12312020)
 						.foliageColorOverride(13885404)
 						.grassColorModifier(GrassColorModifier.NONE)
-						.backgroundMusic(new Music(SoundEventRegistry.STARLIGHT_PLAINS_MUSIC.getHolder().get(), 6000, 24000, true))
+						.backgroundMusic(new Music(SoundEventRegistry.STARLIGHT_PLAINS_MUSIC, 6000, 24000, true))
 						.build())
 				.mobSpawnSettings(getStarlightPlainsSpawns())
 				.generationSettings(getStarlightPlainsGenerationSettings(placedFeatures, worldCarvers))
@@ -99,7 +96,7 @@ public class BiomesGenerator {
 						.grassColorOverride(6176026)
 						.foliageColorOverride(6242850)
 						.grassColorModifier(GrassColorModifier.NONE)
-						.backgroundMusic(new Music(SoundEventRegistry.DEADMANS_DESERT_MUSIC.getHolder().get(), 6000, 24000, true))
+						.backgroundMusic(new Music(SoundEventRegistry.DEADMANS_DESERT_MUSIC, 6000, 24000, true))
 						.ambientParticle(new AmbientParticleSettings(
 								ParticleTypesRegistry.DEADMANS_DESERT_AMBIENT_PARTICLE.get(), 0.002f
 						))

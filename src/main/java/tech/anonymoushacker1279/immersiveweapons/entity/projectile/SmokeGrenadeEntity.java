@@ -13,18 +13,15 @@ import net.minecraft.world.entity.projectile.ThrowableItemProjectile;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.HitResult;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.fml.DistExecutor;
-import net.minecraftforge.network.NetworkEvent;
-import net.minecraftforge.network.NetworkEvent.Context;
-import net.minecraftforge.network.PacketDistributor;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.fml.DistExecutor;
+import net.neoforged.neoforge.network.NetworkEvent.Context;
+import net.neoforged.neoforge.network.PacketDistributor;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.client.particle.smoke_grenade.SmokeGrenadeParticleOptions;
 import tech.anonymoushacker1279.immersiveweapons.config.ClientConfig;
 import tech.anonymoushacker1279.immersiveweapons.init.*;
 import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
-
-import java.util.function.Supplier;
 
 public class SmokeGrenadeEntity extends ThrowableItemProjectile {
 
@@ -117,51 +114,19 @@ public class SmokeGrenadeEntity extends ThrowableItemProjectile {
 
 	public record SmokeGrenadeEntityPacketHandler(double x, double y, double z, int color) {
 
-		/**
-		 * Constructor for SmokeGrenadeEntityPacketHandler.
-		 *
-		 * @param color the color ID
-		 */
-		public SmokeGrenadeEntityPacketHandler {
-		}
-
-		/**
-		 * Encodes a packet
-		 *
-		 * @param msg          the <code>SmokeGrenadeEntityPacketHandler</code> message being sent
-		 * @param packetBuffer the <code>PacketBuffer</code> containing packet data
-		 */
 		public static void encode(SmokeGrenadeEntityPacketHandler msg, FriendlyByteBuf packetBuffer) {
 			packetBuffer.writeDouble(msg.x).writeDouble(msg.y).writeDouble(msg.z).writeInt(msg.color);
 		}
 
-		/**
-		 * Decodes a packet
-		 *
-		 * @param packetBuffer the <code>PacketBuffer</code> containing packet data
-		 * @return SmokeGrenadeEntityPacketHandler
-		 */
 		public static SmokeGrenadeEntityPacketHandler decode(FriendlyByteBuf packetBuffer) {
 			return new SmokeGrenadeEntityPacketHandler(packetBuffer.readDouble(), packetBuffer.readDouble(), packetBuffer.readDouble(), packetBuffer.readInt());
 		}
 
-		/**
-		 * Handles an incoming packet, by sending it to the client/server
-		 *
-		 * @param msg             the <code>SmokeGrenadeEntityPacketHandler</code> message being sent
-		 * @param contextSupplier the <code>Supplier</code> providing context
-		 */
-		public static void handle(SmokeGrenadeEntityPacketHandler msg, Supplier<Context> contextSupplier) {
-			NetworkEvent.Context context = contextSupplier.get();
+		public static void handle(SmokeGrenadeEntityPacketHandler msg, Context context) {
 			context.enqueueWork(() -> DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> handleOnClient(msg)));
 			context.setPacketHandled(true);
 		}
 
-		/**
-		 * Runs specifically on the client, when a packet is received
-		 *
-		 * @param msg the <code>SmokeGrenadeEntityPacketHandler</code> message being sent
-		 */
 		private static void handleOnClient(SmokeGrenadeEntityPacketHandler msg) {
 			ClientLevel level = Minecraft.getInstance().level;
 

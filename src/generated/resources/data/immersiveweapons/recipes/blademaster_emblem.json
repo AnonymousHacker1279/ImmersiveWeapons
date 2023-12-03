@@ -7,10 +7,12 @@
       "tag": "immersiveweapons:shards/starstorm"
     },
     "b": {
-      "type": "forge:nbt",
-      "count": 1,
-      "item": "minecraft:potion",
-      "nbt": "{Potion:\"immersiveweapons:death\"}"
+      "type": "neoforge:nbt",
+      "Count": 1,
+      "id": "minecraft:potion",
+      "tag": {
+        "Potion": "immersiveweapons:death"
+      }
     },
     "c": {
       "item": "immersiveweapons:starstorm_sword"

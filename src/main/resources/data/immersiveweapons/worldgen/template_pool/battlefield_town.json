@@ -1,7 +1,6 @@
 {
 	"name": "immersiveweapons:battlefield_town",
 	"fallback": "minecraft:empty",
-
 	"elements": [
 		{
 			"weight": 1,

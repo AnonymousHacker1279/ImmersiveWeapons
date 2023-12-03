@@ -9,11 +9,8 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.registries.ForgeRegistries;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.advancement.IWCriteriaTriggers;
-
-import java.util.Objects;
 
 public interface GrantAdvancementOnDiscovery {
 
@@ -29,7 +26,7 @@ public interface GrantAdvancementOnDiscovery {
 			for (Player player : level.getNearbyPlayers(TargetingConditions.forNonCombat(), entity, scanningBox)) {
 				if (isLookingAtMe(entity, player)) {
 					if (IWCriteriaTriggers.ENTITY_DISCOVERED_TRIGGER != null) {
-						IWCriteriaTriggers.ENTITY_DISCOVERED_TRIGGER.trigger((ServerPlayer) player, Objects.requireNonNull(ForgeRegistries.ENTITY_TYPES.getKey(entity.getType())));
+						IWCriteriaTriggers.ENTITY_DISCOVERED_TRIGGER.trigger((ServerPlayer) player, entity);
 					}
 				}
 			}

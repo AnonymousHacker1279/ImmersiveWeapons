@@ -66,7 +66,8 @@ community describe an interest in it (This excludes versions listed as **N/A - B
 
 | MC Version | Immersive Weapons Latest Version                                                                             |
 |------------|--------------------------------------------------------------------------------------------------------------|
-| 1.20.1     | [Latest](https://github.com/AnonymousHacker1279/ImmersiveWeapons/releases)                                   |
+| 1.20.2     | [Latest](https://github.com/AnonymousHacker1279/ImmersiveWeapons/releases)                                   |
+| 1.20.1     | [1.27.2](https://github.com/AnonymousHacker1279/ImmersiveWeapons/releases/tag/v1.27.2)                       |
 | 1.19.4     | [1.23.2](https://github.com/AnonymousHacker1279/ImmersiveWeapons/releases/tag/v1.23.2)                       |
 | 1.19.3     | [1.21.0](https://github.com/AnonymousHacker1279/ImmersiveWeapons/releases/tag/v1.21.0)                       |
 | 1.19.2     | [N/A - Build From Source](https://github.com/AnonymousHacker1279/ImmersiveWeapons/tree/1.19.2-dev)           |
@@ -85,10 +86,10 @@ v1.25.0, Immersive Weapons is now designed for the NeoForge modloader. The reaso
 [project blog](https://neoforged.net/news/theproject/). It is expected that a majority of the existing Forge community
 will migrate to NeoForge.
 
-At the current moment, both versions seem to be mostly compatible with each other, however this is not guaranteed. If
-you experience issues on Forge, please try using NeoForge first before reporting anything. This compatibility will
-likely break in the next version of MC (currently 1.20.1). I will not maintain two separate versions of Immersive
-Weapons for Forge and NeoForge.
+On MC 1.20.1, NeoForge should be compatible with Forge mods, so IW v1.25.x-v1.27.x should also work on both. However, if
+you experience issues on Forge, try NeoForge. Starting at MC 1.20.2 there is a hard break on compatibility between the
+two modloaders. I will not (and cannot feasibly) maintain two separate versions of Immersive Weapons for Forge and
+NeoForge.
 
 ## Contributing
 

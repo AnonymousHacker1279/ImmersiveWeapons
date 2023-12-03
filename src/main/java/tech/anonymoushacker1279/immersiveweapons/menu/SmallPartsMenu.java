@@ -8,8 +8,9 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.*;
 import net.minecraft.world.item.*;
+import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.RecipeManager;
-import net.minecraftforge.common.MinecraftForge;
+import net.neoforged.neoforge.common.NeoForge;
 import tech.anonymoushacker1279.immersiveweapons.api.events.SmallPartsTableCraftEvent;
 import tech.anonymoushacker1279.immersiveweapons.init.*;
 import tech.anonymoushacker1279.immersiveweapons.item.crafting.SmallPartsRecipe;
@@ -76,7 +77,7 @@ public class SmallPartsMenu extends AbstractContainerMenu {
 					}
 				});
 
-				MinecraftForge.EVENT_BUS.post(new SmallPartsTableCraftEvent(player, stack));
+				NeoForge.EVENT_BUS.post(new SmallPartsTableCraftEvent(player, stack));
 
 				super.onTake(player, stack);
 			}
@@ -97,12 +98,15 @@ public class SmallPartsMenu extends AbstractContainerMenu {
 	}
 
 	private void initializeRecipes(RecipeManager manager) {
-		List<SmallPartsRecipe> recipes = manager.getAllRecipesFor(RecipeTypeRegistry.SMALL_PARTS_RECIPE_TYPE.get());
+		List<RecipeHolder<SmallPartsRecipe>> recipes = manager
+				.getAllRecipesFor(RecipeTypeRegistry.SMALL_PARTS_RECIPE_TYPE.get())
+				.stream()
+				.toList();
 
-		for (SmallPartsRecipe recipe : recipes) {
-			for (Item craftable : recipe.craftables()) {
+		for (RecipeHolder<SmallPartsRecipe> recipe : recipes) {
+			for (Item craftable : recipe.value().craftables()) {
 				if (!(craftable == Items.AIR)) {
-					for (ItemStack material : recipe.material().getItems()) {
+					for (ItemStack material : recipe.value().material().getItems()) {
 						Pair<Item, Item> pair = new Pair<>(material.getItem(), craftable);
 						if (!ALL_CRAFTABLES.contains(pair)) {
 							ALL_CRAFTABLES.add(pair);

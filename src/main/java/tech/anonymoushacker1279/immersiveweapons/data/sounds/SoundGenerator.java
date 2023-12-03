@@ -2,10 +2,10 @@ package tech.anonymoushacker1279.immersiveweapons.data.sounds;
 
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraftforge.common.data.ExistingFileHelper;
-import net.minecraftforge.common.data.SoundDefinition.Sound;
-import net.minecraftforge.common.data.SoundDefinition.SoundType;
-import net.minecraftforge.common.data.SoundDefinitionsProvider;
+import net.neoforged.neoforge.common.data.ExistingFileHelper;
+import net.neoforged.neoforge.common.data.SoundDefinition.Sound;
+import net.neoforged.neoforge.common.data.SoundDefinition.SoundType;
+import net.neoforged.neoforge.common.data.SoundDefinitionsProvider;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.init.SoundEventRegistry;
 

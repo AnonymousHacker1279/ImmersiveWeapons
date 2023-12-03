@@ -51,7 +51,7 @@ public class FlagBlock extends HorizontalDirectionalBlock implements SimpleWater
 		BlockState blockStateBelow = context.getLevel().getBlockState(context.getClickedPos().below());
 
 		if (blockStateBelow.getBlock() instanceof FlagPoleBlock || blockStateBelow.getBlock() instanceof FlagBlock) {
-			return defaultBlockState().setValue(FACING, context.getHorizontalDirection());
+			return defaultBlockState().setValue(FACING, context.getHorizontalDirection().getOpposite());
 		} else {
 			return Blocks.AIR.defaultBlockState();
 		}

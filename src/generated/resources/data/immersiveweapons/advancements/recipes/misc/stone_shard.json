@@ -22,8 +22,8 @@
   },
   "requirements": [
     [
-      "cobblestone",
-      "has_the_recipe"
+      "has_the_recipe",
+      "cobblestone"
     ]
   ],
   "rewards": {

@@ -1,20 +1,19 @@
 package tech.anonymoushacker1279.immersiveweapons.item.crafting;
 
-import com.google.gson.JsonObject;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.util.GsonHelper;
 import net.minecraft.world.Container;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.level.Level;
+import org.jetbrains.annotations.Nullable;
 import tech.anonymoushacker1279.immersiveweapons.init.*;
 
-public record TeslaSynthesizerRecipe(ResourceLocation recipeId,
-                                     Ingredient blockIngredient,
+public record TeslaSynthesizerRecipe(Ingredient blockIngredient,
                                      Ingredient material1,
                                      Ingredient material2,
                                      ItemStack result,
@@ -75,16 +74,6 @@ public record TeslaSynthesizerRecipe(ResourceLocation recipeId,
 	}
 
 	/**
-	 * Get the recipe ID.
-	 *
-	 * @return ResourceLocation
-	 */
-	@Override
-	public ResourceLocation getId() {
-		return recipeId;
-	}
-
-	/**
 	 * Get the recipe serializer.
 	 *
 	 * @return IRecipeSerializer
@@ -118,48 +107,39 @@ public record TeslaSynthesizerRecipe(ResourceLocation recipeId,
 		return defaultedList;
 	}
 
+	@Override
+	public boolean isSpecial() {
+		return true;
+	}
+
 	public static class Serializer implements RecipeSerializer<TeslaSynthesizerRecipe> {
 
-		/**
-		 * Serialize from JSON.
-		 *
-		 * @param recipeId the <code>ResourceLocation</code> for the recipe
-		 * @param json     the <code>JsonObject</code> instance
-		 * @return TeslaSynthesizerRecipe
-		 */
+		private static final Codec<TeslaSynthesizerRecipe> CODEC = RecordCodecBuilder.create(
+				instance -> instance.group(
+								Ingredient.CODEC.fieldOf("block").forGetter(recipe -> recipe.blockIngredient),
+								Ingredient.CODEC.fieldOf("material1").forGetter(recipe -> recipe.material1),
+								Ingredient.CODEC.fieldOf("material2").forGetter(recipe -> recipe.material2),
+								CraftingRecipeCodecs.ITEMSTACK_OBJECT_CODEC.fieldOf("result").forGetter(recipe -> recipe.result),
+								Codec.INT.fieldOf("cookTime").forGetter(recipe -> recipe.cookTime)
+						)
+						.apply(instance, TeslaSynthesizerRecipe::new)
+		);
+
 		@Override
-		public TeslaSynthesizerRecipe fromJson(ResourceLocation recipeId, JsonObject json) {
-			Ingredient blockIngredient = Ingredient.fromJson(GsonHelper.getAsJsonObject(json, "block"));
-			Ingredient material1 = Ingredient.fromJson(GsonHelper.getAsJsonObject(json, "material1"));
-			Ingredient material2 = Ingredient.fromJson(GsonHelper.getAsJsonObject(json, "material2"));
-			int cookTime = GsonHelper.getAsInt(json, "cookTime");
-			ItemStack result = new ItemStack(ShapedRecipe.itemFromJson(GsonHelper.getAsJsonObject(json, "result")));
-			return new TeslaSynthesizerRecipe(recipeId, blockIngredient, material1, material2, result, cookTime);
+		public Codec<TeslaSynthesizerRecipe> codec() {
+			return CODEC;
 		}
 
-		/**
-		 * Serialize from JSON on the network.
-		 *
-		 * @param recipeId the <code>ResourceLocation</code> for the recipe
-		 * @param buffer   the <code>PacketBuffer</code> instance
-		 * @return TeslaSynthesizerRecipe
-		 */
 		@Override
-		public TeslaSynthesizerRecipe fromNetwork(ResourceLocation recipeId, FriendlyByteBuf buffer) {
-			Ingredient blockIngredient = Ingredient.fromNetwork(buffer);
-			Ingredient material1 = Ingredient.fromNetwork(buffer);
-			Ingredient material2 = Ingredient.fromNetwork(buffer);
-			int cookTime = buffer.readInt();
-			ItemStack result = buffer.readItem();
-			return new TeslaSynthesizerRecipe(recipeId, blockIngredient, material1, material2, result, cookTime);
+		public @Nullable TeslaSynthesizerRecipe fromNetwork(FriendlyByteBuf byteBuf) {
+			Ingredient blockIngredient = Ingredient.fromNetwork(byteBuf);
+			Ingredient material1 = Ingredient.fromNetwork(byteBuf);
+			Ingredient material2 = Ingredient.fromNetwork(byteBuf);
+			int cookTime = byteBuf.readInt();
+			ItemStack result = byteBuf.readItem();
+			return new TeslaSynthesizerRecipe(blockIngredient, material1, material2, result, cookTime);
 		}
 
-		/**
-		 * Serialize to JSON on the network.
-		 *
-		 * @param buffer the <code>PacketBuffer</code> instance
-		 * @param recipe the <code>TeslaSynthesizerRecipe</code> instance
-		 */
 		@Override
 		public void toNetwork(FriendlyByteBuf buffer, TeslaSynthesizerRecipe recipe) {
 			recipe.blockIngredient.toNetwork(buffer);

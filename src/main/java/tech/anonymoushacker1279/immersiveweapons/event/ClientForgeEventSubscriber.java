@@ -12,14 +12,14 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.client.event.*;
-import net.minecraftforge.client.event.ViewportEvent.ComputeFov;
-import net.minecraftforge.client.event.ViewportEvent.RenderFog;
-import net.minecraftforge.client.gui.overlay.ForgeGui;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.Mod.EventBusSubscriber;
+import net.neoforged.fml.common.Mod.EventBusSubscriber.Bus;
+import net.neoforged.neoforge.client.event.*;
+import net.neoforged.neoforge.client.event.ViewportEvent.ComputeFov;
+import net.neoforged.neoforge.client.event.ViewportEvent.RenderFog;
+import net.neoforged.neoforge.client.gui.overlay.ExtendedGui;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.client.IWKeyBinds;
 import tech.anonymoushacker1279.immersiveweapons.client.gui.IWOverlays;
@@ -162,7 +162,7 @@ public class ClientForgeEventSubscriber {
 				GunData.scopeScale = Mth.lerp(0.25F * deltaFrame, GunData.scopeScale, 1.125F);
 
 				if (IWOverlays.SCOPE_ELEMENT != null) {
-					IWOverlays.SCOPE_ELEMENT.render((ForgeGui) minecraft.gui,
+					IWOverlays.SCOPE_ELEMENT.render((ExtendedGui) minecraft.gui,
 							event.getGuiGraphics(),
 							event.getPartialTick(),
 							screenWidth,
@@ -177,7 +177,7 @@ public class ClientForgeEventSubscriber {
 
 		if (DebugTracingData.isDebugTracingEnabled) {
 			if (IWOverlays.DEBUG_TRACING_ELEMENT != null) {
-				IWOverlays.DEBUG_TRACING_ELEMENT.render((ForgeGui) minecraft.gui,
+				IWOverlays.DEBUG_TRACING_ELEMENT.render((ExtendedGui) minecraft.gui,
 						event.getGuiGraphics(),
 						event.getPartialTick(),
 						screenWidth,

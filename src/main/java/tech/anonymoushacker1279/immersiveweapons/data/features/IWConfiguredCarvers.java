@@ -30,10 +30,10 @@ public class IWConfiguredCarvers {
 
 		context.register(TRENCH, new ConfiguredWorldCarver<>(WorldCarver.CANYON,
 				new CanyonCarverConfiguration(
-						0.35f,
-						BiasedToBottomHeight.of(VerticalAnchor.absolute(0),
-								VerticalAnchor.absolute(172),
-								68),
+						0.75f,
+						BiasedToBottomHeight.of(VerticalAnchor.absolute(63),
+								VerticalAnchor.absolute(128),
+								70),
 						ConstantFloat.of(0.75f),
 						VerticalAnchor.absolute(0),
 						CarverDebugSettings.DEFAULT,

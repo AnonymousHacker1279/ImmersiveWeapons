@@ -22,8 +22,8 @@
   },
   "requirements": [
     [
-      "soul_torch",
-      "has_the_recipe"
+      "has_the_recipe",
+      "soul_torch"
     ]
   ],
   "rewards": {

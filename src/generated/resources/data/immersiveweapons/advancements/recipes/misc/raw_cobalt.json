@@ -22,8 +22,8 @@
   },
   "requirements": [
     [
-      "raw_cobalt_block",
-      "has_the_recipe"
+      "has_the_recipe",
+      "raw_cobalt_block"
     ]
   ],
   "rewards": {

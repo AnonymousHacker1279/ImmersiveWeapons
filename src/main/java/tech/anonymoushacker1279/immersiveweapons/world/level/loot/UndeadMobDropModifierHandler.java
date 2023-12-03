@@ -5,15 +5,15 @@ import com.google.gson.JsonParseException;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.MobType;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
-import net.minecraftforge.common.loot.IGlobalLootModifier;
-import net.minecraftforge.common.loot.LootModifier;
-import net.minecraftforge.registries.ForgeRegistries;
+import net.neoforged.neoforge.common.loot.IGlobalLootModifier;
+import net.neoforged.neoforge.common.loot.LootModifier;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.function.Supplier;
@@ -32,7 +32,7 @@ public class UndeadMobDropModifierHandler extends LootModifier {
 		super(conditionsIn);
 		this.itemStack = itemStack;
 
-		if (!ForgeRegistries.ITEMS.containsValue(itemStack.getItem())) {
+		if (!BuiltInRegistries.ITEM.containsValue(itemStack.getItem())) {
 			throw new JsonParseException("item must exist in the registry");
 		}
 	}

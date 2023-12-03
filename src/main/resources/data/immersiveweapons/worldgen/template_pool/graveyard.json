@@ -1,7 +1,6 @@
 {
 	"name": "immersiveweapons:graveyard",
 	"fallback": "minecraft:empty",
-
 	"elements": [
 		{
 			"weight": 1,

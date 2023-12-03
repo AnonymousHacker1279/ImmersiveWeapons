@@ -68,8 +68,6 @@ public class SlimeMixin {
 	@WrapOperation(method = "setSize", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/ai/attributes/AttributeInstance;setBaseValue(D)V"))
 	@SuppressWarnings("unused")
 	private void setSize(AttributeInstance instance, double original, Operation<Double> operation) {
-		Slime self = (Slime) (Object) this;
-
 		if (immersiveWeapons$earlySpawnType != null && immersiveWeapons$earlySpawnType != MobSpawnType.STRUCTURE) {
 			operation.call(instance, original);
 			immersiveWeapons$earlySpawnType = null;

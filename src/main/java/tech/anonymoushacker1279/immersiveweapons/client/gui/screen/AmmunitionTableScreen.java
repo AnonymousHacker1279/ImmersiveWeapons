@@ -27,7 +27,6 @@ public class AmmunitionTableScreen extends AbstractContainerScreen<AmmunitionTab
 
 	@Override
 	protected void renderBg(GuiGraphics guiGraphics, float pPartialTick, int pX, int pY) {
-		renderBackground(guiGraphics);
 		guiGraphics.blit(GUI_TEXTURE, leftPos, topPos, 0, 0, imageWidth, imageHeight);
 
 		/*Render the density scroller
@@ -51,12 +50,12 @@ public class AmmunitionTableScreen extends AbstractContainerScreen<AmmunitionTab
 	}
 
 	@Override
-	public boolean mouseScrolled(double mouseX, double mouseY, double delta) {
+	public boolean mouseScrolled(double mouseX, double mouseY, double deltaX, double deltaY) {
 		if (isOverDensityScrollbar(mouseX, mouseY)) {
-			menu.setDensityModifier(menu.getDensityModifier() + (float) delta / 10.0F);
+			menu.setDensityModifier(menu.getDensityModifier() + (float) deltaY / 10.0F);
 		}
 
-		return super.mouseScrolled(mouseX, mouseY, delta);
+		return super.mouseScrolled(mouseX, mouseY, deltaX, deltaY);
 	}
 
 	@Override

@@ -78,5 +78,4 @@ public class CustomBoatEntity extends Boat {
 	public CustomBoatType getCustomBoatType() {
 		return CustomBoatType.byId(entityData.get(DATA_ID_TYPE));
 	}
-
 }

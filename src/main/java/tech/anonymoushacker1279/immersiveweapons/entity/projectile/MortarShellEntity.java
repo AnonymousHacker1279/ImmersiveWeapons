@@ -14,7 +14,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.Level.ExplosionInteraction;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.*;
-import net.minecraftforge.event.ForgeEventFactory;
+import net.neoforged.neoforge.event.EventHooks;
 import org.jetbrains.annotations.Nullable;
 import tech.anonymoushacker1279.immersiveweapons.block.MortarBlock;
 import tech.anonymoushacker1279.immersiveweapons.init.EntityRegistry;
@@ -80,7 +80,7 @@ public class MortarShellEntity extends Projectile implements ItemSupplier {
 				rayTraceResult = hitResult;
 			}
 
-			if (rayTraceResult != null && rayTraceResult.getType() != HitResult.Type.MISS && !ForgeEventFactory.onProjectileImpact(this, rayTraceResult)) {
+			if (rayTraceResult != null && rayTraceResult.getType() != HitResult.Type.MISS && !EventHooks.onProjectileImpact(this, rayTraceResult)) {
 				onHit(rayTraceResult);
 				hasImpulse = true;
 			}

@@ -20,8 +20,8 @@
   },
   "requirements": [
     [
-      "copper_ingot",
-      "has_the_recipe"
+      "has_the_recipe",
+      "copper_ingot"
     ]
   ],
   "rewards": {

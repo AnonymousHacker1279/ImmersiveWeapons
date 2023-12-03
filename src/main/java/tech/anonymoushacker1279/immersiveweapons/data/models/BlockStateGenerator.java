@@ -1,17 +1,16 @@
 package tech.anonymoushacker1279.immersiveweapons.data.models;
 
 import net.minecraft.core.Direction;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
-import net.minecraftforge.client.model.generators.*;
-import net.minecraftforge.client.model.generators.ModelBuilder.FaceRotation;
-import net.minecraftforge.client.model.generators.ModelFile.ExistingModelFile;
-import net.minecraftforge.common.data.ExistingFileHelper;
-import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.registries.RegistryObject;
+import net.neoforged.neoforge.client.model.generators.*;
+import net.neoforged.neoforge.client.model.generators.ModelBuilder.FaceRotation;
+import net.neoforged.neoforge.client.model.generators.ModelFile.ExistingModelFile;
+import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.block.*;
 import tech.anonymoushacker1279.immersiveweapons.block.barbed_wire.BarbedWireBlock;
@@ -22,6 +21,7 @@ import tech.anonymoushacker1279.immersiveweapons.data.lists.BlockLists;
 import tech.anonymoushacker1279.immersiveweapons.init.BlockRegistry;
 
 import java.util.*;
+import java.util.function.Supplier;
 
 public class BlockStateGenerator extends BlockStateProvider {
 
@@ -32,7 +32,7 @@ public class BlockStateGenerator extends BlockStateProvider {
 	@Override
 	protected void registerStatesAndModels() {
 		List<Block> blocks = new ArrayList<>(250);
-		BlockRegistry.BLOCKS.getEntries().stream().map(RegistryObject::get).forEach(blocks::add);
+		BlockRegistry.BLOCKS.getEntries().stream().map(Supplier::get).forEach(blocks::add);
 
 		ResourceLocation stardust_granule_overlay = new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/stardust_granule_overlay");
 
@@ -49,7 +49,7 @@ public class BlockStateGenerator extends BlockStateProvider {
 						new ResourceLocation(ImmersiveWeapons.MOD_ID + ":block/cloud"))
 				.renderType("minecraft:translucent"));
 		for (Block block : BlockLists.stainedGlassBlocks) {
-			String color = Objects.requireNonNull(ForgeRegistries.BLOCKS.getKey(block)).getPath().split("stained_bulletproof_glass")[0];
+			String color = Objects.requireNonNull(BuiltInRegistries.BLOCK.getKey(block)).getPath().split("stained_bulletproof_glass")[0];
 			simpleBlock(block, models().cubeAll(color + "stained_bulletproof_glass",
 							new ResourceLocation(ImmersiveWeapons.MOD_ID + ":block/" + color + "stained_bulletproof_glass"))
 					.renderType("minecraft:translucent"));
@@ -58,7 +58,7 @@ public class BlockStateGenerator extends BlockStateProvider {
 		ResourceLocation stardust_leaves_all = new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/stardust_leaves");
 		Block stardust_leaves = BlockRegistry.STARDUST_LEAVES.get();
 		simpleBlock(BlockRegistry.STARDUST_LEAVES.get(),
-				models().withExistingParent(Objects.requireNonNull(ForgeRegistries.BLOCKS.getKey(stardust_leaves)).getPath(), "minecraft:block/cube_all")
+				models().withExistingParent(Objects.requireNonNull(BuiltInRegistries.BLOCK.getKey(stardust_leaves)).getPath(), "minecraft:block/cube_all")
 						.texture("all", stardust_leaves_all)
 						.texture("overlay", stardust_granule_overlay)
 						.renderType("minecraft:cutout_mipped")
@@ -75,33 +75,33 @@ public class BlockStateGenerator extends BlockStateProvider {
 
 		// Generate data for simple, six-sized blocks that use overlays (ores)
 		for (Block block : BlockLists.stoneBasedOres) {
-			simpleBlock(block, models().withExistingParent(Objects.requireNonNull(ForgeRegistries.BLOCKS.getKey(block)).getPath(),
+			simpleBlock(block, models().withExistingParent(Objects.requireNonNull(BuiltInRegistries.BLOCK.getKey(block)).getPath(),
 							new ResourceLocation(ImmersiveWeapons.MOD_ID, "simple_overlay"))
 					.texture("all", "minecraft:block/stone")
 					.texture("overlay", new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/"
-							+ Objects.requireNonNull(ForgeRegistries.BLOCKS.getKey(block)).getPath()))
+							+ Objects.requireNonNull(BuiltInRegistries.BLOCK.getKey(block)).getPath()))
 					.renderType("minecraft:cutout_mipped"));
 		}
 		for (Block block : BlockLists.deepslateBasedOres) {
-			simpleBlock(block, models().withExistingParent(Objects.requireNonNull(ForgeRegistries.BLOCKS.getKey(block)).getPath(),
+			simpleBlock(block, models().withExistingParent(Objects.requireNonNull(BuiltInRegistries.BLOCK.getKey(block)).getPath(),
 							new ResourceLocation(ImmersiveWeapons.MOD_ID, "simple_overlay"))
 					.texture("all", "minecraft:block/deepslate")
 					.texture("overlay", new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/"
-							+ Objects.requireNonNull(ForgeRegistries.BLOCKS.getKey(block)).getPath()
+							+ Objects.requireNonNull(BuiltInRegistries.BLOCK.getKey(block)).getPath()
 							.replace("deepslate_", "")))
 					.renderType("minecraft:cutout_mipped"));
 		}
 		for (Block block : BlockLists.netherrackBasedOres) {
-			simpleBlock(block, models().withExistingParent(Objects.requireNonNull(ForgeRegistries.BLOCKS.getKey(block)).getPath(),
+			simpleBlock(block, models().withExistingParent(Objects.requireNonNull(BuiltInRegistries.BLOCK.getKey(block)).getPath(),
 							new ResourceLocation(ImmersiveWeapons.MOD_ID, "simple_overlay"))
 					.texture("all", "minecraft:block/netherrack")
 					.texture("overlay", new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/"
-							+ Objects.requireNonNull(ForgeRegistries.BLOCKS.getKey(block)).getPath()
+							+ Objects.requireNonNull(BuiltInRegistries.BLOCK.getKey(block)).getPath()
 							.replace("nether_", "")))
 					.renderType("minecraft:cutout_mipped"));
 		}
 		// Astral ore uses smooth quartz for a base
-		simpleBlock(BlockRegistry.ASTRAL_ORE.get(), models().withExistingParent(Objects.requireNonNull(ForgeRegistries.BLOCKS.getKey(BlockRegistry.ASTRAL_ORE.get())).getPath(),
+		simpleBlock(BlockRegistry.ASTRAL_ORE.get(), models().withExistingParent(Objects.requireNonNull(BuiltInRegistries.BLOCK.getKey(BlockRegistry.ASTRAL_ORE.get())).getPath(),
 						new ResourceLocation(ImmersiveWeapons.MOD_ID, "simple_overlay"))
 				.texture("all", "minecraft:block/quartz_block_bottom")
 				.texture("overlay", new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/astral_ore"))
@@ -115,9 +115,9 @@ public class BlockStateGenerator extends BlockStateProvider {
 				namespace = ImmersiveWeapons.MOD_ID + ":block/";
 			}
 
-			simpleBlock(block, models().withExistingParent(Objects.requireNonNull(ForgeRegistries.BLOCKS.getKey(block)).getPath(),
+			simpleBlock(block, models().withExistingParent(Objects.requireNonNull(BuiltInRegistries.BLOCK.getKey(block)).getPath(),
 							new ResourceLocation(ImmersiveWeapons.MOD_ID, "table"))
-					.texture("all", namespace + Objects.requireNonNull(ForgeRegistries.BLOCKS.getKey(block)).getPath()
+					.texture("all", namespace + Objects.requireNonNull(BuiltInRegistries.BLOCK.getKey(block)).getPath()
 							.replace("table", "planks"))
 					.renderType("minecraft:cutout_mipped"));
 		});
@@ -132,10 +132,10 @@ public class BlockStateGenerator extends BlockStateProvider {
 						.getExistingFile(new ResourceLocation(ImmersiveWeapons.MOD_ID, "flag_pole"))));
 
 		blocks.stream().filter(FlagBlock.class::isInstance).forEach(block -> horizontalBlock(block, models()
-				.withExistingParent(Objects.requireNonNull(ForgeRegistries.BLOCKS.getKey(block)).getPath(),
+				.withExistingParent(Objects.requireNonNull(BuiltInRegistries.BLOCK.getKey(block)).getPath(),
 						new ResourceLocation(ImmersiveWeapons.MOD_ID, "flag"))
 				.texture("flag", ImmersiveWeapons.MOD_ID +
-						":block/" + Objects.requireNonNull(ForgeRegistries.BLOCKS.getKey(block)).getPath())));
+						":block/" + Objects.requireNonNull(BuiltInRegistries.BLOCK.getKey(block)).getPath())));
 
 		// Generate data for cube-bottom-top blocks
 		simpleBlock(BlockRegistry.BLOOD_SANDSTONE.get(), models()
@@ -163,7 +163,7 @@ public class BlockStateGenerator extends BlockStateProvider {
 		ResourceLocation stardust_log_top = new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/stardust_log_top");
 		RotatedPillarBlock stardust_log = BlockRegistry.STARDUST_LOG.get();
 		axisBlock(BlockRegistry.STARDUST_LOG.get(),
-				models().withExistingParent(Objects.requireNonNull(ForgeRegistries.BLOCKS.getKey(stardust_log)).getPath(), "minecraft:block/cube_column")
+				models().withExistingParent(Objects.requireNonNull(BuiltInRegistries.BLOCK.getKey(stardust_log)).getPath(), "minecraft:block/cube_column")
 						.texture("side", stardust_log_side)
 						.texture("end", stardust_log_top)
 						.texture("overlay", stardust_granule_overlay)
@@ -187,7 +187,7 @@ public class BlockStateGenerator extends BlockStateProvider {
 								case UP, DOWN -> faceBuilder.texture("#end").end();
 							}
 						}).end(),
-				models().withExistingParent(Objects.requireNonNull(ForgeRegistries.BLOCKS.getKey(stardust_log)).getPath() + "_horizontal", "minecraft:block/cube_column_horizontal")
+				models().withExistingParent(Objects.requireNonNull(BuiltInRegistries.BLOCK.getKey(stardust_log)).getPath() + "_horizontal", "minecraft:block/cube_column_horizontal")
 						.texture("side", stardust_log_side)
 						.texture("end", stardust_log_top)
 						.texture("overlay", stardust_granule_overlay)
@@ -213,7 +213,7 @@ public class BlockStateGenerator extends BlockStateProvider {
 						}).end());
 		RotatedPillarBlock stardust_wood = BlockRegistry.STARDUST_WOOD.get();
 		axisBlock(stardust_wood,
-				models().withExistingParent(Objects.requireNonNull(ForgeRegistries.BLOCKS.getKey(stardust_wood)).getPath(), "minecraft:block/cube_column")
+				models().withExistingParent(Objects.requireNonNull(BuiltInRegistries.BLOCK.getKey(stardust_wood)).getPath(), "minecraft:block/cube_column")
 						.texture("side", stardust_log_side)
 						.texture("end", stardust_log_side)
 						.texture("overlay", stardust_granule_overlay)
@@ -227,7 +227,7 @@ public class BlockStateGenerator extends BlockStateProvider {
 								.texture("#overlay")
 								.emissivity(15, 3)
 								.end()).end(),
-				models().withExistingParent(Objects.requireNonNull(ForgeRegistries.BLOCKS.getKey(stardust_wood)).getPath() + "_horizontal", "minecraft:block/cube_column_horizontal")
+				models().withExistingParent(Objects.requireNonNull(BuiltInRegistries.BLOCK.getKey(stardust_wood)).getPath() + "_horizontal", "minecraft:block/cube_column_horizontal")
 						.texture("side", stardust_log_side)
 						.texture("end", stardust_log_side)
 						.texture("overlay", stardust_granule_overlay)
@@ -363,25 +363,25 @@ public class BlockStateGenerator extends BlockStateProvider {
 
 		// Generate data for cross blocks
 		simpleBlock(BlockRegistry.AZUL_STAINED_ORCHID.get(), models()
-				.cross(BlockRegistry.AZUL_STAINED_ORCHID.getId().toString(),
+				.cross(BuiltInRegistries.BLOCK.getKey(BlockRegistry.AZUL_STAINED_ORCHID.get()).toString(),
 						new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/azul_stained_orchid"))
 				.renderType("minecraft:cutout_mipped"));
 		simpleBlock(BlockRegistry.MOONGLOW.get(), models()
-				.cross(BlockRegistry.MOONGLOW.getId().toString(),
+				.cross(BuiltInRegistries.BLOCK.getKey(BlockRegistry.MOONGLOW.get()).toString(),
 						new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/moonglow"))
 				.renderType("minecraft:cutout_mipped"));
 		simpleBlock(BlockRegistry.STARDUST_SAPLING.get(), models()
-				.cross(BlockRegistry.STARDUST_SAPLING.getId().toString(),
+				.cross(BuiltInRegistries.BLOCK.getKey(BlockRegistry.STARDUST_SAPLING.get()).toString(),
 						new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/stardust_sapling"))
 				.renderType("minecraft:cutout_mipped"));
 		simpleBlock(BlockRegistry.DEATHWEED.get(), models()
-				.cross(BlockRegistry.DEATHWEED.getId().toString(),
+				.cross(BuiltInRegistries.BLOCK.getKey(BlockRegistry.DEATHWEED.get()).toString(),
 						new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/deathweed"))
 				.renderType("minecraft:cutout_mipped"));
 
 		// Generate data for miscellaneous blocks not covered above
 		horizontalBlock(BlockRegistry.SMALL_PARTS_TABLE.get(), models()
-				.cube(BlockRegistry.SMALL_PARTS_TABLE.getId().toString(),
+				.cube(BuiltInRegistries.BLOCK.getKey(BlockRegistry.SMALL_PARTS_TABLE.get()).toString(),
 						new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/small_parts_table_bottom"),
 						new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/small_parts_table_top"),
 						new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/small_parts_table_front"),
@@ -390,12 +390,12 @@ public class BlockStateGenerator extends BlockStateProvider {
 						new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/small_parts_table_side"))
 				.texture("particle", "minecraft:block/copper_block"));
 		simpleBlock(BlockRegistry.POTTED_MOONGLOW.get(), models()
-				.withExistingParent(BlockRegistry.POTTED_MOONGLOW.getId().toString(),
+				.withExistingParent(BuiltInRegistries.BLOCK.getKey(BlockRegistry.POTTED_MOONGLOW.get()).toString(),
 						"minecraft:block/flower_pot_cross")
 				.texture("plant", new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/moonglow"))
 				.renderType("minecraft:cutout_mipped"));
 		simpleBlock(BlockRegistry.POTTED_DEATHWEED.get(), models()
-				.withExistingParent(BlockRegistry.POTTED_DEATHWEED.getId().toString(),
+				.withExistingParent(BuiltInRegistries.BLOCK.getKey(BlockRegistry.POTTED_DEATHWEED.get()).toString(),
 						"minecraft:block/flower_pot_cross")
 				.texture("plant", new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/deathweed"))
 				.renderType("minecraft:cutout_mipped"));
@@ -626,7 +626,7 @@ public class BlockStateGenerator extends BlockStateProvider {
 				.renderType("minecraft:translucent"));
 	}
 
-	private ConfiguredModel[] crystalBlock(RegistryObject<? extends AmethystClusterBlock> crystal, String name, BlockState state) {
+	private ConfiguredModel[] crystalBlock(Supplier<? extends AmethystClusterBlock> crystal, String name, BlockState state) {
 		Direction facing = state.getValue(AmethystClusterBlock.FACING);
 
 		int xRot;
@@ -661,7 +661,7 @@ public class BlockStateGenerator extends BlockStateProvider {
 
 		return ConfiguredModel.builder()
 				.modelFile(models()
-						.cross(crystal.getId().toString(),
+						.cross(BuiltInRegistries.BLOCK.getKey(crystal.get()).toString(),
 								new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/" + name))
 						.renderType("minecraft:cutout_mipped"))
 				.rotationY(yRot)
@@ -699,7 +699,7 @@ public class BlockStateGenerator extends BlockStateProvider {
 	}
 
 	public void hangingSignBlock(CeilingHangingSignBlock signBlock, WallHangingSignBlock wallSignBlock, ResourceLocation texture) {
-		ModelFile sign = models().sign(ForgeRegistries.BLOCKS.getKey(signBlock).getPath(), texture);
+		ModelFile sign = models().sign(BuiltInRegistries.BLOCK.getKey(signBlock).getPath(), texture);
 		hangingSignBlock(signBlock, wallSignBlock, sign);
 	}
 

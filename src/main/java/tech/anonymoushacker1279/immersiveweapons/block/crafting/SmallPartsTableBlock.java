@@ -13,7 +13,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.HorizontalDirectionalBlock;
 import net.minecraft.world.level.block.state.*;
 import net.minecraft.world.phys.BlockHitResult;
-import net.minecraftforge.network.NetworkHooks;
+import net.neoforged.neoforge.network.NetworkHooks;
 import tech.anonymoushacker1279.immersiveweapons.menu.SmallPartsMenu;
 
 public class SmallPartsTableBlock extends HorizontalDirectionalBlock {

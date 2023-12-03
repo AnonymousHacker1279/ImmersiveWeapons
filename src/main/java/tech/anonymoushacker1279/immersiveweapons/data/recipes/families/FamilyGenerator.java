@@ -1,6 +1,9 @@
 package tech.anonymoushacker1279.immersiveweapons.data.recipes.families;
 
-import net.minecraft.advancements.critereon.InventoryChangeTrigger;
+import net.minecraft.advancements.Criterion;
+import net.minecraft.advancements.critereon.InventoryChangeTrigger.TriggerInstance;
+import net.minecraft.core.HolderLookup.Provider;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.*;
 import net.minecraft.tags.TagKey;
@@ -9,43 +12,42 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
-import net.minecraftforge.common.Tags;
+import net.neoforged.neoforge.common.Tags;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.data.recipes.RecipeGenerator;
 
 import java.util.List;
-import java.util.function.Consumer;
-
-import static tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities.blockRegistryPath;
-import static tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities.itemRegistryPath;
+import java.util.concurrent.CompletableFuture;
 
 public class FamilyGenerator extends RecipeGenerator {
 
-	public FamilyGenerator(PackOutput output) {
-		super(output);
+	public FamilyGenerator(PackOutput output, CompletableFuture<Provider> lookupProvider) {
+		super(output, lookupProvider);
 	}
 
 	@Override
-	public void buildRecipes(Consumer<FinishedRecipe> consumer) {
-		woodFamilies(consumer);
+	protected void buildRecipes(RecipeOutput output) {
+		super.buildRecipes(output);
+
+		woodFamilies(output);
 		stoneFamilies();
-		toolFamilies(consumer);
-		armorFamilies(consumer);
+		toolFamilies(output);
+		armorFamilies(output);
 		vanillaTieredItemFamilies();
 	}
 
-	private void woodFamilies(Consumer<FinishedRecipe> consumer) {
+	private void woodFamilies(RecipeOutput output) {
 		for (WoodFamilies family : WoodFamilies.FAMILIES) {
 			Block planks = family.planks().get();
 			final String planksTriggerName = "has_planks";
-			InventoryChangeTrigger.TriggerInstance planksTrigger = has(planks);
+			Criterion<TriggerInstance> planksTrigger = has(planks);
 
 			// Button
 			ShapelessRecipeBuilder.shapeless(RecipeCategory.BUILDING_BLOCKS, family.button().get())
 					.requires(planks)
 					.group("wooden_button")
 					.unlockedBy(planksTriggerName, planksTrigger)
-					.save(consumer, blockRegistryPath(family.button().get()));
+					.save(output, BuiltInRegistries.BLOCK.getKey(family.button().get()));
 
 			// Door
 			ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, family.door().get(), 3)
@@ -55,7 +57,7 @@ public class FamilyGenerator extends RecipeGenerator {
 					.define('a', planks)
 					.group("wooden_door")
 					.unlockedBy(planksTriggerName, planksTrigger)
-					.save(consumer, blockRegistryPath(family.door().get()));
+					.save(output, BuiltInRegistries.BLOCK.getKey(family.door().get()));
 
 			// Fence
 			ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, family.fence().get(), 3)
@@ -65,7 +67,7 @@ public class FamilyGenerator extends RecipeGenerator {
 					.define('b', Tags.Items.RODS_WOODEN)
 					.group("wooden_fence")
 					.unlockedBy(planksTriggerName, planksTrigger)
-					.save(consumer, blockRegistryPath(family.fence().get()));
+					.save(output, BuiltInRegistries.BLOCK.getKey(family.fence().get()));
 
 			// Fence Gate
 			ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, family.fenceGate().get())
@@ -75,14 +77,14 @@ public class FamilyGenerator extends RecipeGenerator {
 					.define('b', Tags.Items.RODS_WOODEN)
 					.group("wooden_fence_gate")
 					.unlockedBy(planksTriggerName, planksTrigger)
-					.save(consumer, blockRegistryPath(family.fenceGate().get()));
+					.save(output, BuiltInRegistries.BLOCK.getKey(family.fenceGate().get()));
 
 			// Planks
 			ShapelessRecipeBuilder.shapeless(RecipeCategory.BUILDING_BLOCKS, planks, 4)
 					.requires(family.logsItemTag())
 					.group("planks")
-					.unlockedBy("has_" + blockRegistryPath(family.log().get()).getPath(), has(family.logsItemTag()))
-					.save(consumer, blockRegistryPath(planks));
+					.unlockedBy("has_" + BuiltInRegistries.BLOCK.getKey(family.log().get()).getPath(), has(family.logsItemTag()))
+					.save(output, BuiltInRegistries.BLOCK.getKey(planks));
 
 			// Wood
 			ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, family.wood().get(), 3)
@@ -90,8 +92,8 @@ public class FamilyGenerator extends RecipeGenerator {
 					.pattern("aa")
 					.define('a', family.log().get())
 					.group("wood")
-					.unlockedBy("has_" + blockRegistryPath(family.log().get()).getPath(), has(family.logsItemTag()))
-					.save(consumer, blockRegistryPath(family.wood().get()));
+					.unlockedBy("has_" + BuiltInRegistries.BLOCK.getKey(family.log().get()).getPath(), has(family.logsItemTag()))
+					.save(output, BuiltInRegistries.BLOCK.getKey(family.wood().get()));
 
 			// Pressure Plate
 			ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, family.pressurePlate().get())
@@ -99,7 +101,7 @@ public class FamilyGenerator extends RecipeGenerator {
 					.define('a', planks)
 					.group("wooden_pressure_plate")
 					.unlockedBy(planksTriggerName, planksTrigger)
-					.save(consumer, blockRegistryPath(family.pressurePlate().get()));
+					.save(output, BuiltInRegistries.BLOCK.getKey(family.pressurePlate().get()));
 
 			// Sign
 			ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, family.standingSign().get(), 3)
@@ -110,7 +112,7 @@ public class FamilyGenerator extends RecipeGenerator {
 					.pattern("aaa")
 					.pattern(" b ")
 					.unlockedBy(planksTriggerName, planksTrigger)
-					.save(consumer, blockRegistryPath(family.standingSign().get()));
+					.save(output, BuiltInRegistries.BLOCK.getKey(family.standingSign().get()));
 
 			// Hanging Sign
 			ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, family.ceilingHangingSign().get(), 6)
@@ -121,7 +123,7 @@ public class FamilyGenerator extends RecipeGenerator {
 					.pattern("aaa")
 					.pattern("aaa")
 					.unlockedBy(planksTriggerName, planksTrigger)
-					.save(consumer, blockRegistryPath(family.wallSign().get()));
+					.save(output, BuiltInRegistries.BLOCK.getKey(family.wallSign().get()));
 
 			// Slab
 			RecipeGenerator.CraftingTableRecipes.slab(family.slab().get(), planks, "wooden_slab", planksTriggerName, planksTrigger);
@@ -136,7 +138,7 @@ public class FamilyGenerator extends RecipeGenerator {
 					.define('a', planks)
 					.group("wooden_trapdoor")
 					.unlockedBy(planksTriggerName, planksTrigger)
-					.save(consumer, blockRegistryPath(family.trapdoor().get()));
+					.save(output, BuiltInRegistries.BLOCK.getKey(family.trapdoor().get()));
 
 			// Boat
 			ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, family.boat().get())
@@ -145,7 +147,7 @@ public class FamilyGenerator extends RecipeGenerator {
 					.define('a', planks)
 					.group("boat")
 					.unlockedBy("water", insideOf(Blocks.WATER))
-					.save(consumer, itemRegistryPath(family.boat().get()));
+					.save(output, BuiltInRegistries.ITEM.getKey(family.boat().get()));
 
 			// Chest boat
 			ShapelessRecipeBuilder.shapeless(RecipeCategory.BUILDING_BLOCKS, family.chestBoat().get())
@@ -153,7 +155,7 @@ public class FamilyGenerator extends RecipeGenerator {
 					.requires(family.boat().get())
 					.group("chest_boat")
 					.unlockedBy("water", insideOf(Blocks.WATER))
-					.save(consumer, itemRegistryPath(family.chestBoat().get()));
+					.save(output, BuiltInRegistries.ITEM.getKey(family.chestBoat().get()));
 		}
 	}
 
@@ -162,7 +164,7 @@ public class FamilyGenerator extends RecipeGenerator {
 			Block stone = family.stone().get();
 			Block bricks = family.bricks().get();
 			final String stoneTriggerName = "has_stone";
-			InventoryChangeTrigger.TriggerInstance bricksTrigger = has(bricks);
+			Criterion<TriggerInstance> bricksTrigger = has(bricks);
 
 			RecipeGenerator.CraftingTableRecipes.bricks(bricks, stone);
 			if (family.bricksHaveStonecutterRecipe()) {
@@ -220,7 +222,7 @@ public class FamilyGenerator extends RecipeGenerator {
 		}
 	}
 
-	private void toolFamilies(Consumer<FinishedRecipe> consumer) {
+	private void toolFamilies(RecipeOutput output) {
 		for (ToolFamilies family : ToolFamilies.FAMILIES) {
 			TagKey<Item> material = family.material();
 			final String materialTriggerName = "has_material";
@@ -245,7 +247,7 @@ public class FamilyGenerator extends RecipeGenerator {
 									RecipeCategory.MISC,
 									upgradeMap[i])
 							.unlocks(materialTriggerName, has(material))
-							.save(consumer, ImmersiveWeapons.MOD_ID + ":" + getItemName(upgradeMap[i]) + "_smithing");
+							.save(output, ImmersiveWeapons.MOD_ID + ":" + getItemName(upgradeMap[i]) + "_smithing");
 
 					i++;
 				}
@@ -260,7 +262,7 @@ public class FamilyGenerator extends RecipeGenerator {
 						.define('a', material)
 						.define('b', family.handle())
 						.unlockedBy(materialTriggerName, has(material))
-						.save(consumer, itemRegistryPath(family.sword().get()));
+						.save(output, BuiltInRegistries.ITEM.getKey(family.sword().get()));
 
 				// Pickaxe
 				ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, family.pickaxe().get())
@@ -270,7 +272,7 @@ public class FamilyGenerator extends RecipeGenerator {
 						.define('a', material)
 						.define('b', family.handle())
 						.unlockedBy(materialTriggerName, has(material))
-						.save(consumer, itemRegistryPath(family.pickaxe().get()));
+						.save(output, BuiltInRegistries.ITEM.getKey(family.pickaxe().get()));
 
 				// Axe
 				ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, family.axe().get())
@@ -280,7 +282,7 @@ public class FamilyGenerator extends RecipeGenerator {
 						.define('a', material)
 						.define('b', family.handle())
 						.unlockedBy(materialTriggerName, has(material))
-						.save(consumer, itemRegistryPath(family.axe().get()));
+						.save(output, BuiltInRegistries.ITEM.getKey(family.axe().get()));
 
 				// Shovel
 				ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, family.shovel().get())
@@ -290,7 +292,7 @@ public class FamilyGenerator extends RecipeGenerator {
 						.define('a', material)
 						.define('b', family.handle())
 						.unlockedBy(materialTriggerName, has(material))
-						.save(consumer, itemRegistryPath(family.shovel().get()));
+						.save(output, BuiltInRegistries.ITEM.getKey(family.shovel().get()));
 
 				// Hoe
 				ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, family.hoe().get())
@@ -300,7 +302,7 @@ public class FamilyGenerator extends RecipeGenerator {
 						.define('a', material)
 						.define('b', family.handle())
 						.unlockedBy(materialTriggerName, has(material))
-						.save(consumer, itemRegistryPath(family.hoe().get()));
+						.save(output, BuiltInRegistries.ITEM.getKey(family.hoe().get()));
 
 				// Gauntlet
 				RecipeGenerator.createGauntlet(family.gauntlet().get(), material);
@@ -324,7 +326,7 @@ public class FamilyGenerator extends RecipeGenerator {
 		}
 	}
 
-	private void armorFamilies(Consumer<FinishedRecipe> consumer) {
+	private void armorFamilies(RecipeOutput output) {
 		for (ArmorFamilies family : ArmorFamilies.FAMILIES) {
 			TagKey<Item> material = family.material();
 			final String materialTriggerName = "has_material";
@@ -345,7 +347,7 @@ public class FamilyGenerator extends RecipeGenerator {
 									RecipeCategory.MISC,
 									upgradeMap[i])
 							.unlocks(materialTriggerName, has(material))
-							.save(consumer, ImmersiveWeapons.MOD_ID + ":" + getItemName(upgradeMap[i]) + "_smithing");
+							.save(output, ImmersiveWeapons.MOD_ID + ":" + getItemName(upgradeMap[i]) + "_smithing");
 
 					i++;
 				}
@@ -359,7 +361,7 @@ public class FamilyGenerator extends RecipeGenerator {
 					.pattern("a a")
 					.define('a', material)
 					.unlockedBy(materialTriggerName, has(material))
-					.save(consumer, itemRegistryPath(family.helmet().get()));
+					.save(output, BuiltInRegistries.ITEM.getKey(family.helmet().get()));
 
 			// Chestplate
 			ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, family.chestplate().get())
@@ -368,7 +370,7 @@ public class FamilyGenerator extends RecipeGenerator {
 					.pattern("aaa")
 					.define('a', material)
 					.unlockedBy(materialTriggerName, has(material))
-					.save(consumer, itemRegistryPath(family.chestplate().get()));
+					.save(output, BuiltInRegistries.ITEM.getKey(family.chestplate().get()));
 
 			// Leggings
 			ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, family.leggings().get())
@@ -377,7 +379,7 @@ public class FamilyGenerator extends RecipeGenerator {
 					.pattern("a a")
 					.define('a', material)
 					.unlockedBy(materialTriggerName, has(material))
-					.save(consumer, itemRegistryPath(family.leggings().get()));
+					.save(output, BuiltInRegistries.ITEM.getKey(family.leggings().get()));
 
 			// Boots
 			ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, family.boots().get())
@@ -385,7 +387,7 @@ public class FamilyGenerator extends RecipeGenerator {
 					.pattern("a a")
 					.define('a', material)
 					.unlockedBy(materialTriggerName, has(material))
-					.save(consumer, itemRegistryPath(family.boots().get()));
+					.save(output, BuiltInRegistries.ITEM.getKey(family.boots().get()));
 		}
 	}
 

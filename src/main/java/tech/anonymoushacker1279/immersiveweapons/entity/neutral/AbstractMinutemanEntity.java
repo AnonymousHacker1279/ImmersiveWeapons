@@ -266,16 +266,6 @@ public abstract class AbstractMinutemanEntity extends PathfinderMob implements R
 	}
 
 	/**
-	 * Get the Y offset of the entity.
-	 *
-	 * @return double
-	 */
-	@Override
-	public double getMyRidingOffset() {
-		return -0.6D;
-	}
-
-	/**
 	 * Start the anger timer
 	 */
 	@Override

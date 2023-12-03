@@ -24,11 +24,10 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.fml.DistExecutor;
-import net.minecraftforge.network.NetworkEvent;
-import net.minecraftforge.network.NetworkEvent.Context;
-import net.minecraftforge.network.PacketDistributor;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.fml.DistExecutor;
+import net.neoforged.neoforge.network.NetworkEvent.Context;
+import net.neoforged.neoforge.network.PacketDistributor;
 import org.jetbrains.annotations.Nullable;
 import tech.anonymoushacker1279.immersiveweapons.entity.GrantAdvancementOnDiscovery;
 import tech.anonymoushacker1279.immersiveweapons.entity.ai.goal.FieldMedicHealEntitiesGoal;
@@ -37,7 +36,6 @@ import tech.anonymoushacker1279.immersiveweapons.world.level.IWDamageSources;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.function.Supplier;
 
 public abstract class AbstractFieldMedicEntity extends PathfinderMob implements GrantAdvancementOnDiscovery {
 
@@ -152,6 +150,16 @@ public abstract class AbstractFieldMedicEntity extends PathfinderMob implements 
 					minutemanEntity.setPersistentAngerTarget(livingEntity.getUUID());
 				}
 
+				// If there are no minutemen, aggro any nearby medics
+				if (nearbyMinutemen.isEmpty()) {
+					List<AbstractFieldMedicEntity> nearbyMedics = level().getEntitiesOfClass(AbstractFieldMedicEntity.class, getBoundingBox()
+							.inflate(48.0D, 8.0D, 48.0D));
+
+					for (AbstractFieldMedicEntity medicEntity : nearbyMedics) {
+						medicEntity.setTarget(livingEntity);
+					}
+				}
+
 				return true;
 			}
 		}
@@ -205,51 +213,19 @@ public abstract class AbstractFieldMedicEntity extends PathfinderMob implements 
 
 	public record AbstractFieldMedicEntityPacketHandler(BlockPos blockPos) {
 
-		/**
-		 * Constructor for AbstractFieldMedicEntityPacketHandler.
-		 *
-		 * @param blockPos the <code>BlockPos</code> the packet came from
-		 */
-		public AbstractFieldMedicEntityPacketHandler {
-		}
-
-		/**
-		 * Encodes a packet
-		 *
-		 * @param msg          the <code>AbstractFieldMedicEntityPacketHandler</code> message being sent
-		 * @param packetBuffer the <code>PacketBuffer</code> containing packet data
-		 */
 		public static void encode(AbstractFieldMedicEntityPacketHandler msg, FriendlyByteBuf packetBuffer) {
 			packetBuffer.writeBlockPos(msg.blockPos);
 		}
 
-		/**
-		 * Decodes a packet
-		 *
-		 * @param packetBuffer the <code>PacketBuffer</code> containing packet data
-		 * @return AbstractFieldMedicEntityPacketHandler
-		 */
 		public static AbstractFieldMedicEntityPacketHandler decode(FriendlyByteBuf packetBuffer) {
 			return new AbstractFieldMedicEntityPacketHandler(packetBuffer.readBlockPos());
 		}
 
-		/**
-		 * Handles an incoming packet, by sending it to the client/server
-		 *
-		 * @param msg             the <code>AbstractFieldMedicEntityPacketHandler</code> message being sent
-		 * @param contextSupplier the <code>Supplier</code> providing context
-		 */
-		public static void handle(AbstractFieldMedicEntityPacketHandler msg, Supplier<Context> contextSupplier) {
-			NetworkEvent.Context context = contextSupplier.get();
+		public static void handle(AbstractFieldMedicEntityPacketHandler msg, Context context) {
 			context.enqueueWork(() -> DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> handleOnClient(msg)));
 			context.setPacketHandled(true);
 		}
 
-		/**
-		 * Runs specifically on the client, when a packet is received
-		 *
-		 * @param msg the <code>AbstractFieldMedicEntityPacketHandler</code> message being sent
-		 */
 		private static void handleOnClient(AbstractFieldMedicEntityPacketHandler msg) {
 			Minecraft minecraft = Minecraft.getInstance();
 			if (minecraft.level != null) {

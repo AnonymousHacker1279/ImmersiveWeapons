@@ -5,7 +5,7 @@ import net.minecraft.world.level.levelgen.feature.configurations.OreConfiguratio
 import net.minecraft.world.level.levelgen.feature.configurations.OreConfiguration.TargetBlockState;
 import net.minecraft.world.level.levelgen.structure.templatesystem.RuleTest;
 import net.minecraft.world.level.levelgen.structure.templatesystem.TagMatchTest;
-import net.minecraftforge.common.Tags.Blocks;
+import net.neoforged.neoforge.common.Tags.Blocks;
 import tech.anonymoushacker1279.immersiveweapons.init.BlockRegistry;
 
 import java.util.List;

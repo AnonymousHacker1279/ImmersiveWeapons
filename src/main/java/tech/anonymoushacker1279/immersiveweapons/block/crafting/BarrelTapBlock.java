@@ -8,6 +8,7 @@ import net.minecraft.world.*;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.level.*;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -124,16 +125,16 @@ public class BarrelTapBlock extends HorizontalDirectionalBlock implements Simple
 			if (blockEntity != null) {
 				if (player.getMainHandItem().getItem() == Items.GLASS_BOTTLE) {
 					Container container = ((Container) blockEntity);
-					List<BarrelTapRecipe> recipes = level.getRecipeManager()
+					List<RecipeHolder<BarrelTapRecipe>> recipes = level.getRecipeManager()
 							.getAllRecipesFor(RecipeTypeRegistry.BARREL_TAP_RECIPE_TYPE.get());
 
-					for (BarrelTapRecipe recipe : recipes) {
+					for (RecipeHolder<BarrelTapRecipe> recipe : recipes) {
 						for (int i = 0; i < container.getContainerSize(); ++i) {
-							if (recipe.material().test(container.getItem(i))) {
-								if (container.getItem(i).getCount() >= recipe.getMaterialCount()) {
-									player.getInventory().add(recipe.getResultItem(level.registryAccess()));
+							if (recipe.value().material().test(container.getItem(i))) {
+								if (container.getItem(i).getCount() >= recipe.value().getMaterialCount()) {
+									player.getInventory().add(recipe.value().getResultItem(level.registryAccess()));
 									player.getMainHandItem().shrink(1);
-									container.removeItem(i, recipe.getMaterialCount());
+									container.removeItem(i, recipe.value().getMaterialCount());
 
 									level.playSound(
 											null,

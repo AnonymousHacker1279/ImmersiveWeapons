@@ -22,8 +22,8 @@
   },
   "requirements": [
     [
-      "iron_ring",
-      "has_the_recipe"
+      "has_the_recipe",
+      "iron_ring"
     ]
   ],
   "rewards": {

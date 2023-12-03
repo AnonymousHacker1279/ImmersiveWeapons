@@ -1,6 +1,6 @@
 package tech.anonymoushacker1279.immersiveweapons.api;
 
-import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import org.jetbrains.annotations.ApiStatus.AvailableSince;
 import org.jetbrains.annotations.ApiStatus.Internal;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;

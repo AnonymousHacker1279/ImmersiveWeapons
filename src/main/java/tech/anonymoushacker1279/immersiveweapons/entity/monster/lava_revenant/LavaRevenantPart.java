@@ -3,7 +3,7 @@ package tech.anonymoushacker1279.immersiveweapons.entity.monster.lava_revenant;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.*;
-import net.minecraftforge.entity.PartEntity;
+import net.neoforged.neoforge.entity.PartEntity;
 
 public class LavaRevenantPart extends PartEntity<LavaRevenantEntity> {
 	public final LavaRevenantEntity parentMob;
