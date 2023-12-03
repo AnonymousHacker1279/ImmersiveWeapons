@@ -39,7 +39,6 @@ public interface DataGenUtils {
 
 	static ResourceLocation getItemFromNuggetsLocation(Item item) {
 		return Objects.requireNonNull(BuiltInRegistries.ITEM.getKey(item))
-				.withPrefix("item/")
 				.withSuffix("_from_nuggets");
 	}
 }

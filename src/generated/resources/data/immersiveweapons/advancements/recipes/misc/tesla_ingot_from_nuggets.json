@@ -1,32 +1,32 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "astral_ingot": {
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "immersiveweapons:tesla_ingot_from_nuggets"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    },
+    "tesla_ingot": {
       "conditions": {
         "items": [
           {
-            "tag": "immersiveweapons:ingots/astral"
+            "tag": "immersiveweapons:ingots/tesla"
           }
         ]
       },
       "trigger": "minecraft:inventory_changed"
-    },
-    "has_the_recipe": {
-      "conditions": {
-        "recipe": "immersiveweapons:item/astral_ingot_from_nuggets"
-      },
-      "trigger": "minecraft:recipe_unlocked"
     }
   },
   "requirements": [
     [
       "has_the_recipe",
-      "astral_ingot"
+      "tesla_ingot"
     ]
   ],
   "rewards": {
     "recipes": [
-      "immersiveweapons:item/astral_ingot_from_nuggets"
+      "immersiveweapons:tesla_ingot_from_nuggets"
     ]
   },
   "sends_telemetry_event": false

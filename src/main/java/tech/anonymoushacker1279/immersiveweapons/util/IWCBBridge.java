@@ -6,11 +6,10 @@ import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.player.Player;
 import tech.anonymoushacker1279.immersiveweapons.item.AccessoryItem;
 import tech.anonymoushacker1279.immersiveweapons.item.AccessoryItem.EffectType;
+import tech.anonymoushacker1279.iwcompatbridge.plugin.curios.AccessoryBridge;
 
 import java.util.List;
 import java.util.Map;
-
-// TODO: Reimplement once IWCB is updated
 
 /**
  * This class is used to access IWCB methods. It is in a separate class to avoid classloading issues when IWCB is not
@@ -19,27 +18,22 @@ import java.util.Map;
 public class IWCBBridge {
 
 	public static double collectEffects(EffectType type, Player player) {
-		// return AccessoryBridge.collectEffects(type, player);
-		return 0;
+		return AccessoryBridge.collectEffects(type, player);
 	}
 
 	public static Map<AttributeModifier, Attribute> collectStandardAttributes(Player player) {
-		// return AccessoryBridge.collectStandardAttributes(player);
-		return Map.of();
+		return AccessoryBridge.collectStandardAttributes(player);
 	}
 
 	public static Map<Map<AttributeModifier, Attribute>, Double> collectDynamicAttributes(Player player) {
-		// return AccessoryBridge.collectDynamicAttributes(player);
-		return Map.of();
+		return AccessoryBridge.collectDynamicAttributes(player);
 	}
 
 	public static List<MobEffectInstance> collectMobEffects(Player player) {
-		// return AccessoryBridge.collectMobEffects(player);
-		return List.of();
+		return AccessoryBridge.collectMobEffects(player);
 	}
 
 	public static boolean isAccessoryActive(Player player, AccessoryItem item) {
-		// return AccessoryBridge.isAccessoryActive(player, item);
-		return false;
+		return AccessoryBridge.isAccessoryActive(player, item);
 	}
 }
