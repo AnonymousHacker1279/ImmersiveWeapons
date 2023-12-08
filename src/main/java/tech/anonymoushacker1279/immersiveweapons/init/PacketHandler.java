@@ -20,6 +20,7 @@ import tech.anonymoushacker1279.immersiveweapons.item.armor.TeslaArmorItem.Tesla
 import tech.anonymoushacker1279.immersiveweapons.item.armor.VentusArmorItem.VentusArmorItemPacketHandler;
 import tech.anonymoushacker1279.immersiveweapons.item.gun.GunScopePacketHandler;
 import tech.anonymoushacker1279.immersiveweapons.menu.AmmunitionTableMenu.AmmunitionTableMenuPacketHandler;
+import tech.anonymoushacker1279.immersiveweapons.menu.StarForgeMenu.StarForgeMenuPacketHandler;
 
 public class PacketHandler {
 
@@ -128,11 +129,17 @@ public class PacketHandler {
 				DebugDataPacketHandler::decode,
 				DebugDataPacketHandler::handle
 		);
-		PacketHandler.INSTANCE.registerMessage(networkId,
+		PacketHandler.INSTANCE.registerMessage(networkId++,
 				AmmunitionTableMenuPacketHandler.class,
 				AmmunitionTableMenuPacketHandler::encode,
 				AmmunitionTableMenuPacketHandler::decode,
 				AmmunitionTableMenuPacketHandler::handle
+		);
+		PacketHandler.INSTANCE.registerMessage(networkId,
+				StarForgeMenuPacketHandler.class,
+				StarForgeMenuPacketHandler::encode,
+				StarForgeMenuPacketHandler::decode,
+				StarForgeMenuPacketHandler::handle
 		);
 	}
 }

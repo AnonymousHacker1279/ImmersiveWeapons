@@ -1,0 +1,15 @@
+{
+  "type": "immersiveweapons:star_forge",
+  "ingot": {
+    "tag": "immersiveweapons:ingots/astral"
+  },
+  "ingot_count": 3,
+  "result": {
+    "item": "immersiveweapons:astral_pickaxe"
+  },
+  "secondary_material": {
+    "item": "immersiveweapons:obsidian_rod"
+  },
+  "secondary_material_count": 2,
+  "smelt_time": 300
+}

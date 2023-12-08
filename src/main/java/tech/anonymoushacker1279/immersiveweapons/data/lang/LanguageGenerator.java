@@ -231,6 +231,12 @@ public class LanguageGenerator extends IWLanguageProvider {
 		addContainer("small_parts_table", "Small Parts Crafting");
 		addContainer("tesla_synthesizer", "Tesla Synthesizing");
 		addContainer("ammunition_table", "Ammunition Crafting");
+		addContainer("star_forge", "Star Forging");
+
+		// Container tooltips
+		addContainer("star_forge.si_inactive", "Inactive");
+		addContainer("star_forge.si_active", "Active");
+		addContainer("star_forge.temperature", "Thermal Capacity: %s");
 	}
 
 	private void addSubtitles() {

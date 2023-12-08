@@ -73,6 +73,7 @@ public class RecipeGenerator extends RecipeProvider implements DataGenUtils {
 		createDecorations();
 		createAccessories();
 		createMiscellaneousItems();
+		createStarForgeItems();
 		createMinecraftItems();
 	}
 
@@ -525,6 +526,18 @@ public class RecipeGenerator extends RecipeProvider implements DataGenUtils {
 	private void createAstralCrystalSorceryItems() {
 		ItemStack astralIngot = new ItemStack(ItemRegistry.ASTRAL_INGOT.get());
 		astralCrystalSorcery(ItemRegistry.RAW_ASTRAL.get(), Items.AMETHYST_SHARD, astralIngot);
+	}
+
+	private void createStarForgeItems() {
+		starForgeSmelting(IWItemTagGroups.ASTRAL_INGOTS, 2, ItemRegistry.OBSIDIAN_ROD.get(), 2, ItemRegistry.ASTRAL_SWORD.get(), 300);
+		starForgeSmelting(IWItemTagGroups.ASTRAL_INGOTS, 3, ItemRegistry.OBSIDIAN_ROD.get(), 2, ItemRegistry.ASTRAL_PICKAXE.get(), 300);
+		starForgeSmelting(IWItemTagGroups.ASTRAL_INGOTS, 3, ItemRegistry.OBSIDIAN_ROD.get(), 2, ItemRegistry.ASTRAL_AXE.get(), 300);
+		starForgeSmelting(IWItemTagGroups.ASTRAL_INGOTS, 1, ItemRegistry.OBSIDIAN_ROD.get(), 2, ItemRegistry.ASTRAL_SHOVEL.get(), 300);
+		starForgeSmelting(IWItemTagGroups.ASTRAL_INGOTS, 2, ItemRegistry.OBSIDIAN_ROD.get(), 2, ItemRegistry.ASTRAL_HOE.get(), 300);
+		starForgeSmelting(IWItemTagGroups.ASTRAL_INGOTS, 5, 0, ItemRegistry.ASTRAL_HELMET.get(), 600);
+		starForgeSmelting(IWItemTagGroups.ASTRAL_INGOTS, 8, 0, ItemRegistry.ASTRAL_CHESTPLATE.get(), 600);
+		starForgeSmelting(IWItemTagGroups.ASTRAL_INGOTS, 7, 0, ItemRegistry.ASTRAL_LEGGINGS.get(), 600);
+		starForgeSmelting(IWItemTagGroups.ASTRAL_INGOTS, 4, 0, ItemRegistry.ASTRAL_BOOTS.get(), 600);
 	}
 
 	private void createSmokeGrenades() {
@@ -1815,6 +1828,18 @@ public class RecipeGenerator extends RecipeProvider implements DataGenUtils {
 		SmallPartsRecipeBuilder.tinker(Ingredient.of(material), craftables)
 				.unlockedBy("copper_ingot", has(Tags.Items.INGOTS_COPPER))
 				.save(output, ImmersiveWeapons.MOD_ID + ":" + getTagName(material) + "_tinkering");
+	}
+
+	private static void starForgeSmelting(TagKey<Item> ingot, int ingotCount, Item secondaryMaterial, int secondaryMaterialCount, Item result, int smeltTime) {
+		StarForgeRecipeBuilder.forge(Ingredient.of(ingot), ingotCount, Ingredient.of(secondaryMaterial), secondaryMaterialCount, result, smeltTime)
+				.unlocks("star_forge_controller", has(BlockRegistry.STAR_FORGE_CONTROLLER.get()))
+				.save(output, ImmersiveWeapons.MOD_ID + ":" + getItemName(result) + "_star_forge_smelting");
+	}
+
+	private static void starForgeSmelting(TagKey<Item> ingot, int ingotCount, int secondaryMaterialCount, Item result, int smeltTime) {
+		StarForgeRecipeBuilder.forge(Ingredient.of(ingot), ingotCount, Ingredient.EMPTY, secondaryMaterialCount, result, smeltTime)
+				.unlocks("star_forge_controller", has(BlockRegistry.STAR_FORGE_CONTROLLER.get()))
+				.save(output, ImmersiveWeapons.MOD_ID + ":" + getItemName(result) + "_star_forge_smelting");
 	}
 
 	private static void barrelTapFermenting(ItemLike material, int materialCount, ItemLike result) {

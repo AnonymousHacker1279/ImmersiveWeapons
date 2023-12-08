@@ -2,19 +2,28 @@ package tech.anonymoushacker1279.immersiveweapons.block.star_forge;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.*;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.*;
+import net.minecraft.world.level.block.entity.*;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition.Builder;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.phys.BlockHitResult;
+import net.neoforged.neoforge.network.NetworkHooks;
 import tech.anonymoushacker1279.immersiveweapons.block.core.BasicOrientableBlock;
+import tech.anonymoushacker1279.immersiveweapons.blockentity.StarForgeBlockEntity;
 import tech.anonymoushacker1279.immersiveweapons.init.BlockRegistry;
+import tech.anonymoushacker1279.immersiveweapons.menu.StarForgeMenu;
 
-public class StarForgeControllerBlock extends BasicOrientableBlock {
+public class StarForgeControllerBlock extends BasicOrientableBlock implements EntityBlock {
+
+	private static final Component CONTAINER_NAME = Component.translatable("container.immersiveweapons.star_forge");
 
 	public static final BooleanProperty LIT = BlockStateProperties.LIT;
 
@@ -31,6 +40,34 @@ public class StarForgeControllerBlock extends BasicOrientableBlock {
 	}
 
 	@Override
+	public MenuProvider getMenuProvider(BlockState state, Level level, BlockPos pos) {
+		return new SimpleMenuProvider((id, inventory, player) -> new StarForgeMenu(id, inventory), CONTAINER_NAME);
+	}
+
+	@Override
+	public BlockEntity newBlockEntity(BlockPos blockPos, BlockState blockState) {
+		return new StarForgeBlockEntity(blockPos, blockState);
+	}
+
+	@Override
+	public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState blockState, BlockEntityType<T> blockEntityType) {
+
+		return level.isClientSide ? null : (world, pos, state, entity) -> ((StarForgeBlockEntity) entity).tick((ServerLevel) world, pos, state);
+	}
+
+	@Override
+	public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
+		if (level.isClientSide) {
+			return InteractionResult.SUCCESS;
+		} else {
+			if (level.getBlockEntity(pos) instanceof StarForgeBlockEntity blockEntity) {
+				NetworkHooks.openScreen((ServerPlayer) player, blockEntity, pos);
+			}
+			return InteractionResult.CONSUME;
+		}
+	}
+
+	@Override
 	public void neighborChanged(BlockState state, Level level, BlockPos pos, Block neighborBlock, BlockPos neighborPos, boolean movedByPiston) {
 		super.neighborChanged(state, level, pos, neighborBlock, neighborPos, movedByPiston);
 
@@ -41,9 +78,10 @@ public class StarForgeControllerBlock extends BasicOrientableBlock {
 
 	/**
 	 * Scan the 3x3x5 area around the controller to check for a valid multiblock structure.
+	 *
 	 * @return boolean
 	 */
-	public boolean checkForValidMultiBlock(BlockState controllerState, BlockPos controllerPos, ServerLevel level) {
+	public static boolean checkForValidMultiBlock(BlockState controllerState, BlockPos controllerPos, ServerLevel level) {
 		// Get the selection of blocks to check relative to the controller's direction
 		// The controller is always in front of the forge
 		Direction controllerDirection = controllerState.getValue(FACING);
@@ -76,24 +114,7 @@ public class StarForgeControllerBlock extends BasicOrientableBlock {
 
 		// Slice 4
 		sliceStart = controllerPos.above(3).relative(controllerDirection);
-		if (isSliceInvalid(sliceStart, controllerPos, 4, level)) {
-			return false;
-		}
-
-		// Spawn particles within the area that fly out from in front of the controller
-		level.sendParticles(
-				ParticleTypes.SOUL_FIRE_FLAME,
-				controllerPos.getX(),
-				controllerPos.getY(),
-				controllerPos.getZ(),
-				48,
-				1,
-				1,
-				1,
-				0.15f
-		);
-
-		return true;
+		return !isSliceInvalid(sliceStart, controllerPos, 4, level);
 	}
 
 	/**
@@ -105,7 +126,7 @@ public class StarForgeControllerBlock extends BasicOrientableBlock {
 	 * @param level         the <code>ServerLevel</code> instance
 	 * @return boolean
 	 */
-	public boolean isSliceInvalid(BlockPos centerPos, BlockPos controllerPos, int slice, ServerLevel level) {
+	public static boolean isSliceInvalid(BlockPos centerPos, BlockPos controllerPos, int slice, ServerLevel level) {
 		boolean isValid = true;
 		switch (slice) {
 			case 0 -> {

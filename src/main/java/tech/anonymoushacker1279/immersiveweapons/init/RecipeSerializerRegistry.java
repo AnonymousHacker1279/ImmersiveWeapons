@@ -21,4 +21,5 @@ public class RecipeSerializerRegistry {
 	public static final Supplier<RecipeSerializer<AstralCrystalRecipe>> ASTRAL_CRYSTAL_RECIPE_SERIALIZER = RECIPE_SERIALIZER.register("astral_crystal", () -> new AstralCrystalRecipe.Serializer<>(AstralCrystalRecipe::new));
 	public static final Supplier<RecipeSerializer<PistonCrushingRecipe>> PISTON_CRUSHING_RECIPE_SERIALIZER = RECIPE_SERIALIZER.register("piston_crushing", () -> new PistonCrushingRecipe.Serializer<>(PistonCrushingRecipe::new));
 	public static final Supplier<RecipeSerializer<AmmunitionTableRecipe>> AMMUNITION_TABLE_RECIPE_SERIALIZER = RECIPE_SERIALIZER.register("ammunition_table", () -> new AmmunitionTableRecipe.Serializer<>(AmmunitionTableRecipe::new));
+	public static final Supplier<RecipeSerializer<StarForgeRecipe>> STAR_FORGE_RECIPE_SERIALIZER = RECIPE_SERIALIZER.register("star_forge", () -> new StarForgeRecipe.Serializer<>(StarForgeRecipe::new));
 }
