@@ -10,7 +10,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
-import tech.anonymoushacker1279.immersiveweapons.advancement.IWCriteriaTriggers;
+import tech.anonymoushacker1279.immersiveweapons.init.CriterionTriggerRegistry;
 
 public interface GrantAdvancementOnDiscovery {
 
@@ -20,14 +20,14 @@ public interface GrantAdvancementOnDiscovery {
 
 		if (!level.isClientSide && entity.tickCount % 20 == 0) {
 			int scanningRange = ImmersiveWeapons.COMMON_CONFIG.discoveryAdvancementRange().get();
-			AABB scanningBox = new AABB(entityPos.offset(-scanningRange, -scanningRange, -scanningRange),
-					entityPos.offset(scanningRange, scanningRange, scanningRange));
+			AABB scanningBox = new AABB(
+					entityPos.offset(-scanningRange, -scanningRange, -scanningRange).getCenter(),
+					entityPos.offset(scanningRange, scanningRange, scanningRange).getCenter()
+			);
 
 			for (Player player : level.getNearbyPlayers(TargetingConditions.forNonCombat(), entity, scanningBox)) {
 				if (isLookingAtMe(entity, player)) {
-					if (IWCriteriaTriggers.ENTITY_DISCOVERED_TRIGGER != null) {
-						IWCriteriaTriggers.ENTITY_DISCOVERED_TRIGGER.trigger((ServerPlayer) player, entity);
-					}
+					CriterionTriggerRegistry.ENTITY_DISCOVERED_TRIGGER.get().trigger((ServerPlayer) player, entity);
 				}
 			}
 		}

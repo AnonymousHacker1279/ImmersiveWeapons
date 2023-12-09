@@ -83,12 +83,12 @@ public class ForgeEventSubscriber {
 	public static void registerGuiOverlaysEvent(RegisterGuiOverlaysEvent event) {
 		assert IWOverlays.SCOPE_ELEMENT != null;
 		event.registerAbove(VanillaGuiOverlay.VIGNETTE.id(),
-				ImmersiveWeapons.MOD_ID + ":scope",
+				new ResourceLocation(ImmersiveWeapons.MOD_ID, "scope"),
 				IWOverlays.SCOPE_ELEMENT);
 
 		assert IWOverlays.DEBUG_TRACING_ELEMENT != null;
 		event.registerAbove(VanillaGuiOverlay.DEBUG_SCREEN.id(),
-				ImmersiveWeapons.MOD_ID + ":debug_tracing",
+				new ResourceLocation(ImmersiveWeapons.MOD_ID, "debug_overlay"),
 				IWOverlays.DEBUG_TRACING_ELEMENT);
 	}
 
@@ -139,7 +139,7 @@ public class ForgeEventSubscriber {
 							attributeInstance.addTransientModifier(JONNYS_CURSE_SPEED_MODIFIER);
 						} else {
 							AttributeModifier newModifier = new AttributeModifier(JONNYS_CURSE_SPEED_MODIFIER.getId(),
-									JONNYS_CURSE_SPEED_MODIFIER.getName(),
+									JONNYS_CURSE_SPEED_MODIFIER.name,
 									0.25d,
 									JONNYS_CURSE_SPEED_MODIFIER.getOperation());
 

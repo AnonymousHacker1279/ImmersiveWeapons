@@ -19,7 +19,7 @@ import tech.anonymoushacker1279.immersiveweapons.entity.npc.SkygazerEntity;
 public abstract class ItemStackMixin {
 
 	@ModifyArg(
-			method = "lambda$appendEnchantmentNames$5",
+			method = "lambda$appendEnchantmentNames$13",
 			at = @At(
 					value = "INVOKE",
 					target = "Ljava/util/List;add(Ljava/lang/Object;)Z"

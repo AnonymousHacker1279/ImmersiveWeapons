@@ -28,6 +28,5 @@
     "recipes": [
       "immersiveweapons:conductive_alloy"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

@@ -26,7 +26,6 @@
     }
   },
   "display": {
-    "announce_to_chat": true,
     "description": {
       "translate": "advancements.immersiveweapons.used_syringe.description"
     },
@@ -35,7 +34,6 @@
     "icon": {
       "item": "immersiveweapons:used_syringe"
     },
-    "show_toast": true,
     "title": {
       "translate": "advancements.immersiveweapons.used_syringe.title"
     }

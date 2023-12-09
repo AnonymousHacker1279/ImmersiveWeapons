@@ -20,14 +20,13 @@
   },
   "requirements": [
     [
-      "tesla_ingot",
-      "has_the_recipe"
+      "has_the_recipe",
+      "tesla_ingot"
     ]
   ],
   "rewards": {
     "recipes": [
       "immersiveweapons:electric_ingot_tesla_synthesizing"
     ]
-  },
-  "sends_telemetry_event": true
+  }
 }

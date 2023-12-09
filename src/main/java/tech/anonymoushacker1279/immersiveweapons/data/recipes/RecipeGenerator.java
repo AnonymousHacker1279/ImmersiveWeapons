@@ -13,12 +13,12 @@ import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.*;
 import net.minecraft.world.item.alchemy.PotionUtils;
 import net.minecraft.world.item.alchemy.Potions;
-import net.minecraft.world.item.crafting.*;
+import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.neoforged.neoforge.common.Tags;
-import net.neoforged.neoforge.common.crafting.StrictNBTIngredient;
+import net.neoforged.neoforge.common.crafting.NBTIngredient;
 import org.jetbrains.annotations.Nullable;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.data.DataGenUtils;
@@ -523,7 +523,8 @@ public class RecipeGenerator extends RecipeProvider implements DataGenUtils {
 	}
 
 	private void createAstralCrystalSorceryItems() {
-		astralCrystalSorcery(ItemRegistry.RAW_ASTRAL.get(), Items.AMETHYST_SHARD, ItemRegistry.ASTRAL_INGOT.get(), 1);
+		ItemStack astralIngot = new ItemStack(ItemRegistry.ASTRAL_INGOT.get());
+		astralCrystalSorcery(ItemRegistry.RAW_ASTRAL.get(), Items.AMETHYST_SHARD, astralIngot);
 	}
 
 	private void createSmokeGrenades() {
@@ -729,19 +730,18 @@ public class RecipeGenerator extends RecipeProvider implements DataGenUtils {
 		// Pitfall
 		ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, BlockItemRegistry.PITFALL_ITEM.get())
 				.define('a', Items.STICK)
-				.define('b', Items.GRASS)
+				.define('b', Items.SHORT_GRASS)
 				.define('c', ItemTags.LEAVES)
 				.pattern("bcb")
 				.pattern("aaa")
 				.group("traps")
-				.unlockedBy("grass", has(Items.GRASS))
+				.unlockedBy("grass", has(Items.SHORT_GRASS))
 				.save(output);
 		// Punji sticks
 		ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, BlockItemRegistry.PUNJI_STICKS_ITEM.get(), 3)
 				.define('a', Items.DIRT)
 				.define('b', Items.BAMBOO)
-				.define('c', new StrictNBTIngredient(PotionUtils.setPotion(new ItemStack(Items.POTION), Potions.POISON)) {
-				})
+				.define('c', NBTIngredient.of(true, PotionUtils.setPotion(new ItemStack(Items.POTION), Potions.POISON)))
 				.pattern("bbb")
 				.pattern("bcb")
 				.pattern("aaa")
@@ -1128,8 +1128,7 @@ public class RecipeGenerator extends RecipeProvider implements DataGenUtils {
 		// Blademaster Emblem
 		ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ItemRegistry.BLADEMASTER_EMBLEM.get())
 				.define('a', IWItemTagGroups.STARSTORM_SHARDS)
-				.define('b', new StrictNBTIngredient(PotionUtils.setPotion(new ItemStack(Items.POTION), PotionRegistry.DEATH_POTION.get())) {
-				})
+				.define('b', NBTIngredient.of(true, PotionUtils.setPotion(new ItemStack(Items.POTION), PotionRegistry.DEATH_POTION.get())))
 				.define('c', ItemRegistry.STARSTORM_SWORD.get())
 				.pattern("aaa")
 				.pattern("aca")
@@ -1284,12 +1283,12 @@ public class RecipeGenerator extends RecipeProvider implements DataGenUtils {
 		// Cloth scrap
 		ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ItemRegistry.CLOTH_SCRAP.get(), 4)
 				.define('a', Tags.Items.STRING)
-				.define('b', Items.GRASS)
+				.define('b', Items.SHORT_GRASS)
 				.pattern("bbb")
 				.pattern("bab")
 				.pattern("bbb")
 				.group("cloth_scrap")
-				.unlockedBy("grass", has(Items.GRASS))
+				.unlockedBy("grass", has(Items.SHORT_GRASS))
 				.save(output);
 		// Conductive alloy
 		ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ItemRegistry.CONDUCTIVE_ALLOY.get())
@@ -1766,45 +1765,34 @@ public class RecipeGenerator extends RecipeProvider implements DataGenUtils {
 				.save(output);
 	}
 
-	public static void createSmeltingRecipe(List<ItemLike> pIngredients,
-	                                        ItemLike pResult, float pExperience, int pCookingTime, @Nullable String pGroup) {
-		oreCooking((SimpleCookingSerializer<?>) RecipeSerializer.SMELTING_RECIPE, pIngredients, pResult, pExperience,
-				pCookingTime, pGroup, "_from_smelting");
-	}
-
-	private static void createSmeltingRecipe(ItemLike ingredient,
-	                                         ItemLike pResult, float pExperience, int pCookingTime, String pGroup) {
-		oreCooking((SimpleCookingSerializer<?>) RecipeSerializer.SMELTING_RECIPE, ingredient, pResult, pExperience,
-				pCookingTime, pGroup, "_from_smelting");
-	}
-
-	private static void createBlastingRecipe(List<ItemLike> pIngredients,
-	                                         ItemLike pResult, float pExperience, int pCookingTime, String pGroup) {
-		oreCooking((SimpleCookingSerializer<?>) RecipeSerializer.BLASTING_RECIPE, pIngredients, pResult, pExperience,
-				pCookingTime, pGroup, "_from_blasting");
-	}
-
-	private static void createBlastingRecipe(ItemLike ingredient,
-	                                         ItemLike pResult, float pExperience, int pCookingTime, String pGroup) {
-		oreCooking((SimpleCookingSerializer<?>) RecipeSerializer.BLASTING_RECIPE, ingredient, pResult, pExperience,
-				pCookingTime, pGroup, "_from_blasting");
-	}
-
-	private static void oreCooking(SimpleCookingSerializer<?> pCookingSerializer, List<ItemLike> pIngredients,
-	                               ItemLike pResult, float pExperience, int pCookingTime, @Nullable String pGroup, String pRecipeName) {
-		for (ItemLike itemlike : pIngredients) {
-			SimpleCookingRecipeBuilder.generic(Ingredient.of(itemlike), RecipeCategory.MISC, pResult, pExperience, pCookingTime, pCookingSerializer)
-					.group(pGroup).unlockedBy(getHasName(itemlike), has(itemlike))
-					.save(output, ImmersiveWeapons.MOD_ID + ":" + getItemName(pResult) + pRecipeName + "_" + getItemName(itemlike));
+	public static void createSmeltingRecipe(List<ItemLike> ingredients, ItemLike result, float experience, int cookTime, @Nullable String group) {
+		for (ItemLike itemlike : ingredients) {
+			SimpleCookingRecipeBuilder.smelting(Ingredient.of(itemlike), RecipeCategory.MISC, result, experience, cookTime)
+					.group(group)
+					.unlockedBy(getHasName(itemlike), has(itemlike))
+					.save(output, ImmersiveWeapons.MOD_ID + ":" + getItemName(result) + "_from_smelting_" + getItemName(itemlike));
 		}
-
 	}
 
-	private static void oreCooking(SimpleCookingSerializer<?> pCookingSerializer, ItemLike ingredient,
-	                               ItemLike pResult, float pExperience, int pCookingTime, String pGroup, String pRecipeName) {
-		SimpleCookingRecipeBuilder.generic(Ingredient.of(ingredient), RecipeCategory.MISC, pResult, pExperience, pCookingTime, pCookingSerializer)
-				.group(pGroup).unlockedBy(getHasName(ingredient), has(ingredient))
-				.save(output, ImmersiveWeapons.MOD_ID + ":" + getItemName(pResult) + pRecipeName + "_" + getItemName(ingredient));
+	private static void createSmeltingRecipe(ItemLike ingredient, ItemLike result, float experience, int cookTime, String group) {
+		SimpleCookingRecipeBuilder.smelting(Ingredient.of(ingredient), RecipeCategory.MISC, result, experience, cookTime)
+				.group(group).unlockedBy(getHasName(ingredient), has(ingredient))
+				.save(output, ImmersiveWeapons.MOD_ID + ":" + getItemName(result) + "_from_smelting_" + getItemName(ingredient));
+	}
+
+	private static void createBlastingRecipe(List<ItemLike> ingredients, ItemLike result, float experience, int cookTime, @Nullable String group) {
+		for (ItemLike itemlike : ingredients) {
+			SimpleCookingRecipeBuilder.smelting(Ingredient.of(itemlike), RecipeCategory.MISC, result, experience, cookTime)
+					.group(group)
+					.unlockedBy(getHasName(itemlike), has(itemlike))
+					.save(output, ImmersiveWeapons.MOD_ID + ":" + getItemName(result) + "_from_blasting_" + getItemName(itemlike));
+		}
+	}
+
+	private static void createBlastingRecipe(ItemLike ingredient, ItemLike result, float experience, int cookTime, String group) {
+		SimpleCookingRecipeBuilder.blasting(Ingredient.of(ingredient), RecipeCategory.MISC, result, experience, cookTime)
+				.group(group).unlockedBy(getHasName(ingredient), has(ingredient))
+				.save(output, ImmersiveWeapons.MOD_ID + ":" + getItemName(result) + "_from_blasting_" + getItemName(ingredient));
 	}
 
 	private static void netheriteSmithing(Item baseItem, Item pResultItem) {
@@ -1819,37 +1807,37 @@ public class RecipeGenerator extends RecipeProvider implements DataGenUtils {
 	                                      ItemLike result) {
 		TeslaSynthesizerRecipeBuilder.synthesizing(Ingredient.of(block), Ingredient.of(material1), Ingredient.of(material2),
 						cookTime, result.asItem())
-				.unlocks("tesla_ingot", has(IWItemTagGroups.TESLA_INGOTS))
+				.unlockedBy("tesla_ingot", has(IWItemTagGroups.TESLA_INGOTS))
 				.save(output, ImmersiveWeapons.MOD_ID + ":" + getItemName(result) + "_tesla_synthesizing");
 	}
 
 	private static void smallPartsTinkering(TagKey<Item> material, List<Item> craftables) {
 		SmallPartsRecipeBuilder.tinker(Ingredient.of(material), craftables)
-				.unlocks("copper_ingot", has(Tags.Items.INGOTS_COPPER))
+				.unlockedBy("copper_ingot", has(Tags.Items.INGOTS_COPPER))
 				.save(output, ImmersiveWeapons.MOD_ID + ":" + getTagName(material) + "_tinkering");
 	}
 
 	private static void barrelTapFermenting(ItemLike material, int materialCount, ItemLike result) {
 		BarrelTapRecipeBuilder.fermenting(Ingredient.of(material), materialCount, result.asItem())
-				.unlocks("barrel_tap", has(BlockItemRegistry.BARREL_TAP_ITEM.get()))
+				.unlockedBy("barrel_tap", has(BlockItemRegistry.BARREL_TAP_ITEM.get()))
 				.save(output, ImmersiveWeapons.MOD_ID + ":" + getItemName(result) + "_fermenting");
 	}
 
-	private static void astralCrystalSorcery(ItemLike primaryMaterial, ItemLike secondaryMaterial, ItemLike result, int resultCount) {
-		AstralCrystalRecipeBuilder.sorcery(Ingredient.of(primaryMaterial), Ingredient.of(secondaryMaterial), result.asItem(), resultCount)
-				.unlocks("astral_crystal", has(BlockItemRegistry.ASTRAL_CRYSTAL_ITEM.get()))
+	private static void astralCrystalSorcery(ItemLike primaryMaterial, ItemLike secondaryMaterial, ItemStack result) {
+		AstralCrystalRecipeBuilder.sorcery(Ingredient.of(primaryMaterial), Ingredient.of(secondaryMaterial), result)
+				.unlockedBy("astral_crystal", has(BlockItemRegistry.ASTRAL_CRYSTAL_ITEM.get()))
 				.save(output, ImmersiveWeapons.MOD_ID + ":" + getItemName(result) + "_astral_crystal_sorcery");
 	}
 
 	private static void pistonCrushing(Block block, ItemLike result, int minCount, int maxCount) {
 		PistonCrushingRecipeBuilder.crushing(block, result.asItem(), minCount, maxCount)
-				.unlocks("piston", has(Blocks.PISTON))
+				.unlockedBy("piston", has(Blocks.PISTON))
 				.save(output, ImmersiveWeapons.MOD_ID + ":" + getItemName(result) + "_piston_crushing");
 	}
 
 	private static void ammunitionTableCrafting(List<MaterialGroup> materials, ItemLike result) {
 		AmmunitionTableRecipeBuilder.crafting(materials, result.asItem())
-				.unlocks("ammunition_table", has(BlockRegistry.AMMUNITION_TABLE.get()))
+				.unlockedBy("ammunition_table", has(BlockRegistry.AMMUNITION_TABLE.get()))
 				.save(output, ImmersiveWeapons.MOD_ID + ":" + getItemName(result) + "_ammunition_table_crafting");
 	}
 
@@ -1857,8 +1845,12 @@ public class RecipeGenerator extends RecipeProvider implements DataGenUtils {
 		return getItemName(pResult) + "_from_" + getItemName(pIngredient);
 	}
 
-	protected static String getItemName(ItemLike pItemLike) {
-		return Objects.requireNonNull(BuiltInRegistries.ITEM.getKey(pItemLike.asItem())).getPath();
+	protected static String getItemName(ItemLike itemLike) {
+		return Objects.requireNonNull(BuiltInRegistries.ITEM.getKey(itemLike.asItem())).getPath();
+	}
+
+	protected static String getItemName(ItemStack itemStack) {
+		return Objects.requireNonNull(BuiltInRegistries.ITEM.getKey(itemStack.getItem())).getPath();
 	}
 
 	protected static String getTagName(TagKey<Item> tagKey) {

@@ -30,6 +30,5 @@
     "recipes": [
       "immersiveweapons:hand_of_doom"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

@@ -158,12 +158,12 @@ public class LandmineBlock extends Block implements SimpleWaterloggedBlock {
 	}
 
 	@Override
-	public void playerWillDestroy(Level level, BlockPos pos, BlockState state, Player player) {
+	public BlockState playerWillDestroy(Level level, BlockPos pos, BlockState state, Player player) {
 		if (!level.isClientSide() && !player.isCreative() && state.getValue(ARMED)) {
 			explode(level, pos, player);
 		}
 
-		super.playerWillDestroy(level, pos, state, player);
+		return super.playerWillDestroy(level, pos, state, player);
 	}
 
 	@Override

@@ -13,16 +13,12 @@
     }
   },
   "display": {
-    "announce_to_chat": true,
     "description": {
       "translate": "advancements.immersiveweapons.planks.description"
     },
-    "frame": "task",
-    "hidden": false,
     "icon": {
       "item": "minecraft:oak_planks"
     },
-    "show_toast": true,
     "title": {
       "translate": "advancements.immersiveweapons.planks.title"
     }

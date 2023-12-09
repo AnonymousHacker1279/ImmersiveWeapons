@@ -30,6 +30,5 @@
     "recipes": [
       "immersiveweapons:cut_blood_sandstone_slab_from_cut_blood_sandstone_stonecutting"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

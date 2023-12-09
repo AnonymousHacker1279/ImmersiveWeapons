@@ -2,7 +2,7 @@ plugins {
 	id 'java-library'
 	id 'maven-publish'
 	// Pinned because it updates too frequently and forces recompile
-	id 'net.neoforged.gradle.userdev' version '7.0.57'
+	id 'net.neoforged.gradle.userdev' version '7.0.61'
 	// id 'org.parchmentmc.librarian.forgegradle' version '1.+' TODO: Uncomment when Librarian is updated
 	id "me.hypherionmc.modutils.modpublisher" version "1.0.20"
 	id 'idea'
@@ -87,8 +87,8 @@ dependencies {
 
 	implementation "net.neoforged:neoforge:${neoforge_version}"
 
-	implementation(jarJar("dev.lukebemish.biomesquisher:biomesquisher-neoforge-${minecraft_version}:${biomesquisher_version}")) {
-		jarJar.ranged(it, "[0.1.5-alpha,)")
+	implementation(jarJar("dev.lukebemish.biomesquisher:biomesquisher-neoforge-1.20.2:${biomesquisher_version}")) {
+		jarJar.ranged(it, "[0.1.6-alpha,)")
 	}
 
 	// TODO: Uncomment once dependencies update

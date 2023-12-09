@@ -30,6 +30,5 @@
     "recipes": [
       "immersiveweapons:flare_gun"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

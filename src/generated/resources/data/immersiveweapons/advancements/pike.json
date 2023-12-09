@@ -159,17 +159,13 @@
     }
   },
   "display": {
-    "announce_to_chat": true,
     "description": {
       "translate": "advancements.immersiveweapons.pike.description"
     },
-    "frame": "task",
-    "hidden": false,
     "icon": {
       "item": "immersiveweapons:iron_pike",
       "nbt": "{Damage:0}"
     },
-    "show_toast": true,
     "title": {
       "translate": "advancements.immersiveweapons.pike.title"
     }

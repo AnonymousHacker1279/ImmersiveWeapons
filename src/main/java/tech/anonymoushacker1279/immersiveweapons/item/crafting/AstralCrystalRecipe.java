@@ -5,16 +5,26 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.util.ExtraCodecs;
 import net.minecraft.world.Container;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.level.Level;
 import tech.anonymoushacker1279.immersiveweapons.init.*;
 
-public record AstralCrystalRecipe(Ingredient primaryMaterial,
-                                  Ingredient secondaryMaterial,
-                                  ItemStack result,
-                                  int resultCount) implements Recipe<Container> {
+public class AstralCrystalRecipe implements Recipe<Container> {
+
+	protected final Ingredient primaryMaterial;
+	protected final Ingredient secondaryMaterial;
+	protected final ItemStack result;
+	protected final String group;
+
+	public AstralCrystalRecipe(String group, Ingredient primaryMaterial, Ingredient secondaryMaterial, ItemStack itemStack) {
+		this.primaryMaterial = primaryMaterial;
+		this.secondaryMaterial = secondaryMaterial;
+		this.result = itemStack;
+		this.group = group;
+	}
 
 	@Override
 	public boolean matches(Container container, Level level) {
@@ -44,10 +54,6 @@ public record AstralCrystalRecipe(Ingredient primaryMaterial,
 		return secondaryMaterial;
 	}
 
-	public int getResultCount() {
-		return resultCount;
-	}
-
 	@Override
 	public ItemStack getToastSymbol() {
 		return new ItemStack(BlockRegistry.ASTRAL_CRYSTAL.get());
@@ -68,6 +74,11 @@ public record AstralCrystalRecipe(Ingredient primaryMaterial,
 		return RecipeTypeRegistry.ASTRAL_CRYSTAL_RECIPE_TYPE.get();
 	}
 
+	@Override
+	public String getGroup() {
+		return group;
+	}
+
 	/**
 	 * Get the recipe's ingredients.
 	 *
@@ -86,39 +97,49 @@ public record AstralCrystalRecipe(Ingredient primaryMaterial,
 		return true;
 	}
 
-	public static class Serializer implements RecipeSerializer<AstralCrystalRecipe> {
+	public interface Factory<T extends AstralCrystalRecipe> {
+		T create(String group, Ingredient primaryMaterial, Ingredient secondaryMaterial, ItemStack result);
+	}
 
-		private static final Codec<AstralCrystalRecipe> CODEC = RecordCodecBuilder.create(
-				instance -> instance.group(
-								Ingredient.CODEC.fieldOf("primaryMaterial").forGetter(recipe -> recipe.primaryMaterial),
-								Ingredient.CODEC.fieldOf("secondaryMaterial").forGetter(recipe -> recipe.secondaryMaterial),
-								CraftingRecipeCodecs.ITEMSTACK_OBJECT_CODEC.fieldOf("result").forGetter(recipe -> recipe.result),
-								Codec.INT.fieldOf("resultCount").forGetter(recipe -> recipe.resultCount)
-						)
-						.apply(instance, AstralCrystalRecipe::new)
-		);
+	public static class Serializer<T extends AstralCrystalRecipe> implements RecipeSerializer<T> {
 
-		@Override
-		public Codec<AstralCrystalRecipe> codec() {
-			return CODEC;
+		private final AstralCrystalRecipe.Factory<T> factory;
+		private final Codec<T> codec;
+
+		public Serializer(AstralCrystalRecipe.Factory<T> factory) {
+			this.factory = factory;
+			this.codec = RecordCodecBuilder.create(
+					instance -> instance.group(
+									ExtraCodecs.strictOptionalField(Codec.STRING, "group", "").forGetter(recipe -> recipe.group),
+									Ingredient.CODEC.fieldOf("primaryMaterial").forGetter(recipe -> recipe.primaryMaterial),
+									Ingredient.CODEC.fieldOf("secondaryMaterial").forGetter(recipe -> recipe.secondaryMaterial),
+									ItemStack.ITEM_WITH_COUNT_CODEC.fieldOf("result").forGetter(recipe -> recipe.result)
+							)
+							.apply(instance, factory::create)
+			);
 		}
 
 		@Override
-		public AstralCrystalRecipe fromNetwork(FriendlyByteBuf buffer) {
+		public Codec<T> codec() {
+			return codec;
+		}
+
+		@Override
+		public T fromNetwork(FriendlyByteBuf buffer) {
+			String group = buffer.readUtf();
 			Ingredient primaryMaterial = Ingredient.fromNetwork(buffer);
 			Ingredient secondaryMaterial = Ingredient.fromNetwork(buffer);
 			ItemStack result = buffer.readItem();
-			int resultCount = buffer.readInt();
 
-			return new AstralCrystalRecipe(primaryMaterial, secondaryMaterial, result, resultCount);
+			return factory.create(group, primaryMaterial, secondaryMaterial, result);
 		}
 
 		@Override
 		public void toNetwork(FriendlyByteBuf buffer, AstralCrystalRecipe recipe) {
+			buffer.writeUtf(recipe.group);
 			recipe.primaryMaterial.toNetwork(buffer);
 			recipe.secondaryMaterial.toNetwork(buffer);
 			buffer.writeItem(recipe.result);
-			buffer.writeInt(recipe.resultCount);
 		}
 	}
 }

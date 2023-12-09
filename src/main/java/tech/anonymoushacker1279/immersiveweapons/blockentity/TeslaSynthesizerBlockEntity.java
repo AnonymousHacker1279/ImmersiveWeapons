@@ -21,12 +21,6 @@ import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.entity.BaseContainerBlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.neoforged.neoforge.common.capabilities.Capabilities;
-import net.neoforged.neoforge.common.capabilities.Capability;
-import net.neoforged.neoforge.common.util.LazyOptional;
-import net.neoforged.neoforge.items.IItemHandler;
-import net.neoforged.neoforge.items.wrapper.SidedInvWrapper;
-import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import tech.anonymoushacker1279.immersiveweapons.init.*;
 import tech.anonymoushacker1279.immersiveweapons.item.crafting.TeslaSynthesizerRecipe;
@@ -42,7 +36,6 @@ public class TeslaSynthesizerBlockEntity extends BaseContainerBlockEntity implem
 	private static final int[] SLOTS_HORIZONTAL = new int[]{1};
 	private static final Map<Item, Integer> BURN_TIMES_MAP = Maps.newLinkedHashMap();
 	private final Object2IntOpenHashMap<ResourceLocation> recipes = new Object2IntOpenHashMap<>();
-	private final LazyOptional<? extends IItemHandler>[] handlers = SidedInvWrapper.create(this, Direction.UP, Direction.DOWN, Direction.NORTH);
 	protected NonNullList<ItemStack> items = NonNullList.withSize(5, ItemStack.EMPTY);
 	private int burnTime;
 	private int burnTimeTotal;
@@ -501,37 +494,5 @@ public class TeslaSynthesizerBlockEntity extends BaseContainerBlockEntity implem
 			helper.accountStack(itemStack);
 		}
 
-	}
-
-	/**
-	 * Get capabilities.
-	 *
-	 * @param capability the <code>Capability</code> instance
-	 * @param facing     the <code>Direction</code> the block is facing
-	 * @return LazyOptional
-	 */
-	@Override
-	public <T> @NotNull LazyOptional<T> getCapability(Capability<T> capability, @Nullable Direction facing) {
-		if (!remove && facing != null && capability == Capabilities.ITEM_HANDLER) {
-			if (facing == Direction.UP) {
-				return handlers[0].cast();
-			} else if (facing == Direction.DOWN) {
-				return handlers[1].cast();
-			} else {
-				return handlers[2].cast();
-			}
-		}
-		return super.getCapability(capability, facing);
-	}
-
-	/**
-	 * Invalidate capabilities.
-	 */
-	@Override
-	public void invalidateCaps() {
-		super.invalidateCaps();
-		for (LazyOptional<? extends IItemHandler> handler : handlers) {
-			handler.invalidate();
-		}
 	}
 }

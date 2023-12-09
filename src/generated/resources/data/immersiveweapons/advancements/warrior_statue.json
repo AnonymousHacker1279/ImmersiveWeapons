@@ -25,16 +25,13 @@
     }
   },
   "display": {
-    "announce_to_chat": true,
     "description": {
       "translate": "advancements.immersiveweapons.tiltros.warrior_statue.description"
     },
-    "frame": "task",
     "hidden": true,
     "icon": {
       "item": "immersiveweapons:warrior_statue_head"
     },
-    "show_toast": true,
     "title": {
       "translate": "advancements.immersiveweapons.tiltros.warrior_statue.title"
     }

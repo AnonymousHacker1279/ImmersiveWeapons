@@ -1,5 +1,6 @@
 {
   "type": "immersiveweapons:ammunition_table",
+  "group": "ammunition_table",
   "materials": [
     {
       "base_multiplier": 0.28,
@@ -9,7 +10,5 @@
       }
     }
   ],
-  "result": {
-    "item": "immersiveweapons:diamond_musket_ball"
-  }
+  "result": "immersiveweapons:diamond_musket_ball"
 }

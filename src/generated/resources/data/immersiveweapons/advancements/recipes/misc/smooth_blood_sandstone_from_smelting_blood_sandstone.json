@@ -30,6 +30,5 @@
     "recipes": [
       "immersiveweapons:smooth_blood_sandstone_from_smelting_blood_sandstone"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

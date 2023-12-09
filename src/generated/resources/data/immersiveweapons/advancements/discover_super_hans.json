@@ -2,20 +2,27 @@
   "parent": "immersiveweapons:entity_discovery",
   "criteria": {
     "discover": {
-      "trigger": "minecraft:entity_discovered"
+      "conditions": {
+        "entity": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "type": "immersiveweapons:super_hans"
+            }
+          }
+        ]
+      },
+      "trigger": "immersiveweapons:entity_discovered"
     }
   },
   "display": {
-    "announce_to_chat": true,
     "description": {
       "translate": "advancements.immersiveweapons.discover_super_hans.description"
     },
-    "frame": "task",
-    "hidden": false,
     "icon": {
       "item": "immersiveweapons:hans_head"
     },
-    "show_toast": true,
     "title": {
       "translate": "advancements.immersiveweapons.discover_super_hans.title"
     }

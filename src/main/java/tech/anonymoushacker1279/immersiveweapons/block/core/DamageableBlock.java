@@ -8,7 +8,8 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.*;
+import net.minecraft.world.level.block.EntityBlock;
+import net.minecraft.world.level.block.SimpleWaterloggedBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.*;
@@ -17,7 +18,7 @@ import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.BlockHitResult;
 import tech.anonymoushacker1279.immersiveweapons.blockentity.DamageableBlockEntity;
 
-public abstract class DamageableBlock extends HorizontalDirectionalBlock implements SimpleWaterloggedBlock, EntityBlock {
+public abstract class DamageableBlock extends BasicOrientableBlock implements SimpleWaterloggedBlock, EntityBlock {
 
 	public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
 	protected final int maxHealth;

@@ -2,20 +2,17 @@
   "parent": "immersiveweapons:azul_keystone",
   "criteria": {
     "activate": {
-      "trigger": "minecraft:warrior_statue_activated"
+      "trigger": "immersiveweapons:warrior_statue_activated"
     }
   },
   "display": {
-    "announce_to_chat": true,
     "description": {
       "translate": "advancements.immersiveweapons.tiltros.activated_warrior_statue.description"
     },
-    "frame": "task",
     "hidden": true,
     "icon": {
       "item": "immersiveweapons:azul_keystone"
     },
-    "show_toast": true,
     "title": {
       "translate": "advancements.immersiveweapons.tiltros.activated_warrior_statue.title"
     }

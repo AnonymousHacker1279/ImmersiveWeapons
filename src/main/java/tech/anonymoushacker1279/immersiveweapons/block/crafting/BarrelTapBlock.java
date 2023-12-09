@@ -21,12 +21,13 @@ import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import tech.anonymoushacker1279.immersiveweapons.block.core.BasicOrientableBlock;
 import tech.anonymoushacker1279.immersiveweapons.init.RecipeTypeRegistry;
 import tech.anonymoushacker1279.immersiveweapons.item.crafting.BarrelTapRecipe;
 
 import java.util.List;
 
-public class BarrelTapBlock extends HorizontalDirectionalBlock implements SimpleWaterloggedBlock {
+public class BarrelTapBlock extends BasicOrientableBlock implements SimpleWaterloggedBlock {
 
 	public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
 	private static final VoxelShape SHAPE_NORTH = Block.box(7.0D, 4.0D, 0.0D, 9.0D, 7.0D, 3.0D);
@@ -130,7 +131,7 @@ public class BarrelTapBlock extends HorizontalDirectionalBlock implements Simple
 
 					for (RecipeHolder<BarrelTapRecipe> recipe : recipes) {
 						for (int i = 0; i < container.getContainerSize(); ++i) {
-							if (recipe.value().material().test(container.getItem(i))) {
+							if (recipe.value().getMaterial().test(container.getItem(i))) {
 								if (container.getItem(i).getCount() >= recipe.value().getMaterialCount()) {
 									player.getInventory().add(recipe.value().getResultItem(level.registryAccess()));
 									player.getMainHandItem().shrink(1);

@@ -15,17 +15,14 @@
     }
   },
   "display": {
-    "announce_to_chat": true,
     "description": {
       "translate": "advancements.immersiveweapons.cursed_sight_staff.description"
     },
     "frame": "challenge",
-    "hidden": false,
     "icon": {
       "item": "immersiveweapons:cursed_sight_staff",
       "nbt": "{Damage:0}"
     },
-    "show_toast": true,
     "title": {
       "translate": "advancements.immersiveweapons.cursed_sight_staff.title"
     }

@@ -28,6 +28,5 @@
     "recipes": [
       "immersiveweapons:cannonball"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

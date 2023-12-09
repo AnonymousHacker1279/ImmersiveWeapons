@@ -30,6 +30,5 @@
     "recipes": [
       "immersiveweapons:electric_ingot_from_blasting_electric_ore"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

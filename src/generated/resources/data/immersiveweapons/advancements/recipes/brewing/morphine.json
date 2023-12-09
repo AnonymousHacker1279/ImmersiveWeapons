@@ -30,6 +30,5 @@
     "recipes": [
       "immersiveweapons:morphine"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

@@ -30,6 +30,5 @@
     "recipes": [
       "immersiveweapons:stardust_slab"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

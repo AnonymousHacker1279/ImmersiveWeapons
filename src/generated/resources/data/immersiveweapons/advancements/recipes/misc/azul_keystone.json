@@ -30,6 +30,5 @@
     "recipes": [
       "immersiveweapons:azul_keystone"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

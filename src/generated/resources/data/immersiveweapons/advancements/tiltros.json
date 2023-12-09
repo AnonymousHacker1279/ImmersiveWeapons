@@ -19,16 +19,13 @@
     }
   },
   "display": {
-    "announce_to_chat": true,
     "description": {
       "translate": "advancements.immersiveweapons.tiltros.biome.description"
     },
     "frame": "goal",
-    "hidden": false,
     "icon": {
       "item": "immersiveweapons:azul_stained_orchid"
     },
-    "show_toast": true,
     "title": {
       "translate": "advancements.immersiveweapons.tiltros.biome.title"
     }

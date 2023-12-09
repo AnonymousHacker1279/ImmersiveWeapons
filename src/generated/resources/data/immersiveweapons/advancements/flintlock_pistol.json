@@ -15,17 +15,14 @@
     }
   },
   "display": {
-    "announce_to_chat": true,
     "description": {
       "translate": "advancements.immersiveweapons.flintlock_pistol.description"
     },
     "frame": "goal",
-    "hidden": false,
     "icon": {
       "item": "immersiveweapons:flintlock_pistol",
       "nbt": "{Damage:0}"
     },
-    "show_toast": true,
     "title": {
       "translate": "advancements.immersiveweapons.flintlock_pistol.title"
     }

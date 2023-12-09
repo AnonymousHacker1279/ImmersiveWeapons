@@ -28,7 +28,6 @@ import net.neoforged.fml.DistExecutor;
 import net.neoforged.neoforge.network.NetworkEvent.Context;
 import net.neoforged.neoforge.network.PacketDistributor;
 import net.neoforged.neoforge.network.PacketDistributor.TargetPoint;
-import tech.anonymoushacker1279.immersiveweapons.advancement.IWCriteriaTriggers;
 import tech.anonymoushacker1279.immersiveweapons.init.*;
 import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
 
@@ -43,7 +42,7 @@ public class WarriorStatueTorso extends WarriorStatueBase {
 	}
 
 	@Override
-	protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
+	public void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
 		builder.add(FACING, POWERED, WATERLOGGED);
 	}
 
@@ -125,7 +124,7 @@ public class WarriorStatueTorso extends WarriorStatueBase {
 
 					}
 
-					IWCriteriaTriggers.WARRIOR_STATUE_ACTIVATED_TRIGGER.trigger((ServerPlayer) player);
+					CriterionTriggerRegistry.WARRIOR_STATUE_ACTIVATED_TRIGGER.get().trigger((ServerPlayer) player);
 
 					return InteractionResult.CONSUME;
 				} else {

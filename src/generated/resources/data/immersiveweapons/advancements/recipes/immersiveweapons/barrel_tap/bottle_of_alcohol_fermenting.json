@@ -1,11 +1,13 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "copper_ingot": {
+    "barrel_tap": {
       "conditions": {
         "items": [
           {
-            "tag": "forge:ingots/copper"
+            "items": [
+              "immersiveweapons:barrel_tap"
+            ]
           }
         ]
       },
@@ -13,21 +15,20 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "immersiveweapons:ingots_iron_tinkering"
+        "recipe": "immersiveweapons:bottle_of_alcohol_fermenting"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
   },
   "requirements": [
     [
-      "copper_ingot",
-      "has_the_recipe"
+      "has_the_recipe",
+      "barrel_tap"
     ]
   ],
   "rewards": {
     "recipes": [
-      "immersiveweapons:ingots_iron_tinkering"
+      "immersiveweapons:bottle_of_alcohol_fermenting"
     ]
-  },
-  "sends_telemetry_event": true
+  }
 }

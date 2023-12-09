@@ -28,6 +28,5 @@
     "recipes": [
       "immersiveweapons:copper_pike"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

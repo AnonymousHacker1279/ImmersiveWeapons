@@ -15,17 +15,14 @@
     }
   },
   "display": {
-    "announce_to_chat": true,
     "description": {
       "translate": "advancements.immersiveweapons.cobalt_axe.description"
     },
     "frame": "goal",
-    "hidden": false,
     "icon": {
       "item": "immersiveweapons:cobalt_axe",
       "nbt": "{Damage:0}"
     },
-    "show_toast": true,
     "title": {
       "translate": "advancements.immersiveweapons.cobalt_axe.title"
     }

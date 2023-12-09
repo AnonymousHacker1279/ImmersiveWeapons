@@ -4,6 +4,7 @@
     "immersiveweapons:grenade_assembly",
     "immersiveweapons:tool_joint"
   ],
+  "group": "small_parts",
   "material": {
     "tag": "forge:ingots/metal"
   }

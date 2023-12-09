@@ -28,6 +28,5 @@
     "recipes": [
       "immersiveweapons:ventus_boots"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

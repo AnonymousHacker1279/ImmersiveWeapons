@@ -1,12 +1,12 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "astral_crystal": {
+    "ammunition_table": {
       "conditions": {
         "items": [
           {
             "items": [
-              "immersiveweapons:astral_crystal"
+              "immersiveweapons:ammunition_table"
             ]
           }
         ]
@@ -15,21 +15,20 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "immersiveweapons:astral_ingot_astral_crystal_sorcery"
+        "recipe": "immersiveweapons:netherite_musket_ball_ammunition_table_crafting"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
   },
   "requirements": [
     [
-      "astral_crystal",
-      "has_the_recipe"
+      "has_the_recipe",
+      "ammunition_table"
     ]
   ],
   "rewards": {
     "recipes": [
-      "immersiveweapons:astral_ingot_astral_crystal_sorcery"
+      "immersiveweapons:netherite_musket_ball_ammunition_table_crafting"
     ]
-  },
-  "sends_telemetry_event": true
+  }
 }

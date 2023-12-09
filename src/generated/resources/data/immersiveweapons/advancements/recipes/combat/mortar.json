@@ -28,6 +28,5 @@
     "recipes": [
       "immersiveweapons:mortar"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

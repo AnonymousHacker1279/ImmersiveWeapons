@@ -28,6 +28,5 @@
     "recipes": [
       "immersiveweapons:wooden_tool_rod"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

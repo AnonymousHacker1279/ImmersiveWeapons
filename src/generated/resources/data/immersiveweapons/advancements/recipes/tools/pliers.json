@@ -30,6 +30,5 @@
     "recipes": [
       "immersiveweapons:pliers"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

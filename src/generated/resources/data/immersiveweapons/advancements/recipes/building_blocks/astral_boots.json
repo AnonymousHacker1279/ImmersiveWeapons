@@ -28,6 +28,5 @@
     "recipes": [
       "immersiveweapons:astral_boots"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

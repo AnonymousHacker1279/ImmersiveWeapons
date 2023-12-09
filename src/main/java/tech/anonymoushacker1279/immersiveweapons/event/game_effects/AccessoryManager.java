@@ -240,7 +240,7 @@ public class AccessoryManager {
 				if (attributeInstance != null) {
 					if (!attributeInstance.hasModifier(modifier)) {
 						double amount = targetValue - attributeInstance.getValue();
-						AttributeModifier newModifier = new AttributeModifier(modifier.getId(), modifier.getName(), amount, modifier.getOperation());
+						AttributeModifier newModifier = new AttributeModifier(modifier.getId(), modifier.name, amount, modifier.getOperation());
 
 						attributeInstance.addTransientModifier(newModifier);
 					}
@@ -248,7 +248,7 @@ public class AccessoryManager {
 						attributeInstance.removeModifier(modifier.getId());
 
 						double amount = targetValue - attributeInstance.getValue();
-						AttributeModifier newModifier = new AttributeModifier(modifier.getId(), modifier.getName(), amount, modifier.getOperation());
+						AttributeModifier newModifier = new AttributeModifier(modifier.getId(), modifier.name, amount, modifier.getOperation());
 
 						attributeInstance.addTransientModifier(newModifier);
 					}

@@ -28,6 +28,5 @@
     "recipes": [
       "immersiveweapons:cobalt_block"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

@@ -2,7 +2,6 @@ package tech.anonymoushacker1279.immersiveweapons.block.misc;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.*;
@@ -15,9 +14,10 @@ import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import tech.anonymoushacker1279.immersiveweapons.block.core.BasicOrientableBlock;
 import tech.anonymoushacker1279.immersiveweapons.blockentity.MinutemanStatueBlockEntity;
 
-public class MinutemanStatueBlock extends HorizontalDirectionalBlock implements EntityBlock, SimpleWaterloggedBlock {
+public class MinutemanStatueBlock extends BasicOrientableBlock implements EntityBlock, SimpleWaterloggedBlock {
 
 	public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
 	protected static final VoxelShape SHAPE = Block.box(2.0D, 0.0D, 2.0D, 14.0D, 10.0D, 14.0D);
@@ -83,18 +83,6 @@ public class MinutemanStatueBlock extends HorizontalDirectionalBlock implements 
 	@Override
 	public void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
 		builder.add(FACING, WATERLOGGED);
-	}
-
-	/**
-	 * Set placement properties.
-	 * Sets the facing direction of the block for placement.
-	 *
-	 * @param context the <code>BlockItemUseContext</code> during placement
-	 * @return BlockState
-	 */
-	@Override
-	public BlockState getStateForPlacement(BlockPlaceContext context) {
-		return defaultBlockState().setValue(FACING, context.getHorizontalDirection());
 	}
 
 	/**

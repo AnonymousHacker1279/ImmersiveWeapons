@@ -30,6 +30,5 @@
     "recipes": [
       "immersiveweapons:smoke_grenade_blue"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

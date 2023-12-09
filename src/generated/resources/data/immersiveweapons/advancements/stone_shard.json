@@ -15,16 +15,13 @@
     }
   },
   "display": {
-    "announce_to_chat": true,
     "description": {
       "translate": "advancements.immersiveweapons.stone_shard.description"
     },
     "frame": "goal",
-    "hidden": false,
     "icon": {
       "item": "immersiveweapons:stone_shard"
     },
-    "show_toast": true,
     "title": {
       "translate": "advancements.immersiveweapons.stone_shard.title"
     }

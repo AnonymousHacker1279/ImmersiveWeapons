@@ -29,7 +29,7 @@ public class WarriorStatueHead extends WarriorStatueBase {
 	}
 
 	@Override
-	protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
+	public void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
 		builder.add(FACING, POWERED, WATERLOGGED);
 	}
 

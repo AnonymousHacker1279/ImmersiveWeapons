@@ -15,7 +15,6 @@ import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.HorizontalDirectionalBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
@@ -28,11 +27,12 @@ import net.neoforged.fml.DistExecutor;
 import net.neoforged.neoforge.network.NetworkEvent.Context;
 import net.neoforged.neoforge.network.PacketDistributor;
 import org.jetbrains.annotations.Nullable;
+import tech.anonymoushacker1279.immersiveweapons.block.core.BasicOrientableBlock;
 import tech.anonymoushacker1279.immersiveweapons.entity.projectile.MortarShellEntity;
 import tech.anonymoushacker1279.immersiveweapons.init.*;
 import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
 
-public class MortarBlock extends HorizontalDirectionalBlock {
+public class MortarBlock extends BasicOrientableBlock {
 
 	public static final IntegerProperty ROTATION = IntegerProperty.create("rotation", 0, 2);
 	public static final BooleanProperty LOADED = BooleanProperty.create("loaded");
@@ -57,7 +57,7 @@ public class MortarBlock extends HorizontalDirectionalBlock {
 	 * @param builder the <code>StateDefinition.Builder</code> of the block
 	 */
 	@Override
-	protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
+	public void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
 		builder.add(ROTATION, FACING, LOADED);
 	}
 

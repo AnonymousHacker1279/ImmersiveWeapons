@@ -5,6 +5,7 @@
     "immersiveweapons:heavy_wooden_stock",
     "immersiveweapons:wooden_pistol_handle"
   ],
+  "group": "small_parts",
   "material": {
     "tag": "minecraft:planks"
   }

@@ -15,17 +15,14 @@
     }
   },
   "display": {
-    "announce_to_chat": true,
     "description": {
       "translate": "advancements.immersiveweapons.blunderbuss.description"
     },
     "frame": "goal",
-    "hidden": false,
     "icon": {
       "item": "immersiveweapons:blunderbuss",
       "nbt": "{Damage:0}"
     },
-    "show_toast": true,
     "title": {
       "translate": "advancements.immersiveweapons.blunderbuss.title"
     }

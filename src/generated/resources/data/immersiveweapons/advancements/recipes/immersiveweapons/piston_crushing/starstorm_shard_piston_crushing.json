@@ -22,14 +22,13 @@
   },
   "requirements": [
     [
-      "piston",
-      "has_the_recipe"
+      "has_the_recipe",
+      "piston"
     ]
   ],
   "rewards": {
     "recipes": [
       "immersiveweapons:starstorm_shard_piston_crushing"
     ]
-  },
-  "sends_telemetry_event": true
+  }
 }

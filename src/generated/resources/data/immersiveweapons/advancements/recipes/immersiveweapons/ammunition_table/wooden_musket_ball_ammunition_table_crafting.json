@@ -22,14 +22,13 @@
   },
   "requirements": [
     [
-      "ammunition_table",
-      "has_the_recipe"
+      "has_the_recipe",
+      "ammunition_table"
     ]
   ],
   "rewards": {
     "recipes": [
       "immersiveweapons:wooden_musket_ball_ammunition_table_crafting"
     ]
-  },
-  "sends_telemetry_event": true
+  }
 }

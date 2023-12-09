@@ -28,6 +28,5 @@
     "recipes": [
       "immersiveweapons:stone_arrow"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

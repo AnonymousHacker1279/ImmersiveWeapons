@@ -6,7 +6,6 @@
     }
   },
   "display": {
-    "announce_to_chat": true,
     "description": {
       "translate": "advancements.immersiveweapons.kill_counter.description"
     },
@@ -15,7 +14,6 @@
     "icon": {
       "item": "immersiveweapons:kill_counter"
     },
-    "show_toast": true,
     "title": {
       "translate": "advancements.immersiveweapons.kill_counter.title"
     }

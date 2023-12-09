@@ -13,16 +13,12 @@
     }
   },
   "display": {
-    "announce_to_chat": true,
     "description": {
       "translate": "advancements.immersiveweapons.accessories.description"
     },
-    "frame": "task",
-    "hidden": false,
     "icon": {
       "item": "immersiveweapons:satchel"
     },
-    "show_toast": true,
     "title": {
       "translate": "advancements.immersiveweapons.accessories.title"
     }

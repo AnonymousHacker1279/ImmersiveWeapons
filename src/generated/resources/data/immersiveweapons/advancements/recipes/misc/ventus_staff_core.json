@@ -28,6 +28,5 @@
     "recipes": [
       "immersiveweapons:ventus_staff_core"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

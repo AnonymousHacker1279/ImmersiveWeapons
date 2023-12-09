@@ -26,16 +26,13 @@
     }
   },
   "display": {
-    "announce_to_chat": true,
     "description": {
       "translate": "advancements.immersiveweapons.molten_tools.description"
     },
     "frame": "challenge",
-    "hidden": false,
     "icon": {
       "item": "immersiveweapons:molten_block"
     },
-    "show_toast": true,
     "title": {
       "translate": "advancements.immersiveweapons.molten_tools.title"
     }

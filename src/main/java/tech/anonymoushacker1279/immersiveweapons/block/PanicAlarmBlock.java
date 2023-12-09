@@ -17,9 +17,10 @@ import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import tech.anonymoushacker1279.immersiveweapons.block.core.BasicOrientableBlock;
 import tech.anonymoushacker1279.immersiveweapons.blockentity.PanicAlarmBlockEntity;
 
-public class PanicAlarmBlock extends HorizontalDirectionalBlock implements SimpleWaterloggedBlock, EntityBlock {
+public class PanicAlarmBlock extends BasicOrientableBlock implements SimpleWaterloggedBlock, EntityBlock {
 
 	public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
 	private static final VoxelShape SHAPE_NORTH = Block.box(4.0D, 4.0D, 13.0D, 12.0D, 11.0D, 16.0D);

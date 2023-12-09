@@ -15,16 +15,13 @@
     }
   },
   "display": {
-    "announce_to_chat": true,
     "description": {
       "translate": "advancements.immersiveweapons.minuteman_statue.description"
     },
     "frame": "goal",
-    "hidden": false,
     "icon": {
       "item": "immersiveweapons:minuteman_statue"
     },
-    "show_toast": true,
     "title": {
       "translate": "advancements.immersiveweapons.minuteman_statue.title"
     }

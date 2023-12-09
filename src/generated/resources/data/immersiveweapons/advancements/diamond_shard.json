@@ -15,16 +15,13 @@
     }
   },
   "display": {
-    "announce_to_chat": true,
     "description": {
       "translate": "advancements.immersiveweapons.diamond_shard.description"
     },
     "frame": "goal",
-    "hidden": false,
     "icon": {
       "item": "immersiveweapons:diamond_shard"
     },
-    "show_toast": true,
     "title": {
       "translate": "advancements.immersiveweapons.diamond_shard.title"
     }

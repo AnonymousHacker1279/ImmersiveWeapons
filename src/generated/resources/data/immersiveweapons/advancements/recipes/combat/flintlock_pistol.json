@@ -30,6 +30,5 @@
     "recipes": [
       "immersiveweapons:flintlock_pistol"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

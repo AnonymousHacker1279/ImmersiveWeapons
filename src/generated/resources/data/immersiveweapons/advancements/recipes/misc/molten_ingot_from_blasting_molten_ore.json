@@ -30,6 +30,5 @@
     "recipes": [
       "immersiveweapons:molten_ingot_from_blasting_molten_ore"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

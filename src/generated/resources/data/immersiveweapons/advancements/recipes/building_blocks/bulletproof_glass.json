@@ -30,6 +30,5 @@
     "recipes": [
       "immersiveweapons:bulletproof_glass"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

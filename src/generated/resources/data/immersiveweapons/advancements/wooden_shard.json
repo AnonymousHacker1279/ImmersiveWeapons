@@ -15,16 +15,13 @@
     }
   },
   "display": {
-    "announce_to_chat": true,
     "description": {
       "translate": "advancements.immersiveweapons.wooden_shard.description"
     },
     "frame": "goal",
-    "hidden": false,
     "icon": {
       "item": "immersiveweapons:wooden_shard"
     },
-    "show_toast": true,
     "title": {
       "translate": "advancements.immersiveweapons.wooden_shard.title"
     }

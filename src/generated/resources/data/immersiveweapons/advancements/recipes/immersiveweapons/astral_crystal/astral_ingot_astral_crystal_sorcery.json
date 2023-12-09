@@ -1,11 +1,13 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "copper_ingot": {
+    "astral_crystal": {
       "conditions": {
         "items": [
           {
-            "tag": "forge:ingots/copper"
+            "items": [
+              "immersiveweapons:astral_crystal"
+            ]
           }
         ]
       },
@@ -13,21 +15,20 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "immersiveweapons:planks_tinkering"
+        "recipe": "immersiveweapons:astral_ingot_astral_crystal_sorcery"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
   },
   "requirements": [
     [
-      "copper_ingot",
-      "has_the_recipe"
+      "has_the_recipe",
+      "astral_crystal"
     ]
   ],
   "rewards": {
     "recipes": [
-      "immersiveweapons:planks_tinkering"
+      "immersiveweapons:astral_ingot_astral_crystal_sorcery"
     ]
-  },
-  "sends_telemetry_event": true
+  }
 }

@@ -30,6 +30,5 @@
     "recipes": [
       "immersiveweapons:cloud_marble_brick_slab_from_cloud_marble_bricks_stonecutting"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

@@ -12,8 +12,9 @@ import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.shapes.*;
+import tech.anonymoushacker1279.immersiveweapons.block.core.BasicOrientableBlock;
 
-public class FlagBlock extends HorizontalDirectionalBlock implements SimpleWaterloggedBlock {
+public class FlagBlock extends BasicOrientableBlock implements SimpleWaterloggedBlock {
 
 	public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
 	private static final VoxelShape SHAPE_POLE = Shapes.or(Block.box(7.0D, 0.0D, 7.0D, 9.0D, 14.0D, 9.0D),
@@ -35,7 +36,7 @@ public class FlagBlock extends HorizontalDirectionalBlock implements SimpleWater
 	 * @param builder the <code>StateDefinition.Builder</code> of the block
 	 */
 	@Override
-	protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
+	public void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
 		builder.add(FACING, WATERLOGGED);
 	}
 

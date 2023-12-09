@@ -28,6 +28,5 @@
     "recipes": [
       "immersiveweapons:bear_trap"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

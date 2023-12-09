@@ -30,6 +30,5 @@
     "recipes": [
       "immersiveweapons:smooth_blood_sandstone_stairs_from_smooth_blood_sandstone_stonecutting"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

@@ -2,20 +2,27 @@
   "parent": "immersiveweapons:entity_discovery",
   "criteria": {
     "discover": {
-      "trigger": "minecraft:entity_discovered"
+      "conditions": {
+        "entity": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "type": "immersiveweapons:rock_spider"
+            }
+          }
+        ]
+      },
+      "trigger": "immersiveweapons:entity_discovered"
     }
   },
   "display": {
-    "announce_to_chat": true,
     "description": {
       "translate": "advancements.immersiveweapons.discover_rock_spider.description"
     },
-    "frame": "task",
-    "hidden": false,
     "icon": {
       "item": "minecraft:spider_eye"
     },
-    "show_toast": true,
     "title": {
       "translate": "advancements.immersiveweapons.discover_rock_spider.title"
     }

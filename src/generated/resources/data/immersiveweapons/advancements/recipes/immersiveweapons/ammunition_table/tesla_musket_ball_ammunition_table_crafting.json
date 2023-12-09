@@ -15,21 +15,20 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "immersiveweapons:diamond_musket_ball_ammunition_table_crafting"
+        "recipe": "immersiveweapons:tesla_musket_ball_ammunition_table_crafting"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
   },
   "requirements": [
     [
-      "ammunition_table",
-      "has_the_recipe"
+      "has_the_recipe",
+      "ammunition_table"
     ]
   ],
   "rewards": {
     "recipes": [
-      "immersiveweapons:diamond_musket_ball_ammunition_table_crafting"
+      "immersiveweapons:tesla_musket_ball_ammunition_table_crafting"
     ]
-  },
-  "sends_telemetry_event": true
+  }
 }

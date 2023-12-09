@@ -6,6 +6,7 @@ import net.minecraft.core.RegistryAccess;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.ExtraCodecs;
 import net.minecraft.world.Container;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.*;
@@ -15,19 +16,22 @@ import net.minecraft.world.level.block.Blocks;
 import tech.anonymoushacker1279.immersiveweapons.init.RecipeSerializerRegistry;
 import tech.anonymoushacker1279.immersiveweapons.init.RecipeTypeRegistry;
 
-public record PistonCrushingRecipe(ResourceLocation block,
-                                   ItemStack result,
-                                   int minCount,
-                                   int maxCount) implements Recipe<Container> {
+public class PistonCrushingRecipe implements Recipe<Container> {
 
-	/**
-	 * Used to check if a recipe matches current crafting inventory.
-	 * Since this is never used in an inventory, it always returns false.
-	 *
-	 * @param container the <code>Container</code> instance
-	 * @param level     the current <code>Level</code>
-	 * @return boolean
-	 */
+	protected final ResourceLocation block;
+	protected final ItemStack result;
+	protected final int minCount;
+	protected final int maxCount;
+	protected final String group;
+
+	public PistonCrushingRecipe(String group, ResourceLocation block, ItemStack result, int minCount, int maxCount) {
+		this.block = block;
+		this.result = result;
+		this.minCount = minCount;
+		this.maxCount = maxCount;
+		this.group = group;
+	}
+
 	@Override
 	public boolean matches(Container container, Level level) {
 		return false;
@@ -47,23 +51,11 @@ public record PistonCrushingRecipe(ResourceLocation block,
 		return result.copy();
 	}
 
-	/**
-	 * Used to determine if this recipe can fit in a grid of the given width/height.
-	 *
-	 * @param width  the width of the grid
-	 * @param height the height of the grid
-	 * @return boolean
-	 */
 	@Override
 	public boolean canCraftInDimensions(int width, int height) {
 		return false;
 	}
 
-	/**
-	 * Get the recipe's block.
-	 *
-	 * @return Block
-	 */
 	public Block getBlock() {
 		return BuiltInRegistries.BLOCK.get(block);
 	}
@@ -75,34 +67,24 @@ public record PistonCrushingRecipe(ResourceLocation block,
 		return minCount + (int) (Math.random() * ((maxCount - minCount) + 1));
 	}
 
-	/**
-	 * Get the toast symbol.
-	 *
-	 * @return ItemStack
-	 */
 	@Override
 	public ItemStack getToastSymbol() {
 		return new ItemStack(Blocks.PISTON);
 	}
 
-	/**
-	 * Get the recipe serializer.
-	 *
-	 * @return RecipeSerializer
-	 */
 	@Override
 	public RecipeSerializer<?> getSerializer() {
 		return RecipeSerializerRegistry.PISTON_CRUSHING_RECIPE_SERIALIZER.get();
 	}
 
-	/**
-	 * Get the recipe type.
-	 *
-	 * @return RecipeType
-	 */
 	@Override
 	public RecipeType<?> getType() {
 		return RecipeTypeRegistry.PISTON_CRUSHING_RECIPE_TYPE.get();
+	}
+
+	@Override
+	public String getGroup() {
+		return group;
 	}
 
 	@Override
@@ -110,35 +92,48 @@ public record PistonCrushingRecipe(ResourceLocation block,
 		return true;
 	}
 
-	public static class Serializer implements RecipeSerializer<PistonCrushingRecipe> {
+	public interface Factory<T extends PistonCrushingRecipe> {
+		T create(String group, ResourceLocation block, ItemStack result, int minCount, int maxCount);
+	}
 
-		private static final Codec<PistonCrushingRecipe> CODEC = RecordCodecBuilder.create(
-				instance -> instance.group(
-								ResourceLocation.CODEC.fieldOf("block").forGetter(recipe -> recipe.block),
-								CraftingRecipeCodecs.ITEMSTACK_OBJECT_CODEC.fieldOf("result").forGetter(recipe -> recipe.result),
-								Codec.INT.fieldOf("minCount").forGetter(recipe -> recipe.minCount),
-								Codec.INT.fieldOf("maxCount").forGetter(recipe -> recipe.maxCount)
-						)
-						.apply(instance, PistonCrushingRecipe::new)
-		);
+	public static class Serializer<T extends PistonCrushingRecipe> implements RecipeSerializer<T> {
 
-		@Override
-		public Codec<PistonCrushingRecipe> codec() {
-			return CODEC;
+		private final PistonCrushingRecipe.Factory<T> factory;
+		private final Codec<T> codec;
+
+		public Serializer(PistonCrushingRecipe.Factory<T> factory) {
+			this.factory = factory;
+			this.codec = RecordCodecBuilder.create(
+					instance -> instance.group(
+									ExtraCodecs.strictOptionalField(Codec.STRING, "group", "").forGetter(recipe -> recipe.group),
+									ResourceLocation.CODEC.fieldOf("block").forGetter(recipe -> recipe.block),
+									ItemStack.SINGLE_ITEM_CODEC.fieldOf("result").forGetter(recipe -> recipe.result),
+									Codec.INT.fieldOf("minCount").forGetter(recipe -> recipe.minCount),
+									Codec.INT.fieldOf("maxCount").forGetter(recipe -> recipe.maxCount)
+							)
+							.apply(instance, factory::create)
+			);
 		}
 
 		@Override
-		public PistonCrushingRecipe fromNetwork(FriendlyByteBuf buffer) {
+		public Codec<T> codec() {
+			return codec;
+		}
+
+		@Override
+		public T fromNetwork(FriendlyByteBuf buffer) {
+			String group = buffer.readUtf();
 			ResourceLocation block = buffer.readResourceLocation();
 			ItemStack result = buffer.readItem();
 			int minCount = buffer.readInt();
 			int maxCount = buffer.readInt();
 
-			return new PistonCrushingRecipe(block, result, minCount, maxCount);
+			return factory.create(group, block, result, minCount, maxCount);
 		}
 
 		@Override
 		public void toNetwork(FriendlyByteBuf buffer, PistonCrushingRecipe recipe) {
+			buffer.writeUtf(recipe.group);
 			buffer.writeResourceLocation(recipe.block);
 			buffer.writeItem(recipe.result);
 			buffer.writeInt(recipe.minCount);

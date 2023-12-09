@@ -10,7 +10,7 @@ import tech.anonymoushacker1279.immersiveweapons.blockentity.CustomHangingSignBl
 public class CustomCeilingHangingSignBlock extends CeilingHangingSignBlock {
 
 	public CustomCeilingHangingSignBlock(Properties properties, WoodType type) {
-		super(properties, type);
+		super(type, properties);
 	}
 
 	@Override

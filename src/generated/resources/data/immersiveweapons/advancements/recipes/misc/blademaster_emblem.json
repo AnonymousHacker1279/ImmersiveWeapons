@@ -30,6 +30,5 @@
     "recipes": [
       "immersiveweapons:blademaster_emblem"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

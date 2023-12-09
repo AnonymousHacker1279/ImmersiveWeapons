@@ -15,16 +15,13 @@
     }
   },
   "display": {
-    "announce_to_chat": true,
     "description": {
       "translate": "advancements.immersiveweapons.mud.description"
     },
     "frame": "goal",
-    "hidden": false,
     "icon": {
       "item": "immersiveweapons:mud"
     },
-    "show_toast": true,
     "title": {
       "translate": "advancements.immersiveweapons.mud.title"
     }

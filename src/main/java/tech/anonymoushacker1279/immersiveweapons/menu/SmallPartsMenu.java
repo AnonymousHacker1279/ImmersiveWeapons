@@ -104,9 +104,9 @@ public class SmallPartsMenu extends AbstractContainerMenu {
 				.toList();
 
 		for (RecipeHolder<SmallPartsRecipe> recipe : recipes) {
-			for (Item craftable : recipe.value().craftables()) {
+			for (Item craftable : recipe.value().craftables) {
 				if (!(craftable == Items.AIR)) {
-					for (ItemStack material : recipe.value().material().getItems()) {
+					for (ItemStack material : recipe.value().material.getItems()) {
 						Pair<Item, Item> pair = new Pair<>(material.getItem(), craftable);
 						if (!ALL_CRAFTABLES.contains(pair)) {
 							ALL_CRAFTABLES.add(pair);

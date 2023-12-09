@@ -1,13 +1,11 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "ammunition_table": {
+    "copper_ingot": {
       "conditions": {
         "items": [
           {
-            "items": [
-              "immersiveweapons:ammunition_table"
-            ]
+            "tag": "forge:ingots/copper"
           }
         ]
       },
@@ -15,21 +13,20 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "immersiveweapons:astral_musket_ball_ammunition_table_crafting"
+        "recipe": "immersiveweapons:ingots_metal_tinkering"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
   },
   "requirements": [
     [
-      "ammunition_table",
-      "has_the_recipe"
+      "has_the_recipe",
+      "copper_ingot"
     ]
   ],
   "rewards": {
     "recipes": [
-      "immersiveweapons:astral_musket_ball_ammunition_table_crafting"
+      "immersiveweapons:ingots_metal_tinkering"
     ]
-  },
-  "sends_telemetry_event": true
+  }
 }

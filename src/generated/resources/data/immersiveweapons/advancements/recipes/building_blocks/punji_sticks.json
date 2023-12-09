@@ -30,6 +30,5 @@
     "recipes": [
       "immersiveweapons:punji_sticks"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

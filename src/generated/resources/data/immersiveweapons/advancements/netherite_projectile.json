@@ -27,16 +27,13 @@
     }
   },
   "display": {
-    "announce_to_chat": true,
     "description": {
       "translate": "advancements.immersiveweapons.netherite_projectile.description"
     },
     "frame": "challenge",
-    "hidden": false,
     "icon": {
       "item": "immersiveweapons:netherite_arrow"
     },
-    "show_toast": true,
     "title": {
       "translate": "advancements.immersiveweapons.netherite_projectile.title"
     }

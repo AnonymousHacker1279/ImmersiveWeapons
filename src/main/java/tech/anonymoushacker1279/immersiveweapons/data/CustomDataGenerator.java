@@ -1,8 +1,6 @@
 package tech.anonymoushacker1279.immersiveweapons.data;
 
 import net.minecraft.core.HolderLookup.Provider;
-import net.minecraft.core.RegistryAccess;
-import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.PackOutput;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -37,9 +35,6 @@ public class CustomDataGenerator {
 		PackOutput output = generator.getPackOutput();
 
 		CompletableFuture<Provider> lookupProvider = event.getLookupProvider();
-		CompletableFuture<Provider> lookupProviderWithOwn = lookupProvider.thenApply(provider ->
-				DatapackRegistriesGenerator.BUILDER.buildPatch(RegistryAccess.fromRegistryOfRegistries(BuiltInRegistries.REGISTRY), provider));
-
 		ExistingFileHelper existingFileHelper = event.getExistingFileHelper();
 
 		// Client data
@@ -57,8 +52,10 @@ public class CustomDataGenerator {
 		generator.addProvider(event.includeServer(), blockTagsGenerator);
 		generator.addProvider(event.includeServer(), new ItemTagsGenerator(output, lookupProvider, blockTagsGenerator, existingFileHelper));
 		generator.addProvider(event.includeServer(), new EntityTypeTagsGenerator(output, lookupProvider, existingFileHelper));
-		generator.addProvider(event.includeServer(), new DatapackRegistriesGenerator(output, lookupProvider));
-		generator.addProvider(event.includeServer(), new BiomeTagsGenerator(output, lookupProviderWithOwn, existingFileHelper));
-		generator.addProvider(event.includeServer(), new DamageTypeTagsGenerator(output, lookupProviderWithOwn, existingFileHelper));
+
+		DatapackRegistriesGenerator datapackRegistriesGenerator = new DatapackRegistriesGenerator(output, lookupProvider);
+		generator.addProvider(event.includeServer(), datapackRegistriesGenerator);
+		generator.addProvider(event.includeServer(), new BiomeTagsGenerator(output, datapackRegistriesGenerator.getRegistryProvider(), existingFileHelper));
+		generator.addProvider(event.includeServer(), new DamageTypeTagsGenerator(output, datapackRegistriesGenerator.getRegistryProvider(), existingFileHelper));
 	}
 }

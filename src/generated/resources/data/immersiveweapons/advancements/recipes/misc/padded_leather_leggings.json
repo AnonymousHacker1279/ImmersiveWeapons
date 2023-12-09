@@ -30,6 +30,5 @@
     "recipes": [
       "immersiveweapons:padded_leather_leggings"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

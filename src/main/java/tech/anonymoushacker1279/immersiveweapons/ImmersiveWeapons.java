@@ -8,7 +8,6 @@ import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.config.ModConfig.Type;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import org.slf4j.Logger;
-import tech.anonymoushacker1279.immersiveweapons.advancement.IWCriteriaTriggers;
 import tech.anonymoushacker1279.immersiveweapons.api.PluginHandler;
 import tech.anonymoushacker1279.immersiveweapons.block.properties.WoodTypes;
 import tech.anonymoushacker1279.immersiveweapons.config.*;
@@ -52,7 +51,6 @@ public class ImmersiveWeapons {
 	 */
 	public void setup(FMLCommonSetupEvent event) {
 		DispenserBehaviorRegistry.init();
-		IWCriteriaTriggers.init();
 		event.enqueueWork(() -> {
 			CustomBlockSetTypes.init();
 			WoodTypes.init();

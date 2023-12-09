@@ -6,7 +6,7 @@
         "items": [
           {
             "items": [
-              "minecraft:grass"
+              "minecraft:short_grass"
             ]
           }
         ]
@@ -30,6 +30,5 @@
     "recipes": [
       "immersiveweapons:pitfall"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

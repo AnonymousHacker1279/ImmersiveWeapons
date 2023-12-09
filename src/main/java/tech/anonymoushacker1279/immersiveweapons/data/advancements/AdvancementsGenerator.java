@@ -47,7 +47,7 @@ public class AdvancementsGenerator extends AdvancementProvider {
 								.withStyle(ChatFormatting.RED),
 						Component.translatable("advancements.immersiveweapons.root.description"),
 						new ResourceLocation(ImmersiveWeapons.MOD_ID, "textures/block/red_stained_bulletproof_glass.png"),
-						FrameType.TASK, false, false, false)
+						AdvancementType.TASK, false, false, false)
 				.addCriterion("exist",
 						PlayerTrigger.TriggerInstance.located(LocationPredicate.Builder.inDimension(Level.OVERWORLD)))
 				.save(consumer, "immersiveweapons:root");
@@ -58,7 +58,7 @@ public class AdvancementsGenerator extends AdvancementProvider {
 				.display(ItemRegistry.MOLTEN_SHARD.get(),
 						Component.translatable("advancements.immersiveweapons.molten_shard.title"),
 						Component.translatable("advancements.immersiveweapons.molten_shard.description"),
-						null, FrameType.TASK, true, true, false)
+						null, AdvancementType.TASK, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.MOLTEN_SHARD.get()))
 				.save(consumer, "immersiveweapons:molten_shard");
@@ -67,7 +67,7 @@ public class AdvancementsGenerator extends AdvancementProvider {
 				.display(ItemRegistry.MOLTEN_INGOT.get(),
 						Component.translatable("advancements.immersiveweapons.molten_ingot.title"),
 						Component.translatable("advancements.immersiveweapons.molten_ingot.description"),
-						null, FrameType.TASK, true, true, false)
+						null, AdvancementType.TASK, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.MOLTEN_INGOT.get()))
 				.save(consumer, "immersiveweapons:molten_ingot");
@@ -76,7 +76,7 @@ public class AdvancementsGenerator extends AdvancementProvider {
 				.display(ItemRegistry.MOLTEN_SWORD.get(),
 						Component.translatable("advancements.immersiveweapons.molten_sword.title"),
 						Component.translatable("advancements.immersiveweapons.molten_sword.description"),
-						null, FrameType.GOAL, true, true, false)
+						null, AdvancementType.GOAL, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.MOLTEN_SWORD.get()))
 				.rewards(AdvancementRewards.Builder.experience(35))
@@ -86,7 +86,7 @@ public class AdvancementsGenerator extends AdvancementProvider {
 				.display(ItemRegistry.MOLTEN_PICKAXE.get(),
 						Component.translatable("advancements.immersiveweapons.molten_pickaxe.title"),
 						Component.translatable("advancements.immersiveweapons.molten_pickaxe.description"),
-						null, FrameType.GOAL, true, true, false)
+						null, AdvancementType.GOAL, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.MOLTEN_PICKAXE.get()))
 				.rewards(AdvancementRewards.Builder.experience(35))
@@ -96,7 +96,7 @@ public class AdvancementsGenerator extends AdvancementProvider {
 				.display(ItemRegistry.MOLTEN_AXE.get(),
 						Component.translatable("advancements.immersiveweapons.molten_axe.title"),
 						Component.translatable("advancements.immersiveweapons.molten_axe.description"),
-						null, FrameType.GOAL, true, true, false)
+						null, AdvancementType.GOAL, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.MOLTEN_AXE.get()))
 				.rewards(AdvancementRewards.Builder.experience(35))
@@ -106,7 +106,7 @@ public class AdvancementsGenerator extends AdvancementProvider {
 				.display(ItemRegistry.MOLTEN_SHOVEL.get(),
 						Component.translatable("advancements.immersiveweapons.molten_shovel.title"),
 						Component.translatable("advancements.immersiveweapons.molten_shovel.description"),
-						null, FrameType.GOAL, true, true, false)
+						null, AdvancementType.GOAL, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.MOLTEN_SHOVEL.get()))
 				.rewards(AdvancementRewards.Builder.experience(35))
@@ -116,7 +116,7 @@ public class AdvancementsGenerator extends AdvancementProvider {
 				.display(ItemRegistry.MOLTEN_HOE.get(),
 						Component.translatable("advancements.immersiveweapons.molten_hoe.title"),
 						Component.translatable("advancements.immersiveweapons.molten_hoe.description"),
-						null, FrameType.CHALLENGE, true, true, false)
+						null, AdvancementType.CHALLENGE, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.MOLTEN_HOE.get()))
 				.rewards(AdvancementRewards.Builder.experience(50))
@@ -126,7 +126,7 @@ public class AdvancementsGenerator extends AdvancementProvider {
 				.display(BlockItemRegistry.MOLTEN_BLOCK_ITEM.get(),
 						Component.translatable("advancements.immersiveweapons.molten_tools.title"),
 						Component.translatable("advancements.immersiveweapons.molten_tools.description"),
-						null, FrameType.CHALLENGE, true, true, false)
+						null, AdvancementType.CHALLENGE, true, true, false)
 				.addCriterion("have_advancements",
 						PlayerTrigger.TriggerInstance.located(
 								EntityPredicate.Builder.entity().subPredicate(
@@ -151,7 +151,7 @@ public class AdvancementsGenerator extends AdvancementProvider {
 				.display(ItemRegistry.MOLTEN_HELMET.get(),
 						Component.translatable("advancements.immersiveweapons.molten_armor.title"),
 						Component.translatable("advancements.immersiveweapons.molten_armor.description"),
-						null, FrameType.GOAL, true, true, false)
+						null, AdvancementType.GOAL, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.MOLTEN_HELMET.get(),
 								ItemRegistry.MOLTEN_CHESTPLATE.get(), ItemRegistry.MOLTEN_LEGGINGS.get(),
@@ -163,7 +163,7 @@ public class AdvancementsGenerator extends AdvancementProvider {
 				.display(Items.LAVA_BUCKET,
 						Component.translatable("advancements.immersiveweapons.swim_in_lava.title"),
 						Component.translatable("advancements.immersiveweapons.swim_in_lava.description"),
-						null, FrameType.CHALLENGE, true, true, false)
+						null, AdvancementType.CHALLENGE, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.MOLTEN_HELMET.get(),
 								ItemRegistry.MOLTEN_CHESTPLATE.get(), ItemRegistry.MOLTEN_LEGGINGS.get(),
@@ -177,7 +177,7 @@ public class AdvancementsGenerator extends AdvancementProvider {
 				.display(ItemRegistry.CONDUCTIVE_ALLOY.get(),
 						Component.translatable("advancements.immersiveweapons.conductive_alloy.title"),
 						Component.translatable("advancements.immersiveweapons.conductive_alloy.description"),
-						null, FrameType.TASK, true, true, false)
+						null, AdvancementType.TASK, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.CONDUCTIVE_ALLOY.get()))
 				.save(consumer, "immersiveweapons:conductive_alloy");
@@ -186,7 +186,7 @@ public class AdvancementsGenerator extends AdvancementProvider {
 				.display(ItemRegistry.ELECTRIC_INGOT.get(),
 						Component.translatable("advancements.immersiveweapons.electric_ingot.title"),
 						Component.translatable("advancements.immersiveweapons.electric_ingot.description"),
-						null, FrameType.TASK, true, true, false)
+						null, AdvancementType.TASK, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.ELECTRIC_INGOT.get()))
 				.save(consumer, "immersiveweapons:electric_ingot");
@@ -195,7 +195,7 @@ public class AdvancementsGenerator extends AdvancementProvider {
 				.display(ItemRegistry.TESLA_INGOT.get(),
 						Component.translatable("advancements.immersiveweapons.tesla_ingot.title"),
 						Component.translatable("advancements.immersiveweapons.tesla_ingot.description"),
-						null, FrameType.TASK, true, true, false)
+						null, AdvancementType.TASK, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.TESLA_INGOT.get()))
 				.save(consumer, "immersiveweapons:tesla_ingot");
@@ -204,7 +204,7 @@ public class AdvancementsGenerator extends AdvancementProvider {
 				.display(ItemRegistry.TESLA_SWORD.get(),
 						Component.translatable("advancements.immersiveweapons.tesla_sword.title"),
 						Component.translatable("advancements.immersiveweapons.tesla_sword.description"),
-						null, FrameType.GOAL, true, true, false)
+						null, AdvancementType.GOAL, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.TESLA_SWORD.get()))
 				.rewards(AdvancementRewards.Builder.experience(35))
@@ -214,7 +214,7 @@ public class AdvancementsGenerator extends AdvancementProvider {
 				.display(ItemRegistry.TESLA_PICKAXE.get(),
 						Component.translatable("advancements.immersiveweapons.tesla_pickaxe.title"),
 						Component.translatable("advancements.immersiveweapons.tesla_pickaxe.description"),
-						null, FrameType.GOAL, true, true, false)
+						null, AdvancementType.GOAL, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.TESLA_PICKAXE.get()))
 				.rewards(AdvancementRewards.Builder.experience(35))
@@ -224,7 +224,7 @@ public class AdvancementsGenerator extends AdvancementProvider {
 				.display(ItemRegistry.TESLA_AXE.get(),
 						Component.translatable("advancements.immersiveweapons.tesla_axe.title"),
 						Component.translatable("advancements.immersiveweapons.tesla_axe.description"),
-						null, FrameType.GOAL, true, true, false)
+						null, AdvancementType.GOAL, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.TESLA_AXE.get()))
 				.rewards(AdvancementRewards.Builder.experience(35))
@@ -234,7 +234,7 @@ public class AdvancementsGenerator extends AdvancementProvider {
 				.display(ItemRegistry.TESLA_SHOVEL.get(),
 						Component.translatable("advancements.immersiveweapons.tesla_shovel.title"),
 						Component.translatable("advancements.immersiveweapons.tesla_shovel.description"),
-						null, FrameType.GOAL, true, true, false)
+						null, AdvancementType.GOAL, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.TESLA_SHOVEL.get()))
 				.rewards(AdvancementRewards.Builder.experience(35))
@@ -244,7 +244,7 @@ public class AdvancementsGenerator extends AdvancementProvider {
 				.display(ItemRegistry.TESLA_HOE.get(),
 						Component.translatable("advancements.immersiveweapons.tesla_hoe.title"),
 						Component.translatable("advancements.immersiveweapons.tesla_hoe.description"),
-						null, FrameType.CHALLENGE, true, true, false)
+						null, AdvancementType.CHALLENGE, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.TESLA_HOE.get()))
 				.rewards(AdvancementRewards.Builder.experience(65))
@@ -254,7 +254,7 @@ public class AdvancementsGenerator extends AdvancementProvider {
 				.display(BlockItemRegistry.TESLA_BLOCK_ITEM.get(),
 						Component.translatable("advancements.immersiveweapons.tesla_tools.title"),
 						Component.translatable("advancements.immersiveweapons.tesla_tools.description"),
-						null, FrameType.CHALLENGE, true, true, false)
+						null, AdvancementType.CHALLENGE, true, true, false)
 				.addCriterion("have_advancements",
 						PlayerTrigger.TriggerInstance.located(
 								EntityPredicate.Builder.entity().subPredicate(
@@ -279,7 +279,7 @@ public class AdvancementsGenerator extends AdvancementProvider {
 				.display(ItemRegistry.TESLA_HELMET.get(),
 						Component.translatable("advancements.immersiveweapons.tesla_armor.title"),
 						Component.translatable("advancements.immersiveweapons.tesla_armor.description"),
-						null, FrameType.GOAL, true, true, false)
+						null, AdvancementType.GOAL, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.TESLA_HELMET.get(),
 								ItemRegistry.TESLA_CHESTPLATE.get(), ItemRegistry.TESLA_LEGGINGS.get(),
@@ -291,7 +291,7 @@ public class AdvancementsGenerator extends AdvancementProvider {
 				.display(BlockRegistry.TESLA_SYNTHESIZER.get(),
 						Component.translatable("advancements.immersiveweapons.tesla_synthesizer.title"),
 						Component.translatable("advancements.immersiveweapons.tesla_synthesizer.description"),
-						null, FrameType.TASK, true, true, false)
+						null, AdvancementType.TASK, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(BlockRegistry.TESLA_SYNTHESIZER.get()))
 				.rewards(AdvancementRewards.Builder.experience(150))
@@ -302,7 +302,7 @@ public class AdvancementsGenerator extends AdvancementProvider {
 				.display(ItemRegistry.VENTUS_SHARD.get(),
 						Component.translatable("advancements.immersiveweapons.ventus_shard.title"),
 						Component.translatable("advancements.immersiveweapons.ventus_shard.description"),
-						null, FrameType.TASK, true, true, false)
+						null, AdvancementType.TASK, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.VENTUS_SHARD.get()))
 				.save(consumer, "immersiveweapons:ventus_shard");
@@ -311,7 +311,7 @@ public class AdvancementsGenerator extends AdvancementProvider {
 				.display(ItemRegistry.VENTUS_SWORD.get(),
 						Component.translatable("advancements.immersiveweapons.ventus_sword.title"),
 						Component.translatable("advancements.immersiveweapons.ventus_sword.description"),
-						null, FrameType.GOAL, true, true, false)
+						null, AdvancementType.GOAL, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.VENTUS_SWORD.get()))
 				.rewards(AdvancementRewards.Builder.experience(35))
@@ -321,7 +321,7 @@ public class AdvancementsGenerator extends AdvancementProvider {
 				.display(ItemRegistry.VENTUS_PICKAXE.get(),
 						Component.translatable("advancements.immersiveweapons.ventus_pickaxe.title"),
 						Component.translatable("advancements.immersiveweapons.ventus_pickaxe.description"),
-						null, FrameType.GOAL, true, true, false)
+						null, AdvancementType.GOAL, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.VENTUS_PICKAXE.get()))
 				.rewards(AdvancementRewards.Builder.experience(35))
@@ -331,7 +331,7 @@ public class AdvancementsGenerator extends AdvancementProvider {
 				.display(ItemRegistry.VENTUS_AXE.get(),
 						Component.translatable("advancements.immersiveweapons.ventus_axe.title"),
 						Component.translatable("advancements.immersiveweapons.ventus_axe.description"),
-						null, FrameType.GOAL, true, true, false)
+						null, AdvancementType.GOAL, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.VENTUS_AXE.get()))
 				.rewards(AdvancementRewards.Builder.experience(35))
@@ -341,7 +341,7 @@ public class AdvancementsGenerator extends AdvancementProvider {
 				.display(ItemRegistry.VENTUS_SHOVEL.get(),
 						Component.translatable("advancements.immersiveweapons.ventus_shovel.title"),
 						Component.translatable("advancements.immersiveweapons.ventus_shovel.description"),
-						null, FrameType.GOAL, true, true, false)
+						null, AdvancementType.GOAL, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.VENTUS_SHOVEL.get()))
 				.rewards(AdvancementRewards.Builder.experience(35))
@@ -351,7 +351,7 @@ public class AdvancementsGenerator extends AdvancementProvider {
 				.display(ItemRegistry.VENTUS_HOE.get(),
 						Component.translatable("advancements.immersiveweapons.ventus_hoe.title"),
 						Component.translatable("advancements.immersiveweapons.ventus_hoe.description"),
-						null, FrameType.CHALLENGE, true, true, false)
+						null, AdvancementType.CHALLENGE, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.VENTUS_HOE.get()))
 				.rewards(AdvancementRewards.Builder.experience(50))
@@ -361,7 +361,7 @@ public class AdvancementsGenerator extends AdvancementProvider {
 				.display(BlockItemRegistry.VENTUS_ORE_ITEM.get(),
 						Component.translatable("advancements.immersiveweapons.ventus_tools.title"),
 						Component.translatable("advancements.immersiveweapons.ventus_tools.description"),
-						null, FrameType.CHALLENGE, true, true, false)
+						null, AdvancementType.CHALLENGE, true, true, false)
 				.addCriterion("have_advancements",
 						PlayerTrigger.TriggerInstance.located(
 								EntityPredicate.Builder.entity().subPredicate(
@@ -386,7 +386,7 @@ public class AdvancementsGenerator extends AdvancementProvider {
 				.display(ItemRegistry.VENTUS_HELMET.get(),
 						Component.translatable("advancements.immersiveweapons.ventus_armor.title"),
 						Component.translatable("advancements.immersiveweapons.ventus_armor.description"),
-						null, FrameType.GOAL, true, true, false)
+						null, AdvancementType.GOAL, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.VENTUS_HELMET.get(),
 								ItemRegistry.VENTUS_CHESTPLATE.get(), ItemRegistry.VENTUS_LEGGINGS.get(),
@@ -398,7 +398,7 @@ public class AdvancementsGenerator extends AdvancementProvider {
 				.display(ItemRegistry.VENTUS_STAFF_CORE.get(),
 						Component.translatable("advancements.immersiveweapons.ventus_staff_core.title"),
 						Component.translatable("advancements.immersiveweapons.ventus_staff_core.description"),
-						null, FrameType.TASK, true, true, false)
+						null, AdvancementType.TASK, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.VENTUS_STAFF_CORE.get()))
 				.save(consumer, "immersiveweapons:ventus_staff_core");
@@ -407,7 +407,7 @@ public class AdvancementsGenerator extends AdvancementProvider {
 				.display(ItemRegistry.VENTUS_STAFF.get(),
 						Component.translatable("advancements.immersiveweapons.ventus_staff.title"),
 						Component.translatable("advancements.immersiveweapons.ventus_staff.description"),
-						null, FrameType.GOAL, true, true, false)
+						null, AdvancementType.GOAL, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.VENTUS_STAFF.get()))
 				.rewards(AdvancementRewards.Builder.experience(35))
@@ -418,7 +418,7 @@ public class AdvancementsGenerator extends AdvancementProvider {
 				.display(BlockRegistry.ASTRAL_CRYSTAL.get(),
 						Component.translatable("advancements.immersiveweapons.astral_crystal.title"),
 						Component.translatable("advancements.immersiveweapons.astral_crystal.description"),
-						null, FrameType.TASK, true, true, false)
+						null, AdvancementType.TASK, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(BlockRegistry.ASTRAL_CRYSTAL.get()))
 				.save(consumer, "immersiveweapons:astral_crystal");
@@ -427,7 +427,7 @@ public class AdvancementsGenerator extends AdvancementProvider {
 				.display(ItemRegistry.ASTRAL_INGOT.get(),
 						Component.translatable("advancements.immersiveweapons.astral_ingot.title"),
 						Component.translatable("advancements.immersiveweapons.astral_ingot.description"),
-						null, FrameType.TASK, true, true, false)
+						null, AdvancementType.TASK, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.ASTRAL_INGOT.get()))
 				.save(consumer, "immersiveweapons:astral_ingot");
@@ -436,7 +436,7 @@ public class AdvancementsGenerator extends AdvancementProvider {
 				.display(ItemRegistry.ASTRAL_SWORD.get(),
 						Component.translatable("advancements.immersiveweapons.astral_sword.title"),
 						Component.translatable("advancements.immersiveweapons.astral_sword.description"),
-						null, FrameType.GOAL, true, true, false)
+						null, AdvancementType.GOAL, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.ASTRAL_SWORD.get()))
 				.rewards(AdvancementRewards.Builder.experience(35))
@@ -446,7 +446,7 @@ public class AdvancementsGenerator extends AdvancementProvider {
 				.display(ItemRegistry.ASTRAL_PICKAXE.get(),
 						Component.translatable("advancements.immersiveweapons.astral_pickaxe.title"),
 						Component.translatable("advancements.immersiveweapons.astral_pickaxe.description"),
-						null, FrameType.GOAL, true, true, false)
+						null, AdvancementType.GOAL, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.ASTRAL_PICKAXE.get()))
 				.rewards(AdvancementRewards.Builder.experience(35))
@@ -456,7 +456,7 @@ public class AdvancementsGenerator extends AdvancementProvider {
 				.display(ItemRegistry.ASTRAL_AXE.get(),
 						Component.translatable("advancements.immersiveweapons.astral_axe.title"),
 						Component.translatable("advancements.immersiveweapons.astral_axe.description"),
-						null, FrameType.GOAL, true, true, false)
+						null, AdvancementType.GOAL, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.ASTRAL_AXE.get()))
 				.rewards(AdvancementRewards.Builder.experience(35))
@@ -466,7 +466,7 @@ public class AdvancementsGenerator extends AdvancementProvider {
 				.display(ItemRegistry.ASTRAL_SHOVEL.get(),
 						Component.translatable("advancements.immersiveweapons.astral_shovel.title"),
 						Component.translatable("advancements.immersiveweapons.astral_shovel.description"),
-						null, FrameType.GOAL, true, true, false)
+						null, AdvancementType.GOAL, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.ASTRAL_SHOVEL.get()))
 				.rewards(AdvancementRewards.Builder.experience(35))
@@ -476,7 +476,7 @@ public class AdvancementsGenerator extends AdvancementProvider {
 				.display(ItemRegistry.ASTRAL_HOE.get(),
 						Component.translatable("advancements.immersiveweapons.astral_hoe.title"),
 						Component.translatable("advancements.immersiveweapons.astral_hoe.description"),
-						null, FrameType.CHALLENGE, true, true, false)
+						null, AdvancementType.CHALLENGE, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.ASTRAL_HOE.get()))
 				.rewards(AdvancementRewards.Builder.experience(50))
@@ -486,7 +486,7 @@ public class AdvancementsGenerator extends AdvancementProvider {
 				.display(BlockItemRegistry.ASTRAL_BLOCK_ITEM.get(),
 						Component.translatable("advancements.immersiveweapons.astral_tools.title"),
 						Component.translatable("advancements.immersiveweapons.astral_tools.description"),
-						null, FrameType.CHALLENGE, true, true, false)
+						null, AdvancementType.CHALLENGE, true, true, false)
 				.addCriterion("have_advancements",
 						PlayerTrigger.TriggerInstance.located(
 								EntityPredicate.Builder.entity().subPredicate(
@@ -511,7 +511,7 @@ public class AdvancementsGenerator extends AdvancementProvider {
 				.display(ItemRegistry.ASTRAL_HELMET.get(),
 						Component.translatable("advancements.immersiveweapons.astral_armor.title"),
 						Component.translatable("advancements.immersiveweapons.astral_armor.description"),
-						null, FrameType.GOAL, true, true, false)
+						null, AdvancementType.GOAL, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.ASTRAL_HELMET.get(),
 								ItemRegistry.ASTRAL_CHESTPLATE.get(), ItemRegistry.ASTRAL_LEGGINGS.get(),
@@ -524,7 +524,7 @@ public class AdvancementsGenerator extends AdvancementProvider {
 				.display(BlockRegistry.STARSTORM_CRYSTAL.get(),
 						Component.translatable("advancements.immersiveweapons.starstorm_crystal.title"),
 						Component.translatable("advancements.immersiveweapons.starstorm_crystal.description"),
-						null, FrameType.TASK, true, true, false)
+						null, AdvancementType.TASK, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(BlockRegistry.STARSTORM_CRYSTAL.get()))
 				.save(consumer, "immersiveweapons:starstorm_crystal");
@@ -533,7 +533,7 @@ public class AdvancementsGenerator extends AdvancementProvider {
 				.display(ItemRegistry.STARSTORM_INGOT.get(),
 						Component.translatable("advancements.immersiveweapons.starstorm_ingot.title"),
 						Component.translatable("advancements.immersiveweapons.starstorm_ingot.description"),
-						null, FrameType.TASK, true, true, false)
+						null, AdvancementType.TASK, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.STARSTORM_INGOT.get()))
 				.save(consumer, "immersiveweapons:starstorm_ingot");
@@ -542,7 +542,7 @@ public class AdvancementsGenerator extends AdvancementProvider {
 				.display(ItemRegistry.STARSTORM_SWORD.get(),
 						Component.translatable("advancements.immersiveweapons.starstorm_sword.title"),
 						Component.translatable("advancements.immersiveweapons.starstorm_sword.description"),
-						null, FrameType.TASK, true, true, false)
+						null, AdvancementType.TASK, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.STARSTORM_SWORD.get()))
 				.rewards(AdvancementRewards.Builder.experience(35))
@@ -552,7 +552,7 @@ public class AdvancementsGenerator extends AdvancementProvider {
 				.display(ItemRegistry.STARSTORM_PICKAXE.get(),
 						Component.translatable("advancements.immersiveweapons.starstorm_pickaxe.title"),
 						Component.translatable("advancements.immersiveweapons.starstorm_pickaxe.description"),
-						null, FrameType.TASK, true, true, false)
+						null, AdvancementType.TASK, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.STARSTORM_PICKAXE.get()))
 				.rewards(AdvancementRewards.Builder.experience(35))
@@ -562,7 +562,7 @@ public class AdvancementsGenerator extends AdvancementProvider {
 				.display(ItemRegistry.STARSTORM_AXE.get(),
 						Component.translatable("advancements.immersiveweapons.starstorm_axe.title"),
 						Component.translatable("advancements.immersiveweapons.starstorm_axe.description"),
-						null, FrameType.TASK, true, true, false)
+						null, AdvancementType.TASK, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.STARSTORM_AXE.get()))
 				.rewards(AdvancementRewards.Builder.experience(35))
@@ -572,7 +572,7 @@ public class AdvancementsGenerator extends AdvancementProvider {
 				.display(ItemRegistry.STARSTORM_SHOVEL.get(),
 						Component.translatable("advancements.immersiveweapons.starstorm_shovel.title"),
 						Component.translatable("advancements.immersiveweapons.starstorm_shovel.description"),
-						null, FrameType.TASK, true, true, false)
+						null, AdvancementType.TASK, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.STARSTORM_SHOVEL.get()))
 				.rewards(AdvancementRewards.Builder.experience(35))
@@ -582,7 +582,7 @@ public class AdvancementsGenerator extends AdvancementProvider {
 				.display(ItemRegistry.STARSTORM_HOE.get(),
 						Component.translatable("advancements.immersiveweapons.starstorm_hoe.title"),
 						Component.translatable("advancements.immersiveweapons.starstorm_hoe.description"),
-						null, FrameType.CHALLENGE, true, true, false)
+						null, AdvancementType.CHALLENGE, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.STARSTORM_HOE.get()))
 				.rewards(AdvancementRewards.Builder.experience(50))
@@ -592,7 +592,7 @@ public class AdvancementsGenerator extends AdvancementProvider {
 				.display(BlockItemRegistry.STARSTORM_BLOCK_ITEM.get(),
 						Component.translatable("advancements.immersiveweapons.starstorm_tools.title"),
 						Component.translatable("advancements.immersiveweapons.starstorm_tools.description"),
-						null, FrameType.CHALLENGE, true, true, false)
+						null, AdvancementType.CHALLENGE, true, true, false)
 				.addCriterion("have_advancements",
 						PlayerTrigger.TriggerInstance.located(
 								EntityPredicate.Builder.entity().subPredicate(
@@ -617,7 +617,7 @@ public class AdvancementsGenerator extends AdvancementProvider {
 				.display(ItemRegistry.STARSTORM_HELMET.get(),
 						Component.translatable("advancements.immersiveweapons.starstorm_armor.title"),
 						Component.translatable("advancements.immersiveweapons.starstorm_armor.description"),
-						null, FrameType.GOAL, true, true, false)
+						null, AdvancementType.GOAL, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.STARSTORM_HELMET.get(),
 								ItemRegistry.STARSTORM_CHESTPLATE.get(), ItemRegistry.STARSTORM_LEGGINGS.get(),
@@ -630,7 +630,7 @@ public class AdvancementsGenerator extends AdvancementProvider {
 				.display(ItemRegistry.PADDED_LEATHER_HELMET.get(),
 						Component.translatable("advancements.immersiveweapons.padded_leather_armor.title"),
 						Component.translatable("advancements.immersiveweapons.padded_leather_armor.description"),
-						null, FrameType.GOAL, true, true, false)
+						null, AdvancementType.GOAL, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.PADDED_LEATHER_HELMET.get(),
 								ItemRegistry.PADDED_LEATHER_CHESTPLATE.get(), ItemRegistry.PADDED_LEATHER_LEGGINGS.get(),
@@ -643,7 +643,7 @@ public class AdvancementsGenerator extends AdvancementProvider {
 				.display(ItemRegistry.WOODEN_TOOL_ROD.get(),
 						Component.translatable("advancements.immersiveweapons.tool_rod.title"),
 						Component.translatable("advancements.immersiveweapons.tool_rod.description"),
-						null, FrameType.TASK, true, true, false)
+						null, AdvancementType.TASK, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.WOODEN_TOOL_ROD.get()))
 				.save(consumer, "immersiveweapons:tool_rod");
@@ -652,7 +652,7 @@ public class AdvancementsGenerator extends AdvancementProvider {
 				.display(ItemRegistry.IRON_PIKE.get(),
 						Component.translatable("advancements.immersiveweapons.pike.title"),
 						Component.translatable("advancements.immersiveweapons.pike.description"),
-						null, FrameType.TASK, true, true, false)
+						null, AdvancementType.TASK, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.WOODEN_PIKE.get()))
 				.addCriterion("hold1",
@@ -686,7 +686,7 @@ public class AdvancementsGenerator extends AdvancementProvider {
 				.display(ItemRegistry.STONE_SHARD.get(),
 						Component.translatable("advancements.immersiveweapons.shards.title"),
 						Component.translatable("advancements.immersiveweapons.shards.description"),
-						null, FrameType.TASK, false, false, false)
+						null, AdvancementType.TASK, false, false, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.MOLTEN_SHARD.get()))
 				.addCriterion("hold1",
@@ -708,7 +708,7 @@ public class AdvancementsGenerator extends AdvancementProvider {
 				.display(ItemRegistry.WOODEN_SHARD.get(),
 						Component.translatable("advancements.immersiveweapons.wooden_shard.title"),
 						Component.translatable("advancements.immersiveweapons.wooden_shard.description"),
-						null, FrameType.GOAL, true, true, false)
+						null, AdvancementType.GOAL, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.WOODEN_SHARD.get()))
 				.save(consumer, "immersiveweapons:wooden_shard");
@@ -717,7 +717,7 @@ public class AdvancementsGenerator extends AdvancementProvider {
 				.display(ItemRegistry.STONE_SHARD.get(),
 						Component.translatable("advancements.immersiveweapons.stone_shard.title"),
 						Component.translatable("advancements.immersiveweapons.stone_shard.description"),
-						null, FrameType.GOAL, true, true, false)
+						null, AdvancementType.GOAL, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.STONE_SHARD.get()))
 				.save(consumer, "immersiveweapons:stone_shard");
@@ -726,7 +726,7 @@ public class AdvancementsGenerator extends AdvancementProvider {
 				.display(ItemRegistry.DIAMOND_SHARD.get(),
 						Component.translatable("advancements.immersiveweapons.diamond_shard.title"),
 						Component.translatable("advancements.immersiveweapons.diamond_shard.description"),
-						null, FrameType.GOAL, true, true, false)
+						null, AdvancementType.GOAL, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.DIAMOND_SHARD.get()))
 				.save(consumer, "immersiveweapons:diamond_shard");
@@ -735,7 +735,7 @@ public class AdvancementsGenerator extends AdvancementProvider {
 				.display(ItemRegistry.OBSIDIAN_SHARD.get(),
 						Component.translatable("advancements.immersiveweapons.obsidian_shard.title"),
 						Component.translatable("advancements.immersiveweapons.obsidian_shard.description"),
-						null, FrameType.GOAL, true, true, false)
+						null, AdvancementType.GOAL, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.OBSIDIAN_SHARD.get()))
 				.save(consumer, "immersiveweapons:obsidian_shard");
@@ -744,7 +744,7 @@ public class AdvancementsGenerator extends AdvancementProvider {
 				.display(ItemRegistry.NETHERITE_ARROW.get(),
 						Component.translatable("advancements.immersiveweapons.netherite_projectile.title"),
 						Component.translatable("advancements.immersiveweapons.netherite_projectile.description"),
-						null, FrameType.CHALLENGE, true, true, false)
+						null, AdvancementType.CHALLENGE, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.NETHERITE_ARROW.get()))
 				.addCriterion("hold1",
@@ -756,7 +756,7 @@ public class AdvancementsGenerator extends AdvancementProvider {
 				.display(ItemRegistry.GOLDEN_MUSKET_BALL.get(),
 						Component.translatable("advancements.immersiveweapons.musket_ball.title"),
 						Component.translatable("advancements.immersiveweapons.musket_ball.description"),
-						null, FrameType.TASK, true, true, false)
+						null, AdvancementType.TASK, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemPredicate.Builder.item().of(IWItemTagGroups.MUSKET_BALLS).build()))
 				.save(consumer, "immersiveweapons:musket_ball");
@@ -765,7 +765,7 @@ public class AdvancementsGenerator extends AdvancementProvider {
 				.display(BlockRegistry.SMALL_PARTS_TABLE.get(),
 						Component.translatable("advancements.immersiveweapons.small_parts_table.title"),
 						Component.translatable("advancements.immersiveweapons.small_parts_table.description"),
-						null, FrameType.TASK, true, true, false)
+						null, AdvancementType.TASK, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(BlockRegistry.SMALL_PARTS_TABLE.get()))
 				.save(consumer, "immersiveweapons:small_parts_table");
@@ -774,7 +774,7 @@ public class AdvancementsGenerator extends AdvancementProvider {
 				.display(ItemRegistry.FLINTLOCK_PISTOL.get(),
 						Component.translatable("advancements.immersiveweapons.flintlock_pistol.title"),
 						Component.translatable("advancements.immersiveweapons.flintlock_pistol.description"),
-						null, FrameType.GOAL, true, true, false)
+						null, AdvancementType.GOAL, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.FLINTLOCK_PISTOL.get()))
 				.save(consumer, "immersiveweapons:flintlock_pistol");
@@ -783,7 +783,7 @@ public class AdvancementsGenerator extends AdvancementProvider {
 				.display(ItemRegistry.BLUNDERBUSS.get(),
 						Component.translatable("advancements.immersiveweapons.blunderbuss.title"),
 						Component.translatable("advancements.immersiveweapons.blunderbuss.description"),
-						null, FrameType.GOAL, true, true, false)
+						null, AdvancementType.GOAL, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.BLUNDERBUSS.get()))
 				.save(consumer, "immersiveweapons:blunderbuss");
@@ -792,7 +792,7 @@ public class AdvancementsGenerator extends AdvancementProvider {
 				.display(ItemRegistry.FLARE_GUN.get(),
 						Component.translatable("advancements.immersiveweapons.flare_gun.title"),
 						Component.translatable("advancements.immersiveweapons.flare_gun.description"),
-						null, FrameType.GOAL, true, true, false)
+						null, AdvancementType.GOAL, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.FLARE_GUN.get()))
 				.save(consumer, "immersiveweapons:flare_gun");
@@ -801,7 +801,7 @@ public class AdvancementsGenerator extends AdvancementProvider {
 				.display(ItemRegistry.MUSKET.get(),
 						Component.translatable("advancements.immersiveweapons.musket.title"),
 						Component.translatable("advancements.immersiveweapons.musket.description"),
-						null, FrameType.GOAL, true, true, false)
+						null, AdvancementType.GOAL, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.MUSKET.get()))
 				.addCriterion("hold1",
@@ -813,7 +813,7 @@ public class AdvancementsGenerator extends AdvancementProvider {
 				.display(ItemRegistry.HAND_CANNON.get(),
 						Component.translatable("advancements.immersiveweapons.hand_cannon.title"),
 						Component.translatable("advancements.immersiveweapons.hand_cannon.description"),
-						null, FrameType.GOAL, true, true, false)
+						null, AdvancementType.GOAL, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.HAND_CANNON.get()))
 				.save(consumer, "immersiveweapons:hand_cannon");
@@ -822,7 +822,7 @@ public class AdvancementsGenerator extends AdvancementProvider {
 				.display(ItemRegistry.SMOKE_GRENADE.get(),
 						Component.translatable("advancements.immersiveweapons.smoke_grenade.title"),
 						Component.translatable("advancements.immersiveweapons.smoke_grenade.description"),
-						null, FrameType.GOAL, true, true, false)
+						null, AdvancementType.GOAL, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.SMOKE_GRENADE_GREEN.get()))
 				.save(consumer, "immersiveweapons:smoke_grenade");
@@ -831,7 +831,7 @@ public class AdvancementsGenerator extends AdvancementProvider {
 				.display(ItemRegistry.BOTTLE_OF_ALCOHOL.get(),
 						Component.translatable("advancements.immersiveweapons.bottle_of_alcohol.title"),
 						Component.translatable("advancements.immersiveweapons.bottle_of_alcohol.description"),
-						null, FrameType.TASK, true, true, false)
+						null, AdvancementType.TASK, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.BOTTLE_OF_ALCOHOL.get()))
 				.save(consumer, "immersiveweapons:bottle_of_alcohol");
@@ -839,7 +839,7 @@ public class AdvancementsGenerator extends AdvancementProvider {
 				.display(ItemRegistry.MOLOTOV_COCKTAIL.get(),
 						Component.translatable("advancements.immersiveweapons.molotov_cocktail.title"),
 						Component.translatable("advancements.immersiveweapons.molotov_cocktail.description"),
-						null, FrameType.GOAL, true, true, false)
+						null, AdvancementType.GOAL, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.MOLOTOV_COCKTAIL.get()))
 				.save(consumer, "immersiveweapons:molotov_cocktail");
@@ -849,7 +849,7 @@ public class AdvancementsGenerator extends AdvancementProvider {
 				.display(ItemRegistry.BANDAGE.get(),
 						Component.translatable("advancements.immersiveweapons.bandage.title"),
 						Component.translatable("advancements.immersiveweapons.bandage.description"),
-						null, FrameType.TASK, true, true, false)
+						null, AdvancementType.TASK, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.BANDAGE.get()))
 				.save(consumer, "immersiveweapons:bandage");
@@ -857,7 +857,7 @@ public class AdvancementsGenerator extends AdvancementProvider {
 				.display(ItemRegistry.FIRST_AID_KIT.get(),
 						Component.translatable("advancements.immersiveweapons.first_aid_kit.title"),
 						Component.translatable("advancements.immersiveweapons.first_aid_kit.description"),
-						null, FrameType.GOAL, true, true, false)
+						null, AdvancementType.GOAL, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.FIRST_AID_KIT.get()))
 				.save(consumer, "immersiveweapons:first_aid_kit");
@@ -867,7 +867,7 @@ public class AdvancementsGenerator extends AdvancementProvider {
 				.display(ItemRegistry.IRON_GAUNTLET.get(),
 						Component.translatable("advancements.immersiveweapons.gauntlet.title"),
 						Component.translatable("advancements.immersiveweapons.gauntlet.description"),
-						null, FrameType.TASK, true, true, false)
+						null, AdvancementType.TASK, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.WOODEN_GAUNTLET.get()))
 				.addCriterion("hold1",
@@ -902,7 +902,7 @@ public class AdvancementsGenerator extends AdvancementProvider {
 				.display(Items.IRON_INGOT,
 						Component.translatable("advancements.immersiveweapons.ingots.title"),
 						Component.translatable("advancements.immersiveweapons.ingots.description"),
-						null, FrameType.TASK, false, false, false)
+						null, AdvancementType.TASK, false, false, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(
 								ItemPredicate.Builder.item().of(Tags.Items.INGOTS).build())
@@ -913,7 +913,7 @@ public class AdvancementsGenerator extends AdvancementProvider {
 				.display(Items.GOLD_NUGGET,
 						Component.translatable("advancements.immersiveweapons.nuggets.title"),
 						Component.translatable("advancements.immersiveweapons.nuggets.description"),
-						null, FrameType.TASK, false, false, false)
+						null, AdvancementType.TASK, false, false, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(
 								ItemPredicate.Builder.item().of(Tags.Items.NUGGETS).build())
@@ -925,7 +925,7 @@ public class AdvancementsGenerator extends AdvancementProvider {
 				.display(Items.COPPER_INGOT,
 						Component.translatable("advancements.immersiveweapons.copper_ingot.title"),
 						Component.translatable("advancements.immersiveweapons.copper_ingot.description"),
-						null, FrameType.TASK, true, true, false)
+						null, AdvancementType.TASK, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(Items.COPPER_INGOT))
 				.save(consumer, "immersiveweapons:copper_ingot");
@@ -934,7 +934,7 @@ public class AdvancementsGenerator extends AdvancementProvider {
 				.display(ItemRegistry.COPPER_SWORD.get(),
 						Component.translatable("advancements.immersiveweapons.copper_sword.title"),
 						Component.translatable("advancements.immersiveweapons.copper_sword.description"),
-						null, FrameType.TASK, true, true, false)
+						null, AdvancementType.TASK, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.COPPER_SWORD.get()))
 				.save(consumer, "immersiveweapons:copper_sword");
@@ -943,7 +943,7 @@ public class AdvancementsGenerator extends AdvancementProvider {
 				.display(ItemRegistry.COPPER_PICKAXE.get(),
 						Component.translatable("advancements.immersiveweapons.copper_pickaxe.title"),
 						Component.translatable("advancements.immersiveweapons.copper_pickaxe.description"),
-						null, FrameType.TASK, true, true, false)
+						null, AdvancementType.TASK, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.COPPER_PICKAXE.get()))
 				.save(consumer, "immersiveweapons:copper_pickaxe");
@@ -952,7 +952,7 @@ public class AdvancementsGenerator extends AdvancementProvider {
 				.display(ItemRegistry.COPPER_AXE.get(),
 						Component.translatable("advancements.immersiveweapons.copper_axe.title"),
 						Component.translatable("advancements.immersiveweapons.copper_axe.description"),
-						null, FrameType.GOAL, true, true, false)
+						null, AdvancementType.GOAL, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.COPPER_AXE.get()))
 				.save(consumer, "immersiveweapons:copper_axe");
@@ -961,7 +961,7 @@ public class AdvancementsGenerator extends AdvancementProvider {
 				.display(ItemRegistry.COPPER_SHOVEL.get(),
 						Component.translatable("advancements.immersiveweapons.copper_shovel.title"),
 						Component.translatable("advancements.immersiveweapons.copper_shovel.description"),
-						null, FrameType.GOAL, true, true, false)
+						null, AdvancementType.GOAL, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.COPPER_SHOVEL.get()))
 				.save(consumer, "immersiveweapons:copper_shovel");
@@ -970,7 +970,7 @@ public class AdvancementsGenerator extends AdvancementProvider {
 				.display(ItemRegistry.COPPER_HOE.get(),
 						Component.translatable("advancements.immersiveweapons.copper_hoe.title"),
 						Component.translatable("advancements.immersiveweapons.copper_hoe.description"),
-						null, FrameType.GOAL, true, true, false)
+						null, AdvancementType.GOAL, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.COPPER_HOE.get()))
 				.save(consumer, "immersiveweapons:copper_hoe");
@@ -979,7 +979,7 @@ public class AdvancementsGenerator extends AdvancementProvider {
 				.display(Items.COPPER_BLOCK,
 						Component.translatable("advancements.immersiveweapons.copper_tools.title"),
 						Component.translatable("advancements.immersiveweapons.copper_tools.description"),
-						null, FrameType.CHALLENGE, true, true, false)
+						null, AdvancementType.CHALLENGE, true, true, false)
 				.addCriterion("have_advancements",
 						PlayerTrigger.TriggerInstance.located(
 								EntityPredicate.Builder.entity().subPredicate(
@@ -1005,7 +1005,7 @@ public class AdvancementsGenerator extends AdvancementProvider {
 				.display(ItemRegistry.COBALT_INGOT.get(),
 						Component.translatable("advancements.immersiveweapons.cobalt_ingot.title"),
 						Component.translatable("advancements.immersiveweapons.cobalt_ingot.description"),
-						null, FrameType.TASK, true, true, false)
+						null, AdvancementType.TASK, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.COBALT_INGOT.get()))
 				.save(consumer, "immersiveweapons:cobalt_ingot");
@@ -1014,7 +1014,7 @@ public class AdvancementsGenerator extends AdvancementProvider {
 				.display(ItemRegistry.COBALT_SWORD.get(),
 						Component.translatable("advancements.immersiveweapons.cobalt_sword.title"),
 						Component.translatable("advancements.immersiveweapons.cobalt_sword.description"),
-						null, FrameType.TASK, true, true, false)
+						null, AdvancementType.TASK, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.COBALT_SWORD.get()))
 				.save(consumer, "immersiveweapons:cobalt_sword");
@@ -1023,7 +1023,7 @@ public class AdvancementsGenerator extends AdvancementProvider {
 				.display(ItemRegistry.COBALT_PICKAXE.get(),
 						Component.translatable("advancements.immersiveweapons.cobalt_pickaxe.title"),
 						Component.translatable("advancements.immersiveweapons.cobalt_pickaxe.description"),
-						null, FrameType.TASK, true, true, false)
+						null, AdvancementType.TASK, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.COBALT_PICKAXE.get()))
 				.save(consumer, "immersiveweapons:cobalt_pickaxe");
@@ -1032,7 +1032,7 @@ public class AdvancementsGenerator extends AdvancementProvider {
 				.display(ItemRegistry.COBALT_AXE.get(),
 						Component.translatable("advancements.immersiveweapons.cobalt_axe.title"),
 						Component.translatable("advancements.immersiveweapons.cobalt_axe.description"),
-						null, FrameType.GOAL, true, true, false)
+						null, AdvancementType.GOAL, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.COBALT_AXE.get()))
 				.save(consumer, "immersiveweapons:cobalt_axe");
@@ -1041,7 +1041,7 @@ public class AdvancementsGenerator extends AdvancementProvider {
 				.display(ItemRegistry.COBALT_SHOVEL.get(),
 						Component.translatable("advancements.immersiveweapons.cobalt_shovel.title"),
 						Component.translatable("advancements.immersiveweapons.cobalt_shovel.description"),
-						null, FrameType.GOAL, true, true, false)
+						null, AdvancementType.GOAL, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.COBALT_SHOVEL.get()))
 				.save(consumer, "immersiveweapons:cobalt_shovel");
@@ -1050,7 +1050,7 @@ public class AdvancementsGenerator extends AdvancementProvider {
 				.display(ItemRegistry.COBALT_HOE.get(),
 						Component.translatable("advancements.immersiveweapons.cobalt_hoe.title"),
 						Component.translatable("advancements.immersiveweapons.cobalt_hoe.description"),
-						null, FrameType.GOAL, true, true, false)
+						null, AdvancementType.GOAL, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.COBALT_HOE.get()))
 				.save(consumer, "immersiveweapons:cobalt_hoe");
@@ -1059,7 +1059,7 @@ public class AdvancementsGenerator extends AdvancementProvider {
 				.display(BlockItemRegistry.COBALT_BLOCK_ITEM.get(),
 						Component.translatable("advancements.immersiveweapons.cobalt_tools.title"),
 						Component.translatable("advancements.immersiveweapons.cobalt_tools.description"),
-						null, FrameType.CHALLENGE, true, true, false)
+						null, AdvancementType.CHALLENGE, true, true, false)
 				.addCriterion("have_advancements",
 						PlayerTrigger.TriggerInstance.located(
 								EntityPredicate.Builder.entity().subPredicate(
@@ -1085,7 +1085,7 @@ public class AdvancementsGenerator extends AdvancementProvider {
 				.display(Items.GOLD_INGOT,
 						Component.translatable("advancements.immersiveweapons.gold_ingot.title"),
 						Component.translatable("advancements.immersiveweapons.gold_ingot.description"),
-						null, FrameType.TASK, true, true, false)
+						null, AdvancementType.TASK, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(Items.GOLD_INGOT))
 				.save(consumer, "immersiveweapons:gold_ingot");
@@ -1094,7 +1094,7 @@ public class AdvancementsGenerator extends AdvancementProvider {
 				.display(Items.NETHERITE_INGOT,
 						Component.translatable("advancements.immersiveweapons.netherite_ingot.title"),
 						Component.translatable("advancements.immersiveweapons.netherite_ingot.description"),
-						null, FrameType.TASK, true, true, false)
+						null, AdvancementType.TASK, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(Items.NETHERITE_INGOT))
 				.save(consumer, "immersiveweapons:netherite_ingot");
@@ -1104,22 +1104,22 @@ public class AdvancementsGenerator extends AdvancementProvider {
 				.display(Items.CREEPER_HEAD,
 						Component.translatable("advancements.immersiveweapons.entity_discovery.title"),
 						Component.translatable("advancements.immersiveweapons.entity_discovery.description"),
-						null, FrameType.GOAL, true, true, false)
-				.addCriterion("discover_minuteman", EntityDiscoveredTrigger.create(EntityRegistry.MINUTEMAN_ENTITY.get()))
-				.addCriterion("discover_field_medic", EntityDiscoveredTrigger.create(EntityRegistry.FIELD_MEDIC_ENTITY.get()))
-				.addCriterion("discover_dying_soldier", EntityDiscoveredTrigger.create(EntityRegistry.DYING_SOLDIER_ENTITY.get()))
-				.addCriterion("discover_wandering_warrior", EntityDiscoveredTrigger.create(EntityRegistry.WANDERING_WARRIOR_ENTITY.get()))
-				.addCriterion("discover_hans", EntityDiscoveredTrigger.create(EntityRegistry.HANS_ENTITY.get()))
-				.addCriterion("discover_super_hans", EntityDiscoveredTrigger.create(EntityRegistry.SUPER_HANS_ENTITY.get()))
-				.addCriterion("discover_lava_revenant", EntityDiscoveredTrigger.create(EntityRegistry.LAVA_REVENANT_ENTITY.get()))
-				.addCriterion("discover_rock_spider", EntityDiscoveredTrigger.create(EntityRegistry.ROCK_SPIDER_ENTITY.get()))
-				.addCriterion("discover_celestial_tower", EntityDiscoveredTrigger.create(EntityRegistry.CELESTIAL_TOWER_ENTITY.get()))
-				.addCriterion("discover_starmite", EntityDiscoveredTrigger.create(EntityRegistry.STARMITE_ENTITY.get()))
-				.addCriterion("discover_storm_creeper", EntityDiscoveredTrigger.create(EntityRegistry.STORM_CREEPER_ENTITY.get()))
-				.addCriterion("discover_evil_eye", EntityDiscoveredTrigger.create(EntityRegistry.EVIL_EYE_ENTITY.get()))
-				.addCriterion("discover_star_wolf", EntityDiscoveredTrigger.create(EntityRegistry.STAR_WOLF_ENTITY.get()))
-				.addCriterion("discover_skygazer", EntityDiscoveredTrigger.create(EntityRegistry.SKYGAZER_ENTITY.get()))
-				.addCriterion("discover_skeleton_merchant", EntityDiscoveredTrigger.create(EntityRegistry.SKELETON_MERCHANT_ENTITY.get()))
+						null, AdvancementType.GOAL, true, true, false)
+				.addCriterion("discover_minuteman", EntityDiscoveredTrigger.TriggerInstance.discoveredEntity(EntityRegistry.MINUTEMAN_ENTITY.get()))
+				.addCriterion("discover_field_medic", EntityDiscoveredTrigger.TriggerInstance.discoveredEntity(EntityRegistry.FIELD_MEDIC_ENTITY.get()))
+				.addCriterion("discover_dying_soldier", EntityDiscoveredTrigger.TriggerInstance.discoveredEntity(EntityRegistry.DYING_SOLDIER_ENTITY.get()))
+				.addCriterion("discover_wandering_warrior", EntityDiscoveredTrigger.TriggerInstance.discoveredEntity(EntityRegistry.WANDERING_WARRIOR_ENTITY.get()))
+				.addCriterion("discover_hans", EntityDiscoveredTrigger.TriggerInstance.discoveredEntity(EntityRegistry.HANS_ENTITY.get()))
+				.addCriterion("discover_super_hans", EntityDiscoveredTrigger.TriggerInstance.discoveredEntity(EntityRegistry.SUPER_HANS_ENTITY.get()))
+				.addCriterion("discover_lava_revenant", EntityDiscoveredTrigger.TriggerInstance.discoveredEntity(EntityRegistry.LAVA_REVENANT_ENTITY.get()))
+				.addCriterion("discover_rock_spider", EntityDiscoveredTrigger.TriggerInstance.discoveredEntity(EntityRegistry.ROCK_SPIDER_ENTITY.get()))
+				.addCriterion("discover_celestial_tower", EntityDiscoveredTrigger.TriggerInstance.discoveredEntity(EntityRegistry.CELESTIAL_TOWER_ENTITY.get()))
+				.addCriterion("discover_starmite", EntityDiscoveredTrigger.TriggerInstance.discoveredEntity(EntityRegistry.STARMITE_ENTITY.get()))
+				.addCriterion("discover_storm_creeper", EntityDiscoveredTrigger.TriggerInstance.discoveredEntity(EntityRegistry.STORM_CREEPER_ENTITY.get()))
+				.addCriterion("discover_evil_eye", EntityDiscoveredTrigger.TriggerInstance.discoveredEntity(EntityRegistry.EVIL_EYE_ENTITY.get()))
+				.addCriterion("discover_star_wolf", EntityDiscoveredTrigger.TriggerInstance.discoveredEntity(EntityRegistry.STAR_WOLF_ENTITY.get()))
+				.addCriterion("discover_skygazer", EntityDiscoveredTrigger.TriggerInstance.discoveredEntity(EntityRegistry.SKYGAZER_ENTITY.get()))
+				.addCriterion("discover_skeleton_merchant", EntityDiscoveredTrigger.TriggerInstance.discoveredEntity(EntityRegistry.SKELETON_MERCHANT_ENTITY.get()))
 				.rewards(AdvancementRewards.Builder.experience(150))
 				.save(consumer, "immersiveweapons:entity_discovery");
 
@@ -1127,8 +1127,8 @@ public class AdvancementsGenerator extends AdvancementProvider {
 				.display(BlockItemRegistry.MINUTEMAN_HEAD_ITEM.get(),
 						Component.translatable("advancements.immersiveweapons.discover_minuteman.title"),
 						Component.translatable("advancements.immersiveweapons.discover_minuteman.description"),
-						null, FrameType.TASK, true, true, false)
-				.addCriterion("discover", EntityDiscoveredTrigger.create(EntityRegistry.MINUTEMAN_ENTITY.get()))
+						null, AdvancementType.TASK, true, true, false)
+				.addCriterion("discover", EntityDiscoveredTrigger.TriggerInstance.discoveredEntity(EntityRegistry.MINUTEMAN_ENTITY.get()))
 				.rewards(AdvancementRewards.Builder.experience(20))
 				.save(consumer, "immersiveweapons:discover_minuteman");
 
@@ -1136,8 +1136,8 @@ public class AdvancementsGenerator extends AdvancementProvider {
 				.display(BlockItemRegistry.FIELD_MEDIC_HEAD_ITEM.get(),
 						Component.translatable("advancements.immersiveweapons.discover_field_medic.title"),
 						Component.translatable("advancements.immersiveweapons.discover_field_medic.description"),
-						null, FrameType.TASK, true, true, false)
-				.addCriterion("discover", EntityDiscoveredTrigger.create(EntityRegistry.FIELD_MEDIC_ENTITY.get()))
+						null, AdvancementType.TASK, true, true, false)
+				.addCriterion("discover", EntityDiscoveredTrigger.TriggerInstance.discoveredEntity(EntityRegistry.FIELD_MEDIC_ENTITY.get()))
 				.rewards(AdvancementRewards.Builder.experience(20))
 				.save(consumer, "immersiveweapons:discover_field_medic");
 
@@ -1145,8 +1145,8 @@ public class AdvancementsGenerator extends AdvancementProvider {
 				.display(BlockItemRegistry.DYING_SOLDIER_HEAD_ITEM.get(),
 						Component.translatable("advancements.immersiveweapons.discover_dying_soldier.title"),
 						Component.translatable("advancements.immersiveweapons.discover_dying_soldier.description"),
-						null, FrameType.TASK, true, true, false)
-				.addCriterion("discover", EntityDiscoveredTrigger.create(EntityRegistry.DYING_SOLDIER_ENTITY.get()))
+						null, AdvancementType.TASK, true, true, false)
+				.addCriterion("discover", EntityDiscoveredTrigger.TriggerInstance.discoveredEntity(EntityRegistry.DYING_SOLDIER_ENTITY.get()))
 				.rewards(AdvancementRewards.Builder.experience(20))
 				.save(consumer, "immersiveweapons:discover_dying_soldier");
 
@@ -1154,8 +1154,8 @@ public class AdvancementsGenerator extends AdvancementProvider {
 				.display(BlockItemRegistry.WANDERING_WARRIOR_HEAD_ITEM.get(),
 						Component.translatable("advancements.immersiveweapons.discover_wandering_warrior.title"),
 						Component.translatable("advancements.immersiveweapons.discover_wandering_warrior.description"),
-						null, FrameType.TASK, true, true, false)
-				.addCriterion("discover", EntityDiscoveredTrigger.create(EntityRegistry.WANDERING_WARRIOR_ENTITY.get()))
+						null, AdvancementType.TASK, true, true, false)
+				.addCriterion("discover", EntityDiscoveredTrigger.TriggerInstance.discoveredEntity(EntityRegistry.WANDERING_WARRIOR_ENTITY.get()))
 				.rewards(AdvancementRewards.Builder.experience(20))
 				.save(consumer, "immersiveweapons:discover_wandering_warrior");
 
@@ -1163,8 +1163,8 @@ public class AdvancementsGenerator extends AdvancementProvider {
 				.display(BlockItemRegistry.HANS_HEAD_ITEM.get(),
 						Component.translatable("advancements.immersiveweapons.discover_hans.title"),
 						Component.translatable("advancements.immersiveweapons.discover_hans.description"),
-						null, FrameType.TASK, true, true, false)
-				.addCriterion("discover", EntityDiscoveredTrigger.create(EntityRegistry.HANS_ENTITY.get()))
+						null, AdvancementType.TASK, true, true, false)
+				.addCriterion("discover", EntityDiscoveredTrigger.TriggerInstance.discoveredEntity(EntityRegistry.HANS_ENTITY.get()))
 				.rewards(AdvancementRewards.Builder.experience(20))
 				.save(consumer, "immersiveweapons:discover_hans");
 
@@ -1172,8 +1172,8 @@ public class AdvancementsGenerator extends AdvancementProvider {
 				.display(BlockItemRegistry.HANS_HEAD_ITEM.get(),
 						Component.translatable("advancements.immersiveweapons.discover_super_hans.title"),
 						Component.translatable("advancements.immersiveweapons.discover_super_hans.description"),
-						null, FrameType.TASK, true, true, false)
-				.addCriterion("discover", EntityDiscoveredTrigger.create(EntityRegistry.SUPER_HANS_ENTITY.get()))
+						null, AdvancementType.TASK, true, true, false)
+				.addCriterion("discover", EntityDiscoveredTrigger.TriggerInstance.discoveredEntity(EntityRegistry.SUPER_HANS_ENTITY.get()))
 				.rewards(AdvancementRewards.Builder.experience(20))
 				.save(consumer, "immersiveweapons:discover_super_hans");
 
@@ -1181,8 +1181,8 @@ public class AdvancementsGenerator extends AdvancementProvider {
 				.display(ItemRegistry.SULFUR.get(),
 						Component.translatable("advancements.immersiveweapons.discover_lava_revenant.title"),
 						Component.translatable("advancements.immersiveweapons.discover_lava_revenant.description"),
-						null, FrameType.TASK, true, true, false)
-				.addCriterion("discover", EntityDiscoveredTrigger.create(EntityRegistry.LAVA_REVENANT_ENTITY.get()))
+						null, AdvancementType.TASK, true, true, false)
+				.addCriterion("discover", EntityDiscoveredTrigger.TriggerInstance.discoveredEntity(EntityRegistry.LAVA_REVENANT_ENTITY.get()))
 				.rewards(AdvancementRewards.Builder.experience(20))
 				.save(consumer, "immersiveweapons:discover_lava_revenant");
 
@@ -1190,8 +1190,8 @@ public class AdvancementsGenerator extends AdvancementProvider {
 				.display(Items.SPIDER_EYE,
 						Component.translatable("advancements.immersiveweapons.discover_rock_spider.title"),
 						Component.translatable("advancements.immersiveweapons.discover_rock_spider.description"),
-						null, FrameType.TASK, true, true, false)
-				.addCriterion("discover", EntityDiscoveredTrigger.create(EntityRegistry.ROCK_SPIDER_ENTITY.get()))
+						null, AdvancementType.TASK, true, true, false)
+				.addCriterion("discover", EntityDiscoveredTrigger.TriggerInstance.discoveredEntity(EntityRegistry.ROCK_SPIDER_ENTITY.get()))
 				.rewards(AdvancementRewards.Builder.experience(20))
 				.save(consumer, "immersiveweapons:discover_rock_spider");
 
@@ -1199,8 +1199,8 @@ public class AdvancementsGenerator extends AdvancementProvider {
 				.display(BlockRegistry.STARSTORM_CRYSTAL.get(),
 						Component.translatable("advancements.immersiveweapons.discover_starmite.title"),
 						Component.translatable("advancements.immersiveweapons.discover_starmite.description"),
-						null, FrameType.TASK, true, true, false)
-				.addCriterion("discover", EntityDiscoveredTrigger.create(EntityRegistry.STARMITE_ENTITY.get()))
+						null, AdvancementType.TASK, true, true, false)
+				.addCriterion("discover", EntityDiscoveredTrigger.TriggerInstance.discoveredEntity(EntityRegistry.STARMITE_ENTITY.get()))
 				.rewards(AdvancementRewards.Builder.experience(20))
 				.save(consumer, "immersiveweapons:discover_starmite");
 
@@ -1208,8 +1208,8 @@ public class AdvancementsGenerator extends AdvancementProvider {
 				.display(BlockItemRegistry.STORM_CREEPER_HEAD_ITEM.get(),
 						Component.translatable("advancements.immersiveweapons.discover_storm_creeper.title"),
 						Component.translatable("advancements.immersiveweapons.discover_storm_creeper.description"),
-						null, FrameType.TASK, true, true, false)
-				.addCriterion("discover", EntityDiscoveredTrigger.create(EntityRegistry.STORM_CREEPER_ENTITY.get()))
+						null, AdvancementType.TASK, true, true, false)
+				.addCriterion("discover", EntityDiscoveredTrigger.TriggerInstance.discoveredEntity(EntityRegistry.STORM_CREEPER_ENTITY.get()))
 				.rewards(AdvancementRewards.Builder.experience(20))
 				.save(consumer, "immersiveweapons:discover_storm_creeper");
 
@@ -1217,8 +1217,8 @@ public class AdvancementsGenerator extends AdvancementProvider {
 				.display(ItemRegistry.BROKEN_LENS.get(),
 						Component.translatable("advancements.immersiveweapons.discover_evil_eye.title"),
 						Component.translatable("advancements.immersiveweapons.discover_evil_eye.description"),
-						null, FrameType.TASK, true, true, false)
-				.addCriterion("discover", EntityDiscoveredTrigger.create(EntityRegistry.EVIL_EYE_ENTITY.get()))
+						null, AdvancementType.TASK, true, true, false)
+				.addCriterion("discover", EntityDiscoveredTrigger.TriggerInstance.discoveredEntity(EntityRegistry.EVIL_EYE_ENTITY.get()))
 				.rewards(AdvancementRewards.Builder.experience(20))
 				.save(consumer, "immersiveweapons:discover_evil_eye");
 
@@ -1226,8 +1226,8 @@ public class AdvancementsGenerator extends AdvancementProvider {
 				.display(Items.BONE,
 						Component.translatable("advancements.immersiveweapons.discover_star_wolf.title"),
 						Component.translatable("advancements.immersiveweapons.discover_star_wolf.description"),
-						null, FrameType.TASK, true, true, false)
-				.addCriterion("discover", EntityDiscoveredTrigger.create(EntityRegistry.STAR_WOLF_ENTITY.get()))
+						null, AdvancementType.TASK, true, true, false)
+				.addCriterion("discover", EntityDiscoveredTrigger.TriggerInstance.discoveredEntity(EntityRegistry.STAR_WOLF_ENTITY.get()))
 				.rewards(AdvancementRewards.Builder.experience(20))
 				.save(consumer, "immersiveweapons:discover_star_wolf");
 
@@ -1235,8 +1235,8 @@ public class AdvancementsGenerator extends AdvancementProvider {
 				.display(Items.BOOK,
 						Component.translatable("advancements.immersiveweapons.discover_skygazer.title"),
 						Component.translatable("advancements.immersiveweapons.discover_skygazer.description"),
-						null, FrameType.TASK, true, true, false)
-				.addCriterion("discover", EntityDiscoveredTrigger.create(EntityRegistry.SKYGAZER_ENTITY.get()))
+						null, AdvancementType.TASK, true, true, false)
+				.addCriterion("discover", EntityDiscoveredTrigger.TriggerInstance.discoveredEntity(EntityRegistry.SKYGAZER_ENTITY.get()))
 				.rewards(AdvancementRewards.Builder.experience(20))
 				.save(consumer, "immersiveweapons:discover_skygazer");
 
@@ -1244,8 +1244,8 @@ public class AdvancementsGenerator extends AdvancementProvider {
 				.display(BlockItemRegistry.SKELETON_MERCHANT_HEAD_ITEM.get(),
 						Component.translatable("advancements.immersiveweapons.discover_skeleton_merchant.title"),
 						Component.translatable("advancements.immersiveweapons.discover_skeleton_merchant.description"),
-						null, FrameType.TASK, true, true, false)
-				.addCriterion("discover", EntityDiscoveredTrigger.create(EntityRegistry.SKELETON_MERCHANT_ENTITY.get()))
+						null, AdvancementType.TASK, true, true, false)
+				.addCriterion("discover", EntityDiscoveredTrigger.TriggerInstance.discoveredEntity(EntityRegistry.SKELETON_MERCHANT_ENTITY.get()))
 				.rewards(AdvancementRewards.Builder.experience(20))
 				.save(consumer, "immersiveweapons:discover_skeleton_merchant");
 
@@ -1254,8 +1254,8 @@ public class AdvancementsGenerator extends AdvancementProvider {
 				.display(ItemRegistry.CELESTIAL_FRAGMENT.get(),
 						Component.translatable("advancements.immersiveweapons.discover_celestial_tower.title"),
 						Component.translatable("advancements.immersiveweapons.discover_celestial_tower.description"),
-						null, FrameType.TASK, true, true, false)
-				.addCriterion("discover", EntityDiscoveredTrigger.create(EntityRegistry.CELESTIAL_TOWER_ENTITY.get()))
+						null, AdvancementType.TASK, true, true, false)
+				.addCriterion("discover", EntityDiscoveredTrigger.TriggerInstance.discoveredEntity(EntityRegistry.CELESTIAL_TOWER_ENTITY.get()))
 				.rewards(AdvancementRewards.Builder.experience(20))
 				.save(consumer, "immersiveweapons:discover_celestial_tower");
 
@@ -1263,7 +1263,7 @@ public class AdvancementsGenerator extends AdvancementProvider {
 				.display(BlockItemRegistry.CELESTIAL_LANTERN_ITEM.get(),
 						Component.translatable("advancements.immersiveweapons.tiltros.celestial_lantern.title"),
 						Component.translatable("advancements.immersiveweapons.tiltros.celestial_lantern.description"),
-						null, FrameType.GOAL, true, true, false)
+						null, AdvancementType.GOAL, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(BlockItemRegistry.CELESTIAL_LANTERN_ITEM.get()))
 				.rewards(AdvancementRewards.Builder.experience(50))
@@ -1273,7 +1273,7 @@ public class AdvancementsGenerator extends AdvancementProvider {
 				.display(ItemRegistry.METEOR_STAFF.get(),
 						Component.translatable("advancements.immersiveweapons.meteor_staff.title"),
 						Component.translatable("advancements.immersiveweapons.meteor_staff.description"),
-						null, FrameType.CHALLENGE, true, true, false)
+						null, AdvancementType.CHALLENGE, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.METEOR_STAFF.get()))
 				.rewards(AdvancementRewards.Builder.experience(75))
@@ -1283,7 +1283,7 @@ public class AdvancementsGenerator extends AdvancementProvider {
 				.display(ItemRegistry.CURSED_SIGHT_STAFF.get(),
 						Component.translatable("advancements.immersiveweapons.cursed_sight_staff.title"),
 						Component.translatable("advancements.immersiveweapons.cursed_sight_staff.description"),
-						null, FrameType.CHALLENGE, true, true, false)
+						null, AdvancementType.CHALLENGE, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.CURSED_SIGHT_STAFF.get()))
 				.rewards(AdvancementRewards.Builder.experience(75))
@@ -1294,7 +1294,7 @@ public class AdvancementsGenerator extends AdvancementProvider {
 				.display(ItemRegistry.SATCHEL.get(),
 						Component.translatable("advancements.immersiveweapons.accessories.title"),
 						Component.translatable("advancements.immersiveweapons.accessories.description"),
-						null, FrameType.TASK, true, true, false)
+						null, AdvancementType.TASK, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(
 								ItemPredicate.Builder.item().of(IWItemTagGroups.ACCESSORIES).build()))
@@ -1304,7 +1304,7 @@ public class AdvancementsGenerator extends AdvancementProvider {
 				.display(ItemRegistry.BLOODY_SACRIFICE.get(),
 						Component.translatable("advancements.immersiveweapons.bloody_sacrifice.title"),
 						Component.translatable("advancements.immersiveweapons.bloody_sacrifice.description"),
-						null, FrameType.CHALLENGE, true, true, false)
+						null, AdvancementType.CHALLENGE, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.BLOODY_SACRIFICE.get()))
 				.rewards(AdvancementRewards.Builder.experience(15))
@@ -1315,7 +1315,7 @@ public class AdvancementsGenerator extends AdvancementProvider {
 				.display(ItemRegistry.USED_SYRINGE.get(),
 						Component.translatable("advancements.immersiveweapons.used_syringe.title"),
 						Component.translatable("advancements.immersiveweapons.used_syringe.description"),
-						null, FrameType.CHALLENGE, true, true, true)
+						null, AdvancementType.CHALLENGE, true, true, true)
 				.addCriterion("hold",
 						KilledTrigger.TriggerInstance.entityKilledPlayer(EntityPredicate.Builder.entity(),
 								DamageSourcePredicate.Builder.damageType()
@@ -1330,7 +1330,7 @@ public class AdvancementsGenerator extends AdvancementProvider {
 				.display(ItemRegistry.KILL_COUNTER.get(),
 						Component.translatable("advancements.immersiveweapons.kill_counter.title"),
 						Component.translatable("advancements.immersiveweapons.kill_counter.description"),
-						null, FrameType.CHALLENGE, true, true, true)
+						null, AdvancementType.CHALLENGE, true, true, true)
 				.addCriterion("", CriteriaTriggers.IMPOSSIBLE.createCriterion(new ImpossibleTrigger.TriggerInstance()))
 				.save(consumer, "immersiveweapons:kill_counter");
 
@@ -1338,7 +1338,7 @@ public class AdvancementsGenerator extends AdvancementProvider {
 				.display(ItemRegistry.STARSTORM_ARROW.get(),
 						Component.translatable("advancements.immersiveweapons.overkill.title"),
 						Component.translatable("advancements.immersiveweapons.overkill.description"),
-						null, FrameType.CHALLENGE, true, true, true)
+						null, AdvancementType.CHALLENGE, true, true, true)
 				.addCriterion("", CriteriaTriggers.IMPOSSIBLE.createCriterion(new ImpossibleTrigger.TriggerInstance()))
 				.rewards(AdvancementRewards.Builder.experience(100))
 				.save(consumer, "immersiveweapons:overkill");
@@ -1347,7 +1347,7 @@ public class AdvancementsGenerator extends AdvancementProvider {
 				.display(BlockRegistry.BEAR_TRAP.get(),
 						Component.translatable("advancements.immersiveweapons.traps.title"),
 						Component.translatable("advancements.immersiveweapons.traps.description"),
-						null, FrameType.GOAL, true, true, false)
+						null, AdvancementType.GOAL, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(BlockRegistry.BEAR_TRAP.get()))
 				.addCriterion("hold1",
@@ -1371,7 +1371,7 @@ public class AdvancementsGenerator extends AdvancementProvider {
 				.display(Items.OAK_PLANKS,
 						Component.translatable("advancements.immersiveweapons.planks.title"),
 						Component.translatable("advancements.immersiveweapons.planks.description"),
-						null, FrameType.TASK, true, true, false)
+						null, AdvancementType.TASK, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemPredicate.Builder.item()
 								.of(ItemTags.PLANKS).build()))
@@ -1381,7 +1381,7 @@ public class AdvancementsGenerator extends AdvancementProvider {
 				.display(BlockItemRegistry.MUD_ITEM.get(),
 						Component.translatable("advancements.immersiveweapons.mud.title"),
 						Component.translatable("advancements.immersiveweapons.mud.description"),
-						null, FrameType.GOAL, true, true, false)
+						null, AdvancementType.GOAL, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemPredicate.Builder.item()
 								.of(BlockItemRegistry.MUD_ITEM.get()).build()))
@@ -1391,7 +1391,7 @@ public class AdvancementsGenerator extends AdvancementProvider {
 				.display(Items.BAMBOO,
 						Component.translatable("advancements.immersiveweapons.bamboo.title"),
 						Component.translatable("advancements.immersiveweapons.bamboo.description"),
-						null, FrameType.TASK, true, true, false)
+						null, AdvancementType.TASK, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemPredicate.Builder.item()
 								.of(Items.BAMBOO).build()))
@@ -1401,7 +1401,7 @@ public class AdvancementsGenerator extends AdvancementProvider {
 				.display(BlockItemRegistry.CLOUD_MARBLE_ITEM.get(),
 						Component.translatable("advancements.immersiveweapons.cloud_marble.title"),
 						Component.translatable("advancements.immersiveweapons.cloud_marble.description"),
-						null, FrameType.GOAL, true, true, false)
+						null, AdvancementType.GOAL, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemPredicate.Builder.item()
 								.of(BlockItemRegistry.CLOUD_MARBLE_ITEM.get()).build()))
@@ -1411,7 +1411,7 @@ public class AdvancementsGenerator extends AdvancementProvider {
 				.display(BlockItemRegistry.BIOHAZARD_BOX_ITEM.get(),
 						Component.translatable("advancements.immersiveweapons.biohazard_box.title"),
 						Component.translatable("advancements.immersiveweapons.biohazard_box.description"),
-						null, FrameType.GOAL, true, true, false)
+						null, AdvancementType.GOAL, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemPredicate.Builder.item()
 								.of(BlockItemRegistry.BIOHAZARD_BOX_ITEM.get()).build()))
@@ -1421,7 +1421,7 @@ public class AdvancementsGenerator extends AdvancementProvider {
 				.display(BlockItemRegistry.CLOUD_ITEM.get(),
 						Component.translatable("advancements.immersiveweapons.cloud.title"),
 						Component.translatable("advancements.immersiveweapons.cloud.description"),
-						null, FrameType.CHALLENGE, true, true, false)
+						null, AdvancementType.CHALLENGE, true, true, false)
 				.addCriterion("hold",
 						PlayerTrigger.TriggerInstance.walkOnBlockWithEquipment(BlockRegistry.CLOUD.get(),
 								Items.AIR))
@@ -1432,7 +1432,7 @@ public class AdvancementsGenerator extends AdvancementProvider {
 				.display(Blocks.SKELETON_SKULL,
 						Component.translatable("advancements.immersiveweapons.battlefield.title"),
 						Component.translatable("advancements.immersiveweapons.battlefield.description"),
-						null, FrameType.TASK, true, true, false)
+						null, AdvancementType.TASK, true, true, false)
 				.addCriterion("visit",
 						PlayerTrigger.TriggerInstance.located(
 								LocationPredicate.Builder.inBiome(IWBiomes.BATTLEFIELD)))
@@ -1443,7 +1443,7 @@ public class AdvancementsGenerator extends AdvancementProvider {
 				.display(BlockItemRegistry.MINUTEMAN_STATUE_ITEM.get(),
 						Component.translatable("advancements.immersiveweapons.minuteman_statue.title"),
 						Component.translatable("advancements.immersiveweapons.minuteman_statue.description"),
-						null, FrameType.GOAL, true, true, false)
+						null, AdvancementType.GOAL, true, true, false)
 				.addCriterion("hold", InventoryChangeTrigger.TriggerInstance.hasItems(
 						BlockItemRegistry.MINUTEMAN_STATUE_ITEM.get()))
 				.save(consumer, "immersiveweapons:minuteman_statue");
@@ -1452,7 +1452,7 @@ public class AdvancementsGenerator extends AdvancementProvider {
 				.display(BlockItemRegistry.MEDIC_STATUE_ITEM.get(),
 						Component.translatable("advancements.immersiveweapons.medic_statue.title"),
 						Component.translatable("advancements.immersiveweapons.medic_statue.description"),
-						null, FrameType.GOAL, true, true, false)
+						null, AdvancementType.GOAL, true, true, false)
 				.addCriterion("hold", InventoryChangeTrigger.TriggerInstance.hasItems(
 						BlockItemRegistry.MEDIC_STATUE_ITEM.get()))
 				.save(consumer, "immersiveweapons:medic_statue");
@@ -1462,7 +1462,7 @@ public class AdvancementsGenerator extends AdvancementProvider {
 				.display(BlockRegistry.WARRIOR_STATUE_HEAD.get(),
 						Component.translatable("advancements.immersiveweapons.tiltros.warrior_statue.title"),
 						Component.translatable("advancements.immersiveweapons.tiltros.warrior_statue.description"),
-						null, FrameType.TASK, true, true, true)
+						null, AdvancementType.TASK, true, true, true)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(BlockRegistry.WARRIOR_STATUE_BASE.get(),
 								BlockRegistry.WARRIOR_STATUE_TORSO.get(),
@@ -1474,7 +1474,7 @@ public class AdvancementsGenerator extends AdvancementProvider {
 				.display(ItemRegistry.AZUL_KEYSTONE_FRAGMENT.get(),
 						Component.translatable("advancements.immersiveweapons.tiltros.azul_keystone.title"),
 						Component.translatable("advancements.immersiveweapons.tiltros.azul_keystone.description"),
-						null, FrameType.TASK, true, true, true)
+						null, AdvancementType.TASK, true, true, true)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.AZUL_KEYSTONE.get()))
 				.save(consumer, "immersiveweapons:azul_keystone");
@@ -1483,15 +1483,15 @@ public class AdvancementsGenerator extends AdvancementProvider {
 				.display(ItemRegistry.AZUL_KEYSTONE.get(),
 						Component.translatable("advancements.immersiveweapons.tiltros.activated_warrior_statue.title"),
 						Component.translatable("advancements.immersiveweapons.tiltros.activated_warrior_statue.description"),
-						null, FrameType.TASK, true, true, true)
-				.addCriterion("activate", WarriorStatueActivatedTrigger.create())
+						null, AdvancementType.TASK, true, true, true)
+				.addCriterion("activate", WarriorStatueActivatedTrigger.TriggerInstance.statueActivated())
 				.save(consumer, "immersiveweapons:activated_warrior_statue");
 
 		Builder.advancement().parent(activated_warrior_statue)
 				.display(BlockItemRegistry.AZUL_STAINED_ORCHID_ITEM.get(),
 						Component.translatable("advancements.immersiveweapons.tiltros.biome.title"),
 						Component.translatable("advancements.immersiveweapons.tiltros.biome.description"),
-						null, FrameType.GOAL, true, true, false)
+						null, AdvancementType.GOAL, true, true, false)
 				.addCriterion("visit",
 						PlayerTrigger.TriggerInstance.located(
 								LocationPredicate.Builder.inDimension(IWDimensions.TILTROS)))

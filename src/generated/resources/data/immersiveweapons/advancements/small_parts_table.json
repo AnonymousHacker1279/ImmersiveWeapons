@@ -15,16 +15,12 @@
     }
   },
   "display": {
-    "announce_to_chat": true,
     "description": {
       "translate": "advancements.immersiveweapons.small_parts_table.description"
     },
-    "frame": "task",
-    "hidden": false,
     "icon": {
       "item": "immersiveweapons:small_parts_table"
     },
-    "show_toast": true,
     "title": {
       "translate": "advancements.immersiveweapons.small_parts_table.title"
     }

@@ -28,6 +28,5 @@
     "recipes": [
       "immersiveweapons:netherite_musket_ball"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

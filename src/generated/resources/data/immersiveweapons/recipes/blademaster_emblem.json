@@ -8,11 +8,9 @@
     },
     "b": {
       "type": "neoforge:nbt",
-      "Count": 1,
-      "id": "minecraft:potion",
-      "tag": {
-        "Potion": "immersiveweapons:death"
-      }
+      "item": "minecraft:potion",
+      "strict": true,
+      "tag": "{Potion:\"immersiveweapons:death\"}"
     },
     "c": {
       "item": "immersiveweapons:starstorm_sword"
@@ -25,6 +23,5 @@
   ],
   "result": {
     "item": "immersiveweapons:blademaster_emblem"
-  },
-  "show_notification": true
+  }
 }

@@ -30,16 +30,13 @@
     }
   },
   "display": {
-    "announce_to_chat": true,
     "description": {
       "translate": "advancements.immersiveweapons.cloud.description"
     },
     "frame": "challenge",
-    "hidden": false,
     "icon": {
       "item": "immersiveweapons:cloud"
     },
-    "show_toast": true,
     "title": {
       "translate": "advancements.immersiveweapons.cloud.title"
     }

@@ -23,8 +23,6 @@
     "description": {
       "translate": "advancements.immersiveweapons.root.description"
     },
-    "frame": "task",
-    "hidden": false,
     "icon": {
       "item": "immersiveweapons:tesla_sword",
       "nbt": "{Damage:0}"

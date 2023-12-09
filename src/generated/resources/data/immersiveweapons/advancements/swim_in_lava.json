@@ -36,16 +36,13 @@
     }
   },
   "display": {
-    "announce_to_chat": true,
     "description": {
       "translate": "advancements.immersiveweapons.swim_in_lava.description"
     },
     "frame": "challenge",
-    "hidden": false,
     "icon": {
       "item": "minecraft:lava_bucket"
     },
-    "show_toast": true,
     "title": {
       "translate": "advancements.immersiveweapons.swim_in_lava.title"
     }

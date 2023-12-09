@@ -1,12 +1,12 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "barrel_tap": {
+    "ammunition_table": {
       "conditions": {
         "items": [
           {
             "items": [
-              "immersiveweapons:barrel_tap"
+              "immersiveweapons:ammunition_table"
             ]
           }
         ]
@@ -15,21 +15,20 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "immersiveweapons:bottle_of_wine_fermenting"
+        "recipe": "immersiveweapons:cobalt_musket_ball_ammunition_table_crafting"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
   },
   "requirements": [
     [
-      "barrel_tap",
-      "has_the_recipe"
+      "has_the_recipe",
+      "ammunition_table"
     ]
   ],
   "rewards": {
     "recipes": [
-      "immersiveweapons:bottle_of_wine_fermenting"
+      "immersiveweapons:cobalt_musket_ball_ammunition_table_crafting"
     ]
-  },
-  "sends_telemetry_event": true
+  }
 }

@@ -28,6 +28,5 @@
     "recipes": [
       "immersiveweapons:flag_pole"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }
