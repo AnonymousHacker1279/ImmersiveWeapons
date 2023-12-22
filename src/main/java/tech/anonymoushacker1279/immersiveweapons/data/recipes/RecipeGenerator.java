@@ -535,6 +535,39 @@ public class RecipeGenerator extends RecipeProvider implements DataGenUtils {
 	}
 
 	private void createStarForgeItems() {
+		// Star Forge Bricks and Controller
+		ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, BlockRegistry.STAR_FORGE_BRICKS.get(), 4)
+				.define('a', BlockItemRegistry.MOONGLOW_ITEM.get())
+				.define('b', ForgeItemTagGroups.COBALT_INGOTS)
+				.define('c', Items.BRICKS)
+				.pattern("bcb")
+				.pattern("cac")
+				.pattern("bcb")
+				.group("star_forge")
+				.unlockedBy("moonglow", has(BlockItemRegistry.MOONGLOW_ITEM.get()))
+				.save(output);
+		ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, BlockRegistry.STAR_FORGE_CONTROLLER.get())
+				.define('a', BlockItemRegistry.STAR_FORGE_BRICKS_ITEM.get())
+				.define('b', IWItemTagGroups.MOLTEN_INGOTS)
+				.define('c', Items.BLAST_FURNACE)
+				.pattern("aaa")
+				.pattern("bcb")
+				.pattern("aaa")
+				.group("star_forge")
+				.unlockedBy("star_forge_bricks", has(BlockItemRegistry.STAR_FORGE_BRICKS_ITEM.get()))
+				.save(output);
+
+		// Solar Lens
+		ShapedRecipeBuilder.shaped(RecipeCategory.MISC, BlockRegistry.SOLAR_LENS.get())
+				.define('a', ForgeItemTagGroups.COBALT_INGOTS)
+				.define('b', Tags.Items.GLASS_PANES)
+				.pattern(" a ")
+				.pattern("aba")
+				.pattern(" a ")
+				.group("star_forge")
+				.unlockedBy("cobalt_ingot", has(ForgeItemTagGroups.COBALT_INGOTS))
+				.save(output);
+
 		starForgeSmelting(IWItemTagGroups.ASTRAL_INGOTS, 2, ItemRegistry.OBSIDIAN_ROD.get(), 2, ItemRegistry.ASTRAL_SWORD.get(), 300);
 		starForgeSmelting(IWItemTagGroups.ASTRAL_INGOTS, 3, ItemRegistry.OBSIDIAN_ROD.get(), 2, ItemRegistry.ASTRAL_PICKAXE.get(), 300);
 		starForgeSmelting(IWItemTagGroups.ASTRAL_INGOTS, 3, ItemRegistry.OBSIDIAN_ROD.get(), 2, ItemRegistry.ASTRAL_AXE.get(), 300);
