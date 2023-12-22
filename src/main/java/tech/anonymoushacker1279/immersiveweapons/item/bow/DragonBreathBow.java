@@ -4,6 +4,7 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.item.BowItem;
+import net.minecraft.world.item.ItemStack;
 import tech.anonymoushacker1279.immersiveweapons.entity.projectile.CustomArrowEntity;
 
 public class DragonBreathBow extends BowItem {
@@ -13,7 +14,7 @@ public class DragonBreathBow extends BowItem {
 	}
 
 	@Override
-	public AbstractArrow customArrow(AbstractArrow abstractArrow) {
+	public AbstractArrow customArrow(AbstractArrow abstractArrow, ItemStack stack) {
 		if (abstractArrow instanceof CustomArrowEntity customArrowEntity) {
 			customArrowEntity.isExplosive = true;
 

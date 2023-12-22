@@ -118,40 +118,6 @@ public record ToolFamilies(TagKey<Item> material,
 			null
 	);
 
-	public static final ToolFamilies ASTRAL = new ToolFamilies(
-			IWItemTagGroups.ASTRAL_INGOTS,
-			IWItemTagGroups.ASTRAL_NUGGETS,
-			IWItemTagGroups.OBSIDIAN_RODS,
-			ItemRegistry.ASTRAL_SWORD,
-			ItemRegistry.ASTRAL_PICKAXE,
-			ItemRegistry.ASTRAL_AXE,
-			ItemRegistry.ASTRAL_SHOVEL,
-			ItemRegistry.ASTRAL_HOE,
-			ItemRegistry.ASTRAL_GAUNTLET,
-			ItemRegistry.ASTRAL_PIKE,
-			ItemRegistry.ASTRAL_PIKE_HEAD,
-			ItemRegistry.ASTRAL_ARROW,
-			null,
-			null
-	);
-
-	public static final ToolFamilies STARSTORM = new ToolFamilies(
-			IWItemTagGroups.STARSTORM_INGOTS,
-			IWItemTagGroups.STARSTORM_SHARDS,
-			IWItemTagGroups.OBSIDIAN_RODS,
-			ItemRegistry.STARSTORM_SWORD,
-			ItemRegistry.STARSTORM_PICKAXE,
-			ItemRegistry.STARSTORM_AXE,
-			ItemRegistry.STARSTORM_SHOVEL,
-			ItemRegistry.STARSTORM_HOE,
-			ItemRegistry.STARSTORM_GAUNTLET,
-			ItemRegistry.STARSTORM_PIKE,
-			ItemRegistry.STARSTORM_PIKE_HEAD,
-			ItemRegistry.STARSTORM_ARROW,
-			null,
-			null
-	);
-
-	public static final Collection<ToolFamilies> FAMILIES = ImmutableList.of(COPPER, COBALT, MOLTEN, VENTUS, TESLA, ASTRAL, STARSTORM);
-	public static final ImmutableList<ToolFamilies> FAMILIES_USE_NUGGETS_FOR_PROJECTILES = ImmutableList.of(MOLTEN, VENTUS, STARSTORM);
+	public static final Collection<ToolFamilies> FAMILIES = ImmutableList.of(COPPER, COBALT, MOLTEN, VENTUS, TESLA);
+	public static final ImmutableList<ToolFamilies> FAMILIES_USE_NUGGETS_FOR_PROJECTILES = ImmutableList.of(MOLTEN, VENTUS);
 }

@@ -72,25 +72,5 @@ public record ArmorFamilies(TagKey<Item> material,
 			null
 	);
 
-	public static final ArmorFamilies ASTRAL = new ArmorFamilies(
-			IWItemTagGroups.ASTRAL_INGOTS,
-			ItemRegistry.ASTRAL_HELMET,
-			ItemRegistry.ASTRAL_CHESTPLATE,
-			ItemRegistry.ASTRAL_LEGGINGS,
-			ItemRegistry.ASTRAL_BOOTS,
-			null,
-			null
-	);
-
-	public static final ArmorFamilies STARSTORM = new ArmorFamilies(
-			IWItemTagGroups.STARSTORM_INGOTS,
-			ItemRegistry.STARSTORM_HELMET,
-			ItemRegistry.STARSTORM_CHESTPLATE,
-			ItemRegistry.STARSTORM_LEGGINGS,
-			ItemRegistry.STARSTORM_BOOTS,
-			null,
-			null
-	);
-
-	public static final ImmutableList<ArmorFamilies> FAMILIES = ImmutableList.of(COPPER, COBALT, MOLTEN, VENTUS, TESLA, ASTRAL, STARSTORM);
+	public static final ImmutableList<ArmorFamilies> FAMILIES = ImmutableList.of(COPPER, COBALT, MOLTEN, VENTUS, TESLA);
 }

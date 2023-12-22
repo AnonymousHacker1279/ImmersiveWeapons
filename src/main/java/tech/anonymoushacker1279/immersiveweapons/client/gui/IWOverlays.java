@@ -4,38 +4,30 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.resources.ResourceLocation;
 import net.neoforged.neoforge.client.gui.overlay.IGuiOverlay;
-import org.jetbrains.annotations.Nullable;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
-import tech.anonymoushacker1279.immersiveweapons.client.gui.overlays.DebugTracingOverlay;
-import tech.anonymoushacker1279.immersiveweapons.client.gui.overlays.ScopeOverlay;
+import tech.anonymoushacker1279.immersiveweapons.client.gui.overlays.*;
 import tech.anonymoushacker1279.immersiveweapons.item.gun.data.GunData;
 
 public class IWOverlays {
 
 	public static final ResourceLocation SCOPE_LOCATION = new ResourceLocation(ImmersiveWeapons.MOD_ID + ":textures/gui/overlay/musket_scope.png");
 
-	@Nullable
-	public static IGuiOverlay SCOPE_ELEMENT;
-	@Nullable
-	public static IGuiOverlay DEBUG_TRACING_ELEMENT;
+	private static final Minecraft MINECRAFT = Minecraft.getInstance();
+	private static final Font FONT_RENDERER = MINECRAFT.font;
 
-	public static void init() {
-		ImmersiveWeapons.LOGGER.info("Initializing overlays");
+	public static final IGuiOverlay SCOPE_ELEMENT = (gui, guiGraphics, partialTick, screenWidth, screenHeight) -> {
+		gui.setupOverlayRenderState(true, false);
 
-		Minecraft minecraft = Minecraft.getInstance();
-		Font fontRenderer = minecraft.font;
+		if (GunData.changingPlayerFOV != -1 && MINECRAFT.options.getCameraType().isFirstPerson()) {
+			ScopeOverlay.renderOverlay(screenWidth, screenHeight, GunData.scopeScale);
+		}
+	};
 
-		SCOPE_ELEMENT = (gui, guiGraphics, partialTick, screenWidth, screenHeight) -> {
-			gui.setupOverlayRenderState(true, false);
+	public static final IGuiOverlay DEBUG_TRACING_ELEMENT = (gui, guiGraphics, partialTick, screenWidth, screenHeight) -> {
+		gui.setupOverlayRenderState(true, false);
 
-			if (GunData.changingPlayerFOV != -1 && minecraft.options.getCameraType().isFirstPerson()) {
-				ScopeOverlay.renderOverlay(screenWidth, screenHeight, GunData.scopeScale);
-			}
-		};
-
-		DEBUG_TRACING_ELEMENT = (gui, guiGraphics, partialTick, screenWidth, screenHeight) -> {
-			gui.setupOverlayRenderState(true, false);
-			DebugTracingOverlay.renderOverlay(guiGraphics, fontRenderer, screenHeight);
-		};
-	}
+		if (DebugTracingData.isDebugTracingEnabled) {
+			DebugTracingOverlay.renderOverlay(guiGraphics, FONT_RENDERER, screenHeight);
+		}
+	};
 }

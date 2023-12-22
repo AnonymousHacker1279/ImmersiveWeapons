@@ -445,6 +445,7 @@
   "container.immersiveweapons.ammunition_table": "Ammunition Crafting",
   "container.immersiveweapons.small_parts_table": "Small Parts Crafting",
   "container.immersiveweapons.star_forge": "Star Forging",
+  "container.immersiveweapons.star_forge.craft_progress": "Time Remaining: %s",
   "container.immersiveweapons.star_forge.si_active": "Active",
   "container.immersiveweapons.star_forge.si_inactive": "Inactive",
   "container.immersiveweapons.star_forge.temperature": "Thermal Capacity: %s",

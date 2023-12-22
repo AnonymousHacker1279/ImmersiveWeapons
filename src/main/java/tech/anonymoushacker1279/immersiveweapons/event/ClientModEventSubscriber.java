@@ -19,6 +19,7 @@ import net.neoforged.fml.common.Mod.EventBusSubscriber;
 import net.neoforged.fml.common.Mod.EventBusSubscriber.Bus;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.neoforge.client.event.*;
+import net.neoforged.neoforge.client.gui.overlay.VanillaGuiOverlay;
 import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
@@ -82,8 +83,6 @@ public class ClientModEventSubscriber {
 		});
 
 		event.enqueueWork(ClientModEventSubscriber::registerPropertyGetters);
-
-		IWOverlays.init();
 	}
 
 	@SubscribeEvent
@@ -340,6 +339,17 @@ public class ClientModEventSubscriber {
 		event.register((state, tintGetter, pos, color) -> BiomeColors
 						.getAverageGrassColor(Objects.requireNonNull(tintGetter), Objects.requireNonNull(pos)),
 				BlockRegistry.PITFALL.get());
+	}
+
+	@SubscribeEvent
+	public static void registerGuiOverlaysEvent(RegisterGuiOverlaysEvent event) {
+		event.registerAbove(VanillaGuiOverlay.VIGNETTE.id(),
+				new ResourceLocation(ImmersiveWeapons.MOD_ID, "scope"),
+				IWOverlays.SCOPE_ELEMENT);
+
+		event.registerAbove(VanillaGuiOverlay.DEBUG_SCREEN.id(),
+				new ResourceLocation(ImmersiveWeapons.MOD_ID, "debug_overlay"),
+				IWOverlays.DEBUG_TRACING_ELEMENT);
 	}
 
 	private static void registerPropertyGetters() {

@@ -21,6 +21,7 @@ import tech.anonymoushacker1279.immersiveweapons.item.armor.VentusArmorItem.Vent
 import tech.anonymoushacker1279.immersiveweapons.item.gun.GunScopePacketHandler;
 import tech.anonymoushacker1279.immersiveweapons.menu.AmmunitionTableMenu.AmmunitionTableMenuPacketHandler;
 import tech.anonymoushacker1279.immersiveweapons.menu.StarForgeMenu.StarForgeMenuPacketHandler;
+import tech.anonymoushacker1279.immersiveweapons.menu.StarForgeMenu.StarForgeMenuUpdateClientRecipes;
 
 public class PacketHandler {
 
@@ -135,11 +136,17 @@ public class PacketHandler {
 				AmmunitionTableMenuPacketHandler::decode,
 				AmmunitionTableMenuPacketHandler::handle
 		);
-		PacketHandler.INSTANCE.registerMessage(networkId,
+		PacketHandler.INSTANCE.registerMessage(networkId++,
 				StarForgeMenuPacketHandler.class,
 				StarForgeMenuPacketHandler::encode,
 				StarForgeMenuPacketHandler::decode,
 				StarForgeMenuPacketHandler::handle
+		);
+		PacketHandler.INSTANCE.registerMessage(networkId,
+				StarForgeMenuUpdateClientRecipes.class,
+				StarForgeMenuUpdateClientRecipes::encode,
+				StarForgeMenuUpdateClientRecipes::decode,
+				StarForgeMenuUpdateClientRecipes::handle
 		);
 	}
 }

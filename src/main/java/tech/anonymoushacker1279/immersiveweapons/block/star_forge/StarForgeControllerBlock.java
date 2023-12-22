@@ -2,11 +2,14 @@ package tech.anonymoushacker1279.immersiveweapons.block.star_forge;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.*;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.entity.*;
@@ -19,14 +22,13 @@ import net.neoforged.neoforge.network.NetworkHooks;
 import tech.anonymoushacker1279.immersiveweapons.block.core.BasicOrientableBlock;
 import tech.anonymoushacker1279.immersiveweapons.blockentity.StarForgeBlockEntity;
 import tech.anonymoushacker1279.immersiveweapons.init.BlockRegistry;
-import tech.anonymoushacker1279.immersiveweapons.menu.StarForgeMenu;
+
+import java.util.List;
 
 public class StarForgeControllerBlock extends BasicOrientableBlock implements EntityBlock {
 
-	private static final Component CONTAINER_NAME = Component.translatable("container.immersiveweapons.star_forge");
-
 	public static final BooleanProperty LIT = BlockStateProperties.LIT;
-
+	
 	public StarForgeControllerBlock(Properties properties) {
 		super(properties);
 
@@ -37,11 +39,6 @@ public class StarForgeControllerBlock extends BasicOrientableBlock implements En
 	public void createBlockStateDefinition(Builder<Block, BlockState> builder) {
 		super.createBlockStateDefinition(builder);
 		builder.add(LIT);
-	}
-
-	@Override
-	public MenuProvider getMenuProvider(BlockState state, Level level, BlockPos pos) {
-		return new SimpleMenuProvider((id, inventory, player) -> new StarForgeMenu(id, inventory), CONTAINER_NAME);
 	}
 
 	@Override
@@ -61,18 +58,30 @@ public class StarForgeControllerBlock extends BasicOrientableBlock implements En
 			return InteractionResult.SUCCESS;
 		} else {
 			if (level.getBlockEntity(pos) instanceof StarForgeBlockEntity blockEntity) {
-				NetworkHooks.openScreen((ServerPlayer) player, blockEntity, pos);
+				if (blockEntity.isInUse()) {
+					return InteractionResult.FAIL;
+				}
+
+				if (player.isHolding(Items.LAVA_BUCKET)) {
+					blockEntity.raiseTemperature(150);
+
+					if (!player.isCreative()) {
+						player.getItemInHand(hand).shrink(1);
+						player.getInventory().add(new ItemStack(Items.BUCKET));
+					}
+				} else {
+					NetworkHooks.openScreen((ServerPlayer) player, blockEntity, buffer -> {
+						List<ResourceLocation> recipeLocations = blockEntity.getAvailableRecipeIds();
+						buffer.writeVarInt(recipeLocations.size());
+
+						for (ResourceLocation location : recipeLocations) {
+							buffer.writeResourceLocation(location);
+						}
+					});
+				}
 			}
+
 			return InteractionResult.CONSUME;
-		}
-	}
-
-	@Override
-	public void neighborChanged(BlockState state, Level level, BlockPos pos, Block neighborBlock, BlockPos neighborPos, boolean movedByPiston) {
-		super.neighborChanged(state, level, pos, neighborBlock, neighborPos, movedByPiston);
-
-		if (level instanceof ServerLevel serverLevel) {
-			checkForValidMultiBlock(state, pos, serverLevel);
 		}
 	}
 

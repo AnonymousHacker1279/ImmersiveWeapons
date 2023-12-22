@@ -1,12 +1,11 @@
 {
   "type": "immersiveweapons:star_forge",
+  "group": "star_forge",
   "ingot": {
     "tag": "immersiveweapons:ingots/astral"
   },
   "ingot_count": 2,
-  "result": {
-    "item": "immersiveweapons:astral_hoe"
-  },
+  "result": "immersiveweapons:astral_hoe",
   "secondary_material": {
     "item": "immersiveweapons:obsidian_rod"
   },

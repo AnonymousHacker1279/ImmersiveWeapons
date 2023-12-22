@@ -5,6 +5,7 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.util.ExtraCodecs;
 import net.minecraft.world.Container;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -12,11 +13,40 @@ import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.level.Level;
 import tech.anonymoushacker1279.immersiveweapons.init.*;
 
-public record StarForgeRecipe(Ingredient ingot, int ingotCount, Ingredient secondaryMaterial,
-                              int secondaryMaterialCount,
-                              int smeltTime, ItemStack result) implements Recipe<Container> {
+public class StarForgeRecipe implements Recipe<Container> {
+
+	public final Ingredient ingot;
+	public final int ingotCount;
+	public final Ingredient secondaryMaterial;
+	public final int secondaryMaterialCount;
+	public final int smeltTime;
+	public final ItemStack result;
+	protected final String group;
+
+	public StarForgeRecipe(String group, Ingredient ingot, int ingotCount, Ingredient secondaryMaterial,
+	                       int secondaryMaterialCount,
+	                       int smeltTime, ItemStack result) {
+		this.ingot = ingot;
+		this.ingotCount = ingotCount;
+		this.secondaryMaterial = secondaryMaterial;
+		this.secondaryMaterialCount = secondaryMaterialCount;
+		this.smeltTime = smeltTime;
+		this.result = result;
+		this.group = group;
+	}
 
 	public boolean matches(Container container, Level level) {
+		return false;
+	}
+
+	public boolean matches(Container container) {
+		ItemStack ingotStack = container.getItem(0);
+		ItemStack secondaryMaterialStack = container.getItem(1);
+
+		if (ingotStack.getItem().equals(getIngot().getItem()) && ingotStack.getCount() >= ingotCount) {
+			return secondaryMaterialStack.getItem().equals(getSecondaryMaterial().getItem()) && secondaryMaterialStack.getCount() >= secondaryMaterialCount;
+		}
+
 		return false;
 	}
 
@@ -35,41 +65,26 @@ public record StarForgeRecipe(Ingredient ingot, int ingotCount, Ingredient secon
 		return false;
 	}
 
-	/**
-	 * Get the toast symbol.
-	 *
-	 * @return ItemStack
-	 */
 	@Override
 	public ItemStack getToastSymbol() {
 		return new ItemStack(BlockRegistry.STAR_FORGE_CONTROLLER.get());
 	}
 
-	/**
-	 * Get the recipe serializer.
-	 *
-	 * @return RecipeSerializer
-	 */
 	@Override
 	public RecipeSerializer<?> getSerializer() {
 		return RecipeSerializerRegistry.STAR_FORGE_RECIPE_SERIALIZER.get();
 	}
 
-	/**
-	 * Get the recipe type.
-	 *
-	 * @return RecipeType
-	 */
 	@Override
 	public RecipeType<?> getType() {
 		return RecipeTypeRegistry.STAR_FORGE_RECIPE_TYPE.get();
 	}
 
-	/**
-	 * Get the recipe's ingredients.
-	 *
-	 * @return NonNullList extending Ingredient
-	 */
+	@Override
+	public String getGroup() {
+		return group;
+	}
+
 	@Override
 	public NonNullList<Ingredient> getIngredients() {
 		NonNullList<Ingredient> defaultedList = NonNullList.create();
@@ -103,26 +118,39 @@ public record StarForgeRecipe(Ingredient ingot, int ingotCount, Ingredient secon
 		return true;
 	}
 
-	public static class Serializer implements RecipeSerializer<StarForgeRecipe> {
+	public interface Factory<T extends StarForgeRecipe> {
+		T create(String group, Ingredient ingot, int ingotCount, Ingredient secondaryMaterial, int secondaryMaterialCount,
+		         int smeltTime, ItemStack result);
+	}
 
-		private static final Codec<StarForgeRecipe> CODEC = RecordCodecBuilder.create(
-				instance -> instance.group(
-								Ingredient.CODEC.fieldOf("ingot").forGetter(recipe -> recipe.ingot),
-								Codec.INT.fieldOf("ingot_count").forGetter(recipe -> recipe.ingotCount),
-								Ingredient.CODEC.fieldOf("secondary_material").forGetter(recipe -> recipe.secondaryMaterial),
-								Codec.INT.fieldOf("secondary_material_count").forGetter(recipe -> recipe.secondaryMaterialCount),
-								Codec.INT.fieldOf("smelt_time").forGetter(recipe -> recipe.smeltTime),
-								CraftingRecipeCodecs.ITEMSTACK_OBJECT_CODEC.fieldOf("result").forGetter(recipe -> recipe.result)
-						)
-						.apply(instance, StarForgeRecipe::new));
+	public static class Serializer<T extends StarForgeRecipe> implements RecipeSerializer<T> {
 
-		@Override
-		public Codec<StarForgeRecipe> codec() {
-			return CODEC;
+		protected final StarForgeRecipe.Factory<T> factory;
+		protected final Codec<T> codec;
+
+		public Serializer(StarForgeRecipe.Factory<T> factory) {
+			this.factory = factory;
+			this.codec = RecordCodecBuilder.create(
+					instance -> instance.group(
+									ExtraCodecs.strictOptionalField(Codec.STRING, "group", "").forGetter(recipe -> recipe.group),
+									Ingredient.CODEC.fieldOf("ingot").forGetter(recipe -> recipe.ingot),
+									Codec.INT.fieldOf("ingot_count").forGetter(recipe -> recipe.ingotCount),
+									Ingredient.CODEC.fieldOf("secondary_material").forGetter(recipe -> recipe.secondaryMaterial),
+									Codec.INT.fieldOf("secondary_material_count").forGetter(recipe -> recipe.secondaryMaterialCount),
+									Codec.INT.fieldOf("smelt_time").forGetter(recipe -> recipe.smeltTime),
+									ItemStack.SINGLE_ITEM_CODEC.fieldOf("result").forGetter(recipe -> recipe.result)
+							)
+							.apply(instance, factory::create));
 		}
 
 		@Override
-		public StarForgeRecipe fromNetwork(FriendlyByteBuf buffer) {
+		public Codec<T> codec() {
+			return codec;
+		}
+
+		@Override
+		public T fromNetwork(FriendlyByteBuf buffer) {
+			String group = buffer.readUtf();
 			Ingredient ingot = Ingredient.fromNetwork(buffer);
 			int ingotCount = buffer.readInt();
 			Ingredient secondaryMaterial = Ingredient.fromNetwork(buffer);
@@ -130,11 +158,12 @@ public record StarForgeRecipe(Ingredient ingot, int ingotCount, Ingredient secon
 			int smeltTime = buffer.readInt();
 			ItemStack result = buffer.readItem();
 
-			return new StarForgeRecipe(ingot, ingotCount, secondaryMaterial, secondaryMaterialCount, smeltTime, result);
+			return factory.create(group, ingot, ingotCount, secondaryMaterial, secondaryMaterialCount, smeltTime, result);
 		}
 
 		@Override
 		public void toNetwork(FriendlyByteBuf buffer, StarForgeRecipe recipe) {
+			buffer.writeUtf(recipe.group);
 			recipe.ingot.toNetwork(buffer);
 			buffer.writeInt(recipe.ingotCount);
 			recipe.secondaryMaterial.toNetwork(buffer);

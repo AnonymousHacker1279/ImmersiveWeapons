@@ -2,9 +2,9 @@ plugins {
 	id 'java-library'
 	id 'maven-publish'
 	// Pinned because it updates too frequently and forces recompile
-	id 'net.neoforged.gradle.userdev' version '7.0.61'
+	id 'net.neoforged.gradle.userdev' version '7.0.71'
 	// id 'org.parchmentmc.librarian.forgegradle' version '1.+' TODO: Uncomment when Librarian is updated
-	id "me.hypherionmc.modutils.modpublisher" version "1.0.20"
+	id "com.hypherionmc.modutils.modpublisher" version "2.0.0"
 	id 'idea'
 }
 
@@ -29,10 +29,6 @@ repositories {
 	maven {
 		name "Bai Maven"
 		url "https://maven2.bai.lol"
-	}
-	maven {
-		name "FabricMC Maven"
-		url "https://maven.fabricmc.net/"
 	}
 	maven {
 		url "https://cursemaven.com"
@@ -87,22 +83,23 @@ dependencies {
 
 	implementation "net.neoforged:neoforge:${neoforge_version}"
 
-	implementation(jarJar("dev.lukebemish.biomesquisher:biomesquisher-neoforge-1.20.2:${biomesquisher_version}")) {
+	// TODO: reimplement after updated to 1.20.4
+	/*implementation(jarJar("dev.lukebemish.biomesquisher:biomesquisher-neoforge-1.20.2:${biomesquisher_version}")) {
 		jarJar.ranged(it, "[0.1.6-alpha,)")
-	}
+	}*/
 
 	// TODO: Uncomment once dependencies update
 
 	// Include Immersive Weapons Compatibility Bridge (IWCB)
-	implementation "tech.anonymoushacker1279.iwcompatbridge:IWCompatBridge:${iwcb_version}"
+	// implementation "tech.anonymoushacker1279.iwcompatbridge:IWCompatBridge:${iwcb_version}"
 
 	// Include JEI
 	// runtimeOnly fg.deobf("mezz.jei:jei-${minecraft_version}-forge:${jei_version}")
 	// Include WTHIT and badpackets
-	runtimeOnly "mcp.mobius.waila:wthit:neo-${wthit_version}"
-	implementation "lol.bai:badpackets:neo-${badpackets_version}"
+	// runtimeOnly "mcp.mobius.waila:wthit:neo-${wthit_version}"
+	// implementation "lol.bai:badpackets:neo-${badpackets_version}"
 	// Include AttributeFix
-	implementation "curse.maven:attributefix-280510:${attributefix_version}"
+	// implementation "curse.maven:attributefix-280510:${attributefix_version}"
 }
 
 tasks.named('processResources', ProcessResources).configure {
@@ -190,8 +187,8 @@ if (file("RELEASE_NOTES.md").exists()) {
 			modrinth = tokens.getProperty("modrinth")
 		}
 
-		debug = false
-		curseID = 494454
+		setDebug(true)
+		curseID = "494454"
 		modrinthID = "QZFdnUQ5"
 		githubRepo = "AnonymousHacker1279/ImmersiveWeapons"
 		versionType = "release"
@@ -207,11 +204,11 @@ if (file("RELEASE_NOTES.md").exists()) {
 		additionalFiles = [javadocJar, sourcesJar]
 
 		curseDepends {
-			optional = ["immersive-weapons-compatibility-bridge", "attributefix"]
+			optional "immersive-weapons-compatibility-bridge", "attributefix"
 		}
 
 		modrinthDepends {
-			optional = ["SAUGybfH", "lOOpEntO"]
+			optional "SAUGybfH", "lOOpEntO"
 		}
 	}
 } else {

@@ -35,8 +35,6 @@ import net.neoforged.bus.api.Event.Result;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.Mod.EventBusSubscriber;
 import net.neoforged.fml.common.Mod.EventBusSubscriber.Bus;
-import net.neoforged.neoforge.client.event.RegisterGuiOverlaysEvent;
-import net.neoforged.neoforge.client.gui.overlay.VanillaGuiOverlay;
 import net.neoforged.neoforge.common.NeoForgeMod;
 import net.neoforged.neoforge.event.AnvilUpdateEvent;
 import net.neoforged.neoforge.event.ItemAttributeModifierEvent;
@@ -51,7 +49,6 @@ import net.neoforged.neoforge.event.level.PistonEvent.PistonMoveType;
 import net.neoforged.neoforge.network.PacketDistributor;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.block.decoration.StarstormCrystalBlock;
-import tech.anonymoushacker1279.immersiveweapons.client.gui.IWOverlays;
 import tech.anonymoushacker1279.immersiveweapons.client.gui.overlays.DebugTracingData;
 import tech.anonymoushacker1279.immersiveweapons.client.gui.overlays.DebugTracingData.DebugDataPacketHandler;
 import tech.anonymoushacker1279.immersiveweapons.data.biomes.IWBiomes;
@@ -77,20 +74,6 @@ public class ForgeEventSubscriber {
 	public static final AttributeModifier JONNYS_CURSE_SPEED_MODIFIER = new AttributeModifier(
 			UUID.fromString("c74619c0-b953-4ee7-a3d7-adf974c22d7d"),
 			"Jonny's Curse speed modifier", -0.25d, Operation.MULTIPLY_BASE);
-
-
-	@SubscribeEvent
-	public static void registerGuiOverlaysEvent(RegisterGuiOverlaysEvent event) {
-		assert IWOverlays.SCOPE_ELEMENT != null;
-		event.registerAbove(VanillaGuiOverlay.VIGNETTE.id(),
-				new ResourceLocation(ImmersiveWeapons.MOD_ID, "scope"),
-				IWOverlays.SCOPE_ELEMENT);
-
-		assert IWOverlays.DEBUG_TRACING_ELEMENT != null;
-		event.registerAbove(VanillaGuiOverlay.DEBUG_SCREEN.id(),
-				new ResourceLocation(ImmersiveWeapons.MOD_ID, "debug_overlay"),
-				IWOverlays.DEBUG_TRACING_ELEMENT);
-	}
 
 	@SubscribeEvent
 	public static void playerTickEvent(PlayerTickEvent event) {

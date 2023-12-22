@@ -27,13 +27,13 @@ public class StarForgeScreen extends AbstractContainerScreen<StarForgeMenu> {
 	}
 
 	@Override
-	public void render(GuiGraphics guiGraphics, int pMouseX, int pMouseY, float pPartialTick) {
-		super.render(guiGraphics, pMouseX, pMouseY, pPartialTick);
-		renderTooltip(guiGraphics, pMouseX, pMouseY);
+	public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick) {
+		super.render(guiGraphics, mouseX, mouseY, partialTick);
+		renderTooltip(guiGraphics, mouseX, mouseY);
 	}
 
 	@Override
-	protected void renderBg(GuiGraphics guiGraphics, float pPartialTick, int pX, int pY) {
+	protected void renderBg(GuiGraphics guiGraphics, float partialTick, int mouseX, int mouseY) {
 		guiGraphics.blit(GUI_TEXTURE, leftPos, topPos, 0, 0, imageWidth, imageHeight);
 
 		// Render the solar indicator (12x12 px) at (37, 28)
@@ -56,12 +56,27 @@ public class StarForgeScreen extends AbstractContainerScreen<StarForgeMenu> {
 		// Render the bar
 		guiGraphics.blit(GUI_TEXTURE, leftPos + 10, destY, 176, sourceY, 12, pixels);
 
+		List<StarForgeRecipe> availableRecipes = menu.availableRecipes;
+
+		// Render the scrollbar
+		int handleHeight = 15;
+		int scrollbarY = topPos + 13;
+		int scrollbarHeight = 56;
+		int handleY = scrollbarY + Mth.clamp((menu.getMenuSelectionIndex() * (scrollbarHeight - handleHeight) / (availableRecipes.size() - 1)), 0, scrollbarHeight - handleHeight);
+		int scrollbarX = leftPos + 119;
+		int scrollbarTextureY = mouseX >= scrollbarX && mouseY >= scrollbarY && mouseX < scrollbarX + 10 && mouseY < scrollbarY + scrollbarHeight ? 244 : 232;
+
+		// Check if there is a recipe currently being crafted, if so, render the scrollbar as grayed out
+		if (menu.getSmeltTime() > 0) {
+			scrollbarTextureY = 244;
+		}
+
+		guiGraphics.blit(GUI_TEXTURE, scrollbarX, handleY, scrollbarTextureY, 0, 11, handleHeight);
+
 		// Render the selection area and the entries
 		int leftPosOffset = leftPos + 60;
 		int topPosOffset = topPos + 17;
 		int startIndexOffset = menu.getMenuSelectionIndex() + 2; // Two entries visible at a time
-
-		List<StarForgeRecipe> availableRecipes = StarForgeMenu.AVAILABLE_RECIPES;
 
 		for (int i = menu.getMenuSelectionIndex(); i < startIndexOffset; ++i) {
 			if (i != -1 && i < availableRecipes.size()) {
@@ -71,7 +86,7 @@ public class StarForgeScreen extends AbstractContainerScreen<StarForgeMenu> {
 
 				if (i == menu.getMenuSelectionIndex()) {
 					vOffset += 24; // Selected entry
-				} else if (pX >= leftPosOffset && pY >= y && pX < leftPosOffset + 55 && pY < y + 24) {
+				} else if (mouseX >= leftPosOffset && mouseY >= y && mouseX < leftPosOffset + 55 && mouseY < y + 24) {
 					vOffset += 48; // Hovered entry
 				}
 
@@ -90,7 +105,7 @@ public class StarForgeScreen extends AbstractContainerScreen<StarForgeMenu> {
 
 				ItemStack ingot = recipe.getIngot();
 				ItemStack secondaryMaterial = recipe.getSecondaryMaterial();
-				ItemStack result = recipe.result();
+				ItemStack result = recipe.result;
 
 				// Render the items
 				guiGraphics.renderItem(ingot, leftPosOffset + 3, y + 3);
@@ -103,56 +118,67 @@ public class StarForgeScreen extends AbstractContainerScreen<StarForgeMenu> {
 			}
 		}
 
-		// Render the scrollbar
-		int handleHeight = 15;
-		int scrollbarY = topPos + 13;
-		int scrollbarHeight = 56;
-		int handleY = scrollbarY + Mth.clamp((menu.getMenuSelectionIndex() * (scrollbarHeight - handleHeight) / (availableRecipes.size() - 1)), 0, scrollbarHeight - handleHeight);
-		int scrollbarX = leftPos + 119;
-		int scrollbarTextureY = pX >= scrollbarX && pY >= scrollbarY && pX < scrollbarX + 10 && pY < scrollbarY + scrollbarHeight ? 244 : 232;
-
-		guiGraphics.blit(GUI_TEXTURE, scrollbarX, handleY, scrollbarTextureY, 0, 11, handleHeight);
+		// Check if the currently selected recipe is valid, if so, render the crafting icon
+		if (isRecipeValid(availableRecipes)) {
+			// If there is a recipe being crafted, the crafting icon should be grayed out
+			if (menu.getSmeltTime() > 0) {
+				guiGraphics.blit(GUI_TEXTURE, leftPos + 144, topPos + 8, 188, 15, 15, 15);
+			} else {
+				guiGraphics.blit(GUI_TEXTURE, leftPos + 144, topPos + 8, 188, 0, 15, 15);
+			}
+		}
 	}
 
 	@Override
-	public boolean mouseClicked(double pMouseX, double pMouseY, int pButton) {
+	public boolean mouseClicked(double mouseX, double mouseY, int button) {
 		// Check if the mouse click is within the selection area
-		if (pMouseX >= leftPos + 61 && pMouseX < leftPos + 116 && pMouseY >= topPos + 17 && pMouseY < topPos + 65) {
+		if (mouseX >= leftPos + 61 && mouseX < leftPos + 116 && mouseY >= topPos + 17 && mouseY < topPos + 65) {
 			// Calculate which entry is clicked
-			int clickedEntry = menu.getMenuSelectionIndex() + (int) ((pMouseY - (topPos + 17)) / 24);
-			menu.setMenuSelectionIndex(clickedEntry);
+			int clickedEntry = menu.getMenuSelectionIndex() + (int) ((mouseY - (topPos + 17)) / 24);
+			menu.setMenuSelectionIndex(clickedEntry, false);
 			return true;
 		}
 
 		// Check if the mouse click is within the scrollbar area
-		if (pMouseX >= leftPos + 119 && pMouseX < leftPos + 119 + 11 && pMouseY >= topPos + 13 && pMouseY < topPos + 13 + 56) {
+		if (mouseX >= leftPos + 119 && mouseX < leftPos + 119 + 11 && mouseY >= topPos + 13 && mouseY < topPos + 13 + 56) {
 			return true;
 		}
 
-		return super.mouseClicked(pMouseX, pMouseY, pButton);
+		// Check if the mouse click is within the crafting icon area
+		if (isOverCraftingIcon((int) mouseX, (int) mouseY)) {
+			// Check if the currently selected recipe is valid
+			if (isRecipeValid(menu.availableRecipes)) {
+				menu.setMenuSelectionIndex(menu.getMenuSelectionIndex(), true);
+			}
+			return true;
+		}
+
+		return super.mouseClicked(mouseX, mouseY, button);
 	}
 
 	@Override
 	public boolean mouseScrolled(double mouseX, double mouseY, double deltaX, double deltaY) {
 		// Adjust the scroll offset based on the scroll amount
-		int scrollAmount = (int) deltaY;
-		menu.setMenuSelectionIndex(menu.getMenuSelectionIndex() - scrollAmount);
+		if (menu.getSmeltTime() == 0) {
+			menu.setMenuSelectionIndex(menu.getMenuSelectionIndex() - (int) deltaY, false);
+		}
+
 		return true;
 	}
 
 	@Override
-	public boolean mouseDragged(double pMouseX, double pMouseY, int pButton, double pDragX, double pDragY) {
+	public boolean mouseDragged(double mouseX, double mouseY, int button, double dragX, double dragY) {
 		// Check if the scrollbar is being dragged
-		if (pMouseX >= leftPos + 119 && pMouseX < leftPos + 119 + 11 && pMouseY >= topPos + 13 && pMouseY < topPos + 13 + 56) {
+		if (isOverScrollbar((int) mouseX, (int) mouseY) && menu.getSmeltTime() == 0) {
 			// Calculate the new menu selection index
-			int newMenuSelectionIndex = (int) ((pMouseY - (topPos + 13)) / (56 - 15) * ((StarForgeBlockEntity) menu.container).getAvailableRecipes(
+			int newMenuSelectionIndex = (int) ((mouseY - (topPos + 13)) / (56 - 15) * ((StarForgeBlockEntity) menu.container).getAvailableRecipes(
 					menu.ingotInputSlot.getItem(),
 					menu.secondaryInputSlot.getItem()).size());
-			menu.setMenuSelectionIndex(newMenuSelectionIndex);
+			menu.setMenuSelectionIndex(newMenuSelectionIndex, false);
 			return true;
 		}
 
-		return super.mouseDragged(pMouseX, pMouseY, pButton, pDragX, pDragY);
+		return super.mouseDragged(mouseX, mouseY, button, dragX, dragY);
 	}
 
 	@Override
@@ -180,6 +206,29 @@ public class StarForgeScreen extends AbstractContainerScreen<StarForgeMenu> {
 					y
 			);
 		}
+
+		// Render the crafting progress tooltip
+		if (isOverCraftingIcon(x, y) && menu.getSmeltTime() > 0) {
+			// Format the time remaining as seconds
+			String timeRemaining = String.format("%.1f", menu.getSmeltTime() / 20.0f);
+			guiGraphics.renderTooltip(
+					font,
+					Component.translatable("container.immersiveweapons.star_forge.craft_progress", timeRemaining + "s"),
+					x,
+					y
+			);
+		}
+	}
+
+	/**
+	 * Check if the mouse is over the scrollbar region.
+	 *
+	 * @param x the x position of the mouse
+	 * @param y the y position of the mouse
+	 * @return boolean
+	 */
+	private boolean isOverScrollbar(int x, int y) {
+		return x >= leftPos + 119 && x < leftPos + 119 + 11 && y >= topPos + 13 && y < topPos + 13 + 56;
 	}
 
 	/**
@@ -202,5 +251,26 @@ public class StarForgeScreen extends AbstractContainerScreen<StarForgeMenu> {
 	 */
 	private boolean isOverTemperatureBar(int x, int y) {
 		return x >= leftPos + 11 && x <= leftPos + 23 && y >= topPos + 10 && y <= topPos + 48;
+	}
+
+	/**
+	 * Check if the mouse is over the crafting icon region.
+	 *
+	 * @param x the x position of the mouse
+	 * @param y the y position of the mouse
+	 * @return boolean
+	 */
+	private boolean isOverCraftingIcon(int x, int y) {
+		return x >= leftPos + 144 && x <= leftPos + 159 && y >= topPos + 8 && y <= topPos + 23;
+	}
+
+	private boolean isRecipeValid(List<StarForgeRecipe> availableRecipes) {
+		if (!availableRecipes.isEmpty() && menu.getMenuSelectionIndex() < availableRecipes.size() && menu.getTemperature() == 1000) {
+			StarForgeRecipe recipe = availableRecipes.get(menu.getMenuSelectionIndex());
+
+			return recipe != null && recipe.matches(menu.container);
+		}
+
+		return false;
 	}
 }

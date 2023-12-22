@@ -34,7 +34,7 @@ public class ImmersiveWeapons {
 		ModLoadingContext.get().registerConfig(Type.CLIENT, ClientConfig.CLIENT_SPEC);
 
 		// Initialize deferred registry
-		DeferredRegistryHandler.init();
+		DeferredRegistryHandler.init(modEventBus);
 
 		// Add event listeners
 		modEventBus.addListener(this::setup);

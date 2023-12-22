@@ -150,9 +150,8 @@ public class ClientForgeEventSubscriber {
 		}
 	}
 
-
 	@SubscribeEvent
-	public static void RenderGuiOverlayPostEvent(RenderGuiOverlayEvent.Post event) {
+	public static void renderGuiOverlayPostEvent(RenderGuiOverlayEvent.Post event) {
 		int screenHeight = event.getWindow().getGuiScaledHeight();
 		int screenWidth = event.getWindow().getGuiScaledWidth();
 
@@ -161,13 +160,11 @@ public class ClientForgeEventSubscriber {
 				float deltaFrame = minecraft.getDeltaFrameTime() / 8;
 				GunData.scopeScale = Mth.lerp(0.25F * deltaFrame, GunData.scopeScale, 1.125F);
 
-				if (IWOverlays.SCOPE_ELEMENT != null) {
-					IWOverlays.SCOPE_ELEMENT.render((ExtendedGui) minecraft.gui,
-							event.getGuiGraphics(),
-							event.getPartialTick(),
-							screenWidth,
-							screenHeight);
-				}
+				IWOverlays.SCOPE_ELEMENT.render((ExtendedGui) minecraft.gui,
+						event.getGuiGraphics(),
+						event.getPartialTick(),
+						screenWidth,
+						screenHeight);
 			}
 		}
 
@@ -176,13 +173,11 @@ public class ClientForgeEventSubscriber {
 		}
 
 		if (DebugTracingData.isDebugTracingEnabled) {
-			if (IWOverlays.DEBUG_TRACING_ELEMENT != null) {
-				IWOverlays.DEBUG_TRACING_ELEMENT.render((ExtendedGui) minecraft.gui,
-						event.getGuiGraphics(),
-						event.getPartialTick(),
-						screenWidth,
-						screenHeight);
-			}
+			IWOverlays.DEBUG_TRACING_ELEMENT.render((ExtendedGui) minecraft.gui,
+					event.getGuiGraphics(),
+					event.getPartialTick(),
+					screenWidth,
+					screenHeight);
 		}
 	}
 

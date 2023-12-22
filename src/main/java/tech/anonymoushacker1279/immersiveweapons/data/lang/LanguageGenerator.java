@@ -237,6 +237,7 @@ public class LanguageGenerator extends IWLanguageProvider {
 		addContainer("star_forge.si_inactive", "Inactive");
 		addContainer("star_forge.si_active", "Active");
 		addContainer("star_forge.temperature", "Thermal Capacity: %s");
+		addContainer("star_forge.craft_progress", "Time Remaining: %s");
 	}
 
 	private void addSubtitles() {

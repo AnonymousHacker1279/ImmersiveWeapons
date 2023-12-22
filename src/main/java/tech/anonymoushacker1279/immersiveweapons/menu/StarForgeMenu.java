@@ -1,6 +1,5 @@
 package tech.anonymoushacker1279.immersiveweapons.menu;
 
-import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
@@ -11,6 +10,9 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.*;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.RecipeHolder;
+import net.minecraft.world.item.crafting.RecipeManager;
+import net.minecraft.world.level.Level;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.fml.DistExecutor;
 import net.neoforged.neoforge.network.NetworkEvent.Context;
@@ -22,25 +24,29 @@ import tech.anonymoushacker1279.immersiveweapons.init.PacketHandler;
 import tech.anonymoushacker1279.immersiveweapons.item.crafting.StarForgeRecipe;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class StarForgeMenu extends AbstractContainerMenu {
 
 	public final Container container;
 	public final ContainerData containerData;
+	public final Player player;
 
 	public final Slot ingotInputSlot;
 	public final Slot secondaryInputSlot;
 
-	public static Map<BlockPos, List<StarForgeRecipe>> AVAILABLE_RECIPES = new HashMap<>(50);
+	public List<StarForgeRecipe> availableRecipes = new ArrayList<>(25);
 
-	public StarForgeMenu(int containerID, Inventory inventory) {
-		this(containerID, inventory, new SimpleContainer(3), new SimpleContainerData(4));
+	public StarForgeMenu(int containerID, Inventory inventory, List<ResourceLocation> availableRecipeLocations) {
+		this(containerID, inventory, new SimpleContainer(3), new SimpleContainerData(5));
+		populateAvailableRecipes(availableRecipeLocations, inventory.player.level(), availableRecipes);
 	}
 
 	public StarForgeMenu(int containerID, Inventory inventory, Container container, ContainerData containerData) {
 		super(MenuTypeRegistry.STAR_FORGE_MENU.get(), containerID);
 		this.container = container;
 		this.containerData = containerData;
+		player = inventory.player;
 
 		// Primary input slot at (8, 52)
 		ingotInputSlot = addSlot(new Slot(container, 0, 8, 52) {
@@ -82,8 +88,12 @@ public class StarForgeMenu extends AbstractContainerMenu {
 
 		addDataSlots(containerData);
 
-		if (container instanceof StarForgeBlockEntity blockEntity) {
-			blockEntity.initializeRecipes(inventory.player.level().getRecipeManager());
+		if (container instanceof StarForgeBlockEntity starForgeBlockEntity) {
+			containerData.set(4, 1);    // Set as in use
+
+			for (RecipeHolder<StarForgeRecipe> holder : starForgeBlockEntity.availableRecipes) {
+				availableRecipes.add(holder.value());
+			}
 		}
 	}
 
@@ -120,8 +130,37 @@ public class StarForgeMenu extends AbstractContainerMenu {
 	public void slotsChanged(Container container) {
 		super.slotsChanged(container);
 
-		if (container == this.container) {
+		if (container instanceof StarForgeBlockEntity starForgeBlockEntity) {
+			availableRecipes.clear();
+			for (RecipeHolder<StarForgeRecipe> holder : starForgeBlockEntity.availableRecipes) {
+				availableRecipes.add(holder.value());
+			}
 
+			StarForgeMenuUpdateClientRecipes packet = new StarForgeMenuUpdateClientRecipes(player.getUUID(), containerId,
+					starForgeBlockEntity.getAvailableRecipeIds());
+
+			// Send the packet to the client
+			PacketHandler.INSTANCE.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(
+					starForgeBlockEntity.getBlockPos().getX(),
+					starForgeBlockEntity.getBlockPos().getY(),
+					starForgeBlockEntity.getBlockPos().getZ(),
+					16,
+					starForgeBlockEntity.getLevel().dimension()
+			)), packet);
+
+			// If there is a recipe already being crafted, cancel it
+			if (containerData.get(2) > 0) {
+				containerData.set(2, 0);
+			}
+		}
+	}
+
+	@Override
+	public void removed(Player player) {
+		super.removed(player);
+
+		if (!player.level().isClientSide) {
+			containerData.set(4, 0);    // Set as no longer in use
 		}
 	}
 
@@ -130,16 +169,16 @@ public class StarForgeMenu extends AbstractContainerMenu {
 		return container.stillValid(pPlayer);
 	}
 
-	public void setMenuSelectionIndex(int index) {
-		// Add code here to update the containerData and the result slot
-		index = Mth.clamp(index, 0, AVAILABLE_RECIPES.size() - 1);
+	public void setMenuSelectionIndex(int index, boolean beginCrafting) {
+		index = Mth.clamp(index, 0, availableRecipes.size() - 1);
 		if (index == -1) {
 			index = 0;
 		}
+
 		containerData.set(3, index);
 
-		PacketHandler.INSTANCE.send(PacketDistributor.SERVER.noArg(),
-				new StarForgeMenuPacketHandler(PacketType.UPDATE_MENU_SELECTION_INDEX, containerId, index, null));
+		// Send the packet to the server
+		PacketHandler.INSTANCE.sendToServer(new StarForgeMenuPacketHandler(containerId, index, beginCrafting));
 	}
 
 	public boolean hasSolarEnergy() {
@@ -158,59 +197,41 @@ public class StarForgeMenu extends AbstractContainerMenu {
 		return containerData.get(3);
 	}
 
-	public int getAvailableRecipesSize() {
-		return containerData.get(4);
+	public static void populateAvailableRecipes(List<ResourceLocation> recipeLocations, Level level, List<StarForgeRecipe> availableRecipes) {
+		for (ResourceLocation location : recipeLocations) {
+			Optional<StarForgeRecipe> recipe = level.getRecipeManager().byKey(location).map(recipeHolder -> {
+				if (recipeHolder.value() instanceof StarForgeRecipe starForgeRecipe) {
+					return starForgeRecipe;
+				}
+				return null;
+			});
+			recipe.ifPresent(availableRecipes::add);
+		}
 	}
 
-	public static void updateServer(ServerPlayer player, int containerId, int menuSelectionIndex) {
+	public static void updateServer(ServerPlayer player, int containerId, int menuSelectionIndex, boolean beginCrafting) {
 		// Get the menu from the container ID
 		AbstractContainerMenu menu = player.containerMenu;
 
 		if (menu.containerId == containerId && menu instanceof StarForgeMenu starForgeMenu) {
 			starForgeMenu.containerData.set(3, menuSelectionIndex);
-			((StarForgeBlockEntity) starForgeMenu.container).updateResult();
+			if (beginCrafting) {
+				// Start the smelting process
+				StarForgeRecipe selectedRecipe = starForgeMenu.availableRecipes.get(menuSelectionIndex);
+				starForgeMenu.containerData.set(2, selectedRecipe.smeltTime);
+			}
 			starForgeMenu.container.setChanged();
 		}
 	}
 
-	public record StarForgeMenuPacketHandler(PacketType type, int containerId, int menuSelectionIndex, BlockPos pos,
-	                                         List<ResourceLocation> availableRecipeIds) {
+	public record StarForgeMenuPacketHandler(int containerId, int menuSelectionIndex, boolean beginCrafting) {
 
 		public static void encode(StarForgeMenuPacketHandler msg, FriendlyByteBuf packetBuffer) {
-			switch (msg.type) {
-				case UPDATE_MENU_SELECTION_INDEX -> packetBuffer
-						.writeEnum(msg.type)
-						.writeInt(msg.containerId)
-						.writeInt(msg.menuSelectionIndex);
-				case UPDATE_CLIENT_RECIPES -> {
-					packetBuffer.writeEnum(msg.type).writeInt(msg.containerId).writeBlockPos(msg.pos);
-					packetBuffer.writeInt(msg.availableRecipeIds.size());
-					for (ResourceLocation id : msg.availableRecipeIds) {
-						packetBuffer.writeResourceLocation(id);
-					}
-				}
-			}
+			packetBuffer.writeInt(msg.containerId).writeInt(msg.menuSelectionIndex).writeBoolean(msg.beginCrafting);
 		}
 
 		public static StarForgeMenuPacketHandler decode(FriendlyByteBuf packetBuffer) {
-			PacketType type = packetBuffer.readEnum(PacketType.class);
-			int containerId = packetBuffer.readInt();
-			switch (type) {
-				case UPDATE_MENU_SELECTION_INDEX -> {
-					int menuSelectionIndex = packetBuffer.readInt();
-					return new StarForgeMenuPacketHandler(type, containerId, menuSelectionIndex, null, null);
-				}
-				case UPDATE_CLIENT_RECIPES -> {
-					int size = packetBuffer.readInt();
-					BlockPos pos = packetBuffer.readBlockPos();
-					List<ResourceLocation> availableRecipeIds = new ArrayList<>(size);
-					for (int i = 0; i < size; i++) {
-						availableRecipeIds.add(packetBuffer.readResourceLocation());
-					}
-					return new StarForgeMenuPacketHandler(type, containerId, -1, pos, availableRecipeIds);
-				}
-			}
-			return null;
+			return new StarForgeMenuPacketHandler(packetBuffer.readInt(), packetBuffer.readInt(), packetBuffer.readBoolean());
 		}
 
 		public static void handle(StarForgeMenuPacketHandler msg, Context context) {
@@ -220,19 +241,60 @@ public class StarForgeMenu extends AbstractContainerMenu {
 		}
 
 		private static void run(StarForgeMenuPacketHandler msg, @Nullable ServerPlayer sender) {
-			if (msg.type == PacketType.UPDATE_MENU_SELECTION_INDEX && sender != null) {
-				updateServer(sender, msg.containerId, msg.menuSelectionIndex);
-			} else if (msg.type == PacketType.UPDATE_CLIENT_RECIPES) {
-				AVAILABLE_RECIPES.put(msg.pos, msg.availableRecipeIds.stream()
-						.map(id -> sender.level().getRecipeManager().byKey(id).orElseThrow(IllegalStateException::new))
-						.map(StarForgeRecipe.class::cast)
-						.toList());
+			if (sender != null) {
+				updateServer(sender, msg.containerId, msg.menuSelectionIndex, msg.beginCrafting);
 			}
 		}
 	}
 
-	enum PacketType {
-		UPDATE_MENU_SELECTION_INDEX,
-		UPDATE_CLIENT_RECIPES
+	public record StarForgeMenuUpdateClientRecipes(UUID playerUUID, int containerId, List<ResourceLocation> recipeIds) {
+
+		public static void encode(StarForgeMenuUpdateClientRecipes msg, FriendlyByteBuf packetBuffer) {
+			packetBuffer.writeUUID(msg.playerUUID);
+			packetBuffer.writeInt(msg.containerId);
+			packetBuffer.writeInt(msg.recipeIds.size());
+
+			for (ResourceLocation location : msg.recipeIds) {
+				packetBuffer.writeResourceLocation(location);
+			}
+		}
+
+		public static StarForgeMenuUpdateClientRecipes decode(FriendlyByteBuf packetBuffer) {
+			UUID playerUUID = packetBuffer.readUUID();
+			int containerId = packetBuffer.readInt();
+			int recipeCount = packetBuffer.readInt();
+			List<ResourceLocation> recipeIds = new ArrayList<>(recipeCount);
+			for (int i = 0; i < recipeCount; i++) {
+				recipeIds.add(packetBuffer.readResourceLocation());
+			}
+
+			return new StarForgeMenuUpdateClientRecipes(playerUUID, containerId, recipeIds);
+		}
+
+		public static void handle(StarForgeMenuUpdateClientRecipes msg, Context context) {
+			context.enqueueWork(() -> DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> run(msg)));
+			context.setPacketHandled(true);
+		}
+
+		private static void run(StarForgeMenuUpdateClientRecipes msg) {
+			int containerId = msg.containerId;
+			List<ResourceLocation> recipeIds = msg.recipeIds;
+			net.minecraft.client.Minecraft minecraft = net.minecraft.client.Minecraft.getInstance();    // Fully qualified to avoid crashes on dedicated servers
+
+			if (minecraft.player != null && minecraft.player.containerMenu instanceof StarForgeMenu menu && menu.containerId == containerId) {
+				RecipeManager recipeManager = minecraft.player.level().getRecipeManager();
+				menu.availableRecipes = recipeIds.stream()
+						.map(recipeManager::byKey)
+						.filter(Optional::isPresent)
+						.map(Optional::get)
+						.map(holder -> {
+							if (holder.value() instanceof StarForgeRecipe recipe) {
+								return recipe;
+							}
+							return null;
+						})
+						.collect(Collectors.toList());
+			}
+		}
 	}
 }
