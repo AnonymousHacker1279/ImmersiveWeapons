@@ -1,6 +1,8 @@
 {
   "advancements.immersiveweapons.accessories.description": "Obtain any accessory",
   "advancements.immersiveweapons.accessories.title": "Accessories!",
+  "advancements.immersiveweapons.ammunition_table.description": "Obtain an ammunition table, used to create musket balls.",
+  "advancements.immersiveweapons.ammunition_table.title": "Ammo Manufacturer",
   "advancements.immersiveweapons.astral_armor.description": "Wear a full set of Astral armor",
   "advancements.immersiveweapons.astral_armor.title": "Celestial Protection",
   "advancements.immersiveweapons.astral_axe.description": "Craft an Astral axe",
@@ -177,6 +179,8 @@
   "advancements.immersiveweapons.small_parts_table.title": "The Engineer",
   "advancements.immersiveweapons.smoke_grenade.description": "Craft a smoke grenade",
   "advancements.immersiveweapons.smoke_grenade.title": "Sight Privileges Revoked",
+  "advancements.immersiveweapons.star_forge.description": "Obtain parts for a Star Forge, used to create high-level tools and armor.",
+  "advancements.immersiveweapons.star_forge.title": "Star Forge",
   "advancements.immersiveweapons.starstorm_armor.description": "Wear a full set of Starstorm armor",
   "advancements.immersiveweapons.starstorm_armor.title": "Celestial Wrath",
   "advancements.immersiveweapons.starstorm_axe.description": "Craft a Starstorm axe",

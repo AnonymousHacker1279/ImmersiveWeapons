@@ -761,6 +761,29 @@ public class AdvancementsGenerator extends AdvancementProvider {
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemPredicate.Builder.item().of(IWItemTagGroups.MUSKET_BALLS).build()))
 				.save(consumer, "immersiveweapons:musket_ball");
 
+		Builder.advancement().parent(root)
+				.display(BlockRegistry.AMMUNITION_TABLE.get(),
+						Component.translatable("advancements.immersiveweapons.ammunition_table.title"),
+						Component.translatable("advancements.immersiveweapons.ammunition_table.description"),
+						null, AdvancementType.TASK, true, true, false)
+				.addCriterion("hold",
+						InventoryChangeTrigger.TriggerInstance.hasItems(BlockRegistry.AMMUNITION_TABLE.get()))
+				.save(consumer, "immersiveweapons:ammunition_table");
+
+		Builder.advancement().parent(root)
+				.display(BlockRegistry.STAR_FORGE_CONTROLLER.get(),
+						Component.translatable("advancements.immersiveweapons.star_forge.title"),
+						Component.translatable("advancements.immersiveweapons.star_forge.description"),
+						null, AdvancementType.TASK, true, true, false)
+				.addCriterion("hold",
+						InventoryChangeTrigger.TriggerInstance.hasItems(
+								BlockRegistry.STAR_FORGE_CONTROLLER.get(),
+								BlockRegistry.STAR_FORGE_BRICKS.get(),
+								BlockRegistry.SOLAR_LENS.get(),
+								Items.IRON_BARS
+						))
+				.save(consumer, "immersiveweapons:star_forge");
+
 		AdvancementHolder smallPartsTable = Builder.advancement().parent(root)
 				.display(BlockRegistry.SMALL_PARTS_TABLE.get(),
 						Component.translatable("advancements.immersiveweapons.small_parts_table.title"),

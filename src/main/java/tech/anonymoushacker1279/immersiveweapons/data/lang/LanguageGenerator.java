@@ -866,6 +866,10 @@ public class LanguageGenerator extends IWLanguageProvider {
 		addAdvancement("medic_statue.description", "Obtain a Medic Statue, a summoning device within battlefields.");
 		addAdvancement("small_parts_table.title", "The Engineer");
 		addAdvancement("small_parts_table.description", "Obtain a small parts table, a gateway for creating advanced weapons.");
+		addAdvancement("ammunition_table.title", "Ammo Manufacturer");
+		addAdvancement("ammunition_table.description", "Obtain an ammunition table, used to create musket balls.");
+		addAdvancement("star_forge.title", "Star Forge");
+		addAdvancement("star_forge.description", "Obtain parts for a Star Forge, used to create high-level tools and armor.");
 		addAdvancement("traps.title", "Advanced Warfare");
 		addAdvancement("traps.description", "Obtain any trap");
 		addAdvancement("mud.title", "Mud!");
