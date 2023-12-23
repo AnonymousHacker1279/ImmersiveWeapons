@@ -31,6 +31,10 @@ repositories {
 		url "https://maven2.bai.lol"
 	}
 	maven {
+		name "AzureDoom's Maven"
+		url 'https://libs.azuredoom.com:4443/mods'
+	}
+	maven {
 		url "https://cursemaven.com"
 		content {
 			includeGroup "curse.maven"
@@ -87,6 +91,8 @@ dependencies {
 	/*implementation(jarJar("dev.lukebemish.biomesquisher:biomesquisher-neoforge-1.20.2:${biomesquisher_version}")) {
 		jarJar.ranged(it, "[0.1.6-alpha,)")
 	}*/
+
+	implementation "net.kyrptonaught.customportalapi:cpapireforged-neo-1.20.4:${custom_portals_api_version}"
 
 	// TODO: Uncomment once dependencies update
 
