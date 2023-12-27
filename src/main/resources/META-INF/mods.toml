@@ -32,7 +32,7 @@ side = "BOTH"
 
 [[dependencies.immersiveweapons]]
 modId = "biomesquisher"
-type = "optional"   # TODO: make required after it updates to support the new mods.toml change
+type = "required"
 versionRange = "[0.1.6-alpha,)"
 ordering = "NONE"
 side = "BOTH"

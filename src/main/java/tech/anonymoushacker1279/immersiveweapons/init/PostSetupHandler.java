@@ -10,6 +10,7 @@ import net.minecraft.world.item.alchemy.Potions;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.FlowerPotBlock;
+import net.minecraft.world.phys.AABB;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.config.ConfigHelper.TomlConfigOps;
 import tech.anonymoushacker1279.immersiveweapons.data.dimensions.IWDimensions;
@@ -110,8 +111,9 @@ public class PostSetupHandler {
 	}
 
 	public static void generateBiodome(Level level, BlockPos center, int radius) {
-		// Check for glass at the top of the radius. If it exists, return early
-		if (level.getBlockState(center.above(radius)).is(Blocks.GLASS)) {
+		// Scan for Biodome Life Support Units in the area. If any are found, do not generate a biodome.
+		AABB aabb = new AABB(center.offset(-radius, -radius, -radius).getCenter(), center.offset(radius, radius, radius).getCenter());
+		if (level.getBlockStates(aabb).anyMatch(blockState -> blockState.is(BlockRegistry.BIODOME_LIFE_SUPPORT_UNIT.get()))) {
 			return;
 		}
 

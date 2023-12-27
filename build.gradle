@@ -87,25 +87,22 @@ dependencies {
 
 	implementation "net.neoforged:neoforge:${neoforge_version}"
 
-	// TODO: reimplement after updated to 1.20.4
-	/*implementation(jarJar("dev.lukebemish.biomesquisher:biomesquisher-neoforge-1.20.2:${biomesquisher_version}")) {
+	implementation(jarJar("dev.lukebemish.biomesquisher:biomesquisher-neoforge-1.20.2:${biomesquisher_version}")) {
 		jarJar.ranged(it, "[0.1.6-alpha,)")
-	}*/
+	}
 
 	implementation "net.kyrptonaught.customportalapi:cpapireforged-neo-1.20.4:${custom_portals_api_version}"
 
-	// TODO: Uncomment once dependencies update
-
 	// Include Immersive Weapons Compatibility Bridge (IWCB)
-	// implementation "tech.anonymoushacker1279.iwcompatbridge:IWCompatBridge:${iwcb_version}"
+	implementation "tech.anonymoushacker1279.iwcompatbridge:IWCompatBridge:${iwcb_version}"
 
 	// Include JEI
 	// runtimeOnly fg.deobf("mezz.jei:jei-${minecraft_version}-forge:${jei_version}")
 	// Include WTHIT and badpackets
-	// runtimeOnly "mcp.mobius.waila:wthit:neo-${wthit_version}"
-	// implementation "lol.bai:badpackets:neo-${badpackets_version}"
+	runtimeOnly "mcp.mobius.waila:wthit:neo-${wthit_version}"
+	implementation "lol.bai:badpackets:neo-${badpackets_version}"
 	// Include AttributeFix
-	// implementation "curse.maven:attributefix-280510:${attributefix_version}"
+	implementation "curse.maven:attributefix-280510:${attributefix_version}"
 }
 
 tasks.named('processResources', ProcessResources).configure {
