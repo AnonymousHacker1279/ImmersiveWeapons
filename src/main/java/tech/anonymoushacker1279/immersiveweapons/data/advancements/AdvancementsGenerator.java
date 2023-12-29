@@ -1449,6 +1449,16 @@ public class AdvancementsGenerator extends AdvancementProvider {
 								Items.AIR))
 				.save(consumer, "immersiveweapons:cloud");
 
+		Builder.advancement().parent(root)
+				.display(ItemRegistry.SCULK_STAFF.get(),
+						Component.translatable("advancements.immersiveweapons.sculk_staff.title"),
+						Component.translatable("advancements.immersiveweapons.sculk_staff.description"),
+						null, AdvancementType.CHALLENGE, true, true, false)
+				.addCriterion("hold",
+						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.SCULK_STAFF.get()))
+				.rewards(AdvancementRewards.Builder.experience(75))
+				.save(consumer, "immersiveweapons:sculk_staff");
+
 		// Battlefield advancements
 		AdvancementHolder discover_battlefield = Builder.advancement().parent(root)
 				.display(Blocks.SKELETON_SKULL,

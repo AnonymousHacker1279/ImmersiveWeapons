@@ -233,6 +233,9 @@ public class TooltipHandler {
 		if (stack.getItem() == ItemRegistry.CURSED_SIGHT_STAFF.get()) {
 			event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.cursed_sight_staff").withStyle(ChatFormatting.DARK_RED, ChatFormatting.ITALIC));
 		}
+		if (stack.getItem() == ItemRegistry.SCULK_STAFF.get()) {
+			event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.sculk_staff").withStyle(ChatFormatting.DARK_BLUE, ChatFormatting.ITALIC));
+		}
 
 		// Player utility
 		if (stack.getItem() == ItemRegistry.BANDAGE.get()) {

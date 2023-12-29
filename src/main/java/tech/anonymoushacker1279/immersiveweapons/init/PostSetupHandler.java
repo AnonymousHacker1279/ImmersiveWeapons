@@ -1,6 +1,7 @@
 package tech.anonymoushacker1279.immersiveweapons.init;
 
 import net.kyrptonaught.customportalapi.api.CustomPortalBuilder;
+import net.kyrptonaught.customportalapi.util.SHOULDTP;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
@@ -100,6 +101,7 @@ public class PostSetupHandler {
 				.lightWithItem(ItemRegistry.AZUL_KEYSTONE.get())
 				.destDimID(new ResourceLocation(ImmersiveWeapons.MOD_ID, "tiltros"))
 				.flatPortal()
+				.registerBeforeTPEvent(entity -> ImmersiveWeapons.COMMON_CONFIG.tiltrosEnabled().get() ? SHOULDTP.CONTINUE_TP : SHOULDTP.CANCEL_TP)
 				.registerPostTPEvent(entity -> {
 					if (!entity.level().dimension().equals(IWDimensions.TILTROS)) {
 						return;

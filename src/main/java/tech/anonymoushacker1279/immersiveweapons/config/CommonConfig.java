@@ -30,7 +30,9 @@ public record CommonConfig(
 		ConfigValue<Integer> meteorStaffMaxUseRange,
 		ConfigValue<Double> meteorStaffExplosionRadius,
 		ConfigValue<Boolean> meteorStaffExplosionBreakBlocks,
-		ConfigValue<Integer> cursedSightStaffMaxUseRange) {
+		ConfigValue<Integer> cursedSightStaffMaxUseRange,
+		ConfigValue<Integer> sculkStaffMaxUseRange,
+		ConfigValue<Boolean> sculkStaffSonicBlastThroughWalls) {
 
 	public static CommonConfig create(ModConfigSpec.Builder builder) {
 		builder.push("Common Configuration");
@@ -101,6 +103,8 @@ public record CommonConfig(
 						past a certain level. Enchantments at their max level will appear with a gold tooltip.""")
 				.translation("config.immersiveweapons.skygazer_enchant_caps")
 				.define("skygazer_enchant_caps", TomlConfigOps.INSTANCE.createMap(getEnchantCapsMap()));
+
+		builder.pop();
 
 		builder.pop();
 
@@ -185,6 +189,17 @@ public record CommonConfig(
 				.defineInRange("cursed_sight_staff_max_use_range", 50, 0, Integer.MAX_VALUE);
 		builder.pop();
 
+		builder.push("Sculk Staff");
+		ConfigValue<Integer> sculkStaffMaxUseRange = builder
+				.comment("Set the maximum range in blocks of the Sculk Staff - Default 25")
+				.translation("config.immersiveweapons.sculk_staff_max_use_range")
+				.defineInRange("sculk_staff_max_use_range", 25, 0, Integer.MAX_VALUE);
+		ConfigValue<Boolean> sculkStaffSonicBlastThroughWalls = builder
+				.comment("Set whether the Sculk Staff sonic blast goes through walls - Default true")
+				.translation("config.immersiveweapons.sculk_staff_sonic_blast_through_walls")
+				.define("sculk_staff_sonic_blast_through_walls", true);
+		builder.pop();
+
 		builder.pop();
 
 		return new CommonConfig(
@@ -202,7 +217,7 @@ public record CommonConfig(
 				musketFireVelocity, musketFireInaccuracy,
 				handCannonFireVelocity, handCannonFireInaccuracy,
 				meteorStaffMaxUseRange, meteorStaffExplosionRadius, meteorStaffExplosionBreakBlocks,
-				cursedSightStaffMaxUseRange
+				cursedSightStaffMaxUseRange, sculkStaffMaxUseRange, sculkStaffSonicBlastThroughWalls
 		);
 	}
 

@@ -1480,6 +1480,18 @@ public class RecipeGenerator extends RecipeProvider implements DataGenUtils {
 				.group("tiltros_portal_frame")
 				.unlockedBy("molten_block", has(BlockRegistry.MOLTEN_BLOCK.get()))
 				.save(output);
+
+		// Sculk Staff
+		ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, ItemRegistry.SCULK_STAFF.get())
+				.define('a', ItemRegistry.WARDEN_HEART.get())
+				.define('b', ItemRegistry.OBSIDIAN_ROD.get())
+				.define('c', Items.ECHO_SHARD)
+				.pattern("cac")
+				.pattern(" b ")
+				.pattern(" b ")
+				.group("sculk_staff")
+				.unlockedBy("warden_heart", has(ItemRegistry.WARDEN_HEART.get()))
+				.save(output);
 	}
 
 	private void createMinecraftItems() {

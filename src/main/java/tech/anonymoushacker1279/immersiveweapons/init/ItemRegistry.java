@@ -115,6 +115,7 @@ public class ItemRegistry {
 	public static final Supplier<GauntletItem> STARSTORM_GAUNTLET = ITEMS.register("starstorm_gauntlet", () -> new GauntletItem(CustomItemMaterials.STARSTORM, 2, -2.3f, new Properties(), 0.95f, 2, Ingredient.of(IWItemTagGroups.STARSTORM_INGOTS)));
 	public static final Supplier<MeteorStaffItem> METEOR_STAFF = ITEMS.register("meteor_staff", () -> new MeteorStaffItem(new Properties().durability(199)));
 	public static final Supplier<CursedSightStaffItem> CURSED_SIGHT_STAFF = ITEMS.register("cursed_sight_staff", () -> new CursedSightStaffItem(new Properties().durability(149)));
+	public static final Supplier<SculkStaffItem> SCULK_STAFF = ITEMS.register("sculk_staff", () -> new SculkStaffItem(new Properties().durability(129)));
 	public static final Supplier<IceBowItem> ICE_BOW = ITEMS.register("ice_bow", () -> new IceBowItem(new Properties().durability(149)));
 	public static final Supplier<DragonBreathBow> DRAGONS_BREATH_BOW = ITEMS.register("dragons_breath_bow", () -> new DragonBreathBow(new Properties().durability(99)));
 	public static final Supplier<AuroraBow> AURORA_BOW = ITEMS.register("aurora_bow", () -> new AuroraBow(new Properties().durability(299)));
@@ -149,6 +150,7 @@ public class ItemRegistry {
 	public static final Supplier<Item> POTASSIUM_NITRATE = ITEMS.register("potassium_nitrate", () -> new Item(new Properties()));
 	public static final Supplier<Item> VENTUS_STAFF_CORE = ITEMS.register("ventus_staff_core", () -> new Item(new Properties()));
 	public static final Supplier<Item> CURSED_SIGHT_STAFF_CORE = ITEMS.register("cursed_sight_staff_core", () -> new Item(new Properties()));
+	public static final Supplier<Item> WARDEN_HEART = ITEMS.register("warden_heart", () -> new Item(new Properties()));
 	public static final Supplier<Item> AZUL_KEYSTONE = ITEMS.register("azul_keystone", () -> new Item(new Properties()));
 	public static final Supplier<Item> AZUL_KEYSTONE_FRAGMENT = ITEMS.register("azul_keystone_fragment", () -> new Item(new Properties()));
 	public static final Supplier<AzulLocatorItem> AZUL_LOCATOR = ITEMS.register("azul_locator", () -> new AzulLocatorItem(new Properties().durability(1)));

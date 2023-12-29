@@ -423,6 +423,7 @@ public class LanguageGenerator extends IWLanguageProvider {
 		addTooltip("ventus_staff", "Teach your enemies the importance of personal space");
 		addTooltip("meteor_staff", "Summon meteors from the sky");
 		addTooltip("cursed_sight_staff", "Summon Evil Eyes to curse your enemies");
+		addTooltip("sculk_staff", "Summon blasts of high-power sonic energy");
 
 		// Player utility
 		addTooltip("bandage", "Cover those nasty cuts and scrapes");
@@ -794,6 +795,8 @@ public class LanguageGenerator extends IWLanguageProvider {
 		addAdvancement("meteor_staff.description", "Craft a meteor staff");
 		addAdvancement("cursed_sight_staff.title", "Cursed Sight");
 		addAdvancement("cursed_sight_staff.description", "Craft a cursed sight staff");
+		addAdvancement("sculk_staff.title", "Sonic Blast");
+		addAdvancement("sculk_staff.description", "Craft a sculk staff");
 
 		// Projectiles
 		addAdvancement("musket_ball.title", "Pow!");
@@ -984,6 +987,10 @@ public class LanguageGenerator extends IWLanguageProvider {
 
 		// Cursed Sight Staff
 		addConfigDescription("cursed_sight_staff_max_use_range", "Set the maximum range in blocks of the Cursed Sight Staff - Default 50");
+
+		// Sculk Staff
+		addConfigDescription("sculk_staff_max_use_range", "Set the maximum range in blocks of the Sculk Staff - Default 25");
+		addConfigDescription("sculk_staff_sonic_blast_through_walls", "Set whether the Sculk Staff sonic blast goes through walls - Default true");
 	}
 
 	private void addEnchantments() {
