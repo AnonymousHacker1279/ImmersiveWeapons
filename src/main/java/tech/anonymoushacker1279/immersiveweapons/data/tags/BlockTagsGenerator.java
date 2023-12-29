@@ -153,9 +153,7 @@ public class BlockTagsGenerator extends BlockTagsProvider {
 				BlockRegistry.STARDUST_TRAPDOOR.get());
 
 		// Small flowers tag
-		tag(BlockTags.SMALL_FLOWERS).add(
-				BlockRegistry.AZUL_STAINED_ORCHID.get(),
-				BlockRegistry.MOONGLOW.get());
+		tag(BlockTags.SMALL_FLOWERS).add(BlockRegistry.MOONGLOW.get());
 
 		// Leaves tag
 		tag(BlockTags.LEAVES).add(BlockRegistry.STARDUST_LEAVES.get());

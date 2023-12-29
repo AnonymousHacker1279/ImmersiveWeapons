@@ -124,10 +124,7 @@ public class BlockItemRegistry {
 	public static final Supplier<BlockItem> HARDENED_MUD_STAIRS_ITEM = ItemRegistry.ITEMS.register("hardened_mud_stairs", () -> new BlockItem(BlockRegistry.HARDENED_MUD_STAIRS.get(), new Properties()));
 	public static final Supplier<BlockItem> HARDENED_MUD_SLAB_ITEM = ItemRegistry.ITEMS.register("hardened_mud_slab", () -> new BlockItem(BlockRegistry.HARDENED_MUD_SLAB.get(), new Properties()));
 	public static final Supplier<BlockItem> HARDENED_MUD_WINDOW_ITEM = ItemRegistry.ITEMS.register("hardened_mud_window", () -> new BlockItem(BlockRegistry.HARDENED_MUD_WINDOW.get(), new Properties()));
-	public static final Supplier<BlockItem> WARRIOR_STATUE_BASE_ITEM = ItemRegistry.ITEMS.register("warrior_statue_base", () -> new BlockItem(BlockRegistry.WARRIOR_STATUE_BASE.get(), new Properties()));
-	public static final Supplier<BlockItem> WARRIOR_STATUE_TORSO_ITEM = ItemRegistry.ITEMS.register("warrior_statue_torso", () -> new BlockItem(BlockRegistry.WARRIOR_STATUE_TORSO.get(), new Properties()));
-	public static final Supplier<BlockItem> WARRIOR_STATUE_HEAD_ITEM = ItemRegistry.ITEMS.register("warrior_statue_head", () -> new BlockItem(BlockRegistry.WARRIOR_STATUE_HEAD.get(), new Properties()));
-	public static final Supplier<BlockItem> AZUL_STAINED_ORCHID_ITEM = ItemRegistry.ITEMS.register("azul_stained_orchid", () -> new BlockItem(BlockRegistry.AZUL_STAINED_ORCHID.get(), new Properties()));
+	public static final Supplier<BlockItem> TILTROS_PORTAL_FRAME_ITEM = ItemRegistry.ITEMS.register("tiltros_portal_frame", () -> new BlockItem(BlockRegistry.TILTROS_PORTAL_FRAME.get(), new Properties()));
 	public static final Supplier<BlockItem> CELESTIAL_LANTERN_ITEM = ItemRegistry.ITEMS.register("celestial_lantern", () -> new BlockItem(BlockRegistry.CELESTIAL_LANTERN.get(), new Properties()));
 	public static final Supplier<BlockItem> MINUTEMAN_HEAD_ITEM = ItemRegistry.ITEMS.register("minuteman_head", () -> new StandingAndWallBlockItem(BlockRegistry.MINUTEMAN_HEAD.get(), BlockRegistry.MINUTEMAN_WALL_HEAD.get(), new Properties(), Direction.DOWN));
 	public static final Supplier<BlockItem> FIELD_MEDIC_HEAD_ITEM = ItemRegistry.ITEMS.register("field_medic_head", () -> new StandingAndWallBlockItem(BlockRegistry.FIELD_MEDIC_HEAD.get(), BlockRegistry.FIELD_MEDIC_WALL_HEAD.get(), new Properties(), Direction.DOWN));

@@ -18,7 +18,6 @@ import net.neoforged.neoforge.common.data.AdvancementProvider;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.advancement.EntityDiscoveredTrigger;
-import tech.anonymoushacker1279.immersiveweapons.advancement.WarriorStatueActivatedTrigger;
 import tech.anonymoushacker1279.immersiveweapons.data.biomes.IWBiomes;
 import tech.anonymoushacker1279.immersiveweapons.data.dimensions.IWDimensions;
 import tech.anonymoushacker1279.immersiveweapons.data.tags.groups.immersiveweapons.IWItemTagGroups;
@@ -1481,19 +1480,17 @@ public class AdvancementsGenerator extends AdvancementProvider {
 				.save(consumer, "immersiveweapons:medic_statue");
 
 		// Tiltros advancements
-		AdvancementHolder warrior_statue = Builder.advancement().parent(root)
-				.display(BlockRegistry.WARRIOR_STATUE_HEAD.get(),
-						Component.translatable("advancements.immersiveweapons.tiltros.warrior_statue.title"),
-						Component.translatable("advancements.immersiveweapons.tiltros.warrior_statue.description"),
+		AdvancementHolder tiltros_portal = Builder.advancement().parent(root)
+				.display(BlockRegistry.TILTROS_PORTAL_FRAME.get(),
+						Component.translatable("advancements.immersiveweapons.tiltros.tiltros_portal.title"),
+						Component.translatable("advancements.immersiveweapons.tiltros.tiltros_portal.description"),
 						null, AdvancementType.TASK, true, true, true)
 				.addCriterion("hold",
-						InventoryChangeTrigger.TriggerInstance.hasItems(BlockRegistry.WARRIOR_STATUE_BASE.get(),
-								BlockRegistry.WARRIOR_STATUE_TORSO.get(),
-								BlockRegistry.WARRIOR_STATUE_HEAD.get()))
+						InventoryChangeTrigger.TriggerInstance.hasItems(BlockRegistry.TILTROS_PORTAL_FRAME.get()))
 				.requirements(Strategy.AND)
 				.save(consumer, "immersiveweapons:warrior_statue");
 
-		AdvancementHolder azul_keystone = Builder.advancement().parent(warrior_statue)
+		AdvancementHolder azul_keystone = Builder.advancement().parent(tiltros_portal)
 				.display(ItemRegistry.AZUL_KEYSTONE_FRAGMENT.get(),
 						Component.translatable("advancements.immersiveweapons.tiltros.azul_keystone.title"),
 						Component.translatable("advancements.immersiveweapons.tiltros.azul_keystone.description"),
@@ -1502,23 +1499,15 @@ public class AdvancementsGenerator extends AdvancementProvider {
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.AZUL_KEYSTONE.get()))
 				.save(consumer, "immersiveweapons:azul_keystone");
 
-		AdvancementHolder activated_warrior_statue = Builder.advancement().parent(azul_keystone)
-				.display(ItemRegistry.AZUL_KEYSTONE.get(),
-						Component.translatable("advancements.immersiveweapons.tiltros.activated_warrior_statue.title"),
-						Component.translatable("advancements.immersiveweapons.tiltros.activated_warrior_statue.description"),
-						null, AdvancementType.TASK, true, true, true)
-				.addCriterion("activate", WarriorStatueActivatedTrigger.TriggerInstance.statueActivated())
-				.save(consumer, "immersiveweapons:activated_warrior_statue");
-
-		Builder.advancement().parent(activated_warrior_statue)
-				.display(BlockItemRegistry.AZUL_STAINED_ORCHID_ITEM.get(),
+		Builder.advancement().parent(azul_keystone)
+				.display(BlockItemRegistry.MOONGLOW_ITEM.get(),
 						Component.translatable("advancements.immersiveweapons.tiltros.biome.title"),
 						Component.translatable("advancements.immersiveweapons.tiltros.biome.description"),
 						null, AdvancementType.GOAL, true, true, false)
 				.addCriterion("visit",
 						PlayerTrigger.TriggerInstance.located(
 								LocationPredicate.Builder.inDimension(IWDimensions.TILTROS)))
-				.rewards(AdvancementRewards.Builder.experience(50))
+				.rewards(AdvancementRewards.Builder.experience(150))
 				.save(consumer, "immersiveweapons:tiltros");
 	}
 }

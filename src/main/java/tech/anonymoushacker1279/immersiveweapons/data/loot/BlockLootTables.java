@@ -28,7 +28,6 @@ import tech.anonymoushacker1279.immersiveweapons.block.WoodenSpikesBlock;
 import tech.anonymoushacker1279.immersiveweapons.block.barbed_wire.BarbedWireBlock;
 import tech.anonymoushacker1279.immersiveweapons.block.decoration.WoodenTableBlock;
 import tech.anonymoushacker1279.immersiveweapons.block.decoration.skull.CustomSkullBlock;
-import tech.anonymoushacker1279.immersiveweapons.block.misc.warrior_statue.WarriorStatueTorso;
 import tech.anonymoushacker1279.immersiveweapons.init.*;
 
 import java.util.ArrayList;
@@ -111,8 +110,6 @@ public class BlockLootTables implements LootTableSubProvider {
 		dropSelf(BlockRegistry.TESLA_SYNTHESIZER.get());
 		dropSelf(BlockRegistry.TROLL_FLAG.get());
 		dropSelf(BlockRegistry.WALL_SHELF.get());
-		dropSelf(BlockRegistry.WARRIOR_STATUE_BASE.get());
-		dropSelf(BlockRegistry.WARRIOR_STATUE_HEAD.get());
 		dropSelf(BlockRegistry.MOONGLOW.get());
 		dropSelf(BlockRegistry.STARDUST_LOG.get());
 		dropSelf(BlockRegistry.STARDUST_WOOD.get());
@@ -153,6 +150,7 @@ public class BlockLootTables implements LootTableSubProvider {
 		dropSelf(BlockRegistry.STAR_FORGE_BRICKS.get());
 		dropSelf(BlockRegistry.STAR_FORGE_CONTROLLER.get());
 		dropSelf(BlockRegistry.SOLAR_LENS.get());
+		dropSelf(BlockRegistry.TILTROS_PORTAL_FRAME.get());
 
 		blocks.stream().filter(WoodenTableBlock.class::isInstance).forEach(this::dropSelf);
 		blocks.stream().filter(CustomSkullBlock.class::isInstance).forEach(this::dropSelf);
@@ -213,28 +211,6 @@ public class BlockLootTables implements LootTableSubProvider {
 										.when(LootItemBlockStatePropertyCondition.hasBlockStateProperties(block)
 												.setProperties(StatePropertiesPredicate.Builder.properties()
 														.hasProperty(SandbagBlock.BAGS, 3))))))));
-		add(BlockRegistry.WARRIOR_STATUE_TORSO.get(), (block) -> LootTable.lootTable()
-				.withPool(LootPool.lootPool()
-						.name("keystone")
-						.setRolls(ConstantValue.exactly(1.0F))
-						.add(applyExplosionDecay(LootItem.lootTableItem(ItemRegistry.AZUL_KEYSTONE.get())
-								.when(LootItemBlockStatePropertyCondition.hasBlockStateProperties(block)
-										.setProperties(StatePropertiesPredicate.Builder.properties()
-												.hasProperty(WarriorStatueTorso.POWERED, true))))))
-				.withPool(LootPool.lootPool()
-						.name("powered")
-						.setRolls(ConstantValue.exactly(1.0F))
-						.add(applyExplosionDecay(LootItem.lootTableItem(BlockRegistry.WARRIOR_STATUE_TORSO.get())
-								.when(LootItemBlockStatePropertyCondition.hasBlockStateProperties(block)
-										.setProperties(StatePropertiesPredicate.Builder.properties()
-												.hasProperty(WarriorStatueTorso.POWERED, true))))))
-				.withPool(LootPool.lootPool()
-						.name("unpowered")
-						.setRolls(ConstantValue.exactly(1.0F))
-						.add(applyExplosionDecay(LootItem.lootTableItem(BlockRegistry.WARRIOR_STATUE_TORSO.get())
-								.when(LootItemBlockStatePropertyCondition.hasBlockStateProperties(block)
-										.setProperties(StatePropertiesPredicate.Builder.properties()
-												.hasProperty(WarriorStatueTorso.POWERED, false)))))));
 	}
 
 	protected static LootTable.Builder createLeafLikeDrop(Block block, Item altDrop, float... pChances) {

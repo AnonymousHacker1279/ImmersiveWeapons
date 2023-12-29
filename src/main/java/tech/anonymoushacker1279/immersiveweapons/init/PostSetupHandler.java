@@ -95,10 +95,10 @@ public class PostSetupHandler {
 
 		// Initialize custom portals
 		CustomPortalBuilder.beginPortal()
-				.frameBlock(BlockRegistry.COBALT_BLOCK.get())
+				.frameBlock(BlockRegistry.TILTROS_PORTAL_FRAME.get())
+				.customPortalBlock(BlockRegistry.TILTROS_PORTAL::get)
 				.lightWithItem(ItemRegistry.AZUL_KEYSTONE.get())
 				.destDimID(new ResourceLocation(ImmersiveWeapons.MOD_ID, "tiltros"))
-				.tintColor(0, 71, 171)
 				.flatPortal()
 				.registerPostTPEvent(entity -> {
 					if (!entity.level().dimension().equals(IWDimensions.TILTROS)) {
@@ -143,8 +143,8 @@ public class PostSetupHandler {
 		}
 
 		// Determine the positions for the Biodome Life Support Units
-		BlockPos pos1 = center.offset(-radius + 4, 0, -radius + 4);
-		BlockPos pos2 = center.offset(radius - 4, 0, radius - 4);
+		BlockPos pos1 = center.offset(-radius + 4, -radius, -radius + 4);
+		BlockPos pos2 = center.offset(radius - 4, -radius, radius - 4);
 
 		// Move upwards until we find a grass block or reach past the radius
 		while (!level.getBlockState(pos1).is(Blocks.GRASS_BLOCK) && pos1.getY() < center.getY() + radius) {

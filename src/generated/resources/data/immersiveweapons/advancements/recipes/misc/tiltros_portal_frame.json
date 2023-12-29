@@ -1,34 +1,34 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "ender_eye": {
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "immersiveweapons:tiltros_portal_frame"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    },
+    "molten_block": {
       "conditions": {
         "items": [
           {
             "items": [
-              "minecraft:ender_eye"
+              "immersiveweapons:molten_block"
             ]
           }
         ]
       },
       "trigger": "minecraft:inventory_changed"
-    },
-    "has_the_recipe": {
-      "conditions": {
-        "recipe": "immersiveweapons:warrior_statue_base"
-      },
-      "trigger": "minecraft:recipe_unlocked"
     }
   },
   "requirements": [
     [
       "has_the_recipe",
-      "ender_eye"
+      "molten_block"
     ]
   ],
   "rewards": {
     "recipes": [
-      "immersiveweapons:warrior_statue_base"
+      "immersiveweapons:tiltros_portal_frame"
     ]
   }
 }

@@ -15,8 +15,6 @@ import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.block.*;
 import tech.anonymoushacker1279.immersiveweapons.block.barbed_wire.BarbedWireBlock;
 import tech.anonymoushacker1279.immersiveweapons.block.decoration.*;
-import tech.anonymoushacker1279.immersiveweapons.block.misc.warrior_statue.WarriorStatueHead;
-import tech.anonymoushacker1279.immersiveweapons.block.misc.warrior_statue.WarriorStatueTorso;
 import tech.anonymoushacker1279.immersiveweapons.block.star_forge.StarForgeControllerBlock;
 import tech.anonymoushacker1279.immersiveweapons.data.lists.BlockLists;
 import tech.anonymoushacker1279.immersiveweapons.init.BlockRegistry;
@@ -363,10 +361,6 @@ public class BlockStateGenerator extends BlockStateProvider {
 		}
 
 		// Generate data for cross blocks
-		simpleBlock(BlockRegistry.AZUL_STAINED_ORCHID.get(), models()
-				.cross(BuiltInRegistries.BLOCK.getKey(BlockRegistry.AZUL_STAINED_ORCHID.get()).toString(),
-						new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/azul_stained_orchid"))
-				.renderType("minecraft:cutout_mipped"));
 		simpleBlock(BlockRegistry.MOONGLOW.get(), models()
 				.cross(BuiltInRegistries.BLOCK.getKey(BlockRegistry.MOONGLOW.get()).toString(),
 						new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/moonglow"))
@@ -507,30 +501,6 @@ public class BlockStateGenerator extends BlockStateProvider {
 							.rotationY(((int) state.getValue(BlockStateProperties.HORIZONTAL_FACING).toYRot()))
 							.build();
 				});
-		horizontalBlock(BlockRegistry.WARRIOR_STATUE_BASE.get(),
-				models().getExistingFile(new ResourceLocation(ImmersiveWeapons.MOD_ID, "warrior_statue_base")), 0);
-		getVariantBuilder(BlockRegistry.WARRIOR_STATUE_TORSO.get())
-				.forAllStates(state -> {
-					boolean powered = state.getValue(WarriorStatueTorso.POWERED);
-
-					String path = "warrior_statue_torso" + (powered ? "_powered" : "");
-
-					return ConfiguredModel.builder()
-							.modelFile(models().getExistingFile(new ResourceLocation(ImmersiveWeapons.MOD_ID, path)))
-							.rotationY(((int) state.getValue(BlockStateProperties.HORIZONTAL_FACING).toYRot()))
-							.build();
-				});
-		getVariantBuilder(BlockRegistry.WARRIOR_STATUE_HEAD.get())
-				.forAllStates(state -> {
-					boolean powered = state.getValue(WarriorStatueHead.POWERED);
-
-					String path = "warrior_statue_head" + (powered ? "_powered" : "");
-
-					return ConfiguredModel.builder()
-							.modelFile(models().getExistingFile(new ResourceLocation(ImmersiveWeapons.MOD_ID, path)))
-							.rotationY(((int) state.getValue(BlockStateProperties.HORIZONTAL_FACING).toYRot()))
-							.build();
-				});
 		getVariantBuilder(BlockRegistry.CELESTIAL_LANTERN.get())
 				.forAllStates(state -> {
 					boolean hanging = state.getValue(CelestialLanternBlock.HANGING);
@@ -644,6 +614,14 @@ public class BlockStateGenerator extends BlockStateProvider {
 				.renderType("minecraft:translucent"));
 		simpleBlock(BlockRegistry.SOLAR_LENS.get(),
 				models().getExistingFile(new ResourceLocation(ImmersiveWeapons.MOD_ID, "solar_lens")));
+
+		// Tiltros Portal and Frame
+		getVariantBuilder(BlockRegistry.TILTROS_PORTAL.get())
+				.forAllStates(state -> ConfiguredModel.builder()
+						.modelFile(models().withExistingParent(BuiltInRegistries.BLOCK.getKey(BlockRegistry.TILTROS_PORTAL.get()).getPath(), "minecraft:block/block")
+								.texture("particle", new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/tiltros_portal_frame"))
+						)
+						.build());
 	}
 
 	private ConfiguredModel[] crystalBlock(Supplier<? extends AmethystClusterBlock> crystal, String name, BlockState state) {

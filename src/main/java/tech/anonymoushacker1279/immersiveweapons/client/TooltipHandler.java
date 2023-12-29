@@ -451,12 +451,6 @@ public class TooltipHandler {
 		if (stack.getItem() == ItemRegistry.AZUL_KEYSTONE_FRAGMENT.get()) {
 			event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.azul_keystone_fragment").withStyle(ChatFormatting.AQUA, ChatFormatting.ITALIC));
 		}
-		if (stack.getItem() == BlockItemRegistry.AZUL_STAINED_ORCHID_ITEM.get()) {
-			event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.azul_stained_orchid").withStyle(ChatFormatting.AQUA, ChatFormatting.ITALIC));
-		}
-		if (stack.getItem() == BlockItemRegistry.WARRIOR_STATUE_HEAD_ITEM.get() || stack.getItem() == BlockItemRegistry.WARRIOR_STATUE_TORSO_ITEM.get() || stack.getItem() == BlockItemRegistry.WARRIOR_STATUE_BASE_ITEM.get()) {
-			event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.warrior_statue").withStyle(ChatFormatting.DARK_PURPLE, ChatFormatting.ITALIC));
-		}
 	}
 
 	/**

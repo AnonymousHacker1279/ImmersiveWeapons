@@ -394,11 +394,6 @@ public class ItemModelGenerator extends ItemModelProvider implements DataGenUtil
 				} else if (item == BlockItemRegistry.BURNED_OAK_BUTTON_ITEM.get()) {
 					buttonInventory(item.toString(),
 							new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/burned_oak_planks"));
-				} else if (item == BlockItemRegistry.AZUL_STAINED_ORCHID_ITEM.get()) {
-					getBuilder(item.toString())
-							.parent(new ModelFile.UncheckedModelFile("item/generated"))
-							.texture("layer0", new ResourceLocation(ImmersiveWeapons.MOD_ID,
-									"block/azul_stained_orchid"));
 				} else if (item == BlockItemRegistry.MOONGLOW_ITEM.get()) {
 					getBuilder(item.toString())
 							.parent(new ModelFile.UncheckedModelFile("item/generated"))

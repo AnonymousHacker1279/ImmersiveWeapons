@@ -534,8 +534,6 @@ public class LanguageGenerator extends IWLanguageProvider {
 		addTooltip("medic_statue", "Something seems to activate inside when it is placed in a Battlefield. It wishes to heal.");
 		addTooltip("azul_keystone", "It resonates with the energy of a lost world");
 		addTooltip("azul_keystone_fragment", "It vibrates gently in your hand");
-		addTooltip("azul_stained_orchid", "If you lean close enough, you can hear something resonating inside");
-		addTooltip("warrior_statue", "It wants to take you somewhere");
 	}
 
 	private void addKeys() {
@@ -846,12 +844,10 @@ public class LanguageGenerator extends IWLanguageProvider {
 		addAdvancement("used_syringe.description", "Die to a used syringe");
 
 		// Tiltros
-		addAdvancement("tiltros.warrior_statue.title", "A Portal to a Forgotten Land");
-		addAdvancement("tiltros.warrior_statue.description", "Craft all three pieces of a warrior statue");
-		addAdvancement("tiltros.azul_keystone.title", "A Warrior's Key");
+		addAdvancement("tiltros.tiltros_portal.title", "A Portal to a Forgotten Land");
+		addAdvancement("tiltros.tiltros_portal.description", "Craft a Tiltros Portal Frame");
+		addAdvancement("tiltros.azul_keystone.title", "Dimensional Keystone");
 		addAdvancement("tiltros.azul_keystone.description", "Craft an Azul Keystone from fragments scattered across the world");
-		addAdvancement("tiltros.activated_warrior_statue.title", "Entry to Tiltros");
-		addAdvancement("tiltros.activated_warrior_statue.description", "Construct and activate a warrior statue");
 		addAdvancement("tiltros.celestial_lantern.title", "Magical Lantern");
 		addAdvancement("tiltros.celestial_lantern.description", "Obtain a celestial lantern");
 		addAdvancement("tiltros.biome.title", "Welcome to Tiltros");

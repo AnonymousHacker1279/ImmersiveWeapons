@@ -11,12 +11,12 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "immersiveweapons:warrior_statue_base"
+          "name": "immersiveweapons:tiltros_portal_frame"
         }
       ],
       "name": "main",
       "rolls": 1.0
     }
   ],
-  "random_sequence": "immersiveweapons:blocks/warrior_statue_base"
+  "random_sequence": "immersiveweapons:blocks/tiltros_portal_frame"
 }

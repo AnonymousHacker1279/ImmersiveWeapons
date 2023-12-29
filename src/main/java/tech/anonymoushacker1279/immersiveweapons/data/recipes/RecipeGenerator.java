@@ -64,7 +64,6 @@ public class RecipeGenerator extends RecipeProvider implements DataGenUtils {
 		createSmokeGrenades();
 		createPanelItems();
 		createShardItems();
-		createWarriorStatueItems();
 		createUtilityItems();
 		createFirstAidItems();
 		createFoodItems();
@@ -669,41 +668,6 @@ public class RecipeGenerator extends RecipeProvider implements DataGenUtils {
 		builder = ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, ItemRegistry.DIAMOND_SHARD.get(), 4)
 				.unlockedBy("diamond", has(Tags.Items.GEMS_DIAMOND));
 		createShard(builder, Items.DIAMOND);
-	}
-
-	private void createWarriorStatueItems() {
-		// Create warrior statute head
-		ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, BlockItemRegistry.WARRIOR_STATUE_HEAD_ITEM.get())
-				.define('a', Items.STONE)
-				.define('b', Items.CARVED_PUMPKIN)
-				.define('c', Items.ENDER_EYE)
-				.pattern("aaa")
-				.pattern("aba")
-				.pattern("aca")
-				.group("warrior_statue")
-				.unlockedBy("ender_eye", has(Items.ENDER_EYE))
-				.save(output);
-		// Create warrior statute torso
-		ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, BlockItemRegistry.WARRIOR_STATUE_TORSO_ITEM.get())
-				.define('a', Items.STONE)
-				.define('b', ItemTags.COALS)
-				.define('c', Items.ENDER_EYE)
-				.pattern("aaa")
-				.pattern("aba")
-				.pattern("aca")
-				.group("warrior_statue")
-				.unlockedBy("ender_eye", has(Items.ENDER_EYE))
-				.save(output);
-		// Create warrior statute base
-		ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, BlockItemRegistry.WARRIOR_STATUE_BASE_ITEM.get())
-				.define('a', Items.STONE)
-				.define('b', Items.ENDER_EYE)
-				.pattern("aba")
-				.pattern("aaa")
-				.pattern("a a")
-				.group("warrior_statue")
-				.unlockedBy("ender_eye", has(Items.ENDER_EYE))
-				.save(output);
 	}
 
 	private void createUtilityItems() {
@@ -1331,9 +1295,9 @@ public class RecipeGenerator extends RecipeProvider implements DataGenUtils {
 		ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ItemRegistry.AZUL_KEYSTONE.get())
 				.define('a', Tags.Items.GEMS_DIAMOND)
 				.define('b', ItemRegistry.AZUL_KEYSTONE_FRAGMENT.get())
-				.pattern("bbb")
+				.pattern(" b ")
 				.pattern("bab")
-				.pattern("bbb")
+				.pattern(" b ")
 				.group("azul_keystone")
 				.unlockedBy("azul_keystone_fragment", has(ItemRegistry.AZUL_KEYSTONE_FRAGMENT.get()))
 				.save(output);
@@ -1502,6 +1466,19 @@ public class RecipeGenerator extends RecipeProvider implements DataGenUtils {
 				.pattern("bbb")
 				.group("padded_leather_armor")
 				.unlockedBy("leather_boots", has(Items.LEATHER_BOOTS))
+				.save(output);
+
+		// Tiltros Portal Frame
+		ShapedRecipeBuilder.shaped(RecipeCategory.MISC, BlockRegistry.TILTROS_PORTAL_FRAME.get(), 4)
+				.define('a', BlockRegistry.MOLTEN_BLOCK.get())
+				.define('b', IWItemTagGroups.TESLA_INGOTS)
+				.define('c', BlockRegistry.COBALT_BLOCK.get())
+				.define('d', Items.NETHERITE_SCRAP)
+				.pattern("cdc")
+				.pattern("bab")
+				.pattern("cdc")
+				.group("tiltros_portal_frame")
+				.unlockedBy("molten_block", has(BlockRegistry.MOLTEN_BLOCK.get()))
 				.save(output);
 	}
 
