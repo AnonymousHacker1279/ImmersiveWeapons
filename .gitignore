@@ -26,8 +26,9 @@ gradlew.bat
 .vs
 .vscode
 
-# Datagen cache
+# Caches
 /src/generated/resources/.cache/
+.optimizePngCache
 
 # Run configurations
 /runs/
