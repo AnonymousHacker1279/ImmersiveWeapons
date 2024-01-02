@@ -1,9 +1,7 @@
 package tech.anonymoushacker1279.immersiveweapons.item.armor;
 
 import net.minecraft.ChatFormatting;
-import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
-import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.StringRepresentable;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -12,13 +10,13 @@ import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.*;
 import net.minecraft.world.level.Level;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.fml.DistExecutor;
-import net.neoforged.neoforge.network.NetworkEvent.Context;
+import net.neoforged.neoforge.network.PacketDistributor;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.client.IWKeyBinds;
 import tech.anonymoushacker1279.immersiveweapons.config.ClientConfig;
-import tech.anonymoushacker1279.immersiveweapons.init.*;
+import tech.anonymoushacker1279.immersiveweapons.init.ItemRegistry;
+import tech.anonymoushacker1279.immersiveweapons.init.SoundEventRegistry;
+import tech.anonymoushacker1279.immersiveweapons.network.payload.TeslaArmorPayload;
 
 import java.util.List;
 
@@ -72,7 +70,7 @@ public class TeslaArmorItem extends ArmorItem {
 
 					// Send packet to server
 					state = state.getNext();
-					PacketHandler.INSTANCE.sendToServer(new TeslaArmorItemPacketHandler(state));
+					PacketDistributor.SERVER.noArg().send(new TeslaArmorPayload(state));
 
 					if (state == EffectState.DISABLED) {
 						level.playSound(player,
@@ -164,7 +162,7 @@ public class TeslaArmorItem extends ArmorItem {
 		}
 	}
 
-	private enum EffectState implements StringRepresentable {
+	public enum EffectState implements StringRepresentable {
 		EFFECT_EVERYTHING("effect_everything"),
 		EFFECT_MOBS("effect_mobs"),
 		DISABLED("disabled");
@@ -191,32 +189,6 @@ public class TeslaArmorItem extends ArmorItem {
 				}
 			}
 			return DISABLED;
-		}
-	}
-
-	public record TeslaArmorItemPacketHandler(EffectState state) {
-
-		public static void encode(TeslaArmorItemPacketHandler msg, FriendlyByteBuf packetBuffer) {
-			packetBuffer.writeEnum(msg.state);
-		}
-
-		public static TeslaArmorItemPacketHandler decode(FriendlyByteBuf packetBuffer) {
-			return new TeslaArmorItemPacketHandler(packetBuffer.readEnum(EffectState.class));
-		}
-
-		public static void handle(TeslaArmorItemPacketHandler msg, Context context) {
-			if (context.getSender() != null) {
-				context.enqueueWork(() -> DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> run(msg, context.getSender())));
-				context.enqueueWork(() -> DistExecutor.unsafeRunWhenOn(Dist.DEDICATED_SERVER, () -> () -> run(msg, context.getSender())));
-			}
-			context.setPacketHandled(true);
-		}
-
-		/**
-		 * Runs specifically on the server, when a packet is received
-		 */
-		private static void run(TeslaArmorItemPacketHandler msg, ServerPlayer player) {
-			player.getPersistentData().putString("TeslaArmorEffectState", msg.state.getSerializedName());
 		}
 	}
 }

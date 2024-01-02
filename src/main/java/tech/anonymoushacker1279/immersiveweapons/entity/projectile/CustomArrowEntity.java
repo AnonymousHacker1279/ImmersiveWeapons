@@ -21,9 +21,8 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import net.neoforged.neoforge.event.EventHooks;
 import net.neoforged.neoforge.network.PacketDistributor;
 import org.jetbrains.annotations.Nullable;
-import tech.anonymoushacker1279.immersiveweapons.entity.projectile.SmokeGrenadeEntity.SmokeGrenadeEntityPacketHandler;
-import tech.anonymoushacker1279.immersiveweapons.init.PacketHandler;
 import tech.anonymoushacker1279.immersiveweapons.item.tool.HitEffectUtils;
+import tech.anonymoushacker1279.immersiveweapons.network.payload.SmokeGrenadePayload;
 import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
 import tech.anonymoushacker1279.immersiveweapons.world.level.IWDamageSources;
 
@@ -263,8 +262,8 @@ public class CustomArrowEntity extends Arrow implements HitEffectUtils {
 		super.onHit(result);
 
 		if (color != -1 && !level().isClientSide) {
-			PacketHandler.INSTANCE.send(PacketDistributor.TRACKING_CHUNK.with(() -> level().getChunkAt(blockPosition())),
-					new SmokeGrenadeEntityPacketHandler(getX(), getY(), getZ(), color));
+			PacketDistributor.TRACKING_CHUNK.with(level().getChunkAt(blockPosition()))
+					.send(new SmokeGrenadePayload(getX(), getY(), getZ(), color));
 		}
 
 		if (isExplosive && !hasExploded) {

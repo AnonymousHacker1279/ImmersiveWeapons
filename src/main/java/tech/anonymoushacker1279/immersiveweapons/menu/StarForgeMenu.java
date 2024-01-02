@@ -1,6 +1,5 @@
 package tech.anonymoushacker1279.immersiveweapons.menu;
 
-import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Mth;
@@ -11,20 +10,16 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.*;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeHolder;
-import net.minecraft.world.item.crafting.RecipeManager;
 import net.minecraft.world.level.Level;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.fml.DistExecutor;
-import net.neoforged.neoforge.network.NetworkEvent.Context;
 import net.neoforged.neoforge.network.PacketDistributor;
-import org.jetbrains.annotations.Nullable;
+import net.neoforged.neoforge.network.PacketDistributor.TargetPoint;
 import tech.anonymoushacker1279.immersiveweapons.blockentity.StarForgeBlockEntity;
 import tech.anonymoushacker1279.immersiveweapons.init.MenuTypeRegistry;
-import tech.anonymoushacker1279.immersiveweapons.init.PacketHandler;
 import tech.anonymoushacker1279.immersiveweapons.item.crafting.StarForgeRecipe;
+import tech.anonymoushacker1279.immersiveweapons.network.payload.star_forge.StarForgeMenuPayload;
+import tech.anonymoushacker1279.immersiveweapons.network.payload.star_forge.StarForgeUpdateRecipesPayload;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class StarForgeMenu extends AbstractContainerMenu {
 
@@ -136,17 +131,14 @@ public class StarForgeMenu extends AbstractContainerMenu {
 				availableRecipes.add(holder.value());
 			}
 
-			StarForgeMenuUpdateClientRecipes packet = new StarForgeMenuUpdateClientRecipes(player.getUUID(), containerId,
-					starForgeBlockEntity.getAvailableRecipeIds());
-
 			// Send the packet to the client
-			PacketHandler.INSTANCE.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(
+			PacketDistributor.NEAR.with(new TargetPoint(
 					starForgeBlockEntity.getBlockPos().getX(),
 					starForgeBlockEntity.getBlockPos().getY(),
 					starForgeBlockEntity.getBlockPos().getZ(),
 					16,
 					starForgeBlockEntity.getLevel().dimension()
-			)), packet);
+			)).send(new StarForgeUpdateRecipesPayload(player.getUUID(), containerId, starForgeBlockEntity.getAvailableRecipeIds()));
 
 			// If there is a recipe already being crafted, cancel it
 			if (containerData.get(2) > 0) {
@@ -178,7 +170,8 @@ public class StarForgeMenu extends AbstractContainerMenu {
 		containerData.set(3, index);
 
 		// Send the packet to the server
-		PacketHandler.INSTANCE.sendToServer(new StarForgeMenuPacketHandler(containerId, index, beginCrafting));
+		PacketDistributor.SERVER.noArg()
+				.send(new StarForgeMenuPayload(containerId, index, beginCrafting));
 	}
 
 	public boolean hasSolarEnergy() {
@@ -221,80 +214,6 @@ public class StarForgeMenu extends AbstractContainerMenu {
 				starForgeMenu.containerData.set(2, selectedRecipe.smeltTime);
 			}
 			starForgeMenu.container.setChanged();
-		}
-	}
-
-	public record StarForgeMenuPacketHandler(int containerId, int menuSelectionIndex, boolean beginCrafting) {
-
-		public static void encode(StarForgeMenuPacketHandler msg, FriendlyByteBuf packetBuffer) {
-			packetBuffer.writeInt(msg.containerId).writeInt(msg.menuSelectionIndex).writeBoolean(msg.beginCrafting);
-		}
-
-		public static StarForgeMenuPacketHandler decode(FriendlyByteBuf packetBuffer) {
-			return new StarForgeMenuPacketHandler(packetBuffer.readInt(), packetBuffer.readInt(), packetBuffer.readBoolean());
-		}
-
-		public static void handle(StarForgeMenuPacketHandler msg, Context context) {
-			context.enqueueWork(() -> DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> run(msg, context.getSender())));
-			context.enqueueWork(() -> DistExecutor.unsafeRunWhenOn(Dist.DEDICATED_SERVER, () -> () -> run(msg, context.getSender())));
-			context.setPacketHandled(true);
-		}
-
-		private static void run(StarForgeMenuPacketHandler msg, @Nullable ServerPlayer sender) {
-			if (sender != null) {
-				updateServer(sender, msg.containerId, msg.menuSelectionIndex, msg.beginCrafting);
-			}
-		}
-	}
-
-	public record StarForgeMenuUpdateClientRecipes(UUID playerUUID, int containerId, List<ResourceLocation> recipeIds) {
-
-		public static void encode(StarForgeMenuUpdateClientRecipes msg, FriendlyByteBuf packetBuffer) {
-			packetBuffer.writeUUID(msg.playerUUID);
-			packetBuffer.writeInt(msg.containerId);
-			packetBuffer.writeInt(msg.recipeIds.size());
-
-			for (ResourceLocation location : msg.recipeIds) {
-				packetBuffer.writeResourceLocation(location);
-			}
-		}
-
-		public static StarForgeMenuUpdateClientRecipes decode(FriendlyByteBuf packetBuffer) {
-			UUID playerUUID = packetBuffer.readUUID();
-			int containerId = packetBuffer.readInt();
-			int recipeCount = packetBuffer.readInt();
-			List<ResourceLocation> recipeIds = new ArrayList<>(recipeCount);
-			for (int i = 0; i < recipeCount; i++) {
-				recipeIds.add(packetBuffer.readResourceLocation());
-			}
-
-			return new StarForgeMenuUpdateClientRecipes(playerUUID, containerId, recipeIds);
-		}
-
-		public static void handle(StarForgeMenuUpdateClientRecipes msg, Context context) {
-			context.enqueueWork(() -> DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> run(msg)));
-			context.setPacketHandled(true);
-		}
-
-		private static void run(StarForgeMenuUpdateClientRecipes msg) {
-			int containerId = msg.containerId;
-			List<ResourceLocation> recipeIds = msg.recipeIds;
-			net.minecraft.client.Minecraft minecraft = net.minecraft.client.Minecraft.getInstance();    // Fully qualified to avoid crashes on dedicated servers
-
-			if (minecraft.player != null && minecraft.player.containerMenu instanceof StarForgeMenu menu && menu.containerId == containerId) {
-				RecipeManager recipeManager = minecraft.player.level().getRecipeManager();
-				menu.availableRecipes = recipeIds.stream()
-						.map(recipeManager::byKey)
-						.filter(Optional::isPresent)
-						.map(Optional::get)
-						.map(holder -> {
-							if (holder.value() instanceof StarForgeRecipe recipe) {
-								return recipe;
-							}
-							return null;
-						})
-						.collect(Collectors.toList());
-			}
 		}
 	}
 }

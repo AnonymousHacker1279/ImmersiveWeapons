@@ -1,10 +1,7 @@
 package tech.anonymoushacker1279.immersiveweapons.init;
 
-import net.kyrptonaught.customportalapi.api.CustomPortalBuilder;
-import net.kyrptonaught.customportalapi.util.SHOULDTP;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.alchemy.PotionBrewing;
 import net.minecraft.world.item.alchemy.Potions;
@@ -14,7 +11,6 @@ import net.minecraft.world.level.block.FlowerPotBlock;
 import net.minecraft.world.phys.AABB;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.config.ConfigHelper.TomlConfigOps;
-import tech.anonymoushacker1279.immersiveweapons.data.dimensions.IWDimensions;
 import tech.anonymoushacker1279.immersiveweapons.entity.npc.SkygazerEntity;
 import tech.anonymoushacker1279.immersiveweapons.entity.vehicle.CustomBoatType;
 import tech.anonymoushacker1279.immersiveweapons.item.materials.CustomArmorMaterials;
@@ -95,7 +91,8 @@ public class PostSetupHandler {
 				.ifPresent(map -> map.forEach((pair) -> SkygazerEntity.ENCHANT_CAPS.put((String) pair.getFirst(), (Integer) pair.getSecond())));
 
 		// Initialize custom portals
-		CustomPortalBuilder.beginPortal()
+		// TODO: reimplement when CPAPI is updated
+		/*CustomPortalBuilder.beginPortal()
 				.frameBlock(BlockRegistry.TILTROS_PORTAL_FRAME.get())
 				.customPortalBlock(BlockRegistry.TILTROS_PORTAL::get)
 				.lightWithItem(ItemRegistry.AZUL_KEYSTONE.get())
@@ -109,7 +106,7 @@ public class PostSetupHandler {
 
 					generateBiodome(entity.level(), entity.blockPosition(), 7);
 				})
-				.registerPortal();
+				.registerPortal();*/
 	}
 
 	public static void generateBiodome(Level level, BlockPos center, int radius) {

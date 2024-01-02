@@ -138,12 +138,6 @@
     ],
     "subtitle": "subtitles.immersiveweapons.entity.field_medic.ambient"
   },
-  "field_medic_attack": {
-    "sounds": [
-      "immersiveweapons:entity/field_medic/attack/attack"
-    ],
-    "subtitle": "subtitles.immersiveweapons.entity.field_medic.attack"
-  },
   "field_medic_death": {
     "sounds": [
       "immersiveweapons:entity/field_medic/death/death"

@@ -1,7 +1,6 @@
 package tech.anonymoushacker1279.immersiveweapons.client.gui.overlays;
 
 import com.google.common.collect.Multimap;
-import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.MobType;
 import net.minecraft.world.entity.ai.attributes.*;
@@ -9,17 +8,11 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.*;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Level;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.fml.DistExecutor;
-import net.neoforged.neoforge.network.NetworkEvent.Context;
-import tech.anonymoushacker1279.immersiveweapons.event.SyncHandler;
 import tech.anonymoushacker1279.immersiveweapons.event.game_effects.AccessoryManager;
 import tech.anonymoushacker1279.immersiveweapons.init.EffectRegistry;
 import tech.anonymoushacker1279.immersiveweapons.init.ItemRegistry;
 import tech.anonymoushacker1279.immersiveweapons.item.AccessoryItem.EffectType;
 import tech.anonymoushacker1279.immersiveweapons.item.gun.AbstractGunItem;
-
-import java.util.UUID;
 
 /**
  * This class contains data for debug tracing.
@@ -125,27 +118,6 @@ public class DebugTracingData {
 					CELESTIAL_PROTECTION_NO_DAMAGE_CHANCE = player.getPersistentData().getFloat("celestialProtectionChanceForNoDamage");
 				}
 			}
-		}
-	}
-
-	public record DebugDataPacketHandler(UUID playerUUID, float lastDamageDealt, float lastDamageTaken,
-	                                     int ticksSinceRest) {
-
-		public static void encode(DebugDataPacketHandler msg, FriendlyByteBuf packetBuffer) {
-			packetBuffer.writeUUID(msg.playerUUID()).writeFloat(msg.lastDamageDealt).writeFloat(msg.lastDamageTaken).writeInt(msg.ticksSinceRest);
-		}
-
-		public static DebugDataPacketHandler decode(FriendlyByteBuf packetBuffer) {
-			return new DebugDataPacketHandler(packetBuffer.readUUID(), packetBuffer.readFloat(), packetBuffer.readFloat(), packetBuffer.readInt());
-		}
-
-		public static void handle(DebugDataPacketHandler msg, Context context) {
-			context.enqueueWork(() -> DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> runOnClient(msg)));
-			context.setPacketHandled(true);
-		}
-
-		private static void runOnClient(DebugDataPacketHandler msg) {
-			SyncHandler.debugDataHandler(msg.lastDamageDealt, msg.lastDamageTaken, msg.ticksSinceRest, msg.playerUUID);
 		}
 	}
 }

@@ -1,7 +1,7 @@
 package tech.anonymoushacker1279.immersiveweapons.entity.projectile;
 
-import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.util.Mth;
@@ -14,10 +14,8 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.fml.DistExecutor;
 import net.neoforged.neoforge.common.Tags;
-import net.neoforged.neoforge.network.NetworkEvent.Context;
+import net.neoforged.neoforge.network.PacketDistributor;
 import org.jetbrains.annotations.Nullable;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.client.gui.overlays.DebugTracingData;
@@ -27,6 +25,7 @@ import tech.anonymoushacker1279.immersiveweapons.init.*;
 import tech.anonymoushacker1279.immersiveweapons.item.AccessoryItem;
 import tech.anonymoushacker1279.immersiveweapons.item.gun.MusketItem;
 import tech.anonymoushacker1279.immersiveweapons.item.tool.HitEffectUtils;
+import tech.anonymoushacker1279.immersiveweapons.network.payload.BulletEntityDebugPayload;
 import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
 import tech.anonymoushacker1279.immersiveweapons.world.level.IWDamageSources;
 
@@ -189,24 +188,13 @@ public class BulletEntity extends CustomArrowEntity implements HitEffectUtils {
 		DebugTracingData.isBulletCritical = false;
 	}
 
-	public record BulletEntityPacketHandler(double liveBulletDamage, boolean isBulletCritical) {
-
-		public static void encode(BulletEntityPacketHandler msg, FriendlyByteBuf packetBuffer) {
-			packetBuffer.writeDouble(msg.liveBulletDamage).writeBoolean(msg.isBulletCritical);
-		}
-
-		public static BulletEntityPacketHandler decode(FriendlyByteBuf packetBuffer) {
-			return new BulletEntityPacketHandler(packetBuffer.readDouble(), packetBuffer.readBoolean());
-		}
-
-		public static void handle(BulletEntityPacketHandler msg, Context context) {
-			context.enqueueWork(() -> DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> runOnClient(msg)));
-			context.setPacketHandled(true);
-		}
-
-		private static void runOnClient(BulletEntityPacketHandler msg) {
-			DebugTracingData.liveBulletDamage = msg.liveBulletDamage;
-			DebugTracingData.isBulletCritical = msg.isBulletCritical;
+	@Override
+	protected void doWhileTicking() {
+		if (tickCount % 10 == 0 && !inGround && getOwner() instanceof ServerPlayer player) {
+			if (!level().isClientSide) {
+				PacketDistributor.PLAYER.with(player)
+						.send(new BulletEntityDebugPayload(calculateDamage(), isCritArrow()));
+			}
 		}
 	}
 }

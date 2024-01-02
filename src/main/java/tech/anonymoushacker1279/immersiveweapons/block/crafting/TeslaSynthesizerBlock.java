@@ -7,6 +7,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.*;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.SimpleContainerData;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.*;
@@ -20,7 +21,6 @@ import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.neoforged.neoforge.network.NetworkHooks;
 import org.jetbrains.annotations.Nullable;
 import tech.anonymoushacker1279.immersiveweapons.blockentity.TeslaSynthesizerBlockEntity;
 import tech.anonymoushacker1279.immersiveweapons.menu.TeslaSynthesizerMenu;
@@ -110,19 +110,6 @@ public class TeslaSynthesizerBlock extends Block implements SimpleWaterloggedBlo
 	}
 
 	/**
-	 * Get the INamedContainerProvider for the block.
-	 *
-	 * @param state the <code>BlockState</code> of the block
-	 * @param level the <code>Level</code> the block is in
-	 * @param pos   the <code>BlockPos</code> the block is at
-	 * @return MenuProvider
-	 */
-	@Override
-	public MenuProvider getMenuProvider(BlockState state, Level level, BlockPos pos) {
-		return new SimpleMenuProvider((id, inventory, player) -> new TeslaSynthesizerMenu(id, inventory), CONTAINER_NAME);
-	}
-
-	/**
 	 * Runs when the block is activated.
 	 * Allows the block to respond to user interaction.
 	 *
@@ -137,10 +124,8 @@ public class TeslaSynthesizerBlock extends Block implements SimpleWaterloggedBlo
 	@Override
 	public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
 
-		if (player instanceof ServerPlayer serverPlayer) {
-			if (level.getBlockEntity(pos) instanceof TeslaSynthesizerBlockEntity teslaSynthesizerBlockEntity) {
-				NetworkHooks.openScreen(serverPlayer, teslaSynthesizerBlockEntity, pos);
-			}
+		if (level.getBlockEntity(pos) instanceof TeslaSynthesizerBlockEntity blockEntity && player instanceof ServerPlayer serverPlayer) {
+			serverPlayer.openMenu(new SimpleMenuProvider((id, inventory, player1) -> new TeslaSynthesizerMenu(id, inventory, blockEntity, new SimpleContainerData(1)), CONTAINER_NAME));
 
 			return InteractionResult.CONSUME;
 		}

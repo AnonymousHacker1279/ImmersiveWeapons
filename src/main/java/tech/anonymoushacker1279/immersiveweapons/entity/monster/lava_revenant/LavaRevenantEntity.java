@@ -1,10 +1,8 @@
 package tech.anonymoushacker1279.immersiveweapons.entity.monster.lava_revenant;
 
-import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.syncher.*;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundSource;
@@ -25,16 +23,13 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.fml.DistExecutor;
 import net.neoforged.neoforge.common.CommonHooks;
 import net.neoforged.neoforge.entity.PartEntity;
-import net.neoforged.neoforge.network.NetworkEvent.Context;
 import net.neoforged.neoforge.network.PacketDistributor;
 import org.jetbrains.annotations.Nullable;
 import tech.anonymoushacker1279.immersiveweapons.entity.GrantAdvancementOnDiscovery;
-import tech.anonymoushacker1279.immersiveweapons.init.PacketHandler;
 import tech.anonymoushacker1279.immersiveweapons.init.SoundEventRegistry;
+import tech.anonymoushacker1279.immersiveweapons.network.payload.LocalSoundPayload;
 
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -495,31 +490,6 @@ public class LavaRevenantEntity extends FlyingMob implements Enemy, GrantAdvance
 		}
 	}
 
-	public record LavaRevenantEntityPacketHandler(BlockPos blockPos) {
-
-		public static void encode(LavaRevenantEntityPacketHandler msg, FriendlyByteBuf packetBuffer) {
-			packetBuffer.writeBlockPos(msg.blockPos);
-		}
-
-		public static LavaRevenantEntityPacketHandler decode(FriendlyByteBuf packetBuffer) {
-			return new LavaRevenantEntityPacketHandler(packetBuffer.readBlockPos());
-		}
-
-		public static void handle(LavaRevenantEntityPacketHandler msg, Context context) {
-			context.enqueueWork(() -> DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> handleOnClient(msg)));
-			context.setPacketHandled(true);
-		}
-
-		private static void handleOnClient(LavaRevenantEntityPacketHandler msg) {
-			Minecraft minecraft = Minecraft.getInstance();
-			if (minecraft.level != null) {
-				minecraft.level.playLocalSound(msg.blockPos.getX(), msg.blockPos.getY(), msg.blockPos.getZ(),
-						SoundEventRegistry.LAVA_REVENANT_BITE.get(), SoundSource.HOSTILE, 0.3F,
-						minecraft.level.getRandom().nextFloat() * 0.1F + 0.9F, false);
-			}
-		}
-	}
-
 	class AttackPlayerTargetGoal extends Goal {
 		private final TargetingConditions attackTargeting = TargetingConditions.forCombat().range(128.0D);
 		private int nextScanTick = 20;
@@ -841,8 +811,9 @@ public class LavaRevenantEntity extends FlyingMob implements Enemy, GrantAdvance
 					}
 					attackPhase = LavaRevenantEntity.AttackPhase.CIRCLE;
 					if (!isSilent()) {
-						PacketHandler.INSTANCE.send(PacketDistributor.TRACKING_CHUNK.with(() ->
-								level().getChunkAt(blockPosition())), new LavaRevenantEntityPacketHandler(blockPosition()));
+						PacketDistributor.TRACKING_CHUNK.with(level().getChunkAt(blockPosition()))
+								.send(new LocalSoundPayload(blockPosition(), SoundEventRegistry.LAVA_REVENANT_BITE.get().getLocation(),
+										SoundSource.HOSTILE, 0.3F, level().getRandom().nextFloat() * 0.1F + 0.9F, false));
 					}
 				} else if (horizontalCollision || hurtTime > 0) {
 					attackPhase = LavaRevenantEntity.AttackPhase.CIRCLE;

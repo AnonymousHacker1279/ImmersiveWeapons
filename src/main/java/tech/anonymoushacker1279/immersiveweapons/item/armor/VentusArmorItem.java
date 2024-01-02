@@ -3,9 +3,7 @@ package tech.anonymoushacker1279.immersiveweapons.item.armor;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
-import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
@@ -15,13 +13,11 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.item.*;
 import net.minecraft.world.level.Level;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.fml.DistExecutor;
-import net.neoforged.neoforge.network.NetworkEvent.Context;
+import net.neoforged.neoforge.network.PacketDistributor;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.client.IWKeyBinds;
 import tech.anonymoushacker1279.immersiveweapons.init.ItemRegistry;
-import tech.anonymoushacker1279.immersiveweapons.init.PacketHandler;
+import tech.anonymoushacker1279.immersiveweapons.network.payload.VentusArmorPayload;
 import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
 
 public class VentusArmorItem extends ArmorItem {
@@ -73,7 +69,7 @@ public class VentusArmorItem extends ArmorItem {
 					player.getPersistentData().putBoolean("VentusArmorEffectEnabled", !effectEnabled);
 
 					// Send packet to server
-					PacketHandler.INSTANCE.sendToServer(new VentusArmorItemPacketHandler(PacketTypes.CHANGE_STATE, !effectEnabled));
+					PacketDistributor.SERVER.noArg().send(new VentusArmorPayload(PacketTypes.CHANGE_STATE, !effectEnabled));
 
 					if (effectEnabled) {
 						player.displayClientMessage(Component.translatable("immersiveweapons.armor_effects.disabled")
@@ -104,7 +100,7 @@ public class VentusArmorItem extends ArmorItem {
 				if (windShieldCooldown > 0) {
 					if (windShieldDuration > 0) {
 						handleProjectileReflection(level, player);
-						PacketHandler.INSTANCE.sendToServer(new VentusArmorItemPacketHandler(PacketTypes.HANDLE_PROJECTILE_REFLECTION, effectEnabled));
+						PacketDistributor.SERVER.noArg().send(new VentusArmorPayload(PacketTypes.HANDLE_PROJECTILE_REFLECTION, effectEnabled));
 
 						windShieldDuration--;
 					}
@@ -164,36 +160,7 @@ public class VentusArmorItem extends ArmorItem {
 		}
 	}
 
-	public record VentusArmorItemPacketHandler(PacketTypes packetType, boolean state) {
-
-		public static void encode(VentusArmorItemPacketHandler msg, FriendlyByteBuf packetBuffer) {
-			packetBuffer.writeEnum(msg.packetType).writeBoolean(msg.state);
-		}
-
-		public static VentusArmorItemPacketHandler decode(FriendlyByteBuf packetBuffer) {
-			return new VentusArmorItemPacketHandler(packetBuffer.readEnum(PacketTypes.class), packetBuffer.readBoolean());
-		}
-
-		public static void handle(VentusArmorItemPacketHandler msg, Context context) {
-			if (context.getSender() != null) {
-				context.enqueueWork(() -> DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> run(msg, context.getSender())));
-				context.enqueueWork(() -> DistExecutor.unsafeRunWhenOn(Dist.DEDICATED_SERVER, () -> () -> run(msg, context.getSender())));
-			}
-			context.setPacketHandled(true);
-		}
-
-		private static void run(VentusArmorItemPacketHandler msg, ServerPlayer player) {
-			if (msg.packetType == PacketTypes.CHANGE_STATE) {
-				player.getPersistentData().putBoolean("VentusArmorEffectEnabled", msg.state);
-			}
-
-			if (msg.packetType == PacketTypes.HANDLE_PROJECTILE_REFLECTION) {
-				VentusArmorItem.handleProjectileReflection(player.level(), player);
-			}
-		}
-	}
-
-	enum PacketTypes {
+	public enum PacketTypes {
 		CHANGE_STATE,
 		HANDLE_PROJECTILE_REFLECTION
 	}

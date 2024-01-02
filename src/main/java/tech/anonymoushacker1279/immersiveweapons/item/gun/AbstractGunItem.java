@@ -27,6 +27,7 @@ import tech.anonymoushacker1279.immersiveweapons.item.AccessoryItem;
 import tech.anonymoushacker1279.immersiveweapons.item.AccessoryItem.EffectType;
 import tech.anonymoushacker1279.immersiveweapons.item.gun.data.GunData;
 import tech.anonymoushacker1279.immersiveweapons.item.projectile.BulletItem;
+import tech.anonymoushacker1279.immersiveweapons.network.payload.GunScopePayload;
 import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
 
 import java.util.function.Consumer;
@@ -329,9 +330,9 @@ public abstract class AbstractGunItem extends Item implements Vanishable {
 	public void onUseTick(Level level, LivingEntity livingEntity, ItemStack stack, int remainingUseDuration) {
 		super.onUseTick(level, livingEntity, stack, remainingUseDuration);
 
-		if (!level.isClientSide && canScope() && livingEntity instanceof Player player) {
-			PacketHandler.INSTANCE.send(PacketDistributor.PLAYER.with(() -> (ServerPlayer) player),
-					new GunScopePacketHandler(GunData.playerFOV, 15.0d, GunData.scopeScale));
+		if (!level.isClientSide && canScope() && livingEntity instanceof ServerPlayer serverPlayer) {
+			PacketDistributor.PLAYER.with(serverPlayer)
+					.send(new GunScopePayload(GunData.playerFOV, 15.0d, GunData.scopeScale));
 		}
 	}
 
@@ -347,9 +348,8 @@ public abstract class AbstractGunItem extends Item implements Vanishable {
 
 	@Override
 	public boolean onDroppedByPlayer(ItemStack item, Player player) {
-
-		PacketHandler.INSTANCE.send(PacketDistributor.PLAYER.with(() -> (ServerPlayer) player),
-				new GunScopePacketHandler(GunData.playerFOV, -1, 0.5f));
+		PacketDistributor.PLAYER.with((ServerPlayer) player)
+				.send(new GunScopePayload(GunData.playerFOV, -1, 0.5f));
 
 		return super.onDroppedByPlayer(item, player);
 	}

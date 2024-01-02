@@ -2,11 +2,11 @@ package tech.anonymoushacker1279.immersiveweapons.block.star_forge;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResult;
+import net.minecraft.world.*;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -18,17 +18,18 @@ import net.minecraft.world.level.block.state.StateDefinition.Builder;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.phys.BlockHitResult;
-import net.neoforged.neoforge.network.NetworkHooks;
 import tech.anonymoushacker1279.immersiveweapons.block.core.BasicOrientableBlock;
 import tech.anonymoushacker1279.immersiveweapons.blockentity.StarForgeBlockEntity;
 import tech.anonymoushacker1279.immersiveweapons.init.BlockRegistry;
+import tech.anonymoushacker1279.immersiveweapons.menu.StarForgeMenu;
 
 import java.util.List;
 
 public class StarForgeControllerBlock extends BasicOrientableBlock implements EntityBlock {
 
 	public static final BooleanProperty LIT = BlockStateProperties.LIT;
-	
+	private static final Component CONTAINER_NAME = Component.translatable("container.immersiveweapons.star_forge");
+
 	public StarForgeControllerBlock(Properties properties) {
 		super(properties);
 
@@ -57,7 +58,7 @@ public class StarForgeControllerBlock extends BasicOrientableBlock implements En
 		if (level.isClientSide) {
 			return InteractionResult.SUCCESS;
 		} else {
-			if (level.getBlockEntity(pos) instanceof StarForgeBlockEntity blockEntity) {
+			if (level.getBlockEntity(pos) instanceof StarForgeBlockEntity blockEntity && player instanceof ServerPlayer serverPlayer) {
 				if (blockEntity.isInUse()) {
 					return InteractionResult.FAIL;
 				}
@@ -70,7 +71,7 @@ public class StarForgeControllerBlock extends BasicOrientableBlock implements En
 						player.getInventory().add(new ItemStack(Items.BUCKET));
 					}
 				} else {
-					NetworkHooks.openScreen((ServerPlayer) player, blockEntity, buffer -> {
+					serverPlayer.openMenu(new SimpleMenuProvider((id, inventory, player1) -> new StarForgeMenu(id, inventory, blockEntity, blockEntity.containerData), CONTAINER_NAME), buffer -> {
 						List<ResourceLocation> recipeLocations = blockEntity.getAvailableRecipeIds();
 						buffer.writeVarInt(recipeLocations.size());
 
@@ -83,6 +84,15 @@ public class StarForgeControllerBlock extends BasicOrientableBlock implements En
 
 			return InteractionResult.CONSUME;
 		}
+	}
+
+	@Override
+	public MenuProvider getMenuProvider(BlockState state, Level level, BlockPos pos) {
+		if (level.getBlockEntity(pos) instanceof StarForgeBlockEntity blockEntity) {
+			return new SimpleMenuProvider((id, inventory, player) -> new StarForgeMenu(id, inventory, blockEntity.getAvailableRecipeIds()), CONTAINER_NAME);
+		}
+
+		return null;
 	}
 
 	/**

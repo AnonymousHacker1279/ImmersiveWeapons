@@ -1,9 +1,7 @@
 package tech.anonymoushacker1279.immersiveweapons.block;
 
-import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.Mob;
@@ -19,13 +17,9 @@ import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.fml.DistExecutor;
-import net.neoforged.neoforge.network.NetworkEvent.Context;
 import net.neoforged.neoforge.network.PacketDistributor;
-import net.neoforged.neoforge.network.PacketDistributor.TargetPoint;
-import tech.anonymoushacker1279.immersiveweapons.init.PacketHandler;
 import tech.anonymoushacker1279.immersiveweapons.init.SoundEventRegistry;
+import tech.anonymoushacker1279.immersiveweapons.network.payload.LocalSoundPayload;
 import tech.anonymoushacker1279.immersiveweapons.world.level.IWDamageSources;
 
 public class SpikeTrapBlock extends Block implements SimpleWaterloggedBlock {
@@ -168,44 +162,15 @@ public class SpikeTrapBlock extends Block implements SimpleWaterloggedBlock {
 		if (flag != state.getValue(POWERED)) {
 			state = state.setValue(POWERED, flag);
 			if (state.getValue(POWERED)) {
-				PacketHandler.INSTANCE.send(PacketDistributor.NEAR.with(() ->
-								new TargetPoint(pos.getX(), pos.getY(), pos.getZ(), 12, level.dimension())),
-						new SpikeTrapBlockPacketHandler(pos, true));
+				PacketDistributor.TRACKING_CHUNK.with(level.getChunkAt(pos))
+						.send(new LocalSoundPayload(pos, SoundEventRegistry.SPIKE_TRAP_EXTEND.get().getLocation(),
+								SoundSource.BLOCKS, 1.0f, 1.0f, true));
 			} else {
-				PacketHandler.INSTANCE.send(PacketDistributor.NEAR.with(() ->
-								new TargetPoint(pos.getX(), pos.getY(), pos.getZ(), 12, level.dimension())),
-						new SpikeTrapBlockPacketHandler(pos, false));
+				PacketDistributor.TRACKING_CHUNK.with(level.getChunkAt(pos))
+						.send(new LocalSoundPayload(pos, SoundEventRegistry.SPIKE_TRAP_RETRACT.get().getLocation(),
+								SoundSource.BLOCKS, 1.0f, 1.0f, true));
 			}
 			level.setBlock(pos, state.setValue(POWERED, flag), 2);
-		}
-	}
-
-	public record SpikeTrapBlockPacketHandler(BlockPos blockPos, boolean extend) {
-
-		public static void encode(SpikeTrapBlockPacketHandler msg, FriendlyByteBuf packetBuffer) {
-			packetBuffer.writeBlockPos(msg.blockPos).writeBoolean(msg.extend);
-		}
-
-		public static SpikeTrapBlockPacketHandler decode(FriendlyByteBuf packetBuffer) {
-			return new SpikeTrapBlockPacketHandler(packetBuffer.readBlockPos(), packetBuffer.readBoolean());
-		}
-
-		public static void handle(SpikeTrapBlockPacketHandler msg, Context context) {
-			context.enqueueWork(() -> DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> handleOnClient(msg)));
-			context.setPacketHandled(true);
-		}
-
-		private static void handleOnClient(SpikeTrapBlockPacketHandler msg) {
-			Minecraft minecraft = Minecraft.getInstance();
-			if (minecraft.level != null) {
-				if (msg.extend) {
-					minecraft.level.playLocalSound(msg.blockPos, SoundEventRegistry.SPIKE_TRAP_EXTEND.get(),
-							SoundSource.BLOCKS, 1.0f, 1.0f, true);
-				} else {
-					minecraft.level.playLocalSound(msg.blockPos, SoundEventRegistry.SPIKE_TRAP_RETRACT.get(),
-							SoundSource.BLOCKS, 1.0f, 1.0f, true);
-				}
-			}
 		}
 	}
 }

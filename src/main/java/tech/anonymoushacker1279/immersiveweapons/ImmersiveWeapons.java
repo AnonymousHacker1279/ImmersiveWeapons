@@ -38,9 +38,6 @@ public class ImmersiveWeapons {
 
 		// Add event listeners
 		modEventBus.addListener(this::setup);
-
-		// Register packet handlers
-		PacketHandler.registerPackets();
 	}
 
 	/**

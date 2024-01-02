@@ -1012,6 +1012,10 @@ public class LanguageGenerator extends IWLanguageProvider {
 		addEnchantment(EnchantmentRegistry.MALEVOLENT_GAZE, "Malevolent Gaze");
 	}
 
+	private void addNetworkingFailures() {
+		addNetworkingFailure("generic", "A networking error occurred regarding Immersive Weapons: %s");
+	}
+
 	private void addMisc() {
 		add("loot.immersiveweapons.chest.village.battlefield.medic_station.iron_axe", "The Amputator");
 		add("loot.immersiveweapons.entity.hans.iron_sword", "The Grand Blade of Hans");

@@ -288,12 +288,6 @@ public class SoundGenerator extends SoundDefinitionsProvider {
 								"entity/field_medic/ambient/ambient_3"),
 						SoundType.SOUND)));
 
-		add(SoundEventRegistry.FIELD_MEDIC_ATTACK.get(), definition()
-				.subtitle("subtitles.immersiveweapons.entity.field_medic.attack")
-				.with(Sound.sound(new ResourceLocation(ImmersiveWeapons.MOD_ID,
-								"entity/field_medic/attack/attack"),
-						SoundType.SOUND)));
-
 		add(SoundEventRegistry.FIELD_MEDIC_HURT.get(), definition()
 				.subtitle("subtitles.immersiveweapons.entity.field_medic.hurt")
 				.with(Sound.sound(new ResourceLocation(ImmersiveWeapons.MOD_ID,

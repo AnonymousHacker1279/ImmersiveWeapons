@@ -3,9 +3,7 @@ package tech.anonymoushacker1279.immersiveweapons.item.armor;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
-import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
@@ -15,13 +13,11 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.*;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.fml.DistExecutor;
-import net.neoforged.neoforge.network.NetworkEvent.Context;
+import net.neoforged.neoforge.network.PacketDistributor;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.client.IWKeyBinds;
 import tech.anonymoushacker1279.immersiveweapons.init.ItemRegistry;
-import tech.anonymoushacker1279.immersiveweapons.init.PacketHandler;
+import tech.anonymoushacker1279.immersiveweapons.network.payload.AstralArmorPayload;
 import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
 
 public class AstralArmorItem extends ArmorItem {
@@ -72,7 +68,7 @@ public class AstralArmorItem extends ArmorItem {
 					player.getPersistentData().putBoolean("AstralArmorEffectEnabled", !effectEnabled);
 
 					// Send packet to server
-					PacketHandler.INSTANCE.sendToServer(new AstralArmorItemPacketHandler(!effectEnabled));
+					PacketDistributor.SERVER.noArg().send(new AstralArmorPayload(!effectEnabled));
 
 					if (effectEnabled) {
 						player.displayClientMessage(Component.translatable("immersiveweapons.armor_effects.disabled")
@@ -130,29 +126,6 @@ public class AstralArmorItem extends ArmorItem {
 				player.addEffect(new MobEffectInstance(MobEffects.DIG_SPEED,
 						0, 0, false, false));
 			}
-		}
-	}
-
-	public record AstralArmorItemPacketHandler(boolean state) {
-
-		public static void encode(AstralArmorItemPacketHandler msg, FriendlyByteBuf packetBuffer) {
-			packetBuffer.writeBoolean(msg.state);
-		}
-
-		public static AstralArmorItemPacketHandler decode(FriendlyByteBuf packetBuffer) {
-			return new AstralArmorItemPacketHandler(packetBuffer.readBoolean());
-		}
-
-		public static void handle(AstralArmorItemPacketHandler msg, Context context) {
-			if (context.getSender() != null) {
-				context.enqueueWork(() -> DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> run(msg, context.getSender())));
-				context.enqueueWork(() -> DistExecutor.unsafeRunWhenOn(Dist.DEDICATED_SERVER, () -> () -> run(msg, context.getSender())));
-			}
-			context.setPacketHandled(true);
-		}
-
-		private static void run(AstralArmorItemPacketHandler msg, ServerPlayer player) {
-			player.getPersistentData().putBoolean("AstralArmorEffectEnabled", msg.state);
 		}
 	}
 }

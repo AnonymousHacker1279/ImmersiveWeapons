@@ -1,6 +1,5 @@
 package tech.anonymoushacker1279.immersiveweapons.menu;
 
-import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Mth;
 import net.minecraft.world.Container;
@@ -9,14 +8,10 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.*;
 import net.minecraft.world.item.ItemStack;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.fml.DistExecutor;
-import net.neoforged.neoforge.network.NetworkEvent.Context;
 import net.neoforged.neoforge.network.PacketDistributor;
-import org.jetbrains.annotations.Nullable;
 import tech.anonymoushacker1279.immersiveweapons.blockentity.AmmunitionTableBlockEntity;
 import tech.anonymoushacker1279.immersiveweapons.init.MenuTypeRegistry;
-import tech.anonymoushacker1279.immersiveweapons.init.PacketHandler;
+import tech.anonymoushacker1279.immersiveweapons.network.payload.AmmunitionTablePayload;
 
 public class AmmunitionTableMenu extends AbstractContainerMenu {
 
@@ -116,7 +111,8 @@ public class AmmunitionTableMenu extends AbstractContainerMenu {
 		modifier = (float) Math.round(modifier * 100.0F) / 100.0F;
 		containerData.set(0, (int) (modifier * 100.0F));
 
-		PacketHandler.INSTANCE.send(PacketDistributor.SERVER.noArg(), new AmmunitionTableMenuPacketHandler(containerId, modifier));
+		PacketDistributor.SERVER.noArg()
+				.send(new AmmunitionTablePayload(containerId, modifier));
 	}
 
 	public static void setDensityModifierOnServer(ServerPlayer player, int containerId, float densityModifier) {
@@ -126,29 +122,6 @@ public class AmmunitionTableMenu extends AbstractContainerMenu {
 		if (menu.containerId == containerId && menu instanceof AmmunitionTableMenu ammunitionTableMenu) {
 			ammunitionTableMenu.containerData.set(0, (int) (densityModifier * 100.0f));
 			ammunitionTableMenu.container.setChanged();
-		}
-	}
-
-	public record AmmunitionTableMenuPacketHandler(int containerId, float densityModifier) {
-
-		public static void encode(AmmunitionTableMenuPacketHandler msg, FriendlyByteBuf packetBuffer) {
-			packetBuffer.writeInt(msg.containerId).writeFloat(msg.densityModifier);
-		}
-
-		public static AmmunitionTableMenuPacketHandler decode(FriendlyByteBuf packetBuffer) {
-			return new AmmunitionTableMenuPacketHandler(packetBuffer.readInt(), packetBuffer.readFloat());
-		}
-
-		public static void handle(AmmunitionTableMenuPacketHandler msg, Context context) {
-			context.enqueueWork(() -> DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> run(msg, context.getSender())));
-			context.enqueueWork(() -> DistExecutor.unsafeRunWhenOn(Dist.DEDICATED_SERVER, () -> () -> run(msg, context.getSender())));
-			context.setPacketHandled(true);
-		}
-
-		private static void run(AmmunitionTableMenuPacketHandler msg, @Nullable ServerPlayer sender) {
-			if (sender != null) {
-				setDensityModifierOnServer(sender, msg.containerId, msg.densityModifier);
-			}
 		}
 	}
 }

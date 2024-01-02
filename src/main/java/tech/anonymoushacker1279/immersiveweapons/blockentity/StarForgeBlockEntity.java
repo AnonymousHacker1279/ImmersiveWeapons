@@ -39,7 +39,7 @@ public class StarForgeBlockEntity extends BaseContainerBlockEntity implements En
 	protected int smeltTime = 0;
 	protected int menuSelectionIndex = 0;
 	protected boolean inUse = false;
-	protected final ContainerData containerData = new ContainerData() {
+	public final ContainerData containerData = new ContainerData() {
 
 		/**
 		 * Retrieves the value at the specified index.

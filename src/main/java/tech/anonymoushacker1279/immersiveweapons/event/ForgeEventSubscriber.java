@@ -50,7 +50,6 @@ import net.neoforged.neoforge.network.PacketDistributor;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.block.decoration.StarstormCrystalBlock;
 import tech.anonymoushacker1279.immersiveweapons.client.gui.overlays.DebugTracingData;
-import tech.anonymoushacker1279.immersiveweapons.client.gui.overlays.DebugTracingData.DebugDataPacketHandler;
 import tech.anonymoushacker1279.immersiveweapons.data.biomes.IWBiomes;
 import tech.anonymoushacker1279.immersiveweapons.data.damage_types.IWDamageTypes;
 import tech.anonymoushacker1279.immersiveweapons.entity.monster.StarmiteEntity;
@@ -61,6 +60,8 @@ import tech.anonymoushacker1279.immersiveweapons.item.*;
 import tech.anonymoushacker1279.immersiveweapons.item.crafting.PistonCrushingRecipe;
 import tech.anonymoushacker1279.immersiveweapons.item.gauntlet.GauntletItem;
 import tech.anonymoushacker1279.immersiveweapons.item.pike.PikeItem;
+import tech.anonymoushacker1279.immersiveweapons.network.payload.DebugDataPayload;
+import tech.anonymoushacker1279.immersiveweapons.network.payload.SyncPlayerDataPayload;
 import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
 import tech.anonymoushacker1279.immersiveweapons.world.level.IWDamageSources;
 
@@ -177,7 +178,8 @@ public class ForgeEventSubscriber {
 		}
 		if (player.tickCount % 100 == 0 && player instanceof ServerPlayer serverPlayer) {
 			int ticksSinceRest = serverPlayer.getStats().getValue(Stats.CUSTOM.get(Stats.TIME_SINCE_REST));
-			PacketHandler.INSTANCE.send(PacketDistributor.PLAYER.with(() -> serverPlayer), new DebugDataPacketHandler(player.getUUID(), -1f, -1f, ticksSinceRest));
+			PacketDistributor.PLAYER.with(serverPlayer)
+					.send(new DebugDataPayload(player.getUUID(), -1f, -1f, ticksSinceRest));
 		}
 	}
 
@@ -265,13 +267,15 @@ public class ForgeEventSubscriber {
 				}
 
 				// Handle debug tracing
-				PacketHandler.INSTANCE.send(PacketDistributor.PLAYER.with(() -> serverPlayer), new DebugDataPacketHandler(player.getUUID(), event.getAmount(), -1f, -1));
+				PacketDistributor.PLAYER.with(serverPlayer)
+						.send(new DebugDataPayload(player.getUUID(), event.getAmount(), -1f, -1));
 			}
 		}
 
 		if (damagedEntity instanceof ServerPlayer serverPlayer) {
 			// Handle debug tracing
-			PacketHandler.INSTANCE.send(PacketDistributor.PLAYER.with(() -> serverPlayer), new DebugDataPacketHandler(serverPlayer.getUUID(), -1f, event.getAmount(), -1));
+			PacketDistributor.PLAYER.with(serverPlayer)
+					.send(new DebugDataPayload(serverPlayer.getUUID(), -1f, event.getAmount(), -1));
 		}
 	}
 
@@ -311,7 +315,8 @@ public class ForgeEventSubscriber {
 		// Sync player data from server to client
 		if (event.getEntity() instanceof ServerPlayer player) {
 			// Send update packet
-			PacketHandler.INSTANCE.send(PacketDistributor.PLAYER.with(() -> player), new SyncPlayerDataPacketHandler(player.getPersistentData(), player.getUUID()));
+			PacketDistributor.PLAYER.with(player)
+					.send(new SyncPlayerDataPayload(player.getPersistentData(), player.getUUID()));
 		}
 
 		// Handle the Velocity enchantment on bows (guns are handled in the gun code)

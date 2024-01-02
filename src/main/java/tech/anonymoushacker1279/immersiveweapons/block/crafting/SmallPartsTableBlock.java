@@ -3,7 +3,6 @@ package tech.anonymoushacker1279.immersiveweapons.block.crafting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
-import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.*;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.ContainerLevelAccess;
@@ -12,7 +11,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
-import net.neoforged.neoforge.network.NetworkHooks;
 import tech.anonymoushacker1279.immersiveweapons.block.core.BasicOrientableBlock;
 import tech.anonymoushacker1279.immersiveweapons.menu.SmallPartsMenu;
 
@@ -37,7 +35,7 @@ public class SmallPartsTableBlock extends BasicOrientableBlock {
 		if (level.isClientSide) {
 			return InteractionResult.SUCCESS;
 		} else {
-			NetworkHooks.openScreen((ServerPlayer) player, state.getMenuProvider(level, pos), pos);
+			player.openMenu(getMenuProvider(state, level, pos));
 			return InteractionResult.CONSUME;
 		}
 	}

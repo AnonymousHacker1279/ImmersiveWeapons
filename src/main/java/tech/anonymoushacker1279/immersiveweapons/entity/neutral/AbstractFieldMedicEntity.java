@@ -1,11 +1,8 @@
 package tech.anonymoushacker1279.immersiveweapons.entity.neutral;
 
-import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.sounds.SoundEvent;
-import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.damagesource.DamageSource;
@@ -24,14 +21,10 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.fml.DistExecutor;
-import net.neoforged.neoforge.network.NetworkEvent.Context;
-import net.neoforged.neoforge.network.PacketDistributor;
 import org.jetbrains.annotations.Nullable;
 import tech.anonymoushacker1279.immersiveweapons.entity.GrantAdvancementOnDiscovery;
 import tech.anonymoushacker1279.immersiveweapons.entity.ai.goal.FieldMedicHealEntitiesGoal;
-import tech.anonymoushacker1279.immersiveweapons.init.*;
+import tech.anonymoushacker1279.immersiveweapons.init.ItemRegistry;
 import tech.anonymoushacker1279.immersiveweapons.world.level.IWDamageSources;
 
 import java.time.LocalDate;
@@ -198,41 +191,10 @@ public abstract class AbstractFieldMedicEntity extends PathfinderMob implements 
 				// Hepatitis chance
 				if (randomNumber <= 0.3f) {
 					entity.hurt(IWDamageSources.USED_SYRINGE, 8.0F);
-					// :)
-					if (randomNumber <= 0.005f) {
-						PacketHandler.INSTANCE.send(PacketDistributor.TRACKING_CHUNK.with(() ->
-										level().getChunkAt(blockPosition())),
-								new AbstractFieldMedicEntityPacketHandler(blockPosition()));
-					}
 				}
 			}
 		}
 
 		return canHurtTarget;
-	}
-
-	public record AbstractFieldMedicEntityPacketHandler(BlockPos blockPos) {
-
-		public static void encode(AbstractFieldMedicEntityPacketHandler msg, FriendlyByteBuf packetBuffer) {
-			packetBuffer.writeBlockPos(msg.blockPos);
-		}
-
-		public static AbstractFieldMedicEntityPacketHandler decode(FriendlyByteBuf packetBuffer) {
-			return new AbstractFieldMedicEntityPacketHandler(packetBuffer.readBlockPos());
-		}
-
-		public static void handle(AbstractFieldMedicEntityPacketHandler msg, Context context) {
-			context.enqueueWork(() -> DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> handleOnClient(msg)));
-			context.setPacketHandled(true);
-		}
-
-		private static void handleOnClient(AbstractFieldMedicEntityPacketHandler msg) {
-			Minecraft minecraft = Minecraft.getInstance();
-			if (minecraft.level != null) {
-				minecraft.level.playLocalSound(msg.blockPos.getX(), msg.blockPos.getY(), msg.blockPos.getZ(),
-						SoundEventRegistry.FIELD_MEDIC_ATTACK.get(), SoundSource.HOSTILE,
-						1.0f, 1.0f, false);
-			}
-		}
 	}
 }

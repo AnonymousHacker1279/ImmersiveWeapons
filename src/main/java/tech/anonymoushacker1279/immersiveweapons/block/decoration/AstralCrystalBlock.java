@@ -1,12 +1,7 @@
 package tech.anonymoushacker1279.immersiveweapons.block.decoration;
 
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.sounds.SoundEvents;
-import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.*;
 import net.minecraft.world.entity.Entity;
@@ -20,14 +15,11 @@ import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.fml.DistExecutor;
-import net.neoforged.neoforge.network.NetworkEvent.Context;
 import net.neoforged.neoforge.network.PacketDistributor;
 import tech.anonymoushacker1279.immersiveweapons.blockentity.AstralCrystalBlockEntity;
-import tech.anonymoushacker1279.immersiveweapons.init.PacketHandler;
 import tech.anonymoushacker1279.immersiveweapons.init.RecipeTypeRegistry;
 import tech.anonymoushacker1279.immersiveweapons.item.crafting.AstralCrystalRecipe;
+import tech.anonymoushacker1279.immersiveweapons.network.payload.AstralCrystalPayload;
 import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
 
 import java.util.*;
@@ -159,8 +151,8 @@ public class AstralCrystalBlock extends AmethystClusterBlock implements EntityBl
 								level.destroyBlock(pos, false);
 
 								// Send a packet to the client, so it can clear its inventory and add effects
-								PacketHandler.INSTANCE.send(PacketDistributor.TRACKING_CHUNK.with(() -> level.getChunkAt(pos)),
-										new AstralCrystalBlockPacketHandler(pos));
+								PacketDistributor.TRACKING_CHUNK.with(level.getChunkAt(pos))
+										.send(new AstralCrystalPayload(pos));
 
 								itemEntity.remove(RemovalReason.DISCARDED);
 							}
@@ -197,45 +189,5 @@ public class AstralCrystalBlock extends AmethystClusterBlock implements EntityBl
 		}
 
 		return true;
-	}
-
-	public record AstralCrystalBlockPacketHandler(BlockPos pos) {
-
-		public static void encode(AstralCrystalBlockPacketHandler msg, FriendlyByteBuf packetBuffer) {
-			packetBuffer.writeBlockPos(msg.pos);
-		}
-
-		public static AstralCrystalBlockPacketHandler decode(FriendlyByteBuf packetBuffer) {
-			return new AstralCrystalBlockPacketHandler(packetBuffer.readBlockPos());
-		}
-
-		public static void handle(AstralCrystalBlockPacketHandler msg, Context context) {
-			context.enqueueWork(() -> DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> runOnClient(msg)));
-			context.setPacketHandled(true);
-		}
-
-		private static void runOnClient(AstralCrystalBlockPacketHandler msg) {
-			ClientLevel level = Minecraft.getInstance().level;
-
-			int x = msg.pos.getX();
-			int y = msg.pos.getY();
-			int z = msg.pos.getZ();
-
-			if (level != null) {
-				level.addParticle(ParticleTypes.EXPLOSION_EMITTER,
-						x + 0.5D + (GeneralUtilities.getRandomNumber(-0.2D, 0.2D)),
-						y + 0.4D + (GeneralUtilities.getRandomNumber(0.2D, 0.5D)),
-						z + 0.5D + (GeneralUtilities.getRandomNumber(-0.2D, 0.2D)),
-						(GeneralUtilities.getRandomNumber(-0.16D, 0.16D)),
-						(GeneralUtilities.getRandomNumber(0.13D, 0.16D)),
-						(GeneralUtilities.getRandomNumber(-0.16D, 0.16D)));
-
-				level.playLocalSound(x, y, z, SoundEvents.AMETHYST_BLOCK_CHIME, SoundSource.BLOCKS, 1.0f, 1.3f, false);
-
-				if (level.getBlockEntity(msg.pos) instanceof AstralCrystalBlockEntity crystalBlockEntity) {
-					crystalBlockEntity.getInventory().clear();
-				}
-			}
-		}
 	}
 }
