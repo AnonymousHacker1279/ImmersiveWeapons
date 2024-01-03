@@ -1,12 +1,12 @@
 {
-  "parent": "immersiveweapons:ventus_staff_core",
+  "parent": "immersiveweapons:warden_heart",
   "criteria": {
     "hold": {
       "conditions": {
         "items": [
           {
             "items": [
-              "immersiveweapons:ventus_staff"
+              "immersiveweapons:reinforced_depth_charm"
             ]
           }
         ]
@@ -16,15 +16,14 @@
   },
   "display": {
     "description": {
-      "translate": "advancements.immersiveweapons.ventus_staff.description"
+      "translate": "advancements.immersiveweapons.reinforced_depth_charm.description"
     },
     "frame": "challenge",
     "icon": {
-      "item": "immersiveweapons:ventus_staff",
-      "nbt": "{Damage:0}"
+      "item": "immersiveweapons:reinforced_depth_charm"
     },
     "title": {
-      "translate": "advancements.immersiveweapons.ventus_staff.title"
+      "translate": "advancements.immersiveweapons.reinforced_depth_charm.title"
     }
   },
   "requirements": [
@@ -33,7 +32,7 @@
     ]
   ],
   "rewards": {
-    "experience": 35
+    "experience": 75
   },
   "sends_telemetry_event": true
 }

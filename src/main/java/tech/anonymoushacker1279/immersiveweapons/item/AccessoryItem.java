@@ -1,5 +1,6 @@
 package tech.anonymoushacker1279.immersiveweapons.item;
 
+import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.ai.attributes.Attribute;
@@ -19,7 +20,7 @@ public class AccessoryItem extends Item {
 
 	private final AccessorySlot slot;
 	private final Map<EffectType, Double> effects;
-	private final EffectScalingType effectScalingType;
+	private final Map<EffectType, EffectScalingType> effectScalingTypes;
 	private final Map<AttributeModifier, Attribute> attributeModifiers;
 	private final Map<Map<AttributeModifier, Attribute>, Double> dynamicAttributeModifiers;
 	private final List<MobEffectInstance> mobEffects;
@@ -39,7 +40,7 @@ public class AccessoryItem extends Item {
 
 		this.slot = slot;
 		this.effects = effectBuilder.getEffects();
-		this.effectScalingType = effectBuilder.getScalingType();
+		this.effectScalingTypes = effectBuilder.getEffectScalingTypes();
 		this.attributeModifiers = effectBuilder.getAttributeModifiers();
 		this.dynamicAttributeModifiers = effectBuilder.getDynamicAttributeModifiers();
 		this.mobEffects = effectBuilder.getMobEffects();
@@ -58,8 +59,8 @@ public class AccessoryItem extends Item {
 		return effects;
 	}
 
-	public EffectScalingType getEffectScalingType() {
-		return effectScalingType;
+	public Map<EffectType, EffectScalingType> getEffectScalingTypes() {
+		return effectScalingTypes;
 	}
 
 	public Map<AttributeModifier, Attribute> getStandardAttributeModifiers() {
@@ -158,7 +159,7 @@ public class AccessoryItem extends Item {
 	public static class EffectBuilder {
 
 		private final Map<EffectType, Double> effects = new HashMap<>(5);
-		private EffectScalingType scalingType = EffectScalingType.NO_SCALING;
+		private Map<EffectType, EffectScalingType> effectScalingTypes = new HashMap<>(5);
 		private final Map<AttributeModifier, Attribute> attributeModifiers = new HashMap<>(5);
 		private final Map<Map<AttributeModifier, Attribute>, Double> dynamicAttributeModifiers = new HashMap<>(5);
 		private final List<MobEffectInstance> mobEffects = new ArrayList<>(5);
@@ -172,6 +173,7 @@ public class AccessoryItem extends Item {
 		 */
 		public EffectBuilder addEffect(EffectType type, double value) {
 			effects.put(type, value);
+			effectScalingTypes.put(type, EffectScalingType.NO_SCALING);
 			return this;
 		}
 
@@ -186,7 +188,7 @@ public class AccessoryItem extends Item {
 		 */
 		public EffectBuilder addEffect(EffectType type, double value, EffectScalingType scalingType) {
 			effects.put(type, value);
-			this.scalingType = scalingType;
+			effectScalingTypes.put(type, scalingType);
 			return this;
 		}
 
@@ -235,7 +237,7 @@ public class AccessoryItem extends Item {
 		 */
 		public EffectBuilder addObjectsFromBuilder(EffectBuilder builder) {
 			effects.putAll(builder.getEffects());
-			scalingType = builder.getScalingType();
+			effectScalingTypes = builder.getEffectScalingTypes();
 			attributeModifiers.putAll(builder.getAttributeModifiers());
 			dynamicAttributeModifiers.putAll(builder.getDynamicAttributeModifiers());
 			mobEffects.addAll(builder.getMobEffects());
@@ -246,8 +248,8 @@ public class AccessoryItem extends Item {
 			return effects;
 		}
 
-		public EffectScalingType getScalingType() {
-			return scalingType;
+		public Map<EffectType, EffectScalingType> getEffectScalingTypes() {
+			return effectScalingTypes;
 		}
 
 		public Map<AttributeModifier, Attribute> getAttributeModifiers() {
@@ -269,17 +271,27 @@ public class AccessoryItem extends Item {
 			/**
 			 * The default scaling type, which has no effects on the final value.
 			 */
-			NO_SCALING,
+			NO_SCALING(""),
 
 			/**
 			 * Scales the effect value based on the player's depth, beginning at y{@literal <}64.
 			 */
-			DEPTH_SCALING,
+			DEPTH_SCALING("depth"),
 
 			/**
 			 * Scales the effect value based on the player's insomnia value, beginning after 24000 ticks.
 			 */
-			INSOMNIA_SCALING
+			INSOMNIA_SCALING("insomnia");
+
+			public final String name;
+
+			EffectScalingType(String name) {
+				this.name = createTranslation(name);
+			}
+
+			private String createTranslation(String name) {
+				return "tooltip.immersiveweapons.accessory.effect_scaling_type." + name;
+			}
 		}
 	}
 
@@ -305,72 +317,92 @@ public class AccessoryItem extends Item {
 		/**
 		 * Chance for firearms to not consume ammo.
 		 */
-		FIREARM_AMMO_CONSERVATION_CHANCE,
+		FIREARM_AMMO_CONSERVATION_CHANCE("firearm_ammo_conservation_chance"),
 
 		/**
 		 * Modifier for reload time for firearms.
 		 */
-		FIREARM_RELOAD_SPEED,
+		FIREARM_RELOAD_SPEED("firearm_reload_speed"),
 
 		/**
 		 * Modifier for melee damage.
 		 */
-		MELEE_DAMAGE,
+		MELEE_DAMAGE("melee_damage"),
 
 		/**
 		 * Modifier for projectile damage.
 		 */
-		PROJECTILE_DAMAGE,
+		PROJECTILE_DAMAGE("projectile_damage"),
 
 		/**
 		 * Modifier to all outgoing damage sources.
 		 */
-		GENERAL_DAMAGE,
+		GENERAL_DAMAGE("general_damage"),
 
 		/**
 		 * Modifier to all incoming damage sources.
 		 */
-		DAMAGE_RESISTANCE,
+		DAMAGE_RESISTANCE("damage_resistance"),
 
 		/**
 		 * Modifier to melee knockback.
 		 */
-		MELEE_KNOCKBACK,
+		MELEE_KNOCKBACK("melee_knockback"),
 
 		/**
 		 * Chance for melee attacks to inflict {@link BleedingEffect}.
 		 */
-		MELEE_BLEED_CHANCE,
+		MELEE_BLEED_CHANCE("melee_bleed_chance"),
 
 		/**
 		 * Modifier to melee critical damage. Additive with vanilla critical damage, which is 50% by default.
 		 * For example, a value of 0.5d will result in 100% critical damage.
 		 */
-		MELEE_CRIT_DAMAGE_BONUS,
+		MELEE_CRIT_DAMAGE_BONUS("melee_crit_damage_bonus"),
 
 		/**
 		 * Chance for any melee attack to become critical, regardless of vanilla critical hit conditions.
 		 */
-		MELEE_CRIT_CHANCE,
+		MELEE_CRIT_CHANCE("melee_crit_chance"),
 
 		/**
 		 * Chance for {@link BleedingEffect} to be cancelled each damage tick.
 		 */
-		BLEED_CANCEL_CHANCE,
+		BLEED_CANCEL_CHANCE("bleed_cancel_chance"),
 
 		/**
 		 * Modifier to {@link BleedingEffect} damage.
 		 */
-		BLEED_RESISTANCE,
+		BLEED_RESISTANCE("bleed_resistance"),
 
 		/**
 		 * Chance for attacks to inflict {@link MobEffects#WITHER}.
 		 */
-		GENERAL_WITHER_CHANCE,
+		GENERAL_WITHER_CHANCE("general_wither_chance"),
 
 		/**
 		 * Modifier for experience drops.
 		 */
-		EXPERIENCE_MODIFIER
+		EXPERIENCE_MODIFIER("experience_modifier"),
+
+		/**
+		 * Modifier to {@link DamageTypes#SONIC_BOOM} damage.
+		 */
+		SONIC_BOOM_RESISTANCE("sonic_boom_resistance"),
+
+		/**
+		 * Modifier to the looting level of the player.
+		 */
+		LOOTING_LEVEL("looting_level");
+
+		public final String name;
+
+		EffectType(String name) {
+			this.name = createTranslation(name);
+		}
+
+		private String createTranslation(String name) {
+			return "tooltip.immersiveweapons.accessory.effect_type." + name;
+		}
 	}
 }

@@ -208,4 +208,22 @@ public class AccessoryEffects {
 			}
 		}
 	}
+
+	public static void sonicBoomResistanceEffects(LivingHurtEvent event, Player player) {
+		if (event.getSource().is(DamageTypes.SONIC_BOOM)) {
+			// Get the total sonic boom resistance from all items
+			double sonicBoomResistance = AccessoryManager.collectEffects(EffectType.SONIC_BOOM_RESISTANCE, player);
+
+			// Apply the sonic boom resistance
+			event.setAmount((float) (event.getAmount() * (1 - sonicBoomResistance)));
+		}
+	}
+
+	public static void lootingEffects(LootingLevelEvent event, Player player) {
+		// Get the total looting level from all items
+		double lootingLevel = AccessoryManager.collectEffects(EffectType.LOOTING_LEVEL, player);
+
+		// Apply the looting level
+		event.setLootingLevel(event.getLootingLevel() + (int) lootingLevel);
+	}
 }

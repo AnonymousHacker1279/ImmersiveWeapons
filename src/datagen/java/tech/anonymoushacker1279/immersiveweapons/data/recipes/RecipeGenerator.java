@@ -1277,6 +1277,15 @@ public class RecipeGenerator extends RecipeProvider implements DataGenUtils {
 						.build()))
 				.save(output);
 
+		// Reinforced Depth Charm
+		ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, ItemRegistry.REINFORCED_DEPTH_CHARM.get())
+				.requires(ItemRegistry.DEPTH_CHARM.get())
+				.requires(ItemRegistry.WARDEN_HEART.get())
+				.requires(Items.DEEPSLATE, 7)
+				.group("reinforced_depth_charm")
+				.unlockedBy("depth_charm", has(ItemRegistry.DEPTH_CHARM.get()))
+				.save(output);
+
 		// Bloody Sacrifice
 		ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ItemRegistry.BLOODY_SACRIFICE.get())
 				.define('a', Items.SPIDER_EYE)

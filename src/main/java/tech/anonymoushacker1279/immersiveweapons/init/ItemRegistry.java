@@ -275,6 +275,7 @@ public class ItemRegistry {
 	public static final Supplier<AccessoryItem> DEATH_GEM_RING = ITEMS.register("death_gem_ring", () -> new AccessoryItem(new Properties().stacksTo(1), AccessorySlot.RING, AccessoryItemEffects.DEATH_GEM_RING));
 	public static final Supplier<AccessoryItem> MEDAL_OF_ADEQUACY = ITEMS.register("medal_of_adequacy", () -> new AccessoryItem(new Properties().stacksTo(1), AccessorySlot.NECKLACE, AccessoryItemEffects.MEDAL_OF_ADEQUACY));
 	public static final Supplier<AccessoryItem> DEPTH_CHARM = ITEMS.register("depth_charm", () -> new AccessoryItem(new Properties().stacksTo(1), AccessorySlot.CHARM, AccessoryItemEffects.DEPTH_CHARM));
+	public static final Supplier<AccessoryItem> REINFORCED_DEPTH_CHARM = ITEMS.register("reinforced_depth_charm", () -> new AccessoryItem(new Properties().stacksTo(1), AccessorySlot.CHARM, AccessoryItemEffects.REINFORCED_DEPTH_CHARM));
 	public static final Supplier<AccessoryItem> INSOMNIA_AMULET = ITEMS.register("insomnia_amulet", () -> new AccessoryItem(new Properties().stacksTo(1), AccessorySlot.NECKLACE, AccessoryItemEffects.INSOMNIA_AMULET));
 	public static final Supplier<AccessoryItem> GOGGLES = ITEMS.register("goggles", () -> new AccessoryItem(new Properties().stacksTo(1), AccessorySlot.HEAD, AccessoryItemEffects.GOGGLES));
 	public static final Supplier<AccessoryItem> LAVA_GOGGLES = ITEMS.register("lava_goggles", () -> new AccessoryItem(new Properties().stacksTo(1), AccessorySlot.HEAD, AccessoryItemEffects.LAVA_GOGGLES));

@@ -191,9 +191,9 @@ public record CommonConfig(
 
 		builder.push("Sculk Staff");
 		ConfigValue<Integer> sculkStaffMaxUseRange = builder
-				.comment("Set the maximum range in blocks of the Sculk Staff - Default 25")
+				.comment("Set the maximum range in blocks of the Sculk Staff - Default 15")
 				.translation("config.immersiveweapons.sculk_staff_max_use_range")
-				.defineInRange("sculk_staff_max_use_range", 25, 0, Integer.MAX_VALUE);
+				.defineInRange("sculk_staff_max_use_range", 15, 0, Integer.MAX_VALUE);
 		ConfigValue<Boolean> sculkStaffSonicBlastThroughWalls = builder
 				.comment("Set whether the Sculk Staff sonic blast goes through walls - Default true")
 				.translation("config.immersiveweapons.sculk_staff_sonic_blast_through_walls")

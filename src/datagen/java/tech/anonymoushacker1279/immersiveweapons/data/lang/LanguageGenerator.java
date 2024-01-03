@@ -438,7 +438,8 @@ public class LanguageGenerator extends IWLanguageProvider {
 		addTooltip("first_aid_kit", "An effective method of healing, combining the effects of bandages and painkillers");
 
 		// Misc
-		addTooltip("shift_for_info", "Hold SHIFT for more information");
+		addTooltip("shift_for_info", "Hold [SHIFT] for more information");
+		addTooltip("alt_for_info", "Hold [ALT] for extended information");
 		addTooltip("accessory_note", "This accessory works while sitting in your inventory");
 		addTooltip("accessory_inactive", "This accessory is inactive - something else is using its accessory slot");
 		addTooltip("accessory_slot", "Accessory Slot: %s");
@@ -459,44 +460,69 @@ public class LanguageGenerator extends IWLanguageProvider {
 		addTooltip("kill_counter", "Apply to an item to track the number of kills achieved with it");
 
 		// Accessories
-		addTooltip("satchel", "Provides a 10% chance not to consume ammo");
-		addTooltip("powder_horn_1", "Decreases reload time on firearms by 15%");
-		addTooltip("powder_horn_2", "Helps to protect powder in wet environments");
-		addTooltip("berserkers_amulet_1", "Increases melee damage by 20%, and projectile damage by 10%");
-		addTooltip("berserkers_amulet_2", "However, you will take 20% more damage from all sources");
-		addTooltip("hans_blessing_1", "Take 15% less damage from all sources");
+		addTooltip("accessory.effects", "This accessory provides the following effects:");
+		addTooltip("accessory.attribute_modifier", "This accessory provides the following attribute modifiers:");
+		addTooltip("accessory.dynamic_attribute_modifier", "These attributes are dynamic and always target the given value:");
+		// Add tooltips for each AccessoryItem$EffectType
+		addTooltip("accessory.effect_type.firearm_ammo_conservation_chance", "Firearm Ammo Conservation Chance: %s");
+		addTooltip("accessory.effect_type.firearm_reload_speed", "Firearm Reload Speed: %s");
+		addTooltip("accessory.effect_type.melee_damage", "Melee Damage: %s");
+		addTooltip("accessory.effect_type.projectile_damage", "Projectile Damage: %s");
+		addTooltip("accessory.effect_type.general_damage", "General Damage: %s");
+		addTooltip("accessory.effect_type.damage_resistance", "Damage Resistance: %s");
+		addTooltip("accessory.effect_type.melee_knockback", "Melee Knockback: %s");
+		addTooltip("accessory.effect_type.melee_bleed_chance", "Melee Bleed Chance: %s");
+		addTooltip("accessory.effect_type.melee_crit_damage_bonus", "Melee Crit Damage Bonus: %s");
+		addTooltip("accessory.effect_type.melee_crit_chance", "Melee Crit Chance: %s");
+		addTooltip("accessory.effect_type.bleed_cancel_chance", "Bleed Cancel Chance: %s");
+		addTooltip("accessory.effect_type.bleed_resistance", "Bleed Resistance: %s");
+		addTooltip("accessory.effect_type.general_wither_chance", "General Wither Chance: %s");
+		addTooltip("accessory.effect_type.experience_modifier", "Experience Modifier: %s");
+		addTooltip("accessory.effect_type.sonic_boom_resistance", "Sonic Boom Resistance: %s");
+		addTooltip("accessory.effect_type.looting_level", "Looting Level Bonus: %s");
+		// Add tooltips for each AccessoryItem$EffectScalingType (excluding NO_SCALING)
+		addTooltip("accessory.effect_scaling_type.depth", "(Scales with depth)");
+		addTooltip("accessory.effect_scaling_type.insomnia", "(Scales with insomnia)");
+
+		addTooltip("satchel", "Reduces the chance of consuming ammunition in firearms");
+		addTooltip("powder_horn_1", "Decreases reload time on firearms");
+		addTooltip("powder_horn_2", "Also helps to protect powder in wet environments");
+		addTooltip("berserkers_amulet_1", "Increases melee damage and projectile damage");
+		addTooltip("berserkers_amulet_2", "However, you will take more damage from all sources");
+		addTooltip("hans_blessing_1", "Take less damage from all sources");
 		addTooltip("hans_blessing_2", "Tis but a scratch");
 		addTooltip("celestial_spirit_1", "When taking damage, there is a 15% chance to summon a meteor");
 		addTooltip("celestial_spirit_2", "The meteor will only damage the creature that attacked you");
-		addTooltip("blademaster_emblem", "Increases melee damage by 10%, and adds a 30% chance to inflict Bleeding");
+		addTooltip("blademaster_emblem", "Increases melee damage and adds a chance to inflict Bleeding");
 		addTooltip("deadeye_pendant_1", "Increases damage over distance with firearms");
 		addTooltip("deadeye_pendant_2", "Maximum damage increase is 20% at 100 meters");
 		addTooltip("bloated_heart", "Increases maximum health by two hearts");
-		addTooltip("netherite_shield", "Provides total immunity to knockback and 3% damage reduction");
-		addTooltip("melee_masters_molten_glove", "Increases melee knockback by 75% and melee damage by 10%");
-		addTooltip("copper_ring", "Increase general damage by 1% and provides 1% damage reduction");
-		addTooltip("iron_ring", "Increase general damage by 2% and provides 2% damage reduction");
-		addTooltip("cobalt_ring", "Increase general damage by 2.5% and provides 2.5% damage reduction");
-		addTooltip("golden_ring", "Increase general damage by 3% and provides 3% damage reduction");
+		addTooltip("netherite_shield", "Provides total immunity to knockback and minor damage reduction");
+		addTooltip("melee_masters_molten_glove", "Increases melee knockback significantly and melee damage");
+		addTooltip("copper_ring", "Increases general damage and incoming damage reduction slightly");
+		addTooltip("iron_ring", "Increases general damage and incoming damage reduction slightly");
+		addTooltip("cobalt_ring", "Increases general damage and incoming damage reduction slightly");
+		addTooltip("golden_ring", "Increases general damage and incoming damage reduction slightly");
 		addTooltip("amethyst_ring", "Provides a looting bonus");
 		addTooltip("emerald_ring", "Provides the Hero of the Village effect");
-		addTooltip("diamond_ring", "Increase general damage by 4% and provides 4% damage reduction");
-		addTooltip("netherite_ring", "Increase general damage by 5% and provides 5% damage reduction");
+		addTooltip("diamond_ring", "Increases general damage and incoming damage reduction slightly");
+		addTooltip("netherite_ring", "Increases general damage and incoming damage reduction slightly");
 		addTooltip("death_gem_ring", "Inflicts Wither on hit");
 		addTooltip("medal_of_adequacy", "This medal was once awarded to gamingwarrior0 for his wholly undistinguished assistance");
 		addTooltip("depth_charm_1", "Provides damage resistance, a general damage bonus, and increased melee knockback");
-		addTooltip("depth_charm_2", "This effect scales with depth");
+		addTooltip("depth_charm_2", "As you descend into the earth, the effects become stronger");
+		addTooltip("reinforced_depth_charm", "Provides significant protection against sonic blasts, and includes the effects of the standard Depth Charm");
 		addTooltip("insomnia_amulet_1", "Slowly increases damage as you stay awake, up to a maximum of 30%");
 		addTooltip("insomnia_amulet_2", "After seven days, you may begin to feel adverse effects");
-		addTooltip("goggles", "Increases ranged damage by 3%");
+		addTooltip("goggles", "Increases ranged damage slightly");
 		addTooltip("lava_goggles", "Improves vision while under lava");
 		addTooltip("night_vision_goggles", "Provides a night vision effect");
-		addTooltip("agility_bracelet", "Increases movement speed by 5%");
-		addTooltip("bloody_cloth", "Reduces bleed damage by 30% and provides a 15% chance to stop bleeding");
-		addTooltip("iron_fist_1", "Increases melee crit damage by 25% and provides a 15% chance for ALL melee attacks to crit");
+		addTooltip("agility_bracelet", "Increases movement speed and step height");
+		addTooltip("bloody_cloth", "Reduces bleed damage significantly and provides a small chance to stop bleeding entirely");
+		addTooltip("iron_fist_1", "Increases melee crit damage and provides a chance for ALL melee attacks to crit");
 		addTooltip("iron_fist_2", "Devil's grip, the Iron Fist");
-		addTooltip("ancient_scroll", "Increase experience gained on kill by 35%");
-		addTooltip("glove_of_rapid_swinging", "Increases attack speed by 25%");
+		addTooltip("ancient_scroll", "Increases experience gained on kill");
+		addTooltip("glove_of_rapid_swinging", "Increases attack speed");
 		addTooltip("hand_of_doom_1", "Woe, crusade be upon ye, enemies of me");
 		addTooltip("hand_of_doom_2", "Combines the effects of the Melee Master's Molten Glove, Iron Fist, and Glove of Rapid Swinging");
 		addTooltip("holy_mantle_1", "Fully negates damage for a single hit");
@@ -841,6 +867,8 @@ public class LanguageGenerator extends IWLanguageProvider {
 		addAdvancement("planks.description", "Obtain any plank");
 		addAdvancement("bamboo.title", "Thick Grass");
 		addAdvancement("bamboo.description", "Obtain bamboo");
+		addAdvancement("warden_heart.title", "Heart of Darkness");
+		addAdvancement("warden_heart.description", "Obtain a Warden Heart");
 
 		// Player utility
 		addAdvancement("bottle_of_alcohol.title", "mmmmm alacol");
@@ -895,6 +923,8 @@ public class LanguageGenerator extends IWLanguageProvider {
 		addAdvancement("accessories.description", "Obtain any accessory");
 		addAdvancement("bloody_sacrifice.title", "For the Worthy");
 		addAdvancement("bloody_sacrifice.description", "Only the bravest souls may take this path");
+		addAdvancement("reinforced_depth_charm.title", "Sonic Boom Protection");
+		addAdvancement("reinforced_depth_charm.description", "Obtain a Reinforced Depth Charm");
 
 		// Entity discovery
 		addAdvancement("entity_discovery.title", "Entity Discovery");

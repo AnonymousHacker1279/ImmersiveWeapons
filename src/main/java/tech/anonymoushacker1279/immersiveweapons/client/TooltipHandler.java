@@ -3,8 +3,10 @@ package tech.anonymoushacker1279.immersiveweapons.client;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.network.chat.*;
+import net.minecraft.network.chat.CommonComponents;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.ai.attributes.*;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.DiggerItem;
 import net.minecraft.world.item.ItemStack;
@@ -19,6 +21,8 @@ import tech.anonymoushacker1279.immersiveweapons.api.PluginHandler;
 import tech.anonymoushacker1279.immersiveweapons.init.BlockItemRegistry;
 import tech.anonymoushacker1279.immersiveweapons.init.ItemRegistry;
 import tech.anonymoushacker1279.immersiveweapons.item.*;
+import tech.anonymoushacker1279.immersiveweapons.item.AccessoryItem.EffectBuilder.EffectScalingType;
+import tech.anonymoushacker1279.immersiveweapons.item.AccessoryItem.EffectType;
 import tech.anonymoushacker1279.immersiveweapons.item.armor.*;
 import tech.anonymoushacker1279.immersiveweapons.item.gauntlet.GauntletItem;
 import tech.anonymoushacker1279.immersiveweapons.item.gun.AbstractGunItem;
@@ -27,8 +31,8 @@ import tech.anonymoushacker1279.immersiveweapons.item.pike.PikeItem;
 import tech.anonymoushacker1279.immersiveweapons.item.projectile.*;
 import tech.anonymoushacker1279.immersiveweapons.item.projectile.ThrowableItem.ThrowableType;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
+import java.util.Map.Entry;
 
 @Mod.EventBusSubscriber(modid = ImmersiveWeapons.MOD_ID, bus = Bus.FORGE, value = Dist.CLIENT)
 public class TooltipHandler {
@@ -271,7 +275,7 @@ public class TooltipHandler {
 			event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.cursed_sight_staff").withStyle(ChatFormatting.DARK_RED, ChatFormatting.ITALIC));
 		}
 		if (stack.getItem() == ItemRegistry.SCULK_STAFF.get()) {
-			event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.sculk_staff").withStyle(ChatFormatting.DARK_BLUE, ChatFormatting.ITALIC));
+			event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.sculk_staff").withStyle(ChatFormatting.DARK_AQUA, ChatFormatting.ITALIC));
 		}
 
 		// Player utility
@@ -384,6 +388,9 @@ public class TooltipHandler {
 				event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.depth_charm_1").withStyle(ChatFormatting.GREEN, ChatFormatting.ITALIC));
 				event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.depth_charm_2").withStyle(ChatFormatting.LIGHT_PURPLE, ChatFormatting.ITALIC));
 			}
+			if (stack.getItem() == ItemRegistry.REINFORCED_DEPTH_CHARM.get()) {
+				event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.reinforced_depth_charm").withStyle(ChatFormatting.GREEN, ChatFormatting.ITALIC));
+			}
 			if (stack.getItem() == ItemRegistry.INSOMNIA_AMULET.get()) {
 				event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.insomnia_amulet_1").withStyle(ChatFormatting.GREEN, ChatFormatting.ITALIC));
 				event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.insomnia_amulet_2").withStyle(ChatFormatting.DARK_RED, ChatFormatting.ITALIC));
@@ -430,7 +437,7 @@ public class TooltipHandler {
 				event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.super_blanket_cape_2").withStyle(ChatFormatting.DARK_PURPLE, ChatFormatting.ITALIC));
 			}
 
-			addShiftTooltip(event.getToolTip(), addAccessoryTooltips(item, event.getEntity(), stack));
+			addAccessoryTooltips(item, event.getEntity(), stack, event.getToolTip());
 		} else if (stack.getItem() instanceof CursedItem) {
 			if (stack.getItem() == ItemRegistry.BLOODY_SACRIFICE.get()) {
 				event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.bloody_sacrifice").withStyle(ChatFormatting.DARK_PURPLE, ChatFormatting.ITALIC));
@@ -494,20 +501,6 @@ public class TooltipHandler {
 	}
 
 	/**
-	 * Adds a tooltip which appears while the player holds SHIFT.
-	 *
-	 * @param existingTooltips The list of tooltips already on the item.
-	 * @param shiftTooltip     The tooltip to add if the player is holding SHIFT.
-	 */
-	private static void addShiftTooltip(List<Component> existingTooltips, MutableComponent shiftTooltip) {
-		if (!Screen.hasShiftDown()) {
-			existingTooltips.add(Component.translatable("tooltip.immersiveweapons.shift_for_info").withStyle(ChatFormatting.GOLD, ChatFormatting.ITALIC));
-		} else {
-			existingTooltips.add(shiftTooltip);
-		}
-	}
-
-	/**
 	 * Adds tooltips which appear while the player holds SHIFT.
 	 *
 	 * @param existingTooltips The list of tooltips already on the item.
@@ -522,27 +515,97 @@ public class TooltipHandler {
 	}
 
 	/**
+	 * Adds tooltips which appear while the player holds ALT.
+	 *
+	 * @param existingTooltips The list of tooltips already on the item.
+	 * @param altTooltips      The list of tooltips to add if the player is holding ALT.
+	 */
+	private static void addAltTooltip(List<Component> existingTooltips, List<Component> altTooltips) {
+		if (!Screen.hasAltDown()) {
+			existingTooltips.add(Component.translatable("tooltip.immersiveweapons.alt_for_info").withStyle(ChatFormatting.LIGHT_PURPLE, ChatFormatting.ITALIC));
+		} else {
+			existingTooltips.addAll(altTooltips);
+		}
+	}
+
+	/**
 	 * Add accessory-specific tooltips (typically for use inside {@link #addShiftTooltip(List, List)})
 	 *
 	 * @param item   the accessory item
 	 * @param player the player holding the item
 	 * @return a list of tooltips
 	 */
-	private static List<Component> addAccessoryTooltips(AccessoryItem item, Player player, ItemStack stack) {
-		List<Component> tooltips = new ArrayList<>(5);
+	private static void addAccessoryTooltips(AccessoryItem item, Player player, ItemStack stack, List<Component> existingTooltips) {
+		List<Component> shiftTooltips = new ArrayList<>(5);
+		List<Component> altTooltips = new ArrayList<>(10);
 
 		if (ImmersiveWeapons.IWCB_LOADED && PluginHandler.isPluginActive("iwcompatbridge:curios_plugin")) {
-			tooltips.add(Component.translatable("tooltip.iwcompatbridge.accessory_note", item.getSlot()).withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC));
+			shiftTooltips.add(Component.translatable("tooltip.iwcompatbridge.accessory_note").withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC));
 		} else {
-			tooltips.add(Component.translatable("tooltip.immersiveweapons.accessory_slot", item.getSlot()).withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC));
+			shiftTooltips.add(Component.translatable("tooltip.immersiveweapons.accessory_slot", item.getSlot()).withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC));
 
 			if (item.isActive(player, stack)) {
-				tooltips.add(Component.translatable("tooltip.immersiveweapons.accessory_note").withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC));
+				shiftTooltips.add(Component.translatable("tooltip.immersiveweapons.accessory_note").withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC));
 			} else {
-				tooltips.add(Component.translatable("tooltip.immersiveweapons.accessory_inactive").withStyle(ChatFormatting.RED, ChatFormatting.ITALIC));
+				shiftTooltips.add(Component.translatable("tooltip.immersiveweapons.accessory_inactive").withStyle(ChatFormatting.RED, ChatFormatting.ITALIC));
 			}
 		}
 
-		return tooltips;
+		addShiftTooltip(existingTooltips, shiftTooltips);
+
+		if (!item.getEffects().isEmpty() || !item.getStandardAttributeModifiers().isEmpty() || !item.getDynamicAttributeModifiers().isEmpty()) {
+			altTooltips.add(CommonComponents.EMPTY);
+
+			// Add basic effects
+			if (!item.getEffects().isEmpty()) {
+				altTooltips.add(Component.translatable("tooltip.immersiveweapons.accessory.effects").withStyle(ChatFormatting.GOLD, ChatFormatting.ITALIC));
+				for (Entry<EffectType, Double> entry : item.getEffects().entrySet()) {
+					String value;
+
+					if (entry.getKey() == EffectType.LOOTING_LEVEL) {
+						value = entry.getValue().intValue() + " levels";
+					} else {
+						value = (float) Math.round(entry.getValue() * 1000f) / 10f + "%";
+					}
+
+					EffectScalingType scalingType = item.getEffectScalingTypes().get(entry.getKey());
+
+					if (scalingType != null && scalingType != EffectScalingType.NO_SCALING) {
+						Component scaling = Component.translatable(item.getEffectScalingTypes().get(entry.getKey()).name);
+						altTooltips.add(Component.translatable(entry.getKey().name, value).append(" ").append(scaling).withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC));
+					} else {
+						altTooltips.add(Component.translatable(entry.getKey().name, value).withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC));
+					}
+				}
+			}
+
+			// Add attribute modifier effects
+			if (!item.getStandardAttributeModifiers().isEmpty()) {
+				altTooltips.add(Component.translatable("tooltip.immersiveweapons.accessory.attribute_modifier").withStyle(ChatFormatting.GOLD, ChatFormatting.ITALIC));
+				for (Entry<AttributeModifier, Attribute> entry : item.getStandardAttributeModifiers().entrySet()) {
+					String amount;
+
+					if (entry.getValue() == Attributes.MAX_HEALTH) {
+						// Convert to hearts
+						amount = (float) Math.round(entry.getKey().getAmount() / 2f) + " hearts";
+					} else {
+						amount = (float) Math.round(entry.getKey().getAmount() * 1000f) / 10f + "%";
+					}
+
+					altTooltips.add(Component.translatable(entry.getValue().getDescriptionId()).append(": " + amount).withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC));
+				}
+			}
+			if (!item.getDynamicAttributeModifiers().isEmpty()) {
+				altTooltips.add(Component.translatable("tooltip.immersiveweapons.accessory.dynamic_attribute_modifier").withStyle(ChatFormatting.GOLD, ChatFormatting.ITALIC));
+				for (Entry<Map<AttributeModifier, Attribute>, Double> entry : item.getDynamicAttributeModifiers().entrySet()) {
+					for (Entry<AttributeModifier, Attribute> entry2 : entry.getKey().entrySet()) {
+						String amount = (float) Math.round(entry.getValue() * 1000f) / 10f + "%";
+						altTooltips.add(Component.translatable(entry2.getValue().getDescriptionId()).append(": " + amount).withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC));
+					}
+				}
+			}
+
+			addAltTooltip(existingTooltips, altTooltips);
+		}
 	}
 }

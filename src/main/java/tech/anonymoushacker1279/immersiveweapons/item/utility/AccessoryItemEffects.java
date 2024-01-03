@@ -73,7 +73,8 @@ public class AccessoryItemEffects {
 			.addEffect(EffectType.DAMAGE_RESISTANCE, 0.03d);
 	public static final EffectBuilder EMERALD_RING = new EffectBuilder()
 			.addMobEffect(new MobEffectInstance(MobEffects.HERO_OF_THE_VILLAGE, 60, 0, true, true));
-	public static final EffectBuilder AMETHYST_RING = new EffectBuilder();
+	public static final EffectBuilder AMETHYST_RING = new EffectBuilder()
+			.addEffect(EffectType.LOOTING_LEVEL, 2);
 	public static final EffectBuilder DIAMOND_RING = new EffectBuilder()
 			.addEffect(EffectType.GENERAL_DAMAGE, 0.04d)
 			.addEffect(EffectType.DAMAGE_RESISTANCE, 0.04d);
@@ -88,6 +89,11 @@ public class AccessoryItemEffects {
 			.addEffect(EffectType.DAMAGE_RESISTANCE, 0.003d, EffectScalingType.DEPTH_SCALING)
 			.addEffect(EffectType.GENERAL_DAMAGE, 0.002d, EffectScalingType.DEPTH_SCALING)
 			.addEffect(EffectType.MELEE_KNOCKBACK, 0.001d, EffectScalingType.DEPTH_SCALING);
+	public static final EffectBuilder REINFORCED_DEPTH_CHARM = new EffectBuilder()
+			.addEffect(EffectType.DAMAGE_RESISTANCE, 0.003d, EffectScalingType.DEPTH_SCALING)
+			.addEffect(EffectType.GENERAL_DAMAGE, 0.002d, EffectScalingType.DEPTH_SCALING)
+			.addEffect(EffectType.MELEE_KNOCKBACK, 0.001d, EffectScalingType.DEPTH_SCALING)
+			.addEffect(EffectType.SONIC_BOOM_RESISTANCE, 0.5d);
 	public static final EffectBuilder INSOMNIA_AMULET = new EffectBuilder()
 			.addEffect(EffectType.GENERAL_DAMAGE, 0.003d, EffectScalingType.INSOMNIA_SCALING);
 	public static final EffectBuilder GOGGLES = new EffectBuilder()

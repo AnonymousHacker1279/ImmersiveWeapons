@@ -1,5 +1,5 @@
 {
-  "parent": "immersiveweapons:root",
+  "parent": "immersiveweapons:warden_heart",
   "criteria": {
     "hold": {
       "conditions": {

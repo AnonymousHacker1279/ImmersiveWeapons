@@ -216,6 +216,7 @@ public class ForgeEventSubscriber {
 			AccessoryEffects.damageResistanceEffects(event, player);
 			AccessoryEffects.bleedResistanceEffects(event, player);
 			AccessoryEffects.bleedCancelEffects(event, player);
+			AccessoryEffects.sonicBoomResistanceEffects(event, player);
 
 			if (source != null) {
 				AccessoryEffects.celestialSpiritEffect(player, source);
@@ -463,10 +464,8 @@ public class ForgeEventSubscriber {
 				event.setLootingLevel(event.getLootingLevel() + 3);
 			}
 
-			// Increase the looting level by 2 with the Amethyst Ring
-			if (AccessoryItem.isAccessoryActive(player, ItemRegistry.AMETHYST_RING.get())) {
-				event.setLootingLevel(event.getLootingLevel() + 2);
-			}
+			// Increase the looting level from accessories
+			AccessoryEffects.lootingEffects(event, player);
 		}
 	}
 

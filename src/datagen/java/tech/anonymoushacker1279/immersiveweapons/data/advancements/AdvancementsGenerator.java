@@ -397,7 +397,7 @@ public class AdvancementsGenerator extends AdvancementProvider {
 				.display(ItemRegistry.VENTUS_STAFF_CORE.get(),
 						Component.translatable("advancements.immersiveweapons.ventus_staff_core.title"),
 						Component.translatable("advancements.immersiveweapons.ventus_staff_core.description"),
-						null, AdvancementType.TASK, true, true, false)
+						null, AdvancementType.GOAL, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.VENTUS_STAFF_CORE.get()))
 				.save(consumer, "immersiveweapons:ventus_staff_core");
@@ -406,7 +406,7 @@ public class AdvancementsGenerator extends AdvancementProvider {
 				.display(ItemRegistry.VENTUS_STAFF.get(),
 						Component.translatable("advancements.immersiveweapons.ventus_staff.title"),
 						Component.translatable("advancements.immersiveweapons.ventus_staff.description"),
-						null, AdvancementType.GOAL, true, true, false)
+						null, AdvancementType.CHALLENGE, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.VENTUS_STAFF.get()))
 				.rewards(AdvancementRewards.Builder.experience(35))
@@ -1449,7 +1449,18 @@ public class AdvancementsGenerator extends AdvancementProvider {
 								Items.AIR))
 				.save(consumer, "immersiveweapons:cloud");
 
-		Builder.advancement().parent(root)
+		// Warden Advancements
+		AdvancementHolder warden_heart = Builder.advancement().parent(root)
+				.display(ItemRegistry.WARDEN_HEART.get(),
+						Component.translatable("advancements.immersiveweapons.warden_heart.title"),
+						Component.translatable("advancements.immersiveweapons.warden_heart.description"),
+						null, AdvancementType.GOAL, true, true, false)
+				.addCriterion("hold",
+						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.WARDEN_HEART.get()))
+				.rewards(AdvancementRewards.Builder.experience(50))
+				.save(consumer, "immersiveweapons:warden_heart");
+
+		Builder.advancement().parent(warden_heart)
 				.display(ItemRegistry.SCULK_STAFF.get(),
 						Component.translatable("advancements.immersiveweapons.sculk_staff.title"),
 						Component.translatable("advancements.immersiveweapons.sculk_staff.description"),
@@ -1458,6 +1469,16 @@ public class AdvancementsGenerator extends AdvancementProvider {
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.SCULK_STAFF.get()))
 				.rewards(AdvancementRewards.Builder.experience(75))
 				.save(consumer, "immersiveweapons:sculk_staff");
+
+		Builder.advancement().parent(warden_heart)
+				.display(ItemRegistry.REINFORCED_DEPTH_CHARM.get(),
+						Component.translatable("advancements.immersiveweapons.reinforced_depth_charm.title"),
+						Component.translatable("advancements.immersiveweapons.reinforced_depth_charm.description"),
+						null, AdvancementType.CHALLENGE, true, true, false)
+				.addCriterion("hold",
+						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.REINFORCED_DEPTH_CHARM.get()))
+				.rewards(AdvancementRewards.Builder.experience(75))
+				.save(consumer, "immersiveweapons:reinforced_depth_charm");
 
 		// Battlefield advancements
 		AdvancementHolder discover_battlefield = Builder.advancement().parent(root)
