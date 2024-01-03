@@ -324,6 +324,12 @@ public class LanguageGenerator extends IWLanguageProvider {
 		addTooltip("musket", "A simple firearm designed for long-range combat");
 		addTooltip("flare_gun", "Launch bright flares into the sky");
 		addTooltip("hand_cannon", "A powerful, but inaccurate, handheld cannon");
+		// Gun metadata
+		addTooltip("gun.meta.base_velocity", "Base Velocity: %s");
+		addTooltip("gun.meta.base_reload_time", "Base Reload Time: %s seconds");
+		addTooltip("gun.meta.base_knockback", "Base Knockback Level: %sx");
+		addTooltip("gun.meta.selected_powder", "Selected Powder: %s ; (%s velocity modifier)");
+		addTooltip("gun.meta.selected_ammo", "Selected Ammunition: %s");
 
 		// Bows
 		addTooltip("ice_bow", "Arrows will inflict slowness on enemies");
@@ -1033,8 +1039,6 @@ public class LanguageGenerator extends IWLanguageProvider {
 		// Debug tracing strings
 		add("immersiveweapons.debug_tracing.melee_item_damage", "Melee Item Damage: %s");
 		add("immersiveweapons.debug_tracing.gun_base_velocity", "Gun Base Velocity: %s");
-		add("immersiveweapons.debug_tracing.selected_ammo", "Selected Ammo: %s (base damage: %s)");
-		add("immersiveweapons.debug_tracing.selected_powder", "Selected Powder: %s (velocity modifier: %s)");
 		add("immersiveweapons.debug_tracing.live_bullet_damage", "Live Bullet Damage: %s (is crit: %s)");
 		add("immersiveweapons.debug_tracing.damage_bonus", "Damage Bonus: %s general, %s melee, %s projectile");
 		add("immersiveweapons.debug_tracing.celestial_protection_chance_for_no_damage", "Celestial Protection Chance: %s");

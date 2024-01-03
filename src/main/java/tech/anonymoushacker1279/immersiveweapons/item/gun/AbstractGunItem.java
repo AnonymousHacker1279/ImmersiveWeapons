@@ -157,7 +157,7 @@ public abstract class AbstractGunItem extends Item implements Vanishable {
 						}
 
 						enchantmentLevel = gun.getEnchantmentLevel(EnchantmentRegistry.IMPACT.get());
-						int kb = getKnockbackLevel();
+						int kb = getKnockbackLevel() + bulletEntity.getKnockback();
 						if (enchantmentLevel > 0) {
 							kb += enchantmentLevel;
 						}
