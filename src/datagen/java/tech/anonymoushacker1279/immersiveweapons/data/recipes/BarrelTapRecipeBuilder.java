@@ -7,7 +7,7 @@ import tech.anonymoushacker1279.immersiveweapons.item.crafting.BarrelTapRecipe;
 
 import java.util.Objects;
 
-public class BarrelTapRecipeBuilder extends IWRecipeBuilder {
+public class BarrelTapRecipeBuilder extends tech.anonymoushacker1279.immersiveweapons.data.recipes.IWRecipeBuilder {
 
 	private final Ingredient material;
 	private final int materialCount;

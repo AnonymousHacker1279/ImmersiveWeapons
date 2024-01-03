@@ -1,6 +1,10 @@
 package tech.anonymoushacker1279.immersiveweapons.event.game_effects;
 
+import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.DamageTypeTags;
+import net.minecraft.world.damagesource.DamageType;
 import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
@@ -8,7 +12,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.neoforged.neoforge.event.entity.living.*;
 import net.neoforged.neoforge.event.entity.player.CriticalHitEvent;
-import tech.anonymoushacker1279.immersiveweapons.data.damage_types.IWDamageTypes;
+import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.entity.projectile.MeteorEntity;
 import tech.anonymoushacker1279.immersiveweapons.init.EffectRegistry;
 import tech.anonymoushacker1279.immersiveweapons.init.ItemRegistry;
@@ -17,6 +21,8 @@ import tech.anonymoushacker1279.immersiveweapons.item.AccessoryItem.EffectType;
 import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
 
 public class AccessoryEffects {
+
+	public static final ResourceKey<DamageType> BLEEDING = ResourceKey.create(Registries.DAMAGE_TYPE, new ResourceLocation(ImmersiveWeapons.MOD_ID, "bleeding"));
 
 	public static void damageResistanceEffects(LivingHurtEvent event, Player player) {
 		// Get the total damage resistance from all items
@@ -27,7 +33,7 @@ public class AccessoryEffects {
 	}
 
 	public static void bleedResistanceEffects(LivingHurtEvent event, Player player) {
-		if (event.getSource().is(IWDamageTypes.BLEEDING_KEY)) {
+		if (event.getSource().is(BLEEDING)) {
 			// Get the total bleed resistance from all items
 			double bleedResistance = AccessoryManager.collectEffects(EffectType.BLEED_RESISTANCE, player);
 
@@ -37,7 +43,7 @@ public class AccessoryEffects {
 	}
 
 	public static void bleedCancelEffects(LivingHurtEvent event, Player player) {
-		if (event.getSource().is(IWDamageTypes.BLEEDING_KEY)) {
+		if (event.getSource().is(BLEEDING)) {
 			// Get the total bleed cancel chance from all items
 			double bleedCancelChance = AccessoryManager.collectEffects(EffectType.BLEED_CANCEL_CHANCE, player);
 

@@ -1,9 +1,11 @@
 package tech.anonymoushacker1279.immersiveweapons.entity.projectile;
 
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.tags.BlockTags;
+import net.minecraft.tags.TagKey;
 import net.minecraft.util.Mth;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.*;
@@ -20,7 +22,6 @@ import org.jetbrains.annotations.Nullable;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.client.gui.overlays.DebugTracingData;
 import tech.anonymoushacker1279.immersiveweapons.client.particle.bullet_impact.BulletImpactParticleOptions;
-import tech.anonymoushacker1279.immersiveweapons.data.tags.groups.forge.ForgeBlockTagGroups;
 import tech.anonymoushacker1279.immersiveweapons.init.*;
 import tech.anonymoushacker1279.immersiveweapons.item.AccessoryItem;
 import tech.anonymoushacker1279.immersiveweapons.item.gun.MusketItem;
@@ -39,6 +40,7 @@ public class BulletEntity extends CustomArrowEntity implements HitEffectUtils {
 	private Item firingItem = ItemRegistry.FLINTLOCK_PISTOL.get();
 	public List<Double> shootingVectorInputs = List.of(0.0025d, 0.2d, 1.1d);
 	public HitEffect hitEffect = HitEffect.NONE;
+	private static final TagKey<Block> BULLETPROOF_GLASS = BlockTags.create(new ResourceLocation("forge", "bulletproof_glass"));
 
 	public BulletEntity(EntityType<? extends Arrow> entityType, Level level) {
 		super(entityType, level);
@@ -129,7 +131,7 @@ public class BulletEntity extends CustomArrowEntity implements HitEffectUtils {
 
 		// Check if glass can be broken, and if it hasn't already broken glass
 		if (canBreakGlass && !hasAlreadyBrokeGlass
-				&& !lastState.is(ForgeBlockTagGroups.BULLETPROOF_GLASS)
+				&& !lastState.is(BULLETPROOF_GLASS)
 				&& (lastState.is(Tags.Blocks.GLASS) || lastState.is(Tags.Blocks.GLASS_PANES))) {
 
 			level().destroyBlock(hitResult.getBlockPos(), false);

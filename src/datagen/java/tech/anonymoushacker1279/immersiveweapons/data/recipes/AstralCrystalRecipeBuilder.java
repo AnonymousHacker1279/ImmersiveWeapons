@@ -8,7 +8,7 @@ import tech.anonymoushacker1279.immersiveweapons.item.crafting.AstralCrystalReci
 
 import java.util.Objects;
 
-public class AstralCrystalRecipeBuilder extends IWRecipeBuilder {
+public class AstralCrystalRecipeBuilder extends tech.anonymoushacker1279.immersiveweapons.data.recipes.IWRecipeBuilder {
 
 	private final Ingredient primaryMaterial;
 	private final Ingredient secondaryMaterial;

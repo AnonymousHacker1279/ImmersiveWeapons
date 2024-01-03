@@ -1,6 +1,8 @@
 package tech.anonymoushacker1279.immersiveweapons.init;
 
 import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.ColorRGBA;
 import net.minecraft.util.valueproviders.ConstantInt;
@@ -13,6 +15,7 @@ import net.minecraft.world.level.block.grower.TreeGrower;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockBehaviour.OffsetType;
 import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
+import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
 import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.level.material.PushReaction;
 import net.neoforged.neoforge.registries.DeferredRegister;
@@ -30,7 +33,6 @@ import tech.anonymoushacker1279.immersiveweapons.block.properties.WoodTypes;
 import tech.anonymoushacker1279.immersiveweapons.block.sign.*;
 import tech.anonymoushacker1279.immersiveweapons.block.star_forge.SolarLensBlock;
 import tech.anonymoushacker1279.immersiveweapons.block.star_forge.StarForgeControllerBlock;
-import tech.anonymoushacker1279.immersiveweapons.data.features.IWConfiguredFeatures;
 import tech.anonymoushacker1279.immersiveweapons.world.level.CustomBlockSetTypes;
 
 import java.util.Optional;
@@ -41,6 +43,8 @@ public class BlockRegistry {
 
 	// Block Register
 	public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(Registries.BLOCK, ImmersiveWeapons.MOD_ID);
+
+	public static final ResourceKey<ConfiguredFeature<?, ?>> STARDUST_TREE_CONFIGURATION = ResourceKey.create(Registries.CONFIGURED_FEATURE, new ResourceLocation(ImmersiveWeapons.MOD_ID, "stardust_tree"));
 
 	// Blocks
 	// Breakable via pickaxe
@@ -229,7 +233,7 @@ public class BlockRegistry {
 	public static final Supplier<FlowerPotBlock> POTTED_MOONGLOW = BLOCKS.register("potted_moonglow", () -> new FlowerPotBlock(() -> (FlowerPotBlock) Blocks.FLOWER_POT, MOONGLOW, BlockBehaviour.Properties.of().pushReaction(PushReaction.DESTROY).lightLevel((state) -> 12).instabreak().noOcclusion()));
 	public static final Supplier<DeathweedBlock> DEATHWEED = BLOCKS.register("deathweed", () -> new DeathweedBlock(() -> MobEffects.HARM, 0, BlockBehaviour.Properties.of().mapColor(MapColor.PLANT).pushReaction(PushReaction.DESTROY).sound(SoundType.GRASS).lightLevel((state) -> 4).noCollission().instabreak().offsetType(OffsetType.XZ)));
 	public static final Supplier<FlowerPotBlock> POTTED_DEATHWEED = BLOCKS.register("potted_deathweed", () -> new FlowerPotBlock(() -> (FlowerPotBlock) Blocks.FLOWER_POT, DEATHWEED, BlockBehaviour.Properties.of().pushReaction(PushReaction.DESTROY).lightLevel((state) -> 12).instabreak().noOcclusion()));
-	public static final Supplier<SaplingBlock> STARDUST_SAPLING = BLOCKS.register("stardust_sapling", () -> new SaplingBlock(new TreeGrower("stardust_sapling", Optional.of(IWConfiguredFeatures.STARDUST_TREE_CONFIGURATION), Optional.empty(), Optional.empty()), BlockBehaviour.Properties.of().mapColor(MapColor.PLANT).pushReaction(PushReaction.DESTROY).strength(0.0f).sound(SoundType.GRASS).noCollission().instabreak().offsetType(OffsetType.NONE)));
+	public static final Supplier<SaplingBlock> STARDUST_SAPLING = BLOCKS.register("stardust_sapling", () -> new SaplingBlock(new TreeGrower("stardust_sapling", Optional.of(STARDUST_TREE_CONFIGURATION), Optional.empty(), Optional.empty()), BlockBehaviour.Properties.of().mapColor(MapColor.PLANT).pushReaction(PushReaction.DESTROY).strength(0.0f).sound(SoundType.GRASS).noCollission().instabreak().offsetType(OffsetType.NONE)));
 	public static final Supplier<SolarLensBlock> SOLAR_LENS = BLOCKS.register("solar_lens", () -> new SolarLensBlock(BlockBehaviour.Properties.of().mapColor(MapColor.METAL).pushReaction(PushReaction.DESTROY).strength(0.5f).sound(SoundType.GLASS).noOcclusion()));
 	public static final Supplier<TiltrosPortalBlock> TILTROS_PORTAL = BLOCKS.register("tiltros_portal", () -> new TiltrosPortalBlock(BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_BLACK).pushReaction(PushReaction.BLOCK).strength(-1.0f, 3600000f).noCollission().lightLevel(state -> 15).noLootTable()));
 }
