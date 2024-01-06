@@ -24,6 +24,7 @@ import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.*;
+import net.neoforged.neoforge.common.Tags.EntityTypes;
 import tech.anonymoushacker1279.immersiveweapons.blockentity.BearTrapBlockEntity;
 import tech.anonymoushacker1279.immersiveweapons.init.SoundEventRegistry;
 import tech.anonymoushacker1279.immersiveweapons.world.level.IWDamageSources;
@@ -155,7 +156,7 @@ public class BearTrapBlock extends Block implements SimpleWaterloggedBlock, Enti
 	@SuppressWarnings("deprecation")
 	@Override
 	public void entityInside(BlockState state, Level level, BlockPos pos, Entity entity) {
-		if (entity instanceof Player player && player.isCreative()) {
+		if (entity instanceof Player player && player.isCreative() || entity.getType().is(EntityTypes.BOSSES)) {
 			return;
 		}
 

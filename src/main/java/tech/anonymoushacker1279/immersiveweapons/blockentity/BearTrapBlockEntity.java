@@ -86,6 +86,15 @@ public class BearTrapBlockEntity extends BlockEntity implements EntityBlock {
 		}
 	}
 
+	@Override
+	public void setRemoved() {
+		if (trappedEntity != null && trappedEntity.isAlive()) {
+			setTrappedEntity(null);
+		}
+
+		super.setRemoved();
+	}
+
 	@Nullable
 	public LivingEntity getTrappedEntity() {
 		return trappedEntity;
@@ -109,7 +118,6 @@ public class BearTrapBlockEntity extends BlockEntity implements EntityBlock {
 			mob.goalSelector.getRunningGoals().filter(WrappedGoal::isRunning).forEach(WrappedGoal::stop);
 			mob.goalSelector.addGoal(0, doNothingGoal = new DoNothingGoal(mob, this));
 		}
-
 	}
 
 	/**
