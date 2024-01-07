@@ -74,6 +74,10 @@ public class TooltipHandler {
 		if (stack.getItem() == ItemRegistry.STARSTORM_SWORD.get()) {
 			event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.starstorm_sword").withStyle(ChatFormatting.RED, ChatFormatting.ITALIC));
 		}
+		if (stack.getItem() == ItemRegistry.THE_SWORD.get()) {
+			event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.the_sword_1").withStyle(ChatFormatting.GOLD, ChatFormatting.ITALIC));
+			event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.the_sword_2").withStyle(ChatFormatting.DARK_PURPLE, ChatFormatting.ITALIC));
+		}
 
 		// Molten-specific
 		if (stack.getItem().toString().contains("molten") && stack.getItem() instanceof DiggerItem) {
@@ -276,6 +280,12 @@ public class TooltipHandler {
 		}
 		if (stack.getItem() == ItemRegistry.SCULK_STAFF.get()) {
 			event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.sculk_staff").withStyle(ChatFormatting.DARK_AQUA, ChatFormatting.ITALIC));
+		}
+		if (stack.getItem() instanceof RecoveryStaffItem staffItem) {
+			event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.recovery_staff_1").withStyle(ChatFormatting.GREEN, ChatFormatting.ITALIC));
+			event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.recovery_staff_2").withStyle(ChatFormatting.DARK_PURPLE, ChatFormatting.ITALIC));
+			float healAmount = (float) Math.round(staffItem.getHealAmount() * 10) / 10;
+			event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.recovery_staff_3", healAmount).withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC));
 		}
 
 		// Player utility

@@ -32,7 +32,8 @@ public record CommonConfig(
 		ConfigValue<Boolean> meteorStaffExplosionBreakBlocks,
 		ConfigValue<Integer> cursedSightStaffMaxUseRange,
 		ConfigValue<Integer> sculkStaffMaxUseRange,
-		ConfigValue<Boolean> sculkStaffSonicBlastThroughWalls) {
+		ConfigValue<Boolean> sculkStaffSonicBlastThroughWalls,
+		ConfigValue<Integer> recoveryStaffMaxUseRange) {
 
 	public static CommonConfig create(ModConfigSpec.Builder builder) {
 		builder.push("Common Configuration");
@@ -200,6 +201,13 @@ public record CommonConfig(
 				.define("sculk_staff_sonic_blast_through_walls", true);
 		builder.pop();
 
+		builder.push("Recovery Staff");
+		ConfigValue<Integer> recoveryStaffMaxUseRange = builder
+				.comment("Set the maximum range in blocks of the Recovery Staff - Default 15")
+				.translation("config.immersiveweapons.recovery_staff_max_use_range")
+				.defineInRange("recovery_staff_max_use_range", 15, 0, Integer.MAX_VALUE);
+		builder.pop();
+
 		builder.pop();
 
 		return new CommonConfig(
@@ -217,7 +225,9 @@ public record CommonConfig(
 				musketFireVelocity, musketFireInaccuracy,
 				handCannonFireVelocity, handCannonFireInaccuracy,
 				meteorStaffMaxUseRange, meteorStaffExplosionRadius, meteorStaffExplosionBreakBlocks,
-				cursedSightStaffMaxUseRange, sculkStaffMaxUseRange, sculkStaffSonicBlastThroughWalls
+				cursedSightStaffMaxUseRange,
+				sculkStaffMaxUseRange, sculkStaffSonicBlastThroughWalls,
+				recoveryStaffMaxUseRange
 		);
 	}
 

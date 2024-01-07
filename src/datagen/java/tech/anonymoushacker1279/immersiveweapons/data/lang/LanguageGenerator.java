@@ -314,6 +314,8 @@ public class LanguageGenerator extends IWLanguageProvider {
 		addTooltip("ventus_sword", "Whoosh");
 		addTooltip("astral_sword", "Fast Hands");
 		addTooltip("starstorm_sword", "Inflict the wrath of the stars");
+		addTooltip("the_sword_1", "Truly one of the greatest swords of all time");
+		addTooltip("the_sword_2", "Combines the effects of Molten, Tesla, Ventus, Astral, and Starstorm swords");
 
 		// Tier specific
 		addTooltip("molten_tool", "Crouching while mining blocks will automatically smelt them");
@@ -430,6 +432,9 @@ public class LanguageGenerator extends IWLanguageProvider {
 		addTooltip("meteor_staff", "Summon meteors from the sky");
 		addTooltip("cursed_sight_staff", "Summon Evil Eyes to curse your enemies");
 		addTooltip("sculk_staff", "Summon blasts of high-power sonic energy");
+		addTooltip("recovery_staff_1", "Heal yourself or targets you aim towards");
+		addTooltip("recovery_staff_2", "The amount healed is based on the last amount of incoming damage you received");
+		addTooltip("recovery_staff_3", "Current Healing Amount: %s");
 
 		// Player utility
 		addTooltip("bandage", "Cover those nasty cuts and scrapes");
@@ -869,6 +874,12 @@ public class LanguageGenerator extends IWLanguageProvider {
 		addAdvancement("bamboo.description", "Obtain bamboo");
 		addAdvancement("warden_heart.title", "Heart of Darkness");
 		addAdvancement("warden_heart.description", "Obtain a Warden Heart");
+
+		// Super Hans
+		addAdvancement("hansium_ingot.title", "Raw Strength in an Ingot");
+		addAdvancement("hansium_ingot.description", "Obtain a Hansium Ingot, dropped by the mighty Super Hans");
+		addAdvancement("the_sword.title", "The Sword of All Time");
+		addAdvancement("the_sword.description", "Obtain The Sword, a powerful combination of several swords");
 
 		// Player utility
 		addAdvancement("bottle_of_alcohol.title", "mmmmm alacol");

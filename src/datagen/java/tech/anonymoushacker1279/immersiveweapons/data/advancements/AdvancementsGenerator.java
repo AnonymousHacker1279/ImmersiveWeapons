@@ -146,7 +146,7 @@ public class AdvancementsGenerator extends AdvancementProvider {
 				.rewards(AdvancementRewards.Builder.experience(150))
 				.save(consumer, "immersiveweapons:molten_tools");
 
-		AdvancementHolder molten_armor = Builder.advancement().parent(smeltMoltenIngot)
+		AdvancementHolder moltenArmor = Builder.advancement().parent(smeltMoltenIngot)
 				.display(ItemRegistry.MOLTEN_HELMET.get(),
 						Component.translatable("advancements.immersiveweapons.molten_armor.title"),
 						Component.translatable("advancements.immersiveweapons.molten_armor.description"),
@@ -158,7 +158,7 @@ public class AdvancementsGenerator extends AdvancementProvider {
 				.rewards(AdvancementRewards.Builder.experience(100))
 				.save(consumer, "immersiveweapons:molten_armor");
 
-		Builder.advancement().parent(molten_armor)
+		Builder.advancement().parent(moltenArmor)
 				.display(Items.LAVA_BUCKET,
 						Component.translatable("advancements.immersiveweapons.swim_in_lava.title"),
 						Component.translatable("advancements.immersiveweapons.swim_in_lava.description"),
@@ -1122,7 +1122,7 @@ public class AdvancementsGenerator extends AdvancementProvider {
 				.save(consumer, "immersiveweapons:netherite_ingot");
 
 		// Entity discovery advancements
-		AdvancementHolder entity_discovery = Builder.advancement().parent(root)
+		AdvancementHolder entityDiscovery = Builder.advancement().parent(root)
 				.display(Items.CREEPER_HEAD,
 						Component.translatable("advancements.immersiveweapons.entity_discovery.title"),
 						Component.translatable("advancements.immersiveweapons.entity_discovery.description"),
@@ -1145,7 +1145,7 @@ public class AdvancementsGenerator extends AdvancementProvider {
 				.rewards(AdvancementRewards.Builder.experience(150))
 				.save(consumer, "immersiveweapons:entity_discovery");
 
-		Builder.advancement().parent(entity_discovery)
+		Builder.advancement().parent(entityDiscovery)
 				.display(BlockItemRegistry.MINUTEMAN_HEAD_ITEM.get(),
 						Component.translatable("advancements.immersiveweapons.discover_minuteman.title"),
 						Component.translatable("advancements.immersiveweapons.discover_minuteman.description"),
@@ -1154,7 +1154,7 @@ public class AdvancementsGenerator extends AdvancementProvider {
 				.rewards(AdvancementRewards.Builder.experience(20))
 				.save(consumer, "immersiveweapons:discover_minuteman");
 
-		Builder.advancement().parent(entity_discovery)
+		Builder.advancement().parent(entityDiscovery)
 				.display(BlockItemRegistry.FIELD_MEDIC_HEAD_ITEM.get(),
 						Component.translatable("advancements.immersiveweapons.discover_field_medic.title"),
 						Component.translatable("advancements.immersiveweapons.discover_field_medic.description"),
@@ -1163,7 +1163,7 @@ public class AdvancementsGenerator extends AdvancementProvider {
 				.rewards(AdvancementRewards.Builder.experience(20))
 				.save(consumer, "immersiveweapons:discover_field_medic");
 
-		Builder.advancement().parent(entity_discovery)
+		Builder.advancement().parent(entityDiscovery)
 				.display(BlockItemRegistry.DYING_SOLDIER_HEAD_ITEM.get(),
 						Component.translatable("advancements.immersiveweapons.discover_dying_soldier.title"),
 						Component.translatable("advancements.immersiveweapons.discover_dying_soldier.description"),
@@ -1172,7 +1172,7 @@ public class AdvancementsGenerator extends AdvancementProvider {
 				.rewards(AdvancementRewards.Builder.experience(20))
 				.save(consumer, "immersiveweapons:discover_dying_soldier");
 
-		Builder.advancement().parent(entity_discovery)
+		Builder.advancement().parent(entityDiscovery)
 				.display(BlockItemRegistry.WANDERING_WARRIOR_HEAD_ITEM.get(),
 						Component.translatable("advancements.immersiveweapons.discover_wandering_warrior.title"),
 						Component.translatable("advancements.immersiveweapons.discover_wandering_warrior.description"),
@@ -1181,7 +1181,7 @@ public class AdvancementsGenerator extends AdvancementProvider {
 				.rewards(AdvancementRewards.Builder.experience(20))
 				.save(consumer, "immersiveweapons:discover_wandering_warrior");
 
-		Builder.advancement().parent(entity_discovery)
+		Builder.advancement().parent(entityDiscovery)
 				.display(BlockItemRegistry.HANS_HEAD_ITEM.get(),
 						Component.translatable("advancements.immersiveweapons.discover_hans.title"),
 						Component.translatable("advancements.immersiveweapons.discover_hans.description"),
@@ -1190,7 +1190,7 @@ public class AdvancementsGenerator extends AdvancementProvider {
 				.rewards(AdvancementRewards.Builder.experience(20))
 				.save(consumer, "immersiveweapons:discover_hans");
 
-		Builder.advancement().parent(entity_discovery)
+		Builder.advancement().parent(entityDiscovery)
 				.display(BlockItemRegistry.HANS_HEAD_ITEM.get(),
 						Component.translatable("advancements.immersiveweapons.discover_super_hans.title"),
 						Component.translatable("advancements.immersiveweapons.discover_super_hans.description"),
@@ -1199,7 +1199,7 @@ public class AdvancementsGenerator extends AdvancementProvider {
 				.rewards(AdvancementRewards.Builder.experience(20))
 				.save(consumer, "immersiveweapons:discover_super_hans");
 
-		Builder.advancement().parent(entity_discovery)
+		Builder.advancement().parent(entityDiscovery)
 				.display(ItemRegistry.SULFUR.get(),
 						Component.translatable("advancements.immersiveweapons.discover_lava_revenant.title"),
 						Component.translatable("advancements.immersiveweapons.discover_lava_revenant.description"),
@@ -1208,7 +1208,7 @@ public class AdvancementsGenerator extends AdvancementProvider {
 				.rewards(AdvancementRewards.Builder.experience(20))
 				.save(consumer, "immersiveweapons:discover_lava_revenant");
 
-		Builder.advancement().parent(entity_discovery)
+		Builder.advancement().parent(entityDiscovery)
 				.display(Items.SPIDER_EYE,
 						Component.translatable("advancements.immersiveweapons.discover_rock_spider.title"),
 						Component.translatable("advancements.immersiveweapons.discover_rock_spider.description"),
@@ -1217,7 +1217,7 @@ public class AdvancementsGenerator extends AdvancementProvider {
 				.rewards(AdvancementRewards.Builder.experience(20))
 				.save(consumer, "immersiveweapons:discover_rock_spider");
 
-		Builder.advancement().parent(entity_discovery)
+		Builder.advancement().parent(entityDiscovery)
 				.display(BlockRegistry.STARSTORM_CRYSTAL.get(),
 						Component.translatable("advancements.immersiveweapons.discover_starmite.title"),
 						Component.translatable("advancements.immersiveweapons.discover_starmite.description"),
@@ -1226,7 +1226,7 @@ public class AdvancementsGenerator extends AdvancementProvider {
 				.rewards(AdvancementRewards.Builder.experience(20))
 				.save(consumer, "immersiveweapons:discover_starmite");
 
-		Builder.advancement().parent(entity_discovery)
+		Builder.advancement().parent(entityDiscovery)
 				.display(BlockItemRegistry.STORM_CREEPER_HEAD_ITEM.get(),
 						Component.translatable("advancements.immersiveweapons.discover_storm_creeper.title"),
 						Component.translatable("advancements.immersiveweapons.discover_storm_creeper.description"),
@@ -1235,7 +1235,7 @@ public class AdvancementsGenerator extends AdvancementProvider {
 				.rewards(AdvancementRewards.Builder.experience(20))
 				.save(consumer, "immersiveweapons:discover_storm_creeper");
 
-		Builder.advancement().parent(entity_discovery)
+		Builder.advancement().parent(entityDiscovery)
 				.display(ItemRegistry.BROKEN_LENS.get(),
 						Component.translatable("advancements.immersiveweapons.discover_evil_eye.title"),
 						Component.translatable("advancements.immersiveweapons.discover_evil_eye.description"),
@@ -1244,7 +1244,7 @@ public class AdvancementsGenerator extends AdvancementProvider {
 				.rewards(AdvancementRewards.Builder.experience(20))
 				.save(consumer, "immersiveweapons:discover_evil_eye");
 
-		Builder.advancement().parent(entity_discovery)
+		Builder.advancement().parent(entityDiscovery)
 				.display(Items.BONE,
 						Component.translatable("advancements.immersiveweapons.discover_star_wolf.title"),
 						Component.translatable("advancements.immersiveweapons.discover_star_wolf.description"),
@@ -1253,7 +1253,7 @@ public class AdvancementsGenerator extends AdvancementProvider {
 				.rewards(AdvancementRewards.Builder.experience(20))
 				.save(consumer, "immersiveweapons:discover_star_wolf");
 
-		Builder.advancement().parent(entity_discovery)
+		Builder.advancement().parent(entityDiscovery)
 				.display(Items.BOOK,
 						Component.translatable("advancements.immersiveweapons.discover_skygazer.title"),
 						Component.translatable("advancements.immersiveweapons.discover_skygazer.description"),
@@ -1262,7 +1262,7 @@ public class AdvancementsGenerator extends AdvancementProvider {
 				.rewards(AdvancementRewards.Builder.experience(20))
 				.save(consumer, "immersiveweapons:discover_skygazer");
 
-		Builder.advancement().parent(entity_discovery)
+		Builder.advancement().parent(entityDiscovery)
 				.display(BlockItemRegistry.SKELETON_MERCHANT_HEAD_ITEM.get(),
 						Component.translatable("advancements.immersiveweapons.discover_skeleton_merchant.title"),
 						Component.translatable("advancements.immersiveweapons.discover_skeleton_merchant.description"),
@@ -1272,7 +1272,7 @@ public class AdvancementsGenerator extends AdvancementProvider {
 				.save(consumer, "immersiveweapons:discover_skeleton_merchant");
 
 
-		AdvancementHolder celestial_tower_discovery = Builder.advancement().parent(entity_discovery)
+		AdvancementHolder celestialTowerDiscovery = Builder.advancement().parent(entityDiscovery)
 				.display(ItemRegistry.CELESTIAL_FRAGMENT.get(),
 						Component.translatable("advancements.immersiveweapons.discover_celestial_tower.title"),
 						Component.translatable("advancements.immersiveweapons.discover_celestial_tower.description"),
@@ -1281,7 +1281,7 @@ public class AdvancementsGenerator extends AdvancementProvider {
 				.rewards(AdvancementRewards.Builder.experience(20))
 				.save(consumer, "immersiveweapons:discover_celestial_tower");
 
-		Builder.advancement().parent(celestial_tower_discovery)
+		Builder.advancement().parent(celestialTowerDiscovery)
 				.display(BlockItemRegistry.CELESTIAL_LANTERN_ITEM.get(),
 						Component.translatable("advancements.immersiveweapons.tiltros.celestial_lantern.title"),
 						Component.translatable("advancements.immersiveweapons.tiltros.celestial_lantern.description"),
@@ -1291,7 +1291,7 @@ public class AdvancementsGenerator extends AdvancementProvider {
 				.rewards(AdvancementRewards.Builder.experience(50))
 				.save(consumer, "immersiveweapons:celestial_lantern");
 
-		Builder.advancement().parent(celestial_tower_discovery)
+		Builder.advancement().parent(celestialTowerDiscovery)
 				.display(ItemRegistry.METEOR_STAFF.get(),
 						Component.translatable("advancements.immersiveweapons.meteor_staff.title"),
 						Component.translatable("advancements.immersiveweapons.meteor_staff.description"),
@@ -1301,7 +1301,7 @@ public class AdvancementsGenerator extends AdvancementProvider {
 				.rewards(AdvancementRewards.Builder.experience(75))
 				.save(consumer, "immersiveweapons:meteor_staff");
 
-		Builder.advancement().parent(celestial_tower_discovery)
+		Builder.advancement().parent(celestialTowerDiscovery)
 				.display(ItemRegistry.CURSED_SIGHT_STAFF.get(),
 						Component.translatable("advancements.immersiveweapons.cursed_sight_staff.title"),
 						Component.translatable("advancements.immersiveweapons.cursed_sight_staff.description"),
@@ -1450,7 +1450,7 @@ public class AdvancementsGenerator extends AdvancementProvider {
 				.save(consumer, "immersiveweapons:cloud");
 
 		// Warden Advancements
-		AdvancementHolder warden_heart = Builder.advancement().parent(root)
+		AdvancementHolder wardenHeart = Builder.advancement().parent(root)
 				.display(ItemRegistry.WARDEN_HEART.get(),
 						Component.translatable("advancements.immersiveweapons.warden_heart.title"),
 						Component.translatable("advancements.immersiveweapons.warden_heart.description"),
@@ -1460,7 +1460,7 @@ public class AdvancementsGenerator extends AdvancementProvider {
 				.rewards(AdvancementRewards.Builder.experience(50))
 				.save(consumer, "immersiveweapons:warden_heart");
 
-		Builder.advancement().parent(warden_heart)
+		Builder.advancement().parent(wardenHeart)
 				.display(ItemRegistry.SCULK_STAFF.get(),
 						Component.translatable("advancements.immersiveweapons.sculk_staff.title"),
 						Component.translatable("advancements.immersiveweapons.sculk_staff.description"),
@@ -1470,7 +1470,7 @@ public class AdvancementsGenerator extends AdvancementProvider {
 				.rewards(AdvancementRewards.Builder.experience(75))
 				.save(consumer, "immersiveweapons:sculk_staff");
 
-		Builder.advancement().parent(warden_heart)
+		Builder.advancement().parent(wardenHeart)
 				.display(ItemRegistry.REINFORCED_DEPTH_CHARM.get(),
 						Component.translatable("advancements.immersiveweapons.reinforced_depth_charm.title"),
 						Component.translatable("advancements.immersiveweapons.reinforced_depth_charm.description"),
@@ -1480,8 +1480,29 @@ public class AdvancementsGenerator extends AdvancementProvider {
 				.rewards(AdvancementRewards.Builder.experience(75))
 				.save(consumer, "immersiveweapons:reinforced_depth_charm");
 
+		// Super Hans advancements
+		AdvancementHolder hansiumIngot = Builder.advancement().parent(root)
+				.display(ItemRegistry.HANSIUM_INGOT.get(),
+						Component.translatable("advancements.immersiveweapons.hansium_ingot.title"),
+						Component.translatable("advancements.immersiveweapons.hansium_ingot.description"),
+						null, AdvancementType.TASK, true, true, false)
+				.addCriterion("hold",
+						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.HANSIUM_INGOT.get()))
+				.rewards(AdvancementRewards.Builder.experience(100))
+				.save(consumer, "immersiveweapons:hansium_ingot");
+
+		Builder.advancement().parent(hansiumIngot)
+				.display(ItemRegistry.THE_SWORD.get(),
+						Component.translatable("advancements.immersiveweapons.the_sword.title"),
+						Component.translatable("advancements.immersiveweapons.the_sword.description"),
+						null, AdvancementType.CHALLENGE, true, true, false)
+				.addCriterion("hold",
+						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.THE_SWORD.get()))
+				.rewards(AdvancementRewards.Builder.experience(250))
+				.save(consumer, "immersiveweapons:the_sword");
+
 		// Battlefield advancements
-		AdvancementHolder discover_battlefield = Builder.advancement().parent(root)
+		AdvancementHolder discoverBattlefield = Builder.advancement().parent(root)
 				.display(Blocks.SKELETON_SKULL,
 						Component.translatable("advancements.immersiveweapons.battlefield.title"),
 						Component.translatable("advancements.immersiveweapons.battlefield.description"),
@@ -1492,7 +1513,7 @@ public class AdvancementsGenerator extends AdvancementProvider {
 				.rewards(AdvancementRewards.Builder.experience(50))
 				.save(consumer, "immersiveweapons:battlefield");
 
-		Builder.advancement().parent(discover_battlefield)
+		Builder.advancement().parent(discoverBattlefield)
 				.display(BlockItemRegistry.MINUTEMAN_STATUE_ITEM.get(),
 						Component.translatable("advancements.immersiveweapons.minuteman_statue.title"),
 						Component.translatable("advancements.immersiveweapons.minuteman_statue.description"),
@@ -1501,7 +1522,7 @@ public class AdvancementsGenerator extends AdvancementProvider {
 						BlockItemRegistry.MINUTEMAN_STATUE_ITEM.get()))
 				.save(consumer, "immersiveweapons:minuteman_statue");
 
-		Builder.advancement().parent(discover_battlefield)
+		Builder.advancement().parent(discoverBattlefield)
 				.display(BlockItemRegistry.MEDIC_STATUE_ITEM.get(),
 						Component.translatable("advancements.immersiveweapons.medic_statue.title"),
 						Component.translatable("advancements.immersiveweapons.medic_statue.description"),
@@ -1511,7 +1532,7 @@ public class AdvancementsGenerator extends AdvancementProvider {
 				.save(consumer, "immersiveweapons:medic_statue");
 
 		// Tiltros advancements
-		AdvancementHolder tiltros_portal = Builder.advancement().parent(root)
+		AdvancementHolder tiltrosPortal = Builder.advancement().parent(root)
 				.display(BlockRegistry.TILTROS_PORTAL_FRAME.get(),
 						Component.translatable("advancements.immersiveweapons.tiltros.tiltros_portal.title"),
 						Component.translatable("advancements.immersiveweapons.tiltros.tiltros_portal.description"),
@@ -1521,7 +1542,7 @@ public class AdvancementsGenerator extends AdvancementProvider {
 				.requirements(Strategy.AND)
 				.save(consumer, "immersiveweapons:warrior_statue");
 
-		AdvancementHolder azul_keystone = Builder.advancement().parent(tiltros_portal)
+		AdvancementHolder azulKeystone = Builder.advancement().parent(tiltrosPortal)
 				.display(ItemRegistry.AZUL_KEYSTONE_FRAGMENT.get(),
 						Component.translatable("advancements.immersiveweapons.tiltros.azul_keystone.title"),
 						Component.translatable("advancements.immersiveweapons.tiltros.azul_keystone.description"),
@@ -1530,7 +1551,7 @@ public class AdvancementsGenerator extends AdvancementProvider {
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.AZUL_KEYSTONE.get()))
 				.save(consumer, "immersiveweapons:azul_keystone");
 
-		Builder.advancement().parent(azul_keystone)
+		Builder.advancement().parent(azulKeystone)
 				.display(BlockItemRegistry.MOONGLOW_ITEM.get(),
 						Component.translatable("advancements.immersiveweapons.tiltros.biome.title"),
 						Component.translatable("advancements.immersiveweapons.tiltros.biome.description"),

@@ -65,7 +65,8 @@ public class SuperHansEntity extends HansEntity implements AttackerTracker {
 				.add(Attributes.ARMOR, 25.0D)
 				.add(Attributes.MAX_HEALTH, 150.0D)
 				.add(Attributes.ATTACK_DAMAGE, 10.0D)
-				.add(Attributes.KNOCKBACK_RESISTANCE, 1.0D);
+				.add(Attributes.KNOCKBACK_RESISTANCE, 1.0D)
+				.add(Attributes.FOLLOW_RANGE, 64.0D);
 	}
 
 	@Override
@@ -206,6 +207,8 @@ public class SuperHansEntity extends HansEntity implements AttackerTracker {
 					spawnParticles(serverLevel, ParticleTypes.SMOKE);
 				}
 			}
+
+			bossEvent.setProgress(getHealth() / getMaxHealth());
 		}
 	}
 

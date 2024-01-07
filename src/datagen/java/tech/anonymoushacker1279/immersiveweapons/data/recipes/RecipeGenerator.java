@@ -1078,6 +1078,22 @@ public class RecipeGenerator extends RecipeProvider implements DataGenUtils {
 				.group("ammunition_table")
 				.unlockedBy("gunpowder", has(Tags.Items.GUNPOWDER))
 				.save(output);
+
+		// The Sword
+		ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, ItemRegistry.THE_SWORD.get())
+				.define('a', ItemRegistry.MOLTEN_SWORD.get())
+				.define('b', ItemRegistry.TESLA_SWORD.get())
+				.define('c', ItemRegistry.VENTUS_SWORD.get())
+				.define('d', ItemRegistry.ASTRAL_SWORD.get())
+				.define('e', ItemRegistry.STARSTORM_SWORD.get())
+				.define('f', ItemRegistry.HANS_BLESSING.get())
+				.define('g', ItemRegistry.HANSIUM_INGOT.get())
+				.pattern("abc")
+				.pattern("dfe")
+				.pattern("ggg")
+				.group("the_sword")
+				.unlockedBy("hans_blessing", has(ItemRegistry.HANSIUM_INGOT.get()))
+				.save(output);
 	}
 
 	private void createDecorations() {
@@ -1500,6 +1516,19 @@ public class RecipeGenerator extends RecipeProvider implements DataGenUtils {
 				.pattern(" b ")
 				.group("sculk_staff")
 				.unlockedBy("warden_heart", has(ItemRegistry.WARDEN_HEART.get()))
+				.save(output);
+
+		// Recovery Staff
+		ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, ItemRegistry.RECOVERY_STAFF.get())
+				.define('a', ItemRegistry.BLOATED_HEART.get())
+				.define('b', ItemRegistry.HANSIUM_INGOT.get())
+				.define('c', ItemRegistry.OBSIDIAN_ROD.get())
+				.define('d', Items.AMETHYST_SHARD)
+				.pattern("bab")
+				.pattern("dcd")
+				.pattern(" c ")
+				.group("recovery_staff")
+				.unlockedBy("bloated_heart", has(ItemRegistry.BLOATED_HEART.get()))
 				.save(output);
 	}
 
