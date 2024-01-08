@@ -3,7 +3,6 @@ plugins {
 	id 'maven-publish'
 	// Pinned because it updates too frequently and forces recompile
 	id 'net.neoforged.gradle.userdev' version '7.0.78'
-	// id 'org.parchmentmc.librarian.forgegradle' version '1.+' TODO: Uncomment when Librarian is updated
 	id "com.hypherionmc.modutils.modpublisher" version "2.0.0"
 	id 'idea'
 }
@@ -96,12 +95,29 @@ runs {
 		systemProperty 'forge.logging.markers', 'REGISTRIES'
 		systemProperty 'forge.logging.console.level', 'debug'
 
-		jvmArguments.addAll '-Xmx6G', '-XX:+AllowEnhancedClassRedefinition'
+		jvmArguments.addAll '-Xmx6G'
+
+		// If the selected toolchain is a JBR, enable DCEVM for improved hotswapping
+		if (it.project.javaToolchains.launcherFor(java.toolchain).map { it.metadata.vendor }.getOrElse("").contains("JetBrains")) {
+			jvmArguments.addAll '-XX:+AllowEnhancedClassRedefinition'
+		}
 
 		modSources project.sourceSets.main, project.sourceSets.datagen
 	}
 
 	client {
+
+		// Setup client information from gradle.properties in the user home
+		// All of these are optional
+		if (project.hasProperty('mc_uuid')) {
+			programArguments('--uuid', (String) project.property('mc_uuid'))
+		}
+		if (project.hasProperty('mc_username')) {
+			programArguments('--username', (String) project.property('mc_username'))
+		}
+		if (project.hasProperty('mc_accessToken')) {
+			programArguments('--accessToken', (String) project.property('mc_accessToken'))
+		}
 	}
 
 	server {
