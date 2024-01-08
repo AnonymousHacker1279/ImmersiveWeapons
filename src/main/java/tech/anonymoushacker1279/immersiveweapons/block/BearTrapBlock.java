@@ -32,15 +32,11 @@ import tech.anonymoushacker1279.immersiveweapons.world.level.IWDamageSources;
 public class BearTrapBlock extends Block implements SimpleWaterloggedBlock, EntityBlock {
 
 	public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
-	protected static final VoxelShape SHAPE = Block.box(0.0D, 0.0D, 0.0D, 16.0D, 2.0D, 16.0D);
+	private static final VoxelShape SHAPE = Block.box(0.0D, 0.0D, 0.0D, 16.0D, 2.0D, 16.0D);
+	private static final VoxelShape COLLISION_SHAPE = Shapes.empty();
 	public static final BooleanProperty TRIGGERED = BooleanProperty.create("triggered");
 	public static final BooleanProperty VINES = BooleanProperty.create("vines");
 
-	/**
-	 * Constructor for BearTrapBlock.
-	 *
-	 * @param properties the <code>Properties</code> of the block
-	 */
 	public BearTrapBlock(Properties properties) {
 		super(properties);
 		registerDefaultState(stateDefinition.any()
@@ -49,18 +45,6 @@ public class BearTrapBlock extends Block implements SimpleWaterloggedBlock, Enti
 				.setValue(VINES, Boolean.FALSE));
 	}
 
-	/**
-	 * Runs when the block is activated.
-	 * Allows the block to respond to user interaction.
-	 *
-	 * @param state     the <code>BlockState</code> of the block
-	 * @param level     the <code>Level</code> the block is in
-	 * @param pos       the <code>BlockPos</code> the block is at
-	 * @param player    the <code>PlayerEntity</code> interacting with the block
-	 * @param hand      the <code>Hand</code> the PlayerEntity used
-	 * @param hitResult the <code>BlockHitResult</code> of the interaction
-	 * @return InteractionResult
-	 */
 	@SuppressWarnings("deprecation")
 	@Override
 	public InteractionResult use(BlockState state, Level level, BlockPos pos,
@@ -86,57 +70,23 @@ public class BearTrapBlock extends Block implements SimpleWaterloggedBlock, Enti
 		return InteractionResult.PASS;
 	}
 
-	/**
-	 * Set the shape of the block.
-	 *
-	 * @param state            the <code>BlockState</code> of the block
-	 * @param getter           the <code>BlockGetter</code> for the block
-	 * @param pos              the <code>BlockPos</code> the block is at
-	 * @param collisionContext the <code>CollisionContext</code> of the block
-	 * @return VoxelShape
-	 */
 	@SuppressWarnings("deprecation")
 	@Override
 	public VoxelShape getShape(BlockState state, BlockGetter getter, BlockPos pos, CollisionContext collisionContext) {
 		return SHAPE;
 	}
 
-	/**
-	 * Get the collision shape of the block.
-	 *
-	 * @param state            the <code>BlockState</code> of the block
-	 * @param getter           the <code>BlockGetter</code> for the block
-	 * @param pos              the <code>BlockPos</code> the block is at
-	 * @param collisionContext the <code>CollisionContext</code> of the block
-	 * @return VoxelShape
-	 */
 	@SuppressWarnings("deprecation")
 	@Override
 	public VoxelShape getCollisionShape(BlockState state, BlockGetter getter, BlockPos pos, CollisionContext collisionContext) {
-		return Shapes.empty();
+		return COLLISION_SHAPE;
 	}
 
-	/**
-	 * Create a block entity for the block.
-	 *
-	 * @param blockPos   the <code>BlockPos</code> the block is at
-	 * @param blockState the <code>BlockState</code> of the block
-	 * @return BlockEntity
-	 */
 	@Override
 	public BlockEntity newBlockEntity(BlockPos blockPos, BlockState blockState) {
 		return new BearTrapBlockEntity(blockPos, blockState);
 	}
 
-	/**
-	 * Get the ticker for the block.
-	 *
-	 * @param level           the <code>Level</code> the block is in
-	 * @param blockState      the <code>BlockState</code> of the block
-	 * @param blockEntityType the <code>BlockEntityType</code> to get the ticker of
-	 * @param <T>             the type extending BlockEntity
-	 * @return BlockEntityTicker
-	 */
 	@Override
 	public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState blockState,
 	                                                              BlockEntityType<T> blockEntityType) {
@@ -144,15 +94,6 @@ public class BearTrapBlock extends Block implements SimpleWaterloggedBlock, Enti
 		return (world, pos, state, entity) -> ((BearTrapBlockEntity) entity).tick(pos);
 	}
 
-	/**
-	 * Runs when an entity is inside the block's collision area.
-	 * Allows the block to deal damage on contact.
-	 *
-	 * @param state  the <code>BlockState</code> of the block
-	 * @param level  the <code>Level</code> the block is in
-	 * @param pos    the <code>BlockPos</code> the block is at
-	 * @param entity the <code>Entity</code> passing through the block
-	 */
 	@SuppressWarnings("deprecation")
 	@Override
 	public void entityInside(BlockState state, Level level, BlockPos pos, Entity entity) {
@@ -188,89 +129,41 @@ public class BearTrapBlock extends Block implements SimpleWaterloggedBlock, Enti
 		}
 	}
 
-	/**
-	 * Set placement properties.
-	 * Sets the facing direction of the block for placement.
-	 *
-	 * @param context the <code>BlockPlaceContext</code> during placement
-	 * @return BlockState
-	 */
 	@Override
 	public BlockState getStateForPlacement(BlockPlaceContext context) {
 		return defaultBlockState().setValue(WATERLOGGED, context.getLevel()
 				.getFluidState(context.getClickedPos()).getType() == Fluids.WATER);
 	}
 
-	/**
-	 * Set FluidState properties.
-	 * Allows the block to exhibit waterlogged behavior.
-	 *
-	 * @param state the <code>BlockState</code> of the block
-	 * @return FluidState
-	 */
 	@SuppressWarnings("deprecation")
 	@Override
 	public FluidState getFluidState(BlockState state) {
 		return state.getValue(WATERLOGGED) ? Fluids.WATER.getSource(false) : super.getFluidState(state);
 	}
 
-	/**
-	 * Set the block's analog output signal.
-	 *
-	 * @param state the <code>BlockState</code> of the block
-	 * @return boolean
-	 */
 	@SuppressWarnings("deprecation")
 	@Override
 	public boolean hasAnalogOutputSignal(BlockState state) {
 		return true;
 	}
 
-	/**
-	 * Set the block's analog output signal strength.
-	 *
-	 * @param state the <code>BlockState</code> of the block
-	 * @param level the <code>Level</code> the block is in
-	 * @param pos   the <code>BlockPos</code> the block is at
-	 * @return int
-	 */
 	@SuppressWarnings("deprecation")
 	@Override
 	public int getAnalogOutputSignal(BlockState state, Level level, BlockPos pos) {
 		return state.getValue(TRIGGERED) ? 15 : 0;
 	}
 
-	/**
-	 * Create the BlockState definition.
-	 *
-	 * @param builder the <code>StateDefinition.Builder</code> of the block
-	 */
 	@Override
 	protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
 		builder.add(TRIGGERED, VINES, WATERLOGGED);
 	}
 
-	/**
-	 * Set the block's signal source.
-	 *
-	 * @param state the <code>BlockState</code> of the block
-	 * @return boolean
-	 */
 	@SuppressWarnings("deprecation")
 	@Override
 	public boolean isSignalSource(BlockState state) {
 		return state.getValue(TRIGGERED);
 	}
 
-	/**
-	 * Get the signal of the block.
-	 *
-	 * @param blockState the <code>BlockState</code> of the block
-	 * @param getter     the <code>BlockGetter</code> for the block
-	 * @param pos        the <code>BlockPos</code> the block is at
-	 * @param side       the <code>Direction</code> the block is facing
-	 * @return int
-	 */
 	@SuppressWarnings("deprecation")
 	@Override
 	public int getSignal(BlockState blockState, BlockGetter getter, BlockPos pos, Direction side) {
