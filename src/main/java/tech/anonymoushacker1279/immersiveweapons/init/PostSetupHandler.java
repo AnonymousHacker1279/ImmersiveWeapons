@@ -1,7 +1,12 @@
 package tech.anonymoushacker1279.immersiveweapons.init;
 
+import net.kyrptonaught.customportalapi.api.CustomPortalBuilder;
+import net.kyrptonaught.customportalapi.util.SHOULDTP;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.alchemy.PotionBrewing;
 import net.minecraft.world.item.alchemy.Potions;
@@ -17,6 +22,8 @@ import tech.anonymoushacker1279.immersiveweapons.item.materials.CustomArmorMater
 import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
 
 public class PostSetupHandler {
+
+	private static final ResourceKey<Level> TILTROS = ResourceKey.create(Registries.DIMENSION, new ResourceLocation(ImmersiveWeapons.MOD_ID, "tiltros"));
 
 	/**
 	 * Initialize attributes which must be applied after setup.
@@ -91,8 +98,7 @@ public class PostSetupHandler {
 				.ifPresent(map -> map.forEach((pair) -> SkygazerEntity.ENCHANT_CAPS.put((String) pair.getFirst(), (Integer) pair.getSecond())));
 
 		// Initialize custom portals
-		// TODO: reimplement when CPAPI is updated
-		/*CustomPortalBuilder.beginPortal()
+		CustomPortalBuilder.beginPortal()
 				.frameBlock(BlockRegistry.TILTROS_PORTAL_FRAME.get())
 				.customPortalBlock(BlockRegistry.TILTROS_PORTAL::get)
 				.lightWithItem(ItemRegistry.AZUL_KEYSTONE.get())
@@ -100,13 +106,13 @@ public class PostSetupHandler {
 				.flatPortal()
 				.registerBeforeTPEvent(entity -> ImmersiveWeapons.COMMON_CONFIG.tiltrosEnabled().get() ? SHOULDTP.CONTINUE_TP : SHOULDTP.CANCEL_TP)
 				.registerPostTPEvent(entity -> {
-					if (!entity.level().dimension().equals(IWDimensions.TILTROS)) {
+					if (!entity.level().dimension().equals(TILTROS)) {
 						return;
 					}
 
 					generateBiodome(entity.level(), entity.blockPosition(), 7);
 				})
-				.registerPortal();*/
+				.registerPortal();
 	}
 
 	public static void generateBiodome(Level level, BlockPos center, int radius) {

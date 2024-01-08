@@ -131,9 +131,9 @@ dependencies {
 
 	// TODO: reimplement dependencies once updated to support network refactor
 
-	/*implementation(jarJar("net.kyrptonaught.customportalapi:cpapireforged-neo-1.20.4:${custom_portals_api_version}")) {
-		jarJar.ranged(it, "[1.0.4,)")
-	}*/
+	implementation(jarJar("net.kyrptonaught.customportalapi:cpapireforged-neo-1.20.4:${custom_portals_api_version}")) {
+		jarJar.ranged(it, "[1.0.5,)")
+	}
 
 	// Include Immersive Weapons Compatibility Bridge (IWCB)
 	implementation "tech.anonymoushacker1279.iwcompatbridge:IWCompatBridge:${iwcb_version}"
