@@ -56,6 +56,7 @@ import tech.anonymoushacker1279.immersiveweapons.block.decoration.StarstormCryst
 import tech.anonymoushacker1279.immersiveweapons.client.gui.overlays.DebugTracingData;
 import tech.anonymoushacker1279.immersiveweapons.entity.monster.StarmiteEntity;
 import tech.anonymoushacker1279.immersiveweapons.entity.projectile.MeteorEntity;
+import tech.anonymoushacker1279.immersiveweapons.entity.projectile.MudBallEntity;
 import tech.anonymoushacker1279.immersiveweapons.event.game_effects.*;
 import tech.anonymoushacker1279.immersiveweapons.init.*;
 import tech.anonymoushacker1279.immersiveweapons.item.*;
@@ -233,6 +234,18 @@ public class ForgeEventSubscriber {
 
 		AccessoryEffects.bloodySacrificeEffect(event, damagedEntity);
 		AccessoryEffects.jonnysCurseEffect(event, damagedEntity);
+
+
+		if (source instanceof ServerPlayer serverPlayer && serverPlayer.getServer() != null) {
+			// If a Mud Ball was thrown, add an advancement
+			if (event.getSource().getDirectEntity() instanceof MudBallEntity) {
+				AdvancementHolder advancement = serverPlayer.getServer().getAdvancements().get(new ResourceLocation(ImmersiveWeapons.MOD_ID, "mud_ball"));
+
+				if (advancement != null) {
+					serverPlayer.getAdvancements().award(advancement, "");
+				}
+			}
+		}
 	}
 
 	@SubscribeEvent
@@ -262,9 +275,9 @@ public class ForgeEventSubscriber {
 			}
 
 
-			if (player instanceof ServerPlayer serverPlayer) {
+			if (player instanceof ServerPlayer serverPlayer && serverPlayer.getServer() != null) {
 				// If over 175 damage was dealt, add an advancement
-				if (event.getAmount() >= 175.0f && serverPlayer.getServer() != null) {
+				if (event.getAmount() >= 175.0f) {
 					AdvancementHolder advancement = serverPlayer.getServer().getAdvancements().get(new ResourceLocation(ImmersiveWeapons.MOD_ID, "overkill"));
 
 					if (advancement != null) {

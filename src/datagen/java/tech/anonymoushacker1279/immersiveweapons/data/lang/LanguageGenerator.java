@@ -926,8 +926,12 @@ public class LanguageGenerator extends IWLanguageProvider {
 		addAdvancement("cloud.description", "Walk across cloud blocks high in the air");
 		addAdvancement("overkill.title", "Overkill");
 		addAdvancement("overkill.description", "Deal 175 damage in a single hit");
+		addAdvancement("firearm_long_range.title", "Long Range");
+		addAdvancement("firearm_long_range.description", "Send a musket ball flying over 200 blocks");
 		addAdvancement("kill_counter.title", "Kill Counter");
 		addAdvancement("kill_counter.description", "Obtain a Kill Counter");
+		addAdvancement("mud_ball.title", "Dirty Snowball");
+		addAdvancement("mud_ball.description", "Throw a mud ball at an entity");
 
 		// Accessories
 		addAdvancement("accessories.title", "Accessories!");

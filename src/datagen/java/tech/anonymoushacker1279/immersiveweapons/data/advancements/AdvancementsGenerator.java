@@ -1366,6 +1366,23 @@ public class AdvancementsGenerator extends AdvancementProvider {
 				.save(consumer, "immersiveweapons:overkill");
 
 		Builder.advancement().parent(root)
+				.display(ItemRegistry.ASTRAL_MUSKET_BALL.get(),
+						Component.translatable("advancements.immersiveweapons.firearm_long_range.title"),
+						Component.translatable("advancements.immersiveweapons.firearm_long_range.description"),
+						null, AdvancementType.CHALLENGE, true, true, true)
+				.addCriterion("", CriteriaTriggers.IMPOSSIBLE.createCriterion(new ImpossibleTrigger.TriggerInstance()))
+				.rewards(AdvancementRewards.Builder.experience(100))
+				.save(consumer, "immersiveweapons:firearm_long_range");
+
+		Builder.advancement().parent(root)
+				.display(ItemRegistry.MUD_BALL.get(),
+						Component.translatable("advancements.immersiveweapons.mud_ball.title"),
+						Component.translatable("advancements.immersiveweapons.mud_ball.description"),
+						null, AdvancementType.GOAL, true, true, true)
+				.addCriterion("", CriteriaTriggers.IMPOSSIBLE.createCriterion(new ImpossibleTrigger.TriggerInstance()))
+				.save(consumer, "immersiveweapons:mud_ball");
+
+		Builder.advancement().parent(root)
 				.display(BlockRegistry.BEAR_TRAP.get(),
 						Component.translatable("advancements.immersiveweapons.traps.title"),
 						Component.translatable("advancements.immersiveweapons.traps.description"),

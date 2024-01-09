@@ -1,5 +1,6 @@
 package tech.anonymoushacker1279.immersiveweapons.entity.projectile;
 
+import net.minecraft.advancements.AdvancementHolder;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -14,8 +15,7 @@ import net.minecraft.world.entity.projectile.Arrow;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.phys.BlockHitResult;
-import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.phys.*;
 import net.neoforged.neoforge.common.Tags;
 import net.neoforged.neoforge.network.PacketDistributor;
 import org.jetbrains.annotations.Nullable;
@@ -37,6 +37,7 @@ public class BulletEntity extends CustomArrowEntity implements HitEffectUtils {
 	private static final boolean canBreakGlass = ImmersiveWeapons.COMMON_CONFIG.bulletsBreakGlass().get();
 	private final SoundEvent hitSound = getDefaultHitGroundSoundEvent();
 	private boolean hasAlreadyBrokeGlass = false;
+	private Vec3 initialPos = Vec3.ZERO;
 	private Item firingItem = ItemRegistry.FLINTLOCK_PISTOL.get();
 	public List<Double> shootingVectorInputs = List.of(0.0025d, 0.2d, 1.1d);
 	public HitEffect hitEffect = HitEffect.NONE;
@@ -50,6 +51,7 @@ public class BulletEntity extends CustomArrowEntity implements HitEffectUtils {
 		this(entityType, level);
 		setOwner(shooter);
 		setPos(shooter.getX(), shooter.getEyeY() - 0.1f, shooter.getZ());
+		initialPos = shooter.position();
 	}
 
 	public static class BulletEntityBuilder implements HitEffectUtils {
@@ -150,6 +152,25 @@ public class BulletEntity extends CustomArrowEntity implements HitEffectUtils {
 
 			// Extra code to run when a block is hit
 			doWhenHitBlock();
+		}
+	}
+
+	@Override
+	protected void onHit(HitResult result) {
+		super.onHit(result);
+
+		// calculate the distance the bullet traveled and print to console
+		if (!level().isClientSide && getOwner() instanceof ServerPlayer player && initialPos != Vec3.ZERO) {
+			Vec3 location = result.getLocation();
+			double distance = Math.sqrt(Math.pow(location.x - initialPos.x, 2) + Math.pow(location.y - initialPos.y, 2) + Math.pow(location.z - initialPos.z, 2));
+
+			if (distance > 200 && player.getServer() != null) {
+				AdvancementHolder advancement = player.getServer().getAdvancements().get(new ResourceLocation(ImmersiveWeapons.MOD_ID, "firearm_long_range"));
+
+				if (advancement != null) {
+					player.getAdvancements().award(advancement, "");
+				}
+			}
 		}
 	}
 
