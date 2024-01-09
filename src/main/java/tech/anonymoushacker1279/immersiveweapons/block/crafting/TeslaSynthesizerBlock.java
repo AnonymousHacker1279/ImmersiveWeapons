@@ -7,7 +7,6 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.*;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.inventory.SimpleContainerData;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.*;
@@ -125,7 +124,7 @@ public class TeslaSynthesizerBlock extends Block implements SimpleWaterloggedBlo
 	public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
 
 		if (level.getBlockEntity(pos) instanceof TeslaSynthesizerBlockEntity blockEntity && player instanceof ServerPlayer serverPlayer) {
-			serverPlayer.openMenu(new SimpleMenuProvider((id, inventory, player1) -> new TeslaSynthesizerMenu(id, inventory, blockEntity, new SimpleContainerData(1)), CONTAINER_NAME));
+			serverPlayer.openMenu(new SimpleMenuProvider((id, inventory, player1) -> new TeslaSynthesizerMenu(id, inventory, blockEntity, blockEntity.containerData), CONTAINER_NAME));
 
 			return InteractionResult.CONSUME;
 		}

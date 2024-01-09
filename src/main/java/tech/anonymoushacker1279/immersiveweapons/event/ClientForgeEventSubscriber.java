@@ -78,12 +78,13 @@ public class ClientForgeEventSubscriber {
 			return;
 		}
 
-		boolean hasLavaGoggles = AccessoryItem.isAccessoryActive(player, ItemRegistry.LAVA_GOGGLES.get());
-		if (player.getItemBySlot(EquipmentSlot.HEAD).getItem() == ItemRegistry.MOLTEN_HELMET.get() &&
-				player.getItemBySlot(EquipmentSlot.CHEST).getItem() == ItemRegistry.MOLTEN_CHESTPLATE.get() &&
-				player.getItemBySlot(EquipmentSlot.LEGS).getItem() == ItemRegistry.MOLTEN_LEGGINGS.get() &&
-				player.getItemBySlot(EquipmentSlot.FEET).getItem() == ItemRegistry.MOLTEN_BOOTS.get()) {
-			if (player.isInLava()) {
+		if (player.isInLava()) {
+			boolean hasLavaGoggles = AccessoryItem.isAccessoryActive(player, ItemRegistry.LAVA_GOGGLES.get());
+			if (player.getItemBySlot(EquipmentSlot.HEAD).getItem() == ItemRegistry.MOLTEN_HELMET.get() &&
+					player.getItemBySlot(EquipmentSlot.CHEST).getItem() == ItemRegistry.MOLTEN_CHESTPLATE.get() &&
+					player.getItemBySlot(EquipmentSlot.LEGS).getItem() == ItemRegistry.MOLTEN_LEGGINGS.get() &&
+					player.getItemBySlot(EquipmentSlot.FEET).getItem() == ItemRegistry.MOLTEN_BOOTS.get()) {
+
 				if (minecraft.level != null) {
 					BlockState state = minecraft.level.getBlockState(new BlockPos(player.blockPosition().above(1)));
 					if (state.is(Blocks.LAVA)) {
@@ -93,9 +94,7 @@ public class ClientForgeEventSubscriber {
 						event.setCanceled(true);
 					}
 				}
-			}
-		} else if (hasLavaGoggles) {
-			if (player.isInLava()) {
+			} else if (hasLavaGoggles) {
 				if (minecraft.level != null) {
 					BlockState state = minecraft.level.getBlockState(new BlockPos(player.blockPosition().above(1)));
 					if (state.is(Blocks.LAVA)) {

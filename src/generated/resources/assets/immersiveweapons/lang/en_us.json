@@ -717,6 +717,7 @@
   "immersiveweapons.kill_count_weapon.tier.novice": "Novice",
   "immersiveweapons.kill_count_weapon.tier.special": "Special",
   "immersiveweapons.kill_count_weapon.total_kills": "Total Kills: %s",
+  "immersiveweapons.networking.failure.generic": "A networking error occurred regarding Immersive Weapons: %s",
   "item.immersiveweapons.agility_bracelet": "Agility Bracelet",
   "item.immersiveweapons.amethyst_ring": "Amethyst Ring",
   "item.immersiveweapons.ancient_scroll": "Ancient Scroll",

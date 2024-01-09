@@ -39,6 +39,7 @@ public class LanguageGenerator extends IWLanguageProvider {
 		addAdvancements();
 		addConfigDescriptions();
 		addEnchantments();
+		addNetworkingFailures();
 		addMisc();
 	}
 

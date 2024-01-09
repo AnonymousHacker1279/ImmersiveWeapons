@@ -5,7 +5,6 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.*;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.inventory.SimpleContainerData;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
@@ -63,7 +62,7 @@ public class AmmunitionTableBlock extends BasicOrientableBlock implements Entity
 			return InteractionResult.SUCCESS;
 		} else {
 			if (level.getBlockEntity(pos) instanceof AmmunitionTableBlockEntity blockEntity && player instanceof ServerPlayer serverPlayer) {
-				serverPlayer.openMenu(new SimpleMenuProvider((id, inventory, player1) -> new AmmunitionTableMenu(id, inventory, blockEntity, new SimpleContainerData(1)), CONTAINER_NAME));
+				serverPlayer.openMenu(new SimpleMenuProvider((id, inventory, player1) -> new AmmunitionTableMenu(id, inventory, blockEntity, blockEntity.containerData), CONTAINER_NAME));
 			}
 
 			return InteractionResult.CONSUME;

@@ -50,6 +50,6 @@ public abstract class IWLanguageProvider extends LanguageProvider {
 	}
 
 	public void addNetworkingFailure(String name, String translation) {
-		add("immersiveweapons.networking.failed." + name, translation);
+		add("immersiveweapons.networking.failure." + name, translation);
 	}
 }

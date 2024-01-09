@@ -159,7 +159,6 @@ public class BulletEntity extends CustomArrowEntity implements HitEffectUtils {
 	protected void onHit(HitResult result) {
 		super.onHit(result);
 
-		// calculate the distance the bullet traveled and print to console
 		if (!level().isClientSide && getOwner() instanceof ServerPlayer player && initialPos != Vec3.ZERO) {
 			Vec3 location = result.getLocation();
 			double distance = Math.sqrt(Math.pow(location.x - initialPos.x, 2) + Math.pow(location.y - initialPos.y, 2) + Math.pow(location.z - initialPos.z, 2));

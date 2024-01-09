@@ -91,7 +91,7 @@ public class ModEventSubscriber {
 		registrar.play(GunScopePayload.ID, GunScopePayload::new, handler -> handler
 				.client(GunScopePayloadHandler.getInstance()::handleData));
 		registrar.play(AmmunitionTablePayload.ID, AmmunitionTablePayload::new, handler -> handler
-				.client(AmmunitionTablePayloadHandler.getInstance()::handleData));
+				.server(AmmunitionTablePayloadHandler.getInstance()::handleData));
 		registrar.play(StarForgeMenuPayload.ID, StarForgeMenuPayload::new, handler -> handler
 				.client(StarForgeMenuPayloadHandler.getInstance()::handleData)
 				.server(StarForgeMenuPayloadHandler.getInstance()::handleData));
