@@ -148,7 +148,7 @@ public class TeslaArmorItem extends ArmorItem {
 	 * @param player the <code>Player</code> instance
 	 */
 	private void effectNoise(Level level, Player player) {
-		if (countdown == 0 && ClientConfig.TESLA_ARMOR_EFFECT_SOUND.get()) {
+		if (countdown == 0 && ClientConfig.teslaArmorEffectSound) {
 			level.playSound(player,
 					player.blockPosition(),
 					SoundEventRegistry.TESLA_ARMOR_EFFECT.get(),

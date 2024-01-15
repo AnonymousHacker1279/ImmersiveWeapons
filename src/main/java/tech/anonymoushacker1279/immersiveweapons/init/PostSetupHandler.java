@@ -15,8 +15,7 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.FlowerPotBlock;
 import net.minecraft.world.phys.AABB;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
-import tech.anonymoushacker1279.immersiveweapons.config.ConfigHelper.TomlConfigOps;
-import tech.anonymoushacker1279.immersiveweapons.entity.npc.SkygazerEntity;
+import tech.anonymoushacker1279.immersiveweapons.config.CommonConfig;
 import tech.anonymoushacker1279.immersiveweapons.entity.vehicle.CustomBoatType;
 import tech.anonymoushacker1279.immersiveweapons.item.materials.CustomArmorMaterials;
 import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
@@ -92,11 +91,6 @@ public class PostSetupHandler {
 				Items.FERMENTED_SPIDER_EYE,
 				PotionRegistry.LONG_DEATH_POTION.get());
 
-		// Populate enchant cap map
-		TomlConfigOps.INSTANCE.getMapValues(ImmersiveWeapons.COMMON_CONFIG.skygazerEnchantCaps().get())
-				.result()
-				.ifPresent(map -> map.forEach((pair) -> SkygazerEntity.ENCHANT_CAPS.put((String) pair.getFirst(), (Integer) pair.getSecond())));
-
 		// Initialize custom portals
 		CustomPortalBuilder.beginPortal()
 				.frameBlock(BlockRegistry.TILTROS_PORTAL_FRAME.get())
@@ -104,7 +98,7 @@ public class PostSetupHandler {
 				.lightWithItem(ItemRegistry.AZUL_KEYSTONE.get())
 				.destDimID(new ResourceLocation(ImmersiveWeapons.MOD_ID, "tiltros"))
 				.flatPortal()
-				.registerBeforeTPEvent(entity -> ImmersiveWeapons.COMMON_CONFIG.tiltrosEnabled().get() ? SHOULDTP.CONTINUE_TP : SHOULDTP.CANCEL_TP)
+				.registerBeforeTPEvent(entity -> CommonConfig.tiltrosEnabled ? SHOULDTP.CONTINUE_TP : SHOULDTP.CANCEL_TP)
 				.registerPostTPEvent(entity -> {
 					if (!entity.level().dimension().equals(TILTROS)) {
 						return;

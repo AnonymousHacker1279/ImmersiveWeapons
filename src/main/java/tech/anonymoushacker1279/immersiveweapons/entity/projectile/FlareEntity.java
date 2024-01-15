@@ -84,7 +84,7 @@ public class FlareEntity extends BulletEntity implements ItemSupplier {
 		// The area lighting effect used here places light blocks at the entity's location. This is inefficient but the default behavior.
 		// If the Lucent plugin is available, it will handle dynamic lighting instead.
 		if (entityData.get(USE_LEGACY_LIGHTING)) {
-			if (tickCount % 4 >= 1) {
+			if (tickCount % 2 == 0) {
 				BlockPos currentPosition = blockPosition();
 				if (!level().isClientSide && currentPosition != previousLightPosition) {
 					if (!lightPositions.isEmpty()) {

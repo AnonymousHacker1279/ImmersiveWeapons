@@ -22,6 +22,7 @@ import org.jetbrains.annotations.Nullable;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.client.gui.overlays.DebugTracingData;
 import tech.anonymoushacker1279.immersiveweapons.client.particle.bullet_impact.BulletImpactParticleOptions;
+import tech.anonymoushacker1279.immersiveweapons.config.CommonConfig;
 import tech.anonymoushacker1279.immersiveweapons.init.*;
 import tech.anonymoushacker1279.immersiveweapons.item.AccessoryItem;
 import tech.anonymoushacker1279.immersiveweapons.item.gun.MusketItem;
@@ -34,7 +35,6 @@ import java.util.List;
 
 public class BulletEntity extends CustomArrowEntity implements HitEffectUtils {
 
-	private static final boolean canBreakGlass = ImmersiveWeapons.COMMON_CONFIG.bulletsBreakGlass().get();
 	private final SoundEvent hitSound = getDefaultHitGroundSoundEvent();
 	private boolean hasAlreadyBrokeGlass = false;
 	private Vec3 initialPos = Vec3.ZERO;
@@ -132,7 +132,7 @@ public class BulletEntity extends CustomArrowEntity implements HitEffectUtils {
 		}
 
 		// Check if glass can be broken, and if it hasn't already broken glass
-		if (canBreakGlass && !hasAlreadyBrokeGlass
+		if (CommonConfig.bulletsBreakGlass && !hasAlreadyBrokeGlass
 				&& !lastState.is(BULLETPROOF_GLASS)
 				&& (lastState.is(Tags.Blocks.GLASS) || lastState.is(Tags.Blocks.GLASS_PANES))) {
 

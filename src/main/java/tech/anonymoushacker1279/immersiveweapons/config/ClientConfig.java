@@ -1,53 +1,18 @@
 package tech.anonymoushacker1279.immersiveweapons.config;
 
-import net.neoforged.neoforge.common.ModConfigSpec;
-import net.neoforged.neoforge.common.ModConfigSpec.Builder;
-import org.apache.commons.lang3.tuple.Pair;
+import tech.anonymoushacker1729.cobaltconfig.config.ConfigEntry;
 
 public class ClientConfig {
 
-	public static final ModConfigSpec CLIENT_SPEC;
-	public static final ClientConfig CLIENT;
+	@ConfigEntry(comment = "Enable or disable the Tesla Armor effect sound", group = "Sounds")
+	public static boolean teslaArmorEffectSound = true;
 
-	public static ModConfigSpec.BooleanValue TESLA_ARMOR_EFFECT_SOUND;
-	public static ModConfigSpec.IntValue PANIC_ALARM_RANGE;
-	public static ModConfigSpec.IntValue SMOKE_GRENADE_PARTICLES;
-	public static ModConfigSpec.BooleanValue FANCY_SMOKE_GRENADE_PARTICLES;
+	@ConfigEntry(comment = "Set the range of the Panic Alarm's sound", group = "Sounds", min = 0, max = 128)
+	public static int panicAlarmRange = 48;
 
-	ClientConfig(ModConfigSpec.Builder builder) {
-		builder.push("Client Configuration");
+	@ConfigEntry(comment = "Set the number of particles produced by the smoke grenade. The server may choose to override this value to encourage fairness.", group = "Graphics", min = 0, max = 256)
+	public static int smokeGrenadeParticles = 96;
 
-		builder.push("Graphics");
-		SMOKE_GRENADE_PARTICLES = builder
-				.comment("Set the number of particles produced by the smoke grenade\n" +
-						"The server may choose to override this value to encourage fairness. - Default 96")
-				.translation("config.immersiveweapons.smoke_grenade_particles")
-				.defineInRange("smoke_grenade_particles", 96, 0, Integer.MAX_VALUE);
-		FANCY_SMOKE_GRENADE_PARTICLES = builder
-				.comment("Render smoke grenade particles at 66% of the regular size, spawn 3x more, and add translucency.\n" +
-						"This will negatively impact performance, but make smoke grenades appear more realistic. - Default false")
-				.translation("config.immersiveweapons.fancy_smoke_grenade_particles")
-				.define("fancy_smoke_grenade_particles", false);
-		builder.pop();
-
-		builder.push("Sounds");
-		TESLA_ARMOR_EFFECT_SOUND = builder
-				.comment("Enable the Tesla Armor effect sound - Default true")
-				.translation("config.immersiveweapons.tesla_armor_effect_sound")
-				.define("tesla_armor_effect_sound", true);
-		PANIC_ALARM_RANGE = builder
-				.comment("Set the range of the Panic Alarm's sound - Default 48")
-				.translation("config.immersiveweapons.panic_alarm_range")
-				.defineInRange("panic_alarm_range", 48, 0, Integer.MAX_VALUE);
-		builder.pop();
-
-		builder.pop();
-	}
-
-	static {
-		Pair<ClientConfig, ModConfigSpec> clientForgeConfigSpecPair = new Builder().configure(ClientConfig::new);
-
-		CLIENT_SPEC = clientForgeConfigSpecPair.getRight();
-		CLIENT = clientForgeConfigSpecPair.getLeft();
-	}
+	@ConfigEntry(comment = "Render smoke grenade particles at 66% of the regular size, spawn 3x more, and add translucency. This will negatively impact performance, but make smoke grenades appear more realistic.", group = "Graphics")
+	public static boolean fancySmokeGrenadeParticles = false;
 }

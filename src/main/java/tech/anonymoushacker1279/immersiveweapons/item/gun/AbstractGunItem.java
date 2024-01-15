@@ -21,6 +21,7 @@ import net.neoforged.neoforge.client.extensions.common.IClientItemExtensions;
 import net.neoforged.neoforge.event.EventHooks;
 import net.neoforged.neoforge.network.PacketDistributor;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
+import tech.anonymoushacker1279.immersiveweapons.config.CommonConfig;
 import tech.anonymoushacker1279.immersiveweapons.entity.projectile.BulletEntity;
 import tech.anonymoushacker1279.immersiveweapons.event.game_effects.AccessoryManager;
 import tech.anonymoushacker1279.immersiveweapons.init.*;
@@ -146,7 +147,7 @@ public abstract class AbstractGunItem extends Item implements Vanishable {
 						setupFire(gun, bulletEntity, player, powderVelocityModifier);
 
 						// Roll for random crits
-						if (livingEntity.getRandom().nextFloat() <= ImmersiveWeapons.COMMON_CONFIG.gunCritChance().get()) {
+						if (livingEntity.getRandom().nextFloat() <= CommonConfig.gunCritChance) {
 							bulletEntity.setCritArrow(true);
 						}
 
@@ -564,7 +565,7 @@ public abstract class AbstractGunItem extends Item implements Vanishable {
 	}
 
 	public float getBaseFireVelocity() {
-		return ImmersiveWeapons.COMMON_CONFIG.flintlockPistolFireVelocity().get().floatValue();
+		return CommonConfig.flintlockPistolFireVelocity;
 	}
 
 	public int getKnockbackLevel() {
@@ -575,7 +576,7 @@ public abstract class AbstractGunItem extends Item implements Vanishable {
 		bulletEntity.shootFromRotation(player, player.getXRot(), player.getYRot(),
 				0.0F,
 				getFireVelocity(gun, powderModifier),
-				ImmersiveWeapons.COMMON_CONFIG.flintlockPistolFireInaccuracy().get().floatValue());
+				CommonConfig.flintlockPistolFireInaccuracy);
 	}
 
 	protected void handleAmmoStack(ItemStack gun, ItemStack ammo, int bulletsToFire, Player player) {

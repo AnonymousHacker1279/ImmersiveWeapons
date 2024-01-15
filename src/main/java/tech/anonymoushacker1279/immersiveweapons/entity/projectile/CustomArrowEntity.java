@@ -242,11 +242,12 @@ public class CustomArrowEntity extends Arrow implements HitEffectUtils {
 			}
 
 			// Set movement and position
-			setDeltaMovement(deltaMovement.scale(inertia));
 			if (!isNoGravity() && !noPhysics) {
 				if (shouldStopMoving) {
 					setDeltaMovement(0, 0, 0);
 				} else {
+					setDeltaMovement(deltaMovement.scale(inertia));
+
 					Vec3 newDeltaMovement = getDeltaMovement();
 					setDeltaMovement(newDeltaMovement.x, newDeltaMovement.y - getGravityModifier(), newDeltaMovement.z);
 				}

@@ -2,7 +2,7 @@ plugins {
 	id 'java-library'
 	id 'maven-publish'
 	// Pinned because it updates too frequently and forces recompile
-	id 'net.neoforged.gradle.userdev' version '7.0.78'
+	id 'net.neoforged.gradle.userdev' version '7.0.83'
 	id "com.hypherionmc.modutils.modpublisher" version "2.0.0"
 	id 'idea'
 }
@@ -141,11 +141,13 @@ dependencies {
 
 	implementation "net.neoforged:neoforge:${neoforge_version}"
 
+	implementation(jarJar("tech.anonymoushacker1279.cobaltconfig:CobaltConfig:${cobaltconfig_version}")) {
+		jarJar.ranged(it, "[1.0.0,)")
+	}
+
 	implementation(jarJar("dev.lukebemish.biomesquisher:biomesquisher-neoforge-1.20.2:${biomesquisher_version}")) {
 		jarJar.ranged(it, "[0.1.6-alpha,)")
 	}
-
-	// TODO: reimplement dependencies once updated to support network refactor
 
 	implementation(jarJar("net.kyrptonaught.customportalapi:cpapireforged-neo-1.20.4:${custom_portals_api_version}")) {
 		jarJar.ranged(it, "[1.0.5,)")
@@ -157,8 +159,8 @@ dependencies {
 	// Include JEI
 	// runtimeOnly fg.deobf("mezz.jei:jei-${minecraft_version}-forge:${jei_version}")
 	// Include WTHIT and badpackets
-	// runtimeOnly "mcp.mobius.waila:wthit:neo-${wthit_version}"
-	// implementation "lol.bai:badpackets:neo-${badpackets_version}"
+	runtimeOnly "mcp.mobius.waila:wthit:neo-${wthit_version}"
+	runtimeOnly "lol.bai:badpackets:neo-${badpackets_version}"
 	// Include AttributeFix
 	implementation "curse.maven:attributefix-280510:${attributefix_version}"
 }
@@ -277,7 +279,7 @@ if (file("RELEASE_NOTES.md").exists()) {
 			modrinth = tokens.getProperty("modrinth")
 		}
 
-		setDebug(true)
+		setDebug(false)
 		curseID = "494454"
 		modrinthID = "QZFdnUQ5"
 		githubRepo = "AnonymousHacker1279/ImmersiveWeapons"
@@ -333,7 +335,7 @@ void minimizePNGFile(File file) {
 	}
 }
 
-def calculateMD5Hash(File file) {
+static def calculateMD5Hash(File file) {
 	MessageDigest md = MessageDigest.getInstance("MD5")
 	file.withInputStream { md.update(it.bytes) }
 	byte[] digest = md.digest()

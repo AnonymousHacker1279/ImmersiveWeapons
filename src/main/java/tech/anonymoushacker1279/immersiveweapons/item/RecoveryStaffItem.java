@@ -19,6 +19,7 @@ import net.neoforged.fml.common.Mod.EventBusSubscriber;
 import net.neoforged.fml.common.Mod.EventBusSubscriber.Bus;
 import net.neoforged.neoforge.event.entity.living.LivingHurtEvent;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
+import tech.anonymoushacker1279.immersiveweapons.config.CommonConfig;
 import tech.anonymoushacker1279.immersiveweapons.init.ItemRegistry;
 
 @EventBusSubscriber(modid = ImmersiveWeapons.MOD_ID, bus = Bus.FORGE)
@@ -69,7 +70,7 @@ public class RecoveryStaffItem extends Item implements SummoningStaff {
 		}
 
 		if (!level.isClientSide) {
-			healAmount = 1;
+			healAmount = 4;
 		}
 
 		player.playSound(SoundEvents.AMETHYST_BLOCK_CHIME, 3.0F, 1.0F);
@@ -86,7 +87,7 @@ public class RecoveryStaffItem extends Item implements SummoningStaff {
 
 	@Override
 	public int getMaxRange() {
-		return ImmersiveWeapons.COMMON_CONFIG.recoveryStaffMaxUseRange().get();
+		return CommonConfig.recoveryStaffMaxUseRange;
 	}
 
 	@Override
@@ -114,7 +115,7 @@ public class RecoveryStaffItem extends Item implements SummoningStaff {
 					.filter(stack -> stack.getItem() instanceof RecoveryStaffItem)
 					.findFirst().ifPresent(stack -> {
 						RecoveryStaffItem staff = (RecoveryStaffItem) stack.getItem();
-						staff.setHealAmount((event.getAmount() / 2) + 1);
+						staff.setHealAmount((event.getAmount() / 2) + 4);
 					});
 		}
 	}

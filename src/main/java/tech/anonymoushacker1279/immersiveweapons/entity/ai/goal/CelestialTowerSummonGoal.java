@@ -17,7 +17,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.phys.AABB;
-import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
+import tech.anonymoushacker1279.immersiveweapons.config.CommonConfig;
 import tech.anonymoushacker1279.immersiveweapons.entity.monster.CelestialTowerEntity;
 import tech.anonymoushacker1279.immersiveweapons.entity.monster.RockSpiderEntity;
 import tech.anonymoushacker1279.immersiveweapons.init.EntityRegistry;
@@ -53,7 +53,7 @@ public class CelestialTowerSummonGoal extends Goal {
 			if (tower.getWavesSpawned() < tower.getTotalWavesToSpawn() && waveSpawnCooldown <= 0) {
 				// Get the total number of mobs to be spawned
 				int mobsToSpawn = (tower.getRandom().nextIntBetweenInclusive(8, 12 + tower.getWavesSpawned())) * tower.getDifficultyWaveSizeModifier();
-				mobsToSpawn = (int) (mobsToSpawn * ImmersiveWeapons.COMMON_CONFIG.celestialTowerWaveSizeModifier().get());
+				mobsToSpawn = (int) (mobsToSpawn * CommonConfig.celestialTowerWaveSizeModifier);
 
 				// 30% of the mob spawns will be "fodder" mobs
 				int fodderMobsToSpawn = (int) (mobsToSpawn * 0.3f);

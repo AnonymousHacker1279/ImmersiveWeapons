@@ -21,8 +21,8 @@ import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.level.*;
 import org.jetbrains.annotations.Nullable;
-import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.block.decoration.CelestialLanternBlock;
+import tech.anonymoushacker1279.immersiveweapons.config.CommonConfig;
 import tech.anonymoushacker1279.immersiveweapons.entity.AttackerTracker;
 import tech.anonymoushacker1279.immersiveweapons.entity.GrantAdvancementOnDiscovery;
 import tech.anonymoushacker1279.immersiveweapons.entity.ai.goal.*;
@@ -241,9 +241,7 @@ public class CelestialTowerEntity extends Monster implements AttackerTracker, Gr
 
 		for (BlockPos lanternPos : CelestialLanternBlock.ALL_TILTROS_LANTERNS) {
 			if (nearbyLanterns < 3) {
-				if (lanternPos.distManhattan(new Vec3i(blockPosition().getX(), blockPosition().getY(), blockPosition().getZ())) <
-						ImmersiveWeapons.COMMON_CONFIG.celestialTowerSpawnCheckingRadius().get()) {
-
+				if (lanternPos.distManhattan(new Vec3i(blockPosition().getX(), blockPosition().getY(), blockPosition().getZ())) < CommonConfig.celestialTowerSpawnCheckingRadius) {
 					nearbyLanterns++;
 				}
 			}

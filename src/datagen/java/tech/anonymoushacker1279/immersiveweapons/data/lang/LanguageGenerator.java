@@ -7,11 +7,15 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
+import tech.anonymoushacker1279.immersiveweapons.config.ClientConfig;
+import tech.anonymoushacker1279.immersiveweapons.config.CommonConfig;
 import tech.anonymoushacker1279.immersiveweapons.data.lists.BlockLists;
 import tech.anonymoushacker1279.immersiveweapons.data.lists.ItemLists;
 import tech.anonymoushacker1279.immersiveweapons.init.*;
 import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
+import tech.anonymoushacker1729.cobaltconfig.config.ConfigEntry;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
@@ -978,71 +982,23 @@ public class LanguageGenerator extends IWLanguageProvider {
 	}
 
 	private void addConfigDescriptions() {
-		// Client options
-
-		addConfigDescription("tesla_armor_effect_sound", "Enable the Tesla Armor effect sound - Default true");
-		addConfigDescription("panic_alarm_range", "Set the range of the Panic Alarm's sound - Default 48");
-		addConfigDescription("smoke_grenade_particles", "Set the number of particles produced by the smoke grenade" +
-				"\nThe server may choose to override this value to encourage fairness. - Default 96");
-		addConfigDescription("fancy_smoke_grenade_particles", "Render smoke grenade particles at 66% of the regular size, spawn 3x more, and add translucency." +
-				"\nThis will negatively impact performance, but make smoke grenades appear more realistic. - Default false");
-
-		// Server options
-
-		// General
-		addConfigDescription("force_smoke_grenade_particles", """
-				Force the number of particles produced by the smoke grenade to be the same on all clients.
-				A value of -1 will not force any value, and will allow clients to use their own values.
-				Setting this to a high value may cause clients to lag. - Default -1""");
-		addConfigDescription("bullets_break_glass", "Enable bullets breaking glass - Default true");
-		addConfigDescription("tiltros_enabled", "Enable the Tiltros dimension portal - Default true");
-
-		// Mixins
-		addConfigDescription("max_armor_protection", """
-				Set the maximum armor protection cap. The vanilla default is 20. Setting this value higher
-				allows higher tiers of armor to work properly. - Default 50.0
-				""");
-
-		// Entity
-
-		// General
-		addConfigDescription("discovery_advancement_range", """
-				Set the range for checking criteria of the discovery advancement (value is squared) - Default 50
-				Lowering this value may improve server performance,
-				""");
-
-		// Celestial Tower
-		addConfigDescription("celestial_tower_spawn_check_radius", "Set the spawn checking radius for the Celestial Tower." +
-				"\nSetting this higher may slightly negatively impact server ticks in Tiltros, but make Celestial Lanterns more effective - Default 128");
-		addConfigDescription("celestial_tower_minions_wave_size_modifier", """
-				Multiplier to change the wave size from Celestial Tower summons.
-				Set less than 1 to reduce, greater than 1 to increase.
-				Increasing the wave size will negatively affect the server ticks in Tiltros. - Default 1.0""");
-
-		// Weapons
-		// General
-		addConfigDescription("gun_crit_chance", "Set the chance for a fired bullet to be critical - Default 0.1");
-		// Flintlock Pistol
-		addConfigDescription("flintlock_pistol_fire_velocity", "Set the velocity of bullets fired by the Flintlock Pistol - Default 2.5");
-		addConfigDescription("flintlock_pistol_fire_inaccuracy", "Set the inaccuracy of bullets fired by the Flintlock Pistol - Default 1.75");
-		// Blunderbuss
-		addConfigDescription("blunderbuss_fire_velocity", "Set the velocity of bullets fired by the Blunderbuss - Default 1.7");
-		addConfigDescription("blunderbuss_fire_inaccuracy", "Set the inaccuracy of bullets fired by the Blunderbuss - Default 2.0");
-		// Musket
-		addConfigDescription("musket_fire_velocity", "Set the velocity of bullets fired by the Musket - Default 4.0");
-		addConfigDescription("musket_fire_inaccuracy", "Set the inaccuracy of bullets fired by the Musket - Default 0.15");
-
-		// Meteor Staff
-		addConfigDescription("meteor_staff_max_use_range", "Set the maximum range in blocks of the Meteor Staff - Default 100");
-		addConfigDescription("meteor_staff_explosion_radius", "Set the radius of the explosion created by the Meteor Staff - Default 3.0");
-		addConfigDescription("meteor_staff_explosion_break_blocks", "Set whether the Meteor Staff explosion breaks blocks - Default false");
-
-		// Cursed Sight Staff
-		addConfigDescription("cursed_sight_staff_max_use_range", "Set the maximum range in blocks of the Cursed Sight Staff - Default 50");
-
-		// Sculk Staff
-		addConfigDescription("sculk_staff_max_use_range", "Set the maximum range in blocks of the Sculk Staff - Default 25");
-		addConfigDescription("sculk_staff_sonic_blast_through_walls", "Set whether the Sculk Staff sonic blast goes through walls - Default true");
+		// Config classes uses annotations on fields, loop through declared fields that have a ConfigEntry annotation and pull the field name
+		for (Field field : ClientConfig.class.getDeclaredFields()) {
+			if (field.isAnnotationPresent(ConfigEntry.class)) {
+				// Insert a space before each uppercase letter, then trim the result to remove leading spaces
+				String spacedFieldName = field.getName().replaceAll("(?<!^)(?=[A-Z])", " ").trim();
+				// Convert the spaced field name to a sentence
+				String description = capitalizeWords(spacedFieldName);
+				addConfigField(field.getName(), description);
+			}
+		}
+		for (Field field : CommonConfig.class.getDeclaredFields()) {
+			if (field.isAnnotationPresent(ConfigEntry.class)) {
+				String spacedFieldName = field.getName().replaceAll("(?<!^)(?=[A-Z])", " ").trim();
+				String description = capitalizeWords(spacedFieldName);
+				addConfigField(field.getName(), description);
+			}
+		}
 	}
 
 	private void addEnchantments() {

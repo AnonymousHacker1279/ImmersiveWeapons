@@ -15,7 +15,7 @@ import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.Vec3;
-import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
+import tech.anonymoushacker1279.immersiveweapons.config.CommonConfig;
 
 public class SculkStaffItem extends Item implements SummoningStaff {
 
@@ -36,7 +36,7 @@ public class SculkStaffItem extends Item implements SummoningStaff {
 		Vec3 normalized = lookVec.normalize();
 
 		// Check if there is an entity in the path of the sonic boom
-		boolean canBlastThroughWalls = ImmersiveWeapons.COMMON_CONFIG.sculkStaffSonicBlastThroughWalls().get();
+		boolean canBlastThroughWalls = CommonConfig.sculkStaffSonicBlastThroughBlocks;
 		EntityHitResult hitResult = ProjectileUtil.getEntityHitResult(level, player,
 				eyePos,
 				eyePos.add(lookVec.scale(getMaxRange())),
@@ -81,7 +81,7 @@ public class SculkStaffItem extends Item implements SummoningStaff {
 
 	@Override
 	public int getMaxRange() {
-		return ImmersiveWeapons.COMMON_CONFIG.sculkStaffMaxUseRange().get();
+		return CommonConfig.sculkStaffMaxUseRange;
 	}
 
 	@Override

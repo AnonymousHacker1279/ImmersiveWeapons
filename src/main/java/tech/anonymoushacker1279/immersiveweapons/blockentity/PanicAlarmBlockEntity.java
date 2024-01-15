@@ -33,7 +33,7 @@ public class PanicAlarmBlockEntity extends BlockEntity implements EntityBlock {
 
 		if (isPowered && cooldown-- <= 0) {
 			for (ServerPlayer serverPlayer : ((ServerLevel) level).getPlayers(player -> player.blockPosition()
-					.distSqr(blockPos) <= Math.pow(ClientConfig.PANIC_ALARM_RANGE.get(), 2))) {
+					.distSqr(blockPos) <= Math.pow(ClientConfig.panicAlarmRange, 2))) {
 
 				serverPlayer.playNotifySound(SoundEventRegistry.PANIC_ALARM_SOUND.get(), SoundSource.BLOCKS, 1.0F, 1.0F);
 			}

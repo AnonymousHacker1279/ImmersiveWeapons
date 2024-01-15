@@ -10,7 +10,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
-import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
+import tech.anonymoushacker1279.immersiveweapons.config.CommonConfig;
 import tech.anonymoushacker1279.immersiveweapons.entity.projectile.MeteorEntity;
 import tech.anonymoushacker1279.immersiveweapons.init.EnchantmentRegistry;
 import tech.anonymoushacker1279.immersiveweapons.init.ItemRegistry;
@@ -73,7 +73,7 @@ public class MeteorStaffItem extends Item implements SummoningStaff {
 
 	@Override
 	public int getMaxRange() {
-		return ImmersiveWeapons.COMMON_CONFIG.meteorStaffMaxUseRange().get();
+		return CommonConfig.meteorStaffMaxUseRange;
 	}
 
 	@Override

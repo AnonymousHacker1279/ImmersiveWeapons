@@ -45,8 +45,8 @@ public abstract class IWLanguageProvider extends LanguageProvider {
 		add("advancements.immersiveweapons." + name, translation);
 	}
 
-	public void addConfigDescription(String name, String translation) {
-		add("config.immersiveweapons." + name, translation);
+	public void addConfigField(String name, String translation) {
+		add("immersiveweapons.cobaltconfig." + name, translation);
 	}
 
 	public void addNetworkingFailure(String name, String translation) {

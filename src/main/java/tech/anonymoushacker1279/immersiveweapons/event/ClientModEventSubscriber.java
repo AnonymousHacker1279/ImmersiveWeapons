@@ -229,7 +229,7 @@ public class ClientModEventSubscriber {
 		event.registerBlockEntityRenderer(BlockEntityRegistry.CUSTOM_SKULL_BLOCK_ENTITY.get(), SkullBlockRenderer::new);
 		event.registerBlockEntityRenderer(BlockEntityRegistry.ASTRAL_CRYSTAL_BLOCK_ENTITY.get(), context -> new AstralCrystalRenderer());
 		event.registerBlockEntityRenderer(BlockEntityRegistry.AMMUNITION_TABLE_BLOCK_ENTITY.get(), context -> new AmmunitionTableRenderer());
-		event.registerBlockEntityRenderer(BlockEntityRegistry.TILTROS_PORTAL_BLOCK_ENTITY.get(), context -> new TiltrosPortalRenderer<tech.anonymoushacker1279.immersiveweapons.blockentity.TiltrosPortalBlockEntity>());
+		event.registerBlockEntityRenderer(BlockEntityRegistry.TILTROS_PORTAL_BLOCK_ENTITY.get(), context -> new TiltrosPortalRenderer<>());
 	}
 
 	/**

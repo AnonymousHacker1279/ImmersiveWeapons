@@ -10,7 +10,7 @@ import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.ModifyArg;
-import tech.anonymoushacker1279.immersiveweapons.entity.npc.SkygazerEntity;
+import tech.anonymoushacker1279.immersiveweapons.config.CommonConfig;
 
 /**
  * Re-color enchantment names at the max Skygazer cap.
@@ -32,7 +32,7 @@ public abstract class ItemStackMixin {
 			int enchantmentLevel = EnchantmentHelper.getEnchantmentLevel(compoundTag);
 
 			if (enchantmentLocation != null) {
-				int maxLevel = SkygazerEntity.ENCHANT_CAPS.getOrDefault(enchantmentLocation.toString(), -1);
+				int maxLevel = CommonConfig.skygazerEnchantCaps.getOrDefault(enchantmentLocation.toString(), -1);
 
 				if (enchantmentLevel >= maxLevel && maxLevel != -1) {
 					return component.copy().withStyle(ChatFormatting.GOLD);

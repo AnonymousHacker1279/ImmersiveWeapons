@@ -10,7 +10,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.trading.MerchantOffer;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
-import tech.anonymoushacker1279.immersiveweapons.entity.npc.SkygazerEntity;
+import tech.anonymoushacker1279.immersiveweapons.config.CommonConfig;
 
 import java.util.Map;
 
@@ -53,7 +53,7 @@ public class EnchantItemForItems implements VillagerTrades.ItemListing {
 					return;
 				}
 
-				int maxLevel = SkygazerEntity.ENCHANT_CAPS.getOrDefault(enchantmentLocation.toString(), -1);
+				int maxLevel = CommonConfig.skygazerEnchantCaps.getOrDefault(enchantmentLocation.toString(), -1);
 
 				// If the level is -1, it's uncapped
 				if (maxLevel == -1) {
