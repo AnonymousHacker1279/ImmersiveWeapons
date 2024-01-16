@@ -14,9 +14,7 @@ public class SyncPlayerDataPayloadHandler {
 	}
 
 	public void handleData(final SyncPlayerDataPayload data, final PlayPayloadContext context) {
-		context.workHandler().submitAsync(() -> {
-					SyncHandler.syncPersistentData(data.tag(), data.playerUUID());
-				})
+		context.workHandler().submitAsync(() -> SyncHandler.syncPersistentData(data.tag(), data.playerUUID()))
 				.exceptionally(e -> {
 					context.packetHandler().disconnect(Component.translatable("immersiveweapons.networking.failure.generic", e.getMessage()));
 					return null;

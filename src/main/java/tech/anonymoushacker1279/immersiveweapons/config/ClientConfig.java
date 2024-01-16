@@ -2,6 +2,7 @@ package tech.anonymoushacker1279.immersiveweapons.config;
 
 import tech.anonymoushacker1729.cobaltconfig.config.ConfigEntry;
 
+@SuppressWarnings("CanBeFinal")
 public class ClientConfig {
 
 	@ConfigEntry(comment = "Enable or disable the Tesla Armor effect sound", group = "Sounds")

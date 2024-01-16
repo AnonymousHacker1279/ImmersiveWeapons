@@ -33,7 +33,7 @@ import java.util.stream.Collectors;
 
 public class StarForgeBlockEntity extends BaseContainerBlockEntity implements EntityBlock {
 
-	protected NonNullList<ItemStack> inventory = NonNullList.withSize(3, ItemStack.EMPTY);
+	protected final NonNullList<ItemStack> inventory = NonNullList.withSize(3, ItemStack.EMPTY);
 	protected boolean hasSolarEnergy = false;
 	protected int temperature = 0;
 	protected int smeltTime = 0;
@@ -133,8 +133,8 @@ public class StarForgeBlockEntity extends BaseContainerBlockEntity implements En
 				updateResult();
 
 				// Decrement the input slots
-				inventory.get(0).shrink(availableRecipes.get(menuSelectionIndex).value().ingotCount);
-				inventory.get(1).shrink(availableRecipes.get(menuSelectionIndex).value().secondaryMaterialCount);
+				inventory.get(0).shrink(availableRecipes.get(menuSelectionIndex).value().ingotCount());
+				inventory.get(1).shrink(availableRecipes.get(menuSelectionIndex).value().secondaryMaterialCount());
 
 				// Reset the menu selection index
 				menuSelectionIndex = 0;
@@ -306,9 +306,9 @@ public class StarForgeBlockEntity extends BaseContainerBlockEntity implements En
 		if (!availableRecipes.isEmpty() && containerData.get(1) == 1000 && containerData.get(2) == 0) {
 			StarForgeRecipe recipe = availableRecipes.get(containerData.get(3)).value();
 			// Check if the inputs are sufficient
-			if (recipe.ingotCount <= inventory.get(0).getCount() && recipe.secondaryMaterialCount <= inventory.get(1).getCount()) {
+			if (recipe.ingotCount() <= inventory.get(0).getCount() && recipe.secondaryMaterialCount() <= inventory.get(1).getCount()) {
 				// Set the result slot
-				setItem(2, recipe.getResult());
+				setItem(2, recipe.result());
 			} else {
 				setItem(2, ItemStack.EMPTY);
 			}

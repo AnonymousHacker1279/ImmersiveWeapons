@@ -105,7 +105,7 @@ public class StarForgeScreen extends AbstractContainerScreen<StarForgeMenu> {
 
 				ItemStack ingot = recipe.getIngot();
 				ItemStack secondaryMaterial = recipe.getSecondaryMaterial();
-				ItemStack result = recipe.result;
+				ItemStack result = recipe.result();
 
 				// Render the items
 				guiGraphics.renderItem(ingot, leftPosOffset + 3, y + 3);

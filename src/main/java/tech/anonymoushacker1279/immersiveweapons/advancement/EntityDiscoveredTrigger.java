@@ -36,15 +36,15 @@ public class EntityDiscoveredTrigger extends SimpleCriterionTrigger<EntityDiscov
 						.apply(instance, EntityDiscoveredTrigger.TriggerInstance::new)
 		);
 
-		public static Criterion<EntityDiscoveredTrigger.TriggerInstance> discoveredEntity(Optional<EntityPredicate> entity) {
+		public static Criterion<EntityDiscoveredTrigger.TriggerInstance> discoveredEntity(EntityPredicate entity) {
 			return CriterionTriggerRegistry.ENTITY_DISCOVERED_TRIGGER.get()
 					.createCriterion(
-							new EntityDiscoveredTrigger.TriggerInstance(Optional.empty(), EntityPredicate.wrap(entity))
+							new EntityDiscoveredTrigger.TriggerInstance(Optional.empty(), EntityPredicate.wrap(Optional.of(entity)))
 					);
 		}
 
 		public static Criterion<EntityDiscoveredTrigger.TriggerInstance> discoveredEntity(EntityType<?> entity) {
-			return discoveredEntity(Optional.of(EntityPredicate.Builder.entity().of(entity).build()));
+			return discoveredEntity(EntityPredicate.Builder.entity().of(entity).build());
 		}
 
 		public boolean matches(LootContext lootContext) {

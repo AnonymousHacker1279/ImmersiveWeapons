@@ -51,7 +51,7 @@ public class SuperHansEntity extends HansEntity implements AttackerTracker {
 	private BoundingBox championTowerBounds;
 	private boolean towerMinibossesAlive = false;
 
-	List<Entity> attackingEntities = new ArrayList<>(5);
+	final List<Entity> attackingEntities = new ArrayList<>(5);
 
 	public SuperHansEntity(EntityType<? extends HansEntity> entityType, Level level) {
 		super(entityType, level);
@@ -298,7 +298,7 @@ public class SuperHansEntity extends HansEntity implements AttackerTracker {
 	@Override
 	public void load(CompoundTag pCompound) {
 		super.load(pCompound);
-		
+
 		xpReward = pCompound.getInt("xpReward");
 	}
 
@@ -399,15 +399,9 @@ public class SuperHansEntity extends HansEntity implements AttackerTracker {
 			int healthModifier = (int) (hans.getMaxHealth() / hans.getHealth());
 			int baseCooldown;
 			switch (difficulty) {
-				case EASY -> {
-					baseCooldown = 600;
-				}
-				case NORMAL -> {
-					baseCooldown = 400;
-				}
-				default -> {
-					baseCooldown = 200;
-				}
+				case EASY -> baseCooldown = 600;
+				case NORMAL -> baseCooldown = 400;
+				default -> baseCooldown = 200;
 			}
 
 			return Mth.clamp((baseCooldown / healthModifier), 60, 600);

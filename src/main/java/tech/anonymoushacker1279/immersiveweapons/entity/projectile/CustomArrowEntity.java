@@ -335,12 +335,6 @@ public class CustomArrowEntity extends Arrow implements HitEffectUtils {
 		level().broadcastEntityEvent(this, VANILLA_IMPACT_STATUS_ID);
 	}
 
-	/**
-	 * Additional stuff to do when a block is hit.
-	 */
-	protected void doWhenHitBlock() {
-	}
-
 	private void explode() {
 		if (!level().isClientSide && getOwner() != null) {
 			level().explode(this,

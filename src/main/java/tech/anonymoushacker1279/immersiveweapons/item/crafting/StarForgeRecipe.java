@@ -13,27 +13,9 @@ import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.level.Level;
 import tech.anonymoushacker1279.immersiveweapons.init.*;
 
-public class StarForgeRecipe implements Recipe<Container> {
-
-	public final Ingredient ingot;
-	public final int ingotCount;
-	public final Ingredient secondaryMaterial;
-	public final int secondaryMaterialCount;
-	public final int smeltTime;
-	public final ItemStack result;
-	protected final String group;
-
-	public StarForgeRecipe(String group, Ingredient ingot, int ingotCount, Ingredient secondaryMaterial,
-	                       int secondaryMaterialCount,
-	                       int smeltTime, ItemStack result) {
-		this.ingot = ingot;
-		this.ingotCount = ingotCount;
-		this.secondaryMaterial = secondaryMaterial;
-		this.secondaryMaterialCount = secondaryMaterialCount;
-		this.smeltTime = smeltTime;
-		this.result = result;
-		this.group = group;
-	}
+public record StarForgeRecipe(String group, Ingredient ingot, int ingotCount, Ingredient secondaryMaterial,
+                              int secondaryMaterialCount, int smeltTime,
+                              ItemStack result) implements Recipe<Container> {
 
 	public boolean matches(Container container, Level level) {
 		return false;
@@ -109,7 +91,7 @@ public class StarForgeRecipe implements Recipe<Container> {
 		}
 	}
 
-	public ItemStack getResult() {
+	public ItemStack result() {
 		return result.copy();
 	}
 
@@ -132,13 +114,13 @@ public class StarForgeRecipe implements Recipe<Container> {
 			this.factory = factory;
 			this.codec = RecordCodecBuilder.create(
 					instance -> instance.group(
-									ExtraCodecs.strictOptionalField(Codec.STRING, "group", "").forGetter(recipe -> recipe.group),
-									Ingredient.CODEC.fieldOf("ingot").forGetter(recipe -> recipe.ingot),
-									Codec.INT.fieldOf("ingot_count").forGetter(recipe -> recipe.ingotCount),
-									Ingredient.CODEC.fieldOf("secondary_material").forGetter(recipe -> recipe.secondaryMaterial),
-									Codec.INT.fieldOf("secondary_material_count").forGetter(recipe -> recipe.secondaryMaterialCount),
-									Codec.INT.fieldOf("smelt_time").forGetter(recipe -> recipe.smeltTime),
-									ItemStack.SINGLE_ITEM_CODEC.fieldOf("result").forGetter(recipe -> recipe.result)
+									ExtraCodecs.strictOptionalField(Codec.STRING, "group", "").forGetter(StarForgeRecipe::group),
+									Ingredient.CODEC.fieldOf("ingot").forGetter(StarForgeRecipe::ingot),
+									Codec.INT.fieldOf("ingot_count").forGetter(StarForgeRecipe::ingotCount),
+									Ingredient.CODEC.fieldOf("secondary_material").forGetter(StarForgeRecipe::secondaryMaterial),
+									Codec.INT.fieldOf("secondary_material_count").forGetter(StarForgeRecipe::secondaryMaterialCount),
+									Codec.INT.fieldOf("smelt_time").forGetter(StarForgeRecipe::smeltTime),
+									ItemStack.SINGLE_ITEM_CODEC.fieldOf("result").forGetter(StarForgeRecipe::result)
 							)
 							.apply(instance, factory::create));
 		}

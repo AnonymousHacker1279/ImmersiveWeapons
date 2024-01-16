@@ -5,6 +5,7 @@ import tech.anonymoushacker1729.cobaltconfig.config.ConfigEntry;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+@SuppressWarnings("CanBeFinal")
 public class CommonConfig {
 
 	@ConfigEntry(comment = "Enable the Tiltros dimension portal", group = "General")

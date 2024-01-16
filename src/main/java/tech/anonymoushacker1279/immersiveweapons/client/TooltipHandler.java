@@ -543,7 +543,6 @@ public class TooltipHandler {
 	 *
 	 * @param item   the accessory item
 	 * @param player the player holding the item
-	 * @return a list of tooltips
 	 */
 	private static void addAccessoryTooltips(AccessoryItem item, Player player, ItemStack stack, List<Component> existingTooltips) {
 		List<Component> shiftTooltips = new ArrayList<>(5);

@@ -149,9 +149,6 @@ public class BulletEntity extends CustomArrowEntity implements HitEffectUtils {
 					GeneralUtilities.getRandomNumber(-0.01d, 0.01d),
 					GeneralUtilities.getRandomNumber(-0.01d, 0.01d),
 					GeneralUtilities.getRandomNumber(-0.01d, 0.01d));
-
-			// Extra code to run when a block is hit
-			doWhenHitBlock();
 		}
 	}
 

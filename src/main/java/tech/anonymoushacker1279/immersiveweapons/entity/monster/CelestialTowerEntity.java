@@ -41,7 +41,7 @@ public class CelestialTowerEntity extends Monster implements AttackerTracker, Gr
 	private boolean doneSpawningWaves = false;
 	public final static List<CelestialTowerEntity> ALL_TOWERS = new ArrayList<>(3);
 
-	List<Entity> attackingEntities = new ArrayList<>(5);
+	final List<Entity> attackingEntities = new ArrayList<>(5);
 
 	public CelestialTowerEntity(EntityType<? extends Monster> type, Level level) {
 		super(type, level);
