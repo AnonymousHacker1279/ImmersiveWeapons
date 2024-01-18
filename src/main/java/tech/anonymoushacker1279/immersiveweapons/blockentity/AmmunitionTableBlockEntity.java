@@ -273,7 +273,7 @@ public class AmmunitionTableBlockEntity extends BaseContainerBlockEntity impleme
 
 						outputSize += modifier;
 
-						int slotCost = (int) (modifier / baseMultiplierList.get(materialListIndex));
+						int slotCost = Mth.ceil(modifier / baseMultiplierList.get(materialListIndex));
 						slotCosts.set(inventoryIndex, slotCost);
 					}
 
@@ -297,7 +297,7 @@ public class AmmunitionTableBlockEntity extends BaseContainerBlockEntity impleme
 
 							outputSize -= modifier;
 
-							int slotCost = (int) (modifier / densityList.get(materialListIndex));
+							int slotCost = Mth.ceil((modifier / densityList.get(materialListIndex)));
 							slotCosts.set(inventoryIndex, slotCost);
 						}
 

@@ -29,3 +29,4 @@ development branches.
 - Fix the Biodome Life Support Unit x-raying nearby blocks by disabling occlusion
 - Fix base bullet KB being overriden by a gun's base KB. The bullet's base KB is now additive.
 - Fix bear traps not resetting entity states when broken
+- Fix Ammunition Table dupes when there is a single material inserted at specific densities
