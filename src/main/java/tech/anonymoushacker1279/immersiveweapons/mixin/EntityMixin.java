@@ -72,6 +72,9 @@ public abstract class EntityMixin {
 					// Get the passenger's entity data
 					CompoundTag passengerData = (CompoundTag) tag;
 
+					// Clear any UUID tags of the passenger
+					passengerData.remove("UUID");
+
 					// Get the passenger's entity
 					Optional<Entity> optional = EntityType.create(passengerData, level());
 
