@@ -116,6 +116,11 @@ public record SmallPartsRecipe(ResourceLocation recipeId,
 		return defaultedList;
 	}
 
+	@Override
+	public boolean isSpecial() {
+		return true;
+	}
+
 	public static class Serializer implements RecipeSerializer<SmallPartsRecipe> {
 		/**
 		 * Serialize from JSON.

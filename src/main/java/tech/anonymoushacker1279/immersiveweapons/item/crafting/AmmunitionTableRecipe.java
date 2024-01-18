@@ -74,6 +74,11 @@ public record AmmunitionTableRecipe(ResourceLocation recipeId,
 		return ingredients;
 	}
 
+	@Override
+	public boolean isSpecial() {
+		return true;
+	}
+
 	public static class Serializer implements RecipeSerializer<AmmunitionTableRecipe> {
 
 		@Override

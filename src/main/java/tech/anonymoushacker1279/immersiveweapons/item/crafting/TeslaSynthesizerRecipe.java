@@ -118,6 +118,11 @@ public record TeslaSynthesizerRecipe(ResourceLocation recipeId,
 		return defaultedList;
 	}
 
+	@Override
+	public boolean isSpecial() {
+		return true;
+	}
+
 	public static class Serializer implements RecipeSerializer<TeslaSynthesizerRecipe> {
 
 		/**

@@ -134,6 +134,11 @@ public record AstralCrystalRecipe(ResourceLocation recipeId,
 		return defaultedList;
 	}
 
+	@Override
+	public boolean isSpecial() {
+		return true;
+	}
+
 	public static class Serializer implements RecipeSerializer<AstralCrystalRecipe> {
 		/**
 		 * Serialize from JSON.

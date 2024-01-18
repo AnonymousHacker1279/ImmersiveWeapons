@@ -129,6 +129,11 @@ public record PistonCrushingRecipe(ResourceLocation recipeId,
 		return RecipeTypeRegistry.PISTON_CRUSHING_RECIPE_TYPE.get();
 	}
 
+	@Override
+	public boolean isSpecial() {
+		return true;
+	}
+
 	public static class Serializer implements RecipeSerializer<PistonCrushingRecipe> {
 		/**
 		 * Serialize from JSON.

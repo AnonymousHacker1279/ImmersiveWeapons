@@ -128,6 +128,11 @@ public record BarrelTapRecipe(ResourceLocation recipeId,
 		return defaultedList;
 	}
 
+	@Override
+	public boolean isSpecial() {
+		return true;
+	}
+
 	public static class Serializer implements RecipeSerializer<BarrelTapRecipe> {
 		/**
 		 * Serialize from JSON.
