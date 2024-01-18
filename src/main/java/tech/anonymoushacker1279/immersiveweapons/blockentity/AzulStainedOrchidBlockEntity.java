@@ -1,24 +1,29 @@
 package tech.anonymoushacker1279.immersiveweapons.blockentity;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.Heightmap;
 import org.jetbrains.annotations.Nullable;
-import tech.anonymoushacker1279.immersiveweapons.data.biomes.IWBiomes;
-import tech.anonymoushacker1279.immersiveweapons.data.dimensions.IWDimensions;
+import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.init.BlockEntityRegistry;
 import tech.anonymoushacker1279.immersiveweapons.world.TiltrosTeleporter;
 
 public class AzulStainedOrchidBlockEntity extends BlockEntity implements EntityBlock {
+
+	private static final ResourceKey<Biome> DEADMANS_DESERT = ResourceKey.create(Registries.BIOME, new ResourceLocation(ImmersiveWeapons.MOD_ID, "deadmans_desert"));
+	private static final ResourceKey<Level> TILTROS = ResourceKey.create(Registries.DIMENSION, new ResourceLocation(ImmersiveWeapons.MOD_ID, "tiltros"));
 
 	int teleportDelay = 100;
 	@Nullable
@@ -39,8 +44,8 @@ public class AzulStainedOrchidBlockEntity extends BlockEntity implements EntityB
 
 			Level entityLevel = entity.level();
 			MinecraftServer server = entityLevel.getServer();
-			ResourceKey<Level> destination = entityLevel.dimension() == IWDimensions.TILTROS ? Level.OVERWORLD
-					: IWDimensions.TILTROS;
+			ResourceKey<Level> destination = entityLevel.dimension() == TILTROS ? Level.OVERWORLD
+					: TILTROS;
 
 			if (server != null) {
 				ServerLevel destinationLevel = server.getLevel(destination);
@@ -73,7 +78,7 @@ public class AzulStainedOrchidBlockEntity extends BlockEntity implements EntityB
 		// 3. It must not be in the Deadman's Desert biome
 
 		// Check if the target position is in a valid biome
-		if (destinationLevel.getBiome(targetPos).is(IWBiomes.DEADMANS_DESERT)) {
+		if (destinationLevel.getBiome(targetPos).is(DEADMANS_DESERT)) {
 			// If it is, find the nearest valid chunk
 			int x = targetPos.getX();
 			int y = targetPos.getY();
@@ -85,7 +90,7 @@ public class AzulStainedOrchidBlockEntity extends BlockEntity implements EntityB
 					for (int j = -radius; j <= radius; j++) {
 						if (i == -radius || i == radius || j == -radius || j == radius) {
 							BlockPos pos = new BlockPos(x + i, y, z + j);
-							if (!destinationLevel.getBiome(pos).is(IWBiomes.DEADMANS_DESERT)) {
+							if (!destinationLevel.getBiome(pos).is(DEADMANS_DESERT)) {
 								// Move the target position at least 10 blocks away from the edge of the chunk
 								// Determine if 10 should be added or subtracted to either the X or Z coordinate
 								int xDiff = Math.abs(pos.getX() - x);

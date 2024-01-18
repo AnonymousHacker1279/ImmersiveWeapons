@@ -6,7 +6,7 @@ import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.MobType;
 import net.minecraft.world.entity.ai.attributes.*;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.*;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
@@ -36,8 +36,6 @@ public class DebugTracingData {
 	public static float lastDamageTaken = 0;
 
 	public static float gunBaseVelocity = 0;
-	public static Item selectedAmmo = Items.AIR;
-	public static Item selectedPowder = Items.AIR;
 	public static double liveBulletDamage = 0;
 	public static boolean isBulletCritical = false;
 
@@ -75,12 +73,8 @@ public class DebugTracingData {
 			if (heldItem.getItem() instanceof AbstractGunItem gunItem) {
 				// Round to nearest 0.1
 				gunBaseVelocity = Math.round(gunItem.getBaseFireVelocity() * 10.0f) / 10.0f;
-				selectedAmmo = gunItem.findAmmo(heldItem, player).getItem();
-				selectedPowder = gunItem.findPowder(heldItem, player).getItem();
 			} else {
 				gunBaseVelocity = 0;
-				selectedAmmo = Items.AIR;
-				selectedPowder = Items.AIR;
 			}
 
 			GENERAL_DAMAGE_BONUS = 0;

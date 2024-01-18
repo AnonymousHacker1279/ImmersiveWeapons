@@ -24,6 +24,7 @@ import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.*;
+import net.minecraftforge.common.Tags.EntityTypes;
 import tech.anonymoushacker1279.immersiveweapons.blockentity.BearTrapBlockEntity;
 import tech.anonymoushacker1279.immersiveweapons.init.SoundEventRegistry;
 import tech.anonymoushacker1279.immersiveweapons.world.level.IWDamageSources;
@@ -31,7 +32,8 @@ import tech.anonymoushacker1279.immersiveweapons.world.level.IWDamageSources;
 public class BearTrapBlock extends Block implements SimpleWaterloggedBlock, EntityBlock {
 
 	public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
-	protected static final VoxelShape SHAPE = Block.box(0.0D, 0.0D, 0.0D, 16.0D, 2.0D, 16.0D);
+	private static final VoxelShape SHAPE = Block.box(0.0D, 0.0D, 0.0D, 16.0D, 2.0D, 16.0D);
+	private static final VoxelShape COLLISION_SHAPE = Shapes.empty();
 	public static final BooleanProperty TRIGGERED = BooleanProperty.create("triggered");
 	public static final BooleanProperty VINES = BooleanProperty.create("vines");
 
@@ -112,7 +114,7 @@ public class BearTrapBlock extends Block implements SimpleWaterloggedBlock, Enti
 	@SuppressWarnings("deprecation")
 	@Override
 	public VoxelShape getCollisionShape(BlockState state, BlockGetter getter, BlockPos pos, CollisionContext collisionContext) {
-		return Shapes.empty();
+		return COLLISION_SHAPE;
 	}
 
 	/**
@@ -155,7 +157,7 @@ public class BearTrapBlock extends Block implements SimpleWaterloggedBlock, Enti
 	@SuppressWarnings("deprecation")
 	@Override
 	public void entityInside(BlockState state, Level level, BlockPos pos, Entity entity) {
-		if (entity instanceof Player player && player.isCreative()) {
+		if (entity instanceof Player player && player.isCreative() || entity.getType().is(EntityTypes.BOSSES)) {
 			return;
 		}
 

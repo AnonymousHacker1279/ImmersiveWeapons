@@ -1,6 +1,8 @@
 package tech.anonymoushacker1279.immersiveweapons.init;
 
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.ItemTags;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.*;
 import net.minecraft.world.item.Item.Properties;
 import net.minecraft.world.item.crafting.Ingredient;
@@ -8,8 +10,6 @@ import net.minecraftforge.common.ForgeSpawnEggItem;
 import net.minecraftforge.common.Tags;
 import net.minecraftforge.registries.*;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
-import tech.anonymoushacker1279.immersiveweapons.data.tags.groups.forge.ForgeItemTagGroups;
-import tech.anonymoushacker1279.immersiveweapons.data.tags.groups.immersiveweapons.IWItemTagGroups;
 import tech.anonymoushacker1279.immersiveweapons.entity.vehicle.CustomBoatType;
 import tech.anonymoushacker1279.immersiveweapons.item.*;
 import tech.anonymoushacker1279.immersiveweapons.item.AccessoryItem.AccessorySlot;
@@ -39,6 +39,13 @@ public class ItemRegistry {
 
 	// Item Register
 	public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, ImmersiveWeapons.MOD_ID);
+
+	public static final TagKey<Item> COBALT_INGOTS = ItemTags.create(new ResourceLocation("forge", "ingots/cobalt"));
+	public static final TagKey<Item> MOLTEN_INGOTS = ItemTags.create(new ResourceLocation(ImmersiveWeapons.MOD_ID, "ingots/molten"));
+	public static final TagKey<Item> TESLA_INGOTS = ItemTags.create(new ResourceLocation(ImmersiveWeapons.MOD_ID, "ingots/tesla"));
+	public static final TagKey<Item> VENTUS_SHARDS = ItemTags.create(new ResourceLocation(ImmersiveWeapons.MOD_ID, "shards/ventus"));
+	public static final TagKey<Item> ASTRAL_INGOTS = ItemTags.create(new ResourceLocation(ImmersiveWeapons.MOD_ID, "ingots/astral"));
+	public static final TagKey<Item> STARSTORM_INGOTS = ItemTags.create(new ResourceLocation(ImmersiveWeapons.MOD_ID, "ingots/starstorm"));
 
 	// Tools
 	public static final RegistryObject<MoltenSword> MOLTEN_SWORD = ITEMS.register("molten_sword", () -> new MoltenSword(CustomItemMaterials.MOLTEN, 3, -2.4f, new Properties().fireResistant()));
@@ -84,14 +91,14 @@ public class ItemRegistry {
 	public static final RegistryObject<PikeItem> GOLDEN_PIKE = ITEMS.register("golden_pike", () -> new PikeItem(Tiers.GOLD, new Properties(), 4, -2.6d, Ingredient.of(Tags.Items.INGOTS_GOLD)));
 	public static final RegistryObject<PikeItem> COPPER_PIKE = ITEMS.register("copper_pike", () -> new PikeItem(CustomItemMaterials.COPPER, new Properties(), 4, -2.6d, Ingredient.of(Tags.Items.INGOTS_COPPER)));
 	public static final RegistryObject<PikeItem> IRON_PIKE = ITEMS.register("iron_pike", () -> new PikeItem(Tiers.IRON, new Properties(), 4, -2.6d, Ingredient.of(Tags.Items.INGOTS_IRON)));
-	public static final RegistryObject<PikeItem> COBALT_PIKE = ITEMS.register("cobalt_pike", () -> new PikeItem(CustomItemMaterials.COBALT, new Properties(), 4, -2.6d, Ingredient.of(ForgeItemTagGroups.COBALT_INGOTS)));
+	public static final RegistryObject<PikeItem> COBALT_PIKE = ITEMS.register("cobalt_pike", () -> new PikeItem(CustomItemMaterials.COBALT, new Properties(), 4, -2.6d, Ingredient.of(COBALT_INGOTS)));
 	public static final RegistryObject<PikeItem> DIAMOND_PIKE = ITEMS.register("diamond_pike", () -> new PikeItem(Tiers.DIAMOND, new Properties(), 4, -2.6d, Ingredient.of(Tags.Items.GEMS_DIAMOND)));
 	public static final RegistryObject<PikeItem> NETHERITE_PIKE = ITEMS.register("netherite_pike", () -> new PikeItem(Tiers.NETHERITE, new Properties().fireResistant(), 4, -2.6d, Ingredient.of(Tags.Items.INGOTS_NETHERITE)));
-	public static final RegistryObject<MoltenPikeItem> MOLTEN_PIKE = ITEMS.register("molten_pike", () -> new MoltenPikeItem(CustomItemMaterials.MOLTEN, new Properties().fireResistant(), 4, -2.6d, Ingredient.of(IWItemTagGroups.MOLTEN_INGOTS)));
-	public static final RegistryObject<TeslaPikeItem> TESLA_PIKE = ITEMS.register("tesla_pike", () -> new TeslaPikeItem(CustomItemMaterials.TESLA, new Properties().fireResistant(), 4, -2.6d, Ingredient.of(IWItemTagGroups.TESLA_INGOTS)));
-	public static final RegistryObject<VentusPikeItem> VENTUS_PIKE = ITEMS.register("ventus_pike", () -> new VentusPikeItem(CustomItemMaterials.VENTUS, new Properties().fireResistant(), 4, -2.2d, Ingredient.of(IWItemTagGroups.VENTUS_SHARDS)));
-	public static final RegistryObject<PikeItem> ASTRAL_PIKE = ITEMS.register("astral_pike", () -> new PikeItem(CustomItemMaterials.ASTRAL, new Properties(), 4, -1.7d, Ingredient.of(IWItemTagGroups.ASTRAL_INGOTS)));
-	public static final RegistryObject<PikeItem> STARSTORM_PIKE = ITEMS.register("starstorm_pike", () -> new PikeItem(CustomItemMaterials.STARSTORM, new Properties(), 4, -2.6d, Ingredient.of(IWItemTagGroups.STARSTORM_INGOTS)));
+	public static final RegistryObject<MoltenPikeItem> MOLTEN_PIKE = ITEMS.register("molten_pike", () -> new MoltenPikeItem(CustomItemMaterials.MOLTEN, new Properties().fireResistant(), 4, -2.6d, Ingredient.of(MOLTEN_INGOTS)));
+	public static final RegistryObject<TeslaPikeItem> TESLA_PIKE = ITEMS.register("tesla_pike", () -> new TeslaPikeItem(CustomItemMaterials.TESLA, new Properties().fireResistant(), 4, -2.6d, Ingredient.of(TESLA_INGOTS)));
+	public static final RegistryObject<VentusPikeItem> VENTUS_PIKE = ITEMS.register("ventus_pike", () -> new VentusPikeItem(CustomItemMaterials.VENTUS, new Properties().fireResistant(), 4, -2.2d, Ingredient.of(VENTUS_SHARDS)));
+	public static final RegistryObject<PikeItem> ASTRAL_PIKE = ITEMS.register("astral_pike", () -> new PikeItem(CustomItemMaterials.ASTRAL, new Properties(), 4, -1.7d, Ingredient.of(ASTRAL_INGOTS)));
+	public static final RegistryObject<PikeItem> STARSTORM_PIKE = ITEMS.register("starstorm_pike", () -> new PikeItem(CustomItemMaterials.STARSTORM, new Properties(), 4, -2.6d, Ingredient.of(STARSTORM_INGOTS)));
 	public static final RegistryObject<SimplePistolItem> FLINTLOCK_PISTOL = ITEMS.register("flintlock_pistol", () -> new SimplePistolItem(new Properties().durability(499)));
 	public static final RegistryObject<SimpleShotgunItem> BLUNDERBUSS = ITEMS.register("blunderbuss", () -> new SimpleShotgunItem(new Properties().durability(449)));
 	public static final RegistryObject<MusketItem> MUSKET = ITEMS.register("musket", () -> new MusketItem(new Properties().durability(499), false));
@@ -103,14 +110,14 @@ public class ItemRegistry {
 	public static final RegistryObject<GauntletItem> GOLDEN_GAUNTLET = ITEMS.register("golden_gauntlet", () -> new GauntletItem(Tiers.GOLD, 2, -2.3f, new Properties(), 0.35f, 0, Ingredient.of(Tags.Items.INGOTS_GOLD)));
 	public static final RegistryObject<GauntletItem> COPPER_GAUNTLET = ITEMS.register("copper_gauntlet", () -> new GauntletItem(CustomItemMaterials.COPPER, 2, -2.3f, new Properties(), 0.45f, 0, Ingredient.of(Tags.Items.INGOTS_COPPER)));
 	public static final RegistryObject<GauntletItem> IRON_GAUNTLET = ITEMS.register("iron_gauntlet", () -> new GauntletItem(Tiers.IRON, 2, -2.3f, new Properties(), 0.55f, 0, Ingredient.of(Tags.Items.INGOTS_IRON)));
-	public static final RegistryObject<GauntletItem> COBALT_GAUNTLET = ITEMS.register("cobalt_gauntlet", () -> new GauntletItem(CustomItemMaterials.COBALT, 2, -2.3f, new Properties(), 0.60f, 0, Ingredient.of(ForgeItemTagGroups.COBALT_INGOTS)));
+	public static final RegistryObject<GauntletItem> COBALT_GAUNTLET = ITEMS.register("cobalt_gauntlet", () -> new GauntletItem(CustomItemMaterials.COBALT, 2, -2.3f, new Properties(), 0.60f, 0, Ingredient.of(COBALT_INGOTS)));
 	public static final RegistryObject<GauntletItem> DIAMOND_GAUNTLET = ITEMS.register("diamond_gauntlet", () -> new GauntletItem(Tiers.DIAMOND, 2, -2.3f, new Properties(), 0.75f, 1, Ingredient.of(Tags.Items.GEMS_DIAMOND)));
 	public static final RegistryObject<GauntletItem> NETHERITE_GAUNTLET = ITEMS.register("netherite_gauntlet", () -> new GauntletItem(Tiers.NETHERITE, 2, -2.3f, new Properties(), 0.85f, 1, Ingredient.of(Tags.Items.INGOTS_NETHERITE)));
-	public static final RegistryObject<MoltenGauntletItem> MOLTEN_GAUNTLET = ITEMS.register("molten_gauntlet", () -> new MoltenGauntletItem(CustomItemMaterials.MOLTEN, 2, -2.3f, new Properties(), 0.95f, 2, Ingredient.of(IWItemTagGroups.MOLTEN_INGOTS)));
-	public static final RegistryObject<TeslaGauntletItem> TESLA_GAUNTLET = ITEMS.register("tesla_gauntlet", () -> new TeslaGauntletItem(CustomItemMaterials.TESLA, 2, -2.3f, new Properties(), 0.95f, 2, Ingredient.of(IWItemTagGroups.TESLA_INGOTS)));
-	public static final RegistryObject<VentusGauntletItem> VENTUS_GAUNTLET = ITEMS.register("ventus_gauntlet", () -> new VentusGauntletItem(CustomItemMaterials.VENTUS, 2, -1.9f, new Properties(), 0.95f, 2, Ingredient.of(IWItemTagGroups.VENTUS_SHARDS)));
-	public static final RegistryObject<GauntletItem> ASTRAL_GAUNTLET = ITEMS.register("astral_gauntlet", () -> new GauntletItem(CustomItemMaterials.ASTRAL, 2, -1.4f, new Properties(), 0.95f, 2, Ingredient.of(IWItemTagGroups.ASTRAL_INGOTS)));
-	public static final RegistryObject<GauntletItem> STARSTORM_GAUNTLET = ITEMS.register("starstorm_gauntlet", () -> new GauntletItem(CustomItemMaterials.STARSTORM, 2, -2.3f, new Properties(), 0.95f, 2, Ingredient.of(IWItemTagGroups.STARSTORM_INGOTS)));
+	public static final RegistryObject<MoltenGauntletItem> MOLTEN_GAUNTLET = ITEMS.register("molten_gauntlet", () -> new MoltenGauntletItem(CustomItemMaterials.MOLTEN, 2, -2.3f, new Properties(), 0.95f, 2, Ingredient.of(MOLTEN_INGOTS)));
+	public static final RegistryObject<TeslaGauntletItem> TESLA_GAUNTLET = ITEMS.register("tesla_gauntlet", () -> new TeslaGauntletItem(CustomItemMaterials.TESLA, 2, -2.3f, new Properties(), 0.95f, 2, Ingredient.of(TESLA_INGOTS)));
+	public static final RegistryObject<VentusGauntletItem> VENTUS_GAUNTLET = ITEMS.register("ventus_gauntlet", () -> new VentusGauntletItem(CustomItemMaterials.VENTUS, 2, -1.9f, new Properties(), 0.95f, 2, Ingredient.of(VENTUS_SHARDS)));
+	public static final RegistryObject<GauntletItem> ASTRAL_GAUNTLET = ITEMS.register("astral_gauntlet", () -> new GauntletItem(CustomItemMaterials.ASTRAL, 2, -1.4f, new Properties(), 0.95f, 2, Ingredient.of(ASTRAL_INGOTS)));
+	public static final RegistryObject<GauntletItem> STARSTORM_GAUNTLET = ITEMS.register("starstorm_gauntlet", () -> new GauntletItem(CustomItemMaterials.STARSTORM, 2, -2.3f, new Properties(), 0.95f, 2, Ingredient.of(STARSTORM_INGOTS)));
 	public static final RegistryObject<MeteorStaffItem> METEOR_STAFF = ITEMS.register("meteor_staff", () -> new MeteorStaffItem(new Properties().durability(199)));
 	public static final RegistryObject<CursedSightStaffItem> CURSED_SIGHT_STAFF = ITEMS.register("cursed_sight_staff", () -> new CursedSightStaffItem(new Properties().durability(149)));
 	public static final RegistryObject<IceBowItem> ICE_BOW = ITEMS.register("ice_bow", () -> new IceBowItem(new Properties().durability(149)));

@@ -4,9 +4,11 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.model.HumanoidModel.ArmPose;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.tags.ItemTags;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.*;
@@ -19,7 +21,6 @@ import net.minecraftforge.client.extensions.common.IClientItemExtensions;
 import net.minecraftforge.event.ForgeEventFactory;
 import net.minecraftforge.network.PacketDistributor;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
-import tech.anonymoushacker1279.immersiveweapons.data.tags.groups.immersiveweapons.IWItemTagGroups;
 import tech.anonymoushacker1279.immersiveweapons.entity.projectile.BulletEntity;
 import tech.anonymoushacker1279.immersiveweapons.event.game_effects.AccessoryManager;
 import tech.anonymoushacker1279.immersiveweapons.init.*;
@@ -34,9 +35,9 @@ import java.util.function.Predicate;
 
 public abstract class AbstractGunItem extends Item implements Vanishable {
 
-	protected static final Predicate<ItemStack> MUSKET_BALLS = (stack) -> stack.is(IWItemTagGroups.MUSKET_BALLS);
-	protected static final Predicate<ItemStack> FLARES = (stack) -> stack.is(IWItemTagGroups.FLARES);
-	protected static final Predicate<ItemStack> CANNONBALLS = (stack) -> stack.is(IWItemTagGroups.CANNONBALLS);
+	protected static final Predicate<ItemStack> MUSKET_BALLS = (stack) -> stack.is(ItemTags.create(new ResourceLocation(ImmersiveWeapons.MOD_ID, "projectiles/musket_balls")));
+	protected static final Predicate<ItemStack> FLARES = (stack) -> stack.is(ItemTags.create(new ResourceLocation(ImmersiveWeapons.MOD_ID, "projectiles/flares")));
+	protected static final Predicate<ItemStack> CANNONBALLS = (stack) -> stack.is(ItemTags.create(new ResourceLocation(ImmersiveWeapons.MOD_ID, "projectiles/cannonballs")));
 	protected static final Predicate<ItemStack> FLAMMABLE_POWDERS = (stack) -> isPowder(stack.getItem());
 
 	/**
@@ -155,7 +156,7 @@ public abstract class AbstractGunItem extends Item implements Vanishable {
 						}
 
 						enchantmentLevel = gun.getEnchantmentLevel(EnchantmentRegistry.IMPACT.get());
-						int kb = getKnockbackLevel();
+						int kb = getKnockbackLevel() + bulletEntity.getKnockback();
 						if (enchantmentLevel > 0) {
 							kb += enchantmentLevel;
 						}

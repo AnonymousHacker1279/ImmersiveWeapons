@@ -200,7 +200,7 @@ public class FamilyGenerator extends RecipeGenerator {
 			}
 
 			if (family.smooth() != null) {
-				RecipeGenerator.createSmeltingRecipe(
+				createSmeltingRecipe(
 						List.of(family.bricks().get()),
 						family.smooth().get(),
 						0.1f,
@@ -303,23 +303,23 @@ public class FamilyGenerator extends RecipeGenerator {
 						.save(consumer, itemRegistryPath(family.hoe().get()));
 
 				// Gauntlet
-				RecipeGenerator.createGauntlet(family.gauntlet().get(), material);
+				createGauntlet(family.gauntlet().get(), material);
 
 				if (family.pikeHead() != null) {
 					// Pike
-					RecipeGenerator.createPike(family.pike().get(), material, family.pikeHead().get());
+					createPike(family.pike().get(), material, family.pikeHead().get());
 
 					// Pike head
-					RecipeGenerator.createPikeHead(family.pikeHead().get(), material, family.nugget());
+					createPikeHead(family.pikeHead().get(), material, family.nugget());
 				}
 			}
 
 			if (ToolFamilies.FAMILIES_USE_NUGGETS_FOR_PROJECTILES.contains(family)) {
 				// Arrow
-				RecipeGenerator.createArrow(family.arrow().get(), family.nugget());
+				createArrow(family.arrow().get(), family.nugget());
 			} else {
 				// Arrow
-				RecipeGenerator.createArrow(family.arrow().get(), family.material());
+				createArrow(family.arrow().get(), family.material());
 			}
 		}
 	}
@@ -394,20 +394,20 @@ public class FamilyGenerator extends RecipeGenerator {
 			TagKey<Item> material = family.material();
 
 			// Gauntlet
-			RecipeGenerator.createGauntlet(family.gauntlet().get(), material);
+			createGauntlet(family.gauntlet().get(), material);
 
 			// Pike
-			RecipeGenerator.createPike(family.pike().get(), material, family.pikeHead().get());
+			createPike(family.pike().get(), material, family.pikeHead().get());
 
 			// Pike head
-			RecipeGenerator.createPikeHead(family.pikeHead().get(), material, family.nugget());
+			createPikeHead(family.pikeHead().get(), material, family.nugget());
 
 			if (VanillaTieredItemFamilies.FAMILIES_USE_NUGGETS_FOR_PROJECTILES.contains(family)) {
 				// Arrow
-				RecipeGenerator.createArrow(family.arrow().get(), family.nugget());
+				createArrow(family.arrow().get(), family.nugget());
 			} else {
 				// Arrow
-				RecipeGenerator.createArrow(family.arrow().get(), family.material());
+				createArrow(family.arrow().get(), family.material());
 			}
 		}
 	}

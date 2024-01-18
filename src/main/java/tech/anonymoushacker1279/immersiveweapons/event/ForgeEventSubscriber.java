@@ -4,6 +4,8 @@ import net.minecraft.advancements.Advancement;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
@@ -11,6 +13,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.stats.Stats;
+import net.minecraft.world.damagesource.DamageType;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.*;
@@ -23,6 +26,7 @@ import net.minecraft.world.entity.projectile.ThrownTrident;
 import net.minecraft.world.item.*;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
@@ -56,8 +60,6 @@ import tech.anonymoushacker1279.immersiveweapons.block.decoration.StarstormCryst
 import tech.anonymoushacker1279.immersiveweapons.client.gui.IWOverlays;
 import tech.anonymoushacker1279.immersiveweapons.client.gui.overlays.DebugTracingData;
 import tech.anonymoushacker1279.immersiveweapons.client.gui.overlays.DebugTracingData.DebugDataPacketHandler;
-import tech.anonymoushacker1279.immersiveweapons.data.biomes.IWBiomes;
-import tech.anonymoushacker1279.immersiveweapons.data.damage_types.IWDamageTypes;
 import tech.anonymoushacker1279.immersiveweapons.entity.monster.StarmiteEntity;
 import tech.anonymoushacker1279.immersiveweapons.entity.projectile.MeteorEntity;
 import tech.anonymoushacker1279.immersiveweapons.event.game_effects.*;
@@ -81,6 +83,8 @@ public class ForgeEventSubscriber {
 			UUID.fromString("c74619c0-b953-4ee7-a3d7-adf974c22d7d"),
 			"Jonny's Curse speed modifier", -0.25d, Operation.MULTIPLY_BASE);
 
+	private static final ResourceKey<Biome> DEADMANS_DESERT = ResourceKey.create(Registries.BIOME, new ResourceLocation(ImmersiveWeapons.MOD_ID, "deadmans_desert"));
+	private static final ResourceKey<DamageType> METEOR = ResourceKey.create(Registries.DAMAGE_TYPE, new ResourceLocation(ImmersiveWeapons.MOD_ID, "meteor"));
 
 	@SubscribeEvent
 	public static void registerGuiOverlaysEvent(RegisterGuiOverlaysEvent event) {
@@ -161,7 +165,7 @@ public class ForgeEventSubscriber {
 		Player player = event.player;
 		// Only check every 8 ticks, and make sure the player is not in creative mode
 		if (player.tickCount % 8 == 0 && !player.isCreative()) {
-			if (player.level().getBiome(player.blockPosition()).is(IWBiomes.DEADMANS_DESERT)) {
+			if (player.level().getBiome(player.blockPosition()).is(DEADMANS_DESERT)) {
 				// If the player is under the effects of Celestial Protection, they are immune to damage
 				if (!player.hasEffect(EffectRegistry.CELESTIAL_PROTECTION_EFFECT.get())) {
 					player.hurt(IWDamageSources.DEADMANS_DESERT_ATMOSPHERE, 1);
@@ -270,7 +274,7 @@ public class ForgeEventSubscriber {
 			source = sourceEntity;
 		}
 
-		if (event.getSource().is(IWDamageTypes.METEOR_KEY) && event.getSource().getDirectEntity() instanceof MeteorEntity meteor && !meteor.getPersistentData().isEmpty()) {
+		if (event.getSource().is(METEOR) && event.getSource().getDirectEntity() instanceof MeteorEntity meteor && !meteor.getPersistentData().isEmpty()) {
 			// Check for a "target" tag, and check if it matches the damaged entity's UUID
 			if (!meteor.getPersistentData().getUUID("target").equals(damagedEntity.getUUID())) {
 				event.setCanceled(true);

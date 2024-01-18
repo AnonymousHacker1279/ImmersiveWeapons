@@ -21,6 +21,8 @@ import tech.anonymoushacker1279.immersiveweapons.init.ItemRegistry;
 import tech.anonymoushacker1279.immersiveweapons.item.*;
 import tech.anonymoushacker1279.immersiveweapons.item.armor.*;
 import tech.anonymoushacker1279.immersiveweapons.item.gauntlet.GauntletItem;
+import tech.anonymoushacker1279.immersiveweapons.item.gun.AbstractGunItem;
+import tech.anonymoushacker1279.immersiveweapons.item.gun.AbstractGunItem.PowderType;
 import tech.anonymoushacker1279.immersiveweapons.item.pike.PikeItem;
 import tech.anonymoushacker1279.immersiveweapons.item.projectile.*;
 import tech.anonymoushacker1279.immersiveweapons.item.projectile.ThrowableItem.ThrowableType;
@@ -89,6 +91,41 @@ public class TooltipHandler {
 		}
 		if (stack.getItem() == ItemRegistry.HAND_CANNON.get()) {
 			event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.hand_cannon").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
+		}
+		if (stack.getItem() instanceof AbstractGunItem abstractGunItem && event.getEntity() != null) {
+			List<Component> shiftTooltipInfo = new ArrayList<>(10);
+			shiftTooltipInfo.add(CommonComponents.EMPTY);
+
+			shiftTooltipInfo.add(Component.translatable("tooltip.immersiveweapons.gun.meta.base_velocity", abstractGunItem.getBaseFireVelocity()).withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC));
+
+			int reloadTime = abstractGunItem.getCooldown() / 20;
+			shiftTooltipInfo.add(Component.translatable("tooltip.immersiveweapons.gun.meta.base_reload_time", reloadTime).withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC));
+
+			if (abstractGunItem.getKnockbackLevel() > 0) {
+				shiftTooltipInfo.add(Component.translatable("tooltip.immersiveweapons.gun.meta.base_knockback", abstractGunItem.getKnockbackLevel()).withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC));
+			}
+
+			ItemStack powder = abstractGunItem.findPowder(stack, event.getEntity());
+			String powderName = powder == ItemStack.EMPTY ? "None" : powder.getHoverName().getString();
+			String velocityModifier = "0%";
+			ChatFormatting powderColor = ChatFormatting.GRAY;
+			if (powder != ItemStack.EMPTY) {
+				PowderType type = AbstractGunItem.getPowderFromItem(powder.getItem());
+				velocityModifier = (float) Math.round(type.getVelocityModifier() * 1000f) / 10f + "%";
+			} else {
+				powderColor = ChatFormatting.RED;
+			}
+
+			shiftTooltipInfo.add(Component.translatable("tooltip.immersiveweapons.gun.meta.selected_powder", powderName, velocityModifier).withStyle(powderColor, ChatFormatting.ITALIC));
+
+
+			ItemStack ammo = abstractGunItem.findAmmo(stack, event.getEntity());
+			String ammoName = ammo == ItemStack.EMPTY ? "None" : ammo.getHoverName().getString();
+			ChatFormatting ammoColor = ammo == ItemStack.EMPTY ? ChatFormatting.RED : ChatFormatting.GRAY;
+
+			shiftTooltipInfo.add(Component.translatable("tooltip.immersiveweapons.gun.meta.selected_ammo", ammoName).withStyle(ammoColor, ChatFormatting.ITALIC));
+
+			addShiftTooltip(event.getToolTip(), shiftTooltipInfo);
 		}
 
 		// Bows
