@@ -25,7 +25,7 @@ import tech.anonymoushacker1279.immersiveweapons.init.ItemRegistry;
 @EventBusSubscriber(modid = ImmersiveWeapons.MOD_ID, bus = Bus.FORGE)
 public class RecoveryStaffItem extends Item implements SummoningStaff {
 
-	private float healAmount = 0.0f;
+	private float healAmount = 4.0f;
 
 	public RecoveryStaffItem(Properties properties) {
 		super(properties);

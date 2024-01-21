@@ -19,7 +19,7 @@ import tech.anonymoushacker1279.immersiveweapons.config.CommonConfig;
 public abstract class ItemStackMixin {
 
 	@ModifyArg(
-			method = "lambda$appendEnchantmentNames$13",
+			method = "lambda$appendEnchantmentNames$16",
 			at = @At(
 					value = "INVOKE",
 					target = "Ljava/util/List;add(Ljava/lang/Object;)Z"

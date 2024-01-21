@@ -15,11 +15,11 @@ import net.minecraft.stats.Stats;
 import net.minecraft.world.damagesource.DamageType;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
-import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.*;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation;
 import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.entity.monster.CaveSpider;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.entity.projectile.ThrownTrident;
@@ -300,6 +300,7 @@ public class ForgeEventSubscriber {
 
 	@SubscribeEvent
 	public static void livingDeathEvent(LivingDeathEvent event) {
+		LivingEntity dyingEntity = event.getEntity();
 
 		if (event.getSource().getEntity() instanceof Player player) {
 			// Handle charging of cursed accessories on kill
@@ -325,6 +326,18 @@ public class ForgeEventSubscriber {
 			ItemStack weapon = player.getItemInHand(player.getUsedItemHand());
 			if (KillCountWeapon.hasKillCount(weapon)) {
 				KillCountWeapon.incrementKillCount(weapon);
+			}
+		}
+
+		if (dyingEntity.getTags().contains("ChampionTowerMinibossSpider")) {
+			Level level = dyingEntity.level();
+			for (int i = 0; i < 10; i++) {
+				CaveSpider spider = EntityType.CAVE_SPIDER.create(level);
+				if (spider != null) {
+					spider.moveTo(dyingEntity.getX(), dyingEntity.getY(), dyingEntity.getZ(), dyingEntity.getYRot(), dyingEntity.getXRot());
+					spider.addEffect(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, 20, 4, true, false));
+					level.addFreshEntity(spider);
+				}
 			}
 		}
 	}

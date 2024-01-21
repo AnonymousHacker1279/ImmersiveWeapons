@@ -17,6 +17,7 @@ import tech.anonymoushacker1279.immersiveweapons.data.models.ItemModelGenerator;
 import tech.anonymoushacker1279.immersiveweapons.data.particles.ParticleDescriptionGenerator;
 import tech.anonymoushacker1279.immersiveweapons.data.recipes.families.FamilyGenerator;
 import tech.anonymoushacker1279.immersiveweapons.data.sounds.SoundGenerator;
+import tech.anonymoushacker1279.immersiveweapons.data.structures.StructureUpdater;
 import tech.anonymoushacker1279.immersiveweapons.data.tags.*;
 
 import java.util.concurrent.CompletableFuture;
@@ -57,5 +58,6 @@ public class CustomDataGenerator {
 		generator.addProvider(event.includeServer(), datapackRegistriesGenerator);
 		generator.addProvider(event.includeServer(), new BiomeTagsGenerator(output, datapackRegistriesGenerator.getRegistryProvider(), existingFileHelper));
 		generator.addProvider(event.includeServer(), new DamageTypeTagsGenerator(output, datapackRegistriesGenerator.getRegistryProvider(), existingFileHelper));
+		generator.addProvider(event.includeServer(), new StructureUpdater(existingFileHelper, output));
 	}
 }
