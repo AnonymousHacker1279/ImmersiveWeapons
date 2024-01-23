@@ -22,6 +22,7 @@ import org.jetbrains.annotations.Nullable;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.client.gui.overlays.DebugTracingData;
 import tech.anonymoushacker1279.immersiveweapons.client.particle.bullet_impact.BulletImpactParticleOptions;
+import tech.anonymoushacker1279.immersiveweapons.config.ClientConfig;
 import tech.anonymoushacker1279.immersiveweapons.config.CommonConfig;
 import tech.anonymoushacker1279.immersiveweapons.init.*;
 import tech.anonymoushacker1279.immersiveweapons.item.AccessoryItem;
@@ -178,7 +179,7 @@ public class BulletEntity extends CustomArrowEntity implements HitEffectUtils {
 			serverLevel.sendParticles(
 					ParticleTypesRegistry.BLOOD_PARTICLE.get(),
 					position().x, position().y, position().z,
-					16,
+					ClientConfig.gunShotBloodParticles,
 					GeneralUtilities.getRandomNumber(-0.03d, 0.03d),
 					GeneralUtilities.getRandomNumber(-0.03d, 0.03d),
 					GeneralUtilities.getRandomNumber(-0.03d, 0.03d),

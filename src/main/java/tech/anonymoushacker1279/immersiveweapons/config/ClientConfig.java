@@ -16,4 +16,7 @@ public class ClientConfig {
 
 	@ConfigEntry(comment = "Render smoke grenade particles at 66% of the regular size, spawn 3x more, and add translucency. This will negatively impact performance, but make smoke grenades appear more realistic.", group = "Graphics")
 	public static boolean fancySmokeGrenadeParticles = false;
+
+	@ConfigEntry(comment = "Set the number of blood particles created when entities are shot", group = "Graphics", min = 0, max = 128)
+	public static int gunShotBloodParticles = 16;
 }

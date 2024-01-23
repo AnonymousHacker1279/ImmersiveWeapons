@@ -671,6 +671,7 @@
   "immersiveweapons.cobaltconfig.flintlockPistolFireVelocity": "Flintlock Pistol Fire Velocity",
   "immersiveweapons.cobaltconfig.forceSmokeGrenadeParticles": "Force Smoke Grenade Particles",
   "immersiveweapons.cobaltconfig.gunCritChance": "Gun Crit Chance",
+  "immersiveweapons.cobaltconfig.gunShotBloodParticles": "Gun Shot Blood Particles",
   "immersiveweapons.cobaltconfig.handCannonFireInaccuracy": "Hand Cannon Fire Inaccuracy",
   "immersiveweapons.cobaltconfig.handCannonFireVelocity": "Hand Cannon Fire Velocity",
   "immersiveweapons.cobaltconfig.infiniteAmmoOnAllTiers": "Infinite Ammo On All Tiers",
