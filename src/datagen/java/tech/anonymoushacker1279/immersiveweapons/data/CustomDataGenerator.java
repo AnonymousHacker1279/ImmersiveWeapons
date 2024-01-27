@@ -48,7 +48,7 @@ public class CustomDataGenerator {
 		// Server data
 		generator.addProvider(event.includeServer(), new AdvancementsGenerator(output, lookupProvider, existingFileHelper));
 		generator.addProvider(event.includeServer(), new LootTableGenerator(output));
-		generator.addProvider(event.includeServer(), new FamilyGenerator(output, lookupProvider));
+		generator.addProvider(event.includeServer(), new FamilyGenerator(output));
 		BlockTagsGenerator blockTagsGenerator = new BlockTagsGenerator(output, lookupProvider, existingFileHelper);
 		generator.addProvider(event.includeServer(), blockTagsGenerator);
 		generator.addProvider(event.includeServer(), new ItemTagsGenerator(output, lookupProvider, blockTagsGenerator, existingFileHelper));

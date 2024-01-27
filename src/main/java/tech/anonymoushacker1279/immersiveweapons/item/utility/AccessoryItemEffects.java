@@ -103,7 +103,7 @@ public class AccessoryItemEffects {
 			.addMobEffect(new MobEffectInstance(MobEffects.NIGHT_VISION, 220, 0, true, true));
 	public static final EffectBuilder AGILITY_BRACELET = new EffectBuilder()
 			.addAttributeModifier(AGILITY_BRACELET_SPEED_MODIFIER, Attributes.MOVEMENT_SPEED)
-			.addAttributeModifier(AGILITY_BRACELET_STEP_HEIGHT_MODIFIER, NeoForgeMod.STEP_HEIGHT.value());
+			.addAttributeModifier(AGILITY_BRACELET_STEP_HEIGHT_MODIFIER, NeoForgeMod.STEP_HEIGHT);
 	public static final EffectBuilder BLOODY_CLOTH = new EffectBuilder()
 			.addEffect(EffectType.BLEED_CANCEL_CHANCE, 0.15d)
 			.addEffect(EffectType.BLEED_RESISTANCE, 0.30d);

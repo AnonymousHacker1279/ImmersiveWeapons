@@ -17,6 +17,7 @@ import net.minecraft.world.phys.AABB;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.config.CommonConfig;
 import tech.anonymoushacker1279.immersiveweapons.entity.vehicle.CustomBoatType;
+import tech.anonymoushacker1279.immersiveweapons.item.AccessoryItem;
 import tech.anonymoushacker1279.immersiveweapons.item.materials.CustomArmorMaterials;
 import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
 
@@ -90,6 +91,9 @@ public class PostSetupHandler {
 				Potions.LONG_STRENGTH,
 				Items.FERMENTED_SPIDER_EYE,
 				PotionRegistry.LONG_DEATH_POTION.get());
+
+		// Handle accessory items with deferred attributes
+		AccessoryItem.unwrapDeferredAttributeModifiers();
 
 		// Initialize custom portals
 		CustomPortalBuilder.beginPortal()

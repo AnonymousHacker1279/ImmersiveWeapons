@@ -4,7 +4,6 @@ import com.google.common.collect.ImmutableList;
 import net.minecraft.advancements.Criterion;
 import net.minecraft.advancements.critereon.InventoryChangeTrigger;
 import net.minecraft.advancements.critereon.ItemPredicate;
-import net.minecraft.core.HolderLookup.Provider;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.*;
@@ -28,7 +27,6 @@ import tech.anonymoushacker1279.immersiveweapons.init.*;
 import tech.anonymoushacker1279.immersiveweapons.item.crafting.AmmunitionTableRecipe.MaterialGroup;
 
 import java.util.*;
-import java.util.concurrent.CompletableFuture;
 
 public class RecipeGenerator extends RecipeProvider implements DataGenUtils {
 
@@ -39,8 +37,8 @@ public class RecipeGenerator extends RecipeProvider implements DataGenUtils {
 			BlockItemRegistry.COBALT_ORE_ITEM.get(), BlockItemRegistry.DEEPSLATE_COBALT_ORE_ITEM.get(),
 			ItemRegistry.RAW_COBALT.get());
 
-	public RecipeGenerator(PackOutput output, CompletableFuture<Provider> lookupProvider) {
-		super(output, lookupProvider);
+	public RecipeGenerator(PackOutput output) {
+		super(output);
 		packOutput = output;
 	}
 

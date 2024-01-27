@@ -117,21 +117,21 @@ public class SmokeGrenadeEntity extends ThrowableItemProjectile {
 				switch (blockHitResult.getDirection()) {
 					case UP:
 					case DOWN:
-						y = -y * 0.8d + GeneralUtilities.getRandomNumber(-0.1d, 0.1d);
+						y = -y * 0.4d + GeneralUtilities.getRandomNumber(-0.1d, 0.1d);
 						break;
 					case NORTH:
 					case SOUTH:
-						z = -z * 0.8d + GeneralUtilities.getRandomNumber(-0.1d, 0.1d);
+						z = -z * 0.4d + GeneralUtilities.getRandomNumber(-0.1d, 0.1d);
 						break;
 					case EAST:
 					case WEST:
-						x = -x * 0.8d + GeneralUtilities.getRandomNumber(-0.1d, 0.1d);
+						x = -x * 0.4d + GeneralUtilities.getRandomNumber(-0.1d, 0.1d);
 						break;
 				}
 			} else if (hitResult.getType() == Type.ENTITY) {
-				x = -x * 0.6d + GeneralUtilities.getRandomNumber(-0.1d, 0.1d);
-				y = -y * 0.6d + GeneralUtilities.getRandomNumber(-0.1d, 0.1d);
-				z = -z * 0.6d + GeneralUtilities.getRandomNumber(-0.1d, 0.1d);
+				x = -x * 0.3d + GeneralUtilities.getRandomNumber(-0.1d, 0.1d);
+				y = -y * 0.3d + GeneralUtilities.getRandomNumber(-0.1d, 0.1d);
+				z = -z * 0.3d + GeneralUtilities.getRandomNumber(-0.1d, 0.1d);
 			}
 
 			setDeltaMovement(x, y, z);
