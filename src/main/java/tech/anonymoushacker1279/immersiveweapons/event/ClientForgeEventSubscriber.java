@@ -28,6 +28,8 @@ import tech.anonymoushacker1279.immersiveweapons.init.ItemRegistry;
 import tech.anonymoushacker1279.immersiveweapons.item.AccessoryItem;
 import tech.anonymoushacker1279.immersiveweapons.item.CursedItem;
 import tech.anonymoushacker1279.immersiveweapons.item.gun.data.GunData;
+import tech.anonymoushacker1279.immersiveweapons.item.projectile.ThrowableItem;
+import tech.anonymoushacker1279.immersiveweapons.item.projectile.ThrowableItem.ThrowableType;
 
 @EventBusSubscriber(modid = ImmersiveWeapons.MOD_ID, bus = Bus.FORGE, value = Dist.CLIENT)
 public class ClientForgeEventSubscriber {
@@ -125,12 +127,13 @@ public class ClientForgeEventSubscriber {
 			event.setFOV(GunData.changingPlayerFOV);
 		}
 
-		// Handle FOV change of custom bows
+		// Handle FOV changes with some items
 		if (minecraft.player != null) {
 			Item itemInHand = minecraft.player.getItemInHand(minecraft.player.getUsedItemHand()).getItem();
 			if ((itemInHand == ItemRegistry.ICE_BOW.get()
 					|| itemInHand == ItemRegistry.DRAGONS_BREATH_BOW.get()
-					|| itemInHand == ItemRegistry.AURORA_BOW.get())
+					|| itemInHand == ItemRegistry.AURORA_BOW.get()
+					|| (itemInHand.asItem() instanceof ThrowableItem throwableItem && throwableItem.type == ThrowableType.SMOKE_GRENADE))
 					&& minecraft.player.isUsingItem()) {
 
 				double fov = event.getFOV();

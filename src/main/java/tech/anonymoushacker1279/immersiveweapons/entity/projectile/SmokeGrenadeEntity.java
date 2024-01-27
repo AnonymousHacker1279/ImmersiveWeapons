@@ -3,14 +3,18 @@ package tech.anonymoushacker1279.immersiveweapons.entity.projectile;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundAddEntityPacket;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.projectile.ThrowableItemProjectile;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.phys.HitResult;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.*;
+import net.minecraft.world.phys.HitResult.Type;
 import net.neoforged.neoforge.network.PacketDistributor;
+import org.jetbrains.annotations.Nullable;
 import tech.anonymoushacker1279.immersiveweapons.client.particle.smoke_grenade.SmokeGrenadeParticleOptions;
 import tech.anonymoushacker1279.immersiveweapons.config.ClientConfig;
 import tech.anonymoushacker1279.immersiveweapons.config.CommonConfig;
@@ -21,6 +25,11 @@ import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
 public class SmokeGrenadeEntity extends ThrowableItemProjectile {
 
 	private int color;
+	private boolean stopMoving = false;
+	@Nullable
+	private BlockState inBlockState;
+	public float randomRotation;
+	private int ticksInGround;
 
 	/**
 	 * Constructor for SmokeBombEntity.
@@ -98,10 +107,78 @@ public class SmokeGrenadeEntity extends ThrowableItemProjectile {
 	@Override
 	protected void onHit(HitResult hitResult) {
 		super.onHit(hitResult);
-		if (!level().isClientSide) {
-			PacketDistributor.TRACKING_CHUNK.with(level().getChunkAt(blockPosition()))
-					.send(new SmokeGrenadePayload(getX(), getY(), getZ(), color));
+		if (!stopMoving) {
+			double x = getDeltaMovement().x();
+			double y = getDeltaMovement().y();
+			double z = getDeltaMovement().z();
+
+			if (hitResult.getType() == HitResult.Type.BLOCK) {
+				BlockHitResult blockHitResult = (BlockHitResult) hitResult;
+				switch (blockHitResult.getDirection()) {
+					case UP:
+					case DOWN:
+						y = -y * 0.8d + GeneralUtilities.getRandomNumber(-0.1d, 0.1d);
+						break;
+					case NORTH:
+					case SOUTH:
+						z = -z * 0.8d + GeneralUtilities.getRandomNumber(-0.1d, 0.1d);
+						break;
+					case EAST:
+					case WEST:
+						x = -x * 0.8d + GeneralUtilities.getRandomNumber(-0.1d, 0.1d);
+						break;
+				}
+			} else if (hitResult.getType() == Type.ENTITY) {
+				x = -x * 0.6d + GeneralUtilities.getRandomNumber(-0.1d, 0.1d);
+				y = -y * 0.6d + GeneralUtilities.getRandomNumber(-0.1d, 0.1d);
+				z = -z * 0.6d + GeneralUtilities.getRandomNumber(-0.1d, 0.1d);
+			}
+
+			setDeltaMovement(x, y, z);
+
+			level().playLocalSound(this, SoundEvents.METAL_HIT, SoundSource.NEUTRAL, 1.0f, 0.6F / (GeneralUtilities.getRandomNumber(0.2f, 0.6f) + 0.8F));
+
+			// Spawn particles when it slows down enough
+			if (getDeltaMovement().lengthSqr() < 0.1d) {
+				stopMoving = true;
+				setDeltaMovement(Vec3.ZERO);
+				setNoGravity(true);
+				inBlockState = level().getBlockState(blockPosition());
+
+				if (!level().isClientSide) {
+					PacketDistributor.TRACKING_CHUNK.with(level().getChunkAt(blockPosition()))
+							.send(new SmokeGrenadePayload(getX(), getY(), getZ(), color));
+				}
+			}
 		}
-		kill();
+	}
+
+	@Override
+	public void tick() {
+		super.tick();
+
+		if (inBlockState != null) {
+			if (inBlockState.isAir()) {
+				if (stopMoving) {
+					// Keep falling until it hits the ground
+					setDeltaMovement(getDeltaMovement().x(), getDeltaMovement().y() - getGravity(), getDeltaMovement().z());
+					inBlockState = level().getBlockState(blockPosition());
+				}
+			} else {
+				setDeltaMovement(0, 0, 0);
+				setNoGravity(true);
+				ticksInGround++;
+			}
+
+			if (inBlockState != level().getBlockState(blockPosition())) {
+				inBlockState = null;
+				stopMoving = false;
+				setNoGravity(false);
+			}
+		}
+
+		if (ticksInGround > 300) {
+			kill();
+		}
 	}
 }
