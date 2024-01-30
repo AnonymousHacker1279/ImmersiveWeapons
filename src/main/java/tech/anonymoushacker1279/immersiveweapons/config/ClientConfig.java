@@ -19,4 +19,7 @@ public class ClientConfig {
 
 	@ConfigEntry(comment = "Set the number of blood particles created when entities are shot", group = "Graphics", min = 0, max = 128)
 	public static int gunShotBloodParticles = 16;
+
+	@ConfigEntry(comment = "Make the flash effect black instead of white", group = "Graphics")
+	public static boolean darkModeFlashbangs = false;
 }

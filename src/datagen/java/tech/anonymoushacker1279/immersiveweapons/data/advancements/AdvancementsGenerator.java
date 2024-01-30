@@ -849,6 +849,15 @@ public class AdvancementsGenerator extends AdvancementProvider {
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemPredicate.Builder.item().of(IWItemTagGroups.SMOKE_GRENADES)))
 				.save(consumer, "immersiveweapons:smoke_grenade");
 
+		Builder.advancement().parent(smallPartsTable)
+				.display(ItemRegistry.FLASHBANG.get(),
+						Component.translatable("advancements.immersiveweapons.flashbang.title"),
+						Component.translatable("advancements.immersiveweapons.flashbang.description"),
+						null, AdvancementType.GOAL, true, true, false)
+				.addCriterion("hold",
+						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.FLASHBANG.get()))
+				.save(consumer, "immersiveweapons:flashbang");
+
 		AdvancementHolder craftAlcohol = Builder.advancement().parent(root)
 				.display(ItemRegistry.BOTTLE_OF_ALCOHOL.get(),
 						Component.translatable("advancements.immersiveweapons.bottle_of_alcohol.title"),

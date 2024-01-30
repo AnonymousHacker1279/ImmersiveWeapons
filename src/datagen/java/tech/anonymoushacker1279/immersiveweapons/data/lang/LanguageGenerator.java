@@ -230,6 +230,7 @@ public class LanguageGenerator extends IWLanguageProvider {
 		addEffect(EffectRegistry.ALCOHOL_EFFECT, "Alcohol");
 		addEffect(EffectRegistry.CELESTIAL_PROTECTION_EFFECT, "Celestial Protection");
 		addEffect(EffectRegistry.DAMAGE_VULNERABILITY_EFFECT, "Damage Vulnerability");
+		addEffect(EffectRegistry.FLASHBANG_EFFECT, "Flashbanged");
 	}
 
 	private void addContainers() {
@@ -267,8 +268,10 @@ public class LanguageGenerator extends IWLanguageProvider {
 		addSubtitle("item.gun.hand_cannon.fire", "Hand cannon fires");
 		addSubtitle("item.gun.bullet_whizz", "Bullet whizzes");
 
-		// Misc items
+		// Throwable items
 		addSubtitle("item.smoke_grenade_hiss", "Smoke grenade hisses");
+		addSubtitle("item.flashbang.explode", "Flashbang explodes");
+		addSubtitle("item.flashbang.ringing", "Flashbang rings");
 		addSubtitle("item.generic_item_throw", "Item flies");
 
 		// Misc blocks
@@ -558,7 +561,7 @@ public class LanguageGenerator extends IWLanguageProvider {
 		addTooltip("jonnys_curse_4", "I don't even think Hans would be able to withstand such pain.");
 		addTooltip("jonnys_curse_5", "Imagine stubbing your toe into a lego brick that has a tack stuck through the middle.");
 		addTooltip("jonnys_curse_6", "Exist in the life of a furry on 4chan!");
-		addTooltip("jonnys_curse_7", "This is what happens when you nuke yourself in Garry’s mod.");
+		addTooltip("jonnys_curse_7", "This is what happens when you nuke yourself in Garry's mod.");
 		addTooltip("jonnys_curse_8", "The true for the worthy play through.");
 		addTooltip("jonnys_curse_9", "If you ever wanted to be put into a mental hospital, this is how you do it.");
 		addTooltip("jonnys_curse_10", "D O N T");
@@ -849,6 +852,8 @@ public class LanguageGenerator extends IWLanguageProvider {
 		// Throwables
 		addAdvancement("smoke_grenade.title", "Sight Privileges Revoked");
 		addAdvancement("smoke_grenade.description", "Craft a smoke grenade");
+		addAdvancement("flashbang.title", "Portable Sun");
+		addAdvancement("flashbang.description", "Craft a flashbang");
 		addAdvancement("molotov_cocktail.title", "Quick-Use Arson");
 		addAdvancement("molotov_cocktail.description", "Craft a molotov cocktail");
 

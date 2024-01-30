@@ -59,7 +59,7 @@ public class RecipeGenerator extends RecipeProvider implements DataGenUtils {
 		createSmallPartsItems();
 		createBarrelTapItems();
 		createAstralCrystalSorceryItems();
-		createSmokeGrenades();
+		createGrenades();
 		createPanelItems();
 		createShardItems();
 		createUtilityItems();
@@ -590,7 +590,7 @@ public class RecipeGenerator extends RecipeProvider implements DataGenUtils {
 		starForgeSmelting(IWItemTagGroups.STARSTORM_INGOTS, 3, ItemRegistry.WOODEN_TOOL_ROD.get(), 1, ItemRegistry.STARSTORM_PIKE.get(), 300);
 	}
 
-	private void createSmokeGrenades() {
+	private void createGrenades() {
 		ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, ItemRegistry.SMOKE_GRENADE.get(), 2)
 				.define('a', Items.BAMBOO)
 				.define('b', ItemRegistry.GRENADE_ASSEMBLY.get())
@@ -631,6 +631,18 @@ public class RecipeGenerator extends RecipeProvider implements DataGenUtils {
 				.requires(ItemTags.LEAVES)
 				.group("smoke_grenade")
 				.unlockedBy("mortar_and_pestle", has(ItemRegistry.MORTAR_AND_PESTLE.get()))
+				.save(output);
+
+		// Flashbang
+		ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, ItemRegistry.FLASHBANG.get(), 2)
+				.define('a', Items.BAMBOO)
+				.define('b', ItemRegistry.GRENADE_ASSEMBLY.get())
+				.define('c', ItemRegistry.POTASSIUM_NITRATE.get())
+				.pattern(" cb")
+				.pattern(" a ")
+				.pattern(" a ")
+				.group("flashbang")
+				.unlockedBy("flashbang", has(ItemRegistry.POTASSIUM_NITRATE.get()))
 				.save(output);
 	}
 

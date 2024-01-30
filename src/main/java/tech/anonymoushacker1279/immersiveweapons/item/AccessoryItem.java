@@ -1,6 +1,5 @@
 package tech.anonymoushacker1279.immersiveweapons.item;
 
-import net.minecraft.core.Holder;
 import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
@@ -23,7 +22,6 @@ public class AccessoryItem extends Item {
 	private final Map<EffectType, Double> effects;
 	private final Map<EffectType, EffectScalingType> effectScalingTypes;
 	private final Map<AttributeModifier, Attribute> attributeModifiers;
-	private final Map<AttributeModifier, Holder<Attribute>> deferredAttributeModifiers;
 	private final Map<Map<AttributeModifier, Attribute>, Double> dynamicAttributeModifiers;
 	private final List<MobEffectInstance> mobEffects;
 
@@ -45,7 +43,6 @@ public class AccessoryItem extends Item {
 		this.effects = effectBuilder.getEffects();
 		this.effectScalingTypes = effectBuilder.getEffectScalingTypes();
 		this.attributeModifiers = effectBuilder.getAttributeModifiers();
-		this.deferredAttributeModifiers = effectBuilder.getDeferredAttributeModifiers();
 		this.dynamicAttributeModifiers = effectBuilder.getDynamicAttributeModifiers();
 		this.mobEffects = effectBuilder.getMobEffects();
 
@@ -88,17 +85,6 @@ public class AccessoryItem extends Item {
 	 */
 	public static Map<AttributeModifier, Attribute> getGlobalAttributeModifierMap() {
 		return GLOBAL_ATTRIBUTE_MODIFIER_MAP;
-	}
-
-	/**
-	 * Unwraps deferred attribute modifiers. This should be called during common setup to ensure the attributes are registered.
-	 */
-	public static void unwrapDeferredAttributeModifiers() {
-		for (AccessoryItem accessoryItem : ACCESSORY_ITEMS) {
-			for (Map.Entry<AttributeModifier, Holder<Attribute>> entry : accessoryItem.deferredAttributeModifiers.entrySet()) {
-				accessoryItem.attributeModifiers.put(entry.getKey(), entry.getValue().value());
-			}
-		}
 	}
 
 	/**
@@ -178,7 +164,6 @@ public class AccessoryItem extends Item {
 		private final Map<EffectType, Double> effects = new HashMap<>(5);
 		private Map<EffectType, EffectScalingType> effectScalingTypes = new HashMap<>(5);
 		private final Map<AttributeModifier, Attribute> attributeModifiers = new HashMap<>(5);
-		private final Map<AttributeModifier, Holder<Attribute>> deferredAttributeModifiers = new HashMap<>(5);
 		private final Map<Map<AttributeModifier, Attribute>, Double> dynamicAttributeModifiers = new HashMap<>(5);
 		private final List<MobEffectInstance> mobEffects = new ArrayList<>(5);
 
@@ -219,19 +204,6 @@ public class AccessoryItem extends Item {
 		 */
 		public EffectBuilder addAttributeModifier(AttributeModifier modifier, Attribute attribute) {
 			attributeModifiers.put(modifier, attribute);
-			return this;
-		}
-
-		/**
-		 * Add an attribute modifier to the accessory. These are static and unchanging in value.
-		 * Accepts a holder for the attribute, which will be unwrapped during common setup.
-		 *
-		 * @param modifier  the <code>AttributeModifier</code>
-		 * @param attribute the <code>Attribute</code>
-		 * @return the <code>EffectBuilder</code> for chaining
-		 */
-		public EffectBuilder addAttributeModifier(AttributeModifier modifier, Holder<Attribute> attribute) {
-			deferredAttributeModifiers.put(modifier, attribute);
 			return this;
 		}
 
@@ -285,10 +257,6 @@ public class AccessoryItem extends Item {
 
 		public Map<AttributeModifier, Attribute> getAttributeModifiers() {
 			return attributeModifiers;
-		}
-
-		public Map<AttributeModifier, Holder<Attribute>> getDeferredAttributeModifiers() {
-			return deferredAttributeModifiers;
 		}
 
 		public Map<Map<AttributeModifier, Attribute>, Double> getDynamicAttributeModifiers() {

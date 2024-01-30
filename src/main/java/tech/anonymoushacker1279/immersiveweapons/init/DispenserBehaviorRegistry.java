@@ -10,8 +10,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.DispenserBlock;
 import net.minecraft.world.phys.Vec3;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
-import tech.anonymoushacker1279.immersiveweapons.entity.projectile.MolotovEntity;
-import tech.anonymoushacker1279.immersiveweapons.entity.projectile.SmokeGrenadeEntity;
+import tech.anonymoushacker1279.immersiveweapons.entity.projectile.*;
 import tech.anonymoushacker1279.immersiveweapons.entity.vehicle.*;
 import tech.anonymoushacker1279.immersiveweapons.item.projectile.CustomArrowItem;
 
@@ -89,6 +88,14 @@ public class DispenserBehaviorRegistry implements DispenseItemBehavior {
 				smokeGrenadeEntity.push(5, 5, 5);
 				smokeGrenadeEntity.setColor(5);
 				return smokeGrenadeEntity;
+			}
+		});
+		DispenserBlock.registerBehavior(ItemRegistry.FLASHBANG.get(), new AbstractProjectileDispenseBehavior() {
+			@Override
+			protected Projectile getProjectile(Level level, Position position, ItemStack stack) {
+				FlashbangEntity flashbangEntity = new FlashbangEntity(level, position.x(), position.y(), position.z());
+				flashbangEntity.push(5, 5, 5);
+				return flashbangEntity;
 			}
 		});
 		DispenserBlock.registerBehavior(ItemRegistry.MOLOTOV_COCKTAIL.get(), new AbstractProjectileDispenseBehavior() {

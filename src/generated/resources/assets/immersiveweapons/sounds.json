@@ -175,6 +175,18 @@
     ],
     "subtitle": "subtitles.immersiveweapons.item.gun.flare_gun.fire"
   },
+  "flashbang_explode": {
+    "sounds": [
+      "immersiveweapons:item/flashbang/explode/explode"
+    ],
+    "subtitle": "subtitles.immersiveweapons.item.flashbang.explode"
+  },
+  "flashbang_ringing": {
+    "sounds": [
+      "immersiveweapons:item/flashbang/ringing/ringing"
+    ],
+    "subtitle": "subtitles.immersiveweapons.item.flashbang.ringing"
+  },
   "flintlock_pistol_fire": {
     "sounds": [
       "immersiveweapons:item/flintlock_pistol/fire/fire"
@@ -287,10 +299,7 @@
   },
   "smoke_grenade_hiss": {
     "sounds": [
-      {
-        "name": "immersiveweapons:item/smoke_grenade/hiss/hiss",
-        "stream": true
-      }
+      "immersiveweapons:item/smoke_grenade/hiss/hiss"
     ],
     "subtitle": "subtitles.immersiveweapons.item.smoke_grenade_hiss"
   },
@@ -360,10 +369,7 @@
   },
   "tesla_armor_effect": {
     "sounds": [
-      {
-        "name": "immersiveweapons:armor/effect/tesla/tesla_armor_effect",
-        "stream": true
-      }
+      "immersiveweapons:armor/effect/tesla/tesla_armor_effect"
     ],
     "subtitle": "subtitles.immersiveweapons.armor.tesla.effect"
   },

@@ -233,6 +233,7 @@ public class ItemRegistry {
 	public static final Supplier<ThrowableItem> SMOKE_GRENADE_BLUE = ITEMS.register("smoke_grenade_blue", () -> new ThrowableItem(new Properties().stacksTo(16), 3));
 	public static final Supplier<ThrowableItem> SMOKE_GRENADE_PURPLE = ITEMS.register("smoke_grenade_purple", () -> new ThrowableItem(new Properties().stacksTo(16), 4));
 	public static final Supplier<ThrowableItem> SMOKE_GRENADE_YELLOW = ITEMS.register("smoke_grenade_yellow", () -> new ThrowableItem(new Properties().stacksTo(16), 5));
+	public static final Supplier<ThrowableItem> FLASHBANG = ITEMS.register("flashbang", () -> new ThrowableItem(new Properties().stacksTo(16), ThrowableType.FLASHBANG));
 	public static final Supplier<ThrowableItem> MOLOTOV_COCKTAIL = ITEMS.register("molotov_cocktail", () -> new ThrowableItem(new Properties().stacksTo(16), ThrowableType.MOLOTOV));
 	public static final Supplier<Item> SMOKE_POWDER = ITEMS.register("smoke_powder", () -> new Item(new Properties()));
 	public static final Supplier<BasicContainerItem> MORTAR_AND_PESTLE = ITEMS.register("mortar_and_pestle", () -> new BasicContainerItem(new Properties()));

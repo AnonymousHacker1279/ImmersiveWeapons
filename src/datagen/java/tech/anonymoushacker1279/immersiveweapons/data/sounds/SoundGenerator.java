@@ -26,9 +26,8 @@ public class SoundGenerator extends SoundDefinitionsProvider {
 		add(SoundEventRegistry.TESLA_ARMOR_EFFECT.get(), definition()
 				.subtitle("subtitles.immersiveweapons.armor.tesla.effect")
 				.with(Sound.sound(new ResourceLocation(ImmersiveWeapons.MOD_ID,
-										"armor/effect/tesla/tesla_armor_effect"),
-								SoundType.SOUND)
-						.stream()));
+								"armor/effect/tesla/tesla_armor_effect"),
+						SoundType.SOUND)));
 
 		add(SoundEventRegistry.TESLA_ARMOR_POWER_DOWN.get(), definition()
 				.subtitle("subtitles.immersiveweapons.armor.tesla.power_down")
@@ -183,9 +182,20 @@ public class SoundGenerator extends SoundDefinitionsProvider {
 		add(SoundEventRegistry.SMOKE_GRENADE_HISS.get(), definition()
 				.subtitle("subtitles.immersiveweapons.item.smoke_grenade_hiss")
 				.with(Sound.sound(new ResourceLocation(ImmersiveWeapons.MOD_ID,
-										"item/smoke_grenade/hiss/hiss"),
-								SoundType.SOUND)
-						.stream()));
+								"item/smoke_grenade/hiss/hiss"),
+						SoundType.SOUND)));
+
+		add(SoundEventRegistry.FLASHBANG_EXPLODE.get(), definition()
+				.subtitle("subtitles.immersiveweapons.item.flashbang.explode")
+				.with(Sound.sound(new ResourceLocation(ImmersiveWeapons.MOD_ID,
+								"item/flashbang/explode/explode"),
+						SoundType.SOUND)));
+
+		add(SoundEventRegistry.FLASHBANG_RINGING.get(), definition()
+				.subtitle("subtitles.immersiveweapons.item.flashbang.ringing")
+				.with(Sound.sound(new ResourceLocation(ImmersiveWeapons.MOD_ID,
+								"item/flashbang/ringing/ringing"),
+						SoundType.SOUND)));
 
 		add(SoundEventRegistry.GENERIC_ITEM_THROW.get(), definition()
 				.subtitle("subtitles.immersiveweapons.item.generic_item_throw")

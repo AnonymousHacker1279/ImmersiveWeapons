@@ -17,19 +17,19 @@ import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.Mod.EventBusSubscriber;
 import net.neoforged.fml.common.Mod.EventBusSubscriber.Bus;
 import net.neoforged.neoforge.client.event.*;
-import net.neoforged.neoforge.client.event.ViewportEvent.ComputeFov;
-import net.neoforged.neoforge.client.event.ViewportEvent.RenderFog;
+import net.neoforged.neoforge.client.event.ViewportEvent.*;
 import net.neoforged.neoforge.client.gui.overlay.ExtendedGui;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.client.IWKeyBinds;
 import tech.anonymoushacker1279.immersiveweapons.client.gui.IWOverlays;
 import tech.anonymoushacker1279.immersiveweapons.client.gui.overlays.DebugTracingData;
+import tech.anonymoushacker1279.immersiveweapons.config.ClientConfig;
+import tech.anonymoushacker1279.immersiveweapons.init.EffectRegistry;
 import tech.anonymoushacker1279.immersiveweapons.init.ItemRegistry;
 import tech.anonymoushacker1279.immersiveweapons.item.AccessoryItem;
 import tech.anonymoushacker1279.immersiveweapons.item.CursedItem;
 import tech.anonymoushacker1279.immersiveweapons.item.gun.data.GunData;
 import tech.anonymoushacker1279.immersiveweapons.item.projectile.ThrowableItem;
-import tech.anonymoushacker1279.immersiveweapons.item.projectile.ThrowableItem.ThrowableType;
 
 @EventBusSubscriber(modid = ImmersiveWeapons.MOD_ID, bus = Bus.FORGE, value = Dist.CLIENT)
 public class ClientForgeEventSubscriber {
@@ -116,6 +116,33 @@ public class ClientForgeEventSubscriber {
 			event.setFogShape(FogShape.SPHERE);
 			event.setCanceled(true);
 		}
+
+		if (player.hasEffect(EffectRegistry.FLASHBANG_EFFECT.get())) {
+			// Slowly increase distance as the effect ticks closer to zero
+			float distance = 1.0f / (player.getEffect(EffectRegistry.FLASHBANG_EFFECT.get()).getDuration() / 20.0f);
+
+			event.setNearPlaneDistance(0.0f);
+			event.setFarPlaneDistance(Math.max(distance * 32, 0.25f));
+			event.scaleFarPlaneDistance(0.5f);
+
+			event.setFogShape(FogShape.SPHERE);
+			event.setCanceled(true);
+		}
+	}
+
+	@SubscribeEvent
+	public static void computeFogColorEvent(ComputeFogColor event) {
+		if (minecraft.player != null && minecraft.player.hasEffect(EffectRegistry.FLASHBANG_EFFECT.get())) {
+			if (ClientConfig.darkModeFlashbangs) {
+				event.setRed(0.0f);
+				event.setGreen(0.0f);
+				event.setBlue(0.0f);
+			} else {
+				event.setRed(1.0f);
+				event.setGreen(1.0f);
+				event.setBlue(1.0f);
+			}
+		}
 	}
 
 	@SubscribeEvent
@@ -133,7 +160,7 @@ public class ClientForgeEventSubscriber {
 			if ((itemInHand == ItemRegistry.ICE_BOW.get()
 					|| itemInHand == ItemRegistry.DRAGONS_BREATH_BOW.get()
 					|| itemInHand == ItemRegistry.AURORA_BOW.get()
-					|| (itemInHand.asItem() instanceof ThrowableItem throwableItem && throwableItem.type == ThrowableType.SMOKE_GRENADE))
+					|| (itemInHand.asItem() instanceof ThrowableItem throwableItem && throwableItem.type.canCharge))
 					&& minecraft.player.isUsingItem()) {
 
 				double fov = event.getFOV();

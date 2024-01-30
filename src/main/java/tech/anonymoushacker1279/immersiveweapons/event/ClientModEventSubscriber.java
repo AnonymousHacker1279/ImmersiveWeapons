@@ -1,6 +1,5 @@
 package tech.anonymoushacker1279.immersiveweapons.event;
 
-import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.model.*;
 import net.minecraft.client.renderer.BiomeColors;
 import net.minecraft.client.renderer.Sheets;
@@ -56,12 +55,6 @@ public class ClientModEventSubscriber {
 	public static void clientSetup(FMLClientSetupEvent event) {
 		ImmersiveWeapons.LOGGER.debug("Initializing client setup");
 
-		// Register GUI screens
-		MenuScreens.register(MenuTypeRegistry.SMALL_PARTS_TABLE_MENU.get(), SmallPartsTableScreen::new);
-		MenuScreens.register(MenuTypeRegistry.TESLA_SYNTHESIZER_MENU.get(), TeslaSynthesizerScreen::new);
-		MenuScreens.register(MenuTypeRegistry.AMMUNITION_TABLE_MENU.get(), AmmunitionTableScreen::new);
-		MenuScreens.register(MenuTypeRegistry.STAR_FORGE_MENU.get(), StarForgeScreen::new);
-
 		event.enqueueWork(() -> {
 			SkullBlockRenderer.SKIN_BY_TYPE.put(CustomSkullTypes.MINUTEMAN, new ResourceLocation(ImmersiveWeapons.MOD_ID,
 					"textures/entity/heads/minuteman.png"));
@@ -83,6 +76,14 @@ public class ClientModEventSubscriber {
 		});
 
 		event.enqueueWork(ClientModEventSubscriber::registerPropertyGetters);
+	}
+
+	@SubscribeEvent
+	public static void registerMenuScreensEvent(RegisterMenuScreensEvent event) {
+		event.register(MenuTypeRegistry.SMALL_PARTS_TABLE_MENU.get(), SmallPartsTableScreen::new);
+		event.register(MenuTypeRegistry.TESLA_SYNTHESIZER_MENU.get(), TeslaSynthesizerScreen::new);
+		event.register(MenuTypeRegistry.AMMUNITION_TABLE_MENU.get(), AmmunitionTableScreen::new);
+		event.register(MenuTypeRegistry.STAR_FORGE_MENU.get(), StarForgeScreen::new);
 	}
 
 	@SubscribeEvent
@@ -191,7 +192,8 @@ public class ClientModEventSubscriber {
 		event.registerEntityRenderer(EntityRegistry.FLARE_ENTITY.get(), FlareRenderer::new);
 		event.registerEntityRenderer(EntityRegistry.CANNONBALL_ENTITY.get(), CannonballRenderer::new);
 		event.registerEntityRenderer(EntityRegistry.MORTAR_SHELL_ENTITY.get(), ThrownItemRenderer::new);
-		event.registerEntityRenderer(EntityRegistry.SMOKE_GRENADE_ENTITY.get(), SmokeGrenadeRenderer::new);
+		event.registerEntityRenderer(EntityRegistry.SMOKE_GRENADE_ENTITY.get(), AdvancedThrowableProjectileRenderer::new);
+		event.registerEntityRenderer(EntityRegistry.FLASHBANG_ENTITY.get(), AdvancedThrowableProjectileRenderer::new);
 		event.registerEntityRenderer(EntityRegistry.MOLOTOV_COCKTAIL_ENTITY.get(), ThrownItemRenderer::new);
 		event.registerEntityRenderer(EntityRegistry.DYING_SOLDIER_ENTITY.get(), DyingSoldierRenderer::new);
 		event.registerEntityRenderer(EntityRegistry.MINUTEMAN_ENTITY.get(), MinutemanRenderer::new);

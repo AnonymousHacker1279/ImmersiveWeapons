@@ -9,16 +9,16 @@ import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemDisplayContext;
-import tech.anonymoushacker1279.immersiveweapons.entity.projectile.SmokeGrenadeEntity;
+import tech.anonymoushacker1279.immersiveweapons.entity.projectile.AdvancedThrowableItemProjectile;
 
-public class SmokeGrenadeRenderer<T extends SmokeGrenadeEntity> extends EntityRenderer<T> {
+public class AdvancedThrowableProjectileRenderer<T extends AdvancedThrowableItemProjectile> extends EntityRenderer<T> {
 
-	public SmokeGrenadeRenderer(EntityRendererProvider.Context context) {
+	public AdvancedThrowableProjectileRenderer(EntityRendererProvider.Context context) {
 		super(context);
 	}
 
 	@Override
-	public void render(SmokeGrenadeEntity entity, float entityYaw, float partialTicks, PoseStack poseStack, MultiBufferSource bufferSource, int light) {
+	public void render(T entity, float entityYaw, float partialTicks, PoseStack poseStack, MultiBufferSource bufferSource, int light) {
 		poseStack.pushPose();
 
 		if (entity.randomRotation == 0.0f) {
