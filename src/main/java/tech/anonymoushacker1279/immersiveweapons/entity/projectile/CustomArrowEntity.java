@@ -6,6 +6,7 @@ import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundAddEntityPacket;
 import net.minecraft.network.syncher.*;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.Mth;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.*;
@@ -18,9 +19,11 @@ import net.minecraft.world.level.Level.ExplosionInteraction;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.*;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import net.neoforged.neoforge.common.Tags.EntityTypes;
 import net.neoforged.neoforge.event.EventHooks;
 import net.neoforged.neoforge.network.PacketDistributor;
 import org.jetbrains.annotations.Nullable;
+import tech.anonymoushacker1279.immersiveweapons.config.CommonConfig;
 import tech.anonymoushacker1279.immersiveweapons.item.tool.HitEffectUtils;
 import tech.anonymoushacker1279.immersiveweapons.network.payload.SmokeGrenadePayload;
 import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
@@ -255,6 +258,21 @@ public class CustomArrowEntity extends Arrow implements HitEffectUtils {
 
 			setPos(newX, newY, newZ);
 			checkInsideBlocks();
+		}
+
+		if (color != -1 && inGroundTime > 0) {
+			if (level() instanceof ServerLevel serverLevel && tickCount % 2 == 0) {
+				serverLevel.getEntities(this, getBoundingBox().inflate(CommonConfig.smokeGrenadeEffectRange))
+						.stream()
+						.filter(entity -> !entity.isSpectator())
+						.forEach(entity -> {
+							if (entity instanceof Mob mob && !mob.getType().is(EntityTypes.BOSSES)) {
+								if (AdvancedThrowableItemProjectile.canSee(mob, this, false)) {
+									mob.setTarget(null);
+								}
+							}
+						});
+			}
 		}
 	}
 

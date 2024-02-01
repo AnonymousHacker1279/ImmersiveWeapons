@@ -6,8 +6,7 @@ import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundAddEntityPacket;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.projectile.ThrowableItemProjectile;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
@@ -119,6 +118,24 @@ public abstract class AdvancedThrowableItemProjectile extends ThrowableItemProje
 		}
 	}
 
+	public static boolean canSee(LivingEntity livingEntity, Entity entity, boolean lookingAt) {
+		if (livingEntity.hasLineOfSight(entity)) {
+			if (!lookingAt) {
+				return true;
+			}
+
+			Vec3 lookVec = livingEntity.getLookAngle();
+			Vec3 toEntity = entity.position().subtract(livingEntity.position()).normalize();
+
+			double dotProduct = lookVec.dot(toEntity);
+			double maxCosine = Math.cos(Math.toRadians(90));
+			double angleToGround = 180 - (Math.acos(lookVec.y) * (180.0 / Math.PI));
+			return dotProduct > maxCosine || angleToGround < 30;
+		}
+
+		return false;
+	}
+
 	@Override
 	public void addAdditionalSaveData(CompoundTag pCompound) {
 		super.addAdditionalSaveData(pCompound);
@@ -141,5 +158,15 @@ public abstract class AdvancedThrowableItemProjectile extends ThrowableItemProje
 	 * Called whenever activation effects should take place.
 	 */
 	protected void onActivate() {
+	}
+
+	/**
+	 * Get the number of ticks the projectile has been in the ground. Used by IWCB.
+	 *
+	 * @return int
+	 */
+	@SuppressWarnings("unused")
+	public int getTicksInGround() {
+		return ticksInGround;
 	}
 }

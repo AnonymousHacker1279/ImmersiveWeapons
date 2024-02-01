@@ -1,10 +1,11 @@
 package tech.anonymoushacker1279.immersiveweapons.entity.projectile;
 
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundSource;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.*;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.Level;
+import net.neoforged.neoforge.common.Tags.EntityTypes;
 import net.neoforged.neoforge.network.PacketDistributor;
 import tech.anonymoushacker1279.immersiveweapons.client.particle.smoke_grenade.SmokeGrenadeParticleOptions;
 import tech.anonymoushacker1279.immersiveweapons.config.ClientConfig;
@@ -70,6 +71,26 @@ public class SmokeGrenadeEntity extends AdvancedThrowableItemProjectile {
 		if (!level().isClientSide) {
 			PacketDistributor.TRACKING_CHUNK.with(level().getChunkAt(blockPosition()))
 					.send(new SmokeGrenadePayload(getX(), getY(), getZ(), color));
+		}
+	}
+
+	@Override
+	public void tick() {
+		super.tick();
+
+		if (ticksInGround > 0) {
+			if (level() instanceof ServerLevel serverLevel && tickCount % 2 == 0) {
+				serverLevel.getEntities(this, getBoundingBox().inflate(CommonConfig.smokeGrenadeEffectRange))
+						.stream()
+						.filter(entity -> !entity.isSpectator())
+						.forEach(entity -> {
+							if (entity instanceof Mob mob && !mob.getType().is(EntityTypes.BOSSES)) {
+								if (canSee(mob, this, false)) {
+									mob.setTarget(null);
+								}
+							}
+						});
+			}
 		}
 	}
 }

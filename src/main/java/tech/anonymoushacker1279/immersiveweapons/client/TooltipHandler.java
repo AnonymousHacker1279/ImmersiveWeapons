@@ -218,13 +218,17 @@ public class TooltipHandler {
 		}
 
 		// Throwables
-		if (stack.getItem() instanceof ThrowableItem grenade && grenade.type == ThrowableType.SMOKE_GRENADE) {
-			event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.smoke_grenade").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
+		if (stack.getItem() instanceof ThrowableItem grenade) {
+			if (grenade.type == ThrowableType.SMOKE_GRENADE) {
+				event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.smoke_grenade").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
 
-			if (grenade.color > 0) {
-				// The last word in the name is the color
-				String color = grenade.toString().substring(grenade.toString().lastIndexOf("_") + 1).toLowerCase();
-				event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.smoke_grenade_" + color).withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
+				if (grenade.color > 0) {
+					// The last word in the name is the color
+					String color = grenade.toString().substring(grenade.toString().lastIndexOf("_") + 1).toLowerCase();
+					event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.smoke_grenade_" + color).withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
+				}
+			} else if (grenade.type == ThrowableType.FLASHBANG) {
+				event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.flashbang").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
 			}
 		}
 		if (stack.getItem() == ItemRegistry.MOLOTOV_COCKTAIL.get()) {

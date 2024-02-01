@@ -398,12 +398,13 @@ public class LanguageGenerator extends IWLanguageProvider {
 		addTooltip("padded_leather_armor", "Fully dampens vibrations caused by walking or running");
 
 		// Throwables
-		addTooltip("smoke_grenade", "Creates a thick cloud of smoke upon impact. Good for quickly escaping a situation.");
+		addTooltip("smoke_grenade", "Creates a thick cloud of smoke. Good for quickly escaping a situation.");
 		addTooltip("smoke_grenade_red", "This one releases red smoke.");
 		addTooltip("smoke_grenade_green", "This one releases green smoke.");
 		addTooltip("smoke_grenade_blue", "This one releases blue smoke.");
 		addTooltip("smoke_grenade_purple", "This one releases purple smoke.");
 		addTooltip("smoke_grenade_yellow", "This one releases yellow smoke.");
+		addTooltip("flashbang", "Creates a blinding flash and a loud bang. Creatures caught in the blast will be disoriented.");
 		addTooltip("molotov_cocktail", "Creates a ring of fire upon impact.");
 		addTooltip("mud_ball", "Throw a ball of mud at something");
 

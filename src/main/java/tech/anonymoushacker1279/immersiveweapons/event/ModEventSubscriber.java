@@ -87,5 +87,7 @@ public class ModEventSubscriber {
 				.client(StarForgeUpdateRecipesPayloadHandler.getInstance()::handleData));
 		registrar.play(LocalSoundPayload.ID, LocalSoundPayload::new, handler -> handler
 				.client(LocalSoundPayloadHandler.getInstance()::handleData));
+		registrar.play(PlayerSoundPayload.ID, PlayerSoundPayload::new, handler -> handler
+				.client(PlayerSoundPayloadHandler.getInstance()::handleData));
 	}
 }

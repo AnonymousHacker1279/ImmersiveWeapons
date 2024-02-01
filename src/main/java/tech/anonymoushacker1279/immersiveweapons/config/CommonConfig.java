@@ -83,6 +83,15 @@ public class CommonConfig {
 	@ConfigEntry(comment = "Set the maximum range the staff can be used", group = "Recovery Staff", min = 0, max = 256)
 	public static int recoveryStaffMaxUseRange = 15;
 
+	@ConfigEntry(comment = "Set the effect range of smoke grenades. This is specifically for the target-clearing effect on non-player entities.", group = "Throwables", min = 0, max = 32.0d)
+	public static double smokeGrenadeEffectRange = 7.0d;
+
+	@ConfigEntry(comment = "Set the effect range of flashbangs", group = "Throwables", min = 0, max = 32.0d)
+	public static double flashbangEffectRange = 10.0d;
+
+	@ConfigEntry(comment = "Set the disorient time of flashbangs in seconds. This is specifically for non-player entities.", group = "Throwables", min = 0, max = 60)
+	public static int flashbangDisorientTime = 10;
+
 	private static Map<String, Integer> getEnchantCapsMap() {
 		Map<String, Integer> enchantCaps = new LinkedHashMap<>(40);
 		enchantCaps.put("minecraft:mending", 1);

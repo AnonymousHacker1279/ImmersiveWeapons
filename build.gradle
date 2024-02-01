@@ -140,7 +140,7 @@ dependencies {
 	implementation "net.neoforged:neoforge:${neoforge_version}"
 
 	implementation(jarJar("tech.anonymoushacker1279.cobaltconfig:CobaltConfig:${cobaltconfig_version}")) {
-		jarJar.ranged(it, "[1.0.0,)")
+		jarJar.ranged(it, "[1.0.1,)")
 	}
 
 	implementation(jarJar("dev.lukebemish.biomesquisher:biomesquisher-neoforge-1.20.2:${biomesquisher_version}")) {
@@ -286,7 +286,7 @@ if (file("RELEASE_NOTES.md").exists()) {
 		changelog = file("RELEASE_NOTES.md").text
 		// Get the IW version from the mod_version variable, it's the last part of the version string
 		version = "v" + mod_version.split("-")[1]
-		displayName = "Immersive Weapons - " + version
+		displayName = "Immersive Weapons - v" + mod_version.split("-")[1]
 		gameVersions = [minecraft_version]
 		loaders = ["neoforge"]
 		curseEnvironment = "both"
