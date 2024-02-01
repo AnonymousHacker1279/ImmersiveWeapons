@@ -67,6 +67,14 @@ public class PistonCrushingRecipe implements Recipe<Container> {
 		return minCount + (int) (Math.random() * ((maxCount - minCount) + 1));
 	}
 
+	public int getMinCount() {
+		return minCount;
+	}
+
+	public int getMaxCount() {
+		return maxCount;
+	}
+
 	@Override
 	public ItemStack getToastSymbol() {
 		return new ItemStack(Blocks.PISTON);

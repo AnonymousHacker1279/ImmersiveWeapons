@@ -61,7 +61,6 @@ println('Java: ' + System.getProperty('java.version') + ' JVM: ' + System.getPro
 
 minecraft.accessTransformers.file rootProject.file('src/main/resources/META-INF/accesstransformer.cfg')
 
-
 sourceSets {
 	main {
 		resources {
@@ -106,7 +105,6 @@ runs {
 	}
 
 	client {
-
 		// Setup client information from gradle.properties in the user home
 		// All of these are optional
 		if (project.hasProperty('mc_uuid')) {

@@ -85,6 +85,7 @@ public class StarForgeBlockEntity extends BaseContainerBlockEntity implements En
 
 	public static final List<RecipeHolder<StarForgeRecipe>> ALL_RECIPES = new ArrayList<>(20);
 	public List<RecipeHolder<StarForgeRecipe>> availableRecipes = new ArrayList<>(20);
+	private final List<ResourceLocation> savedRecipes = new ArrayList<>(20);
 
 	public StarForgeBlockEntity(BlockPos blockPos, BlockState blockState) {
 		super(BlockEntityRegistry.STAR_FORGE_BLOCK_ENTITY.get(), blockPos, blockState);
@@ -153,17 +154,24 @@ public class StarForgeBlockEntity extends BaseContainerBlockEntity implements En
 		ContainerHelper.loadAllItems(tag, inventory);
 		hasSolarEnergy = tag.getBoolean("hasSolarEnergy");
 		temperature = tag.getInt("temperature");
+		smeltTime = tag.getInt("smeltTime");
+
+		ListTag availableRecipesTag = tag.getList("availableRecipes", 10);
+		for (int i = 0; i < availableRecipesTag.size(); i++) {
+			CompoundTag recipeTag = availableRecipesTag.getCompound(i);
+			ResourceLocation recipeId = new ResourceLocation(recipeTag.getString("recipeId"));
+			savedRecipes.add(recipeId);
+		}
+	}
+
+	@Override
+	public void onLoad() {
+		super.onLoad();
 
 		if (level != null) {
 			availableRecipes.clear();
 
-			// Load availableRecipes
-			ListTag availableRecipesTag = tag.getList("availableRecipes", 10);
-			for (int i = 0; i < availableRecipesTag.size(); i++) {
-				CompoundTag recipeTag = availableRecipesTag.getCompound(i);
-				ResourceLocation recipeId = new ResourceLocation(recipeTag.getString("recipeId"));
-
-				// Get the recipe from the recipe manager
+			for (ResourceLocation recipeId : savedRecipes) {
 				level.getRecipeManager().byKey(recipeId).ifPresent(recipeHolder -> {
 					if (recipeHolder.value() instanceof StarForgeRecipe recipe) {
 						availableRecipes.add(new RecipeHolder<>(recipeId, recipe));
@@ -182,8 +190,8 @@ public class StarForgeBlockEntity extends BaseContainerBlockEntity implements En
 		ContainerHelper.saveAllItems(tag, inventory);
 		tag.putBoolean("hasSolarEnergy", hasSolarEnergy);
 		tag.putInt("temperature", temperature);
+		tag.putInt("smeltTime", smeltTime);
 
-		// Save availableRecipes
 		ListTag availableRecipesTag = new ListTag();
 		for (RecipeHolder<StarForgeRecipe> holder : availableRecipes) {
 			CompoundTag recipeTag = new CompoundTag();
