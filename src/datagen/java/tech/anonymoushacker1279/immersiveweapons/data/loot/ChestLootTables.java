@@ -20,7 +20,7 @@ public class ChestLootTables implements LootTableSubProvider {
 
 	@Override
 	public void generate(BiConsumer<ResourceLocation, Builder> out) {
-		out.accept(tech.anonymoushacker1279.immersiveweapons.data.loot.LootTableLocations.ABANDONED_FACTORY,
+		out.accept(LootTableLocations.ABANDONED_FACTORY,
 				LootTable.lootTable()
 						.withPool(LootPool.lootPool()
 								.name("main")
@@ -42,7 +42,7 @@ public class ChestLootTables implements LootTableSubProvider {
 										.apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 5.0F))))
 								.add(LootItem.lootTableItem(ItemRegistry.ELECTRIC_INGOT.get()).setWeight(1))));
 
-		out.accept(tech.anonymoushacker1279.immersiveweapons.data.loot.LootTableLocations.BATTLEFIELD_CAMP,
+		out.accept(LootTableLocations.BATTLEFIELD_CAMP,
 				LootTable.lootTable()
 						.withPool(LootPool.lootPool()
 								.name("main")
@@ -64,7 +64,7 @@ public class ChestLootTables implements LootTableSubProvider {
 								.add(LootItem.lootTableItem(Items.EMERALD).setWeight(3))
 								.add(LootItem.lootTableItem(ItemRegistry.FLINTLOCK_PISTOL.get()).setWeight(1))));
 
-		out.accept(tech.anonymoushacker1279.immersiveweapons.data.loot.LootTableLocations.CAMPSITE,
+		out.accept(LootTableLocations.CAMPSITE,
 				LootTable.lootTable()
 						.withPool(LootPool.lootPool()
 								.name("main")
@@ -88,7 +88,7 @@ public class ChestLootTables implements LootTableSubProvider {
 								.add(LootItem.lootTableItem(ItemRegistry.FLARE_GUN.get()).setWeight(1))
 								.add(LootItem.lootTableItem(ItemRegistry.AGILITY_BRACELET.get()).setWeight(1))));
 
-		out.accept(tech.anonymoushacker1279.immersiveweapons.data.loot.LootTableLocations.UNDERGROUND_BUNKER,
+		out.accept(LootTableLocations.UNDERGROUND_BUNKER,
 				LootTable.lootTable()
 						.withPool(LootPool.lootPool()
 								.name("main")
@@ -110,7 +110,7 @@ public class ChestLootTables implements LootTableSubProvider {
 								.add(LootItem.lootTableItem(ItemRegistry.FLINTLOCK_PISTOL.get()).setWeight(2))
 								.add(LootItem.lootTableItem(ItemRegistry.BLUNDERBUSS.get()).setWeight(1))));
 
-		out.accept(tech.anonymoushacker1279.immersiveweapons.data.loot.LootTableLocations.BATTLEFIELD_VILLAGE_MEDIC_STATION,
+		out.accept(LootTableLocations.BATTLEFIELD_VILLAGE_MEDIC_STATION,
 				LootTable.lootTable()
 						.withPool(LootPool.lootPool()
 								.name("main")
@@ -133,7 +133,7 @@ public class ChestLootTables implements LootTableSubProvider {
 										.apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0f, 2.0f))))
 								.add(LootItem.lootTableItem(ItemRegistry.MORPHINE.get()).setWeight(1))));
 
-		out.accept(tech.anonymoushacker1279.immersiveweapons.data.loot.LootTableLocations.HANS_HUT,
+		out.accept(LootTableLocations.HANS_HUT,
 				LootTable.lootTable()
 						.withPool(LootPool.lootPool()
 								.name("main")
@@ -155,7 +155,7 @@ public class ChestLootTables implements LootTableSubProvider {
 										.apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0f, 1.0f)))
 										.apply(EnchantRandomlyFunction.randomApplicableEnchantment()))));
 
-		out.accept(tech.anonymoushacker1279.immersiveweapons.data.loot.LootTableLocations.HANS_HUT_CASK,
+		out.accept(LootTableLocations.HANS_HUT_CASK,
 				LootTable.lootTable()
 						.withPool(LootPool.lootPool()
 								.name("main")
@@ -165,7 +165,7 @@ public class ChestLootTables implements LootTableSubProvider {
 								.add(LootItem.lootTableItem(Items.SWEET_BERRIES).setWeight(1)
 										.apply(SetItemCountFunction.setCount(UniformGenerator.between(8.0f, 16.0f))))));
 
-		out.accept(tech.anonymoushacker1279.immersiveweapons.data.loot.LootTableLocations.BIODOME_CHEST,
+		out.accept(LootTableLocations.BIODOME_CHEST,
 				LootTable.lootTable()
 						.withPool(LootPool.lootPool()
 								.name("main")
@@ -241,7 +241,7 @@ public class ChestLootTables implements LootTableSubProvider {
 										.apply(SetItemCountFunction.setCount(UniformGenerator.between(4.0f, 12.0f))))
 						));
 
-		out.accept(tech.anonymoushacker1279.immersiveweapons.data.loot.LootTableLocations.BIODOME_MEDICINE_BARREL,
+		out.accept(LootTableLocations.BIODOME_MEDICINE_BARREL,
 				LootTable.lootTable()
 						.withPool(LootPool.lootPool()
 								.name("main")
@@ -268,7 +268,7 @@ public class ChestLootTables implements LootTableSubProvider {
 										.apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0f, 3.0f))))
 						));
 
-		out.accept(tech.anonymoushacker1279.immersiveweapons.data.loot.LootTableLocations.CHAMPION_TOWER_TIER_1,
+		out.accept(LootTableLocations.CHAMPION_TOWER_TIER_1,
 				LootTable.lootTable()
 						.withPool(LootPool.lootPool()
 								.name("main")
@@ -316,7 +316,7 @@ public class ChestLootTables implements LootTableSubProvider {
 								.add(LootItem.lootTableItem(Items.ENCHANTED_GOLDEN_APPLE).setWeight(5))
 						));
 
-		out.accept(tech.anonymoushacker1279.immersiveweapons.data.loot.LootTableLocations.CHAMPION_TOWER_TIER_2,
+		out.accept(LootTableLocations.CHAMPION_TOWER_TIER_2,
 				LootTable.lootTable()
 						.withPool(LootPool.lootPool()
 								.name("main")

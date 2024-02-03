@@ -46,85 +46,80 @@ public class TeslaArmorItem extends ArmorItem {
 				: ImmersiveWeapons.MOD_ID + ":textures/armor/tesla_layer_2.png");
 	}
 
-	/**
-	 * Runs once per tick while armor is equipped
-	 *
-	 * @param stack  the <code>ItemStack</code> instance
-	 * @param level  the <code>Level</code> the player is in
-	 * @param player the <code>Player</code> wearing the armor
-	 */
 	@Override
-	public void onArmorTick(ItemStack stack, Level level, Player player) {
-		if (player.getItemBySlot(EquipmentSlot.HEAD).getItem() == ItemRegistry.TESLA_HELMET.get() &&
-				player.getItemBySlot(EquipmentSlot.CHEST).getItem() == ItemRegistry.TESLA_CHESTPLATE.get() &&
-				player.getItemBySlot(EquipmentSlot.LEGS).getItem() == ItemRegistry.TESLA_LEGGINGS.get() &&
-				player.getItemBySlot(EquipmentSlot.FEET).getItem() == ItemRegistry.TESLA_BOOTS.get()) {
+	public void inventoryTick(ItemStack stack, Level level, Entity entity, int slotId, boolean isSelected) {
+		if (entity instanceof Player player) {
+			if (player.getItemBySlot(EquipmentSlot.HEAD).getItem() == ItemRegistry.TESLA_HELMET.get() &&
+					player.getItemBySlot(EquipmentSlot.CHEST).getItem() == ItemRegistry.TESLA_CHESTPLATE.get() &&
+					player.getItemBySlot(EquipmentSlot.LEGS).getItem() == ItemRegistry.TESLA_LEGGINGS.get() &&
+					player.getItemBySlot(EquipmentSlot.FEET).getItem() == ItemRegistry.TESLA_BOOTS.get()) {
 
-			String data = player.getPersistentData().getString("TeslaArmorEffectState");
-			EffectState state = data.isEmpty() ? EffectState.DISABLED : EffectState.getFromString(data);
+				String data = player.getPersistentData().getString("TeslaArmorEffectState");
+				EffectState state = data.isEmpty() ? EffectState.DISABLED : EffectState.getFromString(data);
 
-			if (level.isClientSide) {
-				if (IWKeyBinds.TOGGLE_ARMOR_EFFECT.consumeClick()) {
-					// Store the toggle variable in the player's NBT
-					player.getPersistentData().putString("TeslaArmorEffectState", state.getNext().getSerializedName());
+				if (level.isClientSide) {
+					if (IWKeyBinds.TOGGLE_ARMOR_EFFECT.consumeClick()) {
+						// Store the toggle variable in the player's NBT
+						player.getPersistentData().putString("TeslaArmorEffectState", state.getNext().getSerializedName());
 
-					// Send packet to server
-					state = state.getNext();
-					PacketDistributor.SERVER.noArg().send(new TeslaArmorPayload(state));
+						// Send packet to server
+						state = state.getNext();
+						PacketDistributor.SERVER.noArg().send(new TeslaArmorPayload(state));
 
-					if (state == EffectState.DISABLED) {
-						level.playSound(player,
-								player.blockPosition(),
-								SoundEventRegistry.TESLA_ARMOR_POWER_DOWN.get(),
-								SoundSource.PLAYERS,
-								0.9f,
-								1.0f);
+						if (state == EffectState.DISABLED) {
+							level.playSound(player,
+									player.blockPosition(),
+									SoundEventRegistry.TESLA_ARMOR_POWER_DOWN.get(),
+									SoundSource.PLAYERS,
+									0.9f,
+									1.0f);
 
-					} else {
-						level.playSound(player,
-								player.blockPosition(),
-								SoundEventRegistry.TESLA_ARMOR_POWER_UP.get(),
-								SoundSource.PLAYERS,
-								0.9f,
-								1.0f);
+						} else {
+							level.playSound(player,
+									player.blockPosition(),
+									SoundEventRegistry.TESLA_ARMOR_POWER_UP.get(),
+									SoundSource.PLAYERS,
+									0.9f,
+									1.0f);
 
-						countdown = 0;
-					}
+							countdown = 0;
+						}
 
-					if (state == EffectState.DISABLED) {
-						player.displayClientMessage(Component.translatable("immersiveweapons.armor_effects.disabled")
-								.withStyle(ChatFormatting.RED), true);
-					} else if (state == EffectState.EFFECT_MOBS) {
-						player.displayClientMessage(Component.translatable("immersiveweapons.armor_effects.tesla_armor.effect_mobs")
-								.withStyle(ChatFormatting.GREEN), true);
-					} else if (state == EffectState.EFFECT_EVERYTHING) {
-						player.displayClientMessage(Component.translatable("immersiveweapons.armor_effects.tesla_armor.effect_everything")
-								.withStyle(ChatFormatting.GREEN), true);
+						if (state == EffectState.DISABLED) {
+							player.displayClientMessage(Component.translatable("immersiveweapons.armor_effects.disabled")
+									.withStyle(ChatFormatting.RED), true);
+						} else if (state == EffectState.EFFECT_MOBS) {
+							player.displayClientMessage(Component.translatable("immersiveweapons.armor_effects.tesla_armor.effect_mobs")
+									.withStyle(ChatFormatting.GREEN), true);
+						} else if (state == EffectState.EFFECT_EVERYTHING) {
+							player.displayClientMessage(Component.translatable("immersiveweapons.armor_effects.tesla_armor.effect_everything")
+									.withStyle(ChatFormatting.GREEN), true);
+						}
 					}
 				}
-			}
 
-			if (state != EffectState.DISABLED && player.tickCount % 20 == 0) {
-				List<Entity> nearbyEntities = level.getEntities(player, player.getBoundingBox().inflate(3));
+				if (state != EffectState.DISABLED && player.tickCount % 20 == 0) {
+					List<Entity> nearbyEntities = level.getEntities(player, player.getBoundingBox().inflate(3));
 
-				// Remove any players in the list that are on the same team
-				nearbyEntities.removeIf(entity -> entity instanceof Player && entity.isAlliedTo(player));
+					// Remove any players in the list that are on the same team
+					nearbyEntities.removeIf(nearbyEntity -> nearbyEntity instanceof Player && nearbyEntity.isAlliedTo(player));
 
-				if (!nearbyEntities.isEmpty()) {
-					for (Entity entity : nearbyEntities) {
-						if (state == EffectState.EFFECT_EVERYTHING) {
-							if (entity instanceof LivingEntity livingEntity) {
-								handleEffect(livingEntity, level, player);
-							}
-						} else if (state == EffectState.EFFECT_MOBS) {
-							if (entity instanceof LivingEntity livingEntity && !(entity instanceof Player)) {
-								handleEffect(livingEntity, level, player);
+					if (!nearbyEntities.isEmpty()) {
+						for (Entity nearbyEntity : nearbyEntities) {
+							if (state == EffectState.EFFECT_EVERYTHING) {
+								if (nearbyEntity instanceof LivingEntity livingEntity) {
+									handleEffect(livingEntity, level, player);
+								}
+							} else if (state == EffectState.EFFECT_MOBS) {
+								if (nearbyEntity instanceof LivingEntity livingEntity && !(nearbyEntity instanceof Player)) {
+									handleEffect(livingEntity, level, player);
+								}
 							}
 						}
 					}
 				}
-			}
 
+			}
 		}
 	}
 
