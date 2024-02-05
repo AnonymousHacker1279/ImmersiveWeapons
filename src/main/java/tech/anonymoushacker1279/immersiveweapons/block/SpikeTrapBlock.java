@@ -13,6 +13,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.shapes.CollisionContext;
@@ -158,19 +159,24 @@ public class SpikeTrapBlock extends Block implements SimpleWaterloggedBlock {
 	@Override
 	public void neighborChanged(BlockState state, Level level, BlockPos pos, Block blockIn,
 	                            BlockPos fromPos, boolean isMoving) {
-		boolean flag = level.hasNeighborSignal(pos);
-		if (flag != state.getValue(POWERED)) {
-			state = state.setValue(POWERED, flag);
+		boolean hasNeighborSignal = level.hasNeighborSignal(pos);
+		if (hasNeighborSignal != state.getValue(POWERED)) {
+			state = state.setValue(POWERED, hasNeighborSignal);
 			if (state.getValue(POWERED)) {
 				PacketDistributor.TRACKING_CHUNK.with(level.getChunkAt(pos))
 						.send(new LocalSoundPayload(pos, SoundEventRegistry.SPIKE_TRAP_EXTEND.get().getLocation(),
 								SoundSource.BLOCKS, 1.0f, 1.0f, true));
+
+				level.gameEvent(GameEvent.BLOCK_ACTIVATE, pos, GameEvent.Context.of(state));
 			} else {
 				PacketDistributor.TRACKING_CHUNK.with(level.getChunkAt(pos))
 						.send(new LocalSoundPayload(pos, SoundEventRegistry.SPIKE_TRAP_RETRACT.get().getLocation(),
 								SoundSource.BLOCKS, 1.0f, 1.0f, true));
+
+				level.gameEvent(GameEvent.BLOCK_DEACTIVATE, pos, GameEvent.Context.of(state));
 			}
-			level.setBlock(pos, state.setValue(POWERED, flag), 2);
+
+			level.setBlock(pos, state.setValue(POWERED, hasNeighborSignal), 2);
 		}
 	}
 }

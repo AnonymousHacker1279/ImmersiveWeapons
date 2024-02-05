@@ -27,38 +27,39 @@ public class MeteorStaffItem extends Item implements SummoningStaff {
 	                                              InteractionHand hand) {
 
 		BlockPos lookingAt = getBlockLookingAt(player, level, getMaxRange());
+		ItemStack itemInHand = player.getItemInHand(hand);
 
 		if (!level.isClientSide) {
 			if (lookingAt != null) {
-				int enchantmentLevel = getEnchantmentLevel(player.getItemInHand(hand), EnchantmentRegistry.CELESTIAL_FURY.get());
+				int enchantmentLevel = itemInHand.getEnchantmentLevel(EnchantmentRegistry.CELESTIAL_FURY.get());
 
 				if (enchantmentLevel > 0 && player.isCrouching()) {
 					for (int i = 0; i < 3; i++) {
-						if (!MeteorEntity.create(level, player, player.getItemInHand(hand), lookingAt, null)) {
+						if (!MeteorEntity.create(level, player, itemInHand, lookingAt, null)) {
 							// If the meteor entity could not be created (because the starting position was inside a solid block)
 							// send a message to the player
 							player.displayClientMessage(Component.translatable("immersiveweapons.item.meteor_staff.not_enough_clearance")
 									.withStyle(ChatFormatting.RED), true);
-							return InteractionResultHolder.fail(player.getItemInHand(hand));
+							return InteractionResultHolder.fail(itemInHand);
 						}
 					}
 					handleCooldown(this, lookingAt, player, hand, getStaffCooldown() * 3);
 				} else {
-					if (!MeteorEntity.create(level, player, player.getItemInHand(hand), lookingAt, null)) {
+					if (!MeteorEntity.create(level, player, itemInHand, lookingAt, null)) {
 						// If the meteor entity could not be created (because the starting position was inside a solid block)
 						// send a message to the player
 						player.displayClientMessage(Component.translatable("immersiveweapons.item.meteor_staff.not_enough_clearance")
 								.withStyle(ChatFormatting.RED), true);
-						return InteractionResultHolder.fail(player.getItemInHand(hand));
+						return InteractionResultHolder.fail(itemInHand);
 					}
 					handleCooldown(this, lookingAt, player, hand);
 				}
 			} else {
-				return InteractionResultHolder.pass(player.getItemInHand(hand));
+				return InteractionResultHolder.pass(itemInHand);
 			}
 		}
 
-		return InteractionResultHolder.sidedSuccess(player.getItemInHand(hand), level.isClientSide());
+		return InteractionResultHolder.sidedSuccess(itemInHand, level.isClientSide());
 	}
 
 	@Override

@@ -11,14 +11,14 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.context.BlockPlaceContext;
-import net.minecraft.world.level.BlockGetter;
-import net.minecraft.world.level.Level;
+import net.minecraft.world.level.*;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.entity.*;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.BlockHitResult;
@@ -45,7 +45,6 @@ public class BearTrapBlock extends Block implements SimpleWaterloggedBlock, Enti
 				.setValue(VINES, Boolean.FALSE));
 	}
 
-	@SuppressWarnings("deprecation")
 	@Override
 	public InteractionResult use(BlockState state, Level level, BlockPos pos,
 	                             Player player, InteractionHand hand,
@@ -56,6 +55,8 @@ public class BearTrapBlock extends Block implements SimpleWaterloggedBlock, Enti
 
 			if (state.getValue(TRIGGERED) && !blockEntity.hasTrappedEntity()) {
 				level.setBlock(pos, state.setValue(TRIGGERED, false).setValue(VINES, false), 3);
+				level.gameEvent(GameEvent.BLOCK_DEACTIVATE, pos, GameEvent.Context.of(state));
+
 				return InteractionResult.SUCCESS;
 			}
 
@@ -64,22 +65,33 @@ public class BearTrapBlock extends Block implements SimpleWaterloggedBlock, Enti
 				if (!player.isCreative()) {
 					mainHandItem.shrink(1);
 				}
+
+				level.gameEvent(GameEvent.BLOCK_ACTIVATE, pos, GameEvent.Context.of(state));
 			}
 		}
 
 		return InteractionResult.PASS;
 	}
 
-	@SuppressWarnings("deprecation")
 	@Override
 	public VoxelShape getShape(BlockState state, BlockGetter getter, BlockPos pos, CollisionContext collisionContext) {
 		return SHAPE;
 	}
 
-	@SuppressWarnings("deprecation")
 	@Override
 	public VoxelShape getCollisionShape(BlockState state, BlockGetter getter, BlockPos pos, CollisionContext collisionContext) {
 		return COLLISION_SHAPE;
+	}
+
+	@Override
+	public boolean canSurvive(BlockState pState, LevelReader pLevel, BlockPos pPos) {
+		BlockState belowState = pLevel.getBlockState(pPos.below());
+		return Block.isFaceFull(belowState.getCollisionShape(pLevel, pPos.below()), Direction.UP);
+	}
+
+	@Override
+	public BlockState updateShape(BlockState pState, Direction pDirection, BlockState pNeighborState, LevelAccessor pLevel, BlockPos pPos, BlockPos pNeighborPos) {
+		return !pState.canSurvive(pLevel, pPos) ? Blocks.AIR.defaultBlockState() : pState;
 	}
 
 	@Override
@@ -94,7 +106,6 @@ public class BearTrapBlock extends Block implements SimpleWaterloggedBlock, Enti
 		return (world, pos, state, entity) -> ((BearTrapBlockEntity) entity).tick(pos);
 	}
 
-	@SuppressWarnings("deprecation")
 	@Override
 	public void entityInside(BlockState state, Level level, BlockPos pos, Entity entity) {
 		if (entity instanceof Player player && player.isCreative() || entity.getType().is(EntityTypes.BOSSES)) {
@@ -120,6 +131,7 @@ public class BearTrapBlock extends Block implements SimpleWaterloggedBlock, Enti
 				level.setBlock(pos, state.setValue(TRIGGERED, true).setValue(VINES, !state.getValue(VINES)), 3);
 
 				level.setBlock(pos, state.setValue(TRIGGERED, true), 3);
+				level.gameEvent(GameEvent.BLOCK_ACTIVATE, pos, GameEvent.Context.of(state));
 				livingEntity.hurt(IWDamageSources.BEAR_TRAP, 2.0F);
 				level.playLocalSound(pos.getX(), pos.getY(), pos.getZ(), SoundEventRegistry.BEAR_TRAP_CLOSE.get(),
 						SoundSource.BLOCKS, 1f, 1f, false);
@@ -135,19 +147,16 @@ public class BearTrapBlock extends Block implements SimpleWaterloggedBlock, Enti
 				.getFluidState(context.getClickedPos()).getType() == Fluids.WATER);
 	}
 
-	@SuppressWarnings("deprecation")
 	@Override
 	public FluidState getFluidState(BlockState state) {
 		return state.getValue(WATERLOGGED) ? Fluids.WATER.getSource(false) : super.getFluidState(state);
 	}
 
-	@SuppressWarnings("deprecation")
 	@Override
 	public boolean hasAnalogOutputSignal(BlockState state) {
 		return true;
 	}
 
-	@SuppressWarnings("deprecation")
 	@Override
 	public int getAnalogOutputSignal(BlockState state, Level level, BlockPos pos) {
 		return state.getValue(TRIGGERED) ? 15 : 0;
@@ -158,13 +167,11 @@ public class BearTrapBlock extends Block implements SimpleWaterloggedBlock, Enti
 		builder.add(TRIGGERED, VINES, WATERLOGGED);
 	}
 
-	@SuppressWarnings("deprecation")
 	@Override
 	public boolean isSignalSource(BlockState state) {
 		return state.getValue(TRIGGERED);
 	}
 
-	@SuppressWarnings("deprecation")
 	@Override
 	public int getSignal(BlockState blockState, BlockGetter getter, BlockPos pos, Direction side) {
 		if (!blockState.isSignalSource()) {

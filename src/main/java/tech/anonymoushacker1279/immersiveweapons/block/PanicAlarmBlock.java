@@ -3,8 +3,7 @@ package tech.anonymoushacker1279.immersiveweapons.block;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.item.context.BlockPlaceContext;
-import net.minecraft.world.level.BlockGetter;
-import net.minecraft.world.level.Level;
+import net.minecraft.world.level.*;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.entity.*;
 import net.minecraft.world.level.block.state.BlockState;
@@ -95,6 +94,18 @@ public class PanicAlarmBlock extends BasicOrientableBlock implements SimpleWater
 				}
 			}
 		}
+	}
+
+	@Override
+	public boolean canSurvive(BlockState pState, LevelReader pLevel, BlockPos pPos) {
+		// Ensure it is being placed on the side of a block
+		BlockState blockState = pLevel.getBlockState(pPos.relative(pState.getValue(FACING), -1));
+		return blockState.isFaceSturdy(pLevel, pPos, pState.getValue(FACING));
+	}
+
+	@Override
+	public BlockState updateShape(BlockState pState, Direction pDirection, BlockState pNeighborState, LevelAccessor pLevel, BlockPos pPos, BlockPos pNeighborPos) {
+		return !pState.canSurvive(pLevel, pPos) ? Blocks.AIR.defaultBlockState() : pState;
 	}
 
 	/**

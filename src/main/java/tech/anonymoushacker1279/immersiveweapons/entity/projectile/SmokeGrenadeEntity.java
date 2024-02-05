@@ -79,17 +79,23 @@ public class SmokeGrenadeEntity extends AdvancedThrowableItemProjectile {
 		super.tick();
 
 		if (ticksInGround > 0) {
-			if (level() instanceof ServerLevel serverLevel && tickCount % 2 == 0) {
-				serverLevel.getEntities(this, getBoundingBox().inflate(CommonConfig.smokeGrenadeEffectRange))
-						.stream()
-						.filter(entity -> !entity.isSpectator())
-						.forEach(entity -> {
-							if (entity instanceof Mob mob && !mob.getType().is(EntityTypes.BOSSES)) {
-								if (canSee(mob, this, false)) {
-									mob.setTarget(null);
+			if (level() instanceof ServerLevel serverLevel) {
+				if (tickCount % 2 == 0) {
+					serverLevel.getEntities(this, getBoundingBox().inflate(CommonConfig.smokeGrenadeEffectRange))
+							.stream()
+							.filter(entity -> !entity.isSpectator())
+							.forEach(entity -> {
+								if (entity instanceof Mob mob && !mob.getType().is(EntityTypes.BOSSES)) {
+									if (canSee(mob, this, false)) {
+										mob.setTarget(null);
+									}
 								}
-							}
-						});
+							});
+				}
+				
+				if (ticksInGround % 10 == 0) {
+					gameEvent(GameEventRegistry.SMOKE_GRENADE_HISS.get(), getOwner());
+				}
 			}
 		}
 	}

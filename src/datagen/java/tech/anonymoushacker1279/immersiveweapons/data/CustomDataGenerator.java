@@ -10,6 +10,7 @@ import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import net.neoforged.neoforge.data.event.GatherDataEvent;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.data.advancements.AdvancementsGenerator;
+import tech.anonymoushacker1279.immersiveweapons.data.data_maps.DataMapsGenerator;
 import tech.anonymoushacker1279.immersiveweapons.data.lang.LanguageGenerator;
 import tech.anonymoushacker1279.immersiveweapons.data.loot.LootTableGenerator;
 import tech.anonymoushacker1279.immersiveweapons.data.models.BlockStateGenerator;
@@ -53,6 +54,8 @@ public class CustomDataGenerator {
 		generator.addProvider(event.includeServer(), blockTagsGenerator);
 		generator.addProvider(event.includeServer(), new ItemTagsGenerator(output, lookupProvider, blockTagsGenerator, existingFileHelper));
 		generator.addProvider(event.includeServer(), new EntityTypeTagsGenerator(output, lookupProvider, existingFileHelper));
+		generator.addProvider(event.includeServer(), new GameEventTagsGenerator(output, lookupProvider, existingFileHelper));
+		generator.addProvider(event.includeServer(), new DataMapsGenerator(output, lookupProvider));
 
 		DatapackRegistriesGenerator datapackRegistriesGenerator = new DatapackRegistriesGenerator(output, lookupProvider);
 		generator.addProvider(event.includeServer(), datapackRegistriesGenerator);

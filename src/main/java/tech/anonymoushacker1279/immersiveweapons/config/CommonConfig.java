@@ -14,6 +14,9 @@ public class CommonConfig {
 	@ConfigEntry(comment = "Force the number of particles produced by the smoke grenade to be the same on all clients. A value of -1 will allow clients to define their own values.", group = "General", min = -1, max = 256)
 	public static int forceSmokeGrenadeParticles = -1;
 
+	@ConfigEntry(comment = "Set the range of the Panic Alarm's sound", group = "General", min = 0, max = 128)
+	public static int panicAlarmRange = 48;
+
 	@ConfigEntry(comment = "Set the maximum armor protection cap. The vanilla default is 20, but higher values allow better armor to work as intended. 25 is fully unlocked.", group = "Combat Rules", min = 20, max = 25)
 	public static double maxArmorProtection = 25.0d;
 

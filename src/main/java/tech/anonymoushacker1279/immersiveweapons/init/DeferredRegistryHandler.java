@@ -76,5 +76,8 @@ public class DeferredRegistryHandler {
 
 		ImmersiveWeapons.LOGGER.info("Initializing deferred registry for criterion triggers");
 		CriterionTriggerRegistry.TRIGGER_TYPE.register(modEventBus);
+
+		ImmersiveWeapons.LOGGER.info("Initializing deferred registry for game events");
+		GameEventRegistry.GAME_EVENTS.register(modEventBus);
 	}
 }

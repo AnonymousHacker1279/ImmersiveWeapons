@@ -46,6 +46,8 @@ public class FlashbangEntity extends AdvancedThrowableItemProjectile {
 					0.0D
 			);
 
+			gameEvent(GameEventRegistry.FLASHBANG_EXPLODE.get(), getOwner());
+
 			serverLevel.getEntities(this, getBoundingBox().inflate(CommonConfig.flashbangEffectRange))
 					.stream()
 					.filter(entity -> !entity.isSpectator())
