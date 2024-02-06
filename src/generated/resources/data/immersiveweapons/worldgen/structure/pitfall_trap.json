@@ -10,6 +10,5 @@
   },
   "start_pool": "immersiveweapons:pitfall_trap",
   "step": "surface_structures",
-  "terrain_adaptation": "beard_thin",
   "use_expansion_hack": false
 }

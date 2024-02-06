@@ -1,0 +1,14 @@
+{
+  "placement": {
+    "type": "minecraft:random_spread",
+    "salt": 959874384,
+    "separation": 20,
+    "spacing": 40
+  },
+  "structures": [
+    {
+      "structure": "immersiveweapons:abandoned_factory",
+      "weight": 1
+    }
+  ]
+}

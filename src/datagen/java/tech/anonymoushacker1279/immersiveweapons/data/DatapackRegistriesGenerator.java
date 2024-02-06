@@ -29,7 +29,8 @@ public class DatapackRegistriesGenerator extends DatapackBuiltinEntriesProvider 
 			.add(Registries.DAMAGE_TYPE, DamageTypesGenerator::bootstrap)
 			.add(Registries.PROCESSOR_LIST, StructureProcessorListGenerator::bootstrap)
 			.add(Registries.TEMPLATE_POOL, StructureTemplatePoolGenerator::bootstrap)
-			.add(Registries.STRUCTURE, StructureGenerator::bootstrap);
+			.add(Registries.STRUCTURE, StructureGenerator::bootstrap)
+			.add(Registries.STRUCTURE_SET, StructureSetGenerator::bootstrap);
 
 	public DatapackRegistriesGenerator(PackOutput output, CompletableFuture<Provider> registries) {
 		super(output, registries, BUILDER, Collections.singleton(ImmersiveWeapons.MOD_ID));
