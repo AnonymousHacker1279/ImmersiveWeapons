@@ -6,25 +6,17 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.util.valueproviders.BiasedToBottomInt;
-import net.minecraft.world.level.Level;
 import net.minecraft.world.level.dimension.DimensionType;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 
 import java.util.OptionalLong;
 
-public class IWDimensions {
+public class DimensionTypeGenerator {
 
-
-	private final static ResourceLocation TILTROS_LEVEL_ID = new ResourceLocation(ImmersiveWeapons.MOD_ID, "tiltros");
-
-	// DimensionType - Specifies the logic and settings for a dimension
+	public static final ResourceLocation TILTROS_LEVEL_ID = new ResourceLocation(ImmersiveWeapons.MOD_ID, "tiltros");
 	public static final ResourceKey<DimensionType> TILTROS_DIMENSION_TYPE = ResourceKey.create(Registries.DIMENSION_TYPE, TILTROS_LEVEL_ID);
 
-	// Level - The dimension during runtime
-	public static final ResourceKey<Level> TILTROS = ResourceKey.create(Registries.DIMENSION,
-			new ResourceLocation(ImmersiveWeapons.MOD_ID, "tiltros"));
-
-	public static void bootstrapDimensionType(BootstapContext<DimensionType> context) {
+	public static void bootstrap(BootstapContext<DimensionType> context) {
 		context.register(TILTROS_DIMENSION_TYPE, new DimensionType(
 				OptionalLong.empty(),
 				false,

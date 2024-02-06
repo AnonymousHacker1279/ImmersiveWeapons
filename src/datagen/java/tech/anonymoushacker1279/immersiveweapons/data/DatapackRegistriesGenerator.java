@@ -9,7 +9,8 @@ import net.neoforged.neoforge.registries.NeoForgeRegistries.Keys;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.data.biomes.IWBiomes;
 import tech.anonymoushacker1279.immersiveweapons.data.damage_types.DamageTypesGenerator;
-import tech.anonymoushacker1279.immersiveweapons.data.dimensions.IWDimensions;
+import tech.anonymoushacker1279.immersiveweapons.data.dimensions.DimensionGenerator;
+import tech.anonymoushacker1279.immersiveweapons.data.dimensions.DimensionTypeGenerator;
 import tech.anonymoushacker1279.immersiveweapons.data.features.*;
 import tech.anonymoushacker1279.immersiveweapons.data.modifiers.IWBiomeModifiers;
 import tech.anonymoushacker1279.immersiveweapons.data.structures.*;
@@ -23,7 +24,8 @@ public class DatapackRegistriesGenerator extends DatapackBuiltinEntriesProvider 
 			.add(Registries.CONFIGURED_FEATURE, IWConfiguredFeatures::bootstrap)
 			.add(Registries.PLACED_FEATURE, IWPlacedFeatures::bootstrap)
 			.add(Registries.BIOME, IWBiomes::bootstrap)
-			.add(Registries.DIMENSION_TYPE, IWDimensions::bootstrapDimensionType)
+			.add(Registries.DIMENSION_TYPE, DimensionTypeGenerator::bootstrap)
+			.add(Registries.LEVEL_STEM, DimensionGenerator::bootstrap)
 			.add(Registries.CONFIGURED_CARVER, IWConfiguredCarvers::bootstrap)
 			.add(Keys.BIOME_MODIFIERS, IWBiomeModifiers::bootstrap)
 			.add(Registries.DAMAGE_TYPE, DamageTypesGenerator::bootstrap)

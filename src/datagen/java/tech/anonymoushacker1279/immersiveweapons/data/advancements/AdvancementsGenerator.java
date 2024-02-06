@@ -19,7 +19,7 @@ import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.advancement.EntityDiscoveredTrigger;
 import tech.anonymoushacker1279.immersiveweapons.data.biomes.IWBiomes;
-import tech.anonymoushacker1279.immersiveweapons.data.dimensions.IWDimensions;
+import tech.anonymoushacker1279.immersiveweapons.data.dimensions.DimensionGenerator;
 import tech.anonymoushacker1279.immersiveweapons.data.tags.groups.immersiveweapons.IWItemTagGroups;
 import tech.anonymoushacker1279.immersiveweapons.init.*;
 
@@ -1584,7 +1584,7 @@ public class AdvancementsGenerator extends AdvancementProvider {
 						null, AdvancementType.GOAL, true, true, false)
 				.addCriterion("visit",
 						PlayerTrigger.TriggerInstance.located(
-								LocationPredicate.Builder.inDimension(IWDimensions.TILTROS)))
+								LocationPredicate.Builder.inDimension(DimensionGenerator.TILTROS_LEVEL)))
 				.rewards(AdvancementRewards.Builder.experience(150))
 				.save(consumer, "immersiveweapons:tiltros");
 	}
