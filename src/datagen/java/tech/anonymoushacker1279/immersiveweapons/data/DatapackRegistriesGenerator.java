@@ -12,7 +12,7 @@ import tech.anonymoushacker1279.immersiveweapons.data.damage_types.DamageTypesGe
 import tech.anonymoushacker1279.immersiveweapons.data.dimensions.IWDimensions;
 import tech.anonymoushacker1279.immersiveweapons.data.features.*;
 import tech.anonymoushacker1279.immersiveweapons.data.modifiers.IWBiomeModifiers;
-import tech.anonymoushacker1279.immersiveweapons.data.structures.StructureProcessorListGenerator;
+import tech.anonymoushacker1279.immersiveweapons.data.structures.*;
 
 import java.util.Collections;
 import java.util.concurrent.CompletableFuture;
@@ -27,9 +27,16 @@ public class DatapackRegistriesGenerator extends DatapackBuiltinEntriesProvider 
 			.add(Registries.CONFIGURED_CARVER, IWConfiguredCarvers::bootstrap)
 			.add(Keys.BIOME_MODIFIERS, IWBiomeModifiers::bootstrap)
 			.add(Registries.DAMAGE_TYPE, DamageTypesGenerator::bootstrap)
-			.add(Registries.PROCESSOR_LIST, StructureProcessorListGenerator::bootstrap);
+			.add(Registries.PROCESSOR_LIST, StructureProcessorListGenerator::bootstrap)
+			.add(Registries.TEMPLATE_POOL, StructureTemplatePoolGenerator::bootstrap)
+			.add(Registries.STRUCTURE, StructureGenerator::bootstrap);
 
 	public DatapackRegistriesGenerator(PackOutput output, CompletableFuture<Provider> registries) {
 		super(output, registries, BUILDER, Collections.singleton(ImmersiveWeapons.MOD_ID));
+	}
+
+	@Override
+	public String getName() {
+		return "Datapack Registries";
 	}
 }
