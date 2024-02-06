@@ -180,6 +180,42 @@ public class ItemTagsGenerator extends ItemTagsProvider {
 		for (Item item : ItemLists.SMOKE_GRENADE_ITEMS) {
 			tag(IWItemTagGroups.SMOKE_GRENADES).add(item);
 		}
+
+		// Tool tags
+		tag(IWItemTagGroups.MOLTEN_TOOLS).add(
+				ItemRegistry.MOLTEN_SWORD.get(),
+				ItemRegistry.MOLTEN_PICKAXE.get(),
+				ItemRegistry.MOLTEN_AXE.get(),
+				ItemRegistry.MOLTEN_SHOVEL.get(),
+				ItemRegistry.MOLTEN_HOE.get());
+
+		tag(IWItemTagGroups.TESLA_TOOLS).add(
+				ItemRegistry.TESLA_SWORD.get(),
+				ItemRegistry.TESLA_PICKAXE.get(),
+				ItemRegistry.TESLA_AXE.get(),
+				ItemRegistry.TESLA_SHOVEL.get(),
+				ItemRegistry.TESLA_HOE.get());
+
+		tag(IWItemTagGroups.VENTUS_TOOLS).add(
+				ItemRegistry.VENTUS_SWORD.get(),
+				ItemRegistry.VENTUS_PICKAXE.get(),
+				ItemRegistry.VENTUS_AXE.get(),
+				ItemRegistry.VENTUS_SHOVEL.get(),
+				ItemRegistry.VENTUS_HOE.get());
+
+		tag(IWItemTagGroups.ASTRAL_TOOLS).add(
+				ItemRegistry.ASTRAL_SWORD.get(),
+				ItemRegistry.ASTRAL_PICKAXE.get(),
+				ItemRegistry.ASTRAL_AXE.get(),
+				ItemRegistry.ASTRAL_SHOVEL.get(),
+				ItemRegistry.ASTRAL_HOE.get());
+
+		tag(IWItemTagGroups.STARSTORM_TOOLS).add(
+				ItemRegistry.STARSTORM_SWORD.get(),
+				ItemRegistry.STARSTORM_PICKAXE.get(),
+				ItemRegistry.STARSTORM_AXE.get(),
+				ItemRegistry.STARSTORM_SHOVEL.get(),
+				ItemRegistry.STARSTORM_HOE.get());
 	}
 
 	/**

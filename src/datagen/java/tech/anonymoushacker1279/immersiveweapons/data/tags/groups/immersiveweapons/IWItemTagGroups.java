@@ -52,4 +52,14 @@ public class IWItemTagGroups {
 			"accessories"));
 	public static final TagKey<Item> SMOKE_GRENADES = ItemTags.create(new ResourceLocation(ImmersiveWeapons.MOD_ID,
 			"smoke_grenades"));
+	public static final TagKey<Item> MOLTEN_TOOLS = ItemTags.create(new ResourceLocation(ImmersiveWeapons.MOD_ID,
+			"tools/molten"));
+	public static final TagKey<Item> TESLA_TOOLS = ItemTags.create(new ResourceLocation(ImmersiveWeapons.MOD_ID,
+			"tools/tesla"));
+	public static final TagKey<Item> VENTUS_TOOLS = ItemTags.create(new ResourceLocation(ImmersiveWeapons.MOD_ID,
+			"tools/ventus"));
+	public static final TagKey<Item> ASTRAL_TOOLS = ItemTags.create(new ResourceLocation(ImmersiveWeapons.MOD_ID,
+			"tools/astral"));
+	public static final TagKey<Item> STARSTORM_TOOLS = ItemTags.create(new ResourceLocation(ImmersiveWeapons.MOD_ID,
+			"tools/starstorm"));
 }

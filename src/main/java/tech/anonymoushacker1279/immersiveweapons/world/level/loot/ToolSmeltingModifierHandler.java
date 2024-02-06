@@ -5,6 +5,8 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Player;
@@ -21,35 +23,29 @@ import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.common.loot.IGlobalLootModifier;
 import net.neoforged.neoforge.common.loot.LootModifier;
 import org.jetbrains.annotations.NotNull;
-import tech.anonymoushacker1279.immersiveweapons.init.ItemRegistry;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.function.Supplier;
 
-public class MoltenToolSmeltingModifierHandler extends LootModifier {
+public class ToolSmeltingModifierHandler extends LootModifier {
 
-	public static final Supplier<Codec<MoltenToolSmeltingModifierHandler>> CODEC = Suppliers.memoize(() ->
-			RecordCodecBuilder.create(inst -> codecStart(inst).apply(inst, MoltenToolSmeltingModifierHandler::new))
+	public static final Supplier<Codec<ToolSmeltingModifierHandler>> CODEC = Suppliers.memoize(() ->
+			RecordCodecBuilder.create(inst -> codecStart(inst).and(
+							TagKey.codec(Registries.ITEM).fieldOf("toolsTag").forGetter(m -> m.tools))
+					.apply(inst, ToolSmeltingModifierHandler::new))
 	);
 
-	private final List<Item> MOLTEN_TOOLS = new ArrayList<>(5);
+	private final TagKey<Item> tools;
 
-	MoltenToolSmeltingModifierHandler(LootItemCondition[] conditions) {
+	public ToolSmeltingModifierHandler(LootItemCondition[] conditions, TagKey<Item> tools) {
 		super(conditions);
-
-		MOLTEN_TOOLS.add(ItemRegistry.MOLTEN_SWORD.get());
-		MOLTEN_TOOLS.add(ItemRegistry.MOLTEN_PICKAXE.get());
-		MOLTEN_TOOLS.add(ItemRegistry.MOLTEN_AXE.get());
-		MOLTEN_TOOLS.add(ItemRegistry.MOLTEN_SHOVEL.get());
-		MOLTEN_TOOLS.add(ItemRegistry.MOLTEN_HOE.get());
+		this.tools = tools;
 	}
 
 	@Override
 	public @NotNull ObjectArrayList<ItemStack> doApply(ObjectArrayList<ItemStack> generatedLoot, LootContext context) {
 		// If a molten tool is used and the player is crouching, the block is smelted
 		if (context.getParamOrNull(LootContextParams.THIS_ENTITY) instanceof Player player) {
-			if (player.isCrouching() && MOLTEN_TOOLS.contains(player.getItemInHand(InteractionHand.MAIN_HAND).getItem())) {
+			if (player.isCrouching() && player.getItemInHand(InteractionHand.MAIN_HAND).is(tools)) {
 				// Query smelting recipes to see if the block can be smelted
 				RecipeManager manager = player.level().getRecipeManager();
 

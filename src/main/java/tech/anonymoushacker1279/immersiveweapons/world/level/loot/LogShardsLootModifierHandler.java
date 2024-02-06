@@ -4,8 +4,9 @@ import com.google.common.base.Suppliers;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.tags.ItemTags;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.tags.TagKey;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
@@ -19,33 +20,33 @@ public class LogShardsLootModifierHandler extends LootModifier {
 
 	public static final Supplier<Codec<LogShardsLootModifierHandler>> CODEC = Suppliers.memoize(() -> RecordCodecBuilder.create(inst -> codecStart(inst).and(
 			inst.group(
-					Codec.STRING.fieldOf("blockTag").forGetter(m -> m.tag),
+					TagKey.codec(Registries.ITEM).fieldOf("blockTag").forGetter(m -> m.tag),
 					Codec.INT.fieldOf("minShards").forGetter(m -> m.minShards),
 					Codec.INT.fieldOf("maxShards").forGetter(m -> m.maxShards),
-					ItemStack.CODEC.fieldOf("replacement").forGetter(m -> m.reward)
+					ItemStack.CODEC.fieldOf("replacement").forGetter(m -> m.replacement)
 			)).apply(inst, LogShardsLootModifierHandler::new)
 	));
 
 	private final int minShards;
 	private final int maxShards;
-	private final String tag;
-	private final ItemStack reward;
+	private final TagKey<Item> tag;
+	private final ItemStack replacement;
 
 	/**
-	 * Constructor for LogShardsLootModifierHandler.
+	 * Create a new log shards modifier.
 	 *
-	 * @param conditionsIn the <code>LootItemCondition</code>s
-	 * @param tag          the block tag string
-	 * @param minShards    the minimum number of shards to drop
-	 * @param maxShards    the maximum number of shards to drop
-	 * @param reward       the returned item
+	 * @param itemConditions the <code>LootItemCondition</code>s
+	 * @param tag            the tag of the item to replace
+	 * @param minShards      the minimum number of shards to drop
+	 * @param maxShards      the maximum number of shards to drop
+	 * @param replacement    the returned item
 	 */
-	LogShardsLootModifierHandler(LootItemCondition[] conditionsIn, String tag, int minShards, int maxShards, ItemStack reward) {
-		super(conditionsIn);
+	public LogShardsLootModifierHandler(LootItemCondition[] itemConditions, TagKey<Item> tag, int minShards, int maxShards, ItemStack replacement) {
+		super(itemConditions);
 		this.tag = tag;
 		this.minShards = minShards;
 		this.maxShards = maxShards;
-		this.reward = reward;
+		this.replacement = replacement;
 	}
 
 	/**
@@ -60,14 +61,14 @@ public class LogShardsLootModifierHandler extends LootModifier {
 		int shardCount = 0;
 		for (ItemStack stack : generatedLoot) {
 			// Each wooden log stack can generate shards
-			if (stack.is(ItemTags.create(new ResourceLocation(tag)))) {
+			if (stack.is(tag)) {
 				shardCount += stack.getCount() * context.getRandom().nextIntBetweenInclusive(minShards, maxShards);
 			}
 		}
 
 		if (shardCount >= 1) {
-			reward.setCount(shardCount);
-			generatedLoot.add(reward);
+			replacement.setCount(shardCount);
+			generatedLoot.add(replacement);
 			generatedLoot.remove(0); // The original item shouldn't drop, so remove it from the loot list
 		}
 

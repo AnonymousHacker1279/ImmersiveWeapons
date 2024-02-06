@@ -1,0 +1,25 @@
+{
+  "type": "immersiveweapons:simple_drop",
+  "conditions": [
+    {
+      "condition": "minecraft:all_of",
+      "terms": [
+        {
+          "condition": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {
+            "type": "minecraft:ender_dragon"
+          }
+        },
+        {
+          "condition": "minecraft:killed_by_player"
+        }
+      ]
+    }
+  ],
+  "item": {
+    "Count": 1,
+    "id": "immersiveweapons:medal_of_adequacy"
+  },
+  "mob_type": ""
+}

@@ -12,6 +12,7 @@ import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.data.advancements.AdvancementsGenerator;
 import tech.anonymoushacker1279.immersiveweapons.data.data_maps.DataMapsGenerator;
 import tech.anonymoushacker1279.immersiveweapons.data.lang.LanguageGenerator;
+import tech.anonymoushacker1279.immersiveweapons.data.loot.GlobalLootModifierGenerator;
 import tech.anonymoushacker1279.immersiveweapons.data.loot.LootTableGenerator;
 import tech.anonymoushacker1279.immersiveweapons.data.models.BlockStateGenerator;
 import tech.anonymoushacker1279.immersiveweapons.data.models.ItemModelGenerator;
@@ -56,11 +57,12 @@ public class CustomDataGenerator {
 		generator.addProvider(event.includeServer(), new EntityTypeTagsGenerator(output, lookupProvider, existingFileHelper));
 		generator.addProvider(event.includeServer(), new GameEventTagsGenerator(output, lookupProvider, existingFileHelper));
 		generator.addProvider(event.includeServer(), new DataMapsGenerator(output, lookupProvider));
+		generator.addProvider(event.includeServer(), new GlobalLootModifierGenerator(output));
+		generator.addProvider(event.includeServer(), new StructureUpdater(existingFileHelper, output));
 
 		DatapackRegistriesGenerator datapackRegistriesGenerator = new DatapackRegistriesGenerator(output, lookupProvider);
 		generator.addProvider(event.includeServer(), datapackRegistriesGenerator);
 		generator.addProvider(event.includeServer(), new BiomeTagsGenerator(output, datapackRegistriesGenerator.getRegistryProvider(), existingFileHelper));
 		generator.addProvider(event.includeServer(), new DamageTypeTagsGenerator(output, datapackRegistriesGenerator.getRegistryProvider(), existingFileHelper));
-		generator.addProvider(event.includeServer(), new StructureUpdater(existingFileHelper, output));
 	}
 }
