@@ -5,9 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "immersiveweapons:smoke_grenade_green"
-            ]
+            "tag": "immersiveweapons:smoke_grenades"
           }
         ]
       },

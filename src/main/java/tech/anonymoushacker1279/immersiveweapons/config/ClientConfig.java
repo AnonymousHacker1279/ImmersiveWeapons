@@ -10,7 +10,6 @@ public class ClientConfig {
 	public static final ClientConfig CLIENT;
 
 	public static ForgeConfigSpec.BooleanValue TESLA_ARMOR_EFFECT_SOUND;
-	public static ForgeConfigSpec.IntValue PANIC_ALARM_RANGE;
 	public static ForgeConfigSpec.IntValue SMOKE_GRENADE_PARTICLES;
 	public static ForgeConfigSpec.BooleanValue FANCY_SMOKE_GRENADE_PARTICLES;
 
@@ -35,10 +34,6 @@ public class ClientConfig {
 				.comment("Enable the Tesla Armor effect sound - Default true")
 				.translation("config.immersiveweapons.tesla_armor_effect_sound")
 				.define("tesla_armor_effect_sound", true);
-		PANIC_ALARM_RANGE = builder
-				.comment("Set the range of the Panic Alarm's sound - Default 48")
-				.translation("config.immersiveweapons.panic_alarm_range")
-				.defineInRange("panic_alarm_range", 48, 0, Integer.MAX_VALUE);
 		builder.pop();
 
 		builder.pop();

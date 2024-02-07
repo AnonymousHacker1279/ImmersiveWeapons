@@ -1,6 +1,8 @@
-This minor update includes a major bugfix along with some optimizations to structure files.
+This minor update includes a handful of bugfixes that were backported from the latest MC 1.20.4 development branch.
 
 ### Bugfixes
 
-- Fix server hangs in certain situations due to entity passenger data not being handled properly
-- Update structure files, removing the need for the game to upgrade them via DFU every time they are loaded
+- Fix Smoke Grenade advancement only firing for green smoke grenades
+- Move panic alarm range config from client to common config
+- Fix placement weirdness with bear traps and panic alarms
+- Fix damageable blocks being repairable with any item

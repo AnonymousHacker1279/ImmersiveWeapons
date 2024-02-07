@@ -824,7 +824,7 @@ public class AdvancementsGenerator extends ForgeAdvancementProvider {
 						Component.translatable("advancements.immersiveweapons.smoke_grenade.description"),
 						null, FrameType.GOAL, true, true, false)
 				.addCriterion("hold",
-						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.SMOKE_GRENADE_GREEN.get()))
+						InventoryChangeTrigger.TriggerInstance.hasItems(ItemPredicate.Builder.item().of(IWItemTagGroups.SMOKE_GRENADES).build()))
 				.save(consumer, "immersiveweapons:smoke_grenade");
 
 		Advancement craftAlcohol = Builder.advancement().parent(root)

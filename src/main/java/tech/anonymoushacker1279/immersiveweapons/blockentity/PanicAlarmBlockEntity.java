@@ -10,7 +10,7 @@ import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.Nullable;
-import tech.anonymoushacker1279.immersiveweapons.config.ClientConfig;
+import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.init.BlockEntityRegistry;
 import tech.anonymoushacker1279.immersiveweapons.init.SoundEventRegistry;
 
@@ -33,7 +33,7 @@ public class PanicAlarmBlockEntity extends BlockEntity implements EntityBlock {
 
 		if (isPowered && cooldown-- <= 0) {
 			for (ServerPlayer serverPlayer : ((ServerLevel) level).getPlayers(player -> player.blockPosition()
-					.distSqr(blockPos) <= Math.pow(ClientConfig.PANIC_ALARM_RANGE.get(), 2))) {
+					.distSqr(blockPos) <= Math.pow(ImmersiveWeapons.COMMON_CONFIG.panicAlarmRange().get(), 2))) {
 
 				serverPlayer.playNotifySound(SoundEventRegistry.PANIC_ALARM_SOUND.get(), SoundSource.BLOCKS, 1.0F, 1.0F);
 			}

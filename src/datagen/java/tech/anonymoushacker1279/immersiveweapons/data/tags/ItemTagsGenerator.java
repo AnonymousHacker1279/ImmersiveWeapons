@@ -174,6 +174,11 @@ public class ItemTagsGenerator extends ItemTagsProvider {
 				tag(IWItemTagGroups.ACCESSORIES).add(accessory);
 			}
 		}
+
+		// Smoke grenade tags
+		for (Item item : ItemLists.SMOKE_GRENADE_ITEMS) {
+			tag(IWItemTagGroups.SMOKE_GRENADES).add(item);
+		}
 	}
 
 	/**

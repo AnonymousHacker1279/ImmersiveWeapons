@@ -924,7 +924,6 @@ public class LanguageGenerator extends IWLanguageProvider {
 		// Client options
 
 		addConfigDescription("tesla_armor_effect_sound", "Enable the Tesla Armor effect sound - Default true");
-		addConfigDescription("panic_alarm_range", "Set the range of the Panic Alarm's sound - Default 48");
 		addConfigDescription("smoke_grenade_particles", "Set the number of particles produced by the smoke grenade" +
 				"\nThe server may choose to override this value to encourage fairness. - Default 96");
 		addConfigDescription("fancy_smoke_grenade_particles", "Render smoke grenade particles at 66% of the regular size, spawn 3x more, and add translucency." +
@@ -939,6 +938,7 @@ public class LanguageGenerator extends IWLanguageProvider {
 				Setting this to a high value may cause clients to lag. - Default -1""");
 		addConfigDescription("bullets_break_glass", "Enable bullets breaking glass - Default true");
 		addConfigDescription("tiltros_enabled", "Enable the Tiltros dimension portal - Default true");
+		addConfigDescription("panic_alarm_range", "Set the range of the Panic Alarm's sound - Default 48");
 
 		// Mixins
 		addConfigDescription("max_armor_protection", """

@@ -12,6 +12,7 @@ public record CommonConfig(
 		ConfigValue<Boolean> bulletsBreakGlass,
 		ConfigValue<Boolean> tiltrosEnabled,
 		ConfigValue<Integer> forceSmokeGrenadeParticles,
+		ConfigValue<Integer> panicAlarmRange,
 		ConfigValue<Double> maxArmorProtection,
 		ConfigValue<Integer> discoveryAdvancementRange,
 		ConfigValue<Integer> celestialTowerSpawnCheckingRadius,
@@ -53,6 +54,11 @@ public record CommonConfig(
 						Setting this to a high value may cause clients to lag. - Default -1""")
 				.translation("config.immersiveweapons.force_smoke_grenade_particles")
 				.defineInRange("force_smoke_grenade_particles", -1, -1, Integer.MAX_VALUE);
+
+		ConfigValue<Integer> panicAlarmRange = builder
+				.comment("Set the range of the Panic Alarm's sound - Default 48")
+				.translation("config.immersiveweapons.panic_alarm_range")
+				.defineInRange("panic_alarm_range", 48, 0, Integer.MAX_VALUE);
 		builder.pop();
 
 		builder.push("Mixin");
@@ -191,6 +197,7 @@ public record CommonConfig(
 				bulletsBreakGlass,
 				tiltrosEnabled,
 				forceSmokeGrenadeParticles,
+				panicAlarmRange,
 				maxArmorProtection,
 				discoveryAdvancementRange,
 				celestialTowerSpawnCheckingRadius, celestialTowerWaveSizeModifier,

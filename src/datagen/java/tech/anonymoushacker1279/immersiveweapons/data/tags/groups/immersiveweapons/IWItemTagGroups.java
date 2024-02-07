@@ -50,4 +50,6 @@ public class IWItemTagGroups {
 			"shards/starstorm"));
 	public static final TagKey<Item> ACCESSORIES = ItemTags.create(new ResourceLocation(ImmersiveWeapons.MOD_ID,
 			"accessories"));
+	public static final TagKey<Item> SMOKE_GRENADES = ItemTags.create(new ResourceLocation(ImmersiveWeapons.MOD_ID,
+			"smoke_grenades"));
 }

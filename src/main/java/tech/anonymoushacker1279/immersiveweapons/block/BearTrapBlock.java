@@ -11,8 +11,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.context.BlockPlaceContext;
-import net.minecraft.world.level.BlockGetter;
-import net.minecraft.world.level.Level;
+import net.minecraft.world.level.*;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.entity.*;
 import net.minecraft.world.level.block.state.BlockState;
@@ -115,6 +114,17 @@ public class BearTrapBlock extends Block implements SimpleWaterloggedBlock, Enti
 	@Override
 	public VoxelShape getCollisionShape(BlockState state, BlockGetter getter, BlockPos pos, CollisionContext collisionContext) {
 		return COLLISION_SHAPE;
+	}
+
+	@Override
+	public boolean canSurvive(BlockState pState, LevelReader pLevel, BlockPos pPos) {
+		BlockState belowState = pLevel.getBlockState(pPos.below());
+		return Block.isFaceFull(belowState.getCollisionShape(pLevel, pPos.below()), Direction.UP);
+	}
+
+	@Override
+	public BlockState updateShape(BlockState pState, Direction pDirection, BlockState pNeighborState, LevelAccessor pLevel, BlockPos pPos, BlockPos pNeighborPos) {
+		return !pState.canSurvive(pLevel, pPos) ? Blocks.AIR.defaultBlockState() : pState;
 	}
 
 	/**
