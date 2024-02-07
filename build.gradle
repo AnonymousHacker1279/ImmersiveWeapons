@@ -145,6 +145,7 @@ dependencies {
 
 	implementation(jarJar("dev.lukebemish.biomesquisher:biomesquisher-neoforge-1.20.2:${biomesquisher_version}")) {
 		jarJar.ranged(it, "[0.1.6-alpha,)")
+		exclude group: "ar.com.hjg", module: "pngj"
 	}
 
 	implementation(jarJar("net.kyrptonaught.customportalapi:cpapireforged-neo-1.20.4:${custom_portals_api_version}")) {
