@@ -1,6 +1,7 @@
 package tech.anonymoushacker1279.immersiveweapons.entity.projectile;
 
 import net.minecraft.advancements.AdvancementHolder;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -42,6 +43,7 @@ public class BulletEntity extends CustomArrowEntity implements HitEffectUtils {
 	private Item firingItem = ItemRegistry.FLINTLOCK_PISTOL.get();
 	public List<Double> shootingVectorInputs = List.of(0.0025d, 0.2d, 1.1d);
 	public HitEffect hitEffect = HitEffect.NONE;
+	public boolean flameTrail = false;
 	private static final TagKey<Block> BULLETPROOF_GLASS = BlockTags.create(new ResourceLocation("forge", "bulletproof_glass"));
 
 	public BulletEntity(EntityType<? extends Arrow> entityType, Level level) {
@@ -215,6 +217,17 @@ public class BulletEntity extends CustomArrowEntity implements HitEffectUtils {
 				PacketDistributor.PLAYER.with(player)
 						.send(new BulletEntityDebugPayload(calculateDamage(), isCritArrow()));
 			}
+		}
+
+		if (!inGround && flameTrail && level() instanceof ServerLevel serverLevel) {
+			serverLevel.sendParticles(
+					ParticleTypes.SMALL_FLAME,
+					position().x, position().y, position().z,
+					8,
+					random.nextGaussian() * 0.05,
+					random.nextGaussian() * 0.05,
+					random.nextGaussian() * 0.05,
+					random.nextGaussian() * 0.025);
 		}
 	}
 }

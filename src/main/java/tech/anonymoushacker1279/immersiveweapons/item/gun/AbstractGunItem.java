@@ -180,6 +180,11 @@ public abstract class AbstractGunItem extends Item implements Vanishable {
 							bulletEntity.gravityModifier += (densityModifier * 0.015f);
 						}
 
+						// Handle particle trails for blaze powder
+						if (powderType == PowderType.BLAZE_POWDER) {
+							bulletEntity.flameTrail = true;
+						}
+
 						int weaponDamage = powderType.getWeaponDamageAmount();
 
 						gun.hurtAndBreak(weaponDamage, player, (entity) ->
@@ -638,6 +643,7 @@ public abstract class AbstractGunItem extends Item implements Vanishable {
 	}
 
 	public enum PowderType {
+		BLAZE_POWDER(Items.BLAZE_POWDER, 0.25f, 0.1f, 1, 0),
 		GUNPOWDER(Items.GUNPOWDER, 0.33f, 0.05f, 1, 1),
 		BLACKPOWDER(ItemRegistry.BLACKPOWDER.get(), 0.75f, 0.025f, 2, 2),
 		SULFUR_DUST(ItemRegistry.SULFUR_DUST.get(), 0.90f, -0.05f, 2, 3);
