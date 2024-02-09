@@ -3,8 +3,8 @@
 	"promos": {
 		"1.20.2-latest": "1.20.2-1.28.0",
 		"1.20.2-recommended": "1.20.2-1.28.0",
-		"1.20.1-latest": "1.20.1-1.27.5",
-		"1.20.1-recommended": "1.20.1-1.27.5",
+		"1.20.1-latest": "1.20.1-1.27.6",
+		"1.20.1-recommended": "1.20.1-1.27.6",
 		"1.19.4-latest": "1.19.4-1.23.2",
 		"1.19.4-recommended": "1.19.4-1.23.2",
 		"1.19.3-latest": "1.19.3-1.21.0",
@@ -28,6 +28,7 @@
 		"1.20.2-1.28.0": "Initial 1.20.2 release - https://github.com/AnonymousHacker1279/ImmersiveWeapons/releases/tag/v1.28.0"
 	},
 	"1.20.1": {
+		"1.20.1-1.27.6": "Bugfixes - https://github.com/AnonymousHacker1279/ImmersiveWeapons/releases/tag/v1.27.6",
 		"1.20.1-1.27.5": "Bugfixes - https://github.com/AnonymousHacker1279/ImmersiveWeapons/releases/tag/v1.27.5",
 		"1.20.1-1.27.4": "Bugfixes - https://github.com/AnonymousHacker1279/ImmersiveWeapons/releases/tag/v1.27.4",
 		"1.20.1-1.27.3": "Bugfixes and improvements - https://github.com/AnonymousHacker1279/ImmersiveWeapons/releases/tag/v1.27.3",
