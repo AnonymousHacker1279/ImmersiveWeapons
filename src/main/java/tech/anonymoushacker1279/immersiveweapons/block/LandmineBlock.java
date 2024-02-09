@@ -165,4 +165,9 @@ public class LandmineBlock extends Block implements SimpleWaterloggedBlock {
 
 		super.playerWillDestroy(level, pos, state, player);
 	}
+
+	@Override
+	public boolean canDropFromExplosion(BlockState state, BlockGetter level, BlockPos pos, Explosion explosion) {
+		return false;
+	}
 }
