@@ -1,4 +1,4 @@
-package tech.anonymoushacker1279.immersiveweapons.entity.npc.trades;
+package tech.anonymoushacker1279.immersiveweapons.entity.npc.trading.trades;
 
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.Entity;

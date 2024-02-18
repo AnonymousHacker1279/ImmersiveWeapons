@@ -21,6 +21,7 @@ import tech.anonymoushacker1279.immersiveweapons.data.recipes.families.FamilyGen
 import tech.anonymoushacker1279.immersiveweapons.data.sounds.SoundGenerator;
 import tech.anonymoushacker1279.immersiveweapons.data.structures.StructureUpdater;
 import tech.anonymoushacker1279.immersiveweapons.data.tags.*;
+import tech.anonymoushacker1279.immersiveweapons.data.trades.TradeDataGenerator;
 
 import java.util.concurrent.CompletableFuture;
 
@@ -59,6 +60,7 @@ public class CustomDataGenerator {
 		generator.addProvider(event.includeServer(), new DataMapsGenerator(output, lookupProvider));
 		generator.addProvider(event.includeServer(), new GlobalLootModifierGenerator(output));
 		generator.addProvider(event.includeServer(), new StructureUpdater(existingFileHelper, output));
+		generator.addProvider(event.includeServer(), new TradeDataGenerator(output));
 
 		DatapackRegistriesGenerator datapackRegistriesGenerator = new DatapackRegistriesGenerator(output, lookupProvider);
 		generator.addProvider(event.includeServer(), datapackRegistriesGenerator);

@@ -1,4 +1,4 @@
-package tech.anonymoushacker1279.immersiveweapons.entity.npc.trades;
+package tech.anonymoushacker1279.immersiveweapons.entity.npc.trading.trades;
 
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.trading.MerchantOffer;

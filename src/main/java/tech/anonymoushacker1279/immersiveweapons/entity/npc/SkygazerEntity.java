@@ -1,8 +1,5 @@
 package tech.anonymoushacker1279.immersiveweapons.entity.npc;
 
-import com.google.common.collect.ImmutableMap;
-import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
-import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
 import net.minecraft.stats.Stats;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -14,8 +11,6 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.targeting.TargetingConditions;
 import net.minecraft.world.entity.npc.AbstractVillager;
-import net.minecraft.world.entity.npc.VillagerTrades;
-import net.minecraft.world.entity.npc.VillagerTrades.ItemListing;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -24,8 +19,9 @@ import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.trading.MerchantOffer;
 import net.minecraft.world.level.Level;
 import tech.anonymoushacker1279.immersiveweapons.entity.monster.StarmiteEntity;
-import tech.anonymoushacker1279.immersiveweapons.entity.npc.trades.*;
-import tech.anonymoushacker1279.immersiveweapons.init.*;
+import tech.anonymoushacker1279.immersiveweapons.entity.npc.trading.trades.*;
+import tech.anonymoushacker1279.immersiveweapons.init.EntityRegistry;
+import tech.anonymoushacker1279.immersiveweapons.init.ItemRegistry;
 import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
 
 import java.util.*;
@@ -33,41 +29,8 @@ import java.util.Map.Entry;
 
 public class SkygazerEntity extends AbstractMerchantEntity {
 
-	public static final Int2ObjectMap<ItemListing[]> TRADES = new Int2ObjectOpenHashMap<>(ImmutableMap.of(
-			1, new VillagerTrades.ItemListing[]{
-					new ItemsForEmeralds(ItemRegistry.BANDAGE.get(), 1, 1, 8),
-					new ItemsForEmeralds(ItemRegistry.FIRST_AID_KIT.get(), 3, 1, 8),
-					new ItemsForEmeralds(ItemRegistry.PAINKILLERS.get(), 2, 1, 8),
-					new ItemsForEmeralds(ItemRegistry.COBALT_MUSKET_BALL.get(), 1, 8, 12),
-					new ItemsForEmeralds(ItemRegistry.DIAMOND_MUSKET_BALL.get(), 2, 8, 12),
-					new ItemsForEmeralds(ItemRegistry.COBALT_ARROW.get(), 1, 8, 12),
-					new ItemsForEmeralds(ItemRegistry.DIAMOND_ARROW.get(), 2, 8, 12),
-					new ItemsForEmeralds(ItemRegistry.AZUL_LOCATOR.get(), 4, 1, 2),
-					new ItemsForEmeralds(Items.SPYGLASS, 3, 1, 2)},
-			2, new VillagerTrades.ItemListing[]{
-					new ItemsForEmeralds(BlockRegistry.STARSTORM_CRYSTAL.get(), 12, 1, 4),
-					new ItemsForEmeralds(BlockRegistry.ASTRAL_CRYSTAL.get(), 12, 1, 4),
-					new ItemsForEmeralds(ItemRegistry.FLINTLOCK_PISTOL.get(), 6, 1, 3),
-					new ItemsForEmeralds(ItemRegistry.BLUNDERBUSS.get(), 7, 1, 3),
-					new ItemsForEmeralds(ItemRegistry.MUSKET.get(), 8, 1, 3),
-					new ItemsForEmeralds(ItemRegistry.METEOR_STAFF.get(), 28, 1, 1),
-					new ItemsForEmeralds(ItemRegistry.CURSED_SIGHT_STAFF.get(), 28, 1, 1),
-					new ItemsForEmeralds(ItemRegistry.NIGHT_VISION_GOGGLES.get(), 32, 1, 1)},
-			3, new VillagerTrades.ItemListing[]{
-					new ItemsForEmeralds(ItemRegistry.TESLA_SWORD.get(), 30, 1, 1),
-					new ItemsForEmeralds(ItemRegistry.MOLTEN_SWORD.get(), 30, 1, 1),
-					new ItemsForEmeralds(ItemRegistry.VENTUS_SWORD.get(), 30, 1, 1),
-					new ItemsForEmeralds(ItemRegistry.ASTRAL_SWORD.get(), 30, 1, 1),
-					new ItemsForEmeralds(ItemRegistry.STARSTORM_SWORD.get(), 30, 1, 1),
-			}));
-
 	public SkygazerEntity(EntityType<? extends AbstractVillager> entityType, Level level) {
 		super(entityType, level);
-	}
-
-	@Override
-	public Int2ObjectMap<ItemListing[]> getTrades() {
-		return TRADES;
 	}
 
 	@Override

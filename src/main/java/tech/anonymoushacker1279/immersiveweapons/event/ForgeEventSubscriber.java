@@ -40,8 +40,7 @@ import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.Mod.EventBusSubscriber;
 import net.neoforged.fml.common.Mod.EventBusSubscriber.Bus;
 import net.neoforged.neoforge.common.NeoForgeMod;
-import net.neoforged.neoforge.event.AnvilUpdateEvent;
-import net.neoforged.neoforge.event.ItemAttributeModifierEvent;
+import net.neoforged.neoforge.event.*;
 import net.neoforged.neoforge.event.TickEvent.PlayerTickEvent;
 import net.neoforged.neoforge.event.entity.EntityJoinLevelEvent;
 import net.neoforged.neoforge.event.entity.living.*;
@@ -55,6 +54,7 @@ import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.block.decoration.StarstormCrystalBlock;
 import tech.anonymoushacker1279.immersiveweapons.client.gui.overlays.DebugTracingData;
 import tech.anonymoushacker1279.immersiveweapons.entity.monster.StarmiteEntity;
+import tech.anonymoushacker1279.immersiveweapons.entity.npc.trading.TradeLoader;
 import tech.anonymoushacker1279.immersiveweapons.entity.projectile.MeteorEntity;
 import tech.anonymoushacker1279.immersiveweapons.entity.projectile.MudBallEntity;
 import tech.anonymoushacker1279.immersiveweapons.event.game_effects.*;
@@ -590,5 +590,10 @@ public class ForgeEventSubscriber {
 			event.setOutput(KillCountWeapon.initialize(event.getLeft().copy(), 0));
 			event.setCost(5);
 		}
+	}
+
+	@SubscribeEvent
+	public static void addReloadListenerEvent(AddReloadListenerEvent event) {
+		event.addListener(new TradeLoader());
 	}
 }

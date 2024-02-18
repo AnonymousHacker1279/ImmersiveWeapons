@@ -1,0 +1,178 @@
+{
+  "tradeGroups": [
+    {
+      "entries": 3,
+      "trades": [
+        {
+          "emerald_cost": 1,
+          "item": {
+            "item": "immersiveweapons:bandage"
+          },
+          "max_uses": 8
+        },
+        {
+          "emerald_cost": 3,
+          "item": {
+            "item": "immersiveweapons:first_aid_kit"
+          },
+          "max_uses": 8
+        },
+        {
+          "emerald_cost": 2,
+          "item": {
+            "item": "immersiveweapons:painkillers"
+          },
+          "max_uses": 8
+        },
+        {
+          "emerald_cost": 1,
+          "item": {
+            "count": 8,
+            "item": "immersiveweapons:cobalt_musket_ball"
+          },
+          "max_uses": 12
+        },
+        {
+          "emerald_cost": 2,
+          "item": {
+            "count": 8,
+            "item": "immersiveweapons:diamond_musket_ball"
+          },
+          "max_uses": 12
+        },
+        {
+          "emerald_cost": 1,
+          "item": {
+            "count": 8,
+            "item": "immersiveweapons:cobalt_arrow"
+          },
+          "max_uses": 12
+        },
+        {
+          "emerald_cost": 2,
+          "item": {
+            "count": 8,
+            "item": "immersiveweapons:diamond_arrow"
+          },
+          "max_uses": 12
+        },
+        {
+          "emerald_cost": 4,
+          "item": {
+            "item": "immersiveweapons:azul_locator"
+          },
+          "max_uses": 2
+        },
+        {
+          "emerald_cost": 3,
+          "item": {
+            "item": "minecraft:spyglass"
+          },
+          "max_uses": 2
+        }
+      ]
+    },
+    {
+      "entries": 1,
+      "trades": [
+        {
+          "emerald_cost": 12,
+          "item": {
+            "item": "immersiveweapons:starstorm_crystal"
+          },
+          "max_uses": 4
+        },
+        {
+          "emerald_cost": 12,
+          "item": {
+            "item": "immersiveweapons:astral_crystal"
+          },
+          "max_uses": 4
+        },
+        {
+          "emerald_cost": 6,
+          "item": {
+            "item": "immersiveweapons:flintlock_pistol"
+          },
+          "max_uses": 3
+        },
+        {
+          "emerald_cost": 7,
+          "item": {
+            "item": "immersiveweapons:blunderbuss"
+          },
+          "max_uses": 3
+        },
+        {
+          "emerald_cost": 8,
+          "item": {
+            "item": "immersiveweapons:musket"
+          },
+          "max_uses": 3
+        },
+        {
+          "emerald_cost": 28,
+          "item": {
+            "item": "immersiveweapons:meteor_staff"
+          },
+          "max_uses": 1
+        },
+        {
+          "emerald_cost": 28,
+          "item": {
+            "item": "immersiveweapons:cursed_sight_staff"
+          },
+          "max_uses": 1
+        },
+        {
+          "emerald_cost": 32,
+          "item": {
+            "item": "immersiveweapons:night_vision_goggles"
+          },
+          "max_uses": 1
+        }
+      ]
+    },
+    {
+      "entries": 1,
+      "trades": [
+        {
+          "emerald_cost": 30,
+          "item": {
+            "item": "immersiveweapons:tesla_sword"
+          },
+          "max_uses": 1
+        },
+        {
+          "emerald_cost": 30,
+          "item": {
+            "item": "immersiveweapons:molten_sword"
+          },
+          "max_uses": 1
+        },
+        {
+          "emerald_cost": 30,
+          "item": {
+            "item": "immersiveweapons:ventus_sword"
+          },
+          "max_uses": 1
+        },
+        {
+          "emerald_cost": 30,
+          "item": {
+            "item": "immersiveweapons:astral_sword"
+          },
+          "max_uses": 1
+        },
+        {
+          "emerald_cost": 30,
+          "item": {
+            "item": "immersiveweapons:starstorm_sword"
+          },
+          "max_uses": 1
+        }
+      ]
+    }
+  ],
+  "tradeRefreshTime": 24000
+}

@@ -3,6 +3,7 @@ package tech.anonymoushacker1279.immersiveweapons.event;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.Mod.EventBusSubscriber;
 import net.neoforged.neoforge.event.entity.EntityAttributeCreationEvent;
+import net.neoforged.neoforge.network.event.OnGameConfigurationEvent;
 import net.neoforged.neoforge.network.event.RegisterPayloadHandlerEvent;
 import net.neoforged.neoforge.network.registration.IPayloadRegistrar;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
@@ -21,6 +22,7 @@ import tech.anonymoushacker1279.immersiveweapons.network.handler.star_forge.Star
 import tech.anonymoushacker1279.immersiveweapons.network.payload.*;
 import tech.anonymoushacker1279.immersiveweapons.network.payload.star_forge.StarForgeMenuPayload;
 import tech.anonymoushacker1279.immersiveweapons.network.payload.star_forge.StarForgeUpdateRecipesPayload;
+import tech.anonymoushacker1279.immersiveweapons.network.task.SyncMerchantTradesConfigurationTask;
 
 @EventBusSubscriber(modid = ImmersiveWeapons.MOD_ID, bus = EventBusSubscriber.Bus.MOD)
 public class ModEventSubscriber {
@@ -89,5 +91,14 @@ public class ModEventSubscriber {
 				.client(LocalSoundPayloadHandler.getInstance()::handleData));
 		registrar.play(PlayerSoundPayload.ID, PlayerSoundPayload::new, handler -> handler
 				.client(PlayerSoundPayloadHandler.getInstance()::handleData));
+		registrar.common(SyncMerchantTradesPayload.ID, SyncMerchantTradesPayload::new, handler -> handler
+				.client(SyncMerchantTradesPayloadHandler.getInstance()::handleData));
+	}
+
+	@SubscribeEvent
+	public static void registerGameConfigurationEvent(final OnGameConfigurationEvent event) {
+		ImmersiveWeapons.LOGGER.info("Registering game configuration tasks");
+
+		event.register(new SyncMerchantTradesConfigurationTask(event.getListener()));
 	}
 }
