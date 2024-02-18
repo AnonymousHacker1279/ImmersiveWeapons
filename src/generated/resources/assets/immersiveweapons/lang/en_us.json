@@ -698,6 +698,7 @@
   "immersiveweapons.cobaltconfig.smokeGrenadeParticles": "Smoke Grenade Particles",
   "immersiveweapons.cobaltconfig.teslaArmorEffectSound": "Tesla Armor Effect Sound",
   "immersiveweapons.cobaltconfig.tiltrosEnabled": "Tiltros Enabled",
+  "immersiveweapons.datapack.description": "Immersive Weapons Resources",
   "immersiveweapons.debug_tracing.armor_values": "Total Armor Value: %s, Armor Toughness: %s",
   "immersiveweapons.debug_tracing.celestial_protection_chance_for_no_damage": "Celestial Protection Chance: %s",
   "immersiveweapons.debug_tracing.damage_bonus": "Damage Bonus: %s general, %s melee, %s projectile",

@@ -1031,6 +1031,9 @@ public class LanguageGenerator extends IWLanguageProvider {
 	}
 
 	private void addMisc() {
+		// Pack metadata description
+		add("immersiveweapons.datapack.description", "Immersive Weapons Resources");
+
 		add("loot.immersiveweapons.chest.village.battlefield.medic_station.iron_axe", "The Amputator");
 		add("loot.immersiveweapons.entity.hans.iron_sword", "The Grand Blade of Hans");
 		add("loot.immersiveweapons.entity.super_hans.super_healing_potion", "Super Potion of Healing");

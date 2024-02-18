@@ -3,6 +3,8 @@ package tech.anonymoushacker1279.immersiveweapons.data;
 import net.minecraft.core.HolderLookup.Provider;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.PackOutput;
+import net.minecraft.data.metadata.PackMetadataGenerator;
+import net.minecraft.network.chat.Component;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.common.Mod.EventBusSubscriber.Bus;
@@ -61,6 +63,7 @@ public class CustomDataGenerator {
 		generator.addProvider(event.includeServer(), new GlobalLootModifierGenerator(output));
 		generator.addProvider(event.includeServer(), new StructureUpdater(existingFileHelper, output));
 		generator.addProvider(event.includeServer(), new TradeDataGenerator(output));
+		generator.addProvider(event.includeServer(), PackMetadataGenerator.forFeaturePack(output, Component.translatable("immersiveweapons.datapack.description")));
 
 		DatapackRegistriesGenerator datapackRegistriesGenerator = new DatapackRegistriesGenerator(output, lookupProvider);
 		generator.addProvider(event.includeServer(), datapackRegistriesGenerator);
