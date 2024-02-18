@@ -34,7 +34,7 @@ public abstract class ItemStackMixin {
 			if (enchantmentLocation != null) {
 				int maxLevel = CommonConfig.skygazerEnchantCaps.getOrDefault(enchantmentLocation.toString(), -1);
 
-				if (enchantmentLevel >= maxLevel && maxLevel != -1) {
+				if ((enchantmentLevel >= maxLevel && maxLevel != -1) || (enchantmentLevel >= 255)) {
 					return component.copy().withStyle(ChatFormatting.GOLD);
 				}
 			}

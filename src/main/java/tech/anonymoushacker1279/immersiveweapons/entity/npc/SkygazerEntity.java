@@ -21,10 +21,12 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.item.trading.MerchantOffer;
 import net.minecraft.world.level.Level;
 import tech.anonymoushacker1279.immersiveweapons.entity.monster.StarmiteEntity;
 import tech.anonymoushacker1279.immersiveweapons.entity.npc.trades.*;
 import tech.anonymoushacker1279.immersiveweapons.init.*;
+import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
 
 import java.util.*;
 import java.util.Map.Entry;
@@ -95,8 +97,9 @@ public class SkygazerEntity extends AbstractMerchantEntity {
 	}
 
 	private void setupRaiseItemEnchantsTrade(Player player) {
-		// First, remove any other EnchantItemsForItems offers (check the result item)
-		getOffers().removeIf(offer -> offer.getCostB().is(ItemRegistry.CELESTIAL_FRAGMENT.get()));
+		// Remove any other offers
+		getOffers().removeIf(offer -> (offer instanceof IdentifiableMerchantOffer identifiableMerchantOffer
+				&& identifiableMerchantOffer.getId().equals("enchant_item_for_items")));
 
 		// Get the first enchanted item from the player's inventory
 		ItemStack enchantableItem = ItemStack.EMPTY;
@@ -110,14 +113,19 @@ public class SkygazerEntity extends AbstractMerchantEntity {
 
 		// If the player has an enchanted item, add an offer to increase the enchantment level
 		if (!enchantableItem.isEmpty()) {
-			getOffers().add(new EnchantItemForItems(enchantableItem, ItemRegistry.CELESTIAL_FRAGMENT.get(), 1)
-					.getOffer(this, player.getRandom()));
+			EnchantItemForItems trade = new EnchantItemForItems(enchantableItem, ItemRegistry.CELESTIAL_FRAGMENT.get(), 1);
+			MerchantOffer offer = trade.getOffer(this, player.getRandom());
+
+			if (trade.getTotalEnchantmentLevels() > GeneralUtilities.getTotalEnchantmentLevels(enchantableItem)) {
+				getOffers().add(offer);
+			}
 		}
 	}
 
 	private void setupAddItemEnchantsTrade(Player player) {
-		// First, remove any other EnchantItemWithEnchantingBooks offers (check the result item)
-		getOffers().removeIf(offer -> offer.getCostB().is(Items.ENCHANTED_BOOK));
+		// Remove any other offers
+		getOffers().removeIf(offer -> (offer instanceof IdentifiableMerchantOffer identifiableMerchantOffer
+				&& identifiableMerchantOffer.getId().equals("enchant_item_with_enchanting_books")));
 
 		// Get the first enchanted item from the player's inventory
 		ItemStack enchantableItem = ItemStack.EMPTY;
@@ -153,8 +161,12 @@ public class SkygazerEntity extends AbstractMerchantEntity {
 
 		// If the player has an enchanted book, add an offer to add the enchantments to an item
 		if (!enchantableBook.isEmpty()) {
-			getOffers().add(new EnchantItemWithEnchantingBooks(enchantableItem, enchantableBook, 1)
-					.getOffer(this, player.getRandom()));
+			EnchantItemWithEnchantingBooks trade = new EnchantItemWithEnchantingBooks(enchantableItem, enchantableBook, 1);
+			MerchantOffer offer = trade.getOffer(this, player.getRandom());
+
+			if (trade.getTotalEnchantmentLevels() > GeneralUtilities.getTotalEnchantmentLevels(enchantableItem)) {
+				getOffers().add(offer);
+			}
 		}
 	}
 

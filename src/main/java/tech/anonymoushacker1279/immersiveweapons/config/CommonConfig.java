@@ -32,6 +32,9 @@ public class CommonConfig {
 	@ConfigEntry(comment = "Specify maximum caps on enchantments to prevent the Skygazer from upgrading them past a certain level. Max level enchants appear with a gold tooltip.", group = "Entity Settings")
 	public static Map<String, Integer> skygazerEnchantCaps = getEnchantCapsMap();
 
+	@ConfigEntry(comment = "Set the maximum Celestial Fragment cost for enchantment upgrades", group = "Entity Settings", min = 0, max = 64)
+	public static int skygazerMaxEnchantCost = 32;
+
 	@ConfigEntry(comment = "Set the chance for a fired bullet to be critical", group = "General Weapon Settings", min = 0, max = 1.0d)
 	public static double gunCritChance = 0.1d;
 

@@ -11,6 +11,7 @@ import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.trading.MerchantOffer;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.config.CommonConfig;
+import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
 
 import java.util.Map;
 
@@ -19,19 +20,13 @@ public class EnchantItemForItems implements VillagerTrades.ItemListing {
 	private final Item tradingItem;
 	private int itemCost;
 	private final int maxUses;
-	private final int villagerXP;
-	private final float priceMultiplier;
+	private int villagerXP;
+	private int totalEnchantmentLevels;
 
 	public EnchantItemForItems(ItemStack enchantableItem, Item tradingItem, int maxUses) {
-		this(enchantableItem, tradingItem, maxUses, 1, 0.05F);
-	}
-
-	public EnchantItemForItems(ItemStack enchantableItem, Item tradingItem, int maxUses, int villagerXP, float priceMultiplier) {
 		this.enchantableItem = enchantableItem.copy();
 		this.tradingItem = tradingItem;
 		this.maxUses = maxUses;
-		this.villagerXP = villagerXP;
-		this.priceMultiplier = priceMultiplier;
 	}
 
 	@Override
@@ -45,6 +40,12 @@ public class EnchantItemForItems implements VillagerTrades.ItemListing {
 			newEnchantableItem.removeTagKey("Enchantments");
 
 			enchantments.forEach((enchantment, level) -> {
+				// Levels above 255 cannot exist because the game clamps levels upon reading
+				if (level >= 255) {
+					GeneralUtilities.unrestrictedEnchant(newEnchantableItem, enchantment, 255);
+					return;
+				}
+
 				// Get the max level for this enchantment
 				ResourceLocation enchantmentLocation = BuiltInRegistries.ENCHANTMENT.getKey(enchantment);
 
@@ -57,22 +58,31 @@ public class EnchantItemForItems implements VillagerTrades.ItemListing {
 
 				// If the level is -1, it's uncapped
 				if (maxLevel == -1) {
-					newEnchantableItem.enchant(enchantment, level + 1);
+					GeneralUtilities.unrestrictedEnchant(newEnchantableItem, enchantment, level + 1);
 				}
 				// Otherwise, cap it at the max level
 				else {
-					newEnchantableItem.enchant(enchantment, Math.min(level + 1, maxLevel));
+					GeneralUtilities.unrestrictedEnchant(newEnchantableItem, enchantment, Math.min(level + 1, maxLevel));
 				}
 			});
 
 			// Add up the total levels of all enchantments
-			int totalEnchantmentLevels = enchantments.values().stream().mapToInt(Integer::intValue).sum();
+			totalEnchantmentLevels = GeneralUtilities.getTotalEnchantmentLevels(newEnchantableItem);
 
 			// The item cost rises exponentially with higher enchantment levels
 			// It caps at 32
-			itemCost = Math.min(32, (int) Math.pow(1.3, ((float) totalEnchantmentLevels / 2)));
+			itemCost = Math.min(CommonConfig.skygazerMaxEnchantCost, (int) Math.pow(1.3, ((float) totalEnchantmentLevels / 2)));
+
+			// Give XP based on the total levels of all enchantments
+			villagerXP = randomSource.nextIntBetweenInclusive(totalEnchantmentLevels / 2, totalEnchantmentLevels);
 		}
 
-		return new MerchantOffer(enchantableItem, new ItemStack(tradingItem, itemCost), newEnchantableItem, maxUses, villagerXP, priceMultiplier);
+		IdentifiableMerchantOffer offer = new IdentifiableMerchantOffer(enchantableItem, new ItemStack(tradingItem, itemCost), newEnchantableItem, maxUses, villagerXP, 0);
+		offer.setId("enchant_item_for_items");
+		return offer;
+	}
+
+	public int getTotalEnchantmentLevels() {
+		return totalEnchantmentLevels;
 	}
 }

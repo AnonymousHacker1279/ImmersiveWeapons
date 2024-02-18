@@ -7,6 +7,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.trading.MerchantOffer;
+import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -15,19 +16,17 @@ public class EnchantItemWithEnchantingBooks implements VillagerTrades.ItemListin
 	private final ItemStack enchantableItem;
 	private final ItemStack tradingItem;
 	private final int maxUses;
-	private final int villagerXP;
-	private final float priceMultiplier;
+	private int villagerXP;
+	private int totalEnchantmentLevels;
 
 	public EnchantItemWithEnchantingBooks(ItemStack enchantableItem, ItemStack tradingItem, int maxUses) {
-		this(enchantableItem, tradingItem, maxUses, 1, 0.05F);
+		this(enchantableItem, tradingItem, maxUses, 1);
 	}
 
-	public EnchantItemWithEnchantingBooks(ItemStack enchantableItem, ItemStack tradingItem, int maxUses, int villagerXP, float priceMultiplier) {
+	public EnchantItemWithEnchantingBooks(ItemStack enchantableItem, ItemStack tradingItem, int maxUses, int villagerXP) {
 		this.enchantableItem = enchantableItem.copy();
 		this.tradingItem = tradingItem.copy();
 		this.maxUses = maxUses;
-		this.villagerXP = villagerXP;
-		this.priceMultiplier = priceMultiplier;
 	}
 
 	@Override
@@ -42,16 +41,28 @@ public class EnchantItemWithEnchantingBooks implements VillagerTrades.ItemListin
 			newEnchantableItem.removeTagKey("Enchantments");
 
 			// Add the existing enchantments, increasing the level if the book has a higher level
-			existingEnchantments.forEach((enchantment, level) -> newEnchantableItem.enchant(enchantment, Math.max(level, enchantmentsFromBook.getOrDefault(enchantment, 0))));
+			existingEnchantments.forEach((enchantment, level) -> GeneralUtilities.unrestrictedEnchant(newEnchantableItem, enchantment, Math.max(level, enchantmentsFromBook.getOrDefault(enchantment, 0))));
 
 			// If the book has anything else on it, add it to the item (if compatible)
 			enchantmentsFromBook.forEach((enchantment, level) -> {
 				if (!existingEnchantments.containsKey(enchantment) && enchantment.canEnchant(newEnchantableItem)) {
-					newEnchantableItem.enchant(enchantment, level);
+					GeneralUtilities.unrestrictedEnchant(newEnchantableItem, enchantment, level);
 				}
 			});
 		}
 
-		return new MerchantOffer(enchantableItem, tradingItem, newEnchantableItem, maxUses, villagerXP, priceMultiplier);
+		// Add up the total levels of all enchantments
+		totalEnchantmentLevels = GeneralUtilities.getTotalEnchantmentLevels(newEnchantableItem);
+
+		// Give XP based on the total levels of all enchantments
+		villagerXP = randomSource.nextIntBetweenInclusive(totalEnchantmentLevels / 4, totalEnchantmentLevels / 2);
+
+		IdentifiableMerchantOffer offer = new IdentifiableMerchantOffer(enchantableItem, tradingItem, newEnchantableItem, maxUses, villagerXP, 0);
+		offer.setId("enchant_item_with_enchanting_books");
+		return offer;
+	}
+
+	public int getTotalEnchantmentLevels() {
+		return totalEnchantmentLevels;
 	}
 }
