@@ -23,15 +23,14 @@ import net.minecraft.world.level.*;
 import org.jetbrains.annotations.Nullable;
 import tech.anonymoushacker1279.immersiveweapons.block.decoration.CelestialLanternBlock;
 import tech.anonymoushacker1279.immersiveweapons.config.CommonConfig;
-import tech.anonymoushacker1279.immersiveweapons.entity.AttackerTracker;
-import tech.anonymoushacker1279.immersiveweapons.entity.GrantAdvancementOnDiscovery;
+import tech.anonymoushacker1279.immersiveweapons.entity.*;
 import tech.anonymoushacker1279.immersiveweapons.entity.ai.goal.*;
 import tech.anonymoushacker1279.immersiveweapons.init.SoundEventRegistry;
 import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
 
 import java.util.*;
 
-public class CelestialTowerEntity extends Monster implements AttackerTracker, GrantAdvancementOnDiscovery {
+public class CelestialTowerEntity extends Monster implements AttackerTracker, GrantAdvancementOnDiscovery, WaveSummoningBoss {
 
 	public final ServerBossEvent bossEvent = (ServerBossEvent) (new ServerBossEvent(getDisplayName(), BossBarColor.RED,
 			BossBarOverlay.PROGRESS)).setDarkenScreen(true);
@@ -196,6 +195,8 @@ public class CelestialTowerEntity extends Monster implements AttackerTracker, Gr
 		if (!ALL_TOWERS.contains(this)) {
 			ALL_TOWERS.add(this);
 		}
+
+		xpReward = pCompound.getInt("xpReward");
 	}
 
 	@Override
@@ -206,6 +207,7 @@ public class CelestialTowerEntity extends Monster implements AttackerTracker, Gr
 		pCompound.putInt("waveSizeModifier", waveSizeModifier);
 		pCompound.putInt("wavesSpawned", wavesSpawned);
 		pCompound.putBoolean("doneSpawningWaves", doneSpawningWaves);
+		pCompound.putInt("xpReward", xpReward);
 	}
 
 	@Override
@@ -271,22 +273,27 @@ public class CelestialTowerEntity extends Monster implements AttackerTracker, Gr
 		return false;
 	}
 
+	@Override
 	public boolean isDoneSpawningWaves() {
 		return doneSpawningWaves;
 	}
 
+	@Override
 	public void setDoneSpawningWaves(boolean state) {
 		doneSpawningWaves = state;
 	}
 
+	@Override
 	public int getTotalWavesToSpawn() {
 		return totalWavesToSpawn;
 	}
 
+	@Override
 	public int getWavesSpawned() {
 		return wavesSpawned;
 	}
 
+	@Override
 	public void setWavesSpawned(int waves) {
 		wavesSpawned = waves;
 	}
@@ -297,5 +304,29 @@ public class CelestialTowerEntity extends Monster implements AttackerTracker, Gr
 
 	public int getAttackingEntities() {
 		return attackingEntities.size();
+	}
+
+	@Override
+	public ServerBossEvent getBossEvent() {
+		return bossEvent;
+	}
+
+	@Override
+	public Component getWaveComponent() {
+		return Component.translatable("immersiveweapons.boss.celestial_tower.waves", getWavesSpawned(), getTotalWavesToSpawn());
+	}
+
+	@Override
+	public void playSummonSound() {
+		playSound(SoundEventRegistry.CELESTIAL_TOWER_SUMMON.get(),
+				1.0f,
+				1.0f + GeneralUtilities.getRandomNumber(-0.3f, 0.2f));
+	}
+
+	@Override
+	public void playVulnerableSound() {
+		playSound(SoundEventRegistry.CELESTIAL_TOWER_VULNERABLE.get(),
+				1.0f,
+				1.0f + GeneralUtilities.getRandomNumber(-0.3f, 0.2f));
 	}
 }

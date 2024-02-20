@@ -5,6 +5,8 @@ import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.*;
 import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.ai.targeting.TargetingConditions;
+import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.projectile.ItemSupplier;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -12,6 +14,7 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 import tech.anonymoushacker1279.immersiveweapons.api.PluginHandler;
+import tech.anonymoushacker1279.immersiveweapons.entity.neutral.MinutemanEntity;
 import tech.anonymoushacker1279.immersiveweapons.init.ItemRegistry;
 
 import java.util.ArrayList;
@@ -102,6 +105,18 @@ public class FlareEntity extends BulletEntity implements ItemSupplier {
 					}
 
 					previousLightPosition = currentPosition;
+				}
+			}
+		}
+
+		// Aggro nearby minutemen to attack the nearest monster
+		if (shouldStopMoving && !level().isClientSide && tickCount % 4 == 0) {
+			Monster monster = level().getNearestEntity(Monster.class, TargetingConditions.forCombat(), null, getX(), getY(), getZ(), getBoundingBox().inflate(7));
+			MinutemanEntity minuteman = level().getNearestEntity(MinutemanEntity.class, TargetingConditions.forNonCombat(), null, getX(), getY(), getZ(), getBoundingBox().inflate(16));
+
+			if (monster != null && minuteman != null && getOwner() instanceof LivingEntity owner) {
+				if (!minuteman.isAngryAt(owner)) {
+					minuteman.aggroNearbyMinutemen(getBoundingBox(), monster);
 				}
 			}
 		}

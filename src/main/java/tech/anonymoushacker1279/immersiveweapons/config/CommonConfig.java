@@ -35,6 +35,9 @@ public class CommonConfig {
 	@ConfigEntry(comment = "Set the maximum Celestial Fragment cost for enchantment upgrades", group = "Entity Settings", min = 0, max = 64)
 	public static int skygazerMaxEnchantUpgradeCost = 32;
 
+	@ConfigEntry(comment = "Multiplier to change the wave size of The Commander summons", group = "Entity Settings", min = 0, max = 5.0d)
+	public static double theCommanderWaveSizeModifier = 1.0d;
+
 	@ConfigEntry(comment = "Set the chance for a fired bullet to be critical", group = "General Weapon Settings", min = 0, max = 1.0d)
 	public static double gunCritChance = 0.1d;
 

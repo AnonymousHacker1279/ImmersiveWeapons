@@ -40,6 +40,7 @@ public class ItemLists {
 		HEAD_ITEMS.add(BlockItemRegistry.MINUTEMAN_HEAD_ITEM.get());
 		HEAD_ITEMS.add(BlockItemRegistry.FIELD_MEDIC_HEAD_ITEM.get());
 		HEAD_ITEMS.add(BlockItemRegistry.DYING_SOLDIER_HEAD_ITEM.get());
+		HEAD_ITEMS.add(BlockItemRegistry.THE_COMMANDER_HEAD_ITEM.get());
 		HEAD_ITEMS.add(BlockItemRegistry.WANDERING_WARRIOR_HEAD_ITEM.get());
 		HEAD_ITEMS.add(BlockItemRegistry.HANS_HEAD_ITEM.get());
 		HEAD_ITEMS.add(BlockItemRegistry.STORM_CREEPER_HEAD_ITEM.get());

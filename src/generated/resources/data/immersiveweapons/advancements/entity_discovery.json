@@ -197,6 +197,20 @@
       },
       "trigger": "immersiveweapons:entity_discovered"
     },
+    "discover_the_commander": {
+      "conditions": {
+        "entity": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "type": "immersiveweapons:the_commander"
+            }
+          }
+        ]
+      },
+      "trigger": "immersiveweapons:entity_discovered"
+    },
     "discover_wandering_warrior": {
       "conditions": {
         "entity": [
@@ -233,6 +247,9 @@
     ],
     [
       "discover_dying_soldier"
+    ],
+    [
+      "discover_the_commander"
     ],
     [
       "discover_wandering_warrior"

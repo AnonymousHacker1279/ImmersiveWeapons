@@ -11,7 +11,7 @@
               "add": false,
               "count": {
                 "type": "minecraft:uniform",
-                "max": 2.0,
+                "max": 6.0,
                 "min": 0.0
               },
               "function": "minecraft:set_count"
@@ -19,16 +19,16 @@
             {
               "count": {
                 "type": "minecraft:uniform",
-                "max": 1.0,
-                "min": 0.0
+                "max": 2.0,
+                "min": 1.0
               },
               "function": "minecraft:looting_enchant"
             }
           ],
-          "name": "minecraft:rotten_flesh"
+          "name": "immersiveweapons:blackpowder"
         }
       ],
-      "name": "rotten_flesh",
+      "name": "blackpowder",
       "rolls": 1.0
     },
     {
@@ -85,6 +85,27 @@
         }
       ],
       "name": "flintlock_pistol",
+      "rolls": 1.0
+    },
+    {
+      "bonus_rolls": 0.0,
+      "conditions": [
+        {
+          "condition": "minecraft:killed_by_player"
+        },
+        {
+          "chance": 0.01,
+          "condition": "minecraft:random_chance_with_looting",
+          "looting_multiplier": 0.025
+        }
+      ],
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "immersiveweapons:medal_of_dishonor"
+        }
+      ],
+      "name": "medal_of_dishonor",
       "rolls": 1.0
     },
     {

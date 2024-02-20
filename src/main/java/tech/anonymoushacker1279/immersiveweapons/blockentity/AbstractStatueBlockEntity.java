@@ -8,6 +8,7 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.Blocks;
@@ -18,11 +19,12 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 import org.jetbrains.annotations.Nullable;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
+import tech.anonymoushacker1279.immersiveweapons.entity.neutral.SoldierEntity;
 import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
 
 import java.util.List;
 
-public abstract class AbstractStatueBlockEntity<T extends LivingEntity> extends BlockEntity implements EntityBlock {
+public abstract class AbstractStatueBlockEntity<T extends SoldierEntity> extends BlockEntity implements EntityBlock {
 
 	protected int cooldown;
 	protected int scannedEntities;
@@ -54,11 +56,12 @@ public abstract class AbstractStatueBlockEntity<T extends LivingEntity> extends 
 		}
 	}
 
-	protected void attemptSpawnEntity(LivingEntity entity) {
+	protected void attemptSpawnEntity(T entity) {
 		int i;
 		for (i = 0; i < 5; i++) {
 			BlockPos randomPositionInArea = getRandomPositionInArea();
 			if (level != null && level.getBlockState(randomPositionInArea) == Blocks.AIR.defaultBlockState()) {
+				entity.finalizeSpawn((ServerLevel) level, level.getCurrentDifficultyAt(randomPositionInArea), MobSpawnType.SPAWNER, null, null);
 				entity.moveTo(randomPositionInArea, 0.0F, 0.0F);
 				level.addFreshEntity(entity);
 				spawnParticles();

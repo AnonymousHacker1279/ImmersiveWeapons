@@ -1139,6 +1139,7 @@ public class AdvancementsGenerator extends AdvancementProvider {
 				.addCriterion("discover_minuteman", EntityDiscoveredTrigger.TriggerInstance.discoveredEntity(EntityRegistry.MINUTEMAN_ENTITY.get()))
 				.addCriterion("discover_field_medic", EntityDiscoveredTrigger.TriggerInstance.discoveredEntity(EntityRegistry.FIELD_MEDIC_ENTITY.get()))
 				.addCriterion("discover_dying_soldier", EntityDiscoveredTrigger.TriggerInstance.discoveredEntity(EntityRegistry.DYING_SOLDIER_ENTITY.get()))
+				.addCriterion("discover_the_commander", EntityDiscoveredTrigger.TriggerInstance.discoveredEntity(EntityRegistry.THE_COMMANDER_ENTITY.get()))
 				.addCriterion("discover_wandering_warrior", EntityDiscoveredTrigger.TriggerInstance.discoveredEntity(EntityRegistry.WANDERING_WARRIOR_ENTITY.get()))
 				.addCriterion("discover_hans", EntityDiscoveredTrigger.TriggerInstance.discoveredEntity(EntityRegistry.HANS_ENTITY.get()))
 				.addCriterion("discover_super_hans", EntityDiscoveredTrigger.TriggerInstance.discoveredEntity(EntityRegistry.SUPER_HANS_ENTITY.get()))
@@ -1180,6 +1181,15 @@ public class AdvancementsGenerator extends AdvancementProvider {
 				.addCriterion("discover", EntityDiscoveredTrigger.TriggerInstance.discoveredEntity(EntityRegistry.DYING_SOLDIER_ENTITY.get()))
 				.rewards(AdvancementRewards.Builder.experience(20))
 				.save(consumer, "immersiveweapons:discover_dying_soldier");
+
+		Builder.advancement().parent(entityDiscovery)
+				.display(BlockItemRegistry.THE_COMMANDER_HEAD_ITEM.get(),
+						Component.translatable("advancements.immersiveweapons.discover_the_commander.title"),
+						Component.translatable("advancements.immersiveweapons.discover_the_commander.description"),
+						null, AdvancementType.TASK, true, true, false)
+				.addCriterion("discover", EntityDiscoveredTrigger.TriggerInstance.discoveredEntity(EntityRegistry.THE_COMMANDER_ENTITY.get()))
+				.rewards(AdvancementRewards.Builder.experience(20))
+				.save(consumer, "immersiveweapons:discover_the_commander");
 
 		Builder.advancement().parent(entityDiscovery)
 				.display(BlockItemRegistry.WANDERING_WARRIOR_HEAD_ITEM.get(),

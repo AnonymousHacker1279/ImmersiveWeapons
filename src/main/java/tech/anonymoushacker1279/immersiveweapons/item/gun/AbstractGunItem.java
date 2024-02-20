@@ -21,6 +21,7 @@ import net.neoforged.neoforge.client.extensions.common.IClientItemExtensions;
 import net.neoforged.neoforge.event.EventHooks;
 import net.neoforged.neoforge.network.PacketDistributor;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
+import tech.anonymoushacker1279.immersiveweapons.client.model.CustomArmPoses;
 import tech.anonymoushacker1279.immersiveweapons.config.CommonConfig;
 import tech.anonymoushacker1279.immersiveweapons.entity.projectile.BulletEntity;
 import tech.anonymoushacker1279.immersiveweapons.event.game_effects.AccessoryManager;
@@ -371,66 +372,9 @@ public abstract class AbstractGunItem extends Item implements Vanishable {
 		// Handle arm posing for holding the weapons
 		consumer.accept(new IClientItemExtensions() {
 
-			private static final ArmPose AIM_PISTOL_POSE = ArmPose.create("AIM_PISTOL", false, (model, entity, arm) -> {
-				// Hold the gun up as if it's being aimed
-				if (arm == HumanoidArm.RIGHT) {
-					model.rightArm.xRot = -1.5f;
-					model.rightArm.yRot = -0.25f;
-
-					// Adjust to move with the head (looking up/down moves the gun)
-					model.rightArm.xRot += model.head.xRot * 0.5f;
-					model.rightArm.yRot += model.head.yRot * 0.5f;
-				} else {
-					model.leftArm.xRot = -1.5f;
-					model.leftArm.yRot = 0.25f;
-
-					// Adjust to move with the head
-					model.leftArm.xRot += model.head.xRot * 0.5f;
-					model.leftArm.yRot += model.head.yRot * 0.5f;
-				}
-			});
-
-			private static final ArmPose AIM_MUSKET_POSE = ArmPose.create("AIM_MUSKET", true, (model, entity, arm) -> {
-				// Hold the gun up as if it's being aimed. This one uses two hands, one needs to be supporting the gun at the end and the other midway
-				if (arm == HumanoidArm.RIGHT) {
-					model.rightArm.xRot = -1.5f;
-					model.rightArm.yRot = -0.25f;
-					// The left arm needs to be moved over more to support the gun
-					model.leftArm.xRot = -1.5f;
-					model.leftArm.yRot = 1.0f;
-
-					// Adjust to move with the head
-					model.rightArm.xRot += model.head.xRot * 0.5f;
-					model.rightArm.yRot += model.head.yRot * 0.5f;
-					model.leftArm.xRot += model.head.xRot * 0.25f;
-					model.leftArm.yRot += model.head.yRot * 0.25f;
-				} else {
-					model.leftArm.xRot = -1.5f;
-					model.leftArm.yRot = 0.25f;
-					// The right arm needs to be moved over more to support the gun
-					model.rightArm.xRot = -1.5f;
-					model.rightArm.yRot = -1.0f;
-
-					// Adjust to move with the head
-					model.leftArm.xRot += model.head.xRot * 0.5f;
-					model.leftArm.yRot += model.head.yRot * 0.5f;
-					model.rightArm.xRot += model.head.xRot * 0.25f;
-					model.rightArm.yRot += model.head.yRot * 0.25f;
-				}
-			});
-
 			@Override
 			public ArmPose getArmPose(LivingEntity entity, InteractionHand hand, ItemStack itemStack) {
-				if (!itemStack.isEmpty()) {
-					if (entity.getUsedItemHand() == hand && entity.getUseItemRemainingTicks() > 0) {
-						if (itemStack.getItem() instanceof MusketItem || itemStack.getItem() instanceof SimpleShotgunItem) {
-							return AIM_MUSKET_POSE;
-						} else {
-							return AIM_PISTOL_POSE;
-						}
-					}
-				}
-				return ArmPose.EMPTY;
+				return CustomArmPoses.getFirearmPose(entity, hand, itemStack);
 			}
 
 			@Override

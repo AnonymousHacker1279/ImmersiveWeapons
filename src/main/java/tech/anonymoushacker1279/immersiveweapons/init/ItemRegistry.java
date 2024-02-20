@@ -291,6 +291,8 @@ public class ItemRegistry {
 	public static final Supplier<AccessoryItem> HOLY_MANTLE = ITEMS.register("holy_mantle", () -> new AccessoryItem(new Properties().stacksTo(1), AccessorySlot.BELT, AccessoryItemEffects.HOLY_MANTLE));
 	public static final Supplier<AccessoryItem> VENSTRAL_JAR = ITEMS.register("venstral_jar", () -> new AccessoryItem(new Properties().stacksTo(1), AccessorySlot.BELT, AccessoryItemEffects.VENSTRAL_JAR));
 	public static final Supplier<AccessoryItem> SUPER_BLANKET_CAPE = ITEMS.register("super_blanket_cape", () -> new AccessoryItem(new Properties().stacksTo(1), AccessorySlot.BODY, AccessoryItemEffects.SUPER_BLANKET_CAPE));
+	public static final Supplier<AccessoryItem> MEDAL_OF_HONOR = ITEMS.register("medal_of_honor", () -> new AccessoryItem(new Properties().stacksTo(1), AccessorySlot.CHARM, AccessoryItemEffects.MEDAL_OF_HONOR));
+	public static final Supplier<AccessoryItem> MEDAL_OF_DISHONOR = ITEMS.register("medal_of_dishonor", () -> new AccessoryItem(new Properties().stacksTo(1), AccessorySlot.CHARM, AccessoryItemEffects.MEDAL_OF_DISHONOR));
 	public static final Supplier<CursedItem> BLOODY_SACRIFICE = ITEMS.register("bloody_sacrifice", () -> new CursedItem(new Properties().stacksTo(1).setNoRepair().durability(100), "bloody_sacrifice"));
 	public static final Supplier<CursedItem> JONNYS_CURSE = ITEMS.register("jonnys_curse", () -> new CursedItem(new Properties().stacksTo(1).setNoRepair().durability(100), "jonnys_curse"));
 	public static final Supplier<Item> CHAMPION_KEYCARD = ITEMS.register("champion_keycard", () -> new Item(new Properties().stacksTo(1).fireResistant()));
@@ -332,6 +334,7 @@ public class ItemRegistry {
 
 	// Spawn eggs
 	public static final Supplier<DeferredSpawnEggItem> DYING_SOLDIER_SPAWN_EGG = ITEMS.register("dying_soldier_spawn_egg", () -> new DeferredSpawnEggItem(EntityRegistry.DYING_SOLDIER_ENTITY, 0x7a6851, 0x783d22, (new Item.Properties()).stacksTo(16)));
+	public static final Supplier<DeferredSpawnEggItem> THE_COMMANDER_SPAWN_EGG = ITEMS.register("the_commander_spawn_egg", () -> new DeferredSpawnEggItem(EntityRegistry.THE_COMMANDER_ENTITY, 0x7a6851, 0x783d22, (new Item.Properties()).stacksTo(16)));
 	public static final Supplier<DeferredSpawnEggItem> MINUTEMAN_SPAWN_EGG = ITEMS.register("minuteman_spawn_egg", () -> new DeferredSpawnEggItem(EntityRegistry.MINUTEMAN_ENTITY, 0x494522, 0x204b2a, (new Item.Properties()).stacksTo(16)));
 	public static final Supplier<DeferredSpawnEggItem> FIELD_MEDIC_SPAWN_EGG = ITEMS.register("field_medic_spawn_egg", () -> new DeferredSpawnEggItem(EntityRegistry.FIELD_MEDIC_ENTITY, 0xde5451, 0xebe4d2, (new Item.Properties()).stacksTo(16)));
 	public static final Supplier<DeferredSpawnEggItem> WANDERING_WARRIOR_SPAWN_EGG = ITEMS.register("wandering_warrior_spawn_egg", () -> new DeferredSpawnEggItem(EntityRegistry.WANDERING_WARRIOR_ENTITY, 0x614226, 0x2e6278, (new Item.Properties()).stacksTo(16)));

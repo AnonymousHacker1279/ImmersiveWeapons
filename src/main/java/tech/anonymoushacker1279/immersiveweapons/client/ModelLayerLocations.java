@@ -12,6 +12,8 @@ public class ModelLayerLocations {
 			BuiltInRegistries.BLOCK.getKey(BlockRegistry.FIELD_MEDIC_HEAD.get()), "main");
 	public static final ModelLayerLocation DYING_SOLDIER_HEAD_LAYER = new ModelLayerLocation(
 			BuiltInRegistries.BLOCK.getKey(BlockRegistry.DYING_SOLDIER_HEAD.get()), "main");
+	public static final ModelLayerLocation THE_COMMANDER_HEAD_LAYER = new ModelLayerLocation(
+			BuiltInRegistries.BLOCK.getKey(BlockRegistry.THE_COMMANDER_HEAD.get()), "main");
 	public static final ModelLayerLocation WANDERING_WARRIOR_HEAD_LAYER = new ModelLayerLocation(
 			BuiltInRegistries.BLOCK.getKey(BlockRegistry.WANDERING_WARRIOR_HEAD.get()), "main");
 	public static final ModelLayerLocation HANS_HEAD_LAYER = new ModelLayerLocation(

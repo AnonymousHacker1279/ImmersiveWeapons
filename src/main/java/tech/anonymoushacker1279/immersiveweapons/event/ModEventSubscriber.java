@@ -11,8 +11,8 @@ import tech.anonymoushacker1279.immersiveweapons.entity.ambient.FireflyEntity;
 import tech.anonymoushacker1279.immersiveweapons.entity.animal.StarWolfEntity;
 import tech.anonymoushacker1279.immersiveweapons.entity.monster.*;
 import tech.anonymoushacker1279.immersiveweapons.entity.monster.lava_revenant.LavaRevenantEntity;
-import tech.anonymoushacker1279.immersiveweapons.entity.neutral.AbstractFieldMedicEntity;
-import tech.anonymoushacker1279.immersiveweapons.entity.neutral.AbstractMinutemanEntity;
+import tech.anonymoushacker1279.immersiveweapons.entity.neutral.FieldMedicEntity;
+import tech.anonymoushacker1279.immersiveweapons.entity.neutral.MinutemanEntity;
 import tech.anonymoushacker1279.immersiveweapons.entity.npc.SkeletonMerchantEntity;
 import tech.anonymoushacker1279.immersiveweapons.entity.npc.SkygazerEntity;
 import tech.anonymoushacker1279.immersiveweapons.init.EntityRegistry;
@@ -36,9 +36,10 @@ public class ModEventSubscriber {
 	public static void entityAttributeCreationEvent(EntityAttributeCreationEvent event) {
 		ImmersiveWeapons.LOGGER.info("Applying entity attributes");
 
-		event.put(EntityRegistry.DYING_SOLDIER_ENTITY.get(), AbstractDyingSoldierEntity.registerAttributes().build());
-		event.put(EntityRegistry.MINUTEMAN_ENTITY.get(), AbstractMinutemanEntity.registerAttributes().build());
-		event.put(EntityRegistry.FIELD_MEDIC_ENTITY.get(), AbstractFieldMedicEntity.registerAttributes().build());
+		event.put(EntityRegistry.DYING_SOLDIER_ENTITY.get(), DyingSoldierEntity.registerAttributes().build());
+		event.put(EntityRegistry.THE_COMMANDER_ENTITY.get(), TheCommanderEntity.registerAttributes().build());
+		event.put(EntityRegistry.MINUTEMAN_ENTITY.get(), MinutemanEntity.registerAttributes().build());
+		event.put(EntityRegistry.FIELD_MEDIC_ENTITY.get(), FieldMedicEntity.registerAttributes().build());
 		event.put(EntityRegistry.WANDERING_WARRIOR_ENTITY.get(), AbstractWanderingWarriorEntity.registerAttributes().build());
 		event.put(EntityRegistry.HANS_ENTITY.get(), HansEntity.registerAttributes().build());
 		event.put(EntityRegistry.SUPER_HANS_ENTITY.get(), SuperHansEntity.registerAttributes().build());

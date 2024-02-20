@@ -33,6 +33,7 @@ public class IWWorldGenTagGroups {
 	public static final TagKey<Biome> HAS_BIODOME = createStructureTag("biodome");
 	public static final TagKey<Biome> HAS_SPACE_OBSERVATORY = createStructureTag("space_observatory");
 	public static final TagKey<Biome> HAS_CHAMPION_TOWER = createStructureTag("champion_tower");
+	public static final TagKey<Biome> HAS_COMMANDER_OUTPOST = createStructureTag("commander_outpost");
 
 	/**
 	 * Helper method for creating a biome tag for containing structures.

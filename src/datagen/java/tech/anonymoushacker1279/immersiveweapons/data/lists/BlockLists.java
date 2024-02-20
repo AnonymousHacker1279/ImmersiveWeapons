@@ -61,6 +61,7 @@ public class BlockLists {
 		headBlocks.add(BlockRegistry.MINUTEMAN_HEAD.get());
 		headBlocks.add(BlockRegistry.FIELD_MEDIC_HEAD.get());
 		headBlocks.add(BlockRegistry.DYING_SOLDIER_HEAD.get());
+		headBlocks.add(BlockRegistry.THE_COMMANDER_HEAD.get());
 		headBlocks.add(BlockRegistry.WANDERING_WARRIOR_HEAD.get());
 		headBlocks.add(BlockRegistry.HANS_HEAD.get());
 		headBlocks.add(BlockRegistry.STORM_CREEPER_HEAD.get());
@@ -68,6 +69,7 @@ public class BlockLists {
 		wallHeadBlocks.add(BlockRegistry.MINUTEMAN_WALL_HEAD.get());
 		wallHeadBlocks.add(BlockRegistry.FIELD_MEDIC_WALL_HEAD.get());
 		wallHeadBlocks.add(BlockRegistry.DYING_SOLDIER_WALL_HEAD.get());
+		wallHeadBlocks.add(BlockRegistry.THE_COMMANDER_WALL_HEAD.get());
 		wallHeadBlocks.add(BlockRegistry.WANDERING_WARRIOR_WALL_HEAD.get());
 		wallHeadBlocks.add(BlockRegistry.HANS_WALL_HEAD.get());
 		wallHeadBlocks.add(BlockRegistry.STORM_CREEPER_WALL_HEAD.get());

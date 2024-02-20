@@ -24,6 +24,7 @@ public class StructureSetGenerator {
 	public static final ResourceKey<StructureSet> CELESTIAL_ASTEROID = createKey("celestial_asteroid");
 	public static final ResourceKey<StructureSet> CHAMPION_TOWER = createKey("champion_tower");
 	public static final ResourceKey<StructureSet> CLOUD_ISLAND = createKey("cloud_island");
+	public static final ResourceKey<StructureSet> COMMANDER_OUTPOST = createKey("commander_outpost");
 	public static final ResourceKey<StructureSet> DESTROYED_HOUSE = createKey("destroyed_house");
 	public static final ResourceKey<StructureSet> GRAVEYARD = createKey("graveyard");
 	public static final ResourceKey<StructureSet> HANS_HUT = createKey("hans_hut");
@@ -58,7 +59,7 @@ public class StructureSetGenerator {
 				List.of(
 						StructureSet.entry(structureHolderGetter.getOrThrow(StructureGenerator.BATTLEFIELD_TOWN), 1)
 				),
-				new RandomSpreadStructurePlacement(28, 8, RandomSpreadType.LINEAR, 176482913)
+				new RandomSpreadStructurePlacement(24, 8, RandomSpreadType.LINEAR, 176482913)
 		));
 
 		register(context, BEAR_TRAP, new StructureSet(
@@ -101,6 +102,13 @@ public class StructureSetGenerator {
 						StructureSet.entry(structureHolderGetter.getOrThrow(StructureGenerator.CLOUD_ISLAND), 1)
 				),
 				new RandomSpreadStructurePlacement(25, 12, RandomSpreadType.LINEAR, 349821657)
+		));
+
+		register(context, COMMANDER_OUTPOST, new StructureSet(
+				List.of(
+						StructureSet.entry(structureHolderGetter.getOrThrow(StructureGenerator.COMMANDER_OUTPOST), 1)
+				),
+				new RandomSpreadStructurePlacement(20, 10, RandomSpreadType.LINEAR, 548319557)
 		));
 
 		register(context, DESTROYED_HOUSE, new StructureSet(

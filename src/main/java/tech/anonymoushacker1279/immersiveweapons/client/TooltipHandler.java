@@ -92,7 +92,8 @@ public class TooltipHandler {
 			event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.blunderbuss").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
 		}
 		if (stack.getItem() == ItemRegistry.FLARE_GUN.get()) {
-			event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.flare_gun").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
+			event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.flare_gun_1").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
+			event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.flare_gun_2").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
 		}
 		if (stack.getItem() == ItemRegistry.MUSKET.get() || stack.getItem() == ItemRegistry.MUSKET_SCOPE.get()) {
 			event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.musket").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));

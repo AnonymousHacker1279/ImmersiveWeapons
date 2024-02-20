@@ -107,6 +107,9 @@ public class BiomeTagsGenerator extends BiomeTagsProvider {
 
 		tag(IWWorldGenTagGroups.HAS_CHAMPION_TOWER)
 				.addTag(ForgeWorldGenTagGroups.IS_PLAINS);
+
+		tag(IWWorldGenTagGroups.HAS_COMMANDER_OUTPOST)
+				.add(IWBiomes.BATTLEFIELD);
 	}
 
 	@Override

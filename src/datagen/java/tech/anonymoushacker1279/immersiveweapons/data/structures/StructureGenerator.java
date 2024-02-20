@@ -36,6 +36,7 @@ public class StructureGenerator {
 	public static final ResourceKey<Structure> CELESTIAL_ASTEROID = createKey("celestial_asteroid");
 	public static final ResourceKey<Structure> CHAMPION_TOWER = createKey("champion_tower");
 	public static final ResourceKey<Structure> CLOUD_ISLAND = createKey("cloud_island");
+	public static final ResourceKey<Structure> COMMANDER_OUTPOST = createKey("commander_outpost");
 	public static final ResourceKey<Structure> DESTROYED_HOUSE = createKey("destroyed_house");
 	public static final ResourceKey<Structure> GRAVEYARD = createKey("graveyard");
 	public static final ResourceKey<Structure> HANS_HUT = createKey("hans_hut");
@@ -205,6 +206,26 @@ public class StructureGenerator {
 				templatePoolHolderGetter.getOrThrow(StructureTemplatePoolGenerator.CLOUD_ISLAND),
 				1,
 				ConstantHeight.of(VerticalAnchor.absolute(64)),
+				false,
+				Types.WORLD_SURFACE_WG
+		));
+
+		register(context, COMMANDER_OUTPOST, new JigsawStructure(
+				Structures.structure(
+						biomeHolderGetter.getOrThrow(IWWorldGenTagGroups.HAS_COMMANDER_OUTPOST),
+						Map.of(
+								MobCategory.MONSTER,
+								new StructureSpawnOverride(
+										BoundingBoxType.STRUCTURE,
+										WeightedRandomList.create(new SpawnerData(EntityRegistry.DYING_SOLDIER_ENTITY.get(), 1, 1, 2))
+								)
+						),
+						Decoration.SURFACE_STRUCTURES,
+						TerrainAdjustment.BEARD_THIN
+				),
+				templatePoolHolderGetter.getOrThrow(StructureTemplatePoolGenerator.COMMANDER_OUTPOST),
+				1,
+				ConstantHeight.of(VerticalAnchor.absolute(0)),
 				false,
 				Types.WORLD_SURFACE_WG
 		));

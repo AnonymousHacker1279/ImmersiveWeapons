@@ -115,4 +115,8 @@ public class AccessoryItemEffects {
 			.addAttributeModifier(SUPER_BLANKET_CAPE_SPEED_MODIFIER, Attributes.MOVEMENT_SPEED)
 			.addMobEffect(new MobEffectInstance(MobEffects.JUMP, 60, 0, true, true))
 			.addMobEffect(new MobEffectInstance(MobEffects.SLOW_FALLING, 60, 0, true, true));
+	public static final EffectBuilder MEDAL_OF_HONOR = new EffectBuilder()
+			.addEffect(EffectType.DAMAGE_RESISTANCE, 0.05d);
+	public static final EffectBuilder MEDAL_OF_DISHONOR = new EffectBuilder()
+			.addEffect(EffectType.GENERAL_DAMAGE, 0.05d);
 }

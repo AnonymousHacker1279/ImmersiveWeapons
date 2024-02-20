@@ -16,6 +16,7 @@ public class StructureProcessorListGenerator {
 
 	public static final ResourceKey<StructureProcessorList> RUST_50_PERCENT = createKey("rust_50_percent");
 	public static final ResourceKey<StructureProcessorList> RUST_70_PERCENT = createKey("rust_70_percent");
+	public static final ResourceKey<StructureProcessorList> WEATHER_70_PERCENT = createKey("weather_70_percent");
 
 	private static ResourceKey<StructureProcessorList> createKey(String name) {
 		return ResourceKey.create(Registries.PROCESSOR_LIST, new ResourceLocation(ImmersiveWeapons.MOD_ID, name));
@@ -27,10 +28,19 @@ public class StructureProcessorListGenerator {
 						new ProcessorRule(new RandomBlockMatchTest(Blocks.IRON_BLOCK, 0.5f), AlwaysTrueTest.INSTANCE, BlockRegistry.RUSTED_IRON_BLOCK.get().defaultBlockState())
 				))
 		));
-		
+
 		register(context, RUST_70_PERCENT, ImmutableList.of(
 				new RuleProcessor(ImmutableList.of(
 						new ProcessorRule(new RandomBlockMatchTest(Blocks.IRON_BLOCK, 0.7f), AlwaysTrueTest.INSTANCE, BlockRegistry.RUSTED_IRON_BLOCK.get().defaultBlockState())
+				))
+		));
+
+		register(context, WEATHER_70_PERCENT, ImmutableList.of(
+				new RuleProcessor(ImmutableList.of(
+						new ProcessorRule(new RandomBlockMatchTest(Blocks.IRON_BLOCK, 0.7f), AlwaysTrueTest.INSTANCE, BlockRegistry.RUSTED_IRON_BLOCK.get().defaultBlockState())
+				)),
+				new RuleProcessor(ImmutableList.of(
+						new ProcessorRule(new RandomBlockMatchTest(Blocks.COBBLESTONE, 0.7f), AlwaysTrueTest.INSTANCE, Blocks.MOSSY_COBBLESTONE.defaultBlockState())
 				))
 		));
 	}

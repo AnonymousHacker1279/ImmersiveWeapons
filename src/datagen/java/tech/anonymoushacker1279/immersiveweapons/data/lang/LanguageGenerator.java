@@ -284,10 +284,10 @@ public class LanguageGenerator extends IWLanguageProvider {
 		addSubtitle("block.mortar.fire", "Mortar fires");
 
 		// Entity
-		addSubtitle("entity.dying_soldier.ambient", "Soldier speaking");
-		addSubtitle("entity.dying_soldier.death", "Soldier dies");
-		addSubtitle("entity.dying_soldier.hurt", "Soldier hurts");
-		addSubtitle("entity.dying_soldier.step", "Soldier walks");
+		addSubtitle("entity.soldier.ambient", "Soldier speaking");
+		addSubtitle("entity.soldier.death", "Soldier dies");
+		addSubtitle("entity.soldier.hurt", "Soldier hurts");
+		addSubtitle("entity.soldier.step", "Soldier walks");
 		addSubtitle("entity.field_medic.ambient", "Medic speaking");
 		addSubtitle("entity.field_medic.death", "Medic dies");
 		addSubtitle("entity.field_medic.hurt", "Medic hurts");
@@ -332,7 +332,8 @@ public class LanguageGenerator extends IWLanguageProvider {
 		addTooltip("flintlock_pistol", "A basic flintlock firearm that excels in medium-range combat.");
 		addTooltip("blunderbuss", "Good for hordes a short distance away. A primitive type of shotgun.");
 		addTooltip("musket", "A simple firearm designed for long-range combat");
-		addTooltip("flare_gun", "Launch bright flares into the sky");
+		addTooltip("flare_gun_1", "Launch bright flares into the sky");
+		addTooltip("flare_gun_2", "Flares can be used to direct Minutemen in attacking specific targets");
 		addTooltip("hand_cannon", "A powerful, but inaccurate, handheld cannon");
 		// Gun metadata
 		addTooltip("gun.meta.base_velocity", "Base Velocity: %s");
@@ -961,6 +962,8 @@ public class LanguageGenerator extends IWLanguageProvider {
 		addAdvancement("discover_field_medic.description", "Discover a Field Medic, a healer that keeps nearby minutemen in good health");
 		addAdvancement("discover_dying_soldier.title", "Barely Alive");
 		addAdvancement("discover_dying_soldier.description", "Discover a Dying Soldier, a decaying war-torn soldier still fighting the war");
+		addAdvancement("discover_the_commander.title", "War General");
+		addAdvancement("discover_the_commander.description", "Discover The Commander, a powerful leader of dying soldiers");
 		addAdvancement("discover_wandering_warrior.title", "Rogue Warrior");
 		addAdvancement("discover_wandering_warrior.description", "Discover a Wandering Warrior, a creature of the wilderness");
 		addAdvancement("discover_hans.title", "O GREAT HANS");
@@ -1038,7 +1041,8 @@ public class LanguageGenerator extends IWLanguageProvider {
 		add("loot.immersiveweapons.entity.hans.iron_sword", "The Grand Blade of Hans");
 		add("loot.immersiveweapons.entity.super_hans.super_healing_potion", "Super Potion of Healing");
 		add("loot.immersiveweapons.entity.super_hans.super_regeneration_potion", "Super Potion of Regeneration");
-		add("immersiveweapons.boss.celestial_tower.waves", "Wave %s of %s");
+		add("immersiveweapons.boss.celestial_tower.waves", "Celestial Tower: Wave %s of %s");
+		add("immersiveweapons.boss.the_commander.waves", "The Commander: Wave %s of %s");
 		add("itemGroup.immersiveweapons.creative_tab", "Immersive Weapons");
 
 		// Vanilla only has enchantment numbers up to 10, so add up to 100 for QoL if the player has high level enchants

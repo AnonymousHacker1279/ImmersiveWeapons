@@ -238,49 +238,49 @@ public class SoundGenerator extends SoundDefinitionsProvider {
 								"block/panic_alarm/alarm/alarm"),
 						SoundType.SOUND)));
 
-		add(SoundEventRegistry.DYING_SOLDIER_AMBIENT.get(), definition()
-				.subtitle("subtitles.immersiveweapons.entity.dying_soldier.ambient")
+		add(SoundEventRegistry.SOLDIER_AMBIENT.get(), definition()
+				.subtitle("subtitles.immersiveweapons.entity.soldier.ambient")
 				.with(Sound.sound(new ResourceLocation(ImmersiveWeapons.MOD_ID,
-								"entity/dying_soldier/ambient/ambient_0"),
+								"entity/soldier/ambient/ambient_0"),
 						SoundType.SOUND))
 				.with(Sound.sound(new ResourceLocation(ImmersiveWeapons.MOD_ID,
-								"entity/dying_soldier/ambient/ambient_1"),
+								"entity/soldier/ambient/ambient_1"),
 						SoundType.SOUND))
 				.with(Sound.sound(new ResourceLocation(ImmersiveWeapons.MOD_ID,
-								"entity/dying_soldier/ambient/ambient_2"),
+								"entity/soldier/ambient/ambient_2"),
 						SoundType.SOUND)));
 
-		add(SoundEventRegistry.DYING_SOLDIER_STEP.get(), definition()
-				.subtitle("subtitles.immersiveweapons.entity.dying_soldier.step")
+		add(SoundEventRegistry.SOLDIER_STEP.get(), definition()
+				.subtitle("subtitles.immersiveweapons.entity.soldier.step")
 				.with(Sound.sound(new ResourceLocation(ImmersiveWeapons.MOD_ID,
-								"entity/dying_soldier/step/step_0"),
+								"entity/soldier/step/step_0"),
 						SoundType.SOUND))
 				.with(Sound.sound(new ResourceLocation(ImmersiveWeapons.MOD_ID,
-								"entity/dying_soldier/step/step_1"),
+								"entity/soldier/step/step_1"),
 						SoundType.SOUND))
 				.with(Sound.sound(new ResourceLocation(ImmersiveWeapons.MOD_ID,
-								"entity/dying_soldier/step/step_2"),
+								"entity/soldier/step/step_2"),
 						SoundType.SOUND))
 				.with(Sound.sound(new ResourceLocation(ImmersiveWeapons.MOD_ID,
-								"entity/dying_soldier/step/step_3"),
+								"entity/soldier/step/step_3"),
 						SoundType.SOUND)));
 
-		add(SoundEventRegistry.DYING_SOLDIER_DEATH.get(), definition()
-				.subtitle("subtitles.immersiveweapons.entity.dying_soldier.death")
+		add(SoundEventRegistry.SOLDIER_DEATH.get(), definition()
+				.subtitle("subtitles.immersiveweapons.entity.soldier.death")
 				.with(Sound.sound(new ResourceLocation(ImmersiveWeapons.MOD_ID,
-								"entity/dying_soldier/death/death"),
+								"entity/soldier/death/death"),
 						SoundType.SOUND)));
 
-		add(SoundEventRegistry.DYING_SOLDIER_HURT.get(), definition()
-				.subtitle("subtitles.immersiveweapons.entity.dying_soldier.hurt")
+		add(SoundEventRegistry.SOLDIER_HURT.get(), definition()
+				.subtitle("subtitles.immersiveweapons.entity.soldier.hurt")
 				.with(Sound.sound(new ResourceLocation(ImmersiveWeapons.MOD_ID,
-								"entity/dying_soldier/hurt/hurt_0"),
+								"entity/soldier/hurt/hurt_0"),
 						SoundType.SOUND))
 				.with(Sound.sound(new ResourceLocation(ImmersiveWeapons.MOD_ID,
-								"entity/dying_soldier/hurt/hurt_1"),
+								"entity/soldier/hurt/hurt_1"),
 						SoundType.SOUND))
 				.with(Sound.sound(new ResourceLocation(ImmersiveWeapons.MOD_ID,
-								"entity/dying_soldier/hurt/hurt_2"),
+								"entity/soldier/hurt/hurt_2"),
 						SoundType.SOUND)));
 
 		add(SoundEventRegistry.FIELD_MEDIC_AMBIENT.get(), definition()
