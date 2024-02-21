@@ -111,6 +111,10 @@ public class LanguageGenerator extends IWLanguageProvider {
 		excludedItems.add(ItemRegistry.PADDED_LEATHER_CHESTPLATE.get());
 		excludedItems.add(ItemRegistry.PADDED_LEATHER_LEGGINGS.get());
 		excludedItems.add(ItemRegistry.DRAGONS_BREATH_BOW.get());
+		excludedItems.add(ItemRegistry.PEDESTAL_AUGMENT_SPEED.get());
+		excludedItems.add(ItemRegistry.PEDESTAL_AUGMENT_ARMOR.get());
+		excludedItems.add(ItemRegistry.PEDESTAL_AUGMENT_ENCHANTMENT.get());
+		excludedItems.add(ItemRegistry.PEDESTAL_AUGMENT_CAPACITY.get());
 
 		// Filter the excluded items from the registry
 		Stream<DeferredHolder<Item, ? extends Item>> items = ItemRegistry.ITEMS.getEntries().stream()
@@ -161,6 +165,10 @@ public class LanguageGenerator extends IWLanguageProvider {
 		addItem(ItemRegistry.PADDED_LEATHER_CHESTPLATE, "Padded Leather Tunic");
 		addItem(ItemRegistry.PADDED_LEATHER_LEGGINGS, "Padded Leather Pants");
 		addItem(ItemRegistry.DRAGONS_BREATH_BOW, "Dragon's Breath Bow");
+		addItem(ItemRegistry.PEDESTAL_AUGMENT_SPEED, "Pedestal Augment: Speed");
+		addItem(ItemRegistry.PEDESTAL_AUGMENT_ARMOR, "Pedestal Augment: Armor");
+		addItem(ItemRegistry.PEDESTAL_AUGMENT_ENCHANTMENT, "Pedestal Augment: Enchantment");
+		addItem(ItemRegistry.PEDESTAL_AUGMENT_CAPACITY, "Pedestal Augment: Capacity");
 	}
 
 	private void addEntityTypes() {
@@ -452,6 +460,13 @@ public class LanguageGenerator extends IWLanguageProvider {
 		addTooltip("mre", "Tastes disgusting but at least you won't be hungry for a while");
 		addTooltip("first_aid_kit", "An effective method of healing, combining the effects of bandages and painkillers");
 
+		// Commander Pedestal Augments
+		addTooltip("pedestal_augment_speed", "Increases the spawn rate by 20%");
+		addTooltip("pedestal_augment_armor", "Increases the chance of spawning with armor by 25%");
+		addTooltip("pedestal_augment_enchantment", "Increases the chance of spawning with enchanted gear by 25%");
+		addTooltip("pedestal_augment_capacity", "Increases the maximum number of soldiers that can be spawned by two");
+		addTooltip("pedestal_augment.note", "Right-click on a Commander Pedestal to apply augments");
+
 		// Misc
 		addTooltip("shift_for_info", "Hold [SHIFT] for more information");
 		addTooltip("alt_for_info", "Hold [ALT] for extended information");
@@ -578,8 +593,8 @@ public class LanguageGenerator extends IWLanguageProvider {
 		addTooltip("jonnys_curse_effect_5", "- Projectiles deal zero damage");
 
 		// Lore
-		addTooltip("minuteman_statue", "Something seems to activate inside when it is placed in a Battlefield. It wishes to protect.");
-		addTooltip("medic_statue", "Something seems to activate inside when it is placed in a Battlefield. It wishes to heal.");
+		addTooltip("minuteman_statue", "Summons Minutemen in the nearby area when placed in a Battlefield or on a Commander Pedestal");
+		addTooltip("medic_statue", "Summons Field Medics in the nearby area when placed in a Battlefield or on a Commander Pedestal");
 		addTooltip("azul_keystone", "It resonates with the energy of a lost world");
 		addTooltip("azul_keystone_fragment", "It vibrates gently in your hand");
 	}

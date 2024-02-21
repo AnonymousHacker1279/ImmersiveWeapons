@@ -614,6 +614,8 @@ public class BlockStateGenerator extends BlockStateProvider {
 				.renderType("minecraft:translucent"));
 		simpleBlock(BlockRegistry.SOLAR_LENS.get(),
 				models().getExistingFile(new ResourceLocation(ImmersiveWeapons.MOD_ID, "solar_lens")));
+		simpleBlock(BlockRegistry.COMMANDER_PEDESTAL.get(),
+				models().getExistingFile(new ResourceLocation(ImmersiveWeapons.MOD_ID, "commander_pedestal")));
 
 		// Tiltros Portal and Frame
 		getVariantBuilder(BlockRegistry.TILTROS_PORTAL.get())

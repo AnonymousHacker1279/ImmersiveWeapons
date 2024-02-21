@@ -110,6 +110,7 @@ public class BlockItemRegistry {
 	public static final Supplier<SignItem> BURNED_OAK_SIGN_ITEM = ItemRegistry.ITEMS.register("burned_oak_sign", () -> new SignItem(new Properties().stacksTo(16), BlockRegistry.BURNED_OAK_SIGN.get(), BlockRegistry.BURNED_OAK_WALL_SIGN.get()));
 	public static final Supplier<HangingSignItem> BURNED_OAK_HANGING_SIGN_ITEM = ItemRegistry.ITEMS.register("burned_oak_hanging_sign", () -> new HangingSignItem(BlockRegistry.BURNED_OAK_HANGING_SIGN.get(), BlockRegistry.BURNED_OAK_WALL_HANGING_SIGN.get(), new Properties().stacksTo(16)));
 	public static final Supplier<BlockItem> BURNED_OAK_BUTTON_ITEM = ItemRegistry.ITEMS.register("burned_oak_button", () -> new BlockItem(BlockRegistry.BURNED_OAK_BUTTON.get(), new Properties()));
+	public static final Supplier<BlockItem> COMMANDER_PEDESTAL = ItemRegistry.ITEMS.register("commander_pedestal", () -> new BlockItem(BlockRegistry.COMMANDER_PEDESTAL.get(), new Properties()));
 	public static final Supplier<BlockItem> FLAG_POLE_ITEM = ItemRegistry.ITEMS.register("flag_pole", () -> new BlockItem(BlockRegistry.FLAG_POLE.get(), new Properties()));
 	public static final Supplier<BlockItem> AMERICAN_FLAG_ITEM = ItemRegistry.ITEMS.register("american_flag", () -> new BlockItem(BlockRegistry.AMERICAN_FLAG.get(), new Properties()));
 	public static final Supplier<BlockItem> GADSDEN_FLAG_ITEM = ItemRegistry.ITEMS.register("gadsden_flag", () -> new BlockItem(BlockRegistry.GADSDEN_FLAG.get(), new Properties()));

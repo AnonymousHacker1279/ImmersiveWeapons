@@ -506,6 +506,14 @@ public class TooltipHandler {
 		if (stack.getItem() == BlockItemRegistry.MEDIC_STATUE_ITEM.get()) {
 			event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.medic_statue").withStyle(ChatFormatting.GREEN, ChatFormatting.ITALIC));
 		}
+		// Regex check for "immersiveweapons:pedestal_augment_X" where X is any string
+		ResourceLocation path = BuiltInRegistries.ITEM.getKey(stack.getItem().asItem());
+		if (path.toString().matches("immersiveweapons:pedestal_augment_.+")) {
+			// Get the name of the augment
+			event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.%s".formatted(path.getPath())).withStyle(ChatFormatting.DARK_PURPLE, ChatFormatting.ITALIC));
+			event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.pedestal_augment.note").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
+		}
+
 		// Tiltros
 		if (stack.getItem() == ItemRegistry.AZUL_KEYSTONE.get()) {
 			event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.azul_keystone").withStyle(ChatFormatting.AQUA, ChatFormatting.ITALIC));

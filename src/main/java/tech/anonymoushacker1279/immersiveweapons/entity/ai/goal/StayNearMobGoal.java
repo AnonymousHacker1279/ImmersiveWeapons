@@ -23,14 +23,16 @@ public class StayNearMobGoal extends Goal {
 
 	@Override
 	public boolean canUse() {
-		return mob.distanceToSqr(mobToStayNear) > maxDistance * maxDistance;
+		return mob.distanceTo(mobToStayNear) > maxDistance;
 	}
 
 	@Override
-	public void start() {
-		Vec3 posTowards = DefaultRandomPos.getPosTowards(mob, 16, 7, mobToStayNear.position(), ((float) Math.PI / 2F));
-		if (posTowards != null) {
-			navigation.moveTo(navigation.createPath(posTowards.x, posTowards.y, posTowards.z, 0), 1.0D);
+	public void tick() {
+		if (!navigation.isInProgress()) {
+			Vec3 posTowards = DefaultRandomPos.getPosTowards(mob, 12, 7, mobToStayNear.position(), ((float) Math.PI / 2F));
+			if (posTowards != null) {
+				navigation.moveTo(navigation.createPath(posTowards.x, posTowards.y, posTowards.z, 0), 1.2D);
+			}
 		}
 	}
 }

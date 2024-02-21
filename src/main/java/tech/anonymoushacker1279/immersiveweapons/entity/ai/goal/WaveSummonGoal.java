@@ -3,13 +3,10 @@ package tech.anonymoushacker1279.immersiveweapons.entity.ai.goal;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.util.RandomSource;
 import net.minecraft.world.BossEvent.BossBarColor;
-import net.minecraft.world.DifficultyInstance;
-import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.ai.goal.Goal;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.phys.AABB;
 import tech.anonymoushacker1279.immersiveweapons.entity.WaveSummoningBoss;
 import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
@@ -97,7 +94,7 @@ public abstract class WaveSummonGoal<T extends Mob & WaveSummoningBoss> extends 
 	 *
 	 * @return BlockPos
 	 */
-	private BlockPos getRandomNearbyPosForSpawning() {  // TODO: allow range to be specified
+	private BlockPos getRandomNearbyPosForSpawning() {
 		return new BlockPos(mob.getBlockX() + mob.getRandom().nextIntBetweenInclusive(-8, 8),
 				mob.getBlockY(),
 				mob.getBlockZ() + mob.getRandom().nextIntBetweenInclusive(-8, 8));
@@ -146,45 +143,6 @@ public abstract class WaveSummonGoal<T extends Mob & WaveSummoningBoss> extends 
 
 	protected boolean isWavesPastHalf() {
 		return mob.getTotalWavesToSpawn() / 2 <= mob.getWavesSpawned();
-	}
-
-	protected void enchantGear(Mob summonedEntity, boolean doWeapons, boolean doArmor) {
-		RandomSource random = summonedEntity.getRandom();
-		DifficultyInstance difficulty = summonedEntity.level().getCurrentDifficultyAt(mob.blockPosition());
-
-		float specialMultiplier = difficulty.getSpecialMultiplier();
-
-		if (doWeapons) {
-			enchantSpawnedWeapon(summonedEntity, random, specialMultiplier);
-		}
-
-		if (doArmor) {
-			enchantSpawnedArmor(summonedEntity, random, specialMultiplier);
-		}
-	}
-
-	private void enchantSpawnedWeapon(Mob summonedEntity, RandomSource random, float chanceMultiplier) {
-		if (!summonedEntity.getMainHandItem().isEmpty()) {
-			summonedEntity.setItemSlot(
-					EquipmentSlot.MAINHAND,
-					EnchantmentHelper.enchantItem(random, summonedEntity.getMainHandItem(),
-							(int) (5.0F + chanceMultiplier * (float) random.nextInt(18)),
-							false)
-			);
-		}
-	}
-
-	private void enchantSpawnedArmor(Mob summonedEntity, RandomSource random, float chanceMultiplier) {
-		for (EquipmentSlot equipmentslot : EquipmentSlot.values()) {
-			if (equipmentslot.getType() == EquipmentSlot.Type.ARMOR) {
-				ItemStack slotStack = summonedEntity.getItemBySlot(equipmentslot);
-				if (!slotStack.isEmpty()) {
-					summonedEntity.setItemSlot(equipmentslot, EnchantmentHelper.enchantItem(random, slotStack,
-							(int) (5.0F + chanceMultiplier * (float) random.nextInt(18)),
-							false));
-				}
-			}
-		}
 	}
 
 	protected abstract void doWaveSpawnBehavior();

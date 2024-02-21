@@ -7,8 +7,10 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.MobSpawnType;
+import net.minecraft.util.Mth;
+import net.minecraft.world.entity.*;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.Blocks;
@@ -20,6 +22,7 @@ import net.minecraft.world.phys.AABB;
 import org.jetbrains.annotations.Nullable;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.entity.neutral.SoldierEntity;
+import tech.anonymoushacker1279.immersiveweapons.init.ItemRegistry;
 import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
 
 import java.util.List;
@@ -27,8 +30,10 @@ import java.util.List;
 public abstract class AbstractStatueBlockEntity<T extends SoldierEntity> extends BlockEntity implements EntityBlock {
 
 	protected int cooldown;
-	protected int scannedEntities;
 	protected final int maxNearbyEntities;
+	protected int additionalEntities;
+	protected float armorSpawnChance = 0.0f;
+	protected float gearEnchantChance = 0.0f;
 
 	protected static final ResourceKey<Biome> BATTLEFIELD = ResourceKey.create(Registries.BIOME, new ResourceLocation(ImmersiveWeapons.MOD_ID, "battlefield"));
 
@@ -39,20 +44,68 @@ public abstract class AbstractStatueBlockEntity<T extends SoldierEntity> extends
 
 	public void tick(Level level, BlockPos blockPos) {
 		if (cooldown == 0) {
-			if (level.getBiome(blockPos).is(BATTLEFIELD)) {
-				T entity = createEntity(level);
-				List<? extends LivingEntity> entitiesInArea = getEntitiesInArea(entity);
+			cooldown = 400;
 
-				if (entitiesInArea != null && entitiesInArea.size() <= maxNearbyEntities) {
-					if (entity != null) {
-						attemptSpawnEntity(entity);
+			if (level.getBlockEntity(blockPos.below()) instanceof CommanderPedestalBlockEntity blockEntity) {
+				for (ItemStack augment : blockEntity.getInventory()) {
+					if (augment.is(ItemRegistry.PEDESTAL_AUGMENT_SPEED.get())) {
+						cooldown = Mth.floor(cooldown * 0.8f);
+					} else if (augment.is(ItemRegistry.PEDESTAL_AUGMENT_ARMOR.get())) {
+						armorSpawnChance += 0.25f;
+					} else if (augment.is(ItemRegistry.PEDESTAL_AUGMENT_ENCHANTMENT.get())) {
+						gearEnchantChance += 0.25f;
+					} else if (augment.is(ItemRegistry.PEDESTAL_AUGMENT_CAPACITY.get())) {
+						additionalEntities += 2;
 					}
 				}
-			} else {
-				cooldown = 400;
+
+				prepareEntitySpawn(level);
+			} else if (level.getBiome(blockPos).is(BATTLEFIELD)) {
+				prepareEntitySpawn(level);
 			}
+
+			armorSpawnChance = 0.0f;
+			gearEnchantChance = 0.0f;
+			additionalEntities = 0;
 		} else if (cooldown > 0) {
 			cooldown--;
+		}
+	}
+
+	protected void prepareEntitySpawn(Level level) {
+		T entity = createEntity(level);
+		List<? extends LivingEntity> entitiesInArea = getEntitiesInArea(entity);
+
+		if (entitiesInArea != null && entitiesInArea.size() <= (maxNearbyEntities + additionalEntities)) {
+			if (entity != null) {
+				if (entity.getRandom().nextFloat() <= armorSpawnChance) {
+					for (EquipmentSlot equipmentslot : EquipmentSlot.values()) {
+						if (equipmentslot.getType() == EquipmentSlot.Type.ARMOR) {
+							ItemStack itemstack = entity.getItemBySlot(equipmentslot);
+
+							int armorTier = 0;
+							for (int i = 0; i < 5; i++) {
+								if (entity.getRandom().nextFloat() <= 0.25f) {
+									armorTier++;
+								}
+							}
+
+							if (itemstack.isEmpty()) {
+								Item item = Mob.getEquipmentForSlot(equipmentslot, armorTier);
+								if (item != null) {
+									entity.setItemSlot(equipmentslot, new ItemStack(item));
+								}
+							}
+						}
+					}
+				}
+
+				if (entity.getRandom().nextFloat() <= gearEnchantChance) {
+					GeneralUtilities.enchantGear(entity, true, true);
+				}
+
+				attemptSpawnEntity(entity);
+			}
 		}
 	}
 
@@ -68,8 +121,6 @@ public abstract class AbstractStatueBlockEntity<T extends SoldierEntity> extends
 				break;
 			}
 		}
-
-		cooldown = 400;
 	}
 
 	protected void spawnParticles() {
@@ -119,13 +170,11 @@ public abstract class AbstractStatueBlockEntity<T extends SoldierEntity> extends
 	protected void saveAdditional(CompoundTag pTag) {
 		super.saveAdditional(pTag);
 		pTag.putInt("scanCooldown", cooldown);
-		pTag.putInt("scannedEntities", scannedEntities);
 	}
 
 	@Override
 	public void load(CompoundTag nbt) {
 		super.load(nbt);
 		cooldown = nbt.getInt("scanCooldown");
-		scannedEntities = nbt.getInt("scannedEntities");
 	}
 }

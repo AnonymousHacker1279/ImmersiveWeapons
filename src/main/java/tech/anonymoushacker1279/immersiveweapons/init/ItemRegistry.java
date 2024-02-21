@@ -297,6 +297,10 @@ public class ItemRegistry {
 	public static final Supplier<CursedItem> JONNYS_CURSE = ITEMS.register("jonnys_curse", () -> new CursedItem(new Properties().stacksTo(1).setNoRepair().durability(100), "jonnys_curse"));
 	public static final Supplier<Item> CHAMPION_KEYCARD = ITEMS.register("champion_keycard", () -> new Item(new Properties().stacksTo(1).fireResistant()));
 	public static final Supplier<Item> KILL_COUNTER = ITEMS.register("kill_counter", () -> new Item(new Properties()));
+	public static final Supplier<Item> PEDESTAL_AUGMENT_SPEED = ITEMS.register("pedestal_augment_speed", () -> new Item(new Properties().stacksTo(4)));
+	public static final Supplier<Item> PEDESTAL_AUGMENT_ARMOR = ITEMS.register("pedestal_augment_armor", () -> new Item(new Properties().stacksTo(4)));
+	public static final Supplier<Item> PEDESTAL_AUGMENT_ENCHANTMENT = ITEMS.register("pedestal_augment_enchantment", () -> new Item(new Properties().stacksTo(4)));
+	public static final Supplier<Item> PEDESTAL_AUGMENT_CAPACITY = ITEMS.register("pedestal_augment_capacity", () -> new Item(new Properties().stacksTo(4)));
 
 	// Armor
 	public static final Supplier<MoltenArmorItem> MOLTEN_HELMET = ITEMS.register("molten_helmet", () -> new MoltenArmorItem(CustomArmorMaterials.MOLTEN, ArmorItem.Type.HELMET, new Item.Properties().fireResistant(), false));

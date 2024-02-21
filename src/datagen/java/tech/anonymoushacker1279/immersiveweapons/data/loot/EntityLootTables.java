@@ -20,8 +20,7 @@ import net.minecraft.world.level.storage.loot.predicates.*;
 import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
 import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
 import org.jetbrains.annotations.Nullable;
-import tech.anonymoushacker1279.immersiveweapons.init.EntityRegistry;
-import tech.anonymoushacker1279.immersiveweapons.init.ItemRegistry;
+import tech.anonymoushacker1279.immersiveweapons.init.*;
 import tech.anonymoushacker1279.immersiveweapons.world.level.loot.number_providers.EntityKillersValue;
 
 import java.util.function.BiConsumer;
@@ -73,12 +72,6 @@ public class EntityLootTables implements LootTableSubProvider {
 								.apply(LootingEnchantFunction.lootingMultiplier(UniformGenerator.between(0.0F, 1.0F))))
 						.when(LootItemKilledByPlayerCondition.killedByPlayer()))
 				.withPool(LootPool.lootPool()
-						.name("flintlock_pistol")
-						.setRolls(ConstantValue.exactly(1.0F))
-						.add(LootItem.lootTableItem(ItemRegistry.FLINTLOCK_PISTOL.get()))
-						.when(LootItemKilledByPlayerCondition.killedByPlayer())
-						.when(LootItemRandomChanceWithLootingCondition.randomChanceAndLootingBoost(0.020F, 0.05F)))
-				.withPool(LootPool.lootPool()
 						.name("medal_of_dishonor")
 						.setRolls(ConstantValue.exactly(1.0F))
 						.add(LootItem.lootTableItem(ItemRegistry.MEDAL_OF_DISHONOR.get()))
@@ -97,6 +90,26 @@ public class EntityLootTables implements LootTableSubProvider {
 								.when(LootItemEntityPropertyCondition.hasProperties(LootContext.EntityTarget.THIS, ENTITY_ON_FIRE)))
 						.when(LootItemKilledByPlayerCondition.killedByPlayer())
 						.when(LootItemRandomChanceWithLootingCondition.randomChanceAndLootingBoost(0.035F, 0.02F))));
+
+		add(EntityRegistry.THE_COMMANDER_ENTITY.get(), LootTable.lootTable()
+				.withPool(LootPool.lootPool()
+						.name("commander_pedestal")
+						.setRolls(ConstantValue.exactly(1.0f))
+						.add(LootItem.lootTableItem(BlockItemRegistry.COMMANDER_PEDESTAL.get()))
+						.when(LootItemKilledByPlayerCondition.killedByPlayer()))
+				.withPool(LootPool.lootPool()
+						.name("gunpowder")
+						.setRolls(ConstantValue.exactly(1.0F))
+						.add(LootItem.lootTableItem(Items.GUNPOWDER))
+						.apply(SetItemCountFunction.setCount(UniformGenerator.between(12.0F, 24.0F)))
+						.apply(LootingEnchantFunction.lootingMultiplier(UniformGenerator.between(3.0F, 8.0F))))
+				.withPool(LootPool.lootPool()
+						.name("cannonball")
+						.setRolls(ConstantValue.exactly(1.0F))
+						.add(LootItem.lootTableItem(ItemRegistry.CANNONBALL.get())
+								.apply(SetItemCountFunction.setCount(UniformGenerator.between(10.0F, 20.0F)))
+								.apply(LootingEnchantFunction.lootingMultiplier(UniformGenerator.between(1.0F, 2.0F))))
+						.when(LootItemKilledByPlayerCondition.killedByPlayer())));
 
 		CompoundTag tag = new CompoundTag();
 		tag.putBoolean("isBerserk", true);

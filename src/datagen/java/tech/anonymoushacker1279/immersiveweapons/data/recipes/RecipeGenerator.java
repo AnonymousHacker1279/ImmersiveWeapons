@@ -1540,6 +1540,12 @@ public class RecipeGenerator extends RecipeProvider implements DataGenUtils {
 				.group("recovery_staff")
 				.unlockedBy("bloated_heart", has(ItemRegistry.BLOATED_HEART.get()))
 				.save(output);
+
+		// Commander Pedestal Augments
+		createPedestalAugment(ItemRegistry.PEDESTAL_AUGMENT_SPEED.get(), Items.SUGAR);
+		createPedestalAugment(ItemRegistry.PEDESTAL_AUGMENT_ARMOR.get(), Items.IRON_HELMET);
+		createPedestalAugment(ItemRegistry.PEDESTAL_AUGMENT_ENCHANTMENT.get(), Items.BOOK);
+		createPedestalAugment(ItemRegistry.PEDESTAL_AUGMENT_CAPACITY.get(), Items.CHEST);
 	}
 
 	private void createMinecraftItems() {
@@ -1865,6 +1871,20 @@ public class RecipeGenerator extends RecipeProvider implements DataGenUtils {
 	private static void createShard(ShapelessRecipeBuilder builder, ItemLike material) {
 		builder.requires(material)
 				.group("shard")
+				.save(output);
+	}
+
+	public static void createPedestalAugment(ItemLike augment, ItemLike material) {
+		ShapedRecipeBuilder.shaped(RecipeCategory.MISC, augment)
+				.define('a', ItemRegistry.HANSIUM_INGOT.get())
+				.define('b', Tags.Items.INGOTS_GOLD)
+				.define('c', Tags.Items.DYES_RED)
+				.define('d', material)
+				.pattern("acb")
+				.pattern("cdc")
+				.pattern("bca")
+				.group("pedestal_augments")
+				.unlockedBy("hansium_ingot", has(ItemRegistry.HANSIUM_INGOT.get()))
 				.save(output);
 	}
 
