@@ -33,11 +33,6 @@ public class AdvancementsGenerator extends AdvancementProvider {
 		super(output, provider, exFileHelper, List.of((lookup, consumer, existingFileHelper) -> registerAdvancements(consumer)));
 	}
 
-	/**
-	 * Build advancement trees.
-	 *
-	 * @param consumer the <code>Consumer</code> extending Advancement
-	 */
 	public static void registerAdvancements(Consumer<AdvancementHolder> consumer) {
 		// Root advancement
 		AdvancementHolder root = Builder.advancement()
@@ -50,7 +45,6 @@ public class AdvancementsGenerator extends AdvancementProvider {
 				.addCriterion("exist",
 						PlayerTrigger.TriggerInstance.located(LocationPredicate.Builder.inDimension(Level.OVERWORLD)))
 				.save(consumer, "immersiveweapons:root");
-
 
 		// Molten advancements
 		AdvancementHolder obtainMoltenShard = Builder.advancement().parent(root)
@@ -1182,7 +1176,7 @@ public class AdvancementsGenerator extends AdvancementProvider {
 				.rewards(AdvancementRewards.Builder.experience(20))
 				.save(consumer, "immersiveweapons:discover_dying_soldier");
 
-		Builder.advancement().parent(entityDiscovery)
+		AdvancementHolder theCommanderDiscovery = Builder.advancement().parent(entityDiscovery)
 				.display(BlockItemRegistry.THE_COMMANDER_HEAD_ITEM.get(),
 						Component.translatable("advancements.immersiveweapons.discover_the_commander.title"),
 						Component.translatable("advancements.immersiveweapons.discover_the_commander.description"),
@@ -1566,6 +1560,26 @@ public class AdvancementsGenerator extends AdvancementProvider {
 				.addCriterion("hold", InventoryChangeTrigger.TriggerInstance.hasItems(
 						BlockItemRegistry.MEDIC_STATUE_ITEM.get()))
 				.save(consumer, "immersiveweapons:medic_statue");
+
+		AdvancementHolder commanderPedestal = Builder.advancement().parent(theCommanderDiscovery)
+				.display(BlockItemRegistry.COMMANDER_PEDESTAL.get(),
+						Component.translatable("advancements.immersiveweapons.commander_pedestal.title"),
+						Component.translatable("advancements.immersiveweapons.commander_pedestal.description"),
+						null, AdvancementType.GOAL, true, true, false)
+				.addCriterion("hold", InventoryChangeTrigger.TriggerInstance.hasItems(
+						BlockItemRegistry.COMMANDER_PEDESTAL.get()))
+				.rewards(AdvancementRewards.Builder.experience(50))
+				.save(consumer, "immersiveweapons:commander_pedestal");
+
+		Builder.advancement().parent(commanderPedestal)
+				.display(ItemRegistry.PEDESTAL_AUGMENT_SPEED.get(),
+						Component.translatable("advancements.immersiveweapons.pedestal_augment.title"),
+						Component.translatable("advancements.immersiveweapons.pedestal_augment.description"),
+						null, AdvancementType.CHALLENGE, true, true, false)
+				.addCriterion("hold", InventoryChangeTrigger.TriggerInstance.hasItems(
+						ItemPredicate.Builder.item().of(IWItemTagGroups.COMMANDER_PEDESTAL_AUGMENTS).build()))
+				.rewards(AdvancementRewards.Builder.experience(75))
+				.save(consumer, "immersiveweapons:pedestal_augment");
 
 		// Tiltros advancements
 		AdvancementHolder tiltrosPortal = Builder.advancement().parent(root)

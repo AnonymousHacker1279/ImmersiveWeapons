@@ -111,14 +111,7 @@ public class FlareEntity extends BulletEntity implements ItemSupplier {
 
 		// Aggro nearby minutemen to attack the nearest monster
 		if (shouldStopMoving && !level().isClientSide && tickCount % 4 == 0) {
-			Monster monster = level().getNearestEntity(Monster.class, TargetingConditions.forCombat(), null, getX(), getY(), getZ(), getBoundingBox().inflate(7));
-			MinutemanEntity minuteman = level().getNearestEntity(MinutemanEntity.class, TargetingConditions.forNonCombat(), null, getX(), getY(), getZ(), getBoundingBox().inflate(16));
-
-			if (monster != null && minuteman != null && getOwner() instanceof LivingEntity owner) {
-				if (!minuteman.isAngryAt(owner)) {
-					minuteman.aggroNearbyMinutemen(getBoundingBox(), monster);
-				}
-			}
+			aggroNearbyMinutemen();
 		}
 	}
 
@@ -132,6 +125,7 @@ public class FlareEntity extends BulletEntity implements ItemSupplier {
 		super.doWhenHitEntity(entity);
 		hasHitEntity = true;
 		entity.setSecondsOnFire(6);
+		aggroNearbyMinutemen();
 	}
 
 	@Override
@@ -215,6 +209,17 @@ public class FlareEntity extends BulletEntity implements ItemSupplier {
 			}
 
 			lightPositions.clear();
+		}
+	}
+
+	private void aggroNearbyMinutemen() {
+		Monster monster = level().getNearestEntity(Monster.class, TargetingConditions.forCombat(), null, getX(), getY(), getZ(), getBoundingBox().inflate(7));
+		MinutemanEntity minuteman = level().getNearestEntity(MinutemanEntity.class, TargetingConditions.forNonCombat(), null, getX(), getY(), getZ(), getBoundingBox().inflate(16));
+
+		if (monster != null && minuteman != null && getOwner() instanceof LivingEntity owner) {
+			if (!minuteman.isAngryAt(owner)) {
+				minuteman.aggroNearbyMinutemen(getBoundingBox(), monster);
+			}
 		}
 	}
 }

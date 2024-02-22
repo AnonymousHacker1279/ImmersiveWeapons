@@ -216,6 +216,13 @@ public class ItemTagsGenerator extends ItemTagsProvider {
 				ItemRegistry.STARSTORM_AXE.get(),
 				ItemRegistry.STARSTORM_SHOVEL.get(),
 				ItemRegistry.STARSTORM_HOE.get());
+
+		// Commander Pedestal Augment tags
+		tag(IWItemTagGroups.COMMANDER_PEDESTAL_AUGMENTS).add(
+				ItemRegistry.PEDESTAL_AUGMENT_SPEED.get(),
+				ItemRegistry.PEDESTAL_AUGMENT_ARMOR.get(),
+				ItemRegistry.PEDESTAL_AUGMENT_ENCHANTMENT.get(),
+				ItemRegistry.PEDESTAL_AUGMENT_CAPACITY.get());
 	}
 
 	/**

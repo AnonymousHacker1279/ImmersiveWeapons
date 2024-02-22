@@ -62,4 +62,6 @@ public class IWItemTagGroups {
 			"tools/astral"));
 	public static final TagKey<Item> STARSTORM_TOOLS = ItemTags.create(new ResourceLocation(ImmersiveWeapons.MOD_ID,
 			"tools/starstorm"));
+	public static final TagKey<Item> COMMANDER_PEDESTAL_AUGMENTS = ItemTags.create(new ResourceLocation(ImmersiveWeapons.MOD_ID,
+			"commander_pedestal_augments"));
 }

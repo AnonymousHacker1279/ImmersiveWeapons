@@ -1,0 +1,36 @@
+{
+  "parent": "immersiveweapons:commander_pedestal",
+  "criteria": {
+    "hold": {
+      "conditions": {
+        "items": [
+          {
+            "tag": "immersiveweapons:commander_pedestal_augments"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.immersiveweapons.pedestal_augment.description"
+    },
+    "frame": "challenge",
+    "icon": {
+      "item": "immersiveweapons:pedestal_augment_speed"
+    },
+    "title": {
+      "translate": "advancements.immersiveweapons.pedestal_augment.title"
+    }
+  },
+  "requirements": [
+    [
+      "hold"
+    ]
+  ],
+  "rewards": {
+    "experience": 75
+  },
+  "sends_telemetry_event": true
+}

@@ -139,10 +139,6 @@ dependencies {
 
 	implementation "net.neoforged:neoforge:${neoforge_version}"
 
-	implementation(jarJar("tech.anonymoushacker1279.cobaltconfig:CobaltConfig:${cobaltconfig_version}")) {
-		jarJar.ranged(it, "[1.0.1,)")
-	}
-
 	implementation(jarJar("dev.lukebemish.biomesquisher:biomesquisher-neoforge-1.20.2:${biomesquisher_version}")) {
 		jarJar.ranged(it, "[0.1.6-alpha,)")
 		exclude group: "ar.com.hjg", module: "pngj"
@@ -152,8 +148,9 @@ dependencies {
 		jarJar.ranged(it, "[1.0.5,)")
 	}
 
-	// Include Immersive Weapons Compatibility Bridge (IWCB)
+	// Include Immersive Weapons Compatibility Bridge (IWCB) and Cobalt Config
 	implementation "tech.anonymoushacker1279.iwcompatbridge:IWCompatBridge:${iwcb_version}"
+	implementation "tech.anonymoushacker1279.cobaltconfig:CobaltConfig:${cobaltconfig_version}"
 
 	// Include JEI
 	runtimeOnly "mezz.jei:jei-${minecraft_version}-neoforge:${jei_version}"
@@ -295,11 +292,13 @@ if (file("RELEASE_NOTES.md").exists()) {
 		additionalFiles = [javadocJar, sourcesJar]
 
 		curseDepends {
+			required 'cobalt-config'
 			optional "immersive-weapons-compatibility-bridge", "attributefix"
 			embedded 'custom-portal-api-reforged'   // BiomeSquisher is not on CF
 		}
 
 		modrinthDepends {
+			required 'cobaltconfig'
 			optional "immersive-weapons-compatibility-bridge", "attributefix"
 			embedded 'biomesquisher', 'custom-portal-api-reforged'
 		}

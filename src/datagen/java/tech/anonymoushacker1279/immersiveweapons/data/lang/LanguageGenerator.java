@@ -935,6 +935,10 @@ public class LanguageGenerator extends IWLanguageProvider {
 		addAdvancement("minuteman_statue.description", "Obtain a Minuteman Statue, a summoning device within battlefields.");
 		addAdvancement("medic_statue.title", "More Medics");
 		addAdvancement("medic_statue.description", "Obtain a Medic Statue, a summoning device within battlefields.");
+		addAdvancement("commander_pedestal.title", "Statue Unlocker");
+		addAdvancement("commander_pedestal.description", "Obtain a Commander Pedestal, which allows summoning statues to operate outside of battlefields");
+		addAdvancement("pedestal_augment.title", "Pedestal Augmentation");
+		addAdvancement("pedestal_augment.description", "Obtain a Pedestal Augment, allowing Commander Pedestals to be upgraded");
 		addAdvancement("small_parts_table.title", "The Engineer");
 		addAdvancement("small_parts_table.description", "Obtain a small parts table, a gateway for creating advanced weapons.");
 		addAdvancement("ammunition_table.title", "Ammo Manufacturer");

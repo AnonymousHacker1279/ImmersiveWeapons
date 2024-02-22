@@ -109,6 +109,11 @@ public class EntityLootTables implements LootTableSubProvider {
 						.add(LootItem.lootTableItem(ItemRegistry.CANNONBALL.get())
 								.apply(SetItemCountFunction.setCount(UniformGenerator.between(10.0F, 20.0F)))
 								.apply(LootingEnchantFunction.lootingMultiplier(UniformGenerator.between(1.0F, 2.0F))))
+						.when(LootItemKilledByPlayerCondition.killedByPlayer()))
+				.withPool(LootPool.lootPool()
+						.name("medal_of_dishonor")
+						.setRolls(EntityKillersValue.create())
+						.add(LootItem.lootTableItem(ItemRegistry.MEDAL_OF_DISHONOR.get()))
 						.when(LootItemKilledByPlayerCondition.killedByPlayer())));
 
 		CompoundTag tag = new CompoundTag();
@@ -169,12 +174,6 @@ public class EntityLootTables implements LootTableSubProvider {
 								.apply(SetItemCountFunction.setCount(UniformGenerator.between(0.0F, 4.0F)))
 								.apply(LootingEnchantFunction.lootingMultiplier(UniformGenerator.between(0.0F, 1.0F))))
 						.when(LootItemKilledByPlayerCondition.killedByPlayer()))
-				.withPool(LootPool.lootPool()
-						.name("blunderbuss")
-						.setRolls(ConstantValue.exactly(1.0F))
-						.add(LootItem.lootTableItem(ItemRegistry.BLUNDERBUSS.get()))
-						.when(LootItemKilledByPlayerCondition.killedByPlayer())
-						.when(LootItemRandomChanceWithLootingCondition.randomChanceAndLootingBoost(0.017F, 0.05F)))
 				.withPool(LootPool.lootPool()
 						.name("medal_of_honor")
 						.setRolls(ConstantValue.exactly(1.0F))
