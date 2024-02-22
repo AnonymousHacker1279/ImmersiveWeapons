@@ -1,0 +1,14 @@
+{
+  "placement": {
+    "type": "minecraft:random_spread",
+    "salt": 959874384,
+    "separation": 4,
+    "spacing": 7
+  },
+  "structures": [
+    {
+      "structure": "immersiveweapons:landmine_trap",
+      "weight": 1
+    }
+  ]
+}

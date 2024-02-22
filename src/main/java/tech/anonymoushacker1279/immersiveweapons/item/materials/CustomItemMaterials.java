@@ -46,4 +46,9 @@ public class CustomItemMaterials {
 					() -> Ingredient.of(ItemRegistry.STARSTORM_INGOT.get())),
 			new ResourceLocation("immersiveweapons:starstorm"),
 			List.of(Tiers.NETHERITE), List.of());
+	public static final Tier HANSIUM = TierSortingRegistry.registerTier(
+			new SimpleTier(5, 3000, 24.0F, 16.0F, 22, BlockTags.create(new ResourceLocation("")),
+					() -> Ingredient.of(ItemRegistry.HANSIUM_INGOT.get())),
+			new ResourceLocation("immersiveweapons:hansium"),
+			List.of(MOLTEN, TESLA, VENTUS, ASTRAL, STARSTORM), List.of());
 }

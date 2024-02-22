@@ -1,9 +1,13 @@
 package tech.anonymoushacker1279.immersiveweapons.entity.projectile;
 
-import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.advancements.AdvancementHolder;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.tags.BlockTags;
+import net.minecraft.tags.TagKey;
 import net.minecraft.util.Mth;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.*;
@@ -12,21 +16,20 @@ import net.minecraft.world.entity.projectile.Arrow;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.phys.BlockHitResult;
-import net.minecraft.world.phys.Vec3;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.fml.DistExecutor;
+import net.minecraft.world.phys.*;
 import net.neoforged.neoforge.common.Tags;
-import net.neoforged.neoforge.network.NetworkEvent.Context;
+import net.neoforged.neoforge.network.PacketDistributor;
 import org.jetbrains.annotations.Nullable;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.client.gui.overlays.DebugTracingData;
 import tech.anonymoushacker1279.immersiveweapons.client.particle.bullet_impact.BulletImpactParticleOptions;
-import tech.anonymoushacker1279.immersiveweapons.data.tags.groups.forge.ForgeBlockTagGroups;
+import tech.anonymoushacker1279.immersiveweapons.config.ClientConfig;
+import tech.anonymoushacker1279.immersiveweapons.config.CommonConfig;
 import tech.anonymoushacker1279.immersiveweapons.init.*;
 import tech.anonymoushacker1279.immersiveweapons.item.AccessoryItem;
 import tech.anonymoushacker1279.immersiveweapons.item.gun.MusketItem;
 import tech.anonymoushacker1279.immersiveweapons.item.tool.HitEffectUtils;
+import tech.anonymoushacker1279.immersiveweapons.network.payload.BulletEntityDebugPayload;
 import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
 import tech.anonymoushacker1279.immersiveweapons.world.level.IWDamageSources;
 
@@ -34,12 +37,14 @@ import java.util.List;
 
 public class BulletEntity extends CustomArrowEntity implements HitEffectUtils {
 
-	private static final boolean canBreakGlass = ImmersiveWeapons.COMMON_CONFIG.bulletsBreakGlass().get();
 	private final SoundEvent hitSound = getDefaultHitGroundSoundEvent();
 	private boolean hasAlreadyBrokeGlass = false;
+	private Vec3 initialPos = Vec3.ZERO;
 	private Item firingItem = ItemRegistry.FLINTLOCK_PISTOL.get();
 	public List<Double> shootingVectorInputs = List.of(0.0025d, 0.2d, 1.1d);
 	public HitEffect hitEffect = HitEffect.NONE;
+	public boolean flameTrail = false;
+	private static final TagKey<Block> BULLETPROOF_GLASS = BlockTags.create(new ResourceLocation("forge", "bulletproof_glass"));
 
 	public BulletEntity(EntityType<? extends Arrow> entityType, Level level) {
 		super(entityType, level);
@@ -49,6 +54,7 @@ public class BulletEntity extends CustomArrowEntity implements HitEffectUtils {
 		this(entityType, level);
 		setOwner(shooter);
 		setPos(shooter.getX(), shooter.getEyeY() - 0.1f, shooter.getZ());
+		initialPos = shooter.position();
 	}
 
 	public static class BulletEntityBuilder implements HitEffectUtils {
@@ -129,8 +135,8 @@ public class BulletEntity extends CustomArrowEntity implements HitEffectUtils {
 		}
 
 		// Check if glass can be broken, and if it hasn't already broken glass
-		if (canBreakGlass && !hasAlreadyBrokeGlass
-				&& !lastState.is(ForgeBlockTagGroups.BULLETPROOF_GLASS)
+		if (CommonConfig.bulletsBreakGlass && !hasAlreadyBrokeGlass
+				&& !lastState.is(BULLETPROOF_GLASS)
 				&& (lastState.is(Tags.Blocks.GLASS) || lastState.is(Tags.Blocks.GLASS_PANES))) {
 
 			level().destroyBlock(hitResult.getBlockPos(), false);
@@ -146,9 +152,24 @@ public class BulletEntity extends CustomArrowEntity implements HitEffectUtils {
 					GeneralUtilities.getRandomNumber(-0.01d, 0.01d),
 					GeneralUtilities.getRandomNumber(-0.01d, 0.01d),
 					GeneralUtilities.getRandomNumber(-0.01d, 0.01d));
+		}
+	}
 
-			// Extra code to run when a block is hit
-			doWhenHitBlock();
+	@Override
+	protected void onHit(HitResult result) {
+		super.onHit(result);
+
+		if (!level().isClientSide && getOwner() instanceof ServerPlayer player && initialPos != Vec3.ZERO) {
+			Vec3 location = result.getLocation();
+			double distance = Math.sqrt(Math.pow(location.x - initialPos.x, 2) + Math.pow(location.y - initialPos.y, 2) + Math.pow(location.z - initialPos.z, 2));
+
+			if (distance > 200 && player.getServer() != null) {
+				AdvancementHolder advancement = player.getServer().getAdvancements().get(new ResourceLocation(ImmersiveWeapons.MOD_ID, "firearm_long_range"));
+
+				if (advancement != null) {
+					player.getAdvancements().award(advancement, "");
+				}
+			}
 		}
 	}
 
@@ -160,7 +181,7 @@ public class BulletEntity extends CustomArrowEntity implements HitEffectUtils {
 			serverLevel.sendParticles(
 					ParticleTypesRegistry.BLOOD_PARTICLE.get(),
 					position().x, position().y, position().z,
-					16,
+					ClientConfig.gunShotBloodParticles,
 					GeneralUtilities.getRandomNumber(-0.03d, 0.03d),
 					GeneralUtilities.getRandomNumber(-0.03d, 0.03d),
 					GeneralUtilities.getRandomNumber(-0.03d, 0.03d),
@@ -189,24 +210,24 @@ public class BulletEntity extends CustomArrowEntity implements HitEffectUtils {
 		DebugTracingData.isBulletCritical = false;
 	}
 
-	public record BulletEntityPacketHandler(double liveBulletDamage, boolean isBulletCritical) {
-
-		public static void encode(BulletEntityPacketHandler msg, FriendlyByteBuf packetBuffer) {
-			packetBuffer.writeDouble(msg.liveBulletDamage).writeBoolean(msg.isBulletCritical);
+	@Override
+	protected void doWhileTicking() {
+		if (tickCount % 10 == 0 && !inGround && getOwner() instanceof ServerPlayer player) {
+			if (!level().isClientSide) {
+				PacketDistributor.PLAYER.with(player)
+						.send(new BulletEntityDebugPayload(calculateDamage(), isCritArrow()));
+			}
 		}
 
-		public static BulletEntityPacketHandler decode(FriendlyByteBuf packetBuffer) {
-			return new BulletEntityPacketHandler(packetBuffer.readDouble(), packetBuffer.readBoolean());
-		}
-
-		public static void handle(BulletEntityPacketHandler msg, Context context) {
-			context.enqueueWork(() -> DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> runOnClient(msg)));
-			context.setPacketHandled(true);
-		}
-
-		private static void runOnClient(BulletEntityPacketHandler msg) {
-			DebugTracingData.liveBulletDamage = msg.liveBulletDamage;
-			DebugTracingData.isBulletCritical = msg.isBulletCritical;
+		if (!inGround && flameTrail && level() instanceof ServerLevel serverLevel) {
+			serverLevel.sendParticles(
+					ParticleTypes.SMALL_FLAME,
+					position().x, position().y, position().z,
+					8,
+					random.nextGaussian() * 0.05,
+					random.nextGaussian() * 0.05,
+					random.nextGaussian() * 0.05,
+					random.nextGaussian() * 0.025);
 		}
 	}
 }

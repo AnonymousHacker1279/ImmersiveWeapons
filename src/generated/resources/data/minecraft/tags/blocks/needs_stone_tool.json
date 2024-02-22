@@ -3,9 +3,6 @@
     "immersiveweapons:spotlight",
     "immersiveweapons:iron_panel",
     "immersiveweapons:iron_panel_bars",
-    "immersiveweapons:warrior_statue_base",
-    "immersiveweapons:warrior_statue_torso",
-    "immersiveweapons:warrior_statue_head",
     "immersiveweapons:sulfur_ore",
     "immersiveweapons:deepslate_sulfur_ore",
     "immersiveweapons:nether_sulfur_ore",
@@ -17,6 +14,7 @@
     "immersiveweapons:champion_bricks",
     "immersiveweapons:champion_base",
     "immersiveweapons:champion_keycard_bricks",
+    "immersiveweapons:commander_pedestal",
     "immersiveweapons:wooden_spikes",
     "immersiveweapons:punji_sticks",
     "immersiveweapons:stardust_leaves"

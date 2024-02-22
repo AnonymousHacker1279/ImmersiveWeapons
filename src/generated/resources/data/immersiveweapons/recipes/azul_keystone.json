@@ -11,9 +11,9 @@
     }
   },
   "pattern": [
-    "bbb",
+    " b ",
     "bab",
-    "bbb"
+    " b "
   ],
   "result": {
     "item": "immersiveweapons:azul_keystone"

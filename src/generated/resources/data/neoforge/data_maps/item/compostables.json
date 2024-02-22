@@ -1,0 +1,25 @@
+{
+  "values": {
+    "immersiveweapons:burned_oak_branch": {
+      "chance": 0.3
+    },
+    "immersiveweapons:chocolate_bar": {
+      "chance": 0.2
+    },
+    "immersiveweapons:deathweed": {
+      "chance": 0.65
+    },
+    "immersiveweapons:moonglow": {
+      "chance": 0.65
+    },
+    "immersiveweapons:mre": {
+      "chance": 1.0
+    },
+    "immersiveweapons:stardust_leaves": {
+      "chance": 0.5
+    },
+    "immersiveweapons:stardust_sapling": {
+      "chance": 0.3
+    }
+  }
+}

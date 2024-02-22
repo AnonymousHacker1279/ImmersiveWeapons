@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "group": "pedestal_augments",
+  "key": {
+    "a": {
+      "item": "immersiveweapons:hansium_ingot"
+    },
+    "b": {
+      "tag": "forge:ingots/gold"
+    },
+    "c": {
+      "tag": "forge:dyes/red"
+    },
+    "d": {
+      "item": "minecraft:book"
+    }
+  },
+  "pattern": [
+    "acb",
+    "cdc",
+    "bca"
+  ],
+  "result": {
+    "item": "immersiveweapons:pedestal_augment_enchantment"
+  }
+}

@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/cube_all",
+  "textures": {
+    "all": "immersiveweapons:block/tiltros_portal_frame"
+  }
+}

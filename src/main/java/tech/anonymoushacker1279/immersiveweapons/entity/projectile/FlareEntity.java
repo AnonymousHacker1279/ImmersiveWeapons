@@ -5,6 +5,8 @@ import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.*;
 import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.ai.targeting.TargetingConditions;
+import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.projectile.ItemSupplier;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -12,6 +14,7 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 import tech.anonymoushacker1279.immersiveweapons.api.PluginHandler;
+import tech.anonymoushacker1279.immersiveweapons.entity.neutral.MinutemanEntity;
 import tech.anonymoushacker1279.immersiveweapons.init.ItemRegistry;
 
 import java.util.ArrayList;
@@ -84,7 +87,7 @@ public class FlareEntity extends BulletEntity implements ItemSupplier {
 		// The area lighting effect used here places light blocks at the entity's location. This is inefficient but the default behavior.
 		// If the Lucent plugin is available, it will handle dynamic lighting instead.
 		if (entityData.get(USE_LEGACY_LIGHTING)) {
-			if (tickCount % 4 >= 1) {
+			if (tickCount % 2 == 0) {
 				BlockPos currentPosition = blockPosition();
 				if (!level().isClientSide && currentPosition != previousLightPosition) {
 					if (!lightPositions.isEmpty()) {
@@ -105,6 +108,11 @@ public class FlareEntity extends BulletEntity implements ItemSupplier {
 				}
 			}
 		}
+
+		// Aggro nearby minutemen to attack the nearest monster
+		if (shouldStopMoving && !level().isClientSide && tickCount % 4 == 0) {
+			aggroNearbyMinutemen();
+		}
 	}
 
 	/**
@@ -117,6 +125,7 @@ public class FlareEntity extends BulletEntity implements ItemSupplier {
 		super.doWhenHitEntity(entity);
 		hasHitEntity = true;
 		entity.setSecondsOnFire(6);
+		aggroNearbyMinutemen();
 	}
 
 	@Override
@@ -200,6 +209,17 @@ public class FlareEntity extends BulletEntity implements ItemSupplier {
 			}
 
 			lightPositions.clear();
+		}
+	}
+
+	private void aggroNearbyMinutemen() {
+		Monster monster = level().getNearestEntity(Monster.class, TargetingConditions.forCombat(), null, getX(), getY(), getZ(), getBoundingBox().inflate(7));
+		MinutemanEntity minuteman = level().getNearestEntity(MinutemanEntity.class, TargetingConditions.forNonCombat(), null, getX(), getY(), getZ(), getBoundingBox().inflate(16));
+
+		if (monster != null && minuteman != null && getOwner() instanceof LivingEntity owner) {
+			if (!minuteman.isAngryAt(owner)) {
+				minuteman.aggroNearbyMinutemen(getBoundingBox(), monster);
+			}
 		}
 	}
 }

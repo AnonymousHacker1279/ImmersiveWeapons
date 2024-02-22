@@ -1,0 +1,13 @@
+{
+  "values": {
+    "immersiveweapons:flashbang_explode": {
+      "frequency": 15
+    },
+    "immersiveweapons:panic_alarm_trigger": {
+      "frequency": 15
+    },
+    "immersiveweapons:smoke_grenade_hiss": {
+      "frequency": 14
+    }
+  }
+}

@@ -29,11 +29,11 @@ import java.util.List;
 
 public class AmmunitionTableBlockEntity extends BaseContainerBlockEntity implements EntityBlock {
 
-	protected NonNullList<ItemStack> inventory = NonNullList.withSize(7, ItemStack.EMPTY);
+	protected final NonNullList<ItemStack> inventory = NonNullList.withSize(7, ItemStack.EMPTY);
 	protected float densityModifier = 0.0f;
-	protected NonNullList<Integer> slotCosts = NonNullList.withSize(7, 0);
+	protected final NonNullList<Integer> slotCosts = NonNullList.withSize(7, 0);
 
-	protected final ContainerData containerData = new ContainerData() {
+	public final ContainerData containerData = new ContainerData() {
 		@Override
 		public int get(int index) {
 			return (int) (densityModifier * 100);
@@ -179,6 +179,7 @@ public class AmmunitionTableBlockEntity extends BaseContainerBlockEntity impleme
 		CompoundTag tag = new CompoundTag();
 		super.saveAdditional(tag);
 		ContainerHelper.saveAllItems(tag, inventory, true);
+		tag.putFloat("densityModifier", densityModifier);
 		return tag;
 	}
 

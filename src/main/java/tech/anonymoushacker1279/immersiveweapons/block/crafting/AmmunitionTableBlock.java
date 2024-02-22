@@ -13,7 +13,6 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.*;
-import net.neoforged.neoforge.network.NetworkHooks;
 import tech.anonymoushacker1279.immersiveweapons.block.core.BasicOrientableBlock;
 import tech.anonymoushacker1279.immersiveweapons.blockentity.AmmunitionTableBlockEntity;
 import tech.anonymoushacker1279.immersiveweapons.menu.AmmunitionTableMenu;
@@ -52,11 +51,6 @@ public class AmmunitionTableBlock extends BasicOrientableBlock implements Entity
 	}
 
 	@Override
-	public MenuProvider getMenuProvider(BlockState state, Level level, BlockPos pos) {
-		return new SimpleMenuProvider((id, inventory, player) -> new AmmunitionTableMenu(id, inventory), CONTAINER_NAME);
-	}
-
-	@Override
 	public BlockEntity newBlockEntity(BlockPos blockPos, BlockState blockState) {
 		return new AmmunitionTableBlockEntity(blockPos, blockState);
 	}
@@ -67,9 +61,10 @@ public class AmmunitionTableBlock extends BasicOrientableBlock implements Entity
 		if (level.isClientSide) {
 			return InteractionResult.SUCCESS;
 		} else {
-			if (level.getBlockEntity(pos) instanceof AmmunitionTableBlockEntity blockEntity) {
-				NetworkHooks.openScreen((ServerPlayer) player, blockEntity, pos);
+			if (level.getBlockEntity(pos) instanceof AmmunitionTableBlockEntity blockEntity && player instanceof ServerPlayer serverPlayer) {
+				serverPlayer.openMenu(new SimpleMenuProvider((id, inventory, player1) -> new AmmunitionTableMenu(id, inventory, blockEntity, blockEntity.containerData), CONTAINER_NAME));
 			}
+
 			return InteractionResult.CONSUME;
 		}
 	}

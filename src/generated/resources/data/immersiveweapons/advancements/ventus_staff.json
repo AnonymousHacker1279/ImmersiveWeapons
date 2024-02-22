@@ -18,7 +18,7 @@
     "description": {
       "translate": "advancements.immersiveweapons.ventus_staff.description"
     },
-    "frame": "goal",
+    "frame": "challenge",
     "icon": {
       "item": "immersiveweapons:ventus_staff",
       "nbt": "{Damage:0}"

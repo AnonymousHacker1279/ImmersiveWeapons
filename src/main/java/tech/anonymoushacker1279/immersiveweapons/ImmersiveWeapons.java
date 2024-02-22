@@ -5,14 +5,18 @@ import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModList;
 import net.neoforged.fml.ModLoadingContext;
 import net.neoforged.fml.common.Mod;
-import net.neoforged.fml.config.ModConfig.Type;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.neoforged.fml.event.lifecycle.FMLConstructModEvent;
+import net.neoforged.neoforge.client.ConfigScreenHandler;
 import org.slf4j.Logger;
 import tech.anonymoushacker1279.immersiveweapons.api.PluginHandler;
 import tech.anonymoushacker1279.immersiveweapons.block.properties.WoodTypes;
-import tech.anonymoushacker1279.immersiveweapons.config.*;
+import tech.anonymoushacker1279.immersiveweapons.config.ClientConfig;
+import tech.anonymoushacker1279.immersiveweapons.config.CommonConfig;
 import tech.anonymoushacker1279.immersiveweapons.init.*;
 import tech.anonymoushacker1279.immersiveweapons.world.level.CustomBlockSetTypes;
+import tech.anonymoushacker1729.cobaltconfig.client.CobaltConfigScreen;
+import tech.anonymoushacker1729.cobaltconfig.config.ConfigManager.ConfigBuilder;
 
 @Mod(ImmersiveWeapons.MOD_ID)
 public class ImmersiveWeapons {
@@ -23,24 +27,27 @@ public class ImmersiveWeapons {
 	// Setup logger
 	public static final Logger LOGGER = LogUtils.getLogger();
 
-	public final static CommonConfig COMMON_CONFIG = ConfigHelper.register(Type.COMMON, CommonConfig::create);
-
 	// Mod setup begins here
 	public ImmersiveWeapons(IEventBus modEventBus) {
 		LOGGER.info("Immersive Weapons is starting");
 
 		// Load configuration
 		LOGGER.info("Registering configuration files");
-		ModLoadingContext.get().registerConfig(Type.CLIENT, ClientConfig.CLIENT_SPEC);
+
+		new ConfigBuilder(MOD_ID, CommonConfig.class)
+				.setConfigName("Common Config")
+				.build();
+		new ConfigBuilder(MOD_ID, "client", ClientConfig.class)
+				.setConfigName("Client Config")
+				.setClientOnly(true)
+				.build();
 
 		// Initialize deferred registry
-		DeferredRegistryHandler.init();
+		DeferredRegistryHandler.init(modEventBus);
 
 		// Add event listeners
 		modEventBus.addListener(this::setup);
-
-		// Register packet handlers
-		PacketHandler.registerPackets();
+		modEventBus.addListener(this::constructMod);
 	}
 
 	/**
@@ -62,5 +69,10 @@ public class ImmersiveWeapons {
 		if (ModList.get().isLoaded("iwcompatbridge")) {
 			IWCB_LOADED = true;
 		}
+	}
+
+	public void constructMod(FMLConstructModEvent event) {
+		ModLoadingContext.get().registerExtensionPoint(ConfigScreenHandler.ConfigScreenFactory.class,
+				() -> new ConfigScreenHandler.ConfigScreenFactory((mc, screen) -> CobaltConfigScreen.getScreen(screen, MOD_ID)));
 	}
 }

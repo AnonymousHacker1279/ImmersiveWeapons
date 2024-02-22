@@ -2,11 +2,8 @@ package tech.anonymoushacker1279.immersiveweapons.block;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.server.level.ServerLevel;
-import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.context.BlockPlaceContext;
-import net.minecraft.world.level.BlockGetter;
-import net.minecraft.world.level.Level;
+import net.minecraft.world.level.*;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.entity.*;
 import net.minecraft.world.level.block.state.BlockState;
@@ -85,7 +82,6 @@ public class PanicAlarmBlock extends BasicOrientableBlock implements SimpleWater
 
 		if (!level.isClientSide) {
 			checkPowered(level, pos);
-			level.scheduleTick(pos, state.getBlock(), 5);
 		}
 	}
 
@@ -94,18 +90,22 @@ public class PanicAlarmBlock extends BasicOrientableBlock implements SimpleWater
 		if (!oldState.is(state.getBlock())) {
 			if (level.hasNeighborSignal(pos)) {
 				if (!level.isClientSide) {
-					level.scheduleTick(pos, state.getBlock(), 5);
+					checkPowered(level, pos);
 				}
 			}
 		}
 	}
 
 	@Override
-	public void tick(BlockState state, ServerLevel serverLevel, BlockPos pos, RandomSource random) {
-		if (!serverLevel.isClientSide) {
-			checkPowered(serverLevel, pos);
-			serverLevel.scheduleTick(pos, state.getBlock(), 5);
-		}
+	public boolean canSurvive(BlockState pState, LevelReader pLevel, BlockPos pPos) {
+		// Ensure it is being placed on the side of a block
+		BlockState blockState = pLevel.getBlockState(pPos.relative(pState.getValue(FACING), -1));
+		return blockState.isFaceSturdy(pLevel, pPos, pState.getValue(FACING));
+	}
+
+	@Override
+	public BlockState updateShape(BlockState pState, Direction pDirection, BlockState pNeighborState, LevelAccessor pLevel, BlockPos pPos, BlockPos pNeighborPos) {
+		return !pState.canSurvive(pLevel, pPos) ? Blocks.AIR.defaultBlockState() : pState;
 	}
 
 	/**

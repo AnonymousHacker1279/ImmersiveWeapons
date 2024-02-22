@@ -1,6 +1,8 @@
 package tech.anonymoushacker1279.immersiveweapons.init;
 
 import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.ColorRGBA;
 import net.minecraft.util.valueproviders.ConstantInt;
@@ -13,6 +15,7 @@ import net.minecraft.world.level.block.grower.TreeGrower;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockBehaviour.OffsetType;
 import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
+import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
 import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.level.material.PushReaction;
 import net.neoforged.neoforge.registries.DeferredRegister;
@@ -25,11 +28,11 @@ import tech.anonymoushacker1279.immersiveweapons.block.crafting.*;
 import tech.anonymoushacker1279.immersiveweapons.block.decoration.*;
 import tech.anonymoushacker1279.immersiveweapons.block.decoration.skull.*;
 import tech.anonymoushacker1279.immersiveweapons.block.misc.*;
-import tech.anonymoushacker1279.immersiveweapons.block.misc.warrior_statue.*;
 import tech.anonymoushacker1279.immersiveweapons.block.mud.*;
 import tech.anonymoushacker1279.immersiveweapons.block.properties.WoodTypes;
 import tech.anonymoushacker1279.immersiveweapons.block.sign.*;
-import tech.anonymoushacker1279.immersiveweapons.data.features.IWConfiguredFeatures;
+import tech.anonymoushacker1279.immersiveweapons.block.star_forge.SolarLensBlock;
+import tech.anonymoushacker1279.immersiveweapons.block.star_forge.StarForgeControllerBlock;
 import tech.anonymoushacker1279.immersiveweapons.world.level.CustomBlockSetTypes;
 
 import java.util.Optional;
@@ -40,6 +43,8 @@ public class BlockRegistry {
 
 	// Block Register
 	public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(Registries.BLOCK, ImmersiveWeapons.MOD_ID);
+
+	public static final ResourceKey<ConfiguredFeature<?, ?>> STARDUST_TREE_CONFIGURATION = ResourceKey.create(Registries.CONFIGURED_FEATURE, new ResourceLocation(ImmersiveWeapons.MOD_ID, "stardust_tree"));
 
 	// Blocks
 	// Breakable via pickaxe
@@ -74,20 +79,18 @@ public class BlockRegistry {
 	public static final Supplier<SpotlightBlock> SPOTLIGHT = BLOCKS.register("spotlight", () -> new SpotlightBlock(BlockBehaviour.Properties.of().mapColor(MapColor.METAL).strength(2.0f).sound(SoundType.METAL).requiresCorrectToolForDrops().noOcclusion().lightLevel((state) -> 0)));
 	public static final Supplier<PanelBlock> IRON_PANEL = BLOCKS.register("iron_panel", () -> new PanelBlock(BlockBehaviour.Properties.of().mapColor(MapColor.METAL).strength(5.0f, 6.0f).sound(SoundType.METAL).requiresCorrectToolForDrops().noOcclusion()));
 	public static final Supplier<PanelBlock> IRON_PANEL_BARS = BLOCKS.register("iron_panel_bars", () -> new PanelBlock(BlockBehaviour.Properties.of().mapColor(MapColor.METAL).strength(5.0f, 6.0f).sound(SoundType.METAL).requiresCorrectToolForDrops().noOcclusion()));
-	public static final Supplier<WarriorStatueBase> WARRIOR_STATUE_BASE = BLOCKS.register("warrior_statue_base", () -> new WarriorStatueBase(BlockBehaviour.Properties.of().mapColor(MapColor.STONE).instrument(NoteBlockInstrument.BASEDRUM).strength(4.0f).sound(SoundType.STONE).noOcclusion()));
-	public static final Supplier<WarriorStatueTorso> WARRIOR_STATUE_TORSO = BLOCKS.register("warrior_statue_torso", () -> new WarriorStatueTorso(BlockBehaviour.Properties.of().mapColor(MapColor.STONE).instrument(NoteBlockInstrument.BASEDRUM).strength(4.0f).sound(SoundType.STONE).noOcclusion()));
-	public static final Supplier<WarriorStatueHead> WARRIOR_STATUE_HEAD = BLOCKS.register("warrior_statue_head", () -> new WarriorStatueHead(BlockBehaviour.Properties.of().mapColor(MapColor.STONE).instrument(NoteBlockInstrument.BASEDRUM).strength(4.0f).sound(SoundType.STONE).noOcclusion()));
 	public static final Supplier<DropExperienceBlock> SULFUR_ORE = BLOCKS.register("sulfur_ore", () -> new DropExperienceBlock(ConstantInt.of(0), BlockBehaviour.Properties.of().mapColor(MapColor.STONE).instrument(NoteBlockInstrument.BASEDRUM).strength(4.0f).sound(SoundType.STONE).requiresCorrectToolForDrops()));
 	public static final Supplier<DropExperienceBlock> DEEPSLATE_SULFUR_ORE = BLOCKS.register("deepslate_sulfur_ore", () -> new DropExperienceBlock(ConstantInt.of(0), BlockBehaviour.Properties.of().mapColor(MapColor.STONE).instrument(NoteBlockInstrument.BASEDRUM).strength(4.5f).sound(SoundType.DEEPSLATE).requiresCorrectToolForDrops()));
 	public static final Supplier<DropExperienceBlock> NETHER_SULFUR_ORE = BLOCKS.register("nether_sulfur_ore", () -> new DropExperienceBlock(ConstantInt.of(0), BlockBehaviour.Properties.of().mapColor(MapColor.STONE).instrument(NoteBlockInstrument.BASEDRUM).strength(0.4f).sound(SoundType.STONE).requiresCorrectToolForDrops()));
 	public static final Supplier<Block> RAW_SULFUR_BLOCK = BLOCKS.register("raw_sulfur_block", () -> new Block(BlockBehaviour.Properties.of().mapColor(MapColor.STONE).instrument(NoteBlockInstrument.BASEDRUM).strength(0.4f).sound(SoundType.STONE).requiresCorrectToolForDrops()));
 	public static final Supplier<Block> POTASSIUM_NITRATE_ORE = BLOCKS.register("potassium_nitrate_ore", () -> new DropExperienceBlock(ConstantInt.of(0), BlockBehaviour.Properties.of().mapColor(MapColor.STONE).instrument(NoteBlockInstrument.BASEDRUM).strength(2.0f).sound(SoundType.STONE).requiresCorrectToolForDrops()));
 	public static final Supplier<AstralCrystalBlock> ASTRAL_CRYSTAL = BLOCKS.register("astral_crystal", () -> new AstralCrystalBlock(7, 3, BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_PURPLE).randomTicks().strength(0.4f).sound(SoundType.AMETHYST_CLUSTER).requiresCorrectToolForDrops().lightLevel((blockState) -> 6)));
-	public static final Supplier<BiodomeLifeSupportUnitBlock> BIODOME_LIFE_SUPPORT_UNIT = BLOCKS.register("biodome_life_support_unit", () -> new BiodomeLifeSupportUnitBlock(BlockBehaviour.Properties.of().mapColor(MapColor.METAL).strength(4.0f).sound(SoundType.METAL).requiresCorrectToolForDrops()));
+	public static final Supplier<BiodomeLifeSupportUnitBlock> BIODOME_LIFE_SUPPORT_UNIT = BLOCKS.register("biodome_life_support_unit", () -> new BiodomeLifeSupportUnitBlock(BlockBehaviour.Properties.of().mapColor(MapColor.METAL).strength(4.0f).sound(SoundType.METAL).noOcclusion().requiresCorrectToolForDrops()));
 	public static final Supplier<Block> RUSTED_IRON_BLOCK = BLOCKS.register("rusted_iron_block", () -> new Block(BlockBehaviour.Properties.of().mapColor(MapColor.METAL).sound(SoundType.METAL).strength(4.0f, 5.0f).requiresCorrectToolForDrops()));
 	public static final Supplier<Block> CHAMPION_BRICKS = BLOCKS.register("champion_bricks", () -> new Block(BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_GREEN).strength(6.0f, 99.0f).sound(SoundType.NETHER_BRICKS).requiresCorrectToolForDrops()));
 	public static final Supplier<Block> CHAMPION_BASE = BLOCKS.register("champion_base", () -> new Block(BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_GRAY).strength(4.0f, 99.0f).sound(SoundType.NETHER_BRICKS).requiresCorrectToolForDrops()));
 	public static final Supplier<ChampionKeycardBlock> CHAMPION_KEYCARD_BRICKS = BLOCKS.register("champion_keycard_bricks", () -> new ChampionKeycardBlock(BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_GRAY).strength(6.0f, 99.0f).sound(SoundType.NETHER_BRICKS).requiresCorrectToolForDrops()));
+	public static final Supplier<CommanderPedestalBlock> COMMANDER_PEDESTAL = BLOCKS.register("commander_pedestal", () -> new CommanderPedestalBlock(BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_GRAY).strength(2.5f).sound(SoundType.STONE).noOcclusion().requiresCorrectToolForDrops()));
 	// Iron tier
 	public static final Supplier<BarbedWireFenceBlock> BARBED_WIRE_FENCE = BLOCKS.register("barbed_wire_fence", () -> new BarbedWireFenceBlock(BlockBehaviour.Properties.of().mapColor(MapColor.METAL).strength(7.0f, 8.0f).sound(SoundType.METAL).noOcclusion()));
 	public static final Supplier<DropExperienceBlock> COBALT_ORE = BLOCKS.register("cobalt_ore", () -> new DropExperienceBlock(ConstantInt.of(0), BlockBehaviour.Properties.of().mapColor(MapColor.STONE).instrument(NoteBlockInstrument.BASEDRUM).strength(4.0f).sound(SoundType.STONE).requiresCorrectToolForDrops()));
@@ -98,6 +101,8 @@ public class BlockRegistry {
 	public static final Supplier<BarbedWireBlock> BARBED_WIRE = BLOCKS.register("barbed_wire", () -> new BarbedWireBlock(BlockBehaviour.Properties.of().mapColor(MapColor.METAL).strength(2.0f).sound(SoundType.CHAIN).noOcclusion().noCollission()));
 	public static final Supplier<SpikeTrapBlock> SPIKE_TRAP = BLOCKS.register("spike_trap", () -> new SpikeTrapBlock(BlockBehaviour.Properties.of().mapColor(MapColor.METAL).strength(2.0f).sound(SoundType.METAL).noOcclusion().noCollission()));
 	public static final Supplier<CelestialLanternBlock> CELESTIAL_LANTERN = BLOCKS.register("celestial_lantern", () -> new CelestialLanternBlock(BlockBehaviour.Properties.of().mapColor(MapColor.METAL).strength(3.5f).sound(SoundType.LANTERN).requiresCorrectToolForDrops().lightLevel((blockState) -> 15).noOcclusion()));
+	public static final Supplier<StarForgeControllerBlock> STAR_FORGE_CONTROLLER = BLOCKS.register("star_forge_controller", () -> new StarForgeControllerBlock(BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_CYAN).strength(5.0f, 10.0f).sound(SoundType.NETHER_BRICKS).requiresCorrectToolForDrops().noOcclusion()));
+	public static final Supplier<Block> STAR_FORGE_BRICKS = BLOCKS.register("star_forge_bricks", () -> new Block(BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_CYAN).strength(5.0f, 10.0f).sound(SoundType.NETHER_BRICKS).requiresCorrectToolForDrops()));
 	// Diamond tier
 	public static final Supplier<DropExperienceBlock> MOLTEN_ORE = BLOCKS.register("molten_ore", () -> new DropExperienceBlock(UniformInt.of(5, 10), BlockBehaviour.Properties.of().mapColor(MapColor.STONE).instrument(NoteBlockInstrument.BASEDRUM).strength(6.0f, 8.0f).sound(SoundType.STONE).requiresCorrectToolForDrops()));
 	public static final Supplier<DropExperienceBlock> ELECTRIC_ORE = BLOCKS.register("electric_ore", () -> new DropExperienceBlock(ConstantInt.of(0), BlockBehaviour.Properties.of().mapColor(MapColor.STONE).instrument(NoteBlockInstrument.BASEDRUM).strength(6.0f, 8.0f).sound(SoundType.STONE).requiresCorrectToolForDrops()));
@@ -105,6 +110,7 @@ public class BlockRegistry {
 	public static final Supplier<Block> MOLTEN_BLOCK = BLOCKS.register("molten_block", () -> new Block(BlockBehaviour.Properties.of().mapColor(MapColor.METAL).strength(45.0f, 1100.0f).sound(SoundType.METAL).requiresCorrectToolForDrops()));
 	public static final Supplier<Block> TESLA_BLOCK = BLOCKS.register("tesla_block", () -> new BasicOrientableBlock(BlockBehaviour.Properties.of().mapColor(MapColor.METAL).strength(35.0f).sound(SoundType.METAL).requiresCorrectToolForDrops()));
 	public static final Supplier<TeslaSynthesizerBlock> TESLA_SYNTHESIZER = BLOCKS.register("tesla_synthesizer", () -> new TeslaSynthesizerBlock(BlockBehaviour.Properties.of().mapColor(MapColor.METAL).strength(10.0f).sound(SoundType.METAL).requiresCorrectToolForDrops().noOcclusion()));
+	public static final Supplier<Block> TILTROS_PORTAL_FRAME = BLOCKS.register("tiltros_portal_frame", () -> new Block(BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_BLACK).strength(50.0f, 1200f).sound(SoundType.STONE).requiresCorrectToolForDrops().noOcclusion()));
 	// Netherite tier
 	public static final Supplier<DropExperienceBlock> ASTRAL_ORE = BLOCKS.register("astral_ore", () -> new DropExperienceBlock(UniformInt.of(7, 12), BlockBehaviour.Properties.of().mapColor(MapColor.STONE).instrument(NoteBlockInstrument.BASEDRUM).strength(8.0f, 10.0f).sound(SoundType.STONE).requiresCorrectToolForDrops()));
 	public static final Supplier<Block> ASTRAL_BLOCK = BLOCKS.register("astral_block", () -> new Block(BlockBehaviour.Properties.of().mapColor(MapColor.STONE).instrument(NoteBlockInstrument.BASEDRUM).strength(25.0f).sound(SoundType.STONE).requiresCorrectToolForDrops()));
@@ -210,13 +216,14 @@ public class BlockRegistry {
 	public static final Supplier<HalfTransparentBlock> CLOUD = BLOCKS.register("cloud", () -> new HalfTransparentBlock(BlockBehaviour.Properties.of().replaceable().strength(0.7f).sound(SoundType.SNOW).noOcclusion()));
 	public static final Supplier<CampChairBlock> CAMP_CHAIR = BLOCKS.register("camp_chair", () -> new CampChairBlock(BlockBehaviour.Properties.of().mapColor(MapColor.WOOL).ignitedByLava().strength(1.0f).sound(SoundType.WOOL).noOcclusion()));
 	public static final Supplier<BranchBlock> BURNED_OAK_BRANCH = BLOCKS.register("burned_oak_branch", () -> new BranchBlock(BlockBehaviour.Properties.of().mapColor(MapColor.WOOD).ignitedByLava().instrument(NoteBlockInstrument.BASS).strength(0.1f).sound(SoundType.WOOD).noOcclusion().noCollission()));
-	public static final Supplier<AzulStainedOrchidBlock> AZUL_STAINED_ORCHID = BLOCKS.register("azul_stained_orchid", () -> new AzulStainedOrchidBlock(() -> MobEffects.LUCK, 30, BlockBehaviour.Properties.of().mapColor(MapColor.PLANT).pushReaction(PushReaction.DESTROY).mapColor(MapColor.PLANT).pushReaction(PushReaction.DESTROY).sound(SoundType.GRASS).noCollission().instabreak().offsetType(OffsetType.NONE)));
 	public static final Supplier<SkullBlock> MINUTEMAN_HEAD = BLOCKS.register("minuteman_head", () -> new CustomSkullBlock(CustomSkullTypes.MINUTEMAN, BlockBehaviour.Properties.of().pushReaction(PushReaction.DESTROY).strength(1.0f)));
 	public static final Supplier<CustomWallSkullBlock> MINUTEMAN_WALL_HEAD = BLOCKS.register("minuteman_wall_head", () -> new CustomWallSkullBlock(CustomSkullTypes.MINUTEMAN, BlockBehaviour.Properties.of().pushReaction(PushReaction.DESTROY).strength(1.0f).lootFrom(MINUTEMAN_HEAD)));
 	public static final Supplier<SkullBlock> FIELD_MEDIC_HEAD = BLOCKS.register("field_medic_head", () -> new CustomSkullBlock(CustomSkullTypes.FIELD_MEDIC, BlockBehaviour.Properties.of().pushReaction(PushReaction.DESTROY).strength(1.0f)));
 	public static final Supplier<CustomWallSkullBlock> FIELD_MEDIC_WALL_HEAD = BLOCKS.register("field_medic_wall_head", () -> new CustomWallSkullBlock(CustomSkullTypes.FIELD_MEDIC, BlockBehaviour.Properties.of().pushReaction(PushReaction.DESTROY).strength(1.0f).lootFrom(FIELD_MEDIC_HEAD)));
 	public static final Supplier<SkullBlock> DYING_SOLDIER_HEAD = BLOCKS.register("dying_soldier_head", () -> new CustomSkullBlock(CustomSkullTypes.DYING_SOLDIER, BlockBehaviour.Properties.of().pushReaction(PushReaction.DESTROY).strength(1.0f)));
 	public static final Supplier<CustomWallSkullBlock> DYING_SOLDIER_WALL_HEAD = BLOCKS.register("dying_soldier_wall_head", () -> new CustomWallSkullBlock(CustomSkullTypes.DYING_SOLDIER, BlockBehaviour.Properties.of().pushReaction(PushReaction.DESTROY).strength(1.0f).lootFrom(DYING_SOLDIER_HEAD)));
+	public static final Supplier<SkullBlock> THE_COMMANDER_HEAD = BLOCKS.register("the_commander_head", () -> new CustomSkullBlock(CustomSkullTypes.THE_COMMANDER, BlockBehaviour.Properties.of().pushReaction(PushReaction.DESTROY).strength(1.0f)));
+	public static final Supplier<CustomWallSkullBlock> THE_COMMANDER_WALL_HEAD = BLOCKS.register("the_commander_wall_head", () -> new CustomWallSkullBlock(CustomSkullTypes.THE_COMMANDER, BlockBehaviour.Properties.of().pushReaction(PushReaction.DESTROY).strength(1.0f).lootFrom(THE_COMMANDER_HEAD)));
 	public static final Supplier<SkullBlock> WANDERING_WARRIOR_HEAD = BLOCKS.register("wandering_warrior_head", () -> new CustomSkullBlock(CustomSkullTypes.WANDERING_WARRIOR, BlockBehaviour.Properties.of().pushReaction(PushReaction.DESTROY).strength(1.0f)));
 	public static final Supplier<CustomWallSkullBlock> WANDERING_WARRIOR_WALL_HEAD = BLOCKS.register("wandering_warrior_wall_head", () -> new CustomWallSkullBlock(CustomSkullTypes.WANDERING_WARRIOR, BlockBehaviour.Properties.of().pushReaction(PushReaction.DESTROY).strength(1.0f).lootFrom(WANDERING_WARRIOR_HEAD)));
 	public static final Supplier<SkullBlock> HANS_HEAD = BLOCKS.register("hans_head", () -> new CustomSkullBlock(CustomSkullTypes.HANS, BlockBehaviour.Properties.of().pushReaction(PushReaction.DESTROY).strength(1.0f)));
@@ -229,5 +236,7 @@ public class BlockRegistry {
 	public static final Supplier<FlowerPotBlock> POTTED_MOONGLOW = BLOCKS.register("potted_moonglow", () -> new FlowerPotBlock(() -> (FlowerPotBlock) Blocks.FLOWER_POT, MOONGLOW, BlockBehaviour.Properties.of().pushReaction(PushReaction.DESTROY).lightLevel((state) -> 12).instabreak().noOcclusion()));
 	public static final Supplier<DeathweedBlock> DEATHWEED = BLOCKS.register("deathweed", () -> new DeathweedBlock(() -> MobEffects.HARM, 0, BlockBehaviour.Properties.of().mapColor(MapColor.PLANT).pushReaction(PushReaction.DESTROY).sound(SoundType.GRASS).lightLevel((state) -> 4).noCollission().instabreak().offsetType(OffsetType.XZ)));
 	public static final Supplier<FlowerPotBlock> POTTED_DEATHWEED = BLOCKS.register("potted_deathweed", () -> new FlowerPotBlock(() -> (FlowerPotBlock) Blocks.FLOWER_POT, DEATHWEED, BlockBehaviour.Properties.of().pushReaction(PushReaction.DESTROY).lightLevel((state) -> 12).instabreak().noOcclusion()));
-	public static final Supplier<SaplingBlock> STARDUST_SAPLING = BLOCKS.register("stardust_sapling", () -> new SaplingBlock(new TreeGrower("stardust_sapling", Optional.of(IWConfiguredFeatures.STARDUST_TREE_CONFIGURATION), Optional.empty(), Optional.empty()), BlockBehaviour.Properties.of().mapColor(MapColor.PLANT).pushReaction(PushReaction.DESTROY).strength(0.0f).sound(SoundType.GRASS).noCollission().instabreak().offsetType(OffsetType.NONE)));
+	public static final Supplier<SaplingBlock> STARDUST_SAPLING = BLOCKS.register("stardust_sapling", () -> new SaplingBlock(new TreeGrower("stardust_sapling", Optional.of(STARDUST_TREE_CONFIGURATION), Optional.empty(), Optional.empty()), BlockBehaviour.Properties.of().mapColor(MapColor.PLANT).pushReaction(PushReaction.DESTROY).strength(0.0f).sound(SoundType.GRASS).noCollission().instabreak().offsetType(OffsetType.NONE)));
+	public static final Supplier<SolarLensBlock> SOLAR_LENS = BLOCKS.register("solar_lens", () -> new SolarLensBlock(BlockBehaviour.Properties.of().mapColor(MapColor.METAL).pushReaction(PushReaction.DESTROY).strength(0.5f).sound(SoundType.GLASS).noOcclusion()));
+	public static final Supplier<TiltrosPortalBlock> TILTROS_PORTAL = BLOCKS.register("tiltros_portal", () -> new TiltrosPortalBlock(BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_BLACK).pushReaction(PushReaction.BLOCK).strength(-1.0f, 3600000f).noCollission().lightLevel(state -> 15).noLootTable()));
 }

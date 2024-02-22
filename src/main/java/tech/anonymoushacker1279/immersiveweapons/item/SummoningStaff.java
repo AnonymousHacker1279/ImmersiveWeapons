@@ -40,6 +40,10 @@ public interface SummoningStaff {
 		handleCooldown(item, lookingAt, player, hand, getStaffCooldown());
 	}
 
+	default void handleCooldown(Item item, Player player, InteractionHand hand) {
+		handleCooldown(item, BlockPos.ZERO, player, hand, getStaffCooldown());
+	}
+
 	default void handleCooldown(Item item, @Nullable BlockPos lookingAt, Player player, InteractionHand hand, int cooldown) {
 		if (lookingAt != null) {
 			if (!player.isCreative()) {

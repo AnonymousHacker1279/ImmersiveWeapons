@@ -1,0 +1,724 @@
+{
+  "variants": {
+    "facing=east,powered=false": [
+      {
+        "model": "minecraft:block/skull",
+        "uvlock": true
+      },
+      {
+        "model": "minecraft:block/skull",
+        "uvlock": true,
+        "y": 90
+      },
+      {
+        "model": "minecraft:block/skull",
+        "uvlock": true,
+        "y": 180
+      },
+      {
+        "model": "minecraft:block/skull",
+        "uvlock": true,
+        "y": 270
+      },
+      {
+        "model": "minecraft:block/skull",
+        "uvlock": true,
+        "x": 90
+      },
+      {
+        "model": "minecraft:block/skull",
+        "uvlock": true,
+        "x": 90,
+        "y": 90
+      },
+      {
+        "model": "minecraft:block/skull",
+        "uvlock": true,
+        "x": 90,
+        "y": 180
+      },
+      {
+        "model": "minecraft:block/skull",
+        "uvlock": true,
+        "x": 90,
+        "y": 270
+      },
+      {
+        "model": "minecraft:block/skull",
+        "uvlock": true,
+        "x": 180
+      },
+      {
+        "model": "minecraft:block/skull",
+        "uvlock": true,
+        "x": 180,
+        "y": 90
+      },
+      {
+        "model": "minecraft:block/skull",
+        "uvlock": true,
+        "x": 180,
+        "y": 180
+      },
+      {
+        "model": "minecraft:block/skull",
+        "uvlock": true,
+        "x": 180,
+        "y": 270
+      },
+      {
+        "model": "minecraft:block/skull",
+        "uvlock": true,
+        "x": 270
+      },
+      {
+        "model": "minecraft:block/skull",
+        "uvlock": true,
+        "x": 270,
+        "y": 90
+      },
+      {
+        "model": "minecraft:block/skull",
+        "uvlock": true,
+        "x": 270,
+        "y": 180
+      },
+      {
+        "model": "minecraft:block/skull",
+        "uvlock": true,
+        "x": 270,
+        "y": 270
+      }
+    ],
+    "facing=east,powered=true": [
+      {
+        "model": "minecraft:block/skull",
+        "uvlock": true
+      },
+      {
+        "model": "minecraft:block/skull",
+        "uvlock": true,
+        "y": 90
+      },
+      {
+        "model": "minecraft:block/skull",
+        "uvlock": true,
+        "y": 180
+      },
+      {
+        "model": "minecraft:block/skull",
+        "uvlock": true,
+        "y": 270
+      },
+      {
+        "model": "minecraft:block/skull",
+        "uvlock": true,
+        "x": 90
+      },
+      {
+        "model": "minecraft:block/skull",
+        "uvlock": true,
+        "x": 90,
+        "y": 90
+      },
+      {
+        "model": "minecraft:block/skull",
+        "uvlock": true,
+        "x": 90,
+        "y": 180
+      },
+      {
+        "model": "minecraft:block/skull",
+        "uvlock": true,
+        "x": 90,
+        "y": 270
+      },
+      {
+        "model": "minecraft:block/skull",
+        "uvlock": true,
+        "x": 180
+      },
+      {
+        "model": "minecraft:block/skull",
+        "uvlock": true,
+        "x": 180,
+        "y": 90
+      },
+      {
+        "model": "minecraft:block/skull",
+        "uvlock": true,
+        "x": 180,
+        "y": 180
+      },
+      {
+        "model": "minecraft:block/skull",
+        "uvlock": true,
+        "x": 180,
+        "y": 270
+      },
+      {
+        "model": "minecraft:block/skull",
+        "uvlock": true,
+        "x": 270
+      },
+      {
+        "model": "minecraft:block/skull",
+        "uvlock": true,
+        "x": 270,
+        "y": 90
+      },
+      {
+        "model": "minecraft:block/skull",
+        "uvlock": true,
+        "x": 270,
+        "y": 180
+      },
+      {
+        "model": "minecraft:block/skull",
+        "uvlock": true,
+        "x": 270,
+        "y": 270
+      }
+    ],
+    "facing=north,powered=false": [
+      {
+        "model": "minecraft:block/skull",
+        "uvlock": true
+      },
+      {
+        "model": "minecraft:block/skull",
+        "uvlock": true,
+        "y": 90
+      },
+      {
+        "model": "minecraft:block/skull",
+        "uvlock": true,
+        "y": 180
+      },
+      {
+        "model": "minecraft:block/skull",
+        "uvlock": true,
+        "y": 270
+      },
+      {
+        "model": "minecraft:block/skull",
+        "uvlock": true,
+        "x": 90
+      },
+      {
+        "model": "minecraft:block/skull",
+        "uvlock": true,
+        "x": 90,
+        "y": 90
+      },
+      {
+        "model": "minecraft:block/skull",
+        "uvlock": true,
+        "x": 90,
+        "y": 180
+      },
+      {
+        "model": "minecraft:block/skull",
+        "uvlock": true,
+        "x": 90,
+        "y": 270
+      },
+      {
+        "model": "minecraft:block/skull",
+        "uvlock": true,
+        "x": 180
+      },
+      {
+        "model": "minecraft:block/skull",
+        "uvlock": true,
+        "x": 180,
+        "y": 90
+      },
+      {
+        "model": "minecraft:block/skull",
+        "uvlock": true,
+        "x": 180,
+        "y": 180
+      },
+      {
+        "model": "minecraft:block/skull",
+        "uvlock": true,
+        "x": 180,
+        "y": 270
+      },
+      {
+        "model": "minecraft:block/skull",
+        "uvlock": true,
+        "x": 270
+      },
+      {
+        "model": "minecraft:block/skull",
+        "uvlock": true,
+        "x": 270,
+        "y": 90
+      },
+      {
+        "model": "minecraft:block/skull",
+        "uvlock": true,
+        "x": 270,
+        "y": 180
+      },
+      {
+        "model": "minecraft:block/skull",
+        "uvlock": true,
+        "x": 270,
+        "y": 270
+      }
+    ],
+    "facing=north,powered=true": [
+      {
+        "model": "minecraft:block/skull",
+        "uvlock": true
+      },
+      {
+        "model": "minecraft:block/skull",
+        "uvlock": true,
+        "y": 90
+      },
+      {
+        "model": "minecraft:block/skull",
+        "uvlock": true,
+        "y": 180
+      },
+      {
+        "model": "minecraft:block/skull",
+        "uvlock": true,
+        "y": 270
+      },
+      {
+        "model": "minecraft:block/skull",
+        "uvlock": true,
+        "x": 90
+      },
+      {
+        "model": "minecraft:block/skull",
+        "uvlock": true,
+        "x": 90,
+        "y": 90
+      },
+      {
+        "model": "minecraft:block/skull",
+        "uvlock": true,
+        "x": 90,
+        "y": 180
+      },
+      {
+        "model": "minecraft:block/skull",
+        "uvlock": true,
+        "x": 90,
+        "y": 270
+      },
+      {
+        "model": "minecraft:block/skull",
+        "uvlock": true,
+        "x": 180
+      },
+      {
+        "model": "minecraft:block/skull",
+        "uvlock": true,
+        "x": 180,
+        "y": 90
+      },
+      {
+        "model": "minecraft:block/skull",
+        "uvlock": true,
+        "x": 180,
+        "y": 180
+      },
+      {
+        "model": "minecraft:block/skull",
+        "uvlock": true,
+        "x": 180,
+        "y": 270
+      },
+      {
+        "model": "minecraft:block/skull",
+        "uvlock": true,
+        "x": 270
+      },
+      {
+        "model": "minecraft:block/skull",
+        "uvlock": true,
+        "x": 270,
+        "y": 90
+      },
+      {
+        "model": "minecraft:block/skull",
+        "uvlock": true,
+        "x": 270,
+        "y": 180
+      },
+      {
+        "model": "minecraft:block/skull",
+        "uvlock": true,
+        "x": 270,
+        "y": 270
+      }
+    ],
+    "facing=south,powered=false": [
+      {
+        "model": "minecraft:block/skull",
+        "uvlock": true
+      },
+      {
+        "model": "minecraft:block/skull",
+        "uvlock": true,
+        "y": 90
+      },
+      {
+        "model": "minecraft:block/skull",
+        "uvlock": true,
+        "y": 180
+      },
+      {
+        "model": "minecraft:block/skull",
+        "uvlock": true,
+        "y": 270
+      },
+      {
+        "model": "minecraft:block/skull",
+        "uvlock": true,
+        "x": 90
+      },
+      {
+        "model": "minecraft:block/skull",
+        "uvlock": true,
+        "x": 90,
+        "y": 90
+      },
+      {
+        "model": "minecraft:block/skull",
+        "uvlock": true,
+        "x": 90,
+        "y": 180
+      },
+      {
+        "model": "minecraft:block/skull",
+        "uvlock": true,
+        "x": 90,
+        "y": 270
+      },
+      {
+        "model": "minecraft:block/skull",
+        "uvlock": true,
+        "x": 180
+      },
+      {
+        "model": "minecraft:block/skull",
+        "uvlock": true,
+        "x": 180,
+        "y": 90
+      },
+      {
+        "model": "minecraft:block/skull",
+        "uvlock": true,
+        "x": 180,
+        "y": 180
+      },
+      {
+        "model": "minecraft:block/skull",
+        "uvlock": true,
+        "x": 180,
+        "y": 270
+      },
+      {
+        "model": "minecraft:block/skull",
+        "uvlock": true,
+        "x": 270
+      },
+      {
+        "model": "minecraft:block/skull",
+        "uvlock": true,
+        "x": 270,
+        "y": 90
+      },
+      {
+        "model": "minecraft:block/skull",
+        "uvlock": true,
+        "x": 270,
+        "y": 180
+      },
+      {
+        "model": "minecraft:block/skull",
+        "uvlock": true,
+        "x": 270,
+        "y": 270
+      }
+    ],
+    "facing=south,powered=true": [
+      {
+        "model": "minecraft:block/skull",
+        "uvlock": true
+      },
+      {
+        "model": "minecraft:block/skull",
+        "uvlock": true,
+        "y": 90
+      },
+      {
+        "model": "minecraft:block/skull",
+        "uvlock": true,
+        "y": 180
+      },
+      {
+        "model": "minecraft:block/skull",
+        "uvlock": true,
+        "y": 270
+      },
+      {
+        "model": "minecraft:block/skull",
+        "uvlock": true,
+        "x": 90
+      },
+      {
+        "model": "minecraft:block/skull",
+        "uvlock": true,
+        "x": 90,
+        "y": 90
+      },
+      {
+        "model": "minecraft:block/skull",
+        "uvlock": true,
+        "x": 90,
+        "y": 180
+      },
+      {
+        "model": "minecraft:block/skull",
+        "uvlock": true,
+        "x": 90,
+        "y": 270
+      },
+      {
+        "model": "minecraft:block/skull",
+        "uvlock": true,
+        "x": 180
+      },
+      {
+        "model": "minecraft:block/skull",
+        "uvlock": true,
+        "x": 180,
+        "y": 90
+      },
+      {
+        "model": "minecraft:block/skull",
+        "uvlock": true,
+        "x": 180,
+        "y": 180
+      },
+      {
+        "model": "minecraft:block/skull",
+        "uvlock": true,
+        "x": 180,
+        "y": 270
+      },
+      {
+        "model": "minecraft:block/skull",
+        "uvlock": true,
+        "x": 270
+      },
+      {
+        "model": "minecraft:block/skull",
+        "uvlock": true,
+        "x": 270,
+        "y": 90
+      },
+      {
+        "model": "minecraft:block/skull",
+        "uvlock": true,
+        "x": 270,
+        "y": 180
+      },
+      {
+        "model": "minecraft:block/skull",
+        "uvlock": true,
+        "x": 270,
+        "y": 270
+      }
+    ],
+    "facing=west,powered=false": [
+      {
+        "model": "minecraft:block/skull",
+        "uvlock": true
+      },
+      {
+        "model": "minecraft:block/skull",
+        "uvlock": true,
+        "y": 90
+      },
+      {
+        "model": "minecraft:block/skull",
+        "uvlock": true,
+        "y": 180
+      },
+      {
+        "model": "minecraft:block/skull",
+        "uvlock": true,
+        "y": 270
+      },
+      {
+        "model": "minecraft:block/skull",
+        "uvlock": true,
+        "x": 90
+      },
+      {
+        "model": "minecraft:block/skull",
+        "uvlock": true,
+        "x": 90,
+        "y": 90
+      },
+      {
+        "model": "minecraft:block/skull",
+        "uvlock": true,
+        "x": 90,
+        "y": 180
+      },
+      {
+        "model": "minecraft:block/skull",
+        "uvlock": true,
+        "x": 90,
+        "y": 270
+      },
+      {
+        "model": "minecraft:block/skull",
+        "uvlock": true,
+        "x": 180
+      },
+      {
+        "model": "minecraft:block/skull",
+        "uvlock": true,
+        "x": 180,
+        "y": 90
+      },
+      {
+        "model": "minecraft:block/skull",
+        "uvlock": true,
+        "x": 180,
+        "y": 180
+      },
+      {
+        "model": "minecraft:block/skull",
+        "uvlock": true,
+        "x": 180,
+        "y": 270
+      },
+      {
+        "model": "minecraft:block/skull",
+        "uvlock": true,
+        "x": 270
+      },
+      {
+        "model": "minecraft:block/skull",
+        "uvlock": true,
+        "x": 270,
+        "y": 90
+      },
+      {
+        "model": "minecraft:block/skull",
+        "uvlock": true,
+        "x": 270,
+        "y": 180
+      },
+      {
+        "model": "minecraft:block/skull",
+        "uvlock": true,
+        "x": 270,
+        "y": 270
+      }
+    ],
+    "facing=west,powered=true": [
+      {
+        "model": "minecraft:block/skull",
+        "uvlock": true
+      },
+      {
+        "model": "minecraft:block/skull",
+        "uvlock": true,
+        "y": 90
+      },
+      {
+        "model": "minecraft:block/skull",
+        "uvlock": true,
+        "y": 180
+      },
+      {
+        "model": "minecraft:block/skull",
+        "uvlock": true,
+        "y": 270
+      },
+      {
+        "model": "minecraft:block/skull",
+        "uvlock": true,
+        "x": 90
+      },
+      {
+        "model": "minecraft:block/skull",
+        "uvlock": true,
+        "x": 90,
+        "y": 90
+      },
+      {
+        "model": "minecraft:block/skull",
+        "uvlock": true,
+        "x": 90,
+        "y": 180
+      },
+      {
+        "model": "minecraft:block/skull",
+        "uvlock": true,
+        "x": 90,
+        "y": 270
+      },
+      {
+        "model": "minecraft:block/skull",
+        "uvlock": true,
+        "x": 180
+      },
+      {
+        "model": "minecraft:block/skull",
+        "uvlock": true,
+        "x": 180,
+        "y": 90
+      },
+      {
+        "model": "minecraft:block/skull",
+        "uvlock": true,
+        "x": 180,
+        "y": 180
+      },
+      {
+        "model": "minecraft:block/skull",
+        "uvlock": true,
+        "x": 180,
+        "y": 270
+      },
+      {
+        "model": "minecraft:block/skull",
+        "uvlock": true,
+        "x": 270
+      },
+      {
+        "model": "minecraft:block/skull",
+        "uvlock": true,
+        "x": 270,
+        "y": 90
+      },
+      {
+        "model": "minecraft:block/skull",
+        "uvlock": true,
+        "x": 270,
+        "y": 180
+      },
+      {
+        "model": "minecraft:block/skull",
+        "uvlock": true,
+        "x": 270,
+        "y": 270
+      }
+    ]
+  }
+}

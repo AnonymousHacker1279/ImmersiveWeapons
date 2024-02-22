@@ -1,0 +1,14 @@
+{
+  "placement": {
+    "type": "minecraft:random_spread",
+    "salt": 468512124,
+    "separation": 14,
+    "spacing": 20
+  },
+  "structures": [
+    {
+      "structure": "immersiveweapons:space_observatory",
+      "weight": 1
+    }
+  ]
+}

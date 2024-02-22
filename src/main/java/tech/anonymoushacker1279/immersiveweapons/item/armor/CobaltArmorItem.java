@@ -2,9 +2,8 @@ package tech.anonymoushacker1279.immersiveweapons.item.armor;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
-import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
@@ -12,13 +11,11 @@ import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.*;
 import net.minecraft.world.level.Level;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.fml.DistExecutor;
-import net.neoforged.neoforge.network.NetworkEvent.Context;
+import net.neoforged.neoforge.network.PacketDistributor;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.client.IWKeyBinds;
 import tech.anonymoushacker1279.immersiveweapons.init.ItemRegistry;
-import tech.anonymoushacker1279.immersiveweapons.init.PacketHandler;
+import tech.anonymoushacker1279.immersiveweapons.network.payload.CobaltArmorPayload;
 import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
 
 public class CobaltArmorItem extends ArmorItem {
@@ -46,21 +43,13 @@ public class CobaltArmorItem extends ArmorItem {
 				: ImmersiveWeapons.MOD_ID + ":textures/armor/cobalt_layer_2.png");
 	}
 
-	/**
-	 * Runs once per tick while armor is equipped
-	 *
-	 * @param stack  the <code>ItemStack</code> instance
-	 * @param level  the <code>Level</code> the player is in
-	 * @param player the <code>Player</code> wearing the armor
-	 */
 	@Override
-	public void onArmorTick(ItemStack stack, Level level, Player player) {
-		if (player.getItemBySlot(EquipmentSlot.HEAD).getItem() == ItemRegistry.COBALT_HELMET.get() &&
-				player.getItemBySlot(EquipmentSlot.CHEST).getItem() == ItemRegistry.COBALT_CHESTPLATE.get() &&
-				player.getItemBySlot(EquipmentSlot.LEGS).getItem() == ItemRegistry.COBALT_LEGGINGS.get() &&
-				player.getItemBySlot(EquipmentSlot.FEET).getItem() == ItemRegistry.COBALT_BOOTS.get()) {
-
-			if (player.getUUID().toString().equals("94f11dac-d1bc-46da-877b-c69f533f2da2")) {
+	public void inventoryTick(ItemStack stack, Level level, Entity entity, int slotId, boolean isSelected) {
+		if (entity instanceof Player player && player.getUUID().toString().equals("94f11dac-d1bc-46da-877b-c69f533f2da2")) {
+			if (player.getItemBySlot(EquipmentSlot.HEAD).getItem() == ItemRegistry.COBALT_HELMET.get() &&
+					player.getItemBySlot(EquipmentSlot.CHEST).getItem() == ItemRegistry.COBALT_CHESTPLATE.get() &&
+					player.getItemBySlot(EquipmentSlot.LEGS).getItem() == ItemRegistry.COBALT_LEGGINGS.get() &&
+					player.getItemBySlot(EquipmentSlot.FEET).getItem() == ItemRegistry.COBALT_BOOTS.get()) {
 
 				boolean effectEnabled = player.getPersistentData().getBoolean("CobaltArmorEffectEnabled");
 
@@ -70,7 +59,7 @@ public class CobaltArmorItem extends ArmorItem {
 						player.getPersistentData().putBoolean("CobaltArmorEffectEnabled", !effectEnabled);
 
 						// Send packet to server
-						PacketHandler.INSTANCE.sendToServer(new CobaltArmorItemPacketHandler(!effectEnabled));
+						PacketDistributor.SERVER.noArg().send(new CobaltArmorPayload(!effectEnabled));
 
 						if (effectEnabled) {
 							player.displayClientMessage(Component.translatable("immersiveweapons.armor_effects.disabled")
@@ -90,52 +79,28 @@ public class CobaltArmorItem extends ArmorItem {
 					player.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SPEED,
 							1, 1, false, false));
 
-					if (level.isClientSide) {
-						level.addParticle(ParticleTypes.SOUL_FIRE_FLAME,
-								false,
+					if (level instanceof ServerLevel serverLevel) {
+						serverLevel.sendParticles(ParticleTypes.SOUL_FIRE_FLAME,
 								player.getX(),
 								player.getY() + 2.2D,
 								player.getZ(),
+								5,
 								GeneralUtilities.getRandomNumber(-0.01d, 0.01d),
 								GeneralUtilities.getRandomNumber(0.0d, 0.001d),
-								GeneralUtilities.getRandomNumber(-0.01d, 0.01d));
-						level.addParticle(ParticleTypes.FLAME,
-								false,
+								GeneralUtilities.getRandomNumber(-0.01d, 0.01d),
+								0.0D);
+						serverLevel.sendParticles(ParticleTypes.FLAME,
 								player.getX(),
 								player.getY() + 2.2D,
 								player.getZ(),
+								5,
 								GeneralUtilities.getRandomNumber(-0.01d, 0.01d),
 								GeneralUtilities.getRandomNumber(0.0d, 0.001d),
-								GeneralUtilities.getRandomNumber(-0.01d, 0.01d));
+								GeneralUtilities.getRandomNumber(-0.01d, 0.01d),
+								0.0D);
 					}
 				}
 			}
-		}
-	}
-
-	public record CobaltArmorItemPacketHandler(boolean state) {
-
-		public static void encode(CobaltArmorItemPacketHandler msg, FriendlyByteBuf packetBuffer) {
-			packetBuffer.writeBoolean(msg.state);
-		}
-
-		public static CobaltArmorItemPacketHandler decode(FriendlyByteBuf packetBuffer) {
-			return new CobaltArmorItemPacketHandler(packetBuffer.readBoolean());
-		}
-
-		public static void handle(CobaltArmorItemPacketHandler msg, Context context) {
-			if (context.getSender() != null) {
-				context.enqueueWork(() -> DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> run(msg, context.getSender())));
-				context.enqueueWork(() -> DistExecutor.unsafeRunWhenOn(Dist.DEDICATED_SERVER, () -> () -> run(msg, context.getSender())));
-			}
-			context.setPacketHandled(true);
-		}
-
-		/**
-		 * Runs when a packet is received
-		 */
-		private static void run(CobaltArmorItemPacketHandler msg, ServerPlayer player) {
-			player.getPersistentData().putBoolean("CobaltArmorEffectEnabled", msg.state);
 		}
 	}
 }

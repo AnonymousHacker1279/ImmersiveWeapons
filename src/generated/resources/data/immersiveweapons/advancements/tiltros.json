@@ -1,5 +1,5 @@
 {
-  "parent": "immersiveweapons:activated_warrior_statue",
+  "parent": "immersiveweapons:azul_keystone",
   "criteria": {
     "visit": {
       "conditions": {
@@ -24,7 +24,7 @@
     },
     "frame": "goal",
     "icon": {
-      "item": "immersiveweapons:azul_stained_orchid"
+      "item": "immersiveweapons:moonglow"
     },
     "title": {
       "translate": "advancements.immersiveweapons.tiltros.biome.title"
@@ -36,7 +36,7 @@
     ]
   ],
   "rewards": {
-    "experience": 50
+    "experience": 150
   },
   "sends_telemetry_event": true
 }

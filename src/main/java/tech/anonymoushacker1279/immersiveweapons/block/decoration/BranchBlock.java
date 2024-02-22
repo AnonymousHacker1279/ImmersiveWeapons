@@ -2,14 +2,17 @@ package tech.anonymoushacker1279.immersiveweapons.block.decoration;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.BlockTags;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.level.*;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.block.core.BasicOrientableBlock;
-import tech.anonymoushacker1279.immersiveweapons.data.tags.groups.immersiveweapons.IWBlockTagGroups;
 
 public class BranchBlock extends BasicOrientableBlock {
 
@@ -17,6 +20,8 @@ public class BranchBlock extends BasicOrientableBlock {
 	private static final VoxelShape SHAPE_SOUTH = Block.box(4.0D, 0.0D, 13.0D, 12.0D, 5.0D, 16.0D);
 	private static final VoxelShape SHAPE_EAST = Block.box(13.0D, 0.0D, 4.0D, 16.0D, 5.0D, 12.0D);
 	private static final VoxelShape SHAPE_WEST = Block.box(0.0D, 0.0D, 4.0D, 3.0D, 5.0D, 12.0D);
+
+	public static final TagKey<Block> BURNED_OAK_LOGS = BlockTags.create(new ResourceLocation(ImmersiveWeapons.MOD_ID, "burned_oak_logs"));
 
 	/**
 	 * Constructor for BranchBlock.
@@ -44,7 +49,7 @@ public class BranchBlock extends BasicOrientableBlock {
 	@Override
 	public boolean canSurvive(BlockState state, LevelReader reader, BlockPos pos) {
 		BlockState blockstate = reader.getBlockState(pos.relative(state.getValue(FACING)));
-		return blockstate.is(IWBlockTagGroups.BURNED_OAK_LOGS);
+		return blockstate.is(BURNED_OAK_LOGS);
 	}
 
 	@SuppressWarnings("deprecation")

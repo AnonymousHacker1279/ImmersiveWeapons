@@ -98,37 +98,6 @@
       }
     ]
   },
-  "dying_soldier_ambient": {
-    "sounds": [
-      "immersiveweapons:entity/dying_soldier/ambient/ambient_0",
-      "immersiveweapons:entity/dying_soldier/ambient/ambient_1",
-      "immersiveweapons:entity/dying_soldier/ambient/ambient_2"
-    ],
-    "subtitle": "subtitles.immersiveweapons.entity.dying_soldier.ambient"
-  },
-  "dying_soldier_death": {
-    "sounds": [
-      "immersiveweapons:entity/dying_soldier/death/death"
-    ],
-    "subtitle": "subtitles.immersiveweapons.entity.dying_soldier.death"
-  },
-  "dying_soldier_hurt": {
-    "sounds": [
-      "immersiveweapons:entity/dying_soldier/hurt/hurt_0",
-      "immersiveweapons:entity/dying_soldier/hurt/hurt_1",
-      "immersiveweapons:entity/dying_soldier/hurt/hurt_2"
-    ],
-    "subtitle": "subtitles.immersiveweapons.entity.dying_soldier.hurt"
-  },
-  "dying_soldier_step": {
-    "sounds": [
-      "immersiveweapons:entity/dying_soldier/step/step_0",
-      "immersiveweapons:entity/dying_soldier/step/step_1",
-      "immersiveweapons:entity/dying_soldier/step/step_2",
-      "immersiveweapons:entity/dying_soldier/step/step_3"
-    ],
-    "subtitle": "subtitles.immersiveweapons.entity.dying_soldier.step"
-  },
   "field_medic_ambient": {
     "sounds": [
       "immersiveweapons:entity/field_medic/ambient/ambient_0",
@@ -137,12 +106,6 @@
       "immersiveweapons:entity/field_medic/ambient/ambient_3"
     ],
     "subtitle": "subtitles.immersiveweapons.entity.field_medic.ambient"
-  },
-  "field_medic_attack": {
-    "sounds": [
-      "immersiveweapons:entity/field_medic/attack/attack"
-    ],
-    "subtitle": "subtitles.immersiveweapons.entity.field_medic.attack"
   },
   "field_medic_death": {
     "sounds": [
@@ -180,6 +143,18 @@
       "immersiveweapons:item/flare_gun/fire/fire"
     ],
     "subtitle": "subtitles.immersiveweapons.item.gun.flare_gun.fire"
+  },
+  "flashbang_explode": {
+    "sounds": [
+      "immersiveweapons:item/flashbang/explode/explode"
+    ],
+    "subtitle": "subtitles.immersiveweapons.item.flashbang.explode"
+  },
+  "flashbang_ringing": {
+    "sounds": [
+      "immersiveweapons:item/flashbang/ringing/ringing"
+    ],
+    "subtitle": "subtitles.immersiveweapons.item.flashbang.ringing"
   },
   "flintlock_pistol_fire": {
     "sounds": [
@@ -293,12 +268,40 @@
   },
   "smoke_grenade_hiss": {
     "sounds": [
-      {
-        "name": "immersiveweapons:item/smoke_grenade/hiss/hiss",
-        "stream": true
-      }
+      "immersiveweapons:item/smoke_grenade/hiss/hiss"
     ],
     "subtitle": "subtitles.immersiveweapons.item.smoke_grenade_hiss"
+  },
+  "soldier_ambient": {
+    "sounds": [
+      "immersiveweapons:entity/soldier/ambient/ambient_0",
+      "immersiveweapons:entity/soldier/ambient/ambient_1",
+      "immersiveweapons:entity/soldier/ambient/ambient_2"
+    ],
+    "subtitle": "subtitles.immersiveweapons.entity.soldier.ambient"
+  },
+  "soldier_death": {
+    "sounds": [
+      "immersiveweapons:entity/soldier/death/death"
+    ],
+    "subtitle": "subtitles.immersiveweapons.entity.soldier.death"
+  },
+  "soldier_hurt": {
+    "sounds": [
+      "immersiveweapons:entity/soldier/hurt/hurt_0",
+      "immersiveweapons:entity/soldier/hurt/hurt_1",
+      "immersiveweapons:entity/soldier/hurt/hurt_2"
+    ],
+    "subtitle": "subtitles.immersiveweapons.entity.soldier.hurt"
+  },
+  "soldier_step": {
+    "sounds": [
+      "immersiveweapons:entity/soldier/step/step_0",
+      "immersiveweapons:entity/soldier/step/step_1",
+      "immersiveweapons:entity/soldier/step/step_2",
+      "immersiveweapons:entity/soldier/step/step_3"
+    ],
+    "subtitle": "subtitles.immersiveweapons.entity.soldier.step"
   },
   "spike_trap_extend": {
     "sounds": [
@@ -366,10 +369,7 @@
   },
   "tesla_armor_effect": {
     "sounds": [
-      {
-        "name": "immersiveweapons:armor/effect/tesla/tesla_armor_effect",
-        "stream": true
-      }
+      "immersiveweapons:armor/effect/tesla/tesla_armor_effect"
     ],
     "subtitle": "subtitles.immersiveweapons.armor.tesla.effect"
   },

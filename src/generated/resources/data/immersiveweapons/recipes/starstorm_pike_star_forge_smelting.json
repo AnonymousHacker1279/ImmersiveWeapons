@@ -1,0 +1,14 @@
+{
+  "type": "immersiveweapons:star_forge",
+  "group": "star_forge",
+  "ingot": {
+    "tag": "immersiveweapons:ingots/starstorm"
+  },
+  "ingot_count": 3,
+  "result": "immersiveweapons:starstorm_pike",
+  "secondary_material": {
+    "item": "immersiveweapons:wooden_tool_rod"
+  },
+  "secondary_material_count": 1,
+  "smelt_time": 300
+}

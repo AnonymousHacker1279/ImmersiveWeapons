@@ -134,7 +134,7 @@ public class AccessoryManager {
 	 * @return the scaled effect value
 	 */
 	public static double handleEffectScaling(AccessoryItem accessoryItem, EffectType type, Player player) {
-		if (accessoryItem.getEffectScalingType() == EffectScalingType.DEPTH_SCALING) {
+		if (accessoryItem.getEffectScalingTypes().get(type) == EffectScalingType.DEPTH_SCALING) {
 			// Depth scaling increases the value inverse proportionally to the player's depth (y-level), starting at y<64
 			// Note, this should continue to the bottom of the world, which may be lower than y=0
 
@@ -147,7 +147,7 @@ public class AccessoryManager {
 				double depthScaling = Mth.clamp(Math.min(1.0, ((64 - depth) / (64 - worldFloor))) * 100, 0, 100);
 				return rawValue * depthScaling;
 			}
-		} else if (accessoryItem.getEffectScalingType() == EffectScalingType.INSOMNIA_SCALING) {
+		} else if (accessoryItem.getEffectScalingTypes().get(type) == EffectScalingType.INSOMNIA_SCALING) {
 			// Insomnia scaling increases the value proportionally to the player's insomnia level, starting after
 			// one full day/night cycle without sleep (24000 ticks)
 

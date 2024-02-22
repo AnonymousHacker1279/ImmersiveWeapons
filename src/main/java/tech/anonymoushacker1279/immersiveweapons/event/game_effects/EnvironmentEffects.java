@@ -8,8 +8,9 @@ import net.neoforged.neoforge.common.Tags.EntityTypes;
 import net.neoforged.neoforge.event.entity.living.LivingHurtEvent;
 import net.neoforged.neoforge.network.PacketDistributor;
 import org.jetbrains.annotations.Nullable;
-import tech.anonymoushacker1279.immersiveweapons.event.SyncPlayerDataPacketHandler;
-import tech.anonymoushacker1279.immersiveweapons.init.*;
+import tech.anonymoushacker1279.immersiveweapons.init.EffectRegistry;
+import tech.anonymoushacker1279.immersiveweapons.init.ItemRegistry;
+import tech.anonymoushacker1279.immersiveweapons.network.payload.SyncPlayerDataPayload;
 
 import java.util.Objects;
 
@@ -52,7 +53,8 @@ public class EnvironmentEffects {
 
 			// Re-sync persistent data to client for debug tracing
 			if (damagedEntity instanceof ServerPlayer serverPlayer) {
-				PacketHandler.INSTANCE.send(PacketDistributor.PLAYER.with(() -> serverPlayer), new SyncPlayerDataPacketHandler(serverPlayer.getPersistentData(), serverPlayer.getUUID()));
+				PacketDistributor.PLAYER.with(serverPlayer)
+						.send(new SyncPlayerDataPayload(serverPlayer.getPersistentData(), serverPlayer.getUUID()));
 			}
 
 			event.setAmount(damage);

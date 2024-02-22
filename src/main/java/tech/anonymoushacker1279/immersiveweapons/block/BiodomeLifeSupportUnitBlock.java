@@ -75,6 +75,6 @@ public class BiodomeLifeSupportUnitBlock extends Block implements EntityBlock {
 	public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState blockState,
 	                                                              BlockEntityType<T> blockEntityType) {
 
-		return level.isClientSide ? null : (world, pos, state, entity) -> ((BiodomeLifeSupportUnitBlockEntity) entity).tick(world, pos);
+		return level.isClientSide ? null : (world, pos, state, entity) -> ((BiodomeLifeSupportUnitBlockEntity) entity).tick(world, pos, state);
 	}
 }

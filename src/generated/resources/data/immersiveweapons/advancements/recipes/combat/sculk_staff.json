@@ -1,0 +1,34 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "immersiveweapons:sculk_staff"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    },
+    "warden_heart": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "immersiveweapons:warden_heart"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "warden_heart"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "immersiveweapons:sculk_staff"
+    ]
+  }
+}

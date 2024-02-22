@@ -1,6 +1,5 @@
 package tech.anonymoushacker1279.immersiveweapons.event;
 
-import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.model.*;
 import net.minecraft.client.renderer.BiomeColors;
 import net.minecraft.client.renderer.Sheets;
@@ -19,6 +18,7 @@ import net.neoforged.fml.common.Mod.EventBusSubscriber;
 import net.neoforged.fml.common.Mod.EventBusSubscriber.Bus;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.neoforge.client.event.*;
+import net.neoforged.neoforge.client.gui.overlay.VanillaGuiOverlay;
 import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
@@ -55,11 +55,6 @@ public class ClientModEventSubscriber {
 	public static void clientSetup(FMLClientSetupEvent event) {
 		ImmersiveWeapons.LOGGER.debug("Initializing client setup");
 
-		// Register GUI screens
-		MenuScreens.register(MenuTypeRegistry.SMALL_PARTS_TABLE_MENU.get(), SmallPartsTableScreen::new);
-		MenuScreens.register(MenuTypeRegistry.TESLA_SYNTHESIZER_MENU.get(), TeslaSynthesizerScreen::new);
-		MenuScreens.register(MenuTypeRegistry.AMMUNITION_TABLE_MENU.get(), AmmunitionTableScreen::new);
-
 		event.enqueueWork(() -> {
 			SkullBlockRenderer.SKIN_BY_TYPE.put(CustomSkullTypes.MINUTEMAN, new ResourceLocation(ImmersiveWeapons.MOD_ID,
 					"textures/entity/heads/minuteman.png"));
@@ -67,6 +62,8 @@ public class ClientModEventSubscriber {
 					"textures/entity/heads/field_medic.png"));
 			SkullBlockRenderer.SKIN_BY_TYPE.put(CustomSkullTypes.DYING_SOLDIER, new ResourceLocation(ImmersiveWeapons.MOD_ID,
 					"textures/entity/heads/dying_soldier.png"));
+			SkullBlockRenderer.SKIN_BY_TYPE.put(CustomSkullTypes.THE_COMMANDER, new ResourceLocation(ImmersiveWeapons.MOD_ID,
+					"textures/entity/heads/the_commander.png"));
 			SkullBlockRenderer.SKIN_BY_TYPE.put(CustomSkullTypes.WANDERING_WARRIOR, new ResourceLocation(ImmersiveWeapons.MOD_ID,
 					"textures/entity/heads/wandering_warrior.png"));
 			SkullBlockRenderer.SKIN_BY_TYPE.put(CustomSkullTypes.HANS, new ResourceLocation(ImmersiveWeapons.MOD_ID,
@@ -78,11 +75,19 @@ public class ClientModEventSubscriber {
 
 			Sheets.addWoodType(WoodTypes.BURNED_OAK);
 			Sheets.addWoodType(WoodTypes.STARDUST);
+
+			CustomArmPoses.bootstrap();
 		});
 
 		event.enqueueWork(ClientModEventSubscriber::registerPropertyGetters);
+	}
 
-		IWOverlays.init();
+	@SubscribeEvent
+	public static void registerMenuScreensEvent(RegisterMenuScreensEvent event) {
+		event.register(MenuTypeRegistry.SMALL_PARTS_TABLE_MENU.get(), SmallPartsTableScreen::new);
+		event.register(MenuTypeRegistry.TESLA_SYNTHESIZER_MENU.get(), TeslaSynthesizerScreen::new);
+		event.register(MenuTypeRegistry.AMMUNITION_TABLE_MENU.get(), AmmunitionTableScreen::new);
+		event.register(MenuTypeRegistry.STAR_FORGE_MENU.get(), StarForgeScreen::new);
 	}
 
 	@SubscribeEvent
@@ -191,11 +196,17 @@ public class ClientModEventSubscriber {
 		event.registerEntityRenderer(EntityRegistry.FLARE_ENTITY.get(), FlareRenderer::new);
 		event.registerEntityRenderer(EntityRegistry.CANNONBALL_ENTITY.get(), CannonballRenderer::new);
 		event.registerEntityRenderer(EntityRegistry.MORTAR_SHELL_ENTITY.get(), ThrownItemRenderer::new);
-		event.registerEntityRenderer(EntityRegistry.SMOKE_GRENADE_ENTITY.get(), ThrownItemRenderer::new);
+		event.registerEntityRenderer(EntityRegistry.SMOKE_GRENADE_ENTITY.get(), AdvancedThrowableProjectileRenderer::new);
+		event.registerEntityRenderer(EntityRegistry.FLASHBANG_ENTITY.get(), AdvancedThrowableProjectileRenderer::new);
 		event.registerEntityRenderer(EntityRegistry.MOLOTOV_COCKTAIL_ENTITY.get(), ThrownItemRenderer::new);
-		event.registerEntityRenderer(EntityRegistry.DYING_SOLDIER_ENTITY.get(), DyingSoldierRenderer::new);
-		event.registerEntityRenderer(EntityRegistry.MINUTEMAN_ENTITY.get(), MinutemanRenderer::new);
-		event.registerEntityRenderer(EntityRegistry.FIELD_MEDIC_ENTITY.get(), FieldMedicRenderer::new);
+		event.registerEntityRenderer(EntityRegistry.DYING_SOLDIER_ENTITY.get(), context -> new SoldierRenderer<>(context, new ResourceLocation(ImmersiveWeapons.MOD_ID,
+				"textures/entity/dying_soldier/dying_soldier.png")));
+		event.registerEntityRenderer(EntityRegistry.THE_COMMANDER_ENTITY.get(), context -> new SoldierRenderer<>(context, new ResourceLocation(ImmersiveWeapons.MOD_ID,
+				"textures/entity/the_commander/the_commander.png")));
+		event.registerEntityRenderer(EntityRegistry.MINUTEMAN_ENTITY.get(), context -> new SoldierRenderer<>(context, new ResourceLocation(ImmersiveWeapons.MOD_ID,
+				"textures/entity/minuteman/minuteman.png")));
+		event.registerEntityRenderer(EntityRegistry.FIELD_MEDIC_ENTITY.get(), context -> new SoldierRenderer<>(context, new ResourceLocation(ImmersiveWeapons.MOD_ID,
+				"textures/entity/field_medic/field_medic.png")));
 		event.registerEntityRenderer(EntityRegistry.WANDERING_WARRIOR_ENTITY.get(), WanderingWarriorRenderer::new);
 		event.registerEntityRenderer(EntityRegistry.HANS_ENTITY.get(), HansRenderer::new);
 		event.registerEntityRenderer(EntityRegistry.SUPER_HANS_ENTITY.get(), SuperHansRenderer::new);
@@ -229,6 +240,8 @@ public class ClientModEventSubscriber {
 		event.registerBlockEntityRenderer(BlockEntityRegistry.CUSTOM_SKULL_BLOCK_ENTITY.get(), SkullBlockRenderer::new);
 		event.registerBlockEntityRenderer(BlockEntityRegistry.ASTRAL_CRYSTAL_BLOCK_ENTITY.get(), context -> new AstralCrystalRenderer());
 		event.registerBlockEntityRenderer(BlockEntityRegistry.AMMUNITION_TABLE_BLOCK_ENTITY.get(), context -> new AmmunitionTableRenderer());
+		event.registerBlockEntityRenderer(BlockEntityRegistry.TILTROS_PORTAL_BLOCK_ENTITY.get(), context -> new TiltrosPortalRenderer<>());
+		event.registerBlockEntityRenderer(BlockEntityRegistry.COMMANDER_PEDESTAL_BLOCK_ENTITY.get(), context -> new CommanderPedestalRenderer());
 	}
 
 	/**
@@ -245,13 +258,14 @@ public class ClientModEventSubscriber {
 		event.registerLayerDefinition(MeteorModel.LAYER_LOCATION, MeteorModel::createBodyLayer);
 		event.registerLayerDefinition(EvilEyeModel.LAYER_LOCATION, EvilEyeModel::createBodyLayer);
 		event.registerLayerDefinition(SkeletonMerchantModel.LAYER_LOCATION, SkeletonMerchantModel::createBodyLayer);
-		event.registerLayerDefinition(ModelLayerLocations.MINUTEMAN_HEAD_LAYER, SkullModel::createMobHeadLayer);
-		event.registerLayerDefinition(ModelLayerLocations.FIELD_MEDIC_HEAD_LAYER, SkullModel::createMobHeadLayer);
-		event.registerLayerDefinition(ModelLayerLocations.DYING_SOLDIER_HEAD_LAYER, SkullModel::createMobHeadLayer);
+		event.registerLayerDefinition(ModelLayerLocations.MINUTEMAN_HEAD_LAYER, SkullModel::createHumanoidHeadLayer);
+		event.registerLayerDefinition(ModelLayerLocations.FIELD_MEDIC_HEAD_LAYER, SkullModel::createHumanoidHeadLayer);
+		event.registerLayerDefinition(ModelLayerLocations.DYING_SOLDIER_HEAD_LAYER, SkullModel::createHumanoidHeadLayer);
+		event.registerLayerDefinition(ModelLayerLocations.THE_COMMANDER_HEAD_LAYER, SkullModel::createHumanoidHeadLayer);
 		event.registerLayerDefinition(ModelLayerLocations.WANDERING_WARRIOR_HEAD_LAYER, SkullModel::createMobHeadLayer);
-		event.registerLayerDefinition(ModelLayerLocations.HANS_HEAD_LAYER, SkullModel::createMobHeadLayer);
+		event.registerLayerDefinition(ModelLayerLocations.HANS_HEAD_LAYER, SkullModel::createHumanoidHeadLayer);
 		event.registerLayerDefinition(ModelLayerLocations.STORM_CREEPER_HEAD_LAYER, SkullModel::createMobHeadLayer);
-		event.registerLayerDefinition(ModelLayerLocations.SKELETON_MERCHANT_HEAD_LAYER, SkullModel::createMobHeadLayer);
+		event.registerLayerDefinition(ModelLayerLocations.SKELETON_MERCHANT_HEAD_LAYER, SkullModel::createHumanoidHeadLayer);
 
 		for (CustomBoatType type : CustomBoatType.values()) {
 			event.registerLayerDefinition(CustomBoatRenderer.createBoatModelName(type), BoatModel::createBodyModel);
@@ -285,6 +299,8 @@ public class ClientModEventSubscriber {
 				.bakeLayer(ModelLayerLocations.FIELD_MEDIC_HEAD_LAYER)));
 		event.registerSkullModel(CustomSkullTypes.DYING_SOLDIER, new SkullModel(event.getEntityModelSet()
 				.bakeLayer(ModelLayerLocations.DYING_SOLDIER_HEAD_LAYER)));
+		event.registerSkullModel(CustomSkullTypes.THE_COMMANDER, new SkullModel(event.getEntityModelSet()
+				.bakeLayer(ModelLayerLocations.THE_COMMANDER_HEAD_LAYER)));
 		event.registerSkullModel(CustomSkullTypes.WANDERING_WARRIOR, new SkullModel(event.getEntityModelSet()
 				.bakeLayer(ModelLayerLocations.WANDERING_WARRIOR_HEAD_LAYER)));
 		event.registerSkullModel(CustomSkullTypes.HANS, new SkullModel(event.getEntityModelSet()
@@ -339,6 +355,17 @@ public class ClientModEventSubscriber {
 		event.register((state, tintGetter, pos, color) -> BiomeColors
 						.getAverageGrassColor(Objects.requireNonNull(tintGetter), Objects.requireNonNull(pos)),
 				BlockRegistry.PITFALL.get());
+	}
+
+	@SubscribeEvent
+	public static void registerGuiOverlaysEvent(RegisterGuiOverlaysEvent event) {
+		event.registerAbove(VanillaGuiOverlay.VIGNETTE.id(),
+				new ResourceLocation(ImmersiveWeapons.MOD_ID, "scope"),
+				IWOverlays.SCOPE_ELEMENT);
+
+		event.registerAbove(VanillaGuiOverlay.DEBUG_SCREEN.id(),
+				new ResourceLocation(ImmersiveWeapons.MOD_ID, "debug_overlay"),
+				IWOverlays.DEBUG_TRACING_ELEMENT);
 	}
 
 	private static void registerPropertyGetters() {

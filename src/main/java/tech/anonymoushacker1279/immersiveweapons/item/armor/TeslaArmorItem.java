@@ -1,9 +1,7 @@
 package tech.anonymoushacker1279.immersiveweapons.item.armor;
 
 import net.minecraft.ChatFormatting;
-import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
-import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.StringRepresentable;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -12,13 +10,13 @@ import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.*;
 import net.minecraft.world.level.Level;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.fml.DistExecutor;
-import net.neoforged.neoforge.network.NetworkEvent.Context;
+import net.neoforged.neoforge.network.PacketDistributor;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.client.IWKeyBinds;
 import tech.anonymoushacker1279.immersiveweapons.config.ClientConfig;
-import tech.anonymoushacker1279.immersiveweapons.init.*;
+import tech.anonymoushacker1279.immersiveweapons.init.ItemRegistry;
+import tech.anonymoushacker1279.immersiveweapons.init.SoundEventRegistry;
+import tech.anonymoushacker1279.immersiveweapons.network.payload.TeslaArmorPayload;
 
 import java.util.List;
 
@@ -48,85 +46,80 @@ public class TeslaArmorItem extends ArmorItem {
 				: ImmersiveWeapons.MOD_ID + ":textures/armor/tesla_layer_2.png");
 	}
 
-	/**
-	 * Runs once per tick while armor is equipped
-	 *
-	 * @param stack  the <code>ItemStack</code> instance
-	 * @param level  the <code>Level</code> the player is in
-	 * @param player the <code>Player</code> wearing the armor
-	 */
 	@Override
-	public void onArmorTick(ItemStack stack, Level level, Player player) {
-		if (player.getItemBySlot(EquipmentSlot.HEAD).getItem() == ItemRegistry.TESLA_HELMET.get() &&
-				player.getItemBySlot(EquipmentSlot.CHEST).getItem() == ItemRegistry.TESLA_CHESTPLATE.get() &&
-				player.getItemBySlot(EquipmentSlot.LEGS).getItem() == ItemRegistry.TESLA_LEGGINGS.get() &&
-				player.getItemBySlot(EquipmentSlot.FEET).getItem() == ItemRegistry.TESLA_BOOTS.get()) {
+	public void inventoryTick(ItemStack stack, Level level, Entity entity, int slotId, boolean isSelected) {
+		if (entity instanceof Player player) {
+			if (player.getItemBySlot(EquipmentSlot.HEAD).getItem() == ItemRegistry.TESLA_HELMET.get() &&
+					player.getItemBySlot(EquipmentSlot.CHEST).getItem() == ItemRegistry.TESLA_CHESTPLATE.get() &&
+					player.getItemBySlot(EquipmentSlot.LEGS).getItem() == ItemRegistry.TESLA_LEGGINGS.get() &&
+					player.getItemBySlot(EquipmentSlot.FEET).getItem() == ItemRegistry.TESLA_BOOTS.get()) {
 
-			String data = player.getPersistentData().getString("TeslaArmorEffectState");
-			EffectState state = data.isEmpty() ? EffectState.DISABLED : EffectState.getFromString(data);
+				String data = player.getPersistentData().getString("TeslaArmorEffectState");
+				EffectState state = data.isEmpty() ? EffectState.DISABLED : EffectState.getFromString(data);
 
-			if (level.isClientSide) {
-				if (IWKeyBinds.TOGGLE_ARMOR_EFFECT.consumeClick()) {
-					// Store the toggle variable in the player's NBT
-					player.getPersistentData().putString("TeslaArmorEffectState", state.getNext().getSerializedName());
+				if (level.isClientSide) {
+					if (IWKeyBinds.TOGGLE_ARMOR_EFFECT.consumeClick()) {
+						// Store the toggle variable in the player's NBT
+						player.getPersistentData().putString("TeslaArmorEffectState", state.getNext().getSerializedName());
 
-					// Send packet to server
-					state = state.getNext();
-					PacketHandler.INSTANCE.sendToServer(new TeslaArmorItemPacketHandler(state));
+						// Send packet to server
+						state = state.getNext();
+						PacketDistributor.SERVER.noArg().send(new TeslaArmorPayload(state));
 
-					if (state == EffectState.DISABLED) {
-						level.playSound(player,
-								player.blockPosition(),
-								SoundEventRegistry.TESLA_ARMOR_POWER_DOWN.get(),
-								SoundSource.PLAYERS,
-								0.9f,
-								1.0f);
+						if (state == EffectState.DISABLED) {
+							level.playSound(player,
+									player.blockPosition(),
+									SoundEventRegistry.TESLA_ARMOR_POWER_DOWN.get(),
+									SoundSource.PLAYERS,
+									0.9f,
+									1.0f);
 
-					} else {
-						level.playSound(player,
-								player.blockPosition(),
-								SoundEventRegistry.TESLA_ARMOR_POWER_UP.get(),
-								SoundSource.PLAYERS,
-								0.9f,
-								1.0f);
+						} else {
+							level.playSound(player,
+									player.blockPosition(),
+									SoundEventRegistry.TESLA_ARMOR_POWER_UP.get(),
+									SoundSource.PLAYERS,
+									0.9f,
+									1.0f);
 
-						countdown = 0;
-					}
+							countdown = 0;
+						}
 
-					if (state == EffectState.DISABLED) {
-						player.displayClientMessage(Component.translatable("immersiveweapons.armor_effects.disabled")
-								.withStyle(ChatFormatting.RED), true);
-					} else if (state == EffectState.EFFECT_MOBS) {
-						player.displayClientMessage(Component.translatable("immersiveweapons.armor_effects.tesla_armor.effect_mobs")
-								.withStyle(ChatFormatting.GREEN), true);
-					} else if (state == EffectState.EFFECT_EVERYTHING) {
-						player.displayClientMessage(Component.translatable("immersiveweapons.armor_effects.tesla_armor.effect_everything")
-								.withStyle(ChatFormatting.GREEN), true);
+						if (state == EffectState.DISABLED) {
+							player.displayClientMessage(Component.translatable("immersiveweapons.armor_effects.disabled")
+									.withStyle(ChatFormatting.RED), true);
+						} else if (state == EffectState.EFFECT_MOBS) {
+							player.displayClientMessage(Component.translatable("immersiveweapons.armor_effects.tesla_armor.effect_mobs")
+									.withStyle(ChatFormatting.GREEN), true);
+						} else if (state == EffectState.EFFECT_EVERYTHING) {
+							player.displayClientMessage(Component.translatable("immersiveweapons.armor_effects.tesla_armor.effect_everything")
+									.withStyle(ChatFormatting.GREEN), true);
+						}
 					}
 				}
-			}
 
-			if (state != EffectState.DISABLED && player.tickCount % 20 == 0) {
-				List<Entity> nearbyEntities = level.getEntities(player, player.getBoundingBox().inflate(3));
+				if (state != EffectState.DISABLED && player.tickCount % 20 == 0) {
+					List<Entity> nearbyEntities = level.getEntities(player, player.getBoundingBox().inflate(3));
 
-				// Remove any players in the list that are on the same team
-				nearbyEntities.removeIf(entity -> entity instanceof Player && entity.isAlliedTo(player));
+					// Remove any players in the list that are on the same team
+					nearbyEntities.removeIf(nearbyEntity -> nearbyEntity instanceof Player && nearbyEntity.isAlliedTo(player));
 
-				if (!nearbyEntities.isEmpty()) {
-					for (Entity entity : nearbyEntities) {
-						if (state == EffectState.EFFECT_EVERYTHING) {
-							if (entity instanceof LivingEntity livingEntity) {
-								handleEffect(livingEntity, level, player);
-							}
-						} else if (state == EffectState.EFFECT_MOBS) {
-							if (entity instanceof LivingEntity livingEntity && !(entity instanceof Player)) {
-								handleEffect(livingEntity, level, player);
+					if (!nearbyEntities.isEmpty()) {
+						for (Entity nearbyEntity : nearbyEntities) {
+							if (state == EffectState.EFFECT_EVERYTHING) {
+								if (nearbyEntity instanceof LivingEntity livingEntity) {
+									handleEffect(livingEntity, level, player);
+								}
+							} else if (state == EffectState.EFFECT_MOBS) {
+								if (nearbyEntity instanceof LivingEntity livingEntity && !(nearbyEntity instanceof Player)) {
+									handleEffect(livingEntity, level, player);
+								}
 							}
 						}
 					}
 				}
-			}
 
+			}
 		}
 	}
 
@@ -150,7 +143,7 @@ public class TeslaArmorItem extends ArmorItem {
 	 * @param player the <code>Player</code> instance
 	 */
 	private void effectNoise(Level level, Player player) {
-		if (countdown == 0 && ClientConfig.TESLA_ARMOR_EFFECT_SOUND.get()) {
+		if (countdown == 0 && ClientConfig.teslaArmorEffectSound) {
 			level.playSound(player,
 					player.blockPosition(),
 					SoundEventRegistry.TESLA_ARMOR_EFFECT.get(),
@@ -164,7 +157,7 @@ public class TeslaArmorItem extends ArmorItem {
 		}
 	}
 
-	private enum EffectState implements StringRepresentable {
+	public enum EffectState implements StringRepresentable {
 		EFFECT_EVERYTHING("effect_everything"),
 		EFFECT_MOBS("effect_mobs"),
 		DISABLED("disabled");
@@ -191,32 +184,6 @@ public class TeslaArmorItem extends ArmorItem {
 				}
 			}
 			return DISABLED;
-		}
-	}
-
-	public record TeslaArmorItemPacketHandler(EffectState state) {
-
-		public static void encode(TeslaArmorItemPacketHandler msg, FriendlyByteBuf packetBuffer) {
-			packetBuffer.writeEnum(msg.state);
-		}
-
-		public static TeslaArmorItemPacketHandler decode(FriendlyByteBuf packetBuffer) {
-			return new TeslaArmorItemPacketHandler(packetBuffer.readEnum(EffectState.class));
-		}
-
-		public static void handle(TeslaArmorItemPacketHandler msg, Context context) {
-			if (context.getSender() != null) {
-				context.enqueueWork(() -> DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> run(msg, context.getSender())));
-				context.enqueueWork(() -> DistExecutor.unsafeRunWhenOn(Dist.DEDICATED_SERVER, () -> () -> run(msg, context.getSender())));
-			}
-			context.setPacketHandled(true);
-		}
-
-		/**
-		 * Runs specifically on the server, when a packet is received
-		 */
-		private static void run(TeslaArmorItemPacketHandler msg, ServerPlayer player) {
-			player.getPersistentData().putString("TeslaArmorEffectState", msg.state.getSerializedName());
 		}
 	}
 }

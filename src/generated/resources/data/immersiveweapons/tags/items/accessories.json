@@ -24,6 +24,7 @@
     "immersiveweapons:death_gem_ring",
     "immersiveweapons:medal_of_adequacy",
     "immersiveweapons:depth_charm",
+    "immersiveweapons:reinforced_depth_charm",
     "immersiveweapons:insomnia_amulet",
     "immersiveweapons:goggles",
     "immersiveweapons:lava_goggles",
@@ -33,6 +34,8 @@
     "immersiveweapons:ancient_scroll",
     "immersiveweapons:holy_mantle",
     "immersiveweapons:venstral_jar",
-    "immersiveweapons:super_blanket_cape"
+    "immersiveweapons:super_blanket_cape",
+    "immersiveweapons:medal_of_honor",
+    "immersiveweapons:medal_of_dishonor"
   ]
 }

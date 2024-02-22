@@ -1,10 +1,12 @@
 {
 	"homepage": "https://www.curseforge.com/minecraft/mc-mods/immersive-weapons",
 	"promos": {
+		"1.20.4-latest": "1.20.4-1.29.0",
+		"1.20.4-recommended": "1.20.4-1.29.0",
 		"1.20.2-latest": "1.20.2-1.28.0",
 		"1.20.2-recommended": "1.20.2-1.28.0",
-		"1.20.1-latest": "1.20.1-1.27.2",
-		"1.20.1-recommended": "1.20.1-1.27.2",
+		"1.20.1-latest": "1.20.1-1.27.6",
+		"1.20.1-recommended": "1.20.1-1.27.6",
 		"1.19.4-latest": "1.19.4-1.23.2",
 		"1.19.4-recommended": "1.19.4-1.23.2",
 		"1.19.3-latest": "1.19.3-1.21.0",
@@ -24,10 +26,17 @@
 		"1.16.4-latest": "1.16.5-1.1.1",
 		"1.16.4-recommended": "1.16.5-1.1.1"
 	},
+	"1.20.4": {
+		"1.20.4-1.29.0": "Initial 1.20.4 release and various new features - https://github.com/AnonymousHacker1279/ImmersiveWeapons/releases/tag/v1.29.0"
+	},
 	"1.20.2": {
 		"1.20.2-1.28.0": "Initial 1.20.2 release - https://github.com/AnonymousHacker1279/ImmersiveWeapons/releases/tag/v1.28.0"
-	}
+	},
 	"1.20.1": {
+		"1.20.1-1.27.6": "Bugfixes - https://github.com/AnonymousHacker1279/ImmersiveWeapons/releases/tag/v1.27.6",
+		"1.20.1-1.27.5": "Bugfixes - https://github.com/AnonymousHacker1279/ImmersiveWeapons/releases/tag/v1.27.5",
+		"1.20.1-1.27.4": "Bugfixes - https://github.com/AnonymousHacker1279/ImmersiveWeapons/releases/tag/v1.27.4",
+		"1.20.1-1.27.3": "Bugfixes and improvements - https://github.com/AnonymousHacker1279/ImmersiveWeapons/releases/tag/v1.27.3",
 		"1.20.1-1.27.2": "Bugfixes - https://github.com/AnonymousHacker1279/ImmersiveWeapons/releases/tag/v1.27.2",
 		"1.20.1-1.27.1": "Bugfixes and improvements - https://github.com/AnonymousHacker1279/ImmersiveWeapons/releases/tag/v1.27.1",
 		"1.20.1-1.27.0": "Features, improvements, bugfixes - https://github.com/AnonymousHacker1279/ImmersiveWeapons/releases/tag/v1.27.0",

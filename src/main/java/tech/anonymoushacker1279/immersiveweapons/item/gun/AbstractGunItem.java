@@ -4,9 +4,11 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.model.HumanoidModel.ArmPose;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.tags.ItemTags;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.*;
@@ -19,7 +21,8 @@ import net.neoforged.neoforge.client.extensions.common.IClientItemExtensions;
 import net.neoforged.neoforge.event.EventHooks;
 import net.neoforged.neoforge.network.PacketDistributor;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
-import tech.anonymoushacker1279.immersiveweapons.data.tags.groups.immersiveweapons.IWItemTagGroups;
+import tech.anonymoushacker1279.immersiveweapons.client.model.CustomArmPoses;
+import tech.anonymoushacker1279.immersiveweapons.config.CommonConfig;
 import tech.anonymoushacker1279.immersiveweapons.entity.projectile.BulletEntity;
 import tech.anonymoushacker1279.immersiveweapons.event.game_effects.AccessoryManager;
 import tech.anonymoushacker1279.immersiveweapons.init.*;
@@ -27,6 +30,7 @@ import tech.anonymoushacker1279.immersiveweapons.item.AccessoryItem;
 import tech.anonymoushacker1279.immersiveweapons.item.AccessoryItem.EffectType;
 import tech.anonymoushacker1279.immersiveweapons.item.gun.data.GunData;
 import tech.anonymoushacker1279.immersiveweapons.item.projectile.BulletItem;
+import tech.anonymoushacker1279.immersiveweapons.network.payload.GunScopePayload;
 import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
 
 import java.util.function.Consumer;
@@ -34,9 +38,9 @@ import java.util.function.Predicate;
 
 public abstract class AbstractGunItem extends Item implements Vanishable {
 
-	protected static final Predicate<ItemStack> MUSKET_BALLS = (stack) -> stack.is(IWItemTagGroups.MUSKET_BALLS);
-	protected static final Predicate<ItemStack> FLARES = (stack) -> stack.is(IWItemTagGroups.FLARES);
-	protected static final Predicate<ItemStack> CANNONBALLS = (stack) -> stack.is(IWItemTagGroups.CANNONBALLS);
+	protected static final Predicate<ItemStack> MUSKET_BALLS = (stack) -> stack.is(ItemTags.create(new ResourceLocation(ImmersiveWeapons.MOD_ID, "projectiles/musket_balls")));
+	protected static final Predicate<ItemStack> FLARES = (stack) -> stack.is(ItemTags.create(new ResourceLocation(ImmersiveWeapons.MOD_ID, "projectiles/flares")));
+	protected static final Predicate<ItemStack> CANNONBALLS = (stack) -> stack.is(ItemTags.create(new ResourceLocation(ImmersiveWeapons.MOD_ID, "projectiles/cannonballs")));
 	protected static final Predicate<ItemStack> FLAMMABLE_POWDERS = (stack) -> isPowder(stack.getItem());
 
 	/**
@@ -144,7 +148,7 @@ public abstract class AbstractGunItem extends Item implements Vanishable {
 						setupFire(gun, bulletEntity, player, powderVelocityModifier);
 
 						// Roll for random crits
-						if (livingEntity.getRandom().nextFloat() <= ImmersiveWeapons.COMMON_CONFIG.gunCritChance().get()) {
+						if (livingEntity.getRandom().nextFloat() <= CommonConfig.gunCritChance) {
 							bulletEntity.setCritArrow(true);
 						}
 
@@ -155,7 +159,7 @@ public abstract class AbstractGunItem extends Item implements Vanishable {
 						}
 
 						enchantmentLevel = gun.getEnchantmentLevel(EnchantmentRegistry.IMPACT.get());
-						int kb = getKnockbackLevel();
+						int kb = getKnockbackLevel() + bulletEntity.getKnockback();
 						if (enchantmentLevel > 0) {
 							kb += enchantmentLevel;
 						}
@@ -175,6 +179,11 @@ public abstract class AbstractGunItem extends Item implements Vanishable {
 
 							// Higher density slightly increases the gravity modifier
 							bulletEntity.gravityModifier += (densityModifier * 0.015f);
+						}
+
+						// Handle particle trails for blaze powder
+						if (powderType == PowderType.BLAZE_POWDER) {
+							bulletEntity.flameTrail = true;
 						}
 
 						int weaponDamage = powderType.getWeaponDamageAmount();
@@ -329,9 +338,9 @@ public abstract class AbstractGunItem extends Item implements Vanishable {
 	public void onUseTick(Level level, LivingEntity livingEntity, ItemStack stack, int remainingUseDuration) {
 		super.onUseTick(level, livingEntity, stack, remainingUseDuration);
 
-		if (!level.isClientSide && canScope() && livingEntity instanceof Player player) {
-			PacketHandler.INSTANCE.send(PacketDistributor.PLAYER.with(() -> (ServerPlayer) player),
-					new GunScopePacketHandler(GunData.playerFOV, 15.0d, GunData.scopeScale));
+		if (!level.isClientSide && canScope() && livingEntity instanceof ServerPlayer serverPlayer) {
+			PacketDistributor.PLAYER.with(serverPlayer)
+					.send(new GunScopePayload(GunData.playerFOV, 15.0d, GunData.scopeScale));
 		}
 	}
 
@@ -347,9 +356,8 @@ public abstract class AbstractGunItem extends Item implements Vanishable {
 
 	@Override
 	public boolean onDroppedByPlayer(ItemStack item, Player player) {
-
-		PacketHandler.INSTANCE.send(PacketDistributor.PLAYER.with(() -> (ServerPlayer) player),
-				new GunScopePacketHandler(GunData.playerFOV, -1, 0.5f));
+		PacketDistributor.PLAYER.with((ServerPlayer) player)
+				.send(new GunScopePayload(GunData.playerFOV, -1, 0.5f));
 
 		return super.onDroppedByPlayer(item, player);
 	}
@@ -364,66 +372,9 @@ public abstract class AbstractGunItem extends Item implements Vanishable {
 		// Handle arm posing for holding the weapons
 		consumer.accept(new IClientItemExtensions() {
 
-			private static final ArmPose AIM_PISTOL_POSE = ArmPose.create("AIM_PISTOL", false, (model, entity, arm) -> {
-				// Hold the gun up as if it's being aimed
-				if (arm == HumanoidArm.RIGHT) {
-					model.rightArm.xRot = -1.5f;
-					model.rightArm.yRot = -0.25f;
-
-					// Adjust to move with the head (looking up/down moves the gun)
-					model.rightArm.xRot += model.head.xRot * 0.5f;
-					model.rightArm.yRot += model.head.yRot * 0.5f;
-				} else {
-					model.leftArm.xRot = -1.5f;
-					model.leftArm.yRot = 0.25f;
-
-					// Adjust to move with the head
-					model.leftArm.xRot += model.head.xRot * 0.5f;
-					model.leftArm.yRot += model.head.yRot * 0.5f;
-				}
-			});
-
-			private static final ArmPose AIM_MUSKET_POSE = ArmPose.create("AIM_MUSKET", true, (model, entity, arm) -> {
-				// Hold the gun up as if it's being aimed. This one uses two hands, one needs to be supporting the gun at the end and the other midway
-				if (arm == HumanoidArm.RIGHT) {
-					model.rightArm.xRot = -1.5f;
-					model.rightArm.yRot = -0.25f;
-					// The left arm needs to be moved over more to support the gun
-					model.leftArm.xRot = -1.5f;
-					model.leftArm.yRot = 1.0f;
-
-					// Adjust to move with the head
-					model.rightArm.xRot += model.head.xRot * 0.5f;
-					model.rightArm.yRot += model.head.yRot * 0.5f;
-					model.leftArm.xRot += model.head.xRot * 0.25f;
-					model.leftArm.yRot += model.head.yRot * 0.25f;
-				} else {
-					model.leftArm.xRot = -1.5f;
-					model.leftArm.yRot = 0.25f;
-					// The right arm needs to be moved over more to support the gun
-					model.rightArm.xRot = -1.5f;
-					model.rightArm.yRot = -1.0f;
-
-					// Adjust to move with the head
-					model.leftArm.xRot += model.head.xRot * 0.5f;
-					model.leftArm.yRot += model.head.yRot * 0.5f;
-					model.rightArm.xRot += model.head.xRot * 0.25f;
-					model.rightArm.yRot += model.head.yRot * 0.25f;
-				}
-			});
-
 			@Override
 			public ArmPose getArmPose(LivingEntity entity, InteractionHand hand, ItemStack itemStack) {
-				if (!itemStack.isEmpty()) {
-					if (entity.getUsedItemHand() == hand && entity.getUseItemRemainingTicks() > 0) {
-						if (itemStack.getItem() instanceof MusketItem || itemStack.getItem() instanceof SimpleShotgunItem) {
-							return AIM_MUSKET_POSE;
-						} else {
-							return AIM_PISTOL_POSE;
-						}
-					}
-				}
-				return ArmPose.EMPTY;
+				return CustomArmPoses.getFirearmPose(entity, hand, itemStack);
 			}
 
 			@Override
@@ -563,7 +514,7 @@ public abstract class AbstractGunItem extends Item implements Vanishable {
 	}
 
 	public float getBaseFireVelocity() {
-		return ImmersiveWeapons.COMMON_CONFIG.flintlockPistolFireVelocity().get().floatValue();
+		return CommonConfig.flintlockPistolFireVelocity;
 	}
 
 	public int getKnockbackLevel() {
@@ -574,7 +525,7 @@ public abstract class AbstractGunItem extends Item implements Vanishable {
 		bulletEntity.shootFromRotation(player, player.getXRot(), player.getYRot(),
 				0.0F,
 				getFireVelocity(gun, powderModifier),
-				ImmersiveWeapons.COMMON_CONFIG.flintlockPistolFireInaccuracy().get().floatValue());
+				CommonConfig.flintlockPistolFireInaccuracy);
 	}
 
 	protected void handleAmmoStack(ItemStack gun, ItemStack ammo, int bulletsToFire, Player player) {
@@ -636,6 +587,7 @@ public abstract class AbstractGunItem extends Item implements Vanishable {
 	}
 
 	public enum PowderType {
+		BLAZE_POWDER(Items.BLAZE_POWDER, 0.25f, 0.1f, 1, 0),
 		GUNPOWDER(Items.GUNPOWDER, 0.33f, 0.05f, 1, 1),
 		BLACKPOWDER(ItemRegistry.BLACKPOWDER.get(), 0.75f, 0.025f, 2, 2),
 		SULFUR_DUST(ItemRegistry.SULFUR_DUST.get(), 0.90f, -0.05f, 2, 3);

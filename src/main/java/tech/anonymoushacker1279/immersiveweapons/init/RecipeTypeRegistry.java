@@ -21,4 +21,5 @@ public class RecipeTypeRegistry {
 	public static final Supplier<RecipeType<AstralCrystalRecipe>> ASTRAL_CRYSTAL_RECIPE_TYPE = RECIPE_TYPES.register("astral_crystal", () -> RecipeType.simple(new ResourceLocation(ImmersiveWeapons.MOD_ID, "astral_crystal")));
 	public static final Supplier<RecipeType<PistonCrushingRecipe>> PISTON_CRUSHING_RECIPE_TYPE = RECIPE_TYPES.register("piston_crushing", () -> RecipeType.simple(new ResourceLocation(ImmersiveWeapons.MOD_ID, "piston_crushing")));
 	public static final Supplier<RecipeType<AmmunitionTableRecipe>> AMMUNITION_TABLE_RECIPE_TYPE = RECIPE_TYPES.register("ammunition_table", () -> RecipeType.simple(new ResourceLocation(ImmersiveWeapons.MOD_ID, "ammunition_table")));
+	public static final Supplier<RecipeType<StarForgeRecipe>> STAR_FORGE_RECIPE_TYPE = RECIPE_TYPES.register("star_forge", () -> RecipeType.simple(new ResourceLocation(ImmersiveWeapons.MOD_ID, "star_forge")));
 }

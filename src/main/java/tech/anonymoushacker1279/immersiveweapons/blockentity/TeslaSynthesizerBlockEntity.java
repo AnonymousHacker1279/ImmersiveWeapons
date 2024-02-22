@@ -41,7 +41,7 @@ public class TeslaSynthesizerBlockEntity extends BaseContainerBlockEntity implem
 	private int burnTimeTotal;
 	private int cookTime;
 	private int cookTimeTotal;
-	final ContainerData teslaSynthesizerData = new ContainerData() {
+	public final ContainerData containerData = new ContainerData() {
 		@Override
 		public int get(int index) {
 			return switch (index) {
@@ -85,7 +85,7 @@ public class TeslaSynthesizerBlockEntity extends BaseContainerBlockEntity implem
 
 	@Override
 	protected AbstractContainerMenu createMenu(int id, Inventory inventory) {
-		return new TeslaSynthesizerMenu(id, inventory, this, teslaSynthesizerData);
+		return new TeslaSynthesizerMenu(id, inventory, this, containerData);
 	}
 
 	/**

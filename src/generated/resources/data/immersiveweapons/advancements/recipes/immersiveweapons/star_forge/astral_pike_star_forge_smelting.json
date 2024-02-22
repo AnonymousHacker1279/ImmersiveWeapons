@@ -1,0 +1,34 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "immersiveweapons:astral_pike_star_forge_smelting"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    },
+    "star_forge_controller": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "immersiveweapons:star_forge_controller"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "star_forge_controller"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "immersiveweapons:astral_pike_star_forge_smelting"
+    ]
+  }
+}

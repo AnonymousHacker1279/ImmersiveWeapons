@@ -1,0 +1,21 @@
+{
+  "type": "immersiveweapons:simple_chest",
+  "allow_treasure": true,
+  "conditions": [
+    {
+      "condition": "neoforge:loot_table_id",
+      "loot_table_id": "minecraft:chests/igloo_chest"
+    }
+  ],
+  "item": {
+    "Count": 1,
+    "id": "immersiveweapons:ice_bow",
+    "tag": {
+      "Damage": 0
+    }
+  },
+  "max_enchant_levels": 20,
+  "max_quantity": 1,
+  "min_quantity": 1,
+  "roll_chance": 0.25
+}

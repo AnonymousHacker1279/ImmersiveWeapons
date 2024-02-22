@@ -17,17 +17,7 @@ import tech.anonymoushacker1279.immersiveweapons.init.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SmallPartsRecipe implements Recipe<Container> {
-
-	public final Ingredient material;
-	public final List<Item> craftables;
-	protected final String group;
-
-	public SmallPartsRecipe(String group, Ingredient material, List<Item> craftables) {
-		this.material = material;
-		this.craftables = craftables;
-		this.group = group;
-	}
+public record SmallPartsRecipe(String group, Ingredient material, List<Item> craftables) implements Recipe<Container> {
 
 	@Override
 	public boolean matches(Container container, Level level) {
@@ -94,11 +84,11 @@ public class SmallPartsRecipe implements Recipe<Container> {
 			this.factory = factory;
 			this.codec = RecordCodecBuilder.create(
 					instance -> instance.group(
-							ExtraCodecs.strictOptionalField(Codec.STRING, "group", "").forGetter(recipe -> recipe.group),
-							Ingredient.CODEC.fieldOf("material").forGetter(recipe -> recipe.material),
+							ExtraCodecs.strictOptionalField(Codec.STRING, "group", "").forGetter(SmallPartsRecipe::group),
+							Ingredient.CODEC.fieldOf("material").forGetter(SmallPartsRecipe::material),
 							Codec.list(Codec.STRING).fieldOf("craftables").forGetter(recipe -> {
-								List<String> craftables = new ArrayList<>(recipe.craftables.size());
-								for (Item item : recipe.craftables) {
+								List<String> craftables = new ArrayList<>(recipe.craftables().size());
+								for (Item item : recipe.craftables()) {
 									craftables.add(BuiltInRegistries.ITEM.getKey(item).toString());
 								}
 								return craftables;

@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "axis=x": {
+      "model": "immersiveweapons:block/tiltros_portal"
+    },
+    "axis=y": {
+      "model": "immersiveweapons:block/tiltros_portal"
+    },
+    "axis=z": {
+      "model": "immersiveweapons:block/tiltros_portal"
+    }
+  }
+}

@@ -18,6 +18,7 @@
     "description": {
       "translate": "advancements.immersiveweapons.ventus_staff_core.description"
     },
+    "frame": "goal",
     "icon": {
       "item": "immersiveweapons:ventus_staff_core"
     },
