@@ -9,8 +9,8 @@ import tech.anonymoushacker1279.immersiveweapons.blockentity.CustomSignBlockEnti
 
 public class CustomWallSignBlock extends WallSignBlock {
 
-	public CustomWallSignBlock(Properties propertiesIn, WoodType woodType) {
-		super(propertiesIn, woodType);
+	public CustomWallSignBlock(Properties properties, WoodType woodType) {
+		super(woodType, properties);
 	}
 
 	@Override

@@ -15,16 +15,13 @@
     }
   },
   "display": {
-    "announce_to_chat": true,
     "description": {
       "translate": "advancements.immersiveweapons.tiltros.celestial_lantern.description"
     },
     "frame": "goal",
-    "hidden": false,
     "icon": {
       "item": "immersiveweapons:celestial_lantern"
     },
-    "show_toast": true,
     "title": {
       "translate": "advancements.immersiveweapons.tiltros.celestial_lantern.title"
     }

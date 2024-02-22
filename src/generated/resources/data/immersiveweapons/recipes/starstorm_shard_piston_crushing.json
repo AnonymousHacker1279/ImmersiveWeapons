@@ -1,9 +1,8 @@
 {
   "type": "immersiveweapons:piston_crushing",
   "block": "immersiveweapons:starstorm_crystal",
+  "group": "piston_crushing",
   "maxCount": 4,
   "minCount": 2,
-  "result": {
-    "item": "immersiveweapons:starstorm_shard"
-  }
+  "result": "immersiveweapons:starstorm_shard"
 }

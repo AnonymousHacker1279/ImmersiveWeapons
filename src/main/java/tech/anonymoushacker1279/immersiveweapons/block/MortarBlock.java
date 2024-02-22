@@ -1,10 +1,9 @@
 package tech.anonymoushacker1279.immersiveweapons.block;
 
-import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -15,24 +14,23 @@ import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.HorizontalDirectionalBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
+import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.fml.DistExecutor;
-import net.neoforged.neoforge.network.NetworkEvent.Context;
 import net.neoforged.neoforge.network.PacketDistributor;
 import org.jetbrains.annotations.Nullable;
+import tech.anonymoushacker1279.immersiveweapons.block.core.BasicOrientableBlock;
 import tech.anonymoushacker1279.immersiveweapons.entity.projectile.MortarShellEntity;
-import tech.anonymoushacker1279.immersiveweapons.init.*;
-import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
+import tech.anonymoushacker1279.immersiveweapons.init.ItemRegistry;
+import tech.anonymoushacker1279.immersiveweapons.init.SoundEventRegistry;
+import tech.anonymoushacker1279.immersiveweapons.network.payload.LocalSoundPayload;
 
-public class MortarBlock extends HorizontalDirectionalBlock {
+public class MortarBlock extends BasicOrientableBlock {
 
 	public static final IntegerProperty ROTATION = IntegerProperty.create("rotation", 0, 2);
 	public static final BooleanProperty LOADED = BooleanProperty.create("loaded");
@@ -57,7 +55,7 @@ public class MortarBlock extends HorizontalDirectionalBlock {
 	 * @param builder the <code>StateDefinition.Builder</code> of the block
 	 */
 	@Override
-	protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
+	public void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
 		builder.add(ROTATION, FACING, LOADED);
 	}
 
@@ -177,36 +175,17 @@ public class MortarBlock extends HorizontalDirectionalBlock {
 	 * @param state the <code>BlockState</code> of the block
 	 */
 	private void fire(Level level, BlockPos pos, BlockState state, @Nullable Player player) {
-		PacketHandler.INSTANCE.send(PacketDistributor.TRACKING_CHUNK.with(() -> level.getChunkAt(pos)),
-				new MortarBlockPacketHandler(pos));
+		PacketDistributor.TRACKING_CHUNK.with(level.getChunkAt(pos))
+				.send(new LocalSoundPayload(pos, SoundEventRegistry.MORTAR_FIRE.get().getLocation(),
+						SoundSource.BLOCKS, 1.0f, 1.0f, true));
+
+		if (level instanceof ServerLevel serverLevel) {
+			serverLevel.sendParticles(ParticleTypes.LARGE_SMOKE, pos.getX(), pos.getY(), pos.getZ(),
+					3, 0.0f, 0.2f, 0.0f, 0.0f);
+		}
 
 		level.setBlock(pos, state.setValue(LOADED, false), 3);
+		level.gameEvent(GameEvent.BLOCK_ACTIVATE, pos, GameEvent.Context.of(state));
 		MortarShellEntity.create(level, pos, 1f, state, player);
-	}
-
-	public record MortarBlockPacketHandler(BlockPos blockPos) {
-
-		public static void encode(MortarBlockPacketHandler msg, FriendlyByteBuf packetBuffer) {
-			packetBuffer.writeBlockPos(msg.blockPos);
-		}
-
-		public static MortarBlockPacketHandler decode(FriendlyByteBuf packetBuffer) {
-			return new MortarBlockPacketHandler(packetBuffer.readBlockPos());
-		}
-
-		public static void handle(MortarBlockPacketHandler msg, Context context) {
-			context.enqueueWork(() -> DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> handleOnClient(msg)));
-			context.setPacketHandled(true);
-		}
-
-		private static void handleOnClient(MortarBlockPacketHandler msg) {
-			Minecraft minecraft = Minecraft.getInstance();
-			if (minecraft.level != null) {
-				minecraft.level.playLocalSound(msg.blockPos, SoundEventRegistry.MORTAR_FIRE.get(), SoundSource.BLOCKS, 1f,
-						GeneralUtilities.getRandomNumber(0.1f, 0.5f) + 0.5f, true);
-				minecraft.level.addParticle(ParticleTypes.LARGE_SMOKE, msg.blockPos.getX(), msg.blockPos.getY(), msg.blockPos.getZ(),
-						0.0f, 0.2f, 0.0f);
-			}
-		}
 	}
 }

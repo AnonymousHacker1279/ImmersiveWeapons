@@ -30,6 +30,5 @@
     "recipes": [
       "immersiveweapons:panic_alarm"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

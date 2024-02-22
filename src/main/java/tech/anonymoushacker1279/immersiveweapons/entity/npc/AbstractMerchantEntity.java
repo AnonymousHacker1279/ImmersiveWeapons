@@ -1,30 +1,30 @@
 package tech.anonymoushacker1279.immersiveweapons.entity.npc;
 
-import com.google.common.collect.ImmutableMap;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
-import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.goal.*;
 import net.minecraft.world.entity.npc.AbstractVillager;
-import net.minecraft.world.entity.npc.VillagerTrades;
 import net.minecraft.world.entity.npc.VillagerTrades.ItemListing;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.item.trading.MerchantOffer;
-import net.minecraft.world.item.trading.MerchantOffers;
 import net.minecraft.world.level.Level;
 import tech.anonymoushacker1279.immersiveweapons.entity.GrantAdvancementOnDiscovery;
-import tech.anonymoushacker1279.immersiveweapons.entity.npc.trades.ItemsForEmeralds;
+import tech.anonymoushacker1279.immersiveweapons.entity.npc.trading.TradeGroup;
+import tech.anonymoushacker1279.immersiveweapons.entity.npc.trading.TradeLoader;
+import tech.anonymoushacker1279.immersiveweapons.entity.npc.trading.trades.ItemsForEmeralds;
 
 import javax.annotation.Nullable;
+import java.util.List;
 
 public abstract class AbstractMerchantEntity extends AbstractVillager implements GrantAdvancementOnDiscovery {
 
-	private int timeUntilRefreshTrades = 24000;
+	private int timeUntilRefreshTrades;
 
 	public AbstractMerchantEntity(EntityType<? extends AbstractVillager> entityType, Level level) {
 		super(entityType, level);
+
+		timeUntilRefreshTrades = TradeLoader.TRADES.get(getType()).tradeRefreshTime();
 	}
 
 	/**
@@ -37,17 +37,7 @@ public abstract class AbstractMerchantEntity extends AbstractVillager implements
 	}
 
 	public Int2ObjectMap<ItemListing[]> getTrades() {
-		return new Int2ObjectOpenHashMap<>(ImmutableMap.of(
-				1, new VillagerTrades.ItemListing[]{
-						new ItemsForEmeralds(Items.AIR, 1, 1, 1)
-				},
-				2, new VillagerTrades.ItemListing[]{
-						new ItemsForEmeralds(Items.AIR, 1, 1, 1)
-				},
-				3, new VillagerTrades.ItemListing[]{
-						new ItemsForEmeralds(Items.AIR, 1, 1, 1)
-				}
-		));
+		return TradeLoader.getTrades(getType());
 	}
 
 	@Override
@@ -81,7 +71,7 @@ public abstract class AbstractMerchantEntity extends AbstractVillager implements
 			timeUntilRefreshTrades--;
 		} else {
 			updateTrades();
-			timeUntilRefreshTrades = 24000;
+			timeUntilRefreshTrades = TradeLoader.TRADES.get(getType()).tradeRefreshTime();
 		}
 	}
 
@@ -108,27 +98,19 @@ public abstract class AbstractMerchantEntity extends AbstractVillager implements
 		// Clear existing trades
 		getOffers().clear();
 
-		VillagerTrades.ItemListing[] commonItemListings = getTrades().get(1);
-		VillagerTrades.ItemListing[] rareItemListings = getTrades().get(2);
-		VillagerTrades.ItemListing[] epicItemListings = getTrades().get(3);
+		List<TradeGroup> tradeGroups = TradeLoader.TRADES.get(getType()).tradeGroups();
+		for (TradeGroup group : tradeGroups) {
+			int entries = group.entries();
+			ItemListing[] trades = group.trades().stream()
+					.map(trade -> (ItemListing) new ItemsForEmeralds(
+							trade.itemStack(),
+							trade.emeraldCost(),
+							trade.maxUses(),
+							trade.xpReward(),
+							trade.priceMultiplier()))
+					.toArray(ItemListing[]::new);
 
-		if (commonItemListings != null && rareItemListings != null && epicItemListings != null) {
-			MerchantOffers offers = getOffers();
-			addOffersFromItemListings(offers, commonItemListings, 3);
-
-			int i = random.nextInt(rareItemListings.length);
-			VillagerTrades.ItemListing rareItemListing = rareItemListings[i];
-			MerchantOffer rareOffer = rareItemListing.getOffer(this, random);
-			if (rareOffer != null) {
-				offers.add(rareOffer);
-			}
-
-			int i2 = random.nextInt(epicItemListings.length);
-			VillagerTrades.ItemListing epicItemListing = epicItemListings[i2];
-			MerchantOffer epicOffer = epicItemListing.getOffer(this, random);
-			if (epicOffer != null) {
-				offers.add(epicOffer);
-			}
+			addOffersFromItemListings(getOffers(), trades, entries);
 		}
 	}
 

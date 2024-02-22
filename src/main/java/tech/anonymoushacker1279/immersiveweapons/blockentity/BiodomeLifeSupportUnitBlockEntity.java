@@ -10,6 +10,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.phys.AABB;
 import org.jetbrains.annotations.Nullable;
 import tech.anonymoushacker1279.immersiveweapons.init.BlockEntityRegistry;
@@ -31,7 +32,7 @@ public class BiodomeLifeSupportUnitBlockEntity extends BlockEntity implements En
 		return new BiodomeLifeSupportUnitBlockEntity(pos, state);
 	}
 
-	public void tick(Level level, BlockPos pos) {
+	public void tick(Level level, BlockPos pos, BlockState state) {
 		if (isPowered && cooldown == 0) {
 			cooldown = 300;
 
@@ -49,6 +50,8 @@ public class BiodomeLifeSupportUnitBlockEntity extends BlockEntity implements En
 				double z = pos.getZ() + 0.5d + Math.sin(i);
 				serverLevel.sendParticles(ParticleTypes.INSTANT_EFFECT, x, pos.getY() + 0.5, z, 1, 0, 0, 0, 0);
 			}
+
+			level.gameEvent(GameEvent.BLOCK_ACTIVATE, pos, GameEvent.Context.of(state));
 		} else {
 			cooldown--;
 		}

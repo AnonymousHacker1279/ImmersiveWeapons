@@ -1,5 +1,6 @@
 {
   "type": "immersiveweapons:ammunition_table",
+  "group": "ammunition_table",
   "materials": [
     {
       "base_multiplier": 2.6,
@@ -16,7 +17,5 @@
       }
     }
   ],
-  "result": {
-    "item": "immersiveweapons:starstorm_musket_ball"
-  }
+  "result": "immersiveweapons:starstorm_musket_ball"
 }

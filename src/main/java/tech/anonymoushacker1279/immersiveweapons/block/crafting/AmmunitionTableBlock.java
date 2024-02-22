@@ -1,27 +1,25 @@
 package tech.anonymoushacker1279.immersiveweapons.block.crafting;
 
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.*;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.*;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.*;
-import net.neoforged.neoforge.network.NetworkHooks;
+import tech.anonymoushacker1279.immersiveweapons.block.core.BasicOrientableBlock;
 import tech.anonymoushacker1279.immersiveweapons.blockentity.AmmunitionTableBlockEntity;
 import tech.anonymoushacker1279.immersiveweapons.menu.AmmunitionTableMenu;
 
 import java.util.stream.Stream;
 
-public class AmmunitionTableBlock extends HorizontalDirectionalBlock implements EntityBlock {
+public class AmmunitionTableBlock extends BasicOrientableBlock implements EntityBlock {
 
 	protected static final VoxelShape SHAPE = Shapes.join(Stream.of(
 			Stream.of(
@@ -45,29 +43,11 @@ public class AmmunitionTableBlock extends HorizontalDirectionalBlock implements 
 
 	public AmmunitionTableBlock(Properties properties) {
 		super(properties);
-
-		registerDefaultState(stateDefinition.any().setValue(FACING, Direction.NORTH));
 	}
 
 	@Override
 	public VoxelShape getShape(BlockState state, BlockGetter getter, BlockPos pos, CollisionContext collisionContext) {
-
 		return SHAPE;
-	}
-
-	@Override
-	protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-		builder.add(FACING);
-	}
-
-	@Override
-	public BlockState getStateForPlacement(BlockPlaceContext context) {
-		return defaultBlockState().setValue(FACING, context.getHorizontalDirection());
-	}
-
-	@Override
-	public MenuProvider getMenuProvider(BlockState state, Level level, BlockPos pos) {
-		return new SimpleMenuProvider((id, inventory, player) -> new AmmunitionTableMenu(id, inventory), CONTAINER_NAME);
 	}
 
 	@Override
@@ -81,9 +61,10 @@ public class AmmunitionTableBlock extends HorizontalDirectionalBlock implements 
 		if (level.isClientSide) {
 			return InteractionResult.SUCCESS;
 		} else {
-			if (level.getBlockEntity(pos) instanceof AmmunitionTableBlockEntity blockEntity) {
-				NetworkHooks.openScreen((ServerPlayer) player, blockEntity, pos);
+			if (level.getBlockEntity(pos) instanceof AmmunitionTableBlockEntity blockEntity && player instanceof ServerPlayer serverPlayer) {
+				serverPlayer.openMenu(new SimpleMenuProvider((id, inventory, player1) -> new AmmunitionTableMenu(id, inventory, blockEntity, blockEntity.containerData), CONTAINER_NAME));
 			}
+
 			return InteractionResult.CONSUME;
 		}
 	}

@@ -1,5 +1,5 @@
 {
-  "parent": "immersiveweapons:activated_warrior_statue",
+  "parent": "immersiveweapons:azul_keystone",
   "criteria": {
     "visit": {
       "conditions": {
@@ -19,16 +19,13 @@
     }
   },
   "display": {
-    "announce_to_chat": true,
     "description": {
       "translate": "advancements.immersiveweapons.tiltros.biome.description"
     },
     "frame": "goal",
-    "hidden": false,
     "icon": {
-      "item": "immersiveweapons:azul_stained_orchid"
+      "item": "immersiveweapons:moonglow"
     },
-    "show_toast": true,
     "title": {
       "translate": "advancements.immersiveweapons.tiltros.biome.title"
     }
@@ -39,7 +36,7 @@
     ]
   ],
   "rewards": {
-    "experience": 50
+    "experience": 150
   },
   "sends_telemetry_event": true
 }

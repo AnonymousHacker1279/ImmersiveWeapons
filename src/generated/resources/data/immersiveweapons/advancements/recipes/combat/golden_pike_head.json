@@ -28,6 +28,5 @@
     "recipes": [
       "immersiveweapons:golden_pike_head"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

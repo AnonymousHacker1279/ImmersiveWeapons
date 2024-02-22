@@ -1,0 +1,39 @@
+{
+  "parent": "immersiveweapons:warden_heart",
+  "criteria": {
+    "hold": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "immersiveweapons:sculk_staff"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.immersiveweapons.sculk_staff.description"
+    },
+    "frame": "challenge",
+    "icon": {
+      "item": "immersiveweapons:sculk_staff",
+      "nbt": "{Damage:0}"
+    },
+    "title": {
+      "translate": "advancements.immersiveweapons.sculk_staff.title"
+    }
+  },
+  "requirements": [
+    [
+      "hold"
+    ]
+  ],
+  "rewards": {
+    "experience": 75
+  },
+  "sends_telemetry_event": true
+}

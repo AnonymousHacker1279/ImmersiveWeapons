@@ -30,6 +30,5 @@
     "recipes": [
       "immersiveweapons:diamond_ring"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

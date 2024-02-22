@@ -30,6 +30,5 @@
     "recipes": [
       "immersiveweapons:bloody_cloth"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

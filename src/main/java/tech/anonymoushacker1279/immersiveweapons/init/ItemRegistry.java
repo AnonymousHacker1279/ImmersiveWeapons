@@ -1,7 +1,9 @@
 package tech.anonymoushacker1279.immersiveweapons.init;
 
 import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.ItemTags;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.*;
 import net.minecraft.world.item.Item.Properties;
 import net.minecraft.world.item.crafting.Ingredient;
@@ -9,8 +11,6 @@ import net.neoforged.neoforge.common.DeferredSpawnEggItem;
 import net.neoforged.neoforge.common.Tags;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
-import tech.anonymoushacker1279.immersiveweapons.data.tags.groups.forge.ForgeItemTagGroups;
-import tech.anonymoushacker1279.immersiveweapons.data.tags.groups.immersiveweapons.IWItemTagGroups;
 import tech.anonymoushacker1279.immersiveweapons.item.*;
 import tech.anonymoushacker1279.immersiveweapons.item.AccessoryItem.AccessorySlot;
 import tech.anonymoushacker1279.immersiveweapons.item.armor.*;
@@ -28,6 +28,7 @@ import tech.anonymoushacker1279.immersiveweapons.item.projectile.BulletItem.Bull
 import tech.anonymoushacker1279.immersiveweapons.item.projectile.CustomArrowItem.ArrowBuilder;
 import tech.anonymoushacker1279.immersiveweapons.item.projectile.ThrowableItem.ThrowableType;
 import tech.anonymoushacker1279.immersiveweapons.item.tool.HitEffectUtils.HitEffect;
+import tech.anonymoushacker1279.immersiveweapons.item.tool.TheSword;
 import tech.anonymoushacker1279.immersiveweapons.item.tool.molten.*;
 import tech.anonymoushacker1279.immersiveweapons.item.tool.tesla.*;
 import tech.anonymoushacker1279.immersiveweapons.item.tool.ventus.*;
@@ -41,6 +42,13 @@ public class ItemRegistry {
 
 	// Item Register
 	public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(Registries.ITEM, ImmersiveWeapons.MOD_ID);
+
+	public static final TagKey<Item> COBALT_INGOTS = ItemTags.create(new ResourceLocation("forge", "ingots/cobalt"));
+	public static final TagKey<Item> MOLTEN_INGOTS = ItemTags.create(new ResourceLocation(ImmersiveWeapons.MOD_ID, "ingots/molten"));
+	public static final TagKey<Item> TESLA_INGOTS = ItemTags.create(new ResourceLocation(ImmersiveWeapons.MOD_ID, "ingots/tesla"));
+	public static final TagKey<Item> VENTUS_SHARDS = ItemTags.create(new ResourceLocation(ImmersiveWeapons.MOD_ID, "shards/ventus"));
+	public static final TagKey<Item> ASTRAL_INGOTS = ItemTags.create(new ResourceLocation(ImmersiveWeapons.MOD_ID, "ingots/astral"));
+	public static final TagKey<Item> STARSTORM_INGOTS = ItemTags.create(new ResourceLocation(ImmersiveWeapons.MOD_ID, "ingots/starstorm"));
 
 	// Tools
 	public static final Supplier<MoltenSword> MOLTEN_SWORD = ITEMS.register("molten_sword", () -> new MoltenSword(CustomItemMaterials.MOLTEN, 3, -2.4f, new Properties().fireResistant()));
@@ -79,6 +87,7 @@ public class ItemRegistry {
 	public static final Supplier<AxeItem> STARSTORM_AXE = ITEMS.register("starstorm_axe", () -> new AxeItem(CustomItemMaterials.STARSTORM, 5, -3.0f, new Properties()));
 	public static final Supplier<ShovelItem> STARSTORM_SHOVEL = ITEMS.register("starstorm_shovel", () -> new ShovelItem(CustomItemMaterials.STARSTORM, 1.5f, -3.0f, new Properties()));
 	public static final Supplier<HoeItem> STARSTORM_HOE = ITEMS.register("starstorm_hoe", () -> new HoeItem(CustomItemMaterials.STARSTORM, -7, 0.0f, new Properties()));
+	public static final Supplier<TheSword> THE_SWORD = ITEMS.register("the_sword", () -> new TheSword(CustomItemMaterials.HANSIUM, 3, -2.4f, new Properties().fireResistant()));
 
 	// Weapons
 	public static final Supplier<PikeItem> WOODEN_PIKE = ITEMS.register("wooden_pike", () -> new PikeItem(Tiers.WOOD, new Properties(), 4, -2.6d, Ingredient.of(ItemTags.PLANKS)));
@@ -86,14 +95,14 @@ public class ItemRegistry {
 	public static final Supplier<PikeItem> GOLDEN_PIKE = ITEMS.register("golden_pike", () -> new PikeItem(Tiers.GOLD, new Properties(), 4, -2.6d, Ingredient.of(Tags.Items.INGOTS_GOLD)));
 	public static final Supplier<PikeItem> COPPER_PIKE = ITEMS.register("copper_pike", () -> new PikeItem(CustomItemMaterials.COPPER, new Properties(), 4, -2.6d, Ingredient.of(Tags.Items.INGOTS_COPPER)));
 	public static final Supplier<PikeItem> IRON_PIKE = ITEMS.register("iron_pike", () -> new PikeItem(Tiers.IRON, new Properties(), 4, -2.6d, Ingredient.of(Tags.Items.INGOTS_IRON)));
-	public static final Supplier<PikeItem> COBALT_PIKE = ITEMS.register("cobalt_pike", () -> new PikeItem(CustomItemMaterials.COBALT, new Properties(), 4, -2.6d, Ingredient.of(ForgeItemTagGroups.COBALT_INGOTS)));
+	public static final Supplier<PikeItem> COBALT_PIKE = ITEMS.register("cobalt_pike", () -> new PikeItem(CustomItemMaterials.COBALT, new Properties(), 4, -2.6d, Ingredient.of(COBALT_INGOTS)));
 	public static final Supplier<PikeItem> DIAMOND_PIKE = ITEMS.register("diamond_pike", () -> new PikeItem(Tiers.DIAMOND, new Properties(), 4, -2.6d, Ingredient.of(Tags.Items.GEMS_DIAMOND)));
 	public static final Supplier<PikeItem> NETHERITE_PIKE = ITEMS.register("netherite_pike", () -> new PikeItem(Tiers.NETHERITE, new Properties().fireResistant(), 4, -2.6d, Ingredient.of(Tags.Items.INGOTS_NETHERITE)));
-	public static final Supplier<MoltenPikeItem> MOLTEN_PIKE = ITEMS.register("molten_pike", () -> new MoltenPikeItem(CustomItemMaterials.MOLTEN, new Properties().fireResistant(), 4, -2.6d, Ingredient.of(IWItemTagGroups.MOLTEN_INGOTS)));
-	public static final Supplier<TeslaPikeItem> TESLA_PIKE = ITEMS.register("tesla_pike", () -> new TeslaPikeItem(CustomItemMaterials.TESLA, new Properties().fireResistant(), 4, -2.6d, Ingredient.of(IWItemTagGroups.TESLA_INGOTS)));
-	public static final Supplier<VentusPikeItem> VENTUS_PIKE = ITEMS.register("ventus_pike", () -> new VentusPikeItem(CustomItemMaterials.VENTUS, new Properties().fireResistant(), 4, -2.2d, Ingredient.of(IWItemTagGroups.VENTUS_SHARDS)));
-	public static final Supplier<PikeItem> ASTRAL_PIKE = ITEMS.register("astral_pike", () -> new PikeItem(CustomItemMaterials.ASTRAL, new Properties(), 4, -1.7d, Ingredient.of(IWItemTagGroups.ASTRAL_INGOTS)));
-	public static final Supplier<PikeItem> STARSTORM_PIKE = ITEMS.register("starstorm_pike", () -> new PikeItem(CustomItemMaterials.STARSTORM, new Properties(), 4, -2.6d, Ingredient.of(IWItemTagGroups.STARSTORM_INGOTS)));
+	public static final Supplier<MoltenPikeItem> MOLTEN_PIKE = ITEMS.register("molten_pike", () -> new MoltenPikeItem(CustomItemMaterials.MOLTEN, new Properties().fireResistant(), 4, -2.6d, Ingredient.of(MOLTEN_INGOTS)));
+	public static final Supplier<TeslaPikeItem> TESLA_PIKE = ITEMS.register("tesla_pike", () -> new TeslaPikeItem(CustomItemMaterials.TESLA, new Properties().fireResistant(), 4, -2.6d, Ingredient.of(TESLA_INGOTS)));
+	public static final Supplier<VentusPikeItem> VENTUS_PIKE = ITEMS.register("ventus_pike", () -> new VentusPikeItem(CustomItemMaterials.VENTUS, new Properties().fireResistant(), 4, -2.2d, Ingredient.of(VENTUS_SHARDS)));
+	public static final Supplier<PikeItem> ASTRAL_PIKE = ITEMS.register("astral_pike", () -> new PikeItem(CustomItemMaterials.ASTRAL, new Properties(), 4, -1.7d, Ingredient.of(ASTRAL_INGOTS)));
+	public static final Supplier<PikeItem> STARSTORM_PIKE = ITEMS.register("starstorm_pike", () -> new PikeItem(CustomItemMaterials.STARSTORM, new Properties(), 4, -2.6d, Ingredient.of(STARSTORM_INGOTS)));
 	public static final Supplier<SimplePistolItem> FLINTLOCK_PISTOL = ITEMS.register("flintlock_pistol", () -> new SimplePistolItem(new Properties().durability(499)));
 	public static final Supplier<SimpleShotgunItem> BLUNDERBUSS = ITEMS.register("blunderbuss", () -> new SimpleShotgunItem(new Properties().durability(449)));
 	public static final Supplier<MusketItem> MUSKET = ITEMS.register("musket", () -> new MusketItem(new Properties().durability(499), false));
@@ -105,16 +114,18 @@ public class ItemRegistry {
 	public static final Supplier<GauntletItem> GOLDEN_GAUNTLET = ITEMS.register("golden_gauntlet", () -> new GauntletItem(Tiers.GOLD, 2, -2.3f, new Properties(), 0.35f, 0, Ingredient.of(Tags.Items.INGOTS_GOLD)));
 	public static final Supplier<GauntletItem> COPPER_GAUNTLET = ITEMS.register("copper_gauntlet", () -> new GauntletItem(CustomItemMaterials.COPPER, 2, -2.3f, new Properties(), 0.45f, 0, Ingredient.of(Tags.Items.INGOTS_COPPER)));
 	public static final Supplier<GauntletItem> IRON_GAUNTLET = ITEMS.register("iron_gauntlet", () -> new GauntletItem(Tiers.IRON, 2, -2.3f, new Properties(), 0.55f, 0, Ingredient.of(Tags.Items.INGOTS_IRON)));
-	public static final Supplier<GauntletItem> COBALT_GAUNTLET = ITEMS.register("cobalt_gauntlet", () -> new GauntletItem(CustomItemMaterials.COBALT, 2, -2.3f, new Properties(), 0.60f, 0, Ingredient.of(ForgeItemTagGroups.COBALT_INGOTS)));
+	public static final Supplier<GauntletItem> COBALT_GAUNTLET = ITEMS.register("cobalt_gauntlet", () -> new GauntletItem(CustomItemMaterials.COBALT, 2, -2.3f, new Properties(), 0.60f, 0, Ingredient.of(COBALT_INGOTS)));
 	public static final Supplier<GauntletItem> DIAMOND_GAUNTLET = ITEMS.register("diamond_gauntlet", () -> new GauntletItem(Tiers.DIAMOND, 2, -2.3f, new Properties(), 0.75f, 1, Ingredient.of(Tags.Items.GEMS_DIAMOND)));
 	public static final Supplier<GauntletItem> NETHERITE_GAUNTLET = ITEMS.register("netherite_gauntlet", () -> new GauntletItem(Tiers.NETHERITE, 2, -2.3f, new Properties(), 0.85f, 1, Ingredient.of(Tags.Items.INGOTS_NETHERITE)));
-	public static final Supplier<MoltenGauntletItem> MOLTEN_GAUNTLET = ITEMS.register("molten_gauntlet", () -> new MoltenGauntletItem(CustomItemMaterials.MOLTEN, 2, -2.3f, new Properties(), 0.95f, 2, Ingredient.of(IWItemTagGroups.MOLTEN_INGOTS)));
-	public static final Supplier<TeslaGauntletItem> TESLA_GAUNTLET = ITEMS.register("tesla_gauntlet", () -> new TeslaGauntletItem(CustomItemMaterials.TESLA, 2, -2.3f, new Properties(), 0.95f, 2, Ingredient.of(IWItemTagGroups.TESLA_INGOTS)));
-	public static final Supplier<VentusGauntletItem> VENTUS_GAUNTLET = ITEMS.register("ventus_gauntlet", () -> new VentusGauntletItem(CustomItemMaterials.VENTUS, 2, -1.9f, new Properties(), 0.95f, 2, Ingredient.of(IWItemTagGroups.VENTUS_SHARDS)));
-	public static final Supplier<GauntletItem> ASTRAL_GAUNTLET = ITEMS.register("astral_gauntlet", () -> new GauntletItem(CustomItemMaterials.ASTRAL, 2, -1.4f, new Properties(), 0.95f, 2, Ingredient.of(IWItemTagGroups.ASTRAL_INGOTS)));
-	public static final Supplier<GauntletItem> STARSTORM_GAUNTLET = ITEMS.register("starstorm_gauntlet", () -> new GauntletItem(CustomItemMaterials.STARSTORM, 2, -2.3f, new Properties(), 0.95f, 2, Ingredient.of(IWItemTagGroups.STARSTORM_INGOTS)));
+	public static final Supplier<MoltenGauntletItem> MOLTEN_GAUNTLET = ITEMS.register("molten_gauntlet", () -> new MoltenGauntletItem(CustomItemMaterials.MOLTEN, 2, -2.3f, new Properties(), 0.95f, 2, Ingredient.of(MOLTEN_INGOTS)));
+	public static final Supplier<TeslaGauntletItem> TESLA_GAUNTLET = ITEMS.register("tesla_gauntlet", () -> new TeslaGauntletItem(CustomItemMaterials.TESLA, 2, -2.3f, new Properties(), 0.95f, 2, Ingredient.of(TESLA_INGOTS)));
+	public static final Supplier<VentusGauntletItem> VENTUS_GAUNTLET = ITEMS.register("ventus_gauntlet", () -> new VentusGauntletItem(CustomItemMaterials.VENTUS, 2, -1.9f, new Properties(), 0.95f, 2, Ingredient.of(VENTUS_SHARDS)));
+	public static final Supplier<GauntletItem> ASTRAL_GAUNTLET = ITEMS.register("astral_gauntlet", () -> new GauntletItem(CustomItemMaterials.ASTRAL, 2, -1.4f, new Properties(), 0.95f, 2, Ingredient.of(ASTRAL_INGOTS)));
+	public static final Supplier<GauntletItem> STARSTORM_GAUNTLET = ITEMS.register("starstorm_gauntlet", () -> new GauntletItem(CustomItemMaterials.STARSTORM, 2, -2.3f, new Properties(), 0.95f, 2, Ingredient.of(STARSTORM_INGOTS)));
 	public static final Supplier<MeteorStaffItem> METEOR_STAFF = ITEMS.register("meteor_staff", () -> new MeteorStaffItem(new Properties().durability(199)));
 	public static final Supplier<CursedSightStaffItem> CURSED_SIGHT_STAFF = ITEMS.register("cursed_sight_staff", () -> new CursedSightStaffItem(new Properties().durability(149)));
+	public static final Supplier<SculkStaffItem> SCULK_STAFF = ITEMS.register("sculk_staff", () -> new SculkStaffItem(new Properties().durability(129)));
+	public static final Supplier<RecoveryStaffItem> RECOVERY_STAFF = ITEMS.register("recovery_staff", () -> new RecoveryStaffItem(new Properties().durability(399)));
 	public static final Supplier<IceBowItem> ICE_BOW = ITEMS.register("ice_bow", () -> new IceBowItem(new Properties().durability(149)));
 	public static final Supplier<DragonBreathBow> DRAGONS_BREATH_BOW = ITEMS.register("dragons_breath_bow", () -> new DragonBreathBow(new Properties().durability(99)));
 	public static final Supplier<AuroraBow> AURORA_BOW = ITEMS.register("aurora_bow", () -> new AuroraBow(new Properties().durability(299)));
@@ -143,12 +154,14 @@ public class ItemRegistry {
 	public static final Supplier<Item> CONDUCTIVE_ALLOY = ITEMS.register("conductive_alloy", () -> new Item(new Properties()));
 	public static final Supplier<Item> MOLTEN_INGOT = ITEMS.register("molten_ingot", () -> new FuelItem(new Properties().fireResistant(), 24000));
 	public static final Supplier<Item> MOLTEN_SMITHING_TEMPLATE = ITEMS.register("molten_smithing_template", () -> new Item(new Properties().fireResistant()));
+	public static final Supplier<Item> HANSIUM_INGOT = ITEMS.register("hansium_ingot", () -> new Item(new Properties()));
 	public static final Supplier<Item> BLACKPOWDER = ITEMS.register("blackpowder", () -> new Item(new Properties()));
 	public static final Supplier<Item> SULFUR = ITEMS.register("sulfur", () -> new Item(new Properties()));
 	public static final Supplier<Item> SULFUR_DUST = ITEMS.register("sulfur_dust", () -> new Item(new Properties()));
 	public static final Supplier<Item> POTASSIUM_NITRATE = ITEMS.register("potassium_nitrate", () -> new Item(new Properties()));
 	public static final Supplier<Item> VENTUS_STAFF_CORE = ITEMS.register("ventus_staff_core", () -> new Item(new Properties()));
 	public static final Supplier<Item> CURSED_SIGHT_STAFF_CORE = ITEMS.register("cursed_sight_staff_core", () -> new Item(new Properties()));
+	public static final Supplier<Item> WARDEN_HEART = ITEMS.register("warden_heart", () -> new Item(new Properties()));
 	public static final Supplier<Item> AZUL_KEYSTONE = ITEMS.register("azul_keystone", () -> new Item(new Properties()));
 	public static final Supplier<Item> AZUL_KEYSTONE_FRAGMENT = ITEMS.register("azul_keystone_fragment", () -> new Item(new Properties()));
 	public static final Supplier<AzulLocatorItem> AZUL_LOCATOR = ITEMS.register("azul_locator", () -> new AzulLocatorItem(new Properties().durability(1)));
@@ -220,6 +233,7 @@ public class ItemRegistry {
 	public static final Supplier<ThrowableItem> SMOKE_GRENADE_BLUE = ITEMS.register("smoke_grenade_blue", () -> new ThrowableItem(new Properties().stacksTo(16), 3));
 	public static final Supplier<ThrowableItem> SMOKE_GRENADE_PURPLE = ITEMS.register("smoke_grenade_purple", () -> new ThrowableItem(new Properties().stacksTo(16), 4));
 	public static final Supplier<ThrowableItem> SMOKE_GRENADE_YELLOW = ITEMS.register("smoke_grenade_yellow", () -> new ThrowableItem(new Properties().stacksTo(16), 5));
+	public static final Supplier<ThrowableItem> FLASHBANG = ITEMS.register("flashbang", () -> new ThrowableItem(new Properties().stacksTo(16), ThrowableType.FLASHBANG));
 	public static final Supplier<ThrowableItem> MOLOTOV_COCKTAIL = ITEMS.register("molotov_cocktail", () -> new ThrowableItem(new Properties().stacksTo(16), ThrowableType.MOLOTOV));
 	public static final Supplier<Item> SMOKE_POWDER = ITEMS.register("smoke_powder", () -> new Item(new Properties()));
 	public static final Supplier<BasicContainerItem> MORTAR_AND_PESTLE = ITEMS.register("mortar_and_pestle", () -> new BasicContainerItem(new Properties()));
@@ -266,6 +280,7 @@ public class ItemRegistry {
 	public static final Supplier<AccessoryItem> DEATH_GEM_RING = ITEMS.register("death_gem_ring", () -> new AccessoryItem(new Properties().stacksTo(1), AccessorySlot.RING, AccessoryItemEffects.DEATH_GEM_RING));
 	public static final Supplier<AccessoryItem> MEDAL_OF_ADEQUACY = ITEMS.register("medal_of_adequacy", () -> new AccessoryItem(new Properties().stacksTo(1), AccessorySlot.NECKLACE, AccessoryItemEffects.MEDAL_OF_ADEQUACY));
 	public static final Supplier<AccessoryItem> DEPTH_CHARM = ITEMS.register("depth_charm", () -> new AccessoryItem(new Properties().stacksTo(1), AccessorySlot.CHARM, AccessoryItemEffects.DEPTH_CHARM));
+	public static final Supplier<AccessoryItem> REINFORCED_DEPTH_CHARM = ITEMS.register("reinforced_depth_charm", () -> new AccessoryItem(new Properties().stacksTo(1), AccessorySlot.CHARM, AccessoryItemEffects.REINFORCED_DEPTH_CHARM));
 	public static final Supplier<AccessoryItem> INSOMNIA_AMULET = ITEMS.register("insomnia_amulet", () -> new AccessoryItem(new Properties().stacksTo(1), AccessorySlot.NECKLACE, AccessoryItemEffects.INSOMNIA_AMULET));
 	public static final Supplier<AccessoryItem> GOGGLES = ITEMS.register("goggles", () -> new AccessoryItem(new Properties().stacksTo(1), AccessorySlot.HEAD, AccessoryItemEffects.GOGGLES));
 	public static final Supplier<AccessoryItem> LAVA_GOGGLES = ITEMS.register("lava_goggles", () -> new AccessoryItem(new Properties().stacksTo(1), AccessorySlot.HEAD, AccessoryItemEffects.LAVA_GOGGLES));
@@ -276,10 +291,16 @@ public class ItemRegistry {
 	public static final Supplier<AccessoryItem> HOLY_MANTLE = ITEMS.register("holy_mantle", () -> new AccessoryItem(new Properties().stacksTo(1), AccessorySlot.BELT, AccessoryItemEffects.HOLY_MANTLE));
 	public static final Supplier<AccessoryItem> VENSTRAL_JAR = ITEMS.register("venstral_jar", () -> new AccessoryItem(new Properties().stacksTo(1), AccessorySlot.BELT, AccessoryItemEffects.VENSTRAL_JAR));
 	public static final Supplier<AccessoryItem> SUPER_BLANKET_CAPE = ITEMS.register("super_blanket_cape", () -> new AccessoryItem(new Properties().stacksTo(1), AccessorySlot.BODY, AccessoryItemEffects.SUPER_BLANKET_CAPE));
+	public static final Supplier<AccessoryItem> MEDAL_OF_HONOR = ITEMS.register("medal_of_honor", () -> new AccessoryItem(new Properties().stacksTo(1), AccessorySlot.CHARM, AccessoryItemEffects.MEDAL_OF_HONOR));
+	public static final Supplier<AccessoryItem> MEDAL_OF_DISHONOR = ITEMS.register("medal_of_dishonor", () -> new AccessoryItem(new Properties().stacksTo(1), AccessorySlot.CHARM, AccessoryItemEffects.MEDAL_OF_DISHONOR));
 	public static final Supplier<CursedItem> BLOODY_SACRIFICE = ITEMS.register("bloody_sacrifice", () -> new CursedItem(new Properties().stacksTo(1).setNoRepair().durability(100), "bloody_sacrifice"));
 	public static final Supplier<CursedItem> JONNYS_CURSE = ITEMS.register("jonnys_curse", () -> new CursedItem(new Properties().stacksTo(1).setNoRepair().durability(100), "jonnys_curse"));
 	public static final Supplier<Item> CHAMPION_KEYCARD = ITEMS.register("champion_keycard", () -> new Item(new Properties().stacksTo(1).fireResistant()));
 	public static final Supplier<Item> KILL_COUNTER = ITEMS.register("kill_counter", () -> new Item(new Properties()));
+	public static final Supplier<Item> PEDESTAL_AUGMENT_SPEED = ITEMS.register("pedestal_augment_speed", () -> new Item(new Properties().stacksTo(4)));
+	public static final Supplier<Item> PEDESTAL_AUGMENT_ARMOR = ITEMS.register("pedestal_augment_armor", () -> new Item(new Properties().stacksTo(4)));
+	public static final Supplier<Item> PEDESTAL_AUGMENT_ENCHANTMENT = ITEMS.register("pedestal_augment_enchantment", () -> new Item(new Properties().stacksTo(4)));
+	public static final Supplier<Item> PEDESTAL_AUGMENT_CAPACITY = ITEMS.register("pedestal_augment_capacity", () -> new Item(new Properties().stacksTo(4)));
 
 	// Armor
 	public static final Supplier<MoltenArmorItem> MOLTEN_HELMET = ITEMS.register("molten_helmet", () -> new MoltenArmorItem(CustomArmorMaterials.MOLTEN, ArmorItem.Type.HELMET, new Item.Properties().fireResistant(), false));
@@ -317,6 +338,7 @@ public class ItemRegistry {
 
 	// Spawn eggs
 	public static final Supplier<DeferredSpawnEggItem> DYING_SOLDIER_SPAWN_EGG = ITEMS.register("dying_soldier_spawn_egg", () -> new DeferredSpawnEggItem(EntityRegistry.DYING_SOLDIER_ENTITY, 0x7a6851, 0x783d22, (new Item.Properties()).stacksTo(16)));
+	public static final Supplier<DeferredSpawnEggItem> THE_COMMANDER_SPAWN_EGG = ITEMS.register("the_commander_spawn_egg", () -> new DeferredSpawnEggItem(EntityRegistry.THE_COMMANDER_ENTITY, 0x7a6851, 0x783d22, (new Item.Properties()).stacksTo(16)));
 	public static final Supplier<DeferredSpawnEggItem> MINUTEMAN_SPAWN_EGG = ITEMS.register("minuteman_spawn_egg", () -> new DeferredSpawnEggItem(EntityRegistry.MINUTEMAN_ENTITY, 0x494522, 0x204b2a, (new Item.Properties()).stacksTo(16)));
 	public static final Supplier<DeferredSpawnEggItem> FIELD_MEDIC_SPAWN_EGG = ITEMS.register("field_medic_spawn_egg", () -> new DeferredSpawnEggItem(EntityRegistry.FIELD_MEDIC_ENTITY, 0xde5451, 0xebe4d2, (new Item.Properties()).stacksTo(16)));
 	public static final Supplier<DeferredSpawnEggItem> WANDERING_WARRIOR_SPAWN_EGG = ITEMS.register("wandering_warrior_spawn_egg", () -> new DeferredSpawnEggItem(EntityRegistry.WANDERING_WARRIOR_ENTITY, 0x614226, 0x2e6278, (new Item.Properties()).stacksTo(16)));

@@ -30,6 +30,5 @@
     "recipes": [
       "immersiveweapons:iron_ring"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

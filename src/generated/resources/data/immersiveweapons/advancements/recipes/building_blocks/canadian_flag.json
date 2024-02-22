@@ -30,6 +30,5 @@
     "recipes": [
       "immersiveweapons:canadian_flag"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

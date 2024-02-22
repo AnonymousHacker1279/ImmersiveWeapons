@@ -30,6 +30,5 @@
     "recipes": [
       "immersiveweapons:mexican_flag"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

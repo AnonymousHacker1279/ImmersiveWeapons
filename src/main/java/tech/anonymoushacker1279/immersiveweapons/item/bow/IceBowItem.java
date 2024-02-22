@@ -5,6 +5,7 @@ import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.entity.projectile.Arrow;
 import net.minecraft.world.item.BowItem;
+import net.minecraft.world.item.ItemStack;
 
 public class IceBowItem extends BowItem {
 
@@ -13,7 +14,7 @@ public class IceBowItem extends BowItem {
 	}
 
 	@Override
-	public AbstractArrow customArrow(AbstractArrow abstractArrow) {
+	public AbstractArrow customArrow(AbstractArrow abstractArrow, ItemStack stack) {
 		if (abstractArrow instanceof Arrow arrow) {
 			arrow.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 100, 2));
 

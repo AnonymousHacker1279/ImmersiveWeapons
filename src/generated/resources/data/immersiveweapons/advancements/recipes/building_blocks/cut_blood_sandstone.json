@@ -30,6 +30,5 @@
     "recipes": [
       "immersiveweapons:cut_blood_sandstone"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

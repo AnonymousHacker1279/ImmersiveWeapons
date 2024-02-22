@@ -18,7 +18,6 @@ public class LootModifierRegistry {
 	// Loot Table Modifiers
 	public static final Supplier<Codec<LogShardsLootModifierHandler>> WOOD_LOGS_MODIFIER = GLOBAL_LOOT_MODIFIER_SERIALIZER.register("log_shards", LogShardsLootModifierHandler.CODEC);
 	public static final Supplier<Codec<SimpleChestModifierHandler>> SIMPLE_CHEST_MODIFIER = GLOBAL_LOOT_MODIFIER_SERIALIZER.register("simple_chest", SimpleChestModifierHandler.CODEC);
-	public static final Supplier<Codec<MoltenToolSmeltingModifierHandler>> MOLTEN_TOOL_SMELTING_MODIFIER = GLOBAL_LOOT_MODIFIER_SERIALIZER.register("molten_tool_smelting", MoltenToolSmeltingModifierHandler.CODEC);
-	public static final Supplier<Codec<UndeadMobDropModifierHandler>> UNDEAD_MOB_DROP_MODIFIER = GLOBAL_LOOT_MODIFIER_SERIALIZER.register("undead_drop", UndeadMobDropModifierHandler.CODEC);
+	public static final Supplier<Codec<ToolSmeltingModifierHandler>> TOOL_SMELTING_MODIFIER = GLOBAL_LOOT_MODIFIER_SERIALIZER.register("tool_smelting", ToolSmeltingModifierHandler.CODEC);
 	public static final Supplier<Codec<SimpleDropModifierHandler>> SIMPLE_DROP_MODIFIER = GLOBAL_LOOT_MODIFIER_SERIALIZER.register("simple_drop", SimpleDropModifierHandler.CODEC);
 }

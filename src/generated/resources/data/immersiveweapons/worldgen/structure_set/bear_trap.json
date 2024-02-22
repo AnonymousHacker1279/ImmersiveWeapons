@@ -1,0 +1,14 @@
+{
+  "placement": {
+    "type": "minecraft:random_spread",
+    "salt": 794532168,
+    "separation": 2,
+    "spacing": 7
+  },
+  "structures": [
+    {
+      "structure": "immersiveweapons:bear_trap",
+      "weight": 1
+    }
+  ]
+}

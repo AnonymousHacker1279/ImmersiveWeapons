@@ -15,17 +15,14 @@
     }
   },
   "display": {
-    "announce_to_chat": true,
     "description": {
       "translate": "advancements.immersiveweapons.bloody_sacrifice.description"
     },
     "frame": "challenge",
-    "hidden": false,
     "icon": {
       "item": "immersiveweapons:bloody_sacrifice",
       "nbt": "{Damage:0}"
     },
-    "show_toast": true,
     "title": {
       "translate": "advancements.immersiveweapons.bloody_sacrifice.title"
     }

@@ -28,6 +28,5 @@
     "recipes": [
       "minecraft:cauldron"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

@@ -15,16 +15,13 @@
     }
   },
   "display": {
-    "announce_to_chat": true,
     "description": {
       "translate": "advancements.immersiveweapons.cloud_marble.description"
     },
     "frame": "goal",
-    "hidden": false,
     "icon": {
       "item": "immersiveweapons:cloud_marble"
     },
-    "show_toast": true,
     "title": {
       "translate": "advancements.immersiveweapons.cloud_marble.title"
     }

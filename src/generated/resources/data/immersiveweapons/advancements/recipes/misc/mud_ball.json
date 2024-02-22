@@ -30,6 +30,5 @@
     "recipes": [
       "immersiveweapons:mud_ball"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

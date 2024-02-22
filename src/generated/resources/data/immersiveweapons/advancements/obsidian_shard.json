@@ -15,16 +15,13 @@
     }
   },
   "display": {
-    "announce_to_chat": true,
     "description": {
       "translate": "advancements.immersiveweapons.obsidian_shard.description"
     },
     "frame": "goal",
-    "hidden": false,
     "icon": {
       "item": "immersiveweapons:obsidian_shard"
     },
-    "show_toast": true,
     "title": {
       "translate": "advancements.immersiveweapons.obsidian_shard.title"
     }

@@ -10,7 +10,7 @@ import tech.anonymoushacker1279.immersiveweapons.blockentity.CustomSignBlockEnti
 public class CustomStandingSignBlock extends StandingSignBlock {
 
 	public CustomStandingSignBlock(Properties properties, WoodType woodType) {
-		super(properties, woodType);
+		super(woodType, properties);
 	}
 
 	@Override

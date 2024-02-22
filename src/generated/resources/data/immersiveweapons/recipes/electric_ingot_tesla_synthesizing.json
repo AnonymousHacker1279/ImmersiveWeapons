@@ -4,13 +4,12 @@
     "item": "minecraft:stone"
   },
   "cookTime": 12000,
+  "group": "tesla_synthesizer",
   "material1": {
     "item": "minecraft:lapis_lazuli"
   },
   "material2": {
     "item": "immersiveweapons:conductive_alloy"
   },
-  "result": {
-    "item": "immersiveweapons:electric_ingot"
-  }
+  "result": "immersiveweapons:electric_ingot"
 }

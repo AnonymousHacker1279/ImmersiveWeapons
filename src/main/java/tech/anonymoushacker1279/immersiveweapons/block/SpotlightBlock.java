@@ -11,11 +11,12 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
+import tech.anonymoushacker1279.immersiveweapons.block.core.BasicOrientableBlock;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class SpotlightBlock extends HorizontalDirectionalBlock implements SimpleWaterloggedBlock {
+public class SpotlightBlock extends BasicOrientableBlock implements SimpleWaterloggedBlock {
 
 	public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
 	public static final BooleanProperty LIT = BlockStateProperties.LIT;

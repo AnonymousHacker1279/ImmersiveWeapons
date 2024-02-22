@@ -24,6 +24,5 @@
     "recipes": [
       "immersiveweapons:burned_oak_boat"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

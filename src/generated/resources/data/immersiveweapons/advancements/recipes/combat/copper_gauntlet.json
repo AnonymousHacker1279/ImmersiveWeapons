@@ -28,6 +28,5 @@
     "recipes": [
       "immersiveweapons:copper_gauntlet"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

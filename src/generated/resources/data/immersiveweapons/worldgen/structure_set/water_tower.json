@@ -1,0 +1,14 @@
+{
+  "placement": {
+    "type": "minecraft:random_spread",
+    "salt": 246975135,
+    "separation": 12,
+    "spacing": 20
+  },
+  "structures": [
+    {
+      "structure": "immersiveweapons:water_tower",
+      "weight": 1
+    }
+  ]
+}

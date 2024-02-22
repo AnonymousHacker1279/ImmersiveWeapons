@@ -21,4 +21,5 @@ public class EffectRegistry {
 	public static final Supplier<AlcoholEffect> ALCOHOL_EFFECT = EFFECTS.register("alcohol", () -> new AlcoholEffect(MobEffectCategory.NEUTRAL, 14465637));
 	public static final Supplier<BasicPotionEffect> CELESTIAL_PROTECTION_EFFECT = EFFECTS.register("celestial_protection", () -> new BasicPotionEffect(MobEffectCategory.BENEFICIAL, 10011890));
 	public static final Supplier<BasicPotionEffect> DAMAGE_VULNERABILITY_EFFECT = EFFECTS.register("damage_vulnerability", () -> new BasicPotionEffect(MobEffectCategory.HARMFUL, 9056876));
+	public static final Supplier<BasicPotionEffect> FLASHBANG_EFFECT = EFFECTS.register("flashbang", () -> new BasicPotionEffect(MobEffectCategory.HARMFUL, 16777215));
 }

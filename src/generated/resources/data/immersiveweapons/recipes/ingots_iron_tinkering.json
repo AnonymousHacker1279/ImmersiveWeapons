@@ -5,6 +5,7 @@
     "immersiveweapons:iron_barrel",
     "immersiveweapons:short_iron_barrel"
   ],
+  "group": "small_parts",
   "material": {
     "tag": "forge:ingots/iron"
   }

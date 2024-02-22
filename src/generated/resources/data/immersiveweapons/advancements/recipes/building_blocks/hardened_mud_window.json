@@ -30,6 +30,5 @@
     "recipes": [
       "immersiveweapons:hardened_mud_window"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

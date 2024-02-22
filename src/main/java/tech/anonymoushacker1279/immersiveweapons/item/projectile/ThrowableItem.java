@@ -3,10 +3,10 @@ package tech.anonymoushacker1279.immersiveweapons.item.projectile;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.ThrowableItemProjectile;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.*;
 import net.minecraft.world.level.Level;
 import tech.anonymoushacker1279.immersiveweapons.entity.projectile.*;
 import tech.anonymoushacker1279.immersiveweapons.init.SoundEventRegistry;
@@ -44,6 +44,12 @@ public class ThrowableItem extends Item {
 	@Override
 	public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
 		ItemStack itemInHand = player.getItemInHand(hand);
+
+		if (type.canCharge) {
+			player.startUsingItem(hand);
+			return InteractionResultHolder.consume(itemInHand);
+		}
+
 		level.playLocalSound(player.getX(), player.getY(), player.getZ(),
 				SoundEventRegistry.GENERIC_ITEM_THROW.get(),
 				SoundSource.NEUTRAL,
@@ -57,7 +63,6 @@ public class ThrowableItem extends Item {
 			switch (type) {
 				case MOLOTOV -> throwable = createMolotov(itemInHand, level, player);
 				case MUD_BALL -> throwable = createMudBall(itemInHand, level, player);
-				case SMOKE_GRENADE -> throwable = createSmokeGrenade(itemInHand, level, player);
 			}
 
 			if (throwable != null) {
@@ -65,21 +70,59 @@ public class ThrowableItem extends Item {
 			}
 		}
 
+		handleCooldown(player, itemInHand);
+
+		return InteractionResultHolder.sidedSuccess(itemInHand, level.isClientSide());
+	}
+
+	@Override
+	public void releaseUsing(ItemStack pStack, Level pLevel, LivingEntity pLivingEntity, int pTimeCharged) {
+		// Allow smoke grenade throws to be charged
+		if (type.canCharge && pLivingEntity instanceof Player player) {
+			int i = this.getUseDuration(pStack) - pTimeCharged;
+			if (i < 0) {
+				return;
+			}
+
+			float charge = BowItem.getPowerForTime(i);
+			if (charge > 0.1f && !pLevel.isClientSide) {
+				ThrowableItemProjectile throwable = null;
+
+				switch (type) {
+					case SMOKE_GRENADE -> throwable = createSmokeGrenade(pStack, pLevel, player, charge);
+					case FLASHBANG -> throwable = createFlashbang(pStack, pLevel, player, charge);
+				}
+
+				if (throwable != null) {
+					pLevel.addFreshEntity(throwable);
+
+					pLevel.playLocalSound(pLivingEntity.getX(), pLivingEntity.getY(), pLivingEntity.getZ(),
+							SoundEventRegistry.GENERIC_ITEM_THROW.get(),
+							SoundSource.NEUTRAL,
+							0.5F,
+							0.4F / (GeneralUtilities.getRandomNumber(0.2f, 0.6f) + 0.8F),
+							false);
+
+					handleCooldown(player, pStack);
+				}
+			}
+		}
+	}
+
+	@Override
+	public int getUseDuration(ItemStack pStack) {
+		return type.canCharge ? 72000 : super.getUseDuration(pStack);
+	}
+
+	private void handleCooldown(Player player, ItemStack itemInHand) {
 		if (!player.isCreative()) {
 			itemInHand.shrink(1);
 
-			int cooldown;
-			switch (type) {
-				case MOLOTOV, SMOKE_GRENADE -> cooldown = 100;
-				default -> cooldown = 0;
-			}
-
+			int cooldown = type == ThrowableType.MUD_BALL ? 0 : 100;
 			if (cooldown > 0) {
 				player.getCooldowns().addCooldown(this, cooldown);
 			}
 		}
-
-		return InteractionResultHolder.sidedSuccess(itemInHand, level.isClientSide());
 	}
 
 	private ThrowableItemProjectile createMolotov(ItemStack stack, Level level, Player player) {
@@ -98,18 +141,33 @@ public class ThrowableItem extends Item {
 		return mudBall;
 	}
 
-	private ThrowableItemProjectile createSmokeGrenade(ItemStack stack, Level level, Player player) {
+	private ThrowableItemProjectile createSmokeGrenade(ItemStack stack, Level level, Player player, float charge) {
 		SmokeGrenadeEntity smokeGrenadeEntity = new SmokeGrenadeEntity(level, player);
 		smokeGrenadeEntity.setColor(color);
 		smokeGrenadeEntity.setItem(stack);
-		smokeGrenadeEntity.shootFromRotation(player, player.getXRot(), player.getYRot(), -20.0F, 0.5F, 1.0F);
+		smokeGrenadeEntity.shootFromRotation(player, player.getXRot(), player.getYRot(), 0.0F, charge * 1.5F, 0.5F);
 
 		return smokeGrenadeEntity;
 	}
 
+	private ThrowableItemProjectile createFlashbang(ItemStack stack, Level level, Player player, float charge) {
+		FlashbangEntity flashbangEntity = new FlashbangEntity(level, player);
+		flashbangEntity.setItem(stack);
+		flashbangEntity.shootFromRotation(player, player.getXRot(), player.getYRot(), 0.0F, charge * 1.5F, 0.5F);
+
+		return flashbangEntity;
+	}
+
 	public enum ThrowableType {
-		MOLOTOV,
-		MUD_BALL,
-		SMOKE_GRENADE
+		MOLOTOV(false),
+		MUD_BALL(false),
+		SMOKE_GRENADE(true),
+		FLASHBANG(true);
+
+		public final boolean canCharge;
+
+		ThrowableType(boolean canCharge) {
+			this.canCharge = canCharge;
+		}
 	}
 }

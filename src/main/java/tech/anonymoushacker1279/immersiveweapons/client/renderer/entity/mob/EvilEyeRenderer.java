@@ -1,11 +1,9 @@
 package tech.anonymoushacker1279.immersiveweapons.client.renderer.entity.mob;
 
 import com.mojang.blaze3d.vertex.PoseStack;
-import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.resources.ResourceLocation;
-import org.joml.Quaternionf;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.client.model.EvilEyeModel;
 import tech.anonymoushacker1279.immersiveweapons.entity.monster.EvilEyeEntity;
@@ -17,18 +15,6 @@ public class EvilEyeRenderer extends MobRenderer<EvilEyeEntity, EvilEyeModel<Evi
 
 	public EvilEyeRenderer(EntityRendererProvider.Context context) {
 		super(context, new EvilEyeModel<>(context.bakeLayer(EvilEyeModel.LAYER_LOCATION)), 0.15F);
-	}
-
-	@Override
-	public void render(EvilEyeEntity entity, float entityYaw, float partialTicks, PoseStack matrixStack, MultiBufferSource buffer, int packedLight) {
-		super.render(entity, entityYaw, partialTicks, matrixStack, buffer, packedLight);
-
-		matrixStack.pushPose();
-
-		// Rotate 180 degrees around the Y axis
-		matrixStack.mulPose(new Quaternionf().rotationY((float) Math.toRadians(180)));
-
-		matrixStack.popPose();
 	}
 
 	@Override

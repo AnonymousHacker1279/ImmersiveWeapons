@@ -28,6 +28,5 @@
     "recipes": [
       "immersiveweapons:copper_leggings"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

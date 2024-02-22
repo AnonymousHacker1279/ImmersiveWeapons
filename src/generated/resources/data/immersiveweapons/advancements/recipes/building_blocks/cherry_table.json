@@ -28,6 +28,5 @@
     "recipes": [
       "immersiveweapons:cherry_table"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

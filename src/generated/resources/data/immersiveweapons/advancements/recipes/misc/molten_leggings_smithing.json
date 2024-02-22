@@ -28,6 +28,5 @@
     "recipes": [
       "immersiveweapons:molten_leggings_smithing"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

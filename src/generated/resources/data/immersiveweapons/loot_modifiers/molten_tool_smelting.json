@@ -1,0 +1,13 @@
+{
+  "type": "immersiveweapons:tool_smelting",
+  "conditions": [
+    {
+      "condition": "minecraft:entity_properties",
+      "entity": "this",
+      "predicate": {
+        "type": "minecraft:player"
+      }
+    }
+  ],
+  "toolsTag": "immersiveweapons:tools/molten"
+}

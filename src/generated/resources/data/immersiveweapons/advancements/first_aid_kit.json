@@ -15,16 +15,13 @@
     }
   },
   "display": {
-    "announce_to_chat": true,
     "description": {
       "translate": "advancements.immersiveweapons.first_aid_kit.description"
     },
     "frame": "goal",
-    "hidden": false,
     "icon": {
       "item": "immersiveweapons:first_aid_kit"
     },
-    "show_toast": true,
     "title": {
       "translate": "advancements.immersiveweapons.first_aid_kit.title"
     }

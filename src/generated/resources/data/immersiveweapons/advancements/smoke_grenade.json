@@ -5,9 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "immersiveweapons:smoke_grenade_green"
-            ]
+            "tag": "immersiveweapons:smoke_grenades"
           }
         ]
       },
@@ -15,16 +13,13 @@
     }
   },
   "display": {
-    "announce_to_chat": true,
     "description": {
       "translate": "advancements.immersiveweapons.smoke_grenade.description"
     },
     "frame": "goal",
-    "hidden": false,
     "icon": {
       "item": "immersiveweapons:smoke_grenade"
     },
-    "show_toast": true,
     "title": {
       "translate": "advancements.immersiveweapons.smoke_grenade.title"
     }

@@ -28,10 +28,9 @@ public class EvilEyeModel<T extends Entity> extends EntityModel<T> {
 						.texOffs(0, 0)
 						.addBox(-2.0F, -4.0F, -4.0F, 4.0F, 4.0F, 5.0F,
 								new CubeDeformation(0.0F)),
-				PartPose.offset(0.0F, 6.0F, 0.0F));
+				PartPose.offsetAndRotation(0.0F, 6.0F, 0F, 0.0F, 0.0F, 0.0F));
 
-		PartDefinition tail = main.addOrReplaceChild("tail", CubeListBuilder.create(),
-				PartPose.offset(2.0F, -2.0F, 3.0F));
+		PartDefinition tail = main.addOrReplaceChild("tail", CubeListBuilder.create(), PartPose.offset(2.0F, -2.0F, 3.0F));
 
 		tail.addOrReplaceChild("tail_r1", CubeListBuilder.create()
 						.texOffs(0, 5)
@@ -48,7 +47,8 @@ public class EvilEyeModel<T extends Entity> extends EntityModel<T> {
 		tail.addOrReplaceChild("tail_r3",
 				CubeListBuilder.create().texOffs(0, 9)
 						.addBox(0.4375F, -2.0F, -2.0F, 0.0F, 4.0F, 4.0F,
-								new CubeDeformation(0.0F)), PartPose.offsetAndRotation(-4.0F, 0.0F, 0.0F, 0.0F, 0.2182F, 0.0F));
+								new CubeDeformation(0.0F)),
+				PartPose.offsetAndRotation(-4.0F, 0.0F, 0.0F, 0.0F, 0.2182F, 0.0F));
 
 		tail.addOrReplaceChild("tail_r4",
 				CubeListBuilder.create().texOffs(8, 9)

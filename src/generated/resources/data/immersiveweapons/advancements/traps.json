@@ -99,16 +99,13 @@
     }
   },
   "display": {
-    "announce_to_chat": true,
     "description": {
       "translate": "advancements.immersiveweapons.traps.description"
     },
     "frame": "goal",
-    "hidden": false,
     "icon": {
       "item": "immersiveweapons:bear_trap"
     },
-    "show_toast": true,
     "title": {
       "translate": "advancements.immersiveweapons.traps.title"
     }

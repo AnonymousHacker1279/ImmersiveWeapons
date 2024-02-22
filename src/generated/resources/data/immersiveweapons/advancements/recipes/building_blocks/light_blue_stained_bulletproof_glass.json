@@ -30,6 +30,5 @@
     "recipes": [
       "immersiveweapons:light_blue_stained_bulletproof_glass"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

@@ -10,7 +10,7 @@ import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.ModifyArg;
-import tech.anonymoushacker1279.immersiveweapons.entity.npc.SkygazerEntity;
+import tech.anonymoushacker1279.immersiveweapons.config.CommonConfig;
 
 /**
  * Re-color enchantment names at the max Skygazer cap.
@@ -19,22 +19,22 @@ import tech.anonymoushacker1279.immersiveweapons.entity.npc.SkygazerEntity;
 public abstract class ItemStackMixin {
 
 	@ModifyArg(
-			method = "lambda$appendEnchantmentNames$5",
+			method = "lambda$appendEnchantmentNames$16",
 			at = @At(
 					value = "INVOKE",
 					target = "Ljava/util/List;add(Ljava/lang/Object;)Z"
 			),
 			remap = false
 	)
-	private static Object recolorEnchantmentNames(Object object, @Local CompoundTag compoundTag) {
+	private static Object recolorEnchantmentNames(Object object, @Local(argsOnly = true) CompoundTag compoundTag) {
 		if (object instanceof Component component) {
 			ResourceLocation enchantmentLocation = EnchantmentHelper.getEnchantmentId(compoundTag);
 			int enchantmentLevel = EnchantmentHelper.getEnchantmentLevel(compoundTag);
 
 			if (enchantmentLocation != null) {
-				int maxLevel = SkygazerEntity.ENCHANT_CAPS.getOrDefault(enchantmentLocation.toString(), -1);
+				int maxLevel = CommonConfig.skygazerEnchantCaps.getOrDefault(enchantmentLocation.toString(), -1);
 
-				if (enchantmentLevel >= maxLevel && maxLevel != -1) {
+				if ((enchantmentLevel >= maxLevel && maxLevel != -1) || (enchantmentLevel >= 255)) {
 					return component.copy().withStyle(ChatFormatting.GOLD);
 				}
 			}

@@ -3,8 +3,10 @@ package tech.anonymoushacker1279.immersiveweapons.client;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.network.chat.*;
+import net.minecraft.network.chat.CommonComponents;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.ai.attributes.*;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.DiggerItem;
 import net.minecraft.world.item.ItemStack;
@@ -19,14 +21,18 @@ import tech.anonymoushacker1279.immersiveweapons.api.PluginHandler;
 import tech.anonymoushacker1279.immersiveweapons.init.BlockItemRegistry;
 import tech.anonymoushacker1279.immersiveweapons.init.ItemRegistry;
 import tech.anonymoushacker1279.immersiveweapons.item.*;
+import tech.anonymoushacker1279.immersiveweapons.item.AccessoryItem.EffectBuilder.EffectScalingType;
+import tech.anonymoushacker1279.immersiveweapons.item.AccessoryItem.EffectType;
 import tech.anonymoushacker1279.immersiveweapons.item.armor.*;
 import tech.anonymoushacker1279.immersiveweapons.item.gauntlet.GauntletItem;
+import tech.anonymoushacker1279.immersiveweapons.item.gun.AbstractGunItem;
+import tech.anonymoushacker1279.immersiveweapons.item.gun.AbstractGunItem.PowderType;
 import tech.anonymoushacker1279.immersiveweapons.item.pike.PikeItem;
 import tech.anonymoushacker1279.immersiveweapons.item.projectile.*;
 import tech.anonymoushacker1279.immersiveweapons.item.projectile.ThrowableItem.ThrowableType;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
+import java.util.Map.Entry;
 
 @Mod.EventBusSubscriber(modid = ImmersiveWeapons.MOD_ID, bus = Bus.FORGE, value = Dist.CLIENT)
 public class TooltipHandler {
@@ -68,6 +74,10 @@ public class TooltipHandler {
 		if (stack.getItem() == ItemRegistry.STARSTORM_SWORD.get()) {
 			event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.starstorm_sword").withStyle(ChatFormatting.RED, ChatFormatting.ITALIC));
 		}
+		if (stack.getItem() == ItemRegistry.THE_SWORD.get()) {
+			event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.the_sword_1").withStyle(ChatFormatting.GOLD, ChatFormatting.ITALIC));
+			event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.the_sword_2").withStyle(ChatFormatting.DARK_PURPLE, ChatFormatting.ITALIC));
+		}
 
 		// Molten-specific
 		if (stack.getItem().toString().contains("molten") && stack.getItem() instanceof DiggerItem) {
@@ -82,13 +92,49 @@ public class TooltipHandler {
 			event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.blunderbuss").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
 		}
 		if (stack.getItem() == ItemRegistry.FLARE_GUN.get()) {
-			event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.flare_gun").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
+			event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.flare_gun_1").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
+			event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.flare_gun_2").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
 		}
 		if (stack.getItem() == ItemRegistry.MUSKET.get() || stack.getItem() == ItemRegistry.MUSKET_SCOPE.get()) {
 			event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.musket").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
 		}
 		if (stack.getItem() == ItemRegistry.HAND_CANNON.get()) {
 			event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.hand_cannon").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
+		}
+		if (stack.getItem() instanceof AbstractGunItem abstractGunItem && event.getEntity() != null) {
+			List<Component> shiftTooltipInfo = new ArrayList<>(10);
+			shiftTooltipInfo.add(CommonComponents.EMPTY);
+
+			shiftTooltipInfo.add(Component.translatable("tooltip.immersiveweapons.gun.meta.base_velocity", abstractGunItem.getBaseFireVelocity()).withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC));
+
+			int reloadTime = abstractGunItem.getCooldown() / 20;
+			shiftTooltipInfo.add(Component.translatable("tooltip.immersiveweapons.gun.meta.base_reload_time", reloadTime).withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC));
+
+			if (abstractGunItem.getKnockbackLevel() > 0) {
+				shiftTooltipInfo.add(Component.translatable("tooltip.immersiveweapons.gun.meta.base_knockback", abstractGunItem.getKnockbackLevel()).withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC));
+			}
+
+			ItemStack powder = abstractGunItem.findPowder(stack, event.getEntity());
+			String powderName = powder == ItemStack.EMPTY ? "None" : powder.getHoverName().getString();
+			String velocityModifier = "0%";
+			ChatFormatting powderColor = ChatFormatting.GRAY;
+			if (powder != ItemStack.EMPTY) {
+				PowderType type = AbstractGunItem.getPowderFromItem(powder.getItem());
+				velocityModifier = (float) Math.round(type.getVelocityModifier() * 1000f) / 10f + "%";
+			} else {
+				powderColor = ChatFormatting.RED;
+			}
+
+			shiftTooltipInfo.add(Component.translatable("tooltip.immersiveweapons.gun.meta.selected_powder", powderName, velocityModifier).withStyle(powderColor, ChatFormatting.ITALIC));
+
+
+			ItemStack ammo = abstractGunItem.findAmmo(stack, event.getEntity());
+			String ammoName = ammo == ItemStack.EMPTY ? "None" : ammo.getHoverName().getString();
+			ChatFormatting ammoColor = ammo == ItemStack.EMPTY ? ChatFormatting.RED : ChatFormatting.GRAY;
+
+			shiftTooltipInfo.add(Component.translatable("tooltip.immersiveweapons.gun.meta.selected_ammo", ammoName).withStyle(ammoColor, ChatFormatting.ITALIC));
+
+			addShiftTooltip(event.getToolTip(), shiftTooltipInfo);
 		}
 
 		// Bows
@@ -173,13 +219,17 @@ public class TooltipHandler {
 		}
 
 		// Throwables
-		if (stack.getItem() instanceof ThrowableItem grenade && grenade.type == ThrowableType.SMOKE_GRENADE) {
-			event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.smoke_grenade").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
+		if (stack.getItem() instanceof ThrowableItem grenade) {
+			if (grenade.type == ThrowableType.SMOKE_GRENADE) {
+				event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.smoke_grenade").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
 
-			if (grenade.color > 0) {
-				// The last word in the name is the color
-				String color = grenade.toString().substring(grenade.toString().lastIndexOf("_") + 1).toLowerCase();
-				event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.smoke_grenade_" + color).withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
+				if (grenade.color > 0) {
+					// The last word in the name is the color
+					String color = grenade.toString().substring(grenade.toString().lastIndexOf("_") + 1).toLowerCase();
+					event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.smoke_grenade_" + color).withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
+				}
+			} else if (grenade.type == ThrowableType.FLASHBANG) {
+				event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.flashbang").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
 			}
 		}
 		if (stack.getItem() == ItemRegistry.MOLOTOV_COCKTAIL.get()) {
@@ -232,6 +282,15 @@ public class TooltipHandler {
 		}
 		if (stack.getItem() == ItemRegistry.CURSED_SIGHT_STAFF.get()) {
 			event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.cursed_sight_staff").withStyle(ChatFormatting.DARK_RED, ChatFormatting.ITALIC));
+		}
+		if (stack.getItem() == ItemRegistry.SCULK_STAFF.get()) {
+			event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.sculk_staff").withStyle(ChatFormatting.DARK_AQUA, ChatFormatting.ITALIC));
+		}
+		if (stack.getItem() instanceof RecoveryStaffItem staffItem) {
+			event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.recovery_staff_1").withStyle(ChatFormatting.GREEN, ChatFormatting.ITALIC));
+			event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.recovery_staff_2").withStyle(ChatFormatting.DARK_PURPLE, ChatFormatting.ITALIC));
+			float healAmount = (float) Math.round(staffItem.getHealAmount() * 10) / 10;
+			event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.recovery_staff_3", healAmount).withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC));
 		}
 
 		// Player utility
@@ -344,6 +403,9 @@ public class TooltipHandler {
 				event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.depth_charm_1").withStyle(ChatFormatting.GREEN, ChatFormatting.ITALIC));
 				event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.depth_charm_2").withStyle(ChatFormatting.LIGHT_PURPLE, ChatFormatting.ITALIC));
 			}
+			if (stack.getItem() == ItemRegistry.REINFORCED_DEPTH_CHARM.get()) {
+				event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.reinforced_depth_charm").withStyle(ChatFormatting.GREEN, ChatFormatting.ITALIC));
+			}
 			if (stack.getItem() == ItemRegistry.INSOMNIA_AMULET.get()) {
 				event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.insomnia_amulet_1").withStyle(ChatFormatting.GREEN, ChatFormatting.ITALIC));
 				event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.insomnia_amulet_2").withStyle(ChatFormatting.DARK_RED, ChatFormatting.ITALIC));
@@ -390,7 +452,7 @@ public class TooltipHandler {
 				event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.super_blanket_cape_2").withStyle(ChatFormatting.DARK_PURPLE, ChatFormatting.ITALIC));
 			}
 
-			addShiftTooltip(event.getToolTip(), addAccessoryTooltips(item, event.getEntity(), stack));
+			addAccessoryTooltips(item, event.getEntity(), stack, event.getToolTip());
 		} else if (stack.getItem() instanceof CursedItem) {
 			if (stack.getItem() == ItemRegistry.BLOODY_SACRIFICE.get()) {
 				event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.bloody_sacrifice").withStyle(ChatFormatting.DARK_PURPLE, ChatFormatting.ITALIC));
@@ -444,32 +506,20 @@ public class TooltipHandler {
 		if (stack.getItem() == BlockItemRegistry.MEDIC_STATUE_ITEM.get()) {
 			event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.medic_statue").withStyle(ChatFormatting.GREEN, ChatFormatting.ITALIC));
 		}
+		// Regex check for "immersiveweapons:pedestal_augment_X" where X is any string
+		ResourceLocation path = BuiltInRegistries.ITEM.getKey(stack.getItem().asItem());
+		if (path.toString().matches("immersiveweapons:pedestal_augment_.+")) {
+			// Get the name of the augment
+			event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.%s".formatted(path.getPath())).withStyle(ChatFormatting.DARK_PURPLE, ChatFormatting.ITALIC));
+			event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.pedestal_augment.note").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
+		}
+
 		// Tiltros
 		if (stack.getItem() == ItemRegistry.AZUL_KEYSTONE.get()) {
 			event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.azul_keystone").withStyle(ChatFormatting.AQUA, ChatFormatting.ITALIC));
 		}
 		if (stack.getItem() == ItemRegistry.AZUL_KEYSTONE_FRAGMENT.get()) {
 			event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.azul_keystone_fragment").withStyle(ChatFormatting.AQUA, ChatFormatting.ITALIC));
-		}
-		if (stack.getItem() == BlockItemRegistry.AZUL_STAINED_ORCHID_ITEM.get()) {
-			event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.azul_stained_orchid").withStyle(ChatFormatting.AQUA, ChatFormatting.ITALIC));
-		}
-		if (stack.getItem() == BlockItemRegistry.WARRIOR_STATUE_HEAD_ITEM.get() || stack.getItem() == BlockItemRegistry.WARRIOR_STATUE_TORSO_ITEM.get() || stack.getItem() == BlockItemRegistry.WARRIOR_STATUE_BASE_ITEM.get()) {
-			event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.warrior_statue").withStyle(ChatFormatting.DARK_PURPLE, ChatFormatting.ITALIC));
-		}
-	}
-
-	/**
-	 * Adds a tooltip which appears while the player holds SHIFT.
-	 *
-	 * @param existingTooltips The list of tooltips already on the item.
-	 * @param shiftTooltip     The tooltip to add if the player is holding SHIFT.
-	 */
-	private static void addShiftTooltip(List<Component> existingTooltips, MutableComponent shiftTooltip) {
-		if (!Screen.hasShiftDown()) {
-			existingTooltips.add(Component.translatable("tooltip.immersiveweapons.shift_for_info").withStyle(ChatFormatting.GOLD, ChatFormatting.ITALIC));
-		} else {
-			existingTooltips.add(shiftTooltip);
 		}
 	}
 
@@ -488,27 +538,96 @@ public class TooltipHandler {
 	}
 
 	/**
+	 * Adds tooltips which appear while the player holds ALT.
+	 *
+	 * @param existingTooltips The list of tooltips already on the item.
+	 * @param altTooltips      The list of tooltips to add if the player is holding ALT.
+	 */
+	private static void addAltTooltip(List<Component> existingTooltips, List<Component> altTooltips) {
+		if (!Screen.hasAltDown()) {
+			existingTooltips.add(Component.translatable("tooltip.immersiveweapons.alt_for_info").withStyle(ChatFormatting.LIGHT_PURPLE, ChatFormatting.ITALIC));
+		} else {
+			existingTooltips.addAll(altTooltips);
+		}
+	}
+
+	/**
 	 * Add accessory-specific tooltips (typically for use inside {@link #addShiftTooltip(List, List)})
 	 *
 	 * @param item   the accessory item
 	 * @param player the player holding the item
-	 * @return a list of tooltips
 	 */
-	private static List<Component> addAccessoryTooltips(AccessoryItem item, Player player, ItemStack stack) {
-		List<Component> tooltips = new ArrayList<>(5);
+	private static void addAccessoryTooltips(AccessoryItem item, Player player, ItemStack stack, List<Component> existingTooltips) {
+		List<Component> shiftTooltips = new ArrayList<>(5);
+		List<Component> altTooltips = new ArrayList<>(10);
 
 		if (ImmersiveWeapons.IWCB_LOADED && PluginHandler.isPluginActive("iwcompatbridge:curios_plugin")) {
-			tooltips.add(Component.translatable("tooltip.iwcompatbridge.accessory_note", item.getSlot()).withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC));
+			shiftTooltips.add(Component.translatable("tooltip.iwcompatbridge.accessory_note").withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC));
 		} else {
-			tooltips.add(Component.translatable("tooltip.immersiveweapons.accessory_slot", item.getSlot()).withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC));
+			shiftTooltips.add(Component.translatable("tooltip.immersiveweapons.accessory_slot", item.getSlot()).withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC));
 
 			if (item.isActive(player, stack)) {
-				tooltips.add(Component.translatable("tooltip.immersiveweapons.accessory_note").withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC));
+				shiftTooltips.add(Component.translatable("tooltip.immersiveweapons.accessory_note").withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC));
 			} else {
-				tooltips.add(Component.translatable("tooltip.immersiveweapons.accessory_inactive").withStyle(ChatFormatting.RED, ChatFormatting.ITALIC));
+				shiftTooltips.add(Component.translatable("tooltip.immersiveweapons.accessory_inactive").withStyle(ChatFormatting.RED, ChatFormatting.ITALIC));
 			}
 		}
 
-		return tooltips;
+		addShiftTooltip(existingTooltips, shiftTooltips);
+
+		if (!item.getEffects().isEmpty() || !item.getStandardAttributeModifiers().isEmpty() || !item.getDynamicAttributeModifiers().isEmpty()) {
+			altTooltips.add(CommonComponents.EMPTY);
+
+			// Add basic effects
+			if (!item.getEffects().isEmpty()) {
+				altTooltips.add(Component.translatable("tooltip.immersiveweapons.accessory.effects").withStyle(ChatFormatting.GOLD, ChatFormatting.ITALIC));
+				for (Entry<EffectType, Double> entry : item.getEffects().entrySet()) {
+					String value;
+
+					if (entry.getKey() == EffectType.LOOTING_LEVEL) {
+						value = entry.getValue().intValue() + " levels";
+					} else {
+						value = (float) Math.round(entry.getValue() * 1000f) / 10f + "%";
+					}
+
+					EffectScalingType scalingType = item.getEffectScalingTypes().get(entry.getKey());
+
+					if (scalingType != null && scalingType != EffectScalingType.NO_SCALING) {
+						Component scaling = Component.translatable(item.getEffectScalingTypes().get(entry.getKey()).name);
+						altTooltips.add(Component.translatable(entry.getKey().name, value).append(" ").append(scaling).withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC));
+					} else {
+						altTooltips.add(Component.translatable(entry.getKey().name, value).withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC));
+					}
+				}
+			}
+
+			// Add attribute modifier effects
+			if (!item.getStandardAttributeModifiers().isEmpty()) {
+				altTooltips.add(Component.translatable("tooltip.immersiveweapons.accessory.attribute_modifier").withStyle(ChatFormatting.GOLD, ChatFormatting.ITALIC));
+				for (Entry<AttributeModifier, Attribute> entry : item.getStandardAttributeModifiers().entrySet()) {
+					String amount;
+
+					if (entry.getValue() == Attributes.MAX_HEALTH) {
+						// Convert to hearts
+						amount = (float) Math.round(entry.getKey().getAmount() / 2f) + " hearts";
+					} else {
+						amount = (float) Math.round(entry.getKey().getAmount() * 1000f) / 10f + "%";
+					}
+
+					altTooltips.add(Component.translatable(entry.getValue().getDescriptionId()).append(": " + amount).withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC));
+				}
+			}
+			if (!item.getDynamicAttributeModifiers().isEmpty()) {
+				altTooltips.add(Component.translatable("tooltip.immersiveweapons.accessory.dynamic_attribute_modifier").withStyle(ChatFormatting.GOLD, ChatFormatting.ITALIC));
+				for (Entry<Map<AttributeModifier, Attribute>, Double> entry : item.getDynamicAttributeModifiers().entrySet()) {
+					for (Entry<AttributeModifier, Attribute> entry2 : entry.getKey().entrySet()) {
+						String amount = (float) Math.round(entry.getValue() * 1000f) / 10f + "%";
+						altTooltips.add(Component.translatable(entry2.getValue().getDescriptionId()).append(": " + amount).withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC));
+					}
+				}
+			}
+
+			addAltTooltip(existingTooltips, altTooltips);
+		}
 	}
 }

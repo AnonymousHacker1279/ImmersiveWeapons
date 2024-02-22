@@ -26,7 +26,7 @@ public class CustomArrowItem<T extends CustomArrowEntity> extends ArrowItem {
 	final double gravityModifier;
 	private final List<Double> shootingVectorInputs;
 	private final int knockbackStrength;
-	public double damage;
+	public final double damage;
 	private final HitEffect hitEffect;
 	public final int color;
 

@@ -1,0 +1,14 @@
+{
+  "placement": {
+    "type": "minecraft:random_spread",
+    "salt": 349821657,
+    "separation": 12,
+    "spacing": 25
+  },
+  "structures": [
+    {
+      "structure": "immersiveweapons:cloud_island",
+      "weight": 1
+    }
+  ]
+}

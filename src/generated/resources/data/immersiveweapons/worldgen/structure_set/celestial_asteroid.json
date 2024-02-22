@@ -1,0 +1,14 @@
+{
+  "placement": {
+    "type": "minecraft:random_spread",
+    "salt": 549831672,
+    "separation": 5,
+    "spacing": 15
+  },
+  "structures": [
+    {
+      "structure": "immersiveweapons:celestial_asteroid",
+      "weight": 1
+    }
+  ]
+}

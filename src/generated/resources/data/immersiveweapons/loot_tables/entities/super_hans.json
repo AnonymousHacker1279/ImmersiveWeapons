@@ -29,24 +29,6 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "immersiveweapons:super_blanket_cape"
-        }
-      ],
-      "name": "super_blanket_cape",
-      "rolls": {
-        "type": "immersiveweapons:entity_killers"
-      }
-    },
-    {
-      "bonus_rolls": 0.0,
-      "conditions": [
-        {
-          "condition": "minecraft:killed_by_player"
-        }
-      ],
-      "entries": [
-        {
-          "type": "minecraft:item",
           "name": "immersiveweapons:melee_masters_molten_glove"
         },
         {
@@ -82,9 +64,17 @@
         {
           "type": "minecraft:item",
           "name": "immersiveweapons:death_gem_ring"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "immersiveweapons:super_blanket_cape"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "immersiveweapons:hansium_ingot"
         }
       ],
-      "name": "other_accessories",
+      "name": "other_items",
       "rolls": {
         "type": "immersiveweapons:entity_killers"
       }

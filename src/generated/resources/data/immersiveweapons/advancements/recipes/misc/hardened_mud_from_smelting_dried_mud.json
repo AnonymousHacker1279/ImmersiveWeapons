@@ -30,6 +30,5 @@
     "recipes": [
       "immersiveweapons:hardened_mud_from_smelting_dried_mud"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

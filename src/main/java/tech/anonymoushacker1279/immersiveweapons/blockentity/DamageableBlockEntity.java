@@ -126,11 +126,21 @@ public class DamageableBlockEntity extends BlockEntity {
 		}
 
 		currentStage = state.getValue(damageStage);
-		if (repairStack.getItem() == repairItem && currentStage > 0 && currentStage <= stages) {
-			if (health < maxHealth) {
-				health += (int) (maxHealth / (double) (stages + 1));
+		if (repairStack.getItem() == repairItem) {
+			if (currentStage > 0 && currentStage <= stages) {
+				if (health < maxHealth) {
+					health += (int) (maxHealth / (double) (stages + 1));
 
-				level.setBlockAndUpdate(pos, state.setValue(damageStage, currentStage - 1));
+					level.setBlockAndUpdate(pos, state.setValue(damageStage, currentStage - 1));
+
+					if (!player.isCreative()) {
+						repairStack.shrink(1);
+					}
+
+					return true;
+				}
+			} else if (health != maxHealth) {
+				health = maxHealth;
 
 				if (!player.isCreative()) {
 					repairStack.shrink(1);
@@ -138,15 +148,8 @@ public class DamageableBlockEntity extends BlockEntity {
 
 				return true;
 			}
-		} else if (health != maxHealth) {
-			health = maxHealth;
-
-			if (!player.isCreative()) {
-				repairStack.shrink(1);
-			}
-
-			return true;
 		}
+
 		return false;
 	}
 

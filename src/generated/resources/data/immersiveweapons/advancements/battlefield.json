@@ -19,16 +19,12 @@
     }
   },
   "display": {
-    "announce_to_chat": true,
     "description": {
       "translate": "advancements.immersiveweapons.battlefield.description"
     },
-    "frame": "task",
-    "hidden": false,
     "icon": {
       "item": "minecraft:skeleton_skull"
     },
-    "show_toast": true,
     "title": {
       "translate": "advancements.immersiveweapons.battlefield.title"
     }

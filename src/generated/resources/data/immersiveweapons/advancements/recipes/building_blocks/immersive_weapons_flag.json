@@ -30,6 +30,5 @@
     "recipes": [
       "immersiveweapons:immersive_weapons_flag"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

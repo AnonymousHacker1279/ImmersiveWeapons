@@ -28,6 +28,5 @@
     "recipes": [
       "immersiveweapons:golden_arrow"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

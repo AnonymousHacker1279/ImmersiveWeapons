@@ -45,6 +45,5 @@
     "recipes": [
       "immersiveweapons:mre"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

@@ -15,16 +15,12 @@
     }
   },
   "display": {
-    "announce_to_chat": true,
     "description": {
       "translate": "advancements.immersiveweapons.starstorm_crystal.description"
     },
-    "frame": "task",
-    "hidden": false,
     "icon": {
       "item": "immersiveweapons:starstorm_crystal"
     },
-    "show_toast": true,
     "title": {
       "translate": "advancements.immersiveweapons.starstorm_crystal.title"
     }

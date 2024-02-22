@@ -10,8 +10,10 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.*;
 import net.minecraft.tags.DamageTypeTags;
+import net.minecraft.util.Mth;
 import net.minecraft.world.BossEvent.BossBarColor;
 import net.minecraft.world.BossEvent.BossBarOverlay;
+import net.minecraft.world.Difficulty;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.damagesource.DamageTypes;
@@ -49,7 +51,7 @@ public class SuperHansEntity extends HansEntity implements AttackerTracker {
 	private BoundingBox championTowerBounds;
 	private boolean towerMinibossesAlive = false;
 
-	List<Entity> attackingEntities = new ArrayList<>(5);
+	final List<Entity> attackingEntities = new ArrayList<>(5);
 
 	public SuperHansEntity(EntityType<? extends HansEntity> entityType, Level level) {
 		super(entityType, level);
@@ -65,7 +67,8 @@ public class SuperHansEntity extends HansEntity implements AttackerTracker {
 				.add(Attributes.ARMOR, 25.0D)
 				.add(Attributes.MAX_HEALTH, 150.0D)
 				.add(Attributes.ATTACK_DAMAGE, 10.0D)
-				.add(Attributes.KNOCKBACK_RESISTANCE, 1.0D);
+				.add(Attributes.KNOCKBACK_RESISTANCE, 1.0D)
+				.add(Attributes.FOLLOW_RANGE, 64.0D);
 	}
 
 	@Override
@@ -206,6 +209,8 @@ public class SuperHansEntity extends HansEntity implements AttackerTracker {
 					spawnParticles(serverLevel, ParticleTypes.SMOKE);
 				}
 			}
+
+			bossEvent.setProgress(getHealth() / getMaxHealth());
 		}
 	}
 
@@ -283,6 +288,20 @@ public class SuperHansEntity extends HansEntity implements AttackerTracker {
 		bossEvent.setProgress(getHealth() / getMaxHealth());
 	}
 
+	@Override
+	public void addAdditionalSaveData(CompoundTag pCompound) {
+		super.addAdditionalSaveData(pCompound);
+
+		pCompound.putInt("xpReward", xpReward);
+	}
+
+	@Override
+	public void load(CompoundTag pCompound) {
+		super.load(pCompound);
+
+		xpReward = pCompound.getInt("xpReward");
+	}
+
 	public int getAttackingEntities() {
 		return attackingEntities.size();
 	}
@@ -354,17 +373,38 @@ public class SuperHansEntity extends HansEntity implements AttackerTracker {
 				for (LivingEntity entity : hans.level().getEntitiesOfClass(LivingEntity.class, hans.getBoundingBox().inflate(8.0D))) {
 					if (entity != hans) {
 						entity.addEffect(new MobEffectInstance(MobEffects.BLINDNESS, 140, 0));
-						entity.knockback(0.5f, entity.getX() - hans.getX(), entity.getZ() - hans.getZ());
+
+						// Calculate the angle between Super Hans and the entity
+						double angle = Math.atan2(entity.getZ() - hans.getZ(), entity.getX() - hans.getX()) + Math.PI;
+
+						// Calculate the X and Z knockback directions based on the angle
+						double knockbackX = Math.cos(angle);
+						double knockbackZ = Math.sin(angle);
+
+						entity.knockback(2.5f, knockbackX, knockbackZ);
+						entity.hurtMarked = true;
 					}
 				}
 
-				cooldown = 400;
+				cooldown = calculateCooldown(hans.level().getDifficulty());
 			}
 		}
 
 		@Override
 		public void stop() {
 			cooldown = 400;
+		}
+
+		private int calculateCooldown(Difficulty difficulty) {
+			int healthModifier = (int) (hans.getMaxHealth() / hans.getHealth());
+			int baseCooldown;
+			switch (difficulty) {
+				case EASY -> baseCooldown = 600;
+				case NORMAL -> baseCooldown = 400;
+				default -> baseCooldown = 200;
+			}
+
+			return Mth.clamp((baseCooldown / healthModifier), 60, 600);
 		}
 	}
 }

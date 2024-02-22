@@ -28,6 +28,5 @@
     "recipes": [
       "immersiveweapons:molten_shovel_smithing"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

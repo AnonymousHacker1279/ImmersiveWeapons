@@ -5,7 +5,6 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.CreativeModeTab;
 import net.neoforged.bus.api.IEventBus;
-import net.neoforged.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 
@@ -25,9 +24,7 @@ public class DeferredRegistryHandler {
 	/**
 	 * Initialize deferred registers.
 	 */
-	public static void init() {
-		IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
-
+	public static void init(IEventBus modEventBus) {
 		ImmersiveWeapons.LOGGER.info("Initializing deferred registry for items");
 		ItemRegistry.ITEMS.register(modEventBus);
 
@@ -76,5 +73,11 @@ public class DeferredRegistryHandler {
 
 		ImmersiveWeapons.LOGGER.info("Initializing deferred registry for number providers");
 		NumberProviderRegistry.NUMBER_PROVIDERS.register(modEventBus);
+
+		ImmersiveWeapons.LOGGER.info("Initializing deferred registry for criterion triggers");
+		CriterionTriggerRegistry.TRIGGER_TYPE.register(modEventBus);
+
+		ImmersiveWeapons.LOGGER.info("Initializing deferred registry for game events");
+		GameEventRegistry.GAME_EVENTS.register(modEventBus);
 	}
 }

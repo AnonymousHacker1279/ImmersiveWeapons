@@ -17,17 +17,19 @@ import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.Mod.EventBusSubscriber;
 import net.neoforged.fml.common.Mod.EventBusSubscriber.Bus;
 import net.neoforged.neoforge.client.event.*;
-import net.neoforged.neoforge.client.event.ViewportEvent.ComputeFov;
-import net.neoforged.neoforge.client.event.ViewportEvent.RenderFog;
+import net.neoforged.neoforge.client.event.ViewportEvent.*;
 import net.neoforged.neoforge.client.gui.overlay.ExtendedGui;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.client.IWKeyBinds;
 import tech.anonymoushacker1279.immersiveweapons.client.gui.IWOverlays;
 import tech.anonymoushacker1279.immersiveweapons.client.gui.overlays.DebugTracingData;
+import tech.anonymoushacker1279.immersiveweapons.config.ClientConfig;
+import tech.anonymoushacker1279.immersiveweapons.init.EffectRegistry;
 import tech.anonymoushacker1279.immersiveweapons.init.ItemRegistry;
 import tech.anonymoushacker1279.immersiveweapons.item.AccessoryItem;
 import tech.anonymoushacker1279.immersiveweapons.item.CursedItem;
 import tech.anonymoushacker1279.immersiveweapons.item.gun.data.GunData;
+import tech.anonymoushacker1279.immersiveweapons.item.projectile.ThrowableItem;
 
 @EventBusSubscriber(modid = ImmersiveWeapons.MOD_ID, bus = Bus.FORGE, value = Dist.CLIENT)
 public class ClientForgeEventSubscriber {
@@ -78,12 +80,13 @@ public class ClientForgeEventSubscriber {
 			return;
 		}
 
-		boolean hasLavaGoggles = AccessoryItem.isAccessoryActive(player, ItemRegistry.LAVA_GOGGLES.get());
-		if (player.getItemBySlot(EquipmentSlot.HEAD).getItem() == ItemRegistry.MOLTEN_HELMET.get() &&
-				player.getItemBySlot(EquipmentSlot.CHEST).getItem() == ItemRegistry.MOLTEN_CHESTPLATE.get() &&
-				player.getItemBySlot(EquipmentSlot.LEGS).getItem() == ItemRegistry.MOLTEN_LEGGINGS.get() &&
-				player.getItemBySlot(EquipmentSlot.FEET).getItem() == ItemRegistry.MOLTEN_BOOTS.get()) {
-			if (player.isInLava()) {
+		if (player.isInLava()) {
+			boolean hasLavaGoggles = AccessoryItem.isAccessoryActive(player, ItemRegistry.LAVA_GOGGLES.get());
+			if (player.getItemBySlot(EquipmentSlot.HEAD).getItem() == ItemRegistry.MOLTEN_HELMET.get() &&
+					player.getItemBySlot(EquipmentSlot.CHEST).getItem() == ItemRegistry.MOLTEN_CHESTPLATE.get() &&
+					player.getItemBySlot(EquipmentSlot.LEGS).getItem() == ItemRegistry.MOLTEN_LEGGINGS.get() &&
+					player.getItemBySlot(EquipmentSlot.FEET).getItem() == ItemRegistry.MOLTEN_BOOTS.get()) {
+
 				if (minecraft.level != null) {
 					BlockState state = minecraft.level.getBlockState(new BlockPos(player.blockPosition().above(1)));
 					if (state.is(Blocks.LAVA)) {
@@ -93,9 +96,7 @@ public class ClientForgeEventSubscriber {
 						event.setCanceled(true);
 					}
 				}
-			}
-		} else if (hasLavaGoggles) {
-			if (player.isInLava()) {
+			} else if (hasLavaGoggles) {
 				if (minecraft.level != null) {
 					BlockState state = minecraft.level.getBlockState(new BlockPos(player.blockPosition().above(1)));
 					if (state.is(Blocks.LAVA)) {
@@ -115,6 +116,33 @@ public class ClientForgeEventSubscriber {
 			event.setFogShape(FogShape.SPHERE);
 			event.setCanceled(true);
 		}
+
+		if (player.hasEffect(EffectRegistry.FLASHBANG_EFFECT.get())) {
+			// Slowly increase distance as the effect ticks closer to zero
+			float distance = 1.0f / (player.getEffect(EffectRegistry.FLASHBANG_EFFECT.get()).getDuration() / 20.0f);
+
+			event.setNearPlaneDistance(0.0f);
+			event.setFarPlaneDistance(Math.max(distance * 32, 0.25f));
+			event.scaleFarPlaneDistance(0.5f);
+
+			event.setFogShape(FogShape.SPHERE);
+			event.setCanceled(true);
+		}
+	}
+
+	@SubscribeEvent
+	public static void computeFogColorEvent(ComputeFogColor event) {
+		if (minecraft.player != null && minecraft.player.hasEffect(EffectRegistry.FLASHBANG_EFFECT.get())) {
+			if (ClientConfig.darkModeFlashbangs) {
+				event.setRed(0.0f);
+				event.setGreen(0.0f);
+				event.setBlue(0.0f);
+			} else {
+				event.setRed(1.0f);
+				event.setGreen(1.0f);
+				event.setBlue(1.0f);
+			}
+		}
 	}
 
 	@SubscribeEvent
@@ -126,12 +154,13 @@ public class ClientForgeEventSubscriber {
 			event.setFOV(GunData.changingPlayerFOV);
 		}
 
-		// Handle FOV change of custom bows
+		// Handle FOV changes with some items
 		if (minecraft.player != null) {
 			Item itemInHand = minecraft.player.getItemInHand(minecraft.player.getUsedItemHand()).getItem();
 			if ((itemInHand == ItemRegistry.ICE_BOW.get()
 					|| itemInHand == ItemRegistry.DRAGONS_BREATH_BOW.get()
-					|| itemInHand == ItemRegistry.AURORA_BOW.get())
+					|| itemInHand == ItemRegistry.AURORA_BOW.get()
+					|| (itemInHand.asItem() instanceof ThrowableItem throwableItem && throwableItem.type.canCharge))
 					&& minecraft.player.isUsingItem()) {
 
 				double fov = event.getFOV();
@@ -150,9 +179,8 @@ public class ClientForgeEventSubscriber {
 		}
 	}
 
-
 	@SubscribeEvent
-	public static void RenderGuiOverlayPostEvent(RenderGuiOverlayEvent.Post event) {
+	public static void renderGuiOverlayPostEvent(RenderGuiOverlayEvent.Post event) {
 		int screenHeight = event.getWindow().getGuiScaledHeight();
 		int screenWidth = event.getWindow().getGuiScaledWidth();
 
@@ -161,13 +189,11 @@ public class ClientForgeEventSubscriber {
 				float deltaFrame = minecraft.getDeltaFrameTime() / 8;
 				GunData.scopeScale = Mth.lerp(0.25F * deltaFrame, GunData.scopeScale, 1.125F);
 
-				if (IWOverlays.SCOPE_ELEMENT != null) {
-					IWOverlays.SCOPE_ELEMENT.render((ExtendedGui) minecraft.gui,
-							event.getGuiGraphics(),
-							event.getPartialTick(),
-							screenWidth,
-							screenHeight);
-				}
+				IWOverlays.SCOPE_ELEMENT.render((ExtendedGui) minecraft.gui,
+						event.getGuiGraphics(),
+						event.getPartialTick(),
+						screenWidth,
+						screenHeight);
 			}
 		}
 
@@ -176,13 +202,11 @@ public class ClientForgeEventSubscriber {
 		}
 
 		if (DebugTracingData.isDebugTracingEnabled) {
-			if (IWOverlays.DEBUG_TRACING_ELEMENT != null) {
-				IWOverlays.DEBUG_TRACING_ELEMENT.render((ExtendedGui) minecraft.gui,
-						event.getGuiGraphics(),
-						event.getPartialTick(),
-						screenWidth,
-						screenHeight);
-			}
+			IWOverlays.DEBUG_TRACING_ELEMENT.render((ExtendedGui) minecraft.gui,
+					event.getGuiGraphics(),
+					event.getPartialTick(),
+					screenWidth,
+					screenHeight);
 		}
 	}
 

@@ -2,9 +2,9 @@ package tech.anonymoushacker1279.immersiveweapons.block.mud;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
-import net.minecraft.world.level.block.*;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.SimpleWaterloggedBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
@@ -12,8 +12,9 @@ import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.shapes.*;
+import tech.anonymoushacker1279.immersiveweapons.block.core.BasicOrientableBlock;
 
-public class HardenedMudWindowBlock extends HorizontalDirectionalBlock implements SimpleWaterloggedBlock {
+public class HardenedMudWindowBlock extends BasicOrientableBlock implements SimpleWaterloggedBlock {
 
 	public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
 	private static final VoxelShape SHAPE_NS = Shapes.or(Block.box(0.0D, 0.0D, 7.5D, 2.0D, 16.0D, 8.5D),
@@ -44,11 +45,6 @@ public class HardenedMudWindowBlock extends HorizontalDirectionalBlock implement
 	@Override
 	public void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
 		builder.add(FACING, WATERLOGGED);
-	}
-
-	@Override
-	public BlockState getStateForPlacement(BlockPlaceContext context) {
-		return defaultBlockState().setValue(FACING, context.getHorizontalDirection());
 	}
 
 	@SuppressWarnings("deprecation")

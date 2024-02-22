@@ -7,7 +7,7 @@ import net.minecraft.world.entity.animal.IronGolem;
 import net.minecraft.world.entity.npc.Villager;
 import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.Nullable;
-import tech.anonymoushacker1279.immersiveweapons.entity.neutral.AbstractFieldMedicEntity;
+import tech.anonymoushacker1279.immersiveweapons.entity.neutral.FieldMedicEntity;
 import tech.anonymoushacker1279.immersiveweapons.entity.neutral.MinutemanEntity;
 import tech.anonymoushacker1279.immersiveweapons.init.ItemRegistry;
 
@@ -16,19 +16,19 @@ import java.util.List;
 
 public class FieldMedicHealEntitiesGoal extends Goal {
 
-	private final AbstractFieldMedicEntity medic;
+	private final FieldMedicEntity medic;
 	private final List<Class<? extends LivingEntity>> targetedEntities = List.of(
 			MinutemanEntity.class,
 			IronGolem.class,
 			Villager.class,
-			AbstractFieldMedicEntity.class
+			FieldMedicEntity.class
 	);
 
 	private final ArrayList<LivingEntity> recentlyHealedEntities = new ArrayList<>(5);
 	@Nullable
 	private LivingEntity healTarget;
 
-	public FieldMedicHealEntitiesGoal(AbstractFieldMedicEntity medic) {
+	public FieldMedicHealEntitiesGoal(FieldMedicEntity medic) {
 		this.medic = medic;
 	}
 

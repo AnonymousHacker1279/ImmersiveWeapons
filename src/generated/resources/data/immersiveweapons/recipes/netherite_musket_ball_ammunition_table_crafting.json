@@ -1,5 +1,6 @@
 {
   "type": "immersiveweapons:ammunition_table",
+  "group": "ammunition_table",
   "materials": [
     {
       "base_multiplier": 2.6,
@@ -9,7 +10,5 @@
       }
     }
   ],
-  "result": {
-    "item": "immersiveweapons:netherite_musket_ball"
-  }
+  "result": "immersiveweapons:netherite_musket_ball"
 }

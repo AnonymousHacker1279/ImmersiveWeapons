@@ -30,6 +30,5 @@
     "recipes": [
       "immersiveweapons:musket_scope"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

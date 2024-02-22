@@ -30,6 +30,5 @@
     "recipes": [
       "immersiveweapons:blunderbuss"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

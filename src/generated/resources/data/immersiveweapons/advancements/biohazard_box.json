@@ -15,16 +15,13 @@
     }
   },
   "display": {
-    "announce_to_chat": true,
     "description": {
       "translate": "advancements.immersiveweapons.biohazard_box.description"
     },
     "frame": "goal",
-    "hidden": false,
     "icon": {
       "item": "immersiveweapons:biohazard_box"
     },
-    "show_toast": true,
     "title": {
       "translate": "advancements.immersiveweapons.biohazard_box.title"
     }

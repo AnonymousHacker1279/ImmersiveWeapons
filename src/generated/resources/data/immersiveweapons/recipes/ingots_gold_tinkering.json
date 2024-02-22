@@ -5,6 +5,7 @@
     "immersiveweapons:trigger_assembly",
     "immersiveweapons:scope_mount"
   ],
+  "group": "small_parts",
   "material": {
     "tag": "forge:ingots/gold"
   }

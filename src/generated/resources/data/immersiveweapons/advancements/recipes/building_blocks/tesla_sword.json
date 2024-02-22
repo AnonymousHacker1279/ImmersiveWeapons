@@ -28,6 +28,5 @@
     "recipes": [
       "immersiveweapons:tesla_sword"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

@@ -6,6 +6,7 @@ import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundAddEntityPacket;
 import net.minecraft.network.syncher.*;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.Mth;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.*;
@@ -18,12 +19,13 @@ import net.minecraft.world.level.Level.ExplosionInteraction;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.*;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import net.neoforged.neoforge.common.Tags.EntityTypes;
 import net.neoforged.neoforge.event.EventHooks;
 import net.neoforged.neoforge.network.PacketDistributor;
 import org.jetbrains.annotations.Nullable;
-import tech.anonymoushacker1279.immersiveweapons.entity.projectile.SmokeGrenadeEntity.SmokeGrenadeEntityPacketHandler;
-import tech.anonymoushacker1279.immersiveweapons.init.PacketHandler;
+import tech.anonymoushacker1279.immersiveweapons.config.CommonConfig;
 import tech.anonymoushacker1279.immersiveweapons.item.tool.HitEffectUtils;
+import tech.anonymoushacker1279.immersiveweapons.network.payload.SmokeGrenadePayload;
 import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
 import tech.anonymoushacker1279.immersiveweapons.world.level.IWDamageSources;
 
@@ -243,11 +245,12 @@ public class CustomArrowEntity extends Arrow implements HitEffectUtils {
 			}
 
 			// Set movement and position
-			setDeltaMovement(deltaMovement.scale(inertia));
 			if (!isNoGravity() && !noPhysics) {
 				if (shouldStopMoving) {
 					setDeltaMovement(0, 0, 0);
 				} else {
+					setDeltaMovement(deltaMovement.scale(inertia));
+
 					Vec3 newDeltaMovement = getDeltaMovement();
 					setDeltaMovement(newDeltaMovement.x, newDeltaMovement.y - getGravityModifier(), newDeltaMovement.z);
 				}
@@ -256,6 +259,21 @@ public class CustomArrowEntity extends Arrow implements HitEffectUtils {
 			setPos(newX, newY, newZ);
 			checkInsideBlocks();
 		}
+
+		if (color != -1 && inGroundTime > 0) {
+			if (level() instanceof ServerLevel serverLevel && tickCount % 2 == 0) {
+				serverLevel.getEntities(this, getBoundingBox().inflate(CommonConfig.smokeGrenadeEffectRange))
+						.stream()
+						.filter(entity -> !entity.isSpectator())
+						.forEach(entity -> {
+							if (entity instanceof Mob mob && !mob.getType().is(EntityTypes.BOSSES)) {
+								if (AdvancedThrowableItemProjectile.canSee(mob, this, false)) {
+									mob.setTarget(null);
+								}
+							}
+						});
+			}
+		}
 	}
 
 	@Override
@@ -263,8 +281,8 @@ public class CustomArrowEntity extends Arrow implements HitEffectUtils {
 		super.onHit(result);
 
 		if (color != -1 && !level().isClientSide) {
-			PacketHandler.INSTANCE.send(PacketDistributor.TRACKING_CHUNK.with(() -> level().getChunkAt(blockPosition())),
-					new SmokeGrenadeEntityPacketHandler(getX(), getY(), getZ(), color));
+			PacketDistributor.TRACKING_CHUNK.with(level().getChunkAt(blockPosition()))
+					.send(new SmokeGrenadePayload(getX(), getY(), getZ(), color));
 		}
 
 		if (isExplosive && !hasExploded) {
@@ -333,12 +351,6 @@ public class CustomArrowEntity extends Arrow implements HitEffectUtils {
 	 */
 	protected void doWhenHitEntity(Entity entity) {
 		level().broadcastEntityEvent(this, VANILLA_IMPACT_STATUS_ID);
-	}
-
-	/**
-	 * Additional stuff to do when a block is hit.
-	 */
-	protected void doWhenHitBlock() {
 	}
 
 	private void explode() {

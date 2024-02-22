@@ -15,16 +15,13 @@
     }
   },
   "display": {
-    "announce_to_chat": true,
     "description": {
       "translate": "advancements.immersiveweapons.molotov_cocktail.description"
     },
     "frame": "goal",
-    "hidden": false,
     "icon": {
       "item": "immersiveweapons:molotov_cocktail"
     },
-    "show_toast": true,
     "title": {
       "translate": "advancements.immersiveweapons.molotov_cocktail.title"
     }

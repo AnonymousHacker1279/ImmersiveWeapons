@@ -30,6 +30,5 @@
     "recipes": [
       "immersiveweapons:explosive_cannonball"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

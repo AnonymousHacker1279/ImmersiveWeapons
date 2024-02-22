@@ -7,6 +7,7 @@ import net.minecraft.core.RegistryAccess;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.ExtraCodecs;
 import net.minecraft.world.Container;
 import net.minecraft.world.item.*;
 import net.minecraft.world.item.crafting.*;
@@ -16,16 +17,8 @@ import tech.anonymoushacker1279.immersiveweapons.init.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public record SmallPartsRecipe(Ingredient material,
-                               List<Item> craftables) implements Recipe<Container> {
+public record SmallPartsRecipe(String group, Ingredient material, List<Item> craftables) implements Recipe<Container> {
 
-	/**
-	 * Used to check if a recipe matches current crafting inventory.
-	 *
-	 * @param container the <code>Container</code> instance
-	 * @param level     the current <code>Level</code>
-	 * @return boolean
-	 */
 	@Override
 	public boolean matches(Container container, Level level) {
 		return false;
@@ -41,53 +34,31 @@ public record SmallPartsRecipe(Ingredient material,
 		return new ItemStack(Items.AIR);
 	}
 
-	/**
-	 * Used to determine if this recipe can fit in a grid of the given width/height.
-	 *
-	 * @param width  the width of the grid
-	 * @param height the height of the grid
-	 * @return boolean
-	 */
 	@Override
 	public boolean canCraftInDimensions(int width, int height) {
 		return false;
 	}
 
-	/**
-	 * Get the toast symbol.
-	 *
-	 * @return ItemStack
-	 */
 	@Override
 	public ItemStack getToastSymbol() {
 		return new ItemStack(BlockRegistry.SMALL_PARTS_TABLE.get());
 	}
 
-	/**
-	 * Get the recipe serializer.
-	 *
-	 * @return RecipeSerializer
-	 */
 	@Override
 	public RecipeSerializer<?> getSerializer() {
 		return RecipeSerializerRegistry.SMALL_PARTS_RECIPE_SERIALIZER.get();
 	}
 
-	/**
-	 * Get the recipe type.
-	 *
-	 * @return RecipeType
-	 */
 	@Override
 	public RecipeType<?> getType() {
 		return RecipeTypeRegistry.SMALL_PARTS_RECIPE_TYPE.get();
 	}
 
-	/**
-	 * Get the recipe's ingredients.
-	 *
-	 * @return NonNullList extending Ingredient
-	 */
+	@Override
+	public String getGroup() {
+		return group;
+	}
+
 	@Override
 	public NonNullList<Ingredient> getIngredients() {
 		NonNullList<Ingredient> defaultedList = NonNullList.create();
@@ -100,36 +71,46 @@ public record SmallPartsRecipe(Ingredient material,
 		return true;
 	}
 
-	public static class Serializer implements RecipeSerializer<SmallPartsRecipe> {
+	public interface Factory<T extends SmallPartsRecipe> {
+		T create(String group, Ingredient material, List<Item> craftables);
+	}
 
-		private static final Codec<SmallPartsRecipe> CODEC = RecordCodecBuilder.create(
-				instance -> instance.group(
-								Ingredient.CODEC.fieldOf("material").forGetter(recipe -> recipe.material),
-								Codec.list(Codec.STRING).fieldOf("craftables").forGetter(recipe -> {
-									List<String> craftables = new ArrayList<>(recipe.craftables.size());
-									for (Item item : recipe.craftables) {
-										craftables.add(BuiltInRegistries.ITEM.getKey(item).toString());
-									}
-									return craftables;
-								})
-						)
-						.apply(instance, (material, craftables) -> {
-									List<Item> craftables1 = new ArrayList<>(craftables.size());
-									for (String s : craftables) {
-										craftables1.add(BuiltInRegistries.ITEM.get(ResourceLocation.tryParse(s)));
-									}
+	public static class Serializer<T extends SmallPartsRecipe> implements RecipeSerializer<T> {
 
-									return new SmallPartsRecipe(material, craftables1);
+		private final SmallPartsRecipe.Factory<T> factory;
+		private final Codec<T> codec;
+
+		public Serializer(SmallPartsRecipe.Factory<T> factory) {
+			this.factory = factory;
+			this.codec = RecordCodecBuilder.create(
+					instance -> instance.group(
+							ExtraCodecs.strictOptionalField(Codec.STRING, "group", "").forGetter(SmallPartsRecipe::group),
+							Ingredient.CODEC.fieldOf("material").forGetter(SmallPartsRecipe::material),
+							Codec.list(Codec.STRING).fieldOf("craftables").forGetter(recipe -> {
+								List<String> craftables = new ArrayList<>(recipe.craftables().size());
+								for (Item item : recipe.craftables()) {
+									craftables.add(BuiltInRegistries.ITEM.getKey(item).toString());
 								}
-						));
-
-		@Override
-		public Codec<SmallPartsRecipe> codec() {
-			return CODEC;
+								return craftables;
+							})
+					).apply(instance, (group, material, craftables) -> {
+						List<Item> craftables1 = new ArrayList<>(craftables.size());
+						for (String s : craftables) {
+							craftables1.add(BuiltInRegistries.ITEM.get(ResourceLocation.tryParse(s)));
+						}
+						return factory.create(group, material, craftables1);
+					})
+			);
 		}
 
 		@Override
-		public SmallPartsRecipe fromNetwork(FriendlyByteBuf buffer) {
+		public Codec<T> codec() {
+			return codec;
+		}
+
+		@Override
+		public T fromNetwork(FriendlyByteBuf buffer) {
+			String group = buffer.readUtf();
 			Ingredient material = Ingredient.fromNetwork(buffer);
 
 			String craft = buffer.readUtf();
@@ -141,11 +122,12 @@ public record SmallPartsRecipe(Ingredient material,
 				craftables.add(BuiltInRegistries.ITEM.get(ResourceLocation.tryParse(s2)));
 			}
 
-			return new SmallPartsRecipe(material, craftables);
+			return factory.create(group, material, craftables);
 		}
 
 		@Override
 		public void toNetwork(FriendlyByteBuf buffer, SmallPartsRecipe recipe) {
+			buffer.writeUtf(recipe.group);
 			recipe.material.toNetwork(buffer);
 			List<ResourceLocation> craftables = new ArrayList<>(recipe.craftables.size());
 			for (Item item : recipe.craftables) {

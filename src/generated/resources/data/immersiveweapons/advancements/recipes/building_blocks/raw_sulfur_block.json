@@ -30,6 +30,5 @@
     "recipes": [
       "immersiveweapons:raw_sulfur_block"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

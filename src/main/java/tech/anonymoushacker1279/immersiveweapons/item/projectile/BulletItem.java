@@ -8,7 +8,7 @@ import net.minecraft.world.item.ArrowItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Level;
-import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
+import tech.anonymoushacker1279.immersiveweapons.config.CommonConfig;
 import tech.anonymoushacker1279.immersiveweapons.entity.projectile.*;
 import tech.anonymoushacker1279.immersiveweapons.init.EnchantmentRegistry;
 import tech.anonymoushacker1279.immersiveweapons.init.SoundEventRegistry;
@@ -96,7 +96,7 @@ public class BulletItem<T extends BulletEntity> extends ArrowItem {
 	@Override
 	public boolean isInfinite(ItemStack bullet, ItemStack gun, Player player) {
 		int enchant = EnchantmentHelper.getTagEnchantmentLevel(EnchantmentRegistry.ENDLESS_MUSKET_POUCH.get(), gun);
-		return (ImmersiveWeapons.COMMON_CONFIG.allowInfiniteAmmoOnAllTiers().get() || canBeInfinite) && enchant > 0;
+		return (CommonConfig.infiniteAmmoOnAllTiers || canBeInfinite) && enchant > 0;
 	}
 
 	public static class BulletBuilder<T extends BulletEntity> {

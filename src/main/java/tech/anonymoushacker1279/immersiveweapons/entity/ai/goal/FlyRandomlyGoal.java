@@ -3,13 +3,17 @@ package tech.anonymoushacker1279.immersiveweapons.entity.ai.goal;
 import net.minecraft.commands.arguments.EntityAnchorArgument.Anchor;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Vec3i;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.level.ClipContext;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.levelgen.Heightmap.Types;
 import net.minecraft.world.phys.HitResult;
 import org.jetbrains.annotations.Nullable;
-import tech.anonymoushacker1279.immersiveweapons.data.biomes.IWBiomes;
-import tech.anonymoushacker1279.immersiveweapons.data.dimensions.IWDimensions;
+import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.entity.monster.EvilEyeEntity;
 
 public class FlyRandomlyGoal extends Goal {
@@ -18,6 +22,9 @@ public class FlyRandomlyGoal extends Goal {
 	@Nullable
 	private BlockPos targetPosition;
 	private int targetingCooldown;
+
+	private static final ResourceKey<Biome> DEADMANS_DESERT = ResourceKey.create(Registries.BIOME, new ResourceLocation(ImmersiveWeapons.MOD_ID, "deadmans_desert"));
+	private static final ResourceKey<Level> TILTROS = ResourceKey.create(Registries.DIMENSION, new ResourceLocation(ImmersiveWeapons.MOD_ID, "tiltros"));
 
 	public FlyRandomlyGoal(EvilEyeEntity pMob) {
 		evilEyeEntity = pMob;
@@ -70,9 +77,9 @@ public class FlyRandomlyGoal extends Goal {
 
 			// Check if the entity is in Tiltros
 			// It should stay confined to the desert but if it's not in Tiltros, it will always remain idle
-			if (evilEyeEntity.level().dimension() == IWDimensions.TILTROS) {
+			if (evilEyeEntity.level().dimension() == TILTROS) {
 				// Ensure the target position is in the Deadman's Desert biome
-				if (!evilEyeEntity.level().getBiome(targetPosition).is(IWBiomes.DEADMANS_DESERT)) {
+				if (!evilEyeEntity.level().getBiome(targetPosition).is(DEADMANS_DESERT)) {
 					targetPosition = null;
 					targetingCooldown = 40;
 					return;

@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/block",
+  "textures": {
+    "particle": "immersiveweapons:block/tiltros_portal_frame"
+  }
+}

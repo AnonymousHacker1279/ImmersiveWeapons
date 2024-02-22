@@ -2,20 +2,27 @@
   "parent": "immersiveweapons:entity_discovery",
   "criteria": {
     "discover": {
-      "trigger": "minecraft:entity_discovered"
+      "conditions": {
+        "entity": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "type": "immersiveweapons:skeleton_merchant"
+            }
+          }
+        ]
+      },
+      "trigger": "immersiveweapons:entity_discovered"
     }
   },
   "display": {
-    "announce_to_chat": true,
     "description": {
       "translate": "advancements.immersiveweapons.discover_skeleton_merchant.description"
     },
-    "frame": "task",
-    "hidden": false,
     "icon": {
       "item": "immersiveweapons:skeleton_merchant_head"
     },
-    "show_toast": true,
     "title": {
       "translate": "advancements.immersiveweapons.discover_skeleton_merchant.title"
     }

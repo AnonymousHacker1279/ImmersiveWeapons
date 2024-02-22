@@ -7,7 +7,7 @@
       "item": "minecraft:stick"
     },
     "b": {
-      "item": "minecraft:grass"
+      "item": "minecraft:short_grass"
     },
     "c": {
       "tag": "minecraft:leaves"
@@ -19,6 +19,5 @@
   ],
   "result": {
     "item": "immersiveweapons:pitfall"
-  },
-  "show_notification": true
+  }
 }

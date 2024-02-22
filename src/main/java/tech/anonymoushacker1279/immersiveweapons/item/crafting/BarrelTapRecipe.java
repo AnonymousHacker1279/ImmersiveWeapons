@@ -5,15 +5,26 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.util.ExtraCodecs;
 import net.minecraft.world.Container;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.level.Level;
 import tech.anonymoushacker1279.immersiveweapons.init.*;
 
-public record BarrelTapRecipe(Ingredient material,
-                              int materialCount,
-                              ItemStack result) implements Recipe<Container> {
+public class BarrelTapRecipe implements Recipe<Container> {
+
+	protected final Ingredient material;
+	protected final int materialCount;
+	protected final ItemStack result;
+	protected final String group;
+
+	public BarrelTapRecipe(String group, Ingredient material, int materialCount, ItemStack result) {
+		this.material = material;
+		this.materialCount = materialCount;
+		this.result = result;
+		this.group = group;
+	}
 
 	@Override
 	public boolean matches(Container container, Level level) {
@@ -59,6 +70,11 @@ public record BarrelTapRecipe(Ingredient material,
 	}
 
 	@Override
+	public String getGroup() {
+		return group;
+	}
+
+	@Override
 	public NonNullList<Ingredient> getIngredients() {
 		NonNullList<Ingredient> defaultedList = NonNullList.create();
 		defaultedList.add(material);
@@ -70,33 +86,46 @@ public record BarrelTapRecipe(Ingredient material,
 		return true;
 	}
 
-	public static class Serializer implements RecipeSerializer<BarrelTapRecipe> {
+	public interface Factory<T extends BarrelTapRecipe> {
+		T create(String group, Ingredient material, int materialCount, ItemStack result);
+	}
 
-		private static final Codec<BarrelTapRecipe> CODEC = RecordCodecBuilder.create(
-				instance -> instance.group(
-								Ingredient.CODEC.fieldOf("material").forGetter(recipe -> recipe.material),
-								Codec.INT.fieldOf("materialCount").forGetter(recipe -> recipe.materialCount),
-								CraftingRecipeCodecs.ITEMSTACK_OBJECT_CODEC.fieldOf("result").forGetter(recipe -> recipe.result)
-						)
-						.apply(instance, BarrelTapRecipe::new)
-		);
+	public static class Serializer<T extends BarrelTapRecipe> implements RecipeSerializer<T> {
 
-		@Override
-		public Codec<BarrelTapRecipe> codec() {
-			return CODEC;
+		private final BarrelTapRecipe.Factory<T> factory;
+		private final Codec<T> codec;
+
+		public Serializer(BarrelTapRecipe.Factory<T> factory) {
+			this.factory = factory;
+			this.codec = RecordCodecBuilder.create(
+					instance -> instance.group(
+									ExtraCodecs.strictOptionalField(Codec.STRING, "group", "").forGetter(recipe -> recipe.group),
+									Ingredient.CODEC.fieldOf("material").forGetter(recipe -> recipe.material),
+									Codec.INT.fieldOf("materialCount").forGetter(recipe -> recipe.materialCount),
+									ItemStack.SINGLE_ITEM_CODEC.fieldOf("result").forGetter(recipe -> recipe.result)
+							)
+							.apply(instance, factory::create)
+			);
 		}
 
 		@Override
-		public BarrelTapRecipe fromNetwork(FriendlyByteBuf buffer) {
+		public Codec<T> codec() {
+			return codec;
+		}
+
+		@Override
+		public T fromNetwork(FriendlyByteBuf buffer) {
+			String group = buffer.readUtf();
 			Ingredient material = Ingredient.fromNetwork(buffer);
 			int materialCount = buffer.readInt();
 			ItemStack result = buffer.readItem();
 
-			return new BarrelTapRecipe(material, materialCount, result);
+			return factory.create(group, material, materialCount, result);
 		}
 
 		@Override
 		public void toNetwork(FriendlyByteBuf buffer, BarrelTapRecipe recipe) {
+			buffer.writeUtf(recipe.group);
 			recipe.material.toNetwork(buffer);
 			buffer.writeInt(recipe.materialCount);
 			buffer.writeItem(recipe.result);

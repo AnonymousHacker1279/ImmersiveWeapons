@@ -30,6 +30,5 @@
     "recipes": [
       "immersiveweapons:burned_oak_sign"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

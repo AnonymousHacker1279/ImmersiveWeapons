@@ -6,17 +6,7 @@
         "items": [
           {
             "items": [
-              "immersiveweapons:warrior_statue_base"
-            ]
-          },
-          {
-            "items": [
-              "immersiveweapons:warrior_statue_torso"
-            ]
-          },
-          {
-            "items": [
-              "immersiveweapons:warrior_statue_head"
+              "immersiveweapons:tiltros_portal_frame"
             ]
           }
         ]
@@ -25,18 +15,15 @@
     }
   },
   "display": {
-    "announce_to_chat": true,
     "description": {
-      "translate": "advancements.immersiveweapons.tiltros.warrior_statue.description"
+      "translate": "advancements.immersiveweapons.tiltros.tiltros_portal.description"
     },
-    "frame": "task",
     "hidden": true,
     "icon": {
-      "item": "immersiveweapons:warrior_statue_head"
+      "item": "immersiveweapons:tiltros_portal_frame"
     },
-    "show_toast": true,
     "title": {
-      "translate": "advancements.immersiveweapons.tiltros.warrior_statue.title"
+      "translate": "advancements.immersiveweapons.tiltros.tiltros_portal.title"
     }
   },
   "requirements": [

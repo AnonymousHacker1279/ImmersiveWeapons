@@ -15,16 +15,12 @@
     }
   },
   "display": {
-    "announce_to_chat": true,
     "description": {
       "translate": "advancements.immersiveweapons.conductive_alloy.description"
     },
-    "frame": "task",
-    "hidden": false,
     "icon": {
       "item": "immersiveweapons:conductive_alloy"
     },
-    "show_toast": true,
     "title": {
       "translate": "advancements.immersiveweapons.conductive_alloy.title"
     }

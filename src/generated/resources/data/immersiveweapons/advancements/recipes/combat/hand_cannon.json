@@ -30,6 +30,5 @@
     "recipes": [
       "immersiveweapons:hand_cannon"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

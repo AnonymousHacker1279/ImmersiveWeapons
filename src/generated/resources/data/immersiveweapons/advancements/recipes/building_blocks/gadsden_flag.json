@@ -30,6 +30,5 @@
     "recipes": [
       "immersiveweapons:gadsden_flag"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

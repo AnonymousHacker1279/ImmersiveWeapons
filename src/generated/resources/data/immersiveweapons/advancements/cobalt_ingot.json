@@ -15,16 +15,12 @@
     }
   },
   "display": {
-    "announce_to_chat": true,
     "description": {
       "translate": "advancements.immersiveweapons.cobalt_ingot.description"
     },
-    "frame": "task",
-    "hidden": false,
     "icon": {
       "item": "immersiveweapons:cobalt_ingot"
     },
-    "show_toast": true,
     "title": {
       "translate": "advancements.immersiveweapons.cobalt_ingot.title"
     }

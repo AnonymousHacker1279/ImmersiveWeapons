@@ -1,0 +1,35 @@
+{
+  "parent": "immersiveweapons:small_parts_table",
+  "criteria": {
+    "hold": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "immersiveweapons:flashbang"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.immersiveweapons.flashbang.description"
+    },
+    "frame": "goal",
+    "icon": {
+      "item": "immersiveweapons:flashbang"
+    },
+    "title": {
+      "translate": "advancements.immersiveweapons.flashbang.title"
+    }
+  },
+  "requirements": [
+    [
+      "hold"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:jigsaw",
+  "biomes": "#immersiveweapons:has_structure/battlefield_town",
+  "max_distance_from_center": 80,
+  "project_start_to_heightmap": "WORLD_SURFACE_WG",
+  "size": 1,
+  "spawn_overrides": {
+    "creature": {
+      "bounding_box": "full",
+      "spawns": [
+        {
+          "type": "minecraft:cat",
+          "maxCount": 2,
+          "minCount": 1,
+          "weight": 1
+        }
+      ]
+    }
+  },
+  "start_height": {
+    "absolute": 0
+  },
+  "start_pool": "immersiveweapons:battlefield_town",
+  "step": "surface_structures",
+  "terrain_adaptation": "beard_thin",
+  "use_expansion_hack": false
+}

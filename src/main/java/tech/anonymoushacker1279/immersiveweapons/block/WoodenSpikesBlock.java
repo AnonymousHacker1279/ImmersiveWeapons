@@ -37,14 +37,12 @@ public class WoodenSpikesBlock extends DamageableBlock {
 
 	@SuppressWarnings("deprecation")
 	@Override
-	public VoxelShape getShape(BlockState state, BlockGetter reader, BlockPos pos,
-	                           CollisionContext selectionContext) {
-
+	public VoxelShape getShape(BlockState state, BlockGetter getter, BlockPos pos, CollisionContext context) {
 		return SHAPE;
 	}
 
 	@Override
-	protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
+	public void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
 		builder.add(WATERLOGGED, FACING, DAMAGE_STAGE);
 	}
 

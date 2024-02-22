@@ -4,19 +4,22 @@ import net.minecraft.advancements.AdvancementHolder;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.stats.Stats;
+import net.minecraft.world.damagesource.DamageType;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
-import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.*;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation;
 import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.entity.monster.CaveSpider;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.entity.projectile.ThrownTrident;
@@ -24,6 +27,7 @@ import net.minecraft.world.item.*;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
@@ -35,11 +39,8 @@ import net.neoforged.bus.api.Event.Result;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.Mod.EventBusSubscriber;
 import net.neoforged.fml.common.Mod.EventBusSubscriber.Bus;
-import net.neoforged.neoforge.client.event.RegisterGuiOverlaysEvent;
-import net.neoforged.neoforge.client.gui.overlay.VanillaGuiOverlay;
 import net.neoforged.neoforge.common.NeoForgeMod;
-import net.neoforged.neoforge.event.AnvilUpdateEvent;
-import net.neoforged.neoforge.event.ItemAttributeModifierEvent;
+import net.neoforged.neoforge.event.*;
 import net.neoforged.neoforge.event.TickEvent.PlayerTickEvent;
 import net.neoforged.neoforge.event.entity.EntityJoinLevelEvent;
 import net.neoforged.neoforge.event.entity.living.*;
@@ -51,19 +52,19 @@ import net.neoforged.neoforge.event.level.PistonEvent.PistonMoveType;
 import net.neoforged.neoforge.network.PacketDistributor;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.block.decoration.StarstormCrystalBlock;
-import tech.anonymoushacker1279.immersiveweapons.client.gui.IWOverlays;
 import tech.anonymoushacker1279.immersiveweapons.client.gui.overlays.DebugTracingData;
-import tech.anonymoushacker1279.immersiveweapons.client.gui.overlays.DebugTracingData.DebugDataPacketHandler;
-import tech.anonymoushacker1279.immersiveweapons.data.biomes.IWBiomes;
-import tech.anonymoushacker1279.immersiveweapons.data.damage_types.IWDamageTypes;
 import tech.anonymoushacker1279.immersiveweapons.entity.monster.StarmiteEntity;
+import tech.anonymoushacker1279.immersiveweapons.entity.npc.trading.TradeLoader;
 import tech.anonymoushacker1279.immersiveweapons.entity.projectile.MeteorEntity;
+import tech.anonymoushacker1279.immersiveweapons.entity.projectile.MudBallEntity;
 import tech.anonymoushacker1279.immersiveweapons.event.game_effects.*;
 import tech.anonymoushacker1279.immersiveweapons.init.*;
 import tech.anonymoushacker1279.immersiveweapons.item.*;
 import tech.anonymoushacker1279.immersiveweapons.item.crafting.PistonCrushingRecipe;
 import tech.anonymoushacker1279.immersiveweapons.item.gauntlet.GauntletItem;
 import tech.anonymoushacker1279.immersiveweapons.item.pike.PikeItem;
+import tech.anonymoushacker1279.immersiveweapons.network.payload.DebugDataPayload;
+import tech.anonymoushacker1279.immersiveweapons.network.payload.SyncPlayerDataPayload;
 import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
 import tech.anonymoushacker1279.immersiveweapons.world.level.IWDamageSources;
 
@@ -78,19 +79,8 @@ public class ForgeEventSubscriber {
 			UUID.fromString("c74619c0-b953-4ee7-a3d7-adf974c22d7d"),
 			"Jonny's Curse speed modifier", -0.25d, Operation.MULTIPLY_BASE);
 
-
-	@SubscribeEvent
-	public static void registerGuiOverlaysEvent(RegisterGuiOverlaysEvent event) {
-		assert IWOverlays.SCOPE_ELEMENT != null;
-		event.registerAbove(VanillaGuiOverlay.VIGNETTE.id(),
-				ImmersiveWeapons.MOD_ID + ":scope",
-				IWOverlays.SCOPE_ELEMENT);
-
-		assert IWOverlays.DEBUG_TRACING_ELEMENT != null;
-		event.registerAbove(VanillaGuiOverlay.DEBUG_SCREEN.id(),
-				ImmersiveWeapons.MOD_ID + ":debug_tracing",
-				IWOverlays.DEBUG_TRACING_ELEMENT);
-	}
+	private static final ResourceKey<Biome> DEADMANS_DESERT = ResourceKey.create(Registries.BIOME, new ResourceLocation(ImmersiveWeapons.MOD_ID, "deadmans_desert"));
+	private static final ResourceKey<DamageType> METEOR = ResourceKey.create(Registries.DAMAGE_TYPE, new ResourceLocation(ImmersiveWeapons.MOD_ID, "meteor"));
 
 	@SubscribeEvent
 	public static void playerTickEvent(PlayerTickEvent event) {
@@ -98,7 +88,7 @@ public class ForgeEventSubscriber {
 		Player player = event.player;
 		// Only check every 8 ticks, and make sure the player is not in creative mode
 		if (player.tickCount % 8 == 0 && !player.isCreative()) {
-			if (player.level().getBiome(player.blockPosition()).is(IWBiomes.DEADMANS_DESERT)) {
+			if (player.level().getBiome(player.blockPosition()).is(DEADMANS_DESERT)) {
 				// If the player is under the effects of Celestial Protection, they are immune to damage
 				if (!player.hasEffect(EffectRegistry.CELESTIAL_PROTECTION_EFFECT.get())) {
 					player.hurt(IWDamageSources.DEADMANS_DESERT_ATMOSPHERE, 1);
@@ -139,7 +129,7 @@ public class ForgeEventSubscriber {
 							attributeInstance.addTransientModifier(JONNYS_CURSE_SPEED_MODIFIER);
 						} else {
 							AttributeModifier newModifier = new AttributeModifier(JONNYS_CURSE_SPEED_MODIFIER.getId(),
-									JONNYS_CURSE_SPEED_MODIFIER.getName(),
+									JONNYS_CURSE_SPEED_MODIFIER.name,
 									0.25d,
 									JONNYS_CURSE_SPEED_MODIFIER.getOperation());
 
@@ -194,7 +184,8 @@ public class ForgeEventSubscriber {
 		}
 		if (player.tickCount % 100 == 0 && player instanceof ServerPlayer serverPlayer) {
 			int ticksSinceRest = serverPlayer.getStats().getValue(Stats.CUSTOM.get(Stats.TIME_SINCE_REST));
-			PacketHandler.INSTANCE.send(PacketDistributor.PLAYER.with(() -> serverPlayer), new DebugDataPacketHandler(player.getUUID(), -1f, -1f, ticksSinceRest));
+			PacketDistributor.PLAYER.with(serverPlayer)
+					.send(new DebugDataPayload(player.getUUID(), -1f, -1f, ticksSinceRest));
 		}
 	}
 
@@ -207,7 +198,7 @@ public class ForgeEventSubscriber {
 			source = sourceEntity;
 		}
 
-		if (event.getSource().is(IWDamageTypes.METEOR_KEY) && event.getSource().getDirectEntity() instanceof MeteorEntity meteor && !meteor.getPersistentData().isEmpty()) {
+		if (event.getSource().is(METEOR) && event.getSource().getDirectEntity() instanceof MeteorEntity meteor && !meteor.getPersistentData().isEmpty()) {
 			// Check for a "target" tag, and check if it matches the damaged entity's UUID
 			if (!meteor.getPersistentData().getUUID("target").equals(damagedEntity.getUUID())) {
 				event.setCanceled(true);
@@ -226,6 +217,7 @@ public class ForgeEventSubscriber {
 			AccessoryEffects.damageResistanceEffects(event, player);
 			AccessoryEffects.bleedResistanceEffects(event, player);
 			AccessoryEffects.bleedCancelEffects(event, player);
+			AccessoryEffects.sonicBoomResistanceEffects(event, player);
 
 			if (source != null) {
 				AccessoryEffects.celestialSpiritEffect(player, source);
@@ -242,6 +234,18 @@ public class ForgeEventSubscriber {
 
 		AccessoryEffects.bloodySacrificeEffect(event, damagedEntity);
 		AccessoryEffects.jonnysCurseEffect(event, damagedEntity);
+
+
+		if (source instanceof ServerPlayer serverPlayer && serverPlayer.getServer() != null) {
+			// If a Mud Ball was thrown, add an advancement
+			if (event.getSource().getDirectEntity() instanceof MudBallEntity) {
+				AdvancementHolder advancement = serverPlayer.getServer().getAdvancements().get(new ResourceLocation(ImmersiveWeapons.MOD_ID, "mud_ball"));
+
+				if (advancement != null) {
+					serverPlayer.getAdvancements().award(advancement, "");
+				}
+			}
+		}
 	}
 
 	@SubscribeEvent
@@ -271,9 +275,9 @@ public class ForgeEventSubscriber {
 			}
 
 
-			if (player instanceof ServerPlayer serverPlayer) {
+			if (player instanceof ServerPlayer serverPlayer && serverPlayer.getServer() != null) {
 				// If over 175 damage was dealt, add an advancement
-				if (event.getAmount() >= 175.0f && serverPlayer.getServer() != null) {
+				if (event.getAmount() >= 175.0f) {
 					AdvancementHolder advancement = serverPlayer.getServer().getAdvancements().get(new ResourceLocation(ImmersiveWeapons.MOD_ID, "overkill"));
 
 					if (advancement != null) {
@@ -282,18 +286,21 @@ public class ForgeEventSubscriber {
 				}
 
 				// Handle debug tracing
-				PacketHandler.INSTANCE.send(PacketDistributor.PLAYER.with(() -> serverPlayer), new DebugDataPacketHandler(player.getUUID(), event.getAmount(), -1f, -1));
+				PacketDistributor.PLAYER.with(serverPlayer)
+						.send(new DebugDataPayload(player.getUUID(), event.getAmount(), -1f, -1));
 			}
 		}
 
 		if (damagedEntity instanceof ServerPlayer serverPlayer) {
 			// Handle debug tracing
-			PacketHandler.INSTANCE.send(PacketDistributor.PLAYER.with(() -> serverPlayer), new DebugDataPacketHandler(serverPlayer.getUUID(), -1f, event.getAmount(), -1));
+			PacketDistributor.PLAYER.with(serverPlayer)
+					.send(new DebugDataPayload(serverPlayer.getUUID(), -1f, event.getAmount(), -1));
 		}
 	}
 
 	@SubscribeEvent
 	public static void livingDeathEvent(LivingDeathEvent event) {
+		LivingEntity dyingEntity = event.getEntity();
 
 		if (event.getSource().getEntity() instanceof Player player) {
 			// Handle charging of cursed accessories on kill
@@ -321,6 +328,18 @@ public class ForgeEventSubscriber {
 				KillCountWeapon.incrementKillCount(weapon);
 			}
 		}
+
+		if (dyingEntity.getTags().contains("ChampionTowerMinibossSpider")) {
+			Level level = dyingEntity.level();
+			for (int i = 0; i < 10; i++) {
+				CaveSpider spider = EntityType.CAVE_SPIDER.create(level);
+				if (spider != null) {
+					spider.moveTo(dyingEntity.getX(), dyingEntity.getY(), dyingEntity.getZ(), dyingEntity.getYRot(), dyingEntity.getXRot());
+					spider.addEffect(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, 20, 4, true, false));
+					level.addFreshEntity(spider);
+				}
+			}
+		}
 	}
 
 	@SubscribeEvent
@@ -328,7 +347,8 @@ public class ForgeEventSubscriber {
 		// Sync player data from server to client
 		if (event.getEntity() instanceof ServerPlayer player) {
 			// Send update packet
-			PacketHandler.INSTANCE.send(PacketDistributor.PLAYER.with(() -> player), new SyncPlayerDataPacketHandler(player.getPersistentData(), player.getUUID()));
+			PacketDistributor.PLAYER.with(player)
+					.send(new SyncPlayerDataPayload(player.getPersistentData(), player.getUUID()));
 		}
 
 		// Handle the Velocity enchantment on bows (guns are handled in the gun code)
@@ -470,10 +490,8 @@ public class ForgeEventSubscriber {
 				event.setLootingLevel(event.getLootingLevel() + 3);
 			}
 
-			// Increase the looting level by 2 with the Amethyst Ring
-			if (AccessoryItem.isAccessoryActive(player, ItemRegistry.AMETHYST_RING.get())) {
-				event.setLootingLevel(event.getLootingLevel() + 2);
-			}
+			// Increase the looting level from accessories
+			AccessoryEffects.lootingEffects(event, player);
 		}
 	}
 
@@ -572,5 +590,10 @@ public class ForgeEventSubscriber {
 			event.setOutput(KillCountWeapon.initialize(event.getLeft().copy(), 0));
 			event.setCost(5);
 		}
+	}
+
+	@SubscribeEvent
+	public static void addReloadListenerEvent(AddReloadListenerEvent event) {
+		event.addListener(new TradeLoader());
 	}
 }
