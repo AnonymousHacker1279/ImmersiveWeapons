@@ -1,4 +1,4 @@
-package tech.anonymoushacker1279.immersiveweapons.world.level.levelgen;
+package tech.anonymoushacker1279.immersiveweapons.data.features;
 
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.level.levelgen.feature.configurations.OreConfiguration;

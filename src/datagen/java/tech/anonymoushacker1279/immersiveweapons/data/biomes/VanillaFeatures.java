@@ -1,4 +1,4 @@
-package tech.anonymoushacker1279.immersiveweapons.world.level.levelgen.feature;
+package tech.anonymoushacker1279.immersiveweapons.data.biomes;
 
 import net.minecraft.data.worldgen.BiomeDefaultFeatures;
 import net.minecraft.data.worldgen.placement.VegetationPlacements;

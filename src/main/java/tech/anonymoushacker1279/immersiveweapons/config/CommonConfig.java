@@ -129,6 +129,8 @@ public class CommonConfig {
 		enchantCaps.put("immersiveweapons:heavy_comet", 4);
 		enchantCaps.put("immersiveweapons:regenerative_assault", 5);
 		enchantCaps.put("immersiveweapons:malevolent_gaze", 5);
+		enchantCaps.put("immersiveweapons:nightmarish_stare", 19);
+		enchantCaps.put("immersiveweapons:crimson_claw", 5);
 		return enchantCaps;
 	}
 }

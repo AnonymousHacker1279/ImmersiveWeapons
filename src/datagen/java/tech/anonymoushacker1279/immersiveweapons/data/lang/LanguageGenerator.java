@@ -919,14 +919,14 @@ public class LanguageGenerator extends IWLanguageProvider {
 		addAdvancement("used_syringe.description", "Die to a used syringe");
 
 		// Tiltros
-		addAdvancement("tiltros.tiltros_portal.title", "A Portal to a Forgotten Land");
-		addAdvancement("tiltros.tiltros_portal.description", "Craft a Tiltros Portal Frame");
-		addAdvancement("tiltros.azul_keystone.title", "Dimensional Keystone");
-		addAdvancement("tiltros.azul_keystone.description", "Craft an Azul Keystone from fragments scattered across the world");
-		addAdvancement("tiltros.celestial_lantern.title", "Magical Lantern");
-		addAdvancement("tiltros.celestial_lantern.description", "Obtain a celestial lantern");
-		addAdvancement("tiltros.biome.title", "Welcome to Tiltros");
-		addAdvancement("tiltros.biome.description", "A ravaged landscape lost in space");
+		addAdvancement("tiltros_portal.title", "A Portal to a Forgotten Land");
+		addAdvancement("tiltros_portal.description", "Craft a Tiltros Portal Frame");
+		addAdvancement("azul_keystone.title", "Dimensional Keystone");
+		addAdvancement("azul_keystone.description", "Craft an Azul Keystone from fragments scattered across the world");
+		addAdvancement("celestial_lantern.title", "Magical Lantern");
+		addAdvancement("celestial_lantern.description", "Obtain a celestial lantern");
+		addAdvancement("enter_tiltros.title", "Welcome to Tiltros");
+		addAdvancement("enter_tiltros.description", "A ravaged landscape lost in space");
 
 		// Other
 		addAdvancement("battlefield.title", "A Destroyed Landscape");

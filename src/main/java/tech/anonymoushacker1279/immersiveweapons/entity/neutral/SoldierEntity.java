@@ -9,6 +9,7 @@ import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.ai.goal.*;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -19,6 +20,7 @@ import org.jetbrains.annotations.Nullable;
 import tech.anonymoushacker1279.immersiveweapons.entity.GrantAdvancementOnDiscovery;
 import tech.anonymoushacker1279.immersiveweapons.init.SoundEventRegistry;
 import tech.anonymoushacker1279.immersiveweapons.item.AccessoryItem;
+import tech.anonymoushacker1279.immersiveweapons.item.gun.AbstractGunItem;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -37,6 +39,12 @@ public abstract class SoldierEntity extends PathfinderMob implements NeutralMob,
 		this.ignoresDamageFrom = ignoresDamageFrom;
 	}
 
+	protected void registerGoals() {
+		goalSelector.addGoal(1, new FloatGoal(this));
+		goalSelector.addGoal(4, new OpenDoorGoal(this, true));
+		goalSelector.addGoal(5, new WaterAvoidingRandomStrollGoal(this, 0.8D, 0.35f));
+	}
+
 	@Override
 	public SpawnGroupData finalizeSpawn(ServerLevelAccessor levelAccessor, DifficultyInstance difficultyInstance,
 	                                    MobSpawnType mobSpawnType, @Nullable SpawnGroupData groupData,
@@ -45,7 +53,7 @@ public abstract class SoldierEntity extends PathfinderMob implements NeutralMob,
 		populateDefaultEquipmentSlots(random, difficultyInstance);
 		populateDefaultEquipmentEnchantments(random, difficultyInstance);
 		prepareForCombat();
-		setCanPickUpLoot(random.nextFloat() < 0.55F * difficultyInstance.getSpecialMultiplier());
+		setCanPickUpLoot(true);
 
 		if (getItemBySlot(EquipmentSlot.HEAD).isEmpty()) {
 			LocalDate date = LocalDate.now();
@@ -60,6 +68,15 @@ public abstract class SoldierEntity extends PathfinderMob implements NeutralMob,
 		}
 
 		return super.finalizeSpawn(levelAccessor, difficultyInstance, mobSpawnType, groupData, compoundTag);
+	}
+
+	@Override
+	protected boolean canReplaceCurrentItem(ItemStack pCandidate, ItemStack pExisting) {
+		if (pCandidate.getItem() instanceof AbstractGunItem && pExisting.getItem() instanceof AbstractGunItem) {
+			return true;
+		}
+
+		return super.canReplaceCurrentItem(pCandidate, pExisting);
 	}
 
 	@Override
@@ -176,6 +193,11 @@ public abstract class SoldierEntity extends PathfinderMob implements NeutralMob,
 	@Override
 	protected SoundEvent getDeathSound() {
 		return SoundEventRegistry.SOLDIER_DEATH.get();
+	}
+
+	@Override
+	public boolean canBeLeashed(Player pPlayer) {
+		return false;
 	}
 
 	protected abstract void prepareForCombat();

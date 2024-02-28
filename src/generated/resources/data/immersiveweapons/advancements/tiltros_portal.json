@@ -16,14 +16,14 @@
   },
   "display": {
     "description": {
-      "translate": "advancements.immersiveweapons.tiltros.tiltros_portal.description"
+      "translate": "advancements.immersiveweapons.tiltros_portal.description"
     },
     "hidden": true,
     "icon": {
       "item": "immersiveweapons:tiltros_portal_frame"
     },
     "title": {
-      "translate": "advancements.immersiveweapons.tiltros.tiltros_portal.title"
+      "translate": "advancements.immersiveweapons.tiltros_portal.title"
     }
   },
   "requirements": [

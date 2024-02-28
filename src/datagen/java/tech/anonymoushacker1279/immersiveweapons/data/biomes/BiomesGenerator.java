@@ -15,7 +15,6 @@ import net.minecraft.world.level.levelgen.placement.PlacedFeature;
 import tech.anonymoushacker1279.immersiveweapons.data.features.IWConfiguredCarvers;
 import tech.anonymoushacker1279.immersiveweapons.data.features.IWPlacedFeatures;
 import tech.anonymoushacker1279.immersiveweapons.init.*;
-import tech.anonymoushacker1279.immersiveweapons.world.level.levelgen.feature.VanillaFeatures;
 
 public class BiomesGenerator {
 
