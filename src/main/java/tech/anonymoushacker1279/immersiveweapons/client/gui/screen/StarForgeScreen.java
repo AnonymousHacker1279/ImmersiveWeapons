@@ -133,10 +133,13 @@ public class StarForgeScreen extends AbstractContainerScreen<StarForgeMenu> {
 	public boolean mouseClicked(double mouseX, double mouseY, int button) {
 		// Check if the mouse click is within the selection area
 		if (mouseX >= leftPos + 61 && mouseX < leftPos + 116 && mouseY >= topPos + 17 && mouseY < topPos + 65) {
-			// Calculate which entry is clicked
-			int clickedEntry = menu.getMenuSelectionIndex() + (int) ((mouseY - (topPos + 17)) / 24);
-			menu.setMenuSelectionIndex(clickedEntry, false);
-			return true;
+			// Check if the forge is currently active
+			if (menu.getSmeltTime() == 0) {
+				// Calculate which entry is clicked
+				int clickedEntry = menu.getMenuSelectionIndex() + (int) ((mouseY - (topPos + 17)) / 24);
+				menu.setMenuSelectionIndex(clickedEntry, false);
+				return true;
+			}
 		}
 
 		// Check if the mouse click is within the scrollbar area
