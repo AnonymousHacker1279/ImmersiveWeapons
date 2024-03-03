@@ -173,9 +173,9 @@ public class StructureGenerator {
 								)
 						),
 						Decoration.SURFACE_STRUCTURES,
-						TerrainAdjustment.NONE
+						TerrainAdjustment.BEARD_THIN
 				),
-				templatePoolHolderGetter.getOrThrow(StructureTemplatePoolGenerator.CELESTIAL_ASTEROID),
+				templatePoolHolderGetter.getOrThrow(StructureTemplatePoolGenerator.CELESTIAL_ASTEROID_TOP),
 				1,
 				ConstantHeight.of(VerticalAnchor.absolute(0)),
 				false,

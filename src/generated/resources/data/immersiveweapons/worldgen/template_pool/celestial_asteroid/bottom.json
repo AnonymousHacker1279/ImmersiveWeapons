@@ -3,7 +3,7 @@
     {
       "element": {
         "element_type": "minecraft:single_pool_element",
-        "location": "immersiveweapons:celestial_asteroid",
+        "location": "immersiveweapons:celestial_asteroid/celestial_asteroid_bottom",
         "processors": {
           "processors": []
         },
