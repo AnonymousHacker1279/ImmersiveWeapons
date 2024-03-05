@@ -23,6 +23,7 @@ import tech.anonymoushacker1279.immersiveweapons.data.recipes.families.FamilyGen
 import tech.anonymoushacker1279.immersiveweapons.data.sounds.SoundGenerator;
 import tech.anonymoushacker1279.immersiveweapons.data.structures.StructureUpdater;
 import tech.anonymoushacker1279.immersiveweapons.data.tags.*;
+import tech.anonymoushacker1279.immersiveweapons.data.textures.TextureMetadataGenerator;
 import tech.anonymoushacker1279.immersiveweapons.data.trades.TradeDataGenerator;
 
 import java.util.concurrent.CompletableFuture;
@@ -49,6 +50,7 @@ public class CustomDataGenerator {
 		generator.addProvider(event.includeClient(), new SoundGenerator(output, ImmersiveWeapons.MOD_ID, existingFileHelper));
 		generator.addProvider(event.includeClient(), new LanguageGenerator(output));
 		generator.addProvider(event.includeClient(), new ParticleDescriptionGenerator(output, existingFileHelper));
+		generator.addProvider(event.includeClient(), new TextureMetadataGenerator(output));
 
 		// Server data
 		generator.addProvider(event.includeServer(), new AdvancementsGenerator(output, lookupProvider, existingFileHelper));
