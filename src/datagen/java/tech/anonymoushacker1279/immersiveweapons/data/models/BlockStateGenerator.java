@@ -16,7 +16,7 @@ import tech.anonymoushacker1279.immersiveweapons.block.*;
 import tech.anonymoushacker1279.immersiveweapons.block.barbed_wire.BarbedWireBlock;
 import tech.anonymoushacker1279.immersiveweapons.block.decoration.*;
 import tech.anonymoushacker1279.immersiveweapons.block.star_forge.StarForgeControllerBlock;
-import tech.anonymoushacker1279.immersiveweapons.data.lists.BlockLists;
+import tech.anonymoushacker1279.immersiveweapons.data.CustomDataGenerator;
 import tech.anonymoushacker1279.immersiveweapons.init.BlockRegistry;
 
 import java.util.*;
@@ -24,19 +24,60 @@ import java.util.function.Supplier;
 
 public class BlockStateGenerator extends BlockStateProvider {
 
+	public static final List<Block> SIMPLE_BLOCKS = new ArrayList<>(25);
+	public static final List<Block> STONE_BASED_ORES = new ArrayList<>(10);
+	public static final List<Block> DEEPSLATE_BASED_ORES = new ArrayList<>(10);
+	public static final List<Block> NETHERRACK_BASED_ORES = new ArrayList<>(10);
+
 	public BlockStateGenerator(PackOutput output, ExistingFileHelper existingFileHelper) {
 		super(output, ImmersiveWeapons.MOD_ID, existingFileHelper);
 	}
 
+	private void buildLists() {
+		SIMPLE_BLOCKS.add(BlockRegistry.CLOUD_MARBLE.get());
+		SIMPLE_BLOCKS.add(BlockRegistry.CLOUD_MARBLE_BRICKS.get());
+		SIMPLE_BLOCKS.add(BlockRegistry.RAW_SULFUR_BLOCK.get());
+		SIMPLE_BLOCKS.add(BlockRegistry.VENTUS_ORE.get());
+		SIMPLE_BLOCKS.add(BlockRegistry.COBALT_BLOCK.get());
+		SIMPLE_BLOCKS.add(BlockRegistry.RAW_COBALT_BLOCK.get());
+		SIMPLE_BLOCKS.add(BlockRegistry.MOLTEN_BLOCK.get());
+		SIMPLE_BLOCKS.add(BlockRegistry.BURNED_OAK_PLANKS.get());
+		SIMPLE_BLOCKS.add(BlockRegistry.MUD.get());
+		SIMPLE_BLOCKS.add(BlockRegistry.DRIED_MUD.get());
+		SIMPLE_BLOCKS.add(BlockRegistry.HARDENED_MUD.get());
+		SIMPLE_BLOCKS.add(BlockRegistry.STARDUST_PLANKS.get());
+		SIMPLE_BLOCKS.add(BlockRegistry.BLOOD_SAND.get());
+		SIMPLE_BLOCKS.add(BlockRegistry.ASTRAL_BLOCK.get());
+		SIMPLE_BLOCKS.add(BlockRegistry.STARSTORM_BLOCK.get());
+		SIMPLE_BLOCKS.add(BlockRegistry.CHAMPION_BRICKS.get());
+		SIMPLE_BLOCKS.add(BlockRegistry.CHAMPION_BASE.get());
+		SIMPLE_BLOCKS.add(BlockRegistry.CHAMPION_KEYCARD_BRICKS.get());
+		SIMPLE_BLOCKS.add(BlockRegistry.STAR_FORGE_BRICKS.get());
+		SIMPLE_BLOCKS.add(BlockRegistry.TILTROS_PORTAL_FRAME.get());
+
+		STONE_BASED_ORES.add(BlockRegistry.SULFUR_ORE.get());
+		STONE_BASED_ORES.add(BlockRegistry.ELECTRIC_ORE.get());
+		STONE_BASED_ORES.add(BlockRegistry.COBALT_ORE.get());
+		STONE_BASED_ORES.add(BlockRegistry.POTASSIUM_NITRATE_ORE.get());
+
+		DEEPSLATE_BASED_ORES.add(BlockRegistry.DEEPSLATE_SULFUR_ORE.get());
+		DEEPSLATE_BASED_ORES.add(BlockRegistry.DEEPSLATE_COBALT_ORE.get());
+
+		NETHERRACK_BASED_ORES.add(BlockRegistry.MOLTEN_ORE.get());
+		NETHERRACK_BASED_ORES.add(BlockRegistry.NETHER_SULFUR_ORE.get());
+	}
+
 	@Override
 	protected void registerStatesAndModels() {
+		buildLists();
+
 		List<Block> blocks = new ArrayList<>(250);
 		BlockRegistry.BLOCKS.getEntries().stream().map(Supplier::get).forEach(blocks::add);
 
 		ResourceLocation stardust_granule_overlay = new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/stardust_granule_overlay");
 
 		// Generate simple, six-sided blocks
-		for (Block block : BlockLists.simpleBlocks) {
+		for (Block block : SIMPLE_BLOCKS) {
 			simpleBlock(block);
 		}
 
@@ -47,11 +88,13 @@ public class BlockStateGenerator extends BlockStateProvider {
 		simpleBlock(BlockRegistry.CLOUD.get(), models().cubeAll("cloud",
 						new ResourceLocation(ImmersiveWeapons.MOD_ID + ":block/cloud"))
 				.renderType("minecraft:translucent"));
-		for (Block block : BlockLists.stainedGlassBlocks) {
-			String color = Objects.requireNonNull(BuiltInRegistries.BLOCK.getKey(block)).getPath().split("stained_bulletproof_glass")[0];
-			simpleBlock(block, models().cubeAll(color + "stained_bulletproof_glass",
-							new ResourceLocation(ImmersiveWeapons.MOD_ID + ":block/" + color + "stained_bulletproof_glass"))
-					.renderType("minecraft:translucent"));
+		for (Block block : CustomDataGenerator.ALL_BLOCKS) {
+			if (block.getDescriptionId().contains("stained_bulletproof_glass")) {
+				String color = Objects.requireNonNull(BuiltInRegistries.BLOCK.getKey(block)).getPath().split("stained_bulletproof_glass")[0];
+				simpleBlock(block, models().cubeAll(color + "stained_bulletproof_glass",
+								new ResourceLocation(ImmersiveWeapons.MOD_ID + ":block/" + color + "stained_bulletproof_glass"))
+						.renderType("minecraft:translucent"));
+			}
 		}
 		// Stardust leaves have emissive layers, requiring a separate model
 		ResourceLocation stardust_leaves_all = new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/stardust_leaves");
@@ -73,7 +116,7 @@ public class BlockStateGenerator extends BlockStateProvider {
 								.end()).end());
 
 		// Generate data for simple, six-sized blocks that use overlays (ores)
-		for (Block block : BlockLists.stoneBasedOres) {
+		for (Block block : STONE_BASED_ORES) {
 			simpleBlock(block, models().withExistingParent(Objects.requireNonNull(BuiltInRegistries.BLOCK.getKey(block)).getPath(),
 							new ResourceLocation(ImmersiveWeapons.MOD_ID, "simple_overlay"))
 					.texture("all", "minecraft:block/stone")
@@ -81,7 +124,7 @@ public class BlockStateGenerator extends BlockStateProvider {
 							+ Objects.requireNonNull(BuiltInRegistries.BLOCK.getKey(block)).getPath()))
 					.renderType("minecraft:cutout_mipped"));
 		}
-		for (Block block : BlockLists.deepslateBasedOres) {
+		for (Block block : DEEPSLATE_BASED_ORES) {
 			simpleBlock(block, models().withExistingParent(Objects.requireNonNull(BuiltInRegistries.BLOCK.getKey(block)).getPath(),
 							new ResourceLocation(ImmersiveWeapons.MOD_ID, "simple_overlay"))
 					.texture("all", "minecraft:block/deepslate")
@@ -90,7 +133,7 @@ public class BlockStateGenerator extends BlockStateProvider {
 							.replace("deepslate_", "")))
 					.renderType("minecraft:cutout_mipped"));
 		}
-		for (Block block : BlockLists.netherrackBasedOres) {
+		for (Block block : NETHERRACK_BASED_ORES) {
 			simpleBlock(block, models().withExistingParent(Objects.requireNonNull(BuiltInRegistries.BLOCK.getKey(block)).getPath(),
 							new ResourceLocation(ImmersiveWeapons.MOD_ID, "simple_overlay"))
 					.texture("all", "minecraft:block/netherrack")
@@ -350,14 +393,13 @@ public class BlockStateGenerator extends BlockStateProvider {
 				new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/stripped_stardust_log"));
 
 		// Generate data for skulls
-		List<Block> headBlocks = new ArrayList<>(25);
-		headBlocks.addAll(BlockLists.headBlocks);
-		headBlocks.addAll(BlockLists.wallHeadBlocks);
-		for (Block block : headBlocks) {
-			getVariantBuilder(block).forAllStates(blockState -> ConfiguredModel.allRotations(
-					models().getExistingFile(new ResourceLocation("block/skull")),
-					true
-			));
+		for (Block block : CustomDataGenerator.ALL_BLOCKS) {
+			if (block.builtInRegistryHolder().key().location().getPath().contains("_head") || block.builtInRegistryHolder().key().location().getPath().contains("_wall_head")) {
+				getVariantBuilder(block).forAllStates(blockState -> ConfiguredModel.allRotations(
+						models().getExistingFile(new ResourceLocation("block/skull")),
+						true
+				));
+			}
 		}
 
 		// Generate data for cross blocks

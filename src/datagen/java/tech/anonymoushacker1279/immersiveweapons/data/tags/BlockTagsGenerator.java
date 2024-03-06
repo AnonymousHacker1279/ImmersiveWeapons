@@ -8,9 +8,9 @@ import net.neoforged.neoforge.common.Tags.Blocks;
 import net.neoforged.neoforge.common.data.BlockTagsProvider;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
+import tech.anonymoushacker1279.immersiveweapons.data.CustomDataGenerator;
 import tech.anonymoushacker1279.immersiveweapons.data.tags.groups.forge.ForgeBlockTagGroups;
 import tech.anonymoushacker1279.immersiveweapons.data.tags.groups.immersiveweapons.IWBlockTagGroups;
-import tech.anonymoushacker1279.immersiveweapons.data.tags.lists.BlockTagLists;
 import tech.anonymoushacker1279.immersiveweapons.init.BlockRegistry;
 
 import java.util.ArrayList;
@@ -41,16 +41,20 @@ public class BlockTagsGenerator extends BlockTagsProvider {
 	@SuppressWarnings("unchecked")
 	private void addForgeTags() {
 		// Bulletproof glass tag
-		for (Block block : BlockTagLists.BULLETPROOF_GLASS) {
-			tag(ForgeBlockTagGroups.BULLETPROOF_GLASS).add(block);
+		for (Block block : CustomDataGenerator.ALL_BLOCKS) {
+			if (block.getDescriptionId().contains("bulletproof_glass")) {
+				tag(ForgeBlockTagGroups.BULLETPROOF_GLASS).add(block);
+			}
 		}
 
 		// Glass tag
 		tag(Blocks.GLASS).addTag(ForgeBlockTagGroups.BULLETPROOF_GLASS);
 
 		// Stained glass tag
-		for (Block block : BlockTagLists.STAINED_GLASS) {
-			tag(ForgeBlockTagGroups.STAINED_GLASS).add(block);
+		for (Block block : CustomDataGenerator.ALL_BLOCKS) {
+			if (block.getDescriptionId().contains("stained_bulletproof_glass")) {
+				tag(ForgeBlockTagGroups.STAINED_GLASS).add(block);
+			}
 		}
 
 		// Ore tags
@@ -71,14 +75,18 @@ public class BlockTagsGenerator extends BlockTagsProvider {
 	 */
 	private void addImmersiveWeaponsTags() {
 		// Burned oak logs tag
-		for (Block block : BlockTagLists.BURNED_OAK_LOGS) {
-			tag(IWBlockTagGroups.BURNED_OAK_LOGS).add(block);
-		}
+		tag(IWBlockTagGroups.BURNED_OAK_LOGS).add(
+				BlockRegistry.BURNED_OAK_LOG.get(),
+				BlockRegistry.BURNED_OAK_WOOD.get(),
+				BlockRegistry.STRIPPED_BURNED_OAK_LOG.get(),
+				BlockRegistry.STRIPPED_BURNED_OAK_WOOD.get());
 
 		// Stardust logs tag
-		for (Block block : BlockTagLists.STARDUST_LOGS) {
-			tag(IWBlockTagGroups.STARDUST_LOGS).add(block);
-		}
+		tag(IWBlockTagGroups.STARDUST_LOGS).add(
+				BlockRegistry.STARDUST_LOG.get(),
+				BlockRegistry.STARDUST_WOOD.get(),
+				BlockRegistry.STRIPPED_STARDUST_LOG.get(),
+				BlockRegistry.STRIPPED_STARDUST_WOOD.get());
 	}
 
 	/**

@@ -12,7 +12,7 @@ import net.neoforged.neoforge.common.data.BlockTagsProvider;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
-import tech.anonymoushacker1279.immersiveweapons.data.lists.ItemLists;
+import tech.anonymoushacker1279.immersiveweapons.data.CustomDataGenerator;
 import tech.anonymoushacker1279.immersiveweapons.data.tags.groups.forge.ForgeBlockTagGroups;
 import tech.anonymoushacker1279.immersiveweapons.data.tags.groups.forge.ForgeItemTagGroups;
 import tech.anonymoushacker1279.immersiveweapons.data.tags.groups.immersiveweapons.IWBlockTagGroups;
@@ -21,10 +21,7 @@ import tech.anonymoushacker1279.immersiveweapons.init.BlockItemRegistry;
 import tech.anonymoushacker1279.immersiveweapons.init.ItemRegistry;
 import tech.anonymoushacker1279.immersiveweapons.item.AccessoryItem;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.concurrent.CompletableFuture;
-import java.util.function.Supplier;
 
 public class ItemTagsGenerator extends ItemTagsProvider {
 
@@ -44,10 +41,6 @@ public class ItemTagsGenerator extends ItemTagsProvider {
 	 */
 	@SuppressWarnings("unchecked")
 	private void addForgeTags() {
-		List<Item> items = new ArrayList<>(250);
-
-		ItemRegistry.ITEMS.getEntries().stream().map(Supplier::get).forEach(items::add);
-
 		// Copy item tags from block tags
 		copy(Blocks.STAINED_GLASS, Tags.Items.STAINED_GLASS);
 		copy(ForgeBlockTagGroups.COBALT_ORES, ForgeItemTagGroups.COBALT_ORES);
@@ -85,7 +78,7 @@ public class ItemTagsGenerator extends ItemTagsProvider {
 		tag(ForgeItemTagGroups.SULFUR_DUSTS).add(ItemRegistry.SULFUR_DUST.get());
 
 		// Loop through the registry and add groups of items to a tag
-		for (Item item : items) {
+		for (Item item : CustomDataGenerator.ALL_ITEMS) {
 			if (item.getDescriptionId().contains("sword")) {
 				tag(ItemTags.SWORDS).add(item);
 			} else if (item.getDescriptionId().contains("pickaxe")) {
@@ -133,9 +126,13 @@ public class ItemTagsGenerator extends ItemTagsProvider {
 
 		// Projectile tags
 		tag(IWItemTagGroups.FLARES).add(ItemRegistry.FLARE.get());
-		for (Item item : ItemLists.MUSKET_BALL_ITEMS) {
-			tag(IWItemTagGroups.MUSKET_BALLS).add(item);
+
+		for (Item item : CustomDataGenerator.ALL_ITEMS) {
+			if (item.getDescriptionId().contains("musket_ball")) {
+				tag(IWItemTagGroups.MUSKET_BALLS).add(item);
+			}
 		}
+
 		tag(IWItemTagGroups.CANNONBALLS).add(
 				ItemRegistry.CANNONBALL.get(),
 				ItemRegistry.EXPLOSIVE_CANNONBALL.get());
@@ -177,8 +174,10 @@ public class ItemTagsGenerator extends ItemTagsProvider {
 		}
 
 		// Smoke grenade tags
-		for (Item item : ItemLists.SMOKE_GRENADE_ITEMS) {
-			tag(IWItemTagGroups.SMOKE_GRENADES).add(item);
+		for (Item item : CustomDataGenerator.ALL_ITEMS) {
+			if (item.getDescriptionId().contains("smoke_grenade") && !item.getDescriptionId().contains("arrow")) {
+				tag(IWItemTagGroups.SMOKE_GRENADES).add(item);
+			}
 		}
 
 		// Tool tags
@@ -285,8 +284,10 @@ public class ItemTagsGenerator extends ItemTagsProvider {
 		tag(ItemTags.SIGNS).add(BlockItemRegistry.BURNED_OAK_SIGN_ITEM.get());
 
 		// Arrow tags
-		for (Item item : ItemLists.ARROW_ITEMS) {
-			tag(ItemTags.ARROWS).add(item);
+		for (Item item : CustomDataGenerator.ALL_ITEMS) {
+			if (item.getDescriptionId().contains("arrow")) {
+				tag(ItemTags.ARROWS).add(item);
+			}
 		}
 
 		// Boat tags
