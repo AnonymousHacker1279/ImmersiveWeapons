@@ -9,38 +9,19 @@ import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.*;
+import net.minecraft.world.item.ArmorMaterial;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.neoforged.neoforge.network.PacketDistributor;
-import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.client.IWKeyBinds;
 import tech.anonymoushacker1279.immersiveweapons.init.ItemRegistry;
 import tech.anonymoushacker1279.immersiveweapons.network.payload.CobaltArmorPayload;
 import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
 
-public class CobaltArmorItem extends ArmorItem {
+public class CobaltArmorItem extends BasicArmorItem {
 
-	private final boolean isLeggings;
-
-	public CobaltArmorItem(ArmorMaterial material, ArmorItem.Type armorType, Properties properties, boolean isLeggings) {
+	public CobaltArmorItem(ArmorMaterial material, Type armorType, Properties properties) {
 		super(material, armorType, properties);
-		this.isLeggings = isLeggings;
-	}
-
-	/**
-	 * Get the armor texture.
-	 *
-	 * @param stack  the <code>ItemStack</code> instance
-	 * @param entity the <code>Entity</code> wearing the armor
-	 * @param slot   the <code>EquipmentSlot</code>
-	 * @param type   type ID
-	 * @return String
-	 */
-	@Override
-	public String getArmorTexture(ItemStack stack, Entity entity, EquipmentSlot slot, String type) {
-		return (!isLeggings
-				? ImmersiveWeapons.MOD_ID + ":textures/armor/cobalt_layer_1.png"
-				: ImmersiveWeapons.MOD_ID + ":textures/armor/cobalt_layer_2.png");
 	}
 
 	@Override

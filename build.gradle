@@ -1,9 +1,8 @@
 plugins {
 	id 'java-library'
 	id 'maven-publish'
-	// Pinned because it updates too frequently and forces recompile
-	id 'net.neoforged.gradle.userdev' version '7.0.93'
-	id "com.hypherionmc.modutils.modpublisher" version "2.0.0"
+	id 'net.neoforged.gradle.userdev' version '7.0.96'
+	id "com.hypherionmc.modutils.modpublisher" version "2.0.5"
 	id 'idea'
 }
 
@@ -276,20 +275,21 @@ if (file("RELEASE_NOTES.md").exists()) {
 		}
 
 		setDebug(false)
-		curseID = "494454"
-		modrinthID = "QZFdnUQ5"
-		githubRepo = "AnonymousHacker1279/ImmersiveWeapons"
-		versionType = "release"
+		setCurseID("494454")
+		setModrinthID("QZFdnUQ5")
+		setGithubRepo("AnonymousHacker1279/ImmersiveWeapons")
+		setVersionType("release")
 		// Read the contents of the RELEASE_NOTES.md file
-		changelog = file("RELEASE_NOTES.md").text
+		setChangelog(file("RELEASE_NOTES.md").text)
 		// Get the IW version from the mod_version variable, it's the last part of the version string
-		version = "v" + mod_version.split("-")[1]
-		displayName = "Immersive Weapons - v" + mod_version.split("-")[1]
-		gameVersions = [minecraft_version]
-		loaders = ["neoforge"]
-		curseEnvironment = "both"
-		artifact = tasks.jarJar
-		additionalFiles = [javadocJar, sourcesJar]
+		setVersion("v" + mod_version.split("-")[1])
+		setDisplayName("Immersive Weapons - v" + mod_version.split("-")[1])
+		setGameVersions([minecraft_version])
+		setLoaders("neoforge")
+		setCurseEnvironment("both")
+		setArtifact(tasks.jarJar)
+		setJavaVersions(["Java 17"])
+		addAdditionalFile(javadocJar, sourcesJar)
 
 		curseDepends {
 			required 'cobalt-config'

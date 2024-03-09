@@ -9,24 +9,19 @@ import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 
 public class PaddedLeatherArmorItem extends DyeableArmorItem {
 
-	private final boolean isLeggings;
+	private final String baseTextureLocation;
+	private final String overlayTextureLocation;
 
-	public PaddedLeatherArmorItem(ArmorMaterial material, Type type, Properties properties, boolean isLeggings) {
+	public PaddedLeatherArmorItem(ArmorMaterial material, Type type, Properties properties) {
 		super(material, type, properties);
-		this.isLeggings = isLeggings;
+
+		baseTextureLocation = ImmersiveWeapons.MOD_ID + ":textures/armor/padded_leather_layer_" + (type == Type.LEGGINGS ? "2" : "1") + ".png";
+		overlayTextureLocation = ImmersiveWeapons.MOD_ID + ":textures/armor/padded_leather_layer_" + (type == Type.LEGGINGS ? "2" : "1") + "_overlay.png";
 	}
 
 	@Override
 	public String getArmorTexture(ItemStack stack, Entity entity, EquipmentSlot slot, @Nullable String type) {
-		if (type == null) {
-			return (!isLeggings
-					? ImmersiveWeapons.MOD_ID + ":textures/armor/padded_leather_layer_1.png"
-					: ImmersiveWeapons.MOD_ID + ":textures/armor/padded_leather_layer_2.png");
-		} else {
-			return (!isLeggings
-					? ImmersiveWeapons.MOD_ID + ":textures/armor/padded_leather_layer_1_%s.png".formatted(type)
-					: ImmersiveWeapons.MOD_ID + ":textures/armor/padded_leather_layer_2_%s.png".formatted(type));
-		}
+		return type == null ? baseTextureLocation : overlayTextureLocation;
 	}
 
 	@Override

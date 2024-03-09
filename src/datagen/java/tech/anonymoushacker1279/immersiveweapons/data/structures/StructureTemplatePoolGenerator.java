@@ -22,7 +22,8 @@ public class StructureTemplatePoolGenerator {
 	public static final ResourceKey<StructureTemplatePool> BEAR_TRAP = createKey("bear_trap");
 	public static final ResourceKey<StructureTemplatePool> BIODOME = createKey("biodome");
 	public static final ResourceKey<StructureTemplatePool> CAMPSITE = createKey("campsite");
-	public static final ResourceKey<StructureTemplatePool> CELESTIAL_ASTEROID = createKey("celestial_asteroid");
+	public static final ResourceKey<StructureTemplatePool> CELESTIAL_ASTEROID_TOP = createKey("celestial_asteroid/top");
+	public static final ResourceKey<StructureTemplatePool> CELESTIAL_ASTEROID_BOTTOM = createKey("celestial_asteroid/bottom");
 	public static final ResourceKey<StructureTemplatePool> CHAMPION_TOWER_TOP = createKey("champion_tower/top");
 	public static final ResourceKey<StructureTemplatePool> CHAMPION_TOWER_BOTTOM = createKey("champion_tower/bottom");
 	public static final ResourceKey<StructureTemplatePool> CLOUD_ISLAND = createKey("cloud_island");
@@ -87,10 +88,17 @@ public class StructureTemplatePoolGenerator {
 				),
 				Projection.RIGID));
 
-		register(context, CELESTIAL_ASTEROID, new StructureTemplatePool(
+		register(context, CELESTIAL_ASTEROID_TOP, new StructureTemplatePool(
 				templatePoolHolderGetter.getOrThrow(Pools.EMPTY),
 				ImmutableList.of(
-						Pair.of(StructurePoolElement.single(ImmersiveWeapons.MOD_ID + ":celestial_asteroid"), 1)
+						Pair.of(StructurePoolElement.single(ImmersiveWeapons.MOD_ID + ":celestial_asteroid/celestial_asteroid_top"), 1)
+				),
+				Projection.RIGID));
+
+		register(context, CELESTIAL_ASTEROID_BOTTOM, new StructureTemplatePool(
+				templatePoolHolderGetter.getOrThrow(Pools.EMPTY),
+				ImmutableList.of(
+						Pair.of(StructurePoolElement.single(ImmersiveWeapons.MOD_ID + ":celestial_asteroid/celestial_asteroid_bottom"), 1)
 				),
 				Projection.RIGID));
 

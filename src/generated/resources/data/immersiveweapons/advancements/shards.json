@@ -5,81 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "immersiveweapons:molten_shard"
-            ]
-          }
-        ]
-      },
-      "trigger": "minecraft:inventory_changed"
-    },
-    "hold1": {
-      "conditions": {
-        "items": [
-          {
-            "items": [
-              "immersiveweapons:obsidian_shard"
-            ]
-          }
-        ]
-      },
-      "trigger": "minecraft:inventory_changed"
-    },
-    "hold2": {
-      "conditions": {
-        "items": [
-          {
-            "items": [
-              "immersiveweapons:stone_shard"
-            ]
-          }
-        ]
-      },
-      "trigger": "minecraft:inventory_changed"
-    },
-    "hold3": {
-      "conditions": {
-        "items": [
-          {
-            "items": [
-              "immersiveweapons:wooden_shard"
-            ]
-          }
-        ]
-      },
-      "trigger": "minecraft:inventory_changed"
-    },
-    "hold4": {
-      "conditions": {
-        "items": [
-          {
-            "items": [
-              "immersiveweapons:diamond_shard"
-            ]
-          }
-        ]
-      },
-      "trigger": "minecraft:inventory_changed"
-    },
-    "hold5": {
-      "conditions": {
-        "items": [
-          {
-            "items": [
-              "immersiveweapons:ventus_shard"
-            ]
-          }
-        ]
-      },
-      "trigger": "minecraft:inventory_changed"
-    },
-    "hold6": {
-      "conditions": {
-        "items": [
-          {
-            "items": [
-              "immersiveweapons:starstorm_shard"
-            ]
+            "tag": "immersiveweapons:shards/shards"
           }
         ]
       },
@@ -101,13 +27,7 @@
   },
   "requirements": [
     [
-      "hold",
-      "hold1",
-      "hold2",
-      "hold3",
-      "hold4",
-      "hold5",
-      "hold6"
+      "hold"
     ]
   ],
   "sends_telemetry_event": true

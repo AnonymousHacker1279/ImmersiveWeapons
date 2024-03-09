@@ -10,22 +10,26 @@ import net.minecraft.world.item.armortrim.TrimMaterials;
 import net.neoforged.neoforge.client.model.generators.ItemModelProvider;
 import net.neoforged.neoforge.client.model.generators.ModelFile;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
+import net.neoforged.neoforge.registries.DeferredHolder;
 import org.jetbrains.annotations.Nullable;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.data.DataGenUtils;
-import tech.anonymoushacker1279.immersiveweapons.data.lists.ItemLists;
 import tech.anonymoushacker1279.immersiveweapons.init.BlockItemRegistry;
 import tech.anonymoushacker1279.immersiveweapons.init.ItemRegistry;
 import tech.anonymoushacker1279.immersiveweapons.item.gauntlet.GauntletItem;
 import tech.anonymoushacker1279.immersiveweapons.item.pike.PikeItem;
 import tech.anonymoushacker1279.immersiveweapons.item.projectile.BulletItem;
+import tech.anonymoushacker1279.immersiveweapons.util.markers.DatagenExclusionMarker;
+import tech.anonymoushacker1279.immersiveweapons.util.markers.DatagenExclusionMarker.Type;
 
+import java.lang.reflect.Field;
 import java.util.*;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
 
 public class ItemModelGenerator extends ItemModelProvider implements DataGenUtils {
 
+	private static final List<Item> IGNORED_ITEMS = new ArrayList<>(50);
 	final Map<PikeItem, ResourceLocation> pikeMaterialMap = new HashMap<>(15);
 	final Map<GauntletItem, ResourceLocation> gauntletMaterialMap = new HashMap<>(15);
 	final ArrayList<ResourceKey<TrimMaterial>> trimMaterials = new ArrayList<>(15);
@@ -310,8 +314,24 @@ public class ItemModelGenerator extends ItemModelProvider implements DataGenUtil
 	protected void registerModels() {
 		List<Item> items = new ArrayList<>(250);
 
+		for (Field field : ItemRegistry.class.getDeclaredFields()) {
+			if (field.isAnnotationPresent(DatagenExclusionMarker.class)) {
+				DatagenExclusionMarker marker = field.getAnnotation(DatagenExclusionMarker.class);
+
+				if (Arrays.asList(marker.value()).contains(Type.MODEL_GENERATOR_ITEM)) {
+					try {
+						if (field.get(null) instanceof DeferredHolder<?, ?> holder) {
+							IGNORED_ITEMS.add((Item) holder.get());
+						}
+					} catch (IllegalAccessException e) {
+						throw new RuntimeException(e);
+					}
+				}
+			}
+		}
+
 		ItemRegistry.ITEMS.getEntries().stream().map(Supplier::get)
-				.filter(Predicate.not(ItemLists.MODEL_GENERATOR_IGNORED_ITEMS::contains)).forEach(items::add);
+				.filter(Predicate.not(IGNORED_ITEMS::contains)).forEach(items::add);
 
 		boolean isAtBlockItems = false;
 		boolean isPastToolItems = false;
@@ -472,7 +492,7 @@ public class ItemModelGenerator extends ItemModelProvider implements DataGenUtil
 							.parent(new ModelFile.UncheckedModelFile("item/generated"))
 							.texture("layer0", new ResourceLocation(ImmersiveWeapons.MOD_ID,
 									"block/starstorm_crystal"));
-				} else if (ItemLists.HEAD_ITEMS.contains(item)) {
+				} else if (item.toString().contains("_head")) {
 					entitySkull(item);
 				} else {
 					blockItem(item);

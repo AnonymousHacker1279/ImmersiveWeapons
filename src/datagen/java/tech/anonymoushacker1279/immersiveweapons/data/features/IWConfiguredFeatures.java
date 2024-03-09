@@ -20,8 +20,8 @@ import net.minecraft.world.level.levelgen.feature.stateproviders.BlockStateProvi
 import net.minecraft.world.level.levelgen.feature.trunkplacers.FancyTrunkPlacer;
 import net.minecraft.world.level.levelgen.feature.trunkplacers.StraightTrunkPlacer;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
+import tech.anonymoushacker1279.immersiveweapons.data.features.OreReplacementData.OreReplacementTargets;
 import tech.anonymoushacker1279.immersiveweapons.init.BlockRegistry;
-import tech.anonymoushacker1279.immersiveweapons.world.level.levelgen.OreReplacementData.OreReplacementTargets;
 import tech.anonymoushacker1279.immersiveweapons.world.level.levelgen.feature.treedecorators.BurnedBranchDecorator;
 
 import java.util.List;

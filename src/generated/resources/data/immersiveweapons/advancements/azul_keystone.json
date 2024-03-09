@@ -1,5 +1,5 @@
 {
-  "parent": "immersiveweapons:warrior_statue",
+  "parent": "immersiveweapons:tiltros_portal",
   "criteria": {
     "hold": {
       "conditions": {
@@ -16,14 +16,14 @@
   },
   "display": {
     "description": {
-      "translate": "advancements.immersiveweapons.tiltros.azul_keystone.description"
+      "translate": "advancements.immersiveweapons.azul_keystone.description"
     },
     "hidden": true,
     "icon": {
       "item": "immersiveweapons:azul_keystone_fragment"
     },
     "title": {
-      "translate": "advancements.immersiveweapons.tiltros.azul_keystone.title"
+      "translate": "advancements.immersiveweapons.azul_keystone.title"
     }
   },
   "requirements": [

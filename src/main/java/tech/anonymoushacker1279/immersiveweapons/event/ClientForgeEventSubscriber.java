@@ -6,7 +6,6 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.util.Mth;
-import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Blocks;
@@ -28,6 +27,7 @@ import tech.anonymoushacker1279.immersiveweapons.init.EffectRegistry;
 import tech.anonymoushacker1279.immersiveweapons.init.ItemRegistry;
 import tech.anonymoushacker1279.immersiveweapons.item.AccessoryItem;
 import tech.anonymoushacker1279.immersiveweapons.item.CursedItem;
+import tech.anonymoushacker1279.immersiveweapons.item.armor.ArmorUtils;
 import tech.anonymoushacker1279.immersiveweapons.item.gun.data.GunData;
 import tech.anonymoushacker1279.immersiveweapons.item.projectile.ThrowableItem;
 
@@ -46,10 +46,7 @@ public class ClientForgeEventSubscriber {
 		Player player = event.getPlayer();
 
 		// Remove fire overlay from players wearing a full set of molten armor
-		if (player.getItemBySlot(EquipmentSlot.HEAD).getItem() == ItemRegistry.MOLTEN_HELMET.get() &&
-				player.getItemBySlot(EquipmentSlot.CHEST).getItem() == ItemRegistry.MOLTEN_CHESTPLATE.get() &&
-				player.getItemBySlot(EquipmentSlot.LEGS).getItem() == ItemRegistry.MOLTEN_LEGGINGS.get() &&
-				player.getItemBySlot(EquipmentSlot.FEET).getItem() == ItemRegistry.MOLTEN_BOOTS.get()) {
+		if (ArmorUtils.isWearingMoltenArmor(player)) {
 			if (player.isInLava()) {
 				if (event.getBlockState() == Blocks.FIRE.defaultBlockState()) {
 					event.setCanceled(true);
@@ -82,11 +79,7 @@ public class ClientForgeEventSubscriber {
 
 		if (player.isInLava()) {
 			boolean hasLavaGoggles = AccessoryItem.isAccessoryActive(player, ItemRegistry.LAVA_GOGGLES.get());
-			if (player.getItemBySlot(EquipmentSlot.HEAD).getItem() == ItemRegistry.MOLTEN_HELMET.get() &&
-					player.getItemBySlot(EquipmentSlot.CHEST).getItem() == ItemRegistry.MOLTEN_CHESTPLATE.get() &&
-					player.getItemBySlot(EquipmentSlot.LEGS).getItem() == ItemRegistry.MOLTEN_LEGGINGS.get() &&
-					player.getItemBySlot(EquipmentSlot.FEET).getItem() == ItemRegistry.MOLTEN_BOOTS.get()) {
-
+			if (ArmorUtils.isWearingMoltenArmor(player)) {
 				if (minecraft.level != null) {
 					BlockState state = minecraft.level.getBlockState(new BlockPos(player.blockPosition().above(1)));
 					if (state.is(Blocks.LAVA)) {

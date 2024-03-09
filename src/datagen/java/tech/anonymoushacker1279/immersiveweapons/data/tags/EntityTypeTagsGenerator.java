@@ -19,6 +19,7 @@ public class EntityTypeTagsGenerator extends EntityTypeTagsProvider {
 	@Override
 	protected void addTags(Provider provider) {
 		tag(EntityTypes.BOSSES).add(EntityRegistry.CELESTIAL_TOWER_ENTITY.get(),
-				EntityRegistry.SUPER_HANS_ENTITY.get());
+				EntityRegistry.SUPER_HANS_ENTITY.get(),
+				EntityRegistry.THE_COMMANDER_ENTITY.get());
 	}
 }

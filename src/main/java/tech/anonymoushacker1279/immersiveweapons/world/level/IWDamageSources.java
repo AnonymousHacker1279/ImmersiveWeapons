@@ -30,6 +30,7 @@ public class IWDamageSources {
 	public static DamageSource CANNONBALL;
 	public static DamageSource EXPLOSIVE_CANNONBALL;
 	public static DamageSource EXPLOSIVE_ARROW;
+	public static DamageSource HELLFIRE;
 
 	public static final ResourceKey<DamageType> BARBED_WIRE_KEY = ResourceKey.create(Registries.DAMAGE_TYPE, new ResourceLocation(ImmersiveWeapons.MOD_ID, "barbed_wire"));
 	public static final ResourceKey<DamageType> BEAR_TRAP_KEY = ResourceKey.create(Registries.DAMAGE_TYPE, new ResourceLocation(ImmersiveWeapons.MOD_ID, "bear_trap"));
@@ -49,6 +50,7 @@ public class IWDamageSources {
 	public static final ResourceKey<DamageType> CANNONBALL_KEY = ResourceKey.create(Registries.DAMAGE_TYPE, new ResourceLocation(ImmersiveWeapons.MOD_ID, "cannonball"));
 	public static final ResourceKey<DamageType> EXPLOSIVE_CANNONBALL_KEY = ResourceKey.create(Registries.DAMAGE_TYPE, new ResourceLocation(ImmersiveWeapons.MOD_ID, "explosive_cannonball"));
 	public static final ResourceKey<DamageType> EXPLOSIVE_ARROW_KEY = ResourceKey.create(Registries.DAMAGE_TYPE, new ResourceLocation(ImmersiveWeapons.MOD_ID, "explosive_arrow"));
+	public static final ResourceKey<DamageType> HELLFIRE_KEY = ResourceKey.create(Registries.DAMAGE_TYPE, new ResourceLocation(ImmersiveWeapons.MOD_ID, "hellfire"));
 
 	public static void init(RegistryAccess registryAccess) {
 		access = registryAccess;
@@ -70,6 +72,7 @@ public class IWDamageSources {
 		CANNONBALL = getDamageSource(registryAccess, CANNONBALL_KEY);
 		EXPLOSIVE_CANNONBALL = getDamageSource(registryAccess, EXPLOSIVE_CANNONBALL_KEY);
 		EXPLOSIVE_ARROW = getDamageSource(registryAccess, EXPLOSIVE_ARROW_KEY);
+		HELLFIRE = getDamageSource(registryAccess, HELLFIRE_KEY);
 	}
 
 	private static DamageSource getDamageSource(RegistryAccess registryAccess, ResourceKey<DamageType> key) {

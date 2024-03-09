@@ -42,13 +42,12 @@ public class DyingSoldierEntity extends RangedSoldierEntity {
 
 	@Override
 	protected void registerGoals() {
-		goalSelector.addGoal(1, new FloatGoal(this));
-		goalSelector.addGoal(5, new WaterAvoidingRandomStrollGoal(this, 0.8D, 0.35f));
+		super.registerGoals();
+
 		goalSelector.addGoal(5, new LookAtPlayerGoal(this, Player.class, 8.0F));
 		goalSelector.addGoal(5, new RandomLookAroundGoal(this));
 		goalSelector.addGoal(6, new MoveThroughVillageGoal(this, 1.0D, false,
 				6, () -> true));
-		goalSelector.addGoal(6, new OpenDoorGoal(this, false));
 
 		targetSelector.addGoal(1, new HurtByTargetWithPredicateGoal(this, (initialPredicate) ->
 				!(initialPredicate instanceof Player player) || !AccessoryItem.isAccessoryActive(player, ItemRegistry.MEDAL_OF_DISHONOR.get()), DyingSoldierEntity.class)

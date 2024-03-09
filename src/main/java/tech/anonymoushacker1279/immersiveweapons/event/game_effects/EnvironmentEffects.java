@@ -1,7 +1,7 @@
 package tech.anonymoushacker1279.immersiveweapons.event.game_effects;
 
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.Level;
 import net.neoforged.neoforge.common.Tags.EntityTypes;
@@ -9,7 +9,7 @@ import net.neoforged.neoforge.event.entity.living.LivingHurtEvent;
 import net.neoforged.neoforge.network.PacketDistributor;
 import org.jetbrains.annotations.Nullable;
 import tech.anonymoushacker1279.immersiveweapons.init.EffectRegistry;
-import tech.anonymoushacker1279.immersiveweapons.init.ItemRegistry;
+import tech.anonymoushacker1279.immersiveweapons.item.armor.ArmorUtils;
 import tech.anonymoushacker1279.immersiveweapons.network.payload.SyncPlayerDataPayload;
 
 import java.util.Objects;
@@ -35,11 +35,7 @@ public class EnvironmentEffects {
 			}
 
 			// Increase the chance that the next damage taken will be neutralized
-			if (damagedEntity.getItemBySlot(EquipmentSlot.HEAD).getItem() == ItemRegistry.ASTRAL_HELMET.get() &&
-					damagedEntity.getItemBySlot(EquipmentSlot.CHEST).getItem() == ItemRegistry.ASTRAL_CHESTPLATE.get() &&
-					damagedEntity.getItemBySlot(EquipmentSlot.LEGS).getItem() == ItemRegistry.ASTRAL_LEGGINGS.get() &&
-					damagedEntity.getItemBySlot(EquipmentSlot.FEET).getItem() == ItemRegistry.ASTRAL_BOOTS.get()) {
-
+			if (ArmorUtils.isWearingAstralArmor(damagedEntity)) {
 				celestialProtectionChanceForNoDamage += damage * 0.03f; // Astral armor has a 3% charge rate
 			} else {
 				celestialProtectionChanceForNoDamage += damage * 0.01f; // Other armor has a 1% charge rate
@@ -82,11 +78,7 @@ public class EnvironmentEffects {
 	// Handle stuff for the Starstorm Armor set bonus
 	public static void starstormArmorSetBonus(LivingHurtEvent event, @Nullable LivingEntity sourceEntity) {
 		if (sourceEntity != null) {
-			if (sourceEntity.getItemBySlot(EquipmentSlot.HEAD).getItem() == ItemRegistry.STARSTORM_HELMET.get() &&
-					sourceEntity.getItemBySlot(EquipmentSlot.CHEST).getItem() == ItemRegistry.STARSTORM_CHESTPLATE.get() &&
-					sourceEntity.getItemBySlot(EquipmentSlot.LEGS).getItem() == ItemRegistry.STARSTORM_LEGGINGS.get() &&
-					sourceEntity.getItemBySlot(EquipmentSlot.FEET).getItem() == ItemRegistry.STARSTORM_BOOTS.get()) {
-
+			if (ArmorUtils.isWearingStarstormArmor(sourceEntity)) {
 				float damage = event.getAmount();
 				damage *= 1.2f;
 				event.setAmount(damage);
@@ -95,13 +87,9 @@ public class EnvironmentEffects {
 	}
 
 	// Handle stuff for the Molten armor set bonus
-	public static void moltenArmorSetBonus(LivingHurtEvent event, @Nullable LivingEntity sourceEntity) {
+	public static void moltenArmorSetBonus(LivingHurtEvent event, @Nullable LivingEntity sourceEntity, LivingEntity damagedEntity) {
 		if (sourceEntity != null) {
-			if (sourceEntity.getItemBySlot(EquipmentSlot.HEAD).getItem() == ItemRegistry.MOLTEN_HELMET.get() &&
-					sourceEntity.getItemBySlot(EquipmentSlot.CHEST).getItem() == ItemRegistry.MOLTEN_CHESTPLATE.get() &&
-					sourceEntity.getItemBySlot(EquipmentSlot.LEGS).getItem() == ItemRegistry.MOLTEN_LEGGINGS.get() &&
-					sourceEntity.getItemBySlot(EquipmentSlot.FEET).getItem() == ItemRegistry.MOLTEN_BOOTS.get()) {
-
+			if (ArmorUtils.isWearingMoltenArmor(sourceEntity)) {
 				// If in the Nether, increase all outgoing damage by 20%
 				if (sourceEntity.level().dimension() == Level.NETHER) {
 					float damage = event.getAmount();
@@ -115,6 +103,11 @@ public class EnvironmentEffects {
 					damage *= 1.1f;
 					event.setAmount(damage);
 				}
+			}
+
+			if (ArmorUtils.isWearingMoltenArmor(damagedEntity)) {
+				// Inflict Hellfire on the attacking entity
+				sourceEntity.addEffect(new MobEffectInstance(EffectRegistry.HELLFIRE_EFFECT.get(), 200, 0, false, false));
 			}
 		}
 	}

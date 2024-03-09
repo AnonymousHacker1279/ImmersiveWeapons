@@ -8,6 +8,7 @@ import net.minecraft.advancements.critereon.*;
 import net.minecraft.core.HolderLookup.Provider;
 import net.minecraft.data.PackOutput;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.Items;
@@ -37,125 +38,124 @@ public class AdvancementsGenerator extends AdvancementProvider {
 		// Root advancement
 		AdvancementHolder root = Builder.advancement()
 				.display(ItemRegistry.TESLA_SWORD.get(),
-						Component.translatable("advancements.immersiveweapons.root.title")
-								.withStyle(ChatFormatting.RED),
-						Component.translatable("advancements.immersiveweapons.root.description"),
+						createTitle("root").withStyle(ChatFormatting.RED),
+						createDescription("root"),
 						new ResourceLocation(ImmersiveWeapons.MOD_ID, "textures/block/red_stained_bulletproof_glass.png"),
 						AdvancementType.TASK, false, false, false)
 				.addCriterion("exist",
 						PlayerTrigger.TriggerInstance.located(LocationPredicate.Builder.inDimension(Level.OVERWORLD)))
-				.save(consumer, "immersiveweapons:root");
+				.save(consumer, prefixString("root"));
 
 		// Molten advancements
 		AdvancementHolder obtainMoltenShard = Builder.advancement().parent(root)
 				.display(ItemRegistry.MOLTEN_SHARD.get(),
-						Component.translatable("advancements.immersiveweapons.molten_shard.title"),
-						Component.translatable("advancements.immersiveweapons.molten_shard.description"),
+						createTitle("molten_shard"),
+						createDescription("molten_shard"),
 						null, AdvancementType.TASK, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.MOLTEN_SHARD.get()))
-				.save(consumer, "immersiveweapons:molten_shard");
+				.save(consumer, prefixString("molten_shard"));
 
 		AdvancementHolder smeltMoltenIngot = Builder.advancement().parent(obtainMoltenShard)
 				.display(ItemRegistry.MOLTEN_INGOT.get(),
-						Component.translatable("advancements.immersiveweapons.molten_ingot.title"),
-						Component.translatable("advancements.immersiveweapons.molten_ingot.description"),
+						createTitle("molten_ingot"),
+						createDescription("molten_ingot"),
 						null, AdvancementType.TASK, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.MOLTEN_INGOT.get()))
-				.save(consumer, "immersiveweapons:molten_ingot");
+				.save(consumer, prefixString("molten_ingot"));
 
 		Builder.advancement().parent(smeltMoltenIngot)
 				.display(ItemRegistry.MOLTEN_SWORD.get(),
-						Component.translatable("advancements.immersiveweapons.molten_sword.title"),
-						Component.translatable("advancements.immersiveweapons.molten_sword.description"),
+						createTitle("molten_sword"),
+						createDescription("molten_sword"),
 						null, AdvancementType.GOAL, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.MOLTEN_SWORD.get()))
 				.rewards(AdvancementRewards.Builder.experience(35))
-				.save(consumer, "immersiveweapons:molten_sword");
+				.save(consumer, prefixString("molten_sword"));
 
 		Builder.advancement().parent(smeltMoltenIngot)
 				.display(ItemRegistry.MOLTEN_PICKAXE.get(),
-						Component.translatable("advancements.immersiveweapons.molten_pickaxe.title"),
-						Component.translatable("advancements.immersiveweapons.molten_pickaxe.description"),
+						createTitle("molten_pickaxe"),
+						createDescription("molten_pickaxe"),
 						null, AdvancementType.GOAL, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.MOLTEN_PICKAXE.get()))
 				.rewards(AdvancementRewards.Builder.experience(35))
-				.save(consumer, "immersiveweapons:molten_pickaxe");
+				.save(consumer, prefixString("molten_pickaxe"));
 
 		Builder.advancement().parent(smeltMoltenIngot)
 				.display(ItemRegistry.MOLTEN_AXE.get(),
-						Component.translatable("advancements.immersiveweapons.molten_axe.title"),
-						Component.translatable("advancements.immersiveweapons.molten_axe.description"),
+						createTitle("molten_axe"),
+						createDescription("molten_axe"),
 						null, AdvancementType.GOAL, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.MOLTEN_AXE.get()))
 				.rewards(AdvancementRewards.Builder.experience(35))
-				.save(consumer, "immersiveweapons:molten_axe");
+				.save(consumer, prefixString("molten_axe"));
 
 		Builder.advancement().parent(smeltMoltenIngot)
 				.display(ItemRegistry.MOLTEN_SHOVEL.get(),
-						Component.translatable("advancements.immersiveweapons.molten_shovel.title"),
-						Component.translatable("advancements.immersiveweapons.molten_shovel.description"),
+						createTitle("molten_shovel"),
+						createDescription("molten_shovel"),
 						null, AdvancementType.GOAL, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.MOLTEN_SHOVEL.get()))
 				.rewards(AdvancementRewards.Builder.experience(35))
-				.save(consumer, "immersiveweapons:molten_shovel");
+				.save(consumer, prefixString("molten_shovel"));
 
 		Builder.advancement().parent(smeltMoltenIngot)
 				.display(ItemRegistry.MOLTEN_HOE.get(),
-						Component.translatable("advancements.immersiveweapons.molten_hoe.title"),
-						Component.translatable("advancements.immersiveweapons.molten_hoe.description"),
+						createTitle("molten_hoe"),
+						createDescription("molten_hoe"),
 						null, AdvancementType.CHALLENGE, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.MOLTEN_HOE.get()))
 				.rewards(AdvancementRewards.Builder.experience(50))
-				.save(consumer, "immersiveweapons:molten_hoe");
+				.save(consumer, prefixString("molten_hoe"));
 
 		Builder.advancement().parent(smeltMoltenIngot)
 				.display(BlockItemRegistry.MOLTEN_BLOCK_ITEM.get(),
-						Component.translatable("advancements.immersiveweapons.molten_tools.title"),
-						Component.translatable("advancements.immersiveweapons.molten_tools.description"),
+						createTitle("molten_tools"),
+						createDescription("molten_tools"),
 						null, AdvancementType.CHALLENGE, true, true, false)
 				.addCriterion("have_advancements",
 						PlayerTrigger.TriggerInstance.located(
 								EntityPredicate.Builder.entity().subPredicate(
 										PlayerPredicate.Builder.player().checkAdvancementDone(
-												new ResourceLocation(ImmersiveWeapons.MOD_ID, "molten_sword"), true
+												prefixRL("molten_sword"), true
 										).checkAdvancementDone(
-												new ResourceLocation(ImmersiveWeapons.MOD_ID, "molten_pickaxe"), true
+												prefixRL("molten_pickaxe"), true
 										).checkAdvancementDone(
-												new ResourceLocation(ImmersiveWeapons.MOD_ID, "molten_axe"), true
+												prefixRL("molten_axe"), true
 										).checkAdvancementDone(
-												new ResourceLocation(ImmersiveWeapons.MOD_ID, "molten_shovel"), true
+												prefixRL("molten_shovel"), true
 										).checkAdvancementDone(
-												new ResourceLocation(ImmersiveWeapons.MOD_ID, "molten_hoe"), true
+												prefixRL("molten_hoe"), true
 										).build()
 								)
 						)
 				)
 				.rewards(AdvancementRewards.Builder.experience(150))
-				.save(consumer, "immersiveweapons:molten_tools");
+				.save(consumer, prefixString("molten_tools"));
 
 		AdvancementHolder moltenArmor = Builder.advancement().parent(smeltMoltenIngot)
 				.display(ItemRegistry.MOLTEN_HELMET.get(),
-						Component.translatable("advancements.immersiveweapons.molten_armor.title"),
-						Component.translatable("advancements.immersiveweapons.molten_armor.description"),
+						createTitle("molten_armor"),
+						createDescription("molten_armor"),
 						null, AdvancementType.GOAL, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.MOLTEN_HELMET.get(),
 								ItemRegistry.MOLTEN_CHESTPLATE.get(), ItemRegistry.MOLTEN_LEGGINGS.get(),
 								ItemRegistry.MOLTEN_BOOTS.get()))
 				.rewards(AdvancementRewards.Builder.experience(100))
-				.save(consumer, "immersiveweapons:molten_armor");
+				.save(consumer, prefixString("molten_armor"));
 
 		Builder.advancement().parent(moltenArmor)
 				.display(Items.LAVA_BUCKET,
-						Component.translatable("advancements.immersiveweapons.swim_in_lava.title"),
-						Component.translatable("advancements.immersiveweapons.swim_in_lava.description"),
+						createTitle("swim_in_lava"),
+						createDescription("swim_in_lava"),
 						null, AdvancementType.CHALLENGE, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.MOLTEN_HELMET.get(),
@@ -163,610 +163,574 @@ public class AdvancementsGenerator extends AdvancementProvider {
 								ItemRegistry.MOLTEN_BOOTS.get()))
 				.addCriterion("swim", EnterBlockTrigger.TriggerInstance.entersBlock(Blocks.LAVA))
 				.rewards(AdvancementRewards.Builder.experience(35))
-				.save(consumer, "immersiveweapons:swim_in_lava");
+				.save(consumer, prefixString("swim_in_lava"));
 
 		// Tesla Advancements
 		AdvancementHolder craftConductiveAlloy = Builder.advancement().parent(root)
 				.display(ItemRegistry.CONDUCTIVE_ALLOY.get(),
-						Component.translatable("advancements.immersiveweapons.conductive_alloy.title"),
-						Component.translatable("advancements.immersiveweapons.conductive_alloy.description"),
+						createTitle("conductive_alloy"),
+						createDescription("conductive_alloy"),
 						null, AdvancementType.TASK, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.CONDUCTIVE_ALLOY.get()))
-				.save(consumer, "immersiveweapons:conductive_alloy");
+				.save(consumer, prefixString("conductive_alloy"));
 
 		AdvancementHolder obtainElectricIngot = Builder.advancement().parent(craftConductiveAlloy)
 				.display(ItemRegistry.ELECTRIC_INGOT.get(),
-						Component.translatable("advancements.immersiveweapons.electric_ingot.title"),
-						Component.translatable("advancements.immersiveweapons.electric_ingot.description"),
+						createTitle("electric_ingot"),
+						createDescription("electric_ingot"),
 						null, AdvancementType.TASK, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.ELECTRIC_INGOT.get()))
-				.save(consumer, "immersiveweapons:electric_ingot");
+				.save(consumer, prefixString("electric_ingot"));
 
 		AdvancementHolder craftTeslaIngot = Builder.advancement().parent(obtainElectricIngot)
 				.display(ItemRegistry.TESLA_INGOT.get(),
-						Component.translatable("advancements.immersiveweapons.tesla_ingot.title"),
-						Component.translatable("advancements.immersiveweapons.tesla_ingot.description"),
+						createTitle("tesla_ingot"),
+						createDescription("tesla_ingot"),
 						null, AdvancementType.TASK, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.TESLA_INGOT.get()))
-				.save(consumer, "immersiveweapons:tesla_ingot");
+				.save(consumer, prefixString("tesla_ingot"));
 
 		Builder.advancement().parent(craftTeslaIngot)
 				.display(ItemRegistry.TESLA_SWORD.get(),
-						Component.translatable("advancements.immersiveweapons.tesla_sword.title"),
-						Component.translatable("advancements.immersiveweapons.tesla_sword.description"),
+						createTitle("tesla_sword"),
+						createDescription("tesla_sword"),
 						null, AdvancementType.GOAL, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.TESLA_SWORD.get()))
 				.rewards(AdvancementRewards.Builder.experience(35))
-				.save(consumer, "immersiveweapons:tesla_sword");
+				.save(consumer, prefixString("tesla_sword"));
 
 		Builder.advancement().parent(craftTeslaIngot)
 				.display(ItemRegistry.TESLA_PICKAXE.get(),
-						Component.translatable("advancements.immersiveweapons.tesla_pickaxe.title"),
-						Component.translatable("advancements.immersiveweapons.tesla_pickaxe.description"),
+						createTitle("tesla_pickaxe"),
+						createDescription("tesla_pickaxe"),
 						null, AdvancementType.GOAL, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.TESLA_PICKAXE.get()))
 				.rewards(AdvancementRewards.Builder.experience(35))
-				.save(consumer, "immersiveweapons:tesla_pickaxe");
+				.save(consumer, prefixString("tesla_pickaxe"));
 
 		Builder.advancement().parent(craftTeslaIngot)
 				.display(ItemRegistry.TESLA_AXE.get(),
-						Component.translatable("advancements.immersiveweapons.tesla_axe.title"),
-						Component.translatable("advancements.immersiveweapons.tesla_axe.description"),
+						createTitle("tesla_axe"),
+						createDescription("tesla_axe"),
 						null, AdvancementType.GOAL, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.TESLA_AXE.get()))
 				.rewards(AdvancementRewards.Builder.experience(35))
-				.save(consumer, "immersiveweapons:tesla_axe");
+				.save(consumer, prefixString("tesla_axe"));
 
 		Builder.advancement().parent(craftTeslaIngot)
 				.display(ItemRegistry.TESLA_SHOVEL.get(),
-						Component.translatable("advancements.immersiveweapons.tesla_shovel.title"),
-						Component.translatable("advancements.immersiveweapons.tesla_shovel.description"),
+						createTitle("tesla_shovel"),
+						createDescription("tesla_shovel"),
 						null, AdvancementType.GOAL, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.TESLA_SHOVEL.get()))
 				.rewards(AdvancementRewards.Builder.experience(35))
-				.save(consumer, "immersiveweapons:tesla_shovel");
+				.save(consumer, prefixString("tesla_shovel"));
 
 		Builder.advancement().parent(craftTeslaIngot)
 				.display(ItemRegistry.TESLA_HOE.get(),
-						Component.translatable("advancements.immersiveweapons.tesla_hoe.title"),
-						Component.translatable("advancements.immersiveweapons.tesla_hoe.description"),
+						createTitle("tesla_hoe"),
+						createDescription("tesla_hoe"),
 						null, AdvancementType.CHALLENGE, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.TESLA_HOE.get()))
 				.rewards(AdvancementRewards.Builder.experience(65))
-				.save(consumer, "immersiveweapons:tesla_hoe");
+				.save(consumer, prefixString("tesla_hoe"));
 
 		Builder.advancement().parent(craftTeslaIngot)
 				.display(BlockItemRegistry.TESLA_BLOCK_ITEM.get(),
-						Component.translatable("advancements.immersiveweapons.tesla_tools.title"),
-						Component.translatable("advancements.immersiveweapons.tesla_tools.description"),
+						createTitle("tesla_tools"),
+						createDescription("tesla_tools"),
 						null, AdvancementType.CHALLENGE, true, true, false)
 				.addCriterion("have_advancements",
 						PlayerTrigger.TriggerInstance.located(
 								EntityPredicate.Builder.entity().subPredicate(
 										PlayerPredicate.Builder.player().checkAdvancementDone(
-												new ResourceLocation(ImmersiveWeapons.MOD_ID, "tesla_sword"), true
+												prefixRL("tesla_sword"), true
 										).checkAdvancementDone(
-												new ResourceLocation(ImmersiveWeapons.MOD_ID, "tesla_pickaxe"), true
+												prefixRL("tesla_pickaxe"), true
 										).checkAdvancementDone(
-												new ResourceLocation(ImmersiveWeapons.MOD_ID, "tesla_axe"), true
+												prefixRL("tesla_axe"), true
 										).checkAdvancementDone(
-												new ResourceLocation(ImmersiveWeapons.MOD_ID, "tesla_shovel"), true
+												prefixRL("tesla_shovel"), true
 										).checkAdvancementDone(
-												new ResourceLocation(ImmersiveWeapons.MOD_ID, "tesla_hoe"), true
+												prefixRL("tesla_hoe"), true
 										).build()
 								)
 						)
 				)
 				.rewards(AdvancementRewards.Builder.experience(150))
-				.save(consumer, "immersiveweapons:tesla_tools");
+				.save(consumer, prefixString("tesla_tools"));
 
 		Builder.advancement().parent(craftTeslaIngot)
 				.display(ItemRegistry.TESLA_HELMET.get(),
-						Component.translatable("advancements.immersiveweapons.tesla_armor.title"),
-						Component.translatable("advancements.immersiveweapons.tesla_armor.description"),
+						createTitle("tesla_armor"),
+						createDescription("tesla_armor"),
 						null, AdvancementType.GOAL, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.TESLA_HELMET.get(),
 								ItemRegistry.TESLA_CHESTPLATE.get(), ItemRegistry.TESLA_LEGGINGS.get(),
 								ItemRegistry.TESLA_BOOTS.get()))
 				.rewards(AdvancementRewards.Builder.experience(100))
-				.save(consumer, "immersiveweapons:tesla_armor");
+				.save(consumer, prefixString("tesla_armor"));
 
 		Builder.advancement().parent(craftTeslaIngot)
 				.display(BlockRegistry.TESLA_SYNTHESIZER.get(),
-						Component.translatable("advancements.immersiveweapons.tesla_synthesizer.title"),
-						Component.translatable("advancements.immersiveweapons.tesla_synthesizer.description"),
+						createTitle("tesla_synthesizer"),
+						createDescription("tesla_synthesizer"),
 						null, AdvancementType.TASK, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(BlockRegistry.TESLA_SYNTHESIZER.get()))
 				.rewards(AdvancementRewards.Builder.experience(150))
-				.save(consumer, "immersiveweapons:tesla_synthesizer");
+				.save(consumer, prefixString("tesla_synthesizer"));
 
 		// Ventus Advancements
 		AdvancementHolder obtainVentusShard = Builder.advancement().parent(root)
 				.display(ItemRegistry.VENTUS_SHARD.get(),
-						Component.translatable("advancements.immersiveweapons.ventus_shard.title"),
-						Component.translatable("advancements.immersiveweapons.ventus_shard.description"),
+						createTitle("ventus_shard"),
+						createDescription("ventus_shard"),
 						null, AdvancementType.TASK, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.VENTUS_SHARD.get()))
-				.save(consumer, "immersiveweapons:ventus_shard");
+				.save(consumer, prefixString("ventus_shard"));
 
 		Builder.advancement().parent(obtainVentusShard)
 				.display(ItemRegistry.VENTUS_SWORD.get(),
-						Component.translatable("advancements.immersiveweapons.ventus_sword.title"),
-						Component.translatable("advancements.immersiveweapons.ventus_sword.description"),
+						createTitle("ventus_sword"),
+						createDescription("ventus_sword"),
 						null, AdvancementType.GOAL, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.VENTUS_SWORD.get()))
 				.rewards(AdvancementRewards.Builder.experience(35))
-				.save(consumer, "immersiveweapons:ventus_sword");
+				.save(consumer, prefixString("ventus_sword"));
 
 		Builder.advancement().parent(obtainVentusShard)
 				.display(ItemRegistry.VENTUS_PICKAXE.get(),
-						Component.translatable("advancements.immersiveweapons.ventus_pickaxe.title"),
-						Component.translatable("advancements.immersiveweapons.ventus_pickaxe.description"),
+						createTitle("ventus_pickaxe"),
+						createDescription("ventus_pickaxe"),
 						null, AdvancementType.GOAL, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.VENTUS_PICKAXE.get()))
 				.rewards(AdvancementRewards.Builder.experience(35))
-				.save(consumer, "immersiveweapons:ventus_pickaxe");
+				.save(consumer, prefixString("ventus_pickaxe"));
 
 		Builder.advancement().parent(obtainVentusShard)
 				.display(ItemRegistry.VENTUS_AXE.get(),
-						Component.translatable("advancements.immersiveweapons.ventus_axe.title"),
-						Component.translatable("advancements.immersiveweapons.ventus_axe.description"),
+						createTitle("ventus_axe"),
+						createDescription("ventus_axe"),
 						null, AdvancementType.GOAL, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.VENTUS_AXE.get()))
 				.rewards(AdvancementRewards.Builder.experience(35))
-				.save(consumer, "immersiveweapons:ventus_axe");
+				.save(consumer, prefixString("ventus_axe"));
 
 		Builder.advancement().parent(obtainVentusShard)
 				.display(ItemRegistry.VENTUS_SHOVEL.get(),
-						Component.translatable("advancements.immersiveweapons.ventus_shovel.title"),
-						Component.translatable("advancements.immersiveweapons.ventus_shovel.description"),
+						createTitle("ventus_shovel"),
+						createDescription("ventus_shovel"),
 						null, AdvancementType.GOAL, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.VENTUS_SHOVEL.get()))
 				.rewards(AdvancementRewards.Builder.experience(35))
-				.save(consumer, "immersiveweapons:ventus_shovel");
+				.save(consumer, prefixString("ventus_shovel"));
 
 		Builder.advancement().parent(obtainVentusShard)
 				.display(ItemRegistry.VENTUS_HOE.get(),
-						Component.translatable("advancements.immersiveweapons.ventus_hoe.title"),
-						Component.translatable("advancements.immersiveweapons.ventus_hoe.description"),
+						createTitle("ventus_hoe"),
+						createDescription("ventus_hoe"),
 						null, AdvancementType.CHALLENGE, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.VENTUS_HOE.get()))
 				.rewards(AdvancementRewards.Builder.experience(50))
-				.save(consumer, "immersiveweapons:ventus_hoe");
+				.save(consumer, prefixString("ventus_hoe"));
 
 		Builder.advancement().parent(obtainVentusShard)
 				.display(BlockItemRegistry.VENTUS_ORE_ITEM.get(),
-						Component.translatable("advancements.immersiveweapons.ventus_tools.title"),
-						Component.translatable("advancements.immersiveweapons.ventus_tools.description"),
+						createTitle("ventus_tools"),
+						createDescription("ventus_tools"),
 						null, AdvancementType.CHALLENGE, true, true, false)
 				.addCriterion("have_advancements",
 						PlayerTrigger.TriggerInstance.located(
 								EntityPredicate.Builder.entity().subPredicate(
 										PlayerPredicate.Builder.player().checkAdvancementDone(
-												new ResourceLocation(ImmersiveWeapons.MOD_ID, "ventus_sword"), true
+												prefixRL("ventus_sword"), true
 										).checkAdvancementDone(
-												new ResourceLocation(ImmersiveWeapons.MOD_ID, "ventus_pickaxe"), true
+												prefixRL("ventus_pickaxe"), true
 										).checkAdvancementDone(
-												new ResourceLocation(ImmersiveWeapons.MOD_ID, "ventus_axe"), true
+												prefixRL("ventus_axe"), true
 										).checkAdvancementDone(
-												new ResourceLocation(ImmersiveWeapons.MOD_ID, "ventus_shovel"), true
+												prefixRL("ventus_shovel"), true
 										).checkAdvancementDone(
-												new ResourceLocation(ImmersiveWeapons.MOD_ID, "ventus_hoe"), true
+												prefixRL("ventus_hoe"), true
 										).build()
 								)
 						)
 				)
 				.rewards(AdvancementRewards.Builder.experience(150))
-				.save(consumer, "immersiveweapons:ventus_tools");
+				.save(consumer, prefixString("ventus_tools"));
 
 		Builder.advancement().parent(obtainVentusShard)
 				.display(ItemRegistry.VENTUS_HELMET.get(),
-						Component.translatable("advancements.immersiveweapons.ventus_armor.title"),
-						Component.translatable("advancements.immersiveweapons.ventus_armor.description"),
+						createTitle("ventus_armor"),
+						createDescription("ventus_armor"),
 						null, AdvancementType.GOAL, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.VENTUS_HELMET.get(),
 								ItemRegistry.VENTUS_CHESTPLATE.get(), ItemRegistry.VENTUS_LEGGINGS.get(),
 								ItemRegistry.VENTUS_BOOTS.get()))
 				.rewards(AdvancementRewards.Builder.experience(100))
-				.save(consumer, "immersiveweapons:ventus_armor");
+				.save(consumer, prefixString("ventus_armor"));
 
 		AdvancementHolder craftVentusStaffCore = Builder.advancement().parent(obtainVentusShard)
 				.display(ItemRegistry.VENTUS_STAFF_CORE.get(),
-						Component.translatable("advancements.immersiveweapons.ventus_staff_core.title"),
-						Component.translatable("advancements.immersiveweapons.ventus_staff_core.description"),
+						createTitle("ventus_staff_core"),
+						createDescription("ventus_staff_core"),
 						null, AdvancementType.GOAL, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.VENTUS_STAFF_CORE.get()))
-				.save(consumer, "immersiveweapons:ventus_staff_core");
+				.save(consumer, prefixString("ventus_staff_core"));
 
 		Builder.advancement().parent(craftVentusStaffCore)
 				.display(ItemRegistry.VENTUS_STAFF.get(),
-						Component.translatable("advancements.immersiveweapons.ventus_staff.title"),
-						Component.translatable("advancements.immersiveweapons.ventus_staff.description"),
+						createTitle("ventus_staff"),
+						createDescription("ventus_staff"),
 						null, AdvancementType.CHALLENGE, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.VENTUS_STAFF.get()))
 				.rewards(AdvancementRewards.Builder.experience(35))
-				.save(consumer, "immersiveweapons:ventus_staff");
+				.save(consumer, prefixString("ventus_staff"));
 
 		// Astral advancements
 		AdvancementHolder obtainAstralCrystal = Builder.advancement().parent(root)
 				.display(BlockRegistry.ASTRAL_CRYSTAL.get(),
-						Component.translatable("advancements.immersiveweapons.astral_crystal.title"),
-						Component.translatable("advancements.immersiveweapons.astral_crystal.description"),
+						createTitle("astral_crystal"),
+						createDescription("astral_crystal"),
 						null, AdvancementType.TASK, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(BlockRegistry.ASTRAL_CRYSTAL.get()))
-				.save(consumer, "immersiveweapons:astral_crystal");
+				.save(consumer, prefixString("astral_crystal"));
 
 		AdvancementHolder obtainAstralIngot = Builder.advancement().parent(obtainAstralCrystal)
 				.display(ItemRegistry.ASTRAL_INGOT.get(),
-						Component.translatable("advancements.immersiveweapons.astral_ingot.title"),
-						Component.translatable("advancements.immersiveweapons.astral_ingot.description"),
+						createTitle("astral_ingot"),
+						createDescription("astral_ingot"),
 						null, AdvancementType.TASK, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.ASTRAL_INGOT.get()))
-				.save(consumer, "immersiveweapons:astral_ingot");
+				.save(consumer, prefixString("astral_ingot"));
 
 		Builder.advancement().parent(obtainAstralIngot)
 				.display(ItemRegistry.ASTRAL_SWORD.get(),
-						Component.translatable("advancements.immersiveweapons.astral_sword.title"),
-						Component.translatable("advancements.immersiveweapons.astral_sword.description"),
+						createTitle("astral_sword"),
+						createDescription("astral_sword"),
 						null, AdvancementType.GOAL, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.ASTRAL_SWORD.get()))
 				.rewards(AdvancementRewards.Builder.experience(35))
-				.save(consumer, "immersiveweapons:astral_sword");
+				.save(consumer, prefixString("astral_sword"));
 
 		Builder.advancement().parent(obtainAstralIngot)
 				.display(ItemRegistry.ASTRAL_PICKAXE.get(),
-						Component.translatable("advancements.immersiveweapons.astral_pickaxe.title"),
-						Component.translatable("advancements.immersiveweapons.astral_pickaxe.description"),
+						createTitle("astral_pickaxe"),
+						createDescription("astral_pickaxe"),
 						null, AdvancementType.GOAL, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.ASTRAL_PICKAXE.get()))
 				.rewards(AdvancementRewards.Builder.experience(35))
-				.save(consumer, "immersiveweapons:astral_pickaxe");
+				.save(consumer, prefixString("astral_pickaxe"));
 
 		Builder.advancement().parent(obtainAstralIngot)
 				.display(ItemRegistry.ASTRAL_AXE.get(),
-						Component.translatable("advancements.immersiveweapons.astral_axe.title"),
-						Component.translatable("advancements.immersiveweapons.astral_axe.description"),
+						createTitle("astral_axe"),
+						createDescription("astral_axe"),
 						null, AdvancementType.GOAL, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.ASTRAL_AXE.get()))
 				.rewards(AdvancementRewards.Builder.experience(35))
-				.save(consumer, "immersiveweapons:astral_axe");
+				.save(consumer, prefixString("astral_axe"));
 
 		Builder.advancement().parent(obtainAstralIngot)
 				.display(ItemRegistry.ASTRAL_SHOVEL.get(),
-						Component.translatable("advancements.immersiveweapons.astral_shovel.title"),
-						Component.translatable("advancements.immersiveweapons.astral_shovel.description"),
+						createTitle("astral_shovel"),
+						createDescription("astral_shovel"),
 						null, AdvancementType.GOAL, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.ASTRAL_SHOVEL.get()))
 				.rewards(AdvancementRewards.Builder.experience(35))
-				.save(consumer, "immersiveweapons:astral_shovel");
+				.save(consumer, prefixString("astral_shovel"));
 
 		Builder.advancement().parent(obtainAstralIngot)
 				.display(ItemRegistry.ASTRAL_HOE.get(),
-						Component.translatable("advancements.immersiveweapons.astral_hoe.title"),
-						Component.translatable("advancements.immersiveweapons.astral_hoe.description"),
+						createTitle("astral_hoe"),
+						createDescription("astral_hoe"),
 						null, AdvancementType.CHALLENGE, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.ASTRAL_HOE.get()))
 				.rewards(AdvancementRewards.Builder.experience(50))
-				.save(consumer, "immersiveweapons:astral_hoe");
+				.save(consumer, prefixString("astral_hoe"));
 
 		Builder.advancement().parent(obtainAstralIngot)
 				.display(BlockItemRegistry.ASTRAL_BLOCK_ITEM.get(),
-						Component.translatable("advancements.immersiveweapons.astral_tools.title"),
-						Component.translatable("advancements.immersiveweapons.astral_tools.description"),
+						createTitle("astral_tools"),
+						createDescription("astral_tools"),
 						null, AdvancementType.CHALLENGE, true, true, false)
 				.addCriterion("have_advancements",
 						PlayerTrigger.TriggerInstance.located(
 								EntityPredicate.Builder.entity().subPredicate(
 										PlayerPredicate.Builder.player().checkAdvancementDone(
-												new ResourceLocation(ImmersiveWeapons.MOD_ID, "astral_sword"), true
+												prefixRL("astral_sword"), true
 										).checkAdvancementDone(
-												new ResourceLocation(ImmersiveWeapons.MOD_ID, "astral_pickaxe"), true
+												prefixRL("astral_pickaxe"), true
 										).checkAdvancementDone(
-												new ResourceLocation(ImmersiveWeapons.MOD_ID, "astral_axe"), true
+												prefixRL("astral_axe"), true
 										).checkAdvancementDone(
-												new ResourceLocation(ImmersiveWeapons.MOD_ID, "astral_shovel"), true
+												prefixRL("astral_shovel"), true
 										).checkAdvancementDone(
-												new ResourceLocation(ImmersiveWeapons.MOD_ID, "astral_hoe"), true
+												prefixRL("astral_hoe"), true
 										).build()
 								)
 						)
 				)
 				.rewards(AdvancementRewards.Builder.experience(150))
-				.save(consumer, "immersiveweapons:astral_tools");
+				.save(consumer, prefixString("astral_tools"));
 
 		Builder.advancement().parent(obtainAstralIngot)
 				.display(ItemRegistry.ASTRAL_HELMET.get(),
-						Component.translatable("advancements.immersiveweapons.astral_armor.title"),
-						Component.translatable("advancements.immersiveweapons.astral_armor.description"),
+						createTitle("astral_armor"),
+						createDescription("astral_armor"),
 						null, AdvancementType.GOAL, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.ASTRAL_HELMET.get(),
 								ItemRegistry.ASTRAL_CHESTPLATE.get(), ItemRegistry.ASTRAL_LEGGINGS.get(),
 								ItemRegistry.ASTRAL_BOOTS.get()))
 				.rewards(AdvancementRewards.Builder.experience(100))
-				.save(consumer, "immersiveweapons:astral_armor");
+				.save(consumer, prefixString("astral_armor"));
 
 		// Starstorm advancements
 		AdvancementHolder obtainStarstormCrystal = Builder.advancement().parent(root)
 				.display(BlockRegistry.STARSTORM_CRYSTAL.get(),
-						Component.translatable("advancements.immersiveweapons.starstorm_crystal.title"),
-						Component.translatable("advancements.immersiveweapons.starstorm_crystal.description"),
+						createTitle("starstorm_crystal"),
+						createDescription("starstorm_crystal"),
 						null, AdvancementType.TASK, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(BlockRegistry.STARSTORM_CRYSTAL.get()))
-				.save(consumer, "immersiveweapons:starstorm_crystal");
+				.save(consumer, prefixString("starstorm_crystal"));
 
 		AdvancementHolder obtainStarstormIngot = Builder.advancement().parent(obtainStarstormCrystal)
 				.display(ItemRegistry.STARSTORM_INGOT.get(),
-						Component.translatable("advancements.immersiveweapons.starstorm_ingot.title"),
-						Component.translatable("advancements.immersiveweapons.starstorm_ingot.description"),
+						createTitle("starstorm_ingot"),
+						createDescription("starstorm_ingot"),
 						null, AdvancementType.TASK, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.STARSTORM_INGOT.get()))
-				.save(consumer, "immersiveweapons:starstorm_ingot");
+				.save(consumer, prefixString("starstorm_ingot"));
 
 		Builder.advancement().parent(obtainStarstormIngot)
 				.display(ItemRegistry.STARSTORM_SWORD.get(),
-						Component.translatable("advancements.immersiveweapons.starstorm_sword.title"),
-						Component.translatable("advancements.immersiveweapons.starstorm_sword.description"),
+						createTitle("starstorm_sword"),
+						createDescription("starstorm_sword"),
 						null, AdvancementType.TASK, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.STARSTORM_SWORD.get()))
 				.rewards(AdvancementRewards.Builder.experience(35))
-				.save(consumer, "immersiveweapons:starstorm_sword");
+				.save(consumer, prefixString("starstorm_sword"));
 
 		Builder.advancement().parent(obtainStarstormIngot)
 				.display(ItemRegistry.STARSTORM_PICKAXE.get(),
-						Component.translatable("advancements.immersiveweapons.starstorm_pickaxe.title"),
-						Component.translatable("advancements.immersiveweapons.starstorm_pickaxe.description"),
+						createTitle("starstorm_pickaxe"),
+						createDescription("starstorm_pickaxe"),
 						null, AdvancementType.TASK, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.STARSTORM_PICKAXE.get()))
 				.rewards(AdvancementRewards.Builder.experience(35))
-				.save(consumer, "immersiveweapons:starstorm_pickaxe");
+				.save(consumer, prefixString("starstorm_pickaxe"));
 
 		Builder.advancement().parent(obtainStarstormIngot)
 				.display(ItemRegistry.STARSTORM_AXE.get(),
-						Component.translatable("advancements.immersiveweapons.starstorm_axe.title"),
-						Component.translatable("advancements.immersiveweapons.starstorm_axe.description"),
+						createTitle("starstorm_axe"),
+						createDescription("starstorm_axe"),
 						null, AdvancementType.TASK, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.STARSTORM_AXE.get()))
 				.rewards(AdvancementRewards.Builder.experience(35))
-				.save(consumer, "immersiveweapons:starstorm_axe");
+				.save(consumer, prefixString("starstorm_axe"));
 
 		Builder.advancement().parent(obtainStarstormIngot)
 				.display(ItemRegistry.STARSTORM_SHOVEL.get(),
-						Component.translatable("advancements.immersiveweapons.starstorm_shovel.title"),
-						Component.translatable("advancements.immersiveweapons.starstorm_shovel.description"),
+						createTitle("starstorm_shovel"),
+						createDescription("starstorm_shovel"),
 						null, AdvancementType.TASK, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.STARSTORM_SHOVEL.get()))
 				.rewards(AdvancementRewards.Builder.experience(35))
-				.save(consumer, "immersiveweapons:starstorm_shovel");
+				.save(consumer, prefixString("starstorm_shovel"));
 
 		Builder.advancement().parent(obtainStarstormIngot)
 				.display(ItemRegistry.STARSTORM_HOE.get(),
-						Component.translatable("advancements.immersiveweapons.starstorm_hoe.title"),
-						Component.translatable("advancements.immersiveweapons.starstorm_hoe.description"),
+						createTitle("starstorm_hoe"),
+						createDescription("starstorm_hoe"),
 						null, AdvancementType.CHALLENGE, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.STARSTORM_HOE.get()))
 				.rewards(AdvancementRewards.Builder.experience(50))
-				.save(consumer, "immersiveweapons:starstorm_hoe");
+				.save(consumer, prefixString("starstorm_hoe"));
 
 		Builder.advancement().parent(obtainStarstormIngot)
 				.display(BlockItemRegistry.STARSTORM_BLOCK_ITEM.get(),
-						Component.translatable("advancements.immersiveweapons.starstorm_tools.title"),
-						Component.translatable("advancements.immersiveweapons.starstorm_tools.description"),
+						createTitle("starstorm_tools"),
+						createDescription("starstorm_tools"),
 						null, AdvancementType.CHALLENGE, true, true, false)
 				.addCriterion("have_advancements",
 						PlayerTrigger.TriggerInstance.located(
 								EntityPredicate.Builder.entity().subPredicate(
 										PlayerPredicate.Builder.player().checkAdvancementDone(
-												new ResourceLocation(ImmersiveWeapons.MOD_ID, "starstorm_sword"), true
+												prefixRL("starstorm_sword"), true
 										).checkAdvancementDone(
-												new ResourceLocation(ImmersiveWeapons.MOD_ID, "starstorm_pickaxe"), true
+												prefixRL("starstorm_pickaxe"), true
 										).checkAdvancementDone(
-												new ResourceLocation(ImmersiveWeapons.MOD_ID, "starstorm_axe"), true
+												prefixRL("starstorm_axe"), true
 										).checkAdvancementDone(
-												new ResourceLocation(ImmersiveWeapons.MOD_ID, "starstorm_shovel"), true
+												prefixRL("starstorm_shovel"), true
 										).checkAdvancementDone(
-												new ResourceLocation(ImmersiveWeapons.MOD_ID, "starstorm_hoe"), true
+												prefixRL("starstorm_hoe"), true
 										).build()
 								)
 						)
 				)
 				.rewards(AdvancementRewards.Builder.experience(150))
-				.save(consumer, "immersiveweapons:starstorm_tools");
+				.save(consumer, prefixString("starstorm_tools"));
 
 		Builder.advancement().parent(obtainStarstormIngot)
 				.display(ItemRegistry.STARSTORM_HELMET.get(),
-						Component.translatable("advancements.immersiveweapons.starstorm_armor.title"),
-						Component.translatable("advancements.immersiveweapons.starstorm_armor.description"),
+						createTitle("starstorm_armor"),
+						createDescription("starstorm_armor"),
 						null, AdvancementType.GOAL, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.STARSTORM_HELMET.get(),
 								ItemRegistry.STARSTORM_CHESTPLATE.get(), ItemRegistry.STARSTORM_LEGGINGS.get(),
 								ItemRegistry.STARSTORM_BOOTS.get()))
 				.rewards(AdvancementRewards.Builder.experience(100))
-				.save(consumer, "immersiveweapons:starstorm_armor");
+				.save(consumer, prefixString("starstorm_armor"));
 
 		// Padded Leather advancements
 		Builder.advancement().parent(root)
 				.display(ItemRegistry.PADDED_LEATHER_HELMET.get(),
-						Component.translatable("advancements.immersiveweapons.padded_leather_armor.title"),
-						Component.translatable("advancements.immersiveweapons.padded_leather_armor.description"),
+						createTitle("padded_leather_armor"),
+						createDescription("padded_leather_armor"),
 						null, AdvancementType.GOAL, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.PADDED_LEATHER_HELMET.get(),
 								ItemRegistry.PADDED_LEATHER_CHESTPLATE.get(), ItemRegistry.PADDED_LEATHER_LEGGINGS.get(),
 								ItemRegistry.PADDED_LEATHER_BOOTS.get()))
 				.rewards(AdvancementRewards.Builder.experience(100))
-				.save(consumer, "immersiveweapons:padded_leather_armor");
+				.save(consumer, prefixString("padded_leather_armor"));
 
 		// Tool advancements
 		AdvancementHolder craftToolRod = Builder.advancement().parent(root)
 				.display(ItemRegistry.WOODEN_TOOL_ROD.get(),
-						Component.translatable("advancements.immersiveweapons.tool_rod.title"),
-						Component.translatable("advancements.immersiveweapons.tool_rod.description"),
+						createTitle("tool_rod"),
+						createDescription("tool_rod"),
 						null, AdvancementType.TASK, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.WOODEN_TOOL_ROD.get()))
-				.save(consumer, "immersiveweapons:tool_rod");
+				.save(consumer, prefixString("tool_rod"));
 
 		Builder.advancement().parent(craftToolRod)
 				.display(ItemRegistry.IRON_PIKE.get(),
-						Component.translatable("advancements.immersiveweapons.pike.title"),
-						Component.translatable("advancements.immersiveweapons.pike.description"),
+						createTitle("pike"),
+						createDescription("pike"),
 						null, AdvancementType.TASK, true, true, false)
 				.addCriterion("hold",
-						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.WOODEN_PIKE.get()))
-				.addCriterion("hold1",
-						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.STONE_PIKE.get()))
-				.addCriterion("hold2",
-						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.GOLDEN_PIKE.get()))
-				.addCriterion("hold3",
-						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.COPPER_PIKE.get()))
-				.addCriterion("hold4",
-						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.IRON_PIKE.get()))
-				.addCriterion("hold5",
-						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.COBALT_PIKE.get()))
-				.addCriterion("hold6",
-						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.DIAMOND_PIKE.get()))
-				.addCriterion("hold7",
-						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.NETHERITE_PIKE.get()))
-				.addCriterion("hold8",
-						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.MOLTEN_PIKE.get()))
-				.addCriterion("hold9",
-						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.TESLA_PIKE.get()))
-				.addCriterion("hold10",
-						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.VENTUS_PIKE.get()))
-				.addCriterion("hold11",
-						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.ASTRAL_PIKE.get()))
-				.addCriterion("hold12",
-						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.STARSTORM_PIKE.get()))
+						InventoryChangeTrigger.TriggerInstance.hasItems(ItemPredicate.Builder.item().of(IWItemTagGroups.PIKES).build()))
 				.requirements(Strategy.OR)
-				.save(consumer, "immersiveweapons:pike");
+				.save(consumer, prefixString("pike"));
 
 		AdvancementHolder shards = Builder.advancement().parent(root)
 				.display(ItemRegistry.STONE_SHARD.get(),
-						Component.translatable("advancements.immersiveweapons.shards.title"),
-						Component.translatable("advancements.immersiveweapons.shards.description"),
+						createTitle("shards"),
+						createDescription("shards"),
 						null, AdvancementType.TASK, false, false, false)
 				.addCriterion("hold",
-						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.MOLTEN_SHARD.get()))
-				.addCriterion("hold1",
-						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.OBSIDIAN_SHARD.get()))
-				.addCriterion("hold2",
-						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.STONE_SHARD.get()))
-				.addCriterion("hold3",
-						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.WOODEN_SHARD.get()))
-				.addCriterion("hold4",
-						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.DIAMOND_SHARD.get()))
-				.addCriterion("hold5",
-						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.VENTUS_SHARD.get()))
-				.addCriterion("hold6",
-						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.STARSTORM_SHARD.get()))
+						InventoryChangeTrigger.TriggerInstance.hasItems(ItemPredicate.Builder.item().of(IWItemTagGroups.SHARDS).build()))
 				.requirements(Strategy.OR)
-				.save(consumer, "immersiveweapons:shards");
+				.save(consumer, prefixString("shards"));
 
 		Builder.advancement().parent(shards)
 				.display(ItemRegistry.WOODEN_SHARD.get(),
-						Component.translatable("advancements.immersiveweapons.wooden_shard.title"),
-						Component.translatable("advancements.immersiveweapons.wooden_shard.description"),
+						createTitle("wooden_shard"),
+						createDescription("wooden_shard"),
 						null, AdvancementType.GOAL, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.WOODEN_SHARD.get()))
-				.save(consumer, "immersiveweapons:wooden_shard");
+				.save(consumer, prefixString("wooden_shard"));
 
 		Builder.advancement().parent(shards)
 				.display(ItemRegistry.STONE_SHARD.get(),
-						Component.translatable("advancements.immersiveweapons.stone_shard.title"),
-						Component.translatable("advancements.immersiveweapons.stone_shard.description"),
+						createTitle("stone_shard"),
+						createDescription("stone_shard"),
 						null, AdvancementType.GOAL, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.STONE_SHARD.get()))
-				.save(consumer, "immersiveweapons:stone_shard");
+				.save(consumer, prefixString("stone_shard"));
 
 		Builder.advancement().parent(shards)
 				.display(ItemRegistry.DIAMOND_SHARD.get(),
-						Component.translatable("advancements.immersiveweapons.diamond_shard.title"),
-						Component.translatable("advancements.immersiveweapons.diamond_shard.description"),
+						createTitle("diamond_shard"),
+						createDescription("diamond_shard"),
 						null, AdvancementType.GOAL, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.DIAMOND_SHARD.get()))
-				.save(consumer, "immersiveweapons:diamond_shard");
+				.save(consumer, prefixString("diamond_shard"));
 
 		Builder.advancement().parent(shards)
 				.display(ItemRegistry.OBSIDIAN_SHARD.get(),
-						Component.translatable("advancements.immersiveweapons.obsidian_shard.title"),
-						Component.translatable("advancements.immersiveweapons.obsidian_shard.description"),
+						createTitle("obsidian_shard"),
+						createDescription("obsidian_shard"),
 						null, AdvancementType.GOAL, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.OBSIDIAN_SHARD.get()))
-				.save(consumer, "immersiveweapons:obsidian_shard");
+				.save(consumer, prefixString("obsidian_shard"));
 
 		Builder.advancement().parent(root)
 				.display(ItemRegistry.NETHERITE_ARROW.get(),
-						Component.translatable("advancements.immersiveweapons.netherite_projectile.title"),
-						Component.translatable("advancements.immersiveweapons.netherite_projectile.description"),
+						createTitle("netherite_projectile"),
+						createDescription("netherite_projectile"),
 						null, AdvancementType.CHALLENGE, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.NETHERITE_ARROW.get()))
 				.addCriterion("hold1",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.NETHERITE_MUSKET_BALL.get()))
 				.rewards(AdvancementRewards.Builder.experience(50))
-				.save(consumer, "immersiveweapons:netherite_projectile");
+				.save(consumer, prefixString("netherite_projectile"));
 
 		Builder.advancement().parent(root)
 				.display(ItemRegistry.GOLDEN_MUSKET_BALL.get(),
-						Component.translatable("advancements.immersiveweapons.musket_ball.title"),
-						Component.translatable("advancements.immersiveweapons.musket_ball.description"),
+						createTitle("musket_ball"),
+						createDescription("musket_ball"),
 						null, AdvancementType.TASK, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemPredicate.Builder.item().of(IWItemTagGroups.MUSKET_BALLS).build()))
-				.save(consumer, "immersiveweapons:musket_ball");
+				.save(consumer, prefixString("musket_ball"));
 
 		Builder.advancement().parent(root)
 				.display(BlockRegistry.AMMUNITION_TABLE.get(),
-						Component.translatable("advancements.immersiveweapons.ammunition_table.title"),
-						Component.translatable("advancements.immersiveweapons.ammunition_table.description"),
+						createTitle("ammunition_table"),
+						createDescription("ammunition_table"),
 						null, AdvancementType.TASK, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(BlockRegistry.AMMUNITION_TABLE.get()))
-				.save(consumer, "immersiveweapons:ammunition_table");
+				.save(consumer, prefixString("ammunition_table"));
 
 		Builder.advancement().parent(root)
 				.display(BlockRegistry.STAR_FORGE_CONTROLLER.get(),
-						Component.translatable("advancements.immersiveweapons.star_forge.title"),
-						Component.translatable("advancements.immersiveweapons.star_forge.description"),
+						createTitle("star_forge"),
+						createDescription("star_forge"),
 						null, AdvancementType.TASK, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(
@@ -775,360 +739,336 @@ public class AdvancementsGenerator extends AdvancementProvider {
 								BlockRegistry.SOLAR_LENS.get(),
 								Items.IRON_BARS
 						))
-				.save(consumer, "immersiveweapons:star_forge");
+				.save(consumer, prefixString("star_forge"));
 
 		AdvancementHolder smallPartsTable = Builder.advancement().parent(root)
 				.display(BlockRegistry.SMALL_PARTS_TABLE.get(),
-						Component.translatable("advancements.immersiveweapons.small_parts_table.title"),
-						Component.translatable("advancements.immersiveweapons.small_parts_table.description"),
+						createTitle("small_parts_table"),
+						createDescription("small_parts_table"),
 						null, AdvancementType.TASK, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(BlockRegistry.SMALL_PARTS_TABLE.get()))
-				.save(consumer, "immersiveweapons:small_parts_table");
+				.save(consumer, prefixString("small_parts_table"));
 
 		Builder.advancement().parent(smallPartsTable)
 				.display(ItemRegistry.FLINTLOCK_PISTOL.get(),
-						Component.translatable("advancements.immersiveweapons.flintlock_pistol.title"),
-						Component.translatable("advancements.immersiveweapons.flintlock_pistol.description"),
+						createTitle("flintlock_pistol"),
+						createDescription("flintlock_pistol"),
 						null, AdvancementType.GOAL, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.FLINTLOCK_PISTOL.get()))
-				.save(consumer, "immersiveweapons:flintlock_pistol");
+				.save(consumer, prefixString("flintlock_pistol"));
 
 		Builder.advancement().parent(smallPartsTable)
 				.display(ItemRegistry.BLUNDERBUSS.get(),
-						Component.translatable("advancements.immersiveweapons.blunderbuss.title"),
-						Component.translatable("advancements.immersiveweapons.blunderbuss.description"),
+						createTitle("blunderbuss"),
+						createDescription("blunderbuss"),
 						null, AdvancementType.GOAL, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.BLUNDERBUSS.get()))
-				.save(consumer, "immersiveweapons:blunderbuss");
+				.save(consumer, prefixString("blunderbuss"));
 
 		Builder.advancement().parent(smallPartsTable)
 				.display(ItemRegistry.FLARE_GUN.get(),
-						Component.translatable("advancements.immersiveweapons.flare_gun.title"),
-						Component.translatable("advancements.immersiveweapons.flare_gun.description"),
+						createTitle("flare_gun"),
+						createDescription("flare_gun"),
 						null, AdvancementType.GOAL, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.FLARE_GUN.get()))
-				.save(consumer, "immersiveweapons:flare_gun");
+				.save(consumer, prefixString("flare_gun"));
 
 		Builder.advancement().parent(smallPartsTable)
 				.display(ItemRegistry.MUSKET.get(),
-						Component.translatable("advancements.immersiveweapons.musket.title"),
-						Component.translatable("advancements.immersiveweapons.musket.description"),
+						createTitle("musket"),
+						createDescription("musket"),
 						null, AdvancementType.GOAL, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.MUSKET.get()))
 				.addCriterion("hold1",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.MUSKET_SCOPE.get()))
 				.requirements(Strategy.OR)
-				.save(consumer, "immersiveweapons:musket");
+				.save(consumer, prefixString("musket"));
 
 		Builder.advancement().parent(smallPartsTable)
 				.display(ItemRegistry.HAND_CANNON.get(),
-						Component.translatable("advancements.immersiveweapons.hand_cannon.title"),
-						Component.translatable("advancements.immersiveweapons.hand_cannon.description"),
+						createTitle("hand_cannon"),
+						createDescription("hand_cannon"),
 						null, AdvancementType.GOAL, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.HAND_CANNON.get()))
-				.save(consumer, "immersiveweapons:hand_cannon");
+				.save(consumer, prefixString("hand_cannon"));
 
 		Builder.advancement().parent(smallPartsTable)
 				.display(ItemRegistry.SMOKE_GRENADE.get(),
-						Component.translatable("advancements.immersiveweapons.smoke_grenade.title"),
-						Component.translatable("advancements.immersiveweapons.smoke_grenade.description"),
+						createTitle("smoke_grenade"),
+						createDescription("smoke_grenade"),
 						null, AdvancementType.GOAL, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemPredicate.Builder.item().of(IWItemTagGroups.SMOKE_GRENADES)))
-				.save(consumer, "immersiveweapons:smoke_grenade");
+				.save(consumer, prefixString("smoke_grenade"));
 
 		Builder.advancement().parent(smallPartsTable)
 				.display(ItemRegistry.FLASHBANG.get(),
-						Component.translatable("advancements.immersiveweapons.flashbang.title"),
-						Component.translatable("advancements.immersiveweapons.flashbang.description"),
+						createTitle("flashbang"),
+						createDescription("flashbang"),
 						null, AdvancementType.GOAL, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.FLASHBANG.get()))
-				.save(consumer, "immersiveweapons:flashbang");
+				.save(consumer, prefixString("flashbang"));
 
 		AdvancementHolder craftAlcohol = Builder.advancement().parent(root)
 				.display(ItemRegistry.BOTTLE_OF_ALCOHOL.get(),
-						Component.translatable("advancements.immersiveweapons.bottle_of_alcohol.title"),
-						Component.translatable("advancements.immersiveweapons.bottle_of_alcohol.description"),
+						createTitle("bottle_of_alcohol"),
+						createDescription("bottle_of_alcohol"),
 						null, AdvancementType.TASK, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.BOTTLE_OF_ALCOHOL.get()))
-				.save(consumer, "immersiveweapons:bottle_of_alcohol");
+				.save(consumer, prefixString("bottle_of_alcohol"));
 		Builder.advancement().parent(craftAlcohol)
 				.display(ItemRegistry.MOLOTOV_COCKTAIL.get(),
-						Component.translatable("advancements.immersiveweapons.molotov_cocktail.title"),
-						Component.translatable("advancements.immersiveweapons.molotov_cocktail.description"),
+						createTitle("molotov_cocktail"),
+						createDescription("molotov_cocktail"),
 						null, AdvancementType.GOAL, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.MOLOTOV_COCKTAIL.get()))
-				.save(consumer, "immersiveweapons:molotov_cocktail");
+				.save(consumer, prefixString("molotov_cocktail"));
 
 
 		AdvancementHolder craftBandage = Builder.advancement().parent(root)
 				.display(ItemRegistry.BANDAGE.get(),
-						Component.translatable("advancements.immersiveweapons.bandage.title"),
-						Component.translatable("advancements.immersiveweapons.bandage.description"),
+						createTitle("bandage"),
+						createDescription("bandage"),
 						null, AdvancementType.TASK, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.BANDAGE.get()))
-				.save(consumer, "immersiveweapons:bandage");
+				.save(consumer, prefixString("bandage"));
 		Builder.advancement().parent(craftBandage)
 				.display(ItemRegistry.FIRST_AID_KIT.get(),
-						Component.translatable("advancements.immersiveweapons.first_aid_kit.title"),
-						Component.translatable("advancements.immersiveweapons.first_aid_kit.description"),
+						createTitle("first_aid_kit"),
+						createDescription("first_aid_kit"),
 						null, AdvancementType.GOAL, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.FIRST_AID_KIT.get()))
-				.save(consumer, "immersiveweapons:first_aid_kit");
+				.save(consumer, prefixString("first_aid_kit"));
 
 
 		Builder.advancement().parent(root)
 				.display(ItemRegistry.IRON_GAUNTLET.get(),
-						Component.translatable("advancements.immersiveweapons.gauntlet.title"),
-						Component.translatable("advancements.immersiveweapons.gauntlet.description"),
+						createTitle("gauntlet"),
+						createDescription("gauntlet"),
 						null, AdvancementType.TASK, true, true, false)
 				.addCriterion("hold",
-						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.WOODEN_GAUNTLET.get()))
-				.addCriterion("hold1",
-						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.STONE_GAUNTLET.get()))
-				.addCriterion("hold2",
-						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.GOLDEN_GAUNTLET.get()))
-				.addCriterion("hold3",
-						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.COPPER_GAUNTLET.get()))
-				.addCriterion("hold4",
-						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.IRON_GAUNTLET.get()))
-				.addCriterion("hold5",
-						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.COBALT_GAUNTLET.get()))
-				.addCriterion("hold6",
-						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.DIAMOND_GAUNTLET.get()))
-				.addCriterion("hold7",
-						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.NETHERITE_GAUNTLET.get()))
-				.addCriterion("hold8",
-						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.MOLTEN_GAUNTLET.get()))
-				.addCriterion("hold9",
-						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.TESLA_GAUNTLET.get()))
-				.addCriterion("hold10",
-						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.VENTUS_GAUNTLET.get()))
-				.addCriterion("hold11",
-						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.STARSTORM_GAUNTLET.get()))
-				.addCriterion("hold12",
-						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.ASTRAL_GAUNTLET.get()))
+						InventoryChangeTrigger.TriggerInstance.hasItems(ItemPredicate.Builder.item().of(IWItemTagGroups.GAUNTLETS).build()))
 				.requirements(Strategy.OR)
-				.save(consumer, "immersiveweapons:gauntlet");
+				.save(consumer, prefixString("gauntlet"));
 
 		// General ingot advancements
 		AdvancementHolder ingots = Builder.advancement().parent(root)
 				.display(Items.IRON_INGOT,
-						Component.translatable("advancements.immersiveweapons.ingots.title"),
-						Component.translatable("advancements.immersiveweapons.ingots.description"),
+						createTitle("ingots"),
+						createDescription("ingots"),
 						null, AdvancementType.TASK, false, false, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(
 								ItemPredicate.Builder.item().of(Tags.Items.INGOTS).build())
 				)
-				.save(consumer, "immersiveweapons:ingots");
+				.save(consumer, prefixString("ingots"));
 
 		Builder.advancement().parent(root)
 				.display(Items.GOLD_NUGGET,
-						Component.translatable("advancements.immersiveweapons.nuggets.title"),
-						Component.translatable("advancements.immersiveweapons.nuggets.description"),
+						createTitle("nuggets"),
+						createDescription("nuggets"),
 						null, AdvancementType.TASK, false, false, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(
 								ItemPredicate.Builder.item().of(Tags.Items.NUGGETS).build())
 				)
-				.save(consumer, "immersiveweapons:nuggets");
+				.save(consumer, prefixString("nuggets"));
 
 		// Copper advancements
 		AdvancementHolder copperIngot = Builder.advancement().parent(ingots)
 				.display(Items.COPPER_INGOT,
-						Component.translatable("advancements.immersiveweapons.copper_ingot.title"),
-						Component.translatable("advancements.immersiveweapons.copper_ingot.description"),
+						createTitle("copper_ingot"),
+						createDescription("copper_ingot"),
 						null, AdvancementType.TASK, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(Items.COPPER_INGOT))
-				.save(consumer, "immersiveweapons:copper_ingot");
+				.save(consumer, prefixString("copper_ingot"));
 
 		Builder.advancement().parent(copperIngot)
 				.display(ItemRegistry.COPPER_SWORD.get(),
-						Component.translatable("advancements.immersiveweapons.copper_sword.title"),
-						Component.translatable("advancements.immersiveweapons.copper_sword.description"),
+						createTitle("copper_sword"),
+						createDescription("copper_sword"),
 						null, AdvancementType.TASK, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.COPPER_SWORD.get()))
-				.save(consumer, "immersiveweapons:copper_sword");
+				.save(consumer, prefixString("copper_sword"));
 
 		Builder.advancement().parent(copperIngot)
 				.display(ItemRegistry.COPPER_PICKAXE.get(),
-						Component.translatable("advancements.immersiveweapons.copper_pickaxe.title"),
-						Component.translatable("advancements.immersiveweapons.copper_pickaxe.description"),
+						createTitle("copper_pickaxe"),
+						createDescription("copper_pickaxe"),
 						null, AdvancementType.TASK, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.COPPER_PICKAXE.get()))
-				.save(consumer, "immersiveweapons:copper_pickaxe");
+				.save(consumer, prefixString("copper_pickaxe"));
 
 		Builder.advancement().parent(copperIngot)
 				.display(ItemRegistry.COPPER_AXE.get(),
-						Component.translatable("advancements.immersiveweapons.copper_axe.title"),
-						Component.translatable("advancements.immersiveweapons.copper_axe.description"),
+						createTitle("copper_axe"),
+						createDescription("copper_axe"),
 						null, AdvancementType.GOAL, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.COPPER_AXE.get()))
-				.save(consumer, "immersiveweapons:copper_axe");
+				.save(consumer, prefixString("copper_axe"));
 
 		Builder.advancement().parent(copperIngot)
 				.display(ItemRegistry.COPPER_SHOVEL.get(),
-						Component.translatable("advancements.immersiveweapons.copper_shovel.title"),
-						Component.translatable("advancements.immersiveweapons.copper_shovel.description"),
+						createTitle("copper_shovel"),
+						createDescription("copper_shovel"),
 						null, AdvancementType.GOAL, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.COPPER_SHOVEL.get()))
-				.save(consumer, "immersiveweapons:copper_shovel");
+				.save(consumer, prefixString("copper_shovel"));
 
 		Builder.advancement().parent(copperIngot)
 				.display(ItemRegistry.COPPER_HOE.get(),
-						Component.translatable("advancements.immersiveweapons.copper_hoe.title"),
-						Component.translatable("advancements.immersiveweapons.copper_hoe.description"),
+						createTitle("copper_hoe"),
+						createDescription("copper_hoe"),
 						null, AdvancementType.GOAL, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.COPPER_HOE.get()))
-				.save(consumer, "immersiveweapons:copper_hoe");
+				.save(consumer, prefixString("copper_hoe"));
 
 		Builder.advancement().parent(copperIngot)
 				.display(Items.COPPER_BLOCK,
-						Component.translatable("advancements.immersiveweapons.copper_tools.title"),
-						Component.translatable("advancements.immersiveweapons.copper_tools.description"),
+						createTitle("copper_tools"),
+						createDescription("copper_tools"),
 						null, AdvancementType.CHALLENGE, true, true, false)
 				.addCriterion("have_advancements",
 						PlayerTrigger.TriggerInstance.located(
 								EntityPredicate.Builder.entity().subPredicate(
 										PlayerPredicate.Builder.player().checkAdvancementDone(
-												new ResourceLocation(ImmersiveWeapons.MOD_ID, "copper_sword"), true
+												prefixRL("copper_sword"), true
 										).checkAdvancementDone(
-												new ResourceLocation(ImmersiveWeapons.MOD_ID, "copper_pickaxe"), true
+												prefixRL("copper_pickaxe"), true
 										).checkAdvancementDone(
-												new ResourceLocation(ImmersiveWeapons.MOD_ID, "copper_axe"), true
+												prefixRL("copper_axe"), true
 										).checkAdvancementDone(
-												new ResourceLocation(ImmersiveWeapons.MOD_ID, "copper_shovel"), true
+												prefixRL("copper_shovel"), true
 										).checkAdvancementDone(
-												new ResourceLocation(ImmersiveWeapons.MOD_ID, "copper_hoe"), true
+												prefixRL("copper_hoe"), true
 										).build()
 								)
 						)
 				)
 				.rewards(AdvancementRewards.Builder.experience(25))
-				.save(consumer, "immersiveweapons:copper_tools");
+				.save(consumer, prefixString("copper_tools"));
 
 		// Cobalt advancements
 		AdvancementHolder cobaltIngot = Builder.advancement().parent(ingots)
 				.display(ItemRegistry.COBALT_INGOT.get(),
-						Component.translatable("advancements.immersiveweapons.cobalt_ingot.title"),
-						Component.translatable("advancements.immersiveweapons.cobalt_ingot.description"),
+						createTitle("cobalt_ingot"),
+						createDescription("cobalt_ingot"),
 						null, AdvancementType.TASK, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.COBALT_INGOT.get()))
-				.save(consumer, "immersiveweapons:cobalt_ingot");
+				.save(consumer, prefixString("cobalt_ingot"));
 
 		Builder.advancement().parent(cobaltIngot)
 				.display(ItemRegistry.COBALT_SWORD.get(),
-						Component.translatable("advancements.immersiveweapons.cobalt_sword.title"),
-						Component.translatable("advancements.immersiveweapons.cobalt_sword.description"),
+						createTitle("cobalt_sword"),
+						createDescription("cobalt_sword"),
 						null, AdvancementType.TASK, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.COBALT_SWORD.get()))
-				.save(consumer, "immersiveweapons:cobalt_sword");
+				.save(consumer, prefixString("cobalt_sword"));
 
 		Builder.advancement().parent(cobaltIngot)
 				.display(ItemRegistry.COBALT_PICKAXE.get(),
-						Component.translatable("advancements.immersiveweapons.cobalt_pickaxe.title"),
-						Component.translatable("advancements.immersiveweapons.cobalt_pickaxe.description"),
+						createTitle("cobalt_pickaxe"),
+						createDescription("cobalt_pickaxe"),
 						null, AdvancementType.TASK, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.COBALT_PICKAXE.get()))
-				.save(consumer, "immersiveweapons:cobalt_pickaxe");
+				.save(consumer, prefixString("cobalt_pickaxe"));
 
 		Builder.advancement().parent(cobaltIngot)
 				.display(ItemRegistry.COBALT_AXE.get(),
-						Component.translatable("advancements.immersiveweapons.cobalt_axe.title"),
-						Component.translatable("advancements.immersiveweapons.cobalt_axe.description"),
+						createTitle("cobalt_axe"),
+						createDescription("cobalt_axe"),
 						null, AdvancementType.GOAL, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.COBALT_AXE.get()))
-				.save(consumer, "immersiveweapons:cobalt_axe");
+				.save(consumer, prefixString("cobalt_axe"));
 
 		Builder.advancement().parent(cobaltIngot)
 				.display(ItemRegistry.COBALT_SHOVEL.get(),
-						Component.translatable("advancements.immersiveweapons.cobalt_shovel.title"),
-						Component.translatable("advancements.immersiveweapons.cobalt_shovel.description"),
+						createTitle("cobalt_shovel"),
+						createDescription("cobalt_shovel"),
 						null, AdvancementType.GOAL, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.COBALT_SHOVEL.get()))
-				.save(consumer, "immersiveweapons:cobalt_shovel");
+				.save(consumer, prefixString("cobalt_shovel"));
 
 		Builder.advancement().parent(cobaltIngot)
 				.display(ItemRegistry.COBALT_HOE.get(),
-						Component.translatable("advancements.immersiveweapons.cobalt_hoe.title"),
-						Component.translatable("advancements.immersiveweapons.cobalt_hoe.description"),
+						createTitle("cobalt_hoe"),
+						createDescription("cobalt_hoe"),
 						null, AdvancementType.GOAL, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.COBALT_HOE.get()))
-				.save(consumer, "immersiveweapons:cobalt_hoe");
+				.save(consumer, prefixString("cobalt_hoe"));
 
 		Builder.advancement().parent(cobaltIngot)
 				.display(BlockItemRegistry.COBALT_BLOCK_ITEM.get(),
-						Component.translatable("advancements.immersiveweapons.cobalt_tools.title"),
-						Component.translatable("advancements.immersiveweapons.cobalt_tools.description"),
+						createTitle("cobalt_tools"),
+						createDescription("cobalt_tools"),
 						null, AdvancementType.CHALLENGE, true, true, false)
 				.addCriterion("have_advancements",
 						PlayerTrigger.TriggerInstance.located(
 								EntityPredicate.Builder.entity().subPredicate(
 										PlayerPredicate.Builder.player().checkAdvancementDone(
-												new ResourceLocation(ImmersiveWeapons.MOD_ID, "cobalt_sword"), true
+												prefixRL("cobalt_sword"), true
 										).checkAdvancementDone(
-												new ResourceLocation(ImmersiveWeapons.MOD_ID, "cobalt_pickaxe"), true
+												prefixRL("cobalt_pickaxe"), true
 										).checkAdvancementDone(
-												new ResourceLocation(ImmersiveWeapons.MOD_ID, "cobalt_axe"), true
+												prefixRL("cobalt_axe"), true
 										).checkAdvancementDone(
-												new ResourceLocation(ImmersiveWeapons.MOD_ID, "cobalt_shovel"), true
+												prefixRL("cobalt_shovel"), true
 										).checkAdvancementDone(
-												new ResourceLocation(ImmersiveWeapons.MOD_ID, "cobalt_hoe"), true
+												prefixRL("cobalt_hoe"), true
 										).build()
 								)
 						)
 				)
 				.rewards(AdvancementRewards.Builder.experience(35))
-				.save(consumer, "immersiveweapons:cobalt_tools");
+				.save(consumer, prefixString("cobalt_tools"));
 
 		// Other ingots, without families
 		Builder.advancement().parent(ingots)
 				.display(Items.GOLD_INGOT,
-						Component.translatable("advancements.immersiveweapons.gold_ingot.title"),
-						Component.translatable("advancements.immersiveweapons.gold_ingot.description"),
+						createTitle("gold_ingot"),
+						createDescription("gold_ingot"),
 						null, AdvancementType.TASK, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(Items.GOLD_INGOT))
-				.save(consumer, "immersiveweapons:gold_ingot");
+				.save(consumer, prefixString("gold_ingot"));
 
 		Builder.advancement().parent(ingots)
 				.display(Items.NETHERITE_INGOT,
-						Component.translatable("advancements.immersiveweapons.netherite_ingot.title"),
-						Component.translatable("advancements.immersiveweapons.netherite_ingot.description"),
+						createTitle("netherite_ingot"),
+						createDescription("netherite_ingot"),
 						null, AdvancementType.TASK, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(Items.NETHERITE_INGOT))
-				.save(consumer, "immersiveweapons:netherite_ingot");
+				.save(consumer, prefixString("netherite_ingot"));
 
 		// Entity discovery advancements
 		AdvancementHolder entityDiscovery = Builder.advancement().parent(root)
 				.display(Items.CREEPER_HEAD,
-						Component.translatable("advancements.immersiveweapons.entity_discovery.title"),
-						Component.translatable("advancements.immersiveweapons.entity_discovery.description"),
+						createTitle("entity_discovery"),
+						createDescription("entity_discovery"),
 						null, AdvancementType.GOAL, true, true, false)
 				.addCriterion("discover_minuteman", EntityDiscoveredTrigger.TriggerInstance.discoveredEntity(EntityRegistry.MINUTEMAN_ENTITY.get()))
 				.addCriterion("discover_field_medic", EntityDiscoveredTrigger.TriggerInstance.discoveredEntity(EntityRegistry.FIELD_MEDIC_ENTITY.get()))
@@ -1147,209 +1087,209 @@ public class AdvancementsGenerator extends AdvancementProvider {
 				.addCriterion("discover_skygazer", EntityDiscoveredTrigger.TriggerInstance.discoveredEntity(EntityRegistry.SKYGAZER_ENTITY.get()))
 				.addCriterion("discover_skeleton_merchant", EntityDiscoveredTrigger.TriggerInstance.discoveredEntity(EntityRegistry.SKELETON_MERCHANT_ENTITY.get()))
 				.rewards(AdvancementRewards.Builder.experience(150))
-				.save(consumer, "immersiveweapons:entity_discovery");
+				.save(consumer, prefixString("entity_discovery"));
 
 		Builder.advancement().parent(entityDiscovery)
 				.display(BlockItemRegistry.MINUTEMAN_HEAD_ITEM.get(),
-						Component.translatable("advancements.immersiveweapons.discover_minuteman.title"),
-						Component.translatable("advancements.immersiveweapons.discover_minuteman.description"),
+						createTitle("discover_minuteman"),
+						createDescription("discover_minuteman"),
 						null, AdvancementType.TASK, true, true, false)
 				.addCriterion("discover", EntityDiscoveredTrigger.TriggerInstance.discoveredEntity(EntityRegistry.MINUTEMAN_ENTITY.get()))
 				.rewards(AdvancementRewards.Builder.experience(20))
-				.save(consumer, "immersiveweapons:discover_minuteman");
+				.save(consumer, prefixString("discover_minuteman"));
 
 		Builder.advancement().parent(entityDiscovery)
 				.display(BlockItemRegistry.FIELD_MEDIC_HEAD_ITEM.get(),
-						Component.translatable("advancements.immersiveweapons.discover_field_medic.title"),
-						Component.translatable("advancements.immersiveweapons.discover_field_medic.description"),
+						createTitle("discover_field_medic"),
+						createDescription("discover_field_medic"),
 						null, AdvancementType.TASK, true, true, false)
 				.addCriterion("discover", EntityDiscoveredTrigger.TriggerInstance.discoveredEntity(EntityRegistry.FIELD_MEDIC_ENTITY.get()))
 				.rewards(AdvancementRewards.Builder.experience(20))
-				.save(consumer, "immersiveweapons:discover_field_medic");
+				.save(consumer, prefixString("discover_field_medic"));
 
 		Builder.advancement().parent(entityDiscovery)
 				.display(BlockItemRegistry.DYING_SOLDIER_HEAD_ITEM.get(),
-						Component.translatable("advancements.immersiveweapons.discover_dying_soldier.title"),
-						Component.translatable("advancements.immersiveweapons.discover_dying_soldier.description"),
+						createTitle("discover_dying_soldier"),
+						createDescription("discover_dying_soldier"),
 						null, AdvancementType.TASK, true, true, false)
 				.addCriterion("discover", EntityDiscoveredTrigger.TriggerInstance.discoveredEntity(EntityRegistry.DYING_SOLDIER_ENTITY.get()))
 				.rewards(AdvancementRewards.Builder.experience(20))
-				.save(consumer, "immersiveweapons:discover_dying_soldier");
+				.save(consumer, prefixString("discover_dying_soldier"));
 
 		AdvancementHolder theCommanderDiscovery = Builder.advancement().parent(entityDiscovery)
 				.display(BlockItemRegistry.THE_COMMANDER_HEAD_ITEM.get(),
-						Component.translatable("advancements.immersiveweapons.discover_the_commander.title"),
-						Component.translatable("advancements.immersiveweapons.discover_the_commander.description"),
+						createTitle("discover_the_commander"),
+						createDescription("discover_the_commander"),
 						null, AdvancementType.TASK, true, true, false)
 				.addCriterion("discover", EntityDiscoveredTrigger.TriggerInstance.discoveredEntity(EntityRegistry.THE_COMMANDER_ENTITY.get()))
 				.rewards(AdvancementRewards.Builder.experience(20))
-				.save(consumer, "immersiveweapons:discover_the_commander");
+				.save(consumer, prefixString("discover_the_commander"));
 
 		Builder.advancement().parent(entityDiscovery)
 				.display(BlockItemRegistry.WANDERING_WARRIOR_HEAD_ITEM.get(),
-						Component.translatable("advancements.immersiveweapons.discover_wandering_warrior.title"),
-						Component.translatable("advancements.immersiveweapons.discover_wandering_warrior.description"),
+						createTitle("discover_wandering_warrior"),
+						createDescription("discover_wandering_warrior"),
 						null, AdvancementType.TASK, true, true, false)
 				.addCriterion("discover", EntityDiscoveredTrigger.TriggerInstance.discoveredEntity(EntityRegistry.WANDERING_WARRIOR_ENTITY.get()))
 				.rewards(AdvancementRewards.Builder.experience(20))
-				.save(consumer, "immersiveweapons:discover_wandering_warrior");
+				.save(consumer, prefixString("discover_wandering_warrior"));
 
 		Builder.advancement().parent(entityDiscovery)
 				.display(BlockItemRegistry.HANS_HEAD_ITEM.get(),
-						Component.translatable("advancements.immersiveweapons.discover_hans.title"),
-						Component.translatable("advancements.immersiveweapons.discover_hans.description"),
+						createTitle("discover_hans"),
+						createDescription("discover_hans"),
 						null, AdvancementType.TASK, true, true, false)
 				.addCriterion("discover", EntityDiscoveredTrigger.TriggerInstance.discoveredEntity(EntityRegistry.HANS_ENTITY.get()))
 				.rewards(AdvancementRewards.Builder.experience(20))
-				.save(consumer, "immersiveweapons:discover_hans");
+				.save(consumer, prefixString("discover_hans"));
 
 		Builder.advancement().parent(entityDiscovery)
 				.display(BlockItemRegistry.HANS_HEAD_ITEM.get(),
-						Component.translatable("advancements.immersiveweapons.discover_super_hans.title"),
-						Component.translatable("advancements.immersiveweapons.discover_super_hans.description"),
+						createTitle("discover_super_hans"),
+						createDescription("discover_super_hans"),
 						null, AdvancementType.TASK, true, true, false)
 				.addCriterion("discover", EntityDiscoveredTrigger.TriggerInstance.discoveredEntity(EntityRegistry.SUPER_HANS_ENTITY.get()))
 				.rewards(AdvancementRewards.Builder.experience(20))
-				.save(consumer, "immersiveweapons:discover_super_hans");
+				.save(consumer, prefixString("discover_super_hans"));
 
 		Builder.advancement().parent(entityDiscovery)
 				.display(ItemRegistry.SULFUR.get(),
-						Component.translatable("advancements.immersiveweapons.discover_lava_revenant.title"),
-						Component.translatable("advancements.immersiveweapons.discover_lava_revenant.description"),
+						createTitle("discover_lava_revenant"),
+						createDescription("discover_lava_revenant"),
 						null, AdvancementType.TASK, true, true, false)
 				.addCriterion("discover", EntityDiscoveredTrigger.TriggerInstance.discoveredEntity(EntityRegistry.LAVA_REVENANT_ENTITY.get()))
 				.rewards(AdvancementRewards.Builder.experience(20))
-				.save(consumer, "immersiveweapons:discover_lava_revenant");
+				.save(consumer, prefixString("discover_lava_revenant"));
 
 		Builder.advancement().parent(entityDiscovery)
 				.display(Items.SPIDER_EYE,
-						Component.translatable("advancements.immersiveweapons.discover_rock_spider.title"),
-						Component.translatable("advancements.immersiveweapons.discover_rock_spider.description"),
+						createTitle("discover_rock_spider"),
+						createDescription("discover_rock_spider"),
 						null, AdvancementType.TASK, true, true, false)
 				.addCriterion("discover", EntityDiscoveredTrigger.TriggerInstance.discoveredEntity(EntityRegistry.ROCK_SPIDER_ENTITY.get()))
 				.rewards(AdvancementRewards.Builder.experience(20))
-				.save(consumer, "immersiveweapons:discover_rock_spider");
+				.save(consumer, prefixString("discover_rock_spider"));
 
 		Builder.advancement().parent(entityDiscovery)
 				.display(BlockRegistry.STARSTORM_CRYSTAL.get(),
-						Component.translatable("advancements.immersiveweapons.discover_starmite.title"),
-						Component.translatable("advancements.immersiveweapons.discover_starmite.description"),
+						createTitle("discover_starmite"),
+						createDescription("discover_starmite"),
 						null, AdvancementType.TASK, true, true, false)
 				.addCriterion("discover", EntityDiscoveredTrigger.TriggerInstance.discoveredEntity(EntityRegistry.STARMITE_ENTITY.get()))
 				.rewards(AdvancementRewards.Builder.experience(20))
-				.save(consumer, "immersiveweapons:discover_starmite");
+				.save(consumer, prefixString("discover_starmite"));
 
 		Builder.advancement().parent(entityDiscovery)
 				.display(BlockItemRegistry.STORM_CREEPER_HEAD_ITEM.get(),
-						Component.translatable("advancements.immersiveweapons.discover_storm_creeper.title"),
-						Component.translatable("advancements.immersiveweapons.discover_storm_creeper.description"),
+						createTitle("discover_storm_creeper"),
+						createDescription("discover_storm_creeper"),
 						null, AdvancementType.TASK, true, true, false)
 				.addCriterion("discover", EntityDiscoveredTrigger.TriggerInstance.discoveredEntity(EntityRegistry.STORM_CREEPER_ENTITY.get()))
 				.rewards(AdvancementRewards.Builder.experience(20))
-				.save(consumer, "immersiveweapons:discover_storm_creeper");
+				.save(consumer, prefixString("discover_storm_creeper"));
 
 		Builder.advancement().parent(entityDiscovery)
 				.display(ItemRegistry.BROKEN_LENS.get(),
-						Component.translatable("advancements.immersiveweapons.discover_evil_eye.title"),
-						Component.translatable("advancements.immersiveweapons.discover_evil_eye.description"),
+						createTitle("discover_evil_eye"),
+						createDescription("discover_evil_eye"),
 						null, AdvancementType.TASK, true, true, false)
 				.addCriterion("discover", EntityDiscoveredTrigger.TriggerInstance.discoveredEntity(EntityRegistry.EVIL_EYE_ENTITY.get()))
 				.rewards(AdvancementRewards.Builder.experience(20))
-				.save(consumer, "immersiveweapons:discover_evil_eye");
+				.save(consumer, prefixString("discover_evil_eye"));
 
 		Builder.advancement().parent(entityDiscovery)
 				.display(Items.BONE,
-						Component.translatable("advancements.immersiveweapons.discover_star_wolf.title"),
-						Component.translatable("advancements.immersiveweapons.discover_star_wolf.description"),
+						createTitle("discover_star_wolf"),
+						createDescription("discover_star_wolf"),
 						null, AdvancementType.TASK, true, true, false)
 				.addCriterion("discover", EntityDiscoveredTrigger.TriggerInstance.discoveredEntity(EntityRegistry.STAR_WOLF_ENTITY.get()))
 				.rewards(AdvancementRewards.Builder.experience(20))
-				.save(consumer, "immersiveweapons:discover_star_wolf");
+				.save(consumer, prefixString("discover_star_wolf"));
 
 		Builder.advancement().parent(entityDiscovery)
 				.display(Items.BOOK,
-						Component.translatable("advancements.immersiveweapons.discover_skygazer.title"),
-						Component.translatable("advancements.immersiveweapons.discover_skygazer.description"),
+						createTitle("discover_skygazer"),
+						createDescription("discover_skygazer"),
 						null, AdvancementType.TASK, true, true, false)
 				.addCriterion("discover", EntityDiscoveredTrigger.TriggerInstance.discoveredEntity(EntityRegistry.SKYGAZER_ENTITY.get()))
 				.rewards(AdvancementRewards.Builder.experience(20))
-				.save(consumer, "immersiveweapons:discover_skygazer");
+				.save(consumer, prefixString("discover_skygazer"));
 
 		Builder.advancement().parent(entityDiscovery)
 				.display(BlockItemRegistry.SKELETON_MERCHANT_HEAD_ITEM.get(),
-						Component.translatable("advancements.immersiveweapons.discover_skeleton_merchant.title"),
-						Component.translatable("advancements.immersiveweapons.discover_skeleton_merchant.description"),
+						createTitle("discover_skeleton_merchant"),
+						createDescription("discover_skeleton_merchant"),
 						null, AdvancementType.TASK, true, true, false)
 				.addCriterion("discover", EntityDiscoveredTrigger.TriggerInstance.discoveredEntity(EntityRegistry.SKELETON_MERCHANT_ENTITY.get()))
 				.rewards(AdvancementRewards.Builder.experience(20))
-				.save(consumer, "immersiveweapons:discover_skeleton_merchant");
+				.save(consumer, prefixString("discover_skeleton_merchant"));
 
 
 		AdvancementHolder celestialTowerDiscovery = Builder.advancement().parent(entityDiscovery)
 				.display(ItemRegistry.CELESTIAL_FRAGMENT.get(),
-						Component.translatable("advancements.immersiveweapons.discover_celestial_tower.title"),
-						Component.translatable("advancements.immersiveweapons.discover_celestial_tower.description"),
+						createTitle("discover_celestial_tower"),
+						createDescription("discover_celestial_tower"),
 						null, AdvancementType.TASK, true, true, false)
 				.addCriterion("discover", EntityDiscoveredTrigger.TriggerInstance.discoveredEntity(EntityRegistry.CELESTIAL_TOWER_ENTITY.get()))
 				.rewards(AdvancementRewards.Builder.experience(20))
-				.save(consumer, "immersiveweapons:discover_celestial_tower");
+				.save(consumer, prefixString("discover_celestial_tower"));
 
 		Builder.advancement().parent(celestialTowerDiscovery)
 				.display(BlockItemRegistry.CELESTIAL_LANTERN_ITEM.get(),
-						Component.translatable("advancements.immersiveweapons.tiltros.celestial_lantern.title"),
-						Component.translatable("advancements.immersiveweapons.tiltros.celestial_lantern.description"),
+						createTitle("celestial_lantern"),
+						createDescription("celestial_lantern"),
 						null, AdvancementType.GOAL, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(BlockItemRegistry.CELESTIAL_LANTERN_ITEM.get()))
 				.rewards(AdvancementRewards.Builder.experience(50))
-				.save(consumer, "immersiveweapons:celestial_lantern");
+				.save(consumer, prefixString("celestial_lantern"));
 
 		Builder.advancement().parent(celestialTowerDiscovery)
 				.display(ItemRegistry.METEOR_STAFF.get(),
-						Component.translatable("advancements.immersiveweapons.meteor_staff.title"),
-						Component.translatable("advancements.immersiveweapons.meteor_staff.description"),
+						createTitle("meteor_staff"),
+						createDescription("meteor_staff"),
 						null, AdvancementType.CHALLENGE, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.METEOR_STAFF.get()))
 				.rewards(AdvancementRewards.Builder.experience(75))
-				.save(consumer, "immersiveweapons:meteor_staff");
+				.save(consumer, prefixString("meteor_staff"));
 
 		Builder.advancement().parent(celestialTowerDiscovery)
 				.display(ItemRegistry.CURSED_SIGHT_STAFF.get(),
-						Component.translatable("advancements.immersiveweapons.cursed_sight_staff.title"),
-						Component.translatable("advancements.immersiveweapons.cursed_sight_staff.description"),
+						createTitle("cursed_sight_staff"),
+						createDescription("cursed_sight_staff"),
 						null, AdvancementType.CHALLENGE, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.CURSED_SIGHT_STAFF.get()))
 				.rewards(AdvancementRewards.Builder.experience(75))
-				.save(consumer, "immersiveweapons:cursed_sight_staff");
+				.save(consumer, prefixString("cursed_sight_staff"));
 
 		// Accessory advancements
 		Builder.advancement().parent(root)
 				.display(ItemRegistry.SATCHEL.get(),
-						Component.translatable("advancements.immersiveweapons.accessories.title"),
-						Component.translatable("advancements.immersiveweapons.accessories.description"),
+						createTitle("accessories"),
+						createDescription("accessories"),
 						null, AdvancementType.TASK, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(
 								ItemPredicate.Builder.item().of(IWItemTagGroups.ACCESSORIES).build()))
 				.rewards(AdvancementRewards.Builder.experience(15))
-				.save(consumer, "immersiveweapons:accessories");
+				.save(consumer, prefixString("accessories"));
 		Builder.advancement().parent(root)
 				.display(ItemRegistry.BLOODY_SACRIFICE.get(),
-						Component.translatable("advancements.immersiveweapons.bloody_sacrifice.title"),
-						Component.translatable("advancements.immersiveweapons.bloody_sacrifice.description"),
+						createTitle("bloody_sacrifice"),
+						createDescription("bloody_sacrifice"),
 						null, AdvancementType.CHALLENGE, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.BLOODY_SACRIFICE.get()))
 				.rewards(AdvancementRewards.Builder.experience(15))
-				.save(consumer, "immersiveweapons:bloody_sacrifice");
+				.save(consumer, prefixString("bloody_sacrifice"));
 
 		// Other advancements
 		Builder.advancement().parent(root)
 				.display(ItemRegistry.USED_SYRINGE.get(),
-						Component.translatable("advancements.immersiveweapons.used_syringe.title"),
-						Component.translatable("advancements.immersiveweapons.used_syringe.description"),
+						createTitle("used_syringe"),
+						createDescription("used_syringe"),
 						null, AdvancementType.CHALLENGE, true, true, true)
 				.addCriterion("hold",
 						KilledTrigger.TriggerInstance.entityKilledPlayer(EntityPredicate.Builder.entity(),
@@ -1359,46 +1299,46 @@ public class AdvancementsGenerator extends AdvancementProvider {
 														.mainhand(ItemPredicate.Builder.item()
 																.of(ItemRegistry.USED_SYRINGE.get()))
 														.build()))))
-				.save(consumer, "immersiveweapons:used_syringe");
+				.save(consumer, prefixString("used_syringe"));
 
 		Builder.advancement().parent(root)
 				.display(ItemRegistry.KILL_COUNTER.get(),
-						Component.translatable("advancements.immersiveweapons.kill_counter.title"),
-						Component.translatable("advancements.immersiveweapons.kill_counter.description"),
+						createTitle("kill_counter"),
+						createDescription("kill_counter"),
 						null, AdvancementType.CHALLENGE, true, true, true)
 				.addCriterion("", CriteriaTriggers.IMPOSSIBLE.createCriterion(new ImpossibleTrigger.TriggerInstance()))
-				.save(consumer, "immersiveweapons:kill_counter");
+				.save(consumer, prefixString("kill_counter"));
 
 		Builder.advancement().parent(root)
 				.display(ItemRegistry.STARSTORM_ARROW.get(),
-						Component.translatable("advancements.immersiveweapons.overkill.title"),
-						Component.translatable("advancements.immersiveweapons.overkill.description"),
+						createTitle("overkill"),
+						createDescription("overkill"),
 						null, AdvancementType.CHALLENGE, true, true, true)
 				.addCriterion("", CriteriaTriggers.IMPOSSIBLE.createCriterion(new ImpossibleTrigger.TriggerInstance()))
 				.rewards(AdvancementRewards.Builder.experience(100))
-				.save(consumer, "immersiveweapons:overkill");
+				.save(consumer, prefixString("overkill"));
 
 		Builder.advancement().parent(root)
 				.display(ItemRegistry.ASTRAL_MUSKET_BALL.get(),
-						Component.translatable("advancements.immersiveweapons.firearm_long_range.title"),
-						Component.translatable("advancements.immersiveweapons.firearm_long_range.description"),
+						createTitle("firearm_long_range"),
+						createDescription("firearm_long_range"),
 						null, AdvancementType.CHALLENGE, true, true, true)
 				.addCriterion("", CriteriaTriggers.IMPOSSIBLE.createCriterion(new ImpossibleTrigger.TriggerInstance()))
 				.rewards(AdvancementRewards.Builder.experience(100))
-				.save(consumer, "immersiveweapons:firearm_long_range");
+				.save(consumer, prefixString("firearm_long_range"));
 
 		Builder.advancement().parent(root)
 				.display(ItemRegistry.MUD_BALL.get(),
-						Component.translatable("advancements.immersiveweapons.mud_ball.title"),
-						Component.translatable("advancements.immersiveweapons.mud_ball.description"),
+						createTitle("mud_ball"),
+						createDescription("mud_ball"),
 						null, AdvancementType.GOAL, true, true, true)
 				.addCriterion("", CriteriaTriggers.IMPOSSIBLE.createCriterion(new ImpossibleTrigger.TriggerInstance()))
-				.save(consumer, "immersiveweapons:mud_ball");
+				.save(consumer, prefixString("mud_ball"));
 
 		Builder.advancement().parent(root)
 				.display(BlockRegistry.BEAR_TRAP.get(),
-						Component.translatable("advancements.immersiveweapons.traps.title"),
-						Component.translatable("advancements.immersiveweapons.traps.description"),
+						createTitle("traps"),
+						createDescription("traps"),
 						null, AdvancementType.GOAL, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(BlockRegistry.BEAR_TRAP.get()))
@@ -1417,199 +1357,215 @@ public class AdvancementsGenerator extends AdvancementProvider {
 				.addCriterion("hold7",
 						InventoryChangeTrigger.TriggerInstance.hasItems(BlockRegistry.WOODEN_SPIKES.get()))
 				.requirements(Strategy.OR)
-				.save(consumer, "immersiveweapons:traps");
+				.save(consumer, prefixString("traps"));
 
 		Builder.advancement().parent(root)
 				.display(Items.OAK_PLANKS,
-						Component.translatable("advancements.immersiveweapons.planks.title"),
-						Component.translatable("advancements.immersiveweapons.planks.description"),
+						createTitle("planks"),
+						createDescription("planks"),
 						null, AdvancementType.TASK, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemPredicate.Builder.item()
 								.of(ItemTags.PLANKS).build()))
-				.save(consumer, "immersiveweapons:planks");
+				.save(consumer, prefixString("planks"));
 
 		Builder.advancement().parent(root)
 				.display(BlockItemRegistry.MUD_ITEM.get(),
-						Component.translatable("advancements.immersiveweapons.mud.title"),
-						Component.translatable("advancements.immersiveweapons.mud.description"),
+						createTitle("mud"),
+						createDescription("mud"),
 						null, AdvancementType.GOAL, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemPredicate.Builder.item()
 								.of(BlockItemRegistry.MUD_ITEM.get()).build()))
-				.save(consumer, "immersiveweapons:mud");
+				.save(consumer, prefixString("mud"));
 
 		Builder.advancement().parent(root)
 				.display(Items.BAMBOO,
-						Component.translatable("advancements.immersiveweapons.bamboo.title"),
-						Component.translatable("advancements.immersiveweapons.bamboo.description"),
+						createTitle("bamboo"),
+						createDescription("bamboo"),
 						null, AdvancementType.TASK, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemPredicate.Builder.item()
 								.of(Items.BAMBOO).build()))
-				.save(consumer, "immersiveweapons:bamboo");
+				.save(consumer, prefixString("bamboo"));
 
 		Builder.advancement().parent(root)
 				.display(BlockItemRegistry.CLOUD_MARBLE_ITEM.get(),
-						Component.translatable("advancements.immersiveweapons.cloud_marble.title"),
-						Component.translatable("advancements.immersiveweapons.cloud_marble.description"),
+						createTitle("cloud_marble"),
+						createDescription("cloud_marble"),
 						null, AdvancementType.GOAL, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemPredicate.Builder.item()
 								.of(BlockItemRegistry.CLOUD_MARBLE_ITEM.get()).build()))
-				.save(consumer, "immersiveweapons:cloud_marble");
+				.save(consumer, prefixString("cloud_marble"));
 
 		Builder.advancement().parent(root)
 				.display(BlockItemRegistry.BIOHAZARD_BOX_ITEM.get(),
-						Component.translatable("advancements.immersiveweapons.biohazard_box.title"),
-						Component.translatable("advancements.immersiveweapons.biohazard_box.description"),
+						createTitle("biohazard_box"),
+						createDescription("biohazard_box"),
 						null, AdvancementType.GOAL, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemPredicate.Builder.item()
 								.of(BlockItemRegistry.BIOHAZARD_BOX_ITEM.get()).build()))
-				.save(consumer, "immersiveweapons:biohazard_box");
+				.save(consumer, prefixString("biohazard_box"));
 
 		Builder.advancement().parent(root)
 				.display(BlockItemRegistry.CLOUD_ITEM.get(),
-						Component.translatable("advancements.immersiveweapons.cloud.title"),
-						Component.translatable("advancements.immersiveweapons.cloud.description"),
+						createTitle("cloud"),
+						createDescription("cloud"),
 						null, AdvancementType.CHALLENGE, true, true, false)
 				.addCriterion("hold",
 						PlayerTrigger.TriggerInstance.walkOnBlockWithEquipment(BlockRegistry.CLOUD.get(),
 								Items.AIR))
-				.save(consumer, "immersiveweapons:cloud");
+				.save(consumer, prefixString("cloud"));
 
 		// Warden Advancements
 		AdvancementHolder wardenHeart = Builder.advancement().parent(root)
 				.display(ItemRegistry.WARDEN_HEART.get(),
-						Component.translatable("advancements.immersiveweapons.warden_heart.title"),
-						Component.translatable("advancements.immersiveweapons.warden_heart.description"),
+						createTitle("warden_heart"),
+						createDescription("warden_heart"),
 						null, AdvancementType.GOAL, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.WARDEN_HEART.get()))
 				.rewards(AdvancementRewards.Builder.experience(50))
-				.save(consumer, "immersiveweapons:warden_heart");
+				.save(consumer, prefixString("warden_heart"));
 
 		Builder.advancement().parent(wardenHeart)
 				.display(ItemRegistry.SCULK_STAFF.get(),
-						Component.translatable("advancements.immersiveweapons.sculk_staff.title"),
-						Component.translatable("advancements.immersiveweapons.sculk_staff.description"),
+						createTitle("sculk_staff"),
+						createDescription("sculk_staff"),
 						null, AdvancementType.CHALLENGE, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.SCULK_STAFF.get()))
 				.rewards(AdvancementRewards.Builder.experience(75))
-				.save(consumer, "immersiveweapons:sculk_staff");
+				.save(consumer, prefixString("sculk_staff"));
 
 		Builder.advancement().parent(wardenHeart)
 				.display(ItemRegistry.REINFORCED_DEPTH_CHARM.get(),
-						Component.translatable("advancements.immersiveweapons.reinforced_depth_charm.title"),
-						Component.translatable("advancements.immersiveweapons.reinforced_depth_charm.description"),
+						createTitle("reinforced_depth_charm"),
+						createDescription("reinforced_depth_charm"),
 						null, AdvancementType.CHALLENGE, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.REINFORCED_DEPTH_CHARM.get()))
 				.rewards(AdvancementRewards.Builder.experience(75))
-				.save(consumer, "immersiveweapons:reinforced_depth_charm");
+				.save(consumer, prefixString("reinforced_depth_charm"));
 
 		// Super Hans advancements
 		AdvancementHolder hansiumIngot = Builder.advancement().parent(root)
 				.display(ItemRegistry.HANSIUM_INGOT.get(),
-						Component.translatable("advancements.immersiveweapons.hansium_ingot.title"),
-						Component.translatable("advancements.immersiveweapons.hansium_ingot.description"),
+						createTitle("hansium_ingot"),
+						createDescription("hansium_ingot"),
 						null, AdvancementType.TASK, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.HANSIUM_INGOT.get()))
 				.rewards(AdvancementRewards.Builder.experience(100))
-				.save(consumer, "immersiveweapons:hansium_ingot");
+				.save(consumer, prefixString("hansium_ingot"));
 
 		Builder.advancement().parent(hansiumIngot)
 				.display(ItemRegistry.THE_SWORD.get(),
-						Component.translatable("advancements.immersiveweapons.the_sword.title"),
-						Component.translatable("advancements.immersiveweapons.the_sword.description"),
+						createTitle("the_sword"),
+						createDescription("the_sword"),
 						null, AdvancementType.CHALLENGE, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.THE_SWORD.get()))
 				.rewards(AdvancementRewards.Builder.experience(250))
-				.save(consumer, "immersiveweapons:the_sword");
+				.save(consumer, prefixString("the_sword"));
 
 		// Battlefield advancements
 		AdvancementHolder discoverBattlefield = Builder.advancement().parent(root)
 				.display(Blocks.SKELETON_SKULL,
-						Component.translatable("advancements.immersiveweapons.battlefield.title"),
-						Component.translatable("advancements.immersiveweapons.battlefield.description"),
+						createTitle("battlefield"),
+						createDescription("battlefield"),
 						null, AdvancementType.TASK, true, true, false)
 				.addCriterion("visit",
 						PlayerTrigger.TriggerInstance.located(
 								LocationPredicate.Builder.inBiome(IWBiomes.BATTLEFIELD)))
 				.rewards(AdvancementRewards.Builder.experience(50))
-				.save(consumer, "immersiveweapons:battlefield");
+				.save(consumer, prefixString("battlefield"));
 
 		Builder.advancement().parent(discoverBattlefield)
 				.display(BlockItemRegistry.MINUTEMAN_STATUE_ITEM.get(),
-						Component.translatable("advancements.immersiveweapons.minuteman_statue.title"),
-						Component.translatable("advancements.immersiveweapons.minuteman_statue.description"),
+						createTitle("minuteman_statue"),
+						createDescription("minuteman_statue"),
 						null, AdvancementType.GOAL, true, true, false)
 				.addCriterion("hold", InventoryChangeTrigger.TriggerInstance.hasItems(
 						BlockItemRegistry.MINUTEMAN_STATUE_ITEM.get()))
-				.save(consumer, "immersiveweapons:minuteman_statue");
+				.save(consumer, prefixString("minuteman_statue"));
 
 		Builder.advancement().parent(discoverBattlefield)
 				.display(BlockItemRegistry.MEDIC_STATUE_ITEM.get(),
-						Component.translatable("advancements.immersiveweapons.medic_statue.title"),
-						Component.translatable("advancements.immersiveweapons.medic_statue.description"),
+						createTitle("medic_statue"),
+						createDescription("medic_statue"),
 						null, AdvancementType.GOAL, true, true, false)
 				.addCriterion("hold", InventoryChangeTrigger.TriggerInstance.hasItems(
 						BlockItemRegistry.MEDIC_STATUE_ITEM.get()))
-				.save(consumer, "immersiveweapons:medic_statue");
+				.save(consumer, prefixString("medic_statue"));
 
 		AdvancementHolder commanderPedestal = Builder.advancement().parent(theCommanderDiscovery)
 				.display(BlockItemRegistry.COMMANDER_PEDESTAL.get(),
-						Component.translatable("advancements.immersiveweapons.commander_pedestal.title"),
-						Component.translatable("advancements.immersiveweapons.commander_pedestal.description"),
+						createTitle("commander_pedestal"),
+						createDescription("commander_pedestal"),
 						null, AdvancementType.GOAL, true, true, false)
 				.addCriterion("hold", InventoryChangeTrigger.TriggerInstance.hasItems(
 						BlockItemRegistry.COMMANDER_PEDESTAL.get()))
 				.rewards(AdvancementRewards.Builder.experience(50))
-				.save(consumer, "immersiveweapons:commander_pedestal");
+				.save(consumer, prefixString("commander_pedestal"));
 
 		Builder.advancement().parent(commanderPedestal)
 				.display(ItemRegistry.PEDESTAL_AUGMENT_SPEED.get(),
-						Component.translatable("advancements.immersiveweapons.pedestal_augment.title"),
-						Component.translatable("advancements.immersiveweapons.pedestal_augment.description"),
+						createTitle("pedestal_augment"),
+						createDescription("pedestal_augment"),
 						null, AdvancementType.CHALLENGE, true, true, false)
 				.addCriterion("hold", InventoryChangeTrigger.TriggerInstance.hasItems(
 						ItemPredicate.Builder.item().of(IWItemTagGroups.COMMANDER_PEDESTAL_AUGMENTS).build()))
 				.rewards(AdvancementRewards.Builder.experience(75))
-				.save(consumer, "immersiveweapons:pedestal_augment");
+				.save(consumer, prefixString("pedestal_augment"));
 
 		// Tiltros advancements
 		AdvancementHolder tiltrosPortal = Builder.advancement().parent(root)
 				.display(BlockRegistry.TILTROS_PORTAL_FRAME.get(),
-						Component.translatable("advancements.immersiveweapons.tiltros.tiltros_portal.title"),
-						Component.translatable("advancements.immersiveweapons.tiltros.tiltros_portal.description"),
+						createTitle("tiltros_portal"),
+						createDescription("tiltros_portal"),
 						null, AdvancementType.TASK, true, true, true)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(BlockRegistry.TILTROS_PORTAL_FRAME.get()))
 				.requirements(Strategy.AND)
-				.save(consumer, "immersiveweapons:warrior_statue");
+				.save(consumer, prefixString("tiltros_portal"));
 
 		AdvancementHolder azulKeystone = Builder.advancement().parent(tiltrosPortal)
 				.display(ItemRegistry.AZUL_KEYSTONE_FRAGMENT.get(),
-						Component.translatable("advancements.immersiveweapons.tiltros.azul_keystone.title"),
-						Component.translatable("advancements.immersiveweapons.tiltros.azul_keystone.description"),
+						createTitle("azul_keystone"),
+						createDescription("azul_keystone"),
 						null, AdvancementType.TASK, true, true, true)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.AZUL_KEYSTONE.get()))
-				.save(consumer, "immersiveweapons:azul_keystone");
+				.save(consumer, prefixString("azul_keystone"));
 
 		Builder.advancement().parent(azulKeystone)
 				.display(BlockItemRegistry.MOONGLOW_ITEM.get(),
-						Component.translatable("advancements.immersiveweapons.tiltros.biome.title"),
-						Component.translatable("advancements.immersiveweapons.tiltros.biome.description"),
+						createTitle("enter_tiltros"),
+						createDescription("enter_tiltros"),
 						null, AdvancementType.GOAL, true, true, false)
 				.addCriterion("visit",
 						PlayerTrigger.TriggerInstance.located(
 								LocationPredicate.Builder.inDimension(DimensionGenerator.TILTROS_LEVEL)))
 				.rewards(AdvancementRewards.Builder.experience(150))
-				.save(consumer, "immersiveweapons:tiltros");
+				.save(consumer, prefixString("tiltros"));
+	}
+
+	private static ResourceLocation prefixRL(String string) {
+		return new ResourceLocation(ImmersiveWeapons.MOD_ID, string);
+	}
+
+	private static String prefixString(String string) {
+		return ImmersiveWeapons.MOD_ID + ":" + string;
+	}
+
+	private static MutableComponent createTitle(String key) {
+		return Component.translatable("advancements.immersiveweapons." + key + ".title");
+	}
+
+	private static MutableComponent createDescription(String key) {
+		return Component.translatable("advancements.immersiveweapons." + key + ".description");
 	}
 }

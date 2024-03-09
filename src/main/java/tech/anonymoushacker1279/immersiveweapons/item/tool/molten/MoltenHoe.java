@@ -12,7 +12,7 @@ public class MoltenHoe extends HoeItem implements HitEffectUtils {
 
 	@Override
 	public boolean hurtEnemy(ItemStack itemStack, LivingEntity target, LivingEntity attacker) {
-		addMoltenEffects(target);
+		addMoltenEffects(target, attacker);
 		return super.hurtEnemy(itemStack, target, attacker);
 	}
 }

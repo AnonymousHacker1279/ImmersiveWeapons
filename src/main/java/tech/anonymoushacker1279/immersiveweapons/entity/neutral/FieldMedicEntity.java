@@ -44,15 +44,13 @@ public class FieldMedicEntity extends SoldierEntity {
 
 	@Override
 	protected void registerGoals() {
-		goalSelector.addGoal(1, new FloatGoal(this));
+		super.registerGoals();
+
 		goalSelector.addGoal(2, new FieldMedicHealEntitiesGoal(this));
-		goalSelector.addGoal(4, new WaterAvoidingRandomStrollGoal(this, 1.0D));
 		goalSelector.addGoal(4, new MoveBackToVillageGoal(this, 0.6D, false));
 		goalSelector.addGoal(4, new MoveThroughVillageGoal(this, 1.0D, false, 6, () -> true));
 		goalSelector.addGoal(7, new LookAtPlayerGoal(this, Player.class, 8.0F));
 		goalSelector.addGoal(7, new RandomLookAroundGoal(this));
-		goalSelector.addGoal(4, new OpenDoorGoal(this, true));
-
 		targetSelector.addGoal(1, new HurtByTargetWithPredicateGoal(this, (initialPredicate) ->
 				!(initialPredicate instanceof Player player) || !AccessoryItem.isAccessoryActive(player, getPeaceAccessory()), MinutemanEntity.class, IronGolem.class)
 				.setAlertOthers());

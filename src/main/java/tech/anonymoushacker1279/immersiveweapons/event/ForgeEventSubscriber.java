@@ -12,7 +12,6 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.stats.Stats;
-import net.minecraft.world.damagesource.DamageType;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.*;
@@ -80,7 +79,6 @@ public class ForgeEventSubscriber {
 			"Jonny's Curse speed modifier", -0.25d, Operation.MULTIPLY_BASE);
 
 	private static final ResourceKey<Biome> DEADMANS_DESERT = ResourceKey.create(Registries.BIOME, new ResourceLocation(ImmersiveWeapons.MOD_ID, "deadmans_desert"));
-	private static final ResourceKey<DamageType> METEOR = ResourceKey.create(Registries.DAMAGE_TYPE, new ResourceLocation(ImmersiveWeapons.MOD_ID, "meteor"));
 
 	@SubscribeEvent
 	public static void playerTickEvent(PlayerTickEvent event) {
@@ -198,7 +196,7 @@ public class ForgeEventSubscriber {
 			source = sourceEntity;
 		}
 
-		if (event.getSource().is(METEOR) && event.getSource().getDirectEntity() instanceof MeteorEntity meteor && !meteor.getPersistentData().isEmpty()) {
+		if (event.getSource().is(IWDamageSources.METEOR_KEY) && event.getSource().getDirectEntity() instanceof MeteorEntity meteor && !meteor.getPersistentData().isEmpty()) {
 			// Check for a "target" tag, and check if it matches the damaged entity's UUID
 			if (!meteor.getPersistentData().getUUID("target").equals(damagedEntity.getUUID())) {
 				event.setCanceled(true);
@@ -209,7 +207,7 @@ public class ForgeEventSubscriber {
 		EnvironmentEffects.celestialProtectionEffect(event, damagedEntity);
 		EnvironmentEffects.damageVulnerabilityEffect(event, damagedEntity);
 		EnvironmentEffects.starstormArmorSetBonus(event, source);
-		EnvironmentEffects.moltenArmorSetBonus(event, source);
+		EnvironmentEffects.moltenArmorSetBonus(event, source, damagedEntity);
 
 		// Handle accessory effects
 		if (damagedEntity instanceof Player player) {

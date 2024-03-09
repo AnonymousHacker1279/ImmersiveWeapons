@@ -300,7 +300,11 @@ public class CustomArrowEntity extends Arrow implements HitEffectUtils {
 		if (result.getEntity() instanceof LivingEntity livingEntity) {
 			// Apply any hit effects from the bullet
 			switch (hitEffect) {
-				case MOLTEN -> addMoltenEffects(livingEntity);
+				case MOLTEN -> {
+					if (getOwner() instanceof LivingEntity owner) {
+						addMoltenEffects(livingEntity, owner);
+					}
+				}
 				case TESLA -> addTeslaEffects(livingEntity);
 				case VENTUS -> addVentusEffects(livingEntity);
 			}

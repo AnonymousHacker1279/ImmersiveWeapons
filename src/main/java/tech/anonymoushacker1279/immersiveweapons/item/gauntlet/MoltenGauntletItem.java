@@ -15,7 +15,7 @@ public class MoltenGauntletItem extends GauntletItem implements HitEffectUtils {
 	@Override
 	public boolean hurtEnemy(ItemStack stack, LivingEntity target, LivingEntity attacker) {
 		if (super.hurtEnemy(stack, target, attacker)) {
-			addMoltenEffects(target);
+			addMoltenEffects(target, attacker);
 			return true;
 		}
 		return false;

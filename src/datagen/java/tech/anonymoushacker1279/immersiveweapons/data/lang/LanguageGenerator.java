@@ -1,26 +1,38 @@
 package tech.anonymoushacker1279.immersiveweapons.data.lang;
 
 import net.minecraft.data.PackOutput;
+import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.alchemy.Potion;
+import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.level.block.Block;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.config.ClientConfig;
 import tech.anonymoushacker1279.immersiveweapons.config.CommonConfig;
-import tech.anonymoushacker1279.immersiveweapons.data.lists.BlockLists;
-import tech.anonymoushacker1279.immersiveweapons.data.lists.ItemLists;
 import tech.anonymoushacker1279.immersiveweapons.init.*;
 import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
+import tech.anonymoushacker1279.immersiveweapons.util.markers.DatagenExclusionMarker;
+import tech.anonymoushacker1279.immersiveweapons.util.markers.DatagenExclusionMarker.Type;
+import tech.anonymoushacker1279.immersiveweapons.util.markers.LanguageEntryOverride;
 import tech.anonymoushacker1729.cobaltconfig.config.ConfigEntry;
 
 import java.lang.reflect.Field;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Stream;
 
+/**
+ * Some language categories are automatically generated based on the contents of registries. Exclusions can be made using
+ * the {@link DatagenExclusionMarker} annotation, and language entries can be overridden using the {@link LanguageEntryOverride}
+ * annotation.
+ */
 public class LanguageGenerator extends IWLanguageProvider {
+
+	private static final Map<LanguageCategory, List<DeferredHolder<?, ?>>> LANGUAGE_EXCLUSIONS = new HashMap<>(50);
+	private static final Map<LanguageCategory, Map<DeferredHolder<?, ?>, String>> LANGUAGE_OVERRIDES = new HashMap<>(50);
+	private static final List<Class<?>> REGISTRY_CLASSES = List.of(BlockRegistry.class, ItemRegistry.class, EffectRegistry.class, EnchantmentRegistry.class, EntityRegistry.class, PotionRegistry.class);
 
 	public LanguageGenerator(PackOutput output) {
 		super(output, ImmersiveWeapons.MOD_ID);
@@ -28,6 +40,8 @@ public class LanguageGenerator extends IWLanguageProvider {
 
 	@Override
 	protected void addTranslations() {
+		init();
+
 		addBlocks();
 		addItems();
 		addEntityTypes();
@@ -47,198 +61,222 @@ public class LanguageGenerator extends IWLanguageProvider {
 		addMisc();
 	}
 
+	/**
+	 * Gather all language exclusions and overrides from the registry classes.
+	 */
+	private static void init() {
+		for (Class<?> registryClass : REGISTRY_CLASSES) {
+			for (Field field : registryClass.getDeclaredFields()) {
+				if (field.isAnnotationPresent(LanguageEntryOverride.class)) {
+					LanguageEntryOverride marker = field.getAnnotation(LanguageEntryOverride.class);
+
+					try {
+						if (field.get(null) instanceof DeferredHolder<?, ?> holder) {
+							LANGUAGE_EXCLUSIONS.computeIfAbsent(getCategoryForClass(registryClass), k -> new ArrayList<>(50)).add(holder);
+							LANGUAGE_OVERRIDES.computeIfAbsent(getCategoryForClass(registryClass), k -> new HashMap<>(50)).put(holder, marker.value());
+						}
+					} catch (IllegalAccessException e) {
+						throw new RuntimeException(e);
+					}
+				} else if (field.isAnnotationPresent(DatagenExclusionMarker.class)) {
+					DatagenExclusionMarker marker = field.getAnnotation(DatagenExclusionMarker.class);
+
+					if (Arrays.asList(marker.value()).contains(Type.LANGUAGE_GENERATOR)) {
+						try {
+							if (field.get(null) instanceof DeferredHolder<?, ?> holder) {
+								LANGUAGE_EXCLUSIONS.computeIfAbsent(getCategoryForClass(registryClass), k -> new ArrayList<>(50)).add(holder);
+							}
+						} catch (IllegalAccessException e) {
+							throw new RuntimeException(e);
+						}
+					}
+				}
+			}
+		}
+	}
+
+	private static LanguageCategory getCategoryForClass(Class<?> clazz) {
+		for (LanguageCategory category : LanguageCategory.values()) {
+			if (category.getRegistryClass().equals(clazz)) {
+				return category;
+			}
+		}
+
+		throw new IllegalArgumentException("No category found for class " + clazz);
+	}
+
+	private enum LanguageCategory {
+		BLOCKS(BlockRegistry.class),
+		ITEMS(ItemRegistry.class),
+		EFFECTS(EffectRegistry.class),
+		ENCHANTMENTS(EnchantmentRegistry.class),
+		ENTITIES(EntityRegistry.class),
+		POTIONS(PotionRegistry.class);
+
+		private final Class<?> registryClass;
+
+		LanguageCategory(Class<?> registryClass) {
+			this.registryClass = registryClass;
+		}
+
+		public Class<?> getRegistryClass() {
+			return registryClass;
+		}
+	}
+
 	private void addBlocks() {
-		// Not all blocks are automatically added below; make a list of exceptions here
-		List<Block> excludedBlocks = new ArrayList<>(25);
-		// These are not added because they're variants of another block which already exists
-		excludedBlocks.add(BlockRegistry.BURNED_OAK_WALL_SIGN.get());
-		excludedBlocks.add(BlockRegistry.BURNED_OAK_WALL_HANGING_SIGN.get());
-		excludedBlocks.add(BlockRegistry.STARDUST_WALL_SIGN.get());
-		excludedBlocks.add(BlockRegistry.STARDUST_WALL_HANGING_SIGN.get());
-		excludedBlocks.addAll(BlockLists.wallHeadBlocks);
-
-		excludedBlocks.add(BlockRegistry.IRON_PANEL_BARS.get());
-		excludedBlocks.add(BlockRegistry.COBALT_BLOCK.get());
-		excludedBlocks.add(BlockRegistry.RAW_COBALT_BLOCK.get());
-		excludedBlocks.add(BlockRegistry.RAW_SULFUR_BLOCK.get());
-
 		// Filter the excluded blocks from the registry
-		Stream<DeferredHolder<Block, ? extends Block>> blocks = BlockRegistry.BLOCKS.getEntries().stream()
-				.filter(block -> !excludedBlocks.contains(block.get()));
+		Stream<DeferredHolder<Block, ? extends Block>> blocks = BlockRegistry.BLOCKS
+				.getEntries()
+				.stream()
+				.filter(block -> !LANGUAGE_EXCLUSIONS.getOrDefault(LanguageCategory.BLOCKS, Collections.emptyList())
+						.contains(block));
 
 		// Get a list of all blocks, and convert their registry names to proper names
 		// Turn underscores into spaces, and capitalize the first letter of each word
 
 		blocks.forEach(block -> {
-			// Get the block name for the block
-			String blockName = block.get().toString();
-			// Remove the namespace from the block name
-			blockName = blockName.substring(blockName.indexOf(":") + 1, blockName.length() - 1);
+			String blockName = block.getKey().location().getPath();
 
-			// Convert underscores to spaces
 			blockName = blockName.replace("_", " ");
-			// Capitalize the first letter of all words
 			blockName = capitalizeWords(blockName);
 
-			// Add the block to the language file
 			addBlock(block, blockName);
 		});
 
-		// Manually add the blocks that were excluded above
-		addBlock(BlockRegistry.IRON_PANEL_BARS, "Iron Panel (Bars)");
-		addBlock(BlockRegistry.COBALT_BLOCK, "Block of Cobalt");
-		addBlock(BlockRegistry.RAW_COBALT_BLOCK, "Block of Raw Cobalt");
-		addBlock(BlockRegistry.RAW_SULFUR_BLOCK, "Block of Raw Sulfur");
+		// Add entries with overrides
+		for (DeferredHolder<?, ?> holder : LANGUAGE_OVERRIDES.getOrDefault(LanguageCategory.BLOCKS, Collections.emptyMap()).keySet()) {
+			add((Block) holder.get(), LANGUAGE_OVERRIDES.get(LanguageCategory.BLOCKS).get(holder));
+		}
 	}
 
 	private void addItems() {
-		// Not all items are automatically added below; make a list of exceptions here
-		List<Item> excludedItems = new ArrayList<>(25);
-
-		excludedItems.addAll(ItemLists.SMOKE_GRENADE_ITEMS);
-		excludedItems.addAll(ItemLists.SMOKE_GRENADE_ARROW_ITEMS);
-
-		excludedItems.add(ItemRegistry.MRE.get());
-		excludedItems.add(ItemRegistry.HANS_SPAWN_EGG.get());
-		excludedItems.add(ItemRegistry.SUPER_HANS_SPAWN_EGG.get());
-		excludedItems.add(ItemRegistry.MUSKET_SCOPE.get());
-		excludedItems.add(ItemRegistry.EXPLOSIVE_CHOCOLATE_BAR.get());
-		excludedItems.add(ItemRegistry.BERSERKERS_AMULET.get());
-		excludedItems.add(ItemRegistry.HANS_BLESSING.get());
-		excludedItems.add(ItemRegistry.MELEE_MASTERS_MOLTEN_GLOVE.get());
-		excludedItems.add(ItemRegistry.JONNYS_CURSE.get());
-		excludedItems.add(ItemRegistry.PADDED_LEATHER_HELMET.get());
-		excludedItems.add(ItemRegistry.PADDED_LEATHER_CHESTPLATE.get());
-		excludedItems.add(ItemRegistry.PADDED_LEATHER_LEGGINGS.get());
-		excludedItems.add(ItemRegistry.DRAGONS_BREATH_BOW.get());
-		excludedItems.add(ItemRegistry.PEDESTAL_AUGMENT_SPEED.get());
-		excludedItems.add(ItemRegistry.PEDESTAL_AUGMENT_ARMOR.get());
-		excludedItems.add(ItemRegistry.PEDESTAL_AUGMENT_ENCHANTMENT.get());
-		excludedItems.add(ItemRegistry.PEDESTAL_AUGMENT_CAPACITY.get());
-
-		// Filter the excluded items from the registry
-		Stream<DeferredHolder<Item, ? extends Item>> items = ItemRegistry.ITEMS.getEntries().stream()
-				.filter(item -> !excludedItems.contains(item.get()));
-		// This will contain all BlockItems too, so filter those out
-		items = items.filter(item -> !(item.get() instanceof BlockItem));
+		Stream<DeferredHolder<Item, ? extends Item>> items = ItemRegistry.ITEMS
+				.getEntries()
+				.stream()
+				.filter(item -> !(item.get() instanceof BlockItem))
+				.filter(item -> !LANGUAGE_EXCLUSIONS.getOrDefault(LanguageCategory.ITEMS, Collections.emptyList())
+						.contains(item));
 
 		// Get a list of all items, and convert their registry names to proper names
 		// Turn underscores into spaces, and capitalize the first letter of each word
 		items.forEach(item -> {
-			// Get the item name for the item
-			String itemName = item.get().toString();
+			String itemName = item.getKey().location().getPath();
 
-			// Remove the namespace and prefix
-			itemName = itemName.substring(itemName.indexOf(":") + 1);
-			// Convert underscores to spaces
 			itemName = itemName.replace("_", " ");
-			// Capitalize the first letter of all words
 			itemName = capitalizeWords(itemName);
 
-			// Add the item to the language file
 			addItem(item, itemName);
 		});
 
-		// Manually add the items that were excluded above
-		addItem(ItemRegistry.SMOKE_GRENADE, "Smoke Grenade");
-		addItem(ItemRegistry.SMOKE_GRENADE_BLUE, "Blue Smoke Grenade");
-		addItem(ItemRegistry.SMOKE_GRENADE_RED, "Red Smoke Grenade");
-		addItem(ItemRegistry.SMOKE_GRENADE_GREEN, "Green Smoke Grenade");
-		addItem(ItemRegistry.SMOKE_GRENADE_PURPLE, "Purple Smoke Grenade");
-		addItem(ItemRegistry.SMOKE_GRENADE_YELLOW, "Yellow Smoke Grenade");
-		addItem(ItemRegistry.SMOKE_GRENADE_ARROW, "Smoke Grenade Arrow");
-		addItem(ItemRegistry.SMOKE_GRENADE_ARROW_BLUE, "Blue Smoke Grenade Arrow");
-		addItem(ItemRegistry.SMOKE_GRENADE_ARROW_RED, "Red Smoke Grenade Arrow");
-		addItem(ItemRegistry.SMOKE_GRENADE_ARROW_GREEN, "Green Smoke Grenade Arrow");
-		addItem(ItemRegistry.SMOKE_GRENADE_ARROW_PURPLE, "Purple Smoke Grenade Arrow");
-		addItem(ItemRegistry.SMOKE_GRENADE_ARROW_YELLOW, "Yellow Smoke Grenade Arrow");
-		addItem(ItemRegistry.MRE, "Meal Ready-to-Eat (MRE)");
-		addItem(ItemRegistry.HANS_SPAWN_EGG, "Hans the Almighty Spawn Egg");
-		addItem(ItemRegistry.SUPER_HANS_SPAWN_EGG, "Super Hans the Almighty Spawn Egg");
-		addItem(ItemRegistry.MUSKET_SCOPE, "Musket (Scope)");
-		addItem(ItemRegistry.EXPLOSIVE_CHOCOLATE_BAR, "Chocolate Bar");
-		addItem(ItemRegistry.BERSERKERS_AMULET, "Berserker's Amulet");
-		addItem(ItemRegistry.HANS_BLESSING, "Hans' Blessing");
-		addItem(ItemRegistry.MELEE_MASTERS_MOLTEN_GLOVE, "Melee Master's Molten Glove");
-		addItem(ItemRegistry.JONNYS_CURSE, "Jonny's Curse");
-		addItem(ItemRegistry.PADDED_LEATHER_HELMET, "Padded Leather Cap");
-		addItem(ItemRegistry.PADDED_LEATHER_CHESTPLATE, "Padded Leather Tunic");
-		addItem(ItemRegistry.PADDED_LEATHER_LEGGINGS, "Padded Leather Pants");
-		addItem(ItemRegistry.DRAGONS_BREATH_BOW, "Dragon's Breath Bow");
-		addItem(ItemRegistry.PEDESTAL_AUGMENT_SPEED, "Pedestal Augment: Speed");
-		addItem(ItemRegistry.PEDESTAL_AUGMENT_ARMOR, "Pedestal Augment: Armor");
-		addItem(ItemRegistry.PEDESTAL_AUGMENT_ENCHANTMENT, "Pedestal Augment: Enchantment");
-		addItem(ItemRegistry.PEDESTAL_AUGMENT_CAPACITY, "Pedestal Augment: Capacity");
+		// Add entries with overrides
+		for (DeferredHolder<?, ?> holder : LANGUAGE_OVERRIDES.getOrDefault(LanguageCategory.ITEMS, Collections.emptyMap()).keySet()) {
+			add((Item) holder.get(), LANGUAGE_OVERRIDES.get(LanguageCategory.ITEMS).get(holder));
+		}
 	}
 
 	private void addEntityTypes() {
-		// Not all entities are automatically added below; make a list of exceptions here
-		List<EntityType<?>> excludedEntities = new ArrayList<>(25);
-
-		excludedEntities.add(EntityRegistry.HANS_ENTITY.get());
-		excludedEntities.add(EntityRegistry.BURNED_OAK_CHEST_BOAT_ENTITY.get());
-		excludedEntities.add(EntityRegistry.STARDUST_CHEST_BOAT_ENTITY.get());
-
 		// Filter the excluded entities from the registry
-		Stream<DeferredHolder<EntityType<?>, ? extends EntityType<?>>> entities = EntityRegistry.ENTITY_TYPES.getEntries().stream()
-				.filter(entity -> !excludedEntities.contains(entity.get()));
+		Stream<DeferredHolder<EntityType<?>, ? extends EntityType<?>>> entities = EntityRegistry.ENTITY_TYPES
+				.getEntries()
+				.stream()
+				.filter(entity -> !LANGUAGE_EXCLUSIONS.getOrDefault(LanguageCategory.ENTITIES, Collections.emptyList())
+						.contains(entity));
 
 		// Get a list of all entities, and convert their registry names to proper names
 		// Turn underscores into spaces, and capitalize the first letter of each word
 		entities.forEach(entity -> {
-			// Get the entity name for the entity
-			String entityName = entity.getKey().location().toString();
-			// Remove the namespace from the entity name
-			entityName = entityName.substring(entityName.indexOf(":") + 1);
+			String entityName = entity.getKey().location().getPath();
 
-			// Convert underscores to spaces
 			entityName = entityName.replace("_", " ");
-			// Capitalize the first letter of all words
 			entityName = capitalizeWords(entityName);
 
-			// Add the entity to the language file
 			addEntityType(entity, entityName);
 		});
 
-		// Manually add the entities that were excluded above
-		addEntityType(EntityRegistry.HANS_ENTITY, "Hans The Almighty");
-		addEntityType(EntityRegistry.BURNED_OAK_CHEST_BOAT_ENTITY, "Burned Oak Boat with Chest");
-		addEntityType(EntityRegistry.STARDUST_CHEST_BOAT_ENTITY, "Stardust Boat with Chest");
+		// Add entries with overrides
+		for (DeferredHolder<?, ?> holder : LANGUAGE_OVERRIDES.getOrDefault(LanguageCategory.ENTITIES, Collections.emptyMap()).keySet()) {
+			add((EntityType<?>) holder.get(), LANGUAGE_OVERRIDES.get(LanguageCategory.ENTITIES).get(holder));
+		}
 	}
 
 	private void addPotions() {
-		// Celestial Brew
-		addPotion("celestial_brew", "potion", "Celestial Brew");
-		addPotion("celestial_brew", "splash_potion", "Splash Celestial Brew");
-		addPotion("celestial_brew", "lingering_potion", "Lingering Celestial Brew");
-		addPotion("celestial_brew", "tipped_arrow", "Arrow of Celestial Brew");
-		addPotion("long_celestial_brew", "potion", "Celestial Brew");
-		addPotion("long_celestial_brew", "splash_potion", "Splash Celestial Brew");
-		addPotion("long_celestial_brew", "lingering_potion", "Lingering Celestial Brew");
-		addPotion("long_celestial_brew", "tipped_arrow", "Arrow of Celestial Brew");
+		String[] types = {"potion", "splash_potion", "lingering_potion", "tipped_arrow"};
 
-		// Potion of Death
-		addPotion("death", "potion", "Potion of Death");
-		addPotion("death", "splash_potion", "Splash Potion of Death");
-		addPotion("death", "lingering_potion", "Lingering Potion of Death");
-		addPotion("death", "tipped_arrow", "Arrow of Death");
-		addPotion("long_death", "potion", "Potion of Death");
-		addPotion("long_death", "splash_potion", "Splash Potion of Death");
-		addPotion("long_death", "lingering_potion", "Lingering Potion of Death");
-		addPotion("long_death", "tipped_arrow", "Arrow of Death");
-		addPotion("strong_death", "potion", "Potion of Death");
-		addPotion("strong_death", "splash_potion", "Splash Potion of Death");
-		addPotion("strong_death", "lingering_potion", "Lingering Potion of Death");
-		addPotion("strong_death", "tipped_arrow", "Arrow of Death");
+		Stream<DeferredHolder<Potion, ? extends Potion>> potions = PotionRegistry.POTIONS
+				.getEntries()
+				.stream()
+				.filter(potion -> !LANGUAGE_EXCLUSIONS.getOrDefault(LanguageCategory.POTIONS, Collections.emptyList())
+						.contains(potion));
+
+		// Get a list of all items, and convert their registry names to proper names
+		// Turn underscores into spaces, and capitalize the first letter of each word
+		potions.forEach(potion -> {
+			for (String type : types) {
+				String effectName = potion.getKey().location().getPath();
+
+				effectName = effectName.replace("long_", "");
+				effectName = effectName.replace("strong_", "");
+				effectName = effectName.replace("_", " ");
+				effectName = capitalizeWords(effectName);
+
+				if (!type.equals("tipped_arrow")) {
+					effectName = "Potion of " + effectName;
+				}
+
+				// Check if an override exists for this potion, if not, append "Potion of " to it
+				if (LANGUAGE_OVERRIDES.getOrDefault(LanguageCategory.POTIONS, Collections.emptyMap()).containsKey(potion)) {
+					effectName = LANGUAGE_OVERRIDES.get(LanguageCategory.POTIONS).get(potion);
+				}
+
+				switch (type) {
+					case "splash_potion" -> effectName = "Splash " + effectName;
+					case "lingering_potion" -> effectName = "Lingering " + effectName;
+					case "tipped_arrow" -> effectName = "Arrow of " + effectName;
+				}
+
+				addPotion(potion.getKey().location().getPath(), type, effectName);
+			}
+		});
+
+		// Add entries with overrides
+		for (DeferredHolder<?, ?> holder : LANGUAGE_OVERRIDES.getOrDefault(LanguageCategory.POTIONS, Collections.emptyMap()).keySet()) {
+			for (String type : types) {
+				String effectName = LANGUAGE_OVERRIDES.get(LanguageCategory.POTIONS).get(holder);
+
+				switch (type) {
+					case "splash_potion" -> effectName = "Splash " + effectName;
+					case "lingering_potion" -> effectName = "Lingering " + effectName;
+					case "tipped_arrow" -> effectName = "Arrow of " + effectName;
+				}
+
+				addPotion(holder.getKey().location().getPath(), type, effectName);
+			}
+		}
 	}
 
 	private void addEffects() {
-		addEffect(EffectRegistry.MORPHINE_EFFECT, "Morphine");
-		addEffect(EffectRegistry.BLEEDING_EFFECT, "Bleeding");
-		addEffect(EffectRegistry.ALCOHOL_EFFECT, "Alcohol");
-		addEffect(EffectRegistry.CELESTIAL_PROTECTION_EFFECT, "Celestial Protection");
-		addEffect(EffectRegistry.DAMAGE_VULNERABILITY_EFFECT, "Damage Vulnerability");
-		addEffect(EffectRegistry.FLASHBANG_EFFECT, "Flashbanged");
+		Stream<DeferredHolder<MobEffect, ? extends MobEffect>> effects = EffectRegistry.EFFECTS
+				.getEntries()
+				.stream()
+				.filter(effect -> !LANGUAGE_EXCLUSIONS.getOrDefault(LanguageCategory.EFFECTS, Collections.emptyList())
+						.contains(effect));
+
+		// Get a list of all items, and convert their registry names to proper names
+		// Turn underscores into spaces, and capitalize the first letter of each word
+		effects.forEach(effect -> {
+			String effectName = effect.getKey().location().getPath();
+
+			effectName = effectName.replace("_", " ");
+			effectName = capitalizeWords(effectName);
+
+			addEffect(effect, effectName);
+		});
+
+		// Add entries with overrides
+		for (DeferredHolder<?, ?> holder : LANGUAGE_OVERRIDES.getOrDefault(LanguageCategory.EFFECTS, Collections.emptyMap()).keySet()) {
+			add((MobEffect) holder.get(), LANGUAGE_OVERRIDES.get(LanguageCategory.EFFECTS).get(holder));
+		}
 	}
 
 	private void addContainers() {
@@ -678,6 +716,8 @@ public class LanguageGenerator extends IWLanguageProvider {
 		addDeathMessage("explosive_cannonball.item", "%1$s was hit by an explosive cannonball fired by %2$s using %3$s");
 		addDeathMessage("explosive_arrow", "%1$s was blown up by explosive arrow fired by %2$s");
 		addDeathMessage("explosive_arrow.item", "%1$s was blown up by an explosive arrow fired by %2$s using %3$s");
+		addDeathMessage("hellfire", "%1$s melted in hellfire");
+		addDeathMessage("hellfire.player", "%1$s was doomed to melt in hellfire by %2$s");
 	}
 
 	private void addBiomes() {
@@ -919,14 +959,14 @@ public class LanguageGenerator extends IWLanguageProvider {
 		addAdvancement("used_syringe.description", "Die to a used syringe");
 
 		// Tiltros
-		addAdvancement("tiltros.tiltros_portal.title", "A Portal to a Forgotten Land");
-		addAdvancement("tiltros.tiltros_portal.description", "Craft a Tiltros Portal Frame");
-		addAdvancement("tiltros.azul_keystone.title", "Dimensional Keystone");
-		addAdvancement("tiltros.azul_keystone.description", "Craft an Azul Keystone from fragments scattered across the world");
-		addAdvancement("tiltros.celestial_lantern.title", "Magical Lantern");
-		addAdvancement("tiltros.celestial_lantern.description", "Obtain a celestial lantern");
-		addAdvancement("tiltros.biome.title", "Welcome to Tiltros");
-		addAdvancement("tiltros.biome.description", "A ravaged landscape lost in space");
+		addAdvancement("tiltros_portal.title", "A Portal to a Forgotten Land");
+		addAdvancement("tiltros_portal.description", "Craft a Tiltros Portal Frame");
+		addAdvancement("azul_keystone.title", "Dimensional Keystone");
+		addAdvancement("azul_keystone.description", "Craft an Azul Keystone from fragments scattered across the world");
+		addAdvancement("celestial_lantern.title", "Magical Lantern");
+		addAdvancement("celestial_lantern.description", "Obtain a celestial lantern");
+		addAdvancement("enter_tiltros.title", "Welcome to Tiltros");
+		addAdvancement("enter_tiltros.description", "A ravaged landscape lost in space");
 
 		// Other
 		addAdvancement("battlefield.title", "A Destroyed Landscape");
@@ -1030,22 +1070,31 @@ public class LanguageGenerator extends IWLanguageProvider {
 	}
 
 	private void addEnchantments() {
-		addEnchantment(EnchantmentRegistry.FIREPOWER, "Firepower");
-		addEnchantment(EnchantmentRegistry.IMPACT, "Impact");
-		addEnchantment(EnchantmentRegistry.ENDLESS_MUSKET_POUCH, "Endless Musket Pouch");
-		addEnchantment(EnchantmentRegistry.SCORCH_SHOT, "Scorch Shot");
-		addEnchantment(EnchantmentRegistry.RAPID_FIRE, "Rapid Fire");
-		addEnchantment(EnchantmentRegistry.VELOCITY, "Velocity");
-		addEnchantment(EnchantmentRegistry.EXTENDED_REACH, "Extended Reach");
-		addEnchantment(EnchantmentRegistry.SHARPENED_HEAD, "Sharpened Head");
-		addEnchantment(EnchantmentRegistry.CRIMSON_CLAW, "Crimson Claw");
-		addEnchantment(EnchantmentRegistry.EXCESSIVE_FORCE, "Excessive Force");
-		addEnchantment(EnchantmentRegistry.REGENERATIVE_ASSAULT, "Regenerative Assault");
-		addEnchantment(EnchantmentRegistry.HEAVY_COMET, "Heavy Comet");
-		addEnchantment(EnchantmentRegistry.BURNING_HEAT, "Burning Heat");
-		addEnchantment(EnchantmentRegistry.CELESTIAL_FURY, "Celestial Fury");
-		addEnchantment(EnchantmentRegistry.NIGHTMARISH_STARE, "Nightmarish Stare");
-		addEnchantment(EnchantmentRegistry.MALEVOLENT_GAZE, "Malevolent Gaze");
+		Stream<DeferredHolder<Enchantment, ? extends Enchantment>> enchantments = EnchantmentRegistry.ENCHANTMENTS
+				.getEntries()
+				.stream()
+				.filter(item -> !LANGUAGE_EXCLUSIONS.getOrDefault(LanguageCategory.ENCHANTMENTS, Collections.emptyList())
+						.contains(item));
+
+		// Get a list of all items, and convert their registry names to proper names
+		// Turn underscores into spaces, and capitalize the first letter of each word
+		enchantments.forEach(enchantment -> {
+			// Get the enchantment name
+			String enchantmentName = enchantment.getKey().location().getPath();
+
+			// Convert underscores to spaces
+			enchantmentName = enchantmentName.replace("_", " ");
+			// Capitalize the first letter of all words
+			enchantmentName = capitalizeWords(enchantmentName);
+
+			// Add the item to the language file
+			addEnchantment(enchantment, enchantmentName);
+		});
+
+		// Add entries with overrides
+		for (DeferredHolder<?, ?> holder : LANGUAGE_OVERRIDES.getOrDefault(LanguageCategory.ENCHANTMENTS, Collections.emptyMap()).keySet()) {
+			add((Enchantment) holder.get(), LANGUAGE_OVERRIDES.get(LanguageCategory.ENTITIES).get(holder));
+		}
 	}
 
 	private void addNetworkingFailures() {

@@ -20,14 +20,14 @@
   },
   "display": {
     "description": {
-      "translate": "advancements.immersiveweapons.tiltros.biome.description"
+      "translate": "advancements.immersiveweapons.enter_tiltros.description"
     },
     "frame": "goal",
     "icon": {
       "item": "immersiveweapons:moonglow"
     },
     "title": {
-      "translate": "advancements.immersiveweapons.tiltros.biome.title"
+      "translate": "advancements.immersiveweapons.enter_tiltros.title"
     }
   },
   "requirements": [
