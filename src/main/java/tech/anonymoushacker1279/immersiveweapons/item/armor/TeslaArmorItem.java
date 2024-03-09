@@ -6,54 +6,32 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.StringRepresentable;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
-import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.*;
+import net.minecraft.world.item.ArmorMaterial;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.neoforged.neoforge.network.PacketDistributor;
-import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.client.IWKeyBinds;
 import tech.anonymoushacker1279.immersiveweapons.config.ClientConfig;
-import tech.anonymoushacker1279.immersiveweapons.init.ItemRegistry;
 import tech.anonymoushacker1279.immersiveweapons.init.SoundEventRegistry;
 import tech.anonymoushacker1279.immersiveweapons.network.payload.TeslaArmorPayload;
 
 import java.util.List;
 
-public class TeslaArmorItem extends ArmorItem {
+public class TeslaArmorItem extends BasicArmorItem {
 
-	private final boolean isLeggings;
-	private int countdown = 0;
+	private int noiseCooldown = 0;
 
-	public TeslaArmorItem(ArmorMaterial material, ArmorItem.Type armorType, Properties properties, boolean isLeggings) {
+	public TeslaArmorItem(ArmorMaterial material, Type armorType, Properties properties) {
 		super(material, armorType, properties);
-		this.isLeggings = isLeggings;
-	}
-
-	/**
-	 * Get the armor texture.
-	 *
-	 * @param stack  the <code>ItemStack</code> instance
-	 * @param entity the <code>Entity</code> wearing the armor
-	 * @param slot   the <code>EquipmentSlot</code>
-	 * @param type   type ID
-	 * @return String
-	 */
-	@Override
-	public String getArmorTexture(ItemStack stack, Entity entity, EquipmentSlot slot, String type) {
-		return (!isLeggings
-				? ImmersiveWeapons.MOD_ID + ":textures/armor/tesla_layer_1.png"
-				: ImmersiveWeapons.MOD_ID + ":textures/armor/tesla_layer_2.png");
 	}
 
 	@Override
 	public void inventoryTick(ItemStack stack, Level level, Entity entity, int slotId, boolean isSelected) {
 		if (entity instanceof Player player) {
-			if (player.getItemBySlot(EquipmentSlot.HEAD).getItem() == ItemRegistry.TESLA_HELMET.get() &&
-					player.getItemBySlot(EquipmentSlot.CHEST).getItem() == ItemRegistry.TESLA_CHESTPLATE.get() &&
-					player.getItemBySlot(EquipmentSlot.LEGS).getItem() == ItemRegistry.TESLA_LEGGINGS.get() &&
-					player.getItemBySlot(EquipmentSlot.FEET).getItem() == ItemRegistry.TESLA_BOOTS.get()) {
-
+			if (ArmorUtils.isWearingTeslaArmor(player)) {
 				String data = player.getPersistentData().getString("TeslaArmorEffectState");
 				EffectState state = data.isEmpty() ? EffectState.DISABLED : EffectState.getFromString(data);
 
@@ -82,7 +60,7 @@ public class TeslaArmorItem extends ArmorItem {
 									0.9f,
 									1.0f);
 
-							countdown = 0;
+							noiseCooldown = 0;
 						}
 
 						if (state == EffectState.DISABLED) {
@@ -143,7 +121,7 @@ public class TeslaArmorItem extends ArmorItem {
 	 * @param player the <code>Player</code> instance
 	 */
 	private void effectNoise(Level level, Player player) {
-		if (countdown == 0 && ClientConfig.teslaArmorEffectSound) {
+		if (noiseCooldown == 0 && ClientConfig.teslaArmorEffectSound) {
 			level.playSound(player,
 					player.blockPosition(),
 					SoundEventRegistry.TESLA_ARMOR_EFFECT.get(),
@@ -151,9 +129,9 @@ public class TeslaArmorItem extends ArmorItem {
 					0.65f,
 					1);
 
-			countdown = 120;
-		} else if (countdown > 0) {
-			countdown--;
+			noiseCooldown = 120;
+		} else if (noiseCooldown > 0) {
+			noiseCooldown--;
 		}
 	}
 

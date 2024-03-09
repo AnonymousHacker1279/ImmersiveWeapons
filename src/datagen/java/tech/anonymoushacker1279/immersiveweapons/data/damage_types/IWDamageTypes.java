@@ -128,4 +128,11 @@ public class IWDamageTypes {
 			DamageScaling.ALWAYS,
 			0.1f
 	);
+
+	public static final ResourceKey<DamageType> HELLFIRE_KEY = ResourceKey.create(Registries.DAMAGE_TYPE, new ResourceLocation(ImmersiveWeapons.MOD_ID, "hellfire"));
+	public static final DamageType HELLFIRE = new DamageType(
+			"immersiveweapons.hellfire",
+			DamageScaling.ALWAYS,
+			0.1f
+	);
 }

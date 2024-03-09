@@ -8,53 +8,29 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.Projectile;
-import net.minecraft.world.item.*;
+import net.minecraft.world.item.ArmorMaterial;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.neoforged.neoforge.network.PacketDistributor;
-import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.client.IWKeyBinds;
-import tech.anonymoushacker1279.immersiveweapons.init.ItemRegistry;
 import tech.anonymoushacker1279.immersiveweapons.network.payload.VentusArmorPayload;
 import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
 
-public class VentusArmorItem extends ArmorItem {
+public class VentusArmorItem extends BasicArmorItem {
 
-	private final boolean isLeggings;
 	private int windShieldCooldown = 0;
 	private int windShieldDuration = 0;
 
-	public VentusArmorItem(ArmorMaterial material, ArmorItem.Type armorType, Properties properties, boolean isLeggings) {
+	public VentusArmorItem(ArmorMaterial material, Type armorType, Properties properties) {
 		super(material, armorType, properties);
-		this.isLeggings = isLeggings;
-	}
-
-	/**
-	 * Get the armor texture.
-	 *
-	 * @param stack  the <code>ItemStack</code> instance
-	 * @param entity the <code>Entity</code> wearing the armor
-	 * @param slot   the <code>EquipmentSlot</code>
-	 * @param type   type ID
-	 * @return String
-	 */
-	@Override
-	public String getArmorTexture(ItemStack stack, Entity entity, EquipmentSlot slot, String type) {
-		return (!isLeggings
-				? ImmersiveWeapons.MOD_ID + ":textures/armor/ventus_layer_1.png"
-				: ImmersiveWeapons.MOD_ID + ":textures/armor/ventus_layer_2.png");
 	}
 
 	@Override
 	public void inventoryTick(ItemStack stack, Level level, Entity entity, int slotId, boolean isSelected) {
 		if (entity instanceof Player player) {
-			if (player.getItemBySlot(EquipmentSlot.HEAD).getItem() == ItemRegistry.VENTUS_HELMET.get() &&
-					player.getItemBySlot(EquipmentSlot.CHEST).getItem() == ItemRegistry.VENTUS_CHESTPLATE.get() &&
-					player.getItemBySlot(EquipmentSlot.LEGS).getItem() == ItemRegistry.VENTUS_LEGGINGS.get() &&
-					player.getItemBySlot(EquipmentSlot.FEET).getItem() == ItemRegistry.VENTUS_BOOTS.get()) {
-
+			if (ArmorUtils.isWearingVentusArmor(player)) {
 				boolean effectEnabled = player.getPersistentData().getBoolean("VentusArmorEffectEnabled");
 
 				if (level.isClientSide) {

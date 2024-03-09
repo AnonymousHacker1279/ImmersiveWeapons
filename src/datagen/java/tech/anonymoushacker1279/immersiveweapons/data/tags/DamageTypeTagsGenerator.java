@@ -25,7 +25,8 @@ public class DamageTypeTagsGenerator extends TagsProvider<DamageType> {
 				.add(IWDamageTypes.BLEEDING_KEY)
 				.add(IWDamageTypes.DEATHWEED_KEY)
 				.add(IWDamageTypes.DEADMANS_DESERT_ATMOSPHERE_KEY)
-				.add(IWDamageTypes.PUNJI_STICKS_FALL_KEY);
+				.add(IWDamageTypes.PUNJI_STICKS_FALL_KEY)
+				.add(IWDamageTypes.HELLFIRE_KEY);
 
 		tag(DamageTypeTags.IS_EXPLOSION)
 				.add(IWDamageTypes.EXPLOSIVE_CHOCOLATE_BAR_KEY)
@@ -47,7 +48,10 @@ public class DamageTypeTagsGenerator extends TagsProvider<DamageType> {
 
 		tag(DamageTypeTags.IS_FALL)
 				.add(IWDamageTypes.PUNJI_STICKS_FALL_KEY);
-		
+
+		tag(DamageTypeTags.IS_FIRE)
+				.add(IWDamageTypes.HELLFIRE_KEY);
+
 		addForgeTags();
 	}
 

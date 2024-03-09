@@ -207,7 +207,7 @@ public class ForgeEventSubscriber {
 		EnvironmentEffects.celestialProtectionEffect(event, damagedEntity);
 		EnvironmentEffects.damageVulnerabilityEffect(event, damagedEntity);
 		EnvironmentEffects.starstormArmorSetBonus(event, source);
-		EnvironmentEffects.moltenArmorSetBonus(event, source);
+		EnvironmentEffects.moltenArmorSetBonus(event, source, damagedEntity);
 
 		// Handle accessory effects
 		if (damagedEntity instanceof Player player) {

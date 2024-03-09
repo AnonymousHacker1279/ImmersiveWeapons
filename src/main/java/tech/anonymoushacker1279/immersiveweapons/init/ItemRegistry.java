@@ -373,45 +373,45 @@ public class ItemRegistry {
 	public static final Supplier<Item> PEDESTAL_AUGMENT_CAPACITY = ITEMS.register("pedestal_augment_capacity", () -> new Item(new Properties().stacksTo(4)));
 
 	// Armor
-	public static final Supplier<MoltenArmorItem> MOLTEN_HELMET = ITEMS.register("molten_helmet", () -> new MoltenArmorItem(CustomArmorMaterials.MOLTEN, ArmorItem.Type.HELMET, new Item.Properties().fireResistant(), false));
-	public static final Supplier<MoltenArmorItem> MOLTEN_CHESTPLATE = ITEMS.register("molten_chestplate", () -> new MoltenArmorItem(CustomArmorMaterials.MOLTEN, ArmorItem.Type.CHESTPLATE, new Item.Properties().fireResistant(), false));
-	public static final Supplier<MoltenArmorItem> MOLTEN_LEGGINGS = ITEMS.register("molten_leggings", () -> new MoltenArmorItem(CustomArmorMaterials.MOLTEN, ArmorItem.Type.LEGGINGS, new Item.Properties().fireResistant(), true));
-	public static final Supplier<MoltenArmorItem> MOLTEN_BOOTS = ITEMS.register("molten_boots", () -> new MoltenArmorItem(CustomArmorMaterials.MOLTEN, ArmorItem.Type.BOOTS, new Item.Properties().fireResistant(), false));
-	public static final Supplier<CopperArmorItem> COPPER_HELMET = ITEMS.register("copper_helmet", () -> new CopperArmorItem(CustomArmorMaterials.COPPER, ArmorItem.Type.HELMET, new Item.Properties(), false));
-	public static final Supplier<CopperArmorItem> COPPER_CHESTPLATE = ITEMS.register("copper_chestplate", () -> new CopperArmorItem(CustomArmorMaterials.COPPER, ArmorItem.Type.CHESTPLATE, new Item.Properties(), false));
-	public static final Supplier<CopperArmorItem> COPPER_LEGGINGS = ITEMS.register("copper_leggings", () -> new CopperArmorItem(CustomArmorMaterials.COPPER, ArmorItem.Type.LEGGINGS, new Item.Properties(), true));
-	public static final Supplier<CopperArmorItem> COPPER_BOOTS = ITEMS.register("copper_boots", () -> new CopperArmorItem(CustomArmorMaterials.COPPER, ArmorItem.Type.BOOTS, new Item.Properties(), false));
-	public static final Supplier<TeslaArmorItem> TESLA_HELMET = ITEMS.register("tesla_helmet", () -> new TeslaArmorItem(CustomArmorMaterials.TESLA, ArmorItem.Type.HELMET, new Item.Properties(), false));
-	public static final Supplier<TeslaArmorItem> TESLA_CHESTPLATE = ITEMS.register("tesla_chestplate", () -> new TeslaArmorItem(CustomArmorMaterials.TESLA, ArmorItem.Type.CHESTPLATE, new Item.Properties(), false));
-	public static final Supplier<TeslaArmorItem> TESLA_LEGGINGS = ITEMS.register("tesla_leggings", () -> new TeslaArmorItem(CustomArmorMaterials.TESLA, ArmorItem.Type.LEGGINGS, new Item.Properties(), true));
-	public static final Supplier<TeslaArmorItem> TESLA_BOOTS = ITEMS.register("tesla_boots", () -> new TeslaArmorItem(CustomArmorMaterials.TESLA, ArmorItem.Type.BOOTS, new Item.Properties(), false));
-	public static final Supplier<CobaltArmorItem> COBALT_HELMET = ITEMS.register("cobalt_helmet", () -> new CobaltArmorItem(CustomArmorMaterials.COBALT, ArmorItem.Type.HELMET, new Item.Properties(), false));
-	public static final Supplier<CobaltArmorItem> COBALT_CHESTPLATE = ITEMS.register("cobalt_chestplate", () -> new CobaltArmorItem(CustomArmorMaterials.COBALT, ArmorItem.Type.CHESTPLATE, new Item.Properties(), false));
-	public static final Supplier<CobaltArmorItem> COBALT_LEGGINGS = ITEMS.register("cobalt_leggings", () -> new CobaltArmorItem(CustomArmorMaterials.COBALT, ArmorItem.Type.LEGGINGS, new Item.Properties(), true));
-	public static final Supplier<CobaltArmorItem> COBALT_BOOTS = ITEMS.register("cobalt_boots", () -> new CobaltArmorItem(CustomArmorMaterials.COBALT, ArmorItem.Type.BOOTS, new Item.Properties(), false));
-	public static final Supplier<VentusArmorItem> VENTUS_HELMET = ITEMS.register("ventus_helmet", () -> new VentusArmorItem(CustomArmorMaterials.VENTUS, ArmorItem.Type.HELMET, new Item.Properties(), false));
-	public static final Supplier<VentusArmorItem> VENTUS_CHESTPLATE = ITEMS.register("ventus_chestplate", () -> new VentusArmorItem(CustomArmorMaterials.VENTUS, ArmorItem.Type.CHESTPLATE, new Item.Properties(), false));
-	public static final Supplier<VentusArmorItem> VENTUS_LEGGINGS = ITEMS.register("ventus_leggings", () -> new VentusArmorItem(CustomArmorMaterials.VENTUS, ArmorItem.Type.LEGGINGS, new Item.Properties(), true));
-	public static final Supplier<VentusArmorItem> VENTUS_BOOTS = ITEMS.register("ventus_boots", () -> new VentusArmorItem(CustomArmorMaterials.VENTUS, ArmorItem.Type.BOOTS, new Item.Properties(), false));
-	public static final Supplier<AstralArmorItem> ASTRAL_HELMET = ITEMS.register("astral_helmet", () -> new AstralArmorItem(CustomArmorMaterials.ASTRAL, ArmorItem.Type.HELMET, new Item.Properties(), false));
-	public static final Supplier<AstralArmorItem> ASTRAL_CHESTPLATE = ITEMS.register("astral_chestplate", () -> new AstralArmorItem(CustomArmorMaterials.ASTRAL, ArmorItem.Type.CHESTPLATE, new Item.Properties(), false));
-	public static final Supplier<AstralArmorItem> ASTRAL_LEGGINGS = ITEMS.register("astral_leggings", () -> new AstralArmorItem(CustomArmorMaterials.ASTRAL, ArmorItem.Type.LEGGINGS, new Item.Properties(), true));
-	public static final Supplier<AstralArmorItem> ASTRAL_BOOTS = ITEMS.register("astral_boots", () -> new AstralArmorItem(CustomArmorMaterials.ASTRAL, ArmorItem.Type.BOOTS, new Item.Properties(), false));
+	public static final Supplier<MoltenArmorItem> MOLTEN_HELMET = ITEMS.register("molten_helmet", () -> new MoltenArmorItem(CustomArmorMaterials.MOLTEN, ArmorItem.Type.HELMET, new Item.Properties().fireResistant()));
+	public static final Supplier<MoltenArmorItem> MOLTEN_CHESTPLATE = ITEMS.register("molten_chestplate", () -> new MoltenArmorItem(CustomArmorMaterials.MOLTEN, ArmorItem.Type.CHESTPLATE, new Item.Properties().fireResistant()));
+	public static final Supplier<MoltenArmorItem> MOLTEN_LEGGINGS = ITEMS.register("molten_leggings", () -> new MoltenArmorItem(CustomArmorMaterials.MOLTEN, ArmorItem.Type.LEGGINGS, new Item.Properties().fireResistant()));
+	public static final Supplier<MoltenArmorItem> MOLTEN_BOOTS = ITEMS.register("molten_boots", () -> new MoltenArmorItem(CustomArmorMaterials.MOLTEN, ArmorItem.Type.BOOTS, new Item.Properties().fireResistant()));
+	public static final Supplier<CopperArmorItem> COPPER_HELMET = ITEMS.register("copper_helmet", () -> new CopperArmorItem(CustomArmorMaterials.COPPER, ArmorItem.Type.HELMET, new Item.Properties()));
+	public static final Supplier<CopperArmorItem> COPPER_CHESTPLATE = ITEMS.register("copper_chestplate", () -> new CopperArmorItem(CustomArmorMaterials.COPPER, ArmorItem.Type.CHESTPLATE, new Item.Properties()));
+	public static final Supplier<CopperArmorItem> COPPER_LEGGINGS = ITEMS.register("copper_leggings", () -> new CopperArmorItem(CustomArmorMaterials.COPPER, ArmorItem.Type.LEGGINGS, new Item.Properties()));
+	public static final Supplier<CopperArmorItem> COPPER_BOOTS = ITEMS.register("copper_boots", () -> new CopperArmorItem(CustomArmorMaterials.COPPER, ArmorItem.Type.BOOTS, new Item.Properties()));
+	public static final Supplier<TeslaArmorItem> TESLA_HELMET = ITEMS.register("tesla_helmet", () -> new TeslaArmorItem(CustomArmorMaterials.TESLA, ArmorItem.Type.HELMET, new Item.Properties()));
+	public static final Supplier<TeslaArmorItem> TESLA_CHESTPLATE = ITEMS.register("tesla_chestplate", () -> new TeslaArmorItem(CustomArmorMaterials.TESLA, ArmorItem.Type.CHESTPLATE, new Item.Properties()));
+	public static final Supplier<TeslaArmorItem> TESLA_LEGGINGS = ITEMS.register("tesla_leggings", () -> new TeslaArmorItem(CustomArmorMaterials.TESLA, ArmorItem.Type.LEGGINGS, new Item.Properties()));
+	public static final Supplier<TeslaArmorItem> TESLA_BOOTS = ITEMS.register("tesla_boots", () -> new TeslaArmorItem(CustomArmorMaterials.TESLA, ArmorItem.Type.BOOTS, new Item.Properties()));
+	public static final Supplier<CobaltArmorItem> COBALT_HELMET = ITEMS.register("cobalt_helmet", () -> new CobaltArmorItem(CustomArmorMaterials.COBALT, ArmorItem.Type.HELMET, new Item.Properties()));
+	public static final Supplier<CobaltArmorItem> COBALT_CHESTPLATE = ITEMS.register("cobalt_chestplate", () -> new CobaltArmorItem(CustomArmorMaterials.COBALT, ArmorItem.Type.CHESTPLATE, new Item.Properties()));
+	public static final Supplier<CobaltArmorItem> COBALT_LEGGINGS = ITEMS.register("cobalt_leggings", () -> new CobaltArmorItem(CustomArmorMaterials.COBALT, ArmorItem.Type.LEGGINGS, new Item.Properties()));
+	public static final Supplier<CobaltArmorItem> COBALT_BOOTS = ITEMS.register("cobalt_boots", () -> new CobaltArmorItem(CustomArmorMaterials.COBALT, ArmorItem.Type.BOOTS, new Item.Properties()));
+	public static final Supplier<VentusArmorItem> VENTUS_HELMET = ITEMS.register("ventus_helmet", () -> new VentusArmorItem(CustomArmorMaterials.VENTUS, ArmorItem.Type.HELMET, new Item.Properties()));
+	public static final Supplier<VentusArmorItem> VENTUS_CHESTPLATE = ITEMS.register("ventus_chestplate", () -> new VentusArmorItem(CustomArmorMaterials.VENTUS, ArmorItem.Type.CHESTPLATE, new Item.Properties()));
+	public static final Supplier<VentusArmorItem> VENTUS_LEGGINGS = ITEMS.register("ventus_leggings", () -> new VentusArmorItem(CustomArmorMaterials.VENTUS, ArmorItem.Type.LEGGINGS, new Item.Properties()));
+	public static final Supplier<VentusArmorItem> VENTUS_BOOTS = ITEMS.register("ventus_boots", () -> new VentusArmorItem(CustomArmorMaterials.VENTUS, ArmorItem.Type.BOOTS, new Item.Properties()));
+	public static final Supplier<AstralArmorItem> ASTRAL_HELMET = ITEMS.register("astral_helmet", () -> new AstralArmorItem(CustomArmorMaterials.ASTRAL, ArmorItem.Type.HELMET, new Item.Properties()));
+	public static final Supplier<AstralArmorItem> ASTRAL_CHESTPLATE = ITEMS.register("astral_chestplate", () -> new AstralArmorItem(CustomArmorMaterials.ASTRAL, ArmorItem.Type.CHESTPLATE, new Item.Properties()));
+	public static final Supplier<AstralArmorItem> ASTRAL_LEGGINGS = ITEMS.register("astral_leggings", () -> new AstralArmorItem(CustomArmorMaterials.ASTRAL, ArmorItem.Type.LEGGINGS, new Item.Properties()));
+	public static final Supplier<AstralArmorItem> ASTRAL_BOOTS = ITEMS.register("astral_boots", () -> new AstralArmorItem(CustomArmorMaterials.ASTRAL, ArmorItem.Type.BOOTS, new Item.Properties()));
 	@TextureMetadataMarker(predefinedGroup = PredefinedGroups.STARSTORM_ITEMS)
-	public static final Supplier<StarstormArmorItem> STARSTORM_HELMET = ITEMS.register("starstorm_helmet", () -> new StarstormArmorItem(CustomArmorMaterials.STARSTORM, ArmorItem.Type.HELMET, new Item.Properties(), false));
+	public static final Supplier<StarstormArmorItem> STARSTORM_HELMET = ITEMS.register("starstorm_helmet", () -> new StarstormArmorItem(CustomArmorMaterials.STARSTORM, ArmorItem.Type.HELMET, new Item.Properties()));
 	@TextureMetadataMarker(predefinedGroup = PredefinedGroups.STARSTORM_ITEMS)
-	public static final Supplier<StarstormArmorItem> STARSTORM_CHESTPLATE = ITEMS.register("starstorm_chestplate", () -> new StarstormArmorItem(CustomArmorMaterials.STARSTORM, ArmorItem.Type.CHESTPLATE, new Item.Properties(), false));
+	public static final Supplier<StarstormArmorItem> STARSTORM_CHESTPLATE = ITEMS.register("starstorm_chestplate", () -> new StarstormArmorItem(CustomArmorMaterials.STARSTORM, ArmorItem.Type.CHESTPLATE, new Item.Properties()));
 	@TextureMetadataMarker(predefinedGroup = PredefinedGroups.STARSTORM_ITEMS)
-	public static final Supplier<StarstormArmorItem> STARSTORM_LEGGINGS = ITEMS.register("starstorm_leggings", () -> new StarstormArmorItem(CustomArmorMaterials.STARSTORM, ArmorItem.Type.LEGGINGS, new Item.Properties(), true));
+	public static final Supplier<StarstormArmorItem> STARSTORM_LEGGINGS = ITEMS.register("starstorm_leggings", () -> new StarstormArmorItem(CustomArmorMaterials.STARSTORM, ArmorItem.Type.LEGGINGS, new Item.Properties()));
 	@TextureMetadataMarker(predefinedGroup = PredefinedGroups.STARSTORM_ITEMS)
-	public static final Supplier<StarstormArmorItem> STARSTORM_BOOTS = ITEMS.register("starstorm_boots", () -> new StarstormArmorItem(CustomArmorMaterials.STARSTORM, ArmorItem.Type.BOOTS, new Item.Properties(), false));
+	public static final Supplier<StarstormArmorItem> STARSTORM_BOOTS = ITEMS.register("starstorm_boots", () -> new StarstormArmorItem(CustomArmorMaterials.STARSTORM, ArmorItem.Type.BOOTS, new Item.Properties()));
 	@LanguageEntryOverride("Padded Leather Cap")
-	public static final Supplier<PaddedLeatherArmorItem> PADDED_LEATHER_HELMET = ITEMS.register("padded_leather_helmet", () -> new PaddedLeatherArmorItem(CustomArmorMaterials.PADDED_LEATHER, ArmorItem.Type.HELMET, new Item.Properties(), false));
+	public static final Supplier<PaddedLeatherArmorItem> PADDED_LEATHER_HELMET = ITEMS.register("padded_leather_helmet", () -> new PaddedLeatherArmorItem(CustomArmorMaterials.PADDED_LEATHER, ArmorItem.Type.HELMET, new Item.Properties()));
 	@LanguageEntryOverride("Padded Leather Tunic")
-	public static final Supplier<PaddedLeatherArmorItem> PADDED_LEATHER_CHESTPLATE = ITEMS.register("padded_leather_chestplate", () -> new PaddedLeatherArmorItem(CustomArmorMaterials.PADDED_LEATHER, ArmorItem.Type.CHESTPLATE, new Item.Properties(), false));
+	public static final Supplier<PaddedLeatherArmorItem> PADDED_LEATHER_CHESTPLATE = ITEMS.register("padded_leather_chestplate", () -> new PaddedLeatherArmorItem(CustomArmorMaterials.PADDED_LEATHER, ArmorItem.Type.CHESTPLATE, new Item.Properties()));
 	@LanguageEntryOverride("Padded Leather Pants")
-	public static final Supplier<PaddedLeatherArmorItem> PADDED_LEATHER_LEGGINGS = ITEMS.register("padded_leather_leggings", () -> new PaddedLeatherArmorItem(CustomArmorMaterials.PADDED_LEATHER, ArmorItem.Type.LEGGINGS, new Item.Properties(), true));
-	public static final Supplier<PaddedLeatherArmorItem> PADDED_LEATHER_BOOTS = ITEMS.register("padded_leather_boots", () -> new PaddedLeatherArmorItem(CustomArmorMaterials.PADDED_LEATHER, ArmorItem.Type.BOOTS, new Item.Properties(), false));
+	public static final Supplier<PaddedLeatherArmorItem> PADDED_LEATHER_LEGGINGS = ITEMS.register("padded_leather_leggings", () -> new PaddedLeatherArmorItem(CustomArmorMaterials.PADDED_LEATHER, ArmorItem.Type.LEGGINGS, new Item.Properties()));
+	public static final Supplier<PaddedLeatherArmorItem> PADDED_LEATHER_BOOTS = ITEMS.register("padded_leather_boots", () -> new PaddedLeatherArmorItem(CustomArmorMaterials.PADDED_LEATHER, ArmorItem.Type.BOOTS, new Item.Properties()));
 
 	// Spawn eggs
 	public static final Supplier<DeferredSpawnEggItem> DYING_SOLDIER_SPAWN_EGG = ITEMS.register("dying_soldier_spawn_egg", () -> new DeferredSpawnEggItem(EntityRegistry.DYING_SOLDIER_ENTITY, 0x7a6851, 0x783d22, (new Item.Properties()).stacksTo(16)));
