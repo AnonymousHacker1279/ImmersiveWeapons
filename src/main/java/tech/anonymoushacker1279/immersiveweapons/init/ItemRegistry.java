@@ -212,8 +212,6 @@ public class ItemRegistry {
 	public static final Supplier<Item> DIAMOND_PIKE_HEAD = ITEMS.register("diamond_pike_head", () -> new Item(new Properties()));
 	public static final Supplier<Item> TESLA_PIKE_HEAD = ITEMS.register("tesla_pike_head", () -> new Item(new Properties()));
 	public static final Supplier<Item> VENTUS_PIKE_HEAD = ITEMS.register("ventus_pike_head", () -> new Item(new Properties()));
-	public static final Supplier<Item> ASTRAL_PIKE_HEAD = ITEMS.register("astral_pike_head", () -> new Item(new Properties()));
-	public static final Supplier<Item> STARSTORM_PIKE_HEAD = ITEMS.register("starstorm_pike_head", () -> new Item(new Properties()));
 	public static final Supplier<CustomArrowItem<?>> WOODEN_ARROW = ITEMS.register("wooden_arrow", () -> new ArrowBuilder<>(new Properties(), 1.65d, EntityRegistry.WOODEN_ARROW_ENTITY).shootingVector(0.0185d, 5.8d, 7.2d).build());
 	public static final Supplier<CustomArrowItem<?>> STONE_ARROW = ITEMS.register("stone_arrow", () -> new ArrowBuilder<>(new Properties(), 1.85d, EntityRegistry.STONE_ARROW_ENTITY).shootingVector(0.0175d, 2.6d, 4.3d).build());
 	public static final Supplier<CustomArrowItem<?>> GOLDEN_ARROW = ITEMS.register("golden_arrow", () -> new ArrowBuilder<>(new Properties(), 2.10d, EntityRegistry.GOLDEN_ARROW_ENTITY).build());
