@@ -565,7 +565,7 @@ public class RecipeGenerator extends RecipeProvider implements DataGenUtils {
 				.unlockedBy("cobalt_ingot", has(ForgeItemTagGroups.COBALT_INGOTS))
 				.save(output);
 
-		starForgeSmelting(IWItemTagGroups.ASTRAL_INGOTS, 2, ItemRegistry.OBSIDIAN_ROD.get(), 2, ItemRegistry.ASTRAL_SWORD.get(), 300);
+		starForgeSmelting(IWItemTagGroups.ASTRAL_INGOTS, 2, ItemRegistry.OBSIDIAN_ROD.get(), 1, ItemRegistry.ASTRAL_SWORD.get(), 300);
 		starForgeSmelting(IWItemTagGroups.ASTRAL_INGOTS, 3, ItemRegistry.OBSIDIAN_ROD.get(), 2, ItemRegistry.ASTRAL_PICKAXE.get(), 300);
 		starForgeSmelting(IWItemTagGroups.ASTRAL_INGOTS, 3, ItemRegistry.OBSIDIAN_ROD.get(), 2, ItemRegistry.ASTRAL_AXE.get(), 300);
 		starForgeSmelting(IWItemTagGroups.ASTRAL_INGOTS, 1, ItemRegistry.OBSIDIAN_ROD.get(), 2, ItemRegistry.ASTRAL_SHOVEL.get(), 300);
@@ -577,7 +577,7 @@ public class RecipeGenerator extends RecipeProvider implements DataGenUtils {
 		starForgeSmelting(IWItemTagGroups.ASTRAL_INGOTS, 5, ItemRegistry.GAUNTLET_SCAFFOLDING.get(), 1, ItemRegistry.ASTRAL_GAUNTLET.get(), 300);
 		starForgeSmelting(IWItemTagGroups.ASTRAL_INGOTS, 3, ItemRegistry.WOODEN_TOOL_ROD.get(), 1, ItemRegistry.ASTRAL_PIKE.get(), 300);
 
-		starForgeSmelting(IWItemTagGroups.STARSTORM_INGOTS, 2, ItemRegistry.OBSIDIAN_ROD.get(), 2, ItemRegistry.STARSTORM_SWORD.get(), 300);
+		starForgeSmelting(IWItemTagGroups.STARSTORM_INGOTS, 2, ItemRegistry.OBSIDIAN_ROD.get(), 1, ItemRegistry.STARSTORM_SWORD.get(), 300);
 		starForgeSmelting(IWItemTagGroups.STARSTORM_INGOTS, 3, ItemRegistry.OBSIDIAN_ROD.get(), 2, ItemRegistry.STARSTORM_PICKAXE.get(), 300);
 		starForgeSmelting(IWItemTagGroups.STARSTORM_INGOTS, 3, ItemRegistry.OBSIDIAN_ROD.get(), 2, ItemRegistry.STARSTORM_AXE.get(), 300);
 		starForgeSmelting(IWItemTagGroups.STARSTORM_INGOTS, 1, ItemRegistry.OBSIDIAN_ROD.get(), 2, ItemRegistry.STARSTORM_SHOVEL.get(), 300);
