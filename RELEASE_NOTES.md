@@ -1,5 +1,6 @@
-This minor update includes a single bugfix regarding a loot table.
+This minor update includes Mixin-related changes to improve compatibility.
 
 ### Bugfixes
 
-- Fix Landmines not dropping themselves when disarmed
+- Make the mixin to unlock vanilla armor caps not required, should
+  fix [#114](https://github.com/AnonymousHacker1279/ImmersiveWeapons/issues/114)

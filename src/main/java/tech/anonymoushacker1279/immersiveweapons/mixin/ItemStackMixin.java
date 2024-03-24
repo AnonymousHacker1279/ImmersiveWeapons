@@ -26,7 +26,7 @@ public abstract class ItemStackMixin {
 			),
 			remap = false
 	)
-	private static Object recolorEnchantmentNames(Object object, @Local CompoundTag compoundTag) {
+	private static Object recolorEnchantmentNames(Object object, @Local(argsOnly = true) CompoundTag compoundTag) {
 		if (object instanceof Component component) {
 			ResourceLocation enchantmentLocation = EnchantmentHelper.getEnchantmentId(compoundTag);
 			int enchantmentLevel = EnchantmentHelper.getEnchantmentLevel(compoundTag);
