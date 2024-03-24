@@ -1,6 +1,5 @@
 package tech.anonymoushacker1279.immersiveweapons.entity.neutral;
 
-import net.minecraft.util.Mth;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
@@ -16,12 +15,10 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
 import tech.anonymoushacker1279.immersiveweapons.entity.ai.goal.*;
 import tech.anonymoushacker1279.immersiveweapons.entity.monster.DyingSoldierEntity;
-import tech.anonymoushacker1279.immersiveweapons.entity.projectile.BulletEntity;
 import tech.anonymoushacker1279.immersiveweapons.init.ItemRegistry;
-import tech.anonymoushacker1279.immersiveweapons.init.SoundEventRegistry;
 import tech.anonymoushacker1279.immersiveweapons.item.AccessoryItem;
 import tech.anonymoushacker1279.immersiveweapons.item.gun.AbstractGunItem;
-import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
+import tech.anonymoushacker1279.immersiveweapons.item.projectile.BulletItem;
 
 import java.util.List;
 
@@ -68,30 +65,8 @@ public class MinutemanEntity extends RangedSoldierEntity {
 	}
 
 	@Override
-	public void performRangedAttack(LivingEntity target, float velocity) {
-		// Fire four bullets for the blunderbuss
-		for (int i = 0; i <= 4; i++) {
-			BulletEntity bulletEntity = ItemRegistry.COPPER_MUSKET_BALL.get().createBullet(level(), this);
-			bulletEntity.setEnchantmentEffectsFromEntity(this, velocity);
-
-			double deltaX = target.getX() - getX();
-			double deltaY = target.getY(0.1D) - bulletEntity.getY();
-			double deltaZ = target.getZ() - getZ();
-			double sqrtXZ = Mth.sqrt((float) (deltaX * deltaX + deltaZ * deltaZ));
-
-			bulletEntity.setKnockback(3);
-			bulletEntity.setOwner(this);
-
-			bulletEntity.shoot(
-					deltaX + GeneralUtilities.getRandomNumber(-1.0f, 1.0f),
-					deltaY + sqrtXZ * 0.2D + GeneralUtilities.getRandomNumber(-0.375f, 0.375f),
-					deltaZ, getGunItem().getFireVelocity(getGun(), AbstractGunItem.getPowderFromItem(ItemRegistry.BLACKPOWDER.get()).getVelocityModifier()),
-					18 - level().getDifficulty().getId() * 4 + GeneralUtilities.getRandomNumber(0.2f, 0.8f));
-			level().addFreshEntity(bulletEntity);
-		}
-
-		playSound(SoundEventRegistry.BLUNDERBUSS_FIRE.get(), 1.0F,
-				1.0F / (getRandom().nextFloat() * 0.4F + 0.8F));
+	protected BulletItem<?> getDefaultBulletItem() {
+		return ItemRegistry.COPPER_MUSKET_BALL.get();
 	}
 
 	public void aggroNearbyMinutemen(AABB aabb, LivingEntity target) {
@@ -110,12 +85,12 @@ public class MinutemanEntity extends RangedSoldierEntity {
 	}
 
 	@Override
-	protected AbstractGunItem getGunItem() {
+	protected AbstractGunItem getDefaultGunItem() {
 		return ItemRegistry.BLUNDERBUSS.get();
 	}
 
 	@Override
-	protected int getAttackInterval(Difficulty difficulty) {
+	protected int getAttackIntervalModifier(Difficulty difficulty) {
 		return switch (level().getDifficulty()) {
 			case NORMAL -> 50;
 			case HARD -> 40;

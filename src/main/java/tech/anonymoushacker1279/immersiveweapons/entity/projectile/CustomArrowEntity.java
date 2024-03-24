@@ -282,7 +282,7 @@ public class CustomArrowEntity extends Arrow implements HitEffectUtils {
 
 		if (color != -1 && !level().isClientSide) {
 			PacketDistributor.TRACKING_CHUNK.with(level().getChunkAt(blockPosition()))
-					.send(new SmokeGrenadePayload(getX(), getY(), getZ(), color));
+					.send(new SmokeGrenadePayload(getX(), getY(), getZ(), color, CommonConfig.forceSmokeGrenadeParticles));
 		}
 
 		if (isExplosive && !hasExploded) {

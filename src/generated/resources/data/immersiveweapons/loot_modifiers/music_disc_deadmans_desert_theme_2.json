@@ -1,0 +1,29 @@
+{
+  "type": "immersiveweapons:simple_chest",
+  "allow_treasure": false,
+  "conditions": [
+    {
+      "condition": "minecraft:all_of",
+      "terms": [
+        {
+          "condition": "neoforge:loot_table_id",
+          "loot_table_id": "minecraft:chests/simple_dungeon"
+        },
+        {
+          "condition": "minecraft:location_check",
+          "predicate": {
+            "biome": "immersiveweapons:deadmans_desert"
+          }
+        }
+      ]
+    }
+  ],
+  "item": {
+    "Count": 1,
+    "id": "immersiveweapons:music_disc_deadmans_desert_theme_2"
+  },
+  "max_enchant_levels": 0,
+  "max_quantity": 1,
+  "min_quantity": 1,
+  "roll_chance": 0.2
+}

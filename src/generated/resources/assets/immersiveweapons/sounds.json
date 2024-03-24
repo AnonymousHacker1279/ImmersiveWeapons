@@ -90,10 +90,30 @@
     ],
     "subtitle": "subtitles.immersiveweapons.armor.copper.equip"
   },
-  "deadmans_desert_music": {
+  "deadmans_desert_background_music": {
     "sounds": [
       {
-        "name": "immersiveweapons:biome/deadmans_desert/music/music",
+        "name": "immersiveweapons:biome/deadmans_desert/music/music_0",
+        "stream": true
+      },
+      {
+        "name": "immersiveweapons:biome/deadmans_desert/music/music_1",
+        "stream": true
+      }
+    ]
+  },
+  "deadmans_desert_theme_1": {
+    "sounds": [
+      {
+        "name": "immersiveweapons:biome/deadmans_desert/music/music_0",
+        "stream": true
+      }
+    ]
+  },
+  "deadmans_desert_theme_2": {
+    "sounds": [
+      {
+        "name": "immersiveweapons:biome/deadmans_desert/music/music_1",
         "stream": true
       }
     ]
@@ -315,10 +335,30 @@
     ],
     "subtitle": "subtitles.immersiveweapons.block.spike_trap.retract"
   },
-  "starlight_plains_music": {
+  "starlight_plains_background_music": {
     "sounds": [
       {
-        "name": "immersiveweapons:biome/starlight_plains/music/music",
+        "name": "immersiveweapons:biome/starlight_plains/music/music_0",
+        "stream": true
+      },
+      {
+        "name": "immersiveweapons:biome/starlight_plains/music/music_1",
+        "stream": true
+      }
+    ]
+  },
+  "starlight_plains_theme_1": {
+    "sounds": [
+      {
+        "name": "immersiveweapons:biome/starlight_plains/music/music_0",
+        "stream": true
+      }
+    ]
+  },
+  "starlight_plains_theme_2": {
+    "sounds": [
+      {
+        "name": "immersiveweapons:biome/starlight_plains/music/music_1",
         "stream": true
       }
     ]
@@ -396,11 +436,7 @@
   "tiltros_wastes_music": {
     "sounds": [
       {
-        "name": "immersiveweapons:biome/tiltros_wastes/music/music_0",
-        "stream": true
-      },
-      {
-        "name": "immersiveweapons:biome/tiltros_wastes/music/music_1",
+        "name": "immersiveweapons:biome/tiltros_wastes/music/music",
         "stream": true
       }
     ]

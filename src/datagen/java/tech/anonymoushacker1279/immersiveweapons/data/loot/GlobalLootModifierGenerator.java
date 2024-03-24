@@ -1,19 +1,21 @@
 package tech.anonymoushacker1279.immersiveweapons.data.loot;
 
-import net.minecraft.advancements.critereon.EntityPredicate;
-import net.minecraft.advancements.critereon.ItemPredicate;
+import net.minecraft.advancements.critereon.*;
 import net.minecraft.data.PackOutput;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.storage.loot.BuiltInLootTables;
 import net.minecraft.world.level.storage.loot.LootContext.EntityTarget;
 import net.minecraft.world.level.storage.loot.predicates.*;
 import net.neoforged.neoforge.common.data.GlobalLootModifierProvider;
 import net.neoforged.neoforge.common.loot.LootTableIdCondition;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
+import tech.anonymoushacker1279.immersiveweapons.data.biomes.IWBiomes;
 import tech.anonymoushacker1279.immersiveweapons.data.tags.groups.immersiveweapons.IWItemTagGroups;
 import tech.anonymoushacker1279.immersiveweapons.init.ItemRegistry;
 import tech.anonymoushacker1279.immersiveweapons.world.level.loot.*;
@@ -100,6 +102,31 @@ public class GlobalLootModifierGenerator extends GlobalLootModifierProvider {
 				simpleEntityCondition(EntityType.PLAYER),
 				IWItemTagGroups.MOLTEN_TOOLS
 		));
+
+		add("music_disc_starlight_plains_theme_1", new SimpleChestModifierHandler(
+				inBiomeDungeonCondition(IWBiomes.STARLIGHT_PLAINS),
+				1, 1, 0.2f,
+				ItemRegistry.MUSIC_DISC_STARLIGHT_PLAINS_THEME_1.get().getDefaultInstance()));
+
+		add("music_disc_starlight_plains_theme_2", new SimpleChestModifierHandler(
+				inBiomeDungeonCondition(IWBiomes.STARLIGHT_PLAINS),
+				1, 1, 0.2f,
+				ItemRegistry.MUSIC_DISC_STARLIGHT_PLAINS_THEME_2.get().getDefaultInstance()));
+
+		add("music_disc_tiltros_wastes", new SimpleChestModifierHandler(
+				inBiomeDungeonCondition(IWBiomes.TILTROS_WASTES),
+				1, 1, 0.4f,
+				ItemRegistry.MUSIC_DISC_TILTROS_WASTES_THEME.get().getDefaultInstance()));
+
+		add("music_disc_deadmans_desert_theme_1", new SimpleChestModifierHandler(
+				inBiomeDungeonCondition(IWBiomes.DEADMANS_DESERT),
+				1, 1, 0.2f,
+				ItemRegistry.MUSIC_DISC_DEADMANS_DESERT_THEME_1.get().getDefaultInstance()));
+
+		add("music_disc_deadmans_desert_theme_2", new SimpleChestModifierHandler(
+				inBiomeDungeonCondition(IWBiomes.DEADMANS_DESERT),
+				1, 1, 0.2f,
+				ItemRegistry.MUSIC_DISC_DEADMANS_DESERT_THEME_2.get().getDefaultInstance()));
 	}
 
 	/**
@@ -192,5 +219,17 @@ public class GlobalLootModifierGenerator extends GlobalLootModifierProvider {
 	private LootItemCondition[] matchToolCondition(TagKey<Item> tagKey) {
 		return new LootItemCondition[]{
 				MatchTool.toolMatches(ItemPredicate.Builder.item().of(tagKey)).build()};
+	}
+
+	/**
+	 * Create a loot condition that applies to {@link BuiltInLootTables#SIMPLE_DUNGEON} loot tables in a given biome.
+	 *
+	 * @param biome the biome to use
+	 * @return the loot item condition
+	 */
+	private LootItemCondition[] inBiomeDungeonCondition(ResourceKey<Biome> biome) {
+		return new LootItemCondition[]{LootTableIdCondition.builder(BuiltInLootTables.SIMPLE_DUNGEON)
+				.and(LocationCheck.checkLocation(LocationPredicate.Builder.inBiome(biome)))
+				.build()};
 	}
 }

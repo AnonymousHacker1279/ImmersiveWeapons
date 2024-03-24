@@ -369,6 +369,16 @@ public class ItemRegistry {
 	public static final Supplier<Item> PEDESTAL_AUGMENT_ENCHANTMENT = ITEMS.register("pedestal_augment_enchantment", () -> new Item(new Properties().stacksTo(4)));
 	@LanguageEntryOverride("Pedestal Augment: Capacity")
 	public static final Supplier<Item> PEDESTAL_AUGMENT_CAPACITY = ITEMS.register("pedestal_augment_capacity", () -> new Item(new Properties().stacksTo(4)));
+	@LanguageEntryOverride("Music Disc")
+	public static final Supplier<RecordItem> MUSIC_DISC_STARLIGHT_PLAINS_THEME_1 = ITEMS.register("music_disc_starlight_plains_theme_1", () -> new RecordItem(0, SoundEventRegistry.STARLIGHT_PLAINS_THEME_1::get, new Properties().stacksTo(1).rarity(Rarity.RARE), 2580));
+	@LanguageEntryOverride("Music Disc")
+	public static final Supplier<RecordItem> MUSIC_DISC_STARLIGHT_PLAINS_THEME_2 = ITEMS.register("music_disc_starlight_plains_theme_2", () -> new RecordItem(0, SoundEventRegistry.STARLIGHT_PLAINS_THEME_2::get, new Properties().stacksTo(1).rarity(Rarity.RARE), 2540));
+	@LanguageEntryOverride("Music Disc")
+	public static final Supplier<RecordItem> MUSIC_DISC_TILTROS_WASTES_THEME = ITEMS.register("music_disc_tiltros_wastes_theme", () -> new RecordItem(0, SoundEventRegistry.TILTROS_WASTES_MUSIC::get, new Properties().stacksTo(1).rarity(Rarity.RARE), 3700));
+	@LanguageEntryOverride("Music Disc")
+	public static final Supplier<RecordItem> MUSIC_DISC_DEADMANS_DESERT_THEME_1 = ITEMS.register("music_disc_deadmans_desert_theme_1", () -> new RecordItem(0, SoundEventRegistry.DEADMANS_DESERT_THEME_1::get, new Properties().stacksTo(1).rarity(Rarity.RARE), 2900));
+	@LanguageEntryOverride("Music Disc")
+	public static final Supplier<RecordItem> MUSIC_DISC_DEADMANS_DESERT_THEME_2 = ITEMS.register("music_disc_deadmans_desert_theme_2", () -> new RecordItem(0, SoundEventRegistry.DEADMANS_DESERT_THEME_2::get, new Properties().stacksTo(1).rarity(Rarity.RARE), 2860));
 
 	// Armor
 	public static final Supplier<MoltenArmorItem> MOLTEN_HELMET = ITEMS.register("molten_helmet", () -> new MoltenArmorItem(CustomArmorMaterials.MOLTEN, ArmorItem.Type.HELMET, new Item.Properties().fireResistant()));

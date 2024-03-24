@@ -7,13 +7,13 @@
       "item": "immersiveweapons:flag_pole"
     },
     "b": {
-      "item": "minecraft:light_blue_wool"
+      "item": "minecraft:black_wool"
     },
     "c": {
       "item": "minecraft:golden_sword"
     },
     "d": {
-      "item": "minecraft:yellow_wool"
+      "item": "minecraft:blue_wool"
     }
   },
   "pattern": [

@@ -74,7 +74,7 @@ public class BiomesGenerator {
 						.grassColorOverride(12312020)
 						.foliageColorOverride(13885404)
 						.grassColorModifier(GrassColorModifier.NONE)
-						.backgroundMusic(new Music(SoundEventRegistry.STARLIGHT_PLAINS_MUSIC, 6000, 24000, true))
+						.backgroundMusic(new Music(SoundEventRegistry.STARLIGHT_PLAINS_BACKGROUND_MUSIC, 6000, 24000, true))
 						.build())
 				.mobSpawnSettings(getStarlightPlainsSpawns())
 				.generationSettings(getStarlightPlainsGenerationSettings(placedFeatures, worldCarvers))
@@ -95,7 +95,7 @@ public class BiomesGenerator {
 						.grassColorOverride(6176026)
 						.foliageColorOverride(6242850)
 						.grassColorModifier(GrassColorModifier.NONE)
-						.backgroundMusic(new Music(SoundEventRegistry.DEADMANS_DESERT_MUSIC, 6000, 24000, true))
+						.backgroundMusic(new Music(SoundEventRegistry.DEADMANS_DESERT_BACKGROUND_MUSIC, 6000, 24000, true))
 						.ambientParticle(new AmbientParticleSettings(
 								ParticleTypesRegistry.DEADMANS_DESERT_AMBIENT_PARTICLE.get(), 0.002f
 						))

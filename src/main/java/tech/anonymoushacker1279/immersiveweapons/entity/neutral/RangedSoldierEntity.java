@@ -1,21 +1,25 @@
 package tech.anonymoushacker1279.immersiveweapons.entity.neutral;
 
 import net.minecraft.util.RandomSource;
-import net.minecraft.world.Difficulty;
-import net.minecraft.world.DifficultyInstance;
+import net.minecraft.world.*;
 import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.ai.goal.MeleeAttackGoal;
 import net.minecraft.world.entity.monster.RangedAttackMob;
-import net.minecraft.world.entity.projectile.ProjectileUtil;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ProjectileWeaponItem;
 import net.minecraft.world.level.Level;
 import tech.anonymoushacker1279.immersiveweapons.entity.ai.goal.RangedGunAttackGoal;
-import tech.anonymoushacker1279.immersiveweapons.item.gun.AbstractGunItem;
+import tech.anonymoushacker1279.immersiveweapons.entity.projectile.BulletEntity;
+import tech.anonymoushacker1279.immersiveweapons.init.ItemRegistry;
+import tech.anonymoushacker1279.immersiveweapons.item.gun.*;
+import tech.anonymoushacker1279.immersiveweapons.item.gun.AbstractGunItem.PowderType;
+import tech.anonymoushacker1279.immersiveweapons.item.projectile.BulletItem;
 
 import java.util.List;
-import java.util.function.Predicate;
 
 public abstract class RangedSoldierEntity extends SoldierEntity implements RangedAttackMob {
+
+	private final MeleeAttackGoal meleeAttackGoal = new MeleeAttackGoal(this, 1.1D, false);
 
 	protected RangedSoldierEntity(EntityType<? extends PathfinderMob> entityType, Level level, List<Class<? extends Entity>> ignoresDamageFrom) {
 		super(entityType, level, ignoresDamageFrom);
@@ -24,29 +28,50 @@ public abstract class RangedSoldierEntity extends SoldierEntity implements Range
 	@Override
 	protected void populateDefaultEquipmentSlots(RandomSource randomSource, DifficultyInstance difficulty) {
 		super.populateDefaultEquipmentSlots(randomSource, difficulty);
-		setItemSlot(EquipmentSlot.MAINHAND, new ItemStack(getGunItem()));
+		setItemSlot(EquipmentSlot.MAINHAND, new ItemStack(getDefaultGunItem()));
 	}
 
 	public void prepareForCombat() {
 		if (!level().isClientSide) {
 			goalSelector.removeGoal(getRangedGunAttackGoal());
+			goalSelector.removeGoal(meleeAttackGoal);
 
 			if (getItemBySlot(EquipmentSlot.MAINHAND).isEmpty()) {
 				populateDefaultEquipmentSlots(random, level().getCurrentDifficultyAt(blockPosition()));
 			}
 
-			ItemStack itemInHand = getItemInHand(ProjectileUtil.getWeaponHoldingHand(this,
-					Predicate.isEqual(getGunItem())));
+			ItemStack itemInHand = getItemInHand(InteractionHand.MAIN_HAND);
 
 			if (itemInHand.is(getGunItem())) {
 				getRangedGunAttackGoal().setMinAttackInterval(getAttackInterval(level().getDifficulty()));
 				goalSelector.addGoal(1, getRangedGunAttackGoal());
+			} else {
+				goalSelector.addGoal(1, meleeAttackGoal);
 			}
 		}
 	}
 
 	protected ItemStack getGun() {
-		return getItemBySlot(EquipmentSlot.MAINHAND);
+		ItemStack mainHandItem = getItemBySlot(EquipmentSlot.MAINHAND);
+		if (mainHandItem.getItem() instanceof AbstractGunItem) {
+			return mainHandItem;
+		} else {
+			return new ItemStack(getDefaultGunItem());
+		}
+	}
+
+	protected AbstractGunItem getGunItem() {
+		return (AbstractGunItem) getGun().getItem();
+	}
+
+	protected BulletEntity createBullet(Level level, LivingEntity livingEntity) {
+		if (getGunItem() instanceof FlareGunItem) {
+			return ItemRegistry.FLARE.get().createFlare(level, livingEntity);
+		} else if (getGunItem() instanceof HandCannonItem) {
+			return ItemRegistry.CANNONBALL.get().createCannonball(level, livingEntity);
+		} else {
+			return getDefaultBulletItem().createBullet(level, livingEntity);
+		}
 	}
 
 	@Override
@@ -54,9 +79,32 @@ public abstract class RangedSoldierEntity extends SoldierEntity implements Range
 		return projectileWeaponItem == getGunItem().asItem();
 	}
 
-	protected abstract int getAttackInterval(Difficulty difficulty);
+	@Override
+	public void performRangedAttack(LivingEntity target, float velocity) {
+		lookAt(target, 30.0F, 30.0F);
 
-	protected abstract AbstractGunItem getGunItem();
+		for (int i = 0; i <= getGunItem().getMaxBulletsToFire(); i++) {
+			BulletEntity bulletEntity = createBullet(level(), this);
+			getGunItem().setupFire(this, bulletEntity, getGun(), null, getPowderType());
+			level().addFreshEntity(bulletEntity);
+		}
+
+		playSound(getGunItem().getFireSound(), 1.0F, 1.0F / (getRandom().nextFloat() * 0.4F + 0.8F));
+	}
+
+	protected int getAttackInterval(Difficulty difficulty) {
+		return getGunItem().getCooldown() + getAttackIntervalModifier(difficulty);
+	}
+
+	protected abstract int getAttackIntervalModifier(Difficulty difficulty);
+
+	protected abstract AbstractGunItem getDefaultGunItem();
+
+	protected abstract BulletItem<?> getDefaultBulletItem();
+
+	protected PowderType getPowderType() {
+		return AbstractGunItem.getPowderFromItem(ItemRegistry.BLACKPOWDER.get());
+	}
 
 	protected abstract RangedGunAttackGoal<? extends SoldierEntity> getRangedGunAttackGoal();
 }

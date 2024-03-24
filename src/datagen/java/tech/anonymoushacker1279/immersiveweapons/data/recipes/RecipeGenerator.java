@@ -152,9 +152,9 @@ public class RecipeGenerator extends RecipeProvider implements DataGenUtils {
 
 		ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, BlockItemRegistry.IMMERSIVE_WEAPONS_FLAG_ITEM.get())
 				.define('a', FLAG_POLE)
-				.define('b', Items.LIGHT_BLUE_WOOL)
+				.define('b', Items.BLACK_WOOL)
 				.define('c', Items.GOLDEN_SWORD)
-				.define('d', Items.YELLOW_WOOL)
+				.define('d', Items.BLUE_WOOL)
 				.pattern("bcb")
 				.pattern("bdb")
 				.pattern("a  ")

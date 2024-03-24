@@ -6,7 +6,6 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerBossEvent;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.tags.DamageTypeTags;
-import net.minecraft.util.Mth;
 import net.minecraft.world.BossEvent.BossBarColor;
 import net.minecraft.world.BossEvent.BossBarOverlay;
 import net.minecraft.world.Difficulty;
@@ -18,7 +17,7 @@ import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.projectile.AbstractArrow;
-import net.minecraft.world.item.Items;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import org.jetbrains.annotations.Nullable;
@@ -26,10 +25,10 @@ import tech.anonymoushacker1279.immersiveweapons.entity.AttackerTracker;
 import tech.anonymoushacker1279.immersiveweapons.entity.WaveSummoningBoss;
 import tech.anonymoushacker1279.immersiveweapons.entity.ai.goal.RangedGunAttackGoal;
 import tech.anonymoushacker1279.immersiveweapons.entity.ai.goal.TheCommanderSummonGoal;
-import tech.anonymoushacker1279.immersiveweapons.entity.projectile.BulletEntity;
-import tech.anonymoushacker1279.immersiveweapons.init.*;
+import tech.anonymoushacker1279.immersiveweapons.init.BlockRegistry;
+import tech.anonymoushacker1279.immersiveweapons.init.ItemRegistry;
 import tech.anonymoushacker1279.immersiveweapons.item.gun.AbstractGunItem;
-import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
+import tech.anonymoushacker1279.immersiveweapons.item.gun.AbstractGunItem.PowderType;
 import tech.anonymoushacker1279.immersiveweapons.world.level.IWDamageSources;
 
 import java.util.ArrayList;
@@ -101,6 +100,15 @@ public class TheCommanderEntity extends DyingSoldierEntity implements AttackerTr
 		}
 
 		return super.finalizeSpawn(level, difficulty, reason, spawnData, dataTag);
+	}
+
+	@Override
+	protected boolean canReplaceCurrentItem(ItemStack pCandidate, ItemStack pExisting) {
+		if (pCandidate.getItem() instanceof AbstractGunItem newGun && pExisting.getItem() instanceof AbstractGunItem oldGun) {
+			return newGun.getBaseFireVelocity() > oldGun.getBaseFireVelocity();
+		}
+
+		return super.canReplaceCurrentItem(pCandidate, pExisting);
 	}
 
 	@Override
@@ -226,36 +234,17 @@ public class TheCommanderEntity extends DyingSoldierEntity implements AttackerTr
 	}
 
 	@Override
-	protected AbstractGunItem getGunItem() {
+	protected AbstractGunItem getDefaultGunItem() {
 		return ItemRegistry.HAND_CANNON.get();
 	}
 
 	@Override
-	public void performRangedAttack(LivingEntity target, float velocity) {
-		BulletEntity bulletEntity = ItemRegistry.CANNONBALL.get().createBullet(level(), this);
-
-		double deltaX = target.getX() - getX();
-		double deltaY = target.getY(0.1D) - bulletEntity.getY();
-		double deltaZ = target.getZ() - getZ();
-		double sqrtXZ = Mth.sqrt((float) (deltaX * deltaX + deltaZ * deltaZ));
-
-		bulletEntity.setOwner(this);
-		bulletEntity.setKnockback(5);
-
-		bulletEntity.shoot(
-				deltaX + GeneralUtilities.getRandomNumber(-0.3f, 0.3f),
-				deltaY + sqrtXZ * 0.1D,
-				deltaZ, getGunItem().getFireVelocity(getGun(), AbstractGunItem.getPowderFromItem(Items.GUNPOWDER).getVelocityModifier()),
-				(float) (20 - level().getDifficulty().getId() * 4));
-
-		playSound(SoundEventRegistry.HAND_CANNON_FIRE.get(), 1.0F,
-				1.0F / (getRandom().nextFloat() * 0.4F + 0.8F));
-
-		level().addFreshEntity(bulletEntity);
+	protected PowderType getPowderType() {
+		return PowderType.GUNPOWDER;
 	}
 
 	@Override
-	protected int getAttackInterval(Difficulty difficulty) {
+	protected int getAttackIntervalModifier(Difficulty difficulty) {
 		return switch (level().getDifficulty()) {
 			case NORMAL -> 100;
 			case HARD -> 80;

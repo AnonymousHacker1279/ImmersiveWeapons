@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "immersiveweapons:item/music_disc_starlight_plains_theme_1"
+  }
+}

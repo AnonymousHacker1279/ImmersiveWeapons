@@ -59,6 +59,12 @@ public class CommonConfig {
 	@ConfigEntry(comment = "Set the inaccuracy modifier", group = "Blunderbuss", min = 0, max = 10)
 	public static float blunderbussFireInaccuracy = 2.0f;
 
+	@ConfigEntry(comment = "Set the base velocity of bullets", group = "Flare Gun", min = 0, max = 10)
+	public static float flareGunFireVelocity = 2.5f;
+
+	@ConfigEntry(comment = "Set the inaccuracy modifier", group = "Flare Gun", min = 0, max = 10)
+	public static float flareGunFireInaccuracy = 1.75f;
+
 	@ConfigEntry(comment = "Set the base velocity of bullets", group = "Musket", min = 0, max = 10)
 	public static float musketFireVelocity = 4.0f;
 

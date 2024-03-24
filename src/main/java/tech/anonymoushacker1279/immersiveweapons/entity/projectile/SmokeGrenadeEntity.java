@@ -39,11 +39,8 @@ public class SmokeGrenadeEntity extends AdvancedThrowableItemProjectile {
 		this.color = color;
 	}
 
-	public static void runOnClientImpact(double x, double y, double z, int color, Level level) {
-		int configValue = CommonConfig.forceSmokeGrenadeParticles;
-		int particles = configValue == -1
-				? ClientConfig.smokeGrenadeParticles
-				: configValue;
+	public static void runOnClientImpact(double x, double y, double z, int color, Level level, int forcedParticleCount) {
+		int particles = forcedParticleCount == -1 ? ClientConfig.smokeGrenadeParticles : forcedParticleCount;
 
 		if (ClientConfig.fancySmokeGrenadeParticles) {
 			particles *= 3;
@@ -70,7 +67,7 @@ public class SmokeGrenadeEntity extends AdvancedThrowableItemProjectile {
 	protected void onActivate() {
 		if (!level().isClientSide) {
 			PacketDistributor.TRACKING_CHUNK.with(level().getChunkAt(blockPosition()))
-					.send(new SmokeGrenadePayload(getX(), getY(), getZ(), color));
+					.send(new SmokeGrenadePayload(getX(), getY(), getZ(), color, CommonConfig.forceSmokeGrenadeParticles));
 		}
 	}
 
@@ -92,7 +89,7 @@ public class SmokeGrenadeEntity extends AdvancedThrowableItemProjectile {
 								}
 							});
 				}
-				
+
 				if (ticksInGround % 10 == 0) {
 					gameEvent(GameEventRegistry.SMOKE_GRENADE_HISS.get(), getOwner());
 				}

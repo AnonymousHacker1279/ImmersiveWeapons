@@ -1,14 +1,14 @@
 package tech.anonymoushacker1279.immersiveweapons.item.gun;
 
 import net.minecraft.sounds.SoundEvent;
-import net.minecraft.world.entity.player.Player;
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 import tech.anonymoushacker1279.immersiveweapons.config.CommonConfig;
 import tech.anonymoushacker1279.immersiveweapons.entity.projectile.BulletEntity;
 import tech.anonymoushacker1279.immersiveweapons.init.SoundEventRegistry;
-import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
 
 public class SimpleShotgunItem extends AbstractGunItem {
 
@@ -22,13 +22,14 @@ public class SimpleShotgunItem extends AbstractGunItem {
 	}
 
 	@Override
-	public void setupFire(ItemStack gun, BulletEntity bulletEntity, Player player, float powderModifier) {
-		bulletEntity.shootFromRotation(player,
-				player.getXRot() + GeneralUtilities.getRandomNumber(-5.0f, 5.0f),
-				player.getYRot() + GeneralUtilities.getRandomNumber(-5.0f, 5.0f),
+	public void prepareBulletForFire(ItemStack gun, BulletEntity bulletEntity, LivingEntity livingEntity, float powderModifier) {
+		RandomSource random = livingEntity.getRandom();
+		bulletEntity.shootFromRotation(livingEntity,
+				(float) (livingEntity.getXRot() + random.nextGaussian() * 5),
+				(float) (livingEntity.getYRot() + random.nextGaussian() * 5),
 				0.0F,
 				getFireVelocity(gun, powderModifier),
-				CommonConfig.blunderbussFireInaccuracy);
+				getInaccuracy());
 	}
 
 	/**
@@ -74,6 +75,11 @@ public class SimpleShotgunItem extends AbstractGunItem {
 	@Override
 	public float getBaseFireVelocity() {
 		return CommonConfig.blunderbussFireVelocity;
+	}
+
+	@Override
+	public float getInaccuracy() {
+		return CommonConfig.blunderbussFireInaccuracy;
 	}
 
 	@Override
