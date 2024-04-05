@@ -298,7 +298,7 @@ public class CustomArrowEntity extends Arrow implements HitEffectUtils {
 		doWhenHitEntity(result.getEntity());
 
 		if (result.getEntity() instanceof LivingEntity livingEntity) {
-			// Apply any hit effects from the bullet
+			// Apply any hit effects from the arrow
 			switch (hitEffect) {
 				case MOLTEN -> {
 					if (getOwner() instanceof LivingEntity owner) {
@@ -366,6 +366,25 @@ public class CustomArrowEntity extends Arrow implements HitEffectUtils {
 					1.5f,
 					false,
 					ExplosionInteraction.NONE);
+
+			// Get nearby entities in the radius and apply hit effects
+			level().getEntities(this, getBoundingBox().inflate(1.5d))
+					.stream()
+					.filter(entity -> {
+						if (entity instanceof LivingEntity livingEntity) {
+							return livingEntity.hasLineOfSight(this);
+						} else {
+							return false;
+						}
+					})
+					.forEach(entity -> {
+						LivingEntity livingEntity = (LivingEntity) entity;
+						switch (hitEffect) {
+							case MOLTEN -> addMoltenEffects(livingEntity, (LivingEntity) getOwner());
+							case TESLA -> addTeslaEffects(livingEntity);
+							case VENTUS -> addVentusEffects(livingEntity);
+						}
+					});
 
 			hasExploded = true;
 		}
