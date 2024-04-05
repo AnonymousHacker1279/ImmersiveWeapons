@@ -531,25 +531,53 @@ public class SoundGenerator extends SoundDefinitionsProvider {
 								SoundType.SOUND)
 						.stream()));
 
-		add(SoundEventRegistry.STARLIGHT_PLAINS_MUSIC.get(), definition()
+		add(SoundEventRegistry.STARLIGHT_PLAINS_THEME_1.get(), definition()
 				.with(Sound.sound(new ResourceLocation(ImmersiveWeapons.MOD_ID,
-										"biome/starlight_plains/music/music"),
+										"biome/starlight_plains/music/music_0"),
+								SoundType.SOUND)
+						.stream()));
+
+		add(SoundEventRegistry.STARLIGHT_PLAINS_THEME_2.get(), definition()
+				.with(Sound.sound(new ResourceLocation(ImmersiveWeapons.MOD_ID,
+										"biome/starlight_plains/music/music_1"),
+								SoundType.SOUND)
+						.stream()));
+
+		add(SoundEventRegistry.STARLIGHT_PLAINS_BACKGROUND_MUSIC.get(), definition()
+				.with(Sound.sound(new ResourceLocation(ImmersiveWeapons.MOD_ID,
+										"biome/starlight_plains/music/music_0"),
+								SoundType.SOUND)
+						.stream())
+				.with(Sound.sound(new ResourceLocation(ImmersiveWeapons.MOD_ID,
+										"biome/starlight_plains/music/music_1"),
 								SoundType.SOUND)
 						.stream()));
 
 		add(SoundEventRegistry.TILTROS_WASTES_MUSIC.get(), definition()
 				.with(Sound.sound(new ResourceLocation(ImmersiveWeapons.MOD_ID,
-										"biome/tiltros_wastes/music/music_0"),
-								SoundType.SOUND)
-						.stream())
-				.with(Sound.sound(new ResourceLocation(ImmersiveWeapons.MOD_ID,
-										"biome/tiltros_wastes/music/music_1"),
+										"biome/tiltros_wastes/music/music"),
 								SoundType.SOUND)
 						.stream()));
 
-		add(SoundEventRegistry.DEADMANS_DESERT_MUSIC.get(), definition()
+		add(SoundEventRegistry.DEADMANS_DESERT_THEME_1.get(), definition()
 				.with(Sound.sound(new ResourceLocation(ImmersiveWeapons.MOD_ID,
-										"biome/deadmans_desert/music/music"),
+										"biome/deadmans_desert/music/music_0"),
+								SoundType.SOUND)
+						.stream()));
+
+		add(SoundEventRegistry.DEADMANS_DESERT_THEME_2.get(), definition()
+				.with(Sound.sound(new ResourceLocation(ImmersiveWeapons.MOD_ID,
+										"biome/deadmans_desert/music/music_1"),
+								SoundType.SOUND)
+						.stream()));
+
+		add(SoundEventRegistry.DEADMANS_DESERT_BACKGROUND_MUSIC.get(), definition()
+				.with(Sound.sound(new ResourceLocation(ImmersiveWeapons.MOD_ID,
+										"biome/deadmans_desert/music/music_0"),
+								SoundType.SOUND)
+						.stream())
+				.with(Sound.sound(new ResourceLocation(ImmersiveWeapons.MOD_ID,
+										"biome/deadmans_desert/music/music_1"),
 								SoundType.SOUND)
 						.stream()));
 	}

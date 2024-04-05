@@ -4,9 +4,7 @@
       "element": {
         "element_type": "minecraft:single_pool_element",
         "location": "immersiveweapons:graveyard",
-        "processors": {
-          "processors": []
-        },
+        "processors": "immersiveweapons:weather_70_percent",
         "projection": "rigid"
       },
       "weight": 1

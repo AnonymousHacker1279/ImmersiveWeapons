@@ -6,12 +6,12 @@ import net.minecraft.resources.ResourceLocation;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 
 public record SmokeGrenadePayload(double x, double y, double z,
-                                  int color) implements CustomPacketPayload {
+                                  int color, int forcedParticleCount) implements CustomPacketPayload {
 
 	public static final ResourceLocation ID = new ResourceLocation(ImmersiveWeapons.MOD_ID, "smoke_grenade");
 
 	public SmokeGrenadePayload(final FriendlyByteBuf buffer) {
-		this(buffer.readDouble(), buffer.readDouble(), buffer.readDouble(), buffer.readInt());
+		this(buffer.readDouble(), buffer.readDouble(), buffer.readDouble(), buffer.readInt(), buffer.readInt());
 	}
 
 	@Override
@@ -20,6 +20,7 @@ public record SmokeGrenadePayload(double x, double y, double z,
 		buffer.writeDouble(y);
 		buffer.writeDouble(z);
 		buffer.writeInt(color);
+		buffer.writeInt(forcedParticleCount);
 	}
 
 	@Override

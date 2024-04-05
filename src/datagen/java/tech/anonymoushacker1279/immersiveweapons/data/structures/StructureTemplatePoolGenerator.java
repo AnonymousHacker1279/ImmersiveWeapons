@@ -141,7 +141,7 @@ public class StructureTemplatePoolGenerator {
 		register(context, GRAVEYARD, new StructureTemplatePool(
 				templatePoolHolderGetter.getOrThrow(Pools.EMPTY),
 				ImmutableList.of(
-						Pair.of(StructurePoolElement.single(ImmersiveWeapons.MOD_ID + ":graveyard"), 1)
+						Pair.of(StructurePoolElement.single(ImmersiveWeapons.MOD_ID + ":graveyard", processorListsHolderGetter.getOrThrow(StructureProcessorListGenerator.WEATHER_70_PERCENT)), 1)
 				),
 				Projection.RIGID));
 

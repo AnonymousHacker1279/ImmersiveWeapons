@@ -1,5 +1,4 @@
 {
-	"required": true,
 	"package": "tech.anonymoushacker1279.immersiveweapons.mixin",
 	"compatibilityLevel": "JAVA_17",
 	"mixins": [

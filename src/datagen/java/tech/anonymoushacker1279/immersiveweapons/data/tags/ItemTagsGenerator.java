@@ -316,5 +316,13 @@ public class ItemTagsGenerator extends ItemTagsProvider {
 				ItemRegistry.VENTUS_SHARD.get(),
 				ItemRegistry.ASTRAL_INGOT.get(),
 				ItemRegistry.STARSTORM_INGOT.get());
+
+		// Music discs
+		for (DeferredHolder<Item, ? extends Item> item : ItemRegistry.ITEMS.getEntries()) {
+			if (item.get() instanceof RecordItem record) {
+				tag(ItemTags.MUSIC_DISCS).add(record);
+			}
+		}
+
 	}
 }

@@ -17,8 +17,6 @@ import tech.anonymoushacker1279.immersiveweapons.entity.monster.SuperHansEntity;
 import tech.anonymoushacker1279.immersiveweapons.init.EntityRegistry;
 import tech.anonymoushacker1279.immersiveweapons.init.ItemRegistry;
 
-import static org.spongepowered.asm.mixin.injection.callback.LocalCapture.CAPTURE_FAILSOFT;
-
 /**
  * Handles the respawning of Super Hans when tossing a Hans' Blessing into a fire block. Simply injects a check
  * into the end of {@link BaseFireBlock#entityInside(BlockState, Level, BlockPos, Entity)}.
@@ -26,7 +24,7 @@ import static org.spongepowered.asm.mixin.injection.callback.LocalCapture.CAPTUR
 @Mixin(BaseFireBlock.class)
 public class BaseFireBlockMixin {
 
-	@Inject(method = "entityInside", at = @At("RETURN"), locals = CAPTURE_FAILSOFT)
+	@Inject(method = "entityInside", at = @At("RETURN"))
 	private void checkForSuperHansSpawn(BlockState pState, Level pLevel, BlockPos pPos, Entity pEntity, CallbackInfo ci) {
 		if (pEntity instanceof ItemEntity itemEntity && itemEntity.getItem().is(ItemRegistry.HANS_BLESSING.get())) {
 			// Check if inside a Champion Tower structure

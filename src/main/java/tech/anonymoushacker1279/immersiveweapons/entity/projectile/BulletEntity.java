@@ -229,5 +229,13 @@ public class BulletEntity extends CustomArrowEntity implements HitEffectUtils {
 					random.nextGaussian() * 0.05,
 					random.nextGaussian() * 0.025);
 		}
+
+		if (!inGround && tickCount % 2 == 0 && level().isClientSide) {
+			Player player = level().getNearestPlayer(this, 5.0D);
+			if (player != null) {
+				float pitch = (float) (0.8F + (getDeltaMovement().length() * 0.2) + (distanceTo(player) * 0.05));
+				player.playSound(SoundEventRegistry.BULLET_WHIZZ.get(), 1.0F, pitch);
+			}
+		}
 	}
 }

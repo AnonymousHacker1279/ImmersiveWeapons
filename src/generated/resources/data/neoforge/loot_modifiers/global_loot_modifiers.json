@@ -4,15 +4,20 @@
     "immersiveweapons:ancient_scroll",
     "immersiveweapons:molten_tool_smelting",
     "immersiveweapons:log_shards",
+    "immersiveweapons:music_disc_tiltros_wastes",
+    "immersiveweapons:music_disc_starlight_plains_theme_2",
     "immersiveweapons:aurora_bow",
     "immersiveweapons:depth_charm",
+    "immersiveweapons:music_disc_starlight_plains_theme_1",
     "immersiveweapons:ice_bow",
     "immersiveweapons:night_vision_goggles",
     "immersiveweapons:warden_heart",
     "immersiveweapons:dragons_breath_bow",
+    "immersiveweapons:music_disc_deadmans_desert_theme_2",
     "immersiveweapons:insomnia_amulet",
     "immersiveweapons:medal_of_adequacy",
-    "immersiveweapons:copper_ring"
+    "immersiveweapons:copper_ring",
+    "immersiveweapons:music_disc_deadmans_desert_theme_1"
   ],
   "replace": false
 }

@@ -1,7 +1,7 @@
 package tech.anonymoushacker1279.immersiveweapons.item.gun;
 
 import net.minecraft.sounds.SoundEvent;
-import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import tech.anonymoushacker1279.immersiveweapons.config.CommonConfig;
@@ -43,8 +43,8 @@ public class HandCannonItem extends SimplePistolItem {
 	}
 
 	@Override
-	protected void setupFire(ItemStack gun, BulletEntity bulletEntity, Player player, float powderModifier) {
-		bulletEntity.shootFromRotation(player, player.getXRot(), player.getYRot(),
+	public void prepareBulletForFire(ItemStack gun, BulletEntity bulletEntity, LivingEntity livingEntity, float powderModifier) {
+		bulletEntity.shootFromRotation(livingEntity, livingEntity.getXRot(), livingEntity.getYRot(),
 				0.0F,
 				getFireVelocity(gun, powderModifier),
 				CommonConfig.handCannonFireInaccuracy);

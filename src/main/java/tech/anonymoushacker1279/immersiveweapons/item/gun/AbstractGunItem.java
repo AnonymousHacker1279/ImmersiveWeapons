@@ -5,6 +5,7 @@ import net.minecraft.client.model.HumanoidModel.ArmPose;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundSource;
@@ -20,6 +21,7 @@ import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.client.extensions.common.IClientItemExtensions;
 import net.neoforged.neoforge.event.EventHooks;
 import net.neoforged.neoforge.network.PacketDistributor;
+import org.jetbrains.annotations.Nullable;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.client.model.CustomArmPoses;
 import tech.anonymoushacker1279.immersiveweapons.config.CommonConfig;
@@ -115,23 +117,7 @@ public abstract class AbstractGunItem extends Item implements Vanishable {
 				PowderType powderType = getPowderFromItem(powder.getItem());
 
 				if (!level.isClientSide) {
-					BulletItem<?> bulletItem = (BulletItem<?>) (ammo.getItem() instanceof BulletItem<?>
-							? ammo.getItem() : defaultAmmo());
-
-					float powderVelocityModifier = powderType.getVelocityModifier();
-
-					// Check for any scenarios where the powder would become wet
-					// Having the Powder Horn accessory reduces the effects slightly
-					boolean hasPowderHorn = AccessoryItem.isAccessoryActive(player, ItemRegistry.POWDER_HORN.get());
-					if (level.isRainingAt(player.blockPosition())) {
-						powderVelocityModifier -= hasPowderHorn ? 0.15f : 0.3f;
-					}
-					if (player.isUnderWater()) {
-						powderVelocityModifier -= hasPowderHorn ? 0.25f : 0.5f;
-					}
-					if (player.isInPowderSnow) {
-						powderVelocityModifier -= hasPowderHorn ? 0.1f : 0.2f;
-					}
+					BulletItem<?> bulletItem = (BulletItem<?>) (ammo.getItem() instanceof BulletItem<?> ? ammo.getItem() : defaultAmmo());
 
 					for (int i = 0; i < bulletsToFire; ++i) {
 						BulletEntity bulletEntity;
@@ -144,92 +130,13 @@ public abstract class AbstractGunItem extends Item implements Vanishable {
 							bulletEntity = bulletItem.createCannonball(level, player);
 						}
 
-						bulletEntity.setFiringItem(this);
-						setupFire(gun, bulletEntity, player, powderVelocityModifier);
-
-						// Roll for random crits
-						if (livingEntity.getRandom().nextFloat() <= CommonConfig.gunCritChance) {
-							bulletEntity.setCritArrow(true);
-						}
-
-						// Handle enchants
-						int enchantmentLevel = gun.getEnchantmentLevel(EnchantmentRegistry.FIREPOWER.get());
-						if (enchantmentLevel > 0) {
-							bulletEntity.setBaseDamage(bulletEntity.getBaseDamage() + (double) enchantmentLevel * 0.5D + 0.5D);
-						}
-
-						enchantmentLevel = gun.getEnchantmentLevel(EnchantmentRegistry.IMPACT.get());
-						int kb = getKnockbackLevel() + bulletEntity.getKnockback();
-						if (enchantmentLevel > 0) {
-							kb += enchantmentLevel;
-						}
-						bulletEntity.setKnockback(kb);
-
-						enchantmentLevel = gun.getEnchantmentLevel(EnchantmentRegistry.SCORCH_SHOT.get());
-						if (enchantmentLevel > 0) {
-							bulletEntity.setSecondsOnFire(enchantmentLevel * 100);
-						}
-
-						// Handle bullet density modifiers
-						if (ammo.getTag() != null && ammo.getTag().contains("densityModifier")) {
-							float densityModifier = ammo.getTag().getFloat("densityModifier");
-
-							// A full 100% value is +20% damage
-							bulletEntity.setBaseDamage(bulletEntity.getBaseDamage() + (bulletEntity.getBaseDamage() * (densityModifier * 0.2f)));
-
-							// Higher density slightly increases the gravity modifier
-							bulletEntity.gravityModifier += (densityModifier * 0.015f);
-						}
-
-						// Handle particle trails for blaze powder
-						if (powderType == PowderType.BLAZE_POWDER) {
-							bulletEntity.flameTrail = true;
-						}
-
-						int weaponDamage = powderType.getWeaponDamageAmount();
-
-						gun.hurtAndBreak(weaponDamage, player, (entity) ->
-								entity.broadcastBreakEvent(player.getUsedItemHand()));
-
+						setupFire(player, bulletEntity, gun, ammo, powderType);
 						level.addFreshEntity(bulletEntity);
 					}
 				} else {
 					// Handle recoil
 					player.yHeadRot = player.yHeadRot + GeneralUtilities.getRandomNumber(getMaxYRecoil(), 0.5f);
 					player.setXRot(player.getXRot() + GeneralUtilities.getRandomNumber(getMaxXRecoil(), -3.0f));
-				}
-
-				// Handle muzzle flash
-				// Calculate a particle position based on the player's position and rotation
-				Vec3 particlePosition = player.getEyePosition(1.0f);
-				particlePosition = particlePosition.add(player.getLookAngle().scale(0.5d));
-
-				// Shift to the side (taking into consideration which hand the gun is in)
-				Vec3 sideVector = player.getLookAngle().cross(new Vec3(0, 1, 0.2));
-				double sideOffset = player.getUsedItemHand() == InteractionHand.MAIN_HAND ? 0.5d : -0.5d;
-				particlePosition = particlePosition.add(sideVector.scale(sideOffset));
-
-				// Adjust forward position based on player FOV
-				double fov = GunData.playerFOV;
-				double fovOffset = 1.75d - (fov / 150.0d);
-				Vec3 lookVector = player.getLookAngle();
-				particlePosition = particlePosition.add(lookVector.x * fovOffset * 0.5d, lookVector.y * fovOffset * 0.5d, lookVector.z * fovOffset * 0.5d);
-
-				for (int i = 0; i < bulletsToFire; ++i) {
-					level.addParticle(ParticleTypesRegistry.MUZZLE_FLASH_PARTICLE.get(),
-							particlePosition.x, particlePosition.y, particlePosition.z,
-							GeneralUtilities.getRandomNumber(-0.01d, 0.01d),
-							GeneralUtilities.getRandomNumber(-0.01d, 0.01d),
-							GeneralUtilities.getRandomNumber(-0.01d, 0.01d));
-
-					int smokeParticles = 3 * powderType.getDirtiness();
-					for (int j = 0; j < smokeParticles; ++j) {
-						level.addParticle(ParticleTypes.SMOKE,
-								particlePosition.x, particlePosition.y, particlePosition.z,
-								GeneralUtilities.getRandomNumber(-0.01d, 0.01d),
-								GeneralUtilities.getRandomNumber(-0.01d, 0.01d),
-								GeneralUtilities.getRandomNumber(-0.01d, 0.01d));
-					}
 				}
 
 				level.playSound(null, player.getX(), player.getY(), player.getZ(),
@@ -517,15 +424,127 @@ public abstract class AbstractGunItem extends Item implements Vanishable {
 		return CommonConfig.flintlockPistolFireVelocity;
 	}
 
+	public float getInaccuracy() {
+		return CommonConfig.flintlockPistolFireInaccuracy;
+	}
+
 	public int getKnockbackLevel() {
 		return 0;
 	}
 
-	protected void setupFire(ItemStack gun, BulletEntity bulletEntity, Player player, float powderModifier) {
-		bulletEntity.shootFromRotation(player, player.getXRot(), player.getYRot(),
+	public void setupFire(LivingEntity shooter, BulletEntity bullet, ItemStack gun, @Nullable ItemStack ammo, PowderType powderType) {
+		bullet.setFiringItem(this);
+
+		float powderVelocityModifier = powderType.getVelocityModifier();
+		if (shooter instanceof Player player) {
+			// Check for any scenarios where the powder would become wet
+			// Having the Powder Horn accessory reduces the effects slightly
+			boolean hasPowderHorn = AccessoryItem.isAccessoryActive(player, ItemRegistry.POWDER_HORN.get());
+			if (player.level().isRainingAt(player.blockPosition())) {
+				powderVelocityModifier -= hasPowderHorn ? 0.15f : 0.3f;
+			}
+			if (player.isUnderWater()) {
+				powderVelocityModifier -= hasPowderHorn ? 0.25f : 0.5f;
+			}
+			if (player.isInPowderSnow) {
+				powderVelocityModifier -= hasPowderHorn ? 0.1f : 0.2f;
+			}
+		}
+
+		// Roll for random crits
+		if (shooter.getRandom().nextFloat() <= CommonConfig.gunCritChance) {
+			bullet.setCritArrow(true);
+		}
+
+		// Handle enchants
+		int enchantmentLevel = gun.getEnchantmentLevel(EnchantmentRegistry.FIREPOWER.get());
+		if (enchantmentLevel > 0) {
+			bullet.setBaseDamage(bullet.getBaseDamage() + (double) enchantmentLevel * 0.5D + 0.5D);
+		}
+
+		enchantmentLevel = gun.getEnchantmentLevel(EnchantmentRegistry.IMPACT.get());
+		int kb = getKnockbackLevel() + bullet.getKnockback();
+		if (enchantmentLevel > 0) {
+			kb += enchantmentLevel;
+		}
+		bullet.setKnockback(kb);
+
+		enchantmentLevel = gun.getEnchantmentLevel(EnchantmentRegistry.SCORCH_SHOT.get());
+		if (enchantmentLevel > 0) {
+			bullet.setSecondsOnFire(enchantmentLevel * 100);
+		}
+
+		// Handle bullet density modifiers
+		if (ammo != null) {
+			if (ammo.getTag() != null && ammo.getTag().contains("densityModifier")) {
+				float densityModifier = ammo.getTag().getFloat("densityModifier");
+
+				// A full 100% value is +20% damage
+				bullet.setBaseDamage(bullet.getBaseDamage() + (bullet.getBaseDamage() * (densityModifier * 0.2f)));
+
+				// Higher density slightly increases the gravity modifier
+				bullet.gravityModifier += (densityModifier * 0.015f);
+			}
+		}
+
+		// Handle particle trails for blaze powder
+		if (powderType == PowderType.BLAZE_POWDER) {
+			bullet.flameTrail = true;
+		}
+
+		int weaponDamage = powderType.getWeaponDamageAmount();
+		gun.hurtAndBreak(weaponDamage, shooter, (entity) ->
+				entity.broadcastBreakEvent(shooter.getUsedItemHand()));
+
+		prepareBulletForFire(gun, bullet, shooter, powderVelocityModifier);
+		handleMuzzleFlash(shooter.level(), shooter, powderType);
+	}
+
+	public void prepareBulletForFire(ItemStack gun, BulletEntity bulletEntity, LivingEntity livingEntity, float powderModifier) {
+		bulletEntity.shootFromRotation(livingEntity, livingEntity.getXRot(), livingEntity.getYRot(),
 				0.0F,
 				getFireVelocity(gun, powderModifier),
-				CommonConfig.flintlockPistolFireInaccuracy);
+				getInaccuracy());
+	}
+
+	protected void handleMuzzleFlash(Level level, LivingEntity shooter, PowderType powderType) {
+		if (level instanceof ServerLevel serverLevel) {
+			Vec3 particlePosition = shooter.getEyePosition();
+
+			// Shift to the side (taking into consideration which hand the gun is in)
+			Vec3 lookVector = shooter.getLookAngle();
+			Vec3 sideVector = lookVector.cross(new Vec3(0, 1, 0.2));
+			double sideOffset = shooter.getUsedItemHand() == InteractionHand.MAIN_HAND ? 0.5d : -0.5d;
+			particlePosition = particlePosition.add(sideVector.scale(sideOffset));
+
+			// Adjust forward position based on FOV
+			double fov = 70d;
+			if (shooter instanceof Player) {
+				fov = GunData.playerFOV;
+			}
+
+			double fovOffset = 1.75d - (fov / 150.0d);
+			particlePosition = particlePosition.add(lookVector.x * fovOffset * 0.5d, lookVector.y * fovOffset * 0.5d, lookVector.z * fovOffset * 0.5d);
+
+			serverLevel.sendParticles(ParticleTypesRegistry.MUZZLE_FLASH_PARTICLE.get(),
+					particlePosition.x, particlePosition.y, particlePosition.z,
+					3,
+					serverLevel.getRandom().nextGaussian() * 0.05d,
+					serverLevel.getRandom().nextGaussian() * 0.025d,
+					serverLevel.getRandom().nextGaussian() * 0.05d,
+					0.01d);
+
+			int smokeParticles = 3 * powderType.getDirtiness();
+			for (int j = 0; j < smokeParticles; ++j) {
+				serverLevel.sendParticles(ParticleTypes.SMOKE,
+						particlePosition.x, particlePosition.y, particlePosition.z,
+						3,
+						serverLevel.getRandom().nextGaussian() * 0.05d,
+						serverLevel.getRandom().nextGaussian() * 0.025d,
+						serverLevel.getRandom().nextGaussian() * 0.05d,
+						0.01d);
+			}
+		}
 	}
 
 	protected void handleAmmoStack(ItemStack gun, ItemStack ammo, int bulletsToFire, Player player) {

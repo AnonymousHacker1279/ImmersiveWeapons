@@ -212,8 +212,6 @@ public class ItemRegistry {
 	public static final Supplier<Item> DIAMOND_PIKE_HEAD = ITEMS.register("diamond_pike_head", () -> new Item(new Properties()));
 	public static final Supplier<Item> TESLA_PIKE_HEAD = ITEMS.register("tesla_pike_head", () -> new Item(new Properties()));
 	public static final Supplier<Item> VENTUS_PIKE_HEAD = ITEMS.register("ventus_pike_head", () -> new Item(new Properties()));
-	public static final Supplier<Item> ASTRAL_PIKE_HEAD = ITEMS.register("astral_pike_head", () -> new Item(new Properties()));
-	public static final Supplier<Item> STARSTORM_PIKE_HEAD = ITEMS.register("starstorm_pike_head", () -> new Item(new Properties()));
 	public static final Supplier<CustomArrowItem<?>> WOODEN_ARROW = ITEMS.register("wooden_arrow", () -> new ArrowBuilder<>(new Properties(), 1.65d, EntityRegistry.WOODEN_ARROW_ENTITY).shootingVector(0.0185d, 5.8d, 7.2d).build());
 	public static final Supplier<CustomArrowItem<?>> STONE_ARROW = ITEMS.register("stone_arrow", () -> new ArrowBuilder<>(new Properties(), 1.85d, EntityRegistry.STONE_ARROW_ENTITY).shootingVector(0.0175d, 2.6d, 4.3d).build());
 	public static final Supplier<CustomArrowItem<?>> GOLDEN_ARROW = ITEMS.register("golden_arrow", () -> new ArrowBuilder<>(new Properties(), 2.10d, EntityRegistry.GOLDEN_ARROW_ENTITY).build());
@@ -371,6 +369,16 @@ public class ItemRegistry {
 	public static final Supplier<Item> PEDESTAL_AUGMENT_ENCHANTMENT = ITEMS.register("pedestal_augment_enchantment", () -> new Item(new Properties().stacksTo(4)));
 	@LanguageEntryOverride("Pedestal Augment: Capacity")
 	public static final Supplier<Item> PEDESTAL_AUGMENT_CAPACITY = ITEMS.register("pedestal_augment_capacity", () -> new Item(new Properties().stacksTo(4)));
+	@LanguageEntryOverride("Music Disc")
+	public static final Supplier<RecordItem> MUSIC_DISC_STARLIGHT_PLAINS_THEME_1 = ITEMS.register("music_disc_starlight_plains_theme_1", () -> new RecordItem(0, SoundEventRegistry.STARLIGHT_PLAINS_THEME_1::get, new Properties().stacksTo(1).rarity(Rarity.RARE), 2580));
+	@LanguageEntryOverride("Music Disc")
+	public static final Supplier<RecordItem> MUSIC_DISC_STARLIGHT_PLAINS_THEME_2 = ITEMS.register("music_disc_starlight_plains_theme_2", () -> new RecordItem(0, SoundEventRegistry.STARLIGHT_PLAINS_THEME_2::get, new Properties().stacksTo(1).rarity(Rarity.RARE), 2540));
+	@LanguageEntryOverride("Music Disc")
+	public static final Supplier<RecordItem> MUSIC_DISC_TILTROS_WASTES_THEME = ITEMS.register("music_disc_tiltros_wastes_theme", () -> new RecordItem(0, SoundEventRegistry.TILTROS_WASTES_MUSIC::get, new Properties().stacksTo(1).rarity(Rarity.RARE), 3700));
+	@LanguageEntryOverride("Music Disc")
+	public static final Supplier<RecordItem> MUSIC_DISC_DEADMANS_DESERT_THEME_1 = ITEMS.register("music_disc_deadmans_desert_theme_1", () -> new RecordItem(0, SoundEventRegistry.DEADMANS_DESERT_THEME_1::get, new Properties().stacksTo(1).rarity(Rarity.RARE), 2900));
+	@LanguageEntryOverride("Music Disc")
+	public static final Supplier<RecordItem> MUSIC_DISC_DEADMANS_DESERT_THEME_2 = ITEMS.register("music_disc_deadmans_desert_theme_2", () -> new RecordItem(0, SoundEventRegistry.DEADMANS_DESERT_THEME_2::get, new Properties().stacksTo(1).rarity(Rarity.RARE), 2860));
 
 	// Armor
 	public static final Supplier<MoltenArmorItem> MOLTEN_HELMET = ITEMS.register("molten_helmet", () -> new MoltenArmorItem(CustomArmorMaterials.MOLTEN, ArmorItem.Type.HELMET, new Item.Properties().fireResistant()));

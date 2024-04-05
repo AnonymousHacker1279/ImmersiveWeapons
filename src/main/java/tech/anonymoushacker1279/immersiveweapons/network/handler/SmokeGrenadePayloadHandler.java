@@ -16,7 +16,7 @@ public class SmokeGrenadePayloadHandler {
 	public void handleData(final SmokeGrenadePayload data, final PlayPayloadContext context) {
 		context.workHandler().submitAsync(() -> {
 					if (context.level().isPresent()) {
-						SmokeGrenadeEntity.runOnClientImpact(data.x(), data.y(), data.z(), data.color(), context.level().get());
+						SmokeGrenadeEntity.runOnClientImpact(data.x(), data.y(), data.z(), data.color(), context.level().get(), data.forcedParticleCount());
 					}
 				})
 				.exceptionally(e -> {

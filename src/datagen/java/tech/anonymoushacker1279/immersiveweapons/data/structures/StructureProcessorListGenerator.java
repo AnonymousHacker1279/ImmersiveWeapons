@@ -41,6 +41,9 @@ public class StructureProcessorListGenerator {
 				)),
 				new RuleProcessor(ImmutableList.of(
 						new ProcessorRule(new RandomBlockMatchTest(Blocks.COBBLESTONE, 0.7f), AlwaysTrueTest.INSTANCE, Blocks.MOSSY_COBBLESTONE.defaultBlockState())
+				)),
+				new RuleProcessor(ImmutableList.of(
+						new ProcessorRule(new RandomBlockMatchTest(Blocks.STONE_BRICKS, 0.7f), AlwaysTrueTest.INSTANCE, Blocks.MOSSY_STONE_BRICKS.defaultBlockState())
 				))
 		));
 	}

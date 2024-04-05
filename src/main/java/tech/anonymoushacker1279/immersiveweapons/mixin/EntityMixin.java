@@ -11,8 +11,6 @@ import tech.anonymoushacker1279.immersiveweapons.item.armor.PaddedLeatherArmorIt
 
 import java.util.concurrent.atomic.AtomicInteger;
 
-import static org.spongepowered.asm.mixin.injection.callback.LocalCapture.CAPTURE_FAILSOFT;
-
 /**
  * See individual methods for notes.
  */
@@ -25,7 +23,7 @@ public abstract class EntityMixin {
 	/**
 	 * Allow an entity to dampen vibrations if wearing padded leather armor.
 	 */
-	@Inject(method = "dampensVibrations", at = @At("RETURN"), cancellable = true, locals = CAPTURE_FAILSOFT)
+	@Inject(method = "dampensVibrations", at = @At("RETURN"), cancellable = true)
 	public void dampensVibrations(CallbackInfoReturnable<Boolean> ci) {
 		// Check if the entity is wearing padded leather armor
 		AtomicInteger paddedArmorCount = new AtomicInteger();

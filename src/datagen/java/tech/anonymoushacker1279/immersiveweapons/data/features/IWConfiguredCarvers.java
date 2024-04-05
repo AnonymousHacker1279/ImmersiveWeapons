@@ -6,14 +6,13 @@ import net.minecraft.data.worldgen.BootstapContext;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BlockTags;
-import net.minecraft.util.valueproviders.ConstantFloat;
-import net.minecraft.util.valueproviders.UniformFloat;
+import net.minecraft.util.valueproviders.*;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.levelgen.VerticalAnchor;
 import net.minecraft.world.level.levelgen.carver.*;
 import net.minecraft.world.level.levelgen.carver.CanyonCarverConfiguration.CanyonShapeConfiguration;
-import net.minecraft.world.level.levelgen.heightproviders.BiasedToBottomHeight;
 import net.minecraft.world.level.levelgen.heightproviders.TrapezoidHeight;
+import net.minecraft.world.level.levelgen.heightproviders.UniformHeight;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 
 public class IWConfiguredCarvers {
@@ -30,22 +29,21 @@ public class IWConfiguredCarvers {
 
 		context.register(TRENCH, new ConfiguredWorldCarver<>(WorldCarver.CANYON,
 				new CanyonCarverConfiguration(
-						0.75f,
-						BiasedToBottomHeight.of(VerticalAnchor.absolute(63),
-								VerticalAnchor.absolute(128),
-								70),
+						0.5f,
+						UniformHeight.of(VerticalAnchor.absolute(60),
+								VerticalAnchor.absolute(128)),
 						ConstantFloat.of(0.75f),
 						VerticalAnchor.absolute(0),
 						CarverDebugSettings.DEFAULT,
 						blocks.getOrThrow(BlockTags.OVERWORLD_CARVER_REPLACEABLES),
-						UniformFloat.of(0.0f, 16f),
+						UniformFloat.of(-0.125f, 0.125f),
 						new CanyonShapeConfiguration(
-								ConstantFloat.of(15.0f),
-								ConstantFloat.of(1.0f),
-								2,
-								ConstantFloat.of(2.0f),
+								UniformFloat.of(0.75f, 1.0f),
+								TrapezoidFloat.of(0, 6, 2),
+								3,
+								UniformFloat.of(0.75f, 1.0f),
 								1,
-								1
+								0
 						)
 				)));
 

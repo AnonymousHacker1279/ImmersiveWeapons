@@ -1140,6 +1140,13 @@ public class LanguageGenerator extends IWLanguageProvider {
 		add("immersiveweapons.kill_count_weapon.tier.legendary", "Legendary");
 		add("immersiveweapons.kill_count_weapon.tier.hans_worthy", "Hans-Worthy");
 
+		// Music disc descriptions
+		add("item.immersiveweapons.music_disc_starlight_plains_theme_1.desc", "RandomDev - Starlight Plains Theme 1");
+		add("item.immersiveweapons.music_disc_starlight_plains_theme_2.desc", "RandomDev - Starlight Plains Theme 2");
+		add("item.immersiveweapons.music_disc_tiltros_wastes_theme.desc", "RandomDev - Tiltros Wastes Theme");
+		add("item.immersiveweapons.music_disc_deadmans_desert_theme_1.desc", "AnonymousHacker1279 - Deadman's Desert Theme 1");
+		add("item.immersiveweapons.music_disc_deadmans_desert_theme_2.desc", "AnonymousHacker1279 - Deadman's Desert Theme 2");
+
 		// IWCB strings
 		add("tooltip.iwcompatbridge.accessory_note", "Equip this in a Curios slot to gain the effect.");
 	}
