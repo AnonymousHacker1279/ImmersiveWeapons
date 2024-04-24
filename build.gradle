@@ -263,7 +263,7 @@ if (file("RELEASE_NOTES.md").exists()) {
 		setLoaders("neoforge")
 		setCurseEnvironment("both")
 		setArtifact(tasks.jarJar)
-		setJavaVersions(["Java 17"])
+		setJavaVersions([JavaVersion.VERSION_17])
 		addAdditionalFile(javadocJar, sourcesJar)
 
 		curseDepends {

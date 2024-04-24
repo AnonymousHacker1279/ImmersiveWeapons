@@ -8,7 +8,6 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.item.ItemStack;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
-import tech.anonymoushacker1279.immersiveweapons.blockentity.StarForgeBlockEntity;
 import tech.anonymoushacker1279.immersiveweapons.item.crafting.StarForgeRecipe;
 import tech.anonymoushacker1279.immersiveweapons.menu.StarForgeMenu;
 
@@ -62,7 +61,7 @@ public class StarForgeScreen extends AbstractContainerScreen<StarForgeMenu> {
 		int handleHeight = 15;
 		int scrollbarY = topPos + 13;
 		int scrollbarHeight = 56;
-		int handleY = scrollbarY + Mth.clamp((menu.getMenuSelectionIndex() * (scrollbarHeight - handleHeight) / (availableRecipes.size() - 1)), 0, scrollbarHeight - handleHeight);
+		int handleY = scrollbarY + Mth.clamp((menu.getMenuSelectionIndex() * (scrollbarHeight - handleHeight) / Mth.clamp((availableRecipes.size() - 1), 1, 9999)), 0, scrollbarHeight - handleHeight);
 		int scrollbarX = leftPos + 119;
 		int scrollbarTextureY = mouseX >= scrollbarX && mouseY >= scrollbarY && mouseX < scrollbarX + 10 && mouseY < scrollbarY + scrollbarHeight ? 244 : 232;
 
@@ -172,11 +171,9 @@ public class StarForgeScreen extends AbstractContainerScreen<StarForgeMenu> {
 	@Override
 	public boolean mouseDragged(double mouseX, double mouseY, int button, double dragX, double dragY) {
 		// Check if the scrollbar is being dragged
-		if (isOverScrollbar((int) mouseX, (int) mouseY) && menu.getSmeltTime() == 0) {
+		if (isOverScrollbar((int) mouseX, (int) mouseY) && menu.getSmeltTime() == 0 && Mth.abs((float) dragY) >= 1.5f) {
 			// Calculate the new menu selection index
-			int newMenuSelectionIndex = (int) ((mouseY - (topPos + 13)) / (56 - 15) * ((StarForgeBlockEntity) menu.container).getAvailableRecipes(
-					menu.ingotInputSlot.getItem(),
-					menu.secondaryInputSlot.getItem()).size());
+			int newMenuSelectionIndex = (int) ((mouseY - (topPos + 13)) / (56 - 15) * menu.availableRecipes.size());
 			menu.setMenuSelectionIndex(newMenuSelectionIndex, false);
 			return true;
 		}
